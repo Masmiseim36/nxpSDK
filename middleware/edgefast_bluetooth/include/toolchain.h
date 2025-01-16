@@ -16,6 +16,10 @@
 #ifndef ZEPHYR_INCLUDE_TOOLCHAIN_H_
 #define ZEPHYR_INCLUDE_TOOLCHAIN_H_
 
+#ifndef __printf_like
+#define __printf_like(...)
+#endif
+
 #ifndef __ASSERT
 #define __ASSERT(test, fmt, ...) assert(test)
 #endif /* __ASSERT */
@@ -63,6 +67,21 @@
 #include <toolchain/other.h>
 #endif
 
+/**
+ * @def __noasan
+ * @brief Disable address sanitizer
+ *
+ * When used in the definiton of a symbol, prevents that symbol (be it
+ * a function or data) from being instrumented by the address
+ * sanitizer feature of the compiler.  Most commonly, this is used to
+ * prevent padding around data that will be treated specially by the
+ * Zephyr link (c.f. SYS_INIT records, STRUCT_SECTION_ITERABLE
+ * definitions) in ways that don't understand the guard padding.
+ */
+#ifndef __noasan
+#define __noasan /**/
+#endif
+
 /*
  * Ensure that __BYTE_ORDER__ and related preprocessor definitions are defined,
  * as these are often used without checking for definition and doing so can
@@ -72,9 +91,47 @@
 #if !defined(__BYTE_ORDER__) || !defined(__ORDER_BIG_ENDIAN__) || \
     !defined(__ORDER_LITTLE_ENDIAN__)
 
-#error "__BYTE_ORDER__ is not defined"
+/*
+ * Displaying values unfortunately requires #pragma message which can't
+ * be taken for granted + STRINGIFY() which is not available in this .h
+ * file.
+ */
+#error "At least one byte _ORDER_ macro is not defined"
 
+#else
+
+#if (__BYTE_ORDER__ == __ORDER_BIG_ENDIAN__)
+#undef CONFIG_BIG_ENDIAN
+#undef CONFIG_LITTLE_ENDIAN
+#define CONFIG_BIG_ENDIAN 1
 #endif
+
+#if (__BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__)
+#undef CONFIG_BIG_ENDIAN
+#undef CONFIG_LITTLE_ENDIAN
+#define CONFIG_LITTLE_ENDIAN 1
+#endif
+
+#if (defined(CONFIG_BIG_ENDIAN) && (__BYTE_ORDER__ != __ORDER_BIG_ENDIAN__)) || \
+    (defined(CONFIG_LITTLE_ENDIAN) && (__BYTE_ORDER__ != __ORDER_LITTLE_ENDIAN__))
+
+#  error "Kconfig/toolchain endianness mismatch:"
+
+#  if (__BYTE_ORDER__ != __ORDER_BIG_ENDIAN__) && (__BYTE_ORDER__ != __ORDER_LITTLE_ENDIAN__)
+#    error "Unknown __BYTE_ORDER__ value"
+#  else
+#    ifdef CONFIG_BIG_ENDIAN
+#      error "CONFIG_BIG_ENDIAN but __ORDER_LITTLE_ENDIAN__"
+#    endif
+#    ifdef CONFIG_LITTLE_ENDIAN
+#      error "CONFIG_LITTLE_ENDIAN but __ORDER_BIG_ENDIAN__"
+#   endif
+# endif
+
+#endif  /* Endianness mismatch */
+
+#endif /* all _ORDER_ macros defined */
+
 #endif /* !_LINKER */
 
 #endif /* ZEPHYR_INCLUDE_TOOLCHAIN_H_ */

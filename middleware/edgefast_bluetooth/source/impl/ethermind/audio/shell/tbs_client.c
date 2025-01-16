@@ -16,18 +16,21 @@
 #include <ctype.h>
 
 #include <zephyr/types.h>
-#include "fsl_shell.h"
 
 #include <sys/byteorder.h>
 #include <sys/util.h>
+#include <porting.h>
 
+#include <bluetooth/hci.h>
 #include <bluetooth/conn.h>
 #include <bluetooth/gatt.h>
 #include <bluetooth/audio/tbs.h>
 
+#include "fsl_shell.h"
 #include "shell_bt.h"
 
-static shell_status_t cmd_tbs_client_discover(shell_handle_t sh, int32_t argc, char *argv[])
+static int cmd_tbs_client_discover(const struct shell *sh, size_t argc,
+				   char *argv[])
 {
 	int result = 0;
 
@@ -36,11 +39,13 @@ static shell_status_t cmd_tbs_client_discover(shell_handle_t sh, int32_t argc, c
 		shell_print(sh, "Fail: %d", result);
 	}
 
-	return (shell_status_t)result;
+	return result;
 }
 
 #if defined(CONFIG_BT_TBS_CLIENT_SET_BEARER_SIGNAL_INTERVAL) && (CONFIG_BT_TBS_CLIENT_SET_BEARER_SIGNAL_INTERVAL > 0)
-static shell_status_t cmd_tbs_client_set_signal_strength_interval(shell_handle_t sh, int32_t argc, char *argv[])
+static int cmd_tbs_client_set_signal_strength_interval(const struct shell *sh,
+						       size_t argc,
+						       char *argv[])
 {
 	unsigned long inst_index;
 	unsigned long interval;
@@ -59,14 +64,14 @@ static shell_status_t cmd_tbs_client_set_signal_strength_interval(shell_handle_t
 					    "Failed to parse inst_index: %d",
 					    result);
 
-				return kStatus_SHELL_Error;
+				return -ENOEXEC;
 			}
 
 			if (inst_index > UINT8_MAX) {
 				shell_error(sh, "Invalid index: %lu",
 					    inst_index);
 
-				return kStatus_SHELL_Error;
+				return -ENOEXEC;
 			}
 		}
 	} else {
@@ -77,13 +82,13 @@ static shell_status_t cmd_tbs_client_set_signal_strength_interval(shell_handle_t
 	if (result != 0) {
 		shell_error(sh, "Failed to parse interval: %d", result);
 
-		return kStatus_SHELL_Error;
+		return -ENOEXEC;
 	}
 
 	if (interval > UINT8_MAX) {
 		shell_error(sh, "Invalid interval: %lu", interval);
 
-		return kStatus_SHELL_Error;
+		return -ENOEXEC;
 	}
 
 	result = bt_tbs_client_set_signal_strength_interval(default_conn,
@@ -93,12 +98,13 @@ static shell_status_t cmd_tbs_client_set_signal_strength_interval(shell_handle_t
 		shell_print(sh, "Fail: %d", result);
 	}
 
-	return (shell_status_t)result;
+	return result;
 }
 #endif /* defined(CONFIG_BT_TBS_CLIENT_SET_BEARER_SIGNAL_INTERVAL) */
 
 #if defined(CONFIG_BT_TBS_CLIENT_HOLD_CALL) && (CONFIG_BT_TBS_CLIENT_HOLD_CALL > 0)
-static shell_status_t cmd_tbs_client_hold(shell_handle_t sh, int32_t argc, char *argv[])
+static int cmd_tbs_client_hold(const struct shell *sh, size_t argc,
+			       char *argv[])
 {
 	unsigned long inst_index;
 	unsigned long call_index;
@@ -114,14 +120,14 @@ static shell_status_t cmd_tbs_client_hold(shell_handle_t sh, int32_t argc, char 
 					    "Failed to parse inst_index: %d",
 					    result);
 
-				return kStatus_SHELL_Error;
+				return -ENOEXEC;
 			}
 
 			if (inst_index > UINT8_MAX) {
 				shell_error(sh, "Invalid index: %lu",
 					    inst_index);
 
-				return kStatus_SHELL_Error;
+				return -ENOEXEC;
 			}
 		}
 	} else {
@@ -132,13 +138,13 @@ static shell_status_t cmd_tbs_client_hold(shell_handle_t sh, int32_t argc, char 
 	if (result != 0) {
 		shell_error(sh, "Failed to parse call_index: %d", result);
 
-		return kStatus_SHELL_Error;
+		return -ENOEXEC;
 	}
 
 	if (call_index > UINT8_MAX) {
 		shell_error(sh, "Invalid call_index: %lu", call_index);
 
-		return kStatus_SHELL_Error;
+		return -ENOEXEC;
 	}
 
 	result = bt_tbs_client_hold_call(default_conn, inst_index, call_index);
@@ -146,12 +152,13 @@ static shell_status_t cmd_tbs_client_hold(shell_handle_t sh, int32_t argc, char 
 		shell_print(sh, "Fail: %d", result);
 	}
 
-	return (shell_status_t)result;
+	return result;
 }
 #endif /* defined(CONFIG_BT_TBS_CLIENT_HOLD_CALL) */
 
 #if defined(CONFIG_BT_TBS_CLIENT_RETRIEVE_CALL) && (CONFIG_BT_TBS_CLIENT_RETRIEVE_CALL > 0)
-static shell_status_t cmd_tbs_client_retrieve(shell_handle_t sh, int32_t argc, char *argv[])
+static int cmd_tbs_client_retrieve(const struct shell *sh, size_t argc,
+				   char *argv[])
 {
 	unsigned long inst_index;
 	unsigned long call_index;
@@ -167,14 +174,14 @@ static shell_status_t cmd_tbs_client_retrieve(shell_handle_t sh, int32_t argc, c
 					    "Failed to parse inst_index: %d",
 					    result);
 
-				return kStatus_SHELL_Error;
+				return -ENOEXEC;
 			}
 
 			if (inst_index > UINT8_MAX) {
 				shell_error(sh, "Invalid index: %lu",
 					    inst_index);
 
-				return kStatus_SHELL_Error;
+				return -ENOEXEC;
 			}
 		}
 	} else {
@@ -185,13 +192,13 @@ static shell_status_t cmd_tbs_client_retrieve(shell_handle_t sh, int32_t argc, c
 	if (result != 0) {
 		shell_error(sh, "Failed to parse call_index: %d", result);
 
-		return kStatus_SHELL_Error;
+		return -ENOEXEC;
 	}
 
 	if (call_index > UINT8_MAX) {
 		shell_error(sh, "Invalid call_index: %lu", call_index);
 
-		return kStatus_SHELL_Error;
+		return -ENOEXEC;
 	}
 
 	result = bt_tbs_client_retrieve_call(default_conn, inst_index,
@@ -200,12 +207,13 @@ static shell_status_t cmd_tbs_client_retrieve(shell_handle_t sh, int32_t argc, c
 		shell_print(sh, "Fail: %d", result);
 	}
 
-	return (shell_status_t)result;
+	return result;
 }
 #endif /* defined(CONFIG_BT_TBS_CLIENT_RETRIEVE_CALL) */
 
 #if defined(CONFIG_BT_TBS_CLIENT_ACCEPT_CALL) && (CONFIG_BT_TBS_CLIENT_ACCEPT_CALL > 0)
-static shell_status_t cmd_tbs_client_accept(shell_handle_t sh, int32_t argc, char *argv[])
+static int cmd_tbs_client_accept(const struct shell *sh, size_t argc,
+				 char *argv[])
 {
 	unsigned long inst_index;
 	unsigned long call_index;
@@ -221,14 +229,14 @@ static shell_status_t cmd_tbs_client_accept(shell_handle_t sh, int32_t argc, cha
 					    "Failed to parse inst_index: %d",
 					    result);
 
-				return kStatus_SHELL_Error;
+				return -ENOEXEC;
 			}
 
 			if (inst_index > UINT8_MAX) {
 				shell_error(sh, "Invalid index: %lu",
 					    inst_index);
 
-				return kStatus_SHELL_Error;
+				return -ENOEXEC;
 			}
 		}
 	} else {
@@ -239,13 +247,13 @@ static shell_status_t cmd_tbs_client_accept(shell_handle_t sh, int32_t argc, cha
 	if (result != 0) {
 		shell_error(sh, "Failed to parse call_index: %d", result);
 
-		return kStatus_SHELL_Error;
+		return -ENOEXEC;
 	}
 
 	if (call_index > UINT8_MAX) {
 		shell_error(sh, "Invalid call_index: %lu", call_index);
 
-		return kStatus_SHELL_Error;
+		return -ENOEXEC;
 	}
 
 	result = bt_tbs_client_accept_call(default_conn, inst_index,
@@ -255,12 +263,13 @@ static shell_status_t cmd_tbs_client_accept(shell_handle_t sh, int32_t argc, cha
 		shell_print(sh, "Fail: %d", result);
 	}
 
-	return (shell_status_t)result;
+	return result;
 }
 #endif /* defined(CONFIG_BT_TBS_CLIENT_ACCEPT_CALL) */
 
 #if defined(CONFIG_BT_TBS_CLIENT_JOIN_CALLS) && (CONFIG_BT_TBS_CLIENT_JOIN_CALLS > 0)
-static shell_status_t cmd_tbs_client_join(shell_handle_t sh, int32_t argc, char *argv[])
+static int cmd_tbs_client_join(const struct shell *sh, size_t argc,
+			       char *argv[])
 {
 
 	uint8_t call_indexes[CONFIG_BT_TBS_CLIENT_MAX_CALLS];
@@ -276,14 +285,14 @@ static shell_status_t cmd_tbs_client_join(shell_handle_t sh, int32_t argc, char 
 					"Failed to parse inst_index: %d",
 					result);
 
-			return kStatus_SHELL_Error;
+			return -ENOEXEC;
 		}
 
 		if (inst_index > UINT8_MAX) {
 			shell_error(sh, "Invalid index: %lu",
 					inst_index);
 
-			return kStatus_SHELL_Error;
+			return -ENOEXEC;
 		}
 	}
 
@@ -295,13 +304,13 @@ static shell_status_t cmd_tbs_client_join(shell_handle_t sh, int32_t argc, char 
 			shell_error(sh, "Failed to parse call_index: %d",
 				    result);
 
-			return kStatus_SHELL_Error;
+			return -ENOEXEC;
 		}
 
 		if (call_index > UINT8_MAX) {
 			shell_error(sh, "Invalid call_index: %lu", call_index);
 
-			return kStatus_SHELL_Error;
+			return -ENOEXEC;
 		}
 
 		call_indexes[i - 2] = (uint8_t)call_index;
@@ -313,12 +322,13 @@ static shell_status_t cmd_tbs_client_join(shell_handle_t sh, int32_t argc, char 
 		shell_print(sh, "Fail: %d", result);
 	}
 
-	return (shell_status_t)result;
+	return result;
 }
 #endif /* defined(CONFIG_BT_TBS_CLIENT_JOIN_CALLS) */
 
 #if defined(CONFIG_BT_TBS_CLIENT_TERMINATE_CALL) && (CONFIG_BT_TBS_CLIENT_TERMINATE_CALL > 0)
-static shell_status_t cmd_tbs_client_terminate(shell_handle_t sh, int32_t argc, char *argv[])
+static int cmd_tbs_client_terminate(const struct shell *sh, size_t argc,
+				    char *argv[])
 {
 	unsigned long inst_index;
 	unsigned long call_index;
@@ -334,14 +344,14 @@ static shell_status_t cmd_tbs_client_terminate(shell_handle_t sh, int32_t argc, 
 					    "Failed to parse inst_index: %d",
 					    result);
 
-				return kStatus_SHELL_Error;
+				return -ENOEXEC;
 			}
 
 			if (inst_index > UINT8_MAX) {
 				shell_error(sh, "Invalid index: %lu",
 					    inst_index);
 
-				return kStatus_SHELL_Error;
+				return -ENOEXEC;
 			}
 		}
 	} else {
@@ -352,13 +362,13 @@ static shell_status_t cmd_tbs_client_terminate(shell_handle_t sh, int32_t argc, 
 	if (result != 0) {
 		shell_error(sh, "Failed to parse call_index: %d", result);
 
-		return kStatus_SHELL_Error;
+		return -ENOEXEC;
 	}
 
 	if (call_index > UINT8_MAX) {
 		shell_error(sh, "Invalid call_index: %lu", call_index);
 
-		return kStatus_SHELL_Error;
+		return -ENOEXEC;
 	}
 
 	result = bt_tbs_client_terminate_call(default_conn, inst_index,
@@ -367,12 +377,13 @@ static shell_status_t cmd_tbs_client_terminate(shell_handle_t sh, int32_t argc, 
 		shell_print(sh, "Fail: %d", result);
 	}
 
-	return (shell_status_t)result;
+	return result;
 }
 #endif /* defined(CONFIG_BT_TBS_CLIENT_TERMINATE_CALL) */
 
 #if defined(CONFIG_BT_TBS_CLIENT_ORIGINATE_CALL) && (CONFIG_BT_TBS_CLIENT_ORIGINATE_CALL > 0)
-static shell_status_t cmd_tbs_client_originate(shell_handle_t sh, int32_t argc, char *argv[])
+static int cmd_tbs_client_originate(const struct shell *sh, size_t argc,
+				    char *argv[])
 {
 	unsigned long inst_index;
 	int result = 0;
@@ -387,14 +398,14 @@ static shell_status_t cmd_tbs_client_originate(shell_handle_t sh, int32_t argc, 
 					    "Failed to parse inst_index: %d",
 					    result);
 
-				return kStatus_SHELL_Error;
+				return -ENOEXEC;
 			}
 
 			if (inst_index > UINT8_MAX) {
 				shell_error(sh, "Invalid index: %lu",
 					    inst_index);
 
-				return kStatus_SHELL_Error;
+				return -ENOEXEC;
 			}
 		}
 	} else {
@@ -407,12 +418,13 @@ static shell_status_t cmd_tbs_client_originate(shell_handle_t sh, int32_t argc, 
 		shell_print(sh, "Fail: %d", result);
 	}
 
-	return (shell_status_t)result;
+	return result;
 }
 #endif /* defined(CONFIG_BT_TBS_CLIENT_ORIGINATE_CALL) */
 
 #if defined(CONFIG_BT_TBS_CLIENT_BEARER_PROVIDER_NAME) && (CONFIG_BT_TBS_CLIENT_BEARER_PROVIDER_NAME > 0)
-static shell_status_t cmd_tbs_client_read_bearer_provider_name(shell_handle_t sh, int32_t argc, char *argv[])
+static int cmd_tbs_client_read_bearer_provider_name(const struct shell *sh,
+						    size_t argc, char *argv[])
 {
 	unsigned long inst_index;
 	int result = 0;
@@ -427,14 +439,14 @@ static shell_status_t cmd_tbs_client_read_bearer_provider_name(shell_handle_t sh
 					    "Failed to parse inst_index: %d",
 					    result);
 
-				return kStatus_SHELL_Error;
+				return -ENOEXEC;
 			}
 
 			if (inst_index > UINT8_MAX) {
 				shell_error(sh, "Invalid index: %lu",
 					    inst_index);
 
-				return kStatus_SHELL_Error;
+				return -ENOEXEC;
 			}
 		}
 	} else {
@@ -447,12 +459,13 @@ static shell_status_t cmd_tbs_client_read_bearer_provider_name(shell_handle_t sh
 		shell_print(sh, "Fail: %d", result);
 	}
 
-	return (shell_status_t)result;
+	return result;
 }
 #endif /* defined(CONFIG_BT_TBS_CLIENT_BEARER_PROVIDER_NAME) */
 
 #if defined(CONFIG_BT_TBS_CLIENT_BEARER_UCI) && (CONFIG_BT_TBS_CLIENT_BEARER_UCI > 0)
-static shell_status_t cmd_tbs_client_read_bearer_uci(shell_handle_t sh, int32_t argc, char *argv[])
+static int cmd_tbs_client_read_bearer_uci(const struct shell *sh, size_t argc,
+					  char *argv[])
 {
 	unsigned long inst_index;
 	int result = 0;
@@ -467,14 +480,14 @@ static shell_status_t cmd_tbs_client_read_bearer_uci(shell_handle_t sh, int32_t 
 					    "Failed to parse inst_index: %d",
 					    result);
 
-				return kStatus_SHELL_Error;
+				return -ENOEXEC;
 			}
 
 			if (inst_index > UINT8_MAX) {
 				shell_error(sh, "Invalid index: %lu",
 					    inst_index);
 
-				return kStatus_SHELL_Error;
+				return -ENOEXEC;
 			}
 		}
 	} else {
@@ -486,12 +499,13 @@ static shell_status_t cmd_tbs_client_read_bearer_uci(shell_handle_t sh, int32_t 
 		shell_print(sh, "Fail: %d", result);
 	}
 
-	return (shell_status_t)result;
+	return result;
 }
 #endif /* defined(CONFIG_BT_TBS_CLIENT_BEARER_UCI) */
 
 #if defined(CONFIG_BT_TBS_CLIENT_BEARER_TECHNOLOGY) && (CONFIG_BT_TBS_CLIENT_BEARER_TECHNOLOGY > 0)
-static shell_status_t cmd_tbs_client_read_technology(shell_handle_t sh, int32_t argc, char *argv[])
+static int cmd_tbs_client_read_technology(const struct shell *sh, size_t argc,
+					  char *argv[])
 {
 	unsigned long inst_index;
 	int result = 0;
@@ -506,14 +520,14 @@ static shell_status_t cmd_tbs_client_read_technology(shell_handle_t sh, int32_t 
 					    "Failed to parse inst_index: %d",
 					    result);
 
-				return kStatus_SHELL_Error;
+				return -ENOEXEC;
 			}
 
 			if (inst_index > UINT8_MAX) {
 				shell_error(sh, "Invalid index: %lu",
 					    inst_index);
 
-				return kStatus_SHELL_Error;
+				return -ENOEXEC;
 			}
 		}
 	} else {
@@ -525,12 +539,13 @@ static shell_status_t cmd_tbs_client_read_technology(shell_handle_t sh, int32_t 
 		shell_print(sh, "Fail: %d", result);
 	}
 
-	return (shell_status_t)result;
+	return result;
 }
 #endif /* defined(CONFIG_BT_TBS_CLIENT_BEARER_TECHNOLOGY) */
 
 #if defined(CONFIG_BT_TBS_CLIENT_BEARER_URI_SCHEMES_SUPPORTED_LIST) && (CONFIG_BT_TBS_CLIENT_BEARER_URI_SCHEMES_SUPPORTED_LIST > 0)
-static shell_status_t cmd_tbs_client_read_uri_list(shell_handle_t sh, int32_t argc, char *argv[])
+static int cmd_tbs_client_read_uri_list(const struct shell *sh, size_t argc,
+					char *argv[])
 {
 	unsigned long inst_index;
 	int result = 0;
@@ -545,14 +560,14 @@ static shell_status_t cmd_tbs_client_read_uri_list(shell_handle_t sh, int32_t ar
 					    "Failed to parse inst_index: %d",
 					    result);
 
-				return kStatus_SHELL_Error;
+				return -ENOEXEC;
 			}
 
 			if (inst_index > UINT8_MAX) {
 				shell_error(sh, "Invalid index: %lu",
 					    inst_index);
 
-				return kStatus_SHELL_Error;
+				return -ENOEXEC;
 			}
 		}
 	} else {
@@ -564,12 +579,13 @@ static shell_status_t cmd_tbs_client_read_uri_list(shell_handle_t sh, int32_t ar
 		shell_print(sh, "Fail: %d", result);
 	}
 
-	return (shell_status_t)result;
+	return result;
 }
 #endif /* defined(CONFIG_BT_TBS_CLIENT_BEARER_URI_SCHEMES_SUPPORTED_LIST) */
 
 #if defined(CONFIG_BT_TBS_CLIENT_BEARER_SIGNAL_STRENGTH) && (CONFIG_BT_TBS_CLIENT_BEARER_SIGNAL_STRENGTH > 0)
-static shell_status_t cmd_tbs_client_read_signal_strength(shell_handle_t sh, int32_t argc, char *argv[])
+static int cmd_tbs_client_read_signal_strength(const struct shell *sh,
+					       size_t argc, char *argv[])
 {
 	unsigned long inst_index;
 	int result = 0;
@@ -584,14 +600,14 @@ static shell_status_t cmd_tbs_client_read_signal_strength(shell_handle_t sh, int
 					    "Failed to parse inst_index: %d",
 					    result);
 
-				return kStatus_SHELL_Error;
+				return -ENOEXEC;
 			}
 
 			if (inst_index > UINT8_MAX) {
 				shell_error(sh, "Invalid index: %lu",
 					    inst_index);
 
-				return kStatus_SHELL_Error;
+				return -ENOEXEC;
 			}
 		}
 	} else {
@@ -603,12 +619,13 @@ static shell_status_t cmd_tbs_client_read_signal_strength(shell_handle_t sh, int
 		shell_print(sh, "Fail: %d", result);
 	}
 
-	return (shell_status_t)result;
+	return result;
 }
 #endif /* defined(CONFIG_BT_TBS_CLIENT_BEARER_SIGNAL_STRENGTH) */
 
 #if defined(CONFIG_BT_TBS_CLIENT_READ_BEARER_SIGNAL_INTERVAL) && (CONFIG_BT_TBS_CLIENT_READ_BEARER_SIGNAL_INTERVAL > 0)
-static shell_status_t cmd_tbs_client_read_signal_interval(shell_handle_t sh, int32_t argc, char *argv[])
+static int cmd_tbs_client_read_signal_interval(const struct shell *sh,
+					       size_t argc, char *argv[])
 {
 	unsigned long inst_index;
 	int result = 0;
@@ -623,14 +640,14 @@ static shell_status_t cmd_tbs_client_read_signal_interval(shell_handle_t sh, int
 					    "Failed to parse inst_index: %d",
 					    result);
 
-				return kStatus_SHELL_Error;
+				return -ENOEXEC;
 			}
 
 			if (inst_index > UINT8_MAX) {
 				shell_error(sh, "Invalid index: %lu",
 					    inst_index);
 
-				return kStatus_SHELL_Error;
+				return -ENOEXEC;
 			}
 		}
 	} else {
@@ -642,12 +659,13 @@ static shell_status_t cmd_tbs_client_read_signal_interval(shell_handle_t sh, int
 		shell_print(sh, "Fail: %d", result);
 	}
 
-	return (shell_status_t)result;
+	return result;
 }
 #endif /* defined(CONFIG_BT_TBS_CLIENT_READ_BEARER_SIGNAL_INTERVAL) */
 
 #if defined(CONFIG_BT_TBS_CLIENT_BEARER_LIST_CURRENT_CALLS) && (CONFIG_BT_TBS_CLIENT_BEARER_LIST_CURRENT_CALLS > 0)
-static shell_status_t cmd_tbs_client_read_current_calls(shell_handle_t sh, int32_t argc, char *argv[])
+static int cmd_tbs_client_read_current_calls(const struct shell *sh,
+					     size_t argc, char *argv[])
 {
 	unsigned long inst_index;
 	int result = 0;
@@ -662,14 +680,14 @@ static shell_status_t cmd_tbs_client_read_current_calls(shell_handle_t sh, int32
 					    "Failed to parse inst_index: %d",
 					    result);
 
-				return kStatus_SHELL_Error;
+				return -ENOEXEC;
 			}
 
 			if (inst_index > UINT8_MAX) {
 				shell_error(sh, "Invalid index: %lu",
 					    inst_index);
 
-				return kStatus_SHELL_Error;
+				return -ENOEXEC;
 			}
 		}
 	} else {
@@ -681,12 +699,13 @@ static shell_status_t cmd_tbs_client_read_current_calls(shell_handle_t sh, int32
 		shell_print(sh, "Fail: %d", result);
 	}
 
-	return (shell_status_t)result;
+	return result;
 }
 #endif /* defined(CONFIG_BT_TBS_CLIENT_BEARER_LIST_CURRENT_CALLS) */
 
 #if defined(CONFIG_BT_TBS_CLIENT_CCID) && (CONFIG_BT_TBS_CLIENT_CCID > 0)
-static shell_status_t cmd_tbs_client_read_ccid(shell_handle_t sh, int32_t argc, char *argv[])
+static int cmd_tbs_client_read_ccid(const struct shell *sh, size_t argc,
+				    char *argv[])
 {
 	unsigned long inst_index;
 	int result = 0;
@@ -701,14 +720,14 @@ static shell_status_t cmd_tbs_client_read_ccid(shell_handle_t sh, int32_t argc, 
 					    "Failed to parse inst_index: %d",
 					    result);
 
-				return kStatus_SHELL_Error;
+				return -ENOEXEC;
 			}
 
 			if (inst_index > UINT8_MAX) {
 				shell_error(sh, "Invalid index: %lu",
 					    inst_index);
 
-				return kStatus_SHELL_Error;
+				return -ENOEXEC;
 			}
 		}
 	} else {
@@ -720,12 +739,13 @@ static shell_status_t cmd_tbs_client_read_ccid(shell_handle_t sh, int32_t argc, 
 		shell_print(sh, "Fail: %d", result);
 	}
 
-	return (shell_status_t)result;
+	return result;
 }
 #endif /* defined(CONFIG_BT_TBS_CLIENT_CCID) */
 
 #if defined(CONFIG_BT_TBS_CLIENT_INCOMING_URI) && (CONFIG_BT_TBS_CLIENT_INCOMING_URI > 0)
-static shell_status_t cmd_tbs_client_read_uri(shell_handle_t sh, int32_t argc, char *argv[])
+static int cmd_tbs_client_read_uri(const struct shell *sh, size_t argc,
+				   char *argv[])
 {
 	unsigned long inst_index;
 	int result = 0;
@@ -740,14 +760,14 @@ static shell_status_t cmd_tbs_client_read_uri(shell_handle_t sh, int32_t argc, c
 					    "Failed to parse inst_index: %d",
 					    result);
 
-				return kStatus_SHELL_Error;
+				return -ENOEXEC;
 			}
 
 			if (inst_index > UINT8_MAX) {
 				shell_error(sh, "Invalid index: %lu",
 					    inst_index);
 
-				return kStatus_SHELL_Error;
+				return -ENOEXEC;
 			}
 		}
 	} else {
@@ -759,12 +779,13 @@ static shell_status_t cmd_tbs_client_read_uri(shell_handle_t sh, int32_t argc, c
 		shell_print(sh, "Fail: %d", result);
 	}
 
-	return (shell_status_t)result;
+	return result;
 }
 #endif /* defined(CONFIG_BT_TBS_CLIENT_INCOMING_URI) */
 
 #if defined(CONFIG_BT_TBS_CLIENT_STATUS_FLAGS) && (CONFIG_BT_TBS_CLIENT_STATUS_FLAGS > 0)
-static shell_status_t cmd_tbs_client_read_status_flags(shell_handle_t sh, int32_t argc, char *argv[])
+static int cmd_tbs_client_read_status_flags(const struct shell *sh, size_t argc,
+					    char *argv[])
 {
 	unsigned long inst_index;
 	int result = 0;
@@ -779,14 +800,14 @@ static shell_status_t cmd_tbs_client_read_status_flags(shell_handle_t sh, int32_
 					    "Failed to parse inst_index: %d",
 					    result);
 
-				return kStatus_SHELL_Error;
+				return -ENOEXEC;
 			}
 
 			if (inst_index > UINT8_MAX) {
 				shell_error(sh, "Invalid index: %lu",
 					    inst_index);
 
-				return kStatus_SHELL_Error;
+				return -ENOEXEC;
 			}
 		}
 	} else {
@@ -798,11 +819,12 @@ static shell_status_t cmd_tbs_client_read_status_flags(shell_handle_t sh, int32_
 		shell_print(sh, "Fail: %d", result);
 	}
 
-	return (shell_status_t)result;
+	return result;
 }
 #endif /* defined(CONFIG_BT_TBS_CLIENT_STATUS_FLAGS) */
 
-static shell_status_t cmd_tbs_client_read_call_state(shell_handle_t sh, int32_t argc, char *argv[])
+static int cmd_tbs_client_read_call_state(const struct shell *sh, size_t argc,
+					  char *argv[])
 {
 	unsigned long inst_index;
 	int result = 0;
@@ -817,14 +839,14 @@ static shell_status_t cmd_tbs_client_read_call_state(shell_handle_t sh, int32_t 
 					    "Failed to parse inst_index: %d",
 					    result);
 
-				return kStatus_SHELL_Error;
+				return -ENOEXEC;
 			}
 
 			if (inst_index > UINT8_MAX) {
 				shell_error(sh, "Invalid index: %lu",
 					    inst_index);
 
-				return kStatus_SHELL_Error;
+				return -ENOEXEC;
 			}
 		}
 	} else {
@@ -836,11 +858,12 @@ static shell_status_t cmd_tbs_client_read_call_state(shell_handle_t sh, int32_t 
 		shell_print(sh, "Fail: %d", result);
 	}
 
-	return (shell_status_t)result;
+	return result;
 }
 
 #if defined(CONFIG_BT_TBS_CLIENT_INCOMING_CALL) && (CONFIG_BT_TBS_CLIENT_INCOMING_CALL > 0)
-static shell_status_t cmd_tbs_client_read_remote_uri(shell_handle_t sh, int32_t argc, char *argv[])
+static int cmd_tbs_client_read_remote_uri(const struct shell *sh, size_t argc,
+					  char *argv[])
 {
 	unsigned long inst_index;
 	int result = 0;
@@ -855,14 +878,14 @@ static shell_status_t cmd_tbs_client_read_remote_uri(shell_handle_t sh, int32_t 
 					    "Failed to parse inst_index: %d",
 					    result);
 
-				return kStatus_SHELL_Error;
+				return -ENOEXEC;
 			}
 
 			if (inst_index > UINT8_MAX) {
 				shell_error(sh, "Invalid index: %lu",
 					    inst_index);
 
-				return kStatus_SHELL_Error;
+				return -ENOEXEC;
 			}
 		}
 	} else {
@@ -874,12 +897,13 @@ static shell_status_t cmd_tbs_client_read_remote_uri(shell_handle_t sh, int32_t 
 		shell_print(sh, "Fail: %d", result);
 	}
 
-	return (shell_status_t)result;
+	return result;
 }
 #endif /* defined(CONFIG_BT_TBS_CLIENT_INCOMING_CALL) */
 
 #if defined(CONFIG_BT_TBS_CLIENT_CALL_FRIENDLY_NAME) && (CONFIG_BT_TBS_CLIENT_CALL_FRIENDLY_NAME > 0)
-static shell_status_t cmd_tbs_client_read_friendly_name(shell_handle_t sh, int32_t argc, char *argv[])
+static int cmd_tbs_client_read_friendly_name(const struct shell *sh,
+					     size_t argc, char *argv[])
 {
 	unsigned long inst_index;
 	int result = 0;
@@ -894,14 +918,14 @@ static shell_status_t cmd_tbs_client_read_friendly_name(shell_handle_t sh, int32
 					    "Failed to parse inst_index: %d",
 					    result);
 
-				return kStatus_SHELL_Error;
+				return -ENOEXEC;
 			}
 
 			if (inst_index > UINT8_MAX) {
 				shell_error(sh, "Invalid index: %lu",
 					    inst_index);
 
-				return kStatus_SHELL_Error;
+				return -ENOEXEC;
 			}
 		}
 	} else {
@@ -913,12 +937,13 @@ static shell_status_t cmd_tbs_client_read_friendly_name(shell_handle_t sh, int32
 		shell_print(sh, "Fail: %d", result);
 	}
 
-	return (shell_status_t)result;
+	return result;
 }
 #endif /* defined(CONFIG_BT_TBS_CLIENT_CALL_FRIENDLY_NAME) */
 
 #if defined(CONFIG_BT_TBS_CLIENT_OPTIONAL_OPCODES) && (CONFIG_BT_TBS_CLIENT_OPTIONAL_OPCODES > 0)
-static shell_status_t cmd_tbs_client_read_optional_opcodes(shell_handle_t sh, int32_t argc, char *argv[])
+static int cmd_tbs_client_read_optional_opcodes(const struct shell *sh,
+						size_t argc, char *argv[])
 {
 	unsigned long inst_index;
 	int result = 0;
@@ -933,14 +958,14 @@ static shell_status_t cmd_tbs_client_read_optional_opcodes(shell_handle_t sh, in
 					    "Failed to parse inst_index: %d",
 					    result);
 
-				return kStatus_SHELL_Error;
+				return -ENOEXEC;
 			}
 
 			if (inst_index > UINT8_MAX) {
 				shell_error(sh, "Invalid index: %lu",
 					    inst_index);
 
-				return kStatus_SHELL_Error;
+				return -ENOEXEC;
 			}
 		}
 	} else {
@@ -952,11 +977,11 @@ static shell_status_t cmd_tbs_client_read_optional_opcodes(shell_handle_t sh, in
 		shell_print(sh, "Fail: %d", result);
 	}
 
-	return (shell_status_t)result;
+	return result;
 }
 #endif /* defined(CONFIG_BT_TBS_CLIENT_OPTIONAL_OPCODES) */
 
-static shell_status_t cmd_tbs_client(shell_handle_t sh, int32_t argc, char *argv[])
+static int cmd_tbs_client(const struct shell *sh, size_t argc, char **argv)
 {
 	if (argc > 1) {
 		shell_error(sh, "%s unknown parameter: %s",
@@ -965,7 +990,7 @@ static shell_status_t cmd_tbs_client(shell_handle_t sh, int32_t argc, char *argv
 		shell_error(sh, "%s Missing subcommand", argv[0]);
 	}
 
-	return kStatus_SHELL_Error;
+	return -ENOEXEC;
 }
 
 SHELL_STATIC_SUBCMD_SET_CREATE(tbs_client_cmds,
@@ -1089,7 +1114,7 @@ SHELL_STATIC_SUBCMD_SET_CREATE(tbs_client_cmds,
 	SHELL_SUBCMD_SET_END
 );
 
-SHELL_CMD_REGISTER(tbs_client, tbs_client_cmds,
+SHELL_CMD_ARG_REGISTER(tbs_client, &tbs_client_cmds,
 		       "Bluetooth TBS_CLIENT shell commands",
 		       cmd_tbs_client, 1, 1);
 

@@ -9,7 +9,7 @@
 *                                                                    *
 **********************************************************************
 
-** emWin V6.38 - Graphical user interface for embedded applications **
+** emWin V6.46 - Graphical user interface for embedded applications **
 All  Intellectual Property rights  in the Software belongs to  SEGGER.
 emWin is protected by  international copyright laws.  Knowledge of the
 source code may not be used to write a similar product.  This file may
@@ -34,7 +34,7 @@ License model:            emWin License Agreement, dated August 20th 2011 and Am
 Licensed platform:        NXP's ARM 7/9, Cortex-M0, M3, M4, M7, A7, M33
 ----------------------------------------------------------------------
 Support and Update Agreement (SUA)
-SUA period:               2011-08-19 - 2024-09-02
+SUA period:               2011-08-19 - 2025-09-02
 Contact to extend SUA:    sales@segger.com
 ----------------------------------------------------------------------
 File        : GUI_SVG_OpenVG.h
@@ -89,7 +89,7 @@ Purpose     : OpenVG interface for SVG
     #define GUI_SVG_HAS_SHIVAVG       1    // Can be ShivaVG source or DLL.
     #define GUI_SVG_HAS_SHIVAVG_DLL   0
   #else
-    #if defined(WIN32) && !defined(GUI_SVG_HAS_OPENVG)  // Simulation always uses ShivaVG DLL by default.
+    #if defined(_WINDOWS) && !defined(GUI_SVG_HAS_OPENVG)  // Simulation always uses ShivaVG DLL by default.
       #define GUI_SVG_HAS_SHIVAVG       1
       #define GUI_SVG_HAS_SHIVAVG_DLL   1
     #else
@@ -265,11 +265,9 @@ typedef EGLSurface (GUI_SVG_EGL_CREATEPIXMAPSURFACE_FUNC)(EGLDisplay dpy, EGLCon
 typedef EGLBoolean (GUI_SVG_EGL_DESTROYSURFACE_FUNC)     (EGLDisplay dpy, EGLSurface surface);
 typedef EGLContext (GUI_SVG_EGL_CREATECONTEXT_FUNC)      (EGLDisplay dpy, EGLConfig config, EGLContext share_context, const EGLint *attrib_list);
 typedef EGLBoolean (GUI_SVG_EGL_INITIALIZE_FUNC)         (EGLDisplay dpy, EGLint *major, EGLint *minor);
-typedef EGLBoolean (GUI_SVG_EGL_SWAPBUFFERS_FUNC)        (EGLDisplay dpy, EGLSurface surface);
 typedef EGLBoolean (GUI_SVG_EGL_BINDAPI_FUNC)            (EGLenum api);
 typedef EGLBoolean (GUI_SVG_EGL_CHOOSECONFIG_FUNC)       (EGLDisplay dpy, const EGLint *attrib_list, EGLConfig *configs, EGLint config_size, EGLint *num_config);
 typedef EGLBoolean (GUI_SVG_EGL_MAKECURRENT_FUNC)        (EGLDisplay dpy, EGLSurface draw, EGLSurface read, EGLContext ctx);
-typedef EGLBoolean (GUI_SVG_EGL_COPYBUFFERS_FUNC)        (EGLDisplay dpy, EGLSurface surface, EGLNativePixmapType target);
 typedef EGLint     (GUI_SVG_EGL_GETERROR_FUNC)           (void);
 //
 // OpenVG API
@@ -330,11 +328,9 @@ typedef struct {
   GUI_SVG_EGL_DESTROYSURFACE_FUNC      * pfDestroySurface;      // Pointer to EGL function \c{eglDestroySurface()}
   GUI_SVG_EGL_CREATECONTEXT_FUNC       * pfCreateContext;       // Pointer to EGL function \c{eglCreateContext()}
   GUI_SVG_EGL_INITIALIZE_FUNC          * pfInitialize;          // Pointer to EGL function \c{eglInitialize()}
-  GUI_SVG_EGL_SWAPBUFFERS_FUNC         * pfSwapBuffers;         // Pointer to EGL function \c{eglSwapBuffers()}
   GUI_SVG_EGL_BINDAPI_FUNC             * pfBindAPI;             // Pointer to EGL function \c{eglBindAPI()}
   GUI_SVG_EGL_CHOOSECONFIG_FUNC        * pfChooseConfig;        // Pointer to EGL function \c{eglChooseConfig()}
   GUI_SVG_EGL_MAKECURRENT_FUNC         * pfMakeCurrent;         // Pointer to EGL function \c{eglMakeCurrent()}
-  GUI_SVG_EGL_COPYBUFFERS_FUNC         * pfCopyBuffers;         // Pointer to EGL function \c{eglCopyBuffers()}
   GUI_SVG_EGL_GETERROR_FUNC            * pfGetError;            // Pointer to EGL function \c{eglGetError()}
 } GUI_SVG_EGL_API_STRUCT;
 
@@ -345,7 +341,7 @@ typedef struct {
 *  Description
 *    Maps the required functions of the Khronos OpenVG API.
 *
-*    A structure of this type can be set with GUI_SVG_SetAPI_OpenVG()
+*    A structure of this type can be set with GUI_SVG_DRIVER_BindAPI()
 *    when a precompiled emWin library is used, that was compiled without
 *    the OpenVG code (meaning \c{GUI_SVG_HAS_OPENVG} and \c{GUI_SVG_HAS_EGL}
 *    were not defined.
@@ -415,11 +411,9 @@ typedef struct {
     eglDestroySurface,                                \
     eglCreateContext,                                 \
     eglInitialize,                                    \
-    eglSwapBuffers,                                   \
     eglBindAPI,                                       \
     eglChooseConfig,                                  \
     eglMakeCurrent,                                   \
-    eglCopyBuffers,                                   \
     eglGetError,                                      \
   }
 
@@ -435,9 +429,6 @@ typedef struct {
 *    VAR_NAME: Identifier name to be used for the structure variable.
 *    EGL_PTR:  Optional pointer to GUI_SVG_EGL_API_STRUCT if EGL API should
 *              be used. If not, it must be left as NULL.
-*
-*  Additional information
-*    An example can be found under GUI_SVG_SetAPI_OpenVG().
 */
 #define GUI_SVG_DECLARE_OPENVG_API(VAR_NAME, EGL_PTR) \
   static const GUI_SVG_OPENVG_API_STRUCT VAR_NAME = { \
@@ -488,22 +479,10 @@ typedef struct {
 * 
 *  Parameters
 *    VAR_NAME: Identifier name to be used for the structure variable.
-* 
-*  Additional information
-*    An example can be found under GUI_SVG_SetAPI_OpenVG().
 */
 #define GUI_SVG_DECLARE_OPENVG_AND_EGL_API(VAR_NAME)   \
   GUI_SVG_DECLARE_EGL_API(_EGL);                       \
   GUI_SVG_DECLARE_OPENVG_API(VAR_NAME, &_EGL)
-
-/*********************************************************************
-*
-*       Prototypes
-*
-**********************************************************************
-*/
-void GUI_SVG_SetAPI_OpenVG (const GUI_SVG_OPENVG_API_STRUCT * pAPI);
-void GUI_SVG_LoadAPI_OpenVG(GUI_SVG_OPENVG_API_STRUCT * pOpenVG, GUI_SVG_EGL_API_STRUCT * pEGL, GUI_SVG_LOAD_API_CALLBACK * cbLoadFunction);
 
 #if defined(__cplusplus)
 }

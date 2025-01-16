@@ -11623,7 +11623,7 @@ API_RESULT BT_hci_write_inquiry_response_transmit_power_level
  */
 #define BT_hci_read_default_erroneous_data_reporting() \
         hci_common_api_handler_no_params \
-        (HCI_READ_DEFAULT_ERRONEOUS_DATA_REPORTING_OPCODE)
+        (HCI_READ_DEFAULT_ERR_DATA_REPORTING_OPCODE)
 /**
  *  \brief  To write Erroneous Data Reporting parameter to Controller.
  *

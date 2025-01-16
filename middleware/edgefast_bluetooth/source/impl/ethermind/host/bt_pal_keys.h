@@ -213,7 +213,8 @@ struct bt_keys_link_key {
 	    uint8_t                 storage_start[1];
 		struct
 		{
-	    	uint8_t                 flags;
+			uint8_t                 enc_size;
+			uint8_t                 flags;
 			uint8_t                 val[16];
 #if (defined(CONFIG_BT_KEYS_OVERWRITE_OLDEST))
 			uint32_t                aging_counter;
@@ -229,7 +230,8 @@ struct bt_keys_link_key *bt_keys_find_link_key(const bt_addr_t *addr);
 void bt_keys_link_key_clear(struct bt_keys_link_key *link_key);
 void bt_keys_link_key_clear_addr(const bt_addr_t *addr);
 void bt_keys_link_key_store(struct bt_keys_link_key *link_key);
-
+void bt_foreach_bond_br(void (*func)(const struct bt_bond_info *info, void *user_data),
+			void *user_data);
 
 /* This function is used to signal that the key has been used for paring */
 /* It updates the aging counter and saves it to flash if configuration option */
@@ -238,6 +240,8 @@ void bt_keys_update_usage(uint8_t id, const bt_addr_le_t *addr);
 void bt_keys_link_key_update_usage(const bt_addr_t *addr);
 
 void bt_keys_show_sniffer_info(struct bt_keys *keys, void *data);
+
+void bt_keys_reset(void);
 
 /** @endcond */
 

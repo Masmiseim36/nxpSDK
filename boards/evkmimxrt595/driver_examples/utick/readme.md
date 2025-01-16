@@ -1,50 +1,23 @@
-Overview
-========
+# utick_example
+
+## Overview
 The utick project is a simple demonstration program of the SDK utick driver. It sets up the utick
 hardware block to trigger a periodic interrupt after every 1 second. When the utick interrupt is triggered
 a message a printed on the UART terminal.
 
-SDK version
-===========
-- Version: 2.16.000
-
-Toolchain supported
-===================
-- IAR embedded Workbench  9.60.1
-- Keil MDK  5.39.0
-- GCC ARM Embedded  13.2.1
-- MCUXpresso  11.10.0
-
-Hardware requirements
-=====================
-- Micro USB cable
-- EVK-MIMXRT595 board
-- Personal Computer
-
-Board settings
-==============
-
-
-Prepare the Demo
-================
-1.  Connect a micro USB cable between the PC host and the CMSIS DAP USB port (J40) on the board
-2.  Open a serial terminal with the following settings:
-    - 115200 baud rate
-    - 8 data bits
-    - No parity
-    - One stop bit
-    - No flow control
-3.  Download the program to the target board.
-4.  Launch the debugger in your IDE to begin running the demo.
-
-Running the demo
-================
-The log below shows the output of the hello world demo in the terminal window:
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Utick example start...
-UTICK delay 1 second...
-UTICK delay 1 second...
-.
-.
-.
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+## Supported Boards
+- [EVK-MIMXRT595](../../_boards/evkmimxrt595/driver_examples/utick/example_board_readme.md)
+- [EVK-MIMXRT685](../../_boards/evkmimxrt685/driver_examples/utick/example_board_readme.md)
+- [FRDM-MCXA153](../../_boards/frdmmcxa153/driver_examples/utick/example_board_readme.md)
+- [FRDM-MCXA156](../../_boards/frdmmcxa156/driver_examples/utick/example_board_readme.md)
+- [FRDM-MCXA166](../../_boards/frdmmcxa166/driver_examples/utick/example_board_readme.md)
+- [FRDM-MCXA276](../../_boards/frdmmcxa276/driver_examples/utick/example_board_readme.md)
+- [FRDM-MCXN236](../../_boards/frdmmcxn236/driver_examples/utick/example_board_readme.md)
+- [FRDM-MCXN947](../../_boards/frdmmcxn947/driver_examples/utick/example_board_readme.md)
+- [FRDM-RW612](../../_boards/frdmrw612/driver_examples/utick/example_board_readme.md)
+- [LPCXpresso55S36](../../_boards/lpcxpresso55s36/driver_examples/utick/example_board_readme.md)
+- [MCX-N5XX-EVK](../../_boards/mcxn5xxevk/driver_examples/utick/example_board_readme.md)
+- [MCX-N9XX-EVK](../../_boards/mcxn9xxevk/driver_examples/utick/example_board_readme.md)
+- [MIMXRT685-AUD-EVK](../../_boards/mimxrt685audevk/driver_examples/utick/example_board_readme.md)
+- [MIMXRT700-EVK](../../_boards/mimxrt700evk/driver_examples/utick/example_board_readme.md)
+- [RD-RW612-BGA](../../_boards/rdrw612bga/driver_examples/utick/example_board_readme.md)

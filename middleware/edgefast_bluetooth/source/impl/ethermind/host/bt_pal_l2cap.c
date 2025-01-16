@@ -1,8 +1,9 @@
 /* l2cap.c - L2CAP handling */
 
 /*
- * Copyright 2021 NXP
  * Copyright (c) 2015-2016 Intel Corporation
+ * Copyright (c) 2023 Nordic Semiconductor
+ * Copyright 2024 NXP
  *
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -24,14 +25,16 @@
 #include "l2cap.h"
 #include "bt_pal_l2cap_br_interface.h"
 
+#if !(defined(CONFIG_BT_BLE_DISABLE) && ((CONFIG_BT_BLE_DISABLE) > 0U))
 #ifndef L2CAP_CBFC_CONNECT_WITH_CID_CONTEXT
 #error The macro L2CAP_CBFC_CONNECT_WITH_CID_CONTEXT need to be defined!
 #endif /* L2CAP_CBFC_CONNECT_WITH_CID_CONTEXT */
+#endif /* CONFIG_BT_BLE_DISABLE */
 
 #define LOG_ENABLE IS_ENABLED(CONFIG_BT_DEBUG_L2CAP)
 #define LOG_MODULE_NAME bt_l2cap
 #include "fsl_component_log.h"
-LOG_MODULE_DEFINE(LOG_MODULE_NAME, kLOG_LevelTrace);
+LOG_MODULE_DEFINE(LOG_MODULE_NAME, kLOG_LevelDebug);
 
 #include "bt_pal_hci_core.h"
 #include "bt_pal_conn_internal.h"
@@ -63,9 +66,9 @@ LOG_MODULE_DEFINE(LOG_MODULE_NAME, kLOG_LevelTrace);
 #define L2CAP_LE_PSM_IS_DYN(_psm) \
 	((_psm) >= L2CAP_LE_PSM_DYN_START && (_psm) <= L2CAP_LE_PSM_DYN_END)
 
-#define L2CAP_CONN_TIMEOUT  BT_SECONDS(40)
-#define L2CAP_DISC_TIMEOUT  BT_SECONDS(2)
-#define L2CAP_RTX_TIMEOUT   BT_SECONDS(2)
+#define L2CAP_CONN_TIMEOUT	K_SECONDS(40)
+#define L2CAP_DISC_TIMEOUT	K_SECONDS(2)
+#define L2CAP_RTX_TIMEOUT	K_SECONDS(2)
 
 #define L2CAP_SC_CHECK_TIMEOUT	200
 
@@ -74,7 +77,7 @@ LOG_MODULE_DEFINE(LOG_MODULE_NAME, kLOG_LevelTrace);
  */
 #if (defined(CONFIG_BT_L2CAP_DYNAMIC_CHANNEL) && ((CONFIG_BT_L2CAP_DYNAMIC_CHANNEL) > 0U))
 NET_BUF_POOL_FIXED_DEFINE(disc_pool, 1,
-			  BT_L2CAP_BUF_SIZE(CONFIG_BT_L2CAP_TX_MTU), NULL);
+			  BT_L2CAP_BUF_SIZE(CONFIG_BT_L2CAP_TX_MTU), CONFIG_BT_CONN_TX_USER_DATA_SIZE, NULL);
 #endif
 #if (defined(CONFIG_BT_L2CAP_DYNAMIC_CHANNEL) && ((CONFIG_BT_L2CAP_DYNAMIC_CHANNEL) > 0U))
 
@@ -85,55 +88,14 @@ NET_BUF_POOL_FIXED_DEFINE(disc_pool, 1,
 #define br_l2cap_lookup_ident(conn, ident) __br_l2cap_lookup_ident(conn, ident, false)
 #define br_l2cap_remove_ident(conn, ident) __br_l2cap_lookup_ident(conn, ident, true)
 
-struct l2cap_tx_meta_data {
-	int sent;
-	uint16_t cid;
-	bt_conn_tx_cb_t cb;
-	void *user_data;
-};
-
-struct l2cap_tx_meta {
-	struct l2cap_tx_meta_data *data;
-};
-
-static struct l2cap_tx_meta_data l2cap_tx_meta_data_storage[CONFIG_BT_CONN_TX_MAX];
-static osa_msgq_handle_t free_l2cap_tx_meta_data;
-static OSA_MSGQ_HANDLE_DEFINE(free_l2cap_tx_meta_data_handle, CONFIG_BT_CONN_TX_MAX, sizeof(void*));
-
-static struct l2cap_tx_meta_data *alloc_tx_meta_data(void)
-{
-        struct l2cap_tx_meta_data *get;
-        if (OSA_MsgQGet(free_l2cap_tx_meta_data, &get, 0) == KOSA_StatusSuccess)
-        {
-            return get;
-        }
-
-        return NULL;
-}
-
-static void free_tx_meta_data(struct l2cap_tx_meta_data *data)
-{
-	(void)memset(data, 0, sizeof(*data));
-        void *msg = (void*)data;
-	OSA_MsgQPut(free_l2cap_tx_meta_data, &msg);
-}
-
-#define l2cap_tx_meta_data_macro(buf) (((struct l2cap_tx_meta *)net_buf_user_data(buf))->data)
-
-struct data_sent {
-	uint32_t reserved;
-	uint16_t len;
-};
-
-
-#define l2cap_tx_meta_data(buf) (((struct l2cap_tx_meta *)net_buf_user_data(buf))->data)
-
-
-#define data_sent(buf) ((struct data_sent *)net_buf_user_data(buf))
 
 static sys_slist_t servers;
 
 #endif /* CONFIG_BT_L2CAP_DYNAMIC_CHANNEL */
+
+/* L2CAP LE*/
+STRUCT_SECTION_DEFINE(bt_l2cap_fixed_chan);
+
 
 /* L2CAP signalling channel specific context */
 struct bt_l2cap {
@@ -153,7 +115,10 @@ void bt_l2cap_register_ecred_cb(const struct bt_l2cap_ecred_cb *cb)
 #endif
 }
 
-STRUCT_SECTION_DEFINE(bt_l2cap_fixed_chan);
+#if 0
+STRUCT_SECTION_START_EXTERN(bt_l2cap_fixed_chan);
+STRUCT_SECTION_END_EXTERN(bt_l2cap_fixed_chan);
+#endif
 
 #ifdef L2CAP_SUPPORT_CBFC_MODE
 API_RESULT ethermind_l2ca_connect_ind_cb
@@ -225,7 +190,7 @@ __l2cap_lookup_ident(struct bt_conn *conn, uint16_t ident, bool remove)
 	struct bt_l2cap_chan *chan;
 	sys_snode_t *prev = NULL;
 
-	SYS_SLIST_FOR_EACH_CONTAINER(&conn->channels, chan, node, struct bt_l2cap_chan) {
+	SYS_SLIST_FOR_EACH_CONTAINER(&conn->channels, chan, node) {
 		if (BT_L2CAP_LE_CHAN(chan)->ident == ident) {
 			if (remove) {
 				sys_slist_remove(&conn->channels, prev,
@@ -246,7 +211,7 @@ __br_l2cap_lookup_ident(struct bt_conn *conn, uint16_t ident, bool remove)
 	struct bt_l2cap_chan *chan;
 	sys_snode_t *prev = NULL;
 
-	SYS_SLIST_FOR_EACH_CONTAINER(&conn->channels, chan, node, struct bt_l2cap_chan) {
+	SYS_SLIST_FOR_EACH_CONTAINER(&conn->channels, chan, node) {
 		if (BR_CHAN(chan)->ident == ident) {
 			if (remove) {
 				sys_slist_remove(&conn->channels, prev,
@@ -267,7 +232,7 @@ void bt_l2cap_chan_remove(struct bt_conn *conn, struct bt_l2cap_chan *ch)
 	struct bt_l2cap_chan *chan;
 	sys_snode_t *prev = NULL;
 
-	SYS_SLIST_FOR_EACH_CONTAINER(&conn->channels, chan, node, struct bt_l2cap_chan) {
+	SYS_SLIST_FOR_EACH_CONTAINER(&conn->channels, chan, node) {
 		if (chan == ch) {
 			sys_slist_remove(&conn->channels, prev, &chan->node);
 			return;
@@ -295,12 +260,18 @@ const char *bt_l2cap_chan_state_str(bt_l2cap_chan_state_t state)
 	}
 }
 
-#if (defined(CONFIG_BT_L2CAP_DYNAMIC_CHANNEL) && ((CONFIG_BT_L2CAP_DYNAMIC_CHANNEL) > 0U))
 /* Attention: below code block need to be kept during code rebase. */
+#if (defined(CONFIG_BT_L2CAP_DYNAMIC_CHANNEL) && ((CONFIG_BT_L2CAP_DYNAMIC_CHANNEL) > 0U))
 #define SET_CHAN_MEMBER(ch, member, value) \
 	(ch->conn->type == BT_CONN_TYPE_LE) ? (BT_L2CAP_LE_CHAN(ch)->member = value) : (BR_CHAN(ch)->member = value);
 #define GET_CHAN_MEMBER(ch, member) \
 	(ch->conn->type == BT_CONN_TYPE_LE) ? (BT_L2CAP_LE_CHAN(ch)->member) : (BR_CHAN(ch)->member);
+#else
+#define SET_CHAN_MEMBER(ch, member, value) \
+	(ch->conn->type == BT_CONN_TYPE_LE) ? value : (BR_CHAN(ch)->member = value);
+#define GET_CHAN_MEMBER(ch, member) \
+	(ch->conn->type == BT_CONN_TYPE_LE) ? 0 : (BR_CHAN(ch)->member);
+#endif /* CONFIG_BT_L2CAP_DYNAMIC_CHANNEL */
 
 #if (defined(CONFIG_BT_DEBUG_L2CAP) && ((CONFIG_BT_DEBUG_L2CAP) > 0U))
 void bt_l2cap_chan_set_state_debug(struct bt_l2cap_chan *chan,
@@ -371,8 +342,9 @@ void bt_l2cap_chan_set_state(struct bt_l2cap_chan *chan,
 #endif
 }
 #endif /* CONFIG_BT_DEBUG_L2CAP */
-#endif /* CONFIG_BT_L2CAP_DYNAMIC_CHANNEL */
 
+static void cancel_data_ready(struct bt_l2cap_le_chan *lechan);
+static bool chan_has_data(struct bt_l2cap_le_chan *lechan);
 void bt_l2cap_chan_del(struct bt_l2cap_chan *chan)
 {
 	const struct bt_l2cap_chan_ops *ops = chan->ops;
@@ -381,6 +353,30 @@ void bt_l2cap_chan_del(struct bt_l2cap_chan *chan)
 
 	if (!chan->conn) {
 		goto destroy;
+	}
+
+#if (defined (CONFIG_BT_CLASSIC) && (CONFIG_BT_CLASSIC > 0U))
+	if (chan->conn->type == BT_CONN_TYPE_BR) {
+		struct bt_l2cap_br_chan *br_chan = BR_CHAN(chan);
+		br_chan->psm = 0;
+	} else
+#endif
+	{
+		struct bt_l2cap_le_chan *le_chan = BT_L2CAP_LE_CHAN(chan);
+
+		cancel_data_ready(le_chan);
+
+		/* Remove buffers on the PDU TX queue. We can't do that in
+		* `l2cap_chan_destroy()` as it is not called for fixed channels.
+		*/
+		while (chan_has_data(le_chan)) {
+			struct net_buf *buf = net_buf_get(&le_chan->tx_queue, K_NO_WAIT);
+
+			net_buf_unref(buf);
+		}
+#if (defined(CONFIG_BT_L2CAP_DYNAMIC_CHANNEL) && (CONFIG_BT_L2CAP_DYNAMIC_CHANNEL > 0))
+		le_chan->psm = 0;
+#endif /* CONFIG_BT_L2CAP_DYNAMIC_CHANNEL */
 	}
 
 	if (ops->disconnected) {
@@ -392,8 +388,8 @@ destroy:
 	/* Reset internal members of common channel */
 	bt_l2cap_chan_set_state(chan, BT_L2CAP_DISCONNECTED);
 #if 1
-    /* Attention: below code block need to be kept during code rebase. */
-    SET_CHAN_MEMBER(chan, psm, 0U);
+	/* Attention: below code block need to be kept during code rebase. */
+	SET_CHAN_MEMBER(chan, psm, 0U);
 #else
 	BT_L2CAP_LE_CHAN(chan)->psm = 0U;
 #endif
@@ -428,15 +424,15 @@ static void l2cap_rtx_timeout(struct k_work *work)
 }
 #endif
 
-
 static void l2cap_chan_le_recv(struct bt_l2cap_le_chan *chan,
 			       struct net_buf *buf);
+
 static void l2cap_rx_process(struct k_work *work)
 {
 	struct bt_l2cap_le_chan *ch = CHAN_RX(work);
 	struct net_buf *buf;
 
-	while ((buf = net_buf_get(ch->rx_queue.queue, osaWaitNone_c))) {
+	while ((buf = net_buf_get(&ch->rx_queue, K_NO_WAIT))) {
 		LOG_DBG("ch %p buf %p", ch, buf);
 		l2cap_chan_le_recv(ch, buf);
 		net_buf_unref(buf);
@@ -459,7 +455,6 @@ static bool l2cap_chan_add(struct bt_conn *conn, struct bt_l2cap_chan *chan,
 			   bt_l2cap_chan_destroy_t destroy)
 {
 	struct bt_l2cap_le_chan *le_chan;
-    osa_status_t ret = KOSA_StatusSuccess;
 
 #if (defined(CONFIG_BT_L2CAP_DYNAMIC_CHANNEL) && ((CONFIG_BT_L2CAP_DYNAMIC_CHANNEL) > 0U))
 	le_chan = l2cap_chan_alloc_cid(conn, chan);
@@ -476,6 +471,7 @@ static bool l2cap_chan_add(struct bt_conn *conn, struct bt_l2cap_chan *chan,
 
 	bt_l2cap_chan_add(conn, chan, destroy);
 
+#if (defined(CONFIG_BT_L2CAP_DYNAMIC_CHANNEL) && ((CONFIG_BT_L2CAP_DYNAMIC_CHANNEL) > 0U))
 #if 0
 	/* All dynamic channels have the destroy handler which makes sure that
 	 * the RTX work structure is properly released with a cancel sync.
@@ -486,14 +482,12 @@ static bool l2cap_chan_add(struct bt_conn *conn, struct bt_l2cap_chan *chan,
 	k_work_init_delayable(&le_chan->rtx_work, l2cap_rtx_timeout);
 #endif
 
-#if (defined(CONFIG_BT_L2CAP_DYNAMIC_CHANNEL) && ((CONFIG_BT_L2CAP_DYNAMIC_CHANNEL) > 0U))
 	if (L2CAP_LE_CID_IS_DYN(le_chan->rx.cid)) {
 		k_work_init(&le_chan->rx_work, l2cap_rx_process);
 		k_fifo_init(&le_chan->rx_queue);
 		bt_l2cap_chan_set_state(chan, BT_L2CAP_CONNECTING);
 	}
 #endif /* CONFIG_BT_L2CAP_DYNAMIC_CHANNEL */
-    (void)ret;
 
 	return true;
 }
@@ -502,7 +496,7 @@ void bt_l2cap_connected(struct bt_conn *conn)
 {
 	struct bt_l2cap_chan *chan;
 
-	if (IS_ENABLED(CONFIG_BT_BREDR) &&
+	if (IS_ENABLED(CONFIG_BT_CLASSIC) &&
 	    conn->type == BT_CONN_TYPE_BR) {
 		bt_l2cap_br_connected(conn);
 		return;
@@ -527,6 +521,8 @@ void bt_l2cap_connected(struct bt_conn *conn)
 			return;
 		}
 
+		k_fifo_init(&le_chan->tx_queue);
+
 		if (chan->ops->connected) {
 			chan->ops->connected(chan);
 		}
@@ -544,7 +540,7 @@ void bt_l2cap_disconnected(struct bt_conn *conn)
 {
 	struct bt_l2cap_chan *chan, *next;
 
-	SYS_SLIST_FOR_EACH_CONTAINER_SAFE(&conn->channels, chan, next, node, struct bt_l2cap_chan) {
+	SYS_SLIST_FOR_EACH_CONTAINER_SAFE(&conn->channels, chan, next, node) {
 		bt_l2cap_chan_del(chan);
 	}
 }
@@ -734,9 +730,9 @@ static int l2cap_ecred_conn_req(struct bt_l2cap_chan **chan, int channels)
 	//struct net_buf *buf;
 	//struct bt_l2cap_ecred_conn_req *req;
 	struct bt_l2cap_le_chan *ch;
-#if (defined (CONFIG_BT_BREDR) && (CONFIG_BT_BREDR > 0U))
+#if (defined (CONFIG_BT_CLASSIC) && (CONFIG_BT_CLASSIC > 0U))
 	struct bt_l2cap_br_chan *br_ch;
-#endif /* CONFIG_BT_BREDR */
+#endif /* CONFIG_BT_CLASSIC */
 	int i;
 	uint16_t remote_psm;
 #if 0
@@ -746,6 +742,8 @@ static int l2cap_ecred_conn_req(struct bt_l2cap_chan **chan, int channels)
 	API_RESULT retval;
 	int err;
 	uint16_t req_mtu;
+
+	LOG_DBG("");
 
 	if (!chan || !channels) {
 		return -EINVAL;
@@ -782,112 +780,115 @@ static int l2cap_ecred_conn_req(struct bt_l2cap_chan **chan, int channels)
 
 	l2cap_chan_send_req(*chan, buf, L2CAP_CONN_TIMEOUT);
 #endif
-    L2CAP_PSM_ECBFC l2cap_ecbfc_psm =
-    {
-        ethermind_l2ca_ecbfc_connect_ind_cb,
-        ethermind_l2ca_ecbfc_connect_cnf_cb,
-        ethermind_l2ca_ecbfc_reconfig_ind_cb,
-        ethermind_l2ca_ecbfc_reconfig_cnf_cb,
-        ethermind_l2ca_ecbfc_disconnect_ind_cb,
-        ethermind_l2ca_ecbfc_disconnect_cnf_cb,
-        ethermind_l2ca_ecbfc_data_read_cb,
-        ethermind_l2ca_ecbfc_low_rx_credit_ind_cb,
-        ethermind_l2ca_ecbfc_tx_credit_ind_cb,
-        L2CAP_LE_PSM_FIXED_START,
+	L2CAP_PSM_ECBFC l2cap_ecbfc_psm =
+	{
+		ethermind_l2ca_ecbfc_connect_ind_cb,
+		ethermind_l2ca_ecbfc_connect_cnf_cb,
+		ethermind_l2ca_ecbfc_reconfig_ind_cb,
+		ethermind_l2ca_ecbfc_reconfig_cnf_cb,
+		ethermind_l2ca_ecbfc_disconnect_ind_cb,
+		ethermind_l2ca_ecbfc_disconnect_cnf_cb,
+		ethermind_l2ca_ecbfc_data_read_cb,
+		ethermind_l2ca_ecbfc_low_rx_credit_ind_cb,
+		ethermind_l2ca_ecbfc_tx_credit_ind_cb,
+		L2CAP_LE_PSM_FIXED_START,
 
-    #ifdef L2CAP_ECBFC_SUPPORT_UL_CREDIT_LWM
-        L2CAP_LE_MAX_CREDITS,
-    #endif /* L2CAP_ECBFC_SUPPORT_UL_CREDIT_LWM */
+#ifdef L2CAP_ECBFC_SUPPORT_UL_CREDIT_LWM
+		L2CAP_LE_MAX_CREDITS,
+#endif /* L2CAP_ECBFC_SUPPORT_UL_CREDIT_LWM */
 
-        ethermind_l2ca_ecbfc_data_write_cb
-    };
+		ethermind_l2ca_ecbfc_data_write_cb
+	};
 
-    L2CAP_ECBFC_CONNECT_PARAM ecbfc_connect_param;
+	L2CAP_ECBFC_CONNECT_PARAM ecbfc_connect_param;
 
-#if (defined (CONFIG_BT_BREDR) && (CONFIG_BT_BREDR > 0U))
-    if (BT_CONN_TYPE_BR == chan[0]->conn->type)
-    {
-        br_ch = BR_CHAN(chan[0]);
-        l2cap_ecbfc_psm.psm = br_ch->psm;
+#if (defined (CONFIG_BT_CLASSIC) && (CONFIG_BT_CLASSIC > 0U))
+	if (BT_CONN_TYPE_BR == chan[0]->conn->type)
+	{
+		br_ch = BR_CHAN(chan[0]);
+		l2cap_ecbfc_psm.psm = br_ch->psm;
 #ifdef L2CAP_CBFC_SUPPORT_UL_CREDIT_LWM
-        l2cap_ecbfc_psm.credit_lwm = br_ch->rx.credits;
+		l2cap_ecbfc_psm.credit_lwm = br_ch->rx.credits;
 #endif /* L2CAP_CBFC_SUPPORT_UL_CREDIT_LWM */
-    }
-    else
-#endif /* CONFIG_BT_BREDR */
-    {
-        ch = BT_L2CAP_LE_CHAN(chan[0]);
-        l2cap_ecbfc_psm.psm = ch->psm;
+	}
+	else
+#endif /* CONFIG_BT_CLASSIC */
+	{
+		ch = BT_L2CAP_LE_CHAN(chan[0]);
+		l2cap_ecbfc_psm.psm = ch->psm;
 #ifdef L2CAP_CBFC_SUPPORT_UL_CREDIT_LWM
-        l2cap_ecbfc_psm.credit_lwm = ch->rx.credits;
+		l2cap_ecbfc_psm.credit_lwm = ch->rx.credits;
 #endif /* L2CAP_CBFC_SUPPORT_UL_CREDIT_LWM */
-    }
+	}
 
-    retval = l2cap_ecbfc_register_psm (&l2cap_ecbfc_psm);
-    if ((retval != API_SUCCESS) && (retval != L2CAP_PSM_ALREADY_REGISTERED))
-    {
-        return -EIO;
-    }
-
-#if (defined (CONFIG_BT_BREDR) && (CONFIG_BT_BREDR > 0U))
-    if (BT_CONN_TYPE_BR == chan[0]->conn->type)
-    {
-        ecbfc_connect_param.mtu = br_ch->rx.mtu;
-        ecbfc_connect_param.mps = br_ch->rx.mps;
-        ecbfc_connect_param.credit = br_ch->rx.credits;
-        ecbfc_connect_param.num_cids = channels;
-		remote_psm = br_ch->psm;
-    }
-    else
-#endif /* CONFIG_BT_BREDR */
-    {
-        ecbfc_connect_param.mtu = ch->rx.mtu;
-        ecbfc_connect_param.mps = ch->rx.mps;
-        ecbfc_connect_param.credit = ch->rx.credits;
-        ecbfc_connect_param.num_cids = channels;
-		remote_psm = ch->psm;
-    }
-#if 0 /* allocate by EtherMind */
-	for (i = 0; i < channels; i++)
-        {
-            ch = BT_L2CAP_LE_CHAN(chan[i]);
-
-            ch->chan.ident = ident;
-
-            ecbfc_connect_param.cid[i] = ch->rx.cid;
+#if 0
+	retval = l2cap_ecbfc_unregister_psm(l2cap_ecbfc_psm.psm);
+	if (retval != API_SUCCESS)
+	{
+		LOG_WRN("Failed to unregister PSM %d", l2cap_ecbfc_psm.psm);
 	}
 #endif
-    retval = l2ca_ecbfc_connect_req
-                (
-                    &chan[0]->conn->deviceId,
-                    remote_psm,
-                    l2cap_ecbfc_psm.psm,
-                    &ecbfc_connect_param
-                );
-    if (API_SUCCESS == retval)
-    {
-        err = 0;
-        /* allocate by EtherMind */
-        for (i = 0; i < channels; i++)
-        {
-#if (defined (CONFIG_BT_BREDR) && (CONFIG_BT_BREDR > 0U))
-            if (BT_CONN_TYPE_BR == chan[i]->conn->type)
-            {
-                br_ch = BR_CHAN(chan[i]);
-                br_ch->rx.cid = ecbfc_connect_param.cid[i];
-            }
-            else
-#endif /* CONFIG_BT_BREDR */
-            {
-                ch = BT_L2CAP_LE_CHAN(chan[i]);
-                ch->rx.cid = ecbfc_connect_param.cid[i];
-            }
-        }
-    }
-    else
-    {
-        err = -EIO;
-    }
+	retval = l2cap_ecbfc_register_psm (&l2cap_ecbfc_psm);
+	if ((retval != API_SUCCESS) && (retval != L2CAP_PSM_ALREADY_REGISTERED))
+	{
+		LOG_ERR("Failed to register PSM %d", l2cap_ecbfc_psm.psm);
+		return -EIO;
+	}
+
+#if (defined (CONFIG_BT_CLASSIC) && (CONFIG_BT_CLASSIC > 0U))
+	if (BT_CONN_TYPE_BR == chan[0]->conn->type)
+	{
+		ecbfc_connect_param.mtu = br_ch->rx.mtu;
+		ecbfc_connect_param.mps = br_ch->rx.mps;
+		ecbfc_connect_param.credit = br_ch->rx.credits;
+		ecbfc_connect_param.num_cids = channels;
+		remote_psm = br_ch->psm;
+	}
+	else
+#endif /* CONFIG_BT_CLASSIC */
+	{
+		ecbfc_connect_param.mtu = ch->rx.mtu;
+		ecbfc_connect_param.mps = ch->rx.mps;
+		ecbfc_connect_param.credit = ch->rx.credits;
+		ecbfc_connect_param.num_cids = channels;
+		remote_psm = ch->psm;
+	}
+
+	retval = l2ca_ecbfc_connect_req
+			(
+			&chan[0]->conn->deviceId,
+			remote_psm,
+			l2cap_ecbfc_psm.psm,
+			&ecbfc_connect_param
+			);
+	if (API_SUCCESS == retval)
+	{
+		LOG_DBG("ECBFC conn req PSM %d channels %d", remote_psm, channels);
+		err = 0;
+		/* allocate by EtherMind */
+		for (i = 0; i < channels; i++)
+		{
+#if (defined (CONFIG_BT_CLASSIC) && (CONFIG_BT_CLASSIC > 0U))
+			if (BT_CONN_TYPE_BR == chan[i]->conn->type)
+			{
+				br_ch = BR_CHAN(chan[i]);
+				br_ch->rx.cid = ecbfc_connect_param.cid[i];
+				br_ch->ident = ecbfc_connect_param.sig_id;
+			}
+			else
+#endif /* CONFIG_BT_CLASSIC */
+			{
+				ch = BT_L2CAP_LE_CHAN(chan[i]);
+				ch->rx.cid = ecbfc_connect_param.cid[i];
+				ch->ident = ecbfc_connect_param.sig_id;
+			}
+		}
+	}
+	else
+	{
+		LOG_ERR("Fail to send ECBFC connect req err 0x%04X", retval);
+		err = -EIO;
+	}
 
 	return err;
 }
@@ -941,13 +942,13 @@ void bt_l2cap_security_changed(struct bt_conn *conn, uint8_t hci_status)
 {
 	struct bt_l2cap_chan *chan, *next;
 
-	if (IS_ENABLED(CONFIG_BT_BREDR) &&
+	if (IS_ENABLED(CONFIG_BT_CLASSIC) &&
 	    conn->type == BT_CONN_TYPE_BR) {
 		l2cap_br_encrypt_change(conn, hci_status);
 		return;
 	}
 
-	SYS_SLIST_FOR_EACH_CONTAINER_SAFE(&conn->channels, chan, next, node, struct bt_l2cap_chan) {
+	SYS_SLIST_FOR_EACH_CONTAINER_SAFE(&conn->channels, chan, next, node) {
 #if (defined(CONFIG_BT_L2CAP_DYNAMIC_CHANNEL) && ((CONFIG_BT_L2CAP_DYNAMIC_CHANNEL) > 0U))
 		l2cap_le_encrypt_change(chan, hci_status);
 #endif
@@ -967,6 +968,49 @@ struct net_buf *bt_l2cap_create_pdu_timeout(struct net_buf_pool *pool,
 					  timeout);
 }
 
+static void raise_data_ready(struct bt_l2cap_le_chan *le_chan)
+{
+	if (!atomic_set(&le_chan->_pdu_ready_lock, 1)) {
+		sys_slist_append(&le_chan->chan.conn->l2cap_data_ready,
+				 &le_chan->_pdu_ready);
+		LOG_DBG("data ready raised %p", le_chan);
+	} else {
+		LOG_DBG("data ready already %p", le_chan);
+	}
+
+	bt_conn_data_ready(le_chan->chan.conn);
+}
+
+static void lower_data_ready(struct bt_l2cap_le_chan *le_chan)
+{
+	struct bt_conn *conn = le_chan->chan.conn;
+	__maybe_unused sys_snode_t *s = sys_slist_get(&conn->l2cap_data_ready);
+
+	/* EDEGFAST: Avoid assert error. */
+	if (s == NULL) {
+		return;
+	}
+
+	LOG_DBG("%p", le_chan);
+
+	__ASSERT_NO_MSG(s == &le_chan->_pdu_ready);
+
+	__maybe_unused atomic_t old = atomic_set(&le_chan->_pdu_ready_lock, 0);
+
+	__ASSERT_NO_MSG(old);
+}
+
+static void cancel_data_ready(struct bt_l2cap_le_chan *le_chan)
+{
+	struct bt_conn *conn = le_chan->chan.conn;
+
+	LOG_DBG("%p", le_chan);
+
+	sys_slist_find_and_remove(&conn->l2cap_data_ready,
+				  &le_chan->_pdu_ready);
+	atomic_set(&le_chan->_pdu_ready_lock, 0);
+}
+
 int bt_l2cap_send_cb(struct bt_conn *conn, uint16_t cid, struct net_buf *buf,
 		     bt_conn_tx_cb_t cb, void *user_data)
 {
@@ -983,6 +1027,204 @@ int bt_l2cap_send_cb(struct bt_conn *conn, uint16_t cid, struct net_buf *buf,
 #else
     return -EIO;
 #endif
+}
+
+/* L2CAP channel wants to send a PDU */
+static bool chan_has_data(struct bt_l2cap_le_chan *lechan)
+{
+	return !k_fifo_is_empty(&lechan->tx_queue);
+}
+#if 0
+/* Just like in group projects :p */
+static void chan_take_credit(struct bt_l2cap_le_chan *lechan)
+{
+#if defined(CONFIG_BT_L2CAP_DYNAMIC_CHANNEL)
+	if (!L2CAP_LE_CID_IS_DYN(lechan->tx.cid)) {
+		return;
+	}
+
+	if (!test_and_dec(&lechan->tx.credits)) {
+		/* Always ensure you have credits before calling this fn */
+		__ASSERT_NO_MSG(0);
+	}
+
+	/* Notify channel user that it can't send anymore on this channel. */
+	if (!atomic_get(&lechan->tx.credits)) {
+		LOG_DBG("chan %p paused", lechan);
+		atomic_clear_bit(lechan->chan.status, BT_L2CAP_STATUS_OUT);
+
+		if (lechan->chan.ops->status) {
+			lechan->chan.ops->status(&lechan->chan, lechan->chan.status);
+		}
+	}
+#endif
+}
+#endif
+static struct bt_l2cap_le_chan *get_ready_chan(struct bt_conn *conn)
+{
+	struct bt_l2cap_le_chan *lechan;
+
+	sys_snode_t *pdu_ready = sys_slist_peek_head(&conn->l2cap_data_ready);
+
+	if (!pdu_ready) {
+		LOG_DBG("nothing to send on this conn");
+		return NULL;
+	}
+
+	SYS_SLIST_FOR_EACH_CONTAINER(&conn->l2cap_data_ready, lechan, _pdu_ready) {
+		if (chan_has_data(lechan)) {
+			LOG_DBG("sending from chan %p (%s) data %d", lechan,
+				L2CAP_LE_CID_IS_DYN(lechan->tx.cid) ? "dynamic" : "static",
+				chan_has_data(lechan));
+			return lechan;
+		}
+
+		LOG_DBG("chan %p has no data", lechan);
+		lower_data_ready(lechan);
+	}
+
+	return NULL;
+}
+
+static void l2cap_chan_sdu_sent(struct bt_conn *conn, void *user_data, int err)
+{
+	struct bt_l2cap_chan *chan;
+	uint16_t cid = POINTER_TO_UINT(user_data);
+
+	LOG_DBG("conn %p CID 0x%04x err %d", conn, cid, err);
+
+	if (err) {
+		LOG_DBG("error %d when sending SDU", err);
+
+		return;
+	}
+
+	chan = bt_l2cap_le_lookup_tx_cid(conn, cid);
+	if (!chan) {
+		LOG_DBG("got SDU sent cb for disconnected chan (CID %u)", cid);
+
+		return;
+	}
+
+	if (chan->ops->sent) {
+		chan->ops->sent(chan);
+	}
+}
+#if 0
+static uint16_t get_pdu_len(struct bt_l2cap_le_chan *lechan,
+			    struct net_buf *buf)
+{
+#if 0
+	if (!L2CAP_LE_CID_IS_DYN(lechan->tx.cid)) {
+		/* No segmentation shenanigans on static channels */
+		return buf->len;
+	}
+
+	return MIN(buf->len, lechan->tx.mps);
+#else
+	/* EDGEFAST: Do not do segmentation/fragment */
+	return buf->len;
+#endif
+}
+
+static bool chan_has_credits(struct bt_l2cap_le_chan *lechan)
+{
+#if (defined(CONFIG_BT_L2CAP_DYNAMIC_CHANNEL) && (CONFIG_BT_L2CAP_DYNAMIC_CHANNEL > 0))
+	if (!L2CAP_LE_CID_IS_DYN(lechan->tx.cid)) {
+		return true;
+	}
+
+	LOG_DBG("chan %p credits %ld", lechan, atomic_get(&lechan->tx.credits));
+
+	return atomic_get(&lechan->tx.credits) >= 1;
+#else
+	return true;
+#endif
+}
+#endif
+
+#if (defined(CONFIG_BT_L2CAP_DYNAMIC_CHANNEL) && (CONFIG_BT_L2CAP_DYNAMIC_CHANNEL > 0))
+static int l2cap_chan_le_send_sdu(struct bt_l2cap_le_chan *ch,
+				  struct net_buf **buf, uint16_t sent);
+#endif /* CONFIG_BT_L2CAP_DYNAMIC_CHANNEL */
+
+struct net_buf *l2cap_data_pull(struct bt_conn *conn,
+				size_t amount,
+				size_t *length)
+{
+#if (defined(CONFIG_BT_L2CAP_DYNAMIC_CHANNEL) && (CONFIG_BT_L2CAP_DYNAMIC_CHANNEL > 0))
+	struct bt_l2cap_le_chan *lechan = get_ready_chan(conn);
+	int err;
+
+	if (!lechan) {
+		LOG_DBG("no channel conn %p", conn);
+		bt_tx_irq_raise();
+		return NULL;
+	}
+
+	/* Leave the PDU buffer in the queue until we have sent all its
+	 * fragments.
+	 *
+	 * For SDUs we do the same, we keep it in the queue until all the
+	 * segments have been sent, adding the PDU headers just-in-time.
+	 */
+	struct net_buf *pdu = k_fifo_peek_head(&lechan->tx_queue);
+
+	if (!pdu) {
+		bt_tx_irq_raise();
+		return NULL;
+	}
+
+	/* EDGEFAST: Check the last buf is sent. */
+	if (lechan->_pdu_remaining != 0) {
+		/* Last buf is not sent done. Remove the
+		 * channel from the ready-list, it will be added back later when
+		 * the buf is sent.
+		 */
+		LOG_DBG("no credits for new K-frame on %p", lechan);
+		lower_data_ready(lechan);
+		return NULL;
+	}
+
+	/* EDGEFAST: Flag the channel is busy. */
+	lechan->_pdu_remaining = pdu->len + sizeof(struct bt_l2cap_hdr);
+
+	/* EDGEFAST: Send out the data. */
+	err = l2cap_chan_le_send_sdu(lechan, &pdu, 0);
+	if (err < 0) {
+		LOG_DBG("Failed to send data.");
+		lechan->_pdu_remaining = 0;
+		/* Append channel to list if it still has data */
+		if (chan_has_data(lechan)) {
+			LOG_DBG("chan %p ready", lechan);
+			raise_data_ready(lechan);
+		}
+		return NULL;
+	}
+
+	LOG_DBG("last frag of last seg, dequeuing %p", pdu);
+	__maybe_unused struct net_buf *b = k_fifo_get(&lechan->tx_queue, K_NO_WAIT);
+
+	__ASSERT_NO_MSG(b == pdu);
+
+	net_buf_unref(b);
+
+	LOG_DBG("chan %p done", lechan);
+
+	/* EDGEFAST: Set channel inactive. */
+	lower_data_ready(lechan);
+
+	/* EDGEFAST: Append channel to list if it still has data */
+	if (chan_has_data(lechan)) {
+		LOG_DBG("chan %p ready", lechan);
+		raise_data_ready(lechan);
+	}
+#else
+	(void)conn;
+	(void)amount;
+	(void)length;
+#endif /* CONFIG_BT_L2CAP_DYNAMIC_CHANNEL */
+	return NULL;
 }
 
 static void l2cap_send_reject(struct bt_conn *conn, uint8_t ident,
@@ -1082,7 +1324,7 @@ struct bt_l2cap_chan *bt_l2cap_le_lookup_tx_cid(struct bt_conn *conn,
 {
 	struct bt_l2cap_chan *chan;
 
-	SYS_SLIST_FOR_EACH_CONTAINER(&conn->channels, chan, node, struct bt_l2cap_chan) {
+	SYS_SLIST_FOR_EACH_CONTAINER(&conn->channels, chan, node) {
 		if (BT_L2CAP_LE_CHAN(chan)->tx.cid == cid) {
 			return chan;
 		}
@@ -1096,7 +1338,7 @@ struct bt_l2cap_chan *bt_l2cap_le_lookup_rx_cid(struct bt_conn *conn,
 {
 	struct bt_l2cap_chan *chan;
 
-	SYS_SLIST_FOR_EACH_CONTAINER(&conn->channels, chan, node, struct bt_l2cap_chan) {
+	SYS_SLIST_FOR_EACH_CONTAINER(&conn->channels, chan, node) {
 		if (BT_L2CAP_LE_CHAN(chan)->rx.cid == cid) {
 			return chan;
 		}
@@ -1110,7 +1352,7 @@ struct bt_l2cap_server *bt_l2cap_server_lookup_psm(uint16_t psm)
 {
 	struct bt_l2cap_server *server;
 
-	SYS_SLIST_FOR_EACH_CONTAINER(&servers, server, node, struct bt_l2cap_server) {
+	SYS_SLIST_FOR_EACH_CONTAINER(&servers, server, node) {
 		if (server->psm == psm) {
 			return server;
 		}
@@ -1164,121 +1406,128 @@ int bt_l2cap_ecbfc_server_register(struct bt_l2cap_server *server)
 
 int bt_l2cap_server_register(struct bt_l2cap_server *server)
 {
-    API_RESULT retval;
-    int err = 0;
+	API_RESULT retval;
+	int err = 0;
 
-    if (server->psm != 0x27u)
+	if (server->psm != 0x27u)
 #if 0
-    {
-        sys_slist_append(&servers, &server->node);
-        return 0;
-    }
+	{
+		sys_slist_append(&servers, &server->node);
+		return 0;
+	}
 #endif
-    {
-        L2CAP_PSM_CBFC l2cap_psm =
-        {
-            ethermind_l2ca_connect_ind_cb,
-            ethermind_l2ca_connect_cnf_cb,
-            ethermind_l2ca_disconnect_ind_cb,
-            ethermind_l2ca_disconnect_cnf_cb,
-            ethermind_l2ca_data_read_cb,
-            ethermind_l2ca_low_rx_credit_ind_cb,
-            ethermind_l2ca_tx_credit_ind_cb,
-            L2CAP_LE_PSM_FIXED_START,
+	{
+		L2CAP_PSM_CBFC l2cap_psm =
+		{
+			ethermind_l2ca_connect_ind_cb,
+			ethermind_l2ca_connect_cnf_cb,
+			ethermind_l2ca_disconnect_ind_cb,
+			ethermind_l2ca_disconnect_cnf_cb,
+			ethermind_l2ca_data_read_cb,
+			ethermind_l2ca_low_rx_credit_ind_cb,
+			ethermind_l2ca_tx_credit_ind_cb,
+			L2CAP_LE_PSM_FIXED_START,
 #ifdef L2CAP_CBFC_SUPPORT_UL_CREDIT_LWM
-            L2CAP_LE_MAX_CREDITS,
+			L2CAP_LE_MAX_CREDITS,
 #endif /* L2CAP_CBFC_SUPPORT_UL_CREDIT_LWM */
-            ethermind_l2ca_data_write_cb
-        };
+			ethermind_l2ca_data_write_cb
+		};
 
-            if (!server->accept) {
-                    return -EINVAL;
-            }
+		if (!server->accept) {
+			return -EINVAL;
+		}
 
-            if (server->psm) {
-                    if (server->psm < L2CAP_LE_PSM_FIXED_START ||
-                        server->psm > L2CAP_LE_PSM_DYN_END) {
-                            return -EINVAL;
-                    }
+		if (server->psm) {
+			if (server->psm < L2CAP_LE_PSM_FIXED_START ||
+				server->psm > L2CAP_LE_PSM_DYN_END) {
+				return -EINVAL;
+			}
 
-                    /* Check if given PSM is already in use */
-                    if (bt_l2cap_server_lookup_psm(server->psm)) {
-                            LOG_DBG("PSM already registered");
-                            return -EADDRINUSE;
-                    }
-            } else {
-                    uint16_t psm;
+			/* Check if given PSM is already in use */
+			if (bt_l2cap_server_lookup_psm(server->psm)) {
+				LOG_DBG("PSM already registered");
+				return -EADDRINUSE;
+			}
+		} else {
+			uint16_t psm;
 
-                    for (psm = (L2CAP_LE_PSM_DYN_START + 1);
-                         psm <= L2CAP_LE_PSM_DYN_END; psm += 2) {
-                            if (!bt_l2cap_server_lookup_psm(psm)) {
-                                    break;
-                            }
-                    }
+			for (psm = (L2CAP_LE_PSM_DYN_START + 1);
+				psm <= L2CAP_LE_PSM_DYN_END; psm += 2) {
+				if (!bt_l2cap_server_lookup_psm(psm)) {
+					break;
+				}
+			}
 
-                    if (psm > L2CAP_LE_PSM_DYN_END) {
-                            LOG_WRN("No free dynamic PSMs available");
-                            return -EADDRNOTAVAIL;
-                    }
+			if (psm > L2CAP_LE_PSM_DYN_END) {
+				LOG_WRN("No free dynamic PSMs available");
+				return -EADDRNOTAVAIL;
+			}
 
-                    LOG_DBG("Allocated PSM 0x%04x for new server", psm);
-                    server->psm = psm;
-            }
+			LOG_DBG("Allocated PSM 0x%04x for new server", psm);
+			server->psm = psm;
+		}
 
-            if (server->sec_level > BT_SECURITY_L4) {
-                    return -EINVAL;
-            } else if (server->sec_level < BT_SECURITY_L1) {
-                    /* Level 0 is only applicable for BR/EDR */
-                    server->sec_level = BT_SECURITY_L1;
-            }
+		if (server->sec_level > BT_SECURITY_L4) {
+			return -EINVAL;
+		} else if (server->sec_level < BT_SECURITY_L1) {
+			/* Level 0 is only applicable for BR/EDR */
+			server->sec_level = BT_SECURITY_L1;
+		}
 
-            LOG_DBG("PSM 0x%04x", server->psm);
+		LOG_DBG("PSM 0x%04x", server->psm);
 
-        l2cap_psm.psm = server->psm;
+		l2cap_psm.psm = server->psm;
 
-        retval = l2cap_cbfc_register_psm(&l2cap_psm);
-        if (API_SUCCESS != retval)
-        {
-            return -EIO;
-        }
-    }
+		retval = l2cap_cbfc_register_psm(&l2cap_psm);
+		if (API_SUCCESS != retval)
+		{
+			return -EIO;
+		}
+	}
 
 #if (defined(CONFIG_BT_L2CAP_ECRED) && (CONFIG_BT_L2CAP_ECRED > 0U))
-    L2CAP_PSM_ECBFC l2cap_ecbfc_psm =
-    {
-        ethermind_l2ca_ecbfc_connect_ind_cb,
-        ethermind_l2ca_ecbfc_connect_cnf_cb,
-        ethermind_l2ca_ecbfc_reconfig_ind_cb,
-        ethermind_l2ca_ecbfc_reconfig_cnf_cb,
-        ethermind_l2ca_ecbfc_disconnect_ind_cb,
-        ethermind_l2ca_ecbfc_disconnect_cnf_cb,
-        ethermind_l2ca_ecbfc_data_read_cb,
-        ethermind_l2ca_ecbfc_low_rx_credit_ind_cb,
-        ethermind_l2ca_ecbfc_tx_credit_ind_cb,
-        L2CAP_LE_PSM_FIXED_START,
+	L2CAP_PSM_ECBFC l2cap_ecbfc_psm =
+	{
+		ethermind_l2ca_ecbfc_connect_ind_cb,
+		ethermind_l2ca_ecbfc_connect_cnf_cb,
+		ethermind_l2ca_ecbfc_reconfig_ind_cb,
+		ethermind_l2ca_ecbfc_reconfig_cnf_cb,
+		ethermind_l2ca_ecbfc_disconnect_ind_cb,
+		ethermind_l2ca_ecbfc_disconnect_cnf_cb,
+		ethermind_l2ca_ecbfc_data_read_cb,
+		ethermind_l2ca_ecbfc_low_rx_credit_ind_cb,
+		ethermind_l2ca_ecbfc_tx_credit_ind_cb,
+		L2CAP_LE_PSM_FIXED_START,
 
-    #ifdef L2CAP_ECBFC_SUPPORT_UL_CREDIT_LWM
-        L2CAP_LE_MAX_CREDITS,
-    #endif /* L2CAP_ECBFC_SUPPORT_UL_CREDIT_LWM */
+	#ifdef L2CAP_ECBFC_SUPPORT_UL_CREDIT_LWM
+		L2CAP_LE_MAX_CREDITS,
+	#endif /* L2CAP_ECBFC_SUPPORT_UL_CREDIT_LWM */
 
-        ethermind_l2ca_ecbfc_data_write_cb
-    };
+		ethermind_l2ca_ecbfc_data_write_cb
+	};
 
-    l2cap_ecbfc_psm.psm = server->psm;
+	l2cap_ecbfc_psm.psm = server->psm;
 
-    if (server->psm == 0x27u)
-    {
-        (void)l2cap_ecbfc_unregister_psm(server->psm);
-    }
-    retval = l2cap_ecbfc_register_psm (&l2cap_ecbfc_psm);
-    if(retval != API_SUCCESS)
-    {
-        return -EIO;
-    }
+	if (server->psm == 0x27u)
+	{
+		struct bt_l2cap_server *item, *next;
+		SYS_SLIST_FOR_EACH_CONTAINER_SAFE(&servers, item, next, node) {
+			if (item->psm == server->psm)
+			{
+				sys_slist_find_and_remove(&servers, &item->node);
+			}
+		}
+		(void)l2cap_ecbfc_unregister_psm(server->psm);
+	}
+	retval = l2cap_ecbfc_register_psm (&l2cap_ecbfc_psm);
+	if(retval != API_SUCCESS)
+	{
+		return -EIO;
+	}
 #endif
 
-    sys_slist_append(&servers, &server->node);
-    return err;
+	sys_slist_append(&servers, &server->node);
+	return err;
 }
 #if (defined(CONFIG_BT_L2CAP_SEG_RECV) && (CONFIG_BT_L2CAP_SEG_RECV > 0))
 static void l2cap_chan_seg_recv_rx_init(struct bt_l2cap_le_chan *chan)
@@ -1313,13 +1562,12 @@ static void l2cap_chan_rx_init(struct bt_l2cap_le_chan *chan)
 	}
 
 	/* Init general queues when attaching the first channel */
-    k_fifo_init(&chan->rx_queue);
+	k_fifo_init(&chan->rx_queue);
 
 	/* MPS shall not be bigger than MTU + BT_L2CAP_SDU_HDR_SIZE as the
 	 * remaining bytes cannot be used.
 	 */
-	chan->rx.mps = MIN(chan->rx.mtu + BT_L2CAP_SDU_HDR_SIZE,
-			   BT_L2CAP_RX_MTU);
+	chan->rx.mps = MIN(chan->rx.mtu, BT_L2CAP_RX_MTU);
 
 	/* Truncate MTU if channel have disabled segmentation but still have
 	 * set an MTU which requires it.
@@ -1330,72 +1578,25 @@ static void l2cap_chan_rx_init(struct bt_l2cap_le_chan *chan)
 		chan->rx.mtu = chan->rx.mps - BT_L2CAP_SDU_HDR_SIZE;
 	}
 
-    /* atomic_set(&chan->rx.credits, 1); */
+	/* EDGEFAST: For EtherMind, the mps should not be more than mtu. */
+	chan->rx.mps = MIN(chan->rx.mtu, chan->rx.mps);
 
-    /* Use existing credits if defined */
-    if (!chan->rx.credits)
-    {
-        if (chan->chan.ops->alloc_buf)
-        {
-            /* Auto tune credits to receive a full packet */
-            chan->rx.credits = ceiling_fraction(chan->rx.mtu, BT_L2CAP_RX_MTU);
-        }
-        else
-        {
-            chan->rx.credits = L2CAP_LE_MAX_CREDITS;
-        }
-    }
-}
+	/* atomic_set(&chan->rx.credits, 1); */
 
-static struct net_buf *l2cap_chan_le_get_tx_buf(struct bt_l2cap_le_chan *ch)
-{
-	struct net_buf *buf;
-
-	/* Return current buffer */
-	if (ch->tx_buf) {
-		buf = ch->tx_buf;
-		ch->tx_buf = NULL;
-		return buf;
-	}
-
-	return net_buf_get(ch->tx_queue.queue, osaWaitNone_c);
-}
-
-static int l2cap_chan_le_send_sdu(struct bt_l2cap_le_chan *ch,
-				  struct net_buf **buf, uint16_t sent);
-static void l2cap_chan_sdu_sent(struct bt_conn *conn, void *user_data, int err);
-#if 1
-static void l2cap_chan_tx_process(struct k_work *work)
-{
-	struct bt_l2cap_le_chan *ch;
-	struct net_buf *buf;
-
-	ch = CONTAINER_OF(work, struct bt_l2cap_le_chan, tx_work);
-
-	/* Resume tx in case there are buffers in the queue */
-	while ((buf = l2cap_chan_le_get_tx_buf(ch))) {
-		int sent = l2cap_tx_meta_data(buf)->sent;
-
-		LOG_DBG("buf %p sent %u", buf, sent);
-
-		sent = l2cap_chan_le_send_sdu(ch, &buf, sent);
-		if (sent < 0) {
-			if (sent == -EAGAIN) {
-				ch->tx_buf = buf;
-				/* If we don't reschedule, and the app doesn't nudge l2cap (e.g. by
-				 * sending another SDU), the channel will be stuck in limbo. To
-				 * prevent this, we attempt to re-schedule the work item for every
-				 * channel on every connection when an SDU has successfully been
-				 * sent.
-				 */
-			} else {
-				net_buf_unref(buf);
-			}
-			break;
+	/* Use existing credits if defined */
+	if (!chan->rx.credits)
+	{
+		if (chan->chan.ops->alloc_buf)
+		{
+			/* Auto tune credits to receive a full packet */
+			chan->rx.credits = ceiling_fraction(chan->rx.mtu, BT_L2CAP_RX_MTU);
+		}
+		else
+		{
+			chan->rx.credits = L2CAP_LE_MAX_CREDITS;
 		}
 	}
 }
-#endif
 
 static void l2cap_chan_tx_init(struct bt_l2cap_le_chan *chan)
 {
@@ -1404,10 +1605,7 @@ static void l2cap_chan_tx_init(struct bt_l2cap_le_chan *chan)
 	(void)memset(&chan->tx, 0, sizeof(chan->tx));
 	atomic_set(&chan->tx.credits, 0);
 	/* Init general queues when attaching the first channel */
-    k_fifo_init(&chan->tx_queue);
-#if 1
-	k_work_init(&chan->tx_work, l2cap_chan_tx_process);
-#endif
+	k_fifo_init(&chan->tx_queue);
 }
 
 static void l2cap_chan_tx_give_credits(struct bt_l2cap_le_chan *chan,
@@ -1417,9 +1615,14 @@ static void l2cap_chan_tx_give_credits(struct bt_l2cap_le_chan *chan,
 
 	atomic_add(&chan->tx.credits, credits);
 
-	if (!atomic_test_and_set_bit(chan->chan.status, BT_L2CAP_STATUS_OUT) &&
-	    chan->chan.ops->status) {
-		chan->chan.ops->status(&chan->chan, chan->chan.status);
+	if (!atomic_test_and_set_bit(chan->chan.status, BT_L2CAP_STATUS_OUT)) {
+		LOG_DBG("chan %p unpaused", chan);
+		if (chan->chan.ops->status) {
+			chan->chan.ops->status(&chan->chan, chan->chan.status);
+		}
+		if (chan_has_data(chan)) {
+			raise_data_ready(chan);
+		}
 	}
 }
 
@@ -1458,26 +1661,14 @@ static void l2cap_chan_destroy(struct bt_l2cap_chan *chan)
 	}
 #endif
 
-	if (le_chan->tx_buf) {
-		net_buf_unref(le_chan->tx_buf);
-		le_chan->tx_buf = NULL;
-	}
-
 	/* Remove buffers on the TX queue */
-	while ((buf = net_buf_get(le_chan->tx_queue.queue, osaWaitNone_c))) {
+	while ((buf = net_buf_get(&le_chan->tx_queue, K_NO_WAIT))) {
 		net_buf_unref(buf);
 	}
 
 	/* Remove buffers on the RX queue */
-	while ((buf = net_buf_get(le_chan->rx_queue.queue, osaWaitNone_c))) {
+	while ((buf = net_buf_get(&le_chan->rx_queue, K_NO_WAIT))) {
 		net_buf_unref(buf);
-	}
-
-	/* Destroy segmented SDU if it exists */
-	if (le_chan->_sdu) {
-		net_buf_unref(le_chan->_sdu);
-		le_chan->_sdu = NULL;
-		le_chan->_sdu_len = 0U;
 	}
 }
 
@@ -1507,9 +1698,9 @@ static uint16_t l2cap_chan_accept(struct bt_conn *conn,
 			       struct bt_l2cap_chan **chan)
 {
 	struct bt_l2cap_le_chan *le_chan;
-#if (defined (CONFIG_BT_BREDR) && (CONFIG_BT_BREDR > 0U))
+#if (defined (CONFIG_BT_CLASSIC) && (CONFIG_BT_CLASSIC > 0U))
     struct bt_l2cap_br_chan *br_chan;
-#endif /* CONFIG_BT_BREDR */
+#endif /* CONFIG_BT_CLASSIC */
 	int err;
 
 	LOG_DBG("conn %p scid 0x%04x chan %p", conn, scid, chan);
@@ -1518,18 +1709,16 @@ static uint16_t l2cap_chan_accept(struct bt_conn *conn,
 		return BT_L2CAP_LE_ERR_INVALID_SCID;
 	}
 
-#if 0
-#if (defined (CONFIG_BT_BREDR) && (CONFIG_BT_BREDR > 0U))
-    if (BT_CONN_TYPE_BR == conn->type)
-    {
-	    *chan = bt_l2cap_br_lookup_tx_cid(conn, scid);
-    }
-    else
-#endif /* CONFIG_BT_BREDR */
-#endif
-    {
-	    *chan = bt_l2cap_le_lookup_tx_cid(conn, scid);
-    }
+#if (defined (CONFIG_BT_CLASSIC) && (CONFIG_BT_CLASSIC > 0U))
+	if (BT_CONN_TYPE_BR == conn->type)
+	{
+		*chan = bt_l2cap_br_lookup_tx_cid(conn, scid);
+	}
+	else
+#endif /* CONFIG_BT_CLASSIC */
+	{
+		*chan = bt_l2cap_le_lookup_tx_cid(conn, scid);
+	}
 
 	if (*chan) {
 		return BT_L2CAP_LE_ERR_SCID_IN_USE;
@@ -1555,39 +1744,39 @@ static uint16_t l2cap_chan_accept(struct bt_conn *conn,
 	}
 #endif
 
-#if (defined (CONFIG_BT_BREDR) && (CONFIG_BT_BREDR > 0U))
-    if (BT_CONN_TYPE_BR == conn->type)
-    {
-        br_chan = BR_CHAN(*chan);
+#if (defined (CONFIG_BT_CLASSIC) && (CONFIG_BT_CLASSIC > 0U))
+	if (BT_CONN_TYPE_BR == conn->type)
+	{
+		br_chan = BR_CHAN(*chan);
 		l2cap_br_ecred_init(conn, br_chan, server->psm);
-        br_chan->required_sec_level = server->sec_level;
+		br_chan->required_sec_level = server->sec_level;
 		br_chan->tx.cid = scid;
 		br_chan->tx.mps = mps;
 		br_chan->tx.mtu = mtu;
 		atomic_add(&br_chan->tx.credits, credits);
-    }
-    else
-#endif /* CONFIG_BT_BREDR */
-    {
-        le_chan = BT_L2CAP_LE_CHAN(*chan);
-        le_chan->required_sec_level = server->sec_level;
-        if (!l2cap_chan_add(conn, *chan, l2cap_chan_destroy)) {
-            return BT_L2CAP_LE_ERR_NO_RESOURCES;
-        }
+	}
+	else
+#endif /* CONFIG_BT_CLASSIC */
+	{
+		le_chan = BT_L2CAP_LE_CHAN(*chan);
+		le_chan->required_sec_level = server->sec_level;
+		if (!l2cap_chan_add(conn, *chan, l2cap_chan_destroy)) {
+			return BT_L2CAP_LE_ERR_NO_RESOURCES;
+		}
 
-        /* Init TX parameters */
-        l2cap_chan_tx_init(le_chan);
-        le_chan->tx.cid = scid;
-        le_chan->tx.mps = mps;
-        le_chan->tx.mtu = mtu;
-        l2cap_chan_tx_give_credits(le_chan, credits);
+		/* Init TX parameters */
+		l2cap_chan_tx_init(le_chan);
+		le_chan->tx.cid = scid;
+		le_chan->tx.mps = mps;
+		le_chan->tx.mtu = mtu;
+		l2cap_chan_tx_give_credits(le_chan, credits);
 
-        /* Init RX parameters */
-        l2cap_chan_rx_init(le_chan);
+		/* Init RX parameters */
+		l2cap_chan_rx_init(le_chan);
 
-        /* Set channel PSM */
-        le_chan->psm = server->psm;
-    }
+		/* Set channel PSM */
+		le_chan->psm = server->psm;
+	}
 
 	/* Update state */
 	bt_l2cap_chan_set_state(*chan, BT_L2CAP_CONNECTED);
@@ -1605,17 +1794,6 @@ static uint16_t l2cap_check_security(struct bt_conn *conn,
 	const struct bt_keys *keys = bt_keys_find_addr(conn->id, &conn->le.dst);
 	bool ltk_present;
 
-	/* Try L2CAP_SC_CHECK_TIMEOUT to take semaphore to wait until the security level updated. */
-	osa_status_t status = OSA_SemaphoreWait(conn->sem_security_level_updated, L2CAP_SC_CHECK_TIMEOUT);
-	if(KOSA_StatusSuccess == status)
-	{
-		(void)OSA_SemaphorePost(conn->sem_security_level_updated);
-	}
-	else
-	{
-		LOG_ERR("conn: %p, security level semaphore wait fail %d", conn, status);
-		return BT_L2CAP_LE_ERR_AUTHENTICATION;
-	}
 
 #if (defined(CONFIG_BT_CONN_DISABLE_SECURITY) && ((CONFIG_BT_CONN_DISABLE_SECURITY) > 0U))
 	if (IS_ENABLED(CONFIG_BT_CONN_DISABLE_SECURITY)) {
@@ -1665,14 +1843,14 @@ static uint16_t br_l2cap_check_security(struct bt_conn *conn,
 	int check;
 
 	/* Try L2CAP_SC_CHECK_TIMEOUT to take semaphore to wait until the security level updated. */
-	osa_status_t status = OSA_SemaphoreWait(conn->sem_security_level_updated, L2CAP_SC_CHECK_TIMEOUT);
-	if(KOSA_StatusSuccess == status)
+	int err = k_sem_take(&conn->sec_lvl_updated, L2CAP_SC_CHECK_TIMEOUT);
+	if(err >= 0)
 	{
-		(void)OSA_SemaphorePost(conn->sem_security_level_updated);
+		k_sem_give(&conn->sec_lvl_updated);
 	}
 	else
 	{
-		LOG_ERR("conn: %p, security level semaphore wait fail %d", conn, status);
+		LOG_ERR("conn: %p, security level semaphore wait fail %d", conn, err);
 		return BT_L2CAP_LE_ERR_AUTHENTICATION;
 	}
 
@@ -1830,9 +2008,9 @@ static void le_ecred_conn_req(struct bt_l2cap *l2cap, uint8_t ident,
 	struct bt_conn *conn = l2cap->chan.chan.conn;
 	struct bt_l2cap_chan *chan[L2CAP_ECRED_CHAN_MAX_PER_REQ];
 	struct bt_l2cap_le_chan *ch = NULL;
-#if (defined (CONFIG_BT_BREDR) && (CONFIG_BT_BREDR > 0U))
+#if (defined (CONFIG_BT_CLASSIC) && (CONFIG_BT_CLASSIC > 0U))
     struct bt_l2cap_br_chan *br_ch = NULL;
-#endif /* CONFIG_BT_BREDR */
+#endif /* CONFIG_BT_CLASSIC */
 	struct bt_l2cap_server *server;
 	struct bt_l2cap_ecred_conn_req *req;
 #if 0
@@ -1889,30 +2067,30 @@ static void le_ecred_conn_req(struct bt_l2cap *l2cap, uint8_t ident,
 	}
 
 	/* Check if connection has minimum required security level */
-#if (defined (CONFIG_BT_BREDR) && (CONFIG_BT_BREDR > 0U))
-    if (BT_CONN_TYPE_BR == conn->type)
-    {
-	    result = br_l2cap_check_security(conn, server);
-        if ((BT_L2CAP_LE_ERR_AUTHENTICATION_PENDING == result) || (BT_L2CAP_LE_ERR_AUTHORIZATION_PENDING == result))
-        {
-            if (NULL == conn->br.pending_l2cap_ecbfc_req)
-            {
-                net_buf_ref(buf);
-                conn->br.pending_l2cap_ecbfc_req = buf;
-                net_buf_push(buf, sizeof(*req));
-                net_buf_push(buf, sizeof(struct bt_l2cap_sig_hdr));
-            }
-            else
-            {
-                result = BT_L2CAP_LE_ERR_NO_RESOURCES;
-            }
-        }
-    }
-    else
-#endif /* CONFIG_BT_BREDR */
-    {
-        result = l2cap_check_security(conn, server);
-    }
+#if (defined (CONFIG_BT_CLASSIC) && (CONFIG_BT_CLASSIC > 0U))
+	if (BT_CONN_TYPE_BR == conn->type)
+	{
+		result = br_l2cap_check_security(conn, server);
+		if ((BT_L2CAP_LE_ERR_AUTHENTICATION_PENDING == result) || (BT_L2CAP_LE_ERR_AUTHORIZATION_PENDING == result))
+		{
+			if (NULL == conn->br.pending_l2cap_ecbfc_req)
+			{
+				net_buf_ref(buf);
+				conn->br.pending_l2cap_ecbfc_req = buf;
+				net_buf_push(buf, sizeof(*req));
+				net_buf_push(buf, sizeof(struct bt_l2cap_sig_hdr));
+			}
+			else
+			{
+				result = BT_L2CAP_LE_ERR_NO_RESOURCES;
+			}
+		}
+	}
+	else
+#endif /* CONFIG_BT_CLASSIC */
+	{
+		result = l2cap_check_security(conn, server);
+	}
 
 	if (result != BT_L2CAP_LE_SUCCESS) {
 		goto response;
@@ -1925,6 +2103,7 @@ static void le_ecred_conn_req(struct bt_l2cap *l2cap, uint8_t ident,
 		rc = l2cap_chan_accept(conn, server, scid, mtu, mps,
 				credits, &chan[i]);
 		if (rc != BT_L2CAP_LE_SUCCESS) {
+			LOG_ERR("Fail to accept conn PSM 0x%04x scid 0x%04X (err %d)", psm, scid, rc);
 			/* Walkaround, here we just accept the result if lcid is not 0x0000,
 			 because the error code already packed in ethermind, so we only need to give others cid result. */
 			if(0x0000 != lcid[i])
@@ -1934,20 +2113,20 @@ static void le_ecred_conn_req(struct bt_l2cap *l2cap, uint8_t ident,
 		}
 		switch (rc) {
 		case BT_L2CAP_LE_SUCCESS:
-#if (defined(CONFIG_BT_BREDR) && (CONFIG_BT_BREDR > 0U))
-            if (BT_CONN_TYPE_BR == conn->type)
-            {
-                br_ch = BR_CHAN(chan[i]);
-                br_ch->rx.cid = lcid[i];
-			    dcid[i++] = sys_cpu_to_le16(br_ch->rx.cid);
-            }
-            else
-#endif /* CONFIG_BT_BREDR */
-            {
-                ch = BT_L2CAP_LE_CHAN(chan[i]);
-                ch->rx.cid = lcid[i];
-			    dcid[i++] = sys_cpu_to_le16(ch->rx.cid);
-            }
+#if (defined(CONFIG_BT_CLASSIC) && (CONFIG_BT_CLASSIC > 0U))
+			if (BT_CONN_TYPE_BR == conn->type)
+			{
+				br_ch = BR_CHAN(chan[i]);
+				br_ch->rx.cid = lcid[i];
+				dcid[i++] = sys_cpu_to_le16(br_ch->rx.cid);
+			}
+			else
+#endif /* CONFIG_BT_CLASSIC */
+			{
+				ch = BT_L2CAP_LE_CHAN(chan[i]);
+				ch->rx.cid = lcid[i];
+				dcid[i++] = sys_cpu_to_le16(ch->rx.cid);
+			}
 			continue;
 		/* Some connections refused – invalid Source CID */
 		/* Some connections refused – Source CID already allocated */
@@ -1985,8 +2164,10 @@ response:
 
 	l2cap_send(conn, BT_L2CAP_CID_LE_SIG, buf);
 #endif
+
 	(void)memset(&ethermind_ecbfc_connect_param, 0, sizeof(ethermind_ecbfc_connect_param));
-#if (defined(CONFIG_BT_BREDR) && (CONFIG_BT_BREDR > 0U))
+
+#if (defined(CONFIG_BT_CLASSIC) && (CONFIG_BT_CLASSIC > 0U))
 	if (BT_CONN_TYPE_BR == conn->type)
 	{
 		if(br_ch)
@@ -1997,7 +2178,7 @@ response:
 		}
 	}
 	else
-#endif /* CONFIG_BT_BREDR */
+#endif /* CONFIG_BT_CLASSIC */
 	{
 		if(ch)
 		{
@@ -2012,6 +2193,7 @@ response:
 		ethermind_ecbfc_connect_param.cid[index] = dcid[index];
 	}
 
+	LOG_DBG("conn %p cid count %d result %d", conn, req_cid_count, result);
 	(void)l2ca_ecbfc_connect_rsp
 	(
 		lcid,
@@ -2059,49 +2241,49 @@ static void le_ecred_reconf_req(struct bt_l2cap *l2cap, uint8_t ident,
 	while (buf->len >= sizeof(scid)) {
 		struct bt_l2cap_chan *chan;
 		scid = net_buf_pull_le16(buf);
-#if (defined (CONFIG_BT_BREDR) && (CONFIG_BT_BREDR > 0U))
-        if (BT_CONN_TYPE_BR == conn->type)
-        {
-		    chan = bt_l2cap_br_lookup_tx_cid(conn, scid);
-        }
-        else
-#endif /* CONFIG_BT_BREDR */
-        {
-		    chan = bt_l2cap_le_lookup_tx_cid(conn, scid);
-        }
+#if (defined (CONFIG_BT_CLASSIC) && (CONFIG_BT_CLASSIC > 0U))
+		if (BT_CONN_TYPE_BR == conn->type)
+		{
+			chan = bt_l2cap_br_lookup_tx_cid(conn, scid);
+		}
+		else
+#endif /* CONFIG_BT_CLASSIC */
+		{
+			chan = bt_l2cap_le_lookup_tx_cid(conn, scid);
+		}
 		if (!chan) {
 			result = BT_L2CAP_RECONF_INVALID_CID;
 			goto response;
 		}
 
-#if (defined (CONFIG_BT_BREDR) && (CONFIG_BT_BREDR > 0U))
-        if (BT_CONN_TYPE_BR == conn->type)
-        {
-            if (BR_CHAN(chan)->tx.mtu > mtu) {
-                LOG_ERR("chan %p decreased MTU %u -> %u", chan,
-                    BR_CHAN(chan)->tx.mtu, mtu);
-                result = BT_L2CAP_RECONF_INVALID_MTU;
-                goto response;
-            }
+#if (defined (CONFIG_BT_CLASSIC) && (CONFIG_BT_CLASSIC > 0U))
+		if (BT_CONN_TYPE_BR == conn->type)
+		{
+			if (BR_CHAN(chan)->tx.mtu > mtu) {
+				LOG_ERR("chan %p decreased MTU %u -> %u", chan,
+				BR_CHAN(chan)->tx.mtu, mtu);
+				result = BT_L2CAP_RECONF_INVALID_MTU;
+				goto response;
+			}
 
-            if (BR_CHAN(chan)->tx.mps > mps) {
-                mps_reduced = true;
-            }
-        }
-        else
-#endif /* CONFIG_BT_BREDR */
-        {
-            if (BT_L2CAP_LE_CHAN(chan)->tx.mtu > mtu) {
-                LOG_ERR("chan %p decreased MTU %u -> %u", chan,
-                    BT_L2CAP_LE_CHAN(chan)->tx.mtu, mtu);
-                result = BT_L2CAP_RECONF_INVALID_MTU;
-                goto response;
-            }
+			if (BR_CHAN(chan)->tx.mps > mps) {
+				mps_reduced = true;
+			}
+		}
+		else
+#endif /* CONFIG_BT_CLASSIC */
+		{
+			if (BT_L2CAP_LE_CHAN(chan)->tx.mtu > mtu) {
+				LOG_ERR("chan %p decreased MTU %u -> %u", chan,
+					BT_L2CAP_LE_CHAN(chan)->tx.mtu, mtu);
+				result = BT_L2CAP_RECONF_INVALID_MTU;
+				goto response;
+			}
 
-            if (BT_L2CAP_LE_CHAN(chan)->tx.mps > mps) {
-                mps_reduced = true;
-            }
-        }
+			if (BT_L2CAP_LE_CHAN(chan)->tx.mps > mps) {
+				mps_reduced = true;
+			}
+		}
 
 		chans[chan_count] = chan;
 		chan_count++;
@@ -2117,18 +2299,18 @@ static void le_ecred_reconf_req(struct bt_l2cap *l2cap, uint8_t ident,
 	}
 
 	for (int i = 0; i < chan_count; i++) {
-#if (defined (CONFIG_BT_BREDR) && (CONFIG_BT_BREDR > 0U))
-        if (BT_CONN_TYPE_BR == conn->type)
-        {
-            BR_CHAN(chans[i])->tx.mtu = mtu;
-            BR_CHAN(chans[i])->tx.mps = mps;
-        }
-        else
-#endif /* CONFIG_BT_BREDR */
-        {
-            BT_L2CAP_LE_CHAN(chans[i])->tx.mtu = mtu;
-            BT_L2CAP_LE_CHAN(chans[i])->tx.mps = mps;
-        }
+#if (defined (CONFIG_BT_CLASSIC) && (CONFIG_BT_CLASSIC > 0U))
+		if (BT_CONN_TYPE_BR == conn->type)
+		{
+			BR_CHAN(chans[i])->tx.mtu = mtu;
+			BR_CHAN(chans[i])->tx.mps = mps;
+		}
+		else
+#endif /* CONFIG_BT_CLASSIC */
+		{
+			BT_L2CAP_LE_CHAN(chans[i])->tx.mtu = mtu;
+			BT_L2CAP_LE_CHAN(chans[i])->tx.mps = mps;
+		}
 
 		if (chans[i]->ops->reconfigured) {
 			chans[i]->ops->reconfigured(chans[i]);
@@ -2147,26 +2329,26 @@ response:
 
 	l2cap_send(conn, BT_L2CAP_CID_LE_SIG, buf);
 #endif
-        for (int i = 0; i < chan_count; i++)
-        {
-#if (defined (CONFIG_BT_BREDR) && (CONFIG_BT_BREDR > 0U))
-            if (BT_CONN_TYPE_BR == conn->type)
-            {
-                lcids[i] = BR_CHAN(chans[i])->rx.cid;
-            }
-            else
-#endif /* CONFIG_BT_BREDR */
-            {
-                lcids[i] = BT_L2CAP_LE_CHAN(chans[i])->rx.cid;
-            }
-        }
+	for (int i = 0; i < chan_count; i++)
+	{
+#if (defined (CONFIG_BT_CLASSIC) && (CONFIG_BT_CLASSIC > 0U))
+		if (BT_CONN_TYPE_BR == conn->type)
+		{
+			lcids[i] = BR_CHAN(chans[i])->rx.cid;
+		}
+		else
+#endif /* CONFIG_BT_CLASSIC */
+		{
+			lcids[i] = BT_L2CAP_LE_CHAN(chans[i])->rx.cid;
+		}
+	}
 
-        (void)l2ca_ecbfc_reconfig_rsp
-         (
-             lcids,
-             chan_count,
-             result
-         );
+	(void)l2ca_ecbfc_reconfig_rsp
+	(
+		lcids,
+		chan_count,
+		result
+	);
 }
 
 static void le_ecred_reconf_rsp(struct bt_l2cap *l2cap, uint8_t ident,
@@ -2175,9 +2357,9 @@ static void le_ecred_reconf_rsp(struct bt_l2cap *l2cap, uint8_t ident,
 	struct bt_conn *conn = l2cap->chan.chan.conn;
 	struct bt_l2cap_ecred_reconf_rsp *rsp;
 	struct bt_l2cap_le_chan *ch;
-#if (defined (CONFIG_BT_BREDR) && (CONFIG_BT_BREDR > 0U))
+#if (defined (CONFIG_BT_CLASSIC) && (CONFIG_BT_CLASSIC > 0U))
 	struct bt_l2cap_br_chan *br_ch;
-#endif /* CONFIG_BT_BREDR */
+#endif /* CONFIG_BT_CLASSIC */
 	uint16_t result;
 
 	if (buf->len < sizeof(*rsp)) {
@@ -2188,54 +2370,54 @@ static void le_ecred_reconf_rsp(struct bt_l2cap *l2cap, uint8_t ident,
 	rsp = net_buf_pull_mem(buf, sizeof(*rsp));
 	result = sys_le16_to_cpu(rsp->result);
 
-#if (defined (CONFIG_BT_BREDR) && (CONFIG_BT_BREDR > 0U))
-    if (BT_CONN_TYPE_BR == conn->type)
-    {
-        while ((br_ch = br_l2cap_lookup_ident(conn, ident))) {
+#if (defined (CONFIG_BT_CLASSIC) && (CONFIG_BT_CLASSIC > 0U))
+	if (BT_CONN_TYPE_BR == conn->type)
+	{
+		while ((br_ch = br_l2cap_lookup_ident(conn, ident))) {
 #if 0
-            /* Stop timer started on REQ send. The timer is only set on one
-            * of the channels, but we don't want to make assumptions on
-            * which one it is.
-            */
-            k_work_cancel_delayable(&br_ch->rtx_work);
+			/* Stop timer started on REQ send. The timer is only set on one
+			* of the channels, but we don't want to make assumptions on
+			* which one it is.
+			*/
+			k_work_cancel_delayable(&br_ch->rtx_work);
 #endif
 
-            if (result == BT_L2CAP_LE_SUCCESS) {
-                br_ch->rx.mtu = br_ch->pending_rx_mtu;
+			if (result == BT_L2CAP_LE_SUCCESS) {
+				br_ch->rx.mtu = br_ch->pending_rx_mtu;
 				br_ch->rx.mps = br_ch->pending_rx_mps;
-            }
+			}
 
-            br_ch->pending_rx_mtu = 0;
+			br_ch->pending_rx_mtu = 0;
 			br_ch->pending_rx_mps = 0;
-            br_ch->ident = 0U;
+			br_ch->ident = 0U;
 
-            if (br_ch->chan.ops->reconfigured) {
-                br_ch->chan.ops->reconfigured(&br_ch->chan);
-            }
-        }
-    }
-    else
-#endif /* CONFIG_BT_BREDR */
-    {
-        while ((ch = l2cap_lookup_ident(conn, ident))) {
-            /* Stop timer started on REQ send. The timer is only set on one
-            * of the channels, but we don't want to make assumptions on
-            * which one it is.
-            */
-            k_work_cancel_delayable(&ch->rtx_work);
+			if (br_ch->chan.ops->reconfigured) {
+				br_ch->chan.ops->reconfigured(&br_ch->chan);
+			}
+		}
+	}
+	else
+#endif /* CONFIG_BT_CLASSIC */
+	{
+		while ((ch = l2cap_lookup_ident(conn, ident))) {
+			/* Stop timer started on REQ send. The timer is only set on one
+			* of the channels, but we don't want to make assumptions on
+			* which one it is.
+			*/
+			k_work_cancel_delayable(&ch->rtx_work);
 
-            if (result == BT_L2CAP_LE_SUCCESS) {
-                ch->rx.mtu = ch->pending_rx_mtu;
-            }
+			if (result == BT_L2CAP_LE_SUCCESS) {
+				ch->rx.mtu = ch->pending_rx_mtu;
+			}
 
-            ch->pending_rx_mtu = 0;
-            ch->ident = 0U;
+			ch->pending_rx_mtu = 0;
+			ch->ident = 0U;
 
-            if (ch->chan.ops->reconfigured) {
-                ch->chan.ops->reconfigured(&ch->chan);
-            }
-        }
-    }
+			if (ch->chan.ops->reconfigured) {
+				ch->chan.ops->reconfigured(&ch->chan);
+			}
+		}
+	}
 }
 #endif /* defined(CONFIG_BT_L2CAP_ECRED) */
 
@@ -2250,7 +2432,7 @@ static struct bt_l2cap_le_chan *l2cap_remove_rx_cid(struct bt_conn *conn,
 		return NULL;
 	}
 
-	SYS_SLIST_FOR_EACH_CONTAINER(&conn->channels, chan, node, struct bt_l2cap_chan) {
+	SYS_SLIST_FOR_EACH_CONTAINER(&conn->channels, chan, node) {
 		if (BT_L2CAP_LE_CHAN(chan)->rx.cid == cid) {
 			sys_slist_remove(&conn->channels, prev, &chan->node);
 			return BT_L2CAP_LE_CHAN(chan);
@@ -2321,7 +2503,7 @@ static void le_disconn_req(struct bt_l2cap *l2cap, uint8_t ident,
 
 static int l2cap_change_security(struct bt_l2cap_le_chan *chan, uint16_t err)
 {
-#if ((defined(CONFIG_BT_SMP) && ((CONFIG_BT_SMP) > 0U)) || (defined(CONFIG_BT_BREDR) && ((CONFIG_BT_BREDR) > 0U)))
+#if ((defined(CONFIG_BT_SMP) && ((CONFIG_BT_SMP) > 0U)) || (defined(CONFIG_BT_CLASSIC) && ((CONFIG_BT_CLASSIC) > 0U)))
 	struct bt_conn *conn = chan->chan.conn;
 #endif
 	bt_security_t sec;
@@ -2331,7 +2513,7 @@ static int l2cap_change_security(struct bt_l2cap_le_chan *chan, uint16_t err)
 			    BT_L2CAP_STATUS_ENCRYPT_PENDING)) {
 		return -EINPROGRESS;
 	}
-#if ((defined(CONFIG_BT_SMP) && ((CONFIG_BT_SMP) > 0U)) || (defined(CONFIG_BT_BREDR) && ((CONFIG_BT_BREDR) > 0U)))
+#if ((defined(CONFIG_BT_SMP) && ((CONFIG_BT_SMP) > 0U)) || (defined(CONFIG_BT_CLASSIC) && ((CONFIG_BT_CLASSIC) > 0U)))
 	switch (err) {
 	case BT_L2CAP_LE_ERR_ENCRYPTION:
 		if (conn->sec_level >= BT_SECURITY_L2) {
@@ -2372,7 +2554,7 @@ static int l2cap_change_security(struct bt_l2cap_le_chan *chan, uint16_t err)
 
 static int br_l2cap_change_security(struct bt_l2cap_br_chan *chan, uint16_t err)
 {
-#if ((defined(CONFIG_BT_SMP) && ((CONFIG_BT_SMP) > 0U)) || (defined(CONFIG_BT_BREDR) && ((CONFIG_BT_BREDR) > 0U)))
+#if ((defined(CONFIG_BT_SMP) && ((CONFIG_BT_SMP) > 0U)) || (defined(CONFIG_BT_CLASSIC) && ((CONFIG_BT_CLASSIC) > 0U)))
 	struct bt_conn *conn = chan->chan.conn;
 #endif
 	bt_security_t sec;
@@ -2382,7 +2564,7 @@ static int br_l2cap_change_security(struct bt_l2cap_br_chan *chan, uint16_t err)
 			    BT_L2CAP_STATUS_ENCRYPT_PENDING)) {
 		return -EINPROGRESS;
 	}
-#if ((defined(CONFIG_BT_SMP) && ((CONFIG_BT_SMP) > 0U)) || (defined(CONFIG_BT_BREDR) && ((CONFIG_BT_BREDR) > 0U)))
+#if ((defined(CONFIG_BT_SMP) && ((CONFIG_BT_SMP) > 0U)) || (defined(CONFIG_BT_CLASSIC) && ((CONFIG_BT_CLASSIC) > 0U)))
 	switch (err) {
 	case BT_L2CAP_LE_ERR_ENCRYPTION:
 		if (conn->sec_level >= BT_SECURITY_L2) {
@@ -2427,9 +2609,9 @@ static void le_ecred_conn_rsp(struct bt_l2cap *l2cap, uint8_t ident,
 {
 	struct bt_conn *conn = l2cap->chan.chan.conn;
 	struct bt_l2cap_le_chan *chan;
-#if (defined (CONFIG_BT_BREDR) && (CONFIG_BT_BREDR > 0U))
+#if (defined (CONFIG_BT_CLASSIC) && (CONFIG_BT_CLASSIC > 0U))
     struct bt_l2cap_br_chan *br_chan = NULL;
-#endif /* CONFIG_BT_BREDR */
+#endif /* CONFIG_BT_CLASSIC */
 	struct bt_l2cap_ecred_conn_rsp *rsp;
 	uint16_t dcid, mtu, mps, credits, result, psm;
 	uint8_t attempted = 0;
@@ -2449,67 +2631,67 @@ static void le_ecred_conn_rsp(struct bt_l2cap *l2cap, uint8_t ident,
 	LOG_DBG("mtu 0x%04x mps 0x%04x credits 0x%04x result %u", mtu,
 	       mps, credits, result);
 
-#if (defined (CONFIG_BT_BREDR) && (CONFIG_BT_BREDR > 0U))
-    if (BT_CONN_TYPE_BR == conn->type)
-    {
-        br_chan = br_l2cap_lookup_ident(conn, ident);
+#if (defined (CONFIG_BT_CLASSIC) && (CONFIG_BT_CLASSIC > 0U))
+	if (BT_CONN_TYPE_BR == conn->type)
+	{
+		br_chan = br_l2cap_lookup_ident(conn, ident);
 
-        if (br_chan) {
-            psm = br_chan->psm;
-        } else {
-            psm = 0x0000;
-        }
-    }
-    else
-#endif /* CONFIG_BT_BREDR */
-    {
-        chan = l2cap_lookup_ident(conn, ident);
+		if (br_chan) {
+			psm = br_chan->psm;
+		} else {
+			psm = 0x0000;
+		}
+	}
+	else
+#endif /* CONFIG_BT_CLASSIC */
+	{
+		chan = l2cap_lookup_ident(conn, ident);
 
-        if (chan) {
-            psm = chan->psm;
-        } else {
-            psm = 0x0000;
-        }
-    }
+		if (chan) {
+			psm = chan->psm;
+		} else {
+			psm = 0x0000;
+		}
+	}
 
 	switch (result) {
 	case BT_L2CAP_LE_ERR_AUTHENTICATION:
 	case BT_L2CAP_LE_ERR_ENCRYPTION:
-#if (defined (CONFIG_BT_BREDR) && (CONFIG_BT_BREDR > 0U))
-        if (BT_CONN_TYPE_BR == conn->type)
-        {
-            while ((br_chan = br_l2cap_lookup_ident(conn, ident))) {
-                /* Cancel RTX work */
+#if (defined (CONFIG_BT_CLASSIC) && (CONFIG_BT_CLASSIC > 0U))
+	if (BT_CONN_TYPE_BR == conn->type)
+	{
+		while ((br_chan = br_l2cap_lookup_ident(conn, ident))) {
+			/* Cancel RTX work */
 #if 0
-                k_work_cancel_delayable(&chan->rtx_work);
+			k_work_cancel_delayable(&chan->rtx_work);
 #endif
 
-                /* If security needs changing wait it to be completed */
-                if (!br_l2cap_change_security(br_chan, result)) {
-                    return;
-                }
-                bt_l2cap_chan_remove(conn, &br_chan->chan);
-                bt_l2cap_chan_del(&br_chan->chan);
-            }
-        }
-        else
-#endif /* CONFIG_BT_BREDR */
-        {
-            while ((chan = l2cap_lookup_ident(conn, ident))) {
-                /* Cancel RTX work */
+			/* If security needs changing wait it to be completed */
+			if (!br_l2cap_change_security(br_chan, result)) {
+				return;
+			}
+			bt_l2cap_chan_remove(conn, &br_chan->chan);
+			bt_l2cap_chan_del(&br_chan->chan);
+		}
+	}
+	else
+#endif /* CONFIG_BT_CLASSIC */
+	{
+		while ((chan = l2cap_lookup_ident(conn, ident))) {
+			/* Cancel RTX work */
 #if 0
-                k_work_cancel_delayable(&chan->rtx_work);
+			k_work_cancel_delayable(&chan->rtx_work);
 #endif
 
-                /* If security needs changing wait it to be completed */
-                if (!l2cap_change_security(chan, result)) {
-                    return;
-                }
-                bt_l2cap_chan_remove(conn, &chan->chan);
-                bt_l2cap_chan_del(&chan->chan);
-            }
-        }
-		break;
+			/* If security needs changing wait it to be completed */
+			if (!l2cap_change_security(chan, result)) {
+				return;
+			}
+			bt_l2cap_chan_remove(conn, &chan->chan);
+			bt_l2cap_chan_del(&chan->chan);
+		}
+	}
+	break;
 	case BT_L2CAP_LE_SUCCESS:
 	/* Some connections refused – invalid Source CID */
 	case BT_L2CAP_LE_ERR_INVALID_SCID:
@@ -2517,7 +2699,7 @@ static void le_ecred_conn_rsp(struct bt_l2cap *l2cap, uint8_t ident,
 	case BT_L2CAP_LE_ERR_SCID_IN_USE:
 	/* Some connections refused – not enough resources available */
 	case BT_L2CAP_LE_ERR_NO_RESOURCES:
-    #if (defined (CONFIG_BT_BREDR) && (CONFIG_BT_BREDR > 0U))
+#if (defined (CONFIG_BT_CLASSIC) && (CONFIG_BT_CLASSIC > 0U))
         if (BT_CONN_TYPE_BR == conn->type)
         {
             while ((br_chan = br_l2cap_lookup_ident(conn, ident))) {
@@ -2585,7 +2767,7 @@ static void le_ecred_conn_rsp(struct bt_l2cap *l2cap, uint8_t ident,
             }
         }
         else
-#endif /* CONFIG_BT_BREDR */
+#endif /* CONFIG_BT_CLASSIC */
         {
             while ((chan = l2cap_lookup_ident(conn, ident))) {
                 struct bt_l2cap_chan *c;
@@ -2651,10 +2833,10 @@ static void le_ecred_conn_rsp(struct bt_l2cap *l2cap, uint8_t ident,
                 succeeded++;
             }
         }
-		break;
+	break;
 	case BT_L2CAP_LE_ERR_PSM_NOT_SUPP:
 	default:
-#if (defined (CONFIG_BT_BREDR) && (CONFIG_BT_BREDR > 0U))
+#if (defined (CONFIG_BT_CLASSIC) && (CONFIG_BT_CLASSIC > 0U))
         if (BT_CONN_TYPE_BR == conn->type)
         {
             while ((br_chan = br_l2cap_remove_ident(conn, ident))) {
@@ -2662,13 +2844,13 @@ static void le_ecred_conn_rsp(struct bt_l2cap *l2cap, uint8_t ident,
             }
         }
         else
-#endif /* CONFIG_BT_BREDR */
+#endif /* CONFIG_BT_CLASSIC */
         {
             while ((chan = l2cap_remove_ident(conn, ident))) {
                 bt_l2cap_chan_del(&chan->chan);
             }
         }
-		break;
+	break;
 	}
 
 	if (ecred_cb && ecred_cb->ecred_conn_rsp) {
@@ -2847,75 +3029,7 @@ segment:
 	return seg;
 }
 #endif
-static void l2cap_chan_tx_resume(struct bt_l2cap_le_chan *ch)
-{
-	if (!atomic_get(&ch->tx.credits) ||
-	    ((0 == OSA_MsgQAvailableMsgs(ch->tx_queue.queue)) && !ch->tx_buf)) {
-		return;
-	}
-#if 1
-	k_work_submit(&ch->tx_work);
-#endif
-}
 
-#if (defined(CONFIG_BT_L2CAP_DYNAMIC_CHANNEL) && (CONFIG_BT_L2CAP_DYNAMIC_CHANNEL > 0))
-static void resume_all_channels(struct bt_conn *conn, void *data)
-{
-	struct bt_l2cap_chan *chan;
-
-	SYS_SLIST_FOR_EACH_CONTAINER(&conn->channels, chan, node, struct bt_l2cap_chan) {
-		l2cap_chan_tx_resume(BT_L2CAP_LE_CHAN(chan));
-	}
-}
-#endif
-
-static void l2cap_chan_sdu_sent(struct bt_conn *conn, void *user_data, int err)
-{
-	struct l2cap_tx_meta_data *data = user_data;
-	struct bt_l2cap_chan *chan;
-	bt_conn_tx_cb_t cb = data->cb;
-	void *cb_user_data = data->user_data;
-	uint16_t cid = data->cid;
-
-	LOG_DBG("conn %p CID 0x%04x err %d", conn, cid, err);
-
-	if ((uint32_t)cb_user_data != 0xFFFFFFFFu)
-	{
-		free_tx_meta_data(data);
-	}
-
-	if (err) {
-		if (cb) {
-			cb(conn, cb_user_data, err);
-		}
-
-		return;
-	}
-
-	chan = bt_l2cap_le_lookup_tx_cid(conn, cid);
-	if (!chan) {
-		/* Received SDU sent callback for disconnected channel */
-		return;
-	}
-
-	if (chan->ops->sent) {
-		chan->ops->sent(chan);
-	}
-
-	if (cb) {
-		cb(conn, cb_user_data, 0);
-	}
-
-	/* Resume the current channel */
-	l2cap_chan_tx_resume(BT_L2CAP_LE_CHAN(chan));
-
-	if (IS_ENABLED(CONFIG_BT_L2CAP_DYNAMIC_CHANNEL)) {
-		/* Resume all other channels in case one might be stuck.
-		 * The current channel has already been given priority.
-		 */
-		bt_conn_foreach(BT_CONN_TYPE_LE, resume_all_channels, NULL);
-	}
-}
 #if 0
 static void l2cap_chan_seg_sent(struct bt_conn *conn, void *user_data, int err)
 {
@@ -3091,28 +3205,19 @@ static int l2cap_chan_le_send_sdu(struct bt_l2cap_le_chan *ch,
 
 	return ret;
 #else
-    API_RESULT retval;
+	API_RESULT retval;
 
-	if (NULL != ch->_sdu)
-	{
-		return -EAGAIN;
-	}
-
-	ch->_sdu = *buf;
-	ch->_sdu_len = (*buf)->len;
-    LOG_DBG("ch %p cid 0x%04x buf %p total_len %u\r\n", ch, ch->rx.cid, *buf,
-       ch->_sdu_len);
+	LOG_DBG("ch %p cid 0x%04x buf %p total_len %u\r\n", ch, ch->rx.cid, *buf,
+		ch->_sdu_len);
 	retval = l2ca_channel_data_write
-				(
-					&ch->chan.conn->deviceId,
-					ch->rx.cid,
-					(*buf)->data,
-					(*buf)->len
-				);
+		(
+			&ch->chan.conn->deviceId,
+			ch->rx.cid,
+			(*buf)->data,
+			(*buf)->len
+		);
 	if(retval != API_SUCCESS)
 	{
-		ch->_sdu = NULL;
-		ch->_sdu_len = 0;
 		return -EAGAIN;
 	}
 	return (*buf)->len;
@@ -3156,8 +3261,6 @@ static void le_credits(struct bt_l2cap *l2cap, uint8_t ident,
 
 	LOG_DBG("chan %p total credits %lu",
 	       le_chan, atomic_get(&le_chan->tx.credits));
-
-	l2cap_chan_tx_resume(le_chan);
 }
 
 static void reject_cmd(struct bt_l2cap *l2cap, uint8_t ident,
@@ -3332,11 +3435,11 @@ static void l2cap_chan_send_credits(struct bt_l2cap_le_chan *chan,
 	/* __ASSERT_NO_MSG(atomic_get(&chan->rx.credits) == 0); */
 	atomic_set(&chan->rx.credits, credits);
 
-    (void)l2ca_cbfc_send_flow_control_credit
-         (
-             sys_cpu_to_le16(chan->rx.cid),
-             sys_cpu_to_le16(credits)
-         );
+	(void)l2ca_cbfc_send_flow_control_credit
+	(
+		sys_cpu_to_le16(chan->rx.cid),
+		sys_cpu_to_le16(credits)
+	);
 
 	LOG_DBG("chan %p credits %lu", chan, atomic_get(&chan->rx.credits));
 }
@@ -3362,6 +3465,7 @@ static void l2cap_chan_update_credits(struct bt_l2cap_le_chan *chan,
 	l2cap_chan_send_credits(chan, buf, credits);
 }
 #endif
+
 #if (defined(CONFIG_BT_L2CAP_SEG_RECV) && (CONFIG_BT_L2CAP_SEG_RECV > 0))
 static int l2cap_chan_send_credits_pdu(struct bt_conn *conn, uint16_t cid, uint16_t credits)
 {
@@ -3736,7 +3840,7 @@ static void l2cap_chan_recv_queue(struct bt_l2cap_le_chan *chan,
 		return;
 	}
 
-	net_buf_put(chan->rx_queue.queue, buf);
+	net_buf_put(&chan->rx_queue, buf);
 #if 1
 	k_work_submit(&chan->rx_work);
 #endif
@@ -3776,7 +3880,7 @@ void bt_l2cap_recv(struct bt_conn *conn, struct net_buf *buf, bool complete)
 	struct bt_l2cap_chan *chan;
 	uint16_t cid;
 
-	if (IS_ENABLED(CONFIG_BT_BREDR) &&
+	if (IS_ENABLED(CONFIG_BT_CLASSIC) &&
 	    conn->type == BT_CONN_TYPE_BR) {
 		bt_l2cap_br_recv(conn, buf);
 		return;
@@ -3831,6 +3935,7 @@ int bt_l2cap_update_conn_param(struct bt_conn *conn,
 
 	return 0;
 #endif
+#if !(defined(CONFIG_BT_BLE_DISABLE) && ((CONFIG_BT_BLE_DISABLE) > 0U))
     API_RESULT retval;
 
     retval = BT_l2cap_le_connection_param_update_request
@@ -3847,6 +3952,9 @@ int bt_l2cap_update_conn_param(struct bt_conn *conn,
     }
 
     return 0;
+#else
+	return -ENOTSUP;
+#endif /* CONFIG_BT_BLE_DISABLE */
 }
 
 static void l2cap_connected(struct bt_l2cap_chan *chan)
@@ -3903,6 +4011,7 @@ static int l2cap_accept(struct bt_conn *conn, struct bt_l2cap_chan **chan)
 
 BT_L2CAP_CHANNEL_DEFINE(le_fixed_chan, BT_L2CAP_CID_LE_SIG, l2cap_accept, NULL);
 
+#if !(defined(CONFIG_BT_BLE_DISABLE) && ((CONFIG_BT_BLE_DISABLE) > 0U))
 static void ethermind_l2cap_le_callback
      (
          DEVICE_HANDLE    * handle,
@@ -4056,41 +4165,43 @@ static void ethermind_l2cap_le_callback
         LOG_DBG("\tbd_addr_type : %02X\n", bd_addr_type);
     }
 }
+#endif /* CONFIG_BT_BLE_DISABLE */
 
 void bt_l2cap_init(void)
 {
-    API_RESULT retval;
+#if (defined(CONFIG_BT_L2CAP_DYNAMIC_CHANNEL) && ((CONFIG_BT_L2CAP_DYNAMIC_CHANNEL) > 0U))
+	struct bt_l2cap_server *server, *next;
+	sys_slist_t temp;
+#endif /* CONFIG_BT_L2CAP_DYNAMIC_CHANNEL */
 
-	if (IS_ENABLED(CONFIG_BT_BREDR)) {
+	if (IS_ENABLED(CONFIG_BT_CLASSIC)) {
 		bt_l2cap_br_init();
 	}
 
-    retval = BT_l2cap_register_le_event_cb(ethermind_l2cap_le_callback);
+#if (defined(CONFIG_BT_L2CAP_DYNAMIC_CHANNEL) && ((CONFIG_BT_L2CAP_DYNAMIC_CHANNEL) > 0U))
+	/* Clear register server. */
+	temp = servers;
+	sys_slist_init(&servers);
 
-    if (retval != API_SUCCESS)
-    {
-        LOG_ERR("ERROR!!! retval = 0x%04X", retval);
-    }
-
-#if (defined(CONFIG_BT_L2CAP_DYNAMIC_CHANNEL) && (CONFIG_BT_L2CAP_DYNAMIC_CHANNEL > 0U))
-    if (NULL == free_l2cap_tx_meta_data)
-    {
-        osa_status_t ret = OSA_MsgQCreate((osa_msgq_handle_t)free_l2cap_tx_meta_data_handle, CONFIG_BT_CONN_TX_MAX, sizeof(void*));
-        assert(KOSA_StatusSuccess == ret);
-        if (KOSA_StatusSuccess != ret)
-        {
-            return;
-        }
-        free_l2cap_tx_meta_data = (osa_msgq_handle_t)free_l2cap_tx_meta_data_handle;
-    }
-	for (size_t i = 0; i < ARRAY_SIZE(l2cap_tx_meta_data_storage); i++) {
-		(void)memset(&l2cap_tx_meta_data_storage[i], 0,
-					sizeof(l2cap_tx_meta_data_storage[i]));
-
-                void *msg = (void *)&l2cap_tx_meta_data_storage[i];
-		OSA_MsgQPut(free_l2cap_tx_meta_data, (void*)&msg);
+	/* Recover the L2CAP servers */
+	SYS_SLIST_FOR_EACH_CONTAINER_SAFE(&temp, server, next, node) {
+		int err = bt_l2cap_server_register(server);
+		if (err != 0) {
+			LOG_ERR("Fail to register L2CAP server %p", server);
+		}
 	}
 #endif /* CONFIG_BT_L2CAP_DYNAMIC_CHANNEL */
+
+#if !(defined(CONFIG_BT_BLE_DISABLE) && ((CONFIG_BT_BLE_DISABLE) > 0U))
+	API_RESULT retval;
+
+	retval = BT_l2cap_register_le_event_cb(ethermind_l2cap_le_callback);
+
+	if (retval != API_SUCCESS)
+	{
+		LOG_ERR("ERROR!!! retval = 0x%04X", retval);
+	}
+#endif /* CONFIG_BT_BLE_DISABLE */
 }
 
 #if (defined(CONFIG_BT_L2CAP_DYNAMIC_CHANNEL) && ((CONFIG_BT_L2CAP_DYNAMIC_CHANNEL) > 0U))
@@ -4112,7 +4223,7 @@ static int l2cap_le_connect(struct bt_conn *conn, struct bt_l2cap_le_chan *ch,
 
 	ch->psm = psm;
 
-#if ((defined(CONFIG_BT_SMP) && ((CONFIG_BT_SMP) > 0U)) || (defined(CONFIG_BT_BREDR) && ((CONFIG_BT_BREDR) > 0U)))
+#if ((defined(CONFIG_BT_SMP) && ((CONFIG_BT_SMP) > 0U)) || (defined(CONFIG_BT_CLASSIC) && ((CONFIG_BT_CLASSIC) > 0U)))
 	if (conn->sec_level < ch->required_sec_level) {
 		err = bt_conn_set_security(conn, ch->required_sec_level);
 		if (err) {
@@ -4167,7 +4278,7 @@ int bt_l2cap_ecred_chan_connect(struct bt_conn *conn,
 				struct bt_l2cap_chan **chans, uint16_t psm)
 {
 	int i, err;
-#if (defined (CONFIG_BT_BREDR) && (CONFIG_BT_BREDR > 0U))
+#if (defined (CONFIG_BT_CLASSIC) && (CONFIG_BT_CLASSIC > 0U))
 	struct bt_l2cap_server *server;
 #endif
 
@@ -4182,48 +4293,48 @@ int bt_l2cap_ecred_chan_connect(struct bt_conn *conn,
 		if (!chans[i]) {
 			break;
 		}
-#if (defined (CONFIG_BT_BREDR) && (CONFIG_BT_BREDR > 0U))
-        if (BT_CONN_TYPE_BR == conn->type)
-        {
-            if (psm < L2CAP_LE_PSM_FIXED_START || psm > L2CAP_LE_PSM_DYN_END) {
-                return -EINVAL;
-            }
+#if (defined (CONFIG_BT_CLASSIC) && (CONFIG_BT_CLASSIC > 0U))
+		if (BT_CONN_TYPE_BR == conn->type)
+		{
+			if (psm < L2CAP_LE_PSM_FIXED_START || psm > L2CAP_LE_PSM_DYN_END) {
+				return -EINVAL;
+			}
 
-            err = l2cap_br_ecred_init(conn, BR_CHAN(chans[i]), psm);
-            if (err < 0) {
-                i--;
-                goto fail;
-            }
-        }
-        else
-#endif /* CONFIG_BT_BREDR */
-        {
-            err = l2cap_ecred_init(conn, BT_L2CAP_LE_CHAN(chans[i]), psm);
-            if (err < 0) {
-                i--;
-                goto fail;
-            }
-        }
+			err = l2cap_br_ecred_init(conn, BR_CHAN(chans[i]), psm);
+			if (err < 0) {
+				i--;
+				goto fail;
+			}
+		}
+        	else
+#endif /* CONFIG_BT_CLASSIC */
+		{
+			err = l2cap_ecred_init(conn, BT_L2CAP_LE_CHAN(chans[i]), psm);
+			if (err < 0) {
+				i--;
+				goto fail;
+			}
+		}
 	}
-	
-#if (defined (CONFIG_BT_BREDR) && (CONFIG_BT_BREDR > 0U))
+
+#if (defined (CONFIG_BT_CLASSIC) && (CONFIG_BT_CLASSIC > 0U))
 	if (BT_CONN_TYPE_BR == conn->type) {
 		server = bt_l2cap_server_lookup_psm(psm);
 		br_l2cap_check_security(conn, server);
-		
+
 		/* Try L2CAP_SC_CHECK_TIMEOUT to take semaphore to wait until the security level updated. */
-		osa_status_t status = OSA_SemaphoreWait(conn->sem_security_level_updated, osaWaitForever_c);
-		if(KOSA_StatusSuccess == status)
+		int err = k_sem_take(&conn->sec_lvl_updated, K_FOREVER);
+		if(err >= 0)
 		{
-			(void)OSA_SemaphorePost(conn->sem_security_level_updated);
+			k_sem_give(&conn->sec_lvl_updated);
 		}
 		else
 		{
-			LOG_ERR("conn: %p, security level semaphore wait fail %d", conn, status);
+			LOG_ERR("conn: %p, security level semaphore wait fail %d", conn, err);
 			return BT_L2CAP_LE_ERR_AUTHENTICATION;
 		}
 	}
-#endif /* CONFIG_BT_BREDR */
+#endif /* CONFIG_BT_CLASSIC */
 
 	return l2cap_ecred_conn_req(chans, i);
 fail:
@@ -4243,21 +4354,21 @@ static struct bt_l2cap_chan *l2cap_find_pending_reconf(struct bt_conn *conn)
 {
 	struct bt_l2cap_chan *chan;
 
-	SYS_SLIST_FOR_EACH_CONTAINER(&conn->channels, chan, node, struct bt_l2cap_chan) {
-#if (defined (CONFIG_BT_BREDR) && (CONFIG_BT_BREDR > 0U))
-        if (BT_CONN_TYPE_BR == conn->type)
-        {
-            if (BR_CHAN(chan)->pending_rx_mtu || BR_CHAN(chan)->pending_rx_mps) {
-                return chan;
-            }
-        }
-        else
-#endif /* CONFIG_BT_BREDR */
-        {
-            if (BT_L2CAP_LE_CHAN(chan)->pending_rx_mtu) {
-                return chan;
-            }
-        }
+	SYS_SLIST_FOR_EACH_CONTAINER(&conn->channels, chan, node) {
+#if (defined (CONFIG_BT_CLASSIC) && (CONFIG_BT_CLASSIC > 0U))
+		if (BT_CONN_TYPE_BR == conn->type)
+		{
+			if (BR_CHAN(chan)->pending_rx_mtu || BR_CHAN(chan)->pending_rx_mps) {
+				return chan;
+			}
+		}
+		else
+#endif /* CONFIG_BT_CLASSIC */
+		{
+			if (BT_L2CAP_LE_CHAN(chan)->pending_rx_mtu) {
+				return chan;
+			}
+		}
 	}
 
 	return NULL;
@@ -4270,9 +4381,9 @@ int bt_l2cap_ecred_chan_reconfigure(struct bt_l2cap_chan **chans, uint16_t mtu, 
 #endif
 	struct bt_conn *conn = NULL;
 	struct bt_l2cap_le_chan *ch;
-#if (defined (CONFIG_BT_BREDR) && (CONFIG_BT_BREDR > 0U))
+#if (defined (CONFIG_BT_CLASSIC) && (CONFIG_BT_CLASSIC > 0U))
 	struct bt_l2cap_br_chan *br_ch;
-#endif /* CONFIG_BT_BREDR */
+#endif /* CONFIG_BT_CLASSIC */
 #if 0
 	struct net_buf *buf;
 #endif
@@ -4299,22 +4410,22 @@ int bt_l2cap_ecred_chan_reconfigure(struct bt_l2cap_chan **chans, uint16_t mtu, 
 			conn = chans[i]->conn;
 		}
 
-#if (defined (CONFIG_BT_BREDR) && (CONFIG_BT_BREDR > 0U))
-        if (BT_CONN_TYPE_BR == conn->type)
-        {
-            /* validate MTU is not decreased */
-            if (mtu < BR_CHAN(chans[i])->rx.mtu) {
-                return -EINVAL;
-            }
-        }
-        else
-#endif /* CONFIG_BT_BREDR */
-        {
-            /* validate MTU is not decreased */
-            if (mtu < BT_L2CAP_LE_CHAN(chans[i])->rx.mtu) {
-                return -EINVAL;
-            }
-        }
+#if (defined (CONFIG_BT_CLASSIC) && (CONFIG_BT_CLASSIC > 0U))
+		if (BT_CONN_TYPE_BR == conn->type)
+		{
+			/* validate MTU is not decreased */
+			if (mtu < BR_CHAN(chans[i])->rx.mtu) {
+				return -EINVAL;
+			}
+		}
+		else
+#endif /* CONFIG_BT_CLASSIC */
+		{
+			/* validate MTU is not decreased */
+			if (mtu < BT_L2CAP_LE_CHAN(chans[i])->rx.mtu) {
+				return -EINVAL;
+			}
+		}
 	}
 
 	if (i == 0) {
@@ -4342,31 +4453,32 @@ int bt_l2cap_ecred_chan_reconfigure(struct bt_l2cap_chan **chans, uint16_t mtu, 
 
 	param.mtu = mtu;
 	if (0 == mps) {
-	    param.mps = MIN(mtu + BT_L2CAP_SDU_HDR_SIZE, BT_L2CAP_RX_MTU);
+	    param.mps = MIN(mtu, BT_L2CAP_RX_MTU);
 	} else {
 	    param.mps = mps;
 	}
 	param.num_cids = i;
 	for(int j = 0; j < i; j++)
 	{
-#if (defined (CONFIG_BT_BREDR) && (CONFIG_BT_BREDR > 0U))
-        if (BT_CONN_TYPE_BR == conn->type)
-        {
-            br_ch = BR_CHAN(chans[j]);
-            br_ch->ident = ident;
-            br_ch->pending_rx_mtu = mtu;
-			br_ch->pending_rx_mps = mps;
-            param.cid[j] = br_ch->rx.cid;
-        }
-        else
-#endif /* CONFIG_BT_BREDR */
-        {
-            ch = BT_L2CAP_LE_CHAN(chans[j]);
-            ch->ident = ident;
-            ch->pending_rx_mtu = mtu;
-            param.cid[j] = ch->rx.cid;
-        }
+#if (defined (CONFIG_BT_CLASSIC) && (CONFIG_BT_CLASSIC > 0U))
+		if (BT_CONN_TYPE_BR == conn->type)
+		{
+			br_ch = BR_CHAN(chans[j]);
+			br_ch->ident = ident;
+			br_ch->pending_rx_mtu = param.mtu;
+			br_ch->pending_rx_mps = param.mps;
+			param.cid[j] = br_ch->rx.cid;
+		}
+		else
+#endif /* CONFIG_BT_CLASSIC */
+		{
+			ch = BT_L2CAP_LE_CHAN(chans[j]);
+			ch->ident = ident;
+			ch->pending_rx_mtu = param.mtu;
+			param.cid[j] = ch->rx.cid;
+		}
 	}
+
 	result = l2ca_ecbfc_reconfig_req
            (
                &chans[0]->conn->deviceId,
@@ -4435,7 +4547,7 @@ int bt_l2cap_chan_connect(struct bt_conn *conn, struct bt_l2cap_chan *chan,
 		return -EINVAL;
 	}
 
-	if (IS_ENABLED(CONFIG_BT_BREDR) && (conn->type == BT_CONN_TYPE_BR)) {
+	if (IS_ENABLED(CONFIG_BT_CLASSIC) && (conn->type == BT_CONN_TYPE_BR)) {
 		return bt_l2cap_br_chan_connect(conn, chan, psm);
 	}
 
@@ -4457,7 +4569,7 @@ int bt_l2cap_chan_disconnect(struct bt_l2cap_chan *chan)
 		return -ENOTCONN;
 	}
 
-	if (IS_ENABLED(CONFIG_BT_BREDR) &&
+	if (IS_ENABLED(CONFIG_BT_CLASSIC) &&
 	    conn->type == BT_CONN_TYPE_BR) {
 		return bt_l2cap_br_chan_disconnect(chan);
 	}
@@ -4475,12 +4587,95 @@ int bt_l2cap_chan_disconnect(struct bt_l2cap_chan *chan)
 	return 0;
 }
 
+#if defined(CONFIG_BT_L2CAP_DYNAMIC_CHANNEL) && (CONFIG_BT_L2CAP_DYNAMIC_CHANNEL > 0)
+__maybe_unused static bool user_data_not_empty(const struct net_buf *buf)
+{
+	size_t ud_len = sizeof(struct closure);
+	const uint8_t *ud = net_buf_user_data(buf);
+
+	for (size_t i = 0; i < ud_len; i++) {
+		if (ud[i] != 0) {
+			return true;
+		}
+	}
+
+	return false;
+}
+
+static int bt_l2cap_dyn_chan_send(struct bt_l2cap_le_chan *le_chan, struct net_buf *buf)
+{
+	uint16_t sdu_len = buf->len;
+
+	LOG_DBG("chan %p buf %p", le_chan, buf);
+
+	/* Frags are not supported. */
+	__ASSERT_NO_MSG(buf->frags == NULL);
+
+	if (sdu_len > le_chan->tx.mtu) {
+		LOG_ERR("attempt to send %u bytes on %u MTU chan",
+			sdu_len, le_chan->tx.mtu);
+		return -EMSGSIZE;
+	}
+
+	if (buf->ref != 1) {
+		/* The host may alter the buf contents when segmenting. Higher
+		 * layers cannot expect the buf contents to stay intact. Extra
+		 * refs suggests a silent data corruption would occur if not for
+		 * this error.
+		 */
+		LOG_ERR("buf given to l2cap has other refs");
+		return -EINVAL;
+	}
+
+	if (net_buf_headroom(buf) < BT_L2CAP_SDU_CHAN_SEND_RESERVE) {
+		/* Call `net_buf_reserve(buf, BT_L2CAP_SDU_CHAN_SEND_RESERVE)`
+		 * when allocating buffers intended for bt_l2cap_chan_send().
+		 */
+		LOG_DBG("Not enough headroom in buf %p", buf);
+		return -EINVAL;
+	}
+
+	CHECKIF(user_data_not_empty(buf)) {
+		LOG_DBG("Please clear user_data first");
+		return -EINVAL;
+	}
+
+	/* Prepend SDU length.
+	 *
+	 * L2CAP LE CoC SDUs are segmented and put into K-frames PDUs which have
+	 * their own L2CAP header (i.e. PDU length, channel id).
+	 *
+	 * The SDU length is right before the data that will be segmented and is
+	 * only present in the first PDU. Here's an example:
+	 *
+	 * Sent data payload of 50 bytes over channel 0x4040 with MPS of 30 bytes:
+	 * First PDU (K-frame):
+	 * | L2CAP K-frame header        | K-frame payload                 |
+	 * | PDU length  | Channel ID    | SDU length   | SDU payload      |
+	 * | 0x001e      | 0x4040        | 0x0032       | 28 bytes of data |
+	 *
+	 * Second and last PDU (K-frame):
+	 * | L2CAP K-frame header        | K-frame payload     |
+	 * | PDU length  | Channel ID    | rest of SDU payload |
+	 * | 0x0016      | 0x4040        | 22 bytes of data    |
+	 */
+#ifndef L2CAP_ALLOC_FOR_CBFC_SDU
+	net_buf_push_le16(buf, buf->len);
+#endif
+
+	/* Put buffer on TX queue */
+	net_buf_put(&le_chan->tx_queue, buf);
+
+	/* Always process the queue in the same context */
+	raise_data_ready(le_chan);
+
+	return 0;
+}
+#endif /* CONFIG_BT_L2CAP_DYNAMIC_CHANNEL */
+
 int bt_l2cap_chan_send_cb(struct bt_l2cap_chan *chan, struct net_buf *buf, bt_conn_tx_cb_t cb,
 			  void *user_data)
 {
-    struct l2cap_tx_meta_data *data;
-    struct bt_l2cap_le_chan *le_chan = BT_L2CAP_LE_CHAN(chan);
-
 	if (!buf) {
 		return -EINVAL;
 	}
@@ -4495,32 +4690,30 @@ int bt_l2cap_chan_send_cb(struct bt_l2cap_chan *chan, struct net_buf *buf, bt_co
 		return -ESHUTDOWN;
 	}
 
-	if (IS_ENABLED(CONFIG_BT_BREDR) &&
+	if (IS_ENABLED(CONFIG_BT_CLASSIC) &&
 	    chan->conn->type == BT_CONN_TYPE_BR) {
 		return bt_l2cap_br_chan_send(chan, buf);
 	}
-	
-	data = alloc_tx_meta_data();
-	if (!data) {
-		LOG_WRN("Unable to allocate TX context");
-		return -ENOBUFS;
+
+#if defined(CONFIG_BT_L2CAP_DYNAMIC_CHANNEL) && (CONFIG_BT_L2CAP_DYNAMIC_CHANNEL > 0)
+	/* Sending over static channels is not supported by this fn. Use
+	 * `bt_l2cap_send_pdu()` instead.
+	 */
+	if (IS_ENABLED(CONFIG_BT_L2CAP_DYNAMIC_CHANNEL)) {
+		struct bt_l2cap_le_chan *le_chan = BT_L2CAP_LE_CHAN(chan);
+
+		__ASSERT_NO_MSG(le_chan);
+		__ASSERT_NO_MSG(L2CAP_LE_CID_IS_DYN(le_chan->tx.cid));
+
+		return bt_l2cap_dyn_chan_send(le_chan, buf);
 	}
+	else
+#endif /* CONFIG_BT_L2CAP_DYNAMIC_CHANNEL */
+	{
+		LOG_DBG("Invalid channel type (chan %p)", chan);
 
-#ifndef L2CAP_ALLOC_FOR_CBFC_SDU
-	net_buf_push_le16(buf, buf->len);
-#endif
-
-	data->sent = 0;
-	data->cid = le_chan->tx.cid;
-	data->cb = cb;
-	data->user_data = user_data;
-	l2cap_tx_meta_data_macro(buf) = data;
-    data_sent(buf)->len = 0;
-    net_buf_put(le_chan->tx_queue.queue, buf);
-#if 1
-    k_work_submit(&le_chan->tx_work);
-#endif
-    return 0;
+		return -EINVAL;
+	}
 }
 #if 0
 int bt_l2cap_chan_send(struct bt_l2cap_chan *chan, struct net_buf *buf)
@@ -4542,7 +4735,7 @@ int bt_l2cap_chan_send(struct bt_l2cap_chan *chan, struct net_buf *buf)
 		return -ESHUTDOWN;
 	}
 
-	if (IS_ENABLED(CONFIG_BT_BREDR) &&
+	if (IS_ENABLED(CONFIG_BT_CLASSIC) &&
 	    chan->conn->type == BT_CONN_TYPE_BR) {
 		return bt_l2cap_br_chan_send_cb(chan, buf, cb, user_data);
 	}
@@ -4569,6 +4762,23 @@ int bt_l2cap_chan_send(struct bt_l2cap_chan *chan, struct net_buf *buf)
 	return bt_l2cap_chan_send_cb(chan, buf, NULL, NULL);
 }
 
+#else
+
+int bt_l2cap_chan_disconnect(struct bt_l2cap_chan *chan)
+{
+	struct bt_conn *conn = chan->conn;
+
+	if (!conn) {
+		return -ENOTCONN;
+	}
+
+	if (IS_ENABLED(CONFIG_BT_CLASSIC) &&
+	    conn->type == BT_CONN_TYPE_BR) {
+		return bt_l2cap_br_chan_disconnect(chan);
+	}
+
+	return -ENOTSUP;
+}
 #endif /* CONFIG_BT_L2CAP_DYNAMIC_CHANNEL */
 
 #if (defined(CONFIG_BT_L2CAP_DYNAMIC_CHANNEL) && ((CONFIG_BT_L2CAP_DYNAMIC_CHANNEL) > 0U))
@@ -4584,15 +4794,15 @@ API_RESULT ethermind_l2ca_connect_ind_cb
 	struct bt_l2cap_chan *chan;
 	struct bt_l2cap_le_chan *ch;
 	struct bt_l2cap_server *server;
-    struct bt_conn *conn;
+	struct bt_conn *conn;
 	uint16_t mtu, mps, credits;
 	uint16_t result;
 #if (defined(CONFIG_BT_SMP) && (CONFIG_BT_SMP > 0u))
 	uint16_t security_result;
 #endif
-    L2CAP_CBFC_CONNECT_PARAM connect_param;
-    API_RESULT retval;
-    UINT16 response = L2CAP_CONNECTION_SUCCESSFUL;
+	L2CAP_CBFC_CONNECT_PARAM connect_param;
+	API_RESULT retval;
+	UINT16 response = L2CAP_CONNECTION_SUCCESSFUL;
 
 	conn = bt_conn_lookup_device_id(*handle);
 	assert(NULL != conn);
@@ -4600,15 +4810,14 @@ API_RESULT ethermind_l2ca_connect_ind_cb
 	{
 		return API_SUCCESS;
 	}
-    bt_conn_unref(conn);
+	bt_conn_unref(conn);
 
 	psm = sys_le16_to_cpu(psm);
 	mtu = sys_le16_to_cpu(param->mtu);
 	mps = sys_le16_to_cpu(param->mps);
 	credits = sys_le16_to_cpu(param->credit);
 
-	LOG_DBG("psm 0x%02x mtu %u mps %u credits %u", psm,
-	       mtu, mps, credits);
+	LOG_DBG("psm 0x%02x mtu %u mps %u credits %u", psm, mtu, mps, credits);
 
 	if (mtu < L2CAP_LE_MIN_MTU || mps < L2CAP_LE_MIN_MTU)
 	{
@@ -4655,10 +4864,9 @@ API_RESULT ethermind_l2ca_connect_ind_cb
 	{
 		ch = BT_L2CAP_LE_CHAN(chan);
 
-        ch->tx.credits = credits;
-        ch->tx.init_credits = credits;
-        ch->tx.mps = mps;
-        ch->tx.mtu = mtu;
+		ch->tx.credits = credits;
+		ch->tx.mps = mps;
+		ch->tx.mtu = mtu;
 
 		/* Prepare response protocol data */
 		ch->rx.cid = sys_le16_to_cpu(lcid);
@@ -4667,13 +4875,14 @@ API_RESULT ethermind_l2ca_connect_ind_cb
 		connect_param.credit = sys_cpu_to_le16(ch->rx.credits);
 	}
 
-    retval = l2ca_cbfc_connect_rsp
-                (
-                    lcid,
-                    response,
-                    &connect_param
-                );
-    return retval;
+	retval = l2ca_cbfc_connect_rsp
+		(
+			lcid,
+			response,
+			&connect_param
+		);
+
+	return retval;
 }
 
 API_RESULT ethermind_l2ca_connect_cnf_cb
@@ -4705,7 +4914,7 @@ API_RESULT ethermind_l2ca_connect_cnf_cb
 		return API_SUCCESS;
 	}
 
-        le_chan = BT_L2CAP_LE_CHAN(l2capChan);
+	le_chan = BT_L2CAP_LE_CHAN(l2capChan);
 
 	mtu = sys_le16_to_cpu(param->mtu);
 	mps = sys_le16_to_cpu(param->mps);
@@ -4739,9 +4948,7 @@ API_RESULT ethermind_l2ca_connect_cnf_cb
 
 	switch (response) {
 	case BT_L2CAP_LE_SUCCESS:
-#if 0
-		chan->tx.cid = dcid;
-#endif
+		chan->tx.cid = sys_le16_to_cpu(param->cid);
 		chan->rx.cid = sys_le16_to_cpu(lcid);
 		chan->tx.mtu = mtu;
 		chan->tx.mps = mps;
@@ -4775,18 +4982,27 @@ API_RESULT ethermind_l2ca_connect_cnf_cb
 typedef struct bt_l2cap_conn_scan_param
 {
 	uint16_t lcid;
-	struct bt_l2cap_le_chan *chan;
+	struct bt_l2cap_chan *chan;
 } bt_l2cap_conn_scan_param_t;
 
 static bool ethermind_bt_conn_scan_cb(struct bt_conn *conn, void *param)
 {
 	bt_l2cap_conn_scan_param_t *conn_scan = (bt_l2cap_conn_scan_param_t *)param;
-    struct bt_l2cap_chan *chan;
+	struct bt_l2cap_chan *chan;
 
-	chan = bt_l2cap_le_lookup_rx_cid(conn, conn_scan->lcid);
+#if (defined (CONFIG_BT_CLASSIC) && (CONFIG_BT_CLASSIC > 0U))
+	if (BT_CONN_TYPE_BR == conn->type)
+	{
+		chan = bt_l2cap_br_lookup_rx_cid(conn, conn_scan->lcid);
+	}
+	else
+#endif
+	{
+		chan = bt_l2cap_le_lookup_rx_cid(conn, conn_scan->lcid);
+	}
 	if (NULL != chan)
 	{
-        conn_scan->chan = BT_L2CAP_LE_CHAN(chan);
+		conn_scan->chan = chan;
 		return true;
 	}
 	else
@@ -4797,7 +5013,6 @@ static bool ethermind_bt_conn_scan_cb(struct bt_conn *conn, void *param)
 
 API_RESULT ethermind_l2ca_disconnect_ind_cb(UINT16 lcid)
 {
-	struct bt_l2cap_le_chan *chan;
 	bt_l2cap_conn_scan_param_t conn_scan;
 	uint16_t dcid;
 
@@ -4805,14 +5020,13 @@ API_RESULT ethermind_l2ca_disconnect_ind_cb(UINT16 lcid)
 	conn_scan.lcid = dcid;
 	conn_scan.chan = NULL;
 
-	LOG_DBG("dcid 0x%04x", dcid);
+	LOG_DBG("disconnect dcid 0x%04x", dcid);
 
 	(void)bt_conn_scan(ethermind_bt_conn_scan_cb, &conn_scan);
-	chan = conn_scan.chan;
-	if (NULL != chan)
+	if (NULL != conn_scan.chan)
 	{
-		(void)l2cap_remove_rx_cid(chan->chan.conn, dcid);
-		bt_l2cap_chan_del(&chan->chan);
+		(void)l2cap_remove_rx_cid(conn_scan.chan->conn, dcid);
+		bt_l2cap_chan_del(conn_scan.chan);
 	}
 
 	return API_SUCCESS;
@@ -4827,7 +5041,7 @@ API_RESULT ethermind_l2ca_disconnect_cnf_cb(UINT16 lcid, UINT16 reason)
 
 API_RESULT ethermind_l2ca_data_read_cb (UINT16 lcid, UINT16 result, UCHAR * data, UINT16 datalen)
 {
-	struct bt_l2cap_le_chan *chan;
+	struct bt_l2cap_chan *chan;
 	bt_l2cap_conn_scan_param_t conn_scan;
 	struct bt_conn *conn;
 	struct net_buf *buf;
@@ -4846,15 +5060,16 @@ API_RESULT ethermind_l2ca_data_read_cb (UINT16 lcid, UINT16 result, UCHAR * data
 
 	if (NULL != chan)
 	{
-		conn = chan->chan.conn;
-		if (NULL != chan->chan.ops->alloc_buf)
+		conn = chan->conn;
+		if (NULL != chan->ops->alloc_buf)
 		{
-			buf = chan->chan.ops->alloc_buf(&chan->chan);
+			buf = chan->ops->alloc_buf(chan);
 		}
 		else
 		{
 			buf = bt_buf_get_rx(BT_BUF_ACL_IN, osaWaitNone_c);
 		}
+
 		if (NULL != buf)
 		{
 			hdr.len = datalen;
@@ -4866,7 +5081,7 @@ API_RESULT ethermind_l2ca_data_read_cb (UINT16 lcid, UINT16 result, UCHAR * data
 		else
 		{
 			retval = API_FAILURE;
-			bt_l2cap_chan_disconnect(&chan->chan);
+			l2ca_cbfc_disconnect_req(lcid);
 		}
 	}
 	else
@@ -4880,7 +5095,8 @@ API_RESULT ethermind_l2ca_data_read_cb (UINT16 lcid, UINT16 result, UCHAR * data
 
 API_RESULT ethermind_l2ca_low_rx_credit_ind_cb (UINT16 lcid, UINT16 credit)
 {
-	struct bt_l2cap_le_chan *chan;
+	struct bt_l2cap_chan *chan;
+	struct bt_l2cap_le_chan *le_chan;
 	bt_l2cap_conn_scan_param_t conn_scan;
 
 	conn_scan.lcid = sys_le16_to_cpu(lcid);
@@ -4901,7 +5117,8 @@ API_RESULT ethermind_l2ca_low_rx_credit_ind_cb (UINT16 lcid, UINT16 credit)
                      chan->rx.credits - credit
                  );
 #endif
-		atomic_set(&chan->rx.credits, credit);
+		le_chan = BT_L2CAP_LE_CHAN(chan);
+		atomic_set(&le_chan->rx.credits, credit);
 	}
 	else
 	{
@@ -4915,7 +5132,8 @@ API_RESULT ethermind_l2ca_low_rx_credit_ind_cb (UINT16 lcid, UINT16 credit)
 API_RESULT ethermind_l2ca_tx_credit_ind_cb (UINT16 lcid, UINT16 result, UINT16 credit)
 
 {
-	struct bt_l2cap_le_chan *chan;
+	struct bt_l2cap_chan *chan;
+	struct bt_l2cap_le_chan *le_chan;
 	bt_l2cap_conn_scan_param_t conn_scan;
 	struct bt_conn *conn;
 	uint16_t dcid;
@@ -4944,19 +5162,18 @@ API_RESULT ethermind_l2ca_tx_credit_ind_cb (UINT16 lcid, UINT16 result, UINT16 c
 	if (NULL != chan)
 	{
 		credits = sys_le16_to_cpu(credit);
-		conn = chan->chan.conn;
-		atomic_set(&chan->tx.credits, 0);
-		if ((atomic_get(&chan->tx.credits) + credits) > UINT16_MAX) {
+		conn = chan->conn;
+		le_chan = BT_L2CAP_LE_CHAN(chan);
+		atomic_set(&le_chan->tx.credits, 0);
+		if ((atomic_get(&le_chan->tx.credits) + credits) > UINT16_MAX) {
 			LOG_ERR("Credits overflow");
-			bt_l2cap_chan_disconnect(&chan->chan);
+			l2ca_cbfc_disconnect_req(lcid);
 			return retval;
 		}
 
-		l2cap_chan_tx_give_credits(chan, credits);
+		l2cap_chan_tx_give_credits(le_chan, credits);
 
-		LOG_DBG("chan %p total credits %u", chan, atomic_get(&chan->tx.credits));
-
-		l2cap_chan_tx_resume(chan);
+		LOG_DBG("chan %p total credits %u", chan, atomic_get(&le_chan->tx.credits));
 	}
 	else
 	{
@@ -4971,9 +5188,9 @@ API_RESULT ethermind_l2ca_tx_credit_ind_cb (UINT16 lcid, UINT16 result, UINT16 c
 
 API_RESULT ethermind_l2ca_data_write_cb(UINT16 lcid, UINT16 result, UCHAR *buffer, UINT16 buffer_len)
 {
- 	struct bt_l2cap_le_chan *chan;
+ 	struct bt_l2cap_chan *chan;
+ 	struct bt_l2cap_le_chan *le_chan;
 	bt_l2cap_conn_scan_param_t conn_scan;
-	struct l2cap_tx_meta_data *user_data = NULL;
 	int err = 0;
 
 	conn_scan.lcid = sys_le16_to_cpu(lcid);
@@ -4992,25 +5209,18 @@ API_RESULT ethermind_l2ca_data_write_cb(UINT16 lcid, UINT16 result, UCHAR *buffe
 
 	if (NULL != chan)
 	{
-		struct l2cap_tx_meta_data user_data_temp;
-		memset(&user_data_temp, 0, sizeof(user_data_temp));
-		user_data_temp.user_data = (void*)0xFFFFFFFFu;
-		user_data_temp.cid = chan->tx.cid;
-		if (NULL != chan->_sdu)
-		{
-			if (l2cap_tx_meta_data_macro(chan->_sdu) != NULL)
-			{
-				user_data = l2cap_tx_meta_data_macro(chan->_sdu);
-			}
-			else
-			{
-				user_data = &user_data_temp;
-			}
-			net_buf_unref(chan->_sdu);
-			chan->_sdu = NULL;
-			chan->_sdu_len = 0;
+		le_chan = BT_L2CAP_LE_CHAN(chan);
+		le_chan->_pdu_remaining = 0;
+		l2cap_chan_sdu_sent(chan->conn, UINT_TO_POINTER(le_chan->tx.cid), err);
+
+		LOG_DBG("chan %p done", le_chan);
+		lower_data_ready(le_chan);
+
+		/* Append channel to list if it still has data */
+		if (chan_has_data(le_chan)) {
+			LOG_DBG("chan %p ready", le_chan);
+			raise_data_ready(le_chan);
 		}
-		l2cap_chan_sdu_sent(chan->chan.conn, user_data, err);
 	}
 	else
 	{
@@ -5031,132 +5241,133 @@ struct ethermind_ecbfc_edgefast_state
 
 static struct bt_l2cap_chan *ethermind_find_le_sig_chan(struct bt_conn *conn)
 {
-    for (int i = 0; i < ARRAY_SIZE(bt_l2cap_pool); i++)
-    {
-        struct bt_l2cap *l2cap = &bt_l2cap_pool[i];
+	for (int i = 0; i < ARRAY_SIZE(bt_l2cap_pool); i++)
+	{
+		struct bt_l2cap *l2cap = &bt_l2cap_pool[i];
 
-        if ((l2cap->chan.chan.conn) && (l2cap->chan.chan.conn == conn))
-        {
-             if ((l2cap->chan.rx.cid == BT_L2CAP_CID_LE_SIG) && (l2cap->chan.tx.cid == BT_L2CAP_CID_LE_SIG))
-             {
-                 return &l2cap->chan.chan;
-             }
-        }
-    }
+		if ((l2cap->chan.chan.conn) && (l2cap->chan.chan.conn == conn))
+		{
+			if ((l2cap->chan.rx.cid == BT_L2CAP_CID_LE_SIG) && (l2cap->chan.tx.cid == BT_L2CAP_CID_LE_SIG))
+			{
+				return &l2cap->chan.chan;
+			}
+		}
+	}
 
-    return NULL;
+	return NULL;
 }
 
 static API_RESULT ethermind_ecbfc_get_edgefast_state(DEVICE_HANDLE *handle, struct ethermind_ecbfc_edgefast_state *state)
 {
-    state->conn = bt_conn_lookup_device_id(*handle);
-    assert(NULL != state->conn);
-    if (NULL == state->conn)
-    {
-        return API_FAILURE;
-    }
+	state->conn = bt_conn_lookup_device_id(*handle);
+	if (NULL == state->conn)
+	{
+		LOG_ERR("%d Fail to get ACL conn", *handle);
+		return API_FAILURE;
+	}
 
-#if (defined (CONFIG_BT_BREDR) && (CONFIG_BT_BREDR > 0U))
-    if (BT_CONN_TYPE_BR == state->conn->type)
-    {
-        state->l2cap_att_sig_chan = ethermind_find_br_sig_chan(state->conn);
-    }
+#if (defined (CONFIG_BT_CLASSIC) && (CONFIG_BT_CLASSIC > 0U))
+	if (BT_CONN_TYPE_BR == state->conn->type)
+	{
+		state->l2cap_att_sig_chan = ethermind_find_br_sig_chan(state->conn);
+	}
     else
-#endif /* CONFIG_BT_BREDR */
-    {
-        state->l2cap_att_sig_chan = ethermind_find_le_sig_chan(state->conn);
-    }
-    assert(NULL != state->l2cap_att_sig_chan);
-    if (NULL == state->l2cap_att_sig_chan)
-    {
+#endif /* CONFIG_BT_CLASSIC */
+	{
+		state->l2cap_att_sig_chan = ethermind_find_le_sig_chan(state->conn);
+	}
+
+	assert(NULL != state->l2cap_att_sig_chan);
+	if (NULL == state->l2cap_att_sig_chan)
+	{
 		bt_conn_unref(state->conn);
-        return API_FAILURE;
-    }
+		return API_FAILURE;
+	}
 
-    if (NULL != state->l2cap_att_sig_chan->ops->alloc_buf)
-    {
-        state->buf = state->l2cap_att_sig_chan->ops->alloc_buf(state->l2cap_att_sig_chan);
-    }
-    else
-    {
-        state->buf = bt_buf_get_rx(BT_BUF_ACL_IN, osaWaitNone_c);
-    }
+	if (NULL != state->l2cap_att_sig_chan->ops->alloc_buf)
+	{
+		state->buf = state->l2cap_att_sig_chan->ops->alloc_buf(state->l2cap_att_sig_chan);
+	}
+	else
+	{
+		state->buf = bt_buf_get_rx(BT_BUF_ACL_IN, osaWaitNone_c);
+	}
 
-    if (state->buf == NULL)
-    {
+	if (state->buf == NULL)
+	{
 		bt_conn_unref(state->conn);
-        return API_FAILURE;
-    }
+		return API_FAILURE;
+	}
 
-    return API_SUCCESS;
+	return API_SUCCESS;
 }
 
 static API_RESULT ethermind_ecbfc_get_edgefast_state_by_lcid(UINT16 lcid, struct ethermind_ecbfc_edgefast_state *state)
 {
-    struct bt_l2cap_chan *l2cap = NULL;
+	struct bt_l2cap_chan *l2cap = NULL;
 
-    for (int i = 0; i < ARRAY_SIZE(bt_l2cap_pool); i++)
-    {
-        if (bt_l2cap_pool[i].chan.chan.conn)
-        {
-             if (bt_l2cap_pool[i].chan.rx.cid == lcid)
-             {
-                 l2cap = &bt_l2cap_pool[i].chan.chan;
-                 state->conn = l2cap->conn;
-             }
-        }
-    }
+	for (int i = 0; i < ARRAY_SIZE(bt_l2cap_pool); i++)
+	{
+		if (bt_l2cap_pool[i].chan.chan.conn)
+		{
+			if (bt_l2cap_pool[i].chan.rx.cid == lcid)
+			{
+				l2cap = &bt_l2cap_pool[i].chan.chan;
+				state->conn = l2cap->conn;
+			}
+		}
+	}
 
-    if (l2cap == NULL)
-    {
-        return API_FAILURE;
-    }
+	if (l2cap == NULL)
+	{
+		return API_FAILURE;
+	}
 
-    assert(NULL != state->conn);
-    if (NULL == state->conn)
-    {
-        return API_FAILURE;
-    }
-    state->l2cap_att_sig_chan = l2cap;
-    assert(NULL != state->l2cap_att_sig_chan);
-    if (NULL == state->l2cap_att_sig_chan)
-    {
-        return API_FAILURE;
-    }
+	assert(NULL != state->conn);
+	if (NULL == state->conn)
+	{
+		return API_FAILURE;
+	}
+	state->l2cap_att_sig_chan = l2cap;
+	assert(NULL != state->l2cap_att_sig_chan);
+	if (NULL == state->l2cap_att_sig_chan)
+	{
+		return API_FAILURE;
+	}
 
-    if (NULL != state->l2cap_att_sig_chan->ops->alloc_buf)
-    {
-        state->buf = state->l2cap_att_sig_chan->ops->alloc_buf(state->l2cap_att_sig_chan);
-    }
-    else
-    {
-        state->buf = bt_buf_get_rx(BT_BUF_ACL_IN, osaWaitNone_c);
-    }
+	if (NULL != state->l2cap_att_sig_chan->ops->alloc_buf)
+	{
+		state->buf = state->l2cap_att_sig_chan->ops->alloc_buf(state->l2cap_att_sig_chan);
+	}
+	else
+	{
+		state->buf = bt_buf_get_rx(BT_BUF_ACL_IN, osaWaitNone_c);
+	}
 
-    if (state->buf == NULL)
-    {
-        return API_FAILURE;
-    }
+	if (state->buf == NULL)
+	{
+		return API_FAILURE;
+	}
 
-    return API_SUCCESS;
+	return API_SUCCESS;
 }
 
 void l2cap_ecbfc_conn_req_recovery(struct bt_conn *conn, struct net_buf *buf)
 {
-    struct bt_l2cap_chan *l2cap_att_sig_chan;
+	struct bt_l2cap_chan *l2cap_att_sig_chan;
 
-#if (defined (CONFIG_BT_BREDR) && (CONFIG_BT_BREDR > 0U))
-    if (BT_CONN_TYPE_BR == conn->type)
-    {
-        l2cap_att_sig_chan = ethermind_find_br_sig_chan(conn);
-    }
-    else
-#endif /* CONFIG_BT_BREDR */
-    {
-        l2cap_att_sig_chan = ethermind_find_le_sig_chan(conn);
-    }
+#if (defined (CONFIG_BT_CLASSIC) && (CONFIG_BT_CLASSIC > 0U))
+	if (BT_CONN_TYPE_BR == conn->type)
+	{
+		l2cap_att_sig_chan = ethermind_find_br_sig_chan(conn);
+	}
+else
+#endif /* CONFIG_BT_CLASSIC */
+	{
+		l2cap_att_sig_chan = ethermind_find_le_sig_chan(conn);
+	}
 
-    (void)l2cap_recv(l2cap_att_sig_chan, buf);
+	(void)l2cap_recv(l2cap_att_sig_chan, buf);
 }
 
 static API_RESULT ethermind_l2ca_ecbfc_connect_ind_cb
@@ -5167,58 +5378,61 @@ static API_RESULT ethermind_l2ca_ecbfc_connect_ind_cb
                L2CAP_ECBFC_CONNECT_PARAM * param
            )
 {
-    struct bt_l2cap_chan *l2cap_att_sig_chan;
-    struct net_buf *buf;
-    API_RESULT retval = API_FAILURE;
-    struct ethermind_ecbfc_edgefast_state state;
-    struct bt_l2cap_sig_hdr hdr;
-    struct bt_l2cap_ecred_conn_req req;
-    uint32_t len_temp;
+	struct bt_l2cap_chan *l2cap_att_sig_chan;
+	struct net_buf *buf;
+	API_RESULT retval = API_FAILURE;
+	struct ethermind_ecbfc_edgefast_state state;
+	struct bt_l2cap_sig_hdr hdr;
+	struct bt_l2cap_ecred_conn_req req;
+	uint32_t len_temp;
 
-    retval = ethermind_ecbfc_get_edgefast_state(handle, &state);
-    if (retval != API_SUCCESS)
-    {
-        return API_FAILURE;
-    }
+	LOG_DBG("ECBFC connect req");
+
+	retval = ethermind_ecbfc_get_edgefast_state(handle, &state);
+	if (retval != API_SUCCESS)
+	{
+		LOG_ERR("Fail to call ethermind_ecbfc_get_edgefast_state");
+		return API_FAILURE;
+	}
 	bt_conn_unref(state.conn);
 
-    buf = state.buf;
-    l2cap_att_sig_chan = state.l2cap_att_sig_chan;
+	buf = state.buf;
+	l2cap_att_sig_chan = state.l2cap_att_sig_chan;
 
-    /* re-struct as buf */
-    hdr.code = BT_L2CAP_ECRED_CONN_REQ;
-    hdr.ident = 1; /* don't care, ethermind maintain it */
-    hdr.len = sizeof(req) + param->num_cids * 2u;
+	/* re-struct as buf */
+	hdr.code = BT_L2CAP_ECRED_CONN_REQ;
+	hdr.ident = param->sig_id;
+	hdr.len = sizeof(req) + param->num_cids * 2u;
 
-    (void)net_buf_add_mem(buf, &hdr, sizeof(hdr));
+	(void)net_buf_add_mem(buf, &hdr, sizeof(hdr));
 
-    req.psm = sys_cpu_to_le16(psm);
-    req.mtu = sys_cpu_to_le16(param->mtu);
-    req.mps = sys_cpu_to_le16(param->mps);
-    req.credits = sys_cpu_to_le16(param->credit);
-    (void)net_buf_add_mem(buf, &req, sizeof(req));
-    for (uint8_t index = 0; ((index < param->num_cids) && (index < L2CAP_ECBFC_MAX_NUM_CIDS)); ++index)
-    {
-        net_buf_add_le16(buf, param->cid[index]);
-    }
+	req.psm = sys_cpu_to_le16(psm);
+	req.mtu = sys_cpu_to_le16(param->mtu);
+	req.mps = sys_cpu_to_le16(param->mps);
+	req.credits = sys_cpu_to_le16(param->credit);
+	(void)net_buf_add_mem(buf, &req, sizeof(req));
+	for (uint8_t index = 0; ((index < param->num_cids) && (index < L2CAP_ECBFC_MAX_NUM_CIDS)); ++index)
+	{
+		net_buf_add_le16(buf, param->cid[index]);
+	}
 
-    /* put the lcid here */
-    len_temp = 0;
-    for (uint8_t index = 0; ((index < param->num_cids) && (index < L2CAP_ECBFC_MAX_NUM_CIDS)); ++index)
-    {
-        net_buf_add_le16(buf, lcid[index]);
-        len_temp += 2u;
-    }
-    buf->len -= len_temp;
+	/* put the lcid here */
+	len_temp = 0;
+	for (uint8_t index = 0; ((index < param->num_cids) && (index < L2CAP_ECBFC_MAX_NUM_CIDS)); ++index)
+	{
+		net_buf_add_le16(buf, lcid[index]);
+		len_temp += 2u;
+	}
+	buf->len -= len_temp;
 
-    //le_ecred_conn_req(l2cap, hdr->ident, buf);
-    if (!l2cap_recv(l2cap_att_sig_chan, buf))
-    {
-        retval = API_SUCCESS;
-    }
-    net_buf_unref(buf);
+	//le_ecred_conn_req(l2cap, hdr->ident, buf);
+	if (!l2cap_recv(l2cap_att_sig_chan, buf))
+	{
+		retval = API_SUCCESS;
+	}
+	net_buf_unref(buf);
 
-    return retval;
+	return retval;
 }
 
 static API_RESULT ethermind_l2ca_ecbfc_connect_cnf_cb
@@ -5229,81 +5443,52 @@ static API_RESULT ethermind_l2ca_ecbfc_connect_cnf_cb
                L2CAP_ECBFC_CONNECT_PARAM * param
            )
 {
-    struct bt_conn *conn;
-    struct bt_l2cap_chan *l2cap_att_sig_chan;
-    struct net_buf *buf;
-    API_RESULT retval = API_FAILURE;
-    struct bt_l2cap_sig_hdr hdr;
-    struct bt_l2cap_ecred_conn_rsp rsp;
+	struct bt_conn *conn;
+	struct bt_l2cap_chan *l2cap_att_sig_chan;
+	struct net_buf *buf;
+	API_RESULT retval = API_FAILURE;
+	struct bt_l2cap_sig_hdr hdr;
+	struct bt_l2cap_ecred_conn_rsp rsp;
 
-    struct ethermind_ecbfc_edgefast_state state;
+	struct ethermind_ecbfc_edgefast_state state;
 
-    retval = ethermind_ecbfc_get_edgefast_state(handle, &state);
-    if (retval != API_SUCCESS)
-    {
-        return API_FAILURE;
-    }
+	LOG_DBG("ECBFC connect rsp");
 
-    conn = state.conn;
-    buf = state.buf;
-    l2cap_att_sig_chan = state.l2cap_att_sig_chan;
-
-    hdr.code = BT_L2CAP_ECRED_CONN_RSP;
-    hdr.ident = get_ident(); /* ethermind doesn't provide it */
-    /* zephyr use this ident to find all the creating chan. so fake the ident here */
-#if defined(CONFIG_BT_BREDR) && ((CONFIG_BT_BREDR) > 0U)
-	if(BT_CONN_TYPE_BR == conn->type) {
-		for (uint8_t index = 0; ((index < param->num_cids) && (index < L2CAP_ECBFC_MAX_NUM_CIDS)); ++index)
-		{
-			struct bt_l2cap_chan *chan;
-
-			SYS_SLIST_FOR_EACH_CONTAINER(&conn->channels, chan, node, struct bt_l2cap_chan)
-			{
-				if (BR_CHAN(chan)->rx.cid == lcid[index])
-				{
-					BR_CHAN(chan)->ident = hdr.ident;
-					break;
-				}
-			}
-		}
-	} else
-#endif
+	retval = ethermind_ecbfc_get_edgefast_state(handle, &state);
+	if (retval != API_SUCCESS)
 	{
-		for (uint8_t index = 0; ((index < param->num_cids) && (index < L2CAP_ECBFC_MAX_NUM_CIDS)); ++index)
-		{
-			struct bt_l2cap_chan *chan;
-
-			SYS_SLIST_FOR_EACH_CONTAINER(&conn->channels, chan, node, struct bt_l2cap_chan)
-			{
-				if (BT_L2CAP_LE_CHAN(chan)->rx.cid == lcid[index])
-				{
-					BT_L2CAP_LE_CHAN(chan)->ident = hdr.ident;
-					break;
-				}
-			}
-		}
+		return API_FAILURE;
 	}
+
+	conn = state.conn;
+	buf = state.buf;
+	l2cap_att_sig_chan = state.l2cap_att_sig_chan;
+
+	hdr.code = BT_L2CAP_ECRED_CONN_RSP;
+	hdr.ident = param->sig_id;
 	bt_conn_unref(state.conn);
-    hdr.len = sizeof(rsp) + param->num_cids * 2u;
-    (void)net_buf_add_mem(buf, &hdr, sizeof(hdr));
+	hdr.len = sizeof(rsp) + param->num_cids * 2u;
+	(void)net_buf_add_mem(buf, &hdr, sizeof(hdr));
 
-    rsp.mtu = sys_cpu_to_le16(param->mtu);
-    rsp.mps = sys_cpu_to_le16(param->mps);
-    rsp.credits = sys_cpu_to_le16(param->credit);
-    rsp.result = response;
-    (void)net_buf_add_mem(buf, &rsp, sizeof(rsp));
-    for (uint8_t index = 0; ((index < param->num_cids) && (index < L2CAP_ECBFC_MAX_NUM_CIDS)); ++index)
-    {
-        net_buf_add_le16(buf, param->cid[index]);
-    }
-    //le_ecred_conn_rsp(l2cap, hdr->ident, buf);
-    if (!l2cap_recv(l2cap_att_sig_chan, buf))
-    {
-        retval = API_SUCCESS;
-    }
-    net_buf_unref(buf);
+	rsp.mtu = sys_cpu_to_le16(param->mtu);
+	rsp.mps = sys_cpu_to_le16(param->mps);
+	rsp.credits = sys_cpu_to_le16(param->credit);
+	rsp.result = response;
+	(void)net_buf_add_mem(buf, &rsp, sizeof(rsp));
+	for (uint8_t index = 0; ((index < param->num_cids) && (index < L2CAP_ECBFC_MAX_NUM_CIDS)); ++index)
+	{
+		net_buf_add_le16(buf, param->cid[index]);
+	}
+	//le_ecred_conn_rsp(l2cap, hdr->ident, buf);
+	if (!l2cap_recv(l2cap_att_sig_chan, buf))
+	{
+		retval = API_SUCCESS;
+	}
+	net_buf_unref(buf);
 
-    return retval;
+	(void)conn;
+
+	return retval;
 }
 
 static API_RESULT ethermind_l2ca_ecbfc_reconfig_ind_cb
@@ -5313,44 +5498,46 @@ static API_RESULT ethermind_l2ca_ecbfc_reconfig_ind_cb
                L2CAP_ECBFC_RECONFIG_PARAM * param
            )
 {
-    struct bt_l2cap_chan *l2cap_att_sig_chan;
-    struct net_buf *buf;
-    API_RESULT retval = API_FAILURE;
-    struct bt_l2cap_sig_hdr hdr;
-    struct bt_l2cap_ecred_reconf_req req;
+	struct bt_l2cap_chan *l2cap_att_sig_chan;
+	struct net_buf *buf;
+	API_RESULT retval = API_FAILURE;
+	struct bt_l2cap_sig_hdr hdr;
+	struct bt_l2cap_ecred_reconf_req req;
 
-    struct ethermind_ecbfc_edgefast_state state;
+	struct ethermind_ecbfc_edgefast_state state;
 
-    retval = ethermind_ecbfc_get_edgefast_state(handle, &state);
-    if (retval != API_SUCCESS)
-    {
-        return API_FAILURE;
-    }
-	bt_conn_unref(state.conn);
+	LOG_DBG("ECBFC reconfig req");
 
-    buf = state.buf;
-    l2cap_att_sig_chan = state.l2cap_att_sig_chan;
+	retval = ethermind_ecbfc_get_edgefast_state(handle, &state);
+	if (retval != API_SUCCESS)
+	{
+		return API_FAILURE;
+	}
+		bt_conn_unref(state.conn);
 
-    hdr.code = BT_L2CAP_ECRED_RECONF_REQ;
-    hdr.ident = 1; /* don't care, ethermind maintain it */
-    hdr.len = sizeof(req) + param->num_cids * 2u;
-    (void)net_buf_add_mem(buf, &hdr, sizeof(hdr));
+	buf = state.buf;
+	l2cap_att_sig_chan = state.l2cap_att_sig_chan;
 
-    req.mtu = sys_cpu_to_le16(param->mtu);
-    req.mps = sys_cpu_to_le16(param->mps);
-    (void)net_buf_add_mem(buf, &req, sizeof(req));
-    for (uint8_t index = 0; ((index < param->num_cids) && (index < L2CAP_ECBFC_MAX_NUM_CIDS)); ++index)
-    {
-        net_buf_add_le16(buf, param->cid[index]);
-    }
-    //le_ecred_reconf_req(l2cap, hdr->ident, buf);
-    if (!l2cap_recv(l2cap_att_sig_chan, buf))
-    {
-        retval = API_SUCCESS;
-    }
-    net_buf_unref(buf);
+	hdr.code = BT_L2CAP_ECRED_RECONF_REQ;
+	hdr.ident = 1; /* don't care, ethermind maintain it */
+	hdr.len = sizeof(req) + param->num_cids * 2u;
+	(void)net_buf_add_mem(buf, &hdr, sizeof(hdr));
 
-    return retval;
+	req.mtu = sys_cpu_to_le16(param->mtu);
+	req.mps = sys_cpu_to_le16(param->mps);
+	(void)net_buf_add_mem(buf, &req, sizeof(req));
+	for (uint8_t index = 0; ((index < param->num_cids) && (index < L2CAP_ECBFC_MAX_NUM_CIDS)); ++index)
+	{
+		net_buf_add_le16(buf, param->cid[index]);
+	}
+	//le_ecred_reconf_req(l2cap, hdr->ident, buf);
+	if (!l2cap_recv(l2cap_att_sig_chan, buf))
+	{
+		retval = API_SUCCESS;
+	}
+	net_buf_unref(buf);
+
+	return retval;
 }
 
 static API_RESULT ethermind_l2ca_ecbfc_reconfig_cnf_cb
@@ -5358,29 +5545,32 @@ static API_RESULT ethermind_l2ca_ecbfc_reconfig_cnf_cb
                DEVICE_HANDLE            * handle
            )
 {
-    struct bt_l2cap_chan *l2cap_att_sig_chan;
-    struct net_buf *buf;
-    API_RESULT retval = API_FAILURE;
-    struct bt_l2cap_sig_hdr hdr;
-    struct bt_l2cap_ecred_reconf_rsp rsp;
+	struct bt_l2cap_chan *l2cap_att_sig_chan;
+	struct net_buf *buf;
+	API_RESULT retval = API_FAILURE;
+	struct bt_l2cap_sig_hdr hdr;
+	struct bt_l2cap_ecred_reconf_rsp rsp;
 	struct bt_conn *conn;
 	struct bt_l2cap_chan *chan;
 
-    struct ethermind_ecbfc_edgefast_state state;
-    retval = ethermind_ecbfc_get_edgefast_state(handle, &state);
-    if (retval != API_SUCCESS)
-    {
-        return API_FAILURE;
-    }
+	struct ethermind_ecbfc_edgefast_state state;
+
+	LOG_DBG("ECBFC reconfig rsp");
+
+	retval = ethermind_ecbfc_get_edgefast_state(handle, &state);
+	if (retval != API_SUCCESS)
+	{
+		return API_FAILURE;
+	}
 
 	conn = state.conn;
-    buf = state.buf;
-    l2cap_att_sig_chan = state.l2cap_att_sig_chan;
+	buf = state.buf;
+	l2cap_att_sig_chan = state.l2cap_att_sig_chan;
 
-    memset(&hdr, 0, sizeof(hdr));
-    hdr.code = BT_L2CAP_ECRED_RECONF_RSP;
+	memset(&hdr, 0, sizeof(hdr));
+	hdr.code = BT_L2CAP_ECRED_RECONF_RSP;
 	/* Find the pending ident for the device. */
-	SYS_SLIST_FOR_EACH_CONTAINER(&conn->channels, chan, node, struct bt_l2cap_chan) {
+	SYS_SLIST_FOR_EACH_CONTAINER(&conn->channels, chan, node) {
 		if ((chan->conn->deviceId == *handle) && (BT_CONN_TYPE_BR == chan->conn->type))
 		{
 			if (BR_CHAN(chan)->pending_rx_mtu || BR_CHAN(chan)->pending_rx_mps) {
@@ -5395,99 +5585,55 @@ static API_RESULT ethermind_l2ca_ecbfc_reconfig_cnf_cb
 		} else {
 			/* misra */
 		}
-		  
 	}
+
 	bt_conn_unref(state.conn);
-    hdr.len = sizeof(rsp);
-    (void)net_buf_add_mem(buf, &hdr, sizeof(hdr));
+	hdr.len = sizeof(rsp);
+	(void)net_buf_add_mem(buf, &hdr, sizeof(hdr));
 
-    rsp.result = 0; /* ethermind doesn't callback it */
-    (void)net_buf_add_mem(buf, &rsp, sizeof(rsp));
-    //le_ecred_reconf_rsp(l2cap, hdr->ident, buf);
-    if (!l2cap_recv(l2cap_att_sig_chan, buf))
-    {
-        retval = API_SUCCESS;
-    }
-    net_buf_unref(buf);
+	rsp.result = 0; /* ethermind doesn't callback it */
+	(void)net_buf_add_mem(buf, &rsp, sizeof(rsp));
+	//le_ecred_reconf_rsp(l2cap, hdr->ident, buf);
+	if (!l2cap_recv(l2cap_att_sig_chan, buf))
+	{
+		retval = API_SUCCESS;
+	}
+	net_buf_unref(buf);
 
-    return retval;
+	return retval;
 }
 
 static API_RESULT ethermind_l2ca_ecbfc_disconnect_ind_cb(UINT16 lcid)
 {
-    struct bt_l2cap_chan *l2cap_att_sig_chan;
-    struct net_buf *buf;
-    API_RESULT retval = API_FAILURE;
-    struct bt_l2cap_sig_hdr hdr;
-    struct bt_l2cap_disconn_req req;
+	bt_l2cap_conn_scan_param_t conn_scan;
+	uint16_t dcid;
 
-    struct ethermind_ecbfc_edgefast_state state;
-    retval = ethermind_ecbfc_get_edgefast_state_by_lcid(lcid, &state);
-    if (retval != API_SUCCESS)
-    {
-        return API_FAILURE;
-    }
+	dcid = sys_le16_to_cpu(lcid);
+	conn_scan.lcid = dcid;
+	conn_scan.chan = NULL;
 
-    buf = state.buf;
-    l2cap_att_sig_chan = state.l2cap_att_sig_chan;
+	LOG_DBG("disconnect dcid 0x%04x", dcid);
 
-    hdr.code = BT_L2CAP_DISCONN_REQ;
-    hdr.ident = 1; /* don't care, ethermind maintain it */
-    hdr.len = sizeof(req);
-    (void)net_buf_add_mem(buf, &hdr, sizeof(hdr));
+	(void)bt_conn_scan(ethermind_bt_conn_scan_cb, &conn_scan);
+	if (NULL != conn_scan.chan)
+	{
+		(void)l2cap_remove_rx_cid(conn_scan.chan->conn, dcid);
+		bt_l2cap_chan_del(conn_scan.chan);
+	}
 
-    req.dcid = sys_cpu_to_le16(lcid);
-    req.scid = 0; /* ethermind doesn't give it */
-    (void)net_buf_add_mem(buf, &req, sizeof(req));
-    //le_disconn_req(l2cap, hdr->ident, buf);
-    if (!l2cap_recv(l2cap_att_sig_chan, buf))
-    {
-        retval = API_SUCCESS;
-    }
-    net_buf_unref(buf);
-
-    return retval;
+	return API_SUCCESS;
 }
 
 static API_RESULT ethermind_l2ca_ecbfc_disconnect_cnf_cb(UINT16 lcid, UINT16 reason)
 {
-    struct bt_l2cap_chan *l2cap_att_sig_chan;
-    struct net_buf *buf;
-    API_RESULT retval = API_FAILURE;
-    struct bt_l2cap_sig_hdr hdr;
-    struct bt_l2cap_disconn_rsp rsp;
+	BT_IGNORE_UNUSED_PARAM(reason);
 
-    struct ethermind_ecbfc_edgefast_state state;
-    retval = ethermind_ecbfc_get_edgefast_state_by_lcid(lcid, &state);
-    if (retval != API_SUCCESS)
-    {
-        return API_FAILURE;
-    }
-
-    buf = state.buf;
-    l2cap_att_sig_chan = state.l2cap_att_sig_chan;
-
-    hdr.code = BT_L2CAP_DISCONN_RSP;
-    hdr.ident = 1; /* don't care, ethermind maintain it */
-    hdr.len = sizeof(rsp);
-    (void)net_buf_add_mem(buf, &hdr, sizeof(hdr));
-
-    rsp.dcid = 0; /* ethermind doesn't give it */
-    rsp.scid = lcid;
-    (void)net_buf_add_mem(buf, &rsp, sizeof(rsp));
-    //le_disconn_rsp(l2cap, hdr->ident, buf);
-    if (!l2cap_recv(l2cap_att_sig_chan, buf))
-    {
-        retval = API_SUCCESS;
-    }
-    net_buf_unref(buf);
-
-    return retval;
+	return ethermind_l2ca_ecbfc_disconnect_ind_cb(lcid);
 }
 
 static API_RESULT ethermind_l2ca_ecbfc_data_read_cb (UINT16 lcid, UINT16 result, UCHAR * data, UINT16 datalen)
 {
-	struct bt_l2cap_le_chan *chan;
+	struct bt_l2cap_chan *chan;
 	bt_l2cap_conn_scan_param_t conn_scan;
 	struct bt_conn *conn;
 	struct net_buf *buf;
@@ -5506,10 +5652,11 @@ static API_RESULT ethermind_l2ca_ecbfc_data_read_cb (UINT16 lcid, UINT16 result,
 
 	if (NULL != chan)
 	{
-		conn = chan->chan.conn;
-		if (NULL != chan->chan.ops->alloc_buf)
+		conn = chan->conn;
+
+		if (NULL != chan->ops->alloc_buf)
 		{
-			buf = chan->chan.ops->alloc_buf(&chan->chan);
+			buf = chan->ops->alloc_buf(chan);
 		}
 		else
 		{
@@ -5526,13 +5673,13 @@ static API_RESULT ethermind_l2ca_ecbfc_data_read_cb (UINT16 lcid, UINT16 result,
 		else
 		{
 			retval = API_FAILURE;
-			bt_l2cap_chan_disconnect(&chan->chan);
+			l2ca_ecbfc_disconnect_req(lcid);
 		}
 	}
 	else
 	{
 		retval = API_FAILURE;
-		l2ca_cbfc_disconnect_req(lcid);
+		l2ca_ecbfc_disconnect_req(lcid);
 	}
 
         /* l2ca_ecbfc_send_flow_control_credit is same with l2ca_cbfc_send_flow_control_credit */
@@ -5541,7 +5688,8 @@ static API_RESULT ethermind_l2ca_ecbfc_data_read_cb (UINT16 lcid, UINT16 result,
 
 static API_RESULT ethermind_l2ca_ecbfc_low_rx_credit_ind_cb (UINT16 lcid, UINT16 credit)
 {
-	struct bt_l2cap_le_chan *chan;
+	struct bt_l2cap_chan *chan;
+	struct bt_l2cap_le_chan *le_chan;
 	bt_l2cap_conn_scan_param_t conn_scan;
 
 	conn_scan.lcid = sys_le16_to_cpu(lcid);
@@ -5562,7 +5710,20 @@ static API_RESULT ethermind_l2ca_ecbfc_low_rx_credit_ind_cb (UINT16 lcid, UINT16
                      chan->rx.credits - credit
                  );
 #endif
-		atomic_set(&chan->rx.credits, credit);
+#if (defined (CONFIG_BT_CLASSIC) && (CONFIG_BT_CLASSIC > 0U))
+		if (BT_CONN_TYPE_BR == chan->conn->type)
+		{
+			struct bt_l2cap_br_chan *br_chan;
+
+			br_chan = BR_CHAN(chan);
+			atomic_set(&br_chan->rx.credits, credit);
+		}
+		else
+#endif /* CONFIG_BT_CLASSIC */
+		{
+			le_chan = BT_L2CAP_LE_CHAN(chan);
+			atomic_set(&le_chan->rx.credits, credit);
+		}
 	}
 	else
 	{
@@ -5575,10 +5736,11 @@ static API_RESULT ethermind_l2ca_ecbfc_low_rx_credit_ind_cb (UINT16 lcid, UINT16
 
 static API_RESULT ethermind_l2ca_ecbfc_tx_credit_ind_cb (UINT16 lcid, UINT16 result, UINT16 credit)
 {
-	struct bt_l2cap_le_chan *chan;
-#if defined(CONFIG_BT_BREDR) && ((CONFIG_BT_BREDR) > 0U)
+	struct bt_l2cap_chan *chan;
+	struct bt_l2cap_le_chan *le_chan;
+#if defined(CONFIG_BT_CLASSIC) && ((CONFIG_BT_CLASSIC) > 0U)
 	struct bt_l2cap_br_chan *br_chan;
-#endif /* defined(CONFIG_BT_BREDR) && ((CONFIG_BT_BREDR) > 0U) */
+#endif /* defined(CONFIG_BT_CLASSIC) && ((CONFIG_BT_CLASSIC) > 0U) */
 	bt_l2cap_conn_scan_param_t conn_scan;
 	struct bt_conn *conn;
 	uint16_t dcid;
@@ -5602,62 +5764,55 @@ static API_RESULT ethermind_l2ca_ecbfc_tx_credit_ind_cb (UINT16 lcid, UINT16 res
 	}
 
 	(void)bt_conn_scan(ethermind_bt_conn_scan_cb, &conn_scan);
-	
-#if defined(CONFIG_BT_BREDR) && ((CONFIG_BT_BREDR) > 0U)
-	br_chan = (struct bt_l2cap_br_chan *)conn_scan.chan;
-	
-	if (NULL != br_chan)
-	{
-		credits = sys_le16_to_cpu(credit);
-		conn = br_chan->chan.conn;
-		atomic_set(&br_chan->tx.credits, 0);
-		if ((atomic_get(&br_chan->tx.credits) + credits) > UINT16_MAX) {
-			LOG_ERR("Credits overflow");
-			bt_l2cap_chan_disconnect(&br_chan->chan);
-			return retval;
-		}
-
-		atomic_add(&br_chan->tx.credits, credits);
-#if 0
-		l2cap_chan_tx_give_credits(br_chan, credits);
-
-		LOG_DBG("chan %p total credits %u", br_chan, atomic_get(&br_chan->tx.credits));
-
-		l2cap_chan_tx_resume(chan);
-#endif
-	}
-	else
-	{
-		retval = API_FAILURE;
-		l2ca_ecbfc_disconnect_req(lcid);
-	}
-#else
 	chan = conn_scan.chan;
 
 	if (NULL != chan)
 	{
-		credits = sys_le16_to_cpu(credit);
-		conn = chan->chan.conn;
-		atomic_set(&chan->tx.credits, 0);
-		if ((atomic_get(&chan->tx.credits) + credits) > UINT16_MAX) {
-			LOG_ERR("Credits overflow");
-			bt_l2cap_chan_disconnect(&chan->chan);
-			return retval;
+		conn = chan->conn;
+#if defined(CONFIG_BT_CLASSIC) && ((CONFIG_BT_CLASSIC) > 0U)
+		if (BT_CONN_TYPE_BR == conn->type)
+		{
+			br_chan = BR_CHAN(chan);
+			credits = sys_le16_to_cpu(credit);
+			atomic_set(&br_chan->tx.credits, 0);
+			if ((atomic_get(&br_chan->tx.credits) + credits) > UINT16_MAX) {
+				LOG_ERR("Credits overflow");
+				l2ca_ecbfc_disconnect_req(lcid);
+				return retval;
+			}
+
+			atomic_add(&br_chan->tx.credits, credits);
+#if 0
+			l2cap_chan_tx_give_credits(br_chan, credits);
+
+			LOG_DBG("chan %p total credits %u", br_chan, atomic_get(&br_chan->tx.credits));
+
+			l2cap_chan_tx_resume(chan);
+#endif
 		}
+		else
+#endif
+		{
+			le_chan = BT_L2CAP_LE_CHAN(chan);
+			credits = sys_le16_to_cpu(credit);
+			atomic_set(&le_chan->tx.credits, 0);
+			if ((atomic_get(&le_chan->tx.credits) + credits) > UINT16_MAX) {
+				LOG_ERR("Credits overflow");
+				l2ca_ecbfc_disconnect_req(lcid);
+				return retval;
+			}
 
-		l2cap_chan_tx_give_credits(chan, credits);
+			l2cap_chan_tx_give_credits(le_chan, credits);
 
-		LOG_DBG("chan %p total credits %u", chan, atomic_get(&chan->tx.credits));
-
-		l2cap_chan_tx_resume(chan);
+			LOG_DBG("chan %p total credits %u", chan, atomic_get(&le_chan->tx.credits));
+		}
 	}
 	else
 	{
 		retval = API_FAILURE;
 		l2ca_ecbfc_disconnect_req(lcid);
 	}
-#endif
-	
+
 	(void)conn;
 
 	return retval;
@@ -5665,9 +5820,9 @@ static API_RESULT ethermind_l2ca_ecbfc_tx_credit_ind_cb (UINT16 lcid, UINT16 res
 
 static API_RESULT ethermind_l2ca_ecbfc_data_write_cb(UINT16 lcid, UINT16 result, UCHAR *buffer, UINT16 buffer_len)
 {
- 	struct bt_l2cap_le_chan *chan;
+ 	struct bt_l2cap_chan *chan;
+ 	struct bt_l2cap_le_chan *le_chan;
 	bt_l2cap_conn_scan_param_t conn_scan;
-	struct l2cap_tx_meta_data *user_data = NULL;
 	int err = 0;
 
 	conn_scan.lcid = sys_le16_to_cpu(lcid);
@@ -5683,37 +5838,30 @@ static API_RESULT ethermind_l2ca_ecbfc_data_write_cb(UINT16 lcid, UINT16 result,
 	{
 		err = -1;
 	}
-	
-	if(BT_CONN_TYPE_BR == chan->chan.conn->type)
-	{
-	    return API_SUCCESS;
-	}
-	
+
 	if (NULL != chan)
 	{
-		struct l2cap_tx_meta_data user_data_temp;
-		memset(&user_data_temp, 0, sizeof(user_data_temp));
-		user_data_temp.user_data = (void*)0xFFFFFFFFu;
-		user_data_temp.cid = chan->tx.cid;
-		if (NULL != chan->_sdu)
+		if(BT_CONN_TYPE_BR == chan->conn->type)
 		{
-			if (l2cap_tx_meta_data_macro(chan->_sdu) != NULL)
-			{
-				user_data = l2cap_tx_meta_data_macro(chan->_sdu);
-			}
-			else
-			{
-				user_data = &user_data_temp;
-			}
-			net_buf_unref(chan->_sdu);
-			chan->_sdu = NULL;
-			chan->_sdu_len = 0;
+			return API_SUCCESS;
 		}
-		l2cap_chan_sdu_sent(chan->chan.conn, user_data, err);
+
+		le_chan = BT_L2CAP_LE_CHAN(chan);
+		le_chan->_pdu_remaining = 0;
+		l2cap_chan_sdu_sent(le_chan->chan.conn, UINT_TO_POINTER(le_chan->tx.cid), err);
+
+		LOG_DBG("chan %p done", le_chan);
+		lower_data_ready(le_chan);
+
+		/* Append channel to list if it still has data */
+		if (chan_has_data(le_chan)) {
+			LOG_DBG("chan %p ready", le_chan);
+			raise_data_ready(le_chan);
+		}
 	}
 	else
 	{
-		l2ca_cbfc_disconnect_req(lcid);
+		l2ca_ecbfc_disconnect_req(lcid);
 	}
 
 	return API_SUCCESS;

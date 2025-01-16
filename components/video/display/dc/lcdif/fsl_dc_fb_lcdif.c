@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2020,2023 NXP
+ * Copyright 2019-2020,2023 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -66,6 +66,9 @@ static const dc_fb_lcdif_pixel_foramt_map_t s_lcdifPixelFormatMap[] = {
     {kVIDEO_PixelFormatRGBX4444, kLCDIF_PixelFormatARGB4444, kLCDIF_PixelInputOrderRGBA},
     {kVIDEO_PixelFormatXBGR4444, kLCDIF_PixelFormatARGB4444, kLCDIF_PixelInputOrderABGR},
     {kVIDEO_PixelFormatBGRX4444, kLCDIF_PixelFormatARGB4444, kLCDIF_PixelInputOrderBGRA},
+    {kVIDEO_PixelFormatVYUY, kLCDIF_PixelFormatYUV422Tiled, kLCDIF_PixelInputOrderARGB},
+    {kVIDEO_PixelFormatNV12, kLCDIF_PixelFormatYUV420Tiled, kLCDIF_PixelInputOrderARGB},
+    {kVIDEO_PixelFormatYUYV, kLCDIF_PixelFormatYUV422Tiled, kLCDIF_PixelInputOrderARGB},
 };
 #else
 static const dc_fb_lcdif_pixel_foramt_map_t s_lcdifPixelFormatMap[] = {
@@ -253,12 +256,8 @@ status_t DC_FB_LCDIF_SetLayerConfig(const dc_fb_t *dc, uint8_t layer, dc_fb_info
 {
     assert(layer < DC_FB_LCDIF_MAX_LAYER);
 
-    lcdif_fb_format_t pixelFormat;
-#if defined(FSL_FEATURE_LCDIF_VERSION_DC8000) && FSL_FEATURE_LCDIF_VERSION_DC8000
-    lcdif_layer_input_order_t componentOrder;
-#endif
+    lcdif_fb_format_t pixelFormat = kLCDIF_PixelFormatRGB565;
     status_t status;
-
     dc_fb_lcdif_handle_t *dcHandle = (dc_fb_lcdif_handle_t *)(dc->prvData);
 
 #if !(defined(FSL_FEATURE_LCDIF_VERSION_DC8000) && FSL_FEATURE_LCDIF_VERSION_DC8000)
@@ -268,7 +267,17 @@ status_t DC_FB_LCDIF_SetLayerConfig(const dc_fb_t *dc, uint8_t layer, dc_fb_info
     assert(fbInfo->height == dcHandle->height);
     status = DC_FB_LCDIF_GetPixelFormat(fbInfo->pixelFormat, &pixelFormat);
 #else
+    lcdif_layer_input_order_t componentOrder;
+    uint32_t stride;
+
     status = DC_FB_LCDIF_GetPixelFormat(fbInfo->pixelFormat, &pixelFormat, &componentOrder);
+
+    if ((layer == (DC_FB_LCDIF_MAX_LAYER - 1U)) &&
+        ((pixelFormat == kLCDIF_PixelFormatYUV422Tiled) || (pixelFormat == kLCDIF_PixelFormatYUV420Tiled)))
+    {
+        /* layer 2 does not support tile input. */
+        return kStatus_InvalidArgument;
+    }
 #endif
 
     if (kStatus_Success != status)
@@ -289,22 +298,60 @@ status_t DC_FB_LCDIF_SetLayerConfig(const dc_fb_t *dc, uint8_t layer, dc_fb_info
     dcHandle->layers[layer].fbConfig.height          = fbInfo->height;
     /* gamma is disabled by default, no need to configure. */
 
+    /* Special handling for tile input. */
+    if (pixelFormat == kLCDIF_PixelFormatYUV422Tiled)
+    {
+        /* YUV422 is 4x4 tiled, the stride shall be set to multiply 4. */
+        stride = fbInfo->strideBytes * 4U;
+    }
+    else if (pixelFormat == kLCDIF_PixelFormatYUV420Tiled)
+    {
+        /* YUV420 has 2 planner, the parameter is the stride of the 1st planner.
+           YUV420 planner 1 is 8x8 tiled, the stride shall be set to multiply 8. */
+        stride = fbInfo->strideBytes * 8U;
+    }
+    else if (pixelFormat == kLCDIF_PixelFormatRGB888)
+    {
+        /* Special handling for RGB888 */
+        if ((fbInfo->strideBytes % 3) != 0U)
+        {
+            return kStatus_InvalidArgument;
+        }
+        else
+        {
+            stride = fbInfo->strideBytes / 3U * 4U;
+        }
+    }
+    else
+    {
+        stride = fbInfo->strideBytes;
+    }
+
     switch (layer)
     {
         case 0U:
-            LCDIF_SetFrameBufferStride(dcHandle->lcdif, 0, fbInfo->strideBytes);
+            LCDIF_SetFrameBufferStride(dcHandle->lcdif, 0U, stride);
+            if (pixelFormat == kLCDIF_PixelFormatYUV420Tiled)
+            {
+                /* YUV420 planner 2 is 4x4 tiled, the stride shall be set to multiply 4. */
+                LCDIF_SetFrameBufferUVStride(dcHandle->lcdif, 0U, fbInfo->strideBytes_2p * 4U);
+            }
             break;
         case 1U:
-            LCDIF_SetOverlayLayerStride(dcHandle->lcdif, 0, fbInfo->strideBytes, 0U);
+            LCDIF_SetOverlayLayerStride(dcHandle->lcdif, 0U, stride, 0U);
+            if (pixelFormat == kLCDIF_PixelFormatYUV420Tiled)
+            {
+                LCDIF_SetOverlayLayerUVStride(dcHandle->lcdif, 0U, fbInfo->strideBytes_2p * 4U);
+            }
             break;
         case 2:
-            LCDIF_SetOverlayLayerStride(dcHandle->lcdif, 0, fbInfo->strideBytes, 1U);
+            LCDIF_SetOverlayLayerStride(dcHandle->lcdif, 0U, stride, 1U);
             break;
     }
     LCDIF_SetUpdateReady(dcHandle->lcdif);
 #else
     dcHandle->layers[layer].fbConfig.enableGamma = false;
-    LCDIF_SetFrameBufferStride(dcHandle->lcdif, 0, fbInfo->strideBytes);
+    LCDIF_SetFrameBufferStride(dcHandle->lcdif, 0U, fbInfo->strideBytes);
 #endif
 
     return kStatus_Success;
@@ -329,23 +376,35 @@ status_t DC_FB_LCDIF_GetLayerDefaultConfig(const dc_fb_t *dc, uint8_t layer, dc_
 status_t DC_FB_LCDIF_SetFrameBuffer(const dc_fb_t *dc, uint8_t layer, void *frameBuffer)
 {
     assert(layer < DC_FB_LCDIF_MAX_LAYER);
-    dc_fb_lcdif_handle_t *dcHandle = dc->prvData;
+    dc_fb_lcdif_handle_t *dcHandle = (dc_fb_lcdif_handle_t *)(dc->prvData);
+
 
 #if defined(FSL_FEATURE_LCDIF_VERSION_DC8000) && FSL_FEATURE_LCDIF_VERSION_DC8000
+    uint32_t stride;
 
     switch (layer)
     {
         case 0U:
             LCDIF_SetFrameBufferAddr(dcHandle->lcdif, 0, (uint32_t)(uint8_t *)frameBuffer);
+            if (dcHandle->layers[layer].fbConfig.format == kLCDIF_PixelFormatYUV420Tiled)
+            {
+                stride = dcHandle->lcdif->FRAMEBUFFERSTRIDE0 / 8U;
+                LCDIF_SetFrameBufferUVAddr(dcHandle->lcdif, 0, (uint32_t)(uint8_t *)frameBuffer + stride * dcHandle->layers[layer].fbConfig.height);
+            }
             break;
         case 1U:
             LCDIF_SetOverlayLayerAddr(dcHandle->lcdif, 0, (uint32_t)(uint8_t *)frameBuffer, 0U);
+            if (dcHandle->layers[layer].fbConfig.format == kLCDIF_PixelFormatYUV420Tiled)
+            {
+                stride = dcHandle->lcdif->OVERLAYSTRIDE / 8U;
+                LCDIF_SetOverlayLayerUVAddr(dcHandle->lcdif, 0, (uint32_t)(uint8_t *)frameBuffer + stride * dcHandle->layers[layer].fbConfig.height);
+            }
             break;
         case 2:
             LCDIF_SetOverlayLayerAddr(dcHandle->lcdif, 0, (uint32_t)(uint8_t *)frameBuffer, 1U);
             break;
     }
-    
+
     LCDIF_SetUpdateReady(dcHandle->lcdif);
 #else
     LCDIF_SetFrameBufferAddr(dcHandle->lcdif, 0, (uint32_t)(uint8_t *)frameBuffer);

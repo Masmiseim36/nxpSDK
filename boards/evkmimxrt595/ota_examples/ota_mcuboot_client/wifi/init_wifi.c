@@ -18,7 +18,8 @@
 #include "wlan.h"
 #include "network_cfg.h"
 
-#ifdef RW610
+/* depricated way to include wifi fw in application image */
+#if defined(RW610) && defined(WPL_NO_WLAN_INIT)
 #include "rw61x_wifi_bin.h"
 #endif
 /*${header:end}*/
@@ -88,6 +89,7 @@ int initNetwork(void)
         return -1;
     }
     
+/* depricated way to include wifi fw in application image */
 #if defined(RW610) && defined(WPL_NO_WLAN_INIT)
     result = wlan_init(rw61x_wifi_bin, RW61X_WIFI_BIN_LEN);
     if (result != WM_SUCCESS)

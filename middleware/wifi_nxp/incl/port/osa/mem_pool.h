@@ -1,8 +1,11 @@
 /*
- *  Copyright 2023 NXP
+ *  Copyright 2023-2024 NXP
  *
  *  SPDX-License-Identifier: BSD-3-Clause
  *
+ */
+/*!\file mem_pool.h
+ *\brief This file provides OSA memory pool interfaces for Wi-Fi driver static memory operation.
  */
 
 #ifndef MEM_POOL_H_
@@ -59,39 +62,35 @@ typedef TX_BLOCK_POOL MemPool_t;
 
 #endif
 
-/**
- *  Create a MemoryPool
- *
- *  @param ItemSize How big is an allocation.
- *  @param PreallocatedMemory Pointer to the preallocated memory
- *  you are dedicating to this pool.
- *  @param PreallocatedMemorySize How big is the buffer you are
- *  passing in.
- *  @param Alignment Power of 2 value denoting on which address boundary the
- *  memory will be aligned to. Must be at least sizeof(unsigned char *).
- *  @return A Handle to the pool, or NULL on failure.
+/** Create a MemoryPool
+ *\param[in,out] MemPool the created memory pool.
+ *\param[in] ItemSize How big is an allocation.
+ *\param[in] PreallocatedMemory Pointer to the preallocated memory
+ *           you are dedicating to this pool.
+ *\param[in] PreallocatedMemorySize How big is the buffer you are
+ *           passing in.
+ *\param[in] Alignment Power of 2 value denoting on which address boundary the
+ *           memory will be aligned to. Must be at least sizeof(unsigned char *).
+ *\return A Handle to the pool, or NULL on failure.
  */
 MemoryPool_t OSA_MemoryPoolCreate(
     MemPool_t *MemPool, int ItemSize, void *PreallocatedMemory, int PreallocatedMemorySize, int Alignment);
 
-/**
- *  Get a memory buffer from the pool.
+/**Get a memory buffer from the pool.
+ * Note that this can block, and cannnot be used from ISR context.
  *
- *  Note that this can block, and cannnot be used from ISR context.
- *
- *  @param pool A handle to a MemoryPool.
- *  @return A pointer or NULL on failure.
+ *\param[in] pool A handle to a MemoryPool.
+ *\return A pointer or NULL on failure.
  */
 void *OSA_MemoryPoolAllocate(MemoryPool_t pool);
 
-/**
- *  Return a memory buffer to the pool.
+/**free a memory buffer to the pool.
  *
- *  @note This can block, and cannnot be used from ISR context.
- *  @note There is no check that the memory passed in is valid.
+ *  note This can block, and cannnot be used from ISR context.
+ *  note There is no check that the memory passed in is valid.
  *
- *  @param pool A handle to a MemoryPool.
- *  @param memory memory obtained from OSA_MemoryPoolAllocate().
+ *\param[in] pool A handle to a MemoryPool.
+ *\param[in] memory memory obtained from OSA_MemoryPoolAllocate().
  */
 void OSA_MemoryPoolFree(MemoryPool_t pool, void *memory);
 

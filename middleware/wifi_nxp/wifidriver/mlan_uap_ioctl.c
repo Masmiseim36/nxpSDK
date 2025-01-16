@@ -13,6 +13,7 @@ Change log:
     02/05/2009: initial version
 ********************************************************/
 
+#if CONFIG_NXP_WIFI_SOFTAP_SUPPORT
 #include <mlan_api.h>
 
 /* Additional WMSDK header files */
@@ -23,7 +24,7 @@ Change log:
 #include <mlan_remap_mem_operations.h>
 
 
-#if defined(WAPI_AP) || defined(HOST_AUTHENTICATOR) || (CONFIG_WPA_SUPP_AP)
+#if defined(WAPI_AP) || defined(HOST_AUTHENTICATOR) || (CONFIG_HOSTAPD)
 /**
  *  @brief Set encrypt key
  *
@@ -46,8 +47,13 @@ static mlan_status wlan_uap_sec_ioctl_set_encrypt_key(IN pmlan_adapter pmadapter
         LEAVE();
         return MLAN_STATUS_FAILURE;
     }
+#ifdef KEY_PARAM_SET_V2
     if (!sec->param.encrypt_key.key_remove && !sec->param.encrypt_key.key_len)
     {
+#else
+    if (!sec->param.encrypt_key.key_len)
+    {
+#endif /* KEY_PARAM_SET_V2 */
         PRINTM(MCMND, "Skip set key with key_len = 0\n");
         LEAVE();
         return ret;
@@ -109,7 +115,7 @@ mlan_status wlan_ops_uap_ioctl(t_void *adapter, pmlan_ioctl_req pioctl_req)
     mlan_ds_misc_cfg *misc = MNULL;
     mlan_ds_bss *bss       = MNULL;
 #endif
-#if defined(WAPI_AP) || defined(HOST_AUTHENTICATOR) || (CONFIG_WPA_SUPP_AP)
+#if defined(WAPI_AP) || defined(HOST_AUTHENTICATOR) || (CONFIG_HOSTAPD)
     mlan_ds_sec_cfg *sec = MNULL;
 #endif
     mlan_ds_rate *rate = MNULL;
@@ -118,7 +124,7 @@ mlan_status wlan_ops_uap_ioctl(t_void *adapter, pmlan_ioctl_req pioctl_req)
 
     switch (pioctl_req->req_id)
     {
-#if defined(WAPI_AP) || defined(HOST_AUTHENTICATOR) || (CONFIG_WPA_SUPP_AP)
+#if defined(WAPI_AP) || defined(HOST_AUTHENTICATOR) || (CONFIG_HOSTAPD)
         case MLAN_IOCTL_SEC_CFG:
             sec = (mlan_ds_sec_cfg *)pioctl_req->pbuf;
             if (sec->sub_command == MLAN_OID_SEC_CFG_ENCRYPT_KEY)
@@ -158,3 +164,4 @@ mlan_status wlan_ops_uap_ioctl(t_void *adapter, pmlan_ioctl_req pioctl_req)
     LEAVE();
     return status;
 }
+#endif /* CONFIG_NXP_WIFI_SOFTAP_SUPPORT */

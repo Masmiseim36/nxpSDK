@@ -23,23 +23,29 @@
 # limitations under the License.
 ################################################################################
 
+include host.mk
+
 # Cypress' MCUBoot Application supports GCC ARM only at this moment
 # Set default compiler to GCC if not specified from command line
 COMPILER ?= GCC_ARM
 
-USE_CRYPTO_HW ?= 1
+USE_CRYPTO_HW ?= 0
 USE_EXTERNAL_FLASH ?= 0
 MCUBOOT_IMAGE_NUMBER ?= 1
+ENC_IMG ?= 0
+
+# For which core this application is built
+CORE ?= CM0P
 
 ifneq ($(COMPILER), GCC_ARM)
 $(error Only GCC ARM is supported at this moment)
 endif
 
-CUR_APP_PATH = $(CURDIR)/$(APP_NAME)
+CUR_APP_PATH = $(PRJ_DIR)/$(APP_NAME)
 
-include $(CUR_APP_PATH)/platforms.mk
-include $(CUR_APP_PATH)/libs.mk
-include $(CUR_APP_PATH)/toolchains.mk
+include $(PRJ_DIR)/platforms.mk
+include $(PRJ_DIR)/common_libs.mk
+include $(PRJ_DIR)/toolchains.mk
 
 # default slot size is 0x10000, 512bytes per row/sector, so 128 sectors
 MAX_IMG_SECTORS ?= 128
@@ -53,11 +59,17 @@ ifeq ($(USE_EXTERNAL_FLASH), 1)
 DEFINES_APP += -DCY_BOOT_USE_EXTERNAL_FLASH
 endif
 DEFINES_APP += -DMCUBOOT_MAX_IMG_SECTORS=$(MAX_IMG_SECTORS)
-
+# Hardrware acceleration support
 ifeq ($(USE_CRYPTO_HW), 1)
 DEFINES_APP += -DMBEDTLS_USER_CONFIG_FILE="\"mcuboot_crypto_acc_config.h\""
 DEFINES_APP += -DCY_CRYPTO_HAL_DISABLE
+DEFINES_APP += -DCY_MBEDTLS_HW_ACCELERATION
 endif
+# Encrypted image support
+ifeq ($(ENC_IMG), 1)
+DEFINES_APP += -DENC_IMG=1
+endif
+
 # Collect MCUBoot sourses
 SOURCES_MCUBOOT := $(wildcard $(CURDIR)/../bootutil/src/*.c)
 # Collect MCUBoot Application sources
@@ -84,6 +96,7 @@ INCLUDE_DIRS_APP += $(addprefix -I, $(CUR_APP_PATH)/config)
 INCLUDE_DIRS_APP += $(addprefix -I, $(CUR_APP_PATH)/os)
 
 ASM_FILES_APP :=
+ASM_FILES_APP += $(ASM_FILES_STARTUP)
 
 # Output folder
 OUT := $(APP_NAME)/out

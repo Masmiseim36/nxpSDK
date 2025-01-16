@@ -44,7 +44,6 @@
   @param[in]     pSrcB      points to the second input sequence
   @param[in]     srcBLen    length of the second input sequence
   @param[out]    pDst       points to the location where the output result is written.  Length srcALen+srcBLen-1.
-  @return        none
 
   @par           Scaling and Overflow Behavior
                    The function is implemented using a 32-bit internal accumulator.
@@ -55,12 +54,13 @@
   @remark
                    Refer to \ref arm_conv_opt_q7() for a faster implementation of this function.
  */
+
 #if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE)
 #include "arm_helium_utils.h"
 
 #include "arm_vec_filtering.h"
 
-void arm_conv_q7(
+ARM_DSP_ATTRIBUTE void arm_conv_q7(
   const q7_t * pSrcA,
         uint32_t srcALen,
   const q7_t * pSrcB,
@@ -186,7 +186,7 @@ void arm_conv_q7(
         pA++;
     }
 
-    for (i = block3; i >= 1; i -= 2)
+    for (i = block3; i >= 2; i -= 2)
     {
         uint32_t  count = i;
         int32_t   acc0 = 0;
@@ -200,7 +200,7 @@ void arm_conv_q7(
         *pDst++ = (q7_t) acc1;
         pA += 2;
     }
-    for (; i >= 1; i--)
+    for (; i > 0; i--)
     {
         uint32_t  count = i;
         int32_t   acc = 0;
@@ -212,10 +212,11 @@ void arm_conv_q7(
         *pDst++ = (q7_t) acc;
         pA++;
     }
+
 }
 
 #else
-void arm_conv_q7(
+ARM_DSP_ATTRIBUTE void arm_conv_q7(
   const q7_t * pSrcA,
         uint32_t srcALen,
   const q7_t * pSrcB,

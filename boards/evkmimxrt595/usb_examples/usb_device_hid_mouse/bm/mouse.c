@@ -7,7 +7,7 @@
  */
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdbool.h>
+/*${standard_header_anchor}*/
 #include "usb_device_config.h"
 #include "usb.h"
 #include "usb_device.h"
@@ -26,17 +26,14 @@
 #include "mouse.h"
 
 #include "fsl_device_registers.h"
-#include "fsl_debug_console.h"
-#include "pin_mux.h"
 #include "clock_config.h"
+#include "fsl_debug_console.h"
 #include "board.h"
 
 #if (defined(FSL_FEATURE_SOC_SYSMPU_COUNT) && (FSL_FEATURE_SOC_SYSMPU_COUNT > 0U))
 #include "fsl_sysmpu.h"
 #endif /* FSL_FEATURE_SOC_SYSMPU_COUNT */
 
-#include "usb_phy.h"
-#include "fsl_power.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -72,8 +69,6 @@ static void USB_DeviceApplicationInit(void);
 /*******************************************************************************
  * Variables
  ******************************************************************************/
-extern usb_hid_mouse_struct_t g_UsbDeviceHidMouse;
-uint32_t isConnectedToFsHost = 0U;
 USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) static uint8_t s_MouseBuffer[USB_HID_MOUSE_REPORT_LENGTH];
 usb_hid_mouse_struct_t g_UsbDeviceHidMouse;
 
@@ -97,112 +92,6 @@ usb_device_class_config_list_struct_t g_UsbDeviceHidConfigList = {
 /*******************************************************************************
  * Code
  ******************************************************************************/
-
-void USB_DeviceDisconnected(void)
-{
-    isConnectedToFsHost = 0U;
-}
-
-void USB0_IRQHandler(void)
-{
-    USB_DeviceLpcIp3511IsrFunction(g_UsbDeviceHidMouse.deviceHandle);
-}
-#if (defined(USB_DEVICE_CONFIG_CHARGER_DETECT) && (USB_DEVICE_CONFIG_CHARGER_DETECT > 0U)) && \
-    (defined(FSL_FEATURE_SOC_USBHSDCD_COUNT) && (FSL_FEATURE_SOC_USBHSDCD_COUNT > 0U))
-void USB_PHYDCD_IRQHandler(void)
-{
-    USB_DeviceLpcIp3511IsrDCDFunction((void *)g_UsbDeviceHidMouse.deviceHandle);
-    /* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-    exception return operation might vector to incorrect interrupt */
-    __DSB();
-}
-#endif
-void USB_DeviceClockInit(void)
-{
-    uint8_t usbClockDiv = 1;
-    uint32_t usbClockFreq;
-    usb_phy_config_struct_t phyConfig = {
-        BOARD_USB_PHY_D_CAL,
-        BOARD_USB_PHY_TXCAL45DP,
-        BOARD_USB_PHY_TXCAL45DM,
-    };
-
-    /* Make sure USDHC ram buffer and usb1 phy has power up */
-    POWER_DisablePD(kPDRUNCFG_APD_USBHS_SRAM);
-    POWER_DisablePD(kPDRUNCFG_PPD_USBHS_SRAM);
-    POWER_ApplyPD();
-
-    RESET_PeripheralReset(kUSBHS_PHY_RST_SHIFT_RSTn);
-    RESET_PeripheralReset(kUSBHS_DEVICE_RST_SHIFT_RSTn);
-    RESET_PeripheralReset(kUSBHS_HOST_RST_SHIFT_RSTn);
-    RESET_PeripheralReset(kUSBHS_SRAM_RST_SHIFT_RSTn);
-
-    /* enable usb ip clock */
-    CLOCK_EnableUsbHs0DeviceClock(kOSC_CLK_to_USB_CLK, usbClockDiv);
-    /* save usb ip clock freq*/
-    usbClockFreq = g_xtalFreq / usbClockDiv;
-    CLOCK_SetClkDiv(kCLOCK_DivPfc1Clk, 4);
-    /* enable usb ram clock */
-    CLOCK_EnableClock(kCLOCK_UsbhsSram);
-    /* enable USB PHY PLL clock, the phy bus clock (480MHz) source is same with USB IP */
-    CLOCK_EnableUsbHs0PhyPllClock(kOSC_CLK_to_USB_CLK, usbClockFreq);
-
-    /* USB PHY initialization */
-    USB_EhciPhyInit(CONTROLLER_ID, BOARD_XTAL_SYS_CLK_HZ, &phyConfig);
-
-#if defined(FSL_FEATURE_USBHSD_USB_RAM) && (FSL_FEATURE_USBHSD_USB_RAM)
-    for (int i = 0; i < FSL_FEATURE_USBHSD_USB_RAM; i++)
-    {
-        ((uint8_t *)FSL_FEATURE_USBHSD_USB_RAM_BASE_ADDRESS)[i] = 0x00U;
-    }
-#endif
-
-    /* the following code should run after phy initialization and should wait some microseconds to make sure utmi clock
-     * valid */
-    /* enable usb1 host clock */
-    CLOCK_EnableClock(kCLOCK_UsbhsHost);
-    /*  Wait until host_needclk de-asserts */
-    while (SYSCTL0->USB0CLKSTAT & SYSCTL0_USB0CLKSTAT_HOST_NEED_CLKST_MASK)
-    {
-        __ASM("nop");
-    }
-    /*According to reference mannual, device mode setting has to be set by access usb host register */
-    USBHSH->PORTMODE |= USBHSH_PORTMODE_DEV_ENABLE_MASK;
-    /* disable usb1 host clock */
-    CLOCK_DisableClock(kCLOCK_UsbhsHost);
-}
-
-void USB_DeviceIsrEnable(void)
-{
-    uint8_t irqNumber;
-#if (defined(USB_DEVICE_CONFIG_CHARGER_DETECT) && (USB_DEVICE_CONFIG_CHARGER_DETECT > 0U)) && \
-    ((defined(FSL_FEATURE_SOC_USBHSDCD_COUNT) && (FSL_FEATURE_SOC_USBHSDCD_COUNT > 0U)))
-    uint8_t dcdIrqNumber;
-#endif
-    uint8_t usbDeviceIP3511Irq[] = USBHSD_IRQS;
-    irqNumber                    = usbDeviceIP3511Irq[CONTROLLER_ID - kUSB_ControllerLpcIp3511Hs0];
-#if (defined(USB_DEVICE_CONFIG_CHARGER_DETECT) && (USB_DEVICE_CONFIG_CHARGER_DETECT > 0U)) && \
-    (defined(FSL_FEATURE_SOC_USBHSDCD_COUNT) && (FSL_FEATURE_SOC_USBHSDCD_COUNT > 0U))
-    uint8_t usbDeviceDcdIrq[] = USBHSDCD_IRQS;
-    dcdIrqNumber              = usbDeviceDcdIrq[CONTROLLER_ID - kUSB_ControllerLpcIp3511Hs0];
-#endif
-    /* Install isr, set priority, and enable IRQ. */
-    NVIC_SetPriority((IRQn_Type)irqNumber, USB_DEVICE_INTERRUPT_PRIORITY);
-    EnableIRQ((IRQn_Type)irqNumber);
-#if (defined(USB_DEVICE_CONFIG_CHARGER_DETECT) && (USB_DEVICE_CONFIG_CHARGER_DETECT > 0U)) && \
-    ((defined(FSL_FEATURE_SOC_USBHSDCD_COUNT) && (FSL_FEATURE_SOC_USBHSDCD_COUNT > 0U)))
-    /* Install isr, set priority, and enable IRQ. */
-    NVIC_SetPriority((IRQn_Type)dcdIrqNumber, USB_DEVICE_INTERRUPT_PRIORITY);
-    EnableIRQ((IRQn_Type)dcdIrqNumber);
-#endif
-}
-
-#if USB_DEVICE_CONFIG_USE_TASK
-void USB_DeviceTaskFn(void *deviceHandle)
-{
-    USB_DeviceLpcIp3511TaskFunction(deviceHandle);
-}
-#endif
 
 /* Update mouse pointer location. Draw a rectangular rotation*/
 static usb_status_t USB_DeviceHidMouseAction(void)
@@ -736,9 +625,7 @@ int main(void)
 void main(void)
 #endif
 {
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
 
     USB_DeviceApplicationInit();
 

@@ -20,7 +20,7 @@
 /*! @name Driver version */
 /*! @{ */
 /*! @brief I3C driver version */
-#define FSL_I3C_DRIVER_VERSION (MAKE_VERSION(2, 12, 0))
+#define FSL_I3C_DRIVER_VERSION (MAKE_VERSION(2, 13, 0))
 /*! @} */
 
 /*! @brief Timeout times for waiting flag. */
@@ -28,7 +28,9 @@
 #define I3C_RETRY_TIMES 0U /* Define to zero means keep waiting until the flag is assert/deassert. */
 #endif
 
+#ifndef I3C_MAX_DEVCNT
 #define I3C_MAX_DEVCNT 10U
+#endif
 
 #ifndef I3C_IBI_BUFF_SIZE
 #define I3C_IBI_BUFF_SIZE 10U
@@ -164,7 +166,7 @@ typedef enum _i3c_master_state
     kI3C_MasterStateDdr     = 4U, /*!< In DDR Message mode. */
     kI3C_MasterStateDaa     = 5U, /*!< In ENTDAA mode. */
     kI3C_MasterStateIbiAck  = 6U, /*!< Waiting on IBI ACK/NACK decision. */
-    kI3C_MasterStateIbiRcv  = 7U, /*!< receiving IBI. */
+    kI3C_MasterStateIbiRcv  = 7U, /*!< Receiving IBI. */
 } i3c_master_state_t;
 
 /*! @brief I3C master enable configuration. */
@@ -647,6 +649,9 @@ typedef struct _i3c_config
     uint32_t maxWriteLength;          /*!< Maximum write length. */
     uint32_t maxReadLength;           /*!< Maximum read length. */
     bool enableSlave;                 /*!< Whether to enable slave. */
+#if !(defined(FSL_FEATURE_I3C_HAS_NO_SLAVE_IBI_MR_HJ) && FSL_FEATURE_I3C_HAS_NO_SLAVE_IBI_MR_HJ)
+    bool isHotJoin;                  /*!< Whether to enable slave hotjoin before enable slave. */
+#endif
     uint8_t staticAddr;               /*!< Static address. */
     uint16_t vendorID;                /*!< Device vendor ID(manufacture ID). */
 #if !(defined(FSL_FEATURE_I3C_HAS_NO_SCONFIG_IDRAND) && FSL_FEATURE_I3C_HAS_NO_SCONFIG_IDRAND)
@@ -1333,6 +1338,15 @@ static inline status_t I3C_MasterProcessDAA(I3C_Type *base, uint8_t *addressList
  * @return Pointer to the i3c_device_info_t array.
  */
 i3c_device_info_t *I3C_MasterGetDeviceListAfterDAA(I3C_Type *base, uint8_t *count);
+
+/*!
+ * @brief Clear the global device count which represents current devices number on the bus.
+ * When user resets all dynamic addresses on the bus, should call this API.
+ *
+ * @param base The I3C peripheral base address.
+ */
+void I3C_MasterClearDeviceCount(I3C_Type *base);
+
 /*!
  * @brief Performs a master polling transfer on the I2C/I3C bus.
  *

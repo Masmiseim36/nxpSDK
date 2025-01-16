@@ -8,13 +8,10 @@
 
 #include <stdio.h>
 #include "fsl_debug_console.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 #include "fsl_sd.h"
 #include "sdmmc_config.h"
-#include "fsl_power.h"
-#include "fsl_gpio.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -150,9 +147,7 @@ int main(void)
     char ch         = '0';
     bool isReadOnly;
 
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
     BOARD_SD_Config(card, NULL, BOARD_SDMMC_SD_HOST_IRQ_PRIORITY, NULL);
 
     PRINTF("\r\nSDCARD polling example.\r\n");

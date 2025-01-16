@@ -43,7 +43,6 @@
   @param[in]     pSrc       points to the input vector
   @param[in]     blockSize  number of samples in input vector
   @param[out]    pResult    minimum value returned here
-  @return        none
  */
 #if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE)
 
@@ -52,7 +51,7 @@
 
 
 
-void arm_absmin_no_idx_q7(
+ARM_DSP_ATTRIBUTE void arm_absmin_no_idx_q7(
   const q7_t * pSrc,
         uint32_t blockSize,
         q7_t * pResult)
@@ -105,7 +104,7 @@ void arm_absmin_no_idx_q7(
 
 #else
 #if defined(ARM_MATH_DSP)
-void arm_absmin_no_idx_q7(
+ARM_DSP_ATTRIBUTE void arm_absmin_no_idx_q7(
   const q7_t * pSrc,
         uint32_t blockSize,
         q7_t * pResult)
@@ -180,7 +179,7 @@ void arm_absmin_no_idx_q7(
   *pResult = out;                                                                                           \
 }
 #else
-void arm_absmin_no_idx_q7(
+ARM_DSP_ATTRIBUTE void arm_absmin_no_idx_q7(
   const q7_t * pSrc,
         uint32_t blockSize,
         q7_t * pResult)

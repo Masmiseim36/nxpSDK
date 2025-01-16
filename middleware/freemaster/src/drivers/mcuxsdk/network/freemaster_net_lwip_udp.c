@@ -1,19 +1,16 @@
 /*
- * Copyright 2021 NXP
+ * Copyright 2021, 2024 NXP
  *
- * License: NXP LA_OPT_NXP_Software_License
+ * License: NXP LA_OPT_Online Code Hosting NXP_Software_License
  *
- * NXP Confidential. This software is owned or controlled by NXP and may
+ * NXP Proprietary. This software is owned or controlled by NXP and may
  * only be used strictly in accordance with the applicable license terms.
  * By expressly accepting such terms or by downloading, installing,
  * activating and/or otherwise using the software, you are agreeing that
  * you have read, and that you agree to comply with and are bound by,
  * such license terms.  If you do not agree to be bound by the applicable
  * license terms, then you may not retain, install, activate or otherwise
- * use the software.  This code may only be used in a microprocessor,
- * microcontroller, sensor or digital signal processor ("NXP Product")
- * supplied directly or indirectly from NXP.  See the full NXP Software
- * License Agreement in license/LA_OPT_NXP_Software_License.pdf
+ * use the software.
  *
  * FreeMASTER Communication Driver - Network LWIP UDP driver
  */
@@ -21,10 +18,8 @@
 #include "freemaster.h"
 #include "freemaster_private.h"
 
-/* Numeric identifier to help pre-processor to identify whether our driver is used or not. */
-#define FMSTR_NET_LWIP_UDP_ID 1
-
-#if (FMSTR_MK_IDSTR(FMSTR_NET_DRV) == FMSTR_NET_LWIP_UDP_ID)
+/* Compile this code only if the NET driver is selected in freemaster_cfg.h. */
+#if defined(FMSTR_NET_DRV) && (FMSTR_MK_IDSTR(FMSTR_NET_DRV) == FMSTR_NET_LWIP_UDP_ID)
 
 #include "freemaster_net_lwip_udp.h"
 
@@ -256,4 +251,4 @@ static void _FMSTR_NetAddrFromFmstr(struct netbuf *buf, FMSTR_NET_ADDR *fmstrAdd
 }
 
 #endif /* (!(FMSTR_DISABLE)) */
-#endif /* (FMSTR_MK_IDSTR(FMSTR_NET_DRV) == FMSTR_NET_MCUX_LWIP_UPD_ID) */
+#endif /* defined(FMSTR_NET_DRV) && (FMSTR_MK_IDSTR(FMSTR_NET_DRV) == FMSTR_NET_MCUX_LWIP_UPD_ID) */

@@ -15,32 +15,15 @@
 #include <bluetooth/services/ots.h>
 #include <bluetooth/audio/media_proxy.h>
 
+#include "ccid_internal.h"
 #include "media_proxy_internal.h"
+#include "mcs_internal.h"
 #include "mpl_internal.h"
 
 #define LOG_ENABLE IS_ENABLED(CONFIG_BT_MPL_LOG_LEVEL_DBG)
 #define LOG_MODULE_NAME bt_mpl
 #include "fsl_component_log.h"
 LOG_MODULE_DEFINE(LOG_MODULE_NAME, kLOG_LevelTrace);
-
-#ifndef LOG_DBG
-#define LOG_DBG BT_DBG
-#endif
-
-#ifndef LOG_ERR
-#define LOG_ERR BT_ERR
-#endif
-
-#ifndef LOG_HEXDUMP_DBG
-#define LOG_HEXDUMP_DBG BT_HEXDUMP_DBG
-#endif
-
-#ifndef LOG_WRN
-#define LOG_WRN BT_WARN
-#endif
-
-#include "ccid_internal.h"
-#include "mcs_internal.h"
 
 #define TRACK_STATUS_INVALID 0x00
 #define TRACK_STATUS_VALID 0x01
@@ -415,7 +398,7 @@ static uint32_t setup_parent_group_object(struct mpl_group *group)
 	/* The implementation has a fixed structure, with one parent group, */
 	/* and one level of groups containing tracks only. */
 	/* The track groups have a pointer to the parent, but there is no */
-	/* poinbter in the other direction, so it is not possible to go from */
+	/* pointer in the other direction, so it is not possible to go from */
 	/* the parent group to a group of tracks. */
 
 	uint8_t type = MEDIA_PROXY_GROUP_OBJECT_GROUP_TYPE;
@@ -2057,7 +2040,7 @@ static void set_track_position(int32_t position)
 
 		/* MCS 1.0, section 3.7.1, states:
 		 * to avoid an excessive number of notifications, the Track Position should
-		 * not be notified when the Media State is set to ìPlayingî and playback happens
+		 * not be notified when the Media State is set to ‚ÄúPlaying‚Äù and playback happens
 		 * at a constant speed.
 		 */
 		if (media_player.state != MEDIA_PROXY_STATE_PLAYING) {

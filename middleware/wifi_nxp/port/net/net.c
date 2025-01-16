@@ -74,7 +74,9 @@ struct interface
 typedef struct interface interface_t;
 
 static interface_t g_mlan;
+#if UAP_SUPPORT
 static interface_t g_uap;
+#endif
 
 static int net_wlan_init_done;
 OSA_TIMER_HANDLE_DEFINE(dhcp_timer);
@@ -259,10 +261,14 @@ void net_wlan_set_mac_address(unsigned char *stamac, unsigned char *uapmac)
     {
         (void)memcpy(&g_mlan.netif.hwaddr[0], &stamac[0], MLAN_MAC_ADDR_LENGTH);
     }
+#if UAP_SUPPORT
     if (uapmac != NULL)
     {
         (void)memcpy(&g_uap.netif.hwaddr[0], &uapmac[0], MLAN_MAC_ADDR_LENGTH);
     }
+#else
+    (void)uapmac;
+#endif
 }
 
 int net_wlan_init(void)
@@ -278,6 +284,11 @@ int net_wlan_init(void)
 #endif
     if (!net_wlan_init_done)
     {
+        wifi_mac_addr_t mac_addr = {0};
+
+        wifi_get_device_mac_addr(&mac_addr);
+        wlan_set_mac_addr((uint8_t *)(&mac_addr.mac[0]));
+
 #if !CONFIG_NO_WIFI_TCPIP_INIT
         net_ipv4stack_init();
 #endif
@@ -303,6 +314,7 @@ int net_wlan_init(void)
         net_ipv6stack_init(&g_mlan.netif);
 #endif /* CONFIG_IPV6 */
 
+#if UAP_SUPPORT
         ret = netifapi_netif_add(&g_uap.netif, ip_2_ip4(&g_uap.ipaddr), ip_2_ip4(&g_uap.ipaddr),
                                  ip_2_ip4(&g_uap.ipaddr), NULL, lwip_netif_uap_init, tcpip_input);
         if (ret != WM_SUCCESS)
@@ -313,7 +325,7 @@ int net_wlan_init(void)
 #if CONFIG_IPV6
         net_ipv6stack_init(&g_uap.netif);
 #endif /* CONFIG_IPV6 */
-
+#endif /* UAP_SUPPORT */
 
         status = OSA_TimerCreate((osa_timer_handle_t)dhcp_timer, DHCP_TIMEOUT, &dhcp_timer_cb, NULL, KOSA_TimerOnce,
                                  OSA_TIMER_NO_ACTIVATE);
@@ -342,10 +354,12 @@ struct netif *net_get_sta_interface(void)
     return &g_mlan.netif;
 }
 
+#if UAP_SUPPORT
 struct netif *net_get_uap_interface(void)
 {
     return &g_uap.netif;
 }
+#endif
 
 int net_get_if_name_netif(char *pif_name, struct netif *iface)
 {
@@ -410,12 +424,14 @@ int net_wlan_deinit(void)
         return -WM_FAIL;
     }
 
+#if UAP_SUPPORT
     ret = net_netif_deinit(&g_uap.netif);
     if (ret != WM_SUCCESS)
     {
         net_e("UAP interface deinit failed");
         return -WM_FAIL;
     }
+#endif
 
     status = OSA_TimerDestroy((osa_timer_handle_t)dhcp_timer);
     if (status != KOSA_StatusSuccess)
@@ -469,7 +485,11 @@ static void wm_netif_status_callback(struct netif *n)
 
     if (is_dhcp_off)
     {
-        /* Do Nothing */
+        /* If dhcp is switched off and default dhcp address is provided */
+        if (is_default_dhcp_address)
+        {
+            event_flag_dhcp_connection = DHCP_FAILED;
+        }
     }
     else if (is_dhcp_address && !(is_default_dhcp_address))
     {
@@ -521,7 +541,10 @@ static void stop_cb(void *ctx)
     interface_t *if_handle = (interface_t *)net_get_mlan_handle();
 
     dhcp_release_and_stop(&if_handle->netif);
-    netif_set_down(&if_handle->netif);
+#if CONFIG_IPV6
+    if (!is_sta_ipv6_connected())
+#endif
+        netif_set_down(&if_handle->netif);
     wm_netif_status_callback_ptr = NULL;
 }
 
@@ -559,6 +582,7 @@ static void *net_ip_to_interface(uint32_t ipaddr)
         return handle;
     }
 
+#if UAP_SUPPORT
     /* Check uap handle */
     handle = net_get_uap_handle();
     ret    = check_iface_mask(handle, ipaddr);
@@ -566,6 +590,7 @@ static void *net_ip_to_interface(uint32_t ipaddr)
     {
         return handle;
     }
+#endif
 
     /* If more interfaces are added then above check needs to done for
      * those newly added interfaces
@@ -595,11 +620,12 @@ void *net_get_sta_handle(void)
     return &g_mlan;
 }
 
+#if UAP_SUPPORT
 void *net_get_uap_handle(void)
 {
     return &g_uap;
 }
-
+#endif
 
 int net_alloc_client_data_id()
 {
@@ -663,7 +689,11 @@ int net_configure_address(struct net_ip_config *addr, void *intrfc_handle)
     wm_netif_status_callback_ptr = NULL;
 
 #if CONFIG_IPV6
-    if (if_handle == &g_mlan || if_handle == &g_uap)
+    if (if_handle == &g_mlan
+#if UAP_SUPPORT
+        || if_handle == &g_uap
+#endif
+        )
     {
         LOCK_TCPIP_CORE();
 
@@ -722,13 +752,15 @@ int net_configure_address(struct net_ip_config *addr, void *intrfc_handle)
                netifapi_dhcp_start() call will be used */
             net_e("Not supported as of now...");
             break;
+        case NET_ADDR_TYPE_BRIDGE_MODE:
+            /* For uAP added to bridge case, we don't set IP */
+            break;
         default:
             net_d("Unexpected addr type");
             break;
     }
     /* Finally this should send the following event. */
-    if ((if_handle == &g_mlan)
-    )
+    if (if_handle == &g_mlan)
     {
         (void)wlan_wlcmgr_send_msg(WIFI_EVENT_NET_STA_ADDR_CONFIG, WIFI_EVENT_REASON_SUCCESS, NULL);
 
@@ -738,11 +770,12 @@ int net_configure_address(struct net_ip_config *addr, void *intrfc_handle)
          * WD_EVENT_NET_DHCP_CONFIG, should be sent to the wlcmgr.
          */
     }
-    else if ((if_handle == &g_uap)
-    )
+#if UAP_SUPPORT
+    else if (if_handle == &g_uap)
     {
         (void)wlan_wlcmgr_send_msg(WIFI_EVENT_UAP_NET_ADDR_CONFIG, WIFI_EVENT_REASON_SUCCESS, NULL);
     }
+#endif
     else
     { /* Do Nothing */
     }

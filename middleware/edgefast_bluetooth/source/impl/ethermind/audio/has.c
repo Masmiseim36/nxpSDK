@@ -6,44 +6,41 @@
 
 #if (defined(CONFIG_BT_HAS) && (CONFIG_BT_HAS > 0))
 
-#include <stdlib.h>
+#include <stdbool.h>
+#include <stddef.h>
+#include <stdint.h>
+#include <string.h>
+
 #include <sys/check.h>
 
-#include <bluetooth/bluetooth.h>
-#include <bluetooth/gatt.h>
+#include <porting.h>
 #include <bluetooth/audio/audio.h>
 #include <bluetooth/audio/pacs.h>
 #include <bluetooth/audio/has.h>
+#include <bluetooth/addr.h>
+#include <bluetooth/att.h>
+#include <bluetooth/bluetooth.h>
+#include <bluetooth/conn.h>
+#include <bluetooth/gatt.h>
+#include <bluetooth/uuid.h>
+#include <net/buf.h>
+#include <sys/atomic.h>
 #include <sys/check.h>
 #include <sys/slist.h>
+#include <sys/util.h>
+#include <sys/util_macro.h>
+#include <toolchain.h>
 
 #include "../host/bt_pal_hci_core.h"
 #include "../host/bt_pal_settings.h"
 #include "audio_internal.h"
+//#include "common/bt_str.h"
 #include "has_internal.h"
-   
-#include "toolchain.h"
 
 #define LOG_ENABLE IS_ENABLED(CONFIG_BT_DEBUG_HAS)
 #define LOG_MODULE_NAME bt_has
 #include "fsl_component_log.h"
 LOG_MODULE_DEFINE(LOG_MODULE_NAME, kLOG_LevelTrace);
-
-#ifndef LOG_DBG
-#define LOG_DBG BT_DBG
-#endif
-
-#ifndef LOG_ERR
-#define LOG_ERR BT_ERR
-#endif
-
-#ifndef LOG_HEXDUMP_DBG
-#define LOG_HEXDUMP_DBG BT_HEXDUMP_DBG
-#endif
-
-#ifndef LOG_WRN
-#define LOG_WRN BT_WARN
-#endif
 
 /* The service allows operations with paired devices only.
  * The number of clients is set to maximum number of simultaneous connections to paired devices.
@@ -205,7 +202,7 @@ static struct client_context {
 	uint8_t last_preset_index_known;
 } contexts[CONFIG_BT_MAX_PAIRED];
 
-/* Connected client clientance */
+/* Connected client instance */
 static struct has_client {
 	struct bt_conn *conn;
 #if defined(CONFIG_BT_HAS_PRESET_SUPPORT) && (CONFIG_BT_HAS_PRESET_SUPPORT > 0)
@@ -265,7 +262,8 @@ static void client_free(struct has_client *client)
 {
 	struct bt_conn_info info;
 	int err;
-    (void)memset(&info, 0x0, sizeof(struct bt_conn_info));
+
+	(void)memset(&info, 0x0, sizeof(struct bt_conn_info));
 #if (defined(CONFIG_BT_HAS_PRESET_SUPPORT) && (CONFIG_BT_HAS_PRESET_SUPPORT > 0)) || \
     (defined(CONFIG_BT_HAS_FEATURES_NOTIFIABLE) && (CONFIG_BT_HAS_FEATURES_NOTIFIABLE > 0))
 	(void)k_work_cancel_delayable(&client->notify_work);
@@ -290,7 +288,8 @@ static struct has_client *client_alloc(struct bt_conn *conn)
 	struct bt_conn_info info;
 	struct has_client *client = NULL;
 	int err;
-        (void)memset(&info, 0x0, sizeof(struct bt_conn_info));
+
+	(void)memset(&info, 0x0, sizeof(struct bt_conn_info));
 	for (size_t i = 0; i < ARRAY_SIZE(has_client_list); i++) {
 		if (conn == has_client_list[i].conn) {
 			return &has_client_list[i];
@@ -378,11 +377,7 @@ static void security_changed(struct bt_conn *conn, bt_security_t level, enum bt_
 	}
 
 	client = client_alloc(conn);
-#if 0
 	if (unlikely(!client)) {
-#else
-        if (!client) {
-#endif
 		LOG_ERR("Failed to allocate client");
 		return;
 	}
@@ -398,7 +393,7 @@ static void security_changed(struct bt_conn *conn, bt_security_t level, enum bt_
 	}
 
 	if (atomic_get(client->context->flags) != 0) {
-		notify_work_reschedule(client, osaWaitNone_c);
+		notify_work_reschedule(client, K_NO_WAIT);
 	}
 }
 
@@ -428,19 +423,12 @@ static void identity_resolved(struct bt_conn *conn, const bt_addr_le_t *rpa,
 
 	bt_addr_le_copy(&client->context->addr, identity);
 }
-#if 0
+
 BT_CONN_CB_DEFINE(conn_cb) = {
 	.disconnected = disconnected,
 	.security_changed = security_changed,
 	.identity_resolved = identity_resolved,
 };
-#else
-static struct bt_conn_cb conn_cb = {
-	.disconnected = disconnected,
-	.security_changed = security_changed,
-	.identity_resolved = identity_resolved,
-};
-#endif
 
 static void notify_work_handler(struct k_work *work)
 {
@@ -455,7 +443,7 @@ static void notify_work_handler(struct k_work *work)
 				     sizeof(has.features));
 		if (err == -ENOMEM) {
 			atomic_set_bit(client->context->flags, FLAG_FEATURES_CHANGED);
-			notify_work_reschedule(client, BT_AUDIO_NOTIFY_RETRY_DELAY_US / 1000);
+			notify_work_reschedule(client, K_USEC(BT_AUDIO_NOTIFY_RETRY_DELAY_US));
 		} else if (err < 0) {
 			LOG_ERR("Notify features err %d", err);
 		}
@@ -466,7 +454,7 @@ static void notify_work_handler(struct k_work *work)
 		err = read_preset_response(client);
 		if (err == -ENOMEM) {
 			atomic_set_bit(client->context->flags, FLAG_PENDING_READ_PRESET_RESPONSE);
-			notify_work_reschedule(client, BT_AUDIO_NOTIFY_RETRY_DELAY_US / 1000);
+			notify_work_reschedule(client, K_USEC(BT_AUDIO_NOTIFY_RETRY_DELAY_US));
 		} else if (err < 0) {
 			LOG_ERR("Notify read preset response err %d", err);
 		}
@@ -474,7 +462,7 @@ static void notify_work_handler(struct k_work *work)
 		err = preset_list_changed(client);
 		if (err == -ENOMEM) {
 			atomic_set_bit(client->context->flags, FLAG_NOTIFY_PRESET_LIST);
-			notify_work_reschedule(client, BT_AUDIO_NOTIFY_RETRY_DELAY_US / 1000);
+			notify_work_reschedule(client, K_USEC(BT_AUDIO_NOTIFY_RETRY_DELAY_US));
 		} else if (err < 0) {
 			LOG_ERR("Notify preset list changed err %d", err);
 		}
@@ -484,7 +472,7 @@ static void notify_work_handler(struct k_work *work)
 		if (err == -ENOMEM) {
 			atomic_set_bit(client->context->flags,
 				       FLAG_NOTIFY_PRESET_LIST_GENERIC_UPDATE_TAIL);
-			notify_work_reschedule(client, BT_AUDIO_NOTIFY_RETRY_DELAY_US / 1000);
+			notify_work_reschedule(client, K_USEC(BT_AUDIO_NOTIFY_RETRY_DELAY_US));
 		} else if (err < 0) {
 			LOG_ERR("Notify preset list changed generic update tail err %d", err);
 		}
@@ -494,7 +482,7 @@ static void notify_work_handler(struct k_work *work)
 		if (err == -ENOMEM) {
 			atomic_set_bit(client->context->flags,
 				       FLAG_NOTIFY_PRESET_LIST_RECORD_DELETED_LAST);
-			notify_work_reschedule(client, BT_AUDIO_NOTIFY_RETRY_DELAY_US / 1000);
+			notify_work_reschedule(client, K_USEC(BT_AUDIO_NOTIFY_RETRY_DELAY_US));
 		} else if (err < 0) {
 			LOG_ERR("Notify preset list changed recoed deleted last err %d", err);
 		}
@@ -513,7 +501,7 @@ static void notify_work_handler(struct k_work *work)
 				     &active_index, sizeof(active_index));
 		if (err == -ENOMEM) {
 			atomic_set_bit(client->context->flags, FLAG_ACTIVE_INDEX_CHANGED);
-			notify_work_reschedule(client, BT_AUDIO_NOTIFY_RETRY_DELAY_US / 1000);
+			notify_work_reschedule(client, K_USEC(BT_AUDIO_NOTIFY_RETRY_DELAY_US));
 		} else if (err < 0) {
 			LOG_ERR("Notify active index err %d", err);
 		}
@@ -524,7 +512,7 @@ static void notify(struct has_client *client, enum flag_internal flag)
 {
 	if (client != NULL) {
 		atomic_set_bit(client->context->flags, flag);
-		notify_work_reschedule(client, osaWaitNone_c);
+		notify_work_reschedule(client, K_NO_WAIT);
 		return;
 	}
 
@@ -540,7 +528,7 @@ static void notify(struct has_client *client, enum flag_internal flag)
 			continue;
 		}
 
-		notify_work_reschedule(client, osaWaitNone_c);
+		notify_work_reschedule(client, K_NO_WAIT);
 	}
 }
 
@@ -589,7 +577,7 @@ static void preset_foreach(uint8_t start_index, uint8_t end_index, preset_func_t
 {
 	struct has_preset *preset, *tmp;
 
-	SYS_SLIST_FOR_EACH_CONTAINER_SAFE(&preset_list, preset, tmp, node, struct has_preset) {
+	SYS_SLIST_FOR_EACH_CONTAINER_SAFE(&preset_list, preset, tmp, node) {
 		if (preset->index < start_index) {
 			continue;
 		}
@@ -617,7 +605,7 @@ static void preset_insert(struct has_preset *preset)
 {
 	struct has_preset *tmp, *prev = NULL;
 
-	SYS_SLIST_FOR_EACH_CONTAINER(&preset_list, tmp, node, struct has_preset) {
+	SYS_SLIST_FOR_EACH_CONTAINER(&preset_list, tmp, node) {
 		if (tmp->index > preset->index) {
 			if (prev) {
 				sys_slist_insert(&preset_list, &prev->node, &preset->node);
@@ -675,7 +663,7 @@ static struct has_preset *preset_get_head(void)
 
 	(void)next;
 
-	return SYS_SLIST_PEEK_HEAD_CONTAINER(&preset_list, next, node, struct has_preset);
+	return SYS_SLIST_PEEK_HEAD_CONTAINER(&preset_list, next, node);
 }
 
 static struct has_preset *preset_get_tail(void)
@@ -684,15 +672,15 @@ static struct has_preset *preset_get_tail(void)
 
 	(void)prev;
 
-	return SYS_SLIST_PEEK_TAIL_CONTAINER(&preset_list, prev, node, struct has_preset);
+	return SYS_SLIST_PEEK_TAIL_CONTAINER(&preset_list, prev, node);
 }
 
 static struct has_preset *preset_get_prev(const struct has_preset *preset)
 {
 	struct has_preset *prev;
 
-	SYS_SLIST_FOR_EACH_CONTAINER(&preset_list, prev, node, struct has_preset) {
-		if (SYS_SLIST_PEEK_NEXT_CONTAINER(prev, node, struct has_preset) == preset) {
+	SYS_SLIST_FOR_EACH_CONTAINER(&preset_list, prev, node) {
+		if (SYS_SLIST_PEEK_NEXT_CONTAINER(prev, node) == preset) {
 			return prev;
 		}
 	}
@@ -709,7 +697,7 @@ static struct has_preset *preset_lookup_index(uint8_t index)
 {
 	struct has_preset *preset;
 
-	SYS_SLIST_FOR_EACH_CONTAINER(&preset_list, preset, node, struct has_preset) {
+	SYS_SLIST_FOR_EACH_CONTAINER(&preset_list, preset, node) {
 		if (preset->index == index) {
 			return preset;
 		}
@@ -722,7 +710,7 @@ static struct has_preset *preset_get_next(struct has_preset *preset)
 {
 	struct has_preset *next;
 
-	next = SYS_SLIST_PEEK_NEXT_CONTAINER(preset, node, struct has_preset);
+	next = SYS_SLIST_PEEK_NEXT_CONTAINER(preset, node);
 	if (next == NULL) {
 		next = preset_get_head();
 		if (next == preset) {
@@ -753,7 +741,7 @@ static void control_point_ntf_complete(struct bt_conn *conn, void *user_data)
 
 	/* Resubmit if needed */
 	if (client != NULL && atomic_get(client->context->flags) != 0) {
-		notify_work_reschedule(client, osaWaitNone_c);
+		notify_work_reschedule(client, K_NO_WAIT);
 	}
 }
 
@@ -906,11 +894,10 @@ static int bt_has_cp_generic_update(struct has_client *client, uint8_t prev_inde
 }
 
 #if defined(CONFIG_BT_SETTINGS) && (CONFIG_BT_SETTINGS > 0)
-STRUCT_PACKED_PRE
 struct client_context_store {
 	/* Last notified preset index */
 	uint8_t last_preset_index_known;
-} STRUCT_PACKED_POST;
+} __packed;
 
 static int settings_set_cb(const char *name, size_t len_rd, settings_read_cb read_cb, void *cb_arg)
 {
@@ -959,7 +946,7 @@ static int settings_set_cb(const char *name, size_t len_rd, settings_read_cb rea
 	return 0;
 }
 
-BT_SETTINGS_DEFINE(has, "has", settings_set_cb, NULL);
+static BT_SETTINGS_DEFINE(has, "has", settings_set_cb, NULL);
 
 static void store_client_context(struct client_context *context)
 {
@@ -1012,11 +999,7 @@ static int read_preset_response(struct has_client *client)
 	preset_foreach(client->read_presets_req.start_index, BT_HAS_PRESET_INDEX_LAST,
 		       preset_found, &preset);
 
-#if 0
 	if (unlikely(preset == NULL)) {
-#else
-	if (preset == NULL) {
-#endif
 		return bt_has_cp_read_preset_rsp(client, NULL, BT_HAS_IS_LAST);
 	}
 
@@ -1042,7 +1025,7 @@ static int read_preset_response(struct has_client *client)
 		client->read_presets_req.num_presets--;
 
 		atomic_set_bit(client->context->flags, FLAG_PENDING_READ_PRESET_RESPONSE);
-		notify_work_reschedule(client, BT_AUDIO_NOTIFY_RETRY_DELAY_US / 1000);
+		notify_work_reschedule(client, K_USEC(BT_AUDIO_NOTIFY_RETRY_DELAY_US));
 	}
 
 	return 0;
@@ -1127,7 +1110,7 @@ static int preset_list_changed(struct has_client *client)
 			       FLAG_NOTIFY_PRESET_LIST_GENERIC_UPDATE_TAIL);
 		atomic_set_bit(client->context->flags,
 			       FLAG_NOTIFY_PRESET_LIST_RECORD_DELETED_LAST);
-		notify_work_reschedule(client, BT_AUDIO_NOTIFY_RETRY_DELAY_US / 1000);
+		notify_work_reschedule(client, K_USEC(BT_AUDIO_NOTIFY_RETRY_DELAY_US));
 
 		return 0;
 	}
@@ -1179,7 +1162,7 @@ static int preset_list_changed(struct has_client *client)
 		atomic_set_bit(client->context->flags, FLAG_NOTIFY_PRESET_LIST);
 	}
 
-	notify_work_reschedule(client, BT_AUDIO_NOTIFY_RETRY_DELAY_US / 1000);
+	notify_work_reschedule(client, K_USEC(BT_AUDIO_NOTIFY_RETRY_DELAY_US));
 
 	return 0;
 }
@@ -1840,7 +1823,6 @@ int bt_has_register(const struct bt_has_features_param *features)
 #if (defined(CONFIG_BT_HAS_PRESET_SUPPORT) && (CONFIG_BT_HAS_PRESET_SUPPORT > 0)) || \
     (defined(CONFIG_BT_HAS_FEATURES_NOTIFIABLE) && (CONFIG_BT_HAS_FEATURES_NOTIFIABLE > 0))
 	bt_conn_auth_info_cb_register(&auth_info_cb);
-	bt_conn_cb_register(&conn_cb);
 #endif /* CONFIG_BT_HAS_PRESET_SUPPORT || CONFIG_BT_HAS_FEATURES_NOTIFIABLE */
 
 	has.registered = true;

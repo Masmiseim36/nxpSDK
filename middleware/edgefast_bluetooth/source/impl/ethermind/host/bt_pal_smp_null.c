@@ -23,7 +23,7 @@
 #include "BT_sm_api.h"
 #include "smp_pl.h"
 
-#if !(defined(CONFIG_BT_SMP) && (CONFIG_BT_SMP > 0) || (defined(CONFIG_BT_BREDR) && (CONFIG_BT_BREDR > 0)))
+#if !(defined(CONFIG_BT_SMP) && (CONFIG_BT_SMP > 0) || (defined(CONFIG_BT_CLASSIC) && (CONFIG_BT_CLASSIC > 0)))
 
 #define LOG_ENABLE IS_ENABLED(CONFIG_BT_DEBUG_HCI_CORE)
 #define LOG_MODULE_NAME bt_smp

@@ -10,7 +10,7 @@
 
 //#include <zephyr/sys/__assert.h>
 
-#if defined(CONFIG_ASSERT_ON_ERRORS)
+#if (defined(CONFIG_ASSERT_ON_ERRORS) && (CONFIG_ASSERT_ON_ERRORS > 0))
 #define CHECKIF(expr) \
 	__ASSERT_NO_MSG(!(expr));   \
 	if (0)

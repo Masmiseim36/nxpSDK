@@ -58,7 +58,6 @@ extern "C" {
 #define BT_A2DP_SBC_ALLOC_MTHD(preset)   ((preset->config[1]) & 0x03)
 
 /** @brief SBC Codec */
-STRUCT_PACKED_PRE
 struct bt_a2dp_codec_sbc_params {
 	/** First two octets of configuration */
 	uint8_t config[2];
@@ -66,16 +65,15 @@ struct bt_a2dp_codec_sbc_params {
 	uint8_t min_bitpool;
 	/** Maximum Bitpool Value */
 	uint8_t max_bitpool;
-} STRUCT_PACKED_POST;
+} __packed;
 
-STRUCT_PACKED_PRE
 struct bt_a2dp_codec_sbc_media_packet_hdr {
 	uint8_t number_of_sbc_frames:4;
 	uint8_t rfa:1;
 	uint8_t L:1;
 	uint8_t S:1;
 	uint8_t F:1;
-} STRUCT_PACKED_POST;
+} __packed;
 
 uint8_t bt_a2dp_sbc_get_subband_num(struct bt_a2dp_codec_sbc_params *sbc_codec);
 uint8_t bt_a2dp_sbc_get_block_length(struct bt_a2dp_codec_sbc_params *sbc_codec);

@@ -31,12 +31,12 @@
 
 #include "shell_bt.h"
 
-#if (defined(CONFIG_BT_BREDR) && ((CONFIG_BT_BREDR) > 0U))
+#if (defined(CONFIG_BT_CLASSIC) && ((CONFIG_BT_CLASSIC) > 0U))
 #if (defined(CONFIG_BT_A2DP) && ((CONFIG_BT_A2DP) > 0U))
 
 struct bt_a2dp_ep_test {
     struct bt_a2dp_endpoint *ep;
-    struct bt_delayed_work consume_stream_work;
+    struct k_work_delayable consume_stream_work;
     uint8_t media_started;
     uint8_t fisrt_media;
     uint8_t delay_ms;
@@ -246,7 +246,7 @@ static struct bt_sdp_record a2dp_source_rec = BT_SDP_RECORD(a2dp_source_attrs);
 
 static uint8_t mpeg12_endpoint_cap[5] =
 {
-    4U,                           
+    4U,
     /* Layer, CRC, Channel Mode */
     (MPEG_1_2_LAYER_I             |
     MPEG_1_2_LAYER_II            |
@@ -299,7 +299,7 @@ static uint8_t mpeg12_endpoint_cap[5] =
 
 static uint8_t mpeg12_endpoint_config[5] =
 {
-    4U,                           
+    4U,
     /* Layer, CRC, Channel Mode */
     (MPEG_1_2_LAYER_I             |
     MPEG_1_2_CRC_ON              |
@@ -861,7 +861,7 @@ void app_disconnected(struct bt_a2dp *a2dp)
     shell_print(ctx_shell, "a2dp disconnected");
 }
 
-static void consume_stream_work_cb(struct bt_work *work)
+static void consume_stream_work_cb(struct k_work *work)
 {
     struct bt_a2dp_ep_test *ep_test = CONTAINER_OF((work), struct bt_a2dp_ep_test, consume_stream_work);
 
@@ -890,12 +890,12 @@ static void sink_common_streamer_data(struct bt_a2dp_endpoint *ep, uint8_t *data
     struct bt_a2dp_ep_test *ep_test = get_a2dp_test(ep);
     uint32_t temp;
     uint32_t *u32data;
-    
+
     if (ep_test == NULL)
     {
         return;
     }
-    
+
     temp = (uint32_t)data;
     temp = ((temp + 3u) & 0xFFFFFFFCu);
     u32data = (uint32_t*)temp;
@@ -1113,21 +1113,21 @@ void sbc_sink_start_play(int err)
 void mpeg12_sink_start_play(int err)
 {
     struct bt_a2dp_ep_test *ep_test = get_a2dp_test(&sink_mpeg12_endpoint);
-    
+
     common_start_play_internal(ep_test, err);
 }
 
 void mpeg24_sink_start_play(int err)
 {
     struct bt_a2dp_ep_test *ep_test = get_a2dp_test(&sink_mpeg24_endpoint);
-    
+
     common_start_play_internal(ep_test, err);
 }
 
 void vendor_sink_start_play(int err)
 {
     struct bt_a2dp_ep_test *ep_test = get_a2dp_test(&sink_vendor_endpoint);
-    
+
     common_start_play_internal(ep_test, err);
 }
 
@@ -1164,21 +1164,21 @@ void sbc_stop_play(int err)
 void mpeg12_stop_play(int err)
 {
     struct bt_a2dp_ep_test *ep_test = get_a2dp_test(&sink_sbc_endpoint);
-    
+
     common_stop_play_internal(ep_test, err);
 }
 
 void mpeg24_stop_play(int err)
 {
     struct bt_a2dp_ep_test *ep_test = get_a2dp_test(&sink_sbc_endpoint);
-    
+
     common_stop_play_internal(ep_test, err);
 }
 
 void vendor_stop_play(int err)
 {
     struct bt_a2dp_ep_test *ep_test = get_a2dp_test(&sink_sbc_endpoint);
-    
+
     common_stop_play_internal(ep_test, err);
 }
 
@@ -1220,7 +1220,7 @@ static uint8_t test_recovery_config[] = {3, RECOVERY_TYPE_RFC2733, MAX_MRWS, MAX
 #endif
 
 #if ((defined(CONFIG_BT_A2DP_DR_SERVICE)) && (CONFIG_BT_A2DP_DR_SERVICE > 0U))
-static shell_status_t cmd_send_delay_report(shell_handle_t shell, int32_t argc, char *argv[])
+static int cmd_send_delay_report(const struct shell *sh, size_t argc, char *argv[])
 {
     int err;
     int16_t delay;
@@ -1228,27 +1228,27 @@ static shell_status_t cmd_send_delay_report(shell_handle_t shell, int32_t argc, 
     shell_a2dp_init();
     if (default_ep == NULL)
     {
-        shell_print(shell, "default endpoint is not set");
-        return kStatus_SHELL_Success;
+        shell_print(sh, "default endpoint is not set");
+        return 0;
     }
 
     if (argc > 1) {
         delay = strtoul(argv[1], NULL, 10);
     } else {
-        shell_print(shell, "wrong parameter");
-        return kStatus_SHELL_Success;
+        shell_print(sh, "wrong parameter");
+        return 0;
     }
 
     err = bt_a2dp_send_delay_report(default_ep->ep, delay);
     if (err) {
-        shell_print(shell, "sending fail");
+        shell_print(sh, "sending fail");
     }
 
-    return kStatus_SHELL_Success;
+    return 0;
 }
 #endif
 
-static shell_status_t cmd_register_sink_ep(shell_handle_t shell, int32_t argc, char *argv[])
+static int cmd_register_sink_ep(const struct shell *sh, size_t argc, char *argv[])
 {
     int select;
     int err = -1;
@@ -1263,13 +1263,13 @@ static shell_status_t cmd_register_sink_ep(shell_handle_t shell, int32_t argc, c
     if (argc > 1) {
         select = strtoul(argv[1], NULL, 10);
     } else {
-        shell_print(shell, "wrong parameter");
-        return kStatus_SHELL_Success;
+        shell_print(sh, "wrong parameter");
+        return 0;
     }
 
     if ((select <= 0) || (select > 6)) {
-        shell_print(shell, "wrong parameter");
-        return kStatus_SHELL_Success;
+        shell_print(sh, "wrong parameter");
+        return 0;
     }
 
     switch (select) {
@@ -1283,7 +1283,7 @@ static shell_status_t cmd_register_sink_ep(shell_handle_t shell, int32_t argc, c
         err = bt_a2dp_register_endpoint(&sink_sbc_endpoint, BT_A2DP_AUDIO, BT_A2DP_SINK);
         if (!err)
         {
-            shell_print(shell, "SBC sink endpoint is registered");
+            shell_print(sh, "SBC sink endpoint is registered");
         }
         break;
     case 2: /* MPEG-1,2 */
@@ -1296,7 +1296,7 @@ static shell_status_t cmd_register_sink_ep(shell_handle_t shell, int32_t argc, c
         err = bt_a2dp_register_endpoint(&sink_mpeg12_endpoint, BT_A2DP_AUDIO, BT_A2DP_SINK);
         if (!err)
         {
-            shell_print(shell, "MPEG-1,2 sink endpoint is registered");
+            shell_print(sh, "MPEG-1,2 sink endpoint is registered");
         }
         break;
     case 3: /* 3:MPEG-2,4 */
@@ -1309,7 +1309,7 @@ static shell_status_t cmd_register_sink_ep(shell_handle_t shell, int32_t argc, c
         err = bt_a2dp_register_endpoint(&sink_mpeg24_endpoint, BT_A2DP_AUDIO, BT_A2DP_SINK);
         if (!err)
         {
-            shell_print(shell, "MPEG-2,4 sink endpoint is registered");
+            shell_print(sh, "MPEG-2,4 sink endpoint is registered");
         }
         break;
     case 4: /*  4:vendor */
@@ -1322,7 +1322,7 @@ static shell_status_t cmd_register_sink_ep(shell_handle_t shell, int32_t argc, c
         err = bt_a2dp_register_endpoint(&sink_vendor_endpoint, BT_A2DP_AUDIO, BT_A2DP_SINK);
         if (!err)
         {
-            shell_print(shell, "Vendor sink endpoint is registered");
+            shell_print(sh, "Vendor sink endpoint is registered");
         }
         break;
     case 5: /* sbc with delay report and content protection services */
@@ -1344,13 +1344,13 @@ static shell_status_t cmd_register_sink_ep(shell_handle_t shell, int32_t argc, c
         err = bt_a2dp_register_endpoint(&sink_sbc_endpoint, BT_A2DP_AUDIO, BT_A2DP_SINK);
         if (!err)
         {
-            shell_print(shell, "SBC sink endpoint is registered");
+            shell_print(sh, "SBC sink endpoint is registered");
 #if ((defined(CONFIG_BT_A2DP_CP_SERVICE)) && (CONFIG_BT_A2DP_CP_SERVICE > 0U))
             bt_a2dp_set_cp_header(&sink_sbc_endpoint, &cp_header, 1);
 #endif
 #if ((defined(CONFIG_BT_A2DP_DR_SERVICE)) && (CONFIG_BT_A2DP_DR_SERVICE > 0U))
             bt_a2dp_set_initial_delay_report(&sink_sbc_endpoint, 1);
-            shell_print(shell, "set initial delay report value as 1");
+            shell_print(sh, "set initial delay report value as 1");
 #endif
         }
         break;
@@ -1388,13 +1388,13 @@ static shell_status_t cmd_register_sink_ep(shell_handle_t shell, int32_t argc, c
         err = bt_a2dp_register_endpoint(&sink_sbc_endpoint, BT_A2DP_AUDIO, BT_A2DP_SINK);
         if (!err)
         {
-            shell_print(shell, "SBC sink endpoint is registered");
+            shell_print(sh, "SBC sink endpoint is registered");
 #if ((defined(CONFIG_BT_A2DP_CP_SERVICE)) && (CONFIG_BT_A2DP_CP_SERVICE > 0U))
             bt_a2dp_set_cp_header(&sink_sbc_endpoint, &cp_header, 1);
 #endif
 #if ((defined(CONFIG_BT_A2DP_DR_SERVICE)) && (CONFIG_BT_A2DP_DR_SERVICE > 0U))
             bt_a2dp_set_initial_delay_report(&sink_sbc_endpoint, 1);
-            shell_print(shell, "set initial delay report value as 1");
+            shell_print(sh, "set initial delay report value as 1");
 #endif
         }
         break;
@@ -1404,7 +1404,7 @@ static shell_status_t cmd_register_sink_ep(shell_handle_t shell, int32_t argc, c
 
     if (err)
     {
-        shell_print(shell, "fail to register endpoint");
+        shell_print(sh, "fail to register endpoint");
     }
     else
     {
@@ -1416,13 +1416,13 @@ static shell_status_t cmd_register_sink_ep(shell_handle_t shell, int32_t argc, c
         }
         else
         {
-            shell_print(shell, "please increase the ep number");
+            shell_print(sh, "please increase the ep number");
         }
     }
-    return kStatus_SHELL_Success;
+    return 0;
 }
 
-static shell_status_t cmd_register_source_ep(shell_handle_t shell, int32_t argc, char *argv[])
+static int cmd_register_source_ep(const struct shell *sh, size_t argc, char *argv[])
 {
     int select;
     int err = -1;
@@ -1437,13 +1437,13 @@ static shell_status_t cmd_register_source_ep(shell_handle_t shell, int32_t argc,
     if (argc > 1) {
         select = strtoul(argv[1], NULL, 10);
     } else {
-        shell_print(shell, "wrong parameter");
-        return kStatus_SHELL_Success;
+        shell_print(sh, "wrong parameter");
+        return 0;
     }
 
     if ((select <= 0) || (select > 6)) {
-        shell_print(shell, "wrong parameter");
-        return kStatus_SHELL_Success;
+        shell_print(sh, "wrong parameter");
+        return 0;
     }
 
     switch (select) {
@@ -1456,7 +1456,7 @@ static shell_status_t cmd_register_source_ep(shell_handle_t shell, int32_t argc,
         err = bt_a2dp_register_endpoint(&source_sbc_endpoint, BT_A2DP_AUDIO, BT_A2DP_SOURCE);
         if (!err)
         {
-            shell_print(shell, "SBC source endpoint is registered");
+            shell_print(sh, "SBC source endpoint is registered");
         }
         break;
     case 2: /* MPEG-1,2 */
@@ -1468,7 +1468,7 @@ static shell_status_t cmd_register_source_ep(shell_handle_t shell, int32_t argc,
         err = bt_a2dp_register_endpoint(&source_mpeg12_endpoint, BT_A2DP_AUDIO, BT_A2DP_SOURCE);
         if (!err)
         {
-            shell_print(shell, "MPEG-1,2 source endpoint is registered");
+            shell_print(sh, "MPEG-1,2 source endpoint is registered");
         }
         break;
     case 3: /* 3:MPEG-2,4 */
@@ -1480,7 +1480,7 @@ static shell_status_t cmd_register_source_ep(shell_handle_t shell, int32_t argc,
         err = bt_a2dp_register_endpoint(&source_mpeg24_endpoint, BT_A2DP_AUDIO, BT_A2DP_SOURCE);
         if (!err)
         {
-            shell_print(shell, "MPEG-2,4 source endpoint is registered");
+            shell_print(sh, "MPEG-2,4 source endpoint is registered");
         }
         break;
     case 4: /*  4:vendor */
@@ -1492,7 +1492,7 @@ static shell_status_t cmd_register_source_ep(shell_handle_t shell, int32_t argc,
         err = bt_a2dp_register_endpoint(&source_vendor_endpoint, BT_A2DP_AUDIO, BT_A2DP_SOURCE);
         if (!err)
         {
-            shell_print(shell, "Vendor source endpoint is registered");
+            shell_print(sh, "Vendor source endpoint is registered");
         }
         break;
     case 5: /* sbc with delay report and content protection services */
@@ -1513,7 +1513,7 @@ static shell_status_t cmd_register_source_ep(shell_handle_t shell, int32_t argc,
         err = bt_a2dp_register_endpoint(&source_sbc_endpoint, BT_A2DP_AUDIO, BT_A2DP_SOURCE);
         if (!err)
         {
-            shell_print(shell, "SBC source endpoint is registered");
+            shell_print(sh, "SBC source endpoint is registered");
 #if ((defined(CONFIG_BT_A2DP_CP_SERVICE)) && (CONFIG_BT_A2DP_CP_SERVICE > 0U))
             bt_a2dp_set_cp_header(&source_sbc_endpoint, &cp_header, 1);
 #endif
@@ -1552,7 +1552,7 @@ static shell_status_t cmd_register_source_ep(shell_handle_t shell, int32_t argc,
         err = bt_a2dp_register_endpoint(&source_sbc_endpoint, BT_A2DP_AUDIO, BT_A2DP_SOURCE);
         if (!err)
         {
-            shell_print(shell, "SBC source endpoint is registered");
+            shell_print(sh, "SBC source endpoint is registered");
 #if ((defined(CONFIG_BT_A2DP_CP_SERVICE)) && (CONFIG_BT_A2DP_CP_SERVICE > 0U))
             bt_a2dp_set_cp_header(&source_sbc_endpoint, &cp_header, 1);
 #endif
@@ -1564,7 +1564,7 @@ static shell_status_t cmd_register_source_ep(shell_handle_t shell, int32_t argc,
 
     if (err)
     {
-        shell_print(shell, "fail to register endpoint");
+        shell_print(sh, "fail to register endpoint");
     }
     else
     {
@@ -1574,29 +1574,29 @@ static shell_status_t cmd_register_source_ep(shell_handle_t shell, int32_t argc,
         }
         else
         {
-            shell_print(shell, "please increase the ep number");
+            shell_print(sh, "please increase the ep number");
         }
     }
 
-    return kStatus_SHELL_Success;
+    return 0;
 }
 
-static shell_status_t cmd_connect(shell_handle_t shell, int32_t argc, char *argv[])
+static int cmd_connect(const struct shell *sh, size_t argc, char *argv[])
 {
     shell_a2dp_init();
     if (!default_conn) {
-        shell_error(shell, "Not connected");
-        return kStatus_SHELL_Error;
+        shell_error(sh, "Not connected");
+        return -EINVAL;
     }
 
     default_a2dp = bt_a2dp_connect(default_conn);
     if (NULL == default_a2dp) {
-        shell_error(shell, "fail to connect a2dp");
+        shell_error(sh, "fail to connect a2dp");
     }
-    return kStatus_SHELL_Success;
+    return 0;
 }
 
-static shell_status_t cmd_disconnect(shell_handle_t shell, int32_t argc, char *argv[])
+static int cmd_disconnect(const struct shell *sh, size_t argc, char *argv[])
 {
     shell_a2dp_init();
     default_ep = NULL;
@@ -1604,9 +1604,9 @@ static shell_status_t cmd_disconnect(shell_handle_t shell, int32_t argc, char *a
         bt_a2dp_disconnect(default_a2dp);
         default_a2dp = NULL;
     } else {
-        shell_error(shell, "a2dp is not connected");
+        shell_error(sh, "a2dp is not connected");
     }
-    return kStatus_SHELL_Success;
+    return 0;
 }
 
 void app_configured(int err)
@@ -1616,15 +1616,15 @@ void app_configured(int err)
     }
 }
 
-static shell_status_t cmd_configure(shell_handle_t shell, int32_t argc, char *argv[])
+static int cmd_configure(const struct shell *sh, size_t argc, char *argv[])
 {
     shell_a2dp_init();
     if (default_a2dp != NULL) {
         bt_a2dp_configure(default_a2dp, app_configured);
     } else {
-        shell_error(shell, "a2dp is not connected");
+        shell_error(sh, "a2dp is not connected");
     }
-    return kStatus_SHELL_Success;
+    return 0;
 }
 
 static uint8_t bt_a2dp_discover_peer_endpoint_cb(struct bt_a2dp *a2dp,
@@ -1639,21 +1639,21 @@ static uint8_t bt_a2dp_discover_peer_endpoint_cb(struct bt_a2dp *a2dp,
     }
 }
 
-static shell_status_t cmd_get_peer_eps(shell_handle_t shell, int32_t argc, char *argv[])
+static int cmd_get_peer_eps(const struct shell *sh, size_t argc, char *argv[])
 {
     shell_a2dp_init();
     if (default_a2dp != NULL) {
         int err = bt_a2dp_discover_peer_endpoints(default_a2dp, bt_a2dp_discover_peer_endpoint_cb);
         if (err) {
-            shell_error(shell, "discover fail");
+            shell_error(sh, "discover fail");
         }
     } else {
-        shell_error(shell, "a2dp is not connected");
+        shell_error(sh, "a2dp is not connected");
     }
-    return kStatus_SHELL_Success;
+    return 0;
 }
 
-static shell_status_t cmd_get_registered_eps(shell_handle_t shell, int32_t argc, char *argv[])
+static int cmd_get_registered_eps(const struct shell *sh, size_t argc, char *argv[])
 {
     uint8_t *str;
     shell_a2dp_init();
@@ -1680,12 +1680,12 @@ static shell_status_t cmd_get_registered_eps(shell_handle_t shell, int32_t argc,
             str = (uint8_t *)"UNKOWN";
             break;
         }
-        shell_print(shell, "%d-%s", (index + 1), str);
+        shell_print(sh, "%d-%s", (index + 1), str);
     }
-    return kStatus_SHELL_Success;
+    return 0;
 }
 
-static shell_status_t cmd_set_default_ep(shell_handle_t shell, int32_t argc, char *argv[])
+static int cmd_set_default_ep(const struct shell *sh, size_t argc, char *argv[])
 {
     int select;
 
@@ -1693,83 +1693,83 @@ static shell_status_t cmd_set_default_ep(shell_handle_t shell, int32_t argc, cha
     if (argc > 1) {
         select = strtoul(argv[1], NULL, 10);
     } else {
-        shell_print(shell, "wrong parameter");
-        return kStatus_SHELL_Success;
+        shell_print(sh, "wrong parameter");
+        return 0;
     }
 
     if ((select <= 0) || (select > registered_index)) {
-        shell_print(shell, "wrong parameter");
-        return kStatus_SHELL_Success;
+        shell_print(sh, "wrong parameter");
+        return 0;
     }
     default_ep = &registered_eps[select - 1];
-    shell_print(shell, "success");
-    return kStatus_SHELL_Success;
+    shell_print(sh, "success");
+    return 0;
 }
 
-static shell_status_t cmd_configure_ep(shell_handle_t shell, int32_t argc, char *argv[])
+static int cmd_configure_ep(const struct shell *sh, size_t argc, char *argv[])
 {
     shell_a2dp_init();
-    return kStatus_SHELL_Success;
+    return 0;
 }
 
-static shell_status_t cmd_deconfigure(shell_handle_t shell, int32_t argc, char *argv[])
+static int cmd_deconfigure(const struct shell *sh, size_t argc, char *argv[])
 {
     shell_a2dp_init();
     if (default_ep == NULL)
     {
-        shell_print(shell, "default endpoint is not set");
-        return kStatus_SHELL_Success;
+        shell_print(sh, "default endpoint is not set");
+        return 0;
     }
     if (bt_a2dp_deconfigure(default_ep->ep)) {
-          shell_print(shell, "fail");
+          shell_print(sh, "fail");
     }
-    return kStatus_SHELL_Success;
+    return 0;
 }
 
-static shell_status_t cmd_start(shell_handle_t shell, int32_t argc, char *argv[])
+static int cmd_start(const struct shell *sh, size_t argc, char *argv[])
 {
     shell_a2dp_init();
     if (default_ep == NULL)
     {
-        shell_print(shell, "default endpoint is not set");
-        return kStatus_SHELL_Success;
+        shell_print(sh, "default endpoint is not set");
+        return 0;
     }
     if (bt_a2dp_start(default_ep->ep)) {
-          shell_print(shell, "fail");
+          shell_print(sh, "fail");
     }
-    return kStatus_SHELL_Success;
+    return 0;
 }
 
-static shell_status_t cmd_stop(shell_handle_t shell, int32_t argc, char *argv[])
+static int cmd_stop(const struct shell *sh, size_t argc, char *argv[])
 {
     shell_a2dp_init();
     if (default_ep == NULL)
     {
-        shell_print(shell, "default endpoint is not set");
-        return kStatus_SHELL_Success;
+        shell_print(sh, "default endpoint is not set");
+        return 0;
     }
     if (bt_a2dp_stop(default_ep->ep)) {
-          shell_print(shell, "fail");
+          shell_print(sh, "fail");
     }
-    return kStatus_SHELL_Success;
+    return 0;
 }
 
-static shell_status_t cmd_send_media(shell_handle_t shell, int32_t argc, char *argv[])
+static int cmd_send_media(const struct shell *sh, size_t argc, char *argv[])
 {
     uint32_t time;
 
     shell_a2dp_init();
     if (default_ep == NULL)
     {
-        shell_print(shell, "default endpoint is not set");
-        return kStatus_SHELL_Success;
+        shell_print(sh, "default endpoint is not set");
+        return 0;
     }
 
     if (argc > 1) {
         time = strtoul(argv[1], NULL, 10);
     } else {
-        shell_print(shell, "wrong parameter");
-        return kStatus_SHELL_Success;
+        shell_print(sh, "wrong parameter");
+        return 0;
     }
 
     time *= 1000u;
@@ -1778,7 +1778,7 @@ static shell_status_t cmd_send_media(shell_handle_t shell, int32_t argc, char *a
         vTaskDelay((((1)*configTICK_RATE_HZ + 999U) / 1000U));
     }
 
-    return kStatus_SHELL_Success;
+    return 0;
 }
 
 #define HELP_NONE "[none]"
@@ -1815,21 +1815,20 @@ SHELL_STATIC_SUBCMD_SET_CREATE(a2dp_cmds,
 	SHELL_SUBCMD_SET_END
 );
 
-static shell_status_t cmd_a2dp(shell_handle_t shell, int32_t argc, char **argv)
+static int cmd_a2dp(const struct shell *sh, size_t argc, char **argv)
 {
     if (argc == 1) {
-        shell_help(shell);
+        shell_help(sh);
         /* shell returns 1 when help is printed */
-        return kStatus_SHELL_PrintCmdHelp;
+        return SHELL_CMD_HELP_PRINTED;
     }
 
-    shell_error(shell, "%s unknown parameter: %s", argv[0], argv[1]);
+    shell_error(sh, "%s unknown parameter: %s", argv[0], argv[1]);
 
-    return kStatus_SHELL_Error;
+    return -EINVAL;
 }
 
-SHELL_CMD_REGISTER(a2dp, a2dp_cmds, "Bluetooth A2DP shell commands",
-		       cmd_a2dp, 1, 1);
+SHELL_CMD_ARG_REGISTER(a2dp, a2dp_cmds, "Bluetooth A2DP shell commands", cmd_a2dp, 1, 1);
 
 void bt_ShellA2dpInit(shell_handle_t shell)
 {
@@ -1839,4 +1838,4 @@ void bt_ShellA2dpInit(shell_handle_t shell)
     }
 }
 #endif /* CONFIG_BT_A2DP */
-#endif /* CONFIG_BT_BREDR */
+#endif /* CONFIG_BT_CLASSIC */

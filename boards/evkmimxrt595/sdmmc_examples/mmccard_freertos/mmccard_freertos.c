@@ -11,16 +11,12 @@
 #include "fsl_debug_console.h"
 #include "FreeRTOS.h"
 #include "task.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 #include "sdmmc_config.h"
-#include "fsl_power.h"
-#include "fsl_gpio.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-
 /*! @brief Data block count accessed in card */
 #define DATA_BLOCK_COUNT (5U)
 /*! @brief Start data block number accessed in card */
@@ -207,9 +203,7 @@ static void AccessCardTask(void *pvParameters)
 /*! @brief Main function */
 int main(void)
 {
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
     BOARD_MMC_Config(&g_mmc, BOARD_SDMMC_MMC_HOST_IRQ_PRIORITY);
 
     if (pdPASS !=

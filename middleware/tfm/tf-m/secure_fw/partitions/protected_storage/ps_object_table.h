@@ -53,7 +53,7 @@ psa_status_t ps_object_table_init(uint8_t *obj_data);
  *        client ID pair.
  *
  * \param[in] uid        Identifier for the data
- * \param[in] client_id  Identifier of the asset’s owner (client)
+ * \param[in] client_id  Identifier of the assetâ€™s owner (client)
  *
  * \return Returns error code as specified in \ref psa_status_t
  *
@@ -83,7 +83,7 @@ psa_status_t ps_object_table_get_free_fid(uint32_t fid_num, uint32_t *p_fid);
  *        persistently, for the provided UID and client ID pair.
  *
  * \param[in] uid           Identifier for the data.
- * \param[in] client_id     Identifier of the asset’s owner (client)
+ * \param[in] client_id     Identifier of the assetâ€™s owner (client)
  * \param[in] obj_tbl_info  Pointer to the location to store object table
  *                          information \ref ps_obj_table_info_t
  *
@@ -101,7 +101,7 @@ psa_status_t ps_object_table_set_obj_tbl_info(psa_storage_uid_t uid,
  *        UID and client ID pair.
  *
  * \param[in]  uid           Identifier for the data.
- * \param[in]  client_id     Identifier of the asset’s owner (client)
+ * \param[in]  client_id     Identifier of the assetâ€™s owner (client)
  * \param[out] obj_tbl_info  Pointer to the location to store object table
  *                           information
  *
@@ -116,7 +116,7 @@ psa_status_t ps_object_table_get_obj_tbl_info(psa_storage_uid_t uid,
  * \brief Deletes the table entry for the provided UID and client ID pair.
  *
  * \param[in]  uid        Identifier for the data.
- * \param[in]  client_id  Identifier of the asset’s owner (client)
+ * \param[in]  client_id  Identifier of the assetâ€™s owner (client)
  *
  * \return Returns error code as specified in \ref psa_status_t
  */

@@ -9,7 +9,7 @@
 *                                                                    *
 **********************************************************************
 
-** emWin V6.38 - Graphical user interface for embedded applications **
+** emWin V6.46 - Graphical user interface for embedded applications **
 All  Intellectual Property rights  in the Software belongs to  SEGGER.
 emWin is protected by  international copyright laws.  Knowledge of the
 source code may not be used to write a similar product.  This file may
@@ -34,7 +34,7 @@ License model:            emWin License Agreement, dated August 20th 2011 and Am
 Licensed platform:        NXP's ARM 7/9, Cortex-M0, M3, M4, M7, A7, M33
 ----------------------------------------------------------------------
 Support and Update Agreement (SUA)
-SUA period:               2011-08-19 - 2024-09-02
+SUA period:               2011-08-19 - 2025-09-02
 Contact to extend SUA:    sales@segger.com
 ----------------------------------------------------------------------
 File        : GUI_SVG_VGLite.h
@@ -46,6 +46,7 @@ Purpose     : VGLite interface for SVG
 #define GUI_SVG_VGLITE_H
 
 #include "GUI_ConfDefaults.h"
+#include "GUI_SVG_Global.h"
 
 /*********************************************************************
 *
@@ -65,52 +66,11 @@ Purpose     : VGLite interface for SVG
 #ifdef GUI_SVG_HAS_VGLITE
   #include GUI_SVG_VGLITE_HEADER
   #include GUI_SVG_VGLITE_OS_HEADER
-#else
-  #ifdef WIN32
-    #if (_MSC_VER <= 1900)  // Older compiler version do not know about the header
-      typedef unsigned char uint8_t;
-      typedef signed   int  int32_t;
-      typedef unsigned int  uint32_t;
-    #else
-      #include <stdint.h>
-    #endif
-  #else
-    #include <stdint.h>
-  #endif
 #endif
 
 #if defined(__cplusplus)
 extern "C" {     /* Make sure we have C-declarations in C++ programs */
 #endif
-
-/*********************************************************************
-*
-*       Macros
-*
-**********************************************************************
-*/
-//
-// Redirect vg_lite typename to the same type defined as GUI_...
-//
-#define REDIRECT_VG_TYPE(TYPE_NAME)    typedef GUI_##TYPE_NAME TYPE_NAME
-//
-// Used to define a given VGLite type with private members
-// with the same size of given type if source is not available.
-//
-#define DEFINE_VG_TYPE_PRIVATE(TYPE_NAME, NUM_BYTES)   \
-  typedef struct {                                     \
-    int a[NUM_BYTES / 4];                              \
-  } GUI_##TYPE_NAME;                                   \
-  REDIRECT_VG_TYPE(TYPE_NAME)
-//
-// Used to define a given VGLite type with public members,
-// required when the named members are used in the source file.
-//
-#define DEFINE_VG_TYPE_PUBLIC(TYPE_NAME, MEMBERS)   \
-  typedef struct {                                  \
-    MEMBERS                                         \
-  } GUI_##TYPE_NAME;                                \
-  REDIRECT_VG_TYPE(TYPE_NAME)
 
 /*********************************************************************
 *
@@ -143,15 +103,15 @@ extern "C" {     /* Make sure we have C-declarations in C++ programs */
   //
   // Define private structure types.
   //
-  DEFINE_VG_TYPE_PRIVATE(vg_lite_path_t,                   72);
-  DEFINE_VG_TYPE_PRIVATE(vg_lite_yuvinfo_t,                52);
-  DEFINE_VG_TYPE_PRIVATE(vg_lite_matrix_t,                 36);
-  DEFINE_VG_TYPE_PRIVATE(vg_lite_linear_gradient_ext_t, 10432);
-  DEFINE_VG_TYPE_PRIVATE(vg_lite_radial_gradient_t,     10440);
+  DEFINE_TYPE_PRIVATE(vg_lite_path_t,                   72);
+  DEFINE_TYPE_PRIVATE(vg_lite_yuvinfo_t,                52);
+  DEFINE_TYPE_PRIVATE(vg_lite_matrix_t,                 36);
+  DEFINE_TYPE_PRIVATE(vg_lite_linear_gradient_ext_t, 10432);
+  DEFINE_TYPE_PRIVATE(vg_lite_radial_gradient_t,     10440);
   //
   // Define structs with public members.
   //
-  DEFINE_VG_TYPE_PUBLIC(vg_lite_buffer_t,
+  DEFINE_TYPE_PUBLIC(vg_lite_buffer_t,
     int32_t                            width;
     int32_t                            height;
     int32_t                            stride;
@@ -164,20 +124,20 @@ extern "C" {     /* Make sure we have C-declarations in C++ programs */
     vg_lite_buffer_image_mode_t        image_mode;
     vg_lite_buffer_transparency_mode_t transparency_mode;
   );
-  DEFINE_VG_TYPE_PUBLIC(vg_lite_color_ramp_t,
+  DEFINE_TYPE_PUBLIC(vg_lite_color_ramp_t,
     vg_lite_float_t stop;
     vg_lite_float_t red;
     vg_lite_float_t green;
     vg_lite_float_t blue;
     vg_lite_float_t alpha;
   );
-  DEFINE_VG_TYPE_PUBLIC(vg_lite_linear_gradient_parameter_t,
+  DEFINE_TYPE_PUBLIC(vg_lite_linear_gradient_parameter_t,
     vg_lite_float_t X0;
     vg_lite_float_t Y0;
     vg_lite_float_t X1;
     vg_lite_float_t Y1;
   );
-  DEFINE_VG_TYPE_PUBLIC(vg_lite_radial_gradient_parameter_t,
+  DEFINE_TYPE_PUBLIC(vg_lite_radial_gradient_parameter_t,
     vg_lite_float_t cx;
     vg_lite_float_t cy;
     vg_lite_float_t r;
@@ -259,7 +219,7 @@ typedef uint32_t           (GUI_SVG_VGLITE_QUERY_FEATURE_FUNC)   (vg_lite_featur
 *  Description
 *    Maps the required functions of the Vivante VGLite API.
 *
-*    A structure of this type can be set with GUI_SVG_SetAPI_VGLite()
+*    A structure of this type can be set with GUI_SVG_DRIVER_BindAPI()
 *    when a precompiled emWin library is used, that was compiled without
 *    the VGLite code (meaning \c{GUI_SVG_HAS_VGLITE} was not defined.
 *
@@ -309,9 +269,6 @@ typedef struct {
 * 
 *  Parameters
 *    VAR_NAME: Identifier name to be used for the structure variable.
-*
-*  Additional information
-*    An example can be found under GUI_SVG_SetAPI_VGLite().
 */
 #define GUI_SVG_DECLARE_VGLITE_API(VAR_NAME)          \
   static const GUI_SVG_VGLITE_API_STRUCT VAR_NAME = { \
@@ -340,14 +297,6 @@ typedef struct {
     vg_lite_finish,                                   \
     vg_lite_query_feature,                            \
   }
-
-/*********************************************************************
-*
-*       Prototypes
-*
-**********************************************************************
-*/
-void GUI_SVG_SetAPI_VGLite(const GUI_SVG_VGLITE_API_STRUCT * pAPI);
 
 #if defined(__cplusplus)
 }

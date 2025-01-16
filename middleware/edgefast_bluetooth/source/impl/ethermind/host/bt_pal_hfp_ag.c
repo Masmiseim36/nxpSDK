@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 NXP
+ * Copyright 2021, 2024 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -40,8 +40,9 @@
 #include "BT_at_parser_api.h"
 #include "db_gen.h"
 #include "sco_audio_pl.h"
+#include "bt_pal_sco_internal.h"
 
-#if (defined(CONFIG_BT_BREDR) && ((CONFIG_BT_BREDR) > 0U))
+#if (defined(CONFIG_BT_CLASSIC) && ((CONFIG_BT_CLASSIC) > 0U))
 #if (defined (CONFIG_BT_HFP_AG) && (CONFIG_BT_HFP_AG > 0U))
 
 #define LOG_ENABLE IS_ENABLED(CONFIG_BT_DEBUG_HFP_AG)
@@ -62,15 +63,13 @@ typedef struct _hfp_ag_clcc_t
 
 struct bt_hfp_ag
 {
+    struct bt_sco_chan sco_chan;
     /* Flag - Whether allocated or free */
     uint8_t allocated;
-    uint8_t actived;
     uint8_t serverChannel;
     uint8_t peerAddr[BT_BD_ADDR_SIZE];
     uint16_t sco_connection_handle;
-    struct bt_conn *bt_so_conn;
     struct bt_conn *acl_so_conn;
-    struct bt_hfp_ag_cb *bt_hfp_ag_cb;
     hfp_ag_get_config *bt_hfp_ag_config;
     uint8_t bt_hfp_ag_bind[2];
     char ag_str_cops[16];
@@ -80,6 +79,7 @@ struct bt_hfp_ag
     uint32_t ag_features;
 };
 
+static struct bt_hfp_ag_cb *bt_hfp_ag_cb;
 static OSA_MUTEX_HANDLE_DEFINE(s_HfpAgLockMutex);
 static osa_mutex_handle_t s_HfpAgLock;
 static struct bt_hfp_ag s_HfpAgInstances[CONFIG_BT_MAX_CONN];
@@ -87,7 +87,7 @@ static struct bt_hfp_ag s_HfpAgInstances[CONFIG_BT_MAX_CONN];
 #define EDGEFAST_HFP_AG_UNLOCK OSA_MutexUnlock(s_HfpAgLock)
 
 #define SDP_CLIENT_USER_BUF_LEN 512U
-NET_BUF_POOL_FIXED_DEFINE(sdp_client_pool, CONFIG_BT_MAX_CONN, SDP_CLIENT_USER_BUF_LEN, NULL);
+NET_BUF_POOL_FIXED_DEFINE(sdp_client_pool, CONFIG_BT_MAX_CONN, SDP_CLIENT_USER_BUF_LEN, CONFIG_NET_BUF_USER_DATA_SIZE, NULL);
 struct bt_hfp_sdp
 {
     struct bt_conn *bt_conn;
@@ -101,8 +101,10 @@ static struct bt_hfp_ag *s_actived_bt_hfp_ag = NULL;
 #define BT_HFP_AG_STATE_CONNECTED    0x01
 
 static uint8_t bt_hfp_agag_state;
+#ifndef SDP_DYNAMIC_DB
 static uint8_t hfp_ag_local_supported_features[6];
 static uint16_t hfp_ag_local_supported_features_ext;
+#endif
 static void bt_hfp_ag_send_at_rsp(uint8_t rsp_code, void *value);
 static void bt_hfp_ag_dump_bytes(uint8_t *buffer, uint16_t length);
 extern void bt_sco_cleanup(struct bt_conn *sco_conn);
@@ -282,6 +284,8 @@ typedef struct _bt_hfp_ag_sendelt
 static bt_hfp_ag_sendelt bt_hfp_ag_send[BT_HFP_AG_SEND_QUEUE_SIZE];
 static uint8_t bt_hfp_ag_sendwr;
 static uint8_t bt_hfp_ag_sendrd;
+static struct bt_hfp_ag *hfp_ag_GetInstance(void);
+static void hfp_ag_FreeInstance(struct bt_hfp_ag *hfp_ag);
 
 static void bt_hfp_ag_dump_bytes(uint8_t *buffer, uint16_t length)
 {
@@ -413,23 +417,71 @@ static API_RESULT hfp_ag_callback(HFP_AG_EVENTS hfp_ag_event, API_RESULT result,
     uint16_t i;
     uint8_t *recvd_data;
     uint8_t option, index;
-    uint8_t cmd[16];
+    struct bt_hfp_ag *hfp_ag;
+    uint32_t codecs = 0;
 
     switch (hfp_ag_event)
     {
         case HFP_AG_CONNECT_IND:
+        {
+            struct bt_conn *conn;
+
             LOG_DBG("BT_HFP_AG HFP_AG_CONNECT_IND \n");
             bt_hfp_agag_state = BT_HFP_AG_STATE_CONNECTED;
 
-            s_actived_bt_hfp_ag->bt_hfp_ag_config->bt_hfp_ag_inband = BT_TRUE;
-            s_actived_bt_hfp_ag->bt_hfp_ag_config->bt_hfp_ag_dial   = BT_TRUE;
-
-            if (s_actived_bt_hfp_ag->bt_hfp_ag_cb->connected)
+            hfp_ag = hfp_ag_GetInstance();
+            if (NULL == hfp_ag)
             {
-                s_actived_bt_hfp_ag->bt_hfp_ag_cb->connected(s_actived_bt_hfp_ag);
+                break;
             }
 
+            s_actived_bt_hfp_ag = hfp_ag;
+            memset(s_actived_bt_hfp_ag->bt_hfp_ag_bind, 0x0, 2U);
+            s_actived_bt_hfp_ag->bt_cind_setting.server           = 1U;
+            s_actived_bt_hfp_ag->bt_cind_setting.call_state       = 0U;
+            s_actived_bt_hfp_ag->bt_cind_setting.call_setup_state = HFP_AG_CALL_SETUP_STATUS_IDLE;
+            s_actived_bt_hfp_ag->bt_cind_setting.call_held_state  = 0U;
+            s_actived_bt_hfp_ag->bt_cind_setting.signal           = 4U;
+            s_actived_bt_hfp_ag->bt_cind_setting.roam             = 0U;
+            s_actived_bt_hfp_ag->bt_cind_setting.batt_lev         = 2U;
+
+            hfp_ag->ag_features = BT_HFP_AG_SUPPORTED_FEATURES;
+
+            if (data_length >= BT_BD_ADDR_SIZE)
+            {
+                BT_mem_copy(hfp_ag->peerAddr, data, BT_BD_ADDR_SIZE);
+                conn = bt_conn_lookup_addr_br((const bt_addr_t *)hfp_ag->peerAddr);
+                if (!conn)
+                {
+                    break;
+                }
+                else
+                {
+                    bt_conn_unref(conn);
+                }
+
+                hfp_ag->acl_so_conn = conn;
+            }
+
+            if ((bt_hfp_ag_cb) && (bt_hfp_ag_cb->connected))
+            {
+                bt_hfp_ag_cb->connected(s_actived_bt_hfp_ag);
+            }
+
+            if ((bt_hfp_ag_cb) && (bt_hfp_ag_cb->get_config))
+            {
+                bt_hfp_ag_cb->get_config(s_actived_bt_hfp_ag, &s_actived_bt_hfp_ag->bt_hfp_ag_config);
+            }
+
+            if (s_actived_bt_hfp_ag->bt_hfp_ag_config)
+            {
+                s_actived_bt_hfp_ag->bt_hfp_ag_config->bt_hfp_ag_inband = BT_TRUE;
+                s_actived_bt_hfp_ag->bt_hfp_ag_config->bt_hfp_ag_dial   = BT_TRUE;
+            }
+
+            bt_hfp_ag_set_esco_channel_parameters(BT_TRUE, bt_hfp_ag_esco_params[0]);
             break;
+        }
 
         case HFP_AG_CONNECT_CNF:
             LOG_DBG("BT_HFP_AG HFP_AG_CONNECT_CNF \n");
@@ -437,14 +489,23 @@ static API_RESULT hfp_ag_callback(HFP_AG_EVENTS hfp_ag_event, API_RESULT result,
             {
                 bt_hfp_agag_state = BT_HFP_AG_STATE_CONNECTED;
 
-                s_actived_bt_hfp_ag->bt_hfp_ag_config->bt_hfp_ag_inband = BT_TRUE;
-                s_actived_bt_hfp_ag->bt_hfp_ag_config->bt_hfp_ag_dial   = BT_TRUE;
-                if (s_actived_bt_hfp_ag->bt_hfp_ag_cb->connected)
+                if ((bt_hfp_ag_cb) && (bt_hfp_ag_cb->connected))
                 {
-                    s_actived_bt_hfp_ag->bt_hfp_ag_cb->connected(s_actived_bt_hfp_ag);
+                    bt_hfp_ag_cb->connected(s_actived_bt_hfp_ag);
+                }
+
+                if ((bt_hfp_ag_cb) && (bt_hfp_ag_cb->get_config))
+                {
+                    bt_hfp_ag_cb->get_config(s_actived_bt_hfp_ag, &s_actived_bt_hfp_ag->bt_hfp_ag_config);
+                }
+                if (s_actived_bt_hfp_ag->bt_hfp_ag_config)
+                {
+                    s_actived_bt_hfp_ag->bt_hfp_ag_config->bt_hfp_ag_inband = BT_TRUE;
+                    s_actived_bt_hfp_ag->bt_hfp_ag_config->bt_hfp_ag_dial   = BT_TRUE;
                 }
             }
             bt_hfp_ag_handle_retval_from_hfag(result);
+            bt_hfp_ag_set_esco_channel_parameters(BT_TRUE, bt_hfp_ag_esco_params[0]);
             break;
         case HFP_AG_DISCONNECT_IND:
             BT_mem_copy(recvd_bd_addr, (uint8_t *)data, data_length);
@@ -454,10 +515,11 @@ static API_RESULT hfp_ag_callback(HFP_AG_EVENTS hfp_ag_event, API_RESULT result,
 
             bt_hfp_agag_state = BT_HFP_AG_STATE_DISCONNECTED;
 
-            if (s_actived_bt_hfp_ag->bt_hfp_ag_cb->disconnected)
+            if ((bt_hfp_ag_cb) && (bt_hfp_ag_cb->disconnected))
             {
-                s_actived_bt_hfp_ag->bt_hfp_ag_cb->disconnected(s_actived_bt_hfp_ag);
+                bt_hfp_ag_cb->disconnected(s_actived_bt_hfp_ag);
             }
+            hfp_ag_FreeInstance(s_actived_bt_hfp_ag);
             break;
 
         case HFP_AG_DISCONNECT_CNF:
@@ -468,11 +530,11 @@ static API_RESULT hfp_ag_callback(HFP_AG_EVENTS hfp_ag_event, API_RESULT result,
 
             bt_hfp_agag_state = BT_HFP_AG_STATE_DISCONNECTED;
 
-            if (s_actived_bt_hfp_ag->bt_hfp_ag_cb->disconnected)
+            if ((bt_hfp_ag_cb) && (bt_hfp_ag_cb->disconnected))
             {
-                s_actived_bt_hfp_ag->bt_hfp_ag_cb->disconnected(s_actived_bt_hfp_ag);
+                bt_hfp_ag_cb->disconnected(s_actived_bt_hfp_ag);
             }
-
+            hfp_ag_FreeInstance(s_actived_bt_hfp_ag);
             break;
 
         case HFP_AG_STOP_CNF:
@@ -550,15 +612,17 @@ static API_RESULT hfp_ag_callback(HFP_AG_EVENTS hfp_ag_event, API_RESULT result,
                     switch (at_response.keyword_type)
                     {
                         case ATA:
-                            if (s_actived_bt_hfp_ag->bt_hfp_ag_cb->ata_response)
+                            bt_hfp_ag_send_at_rsp(HFAG_OK, NULL);
+                            if ((bt_hfp_ag_cb) && (bt_hfp_ag_cb->ata_response))
                             {
-                                s_actived_bt_hfp_ag->bt_hfp_ag_cb->ata_response(s_actived_bt_hfp_ag);
+                                bt_hfp_ag_cb->ata_response(s_actived_bt_hfp_ag);
                             }
                             break;
                         case AT_CHUP:
-                            if (s_actived_bt_hfp_ag->bt_hfp_ag_cb->chup_response)
+                            bt_hfp_ag_send_at_rsp(HFAG_OK, NULL);
+                            if ((bt_hfp_ag_cb) && (bt_hfp_ag_cb->chup_response))
                             {
-                                s_actived_bt_hfp_ag->bt_hfp_ag_cb->chup_response(s_actived_bt_hfp_ag);
+                                bt_hfp_ag_cb->chup_response(s_actived_bt_hfp_ag);
                             }
                             break;
 
@@ -569,12 +633,15 @@ static API_RESULT hfp_ag_callback(HFP_AG_EVENTS hfp_ag_event, API_RESULT result,
                             bt_hfp_ag_send_at_rsp(HFAG_BRSF, NULL);
                             bt_hfp_ag_send_at_rsp(HFAG_OK, NULL);
 
-                            if (s_actived_bt_hfp_ag->bt_hfp_ag_cb->hfu_brsf)
+                            if ((bt_hfp_ag_cb) && (bt_hfp_ag_cb->hfu_brsf))
                             {
-                                s_actived_bt_hfp_ag->bt_hfp_ag_cb->hfu_brsf(s_actived_bt_hfp_ag,
+                                bt_hfp_ag_cb->hfu_brsf(s_actived_bt_hfp_ag,
                                                                             s_actived_bt_hfp_ag->hf_features);
                             }
-                            s_actived_bt_hfp_ag->bt_hfp_ag_config->bt_hfp_ag_codec_negotiate = 0;
+                            if (s_actived_bt_hfp_ag->bt_hfp_ag_config)
+                            {
+                                s_actived_bt_hfp_ag->bt_hfp_ag_config->bt_hfp_ag_codec_negotiate = 0;
+                            }
                             break;
 
                         case AT_CMER:
@@ -593,7 +660,7 @@ static API_RESULT hfp_ag_callback(HFP_AG_EVENTS hfp_ag_event, API_RESULT result,
                             bt_hfp_ag_send_at_rsp(HFAG_OK, NULL);
                             break;
                         case AT_NREC:
-                            if (!s_actived_bt_hfp_ag->bt_hfp_ag_config->bt_hfp_ag_nrec)
+                            if ((s_actived_bt_hfp_ag->bt_hfp_ag_config) && (!s_actived_bt_hfp_ag->bt_hfp_ag_config->bt_hfp_ag_nrec))
                             {
                                 bt_hfp_ag_send_at_rsp(HFAG_ERROR, NULL);
                             }
@@ -608,13 +675,31 @@ static API_RESULT hfp_ag_callback(HFP_AG_EVENTS hfp_ag_event, API_RESULT result,
 
                                     case '0':
                                         LOG_DBG("NREC Disbled\n");
-                                        bt_hfp_ag_send_at_rsp(HFAG_OK, NULL);
+                                        if (s_actived_bt_hfp_ag->ag_features | BT_HFP_AG_FEATURE_ECNR )
+                                        {
+                                            bt_hfp_ag_send_at_rsp(HFAG_ERROR, NULL);
+                                        }
+                                        else
+                                        {
+                                             bt_hfp_ag_send_at_rsp(HFAG_OK, NULL);
+                                        }
                                         break;
 
                                     default:
                                         bt_hfp_ag_send_at_rsp(HFAG_ERROR, NULL);
                                         break;
                                 }
+                            }
+                            break;
+
+                        case AT_VTS:
+                            LOG_DBG("DTMF codes received \n");
+                            bt_hfp_ag_send_at_rsp(HFAG_OK, NULL);
+                            if ((bt_hfp_ag_cb) && (bt_hfp_ag_cb->recv_dtmf_codes))
+                            {
+                                bt_hfp_ag_cb->recv_dtmf_codes(
+                                    s_actived_bt_hfp_ag,
+                                    at_response.global_at_str[at_response.param->start_of_value_index]);
                             }
                             break;
 
@@ -625,9 +710,9 @@ static API_RESULT hfp_ag_callback(HFP_AG_EVENTS hfp_ag_event, API_RESULT result,
                                     LOG_DBG("VR Enabled\n");
                                     bt_hfp_ag_send_at_rsp(HFAG_OK, NULL);
 
-                                     if (s_actived_bt_hfp_ag->bt_hfp_ag_cb->brva)
+                                     if ((bt_hfp_ag_cb) && (bt_hfp_ag_cb->brva))
                                       {
-                                          s_actived_bt_hfp_ag->bt_hfp_ag_cb->brva(
+                                          bt_hfp_ag_cb->brva(
                                               s_actived_bt_hfp_ag,
                                               1);
                                       }
@@ -636,9 +721,9 @@ static API_RESULT hfp_ag_callback(HFP_AG_EVENTS hfp_ag_event, API_RESULT result,
                                 case '0':
                                     LOG_DBG("VR Disbled\n");
                                     bt_hfp_ag_send_at_rsp(HFAG_OK, NULL);
-                                     if (s_actived_bt_hfp_ag->bt_hfp_ag_cb->brva)
+                                     if ((bt_hfp_ag_cb) && (bt_hfp_ag_cb->brva))
                                      {
-                                          s_actived_bt_hfp_ag->bt_hfp_ag_cb->brva(
+                                          bt_hfp_ag_cb->brva(
                                               s_actived_bt_hfp_ag,
                                               0);
                                       }
@@ -656,31 +741,42 @@ static API_RESULT hfp_ag_callback(HFP_AG_EVENTS hfp_ag_event, API_RESULT result,
                             break;
 
                         case AT_VGS:
-                            s_actived_bt_hfp_ag->bt_hfp_ag_config->bt_hfp_ag_vgs = (uint8_t)atoi(
-                                (char const *)&at_response.global_at_str[at_response.param->start_of_value_index]);
-                            LOG_DBG("Speaker Gain Updated - %d\n", s_actived_bt_hfp_ag->bt_hfp_ag_config->bt_hfp_ag_vgs);
-                            bt_hfp_ag_send_at_rsp(HFAG_OK, NULL);
-                            if (s_actived_bt_hfp_ag->bt_hfp_ag_cb->volume_control)
+                        {
+                            uint8_t bt_hfp_ag_vgs;
+
+                            bt_hfp_ag_vgs = (uint8_t)atoi(
+                                    (char const *)&at_response.global_at_str[at_response.param->start_of_value_index]);
+                            if (s_actived_bt_hfp_ag->bt_hfp_ag_config)
                             {
-                                s_actived_bt_hfp_ag->bt_hfp_ag_cb->volume_control(
-                                    s_actived_bt_hfp_ag, hf_volume_type_speaker,
-                                    s_actived_bt_hfp_ag->bt_hfp_ag_config->bt_hfp_ag_vgs);
+                                s_actived_bt_hfp_ag->bt_hfp_ag_config->bt_hfp_ag_vgs = bt_hfp_ag_vgs;
+                            }
+                            LOG_DBG("Speaker Gain Updated - %d\n", bt_hfp_ag_vgs);
+                            bt_hfp_ag_send_at_rsp(HFAG_OK, NULL);
+                            if ((bt_hfp_ag_cb) && (bt_hfp_ag_cb->volume_control))
+                            {
+                                bt_hfp_ag_cb->volume_control(s_actived_bt_hfp_ag, hf_ag_volume_type_speaker,
+                                                             bt_hfp_ag_vgs);
                             }
                             break;
+                        }
 
                         case AT_VGM:
-                            s_actived_bt_hfp_ag->bt_hfp_ag_config->bt_hfp_ag_vgm = (uint8_t)atoi(
-                                (char const *)&at_response.global_at_str[at_response.param->start_of_value_index]);
-                            LOG_DBG("Microphone Gain Updated - %d\n",
-                                   s_actived_bt_hfp_ag->bt_hfp_ag_config->bt_hfp_ag_vgm);
-                            if (s_actived_bt_hfp_ag->bt_hfp_ag_cb->volume_control)
+                        {
+                            uint8_t bt_hfp_ag_vgm = (uint8_t)atoi(
+                                    (char const *)&at_response.global_at_str[at_response.param->start_of_value_index]);
+
+                            if (s_actived_bt_hfp_ag->bt_hfp_ag_config)
                             {
-                                s_actived_bt_hfp_ag->bt_hfp_ag_cb->volume_control(
-                                    s_actived_bt_hfp_ag, hf_volume_type_mic,
-                                    s_actived_bt_hfp_ag->bt_hfp_ag_config->bt_hfp_ag_vgm);
+                                s_actived_bt_hfp_ag->bt_hfp_ag_config->bt_hfp_ag_vgm = bt_hfp_ag_vgm;
+                            }
+                            LOG_DBG("Microphone Gain Updated - %d\n", bt_hfp_ag_vgm);
+                            if ((bt_hfp_ag_cb) && (bt_hfp_ag_cb->volume_control))
+                            {
+                                bt_hfp_ag_cb->volume_control(s_actived_bt_hfp_ag, hf_ag_volume_type_mic, bt_hfp_ag_vgm);
                             }
                             bt_hfp_ag_send_at_rsp(HFAG_OK, NULL);
                             break;
+                        }
 
                         case AT_BINP:
                             bt_hfp_ag_send_at_rsp(HFAG_BINP, NULL);
@@ -689,37 +785,51 @@ static API_RESULT hfp_ag_callback(HFP_AG_EVENTS hfp_ag_event, API_RESULT result,
 
                         case AT_BCC:
                             bt_hfp_ag_send_at_rsp(HFAG_OK, NULL);
-                            bt_hfp_ag_send_at_rsp(HFAG_BCS, NULL);
+                            if ((bt_hfp_ag_cb) && (bt_hfp_ag_cb->codec_connect_req))
+                            {
+                                bt_hfp_ag_cb->codec_connect_req(s_actived_bt_hfp_ag);
+                            }
                             break;
 
+                        case AT_CLCC:
+                            if ((bt_hfp_ag_cb) && (bt_hfp_ag_cb->clcc))
+                            {
+                                bt_hfp_ag_cb->clcc(s_actived_bt_hfp_ag);
+                            }
+                            bt_hfp_ag_send_at_rsp(HFAG_OK, NULL);
+                            break;
                         case AT_BCS:
                             bt_hfp_ag_send_at_rsp(HFAG_OK, NULL);
-                            if (s_actived_bt_hfp_ag->bt_hfp_ag_cb->codec_negotiate)
+                            if ((bt_hfp_ag_cb) && (bt_hfp_ag_cb->codec_negotiate))
                             {
-                                s_actived_bt_hfp_ag->bt_hfp_ag_cb->codec_negotiate(
+                                bt_hfp_ag_cb->codec_negotiate(
                                     s_actived_bt_hfp_ag,
-                                    at_response.global_at_str[at_response.param->start_of_value_index - '0'] );
+                                    at_response.global_at_str[at_response.param->start_of_value_index] - '0' );
                             }
-                            s_actived_bt_hfp_ag->bt_hfp_ag_config->bt_hfp_ag_codec_negotiate = 0;
-                            /* Trigger codec connection */
-                            if (at_response.global_at_str[at_response.param->start_of_value_index] == s_actived_bt_hfp_ag->bt_hfp_ag_config->bt_hfp_ag_codec)
+
+                            if (s_actived_bt_hfp_ag->bt_hfp_ag_config)
                             {
-                                bt_hfp_ag_open_audio(
-                                    s_actived_bt_hfp_ag,
-                                    (at_response.global_at_str[at_response.param->start_of_value_index] - '0') - 1);
+                                s_actived_bt_hfp_ag->bt_hfp_ag_config->bt_hfp_ag_codec_negotiate = 0;
+                                /* Trigger codec connection */
+                                if (at_response.global_at_str[at_response.param->start_of_value_index] == s_actived_bt_hfp_ag->bt_hfp_ag_config->bt_hfp_ag_codec)
+                                {
+                                    bt_hfp_ag_open_audio(
+                                        s_actived_bt_hfp_ag,
+                                        (at_response.global_at_str[at_response.param->start_of_value_index] - '0') - 1);
+                                }
                             }
                             break;
 
                         case AT_BAC:
-
-                            if (s_actived_bt_hfp_ag->bt_hfp_ag_config->bt_hfp_ag_codec_negotiate == 1)
+                            for (i = 0; i < at_response.number_of_params; i++)
                             {
-                                bt_hfp_ag_send_at_rsp(HFAG_OK, NULL);
-                                s_actived_bt_hfp_ag->bt_hfp_ag_config->bt_hfp_ag_codec = 1;
+                                codecs |= at_response.global_at_str[at_response.param[i].start_of_value_index] - '0';
                             }
-                            else
+
+                            bt_hfp_ag_send_at_rsp(HFAG_OK, NULL);
+                            if ((bt_hfp_ag_cb) && (bt_hfp_ag_cb->codec))
                             {
-                                bt_hfp_ag_send_at_rsp(HFAG_OK, NULL);
+                                bt_hfp_ag_cb->codec(s_actived_bt_hfp_ag, codecs);
                             }
                             break;
 
@@ -753,30 +863,46 @@ static API_RESULT hfp_ag_callback(HFP_AG_EVENTS hfp_ag_event, API_RESULT result,
 
                         case ATD:
                             /* Hold the phone number */
-                            BT_mem_set(s_actived_bt_hfp_ag->bt_hfp_ag_config->bt_hfp_ag_phnum, 0x0, sizeof(s_actived_bt_hfp_ag->bt_hfp_ag_config->bt_hfp_ag_phnum));
-                            BT_str_copy(s_actived_bt_hfp_ag->bt_hfp_ag_config->bt_hfp_ag_phnum,
-                                        &at_response.global_at_str[at_response.param->start_of_value_index]);
-                            bt_hfp_ag_send_rsp(recvd_data, buffer_size);
-                            if (s_actived_bt_hfp_ag->bt_hfp_ag_cb->dial)
+                            if (s_actived_bt_hfp_ag->bt_hfp_ag_config)
                             {
-                                s_actived_bt_hfp_ag->bt_hfp_ag_cb->dial(
+                                BT_mem_set(s_actived_bt_hfp_ag->bt_hfp_ag_config->bt_hfp_ag_phnum, 0x0, sizeof(s_actived_bt_hfp_ag->bt_hfp_ag_config->bt_hfp_ag_phnum));
+                                BT_str_copy(s_actived_bt_hfp_ag->bt_hfp_ag_config->bt_hfp_ag_phnum,
+                                            &at_response.global_at_str[at_response.param->start_of_value_index]);
+                            }
+
+                            if ((bt_hfp_ag_cb) && (bt_hfp_ag_cb->dial))
+                            {
+                                bt_hfp_ag_cb->dial(
                                     s_actived_bt_hfp_ag,
-                                    s_actived_bt_hfp_ag->bt_hfp_ag_config->bt_hfp_ag_phnum);
+                                    (char*)&at_response.global_at_str[at_response.param->start_of_value_index]);
                             }
 
                             break;
 
                         case ATDM:
-                        case AT_BLDN:
-                            if (!s_actived_bt_hfp_ag->bt_hfp_ag_config->bt_hfp_ag_dial)
+                            if ((!s_actived_bt_hfp_ag->bt_hfp_ag_config) || (!s_actived_bt_hfp_ag->bt_hfp_ag_config->bt_hfp_ag_dial))
                             {
                                 bt_hfp_ag_send_at_rsp(HFAG_ERROR, NULL);
                                 break;
                             }
 
-                            BT_mem_set(cmd, 0, sizeof(cmd));
-                            sprintf((CHAR *)cmd, "ATD7654321;\r");
-                            bt_hfp_ag_send_rsp(cmd, (uint16_t)BT_str_len(cmd));
+                            if ((bt_hfp_ag_cb) && (bt_hfp_ag_cb->memory_dial))
+                            {
+                                bt_hfp_ag_cb->memory_dial(
+                                    s_actived_bt_hfp_ag, at_response.global_at_str[at_response.param->start_of_value_index] - '0');
+                            }
+                            break;
+                        case AT_BLDN:
+                            if ((!s_actived_bt_hfp_ag->bt_hfp_ag_config) || (!s_actived_bt_hfp_ag->bt_hfp_ag_config->bt_hfp_ag_dial))
+                            {
+                                bt_hfp_ag_send_at_rsp(HFAG_ERROR, NULL);
+                                break;
+                            }
+                            if ((bt_hfp_ag_cb) && (bt_hfp_ag_cb->last_dial))
+                            {
+                                bt_hfp_ag_cb->last_dial(
+                                    s_actived_bt_hfp_ag);
+                            }
                             break;
                         case AT_BTRH_READ:
                             /* todo , will impletment on full feature release*/
@@ -789,18 +915,18 @@ static API_RESULT hfp_ag_callback(HFP_AG_EVENTS hfp_ag_event, API_RESULT result,
                             bt_hfp_ag_send_at_rsp(HFAG_OK, NULL);
                             index = (index == '\r') ? 0U : index - '0';
 
-                            if (s_actived_bt_hfp_ag->bt_hfp_ag_cb->chld)
+                            if ((bt_hfp_ag_cb) && (bt_hfp_ag_cb->chld))
                             {
-                                s_actived_bt_hfp_ag->bt_hfp_ag_cb->chld(
+                                bt_hfp_ag_cb->chld(
                                     s_actived_bt_hfp_ag,
                                     option, index);
                             }
                             break;
 
                         default:
-                            if (s_actived_bt_hfp_ag->bt_hfp_ag_cb->unkown_at)
+                            if ((bt_hfp_ag_cb) && (bt_hfp_ag_cb->unkown_at))
                             {
-                                s_actived_bt_hfp_ag->bt_hfp_ag_cb->unkown_at(s_actived_bt_hfp_ag, (char *)recvd_data,
+                                bt_hfp_ag_cb->unkown_at(s_actived_bt_hfp_ag, (char *)recvd_data,
                                                                              buffer_size);
                             }
                             else
@@ -819,11 +945,52 @@ static API_RESULT hfp_ag_callback(HFP_AG_EVENTS hfp_ag_event, API_RESULT result,
     return API_SUCCESS;
 }
 
-static void hfp_ag_start_pre(void)
+static void hfp_ag_sco_connected(struct bt_sco_chan *chan)
+{
+    if ((bt_hfp_ag_cb != NULL) && (bt_hfp_ag_cb->sco_connected))
+    {
+        bt_hfp_ag_cb->sco_connected(s_actived_bt_hfp_ag, chan->sco);
+    }
+}
+
+static void hfp_ag_sco_disconnected(struct bt_sco_chan *chan, uint8_t reason)
+{
+    if ((bt_hfp_ag_cb != NULL) && (bt_hfp_ag_cb->sco_disconnected))
+    {
+        bt_hfp_ag_cb->sco_disconnected(s_actived_bt_hfp_ag);
+    }
+}
+
+static struct bt_sco_chan_ops ag_sco_chan_ops = {
+    .connected    = hfp_ag_sco_connected,
+    .disconnected = hfp_ag_sco_disconnected,
+};
+
+static int bt_hfp_ag_sco_accept(const struct bt_sco_accept_info *info, struct bt_sco_chan **chan)
+{
+    LOG_DBG("conn %p", info->acl);
+
+    if (s_actived_bt_hfp_ag)
+    {
+        s_actived_bt_hfp_ag->sco_chan.ops = &ag_sco_chan_ops;
+        *chan                             = &s_actived_bt_hfp_ag->sco_chan;
+        return 0;
+    }
+
+    LOG_ERR("Unable to establish HF connection (%p)", info->acl);
+
+    return -ENOMEM;
+}
+
+static int hfp_ag_start_pre(void)
 {
     API_RESULT api_retval;
-
+    UINT8 hfp_ag_server_channel;
+#ifdef SDP_DYNAMIC_DB
+    hfp_ag_server_channel = BT_RFCOMM_CHAN_HFP_AG;
+#else
     UINT32 hfp_ag_record_handle;
+
 
     /* local varibale to extract the supported features */
     uint8_t attr_value[] = {0x09, 0x00, 0x00};
@@ -846,6 +1013,27 @@ static void hfp_ag_start_pre(void)
 
     api_retval = BT_dbase_update_attr_value(hfp_ag_record_handle, 0x0311, attr_value, 0x03);
     bt_hfp_ag_handle_retval_from_hfag(api_retval);
+
+    api_retval = BT_dbase_get_server_channel
+                     (
+                         hfp_ag_record_handle,
+                         PROTOCOL_DESC_LIST,
+                         &hfp_ag_server_channel
+                     );
+    if(API_SUCCESS != api_retval)
+    {
+        return -EIO;
+    }
+#endif
+    api_retval = BT_hfp_ag_start(hfp_ag_server_channel);
+    if(API_SUCCESS != api_retval)
+    {
+        return -EIO;
+    }
+#ifndef SDP_DYNAMIC_DB
+    (void)BT_dbase_activate_record(hfp_ag_record_handle);
+#endif
+    return 0;
 }
 
 static struct bt_hfp_ag *hfp_ag_GetInstance(void)
@@ -957,30 +1145,49 @@ static void bt_hfp_ag_send_at_rsp(uint8_t rsp_code, void *value)
             break;
 
         case HFAG_BCS:
-            sprintf((response + length), "%d\r\n", s_actived_bt_hfp_ag->bt_hfp_ag_config->bt_hfp_ag_codec);
+            if (s_actived_bt_hfp_ag->bt_hfp_ag_config)
+            {
+                sprintf((response + length), "%d\r\n", s_actived_bt_hfp_ag->bt_hfp_ag_config->bt_hfp_ag_codec);
+            }
             break;
 
         case HFAG_BINP:
-            sprintf((response + length), "%s\r\n", s_actived_bt_hfp_ag->bt_hfp_ag_config->bt_hfp_ag_phnum_tag);
+            if (s_actived_bt_hfp_ag->bt_hfp_ag_config)
+            {
+                sprintf((response + length), "%s\r\n", s_actived_bt_hfp_ag->bt_hfp_ag_config->bt_hfp_ag_phnum_tag);
+            }
             break;
 
         case HFAG_VGS:
-            sprintf((response + length), "%d\r\n", s_actived_bt_hfp_ag->bt_hfp_ag_config->bt_hfp_ag_vgs);
+            if (s_actived_bt_hfp_ag->bt_hfp_ag_config)
+            {
+                sprintf((response + length), "%d\r\n", s_actived_bt_hfp_ag->bt_hfp_ag_config->bt_hfp_ag_vgs);
+            }
             break;
 
         case HFAG_VGM:
-            sprintf((response + length), "%d\r\n", s_actived_bt_hfp_ag->bt_hfp_ag_config->bt_hfp_ag_vgm);
+            if (s_actived_bt_hfp_ag->bt_hfp_ag_config)
+            {
+                sprintf((response + length), "%d\r\n", s_actived_bt_hfp_ag->bt_hfp_ag_config->bt_hfp_ag_vgm);
+            }
             break;
 
         case HFAG_BSIR:
-            sprintf((response + length), "%d\r\n", s_actived_bt_hfp_ag->bt_hfp_ag_config->bt_hfp_ag_inband);
+            if (s_actived_bt_hfp_ag->bt_hfp_ag_config)
+            {
+                sprintf((response + length), "%d\r\n", s_actived_bt_hfp_ag->bt_hfp_ag_config->bt_hfp_ag_inband);
+            }
             break;
 
         case HFAG_BIND_TEST:
             break;
 
+        case HFAG_CLIP:
         case HFAG_CCWA:
             sprintf((response + length), "\"%s\",129\r\n", (CHAR *)value);
+            break;
+        case HFAG_CLCC:
+            sprintf((response + length), "%s\r\n", (CHAR *)value);
             break;
 
         case HFAG_BTRH:
@@ -989,6 +1196,7 @@ static void bt_hfp_ag_send_at_rsp(uint8_t rsp_code, void *value)
         case HFAG_SERVICE:
         case HFAG_SIGNAL:
         case HFAG_ROAMING:
+        case HFAG_CALLHELD:
         case HFAG_BATTERY:
             sprintf((response + length), "%d\r\n", *((uint8_t *)value));
             break;
@@ -1018,11 +1226,17 @@ static void bt_hfp_ag_callend_timeout_handler(void *args, uint16_t size)
 int bt_hfp_ag_init(void)
 {
     static int ag_init = 0;
+
     if (ag_init == 0)
     {
+        int err;
+
         BT_hfp_ag_init(hfp_ag_callback);
         ag_init = 1U;
-        hfp_ag_start_pre();
+        err = hfp_ag_start_pre();
+        if (err) {
+            return err;
+        }
     }
     if (NULL == s_HfpAgLock)
     {
@@ -1039,8 +1253,17 @@ int bt_hfp_ag_init(void)
     {
         s_hfp_sdp[i].allocated = 0;
     }
+
+    static struct bt_sco_server sco_server = {
+        .sec_level = BT_SECURITY_L0,
+        .accept    = bt_hfp_ag_sco_accept,
+    };
+
+    (void)bt_sco_server_register(&sco_server);
+
     return 0;
 }
+
 int bt_hfp_ag_deinit(void)
 {
     /* TODO */
@@ -1052,47 +1275,32 @@ int bt_hfp_ag_connect(struct bt_conn *conn,
                       struct bt_hfp_ag_cb *cb,
                       struct bt_hfp_ag **phfp_ag)
 {
-    struct bt_conn_info info;
     struct bt_hfp_ag *hfp_ag;
-
-    API_RESULT retval;
 
     hfp_ag = hfp_ag_GetInstance();
     if (NULL == hfp_ag)
     {
         return -EAGAIN;
     }
-    if (!cb)
+
+    if ((!cb) && bt_hfp_ag_cb == NULL)
     {
         return -EINVAL;
     }
-    hfp_ag->bt_hfp_ag_cb = cb;
+    if (cb)
+    {
+        bt_hfp_ag_cb = cb;
+    }
+
     if (!config)
     {
         return -EINVAL;
     }
 
     hfp_ag->bt_hfp_ag_config = config;
-    retval                   = BT_hfp_ag_start(config->server_channel);
-
-    if (API_SUCCESS == retval)
-    {
-        bt_hfp_agag_state = BT_HFP_AG_STATE_DISCONNECTED;
-
-        BT_dbase_activate_record(config->server_channel);
-
-        LOG_DBG("\nBT HFP AG Profile Started Successfully\n");
-    }
-    else
-    {
-        bt_hfp_ag_handle_retval_from_hfag(retval);
-        return -EIO;
-    }
     hfp_ag->serverChannel = config->server_channel;
 
-    (void)memset(&info, 0, sizeof(info));
-    bt_conn_get_info(conn, &info);
-    memcpy(hfp_ag->peerAddr, info.br.dst, BT_BD_ADDR_SIZE);
+    memcpy(hfp_ag->peerAddr, conn->br.dst.val, BT_BD_ADDR_SIZE);
     BT_hfp_ag_connect(config->server_channel, hfp_ag->peerAddr);
     s_actived_bt_hfp_ag = hfp_ag;
     hfp_ag->acl_so_conn = conn;
@@ -1110,12 +1318,36 @@ int bt_hfp_ag_connect(struct bt_conn *conn,
     return 0;
 }
 
+int bt_hfp_ag_register_cb(struct bt_hfp_ag_cb *cb)
+{
+    bt_hfp_ag_cb = cb;
+    return 0;
+}
+
 int bt_hfp_ag_disconnect(struct bt_hfp_ag *hfp_ag)
 {
     bt_hfp_ag_close_audio(hfp_ag);
     BT_hfp_ag_disconnect(hfp_ag->peerAddr);
-    BT_hfp_ag_stop();
-    hfp_ag_FreeInstance(hfp_ag);
+    return 0;
+}
+
+int bt_hfp_ag_get_cind_setting(struct bt_hfp_ag *hfp_ag, hfp_ag_cind_t *cind_setting)
+{
+    if ( (!hfp_ag) || (!cind_setting))
+    {
+        return -EINVAL;
+    }
+    memcpy(cind_setting, &s_actived_bt_hfp_ag->bt_cind_setting, sizeof(hfp_ag_cind_t));
+    return 0;
+}
+int bt_hfp_ag_set_cind_setting(struct bt_hfp_ag *hfp_ag, hfp_ag_cind_t *cind_setting)
+{
+    if ( (!hfp_ag) || (!cind_setting))
+    {
+        return -EINVAL;
+    }
+    memcpy(&s_actived_bt_hfp_ag->bt_cind_setting, cind_setting, sizeof(hfp_ag_cind_t));
+
     return 0;
 }
 int bt_hfp_ag_send_enable_voice_recognition(struct bt_hfp_ag *hfp_ag)
@@ -1129,7 +1361,7 @@ int bt_hfp_ag_send_enable_voice_recognition(struct bt_hfp_ag *hfp_ag)
 
     bt_hfp_ag_send_rsp((uint8_t *)HFP_AG_ENABLE_VOICE_REG, (uint8_t)BT_str_len(HFP_AG_ENABLE_VOICE_REG));
 
-    bt_hfp_ag_open_audio(hfp_ag, hfp_ag->bt_hfp_ag_config->bt_hfp_ag_codec - 1);
+    bt_hfp_ag_open_audio(hfp_ag, hfp_ag->bt_hfp_ag_config ? hfp_ag->bt_hfp_ag_config->bt_hfp_ag_codec - 1 : 0);
 
     return 0;
 }
@@ -1173,34 +1405,41 @@ void bt_hfp_ag_open_audio(struct bt_hfp_ag *hfp_ag, uint8_t codec)
     /* Update the eSCO channel paramters for Codec */
     bt_hfp_ag_set_esco_channel_parameters(BT_TRUE, bt_hfp_ag_esco_params[codec]);
     LOG_DBG("> bt_hfp_ag_set_esco_channel_parameters \n");
-    if (hfp_ag->bt_so_conn == NULL)
+    if (hfp_ag->sco_chan.sco == NULL)
     {
-        bt_so_conn = bt_conn_create_sco((const bt_addr_t *)hfp_ag->peerAddr);
+        hfp_ag->sco_chan.ops = &ag_sco_chan_ops;
+        bt_so_conn = bt_conn_create_sco((const bt_addr_t *)hfp_ag->peerAddr, &hfp_ag->sco_chan);
         if (NULL == bt_so_conn)
         {
             LOG_ERR("FAILED !! bt_conn_create_sco \n");
         }
+        else
+        {
+            bt_conn_unref(bt_so_conn);
+        }
         LOG_DBG(" bt_conn_create_sco  Sucuss\n");
-        hfp_ag->bt_so_conn = bt_so_conn;
+        hfp_ag->sco_chan.sco = bt_so_conn;
     }
 }
 
 void bt_hfp_ag_close_audio(struct bt_hfp_ag *hfp_ag)
 {
     int retval;
-    if ( hfp_ag->bt_so_conn != NULL)
+    if ( hfp_ag->sco_chan.sco != NULL)
     {
-        retval = bt_conn_disconnect(hfp_ag->bt_so_conn, 0x13U);
+        struct bt_conn *sco;
+
+        sco                  = hfp_ag->sco_chan.sco;
+        hfp_ag->sco_chan.sco = NULL;
+        retval = bt_conn_disconnect(sco, 0x13U);
         if (0 == retval)
         {
-            LOG_DBG("Disconnected SCO Connection 0x%04X\n", hfp_ag->bt_so_conn);
+            LOG_DBG("Disconnected SCO Connection 0x%04X\n", sco);
         }
         else
         {
             LOG_ERR("SCO Connection for HFP-Unit not found\n");
         }
-        bt_conn_unref(hfp_ag->bt_so_conn);
-        hfp_ag->bt_so_conn = NULL;
     }
 }
 
@@ -1224,13 +1463,27 @@ int bt_hfp_ag_set_phnum_tag(struct bt_hfp_ag *hfp_ag, char *name)
     {
         return -EINVAL;
     }
-    if (!name)
+    if ((!name) || (!hfp_ag->bt_hfp_ag_config))
     {
         return -EINVAL;
     }
     BT_str_n_copy(hfp_ag->bt_hfp_ag_config->bt_hfp_ag_phnum_tag, name, 16);
     hfp_ag->bt_hfp_ag_config->bt_hfp_ag_phnum_tag[15] = '\0';
     bt_hfp_ag_send_at_rsp(HFAG_BINP, NULL);
+    return 0;
+}
+int bt_hfp_ag_set_clcc(struct bt_hfp_ag *hfp_ag, char *call_list)
+{
+    if (!hfp_ag)
+    {
+        return -EINVAL;
+    }
+    if ((!call_list) || (!hfp_ag->bt_hfp_ag_config))
+    {
+        return -EINVAL;
+    }
+
+    bt_hfp_ag_send_at_rsp(HFAG_CLCC, call_list);
     return 0;
 }
 int bt_hfp_ag_set_cops(struct bt_hfp_ag *hfp_ag, char *name)
@@ -1279,20 +1532,20 @@ int bt_hfp_ag_send_ccwa_indicator(struct bt_hfp_ag *hfp_ag, char *number)
 
     return 0;
 }
-int bt_hfp_ag_set_volume_control(struct bt_hfp_ag *hfp_ag, hf_volume_type_t type, int value)
+int bt_hfp_ag_set_volume_control(struct bt_hfp_ag *hfp_ag, hf_ag_volume_type_t type, int value)
 {
-    if (!hfp_ag)
+    if ((!hfp_ag) || (!hfp_ag->bt_hfp_ag_config))
     {
         return -EINVAL;
     }
-    if (type == hf_volume_type_speaker)
+    if (type == hf_ag_volume_type_speaker)
     {
-        s_actived_bt_hfp_ag->bt_hfp_ag_config->bt_hfp_ag_vgs = value;
+        hfp_ag->bt_hfp_ag_config->bt_hfp_ag_vgs = value;
         bt_hfp_ag_send_at_rsp(HFAG_VGS, NULL);
     }
-    else if (type == hf_volume_type_mic)
+    else if (type == hf_ag_volume_type_mic)
     {
-        s_actived_bt_hfp_ag->bt_hfp_ag_config->bt_hfp_ag_vgm = value;
+        hfp_ag->bt_hfp_ag_config->bt_hfp_ag_vgm = value;
         bt_hfp_ag_send_at_rsp(HFAG_VGM, NULL);
     }
     return 0;
@@ -1300,11 +1553,11 @@ int bt_hfp_ag_set_volume_control(struct bt_hfp_ag *hfp_ag, hf_volume_type_t type
 
 int bt_hfp_ag_set_inband_ring_tone(struct bt_hfp_ag *hfp_ag, int value)
 {
-    if (!hfp_ag)
+    if ((!hfp_ag) || (!hfp_ag->bt_hfp_ag_config))
     {
         return -EINVAL;
     }
-    s_actived_bt_hfp_ag->bt_hfp_ag_config->bt_hfp_ag_inband = value;
+    hfp_ag->bt_hfp_ag_config->bt_hfp_ag_inband = value;
     bt_hfp_ag_send_at_rsp(HFAG_BSIR, NULL);
     return 0;
 }
@@ -1320,29 +1573,31 @@ void bt_hfp_ag_call_status_pl(struct bt_hfp_ag *hfp_ag, hfp_ag_call_status_t sta
             break;
 
         case hfp_ag_call_call_active: /* Call Active */
-            if (hfp_ag->bt_hfp_ag_config->bt_hfp_ag_codec_negotiate)
+            if ((hfp_ag->bt_hfp_ag_config) && (hfp_ag->bt_hfp_ag_config->bt_hfp_ag_codec_negotiate))
             {
                 bt_hfp_ag_send_at_rsp(HFAG_BCS, NULL);
             }
             else
             {
-                bt_hfp_ag_open_audio(s_actived_bt_hfp_ag, hfp_ag->bt_hfp_ag_config->bt_hfp_ag_codec - 1);
+                bt_hfp_ag_open_audio(s_actived_bt_hfp_ag,
+                                     hfp_ag->bt_hfp_ag_config ? hfp_ag->bt_hfp_ag_config->bt_hfp_ag_codec - 1 : 0);
             }
             break;
 
         case hfp_ag_call_call_incoming: /* Call Incoming */
-            if (hfp_ag->bt_hfp_ag_config->bt_hfp_ag_inband)
+            if ((hfp_ag->bt_hfp_ag_config) && (hfp_ag->bt_hfp_ag_config->bt_hfp_ag_inband))
             {
-                if (hfp_ag->bt_hfp_ag_config->bt_hfp_ag_codec_negotiate)
+                if ((hfp_ag->bt_hfp_ag_config) && (hfp_ag->bt_hfp_ag_config->bt_hfp_ag_codec_negotiate))
                 {
                     bt_hfp_ag_send_at_rsp(HFAG_BCS, NULL);
                     LOG_DBG("hfp_ag_call_call_incoming HFAG_BCS \n");
                 }
                 else
                 {
-                    if (hfp_ag->bt_hfp_ag_config->bt_hfp_ag_inband)
+                    if ((!hfp_ag->bt_hfp_ag_config) || (hfp_ag->bt_hfp_ag_config->bt_hfp_ag_inband))
                     {
-                        bt_hfp_ag_open_audio(s_actived_bt_hfp_ag, hfp_ag->bt_hfp_ag_config->bt_hfp_ag_codec - 1);
+                        bt_hfp_ag_open_audio(s_actived_bt_hfp_ag,
+                                             hfp_ag->bt_hfp_ag_config ? hfp_ag->bt_hfp_ag_config->bt_hfp_ag_codec - 1 : 0);
                     }
                 }
             }
@@ -1350,13 +1605,14 @@ void bt_hfp_ag_call_status_pl(struct bt_hfp_ag *hfp_ag, hfp_ag_call_status_t sta
             break;
 
         case hfp_ag_call_call_outgoing: /* Call Outgoing */
-            if (hfp_ag->bt_hfp_ag_config->bt_hfp_ag_codec_negotiate)
+            if ((hfp_ag->bt_hfp_ag_config) && (hfp_ag->bt_hfp_ag_config->bt_hfp_ag_codec_negotiate))
             {
                 bt_hfp_ag_send_at_rsp(HFAG_BCS, NULL);
             }
             else
             {
-                bt_hfp_ag_open_audio(s_actived_bt_hfp_ag, hfp_ag->bt_hfp_ag_config->bt_hfp_ag_codec - 1);
+                bt_hfp_ag_open_audio(s_actived_bt_hfp_ag,
+                                     hfp_ag->bt_hfp_ag_config ? hfp_ag->bt_hfp_ag_config->bt_hfp_ag_codec - 1 : 0);
             }
             break;
     }
@@ -1376,6 +1632,7 @@ void bt_hfp_ag_send_callring(struct bt_hfp_ag *hfp_ag)
     /* Ring */
     bt_hfp_ag_send_at_rsp(HFAG_RING, NULL);
 }
+
 int bt_hfp_ag_send_call_indicator(struct bt_hfp_ag *hfp_ag, uint8_t value)
 {
     if (!hfp_ag)
@@ -1384,6 +1641,16 @@ int bt_hfp_ag_send_call_indicator(struct bt_hfp_ag *hfp_ag, uint8_t value)
     }
     hfp_ag->cind.call_state = value;
     bt_hfp_ag_send_at_rsp(HFAG_CALL, &value);
+    return 0;
+}
+int bt_hfp_ag_send_callheld_indicator(struct bt_hfp_ag *hfp_ag, uint8_t value)
+{
+    if (!hfp_ag)
+    {
+        return -EINVAL;
+    }
+    hfp_ag->cind.call_state = value;
+    bt_hfp_ag_send_at_rsp(HFAG_CALLHELD, &value);
     return 0;
 }
 int bt_hfp_ag_send_callsetup_indicator(struct bt_hfp_ag *hfp_ag, uint8_t value)
@@ -1439,24 +1706,32 @@ int bt_hfp_ag_send_battery_indicator(struct bt_hfp_ag *hfp_ag, uint8_t value)
 
 int bt_hfp_ag_codec_selector(struct bt_hfp_ag *hfp_ag, uint8_t value)
 {
+    if ((!hfp_ag) || (!hfp_ag->bt_hfp_ag_config))
+    {
+        return -EINVAL;
+    }
+    if (!(hfp_ag->hf_features & BT_HFP_HF_FEATURE_CODEC_NEG))
+    {
+        return -ENOTSUP;
+    }
+    if (!(hfp_ag->ag_features & BT_HFP_AG_FEATURE_CODEC_NEG))
+    {
+        return -ENOTSUP;
+    }
+
+    hfp_ag->bt_hfp_ag_config->bt_hfp_ag_codec = value;
+    bt_hfp_ag_send_at_rsp(HFAG_BCS, NULL);
+    return 0;
+}
+int  bt_hfp_ag_send_clip(struct bt_hfp_ag *hfp_ag, uint8_t *clip_result)
+{
     if (!hfp_ag)
     {
         return -EINVAL;
     }
-    if (!(s_actived_bt_hfp_ag->hf_features & BT_HFP_HF_FEATURE_CODEC_NEG))
-    {
-        return -ENOTSUP;
-    }
-    if (!(s_actived_bt_hfp_ag->ag_features & BT_HFP_AG_FEATURE_CODEC_NEG))
-    {
-        return -ENOTSUP;
-    }
-
-    s_actived_bt_hfp_ag->bt_hfp_ag_config->bt_hfp_ag_codec = value;
-    bt_hfp_ag_send_at_rsp(HFAG_BCS, NULL);
+    bt_hfp_ag_send_at_rsp(HFAG_CLIP, clip_result);
     return 0;
 }
-
 static uint8_t bt_hfp_ag_sdp_user(struct bt_conn *conn, struct bt_sdp_client_result *result)
 {
     uint16_t param;
@@ -1528,4 +1803,4 @@ int bt_hfp_ag_discover(struct bt_conn *conn, bt_hfp_ag_discover_callback discove
 }
 
 #endif /* CONFIG_BT_HFP_AG */
-#endif /* CONFIG_BT_BREDR */
+#endif /* CONFIG_BT_CLASSIC */

@@ -42,7 +42,6 @@
   @param[in]     pSrc        points to input vector
   @param[out]    pDst        points to output vector
   @param[in]     numSamples  number of samples in each vector
-  @return        none
 
   @par           Scaling and Overflow Behavior
                    The function implements 1.31 by 1.31 multiplications and finally output is converted into 2.30 format.
@@ -53,7 +52,7 @@
 
 #include "arm_helium_utils.h"
 
-void arm_cmplx_mag_q31(
+ARM_DSP_ATTRIBUTE void arm_cmplx_mag_q31(
   const q31_t * pSrc,
         q31_t * pDst,
         uint32_t numSamples)
@@ -119,7 +118,7 @@ void arm_cmplx_mag_q31(
 }
 
 #else
-void arm_cmplx_mag_q31(
+ARM_DSP_ATTRIBUTE void arm_cmplx_mag_q31(
   const q31_t * pSrc,
         q31_t * pDst,
         uint32_t numSamples)

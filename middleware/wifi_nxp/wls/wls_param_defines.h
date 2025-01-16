@@ -3,10 +3,9 @@
  *
  * @brief This file contains global header file for configuring fft processing of CSI.
  *
- * Copyright 2023 NXP
+ * Copyright 2023-2024 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
- *
  */
 
 /************************************************************************
@@ -22,6 +21,10 @@
 
 #define INPUT_FILE _TXT
 // #define SMAC_BFINFO
+// #define RAW_HEADER
+#define LEG_LTF_NG1
+
+#define CSI_PROC
 
 #ifdef SMAC_BFINFO
 #define CSI_SIGNATURE      0x0
@@ -29,8 +32,12 @@
 #define CSI_BUFFER_SIZE_DW (1024 * 2 + 64)
 #define CSI_NUM_BUFFER     32
 #else
+#if defined(RAW_HEADER)
+#define HEADER_LEN 28
+#else
+#define HEADER_LEN 11
+#endif
 #define CSI_SIGNATURE      0xabcd0000
-#define HEADER_LEN         28
 #define CSI_BUFFER_SIZE_DW (512 + 64) // 1536 // 512 //
 #define CSI_NUM_BUFFER     32         // 16 //
 #endif
@@ -40,7 +47,9 @@
 // #define FFT_PARALLEL
 // #define FFT_INPLACE
 // #define TDDE_FIRSTPATH
+#if defined(RW610)
 #define STA_20_ONLY
+#endif
 
 #define MAX_RX 1
 #define MAX_TX 4

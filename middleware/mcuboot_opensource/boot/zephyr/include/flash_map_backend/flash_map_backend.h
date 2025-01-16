@@ -8,7 +8,7 @@
 #ifndef __FLASH_MAP_BACKEND_H__
 #define __FLASH_MAP_BACKEND_H__
 
-#include <storage/flash_map.h> // the zephyr flash_map
+#include <zephyr/storage/flash_map.h> // the zephyr flash_map
 
 #ifdef __cplusplus
 extern "C" {
@@ -34,12 +34,6 @@ extern "C" {
 #include <inttypes.h>
 #include <sys/types.h>
 
-/* Retrieve the flash device with the given name.
- *
- * Returns the flash device on success, or NULL on failure.
- */
-const struct device *flash_device_get_binding(char *dev_name);
-
 /*
  * Retrieve a memory-mapped flash device's base address.
  *
@@ -52,14 +46,6 @@ int flash_device_base(uint8_t fd_id, uintptr_t *ret);
 
 int flash_area_id_from_image_slot(int slot);
 int flash_area_id_from_multi_image_slot(int image_index, int slot);
-
-/**
- * Converts the specified flash area ID to an image slot index.
- *
- * Returns image slot index (0 or 1), or -1 if ID doesn't correspond to an image
- * slot.
- */
-int flash_area_id_to_image_slot(int area_id);
 
 /**
  * Converts the specified flash area ID and image index (in multi-image setup)
@@ -76,11 +62,49 @@ int flash_area_id_to_multi_image_slot(int image_index, int area_id);
  */
 int flash_area_sector_from_off(off_t off, struct flash_sector *sector);
 
+static inline uint32_t flash_area_get_off(const struct flash_area *fa)
+{
+	return (uint32_t)fa->fa_off;
+}
+
+static inline uint32_t flash_area_get_size(const struct flash_area *fa)
+{
+	return (uint32_t)fa->fa_size;
+}
+
+static inline uint8_t flash_area_get_id(const struct flash_area *fa)
+{
+	return fa->fa_id;
+}
+
+uint8_t flash_area_get_device_id(const struct flash_area *fa);
+
 /*
  * Returns the value expected to be read when accessing any erased
  * flash byte.
  */
 uint8_t flash_area_erased_val(const struct flash_area *fap);
+
+static inline uint32_t flash_sector_get_off(const struct flash_sector *fs)
+{
+	return fs->fs_off;
+}
+
+static inline uint32_t flash_sector_get_size(const struct flash_sector *fs)
+{
+	return fs->fs_size;
+}
+
+/* Retrieve the flash sector withing given flash area, at a given offset.
+ *
+ * @param fa        flash area where the sector is taken from.
+ * @param off       offset within flash area.
+ * @param sector    structure of sector information.
+ * Returns 0 on success, -ERANGE if @p off is beyond flash area size,
+ *         other negative errno code on failure.
+ */
+int flash_area_get_sector(const struct flash_area *fa, off_t off,
+                          struct flash_sector *fs);
 
 #ifdef __cplusplus
 }

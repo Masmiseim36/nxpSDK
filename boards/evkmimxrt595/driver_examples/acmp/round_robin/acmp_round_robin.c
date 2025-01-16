@@ -8,47 +8,16 @@
 
 #include "fsl_acmp.h"
 #include "fsl_debug_console.h"
-#include "pin_mux.h"
-#include "clock_config.h"
+#include "app.h"
 #include "board.h"
 
-#include "fsl_rtc.h"
-#include "fsl_power.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_ACMP_BASEADDR ACMP0
-
-#define DEMO_ACMP_IRQ_ID           ACMP_IRQn
-#define DEMO_ACMP_IRQ_HANDLER_FUNC ACMP_IRQHandler
-
-/* Select which channels is used to do round robin checker.
- * Example sets positive port as fixed port with DAC output as comparison reference. So Pre-state mask bit high
- * represents the pre-state of corresponding channel's input voltage is higher than DAC output voltage. If the round
- * robin check result shows that corresponding channel's actual input voltage is lower than DAC output voltage, wakeup
- * event will be generated. The case of pre-state mask bit low is contrary to the case of pre-state mask bit high.
- */
-#define DEMO_ACMP_ROUND_ROBIN_CHANNELS_CHECKER_MASK   0x02U /* ACMP CHAN-B. */
-#define DEMO_ACMP_ROUND_ROBIN_CHANNELS_PRE_STATE_MASK 0x02U /* ACMP CHAN-B. */
-#define DEMO_ACMP_ROUND_ROBIN_PERIOD_MILLISECONDS     1000U
-#define DEMO_ACMP_ROUND_ROBIN_FIXED_CHANNEL           0x07U /* DAC output */
-
-#define EXAMPLE_DEEPSLEEP_RUNCFG0 \
-    (SYSCTL0_PDRUNCFG0_ACMP_PD_MASK)          /*!< Power down all unnecessary blocks during deep sleep*/
-#define EXAMPLE_DEEPSLEEP_RAM_APD 0xFFC00000U /* 0x280000 - 0x4FFFFF keep powered */
-#define EXAMPLE_DEEPSLEEP_RAM_PPD 0U
-#define EXAMPLE_EXCLUDE_FROM_DEEPSLEEP                                                                              \
-    (((const uint32_t[]){EXAMPLE_DEEPSLEEP_RUNCFG0,                                                                 \
-                         (SYSCTL0_PDSLEEPCFG1_FLEXSPI0_SRAM_APD_MASK | SYSCTL0_PDSLEEPCFG1_FLEXSPI1_SRAM_APD_MASK | \
-                          SYSCTL0_PDSLEEPCFG1_FLEXSPI0_SRAM_PPD_MASK | SYSCTL0_PDSLEEPCFG1_FLEXSPI1_SRAM_PPD_MASK), \
-                         EXAMPLE_DEEPSLEEP_RAM_APD, EXAMPLE_DEEPSLEEP_RAM_PPD}))
 
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
-void BOARD_InitAcmpRoundRobinTrigger(uint32_t triggerPeroid_Ms);
-void BOARD_ClearAcmpRoundRobinTrigger(void);
-void BOARD_EnterStopMode(void);
 
 /*******************************************************************************
  * Variables
@@ -57,46 +26,6 @@ void BOARD_EnterStopMode(void);
 /*******************************************************************************
  * Code
  ******************************************************************************/
-
-void BOARD_InitAcmpRoundRobinTrigger(uint32_t triggerPeroid_Ms)
-{
-    uint32_t cycles = MSEC_TO_COUNT(triggerPeroid_Ms, CLOCK_GetOsc32KFreq());
-    acmp_discrete_mode_config_t config;
-
-    ACMP_GetDefaultDiscreteModeConfig(&config);
-    /* In the example, DAC is selected on positve port. It need to be continuous mode.
-     * The other port should be discrete mode. */
-    config.enablePositiveChannelDiscreteMode = false;
-    config.enableNegativeChannelDiscreteMode = true;
-    /* Both port under 1.8V, no divider needed */
-    config.enableResistorDivider = false;
-    ACMP_SetDiscreteModeConfig(DEMO_ACMP_BASEADDR, &config);
-
-    /* Set up trigger timer */
-    if (cycles == 0)
-    {
-        cycles = 2; /* Set RR_TIMER_RELOAD to 1 */
-    }
-    cycles = cycles > CMP_RR_TIMER_CR_RR_TIMER_RELOAD_MASK ? CMP_RR_TIMER_CR_RR_TIMER_RELOAD_MASK : cycles - 1;
-    /* Set RR_TIMER_RELOAD and start counting. */
-    DEMO_ACMP_BASEADDR->RR_TIMER_CR = CMP_RR_TIMER_CR_RR_TIMER_RELOAD(cycles) | CMP_RR_TIMER_CR_RR_TIMER_ENA_MASK;
-
-    /* Enable round robin mode. */
-    DEMO_ACMP_BASEADDR->C0 = (DEMO_ACMP_BASEADDR->C0 | CMP_C0_SE_MASK | CMP_C0_WE_MASK) & ~CMP_C0_CFx_MASK;
-}
-
-void BOARD_ClearAcmpRoundRobinTrigger(void)
-{
-    DEMO_ACMP_BASEADDR->RR_TIMER_CR = 0;
-}
-
-void BOARD_EnterStopMode(void)
-{
-    /* Enable deep sleep IRQ. */
-    EnableDeepSleepIRQ(DEMO_ACMP_IRQ_ID);
-    /* Enter deep sleep mode by using power API. */
-    POWER_EnterDeepSleep(EXAMPLE_EXCLUDE_FROM_DEEPSLEEP);
-}
 void DEMO_ACMP_IRQ_HANDLER_FUNC(void)
 {
     uint32_t statusFlags;
@@ -122,23 +51,7 @@ int main(void)
     acmp_round_robin_config_t roundRobinConfigStruct;
     uint8_t ch;
 
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
-
-    /* Let acmp run on main clock with divider 2 (198Mhz). */
-    CLOCK_AttachClk(kMAIN_CLK_to_ACMP_CLK);
-    CLOCK_SetClkDiv(kCLOCK_DivAcmpClk, 2);
-
-    POWER_DisablePD(kPDRUNCFG_PD_ACMP);
-    RESET_PeripheralReset(kACMP0_RST_SHIFT_RSTn);
-    /* Make sure ACMP voltage reference available*/
-    POWER_SetAnalogBuffer(true);
-
-    /* Enable OSC32K */
-    CLOCK_EnableOsc32K(true);
-    RTC_Init(RTC);
-    CLOCK_AttachClk(kOSC32K_to_32KHZWAKE_CLK);
+    BOARD_InitHardware();
 
     /* Configure ACMP. */
     /*

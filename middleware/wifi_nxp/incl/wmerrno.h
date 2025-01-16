@@ -1,12 +1,12 @@
 /*
- *  Copyright 2008-2020 NXP
+ *  Copyright 2008-2020, 2024 NXP
  *
  *  SPDX-License-Identifier: BSD-3-Clause
  *
  */
 
-/*! \file wmerrno.h
- *  \brief Error Management
+/*!\file wmerrno.h
+ *\brief This file provides error codes definition.
  */
 #ifndef WM_ERRNO_H
 #define WM_ERRNO_H

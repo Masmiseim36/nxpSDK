@@ -6,17 +6,14 @@
  */
 
 #include "fsl_debug_console.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 #include "fsl_powerquad.h"
 #include "math.h"
 
-#include "fsl_power.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_POWERQUAD POWERQUAD
 #define MATH_EXAMPLE_LEN 32
 #define DATA_SIZE        4
 #define MATH_PI          3.1415926535898
@@ -74,14 +71,7 @@ static uint32_t s_matrixInvTmp[1024];
 int main(void)
 {
     /* Board pin, clock, debug console init */
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
-
-    /* Power up PQ RAM. */
-    POWER_DisablePD(kPDRUNCFG_PPD_PQ_SRAM);
-    /* Apply power setting. */
-    POWER_ApplyPD();
+    BOARD_InitHardware();
 
     PRINTF("POWERQUAD matrix example started\r\n");
 

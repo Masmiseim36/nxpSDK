@@ -45,7 +45,6 @@
   @param[out]    pOut      points to the block of output data
   @param[out]    pErr      points to the block of error data
   @param[in]     blockSize number of samples to process
-  @return        none
 
   @par           Scaling and Overflow Behavior
                    The function is implemented using an internal 64-bit accumulator.
@@ -62,7 +61,7 @@
                    updation of filter cofficients are saturted.
  */
 
-void arm_lms_norm_q31(
+ARM_DSP_ATTRIBUTE void arm_lms_norm_q31(
         arm_lms_norm_instance_q31 * S,
   const q31_t * pSrc,
         q31_t * pRef,

@@ -76,6 +76,18 @@ void wifi_configure_delay_to_ps(unsigned int timeout_ms)
     pmadapter->delay_to_ps = (t_u16)timeout_ms;
 }
 
+void wifi_configure_idle_time(unsigned int timeout_ms)
+{
+    pmlan_adapter pmadapter = ((mlan_private *)mlan_adap->priv[0])->adapter;
+
+    if (timeout_ms < DEEP_SLEEP_IDLE_TIME)
+    {
+        pwr_e("The idle time is too small. Minimum value: 100ms");
+        return;
+    }
+    pmadapter->idle_time = (t_u16)timeout_ms;
+}
+
 unsigned short wifi_get_listen_interval()
 {
     pmlan_adapter pmadapter = ((mlan_private *)mlan_adap->priv[0])->adapter;
@@ -88,6 +100,13 @@ unsigned int wifi_get_delay_to_ps()
     pmlan_adapter pmadapter = ((mlan_private *)mlan_adap->priv[0])->adapter;
 
     return (unsigned int)pmadapter->delay_to_ps;
+}
+
+unsigned int wifi_get_idle_time()
+{
+    pmlan_adapter pmadapter = ((mlan_private *)mlan_adap->priv[0])->adapter;
+
+    return (unsigned int)pmadapter->idle_time;
 }
 
 #if CONFIG_HOST_SLEEP
@@ -272,6 +291,7 @@ int wifi_exit_ieee_power_save(void)
     return wifi_send_power_save_command(DIS_AUTO_PS, BITMAP_STA_PS, MLAN_BSS_TYPE_STA, NULL);
 }
 
+#if (CONFIG_WNM_PS)
 int wifi_enter_wnm_power_save(t_u16 wnm_sleep_time)
 {
     ((mlan_private *)mlan_adap->priv[0])->wnm_set = true;
@@ -283,15 +303,12 @@ int wifi_exit_wnm_power_save(void)
 {
     return wifi_send_power_save_command(DIS_WNM_PS, BITMAP_STA_PS, MLAN_BSS_TYPE_STA, NULL);
 }
+#endif
 
 int wifi_enter_deepsleep_power_save(void)
 {
-    t_u16 idletime = 0;
-    /* Set default idle time for deep sleep mode.
-     * If not set, fw will use 10ms as default value and this will
-     * cause small time gap between ps_wakeup and ps_sleep events
-     */
-    idletime = DEEP_SLEEP_IDLE_TIME;
+    t_u16 idletime = mlan_adap->idle_time;
+
     return wifi_send_power_save_command(EN_AUTO_PS, BITMAP_AUTO_DS, MLAN_BSS_TYPE_STA, &idletime);
 }
 
@@ -380,6 +397,26 @@ void send_sleep_confirm_command(mlan_bss_type interface)
         (void)wifi_put_command_lock();
     }
 }
+
+#ifdef SD9177
+void prepare_error_sleep_confirm_command(mlan_bss_type interface)
+{
+    OPT_Confirm_Sleep *ps_cfm_sleep;
+    // Command lock not taken here since it was already taken for previous command and we are not out of loop yet
+    HostCmd_DS_COMMAND *command = wifi_get_command_buffer();
+
+    ps_cfm_sleep = (OPT_Confirm_Sleep *)(void *)(command);
+
+    (void)memset(ps_cfm_sleep, 0, sizeof(OPT_Confirm_Sleep));
+    ps_cfm_sleep->command = HostCmd_CMD_802_11_PS_MODE_ENH;
+    ps_cfm_sleep->seq_num = HostCmd_SET_SEQ_NO_BSS_INFO(0U /* seq_num */, 0U /* bss_num */, (t_u8)(interface));
+
+    ps_cfm_sleep->size                = (t_u16)sizeof(OPT_Confirm_Sleep);
+    ps_cfm_sleep->result              = 0;
+    ps_cfm_sleep->action              = (t_u16)SLEEP_CONFIRM;
+    ps_cfm_sleep->sleep_cfm.resp_ctrl = (t_u16)RESP_NEEDED;
+}
+#endif
 
 #if CONFIG_HOST_SLEEP
 /* fixme: accept HostCmd_DS_COMMAND directly */
@@ -471,6 +508,7 @@ enum wifi_event_reason wifi_process_ps_enh_response(t_u8 *cmd_res_buffer, t_u16 
         }
         return WIFI_EVENT_REASON_SUCCESS;
     }
+#if (CONFIG_WNM_PS)
     else if (ps_mode->action == EN_WNM_PS)
     {
         if ((ps_mode->params.auto_ps.ps_bitmap & BITMAP_STA_PS) != 0)
@@ -511,6 +549,7 @@ enum wifi_event_reason wifi_process_ps_enh_response(t_u8 *cmd_res_buffer, t_u16 
         *ps_event = (t_u16)WIFI_EVENT_WNM_PS;
         return WIFI_EVENT_REASON_SUCCESS;
     }
+#endif
     else if (ps_mode->action == (t_u16)GET_PS)
     {
         if ((ps_mode->params.ps_bitmap & BITMAP_AUTO_DS) != 0U)
@@ -549,10 +588,12 @@ enum wifi_event_reason wifi_process_ps_enh_response(t_u8 *cmd_res_buffer, t_u16 
         {
             *ps_event = (t_u16)WIFI_EVENT_IEEE_DEEP_SLEEP;
         }
+#if (CONFIG_WNM_PS)
         else if ((((mlan_private *)mlan_adap->priv[0])->wnm_set) && (deepsleepps_enabled))
         {
             *ps_event = (t_u16)WIFI_EVENT_WNM_DEEP_SLEEP;
         }
+#endif
         else if (ieeeps_enabled)
         {
             *ps_event = (t_u16)WIFI_EVENT_IEEE_PS;
@@ -561,17 +602,21 @@ enum wifi_event_reason wifi_process_ps_enh_response(t_u8 *cmd_res_buffer, t_u16 
         {
             *ps_event = (t_u16)WIFI_EVENT_DEEP_SLEEP;
         }
+#if (CONFIG_WNM_PS)
         else if (((mlan_private *)mlan_adap->priv[0])->wnm_set)
         {
             *ps_event = (t_u16)WIFI_EVENT_WNM_PS;
         }
+#endif
         else
         {
             return WIFI_EVENT_REASON_FAILURE;
         }
 
         if (ieeeps_enabled || deepsleepps_enabled
+#if CONFIG_WNM_PS
             || (((mlan_private *)mlan_adap->priv[0])->wnm_set)
+#endif
         )
         {
             /* sleep confirm response needs to get the sleep_rwlock, for this lock

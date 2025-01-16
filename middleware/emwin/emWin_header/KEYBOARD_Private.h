@@ -9,7 +9,7 @@
 *                                                                    *
 **********************************************************************
 
-** emWin V6.38 - Graphical user interface for embedded applications **
+** emWin V6.46 - Graphical user interface for embedded applications **
 All  Intellectual Property rights  in the Software belongs to  SEGGER.
 emWin is protected by  international copyright laws.  Knowledge of the
 source code may not be used to write a similar product.  This file may
@@ -34,7 +34,7 @@ License model:            emWin License Agreement, dated August 20th 2011 and Am
 Licensed platform:        NXP's ARM 7/9, Cortex-M0, M3, M4, M7, A7, M33
 ----------------------------------------------------------------------
 Support and Update Agreement (SUA)
-SUA period:               2011-08-19 - 2024-09-02
+SUA period:               2011-08-19 - 2025-09-02
 Contact to extend SUA:    sales@segger.com
 ----------------------------------------------------------------------
 File        : KEYBOARD_Private.h
@@ -56,11 +56,6 @@ Purpose     : Internal header file
 *
 **********************************************************************
 */
-#define KEYBOARD_STATE_CODES 0
-#define KEYBOARD_STATE_SHIFT 1
-#define KEYBOARD_STATE_SLOCK 2
-#define KEYBOARD_STATE_EXTRA 3
-
 #define FLAG_FIXED        (1 << 0)
 #define FLAG_CODES        (1 << 1)
 #define FLAG_SHIFT        (1 << 2)
@@ -115,6 +110,7 @@ typedef struct {
   //
   U8           State;
   U8           IsPressed;
+  U8           StateLocked;
   WM_HTIMER    hTimer;
   KEYBOARD_KEY kPressed;
   int          PressedIndex;

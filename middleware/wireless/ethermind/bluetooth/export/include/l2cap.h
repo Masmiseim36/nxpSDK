@@ -860,6 +860,9 @@ typedef struct l2cap_ecbfc_connect_param
     /** Number of L2CAP Channels to be connected or requested for connection */
     UINT8    num_cids;
 
+    /** Signalling Identifier of the C-frame being formed */
+    UINT8    sig_id;
+
 }L2CAP_ECBFC_CONNECT_PARAM;
 
 /**
@@ -1659,16 +1662,20 @@ void l2cap_lp_le_buffer_size
 #ifdef BT_ENH_L2CAP
 
 /** L2CA Connect Request */
-API_RESULT l2ca_connect_req_ex
+API_RESULT l2ca_connect_req_ext
            (
                /* IN */ UINT16           local_psm,
                /* IN */ UINT16           remote_psm,
                /* IN */ DEVICE_HANDLE    * handle,
-               /* IN */ UCHAR            config_pref
+               /* IN */ UCHAR            config_pref,
+               /* OUT */ UINT16          *l_cid
            );
 
+#define l2ca_connect_req_ex(p1, p2, p3, pref) \
+        l2ca_connect_req_ext((p1), (p2), (p3), (pref), NULL)
+
 #define l2ca_connect_req(p1, p2, p3) \
-        l2ca_connect_req_ex(p1, p2, p3, L2CAP_CONFIG_PREF_BASIC)
+        l2ca_connect_req_ex((p1), (p2), (p3), L2CAP_CONFIG_PREF_BASIC)
 
 /** L2CA Connect Response */
 API_RESULT l2ca_connect_rsp_ex

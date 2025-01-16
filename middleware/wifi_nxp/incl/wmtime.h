@@ -1,5 +1,5 @@
 /*
- *  Copyright 2008-2020 NXP
+ *  Copyright 2008-2020, 2024 NXP
  *
  *  SPDX-License-Identifier: BSD-3-Clause
  *
@@ -7,9 +7,9 @@
 
 /** @file wmtime.h
  *
- *  @brief Time Management Subsystem
+ *  @brief This file provides the time management APIs.
  *
- * This module provides the time management APIs. Internally wireless
+ * Time Management Subsystem, Internally wireless
  * microcontroller manages time in terms of seconds since epoch (1 Jan 1970
  * 00:00). This representation is known as "posix time". These routines can
  * be used to do conversions between human readable time and posix time as well
@@ -24,7 +24,7 @@
 #include <time.h>
 #include <wm_net.h>
 
-/*! @brief Structure is used to hold the date and time */
+/** Structure is used to hold the date and time */
 struct datetime_t
 {
     uint16_t year;  /*!< Range from 1970 to 2099.*/

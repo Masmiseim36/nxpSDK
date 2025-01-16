@@ -26,7 +26,9 @@
 #define FSL_SDMMC_HOST_ADAPTER_VERSION (MAKE_VERSION(2U, 6U, 3U)) /*2.6.3*/
 
 #if ((defined __DCACHE_PRESENT) && __DCACHE_PRESENT) || (defined FSL_FEATURE_HAS_L1CACHE && FSL_FEATURE_HAS_L1CACHE)
+#ifndef SDMMCHOST_ENABLE_CACHE_LINE_ALIGN_TRANSFER
 #define SDMMCHOST_ENABLE_CACHE_LINE_ALIGN_TRANSFER 0
+#endif
 #if SDMMCHOST_ENABLE_CACHE_LINE_ALIGN_TRANSFER
 #if !(defined FSL_USDHC_ENABLE_SCATTER_GATHER_TRANSFER && FSL_USDHC_ENABLE_SCATTER_GATHER_TRANSFER)
 #error "missing definition of macro FSL_USDHC_ENABLE_SCATTER_GATHER_TRANSFER"
@@ -142,8 +144,11 @@ enum
 #define SDMMCHOST_MAX_TUNING_DELAY_CELL            (128U)
 /*!@brief sdmmc host transfer function */
 typedef usdhc_transfer_t sdmmchost_transfer_t;
+typedef usdhc_scatter_gather_transfer_t sdmmchost_scatter_gather_transfer_t;
 typedef usdhc_command_t sdmmchost_cmd_t;
 typedef usdhc_data_t sdmmchost_data_t;
+typedef usdhc_scatter_gather_data_list_t sdmmchost_scatter_gather_data_list_t;
+typedef usdhc_scatter_gather_data_t sdmmchost_scatter_gather_data_t;
 typedef struct _sdmmchost_ SDMMCHOST_CONFIG;
 typedef USDHC_Type SDMMCHOST_TYPE;
 typedef void sdmmchost_detect_card_t;
@@ -476,6 +481,18 @@ void SDMMCHOST_InstallCacheAlignBuffer(sdmmchost_t *host, void *cacheAlignBuffer
  * @param content transfer content.
  */
 status_t SDMMCHOST_TransferFunction(sdmmchost_t *host, sdmmchost_transfer_t *content);
+
+#if defined SDMMCHOST_ENABLE_CACHE_LINE_ALIGN_TRANSFER && SDMMCHOST_ENABLE_CACHE_LINE_ALIGN_TRANSFER
+/*!
+ * @brief host transfer function (scatter gather).
+ *
+ * Please note it is a thread safe function.
+ *
+ * @param host host handler
+ * @param content transfer content.
+ */
+status_t SDMMCHOST_ScatterGatherTransferFunction(sdmmchost_t *host, sdmmchost_scatter_gather_transfer_t *content);
+#endif
 
 /*!
  * @brief sdmmc host excute tuning.

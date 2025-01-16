@@ -5,14 +5,14 @@ The example demonstrates graphical widgets of the emWin library.
 
 SDK version
 ===========
-- Version: 2.16.000
+- Version: 24.12.00
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  9.60.1
-- Keil MDK  5.39.0
+- Keil MDK  5.41
+- IAR embedded Workbench  9.60.3
 - GCC ARM Embedded  13.2.1
-- MCUXpresso  11.10.0
+- MCUXpresso  24.12.00
 
 Hardware requirements
 =====================
@@ -32,14 +32,23 @@ Connect SSD1963 panel to J43. Touch capability is enabled.
 To use MIPI panel:
 Connect MIPI panel to J44. Touch capability is enabled.
 
+Select the panel
+SSD1963 panel is used by default, follow the steps to configure the sw to support different panel.
+
+When Kconfig is used
+-------------
+Select the panel in Kconfig "Panel Selection".
+
+When Package is used
+-------------
+Modify `DEMO_PANEL` in mcux_config.h.
+`#define DEMO_PANEL 0` for "MikroE TFT Proto 5" CAPACITIVE FlexIO panel(default).
+`#define DEMO_PANEL 1` for "RK055HDMIPI4M" MIPI Rectangular panel.
+`#define DEMO_PANEL 3` for "G1120B0MIPI" MIPI Circular panel.
+`#define DEMO_PANEL 4` for "RK055MHD091A0-CTG MIPI Rectangular panel.
+
 Prepare the Demo
 ================
-The demo use SSD1963 panel by default, to use MIPI RK055AHD091 panel, change the macro
-DEMO_PANEL to DEMO_PANEL_RK055AHD091 in display_support.h. To use RM67162 MIPI
-smart panel, change the macro DEMO_PANEL to DEMO_PANEL_RM67162 in display_support.h.
-To use MIPI RK055MHD091 panel, change the macro DEMO_PANEL to DEMO_PANEL_RK055AHD091
-in display_support.h.
-
 1.  Connect a USB cable between the host PC and the OpenSDA USB port on the target board.
 2.  Open a serial terminal with the following settings:
     - 115200 baud rate

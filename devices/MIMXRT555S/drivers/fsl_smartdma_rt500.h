@@ -22,6 +22,7 @@
 #define SMARTDMA_DISPLAY_MIPI_AND_FLEXIO 0
 #define SMARTDMA_DISPLAY_MIPI_ONLY       1
 #define SMARTDMA_DISPLAY_FLEXIO_ONLY     2
+#define SMARTDMA_FLEXIO_QSPI             3
 
 /* Select firmware for MIPI and FLEXIO by default. */
 #ifndef SMARTDMA_DISPLAY_FIRMWARE_SELECT
@@ -141,6 +142,28 @@ enum _smartdma_display_api
     kSMARTDMA_FlexIO_DMA_ONELANE, /*!< FlexIO DMA for one SHIFTBUF, Write Data to SHIFTBUF[OFFSET] */
     kSMARTDMA_FlexIO_FIFO2RAM, /*!< Read data from FlexIO FIFO to ram space. */
 };
+#elif (SMARTDMA_DISPLAY_FIRMWARE_SELECT == SMARTDMA_FLEXIO_QSPI)
+
+/*!
+ * @brief The API index when using s_smartdmaDisplayFirmware.
+ */
+typedef enum _smartdma_flexio_qspi_api
+{
+    kSMARTDMA_FLEXIO_QSPI_DMA_NIBBLE_BYTE_SWAP = 0U,
+} smartdma_flexio_qspi_api_t;
+
+/*!
+ * @brief Parameter for FlexIO QSPI
+ */
+typedef struct _flexio_qspi_buf flexio_qspi_buf_t;
+
+typedef struct _smartdma_flexio_qspi_param
+{
+    uint32_t *txRemainingBytes;               /*!< Send data remaining in bytes. */
+    uint32_t *current_buffer;
+    uint32_t buf_num;
+    flexio_qspi_buf_t *bufs;
+} smartdma_flexio_qspi_param_t;
 #endif
 
 /*!

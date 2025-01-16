@@ -6,21 +6,14 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 #include "fsl_debug_console.h"
 #include "fsl_dma.h"
 #include "fsl_inputmux.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_DMA_CHANNEL1                1
-#define DEMO_DMA_CHANNEL0                0
-#define DEMO_DMA_CHANNEL2                2
-#define DEMO_DMA_CHANNEL_TRIGGER_INPUT   kINPUTMUX_Dma0TrigOutAToDma0
-#define DEMO_DMA_CHANNEL_TRIGGER_OUTPUT0 kINPUTMUX_Dma0OtrigChannel0ToTriginChannels
-#define DEMO_DMA_CHANNEL_TRIGGER_OUTPUT1 kINPUTMUX_Dma0OtrigChannel1ToTriginChannels
 #define BUFF_LENGTH        4U
 #define DMA_DESCRIPTOR_NUM 3U
 #define DEST_BUFFER_LENGTH 16U
@@ -88,18 +81,7 @@ int main(void)
 {
     uint32_t i = 0;
 
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
-
-    /* Configure DMAMUX. */
-    RESET_PeripheralReset(kINPUTMUX_RST_SHIFT_RSTn);
-
-    INPUTMUX_Init(INPUTMUX);
-    /* Enable trigger. */
-    INPUTMUX_EnableSignal(INPUTMUX, kINPUTMUX_Dmac0InputTriggerDma0OutAEna, true);
-    /* Turnoff clock to inputmux to save power. Clock is only needed to make changes */
-    INPUTMUX_Deinit(INPUTMUX);
+    BOARD_InitHardware();
 
     /* Print source buffer */
     PRINTF("DMA channel chain example begin.\r\n");

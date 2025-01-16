@@ -23,7 +23,6 @@
 /* Forward declarations */
 LOCAL(boolean) output_pass_setup JPP((j_decompress_ptr cinfo));
 
-
 /*
  * Decompression initialization.
  * jpeg_read_header must be completed before calling this.
@@ -38,51 +37,145 @@ LOCAL(boolean) output_pass_setup JPP((j_decompress_ptr cinfo));
 GLOBAL(boolean)
 jpeg_start_decompress (j_decompress_ptr cinfo)
 {
-  if (cinfo->global_state == DSTATE_READY) {
-    /* First call: initialize master control, select active modules */
-    jinit_master_decompress(cinfo);
-    if (cinfo->buffered_image) {
-      /* No more work here; expecting jpeg_start_output next */
-      cinfo->global_state = DSTATE_BUFIMAGE;
-      return TRUE;
-    }
-    cinfo->global_state = DSTATE_PRELOAD;
-  }
-  if (cinfo->global_state == DSTATE_PRELOAD) {
-    /* If file has multiple scans, absorb them all into the coef buffer */
-    if (cinfo->inputctl->has_multiple_scans) {
-#ifdef D_MULTISCAN_FILES_SUPPORTED
-      for (;;) {
-	int retcode;
-	/* Call progress monitor hook if present */
-	if (cinfo->progress != NULL)
-	  (*cinfo->progress->progress_monitor) ((j_common_ptr) cinfo);
-	/* Absorb some more input */
-	retcode = (*cinfo->inputctl->consume_input) (cinfo);
-	if (retcode == JPEG_SUSPENDED)
-	  return FALSE;
-	if (retcode == JPEG_REACHED_EOI)
-	  break;
-	/* Advance progress counter if appropriate */
-	if (cinfo->progress != NULL &&
-	    (retcode == JPEG_ROW_COMPLETED || retcode == JPEG_REACHED_SOS)) {
-	  if (++cinfo->progress->pass_counter >= cinfo->progress->pass_limit) {
-	    /* jdmaster underestimated number of scans; ratchet up one scan */
-	    cinfo->progress->pass_limit += (long) cinfo->total_iMCU_rows;
-	  }
-	}
-      }
-#else
-      ERREXIT(cinfo, JERR_NOT_COMPILED);
-#endif /* D_MULTISCAN_FILES_SUPPORTED */
-    }
-    cinfo->output_scan_number = cinfo->input_scan_number;
-  } else if (cinfo->global_state != DSTATE_PRESCAN)
-    ERREXIT1(cinfo, JERR_BAD_STATE, cinfo->global_state);
-  /* Perform any dummy output passes, and set up for the final pass */
-  return output_pass_setup(cinfo);
-}
+  boolean status = TRUE;
+#if LIB_JPEG_USE_HW_ACCEL
+  JPEG_DECODER_Type *jpegdec = cinfo->jpegdec;
+  cinfo->format_supported = FALSE;
+  jpegdec_pixel_format_t format;
 
+  /* JPEGDEC
+     1. Do not support CSC or scale
+     2. Only support precision of 8 or 12
+     3. The jpeg buffer address shall be 16 byte alined
+     4. Check if the buffer address or file size is 0, if so means jpeg_stdio_src
+        is used, and the file is read section by section, which is not supported.
+     5. For the supported jpeg formats, the width and height shall all be divisible by 8
+     6. Only support SOF0 and SOF1 marker, which means does not support progressive_mode and arith_code
+  */
+  if ((cinfo->jpeg_color_space == cinfo->out_color_space) && (cinfo->scale_num == cinfo->scale_denom)
+     && ((cinfo->data_precision == 8U) || (cinfo->data_precision == 12))
+     && (((uint32_t)cinfo->jpeg_buffer & 0xF) == 0U)
+     && ((uint32_t)cinfo->jpeg_buffer != 0U) && (cinfo->jpeg_size != 0U)
+     && ((cinfo->image_height & 0x7U) == 0U) && ((cinfo->image_width & 0x7U) == 0U)
+     && (cinfo->progressive_mode == FALSE) && (cinfo->arith_code == FALSE))
+  {
+      switch (cinfo->jpeg_color_space)
+      {
+          case JCS_GRAYSCALE:
+              format = kJPEGDEC_PixelFormatGray;
+              cinfo->format_supported = TRUE;
+              break;
+          case JCS_RGB:
+              format = kJPEGDEC_PixelFormatRGB;
+              cinfo->format_supported = TRUE;
+              break;
+          case JCS_CMYK:
+          case JCS_YCCK:
+              /* JPEGDEC treats formats that have 4 components as the same. */
+              format = kJPEGDEC_PixelFormatYCCK;
+              cinfo->format_supported = TRUE;
+              break;
+          case JCS_YCbCr:
+              /* Only support YUV444, all other YUV formats are not supported. For YUV422 and YUV420,
+                 the libjpeg decodes them and generates YUV444 pixel, but for JPEGDEC, the
+                 generated pixel format are the same as the dource format. To align the behaviour
+                 these 2 formats are not supported. */
+              if ((cinfo->max_v_samp_factor == 1U) && (cinfo->max_h_samp_factor == 1U))
+              {
+                  cinfo->format_supported = TRUE;
+                  format = kJPEGDEC_PixelFormatYUV444;
+              }
+              break;
+          default:
+              /* No action, all other formats are not supported. */
+              break;
+      }
+  }
+  if (cinfo->format_supported)
+  {
+      /* The format is supported by JPEGDEC, configure and start the decompress. */
+      jpegdec_config_t config;
+      jpegdec_decoder_config_t decConfig;
+
+      /* Init JPEG decoder module. */
+      JPEGDEC_GetDefaultConfig(&config);
+
+      config.slots = kJPEGDEC_Slot0; /* Enable only one slot. */
+
+      JPEGDEC_Init(jpegdec, &config);
+
+      /* Has to be 16-byte aligned. */
+      /* Set decoder configuration. */
+      decConfig.jpegBufAddr = (uint32_t)cinfo->jpeg_buffer;
+      decConfig.jpegBufSize = JPEG_ALIGN_SIZE(cinfo->jpeg_size, 0x400); /* Has to be integer times of 1K. */
+      decConfig.outBufAddr0 = (uint32_t)cinfo->output_buffer;
+      decConfig.outBufAddr1 = 0U; /* Only use one planner. */
+      decConfig.outBufPitch = cinfo->output_pitch;
+      decConfig.pixelFormat = format;
+      decConfig.height = cinfo->image_height;
+      decConfig.width = cinfo->image_width;
+      decConfig.pixelDepth = cinfo->data_precision;
+      decConfig.clearStreamBuf = false;
+      decConfig.autoStart = false;
+
+      JPEGDEC_ConfigDecoder(jpegdec, &decConfig);
+
+      /* No scaling. */
+      cinfo->output_height = cinfo->image_height;
+      cinfo->output_width = cinfo->image_width;
+
+      /* Start the decoder. */
+      JPEGDEC_StartDecode(jpegdec);
+  }
+  else
+#endif
+  {
+      if (cinfo->global_state == DSTATE_READY) {
+        /* First call: initialize master control, select active modules */
+        jinit_master_decompress(cinfo);
+        if (cinfo->buffered_image) {
+          /* No more work here; expecting jpeg_start_output next */
+          cinfo->global_state = DSTATE_BUFIMAGE;
+          return TRUE;
+        }
+        cinfo->global_state = DSTATE_PRELOAD;
+      }
+      if (cinfo->global_state == DSTATE_PRELOAD) {
+        /* If file has multiple scans, absorb them all into the coef buffer */
+        if (cinfo->inputctl->has_multiple_scans) {
+#ifdef D_MULTISCAN_FILES_SUPPORTED
+          for (;;) {
+            int retcode;
+            /* Call progress monitor hook if present */
+            if (cinfo->progress != NULL)
+              (*cinfo->progress->progress_monitor) ((j_common_ptr) cinfo);
+            /* Absorb some more input */
+            retcode = (*cinfo->inputctl->consume_input) (cinfo);
+            if (retcode == JPEG_SUSPENDED)
+              return FALSE;
+            if (retcode == JPEG_REACHED_EOI)
+              break;
+            /* Advance progress counter if appropriate */
+            if (cinfo->progress != NULL &&
+                (retcode == JPEG_ROW_COMPLETED || retcode == JPEG_REACHED_SOS)) {
+              if (++cinfo->progress->pass_counter >= cinfo->progress->pass_limit) {
+                /* jdmaster underestimated number of scans; ratchet up one scan */
+                cinfo->progress->pass_limit += (long) cinfo->total_iMCU_rows;
+              }
+            }
+          }
+#else
+          ERREXIT(cinfo, JERR_NOT_COMPILED);
+#endif /* D_MULTISCAN_FILES_SUPPORTED */
+        }
+        cinfo->output_scan_number = cinfo->input_scan_number;
+      } else if (cinfo->global_state != DSTATE_PRESCAN)
+        ERREXIT1(cinfo, JERR_BAD_STATE, cinfo->global_state);
+      /* Perform any dummy output passes, and set up for the final pass */
+      status = output_pass_setup(cinfo);
+  }
+  return status;
+}
 
 /*
  * Set up for an output pass, and perform any dummy pass(es) needed.
@@ -153,26 +246,52 @@ GLOBAL(JDIMENSION)
 jpeg_read_scanlines (j_decompress_ptr cinfo, JSAMPARRAY scanlines,
 		     JDIMENSION max_lines)
 {
-  JDIMENSION row_ctr;
+  JDIMENSION row_ctr = 0U;
 
-  if (cinfo->global_state != DSTATE_SCANNING)
-    ERREXIT1(cinfo, JERR_BAD_STATE, cinfo->global_state);
-  if (cinfo->output_scanline >= cinfo->output_height) {
-    WARNMS(cinfo, JWRN_TOO_MUCH_DATA);
-    return 0;
+#if LIB_JPEG_USE_HW_ACCEL
+  uint32_t status;
+  JPEG_DECODER_Type *jpegdec = cinfo->jpegdec;
+  if (cinfo->format_supported)
+  {
+      status = JPEGDEC_GetStatusFlags(jpegdec, 0);
+      if ((status & (kJPEGDEC_DecodeCompleteFlag | kJPEGDEC_ErrorFlags)) != 0U)
+      {
+          JPEGDEC_ClearStatusFlags(jpegdec, 0, status);
+          /* Error occur */
+          if ((status & kJPEGDEC_DecodeCompleteFlag) == 0U)
+          {
+              ERREXIT(cinfo, JERR_HARDWARE_ERROR);
+          }
+          else
+          {
+              cinfo->output_scanline = cinfo->output_height;
+              row_ctr = cinfo->output_height;
+          }
+      }
+
   }
+  else
+#endif
+  {
+    if (cinfo->global_state != DSTATE_SCANNING)
+      ERREXIT1(cinfo, JERR_BAD_STATE, cinfo->global_state);
+    if (cinfo->output_scanline >= cinfo->output_height) {
+      WARNMS(cinfo, JWRN_TOO_MUCH_DATA);
+      return 0;
+    }
 
-  /* Call progress monitor hook if present */
-  if (cinfo->progress != NULL) {
-    cinfo->progress->pass_counter = (long) cinfo->output_scanline;
-    cinfo->progress->pass_limit = (long) cinfo->output_height;
-    (*cinfo->progress->progress_monitor) ((j_common_ptr) cinfo);
+    /* Call progress monitor hook if present */
+    if (cinfo->progress != NULL) {
+      cinfo->progress->pass_counter = (long) cinfo->output_scanline;
+      cinfo->progress->pass_limit = (long) cinfo->output_height;
+      (*cinfo->progress->progress_monitor) ((j_common_ptr) cinfo);
+    }
+
+    /* Process some data */
+    row_ctr = 0;
+    (*cinfo->main->process_data) (cinfo, scanlines, &row_ctr, max_lines);
+    cinfo->output_scanline += row_ctr;
   }
-
-  /* Process some data */
-  row_ctr = 0;
-  (*cinfo->main->process_data) (cinfo, scanlines, &row_ctr, max_lines);
-  cinfo->output_scanline += row_ctr;
   return row_ctr;
 }
 

@@ -8,6 +8,7 @@
 
 #include "utils/includes.h"
 
+#if CONFIG_HOSTAPD
 #ifndef CONFIG_NATIVE_WINDOWS
 
 #ifdef CONFIG_TESTING_OPTIONS
@@ -5446,3 +5447,4 @@ static void hostapd_ctrl_iface_send(
 #endif
 
 #endif /* CONFIG_NATIVE_WINDOWS */
+#endif /* CONFIG_HOSTAPD */

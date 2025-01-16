@@ -1,5 +1,5 @@
 /*
- * Copyright 2021-2023 NXP
+ * Copyright 2021-2024 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -37,6 +37,7 @@
 #error Controller module is unsupported
 #endif /*defined(SD8978)*/
 #else
+#include "sdio.h"
 #if defined(SD8978) /*RB3P*/
 #include "sduartIW416_wlan_bt.h"
 #elif defined(SD8987) /*CA2*/
@@ -53,7 +54,6 @@
 #endif /*CONFIG_BT_IND_DNLD*/
 #endif /* CONTROLLER_INIT_ESCAPE */
 
-#include "sdio.h"
 #include "controller.h"
 #include "firmware_dnld.h"
 #include "fsl_adapter_uart.h"

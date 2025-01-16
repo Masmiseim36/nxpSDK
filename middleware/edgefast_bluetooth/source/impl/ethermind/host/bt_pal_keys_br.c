@@ -82,7 +82,7 @@ struct bt_keys_link_key *bt_keys_get_link_key(const bt_addr_t *addr)
 
 	if (key) {
 		bt_addr_copy(&key->addr, addr);
-#if (defined(CONFIG_BT_SETTINGS) && ((CONFIG_BT_SETTINGS) > 0U))                
+#if (defined(CONFIG_BT_SETTINGS) && ((CONFIG_BT_SETTINGS) > 0U))
 #if IS_ENABLED(CONFIG_BT_KEYS_OVERWRITE_OLDEST)
 		key->aging_counter = ++aging_counter_val;
 		last_keys_updated = key;
@@ -122,9 +122,9 @@ void bt_keys_link_key_clear_addr(const bt_addr_t *addr)
 
 
     memcpy(bd_addr, addr->val, sizeof(bd_addr));
-#if IS_ENABLED(CONFIG_BT_BREDR)
+#if IS_ENABLED(CONFIG_BT_CLASSIC)
 	retval = BT_sm_delete_device (bd_addr, SM_ANY_LIST);
-#endif  /* CONFIG_BT_BREDR */
+#endif  /* CONFIG_BT_CLASSIC */
 	(void)retval;
 
 	if (!addr) {
@@ -154,6 +154,24 @@ void bt_keys_link_key_store(struct bt_keys_link_key *link_key)
 						 BT_KEYS_LINK_KEY_STORAGE_LEN);
 		if (err) {
 			LOG_ERR("Failed to save link key (err %d)", err);
+		}
+	}
+}
+
+void bt_foreach_bond_br(void (*func)(const struct bt_bond_info *info, void *user_data),
+			void *user_data)
+{
+	__ASSERT_NO_MSG(func != NULL);
+
+	for (size_t i = 0; i < ARRAY_SIZE(key_pool); i++) {
+		const struct bt_keys_link_key *key = &key_pool[i];
+
+		if (!bt_addr_eq(&key->addr, BT_ADDR_ANY)) {
+			struct bt_bond_info info;
+
+			info.addr.type = BT_ADDR_LE_PUBLIC;
+			bt_addr_copy(&info.addr.a, &key->addr);
+			func(&info, user_data);
 		}
 	}
 }

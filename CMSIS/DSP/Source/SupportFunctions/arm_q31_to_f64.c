@@ -46,7 +46,6 @@
   @param[in]     pSrc       points to the Q31 input vector
   @param[out]    pDst       points to the 64 bit floating-point output vector
   @param[in]     blockSize  number of samples in each vector
-  @return        none
 
   @par           Details
                    The equation used for the conversion process is:
@@ -55,7 +54,7 @@
   </pre>
  */
 
-void arm_q31_to_f64(
+ARM_DSP_ATTRIBUTE void arm_q31_to_f64(
   const q31_t * pSrc,
   float64_t * pDst,
   uint32_t blockSize)

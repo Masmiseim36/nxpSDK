@@ -25,24 +25,7 @@
 
 LOG_MODULE_DEFINE(bt_ots, kLOG_LevelTrace);
 
-#ifndef LOG_DBG
-#define LOG_DBG BT_DBG
-#endif
-
-#ifndef LOG_ERR
-#define LOG_ERR BT_ERR
-#endif
-
-#ifndef LOG_HEXDUMP_DBG
-#define LOG_HEXDUMP_DBG BT_HEXDUMP_DBG
-#endif
-
-#ifndef LOG_WRN
-#define LOG_WRN BT_WARN
-#endif
-
 #define OLCP_PROC_TYPE_SIZE	1
-#define OLCP_RES_MAX_SIZE	7
 
 static enum bt_gatt_ots_olcp_res_code obj_manager_to_olcp_err_map(int err)
 {
@@ -224,13 +207,13 @@ static void olcp_ind_cb(struct bt_conn *conn,
 	LOG_DBG("Received OLCP Indication ACK with status: 0x%04X", err);
 }
 
-static int olcp_ind_send(const struct bt_gatt_attr *olcp_attr,
+static void olcp_ind_send(const struct bt_gatt_attr *olcp_attr,
 			 enum bt_gatt_ots_olcp_proc_type req_op_code,
 			 enum bt_gatt_ots_olcp_res_code olcp_status)
 {
-	uint8_t olcp_res[OLCP_RES_MAX_SIZE];
-	uint16_t olcp_res_len = 0;
 	struct bt_ots *ots = (struct bt_ots *) olcp_attr->user_data;
+	uint8_t *olcp_res = ots->olcp_ind.res;
+	uint16_t olcp_res_len = 0;
 
 	/* Encode OLCP Response */
 	olcp_res[olcp_res_len++] = BT_GATT_OTS_OLCP_PROC_RESP;
@@ -250,7 +233,7 @@ static int olcp_ind_send(const struct bt_gatt_attr *olcp_attr,
 
 	LOG_DBG("Sending OLCP indication");
 
-	return bt_gatt_indicate(NULL, &ots->olcp_ind.params);
+	k_work_submit(&ots->olcp_ind.work);
 }
 
 ssize_t bt_gatt_ots_olcp_write(struct bt_conn *conn,
@@ -274,6 +257,11 @@ ssize_t bt_gatt_ots_olcp_write(struct bt_conn *conn,
 	if (offset != 0) {
 		LOG_ERR("Invalid offset of OLCP Write Request");
 		return BT_GATT_ERR(BT_ATT_ERR_INVALID_OFFSET);
+	}
+
+	if (k_work_is_pending(&ots->olcp_ind.work)) {
+		LOG_ERR("OLCP Write received before indication sent");
+		return BT_GATT_ERR(BT_ATT_ERR_PROCEDURE_IN_PROGRESS);
 	}
 
 	old_obj = ots->cur_obj;

@@ -51,11 +51,7 @@
                    - \ref ARM_MATH_SIZE_MISMATCH : Matrix size check failed
  */
 
-#if defined(ARM_MATH_MVE_FLOAT16) && !defined(ARM_MATH_AUTOVECTORIZE) && defined(__CMSIS_GCC_H)
-#pragma GCC warning "Scalar version of arm_mat_cmplx_mult_f16 built. Helium version has build issues with gcc."
-#endif 
-
-#if defined(ARM_MATH_MVE_FLOAT16) && !defined(ARM_MATH_AUTOVECTORIZE) &&  !defined(__CMSIS_GCC_H)
+#if defined(ARM_MATH_MVE_FLOAT16) && !defined(ARM_MATH_AUTOVECTORIZE)
 
 #include "arm_helium_utils.h"
 
@@ -378,7 +374,7 @@ __STATIC_FORCEINLINE arm_status arm_mat_cmplx_mult_f16_4x4_mve(
 
 
 
-arm_status arm_mat_cmplx_mult_f16(
+ARM_DSP_ATTRIBUTE arm_status arm_mat_cmplx_mult_f16(
   const arm_matrix_instance_f16 * pSrcA,
   const arm_matrix_instance_f16 * pSrcB,
   arm_matrix_instance_f16 * pDst)
@@ -704,7 +700,7 @@ if ((pSrcA->numCols != pSrcB->numRows) ||
 }
 #else
 
-arm_status arm_mat_cmplx_mult_f16(
+ARM_DSP_ATTRIBUTE arm_status arm_mat_cmplx_mult_f16(
   const arm_matrix_instance_f16 * pSrcA,
   const arm_matrix_instance_f16 * pSrcB,
         arm_matrix_instance_f16 * pDst)

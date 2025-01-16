@@ -52,7 +52,6 @@
  * @param[in]       pInputRotations points to an array 3x3 rotation matrix (in row order)
  * @param[out]      pOutputQuaternions points to an array quaternions
  * @param[in]       nbQuaternions number of quaternions in the array
- * @return none.
  *
  * q and -q are representing the same rotation. This ambiguity must be taken into
  * account when using the output of this function.
@@ -73,7 +72,7 @@
 #define R21  vgetq_lane(q2,3)
 #define R22  ro22
 
-void arm_rotation2quaternion_f32(const float32_t *pInputRotations, 
+ARM_DSP_ATTRIBUTE void arm_rotation2quaternion_f32(const float32_t *pInputRotations, 
     float32_t *pOutputQuaternions,  
     uint32_t nbQuaternions)
 {
@@ -162,7 +161,7 @@ void arm_rotation2quaternion_f32(const float32_t *pInputRotations,
 }
 
 #else
-void arm_rotation2quaternion_f32(const float32_t *pInputRotations, 
+ARM_DSP_ATTRIBUTE void arm_rotation2quaternion_f32(const float32_t *pInputRotations, 
     float32_t *pOutputQuaternions,  
     uint32_t nbQuaternions)
 {

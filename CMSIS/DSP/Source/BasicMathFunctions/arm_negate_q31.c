@@ -42,7 +42,6 @@
   @param[in]     pSrc       points to the input vector.
   @param[out]    pDst       points to the output vector.
   @param[in]     blockSize   number of samples in each vector.
-  @return        none
 
   @par           Scaling and Overflow Behavior
                    The function uses saturating arithmetic.
@@ -53,7 +52,7 @@
 
 #include "arm_helium_utils.h"
 
-void arm_negate_q31(
+ARM_DSP_ATTRIBUTE void arm_negate_q31(
     const q31_t * pSrc,
     q31_t * pDst,
     uint32_t blockSize)
@@ -94,7 +93,7 @@ void arm_negate_q31(
 }
 
 #else
-void arm_negate_q31(
+ARM_DSP_ATTRIBUTE void arm_negate_q31(
   const q31_t * pSrc,
         q31_t * pDst,
         uint32_t blockSize)

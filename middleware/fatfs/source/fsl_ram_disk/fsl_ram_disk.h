@@ -16,7 +16,7 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-     
+
 /*
  * The following macros (FSL_FF_RAMDISK_SECTOR_SIZE, FSL_FF_RAMDISK_DISK_SIZE)
  * can be redefined from the application, to facilitate a RAM disk with a
@@ -28,17 +28,20 @@
  */
 
 #ifndef FSL_FF_RAMDISK_SECTOR_SIZE
-#define FSL_FF_RAMDISK_SECTOR_SIZE FF_MIN_SS     /* usualy 512 B */
+#define FSL_FF_RAMDISK_SECTOR_SIZE FF_MIN_SS     /* usually 512 B */
 #endif
-     
+
 #ifndef FSL_FF_RAMDISK_DISK_SIZE
-#define FSL_FF_RAMDISK_DISK_SIZE 128 * FF_MIN_SS /* minmal disk size calculated as 128 * FF_MIN_SS (ff.c ln 4112) , 128*512=65536 */
+/* Minimal volume size (128 sectors) required in file ff.c in f_mkfs function,
+   Minimal sectors per track required in file ff.c in f_mkfs function,
+   N_SEC_TRACK (63 sectors) defined in file ff.c */
+#define FSL_FF_RAMDISK_DISK_SIZE  (128 + 63) * FF_MIN_SS
 #endif
 
 #if defined(__cplusplus)
 extern "C" {
 #endif
-    
+
 /*******************************************************************************
  * API
  ******************************************************************************/

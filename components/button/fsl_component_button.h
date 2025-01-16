@@ -1,6 +1,5 @@
 /*
  * Copyright 2018-2019 NXP
- * All rights reserved.
  *
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -98,7 +97,9 @@ typedef void *button_handle_t;
 #endif
 
 /*! @brief Definition of button double click threshold,unit is ms. */
+#ifndef BUTTON_DOUBLE_CLICK_THRESHOLD
 #define BUTTON_DOUBLE_CLICK_THRESHOLD (200U)
+#endif
 
 /*! @brief Definition to determine whether use common task. */
 #ifndef BUTTON_USE_COMMON_TASK

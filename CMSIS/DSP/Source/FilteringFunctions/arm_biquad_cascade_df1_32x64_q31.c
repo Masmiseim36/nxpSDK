@@ -157,7 +157,6 @@
   @param[in]     pSrc      points to the block of input data
   @param[out]    pDst      points to the block of output data
   @param[in]     blockSize number of samples to process
-  @return        none
 
   @par           Details
                    The function is implemented using an internal 64-bit accumulator.
@@ -281,7 +280,7 @@ static void arm_biquad_cas_df1_32x64_q31_scalar(const arm_biquad_cas_df1_32x64_i
 
 }
 
-void arm_biquad_cas_df1_32x64_q31(
+ARM_DSP_ATTRIBUTE void arm_biquad_cas_df1_32x64_q31(
   const arm_biquad_cas_df1_32x64_ins_q31 * S,
   const q31_t * pSrc,
         q31_t * pDst,
@@ -520,7 +519,7 @@ void arm_biquad_cas_df1_32x64_q31(
     }
 }
 #else
-void arm_biquad_cas_df1_32x64_q31(
+ARM_DSP_ATTRIBUTE void arm_biquad_cas_df1_32x64_q31(
   const arm_biquad_cas_df1_32x64_ins_q31 * S,
   const q31_t * pSrc,
         q31_t * pDst,

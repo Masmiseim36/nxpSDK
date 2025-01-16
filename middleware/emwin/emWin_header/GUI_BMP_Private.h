@@ -9,7 +9,7 @@
 *                                                                    *
 **********************************************************************
 
-** emWin V6.38 - Graphical user interface for embedded applications **
+** emWin V6.46 - Graphical user interface for embedded applications **
 All  Intellectual Property rights  in the Software belongs to  SEGGER.
 emWin is protected by  international copyright laws.  Knowledge of the
 source code may not be used to write a similar product.  This file may
@@ -34,7 +34,7 @@ License model:            emWin License Agreement, dated August 20th 2011 and Am
 Licensed platform:        NXP's ARM 7/9, Cortex-M0, M3, M4, M7, A7, M33
 ----------------------------------------------------------------------
 Support and Update Agreement (SUA)
-SUA period:               2011-08-19 - 2024-09-02
+SUA period:               2011-08-19 - 2025-09-02
 Contact to extend SUA:    sales@segger.com
 ----------------------------------------------------------------------
 File        : GUI_BMP_Private.h
@@ -75,9 +75,9 @@ typedef struct {
 // Context structure for getting stdio input
 //
 typedef struct {
-  GUI_GET_DATA_FUNC * pfGetData; // Function pointer
-  U32                 Off;       // Data pointer
-  void              * pParam;    // Parameter pointer passed to function
+  GUI_BMP_GET_DATA_FUNC * pfGetData; // Function pointer
+  U32                     Off;       // Data pointer
+  void                  * pParam;    // Parameter pointer passed to function
 } GUI_BMP_CONTEXT;
 
 //
@@ -98,6 +98,8 @@ typedef struct {
   int                   x1;             // Used to draw data
   int                   y1;             // Used to draw data
 } GUI_DRAWLINE_INFO;
+
+extern void (* GUI__pfDrawLine_RGB)(GUI_DRAWLINE_INFO * pInfo);
 
 /*********************************************************************
 *

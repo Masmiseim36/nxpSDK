@@ -1,14 +1,14 @@
 /*
- *  Copyright 2008-2022 NXP
+ *  Copyright 2008-2022, 2024 NXP
  *
  *  SPDX-License-Identifier: BSD-3-Clause
  *
  */
 
-/*! \file wm_utils.h
- * \brief Utility functions
+/*!\file wm_utils.h
+ *\brief This file provides utility functions for Wi-Fi connection manager.
  *
- * Collection of some common helper functions
+ * Utility functions
  */
 
 #ifndef _UTIL_H_

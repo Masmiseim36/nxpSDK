@@ -383,6 +383,50 @@ status_t SDIO_IO_Write_Extended(
  */
 status_t SDIO_IO_Read_Extended(
     sdio_card_t *card, sdio_func_num_t func, uint32_t regAddr, uint8_t *buffer, uint32_t count, uint32_t flags);
+#if SDMMCHOST_ENABLE_CACHE_LINE_ALIGN_TRANSFER
+/*!
+ * @brief IO extended write transfer function
+ *
+ * Please note it is a thread safe function.
+ *
+ * @param card Card descriptor.
+ * @param func IO number
+ * @param regAddr register address
+ * @param dataList dataList to write
+ * @param count data count
+ * @param flags write flags
+ * @retval kStatus_SDMMC_TransferFailed
+ * @retval kStatus_SDMMC_SDIO_InvalidArgument
+ * @retval kStatus_Success
+ */
+status_t SDIO_IO_Write_Extended_Scatter_Gather(sdio_card_t *card,
+                                               sdio_func_num_t func,
+                                               uint32_t regAddr,
+                                               sdmmchost_scatter_gather_data_list_t *dataList,
+                                               uint32_t count,
+                                               uint32_t flags);
+/*!
+ * @brief IO extended read transfer function (scatter gather)
+ *
+ * Please note it is a thread safe function.
+ *
+ * @param card Card descriptor.
+ * @param func IO number
+ * @param regAddr register address
+ * @param dataList dataList to read
+ * @param count data count
+ * @param flags write flags
+ * @retval kStatus_SDMMC_TransferFailed
+ * @retval kStatus_SDMMC_SDIO_InvalidArgument
+ * @retval kStatus_Success
+ */
+status_t SDIO_IO_Read_Extended_Scatter_Gather(sdio_card_t *card,
+                                              sdio_func_num_t func,
+                                              uint32_t regAddr,
+                                              sdmmchost_scatter_gather_data_list_t *dataList,
+                                              uint32_t count,
+                                              uint32_t flags);
+#endif
 /*!
  * @brief enable IO interrupt
  *

@@ -45,7 +45,6 @@
  * @param[in]    S          Pointer to an instance of the polynomial SVM structure.
  * @param[in]    in         Pointer to input vector
  * @param[out]   pResult    Decision value
- * @return none.
  *
  */
 
@@ -54,7 +53,7 @@
 #include "arm_helium_utils.h"
 #include "arm_vec_math.h"
 
-void arm_svm_polynomial_predict_f32(
+ARM_DSP_ATTRIBUTE void arm_svm_polynomial_predict_f32(
     const arm_svm_polynomial_instance_f32 *S,
     const float32_t * in,
     int32_t * pResult)
@@ -303,7 +302,7 @@ void arm_svm_polynomial_predict_f32(
 
 #else
 #if defined(ARM_MATH_NEON)
-void arm_svm_polynomial_predict_f32(
+ARM_DSP_ATTRIBUTE void arm_svm_polynomial_predict_f32(
     const arm_svm_polynomial_instance_f32 *S,
     const float32_t * in,
     int32_t * pResult)
@@ -459,7 +458,7 @@ void arm_svm_polynomial_predict_f32(
     *pResult=S->classes[STEP(sum)];
 }
 #else
-void arm_svm_polynomial_predict_f32(
+ARM_DSP_ATTRIBUTE void arm_svm_polynomial_predict_f32(
     const arm_svm_polynomial_instance_f32 *S,
     const float32_t * in,
     int32_t * pResult)

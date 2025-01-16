@@ -13,15 +13,21 @@
 #if (defined(CONFIG_BT_MCS) && (CONFIG_BT_MCS > 0))
 
 #include <stdlib.h>
-#include "fsl_shell.h"
+
+#include <sys/byteorder.h>
+#include <sys/util.h>
+#include <porting.h>
+
+#include <bluetooth/hci.h>
 #include <bluetooth/bluetooth.h>
 #include <bluetooth/conn.h>
-
-#include "shell_bt.h"
 #include <bluetooth/services/ots.h>
-
 #include <bluetooth/audio/media_proxy.h>
+
 #include "../audio/media_proxy_internal.h" /* For MPL_NO_TRACK_ID - TODO: Fix */
+
+#include "fsl_shell.h"
+#include "shell_bt.h"
 
 #define BT_DBG_ENABLED IS_ENABLED(CONFIG_BT_DEBUG_MCS)
 #define LOG_MODULE_NAME bt_media_controller_shell
@@ -359,7 +365,7 @@ static void search_results_id_cb(struct media_player *plr, int err, uint64_t id)
 	}
 
 	if (id == 0) {
-		shell_print(ctx_shell, "Player: %p, Search result not avilable", plr);
+		shell_print(ctx_shell, "Player: %p, Search result not available", plr);
 	}
 
 	(void)bt_ots_obj_id_to_str(id, str, sizeof(str));
@@ -377,7 +383,7 @@ static void content_ctrl_id_cb(struct media_player *plr, int err, uint8_t ccid)
 	shell_print(ctx_shell, "Player: %p, Content Control ID: %u", plr, ccid);
 }
 
-static shell_status_t cmd_media_init(shell_handle_t sh, int32_t argc, char *argv[])
+static int cmd_media_init(const struct shell *sh, size_t argc, char *argv[])
 {
 	int err;
 
@@ -432,40 +438,40 @@ static shell_status_t cmd_media_init(shell_handle_t sh, int32_t argc, char *argv
 		shell_error(ctx_shell, "Could not register media shell as controller");
 	}
 
-	return (shell_status_t)err;
+	return err;
 }
 
-static shell_status_t cmd_media_set_player(shell_handle_t sh, int32_t argc, char *argv[])
+static int cmd_media_set_player(const struct shell *sh, size_t argc, char *argv[])
 {
 	if (!strcmp(argv[1], "local")) {
 		if (local_player) {
 			current_player = local_player;
 			shell_print(ctx_shell, "Current player set to local player: %p",
 				    current_player);
-			return (shell_status_t)0;
+			return 0;
 		}
 
 		shell_print(ctx_shell, "No local player");
-		return kStatus_SHELL_Error;
+		return -EOPNOTSUPP;
 
 	} else if (!strcmp(argv[1], "remote")) {
 		if (remote_player) {
 			current_player = remote_player;
 			shell_print(ctx_shell, "Current player set to remote player: %p",
 				    current_player);
-			return (shell_status_t)0;
+			return 0;
 		}
 
 		shell_print(ctx_shell, "No remote player");
-		return kStatus_SHELL_Error;
+		return -EOPNOTSUPP;
 
 	} else {
 		shell_error(ctx_shell, "Input argument must be either \"local\" or \"remote\"");
-		return kStatus_SHELL_Error;
+		return -EINVAL;
 	}
 }
 
-static shell_status_t cmd_media_show_players(shell_handle_t sh, int32_t argc, char *argv[])
+static int cmd_media_show_players(const struct shell *sh, size_t argc, char *argv[])
 {
 	shell_print(ctx_shell, "Local player: %p", local_player);
 	shell_print(ctx_shell, "Remote player: %p", remote_player);
@@ -482,11 +488,11 @@ static shell_status_t cmd_media_show_players(shell_handle_t sh, int32_t argc, ch
 		shell_print(ctx_shell, "Current player is not set to valid player");
 	}
 
-	return (shell_status_t)0;
+	return 0;
 }
 
 #if defined(CONFIG_MCTL_REMOTE_PLAYER_CONTROL) && (CONFIG_MCTL_REMOTE_PLAYER_CONTROL > 0)
-static shell_status_t cmd_media_discover_player(shell_handle_t sh, int32_t argc, char *argv[])
+static int cmd_media_discover_player(const struct shell *sh, size_t argc, char *argv[])
 {
 	int err = media_proxy_ctrl_discover_player(default_conn);
 
@@ -494,11 +500,11 @@ static shell_status_t cmd_media_discover_player(shell_handle_t sh, int32_t argc,
 		shell_error(ctx_shell, "Discover player failed (%d)", err);
 	}
 
-	return (shell_status_t)err;
+	return err;
 }
 #endif /* CONFIG_MCTL_REMOTE_PLAYER_CONTROL */
 
-static shell_status_t cmd_media_read_player_name(shell_handle_t sh, int32_t argc, char *argv[])
+static int cmd_media_read_player_name(const struct shell *sh, size_t argc, char *argv[])
 {
 	int err = media_proxy_ctrl_get_player_name(current_player);
 
@@ -506,11 +512,11 @@ static shell_status_t cmd_media_read_player_name(shell_handle_t sh, int32_t argc
 		shell_error(ctx_shell, "Player name get failed (%d)", err);
 	}
 
-	return (shell_status_t)err;
+	return err;
 }
 
 #if defined(CONFIG_BT_OTS) && (CONFIG_BT_OTS > 0)
-static shell_status_t cmd_media_read_icon_obj_id(shell_handle_t sh, int32_t argc, char *argv[])
+static int cmd_media_read_icon_obj_id(const struct shell *sh, size_t argc, char *argv[])
 {
 	int err = media_proxy_ctrl_get_icon_id(current_player);
 
@@ -518,11 +524,11 @@ static shell_status_t cmd_media_read_icon_obj_id(shell_handle_t sh, int32_t argc
 		shell_error(ctx_shell, "Icon ID get failed (%d)", err);
 	}
 
-	return (shell_status_t)err;
+	return err;
 }
 #endif /* CONFIG_BT_OTS */
 
-static shell_status_t cmd_media_read_icon_url(shell_handle_t sh, int32_t argc, char *argv[])
+static int cmd_media_read_icon_url(const struct shell *sh, size_t argc, char *argv[])
 {
 	int err = media_proxy_ctrl_get_icon_url(current_player);
 
@@ -530,10 +536,10 @@ static shell_status_t cmd_media_read_icon_url(shell_handle_t sh, int32_t argc, c
 		shell_error(ctx_shell, "Icon URL get failed (%d)", err);
 	}
 
-	return (shell_status_t)err;
+	return err;
 }
 
-static shell_status_t cmd_media_read_track_title(shell_handle_t sh, int32_t argc, char *argv[])
+static int cmd_media_read_track_title(const struct shell *sh, size_t argc, char *argv[])
 {
 	int err = media_proxy_ctrl_get_track_title(current_player);
 
@@ -541,10 +547,10 @@ static shell_status_t cmd_media_read_track_title(shell_handle_t sh, int32_t argc
 		shell_error(ctx_shell, "Track title get failed (%d)", err);
 	}
 
-	return (shell_status_t)err;
+	return err;
 }
 
-static shell_status_t cmd_media_read_track_duration(shell_handle_t sh, int32_t argc, char *argv[])
+static int cmd_media_read_track_duration(const struct shell *sh, size_t argc, char *argv[])
 {
 	int err = media_proxy_ctrl_get_track_duration(current_player);
 
@@ -552,10 +558,10 @@ static shell_status_t cmd_media_read_track_duration(shell_handle_t sh, int32_t a
 		shell_error(ctx_shell, "Track duration get failed (%d)", err);
 	}
 
-	return (shell_status_t)err;
+	return err;
 }
 
-static shell_status_t cmd_media_read_track_position(shell_handle_t sh, int32_t argc, char *argv[])
+static int cmd_media_read_track_position(const struct shell *sh, size_t argc, char *argv[])
 {
 	int err = media_proxy_ctrl_get_track_position(current_player);
 
@@ -563,10 +569,11 @@ static shell_status_t cmd_media_read_track_position(shell_handle_t sh, int32_t a
 		shell_error(ctx_shell, "Track position get failed (%d)", err);
 	}
 
-	return (shell_status_t)err;
+	return err;
 }
 
-static shell_status_t cmd_media_set_track_position(shell_handle_t sh, int32_t argc, char *argv[])
+static int cmd_media_set_track_position(const struct shell *sh, size_t argc,
+			       char *argv[])
 {
 	long position;
 	int err = 0;
@@ -575,13 +582,13 @@ static shell_status_t cmd_media_set_track_position(shell_handle_t sh, int32_t ar
 	if (err != 0) {
 		shell_error(sh, "Could not parse position: %d", err);
 
-		return kStatus_SHELL_Error;
+		return -ENOEXEC;
 	}
 
 	if (sizeof(long) != sizeof(int32_t) && !IN_RANGE(position, INT32_MIN, INT32_MAX)) {
 		shell_error(sh, "Invalid position: %ld", position);
 
-		return kStatus_SHELL_Error;
+		return -ENOEXEC;
 	}
 
 	err = media_proxy_ctrl_set_track_position(current_player, position);
@@ -589,22 +596,22 @@ static shell_status_t cmd_media_set_track_position(shell_handle_t sh, int32_t ar
 		shell_error(ctx_shell, "Track position set failed (%d)", err);
 	}
 
-	return (shell_status_t)err;
+	return err;
 }
 
-static shell_status_t cmd_media_read_playback_speed(shell_handle_t sh, int32_t argc, char *argv[])
+static int cmd_media_read_playback_speed(const struct shell *sh, size_t argc, char *argv[])
 {
 	int err = media_proxy_ctrl_get_playback_speed(current_player);
 
 	if (err) {
-		shell_error(ctx_shell, "Playback speed get get failed (%d)", err);
+		shell_error(ctx_shell, "Playback speed get failed (%d)", err);
 	}
 
-	return (shell_status_t)err;
+	return err;
 }
 
 
-static shell_status_t cmd_media_set_playback_speed(shell_handle_t sh, int32_t argc, char *argv[])
+static int cmd_media_set_playback_speed(const struct shell *sh, size_t argc, char *argv[])
 {
 	long speed;
 	int err = 0;
@@ -613,13 +620,13 @@ static shell_status_t cmd_media_set_playback_speed(shell_handle_t sh, int32_t ar
 	if (err != 0) {
 		shell_error(sh, "Could not parse speed: %d", err);
 
-		return kStatus_SHELL_Error;
+		return -ENOEXEC;
 	}
 
 	if (!IN_RANGE(speed, INT8_MIN, INT8_MAX)) {
 		shell_error(sh, "Invalid speed: %ld", speed);
 
-		return kStatus_SHELL_Error;
+		return -ENOEXEC;
 	}
 
 	err = media_proxy_ctrl_set_playback_speed(current_player, speed);
@@ -627,10 +634,10 @@ static shell_status_t cmd_media_set_playback_speed(shell_handle_t sh, int32_t ar
 		shell_error(ctx_shell, "Playback speed set failed (%d)", err);
 	}
 
-	return (shell_status_t)err;
+	return err;
 }
 
-static shell_status_t cmd_media_read_seeking_speed(shell_handle_t sh, int32_t argc, char *argv[])
+static int cmd_media_read_seeking_speed(const struct shell *sh, size_t argc, char *argv[])
 {
 	int err = media_proxy_ctrl_get_seeking_speed(current_player);
 
@@ -638,11 +645,11 @@ static shell_status_t cmd_media_read_seeking_speed(shell_handle_t sh, int32_t ar
 		shell_error(ctx_shell, "Seeking speed get failed (%d)", err);
 	}
 
-	return (shell_status_t)err;
+	return err;
 }
 
 #if defined(CONFIG_BT_OTS) && (CONFIG_BT_OTS > 0)
-static shell_status_t cmd_media_read_track_segments_obj_id(shell_handle_t sh, int32_t argc, char *argv[])
+static int cmd_media_read_track_segments_obj_id(const struct shell *sh, size_t argc, char *argv[])
 {
 	int err = media_proxy_ctrl_get_track_segments_id(current_player);
 
@@ -650,10 +657,10 @@ static shell_status_t cmd_media_read_track_segments_obj_id(shell_handle_t sh, in
 		shell_error(ctx_shell, "Track segments ID get failed (%d)", err);
 	}
 
-	return (shell_status_t)err;
+	return err;
 }
 
-static shell_status_t cmd_media_read_current_track_obj_id(shell_handle_t sh, int32_t argc, char *argv[])
+static int cmd_media_read_current_track_obj_id(const struct shell *sh, size_t argc, char *argv[])
 {
 	int err = media_proxy_ctrl_get_current_track_id(current_player);
 
@@ -661,23 +668,23 @@ static shell_status_t cmd_media_read_current_track_obj_id(shell_handle_t sh, int
 		shell_error(ctx_shell, "Current track ID get failed (%d)", err);
 	}
 
-	return (shell_status_t)err;
+	return err;
 }
 
-/* TDOD: cmd_media_set_current_track_obj_id */
+/* TODO: cmd_media_set_current_track_obj_id */
 
-static shell_status_t cmd_media_read_next_track_obj_id(shell_handle_t sh, int32_t argc, char *argv[])
+static int cmd_media_read_next_track_obj_id(const struct shell *sh, size_t argc, char *argv[])
 {
 	int err = media_proxy_ctrl_get_next_track_id(current_player);
 
 	if (err) {
-		shell_error(ctx_shell, "Nect track ID get failed (%d)", err);
+		shell_error(ctx_shell, "Next track ID get failed (%d)", err);
 	}
 
-	return (shell_status_t)err;
+	return err;
 }
 
-static shell_status_t cmd_media_read_current_group_obj_id(shell_handle_t sh, int32_t argc, char *argv[])
+static int cmd_media_read_current_group_obj_id(const struct shell *sh, size_t argc, char *argv[])
 {
 	int err = media_proxy_ctrl_get_current_group_id(current_player);
 
@@ -686,10 +693,10 @@ static shell_status_t cmd_media_read_current_group_obj_id(shell_handle_t sh, int
 
 	}
 
-	return (shell_status_t)err;
+	return err;
 }
 
-static shell_status_t cmd_media_read_parent_group_obj_id(shell_handle_t sh, int32_t argc, char *argv[])
+static int cmd_media_read_parent_group_obj_id(const struct shell *sh, size_t argc, char *argv[])
 {
 	int err = media_proxy_ctrl_get_parent_group_id(current_player);
 
@@ -697,11 +704,11 @@ static shell_status_t cmd_media_read_parent_group_obj_id(shell_handle_t sh, int3
 		shell_error(ctx_shell, "Parent group ID get failed (%d)", err);
 	}
 
-	return (shell_status_t)err;
+	return err;
 }
 #endif /* CONFIG_BT_OTS */
 
-static shell_status_t cmd_media_read_playing_order(shell_handle_t sh, int32_t argc, char *argv[])
+static int cmd_media_read_playing_order(const struct shell *sh, size_t argc, char *argv[])
 {
 	int err = media_proxy_ctrl_get_playing_order(current_player);
 
@@ -709,10 +716,10 @@ static shell_status_t cmd_media_read_playing_order(shell_handle_t sh, int32_t ar
 		shell_error(ctx_shell, "Playing order get failed (%d)", err);
 	}
 
-	return (shell_status_t)err;
+	return err;
 }
 
-static shell_status_t cmd_media_set_playing_order(shell_handle_t sh, int32_t argc, char *argv[])
+static int cmd_media_set_playing_order(const struct shell *sh, size_t argc, char *argv[])
 {
 	unsigned long order;
 	int err = 0;
@@ -721,13 +728,13 @@ static shell_status_t cmd_media_set_playing_order(shell_handle_t sh, int32_t arg
 	if (err != 0) {
 		shell_error(sh, "Could not parse order: %d", err);
 
-		return kStatus_SHELL_Error;
+		return -ENOEXEC;
 	}
 
 	if (order > UINT8_MAX) {
 		shell_error(sh, "Invalid order: %ld", order);
 
-		return kStatus_SHELL_Error;
+		return -ENOEXEC;
 	}
 
 	err = media_proxy_ctrl_set_playing_order(current_player, order);
@@ -735,10 +742,11 @@ static shell_status_t cmd_media_set_playing_order(shell_handle_t sh, int32_t arg
 		shell_error(ctx_shell, "Playing order set failed (%d)", err);
 	}
 
-	return (shell_status_t)err;
+	return err;
 }
 
-static shell_status_t cmd_media_read_playing_orders_supported(shell_handle_t sh, int32_t argc, char *argv[])
+static int cmd_media_read_playing_orders_supported(const struct shell *sh, size_t argc,
+						   char *argv[])
 {
 	int err = media_proxy_ctrl_get_playing_orders_supported(current_player);
 
@@ -746,10 +754,10 @@ static shell_status_t cmd_media_read_playing_orders_supported(shell_handle_t sh,
 		shell_error(ctx_shell, "Icon URL get failed (%d)", err);
 	}
 
-	return (shell_status_t)err;
+	return err;
 }
 
-static shell_status_t cmd_media_read_media_state(shell_handle_t sh, int32_t argc, char *argv[])
+static int cmd_media_read_media_state(const struct shell *sh, size_t argc, char *argv[])
 {
 	int err = media_proxy_ctrl_get_media_state(current_player);
 
@@ -757,10 +765,10 @@ static shell_status_t cmd_media_read_media_state(shell_handle_t sh, int32_t argc
 		shell_error(ctx_shell, "Icon URL get failed (%d)", err);
 	}
 
-	return (shell_status_t)err;
+	return err;
 }
 
-static shell_status_t cmd_media_play(shell_handle_t sh, int32_t argc, char *argv[])
+static int cmd_media_play(const struct shell *sh, size_t argc, char *argv[])
 {
 	const struct mpl_cmd cmd = {
 		.opcode = BT_MCS_OPC_PLAY,
@@ -774,10 +782,10 @@ static shell_status_t cmd_media_play(shell_handle_t sh, int32_t argc, char *argv
 		shell_error(sh, "Media Controller play failed: %d", err);
 	}
 
-	return (shell_status_t)err;
+	return err;
 }
 
-static shell_status_t cmd_media_pause(shell_handle_t sh, int32_t argc, char *argv[])
+static int cmd_media_pause(const struct shell *sh, size_t argc, char *argv[])
 {
 	const struct mpl_cmd cmd = {
 		.opcode = BT_MCS_OPC_PAUSE,
@@ -791,10 +799,11 @@ static shell_status_t cmd_media_pause(shell_handle_t sh, int32_t argc, char *arg
 		shell_error(sh, "Media Controller pause failed: %d", err);
 	}
 
-	return (shell_status_t)err;
+	return err;
 }
 
-static shell_status_t cmd_media_fast_rewind(shell_handle_t sh, int32_t argc, char *argv[])
+static int cmd_media_fast_rewind(const struct shell *sh, size_t argc,
+				 char *argv[])
 {
 	const struct mpl_cmd cmd = {
 		.opcode = BT_MCS_OPC_FAST_REWIND,
@@ -808,10 +817,11 @@ static shell_status_t cmd_media_fast_rewind(shell_handle_t sh, int32_t argc, cha
 		shell_error(sh, "Media Controller fast rewind failed: %d", err);
 	}
 
-	return (shell_status_t)err;
+	return err;
 }
 
-static shell_status_t cmd_media_fast_forward(shell_handle_t sh, int32_t argc, char *argv[])
+static int cmd_media_fast_forward(const struct shell *sh, size_t argc,
+				  char *argv[])
 {
 	const struct mpl_cmd cmd = {
 		.opcode = BT_MCS_OPC_FAST_FORWARD,
@@ -826,10 +836,10 @@ static shell_status_t cmd_media_fast_forward(shell_handle_t sh, int32_t argc, ch
 			    err);
 	}
 
-	return (shell_status_t)err;
+	return err;
 }
 
-static shell_status_t cmd_media_stop(shell_handle_t sh, int32_t argc, char *argv[])
+static int cmd_media_stop(const struct shell *sh, size_t argc, char *argv[])
 {
 	const struct mpl_cmd cmd = {
 		.opcode = BT_MCS_OPC_STOP,
@@ -843,10 +853,11 @@ static shell_status_t cmd_media_stop(shell_handle_t sh, int32_t argc, char *argv
 		shell_error(sh, "Media Controller stop failed: %d", err);
 	}
 
-	return (shell_status_t)err;
+	return err;
 }
 
-static shell_status_t cmd_media_move_relative(shell_handle_t sh, int32_t argc, char *argv[])
+static int cmd_media_move_relative(const struct shell *sh, size_t argc,
+				   char *argv[])
 {
 	struct mpl_cmd cmd = {
 		.opcode = BT_MCS_OPC_MOVE_RELATIVE,
@@ -860,13 +871,13 @@ static shell_status_t cmd_media_move_relative(shell_handle_t sh, int32_t argc, c
 	if (err != 0) {
 		shell_error(sh, "Failed to parse offset: %d", err);
 
-		return (shell_status_t)err;
+		return err;
 	}
 
 	if (sizeof(long) != sizeof(int32_t) && !IN_RANGE(offset, INT32_MIN, INT32_MAX)) {
 		shell_error(sh, "Invalid offset: %ld", offset);
 
-		return kStatus_SHELL_Error;
+		return -ENOEXEC;
 	}
 
 	cmd.param = (int32_t)offset;
@@ -877,10 +888,11 @@ static shell_status_t cmd_media_move_relative(shell_handle_t sh, int32_t argc, c
 			    err);
 	}
 
-	return (shell_status_t)err;
+	return err;
 }
 
-static shell_status_t cmd_media_prev_segment(shell_handle_t sh, int32_t argc, char *argv[])
+static int cmd_media_prev_segment(const struct shell *sh, size_t argc,
+				  char *argv[])
 {
 	const struct mpl_cmd cmd = {
 		.opcode = BT_MCS_OPC_PREV_SEGMENT,
@@ -895,10 +907,11 @@ static shell_status_t cmd_media_prev_segment(shell_handle_t sh, int32_t argc, ch
 			    err);
 	}
 
-	return (shell_status_t)err;
+	return err;
 }
 
-static shell_status_t cmd_media_next_segment(shell_handle_t sh, int32_t argc, char *argv[])
+static int cmd_media_next_segment(const struct shell *sh, size_t argc,
+				  char *argv[])
 {
 	const struct mpl_cmd cmd = {
 		.opcode = BT_MCS_OPC_NEXT_SEGMENT,
@@ -913,10 +926,11 @@ static shell_status_t cmd_media_next_segment(shell_handle_t sh, int32_t argc, ch
 			    err);
 	}
 
-	return (shell_status_t)err;
+	return err;
 }
 
-static shell_status_t cmd_media_first_segment(shell_handle_t sh, int32_t argc, char *argv[])
+static int cmd_media_first_segment(const struct shell *sh, size_t argc,
+				   char *argv[])
 {
 	const struct mpl_cmd cmd = {
 		.opcode = BT_MCS_OPC_FIRST_SEGMENT,
@@ -931,10 +945,11 @@ static shell_status_t cmd_media_first_segment(shell_handle_t sh, int32_t argc, c
 			    err);
 	}
 
-	return (shell_status_t)err;
+	return err;
 }
 
-static shell_status_t cmd_media_last_segment(shell_handle_t sh, int32_t argc, char *argv[])
+static int cmd_media_last_segment(const struct shell *sh, size_t argc,
+				  char *argv[])
 {
 	const struct mpl_cmd cmd = {
 		.opcode = BT_MCS_OPC_LAST_SEGMENT,
@@ -949,10 +964,11 @@ static shell_status_t cmd_media_last_segment(shell_handle_t sh, int32_t argc, ch
 			    err);
 	}
 
-	return (shell_status_t)err;
+	return err;
 }
 
-static shell_status_t cmd_media_goto_segment(shell_handle_t sh, int32_t argc, char *argv[])
+static int cmd_media_goto_segment(const struct shell *sh, size_t argc,
+				  char *argv[])
 {
 	struct mpl_cmd cmd = {
 		.opcode = BT_MCS_OPC_GOTO_SEGMENT,
@@ -966,13 +982,13 @@ static shell_status_t cmd_media_goto_segment(shell_handle_t sh, int32_t argc, ch
 	if (err != 0) {
 		shell_error(sh, "Failed to parse segment: %d", err);
 
-		return (shell_status_t)err;
+		return err;
 	}
 
 	if (sizeof(long) != sizeof(int32_t) && !IN_RANGE(segment, INT32_MIN, INT32_MAX)) {
 		shell_error(sh, "Invalid segment: %ld", segment);
 
-		return kStatus_SHELL_Error;
+		return -ENOEXEC;
 	}
 
 	cmd.param = (int32_t)segment;
@@ -983,10 +999,11 @@ static shell_status_t cmd_media_goto_segment(shell_handle_t sh, int32_t argc, ch
 			    err);
 	}
 
-	return (shell_status_t)err;
+	return err;
 }
 
-static shell_status_t cmd_media_prev_track(shell_handle_t sh, int32_t argc, char *argv[])
+static int cmd_media_prev_track(const struct shell *sh, size_t argc,
+				char *argv[])
 {
 	const struct mpl_cmd cmd = {
 		.opcode = BT_MCS_OPC_PREV_TRACK,
@@ -1001,10 +1018,11 @@ static shell_status_t cmd_media_prev_track(shell_handle_t sh, int32_t argc, char
 			    err);
 	}
 
-	return (shell_status_t)err;
+	return err;
 }
 
-static shell_status_t cmd_media_next_track(shell_handle_t sh, int32_t argc, char *argv[])
+static int cmd_media_next_track(const struct shell *sh, size_t argc,
+				char *argv[])
 {
 	const struct mpl_cmd cmd = {
 		.opcode = BT_MCS_OPC_NEXT_TRACK,
@@ -1019,10 +1037,11 @@ static shell_status_t cmd_media_next_track(shell_handle_t sh, int32_t argc, char
 			    err);
 	}
 
-	return (shell_status_t)err;
+	return err;
 }
 
-static shell_status_t cmd_media_first_track(shell_handle_t sh, int32_t argc, char *argv[])
+static int cmd_media_first_track(const struct shell *sh, size_t argc,
+				 char *argv[])
 {
 	const struct mpl_cmd cmd = {
 		.opcode = BT_MCS_OPC_FIRST_TRACK,
@@ -1037,10 +1056,11 @@ static shell_status_t cmd_media_first_track(shell_handle_t sh, int32_t argc, cha
 			    err);
 	}
 
-	return (shell_status_t)err;
+	return err;
 }
 
-static shell_status_t cmd_media_last_track(shell_handle_t sh, int32_t argc, char *argv[])
+static int cmd_media_last_track(const struct shell *sh, size_t argc,
+				char *argv[])
 {
 	const struct mpl_cmd cmd = {
 		.opcode = BT_MCS_OPC_LAST_TRACK,
@@ -1054,10 +1074,11 @@ static shell_status_t cmd_media_last_track(shell_handle_t sh, int32_t argc, char
 		shell_error(sh, "Media Controller last track failed: %d", err);
 	}
 
-	return (shell_status_t)err;
+	return err;
 }
 
-static shell_status_t cmd_media_goto_track(shell_handle_t sh, int32_t argc, char *argv[])
+static int cmd_media_goto_track(const struct shell *sh, size_t argc,
+				char *argv[])
 {
 	struct mpl_cmd cmd = {
 		.opcode = BT_MCS_OPC_GOTO_TRACK,
@@ -1071,13 +1092,13 @@ static shell_status_t cmd_media_goto_track(shell_handle_t sh, int32_t argc, char
 	if (err != 0) {
 		shell_error(sh, "Failed to parse track: %d", err);
 
-		return (shell_status_t)err;
+		return err;
 	}
 
 	if (sizeof(long) != sizeof(int32_t) && !IN_RANGE(track, INT32_MIN, INT32_MAX)) {
 		shell_error(sh, "Invalid track: %ld", track);
 
-		return kStatus_SHELL_Error;
+		return -ENOEXEC;
 	}
 
 	cmd.param = (int32_t)track;
@@ -1088,10 +1109,11 @@ static shell_status_t cmd_media_goto_track(shell_handle_t sh, int32_t argc, char
 			    err);
 	}
 
-	return (shell_status_t)err;
+	return err;
 }
 
-static shell_status_t cmd_media_prev_group(shell_handle_t sh, int32_t argc, char *argv[])
+static int cmd_media_prev_group(const struct shell *sh, size_t argc,
+				char *argv[])
 {
 	const struct mpl_cmd cmd = {
 		.opcode = BT_MCS_OPC_PREV_GROUP,
@@ -1106,10 +1128,11 @@ static shell_status_t cmd_media_prev_group(shell_handle_t sh, int32_t argc, char
 			    err);
 	}
 
-	return (shell_status_t)err;
+	return err;
 }
 
-static shell_status_t cmd_media_next_group(shell_handle_t sh, int32_t argc, char *argv[])
+static int cmd_media_next_group(const struct shell *sh, size_t argc,
+				char *argv[])
 {
 	const struct mpl_cmd cmd = {
 		.opcode = BT_MCS_OPC_NEXT_GROUP,
@@ -1123,10 +1146,11 @@ static shell_status_t cmd_media_next_group(shell_handle_t sh, int32_t argc, char
 		shell_error(sh, "Media Controller next group failed: %d", err);
 	}
 
-	return (shell_status_t)err;
+	return err;
 }
 
-static shell_status_t cmd_media_first_group(shell_handle_t sh, int32_t argc, char *argv[])
+static int cmd_media_first_group(const struct shell *sh, size_t argc,
+				 char *argv[])
 {
 	const struct mpl_cmd cmd = {
 		.opcode = BT_MCS_OPC_FIRST_GROUP,
@@ -1140,10 +1164,11 @@ static shell_status_t cmd_media_first_group(shell_handle_t sh, int32_t argc, cha
 		shell_error(sh, "Media Controller first group failed: %d", err);
 	}
 
-	return (shell_status_t)err;
+	return err;
 }
 
-static shell_status_t cmd_media_last_group(shell_handle_t sh, int32_t argc, char *argv[])
+static int cmd_media_last_group(const struct shell *sh, size_t argc,
+				char *argv[])
 {
 	const struct mpl_cmd cmd = {
 		.opcode = BT_MCS_OPC_LAST_GROUP,
@@ -1157,10 +1182,11 @@ static shell_status_t cmd_media_last_group(shell_handle_t sh, int32_t argc, char
 		shell_error(sh, "Media Controller last group failed: %d", err);
 	}
 
-	return (shell_status_t)err;
+	return err;
 }
 
-static shell_status_t cmd_media_goto_group(shell_handle_t sh, int32_t argc, char *argv[])
+static int cmd_media_goto_group(const struct shell *sh, size_t argc,
+				char *argv[])
 {
 	struct mpl_cmd cmd = {
 		.opcode = BT_MCS_OPC_GOTO_GROUP,
@@ -1174,13 +1200,13 @@ static shell_status_t cmd_media_goto_group(shell_handle_t sh, int32_t argc, char
 	if (err != 0) {
 		shell_error(sh, "Failed to parse group: %d", err);
 
-		return (shell_status_t)err;
+		return err;
 	}
 
 	if (sizeof(long) != sizeof(int32_t) && !IN_RANGE(group, INT32_MIN, INT32_MAX)) {
 		shell_error(sh, "Invalid group: %ld", group);
 
-		return kStatus_SHELL_Error;
+		return -ENOEXEC;
 	}
 
 	cmd.param = (int32_t)group;
@@ -1191,10 +1217,10 @@ static shell_status_t cmd_media_goto_group(shell_handle_t sh, int32_t argc, char
 			    err);
 	}
 
-	return (shell_status_t)err;
+	return err;
 }
 
-static shell_status_t cmd_media_read_commands_supported(shell_handle_t sh, int32_t argc, char *argv[])
+static int cmd_media_read_commands_supported(const struct shell *sh, size_t argc, char *argv[])
 {
 	int err = media_proxy_ctrl_get_commands_supported(current_player);
 
@@ -1202,11 +1228,11 @@ static shell_status_t cmd_media_read_commands_supported(shell_handle_t sh, int32
 		shell_error(ctx_shell, "Commands supported read failed (%d)", err);
 	}
 
-	return (shell_status_t)err;
+	return err;
 }
 
 #if defined(CONFIG_BT_OTS) && (CONFIG_BT_OTS > 0)
-static shell_status_t cmd_media_set_search(shell_handle_t sh, int32_t argc, char *argv[])
+static int cmd_media_set_search(const struct shell *sh, size_t argc, char *argv[])
 {
 	/* TODO: Currently takes the raw search as input - add parameters
 	 * and build the search item here
@@ -1219,7 +1245,7 @@ static shell_status_t cmd_media_set_search(shell_handle_t sh, int32_t argc, char
 	len = strlen(argv[1]);
 	if (len > sizeof(search.search)) {
 		shell_print(sh, "Fail: Invalid argument");
-		return kStatus_SHELL_Error;
+		return -EINVAL;
 	}
 
 	search.len = len;
@@ -1231,10 +1257,11 @@ static shell_status_t cmd_media_set_search(shell_handle_t sh, int32_t argc, char
 		shell_error(ctx_shell, "Search send failed (%d)", err);
 	}
 
-	return (shell_status_t)err;
+	return err;
 }
 
-static shell_status_t cmd_media_read_search_results_obj_id(shell_handle_t sh, int32_t argc, char *argv[])
+static int cmd_media_read_search_results_obj_id(const struct shell *sh, size_t argc,
+						char *argv[])
 {
 	int err = media_proxy_ctrl_get_search_results_id(current_player);
 
@@ -1242,11 +1269,12 @@ static shell_status_t cmd_media_read_search_results_obj_id(shell_handle_t sh, in
 		shell_error(ctx_shell, "Search results ID get failed (%d)", err);
 	}
 
-	return (shell_status_t)err;
+	return err;
 }
 #endif /* CONFIG_BT_OTS */
 
-static shell_status_t cmd_media_read_content_control_id(shell_handle_t sh, int32_t argc, char *argv[])
+static int cmd_media_read_content_control_id(const struct shell *sh, size_t argc,
+					     char *argv[])
 {
 	int err = media_proxy_ctrl_get_content_ctrl_id(current_player);
 
@@ -1254,14 +1282,14 @@ static shell_status_t cmd_media_read_content_control_id(shell_handle_t sh, int32
 		shell_error(ctx_shell, "Content control ID get failed (%d)", err);
 	}
 
-	return (shell_status_t)err;
+	return err;
 }
 
-static shell_status_t cmd_media(shell_handle_t sh, int32_t argc, char *argv[])
+static int cmd_media(const struct shell *sh, size_t argc, char **argv)
 {
 	shell_error(ctx_shell, "%s unknown parameter: %s", argv[0], argv[1]);
 
-	return kStatus_SHELL_Error;
+	return -ENOEXEC;
 }
 
 SHELL_STATIC_SUBCMD_SET_CREATE(media_cmds,
@@ -1384,7 +1412,7 @@ SHELL_STATIC_SUBCMD_SET_CREATE(media_cmds,
 	SHELL_SUBCMD_SET_END
 );
 
-SHELL_CMD_REGISTER(media, media_cmds, "Media commands",
+SHELL_CMD_ARG_REGISTER(media, &media_cmds, "Media commands",
 		       cmd_media, 1, 1);
 
 void bt_ShellMediaInit(shell_handle_t shell)

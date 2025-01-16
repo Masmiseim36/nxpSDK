@@ -44,14 +44,13 @@
   @param[in]     pSrcB      points to second input vector
   @param[out]    pDst       points to output vector
   @param[in]     blockSize  number of samples in each vector
-  @return        none
  */
 
 #if defined(ARM_MATH_MVE_FLOAT16) && !defined(ARM_MATH_AUTOVECTORIZE)
 
 #include "arm_helium_utils.h"
 
-void arm_add_f16(
+ARM_DSP_ATTRIBUTE void arm_add_f16(
   const float16_t * pSrcA,
   const float16_t * pSrcB,
         float16_t * pDst,
@@ -101,7 +100,7 @@ void arm_add_f16(
 
 #else
 #if defined(ARM_FLOAT16_SUPPORTED)
-void arm_add_f16(
+ARM_DSP_ATTRIBUTE void arm_add_f16(
   const float16_t * pSrcA,
   const float16_t * pSrcB,
         float16_t * pDst,

@@ -9,6 +9,7 @@
 #ifndef CTRL_IFACE_H
 #define CTRL_IFACE_H
 
+#if CONFIG_HOSTAPD
 #include "hostapd.h"
 
 #ifndef CONFIG_NO_CTRL_IFACE
@@ -36,5 +37,5 @@ static inline void hostapd_global_ctrl_iface_deinit(struct hapd_interfaces *inte
 {
 }
 #endif /* CONFIG_NO_CTRL_IFACE */
-
+#endif /* CONFIG_HOSTAPD */
 #endif /* CTRL_IFACE_H */

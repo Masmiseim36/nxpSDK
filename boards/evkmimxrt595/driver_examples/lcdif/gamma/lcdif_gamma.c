@@ -1,16 +1,15 @@
 /*
- * Copyright (c) 2019,2024 NXP
+ * Copyright 2019,2024 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
+#include "app.h"
 #include "fsl_lcdif.h"
 #include "lcdif_support.h"
 #include "fsl_debug_console.h"
 
-#include "pin_mux.h"
-#include "board.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -18,6 +17,12 @@
 #define DEMO_IMG_HEIGHT     DEMO_PANEL_HEIGHT
 #define DEMO_IMG_WIDTH      DEMO_PANEL_WIDTH
 #define DEMO_BYTE_PER_PIXEL 4
+
+#if defined(FSL_FEATURE_LCDIF_VERSION_DC8000) & FSL_FEATURE_LCDIF_VERSION_DC8000
+#define DEMO_IMG_BYTES_PER_LINE LCDIF_ALIGN_ADDR((DEMO_IMG_WIDTH * DEMO_BYTE_PER_PIXEL), LCDIF_FB_ALIGN)
+#else
+#define DEMO_IMG_BYTES_PER_LINE (DEMO_PANEL_WIDTH * DEMO_BYTE_PER_PIXEL)
+#endif
 
 /*******************************************************************************
  * Prototypes
@@ -48,7 +53,7 @@ void DEMO_LCDIF_IRQHandler(void)
 
 void DEMO_LCDIF_Init(void)
 {
-    uint32_t(*frameBuffer)[DEMO_IMG_WIDTH] = (void *)DEMO_FB0_ADDR;
+    uint8_t(*frameBuffer)[DEMO_IMG_BYTES_PER_LINE] = (void *)DEMO_FB0_ADDR;
 
     lcdif_dpi_config_t dpiConfig = {
         .panelWidth    = DEMO_IMG_WIDTH,
@@ -68,7 +73,7 @@ void DEMO_LCDIF_Init(void)
     {
         for (uint32_t j = 0; j < DEMO_IMG_WIDTH; j++)
         {
-            frameBuffer[i][j] = ((j & 0xFFU) << 16U) | ((j & 0xFFU) << 8U) | ((j & 0xFFU));
+            *((uint32_t *)&frameBuffer[i][j * 4]) = ((j & 0xFFU) << 16U) | ((j & 0xFFU) << 8U) | ((j & 0xFFU));
         }
     }
 
@@ -76,7 +81,7 @@ void DEMO_LCDIF_Init(void)
 
     LCDIF_DpiModeSetConfig(DEMO_LCDIF, 0, &dpiConfig);
 
-    LCDIF_SetFrameBufferStride(DEMO_LCDIF, 0, DEMO_IMG_WIDTH * DEMO_BYTE_PER_PIXEL);
+    LCDIF_SetFrameBufferStride(DEMO_LCDIF, 0, DEMO_IMG_BYTES_PER_LINE);
 
     if (kStatus_Success != BOARD_InitDisplayInterface())
     {
@@ -170,22 +175,7 @@ void DEMO_LCDIF_Gamma(void)
  */
 int main(void)
 {
-    BOARD_InitPins();
-    BOARD_InitMipiPanelPins();
-    BOARD_InitPsRamPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
-    BOARD_InitLcdifClock();
-
-    GPIO_PortInit(GPIO, BOARD_MIPI_POWER_PORT);
-    GPIO_PortInit(GPIO, BOARD_MIPI_BL_PORT);
-    GPIO_PortInit(GPIO, BOARD_MIPI_RST_PORT);
-
-    status_t status = BOARD_InitPsRam();
-    if (status != kStatus_Success)
-    {
-        assert(false);
-    }
+    BOARD_InitHardware();
 
     PRINTF("LCDIF gamma example start...\r\n");
 

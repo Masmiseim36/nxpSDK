@@ -137,9 +137,9 @@ typedef struct {
   /* The decompressor output side may not use these variables. */
   int dc_tbl_no;		/* DC entropy table selector (0..3) */
   int ac_tbl_no;		/* AC entropy table selector (0..3) */
-  
+
   /* Remaining fields should be treated as private by applications. */
-  
+
   /* These values are computed during compression or decompression startup: */
   /* Component's size in DCT blocks.
    * Any dummy blocks added to complete an MCU are not counted; therefore
@@ -414,7 +414,7 @@ struct jpeg_compress_struct {
    * There are v_samp_factor * DCTSIZE sample rows of each component in an
    * "iMCU" (interleaved MCU) row.
    */
-  
+
   /*
    * These fields are valid during any one scan.
    * They describe the components and MCUs actually appearing in the scan.
@@ -422,10 +422,10 @@ struct jpeg_compress_struct {
   int comps_in_scan;		/* # of JPEG components in this scan */
   jpeg_component_info * cur_comp_info[MAX_COMPS_IN_SCAN];
   /* *cur_comp_info[i] describes component that appears i'th in SOS */
-  
+
   JDIMENSION MCUs_per_row;	/* # of MCUs across the image */
   JDIMENSION MCU_rows_in_scan;	/* # of MCU rows in the image */
-  
+
   int blocks_in_MCU;		/* # of DCT blocks per MCU */
   int MCU_membership[C_MAX_BLOCKS_IN_MCU];
   /* MCU_membership[i] is index in cur_comp_info of component owning */
@@ -461,6 +461,15 @@ struct jpeg_decompress_struct {
 
   /* Source of compressed data */
   struct jpeg_source_mgr * src;
+
+#if LIB_JPEG_USE_HW_ACCEL
+  JDIMENSION jpeg_size;
+  const JOCTET *jpeg_buffer;
+  JDIMENSION output_pitch;
+  const JOCTET *output_buffer;
+  boolean format_supported;
+  void *jpegdec;
+#endif
 
   /* Basic description of image --- filled in by jpeg_read_header(). */
   /* Application may inspect these values to decide how to process image. */
@@ -711,7 +720,7 @@ struct jpeg_error_mgr {
 #define JMSG_LENGTH_MAX  200	/* recommended size of format_message buffer */
   /* Reset error state variables at start of a new image */
   JMETHOD(void, reset_error_mgr, (j_common_ptr cinfo));
-  
+
   /* The message ID code and any parameters are saved here.
    * A message can have one string parameter or up to 8 int parameters.
    */
@@ -721,11 +730,11 @@ struct jpeg_error_mgr {
     int i[8];
     char s[JMSG_STR_PARM_MAX];
   } msg_parm;
-  
+
   /* Standard state variables for error facility */
-  
+
   int trace_level;		/* max msg_level that will be displayed */
-  
+
   /* For recoverable corrupt-data errors, we emit a warning message,
    * but keep going unless emit_message chooses to abort.  emit_message
    * should count warnings in num_warnings.  The surrounding application
@@ -883,7 +892,7 @@ typedef JMETHOD(boolean, jpeg_marker_parser_method, (j_decompress_ptr cinfo));
 /* Short forms of external names for systems with brain-damaged linkers.
  * We shorten external names to be unique in the first six letters, which
  * is good enough for all known systems.
- * (If your compiler itself needs names to be unique in less than 15 
+ * (If your compiler itself needs names to be unique in less than 15
  * characters, you are out of luck.  Get a better compiler.)
  */
 
@@ -897,6 +906,9 @@ typedef JMETHOD(boolean, jpeg_marker_parser_method, (j_decompress_ptr cinfo));
 #define jpeg_stdio_src		jStdSrc
 #define jpeg_mem_dest		jMemDest
 #define jpeg_mem_src		jMemSrc
+#if LIB_JPEG_USE_HW_ACCEL
+#define jpeg_set_output		jSetOutput
+#endif
 #define jpeg_set_defaults	jSetDefaults
 #define jpeg_set_colorspace	jSetColorspace
 #define jpeg_default_colorspace	jDefColorspace
@@ -981,6 +993,13 @@ EXTERN(void) jpeg_mem_dest JPP((j_compress_ptr cinfo,
 EXTERN(void) jpeg_mem_src JPP((j_decompress_ptr cinfo,
 			      const unsigned char * inbuffer,
 			      unsigned long insize));
+
+/* Set output buffer address and stride. */
+#if LIB_JPEG_USE_HW_ACCEL
+EXTERN(void) jpeg_set_output JPP((j_decompress_ptr cinfo,
+			      const unsigned char * outbuffer,
+			      unsigned long stride));
+#endif
 
 /* Default parameter setup for compression */
 EXTERN(void) jpeg_set_defaults JPP((j_compress_ptr cinfo));

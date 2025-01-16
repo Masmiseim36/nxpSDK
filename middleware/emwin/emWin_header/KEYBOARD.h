@@ -9,7 +9,7 @@
 *                                                                    *
 **********************************************************************
 
-** emWin V6.38 - Graphical user interface for embedded applications **
+** emWin V6.46 - Graphical user interface for embedded applications **
 All  Intellectual Property rights  in the Software belongs to  SEGGER.
 emWin is protected by  international copyright laws.  Knowledge of the
 source code may not be used to write a similar product.  This file may
@@ -34,7 +34,7 @@ License model:            emWin License Agreement, dated August 20th 2011 and Am
 Licensed platform:        NXP's ARM 7/9, Cortex-M0, M3, M4, M7, A7, M33
 ----------------------------------------------------------------------
 Support and Update Agreement (SUA)
-SUA period:               2011-08-19 - 2024-09-02
+SUA period:               2011-08-19 - 2025-09-02
 Contact to extend SUA:    sales@segger.com
 ----------------------------------------------------------------------
 File        : KEYBOARD.h
@@ -89,6 +89,15 @@ Purpose     : KEYBOARD public header file (API)
 */
 #define KEYBOARD_PI_LONGPRESS 0  // Period it takes for a long press to open the long press dialog.
 #define KEYBOARD_PI_REPEAT    1  // Period for repeated actions, such as holding the backspace key.
+
+/*********************************************************************
+*
+*       States of shift key
+*/
+#define KEYBOARD_STATE_CODES 0
+#define KEYBOARD_STATE_SHIFT 1
+#define KEYBOARD_STATE_SLOCK 2
+#define KEYBOARD_STATE_EXTRA 3
 
 /*********************************************************************
 *
@@ -273,6 +282,7 @@ void KEYBOARD_Callback(WM_MESSAGE *pMsg);
 void KEYBOARD_ExportLayout     (GUI_CALLBACK_VOID_U8_P * pfSerialize, void * pVoid, const KEYDEF_KEYBOARD * pKeyboard);
 void KEYBOARD_ExportPatternFile(GUI_CALLBACK_VOID_U8_P * pfSerialize, void * pVoid, const KEYDEF_KEYBOARD * pKeyboard);
 int  KEYBOARD_GetKeyRect       (KEYBOARD_Handle hObj, GUI_RECT * pRect, U32 cKey);
+void KEYBOARD_LockShiftState   (KEYBOARD_Handle hObj, unsigned OnOff);
 void KEYBOARD_SetColor         (KEYBOARD_Handle hObj, unsigned Index, GUI_COLOR Color);
 void KEYBOARD_SetFont          (KEYBOARD_Handle hObj, unsigned Index, const GUI_FONT * pFont);
 int  KEYBOARD_SetLayout        (KEYBOARD_Handle hObj, const KEYDEF_KEYBOARD * pKeyboard);
@@ -281,6 +291,7 @@ void KEYBOARD_SetRadius        (KEYBOARD_Handle hObj, unsigned Radius);
 void KEYBOARD_SetSpace         (KEYBOARD_Handle hObj, unsigned Axis, unsigned Space);
 void KEYBOARD_SetSensy         (KEYBOARD_Handle hObj, unsigned Sensy);
 int  KEYBOARD_SetStreamedLayout(KEYBOARD_Handle hObj, const void * pVoid, U32 Size);
+void KEYBOARD_SetShiftState    (KEYBOARD_Handle hObj, unsigned State);
 
 /*********************************************************************
 *

@@ -987,7 +987,8 @@ out:
 
 static int wpa_drv_freertos_save_pairwise_key_params(void *priv, struct wpa_driver_set_key_params *params)
 {
-    struct freertos_drv_if_ctx *if_ctx              = NULL;
+    struct freertos_drv_if_ctx *if_ctx = NULL;
+    int ret = -1;
 
     if_ctx = priv;
 
@@ -1012,7 +1013,7 @@ static int wpa_drv_freertos_save_pairwise_key_params(void *priv, struct wpa_driv
         if (!if_ctx->key_params->ifname)
         {
             wpa_printf(MSG_DEBUG, "%s: failed to alloc ifname", __func__);
-            return -1;
+            goto out;
         }
     }
 
@@ -1023,7 +1024,7 @@ static int wpa_drv_freertos_save_pairwise_key_params(void *priv, struct wpa_driv
         if (!if_ctx->key_params->addr)
         {
             wpa_printf(MSG_DEBUG, "%s: failed to alloc addr", __func__);
-            return -1;
+            goto out;
         }
     }
 
@@ -1034,7 +1035,7 @@ static int wpa_drv_freertos_save_pairwise_key_params(void *priv, struct wpa_driv
         if (!if_ctx->key_params->seq)
         {
             wpa_printf(MSG_DEBUG, "%s: failed to alloc seq", __func__);
-            return -1;
+            goto out;
         }
         if_ctx->key_params->seq_len = params->seq_len;
     }
@@ -1046,7 +1047,7 @@ static int wpa_drv_freertos_save_pairwise_key_params(void *priv, struct wpa_driv
         if (!if_ctx->key_params->key)
         {
             wpa_printf(MSG_DEBUG, "%s: failed to alloc key", __func__);
-            return -1;
+            goto out;
         }
         if_ctx->key_params->key_len = params->key_len;
     }
@@ -1059,7 +1060,16 @@ static int wpa_drv_freertos_save_pairwise_key_params(void *priv, struct wpa_driv
 
     if_ctx->key_params->key_flag = params->key_flag;
 
-    return 0;
+    ret = 0;
+
+out:
+    if (ret)
+    {
+        wpa_drv_freertos_free_pairwise_key_params(if_ctx->key_params);
+        if_ctx->key_params = NULL;
+    }
+
+    return ret;
 }
 
 static void wpa_drv_freertos_set_rekey_info(void *priv, const u8 *kek, size_t kek_len, const u8 *kck, size_t kck_len, const u8 *replay_ctr)
@@ -2571,7 +2581,7 @@ static void freertos_set_ht40_mode_sec(struct hostapd_hw_modes *mode, int start,
     }
 }
 
-#ifdef CONFIG_5GHz_SUPPORT
+#if CONFIG_5GHz_SUPPORT
 static void freertos_set_vht_mode(struct hostapd_hw_modes *mode, int start, int end, int max_bw)
 {
     int c;
@@ -2634,7 +2644,7 @@ static void freertos_reg_rule_max_eirp(struct hostapd_hw_modes *mode, int start,
 }
 
 #define MAX_NUM_CHANNEL    (14)
-#ifdef CONFIG_5GHz_SUPPORT
+#if CONFIG_5GHz_SUPPORT
 #define MAX_NUM_CHANNEL_5G (28)
 #endif
 
@@ -2646,7 +2656,7 @@ static struct hostapd_hw_modes *wpa_drv_freertos_get_hw_feature_data(void *if_pr
     struct hostapd_hw_modes *modes;
     size_t i;
     int start, end;
-#ifdef CONFIG_5GHz_SUPPORT
+#if CONFIG_5GHz_SUPPORT
     int k;
     bool support_5G = 0;
 #endif
@@ -2661,7 +2671,7 @@ static struct hostapd_hw_modes *wpa_drv_freertos_get_hw_feature_data(void *if_pr
     dev_ops = (struct freertos_wpa_supp_dev_ops *)if_ctx->dev_ops;
 
     *num_modes = 2;
-#ifdef CONFIG_5GHz_SUPPORT
+#if CONFIG_5GHz_SUPPORT
     support_5G = dev_ops->get_modes(if_ctx->dev_priv);
     if (support_5G)
     {
@@ -2752,7 +2762,7 @@ static struct hostapd_hw_modes *wpa_drv_freertos_get_hw_feature_data(void *if_pr
     modes[1].rates[10] = 480;
     modes[1].rates[11] = 540;
  
-#ifdef CONFIG_5GHz_SUPPORT
+#if CONFIG_5GHz_SUPPORT
     //.3
     if (support_5G)
     {
@@ -2828,12 +2838,14 @@ static struct hostapd_hw_modes *wpa_drv_freertos_get_hw_feature_data(void *if_pr
     }
 #endif
 
-    status = dev_ops->set_modes(if_ctx->dev_priv, modes);
-
-    if (status)
+    if (dev_ops->set_modes)
     {
-        wpa_printf(MSG_ERROR, "%s: set modes failed", __func__);
-        goto fail;
+        status = dev_ops->set_modes(if_ctx->dev_priv, modes);
+        if (status)
+        {
+            wpa_printf(MSG_ERROR, "%s: set modes failed", __func__);
+            goto fail;
+        }
     }
 
     return modes;

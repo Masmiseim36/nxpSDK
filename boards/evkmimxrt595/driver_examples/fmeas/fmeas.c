@@ -9,30 +9,13 @@
 #include "fsl_device_registers.h"
 #include "fsl_debug_console.h"
 #include "fsl_inputmux.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 #include "fsl_fmeas.h"
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define FMEAS_SYSCON FREQME
-/* FMEASURE_CH0_SEL is reference clock selector, FMEASURE_CH1_SEL is target clock selector. */
-#define EXAMPLE_REFERENCE_CLOCK_REGISTRY_INDEX 0
-#define EXAMPLE_REFERENCE_CLOCK_NAME           "main system clock"
-#define EXAMPLE_REFERENCE_CLOCK                kINPUTMUX_MainSysClkToFreqmeas
-#define EXAMPLE_REFERENCE_CLOCK_FREQUENCY      CLOCK_GetFreq(kCLOCK_BusClk)
-#define EXAMPLE_TARGET_CLOCK_REGISTRY_INDEX    1
-#define EXAMPLE_TARGET_CLOCK_1_NAME            "External clock (clk_in)"
-#define EXAMPLE_TARGET_CLOCK_2_NAME            "LPOSC clock"
-#define EXAMPLE_TARGET_CLOCK_3_NAME            "FRO192M clock"
-#define EXAMPLE_TARGET_CLOCK_1                 kINPUTMUX_XtalinToFreqmeas
-#define EXAMPLE_TARGET_CLOCK_2                 kINPUTMUX_LposcToFreqmeas
-#define EXAMPLE_TARGET_CLOCK_3                 kINPUTMUX_Fro192mToFreqmeas
-#define EXAMPLE_TARGET_CLOCK_1_FREQUENCY       CLOCK_GetXtalInClkFreq()
-#define EXAMPLE_TARGET_CLOCK_2_FREQUENCY       CLOCK_GetLpOscFreq()
-#define EXAMPLE_TARGET_CLOCK_3_FREQUENCY       CLK_FRO_CLK
 
 /*******************************************************************************
  * Prototypes
@@ -84,14 +67,7 @@ static uint32_t MeasureDisplay(char *srcName, inputmux_connection_t target, uint
 int main(void)
 {
     /* Init board hardware. */
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
-
-    CLOCK_EnableClock(kCLOCK_InputMux);
-    CLOCK_EnableClock(kCLOCK_Freqme);
-    RESET_PeripheralReset(kFREQME_RST_SHIFT_RSTn);
-    RESET_PeripheralReset(kINPUTMUX_RST_SHIFT_RSTn);
+    BOARD_InitHardware();
 
     uint32_t freqRef = EXAMPLE_REFERENCE_CLOCK_FREQUENCY;
 

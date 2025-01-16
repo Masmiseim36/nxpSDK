@@ -39,7 +39,6 @@
   @param[in]     resetStateFlag
                    - value = 0: no change in state
                    - value = 1: reset state
-  @return        none
 
   @par           Details
                    The <code>resetStateFlag</code> specifies whether to set state to zero or not. \n
@@ -48,7 +47,7 @@
                    also sets the state variables to all zeros.
  */
 
-void arm_pid_init_f32(
+ARM_DSP_ATTRIBUTE void arm_pid_init_f32(
   arm_pid_instance_f32 * S,
   int32_t resetStateFlag)
 {

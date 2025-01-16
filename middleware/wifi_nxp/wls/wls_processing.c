@@ -2,10 +2,9 @@
   *
   * @brief This file contains processing functions to calculate CSI correction for WLS time stamps
   *
-  * Copyright 2023 NXP
+  * Copyright 2023-2024 NXP
   *
   * SPDX-License-Identifier: BSD-3-Clause
-  *
   */
 
 /************************************************************************
@@ -50,8 +49,12 @@ static const unsigned int pilotDummyArray[10] = {0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0
 // minus pilots on [-117, -100, -23, -6, 6, 23, 100, 117]
 
 // SC5 VHT format with Ng=1, needs to skip pilot tones
+#define SC5_LEG80_PILOTS 20
+#define SC5_LEG40_PILOTS (6 + 2 + 2)
 const unsigned char pilotToneIndexVHT80[SC5_VHT80_PILOTS] = { 25, 53, 89, 117, 139, 167, 203, 231 };
+const unsigned char pilotToneIndexLeg80[SC5_LEG80_PILOTS] = { 11, 25, 32, 39, 53, 75, 89, 96, 103, 117, 139, 153, 160, 167, 181, 203, 217, 224, 231, 245 };
 const unsigned char pilotToneIndexVHT40[SC5_VHT40_PILOTS] = { 11, 39, 53, 75, 89, 117 };
+const unsigned char pilotToneIndexLeg40[SC5_LEG40_PILOTS] = { 11, 25, 32, 39, 53, 75, 89, 96, 103, 117 };
 const unsigned char pilotToneIndexVHT20[SC5_VHT20_PILOTS] = { 11, 25, 39, 53 };
 const unsigned char pilotToneIndexHE80[SC5_HE80_PILOTS] = { 11, 28, 105, 122, 134, 151, 228, 245 };
 const unsigned char pilotToneIndexHE40[SC5_HE40_PILOTS] = { 11, 28, 38, 55, 73, 90, 100, 117 };
@@ -64,13 +67,239 @@ const unsigned char pilotToneIndexLEG20[SC5_HT20_PILOTS] = { 5, 7, 9, 11, 13, 15
 
 #ifdef REMOVE_IIR
 #define P(x) (((x*REMOVE_IIR*MAX_FFT_SIZE)>>IIR_FORMAT_NP)&(MAX_FFT_SIZE-1)) // adjust index format to twiddle table
-#ifdef STA_20_ONLY
+#if defined(STA_20_ONLY) || defined(TDDE_FIRSTPATH)
 const short phiCorr64[64] = {P(-2560), P(-2049), P(-1731), P(-1527), P(-1376), P(-1254), P(-1151), P(-1061), P(-981), P(-910), P(-845), P(-785), P(-730), P(-679), P(-631), P(-586), P(-543), P(-502), P(-462), P(-424), P(-388), P(-352), P(-318), P(-284), P(-251), P(-218), P(-186), P(-155), P(-123), P(-92), P(-61), P(-31), P(0), P(31), P(61), P(92), P(123), P(155), P(186), P(218), P(251), P(284), P(318), P(352), P(388), P(424), P(462), P(502), P(543), P(586), P(631), P(679), P(730), P(785), P(845), P(910), P(981), P(1061), P(1151), P(1254), P(1376), P(1527), P(1731), P(2049)};
+const short phiCorrScBt64[64] = { P(-3584),P(-2286),P(-1886),P(-1642),P(-1466),P(-1328),P(-1213),P(-1114),P(-1027),P(-950),P(-881),P(-817),P(-759),P(-705),P(-655),P(-607),P(-562),P(-519),P(-478),P(-439),P(-401),P(-364),P(-328),P(-293),P(-259),P(-225),P(-192),P(-159),P(-127),P(-95),P(-63),P(-32),P(0),P(32),P(63),P(95),P(127),P(159),P(192),P(225),P(259),P(293),P(328),P(364),P(401),P(439),P(478),P(519),P(562),P(607),P(655),P(705),P(759),P(817),P(881),P(950),P(1027),P(1114),P(1213),P(1328),P(1466),P(1642),P(1886),P(2286)};
 #else
 const short phiCorr512[512] ={P(-2560), P(-2488), P(-2417), P(-2348), P(-2281), P(-2218), P(-2158), P(-2101), P(-2049), P(-1999), P(-1953), P(-1910), P(-1870), P(-1832), P(-1796), P(-1763), P(-1731), P(-1701), P(-1673), P(-1646), P(-1620), P(-1595), P(-1572), P(-1549), P(-1527), P(-1506), P(-1486), P(-1466), P(-1447), P(-1429), P(-1411), P(-1393), P(-1376), P(-1360), P(-1344), P(-1328), P(-1313), P(-1297), P(-1283), P(-1268), P(-1254), P(-1241), P(-1227), P(-1214), P(-1201), P(-1188), P(-1176), P(-1163), P(-1151), P(-1139), P(-1128), P(-1116), P(-1105), P(-1094), P(-1083), P(-1072), P(-1061), P(-1051), P(-1040), P(-1030), P(-1020), P(-1010), P(-1001), P(-991), P(-981), P(-972), P(-963), P(-954), P(-945), P(-936), P(-927), P(-918), P(-910), P(-901), P(-893), P(-885), P(-877), P(-869), P(-861), P(-853), P(-845), P(-837), P(-829), P(-822), P(-814), P(-807), P(-800), P(-792), P(-785), P(-778), P(-771), P(-764), P(-757), P(-750), P(-744), P(-737), P(-730), P(-724), P(-717), P(-711), P(-704), P(-698), P(-691), P(-685), P(-679), P(-673), P(-667), P(-661), P(-655), P(-649), P(-643), P(-637), P(-631), P(-625), P(-619), P(-614), P(-608), P(-602), P(-597), P(-591), P(-586), P(-580), P(-575), P(-569), P(-564), P(-558), P(-553), P(-548), P(-543), P(-537), P(-532), P(-527), P(-522), P(-517), P(-512), P(-507), P(-502), P(-497), P(-492), P(-487), P(-482), P(-477), P(-472), P(-467), P(-462), P(-457), P(-453), P(-448), P(-443), P(-438), P(-434), P(-429), P(-424), P(-420), P(-415), P(-410), P(-406), P(-401), P(-397), P(-392), P(-388), P(-383), P(-379), P(-374), P(-370), P(-365), P(-361), P(-357), P(-352), P(-348), P(-343), P(-339), P(-335), P(-330), P(-326), P(-322), P(-318), P(-313), P(-309), P(-305), P(-301), P(-296), P(-292), P(-288), P(-284), P(-280), P(-276), P(-271), P(-267), P(-263), P(-259), P(-255), P(-251), P(-247), P(-243), P(-238), P(-234), P(-230), P(-226), P(-222), P(-218), P(-214), P(-210), P(-206), P(-202), P(-198), P(-194), P(-190), P(-186), P(-182), P(-178), P(-174), P(-170), P(-166), P(-162), P(-159), P(-155), P(-151), P(-147), P(-143), P(-139), P(-135), P(-131), P(-127), P(-123), P(-119), P(-116), P(-112), P(-108), P(-104), P(-100), P(-96), P(-92), P(-88), P(-85), P(-81), P(-77), P(-73), P(-69), P(-65), P(-61), P(-58), P(-54), P(-50), P(-46), P(-42), P(-38), P(-35), P(-31), P(-27), P(-23), P(-19), P(-15), P(-11), P(-8), P(-4), P(0), P(4), P(8), P(11), P(15), P(19), P(23), P(27), P(31), P(35), P(38), P(42), P(46), P(50), P(54), P(58), P(61), P(65), P(69), P(73), P(77), P(81), P(85), P(88), P(92), P(96), P(100), P(104), P(108), P(112), P(116), P(119), P(123), P(127), P(131), P(135), P(139), P(143), P(147), P(151), P(155), P(159), P(162), P(166), P(170), P(174), P(178), P(182), P(186), P(190), P(194), P(198), P(202), P(206), P(210), P(214), P(218), P(222), P(226), P(230), P(234), P(238), P(243), P(247), P(251), P(255), P(259), P(263), P(267), P(271), P(276), P(280), P(284), P(288), P(292), P(296), P(301), P(305), P(309), P(313), P(318), P(322), P(326), P(330), P(335), P(339), P(343), P(348), P(352), P(357), P(361), P(365), P(370), P(374), P(379), P(383), P(388), P(392), P(397), P(401), P(406), P(410), P(415), P(420), P(424), P(429), P(434), P(438), P(443), P(448), P(453), P(457), P(462), P(467), P(472), P(477), P(482), P(487), P(492), P(497), P(502), P(507), P(512), P(517), P(522), P(527), P(532), P(537), P(543), P(548), P(553), P(558), P(564), P(569), P(575), P(580), P(586), P(591), P(597), P(602), P(608), P(614), P(619), P(625), P(631), P(637), P(643), P(649), P(655), P(661), P(667), P(673), P(679), P(685), P(691), P(698), P(704), P(711), P(717), P(724), P(730), P(737), P(744), P(750), P(757), P(764), P(771), P(778), P(785), P(792), P(800), P(807), P(814), P(822), P(829), P(837), P(845), P(853), P(861), P(869), P(877), P(885), P(893), P(901), P(910), P(918), P(927), P(936), P(945), P(954), P(963), P(972), P(981), P(991), P(1001), P(1010), P(1020), P(1030), P(1040), P(1051), P(1061), P(1072), P(1083), P(1094), P(1105), P(1116), P(1128), P(1139), P(1151), P(1163), P(1176), P(1188), P(1201), P(1214), P(1227), P(1241), P(1254), P(1268), P(1283), P(1297), P(1313), P(1328), P(1344), P(1360), P(1376), P(1393), P(1411), P(1429), P(1447), P(1466), P(1486), P(1506), P(1527), P(1549), P(1572), P(1595), P(1620), P(1646), P(1673), P(1701), P(1731), P(1763), P(1796), P(1832), P(1870), P(1910), P(1953), P(1999), P(2049), P(2101), P(2158), P(2218), P(2281), P(2348), P(2417), P(2488)};
 const short phiCorrScBt512[512] ={P(-3584), P(-3243), P(-2979), P(-2789), P(-2648), P(-2534), P(-2440), P(-2358), P(-2286), P(-2220), P(-2161), P(-2106), P(-2056), P(-2009), P(-1965), P(-1924), P(-1886), P(-1850), P(-1815), P(-1783), P(-1752), P(-1722), P(-1694), P(-1667), P(-1642), P(-1617), P(-1593), P(-1570), P(-1548), P(-1526), P(-1506), P(-1485), P(-1466), P(-1447), P(-1429), P(-1411), P(-1393), P(-1376), P(-1360), P(-1343), P(-1328), P(-1312), P(-1297), P(-1282), P(-1268), P(-1253), P(-1240), P(-1226), P(-1213), P(-1199), P(-1187), P(-1174), P(-1161), P(-1149), P(-1137), P(-1125), P(-1114), P(-1102), P(-1091), P(-1080), P(-1069), P(-1059), P(-1048), P(-1038), P(-1027), P(-1017), P(-1007), P(-997), P(-988), P(-978), P(-969), P(-959), P(-950), P(-941), P(-932), P(-923), P(-915), P(-906), P(-898), P(-889), P(-881), P(-873), P(-864), P(-856), P(-848), P(-841), P(-833), P(-825), P(-817), P(-810), P(-802), P(-795), P(-788), P(-780), P(-773), P(-766), P(-759), P(-752), P(-745), P(-738), P(-732), P(-725), P(-718), P(-712), P(-705), P(-699), P(-692), P(-686), P(-679), P(-673), P(-667), P(-661), P(-655), P(-648), P(-642), P(-636), P(-630), P(-625), P(-619), P(-613), P(-607), P(-601), P(-596), P(-590), P(-584), P(-579), P(-573), P(-568), P(-562), P(-557), P(-551), P(-546), P(-540), P(-535), P(-530), P(-524), P(-519), P(-514), P(-509), P(-504), P(-498), P(-493), P(-488), P(-483), P(-478), P(-473), P(-468), P(-463), P(-458), P(-453), P(-449), P(-444), P(-439), P(-434), P(-429), P(-424), P(-420), P(-415), P(-410), P(-405), P(-401), P(-396), P(-391), P(-387), P(-382), P(-378), P(-373), P(-368), P(-364), P(-359), P(-355), P(-350), P(-346), P(-341), P(-337), P(-333), P(-328), P(-324), P(-319), P(-315), P(-311), P(-306), P(-302), P(-297), P(-293), P(-289), P(-284), P(-280), P(-276), P(-272), P(-267), P(-263), P(-259), P(-255), P(-250), P(-246), P(-242), P(-238), P(-234), P(-229), P(-225), P(-221), P(-217), P(-213), P(-209), P(-205), P(-200), P(-196), P(-192), P(-188), P(-184), P(-180), P(-176), P(-172), P(-168), P(-164), P(-159), P(-155), P(-151), P(-147), P(-143), P(-139), P(-135), P(-131), P(-127), P(-123), P(-119), P(-115), P(-111), P(-107), P(-103), P(-99), P(-95), P(-91), P(-87), P(-83), P(-79), P(-75), P(-71), P(-67), P(-63), P(-59), P(-55), P(-51), P(-47), P(-44), P(-40), P(-36), P(-32), P(-28), P(-24), P(-20), P(-16), P(-12), P(-8), P(-4), P(0), P(4), P(8), P(12), P(16), P(20), P(24), P(28), P(32), P(36), P(40), P(44), P(47), P(51), P(55), P(59), P(63), P(67), P(71), P(75), P(79), P(83), P(87), P(91), P(95), P(99), P(103), P(107), P(111), P(115), P(119), P(123), P(127), P(131), P(135), P(139), P(143), P(147), P(151), P(155), P(159), P(164), P(168), P(172), P(176), P(180), P(184), P(188), P(192), P(196), P(200), P(205), P(209), P(213), P(217), P(221), P(225), P(229), P(234), P(238), P(242), P(246), P(250), P(255), P(259), P(263), P(267), P(272), P(276), P(280), P(284), P(289), P(293), P(297), P(302), P(306), P(311), P(315), P(319), P(324), P(328), P(333), P(337), P(341), P(346), P(350), P(355), P(359), P(364), P(368), P(373), P(378), P(382), P(387), P(391), P(396), P(401), P(405), P(410), P(415), P(420), P(424), P(429), P(434), P(439), P(444), P(449), P(453), P(458), P(463), P(468), P(473), P(478), P(483), P(488), P(493), P(498), P(504), P(509), P(514), P(519), P(524), P(530), P(535), P(540), P(546), P(551), P(557), P(562), P(568), P(573), P(579), P(584), P(590), P(596), P(601), P(607), P(613), P(619), P(625), P(630), P(636), P(642), P(648), P(655), P(661), P(667), P(673), P(679), P(686), P(692), P(699), P(705), P(712), P(718), P(725), P(732), P(738), P(745), P(752), P(759), P(766), P(773), P(780), P(788), P(795), P(802), P(810), P(817), P(825), P(833), P(841), P(848), P(856), P(864), P(873), P(881), P(889), P(898), P(906), P(915), P(923), P(932), P(941), P(950), P(959), P(969), P(978), P(988), P(997), P(1007), P(1017), P(1027), P(1038), P(1048), P(1059), P(1069), P(1080), P(1091), P(1102), P(1114), P(1125), P(1137), P(1149), P(1161), P(1174), P(1187), P(1199), P(1213), P(1226), P(1240), P(1253), P(1268), P(1282), P(1297), P(1312), P(1328), P(1343), P(1360), P(1376), P(1393), P(1411), P(1429), P(1447), P(1466), P(1485), P(1506), P(1526), P(1548), P(1570), P(1593), P(1617), P(1642), P(1667), P(1694), P(1722), P(1752), P(1783), P(1815), P(1850), P(1886), P(1924), P(1965), P(2009), P(2056), P(2106), P(2161), P(2220), P(2286), P(2358), P(2440), P(2534), P(2648), P(2789), P(2979), P(3243)};
 #endif
 #endif
+
+#ifdef TDDE_FIRSTPATH
+
+#define TDDE_IDX_MAX (1<<20)
+
+void removeIirPhaseTdde(short *A0_vals_ptr, int fft_size, const short *phiCorrPtr, int phiCorrPtrStride)
+{
+	int ii, idx, phiCorrIdx = 0;
+	short tempValI, tempValQ, cosPhi, sinPhi;
+	int resI, resQ;
+
+	for (ii = 0; ii < fft_size; ii++) {
+		tempValI = A0_vals_ptr[2 * ii];
+		tempValQ = A0_vals_ptr[2 * ii + 1];
+
+		idx = phiCorrPtr[phiCorrIdx]; phiCorrIdx += phiCorrPtrStride;
+		cosPhi = radix4FftTwiddleArr[2 * idx];
+		sinPhi = radix4FftTwiddleArr[2 * idx + 1];
+		resI = tempValI*cosPhi - tempValQ*sinPhi;
+		resQ = tempValI*sinPhi + tempValQ*cosPhi;
+
+		tempValI = (short)(resI >> TWIDDLE_BIPT);
+		tempValQ = (short)(resQ >> TWIDDLE_BIPT);
+
+		A0_vals_ptr[2 * ii] = tempValI;
+		A0_vals_ptr[2 * ii + 1] = tempValQ;
+	}
+}
+
+int findfirstpath(hal_pktinfo_t *pktinfo, short *A0_ptr, unsigned int *tdde_power, int fft_size, char MIN_comb, unsigned short path_idx) {
+
+	int ii, kk;
+	unsigned int detThresh;
+	unsigned int ym1, yp1, y0, denominator;
+	int	numerator, delta, tempVal;
+	unsigned int maxVal = 0;
+	int maxIdx = 0;
+	int firstPathIdx = 0, interpDelay;
+
+	// reverse samples to undo IFFT/FFT effect
+	if (MIN_comb || (path_idx == 0)) {
+		for (kk = 0; kk < fft_size; kk++) {
+			tdde_power[kk] = A0_ptr[2 * kk] * A0_ptr[2 * kk] + A0_ptr[2 * kk + 1] * A0_ptr[2 * kk + 1];
+		}
+	}
+	else {
+		for (kk = 0; kk < fft_size; kk++) {
+			tdde_power[kk] += A0_ptr[2 * kk] * A0_ptr[2 * kk] + A0_ptr[2 * kk + 1] * A0_ptr[2 * kk + 1];
+		}
+	}
+	if ((MIN_comb == 0) && (path_idx < pktinfo->nRx))
+	{
+		return interpDelay = TDDE_IDX_MAX;
+	}
+	// find max
+	for (kk = 0; kk < fft_size; kk++) {
+		if (tdde_power[kk] > maxVal) {
+			maxVal = tdde_power[kk];
+			maxIdx = kk;
+		}
+	}
+
+	detThresh = maxVal >> 2;
+
+	if (detThresh<200) {
+		detThresh = 200;
+	}
+	//search for the first peak
+	for (ii = 1; ii <= maxIdx; ii++) {
+		if ((tdde_power[ii]>detThresh) & (tdde_power[ii] >= tdde_power[ii + 1])) {
+			firstPathIdx = ii;
+			break;
+		}
+	}
+	if (firstPathIdx == 0) {
+		firstPathIdx = fft_size - 1;
+		delta = 0;
+	}
+	else {
+		//3-point interpolation
+		ym1 = tdde_power[(firstPathIdx - 1)];
+		y0 = tdde_power[(firstPathIdx)];
+		yp1 = tdde_power[(firstPathIdx + 1)];
+
+		denominator = 2 * (2 * y0 - yp1 - ym1);
+		numerator = (yp1 - ym1);
+
+		tempVal = (numerator>0) ? numerator : (-numerator);
+		ii = __clz(tempVal);
+		if (ii>TOA_FPATH_BIPT) {
+			tempVal <<= TOA_FPATH_BIPT;
+			delta = tempVal / denominator;
+		}
+		else {
+			tempVal <<= (ii - 1);
+			delta = tempVal / (denominator >> (TOA_FPATH_BIPT - ii + 1));
+		}
+		delta = (numerator>0) ? delta : -delta;
+
+		if ((delta>(1 << (TOA_FPATH_BIPT - 1))) || (-delta >(1 << (TOA_FPATH_BIPT - 1)))) {
+			delta = 0; // overflow in division
+		}
+	}
+	interpDelay = (firstPathIdx << TOA_FPATH_BIPT) + delta;
+
+	return interpDelay;
+}
+
+int determine_tdde_firstpath(hal_pktinfo_t *pktinfo, hal_wls_packet_params_t *packetparams, hal_tddestruct_t *tdde_ptr, unsigned int *procBuffer, char MIN_comb)
+{
+	int ii, jj, kk;
+	int num_IQ_samps, fft_size, freq_size, ifft_size, tdde_offset, firstPathIdx, TDDEFirstPath;
+	short M_idx;
+	int ret_firstPath[2];
+	short data_offset[2];
+	int tempvalue = TDDE_IDX_MAX;
+	int reg_circ_shift;
+	unsigned int *TDDE_IQ_samps;
+	char *IQ_8bit;
+	short *A0_vals_ptr, *A0_vals_bfr = (short*)procBuffer;
+	unsigned int *A0_vals_intepr;
+	int numRx = pktinfo->nRx + 1;
+	int numTx = pktinfo->nTx + 1;
+	UINT8 sigBw = pktinfo->sigBw;
+	UINT8 rxDevBw = pktinfo->rxDevBw;
+	int phiCorrStep;
+	const short *phiCorrPtr;
+
+	if (pktinfo->packetType == 4)
+		reg_circ_shift = 32;
+	else
+		reg_circ_shift = 64;
+
+	num_IQ_samps = 16; // Owl
+	tdde_offset = (num_IQ_samps / 2) + 4; // reg value 3
+
+	M_idx = tdde_ptr->M1_idx;
+	data_offset[0] = (M_idx >> 2) - reg_circ_shift;
+	M_idx = tdde_ptr->M2_idx;
+	data_offset[1] = (M_idx >> 2) - reg_circ_shift;
+
+	TDDE_IQ_samps = &(tdde_ptr->IQ_Data[0]);
+	IQ_8bit = (char*)TDDE_IQ_samps;
+
+	fft_size = 2 * num_IQ_samps; // oversampled
+	ifft_size = fft_size << sigBw;
+	A0_vals_intepr = (unsigned int *)(procBuffer + 2 * ifft_size); // skip A0_vals
+
+	freq_size = fft_size >> (2 - sigBw);
+	phiCorrStep = (256 >> rxDevBw)/ fft_size;
+	phiCorrPtr = (rxDevBw > 0) ? phiCorrScBt64 : phiCorr64;
+
+	if (sigBw < rxDevBw) {	// figure out channel offset
+		UINT8 channelOffset, chNum = packetparams->chNum;
+		UINT8 diff = rxDevBw - sigBw;
+		UINT8 mask = (1 << diff) - 1;
+		UINT8 baseChan;
+		if (chNum < 36) { // 2.4 GHZ
+			baseChan = chNum; // control channel always on bottom
+		}
+		else if (chNum < 149) { // 5 GHz
+			baseChan = 36;
+		}
+		else {
+			baseChan = 149;
+		}
+		channelOffset = ((chNum - baseChan) >> (2 + sigBw)) & mask;
+		// add offset
+		phiCorrPtr += channelOffset*(64 >> diff);
+	}
+
+	for (jj = 0; jj < numTx; jj++) {
+		for (ii = 0; ii < numRx; ii++) {
+			memset(A0_vals_bfr, 0, ifft_size * sizeof(unsigned int));
+			A0_vals_ptr = A0_vals_bfr + 3 * num_IQ_samps - 2;
+			for (kk = 0; kk < num_IQ_samps; kk++) {
+				// input written in reversed order
+				A0_vals_ptr[0] = (short)(*IQ_8bit++);
+				A0_vals_ptr[1] = (short)(*IQ_8bit++);
+				A0_vals_ptr -= 2;
+			}
+
+			// transfer to frequency domain for interpolation and phase removal
+			// use IFFT instead of FFFT for code simplicity, needs reversed input
+			radix2Ifft(A0_vals_bfr, fft_size, radix4FftTwiddleArr, MAX_FFT_SIZE);
+			if (sigBw < 2) { // 20 + 40 MHz case
+				// zero out second half
+				UINT32 *A0_wrt_ptr = (UINT32 *)A0_vals_bfr;
+				for (kk = freq_size; kk < fft_size; kk++) {
+					A0_wrt_ptr[kk] = 0;
+				}
+			}
+#ifdef REMOVE_IIR
+			// apply phase compensation
+			removeIirPhaseTdde(A0_vals_bfr, freq_size, phiCorrPtr, phiCorrStep);
+#endif
+			// use IFFT twice to interpolate, bit growth
+			radix2Ifft(A0_vals_bfr, ifft_size, radix4FftTwiddleArr, MAX_FFT_SIZE);
+
+			firstPathIdx = findfirstpath(pktinfo, A0_vals_bfr, A0_vals_intepr, ifft_size, MIN_comb, ii);
+			if (firstPathIdx < tempvalue) {
+				tempvalue = firstPathIdx;
+			}
+		}
+		// in 4x oversampled samples with 32.TOA_FPATH_BIPT precision
+		ret_firstPath[jj] = tempvalue + ((data_offset[jj] - tdde_offset) << (TOA_FPATH_BIPT + sigBw));
+		tempvalue = TDDE_IDX_MAX;
+	}
+	if (numTx == 1)
+		tempvalue = ret_firstPath[0];
+	else
+		if (MIN_comb)
+		{ // min across streams
+			tempvalue = (ret_firstPath[0] < ret_firstPath[1]) ? ret_firstPath[0] : ret_firstPath[1];
+		}
+		else
+		{ // use average across streams
+			tempvalue = (ret_firstPath[0] + ret_firstPath[1]) / 2;
+		}
+
+	// final output is in micro seconds 32.16 format
+	TDDEFirstPath = ((tempvalue << (12 - TOA_FPATH_BIPT)) / 5) >> sigBw;
+	return TDDEFirstPath;
+}
+#else // TDDE_FIRSTPATH
 
 // input is in 16p14
 #define ONE_16P14 (1<<14)
@@ -697,7 +926,7 @@ void readHexDataDemodulateProcessVhtHeNg1(hal_pktinfo_t *pktinfo, hal_wls_proces
 	phiCorrScale = 3 - devSubbands; // since filter is in 160 MHz resolution
 #endif
 
-	if (pktinfo->packetType == 3) { // VHT
+	if ((pktinfo->packetType == 3) || (pktinfo->packetType == 0)) { // VHT + legacy
 		pilotSkip = 0;
 		dcSkip = 0;
 		if ((bandwidth == 80) || (bandwidth == 160)) {
@@ -743,7 +972,11 @@ void readHexDataDemodulateProcessVhtHeNg1(hal_pktinfo_t *pktinfo, hal_wls_proces
 		}
 	}
 	else { // HE
+#ifdef RAW_HEADER
 		pilotSkip = 2;
+#else
+		pilotSkip = 1;
+#endif
 		if ((bandwidth == 80) || (bandwidth == 160)) {
 			// 80 MHz 128+[-125:-1 1:125]
 			// minus pilots on [-117, -100, -23, -6, 6, 23, 100, 117]
@@ -1186,13 +1419,103 @@ void calculateTotalPower(hal_pktinfo_t *pktinfo, unsigned int *powerPerSubband, 
 	}
 }
 
-#ifndef STA_20_ONLY
-void processLegacyPackets(hal_pktinfo_t *pktinfo, unsigned int *fftInBuffer, int bufferspacing, int *phaseRollPtr){
+#if !defined(STA_20_ONLY) && defined(LEG_LTF_NG1)
+void processLegacyPackets(hal_pktinfo_t *pktinfo, unsigned int *fftInBuffer, int bufferspacing, int *phaseRollPtr) {
+	int ii, jj, kk, bb;
+	int distLeft, distRight;
+	int phaseRollNg, idx;
+	unsigned int tempValLd, tempValSt;
+	short tempLeftI, tempLeftQ, tempRightI, tempRightQ;
+	int convertI, convertQ;
+	int resLeftI, resLeftQ, resRightI, resRightQ, resMidI, resMidQ;
+	unsigned int * readPtr;
 
+	unsigned int *cosTablePtr = (unsigned int*)radix4FftTwiddleArr;
+	int nRx = pktinfo->nRx + 1;
+	int nTx = pktinfo->nTx + 1;
+	int numSubbands = 1 << pktinfo->sigBw;
+
+	short sinPhiLeft, cosPhiLeft, sinPhiRight, cosPhiRight;
+	for (ii = 0; ii < nTx; ii++) {
+		for (jj = 0; jj < nRx; jj++) {
+			for (bb = 1; bb < numSubbands; bb++) {
+				readPtr = fftInBuffer + 64 * bb + bufferspacing*(jj + ii*nRx);
+				// keep edge tones in register
+				tempValLd = *(readPtr + 6);
+				tempRightI = (tempValLd & 0xffff);
+				tempRightQ = (tempValLd >> 16);
+
+				tempValLd = *(readPtr - 6);
+				tempLeftI = (tempValLd & 0xffff);
+				tempLeftQ = (tempValLd >> 16);
+
+				// 11 tones to interpolate
+				// mid-tone first
+				phaseRollNg = phaseRollPtr[jj + ii*nRx];
+				idx = (6 * phaseRollNg*MAX_FFT_SIZE) >> MPY_BIPT;
+				idx &= (MAX_FFT_SIZE - 1); // apply modulo
+				tempValLd = cosTablePtr[idx];
+				cosPhiRight = (tempValLd & 0xffff);
+				sinPhiRight = (tempValLd >> 16);
+				resMidI = (((int)cosPhiRight*tempRightI) + ((int)sinPhiRight*tempRightQ)) / 2;
+				resMidQ = (((int)cosPhiRight*tempRightQ) - ((int)sinPhiRight*tempRightI)) / 2;
+
+				cosPhiLeft = cosPhiRight;
+				sinPhiLeft = sinPhiRight;
+				resMidI += (((int)cosPhiLeft*tempLeftI) - ((int)sinPhiLeft*tempLeftQ)) / 2;
+				resMidQ += (((int)cosPhiLeft*tempLeftQ) + ((int)sinPhiLeft*tempLeftI)) / 2;
+
+				convertI = resMidI >> TWIDDLE_BIPT;
+				convertQ = resMidQ >> TWIDDLE_BIPT;
+				tempValSt = (convertI & 0xffff) | (convertQ << 16);
+				*readPtr = tempValSt;
+
+				for (kk = 0; kk < 5; kk++) {
+					distRight = 5 - kk;
+					distLeft = 7 + kk;
+					idx = (distRight * phaseRollNg*MAX_FFT_SIZE) >> MPY_BIPT;
+					idx &= (MAX_FFT_SIZE - 1); // apply modulo
+					tempValLd = cosTablePtr[idx];
+					cosPhiRight = (tempValLd & 0xffff);
+					sinPhiRight = (tempValLd >> 16);
+
+					resRightI = (((int)cosPhiRight*tempRightI) + ((int)sinPhiRight*tempRightQ)) / 12 * distLeft ;
+					resRightQ = (((int)cosPhiRight*tempRightQ) - ((int)sinPhiRight*tempRightI)) / 12 * distLeft ;
+
+					resLeftI = (((int)cosPhiRight*tempLeftI) - ((int)sinPhiRight*tempLeftQ)) / 12 * distLeft ;
+					resLeftQ = (((int)cosPhiRight*tempLeftQ) + ((int)sinPhiRight*tempLeftI)) / 12 * distLeft ;
+
+					idx = (distLeft*phaseRollNg*MAX_FFT_SIZE) >> MPY_BIPT;
+					idx &= (MAX_FFT_SIZE - 1); // apply modulo
+					tempValLd = cosTablePtr[idx];
+					cosPhiLeft = (tempValLd & 0xffff);
+					sinPhiLeft = (tempValLd >> 16);
+
+					resRightI += (((int)cosPhiLeft*tempLeftI) - ((int)sinPhiLeft*tempLeftQ)) / 12 * distRight;
+					resRightQ += (((int)cosPhiLeft*tempLeftQ) + ((int)sinPhiLeft*tempLeftI)) / 12 * distRight ;
+
+					resLeftI += (((int)cosPhiLeft*tempRightI) + ((int)sinPhiLeft*tempRightQ)) / 12 * distRight ;
+					resLeftQ += (((int)cosPhiLeft*tempRightQ) - ((int)sinPhiLeft*tempRightI)) / 12 * distRight ;
+
+					convertI = resRightI >> TWIDDLE_BIPT;
+					convertQ = resRightQ >> TWIDDLE_BIPT;
+					tempValSt = (convertI & 0xffff) | (convertQ << 16);
+					*(readPtr + 1 + kk) = tempValSt;
+
+					convertI = resLeftI >> TWIDDLE_BIPT;
+					convertQ = resLeftQ >> TWIDDLE_BIPT;
+					tempValSt = (convertI & 0xffff) | (convertQ << 16);
+					*(readPtr - 1 - kk) = tempValSt;
+				}
+			}
+		}
+	}
+}
+#elif !defined(STA_20_ONLY) // && !defined(LEG_LTF_NG1)
+void processLegacyPackets(hal_pktinfo_t *pktinfo, unsigned int *fftInBuffer, int bufferspacing, int *phaseRollPtr) {
 	int ii, jj;
-	int nRx = pktinfo->nRx+1;
-	int nTx = pktinfo->nTx+1;
-
+	int nRx = pktinfo->nRx + 1;
+	int nTx = pktinfo->nTx + 1;
 	for(ii=0;ii<nTx;ii++){
 		for(jj=0;jj<nRx;jj+=NUM_PARALLEL){
 			if (pktinfo->sigBw == 0) { // 20 MHz cases
@@ -1295,8 +1618,7 @@ void interpolatePilots(hal_pktinfo_t *pktinfo, unsigned int *fftInBuffer, int bu
 	int extraSc = 0;
 	const unsigned char *extraScIdx = NULL;
 	unsigned int powerScale = 1;
-
-	if (pktinfo->packetType == 3) { // VHT
+if (pktinfo->packetType == 3) { // VHT
 #ifndef STA_20_ONLY
 		if ((bandwidth == 80) || (bandwidth == 160)) {
 			// 80 MHz 128+[-122:-2 2:122]
@@ -1328,17 +1650,46 @@ void interpolatePilots(hal_pktinfo_t *pktinfo, unsigned int *fftInBuffer, int bu
 		}
 	}
 	else {
-		if (pktinfo->packetType == 0) { // Leg 20in20 only
-										// pilotToneIndexLEG20[SC5_HT20_PILOTS
-										// 20 MHz 32+[-28:2:-2 -1 1 2:2:28]
-			numPilots = SC5_HT20_PILOTS;
-			pilotIdx = pilotToneIndexLEG20;
-			dcZeros = 2; // not really DC
-			NgShift = 1; // Ng=2
-			extraSc = 0; //2; // change phase on two subcarriers
-			powerScale = 2;
-		}
-		else if (pktinfo->packetType == 1) {
+		if (pktinfo->packetType == 0) {
+#ifdef LEG_LTF_NG1
+			if ((bandwidth == 80) || (bandwidth == 160)) {
+				// 80 MHz 128+[-122:-2 2:122] filled up to VHT80
+				// VHT pilots skipped [103, 75, 39, 11, -103, -75, -39, -11]
+				// legacy pilots [-117,-103,-89,-75,-53,-39,-25,-11,11,25,39,53,75,89,103,117] some overlap
+				// extra DC copy neighbor [-96,-32,32,96]
+				numPilots = SC5_LEG80_PILOTS;
+				pilotIdx = pilotToneIndexLeg80;
+				dcZeros = 0;
+				if (bandwidth == 160) {
+					fftSizeHalf >>= 1;
+					fftSize >>= 1;
+					numBands = 2;
+				}
+			}
+			else if (bandwidth == 40) {
+				// 40 MHz 64+[-58:-2 2:58] filled up to VHT40
+				// VHT pilots skipped [-53,-25,-11,11,25,53]
+				// legacy pilots [-53,-39,-25,-11,11,25,39,53] some overlap
+				// extra DC copy neighbor [-32,32]
+				numPilots = SC5_LEG40_PILOTS;
+				pilotIdx = pilotToneIndexLeg40;
+				dcZeros = 0;
+			}
+			else
+#endif
+			{
+				// Leg 20in20 only
+				// pilotToneIndexLEG20[SC5_HT20_PILOTS
+				// 20 MHz 32+[-28:2:-2 -1 1 2:2:28]
+				numPilots = SC5_HT20_PILOTS;
+				pilotIdx = pilotToneIndexLEG20;
+				dcZeros = 2; // not really DC
+				NgShift = 1; // Ng=2
+				extraSc = 0; //2; // change phase on two subcarriers
+				powerScale = 2;
+			}
+		} else
+			if (pktinfo->packetType == 1) {
 #ifndef STA_20_ONLY
 			if(pktinfo->sigBw==1){ //HT40
 				numPilots = 0;
@@ -2239,6 +2590,7 @@ void removeToneRotation(hal_pktinfo_t *pktinfo, unsigned int *fftInBfr, int buff
 }
 
 #endif // STA_20_ONLY
+#endif // ifndef TDDE_FIRSTPATH
 
 void calcPdpAndMaxRx(unsigned int *currentValPtr, unsigned int *pdpOutBuffer, int ifftSizeOsf, unsigned int* maxVals, int *maxIndeces){
 #ifdef ARM_DS5
@@ -2734,5 +3086,4 @@ void dumpRawComplex(hal_pktinfo_t *pktinfo, unsigned int *fftBuffer, int peakIdx
 		}
 	}
 }
-
 #endif  /* CONFIG_WLS_CSI_PROC */

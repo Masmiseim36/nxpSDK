@@ -4,17 +4,15 @@
 **                          MIMXRT595SFFOC_cm33
 **
 **     Compiler:            GNU C Compiler
-**     Reference manual:    iMXRT500RM Rev.0, 01/2021
+**     Reference manual:    iMXRT500RM Rev.1, 07/2022
 **     Version:             rev. 5.0, 2021-07-28
-**     Build:               b210730
+**     Build:               b241125
 **
 **     Abstract:
 **         Linker file for the GNU C Compiler
 **
 **     Copyright 2016 Freescale Semiconductor, Inc.
-**     Copyright 2016-2021 NXP
-**     All rights reserved.
-**
+**     Copyright 2016-2024 NXP
 **     SPDX-License-Identifier: BSD-3-Clause
 **
 **     http:                 www.nxp.com
@@ -28,8 +26,8 @@
 /* Entry Point */
 ENTRY(Reset_Handler)
 
-HEAP_SIZE  = DEFINED(__heap_size__)  ? __heap_size__  : 0x400;
-STACK_SIZE = DEFINED(__stack_size__) ? __stack_size__ : 0x400;
+HEAP_SIZE  = DEFINED(__heap_size__)  ? __heap_size__  : 0x0400;
+STACK_SIZE = DEFINED(__stack_size__) ? __stack_size__ : 0x0400;
 M_VECTOR_RAM_SIZE = DEFINED(__ram_vector_table__) ? 0x00000180 : 0;
 
 /* Specify the memory areas */

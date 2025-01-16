@@ -47,7 +47,7 @@
  * @return distance
  *
  */
-float64_t arm_euclidean_distance_f64(const float64_t *pA,const float64_t *pB, uint32_t blockSize)
+ARM_DSP_ATTRIBUTE float64_t arm_euclidean_distance_f64(const float64_t *pA,const float64_t *pB, uint32_t blockSize)
 {
     float64_t accum=0.,tmp;
     uint32_t blkCnt;
@@ -73,7 +73,7 @@ float64_t arm_euclidean_distance_f64(const float64_t *pA,const float64_t *pB, ui
     while(blkCnt > 0)
     {
         tmp = *pA++ - *pB++;
-        accum += SQ(tmp);
+        accum += ARM_SQ(tmp);
         blkCnt --;
     }
     tmp = sqrt(accum);

@@ -31,8 +31,13 @@ void OSA_DumpThreadInfo(char *name)
     if (task_info_buf == NULL)
         return;
 
+    (void)memset((void *)task_info_buf, 0, MAX_TASK_INFO_BUF);
 #ifndef __ZEPHYR__
+#if !CONFIG_MEM_POOLS
     vTaskList(task_info_buf);
+#else
+    PRINTF("thread info not applicable for wifi_cli_static example!\r\n");
+#endif
 #endif
 
     PRINTF("Name                  State   Priority Stack  Num\r\n");
@@ -43,6 +48,5 @@ void OSA_DumpThreadInfo(char *name)
     OSA_MemoryFree(task_info_buf);
 #else
     OSA_MemoryPoolFree(buf_1024_MemoryPool, task_info_buf);
-    ;
 #endif
 }

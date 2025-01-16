@@ -25,27 +25,11 @@
 #include "fsl_component_log.h"
 LOG_MODULE_DEFINE(LOG_MODULE_NAME, kLOG_LevelTrace);
 
-#ifndef LOG_DBG
-#define LOG_DBG BT_DBG
-#endif
-
-#ifndef LOG_ERR
-#define LOG_ERR BT_ERR
-#endif
-
-#ifndef LOG_HEXDUMP_DBG
-#define LOG_HEXDUMP_DBG BT_HEXDUMP_DBG
-#endif
-
-#ifndef LOG_WRN
-#define LOG_WRN BT_WARN
-#endif
-
 /* TODO TBS client attempts to subscribe to all characteristics at once if the MTU is large enough.
  * This requires a significant amount of buffers, and should be optimized.
  */
 
-/* Calculate the requiered buffers for TBS Client discovery */
+/* Calculate the required buffers for TBS Client discovery */
 #define TBS_CLIENT_BUF_COUNT                                                                       \
 	(1 /* Discover buffer */ + 1 /* terminate reason */ +                                      \
 	 IS_ENABLED(CONFIG_BT_TBS_CLIENT_BEARER_PROVIDER_NAME) +                                   \
@@ -58,7 +42,7 @@ LOG_MODULE_DEFINE(LOG_MODULE_NAME, kLOG_LevelTrace);
 	 IS_ENABLED(CONFIG_BT_TBS_CLIENT_CALL_FRIENDLY_NAME) +                                     \
 	 IS_ENABLED(CONFIG_BT_TBS_CLIENT_INCOMING_CALL))
 
-BUILD_ASSERT_MSG(CONFIG_BT_ATT_TX_COUNT >= TBS_CLIENT_BUF_COUNT, "Too few ATT buffers");
+BUILD_ASSERT(CONFIG_BT_ATT_TX_COUNT >= TBS_CLIENT_BUF_COUNT, "Too few ATT buffers");
 
 //#include "common/bt_str.h"
 
@@ -69,7 +53,7 @@ struct bt_tbs_server_inst {
 #endif /* CONFIG_BT_TBS_CLIENT_TBS */
 #if defined(CONFIG_BT_TBS_CLIENT_GTBS) && (CONFIG_BT_TBS_CLIENT_GTBS > 0)
 	struct bt_tbs_instance gtbs_inst;
-#endif /* IS_ENABLED(CONFIG_BT_TBS_CLIENT_GTBS) */
+#endif /* defined(CONFIG_BT_TBS_CLIENT_GTBS) */
 	struct bt_gatt_discover_params discover_params;
 	struct bt_tbs_instance *current_inst;
 };
@@ -780,7 +764,7 @@ static uint8_t handle_string_long_read(struct bt_conn *conn, uint8_t err,
 	if (data != NULL) {
 		/* Get data and try to read more using read long procedure */
 		LOG_DBG("Read (offset %u): %s", offset, bt_hex(data, length));
-                (void)offset;
+		(void)offset;
 
 		net_buf_simple_add_mem(&inst->net_buf, data, length);
 
@@ -1563,14 +1547,14 @@ static uint8_t discover_func(struct bt_conn *conn,
 				err = bt_gatt_subscribe(conn, sub_params);
 				if (err != 0 && err != -EALREADY) {
 					LOG_DBG("Could not subscribe to "
-					       "characterstic at handle 0x%04X"
+					       "characteristic at handle 0x%04X"
 					       "(%d)",
 					       sub_params->value_handle, err);
 					tbs_client_discover_complete(conn, err);
 
 					return BT_GATT_ITER_STOP;
 				} else {
-					LOG_DBG("Subscribed to characterstic at "
+					LOG_DBG("Subscribed to characteristic at "
 					       "handle 0x%04X",
 					       sub_params->value_handle);
 				}
@@ -1757,7 +1741,7 @@ static int primary_discover_gtbs(struct bt_conn *conn)
 
 	return bt_gatt_discover(conn, params);
 }
-#endif /* IS_ENABLED(CONFIG_BT_TBS_CLIENT_GTBS) */
+#endif /* defined(CONFIG_BT_TBS_CLIENT_GTBS) */
 
 /****************************** PUBLIC API ******************************/
 

@@ -45,7 +45,6 @@
   @param[in]     pScratchIn  points to a temporary buffer of size blockSize
   @param[in]     pScratchOut points to a temporary buffer of size blockSize
   @param[in]     blockSize   number of input samples to process
-  @return        none
 
   @par           Scaling and Overflow Behavior
                    The function is implemented using a 32-bit internal accumulator.
@@ -56,7 +55,7 @@
                    Finally, the result is truncated to 1.7 format.
  */
 
-void arm_fir_sparse_q7(
+ARM_DSP_ATTRIBUTE void arm_fir_sparse_q7(
         arm_fir_sparse_instance_q7 * S,
   const q7_t * pSrc,
         q7_t * pDst,

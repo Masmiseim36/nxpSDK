@@ -11,9 +11,10 @@
 #define ZEPHYR_INCLUDE_BLUETOOTH_ADDR_H_
 
 #include <stdint.h>
+#include <stdbool.h>
 #include <string.h>
+
 #include <sys/printk.h>
-#include <zephyr/types.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -108,8 +109,8 @@ static inline int bt_addr_le_cmp(const bt_addr_le_t *a, const bt_addr_le_t *b)
 
 /** @brief Determine equality of two Bluetooth LE device addresses.
  *
- *  The Bluetooth LE addresses are equal iff both the types and the 48-bit
- *  addresses are numerically equal.
+ *  The Bluetooth LE addresses are equal if and only if both the types and
+ *  the 48-bit addresses are numerically equal.
  *
  *  @retval #true if the two addresses are equal
  *  @retval #false otherwise

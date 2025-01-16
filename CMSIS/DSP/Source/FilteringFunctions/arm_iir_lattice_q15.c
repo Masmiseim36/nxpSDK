@@ -43,7 +43,6 @@
   @param[in]     pSrc       points to the block of input data
   @param[out]    pDst       points to the block of output data
   @param[in]     blockSize  number of samples to process
-  @return        none
 
   @par           Scaling and Overflow Behavior
                    The function is implemented using an internal 64-bit accumulator.
@@ -54,7 +53,7 @@
                    Lastly, the accumulator is saturated to yield a result in 1.15 format.
  */
 
-void arm_iir_lattice_q15(
+ARM_DSP_ATTRIBUTE void arm_iir_lattice_q15(
   const arm_iir_lattice_instance_q15 * S,
   const q15_t * pSrc,
         q15_t * pDst,

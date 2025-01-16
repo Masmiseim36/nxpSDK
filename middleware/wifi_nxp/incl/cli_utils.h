@@ -1,11 +1,8 @@
-/** @file cli_utils.h
- *
- *  @brief CLI Utils
- *
- *  Copyright 2008-2020 NXP
- *
- *  SPDX-License-Identifier: BSD-3-Clause
- *
+/* Copyright 2008-2020, 2024 NXP
+ * SPDX-License-Identifier: BSD-3-Clause
+ */
+/*!\file cli_utils.h
+ *\brief This file provides Wi-Fi console utility interfaces.
  */
 
 #ifndef __CLI_UTILS_H__

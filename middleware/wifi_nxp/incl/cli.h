@@ -1,19 +1,15 @@
 /*
- *  Copyright 2008-2022 NXP
- *
- *  SPDX-License-Identifier: BSD-3-Clause
+ * Copyright 2008-2022, 2024 NXP
+ * SPDX-License-Identifier: BSD-3-Clause
  *
  */
 
-/*! \file cli.h
- * \brief CLI module
+/*!\file cli.h
+ *\brief This file provides CLI interfaces to register commands in CLI mode.
  *
- *  \section cli_usage Usage
- *  The CLI module lets you register commands with the CLI interface. Modules
- *  that wish to register the commands should initialize the struct cli_command
- *  structure and pass this to cli_register_command(). These commands will then
- *  be available on the CLI.
- *
+ * Modules that wish to register the commands should initialize the struct cli_command
+ * structure and pass it to cli_register_command(). These commands will then
+ * be available on the CLI.
  */
 
 #ifndef __CLI_H__

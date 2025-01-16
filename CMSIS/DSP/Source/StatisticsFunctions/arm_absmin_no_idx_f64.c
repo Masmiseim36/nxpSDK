@@ -42,11 +42,10 @@
   @param[in]     pSrc       points to the input vector
   @param[in]     blockSize  number of samples in input vector
   @param[out]    pResult    minimum value returned here
-  @return        none
  */
 
 #if defined(ARM_MATH_NEON) && defined(__aarch64__)
-void arm_absmin_no_idx_f64(
+ARM_DSP_ATTRIBUTE void arm_absmin_no_idx_f64(
     const float64_t * pSrc,
     uint32_t blockSize,
     float64_t * pResult)
@@ -109,7 +108,7 @@ void arm_absmin_no_idx_f64(
     
 }
 #else
-void arm_absmin_no_idx_f64(
+ARM_DSP_ATTRIBUTE void arm_absmin_no_idx_f64(
     const float64_t * pSrc,
     uint32_t blockSize,
     float64_t * pResult)

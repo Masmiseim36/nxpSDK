@@ -43,10 +43,9 @@
   @param[in]     pSrcB      points to input vector B
   @param[out]    pDst       points to output vector
   @param[in]     blockSize  number of samples in each vector
-  @return        none
  */
 
-void arm_xor_u8(
+ARM_DSP_ATTRIBUTE void arm_xor_u8(
     const uint8_t * pSrcA,
     const uint8_t * pSrcB,
           uint8_t * pDst,

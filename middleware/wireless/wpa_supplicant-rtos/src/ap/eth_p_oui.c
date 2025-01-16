@@ -8,6 +8,7 @@
 
 #include "utils/includes.h"
 
+#if CONFIG_HOSTAPD
 #include "utils/common.h"
 #include "utils/eloop.h"
 #include "l2_packet/l2_packet.h"
@@ -183,3 +184,4 @@ int eth_p_oui_send(struct eth_p_oui_ctx *ctx, const u8 *src_addr, const u8 *dst_
     os_free(packet);
     return ret;
 }
+#endif /* CONFIG_HOSTAPD */

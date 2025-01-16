@@ -49,6 +49,7 @@
  */
 
 #include "includes.h"
+#if CONFIG_HOSTAPD
 #include "fsl_os_abstraction.h"
 
 #if !defined(CONFIG_FREERTOS) && !defined(__ZEPHYR__)
@@ -1555,3 +1556,4 @@ int hlr_main(int argc, char *argv[])
 
     return ret;
 }
+#endif /* CONFIG_HOSTAPD */

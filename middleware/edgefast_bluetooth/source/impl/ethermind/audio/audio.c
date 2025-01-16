@@ -24,21 +24,7 @@
 #include "fsl_component_log.h"
 LOG_MODULE_DEFINE(LOG_MODULE_NAME, kLOG_LevelTrace);
 
-#ifndef LOG_DBG
-#define LOG_DBG BT_DBG
-#endif
 
-#ifndef LOG_ERR
-#define LOG_ERR BT_ERR
-#endif
-
-#ifndef LOG_HEXDUMP_DBG
-#define LOG_HEXDUMP_DBG BT_HEXDUMP_DBG
-#endif
-
-#ifndef LOG_WRN
-#define LOG_WRN BT_WARN
-#endif
 
 int bt_audio_data_parse(const uint8_t ltv[], size_t size,
 			bool (*func)(struct bt_data *data, void *user_data), void *user_data)
@@ -87,6 +73,26 @@ int bt_audio_data_parse(const uint8_t ltv[], size_t size,
 	}
 
 	return 0;
+}
+
+uint8_t bt_audio_get_chan_count(enum bt_audio_location chan_allocation)
+{
+	if (chan_allocation == BT_AUDIO_LOCATION_MONO_AUDIO) {
+		return 1;
+	}
+
+#ifdef POPCOUNT
+	return POPCOUNT(chan_allocation);
+#else
+	uint8_t cnt = 0U;
+
+	while (chan_allocation != 0U) {
+		cnt += chan_allocation & 1U;
+		chan_allocation >>= 1U;
+	}
+
+	return cnt;
+#endif
 }
 
 #if defined(CONFIG_BT_CONN) && (CONFIG_BT_CONN > 0)

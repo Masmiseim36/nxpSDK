@@ -43,7 +43,6 @@
   @param[in]     pSrc      points to the block of input data
   @param[out]    pDst      points to the location where the output result is written
   @param[in]     blockSize number of samples to process
-  @return        none
 
   @par           Scaling and Overflow Behavior
                    The function is implemented using a 64-bit internal accumulator.
@@ -58,7 +57,7 @@
 
 #if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE)
 
-void arm_biquad_cascade_df1_q15(
+ARM_DSP_ATTRIBUTE void arm_biquad_cascade_df1_q15(
   const arm_biquad_casd_df1_inst_q15 * S,
   const q15_t * pSrc,
         q15_t * pDst,
@@ -310,7 +309,7 @@ void arm_biquad_cascade_df1_q15(
     while (--stages);
 }
 #else
-void arm_biquad_cascade_df1_q15(
+ARM_DSP_ATTRIBUTE void arm_biquad_cascade_df1_q15(
   const arm_biquad_casd_df1_inst_q15 * S,
   const q15_t * pSrc,
         q15_t * pDst,

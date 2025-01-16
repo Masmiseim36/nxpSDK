@@ -6,23 +6,13 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 #include "fsl_flexio_uart.h"
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define BOARD_FLEXIO_BASE  FLEXIO0
-#define FLEXIO_UART_TX_PIN 10U
-#define FLEXIO_UART_RX_PIN 11U
-
-/* Select flexio clock source */
-#define FLEXIO_CLOCK_SRC (kFRG_to_FLEXIO)
-/* Clock divider for flexio clock source */
-#define FLEXIO_CLOCK_DIVIDER   (33U)
-#define FLEXIO_CLOCK_FREQUENCY CLOCK_GetFlexioClkFreq()
 #define ECHO_BUFFER_LENGTH 8
 
 /*******************************************************************************
@@ -80,16 +70,7 @@ int main(void)
     flexio_uart_transfer_t receiveXfer;
     status_t result = kStatus_Success;
 
-    const clock_frg_clk_config_t flexio_frg = {17U, kCLOCK_FrgMainClk, 255U, 0U};
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-
-    /* Clock setting for Flexio */
-    CLOCK_SetFRGClock(&flexio_frg);
-    CLOCK_AttachClk(FLEXIO_CLOCK_SRC);
-    CLOCK_SetClkDiv(kCLOCK_DivFlexioClk, FLEXIO_CLOCK_DIVIDER);
-
-    RESET_ClearPeripheralReset(kFLEXIO_RST_SHIFT_RSTn);
+    BOARD_InitHardware();
 
     /*
      * config.enableUart = true;

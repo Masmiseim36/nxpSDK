@@ -1,29 +1,24 @@
 /*
- * Copyright 2020, 2022 NXP
+ * Copyright 2020, 2022, 2024 NXP
  *
- * License: NXP LA_OPT_NXP_Software_License
+ * License: NXP LA_OPT_Online Code Hosting NXP_Software_License
  *
- * NXP Confidential. This software is owned or controlled by NXP and may
+ * NXP Proprietary. This software is owned or controlled by NXP and may
  * only be used strictly in accordance with the applicable license terms.
  * By expressly accepting such terms or by downloading, installing,
  * activating and/or otherwise using the software, you are agreeing that
  * you have read, and that you agree to comply with and are bound by,
  * such license terms.  If you do not agree to be bound by the applicable
  * license terms, then you may not retain, install, activate or otherwise
- * use the software.  This code may only be used in a microprocessor,
- * microcontroller, sensor or digital signal processor ("NXP Product")
- * supplied directly or indirectly from NXP.  See the full NXP Software
- * License Agreement in license/LA_OPT_NXP_Software_License.pdf
+ * use the software.
  *
  * FreeMASTER Communication Driver - Serial Communication Interface
  */
 #include "freemaster.h"
 #include "freemaster_private.h"
 
-/* Numeric identifier to help pre-processor to identify whether our driver is used or not. */
-#define FMSTR_SERIAL_S32K144_LPUART_ID 1
-
-#if (FMSTR_MK_IDSTR(FMSTR_SERIAL_DRV) == FMSTR_SERIAL_S32K144_LPUART_ID)
+/* Compile this code only if the SERIAL driver is selected in freemaster_cfg.h. */
+#if defined(FMSTR_SERIAL_DRV) && (FMSTR_MK_IDSTR(FMSTR_SERIAL_DRV) == FMSTR_SERIAL_S32K144_LPUART_ID)
 #if !(FMSTR_DISABLE)
 
 #include "freemaster_serial.h"
@@ -342,4 +337,4 @@ void FMSTR_SerialIsr()
 }
 
 #endif /* !(FMSTR_DISABLE) */
-#endif /* (FMSTR_MK_IDSTR(FMSTR_SERIAL_DRV) == FMSTR_SERIAL_S32K144_LPUART_ID) */
+#endif /* defined(FMSTR_SERIAL_DRV) && (FMSTR_MK_IDSTR(FMSTR_SERIAL_DRV) == FMSTR_SERIAL_S32K144_LPUART_ID) */

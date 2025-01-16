@@ -1,7 +1,7 @@
 /* ----------------------------------------------------------------------
  * Project:      CMSIS DSP Library
  * Title:        arm_atan2_q31.c
- * Description:  float32 Arc tangent of y/x
+ * Description:  q31 Arc tangent of y/x
  *
  * $Date:        22 April 2022
  * $Revision:    V1.10.0
@@ -178,11 +178,11 @@ __STATIC_FORCEINLINE q31_t arm_atan_q31(q31_t y,q31_t x)
  
   @par         Compute the Arc tangent of y/x:
                    The sign of y and x are used to determine the right quadrant
-                   and compute the right angle.
+                   and compute the right angle. Returned value is between -Pi and Pi.
 */
 
 
-arm_status arm_atan2_q31(q31_t y,q31_t x,q31_t *result)
+ARM_DSP_ATTRIBUTE arm_status arm_atan2_q31(q31_t y,q31_t x,q31_t *result)
 {
     if (x > 0)
     {
@@ -201,14 +201,7 @@ arm_status arm_atan2_q31(q31_t y,q31_t x,q31_t *result)
         }
         else
         {
-            if (y<0)
-            {
-               *result= -PIQ29;
-            }
-            else
-            {
-               *result= PIQ29;
-            }
+           *result= PIQ29;
         }
         return(ARM_MATH_SUCCESS);
     }

@@ -9,7 +9,7 @@
 *                                                                    *
 **********************************************************************
 
-** emWin V6.38 - Graphical user interface for embedded applications **
+** emWin V6.46 - Graphical user interface for embedded applications **
 All  Intellectual Property rights  in the Software belongs to  SEGGER.
 emWin is protected by  international copyright laws.  Knowledge of the
 source code may not be used to write a similar product.  This file may
@@ -34,7 +34,7 @@ License model:            emWin License Agreement, dated August 20th 2011 and Am
 Licensed platform:        NXP's ARM 7/9, Cortex-M0, M3, M4, M7, A7, M33
 ----------------------------------------------------------------------
 Support and Update Agreement (SUA)
-SUA period:               2011-08-19 - 2024-09-02
+SUA period:               2011-08-19 - 2025-09-02
 Contact to extend SUA:    sales@segger.com
 ----------------------------------------------------------------------
 File        : GUIDRV_S1D13781_Private.h
@@ -246,6 +246,8 @@ static I32 _GetDevProp_##EXT(GUI_DEVICE * pDevice, int Index) { \
       return (pContext->Orientation & GUI_MIRROR_Y) ? 1 : 0;    \
     case LCD_DEVCAP_SWAP_XY:                                    \
       return (pContext->Orientation & GUI_SWAP_XY)  ? 1 : 0;    \
+    default:                                                    \
+      break;                                                    \
     }                                                           \
   }                                                             \
   return _GetDevProp(pDevice, Index);                           \
@@ -284,6 +286,8 @@ static void (* _GetDevFunc_##EXT(GUI_DEVICE ** ppDevice, int Index))(void) { \
     return (void (*)(void))_Init;                                            \
   case APP_DEVFUNC_INITORIENTATION:                                          \
     return (void (*)(void))_InitOrientation_##EXT;                           \
+  default:                                                                   \
+    break;                                                                   \
   }                                                                          \
   return _GetDevFunc(ppDevice, Index);                                       \
 }

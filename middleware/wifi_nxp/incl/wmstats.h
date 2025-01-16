@@ -1,13 +1,12 @@
 /*
- *  Copyright 2008-2020 NXP
+ *  Copyright 2008-2020, 2024 NXP
  *
  *  SPDX-License-Identifier: BSD-3-Clause
  *
  */
 
-/*! \file wmstats.h
- *
- * \brief Wireless Microcontroller statistics
+/*!\file wmstats.h
+ *\brief This file provides state statistics for Wi-Fi connection manager.
  */
 
 #ifndef _WMSTATS_H_

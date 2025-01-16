@@ -42,7 +42,6 @@
   @param[in]     pSrc       points to the input vector.
   @param[out]    pDst       points to the output vector.
   @param[in]     blockSize  number of samples in each vector.
-  @return        none
 
   @par           Conditions for optimum performance
                    Input and output buffers should be aligned by 32-bit
@@ -54,7 +53,7 @@
 
 #include "arm_helium_utils.h"
 
-void arm_negate_q15(
+ARM_DSP_ATTRIBUTE void arm_negate_q15(
     const q15_t  * pSrc,
     q15_t  * pDst,
     uint32_t blockSize)
@@ -95,7 +94,7 @@ void arm_negate_q15(
 }
 
 #else
-void arm_negate_q15(
+ARM_DSP_ATTRIBUTE void arm_negate_q15(
   const q15_t * pSrc,
         q15_t * pDst,
         uint32_t blockSize)

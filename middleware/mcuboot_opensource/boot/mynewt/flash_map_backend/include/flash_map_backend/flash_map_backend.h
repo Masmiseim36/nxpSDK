@@ -8,7 +8,9 @@
 #define __FLASH_MAP_BACKEND_H__
 
 #include <sysflash/sysflash.h>
+#include <flash_map/flash_map.h>
 #include <mcuboot_config/mcuboot_config.h>
+#include <unistd.h>  /* off_t */
 
 #if (MCUBOOT_IMAGE_NUMBER == 1)
 
@@ -38,5 +40,43 @@
 
 int flash_area_id_from_multi_image_slot(int image_index, int slot);
 int flash_area_id_to_multi_image_slot(int image_index, int area_id);
+
+struct flash_sector {
+    uint32_t fs_off;
+    uint32_t fs_size;
+};
+
+int flash_area_sector_from_off(off_t off, struct flash_sector *sector);
+
+static inline int flash_area_get_sector(const struct flash_area *fa, off_t off,
+    struct flash_sector *sector)
+{
+    return flash_area_sector_from_off(off, sector);
+}
+
+static inline uint8_t flash_area_get_id(const struct flash_area *fa)
+{
+    return fa->fa_id;
+}
+
+static inline uint8_t flash_area_get_device_id(const struct flash_area *fa)
+{
+    return fa->fa_device_id;
+}
+
+static inline uint32_t flash_area_get_off(const struct flash_area *fa)
+{
+    return fa->fa_off;
+}
+
+static inline uint32_t flash_area_get_size(const struct flash_area *fa)
+{
+    return fa->fa_size;
+}
+
+static inline uint32_t flash_sector_get_off(const struct flash_sector *fs)
+{
+    return fs->fs_off;
+}
 
 #endif /* __FLASH_MAP_BACKEND_H__ */

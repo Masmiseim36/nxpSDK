@@ -1,11 +1,11 @@
-/** @file wmlog.h
- *
- *  @brief This file contains macros to print logs
- *
- *  Copyright 2008-2020 NXP
+/*
+ *  Copyright 2008-2020, 2024 NXP
  *
  *  SPDX-License-Identifier: BSD-3-Clause
  *
+ */
+/*!\file wmlog.h
+ *\brief This file contains macros to print logs.
  */
 
 #ifndef __WMLOG_H__

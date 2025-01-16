@@ -32,11 +32,11 @@ extern "C" {
 
 #include <sys/byteorder.h>
 #include <sys/util.h>
+#include "porting.h"
 #include <bluetooth/conn.h>
 #include <bluetooth/uuid.h>
 #include <bluetooth/gatt.h>
 
-#include "porting.h"
 
 /** @brief Size of OTS object ID (in bytes). */
 #define BT_OTS_OBJ_ID_SIZE 6
@@ -217,14 +217,13 @@ enum {
 	((prop) & BIT(BT_OTS_OBJ_PROP_MARKED))
 
 /** @brief Descriptor for OTS Object Size parameter. */
-STRUCT_PACKED_PRE
 struct bt_ots_obj_size {
 	/** @brief Current Size */
 	uint32_t cur;
 
 	/** @brief Allocated Size */
 	uint32_t alloc;
-} STRUCT_PACKED_POST;
+} __packed;
 
 /** @brief Object Action Control Point Feature bits. */
 enum {
@@ -480,14 +479,13 @@ enum {
 	((feat) & BIT(BT_OTS_OLCP_FEAT_CLEAR))
 
 /**@brief Features of the OTS. */
-STRUCT_PACKED_PRE
 struct bt_ots_feat {
 	/* OACP Features */
 	uint32_t oacp;
 
 	/* OLCP Features */
 	uint32_t olcp;
-} STRUCT_PACKED_POST;
+} __packed;
 
 /** @brief Object metadata request bit field values */
 enum {

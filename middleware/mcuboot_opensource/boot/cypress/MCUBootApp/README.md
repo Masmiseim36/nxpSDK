@@ -1,14 +1,17 @@
-### Port of MCUBoot library to be used with Cypress targets
+### Port of MCUboot library to be used with Cypress targets
 
 **Solution Description**
 
-Given solution demonstrates operation of MCUBoot on Cypress' PSoC6 device.
+Given solution demonstrates operation of MCUboot on Cypress' PSoC6 device.
 
 There are two applications implemented:
-* MCUBootApp - PSoC6 MCUBoot-based bootloading application;
+* MCUBootApp - PSoC6 MCUboot-based bootloading application;
 * BlinkyApp - simple PSoC6 blinking LED application which is a target of BOOT/UPGRADE;
 
-The demonstration device is CY8CPROTO-062-4343W board which is PSoC6 device with 2M of Flash available.
+Cypress boards, that can be used with this evaluation example:
+- CY8CPROTO-062-4343W - PSoC 6 2M on board
+- CY8CKIT-062-WIFI-BT - PSoC 6 1M on board
+- CY8CPROTO-062S3-4343W - PSoC 6 512K on board
 The default flash map implemented is the following:
 
 Single-image mode.
@@ -23,7 +26,7 @@ Single-image mode.
 
 Size of slots `0x10000` - 64kb
 
-MCUBootApp checks image integrity with SHA256, image authenticity with EC256 digital signature verification and uses completely SW implementation of cryptographic functions based on mbedTLS Library.
+MCUBootApp checks image integrity with SHA256, image authenticity with EC256 digital signature verification and uses completely SW implementation of cryptographic functions based on Mbed TLS Library.
 
 **Important**: make sure primary, secondary slot and bootloader app sizes are appropriate and correspond to flash area size defined in Applications' linker files.
 
@@ -32,7 +35,7 @@ Memory (stack) corruption of CM0p application can cause failure if SystemCall-se
 
 ### Hardware cryptography acceleration
 
-Cypress PSOC6 MCU family supports hardware acceleration of cryptography based on mbedTLS Library via shim layer. Implementation of this layer is supplied as separate submodule `cy-mbedtls-acceleration`. HW acceleration of cryptography shortens boot time more then 4 times, comparing to software implementation (observation results).
+Cypress PSOC6 MCU family supports hardware acceleration of cryptography based on Mbed TLS Library via shim layer. Implementation of this layer is supplied as separate submodule `cy-mbedtls-acceleration`. HW acceleration of cryptography shortens boot time more then 4 times, comparing to software implementation (observation results).
 
 To enable hardware acceleration in `MCUBootApp` pass flag `USE_CRYPTO_HW=1` to `make` while build.
 
@@ -83,7 +86,7 @@ To enable multi-image operation define `MCUBOOT_IMAGE_NUMBER` in `MCUBootApp/con
 
 Default value of `MCUBOOT_IMAGE_NUMBER` is 1, which corresponds to single image configuratios.
 
-In multi-image operation (two images are considered for simplicity) MCUBoot Bootloader application operates as following:
+In multi-image operation (two images are considered for simplicity) MCUboot Bootloader application operates as following:
 
 * Verifies Primary_1 and Primary_2 images;
 * Verifies Secondary_1 and Secondary_2 images;
@@ -95,7 +98,7 @@ This ensures two dependent applications can be accepted by device only in case b
 
 **Default Flash map for Multi-Image operation:**
 
-`0x10000000 - 0x10018000` - MCUBoot Bootloader
+`0x10000000 - 0x10018000` - MCUboot Bootloader
 
 `0x10018000 - 0x10028000` - Primary_1 (BOOT) slot of Bootloader
 
@@ -114,27 +117,27 @@ For more details about External Memory usage, please refer to separate guiding d
 
 ### Hardware limitations
 
-Since this application is created to demonstrate MCUBoot library features and not as reference examples some considerations are taken.
+Since this application is created to demonstrate MCUboot library features and not as reference examples some considerations are taken.
 
 1. `SCB5` used to configure serial port for debug prints. This is the most commonly used Serial Communication Block number among available Cypress PSoC 6 kits. If you try to use custom hardware with this application - change definition of `CYBSP_UART_HW` in `main.c` of MCUBootApp to SCB* that correspond to your design.
 
-2. `CY_SMIF_SLAVE_SELECT_0` is used as definition SMIF driver API. This configuration is used on evaluation kit for this example CY8CPROTO-062-4343W. If you try to use custom hardware with this application - change value of `smif_id` in `main.c` of MCUBootApp to value that corresponds to your design.
+2. `CY_SMIF_SLAVE_SELECT_0` is used as definition SMIF driver API. This configuration is used on evaluation kit for this example CY8CPROTO-062-4343W, CY8PROTO-062S3-4343W, CY8CKIT-062-4343W. If you try to use custom hardware with this application - change value of `smif_id` in `main.c` of MCUBootApp to value that corresponds to your design.
 
 
-### Downloading Solution's Assets
+### Downloading solution's assets
 
 There is a set assets required:
 
 * MCUBooot Library (root repository)
 * PSoC6 HAL Library
 * PSoC6 Peripheral Drivers Library (PDL)
-* mbedTLS Cryptographic Library
+* Mbed TLS Cryptographic Library
 
 To get submodules - run the following command:
 
     git submodule update --init --recursive
 
-### Building Solution
+### Building solution
 
 This folder contains make files infrastructure for building MCUBoot Bootloader. Same approach used in sample BlinkyLedApp application. Example command are provided below for couple different build configurations.
 
@@ -146,7 +149,23 @@ This folder contains make files infrastructure for building MCUBoot Bootloader. 
 
         make app APP_NAME=MCUBootApp PLATFORM=PSOC_062_2M BUILDCFG=Release MCUBOOT_IMAGE_NUMBER=2
 
+* To Build MCUBootApp with external memory support - pass `USE_EXTERNAL_FLASH=1` flag to `make` command in examples above. In this case UPGRADE image will be located in external memory. Refer to ExternalMemory.md for additional details.
+
 Root directory for build is **boot/cypress.**
+
+**Encrypted Image Support**
+
+To protect user image from unwanted read - Upgrade Image Encryption can be applied. The ECDH/HKDF with EC256 scheme is used in a given solution as well as Mbed TLS as a crypto provider.
+
+To enable image encryption support use `ENC_IMG=1` build flag (BlinkyApp should also be built with this flash set 1).
+
+User is also responsible for providing corresponding binary key data in `enc_priv_key[]` (file `\MCUBootApp\keys.c`). The public part will be used by imgtool when signing and encrypting upgrade image. Signing image with encryption is described in `\BlinkyApp\Readme.md`.
+
+After MCUBootApp is built with these settings unencrypted and encrypted images will be accepted in secondary (upgrade) slot.
+
+Example command:
+
+        make app APP_NAME=MCUBootApp PLATFORM=PSOC_062_2M BUILDCFG=Debug MCUBOOT_IMAGE_NUMBER=1 ENC_IMG=1
 
 **Programming solution**
 
@@ -177,6 +196,8 @@ Connect a board to your computer. Switch Kitprog3 to DAP-BULK mode by pressing `
 **Currently supported platforms:**
 
 * PSOC_062_2M
+* PSOC_062_1M
+* PSOC_062_512K
 
 **Build environment troubleshooting:**
 
@@ -195,10 +216,6 @@ Also IDE may be used:
 *Python/Python3* - make sure you have correct path referenced in `PATH`;
 
 *Msys2* - to use systems PATH navigate to msys2 folder, open `msys2_shell.cmd`, uncomment set `MSYS2_PATH_TYPE=inherit`, restart MSYS2 shell.
-
-*Cygwin* - add following to build command `CURDIR=pwd | cygpath --mixed -f -` so that build command looks like that:
-
-        make app APP_NAME=MCUBootApp PLATFORM=PSOC_062_2M CURDIR=`pwd | cygpath --mixed -f -`
 
 This will iherit system's PATH so should find `python3.7` installed in regular way as well as imgtool and its dependencies.
 

@@ -11,7 +11,7 @@
 
 /* This fatfs subcomponent is disabled by default
  * To enable it, define following macro in ffconf.h */
-#ifdef RAM_DISK_ENABLE
+#if defined(RAM_DISK_ENABLE) && (RAM_DISK_ENABLE == 1)
 
 #include "fsl_common.h"
 #include "fsl_ram_disk.h"
@@ -90,7 +90,7 @@ DRESULT ram_disk_ioctl(BYTE pdrv, BYTE cmd, void* buff)
             return RES_OK;
             break;
         case GET_SECTOR_SIZE:
-            *(uint32_t *)buff = FSL_FF_RAMDISK_SECTOR_SIZE;
+            *(WORD *)buff = FSL_FF_RAMDISK_SECTOR_SIZE;
             return RES_OK;
             break;
         case CTRL_SYNC:
@@ -101,4 +101,4 @@ DRESULT ram_disk_ioctl(BYTE pdrv, BYTE cmd, void* buff)
     }
     return RES_PARERR;
 }
-#endif /* RAM_DISK_ENABLE */
+#endif /* defined(RAM_DISK_ENABLE) && (RAM_DISK_ENABLE == 1) */

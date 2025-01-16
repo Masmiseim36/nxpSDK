@@ -9,12 +9,9 @@
 #include <stdio.h>
 #include "fsl_mmc.h"
 #include "fsl_debug_console.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 #include "sdmmc_config.h"
-#include "fsl_power.h"
-#include "fsl_gpio.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -70,9 +67,7 @@ int main(void)
     bool failedFlag = false;
     char ch         = '0';
 
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
     BOARD_MMC_Config(card, BOARD_SDMMC_MMC_HOST_IRQ_PRIORITY);
 
     PRINTF("\r\nMMCCARD polling example.\r\n");

@@ -50,13 +50,12 @@
   @param[in]     blockSize  number of samples in input vector
   @param[out]    pResult    maximum value returned here
   @param[out]    pIndex     index of maximum value returned here
-  @return        none
  */
 
 #if defined(ARM_MATH_MVE_FLOAT16) && !defined(ARM_MATH_AUTOVECTORIZE)
 
 #include "arm_helium_utils.h"
-void arm_absmax_f16(
+ARM_DSP_ATTRIBUTE void arm_absmax_f16(
   const float16_t * pSrc,
         uint32_t blockSize,
         float16_t * pResult,
@@ -138,7 +137,7 @@ void arm_absmax_f16(
 }
 #else
 #if defined(ARM_MATH_LOOPUNROLL)
-void arm_absmax_f16(
+ARM_DSP_ATTRIBUTE void arm_absmax_f16(
   const float16_t * pSrc,
         uint32_t blockSize,
         float16_t * pResult,
@@ -225,7 +224,7 @@ void arm_absmax_f16(
   *pIndex = outIndex;  
 }
 #else
-void arm_absmax_f16(
+ARM_DSP_ATTRIBUTE void arm_absmax_f16(
   const float16_t * pSrc,
         uint32_t blockSize,
         float16_t * pResult,

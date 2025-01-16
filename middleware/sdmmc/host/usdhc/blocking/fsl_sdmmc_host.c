@@ -149,6 +149,14 @@ void SDMMCHOST_InstallCacheAlignBuffer(sdmmchost_t *host, void *cacheAlignBuffer
 }
 #endif
 
+#if defined SDMMCHOST_ENABLE_CACHE_LINE_ALIGN_TRANSFER && SDMMCHOST_ENABLE_CACHE_LINE_ALIGN_TRANSFER
+status_t SDMMCHOST_ScatterGatherTransferFunction(sdmmchost_t *host, sdmmchost_scatter_gather_transfer_t *content)
+{
+    assert(false);
+    return kStatus_Fail;
+}
+#endif
+
 status_t SDMMCHOST_TransferFunction(sdmmchost_t *host, sdmmchost_transfer_t *content)
 {
     status_t error = kStatus_Success;

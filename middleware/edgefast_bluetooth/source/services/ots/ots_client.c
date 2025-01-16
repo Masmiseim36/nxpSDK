@@ -33,21 +33,7 @@
 #include "fsl_component_log.h"
 LOG_MODULE_DEFINE(LOG_MODULE_NAME, kLOG_LevelTrace);
 
-#ifndef LOG_DBG
-#define LOG_DBG BT_DBG
-#endif
 
-#ifndef LOG_ERR
-#define LOG_ERR BT_ERR
-#endif
-
-#ifndef LOG_HEXDUMP_DBG
-#define LOG_HEXDUMP_DBG BT_HEXDUMP_DBG
-#endif
-
-#ifndef LOG_WRN
-#define LOG_WRN BT_WARN
-#endif
 
 /* TODO: KConfig options */
 #define OTS_CLIENT_INST_COUNT     1
@@ -321,6 +307,11 @@ static void olcp_ind_handler(struct bt_conn *conn,
 	enum bt_gatt_ots_olcp_proc_type op_code;
 	struct net_buf_simple net_buf;
 
+	if (length < sizeof(op_code)) {
+		LOG_DBG("Invalid indication length: %u", length);
+		return;
+	}
+
 	net_buf_simple_init_with_data(&net_buf, (void *)data, length);
 
 	op_code = (enum bt_gatt_ots_olcp_proc_type)net_buf_simple_pull_u8(&net_buf);
@@ -328,6 +319,12 @@ static void olcp_ind_handler(struct bt_conn *conn,
 	LOG_DBG("OLCP indication");
 
 	if (op_code == BT_GATT_OTS_OLCP_PROC_RESP) {
+		if (net_buf.len < (sizeof(uint8_t) + sizeof(uint8_t))) {
+			LOG_DBG("Invalid indication length for op_code %u: %u", op_code,
+				net_buf.len);
+			return;
+		}
+
 		enum bt_gatt_ots_olcp_proc_type req_opcode =
 			(enum bt_gatt_ots_olcp_proc_type)net_buf_simple_pull_u8(&net_buf);
 		enum bt_gatt_ots_olcp_res_code result_code =
@@ -390,6 +387,11 @@ static void oacp_ind_handler(struct bt_conn *conn,
 	enum bt_gatt_ots_oacp_res_code result_code;
 	uint32_t checksum;
 	struct net_buf_simple net_buf;
+
+	if (length < sizeof(op_code)) {
+		LOG_DBG("Invalid indication length: %u", length);
+		return;
+	}
 
 	net_buf_simple_init_with_data(&net_buf, (void *)data, length);
 
@@ -1005,7 +1007,9 @@ static uint8_t read_obj_type_cb(struct bt_conn *conn, uint8_t err,
 			struct bt_uuid *uuid =
 				&inst->otc_inst->cur_object.type.uuid;
 
-			bt_uuid_create(uuid, data, length);
+			if (!bt_uuid_create(uuid, data, length)) {
+				return BT_GATT_ITER_STOP;
+			}
 
 			bt_uuid_to_str(uuid, uuid_str, sizeof(uuid_str));
 			LOG_DBG("UUID type read: %s", uuid_str);
@@ -1168,7 +1172,7 @@ static uint8_t read_obj_properties_cb(struct bt_conn *conn, uint8_t err,
 	} else {
 		LOG_WRN("Invalid length %u (expected %u)", length, OTS_PROPERTIES_LEN);
 		cb_err = BT_ATT_ERR_INVALID_ATTRIBUTE_LEN;
-                (void)cb_err;
+		(void)cb_err;
 	}
 
 	if (err) {
@@ -1714,8 +1718,10 @@ static int decode_record(struct net_buf_simple *buf,
 		}
 
 		uuid = net_buf_simple_pull_mem(buf, BT_UUID_SIZE_128);
-		bt_uuid_create(&rec->metadata.type.uuid,
-			       uuid, BT_UUID_SIZE_128);
+		if (!bt_uuid_create(&rec->metadata.type.uuid, uuid, BT_UUID_SIZE_128)) {
+			LOG_DBG("Failed to create UUID");
+			return -EINVAL;
+		}
 	} else {
 		if ((start_len - buf->len) + BT_UUID_SIZE_16 > rec->len) {
 			LOG_WRN("incorrect DirListing record, reclen %u "

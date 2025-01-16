@@ -87,6 +87,7 @@ initialize by copy {
   readwrite,
   /* Place in RAM flash and performance dependent functions  */
   readonly object fsl_flexspi.o,
+  readonly object fsl_reset.o,
   readonly object flexspi_octal_flash_ops.o,
   section .textrw,
   section CodeQuickAccess,

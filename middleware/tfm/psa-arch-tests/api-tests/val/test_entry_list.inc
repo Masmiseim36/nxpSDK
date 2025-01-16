@@ -43,7 +43,13 @@
     {242, &test_entry_c042},
     {243, &test_entry_c043},
     {244, &test_entry_c044},
+#if defined(PSA_CRYPTO_DRIVER_ELE_S2XX) \
+    && (!defined(ELE_FEATURE_DIGEST_CLONE) || (ELE_FEATURE_DIGEST_CLONE == 0))
+    /* Do not do hash clone tests on S2XX devices that do not have
+     * hash cloning support */
+#else
     {245, &test_entry_c045},
+#endif /* PSA_CRYPTO_DRIVER_ELE_S2XX && (ELE_FEATURE_DIGEST_CLONE == 0) */
     {246, &test_entry_c046},
     {247, &test_entry_c047},
     {248, &test_entry_c048},

@@ -16,42 +16,37 @@
 #define BT_L2CAP_CID_BR_SMP             0x0007
 #define BT_L2CAP_PSM_RFCOMM             0x0003
 
-STRUCT_PACKED_PRE
 struct bt_l2cap_hdr {
 	uint16_t len;
 	uint16_t cid;
-} STRUCT_PACKED_POST;
+} __packed;
 
-STRUCT_PACKED_PRE
 struct bt_l2cap_sig_hdr {
 	uint8_t  code;
 	uint8_t  ident;
 	uint16_t len;
-} STRUCT_PACKED_POST;
+} __packed;
 
 #define BT_L2CAP_REJ_NOT_UNDERSTOOD     0x0000
 #define BT_L2CAP_REJ_MTU_EXCEEDED       0x0001
 #define BT_L2CAP_REJ_INVALID_CID        0x0002
 
 #define BT_L2CAP_CMD_REJECT             0x01
-STRUCT_PACKED_PRE
 struct bt_l2cap_cmd_reject {
 	uint16_t reason;
 	uint8_t  data[0];
-} STRUCT_PACKED_POST;
+} __packed;
 
-STRUCT_PACKED_PRE
 struct bt_l2cap_cmd_reject_cid_data {
 	uint16_t scid;
 	uint16_t dcid;
-} STRUCT_PACKED_POST;
+} __packed;
 
 #define BT_L2CAP_CONN_REQ               0x02
-STRUCT_PACKED_PRE
 struct bt_l2cap_conn_req {
 	uint16_t psm;
 	uint16_t scid;
-} STRUCT_PACKED_POST;
+} __packed;
 
 /* command statuses in response */
 #define BT_L2CAP_CS_NO_INFO             0x0000
@@ -67,81 +62,74 @@ struct bt_l2cap_conn_req {
 #define BT_L2CAP_BR_ERR_SCID_IN_USE     0x0007
 
 #define BT_L2CAP_CONN_RSP               0x03
-STRUCT_PACKED_PRE
 struct bt_l2cap_conn_rsp {
 	uint16_t dcid;
 	uint16_t scid;
 	uint16_t result;
 	uint16_t status;
-} STRUCT_PACKED_POST;
+} __packed;
 
 #define BT_L2CAP_CONF_SUCCESS           0x0000
 #define BT_L2CAP_CONF_UNACCEPT          0x0001
 #define BT_L2CAP_CONF_REJECT            0x0002
 
 #define BT_L2CAP_CONF_REQ               0x04
-STRUCT_PACKED_PRE
 struct bt_l2cap_conf_req {
 	uint16_t dcid;
 	uint16_t flags;
 	uint8_t  data[0];
-} STRUCT_PACKED_POST;
+} __packed;
 
 #define BT_L2CAP_CONF_RSP               0x05
-STRUCT_PACKED_PRE
 struct bt_l2cap_conf_rsp {
 	uint16_t scid;
 	uint16_t flags;
 	uint16_t result;
 	uint8_t  data[0];
-} STRUCT_PACKED_POST;
+} __packed;
 
 /* Option type used by MTU config request data */
 #define BT_L2CAP_CONF_OPT_MTU           0x01
 /* Options bits selecting most significant bit (hint) in type field */
 #define BT_L2CAP_CONF_HINT              0x80
 #define BT_L2CAP_CONF_MASK              0x7f
-STRUCT_PACKED_PRE
+
 struct bt_l2cap_conf_opt {
 	uint8_t type;
 	uint8_t len;
 	uint8_t data[0];
-} STRUCT_PACKED_POST;
+} __packed;
 
 #define BT_L2CAP_DISCONN_REQ            0x06
-STRUCT_PACKED_PRE
 struct bt_l2cap_disconn_req {
 	uint16_t dcid;
 	uint16_t scid;
-} STRUCT_PACKED_POST;
+} __packed;
 
 #define BT_L2CAP_DISCONN_RSP            0x07
-STRUCT_PACKED_PRE
 struct bt_l2cap_disconn_rsp {
 	uint16_t dcid;
 	uint16_t scid;
-} STRUCT_PACKED_POST;
+} __packed;
 
 #define BT_L2CAP_INFO_FEAT_MASK         0x0002
 #define BT_L2CAP_INFO_FIXED_CHAN        0x0003
 
 #define BT_L2CAP_INFO_REQ               0x0a
-STRUCT_PACKED_PRE
 struct bt_l2cap_info_req {
 	uint16_t type;
-} STRUCT_PACKED_POST;
+} __packed;
 
 /* info result */
 #define BT_L2CAP_INFO_SUCCESS           0x0000
 #define BT_L2CAP_INFO_NOTSUPP           0x0001
 
 #define BT_L2CAP_INFO_RSP               0x0b
-STRUCT_PACKED_PRE
 struct bt_l2cap_info_rsp {
 	uint16_t type;
 	uint16_t result;
 	uint8_t  data[0];
-} STRUCT_PACKED_POST;
+} __packed;
 
 /* Need a name different than bt_l2cap_fixed_chan for a different section */
 struct bt_l2cap_br_fixed_chan {
@@ -185,4 +173,4 @@ struct net_buf *bt_l2cap_create_pdu_timeout(struct net_buf_pool *pool,
 					    size_t reserve,
 					    size_t timeout);
 #define bt_l2cap_create_pdu(_pool, _reserve) \
-	bt_l2cap_create_pdu_timeout(_pool, _reserve, osaWaitForever_c)
+	bt_l2cap_create_pdu_timeout(_pool, _reserve, K_FOREVER)

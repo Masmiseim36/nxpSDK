@@ -42,9 +42,8 @@
   @param[in]     value      input value to be filled
   @param[out]    pDst       points to output vector
   @param[in]     blockSize  number of samples in each vector
-  @return        none
  */
-void arm_fill_f64(
+ARM_DSP_ATTRIBUTE void arm_fill_f64(
   float64_t value,
   float64_t * pDst,
   uint32_t blockSize)

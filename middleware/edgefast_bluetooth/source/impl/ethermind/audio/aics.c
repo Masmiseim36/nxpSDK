@@ -26,21 +26,7 @@
 #include "fsl_component_log.h"
 LOG_MODULE_DEFINE(LOG_MODULE_NAME, kLOG_LevelTrace);
 
-#ifndef LOG_DBG
-#define LOG_DBG BT_DBG
-#endif
 
-#ifndef LOG_ERR
-#define LOG_ERR BT_ERR
-#endif
-
-#ifndef LOG_HEXDUMP_DBG
-#define LOG_HEXDUMP_DBG BT_HEXDUMP_DBG
-#endif
-
-#ifndef LOG_WRN
-#define LOG_WRN BT_WARN
-#endif
 
 #define VALID_AICS_OPCODE(opcode)                                              \
 	((opcode) >= BT_AICS_OPCODE_SET_GAIN && (opcode) <= BT_AICS_OPCODE_SET_AUTO)
@@ -203,7 +189,7 @@ static void notify_work_reschedule(struct bt_aics *inst, enum bt_aics_notify not
 
 	atomic_set_bit(inst->srv.notify, notify);
 
-	err = k_work_reschedule(&inst->srv.notify_work, osaWaitNone_c);
+	err = k_work_reschedule(&inst->srv.notify_work, K_NO_WAIT);
 	if (err < 0) {
 		LOG_ERR("Failed to reschedule %s notification err %d",
 			aics_notify_str(notify), err);
@@ -217,7 +203,7 @@ static void notify(struct bt_aics *inst, enum bt_aics_notify notify, const struc
 
 	err = bt_gatt_notify_uuid(NULL, uuid, inst->srv.service_p->attrs, data, len);
 	if (err == -ENOMEM) {
-		notify_work_reschedule(inst, notify, BT_AUDIO_NOTIFY_RETRY_DELAY_US / 1000);
+		notify_work_reschedule(inst, notify, K_USEC(BT_AUDIO_NOTIFY_RETRY_DELAY_US));
 	} else if (err < 0 && err != -ENOTCONN) {
 		LOG_ERR("Notify %s err %d", aics_notify_str(notify), err);
 	}
@@ -246,7 +232,7 @@ static void notify_work_handler(struct k_work *work)
 
 static void value_changed(struct bt_aics *inst, enum bt_aics_notify notify)
 {
-	notify_work_reschedule(inst, notify, osaWaitNone_c);
+	notify_work_reschedule(inst, notify, K_NO_WAIT);
 }
 #else
 #define value_changed(...)

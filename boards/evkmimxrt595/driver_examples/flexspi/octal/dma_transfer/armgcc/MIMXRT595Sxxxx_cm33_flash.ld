@@ -76,6 +76,10 @@ SECTIONS
         */fsl_memcpy.S.obj
         *libc_a-memcpy-stub.o
         *libc_a-memset.o
+        *_aeabi_uldivmod.o
+        *_aeabi_ldivmod.o
+        *_udivmoddi4.o
+        *_dvmd_tls.o
         */fsl_flexspi_dma.c.obj
         */fsl_dma.c.obj
         */fsl_reset.c.obj
@@ -88,6 +92,10 @@ SECTIONS
         */fsl_memcpy.S.obj
         *libc_a-memcpy-stub.o
         *libc_a-memset.o
+        *_aeabi_uldivmod.o
+        *_aeabi_ldivmod.o
+        *_udivmoddi4.o
+        *_dvmd_tls.o
         */fsl_flexspi_dma.c.obj
         */fsl_dma.c.obj
         */fsl_reset.c.obj
@@ -100,6 +108,10 @@ SECTIONS
         */fsl_memcpy.S.obj
         *libc_a-memcpy-stub.o
         *libc_a-memset.o
+        *_aeabi_uldivmod.o
+        *_aeabi_ldivmod.o
+        *_udivmoddi4.o
+        *_dvmd_tls.o
         */fsl_flexspi_dma.c.obj
         */fsl_dma.c.obj
         */fsl_reset.c.obj
@@ -112,6 +124,10 @@ SECTIONS
         */fsl_memcpy.S.obj
         *libc_a-memcpy-stub.o
         *libc_a-memset.o
+        *_aeabi_uldivmod.o
+        *_aeabi_ldivmod.o
+        *_udivmoddi4.o
+        *_dvmd_tls.o
         */fsl_flexspi_dma.c.obj
         */fsl_dma.c.obj
         */fsl_reset.c.obj
@@ -224,6 +240,10 @@ SECTIONS
     */fsl_memcpy.S.obj(.text .text* .rodata .rodata*)
     *libc_a-memcpy-stub.o(.text .text* .rodata .rodata*)
     *libc_a-memset.o(.text .text* .rodata .rodata*)
+    *_aeabi_uldivmod.o(.text .text* .rodata .rodata*)
+    *_aeabi_ldivmod.o(.text .text* .rodata .rodata*)
+    *_udivmoddi4.o(.text .text* .rodata .rodata*)
+    *_dvmd_tls.o(.text .text* .rodata .rodata*)
     */fsl_flexspi_dma.c.obj(.text .text* .rodata .rodata*)
     */fsl_dma.c.obj(.text .text* .rodata .rodata*)
     */fsl_reset.c.obj(.text .text* .rodata .rodata*)

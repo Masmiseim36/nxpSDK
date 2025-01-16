@@ -43,7 +43,6 @@
   @param[in]     pSrc       points to the block of input data
   @param[out]    pDst       points to the block of output data
   @param[in]     blockSize  number of samples to process
-  @return        none
 
   @par           Scaling and Overflow Behavior
                    This function is optimized for speed at the expense of fixed-point precision and overflow protection.
@@ -58,7 +57,7 @@
                    Use function \ref arm_fir_init_q31() to initialize the filter structure.
  */
 
-void arm_fir_fast_q31(
+ARM_DSP_ATTRIBUTE void arm_fir_fast_q31(
   const arm_fir_instance_q31 * S,
   const q31_t * pSrc,
         q31_t * pDst,

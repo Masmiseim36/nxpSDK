@@ -6,18 +6,13 @@
  */
 
 #include "fsl_debug_console.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 #include "fsl_pint.h"
 
-#include "fsl_inputmux.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_PINT_BSLICE0_SRC kPINT_PatternMatchInp0Src
-#define DEMO_PINT_BSLICE1_SRC kPINT_PatternMatchInp0Src
-#define DEMO_PINT_BSLICE2_SRC kPINT_PatternMatchInp1Src
 #ifndef EXAMPLE_PINT_BASE
 #define EXAMPLE_PINT_BASE PINT
 #endif
@@ -50,19 +45,7 @@ int main(void)
     pint_pmatch_cfg_t pmcfg;
 
     /* Board pin, clock, debug console init */
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
-
-    /* Configure DMAMUX. */
-    RESET_PeripheralReset(kINPUTMUX_RST_SHIFT_RSTn);
-
-    /* Connect trigger sources to PINT */
-    INPUTMUX_Init(INPUTMUX);
-    INPUTMUX_AttachSignal(INPUTMUX, kPINT_PatternMatchInp0Src, kINPUTMUX_GpioPort0Pin25ToPintsel); /* SW1 */
-    INPUTMUX_AttachSignal(INPUTMUX, kPINT_PatternMatchInp1Src, kINPUTMUX_GpioPort0Pin10ToPintsel); /* SW2 */
-    /* Turnoff clock to inputmux to save power. Clock is only needed to make changes */
-    INPUTMUX_Deinit(INPUTMUX);
+    BOARD_InitHardware();
 
     /* Clear screen*/
     PRINTF("%c[2J", 27);

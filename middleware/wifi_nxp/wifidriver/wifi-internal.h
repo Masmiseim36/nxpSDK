@@ -39,7 +39,7 @@ struct bus_message
 
 typedef struct
 {
-    int (*wifi_uap_downld_domain_params_p)(int channel, wifi_scan_chan_list_t scan_chan_list);
+    int (*wifi_uap_downld_domain_params_p)(int band);
 } wifi_uap_11d_apis_t;
 
 typedef struct mcast_filter
@@ -77,6 +77,9 @@ typedef struct
     t_u8 wifi_init_done;
     t_u8 wifi_core_init_done;
     OSA_TASK_HANDLE_DEFINE(wifi_drv_task_Handle);
+#ifdef SD9177
+    OSA_TASK_HANDLE_DEFINE(wifi_pre_asleep_task_Handle);
+#endif
 
 #ifndef RW610
     OSA_TASK_HANDLE_DEFINE(wifi_core_task_Handle);
@@ -99,9 +102,11 @@ typedef struct
     void (*amsdu_data_input_callback)(uint8_t interface, uint8_t *buffer, uint16_t len);
     void (*deliver_packet_above_callback)(void *rxpd, t_u8 interface, t_void *lwip_pbuf);
     bool (*wrapper_net_is_ip_or_ipv6_callback)(const t_u8 *buffer);
-
+#ifdef SD9177
+    OSA_SEMAPHORE_HANDLE_DEFINE(command_lock);
+#else
     OSA_MUTEX_HANDLE_DEFINE(command_lock);
-
+#endif
     OSA_SEMAPHORE_HANDLE_DEFINE(command_resp_sem);
 
     OSA_MUTEX_HANDLE_DEFINE(mcastf_mutex);
@@ -118,6 +123,9 @@ typedef struct
 
     /* Queue for events/data from low level interface driver */
     OSA_MSGQ_HANDLE_DEFINE(io_events, MAX_EVENTS, sizeof(struct bus_message));
+#ifdef SD9177
+    OSA_MSGQ_HANDLE_DEFINE(pre_asleep_events, MAX_EVENTS, sizeof(struct bus_message));
+#endif
     OSA_MSGQ_HANDLE_DEFINE(powersave_queue, MAX_EVENTS, sizeof(struct bus_message));
 
     mcast_filter *start_list;
@@ -161,6 +169,8 @@ typedef struct
     t_u8 chan_sw_count;
     /** Sniffer channel number */
     t_u8 chan_num;
+    /** ACS channel number */
+    t_u8 acs_chan;
     /** HT Capability Info */
     t_u16 ht_cap_info;
     /** HTTX Cfg */
@@ -286,6 +296,13 @@ int wifi_event_completion(enum wifi_event event, enum wifi_event_reason result, 
  */
 bool is_split_scan_complete(void);
 
+#ifdef SD9177
+/**
+ * This function will handle pre asleep command response
+ */
+void wifi_handle_preasleep_response(void);
+#endif
+
 /**
  * Waits for Command processing to complete and waits for command response
  */
@@ -379,7 +396,14 @@ void *wifi_mem_malloc_cmdrespbuf(void);
 void *wifi_malloc_eventbuf(size_t size);
 void wifi_free_eventbuf(void *buffer);
 
+#if UAP_SUPPORT
 void wifi_uap_handle_cmd_resp(HostCmd_DS_COMMAND *resp);
+#else
+static inline void wifi_uap_handle_cmd_resp(HostCmd_DS_COMMAND *resp)
+{
+    (void)PRINTF("wifi_uap_handle_cmd_resp UAP not supported %s:%d\r\n", __func__, __LINE__);
+}
+#endif
 
 mlan_status wrapper_moal_malloc(t_void *pmoal_handle, t_u32 size, t_u32 flag, t_u8 **ppbuf);
 mlan_status wrapper_moal_mfree(t_void *pmoal_handle, t_u8 *pbuf);
@@ -412,6 +436,7 @@ void wifi_user_scan_config_cleanup(void);
  *
  */
 void wifi_scan_stop(void);
+int wifi_remain_on_channel(const bool status, const uint8_t channel, const uint32_t duration);
 #if CONFIG_WPA_SUPP
 void wpa_supp_handle_link_lost(mlan_private *priv);
 
@@ -432,7 +457,6 @@ int wifi_setup_he_cap(nxp_wifi_he_capabilities *he_cap, t_u8 band);
 #endif
 int wifi_nxp_send_assoc(nxp_wifi_assoc_info_t *assoc_info);
 int wifi_nxp_send_mlme(unsigned int bss_type, int channel, unsigned int wait_time, const t_u8 *data, size_t data_len);
-int wifi_remain_on_channel(const bool status, const uint8_t channel, const uint32_t duration);
 int wifi_nxp_beacon_config(nxp_wifi_ap_info_t *params);
 int wifi_set_uap_rts(int rts_threshold);
 int wifi_set_uap_frag(int frag_threshold);

@@ -15,12 +15,11 @@
 #include "pin_mux.h"
 #include "clock_config.h"
 #include "board.h"
+#include "app.h"
 #include "sdmmc_config.h"
-#include "fsl_power.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-
 
 /* define data buffer size */
 #define DATA_BUFFER_SIZE (256U)
@@ -146,11 +145,7 @@ static void SDIO_CardInterruptCallBack(void *userData)
 /*! @brief Main function */
 int main(void)
 {
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
-
-    NVIC_SetPriority(BOARD_UART_IRQ, 6U);
+    BOARD_InitHardware();
 
     PRINTF("SDIO freertos example.\r\n");
 

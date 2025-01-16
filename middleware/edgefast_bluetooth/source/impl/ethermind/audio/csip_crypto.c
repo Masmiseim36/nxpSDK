@@ -13,35 +13,29 @@
 #if defined(CONFIG_BT_CSIP_SET_MEMBER) && (CONFIG_BT_CSIP_SET_MEMBER > 0) || \
 	defined(CONFIG_BT_CSIP_SET_COORDINATOR) && (CONFIG_BT_CSIP_SET_COORDINATOR > 0)
 
-#include "csip_crypto.h"
+#include <stddef.h>
+#include <stdint.h>
+#include <string.h>
+
+#include <porting.h>
+#include <bluetooth/audio/csip.h>
 #include <bluetooth/crypto.h>
 #include <sys/byteorder.h>
 #include <sys/util.h>
+#include <sys/util_macro.h>
 
 #include "../host/bt_pal_crypto_internal.h"
+
+#include "bt_crypto.h"
+
+//#include "common/bt_str.h"
+
+#include "csip_crypto.h"
 
 #define LOG_ENABLE IS_ENABLED(CONFIG_BT_DEBUG_CSIP_CRYPTO)
 #define LOG_MODULE_NAME bt_csis_crypto
 #include "fsl_component_log.h"
 LOG_MODULE_DEFINE(LOG_MODULE_NAME, kLOG_LevelTrace);
-
-#ifndef LOG_DBG
-#define LOG_DBG BT_DBG
-#endif
-
-#ifndef LOG_ERR
-#define LOG_ERR BT_ERR
-#endif
-
-#ifndef LOG_HEXDUMP_DBG
-#define LOG_HEXDUMP_DBG BT_HEXDUMP_DBG
-#endif
-
-#ifndef LOG_WRN
-#define LOG_WRN BT_WARN
-#endif
-
-//#include "common/bt_str.h"
 
 #define BT_CSIP_CRYPTO_PADDING_SIZE 13
 #define BT_CSIP_PADDED_RAND_SIZE    (BT_CSIP_CRYPTO_PADDING_SIZE + BT_CSIP_CRYPTO_PRAND_SIZE)
@@ -52,7 +46,7 @@ static int aes_cmac(const uint8_t key[BT_CSIP_CRYPTO_KEY_SIZE],
 {
 	bt_aes_128_cmac_state_t state;
 
-        BT_DBG("key %s in %s", bt_hex(key, 16), bt_hex(in, in_len));
+        LOG_DBG("key %s in %s", bt_hex(key, 16), bt_hex(in, in_len));
 
 	bt_aes_128_cmac_setup(&state, key);
 	bt_aes_128_cmac_update(&state, in, in_len);
@@ -71,7 +65,7 @@ static void xor_128(const uint8_t a[16], const uint8_t b[16], uint8_t out[16])
 	}
 }
 
-int bt_csip_sih(const uint8_t sirk[BT_CSIP_SET_SIRK_SIZE], uint8_t r[BT_CSIP_CRYPTO_PRAND_SIZE],
+int bt_csip_sih(const uint8_t sirk[BT_CSIP_SIRK_SIZE], uint8_t r[BT_CSIP_CRYPTO_PRAND_SIZE],
 		uint8_t out[BT_CSIP_CRYPTO_HASH_SIZE])
 {
 	uint8_t res[BT_CSIP_PADDED_RAND_SIZE]; /* need to store 128 bit */
@@ -82,7 +76,7 @@ int bt_csip_sih(const uint8_t sirk[BT_CSIP_SET_SIRK_SIZE], uint8_t r[BT_CSIP_CRY
 		LOG_DBG("Invalid r %s", bt_hex(r, BT_CSIP_CRYPTO_PRAND_SIZE));
 	}
 
-	LOG_DBG("SIRK %s", bt_hex(sirk, BT_CSIP_SET_SIRK_SIZE));
+	LOG_DBG("SIRK %s", bt_hex(sirk, BT_CSIP_SIRK_SIZE));
 	LOG_DBG("r %s", bt_hex(r, BT_CSIP_CRYPTO_PRAND_SIZE));
 
 	/* r' = padding || r */
@@ -193,9 +187,8 @@ static int s1(const uint8_t *m, size_t m_size,
 	return err;
 }
 
-int bt_csip_sef(const uint8_t k[BT_CSIP_CRYPTO_KEY_SIZE],
-		const uint8_t sirk[BT_CSIP_SET_SIRK_SIZE],
-		uint8_t out_sirk[BT_CSIP_SET_SIRK_SIZE])
+int bt_csip_sef(const uint8_t k[BT_CSIP_CRYPTO_KEY_SIZE], const uint8_t sirk[BT_CSIP_SIRK_SIZE],
+		uint8_t out_sirk[BT_CSIP_SIRK_SIZE])
 {
 	const uint8_t m[] = {'S', 'I', 'R', 'K', 'e', 'n', 'c'};
 	const uint8_t p[] = {'c', 's', 'i', 's'};
@@ -208,7 +201,7 @@ int bt_csip_sef(const uint8_t k[BT_CSIP_CRYPTO_KEY_SIZE],
 	 * sef(K, SIRK) = k1(K, s1("SIRKenc"), "csis") ^ SIRK
 	 */
 
-	LOG_DBG("SIRK %s", bt_hex(sirk, BT_CSIP_SET_SIRK_SIZE));
+	LOG_DBG("SIRK %s", bt_hex(sirk, BT_CSIP_SIRK_SIZE));
 
 	if (IS_ENABLED(CONFIG_LITTLE_ENDIAN)) {
 		/* Swap because aes_cmac is big endian
@@ -240,14 +233,13 @@ int bt_csip_sef(const uint8_t k[BT_CSIP_CRYPTO_KEY_SIZE],
 	}
 
 	xor_128(k1_out, sirk, out_sirk);
-	LOG_DBG("out %s", bt_hex(out_sirk, BT_CSIP_SET_SIRK_SIZE));
+	LOG_DBG("out %s", bt_hex(out_sirk, BT_CSIP_SIRK_SIZE));
 
 	return 0;
 }
 
-int bt_csip_sdf(const uint8_t k[BT_CSIP_CRYPTO_KEY_SIZE],
-		const uint8_t enc_sirk[BT_CSIP_SET_SIRK_SIZE],
-		uint8_t out_sirk[BT_CSIP_SET_SIRK_SIZE])
+int bt_csip_sdf(const uint8_t k[BT_CSIP_CRYPTO_KEY_SIZE], const uint8_t enc_sirk[BT_CSIP_SIRK_SIZE],
+		uint8_t out_sirk[BT_CSIP_SIRK_SIZE])
 {
 	/* SIRK encryption is currently symmetric, which means that we can
 	 * simply apply the sef function to decrypt it.

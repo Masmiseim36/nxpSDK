@@ -19,7 +19,7 @@
 
 /*
  * Copyright (c) 2014 Simon Goldschmidt
- * Copyright 2019-2023 NXP
+ * Copyright 2019-2024 NXP
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
@@ -1167,15 +1167,17 @@ static void
 lwiperf_udp_set_client_rate(lwiperf_state_udp_t *c, s32_t rate, u32_t buf_len)
 {
   /* compute delay for bandwidth restriction, constrained to [0,1]s in microseconds */
-  c->delay_target = (uint32_t)((buf_len * 8 * (u64_t)1000000) / rate);
-  LWIP_PLATFORM_DIAG(("Ideal frame delay: %u us\n", c->delay_target));
-  /* truncate the delay according to clock resolution, may result in a higher bitrate */
+  double delay = ((buf_len * 8 * (u64_t)1000000) / (double)rate);
+  LWIP_PLATFORM_DIAG(("Ideal frame delay: %lf us\n", delay));
+  /* truncate delay to an integer, may result in a higher bitrate */
+  c->delay_target = (uint32_t)delay;
+  /* further truncate the delay according to clock resolution, may result in a higher bitrate */
   c->delay_target = (c->delay_target / CLOCK_RESOLUTION_US) * CLOCK_RESOLUTION_US;
   if (c->delay_target == 0u) {
     /* bitrate is high - have to send more than 1 frame per CLOCK_RESOLUTION_US
-     * period, may result in a lower bitrate and/or a higher jitter */
+     * period, may result in a difference from desired bitrate and/or a higher jitter */
     c->delay_target = CLOCK_RESOLUTION_US;
-    c->frames_per_delay = CLOCK_RESOLUTION_US / (uint32_t)((buf_len * 8 * (u64_t)1000000) / rate);
+    c->frames_per_delay = (uint32_t)(CLOCK_RESOLUTION_US / delay);
   } else {
     c->frames_per_delay = 1u;
   }

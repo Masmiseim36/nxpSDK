@@ -9,7 +9,7 @@
 *                                                                    *
 **********************************************************************
 
-** emWin V6.38 - Graphical user interface for embedded applications **
+** emWin V6.46 - Graphical user interface for embedded applications **
 All  Intellectual Property rights  in the Software belongs to  SEGGER.
 emWin is protected by  international copyright laws.  Knowledge of the
 source code may not be used to write a similar product.  This file may
@@ -34,7 +34,7 @@ License model:            emWin License Agreement, dated August 20th 2011 and Am
 Licensed platform:        NXP's ARM 7/9, Cortex-M0, M3, M4, M7, A7, M33
 ----------------------------------------------------------------------
 Support and Update Agreement (SUA)
-SUA period:               2011-08-19 - 2024-09-02
+SUA period:               2011-08-19 - 2025-09-02
 Contact to extend SUA:    sales@segger.com
 ----------------------------------------------------------------------
 File        : WM.h
@@ -88,10 +88,6 @@ extern "C" {     /* Make sure we have C-declarations in C++ programs */
 */
 #ifndef   WM_ASSERT
   #define WM_ASSERT(expr) GUI_DEBUG_ASSERT(expr)
-#endif
-
-#ifndef   WM_SUPPORT_TOUCH
-  #define WM_SUPPORT_TOUCH        GUI_SUPPORT_TOUCH
 #endif
 
 /* Allow older API calls */
@@ -587,7 +583,8 @@ struct WM_MESSAGE {
   WM_HWIN hWin;            // Destination window.
   WM_HWIN hWinSrc;         // Source window.
   union {
-    const void * p;        // Message-specific data pointer.
+    const void * p;        // Message-specific const data pointer.
+    void * pData;          // Message-specific data pointer.
     int v;                 // Message-specific data value.
     PTR_ADDR u;
     GUI_COLOR Color;
@@ -708,6 +705,7 @@ WM_HMEM WM_MOTION__CreateContext(void);
 void    WM_MOTION__DeleteContext(WM_HMEM hContext);
 WM_HMEM WM_MOTION__GetContext   (WM_HWIN hWin);
 void    WM_MOTION__SetContext   (WM_HWIN hWin, WM_HMEM hContext);
+int     WM_MOTION__IsActive     (void);
 
 /* Motion support, private function(s) */
 void     WM__SetMotionCallback (void(* cbMotion) (GUI_PID_STATE * pState, void * p));

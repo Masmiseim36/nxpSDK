@@ -1,13 +1,12 @@
 /*
- *  Copyright 2008-2020 NXP
+ *  Copyright 2008-2020, 2024 NXP
  *
  *  SPDX-License-Identifier: BSD-3-Clause
  *
  */
 
-/** @file wmcrypto.h
- *
- *  @brief Crypto Functions
+/*!\file wmcrypto.h
+ *\brief This file provides crypto wrapper interfaces.
  *
  *  This provides crypto wrapper functions that selectively call the WMSDKA or
  *  mbed TLS crypto functions based on the selected configuration.

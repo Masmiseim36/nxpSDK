@@ -1,9 +1,8 @@
-/** @file iperf.h
- *
- *  @brief  This file provides the support for network utility iperf
+/*!\file iperf.h
+ *\brief This file provides support for iperf console commands.
  */
 /*
- *  Copyright 2008-2020 NXP
+ *  Copyright 2008-2020, 2024 NXP
  *
  *  SPDX-License-Identifier: BSD-3-Clause
  *

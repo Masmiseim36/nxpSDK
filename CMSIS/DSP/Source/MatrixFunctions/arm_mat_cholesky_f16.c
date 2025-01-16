@@ -52,13 +52,17 @@
    * @par
    * If the matrix is ill conditioned or only semi-definite, then it is better using the LDL^t decomposition.
    * The decomposition of A is returning a lower triangular matrix U such that A = L L^t
+   *
+   * @par
+   * The destination matrix should be set to 0 before calling the functions because
+   * the function may not overwrite all output elements.
    */
 
 #if defined(ARM_MATH_MVE_FLOAT16) && !defined(ARM_MATH_AUTOVECTORIZE)
 
 #include "arm_helium_utils.h"
 
-arm_status arm_mat_cholesky_f16(
+ARM_DSP_ATTRIBUTE arm_status arm_mat_cholesky_f16(
   const arm_matrix_instance_f16 * pSrc,
         arm_matrix_instance_f16 * pDst)
 {
@@ -178,7 +182,7 @@ arm_status arm_mat_cholesky_f16(
 }
 
 #else
-arm_status arm_mat_cholesky_f16(
+ARM_DSP_ATTRIBUTE arm_status arm_mat_cholesky_f16(
   const arm_matrix_instance_f16 * pSrc,
         arm_matrix_instance_f16 * pDst)
 {

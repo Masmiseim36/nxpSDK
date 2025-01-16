@@ -103,7 +103,7 @@ static int ead_encrypt(const uint8_t session_key[BT_EAD_KEY_SIZE], const uint8_t
 		return -EIO;
 	}
 
-	BT_HEXDUMP_DBG(encrypted_payload, ead_size, "Encrypted Data: ");
+	LOG_HEXDUMP_DBG(encrypted_payload, ead_size, "Encrypted Data: ");
 
 	return 0;
 }
@@ -197,11 +197,11 @@ static int ead_decrypt(const uint8_t session_key[BT_EAD_KEY_SIZE], const uint8_t
 		return -EIO;
 	}
 
-	BT_HEXDUMP_DBG(encrypted_ad_data, encrypted_ad_data_size, "Encrypted Data: ");
+	LOG_HEXDUMP_DBG(encrypted_ad_data, encrypted_ad_data_size, "Encrypted Data: ");
 
 	err = bt_ccm_decrypt(session_key, nonce, encrypted_ad_data, payload_size, bt_ead_aad,
 			     BT_EAD_AAD_SIZE, payload, BT_EAD_MIC_SIZE);
-	BT_HEXDUMP_DBG(payload, payload_size, "Decrypted Data: ");
+	LOG_HEXDUMP_DBG(payload, payload_size, "Decrypted Data: ");
 	if (err != 0) {
 		LOG_DBG("Failed to decrypt the data (bt_ccm_decrypt err %d)", err);
 		return -EIO;

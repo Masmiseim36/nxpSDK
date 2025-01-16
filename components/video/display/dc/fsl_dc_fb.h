@@ -1,6 +1,5 @@
 /*
- * Copyright  2019 NXP
- * All rights reserved.
+ * Copyright 2019,2024 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -26,6 +25,7 @@ typedef struct _dc_fb_info
     uint16_t width;                   /*!< How many pixels in one line of the frame buffer.*/
     uint16_t height;                  /*!< How many lines in one frame buffer. */
     uint16_t strideBytes;             /*!< Stride of the frame buffer */
+    uint16_t strideBytes_2p;             /*!< Stride of the frame buffer */
     video_pixel_format_t pixelFormat; /*!< Pixel format of the frame buffer */
 } dc_fb_info_t;
 

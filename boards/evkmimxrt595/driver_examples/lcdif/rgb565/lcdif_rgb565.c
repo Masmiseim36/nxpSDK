@@ -1,24 +1,27 @@
 /*
- * Copyright (c) 2019, NXP
+ * Copyright 2019 NXP
  * All rights reserved.
  *
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
+#include "app.h"
 #include "fsl_lcdif.h"
 #include "lcdif_support.h"
 #include "fsl_debug_console.h"
 
-#include "pin_mux.h"
-#include "board.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_BYTE_PER_PIXEL     2U
-#define DEMO_IMG_HEIGHT         DEMO_PANEL_HEIGHT
-#define DEMO_IMG_WIDTH          DEMO_PANEL_WIDTH
+#define DEMO_BYTE_PER_PIXEL 2U
+#define DEMO_IMG_HEIGHT     DEMO_PANEL_HEIGHT
+#define DEMO_IMG_WIDTH      DEMO_PANEL_WIDTH
+#if defined(FSL_FEATURE_LCDIF_VERSION_DC8000) & FSL_FEATURE_LCDIF_VERSION_DC8000
+#define DEMO_IMG_BYTES_PER_LINE LCDIF_ALIGN_ADDR((DEMO_IMG_WIDTH * DEMO_BYTE_PER_PIXEL), LCDIF_FB_ALIGN)
+#else
 #define DEMO_IMG_BYTES_PER_LINE (DEMO_PANEL_WIDTH * DEMO_BYTE_PER_PIXEL)
+#endif
 
 /*******************************************************************************
  * Prototypes
@@ -48,7 +51,7 @@ void DEMO_LCDIF_IRQHandler(void)
 
 void DEMO_FillFrameBuffer(uint32_t frameBufferAddr)
 {
-    uint16_t(*frameBuffer)[DEMO_IMG_WIDTH] = (void *)frameBufferAddr;
+    uint8_t(*frameBuffer)[DEMO_IMG_BYTES_PER_LINE] = (void *)frameBufferAddr;
 
     /* Foreground color. */
     static uint8_t fgColorIndex          = 0U;
@@ -64,20 +67,20 @@ void DEMO_FillFrameBuffer(uint32_t frameBufferAddr)
     static int8_t incX = 1;
     static int8_t incY = 1;
 
-    /* Change color in next forame or not. */
+    /* Change color in next frame or not. */
     static bool changeColor = false;
 
     uint32_t i, j;
 
     /* Set background color to black. */
-    memset(frameBuffer, 0, DEMO_IMG_WIDTH * DEMO_IMG_HEIGHT * 2);
+    memset(frameBuffer, 0, DEMO_IMG_BYTES_PER_LINE * DEMO_IMG_HEIGHT);
 
     /* Foreground color. */
     for (i = upperLeftY; i < lowerRightY; i++)
     {
         for (j = upperLeftX; j < lowerRightX; j++)
         {
-            frameBuffer[i][j] = fgColor;
+            *((uint16_t *)&frameBuffer[i][j * 2]) = fgColor;
         }
     }
 
@@ -141,7 +144,7 @@ void DEMO_LCDIF_Init(void)
 
     LCDIF_DpiModeSetConfig(DEMO_LCDIF, 0, &dpiConfig);
 
-    LCDIF_SetFrameBufferStride(DEMO_LCDIF, 0, DEMO_IMG_WIDTH * DEMO_BYTE_PER_PIXEL);
+    LCDIF_SetFrameBufferStride(DEMO_LCDIF, 0, DEMO_IMG_BYTES_PER_LINE);
 
     if (kStatus_Success != BOARD_InitDisplayInterface())
     {
@@ -207,7 +210,7 @@ void DEMO_LCDIF_RGB(void)
         while (!s_frameDone)
         {
         }
-        
+
 #if defined(FSL_FEATURE_LCDIF_VERSION_DC8000) & FSL_FEATURE_LCDIF_VERSION_DC8000
         LCDIF_SetUpdateReady(DEMO_LCDIF);
 #endif
@@ -222,22 +225,7 @@ void DEMO_LCDIF_RGB(void)
  */
 int main(void)
 {
-    BOARD_InitPins();
-    BOARD_InitMipiPanelPins();
-    BOARD_InitPsRamPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
-    BOARD_InitLcdifClock();
-
-    GPIO_PortInit(GPIO, BOARD_MIPI_POWER_PORT);
-    GPIO_PortInit(GPIO, BOARD_MIPI_BL_PORT);
-    GPIO_PortInit(GPIO, BOARD_MIPI_RST_PORT);
-
-    status_t status = BOARD_InitPsRam();
-    if (status != kStatus_Success)
-    {
-        assert(false);
-    }
+    BOARD_InitHardware();
 
     PRINTF("LCDIF RGB565 example start...\r\n");
 

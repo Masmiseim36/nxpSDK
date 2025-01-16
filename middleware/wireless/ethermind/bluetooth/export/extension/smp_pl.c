@@ -1538,7 +1538,7 @@ API_RESULT BT_smp_get_oob_data_pl
                 {
 #ifdef SMP_LESC
                     BT_mem_copy (oob->lesc_rand, smp_pl_device_list[i].rand, SMP_OOB_RANDOM_VAL_SIZE);
-                    BT_mem_copy (oob->temp_key, smp_pl_device_list[i].cnf_val, SMP_OOB_CONFIRM_VAL_SIZE);
+                    BT_mem_copy (oob->lesc_cnf_val, smp_pl_device_list[i].cnf_val, SMP_OOB_CONFIRM_VAL_SIZE);
 #endif /* SMP_LESC */
                     BT_mem_copy (oob->temp_key, smp_pl_device_list[i].tk, SMP_OOB_TEMP_KEY_SIZE);
                 }

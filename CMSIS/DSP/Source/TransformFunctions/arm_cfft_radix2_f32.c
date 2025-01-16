@@ -28,13 +28,13 @@
 
 #include "dsp/transform_functions.h"
 
-void arm_radix2_butterfly_f32(
+ARM_DSP_ATTRIBUTE void arm_radix2_butterfly_f32(
         float32_t * pSrc,
         uint32_t fftLen,
   const float32_t * pCoef,
         uint16_t twidCoefModifier);
 
-void arm_radix2_butterfly_inverse_f32(
+ARM_DSP_ATTRIBUTE void arm_radix2_butterfly_inverse_f32(
         float32_t * pSrc,
         uint32_t fftLen,
   const float32_t * pCoef,
@@ -59,10 +59,9 @@ extern void arm_bitreversal_f32(
   @deprecated    Do not use this function. It has been superseded by \ref arm_cfft_f32 and will be removed in the future
   @param[in]     S    points to an instance of the floating-point Radix-2 CFFT/CIFFT structure
   @param[in,out] pSrc points to the complex data buffer of size <code>2*fftLen</code>. Processing occurs in-place
-  @return        none
  */
 
-void arm_cfft_radix2_f32(
+ARM_DSP_ATTRIBUTE void arm_cfft_radix2_f32(
 const arm_cfft_radix2_instance_f32 * S,
       float32_t * pSrc)
 {
@@ -108,7 +107,7 @@ const arm_cfft_radix2_instance_f32 * S,
   return        none
  */
 
-void arm_radix2_butterfly_f32(
+ARM_DSP_ATTRIBUTE void arm_radix2_butterfly_f32(
         float32_t * pSrc,
         uint32_t fftLen,
   const float32_t * pCoef,
@@ -276,7 +275,7 @@ void arm_radix2_butterfly_f32(
 }
 
 
-void arm_radix2_butterfly_inverse_f32(
+ARM_DSP_ATTRIBUTE void arm_radix2_butterfly_inverse_f32(
         float32_t * pSrc,
         uint32_t fftLen,
   const float32_t * pCoef,

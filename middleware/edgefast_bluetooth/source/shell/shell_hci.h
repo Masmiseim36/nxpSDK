@@ -4,4 +4,4 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-shell_status_t cmd_mesh_adv(shell_handle_t shell, int32_t argc, char *argv[]);
+int cmd_mesh_adv(const struct shell *sh, size_t argc, char *argv[]);

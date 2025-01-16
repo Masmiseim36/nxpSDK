@@ -28,13 +28,12 @@
 LOG_MODULE_DEFINE(LOG_MODULE_NAME, kLOG_LevelTrace);
 
 #if CONFIG_BT_DIS_PNP
-STRUCT_PACKED_PRE
 struct dis_pnp {
 	uint8_t pnp_vid_src;
 	uint16_t pnp_vid;
 	uint16_t pnp_pid;
 	uint16_t pnp_ver;
-} STRUCT_PACKED_POST;
+} __packed;
 
 static struct dis_pnp dis_pnp_id = {
 	.pnp_vid_src = CONFIG_BT_DIS_PNP_VID_SRC,

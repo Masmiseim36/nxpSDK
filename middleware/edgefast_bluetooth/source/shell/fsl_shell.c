@@ -671,6 +671,14 @@ static shell_status_t SHELL_FindCommand(shell_context_handle_t *shellContextHand
         return kStatus_SHELL_Error;
     }
 
+    if (strlen(cmdLine) > strlen(cmd->pcCommand))
+    {
+        if ((cmdLine[strlen(cmd->pcCommand)] != SHELL_COMMAND_CONNECTOR) && (cmdLine[strlen(cmd->pcCommand)] != ' '))
+        {
+            return kStatus_SHELL_Error;
+        }
+    }
+
     if ((NULL != cmd->commandList) && (strlen(cmdLine) > ((uint32_t)strlen(cmd->pcCommand))))
     {
         if (SHELL_COMMAND_CONNECTOR != cmdLine[((uint32_t)strlen(cmd->pcCommand))])

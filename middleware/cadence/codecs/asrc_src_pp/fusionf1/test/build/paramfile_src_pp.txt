@@ -1,0 +1,6 @@
+@Start
+@Input_path ../test_inp/
+@Output_path ../test_out/
+-insize:128 -outrate:48000 -ifile:sinusoid_8960Hz_32kHz.wav  -ofile:out_src_sinusoid_8960Hz_48kHz.wav
+-insize:128 -outrate:48000 -enable_asrc:1 -drift_asrc:0.03  -ifile:sinusoid_8960Hz_32kHz.wav  -ofile:out_src_sinusoid_8960Hz_48kHz_asrc.wav
+@Stop

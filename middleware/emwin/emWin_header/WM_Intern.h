@@ -9,7 +9,7 @@
 *                                                                    *
 **********************************************************************
 
-** emWin V6.38 - Graphical user interface for embedded applications **
+** emWin V6.46 - Graphical user interface for embedded applications **
 All  Intellectual Property rights  in the Software belongs to  SEGGER.
 emWin is protected by  international copyright laws.  Knowledge of the
 source code may not be used to write a similar product.  This file may
@@ -34,7 +34,7 @@ License model:            emWin License Agreement, dated August 20th 2011 and Am
 Licensed platform:        NXP's ARM 7/9, Cortex-M0, M3, M4, M7, A7, M33
 ----------------------------------------------------------------------
 Support and Update Agreement (SUA)
-SUA period:               2011-08-19 - 2024-09-02
+SUA period:               2011-08-19 - 2025-09-02
 Contact to extend SUA:    sales@segger.com
 ----------------------------------------------------------------------
 File        : WM_Intern.h
@@ -153,22 +153,22 @@ extern int                    WM__ModalLayer;
 #endif
 
 #if (GUI_NUM_LAYERS > 1)
-  GUI_EXTERN U32                       WM__InvalidLayerMask;
-  GUI_EXTERN unsigned                  WM__TouchedLayer;
+  extern U32                       WM__InvalidLayerMask;
+  extern unsigned                  WM__TouchedLayer;
   #define WM__TOUCHED_LAYER            WM__TouchedLayer
 #else
   #define WM__TOUCHED_LAYER            GUI_CURSOR_LAYER
 #endif
 
-GUI_EXTERN U16     WM__NumWindows;
-GUI_EXTERN U16     WM__NumInvalidWindows;
-GUI_EXTERN WM_HWIN WM__FirstWin;
-GUI_EXTERN WM_CRITICAL_HANDLE * WM__pFirstCriticalHandle;
+extern U16     WM__NumWindows;
+extern U16     WM__NumInvalidWindows;
+extern WM_HWIN WM__FirstWin;
+extern WM_CRITICAL_HANDLE * WM__pFirstCriticalHandle;
 
-GUI_EXTERN WM_HWIN   WM__ahDesktopWin[GUI_NUM_LAYERS];
-GUI_EXTERN GUI_COLOR WM__aBkColor[GUI_NUM_LAYERS];
+extern WM_HWIN   WM__ahDesktopWin[GUI_NUM_LAYERS];
+extern GUI_COLOR WM__aBkColor[GUI_NUM_LAYERS];
 
-GUI_EXTERN U32 WM__DrawSprite;  // Required when using sprites in combination with the WM.
+extern U32 WM__DrawSprite;  // Required when using sprites in combination with the WM.
 
 #undef GUI_EXTERN
 

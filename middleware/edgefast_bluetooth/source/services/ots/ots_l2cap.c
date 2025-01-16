@@ -28,21 +28,7 @@
 #include "fsl_component_log.h"
 LOG_MODULE_DEFINE(LOG_MODULE_NAME, kLOG_LevelTrace);
 
-#ifndef LOG_DBG
-#define LOG_DBG BT_DBG
-#endif
 
-#ifndef LOG_ERR
-#define LOG_ERR BT_ERR
-#endif
-
-#ifndef LOG_HEXDUMP_DBG
-#define LOG_HEXDUMP_DBG BT_HEXDUMP_DBG
-#endif
-
-#ifndef LOG_WRN
-#define LOG_WRN BT_WARN
-#endif
 
 /* According to BLE specification Assigned Numbers that are used in the
  * Logical Link Control for protocol/service multiplexers.
@@ -51,10 +37,12 @@ LOG_MODULE_DEFINE(LOG_MODULE_NAME, kLOG_LevelTrace);
 
 
 NET_BUF_POOL_FIXED_DEFINE(ot_chan_tx_pool, 1,
-			  BT_L2CAP_SDU_BUF_SIZE(CONFIG_BT_OTS_L2CAP_CHAN_TX_MTU), NULL);
+			  BT_L2CAP_SDU_BUF_SIZE(CONFIG_BT_OTS_L2CAP_CHAN_TX_MTU),
+			  CONFIG_BT_CONN_TX_USER_DATA_SIZE, NULL);
 
 #if (CONFIG_BT_OTS_L2CAP_CHAN_RX_MTU > BT_L2CAP_SDU_RX_MTU)
-NET_BUF_POOL_FIXED_DEFINE(ot_chan_rx_pool, 1, CONFIG_BT_OTS_L2CAP_CHAN_RX_MTU, NULL);
+NET_BUF_POOL_FIXED_DEFINE(ot_chan_rx_pool, 1, CONFIG_BT_OTS_L2CAP_CHAN_RX_MTU, 8,
+			  NULL);
 #endif
 
 /* List of Object Transfer Channels. */
@@ -71,7 +59,7 @@ static int ots_l2cap_send(struct bt_gatt_ots_l2cap *l2cap_ctx)
 	len = MIN(len, l2cap_ctx->tx.len - l2cap_ctx->tx.len_sent);
 
 	/* Prepare buffer for sending. */
-	buf = net_buf_alloc(&ot_chan_tx_pool, osaWaitForever_c);
+	buf = net_buf_alloc(&ot_chan_tx_pool, K_FOREVER);
 	net_buf_reserve(buf, BT_L2CAP_SDU_CHAN_SEND_RESERVE);
 	net_buf_add_mem(buf, &l2cap_ctx->tx.data[l2cap_ctx->tx.len_sent], len);
 
@@ -96,7 +84,7 @@ static struct net_buf *l2cap_alloc_buf(struct bt_l2cap_chan *chan)
 {
 	LOG_DBG("Channel %p allocating buffer", chan);
 
-	return net_buf_alloc(&ot_chan_rx_pool, osaWaitForever_c);
+	return net_buf_alloc(&ot_chan_rx_pool, K_FOREVER);
 }
 #endif
 
@@ -190,7 +178,7 @@ static struct bt_gatt_ots_l2cap *find_free_l2cap_ctx(void)
 {
 	struct bt_gatt_ots_l2cap *l2cap_ctx;
 
-	SYS_SLIST_FOR_EACH_CONTAINER(&channels, l2cap_ctx, node, struct bt_gatt_ots_l2cap) {
+	SYS_SLIST_FOR_EACH_CONTAINER(&channels, l2cap_ctx, node) {
 		if (l2cap_ctx->ot_chan.chan.conn) {
 			continue;
 		}

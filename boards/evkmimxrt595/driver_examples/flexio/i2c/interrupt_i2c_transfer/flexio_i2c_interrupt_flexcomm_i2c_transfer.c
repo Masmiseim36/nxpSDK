@@ -13,25 +13,13 @@
 #include "pin_mux.h"
 #include "clock_config.h"
 #include "board.h"
+#include "app.h"
 #include <stdio.h>
 #include <string.h>
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define BOARD_FLEXIO_BASE      FLEXIO0
-#define FLEXIO_I2C_SDA_PIN     10
-#define FLEXIO_I2C_SCL_PIN     11
-#define EXAMPLE_I2C_SLAVE_BASE I2C5
-/* Select flexio clock source */
-#define FLEXIO_CLOCK_SRC (kFRO_DIV2_to_FLEXIO)
-/* Clock divider for flexio clock source */
-#define FLEXIO_CLOCK_DIVIDER   (8U)
-#define FLEXIO_CLOCK_FREQUENCY CLOCK_GetFlexioClkFreq()
-
-#define BOARD_I2C_SLAVE_BASE      I2C11
-#define I2C_SLAVE_CLOCK_FREQUENCY CLOCK_GetFlexcommClkFreq(11)
-#define BOARD_I2C_SLAVE_IRQn      FLEXCOMM11_IRQn
 /* I2C Slave Address */
 #define I2C_MASTER_SLAVE_ADDR_7BIT 0x7EU
 /* I2C Baudrate 100K */
@@ -91,16 +79,7 @@ int main(void)
     flexio_i2c_master_transfer_t masterXfer;
     IRQn_Type flexio_irqs[] = FLEXIO_IRQS;
 
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
-    /* Use 48 MHz clock for the FLEXCOMM11 */
-    CLOCK_AttachClk(kFRO_DIV4_to_FLEXCOMM11);
-    /* Clock setting for Flexio */
-    CLOCK_AttachClk(FLEXIO_CLOCK_SRC);
-    CLOCK_SetClkDiv(kCLOCK_DivFlexioClk, FLEXIO_CLOCK_DIVIDER);
-
-    RESET_ClearPeripheralReset(kFLEXIO_RST_SHIFT_RSTn);
+    BOARD_InitHardware();
 
     PRINTF("\r\nFlexIO I2C interrupt - I2C interrupt\r\n");
 

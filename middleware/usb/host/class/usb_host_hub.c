@@ -476,7 +476,7 @@ usb_status_t USB_HostHubGetDescriptor(usb_host_class_handle classHandle,
 {
     return USB_HostHubClassRequestCommon(
         classHandle, USB_REQUEST_TYPE_DIR_IN | USB_REQUEST_TYPE_TYPE_CLASS | USB_REQUEST_TYPE_RECIPIENT_DEVICE,
-        USB_REQUEST_STANDARD_GET_DESCRIPTOR, 0x00, 0, buffer, bufferLength, callbackFn, callbackParam);
+        USB_REQUEST_STANDARD_GET_DESCRIPTOR, 0x2900, 0, buffer, bufferLength, callbackFn, callbackParam);
 }
 
 /*!

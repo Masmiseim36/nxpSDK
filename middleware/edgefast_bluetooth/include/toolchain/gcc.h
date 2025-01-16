@@ -22,6 +22,10 @@
 
 #ifndef _LINKER
 
+#ifndef FUNC_NORETURN
+#define FUNC_NORETURN __attribute__((__noreturn__))
+#endif /* FUNC_NORETURN */
+
 #ifndef __ORDER_BIG_ENDIAN__
 #define __ORDER_BIG_ENDIAN__            (1)
 #endif
@@ -97,7 +101,7 @@
 #define FUNC_ALIAS(real_func, new_alias, return_type) \
 	return_type new_alias() ALIAS_OF(real_func)
 
-#if defined(CONFIG_ARCH_POSIX)
+#if (defined(CONFIG_ARCH_POSIX) && (CONFIG_ARCH_POSIX > 0))
 #include <arch/posix/posix_trace.h>
 
 /*let's not segfault if this were to happen for some reason*/
@@ -110,7 +114,6 @@
 #else
 #define CODE_UNREACHABLE __builtin_unreachable()
 #endif
-#define FUNC_NORETURN    __attribute__((__noreturn__))
 
 /* The GNU assembler for Cortex-M3 uses # for immediate values, not
  * comments, so the @nobits# trick does not work.
@@ -206,6 +209,9 @@ do {                                                                    \
 #define __get_section_start(x, type, name) extern type name[];
 #define __get_section_end(x, type, name) extern type name[];
 
+#define __get_rw_section_start(x, type, name) extern type name[];
+#define __get_rw_section_end(x, type, name) extern type name[];
+
 #ifdef CONFIG_APPLICATION_MEMORY
 #define __kernel	__in_section_unique(kernel)
 #define __kernel_noinit	__in_section_unique(kernel_noinit)
@@ -217,34 +223,11 @@ do {                                                                    \
 #endif
 
 #define __noinit
+#define __noinit_named(x)
 
 #ifndef _OFF_T_DECLARED
 typedef int off_t; /* file offset */
 #define _OFF_T_DECLARED
-#endif
-
-#ifndef STRUCT_PACKED_PRE
-#define STRUCT_PACKED_PRE
-#endif
-
-#ifndef STRUCT_PACKED_POST
-#define STRUCT_PACKED_POST __attribute__((__packed__))
-#endif
-
-#ifndef UNION_PACKED_PRE
-#define UNION_PACKED_PRE
-#endif
-
-#ifndef UNION_PACKED_POST
-#define UNION_PACKED_POST __attribute__((__packed__))
-#endif
-
-#ifndef ENUM_PACKED_PRE
-#define ENUM_PACKED_PRE
-#endif
-
-#ifndef ENUM_PACKED_POST
-#define ENUM_PACKED_POST __attribute__((__packed__))
 #endif
 
 #ifndef __packed
@@ -261,12 +244,19 @@ typedef int off_t; /* file offset */
 #define __printf_like(f, a)   __attribute__((format (printf, f, a)))
 #endif
 #define __used		__attribute__((__used__))
+#define __unused	__attribute__((__unused__))
+#define __maybe_unused	__attribute__((__unused__))
 #ifndef __deprecated
 #define __deprecated	__attribute__((deprecated))
 #endif
 #ifndef __attribute_const__
 #define __attribute_const__ __attribute__((__const__))
 #endif
+
+#ifndef __must_check
+#define __must_check __attribute__((warn_unused_result))
+#endif
+
 #define ARG_UNUSED(x) (void)(x)
 
 #define likely(x)   __builtin_expect((bool)!!(x), true)
@@ -323,9 +313,9 @@ typedef int off_t; /* file offset */
 
 #if defined(_ASMLANGUAGE)
 
-#if defined(CONFIG_ARM)
+#if (defined(CONFIG_ARM) && (CONFIG_ARM > 0))
 
-#if defined(CONFIG_ASSEMBLER_ISA_THUMB2)
+#if (defined(CONFIG_ASSEMBLER_ISA_THUMB2) && (CONFIG_ASSEMBLER_ISA_THUMB2 > 0))
 
 #define FUNC_CODE() .thumb;
 #define FUNC_INSTR(a)
@@ -401,7 +391,7 @@ typedef int off_t; /* file offset */
  *   if all functions in the sub-section are not referenced.
  */
 
-#if defined(CONFIG_ARC)
+#if (defined(CONFIG_ARC) && (CONFIG_ARC > 0))
 /*
  * Need to use assembly macros because ';' is interpreted as the start of
  * a single line comment in the ARC assembler.
@@ -449,8 +439,8 @@ typedef int off_t; /* file offset */
 #endif /* _ASMLANGUAGE */
 
 #if defined(_ASMLANGUAGE)
-#if defined(CONFIG_ARM)
-#if defined(CONFIG_ASSEMBLER_ISA_THUMB2)
+#if (defined(CONFIG_ARM) && (CONFIG_ARM > 0))
+#if (defined(CONFIG_ASSEMBLER_ISA_THUMB2) && (CONFIG_ASSEMBLER_ISA_THUMB2 > 0))
 /* '.syntax unified' is a gcc-ism used in thumb-2 asm files */
 #define _ASM_FILE_PROLOGUE .text; .syntax unified; .thumb
 #else
@@ -493,7 +483,7 @@ typedef int off_t; /* file offset */
  * to generate named symbol/value pairs for kconfigs.
  */
 
-#if defined(CONFIG_ARM)
+#if (defined(CONFIG_ARM) && (CONFIG_ARM > 0))
 
 /*
  * GNU/ARM backend does not have a proper operand modifier which does not

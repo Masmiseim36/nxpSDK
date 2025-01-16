@@ -6,16 +6,12 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 #include "fsl_usart.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_USART          USART0
-#define DEMO_USART_CLK_SRC  kCLOCK_Flexcomm0Clk
-#define DEMO_USART_CLK_FREQ CLOCK_GetFlexcommClkFreq(0)
 
 /*******************************************************************************
  * Prototypes
@@ -39,9 +35,7 @@ int main(void)
     uint8_t ch;
     usart_config_t config;
 
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
     /*
      * config.baudRate_Bps = 115200U;
      * config.parityMode = kUSART_ParityDisabled;

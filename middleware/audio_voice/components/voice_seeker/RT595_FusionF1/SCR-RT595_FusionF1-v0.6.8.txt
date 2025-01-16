@@ -1,0 +1,39 @@
+NXP Software Content Register
+
+Release - VoiceSeeker_v0.6.8
+
+Outgoing License: LA_OPT_NXP_Software_License v49 September 2023 - Appendix A: NXP Voice Software applies.
+License File:     license.txt
+
+Release tag: v0.6.8
+
+--------------------------------------------
+
+Package:                    libvoiceseeker
+Version:                    0.6.8
+Outgoing License:           LA_OPT_NXP_Software_License v49 September 2023 - Appendix A: NXP Voice Software applies.
+License File:               ./LICENSE.txt
+Package Category:           library
+Type of Content:            binary and headers
+Description and comments:   Multi-microphone audio-front-end with acoustic echo cancellation.
+Release Location:           ./include
+							./lib/libvoiceseeker.a
+							./lib/libvoiceseeker_no_aec.a
+Origin:                     NXP (proprietary)
+							NatureDSP Library (proprietary) - Cadence Design Systems
+
+--------------------------------------------
+
+Name: 						NatureDSP                                   
+Version: 					1.0.0                             
+Outgoing License: 			LA_OPT_NXP_Software_License v49 September 2023 - Appendix A: Cadence Design Systems applies.
+License File: 				license.txt
+Package Category:       	library
+Type of Content:			object code                               
+Description: 				Digital Signal Processing for Xtensa Fusion F1 Audio Engines
+Release Location:       	./lib/libvoiceseeker.a
+							./lib/libvoiceseeker_no_aec.a
+Origin: 					Cadence Design Systems (Proprietary)  
+
+--------------------------------------------
+

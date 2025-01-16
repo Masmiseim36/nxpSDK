@@ -24,8 +24,8 @@
  */
 
  
-#ifndef _MATRIX_FUNCTIONS_F16_H_
-#define _MATRIX_FUNCTIONS_F16_H_
+#ifndef MATRIX_FUNCTIONS_F16_H_
+#define MATRIX_FUNCTIONS_F16_H_
 
 #ifdef   __cplusplus
 extern "C"
@@ -228,7 +228,6 @@ void arm_mat_init_f16(
                    - \ref ARM_MATH_SIZE_MISMATCH : Matrix size check failed
                    - \ref ARM_MATH_SINGULAR      : Input matrix is found to be singular (non-invertible)
  */
-
 arm_status arm_mat_qr_f16(
     const arm_matrix_instance_f16 * pSrc,
     const float16_t threshold,
@@ -247,7 +246,6 @@ arm_status arm_mat_qr_f16(
   @param[outQ]   pOut        points to the output vector.
   @return        beta        return the scaling factor beta
  */
-
 float16_t arm_householder_f16(
     const float16_t * pSrc,
     const float16_t threshold,

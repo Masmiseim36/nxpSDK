@@ -95,6 +95,36 @@ struct eth_llc_hdr
 /* The time to block waiting for input. */
 #define emacBLOCK_TIME_WAITING_FOR_INPUT ((portTickType)100)
 
+#if FSL_USDHC_ENABLE_SCATTER_GATHER_TRANSFER
+#define NETIF_TX_BUFFERS 32
+#define NETIF_RX_BUFFERS 32
+
+/**
+ * npx wifi driver structure.
+ */
+struct nxp_wifi_device
+{
+    /** Set to 1 when owner is software (ready to read), 0 for Wi-Fi. */
+    uint32_t rx_desc[NETIF_RX_BUFFERS];
+    /** Set to 1 when owner is Wi-Fi, 0 for software. */
+    uint32_t tx_desc[NETIF_TX_BUFFERS];
+    /** RX pbuf pointer list */
+    struct pbuf *rx_pbuf[NETIF_RX_BUFFERS];
+    /** TX pbuf pointer list */
+    struct pbuf *tx_pbuf[NETIF_TX_BUFFERS];
+
+    /** Circular buffer head pointer for packet received. */
+    uint32_t us_rx_head;
+    /** Circular buffer tail pointer for packet to be read. */
+    uint32_t us_rx_tail;
+    /** Circular buffer head pointer by upper layer (buffer to be sent). */
+    uint32_t us_tx_head;
+    /** Circular buffer tail pointer incremented by handlers (buffer sent). */
+    uint32_t us_tx_tail;
+    /** RX task notification semaphore. */
+    sys_sem_t sync_sem;
+};
+#endif
 /*------------------------------------------------------*/
 extern int wlan_get_mac_address(uint8_t *dest);
 extern void wlan_wake_up_card(void);
@@ -104,11 +134,11 @@ extern void wlan_wake_up_card(void);
 // void (*l2_packet_rx_callback)(const struct pbuf *p);
 #endif /* CONFIG_HOST_SUPP */
 
+#if UAP_SUPPORT
 void wrapper_wlan_update_uap_rxrate_info(RxPD *rxpd);
+#endif
 
 int wrapper_wlan_handle_rx_packet(t_u16 datalen, RxPD *rxpd, void *p, void *payload);
-
-int wrapper_wlan_handle_amsdu_rx_packet(const t_u8 *rcvdata, const t_u16 datalen);
 
 #if CONFIG_NET_MONITOR
 void user_recv_monitor_data(const t_u8 *rcvdata);

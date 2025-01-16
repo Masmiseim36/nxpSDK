@@ -9,7 +9,7 @@
 *                                                                    *
 **********************************************************************
 
-** emWin V6.38 - Graphical user interface for embedded applications **
+** emWin V6.46 - Graphical user interface for embedded applications **
 All  Intellectual Property rights  in the Software belongs to  SEGGER.
 emWin is protected by  international copyright laws.  Knowledge of the
 source code may not be used to write a similar product.  This file may
@@ -34,7 +34,7 @@ License model:            emWin License Agreement, dated August 20th 2011 and Am
 Licensed platform:        NXP's ARM 7/9, Cortex-M0, M3, M4, M7, A7, M33
 ----------------------------------------------------------------------
 Support and Update Agreement (SUA)
-SUA period:               2011-08-19 - 2024-09-02
+SUA period:               2011-08-19 - 2025-09-02
 Contact to extend SUA:    sales@segger.com
 ----------------------------------------------------------------------
 File        : GUI_GCache_Private.h
@@ -55,6 +55,9 @@ Purpose     : Private header
 */
 #define DRIVER_CONTEXT DRIVER_CONTEXT_GCACHE
 
+#define GUI_GCACHE_FLAGS_USER_BUFFER    (1 << 0)
+#define GUI_GCACHE_FLAGS_COLORCONV_REQ  (1 << 1)
+
 /*********************************************************************
 *
 *       Types
@@ -72,6 +75,7 @@ typedef struct {
   int MemSize;
   int BitsPerPixel;
   int BytesPerLine;
+  U32 Flags;
   //
   // Line buffer for reading operation
   //
@@ -85,7 +89,7 @@ typedef struct {
   //
   void (* pfReadRect)     (GUI_DEVICE * pDevice, int _x0, int _y0, int _x1, int _y1, LCD_PIXELINDEX * pBuffer);
   void (* pfSendCacheRect)(GUI_DEVICE * pDevice);
-  U32 * pVMEM;
+  U32   * pVMEM;
   //
   // Drawing functions
   //
@@ -99,7 +103,7 @@ typedef struct {
   //
   // GetData function
   //
-  void          *(* pfGetDevData   )(GUI_DEVICE *  pDevice,  int Index);
+  const void    *(* pfGetDevData   )(GUI_DEVICE *  pDevice,  int Index);
 } DRIVER_CONTEXT;
 
 /*********************************************************************
@@ -108,7 +112,8 @@ typedef struct {
 *
 **********************************************************************
 */
-GUI_DEVICE * GUI_GCACHE__CreateEx(int LayerIndex, const LCD_API_COLOR_CONV * pColorConvAPI, int BitsPerPixel);
+GUI_DEVICE * GUI_GCACHE__CreateEx           (int LayerIndex, const LCD_API_COLOR_CONV * pColorConvAPI, int BitsPerPixel, void * pUserBuffer);
+const U16  * GUI_GCACHE__ConvertLineOnDemand(GUI_DEVICE * pDevice, const U16 * pSrc, int NumPixels);
 
 #endif
 

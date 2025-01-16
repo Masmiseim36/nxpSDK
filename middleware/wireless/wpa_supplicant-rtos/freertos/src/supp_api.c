@@ -42,8 +42,14 @@
 #endif
 
 #ifdef CONFIG_DPP
+#if CONFIG_HOSTAPD
 #include "ap/dpp_hostapd.h"
+#endif
 #include "wpa_supplicant/dpp_supplicant.h"
+#endif
+
+#if CONFIG_11R
+#include "wpa_i.h"
 #endif
 
 #define EAP_TTLS_AUTH_PAP      1
@@ -523,6 +529,44 @@ static int wpa_config_process_blob(struct wpa_config *config, char *name, u8 *da
     return 0;
 }
 #endif
+
+static int wpa_parse_intlist(int **int_list, char *val)
+{
+    int *list;
+    int count;
+    char *pos, *end;
+
+    os_free(*int_list);
+    *int_list = NULL;
+
+    pos   = val;
+    count = 0;
+    while (*pos != '\0')
+    {
+        if (*pos == ' ')
+            count++;
+        pos++;
+    }
+
+    list = os_malloc(sizeof(int) * (count + 2));
+    if (list == NULL)
+        return -1;
+    pos   = val;
+    count = 0;
+    while (*pos != '\0')
+    {
+        end = os_strchr(pos, ' ');
+
+        list[count++] = atoi(pos);
+        if (!end)
+            break;
+        pos = end + 1;
+    }
+    list[count] = -1;
+
+    *int_list = list;
+    return 0;
+}
 
 #if CONFIG_HOSTAPD
 #if CONFIG_WPA_SUPP_CRYPTO_AP_ENTERPRISE
@@ -1062,44 +1106,6 @@ fail:
 }
 #endif
 
-static int wpa_parse_intlist(int **int_list, char *val)
-{
-    int *list;
-    int count;
-    char *pos, *end;
-
-    os_free(*int_list);
-    *int_list = NULL;
-
-    pos   = val;
-    count = 0;
-    while (*pos != '\0')
-    {
-        if (*pos == ' ')
-            count++;
-        pos++;
-    }
-
-    list = os_malloc(sizeof(int) * (count + 2));
-    if (list == NULL)
-        return -1;
-    pos   = val;
-    count = 0;
-    while (*pos != '\0')
-    {
-        end = os_strchr(pos, ' ');
-
-        list[count++] = atoi(pos);
-        if (!end)
-            break;
-        pos = end + 1;
-    }
-    list[count] = -1;
-
-    *int_list = list;
-    return 0;
-}
-
 static int hostapd_update_bss(struct hostapd_iface *hapd_s, struct wlan_network *network)
 {
     struct hostapd_config *conf;
@@ -1341,6 +1347,10 @@ static int hostapd_update_bss(struct hostapd_iface *hapd_s, struct wlan_network 
                 {
                     bss->wpa_key_mgmt = WPA_KEY_MGMT_IEEE8021X_SUITE_B;
                     bss->tls_flags |= TLS_CONN_SUITEB;
+                }
+                else if (network->security.wpa3_ent)
+                {
+                    bss->wpa_key_mgmt = WPA_KEY_MGMT_IEEE8021X_SHA256;
                 }
                 else
                 {
@@ -2072,6 +2082,10 @@ int wpa_supp_add_network(const struct netif *dev, struct wlan_network *network)
                     {
                         ssid->key_mgmt  = WPA_KEY_MGMT_IEEE8021X_SUITE_B;
                         openssl_ciphers = "SUITEB128";
+                    }
+                    else if (network->security.wpa3_ent)
+                    {
+                        ssid->key_mgmt  = WPA_KEY_MGMT_IEEE8021X_SHA256;
                     }
                     else
                     {
@@ -2933,6 +2947,7 @@ out:
     return ret;
 }
 
+#if CONFIG_HOSTAPD
 void wpa_supp_set_ap_max_num_sta(const struct netif *dev, unsigned int max_num_sta)
 {
     h_max_num_sta = (int)max_num_sta;
@@ -2994,7 +3009,6 @@ out:
 
     wpa_s->conf->country[0] = country[0];
     wpa_s->conf->country[1] = country[1];
-    wpa_s->conf->country[2] = country3;
 
 out:
     OSA_MutexUnlock((osa_mutex_handle_t)wpa_supplicant_mutex);
@@ -3064,6 +3078,7 @@ int wpa_supp_start_ap(const struct netif *dev, struct wlan_network *network, int
     if (bandwidth == 1)
     {
         conf->secondary_channel = 0;
+        conf->obss_interval     = 0;
         conf->ht_capab &= ~HT_CAP_INFO_SUPP_CHANNEL_WIDTH_SET;
         conf->ht_capab &= ~HT_CAP_INFO_SHORT_GI40MHZ;
 
@@ -3101,7 +3116,7 @@ int wpa_supp_start_ap(const struct netif *dev, struct wlan_network *network, int
         }
         else if (network->channel >= 165 && network->channel <= 169)
         {
-            conf->vht_oper_centr_freq_seg1_idx = 167;
+            conf->vht_oper_centr_freq_seg0_idx = 167;
         }
         else if (network->channel >= 173 && network->channel <= 177)
         {
@@ -3295,30 +3310,75 @@ out:
     return ret;
 }
 
-void wpa_supp_set_bgscan(const struct netif *dev, const int short_interval, const int signal_threshold, const int long_interval)
+void wpa_supp_notify_acs(const struct netif *dev)
 {
-    struct wpa_supplicant *wpa_s;
-    char bgscan_str[128] = {0};
+#if CONFIG_HOSTAPD
+    struct hostapd_iface *hapd_s;
+    struct hostapd_config *conf;
 
     OSA_MutexLock((osa_mutex_handle_t)wpa_supplicant_mutex, osaWaitForever_c);
 
-    wpa_s = get_wpa_s_handle(dev);
-    if (!wpa_s)
+    hapd_s = get_hostapd_handle(dev);
+    if (!hapd_s)
     {
         goto out;
     }
 
-    snprintf(bgscan_str, 128, "simple:%d:%d:%d", short_interval, signal_threshold, long_interval);
+    struct hostapd_hw_modes *mode = hapd_s->current_mode;
 
-    os_free(wpa_s->conf->bgscan);
+    conf = hapd_s->conf;
+    conf->ht_capab &= ~HT_CAP_INFO_SHORT_GI40MHZ;
+    conf->ht_capab &= ~HT_CAP_INFO_SUPP_CHANNEL_WIDTH_SET;
+    conf->vht_capab &= ~VHT_CAP_SHORT_GI_80;
+#if CONFIG_11AX
+    mode->he_capab[IEEE80211_MODE_AP].phy_cap[0] &= ~HE_PHYCAP_CHANNEL_WIDTH_SET_40MHZ_80MHZ_IN_5G;
+#endif
+out:
+    OSA_MutexUnlock((osa_mutex_handle_t)wpa_supplicant_mutex);
+#endif
+}
 
-    wpa_s->conf->bgscan = os_strdup(bgscan_str);
+int wpa_supp_get_sta_info(const struct netif *dev, unsigned char *sta_addr, unsigned char *is_11n_enabled)
+{
+    // struct wpa_supplicant *wpa_s;
+    int ret = 0;
 
-    //wpa_supplicant_reset_bgscan(wpa_s);
+    OSA_MutexLock((osa_mutex_handle_t)wpa_supplicant_mutex, osaWaitForever_c);
+
+    struct hostapd_iface *hapd_s;
+    struct hostapd_data *hapd;
+    struct sta_info *sta;
+
+    hapd_s = get_hostapd_handle(dev);
+    if (!hapd_s)
+    {
+        ret = -1;
+        goto out;
+    }
+    hapd = hapd_s->bss[0];
+
+    sta = ap_get_sta(hapd, sta_addr);
+    if (!sta)
+    {
+        ret = -1;
+        goto out;
+    }
+
+    if (sta->flags & WLAN_STA_HT)
+    {
+        *is_11n_enabled = 1;
+    }
+    else
+    {
+        *is_11n_enabled = 0;
+    }
 
 out:
     OSA_MutexUnlock((osa_mutex_handle_t)wpa_supplicant_mutex);
+
+    return ret;
 }
+#endif
 
 int wpa_supp_set_okc(const struct netif *dev, unsigned char okc)
 {
@@ -3700,7 +3760,13 @@ int wpa_supp_notify_assoc(const struct netif *dev)
         ret = -1;
         goto out;
     }
-
+#if CONFIG_11R
+    /* If FT is configured and if ft re-assoc is not completed then
+     * no need to notify assoc.
+     */
+    if (wpa_key_mgmt_ft(wpa_s->wpa->key_mgmt) && !(wpa_s->wpa->ft_reassoc_completed))
+        goto out;
+#endif
     wpa_sm_notify_assoc(wpa_s->wpa, wpa_s->current_bss->bssid);
 
 out:
@@ -3708,49 +3774,6 @@ out:
 
     return ret;
 }
-
-#if CONFIG_HOSTAPD
-int wpa_supp_get_sta_info(const struct netif *dev, unsigned char *sta_addr, unsigned char *is_11n_enabled)
-{
-    // struct wpa_supplicant *wpa_s;
-    int ret = 0;
-
-    OSA_MutexLock((osa_mutex_handle_t)wpa_supplicant_mutex, osaWaitForever_c);
-
-    struct hostapd_iface *hapd_s;
-    struct hostapd_data *hapd;
-    struct sta_info *sta;
-
-    hapd_s = get_hostapd_handle(dev);
-    if (!hapd_s)
-    {
-        ret = -1;
-        goto out;
-    }
-    hapd = hapd_s->bss[0];
-
-    sta = ap_get_sta(hapd, sta_addr);
-    if (!sta)
-    {
-        ret = -1;
-        goto out;
-    }
-
-    if (sta->flags & WLAN_STA_HT)
-    {
-        *is_11n_enabled = 1;
-    }
-    else
-    {
-        *is_11n_enabled = 0;
-    }
-
-out:
-    OSA_MutexUnlock((osa_mutex_handle_t)wpa_supplicant_mutex);
-
-    return ret;
-}
-#endif
 
 #if CONFIG_WPA_SUPP_WPS
 int wpa_supp_start_wps_pbc(const struct netif *dev, int is_ap)
@@ -4876,6 +4899,7 @@ out:
     return ret;
 }
 
+#if CONFIG_HOSTAPD
 static int wpa_supp_add_acl_maclist(struct mac_acl_entry **acl, int *num, int vlan_id, const u8 *addr)
 {
     struct mac_acl_entry *newacl;
@@ -4962,6 +4986,7 @@ int wpa_supp_set_mac_acl(const struct netif *dev, int filter_mode, char mac_coun
     }
     return 0;
 }
+#endif /* CONFIG_HOSTAPD */
 
 static void (*msg_cb_ptr)(const char *txt, size_t len);
 
@@ -5047,6 +5072,7 @@ int wpa_supp_deinit(void)
     return 0;
 }
 
+#if CONFIG_HOSTAPD
 void hostapd_connected_sta_list(wifi_sta_info_t *si, wifi_sta_list_t *sl)
 {
     struct hostapd_iface *hapd_s;
@@ -5122,3 +5148,4 @@ out:
     return ret;
 
 }
+#endif /* CONFIG_HOSTAPD */

@@ -37,17 +37,15 @@
 #define BT_AICS_INPUT_MODE_SETTABLE(gain_mode) \
 	((gain_mode) == BT_AICS_MODE_AUTO || (gain_mode) == BT_AICS_MODE_MANUAL)
 
-STRUCT_PACKED_PRE
 struct bt_aics_control {
 	uint8_t opcode;
 	uint8_t counter;
-} STRUCT_PACKED_POST;
+} __packed;
 
-STRUCT_PACKED_PRE
 struct bt_aics_gain_control {
 	struct bt_aics_control cp;
 	int8_t gain_setting;
-} STRUCT_PACKED_POST;
+} __packed;
 
 struct bt_aics_client {
 	uint8_t change_counter;
@@ -77,20 +75,18 @@ struct bt_aics_client {
 	struct bt_conn *conn;
 };
 
-STRUCT_PACKED_PRE
 struct bt_aics_state {
 	int8_t gain;
 	uint8_t mute;
 	uint8_t gain_mode;
 	uint8_t change_counter;
-} STRUCT_PACKED_POST;
+} __packed;
 
-STRUCT_PACKED_PRE
 struct bt_aics_gain_settings {
 	uint8_t units;
 	int8_t minimum;
 	int8_t maximum;
-} STRUCT_PACKED_POST;
+} __packed;
 
 enum bt_aics_notify {
 	AICS_NOTIFY_STATE,

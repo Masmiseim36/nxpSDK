@@ -27,6 +27,7 @@
 #include "cy_pdl.h"
 #include "cyhal.h"
 #include "cy_retarget_io.h"
+#include "watchdog.h"
 
 /* Define pins for UART debug output */
 
@@ -37,6 +38,12 @@
 #warning "Check if User LED is correct for your target board."
 #define LED_PORT GPIO_PRT13
 #define LED_PIN 7U
+#elif defined(PSOC_062_1M)
+#define LED_PORT GPIO_PRT13
+#define LED_PIN 7U
+#elif defined(PSOC_062_512K)
+#define LED_PORT GPIO_PRT11
+#define LED_PIN 1U
 #endif
 
 #define LED_NUM 5U
@@ -60,11 +67,14 @@ const cy_stc_gpio_pin_config_t LED_config =
     .vohSel = 0UL,
 };
 
+#define WATCHDOG_UPD_MESSAGE  "[BlinkyApp] Update watchdog timer started in MCUBootApp to mark successful start of user app\r\n"
+#define WATCHDOG_FREE_MESSAGE "[BlinkyApp] Turn off watchdog timer\r\n"
+
 #ifdef BOOT_IMG
     #define BLINK_PERIOD          (1000u)
     #define GREETING_MESSAGE_VER  "[BlinkyApp] BlinkyApp v1.0 [CM4]\r\n"
     #define GREETING_MESSAGE_INFO "[BlinkyApp] Red led blinks with 1 sec period\r\n"
-#elif UPGRADE_IMG
+#elif defined(UPGRADE_IMG)
     #define BLINK_PERIOD          (250u)
     #define GREETING_MESSAGE_VER  "[BlinkyApp] BlinkyApp v2.0 [+]\r\n"
     #define GREETING_MESSAGE_INFO "[BlinkyApp] Red led blinks with 0.25 sec period\r\n"
@@ -74,8 +84,7 @@ const cy_stc_gpio_pin_config_t LED_config =
 
 void check_result(int res)
 {
-    if (res != CY_RSLT_SUCCESS)
-    {
+    if (res != CY_RSLT_SUCCESS) {
         CY_ASSERT(0);
     }
 }
@@ -108,6 +117,12 @@ int main(void)
     test_app_init_hardware();
 
     printf(GREETING_MESSAGE_INFO);
+
+    /* Update watchdog timer to mark successful start up of application */
+    printf(WATCHDOG_UPD_MESSAGE);
+    cy_wdg_kick();
+    printf(WATCHDOG_FREE_MESSAGE);
+    cy_wdg_free();
 
     for (;;)
     {

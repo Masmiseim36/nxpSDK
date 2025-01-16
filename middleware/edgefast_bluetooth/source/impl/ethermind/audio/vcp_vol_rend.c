@@ -27,22 +27,6 @@
 #include "fsl_component_log.h"
 LOG_MODULE_DEFINE(LOG_MODULE_NAME, kLOG_LevelTrace);
 
-#ifndef LOG_DBG
-#define LOG_DBG BT_DBG
-#endif
-
-#ifndef LOG_ERR
-#define LOG_ERR BT_ERR
-#endif
-
-#ifndef LOG_HEXDUMP_DBG
-#define LOG_HEXDUMP_DBG BT_HEXDUMP_DBG
-#endif
-
-#ifndef LOG_WRN
-#define LOG_WRN BT_WARN
-#endif
-
 #define VOLUME_DOWN(current_vol) \
 	((uint8_t)MAX(0, (int)current_vol - vol_rend.volume_step))
 #define VOLUME_UP(current_vol) \
@@ -117,11 +101,7 @@ static void notify_work_reschedule(struct bt_vcp_vol_rend *inst, enum vol_rend_n
 	if (err < 0) {
 		LOG_ERR("Failed to reschedule %s notification err %d", vol_rend_notify_str(notify),
 			err);
-#if 0
-	} else if (!K_TIMEOUT_EQ(delay, osaWaitNone_c)) {
-#else
-	} else if (delay != osaWaitNone_c) {
-#endif
+	} else if (!K_TIMEOUT_EQ(delay, K_NO_WAIT)) {
 		LOG_DBG("%s notification scheduled in %dms", vol_rend_notify_str(notify),
 			k_ticks_to_ms_floor32(k_work_delayable_remaining_get(&inst->notify_work)));
 	}
@@ -134,7 +114,7 @@ static void notify(struct bt_vcp_vol_rend *inst, enum vol_rend_notify notify,
 
 	err = bt_gatt_notify_uuid(NULL, uuid, inst->service_p->attrs, data, len);
 	if (err == -ENOMEM) {
-		notify_work_reschedule(inst, notify, BT_AUDIO_NOTIFY_RETRY_DELAY_US / 1000);
+		notify_work_reschedule(inst, notify, K_USEC(BT_AUDIO_NOTIFY_RETRY_DELAY_US));
 	} else if (err < 0 && err != -ENOTCONN) {
 		LOG_ERR("Notify %s err %d", vol_rend_notify_str(notify), err);
 	}
@@ -157,7 +137,7 @@ static void notify_work_handler(struct k_work *work)
 
 static void value_changed(struct bt_vcp_vol_rend *inst, enum vol_rend_notify notify)
 {
-	notify_work_reschedule(inst, notify, osaWaitNone_c);
+	notify_work_reschedule(inst, notify, K_NO_WAIT);
 }
 
 static ssize_t write_vcs_control(struct bt_conn *conn,

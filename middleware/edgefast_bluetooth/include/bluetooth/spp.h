@@ -108,7 +108,6 @@ struct bt_spp_port
 
 #define SPP_GET_LOCAL_PN     0x10
 #define SPP_SEND_PN          0x11
-STRUCT_PACKED_PRE
 struct bt_spp_pn
 {
     uint8_t  dlci;      /** SPP Parameter Negotiation - DLCI */
@@ -116,7 +115,7 @@ struct bt_spp_pn
 	uint8_t  priority;  /** SPP Parameter Negotiation - Priority */
 	uint16_t mtu;       /** SPP Parameter Negotiation - Maximum Frame Size */
 	uint8_t  credits;   /** SPP Parameter Negotiation - Initial Count of Credits */
-}STRUCT_PACKED_POST;
+}__packed;
 
 #define SPP_SEND_LINE_STATUS 0x20
 #define SPP_REC_LINE_STATUS  0x21

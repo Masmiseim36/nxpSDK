@@ -9,6 +9,7 @@
 #ifndef ETH_P_OUI_H
 #define ETH_P_OUI_H
 
+#if CONFIG_HOSTAPD
 struct eth_p_oui_ctx;
 struct hostapd_data;
 
@@ -22,5 +23,5 @@ struct eth_p_oui_ctx *eth_p_oui_register(
 void eth_p_oui_unregister(struct eth_p_oui_ctx *eth_p_oui);
 int eth_p_oui_send(struct eth_p_oui_ctx *ctx, const u8 *src_addr, const u8 *dst_addr, const u8 *buf, size_t len);
 void eth_p_oui_deliver(struct eth_p_oui_ctx *ctx, const u8 *src_addr, const u8 *dst_addr, const u8 *buf, size_t len);
-
+#endif /* CONFIG_HOSTAPD */
 #endif /* ETH_P_OUI_H */

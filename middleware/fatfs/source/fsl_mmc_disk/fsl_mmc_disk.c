@@ -10,7 +10,7 @@
 #include "ffconf.h"
 /* This fatfs subcomponent is disabled by default
  * To enable it, define following macro in ffconf.h */
-#ifdef MMC_DISK_ENABLE
+#if defined(MMC_DISK_ENABLE) && (MMC_DISK_ENABLE == 1)
 
 #include <assert.h>
 #include <stdio.h>
@@ -89,7 +89,7 @@ DRESULT mmc_disk_ioctl(BYTE pdrv, BYTE cmd, void* buff)
         case GET_SECTOR_SIZE:
             if (buff)
             {
-                *(uint32_t *)buff = g_mmc.blockSize;
+                *(WORD *)buff = g_mmc.blockSize;
             }
             else
             {
@@ -148,9 +148,9 @@ DSTATUS mmc_disk_initialize(BYTE pdrv)
         memset(&g_mmc, 0U, sizeof(g_mmc));
         return STA_NOINIT;
     }
-    
+
     isCardInitialized = true;
 
     return RES_OK;
 }
-#endif /* MMC_DISK_ENABLE */
+#endif /* defined(MMC_DISK_ENABLE) && (MMC_DISK_ENABLE == 1) */

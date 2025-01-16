@@ -49,7 +49,6 @@
   @param[in]     pSrc       points to the Q15 input vector
   @param[out]    pDst       points to the f16 output vector
   @param[in]     blockSize  number of samples in each vector
-  @return        none
 
   @par           Details
                    The equation used for the conversion process is:
@@ -60,7 +59,7 @@
 
 #if defined(ARM_MATH_MVE_FLOAT16) && !defined(ARM_MATH_AUTOVECTORIZE)
 
-void arm_q15_to_f16(
+ARM_DSP_ATTRIBUTE void arm_q15_to_f16(
   const q15_t * pSrc,
   float16_t * pDst,
   uint32_t blockSize)
@@ -96,7 +95,7 @@ void arm_q15_to_f16(
 }
 #else
 
-void arm_q15_to_f16(
+ARM_DSP_ATTRIBUTE void arm_q15_to_f16(
   const q15_t * pSrc,
         float16_t * pDst,
         uint32_t blockSize)

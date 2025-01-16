@@ -4,6 +4,10 @@
  *  SPDX-License-Identifier: BSD-3-Clause
  *
  */
+/*!\file osa.h
+ *\brief This file contains OSA wrapper declarations for timer, read/write lock and idle hook.
+*/
+
 
 #ifndef _OSA_H_
 #define _OSA_H_

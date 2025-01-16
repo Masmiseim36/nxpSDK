@@ -25,21 +25,7 @@
 #define LOG_MODULE_NAME bt_micp
 #include "fsl_component_log.h"
 
-#ifndef LOG_DBG
-#define LOG_DBG BT_DBG
-#endif
 
-#ifndef LOG_ERR
-#define LOG_ERR BT_ERR
-#endif
-
-#ifndef LOG_HEXDUMP_DBG
-#define LOG_HEXDUMP_DBG BT_HEXDUMP_DBG
-#endif
-
-#ifndef LOG_WRN
-#define LOG_WRN BT_WARN
-#endif
 
 struct bt_micp_server {
 	uint8_t mute;
@@ -79,7 +65,7 @@ static void notify_work_handler(struct k_work *work)
 	}
 
 	if (err == -ENOMEM &&
-	    k_work_reschedule(d_work, BT_AUDIO_NOTIFY_RETRY_DELAY_US / 1000) >= 0) {
+	    k_work_reschedule(d_work, K_USEC(BT_AUDIO_NOTIFY_RETRY_DELAY_US)) >= 0) {
 		LOG_WRN("Out of buffers for mute state notification. Will retry in %dms",
 			BT_AUDIO_NOTIFY_RETRY_DELAY_US);
 		return;
@@ -118,7 +104,7 @@ static ssize_t write_mute(struct bt_conn *conn, const struct bt_gatt_attr *attr,
 
 		micp_inst.mute = *val;
 
-		err = k_work_reschedule(&micp_inst.notify_work, osaWaitNone_c);
+		err = k_work_reschedule(&micp_inst.notify_work, K_NO_WAIT);
 		if (err < 0) {
 			LOG_ERR("Failed to schedule mute state notification err %d", err);
 		}

@@ -1,6 +1,6 @@
 // Copyright (c) 2017-2021 Linaro LTD
 // Copyright (c) 2017-2020 JUUL Labs
-// Copyright (c) 2021 Arm Limited
+// Copyright (c) 2021-2023 Arm Limited
 //
 // SPDX-License-Identifier: Apache-2.0
 
@@ -29,6 +29,7 @@ use ring::signature::{
     EcdsaKeyPair,
     ECDSA_P256_SHA256_ASN1_SIGNING,
     Ed25519KeyPair,
+    ECDSA_P384_SHA384_ASN1_SIGNING,
 };
 use aes::{
     Aes128,
@@ -50,9 +51,9 @@ use typenum::{U16, U32};
 pub enum TlvKinds {
     KEYHASH = 0x01,
     SHA256 = 0x10,
+    SHA384 = 0x11,
     RSA2048 = 0x20,
-    ECDSA224 = 0x21,
-    ECDSA256 = 0x22,
+    ECDSASIG = 0x22,
     RSA3072 = 0x23,
     ED25519 = 0x24,
     ENCRSA2048 = 0x30,
@@ -60,6 +61,7 @@ pub enum TlvKinds {
     ENCEC256 = 0x32,
     ENCX25519 = 0x33,
     DEPENDENCY = 0x40,
+    SECCNT = 0x50,
 }
 
 #[allow(dead_code, non_camel_case_types)]
@@ -109,6 +111,13 @@ pub trait ManifestGen {
 
     /// Return the current encryption key
     fn get_enc_key(&self) -> Vec<u8>;
+
+    /// Set the security counter to the specified value.
+    fn set_security_counter(&mut self, security_cnt: Option<u32>);
+
+    /// Sets the ignore_ram_load_flag so that can be validated when it is missing,
+    /// it will not load successfully.
+    fn set_ignore_ram_load_flag(&mut self);
 }
 
 #[derive(Debug, Default)]
@@ -120,6 +129,9 @@ pub struct TlvGen {
     enc_key: Vec<u8>,
     /// Should this signature be corrupted.
     gen_corrupted: bool,
+    security_cnt: Option<u32>,
+    /// Ignore RAM_LOAD flag
+    ignore_ram_load_flag: bool,
 }
 
 #[derive(Debug)]
@@ -156,8 +168,13 @@ impl TlvGen {
 
     #[allow(dead_code)]
     pub fn new_ecdsa() -> TlvGen {
+        let hash_kind = if cfg!(feature = "sig-p384") {
+            TlvKinds::SHA384
+        } else {
+            TlvKinds::SHA256
+        };
         TlvGen {
-            kinds: vec![TlvKinds::SHA256, TlvKinds::ECDSA256],
+            kinds: vec![hash_kind, TlvKinds::ECDSASIG],
             ..Default::default()
         }
     }
@@ -235,7 +252,7 @@ impl TlvGen {
         };
         TlvGen {
             flags: flag,
-            kinds: vec![TlvKinds::SHA256, TlvKinds::ECDSA256, TlvKinds::ENCKW],
+            kinds: vec![TlvKinds::SHA256, TlvKinds::ECDSASIG, TlvKinds::ENCKW],
             ..Default::default()
         }
     }
@@ -263,7 +280,7 @@ impl TlvGen {
         };
         TlvGen {
             flags: flag,
-            kinds: vec![TlvKinds::SHA256, TlvKinds::ECDSA256, TlvKinds::ENCEC256],
+            kinds: vec![TlvKinds::SHA256, TlvKinds::ECDSASIG, TlvKinds::ENCEC256],
             ..Default::default()
         }
     }
@@ -295,6 +312,15 @@ impl TlvGen {
             ..Default::default()
         }
     }
+
+    #[allow(dead_code)]
+    pub fn new_sec_cnt() -> TlvGen {
+       TlvGen {
+            kinds: vec![TlvKinds::SHA256, TlvKinds::SECCNT],
+            ..Default::default()
+        }
+    }
+
 }
 
 impl ManifestGen for TlvGen {
@@ -305,7 +331,7 @@ impl ManifestGen for TlvGen {
     /// Retrieve the header flags for this configuration.  This can be called at any time.
     fn get_flags(&self) -> u32 {
         // For the RamLoad case, add in the flag for this feature.
-        if Caps::RamLoad.present() {
+        if Caps::RamLoad.present() && !self.ignore_ram_load_flag {
             self.flags | (TlvFlags::RAM_LOAD as u32)
         } else {
             self.flags
@@ -318,12 +344,17 @@ impl ManifestGen for TlvGen {
     }
 
     fn protect_size(&self) -> u16 {
-        if self.dependencies.is_empty() {
-            0
-        } else {
-            // Include the header and space for each dependency.
-            4 + (self.dependencies.len() as u16) * (4 + 4 + 8)
+        let mut size = 0;
+        if !self.dependencies.is_empty() || (Caps::HwRollbackProtection.present() && self.security_cnt.is_some()) {
+            // include the TLV area header.
+            size += 4;
+            // add space for each dependency.
+            size +=  (self.dependencies.len() as u16) * (4 + std::mem::size_of::<Dependency>() as u16);
+            if Caps::HwRollbackProtection.present() && self.security_cnt.is_some() {
+                size += 4 + 4;
+            }
         }
+        size
     }
 
     fn add_dependency(&mut self, id: u8, version: &ImageVersion) {
@@ -345,6 +376,8 @@ impl ManifestGen for TlvGen {
         // Estimate the size of the image hash.
         if self.kinds.contains(&TlvKinds::SHA256) {
             estimate += 4 + 32;
+        } else if self.kinds.contains(&TlvKinds::SHA384) {
+            estimate += 4 + 48;
         }
 
         // Add an estimate in for each of the signature algorithms.
@@ -356,17 +389,22 @@ impl ManifestGen for TlvGen {
             estimate += 4 + 32; // keyhash
             estimate += 4 + 384; // RSA3072
         }
-        if self.kinds.contains(&TlvKinds::ECDSA256) {
-            estimate += 4 + 32; // keyhash
-
-            // ECDSA signatures are encoded as ASN.1 with the x and y values stored as signed
-            // integers.  As such, the size can vary by 2 bytes, if the 256-bit value has the high
-            // bit, it takes an extra 0 byte to avoid it being seen as a negative number.
-            estimate += 4 + 72; // ECDSA256 (varies)
-        }
         if self.kinds.contains(&TlvKinds::ED25519) {
             estimate += 4 + 32; // keyhash
             estimate += 4 + 64; // ED25519 signature.
+        }
+        if self.kinds.contains(&TlvKinds::ECDSASIG) {
+            // ECDSA signatures are encoded as ASN.1 with the x and y values
+            // stored as signed integers. As such, the size can vary by 2 bytes,
+            // if for example the 256-bit value has the high bit, it takes an
+            // extra 0 byte to avoid it being seen as a negative number.
+            if self.kinds.contains(&TlvKinds::SHA384) {
+                estimate += 4 + 48;  // SHA384
+                estimate += 4 + 104; // ECDSA384 (varies)
+            } else {
+                estimate += 4 + 32;  // SHA256
+                estimate += 4 + 72;  // ECDSA256 (varies)
+            }
         }
 
         // Estimate encryption.
@@ -386,10 +424,8 @@ impl ManifestGen for TlvGen {
             estimate += 4 + if aes256 { 96 } else { 80 };
         }
 
-        // Gather the size of the dependency information.
-        if self.protect_size() > 0 {
-            estimate += 4 + (16 * self.dependencies.len());
-        }
+        // Gather the size of the protected TLV area.
+        estimate += self.protect_size() as usize;
 
         estimate
     }
@@ -419,6 +455,13 @@ impl ManifestGen for TlvGen {
                 protected_tlv.write_u32::<LittleEndian>(dep.version.build_num).unwrap();
             }
 
+            // Security counter has to be at the protected TLV area also
+            if Caps::HwRollbackProtection.present() && self.security_cnt.is_some() {
+                protected_tlv.write_u16::<LittleEndian>(TlvKinds::SECCNT as u16).unwrap();
+                protected_tlv.write_u16::<LittleEndian>(std::mem::size_of::<u32>() as u16).unwrap();
+                protected_tlv.write_u32::<LittleEndian>(self.security_cnt.unwrap() as u32).unwrap();
+            }
+
             assert_eq!(size, protected_tlv.len() as u16, "protected TLV length incorrect");
         }
 
@@ -444,15 +487,14 @@ impl ManifestGen for TlvGen {
         // Placeholder for the size.
         result.write_u16::<LittleEndian>(0).unwrap();
 
-        if self.kinds.contains(&TlvKinds::SHA256) {
+        if self.kinds.iter().any(|v| v == &TlvKinds::SHA256 || v == &TlvKinds::SHA384) {
             // If a signature is not requested, corrupt the hash we are
             // generating.  But, if there is a signature, output the
             // correct hash.  We want the hash test to pass so that the
             // signature verification can be validated.
             let mut corrupt_hash = self.gen_corrupted;
             for k in &[TlvKinds::RSA2048, TlvKinds::RSA3072,
-                TlvKinds::ECDSA224, TlvKinds::ECDSA256,
-                TlvKinds::ED25519]
+                TlvKinds::ED25519, TlvKinds::ECDSASIG]
             {
                 if self.kinds.contains(k) {
                     corrupt_hash = false;
@@ -463,13 +505,20 @@ impl ManifestGen for TlvGen {
             if corrupt_hash {
                 sig_payload[0] ^= 1;
             }
-
-            let hash = digest::digest(&digest::SHA256, &sig_payload);
+            let (hash,hash_size,tlv_kind) =  if self.kinds.contains(&TlvKinds::SHA256)
+            {
+                let hash = digest::digest(&digest::SHA256, &sig_payload);
+                (hash,32,TlvKinds::SHA256)
+            }
+            else {
+                let hash = digest::digest(&digest::SHA384, &sig_payload);
+                (hash,48,TlvKinds::SHA384)
+            };
             let hash = hash.as_ref();
 
-            assert!(hash.len() == 32);
-            result.write_u16::<LittleEndian>(TlvKinds::SHA256 as u16).unwrap();
-            result.write_u16::<LittleEndian>(32).unwrap();
+            assert!(hash.len() == hash_size);
+            result.write_u16::<LittleEndian>(tlv_kind as u16).unwrap();
+            result.write_u16::<LittleEndian>(hash_size as u16).unwrap();
             result.extend_from_slice(hash);
 
             // Undo the corruption.
@@ -529,29 +578,34 @@ impl ManifestGen for TlvGen {
             result.extend_from_slice(&signature);
         }
 
-        if self.kinds.contains(&TlvKinds::ECDSA256) {
-            let keyhash = digest::digest(&digest::SHA256, ECDSA256_PUB_KEY);
-            let keyhash = keyhash.as_ref();
-
-            assert!(keyhash.len() == 32);
-            result.write_u16::<LittleEndian>(TlvKinds::KEYHASH as u16).unwrap();
-            result.write_u16::<LittleEndian>(32).unwrap();
-            result.extend_from_slice(keyhash);
-
-            let key_bytes = pem::parse(include_bytes!("../../root-ec-p256-pkcs8.pem").as_ref()).unwrap();
-            assert_eq!(key_bytes.tag, "PRIVATE KEY");
-
-            let key_pair = EcdsaKeyPair::from_pkcs8(&ECDSA_P256_SHA256_ASN1_SIGNING,
-                                                    &key_bytes.contents).unwrap();
+        if self.kinds.contains(&TlvKinds::ECDSASIG) {
             let rng = rand::SystemRandom::new();
-            let signature = key_pair.sign(&rng, &sig_payload).unwrap();
+            let (signature, keyhash, keyhash_size) =  if self.kinds.contains(&TlvKinds::SHA384) {
+                let keyhash = digest::digest(&digest::SHA384, ECDSAP384_PUB_KEY);
+                let key_bytes = pem::parse(include_bytes!("../../root-ec-p384-pkcs8.pem").as_ref()).unwrap();
+                let sign_algo = &ECDSA_P384_SHA384_ASN1_SIGNING;
+                let key_pair = EcdsaKeyPair::from_pkcs8(sign_algo, &key_bytes.contents).unwrap();
+                (key_pair.sign(&rng, &sig_payload).unwrap(), keyhash, 48)
+             } else {
+                let keyhash = digest::digest(&digest::SHA256, ECDSA256_PUB_KEY);
+                let key_bytes = pem::parse(include_bytes!("../../root-ec-p256-pkcs8.pem").as_ref()).unwrap();
+                let sign_algo = &ECDSA_P256_SHA256_ASN1_SIGNING;
+                let key_pair = EcdsaKeyPair::from_pkcs8(sign_algo, &key_bytes.contents).unwrap();
+                (key_pair.sign(&rng, &sig_payload).unwrap(), keyhash, 32)
+             };
 
-            result.write_u16::<LittleEndian>(TlvKinds::ECDSA256 as u16).unwrap();
+            // Write public key
+            let keyhash_slice = keyhash.as_ref();
+            assert!(keyhash_slice.len() == keyhash_size);
+            result.write_u16::<LittleEndian>(TlvKinds::KEYHASH as u16).unwrap();
+            result.write_u16::<LittleEndian>(keyhash_size as u16).unwrap();
+            result.extend_from_slice(keyhash_slice);
 
+            // Write signature
+            result.write_u16::<LittleEndian>(TlvKinds::ECDSASIG as u16).unwrap();
             let signature = signature.as_ref().to_vec();
-
             result.write_u16::<LittleEndian>(signature.len() as u16).unwrap();
-            result.extend_from_slice(signature.as_ref());
+            result.extend_from_slice(&signature);
         }
 
         if self.kinds.contains(&TlvKinds::ED25519) {
@@ -770,6 +824,14 @@ impl ManifestGen for TlvGen {
             panic!("No random key was generated");
         }
         self.enc_key.clone()
+    }
+
+    fn set_security_counter(&mut self, security_cnt: Option<u32>) {
+        self.security_cnt = security_cnt;
+    }
+
+    fn set_ignore_ram_load_flag(&mut self) {
+        self.ignore_ram_load_flag = true;
     }
 }
 

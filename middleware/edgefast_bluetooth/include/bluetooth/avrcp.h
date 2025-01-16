@@ -176,6 +176,9 @@
 #define BT_AVRCP_BATTERY_STATUS_CRITICAL 0x02
 #define BT_AVRCP_BATTERY_STATUS_EXTERNAL 0x03
 #define BT_AVRCP_BATTERY_STATUS_FULL     0x04
+   
+/** AVRCP Volume Status Code. */
+#define BT_AVRCP_VOLUME_MAXIMUM 0x7F
 
 /** AVRCP Error Status Code. */
 #define BT_AVRCP_METADATA_ERROR_INVALID_COMMAND      0x00
@@ -233,7 +236,6 @@
 #define BT_AVRCP_CA_SERVER_ERROR        0xD0
 
 /** @brief avrcp message header */
-STRUCT_PACKED_PRE
 struct bt_avrcp_header
 {
     union
@@ -262,19 +264,17 @@ struct bt_avrcp_header
     uint8_t subunit_type : 5;
     /** operation code */
     uint8_t op_code;
-} STRUCT_PACKED_POST;
+} __packed;
 
 /** @brief unit info */
-STRUCT_PACKED_PRE
 struct bt_avrcp_unit_info
 {
     uint8_t unit : 3;
     uint8_t unit_type : 5;
     uint8_t comapny_id[3];
-} STRUCT_PACKED_POST;
+} __packed;
 
 /** @brief subunit info */
-STRUCT_PACKED_PRE
 struct bt_avrcp_subunit_info
 {
     uint8_t exten_code : 3;
@@ -282,10 +282,9 @@ struct bt_avrcp_subunit_info
     uint8_t page : 3;
     uint8_t reserved2 : 1;
     uint8_t data[0];
-} STRUCT_PACKED_POST;
+} __packed;
 
 /** @brief pass through message */
-STRUCT_PACKED_PRE
 struct bt_avrcp_pass_through
 {
     /** operation id */
@@ -296,48 +295,43 @@ struct bt_avrcp_pass_through
     uint8_t op_data_len;
     /** operation data */
     uint8_t op_data[0];
-} STRUCT_PACKED_POST;
+} __packed;
 
 /** @brief register notification */
-STRUCT_PACKED_PRE
 struct bt_avrcp_register_ntfy
 {
     /** event id */
     uint8_t event_id;
     /** Playback interval */
     uint32_t playback_interval;
-} STRUCT_PACKED_POST;
+} __packed;
 
 /** @brief player application setting attribute IDs  */
-STRUCT_PACKED_PRE
 struct bt_avrcp_player_app_setting_attr_ids
 {
     /** number of attributes */
     uint8_t num_of_attr;
     /** attribute IDs */
     uint8_t attr_ids[0];
-} STRUCT_PACKED_POST;
+} __packed;
 
 /** @brief attribute value  */
-STRUCT_PACKED_PRE
 struct bt_avrcp_player_attr_value
 {
     uint8_t attr_id;
     uint8_t value_id;
-} STRUCT_PACKED_POST;
+} __packed;
 
 /** @brief player application values  */
-STRUCT_PACKED_PRE
 struct bt_avrcp_player_app_attr_values
 {
     /** number of attributes */
     uint8_t num_of_attr;
     /** attribute value */
     struct bt_avrcp_player_attr_value attr_vals[0];
-} STRUCT_PACKED_POST;
+} __packed;
 
 /** @brief get player application setting values text */
-STRUCT_PACKED_PRE
 struct bt_avrcp_get_player_app_setting_value_text
 {
     uint8_t attr_id;
@@ -345,57 +339,51 @@ struct bt_avrcp_get_player_app_setting_value_text
     uint8_t num_of_value;
     /** attribute IDs */
     uint8_t value_ids[0];
-} STRUCT_PACKED_POST;
+} __packed;
 
 /** @brief inform displayable character set */
-STRUCT_PACKED_PRE
 struct bt_avrcp_inform_displayable_char_set
 {
     uint8_t num_of_char;
     uint16_t char_sets[0];
-} STRUCT_PACKED_POST;
+} __packed;
 
 /** @brief get element attributes */
-STRUCT_PACKED_PRE
 struct bt_avrcp_get_element_attrs
 {
     /** PLAYING (0x0) */
     uint8_t identifier[8];
     uint8_t num_of_attr;
     uint32_t attr_ids[0];
-} STRUCT_PACKED_POST;
+} __packed;
 
 /** @brief AddToNowPlaying */
-STRUCT_PACKED_PRE
 struct bt_avrcp_add_to_now_playing
 {
     uint8_t scope;
     uint8_t uid[8];
     uint16_t uid_counter;
-} STRUCT_PACKED_POST;
+} __packed;
 
 /** @brief PlayItem */
-STRUCT_PACKED_PRE
 struct bt_avrcp_play_item
 {
     uint8_t scope;
     uint8_t uid[8];
     uint16_t uid_counter;
-} STRUCT_PACKED_POST;
+} __packed;
 
 
 /** @brief company id */
-STRUCT_PACKED_PRE
 struct bt_avrcp_company_id
 {
     /** company id */
     uint8_t company_id0;
     uint8_t company_id1;
     uint8_t company_id2;
-} STRUCT_PACKED_POST;
+} __packed;
 
 /** @brief capability id */
-STRUCT_PACKED_PRE
 struct bt_avrcp_capability_company_id
 {
     /** capability id */
@@ -404,10 +392,9 @@ struct bt_avrcp_capability_company_id
     uint8_t capability_count;
     /** capability IDs */
     struct bt_avrcp_company_id company_ids[0];
-} STRUCT_PACKED_POST;
+} __packed;
 
 /** @brief capability event supports  */
-STRUCT_PACKED_PRE
 struct bt_avrcp_capability_events_supported
 {
     /** capability id */
@@ -416,66 +403,59 @@ struct bt_avrcp_capability_events_supported
     uint8_t capability_count;
     /** events supported */
     uint8_t event_ids[0];
-} STRUCT_PACKED_POST;
+} __packed;
 
 /** @brief player application setting attribute IDs  */
-STRUCT_PACKED_PRE
 struct bt_avrcp_player_app_setting_values
 {
     /** number of attributes */
     uint8_t num_of_value;
     /** attribute IDs */
     uint8_t value_ids[0];
-} STRUCT_PACKED_POST;
+} __packed;
 
 /** @brief attribute/value text */
-STRUCT_PACKED_PRE
 struct bt_avrcp_player_attr_value_text
 {
     uint8_t attr_value_id;
     uint16_t char_set;
     uint8_t string_len;
     uint8_t *string;
-} STRUCT_PACKED_POST;
+} __packed;
 
 /** @brief get text response */
-STRUCT_PACKED_PRE
 struct bt_avrcp_player_get_txt_rsp
 {
     uint8_t num_of_id;
     struct bt_avrcp_player_attr_value_text texts[0];
-} STRUCT_PACKED_POST;
+} __packed;
 
 /** @brief element attribute */
-STRUCT_PACKED_PRE
 struct bt_avrcp_element_attr
 {
     uint32_t attr_id;
     uint16_t char_set;
     uint16_t string_len;
     uint8_t *string;
-} STRUCT_PACKED_POST;
+} __packed;
 
 /** @brief get element attribute response */
-STRUCT_PACKED_PRE
 struct bt_avrcp_player_get_element_attr_rsp
 {
     uint8_t num_of_attr;
     struct bt_avrcp_element_attr attrs[0];
-} STRUCT_PACKED_POST;
+} __packed;
 
 /** @brief play status response */
-STRUCT_PACKED_PRE
 struct bt_avrcp_play_status_rsp
 {
     uint32_t song_length;
     uint32_t song_pos;
     uint8_t play_status;
-} STRUCT_PACKED_POST;
+} __packed;
 
 
 /** @brief event response data format */
-STRUCT_PACKED_PRE
 struct bt_avrcp_event_rsp
 {
     uint8_t event_id;
@@ -508,10 +488,27 @@ struct bt_avrcp_event_rsp
         /** EVENT_VOLUME_CHANGED */
         uint8_t absolute_volume;
     };
-} STRUCT_PACKED_POST;
+} __packed;
+
+/** @brief vendor dependent message header */
+struct bt_avrcp_vendor_header
+{
+    /** company id */
+    uint32_t company_id;
+    /** pdu id */
+    uint8_t pdu_id;
+    /** packet type. It's value can be
+     *   BT_AVRCP_PACKET_TYPE_SINGLE
+     *   BT_AVRCP_PACKET_TYPE_START
+     *   BT_AVRCP_PACKET_TYPE_CONTINUE
+     *   BT_AVRCP_PACKET_TYPE_END
+     */
+    uint8_t packet_type;
+    /** parameter length */
+    uint16_t parameter_len;
+};
 
 /** @brief vendor dependent message */
-STRUCT_PACKED_PRE
 struct bt_avrcp_vendor
 {
     /** company id */
@@ -548,11 +545,10 @@ struct bt_avrcp_vendor
         struct bt_avrcp_player_get_element_attr_rsp element_attr_rsp;
         struct bt_avrcp_play_status_rsp play_status_rsp;
         struct bt_avrcp_event_rsp event_rsp;
-    };    
-} STRUCT_PACKED_POST;
+    };
+} __packed;
 
 /** @brief avrcp control message */
-STRUCT_PACKED_PRE
 struct bt_avrcp_control_msg
 {
     struct bt_avrcp_header header;
@@ -563,10 +559,9 @@ struct bt_avrcp_control_msg
         struct bt_avrcp_pass_through pass_th;
         struct bt_avrcp_vendor vendor;
     };
-} STRUCT_PACKED_POST;
+} __packed;
 
 /** @brief browsing message header */
-STRUCT_PACKED_PRE
 struct bt_avrcp_browsing_header
 {
     union
@@ -590,10 +585,9 @@ struct bt_avrcp_browsing_header
     uint8_t pdu_id;
     /** parameter length */
     uint16_t parameter_len;
-} STRUCT_PACKED_POST;
+} __packed;
 
 /** @brief get folder items player list */
-STRUCT_PACKED_PRE
 struct bt_avrcp_get_folder_items_cmd
 {
     uint8_t scope;
@@ -604,26 +598,23 @@ struct bt_avrcp_get_folder_items_cmd
      *  every attribute id is 4 bytes.
      */
     uint32_t attr_list[0];
-} STRUCT_PACKED_POST;
+} __packed;
 
 /** @brief set browsed player */
-STRUCT_PACKED_PRE
 struct bt_avrcp_set_browsed_player_cmd
 {
     uint16_t player_id;
-} STRUCT_PACKED_POST;
+} __packed;
 
 /** @brief change path */
-STRUCT_PACKED_PRE
 struct bt_avrcp_change_path_cmd
 {
     uint16_t uid_counter;
     uint8_t direction;
     uint8_t folder_uid[8];
-} STRUCT_PACKED_POST;
+} __packed;
 
 /** @brief get item attributes */
-STRUCT_PACKED_PRE
 struct bt_avrcp_get_item_attrs_cmd
 {
     uint8_t scope;
@@ -634,26 +625,23 @@ struct bt_avrcp_get_item_attrs_cmd
      *  every attribute id is 4 bytes.
      */
     uint32_t attr_list[0];
-} STRUCT_PACKED_POST;
+} __packed;
 
 /** @brief search */
-STRUCT_PACKED_PRE
 struct bt_avrcp_search_cmd
 {
     uint8_t char_set;
     uint16_t length;
     uint8_t *str;
-} STRUCT_PACKED_POST;
+} __packed;
 
 /** @brief get total number of items */
-STRUCT_PACKED_PRE
 struct bt_avrcp_get_total_num_of_items_cmd
 {
     uint8_t scope;
-} STRUCT_PACKED_POST;
+} __packed;
 
 /** @brief avrcp browsing command */
-STRUCT_PACKED_PRE
 struct bt_avrcp_browsing_cmd
 {
     struct bt_avrcp_browsing_header header;
@@ -666,10 +654,9 @@ struct bt_avrcp_browsing_cmd
         struct bt_avrcp_search_cmd search;
         struct bt_avrcp_get_total_num_of_items_cmd get_total_num_of_items;
     };
-} STRUCT_PACKED_POST;
+} __packed;
 
 /** @brief player item */
-STRUCT_PACKED_PRE
 struct bt_avrcp_player_item
 {
     uint16_t player_id;
@@ -680,10 +667,9 @@ struct bt_avrcp_player_item
     uint16_t char_set;
     uint16_t name_len;
     uint8_t *name;
-} STRUCT_PACKED_POST;
+} __packed;
 
 /** @brief folder item */
-STRUCT_PACKED_PRE
 struct bt_avrcp_folder_item
 {
     uint8_t folder_uid[8];
@@ -692,20 +678,18 @@ struct bt_avrcp_folder_item
     uint16_t char_set;
     uint16_t name_len;
     uint8_t *name;
-} STRUCT_PACKED_POST;
+} __packed;
 
 /** @brief media item attribute */
-STRUCT_PACKED_PRE
 struct bt_avrcp_attr_val_entry
 {
     uint32_t attr_id;
     uint16_t char_set;
     uint16_t value_len;
     uint8_t *value_str;
-} STRUCT_PACKED_POST;
+} __packed;
 
 /** @brief media item */
-STRUCT_PACKED_PRE
 struct bt_avrcp_media_item
 {
     uint8_t media_uid[8];
@@ -716,10 +700,9 @@ struct bt_avrcp_media_item
     uint8_t num_of_attr;
     /* the max is 8 in avrcp spec */
     struct bt_avrcp_attr_val_entry attrs[8];
-} STRUCT_PACKED_POST;
+} __packed;
 
 /** @brief avrcp item */
-STRUCT_PACKED_PRE
 struct bt_avrcp_item
 {
     uint8_t item_type;
@@ -730,28 +713,25 @@ struct bt_avrcp_item
         struct bt_avrcp_folder_item folder_item;
         struct bt_avrcp_media_item media_item;
     };
-} STRUCT_PACKED_POST;
+} __packed;
 
 /** @brief get folder items (response) */
-STRUCT_PACKED_PRE
 struct bt_avrcp_get_folder_items_rsp
 {
     uint8_t status;
     uint16_t uid_counter;
     uint16_t num_of_items;
     struct bt_avrcp_item items[0];
-} STRUCT_PACKED_POST;
+} __packed;
 
 /** @brief get folder name (response) */
-STRUCT_PACKED_PRE
 struct bt_avrcp_folder_name
 {
     uint16_t folder_name_len;
     uint8_t *folder_name;
-} STRUCT_PACKED_POST;
+} __packed;
 
 /** @brief set browsed player (response) */
-STRUCT_PACKED_PRE
 struct bt_avrcp_set_browsed_player_rsp
 {
     uint8_t status;
@@ -760,18 +740,16 @@ struct bt_avrcp_set_browsed_player_rsp
     uint16_t char_set;
     uint8_t folder_depth;
     struct bt_avrcp_folder_name folder_names[0];
-} STRUCT_PACKED_POST;
+} __packed;
 
 /** @brief change path (response) */
-STRUCT_PACKED_PRE
 struct bt_avrcp_change_path_rsp
 {
     uint8_t status;
     uint32_t num_of_items;
-} STRUCT_PACKED_POST;
+} __packed;
 
 /** @brief get item attributes (response) */
-STRUCT_PACKED_PRE
 struct bt_avrcp_get_item_attrs_rsp
 {
     uint8_t status;
@@ -780,28 +758,25 @@ struct bt_avrcp_get_item_attrs_rsp
      *  every attribute id is 4 bytes.
      */
     struct bt_avrcp_attr_val_entry attrs[0];
-} STRUCT_PACKED_POST;
+} __packed;
 
 /** @brief search (response) */
-STRUCT_PACKED_PRE
 struct bt_avrcp_search_rsp
 {
     uint8_t status;
     uint16_t uid_counter;
     uint32_t num_of_items;
-} STRUCT_PACKED_POST;
+} __packed;
 
 /** @brief get total number of items (response) */
-STRUCT_PACKED_PRE
 struct bt_avrcp_get_total_num_of_items_rsp
 {
     uint8_t status;
     uint16_t uid_counter;
     uint32_t num_of_items;
-} STRUCT_PACKED_POST;
+} __packed;
 
 /** @brief browsing message (response) */
-STRUCT_PACKED_PRE
 struct bt_avrcp_browsing_rsp
 {
     struct bt_avrcp_browsing_header header;
@@ -814,7 +789,7 @@ struct bt_avrcp_browsing_rsp
         struct bt_avrcp_search_rsp search;
         struct bt_avrcp_get_total_num_of_items_rsp get_total_num_of_items;
     };
-} STRUCT_PACKED_POST;
+} __packed;
 
 /** @brief The connecting callback */
 struct bt_avrcp_cb
@@ -881,6 +856,16 @@ struct bt_avrcp_cb
      *  @param err error code.
      */
     void (*control_rsp_received)(struct bt_conn *conn, struct bt_avrcp_control_msg *msg, int err);
+    /** @brief received the vendor dependent continuing response.
+     *
+     *  @param conn connection object.
+     *  @param header vendor dependent response header information.
+     *         In this callback, header->packet_type never be BT_AVRCP_PACKET_TYPE_SINGLE.
+     *  @param buf it is the received continuing packet.
+     *
+     *  @param buf The data for the different vendor dependent commands. reference to #bt_avrcp_vendor_rsp_parse.
+     */
+    void (*vendor_dependent_continue_rsp)(struct bt_conn *conn, struct bt_avrcp_vendor_header *header, struct net_buf *buf);
 #endif
 #if (defined(CONFIG_BT_AVRCP_TG) && ((CONFIG_BT_AVRCP_TG) > 0U))
     /** @brief received the browsing command.
@@ -917,7 +902,7 @@ struct bt_avrcp_cb
 int bt_avrcp_register_callback(struct bt_avrcp_cb *cb);
 
 /** @brief Create the AVRCP control l2cap connection.
- * 
+ *
  *  The sender will be notified by the registered callback (control_connected).
  *
  *  @param conn connection object.
@@ -927,7 +912,7 @@ int bt_avrcp_register_callback(struct bt_avrcp_cb *cb);
 int bt_avrcp_control_connect(struct bt_conn *conn);
 
 /** @brief Release the AVRCP control l2cap connection.
- * 
+ *
  *  The sender will be notified by the registered callback (control_disconnected).
  *
  *  @param conn connection object.
@@ -938,7 +923,7 @@ int bt_avrcp_control_disconnect(struct bt_conn *conn);
 
 #if (defined(CONFIG_BT_AVRCP_CT) && ((CONFIG_BT_AVRCP_CT) > 0U))
 /** @brief send unit info command.
- * 
+ *
  *  The sender will be notified by the registered callback (send_result).
  *  The receiver will be notified by the registered callback (control_received).
  *
@@ -949,7 +934,7 @@ int bt_avrcp_control_disconnect(struct bt_conn *conn);
 int bt_avrcp_send_unit_info(struct bt_conn *conn);
 
 /** @brief send subunit info command.
- * 
+ *
  *  The sender will be notified by the registered callback (send_result).
  *  The receiver will be notified by the registered callback (control_received).
  *
@@ -965,7 +950,7 @@ int bt_avrcp_send_subunit_info(struct bt_conn *conn);
  *
  *  The sender will be notified by the registered callback (send_result).
  *  The receiver will be notified by the registered callback (control_rsp_received).
- * 
+ *
  *  @param conn connection object.
  *  @param subunit sbuunit.
  *  @param subunit_type subunit type.
@@ -981,7 +966,7 @@ int bt_avrcp_response_info(struct bt_conn *conn, uint8_t subunit, uint8_t subuni
  *
  *  The sender will be notified by the registered callback (send_result).
  *  The receiver will be notified by the registered callback (control_received).
- * 
+ *
  *  @param conn connection object.
  *  @param op_id operation id.
  *  @param vendor_op_id vendor operation id.
@@ -994,10 +979,10 @@ int bt_avrcp_send_passthrough(struct bt_conn *conn, uint8_t op_id, uint8_t vendo
 
 #if (defined(CONFIG_BT_AVRCP_TG) && ((CONFIG_BT_AVRCP_TG) > 0U))
 /** @brief send pass through response.
- * 
+ *
  *  The sender will be notified by the registered callback (send_result).
  *  The receiver will be notified by the registered callback (control_rsp_received).
- * 
+ *
  *  @param conn connection object.
  *  @param rsp_type response type, for example: BT_AVRCP_RESPONSE_TYPE_ACCEPTED.
  *  @param cmd the received command message.
@@ -1020,10 +1005,10 @@ int bt_avrcp_set_addressed_player(struct bt_conn *conn, uint16_t player_id);
 
 #if (defined(CONFIG_BT_AVRCP_CT) && ((CONFIG_BT_AVRCP_CT) > 0U))
 /** @brief send vendor dependent command.
- * 
+ *
  *  The sender will be notified by the registered callback (send_result).
  *  The receiver will be notified by the registered callback (control_received).
- * 
+ *
  *  @param conn connection object.
  *  @param pdu_id pdu id.
  *  @param parameter parameter as follow:
@@ -1048,22 +1033,20 @@ int bt_avrcp_set_addressed_player(struct bt_conn *conn, uint16_t player_id);
  *  BT_AVRCP_PDU_ID_ADD_TO_NOW_PLAYING               struct bt_avrcp_add_to_now_playing
  *
  *  @return 0 in case of success and error code in case of error.
+ *  @return -ENOMEM in case of packet length exceeds CONFIG_BT_AVRCP_SEND_PACKET_MAX_SIZE and the internal buffer is not enough to create the response packet.
+ * The CONFIG_BT_AVRCP_SEND_PACKET_MAX_SIZE's default value is 512 which is AVRCP defined max response data length without Continuation function.
+ * Please reduce the replied content or increase CONFIG_BT_AVRCP_SEND_PACKET_MAX_SIZE.
  */
 int bt_avrcp_send_vendor_dependent(struct bt_conn *conn, uint8_t pdu_id, void *parameter);
-#endif
 
-#if (defined(CONFIG_BT_AVRCP_TG) && ((CONFIG_BT_AVRCP_TG) > 0U))
-/** @brief send vendor dependent response.
- * 
- *  The sender will be notified by the registered callback (send_result).
- *  The receiver will be notified by the registered callback (control_rsp_received).
- * 
- *  @param conn connection object.
- *  @param pdu_id pdu id.
- *  @param tl transaction label.
- *  @param response_type response type, for example: BT_AVRCP_RESPONSE_TYPE_ACCEPTED.
- *  @param rsp_param parameter as follow:
- *            pdu_id                                    rsp_param
+/** @brief parse the response buf.
+ *
+ *  @param header the vendor dependent msg header.
+ *  @param buf the received response data. that is formated as follow table.
+ *  @param parse_buf the parsing buffer.
+ *  @param parse_buf_size the parsing buffer size.
+ *  It parse the data of buf to parse_buf, and return the follow parsed structure.
+ *            pdu_id                                    returned structure
  *  BT_AVRCP_PDU_ID_GET_CAPABILITY                   bt_avrcp_capability_company_id or bt_avrcp_capability_events_supported
  *  BT_AVRCP_PDU_ID_LIST_PLAYER_APP_SETTING_ATTR     bt_avrcp_player_app_setting_attr_ids
  *  BT_AVRCP_PDU_ID_LIST_PLAYER_APP_SETTING_VAL      bt_avrcp_player_app_setting_values
@@ -1082,9 +1065,49 @@ int bt_avrcp_send_vendor_dependent(struct bt_conn *conn, uint8_t pdu_id, void *p
  *  BT_AVRCP_PDU_ID_SET_ADDRESSED_PLAYER             status(uint8_t)
  *  BT_AVRCP_PDU_ID_PLAY_ITEMS                       status(uint8_t)
  *  BT_AVRCP_PDU_ID_ADD_TO_NOW_PLAYING               status(uint8_t)
+ *
+ *  @return 0 in case of success and error code in case of error.
+ */
+struct bt_avrcp_vendor* bt_avrcp_vendor_rsp_parse(struct bt_avrcp_vendor_header *header, struct net_buf *buf,
+        uint8_t *parse_buf, uint32_t parse_buf_size);
+#endif
+
+#if (defined(CONFIG_BT_AVRCP_TG) && ((CONFIG_BT_AVRCP_TG) > 0U))
+/** @brief send vendor dependent response.
+ *
+ *  The sender will be notified by the registered callback (send_result).
+ *  The receiver will be notified by the registered callback (control_rsp_received).
+ *
+ *  @param conn connection object.
+ *  @param pdu_id pdu id.
+ *  @param tl transaction label.
+ *  @param response_type response type, for example: BT_AVRCP_RESPONSE_TYPE_ACCEPTED.
+ *  @param rsp_param parameter as follow:
+ *            pdu_id                                    rsp_param
+ *  BT_AVRCP_PDU_ID_GET_CAPABILITY                   bt_avrcp_capability_company_id or bt_avrcp_capability_events_supported
+ *  BT_AVRCP_PDU_ID_LIST_PLAYER_APP_SETTING_ATTR     bt_avrcp_player_app_setting_attr_ids
+ *  BT_AVRCP_PDU_ID_LIST_PLAYER_APP_SETTING_VAL      bt_avrcp_player_app_setting_values
+ *  BT_AVRCP_PDU_ID_GET_CUR_PLAYER_APP_SETTING_VAL   bt_avrcp_player_app_attr_values
+ *  BT_AVRCP_PDU_ID_GET_PLAYER_APP_SETTING_ATTR_TXT  bt_avrcp_player_get_txt_rsp
+ *  BT_AVRCP_PDU_ID_GET_PLAYER_APP_SETTING_VAL_TXT   bt_avrcp_player_get_txt_rsp
+ *  BT_AVRCP_PDU_ID_SET_PLAYER_APP_SETTING_VAL       NULL
+ *  BT_AVRCP_PDU_ID_INFORM_DISPLAYABLE_CHAR_SET      NULL
+ *  BT_AVRCP_PDU_ID_INFORM_BATTERY_STATUS            NULL
+ *  BT_AVRCP_PDU_ID_GET_ELEMENT_ATTRIBUTE            bt_avrcp_player_get_element_attr_rsp
+ *  BT_AVRCP_PDU_ID_GET_PLAY_STATUS                  bt_avrcp_play_status_rsp
+ *  BT_AVRCP_PDU_ID_REGISTER_NOTIFICATION            bt_avrcp_event_rsp
+ *  BT_AVRCP_PDU_ID_REQUEST_CONTINUING_RESPONSE      NULL
+ *  BT_AVRCP_PDU_ID_ABORT_CONTINUING_RESPONSE        NULL
+ *  BT_AVRCP_PDU_ID_SET_ABSOLUTE_VOLUME              volume(uint8_t)
+ *  BT_AVRCP_PDU_ID_SET_ADDRESSED_PLAYER             status(uint8_t)
+ *  BT_AVRCP_PDU_ID_PLAY_ITEMS                       status(uint8_t)
+ *  BT_AVRCP_PDU_ID_ADD_TO_NOW_PLAYING               status(uint8_t)
  *  @param param_len rsp_param's data length.
  *
  *  @return 0 in case of success and error code in case of error.
+ *  @return -ENOMEM in case of packet length exceeds CONFIG_BT_AVRCP_SEND_PACKET_MAX_SIZE and the internal buffer is not enough to create the response packet.
+ * The CONFIG_BT_AVRCP_SEND_PACKET_MAX_SIZE's default value is 512 which is AVRCP defined max response data length without Continuation function.
+ * Please reduce the replied content or increase CONFIG_BT_AVRCP_SEND_PACKET_MAX_SIZE.
  */
 int bt_avrcp_response_vendor_dependent(
     struct bt_conn *conn, uint8_t pdu_id, uint8_t tl,
@@ -1093,7 +1116,7 @@ int bt_avrcp_response_vendor_dependent(
 
 #if (defined(CONFIG_BT_AVRCP_BROWSING) && ((CONFIG_BT_AVRCP_BROWSING) > 0U))
 /** @brief Create the AVRCP browsing l2cap connection.
- * 
+ *
  *  The sender will be notified by the registered callback (browsing_connected).
  *
  *  @param conn connection object.
@@ -1103,7 +1126,7 @@ int bt_avrcp_response_vendor_dependent(
 int bt_avrcp_browsing_connect(struct bt_conn *conn);
 
 /** @brief Release the AVRCP browsing l2cap connection.
- * 
+ *
  *  The sender will be notified by the registered callback (browsing_disconnected).
  *
  *  @param conn connection object.
@@ -1114,7 +1137,7 @@ int bt_avrcp_browsing_disconnect(struct bt_conn *conn);
 
 #if (defined(CONFIG_BT_AVRCP_CT) && ((CONFIG_BT_AVRCP_CT) > 0U))
 /** @brief get folder items (browsing).
- * 
+ *
  *  The sender will be notified by the registered callback (send_result).
  *  The receiver will be notified by the registered callback (browsing_received).
  *
@@ -1126,7 +1149,7 @@ int bt_avrcp_browsing_disconnect(struct bt_conn *conn);
 int bt_avrcp_get_folder_items(struct bt_conn *conn, struct bt_avrcp_get_folder_items_cmd *param);
 
 /** @brief change path (browsing).
- * 
+ *
  *  The sender will be notified by the registered callback (send_result).
  *  The receiver will be notified by the registered callback (browsing_received).
  *
@@ -1138,7 +1161,7 @@ int bt_avrcp_get_folder_items(struct bt_conn *conn, struct bt_avrcp_get_folder_i
 int bt_avrcp_change_path(struct bt_conn *conn, struct bt_avrcp_change_path_cmd *param);
 
 /** @brief change path (browsing).
- * 
+ *
  *  The sender will be notified by the registered callback (send_result).
  *  The receiver will be notified by the registered callback (browsing_received).
  *
@@ -1150,7 +1173,7 @@ int bt_avrcp_change_path(struct bt_conn *conn, struct bt_avrcp_change_path_cmd *
 int bt_avrcp_set_borwsed_player(struct bt_conn *conn, uint16_t player_id);
 
 /** @brief get items attribute (browsing).
- * 
+ *
  *  The sender will be notified by the registered callback (send_result).
  *  The receiver will be notified by the registered callback (browsing_received).
  *
@@ -1162,7 +1185,7 @@ int bt_avrcp_set_borwsed_player(struct bt_conn *conn, uint16_t player_id);
 int bt_avrcp_get_items_attribute(struct bt_conn *conn, struct bt_avrcp_get_item_attrs_cmd *param);
 
 /** @brief search (browsing).
- * 
+ *
  *  The sender will be notified by the registered callback (send_result).
  *  The receiver will be notified by the registered callback (browsing_received).
  *
@@ -1174,7 +1197,7 @@ int bt_avrcp_get_items_attribute(struct bt_conn *conn, struct bt_avrcp_get_item_
 int bt_avrcp_search(struct bt_conn *conn, struct bt_avrcp_search_cmd *param);
 
 /** @brief get total number of items (browsing).
- * 
+ *
  *  The sender will be notified by the registered callback (send_result).
  *  The receiver will be notified by the registered callback (browsing_received).
  *
@@ -1188,7 +1211,7 @@ int bt_avrcp_get_total_num_of_items(struct bt_conn *conn, uint8_t scope);
 
 #if (defined(CONFIG_BT_AVRCP_TG) && ((CONFIG_BT_AVRCP_TG) > 0U))
 /** @brief response browsing command (browsing).
- * 
+ *
  *  The sender will be notified by the registered callback (send_result).
  *  The receiver will be notified by the registered callback (browsing_rsp_received).
  *
@@ -1203,10 +1226,13 @@ int bt_avrcp_get_total_num_of_items(struct bt_conn *conn, uint8_t scope);
  *  BT_AVRCP_PDU_ID_GET_ITEM_ATTRIBUTES      bt_avrcp_get_item_attrs_rsp
  *  BT_AVRCP_PDU_ID_SEARCH                   bt_avrcp_search_rsp
  *  BT_AVRCP_PDU_ID_GET_TOTAL_NUM_ITEMS      bt_avrcp_get_total_num_of_items_rsp
- *  
+ *
  *  @param param_len rsp_param data length.
  *
  *  @return 0 in case of success and error code in case of error.
+ *  @return -ENOMEM in case of packet length exceeds CONFIG_BT_AVRCP_SEND_PACKET_MAX_SIZE and the internal buffer is not enough to create the response packet.
+ * The CONFIG_BT_AVRCP_SEND_PACKET_MAX_SIZE's default value is 512 which is AVRCP defined max response data length without Continuation function.
+ * Please reduce the replied content or increase CONFIG_BT_AVRCP_SEND_PACKET_MAX_SIZE.
  */
 int bt_avrcp_response_browsing(struct bt_conn *conn, uint8_t pdu_id, uint8_t tl, void *rsp_param, uint16_t param_len);
 #endif
@@ -1372,7 +1398,7 @@ int bt_avrcp_register_cover_art_cb(struct bt_avrcp_cover_art_cb *cb);
 #if (defined(CONFIG_BT_AVRCP_COVER_ART_INITIATOR) && ((CONFIG_BT_AVRCP_COVER_ART_INITIATOR) > 0U))
 /** @brief start one cover art initiator.
  *
- *  @param[out] handle the handle, all other cover art APIs use this handle as parameter. 
+ *  @param[out] handle the handle, all other cover art APIs use this handle as parameter.
  *
  *  @return 0 in case of success and error code in case of error.
  */
@@ -1390,7 +1416,7 @@ int bt_avrcp_cover_art_stop_initiator(uint8_t handle);
 #if (defined(CONFIG_BT_AVRCP_COVER_ART_RESPONDER) && ((CONFIG_BT_AVRCP_COVER_ART_RESPONDER) > 0U))
 /** @brief start cover art responder.
  *
- *  @param[out] handle the handle, , all other cover art APIs use this handle as parameter. 
+ *  @param[out] handle the handle, , all other cover art APIs use this handle as parameter.
  *
  *  @return 0 in case of success and error code in case of error.
  */
@@ -1410,7 +1436,7 @@ int bt_avrcp_cover_art_stop_responder(uint8_t handle);
  *
  *  The sender will be notified by the registered callback (connected & rsp_received).
  *  The receiver will be notified by the registered callback (connected & cmd_received).
- * 
+ *
  *  @param handle the handle.
  *  @param conn connection object.
  *  @param cmd connection command parameter.
@@ -1423,7 +1449,7 @@ int bt_avrcp_cover_art_connect(uint8_t handle, struct bt_conn *conn, struct bt_a
  *
  *  The sender will be notified by the registered callback (connected & rsp_received).
  *  The receiver will be notified by the registered callback (connected & cmd_received).
- * 
+ *
  *  @param handle the handle.
  *
  *  @return 0 in case of success and error code in case of error.
@@ -1434,7 +1460,7 @@ int bt_avrcp_cover_art_disconnect(uint8_t handle);
  *
  *  The sender will be notified by the registered callback (rsp_received).
  *  The receiver will be notified by the registered callback (cmd_received).
- * 
+ *
  *  @param handle the handle.
  *  @param param parameter.
  *
@@ -1446,7 +1472,7 @@ int bt_avrcp_get_image_property(uint8_t handle, struct bt_avrcp_get_image_proper
  *
  *  The sender will be notified by the registered callback (rsp_received).
  *  The receiver will be notified by the registered callback (cmd_received).
- * 
+ *
  *  @param handle the handle.
  *  @param param parameter.
  *
@@ -1458,7 +1484,7 @@ int bt_avrcp_get_image(uint8_t handle, struct bt_avrcp_get_image *param);
  *
  *  The sender will be notified by the registered callback (rsp_received).
  *  The receiver will be notified by the registered callback (cmd_received).
- * 
+ *
  *  @param handle the handle.
  *  @param param parameter.
  *
@@ -1470,7 +1496,7 @@ int bt_avrcp_get_linked_thumbnail(uint8_t handle, struct bt_avrcp_get_linked_thu
  *
  *  The sender will be notified by the registered callback (rsp_received).
  *  The receiver will be notified by the registered callback (cmd_received).
- * 
+ *
  *  @param handle the handle.
  *
  *  @return 0 in case of success and error code in case of error.
@@ -1481,7 +1507,7 @@ int bt_avrcp_abort(uint8_t handle);
  *
  *  The sender will be notified by the registered callback (rsp_received).
  *  The receiver will be notified by the registered callback (cmd_received).
- * 
+ *
  *  @param handle the handle.
  *  @param wait ture: not 0, faluse: 0.
  *  @param rsp the received respone message.
@@ -1495,7 +1521,7 @@ int bt_avrcp_send_request(uint8_t handle, uint8_t wait, struct bt_avrcp_cover_ar
 /** @brief response cover art command (cover art).
  *
  *  The receiver will be notified by the registered callback (rsp_received).
- * 
+ *
  *  @param handle the handle.
  *  @param cmd the command, for example: BT_AVRCP_COVER_ART_GET_PROP.
  *  @param response for example: BT_AVRCP_CA_SUCCESS_RSP.
@@ -1517,6 +1543,6 @@ int bt_avrcp_response_cover_art(uint8_t handle, uint8_t cmd, uint8_t response, v
 /**
  * @}
  */
- 
+
 
 #endif /* ZEPHYR_INCLUDE_BLUETOOTH_AVRCP_H_ */

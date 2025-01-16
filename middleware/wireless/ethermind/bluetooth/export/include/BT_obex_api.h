@@ -1677,10 +1677,36 @@ API_RESULT BT_obex_get_srm_status
  */
 #define BT_obex_get_peer_srm_status(handle, value) \
         BT_obex_get_srm_status((handle), 0x02U, (value))
+
+/**
+ *  \brief To get the OBEX SRMP status of peer device.
+ *
+ *  \par Description:
+ *      This API is used to extract the OBEX SRMP status of peer device.
+ *
+ *  \param [in] handle
+ *      Handle to refer the OBEX instance.
+ *
+ *  \param [out] value
+ *      OBEX SRMP status
+ *
+ *  \return API_RESULT
+ *      API_SUCCESS on success otherwise an error code describing
+ *      the reason for failure
+ *
+ *  \note
+ *      None
+ */
+API_RESULT BT_obex_get_peer_srmp
+           (
+               /* IN  */ OBEX_HANDLE * handle,
+               /* OUT */ UCHAR * value 
+           );
 #else /* OBEX_OVER_L2CAP */
 #define BT_obex_get_local_srm_status(handle, value) API_FAILURE
 #define BT_obex_get_peer_srm_status(handle, value)  API_FAILURE
 #define BT_obex_get_srm_status(handle, type, value) API_FAILURE
+#define BT_obex_get_peer_srmp(handle, value)  API_FAILURE
 #endif /* OBEX_OVER_L2CAP */
 
 /**

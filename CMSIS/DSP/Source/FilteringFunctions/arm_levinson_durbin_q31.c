@@ -106,19 +106,18 @@ __STATIC_FORCEINLINE q31_t divide(q31_t n, q31_t d)
   @param[out]    a        autoregressive coefficients
   @param[out]    err      prediction error (variance)
   @param[in]     nbCoefs  number of autoregressive coefficients
-  @return        none
  */
 
-#if defined(ARM_MATH_MVE_FLOAT16) && !defined(ARM_MATH_AUTOVECTORIZE) && defined(__CMSIS_GCC_H)
+#if defined(ARM_MATH_MVE_FLOAT16) && !defined(ARM_MATH_AUTOVECTORIZE) && defined(ARM_DSP_BUILT_WITH_GCC)
 #pragma GCC warning "Scalar version of arm_levinson_durbin_q31 built. Helium version has build issues with gcc."
 #endif 
 
-#if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE) &&  !defined(__CMSIS_GCC_H)
+#if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE) &&  !defined(ARM_DSP_BUILT_WITH_GCC)
 
 #define LANE23_MASK 0xFF00
 
 #include "arm_helium_utils.h"
-void arm_levinson_durbin_q31(const q31_t *phi,
+ARM_DSP_ATTRIBUTE void arm_levinson_durbin_q31(const q31_t *phi,
   q31_t *a, 
   q31_t *err,
   int nbCoefs)
@@ -298,7 +297,7 @@ void arm_levinson_durbin_q31(const q31_t *phi,
 
 #else
 
-void arm_levinson_durbin_q31(const q31_t *phi,
+ARM_DSP_ATTRIBUTE void arm_levinson_durbin_q31(const q31_t *phi,
   q31_t *a, 
   q31_t *err,
   int nbCoefs)

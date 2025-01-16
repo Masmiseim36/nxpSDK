@@ -43,7 +43,11 @@
 
 #define WIFI_RESP_WAIT_TIME 10
 
+#if CONFIG_ENABLE_AMSDU_RX
 #define SDIO_INBUF_LEN (2048 * 2)
+#else  /* ! CONFIG_ENABLE_AMSDU_RX */
+#define SDIO_INBUF_LEN 2048
+#endif /* CONFIG_ENABLE_AMSDU_RX */
 
 #define SDIO_OUTBUF_LEN 2048U
 
@@ -85,6 +89,7 @@ extern bool low_power_mode;
 #endif
 extern bool cal_data_valid;
 extern bool mac_addr_valid;
+extern bus_operations bus_ops;
 
 mlan_status sd_wifi_init(enum wlan_type type, const uint8_t *fw_start_addr, const size_t size);
 
@@ -118,6 +123,11 @@ int wifi_send_cmdbuffer(t_u32 tx_blocks, t_u32 len);
  *
  */
 HostCmd_DS_COMMAND *wifi_get_command_buffer(void);
+
+#ifdef SD9177
+HostCmd_DS_COMMAND *wifi_get_prev_command_buffer(void);
+#endif
+
 #if CONFIG_FW_VDLL
 int wifi_send_vdllcmdbuffer(t_u32 tx_blocks, t_u32 len);
 HostCmd_DS_COMMAND *wifi_get_vdllcommand_buffer(void);

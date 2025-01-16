@@ -39,7 +39,6 @@
   @param[in]     S             points to an instance of the Q15 DCT4 structure.
   @param[in]     pState        points to state buffer.
   @param[in,out] pInlineBuffer points to the in-place input and output buffer.
-  @return        none
  
   @par           Input an output formats
                    Internally inputs are downscaled in the RFFT process function to avoid overflows.
@@ -55,7 +54,7 @@
 
  */
 
-void arm_dct4_q15(
+ARM_DSP_ATTRIBUTE void arm_dct4_q15(
   const arm_dct4_instance_q15 * S,
         q15_t * pState,
         q15_t * pInlineBuffer)

@@ -45,7 +45,6 @@
  * @param[in]    S         Pointer to an instance of the rbf SVM structure.
  * @param[in]    in        Pointer to input vector
  * @param[out]   pResult   decision value
- * @return none.
  *
  */
 
@@ -54,7 +53,7 @@
 #include "arm_helium_utils.h"
 #include "arm_vec_math_f16.h"
 
-void arm_svm_rbf_predict_f16(
+ARM_DSP_ATTRIBUTE void arm_svm_rbf_predict_f16(
     const arm_svm_rbf_instance_f16 *S,
     const float16_t * in,
     int32_t * pResult)
@@ -319,7 +318,7 @@ void arm_svm_rbf_predict_f16(
 }
 
 #else
-void arm_svm_rbf_predict_f16(
+ARM_DSP_ATTRIBUTE void arm_svm_rbf_predict_f16(
     const arm_svm_rbf_instance_f16 *S,
     const float16_t * in,
     int32_t * pResult)
@@ -334,7 +333,7 @@ void arm_svm_rbf_predict_f16(
         dot=0.0f16;
         for(j=0; j < S->vectorDimension; j++)
         {
-            dot = dot + SQ((_Float16)in[j] - (_Float16) *pSupport);
+            dot = dot + ARM_SQ((_Float16)in[j] - (_Float16) *pSupport);
             pSupport++;
         }
         sum += (_Float16)S->dualCoefficients[i] * (_Float16)expf((float32_t)(-(_Float16)S->gamma * (_Float16)dot));

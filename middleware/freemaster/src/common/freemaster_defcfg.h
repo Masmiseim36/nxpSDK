@@ -1,20 +1,17 @@
 /*
  * Copyright (c) 2007-2015 Freescale Semiconductor, Inc.
- * Copyright 2018-2021 NXP
+ * Copyright 2018-2021, 2024 NXP
  *
- * License: NXP LA_OPT_NXP_Software_License
+ * License: NXP LA_OPT_Online Code Hosting NXP_Software_License
  *
- * NXP Confidential. This software is owned or controlled by NXP and may
+ * NXP Proprietary. This software is owned or controlled by NXP and may
  * only be used strictly in accordance with the applicable license terms.
  * By expressly accepting such terms or by downloading, installing,
  * activating and/or otherwise using the software, you are agreeing that
  * you have read, and that you agree to comply with and are bound by,
  * such license terms.  If you do not agree to be bound by the applicable
  * license terms, then you may not retain, install, activate or otherwise
- * use the software.  This code may only be used in a microprocessor,
- * microcontroller, sensor or digital signal processor ("NXP Product")
- * supplied directly or indirectly from NXP.  See the full NXP Software
- * License Agreement in license/LA_OPT_NXP_Software_License.pdf
+ * use the software.
  *
  * FreeMASTER Communication Driver - default configuration options
  */
@@ -32,8 +29,16 @@
 #include "freemaster_cfg.h"
 
 /* Define global version macro */
-#define FMSTR_VERSION     0x00030004
-#define FMSTR_VERSION_STR "3.0.4"
+#define FMSTR_VERSION     0x00030007
+#define FMSTR_VERSION_STR "3.0.7"
+
+/******************************************************************************
+ * Includes
+ ******************************************************************************/
+
+#ifdef FMSTR_PRINT_INCLUDE
+#include FMSTR_PRINT_INCLUDE
+#endif
 
 /******************************************************************************
  * Configuration check
@@ -228,6 +233,11 @@
 #define FMSTR_USE_TSA_DYNAMIC 0
 #endif
 
+/* use TSA user-defined resources (experimental feature) */
+#ifndef FMSTR_USE_URES
+#define FMSTR_USE_URES 0
+#endif
+
 /* use transport "pipe" functionality */
 #ifndef FMSTR_USE_PIPES
 #define FMSTR_USE_PIPES 0
@@ -308,7 +318,57 @@
 #if FMSTR_FASTREC_RISING_EDGE_TRG_ONLY && FMSTR_FASTREC_FALLING_EDGE_TRG_ONLY
 #undef  FMSTR_FASTREC_FALLING_EDGE_TRG_ONLY
 #define FMSTR_FASTREC_FALLING_EDGE_TRG_ONLY 0
-#warning Only rainsing edge trigger mode will be used for recorder.
+#warning Only raising edge trigger mode will be used for recorder.
 #endif
+
+/* Internal ID constants for the known driver files. Having them
+   here prevents some compiler warning in -Wpedantic builds when
+   processing FMSTR_MK_IDSTR(FMSTR_SERIAL_DRV) and similar tests
+   in driver .c files. When new drivers are created, add the
+   identifier to this list (or ignore the pedantic warning). */
+
+/* Transports */
+#define FMSTR_CAN_ID                         101
+#define FMSTR_NET_ID                         102
+#define FMSTR_PDBDM_ID                       103
+#define FMSTR_SERIAL_ID                      104
+
+/* ampxsdk drivers */
+#define FMSTR_CAN_S32K1x_FLEXCAN_ID          201
+#define FMSTR_SERIAL_S32K1x_LPUART_ID        202
+
+/* dreg drivers */
+#define FMSTR_SERIAL_56F800E_EONCE_ID        301
+#define FMSTR_CAN_56F800E_FLEXCAN_ID         302
+#define FMSTR_SERIAL_56F800E_QSCI_ID         303
+#define FMSTR_SERIAL_DREG_KXX_UART_ID        304
+#define FMSTR_SERIAL_MPC57XP_LINFLEX_ID      305
+#define FMSTR_CAN_S12Z_MSCAN_ID              306
+#define FMSTR_SERIAL_S12Z_SCI_ID             307
+#define FMSTR_SERIAL_S32G274A_LINFLEXD_ID    308
+#define FMSTR_SERIAL_S32K144_LPUART_ID       309
+#define FMSTR_SERIAL_S32K3XX_LPUART_ID       310
+#define FMSTR_SERIAL_S32M2XX_LPUART_ID       311
+#define FMSTR_SERIAL_S32N_LINFLEXD_ID        312
+#define FMSTR_SERIAL_S32R45_LINFLEXD_ID      313
+#define FMSTR_SERIAL_S32S247TV_LINFLEXD_ID   314
+#define FMSTR_SERIAL_S32Z2E2_LINFLEXD_ID     315
+
+/* MCUX drivers */
+#define FMSTR_CAN_MCUX_FLEXCAN_ID            401
+#define FMSTR_CAN_MCUX_DSCFLEXCAN_ID         402
+#define FMSTR_CAN_MCUX_MCAN_ID               403
+#define FMSTR_CAN_MCUX_MSCAN_ID              404
+#define FMSTR_CAN_MCUX_DSCMSCAN_ID           405
+#define FMSTR_NET_LWIP_TCP_ID                406
+#define FMSTR_NET_LWIP_UDP_ID                407
+#define FMSTR_NET_SEGGER_RTT_ID              408
+#define FMSTR_SERIAL_MCUX_LPSCI_ID           409
+#define FMSTR_SERIAL_MCUX_LPUART_ID          410
+#define FMSTR_SERIAL_MCUX_MINIUSART_ID       411
+#define FMSTR_SERIAL_MCUX_QSCI_ID            412
+#define FMSTR_SERIAL_MCUX_UART_ID            413
+#define FMSTR_SERIAL_MCUX_USART_ID           414
+#define FMSTR_SERIAL_MCUX_USB_ID             415
 
 #endif /* __FREEMASTER_DEF_CFG_H */

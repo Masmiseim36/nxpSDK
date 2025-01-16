@@ -14,13 +14,15 @@
 
 #include <bluetooth/hci.h>
 #include <bluetooth/addr.h>
+#include "sm_internal.h"
+#include "sm_extern.h"
 
 #define LOG_ENABLE IS_ENABLED(CONFIG_BT_DEBUG_SMP)
 #define LOG_MODULE_NAME bt_ssp
 #include "fsl_component_log.h"
 LOG_MODULE_DEFINE(LOG_MODULE_NAME, kLOG_LevelDebug);
 
-#if (defined(CONFIG_BT_BREDR) && ((CONFIG_BT_BREDR) > 0U))
+#if (defined(CONFIG_BT_CLASSIC) && ((CONFIG_BT_CLASSIC) > 0U))
 #include "sm_ssp_pl.h"
 #include "BT_sm_api.h"
 
@@ -48,6 +50,8 @@ static const uint8_t ssp_method[4 /* remote */][4 /* local */] = {
 
 static int ssp_passkey_neg_reply(struct bt_conn *conn);
 static int ssp_confirm_reply(struct bt_conn *conn);
+static uint8_t ssp_pair_method(const struct bt_conn *conn);
+static uint8_t get_io_capa(void);
 
 extern bt_security_t l2cap_br_server_security_level_max(void);
 
@@ -174,14 +178,72 @@ void pin_code_req(struct bt_conn *conn)
 	}
 }
 
+static uint8_t get_local_auth(const struct bt_conn *conn)
+{
+	API_RESULT retval;
+	SM_IO_CAPS cap;
+	DEVICE_HANDLE handle;
+
+	retval = sm_get_device_handle((UCHAR*)&conn->br.dst.val[0], &handle);
+	if (retval == API_SUCCESS) {
+		UINT32 di;
+
+		retval = API_FAILURE;
+		di = sm_search_device_entity (NULL, 0x0U, &handle);
+		if (di != SM_MAX_DEVICES) {
+			sm_lock();
+			retval = sm_get_io_capability_pl(di, &cap);
+			sm_unlock();
+		}
+	}
+
+	if (retval == API_SUCCESS) {
+		return cap.auth_reqs;
+	}
+
+	return 0;
+}
+
+static bool check_both_mitm_not_required(uint8_t remote_auth, uint8_t local_auth)
+{
+	return !(remote_auth & BT_HCI_NO_BONDING_MITM) &&
+	       !(local_auth & BT_HCI_NO_BONDING_MITM);
+}
+
 void user_confirm_req(struct bt_conn *conn, unsigned int passkey)
 {
-	conn->br.pairing_method = PASSKEY_CONFIRM;
-	if (bt_auth && bt_auth->passkey_confirm) {
-		atomic_set_bit(conn->flags, BT_CONN_USER);
-		bt_auth->passkey_confirm(conn, passkey);
+	SM_IO_CAPS io_cap;
+	uint8_t local_io;
+	uint8_t local_auth = 0;
+
+	if (API_SUCCESS == BT_sm_get_remote_iocaps_pl(&conn->br.dst.val[0], &io_cap))
+	{
+		conn->br.remote_io_capa = (uint8_t)io_cap.io_cap;
+		conn->br.remote_auth = (uint8_t)io_cap.auth_reqs;
+	}
+	conn->br.pairing_method = ssp_pair_method(conn);
+
+	local_io = get_io_capa();
+	local_auth = get_local_auth(conn);
+	if ((conn->br.pairing_method == PASSKEY_CONFIRM) ||
+	    (local_io == BT_IO_DISPLAY_YESNO &&
+	     conn->br.remote_io_capa == BT_IO_DISPLAY_ONLY &&
+	     !check_both_mitm_not_required(conn->br.remote_auth, local_auth))) {
+		if (bt_auth && bt_auth->passkey_confirm) {
+			atomic_set_bit(conn->flags, BT_CONN_USER);
+			bt_auth->passkey_confirm(conn, passkey);
+		} else {
+			/* this should not be needed, passkey_confirm should be set */
+			ssp_confirm_reply(conn);
+		}
 	} else {
-		ssp_confirm_reply(conn);
+		if (bt_auth && bt_auth->pairing_confirm) {
+			atomic_set_bit(conn->flags, BT_CONN_USER);
+			bt_auth->pairing_confirm(conn);
+		} else {
+			/* automatic confirmation */
+			ssp_confirm_reply(conn);
+		}
 	}
 }
 
@@ -229,7 +291,17 @@ static uint8_t get_io_capa(void)
 
 static uint8_t ssp_pair_method(const struct bt_conn *conn)
 {
-	return ssp_method[conn->br.remote_io_capa][get_io_capa()];
+	uint8_t local_io;
+	uint8_t local_auth;
+
+	local_io = get_io_capa();
+	local_auth = get_local_auth(conn);
+
+	/* [BT Core 5.4 table 5.7, Vol 3, Part C, 5.2.2.6] */
+	if (check_both_mitm_not_required(conn->br.remote_auth, local_auth)) {
+		return JUST_WORKS;
+	}
+	return ssp_method[conn->br.remote_io_capa][local_io];
 }
 
 static uint8_t ssp_get_auth(const struct bt_conn *conn)
@@ -322,7 +394,7 @@ static void ssp_pairing_complete(struct bt_conn *conn, uint8_t status)
 		struct bt_conn_auth_info_cb *listener, *next;
 
 		SYS_SLIST_FOR_EACH_CONTAINER_SAFE(&bt_auth_info_cbs, listener,
-						  next, node, struct bt_conn_auth_info_cb) {
+						  next, node) {
 			if (listener->pairing_complete) {
 				listener->pairing_complete(conn, bond);
 			}
@@ -331,7 +403,7 @@ static void ssp_pairing_complete(struct bt_conn *conn, uint8_t status)
 		struct bt_conn_auth_info_cb *listener, *next;
 
 		SYS_SLIST_FOR_EACH_CONTAINER_SAFE(&bt_auth_info_cbs, listener,
-						  next, node, struct bt_conn_auth_info_cb) {
+						  next, node) {
 			if (listener->pairing_failed) {
 				listener->pairing_failed(conn, (enum bt_security_err)status);
 			}
@@ -457,7 +529,7 @@ static int ssp_passkey_neg_reply(struct bt_conn *conn)
 static int conn_auth(struct bt_conn *conn)
 {
 #if 0
-    struct bt_hci_cp_auth_requested *auth;
+	struct bt_hci_cp_auth_requested *auth;
 	struct net_buf *buf;
 
 	LOG_DBG("");
@@ -474,22 +546,19 @@ static int conn_auth(struct bt_conn *conn)
 
 	return bt_hci_cmd_send_sync(BT_HCI_OP_AUTH_REQUESTED, buf, NULL);
 #else
-    API_RESULT retval = API_SUCCESS;
+	API_RESULT retval = API_SUCCESS;
 
 	/* Try L2CAP_SC_CHECK_TIMEOUT to take semaphore to wait until the security level updated. */
-	osa_status_t status = OSA_SemaphoreWait(conn->sem_security_level_updated, 200);
-	if(KOSA_StatusSuccess == status) {
+	int err = k_sem_take(&conn->sec_lvl_updated, K_MSEC(200));
+	if(err >= 0) {
 		retval = BT_sm_authentication_request (conn->br.dst.val);
+		if (API_SUCCESS == retval)
+		{
+			return 0;
+		}
 	}
 
-	if (API_SUCCESS == retval)
-	{
-		return 0;
-	}
-	else
-	{
-		return -EIO;
-	}
+	return err;
 #endif
 }
 
@@ -831,6 +900,28 @@ void bt_hci_io_capa_resp(struct net_buf *buf)
 #endif
 }
 
+#if defined(CONFIG_BT_SMP_APP_PAIRING_ACCEPT)
+API_RESULT sm_pairing_accept(BT_DEVICE_ADDR* device_addr)
+{
+	struct bt_conn *conn = NULL;
+	API_RESULT ret = API_SUCCESS;
+
+	conn = bt_conn_lookup_addr_br((const bt_addr_t *)&device_addr->addr[0]);
+	if (conn != NULL) {
+		if (bt_auth && bt_auth->pairing_accept) {
+			enum bt_security_err err;
+
+			err = bt_auth->pairing_accept(conn, NULL);
+			if (err != BT_SECURITY_ERR_SUCCESS) {
+				ret = HC_PAIRING_NOT_ALLOWED;
+			}
+		}
+		bt_conn_unref(conn);
+	}
+	return ret;
+}
+#endif
+
 void bt_hci_io_capa_req(struct net_buf *buf)
 {
 #if 0
@@ -1010,4 +1101,4 @@ void bt_hci_auth_complete(struct net_buf *buf)
 	}
 	bt_conn_unref(conn);
 }
-#endif /* #if CONFIG_BT_BREDR */
+#endif /* #if CONFIG_BT_CLASSIC */

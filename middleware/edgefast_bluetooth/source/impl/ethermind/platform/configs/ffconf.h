@@ -5,12 +5,12 @@
 /  FatFs Functional Configurations
 /---------------------------------------------------------------------------*/
 
-#define FFCONF_DEF	86631	/* Revision ID */
+#define FFCONF_DEF	80286	/* Revision ID */
 
 /*---------------------------------------------------------------------------/
 / MSDK adaptation configuration
 /---------------------------------------------------------------------------*/
-#define USB_DISK_ENABLE
+#define USB_DISK_ENABLE 1
 
 /*---------------------------------------------------------------------------/
 / Function Configurations
@@ -41,12 +41,12 @@
 /  2: Enable with LF-CRLF conversion. */
 
 
-#define FF_USE_FIND		0
+#define FF_USE_FIND		1
 /* This option switches filtered directory read functions, f_findfirst() and
 /  f_findnext(). (0:Disable, 1:Enable 2:Enable with matching altname[] too) */
 
 
-#define FF_USE_MKFS		0
+#define FF_USE_MKFS		1
 /* This option switches f_mkfs() function. (0:Disable or 1:Enable) */
 
 

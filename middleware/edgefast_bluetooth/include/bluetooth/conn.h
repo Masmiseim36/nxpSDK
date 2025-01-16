@@ -20,9 +20,8 @@
 #include <stdbool.h>
 #include <stdint.h>
 
-#include <toolchain.h>
-
 #include <bluetooth/bluetooth.h>
+#include <bluetooth/hci_types.h>
 #include <bluetooth/addr.h>
 #include <bluetooth/gap.h>
 #include <bluetooth/direction.h>
@@ -98,9 +97,9 @@ enum {
 
 /** Preferred PHY parameters for LE connections */
 struct bt_conn_le_phy_param {
-	uint16_t options;     /** Connection PHY options. */
-	uint8_t  pref_tx_phy; /** Bitmask of preferred transmit PHYs */
-	uint8_t  pref_rx_phy; /** Bitmask of preferred receive PHYs */
+	uint16_t options; /**< Connection PHY options. */
+	uint8_t  pref_tx_phy; /**< Bitmask of preferred transmit PHYs */
+	uint8_t  pref_rx_phy; /**< Bitmask of preferred receive PHYs */
 };
 
 /** Initialize PHY parameters
@@ -197,8 +196,7 @@ struct bt_conn_le_data_len_param {
 				  BT_GAP_DATA_TIME_MAX)
 
 /** Connection Type */
-ENUM_PACKED_PRE
-enum  bt_conn_type {
+enum __packed bt_conn_type {
 	/** LE Connection Type */
 	BT_CONN_TYPE_LE = BIT(0),
 	/** BR/EDR Connection Type */
@@ -210,7 +208,7 @@ enum  bt_conn_type {
 	/** All Connection Type */
 	BT_CONN_TYPE_ALL = BT_CONN_TYPE_LE | BT_CONN_TYPE_BR |
 			   BT_CONN_TYPE_SCO | BT_CONN_TYPE_ISO,
-}ENUM_PACKED_POST;
+};
 
 /** @brief Increment a connection's reference count.
  *
@@ -235,7 +233,7 @@ void bt_conn_unref(struct bt_conn *conn);
 
 /** @brief Iterate through all bt_conn objects.
  *
- * Iterates trough all bt_conn objects that are alive in the Host allocator.
+ * Iterates through all bt_conn objects that are alive in the Host allocator.
  *
  * To find established connections, combine this with @ref bt_conn_get_info.
  * Check that @ref bt_conn_info.state is @ref BT_CONN_STATE_CONNECTED.
@@ -338,7 +336,7 @@ struct bt_conn_le_info {
 
 /** BR/EDR Connection Info Structure */
 struct bt_conn_br_info {
-	const bt_addr_t *dst; /** Destination (Remote) BR/EDR address */
+	const bt_addr_t *dst; /**< Destination (Remote) BR/EDR address */
 };
 
 enum {
@@ -358,8 +356,7 @@ enum bt_conn_state {
 };
 
 /** Security level. */
-ENUM_PACKED_PRE
-enum _bt_security {
+typedef enum __packed {
 	/** Level 0: Only for BR/EDR special cases, like SDP */
 	BT_SECURITY_L0,
 	/** Level 1: No encryption and no authentication. */
@@ -374,8 +371,7 @@ enum _bt_security {
 	 *  security level.
 	 */
 	BT_SECURITY_FORCE_PAIR = BIT(7),
-} ENUM_PACKED_POST;
-typedef enum _bt_security bt_security_t;
+} bt_security_t;
 
 /** Security Info Flags. */
 enum bt_security_flag {
@@ -394,10 +390,6 @@ struct bt_security_info {
 	/** Flags. */
 	enum bt_security_flag flags;
 };
-
-/** Connection role (central or peripheral) */
-#define BT_CONN_ROLE_MASTER __DEPRECATED_MACRO BT_CONN_ROLE_CENTRAL
-#define BT_CONN_ROLE_SLAVE __DEPRECATED_MACRO BT_CONN_ROLE_PERIPHERAL
 
 /** Connection Info Structure */
 struct bt_conn_info {
@@ -525,6 +517,58 @@ struct bt_conn_le_tx_power_report {
 	 */
 	int8_t delta;
 };
+
+/** @brief Path Loss zone that has been entered.
+ *
+ *  The path loss zone that has been entered in the most recent LE Path Loss Monitoring
+ *  Threshold Change event as documented in Core Spec. Version 5.4 Vol.4, Part E, 7.7.65.32.
+ *
+ *  @note BT_CONN_LE_PATH_LOSS_ZONE_UNAVAILABLE has been added to notify when path loss becomes
+ *        unavailable.
+ */
+enum bt_conn_le_path_loss_zone {
+	/** Low path loss zone entered. */
+	BT_CONN_LE_PATH_LOSS_ZONE_ENTERED_LOW,
+	/** Middle path loss zone entered. */
+	BT_CONN_LE_PATH_LOSS_ZONE_ENTERED_MIDDLE,
+	/** High path loss zone entered. */
+	BT_CONN_LE_PATH_LOSS_ZONE_ENTERED_HIGH,
+	/** Path loss has become unavailable. */
+	BT_CONN_LE_PATH_LOSS_ZONE_UNAVAILABLE,
+};
+
+BUILD_ASSERT(BT_CONN_LE_PATH_LOSS_ZONE_ENTERED_LOW == BT_HCI_LE_ZONE_ENTERED_LOW);
+BUILD_ASSERT(BT_CONN_LE_PATH_LOSS_ZONE_ENTERED_MIDDLE == BT_HCI_LE_ZONE_ENTERED_MIDDLE);
+BUILD_ASSERT(BT_CONN_LE_PATH_LOSS_ZONE_ENTERED_HIGH == BT_HCI_LE_ZONE_ENTERED_HIGH);
+
+/** @brief LE Path Loss Monitoring Threshold Change Report Structure. */
+struct bt_conn_le_path_loss_threshold_report {
+
+	/** Path Loss zone as documented in Core Spec. Version 5.4 Vol.4, Part E, 7.7.65.32. */
+	enum bt_conn_le_path_loss_zone zone;
+
+	/** Current path loss (dB). */
+	uint8_t path_loss;
+};
+
+/** @brief LE Path Loss Monitoring Parameters Structure as defined in Core Spec. Version 5.4
+ *         Vol.4, Part E, 7.8.119 LE Set Path Loss Reporting Parameters command.
+ */
+struct bt_conn_le_path_loss_reporting_param {
+	/** High threshold for the path loss (dB). */
+	uint8_t high_threshold;
+	/** Hysteresis value for the high threshold (dB). */
+	uint8_t high_hysteresis;
+	/** Low threshold for the path loss (dB). */
+	uint8_t low_threshold;
+	/** Hysteresis value for the low threshold (dB). */
+	uint8_t low_hysteresis;
+	/** Minimum time in number of connection events to be observed once the
+	 *  path loss crosses the threshold before an event is generated.
+	 */
+	uint16_t min_time_spent;
+};
+
 /** @brief Passkey Keypress Notification type
  *
  *  The numeric values are the same as in the Core specification for Pairing
@@ -537,6 +581,7 @@ enum bt_conn_auth_keypress {
 	BT_CONN_AUTH_KEYPRESS_CLEARED = 0x03,
 	BT_CONN_AUTH_KEYPRESS_ENTRY_COMPLETED = 0x04,
 };
+
 /** @brief Get connection info
  *
  *  @param conn Connection object.
@@ -609,6 +654,34 @@ int bt_conn_le_get_remote_tx_power_level(struct bt_conn *conn,
 int bt_conn_le_set_tx_power_report_enable(struct bt_conn *conn,
 					  bool local_enable,
 					  bool remote_enable);
+
+/** @brief Set Path Loss Monitoring Parameters.
+ *
+ *  Change the configuration for path loss threshold change events for a given conn handle.
+ *
+ *  @note To use this API @kconfig{CONFIG_BT_PATH_LOSS_MONITORING} must be set.
+ *
+ *  @param conn  Connection object.
+ *  @param param Path Loss Monitoring parameters
+ *
+ *  @return Zero on success or (negative) error code on failure.
+ */
+int bt_conn_le_set_path_loss_mon_param(struct bt_conn *conn,
+				       const struct bt_conn_le_path_loss_reporting_param *param);
+
+/** @brief Enable or Disable Path Loss Monitoring.
+ *
+ * Enable or disable Path Loss Monitoring, which will decide whether Path Loss Threshold events
+ * are sent from the controller to the host.
+ *
+ * @note To use this API @kconfig{CONFIG_BT_PATH_LOSS_MONITORING} must be set.
+ *
+ * @param conn   Connection Object.
+ * @param enable Enable/disable path loss reporting.
+ *
+ * @return Zero on success or (negative) error code on failure.
+ */
+int bt_conn_le_set_path_loss_mon_enable(struct bt_conn *conn, bool enable);
 
 /** @brief Update the connection parameters.
  *
@@ -777,7 +850,8 @@ struct bt_conn_le_create_param {
  *  This uses the General Connection Establishment procedure.
  *
  *  The application must disable explicit scanning before initiating
- *  a new LE connection.
+ *  a new LE connection if @kconfig{CONFIG_BT_SCAN_AND_INITIATE_IN_PARALLEL}
+ *  is not enabled.
  *
  *  @param[in]  peer         Remote address.
  *  @param[in]  create_param Create connection parameters.
@@ -830,7 +904,7 @@ int bt_conn_le_create_synced(const struct bt_le_ext_adv *adv,
  *  This uses the Auto Connection Establishment procedure.
  *  The procedure will continue until a single connection is established or the
  *  procedure is stopped through @ref bt_conn_create_auto_stop.
- *  To establish connections to all devices in the the filter accept list the
+ *  To establish connections to all devices in the filter accept list the
  *  procedure should be started again in the connected callback after a
  *  new connection has been established.
  *
@@ -1022,6 +1096,7 @@ struct bt_conn_cb {
 	 * discouraged.
 	 */
 	void (*recycled)(void);
+
 	/** @brief LE connection parameter update request.
 	 *
 	 *  This callback notifies the application that a remote device
@@ -1075,7 +1150,7 @@ struct bt_conn_cb {
 				  const bt_addr_le_t *rpa,
 				  const bt_addr_le_t *identity);
 #endif /* CONFIG_BT_SMP */
-#if ((defined(CONFIG_BT_SMP) && (CONFIG_BT_SMP > 0U)) || (defined(CONFIG_BT_BREDR) && (CONFIG_BT_BREDR > 0U)))
+#if ((defined(CONFIG_BT_SMP) && (CONFIG_BT_SMP > 0U)) || (defined(CONFIG_BT_CLASSIC) && (CONFIG_BT_CLASSIC > 0U)))
 	/** @brief The security level of a connection has changed.
 	 *
 	 *  This callback notifies the application that the security of a
@@ -1094,7 +1169,7 @@ struct bt_conn_cb {
 	 */
 	void (*security_changed)(struct bt_conn *conn, bt_security_t level,
 				 enum bt_security_err err);
-#endif /* defined(CONFIG_BT_SMP) || defined(CONFIG_BT_BREDR) */
+#endif /* defined(CONFIG_BT_SMP) || defined(CONFIG_BT_CLASSIC) */
 
 #if (defined(CONFIG_BT_REMOTE_INFO) && (CONFIG_BT_REMOTE_INFO > 0U))
 	/** @brief Remote information procedures has completed.
@@ -1146,7 +1221,7 @@ struct bt_conn_cb {
 			      const struct bt_df_conn_iq_samples_report *iq_report);
 #endif /* CONFIG_BT_DF_CONNECTION_CTE_RX */
 
-#if defined(CONFIG_BT_TRANSMIT_POWER_CONTROL)
+#if (defined(CONFIG_BT_TRANSMIT_POWER_CONTROL) && (CONFIG_BT_TRANSMIT_POWER_CONTROL > 0))
 	/** @brief LE Read Remote Transmit Power Level procedure has completed or LE
 	 *  Transmit Power Reporting event.
 	 *
@@ -1161,7 +1236,23 @@ struct bt_conn_cb {
 	void (*tx_power_report)(struct bt_conn *conn,
 				const struct bt_conn_le_tx_power_report *report);
 #endif /* CONFIG_BT_TRANSMIT_POWER_CONTROL */
-	struct bt_conn_cb *_next;
+
+#if (defined(CONFIG_BT_PATH_LOSS_MONITORING) && (CONFIG_BT_PATH_LOSS_MONITORING > 0))
+	/** @brief LE Path Loss Threshold event.
+	 *
+	 *  This callback notifies the application that there has been a path loss threshold
+	 *  crossing or reporting the initial path loss threshold zone after using
+	 *  @ref bt_conn_le_set_path_loss_mon_enable.
+	 *
+	 *  @param conn Connection object.
+	 *  @param report Path loss threshold report.
+	 */
+	void (*path_loss_threshold_report)(struct bt_conn *conn,
+				const struct bt_conn_le_path_loss_threshold_report *report);
+#endif /* CONFIG_BT_PATH_LOSS_MONITORING */
+
+	/** @internal Internally used field for list handling */
+	sys_snode_t _node;
 };
 
 /** @brief Register connection callbacks.
@@ -1169,8 +1260,12 @@ struct bt_conn_cb {
  *  Register callbacks to monitor the state of connections.
  *
  *  @param cb Callback struct. Must point to memory that remains valid.
+ *
+ * @retval 0 Success.
+ * @retval -EEXIST if @p cb was already registered.
  */
-void bt_conn_cb_register(struct bt_conn_cb *cb);
+int bt_conn_cb_register(struct bt_conn_cb *cb);
+
 /**
  * @brief Unregister connection callbacks.
  *
@@ -1189,10 +1284,29 @@ int bt_conn_cb_unregister(struct bt_conn_cb *cb);
  *
  *  @param _name Name of callback structure.
  */
+/*
+ * EDGEFAST: Keywords `static` and `const` cannot be used at same time
+ * if the variable need to be put into a section.
+ */
 #define BT_CONN_CB_DEFINE(_name)					\
-	static const STRUCT_SECTION_ITERABLE(bt_conn_cb,		\
-						_CONCAT(bt_conn_cb_,	\
-							_name))
+	const STRUCT_SECTION_ITERABLE(bt_conn_cb, _CONCAT(_name, __LINE__))
+
+/** Converts a security error to string.
+ *
+ * @return The string representation of the security error code.
+ *         If @kconfig{CONFIG_BT_SECURITY_ERR_TO_STR} is not enabled,
+ *         this just returns the empty string
+ */
+#if (defined(CONFIG_BT_SECURITY_ERR_TO_STR) && (CONFIG_BT_SECURITY_ERR_TO_STR > 0))
+const char *bt_security_err_to_str(enum bt_security_err err);
+#else
+static inline const char *bt_security_err_to_str(enum bt_security_err err)
+{
+	ARG_UNUSED(err);
+
+	return "";
+}
+#endif
 
 /** @brief Enable/disable bonding.
  *
@@ -1434,6 +1548,7 @@ struct bt_conn_auth_cb {
 	 *  @param passkey Passkey to show to the user.
 	 */
 	void (*passkey_display)(struct bt_conn *conn, unsigned int passkey);
+
 #if (defined(CONFIG_BT_PASSKEY_KEYPRESS) && (CONFIG_BT_PASSKEY_KEYPRESS > 0))
 	/** @brief Receive Passkey Keypress Notification during pairing
 	 *
@@ -1556,7 +1671,7 @@ struct bt_conn_auth_cb {
 	 */
 	void (*pairing_confirm)(struct bt_conn *conn);
 
-#if (defined(CONFIG_BT_BREDR) && (CONFIG_BT_BREDR > 0U))
+#if (defined(CONFIG_BT_CLASSIC) && (CONFIG_BT_CLASSIC > 0U))
 	/** @brief Request the user to enter a passkey.
 	 *
 	 *  This callback will be called for a BR/EDR (Bluetooth Classic)
@@ -1778,19 +1893,6 @@ struct bt_br_conn_param {
  */
 struct bt_conn *bt_conn_create_br(const bt_addr_t *peer,
 				  const struct bt_br_conn_param *param);
-
-/** @brief Initiate an SCO connection to a remote device.
- *
- *  Allows initiate new SCO link to remote peer using its address.
- *
- *  The caller gets a new reference to the connection object which must be
- *  released with bt_conn_unref() once done using the object.
- *
- *  @param peer  Remote address.
- *
- *  @return Valid connection object on success or NULL otherwise.
- */
-struct bt_conn *bt_conn_create_sco(const bt_addr_t *peer);
 
 #ifdef __cplusplus
 }

@@ -511,7 +511,7 @@ boot_image_check(struct boot_loader_state *state, struct image_header *hdr,
         if (rc < 0) {
             FIH_RET(fih_rc);
         }
-#ifdef CONFIG_MCUBOOT_ENCRYPTED_XIP_SUPPORT
+#if defined(CONFIG_ENCRYPT_XIP_EXT_ENABLE) && !defined(CONFIG_ENCRYPT_XIP_EXT_OVERWRITE_ONLY)
         /* Both slots are used for staging encrypted image */
         uint32_t active_slot = state->slot_usage[BOOT_CURR_IMG(state)].active_slot;
         if (rc == 0 && boot_enc_set_key(BOOT_CURR_ENC(state), active_slot, bs)) {
@@ -997,7 +997,11 @@ boot_copy_region(struct boot_loader_state *state,
     uint8_t image_index;
 #endif
 
+#ifndef CONFIG_ENCRYPT_XIP_OVERWRITE_ONLY_BUF_SIZE
     TARGET_STATIC uint8_t buf[BUF_SZ] __attribute__((aligned(4)));
+#else
+    TARGET_STATIC uint8_t buf[CONFIG_ENCRYPT_XIP_OVERWRITE_ONLY_BUF_SIZE] __attribute__((aligned(4)));
+#endif
 
 #if !defined(MCUBOOT_ENC_IMAGES)
     (void)state;
@@ -1149,7 +1153,8 @@ boot_copy_image(struct boot_loader_state *state, struct boot_status *bs)
         rc = boot_erase_region(fap_primary_slot, size, this_size);
         assert(rc == 0);
 
-#if defined(MCUBOOT_OVERWRITE_ONLY_FAST)
+#if defined(MCUBOOT_OVERWRITE_ONLY_FAST) && !defined(ENCRYPTED_XIP_IPED)
+        /* In case of IPED region we have to erase whole primary slot */
         if ((size + this_size) >= src_size) {
             size += src_size - size;
             size += BOOT_WRITE_SZ(state) - (size % BOOT_WRITE_SZ(state));
@@ -1188,6 +1193,16 @@ boot_copy_image(struct boot_loader_state *state, struct boot_status *bs)
         }
     }
 #endif
+
+#if defined(ENCRYPTED_XIP_IPED)
+    size = src_size;
+#endif
+    
+    rc = BOOT_HOOK_CALL(boot_copy_region_pre_hook, 0, BOOT_CURR_IMG(state),
+                        BOOT_IMG_AREA(state, BOOT_PRIMARY_SLOT), size);
+    if (rc != 0) {
+        return rc;
+    }
 
     BOOT_LOG_INF("Image %d copying the secondary slot to the primary slot: 0x%x bytes",
                  image_index, size);

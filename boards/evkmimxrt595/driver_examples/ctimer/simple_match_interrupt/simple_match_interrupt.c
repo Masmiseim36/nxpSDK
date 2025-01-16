@@ -11,28 +11,17 @@
  ******************************************************************************/
 
 #include "fsl_debug_console.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
 #include "fsl_ctimer.h"
+#include "app.h"
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define CTIMER          CTIMER2         /* Timer 2 */
-#define CTIMER_MAT0_OUT kCTIMER_Match_0 /* Match output 0 */
-#define CTIMER_MAT1_OUT kCTIMER_Match_1 /* Match output 1 */
-#define CTIMER_CLK_FREQ CLOCK_GetCtimerClkFreq(2)
 
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
-void ctimer_match0_callback(uint32_t flags);
-void ctimer_match1_callback(uint32_t flags);
-
-/* Array of function pointers for callback for each channel */
-ctimer_callback_t ctimer_callback_table[] = {
-    ctimer_match0_callback, ctimer_match1_callback, NULL, NULL, NULL, NULL, NULL, NULL};
 
 /*******************************************************************************
  * Variables
@@ -132,12 +121,7 @@ int main(void)
     ctimer_config_t config;
 
     /* Init hardware*/
-    /* Use MAIN clock for the Ctimer2 */
-    CLOCK_AttachClk(kMAIN_CLK_to_CTIMER2);
-
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
 
 #if defined(BOARD_HAS_NO_CTIMER_OUTPUT_PIN_CONNECTED_TO_LED)
     LED_RED1_INIT(LOGIC_LED_OFF);

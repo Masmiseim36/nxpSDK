@@ -28,19 +28,19 @@
 
 #include "dsp/transform_functions.h"
 
-void arm_radix2_butterfly_q31(
+ARM_DSP_ATTRIBUTE void arm_radix2_butterfly_q31(
         q31_t * pSrc,
         uint32_t fftLen,
   const q31_t * pCoef,
         uint16_t twidCoefModifier);
 
-void arm_radix2_butterfly_inverse_q31(
+ARM_DSP_ATTRIBUTE void arm_radix2_butterfly_inverse_q31(
         q31_t * pSrc,
         uint32_t fftLen,
   const q31_t * pCoef,
         uint16_t twidCoefModifier);
 
-void arm_bitreversal_q31(
+ARM_DSP_ATTRIBUTE void arm_bitreversal_q31(
         q31_t * pSrc,
         uint32_t fftLen,
         uint16_t bitRevFactor,
@@ -57,10 +57,9 @@ void arm_bitreversal_q31(
   @deprecated    Do not use this function. It has been superseded by \ref arm_cfft_q31 and will be removed in the future.
   @param[in]     S    points to an instance of the fixed-point CFFT/CIFFT structure
   @param[in,out] pSrc points to the complex data buffer of size <code>2*fftLen</code>. Processing occurs in-place
-  @return        none
  */
 
-void arm_cfft_radix2_q31(
+ARM_DSP_ATTRIBUTE void arm_cfft_radix2_q31(
   const arm_cfft_radix2_instance_q31 * S,
         q31_t * pSrc)
 {
@@ -83,7 +82,7 @@ void arm_cfft_radix2_q31(
   @} end of ComplexFFTDeprecated group
  */
 
-void arm_radix2_butterfly_q31(
+ARM_DSP_ATTRIBUTE void arm_radix2_butterfly_q31(
         q31_t * pSrc,
         uint32_t fftLen,
   const q31_t * pCoef,
@@ -211,7 +210,7 @@ void arm_radix2_butterfly_q31(
 }
 
 
-void arm_radix2_butterfly_inverse_q31(
+ARM_DSP_ATTRIBUTE void arm_radix2_butterfly_inverse_q31(
         q31_t * pSrc,
         uint32_t fftLen,
   const q31_t * pCoef,

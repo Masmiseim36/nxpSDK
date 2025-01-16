@@ -621,10 +621,8 @@ typedef struct
     /** Remote Key Info pointer */
     UCHAR * key_info[SMP_NUM_KEY_INFO_EXCHANGE];
 
-#ifdef SMP_LESC_CROSS_TXP_KEY_GEN
     /** Unmasked LESC LTK for CTKD access */
     UCHAR lesc_ltk[SMP_LTK_SIZE];
-#endif /* SMP_LESC_CROSS_TXP_KEY_GEN */
 
 } SMP_DEVICE_ENTITY;
 

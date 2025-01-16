@@ -5,7 +5,7 @@
  *  and response routines for sending adhoc start, adhoc join, and
  *  association commands to the firmware.
  *
- *  Copyright 2008-2023 NXP
+ *  Copyright 2008-2024 NXP
  *
  *  SPDX-License-Identifier: BSD-3-Clause
  *
@@ -260,10 +260,10 @@ static mlan_status wlan_setup_rates_from_bssdesc(IN mlan_private *pmpriv,
  *
  *  @return                 MLAN_STATUS_SUCCESS or MLAN_STATUS_FAILURE
  */
-static mlan_status wlan_setup_rates_from_bssdesc(mlan_private *pmpriv,
-                                                 BSSDescriptor_t *pbss_desc,
-                                                 t_u8 *pout_rates,
-                                                 t_u32 *pout_rates_size)
+mlan_status wlan_setup_rates_from_bssdesc(mlan_private *pmpriv,
+                                          BSSDescriptor_t *pbss_desc,
+                                          t_u8 *pout_rates,
+                                          t_u32 *pout_rates_size)
 {
     t_u8 card_rates[WLAN_SUPPORTED_RATES] = {0};
     t_u32 card_rates_size                 = 0;
@@ -358,7 +358,11 @@ static int wlan_update_rsn_ie(mlan_private *pmpriv,
     */
     t_u8 akm_type_selected;
     t_u8 akm_type_id        = 0;
+#if CONFIG_11R
     t_u8 akm_preference[25] = {0, 7, 1, 9, 3, 8, 2, 0, 5, 6, 0, 10, 11, 12, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 13};
+#else
+    t_u8 akm_preference[25] = {0, 7, 1, 0, 0, 8, 2, 0, 5, 0, 0, 10, 11, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 13};
+#endif
 
     int ap_mfpc = 0, ap_mfpr = 0, ret = MLAN_STATUS_SUCCESS;
 
@@ -822,7 +826,9 @@ mlan_status wlan_cmd_802_11_associate(IN mlan_private *pmpriv, IN HostCmd_DS_COM
     t_u8 oper_class = 1;
 #endif
 
+#if CONFIG_HOST_MLME
     MrvlIEtypes_HostMlme_t *host_mlme_tlv = MNULL;
+#endif
 
     ENTER();
 
@@ -834,8 +840,10 @@ mlan_status wlan_cmd_802_11_associate(IN mlan_private *pmpriv, IN HostCmd_DS_COM
 
     /* Save so we know which BSS Desc to use in the response handler */
     pmpriv->pattempted_bss_desc = pbss_desc;
+#if CONFIG_HOST_MLME
     (void)__memcpy(pmadapter, &pmpriv->curr_bss_params.attemp_bssid, pbss_desc->mac_address, MLAN_MAC_ADDR_LENGTH);
     pmpriv->assoc_req_size = 0;
+#endif
 
     (void)__memcpy(pmadapter, passo->peer_sta_addr, pbss_desc->mac_address, sizeof(passo->peer_sta_addr));
 
@@ -891,7 +899,11 @@ mlan_status wlan_cmd_802_11_associate(IN mlan_private *pmpriv, IN HostCmd_DS_COM
     /* Add the Authentication type to be used for Auth frames if needed */
     if ((pmpriv->sec_info.authentication_mode != MLAN_AUTH_MODE_AUTO)
 #if CONFIG_DRIVER_OWE
-        || (pbss_desc->owe_transition_mode == OWE_TRANS_MODE_OWE)
+        || (
+#if CONFIG_HOST_MLME
+            !pmpriv->curr_bss_params.host_mlme &&
+#endif
+            (pbss_desc->owe_transition_mode == OWE_TRANS_MODE_OWE))
 #endif
     )
     {
@@ -905,11 +917,13 @@ mlan_status wlan_cmd_802_11_associate(IN mlan_private *pmpriv, IN HostCmd_DS_COM
 #if CONFIG_11R
         else if (pmpriv->sec_info.authentication_mode == MLAN_AUTH_MODE_FT)
         {
+#if CONFIG_HOST_MLME
             if (pmpriv->curr_bss_params.host_mlme)
             {
                 pauth_tlv->auth_type = wlan_cpu_to_le16(AssocAgentAuth_FastBss_Skip);
             }
             else
+#endif
             {
                 pauth_tlv->auth_type = wlan_cpu_to_le16(AssocAgentAuth_FastBss);
             }
@@ -917,7 +931,9 @@ mlan_status wlan_cmd_802_11_associate(IN mlan_private *pmpriv, IN HostCmd_DS_COM
 #endif
 #if CONFIG_DRIVER_OWE
         else if (
+#if CONFIG_HOST_MLME
             !pmpriv->curr_bss_params.host_mlme &&
+#endif
             ((pbss_desc->owe_transition_mode == OWE_TRANS_MODE_OWE) ||
              (pmpriv->sec_info.authentication_mode == MLAN_AUTH_MODE_OWE)))
         {
@@ -1114,6 +1130,7 @@ mlan_status wlan_cmd_802_11_associate(IN mlan_private *pmpriv, IN HostCmd_DS_COM
     }
 #endif
 
+#if CONFIG_HOST_MLME
     if (pmpriv->curr_bss_params.host_mlme)
     {
         host_mlme_tlv              = (MrvlIEtypes_HostMlme_t *)pos;
@@ -1122,6 +1139,7 @@ mlan_status wlan_cmd_802_11_associate(IN mlan_private *pmpriv, IN HostCmd_DS_COM
         host_mlme_tlv->host_mlme   = MTRUE;
         pos += sizeof(host_mlme_tlv->header) + host_mlme_tlv->header.len;
     }
+#endif
     if (memcmp(&pmpriv->curr_bss_params.prev_bssid, zero_mac, MLAN_MAC_ADDR_LENGTH))
     {
         prev_bssid_tlv              = (MrvlIEtypes_PrevBssid_t *)pos;
@@ -1269,14 +1287,21 @@ mlan_status wlan_ret_802_11_associate(IN mlan_private *pmpriv, IN HostCmd_DS_COM
 #endif
     /* mlan_adapter *pmadapter = pmpriv->adapter; */
 
+#if CONFIG_HOST_MLME
     IEEEtypes_MgmtHdr_t *hdr;
+    t_u16 assoc_rsp_size = 0;
+#endif
 
     ENTER();
 
+#if CONFIG_HOST_MLME
     if (pmpriv->curr_bss_params.host_mlme)
     {
         hdr = (IEEEtypes_MgmtHdr_t *)&resp->params;
-        if (!__memcmp(pmpriv->adapter, hdr->BssId, pmpriv->pattempted_bss_desc->mac_address, MLAN_MAC_ADDR_LENGTH))
+        assoc_rsp_size = resp->size - S_DS_GEN;
+        if ((assoc_rsp_size >= (sizeof(IEEEtypes_MgmtHdr_t)
+             + sizeof(IEEEtypes_AssocRsp_t))) && !__memcmp(pmpriv->adapter, hdr->BssId,
+             pmpriv->pattempted_bss_desc->mac_address, MLAN_MAC_ADDR_LENGTH))
         {
             passoc_rsp = (IEEEtypes_AssocRsp_t *)((t_u8 *)(&resp->params) + sizeof(IEEEtypes_MgmtHdr_t));
         }
@@ -1286,6 +1311,7 @@ mlan_status wlan_ret_802_11_associate(IN mlan_private *pmpriv, IN HostCmd_DS_COM
         }
     }
     else
+#endif
 
         passoc_rsp = (IEEEtypes_AssocRsp_t *)(void *)&resp->params;
     passoc_rsp->status_code = wlan_le16_to_cpu(passoc_rsp->status_code);
@@ -1337,12 +1363,6 @@ mlan_status wlan_ret_802_11_associate(IN mlan_private *pmpriv, IN HostCmd_DS_COM
     pmpriv->curr_bss_params.bss_descriptor.channel = pbss_desc->phy_param_set.ds_param_set.current_chan;
 
     pmpriv->curr_bss_params.band = (t_u8)pbss_desc->bss_band;
-
-    if (!pmpriv->adapter->country_ie_ignore)
-    {
-        wifi_event_completion(WIFI_EVENT_SYNC_REGION_CODE, WIFI_EVENT_REASON_SUCCESS,
-                              pbss_desc->country_info.country_code);
-    }
 
 
     if (pbss_desc->wmm_ie.vend_hdr.element_id == WMM_IE)

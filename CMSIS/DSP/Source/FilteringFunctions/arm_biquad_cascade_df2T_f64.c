@@ -137,12 +137,11 @@
  @param[in]     pSrc      points to the block of input data
  @param[out]    pDst      points to the block of output data
  @param[in]     blockSize number of samples to process
- @return        none
  */
 
 
 #if defined(ARM_MATH_NEON) && defined(__aarch64__)
-void arm_biquad_cascade_df2T_f64(
+ARM_DSP_ATTRIBUTE void arm_biquad_cascade_df2T_f64(
     const arm_biquad_cascade_df2T_instance_f64 * S,
     const float64_t * pSrc,
     float64_t * pDst,
@@ -300,7 +299,7 @@ void arm_biquad_cascade_df2T_f64(
 }
 #else
 
-void arm_biquad_cascade_df2T_f64(
+ARM_DSP_ATTRIBUTE void arm_biquad_cascade_df2T_f64(
     const arm_biquad_cascade_df2T_instance_f64 * S,
     const float64_t * pSrc,
     float64_t * pDst,

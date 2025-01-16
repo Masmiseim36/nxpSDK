@@ -10,7 +10,7 @@
 #include "ffconf.h"
 /* This fatfs subcomponent is disabled by default
  * To enable it, define following macro in ffconf.h */
-#ifdef SD_DISK_ENABLE
+#if defined(SD_DISK_ENABLE) && (SD_DISK_ENABLE == 1)
 
 #include <assert.h>
 #include <stdio.h>
@@ -89,7 +89,7 @@ DRESULT sd_disk_ioctl(BYTE pdrv, BYTE cmd, void* buff)
         case GET_SECTOR_SIZE:
             if (buff)
             {
-                *(uint32_t *)buff = g_sd.blockSize;
+                *(WORD *)buff = g_sd.blockSize;
             }
             else
             {
@@ -153,4 +153,4 @@ DSTATUS sd_disk_initialize(BYTE pdrv)
 
     return RES_OK;
 }
-#endif /* SD_DISK_ENABLE */
+#endif /* defined(SD_DISK_ENABLE) && (SD_DISK_ENABLE == 1) */

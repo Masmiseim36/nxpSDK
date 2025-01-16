@@ -6,16 +6,13 @@
  */
 
 #include "fsl_debug_console.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 #include "fsl_utick.h"
 
-#include "fsl_common.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define EXAMPLE_UTICK UTICK0
 #define UTICK_TIME_1S (1000000UL)
 
 /*******************************************************************************
@@ -53,11 +50,7 @@ static void UTickDelay(uint32_t usec)
 int main(void)
 {
     /* Init board hardware. */
-    CLOCK_AttachClk(kLPOSC_to_UTICK_CLK);
-
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
 
     PRINTF("Utick example start...\r\n");
 

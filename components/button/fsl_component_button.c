@@ -1,6 +1,5 @@
 /*
  * Copyright 2018-2019 NXP
- * All rights reserved.
  *
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -113,8 +112,10 @@ static OSA_TASK_DEFINE(BUTTON_Task, BUTTON_TASK_PRIORITY, 1, BUTTON_TASK_STACK_S
 
 static void BUTTON_NotificationUpdate(button_state_t *buttonState, button_event_t event)
 {
-    buttonState->state.pressed = (uint8_t)kStatus_BUTTON_PressIdle;
-    buttonState->state.msg     = (uint8_t)event;
+    buttonState->state.pressed       = (uint8_t)kStatus_BUTTON_PressIdle;
+    buttonState->pushPeriodCount     = 0;
+    buttonState->pushPeriodCountLast = 0;
+    buttonState->state.msg           = (uint8_t)event;
 #if defined(OSA_USED)
 
 #if (defined(BUTTON_USE_COMMON_TASK) && (BUTTON_USE_COMMON_TASK > 0U))
@@ -240,7 +241,9 @@ static void BUTTON_Task(void *param)
             s_buttonList.activeButtonCount--;
             if (0U == s_buttonList.activeButtonCount)
             {
+                BUTTON_EXIT_CRITICAL();
                 (void)TM_Stop(s_buttonList.timerHandle);
+                BUTTON_ENTER_CRITICAL();
             }
         }
         buttonState = buttonState->next;
@@ -282,7 +285,6 @@ static void BUTTON_TimerEvent(void *param)
             if ((BUTTON_DOUBLE_CLICK_THRESHOLD + buttonState->pushPeriodCountLast) < s_buttonList.periodCount)
             {
                 BUTTON_NotificationUpdate(buttonState, kBUTTON_EventOneClick);
-                buttonState->pushPeriodCountLast = 0U;
             }
         }
         buttonState = buttonState->next;

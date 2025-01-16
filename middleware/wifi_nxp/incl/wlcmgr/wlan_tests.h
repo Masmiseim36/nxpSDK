@@ -1,11 +1,11 @@
-/*  Copyright 2008-2020 NXP
+/*  Copyright 2008-2020, 2024 NXP
  *
  *  SPDX-License-Identifier: BSD-3-Clause
  *
  */
 
 /*! \file wlan_tests.h
- *  \brief WLAN Connection Manager Tests
+ *  \brief This file provides interfaces for 802.11ax config test command.
  */
 
 #ifndef __WLAN_TESTS_H__

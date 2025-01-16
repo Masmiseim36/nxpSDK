@@ -9,6 +9,19 @@
 
 #if (defined(CONFIG_BT_BAP_STREAM) && (CONFIG_BT_BAP_STREAM > 0))
 
+#include <stdbool.h>
+#include <stddef.h>
+#include <string.h>
+
+#include <porting.h>
+
+#include <bluetooth/audio/audio.h>
+#include <bluetooth/audio/bap.h>
+#include <bluetooth/hci_types.h>
+#include <bluetooth/iso.h>
+#include <sys/atomic.h>
+#include <sys/util.h>
+#include <sys/util_macro.h>
 #include "bap_iso.h"
 #include "audio_internal.h"
 #include "bap_endpoint.h"
@@ -17,22 +30,6 @@
 #define LOG_MODULE_NAME bt_bap_iso
 #include "fsl_component_log.h"
 LOG_MODULE_DEFINE(LOG_MODULE_NAME, kLOG_LevelTrace);
-
-#ifndef LOG_DBG
-#define LOG_DBG BT_DBG
-#endif
-
-#ifndef LOG_ERR
-#define LOG_ERR BT_ERR
-#endif
-
-#ifndef LOG_HEXDUMP_DBG
-#define LOG_HEXDUMP_DBG BT_HEXDUMP_DBG
-#endif
-
-#ifndef LOG_WRN
-#define LOG_WRN BT_WARN
-#endif
 
 /* TODO: Optimize the ISO_POOL_SIZE */
 #define ISO_POOL_SIZE CONFIG_BT_ISO_MAX_CHAN
@@ -195,7 +192,7 @@ void bt_bap_iso_configure_data_path(struct bt_bap_ep *ep, struct bt_audio_codec_
 	}
 
 	/* Configure the data path to either use the controller for transcoding, or set the path to
-	 * be transparant to indicate that the transcoding happens somewhere else
+	 * be transparent to indicate that the transcoding happens somewhere else
 	 */
 	path->pid = codec_cfg->path_id;
 

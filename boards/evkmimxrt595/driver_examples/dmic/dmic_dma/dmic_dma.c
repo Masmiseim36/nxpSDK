@@ -1,5 +1,5 @@
 /*
- * Copyright 2016, NXP
+ * Copyright 2016 NXP
  * All rights reserved.
  *
  *
@@ -8,25 +8,17 @@
 
 #include "fsl_device_registers.h"
 #include "fsl_debug_console.h"
-#include "pin_mux.h"
 #include "board.h"
+#include "app.h"
 #include "fsl_dmic.h"
 #include "fsl_dma.h"
 #include "fsl_dmic_dma.h"
 #include <stdlib.h>
 #include <string.h>
 
-#include <stdbool.h>
-#include "fsl_inputmux.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-
-#define DMAREQ_DMIC0            16U
-#define APP_DMAREQ_CHANNEL      DMAREQ_DMIC0
-#define APP_DMIC_CHANNEL        kDMIC_Channel0
-#define APP_DMIC_CHANNEL_ENABLE DMIC_CHANEN_EN_CH0(1)
-#define APP_DMIC_FIFO_DELAY_MS  15U
 #define FIFO_DEPTH    15U
 #define BUFFER_LENGTH 32U
 #if defined(FSL_FEATURE_DMIC_CHANNEL_HAS_SIGNEXTEND) && (FSL_FEATURE_DMIC_CHANNEL_HAS_SIGNEXTEND)
@@ -84,23 +76,7 @@ int main(void)
 
     uint32_t i;
     /* Board pin, clock, debug console init */
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
-
-    /* Configure DMAMUX. */
-    RESET_PeripheralReset(kINPUTMUX_RST_SHIFT_RSTn);
-
-    INPUTMUX_Init(INPUTMUX);
-    /* Enable DMA request */
-    INPUTMUX_EnableSignal(INPUTMUX, kINPUTMUX_Dmic0Ch0ToDmac0Ch16RequestEna, true);
-    /* Turnoff clock to inputmux to save power. Clock is only needed to make changes */
-    INPUTMUX_Deinit(INPUTMUX);
-
-    /* DMIC uses 48MHz FRO clock */
-    CLOCK_AttachClk(kFRO_DIV4_to_DMIC);
-    /*48MHz divided by 60 = 800 KHz PDM clock --> gives 16kHz sample rate */
-    CLOCK_SetClkDiv(kCLOCK_DivDmicClk, 60);
+    BOARD_InitHardware();
 
     dmic_channel_cfg.divhfclk            = kDMIC_PdmDiv1;
     dmic_channel_cfg.osr                 = 25U;

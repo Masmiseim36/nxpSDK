@@ -123,7 +123,7 @@ static uint32_t arm_scalar_log_q31(uint32_t src)
 #if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE)
 
 
-q31x4_t vlogq_q31(q31x4_t src)
+static q31x4_t vlogq_q31(q31x4_t src)
 {
 
    int32_t i;
@@ -210,10 +210,8 @@ q31x4_t vlogq_q31(q31x4_t src)
   @param[in]     pSrc       points to the input vector in q31
   @param[out]    pDst       points to the output vector q5.26
   @param[in]     blockSize  number of samples in each vector
-  @return        none
-
  */
-void arm_vlog_q31(
+ARM_DSP_ATTRIBUTE void arm_vlog_q31(
   const q31_t * pSrc,
         q31_t * pDst,
         uint32_t blockSize)

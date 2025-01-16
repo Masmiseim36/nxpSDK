@@ -6,8 +6,18 @@
 
 #if defined(CONFIG_BT_GMAP) && (CONFIG_BT_GMAP > 0)
 
-#include <bluetooth/gatt.h>
+#include <stdbool.h>
+#include <stddef.h>
+#include <stdint.h>
+#include <string.h>
+
+#include <porting.h>
+#include <bluetooth/att.h>
 #include <bluetooth/audio/gmap.h>
+#include <bluetooth/conn.h>
+#include <bluetooth/gatt.h>
+#include <bluetooth/uuid.h>
+#include <net/buf.h>
 #include <sys/check.h>
 
 #include "audio_internal.h"
@@ -76,15 +86,9 @@ static void disconnected(struct bt_conn *conn, uint8_t reason)
 	}
 }
 
-#if 0
 BT_CONN_CB_DEFINE(conn_callbacks) = {
 	.disconnected = disconnected,
 };
-#else
-static struct bt_conn_cb conn_callbacks = {
-	.disconnected = disconnected,
-};
-#endif
 
 static void discover_complete(struct bt_gmap_client *gmap_cli)
 {
@@ -668,8 +672,6 @@ int bt_gmap_discover(struct bt_conn *conn)
 	}
 
 	gmap_cli->conn = bt_conn_ref(conn);
-
-	bt_conn_cb_register(&conn_callbacks);
 
 	return 0;
 }

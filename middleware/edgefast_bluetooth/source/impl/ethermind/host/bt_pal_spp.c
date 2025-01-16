@@ -19,7 +19,7 @@
 #include "fsl_component_log.h"
 LOG_MODULE_DEFINE(LOG_MODULE_NAME, kLOG_LevelTrace);
 
-#if (defined(CONFIG_BT_BREDR) && ((CONFIG_BT_BREDR) > 0U))
+#if (defined(CONFIG_BT_CLASSIC) && ((CONFIG_BT_CLASSIC) > 0U))
 #if (defined(CONFIG_BT_SPP) && ((CONFIG_BT_SPP) > 0U))
 #include <bluetooth/bluetooth.h>
 #include <bluetooth/conn.h>
@@ -103,8 +103,6 @@ struct bt_spp_server
     struct bt_rfcomm_server server;
 };
 
-#define SPP_DATA_MTU 48
-
 /** To initialize a spp_entity[] */
 #define SPP_INIT_ENTITY(index)                                           \
 {                                                                        \
@@ -144,8 +142,6 @@ static struct bt_spp_server spp_server[CONFIG_BT_SPP_SERVER_MAX_COUNT];
 static OSA_MUTEX_HANDLE_DEFINE(spp_lock_mutex);
 #define EDGEFAST_SPP_LOCK OSA_MutexLock((osa_mutex_handle_t)spp_lock_mutex, osaWaitForever_c)
 #define EDGEFAST_SPP_UNLOCK OSA_MutexUnlock((osa_mutex_handle_t)spp_lock_mutex)
-
-NET_BUF_POOL_FIXED_DEFINE(spp_pool, 1, SPP_DATA_MTU, NULL);
 
 /** SPP SDP handle */
 static SDP_HANDLE sdp_handle;
@@ -1014,7 +1010,6 @@ int bt_spp_client_connect(struct bt_conn *conn, uint8_t channel, bt_spp_callback
 int bt_spp_data_send(struct bt_spp *spp, uint8_t *data, uint16_t len)
 {
     int             err;
-    struct net_buf *buf;
 
     if ((NULL == spp) || (NULL == data) || (0U == len))
     {
@@ -1024,10 +1019,11 @@ int bt_spp_data_send(struct bt_spp *spp, uint8_t *data, uint16_t len)
     {
         if (SPP_CONNECTED == spp->state)
         {
-            buf = bt_rfcomm_create_pdu(&spp_pool);
-            net_buf_add_mem(buf, data, len);
+            struct net_buf buf;
 
-            err = bt_rfcomm_dlc_send(&spp->dlc, buf);
+            net_buf_simple_init_with_data(&buf.b, data, len);
+
+            err = bt_rfcomm_dlc_send(&spp->dlc, &buf);
             if (0 != err)
             {
                 LOG_ERR("[SPP] SPP send data failed, reason = 0x%04X\n",err);
@@ -1036,7 +1032,6 @@ int bt_spp_data_send(struct bt_spp *spp, uint8_t *data, uint16_t len)
             {
                 LOG_INF("[SPP] SPP send data successfully, waiting for SPP_SEND_CNF event.");
             }
-             net_buf_unref(buf);
         }
         else
         {
@@ -1506,4 +1501,4 @@ int bt_spp_send_msc(struct bt_spp *spp, struct bt_spp_msc *msc)
 #endif /** (defined(CONFIG_BT_SPP_ENABLE_CONTROL_CMD) && (CONFIG_BT_SPP_ENABLE_CONTROL_CMD > 0)) */
 
 #endif /** (defined(CONFIG_BT_SPP) && ((CONFIG_BT_SPP) > 0U)) */
-#endif /** (defined(CONFIG_BT_BREDR) && ((CONFIG_BT_BREDR) > 0U)) */
+#endif /** (defined(CONFIG_BT_CLASSIC) && ((CONFIG_BT_CLASSIC) > 0U)) */

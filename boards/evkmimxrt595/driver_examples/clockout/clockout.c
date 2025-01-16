@@ -8,26 +8,12 @@
 
 #include "fsl_device_registers.h"
 #include "fsl_debug_console.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define APP_CLOCK_OUT_SELECT_ARRAY                                                                                   \
-    {                                                                                                                \
-        kOSC_CLK_to_CLKOUT, kLPOSC_to_CLKOUT, kFRO_DIV2_to_CLKOUT, kMAIN_CLK_to_CLKOUT, kDSP_MAIN_to_CLKOUT,         \
-            kMAIN_PLL_to_CLKOUT, kAUX0_PLL_to_CLKOUT, kDSP_PLL_to_CLKOUT, kAUX1_PLL_to_CLKOUT, kAUDIO_PLL_to_CLKOUT, \
-            kOSC32K_to_CLKOUT,                                                                                       \
-    }
-#define APP_CLOCK_OUT_NAME_ARRAY                                                                                       \
-    {                                                                                                                  \
-        "OSC_CLK Clock", "Low Power Oscillator Clock", "FRO_DIV2 Clock", "Main Clock", "Dsp Main Clock",               \
-            "Main System PLL", "SYSPLL0 AUX0_PLL_Clock", "DSP PLL Clock", "SYSPLL0 AUX1_PLL_Clock", "AUDIO PLL Clock", \
-            "32 KHz RTC Clock",                                                                                        \
-    }
-
 
 /*******************************************************************************
  * Prototypes
@@ -45,18 +31,7 @@ int main(void)
     uint8_t divideValue;
     uint32_t dividedFreq;
 
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
-
-    /* Configure 32K OSC clock. */
-    CLOCK_EnableOsc32K(true);               /* Enable 32KHz Oscillator clock */
-    CLOCK_EnableClock(kCLOCK_Rtc);          /* Enable the RTC peripheral clock */
-    RTC->CTRL &= ~RTC_CTRL_SWRESET_MASK;    /* Make sure the reset bit is cleared */
-    RTC->CTRL &= ~RTC_CTRL_RTC_OSC_PD_MASK; /* The RTC Oscillator is powered up */
-
-    CLOCK_InitSysPfd(kCLOCK_Pfd1, 24);      /* Enable DSP PLL clock */
-    CLOCK_InitSysPfd(kCLOCK_Pfd3, 24);      /* Enable AUX1 PLL clock */
+    BOARD_InitHardware();
 
     PRINTF("\r\nClock Output Driver Example.\r\n");
 

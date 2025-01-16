@@ -13,7 +13,7 @@
 #include "btsnoop_pl.h"
 
 #ifndef CONFIG_BT_SNOOP
-#define CONFIG_BT_SNOOP 1
+#define CONFIG_BT_SNOOP 0
 #endif /* CONFIG_BT_SNOOP */
 
 /*

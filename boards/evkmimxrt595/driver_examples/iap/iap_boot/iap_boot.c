@@ -7,23 +7,16 @@
  */
 
 #include "fsl_debug_console.h"
+#include "app.h"
 #include "fsl_iap.h"
 
-#include "pin_mux.h"
-#include "board.h"
-#include <stdbool.h>
 /*******************************************************************************
  * Definitions
  *******************************************************************************/
-#define EXAMPLE_BOOT_INTERFACES        "0: USART 2: SPI 3: USB HID 4:FlexSPI 6:SD 7:MMC"
-#define EXAMPLE_BOOT_INTERFACE_FLEXSPI (4U)
-#define EXAMPLE_BOOT_INTERFACE_SD      (6U)
-#define EXAMPLE_BOOT_INTERFACE_MMC     (7U)
 
 /*******************************************************************************
  * Prototypes
  *******************************************************************************/
-bool EXAMPLE_IsValidInterface(uint8_t idx);
 
 /*******************************************************************************
  * Variables
@@ -32,11 +25,6 @@ bool EXAMPLE_IsValidInterface(uint8_t idx);
 /*******************************************************************************
  * Code
  *******************************************************************************/
-
-bool EXAMPLE_IsValidInterface(uint8_t idx)
-{
-    return (idx <= 7U) && (idx != 1U) && (idx != 5U);
-}
 static uint8_t getIndex(char ch)
 {
     uint8_t idx = 0xFFU;
@@ -56,9 +44,7 @@ int main(void)
     char ch;
 
     /* Init board hardware. */
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
 
     PRINTF("===== IAP Boot example, input the parameter: =====\r\n");
     while (true)

@@ -1,0 +1,35 @@
+
+/**
+ *  \file lc3_ndsp_Limits.h
+ *
+ *  \brief LC3 Tunable Constants header File.
+ *
+ *  This file lists all the Tunable constants used in LC3 module.
+ */
+
+/*
+ *  Copyright (C) 2021. Mindtree Ltd.
+ *  All rights reserved.
+ */
+
+#if defined(LC3_DSP) && (LC3_DSP == 0)
+#ifndef _H_LC3_NDSP_LIMITS_
+#define _H_LC3_NDSP_LIMITS_
+
+
+/* --------------------------------------------- Header File Inclusion */
+
+
+/* --------------------------------------------- Global Definitions */
+
+/*
+ *  This parameter specifies maximum number of supported audio channels.
+ *
+ *  Minimum Value: 1
+ *  Maximum Value: anything
+ */
+#define  LC3_CHANNELS_MAX                                2
+
+
+#endif /* _H_LC3_NDSP_LIMITS_ */
+#endif /*defined(LC3_DSP) && (LC3_DSP == 0)*/

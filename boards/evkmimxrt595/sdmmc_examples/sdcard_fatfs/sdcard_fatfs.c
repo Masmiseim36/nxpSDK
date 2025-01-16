@@ -13,12 +13,9 @@
 #include "ff.h"
 #include "diskio.h"
 #include "fsl_sd_disk.h"
-#include "pin_mux.h"
-#include "clock_config.h"
+#include "app.h"
 #include "board.h"
 #include "sdmmc_config.h"
-#include "fsl_power.h"
-#include "fsl_gpio.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -69,9 +66,7 @@ int main(void)
     char ch                            = '0';
     BYTE work[FF_MAX_SS];
 
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
 
     PRINTF("\r\nFATFS example to demonstrate how to use FATFS with SD card.\r\n");
 

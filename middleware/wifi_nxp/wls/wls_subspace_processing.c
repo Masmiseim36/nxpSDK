@@ -2,10 +2,9 @@
   *
   * @brief This file contains source code to calculate fine timing using sub-space methods (ESPRIT)
   *
-  * Copyright 2023 NXP
+  * Copyright 2023-2024 NXP
   *
   * SPDX-License-Identifier: BSD-3-Clause
-  *
   */
 
 /************************************************************************
@@ -42,21 +41,31 @@
 #endif
 #define SUBSP_DIM_L_MAX MAX_MAT_SIZE
 //needs to be floor(0.75*SUB_DIM_L)
-#define SIG_SUBSP_DIM_MAX 7 // 15
+#define SIG_SUBSP_DIM_MAX 15 // 7
 
 #define MUSIC_THRESH_REL_5GHz 0.01f
 #define MUSIC_THRESH_REL_2GHz 0.1f
 #define MUSIC_THRESH_MIN 0.02f
 #define MUSIC_THRESH_MAX 0.10f
 
+// Use these values for SUB_DIM_L 20
 #define SUB_DET_THRESH_5G_80MHZ 0.1f
-#define SUB_DET_THRESH_5G_40MHZ 0.08f
-#define SUB_DET_THRESH_5G_20MHZ 0.04f // 0.1f
+#define SUB_DET_THRESH_5G_40MHZ 0.1f
+#define SUB_DET_THRESH_5G_20MHZ 0.1f
+#define SUB_DET_THRESH_REL_5G_80MHZ 0.01f
+#define SUB_DET_THRESH_REL_5G_40MHZ 0.01f
+#define SUB_DET_THRESH_REL_5G_20MHZ 0.005f
+
+// Use these values for SUB_DIM_L 10
+//#define SUB_DET_THRESH_5G_80MHZ 0.03f
+//#define SUB_DET_THRESH_5G_40MHZ 0.03f
+//#define SUB_DET_THRESH_5G_20MHZ 0.03f
+//#define SUB_DET_THRESH_REL_5G_80MHZ 0.001f
+//#define SUB_DET_THRESH_REL_5G_40MHZ 0.001f
+//#define SUB_DET_THRESH_REL_5G_20MHZ 0.001f
+
 #define SUB_DET_THRESH_20MHZ 0.253f
 #define SUB_DET_THRESH_Legacy 0.38f
-#define SUB_DET_THRESH_REL_5G_80MHZ 0.01f
-#define SUB_DET_THRESH_REL_5G_40MHZ 0.025f
-#define SUB_DET_THRESH_REL_5G_20MHZ 0.005f
 #define SUB_DET_THRESH_REL_2G 0.015f
 #define SUB_DET_THRESH_REL_Legacy 0.25f
 
@@ -737,10 +746,10 @@ int calcSubspaceFineTiming(hal_pktinfo_t *pktinfo,		// structure with CSI buffer
 			sub_det_thresh_rel = SUB_DET_THRESH_REL_5G_40MHZ;
 		}
 		else if (pktinfo->sigBw == 0) {
-#if 0 //larger auto-correlation matrix size
+#if 1 //larger auto-correlation matrix size L 20
 			sub_det_thresh = SUB_DET_THRESH_5G_20MHZ;
 			sub_det_thresh_rel = SUB_DET_THRESH_REL_5G_20MHZ;
-#else
+#else //smaller auto-correlation matrix size L 10
 			fft_input_size = FFT_INPUT_SIZE_SHORT_WINDOW;
 			subsp_dim_L = SUB_DIM_L_10;
 			sub_det_thresh = SUB_DET_THRESH_5G_20MHZ;

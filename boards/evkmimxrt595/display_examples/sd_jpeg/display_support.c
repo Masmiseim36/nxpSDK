@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2021, NXP
+ * Copyright 2019-2021 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -60,9 +60,6 @@ static void BOARD_InitSmartDMA(void)
     POWER_DisablePD(kPDRUNCFG_APD_SMARTDMA_SRAM);
     POWER_DisablePD(kPDRUNCFG_PPD_SMARTDMA_SRAM);
     POWER_ApplyPD();
-
-    RESET_ClearPeripheralReset(kSMART_DMA_RST_SHIFT_RSTn);
-    CLOCK_EnableClock(kCLOCK_Smartdma);
 
     SMARTDMA_InitWithoutFirmware();
     NVIC_EnableIRQ(SDMA_IRQn);
@@ -141,7 +138,7 @@ static dbi_flexio_smartdma_xfer_handle_t g_dbiFlexioSmartdmaXferHandle;
 
 static const dc_fb_ssd1963_config_t s_dcFbSSD1963Config = {
     .ssd1963Config = {.pclkFreq_Hz    = DEMO_SSD1963_PCLK_FREQ,
-                      .pixelInterface = DC_FB_SSD1963_DEFAULT_PIXEL_FORMAT_SSD1963,
+                      .pixelInterface = kSSD1963_BGR888,
                       .panelDataWidth = kSSD1963_PanelData24Bit,
                       .polarityFlags  = DEMO_SSD1963_POLARITY_FLAG,
                       .panelWidth     = DEMO_PANEL_WIDTH,

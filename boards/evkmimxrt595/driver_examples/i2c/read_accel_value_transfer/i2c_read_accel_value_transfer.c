@@ -7,18 +7,14 @@
  */
 
 /*  SDK Included Files */
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
 #include "fsl_debug_console.h"
 #include "fsl_i2c.h"
+#include "app.h"
 
-#include "fsl_gpio.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define ACCEL_I2C_CLK_FREQ CLOCK_GetFlexcommClkFreq(4)
-#define I2C_BAUDRATE       100000
 /* MMA8491 does not have WHO_AM_I, DATA_CFG amd CTRL registers */
 #if !(defined(I2C_ACCEL_MMA8491) && I2C_ACCEL_MMA8491)
 #define FXOS8700_WHOAMI    0xC7U
@@ -281,12 +277,7 @@ static bool I2C_ReadAccelRegs(I2C_Type *base, uint8_t device_addr, uint8_t reg_a
 int main(void)
 {
     bool isThereAccel = false;
-    /* Use 48 MHz clock for the FLEXCOMM4 */
-    CLOCK_AttachClk(kFRO_DIV4_to_FLEXCOMM4);
-
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
 
     PRINTF("\r\nI2C example -- Read Accelerometer Value\r\n");
 

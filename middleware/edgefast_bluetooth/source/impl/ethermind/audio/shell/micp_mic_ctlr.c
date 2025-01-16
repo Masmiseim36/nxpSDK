@@ -10,12 +10,18 @@
 
 #if (defined(CONFIG_BT_MICP_MIC_CTLR) && (CONFIG_BT_MICP_MIC_CTLR > 0))
 
+#include <stdlib.h>
+#include <stdio.h>
+
 #include <zephyr/types.h>
+#include <sys/byteorder.h>
+#include <sys/util.h>
+#include <porting.h>
+
+#include <bluetooth/hci.h>
 #include <bluetooth/conn.h>
 #include <bluetooth/audio/micp.h>
 #include "fsl_shell.h"
-#include <stdlib.h>
-#include <stdio.h>
 
 #include "shell_bt.h"
 
@@ -218,7 +224,8 @@ static struct bt_micp_mic_ctlr_cb micp_cbs = {
 #endif /* CONFIG_BT_MICP_MIC_CTLR_AICS */
 };
 
-static shell_status_t cmd_micp_mic_ctlr_discover(shell_handle_t sh, int32_t argc, char *argv[])
+static int cmd_micp_mic_ctlr_discover(const struct shell *sh, size_t argc,
+				    char **argv)
 {
 	int result;
 
@@ -232,7 +239,7 @@ static shell_status_t cmd_micp_mic_ctlr_discover(shell_handle_t sh, int32_t argc
 	}
 
 	if (default_conn == NULL) {
-		return kStatus_SHELL_Error;
+		return -ENOTCONN;
 	}
 
 	result = bt_micp_mic_ctlr_discover(default_conn, &micp_mic_ctlr);
@@ -240,15 +247,16 @@ static shell_status_t cmd_micp_mic_ctlr_discover(shell_handle_t sh, int32_t argc
 		shell_print(sh, "Fail: %d", result);
 	}
 
-	return (shell_status_t)result;
+	return result;
 }
 
-static shell_status_t cmd_micp_mic_ctlr_mute_get(shell_handle_t sh, int32_t argc, char *argv[])
+static int cmd_micp_mic_ctlr_mute_get(const struct shell *sh, size_t argc,
+				    char **argv)
 {
 	int result;
 
 	if (micp_mic_ctlr == NULL) {
-		return kStatus_SHELL_Error;
+		return -ENOENT;
 	}
 
 	result = bt_micp_mic_ctlr_mute_get(micp_mic_ctlr);
@@ -257,15 +265,16 @@ static shell_status_t cmd_micp_mic_ctlr_mute_get(shell_handle_t sh, int32_t argc
 		shell_print(sh, "Fail: %d", result);
 	}
 
-	return (shell_status_t)result;
+	return result;
 }
 
-static shell_status_t cmd_micp_mic_ctlr_mute(shell_handle_t sh, int32_t argc, char *argv[])
+static int cmd_micp_mic_ctlr_mute(const struct shell *sh, size_t argc,
+				char **argv)
 {
 	int result;
 
 	if (micp_mic_ctlr == NULL) {
-		return kStatus_SHELL_Error;
+		return -ENOENT;
 	}
 
 	result = bt_micp_mic_ctlr_mute(micp_mic_ctlr);
@@ -274,15 +283,16 @@ static shell_status_t cmd_micp_mic_ctlr_mute(shell_handle_t sh, int32_t argc, ch
 		shell_print(sh, "Fail: %d", result);
 	}
 
-	return (shell_status_t)result;
+	return result;
 }
 
-static shell_status_t cmd_micp_mic_ctlr_unmute(shell_handle_t sh, int32_t argc, char *argv[])
+static int cmd_micp_mic_ctlr_unmute(const struct shell *sh, size_t argc,
+				  char **argv)
 {
 	int result;
 
 	if (micp_mic_ctlr == NULL) {
-		return kStatus_SHELL_Error;
+		return -ENOENT;
 	}
 
 	result = bt_micp_mic_ctlr_unmute(micp_mic_ctlr);
@@ -291,11 +301,12 @@ static shell_status_t cmd_micp_mic_ctlr_unmute(shell_handle_t sh, int32_t argc, 
 		shell_print(sh, "Fail: %d", result);
 	}
 
-	return (shell_status_t)result;
+	return result;
 }
 
 #if defined(CONFIG_BT_MICP_MIC_CTLR_AICS) && (CONFIG_BT_MICP_MIC_CTLR_AICS > 0)
-static shell_status_t cmd_micp_mic_ctlr_aics_input_state_get(shell_handle_t sh, int32_t argc, char *argv[])
+static int cmd_micp_mic_ctlr_aics_input_state_get(const struct shell *sh,
+						size_t argc, char **argv)
 {
 	unsigned long index;
 	int result = 0;
@@ -304,18 +315,18 @@ static shell_status_t cmd_micp_mic_ctlr_aics_input_state_get(shell_handle_t sh, 
 	if (result != 0) {
 		shell_error(sh, "Could not parse index: %d", result);
 
-		return kStatus_SHELL_Error;
+		return -ENOEXEC;
 	}
 
 	if (index >= micp_included.aics_cnt) {
 		shell_error(sh, "Index shall be less than %u, was %lu",
 			    micp_included.aics_cnt, index);
 
-		return kStatus_SHELL_Error;
+		return -ENOEXEC;
 	}
 
 	if (micp_mic_ctlr == NULL) {
-		return kStatus_SHELL_Error;
+		return -ENOENT;
 	}
 
 	result = bt_aics_state_get(micp_included.aics[index]);
@@ -323,10 +334,11 @@ static shell_status_t cmd_micp_mic_ctlr_aics_input_state_get(shell_handle_t sh, 
 		shell_print(sh, "Fail: %d", result);
 	}
 
-	return (shell_status_t)result;
+	return result;
 }
 
-static shell_status_t cmd_micp_mic_ctlr_aics_gain_setting_get(shell_handle_t sh, int32_t argc, char *argv[])
+static int cmd_micp_mic_ctlr_aics_gain_setting_get(const struct shell *sh,
+						 size_t argc, char **argv)
 {
 	unsigned long index;
 	int result = 0;
@@ -335,18 +347,18 @@ static shell_status_t cmd_micp_mic_ctlr_aics_gain_setting_get(shell_handle_t sh,
 	if (result != 0) {
 		shell_error(sh, "Could not parse index: %d", result);
 
-		return kStatus_SHELL_Error;
+		return -ENOEXEC;
 	}
 
 	if (index >= micp_included.aics_cnt) {
 		shell_error(sh, "Index shall be less than %u, was %lu",
 			    micp_included.aics_cnt, index);
 
-		return kStatus_SHELL_Error;
+		return -ENOEXEC;
 	}
 
 	if (micp_mic_ctlr == NULL) {
-		return kStatus_SHELL_Error;
+		return -ENOENT;
 	}
 
 	result = bt_aics_gain_setting_get(micp_included.aics[index]);
@@ -354,10 +366,11 @@ static shell_status_t cmd_micp_mic_ctlr_aics_gain_setting_get(shell_handle_t sh,
 		shell_print(sh, "Fail: %d", result);
 	}
 
-	return (shell_status_t)result;
+	return result;
 }
 
-static shell_status_t cmd_micp_mic_ctlr_aics_input_type_get(shell_handle_t sh, int32_t argc, char *argv[])
+static int cmd_micp_mic_ctlr_aics_input_type_get(const struct shell *sh,
+					       size_t argc, char **argv)
 {
 	unsigned long index;
 	int result = 0;
@@ -366,18 +379,18 @@ static shell_status_t cmd_micp_mic_ctlr_aics_input_type_get(shell_handle_t sh, i
 	if (result != 0) {
 		shell_error(sh, "Could not parse index: %d", result);
 
-		return kStatus_SHELL_Error;
+		return -ENOEXEC;
 	}
 
 	if (index >= micp_included.aics_cnt) {
 		shell_error(sh, "Index shall be less than %u, was %lu",
 			    micp_included.aics_cnt, index);
 
-		return kStatus_SHELL_Error;
+		return -ENOEXEC;
 	}
 
 	if (micp_mic_ctlr == NULL) {
-		return kStatus_SHELL_Error;
+		return -ENOENT;
 	}
 
 	result = bt_aics_type_get(micp_included.aics[index]);
@@ -385,10 +398,11 @@ static shell_status_t cmd_micp_mic_ctlr_aics_input_type_get(shell_handle_t sh, i
 		shell_print(sh, "Fail: %d", result);
 	}
 
-	return (shell_status_t)result;
+	return result;
 }
 
-static shell_status_t cmd_micp_mic_ctlr_aics_input_status_get(shell_handle_t sh, int32_t argc, char *argv[])
+static int cmd_micp_mic_ctlr_aics_input_status_get(const struct shell *sh,
+						 size_t argc, char **argv)
 {
 	unsigned long index;
 	int result = 0;
@@ -397,18 +411,18 @@ static shell_status_t cmd_micp_mic_ctlr_aics_input_status_get(shell_handle_t sh,
 	if (result != 0) {
 		shell_error(sh, "Could not parse index: %d", result);
 
-		return kStatus_SHELL_Error;
+		return -ENOEXEC;
 	}
 
 	if (index >= micp_included.aics_cnt) {
 		shell_error(sh, "Index shall be less than %u, was %lu",
 			    micp_included.aics_cnt, index);
 
-		return kStatus_SHELL_Error;
+		return -ENOEXEC;
 	}
 
 	if (micp_mic_ctlr == NULL) {
-		return kStatus_SHELL_Error;
+		return -ENOENT;
 	}
 
 	result = bt_aics_status_get(micp_included.aics[index]);
@@ -416,10 +430,11 @@ static shell_status_t cmd_micp_mic_ctlr_aics_input_status_get(shell_handle_t sh,
 		shell_print(sh, "Fail: %d", result);
 	}
 
-	return (shell_status_t)result;
+	return result;
 }
 
-static shell_status_t cmd_micp_mic_ctlr_aics_input_unmute(shell_handle_t sh, int32_t argc, char *argv[])
+static int cmd_micp_mic_ctlr_aics_input_unmute(const struct shell *sh,
+					     size_t argc, char **argv)
 {
 	unsigned long index;
 	int result = 0;
@@ -428,14 +443,14 @@ static shell_status_t cmd_micp_mic_ctlr_aics_input_unmute(shell_handle_t sh, int
 	if (result != 0) {
 		shell_error(sh, "Could not parse index: %d", result);
 
-		return kStatus_SHELL_Error;
+		return -ENOEXEC;
 	}
 
 	if (index >= micp_included.aics_cnt) {
 		shell_error(sh, "Index shall be less than %u, was %lu",
 			    micp_included.aics_cnt, index);
 
-		return kStatus_SHELL_Error;
+		return -ENOEXEC;
 	}
 
 	result = bt_aics_unmute(micp_included.aics[index]);
@@ -443,10 +458,11 @@ static shell_status_t cmd_micp_mic_ctlr_aics_input_unmute(shell_handle_t sh, int
 		shell_print(sh, "Fail: %d", result);
 	}
 
-	return (shell_status_t)result;
+	return result;
 }
 
-static shell_status_t cmd_micp_mic_ctlr_aics_input_mute(shell_handle_t sh, int32_t argc, char *argv[])
+static int cmd_micp_mic_ctlr_aics_input_mute(const struct shell *sh,
+					   size_t argc, char **argv)
 {
 	unsigned long index;
 	int result = 0;
@@ -455,18 +471,18 @@ static shell_status_t cmd_micp_mic_ctlr_aics_input_mute(shell_handle_t sh, int32
 	if (result != 0) {
 		shell_error(sh, "Could not parse index: %d", result);
 
-		return kStatus_SHELL_Error;
+		return -ENOEXEC;
 	}
 
 	if (index >= micp_included.aics_cnt) {
 		shell_error(sh, "Index shall be less than %u, was %lu",
 			    micp_included.aics_cnt, index);
 
-		return kStatus_SHELL_Error;
+		return -ENOEXEC;
 	}
 
 	if (micp_mic_ctlr == NULL) {
-		return kStatus_SHELL_Error;
+		return -ENOENT;
 	}
 
 	result = bt_aics_mute(micp_included.aics[index]);
@@ -474,10 +490,11 @@ static shell_status_t cmd_micp_mic_ctlr_aics_input_mute(shell_handle_t sh, int32
 		shell_print(sh, "Fail: %d", result);
 	}
 
-	return (shell_status_t)result;
+	return result;
 }
 
-static shell_status_t cmd_micp_mic_ctlr_aics_manual_input_gain_set(shell_handle_t sh, int32_t argc, char *argv[])
+static int cmd_micp_mic_ctlr_aics_manual_input_gain_set(const struct shell *sh,
+						      size_t argc, char **argv)
 {
 	unsigned long index;
 	int result = 0;
@@ -486,18 +503,18 @@ static shell_status_t cmd_micp_mic_ctlr_aics_manual_input_gain_set(shell_handle_
 	if (result != 0) {
 		shell_error(sh, "Could not parse index: %d", result);
 
-		return kStatus_SHELL_Error;
+		return -ENOEXEC;
 	}
 
 	if (index >= micp_included.aics_cnt) {
 		shell_error(sh, "Index shall be less than %u, was %lu",
 			    micp_included.aics_cnt, index);
 
-		return kStatus_SHELL_Error;
+		return -ENOEXEC;
 	}
 
 	if (micp_mic_ctlr == NULL) {
-		return kStatus_SHELL_Error;
+		return -ENOENT;
 	}
 
 	result = bt_aics_manual_gain_set(micp_included.aics[index]);
@@ -505,10 +522,12 @@ static shell_status_t cmd_micp_mic_ctlr_aics_manual_input_gain_set(shell_handle_
 		shell_print(sh, "Fail: %d", result);
 	}
 
-	return (shell_status_t)result;
+	return result;
 }
 
-static shell_status_t cmd_micp_mic_ctlr_aics_automatic_input_gain_set(shell_handle_t sh, int32_t argc, char *argv[])
+static int cmd_micp_mic_ctlr_aics_automatic_input_gain_set(const struct shell *sh,
+							 size_t argc,
+							 char **argv)
 {
 	unsigned long index;
 	int result = 0;
@@ -517,18 +536,18 @@ static shell_status_t cmd_micp_mic_ctlr_aics_automatic_input_gain_set(shell_hand
 	if (result != 0) {
 		shell_error(sh, "Could not parse index: %d", result);
 
-		return kStatus_SHELL_Error;
+		return -ENOEXEC;
 	}
 
 	if (index >= micp_included.aics_cnt) {
 		shell_error(sh, "Index shall be less than %u, was %lu",
 			    micp_included.aics_cnt, index);
 
-		return kStatus_SHELL_Error;
+		return -ENOEXEC;
 	}
 
 	if (micp_mic_ctlr == NULL) {
-		return kStatus_SHELL_Error;
+		return -ENOENT;
 	}
 
 	result = bt_aics_automatic_gain_set(micp_included.aics[index]);
@@ -536,10 +555,11 @@ static shell_status_t cmd_micp_mic_ctlr_aics_automatic_input_gain_set(shell_hand
 		shell_print(sh, "Fail: %d", result);
 	}
 
-	return (shell_status_t)result;
+	return result;
 }
 
-static shell_status_t cmd_micp_mic_ctlr_aics_gain_set(shell_handle_t sh, int32_t argc, char *argv[])
+static int cmd_micp_mic_ctlr_aics_gain_set(const struct shell *sh, size_t argc,
+					 char **argv)
 {
 	unsigned long index;
 	int result = 0;
@@ -549,32 +569,32 @@ static shell_status_t cmd_micp_mic_ctlr_aics_gain_set(shell_handle_t sh, int32_t
 	if (result != 0) {
 		shell_error(sh, "Could not parse index: %d", result);
 
-		return kStatus_SHELL_Error;
+		return -ENOEXEC;
 	}
 
 	if (index >= micp_included.aics_cnt) {
 		shell_error(sh, "Index shall be less than %u, was %lu",
 			    micp_included.aics_cnt, index);
 
-		return kStatus_SHELL_Error;
+		return -ENOEXEC;
 	}
 
 	gain = shell_strtol(argv[2], 0, &result);
 	if (result != 0) {
 		shell_error(sh, "Could not parse gain: %d", result);
 
-		return kStatus_SHELL_Error;
+		return -ENOEXEC;
 	}
 
 	if (gain > INT8_MAX || gain < INT8_MIN) {
 		shell_error(sh, "Gain shall be %d-%d, was %ld",
 			    INT8_MIN, INT8_MAX, gain);
 
-		return kStatus_SHELL_Error;
+		return -ENOEXEC;
 	}
 
 	if (micp_mic_ctlr == NULL) {
-		return kStatus_SHELL_Error;
+		return -ENOENT;
 	}
 
 	result = bt_aics_gain_set(micp_included.aics[index], gain);
@@ -582,10 +602,11 @@ static shell_status_t cmd_micp_mic_ctlr_aics_gain_set(shell_handle_t sh, int32_t
 		shell_print(sh, "Fail: %d", result);
 	}
 
-	return (shell_status_t)result;
+	return result;
 }
 
-static shell_status_t cmd_micp_mic_ctlr_aics_input_description_get(shell_handle_t sh, int32_t argc, char *argv[])
+static int cmd_micp_mic_ctlr_aics_input_description_get(const struct shell *sh,
+						      size_t argc, char **argv)
 {
 	unsigned long index;
 	int result = 0;
@@ -594,18 +615,18 @@ static shell_status_t cmd_micp_mic_ctlr_aics_input_description_get(shell_handle_
 	if (result != 0) {
 		shell_error(sh, "Could not parse index: %d", result);
 
-		return kStatus_SHELL_Error;
+		return -ENOEXEC;
 	}
 
 	if (index >= micp_included.aics_cnt) {
 		shell_error(sh, "Index shall be less than %u, was %lu",
 			    micp_included.aics_cnt, index);
 
-		return kStatus_SHELL_Error;
+		return -ENOEXEC;
 	}
 
 	if (micp_mic_ctlr == NULL) {
-		return kStatus_SHELL_Error;
+		return -ENOENT;
 	}
 
 	result = bt_aics_description_get(micp_included.aics[index]);
@@ -613,10 +634,11 @@ static shell_status_t cmd_micp_mic_ctlr_aics_input_description_get(shell_handle_
 		shell_print(sh, "Fail: %d", result);
 	}
 
-	return (shell_status_t)result;
+	return result;
 }
 
-static shell_status_t cmd_micp_mic_ctlr_aics_input_description_set(shell_handle_t sh, int32_t argc, char *argv[])
+static int cmd_micp_mic_ctlr_aics_input_description_set(const struct shell *sh,
+						      size_t argc, char **argv)
 {
 	unsigned long index;
 	int result = 0;
@@ -625,18 +647,18 @@ static shell_status_t cmd_micp_mic_ctlr_aics_input_description_set(shell_handle_
 	if (result != 0) {
 		shell_error(sh, "Could not parse index: %d", result);
 
-		return kStatus_SHELL_Error;
+		return -ENOEXEC;
 	}
 
 	if (index >= micp_included.aics_cnt) {
 		shell_error(sh, "Index shall be less than %u, was %lu",
 			    micp_included.aics_cnt, index);
 
-		return kStatus_SHELL_Error;
+		return -ENOEXEC;
 	}
 
 	if (micp_mic_ctlr == NULL) {
-		return kStatus_SHELL_Error;
+		return -ENOENT;
 	}
 
 	result = bt_aics_description_set(micp_included.aics[index], argv[2]);
@@ -644,11 +666,11 @@ static shell_status_t cmd_micp_mic_ctlr_aics_input_description_set(shell_handle_
 		shell_print(sh, "Fail: %d", result);
 	}
 
-	return (shell_status_t)result;
+	return result;
 }
 #endif /* CONFIG_BT_MICP_MIC_CTLR_AICS */
 
-static shell_status_t cmd_micp_mic_ctlr(shell_handle_t sh, int32_t argc, char *argv[])
+static int cmd_micp_mic_ctlr(const struct shell *sh, size_t argc, char **argv)
 {
 	if (argc > 1) {
 		shell_error(sh, "%s unknown parameter: %s",
@@ -657,7 +679,7 @@ static shell_status_t cmd_micp_mic_ctlr(shell_handle_t sh, int32_t argc, char *a
 		shell_error(sh, "%s Missing subcommand", argv[0]);
 	}
 
-	return kStatus_SHELL_Error;
+	return -ENOEXEC;
 }
 
 SHELL_STATIC_SUBCMD_SET_CREATE(micp_mic_ctlr_cmds,
@@ -715,7 +737,7 @@ SHELL_STATIC_SUBCMD_SET_CREATE(micp_mic_ctlr_cmds,
 	SHELL_SUBCMD_SET_END
 );
 
-SHELL_CMD_REGISTER(micp_mic_ctlr, micp_mic_ctlr_cmds,
+SHELL_CMD_ARG_REGISTER(micp_mic_ctlr, &micp_mic_ctlr_cmds,
 		       "Bluetooth Microphone Controller shell commands",
 		       cmd_micp_mic_ctlr, 1, 1);
 

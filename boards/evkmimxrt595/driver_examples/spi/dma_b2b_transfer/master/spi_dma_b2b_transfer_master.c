@@ -6,41 +6,16 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
+#include "app.h"
 #include "fsl_debug_console.h"
 #include "fsl_device_registers.h"
 #include "fsl_spi.h"
 #include "fsl_spi_dma.h"
 #include "fsl_dma.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
-#include "fsl_inputmux.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#ifndef USE_HS_SPI
-#define USE_HS_SPI 0
-#endif
-
-#if USE_HS_SPI
-#define EXAMPLE_SPI_MASTER            SPI14
-#define EXAMPLE_SPI_MASTER_IRQ        FLEXCOMM14_IRQn
-#define EXAMPLE_SPI_MASTER_CLK_SRC    kCLOCK_Flexcomm14Clk
-#define EXAMPLE_SPI_MASTER_CLK_FREQ   CLOCK_GetFlexcommClkFreq(14)
-#define EXAMPLE_SPI_MASTER_RX_CHANNEL 26
-#define EXAMPLE_SPI_MASTER_TX_CHANNEL 27
-#else
-#define EXAMPLE_SPI_MASTER            SPI5
-#define EXAMPLE_SPI_MASTER_IRQ        FLEXCOMM5_IRQn
-#define EXAMPLE_SPI_MASTER_CLK_SRC    kCLOCK_Flexcomm5Clk
-#define EXAMPLE_SPI_MASTER_CLK_FREQ   CLOCK_GetFlexcommClkFreq(5)
-#define EXAMPLE_SPI_MASTER_RX_CHANNEL 10
-#define EXAMPLE_SPI_MASTER_TX_CHANNEL 11
-#endif
-
-#define EXAMPLE_DMA             DMA0
-#define EXAMPLE_SPI_SSEL        0
-#define EXAMPLE_MASTER_SPI_SPOL kSPI_SpolActiveAllLow
 #define TRANSFER_SIZE 64U /*! Transfer dataSize */
 
 /*******************************************************************************
@@ -82,28 +57,7 @@ static void SPI_MasterUserCallback(SPI_Type *base, spi_dma_handle_t *handle, sta
 int main(void)
 {
     /* Initialize board setting. */
-    /* Configure DMAMUX. */
-    RESET_PeripheralReset(kINPUTMUX_RST_SHIFT_RSTn);
-
-    INPUTMUX_Init(INPUTMUX);
-    /* Enable DMA request */
-#if USE_HS_SPI
-    /* Use 48 MHz clock for the FLEXCOMM14 */
-    CLOCK_AttachClk(kFRO_DIV4_to_FLEXCOMM14);
-    INPUTMUX_EnableSignal(INPUTMUX, kINPUTMUX_Flexcomm14RxToDmac0Ch26RequestEna, true);
-    INPUTMUX_EnableSignal(INPUTMUX, kINPUTMUX_Flexcomm14TxToDmac0Ch27RequestEna, true);
-#else
-    /* Use 48 MHz clock for the FLEXCOMM5 */
-    CLOCK_AttachClk(kFRO_DIV4_to_FLEXCOMM5);
-    INPUTMUX_EnableSignal(INPUTMUX, kINPUTMUX_Flexcomm5RxToDmac0Ch10RequestEna, true);
-    INPUTMUX_EnableSignal(INPUTMUX, kINPUTMUX_Flexcomm5TxToDmac0Ch11RequestEna, true);
-#endif
-    /* Turnoff clock to inputmux to save power. Clock is only needed to make changes */
-    INPUTMUX_Deinit(INPUTMUX);
-
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
 
     /* Print project information. */
     PRINTF("This is SPI DMA transfer master example.\r\n");

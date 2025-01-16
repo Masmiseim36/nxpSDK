@@ -2,7 +2,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 #include <porting.h>
-#include <errno.h>
+#include <errno/errno.h>
 #include <string.h>
 
 #include "bt_crypto.h"

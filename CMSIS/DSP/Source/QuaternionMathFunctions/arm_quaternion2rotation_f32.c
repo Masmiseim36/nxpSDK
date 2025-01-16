@@ -59,7 +59,6 @@
    @param[in]       pInputQuaternions points to an array of normalized quaternions
    @param[out]      pOutputRotations points to an array of 3x3 rotations (in row order)
    @param[in]       nbQuaternions number of quaternions in the array
-   @return none.
   
    @par
    Format of rotation matrix
@@ -78,7 +77,7 @@
 
 #include "arm_helium_utils.h"
 
-void arm_quaternion2rotation_f32(const float32_t *pInputQuaternions, 
+ARM_DSP_ATTRIBUTE void arm_quaternion2rotation_f32(const float32_t *pInputQuaternions, 
     float32_t *pOutputRotations, 
     uint32_t nbQuaternions)
 {
@@ -141,17 +140,17 @@ void arm_quaternion2rotation_f32(const float32_t *pInputQuaternions,
 }
 
 #else
-void arm_quaternion2rotation_f32(const float32_t *pInputQuaternions, 
+ARM_DSP_ATTRIBUTE void arm_quaternion2rotation_f32(const float32_t *pInputQuaternions, 
     float32_t *pOutputRotations, 
     uint32_t nbQuaternions)
 {
    uint32_t nb;
    for(nb=0; nb < nbQuaternions; nb++)
    {
-        float32_t q00 = SQ(pInputQuaternions[0 + nb * 4]);
-        float32_t q11 = SQ(pInputQuaternions[1 + nb * 4]);
-        float32_t q22 = SQ(pInputQuaternions[2 + nb * 4]);
-        float32_t q33 = SQ(pInputQuaternions[3 + nb * 4]);
+        float32_t q00 = ARM_SQ(pInputQuaternions[0 + nb * 4]);
+        float32_t q11 = ARM_SQ(pInputQuaternions[1 + nb * 4]);
+        float32_t q22 = ARM_SQ(pInputQuaternions[2 + nb * 4]);
+        float32_t q33 = ARM_SQ(pInputQuaternions[3 + nb * 4]);
         float32_t q01 =  pInputQuaternions[0 + nb * 4]*pInputQuaternions[1 + nb * 4];
         float32_t q02 =  pInputQuaternions[0 + nb * 4]*pInputQuaternions[2 + nb * 4];
         float32_t q03 =  pInputQuaternions[0 + nb * 4]*pInputQuaternions[3 + nb * 4];

@@ -419,6 +419,7 @@ static mlan_status wlan_11n_ioctl_delba(pmlan_adapter pmadapter, pmlan_ioctl_req
     Global Functions
 ********************************************************/
 
+#ifdef STA_SUPPORT
 /**
  *  @brief This function fills the cap info
  *
@@ -604,6 +605,7 @@ void wlan_fill_ht_cap_tlv(mlan_private *priv, MrvlIETypes_HTCap_t *pht_cap, t_u1
     LEAVE();
     return;
 }
+#endif /* STA_SUPPORT */
 
 /**
  *  @brief This function prints the 802.11n device capability
@@ -846,6 +848,7 @@ mlan_status wlan_ret_11n_cfg(IN pmlan_private pmpriv, IN HostCmd_DS_COMMAND *res
     return MLAN_STATUS_SUCCESS;
 }
 
+#ifdef STA_SUPPORT
 
 /**
  *  @brief This function check if ht40 is allowed in current region
@@ -1116,8 +1119,10 @@ t_u32 wlan_cmd_append_11n_tlv(IN mlan_private *pmpriv, IN BSSDescriptor_t *pbss_
         (void)__memcpy(pmadapter, (t_u8 *)pext_cap + sizeof(MrvlIEtypesHeader_t),
                        (t_u8 *)pbss_desc->pext_cap + sizeof(IEEEtypes_Header_t), pbss_desc->pext_cap->ieee_hdr.len);
 
+#if CONFIG_MULTI_BSSID_SUPPORT
         if (pbss_desc && pbss_desc->multi_bssid_ap)
             SET_EXTCAP_MULTI_BSSID(pext_cap->ext_cap);
+#endif
 
 #if !defined(SD8801) && !defined(RW610)
         pext_cap->ext_cap.BSS_CoexistSupport = 0x01; /*2040 CoEx support must be always set*/
@@ -1134,6 +1139,7 @@ t_u32 wlan_cmd_append_11n_tlv(IN mlan_private *pmpriv, IN BSSDescriptor_t *pbss_
                 pext_cap->ext_cap.TDLSSupport = 1;
             }
         }
+#if (CONFIG_WNM_PS)
         if ((((mlan_private *)mlan_adap->priv[0])->wnm_set == true) && (pbss_desc->pext_cap->ext_cap.WNM_Sleep == true))
         {
             pext_cap->ext_cap.WNM_Sleep = 1;
@@ -1142,6 +1148,7 @@ t_u32 wlan_cmd_append_11n_tlv(IN mlan_private *pmpriv, IN BSSDescriptor_t *pbss_
         {
             pext_cap->ext_cap.WNM_Sleep = 0;
         }
+#endif
 
 #if CONFIG_11V
         if (pbss_desc->pext_cap->ext_cap.BSS_Transition == true)
@@ -1185,6 +1192,7 @@ t_u32 wlan_cmd_append_11n_tlv(IN mlan_private *pmpriv, IN BSSDescriptor_t *pbss_
     return ret_len;
 }
 
+#endif /* STA_SUPPORT */
 
 /**
  *  @brief 11n configuration handler
@@ -1254,6 +1262,11 @@ void wlan_11n_delete_txbastream_tbl_entry(mlan_private *priv, t_u8 *ra)
 
         util_unlink_list(pmadapter->pmoal_handle, &priv->tx_ba_stream_tbl_ptr, (pmlan_linked_list)ptx_tbl, MNULL,
                          MNULL);
+    }
+
+    if(ptx_tbl == NULL)
+    {
+        return;
     }
 
     (void)pmadapter->callbacks.moal_spin_unlock(pmadapter->pmoal_handle, priv->tx_ba_stream_tbl_ptr.plock);

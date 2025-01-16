@@ -2,7 +2,7 @@
  *
  *  @brief  This file provides the handling of AP mode command and event
  *
- *  Copyright 2008-2023 NXP
+ *  Copyright 2008-2024 NXP
  *
  *  SPDX-License-Identifier: BSD-3-Clause
  *
@@ -13,6 +13,7 @@ Change log:
     02/05/2009: initial version
 ********************************************************/
 
+#if CONFIG_NXP_WIFI_SOFTAP_SUPPORT
 #include <mlan_api.h>
 
 /* Additional WMSDK header files */
@@ -58,7 +59,9 @@ static mlan_status wlan_uap_cmd_ap_config(pmlan_private pmpriv,
     MrvlIEtypes_passphrase_t *tlv_passphrase = MNULL;
     MrvlIEtypes_password_t *tlv_password     = MNULL;
     MrvlIEtypes_wmm_parameter_t *tlv_wmm_parameter = MNULL;
+#if (CONFIG_UAP_AMPDU_TX) || (CONFIG_UAP_AMPDU_RX)
     MrvlIETypes_HTCap_t *tlv_htcap = MNULL;
+#endif
     t_u32 cmd_size  = 0;
     t_u8 zero_mac[] = {0, 0, 0, 0, 0, 0};
     t_u16 i;
@@ -191,7 +194,8 @@ static mlan_status wlan_uap_cmd_ap_config(pmlan_private pmpriv,
     }
 
     if ((bss->param.bss_config.auth_mode <= MLAN_AUTH_MODE_SHARED) ||
-        (bss->param.bss_config.auth_mode == MLAN_AUTH_MODE_AUTO))
+        (bss->param.bss_config.auth_mode == MLAN_AUTH_MODE_AUTO) ||
+		(bss->param.bss_config.auth_mode == MLAN_AUTH_MODE_SAE))
     {
         tlv_auth_type                 = (MrvlIEtypes_auth_type_t *)tlv;
         tlv_auth_type->header.type    = wlan_cpu_to_le16(TLV_TYPE_AUTH_TYPE);
@@ -297,6 +301,7 @@ static mlan_status wlan_uap_cmd_ap_config(pmlan_private pmpriv,
     {
     }
 
+#if (CONFIG_UAP_AMPDU_TX) || (CONFIG_UAP_AMPDU_RX)
     if ((bss->param.bss_config.ht_cap_info) != 0U)
     {
         /* wmsdk: All the values received will be zero by default. */
@@ -307,24 +312,28 @@ static mlan_status wlan_uap_cmd_ap_config(pmlan_private pmpriv,
         tlv_htcap->ht_cap.ampdu_param = bss->param.bss_config.ampdu_param;
         (void)__memcpy(pmpriv->adapter, tlv_htcap->ht_cap.supported_mcs_set, bss->param.bss_config.supported_mcs_set,
                        16);
+#if CONFIG_WIFI_CAPA
         /* Disable 802.11n */
         if (!pmpriv->adapter->usr_dot_11n_enable)
         {
             tlv_htcap->ht_cap.supported_mcs_set[0] = 0;
             tlv_htcap->ht_cap.supported_mcs_set[4] = 0;
         }
+#endif
         tlv_htcap->ht_cap.ht_ext_cap = wlan_cpu_to_le16(bss->param.bss_config.ht_ext_cap);
         tlv_htcap->ht_cap.tx_bf_cap  = wlan_cpu_to_le32(bss->param.bss_config.tx_bf_cap);
         tlv_htcap->ht_cap.asel       = bss->param.bss_config.asel;
         cmd_size += sizeof(MrvlIETypes_HTCap_t);
         tlv += sizeof(MrvlIETypes_HTCap_t);
     }
+#endif
 
 
     if ((bss->param.bss_config.uap_host_based_config == MTRUE) ||
         (bss->param.bss_config.wmm_para.qos_info & 0x80 || bss->param.bss_config.wmm_para.qos_info == 0x00))
     {
         tlv_wmm_parameter              = (MrvlIEtypes_wmm_parameter_t *)tlv;
+        (void)__memset(pmpriv->adapter, tlv_wmm_parameter, 0x00, sizeof(MrvlIEtypes_wmm_parameter_t));
         tlv_wmm_parameter->header.type = wlan_cpu_to_le16(TLV_TYPE_VENDOR_SPECIFIC_IE);
         tlv_wmm_parameter->header.len  = wlan_cpu_to_le16(sizeof(bss->param.bss_config.wmm_para));
         (void)__memcpy(pmpriv->adapter, tlv_wmm_parameter->wmm_para.ouitype, bss->param.bss_config.wmm_para.ouitype,
@@ -337,6 +346,8 @@ static mlan_status wlan_uap_cmd_ap_config(pmlan_private pmpriv,
         {
             tlv_wmm_parameter->wmm_para.ac_params[ac].aci_aifsn.aifsn =
                 bss->param.bss_config.wmm_para.ac_params[ac].aci_aifsn.aifsn;
+            tlv_wmm_parameter->wmm_para.ac_params[ac].aci_aifsn.acm =
+                bss->param.bss_config.wmm_para.ac_params[ac].aci_aifsn.acm;
             tlv_wmm_parameter->wmm_para.ac_params[ac].aci_aifsn.aci =
                 bss->param.bss_config.wmm_para.ac_params[ac].aci_aifsn.aci;
             tlv_wmm_parameter->wmm_para.ac_params[ac].ecw.ecw_max =
@@ -563,7 +574,9 @@ static mlan_status wlan_uap_cmd_snmp_mib(pmlan_private pmpriv,
     HostCmd_DS_802_11_SNMP_MIB *psnmp_mib = &cmd->params.smib;
     mlan_status ret                       = MLAN_STATUS_SUCCESS;
     t_u8 *psnmp_oid                       = MNULL;
+#if (CONFIG_WIFI_FRAG_THRESHOLD) || (CONFIG_WIFI_RTS_THRESHOLD)
     t_u32 ul_temp;
+#endif
     t_u8 i;
 
     t_u8 snmp_oids[] = {
@@ -638,6 +651,7 @@ static mlan_status wlan_uap_cmd_snmp_mib(pmlan_private pmpriv,
                 psnmp_mib->value[0] = *((t_u8 *)pdata_buf);
                 cmd->size += (t_u16)sizeof(t_u8);
                 break;
+#if CONFIG_WIFI_FRAG_THRESHOLD
             case FragThresh_i:
                 psnmp_mib->oid                 = wlan_cpu_to_le16((t_u16)FragThresh_i);
                 psnmp_mib->buf_size            = wlan_cpu_to_le16(sizeof(t_u16));
@@ -645,6 +659,8 @@ static mlan_status wlan_uap_cmd_snmp_mib(pmlan_private pmpriv,
                 *((t_u16 *)(psnmp_mib->value)) = wlan_cpu_to_le16((t_u16)ul_temp);
                 cmd->size += sizeof(t_u16);
                 break;
+#endif
+#if CONFIG_WIFI_RTS_THRESHOLD
             case RtsThresh_i:
                 psnmp_mib->oid                 = wlan_cpu_to_le16((t_u16)RtsThresh_i);
                 psnmp_mib->buf_size            = wlan_cpu_to_le16(sizeof(t_u16));
@@ -652,6 +668,7 @@ static mlan_status wlan_uap_cmd_snmp_mib(pmlan_private pmpriv,
                 *((t_u16 *)(psnmp_mib->value)) = wlan_cpu_to_le16((t_u16)ul_temp);
                 cmd->size += sizeof(t_u16);
                 break;
+#endif
             default:
                 PRINTM(MERROR, "Unsupported OID.\n");
                 ret = MLAN_STATUS_FAILURE;
@@ -688,7 +705,7 @@ static mlan_status wlan_uap_cmd_sta_deauth(pmlan_private pmpriv, IN HostCmd_DS_C
 }
 
 
-#if defined(WAPI_AP) || defined(HOST_AUTHENTICATOR) || (CONFIG_WPA_SUPP_AP)
+#if defined(WAPI_AP) || defined(HOST_AUTHENTICATOR) || (CONFIG_HOSTAPD)
 
 /**
  *  @brief This function prepares command of key material
@@ -761,8 +778,10 @@ static mlan_status wlan_uap_cmd_key_material(
         pkey_material->key_param_set.key_info |= KEY_INFO_MCAST_KEY;
     else
         pkey_material->key_param_set.key_info |= KEY_INFO_UCAST_KEY;
+#ifdef ENABLE_802_11W
     if (pkey->key_flags & KEY_FLAG_AES_MCAST_IGTK)
         pkey_material->key_param_set.key_info |= KEY_INFO_CMAC_AES_KEY;
+#endif
     if (pkey->key_flags & KEY_FLAG_SET_TX_KEY)
         pkey_material->key_param_set.key_info |= KEY_INFO_TX_KEY | KEY_INFO_RX_KEY;
     else
@@ -806,8 +825,13 @@ static mlan_status wlan_uap_cmd_key_material(
         PRINTM(MCMND, "Set CCMP256 Key\n");
         goto done;
     }
+#ifdef ENABLE_802_11W
     if (pkey->key_len == WPA_AES_KEY_LEN && !(pkey->key_flags & KEY_FLAG_AES_MCAST_IGTK))
     {
+#else
+    if (pkey->key_len == WPA_AES_KEY_LEN)
+    {
+#endif
         if (pkey->key_flags & (KEY_FLAG_RX_SEQ_VALID | KEY_FLAG_TX_SEQ_VALID))
             memcpy_ext(pmpriv->adapter, pkey_material->key_param_set.key_params.aes.pn, pkey->pn, SEQ_MAX_SIZE,
                        WPA_PN_SIZE);
@@ -821,6 +845,7 @@ static mlan_status wlan_uap_cmd_key_material(
         wifi_d("Set AES Key");
         goto done;
     }
+#ifdef ENABLE_802_11W
     if (pkey->key_len == WPA_IGTK_KEY_LEN && (pkey->key_flags & KEY_FLAG_AES_MCAST_IGTK))
     {
         if (pkey->key_flags & (KEY_FLAG_RX_SEQ_VALID | KEY_FLAG_TX_SEQ_VALID))
@@ -861,6 +886,7 @@ static mlan_status wlan_uap_cmd_key_material(
         PRINTM(MCMND, "Set AES 256 GMAC Key\n");
         goto done;
     }
+#endif
     if (pkey->key_len == WPA_TKIP_KEY_LEN)
     {
         if (pkey->key_flags & (KEY_FLAG_RX_SEQ_VALID | KEY_FLAG_TX_SEQ_VALID))
@@ -880,7 +906,7 @@ done:
     return ret;
 }
 
-#endif /* WAPI_AP || HOST_AUTHENTICATOR || CONFIG_WPA_SUPP_AP */
+#endif /* WAPI_AP || HOST_AUTHENTICATOR || CONFIG_HOSTAPD */
 
 
 /**
@@ -955,6 +981,7 @@ void wlan_check_sta_capability(pmlan_private priv, pmlan_buffer pevent, sta_node
 }
 
 
+#if UAP_HOST_MLME
 /**
  *  @brief	Check 11B support Rates
  *
@@ -1083,6 +1110,8 @@ static mlan_status wlan_uap_cmd_add_station(pmlan_private pmpriv,
                 break;
             case SUPPORTED_RATES:
                 b_only = wlan_check_11B_support_rates((MrvlIEtypes_RatesParamSet_t *)tlv);
+                if (b_only)
+                    wm_wifi.bandwidth = BANDWIDTH_20MHZ;
                 break;
             case QOS_INFO:
                 wifi_d("STA supports wmm");
@@ -1172,6 +1201,7 @@ static mlan_status wlan_uap_cmd_add_station(pmlan_private pmpriv,
 
             pos += sizeof(MrvlIEtypesHeader_t);
             (void)__memcpy(NULL, pos, (t_u8 *)&sta_ptr->he_cap.ext_id, tlv->len);
+            pos += tlv->len;
             travel_len += sizeof(MrvlIEtypesHeader_t) + tlv->len;
         }
     }
@@ -1234,6 +1264,7 @@ done:
     LEAVE();
     return MLAN_STATUS_SUCCESS;
 }
+#endif
 
 /**
  *  @brief This function prepares command of bss_start.
@@ -1245,10 +1276,13 @@ done:
  **/
 static mlan_status wlan_uap_cmd_bss_start(pmlan_private pmpriv, HostCmd_DS_COMMAND *cmd)
 {
+#if UAP_HOST_MLME
     MrvlIEtypes_HostMlme_t *tlv;
+#endif
     ENTER();
     cmd->command = wlan_cpu_to_le16(HOST_CMD_APCMD_BSS_START);
     cmd->size    = S_DS_GEN;
+#if UAP_HOST_MLME
     if (pmpriv->uap_host_based)
     {
         tlv              = (MrvlIEtypes_HostMlme_t *)((t_u8 *)cmd + cmd->size);
@@ -1257,6 +1291,7 @@ static mlan_status wlan_uap_cmd_bss_start(pmlan_private pmpriv, HostCmd_DS_COMMA
         tlv->host_mlme   = MTRUE;
         cmd->size += sizeof(MrvlIEtypes_HostMlme_t);
     }
+#endif
     cmd->size = wlan_cpu_to_le16(cmd->size);
     LEAVE();
     return MLAN_STATUS_SUCCESS;
@@ -1323,7 +1358,7 @@ mlan_status wlan_ops_uap_prepare_cmd(IN t_void *priv,
         case HOST_CMD_APCMD_STA_DEAUTH:
             ret = wlan_uap_cmd_sta_deauth(pmpriv, cmd_ptr, pdata_buf);
             break;
-#if defined(WAPI_AP) || defined(HOST_AUTHENTICATOR) || (CONFIG_WPA_SUPP_AP)
+#if defined(WAPI_AP) || defined(HOST_AUTHENTICATOR) || (CONFIG_HOSTAPD)
         case HostCmd_CMD_802_11_KEY_MATERIAL:
             ret = wlan_uap_cmd_key_material(pmpriv, cmd_ptr, cmd_action, cmd_oid, pdata_buf);
             break;
@@ -1337,9 +1372,11 @@ mlan_status wlan_ops_uap_prepare_cmd(IN t_void *priv,
         case HostCmd_CMD_11N_DELBA:
             ret = wlan_cmd_11n_delba(pmpriv, cmd_ptr, pdata_buf);
             break;
+#if UAP_HOST_MLME
         case HostCmd_CMD_ADD_NEW_STATION:
             ret = wlan_uap_cmd_add_station(pmpriv, cmd_ptr, cmd_action, (pmlan_ioctl_req)pioctl_buf);
             break;
+#endif
         case HostCmd_CMD_TX_RATE_CFG:
             ret = wlan_cmd_tx_rate_cfg(pmpriv, cmd_ptr, cmd_action, pdata_buf, (pmlan_ioctl_req)pioctl_buf);
             break;
@@ -1382,4 +1419,4 @@ mlan_status wlan_ops_uap_prepare_cmd(IN t_void *priv,
     LEAVE();
     return ret;
 }
-
+#endif /* CONFIG_NXP_WIFI_SOFTAP_SUPPORT */

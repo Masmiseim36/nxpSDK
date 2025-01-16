@@ -23,21 +23,7 @@
 
 LOG_MODULE_DEFINE(bt_ots, kLOG_LevelTrace);
 
-#ifndef LOG_DBG
-#define LOG_DBG BT_DBG
-#endif
 
-#ifndef LOG_ERR
-#define LOG_ERR BT_ERR
-#endif
-
-#ifndef LOG_HEXDUMP_DBG
-#define LOG_HEXDUMP_DBG BT_HEXDUMP_DBG
-#endif
-
-#ifndef LOG_WRN
-#define LOG_WRN BT_WARN
-#endif
 
 static struct bt_ots_dir_list dir_lists[CONFIG_BT_OTS_MAX_INST_CNT];
 
@@ -52,7 +38,7 @@ static size_t dir_list_object_record_size(const struct bt_gatt_ots_object *obj)
 	/* ID */
 	len += BT_OTS_OBJ_ID_SIZE;
 
-	/* Name length (single octect is used for the name length) */
+	/* Name length (single octet is used for the name length) */
 	len += sizeof(uint8_t);
 
 	/* Name */

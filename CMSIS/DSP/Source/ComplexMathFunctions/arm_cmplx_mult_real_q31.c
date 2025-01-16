@@ -43,7 +43,6 @@
   @param[in]     pSrcReal    points to real input vector
   @param[out]    pCmplxDst   points to complex output vector
   @param[in]     numSamples  number of samples in each vector
-  @return        none
 
   @par           Scaling and Overflow Behavior
                    The function uses saturating arithmetic.
@@ -51,7 +50,7 @@
  */
 
 #if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE)
-void arm_cmplx_mult_real_q31(
+ARM_DSP_ATTRIBUTE void arm_cmplx_mult_real_q31(
   const q31_t * pSrcCmplx,
   const q31_t * pSrcReal,
         q31_t * pCmplxDst,
@@ -105,7 +104,7 @@ void arm_cmplx_mult_real_q31(
     }
 }
 #else
-void arm_cmplx_mult_real_q31(
+ARM_DSP_ATTRIBUTE void arm_cmplx_mult_real_q31(
   const q31_t * pSrcCmplx,
   const q31_t * pSrcReal,
         q31_t * pCmplxDst,

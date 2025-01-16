@@ -44,7 +44,6 @@
   @param[in]     blockSize  number of samples in input vector
   @param[out]    pResult    minimum value returned here
   @param[out]    pIndex     index of minimum value returned here
-  @return        none
  */
 #if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE)
 
@@ -132,7 +131,7 @@ static void arm_small_blk_absmin_q7(
 }
 
 
-void arm_absmin_q7(
+ARM_DSP_ATTRIBUTE void arm_absmin_q7(
   const q7_t * pSrc,
         uint32_t blockSize,
         q7_t * pResult,
@@ -188,7 +187,7 @@ void arm_absmin_q7(
 
 #else
 #if defined(ARM_MATH_DSP)
-void arm_absmin_q7(
+ARM_DSP_ATTRIBUTE void arm_absmin_q7(
   const q7_t * pSrc,
         uint32_t blockSize,
         q7_t * pResult,
@@ -275,7 +274,7 @@ void arm_absmin_q7(
   *pIndex = outIndex;  
 }
 #else
-void arm_absmin_q7(
+ARM_DSP_ATTRIBUTE void arm_absmin_q7(
   const q7_t * pSrc,
         uint32_t blockSize,
         q7_t * pResult,

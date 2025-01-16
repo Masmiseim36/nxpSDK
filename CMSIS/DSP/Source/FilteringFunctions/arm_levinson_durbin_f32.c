@@ -48,20 +48,19 @@
   @param[out]    a        autoregressive coefficients
   @param[out]    err      prediction error (variance)
   @param[in]     nbCoefs  number of autoregressive coefficients
-  @return        none
  */
 
-#if defined(ARM_MATH_MVE_FLOAT16) && !defined(ARM_MATH_AUTOVECTORIZE) && defined(__CMSIS_GCC_H)
+#if defined(ARM_MATH_MVE_FLOAT16) && !defined(ARM_MATH_AUTOVECTORIZE) && defined(ARM_DSP_BUILT_WITH_GCC)
 #pragma GCC warning "Scalar version of arm_levinson_durbin_f32 built. Helium version has build issues with gcc."
 #endif 
 
-#if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE) &&  !defined(__CMSIS_GCC_H)
+#if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE) &&  !defined(ARM_DSP_BUILT_WITH_GCC)
 
 #include "arm_helium_utils.h"
 
 #define LANE23_MASK 0xFF00
 
-void arm_levinson_durbin_f32(const float32_t *phi,
+ARM_DSP_ATTRIBUTE void arm_levinson_durbin_f32(const float32_t *phi,
   float32_t *a, 
   float32_t *err,
   int nbCoefs)
@@ -217,7 +216,7 @@ void arm_levinson_durbin_f32(const float32_t *phi,
 }
 
 #else
-void arm_levinson_durbin_f32(const float32_t *phi,
+ARM_DSP_ATTRIBUTE void arm_levinson_durbin_f32(const float32_t *phi,
   float32_t *a, 
   float32_t *err,
   int nbCoefs)

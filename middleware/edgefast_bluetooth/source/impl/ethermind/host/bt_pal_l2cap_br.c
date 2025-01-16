@@ -25,7 +25,7 @@
 #include "fsl_component_log.h"
 LOG_MODULE_DEFINE(LOG_MODULE_NAME, kLOG_LevelTrace);
 
-#if (defined(CONFIG_BT_BREDR) && ((CONFIG_BT_BREDR) > 0U))
+#if (defined(CONFIG_BT_CLASSIC) && ((CONFIG_BT_CLASSIC) > 0U))
 #include "bt_pal_hci_core.h"
 #include "bt_pal_conn_internal.h"
 #include "bt_pal_l2cap_br_internal.h"
@@ -86,10 +86,12 @@ enum {
 
 static sys_slist_t br_servers;
 
+/* L2CAP BR */
+STRUCT_SECTION_DEFINE(bt_l2cap_br_fixed_chan);
 
 /* Pool for outgoing BR/EDR signaling packets, min MTU is 48 */
 NET_BUF_POOL_FIXED_DEFINE(br_sig_pool, CONFIG_BT_MAX_CONN,
-			  BT_L2CAP_BUF_SIZE(L2CAP_BR_MIN_MTU), NULL);
+			  BT_L2CAP_BUF_SIZE(L2CAP_BR_MIN_MTU), CONFIG_NET_BUF_USER_DATA_SIZE, NULL);
 
 /* BR/EDR L2CAP signalling channel specific context */
 struct bt_l2cap_br {
@@ -104,14 +106,17 @@ static struct bt_l2cap_br bt_l2cap_br_pool[CONFIG_BT_MAX_CONN];
 
 static bt_fifo_t pending_req;
 
-STRUCT_SECTION_DEFINE(bt_l2cap_br_fixed_chan);
+#if 0
+STRUCT_SECTION_START_EXTERN(bt_l2cap_br_fixed_chan);
+STRUCT_SECTION_END_EXTERN(bt_l2cap_br_fixed_chan);
+#endif
 
 struct bt_l2cap_chan *bt_l2cap_br_lookup_tx_cid(struct bt_conn *conn,
 						uint16_t cid)
 {
 	struct bt_l2cap_chan *chan;
 
-	SYS_SLIST_FOR_EACH_CONTAINER(&conn->channels, chan, node, struct bt_l2cap_chan) {
+	SYS_SLIST_FOR_EACH_CONTAINER(&conn->channels, chan, node) {
 		if (BR_CHAN(chan)->tx.cid == cid) {
 			return chan;
 		}
@@ -125,7 +130,7 @@ struct bt_l2cap_chan *bt_l2cap_br_lookup_rx_cid(struct bt_conn *conn,
 {
 	struct bt_l2cap_chan *chan;
 
-	SYS_SLIST_FOR_EACH_CONTAINER(&conn->channels, chan, node, struct bt_l2cap_chan) {
+	SYS_SLIST_FOR_EACH_CONTAINER(&conn->channels, chan, node) {
 		if (BR_CHAN(chan)->rx.cid == cid) {
 			return chan;
 		}
@@ -140,7 +145,7 @@ static struct bt_l2cap_chan *bt_l2cap_br_lookup_tx_cid(struct bt_conn *conn,
 {
 	struct bt_l2cap_chan *chan;
 
-	SYS_SLIST_FOR_EACH_CONTAINER(&conn->channels, chan, node, struct bt_l2cap_chan) {
+	SYS_SLIST_FOR_EACH_CONTAINER(&conn->channels, chan, node) {
 		if (BR_CHAN(chan)->tx.cid == cid) {
 			return chan;
 		}
@@ -261,6 +266,8 @@ static bool l2cap_br_chan_add(struct bt_conn *conn, struct bt_l2cap_chan *chan,
 #endif
 	bt_l2cap_chan_add(conn, chan, destroy);
 
+	bt_l2cap_chan_set_state(chan, BT_L2CAP_CONNECTING);
+
 	return true;
 }
 
@@ -281,6 +288,7 @@ static uint8_t l2cap_br_get_ident(void)
 static int l2cap_br_send_cb(struct bt_conn *conn, uint16_t cid, struct net_buf *buf,
 			    bt_conn_tx_cb_t cb, void *user_data)
 {
+#if 0
 	struct bt_l2cap_hdr *hdr;
 
 	LOG_DBG("conn %p cid %u len %zu", conn, cid, buf->len);
@@ -290,6 +298,9 @@ static int l2cap_br_send_cb(struct bt_conn *conn, uint16_t cid, struct net_buf *
 	hdr->cid = sys_cpu_to_le16(cid);
 
 	return bt_conn_send_cb(conn, buf, cb, user_data);
+#else
+    return -EIO;
+#endif
 }
 #if 0
 /* Send the buffer and release it in case of failure.
@@ -536,10 +547,10 @@ static int l2cap_br_info_req(struct bt_l2cap_br *l2cap, uint8_t ident,
 int l2cap_br_ecred_init(struct bt_conn *conn,
 			       struct bt_l2cap_br_chan *ch, uint16_t psm)
 {
-    (void)memset(&ch->tx, 0, sizeof(ch->tx));
+	(void)memset(&ch->tx, 0, sizeof(ch->tx));
 	atomic_set(&ch->tx.credits, 0);
 
-    ch->chan.conn = conn;
+    	ch->chan.conn = conn;
 
 #if 0
 	/* Redirect to experimental API. */
@@ -562,8 +573,7 @@ int l2cap_br_ecred_init(struct bt_conn *conn,
 	/* MPS shall not be bigger than MTU + BT_L2CAP_SDU_HDR_SIZE as the
 	 * remaining bytes cannot be used.
 	 */
-	ch->rx.mps = MIN(ch->rx.mtu + BT_L2CAP_SDU_HDR_SIZE,
-			   BT_L2CAP_RX_MTU);
+	ch->rx.mps = MIN(ch->rx.mtu, BT_L2CAP_RX_MTU);
 
 #if 0
 	/* Truncate MTU if channel have disabled segmentation but still have
@@ -576,19 +586,19 @@ int l2cap_br_ecred_init(struct bt_conn *conn,
 	}
 #endif
 
-    /* Use existing credits if defined */
-    if (!ch->rx.credits)
-    {
-        if (ch->chan.ops->alloc_buf)
-        {
-            /* Auto tune credits to receive a full packet */
-            ch->rx.credits = ceiling_fraction(ch->rx.mtu, BT_L2CAP_RX_MTU);
-        }
-        else
-        {
-            ch->rx.credits = L2CAP_BREDR_MAX_CREDITS;
-        }
-    }
+	/* Use existing credits if defined */
+	if (!ch->rx.credits)
+	{
+		if (ch->chan.ops->alloc_buf)
+		{
+		/* Auto tune credits to receive a full packet */
+		ch->rx.credits = ceiling_fraction(ch->rx.mtu, BT_L2CAP_RX_MTU);
+		}
+		else
+		{
+		ch->rx.credits = L2CAP_BREDR_MAX_CREDITS;
+		}
+	}
 
 	if (!l2cap_br_chan_add(conn, &ch->chan, l2cap_br_chan_destroy, 0)) {
 		return -ENOMEM;
@@ -650,7 +660,7 @@ static struct bt_l2cap_server *l2cap_br_server_lookup_psm(uint16_t psm)
 {
 	struct bt_l2cap_server *server;
 
-	SYS_SLIST_FOR_EACH_CONTAINER(&br_servers, server, node, struct bt_l2cap_server) {
+	SYS_SLIST_FOR_EACH_CONTAINER(&br_servers, server, node) {
 		if (server->psm == psm) {
 			return server;
 		}
@@ -664,7 +674,7 @@ bt_security_t l2cap_br_server_security_level_max(void)
 	struct bt_l2cap_server *server, *next;
     bt_security_t level = BT_SECURITY_L0;
 
-	SYS_SLIST_FOR_EACH_CONTAINER_SAFE(&br_servers, server, next, node, struct bt_l2cap_server) {
+	SYS_SLIST_FOR_EACH_CONTAINER_SAFE(&br_servers, server, next, node) {
 		if (server->sec_level > level) {
             level = server->sec_level;
 		}
@@ -1093,6 +1103,7 @@ static void l2cap_br_conn_req(struct bt_conn *conn,
 		goto no_chan;
 	}
 
+#if 0
 	/*
 	 * Report security violation for non SDP channel without encryption when
 	 * remote supports SSP.
@@ -1102,7 +1113,7 @@ static void l2cap_br_conn_req(struct bt_conn *conn,
 		result = BT_L2CAP_BR_ERR_SEC_BLOCK;
 		goto no_chan;
 	}
-#if 0
+
 	if (!L2CAP_BR_CID_IS_DYN(scid)) {
 		result = BT_L2CAP_BR_ERR_INVALID_SCID;
 		goto no_chan;
@@ -1125,7 +1136,7 @@ static void l2cap_br_conn_req(struct bt_conn *conn,
 	 * channel. If no free channels available for PSM server reply with
 	 * proper result and quit since chan pointer is uninitialized then.
 	 */
-    err = server->accept(conn, server, &chan);
+	err = server->accept(conn, server, &chan);
 	if (err < 0) {
 		result = br_err_to_result(err);
 		goto no_chan;
@@ -1134,13 +1145,13 @@ static void l2cap_br_conn_req(struct bt_conn *conn,
 	br_chan = BR_CHAN(chan);
 
 	br_chan->required_sec_level = server->sec_level;
+	br_chan->psm = psm;
 
 	l2cap_br_chan_add(conn, chan, l2cap_br_chan_destroy, dcid);
 #if 0
 	BR_CHAN(chan)->tx.cid = scid;
 #endif
 	br_chan->ident = 0;
-	bt_l2cap_chan_set_state(chan, BT_L2CAP_CONNECTING);
 	atomic_set_bit(BR_CHAN(chan)->flags, L2CAP_FLAG_CONN_ACCEPTOR);
 
 	/* Disable fragmentation of l2cap rx pdu */
@@ -1703,7 +1714,7 @@ static struct bt_l2cap_br_chan *l2cap_br_remove_rx_cid(struct bt_conn *conn,
 		return NULL;
 	}
 
-	SYS_SLIST_FOR_EACH_CONTAINER(&conn->channels, chan, node, struct bt_l2cap_chan) {
+	SYS_SLIST_FOR_EACH_CONTAINER(&conn->channels, chan, node) {
 		if (BR_CHAN(chan)->rx.cid == cid) {
 			sys_slist_remove(&conn->channels, prev, &chan->node);
 			return BR_CHAN(chan);
@@ -1776,6 +1787,7 @@ int bt_l2cap_br_chan_disconnect(struct bt_l2cap_chan *chan)
 {
 	struct bt_conn *conn = chan->conn;
 	struct bt_l2cap_br_chan *br_chan;
+	API_RESULT res;
 
 	if (!conn) {
 		return -ENOTCONN;
@@ -1806,13 +1818,20 @@ int bt_l2cap_br_chan_disconnect(struct bt_l2cap_chan *chan)
 #endif
 
 #if (defined(CONFIG_BT_L2CAP_ECRED) && (CONFIG_BT_L2CAP_ECRED > 0U))
-	l2ca_ecbfc_disconnect_req(br_chan->rx.cid);
-#else
-	l2ca_disconnect_req(br_chan->rx.cid);
+	if(br_chan->psm < 0x1000) {
+		res = l2ca_ecbfc_disconnect_req(br_chan->rx.cid);
+	} else
 #endif
-	bt_l2cap_chan_set_state(chan, BT_L2CAP_DISCONNECTING);
+	{
+		res = l2ca_disconnect_req(br_chan->rx.cid);
+	}
 
-	return 0;
+	if (res == API_SUCCESS) {
+		bt_l2cap_chan_set_state(chan, BT_L2CAP_DISCONNECTING);
+		return 0;
+	}
+
+	return -EINVAL;
 }
 
 static void l2cap_br_disconn_rsp(struct bt_conn *conn, uint16_t dcid, uint16_t scid)
@@ -2213,9 +2232,8 @@ void l2cap_br_encrypt_change(struct bt_conn *conn, uint8_t hci_status)
 {
 	struct bt_l2cap_chan *chan;
 
-	SYS_SLIST_FOR_EACH_CONTAINER(&conn->channels, chan, node, struct bt_l2cap_chan) {
+	SYS_SLIST_FOR_EACH_CONTAINER(&conn->channels, chan, node) {
 		l2cap_br_conn_pend(chan, hci_status);
-
 		if (chan->ops && chan->ops->encrypt_change) {
 			chan->ops->encrypt_change(chan, hci_status);
 		}
@@ -2244,8 +2262,10 @@ void bt_l2cap_br_recv(struct bt_conn *conn, struct net_buf *buf)
 {
 	struct bt_l2cap_hdr *hdr;
 	struct bt_l2cap_chan *chan;
+#ifdef L2CAP_SUPPORT_CBFC_MODE
 	struct bt_l2cap_br_chan *br_chan;
 	uint16_t credit = 0;
+#endif
 	uint16_t cid;
 	int err;
 
@@ -2265,6 +2285,13 @@ void bt_l2cap_br_recv(struct bt_conn *conn, struct net_buf *buf)
 		return;
 	}
 
+#ifdef L2CAP_SUPPORT_CBFC_MODE
+	br_chan = BR_CHAN(chan);
+	credit = ceiling_fraction((buf->len + 2), br_chan->rx.mps);
+
+	memcpy(net_buf_user_data(buf), &credit, sizeof(credit));
+#endif
+
 	err = chan->ops->recv(chan, buf);
 	if (err < 0) {
 		if (err != -EINPROGRESS) {
@@ -2274,21 +2301,22 @@ void bt_l2cap_br_recv(struct bt_conn *conn, struct net_buf *buf)
 		return;
 	}
 
-	br_chan = BR_CHAN(chan);
-	credit = ceiling_fraction((buf->len + 2), br_chan->rx.mps);
-
+#ifdef L2CAP_SUPPORT_CBFC_MODE
 	atomic_set(&br_chan->rx.credits, credit);
     (void)l2ca_cbfc_send_flow_control_credit
          (
              sys_cpu_to_le16(br_chan->rx.cid),
              sys_cpu_to_le16(credit)
          );
+#endif
 	net_buf_unref(buf);
 }
 
 int bt_l2cap_br_chan_recv_complete(struct bt_l2cap_chan *chan, struct net_buf *buf)
 {
+#ifdef L2CAP_SUPPORT_CBFC_MODE
 	struct bt_l2cap_br_chan *br_chan = BR_CHAN(chan);
+#endif
 	struct bt_conn *conn = chan->conn;
 
 	__ASSERT_NO_MSG(chan);
@@ -2304,6 +2332,7 @@ int bt_l2cap_br_chan_recv_complete(struct bt_l2cap_chan *chan, struct net_buf *b
 
 	LOG_DBG("chan %p buf %p", chan, buf);
 
+#ifdef L2CAP_SUPPORT_CBFC_MODE
 	if (BT_L2CAP_CONNECTED == br_chan->state) {
 		uint16_t credits;
 
@@ -2319,6 +2348,7 @@ int bt_l2cap_br_chan_recv_complete(struct bt_l2cap_chan *chan, struct net_buf *b
 				 sys_cpu_to_le16(credits)
 			 );
 	}
+#endif /* L2CAP_SUPPORT_CBFC_MODE */
 
 	net_buf_unref(buf);
 
@@ -2376,7 +2406,20 @@ BT_L2CAP_BR_CHANNEL_DEFINE(br_fixed_chan, BT_L2CAP_CID_BR_SIG, l2cap_br_accept);
 
 void bt_l2cap_br_init(void)
 {
+	struct bt_l2cap_server *server, *next;
+	sys_slist_t temp;
+
+	/* Clear register server. */
+	temp = br_servers;
 	sys_slist_init(&br_servers);
+
+	/* Recover the L2CAP servers */
+	SYS_SLIST_FOR_EACH_CONTAINER_SAFE(&temp, server, next, node) {
+		int err = bt_l2cap_br_server_register(server);
+		if (err != 0) {
+			LOG_ERR("Fail to register L2CAP BR server %p", server);
+		}
+	}
 
 	if (IS_ENABLED(CONFIG_BT_RFCOMM)) {
 		bt_rfcomm_init();
@@ -2391,6 +2434,13 @@ void bt_l2cap_br_init(void)
 		bt_avrcp_init();
 	}
 
-    bt_fifo_init(&pending_req);
+	bt_fifo_init(&pending_req);
 }
-#endif /* CONFIG_BT_BREDR */
+
+struct net_buf *l2cap_br_data_pull(struct bt_conn *conn,
+				   size_t amount,
+				   size_t *length)
+{
+	return NULL;
+}
+#endif /* CONFIG_BT_CLASSIC */

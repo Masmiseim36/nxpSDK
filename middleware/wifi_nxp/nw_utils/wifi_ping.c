@@ -22,7 +22,8 @@ static int ptotal = 0, precvd = 0;
 
 #if defined(SDK_OS_FREE_RTOS)
 #if CONFIG_MEM_POOLS
-#define PING_SIZE (sizeof(struct icmp_echo_hdr) + 1024)
+// Max 10k ping will be supported
+#define PING_SIZE (sizeof(struct icmp_echo_hdr) + 10008)
 
 static uint8_t IEcho[PING_SIZE];
 #endif
@@ -623,7 +624,7 @@ static int handle_ipv6_echo_reply(struct net_icmp_ctx *ctx,
         );
     }
 
-    PRINTF(
+    (void)PRINTF(
         "%d bytes from %s to %s: icmp_seq=%d ttl=%d "
 #if CONFIG_IEEE802154
         "rssi=%d "
@@ -702,7 +703,7 @@ static int handle_ipv4_echo_reply(struct net_icmp_ctx *ctx,
 
     precvd++;
 
-    PRINTF(
+    (void)PRINTF(
         "%d bytes from %s to %s: icmp_seq=%d ttl=%d "
         "%s\r\n",
         ntohs(ip_hdr->len) - net_pkt_ipv6_ext_len(pkt) - NET_ICMPH_LEN, net_sprint_addr(AF_INET, &ip_hdr->src),
@@ -795,7 +796,7 @@ static void ping_work(struct k_work *work)
 
     if (ctx->sequence > ctx->count)
     {
-        PRINTF("Ping timeout\r\n");
+        (void)PRINTF("Ping timeout\r\n");
         ping_done(ctx);
         return;
     }
@@ -820,7 +821,7 @@ static void ping_work(struct k_work *work)
     ret = net_icmp_send_echo_request(&ctx->icmp, ctx->iface, &ctx->addr, &params, ctx);
     if (ret != 0)
     {
-        PRINTF("Failed to send ping, err: %d\r\n", ret);
+        (void)PRINTF("Failed to send ping, err: %d\r\n", ret);
         ping_done(ctx);
         return;
     }
@@ -920,7 +921,7 @@ static void cmd_ping(int argc, char **argv)
                 count = parse_arg(&i, argc, argv);
                 if (count < 0)
                 {
-                    PRINTF("Parse error: %s\r\n", argv[i]);
+                    (void)PRINTF("Parse error: %s\r\n", argv[i]);
                     return;
                 }
 
@@ -929,7 +930,7 @@ static void cmd_ping(int argc, char **argv)
                 interval = parse_arg(&i, argc, argv);
                 if (interval < 0)
                 {
-                    PRINTF("Parse error: %s\r\n", argv[i]);
+                    (void)PRINTF("Parse error: %s\r\n", argv[i]);
                     return;
                 }
 
@@ -939,7 +940,7 @@ static void cmd_ping(int argc, char **argv)
                 iface_idx = parse_arg(&i, argc, argv);
                 if (iface_idx < 0 || !net_if_get_by_index(iface_idx))
                 {
-                    PRINTF("Parse error: %s\r\n", argv[i]);
+                    (void)PRINTF("Parse error: %s\r\n", argv[i]);
                     return;
                 }
                 break;
@@ -948,7 +949,7 @@ static void cmd_ping(int argc, char **argv)
                 priority = parse_arg(&i, argc, argv);
                 if (priority < 0 || priority > UINT8_MAX)
                 {
-                    PRINTF("Parse error: %s\r\n", argv[i]);
+                    (void)PRINTF("Parse error: %s\r\n", argv[i]);
                     return;
                 }
                 break;
@@ -957,7 +958,7 @@ static void cmd_ping(int argc, char **argv)
                 tos = parse_arg(&i, argc, argv);
                 if (tos < 0 || tos > UINT8_MAX)
                 {
-                    PRINTF("Parse error: %s\r\n", argv[i]);
+                    (void)PRINTF("Parse error: %s\r\n", argv[i]);
                     return;
                 }
 
@@ -967,21 +968,21 @@ static void cmd_ping(int argc, char **argv)
                 payload_size = parse_arg(&i, argc, argv);
                 if (payload_size < 0 || payload_size > UINT16_MAX)
                 {
-                    PRINTF("Parse error: %s\r\n", argv[i]);
+                    (void)PRINTF("Parse error: %s\r\n", argv[i]);
                     return;
                 }
 
                 break;
 
             default:
-                PRINTF("Unrecognized argument: %s\r\n", argv[i]);
+                (void)PRINTF("Unrecognized argument: %s\r\n", argv[i]);
                 return;
         }
     }
 
     if (!host)
     {
-        PRINTF("Target host missing\r\n");
+        (void)PRINTF("Target host missing\r\n");
         return;
     }
 
@@ -1002,7 +1003,7 @@ static void cmd_ping(int argc, char **argv)
         ret = net_icmp_init_ctx(&ping_ctx.icmp, NET_ICMPV6_ECHO_REPLY, 0, handle_ipv6_echo_reply);
         if (ret < 0)
         {
-            PRINTF("Cannot initialize ICMP context for %s\r\n", "IPv6");
+            (void)PRINTF("Cannot initialize ICMP context for %s\r\n", "IPv6");
             return;
         }
     }
@@ -1013,19 +1014,19 @@ static void cmd_ping(int argc, char **argv)
         ret = net_icmp_init_ctx(&ping_ctx.icmp, NET_ICMPV4_ECHO_REPLY, 0, handle_ipv4_echo_reply);
         if (ret < 0)
         {
-            PRINTF("Cannot initialize ICMP context for %s\r\n", "IPv4");
+            (void)PRINTF("Cannot initialize ICMP context for %s\r\n", "IPv4");
             return;
         }
     }
     else
     {
-        PRINTF("Invalid IP address\r\n");
+        (void)PRINTF("Invalid IP address\r\n");
         return;
     }
 
     ping_ctx.iface = ping_select_iface(iface_idx, &ping_ctx.addr);
 
-    PRINTF("PING %s\r\n", host);
+    (void)PRINTF("PING %s\r\n", host);
 
     ptotal = 0;
     precvd = 0;

@@ -7,9 +7,8 @@
 
 #include <stdlib.h>
 #include <string.h>
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 #include "fsl_common.h"
 #include "fsl_debug_console.h"
 #include "fsl_iap.h"
@@ -17,26 +16,10 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define EXAMPLE_NOR_INSTANCE       1U        /* FLEXSPI0 */
-#define NOR_FLASH_OP_START_ADDRESS 0x200000U /* Operation on 2MB offset */
-#define NOR_FLASH_OP_SIZE          0x2000U   /* Test 8KB region */
-
-/* Predefined flash option */
-#define EXAMPLE_NOR_FLASH_QSPI      0xC0000000U               /* QuadSPI flash */
-#define EXAMPLE_NOR_FLASH_QSPI_DDR  0xC0100000U               /* QuadSPI DDR flash */
-#define EXAMPLE_NOR_FLASH_HYPER_1V8 0xC0233001U               /* 1.8V Hyper flash */
-#define EXAMPLE_NOR_FLASH_HYPER_3V0 0xC0333000U               /* 3.0V Hyper flash */
-#define EXAMPLE_NOR_FLASH_MXIC_OSPI 0xC0403000U               /* Macronix OctalSPI flash */
-#define EXAMPLE_NOR_FLASH_MCRN_OSPI 0xC0600000U               /* Micron OctalSPI flash */
-#define EXAMPLE_NOR_FLASH_ADST_OSPI 0xC0803000U               /* Adesto OctalSPI flash */
-
-#define EXAMPLE_NOR_FLASH         EXAMPLE_NOR_FLASH_MXIC_OSPI /* MXIC flash on EVK board */
-#define EXAMPLE_NOR_FLASH_OPTION1 0U
 
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
-
 
 /*******************************************************************************
  * variables
@@ -48,7 +31,6 @@ static uint32_t mem_readBuffer[(NOR_FLASH_OP_SIZE + 3) / 4];
 /*******************************************************************************
  * Code
  ******************************************************************************/
-
 /*!
  * @brief Main function
  */
@@ -62,9 +44,7 @@ int main(void)
     uint8_t *pReadBuf  = (uint8_t *)mem_readBuffer;
     uint8_t *pWriteBuf = (uint8_t *)mem_writeBuffer;
 
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
 
     PRINTF("\r\nIAP flash example started!\r\n");
 

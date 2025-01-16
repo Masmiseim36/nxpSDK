@@ -52,7 +52,7 @@
   to the saturated negative or positive value.
  */
 
-arm_status arm_divide_q31(q31_t numerator,
+ARM_DSP_ATTRIBUTE arm_status arm_divide_q31(q31_t numerator,
   q31_t denominator,
   q31_t *quotient,
   int16_t *shift)
@@ -63,7 +63,7 @@ arm_status arm_divide_q31(q31_t numerator,
 
   *shift = 0;
 
-  sign = (numerator>>31) ^ (denominator>>31);
+  sign = (numerator<0) ^ (denominator<0);
 
   if (denominator == 0)
   {

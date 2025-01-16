@@ -1,14 +1,13 @@
 /*
  * Copyright 2017-2019 NXP
- * All rights reserved.
  *
- *
- * SPDX-License-Identifier: BSD-3-Clause
+ * SPDX-License-Identifier: IJG
  */
 
 #include <stdio.h>
 #include <string.h>
 #include "fsl_common.h"
+#include "app.h"
 #include "fsl_debug_console.h"
 #include "fsl_cache.h"
 #include "ff.h"
@@ -16,33 +15,11 @@
 #include "fsl_sd_disk.h"
 #include "jpeglib.h"
 #include "display_support.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
 #include "sdmmc_config.h"
-#include "fsl_gpio.h"
-#include "fsl_power.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define APP_FB_ALIGN FRAME_BUFFER_ALIGN
-
-#define APP_FB_USE_FIXED_ADDRESS 1
-/* The PSRAM size is 8M, not enough for three 720*1280 XRGB8888 buffers. */
-#define APP_FB_NUM   2
-#define APP_FB0_ADDR 0x28000000
-#define APP_FB1_ADDR 0x28400000
-
-#if ((DEMO_PANEL_RK055AHD091 == DEMO_PANEL) || (DEMO_PANEL_RK055MHD091 == DEMO_PANEL) || \
-     (DEMO_PANEL_RK055IQH091 == DEMO_PANEL))
-#define APP_USE_XRGB8888 1 /* LCDIF does not support RGB888 .*/
-#else
-#define APP_USE_XRGB8888 0
-#endif
-
-#define DEMO_SDCARD_SWITCH_VOLTAGE_FUNCTION_EXIST
-#define DEMO_SDCARD_SWITCH_VOLTAGE_PORT 4U
-#define DEMO_SDCARD_SWITCH_VOLTAGE_PIN  0U
 #define APP_FB_HEIGHT  DEMO_BUFFER_HEIGHT
 #define APP_FB_WIDTH   DEMO_BUFFER_WIDTH
 #define APP_FB_START_X DEMO_BUFFER_START_X
@@ -113,8 +90,6 @@
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
-void BOARD_USDHC_Switch_VoltageTo1V8(void);
-void BOARD_USDHC_Switch_VoltageTo3V3(void);
 static status_t sdcardWaitCardInsert(void);
 static void APP_BufferSwitchOffCallback(void *param, void *switchOffBuffer);
 
@@ -156,22 +131,6 @@ AT_NONCACHEABLE_SECTION(static FIL jpgFil);
 /*******************************************************************************
  * Code
  ******************************************************************************/
-#if (DEMO_PANEL_RM67162 == DEMO_PANEL)
-void GPIO_INTA_IRQHandler(void)
-{
-    uint32_t intStat;
-
-    intStat = GPIO_PortGetInterruptStatus(GPIO, BOARD_MIPI_TE_PORT, 0);
-
-    GPIO_PortClearInterruptFlags(GPIO, BOARD_MIPI_TE_PORT, 0, intStat);
-
-    if (intStat & (1U << BOARD_MIPI_TE_PIN))
-    {
-        BOARD_DisplayTEPinHandler();
-    }
-}
-#endif
-
 
 /* Get the empty frame buffer from the s_fbList. */
 static void *APP_GetFrameBuffer(void)
@@ -418,39 +377,7 @@ int main(void)
     void *freeFb;
     uint32_t oldIntStat;
 
-    status_t status;
-
-    BOARD_InitUARTPins();
-    BOARD_InitPsRamPins();
-
-#if (DEMO_PANEL_TFT_PROTO_5 == DEMO_PANEL)
-    BOARD_InitFlexIOPanelPins();
-
-    GPIO_PortInit(GPIO, BOARD_SSD1963_RST_PORT);
-    GPIO_PortInit(GPIO, BOARD_SSD1963_CS_PORT);
-    GPIO_PortInit(GPIO, BOARD_SSD1963_RS_PORT);
-#else
-    BOARD_InitMipiPanelPins();
-
-    GPIO_PortInit(GPIO, BOARD_MIPI_POWER_PORT);
-    GPIO_PortInit(GPIO, BOARD_MIPI_BL_PORT);
-    GPIO_PortInit(GPIO, BOARD_MIPI_RST_PORT);
-
-#if (DEMO_PANEL_RM67162 == DEMO_PANEL)
-    GPIO_PortInit(GPIO, BOARD_MIPI_TE_PORT);
-#endif
-
-#endif
-    BOARD_InitSdCardPins();
-
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
-
-    status = BOARD_InitPsRam();
-    if (status != kStatus_Success)
-    {
-        assert(false);
-    }
+    BOARD_InitHardware();
 
     PRINTF("SD JPEG demo start:\r\n");
 

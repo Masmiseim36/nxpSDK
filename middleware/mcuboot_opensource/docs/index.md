@@ -11,6 +11,7 @@ enables easy software upgrade.
 MCUboot is not dependent on any specific operating system and hardware and
 relies on hardware porting layers from the operating system it works with.
 Currently MCUboot works with the following operating systems and SoCs:
+- [NXP MCUXpresso SDK](readme-nxp_mcux_sdk.md)
 - [Zephyr](https://www.zephyrproject.org/)
 - [Apache Mynewt](https://mynewt.apache.org/)
 - [Apache NuttX](https://nuttx.apache.org/)
@@ -40,6 +41,7 @@ The MCUboot documentation is composed of the following pages:
 - [ECDSA](ecdsa.md) - information about ECDSA signature formats
 - [Serial Recovery](serial_recovery.md) - MCUmgr as the serial recovery protocol
 - Usage instructions:
+  - [NXP MCUXpresso SDK](readme-nxp_mcux_sdk.md)
   - [Zephyr](readme-zephyr.md)
   - [Apache Mynewt](readme-mynewt.md)
   - [Apache NuttX](readme-nuttx.md)

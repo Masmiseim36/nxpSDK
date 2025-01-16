@@ -25,7 +25,7 @@
 /*-----------------------------------------------------------*/
 void *pvPortMalloc(size_t xWantedSize)
 {
-    void *         pvReturn = NULL;
+    void          *pvReturn = NULL;
     static uint8_t init     = 0U;
 
     vTaskSuspendAll();

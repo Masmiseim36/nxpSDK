@@ -6,12 +6,17 @@
  
 #if defined(CONFIG_BT_PBP) && (CONFIG_BT_PBP > 0)
 
-#include <sys/byteorder.h>
-#include <zephyr/types.h>
-#include <bluetooth/bluetooth.h>
+#include <stddef.h>
+#include <stdint.h>
+
+#include <porting.h>
 #include <bluetooth/audio/audio.h>
 #include <bluetooth/audio/pbp.h>
-
+#include <bluetooth/bluetooth.h>
+#include <bluetooth/gap.h>
+#include <bluetooth/uuid.h>
+#include <net/buf.h>
+#include <sys/byteorder.h>
 #include <sys/check.h>
 
 #define LOG_ENABLE IS_ENABLED(CONFIG_BT_DEBUG_PBP)

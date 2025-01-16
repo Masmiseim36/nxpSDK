@@ -17,7 +17,8 @@
 
 /* Enable VIT models*/
 #if (XA_VIT_PRE_PROC == 1)
-#include "PL_platformTypes_HIFI4_FUSIONF1.h"
+#include "PL_platformTypes_HIFI_FUSIONF1.h"
+#if (VIT_MODELS_ALL == 1)
 #include "VIT_Model_en.h"
 #include "VIT_Model_cn.h"
 #include "VIT_Model_de.h"
@@ -28,6 +29,9 @@
 #include "VIT_Model_ko.h"
 #include "VIT_Model_tr.h"
 #include "VIT_Model_pt.h"
+#else
+#include "VIT_Model_en.h"
+#endif
 #endif
 /*${header:end}*/
 
@@ -123,9 +127,9 @@ static shell_status_t shellRecDMIC(shell_handle_t shellHandle, int32_t argc, cha
     srtm_message msg = {0};
     initMessage(&msg);
 
-#ifdef XA_VIT_PRE_PROC
+#if (defined(XA_VIT_PRE_PROC) && !defined(MIMXRT798S_cm33_core0_SERIES))
     BOARD_MuteRightChannel(true);
-#else
+#elif (!defined(MIMXRT798S_cm33_core0_SERIES))
     BOARD_MuteRightChannel(BOARD_DMIC_NUM == 1);
 #endif
 
@@ -142,9 +146,10 @@ static shell_status_t shellRecDMIC(shell_handle_t shellHandle, int32_t argc, cha
 
     msg.param[0] = BOARD_DMIC_NUM;
     msg.param[1] = 16000;
-    msg.param[2] = 16;
+    msg.param[2] = BOARD_PCM_WIDTH;
 
 #if (XA_VIT_PRE_PROC == 1)
+#if (VIT_MODELS_ALL == 1)
     if (strcmp(argv[1], "en") == 0)
     {
         msg.param[3] = (uint32_t)&VIT_Model_en;
@@ -210,6 +215,14 @@ static shell_status_t shellRecDMIC(shell_handle_t shellHandle, int32_t argc, cha
         PRINTF("[CM33 CMD] Wrong language selected.\r\n");
         return kStatus_SHELL_Success;
     }
+#else
+    if (strcmp(argv[1], "en") == 0)
+    {
+        msg.param[3] = (uint32_t)&VIT_Model_en;
+        msg.param[4] = (uint32_t)sizeof(VIT_Model_en);
+        PRINTF("[CM33 CMD] Setting VIT language to en\r\n");
+    }
+#endif
 #endif
 
     g_handleShellMessageCallback(&msg, g_handleShellMessageCallbackData);

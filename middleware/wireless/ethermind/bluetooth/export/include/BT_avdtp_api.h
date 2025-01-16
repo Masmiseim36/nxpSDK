@@ -806,6 +806,32 @@ typedef struct
 /** \} */
 /** \} */
 
+#ifdef AVDTP_ENABLE_CODEC_CONFIG_VALIDATION
+/**
+ *  \fn Handler to register using BT_avdtp_register_codec_config_validate_hndlr()
+ *
+ *  \brief Handler for codec config parameter validation.
+ *
+ *  \par Description:
+ *  This datastructure defines handler for codec config parameter validation.
+ *
+ *  \param [in] avdtp_handle
+ *         AVDTP handle of the channel requesting config validation
+ *  \param [in] avdtp_codec_conf_info
+ *         Media Codec Configuration Information
+ *
+ *  \return API_RESULT
+ *          API_SUCCESS, or, an Error Code from BT_error.h
+ *
+ *  \note
+ */
+typedef API_RESULT (*AVDTP_CODEC_CONFIG_VALIDATE_HNDLR)
+                   (
+                       /* IN */ AVDTP_HANDLE       *avdtp_handle,
+                       /* IN */ AVDTP_CODEC_CAP    *avdtp_codec_conf_info
+                   );
+#endif /* AVDTP_ENABLE_CODEC_CONFIG_VALIDATION */
+
 /* ----------------------------------------- Macros */
 /**
  * \defgroup avdtp_utility_macros Utility Macros
@@ -3316,6 +3342,30 @@ API_RESULT BT_avdtp_access_sig_channel_out_mtu
         BT_avdtp_access_sig_channel_out_mtu((h), 0x01, (mtu))
 
 #endif /* HAVE_AVDTP_SET_GET_SIG_CH_OUTMTU */
+
+#ifdef AVDTP_ENABLE_CODEC_CONFIG_VALIDATION
+/**
+ *  \fn BT_avdtp_register_handler_for_codec_param_validation
+ *
+ *  \brief To register handler for codec config parameter validation.
+ *
+ *  \par Description:
+ *  This API enables the upper layer to register handler for codec config parameter validation.
+ *
+ *  \param [in] handler
+ *         Handler function.
+ *
+ *  \return API_RESULT
+ *          API_SUCCESS, or, an Error Code from BT_error.h
+ *
+ *  \note
+ */
+API_RESULT BT_avdtp_register_codec_config_validate_hndlr
+           (
+               /* IN */ AVDTP_CODEC_CONFIG_VALIDATE_HNDLR handler
+           );
+#endif /* AVDTP_ENABLE_CODEC_CONFIG_VALIDATION */
+
 #ifdef __cplusplus
 };
 #endif

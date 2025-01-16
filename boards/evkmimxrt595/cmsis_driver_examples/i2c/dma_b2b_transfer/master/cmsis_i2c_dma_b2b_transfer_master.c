@@ -8,21 +8,17 @@
 /*  Standard C Included Files */
 #include <string.h>
 /*  SDK Included Files */
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
 #include "fsl_debug_console.h"
 #include "fsl_i2c.h"
 #include "Driver_I2C.h"
 #include "fsl_i2c_cmsis.h"
 #include "fsl_i2c_dma.h"
+#include "app.h"
 
-#include "fsl_inputmux.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define EXAMPLE_DMA        DMA0
-#define EXAMPLE_I2C_MASTER (Driver_I2C11)
 
 #define I2C_DATA_LENGTH       32U
 #define I2C_MASTER_SLAVE_ADDR 0x7E
@@ -42,12 +38,6 @@ volatile bool g_MasterCompletionFlag = false;
 /*******************************************************************************
  * Code
  ******************************************************************************/
-
-uint32_t I2C11_GetFreq(void)
-{
-    return CLOCK_GetFlexcommClkFreq(11);
-}
-
 void I2C_MasterSignalEvent_t(uint32_t event)
 {
     /*  Transfer done */
@@ -62,20 +52,7 @@ void I2C_MasterSignalEvent_t(uint32_t event)
  */
 int main(void)
 {
-    /* Use 48 MHz clock for the FLEXCOMM11 */
-    CLOCK_AttachClk(kFRO_DIV4_to_FLEXCOMM11);
-
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
-
-    /* Configure INPUTMUX. */
-    RESET_PeripheralReset(kINPUTMUX_RST_SHIFT_RSTn);
-    INPUTMUX_Init(INPUTMUX);
-    /* Enable DMA request */
-    INPUTMUX_EnableSignal(INPUTMUX, kINPUTMUX_Flexcomm11TxToDmac0Ch33RequestEna, true);
-    /* Turnoff clock to inputmux to save power. Clock is only needed to make changes */
-    INPUTMUX_Deinit(INPUTMUX);
+    BOARD_InitHardware();
     /* Init DMA for example*/
     DMA_Init(EXAMPLE_DMA);
 

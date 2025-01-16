@@ -2471,7 +2471,7 @@ cleanup:
 /* Fill X with n_bytes random bytes.
  * X must already have room for those bytes.
  * The ordering of the bytes returned from the RNG is suitable for
- * deterministic ECDSA (see RFC 6979 ง3.3 and mbedtls_mpi_random()).
+ * deterministic ECDSA (see RFC 6979 ยง3.3 and mbedtls_mpi_random()).
  * The size and sign of X are unchanged.
  * n_bytes must not be 0.
  */
@@ -2574,7 +2574,7 @@ int mbedtls_mpi_random(mbedtls_mpi *X,
     MBEDTLS_MPI_CHK(mbedtls_mpi_lset(&lower_bound, min));
 
     /*
-     * Match the procedure given in RFC 6979 ง3.3 (deterministic ECDSA)
+     * Match the procedure given in RFC 6979 ยง3.3 (deterministic ECDSA)
      * when f_rng is a suitably parametrized instance of HMAC_DRBG:
      * - use the same byte ordering;
      * - keep the leftmost n_bits bits of the generated octet string;
@@ -2967,7 +2967,7 @@ int mbedtls_mpi_gen_prime(mbedtls_mpi *X, size_t nbits, int flags,
 
     while (1) {
         MBEDTLS_MPI_CHK(mbedtls_mpi_fill_random(X, n * ciL, f_rng, p_rng));
-        /* make sure generated number is at least (nbits-1)+0.5 bits (FIPS 186-4 งB.3.3 steps 4.4, 5.5) */
+        /* make sure generated number is at least (nbits-1)+0.5 bits (FIPS 186-4 ยงB.3.3 steps 4.4, 5.5) */
         if (X->p[n-1] < CEIL_MAXUINT_DIV_SQRT2) {
             continue;
         }

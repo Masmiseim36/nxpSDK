@@ -39,7 +39,7 @@
 #endif
 
 /*! @brief Calculate the aligned address for LCDIF buffer. */
-#define LCDIF_ALIGN_ADDR(addr, align) (((addr) + (align)-1U) & ~((align)-1U))
+#define LCDIF_ALIGN_ADDR(addr, align) ((((addr) / (align) * (align)) == (addr)) ? (addr) : ((addr) / (align) * (align) + (align)))
 
 /*! @brief The frame buffer should be 128 byte aligned. */
 #if defined(FSL_FEATURE_LCDIF_VERSION_DC8000) & FSL_FEATURE_LCDIF_VERSION_DC8000
@@ -119,7 +119,7 @@ typedef enum _lcdif_fb_format
     kLCDIF_PixelFormatARGB8565      = 6,          /*!< ARGB8565, 24-bit each pixel. */
     kLCDIF_PixelFormatARGB8888Tiled = 0x1U << 3U, /*!< ARGB8888, 32-bit each pixel, 8-bit each element in tiled format,
                                                      not supported in overlay layer 1. */
-    kLCDIF_PixelFormatYUV422Tiled = 0x2U << 3U,   /*!< YUV422, in tiled format, not supported in overlay layer 1. */
+    kLCDIF_PixelFormatYUV422Tiled = 0x2U << 3U,   /*!< YUV422, component order V-Y-U-Y, in tiled format, not supported in overlay layer 1. */
     kLCDIF_PixelFormatYUV420Tiled =
         0x3U << 3U, /*!< YUV420, in tiled format, need 2 plane, not supported in overlay layer 1. */
     kLCDIF_PixelFormatRGB888Tiled =
@@ -665,11 +665,6 @@ static inline bool LCDIF_DbiIsTypeCFifoFull(LCDIF_Type *base, uint8_t displayInd
 }
 #endif
 
-/* TODO:
- * From vendor spec description, to partial refresh panel, the frame buffer base address
- * doesn't need to be changed, but only change the region. But after test, the
- * frame buffer address need be changed too. To confirm with designer.
- */
 /*!
  * @brief Select the update area in DBI mode.
  *
@@ -828,7 +823,7 @@ static inline void LCDIF_SetFrameBufferUVAddr(LCDIF_Type *base, uint8_t displayI
  */
 static inline void LCDIF_SetFrameBufferUVStride(LCDIF_Type *base, uint8_t displayIndex, uint32_t strideBytes)
 {
-    base->DCTILEUVFRAMEBUFFERSTR0 = LCDIF_ALIGN_ADDR(strideBytes, LCDIF_FB_ALIGN);
+    base->DCTILEUVFRAMEBUFFERSTR0 = strideBytes;
 }
 
 /*!
@@ -934,7 +929,7 @@ static inline void LCDIF_SetOverlayLayerUVAddr(LCDIF_Type *base, uint8_t display
  */
 static inline void LCDIF_SetOverlayLayerUVStride(LCDIF_Type *base, uint8_t displayIndex, uint32_t strideBytes)
 {
-    base->DCTILEUVOVERLAYSTR = LCDIF_ALIGN_ADDR(strideBytes, LCDIF_FB_UV_ALIGN);
+    base->DCTILEUVOVERLAYSTR = strideBytes;
 }
 
 /*!

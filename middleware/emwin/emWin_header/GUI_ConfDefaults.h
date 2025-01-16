@@ -9,7 +9,7 @@
 *                                                                    *
 **********************************************************************
 
-** emWin V6.38 - Graphical user interface for embedded applications **
+** emWin V6.46 - Graphical user interface for embedded applications **
 All  Intellectual Property rights  in the Software belongs to  SEGGER.
 emWin is protected by  international copyright laws.  Knowledge of the
 source code may not be used to write a similar product.  This file may
@@ -34,7 +34,7 @@ License model:            emWin License Agreement, dated August 20th 2011 and Am
 Licensed platform:        NXP's ARM 7/9, Cortex-M0, M3, M4, M7, A7, M33
 ----------------------------------------------------------------------
 Support and Update Agreement (SUA)
-SUA period:               2011-08-19 - 2024-09-02
+SUA period:               2011-08-19 - 2025-09-02
 Contact to extend SUA:    sales@segger.com
 ----------------------------------------------------------------------
 File        : GUI_ConfDefaults.h
@@ -77,7 +77,11 @@ Attention : Do not modify this file ! If you do, you will not
 #endif
 
 #ifndef   GUI_SIM_SUPPORT_EMBOS
-  #define GUI_SIM_SUPPORT_EMBOS 1
+  #if (defined(_WIN64) || defined(__LP64__))
+    #define GUI_SIM_SUPPORT_EMBOS 0
+  #else
+    #define GUI_SIM_SUPPORT_EMBOS 1
+  #endif
 #endif
 
 /**********************************************************************
@@ -188,6 +192,25 @@ Attention : Do not modify this file ! If you do, you will not
 #ifndef GUI_MEMCPY
   #define GUI_MEMCPY memcpy
 #endif
+
+#ifdef WIN32
+   #if defined(_MSC_VER)
+     //
+     // MS VS <= 2010 standard library does not include ceilf/floorf/sqrtf
+     //
+     #if (_MSC_VER <= 1600)
+       #ifndef GUI_CEIL
+         #define GUI_CEIL ceil
+       #endif
+       #ifndef GUI_FLOOR
+         #define GUI_FLOOR floor
+       #endif
+       #ifndef GUI_SQRT
+         #define GUI_SQRT sqrt
+       #endif
+     #endif
+   #endif
+#endif 
 
 #ifndef GUI_CEIL
   #define GUI_CEIL ceilf

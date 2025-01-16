@@ -106,8 +106,10 @@ void wlan_wmm_add_buf_txqueue(pmlan_adapter pmadapter, pmlan_buffer pmbuf);
 void wlan_ralist_add(mlan_private *priv, t_u8 *ra);
 /** Update the RA list */
 int wlan_ralist_update(mlan_private *priv, t_u8 *old_ra, t_u8 *new_ra);
+#ifdef STA_SUPPORT
 /** WMM status change command handler */
 mlan_status wlan_cmd_wmm_status_change(pmlan_private priv);
+#endif /* STA_SUPPORT */
 /** Check if WMM lists are empty */
 int wlan_wmm_lists_empty(pmlan_adapter pmadapter);
 /** Process WMM transmission */
@@ -128,11 +130,13 @@ extern void wlan_wmm_setup_queues(pmlan_private priv);
 /* Setup default queues */
 void wlan_wmm_default_queue_priorities(pmlan_private priv);
 
+#ifdef STA_SUPPORT
 /** Process WMM association request */
 extern t_u32 wlan_wmm_process_association_req(pmlan_private priv,
                                               t_u8 **ppAssocBuf,
                                               IEEEtypes_WmmParameter_t *pWmmIE,
                                               IEEEtypes_HTCap_t *pHTCap);
+#endif /* STA_SUPPORT */
 
 /** setup wmm queue priorities */
 void wlan_wmm_setup_queue_priorities(pmlan_private priv, IEEEtypes_WmmParameter_t *wmm_ie);
@@ -141,7 +145,9 @@ void wlan_wmm_setup_queue_priorities(pmlan_private priv, IEEEtypes_WmmParameter_
 void wlan_wmm_setup_ac_downgrade(pmlan_private priv);
 /** select WMM queue */
 t_u8 wlan_wmm_select_queue(mlan_private *pmpriv, t_u8 tid);
+#if UAP_SUPPORT
 t_void wlan_wmm_delete_peer_ralist(pmlan_private priv, t_u8 *mac);
+#endif
 
 /** WMM TS_STATUS command handler */
 extern mlan_status wlan_cmd_wmm_ts_status(IN pmlan_private pmpriv, OUT HostCmd_DS_COMMAND *cmd, IN t_void *pdata_buf);
@@ -153,6 +159,7 @@ extern mlan_status wlan_ret_wmm_addts_req(IN pmlan_private pmpriv,
 extern mlan_status wlan_ret_wmm_delts_req(IN pmlan_private pmpriv,
                                           const IN HostCmd_DS_COMMAND *resp,
                                           OUT mlan_ioctl_req *pioctl_buf);
+#ifdef STA_SUPPORT
 /*
  *  Functions used in the cmd handling routine
  */
@@ -181,8 +188,11 @@ extern mlan_status wlan_ret_wmm_queue_stats(IN pmlan_private pmpriv,
 /** WMM DELTS request command handler */
 extern mlan_status wlan_cmd_wmm_delts_req(IN pmlan_private pmpriv, OUT HostCmd_DS_COMMAND *cmd, IN t_void *pdata_buf);
 
+#endif /* STA_SUPPORT */
 
+#if UAP_SUPPORT
 t_void wlan_wmm_delete_peer_ralist(pmlan_private priv, t_u8 *mac);
+#endif
 
 /* process wmm_param_config command */
 mlan_status wlan_cmd_wmm_param_config(pmlan_private pmpriv,

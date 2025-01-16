@@ -6,17 +6,13 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 #include "fsl_usart.h"
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_USART          USART0
-#define DEMO_USART_CLK_SRC  kCLOCK_Flexcomm0Clk
-#define DEMO_USART_CLK_FREQ CLOCK_GetFlexcommClkFreq(0)
 #define ECHO_BUFFER_LENGTH 8
 
 /*******************************************************************************
@@ -72,9 +68,7 @@ int main(void)
     usart_transfer_t sendXfer;
     usart_transfer_t receiveXfer;
 
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
 
     /*
      * config.baudRate_Bps = 115200U;

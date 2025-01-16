@@ -37,6 +37,9 @@
 
 #define FIRST_PRINTABLE_ASCII_CHAR ' ' /* space */
 
+#define BT_TBS_CALL_FLAG_SET_INCOMING(flag) (flag &= ~BT_TBS_CALL_FLAG_OUTGOING)
+#define BT_TBS_CALL_FLAG_SET_OUTGOING(flag) (flag |= BT_TBS_CALL_FLAG_OUTGOING)
+
 const char *parse_string_value(const void *data, uint16_t length,
 				      uint16_t max_len);
 
@@ -137,8 +140,6 @@ static inline const char *bt_tbs_technology_str(uint8_t status)
 		return "2G";
 	case BT_TBS_TECHNOLOGY_WCDMA:
 		return "WCDMA";
-	case BT_TBS_TECHNOLOGY_IP:
-		return "IP";
 	default:
 		return "unknown technology";
 	}
@@ -203,58 +204,49 @@ static inline bool bt_tbs_valid_uri(const char *uri, size_t len)
 /* TODO: The bt_tbs_call could use the bt_tbs_call_state struct for the first
  * 3 fields
  */
-STRUCT_PACKED_PRE
 struct bt_tbs_call {
 	uint8_t index;
 	uint8_t state;
 	uint8_t flags;
 	char remote_uri[CONFIG_BT_TBS_MAX_URI_LENGTH + 1];
-} STRUCT_PACKED_POST;
+} __packed;
 
-STRUCT_PACKED_PRE
 struct bt_tbs_call_state {
 	uint8_t index;
 	uint8_t state;
 	uint8_t flags;
-} STRUCT_PACKED_POST;
+} __packed;
 
-STRUCT_PACKED_PRE
 struct bt_tbs_call_cp_acc {
 	uint8_t opcode;
 	uint8_t call_index;
-} STRUCT_PACKED_POST;
+} __packed;
 
-STRUCT_PACKED_PRE
 struct bt_tbs_call_cp_term {
 	uint8_t opcode;
 	uint8_t call_index;
-} STRUCT_PACKED_POST;
+} __packed;
 
-STRUCT_PACKED_PRE
 struct bt_tbs_call_cp_hold {
 	uint8_t opcode;
 	uint8_t call_index;
-} STRUCT_PACKED_POST;
+} __packed;
 
-STRUCT_PACKED_PRE
 struct bt_tbs_call_cp_retrieve {
 	uint8_t opcode;
 	uint8_t call_index;
-} STRUCT_PACKED_POST;
+} __packed;
 
-STRUCT_PACKED_PRE
 struct bt_tbs_call_cp_originate {
 	uint8_t opcode;
 	uint8_t uri[0];
-} STRUCT_PACKED_POST;
+} __packed;
 
-STRUCT_PACKED_PRE
 struct bt_tbs_call_cp_join {
 	uint8_t opcode;
 	uint8_t call_indexes[0];
-} STRUCT_PACKED_POST;
+} __packed;
 
-STRUCT_PACKED_PRE
 union bt_tbs_call_cp_t {
 	uint8_t opcode;
 	struct bt_tbs_call_cp_acc accept;
@@ -263,40 +255,35 @@ union bt_tbs_call_cp_t {
 	struct bt_tbs_call_cp_retrieve retrieve;
 	struct bt_tbs_call_cp_originate originate;
 	struct bt_tbs_call_cp_join join;
-} STRUCT_PACKED_POST;
+} __packed;
 
-STRUCT_PACKED_PRE
 struct bt_tbs_call_cp_notify {
 	uint8_t opcode;
 	uint8_t call_index;
 	uint8_t status;
-} STRUCT_PACKED_POST;
+} __packed;
 
-STRUCT_PACKED_PRE
 struct bt_tbs_call_state_notify {
 	uint8_t call_index;
 	uint8_t state;
-} STRUCT_PACKED_POST;
+} __packed;
 
-STRUCT_PACKED_PRE
 struct bt_tbs_terminate_reason {
 	uint8_t call_index;
 	uint8_t reason;
-} STRUCT_PACKED_POST;
+} __packed;
 
-STRUCT_PACKED_PRE
 struct bt_tbs_current_call_item {
 	uint8_t length;
 	uint8_t call_index;
 	uint8_t call_state;
 	uint8_t uri[CONFIG_BT_TBS_MAX_URI_LENGTH];
-} STRUCT_PACKED_POST;
+} __packed;
 
-STRUCT_PACKED_PRE
 struct bt_tbs_in_uri {
 	uint8_t call_index;
 	char uri[CONFIG_BT_TBS_MAX_URI_LENGTH + 1];
-} STRUCT_PACKED_POST;
+} __packed;
 
 #if defined(CONFIG_BT_TBS_CLIENT) && (CONFIG_BT_TBS_CLIENT > 0)
 

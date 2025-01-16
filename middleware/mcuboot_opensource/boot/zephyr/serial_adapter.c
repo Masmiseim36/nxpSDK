@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Nordic Semiconductor ASA
+ * Copyright (c) 2017-2023 Nordic Semiconductor ASA
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,18 +15,26 @@
  */
 
 #include <stdio.h>
-#include <drivers/uart.h>
+#include <zephyr/drivers/uart.h>
 #include <assert.h>
 #include <string.h>
-#include <zephyr.h>
+#include <zephyr/kernel.h>
 #include "bootutil/bootutil_log.h"
-#include <usb/usb_device.h>
+#include <zephyr/usb/usb_device.h>
 
-#if defined(CONFIG_BOOT_SERIAL_UART) && defined(CONFIG_UART_CONSOLE)
+#if defined(CONFIG_BOOT_SERIAL_UART) && defined(CONFIG_UART_CONSOLE) && \
+    (!DT_HAS_CHOSEN(zephyr_uart_mcumgr) ||                              \
+     DT_SAME_NODE(DT_CHOSEN(zephyr_uart_mcumgr), DT_CHOSEN(zephyr_console)))
 #error Zephyr UART console must been disabled if serial_adapter module is used.
 #endif
 
-MCUBOOT_LOG_MODULE_REGISTER(serial_adapter);
+#if defined(CONFIG_BOOT_SERIAL_CDC_ACM) && \
+    defined(CONFIG_UART_CONSOLE) && !DT_HAS_CHOSEN(zephyr_uart_mcumgr)
+#error Zephyr UART console must been disabled if CDC ACM is enabled and MCUmgr \
+       has not been redirected to other UART with DTS chosen zephyr,uart-mcumgr.
+#endif
+
+BOOT_LOG_MODULE_REGISTER(serial_adapter);
 
 /** @brief Console input representation
  *
@@ -42,7 +50,7 @@ struct line_input {
 };
 
 static struct device const *uart_dev;
-static struct line_input line_bufs[2];
+static struct line_input line_bufs[CONFIG_BOOT_LINE_BUFS];
 
 static sys_slist_t avail_queue;
 static sys_slist_t lines_queue;
@@ -191,28 +199,39 @@ boot_uart_fifo_getline(char **line)
 static int
 boot_uart_fifo_init(void)
 {
-#ifdef CONFIG_BOOT_SERIAL_UART
-	uart_dev = device_get_binding(CONFIG_RECOVERY_UART_DEV_NAME);
-#elif CONFIG_BOOT_SERIAL_CDC_ACM
-	uart_dev = device_get_binding(CONFIG_USB_CDC_ACM_DEVICE_NAME "_0");
-	if (uart_dev) {
-		int rc;
-		rc = usb_enable(NULL);
-		if (rc) {
-			return (-1);
-		}
-	}
-#endif
-	uint8_t c;
 
-	if (!uart_dev) {
+#if defined(CONFIG_BOOT_SERIAL_UART)
+
+#if DT_HAS_CHOSEN(zephyr_uart_mcumgr)
+	uart_dev = DEVICE_DT_GET(DT_CHOSEN(zephyr_uart_mcumgr));
+#else
+	uart_dev = DEVICE_DT_GET(DT_CHOSEN(zephyr_console));
+#endif
+
+#elif defined(CONFIG_BOOT_SERIAL_CDC_ACM)
+        uart_dev = DEVICE_DT_GET_ONE(zephyr_cdc_acm_uart);
+#else
+#error No serial recovery device selected
+#endif
+
+
+	if (!device_is_ready(uart_dev)) {
 		return (-1);
 	}
+
+#if CONFIG_BOOT_SERIAL_CDC_ACM
+	int rc = usb_enable(NULL);
+	if (rc) {
+		return (-1);
+	}
+#endif
 
 	uart_irq_callback_set(uart_dev, boot_uart_fifo_callback);
 
 	/* Drain the fifo */
 	if (uart_irq_rx_ready(uart_dev)) {
+		uint8_t c;
+
 		while (uart_fifo_read(uart_dev, &c, 1)) {
 			;
 		}
@@ -221,12 +240,6 @@ boot_uart_fifo_init(void)
 	cur = 0;
 
 	uart_irq_rx_enable(uart_dev);
-
-	/* Enable all interrupts unconditionally. Note that this is due
-	 * to Zephyr issue #8393. This should be removed once the
-	 * issue is fixed in upstream Zephyr.
-	 */
-	irq_unlock(0);
 
 	return 0;
 }

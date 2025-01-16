@@ -26,21 +26,7 @@
 #include "fsl_component_log.h"
 LOG_MODULE_DEFINE(LOG_MODULE_NAME, kLOG_LevelTrace);
 
-#ifndef LOG_DBG
-#define LOG_DBG BT_DBG
-#endif
 
-#ifndef LOG_ERR
-#define LOG_ERR BT_ERR
-#endif
-
-#ifndef LOG_HEXDUMP_DBG
-#define LOG_HEXDUMP_DBG BT_HEXDUMP_DBG
-#endif
-
-#ifndef LOG_WRN
-#define LOG_WRN BT_WARN
-#endif
 
 #define BT_TBS_VALID_STATUS_FLAGS(val)         ((val) <= (BIT(0) | BIT(1)))
 
@@ -91,7 +77,7 @@ struct gtbs_service_inst {
 #else
 #define READ_BUF_SIZE   (CONFIG_BT_TBS_MAX_CALLS * \
 			 sizeof(struct bt_tbs_current_call_item))
-#endif /* IS_ENABLED(CONFIG_BT_GTBS) */
+#endif /* defined(CONFIG_BT_GTBS) */
 NET_BUF_SIMPLE_DEFINE_STATIC(read_buf, READ_BUF_SIZE);
 
 static struct tbs_service_inst svc_insts[CONFIG_BT_TBS_BEARER_COUNT];
@@ -1601,7 +1587,7 @@ static void signal_interval_timeout(struct k_work *work)
 
 	if (inst->signal_strength_interval) {
 		k_work_reschedule(&inst->reporting_interval_work,
-				  inst->signal_strength_interval * 1000);
+				  K_SECONDS(inst->signal_strength_interval));
 	}
 
 	inst->pending_signal_strength_notification = false;
@@ -1660,8 +1646,7 @@ int bt_tbs_init(void)
 }
 
 #if 0
-DEVICE_DEFINE(bt_tbs, "bt_tbs", &bt_tbs_init, NULL, NULL, NULL,
-	      APPLICATION, CONFIG_KERNEL_INIT_PRIORITY_DEVICE, NULL);
+SYS_INIT(bt_tbs_init, APPLICATION, CONFIG_KERNEL_INIT_PRIORITY_DEVICE);
 #endif
 
 /***************************** Profile API *****************************/
@@ -1698,12 +1683,7 @@ int bt_tbs_hold(uint8_t call_index)
 		status = tbs_hold_call(inst, &ccp);
 	}
 
-#if 1
-	/* Workaround: the status change is not notified. */
-	if (status == BT_TBS_RESULT_CODE_SUCCESS) {
-		notify_calls(inst);
-	}
-#endif
+	notify_calls(inst);
 
 	return status;
 }
@@ -1721,12 +1701,7 @@ int bt_tbs_retrieve(uint8_t call_index)
 		status = retrieve_call(inst, &ccp);
 	}
 
-#if 1
-	/* Workaround: the status change is not notified. */
-	if (status == BT_TBS_RESULT_CODE_SUCCESS) {
-		notify_calls(inst);
-	}
-#endif
+	notify_calls(inst);
 
 	return status;
 }
@@ -1802,9 +1777,7 @@ int bt_tbs_join(uint8_t call_index_cnt, uint8_t *call_indexes)
 
 #if 1
 	/* Workaround: the status change is not notified. */
-	if (status == BT_TBS_RESULT_CODE_SUCCESS) {
-		notify_calls(inst);
-	}
+	notify_calls(inst);
 #endif
 
 	return status;
@@ -2022,8 +1995,7 @@ int bt_tbs_set_bearer_technology(uint8_t bearer_index, uint8_t new_technology)
 {
 	struct service_inst *inst = inst_lookup_index(bearer_index);
 
-	if (new_technology < BT_TBS_TECHNOLOGY_3G ||
-	    new_technology > BT_TBS_TECHNOLOGY_IP) {
+	if (new_technology < BT_TBS_TECHNOLOGY_3G || new_technology > BT_TBS_TECHNOLOGY_WCDMA) {
 		return -EINVAL;
 	} else if (inst == NULL) {
 		return -EINVAL;
@@ -2063,7 +2035,7 @@ int bt_tbs_set_signal_strength(uint8_t bearer_index,
 
 	timer_status = k_work_delayable_remaining_get(&inst->reporting_interval_work);
 	if (timer_status == 0) {
-		k_work_reschedule(&inst->reporting_interval_work, osaWaitNone_c);
+		k_work_reschedule(&inst->reporting_interval_work, K_NO_WAIT);
 	}
 
 	LOG_DBG("Index %u: Reporting signal strength in %d ms", bearer_index, timer_status);

@@ -1705,6 +1705,7 @@ void wpas_clear_beacon_rep_data(struct wpa_supplicant *wpa_s);
 void wpas_flush_fils_hlp_req(struct wpa_supplicant *wpa_s);
 void wpas_clear_disabled_interface(void *eloop_ctx, void *timeout_ctx);
 void wpa_supplicant_reset_bgscan(struct wpa_supplicant *wpa_s);
+void wpa_supplicant_stop_bgscan(struct wpa_supplicant *wpa_s);
 
 /* MBO functions */
 int wpas_mbo_ie(struct wpa_supplicant *wpa_s, u8 *buf, size_t len, int add_oce_capa);

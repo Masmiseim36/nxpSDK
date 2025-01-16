@@ -10,10 +10,14 @@
 
 #if defined(CONFIG_BT_PBP) && (CONFIG_BT_PBP > 0)
 
-#include "fsl_shell.h"
+#include <sys/byteorder.h>
 #include <sys/util.h>
+#include <porting.h>
+
+#include <bluetooth/hci.h>
 #include <bluetooth/audio/pbp.h>
 
+#include "fsl_shell.h"
 #include "shell_bt.h"
 
 #define PBS_DEMO                'P', 'B', 'P'
@@ -26,9 +30,9 @@ const uint8_t pba_metadata[] = {
 NET_BUF_SIMPLE_DEFINE_STATIC(pbp_ad_buf, BT_PBP_MIN_PBA_SIZE + ARRAY_SIZE(pba_metadata));
 
 enum bt_pbp_announcement_feature pbp_features;
-extern shell_handle_t ctx_shell;
+extern const struct shell *ctx_shell;
 
-static shell_status_t cmd_pbp_set_features(shell_handle_t sh, int32_t argc, char *argv[])
+static int cmd_pbp_set_features(const struct shell *sh, size_t argc, char **argv)
 {
 	int err = 0;
 	enum bt_pbp_announcement_feature features;
@@ -37,17 +41,19 @@ static shell_status_t cmd_pbp_set_features(shell_handle_t sh, int32_t argc, char
 	if (err != 0) {
 		shell_error(sh, "Could not parse received features: %d", err);
 
-		return kStatus_SHELL_Error;
+		return -ENOEXEC;
 	}
 
 	pbp_features = features;
 
-	return (shell_status_t)err;
+	return err;
 }
 
 size_t pbp_ad_data_add(struct bt_data data[], size_t data_size)
 {
 	int err;
+
+	net_buf_simple_reset(&pbp_ad_buf);
 
 	err = bt_pbp_get_announcement(pba_metadata,
 				      ARRAY_SIZE(pba_metadata),
@@ -68,7 +74,7 @@ size_t pbp_ad_data_add(struct bt_data data[], size_t data_size)
 	return 1U;
 }
 
-static shell_status_t cmd_pbp(shell_handle_t sh, int32_t argc, char *argv[])
+static int cmd_pbp(const struct shell *sh, size_t argc, char **argv)
 {
 	if (argc > 1) {
 		shell_error(sh, "%s unknown parameter: %s", argv[0], argv[1]);
@@ -76,7 +82,7 @@ static shell_status_t cmd_pbp(shell_handle_t sh, int32_t argc, char *argv[])
 		shell_error(sh, "%s missing subcomand", argv[0]);
 	}
 
-	return kStatus_SHELL_Error;
+	return -ENOEXEC;
 }
 
 SHELL_STATIC_SUBCMD_SET_CREATE(pbp_cmds,
@@ -86,7 +92,7 @@ SHELL_STATIC_SUBCMD_SET_CREATE(pbp_cmds,
 	SHELL_SUBCMD_SET_END
 );
 
-SHELL_CMD_REGISTER(pbp, pbp_cmds, "Bluetooth pbp shell commands", cmd_pbp, 1, 1);
+SHELL_CMD_ARG_REGISTER(pbp, &pbp_cmds, "Bluetooth pbp shell commands", cmd_pbp, 1, 1);
 
 void bt_ShellPbpInit(shell_handle_t shell)
 {

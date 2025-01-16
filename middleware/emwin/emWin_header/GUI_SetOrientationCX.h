@@ -9,7 +9,7 @@
 *                                                                    *
 **********************************************************************
 
-** emWin V6.38 - Graphical user interface for embedded applications **
+** emWin V6.46 - Graphical user interface for embedded applications **
 All  Intellectual Property rights  in the Software belongs to  SEGGER.
 emWin is protected by  international copyright laws.  Knowledge of the
 source code may not be used to write a similar product.  This file may
@@ -34,7 +34,7 @@ License model:            emWin License Agreement, dated August 20th 2011 and Am
 Licensed platform:        NXP's ARM 7/9, Cortex-M0, M3, M4, M7, A7, M33
 ----------------------------------------------------------------------
 Support and Update Agreement (SUA)
-SUA period:               2011-08-19 - 2024-09-02
+SUA period:               2011-08-19 - 2025-09-02
 Contact to extend SUA:    sales@segger.com
 ----------------------------------------------------------------------
 File        : GUI_SetOrientationC0.c
@@ -147,6 +147,8 @@ static void _DrawBitLine1BPP(GUI_DEVICE * pDevice, unsigned x, unsigned y, U8 co
       }
     } while (--xsize);
     break;
+  default:
+    break;
   }
 }
 
@@ -223,6 +225,8 @@ static void _DrawBitLine2BPP(GUI_DEVICE * pDevice, int x, int y, U8 const * p, i
         }
       } while (--xsize);
     }
+    break;
+  default:
     break;
   }
 }
@@ -301,6 +305,8 @@ static void _DrawBitLine4BPP(GUI_DEVICE * pDevice, int x, int y, U8 const * p, i
       } while (--xsize);
     }
     break;
+  default:
+    break;
   }
 }
 
@@ -350,6 +356,8 @@ static void _DrawBitLine8BPP(GUI_DEVICE * pDevice, int x, int y, U8 const * p, i
         pData += pContext->PixelOffset;
       } while (--xsize);
     }
+    break;
+  default:
     break;
   }
 }
@@ -441,15 +449,17 @@ static void _DrawBitmap_CX(GUI_DEVICE * pDevice, int x0, int y0,
     break;
   case 16:
     for (i = 0; i < ySize; i++) {
-      _DrawBitLine16BPP(pDevice, x0, i + y0, (U16 *)pData, xSize);
+      _DrawBitLine16BPP(pDevice, x0, i + y0, (const U16 *)pData, xSize);
       pData += BytesPerLine;
     }
     break;
   case 32:
     for (i = 0; i < ySize; i++) {
-      _DrawBitLine32BPP(pDevice, x0, i + y0, (U32 *)pData, xSize);
+      _DrawBitLine32BPP(pDevice, x0, i + y0, (const U32 *)pData, xSize);
       pData += BytesPerLine;
     }
+    break;
+  default:
     break;
   }
 

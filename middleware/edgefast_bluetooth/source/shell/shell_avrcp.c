@@ -5,7 +5,7 @@
  */
 
 /*
- * Copyright (c) 2021 NXP
+ * Copyright (c) 2021, 2024 NXP
  *
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -27,7 +27,7 @@
 #include "fsl_shell.h"
 #include "shell_bt.h"
 
-#if (defined(CONFIG_BT_BREDR) && ((CONFIG_BT_BREDR) > 0U))
+#if (defined(CONFIG_BT_CLASSIC) && ((CONFIG_BT_CLASSIC) > 0U))
 
 uint8_t search_uid;
 uint8_t now_playing_uid;
@@ -43,6 +43,8 @@ static void avrcp_auto_test(uint8_t print);
 
 #define AVRCP_TG_SUPPORTED_FEATURES (0x01ffu)
 #define AVRCP_CT_SUPPORTED_FEATURES (0x03Cfu)
+static uint8_t cover_art_handle[32u];
+static uint16_t cover_art_handle_len;
 
 static struct bt_sdp_attribute avrcp_tg_attrs[] = {
     BT_SDP_NEW_SERVICE,
@@ -159,7 +161,7 @@ static struct bt_sdp_attribute avrcp_tg_attrs[] = {
                 )
             },
             {
-                BT_SDP_TYPE_SIZE_VAR(BT_SDP_SEQ8, 6), //35 03
+                BT_SDP_TYPE_SIZE_VAR(BT_SDP_SEQ8, 3), //35 03
                 BT_SDP_DATA_ELEM_LIST(
                 {
                     BT_SDP_TYPE_SIZE(BT_SDP_UUID16), //19
@@ -180,8 +182,12 @@ static struct bt_sdp_attribute avrcp_ct_attrs[] = {
     BT_SDP_NEW_SERVICE,
     BT_SDP_LIST( //09
         BT_SDP_ATTR_SVCLASS_ID_LIST, //00 01
-        BT_SDP_TYPE_SIZE_VAR(BT_SDP_SEQ8, 3), //35 03
+        BT_SDP_TYPE_SIZE_VAR(BT_SDP_SEQ8, 6), //35 06
         BT_SDP_DATA_ELEM_LIST(
+        {
+            BT_SDP_TYPE_SIZE(BT_SDP_UUID16), //19
+            BT_SDP_ARRAY_16(BT_SDP_AV_REMOTE_SVCLASS) //11 0E
+        },
         {
             BT_SDP_TYPE_SIZE(BT_SDP_UUID16), //19
             BT_SDP_ARRAY_16(BT_SDP_AV_REMOTE_CONTROLLER_SVCLASS) //11 0F
@@ -234,6 +240,43 @@ static struct bt_sdp_attribute avrcp_ct_attrs[] = {
             {
                 BT_SDP_TYPE_SIZE(BT_SDP_UINT16), //09
                 BT_SDP_ARRAY_16(0x0106U) //01 06
+            },
+            )
+        },
+        )
+    ),
+    BT_SDP_LIST(//09
+        BT_SDP_ATTR_ADD_PROTO_DESC_LIST, //00 0d
+        BT_SDP_TYPE_SIZE_VAR(BT_SDP_SEQ8, 0x12), //35 12
+        BT_SDP_DATA_ELEM_LIST(
+        {
+            BT_SDP_TYPE_SIZE_VAR(BT_SDP_SEQ8, 0x10), //35 10
+            BT_SDP_DATA_ELEM_LIST(
+            {
+                BT_SDP_TYPE_SIZE_VAR(BT_SDP_SEQ8, 6), //35 06
+                BT_SDP_DATA_ELEM_LIST(
+                {
+                    BT_SDP_TYPE_SIZE(BT_SDP_UUID16), //19
+                    BT_SDP_ARRAY_16(BT_SDP_PROTO_L2CAP) //01 00
+                },
+                {
+                    BT_SDP_TYPE_SIZE(BT_SDP_UINT16), //09
+                    BT_SDP_ARRAY_16(0x001bU) // 00 1b
+                },
+                )
+            },
+            {
+                BT_SDP_TYPE_SIZE_VAR(BT_SDP_SEQ8, 6), //35 06
+                BT_SDP_DATA_ELEM_LIST(
+                {
+                    BT_SDP_TYPE_SIZE(BT_SDP_UUID16), //19
+                    BT_SDP_ARRAY_16(BT_UUID_AVCTP_VAL) //00 17
+                },
+                {
+                    BT_SDP_TYPE_SIZE(BT_SDP_UINT16), //09
+                    BT_SDP_ARRAY_16(0x0104U) // 01 04
+                },
+                )
             },
             )
         },
@@ -634,7 +677,6 @@ void avrcp_target_rsp_notify_cmd_interim(
             break;
         }
 
-#ifdef AVRCP_1_4
         case BT_AVRCP_EVENT_NOW_PLAYING_CONTENT_CHANGED:
             shell_print(ctx_shell, "    Event-ID ->BT_AVRCP_EVENT_PLAYER_APP_SETTING_CHANGED<0x%x>.", event_id);
             register_player_event(event_id, msg->header.tl);
@@ -664,7 +706,6 @@ void avrcp_target_rsp_notify_cmd_interim(
             register_player_event(event_id, msg->header.tl);
             break;
 
-#endif /* AVRCP_1_4 */
         default:
             shell_print(ctx_shell, "    Event-ID -> ??? ");
             break;
@@ -985,31 +1026,9 @@ static void avrcp_target_handle_vendor_dependent_msg(struct bt_conn *conn, struc
 
         case BT_AVRCP_PDU_ID_REQUEST_CONTINUING_RESPONSE:
         {
-            uint8_t pdu_id = vendor_msg->parameter;
-            shell_print(ctx_shell, "    PDU-ID -> Request Continue Response<0x%x>.", vendor_msg->pdu_id);
-            shell_print(ctx_shell, "    Continue PDU ID: 0x%02x", pdu_id);
+            /* reply the continuning request for the previous response */
             rsp_param = NULL;
-            rsp_len   = 0;
-            if (pdu_id == BT_AVRCP_PDU_ID_LIST_PLAYER_APP_SETTING_ATTR)
-            {
-                struct bt_avrcp_player_app_setting_attr_ids *rsp;
-                rsp = (struct bt_avrcp_player_app_setting_attr_ids *)&data[0];
-
-                shell_print(ctx_shell, "    PDU-ID -> List Player Appl. Setting Attributes<0x%x>.", vendor_msg->pdu_id);
-
-                vendor_msg->pdu_id = pdu_id;
-                rsp->num_of_attr   = 1;
-                rsp->attr_ids[0]   = 1;
-
-                rsp_param = &data[0];
-                rsp_len   = 2;
-            }
-            else
-            {
-                rsp_param     = &rj_data;
-                rsp_len       = sizeof(rj_data);
-                response_type = BT_AVRCP_RESPONSE_TYPE_REJECTED;
-            }
+            rsp_len = 0;
             break;
         }
         case BT_AVRCP_PDU_ID_ABORT_CONTINUING_RESPONSE:
@@ -1145,7 +1164,7 @@ void avrcp_target_handle_get_folder_items_req(struct bt_conn *conn, struct bt_av
     struct bt_avrcp_item *item;
     struct bt_avrcp_get_folder_items_rsp *response;
 
-    rsp_status = 0u;
+    rsp_status = BT_AVRCP_METADATA_ERROR_OPERATION_SUCCESSFUL;
 
     shell_print(ctx_shell, "    PDU ID - Get Folder Items(0x%x).", cmd->header.pdu_id);
 
@@ -1162,7 +1181,7 @@ void avrcp_target_handle_get_folder_items_req(struct bt_conn *conn, struct bt_av
         rsp_status = BT_AVRCP_BOW_ERROR_RANGE_OUT_OF_BOUNDS;
     }
 
-    if (rsp_status != 0u)
+    if (rsp_status != BT_AVRCP_METADATA_ERROR_OPERATION_SUCCESSFUL)
     {
         avrcp_target_get_folder_items_send_reject(conn, cmd, rsp_status);
         return;
@@ -1476,7 +1495,6 @@ void avrcp_print_event_nofity_rsp(uint8_t event_id, struct bt_avrcp_event_rsp *e
             shell_print(ctx_shell, "    Event-ID ->BT_AVRCP_EVENT_PLAYER_APP_SETTING_CHANGED<0x%x>.", event_id);
             break;
 
-#ifdef AVRCP_1_4
         case BT_AVRCP_EVENT_NOW_PLAYING_CONTENT_CHANGED:
             shell_print(ctx_shell, "    Event-ID ->BT_AVRCP_EVENT_NOW_PLAYING_CONTENT_CHANGED<0x%x>.", event_id);
             break;
@@ -1497,7 +1515,6 @@ void avrcp_print_event_nofity_rsp(uint8_t event_id, struct bt_avrcp_event_rsp *e
             shell_print(ctx_shell, "    Event-ID ->BT_AVRCP_EVENT_VOLUME_CHANGED<0x%x>.", event_id);
             break;
 
-#endif /* AVRCP_1_4 */
         default:
             shell_print(ctx_shell, "    Event-ID -> ??? ");
             break;
@@ -1505,9 +1522,8 @@ void avrcp_print_event_nofity_rsp(uint8_t event_id, struct bt_avrcp_event_rsp *e
     return;
 }
 
-void avrcp_print_vendor_cmd_rsp_content(struct bt_avrcp_control_msg *msg)
+void avrcp_print_vendor_cmd_rsp_content(struct bt_avrcp_vendor *vendor_rsp)
 {
-    struct bt_avrcp_vendor *vendor_rsp = &msg->vendor;
     switch (vendor_rsp->pdu_id)
     {
         case BT_AVRCP_PDU_ID_GET_CAPABILITY:
@@ -1605,7 +1621,7 @@ void avrcp_print_vendor_cmd_rsp_content(struct bt_avrcp_control_msg *msg)
             for (uint8_t i = 0; i < rsp->num_of_id; i++)
             {
                 /* Attribute Value Text */
-                memcpy(attr_val_txt, &rsp->texts[i].string[0], rsp->texts[i].string_len);
+                memcpy(attr_val_txt, (void *)rsp->texts[i].string, rsp->texts[i].string_len);
                 attr_val_txt[rsp->texts[i].string_len] = '\0';
 
                 if (BT_AVRCP_PDU_ID_GET_PLAYER_APP_SETTING_ATTR_TXT == vendor_rsp->pdu_id)
@@ -1636,12 +1652,6 @@ void avrcp_print_vendor_cmd_rsp_content(struct bt_avrcp_control_msg *msg)
             struct bt_avrcp_player_get_element_attr_rsp *rsp =
                 &vendor_rsp->element_attr_rsp;
 
-            if (BT_AVRCP_RESPONSE_TYPE_REJECTED == msg->header.ctype_response)
-            {
-                shell_print(ctx_shell, "    Reason: 0x%02x", vendor_rsp->parameter);
-                break;
-            }
-
             shell_print(ctx_shell, "    No. of Attributes: %d", rsp->num_of_attr);
             for (uint8_t i = 0; i < rsp->num_of_attr; i++)
             {
@@ -1650,7 +1660,16 @@ void avrcp_print_vendor_cmd_rsp_content(struct bt_avrcp_control_msg *msg)
 
                 attr_val[rsp->attrs[i].string_len] = '\0';
                 shell_print(ctx_shell, "       - ID: 0x%04x", rsp->attrs[i].attr_id);
-                shell_print(ctx_shell, "       - Value: %s", attr_val);
+                shell_print(ctx_shell, "       - Len:%d, Value: %s", rsp->attrs[i].string_len, attr_val);
+                if ((rsp->attrs[i].attr_id == 0x08u) && (rsp->attrs[i].string_len != 0u))
+                {
+                    shell_print(ctx_shell, "save the cover art handle");
+                    memset(cover_art_handle, 0, sizeof(cover_art_handle));
+                    cover_art_handle_len = rsp->attrs[i].string_len + 1;
+                    memcpy(cover_art_handle, attr_val,
+                           rsp->attrs[i].string_len > sizeof(cover_art_handle) - 1 ?
+                           sizeof(cover_art_handle) - 1 : rsp->attrs[i].string_len);
+                }
             }
         }
         break;
@@ -1738,9 +1757,8 @@ void avrcp_print_vendor_cmd_rsp_content(struct bt_avrcp_control_msg *msg)
     return;
 }
 
-void avrcp_print_vendor_cmd_rsp(struct bt_avrcp_control_msg *msg)
+void avrcp_print_vendor_cmd_rsp(struct bt_avrcp_vendor *vendor_rsp)
 {
-    struct bt_avrcp_vendor *vendor_rsp = &msg->vendor;
     shell_print(ctx_shell, "    PDU-ID -> ");
 
     switch (vendor_rsp->pdu_id)
@@ -1857,7 +1875,7 @@ void avrcp_print_vendor_cmd_rsp(struct bt_avrcp_control_msg *msg)
 
     shell_print(ctx_shell, "    Param Length: 0x%04x", vendor_rsp->parameter_len);
 
-    avrcp_print_vendor_cmd_rsp_content(msg);
+    avrcp_print_vendor_cmd_rsp_content(vendor_rsp);
 
     return;
 }
@@ -1869,6 +1887,16 @@ void avrcp_control_rsp_received(struct bt_conn *conn, struct bt_avrcp_control_ms
     if ((err) || (msg == NULL))
     {
         shell_error(ctx_shell, "    respone fail");
+        return;
+    }
+
+    if ((msg->header.ctype_response == BT_AVRCP_RESPONSE_TYPE_REJECTED) ||
+        (msg->header.ctype_response == BT_AVRCP_RESPONSE_TYPE_NOT_IMPLEMENTED))
+    {
+        shell_error(ctx_shell, "    avrcp error response");
+        avrcp_response_type_print(msg->header.ctype_response);
+
+        avrcp_auto_test(0);
         return;
     }
 
@@ -1898,13 +1926,84 @@ void avrcp_control_rsp_received(struct bt_conn *conn, struct bt_avrcp_control_ms
     }
     else if (msg->header.op_code == BT_AVRCP_OPCODE_VENDOR_DEPENDENT)
     {
-        avrcp_print_vendor_cmd_rsp(msg);
+        avrcp_print_vendor_cmd_rsp(&msg->vendor);
     }
     else
     {
     }
 
     avrcp_auto_test(0);
+}
+
+NET_BUF_POOL_FIXED_DEFINE(app_avrcp_continue_pool, 1u, 1024u, CONFIG_NET_BUF_USER_DATA_SIZE, NULL);
+static struct net_buf *continue_rsp_buf;
+static struct bt_avrcp_vendor_header continue_rsp_header;
+#define PARSE_BUF_SIZE (1024u)
+static uint8_t parse_buf[PARSE_BUF_SIZE];
+
+static void app_avrcp_process_continue_packet(struct bt_avrcp_vendor_header *header, struct net_buf *buf)
+{
+    bool continue_packet_finish = false;
+
+    if (header->packet_type != BT_AVRCP_PACKET_TYPE_SINGLE) {
+        if (header->packet_type == BT_AVRCP_PACKET_TYPE_START) {
+
+            if (continue_rsp_buf != NULL) {
+                net_buf_unref(continue_rsp_buf);
+                continue_rsp_buf = NULL;
+            }
+
+            continue_rsp_buf = net_buf_alloc(&app_avrcp_continue_pool, osaWaitForever_c);
+            if (continue_rsp_buf == NULL) {
+                shell_print(ctx_shell, "fail to alloc response buf");
+                return;
+            }
+            continue_rsp_header.packet_type = BT_AVRCP_PACKET_TYPE_SINGLE; /* change the packet type as signal */
+            continue_rsp_header.parameter_len = 0u;
+            continue_rsp_header.pdu_id = header->pdu_id;
+        }
+
+        if (!continue_rsp_buf) {
+            return;
+        }
+
+        if (net_buf_tailroom(continue_rsp_buf) >= buf->len) {
+            net_buf_add_mem(continue_rsp_buf, buf->data, buf->len);
+            continue_rsp_header.parameter_len += header->parameter_len;
+
+            if (header->packet_type != BT_AVRCP_PACKET_TYPE_END) {
+                if (bt_avrcp_send_vendor_dependent(default_conn, BT_AVRCP_PDU_ID_REQUEST_CONTINUING_RESPONSE, &header->pdu_id)) {
+                    continue_packet_finish = true;
+                }
+            } else {
+                continue_packet_finish = true;
+            }
+        } else {
+            if (header->packet_type != BT_AVRCP_PACKET_TYPE_END) {
+                (void)bt_avrcp_send_vendor_dependent(default_conn, BT_AVRCP_PDU_ID_ABORT_CONTINUING_RESPONSE, &header->pdu_id);
+            }
+            continue_packet_finish = true;
+        }
+
+        if (continue_packet_finish) {
+            struct bt_avrcp_vendor* vendor = bt_avrcp_vendor_rsp_parse(&continue_rsp_header, continue_rsp_buf, parse_buf, PARSE_BUF_SIZE);
+            if (vendor == NULL) {
+                /* the parse_buf size may need to increase, or the continue_rsp_buf's data is wrong */
+                shell_print(ctx_shell, "parse fail");
+            } else {
+                avrcp_print_vendor_cmd_rsp(vendor);
+            }
+            avrcp_auto_test(0); /* test next case */
+        }
+
+        return;
+    }
+}
+
+static void avrcp_vendor_dependent_continue_rsp(struct bt_conn *conn, struct bt_avrcp_vendor_header *header, struct net_buf *buf)
+{
+    app_avrcp_process_continue_packet(header, buf);
+    net_buf_unref(buf);
 }
 
 void avrcp_browsing_rsp_received(struct bt_conn *conn, struct bt_avrcp_browsing_rsp *rsp, int err)
@@ -1963,7 +2062,7 @@ void avrcp_browsing_rsp_received(struct bt_conn *conn, struct bt_avrcp_browsing_
 
 void avrcp_control_connected(struct bt_conn *conn, int err)
 {
-    shell_print(ctx_shell, "control connected");
+    shell_print(ctx_shell, "control connected:%d", err);
 }
 
 void avrcp_control_disconnected(struct bt_conn *conn, int err)
@@ -1973,7 +2072,7 @@ void avrcp_control_disconnected(struct bt_conn *conn, int err)
 
 void avrcp_browsing_connected(struct bt_conn *conn, int err)
 {
-    shell_print(ctx_shell, "browsing connected");
+    shell_print(ctx_shell, "browsing connected:%d", err);
 }
 
 void avrcp_browsing_disconnected(struct bt_conn *conn, int err)
@@ -2153,22 +2252,7 @@ static void avrcp_auto_test(uint8_t print)
         case 10:
         {
             uint8_t req_pdu = BT_AVRCP_PDU_ID_LIST_PLAYER_APP_SETTING_ATTR;
-
-            shell_print(ctx_shell, "10.RequestContinuingResponse");
-            if (print)
-            {
-                break;
-            }
-            if (bt_avrcp_send_vendor_dependent(default_conn, BT_AVRCP_PDU_ID_REQUEST_CONTINUING_RESPONSE, &req_pdu))
-            {
-                shell_error(ctx_shell, "fail to call bt_avrcp_send_vendor_dependent");
-            }
-            break;
-        }
-        case 11:
-        {
-            uint8_t req_pdu = BT_AVRCP_PDU_ID_LIST_PLAYER_APP_SETTING_ATTR;
-            shell_print(ctx_shell, "11.AbortContinuingResponse");
+            shell_print(ctx_shell, "10.AbortContinuingResponse");
             if (print)
             {
                 break;
@@ -2179,11 +2263,11 @@ static void avrcp_auto_test(uint8_t print)
             }
             break;
         }
-        case 12:
+        case 11:
         {
             DEF_DATA(2);
             struct bt_avrcp_player_app_setting_attr_ids *attr = (struct bt_avrcp_player_app_setting_attr_ids *)&data[0];
-            shell_print(ctx_shell, "12.GetCurrentPlayerApplicationSettingValue");
+            shell_print(ctx_shell, "11.GetCurrentPlayerApplicationSettingValue");
             if (print)
             {
                 break;
@@ -2198,11 +2282,11 @@ static void avrcp_auto_test(uint8_t print)
             }
             break;
         }
-        case 13:
+        case 12:
         {
             DEF_DATA(3);
             struct bt_avrcp_player_app_attr_values *attr_values = (struct bt_avrcp_player_app_attr_values *)&data[0];
-            shell_print(ctx_shell, "13.SetPlayerApplicationSettingValue");
+            shell_print(ctx_shell, "12.SetPlayerApplicationSettingValue");
             if (print)
             {
                 break;
@@ -2218,11 +2302,11 @@ static void avrcp_auto_test(uint8_t print)
             }
             break;
         }
-        case 14:
+        case 13:
         {
             DEF_DATA(2);
             struct bt_avrcp_player_app_setting_attr_ids *attr = (struct bt_avrcp_player_app_setting_attr_ids *)&data[0];
-            shell_print(ctx_shell, "14.GetPlayerApplicationSettingAttributeText");
+            shell_print(ctx_shell, "13.GetPlayerApplicationSettingAttributeText");
             if (print)
             {
                 break;
@@ -2237,12 +2321,12 @@ static void avrcp_auto_test(uint8_t print)
             }
             break;
         }
-        case 15:
+        case 14:
         {
             DEF_DATA(3);
             struct bt_avrcp_get_player_app_setting_value_text *text =
                 (struct bt_avrcp_get_player_app_setting_value_text *)&data[0];
-            shell_print(ctx_shell, "15.GetPlayerApplicatoinSettingValueText");
+            shell_print(ctx_shell, "14.GetPlayerApplicatoinSettingValueText");
             if (print)
             {
                 break;
@@ -2258,11 +2342,11 @@ static void avrcp_auto_test(uint8_t print)
             }
             break;
         }
-        case 16:
+        case 15:
         {
             DEF_DATA(3);
             struct bt_avrcp_inform_displayable_char_set *set = (struct bt_avrcp_inform_displayable_char_set *)&data[0];
-            shell_print(ctx_shell, "16.InformDisplayableCharacterSet");
+            shell_print(ctx_shell, "15.InformDisplayableCharacterSet");
             if (print)
             {
                 break;
@@ -2277,11 +2361,11 @@ static void avrcp_auto_test(uint8_t print)
             }
             break;
         }
-        case 17:
+        case 16:
         {
             uint8_t battery_status = 0;
 
-            shell_print(ctx_shell, "17.InformBatterSatusofCT");
+            shell_print(ctx_shell, "16.InformBatterSatusofCT");
             if (print)
             {
                 break;
@@ -2293,12 +2377,12 @@ static void avrcp_auto_test(uint8_t print)
             }
             break;
         }
-        case 18:
+        case 17:
         {
             DEF_DATA(13u);
             struct bt_avrcp_get_element_attrs *attrs = (struct bt_avrcp_get_element_attrs *)&data[0];
 
-            shell_print(ctx_shell, "18.GetElementAttributes");
+            shell_print(ctx_shell, "17.GetElementAttributes");
             if (print)
             {
                 break;
@@ -2312,9 +2396,9 @@ static void avrcp_auto_test(uint8_t print)
             }
             break;
         }
-        case 19:
+        case 18:
         {
-            shell_print(ctx_shell, "19.GetPlayStatus");
+            shell_print(ctx_shell, "18.GetPlayStatus");
             if (print)
             {
                 break;
@@ -2325,10 +2409,10 @@ static void avrcp_auto_test(uint8_t print)
             }
             break;
         }
-        case 20:
+        case 19:
         {
             struct bt_avrcp_register_ntfy reg;
-            shell_print(ctx_shell, "20.RegisterNotification");
+            shell_print(ctx_shell, "19.RegisterNotification");
             if (print)
             {
                 break;
@@ -2342,10 +2426,10 @@ static void avrcp_auto_test(uint8_t print)
             }
             break;
         }
-        case 21:
+        case 20:
         {
             uint8_t volume = 10;
-            shell_print(ctx_shell, "21.SetAbsoluteVolume");
+            shell_print(ctx_shell, "20.SetAbsoluteVolume");
             if (print)
             {
                 break;
@@ -2356,10 +2440,10 @@ static void avrcp_auto_test(uint8_t print)
             }
             break;
         }
-        case 22:
+        case 21:
         {
             uint16_t player_id = 1;
-            shell_print(ctx_shell, "22.SetAddressedPlayer");
+            shell_print(ctx_shell, "21.SetAddressedPlayer");
             if (print)
             {
                 break;
@@ -2370,9 +2454,9 @@ static void avrcp_auto_test(uint8_t print)
             }
             break;
         }
-        case 23:
+        case 22:
         {
-            shell_print(ctx_shell, "23.SetBrowsedPlayer");
+            shell_print(ctx_shell, "22.SetBrowsedPlayer");
             if (print)
             {
                 break;
@@ -2383,10 +2467,10 @@ static void avrcp_auto_test(uint8_t print)
             }
             break;
         }
-        case 24:
+        case 23:
         {
             struct bt_avrcp_search_cmd search;
-            shell_print(ctx_shell, "24.Search");
+            shell_print(ctx_shell, "23.Search");
             if (print)
             {
                 break;
@@ -2402,11 +2486,11 @@ static void avrcp_auto_test(uint8_t print)
             }
             break;
         }
-        case 25:
+        case 24:
         {
             struct bt_avrcp_add_to_now_playing add;
 
-            shell_print(ctx_shell, "25.AddToNowPlaying");
+            shell_print(ctx_shell, "24.AddToNowPlaying");
             if (print)
             {
                 break;
@@ -2422,10 +2506,10 @@ static void avrcp_auto_test(uint8_t print)
             }
             break;
         }
-        case 26:
+        case 25:
         {
             struct bt_avrcp_get_folder_items_cmd param;
-            shell_print(ctx_shell, "26.GetFolderItems(MediaPlayerList)");
+            shell_print(ctx_shell, "25.GetFolderItems(MediaPlayerList)");
             if (print)
             {
                 break;
@@ -2442,10 +2526,10 @@ static void avrcp_auto_test(uint8_t print)
             }
             break;
         }
-        case 27:
+        case 26:
         {
             struct bt_avrcp_get_folder_items_cmd param;
-            shell_print(ctx_shell, "27.GetFolderItems(Filesystem)");
+            shell_print(ctx_shell, "26.GetFolderItems(Filesystem)");
             if (print)
             {
                 break;
@@ -2462,10 +2546,10 @@ static void avrcp_auto_test(uint8_t print)
             }
             break;
         }
-        case 28:
+        case 27:
         {
             struct bt_avrcp_get_folder_items_cmd param;
-            shell_print(ctx_shell, "28.GetFolderItems(SearchResultList)");
+            shell_print(ctx_shell, "27.GetFolderItems(SearchResultList)");
             if (print)
             {
                 break;
@@ -2482,10 +2566,10 @@ static void avrcp_auto_test(uint8_t print)
             }
             break;
         }
-        case 29:
+        case 28:
         {
             struct bt_avrcp_get_folder_items_cmd param;
-            shell_print(ctx_shell, "29.GetFolderItems(NowPlayingList)");
+            shell_print(ctx_shell, "28.GetFolderItems(NowPlayingList)");
             if (print)
             {
                 break;
@@ -2502,10 +2586,10 @@ static void avrcp_auto_test(uint8_t print)
             }
             break;
         }
-        case 30:
+        case 29:
         {
             struct bt_avrcp_change_path_cmd change_path;
-            shell_print(ctx_shell, "30.ChangePath");
+            shell_print(ctx_shell, "29.ChangePath");
             if (print)
             {
                 break;
@@ -2523,10 +2607,10 @@ static void avrcp_auto_test(uint8_t print)
             break;
         }
 
-        case 31:
+        case 30:
         {
             struct bt_avrcp_get_item_attrs_cmd get_item;
-            shell_print(ctx_shell, "31.GetItemAttributes(FileSystem)");
+            shell_print(ctx_shell, "30.GetItemAttributes(FileSystem)");
             if (print)
             {
                 break;
@@ -2545,10 +2629,10 @@ static void avrcp_auto_test(uint8_t print)
             break;
         }
 
-        case 32:
+        case 31:
         {
             struct bt_avrcp_get_item_attrs_cmd get_item;
-            shell_print(ctx_shell, "32.GetItemAttributes(search)");
+            shell_print(ctx_shell, "31.GetItemAttributes(search)");
             if (print)
             {
                 break;
@@ -2567,10 +2651,10 @@ static void avrcp_auto_test(uint8_t print)
             break;
         }
 
-        case 33:
+        case 32:
         {
             struct bt_avrcp_get_item_attrs_cmd get_item;
-            shell_print(ctx_shell, "33.GetItemAttributes(Now Playing)");
+            shell_print(ctx_shell, "32.GetItemAttributes(Now Playing)");
             if (print)
             {
                 break;
@@ -2589,9 +2673,9 @@ static void avrcp_auto_test(uint8_t print)
             break;
         }
 
-        case 34:
+        case 33:
         {
-            shell_print(ctx_shell, "34.GetTotalNumberOfItems");
+            shell_print(ctx_shell, "33.GetTotalNumberOfItems");
             if (print)
             {
                 break;
@@ -2603,11 +2687,11 @@ static void avrcp_auto_test(uint8_t print)
             break;
         }
 
-        case 35:
+        case 34:
         {
             struct bt_avrcp_play_item play;
 
-            shell_print(ctx_shell, "35.PlayItem(Filesystem)");
+            shell_print(ctx_shell, "34.PlayItem(Filesystem)");
             if (print)
             {
                 break;
@@ -2624,11 +2708,11 @@ static void avrcp_auto_test(uint8_t print)
             break;
         }
 
-        case 36:
+        case 35:
         {
             struct bt_avrcp_play_item play;
 
-            shell_print(ctx_shell, "36.PlayItem(SearchResultList)");
+            shell_print(ctx_shell, "35.PlayItem(SearchResultList)");
             if (print)
             {
                 break;
@@ -2645,11 +2729,11 @@ static void avrcp_auto_test(uint8_t print)
             break;
         }
 
-        case 37:
+        case 36:
         {
             struct bt_avrcp_play_item play;
 
-            shell_print(ctx_shell, "37.PlayItem(NowPlayingList)");
+            shell_print(ctx_shell, "36.PlayItem(NowPlayingList)");
             if (print)
             {
                 break;
@@ -2684,69 +2768,74 @@ static void avrcp_auto_test(uint8_t print)
     }
 }
 
-static shell_status_t cmd_init_ct(shell_handle_t shell, int32_t argc, char *argv[])
+static void register_cb(void)
 {
-    struct bt_avrcp_cb cbs = {avrcp_control_connected,    avrcp_control_disconnected,
-                              avrcp_browsing_connected,   avrcp_browsing_disconnected,
-                              avrcp_send_result,          NULL,
-                              avrcp_control_rsp_received, NULL,
-                              avrcp_browsing_rsp_received};
-
-    bt_sdp_register_service(&avrcp_ct_rec);
-
-    bt_avrcp_register_callback(&cbs);
-    shell_print(shell, "init success");
-    return kStatus_SHELL_Success;
-}
-
-static shell_status_t cmd_init_tg(shell_handle_t shell, int32_t argc, char *argv[])
-{
+    static uint8_t cb_registered;
     struct bt_avrcp_cb cbs = {avrcp_control_connected,
                               avrcp_control_disconnected,
                               avrcp_browsing_connected,
                               avrcp_browsing_disconnected,
                               avrcp_send_result,
                               avrcp_control_received,
-                              NULL,
+                              avrcp_control_rsp_received,
+                              avrcp_vendor_dependent_continue_rsp,
                               avrcp_browsing_received,
-                              NULL};
+                              avrcp_browsing_rsp_received};
 
-    bt_sdp_register_service(&avrcp_tg_rec);
-
-    bt_avrcp_register_callback(&cbs);
-    shell_print(shell, "init success");
-    return kStatus_SHELL_Success;
+    if (!cb_registered)
+    {
+        cb_registered = 1u;
+        bt_avrcp_register_callback(&cbs);
+    }
 }
 
-static shell_status_t cmd_control_connect(shell_handle_t shell, int32_t argc, char *argv[])
+static int cmd_init_ct(const struct shell *sh, size_t argc, char *argv[])
+{
+    bt_sdp_register_service(&avrcp_ct_rec);
+
+    register_cb();
+    shell_print(sh, "init success");
+    return 0;
+}
+
+static int cmd_init_tg(const struct shell *sh, size_t argc, char *argv[])
+{
+    bt_sdp_register_service(&avrcp_tg_rec);
+
+    register_cb();
+    shell_print(sh, "init success");
+    return 0;
+}
+
+static int cmd_control_connect(const struct shell *sh, size_t argc, char *argv[])
 {
     if (bt_avrcp_control_connect(default_conn))
     {
-        shell_print(shell, "fail to call bt_avrcp_control_connect");
+        shell_print(sh, "fail to call bt_avrcp_control_connect");
     }
-    return kStatus_SHELL_Success;
+    return 0;
 }
 
-static shell_status_t cmd_browsing_connect(shell_handle_t shell, int32_t argc, char *argv[])
+static int cmd_browsing_connect(const struct shell *sh, size_t argc, char *argv[])
 {
     if (bt_avrcp_browsing_connect(default_conn))
     {
-        shell_print(shell, "fail to call bt_avrcp_browsing_connect");
+        shell_print(sh, "fail to call bt_avrcp_browsing_connect");
     }
-    return kStatus_SHELL_Success;
+    return 0;
 }
 
-static shell_status_t cmd_ct_list_all_cases(shell_handle_t shell, int32_t argc, char *argv[])
+static int cmd_ct_list_all_cases(const struct shell *sh, size_t argc, char *argv[])
 {
     for (uint8_t index = 0; index <= 37u; index++)
     {
         test_step = index;
         avrcp_auto_test(1);
     }
-    return kStatus_SHELL_Success;
+    return 0;
 }
 
-static shell_status_t cmd_ct_test_case(shell_handle_t shell, int32_t argc, char *argv[])
+static int cmd_ct_test_case(const struct shell *sh, size_t argc, char *argv[])
 {
     if (argc == 2)
     {
@@ -2754,23 +2843,23 @@ static shell_status_t cmd_ct_test_case(shell_handle_t shell, int32_t argc, char 
     }
     else
     {
-        shell_print(shell, "wrong parameter");
-        return kStatus_SHELL_Success;
+        shell_print(sh, "wrong parameter");
+        return 0;
     }
 
     test_enable = 1;
     test_one = 1;
     avrcp_auto_test(0);
-    return kStatus_SHELL_Success;
+    return 0;
 }
 
-static shell_status_t cmd_ct_test_all(shell_handle_t shell, int32_t argc, char *argv[])
+static int cmd_ct_test_all(const struct shell *sh, size_t argc, char *argv[])
 {
     test_enable = 1;
     test_one  = 0;
     test_step = 0;
     avrcp_auto_test(0);
-    return kStatus_SHELL_Success;
+    return 0;
 }
 
 #if (defined(CONFIG_BT_AVRCP_COVER_ART) && ((CONFIG_BT_AVRCP_COVER_ART) > 0U))
@@ -2794,6 +2883,23 @@ void avrcp_cover_art_disconnected(uint8_t handle, int err)
 
 static uint8_t cover_test_step;
 static uint8_t wait_count;
+
+static void cover_art_set_handle(uint8_t **image_handle, uint16_t *image_handle_len)
+{
+    if (cover_art_handle_len > 0)
+    {
+        shell_print(ctx_shell, "use cover art handle from test case 18");
+        *image_handle     = cover_art_handle;
+        *image_handle_len = cover_art_handle_len;
+    }
+    else
+    {
+        shell_print(ctx_shell, "use cover art handle 1000004");
+        *image_handle     = (uint8_t *)"1000004";
+        *image_handle_len = 8u;
+    }
+}
+
 static void cover_art_auto_test(uint8_t print)
 {
     switch (cover_test_step)
@@ -2808,8 +2914,7 @@ static void cover_art_auto_test(uint8_t print)
                 break;
             }
 
-            param.image_handle     = (uint8_t *)"1000004";
-            param.image_handle_len = 7u;
+            cover_art_set_handle(&param.image_handle, &param.image_handle_len);
             param.wait             = 0;
             if (bt_avrcp_get_image_property(default_cover_handle, &param))
             {
@@ -2829,8 +2934,7 @@ static void cover_art_auto_test(uint8_t print)
 
             param.image_descriptor_data     = NULL;
             param.image_descriptor_data_len = 0u;
-            param.image_handle              = (uint8_t *)"1000004";
-            param.image_handle_len          = 7u;
+            cover_art_set_handle(&param.image_handle, &param.image_handle_len);
             param.wait                      = 0;
             if (bt_avrcp_get_image(default_cover_handle, &param))
             {
@@ -2851,8 +2955,7 @@ static void cover_art_auto_test(uint8_t print)
             wait_count                      = 2;
             param.image_descriptor_data     = NULL;
             param.image_descriptor_data_len = 0u;
-            param.image_handle              = (uint8_t *)"1000004";
-            param.image_handle_len          = 7u;
+            cover_art_set_handle(&param.image_handle, &param.image_handle_len);
             param.wait                      = wait_count;
             if (bt_avrcp_get_image(default_cover_handle, &param))
             {
@@ -2870,8 +2973,7 @@ static void cover_art_auto_test(uint8_t print)
                 break;
             }
 
-            param.image_handle     = (uint8_t *)"1000004";
-            param.image_handle_len = 7u;
+            cover_art_set_handle(&param.image_handle, &param.image_handle_len);
             param.wait             = 0;
             if (bt_avrcp_get_linked_thumbnail(default_cover_handle, &param))
             {
@@ -3151,7 +3253,7 @@ void avrcp_cover_art_rsp_received(uint8_t handle, struct bt_avrcp_cover_art_rsp 
 }
 #endif
 
-static shell_status_t cmd_ca_init_responder(shell_handle_t shell, int32_t argc, char *argv[])
+static int cmd_ca_init_responder(const struct shell *sh, size_t argc, char *argv[])
 {
     struct bt_avrcp_cover_art_cb cb = {avrcp_cover_art_connected, avrcp_cover_art_disconnected,
                                        avrcp_cover_art_cmd_received, NULL};
@@ -3159,16 +3261,16 @@ static shell_status_t cmd_ca_init_responder(shell_handle_t shell, int32_t argc, 
     bt_avrcp_register_cover_art_cb(&cb);
     if (bt_avrcp_cover_art_start_responder(&default_cover_handle))
     {
-        shell_print(shell, "fail to call bt_avrcp_cover_art_start_responder");
+        shell_print(sh, "fail to call bt_avrcp_cover_art_start_responder");
     }
     else
     {
-        shell_print(shell, "success");
+        shell_print(sh, "success");
     }
-    return kStatus_SHELL_Success;
+    return 0;
 }
 
-static shell_status_t cmd_ca_init_initiator(shell_handle_t shell, int32_t argc, char *argv[])
+static int cmd_ca_init_initiator(const struct shell *sh, size_t argc, char *argv[])
 {
     struct bt_avrcp_cover_art_cb cb = {avrcp_cover_art_connected, avrcp_cover_art_disconnected, NULL,
                                        avrcp_cover_art_rsp_received};
@@ -3176,13 +3278,13 @@ static shell_status_t cmd_ca_init_initiator(shell_handle_t shell, int32_t argc, 
     bt_avrcp_register_cover_art_cb(&cb);
     if (bt_avrcp_cover_art_start_initiator(&default_cover_handle))
     {
-        shell_print(shell, "fail to call bt_avrcp_cover_art_start_responder");
+        shell_print(sh, "fail to call bt_avrcp_cover_art_start_responder");
     }
     else
     {
-        shell_print(shell, "success");
+        shell_print(sh, "success");
     }
-    return kStatus_SHELL_Success;
+    return 0;
 }
 
 uint16_t remote_cover_psm;
@@ -3222,19 +3324,19 @@ static uint8_t app_sdp_avrcp_user(struct bt_conn *conn,
 
 #define SDP_CLIENT_USER_BUF_LEN        512U
 NET_BUF_POOL_FIXED_DEFINE(app_sdp_client_pool, CONFIG_BT_MAX_CONN,
-              SDP_CLIENT_USER_BUF_LEN, NULL);
+              SDP_CLIENT_USER_BUF_LEN, CONFIG_NET_BUF_USER_DATA_SIZE, NULL);
 
 static uint8_t app_sdp_avrcp_user(struct bt_conn *conn, struct bt_sdp_client_result *result);
-static struct bt_sdp_discover_params discov_avrcp_tg =
+static struct bt_sdp_discover_params discov_avrcp_ca =
 {
     .uuid = BT_UUID_DECLARE_16(BT_SDP_AV_REMOTE_TARGET_SVCLASS),
     .func = app_sdp_avrcp_user,
     .pool = &app_sdp_client_pool,
 };
 
-static shell_status_t cmd_ca_init_connect(shell_handle_t shell, int32_t argc, char *argv[])
+static int cmd_ca_init_connect(const struct shell *sh, size_t argc, char *argv[])
 {
-    int res = bt_sdp_discover(default_conn, &discov_avrcp_tg);
+    int res = bt_sdp_discover(default_conn, &discov_avrcp_ca);
     if (res)
     {
         shell_print(ctx_shell, "SDP discovery failed\r\n");
@@ -3244,17 +3346,17 @@ static shell_status_t cmd_ca_init_connect(shell_handle_t shell, int32_t argc, ch
         shell_print(ctx_shell, "SDP discovery started\r\n");
     }
 
-    return kStatus_SHELL_Success;
+    return 0;
 }
 
-static shell_status_t cmd_ca_initiator_test(shell_handle_t shell, int32_t argc, char *argv[])
+static int cmd_ca_initiator_test(const struct shell *sh, size_t argc, char *argv[])
 {
     cover_test_step = 0;
     cover_art_auto_test(0);
-    return kStatus_SHELL_Success;
+    return 0;
 }
 
-static shell_status_t cmd_ct_reg_ntf(shell_handle_t shell, int32_t argc, char *argv[])
+static int cmd_ct_reg_ntf(const struct shell *sh, size_t argc, char *argv[])
 {
     uint8_t event;
     uint32_t playback_interval = 0;
@@ -3263,13 +3365,13 @@ static shell_status_t cmd_ct_reg_ntf(shell_handle_t shell, int32_t argc, char *a
     if (argc == 2) {
         event = strtoul(argv[1], NULL, 16);
     } else {
-        shell_print(shell, "wrong parameter");
-        return kStatus_SHELL_Success;
+        shell_print(sh, "wrong parameter");
+        return 0;
     }
 
     if (event > 0x0du) {
-        shell_print(shell, "wrong parameter");
-        return kStatus_SHELL_Success;
+        shell_print(sh, "wrong parameter");
+        return 0;
     }
 
     if (event == BT_AVRCP_EVENT_PLAYBACK_POS_CHANGED){
@@ -3284,10 +3386,10 @@ static shell_status_t cmd_ct_reg_ntf(shell_handle_t shell, int32_t argc, char *a
         shell_error(ctx_shell, "fail to call bt_avrcp_send_vendor_dependent");
     }
 
-    return kStatus_SHELL_Success;
+    return 0;
 }
 
-static shell_status_t cmd_tg_notify(shell_handle_t shell, int32_t argc, char *argv[])
+static int cmd_tg_notify(const struct shell *sh, size_t argc, char *argv[])
 {
     uint8_t event;
     struct bt_avrcp_event_rsp *rsp;
@@ -3297,18 +3399,18 @@ static shell_status_t cmd_tg_notify(shell_handle_t shell, int32_t argc, char *ar
     if (argc == 2) {
         event = strtoul(argv[1], NULL, 16);
     } else {
-        shell_print(shell, "wrong parameter");
-        return kStatus_SHELL_Success;
+        shell_print(sh, "wrong parameter");
+        return 0;
     }
 
     if (event > 0x0du) {
-        shell_print(shell, "wrong parameter");
-        return kStatus_SHELL_Success;
+        shell_print(sh, "wrong parameter");
+        return 0;
     }
 
     if (registered_events[event - 1][0] == 0u){
-        shell_print(shell, "the event is not registered by CT");
-        return kStatus_SHELL_Success;
+        shell_print(sh, "the event is not registered by CT");
+        return 0;
     }
 
     rsp = (struct bt_avrcp_event_rsp *)&data[0];
@@ -3378,7 +3480,105 @@ static shell_status_t cmd_tg_notify(shell_handle_t shell, int32_t argc, char *ar
                                        registered_events[event - 1][1], BT_AVRCP_RESPONSE_TYPE_CHANGED,
                                        rsp, rsp_len);
 
-    return kStatus_SHELL_Success;
+    return 0;
+}
+
+static uint8_t sdp_services_count;
+
+static uint8_t app_sdp_get_user(struct bt_conn *conn,
+            struct bt_sdp_client_result *result)
+{
+    uint16_t param;
+    int res;
+
+    /* In this callback, only try to get whether the browsing l2cap exist in the record,
+     * If users need to parse to get other data, need to implement it similarly.
+     */
+    if ((result) && (result->resp_buf))
+    {
+        PRINTF("sdp success callback\r\n");
+        res = bt_sdp_get_addl_proto_param(result->resp_buf, BT_SDP_PROTO_L2CAP, 0, &param);
+        if (res < 0)
+        {
+            PRINTF("PSM is not found\r\n");
+            return BT_SDP_DISCOVER_UUID_CONTINUE;
+        }
+        if (param == 0x001b) /* AVCTP_Browsing PSM */
+        {
+            PRINTF ("Service(%d): AVCTP browsing Service found.\n", sdp_services_count + 1);
+            return BT_SDP_DISCOVER_UUID_STOP;
+        }
+        return BT_SDP_DISCOVER_UUID_CONTINUE;
+    }
+    else
+    {
+        PRINTF("sdp fail callback\r\n");
+        return BT_SDP_DISCOVER_UUID_CONTINUE;
+    }
+}
+
+static struct bt_sdp_discover_params discov_avrcp_tg =
+{
+    .uuid = BT_UUID_DECLARE_16(BT_SDP_AV_REMOTE_TARGET_SVCLASS),
+    .func = app_sdp_get_user,
+    .pool = &app_sdp_client_pool,
+};
+
+static struct bt_sdp_discover_params discov_avrcp_ct =
+{
+    .uuid = BT_UUID_DECLARE_16(BT_SDP_AV_REMOTE_CONTROLLER_SVCLASS),
+    .func = app_sdp_get_user,
+    .pool = &app_sdp_client_pool,
+};
+
+static struct bt_sdp_discover_params discov_avrcp_both =
+{
+    .uuid = BT_UUID_DECLARE_16(BT_SDP_AV_REMOTE_SVCLASS),
+    .func = app_sdp_get_user,
+    .pool = &app_sdp_client_pool,
+};
+
+static int cmd_sdp_get(const struct shell *sh, size_t argc, char *argv[])
+{
+    int res;
+    struct bt_sdp_discover_params *disc_param;
+
+    if (argc != 2)
+    {
+        shell_print(sh, "wrong parameter");
+        return 0;
+    }
+
+    if (!strcmp(argv[1], "tg"))
+    {
+        disc_param = &discov_avrcp_tg;
+    }
+    else if (!strcmp(argv[1], "ct"))
+    {
+        disc_param = &discov_avrcp_ct;
+    }
+    else if (!strcmp(argv[1], "both"))
+    {
+        disc_param = &discov_avrcp_both;
+    }
+    else
+    {
+        shell_print(sh, "wrong parameter");
+        return 0;
+    }
+
+    sdp_services_count = 0;
+    res = bt_sdp_discover(default_conn, disc_param);
+    if (res)
+    {
+        shell_print(sh, "SDP discovery failed: result");
+    }
+    else
+    {
+        shell_print(sh, "SDP discovery started");
+    }
+
+    return 0;
 }
 
 #define HELP_NONE "[none]"
@@ -3424,23 +3624,24 @@ SHELL_STATIC_SUBCMD_SET_CREATE(
     SHELL_CMD_ARG(ca_init_r, NULL, "\"Init cover art responder\"", cmd_ca_init_responder, 1, 0),
     SHELL_CMD_ARG(ca_connect, NULL, "\"create cover art connection\"", cmd_ca_init_connect, 1, 0),
     SHELL_CMD_ARG(ca_test, NULL, "\"cover art test all cases\"", cmd_ca_initiator_test, 1, 0),
+    SHELL_CMD_ARG(sdp_get, NULL, "<tg|ct|both> Get the peer sdp for tg, ct or both", cmd_sdp_get, 2, 0),
     SHELL_SUBCMD_SET_END);
 
-static shell_status_t cmd_avrcp(shell_handle_t shell, int32_t argc, char **argv)
+static int cmd_avrcp(const struct shell *sh, size_t argc, char **argv)
 {
     if (argc == 1)
     {
-        shell_help(shell);
+        shell_help(sh);
         /* shell returns 1 when help is printed */
-        return kStatus_SHELL_PrintCmdHelp;
+        return SHELL_CMD_HELP_PRINTED;
     }
 
-    shell_error(shell, "%s unknown parameter: %s", argv[0], argv[1]);
+    shell_error(sh, "%s unknown parameter: %s", argv[0], argv[1]);
 
-    return kStatus_SHELL_Error;
+    return -EINVAL;
 }
 
-SHELL_CMD_REGISTER(avrcp, avrcp_cmds, "Bluetooth AVRCP shell commands", cmd_avrcp, 1, 1);
+SHELL_CMD_ARG_REGISTER(avrcp, avrcp_cmds, "Bluetooth AVRCP shell commands", cmd_avrcp, 1, 1);
 
 void bt_ShellAvrcpInit(shell_handle_t shell)
 {
@@ -3450,4 +3651,4 @@ void bt_ShellAvrcpInit(shell_handle_t shell)
     }
 }
 
-#endif /* CONFIG_BT_BREDR */
+#endif /* CONFIG_BT_CLASSIC */

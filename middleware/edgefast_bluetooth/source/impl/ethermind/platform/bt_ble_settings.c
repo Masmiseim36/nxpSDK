@@ -15,9 +15,15 @@
 
 #define SETTINGS_NAME_SEPARATOR '/'
 
-STRUCT_SECTION_DEFINE(settings_handler_static);
+#if 0
+STRUCT_SECTION_START_EXTERN(settings_handler_static);
+STRUCT_SECTION_END_EXTERN(settings_handler_static);
+#endif
 
 static lfs_t * lfs;
+
+/* SETTING */
+STRUCT_SECTION_DEFINE(settings_handler_static);
 
 /* Initialize the settings */
 int settings_init(void)
@@ -80,7 +86,7 @@ int settings_load_subtree_direct(
     {
         return -EINVAL;
     }
-    
+
     memset((void *)&dir, 0, sizeof(dir));
     err = lfs_stat(lfs, subtree, &info);
     if (err < 0)

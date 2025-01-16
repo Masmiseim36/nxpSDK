@@ -46,11 +46,10 @@
   @param[in]     value      input value to be filled
   @param[out]    pDst       points to output vector
   @param[in]     blockSize  number of samples in each vector
-  @return        none
  */
 #if defined(ARM_MATH_MVE_FLOAT16) && !defined(ARM_MATH_AUTOVECTORIZE)
 
-void arm_fill_f16(
+ARM_DSP_ATTRIBUTE void arm_fill_f16(
   float16_t value,
   float16_t * pDst,
   uint32_t blockSize)
@@ -70,7 +69,7 @@ void arm_fill_f16(
     while ((int32_t) blockSize > 0);
 }
 #else
-void arm_fill_f16(
+ARM_DSP_ATTRIBUTE void arm_fill_f16(
   float16_t value,
   float16_t * pDst,
   uint32_t blockSize)

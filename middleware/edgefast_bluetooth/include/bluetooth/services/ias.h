@@ -72,7 +72,7 @@ int bt_ias_local_alert_stop(void);
  *  @param _name Name of callback structure.
  */
 #define BT_IAS_CB_DEFINE(_name)                                                                    \
-	static const STRUCT_SECTION_ITERABLE(bt_ias_cb, _CONCAT(bt_ias_cb_, _name))
+	const STRUCT_SECTION_ITERABLE(bt_ias_cb, _CONCAT(_name, __LINE__))
 
 struct bt_ias_client_cb {
 	/** @brief Callback function for bt_ias_discover.
@@ -109,17 +109,6 @@ int bt_ias_discover(struct bt_conn *conn);
  *  @return Zero in case of success and error code in case of error.
  */
 int bt_ias_client_cb_register(const struct bt_ias_client_cb *cb);
-
- /** @brief Initialize IAS Service.
- *
- *  @return Success or error.
- */
-int bt_ias_init(struct bt_ias_cb *cb);
- /** @brief Deinitialize IAS Service.
- *
- *  @return Success or error.
- */
-int bt_ias_deinit(void);
 
 #ifdef __cplusplus
 }

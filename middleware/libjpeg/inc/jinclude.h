@@ -45,6 +45,14 @@
 
 #include <stdio.h>
 
+/* Include JPEGDEC driver if using hardware acceleration. */
+#ifndef LIB_JPEG_USE_HW_ACCEL
+#define LIB_JPEG_USE_HW_ACCEL 0
+#endif
+#if LIB_JPEG_USE_HW_ACCEL
+#include "fsl_jpegdec.h"
+#endif
+
 /*
  * We need memory copying and zeroing functions, plus strncpy().
  * ANSI and System V implementations declare these in <string.h>.

@@ -9,56 +9,81 @@
 #define _IAR_TOOLCHAIN_H_
 
 #include "inttypes.h"
+#include "stdbool.h"
+#include "stdalign.h"
+
+
+#if (defined(CONFIG_ARCH_POSIX) && (CONFIG_ARCH_POSIX > 0))
+#include <arch/posix/posix_trace.h>
+/*let's not segfault if this were to happen for some reason*/
+#define CODE_UNREACHABLE \
+{\
+	posix_print_error_and_exit("CODE_UNREACHABLE reached from %s:%d\n",\
+		__FILE__, __LINE__);\
+	__builtin_unreachable(); \
+}
+#else
+#define CODE_UNREACHABLE __builtin_unreachable()
+#endif
+
+#ifndef FUNC_NORETURN
+#define FUNC_NORETURN __attribute__((__noreturn__))
+#endif /* FUNC_NORETURN */
+
+#define CONFIG_LIBC_ERRNO
+
+#define __used		//__attribute__((__used__))
+#define __unused	__attribute__((__unused__))
+#define __maybe_unused	__attribute__((__unused__))
+
+#ifndef __deprecated
+#define __deprecated __attribute__((deprecated))
+#endif
+
+#ifndef __must_check
+#define __must_check __attribute__((warn_unused_result))
+#endif
+
+#define __SIZEOF_LONG_LONG__ 64U
+#define __SIZEOF_LONG__      32U
+#define __CHAR_BIT__         8U
 
 #if !defined(__ssize_t_defined)
 #define __ssize_t_defined
 typedef int ssize_t;
 #endif
 
+#define __fallthrough __attribute__((fallthrough))
+
 #define __asm__ __asm
 #define __volatile__ volatile
 
-#ifndef __aligned
-#define __aligned(x)
+#ifndef __alignof__
+#define __alignof__ __ALIGNOF__
+#endif
+
+#ifndef __alignof
+#define __alignof __ALIGNOF__
 #endif
 
 #define __noinit
+#define __noinit_named(x)
 
 #ifndef __ram_aligned
 /* disable misra 19.13 */
 _Pragma("diag_suppress=Pm120")
 #define __aligned_internal(x) _Pragma(#x)
 _Pragma("diag_default=Pm120")
-#define __ram_aligned(n) __aligned_internal(data_alignment = n)
+#define __ram_aligned(n) __aligned_internal(data_alignment=n)
+#endif
+
+#ifndef __aligned
+#define __aligned(x) __attribute__((__aligned__(x))) // _Alignas(x)
 #endif
 
 #ifndef _OFF_T_DECLARED
 typedef int off_t; /* file offset */
 #define _OFF_T_DECLARED
-#endif
-
-#ifndef STRUCT_PACKED_PRE
-#define STRUCT_PACKED_PRE __packed
-#endif
-
-#ifndef STRUCT_PACKED_POST
-#define STRUCT_PACKED_POST
-#endif
-
-#ifndef UNION_PACKED_PRE
-#define UNION_PACKED_PRE __packed
-#endif
-
-#ifndef UNION_PACKED_POST
-#define UNION_PACKED_POST
-#endif
-
-#ifndef ENUM_PACKED_PRE
-#define ENUM_PACKED_PRE
-#endif
-
-#ifndef ENUM_PACKED_POST
-#define ENUM_PACKED_POST __packed
 #endif
 
 #define __SIZE_TYPE__ size_t
@@ -68,13 +93,22 @@ typedef int off_t; /* file offset */
 #endif
 
 #ifndef __typeof__
-#define __typeof__
+#define __typeof__ typeof
 #endif
 
-#define __used
+#define __packed __attribute__((__packed__))
+
+#define likely(x)   __builtin_expect((bool)!!(x), true)
+#define unlikely(x) __builtin_expect((bool)!!(x), false)
 
 /* Unaligned access */
-#define UNALIGNED_GET(p) sys_get_le32((const uint8_t *)p)
+#define UNALIGNED_GET(p) \
+__extension__ ({							\
+	struct  __attribute__((__packed__)) {				\
+		__typeof__(*(p)) __v;					\
+	} *__p = (__typeof__(__p)) (p);					\
+	__p->__v;							\
+})
 
 #if 0
 #define ___in_section_pragma(str) _Pragma(#str)
@@ -96,11 +130,14 @@ typedef int off_t; /* file offset */
 #define __get_section_start(x, type, name) static __section_define(x) type *name = (type *)__section_begin("."#x);
 #define __get_section_end(x, type, name) static __section_define(x) type *name = (type *)__section_end("."#x);
 
+#define __get_rw_section_start(x, type, name) static __section_define(x) type *name = (type *)__section_begin("."#x);
+#define __get_rw_section_end(x, type, name) static __section_define(x) type *name = (type *)__section_end("."#x);
+
 #ifdef __cplusplus
-#define BUILD_ASSERT(EXPR) static_assert(EXPR, "")
+#define BUILD_ASSERT(EXPR, MSG...) static_assert(EXPR, "" MSG)
 #define BUILD_ASSERT_MSG(EXPR, MSG) static_assert(EXPR, MSG)
 #else
-#define BUILD_ASSERT(EXPR) _Static_assert(EXPR, "")
+#define BUILD_ASSERT(EXPR, MSG...) _Static_assert(EXPR, "" MSG)
 #define BUILD_ASSERT_MSG(EXPR, MSG) _Static_assert(EXPR, MSG)
 #endif
 
@@ -114,7 +151,6 @@ typedef int off_t; /* file offset */
 #define __BYTE_ORDER__ __LITTLE_ENDIAN__
 #endif
 
-#define __deprecated
 #define ARG_UNUSED(x) (void)(x)
 
 #define __ERROR(msg) __ERROR1(error msg)

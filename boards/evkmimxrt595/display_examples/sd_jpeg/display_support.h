@@ -21,6 +21,7 @@
 
 /* @TEST_ANCHOR */
 
+/* Configure this macro in Kconfig or directly in the generated mcux_config.h. */
 #ifndef DEMO_PANEL
 #define DEMO_PANEL DEMO_PANEL_TFT_PROTO_5
 #endif
@@ -236,7 +237,7 @@
 #define DEMO_PANEL_WIDTH  (400U)
 #define DEMO_PANEL_HEIGHT (392U)
 
-#define DEMO_BUFFER_WIDTH   (392U)
+#define DEMO_BUFFER_WIDTH   (400U)
 #define DEMO_BUFFER_HEIGHT  (392U)
 
 /* Where the frame buffer is shown in the screen. */

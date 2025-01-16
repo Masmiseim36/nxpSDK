@@ -1,6 +1,5 @@
 /*
  * Copyright 2017-2018, 2020 NXP
- * All rights reserved.
  *
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -28,6 +27,8 @@
 /*! @brief Define I2C access function. */
 typedef status_t (*video_i2c_send_func_t)(
     uint8_t deviceAddress, uint32_t subAddress, uint8_t subaddressSize, const uint8_t *txBuff, uint8_t txBuffSize);
+typedef status_t (*video_i2c_send_txbuffersize_32bit_func_t)(
+    uint8_t deviceAddress, uint32_t subAddress, uint8_t subaddressSize, const uint8_t *txBuff, uint32_t txBuffSize);
 typedef status_t (*video_i2c_receive_func_t)(
     uint8_t deviceAddress, uint32_t subAddress, uint8_t subaddressSize, uint8_t *rxBuff, uint8_t rxBuffSize);
 

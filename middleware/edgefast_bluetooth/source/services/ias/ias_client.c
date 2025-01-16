@@ -6,7 +6,8 @@
 
 #include <stdint.h>
 #include <sys/check.h>
-#include <fsl_debug_console.h>
+
+#include <porting.h>
 
 #include <bluetooth/gatt.h>
 #include <bluetooth/conn.h>
@@ -47,11 +48,11 @@ static void client_cleanup(struct bt_ias_client *ias_client)
 
 static void discover_complete(struct bt_conn *conn, int err)
 {
-	PRINTF("conn %p", (void *)conn);
+	/* LOG_DBG("conn %p", (void *)conn); */
 
 	if (err) {
 		client_cleanup(client_by_conn(conn));
-		PRINTF("Discover failed (err %d\n)", err);
+		/* LOG_DBG("Discover failed (err %d\n)", err); */
 	}
 
 	if (ias_client_cb != NULL && ias_client_cb->discover != NULL) {
@@ -77,7 +78,7 @@ int bt_ias_client_alert_write(struct bt_conn *conn, enum bt_ias_alert_lvl lvl)
 	if (lvl_u8 != BT_IAS_ALERT_LVL_NO_ALERT &&
 	    lvl_u8 != BT_IAS_ALERT_LVL_MILD_ALERT &&
 	    lvl_u8 != BT_IAS_ALERT_LVL_HIGH_ALERT) {
-		PRINTF("Invalid alert value: %u", lvl_u8);
+		/* LOG_ERR("Invalid alert value: %u", lvl_u8); */
 		return -EINVAL;
 	}
 
@@ -85,7 +86,7 @@ int bt_ias_client_alert_write(struct bt_conn *conn, enum bt_ias_alert_lvl lvl)
 					     client_by_conn(conn)->alert_level_handle,
 					     &lvl_u8, sizeof(lvl_u8), false);
 	if (err < 0) {
-		PRINTF("IAS client level %d write failed: %d", lvl, err);
+		/* LOG_ERR("IAS client level %d write failed: %d", lvl, err); */
 	}
 
 	return err;

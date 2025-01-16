@@ -1,8 +1,10 @@
-/*
- *  Copyright 2023 NXP
+/*  Copyright 2023-2024 NXP
  *
  *  SPDX-License-Identifier: BSD-3-Clause
  *
+ */
+/*!\file nxp_wifi.h
+ *\brief This file provides macros mapping between zephyr Kconfig and Wi-Fi driver.
  */
 
 #ifndef __NXP_WIFI_H__
@@ -323,6 +325,10 @@ extern "C" {
 #define CONFIG_WIFI_CLOCKSYNC CONFIG_NXP_WIFI_CLOCKSYNC
 #endif
 
+#if CONFIG_NXP_WIFI_RTS_THRESHOLD
+#define CONFIG_WIFI_RTS_THRESHOLD 1
+#endif
+
 #if CONFIG_NXP_WIFI_UAP_WORKAROUND_STICKY_TIM
 #define CONFIG_UAP_WORKAROUND_STICKY_TIM CONFIG_NXP_WIFI_UAP_WORKAROUND_STICKY_TIM
 #endif
@@ -441,10 +447,6 @@ extern "C" {
 
 #if CONFIG_NXP_WIFI_SIGMA_AGENT
 #define CONFIG_SIGMA_AGENT CONFIG_NXP_WIFI_SIGMA_AGENT
-#endif
-
-#if CONFIG_NXP_WIFI_CUSTOM_CALDATA
-#define CONFIG_CUSTOM_CALDATA CONFIG_NXP_WIFI_CUSTOM_CALDATA
 #endif
 
 #if (CONFIG_NXP_WIFI_8978) || (CONFIG_NXP_WIFI_8987) || (CONFIG_NXP_WIFI_9177)

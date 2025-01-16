@@ -1,11 +1,11 @@
-/** @file wifi_nxp.h
+/*
+ * Copyright 2008-2024 NXP
  *
- * @brief This file provides Core Wi-Fi definition for wpa supplicant RTOS driver.
+ * SPDX-License-Identifier: BSD-3-Clause
  *
- * Copyright 2008-2023 NXP
- *
- *  SPDX-License-Identifier: BSD-3-Clause
- *
+ */
+/*!\file  wifi_nxp.h
+ *\brief This file provides core Wi-Fi function definition for wpa supplicant RTOS driver port layer.
  */
 
 #ifndef __WIFI_NXP_H__
@@ -19,7 +19,7 @@
 
 typedef struct freertos_wpa_supp_dev_callbk_fns rtos_wpa_supp_dev_callbk_fns;
 
-#if CONFIG_WPA_SUPP_AP
+#if CONFIG_HOSTAPD
 typedef struct freertos_hostapd_dev_callbk_fns rtos_hostapd_dev_callbk_fns;
 #endif
 
@@ -31,7 +31,7 @@ typedef struct freertos_wpa_supp_dev_ops rtos_wpa_supp_dev_ops;
 
 typedef struct zep_wpa_supp_dev_callbk_fns rtos_wpa_supp_dev_callbk_fns;
 
-#if CONFIG_WPA_SUPP_AP
+#if CONFIG_HOSTAPD
 typedef struct zep_hostapd_dev_callbk_fns rtos_hostapd_dev_callbk_fns;
 #endif
 
@@ -62,11 +62,11 @@ struct wifi_nxp_ctx_rtos
     unsigned int remain_on_channel_freq;
     unsigned int remain_on_channel_duration;
     bool remain_on_chan_is_canceled;
-#if CONFIG_WPA_SUPP_AP
-    rtos_hostapd_dev_callbk_fns hostapd_callbk_fns;
     int mgmt_tx_status;
     uint8_t *last_mgmt_tx_data;
     size_t last_mgmt_tx_data_len;
+#if CONFIG_HOSTAPD
+    rtos_hostapd_dev_callbk_fns hostapd_callbk_fns;
 #endif
 };
 

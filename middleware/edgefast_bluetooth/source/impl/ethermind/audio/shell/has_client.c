@@ -10,13 +10,18 @@
 
 #if (defined(CONFIG_BT_HAS_CLIENT) && (CONFIG_BT_HAS_CLIENT > 0))
 
+#include <stdlib.h>
+#include <stdio.h>
 
+#include <sys/byteorder.h>
+#include <sys/util.h>
+#include <porting.h>
+
+#include <bluetooth/hci.h>
 #include <bluetooth/conn.h>
 #include <bluetooth/bluetooth.h>
 #include <bluetooth/audio/has.h>
 #include "fsl_shell.h"
-#include <stdlib.h>
-#include <stdio.h>
 
 #include "shell_bt.h"
 
@@ -68,7 +73,7 @@ static const struct bt_has_client_cb has_client_cb = {
 	.preset_read_rsp = has_client_preset_read_rsp_cb,
 };
 
-static shell_status_t cmd_has_client_init(shell_handle_t sh, int32_t argc, char *argv[])
+static int cmd_has_client_init(const struct shell *sh, size_t argc, char **argv)
 {
 	int err;
 
@@ -81,16 +86,16 @@ static shell_status_t cmd_has_client_init(shell_handle_t sh, int32_t argc, char 
 		shell_error(sh, "bt_has_client_cb_register (err %d)", err);
 	}
 
-	return (shell_status_t)err;
+	return err;
 }
 
-static shell_status_t cmd_has_client_discover(shell_handle_t sh, int32_t argc, char *argv[])
+static int cmd_has_client_discover(const struct shell *sh, size_t argc, char **argv)
 {
 	int err;
 
 	if (default_conn == NULL) {
 		shell_error(sh, "Not connected");
-		return kStatus_SHELL_Error;
+		return -ENOEXEC;
 	}
 
 	if (!ctx_shell) {
@@ -102,10 +107,10 @@ static shell_status_t cmd_has_client_discover(shell_handle_t sh, int32_t argc, c
 		shell_error(sh, "bt_has_client_discover (err %d)", err);
 	}
 
-	return (shell_status_t)err;
+	return err;
 }
 
-static shell_status_t cmd_has_client_read_presets(shell_handle_t sh, int32_t argc, char *argv[])
+static int cmd_has_client_read_presets(const struct shell *sh, size_t argc, char **argv)
 {
 	int err;
 	const uint8_t index = shell_strtoul(argv[1], 16, &err);
@@ -113,17 +118,17 @@ static shell_status_t cmd_has_client_read_presets(shell_handle_t sh, int32_t arg
 
 	if (err < 0) {
 		shell_error(sh, "Invalid command parameter (err %d)", err);
-		return (shell_status_t)err;
+		return err;
 	}
 
 	if (default_conn == NULL) {
 		shell_error(sh, "Not connected");
-		return kStatus_SHELL_Error;
+		return -ENOEXEC;
 	}
 
 	if (!inst) {
 		shell_error(sh, "No instance discovered");
-		return kStatus_SHELL_Error;
+		return -ENOEXEC;
 	}
 
 	err = bt_has_client_presets_read(inst, index, count);
@@ -131,10 +136,10 @@ static shell_status_t cmd_has_client_read_presets(shell_handle_t sh, int32_t arg
 		shell_error(sh, "bt_has_client_discover (err %d)", err);
 	}
 
-	return (shell_status_t)err;
+	return err;
 }
 
-static shell_status_t cmd_has_client_preset_set(shell_handle_t sh, int32_t argc, char *argv[])
+static int cmd_has_client_preset_set(const struct shell *sh, size_t argc, char **argv)
 {
 	bool sync = false;
 	uint8_t index;
@@ -143,7 +148,7 @@ static shell_status_t cmd_has_client_preset_set(shell_handle_t sh, int32_t argc,
 	index = shell_strtoul(argv[1], 16, &err);
 	if (err < 0) {
 		shell_error(sh, "Invalid command parameter (err %d)", err);
-		return kStatus_SHELL_Error;
+		return -ENOEXEC;
 	}
 
 	for (size_t argn = 2; argn < argc; argn++) {
@@ -153,30 +158,30 @@ static shell_status_t cmd_has_client_preset_set(shell_handle_t sh, int32_t argc,
 			sync = true;
 		} else {
 			shell_error(sh, "Invalid argument");
-			return kStatus_SHELL_Error;
+			return -ENOEXEC;
 		}
 	}
 
 	if (default_conn == NULL) {
 		shell_error(sh, "Not connected");
-		return kStatus_SHELL_Error;
+		return -ENOEXEC;
 	}
 
 	if (!inst) {
 		shell_error(sh, "No instance discovered");
-		return kStatus_SHELL_Error;
+		return -ENOEXEC;
 	}
 
 	err = bt_has_client_preset_set(inst, index, sync);
 	if (err != 0) {
 		shell_error(sh, "bt_has_client_preset_switch (err %d)", err);
-		return kStatus_SHELL_Error;
+		return -ENOEXEC;
 	}
 
-	return kStatus_SHELL_Success;
+	return 0;
 }
 
-static shell_status_t cmd_has_client_preset_next(shell_handle_t sh, int32_t argc, char *argv[])
+static int cmd_has_client_preset_next(const struct shell *sh, size_t argc, char **argv)
 {
 	bool sync = false;
 	int err;
@@ -188,30 +193,30 @@ static shell_status_t cmd_has_client_preset_next(shell_handle_t sh, int32_t argc
 			sync = true;
 		} else {
 			shell_error(sh, "Invalid argument");
-			return kStatus_SHELL_Error;
+			return -ENOEXEC;
 		}
 	}
 
 	if (default_conn == NULL) {
 		shell_error(sh, "Not connected");
-		return kStatus_SHELL_Error;
+		return -ENOEXEC;
 	}
 
 	if (!inst) {
 		shell_error(sh, "No instance discovered");
-		return kStatus_SHELL_Error;
+		return -ENOEXEC;
 	}
 
 	err = bt_has_client_preset_next(inst, sync);
 	if (err != 0) {
 		shell_error(sh, "bt_has_client_preset_next (err %d)", err);
-		return kStatus_SHELL_Error;
+		return -ENOEXEC;
 	}
 
-	return (shell_status_t)err;
+	return err;
 }
 
-static shell_status_t cmd_has_client_preset_prev(shell_handle_t sh, int32_t argc, char *argv[])
+static int cmd_has_client_preset_prev(const struct shell *sh, size_t argc, char **argv)
 {
 	bool sync = false;
 	int err;
@@ -223,30 +228,30 @@ static shell_status_t cmd_has_client_preset_prev(shell_handle_t sh, int32_t argc
 			sync = true;
 		} else {
 			shell_error(sh, "Invalid argument");
-			return kStatus_SHELL_Error;
+			return -ENOEXEC;
 		}
 	}
 
 	if (default_conn == NULL) {
 		shell_error(sh, "Not connected");
-		return kStatus_SHELL_Error;
+		return -ENOEXEC;
 	}
 
 	if (!inst) {
 		shell_error(sh, "No instance discovered");
-		return kStatus_SHELL_Error;
+		return -ENOEXEC;
 	}
 
 	err = bt_has_client_preset_prev(inst, sync);
 	if (err != 0) {
 		shell_error(sh, "bt_has_client_preset_prev (err %d)", err);
-		return kStatus_SHELL_Error;
+		return -ENOEXEC;
 	}
 
-	return (shell_status_t)err;
+	return err;
 }
 
-static shell_status_t cmd_has_client(shell_handle_t sh, int32_t argc, char *argv[])
+static int cmd_has_client(const struct shell *sh, size_t argc, char **argv)
 {
 	if (argc > 1) {
 		shell_error(sh, "%s unknown parameter: %s", argv[0], argv[1]);
@@ -254,7 +259,7 @@ static shell_status_t cmd_has_client(shell_handle_t sh, int32_t argc, char *argv
 		shell_error(sh, "%s missing subcomand", argv[0]);
 	}
 
-	return kStatus_SHELL_Error;
+	return -ENOEXEC;
 }
 
 #define HELP_NONE "[none]"
@@ -270,7 +275,7 @@ SHELL_STATIC_SUBCMD_SET_CREATE(has_client_cmds,
 	SHELL_SUBCMD_SET_END
 );
 
-SHELL_CMD_REGISTER(has_client, has_client_cmds, "Bluetooth HAS client shell commands",
+SHELL_CMD_ARG_REGISTER(has_client, &has_client_cmds, "Bluetooth HAS client shell commands",
 		       cmd_has_client, 1, 1);
 
 void bt_ShellHasClientInit(shell_handle_t shell)

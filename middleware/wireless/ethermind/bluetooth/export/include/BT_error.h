@@ -1744,7 +1744,7 @@ typedef UINT16    API_RESULT;
 #define BIP_SDP_REGISTRATION_FAILED             (0x0029U | BIP_ERR_ID)
 #define BIP_AUTH_RESP_NOT_RECEIVED              (0x002AU | BIP_ERR_ID)
 #define BIP_ENTITY_STOP_FAILED                  (0x002BU | BIP_ERR_ID)
-#define BIP_GET_OPERATION_ABORTED               (0X002CU | BIP_ERR_ID)
+#define BIP_GET_OPERATION_ABORTED               (0x002CU | BIP_ERR_ID)
 #define BIP_INVALID_CONNECTION_ID               (0x002DU | BIP_ERR_ID)
 #define BIP_INVALID_CONNECT_REQ_LENGTH          (0x002EU | BIP_ERR_ID)
 #define BIP_PUT_OPERATION_ABORTED               (0x002FU | BIP_ERR_ID)
@@ -1978,6 +1978,7 @@ typedef UINT16    API_RESULT;
 #define PBAP_AUTHENTICATION_FAILED              (0x0017U | PBAP_ERR_ID)
 #define PBAP_GET_OPERATION_ABORTED              (0x0018U | PBAP_ERR_ID)
 #define PBAP_INVALID_CONNECT_REQ_MAX_TX_LENGTH  (0x0019U | PBAP_ERR_ID)
+#define PBAP_NO_CONN_ID_HDR_IN_RSP              (0x001AU | PBAP_ERR_ID)
 
 
 /* ======================================= Section 'SAP' */

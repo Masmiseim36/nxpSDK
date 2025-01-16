@@ -22,7 +22,7 @@
 #define IPSP_MTU     1280U
 #define INIT_CREDITS 1024U
 
-NET_BUF_POOL_DEFINE(data_pool, 1, IPSP_MTU, USER_DATA_MIN, NULL);
+NET_BUF_POOL_DEFINE(data_pool, 1, BT_L2CAP_SDU_BUF_SIZE(IPSP_MTU), USER_DATA_MIN, NULL);
 
 static int l2cap_rx(struct bt_l2cap_chan *chan, struct net_buf *buf);
 static struct net_buf *alloc_buf_cb(struct bt_l2cap_chan *chan);
@@ -76,7 +76,6 @@ static int ipsp_accept(struct bt_conn *conn, struct bt_l2cap_server *server, str
 {
     l2cap_chan.chan.ops = &l2cap_ops;
     l2cap_chan.rx.mtu = IPSP_MTU;
-    l2cap_chan.rx.init_credits = INIT_CREDITS;
     *ppl2cap_chan = &l2cap_chan.chan;
     return 0;
 }
@@ -88,7 +87,7 @@ static int ipsp_accept(struct bt_conn *conn, struct bt_l2cap_server *server, str
 int ipsp_init(ipsp_rx_cb_t pf_rx_cb)
 {
     mpf_rx_cb = pf_rx_cb;
-    
+
     return 0;
 }
 
@@ -99,7 +98,6 @@ int ipsp_connect(struct bt_conn *conn)
     {
         l2cap_chan.chan.ops = &l2cap_ops;
         l2cap_chan.rx.mtu = IPSP_MTU;
-        l2cap_chan.rx.init_credits = INIT_CREDITS;
 
         result = bt_l2cap_chan_connect(conn, &l2cap_chan.chan, IPSP_LE_PSM);
     }
@@ -119,5 +117,12 @@ int ipsp_listen(void)
 
 int ipsp_send(struct net_buf *buf)
 {
-    return bt_l2cap_chan_send(&l2cap_chan.chan, buf);
+    int err = -ENOTCONN;
+    
+    if (l2cap_chan.state == BT_L2CAP_CONNECTED)
+    {
+        err = bt_l2cap_chan_send(&l2cap_chan.chan, buf);
+    }
+    return err;
 }
+

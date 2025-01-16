@@ -3,7 +3,7 @@
 
   - Copyright (c) 2017-2020 Linaro LTD
   - Copyright (c) 2017-2019 JUUL Labs
-  - Copyright (c) 2019-2021 Arm Limited
+  - Copyright (c) 2019-2023 Arm Limited
 
   - Original license:
 
@@ -107,8 +107,8 @@ struct image_tlv {
 #define IMAGE_TLV_KEYHASH           0x01   /* hash of the public key */
 #define IMAGE_TLV_SHA256            0x10   /* SHA256 of image hdr and body */
 #define IMAGE_TLV_RSA2048_PSS       0x20   /* RSA2048 of hash output */
-#define IMAGE_TLV_ECDSA224          0x21   /* ECDSA of hash output */
-#define IMAGE_TLV_ECDSA256          0x22   /* ECDSA of hash output */
+#define IMAGE_TLV_ECDSA224          0x21   /* ECDSA of hash output - Not supported anymore */
+#define IMAGE_TLV_ECDSA_SIG         0x22   /* ECDSA of hash output */
 #define IMAGE_TLV_RSA3072_PSS       0x23   /* RSA3072 of hash output */
 #define IMAGE_TLV_ED25519           0x24   /* ED25519 of hash output */
 #define IMAGE_TLV_ENC_RSA2048       0x30   /* Key encrypted with RSA-OAEP-2048 */
@@ -1360,7 +1360,12 @@ specific data using the same shared data area as for the measured boot. For
 this, the target must provide a definition for the `boot_save_shared_data()`
 function which is declared in `boot/bootutil/include/bootutil/boot_record.h`.
 The `boot_add_data_to_shared_area()` function can be used for adding new TLV
-entries to the shared data area.
+entries to the shared data area. Alternatively, setting the
+`MCUBOOT_DATA_SHARING_BOOTINFO` option will provide a default function for
+this which saves information such as the maximum application size, bootloader
+version (if available), running slot number, if recovery is part of MCUboot
+and the signature type. Details of the TLVs for this information can be found
+in `boot/bootutil/include/bootutil/boot_status.h` with `BLINFO_` prefixes.
 
 ## [Testing in CI](#testing-in-ci)
 

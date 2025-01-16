@@ -49,7 +49,7 @@
                    - \ref ARM_MATH_SINGULAR      : Input matrix is found to be singular (non-invertible)
  */
 
-arm_status arm_mat_inverse_f64(
+ARM_DSP_ATTRIBUTE arm_status arm_mat_inverse_f64(
   const arm_matrix_instance_f64 * pSrc,
         arm_matrix_instance_f64 * pDst)
 {
@@ -153,6 +153,9 @@ arm_status arm_mat_inverse_f64(
     /* Index modifier to navigate through the columns */
     for(column = 0U; column < numCols; column++)
     {
+      /* reset flag */
+      flag = 0; 
+      
       /* Check if the pivot element is zero..
        * If it is zero then interchange the row with non zero row below.
        * If there is no non zero element to replace in the rows below,

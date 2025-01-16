@@ -9,40 +9,34 @@
 
 #if (defined(CONFIG_BT_BAP_SCAN_DELEGATOR) && (CONFIG_BT_BAP_SCAN_DELEGATOR > 0))
 
-#include <porting.h>
+#include <stdbool.h>
+#include <stddef.h>
+#include <stdint.h>
+#include <string.h>
 
+#include <porting.h>
+#include <bluetooth/addr.h>
+#include <bluetooth/att.h>
+#include <bluetooth/audio/audio.h>
+#include <bluetooth/audio/bap.h>
+#include <bluetooth/bluetooth.h>
+#include <bluetooth/conn.h>
+#include <bluetooth/gap.h>
+#include <bluetooth/gatt.h>
+#include <bluetooth/hci_types.h>
+#include <bluetooth/l2cap.h>
+#include <bluetooth/buf.h>
+#include <bluetooth/uuid.h>
+#include <net/buf.h>
+#include <sys/atomic.h>
 #include <sys/byteorder.h>
 #include <sys/check.h>
 #include <sys/util.h>
-
-#include <bluetooth/bluetooth.h>
-#include <bluetooth/conn.h>
-#include <bluetooth/gatt.h>
-#include <bluetooth/l2cap.h>
-#include <bluetooth/buf.h>
-
-#include "fsl_debug_console.h"
 
 #define LOG_ENABLE IS_ENABLED(CONFIG_BT_DEBUG_BAP_SCAN_DELEGATOR)
 #define LOG_MODULE_NAME bt_bass
 #include "fsl_component_log.h"
 LOG_MODULE_DEFINE(LOG_MODULE_NAME, kLOG_LevelTrace);
-
-#ifndef LOG_DBG
-#define LOG_DBG BT_DBG
-#endif
-
-#ifndef LOG_ERR
-#define LOG_ERR BT_ERR
-#endif
-
-#ifndef LOG_HEXDUMP_DBG
-#define LOG_HEXDUMP_DBG BT_HEXDUMP_DBG
-#endif
-
-#ifndef LOG_WRN
-#define LOG_WRN BT_WARN
-#endif
 
 //#include "common/bt_str.h"
 
@@ -53,16 +47,12 @@ LOG_MODULE_DEFINE(LOG_MODULE_NAME, kLOG_LevelTrace);
 
 #define PAST_TIMEOUT              K_SECONDS(10)
 
-#define SCAN_DELEGATOR_BUF_SEM_TIMEOUT CONFIG_BT_BAP_SCAN_DELEGATOR_BUF_TIMEOUT
-#if 0
+#define SCAN_DELEGATOR_BUF_SEM_TIMEOUT K_MSEC(CONFIG_BT_BAP_SCAN_DELEGATOR_BUF_TIMEOUT)
 static K_SEM_DEFINE(read_buf_sem, 1, 1);
-#else
-static OSA_SEMAPHORE_HANDLE_DEFINE(read_buf_sem);
-static bool read_buf_sem_init = false;
-#endif
 NET_BUF_SIMPLE_DEFINE_STATIC(read_buf, BT_ATT_MAX_ATTRIBUTE_LEN);
 
 enum bass_recv_state_internal_flag {
+	/* TODO: Replace this flag with a k_work_delayable */
 	BASS_RECV_STATE_INTERNAL_FLAG_NOTIFY_PEND,
 
 	BASS_RECV_STATE_INTERNAL_FLAG_NUM,
@@ -112,19 +102,6 @@ static bool bits_subset_of(uint32_t a, uint32_t b)
 	return (((a) & (~(b))) == 0);
 }
 
-static bool valid_bis_syncs(uint32_t bis_sync)
-{
-	if (bis_sync == BT_BAP_BIS_SYNC_NO_PREF) {
-		return true;
-	}
-
-	if (bis_sync > BIT_MASK(31)) { /* Max BIS index */
-		return false;
-	}
-
-	return true;
-}
-
 static bool bis_syncs_unique_or_no_pref(uint32_t requested_bis_syncs,
 					uint32_t aggregated_bis_syncs)
 {
@@ -142,29 +119,31 @@ static bool bis_syncs_unique_or_no_pref(uint32_t requested_bis_syncs,
 
 static void bt_debug_dump_recv_state(const struct bass_recv_state_internal *recv_state)
 {
-	const struct bt_bap_scan_delegator_recv_state *state = &recv_state->state;
-	const bool is_bad_code = state->encrypt_state ==
-					BT_BAP_BIG_ENC_STATE_BAD_CODE;
+	if (recv_state->active) {
+		const struct bt_bap_scan_delegator_recv_state *state = &recv_state->state;
+		const bool is_bad_code = state->encrypt_state == BT_BAP_BIG_ENC_STATE_BAD_CODE;
 
-	LOG_DBG("Receive State[%d]: src ID %u, addr %s, adv_sid %u, "
-		"broadcast_id 0x%06X, pa_sync_state %u, "
-		"encrypt state %u%s%s, num_subgroups %u",
-		recv_state->index, state->src_id, bt_addr_le_str(&state->addr), state->adv_sid,
-		state->broadcast_id, state->pa_sync_state, state->encrypt_state,
-		is_bad_code ? ", bad code" : "",
-		is_bad_code ? bt_hex(state->bad_code, sizeof(state->bad_code)) : "",
-		state->num_subgroups);
-        
-        (void)is_bad_code;
+		LOG_DBG("Receive State[%d]: src ID %u, addr %s, adv_sid %u, broadcast_id 0x%06X, "
+			"pa_sync_state %u, encrypt state %u%s%s, num_subgroups %u",
+			recv_state->index, state->src_id, bt_addr_le_str(&state->addr),
+			state->adv_sid, state->broadcast_id, state->pa_sync_state,
+			state->encrypt_state, is_bad_code ? ", bad code" : "",
+			is_bad_code ? bt_hex(state->bad_code, sizeof(state->bad_code)) : "",
+			state->num_subgroups);
+		(void)is_bad_code;
 
-	for (int i = 0; i < state->num_subgroups; i++) {
-		const struct bt_bap_bass_subgroup *subgroup = &state->subgroups[i];
+		for (uint8_t i = 0U; i < state->num_subgroups; i++) {
+			const struct bt_bap_bass_subgroup *subgroup = &state->subgroups[i];
 
-		LOG_DBG("\tSubgroup[%d]: BIS sync %u (requested %u), metadata_len %zu, metadata: "
-			"%s",
-			i, subgroup->bis_sync, recv_state->requested_bis_sync[i],
-			subgroup->metadata_len, bt_hex(subgroup->metadata, subgroup->metadata_len));
-		(void)subgroup;
+			LOG_DBG("\tSubgroup[%u]: BIS sync %u (requested %u), metadata_len %zu, "
+				"metadata: %s",
+				i, subgroup->bis_sync, recv_state->requested_bis_sync[i],
+				subgroup->metadata_len,
+				bt_hex(subgroup->metadata, subgroup->metadata_len));
+			(void)subgroup;
+		}
+	} else {
+		LOG_DBG("Inactive receive state");
 	}
 }
 
@@ -245,11 +224,7 @@ static void receive_state_updated(struct bt_conn *conn,
 		return;
 	}
 
-#if 0
 	err = k_sem_take(&read_buf_sem, SCAN_DELEGATOR_BUF_SEM_TIMEOUT);
-#else
-	err = (int)OSA_SemaphoreWait(read_buf_sem, SCAN_DELEGATOR_BUF_SEM_TIMEOUT);
-#endif
 	if (err != 0) {
 		LOG_DBG("Failed to take read_buf_sem: %d", err);
 
@@ -265,11 +240,7 @@ static void receive_state_updated(struct bt_conn *conn,
 						       &internal_state->state);
 	}
 
-#if 0
 	k_sem_give(&read_buf_sem);
-#else
-	(void)OSA_SemaphorePost(read_buf_sem);
-#endif
 }
 
 static void bis_sync_request_updated(struct bt_conn *conn,
@@ -279,6 +250,8 @@ static void bis_sync_request_updated(struct bt_conn *conn,
 	    scan_delegator_cbs->bis_sync_req != NULL) {
 		scan_delegator_cbs->bis_sync_req(conn, &internal_state->state,
 						 internal_state->requested_bis_sync);
+	} else {
+		LOG_WRN("bis_sync_req callback is missing");
 	}
 }
 
@@ -305,50 +278,31 @@ static void scan_delegator_security_changed(struct bt_conn *conn,
 					    bt_security_t level,
 					    enum bt_security_err err)
 {
-	if (err != 0 || conn->encrypt == 0) {
-		return;
-	}
 
-	if (bt_addr_le_is_bonded(conn->id, &conn->le.dst) == 0) {
+	if (err != 0 || level < BT_SECURITY_L2 || !bt_addr_le_is_bonded(conn->id, &conn->le.dst)) {
 		return;
 	}
 
 	/* Notify all receive states after a bonded device reconnects */
-	for (int i = 0; i < ARRAY_SIZE(scan_delegator.recv_states); i++) {
-		struct bass_recv_state_internal *internal_state = &scan_delegator.recv_states[i];
-		int gatt_err;
+	for (size_t i = 0; i < ARRAY_SIZE(scan_delegator.recv_states); i++) {
+		const struct bass_recv_state_internal *internal_state =
+			&scan_delegator.recv_states[i];
 
 		if (!internal_state->active) {
 			continue;
 		}
 
-#if 0
-		err = k_sem_take(&read_buf_sem, SCAN_DELEGATOR_BUF_SEM_TIMEOUT);
-#else
-		int res = (int)OSA_SemaphoreWait(read_buf_sem, SCAN_DELEGATOR_BUF_SEM_TIMEOUT);
-#endif
-		if (res != 0) {
-			LOG_DBG("Failed to take read_buf_sem: %d", res);
+		int err = k_sem_take(&read_buf_sem, SCAN_DELEGATOR_BUF_SEM_TIMEOUT);
+		if (err != 0) {
+			LOG_DBG("Failed to take read_buf_sem: %d", err);
 
 			return;
 		}
 
 		net_buf_put_recv_state(internal_state);
+		bass_notify_receive_state(conn, internal_state);
 
-		gatt_err = bt_gatt_notify_uuid(conn, BT_UUID_BASS_RECV_STATE,
-					       internal_state->attr, read_buf.data,
-					       read_buf.len);
-
-#if 0
 		k_sem_give(&read_buf_sem);
-#else
-		(void)OSA_SemaphorePost(read_buf_sem);
-#endif
-
-		if (gatt_err != 0) {
-			LOG_WRN("Could not notify receive state[%d] to reconnecting assistant: %d",
-				i, gatt_err);
-		}
 	}
 }
 
@@ -361,7 +315,7 @@ static struct broadcast_assistant *get_bap_broadcast_assistant(struct bt_conn *c
 {
 	struct broadcast_assistant *new = NULL;
 
-	for (int i = 0; i < ARRAY_SIZE(scan_delegator.assistant_configs); i++) {
+	for (size_t i = 0; i < ARRAY_SIZE(scan_delegator.assistant_configs); i++) {
 		if (scan_delegator.assistant_configs[i].conn == conn) {
 			return &scan_delegator.assistant_configs[i];
 		} else if (new == NULL &&
@@ -387,7 +341,7 @@ static uint8_t next_src_id(void)
 	while (!unique) {
 		next_src_id = scan_delegator.next_src_id++;
 		unique = true;
-		for (int i = 0; i < ARRAY_SIZE(scan_delegator.recv_states); i++) {
+		for (size_t i = 0; i < ARRAY_SIZE(scan_delegator.recv_states); i++) {
 			if (scan_delegator.recv_states[i].active &&
 			    scan_delegator.recv_states[i].state.src_id == next_src_id) {
 				unique = false;
@@ -401,7 +355,7 @@ static uint8_t next_src_id(void)
 
 static struct bass_recv_state_internal *bass_lookup_src_id(uint8_t src_id)
 {
-	for (int i = 0; i < ARRAY_SIZE(scan_delegator.recv_states); i++) {
+	for (size_t i = 0; i < ARRAY_SIZE(scan_delegator.recv_states); i++) {
 		if (scan_delegator.recv_states[i].active &&
 		    scan_delegator.recv_states[i].state.src_id == src_id) {
 			return &scan_delegator.recv_states[i];
@@ -413,7 +367,7 @@ static struct bass_recv_state_internal *bass_lookup_src_id(uint8_t src_id)
 
 static struct bass_recv_state_internal *bass_lookup_pa_sync(struct bt_le_per_adv_sync *sync)
 {
-	for (int i = 0; i < ARRAY_SIZE(scan_delegator.recv_states); i++) {
+	for (size_t i = 0; i < ARRAY_SIZE(scan_delegator.recv_states); i++) {
 		if (scan_delegator.recv_states[i].pa_sync == sync) {
 			return &scan_delegator.recv_states[i];
 		}
@@ -424,7 +378,7 @@ static struct bass_recv_state_internal *bass_lookup_pa_sync(struct bt_le_per_adv
 
 static struct bass_recv_state_internal *bass_lookup_addr(const bt_addr_le_t *addr)
 {
-	for (int i = 0; i < ARRAY_SIZE(scan_delegator.recv_states); i++) {
+	for (size_t i = 0; i < ARRAY_SIZE(scan_delegator.recv_states); i++) {
 		if (bt_addr_le_eq(&scan_delegator.recv_states[i].state.addr,
 				  addr)) {
 			return &scan_delegator.recv_states[i];
@@ -495,6 +449,11 @@ static struct bt_le_per_adv_sync_cb pa_sync_cb =  {
 
 static bool supports_past(struct bt_conn *conn, uint8_t pa_sync_val)
 {
+	LOG_DBG("%p remote %s PAST, local %s PAST (req %u)", (void *)conn,
+		BT_FEAT_LE_PAST_SEND(conn->le.features) ? "supports" : "does not support",
+		BT_FEAT_LE_PAST_RECV(bt_dev.le.features) ? "supports" : "does not support",
+		pa_sync_val);
+
 	return pa_sync_val == BT_BAP_BASS_PA_REQ_SYNC_PAST &&
 	       BT_FEAT_LE_PAST_SEND(conn->le.features) &&
 	       BT_FEAT_LE_PAST_RECV(bt_dev.le.features);
@@ -513,6 +472,8 @@ static int pa_sync_request(struct bt_conn *conn,
 		err = scan_delegator_cbs->pa_sync_req(conn, state,
 						      past_supported,
 						      pa_interval);
+	} else {
+		LOG_WRN("pa_sync_req callback is missing, rejecting PA sync request");
 	}
 
 	return err;
@@ -526,9 +487,34 @@ static int pa_sync_term_request(struct bt_conn *conn,
 	if (scan_delegator_cbs != NULL &&
 	    scan_delegator_cbs->pa_sync_req != NULL) {
 		err = scan_delegator_cbs->pa_sync_term_req(conn, state);
+	} else {
+		LOG_WRN("pa_sync_term_req callback is missing, rejecting PA sync term request");
 	}
 
 	return err;
+}
+
+/* BAP 6.5.4 states that the Broadcast Assistant shall not initiate the Add Source operation
+ * if the operation would result in duplicate values for the combined Source_Address_Type,
+ * Source_Adv_SID, and Broadcast_ID fields of any Broadcast Receive State characteristic exposed
+ * by the Scan Delegator.
+ */
+static bool bass_source_is_duplicate(uint32_t broadcast_id, uint8_t adv_sid, uint8_t addr_type)
+{
+	struct bass_recv_state_internal *state;
+
+	for (size_t i = 0; i < ARRAY_SIZE(scan_delegator.recv_states); i++) {
+		state = &scan_delegator.recv_states[i];
+
+		if (state != NULL && state->state.broadcast_id == broadcast_id &&
+			state->state.adv_sid == adv_sid && state->state.addr.type == addr_type) {
+			LOG_DBG("recv_state already exists at src_id=0x%02X", state->state.src_id);
+
+			return true;
+		}
+	}
+
+	return false;
 }
 
 static int scan_delegator_add_source(struct bt_conn *conn,
@@ -540,7 +526,10 @@ static int scan_delegator_add_source(struct bt_conn *conn,
 	uint8_t pa_sync;
 	uint16_t pa_interval;
 	uint32_t aggregated_bis_syncs = 0;
+	uint32_t broadcast_id;
 	bool bis_sync_requested;
+	uint16_t total_len;
+	struct bt_bap_bass_cp_add_src *add_src;
 
 	/* subtract 1 as the opcode has already been pulled */
 	if (buf->len < sizeof(struct bt_bap_bass_cp_add_src) - 1) {
@@ -548,9 +537,38 @@ static int scan_delegator_add_source(struct bt_conn *conn,
 		return BT_GATT_ERR(BT_ATT_ERR_WRITE_REQ_REJECTED);
 	}
 
+	add_src = (void *)(buf->data - 1);
+	total_len = sizeof(struct bt_bap_bass_cp_add_src) - 1;
+	for (int i = 0; i < add_src->num_subgroups; i++) {
+		struct bt_bap_bass_cp_subgroup *subgroup;
+		uint16_t index = total_len;
+
+		total_len += sizeof(struct bt_bap_bass_cp_subgroup);
+		if (total_len > buf->len) {
+			LOG_DBG("Invalid length %u", buf->len);
+
+			return BT_GATT_ERR(BT_ATT_ERR_WRITE_REQ_REJECTED);
+		}
+
+		subgroup = (void *)&buf->data[index];
+		total_len += subgroup->metadata_len;
+		if (total_len > buf->len) {
+			LOG_DBG("Invalid length %u", buf->len);
+
+			return BT_GATT_ERR(BT_ATT_ERR_WRITE_REQ_REJECTED);
+		}
+	}
+
+	if (total_len != buf->len) {
+		LOG_DBG("Invalid length %u", buf->len);
+
+		return BT_GATT_ERR(BT_ATT_ERR_WRITE_REQ_REJECTED);
+	}
+
 	internal_state = get_free_recv_state();
 	if (internal_state == NULL) {
-		LOG_DBG("Could not add src");
+		LOG_DBG("Could not get free receive state");
+
 		return BT_GATT_ERR(BT_ATT_ERR_INSUFFICIENT_RESOURCES);
 	}
 
@@ -572,7 +590,17 @@ static int scan_delegator_add_source(struct bt_conn *conn,
 		return BT_GATT_ERR(BT_ATT_ERR_VALUE_NOT_ALLOWED);
 	}
 
-	state->broadcast_id = net_buf_simple_pull_le24(buf);
+	broadcast_id = net_buf_simple_pull_le24(buf);
+
+	if (bass_source_is_duplicate(broadcast_id, state->adv_sid, state->addr.type)) {
+		LOG_DBG("Adding broadcast_id=0x%06X, adv_sid=0x%02X, and addr.type=0x%02X would "
+			"result in duplication", state->broadcast_id, state->adv_sid,
+			state->addr.type);
+
+		return BT_GATT_ERR(BT_ATT_ERR_WRITE_REQ_REJECTED);
+	}
+
+	state->broadcast_id = broadcast_id;
 
 	pa_sync = net_buf_simple_pull_u8(buf);
 	if (pa_sync > BT_BAP_BASS_PA_REQ_SYNC) {
@@ -593,11 +621,6 @@ static int scan_delegator_add_source(struct bt_conn *conn,
 	for (int i = 0; i < state->num_subgroups; i++) {
 		struct bt_bap_bass_subgroup *subgroup = &state->subgroups[i];
 		uint8_t *metadata;
-
-		if (buf->len < (sizeof(subgroup->bis_sync) + sizeof(subgroup->metadata_len))) {
-			LOG_DBG("Invalid length %u", buf->size);
-			return BT_GATT_ERR(BT_ATT_ERR_WRITE_REQ_REJECTED);
-		}
 
 		internal_state->requested_bis_sync[i] = net_buf_simple_pull_le32(buf);
 		if (internal_state->requested_bis_sync[i] != BT_BAP_BIS_SYNC_NO_PREF) {
@@ -626,17 +649,15 @@ static int scan_delegator_add_source(struct bt_conn *conn,
 		}
 
 		if (!valid_bis_syncs(internal_state->requested_bis_sync[i])) {
+			LOG_DBG("Invalid BIS sync[%d]: 0x%08X", i,
+				internal_state->requested_bis_sync[i]);
+
 			return BT_GATT_ERR(BT_ATT_ERR_VALUE_NOT_ALLOWED);
 		}
+
 		aggregated_bis_syncs |= internal_state->requested_bis_sync[i];
 
 		subgroup->metadata_len = net_buf_simple_pull_u8(buf);
-
-		if (buf->len < subgroup->metadata_len) {
-			LOG_DBG("Invalid length %u", buf->size);
-
-			return BT_GATT_ERR(BT_ATT_ERR_WRITE_REQ_REJECTED);
-		}
 
 #if CONFIG_BT_AUDIO_CODEC_CFG_MAX_METADATA_SIZE < 255 /* walkaround for below compare always false issue. */
 		if (subgroup->metadata_len > CONFIG_BT_AUDIO_CODEC_CFG_MAX_METADATA_SIZE) {
@@ -652,25 +673,24 @@ static int scan_delegator_add_source(struct bt_conn *conn,
 			     subgroup->metadata_len);
 	}
 
-	if (buf->len != 0) {
-		LOG_DBG("Invalid length %u", buf->size);
-		return BT_GATT_ERR(BT_ATT_ERR_WRITE_REQ_REJECTED);
-	}
+	/* The active flag shall be set before any application callbacks, so that any calls for the
+	 * receive state can be processed
+	 */
+	internal_state->active = true;
+
+	/* Set NOTIFY_PEND flag to ensure that we only send 1 notification in case that the upper
+	 * layer calls another function that changes the state in the pa_sync_request callback
+	 */
+	atomic_set_bit(internal_state->flags, BASS_RECV_STATE_INTERNAL_FLAG_NOTIFY_PEND);
 
 	if (pa_sync != BT_BAP_BASS_PA_REQ_NO_SYNC) {
 		int err;
 
-		/* Set NOTIFY_PEND flag to ensure that we only send 1
-		 * notification in case that the upper layer calls another
-		 * function that changes the state in the pa_sync_request
-		 * callback
-		 */
-		atomic_set_bit(internal_state->flags,
-			       BASS_RECV_STATE_INTERNAL_FLAG_NOTIFY_PEND);
 		err = pa_sync_request(conn, state, pa_sync, pa_interval);
 
 		if (err != 0) {
 			(void)memset(state, 0, sizeof(*state));
+			internal_state->active = false;
 
 			LOG_DBG("PA sync %u from %p was rejected with reason %d", pa_sync, conn,
 				err);
@@ -678,8 +698,6 @@ static int scan_delegator_add_source(struct bt_conn *conn,
 			return BT_GATT_ERR(BT_ATT_ERR_WRITE_REQ_REJECTED);
 		}
 	}
-
-	internal_state->active = true;
 
 	LOG_DBG("Index %u: New source added: ID 0x%02x",
 		internal_state->index, state->src_id);
@@ -711,9 +729,39 @@ static int scan_delegator_mod_src(struct bt_conn *conn,
 	uint8_t pa_sync;
 	uint32_t aggregated_bis_syncs = 0;
 	bool bis_sync_change_requested;
+	uint16_t total_len;
+	struct bt_bap_bass_cp_mod_src *mod_src;
 
 	/* subtract 1 as the opcode has already been pulled */
 	if (buf->len < sizeof(struct bt_bap_bass_cp_mod_src) - 1) {
+		LOG_DBG("Invalid length %u", buf->len);
+
+		return BT_GATT_ERR(BT_ATT_ERR_WRITE_REQ_REJECTED);
+	}
+
+	mod_src = (void *)(buf->data - 1);
+	total_len = sizeof(struct bt_bap_bass_cp_mod_src) - 1;
+	for (int i = 0; i < mod_src->num_subgroups; i++) {
+		struct bt_bap_bass_cp_subgroup *subgroup;
+		uint16_t index = total_len;
+
+		total_len += sizeof(struct bt_bap_bass_cp_subgroup);
+		if (total_len > buf->len) {
+			LOG_DBG("Invalid length %u", buf->len);
+
+			return BT_GATT_ERR(BT_ATT_ERR_WRITE_REQ_REJECTED);
+		}
+
+		subgroup = (void *)&buf->data[index];
+		total_len += subgroup->metadata_len;
+		if (total_len > buf->len) {
+			LOG_DBG("Invalid length %u", buf->len);
+
+			return BT_GATT_ERR(BT_ATT_ERR_WRITE_REQ_REJECTED);
+		}
+	}
+
+	if (total_len != buf->len) {
 		LOG_DBG("Invalid length %u", buf->len);
 
 		return BT_GATT_ERR(BT_ATT_ERR_WRITE_REQ_REJECTED);
@@ -753,11 +801,6 @@ static int scan_delegator_mod_src(struct bt_conn *conn,
 		uint32_t old_bis_sync_req;
 		uint8_t *metadata;
 
-		if (buf->len < (sizeof(subgroup->bis_sync) + sizeof(subgroup->metadata_len))) {
-			LOG_DBG("Invalid length %u", buf->len);
-			return BT_GATT_ERR(BT_ATT_ERR_WRITE_REQ_REJECTED);
-		}
-
 		old_bis_sync_req = internal_state->requested_bis_sync[i];
 
 		internal_state->requested_bis_sync[i] = net_buf_simple_pull_le32(buf);
@@ -793,11 +836,6 @@ static int scan_delegator_mod_src(struct bt_conn *conn,
 
 		subgroup->metadata_len = net_buf_simple_pull_u8(buf);
 
-		if (buf->len < subgroup->metadata_len) {
-			LOG_DBG("Invalid length %u", buf->len);
-			return BT_GATT_ERR(BT_ATT_ERR_WRITE_REQ_REJECTED);
-		}
-
 #if CONFIG_BT_AUDIO_CODEC_CFG_MAX_METADATA_SIZE < 255 /* walkaround for below compare always false issue. */
 		if (subgroup->metadata_len > CONFIG_BT_AUDIO_CODEC_CFG_MAX_METADATA_SIZE) {
 			LOG_WRN("Metadata too long %u/%u", subgroup->metadata_len,
@@ -812,12 +850,6 @@ static int scan_delegator_mod_src(struct bt_conn *conn,
 			     subgroup->metadata_len);
 	}
 
-	if (buf->len != 0) {
-		LOG_DBG("Invalid length %u", buf->size);
-
-		return BT_GATT_ERR(BT_ATT_ERR_WRITE_REQ_REJECTED);
-	}
-
 	/* All input has been validated; update receive state and check for changes */
 	state = &internal_state->state;
 
@@ -830,25 +862,34 @@ static int scan_delegator_mod_src(struct bt_conn *conn,
 	}
 
 	for (int i = 0; i < num_subgroups; i++) {
-		/* If the metadata len is 0, we shall not overwrite the existing metadata */
-		if (subgroups[i].metadata_len == 0) {
-			continue;
-		}
+		const bool metadata_len_changed =
+			subgroups[i].metadata_len != state->subgroups[i].metadata_len;
 
-		if (subgroups[i].metadata_len != state->subgroups[i].metadata_len) {
+		if (metadata_len_changed) {
 			state->subgroups[i].metadata_len = subgroups[i].metadata_len;
 			state_changed = true;
 		}
 
-		if (memcmp(subgroups[i].metadata, state->subgroups[i].metadata,
+		if (metadata_len_changed ||
+		    memcmp(subgroups[i].metadata, state->subgroups[i].metadata,
 			   sizeof(subgroups[i].metadata)) != 0) {
-			(void)memcpy(state->subgroups[i].metadata,
-				     subgroups[i].metadata,
-				     state->subgroups[i].metadata_len);
-			state->subgroups[i].metadata_len = subgroups[i].metadata_len;
+
+			if (state->subgroups[i].metadata_len == 0U) {
+				memset(state->subgroups[i].metadata, 0,
+				       state->subgroups[i].metadata_len);
+			} else {
+				(void)memcpy(state->subgroups[i].metadata, subgroups[i].metadata,
+					     state->subgroups[i].metadata_len);
+			}
+
 			state_changed = true;
 		}
 	}
+
+	/* Set NOTIFY_PEND flag to ensure that we only send 1 notification in case that the upper
+	 * layer calls another function that changes the state in the pa_sync_request callback
+	 */
+	atomic_set_bit(internal_state->flags, BASS_RECV_STATE_INTERNAL_FLAG_NOTIFY_PEND);
 
 	/* Only send the sync request to upper layers if it is requested, and
 	 * we are not already synced to the device
@@ -882,6 +923,8 @@ static int scan_delegator_mod_src(struct bt_conn *conn,
 
 		state_changed = true;
 	}
+
+	atomic_clear_bit(internal_state->flags, BASS_RECV_STATE_INTERNAL_FLAG_NOTIFY_PEND);
 
 	/* Notify if changed */
 	if (state_changed) {
@@ -1121,11 +1164,7 @@ static ssize_t read_recv_state(struct bt_conn *conn,
 		LOG_DBG("Index %u: Source ID 0x%02x", idx, state->src_id);
 		(void)state;
 
-#if 0
 		err = k_sem_take(&read_buf_sem, SCAN_DELEGATOR_BUF_SEM_TIMEOUT);
-#else
-		err = (int)OSA_SemaphoreWait(read_buf_sem, SCAN_DELEGATOR_BUF_SEM_TIMEOUT);
-#endif
 		if (err != 0) {
 			LOG_DBG("Failed to take read_buf_sem: %d", err);
 
@@ -1138,18 +1177,13 @@ static ssize_t read_recv_state(struct bt_conn *conn,
 		ret_val = bt_gatt_attr_read(conn, attr, buf, len, offset,
 					    read_buf.data, read_buf.len);
 
-#if 0
 		k_sem_give(&read_buf_sem);
-#else
-		(void)OSA_SemaphorePost(read_buf_sem);
-#endif
 
 		return ret_val;
-	} else {
-		LOG_DBG("Index %u: Not active", idx);
-
-		return bt_gatt_attr_read(conn, attr, buf, len, offset, NULL, 0);
 	}
+	LOG_DBG("Index %u: Not active", idx);
+	return bt_gatt_attr_read(conn, attr, buf, len, offset, NULL, 0);
+
 }
 
 #define RECEIVE_STATE_CHARACTERISTIC(idx) \
@@ -1189,12 +1223,6 @@ int bt_bap_scan_delegator_init(void)
 #endif /* CONFIG_BT_BAP_SCAN_DELEGATOR_RECV_STATE_COUNT > 1 */
 
 	bt_le_per_adv_sync_cb_register(&pa_sync_cb);
-
-	if(!read_buf_sem_init)
-	{
-		(void)OSA_SemaphoreCreate(read_buf_sem, 1);
-		read_buf_sem_init = true;
-	}
 
 	return 0;
 }
@@ -1305,9 +1333,13 @@ static bool valid_bt_bap_scan_delegator_add_src_param(
 		return false;
 	}
 
-	if (param->pa_sync == NULL) {
-		LOG_DBG("NULL pa_sync");
+	CHECKIF(param->addr.type > BT_ADDR_LE_RANDOM) {
+		LOG_DBG("param->addr.type %u is invalid", param->addr.type);
+		return false;
+	}
 
+	CHECKIF(param->sid > BT_GAP_SID_MAX) {
+		LOG_DBG("param->sid %d is invalid", param->sid);
 		return false;
 	}
 
@@ -1346,42 +1378,40 @@ int bt_bap_scan_delegator_add_src(const struct bt_bap_scan_delegator_add_src_par
 {
 	struct bass_recv_state_internal *internal_state = NULL;
 	struct bt_bap_scan_delegator_recv_state *state;
-	struct bt_le_per_adv_sync_info sync_info;
-	int err;
+	struct bt_le_per_adv_sync *pa_sync;
 
 	CHECKIF(!valid_bt_bap_scan_delegator_add_src_param(param)) {
 		return -EINVAL;
 	}
 
-	internal_state = bass_lookup_pa_sync(param->pa_sync);
-	if (internal_state != NULL) {
-		LOG_DBG("PA Sync already in a receive state with src_id %u",
-			internal_state->state.src_id);
+	pa_sync = bt_le_per_adv_sync_lookup_addr(&param->addr, param->sid);
 
-		return -EALREADY;
+	if (pa_sync != NULL) {
+		internal_state = bass_lookup_pa_sync(pa_sync);
+		if (internal_state != NULL) {
+			LOG_DBG("PA Sync already in a receive state with src_id %u",
+				internal_state->state.src_id);
+
+			return -EALREADY;
+		}
 	}
 
 	internal_state = get_free_recv_state();
 	if (internal_state == NULL) {
-		LOG_DBG("Could not add src");
+		LOG_DBG("Could not get free receive state");
 
 		return -ENOMEM;
-	}
-
-	err = bt_le_per_adv_sync_get_info(param->pa_sync, &sync_info);
-	if (err != 0) {
-		LOG_DBG("Failed to get sync info: %d", err);
-
-		return err;
 	}
 
 	state = &internal_state->state;
 
 	state->src_id = next_src_id();
-	bt_addr_le_copy(&state->addr, &sync_info.addr);
-	state->adv_sid = sync_info.sid;
+	bt_addr_le_copy(&state->addr, &param->addr);
+	state->adv_sid = param->sid;
 	state->broadcast_id = param->broadcast_id;
-	state->pa_sync_state = BT_BAP_PA_STATE_SYNCED;
+	state->encrypt_state = param->encrypt_state;
+	state->pa_sync_state =
+		pa_sync == NULL ? BT_BAP_PA_STATE_NOT_SYNCED : BT_BAP_PA_STATE_SYNCED;
 	state->num_subgroups = param->num_subgroups;
 	if (state->num_subgroups > 0U) {
 		(void)memcpy(state->subgroups, param->subgroups,
@@ -1391,7 +1421,7 @@ int bt_bap_scan_delegator_add_src(const struct bt_bap_scan_delegator_add_src_par
 	}
 
 	internal_state->active = true;
-	internal_state->pa_sync = param->pa_sync;
+	internal_state->pa_sync = pa_sync;
 
 	/* Set all requested_bis_sync to BT_BAP_BIS_SYNC_NO_PREF, as no
 	 * Broadcast Assistant has set any requests yet

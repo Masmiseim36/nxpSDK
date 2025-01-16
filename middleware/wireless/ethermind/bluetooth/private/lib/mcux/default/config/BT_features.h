@@ -322,6 +322,7 @@
 /* ----------------------------------------------------------------------- */
 
 #ifdef BT_5_2
+#ifndef CFG_CLASSIC
 /*
  *  BT_EATT
  *
@@ -331,6 +332,7 @@
  *  Dependency: BT_5_2 must be defined.
  */
 #define BT_EATT
+#endif /* CFG_CLASSIC */
 #endif /* BT_5_2 */
 
 /* ----------------------------------------------------------------------- */
@@ -1941,7 +1943,7 @@
  *
  *  Dependency: BT_4_1 must be defined.
  */
-/* #define HCI_SET_CONNECTIONLESS_SLAVE_BROADCAST_SUPPORT */
+#define HCI_SET_CONNECTIONLESS_SLAVE_BROADCAST_SUPPORT
 
 /*
  *  HCI_SET_CONNECTIONLESS_SLAVE_BROADCAST_RECEIVE_SUPPORT
@@ -1950,7 +1952,7 @@
  *
  *  Dependency: BT_4_1 must be defined.
  */
-/* #define HCI_SET_CONNECTIONLESS_SLAVE_BROADCAST_RECEIVE_SUPPORT */
+#define HCI_SET_CONNECTIONLESS_SLAVE_BROADCAST_RECEIVE_SUPPORT
 
 /*
  *  HCI_START_SYNCHRONIZATION_TRAIN_SUPPORT
@@ -1959,7 +1961,7 @@
  *
  *  Dependency: BT_4_1 must be defined.
  */
-/* #define HCI_START_SYNCHRONIZATION_TRAIN_SUPPORT */
+#define HCI_START_SYNCHRONIZATION_TRAIN_SUPPORT
 
 /*
  *  HCI_RECEIVE_SYNCHRONIZATION_TRAIN_SUPPORT
@@ -1968,7 +1970,7 @@
  *
  *  Dependency: BT_4_1 must be defined.
  */
-/* #define HCI_RECEIVE_SYNCHRONIZATION_TRAIN_SUPPORT */
+#define HCI_RECEIVE_SYNCHRONIZATION_TRAIN_SUPPORT
 
 /*
  *  HCI_SET_RESERVED_LT_ADDR_SUPPORT
@@ -1977,7 +1979,7 @@
  *
  *  Dependency: BT_4_1 must be defined.
  */
-/* #define HCI_SET_RESERVED_LT_ADDR_SUPPORT */
+#define HCI_SET_RESERVED_LT_ADDR_SUPPORT
 
 /*
  *  HCI_DELETE_RESERVED_LT_ADDR_SUPPORT
@@ -1995,7 +1997,7 @@
  *
  *  Dependency: BT_4_1 must be defined.
  */
-/* #define HCI_SET_CONNECTIONLESS_SLAVE_BROADCAST_DATA_SUPPORT */
+#define HCI_SET_CONNECTIONLESS_SLAVE_BROADCAST_DATA_SUPPORT
 
 /*
  *  HCI_READ_SYNCHRONIZATION_TRAIN_PARAMETERS_SUPPORT
@@ -2004,7 +2006,7 @@
  *
  *  Dependency: BT_4_1 must be defined.
  */
-/* #define HCI_READ_SYNCHRONIZATION_TRAIN_PARAMETERS_SUPPORT */
+#define HCI_READ_SYNCHRONIZATION_TRAIN_PARAMETERS_SUPPORT
 
 /*
  *  HCI_WRITE_SYNCHRONIZATION_TRAIN_PARAMETERS_SUPPORT
@@ -2013,7 +2015,7 @@
  *
  *  Dependency: BT_4_1 must be defined.
  */
-/* #define HCI_WRITE_SYNCHRONIZATION_TRAIN_PARAMETERS_SUPPORT */
+#define HCI_WRITE_SYNCHRONIZATION_TRAIN_PARAMETERS_SUPPORT
 
 #endif /* BT_4_1 */
 
@@ -2850,7 +2852,20 @@
  *
  * Default: Disable
  */
-/* #define SDP_DYNAMIC_DB */
+#define SDP_DYNAMIC_DB
+
+/*
+ * SDP_DB_ADD_PROFILE_DESC_LIST_UUID_128_BIT_SUPPORT
+ *
+ * This flag enables APIs to support adding 128 bit Profile Descriptor List
+ * UUID in the SDP database.
+ * This is applicable only for dynamic creation of the SDP database.
+ *
+ * Dependency: SDP_DYNAMIC_DB
+ *
+ * Default: Disable
+ */
+#define SDP_DB_ADD_PROFILE_DESC_LIST_UUID_128_BIT_SUPPORT
 
 /*
  * HAVE_SDP_DB_DUMP
@@ -2998,7 +3013,7 @@
  *
  *  Dependency: None.
  */
-/*#define AVDTP_HAVE_REPORTING_SERVICE*/
+/* #define AVDTP_HAVE_REPORTING_SERVICE */
 
 /*
  *  AVDTP_HAVE_RECOVERY_SERVICE
@@ -3007,7 +3022,7 @@
  *
  *  Dependency: None.
  */
-/*#define AVDTP_HAVE_RECOVERY_SERVICE*/
+/* #define AVDTP_HAVE_RECOVERY_SERVICE */
 
 /*
  *  AVDTP_HAVE_ROHC_SERVICE
@@ -3016,7 +3031,7 @@
  *
  *  Dependency: None.
  */
-/*#define AVDTP_HAVE_ROHC_SERVICE*/
+/* #define AVDTP_HAVE_ROHC_SERVICE */
 
 /*
  *  AVDTP_HAVE_MULTIPLEXING
@@ -3025,7 +3040,7 @@
  *
  *  Dependency: None.
  */
-/*#define AVDTP_HAVE_MULTIPLEXING*/
+/* #define AVDTP_HAVE_MULTIPLEXING */
 
 /*
  *  AVDTP_ASSISTIVE_MODE
@@ -3037,6 +3052,18 @@
  *  Dependency: None.
  */
 /* #define AVDTP_ASSISTIVE_MODE */
+
+/*
+ *  AVDTP_ENABLE_CODEC_CONFIG_VALIDATION
+ *
+ *  This flag enables to validate Media Codec configuration parameters and send
+ *  valid reject response in case of invalid codec configuration from peer.
+ *
+ *  By default it shall be Enabled.
+ *
+ *  Dependency: None.
+ */
+#define AVDTP_ENABLE_CODEC_CONFIG_VALIDATION
 
 /*
  *  AVDTP_HAVE_GET_ALL_CAPABILITIES
@@ -3531,7 +3558,7 @@
  *
  *  Dependency: A2DP.
  */
-/*#define A2DP_MPEG_1_2*/
+/* #define A2DP_MPEG_1_2 */
 
 /*
  *  A2DP_MPEG_2_4
@@ -3540,7 +3567,7 @@
  *
  *  Dependency: A2DP.
  */
-/*#define A2DP_MPEG_2_4*/
+/* #define A2DP_MPEG_2_4 */
 
 /*
  *  A2DP_VENDOR_CODEC
@@ -3549,7 +3576,7 @@
  *
  *  Dependency: A2DP.
  */
-/*#define A2DP_VENDOR_CODEC*/
+/* #define A2DP_VENDOR_CODEC */
 
 /*
  *  A2DP_1_3
@@ -3591,6 +3618,26 @@
  *  Dependency: None
  */
 /* #define A2DP_ENABLE_SEID_ACCESS */
+
+/*
+ *  A2DP_RELAX_MIN_BITPOOL_CONF_CAP_VALIDATION
+ *
+ *  This flag relaxes the minimum bitpool validation in the received SetConfiguration
+ *  with the actual capabilities of the codec instance.
+ *
+ *  Dependency: A2DP
+ */
+/* #define A2DP_RELAX_MIN_BITPOOL_CONF_CAP_VALIDATION */
+
+/*
+ *  A2DP_RELAX_MAX_BITPOOL_CONF_CAP_VALIDATION
+ *
+ *  This flag relaxes the maximum bitpool validation in the received SetConfiguration
+ *  with the actual capabilities of the codec instance.
+ *
+ *  Dependency: A2DP
+ */
+/* #define A2DP_RELAX_MAX_BITPOOL_CONF_CAP_VALIDATION */
 
 #endif /* A2DP */
 

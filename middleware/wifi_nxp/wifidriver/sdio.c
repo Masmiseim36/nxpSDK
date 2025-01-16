@@ -49,7 +49,7 @@
 #define BOARD_SDMMC_DATA_BUFFER_ALIGN_SIZE 32
 #endif
 /*! @brief Data written to the card */
-#if CONFIG_SDIO_MULTI_PORT_TX_AGGR
+#if CONFIG_SDIO_MULTI_PORT_TX_AGGR && !(FSL_USDHC_ENABLE_SCATTER_GATHER_TRANSFER)
 SDK_ALIGN(uint8_t outbuf[SDIO_MP_AGGR_DEF_PKT_LIMIT * 2 * DATA_BUFFER_SIZE], BOARD_SDMMC_DATA_BUFFER_ALIGN_SIZE);
 #else
 SDK_ALIGN(uint8_t outbuf[DATA_BUFFER_SIZE + DATA_BUFFER_SIZE / 2], BOARD_SDMMC_DATA_BUFFER_ALIGN_SIZE);
@@ -145,7 +145,7 @@ static void wlan_sdio_init_ioport(void)
     uint32_t resp = 0;
     t_u8 data;
 
-#if defined(SD8978) || defined(SD8987) || defined(SD8997) || defined(SD9097) || defined(SD9098) || defined(SD9177)
+#if defined(SD8978) || defined(SD8987) || defined(SD8997) || defined(SD9097) || defined(SD9098) || defined(SD9177) || defined(IW610)
     ioport_g = MEM_PORT;
 
     sdio_io_d("IOPORT : (0x%x)", ioport_g);

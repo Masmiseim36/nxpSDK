@@ -974,7 +974,11 @@ static void eap_sim_db_close_socket(struct eap_sim_db_data *data)
     OSA_EventDestroy((osa_event_handle_t)eap_sim_db_event_Handle);
     OSA_TaskDestroy((osa_task_handle_t)eap_sim_db_thread);
 
-    sys_mbox_free(&eap_sim_db_event_queue);
+    if (sys_mbox_valid(&eap_sim_db_event_queue))
+    {
+        sys_mbox_free(&eap_sim_db_event_queue);
+        eap_sim_db_event_queue = NULL;
+    }
 #endif
 }
 

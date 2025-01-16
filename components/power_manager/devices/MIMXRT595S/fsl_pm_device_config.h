@@ -1,6 +1,5 @@
 /*
- * Copyright 2022 NXP
- * All rights reserved.
+ * Copyright 2022, 2024 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -14,11 +13,11 @@
 #define FSL_PM_SUPPORT_WAKEUP_SOURCE_MANAGER (1U)
 #define FSL_PM_SUPPORT_LP_TIMER_CONTROLLER   (1U)
 
-#define PM_CONSTRAINT_COUNT (kResc_MaxNum)
+#define PM_CONSTRAINT_COUNT ((uint32_t)kResc_MaxNum)
 #define PM_LP_STATE_COUNT   (4U)
 
-#define PM_RESC_GROUP_ARRAY_SIZE (PM_CONSTRAINT_COUNT / 8 + 1)
-#define PM_RESC_MASK_ARRAY_SIZE  (PM_CONSTRAINT_COUNT / 32 + 1)
+#define PM_RESC_GROUP_ARRAY_SIZE (PM_CONSTRAINT_COUNT / 8U + 1U)
+#define PM_RESC_MASK_ARRAY_SIZE  (PM_CONSTRAINT_COUNT / 32U + 1U)
 
 /*!
  * irqn:      The irq number of wakeup.

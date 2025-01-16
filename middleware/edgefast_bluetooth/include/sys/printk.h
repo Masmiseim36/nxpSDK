@@ -4,7 +4,7 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
- 
+
 #ifndef __EDGEFAST_BT_BLE_PRINTK_H__
 #define __EDGEFAST_BT_BLE_PRINTK_H__
 
@@ -12,11 +12,9 @@
 #include <stdint.h>
 #include <inttypes.h>
 
-#define snprintk snprintf
+#include <fsl_debug_console.h>
 
-#define BT_DBG  LOG_DBG
-#define BT_ERR  LOG_ERR
-#define BT_WARN LOG_WRN
-#define BT_INFO LOG_INF
+#define snprintk snprintf
+#define printk PRINTF
 
 #endif /* __EDGEFAST_BT_BLE_TYPES_H__ */

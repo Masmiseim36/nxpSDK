@@ -45,17 +45,15 @@
   @param[in]     pSrc       points to the f32 input vector
   @param[out]    pDst       points to the f16 output vector
   @param[in]     blockSize  number of samples in each vector
-  @return        none
-
  */
 
-#if defined(ARM_MATH_MVE_FLOAT16) && !defined(ARM_MATH_AUTOVECTORIZE) && defined(__CMSIS_GCC_H)
+#if defined(ARM_MATH_MVE_FLOAT16) && !defined(ARM_MATH_AUTOVECTORIZE) && defined(ARM_DSP_BUILT_WITH_GCC)
 #pragma GCC warning "Scalar version of arm_float_to_f16 built. Helium version has build issues with gcc."
 #endif 
 
-#if defined(ARM_MATH_MVE_FLOAT16) && !defined(ARM_MATH_AUTOVECTORIZE) &&  !defined(__CMSIS_GCC_H)
+#if defined(ARM_MATH_MVE_FLOAT16) && !defined(ARM_MATH_AUTOVECTORIZE) &&  !defined(ARM_DSP_BUILT_WITH_GCC)
 
-void arm_float_to_f16(
+ARM_DSP_ATTRIBUTE void arm_float_to_f16(
   const float32_t * pSrc,
         float16_t * pDst,
         uint32_t blockSize)
@@ -98,7 +96,7 @@ void arm_float_to_f16(
 
 #else
 
-void arm_float_to_f16(
+ARM_DSP_ATTRIBUTE void arm_float_to_f16(
   const float32_t * pSrc,
         float16_t * pDst,
         uint32_t blockSize)

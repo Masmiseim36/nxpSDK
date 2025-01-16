@@ -6,16 +6,26 @@
 
 #if defined(CONFIG_BT_GMAP) && (CONFIG_BT_GMAP > 0)
 
-#include <bluetooth/gatt.h>
+#include <stdbool.h>
+#include <stddef.h>
+#include <stdint.h>
+#include <string.h>
+
+#include <porting.h>
 #include <bluetooth/audio/gmap.h>
+#include <bluetooth/conn.h>
+#include <bluetooth/gatt.h>
+#include <bluetooth/uuid.h>
 #include <sys/check.h>
+#include <sys/util.h>
+#include <sys/util_macro.h>
+
+#include "audio_internal.h"
 
 #define LOG_ENABLE IS_ENABLED(CONFIG_BT_DEBUG_GMAP_SERVER)
 #define LOG_MODULE_NAME bt_gmap_server
 #include "fsl_component_log.h"
 LOG_MODULE_DEFINE(LOG_MODULE_NAME, kLOG_LevelTrace);
-
-#include "audio_internal.h"
 
 #define BT_GMAP_ROLE_MASK                                                                          \
 	(BT_GMAP_ROLE_UGG | BT_GMAP_ROLE_UGT | BT_GMAP_ROLE_BGS | BT_GMAP_ROLE_BGR)

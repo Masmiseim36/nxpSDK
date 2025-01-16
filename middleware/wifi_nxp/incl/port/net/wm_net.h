@@ -1,16 +1,18 @@
 /*
+ *  Copyright 2008-2024 NXP
+ *
+ *  SPDX-License-Identifier: BSD-3-Clause
+ */
+/*
  * Copyright (c) 2016 Intel Corporation.
- * Copyright 2008-2023 NXP
  *
  * SPDX-License-Identifier: Apache-2.0
  */
 
-/*! \file wm_net.h
- *  \brief Network Abstraction Layer
+/*!\file wm_net.h
+ *\brief This file provides interface for network abstraction layer.
  *
  * This provides the calls related to the network layer.
- *
- *
  */
 
 #ifndef _WM_NET_H_
@@ -192,6 +194,8 @@ enum net_address_types
     NET_ADDR_TYPE_DHCP = 1,
     /** Link level address */
     NET_ADDR_TYPE_LLA = 2,
+    /** For Bridge Mode, no IP address */
+    NET_ADDR_TYPE_BRIDGE_MODE = 3,
 };
 
 /** This data structure represents an IPv4 address */
@@ -426,6 +430,18 @@ static inline void *net_stack_buffer_get_payload(void *buf)
 #endif
 }
 
+#if CONFIG_WIFI_PKT_FWD
+/** Send packet from Wi-Fi driver
+ *
+ * \param[in] interface Wi-Fi interface.
+ * \param[in] stack_buffer net stack buffer pointer.
+ *
+ * \return WM_SUCCESS on success
+ * \return -WM_FAIL otherwise
+ */
+int net_wifi_pkt_fwd(uint8_t interface, void *stack_buffer);
+#endif
+
 /**
  * Get network host entry
  *
@@ -538,17 +554,18 @@ int net_wlan_deinit(void);
 
 /** Get STA interface netif structure pointer
  *
- * \rerurn A pointer to STA interface netif structure
- *
+ * \return A pointer to STA interface netif structure
  */
 struct netif *net_get_sta_interface(void);
 
+#if UAP_SUPPORT
 /** Get uAP interface netif structure pointer
  *
- * \rerurn A pointer to uAP interface netif structure
+ * \return A pointer to uAP interface netif structure
  *
  */
 struct netif *net_get_uap_interface(void);
+#endif
 
 #if defined(SDK_OS_FREE_RTOS)
 
@@ -581,6 +598,7 @@ int net_alloc_client_data_id();
 void *net_get_sta_handle(void);
 #define net_get_mlan_handle() net_get_sta_handle()
 
+#if UAP_SUPPORT
 /** Get micro-AP interface handle
  *
  * Some APIs require the interface handle to be passed to them. The handle can
@@ -589,6 +607,7 @@ void *net_get_sta_handle(void);
  * \return micro-AP interface handle
  */
 void *net_get_uap_handle(void);
+#endif
 
 /** Take interface up
  *
@@ -756,10 +775,10 @@ int net_get_if_ip_addr(uint32_t *ip, void *intrfc_handle);
  * net_get_sta_handle(), net_get_uap_handle() to get
  * interface handle.
  *
- * \param[in] mask Subnet Mask pointer
+ * \param[in] mask Subnet   Mask pointer
  * \param[in] intrfc_handle interface
  *
- * \return WM_SUCCESS on success or error code.
+ * \return WM_SUCCESS on success otherwise error code.
  */
 int net_get_if_ip_mask(uint32_t *nm, void *intrfc_handle);
 

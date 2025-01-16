@@ -1,12 +1,12 @@
 /*
- *  Copyright 2008-2020, 2023 NXP
+ *  Copyright 2008-2020, 2023-2024 NXP
  *
  *  SPDX-License-Identifier: BSD-3-Clause
  *
  */
 
 /*! \file wifi_events.h
- * \brief Wi-Fi events
+ * \brief This file provides Wi-Fi driver event enum.
  */
 
 #ifndef __WIFI_EVENTS_H__
@@ -14,7 +14,7 @@
 
 #include <osa.h>
 
-/** Wifi events */
+/** Wi-Fi events */
 enum wifi_event
 {
     /** uAP Started */
@@ -29,6 +29,8 @@ enum wifi_event
     WIFI_EVENT_UAP_NET_ADDR_CONFIG,
     /** uAP Stopped */
     WIFI_EVENT_UAP_STOPPED,
+    /** uAP TX Data Pause */
+    WIFI_EVENT_UAP_TX_DATA_PAUSE,
     /** uAP Last */
     WIFI_EVENT_UAP_LAST,
     /* All the uAP related events need to be above and STA related events
@@ -48,6 +50,9 @@ enum wifi_event
     /** Association Notify */
     WIFI_EVENT_ASSOCIATION_NOTIFY,
 #endif
+#if CONFIG_HOSTAPD
+    WIFI_EVENT_ACS_COMPLETE,
+#endif
 #endif
     /** PMK */
     WIFI_EVENT_PMK,
@@ -59,34 +64,34 @@ enum wifi_event
     WIFI_EVENT_DEAUTHENTICATION,
     /** Link Loss */
     WIFI_EVENT_LINK_LOSS,
-    /* WiFi RSSI Low Event */
+    /* Wi-Fi RSSI Low Event */
     WIFI_EVENT_RSSI_LOW,
     /** Firmware Hang event */
     WIFI_EVENT_FW_HANG,
     /** Firmware Reset event */
     WIFI_EVENT_FW_RESET,
 #if CONFIG_SUBSCRIBE_EVENT_SUPPORT
-    /* WiFi RSSI High Event */
+    /* Wi-Fi RSSI High Event */
     WIFI_EVENT_RSSI_HIGH,
-    /* WiFi SRN Low Event */
+    /* Wi-Fi SRN Low Event */
     WIFI_EVENT_SNR_LOW,
-    /* WiFi SNR High Event */
+    /* Wi-Fi SNR High Event */
     WIFI_EVENT_SNR_HIGH,
-    /* WiFi Max Fail Event */
+    /* Wi-Fi Max Fail Event */
     WIFI_EVENT_MAX_FAIL,
-    /* WiFi Beacon miised Event */
+    /* Wi-Fi Beacon miised Event */
     WIFI_EVENT_BEACON_MISSED,
-    /* WiFi Data RSSI Low Event */
+    /* Wi-Fi Data RSSI Low Event */
     WIFI_EVENT_DATA_RSSI_LOW,
-    /* WiFi Data RSSI High Event */
+    /* Wi-Fi Data RSSI High Event */
     WIFI_EVENT_DATA_RSSI_HIGH,
-    /* WiFi Data SNR Low Event */
+    /* Wi-Fi Data SNR Low Event */
     WIFI_EVENT_DATA_SNR_LOW,
-    /* WiFi Data SNR High Event */
+    /* Wi-Fi Data SNR High Event */
     WIFI_EVENT_DATA_SNR_HIGH,
-    /* WiFi Link Quality Event */
+    /* Wi-Fi Link Quality Event */
     WIFI_EVENT_FW_LINK_QUALITY,
-    /* WiFi Pre Beacon Lost Event */
+    /* Wi-Fi Pre Beacon Lost Event */
     WIFI_EVENT_FW_PRE_BCN_LOST,
 #endif
 #if CONFIG_HOST_SLEEP
@@ -132,8 +137,10 @@ enum wifi_event
     /** 802.11K/11V neighbor report */
     WIFI_EVENT_NLIST_REPORT,
     /* Add Block Ack */
-    /** 802.11N add block ack */
-    WIFI_EVENT_11N_ADDBA,
+    /** 802.11N send add block ack */
+    WIFI_EVENT_11N_SEND_ADDBA,
+    /** 802.11N receive add block ack */
+    WIFI_EVENT_11N_RECV_ADDBA,
     /** 802.11N block Ack stream timeout */
     WIFI_EVENT_11N_BA_STREAM_TIMEOUT,
     /** 802.11n Delete block add */
@@ -161,6 +168,7 @@ enum wifi_event
 #if CONFIG_CSI
     /* Recv csi data */
     WIFI_EVENT_CSI,
+    WIFI_EVENT_CSI_STATUS,
 #endif
 #if (CONFIG_11MC) || (CONFIG_11AZ)
     /* Event to trigger or stop ftm*/
@@ -169,17 +177,17 @@ enum wifi_event
     WIFI_EVENT_WLS_CSI,
 #endif
 #endif
-    /** Event to sync region code with connected AP*/
-    WIFI_EVENT_SYNC_REGION_CODE,
     /** Event to set region power*/
     WIFI_EVENT_REGION_POWER_CFG,
+    /** TX Data Pause */
+    WIFI_EVENT_TX_DATA_PAUSE,
     /** Event to indicate end of Wi-Fi events */
     WIFI_EVENT_LAST,
     /* other events can be added after this, however this must
-       be the last event in the wifi module */
+       be the last event in the Wi-Fi module */
 };
 
-/** WiFi Event Reason */
+/** Wi-Fi Event Reason */
 enum wifi_event_reason
 {
     /** Success */

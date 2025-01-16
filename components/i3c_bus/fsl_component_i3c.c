@@ -1,5 +1,5 @@
 /*
- * Copyright 2020, 2022-2023 NXP
+ * Copyright 2020, 2022-2024 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -496,7 +496,7 @@ status_t I3C_BusMasterCreate(i3c_device_t *masterDev,
             return result;
         }
 
-        /* Enable all events before start doing DAA. */
+        /* Enable all events. */
         result = I3C_BusMasterEnableEvents(masterDev, I3C_BUS_BROADCAST_ADDR,
                                            ((uint8_t)kI3C_EventMR | (uint8_t)kI3C_EventHJ | (uint8_t)kI3C_EventIBI));
         if (result != kStatus_Success)

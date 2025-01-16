@@ -43,15 +43,9 @@
   @param[in]     blockSize  number of samples in input vector
   @param[out]    pResult    maximum value returned here
   @param[out]    pIndex     index of maximum value returned here
-  @return        none
  */
 
-#if defined(ARM_MATH_MVE_FLOAT16) && !defined(ARM_MATH_AUTOVECTORIZE) && defined(__CMSIS_GCC_H)
-#pragma GCC warning "Scalar version of arm_absmax_q7 built. Helium version has build issues with gcc."
-#endif 
-
-
-#if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE) &&  !defined(__CMSIS_GCC_H)
+#if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE)
 
 #include <stdint.h>
 #include "arm_helium_utils.h"
@@ -109,7 +103,7 @@ static void arm_small_blk_absmax_q7(
     *pResult = maxValue;
 }
 
-void arm_absmax_q7(
+ARM_DSP_ATTRIBUTE void arm_absmax_q7(
   const q7_t * pSrc,
         uint32_t blockSize,
         q7_t * pResult,
@@ -164,7 +158,7 @@ void arm_absmax_q7(
 }
 #else
 #if defined(ARM_MATH_DSP)
-void arm_absmax_q7(
+ARM_DSP_ATTRIBUTE void arm_absmax_q7(
   const q7_t * pSrc,
         uint32_t blockSize,
         q7_t * pResult,
@@ -251,7 +245,7 @@ void arm_absmax_q7(
   *pIndex = outIndex;  
 }
 #else
-void arm_absmax_q7(
+ARM_DSP_ATTRIBUTE void arm_absmax_q7(
   const q7_t * pSrc,
         uint32_t blockSize,
         q7_t * pResult,

@@ -1,6 +1,6 @@
 // Copyright (c) 2017-2021 Linaro LTD
 // Copyright (c) 2019 JUUL Labs
-// Copyright (c) 2019-2021 Arm Limited
+// Copyright (c) 2019-2023 Arm Limited
 //
 // SPDX-License-Identifier: Apache-2.0
 
@@ -11,7 +11,7 @@
 #[allow(unused)]
 pub enum Caps {
     RSA2048              = (1 << 0),
-    EcdsaP224            = (1 << 1),
+               /* reserved (1 << 1) */
     EcdsaP256            = (1 << 2),
     SwapUsingScratch     = (1 << 3),
     OverwriteUpgrade     = (1 << 4),
@@ -28,6 +28,8 @@ pub enum Caps {
     Aes256               = (1 << 15),
     RamLoad              = (1 << 16),
     DirectXip            = (1 << 17),
+    HwRollbackProtection = (1 << 18),
+    EcdsaP384            = (1 << 19),
 }
 
 impl Caps {
@@ -38,7 +40,7 @@ impl Caps {
 
     /// Does this build have ECDSA of some type enabled for signatures.
     pub fn has_ecdsa() -> bool {
-        Caps::EcdsaP256.present() || Caps::EcdsaP224.present()
+        Caps::EcdsaP256.present() || Caps::EcdsaP384.present()
     }
 
     /// Query for the number of images that have been configured into this

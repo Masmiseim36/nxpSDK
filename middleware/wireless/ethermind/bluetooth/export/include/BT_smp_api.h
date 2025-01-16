@@ -1862,7 +1862,7 @@ API_RESULT BT_smp_resolve_device
  * in the SMP Device Data Base and returns the corresponding SMP_BD_HANDLE if search succeeds
  *
  * \param [in] peer_id_addr  Pointer to peer Identity address as in \ref SMP_BD_ADDR
- *
+ * \param [in] peer_link_type BREDR/BLE transport of connection
  * \param [out] peer_dev_hndl  Pointer to the peer device handle as in \ref SMP_BD_HANDLE
  *
  * \return API_SUCCESS on successful search of Identity Address else API_FAILURE
@@ -1870,6 +1870,7 @@ API_RESULT BT_smp_resolve_device
 API_RESULT BT_smp_search_identity_addr
            (
                /* IN */  SMP_BD_ADDR   * peer_id_addr,
+               /* IN */  UINT8           peer_link_type,
                /* OUT */ SMP_BD_HANDLE * peer_dev_hndl
            );
 #endif /* BT_4_2 */

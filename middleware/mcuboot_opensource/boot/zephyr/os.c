@@ -17,7 +17,7 @@
  * under the License.
  */
 
-#include <zephyr.h>
+#include <zephyr/kernel.h>
 #include <string.h>
 
 #include "os/os_heap.h"
@@ -41,7 +41,7 @@
 #define CRYPTO_HEAP_SIZE 6144
 #else
 #  if !defined(MBEDTLS_RSA_NO_CRT)
-#  define CRYPTO_HEAP_SIZE 10240
+#  define CRYPTO_HEAP_SIZE 12032
 #  else
 #  define CRYPTO_HEAP_SIZE 16384
 #  endif

@@ -27,7 +27,7 @@ static bool dhcpd_running;
 void dhcpd_task(osa_task_param_t arg);
 
 /* OSA_TASKS: name, priority, instances, stackSz, useFloat */
-static OSA_TASK_DEFINE(dhcpd_task, OSA_PRIORITY_NORMAL, 1, CONFIG_DHCP_SERVER_STACK_SIZE, 0);
+static OSA_TASK_DEFINE(dhcpd_task, WLAN_TASK_PRI_HIGH, 1, CONFIG_DHCP_SERVER_STACK_SIZE, 0);
 
 OSA_TASK_HANDLE_DEFINE(dhcpd_task_Handle);
 

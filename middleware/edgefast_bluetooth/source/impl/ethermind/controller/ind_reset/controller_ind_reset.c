@@ -114,7 +114,7 @@ OSA_SEMAPHORE_HANDLE_DEFINE(xUartRxRcvd);
 OSA_SEMAPHORE_HANDLE_DEFINE(xWaitForBTDownload);
 #if (defined(CONFIG_BT_IND_RESET_OOB) && (CONFIG_BT_IND_RESET_OOB > 0U))
 static GPIO_HANDLE_DEFINE(ir_gpio_handle);
-static hal_gpio_pin_config_t ir_gpio_config = 
+static hal_gpio_pin_config_t ir_gpio_config =
 {
     .direction = kHAL_GpioDirectionOut,
     .level     = 1,
@@ -142,7 +142,7 @@ static uint8_t controller_ir_indconfig_cmd(ind_reset_mode_t ind_reset)
 
     ir_payload[0] = ind_reset;
     ir_payload[1] = 0xFFU; /*default GPIO will be used by controller for IR*/
-    
+
     net_buf_add_mem(buf, &ir_payload[0], 2U);
     err = bt_hci_cmd_send_sync(BT_OP(BT_OGF_VS, INDEPENDENT_RESET_VENDOR_CMD_ENABLE_IR), buf, NULL);
     if (0 != err)
@@ -204,7 +204,7 @@ static void controller_ir_trigger_oob_ir(void)
     /*since, controller's isr registered with falling edge trigger,
      * there is no need to maintain pulse interval more than 10ms*/
     PRINTF("Sending Out of Band IR Trigger\n");
-    
+
     HAL_GpioInit(ir_gpio_handle, &ir_gpio_config);
     ir_state_update(IND_RESET_OOB_TRIGGER_IR);
     HAL_GpioSetOutput(ir_gpio_handle,  0);
@@ -286,7 +286,7 @@ void controler_ind_reset(ind_reset_mode_t ind_reset)
     bool ir_triggered = false;
     API_RESULT retval;
  #if (defined(CONFIG_BT_IND_RESET_OOB) && (CONFIG_BT_IND_RESET_OOB > 0U))
-   if ((ind_reset != IND_RESET_INBAND) && (ind_reset != IND_RESET_OOB))  
+   if ((ind_reset != IND_RESET_INBAND) && (ind_reset != IND_RESET_OOB))
 #else
     if (ind_reset != IND_RESET_INBAND)
 #endif
@@ -294,7 +294,7 @@ void controler_ind_reset(ind_reset_mode_t ind_reset)
         ir_state_update(IND_RESET_NOT_CONFIGURED);
         PRINTF("IND RESET NOT CONFIGURED\n");
         return;
-    }  
+    }
     controler_config_ind_reset(ind_reset);
 
     ir_state_update(IND_RESET_BT_OFF);
@@ -337,16 +337,19 @@ void controler_ind_reset(ind_reset_mode_t ind_reset)
     {
         PRINTF("BT_bluetooth_on failure = %d\n", retval);
     }
-    
+
     return;
 }
 
 static void controller_ir_create_uart_read_task(BT_THREAD_START_ROUTINE routine)
 {
     BT_thread_attr_type btUartRd_attr;
+    static CHAR task_name[configMAX_TASK_NAME_LEN];
+
+    memcpy(&task_name[0], "BTURTRD", sizeof("BTURTRD"));
 
     /* Initialize the Write Task Attributes */
-    btUartRd_attr.thread_name       = (DECL_CONST CHAR *)"BTURTRD";
+    btUartRd_attr.thread_name       = (DECL_CONST CHAR *)&task_name[0];
     btUartRd_attr.thread_stack_size = BT_TASK_STACK_DEPTH;
     btUartRd_attr.thread_priority   = BT_TASK_PRIORITY;
 

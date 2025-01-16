@@ -1,10 +1,11 @@
 /*
- * Copyright (c) 2019,2024 NXP
+ * Copyright 2019,2024 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
+#include "app.h"
 #include "fsl_lcdif.h"
 #include "lcdif_support.h"
 #include "fsl_debug_console.h"
@@ -32,16 +33,18 @@
  *
  */
 
-#include "pin_mux.h"
-#include "board.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
 #define DEMO_BYTE_PER_PIXEL 2U
 
-#define DEMO_IMG_HEIGHT         DEMO_PANEL_HEIGHT
-#define DEMO_IMG_WIDTH          DEMO_PANEL_WIDTH
+#define DEMO_IMG_HEIGHT DEMO_PANEL_HEIGHT
+#define DEMO_IMG_WIDTH  DEMO_PANEL_WIDTH
+#if defined(FSL_FEATURE_LCDIF_VERSION_DC8000) & FSL_FEATURE_LCDIF_VERSION_DC8000
+#define DEMO_IMG_BYTES_PER_LINE LCDIF_ALIGN_ADDR((DEMO_IMG_WIDTH * DEMO_BYTE_PER_PIXEL), LCDIF_FB_ALIGN)
+#else
 #define DEMO_IMG_BYTES_PER_LINE (DEMO_PANEL_WIDTH * DEMO_BYTE_PER_PIXEL)
+#endif
 
 #define DEMO_MAKE_COLOR(red, green, blue) \
     ((((uint16_t)(red)&0xF8U) << 8U) | (((uint16_t)(green)&0xFCU) << 3U) | (((uint16_t)(blue)&0xF8U) >> 3U))
@@ -88,14 +91,14 @@ void DEMO_FillFrameBuffer(void)
 {
     uint32_t i, j;
 
-    uint16_t(*fb)[DEMO_IMG_WIDTH] = (void *)s_frameBufferAddr;
+    uint8_t(*fb)[DEMO_IMG_BYTES_PER_LINE] = (void *)s_frameBufferAddr;
 
     /* Upper part is red. */
     for (i = 0; i < DEMO_IMG_HEIGHT / 2; i++)
     {
         for (j = 0; j < DEMO_IMG_WIDTH; j++)
         {
-            fb[i][j] = DEMO_COLOR_RED;
+            *((uint16_t *)&fb[i][j * 2]) = DEMO_COLOR_RED;
         }
     }
 
@@ -104,7 +107,7 @@ void DEMO_FillFrameBuffer(void)
     {
         for (j = 0; j < DEMO_IMG_WIDTH; j++)
         {
-            fb[i][j] = DEMO_COLOR_BLUE;
+            *((uint16_t *)&fb[i][j * 2]) = DEMO_COLOR_BLUE;
         }
     }
 }
@@ -131,7 +134,7 @@ void DEMO_LCDIF_Init(void)
 
     LCDIF_DpiModeSetConfig(DEMO_LCDIF, 0, &dpiConfig);
 
-    LCDIF_SetFrameBufferStride(DEMO_LCDIF, 0, DEMO_IMG_WIDTH * DEMO_BYTE_PER_PIXEL);
+    LCDIF_SetFrameBufferStride(DEMO_LCDIF, 0, DEMO_IMG_BYTES_PER_LINE);
 
     LCDIF_SetFrameBufferAddr(DEMO_LCDIF, 0, (uint32_t)s_frameBufferAddr);
 
@@ -263,8 +266,8 @@ void DEMO_LCDIF_CursorMask(void)
         x++;
         y++;
 
-        x = (x >= DEMO_IMG_WIDTH) ? 0 : x;
-        y = (y >= DEMO_IMG_HEIGHT) ? 0 : y;
+        x           = (x >= DEMO_IMG_WIDTH) ? 0 : x;
+        y           = (y >= DEMO_IMG_HEIGHT) ? 0 : y;
         s_frameDone = false;
         LCDIF_SetCursorHotspotPosition(DEMO_LCDIF, x, y);
 
@@ -279,22 +282,7 @@ void DEMO_LCDIF_CursorMask(void)
  */
 int main(void)
 {
-    BOARD_InitPins();
-    BOARD_InitMipiPanelPins();
-    BOARD_InitPsRamPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
-    BOARD_InitLcdifClock();
-
-    GPIO_PortInit(GPIO, BOARD_MIPI_POWER_PORT);
-    GPIO_PortInit(GPIO, BOARD_MIPI_BL_PORT);
-    GPIO_PortInit(GPIO, BOARD_MIPI_RST_PORT);
-
-    status_t status = BOARD_InitPsRam();
-    if (status != kStatus_Success)
-    {
-        assert(false);
-    }
+    BOARD_InitHardware();
 
     PRINTF("LCDIF cursor mask mode example start...\r\n");
 

@@ -19,30 +19,13 @@
 #include <bluetooth/gatt.h>
 #include <bluetooth/audio/vcp.h>
 
+//#include "common/bt_str.h"
 #include "vcp_internal.h"
 
 #define LOG_ENABLE IS_ENABLED(CONFIG_BT_DEBUG_VCP_VOL_CTLR)
 #define LOG_MODULE_NAME bt_vcp_vol_ctlr
 #include "fsl_component_log.h"
 LOG_MODULE_DEFINE(LOG_MODULE_NAME, kLOG_LevelTrace);
-
-#ifndef LOG_DBG
-#define LOG_DBG BT_DBG
-#endif
-
-#ifndef LOG_ERR
-#define LOG_ERR BT_ERR
-#endif
-
-#ifndef LOG_HEXDUMP_DBG
-#define LOG_HEXDUMP_DBG BT_HEXDUMP_DBG
-#endif
-
-#ifndef LOG_WRN
-#define LOG_WRN BT_WARN
-#endif
-
-//#include "common/bt_str.h"
 
 /* Callback functions */
 static sys_slist_t vcp_vol_ctlr_cbs = SYS_SLIST_STATIC_INIT(&vcp_vol_ctlr_cbs);
@@ -59,7 +42,7 @@ static void vcp_vol_ctlr_state_changed(struct bt_vcp_vol_ctlr *vol_ctlr, int err
 {
 	struct bt_vcp_vol_ctlr_cb *listener, *next;
 
-	SYS_SLIST_FOR_EACH_CONTAINER_SAFE(&vcp_vol_ctlr_cbs, listener, next, _node, struct bt_vcp_vol_ctlr_cb) {
+	SYS_SLIST_FOR_EACH_CONTAINER_SAFE(&vcp_vol_ctlr_cbs, listener, next, _node) {
 		if (listener->state) {
 			listener->state(vol_ctlr, err, err == 0 ? vol_ctlr->state.volume : 0,
 					err == 0 ? vol_ctlr->state.mute : 0);
@@ -71,7 +54,7 @@ static void vcp_vol_ctlr_flags_changed(struct bt_vcp_vol_ctlr *vol_ctlr, int err
 {
 	struct bt_vcp_vol_ctlr_cb *listener, *next;
 
-	SYS_SLIST_FOR_EACH_CONTAINER_SAFE(&vcp_vol_ctlr_cbs, listener, next, _node, struct bt_vcp_vol_ctlr_cb) {
+	SYS_SLIST_FOR_EACH_CONTAINER_SAFE(&vcp_vol_ctlr_cbs, listener, next, _node) {
 		if (listener->flags) {
 			listener->flags(vol_ctlr, err, err == 0 ? vol_ctlr->flags : 0);
 		}
@@ -82,17 +65,17 @@ static void vcp_vol_ctlr_discover_complete(struct bt_vcp_vol_ctlr *vol_ctlr, int
 {
 	struct bt_vcp_vol_ctlr_cb *listener, *next;
 
-	SYS_SLIST_FOR_EACH_CONTAINER_SAFE(&vcp_vol_ctlr_cbs, listener, next, _node, struct bt_vcp_vol_ctlr_cb) {
+	SYS_SLIST_FOR_EACH_CONTAINER_SAFE(&vcp_vol_ctlr_cbs, listener, next, _node) {
 		if (listener->discover) {
 			uint8_t vocs_cnt = 0U;
 			uint8_t aics_cnt = 0U;
 
-#if defined(CONFIG_BT_VCP_VOL_CTLR_VOCS) && (CONFIG_BT_VCP_VOL_CTLR_VOCS > 0) 
+#if defined(CONFIG_BT_VCP_VOL_CTLR_VOCS) && (CONFIG_BT_VCP_VOL_CTLR_VOCS > 0)
 			if (err == 0) {
 				vocs_cnt = vol_ctlr->vocs_inst_cnt;
 			}
 #endif /* CONFIG_BT_VCP_VOL_CTLR_VOCS */
-#if defined(CONFIG_BT_VCP_VOL_CTLR_AICS) && (CONFIG_BT_VCP_VOL_CTLR_AICS > 0) 
+#if defined(CONFIG_BT_VCP_VOL_CTLR_AICS) && (CONFIG_BT_VCP_VOL_CTLR_AICS > 0)
 			if (err == 0) {
 				aics_cnt = vol_ctlr->aics_inst_cnt;
 			}
@@ -196,7 +179,7 @@ static void vcs_cp_notify_app(struct bt_vcp_vol_ctlr *vol_ctlr, uint8_t opcode, 
 
 	LOG_DBG("%p opcode %u err %d", vol_ctlr, opcode, err);
 
-	SYS_SLIST_FOR_EACH_CONTAINER_SAFE(&vcp_vol_ctlr_cbs, listener, next, _node, struct bt_vcp_vol_ctlr_cb) {
+	SYS_SLIST_FOR_EACH_CONTAINER_SAFE(&vcp_vol_ctlr_cbs, listener, next, _node) {
 		switch (opcode) {
 		case BT_VCP_OPCODE_REL_VOL_DOWN:
 			if (listener->vol_down) {
@@ -347,20 +330,20 @@ static uint8_t vcs_discover_include_func(struct bt_conn *conn,
 		uint8_t vocs_cnt = 0U;
 		uint8_t aics_cnt = 0U;
 
-#if defined(CONFIG_BT_VCP_VOL_CTLR_VOCS) && (CONFIG_BT_VCP_VOL_CTLR_VOCS > 0) 
+#if defined(CONFIG_BT_VCP_VOL_CTLR_VOCS) && (CONFIG_BT_VCP_VOL_CTLR_VOCS > 0)
 		vocs_cnt = vol_ctlr->vocs_inst_cnt;
 #endif /* CONFIG_BT_VCP_VOL_CTLR_VOCS */
 
-#if defined(CONFIG_BT_VCP_VOL_CTLR_AICS) && (CONFIG_BT_VCP_VOL_CTLR_AICS > 0) 
+#if defined(CONFIG_BT_VCP_VOL_CTLR_AICS) && (CONFIG_BT_VCP_VOL_CTLR_AICS > 0)
 		aics_cnt = vol_ctlr->aics_inst_cnt;
 #endif /* CONFIG_BT_VCP_VOL_CTLR_VOCS */
 
 		LOG_DBG("Discover include complete for vol_ctlr: %u AICS and %u VOCS", aics_cnt,
 			vocs_cnt);
-                
-                (void)vocs_cnt;
-                (void)aics_cnt;
-                
+
+		(void)vocs_cnt;
+		(void)aics_cnt;
+
 		(void)memset(params, 0, sizeof(*params));
 
 		vcp_vol_ctlr_discover_complete(vol_ctlr, 0);
@@ -376,7 +359,7 @@ static uint8_t vcs_discover_include_func(struct bt_conn *conn,
 		include = (struct bt_gatt_include *)attr->user_data;
 		LOG_DBG("Include UUID %s", bt_uuid_str(include->uuid));
 
-#if defined(CONFIG_BT_VCP_VOL_CTLR_AICS) && (CONFIG_BT_VCP_VOL_CTLR_AICS > 0) 
+#if defined(CONFIG_BT_VCP_VOL_CTLR_AICS) && (CONFIG_BT_VCP_VOL_CTLR_AICS > 0)
 		if (bt_uuid_cmp(include->uuid, BT_UUID_AICS) == 0 &&
 		    vol_ctlr->aics_inst_cnt < CONFIG_BT_VCP_VOL_CTLR_MAX_AICS_INST) {
 			struct bt_aics_discover_param param = {
@@ -401,7 +384,7 @@ static uint8_t vcs_discover_include_func(struct bt_conn *conn,
 			return BT_GATT_ITER_STOP;
 		}
 #endif /* CONFIG_BT_VCP_VOL_CTLR_AICS */
-#if defined(CONFIG_BT_VCP_VOL_CTLR_VOCS) && (CONFIG_BT_VCP_VOL_CTLR_VOCS > 0) 
+#if defined(CONFIG_BT_VCP_VOL_CTLR_VOCS) && (CONFIG_BT_VCP_VOL_CTLR_VOCS > 0)
 		if (bt_uuid_cmp(include->uuid, BT_UUID_VOCS) == 0 &&
 		    vol_ctlr->vocs_inst_cnt < CONFIG_BT_VCP_VOL_CTLR_MAX_VOCS_INST) {
 			struct bt_vocs_discover_param param = {
@@ -605,8 +588,8 @@ static struct bt_vcp_vol_ctlr *lookup_vcp_by_aics(const struct bt_aics *aics)
 {
 	__ASSERT(aics != NULL, "aics pointer cannot be NULL");
 
-	for (int i = 0; i < ARRAY_SIZE(vol_ctlr_insts); i++) {
-		for (int j = 0; j < ARRAY_SIZE(vol_ctlr_insts[i].aics); j++) {
+	for (size_t i = 0U; i < ARRAY_SIZE(vol_ctlr_insts); i++) {
+		for (size_t j = 0U; j < ARRAY_SIZE(vol_ctlr_insts[i].aics); j++) {
 			if (vol_ctlr_insts[i].aics[j] == aics) {
 				return &vol_ctlr_insts[i];
 			}
@@ -621,7 +604,7 @@ static void vcp_vol_ctlr_aics_state_cb(struct bt_aics *inst, int err, int8_t gai
 {
 	struct bt_vcp_vol_ctlr_cb *listener, *next;
 
-	SYS_SLIST_FOR_EACH_CONTAINER_SAFE(&vcp_vol_ctlr_cbs, listener, next, _node, struct bt_vcp_vol_ctlr_cb) {
+	SYS_SLIST_FOR_EACH_CONTAINER_SAFE(&vcp_vol_ctlr_cbs, listener, next, _node) {
 		if (listener->aics_cb.state) {
 			listener->aics_cb.state(inst, err, gain, mute, mode);
 		}
@@ -633,7 +616,7 @@ static void vcp_vol_ctlr_aics_gain_setting_cb(struct bt_aics *inst, int err, uin
 {
 	struct bt_vcp_vol_ctlr_cb *listener, *next;
 
-	SYS_SLIST_FOR_EACH_CONTAINER_SAFE(&vcp_vol_ctlr_cbs, listener, next, _node, struct bt_vcp_vol_ctlr_cb) {
+	SYS_SLIST_FOR_EACH_CONTAINER_SAFE(&vcp_vol_ctlr_cbs, listener, next, _node) {
 		if (listener->aics_cb.gain_setting) {
 			listener->aics_cb.gain_setting(inst, err, units, minimum, maximum);
 		}
@@ -644,7 +627,7 @@ static void vcp_vol_ctlr_aics_type_cb(struct bt_aics *inst, int err, uint8_t typ
 {
 	struct bt_vcp_vol_ctlr_cb *listener, *next;
 
-	SYS_SLIST_FOR_EACH_CONTAINER_SAFE(&vcp_vol_ctlr_cbs, listener, next, _node, struct bt_vcp_vol_ctlr_cb) {
+	SYS_SLIST_FOR_EACH_CONTAINER_SAFE(&vcp_vol_ctlr_cbs, listener, next, _node) {
 		if (listener->aics_cb.type) {
 			listener->aics_cb.type(inst, err, type);
 		}
@@ -655,7 +638,7 @@ static void vcp_vol_ctlr_aics_status_cb(struct bt_aics *inst, int err, bool acti
 {
 	struct bt_vcp_vol_ctlr_cb *listener, *next;
 
-	SYS_SLIST_FOR_EACH_CONTAINER_SAFE(&vcp_vol_ctlr_cbs, listener, next, _node, struct bt_vcp_vol_ctlr_cb) {
+	SYS_SLIST_FOR_EACH_CONTAINER_SAFE(&vcp_vol_ctlr_cbs, listener, next, _node) {
 		if (listener->aics_cb.status) {
 			listener->aics_cb.status(inst, err, active);
 		}
@@ -666,7 +649,7 @@ static void vcp_vol_ctlr_aics_description_cb(struct bt_aics *inst, int err, char
 {
 	struct bt_vcp_vol_ctlr_cb *listener, *next;
 
-	SYS_SLIST_FOR_EACH_CONTAINER_SAFE(&vcp_vol_ctlr_cbs, listener, next, _node, struct bt_vcp_vol_ctlr_cb) {
+	SYS_SLIST_FOR_EACH_CONTAINER_SAFE(&vcp_vol_ctlr_cbs, listener, next, _node) {
 		if (listener->aics_cb.description) {
 			listener->aics_cb.description(inst, err, description);
 		}
@@ -695,7 +678,7 @@ static void vcp_vol_ctlr_aics_discover_cb(struct bt_aics *inst, int err)
 		vcp_vol_ctlr_discover_complete(vol_ctlr, err);
 	}
 
-	SYS_SLIST_FOR_EACH_CONTAINER_SAFE(&vcp_vol_ctlr_cbs, listener, next, _node, struct bt_vcp_vol_ctlr_cb) {
+	SYS_SLIST_FOR_EACH_CONTAINER_SAFE(&vcp_vol_ctlr_cbs, listener, next, _node) {
 		if (listener->aics_cb.discover) {
 			listener->aics_cb.discover(inst, err);
 		}
@@ -706,7 +689,7 @@ static void vcp_vol_ctlr_aics_set_gain_cb(struct bt_aics *inst, int err)
 {
 	struct bt_vcp_vol_ctlr_cb *listener, *next;
 
-	SYS_SLIST_FOR_EACH_CONTAINER_SAFE(&vcp_vol_ctlr_cbs, listener, next, _node, struct bt_vcp_vol_ctlr_cb) {
+	SYS_SLIST_FOR_EACH_CONTAINER_SAFE(&vcp_vol_ctlr_cbs, listener, next, _node) {
 		if (listener->aics_cb.set_gain) {
 			listener->aics_cb.set_gain(inst, err);
 		}
@@ -717,7 +700,7 @@ static void vcp_vol_ctlr_aics_unmute_cb(struct bt_aics *inst, int err)
 {
 	struct bt_vcp_vol_ctlr_cb *listener, *next;
 
-	SYS_SLIST_FOR_EACH_CONTAINER_SAFE(&vcp_vol_ctlr_cbs, listener, next, _node, struct bt_vcp_vol_ctlr_cb) {
+	SYS_SLIST_FOR_EACH_CONTAINER_SAFE(&vcp_vol_ctlr_cbs, listener, next, _node) {
 		if (listener->aics_cb.unmute) {
 			listener->aics_cb.unmute(inst, err);
 		}
@@ -728,7 +711,7 @@ static void vcp_vol_ctlr_aics_mute_cb(struct bt_aics *inst, int err)
 {
 	struct bt_vcp_vol_ctlr_cb *listener, *next;
 
-	SYS_SLIST_FOR_EACH_CONTAINER_SAFE(&vcp_vol_ctlr_cbs, listener, next, _node, struct bt_vcp_vol_ctlr_cb) {
+	SYS_SLIST_FOR_EACH_CONTAINER_SAFE(&vcp_vol_ctlr_cbs, listener, next, _node) {
 		if (listener->aics_cb.mute) {
 			listener->aics_cb.mute(inst, err);
 		}
@@ -739,7 +722,7 @@ static void vcp_vol_ctlr_aics_set_manual_mode_cb(struct bt_aics *inst, int err)
 {
 	struct bt_vcp_vol_ctlr_cb *listener, *next;
 
-	SYS_SLIST_FOR_EACH_CONTAINER_SAFE(&vcp_vol_ctlr_cbs, listener, next, _node, struct bt_vcp_vol_ctlr_cb) {
+	SYS_SLIST_FOR_EACH_CONTAINER_SAFE(&vcp_vol_ctlr_cbs, listener, next, _node) {
 		if (listener->aics_cb.set_manual_mode) {
 			listener->aics_cb.set_manual_mode(inst, err);
 		}
@@ -750,7 +733,7 @@ static void vcp_vol_ctlr_aics_set_auto_mode_cb(struct bt_aics *inst, int err)
 {
 	struct bt_vcp_vol_ctlr_cb *listener, *next;
 
-	SYS_SLIST_FOR_EACH_CONTAINER_SAFE(&vcp_vol_ctlr_cbs, listener, next, _node, struct bt_vcp_vol_ctlr_cb) {
+	SYS_SLIST_FOR_EACH_CONTAINER_SAFE(&vcp_vol_ctlr_cbs, listener, next, _node) {
 		if (listener->aics_cb.set_auto_mode) {
 			listener->aics_cb.set_auto_mode(inst, err);
 		}
@@ -778,7 +761,7 @@ static void vcp_vol_ctlr_vocs_state_cb(struct bt_vocs *inst, int err, int16_t of
 {
 	struct bt_vcp_vol_ctlr_cb *listener, *next;
 
-	SYS_SLIST_FOR_EACH_CONTAINER_SAFE(&vcp_vol_ctlr_cbs, listener, next, _node, struct bt_vcp_vol_ctlr_cb) {
+	SYS_SLIST_FOR_EACH_CONTAINER_SAFE(&vcp_vol_ctlr_cbs, listener, next, _node) {
 		if (listener->vocs_cb.state) {
 			listener->vocs_cb.state(inst, err, offset);
 		}
@@ -789,7 +772,7 @@ static void vcp_vol_ctlr_vocs_location_cb(struct bt_vocs *inst, int err, uint32_
 {
 	struct bt_vcp_vol_ctlr_cb *listener, *next;
 
-	SYS_SLIST_FOR_EACH_CONTAINER_SAFE(&vcp_vol_ctlr_cbs, listener, next, _node, struct bt_vcp_vol_ctlr_cb) {
+	SYS_SLIST_FOR_EACH_CONTAINER_SAFE(&vcp_vol_ctlr_cbs, listener, next, _node) {
 		if (listener->vocs_cb.location) {
 			listener->vocs_cb.location(inst, err, location);
 		}
@@ -800,7 +783,7 @@ static void vcp_vol_ctlr_vocs_description_cb(struct bt_vocs *inst, int err, char
 {
 	struct bt_vcp_vol_ctlr_cb *listener, *next;
 
-	SYS_SLIST_FOR_EACH_CONTAINER_SAFE(&vcp_vol_ctlr_cbs, listener, next, _node, struct bt_vcp_vol_ctlr_cb) {
+	SYS_SLIST_FOR_EACH_CONTAINER_SAFE(&vcp_vol_ctlr_cbs, listener, next, _node) {
 		if (listener->vocs_cb.description) {
 			listener->vocs_cb.description(inst, err, description);
 		}
@@ -829,7 +812,7 @@ static void vcp_vol_ctlr_vocs_discover_cb(struct bt_vocs *inst, int err)
 		vcp_vol_ctlr_discover_complete(vol_ctlr, err);
 	}
 
-	SYS_SLIST_FOR_EACH_CONTAINER_SAFE(&vcp_vol_ctlr_cbs, listener, next, _node, struct bt_vcp_vol_ctlr_cb) {
+	SYS_SLIST_FOR_EACH_CONTAINER_SAFE(&vcp_vol_ctlr_cbs, listener, next, _node) {
 		if (listener->vocs_cb.discover) {
 			listener->vocs_cb.discover(inst, err);
 		}
@@ -840,7 +823,7 @@ static void vcp_vol_ctlr_vocs_set_offset_cb(struct bt_vocs *inst, int err)
 {
 	struct bt_vcp_vol_ctlr_cb *listener, *next;
 
-	SYS_SLIST_FOR_EACH_CONTAINER_SAFE(&vcp_vol_ctlr_cbs, listener, next, _node, struct bt_vcp_vol_ctlr_cb) {
+	SYS_SLIST_FOR_EACH_CONTAINER_SAFE(&vcp_vol_ctlr_cbs, listener, next, _node) {
 		if (listener->vocs_cb.set_offset) {
 			listener->vocs_cb.set_offset(inst, err);
 		}
@@ -857,10 +840,10 @@ static void vcp_vol_ctlr_reset(struct bt_vcp_vol_ctlr *vol_ctlr)
 	vol_ctlr->state_handle = 0;
 	vol_ctlr->control_handle = 0;
 	vol_ctlr->flag_handle = 0;
-#if defined(CONFIG_BT_VCP_VOL_CTLR_VOCS) && (CONFIG_BT_VCP_VOL_CTLR_VOCS > 0) 
+#if defined(CONFIG_BT_VCP_VOL_CTLR_VOCS) && (CONFIG_BT_VCP_VOL_CTLR_VOCS > 0)
 	vol_ctlr->vocs_inst_cnt = 0;
 #endif /* CONFIG_BT_VCP_VOL_CTLR_VOCS */
-#if defined(CONFIG_BT_VCP_VOL_CTLR_AICS) && (CONFIG_BT_VCP_VOL_CTLR_AICS > 0) 
+#if defined(CONFIG_BT_VCP_VOL_CTLR_AICS) && (CONFIG_BT_VCP_VOL_CTLR_AICS > 0)
 	vol_ctlr->aics_inst_cnt = 0;
 #endif /* CONFIG_BT_VCP_VOL_CTLR_AICS */
 
@@ -883,15 +866,9 @@ static void disconnected(struct bt_conn *conn, uint8_t reason)
 	}
 }
 
-#if 0
 BT_CONN_CB_DEFINE(conn_callbacks) = {
 	.disconnected = disconnected,
 };
-#else
-static struct bt_conn_cb conn_callbacks = {
-	.disconnected = disconnected,
-};
-#endif
 
 static void bt_vcp_vol_ctlr_init(void)
 {
@@ -942,8 +919,6 @@ static void bt_vcp_vol_ctlr_init(void)
 		}
 	}
 #endif /* CONFIG_BT_VCP_VOL_CTLR_AICS */
-
-	bt_conn_cb_register(&conn_callbacks);
 }
 
 int bt_vcp_vol_ctlr_discover(struct bt_conn *conn, struct bt_vcp_vol_ctlr **out_vol_ctlr)
@@ -1009,7 +984,7 @@ int bt_vcp_vol_ctlr_cb_register(struct bt_vcp_vol_ctlr_cb *cb)
 		return -EINVAL;
 	}
 
-	SYS_SLIST_FOR_EACH_CONTAINER(&vcp_vol_ctlr_cbs, tmp, _node, struct bt_vcp_vol_ctlr_cb) {
+	SYS_SLIST_FOR_EACH_CONTAINER(&vcp_vol_ctlr_cbs, tmp, _node) {
 		if (tmp == cb) {
 			LOG_DBG("Already registered");
 			return -EALREADY;
@@ -1045,12 +1020,12 @@ int bt_vcp_vol_ctlr_included_get(struct bt_vcp_vol_ctlr *vol_ctlr,
 
 	memset(included, 0, sizeof(*included));
 
-#if defined(CONFIG_BT_VCP_VOL_CTLR_VOCS) && (CONFIG_BT_VCP_VOL_CTLR_VOCS > 0) 
+#if defined(CONFIG_BT_VCP_VOL_CTLR_VOCS) && (CONFIG_BT_VCP_VOL_CTLR_VOCS > 0)
 	included->vocs_cnt = vol_ctlr->vocs_inst_cnt;
 	included->vocs = vol_ctlr->vocs;
 #endif /* CONFIG_BT_VCP_VOL_CTLR_VOCS */
 
-#if defined(CONFIG_BT_VCP_VOL_CTLR_AICS) && (CONFIG_BT_VCP_VOL_CTLR_AICS > 0) 
+#if defined(CONFIG_BT_VCP_VOL_CTLR_AICS) && (CONFIG_BT_VCP_VOL_CTLR_AICS > 0)
 	included->aics_cnt = vol_ctlr->aics_inst_cnt;
 	included->aics = vol_ctlr->aics;
 #endif /* CONFIG_BT_VCP_VOL_CTLR_AICS */
@@ -1213,7 +1188,6 @@ int bt_vcp_vol_ctlr_set_vol(struct bt_vcp_vol_ctlr *vol_ctlr, uint8_t volume)
 	vol_ctlr->cp_val.cp.counter = vol_ctlr->state.change_counter;
 	vol_ctlr->cp_val.volume = volume;
 
-	vol_ctlr->busy = true;
 	vol_ctlr->write_params.offset = 0;
 	vol_ctlr->write_params.data = &vol_ctlr->cp_val;
 	vol_ctlr->write_params.length = sizeof(vol_ctlr->cp_val);

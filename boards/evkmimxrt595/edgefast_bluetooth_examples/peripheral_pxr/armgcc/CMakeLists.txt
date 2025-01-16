@@ -1,6 +1,6 @@
 # CROSS COMPILER SETTING
-SET(CMAKE_SYSTEM_NAME Generic)
-CMAKE_MINIMUM_REQUIRED (VERSION 3.10.0)
+set(CMAKE_SYSTEM_NAME Generic)
+cmake_minimum_required(VERSION 3.10.0)
 
 # THE VERSION NUMBER
 SET (MCUXPRESSO_CMAKE_FORMAT_MAJOR_VERSION 2)
@@ -14,27 +14,26 @@ if(CMAKE_SCRIPT_MODE_FILE)
 endif()
 
 
-# ENABLE ASM
-ENABLE_LANGUAGE(ASM)
+set(CMAKE_STATIC_LIBRARY_PREFIX)
+set(CMAKE_STATIC_LIBRARY_SUFFIX)
 
-SET(CMAKE_STATIC_LIBRARY_PREFIX)
-SET(CMAKE_STATIC_LIBRARY_SUFFIX)
-
-SET(CMAKE_EXECUTABLE_LIBRARY_PREFIX)
-SET(CMAKE_EXECUTABLE_LIBRARY_SUFFIX)
+set(CMAKE_EXECUTABLE_LIBRARY_PREFIX)
+set(CMAKE_EXECUTABLE_LIBRARY_SUFFIX)
 
 # CURRENT DIRECTORY
-SET(ProjDirPath ${CMAKE_CURRENT_SOURCE_DIR})
+set(ProjDirPath ${CMAKE_CURRENT_SOURCE_DIR})
 
-SET(EXECUTABLE_OUTPUT_PATH ${ProjDirPath}/${CMAKE_BUILD_TYPE})
-SET(LIBRARY_OUTPUT_PATH ${ProjDirPath}/${CMAKE_BUILD_TYPE})
+set(EXECUTABLE_OUTPUT_PATH ${ProjDirPath}/${CMAKE_BUILD_TYPE})
+set(LIBRARY_OUTPUT_PATH ${ProjDirPath}/${CMAKE_BUILD_TYPE})
 
 
-project(peripheral_pxr)
+project(peripheral_pxr_cm33)
+
+enable_language(ASM)
 
 set(MCUX_BUILD_TYPES flash_debug flash_release)
 
-set(MCUX_SDK_PROJECT_NAME peripheral_pxr.elf)
+set(MCUX_SDK_PROJECT_NAME peripheral_pxr_cm33.elf)
 
 if (NOT DEFINED SdkRootDirPath)
     SET(SdkRootDirPath ${ProjDirPath}/../../../../..)
@@ -45,62 +44,63 @@ include(${ProjDirPath}/flags.cmake)
 include(${ProjDirPath}/config.cmake)
 
 add_executable(${MCUX_SDK_PROJECT_NAME} 
-"${ProjDirPath}/../FreeRTOSConfig.h"
-"${ProjDirPath}/../app_config.h"
-"${ProjDirPath}/../app_bluetooth_config.h"
+"${ProjDirPath}/../edgefast_bluetooth_app.h"
+"${ProjDirPath}/../main.c"
+"${ProjDirPath}/../peripheral_pxr.c"
+"${ProjDirPath}/../peripheral_pxr.h"
+"${ProjDirPath}/../wifi_bt_module_config.h"
+"${ProjDirPath}/../FreeRTOSConfigBoard.h"
 "${ProjDirPath}/../sdmmc_config.c"
 "${ProjDirPath}/../sdmmc_config.h"
 "${ProjDirPath}/../wifi_bt_config.c"
 "${ProjDirPath}/../wifi_bt_config.h"
+"${ProjDirPath}/../FreeRTOSConfig.h"
+"${ProjDirPath}/../hardware_init.c"
 "${ProjDirPath}/../pin_mux.c"
 "${ProjDirPath}/../pin_mux.h"
-"${ProjDirPath}/../controller/configs/mbedtls/mbedtls_config_client.h"
-"${ProjDirPath}/../main.c"
-"${ProjDirPath}/../peripheral_pxr.c"
-"${ProjDirPath}/../peripheral_pxr.h"
-"${ProjDirPath}/../edgefast_bluetooth_config.h"
-"${ProjDirPath}/../edgefast_bluetooth_debug_config.h"
-"${ProjDirPath}/../board.c"
+"${ProjDirPath}/../app_config.h"
+"${ProjDirPath}/../mbedtls_config_client.h"
 "${ProjDirPath}/../board.h"
-"${ProjDirPath}/../clock_config.c"
+"${ProjDirPath}/../board.c"
 "${ProjDirPath}/../clock_config.h"
-"${ProjDirPath}/../wifi_bt_module_config.h"
-"${ProjDirPath}/../platform/configs/ffconf.h"
-"${ProjDirPath}/../platform/configs/usb_host_config.h"
-"${ProjDirPath}/../controller/configs/lwip/lwipopts.h"
-"${ProjDirPath}/../controller/configs/lwip/lwippools.h"
-"${ProjDirPath}/../controller/configs/wifi/wifi_config.h"
+"${ProjDirPath}/../clock_config.c"
+"${ProjDirPath}/../edgefast_bluetooth_audio_config_Gen.h"
+"${ProjDirPath}/../edgefast_bluetooth_config_Gen.h"
+"${ProjDirPath}/../edgefast_bluetooth_debug_config_Gen.h"
+"${ProjDirPath}/../edgefast_bluetooth_extension_config_Gen.h"
+"${ProjDirPath}/../fsl_debug_console_conf.h"
+"${ProjDirPath}/../fsl_os_abstraction_config.h"
+"${ProjDirPath}/../mcux_config.h"
+"${ProjDirPath}/../usb_host_config.h"
 )
 
 target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
     ${ProjDirPath}/..
-    ${ProjDirPath}/../controller/configs/mbedtls
-    ${ProjDirPath}/../platform/configs
-    ${ProjDirPath}/../controller/configs/lwip
-    ${ProjDirPath}/../controller/configs/wifi
 )
 
-set_source_files_properties("${ProjDirPath}/../FreeRTOSConfig.h" PROPERTIES COMPONENT_CONFIG_FILE "middleware_freertos-kernel_template")
-set_source_files_properties("${ProjDirPath}/../app_config.h" PROPERTIES COMPONENT_CONFIG_FILE "middleware_wifi_template")
-set_source_files_properties("${ProjDirPath}/../app_bluetooth_config.h" PROPERTIES COMPONENT_CONFIG_FILE "middleware_edgefast_bluetooth_config_template")
 set_source_files_properties("${ProjDirPath}/../sdmmc_config.c" PROPERTIES COMPONENT_CONFIG_FILE "middleware_sdmmc_usdhc_template")
 set_source_files_properties("${ProjDirPath}/../sdmmc_config.h" PROPERTIES COMPONENT_CONFIG_FILE "middleware_sdmmc_usdhc_template")
 set_source_files_properties("${ProjDirPath}/../wifi_bt_config.c" PROPERTIES COMPONENT_CONFIG_FILE "middleware_wifi_wifi_bt_config_template")
 set_source_files_properties("${ProjDirPath}/../wifi_bt_config.h" PROPERTIES COMPONENT_CONFIG_FILE "middleware_wifi_wifi_bt_config_template")
-set_source_files_properties("${ProjDirPath}/../controller/configs/mbedtls/mbedtls_config_client.h" PROPERTIES COMPONENT_CONFIG_FILE "middleware_edgefast_bluetooth_template")
-set_source_files_properties("${ProjDirPath}/../edgefast_bluetooth_config.h" PROPERTIES COMPONENT_CONFIG_FILE "middleware_edgefast_bluetooth_config_template")
-set_source_files_properties("${ProjDirPath}/../edgefast_bluetooth_debug_config.h" PROPERTIES COMPONENT_CONFIG_FILE "middleware_edgefast_bluetooth_config_template")
-set_source_files_properties("${ProjDirPath}/../platform/configs/ffconf.h" PROPERTIES COMPONENT_CONFIG_FILE "middleware_fatfs_template_usb")
-set_source_files_properties("${ProjDirPath}/../platform/configs/usb_host_config.h" PROPERTIES COMPONENT_CONFIG_FILE "middleware_usb_host_ip3516hs_config_header")
-set_source_files_properties("${ProjDirPath}/../controller/configs/wifi/wifi_config.h" PROPERTIES COMPONENT_CONFIG_FILE "middleware_wifi_template")
+set_source_files_properties("${ProjDirPath}/../FreeRTOSConfig.h" PROPERTIES COMPONENT_CONFIG_FILE "middleware_freertos-kernel_config")
+set_source_files_properties("${ProjDirPath}/../mbedtls_config_client.h" PROPERTIES COMPONENT_CONFIG_FILE "middleware_edgefast_bluetooth_template")
+set_source_files_properties("${ProjDirPath}/../fsl_os_abstraction_config.h" PROPERTIES COMPONENT_CONFIG_FILE "component_osa_template_config")
 
 if(CMAKE_BUILD_TYPE STREQUAL flash_debug)
-     target_compile_definitions(${MCUX_SDK_PROJECT_NAME}  PRIVATE MBEDTLS_CONFIG_FILE="ksdk_mbedtls_config.h")
-endif(CMAKE_BUILD_TYPE STREQUAL flash_debug)
+     target_compile_definitions(${MCUX_SDK_PROJECT_NAME}  PRIVATE $<$<COMPILE_LANGUAGE:C>:MBEDTLS_CONFIG_FILE="ksdk_mbedtls_config.h">)
+endif()
 
 if(CMAKE_BUILD_TYPE STREQUAL flash_release)
-     target_compile_definitions(${MCUX_SDK_PROJECT_NAME}  PRIVATE MBEDTLS_CONFIG_FILE="ksdk_mbedtls_config.h")
-endif(CMAKE_BUILD_TYPE STREQUAL flash_release)
+     target_compile_definitions(${MCUX_SDK_PROJECT_NAME}  PRIVATE $<$<COMPILE_LANGUAGE:C>:MBEDTLS_CONFIG_FILE="ksdk_mbedtls_config.h">)
+endif()
+
+if(CMAKE_BUILD_TYPE STREQUAL flash_debug)
+     target_compile_definitions(${MCUX_SDK_PROJECT_NAME}  PRIVATE $<$<COMPILE_LANGUAGE:CXX>:MBEDTLS_CONFIG_FILE="ksdk_mbedtls_config.h">)
+endif()
+
+if(CMAKE_BUILD_TYPE STREQUAL flash_release)
+     target_compile_definitions(${MCUX_SDK_PROJECT_NAME}  PRIVATE $<$<COMPILE_LANGUAGE:CXX>:MBEDTLS_CONFIG_FILE="ksdk_mbedtls_config.h">)
+endif()
 
 include(${SdkRootDirPath}/devices/MIMXRT595S/all_lib_device.cmake)
 
@@ -114,5 +114,11 @@ target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${TARGET_LINK_SYSTEM_LIBR
 
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--end-group)
 
-set_target_properties(${MCUX_SDK_PROJECT_NAME} PROPERTIES ADDITIONAL_CLEAN_FILES "output.map")
+ADD_CUSTOM_COMMAND(TARGET ${MCUX_SDK_PROJECT_NAME} POST_BUILD COMMAND ${CMAKE_OBJCOPY}
+-Obinary ${EXECUTABLE_OUTPUT_PATH}/${MCUX_SDK_PROJECT_NAME} ${EXECUTABLE_OUTPUT_PATH}/peripheral_pxr.bin)
+
+set_target_properties(${MCUX_SDK_PROJECT_NAME} PROPERTIES ADDITIONAL_CLEAN_FILES "output.map;${EXECUTABLE_OUTPUT_PATH}/peripheral_pxr.bin")
+
+# wrap all libraries with -Wl,--start-group -Wl,--end-group to prevent link order issue
+group_link_libraries()
 

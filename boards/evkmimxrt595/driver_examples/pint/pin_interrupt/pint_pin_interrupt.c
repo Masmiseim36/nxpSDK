@@ -6,19 +6,13 @@
  */
 
 #include "fsl_debug_console.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 #include "fsl_pint.h"
 
-#include "fsl_inputmux.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_PINT_PIN_INT0_SRC kINPUTMUX_GpioPort0Pin25ToPintsel /* SW1 */
-#define DEMO_PINT_PIN_INT1_SRC kINPUTMUX_GpioPort0Pin10ToPintsel /* SW2 */
-#define DEMO_PINT_PIN_INT2_SRC kINPUTMUX_GpioPort0Pin5ToPintsel  /* J30-1 */
-#define DEMO_PIN_NUM           3
 #ifndef EXAMPLE_PINT_BASE
 #define EXAMPLE_PINT_BASE PINT
 #endif
@@ -49,20 +43,7 @@ void pint_intr_callback(pint_pin_int_t pintr, uint32_t pmatch_status)
 int main(void)
 {
     /* Board pin, clock, debug console init */
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
-
-    /* Configure DMAMUX. */
-    RESET_PeripheralReset(kINPUTMUX_RST_SHIFT_RSTn);
-
-    /* Connect trigger sources to PINT */
-    INPUTMUX_Init(INPUTMUX);
-    INPUTMUX_AttachSignal(INPUTMUX, kPINT_PinInt0, DEMO_PINT_PIN_INT0_SRC);
-    INPUTMUX_AttachSignal(INPUTMUX, kPINT_PinInt1, DEMO_PINT_PIN_INT1_SRC);
-    INPUTMUX_AttachSignal(INPUTMUX, kPINT_PinInt2, DEMO_PINT_PIN_INT2_SRC);
-    /* Turnoff clock to inputmux to save power. Clock is only needed to make changes */
-    INPUTMUX_Deinit(INPUTMUX);
+    BOARD_InitHardware();
 
     /* Clear screen*/
     PRINTF("%c[2J", 27);

@@ -36,7 +36,7 @@ Change log:
 #endif
 
 //_IOBUFS_ALIGNED(SDIO_DMA_ALIGNMENT)
-#if defined(SD8978) || defined(SD8987) || defined(SD8997) || defined(SD9097) || defined(SD9098) || defined(SD9177)
+#if defined(SD8978) || defined(SD8987) || defined(SD8997) || defined(SD9097) || defined(SD9098) || defined(SD9177) || defined(IW610)
 static t_u8 mp_regs_buffer[MAX_MP_REGS + DMA_ALIGNMENT];
 #elif defined(SD8801)
 SDK_ALIGN(uint8_t mp_regs_buffer[MAX_MP_REGS], BOARD_SDMMC_DATA_BUFFER_ALIGN_SIZE);
@@ -45,6 +45,7 @@ SDK_ALIGN(uint8_t mp_regs_buffer[MAX_MP_REGS], BOARD_SDMMC_DATA_BUFFER_ALIGN_SIZ
 /* We are allocating BSS list globally as we need heap for other purposes */
 SDK_ALIGN(BSSDescriptor_t BSS_List[MRVDRV_MAX_BSSID_LIST], 32);
 
+#if CONFIG_SCAN_CHANNEL_GAP
 
 #if !CONFIG_5GHz_SUPPORT
 static ChanStatistics_t Chan_Stats[14];
@@ -52,6 +53,7 @@ static ChanStatistics_t Chan_Stats[14];
 static ChanStatistics_t Chan_Stats[48];
 #endif
 
+#endif
 
 /********************************************************
         Local Functions
@@ -74,6 +76,7 @@ mlan_status wlan_allocate_adapter(pmlan_adapter pmadapter)
     (void)__memset(MNULL, &BSS_List, 0x00, sizeof(BSS_List));
 
     pmadapter->pscan_table = BSS_List;
+#if CONFIG_SCAN_CHANNEL_GAP
 
 #if !CONFIG_5GHz_SUPPORT
     pmadapter->num_in_chan_stats = 14;
@@ -81,11 +84,12 @@ mlan_status wlan_allocate_adapter(pmlan_adapter pmadapter)
     pmadapter->num_in_chan_stats = 48;
 #endif
     pmadapter->pchan_stats = Chan_Stats;
+#endif
 
        /* wmsdk: Use a statically allocated DMA aligned buffer */
 #if defined(SD8801)
     pmadapter->mp_regs = mp_regs_buffer;
-#elif defined(SD8978) || defined(SD8987) || defined(SD8997) || defined(SD9097) || defined(SD9098) || defined(SD9177)
+#elif defined(SD8978) || defined(SD8987) || defined(SD8997) || defined(SD9097) || defined(SD9098) || defined(SD9177) || defined(IW610)
     pmadapter->mp_regs = (t_u8 *)ALIGN_ADDR(mp_regs_buffer, DMA_ALIGNMENT);
 // mp_regs_buffer;
 #endif
@@ -130,6 +134,7 @@ mlan_status wlan_init_priv(pmlan_private priv)
     priv->media_connected = MFALSE;
     (void)__memset(pmadapter, priv->curr_addr, 0xff, MLAN_MAC_ADDR_LENGTH);
 
+#ifdef STA_SUPPORT
     priv->pkt_tx_ctrl = 0;
     priv->bss_mode    = MLAN_BSS_MODE_INFRA;
 
@@ -164,11 +169,14 @@ mlan_status wlan_init_priv(pmlan_private priv)
     wlan_11d_priv_init(priv);
     wlan_11h_priv_init(priv);
 
+#if UAP_SUPPORT
     priv->uap_bss_started = MFALSE;
     (void)__memset(pmadapter, &priv->uap_state_chan_cb, 0, sizeof(priv->uap_state_chan_cb));
     priv->num_drop_pkts = 0;
+#endif
 
     priv->wpa_is_gtk_set = MFALSE;
+#endif /* STA_SUPPORT */
 
 #ifdef RW610
     priv->tx_bf_cap = DEFAULT_11N_TX_BF_CAP;
@@ -178,6 +186,8 @@ mlan_status wlan_init_priv(pmlan_private priv)
     priv->wmm_required = MTRUE;
     priv->wmm_enabled  = MFALSE;
     priv->wmm_qosinfo  = 0;
+#ifdef STA_SUPPORT
+#endif /* STA_SUPPORT */
     priv->pmfcfg.mfpc = 0;
     priv->pmfcfg.mfpr = 0;
 
@@ -212,17 +222,19 @@ mlan_status wlan_init_priv(pmlan_private priv)
     priv->roaming_enabled = MFALSE;
 #endif
 
+#if UAP_SUPPORT
     priv->uap_bss_started = MFALSE;
     priv->uap_host_based  = MFALSE;
+#endif
 
-#if CONFIG_WPA_SUPP
     reset_ie_index();
+#if CONFIG_WPA_SUPP
     priv->default_scan_ies_len = 0;
     priv->probe_req_index      = -1;
 #if CONFIG_WPA_SUPP_WPS
     priv->wps.wps_mgmt_bitmap_index = -1;
 #endif
-#if CONFIG_WPA_SUPP_AP
+#if CONFIG_HOSTAPD
     priv->beacon_vendor_index = -1;
     priv->beacon_index        = 0;
     priv->proberesp_index     = 1;
@@ -264,13 +276,14 @@ t_void wlan_init_adapter(pmlan_adapter pmadapter)
 #if defined(SD8801)
     pmadapter->curr_rd_port = 1;
     pmadapter->curr_wr_port = 1;
-#elif defined(SD8978) || defined(SD8987) || defined(SD8997) || defined(SD9097) || defined(SD9098) || defined(SD9177)
+#elif defined(SD8978) || defined(SD8987) || defined(SD8997) || defined(SD9097) || defined(SD9098) || defined(SD9177) || defined(IW610)
     pmadapter->curr_rd_port      = 0;
     pmadapter->curr_wr_port      = 0;
 #endif
     pmadapter->mp_data_port_mask = DATA_PORT_MASK;
 #endif
 
+#ifdef STA_SUPPORT
     /* Scan type */
     pmadapter->scan_type = MLAN_SCAN_TYPE_ACTIVE;
     /* Scan mode */
@@ -298,8 +311,10 @@ t_void wlan_init_adapter(pmlan_adapter pmadapter)
     pmadapter->multiple_dtim         = MRVDRV_DEFAULT_MULTIPLE_DTIM;
     pmadapter->local_listen_interval = 0; /* default value in firmware
                                              will be used */
+#endif                                    /* STA_SUPPORT */
 
     pmadapter->delay_to_ps       = DELAY_TO_PS_DEFAULT;
+    pmadapter->idle_time         = DEEP_SLEEP_IDLE_TIME;
     pmadapter->enhanced_ps_mode  = PS_MODE_AUTO;
     pmadapter->bcn_miss_time_out = DEFAULT_BCN_MISS_TIMEOUT;
 
@@ -331,19 +346,23 @@ t_void wlan_init_adapter(pmlan_adapter pmadapter)
     pmadapter->usr_dot_11n_dev_cap_bg = 0;
     pmadapter->usr_dot_11n_dev_cap_a  = 0;
     pmadapter->usr_dev_mcs_support    = 0;
+#ifdef STA_SUPPORT
     pmadapter->chan_bandwidth    = 0;
     pmadapter->adhoc_11n_enabled = MFALSE;
+#endif /* STA_SUPPORT */
 
     pmadapter->hw_dot_11ac_dev_cap       = 0;
     pmadapter->hw_dot_11ac_mcs_support   = 0;
     pmadapter->usr_dot_11ac_opermode_bw  = 0;
     pmadapter->usr_dot_11ac_opermode_nss = 0;
+#if CONFIG_WIFI_CAPA
     pmadapter->usr_dot_11n_enable = MFALSE;
 #if CONFIG_11AC
     pmadapter->usr_dot_11ac_enable = MFALSE;
 #endif
 #if CONFIG_11AX
     pmadapter->usr_dot_11ax_enable = MFALSE;
+#endif
 #endif
 
     /* Initialize 802.11d */

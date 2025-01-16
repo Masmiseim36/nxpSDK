@@ -27,21 +27,7 @@
 #include "fsl_component_log.h"
 LOG_MODULE_DEFINE(LOG_MODULE_NAME, kLOG_LevelTrace);
 
-#ifndef LOG_DBG
-#define LOG_DBG BT_DBG
-#endif
 
-#ifndef LOG_ERR
-#define LOG_ERR BT_ERR
-#endif
-
-#ifndef LOG_HEXDUMP_DBG
-#define LOG_HEXDUMP_DBG BT_HEXDUMP_DBG
-#endif
-
-#ifndef LOG_WRN
-#define LOG_WRN BT_WARN
-#endif
 
 static struct bt_aics aics_insts[CONFIG_BT_MAX_CONN * CONFIG_BT_AICS_CLIENT_MAX_INSTANCE_COUNT];
 
@@ -683,15 +669,9 @@ static void disconnected(struct bt_conn *conn, uint8_t reason)
 	}
 }
 
-#if 0
 BT_CONN_CB_DEFINE(conn_callbacks) = {
 	.disconnected = disconnected,
 };
-#else
-static struct bt_conn_cb conn_callbacks = {
-	.disconnected = disconnected,
-};
-#endif
 
 int bt_aics_discover(struct bt_conn *conn, struct bt_aics *inst,
 		     const struct bt_aics_discover_param *param)
@@ -1070,8 +1050,6 @@ void bt_aics_client_cb_register(struct bt_aics *inst, struct bt_aics_cb *cb)
 	}
 
 	inst->cli.cb = cb;
-
-	bt_conn_cb_register(&conn_callbacks);
 }
 
 #endif /* CONFIG_BT_AICS_CLIENT */

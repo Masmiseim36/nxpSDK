@@ -8,6 +8,17 @@
   The development versions (X.Y.Z.dev) do not refer to a single source code snapshots. To avoid ambiguity,
   change log below contains SHA-1 hashes of GIT commits used when importing the code into the SDK.
 
+  - 2.2.1_rev2
+    - Bug fixes:
+      - src/apps/lwiperf: Fixed calculation of the number of UDP datagrams to transmit.
+        When the desired rate was high and datagram size small, the ideal delay between
+        each transmitted datagram could be smaller than 1 microsecond. The value was
+        truncated to zero and resulted in zero-division and/or no UDP transmitted at all.
+      - port/arch/cc.h: code which checks for the presence of Newlib standard C library
+        adds import of a standard header first so the __NEWLIB__ macro is always available
+        when Newlib is used. This prevents LWIP_TIMEVAL_PRIVATE from having different values
+        in one program.
+
   - 2.2.1_rev1
     - New features:
       - Ported lwIP 2.2.1.dev (2024-02-19, branch: master, SHA-1: d0efd9ef7ba08e54b46b1060e2b4629a4907391b) to MCUXpresso SDK.

@@ -60,51 +60,44 @@ struct bt_has {
 	bool registered;
 };
 
-STRUCT_PACKED_PRE
 struct bt_has_cp_hdr {
 	uint8_t opcode;
 	uint8_t data[0];
-} STRUCT_PACKED_POST;
+} __packed;
 
-STRUCT_PACKED_PRE
 struct bt_has_cp_read_presets_req {
 	uint8_t start_index;
 	uint8_t num_presets;
-} STRUCT_PACKED_POST;
+} __packed;
 
-STRUCT_PACKED_PRE
 struct bt_has_cp_read_preset_rsp {
 	uint8_t is_last;
 	uint8_t index;
 	uint8_t properties;
 	uint8_t name[0];
-} STRUCT_PACKED_POST;
+} __packed;
 
-STRUCT_PACKED_PRE
 struct bt_has_cp_preset_changed {
 	uint8_t change_id;
 	uint8_t is_last;
 	uint8_t additional_params[0];
-} STRUCT_PACKED_POST;
+} __packed;
 
-STRUCT_PACKED_PRE
 struct bt_has_cp_generic_update {
 	uint8_t prev_index;
 	uint8_t index;
 	uint8_t properties;
 	uint8_t name[0];
-} STRUCT_PACKED_POST;
+} __packed;
 
-STRUCT_PACKED_PRE
 struct bt_has_cp_write_preset_name {
 	uint8_t index;
 	uint8_t name[0];
-} STRUCT_PACKED_POST;
+} __packed;
 
-STRUCT_PACKED_PRE
 struct bt_has_cp_set_active_preset {
 	uint8_t index;
-} STRUCT_PACKED_POST;
+} __packed;
 
 static inline const char *bt_has_op_str(uint8_t op)
 {

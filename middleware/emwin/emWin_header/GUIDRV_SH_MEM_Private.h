@@ -9,7 +9,7 @@
 *                                                                    *
 **********************************************************************
 
-** emWin V6.38 - Graphical user interface for embedded applications **
+** emWin V6.46 - Graphical user interface for embedded applications **
 All  Intellectual Property rights  in the Software belongs to  SEGGER.
 emWin is protected by  international copyright laws.  Knowledge of the
 source code may not be used to write a similar product.  This file may
@@ -34,7 +34,7 @@ License model:            emWin License Agreement, dated August 20th 2011 and Am
 Licensed platform:        NXP's ARM 7/9, Cortex-M0, M3, M4, M7, A7, M33
 ----------------------------------------------------------------------
 Support and Update Agreement (SUA)
-SUA period:               2011-08-19 - 2024-09-02
+SUA period:               2011-08-19 - 2025-09-02
 Contact to extend SUA:    sales@segger.com
 ----------------------------------------------------------------------
 File        : GUIDRV_SH_MEM_Private.h
@@ -88,13 +88,13 @@ struct DRIVER_CONTEXT {
   U8               SendEnd;                                                // Send end command after sending cache
 };
 
-void    GUIDRV_SH_MEM__SendCacheOnDemand(DRIVER_CONTEXT * pContext, int y0, int y1);
-void  * GUIDRV_SH_MEM__GetDevData       (GUI_DEVICE * pDevice, int Index);
-void    GUIDRV_SH_MEM__GetRect          (GUI_DEVICE * pDevice, LCD_RECT * pRect);
-void    GUIDRV_SH_MEM__SetOrg           (GUI_DEVICE * pDevice, int x, int y);
-void (* GUIDRV_SH_MEM__GetDevFunc       (GUI_DEVICE ** ppDevice, int Index))(void);
-void (* GUIDRV_SH_MEM_3__GetDevFunc     (GUI_DEVICE ** ppDevice, int Index))(void);
-void  * GUIDRV_SH_MEM_3__GetDevData     (GUI_DEVICE * pDevice, int Index);
+void         GUIDRV_SH_MEM__SendCacheOnDemand(DRIVER_CONTEXT * pContext, int y0, int y1);
+const void * GUIDRV_SH_MEM__GetDevData       (GUI_DEVICE * pDevice, int Index);
+void         GUIDRV_SH_MEM__GetRect          (GUI_DEVICE * pDevice, LCD_RECT * pRect);
+void         GUIDRV_SH_MEM__SetOrg           (GUI_DEVICE * pDevice, int x, int y);
+void      (* GUIDRV_SH_MEM__GetDevFunc       (GUI_DEVICE ** ppDevice, int Index))(void);
+void      (* GUIDRV_SH_MEM_3__GetDevFunc     (GUI_DEVICE ** ppDevice, int Index))(void);
+const void * GUIDRV_SH_MEM_3__GetDevData     (GUI_DEVICE * pDevice, int Index);
 
 #endif // GUIDRV_SH_MEM_PRIVATE_H
 

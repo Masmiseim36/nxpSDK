@@ -1,6 +1,5 @@
 /*
- * Copyright 2017, 2020-2021, 2023 NXP
- * All rights reserved.
+ * Copyright 2017, 2020-2021, 2023, 2024 NXP
  *
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -16,6 +15,7 @@
  *
  *   1.1.0
  *     - Add stack function which supports LIFO item management.
+ *     - Add new pixel format kVIDEO_PixelFormatNV12.
  *
  *   1.0.5
  *     - Fix IAR Pa082 warning.
@@ -86,6 +86,8 @@ typedef enum _video_pixel_format
     kVIDEO_PixelFormatYVYU = FSL_VIDEO_FOURCC('Y', 'V', 'Y', 'U'), /*!< YUV422, Y-V-Y-U. */
     kVIDEO_PixelFormatUYVY = FSL_VIDEO_FOURCC('U', 'Y', 'V', 'Y'), /*!< YUV422, U-Y-V-Y. */
     kVIDEO_PixelFormatVYUY = FSL_VIDEO_FOURCC('V', 'Y', 'U', 'Y'), /*!< YUV422, V-Y-U-Y. */
+
+    kVIDEO_PixelFormatNV12 = FSL_VIDEO_FOURCC('N', 'V', '1', '2'), /*!< YUV420 2 planner, 1st planner Y, 2nd planner UV. */
 
     kVIDEO_PixelFormatXYUV = FSL_VIDEO_FOURCC('X', 'Y', 'U', 'V'), /*!< YUV444, X-Y-U-V. */
     kVIDEO_PixelFormatXYVU = FSL_VIDEO_FOURCC('X', 'Y', 'V', 'U'), /*!< YUV444, X-Y-V-U. */

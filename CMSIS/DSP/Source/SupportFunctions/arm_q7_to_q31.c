@@ -42,7 +42,6 @@
   @param[in]     pSrc       points to the Q7 input vector
   @param[out]    pDst       points to the Q31 output vector
   @param[in]     blockSize  number of samples in each vector
-  @return        none
 
   @par           Details
                    The equation used for the conversion process is:
@@ -51,7 +50,7 @@
   </pre>
  */
 #if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE)
-void arm_q7_to_q31(
+ARM_DSP_ATTRIBUTE void arm_q7_to_q31(
   const q7_t * pSrc,
         q31_t * pDst,
         uint32_t blockSize)
@@ -93,7 +92,7 @@ void arm_q7_to_q31(
 }
 
 #else
-void arm_q7_to_q31(
+ARM_DSP_ATTRIBUTE void arm_q7_to_q31(
   const q7_t * pSrc,
         q31_t * pDst,
         uint32_t blockSize)

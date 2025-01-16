@@ -73,11 +73,13 @@ SECTIONS
         /* Exclude flash and frequently executed functions from XIP */
         */flexspi_octal_flash_ops.c.obj
         */fsl_flexspi.c.obj
+        */fsl_reset.c.obj
     ) .text)                 /* .text sections (code) */
     *(EXCLUDE_FILE(
         /* Exclude flash and frequently executed functions from XIP */
         */flexspi_octal_flash_ops.c.obj
         */fsl_flexspi.c.obj
+        */fsl_reset.c.obj
     ) .text*)                /* .text* sections (code) */
     *(.rodata)               /* .rodata sections (constants, strings, etc.) */
     *(.rodata*)              /* .rodata* sections (constants, strings, etc.) */
@@ -186,6 +188,7 @@ SECTIONS
     /* Explicit placement of flash and frequently executed functions in RAM */
     */fsl_flexspi.c.obj(.text .text* .rodata .rodata*)
     */flexspi_octal_flash_ops.c.obj(.text .text* .rodata .rodata*)
+    */fsl_reset.c.obj(.text .text* .rodata .rodata*)
     *(.data)                 /* .data sections */
     *(.data*)                /* .data* sections */
     KEEP(*(.jcr*))

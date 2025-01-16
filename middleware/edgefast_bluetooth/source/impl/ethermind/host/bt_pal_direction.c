@@ -325,7 +325,7 @@ prepare_cl_cte_rx_enable_cmd_params(struct net_buf **buf, struct bt_le_per_adv_s
 		}
 
 		cp->switch_pattern_len = switch_pattern_len;
-		dest_ant_ids = net_buf_add(*buf, params->num_ant_ids);
+		dest_ant_ids = net_buf_add(*buf, cp->switch_pattern_len);
 		memcpy(dest_ant_ids, ant_ids, cp->switch_pattern_len);
 	}
 
@@ -388,7 +388,7 @@ int hci_df_prepare_connectionless_iq_report(struct net_buf *buf,
 
 	if (!per_adv_sync) {
 		LOG_ERR("Unknown handle 0x%04X for iq samples report",
-		       sys_le16_to_cpu(evt->sync_handle));
+			sys_le16_to_cpu(evt->sync_handle));
 		return -EINVAL;
 	}
 
@@ -436,7 +436,7 @@ int hci_df_vs_prepare_connectionless_iq_report(struct net_buf *buf,
 
 	if (!per_adv_sync) {
 		LOG_ERR("Unknown handle 0x%04X for iq samples report",
-		       sys_le16_to_cpu(evt->sync_handle));
+			sys_le16_to_cpu(evt->sync_handle));
 		return -EINVAL;
 	}
 
@@ -684,7 +684,7 @@ int hci_df_prepare_connection_iq_report(struct net_buf *buf,
 	conn = bt_conn_lookup_handle(sys_le16_to_cpu(evt->conn_handle), BT_CONN_TYPE_LE);
 	if (!conn) {
 		LOG_ERR("Unknown conn handle 0x%04X for iq samples report",
-		       sys_le16_to_cpu(evt->conn_handle));
+			sys_le16_to_cpu(evt->conn_handle));
 		return -EINVAL;
 	}
 
@@ -736,7 +736,7 @@ int hci_df_vs_prepare_connection_iq_report(struct net_buf *buf,
 	conn = bt_conn_lookup_handle(sys_le16_to_cpu(evt->conn_handle), BT_CONN_TYPE_LE);
 	if (!conn) {
 		LOG_ERR("Unknown conn handle 0x%04X for iq samples report",
-		       sys_le16_to_cpu(evt->conn_handle));
+			sys_le16_to_cpu(evt->conn_handle));
 		return -EINVAL;
 	}
 
@@ -861,7 +861,7 @@ int hci_df_prepare_conn_cte_req_failed(struct net_buf *buf,
 	conn = bt_conn_lookup_handle(sys_le16_to_cpu(evt->conn_handle), BT_CONN_TYPE_LE);
 	if (!conn) {
 		LOG_ERR("Unknown conn handle 0x%04X for iq samples report",
-		       sys_le16_to_cpu(evt->conn_handle));
+			sys_le16_to_cpu(evt->conn_handle));
 		return -EINVAL;
 	}
 
@@ -1145,7 +1145,7 @@ static int bt_df_set_conn_cte_req_enable(struct bt_conn *conn, bool enable,
 	}
 
 	if (!atomic_test_bit(conn->flags, BT_CONN_CTE_RX_PARAMS_SET)) {
-		LOG_ERR("Can't start CTE requres procedure before CTE RX params setup");
+		LOG_ERR("Can't start CTE request procedure before CTE RX params setup");
 		return -EINVAL;
 	}
 

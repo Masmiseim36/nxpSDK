@@ -6,25 +6,16 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 #include "fsl_usart.h"
 #include "fsl_usart_dma.h"
 #include "fsl_dma.h"
 #include "fsl_debug_console.h"
 
-#include "fsl_inputmux.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_USART                USART0
-#define DEMO_USART_CLK_SRC        kCLOCK_Flexcomm0Clk
-#define DEMO_USART_CLK_FREQ       CLOCK_GetFlexcommClkFreq(0)
-#define USART_RX_DMA_CHANNEL      0
-#define USART_TX_DMA_CHANNEL      1
-#define EXAMPLE_UART_DMA_BASEADDR DMA0
-
 
 /*******************************************************************************
  * Prototypes
@@ -89,19 +80,7 @@ int main(void)
     dma_transfer_config_t transferConfig;
     usart_config_t config;
 
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
-
-    /* Configure DMAMUX. */
-    RESET_PeripheralReset(kINPUTMUX_RST_SHIFT_RSTn);
-
-    INPUTMUX_Init(INPUTMUX);
-    /* Enable DMA request */
-    INPUTMUX_EnableSignal(INPUTMUX, kINPUTMUX_Flexcomm0RxToDmac0Ch0RequestEna, true);
-    INPUTMUX_EnableSignal(INPUTMUX, kINPUTMUX_Flexcomm0TxToDmac0Ch1RequestEna, true);
-    /* Turnoff clock to inputmux to save power. Clock is only needed to make changes */
-    INPUTMUX_Deinit(INPUTMUX);
+    BOARD_InitHardware();
 
     /* Initialize the USART. */
     /*

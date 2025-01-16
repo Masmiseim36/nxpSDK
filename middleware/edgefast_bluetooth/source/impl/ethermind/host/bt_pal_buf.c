@@ -10,6 +10,8 @@
 #include <bluetooth/buf.h>
 #include <bluetooth/l2cap.h>
 
+#include "bt_pal_buf_view.h"
+
 #include "bt_pal_hci_core.h"
 #include "bt_pal_conn_internal.h"
 #if (defined(CONFIG_BT_ISO) && ((CONFIG_BT_ISO) > 0))
@@ -40,13 +42,14 @@ LOG_MODULE_DEFINE(LOG_MODULE_NAME, kLOG_LevelTrace);
  * Having a dedicated pool for it ensures that exhaustion of the RX pool
  * cannot block the delivery of this priority event.
  */
-NET_BUF_POOL_FIXED_DEFINE(num_complete_pool, 1, NUM_COMLETE_EVENT_SIZE, NULL);
+#define SYNC_EVT_SIZE NUM_COMLETE_EVENT_SIZE
+NET_BUF_POOL_FIXED_DEFINE(sync_evt_pool, 1, SYNC_EVT_SIZE, sizeof(struct bt_buf_data), NULL);
 #endif /* CONFIG_BT_CONN || CONFIG_BT_ISO */
 
 #if (defined(CONFIG_BT_BUF_EVT_DISCARDABLE_COUNT) && (CONFIG_BT_BUF_EVT_DISCARDABLE_COUNT > 0U))
 NET_BUF_POOL_FIXED_DEFINE(discardable_pool, CONFIG_BT_BUF_EVT_DISCARDABLE_COUNT,
 			  BT_BUF_EVT_SIZE(CONFIG_BT_BUF_EVT_DISCARDABLE_SIZE),
-			  NULL);
+			  sizeof(struct bt_buf_data), NULL);
 #endif /* CONFIG_BT_BUF_EVT_DISCARDABLE_COUNT */
 
 #if (defined(CONFIG_BT_HCI_ACL_FLOW_CONTROL) && (CONFIG_BT_HCI_ACL_FLOW_CONTROL > 0U))
@@ -55,11 +58,11 @@ NET_BUF_POOL_DEFINE(acl_in_pool, CONFIG_BT_BUF_ACL_RX_COUNT,
 		    sizeof(struct acl_data), bt_hci_host_num_completed_packets);
 
 NET_BUF_POOL_FIXED_DEFINE(evt_pool, CONFIG_BT_BUF_EVT_RX_COUNT,
-			  BT_BUF_EVT_RX_SIZE,
+			  BT_BUF_EVT_RX_SIZE, sizeof(struct bt_buf_data),
 			  NULL);
 #else
 NET_BUF_POOL_FIXED_DEFINE(hci_rx_pool, BT_BUF_RX_COUNT,
-			  BT_BUF_RX_SIZE,
+			  BT_BUF_RX_SIZE, sizeof(struct acl_data),
 			  NULL);
 #endif /* CONFIG_BT_HCI_ACL_FLOW_CONTROL */
 
@@ -71,9 +74,7 @@ struct net_buf *bt_buf_get_rx(enum bt_buf_type type, k_timeout_t timeout)
 		 type == BT_BUF_ISO_IN, "Invalid buffer type requested");
 
 #if ((defined(CONFIG_BT_ISO_UNICAST) && (CONFIG_BT_ISO_UNICAST > 0U)) || (defined(CONFIG_BT_ISO_SYNC_RECEIVER) && (CONFIG_BT_ISO_SYNC_RECEIVER > 0U)))
-	if ((IS_ENABLED(CONFIG_BT_ISO_UNICAST) ||
-	     IS_ENABLED(CONFIG_BT_ISO_SYNC_RECEIVER)) &&
-	     type == BT_BUF_ISO_IN) {
+	if (IS_ENABLED(CONFIG_BT_ISO_RX) && type == BT_BUF_ISO_IN) {
 		return bt_iso_get_rx(timeout);
 	}
 #endif /* CONFIG_BT_ISO_UNICAST || CONFIG_BT_ISO_SYNC_RECEIVER */
@@ -95,22 +96,6 @@ struct net_buf *bt_buf_get_rx(enum bt_buf_type type, k_timeout_t timeout)
 	return buf;
 }
 
-struct net_buf *bt_buf_get_cmd_complete(k_timeout_t timeout)
-{
-	struct net_buf *buf;
-
-	buf = (struct net_buf *)atomic_ptr_clear((atomic_ptr_t *)&bt_dev.sent_cmd);
-	if (buf) {
-		bt_buf_set_type(buf, BT_BUF_EVT);
-		buf->len = 0U;
-		net_buf_reserve(buf, BT_BUF_RESERVE);
-
-		return buf;
-	}
-
-	return bt_buf_get_rx(BT_BUF_EVT, timeout);
-}
-
 struct net_buf *bt_buf_get_evt(uint8_t evt, bool discardable,
 			       k_timeout_t timeout)
 {
@@ -119,7 +104,7 @@ struct net_buf *bt_buf_get_evt(uint8_t evt, bool discardable,
 	switch (evt) {
 #if ((defined(CONFIG_BT_CONN) && ((CONFIG_BT_CONN) > 0U)) || (defined(CONFIG_BT_ISO) && ((CONFIG_BT_ISO) > 0U)))
 	case BT_HCI_EVT_NUM_COMPLETED_PACKETS:
-		buf = net_buf_alloc(&num_complete_pool, timeout);
+		buf = net_buf_alloc(&sync_evt_pool, timeout);
 		break;
 #endif /* CONFIG_BT_CONN || CONFIG_BT_ISO */
 	default:
@@ -139,7 +124,7 @@ struct net_buf *bt_buf_get_evt(uint8_t evt, bool discardable,
 }
 
 #ifdef ZTEST_UNITTEST
-#if defined(CONFIG_BT_HCI_ACL_FLOW_CONTROL)
+#if (defined(CONFIG_BT_HCI_ACL_FLOW_CONTROL) && (CONFIG_BT_HCI_ACL_FLOW_CONTROL > 0))
 struct net_buf_pool *bt_buf_get_evt_pool(void)
 {
 	return &evt_pool;
@@ -156,7 +141,7 @@ struct net_buf_pool *bt_buf_get_hci_rx_pool(void)
 }
 #endif /* CONFIG_BT_HCI_ACL_FLOW_CONTROL */
 
-#if defined(CONFIG_BT_BUF_EVT_DISCARDABLE_COUNT)
+#if (defined(CONFIG_BT_BUF_EVT_DISCARDABLE_COUNT) && (CONFIG_BT_BUF_EVT_DISCARDABLE_COUNT > 0))
 struct net_buf_pool *bt_buf_get_discardable_pool(void)
 {
 	return &discardable_pool;
@@ -167,7 +152,66 @@ struct net_buf_pool *bt_buf_get_discardable_pool(void)
     (defined(CONFIG_BT_ISO) && (CONFIG_BT_ISO > 0))
 struct net_buf_pool *bt_buf_get_num_complete_pool(void)
 {
-	return &num_complete_pool;
+	return &sync_evt_pool;
 }
 #endif /* CONFIG_BT_CONN || CONFIG_BT_ISO */
 #endif /* ZTEST_UNITTEST */
+
+struct net_buf *bt_buf_make_view(struct net_buf *view,
+				 struct net_buf *parent,
+				 size_t len,
+				 struct bt_buf_view_meta *meta)
+{
+	__ASSERT_NO_MSG(len);
+	__ASSERT_NO_MSG(view);
+	/* The whole point of this API is to allow prepending data. If the
+	 * headroom is 0, that will not happen.
+	 */
+	__ASSERT_NO_MSG(net_buf_headroom(parent) > 0);
+
+	__ASSERT_NO_MSG(!bt_buf_has_view(parent));
+
+	LOG_DBG("make-view %p viewsize %u meta %p", view, len, meta);
+
+	net_buf_simple_clone(&parent->b, &view->b);
+	view->size = net_buf_headroom(parent) + len;
+	view->len = len;
+	view->flags = NET_BUF_EXTERNAL_DATA;
+
+	/* we have a view, eat `len`'s worth of data from the parent */
+	(void)net_buf_pull(parent, len);
+
+	meta->backup.data = parent->data;
+	parent->data = NULL;
+
+	meta->backup.size = parent->size;
+	parent->size = 0;
+
+	/* The ref to `parent` is moved in by passing `parent` as argument. */
+	/* save backup & "clip" the buffer so the next `make_view` will fail */
+	meta->parent = parent;
+	parent = NULL;
+
+	return view;
+}
+
+void bt_buf_destroy_view(struct net_buf *view, struct bt_buf_view_meta *meta)
+{
+	LOG_DBG("destroy-view %p meta %p", view, meta);
+	__ASSERT_NO_MSG(meta->parent);
+
+	/* "unclip" the parent buf */
+	meta->parent->data = meta->backup.data;
+	meta->parent->size = meta->backup.size;
+
+	net_buf_unref(meta->parent);
+
+	memset(meta, 0, sizeof(*meta));
+	net_buf_destroy(view);
+}
+
+bool bt_buf_has_view(const struct net_buf *parent)
+{
+	/* This is enforced by `make_view`. see comment there. */
+	return parent->size == 0 && parent->data == NULL;
+}

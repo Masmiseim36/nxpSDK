@@ -424,7 +424,7 @@ static void fw_upload_IoFuncInit(void)
     fw_upload_ComReadChar   = HAL_UartReceiveBlocking;
     fw_upload_ComWriteChar  = HAL_UartSendBlocking;
     fw_upload_init_uart     = HAL_UartInit;
-    fw_upload_GetBufferSize = HAL_UartGetReceiveCount;
+    fw_upload_GetBufferSize = NULL;
     fw_upload_CloseUart     = HAL_UartDeinit;
 #endif // USE_LPUART_DRIVER
 }

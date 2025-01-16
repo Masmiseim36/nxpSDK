@@ -9,16 +9,12 @@
 #include "fsl_device_registers.h"
 #include "fsl_debug_console.h"
 #include "fsl_spi_cmsis.h"
-#include "pin_mux.h"
 #include "board.h"
+#include "app.h"
 
-#include "fsl_inputmux.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DRIVER_SLAVE_SPI                  Driver_SPI5
-#define EXAMPLE_LPSPI_MASTER_DMA_BASEADDR DMA0
-
 #define TRANSFER_SIZE 64U /* Transfer dataSize */
 
 /*******************************************************************************
@@ -37,11 +33,6 @@ volatile bool isTransferCompleted = false;
 /*******************************************************************************
  * Code
  ******************************************************************************/
-
-uint32_t SPI5_GetFreq(void)
-{
-    return CLOCK_GetFlexcommClkFreq(5U);
-}
 void SPI_SlaveSignalEvent_t(uint32_t event)
 {
     /* user code */
@@ -53,19 +44,7 @@ void SPI_SlaveSignalEvent_t(uint32_t event)
  */
 int main(void)
 {
-    /* Configure DMAMUX. */
-    RESET_PeripheralReset(kINPUTMUX_RST_SHIFT_RSTn);
-
-    INPUTMUX_Init(INPUTMUX);
-    CLOCK_AttachClk(kFRO_DIV4_to_FLEXCOMM5);
-    INPUTMUX_EnableSignal(INPUTMUX, kINPUTMUX_Flexcomm5RxToDmac0Ch10RequestEna, true);
-    INPUTMUX_EnableSignal(INPUTMUX, kINPUTMUX_Flexcomm5TxToDmac0Ch11RequestEna, true);
-    /* Turnoff clock to inputmux to save power. Clock is only needed to make changes */
-    INPUTMUX_Deinit(INPUTMUX);
-
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
 
     PRINTF("CMSIS SPI board2board DMA example -- Slave transfer.\r\n\r\n");
 

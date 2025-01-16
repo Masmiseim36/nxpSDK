@@ -54,10 +54,9 @@
   @param[in]     value      input value to be filled
   @param[out]    pDst       points to output vector
   @param[in]     blockSize  number of samples in each vector
-  @return        none
  */
 #if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)
-void arm_fill_f32(
+ARM_DSP_ATTRIBUTE void arm_fill_f32(
   float32_t value,
   float32_t * pDst,
   uint32_t blockSize)
@@ -94,7 +93,7 @@ void arm_fill_f32(
 }
 #else
 #if defined(ARM_MATH_NEON_EXPERIMENTAL)
-void arm_fill_f32(
+ARM_DSP_ATTRIBUTE void arm_fill_f32(
   float32_t value,
   float32_t * pDst,
   uint32_t blockSize)
@@ -134,7 +133,7 @@ void arm_fill_f32(
   }
 }
 #else
-void arm_fill_f32(
+ARM_DSP_ATTRIBUTE void arm_fill_f32(
   float32_t value,
   float32_t * pDst,
   uint32_t blockSize)

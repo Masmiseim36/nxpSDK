@@ -35,7 +35,6 @@ typedef my_source_mgr * my_src_ptr;
 
 #define INPUT_BUF_SIZE  4096	/* choose an efficiently fread'able size */
 
-
 /*
  * Initialize source --- called by jpeg_read_header
  * before any data is actually read.
@@ -272,4 +271,25 @@ jpeg_mem_src (j_decompress_ptr cinfo,
   src->term_source = term_source;
   src->bytes_in_buffer = (size_t) insize;
   src->next_input_byte = (const JOCTET *) inbuffer;
+#if LIB_JPEG_USE_HW_ACCEL
+  cinfo->jpeg_size = insize;
+  cinfo->jpeg_buffer = (const JOCTET *) inbuffer;
+#endif
 }
+
+#if LIB_JPEG_USE_HW_ACCEL
+/*
+ * The JPEGDEC does not decode the jpeg file scanline by scanline,
+ * the output buffer and stride must be set specifically.
+ */
+GLOBAL(void)
+jpeg_set_output (j_decompress_ptr cinfo,
+	      const unsigned char * outbuffer, unsigned long stride)
+{
+  if (outbuffer == NULL || stride == 0)	/* Treat empty input as fatal error */
+    ERREXIT(cinfo, JERR_INPUT_EMPTY);
+
+  cinfo->output_buffer = (const JOCTET *) outbuffer;
+  cinfo->output_pitch = stride;
+}
+#endif

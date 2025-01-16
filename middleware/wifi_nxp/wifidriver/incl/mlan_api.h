@@ -186,10 +186,17 @@ extern OSA_SEMAPHORE_HANDLE_DEFINE(uapsd_sem);
 extern OSA_SEMAPHORE_HANDLE_DEFINE(txbuf_sem);
 #endif
 
+#if CONFIG_STA_AMPDU_RX
 extern bool sta_ampdu_rx_enable;
+#endif
 #ifdef DUMP_PACKET_MAC
 void dump_mac_addr(const char *msg, unsigned char *addr);
 #endif /* DUMP_PACKET_MAC */
+mlan_status wlan_setup_rates_from_bssdesc(mlan_private *pmpriv,
+                                          BSSDescriptor_t *pbss_desc,
+                                          t_u8 *pout_rates,
+                                          t_u32 *pout_rates_size);
+
 mlan_status wifi_prepare_and_send_cmd(IN mlan_private *pmpriv,
                                       IN t_u16 cmd_no,
                                       IN t_u16 cmd_action,
@@ -198,6 +205,7 @@ mlan_status wifi_prepare_and_send_cmd(IN mlan_private *pmpriv,
                                       IN t_void *pdata_buf,
                                       mlan_bss_type bss_type,
                                       void *priv);
+#if UAP_SUPPORT
 int wifi_uap_prepare_and_send_cmd(mlan_private *pmpriv,
                                   t_u16 cmd_no,
                                   t_u16 cmd_action,
@@ -206,6 +214,20 @@ int wifi_uap_prepare_and_send_cmd(mlan_private *pmpriv,
                                   t_void *pdata_buf,
                                   mlan_bss_type bss_type,
                                   void *priv);
+#else
+static inline int wifi_uap_prepare_and_send_cmd(mlan_private *pmpriv,
+                                                t_u16 cmd_no,
+                                                t_u16 cmd_action,
+                                                t_u32 cmd_oid,
+                                                t_void *pioctl_buf,
+                                                t_void *pdata_buf,
+                                                mlan_bss_type bss_type,
+                                                void *priv)
+{
+    (void)PRINTF("wifi_uap_prepare_and_send_cmd UAP not suppored %s:%d\r\n", __func__, __LINE__);
+    return -1;
+}
+#endif
 
 bool wmsdk_is_11N_enabled(void);
 
@@ -268,9 +290,11 @@ static inline mlan_status wifi_check_bss_entry_wpa2_entp_only(BSSDescriptor_t *p
     return MLAN_STATUS_SUCCESS;
 }
 #endif
+#if CONFIG_BG_SCAN
 int wifi_request_bgscan_query(mlan_private *pmpriv);
 int wifi_send_scan_query(void);
 void wifi_get_band(mlan_private *pmpriv, int *band);
+#endif
 
 int wifi_send_hostcmd(
     const void *cmd_buf, uint32_t cmd_buf_len, void *resp_buf, uint32_t resp_buf_len, uint32_t *reqd_resp_len);
@@ -284,16 +308,6 @@ void wifi_get_scan_table(mlan_private *pmpriv, mlan_scan_resp *pscan_resp);
 int wifi_get_eeprom_data(uint32_t offset, uint32_t byte_count, uint8_t *buf);
 int wifi_get_mgmt_ie(mlan_bss_type bss_type, IEEEtypes_ElementId_t index, void *buf, unsigned int *buf_len);
 int wifi_send_remain_on_channel_cmd(unsigned int bss_type, wifi_remain_on_channel_t *remain_on_channel);
-int wifi_set_smart_mode_cfg(char *ssid,
-                            int beacon_period,
-                            wifi_chan_list_param_set_t *chan_list,
-                            uint8_t *smc_start_addr,
-                            uint8_t *smc_end_addr,
-                            uint16_t filter_type,
-                            int smc_frame_filter_len,
-                            uint8_t *smc_frame_filter,
-                            int custom_ie_len,
-                            uint8_t *custom_ie);
 int wifi_set_mgmt_ie(mlan_bss_type bss_type, IEEEtypes_ElementId_t id, void *buf, unsigned int buf_len);
 #ifdef SD8801
 int wifi_get_ext_coex_stats(wifi_ext_coex_stats_t *ext_coex_stats);
@@ -334,8 +348,23 @@ int wifi_get_firmware_version_ext(wifi_fw_version_ext_t *version_ext);
  * @return WM_SUCCESS on success or error code.
  */
 int wifi_get_firmware_version(wifi_fw_version_t *ver);
+
+#if UAP_SUPPORT
+int wifi_set_smart_mode_cfg(char *ssid,
+                            int beacon_period,
+                            wifi_chan_list_param_set_t *chan_list,
+                            uint8_t *smc_start_addr,
+                            uint8_t *smc_end_addr,
+                            uint16_t filter_type,
+                            int smc_frame_filter_len,
+                            uint8_t *smc_frame_filter,
+                            int custom_ie_len,
+                            uint8_t *custom_ie);
 int wifi_get_smart_mode_cfg(void);
 int wifi_start_smart_mode(void);
+int wifi_stop_smart_mode(void);
+#endif
+
 /**
  * Get Calibration data from WLAN firmware
  *
@@ -386,10 +415,11 @@ int wifi_send_scan_cmd(t_u8 bss_mode,
 #if CONFIG_SCAN_WITH_RSSIFILTER
                        const t_s16 rssi_threshold,
 #endif
+#if CONFIG_SCAN_CHANNEL_GAP
                        const t_u16 scan_chan_gap,
+#endif
                        const bool keep_previous_scan,
                        const bool active_scan_triggered);
-int wifi_stop_smart_mode(void);
 int wifi_remove_key(int bss_index, bool is_pairwise, const uint8_t key_index, const uint8_t *mac_addr);
 int wifi_enable_ecsa_support(void);
 int wifi_set_ed_mac_mode(wifi_ed_mac_ctrl_t *wifi_ed_mac_ctrl, int bss_type);
@@ -399,12 +429,15 @@ int wifi_set_pmfcfg(t_u8 mfpc, t_u8 mfpr);
 int wifi_set_chanlist(wifi_chanlist_t *chanlist);
 int wifi_get_txpwrlimit(wifi_SubBand_t subband, wifi_txpwrlimit_t *txpwrlimit);
 int wifi_get_data_rate(wifi_ds_rate *ds_rate, mlan_bss_type bss_type);
+#if UAP_SUPPORT
 void wifi_get_active_channel_list(t_u8 *chan_list, t_u8 *num_chans, t_u16 acs_band);
+#endif
 bool wifi_is_ecsa_enabled(void);
 int wifi_set_txpwrlimit(wifi_txpwrlimit_t *txpwrlimit);
 int wifi_send_rssi_info_cmd(wifi_rssi_info_t *rssi_info);
 void wifi_set_curr_bss_channel(uint8_t channel);
 int wifi_get_chanlist(wifi_chanlist_t *chanlist);
+int wifi_get_set_bandcfg(wifi_bandcfg_t *bandcfg, mlan_act_ioctl action);
 #if (CONFIG_IPS)
 int wifi_set_ips_config(mlan_bss_type interface, int option);
 #endif
@@ -441,6 +474,7 @@ typedef struct
     t_u8 status;
 } ftm_start_param;
 
+int wifi_unassoc_ftm_cfg(const t_u16 action, const t_u16 config);
 int wifi_ftm_start_stop(const t_u16 action, const t_u8 loop_cnt, const t_u8 *mac, const t_u8 channel);
 int wifi_ftm_start(const t_u16 action, const t_u8 *mac, const t_u8 channel);
 int wifi_ftm_stop(const t_u16 action, const t_u8 *mac, const t_u8 channel);
@@ -459,10 +493,12 @@ extern t_u8 g_csi_event_for_wls;
 #endif
 #endif
 
+#if UAP_SUPPORT
 int wifi_set_custom_ie(custom_ie *beacon_ies_data,
                        custom_ie *beacon_wps_ies_data,
                        custom_ie *proberesp_ies_data,
                        custom_ie *assocresp_ies_data);
+#endif
 
 #if CONFIG_11K
 /**
@@ -539,7 +575,9 @@ int wifi_get_mgmt_ie2(mlan_bss_type bss_type, void *buf, unsigned int *buf_len);
 int wifi_set_mgmt_ie2(mlan_bss_type bss_type, unsigned short mask, void *buf, unsigned int buf_len);
 int wifi_clear_mgmt_ie2(mlan_bss_type bss_type, int mgmt_bitmap_index);
 
+#if CONFIG_BG_SCAN
 int wifi_request_bgscan(mlan_private *pmpriv);
+#endif
 
 #if CONFIG_WPA_SUPP
 int wifi_send_sched_scan_cmd(nxp_wifi_trigger_sched_scan_t *params);
@@ -591,7 +629,9 @@ int wifi_tsp_cfg(const t_u16 action,
                  int *currRFUTemp);
 #endif
 
+#if CONFIG_TX_AMPDU_PROT_MODE
 int wifi_tx_ampdu_prot_mode(tx_ampdu_prot_mode_para *prot_mode, t_u16 action);
+#endif
 
 #if CONFIG_EXTERNAL_COEX_PTA
 int wifi_external_coex_pta_cfg(ext_coex_pta_cfg coex_pta_config);
@@ -600,6 +640,8 @@ int wifi_external_coex_pta_cfg(ext_coex_pta_cfg coex_pta_config);
 #if CONFIG_IMD3_CFG
 int wifi_imd3_cfg(t_u8 imd3_value);
 #endif
+
+int send_wifi_driver_bypass_data_event(t_u8 interface);
 
 #if CONFIG_AUTO_RECONNECT
 int wifi_auto_reconnect_enable(wifi_auto_reconnect_config_t auto_reconnect_config);

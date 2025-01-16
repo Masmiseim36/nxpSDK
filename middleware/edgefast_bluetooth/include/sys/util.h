@@ -15,12 +15,13 @@
 #ifndef ZEPHYR_INCLUDE_SYS_UTIL_H_
 #define ZEPHYR_INCLUDE_SYS_UTIL_H_
 
+#include <stdint.h>
+
 #include <sys/util_macro.h>
 
 #include <stddef.h>
 
 #include <errno/errno.h>
-#include <sys/work_queue.h>
 #include <sys/slist.h>
 
 #ifdef __cplusplus
@@ -110,10 +111,6 @@ extern "C" {
 #define MIN(a, b) (((a) < (b)) ? (a) : (b))
 #endif
 
-#ifndef __fallthrough
-#define __fallthrough
-#endif
-
 /**
  * @brief Check if a pointer @p ptr lies within @p array.
  *
@@ -138,8 +135,31 @@ extern "C" {
 	((ptr) && POINTER_TO_UINT(array) <= POINTER_TO_UINT(ptr) &&                          \
 	 POINTER_TO_UINT(ptr) < POINTER_TO_UINT(&(array)[ARRAY_SIZE(array)]) &&                    \
 	 (POINTER_TO_UINT(ptr) - POINTER_TO_UINT(array)) % sizeof((array)[0]) == 0)
-#endif   
-          
+#endif
+
+/**
+ * @brief Value of @p x rounded up to the next multiple of @p align.
+ */
+#ifndef ROUND_UP
+#define ROUND_UP(x, align)                                   \
+	((((unsigned long)(x) + ((unsigned long)(align) - 1)) / \
+	  (unsigned long)(align)) * (unsigned long)(align))
+#endif
+
+/**
+ * @brief Value of @p x rounded down to the previous multiple of @p align.
+ */
+#ifndef ROUND_DOWN
+#define ROUND_DOWN(x, align)                                 \
+	(((unsigned long)(x) / (unsigned long)(align)) * (unsigned long)(align))
+#endif
+
+/** @brief Value of @p x rounded up to the next word boundary. */
+#define WB_UP(x) ROUND_UP(x, sizeof(void *))
+
+/** @brief Value of @p x rounded down to the previous word boundary. */
+#define WB_DN(x) ROUND_DOWN(x, sizeof(void *))
+
 /**
  * @def CLAMP
  * @brief Clamp a value to a given range.

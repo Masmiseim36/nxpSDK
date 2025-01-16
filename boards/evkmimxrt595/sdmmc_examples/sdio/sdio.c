@@ -9,17 +9,12 @@
 #include <stdio.h>
 #include "fsl_sdio.h"
 #include "fsl_debug_console.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 #include "sdmmc_config.h"
-#include "fsl_common.h"
-#include "fsl_gpio.h"
-#include "fsl_power.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-
 
 /* define data buffer size */
 #define DATA_BUFFER_SIZE (256U)
@@ -61,9 +56,7 @@ int main(void)
 {
     sdio_card_t *card = &g_sdio;
 
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
     BOARD_SDIO_Config(card, NULL, BOARD_SDMMC_SDIO_HOST_IRQ_PRIORITY, NULL);
     /*
      * Sdio case workaround to cover more wifi module,

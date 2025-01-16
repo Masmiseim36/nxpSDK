@@ -29,30 +29,18 @@
 LOG_MODULE_DEFINE(LOG_MODULE_NAME, kLOG_LevelTrace);
 
 
-#ifndef LOG_DBG
-#define LOG_DBG BT_DBG
-#endif
 
-#ifndef LOG_ERR
-#define LOG_ERR BT_ERR
-#endif
-
-#ifndef LOG_HEXDUMP_DBG
-#define LOG_HEXDUMP_DBG BT_HEXDUMP_DBG
-#endif
-
-#ifndef LOG_WRN
-#define LOG_WRN BT_WARN
-#endif
 
 //#include "common/bt_str.h"
 //#include "common/assert.h"
 
 #include "bt_pal_att_internal.h"
 
+#include "ascs_internal.h"
 #include "audio_internal.h"
-#include "bap_iso.h"
 #include "bap_endpoint.h"
+#include "bap_iso.h"
+#include "bap_stream.h"
 #include "bap_unicast_server.h"
 #include "pacs_internal.h"
 #if defined(CONFIG_BT_CAP_ACCEPTOR) && (CONFIG_BT_CAP_ACCEPTOR > 0)
@@ -65,7 +53,9 @@ LOG_MODULE_DEFINE(LOG_MODULE_NAME, kLOG_LevelTrace);
 				(CONFIG_BT_ASCS_ASE_SNK_COUNT + \
 				 CONFIG_BT_ASCS_ASE_SRC_COUNT)
 
-BUILD_ASSERT_MSG(CONFIG_BT_ASCS_MAX_ACTIVE_ASES <= MAX(MAX_ASES_SESSIONS,
+#define NTF_HEADER_SIZE (3) /* opcode (1) + handle (2) */
+
+BUILD_ASSERT(CONFIG_BT_ASCS_MAX_ACTIVE_ASES <= MAX(MAX_ASES_SESSIONS,
 						   CONFIG_BT_ISO_MAX_CHAN),
 	     "Max active ASEs are set to more than actual number of ASEs or ISOs");
 
@@ -106,20 +96,20 @@ static struct bt_ascs_ase {
 /* Verify that the prepare count is large enough to cover the maximum value we support a client
  * writing
  */
-BUILD_ASSERT_MSG(
-	(BT_ATT_BUF_SIZE - 3 >= ASE_BUF_SIZE ||
-		DIV_ROUND_UP(ASE_BUF_SIZE, (BT_ATT_BUF_SIZE - 3)) <= CONFIG_BT_ATT_PREPARE_COUNT),
+BUILD_ASSERT(
+	(BT_ATT_BUF_SIZE - NTF_HEADER_SIZE) >= ASE_BUF_SIZE ||
+		DIV_ROUND_UP(ASE_BUF_SIZE, (BT_ATT_BUF_SIZE - NTF_HEADER_SIZE)) <=
+			CONFIG_BT_ATT_PREPARE_COUNT,
 	"CONFIG_BT_ATT_PREPARE_COUNT not large enough to cover the maximum supported ASCS value");
 
 /* It is mandatory to support long writes in ASCS unconditionally, and thus
  * CONFIG_BT_ATT_PREPARE_COUNT must be at least 1 to support the feature
  */
-BUILD_ASSERT_MSG(CONFIG_BT_ATT_PREPARE_COUNT > 0, "CONFIG_BT_ATT_PREPARE_COUNT shall be at least 1");
+BUILD_ASSERT(CONFIG_BT_ATT_PREPARE_COUNT > 0, "CONFIG_BT_ATT_PREPARE_COUNT shall be at least 1");
 
 static const struct bt_bap_unicast_server_cb *unicast_server_cb;
 
-static OSA_SEMAPHORE_HANDLE_DEFINE(ase_buf_sem);
-static bool ase_buf_sem_init = false;
+static K_SEM_DEFINE(ase_buf_sem, 1, 1);
 NET_BUF_SIMPLE_DEFINE_STATIC(ase_buf, ASE_BUF_SIZE);
 
 static int control_point_notify(struct bt_conn *conn, const void *data, uint16_t len);
@@ -200,9 +190,19 @@ static void ase_free(struct bt_ascs_ase *ase)
 	(void)k_work_cancel_delayable(&ase->state_transition_work);
 }
 
+static uint16_t get_max_ntf_size(struct bt_conn *conn)
+{
+	const uint16_t mtu = conn == NULL ? 0 : bt_gatt_get_mtu(conn);
+
+	if (mtu > NTF_HEADER_SIZE) {
+		return mtu - NTF_HEADER_SIZE;
+	}
+
+	return 0U;
+}
+
 static int ase_state_notify(struct bt_ascs_ase *ase)
 {
-	const uint8_t att_ntf_header_size = 3; /* opcode (1) + handle (2) */
 	struct bt_conn *conn = ase->conn;
 	struct bt_conn_info conn_info;
 	uint16_t max_ntf_size;
@@ -219,7 +219,7 @@ static int ase_state_notify(struct bt_ascs_ase *ase)
 		return 0;
 	}
 
-	err = (int)OSA_SemaphoreWait(ase_buf_sem, ASE_BUF_SEM_TIMEOUT);
+	err = k_sem_take(&ase_buf_sem, ASE_BUF_SEM_TIMEOUT);
 	if (err != 0) {
 		LOG_WRN("Failed to take ase_buf_sem: %d", err);
 
@@ -228,7 +228,7 @@ static int ase_state_notify(struct bt_ascs_ase *ase)
 
 	ascs_ep_get_status(&ase->ep, &ase_buf);
 
-	max_ntf_size = bt_gatt_get_mtu(conn) - att_ntf_header_size;
+	max_ntf_size = get_max_ntf_size(conn);
 
 	ntf_size = MIN(max_ntf_size, ase_buf.len);
 	if (ntf_size < ase_buf.len) {
@@ -238,7 +238,7 @@ static int ase_state_notify(struct bt_ascs_ase *ase)
 
 	err = bt_gatt_notify(conn, ase->attr, ase_buf.data, ntf_size);
 
-	(void)OSA_SemaphorePost(ase_buf_sem);
+	k_sem_give(&ase_buf_sem);
 
 	return err;
 }
@@ -453,7 +453,7 @@ static void ase_exit_state_enabling(struct bt_ascs_ase *ase)
 
 	/*
 	 * When the EP direction is BT_AUDIO_DIR_SOURCE the state machine goes from
-	 * enabled to disabled where the disabled calback will be called,
+	 * enabled to disabled where the disabled callback will be called,
 	 * for BT_AUDIO_DIR_SINK we go from enabled to qos_configured,
 	 * and logically we have to do the disabled callback first
 	 */
@@ -683,7 +683,7 @@ int ascs_ep_set_state(struct bt_bap_ep *ep, uint8_t state)
 	}
 
 	if (!valid_state_transition) {
-		__ASSERT(false, "Invalid state transition: %s -> %s",
+		BT_ASSERT_MSG(false, "Invalid state transition: %s -> %s",
 			      bt_bap_ep_state_str(old_state), bt_bap_ep_state_str(state));
 
 		return -EBADMSG;
@@ -691,7 +691,7 @@ int ascs_ep_set_state(struct bt_bap_ep *ep, uint8_t state)
 
 	ase->state_pending = (enum bt_bap_ep_state)state;
 
-	err = k_work_schedule(&ase->state_transition_work, osaWaitNone_c);
+	err = k_work_schedule(&ase->state_transition_work, K_NO_WAIT);
 	if (err < 0) {
 		LOG_ERR("Failed to schedule state transition work err %d", err);
 		return err;
@@ -994,7 +994,7 @@ static void ascs_ep_iso_connected(struct bt_bap_ep *ep)
 
 	LOG_DBG("stream %p ep %p dir %s", stream, ep, bt_audio_dir_str(ep->dir));
 
-#if defined(CONFIG_BT_BAP_DEBUG_STREAM_SEQ_NUM) && (CONFIG_BT_BAP_DEBUG_STREAM_SEQ_NUM > 0) 
+#if defined(CONFIG_BT_BAP_DEBUG_STREAM_SEQ_NUM) && (CONFIG_BT_BAP_DEBUG_STREAM_SEQ_NUM > 0)
 	/* reset sequence number */
 	stream->_prev_seq_num = 0U;
 #endif /* CONFIG_BT_BAP_DEBUG_STREAM_SEQ_NUM */
@@ -1105,15 +1105,23 @@ static void ascs_ase_cfg_changed(const struct bt_gatt_attr *attr,
 	LOG_DBG("attr %p value 0x%04x", attr, value);
 }
 
-NET_BUF_SIMPLE_DEFINE_STATIC(rsp_buf, CONFIG_BT_L2CAP_TX_MTU);
+#define CP_RSP_BUF_SIZE                                                                            \
+	(sizeof(struct bt_ascs_cp_rsp) + (ASE_COUNT * sizeof(struct bt_ascs_cp_ase_rsp)))
+
+/* Ensure that the cp_rsp_buf can fit in any notification
+ * (sizeof buffer - header for notification)
+ */
+BUILD_ASSERT(BT_ATT_BUF_SIZE - NTF_HEADER_SIZE >= CP_RSP_BUF_SIZE,
+	     "BT_ATT_BUF_SIZE not large enough to hold responses for all ASEs");
+NET_BUF_SIMPLE_DEFINE_STATIC(cp_rsp_buf, CP_RSP_BUF_SIZE);
 
 static void ascs_cp_rsp_init(uint8_t op)
 {
 	struct bt_ascs_cp_rsp *rsp;
 
-	net_buf_simple_reset(&rsp_buf);
+	net_buf_simple_reset(&cp_rsp_buf);
 
-	rsp = net_buf_simple_add(&rsp_buf, sizeof(*rsp));
+	rsp = net_buf_simple_add(&cp_rsp_buf, sizeof(*rsp));
 	rsp->op = op;
 	rsp->num_ase = 0;
 }
@@ -1121,13 +1129,13 @@ static void ascs_cp_rsp_init(uint8_t op)
 /* Add response to an opcode/ASE ID */
 static void ascs_cp_rsp_add(uint8_t id, uint8_t code, uint8_t reason)
 {
-	struct bt_ascs_cp_rsp *rsp = (void *)rsp_buf.__buf;
+	struct bt_ascs_cp_rsp *rsp = (void *)cp_rsp_buf.__buf;
 	struct bt_ascs_cp_ase_rsp *ase_rsp;
 
 	LOG_DBG("id 0x%02x code %s (0x%02x) reason %s (0x%02x)", id,
 		bt_ascs_rsp_str(code), code, bt_ascs_reason_str(reason), reason);
 
-	if (rsp->num_ase == 0xff) {
+	if (rsp->num_ase == BT_ASCS_UNSUPP_OR_LENGTH_ERR_NUM_ASE) {
 		return;
 	}
 
@@ -1144,7 +1152,7 @@ static void ascs_cp_rsp_add(uint8_t id, uint8_t code, uint8_t reason)
 		break;
 	}
 
-	ase_rsp = net_buf_simple_add(&rsp_buf, sizeof(*ase_rsp));
+	ase_rsp = net_buf_simple_add(&cp_rsp_buf, sizeof(*ase_rsp));
 	ase_rsp->id = id;
 	ase_rsp->code = code;
 	ase_rsp->reason = reason;
@@ -1296,15 +1304,9 @@ static void disconnected(struct bt_conn *conn, uint8_t reason)
 	}
 }
 
-#if 0
 BT_CONN_CB_DEFINE(conn_cb) = {
 	.disconnected = disconnected,
 };
-#else
-static struct bt_conn_cb conn_cb = {
-	.disconnected = disconnected,
-};
-#endif
 
 struct bap_iso_find_params {
 	struct bt_conn *acl;
@@ -1455,7 +1457,7 @@ static ssize_t ascs_ase_read(struct bt_conn *conn,
 		return ascs_ase_read_status_idle(conn, attr, buf, len, offset);
 	}
 
-	err = (int)OSA_SemaphoreWait(ase_buf_sem, ASE_BUF_SEM_TIMEOUT);
+	err = k_sem_take(&ase_buf_sem, ASE_BUF_SEM_TIMEOUT);
 	if (err != 0) {
 		LOG_DBG("Failed to take ase_buf_sem: %d", err);
 
@@ -1466,7 +1468,7 @@ static ssize_t ascs_ase_read(struct bt_conn *conn,
 
 	ret_val = bt_gatt_attr_read(conn, attr, buf, len, offset, ase_buf.data, ase_buf.len);
 
-	(void)OSA_SemaphorePost(ase_buf_sem);
+	k_sem_give(&ase_buf_sem);
 
 	return ret_val;
 }
@@ -1718,7 +1720,7 @@ int bt_ascs_config_ase(struct bt_conn *conn, struct bt_bap_stream *stream,
 		return -EALREADY;
 	}
 
-	/* Get a free ASE or NULL if all ASE instances are aready in use */
+	/* Get a free ASE or NULL if all ASE instances are already in use */
 	for (int i = 1; i <= ASE_COUNT; i++) {
 		if (ase_find(conn, i) == NULL) {
 			ase = ase_new(conn, i);
@@ -1765,7 +1767,42 @@ int bt_ascs_config_ase(struct bt_conn *conn, struct bt_bap_stream *stream,
 	return 0;
 }
 
-static bool is_valid_config_len(struct net_buf_simple *buf)
+static uint16_t get_max_ase_rsp_for_conn(struct bt_conn *conn)
+{
+	const uint16_t max_ntf_size = get_max_ntf_size(conn);
+	const size_t rsp_hdr_size = sizeof(struct bt_ascs_cp_rsp);
+
+	if (max_ntf_size > rsp_hdr_size) {
+		return (max_ntf_size - rsp_hdr_size) / sizeof(struct bt_ascs_cp_ase_rsp);
+	}
+
+	return 0U;
+}
+
+static bool is_valid_num_ases(struct bt_conn *conn, uint8_t num_ases)
+{
+	const uint16_t max_ase_rsp = get_max_ase_rsp_for_conn(conn);
+
+	if (num_ases < 1U) {
+		LOG_WRN("Number_of_ASEs parameter value is less than 1");
+		return false;
+	} else if (num_ases > ASE_COUNT) {
+		/* If the request is for more ASEs than we have, we just reject the request */
+		LOG_DBG("Number_of_ASEs parameter value (%u) is greater than %d", num_ases,
+			ASE_COUNT);
+		return false;
+	} else if (num_ases > max_ase_rsp) {
+		/* If the request is for more ASEs than we can respond to, we reject the request */
+		LOG_DBG("Number_of_ASEs parameter value (%u) is greater than what we can respond "
+			"to (%u) based on the MTU",
+			num_ases, max_ase_rsp);
+		return false;
+	}
+
+	return true;
+}
+
+static bool is_valid_config_len(struct bt_conn *conn, struct net_buf_simple *buf)
 {
 	const struct bt_ascs_config_op *op;
 	struct net_buf_simple_state state;
@@ -1778,8 +1815,7 @@ static bool is_valid_config_len(struct net_buf_simple *buf)
 	}
 
 	op = net_buf_simple_pull_mem(buf, sizeof(*op));
-	if (op->num_ases < 1) {
-		LOG_WRN("Number_of_ASEs parameter value is less than 1");
+	if (!is_valid_num_ases(conn, op->num_ases)) {
 		return false;
 	}
 
@@ -1815,7 +1851,7 @@ static ssize_t ascs_config(struct bt_conn *conn, struct net_buf_simple *buf)
 	const struct bt_ascs_config_op *req;
 	const struct bt_ascs_config *cfg;
 
-	if (!is_valid_config_len(buf)) {
+	if (!is_valid_config_len(conn, buf)) {
 		return BT_GATT_ERR(BT_ATT_ERR_INVALID_ATTRIBUTE_LEN);
 	}
 
@@ -1983,7 +2019,7 @@ static void ase_qos(struct bt_ascs_ase *ase, uint8_t cig_id, uint8_t cis_id,
 	*rsp = BT_BAP_ASCS_RSP(BT_BAP_ASCS_RSP_CODE_SUCCESS, BT_BAP_ASCS_REASON_NONE);
 }
 
-static bool is_valid_qos_len(struct net_buf_simple *buf)
+static bool is_valid_qos_len(struct bt_conn *conn, struct net_buf_simple *buf)
 {
 	const struct bt_ascs_qos_op *op;
 	struct net_buf_simple_state state;
@@ -1997,8 +2033,7 @@ static bool is_valid_qos_len(struct net_buf_simple *buf)
 	}
 
 	op = net_buf_simple_pull_mem(buf, sizeof(*op));
-	if (op->num_ases < 1) {
-		LOG_WRN("Number_of_ASEs parameter value is less than 1");
+	if (!is_valid_num_ases(conn, op->num_ases)) {
 		return false;
 	}
 
@@ -2024,7 +2059,7 @@ static ssize_t ascs_qos(struct bt_conn *conn, struct net_buf_simple *buf)
 {
 	const struct bt_ascs_qos_op *req;
 
-	if (!is_valid_qos_len(buf)) {
+	if (!is_valid_qos_len(conn, buf)) {
 		return BT_GATT_ERR(BT_ATT_ERR_INVALID_ATTRIBUTE_LEN);
 	}
 
@@ -2135,8 +2170,8 @@ static bool ascs_parse_metadata(struct bt_data *data, void *user_data)
 
 		break;
 	}
-	case BT_AUDIO_METADATA_TYPE_STREAM_LANG:
-		if (data_len != 3) {
+	case BT_AUDIO_METADATA_TYPE_LANG:
+		if (data_len != BT_AUDIO_LANG_SIZE) {
 			*result->rsp = BT_BAP_ASCS_RSP(BT_BAP_ASCS_RSP_CODE_METADATA_INVALID,
 						       (enum bt_bap_ascs_reason)data_type);
 			result->err = -EBADMSG;
@@ -2387,7 +2422,7 @@ static int ase_enable(struct bt_ascs_ase *ase, struct bt_ascs_metadata *meta)
 	return 0;
 }
 
-static bool is_valid_enable_len(struct net_buf_simple *buf)
+static bool is_valid_enable_len(struct bt_conn *conn, struct net_buf_simple *buf)
 {
 	const struct bt_ascs_enable_op *op;
 	struct net_buf_simple_state state;
@@ -2400,8 +2435,7 @@ static bool is_valid_enable_len(struct net_buf_simple *buf)
 	}
 
 	op = net_buf_simple_pull_mem(buf, sizeof(*op));
-	if (op->num_ases < 1) {
-		LOG_WRN("Number_of_ASEs parameter value is less than 1");
+	if (!is_valid_num_ases(conn, op->num_ases)) {
 		return false;
 	}
 
@@ -2438,7 +2472,7 @@ static ssize_t ascs_enable(struct bt_conn *conn, struct net_buf_simple *buf)
 	struct bt_ascs_metadata *meta;
 	int i;
 
-	if (!is_valid_enable_len(buf)) {
+	if (!is_valid_enable_len(conn, buf)) {
 		return BT_GATT_ERR(BT_ATT_ERR_INVALID_ATTRIBUTE_LEN);
 	}
 
@@ -2532,7 +2566,7 @@ static void ase_start(struct bt_ascs_ase *ase)
 	ascs_cp_rsp_success(ASE_ID(ase));
 }
 
-static bool is_valid_start_len(struct net_buf_simple *buf)
+static bool is_valid_start_len(struct bt_conn *conn, struct net_buf_simple *buf)
 {
 	const struct bt_ascs_start_op *op;
 	struct net_buf_simple_state state;
@@ -2545,8 +2579,7 @@ static bool is_valid_start_len(struct net_buf_simple *buf)
 	}
 
 	op = net_buf_simple_pull_mem(buf, sizeof(*op));
-	if (op->num_ases < 1) {
-		LOG_WRN("Number_of_ASEs parameter value is less than 1");
+	if (!is_valid_num_ases(conn, op->num_ases)) {
 		return false;
 	}
 
@@ -2565,7 +2598,7 @@ static ssize_t ascs_start(struct bt_conn *conn, struct net_buf_simple *buf)
 	const struct bt_ascs_start_op *req;
 	int i;
 
-	if (!is_valid_start_len(buf)) {
+	if (!is_valid_start_len(conn, buf)) {
 		return BT_GATT_ERR(BT_ATT_ERR_INVALID_ATTRIBUTE_LEN);
 	}
 
@@ -2615,7 +2648,7 @@ static ssize_t ascs_start(struct bt_conn *conn, struct net_buf_simple *buf)
 	return buf->size;
 }
 
-static bool is_valid_disable_len(struct net_buf_simple *buf)
+static bool is_valid_disable_len(struct bt_conn *conn, struct net_buf_simple *buf)
 {
 	const struct bt_ascs_disable_op *op;
 	struct net_buf_simple_state state;
@@ -2628,8 +2661,7 @@ static bool is_valid_disable_len(struct net_buf_simple *buf)
 	}
 
 	op = net_buf_simple_pull_mem(buf, sizeof(*op));
-	if (op->num_ases < 1) {
-		LOG_WRN("Number_of_ASEs parameter value is less than 1");
+	if (!is_valid_num_ases(conn, op->num_ases)) {
 		return false;
 	}
 
@@ -2647,7 +2679,7 @@ static ssize_t ascs_disable(struct bt_conn *conn, struct net_buf_simple *buf)
 {
 	const struct bt_ascs_disable_op *req;
 
-	if (!is_valid_disable_len(buf)) {
+	if (!is_valid_disable_len(conn, buf)) {
 		return BT_GATT_ERR(BT_ATT_ERR_INVALID_ATTRIBUTE_LEN);
 	}
 
@@ -2745,7 +2777,7 @@ static void ase_stop(struct bt_ascs_ase *ase)
 	ascs_cp_rsp_success(ASE_ID(ase));
 }
 
-static bool is_valid_stop_len(struct net_buf_simple *buf)
+static bool is_valid_stop_len(struct bt_conn *conn, struct net_buf_simple *buf)
 {
 	const struct bt_ascs_stop_op *op;
 	struct net_buf_simple_state state;
@@ -2758,7 +2790,7 @@ static bool is_valid_stop_len(struct net_buf_simple *buf)
 	}
 
 	op = net_buf_simple_pull_mem(buf, sizeof(*op));
-	if (op->num_ases < 1) {
+	if (op->num_ases < 1U) {
 		LOG_WRN("Number_of_ASEs parameter value is less than 1");
 		return false;
 	}
@@ -2778,7 +2810,7 @@ static ssize_t ascs_stop(struct bt_conn *conn, struct net_buf_simple *buf)
 	const struct bt_ascs_start_op *req;
 	int i;
 
-	if (!is_valid_stop_len(buf)) {
+	if (!is_valid_stop_len(conn, buf)) {
 		return BT_GATT_ERR(BT_ATT_ERR_INVALID_ATTRIBUTE_LEN);
 	}
 
@@ -2828,7 +2860,7 @@ static ssize_t ascs_stop(struct bt_conn *conn, struct net_buf_simple *buf)
 	return buf->size;
 }
 
-static bool is_valid_metadata_len(struct net_buf_simple *buf)
+static bool is_valid_metadata_len(struct bt_conn *conn, struct net_buf_simple *buf)
 {
 	const struct bt_ascs_metadata_op *op;
 	struct net_buf_simple_state state;
@@ -2841,8 +2873,7 @@ static bool is_valid_metadata_len(struct net_buf_simple *buf)
 	}
 
 	op = net_buf_simple_pull_mem(buf, sizeof(*op));
-	if (op->num_ases < 1) {
-		LOG_WRN("Number_of_ASEs parameter value is less than 1");
+	if (!is_valid_num_ases(conn, op->num_ases)) {
 		return false;
 	}
 
@@ -2879,7 +2910,7 @@ static ssize_t ascs_metadata(struct bt_conn *conn, struct net_buf_simple *buf)
 	struct bt_ascs_metadata *meta;
 	int i;
 
-	if (!is_valid_metadata_len(buf)) {
+	if (!is_valid_metadata_len(conn, buf)) {
 		return BT_GATT_ERR(BT_ATT_ERR_INVALID_ATTRIBUTE_LEN);
 	}
 
@@ -2924,7 +2955,7 @@ static ssize_t ascs_metadata(struct bt_conn *conn, struct net_buf_simple *buf)
 	return buf->size;
 }
 
-static bool is_valid_release_len(struct net_buf_simple *buf)
+static bool is_valid_release_len(struct bt_conn *conn, struct net_buf_simple *buf)
 {
 	const struct bt_ascs_release_op *op;
 	struct net_buf_simple_state state;
@@ -2937,8 +2968,7 @@ static bool is_valid_release_len(struct net_buf_simple *buf)
 	}
 
 	op = net_buf_simple_pull_mem(buf, sizeof(*op));
-	if (op->num_ases < 1) {
-		LOG_WRN("Number_of_ASEs parameter value is less than 1");
+	if (!is_valid_num_ases(conn, op->num_ases)) {
 		return false;
 	}
 
@@ -2957,7 +2987,7 @@ static ssize_t ascs_release(struct bt_conn *conn, struct net_buf_simple *buf)
 	const struct bt_ascs_release_op *req;
 	int i;
 
-	if (!is_valid_release_len(buf)) {
+	if (!is_valid_release_len(conn, buf)) {
 		return BT_GATT_ERR(BT_ATT_ERR_INVALID_ATTRIBUTE_LEN);
 	}
 
@@ -3065,7 +3095,7 @@ static ssize_t ascs_cp_write(struct bt_conn *conn,
 	}
 
 respond:
-	control_point_notify(conn, rsp_buf.data, rsp_buf.len);
+	control_point_notify(conn, cp_rsp_buf.data, cp_rsp_buf.len);
 
 	return len;
 }
@@ -3120,14 +3150,6 @@ int bt_ascs_init(const struct bt_bap_unicast_server_cb *cb)
 	}
 
 	unicast_server_cb = cb;
-
-	if(!ase_buf_sem_init)
-	{
-		(void)OSA_SemaphoreCreate(ase_buf_sem, 1);
-		ase_buf_sem_init = true;
-	}
-
-	bt_conn_cb_register(&conn_cb);
 
 	return 0;
 }

@@ -6,44 +6,25 @@
 
 #if (defined(CONFIG_BT_TMAP) && (CONFIG_BT_TMAP > 0))
 
-#include <sys/byteorder.h>
-#include <zephyr/types.h>
+#include <stdbool.h>
+#include <stdint.h>
+#include <string.h>
 
-#include <stdlib.h>
-
+#include <porting.h>
+#include <bluetooth/att.h>
+#include <bluetooth/audio/tmap.h>
 #include <bluetooth/bluetooth.h>
 #include <bluetooth/conn.h>
 #include <bluetooth/gatt.h>
+#include <bluetooth/uuid.h>
+#include <sys/byteorder.h>
 
 #include "audio_internal.h"
-#include <bluetooth/audio/tmap.h>
 
 #define LOG_ENABLE IS_ENABLED(CONFIG_BT_DEBUG_TMAP)
 #define LOG_MODULE_NAME bt_tmap
 #include "fsl_component_log.h"
 LOG_MODULE_DEFINE(LOG_MODULE_NAME, kLOG_LevelTrace);
-
-#include "fsl_debug_console.h"
-
-#ifndef printk
-#define printk PRINTF
-#endif
-
-#ifndef LOG_DBG
-#define LOG_DBG BT_DBG
-#endif
-
-#ifndef LOG_ERR
-#define LOG_ERR BT_ERR
-#endif
-
-#ifndef LOG_HEXDUMP_DBG
-#define LOG_HEXDUMP_DBG BT_HEXDUMP_DBG
-#endif
-
-#ifndef LOG_WRN
-#define LOG_WRN BT_WARN
-#endif
 
 /* Hex value if all TMAP role bits are set */
 #define TMAP_ALL_ROLES		0x3F
@@ -80,7 +61,7 @@ uint8_t tmap_char_read(struct bt_conn *conn, uint8_t err,
 		return BT_GATT_ITER_STOP;
 	}
 
-	/* Extract the TMAP role of the peer and inform application fo the value found */
+	/* Extract the TMAP role of the peer and inform application of the value found */
 	peer_role = sys_get_le16(data);
 
 	if ((peer_role > 0U) && (peer_role <= TMAP_ALL_ROLES)) {
@@ -139,7 +120,7 @@ static uint8_t discover_func(struct bt_conn *conn, const struct bt_gatt_attr *at
 		/* Discovered TMAP Role characteristic - read value */
 		err = bt_gatt_read(conn, &read_params[0]);
 		if (err != 0) {
-			printk("Could not read peer TMAP Role\n");
+			LOG_DBG("Could not read peer TMAP Role");
 		}
 	} else {
 		return BT_GATT_ITER_CONTINUE;

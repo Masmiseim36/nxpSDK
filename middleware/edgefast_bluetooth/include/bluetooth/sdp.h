@@ -3,6 +3,7 @@
  */
 
 /*
+ * Copyright 2024 NXP
  * Copyright (c) 2016 Intel Corporation
  *
  * SPDX-License-Identifier: Apache-2.0
@@ -572,6 +573,7 @@ int bt_sdp_discover_cancel(struct bt_conn *conn,
 enum bt_sdp_proto {
 	BT_SDP_PROTO_RFCOMM = 0x0003,
 	BT_SDP_PROTO_L2CAP  = 0x0100,
+	BT_SDP_PROTP_OBEX   = 0x0008,
 };
 
 /** @brief Give to user parameter value related to given stacked protocol UUID.
@@ -634,6 +636,78 @@ int bt_sdp_get_profile_version(const struct net_buf *buf, uint16_t profile,
  *  @return 0 on success if feature found and valid, negative in case any error
  */
 int bt_sdp_get_features(const struct net_buf *buf, uint16_t *features);
+
+/** @brief Get GoepL2capPsm attribute value
+ *
+ *  Helper API extracting remote GoepL2capPsm value.
+ *
+ *  @param buf Buffer holding original raw record data from remote.
+ *  @param l2cap_psm On success object to be populated with GoepL2capPsm
+ *  mask.
+ *
+ *  @return 0 on success if feature found and valid, negative in case any error
+ */
+int bt_sdp_get_goep_l2cap_psm(const struct net_buf *buf, uint16_t *l2cap_psm);
+
+/** @brief Get PBAP Supported Repositories attribute value
+ *
+ *  Allows if exposed by remote retrieve SupportedRepositories attribute.
+ *
+ *  @param buf Buffer holding original raw record data from remote.
+ *  @param supported_repositories  On success object to be populated with Supported Repositories
+ *  mask.
+ *
+ *  @return 0 on success if feature found and valid, negative in case any error
+ */
+int bt_sdp_get_supported_repositories(const struct net_buf *buf, uint8_t *supported_repositories);
+
+/** @brief Get PBAP/MAP/CTN SupportedFeatures attribute value
+ *
+ *  Allows if exposed by remote retrieve SupportedFeature attribute.
+ *
+ *  @param buf Buffer holding original raw record data from remote.
+ *  @param features On success object to be populated with SupportedFeature
+ *  mask.
+ *
+ *  @return 0 on success if feature found and valid, negative in case any error
+ */
+int bt_sdp_get_pbap_map_ctn_features(const struct net_buf *buf, uint32_t *features);
+
+/** @brief Get MASInstanceID/CASInstanceID attribute value
+ *
+ *  Helper API extracting remote MASInstanceID/CASInstanceID value.
+ *
+ *  @param buf Buffer holding original raw record data from remote.
+ *  @param id On success object to be populated with MASInstanceID/CASInstanceID
+ *  mask.
+ *
+ *  @return 0 on success if feature found and valid, negative in case any error
+ */
+int bt_sdp_get_instance_id(const struct net_buf *buf, uint8_t *id);
+
+/** @brief Get SupportedMessageTypes attribute value
+ *
+ *  Helper API extracting remote SupportedMessageTypes value.
+ *
+ *  @param buf Buffer holding original raw record data from remote.
+ *  @param supported_msg_type On success object to be populated with SupportedMessageTypes
+ *  mask.
+ *
+ *  @return 0 on success if feature found and valid, negative in case any error
+ */
+int bt_sdp_get_supported_msg_type(const struct net_buf *buf, uint8_t *supported_msg_type);
+
+/** @brief Get ServiceName attribute value
+ *
+ *  Helper API extracting remote ServiceName value.
+ *
+ *  @param buf Buffer holding original raw record data from remote.
+ *  @param name On success pointer to be populated with ServiceName
+ *  mask.
+ *
+ *  @return 0 on success if feature found and valid, negative in case any error
+ */
+int bt_sdp_get_service_name(const struct net_buf *buf, const char **name);
 
 #ifdef __cplusplus
 }

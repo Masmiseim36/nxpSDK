@@ -63,7 +63,7 @@ static void hrmc_ccc_cfg_changed(const struct bt_gatt_attr *attr, uint16_t value
 
 	LOG_INF("HRS notifications %s", notif_enabled ? "enabled" : "disabled");
 
-	SYS_SLIST_FOR_EACH_CONTAINER(&hrs_cbs, listener, _node, struct bt_hrs_cb) {
+	SYS_SLIST_FOR_EACH_CONTAINER(&hrs_cbs, listener, _node) {
 		if (listener->ntf_changed) {
 			listener->ntf_changed(notif_enabled);
 		}

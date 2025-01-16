@@ -1,18 +1,17 @@
+
 /** @file range_kalman.c
  *
  * @brief This file contains Kalman filter for WLS range measurements
  *
- * Copyright 2023 NXP
+ * Copyright 2023-2024 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
- *
  */
 
 #include <osa.h>
 #if CONFIG_WLS_CSI_PROC
 
 #include "range_kalman.h"
-#include "fsl_debug_console.h"
 #include <stdio.h>
 #include <math.h>
 
@@ -64,8 +63,9 @@ int range_kalman(range_kalman_state *in)
     in->last_range_rate = range_rate_hat;
     in->last_time       = in->time;
 
-    PRINTF("Kalman update R mat: %f m, %f m/s; d-time: %d ms; range rate %f m/s\r\n", (double)sqrtf(in->R0_11),
-           (double)sqrtf(in->R0_22), (int)(delta_T * 1000), (double)in->last_range_rate);
+    // printf("Kalman update R mat: %f m, %f m/s; d-time: %d ms; range rate %f m/s\n", sqrtf(in->R0_11),
+    // sqrtf(in->R0_22), (int)(delta_T*1000), in->last_range_rate);
+
     return 0; // no errors
 }
 

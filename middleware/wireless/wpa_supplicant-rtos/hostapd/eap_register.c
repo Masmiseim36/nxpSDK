@@ -8,6 +8,7 @@
 
 #include "includes.h"
 
+#if CONFIG_HOSTAPD
 #include "utils/common.h"
 #include "eap_server/eap_methods.h"
 #include "eap_register.h"
@@ -152,3 +153,4 @@ int eap_server_register_methods(void)
 
     return ret;
 }
+#endif /* CONFIG_HOSTAPD */

@@ -8,35 +8,26 @@
 
 #if (defined(CONFIG_BT_BAP_UNICAST_SERVER) && (CONFIG_BT_BAP_UNICAST_SERVER > 0))
 
-#include <sys/check.h>
+#include <stdbool.h>
+#include <stddef.h>
+#include <stdint.h>
+#include <string.h>
 
+#include <porting.h>
 #include <bluetooth/audio/audio.h>
 #include <bluetooth/audio/bap.h>
+#include <bluetooth/conn.h>
+#include <bluetooth/iso.h>
 
+#include "ascs_internal.h"
 #include "bap_iso.h"
-#include "pacs_internal.h"
 #include "bap_endpoint.h"
+#include "pacs_internal.h"
 
 #define LOG_ENABLE IS_ENABLED(CONFIG_BT_AUDIO_DEBUG_UNICAST_SERVER)
 #define LOG_MODULE_NAME bt_unicast_server
 #include "fsl_component_log.h"
 LOG_MODULE_DEFINE(LOG_MODULE_NAME, kLOG_LevelTrace);
-
-#ifndef LOG_DBG
-#define LOG_DBG BT_DBG
-#endif
-
-#ifndef LOG_ERR
-#define LOG_ERR BT_ERR
-#endif
-
-#ifndef LOG_HEXDUMP_DBG
-#define LOG_HEXDUMP_DBG BT_HEXDUMP_DBG
-#endif
-
-#ifndef LOG_WRN
-#define LOG_WRN BT_WARN
-#endif
 
 static const struct bt_bap_unicast_server_cb *unicast_server_cb;
 

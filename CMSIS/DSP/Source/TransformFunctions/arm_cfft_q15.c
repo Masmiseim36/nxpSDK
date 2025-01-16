@@ -525,9 +525,8 @@ static void arm_cfft_radix4by2_inverse_q15_mve(const arm_cfft_instance_q15 *S, q
   @param[in]     bitReverseFlag flag that enables / disables bit reversal of output
                    - value = 0: disables bit reversal of output
                    - value = 1: enables bit reversal of output
-  @return        none
  */
-void arm_cfft_q15(
+ARM_DSP_ATTRIBUTE void arm_cfft_q15(
   const arm_cfft_instance_q15 * S,
         q15_t * pSrc,
         uint8_t ifftFlag,
@@ -600,12 +599,12 @@ extern void arm_bitreversal_16(
   const uint16_t bitRevLen,
   const uint16_t * pBitRevTable);
 
-void arm_cfft_radix4by2_q15(
+ARM_DSP_ATTRIBUTE void arm_cfft_radix4by2_q15(
         q15_t * pSrc,
         uint32_t fftLen,
   const q15_t * pCoef);
 
-void arm_cfft_radix4by2_inverse_q15(
+ARM_DSP_ATTRIBUTE void arm_cfft_radix4by2_inverse_q15(
         q15_t * pSrc,
         uint32_t fftLen,
   const q15_t * pCoef);
@@ -627,10 +626,9 @@ void arm_cfft_radix4by2_inverse_q15(
   @param[in]     bitReverseFlag flag that enables / disables bit reversal of output
                    - value = 0: disables bit reversal of output
                    - value = 1: enables bit reversal of output
-  @return        none
  */
 
-void arm_cfft_q15(
+ARM_DSP_ATTRIBUTE void arm_cfft_q15(
   const arm_cfft_instance_q15 * S,
         q15_t * p1,
         uint8_t ifftFlag,
@@ -687,7 +685,7 @@ void arm_cfft_q15(
   @} end of ComplexFFTQ15 group
  */
 
-void arm_cfft_radix4by2_q15(
+ARM_DSP_ATTRIBUTE void arm_cfft_radix4by2_q15(
         q15_t * pSrc,
         uint32_t fftLen,
   const q15_t * pCoef)
@@ -786,7 +784,7 @@ void arm_cfft_radix4by2_q15(
 
 }
 
-void arm_cfft_radix4by2_inverse_q15(
+ARM_DSP_ATTRIBUTE void arm_cfft_radix4by2_inverse_q15(
         q15_t * pSrc,
         uint32_t fftLen,
   const q15_t * pCoef)

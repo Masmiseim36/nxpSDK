@@ -12,9 +12,8 @@
 
 #include "fsl_device_registers.h"
 #include "fsl_debug_console.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 
 #include "fsl_hashcrypt.h"
 
@@ -23,7 +22,6 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-
 #define TEST_ASSERT(a)       \
     if (!(a))                \
     {                        \
@@ -428,9 +426,7 @@ void TestReloadHashcryptFeature(void)
 int main(void)
 {
     /* Init hardware */
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
 
     /* Initialize Hashcrypt */
     HASHCRYPT_Init(HASHCRYPT);

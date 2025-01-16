@@ -1,5 +1,5 @@
 /*
- * Copyright 2016, NXP
+ * Copyright 2016 NXP
  * All rights reserved.
  *
  *
@@ -8,19 +8,15 @@
 
 #include "fsl_device_registers.h"
 #include "fsl_debug_console.h"
-#include "pin_mux.h"
 #include "board.h"
+#include "app.h"
 #include "fsl_dmic.h"
 #include <stdlib.h>
 #include <string.h>
 
-#include <stdbool.h>
-#include "fsl_power.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define BOARD_LED_GPIO_PORT BOARD_LED_RED_GPIO_PORT
-#define BOARD_LED_GPIO_PIN  BOARD_LED_RED_GPIO_PIN
 #define FIFO_DEPTH 15U
 
 #ifndef DEMO_DMIC_CHANNEL
@@ -90,19 +86,7 @@ int main(void)
         0,
     };
     /* Board pin, clock, debug console init */
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
-
-    CLOCK_EnableClock(kCLOCK_InputMux);
-    CLOCK_EnableClock(kCLOCK_HsGpio0);
-
-    RESET_PeripheralReset(kHSGPIO0_RST_SHIFT_RSTn);
-
-    /* DMIC uses 48MHz FRO clock */
-    CLOCK_AttachClk(kFRO_DIV4_to_DMIC);
-    /*48MHz divided by 60 = 800 KHz PDM clock --> gives 16kHz sample rate */
-    CLOCK_SetClkDiv(kCLOCK_DivDmicClk, 60);
+    BOARD_InitHardware();
     GPIO_PinInit(GPIO, BOARD_LED_GPIO_PORT, BOARD_LED_GPIO_PIN, &led_config);
     GPIO_PinWrite(GPIO, BOARD_LED_GPIO_PORT, BOARD_LED_GPIO_PIN, LOGIC_LED_OFF);
 

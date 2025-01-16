@@ -99,7 +99,6 @@
   @param[in]     pSrcB      points to the second input sequence
   @param[in]     srcBLen    length of the second input sequence
   @param[out]    pDst       points to the location where the output result is written.  Length 2 * max(srcALen, srcBLen) - 1.
-  @return        none
  */
 
 #if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)
@@ -108,7 +107,7 @@
 #include "arm_vec_filtering.h"
 
 
-void arm_correlate_f32(
+ARM_DSP_ATTRIBUTE void arm_correlate_f32(
   const float32_t * pSrcA,
         uint32_t srcALen,
   const float32_t * pSrcB,
@@ -307,7 +306,7 @@ void arm_correlate_f32(
 }
 
 #else
-void arm_correlate_f32(
+ARM_DSP_ATTRIBUTE void arm_correlate_f32(
   const float32_t * pSrcA,
         uint32_t srcALen,
   const float32_t * pSrcB,

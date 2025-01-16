@@ -69,17 +69,25 @@ bool disable_tickless_hook = false;
 /* Report state => string */
 const char *report_type_str[] = {
     "TCP_DONE_SERVER (RX)",        /* LWIPERF_TCP_DONE_SERVER_RX,*/
+#ifdef LWIPERF_REVERSE_MODE
     "TCP_DONE_SERVER (TX)",        /* LWIPERF_TCP_DONE_SERVER_TX,*/
+#endif
     "TCP_DONE_CLIENT (TX)",        /* LWIPERF_TCP_DONE_CLIENT_TX,*/
+#ifdef LWIPERF_REVERSE_MODE
     "TCP_DONE_CLIENT (RX)",        /* LWIPERF_TCP_DONE_CLIENT_RX,*/
+#endif
     "TCP_ABORTED_LOCAL",           /* LWIPERF_TCP_ABORTED_LOCAL, */
     "TCP_ABORTED_LOCAL_DATAERROR", /* LWIPERF_TCP_ABORTED_LOCAL_DATAERROR, */
     "TCP_ABORTED_LOCAL_TXERROR",   /* LWIPERF_TCP_ABORTED_LOCAL_TXERROR, */
     "TCP_ABORTED_REMOTE",          /* LWIPERF_TCP_ABORTED_REMOTE, */
     "UDP_DONE_SERVER (RX)",        /* LWIPERF_UDP_DONE_SERVER_RX, */
+#ifdef LWIPERF_REVERSE_MODE
     "UDP_DONE_SERVER (TX)",        /* LWIPERF_UDP_DONE_SERVER_TX, */
+#endif
     "UDP_DONE_CLIENT (TX)",        /* LWIPERF_UDP_DONE_CLIENT_TX, */
+#ifdef LWIPERF_REVERSE_MODE
     "UDP_DONE_CLIENT (RX)",        /* LWIPERF_UDP_DONE_CLIENT_RX, */
+#endif
     "UDP_ABORTED_LOCAL",           /* LWIPERF_UDP_ABORTED_LOCAL, */
     "UDP_ABORTED_LOCAL_DATAERROR", /* LWIPERF_UDP_ABORTED_LOCAL_DATAERROR, */
     "UDP_ABORTED_LOCAL_TXERROR",   /* LWIPERF_UDP_ABORTED_LOCAL_TXERROR, */
@@ -459,6 +467,7 @@ static void TCPClientTradeOff(void)
     (void)tcpip_callback(iperf_test_start, (void *)&ctx);
 }
 
+#ifdef LWIPERF_REVERSE_MODE
 static void TCPClientReverse(void)
 {
     ctx.server_mode = false;
@@ -467,6 +476,7 @@ static void TCPClientReverse(void)
 
     (void)tcpip_callback(iperf_test_start, (void *)&ctx);
 }
+#endif
 
 static void UDPServer(void)
 {
@@ -487,6 +497,7 @@ static void UDPServerDual(void)
     (void)tcpip_callback(iperf_test_start, (void *)&ctx);
 }
 
+#ifdef LWIPERF_REVERSE_MODE
 static void UDPServerReverse(void)
 {
     ctx.server_mode = true;
@@ -495,6 +506,7 @@ static void UDPServerReverse(void)
 
     (void)tcpip_callback(iperf_test_start, (void *)&ctx);
 }
+#endif
 
 static void UDPServerTradeOff(void)
 {
@@ -532,6 +544,7 @@ static void UDPClientTradeOff(void)
     (void)tcpip_callback(iperf_test_start, (void *)&ctx);
 }
 
+#ifdef LWIPERF_REVERSE_MODE
 static void UDPClientReverse(void)
 {
     ctx.server_mode = false;
@@ -540,6 +553,7 @@ static void UDPClientReverse(void)
 
     (void)tcpip_callback(iperf_test_start, (void *)&ctx);
 }
+#endif
 
 /* Display the usage of iperf */
 static void display_iperf_usage(void)
@@ -564,7 +578,9 @@ static void display_iperf_usage(void)
     (void)PRINTF("\tClient specific:\r\n");
     (void)PRINTF("\t   -c    <host>   run in client mode, connecting to <host>\r\n");
     (void)PRINTF("\t   -d             Do a bidirectional test simultaneously\r\n");
+#ifdef LWIPERF_REVERSE_MODE
     (void)PRINTF("\t   -R             reverse the test (client receives, server sends)\r\n");
+#endif
     (void)PRINTF("\t   -t    #        time in seconds to transmit for (default 10 secs)\r\n");
     (void)PRINTF(
         "\t   -b    #        for UDP, bandwidth to send at in Mbps, default 100Mbps without the parameter\r\n");
@@ -594,7 +610,9 @@ static void cmd_iperf(int argc, char **argv)
         unsigned chost : 1;
         unsigned dual : 1;
         unsigned tradeoff : 1;
+#ifdef LWIPERF_REVERSE_MODE
         unsigned reverse : 1;
+#endif
         unsigned time : 1;
 #if CONFIG_WMM
         unsigned tos : 1;
@@ -743,11 +761,13 @@ static void cmd_iperf(int argc, char **argv)
             arg += 1;
             info.tradeoff = 1;
         }
+#ifdef LWIPERF_REVERSE_MODE
         else if (!info.reverse && string_equal("-R", argv[arg]))
         {
             arg += 1;
             info.reverse = 1;
         }
+#endif
         else if (string_equal("-b", argv[arg]))
         {
             if (arg + 1 >= argc || (get_uint(argv[arg + 1], &udp_rate_factor, strlen(argv[arg + 1])) != 0))
@@ -852,11 +872,15 @@ static void cmd_iperf(int argc, char **argv)
 #endif
          && ((info.bind == 0U) || (info.bhost == 0U))) ||
         (((info.dual != 0U)
+#ifdef LWIPERF_REVERSE_MODE
           || (info.reverse != 0U)
+#endif
               ) &&
          (info.client == 0U)) ||
         ((info.dual != 0U) && (info.tradeoff != 0U)) ||
+#ifdef LWIPERF_REVERSE_MODE
         ((info.dual != 0U) && (info.reverse != 0U)) || ((info.tradeoff != 0U) && (info.reverse != 0U)) ||
+#endif
         ((info.dserver != 0U) && (info.server == 0U || info.udp == 0U))
 #if CONFIG_IPV6
         || ((info.ipv6 != 0U) && (info.client != 0U) && ((info.bind == 0U) || (info.bhost == 0U)))
@@ -901,10 +925,12 @@ static void cmd_iperf(int argc, char **argv)
             {
                 UDPServerDual();
             }
+#ifdef LWIPERF_REVERSE_MODE
             else if (info.reverse != 0U)
             {
                 UDPServerReverse();
             }
+#endif
             else if (info.tradeoff != 0U)
             {
                 UDPServerTradeOff();
@@ -931,10 +957,12 @@ static void cmd_iperf(int argc, char **argv)
             {
                 UDPClientTradeOff();
             }
+#ifdef LWIPERF_REVERSE_MODE
             else if (info.reverse != 0U)
             {
                 UDPClientReverse();
             }
+#endif
             else
             {
                 UDPClient();
@@ -950,10 +978,12 @@ static void cmd_iperf(int argc, char **argv)
             {
                 TCPClientTradeOff();
             }
+#ifdef LWIPERF_REVERSE_MODE
             else if (info.reverse != 0U)
             {
                 TCPClientReverse();
             }
+#endif
             else
             {
                 TCPClient();

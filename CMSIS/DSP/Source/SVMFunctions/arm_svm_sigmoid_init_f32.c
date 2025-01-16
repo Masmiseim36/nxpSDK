@@ -61,11 +61,10 @@
  * @param[in]    classes                Array of 2 classes ID
  * @param[in]    coef0                  coeff0 (scikit-learn terminology)
  * @param[in]    gamma                  gamma (scikit-learn terminology)
- * @return none.
  *
  */
 
-void arm_svm_sigmoid_init_f32(arm_svm_sigmoid_instance_f32 *S, 
+ARM_DSP_ATTRIBUTE void arm_svm_sigmoid_init_f32(arm_svm_sigmoid_instance_f32 *S, 
   uint32_t nbOfSupportVectors,
   uint32_t vectorDimension,
   float32_t intercept,

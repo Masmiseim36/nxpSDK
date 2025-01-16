@@ -32,21 +32,7 @@
 
 LOG_MODULE_DEFINE(bt_ots, kLOG_LevelTrace);
 
-#ifndef LOG_DBG
-#define LOG_DBG BT_DBG
-#endif
 
-#ifndef LOG_ERR
-#define LOG_ERR BT_ERR
-#endif
-
-#ifndef LOG_HEXDUMP_DBG
-#define LOG_HEXDUMP_DBG BT_HEXDUMP_DBG
-#endif
-
-#ifndef LOG_WRN
-#define LOG_WRN BT_WARN
-#endif
 
 #if (defined(CONFIG_BT_OTS_OACP_CREATE_SUPPORT) && (CONFIG_BT_OTS_OACP_CREATE_SUPPORT > 0))
 #define OACP_FEAT_BIT_CREATE BIT(BT_OTS_OACP_FEAT_CREATE)
@@ -60,7 +46,7 @@ LOG_MODULE_DEFINE(bt_ots, kLOG_LevelTrace);
 #define OACP_FEAT_BIT_DELETE 0
 #endif
 
-#if (defined(BT_OTS_OACP_CHECKSUM_SUPPORT) && (BT_OTS_OACP_CHECKSUM_SUPPORT > 0))
+#if (defined(CONFIG_BT_OTS_OACP_CHECKSUM_SUPPORT) && (CONFIG_BT_OTS_OACP_CHECKSUM_SUPPORT > 0))
 #define OACP_FEAT_BIT_CRC BIT(BT_OTS_OACP_FEAT_CHECKSUM)
 #else
 #define OACP_FEAT_BIT_CRC 0
@@ -336,7 +322,7 @@ int bt_ots_obj_add_internal(struct bt_ots *ots, struct bt_conn *conn,
 	(void)memset(&created_desc, 0, sizeof(created_desc));
 
 	if (ots->cb->obj_created) {
-		err = ots->cb->obj_created(ots, NULL, new_obj->id, param, &created_desc);
+		err = ots->cb->obj_created(ots, conn, new_obj->id, param, &created_desc);
 
 		if (err) {
 			(void)bt_gatt_ots_obj_manager_obj_delete(new_obj);
@@ -460,56 +446,52 @@ void *bt_ots_svc_decl_get(struct bt_ots *ots)
 }
 #endif
 
+static void oacp_indicate_work_handler(struct k_work *work)
+{
+	struct bt_gatt_ots_indicate *ind = CONTAINER_OF(work, struct bt_gatt_ots_indicate, work);
+	struct bt_ots *ots = CONTAINER_OF(ind, struct bt_ots, oacp_ind);
+
+	bt_gatt_indicate(NULL, &ots->oacp_ind.params);
+}
+
+static void olcp_indicate_work_handler(struct k_work *work)
+{
+	struct bt_gatt_ots_indicate *ind = CONTAINER_OF(work, struct bt_gatt_ots_indicate, work);
+	struct bt_ots *ots = CONTAINER_OF(ind, struct bt_ots, olcp_ind);
+
+	bt_gatt_indicate(NULL, &ots->olcp_ind.params);
+}
+
 static int bt_gatt_ots_instances_prepare(void);
-
-static void ots_conn_disconnected(struct bt_conn *conn, uint8_t reason);
-
-#if 0
-BT_CONN_CB_DEFINE(conn_callbacks) = {
-	.disconnected = ots_conn_disconnected,
-};
-#else
-static struct bt_conn_cb conn_callbacks = {
-	.disconnected = ots_conn_disconnected,
-};
-#endif
 
 int bt_ots_init(struct bt_ots *ots,
 		     struct bt_ots_init_param *ots_init)
 {
 	int err;
+	static bool instances_prepared;
 
 	if (!ots || !ots_init || !ots_init->cb) {
 		return -EINVAL;
 	}
 
-	/* OTS instance prepare. */
-	err = bt_gatt_ots_instances_prepare();
-	if (err) {
-		return err;
+	if (!instances_prepared) {
+		bt_gatt_ots_instances_prepare();
+		instances_prepared = true;
 	}
 
-	/* Init OTS L2CAP. */
-	err = bt_gatt_ots_l2cap_init();
-	if (err) {
-		return err;
-	}
-
-	__ASSERT(ots_init->cb->obj_created,
-		 "Callback for object creation is not set");
-	__ASSERT(ots_init->cb->obj_deleted ||
-		 !BT_OTS_OACP_GET_FEAT_CREATE(ots_init->features.oacp),
-		 "Callback for object deletion is not set and object creation is enabled");
+	__ASSERT(ots_init->cb->obj_created || !BT_OTS_OACP_GET_FEAT_CREATE(ots_init->features.oacp),
+		 "Callback for object creation is not set and object creation is enabled");
+	__ASSERT(ots_init->cb->obj_deleted || !BT_OTS_OACP_GET_FEAT_DELETE(ots_init->features.oacp),
+		 "Callback for object deletion is not set and object deletion is enabled");
 #if (defined(CONFIG_BT_OTS_OACP_CHECKSUM_SUPPORT) && (CONFIG_BT_OTS_OACP_CHECKSUM_SUPPORT > 0))
-	__ASSERT(ots_init->cb->obj_cal_checksum,
-		 "Callback for object calculate checksum is not set");
+	__ASSERT(ots_init->cb->obj_cal_checksum ||
+			 !BT_OTS_OACP_GET_FEAT_CHECKSUM(ots_init->features.oacp),
+		 "Callback for object calculate checksum is not set and checksum is enabled");
 #endif
-	__ASSERT(ots_init->cb->obj_read ||
-		 !BT_OTS_OACP_GET_FEAT_READ(ots_init->features.oacp),
-		 "Callback for object reading is not set");
-	__ASSERT(ots_init->cb->obj_write ||
-		 !BT_OTS_OACP_GET_FEAT_WRITE(ots_init->features.oacp),
-		 "Callback for object write is not set");
+	__ASSERT(ots_init->cb->obj_read || !BT_OTS_OACP_GET_FEAT_READ(ots_init->features.oacp),
+		 "Callback for object reading is not set and object read is enabled");
+	__ASSERT(ots_init->cb->obj_write || !BT_OTS_OACP_GET_FEAT_WRITE(ots_init->features.oacp),
+		 "Callback for object write is not set and object write is enabled");
 
 	/* Set callback structure. */
 	ots->cb = ots_init->cb;
@@ -550,7 +532,8 @@ int bt_ots_init(struct bt_ots *ots,
 		bt_ots_dir_list_init(&ots->dir_list, ots->obj_manager);
 	}
 
-	bt_conn_cb_register(&conn_callbacks);
+	k_work_init(&ots->oacp_ind.work, oacp_indicate_work_handler);
+	k_work_init(&ots->olcp_ind.work, olcp_indicate_work_handler);
 
 	LOG_DBG("Initialized OTS");
 
@@ -674,11 +657,9 @@ static void ots_conn_disconnected(struct bt_conn *conn, uint8_t reason)
 	}
 }
 
-#if 0
 BT_CONN_CB_DEFINE(conn_callbacks) = {
 	.disconnected = ots_conn_disconnected,
 };
-#endif
 
 struct bt_ots *bt_ots_free_instance_get(void)
 {

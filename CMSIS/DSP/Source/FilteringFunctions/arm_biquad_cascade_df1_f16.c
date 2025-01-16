@@ -45,13 +45,12 @@
   @param[in]     pSrc      points to the block of input data
   @param[out]    pDst      points to the block of output data
   @param[in]     blockSize  number of samples to process
-  @return        none
  */
 #if defined(ARM_MATH_MVE_FLOAT16) && !defined(ARM_MATH_AUTOVECTORIZE)
 
 #include "arm_helium_utils.h"
 
-void arm_biquad_cascade_df1_f16(
+ARM_DSP_ATTRIBUTE void arm_biquad_cascade_df1_f16(
   const arm_biquad_casd_df1_inst_f16 * S,
   const float16_t * pSrc,
         float16_t * pDst,
@@ -310,7 +309,7 @@ void arm_biquad_cascade_df1_f16(
 }
 
 #else
-void arm_biquad_cascade_df1_f16(
+ARM_DSP_ATTRIBUTE void arm_biquad_cascade_df1_f16(
   const arm_biquad_casd_df1_inst_f16 * S,
   const float16_t * pSrc,
         float16_t * pDst,

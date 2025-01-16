@@ -270,7 +270,7 @@ void OSA_MemoryFreeAlign(void *p)
         void *pointer_value;
         uintptr_t unsigned_value;
     } p_free;
-    p_free.pointer_value = p;
+    p_free.pointer_value     = p;
     osa_mem_align_cb_t *p_cb = (osa_mem_align_cb_t *)(p_free.unsigned_value - 4U);
 
     if (p_cb->identifier != OSA_MEM_MAGIC_NUMBER)
@@ -1434,7 +1434,7 @@ void OSA_InstallIntHandler(uint32_t IRQNumber, void (*handler)(void))
     _Pragma("diag_suppress = Pm138")
 #endif
 #if defined(ENABLE_RAM_VECTOR_TABLE)
-        (void) InstallIRQHandler((IRQn_Type)IRQNumber, (uint32_t) * (uint32_t *)&handler);
+        (void) InstallIRQHandler((IRQn_Type)IRQNumber, (uint32_t)handler);
 #endif /* ENABLE_RAM_VECTOR_TABLE. */
 #if defined(__IAR_SYSTEMS_ICC__)
     _Pragma("diag_remark = PM138")
@@ -1579,4 +1579,34 @@ void OSA_UpdateSysTickCounter(uint32_t corr)
     s_osaState.tickCounter += corr;
 #else
 #endif
+}
+
+/**
+ * Warning: Needs to be implemented
+ */
+#if (defined(FSL_OSA_TASK_ENABLE) && (FSL_OSA_TASK_ENABLE > 0U))
+osa_status_t OSA_TaskNotifyGet(osa_notify_time_ms_t waitTime_ms)
+{
+    return KOSA_StatusError;
+}
+#endif
+
+/**
+ * Warning: Needs to be implemented
+ */
+#if (defined(FSL_OSA_TASK_ENABLE) && (FSL_OSA_TASK_ENABLE > 0U))
+osa_status_t OSA_TaskNotifyPost(osa_task_handle_t taskHandle)
+{
+    return KOSA_StatusError;
+}
+#endif
+
+/**
+ * Warning: Needs to be implemented
+ */
+osa_semaphore_count_t OSA_SemaphoreGetCount(osa_semaphore_handle_t semaphoreHandle)
+{
+    assert(false);
+
+    return 0;
 }

@@ -44,7 +44,6 @@
   @param[in]     pSrcB      points to the second input sequence
   @param[in]     srcBLen    length of the second input sequence
   @param[out]    pDst       points to the location where the output result is written.  Length srcALen+srcBLen-1
-  @return        none
 
   @par           Scaling and Overflow Behavior
                    This fast version uses a 32-bit accumulator with 2.30 format.
@@ -60,7 +59,7 @@
                    Refer to \ref arm_conv_q15() for a slower implementation of this function which uses 64-bit accumulation to avoid wrap around distortion.
  */
 
-void arm_conv_fast_q15(
+ARM_DSP_ATTRIBUTE void arm_conv_fast_q15(
   const q15_t * pSrcA,
         uint32_t srcALen,
   const q15_t * pSrcB,

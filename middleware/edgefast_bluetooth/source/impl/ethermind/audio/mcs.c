@@ -35,21 +35,7 @@
 #include "fsl_component_log.h"
 LOG_MODULE_DEFINE(LOG_MODULE_NAME, kLOG_LevelTrace);
 
-#ifndef LOG_DBG
-#define LOG_DBG BT_DBG
-#endif
 
-#ifndef LOG_ERR
-#define LOG_ERR BT_ERR
-#endif
-
-#ifndef LOG_HEXDUMP_DBG
-#define LOG_HEXDUMP_DBG BT_HEXDUMP_DBG
-#endif
-
-#ifndef LOG_WRN
-#define LOG_WRN BT_WARN
-#endif
 
 static void notify(const struct bt_uuid *uuid, const void *data, uint16_t len);
 
@@ -95,15 +81,9 @@ static void disconnected(struct bt_conn *conn, uint8_t reason)
 	memset(&clients[bt_conn_index(conn)], 0, sizeof(struct client_state));
 }
 
-#if 0
 BT_CONN_CB_DEFINE(conn_callbacks) = {
 	.disconnected = disconnected,
 };
-#else
-static struct bt_conn_cb conn_callbacks = {
-	.disconnected = disconnected,
-};
-#endif
 
 /* Functions for reading and writing attributes, and for keeping track
  * of attribute configuration changes.
@@ -1208,7 +1188,7 @@ static void deferred_nfy_work_handler(struct k_work *work)
 	bt_conn_foreach(BT_CONN_TYPE_LE, notify_cb, NULL);
 }
 
-static BT_WORK_DEFINE(deferred_nfy_work, deferred_nfy_work_handler);
+static K_WORK_DEFINE(deferred_nfy_work, deferred_nfy_work_handler);
 
 static void defer_value_ntf(struct bt_conn *conn, void *data)
 {
@@ -1471,8 +1451,6 @@ int bt_mcs_init(struct bt_ots_cb *ots_cbs)
 #endif /* CONFIG_BT_OTS */
 
 	media_proxy_sctrl_register(&cbs);
-
-	bt_conn_cb_register(&conn_callbacks);
 
 	initialized = true;
 	return 0;

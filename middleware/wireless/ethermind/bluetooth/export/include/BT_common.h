@@ -48,9 +48,6 @@
 /* The EtherMind Timer Library */
 #include "BT_timer.h"
 
-/* The EtherMind SDP Database APIs */
-#include "BT_dbase_api.h"
-
 /* EtherMind Platform Specific Initialization & Shutdown Handlers */
 #include "BT_common_pl.h"
 
@@ -947,6 +944,8 @@
 #define BT_MODULE_BIT_MASK_HFP_PL             0x00400000U
 #define BT_MODULE_BIT_MASK_GEN_PL             0x00800000U
 #define BT_MODULE_BIT_MASK_ANALYZER           0x01000000U
+#define BT_MODULE_BIT_MASK_HTTP_PL            0x02000000U
+#define BT_MODULE_BIT_MASK_HPS	              0x04000000U
 
 /* Module ID */
 #define BT_MODULE_ID_STORAGE                  (BT_MODULE_PAGE_3 | BT_MODULE_BIT_MASK_STORAGE)
@@ -974,6 +973,8 @@
 #define BT_MODULE_ID_HFP_PL                   (BT_MODULE_PAGE_3 | BT_MODULE_BIT_MASK_HFP_PL)
 #define BT_MODULE_ID_GEN_PL                   (BT_MODULE_PAGE_3 | BT_MODULE_BIT_MASK_GEN_PL)
 #define BT_MODULE_ID_ANALYZER                 (BT_MODULE_PAGE_3 | BT_MODULE_BIT_MASK_ANALYZER)
+#define BT_MODULE_ID_HTTPS_PL                 (BT_MODULE_PAGE_3 | BT_MODULE_BIT_MASK_HTTP_PL)
+#define BT_MODULE_ID_HPS_PL 				  (BT_MODULE_PAGE_3 | BT_MODULE_BIT_MASK_HPS)
 
 /** Global module state values */
 #define BT_MODULE_STATE_INVALID               0x00U

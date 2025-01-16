@@ -25,32 +25,16 @@
 #include "../host/bt_pal_conn_internal.h"
 #include "../host/bt_pal_hci_core.h"
 
+//#include "common/bt_str.h"
+
+#include "audio_internal.h"
+#include "bap_unicast_server.h"
+#include "pacs_internal.h"
+
 #define LOG_ENABLE IS_ENABLED(CONFIG_BT_DEBUG_PACS)
 #define LOG_MODULE_NAME bt_pacs
 #include "fsl_component_log.h"
 LOG_MODULE_DEFINE(LOG_MODULE_NAME, kLOG_LevelTrace);
-
-#ifndef LOG_DBG
-#define LOG_DBG BT_DBG
-#endif
-
-#ifndef LOG_ERR
-#define LOG_ERR BT_ERR
-#endif
-
-#ifndef LOG_HEXDUMP_DBG
-#define LOG_HEXDUMP_DBG BT_HEXDUMP_DBG
-#endif
-
-#ifndef LOG_WRN
-#define LOG_WRN BT_WARN
-#endif
-
-//#include "common/bt_str.h"
-
-#include "audio_internal.h"
-#include "pacs_internal.h"
-#include "bap_unicast_server.h"
 
 #define PAC_NOTIFY_TIMEOUT	K_MSEC(10)
 #define READ_BUF_SEM_TIMEOUT    K_MSEC(50)
@@ -100,8 +84,7 @@ static struct pacs_client {
 
 static atomic_t notify_rdy;
 
-static OSA_SEMAPHORE_HANDLE_DEFINE(read_buf_sem);
-static bool read_buf_sem_init = false;
+static K_SEM_DEFINE(read_buf_sem, 1, 1);
 NET_BUF_SIMPLE_DEFINE_STATIC(read_buf, BT_ATT_MAX_ATTRIBUTE_LEN);
 
 static int pacs_gatt_notify(struct bt_conn *conn,
@@ -111,7 +94,7 @@ static int pacs_gatt_notify(struct bt_conn *conn,
 			    uint16_t len);
 static void deferred_nfy_work_handler(struct k_work *work);
 
-static BT_WORK_DEFINE(deferred_nfy_work, deferred_nfy_work_handler);
+static K_WORK_DEFINE(deferred_nfy_work, deferred_nfy_work_handler);
 
 struct pac_records_build_data {
 	struct bt_pacs_read_rsp *rsp;
@@ -191,7 +174,7 @@ static void foreach_cap(sys_slist_t *list, bt_pacs_cap_foreach_func_t func,
 {
 	struct bt_pacs_cap *cap;
 
-	SYS_SLIST_FOR_EACH_CONTAINER(list, cap, _node, struct bt_pacs_cap) {
+	SYS_SLIST_FOR_EACH_CONTAINER(list, cap, _node) {
 		if (!func(cap, user_data)) {
 			break;
 		}
@@ -230,14 +213,14 @@ static enum bt_audio_context pacs_get_available_contexts_for_conn(struct bt_conn
 
 	switch (dir) {
 	case BT_AUDIO_DIR_SINK:
-#if defined(CONFIG_BT_PAC_SNK) && (CONFIG_BT_PAC_SNK > 0) 
+#if defined(CONFIG_BT_PAC_SNK) && (CONFIG_BT_PAC_SNK > 0)
 		if (client->snk_available_contexts != NULL) {
 			return (enum bt_audio_context)POINTER_TO_UINT(client->snk_available_contexts);
 		}
 #endif /* CONFIG_BT_PAC_SNK */
 		break;
 	case BT_AUDIO_DIR_SOURCE:
-#if defined(CONFIG_BT_PAC_SRC) && (CONFIG_BT_PAC_SRC > 0) 
+#if defined(CONFIG_BT_PAC_SRC) && (CONFIG_BT_PAC_SRC > 0)
 		if (client->src_available_contexts != NULL) {
 			return (enum bt_audio_context)POINTER_TO_UINT(client->src_available_contexts);
 		}
@@ -369,7 +352,7 @@ static ssize_t snk_read(struct bt_conn *conn, const struct bt_gatt_attr *attr,
 
 	LOG_DBG("conn %p attr %p buf %p len %u offset %u", conn, attr, buf, len, offset);
 
-	err = (int)OSA_SemaphoreWait(read_buf_sem, READ_BUF_SEM_TIMEOUT);
+	err = k_sem_take(&read_buf_sem, READ_BUF_SEM_TIMEOUT);
 	if (err != 0) {
 		LOG_DBG("Failed to take read_buf_sem: %d", err);
 
@@ -381,7 +364,7 @@ static ssize_t snk_read(struct bt_conn *conn, const struct bt_gatt_attr *attr,
 	ret_val = bt_gatt_attr_read(conn, attr, buf, len, offset, read_buf.data,
 				    read_buf.len);
 
-	(void)OSA_SemaphorePost(read_buf_sem);
+	k_sem_give(&read_buf_sem);
 
 	return ret_val;
 }
@@ -474,7 +457,7 @@ static ssize_t src_read(struct bt_conn *conn, const struct bt_gatt_attr *attr,
 
 	LOG_DBG("conn %p attr %p buf %p len %u offset %u", conn, attr, buf, len, offset);
 
-	err = (int)OSA_SemaphoreWait(read_buf_sem, READ_BUF_SEM_TIMEOUT);
+	err = k_sem_take(&read_buf_sem, READ_BUF_SEM_TIMEOUT);
 	if (err != 0) {
 		LOG_DBG("Failed to take read_buf_sem: %d", err);
 
@@ -486,7 +469,7 @@ static ssize_t src_read(struct bt_conn *conn, const struct bt_gatt_attr *attr,
 	ret_val = bt_gatt_attr_read(conn, attr, buf, len, offset, read_buf.data,
 				    read_buf.len);
 
-	(void)OSA_SemaphorePost(read_buf_sem);
+	k_sem_give(&read_buf_sem);
 
 	return ret_val;
 }
@@ -691,23 +674,19 @@ static int pac_notify_loc(struct bt_conn *conn, enum bt_audio_dir dir)
 	(void)location_le;
 	(void)err;
 	(void)uuid;
-        
+
 	switch (dir) {
-	case BT_AUDIO_DIR_SINK:
 #if defined(CONFIG_BT_PAC_SNK_LOC_NOTIFIABLE) && (CONFIG_BT_PAC_SNK_LOC_NOTIFIABLE > 0)
+	case BT_AUDIO_DIR_SINK:
 		location_le = sys_cpu_to_le32(pacs_snk_location);
 		uuid = pacs_snk_loc_uuid;
 		break;
-#else
-		return -ENOTSUP;
 #endif /* CONFIG_BT_PAC_SNK_LOC_NOTIFIABLE */
-	case BT_AUDIO_DIR_SOURCE:
 #if defined(CONFIG_BT_PAC_SRC_LOC_NOTIFIABLE) && (CONFIG_BT_PAC_SRC_LOC_NOTIFIABLE > 0)
+	case BT_AUDIO_DIR_SOURCE:
 		location_le = sys_cpu_to_le32(pacs_src_location);
 		uuid = pacs_src_loc_uuid;
 		break;
-#else
-		return -ENOTSUP;
 #endif /* CONFIG_BT_PAC_SRC_LOC_NOTIFIABLE */
 	default:
 		return -EINVAL;
@@ -755,7 +734,7 @@ static int pac_notify(struct bt_conn *conn, enum bt_audio_dir dir)
 
 #if (defined(CONFIG_BT_PAC_SNK_NOTIFIABLE) && (CONFIG_BT_PAC_SNK_NOTIFIABLE > 0)) || \
     (defined(CONFIG_BT_PAC_SRC_NOTIFIABLE) && (CONFIG_BT_PAC_SRC_NOTIFIABLE > 0))
-	err = (int)OSA_SemaphoreWait(read_buf_sem, osaWaitNone_c);
+	err = k_sem_take(&read_buf_sem, K_NO_WAIT);
 	if (err != 0) {
 		LOG_DBG("Failed to take read_buf_sem: %d", err);
 
@@ -772,7 +751,7 @@ static int pac_notify(struct bt_conn *conn, enum bt_audio_dir dir)
 		LOG_WRN("PACS notify failed: %d", err);
 	}
 
-	(void)OSA_SemaphorePost(read_buf_sem);
+	k_sem_give(&read_buf_sem);
 
 	if (err == -ENOTCONN) {
 		return 0;
@@ -888,7 +867,7 @@ static void notify_cb(struct bt_conn *conn, void *data)
 		return;
 	}
 
-#if defined(CONFIG_BT_PAC_SNK_NOTIFIABLE) && (CONFIG_BT_PAC_SNK_NOTIFIABLE > 0) 
+#if defined(CONFIG_BT_PAC_SNK_NOTIFIABLE) && (CONFIG_BT_PAC_SNK_NOTIFIABLE > 0)
 	if (atomic_test_bit(client->flags, FLAG_SINK_PAC_CHANGED)) {
 		LOG_DBG("Notifying Sink PAC");
 		err = pac_notify(conn, BT_AUDIO_DIR_SINK);
@@ -898,7 +877,7 @@ static void notify_cb(struct bt_conn *conn, void *data)
 	}
 #endif /* CONFIG_BT_PAC_SNK_NOTIFIABLE */
 
-#if defined(CONFIG_BT_PAC_SNK_LOC_NOTIFIABLE) && (CONFIG_BT_PAC_SNK_LOC_NOTIFIABLE > 0) 
+#if defined(CONFIG_BT_PAC_SNK_LOC_NOTIFIABLE) && (CONFIG_BT_PAC_SNK_LOC_NOTIFIABLE > 0)
 	if (atomic_test_bit(client->flags, FLAG_SINK_AUDIO_LOCATIONS_CHANGED)) {
 		LOG_DBG("Notifying Sink Audio Location");
 		err = pac_notify_loc(conn, BT_AUDIO_DIR_SINK);
@@ -908,7 +887,7 @@ static void notify_cb(struct bt_conn *conn, void *data)
 	}
 #endif /* CONFIG_BT_PAC_SNK_LOC_NOTIFIABLE */
 
-#if defined(CONFIG_BT_PAC_SRC_NOTIFIABLE) && (CONFIG_BT_PAC_SRC_NOTIFIABLE > 0) 
+#if defined(CONFIG_BT_PAC_SRC_NOTIFIABLE) && (CONFIG_BT_PAC_SRC_NOTIFIABLE > 0)
 	if (atomic_test_bit(client->flags, FLAG_SOURCE_PAC_CHANGED)) {
 		LOG_DBG("Notifying Source PAC");
 		err = pac_notify(conn, BT_AUDIO_DIR_SOURCE);
@@ -918,7 +897,7 @@ static void notify_cb(struct bt_conn *conn, void *data)
 	}
 #endif /* CONFIG_BT_PAC_SRC_NOTIFIABLE */
 
-#if defined(CONFIG_BT_PAC_SRC_LOC_NOTIFIABLE) && (CONFIG_BT_PAC_SRC_LOC_NOTIFIABLE > 0) 
+#if defined(CONFIG_BT_PAC_SRC_LOC_NOTIFIABLE) && (CONFIG_BT_PAC_SRC_LOC_NOTIFIABLE > 0)
 	if (atomic_test_and_clear_bit(client->flags, FLAG_SOURCE_AUDIO_LOCATIONS_CHANGED)) {
 		LOG_DBG("Notifying Source Audio Location");
 		err = pac_notify_loc(conn, BT_AUDIO_DIR_SOURCE);
@@ -1034,7 +1013,7 @@ static void pacs_disconnected(struct bt_conn *conn, uint8_t reason)
 		return;
 	}
 
-#if defined(CONFIG_BT_PAC_SNK) && (CONFIG_BT_PAC_SNK > 0) 
+#if defined(CONFIG_BT_PAC_SNK) && (CONFIG_BT_PAC_SNK > 0)
 	if (client->snk_available_contexts != NULL) {
 		uint16_t old = POINTER_TO_UINT(client->snk_available_contexts);
 		uint16_t new;
@@ -1046,7 +1025,7 @@ static void pacs_disconnected(struct bt_conn *conn, uint8_t reason)
 	}
 #endif /* CONFIG_BT_PAC_SNK */
 
-#if defined(CONFIG_BT_PAC_SRC) && (CONFIG_BT_PAC_SRC > 0) 
+#if defined(CONFIG_BT_PAC_SRC) && (CONFIG_BT_PAC_SRC > 0)
 	if (client->src_available_contexts != NULL) {
 		uint16_t old = POINTER_TO_UINT(client->src_available_contexts);
 		uint16_t new;
@@ -1125,7 +1104,7 @@ int bt_pacs_cap_register(enum bt_audio_dir dir, struct bt_pacs_cap *cap)
 
 	LOG_DBG("cap %p dir %s codec_cap id 0x%02x codec_cap cid 0x%04x codec_cap vid 0x%04x", cap,
 		bt_audio_dir_str(dir), codec_cap->id, codec_cap->cid, codec_cap->vid);
-        (void)codec_cap;
+	(void)codec_cap;
 
 	sys_slist_append(pac, &cap->_node);
 
@@ -1144,12 +1123,6 @@ int bt_pacs_cap_register(enum bt_audio_dir dir, struct bt_pacs_cap *cap)
 	if (IS_ENABLED(CONFIG_BT_PAC_SRC_NOTIFIABLE) && dir == BT_AUDIO_DIR_SOURCE) {
 		pacs_set_notify_bit(FLAG_SOURCE_PAC_CHANGED);
 		k_work_submit(&deferred_nfy_work);
-	}
-
-	if(!read_buf_sem_init)
-	{
-		(void)OSA_SemaphoreCreate(read_buf_sem, 1);
-		read_buf_sem_init = true;
 	}
 
 	return 0;
@@ -1236,8 +1209,8 @@ int bt_pacs_conn_set_available_contexts_for_conn(struct bt_conn *conn, enum bt_a
 	struct pacs_client *client;
 	int err;
 
-        memset(&info, 0, sizeof(info));
-        
+	memset(&info, 0, sizeof(info));
+
 	client = client_lookup_conn(conn);
 	if (client == NULL) {
 		return -ENOENT;

@@ -54,11 +54,10 @@
   @param[in]     pSrc       points to input vector
   @param[out]    pDst       points to output vector
   @param[in]     blockSize  number of samples in each vector
-  @return        none
  */
 #if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)
 
-void arm_copy_f32(
+ARM_DSP_ATTRIBUTE void arm_copy_f32(
   const float32_t * pSrc,
   float32_t * pDst,
   uint32_t blockSize)
@@ -96,7 +95,7 @@ void arm_copy_f32(
 
 #else
 #if defined(ARM_MATH_NEON_EXPERIMENTAL)
-void arm_copy_f32(
+ARM_DSP_ATTRIBUTE void arm_copy_f32(
   const float32_t * pSrc,
   float32_t * pDst,
   uint32_t blockSize)
@@ -137,7 +136,7 @@ void arm_copy_f32(
   }
 }
 #else
-void arm_copy_f32(
+ARM_DSP_ATTRIBUTE void arm_copy_f32(
   const float32_t * pSrc,
         float32_t * pDst,
         uint32_t blockSize)

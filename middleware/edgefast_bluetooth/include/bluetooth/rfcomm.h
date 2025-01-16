@@ -32,6 +32,9 @@ enum {
 	BT_RFCOMM_CHAN_HSP_AG,
 	BT_RFCOMM_CHAN_HSP_HS,
 	BT_RFCOMM_CHAN_SPP,
+    BT_RFCOMM_CHAN_PBAP_PSE = 20,
+    BT_RFCOMM_CHAN_MAP_MSE  = 21,
+    BT_RFCOMM_CHAN_MAP_MCE  = 22,
 };
 
 struct bt_rfcomm_dlc;
@@ -74,11 +77,10 @@ struct bt_rfcomm_dlc_ops {
 
 /** @brief Role of RFCOMM session and dlc. Used only by internal APIs
  */
-ENUM_PACKED_PRE
 enum bt_rfcomm_role {
 	BT_RFCOMM_ROLE_ACCEPTOR,
 	BT_RFCOMM_ROLE_INITIATOR
-} ENUM_PACKED_POST;
+};
 typedef enum bt_rfcomm_role bt_rfcomm_role_t;
 
 /** @brief RFCOMM DLC structure. */
@@ -201,7 +203,6 @@ struct bt_rfcomm_server {
  * struct bt_rfcomm_rpn
  * Data structure used to send rfcomm remote port negotiation command.
  */
-STRUCT_PACKED_PRE
 struct bt_rfcomm_rpn {
     /** The Data Link Connection Identifier */
 	uint8_t  dlci;
@@ -271,7 +272,7 @@ struct bt_rfcomm_rpn {
      *      Bit 7 -> (Reserved)
      */
 	uint16_t param_mask;
-} STRUCT_PACKED_POST;
+} __packed;
 
 #define BT_RFCOMM_GET_LOCAL_PN    0x31
 #define BT_RFCOMM_SEND_PN         0x32
@@ -280,7 +281,6 @@ struct bt_rfcomm_rpn {
  * struct bt_rfcomm_pn
  * Data structure used to send rfcomm parameter negotiation command.
  */
-STRUCT_PACKED_PRE
 struct bt_rfcomm_pn {
     /** The Data Link Connection Identifier */
     uint8_t  dlci;
@@ -292,7 +292,7 @@ struct bt_rfcomm_pn {
     uint16_t mtu;
     /** Initial Amount of Credits */
     uint8_t  credits;
-} STRUCT_PACKED_POST;
+} __packed;
 
 #define BT_RFCOMM_SEND_RLS      0x41
 #define BT_RFCOMM_RECVD_RLS     0x42
@@ -312,7 +312,6 @@ struct bt_rfcomm_pn {
  * struct bt_rfcomm_rls
  * Data structure used to send rfcomm remote line status command.
  */
-STRUCT_PACKED_PRE
 struct bt_rfcomm_rls {
     /** The Data Link Connection Identifier */
     uint8_t  dlci;
@@ -320,7 +319,7 @@ struct bt_rfcomm_rls {
      *  For detailed values that can be set, refer to RFCOMM RLS Parameters - Line Status.
      */
     uint8_t  line_status;
-}STRUCT_PACKED_POST;
+}__packed;
 
 #define BT_RFCOMM_SEND_MSC      0x51
 #define BT_RFCOMM_RECVD_MSC     0x52
@@ -329,7 +328,6 @@ struct bt_rfcomm_rls {
  * struct bt_rfcomm_msc
  * Data structure used to send rfcomm modum status command.
  */
-STRUCT_PACKED_PRE
 struct bt_rfcomm_msc {
 	/** The Data Link Connection Identifier */
 	uint8_t dlci;
@@ -349,7 +347,7 @@ struct bt_rfcomm_msc {
     uint8_t break_present;
     /** Length of Break in units of 200 ms */
 	uint8_t break_length;
-} STRUCT_PACKED_POST;
+} __packed;
 
 struct bt_rfcomm_control
 {

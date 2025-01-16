@@ -9,7 +9,7 @@
 *                                                                    *
 **********************************************************************
 
-** emWin V6.38 - Graphical user interface for embedded applications **
+** emWin V6.46 - Graphical user interface for embedded applications **
 All  Intellectual Property rights  in the Software belongs to  SEGGER.
 emWin is protected by  international copyright laws.  Knowledge of the
 source code may not be used to write a similar product.  This file may
@@ -34,7 +34,7 @@ License model:            emWin License Agreement, dated August 20th 2011 and Am
 Licensed platform:        NXP's ARM 7/9, Cortex-M0, M3, M4, M7, A7, M33
 ----------------------------------------------------------------------
 Support and Update Agreement (SUA)
-SUA period:               2011-08-19 - 2024-09-02
+SUA period:               2011-08-19 - 2025-09-02
 Contact to extend SUA:    sales@segger.com
 ----------------------------------------------------------------------
 File        : GUI_Private.h
@@ -223,6 +223,7 @@ void              GUI_MEMDEV__WriteToActiveAt    (GUI_MEMDEV_Handle hMem,int x, 
 void              GUI_MEMDEV__WriteToActiveOpaque(GUI_MEMDEV_Handle hMem,int x, int y);
 void            * GUI_MEMDEV__XY2PTR             (int x,int y);
 void            * GUI_MEMDEV__XY2PTREx           (GUI_MEMDEV * pDev, int x,int y);
+void            * GUI_MEMDEV__XY2PTRStride       (int x, int y, int * pBytesPerLine);
 void              GUI_MEMDEV__BlendColor32       (GUI_MEMDEV_Handle hMem, U32 BlendColor, U8 BlendIntens);
 
 unsigned GUI__AlphaPreserveTrans(int OnOff);
@@ -285,25 +286,27 @@ U32    * GUI__DoAlphaBlending   (int x, int y, U32 * pData, int xSize, tLCDDEV_I
 unsigned GUI__SetAlphaBufferSize(int xSize);
 
 /* System independent font routines */
-int        GUI_SIF__GetCharDistX       (U16P c, int * pSizeX);
-void       GUI_SIF__GetFontInfo        (const GUI_FONT * pFont, GUI_FONTINFO * pfi);
-char       GUI_SIF__IsInFont           (const GUI_FONT * pFont, U16 c);
-const U8 * GUI_SIF__GetpCharInfo       (const GUI_FONT * pFont, U16P c, unsigned SizeOfCharInfo);
-int        GUI_SIF__GetNumCharAreas    (const GUI_FONT * pFont);
-int        GUI_SIF__GetCharDistX_ExtFrm(U16P c, int * pSizeX);
-void       GUI_SIF__GetFontInfo_ExtFrm (const GUI_FONT * pFont, GUI_FONTINFO * pfi);
-char       GUI_SIF__IsInFont_ExtFrm    (const GUI_FONT * pFont, U16 c);
-int        GUI_SIF__GetCharInfo_ExtFrm (U16P c, GUI_CHARINFO_EXT * pInfo);
-void       GUI_SIF__ClearLine_ExtFrm   (const char * s, int Len);
+int        GUI_SIF__GetCharDistX         (U16P c, int * pSizeX);
+void       GUI_SIF__GetFontInfo          (const GUI_FONT * pFont, GUI_FONTINFO * pfi);
+char       GUI_SIF__IsInFont             (const GUI_FONT * pFont, U16 c);
+const U8 * GUI_SIF__GetpCharInfo         (const GUI_FONT * pFont, U16P c, unsigned SizeOfCharInfo);
+int        GUI_SIF__GetNumCharAreas      (const GUI_FONT * pFont);
+int        GUI_SIF__GetCharDistX_ExtFrm  (U16P c, int * pSizeX);
+void       GUI_SIF__GetFontInfo_ExtFrm   (const GUI_FONT * pFont, GUI_FONTINFO * pfi);
+char       GUI_SIF__IsInFont_ExtFrm      (const GUI_FONT * pFont, U16 c);
+int        GUI_SIF__GetCharInfo_ExtFrm   (U16P c, GUI_CHARINFO_EXT * pInfo);
+void       GUI_SIF__ClearLine_ExtFrm     (const char * s, int Len);
+int        GUI_SIF__GetStringDistX_ExtFrm(const char * s, int Len);
 
 /* External binary font routines */
-int        GUI_XBF__GetOff       (const GUI_XBF_DATA * pXBF_Data, unsigned c, U32 * pOff);
-int        GUI_XBF__GetOffAndSize(const GUI_XBF_DATA * pXBF_Data, unsigned c, U32 * pOff, U16 * pSize);
-int        GUI_XBF__GetCharDistX (U16P c, int * pSizeX);
-void       GUI_XBF__GetFontInfo  (const GUI_FONT * pFont, GUI_FONTINFO * pInfo);
-char       GUI_XBF__IsInFont     (const GUI_FONT * pFont, U16 c);
-int        GUI_XBF__GetCharInfo  (U16P c, GUI_CHARINFO_EXT * pInfo);
-void       GUI_XBF__ClearLine    (const char * s, int Len);
+int        GUI_XBF__GetOff        (const GUI_XBF_DATA * pXBF_Data, unsigned c, U32 * pOff);
+int        GUI_XBF__GetOffAndSize (const GUI_XBF_DATA * pXBF_Data, unsigned c, U32 * pOff, U16 * pSize);
+int        GUI_XBF__GetCharDistX  (U16P c, int * pSizeX);
+void       GUI_XBF__GetFontInfo   (const GUI_FONT * pFont, GUI_FONTINFO * pInfo);
+char       GUI_XBF__IsInFont      (const GUI_FONT * pFont, U16 c);
+int        GUI_XBF__GetCharInfo   (U16P c, GUI_CHARINFO_EXT * pInfo);
+void       GUI_XBF__ClearLine     (const char * s, int Len);
+int        GUI_XBF__GetStringDistX(const char * s, int Len);
 
 /* Conversion routines */
 void GUI_AddHex     (U32 v, U8 Len, char ** ps);
@@ -312,6 +315,9 @@ void GUI_AddDecMin  (I32 v, char ** ps);
 void GUI_AddDecShift(I32 v, U8 Len, U8 Shift, char ** ps);
 long GUI_AddSign    (long v, char ** ps);
 int  GUI_Long2Len   (I32 v);
+
+void * GUI__C2D(const void * c);
+void * GUI__F2D(void (* pFunc)(void));
 
 #define GUI_UC__GetCharSize(sText)  GUI_pUC_API->pfGetCharSize(sText)
 #define GUI_UC__GetCharCode(sText)  GUI_pUC_API->pfGetCharCode(sText)
@@ -450,9 +456,10 @@ const GUI_FONT_PROP * GUIPROP__FindChar(const GUI_FONT_PROP * pProp, U16P c);
 
 /* Extended proportional font support */
 const GUI_FONT_PROP_EXT * GUIPROP_EXT__FindChar(const GUI_FONT_PROP_EXT * pPropExt, U16P c);
-void  GUIPROP_EXT__DispLine      (const char * s, int Len);
-void  GUIPROP_EXT__ClearLine     (const char * s, int Len);
-void  GUIPROP_EXT__SetfpClearLine(void (* fpClearLine)(const char * s, int Len));
+void  GUIPROP_EXT__DispLine           (const char * s, int Len);
+void  GUIPROP_EXT__ClearLine          (const char * s, int Len);
+int   GUIPROP_EXT__GetStringDistX     (const char * s, int Len);
+void  GUIPROP_EXT__SetfpClearLine     (void (* fpClearLine)(const char * s, int Len));
 
 /* Reading data routines */
 U16 GUI__Read16(const U8 ** ppData);
@@ -494,6 +501,7 @@ int GUI_GetBitsPerPixelEx(int LayerIndex);
 #define GUI_STREAM_FORMAT_8888       16  /* DO NOT CHANGE */
 #define GUI_STREAM_FORMAT_RLE32      15  /* DO NOT CHANGE */
 #define GUI_STREAM_FORMAT_24         17  /* DO NOT CHANGE */
+#define GUI_STREAM_FORMAT_A8         33  /* DO NOT CHANGE */
 #define GUI_STREAM_FORMAT_RLEALPHA   18  /* DO NOT CHANGE */
 #define GUI_STREAM_FORMAT_444_12     19  /* DO NOT CHANGE */
 #define GUI_STREAM_FORMAT_M444_12    20  /* DO NOT CHANGE */
@@ -730,50 +738,42 @@ extern const GUI_MULTIBUF_API    GUI_MULTIBUF_APIList;
 extern const GUI_MULTIBUF_API    GUI_MULTIBUF_APIListMasked;
 extern const GUI_MULTIBUF_API_EX GUI_MULTIBUF_APIListEx;
 
-#ifdef  GL_CORE_C
-  #define GUI_EXTERN
-#else
-  #define GUI_EXTERN extern
-#endif
-
-GUI_EXTERN   void (* GUI_pfExecAnimations)(void);
-GUI_EXTERN   int  (* GUI_pfUpdateSoftLayer)(void);
+extern void (* GUI_pfExecAnimations)(void);
+extern int  (* GUI_pfUpdateSoftLayer)(void);
 
 #ifdef WIN32
-  GUI_EXTERN void (* GUI_pfSoftlayerGetPixel)(int x, int y, void * p);
+  extern void (* GUI_pfSoftlayerGetPixel)(int x, int y, void * p);
 #endif
 
-GUI_EXTERN void (* GUI_pfHookMTOUCH)(const GUI_MTOUCH_STATE * pState);
+extern void (* GUI_pfHookMTOUCH)(const GUI_MTOUCH_STATE * pState);
 
-GUI_EXTERN void (* GUI_pfManageCursor)(int Layer, int OnOff);
+extern void (* GUI_pfManageCursor)(int Layer, int OnOff);
 
-GUI_EXTERN tGUI_GetGlyph * GUI_UC_pfGetGlyph;
+extern tGUI_GetGlyph * GUI_UC_pfGetGlyph;
 
-GUI_EXTERN const GUI_UC_ENC_APILIST * GUI_pUC_API; /* Unicode encoding API */
+extern const GUI_UC_ENC_APILIST * GUI_pUC_API; /* Unicode encoding API */
 
-GUI_EXTERN GUI_SADDR char             GUI_DecChar;
-GUI_EXTERN           GUI_tfTimer    * GUI_pfTimerExec;
-GUI_EXTERN           WM_tfHandlePID * WM_pfHandlePID;
-GUI_EXTERN   void (* GUI_pfDispCharStyle)(U16 Char);
-GUI_EXTERN   void (* GUI_pfDispCharLine)(int x0);
+extern GUI_SADDR char             GUI_DecChar;
+extern           GUI_tfTimer    * GUI_pfTimerExec;
+extern           WM_tfHandlePID * WM_pfHandlePID;
+extern   void (* GUI_pfDispCharStyle)(U16 Char);
+extern   void (* GUI_pfDispCharLine)(int x0);
 
-GUI_EXTERN           int GUI_AA__BufferSize;  // Required buffer size in pixels for alpha blending and/or antialiasing
-GUI_EXTERN           int GUI_AA__ClipX0;      // x0-clipping value for AA module
+extern           int GUI_AA__BufferSize;  // Required buffer size in pixels for alpha blending and/or antialiasing
+extern           int GUI_AA__ClipX0;      // x0-clipping value for AA module
 
-GUI_EXTERN           I8  GUI__aNumBuffers[GUI_NUM_LAYERS]; // Number of buffers used per layer
-GUI_EXTERN           U8  GUI__PreserveTrans;
-GUI_EXTERN           U8  GUI__IsInitialized;
+extern           I8  GUI__aNumBuffers[GUI_NUM_LAYERS]; // Number of buffers used per layer
+extern           U8  GUI__PreserveTrans;
+extern           U8  GUI__IsInitialized;
 
-GUI_EXTERN           U8  GUI__NumLayersInUse;
-GUI_EXTERN           U32 GUI__LayerMask;
+extern           U8  GUI__NumLayersInUse;
+extern           U32 GUI__LayerMask;
 
 #if GUI_SUPPORT_ROTATION
-  GUI_EXTERN const tLCD_APIList * GUI_pLCD_APIList; /* Used for rotating text */
+  extern const tLCD_APIList * GUI_pLCD_APIList; /* Used for rotating text */
 #endif
 
-GUI_EXTERN I16 GUI_OrgX, GUI_OrgY;
-
-#undef GUI_EXTERN
+extern I16 GUI_OrgX, GUI_OrgY;
 
 #if defined(__cplusplus)
 }

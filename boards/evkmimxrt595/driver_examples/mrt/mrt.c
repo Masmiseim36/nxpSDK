@@ -7,18 +7,13 @@
  */
 
 #include "fsl_debug_console.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 #include "fsl_mrt.h"
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define APP_LED_INIT   (LED_RED_INIT(LOGIC_LED_OFF));
-#define APP_LED_ON     (LED_RED_ON());
-#define APP_LED_TOGGLE (LED_RED_TOGGLE());
-#define MRT_CLK_FREQ   CLOCK_GetFreq(kCLOCK_BusClk)
 
 /*******************************************************************************
  * Prototypes
@@ -65,12 +60,7 @@ int main(void)
     mrt_config_t mrtConfig;
 
     /* Board pin, clock, debug console init */
-    CLOCK_EnableClock(kCLOCK_HsGpio0);
-    RESET_PeripheralReset(kHSGPIO0_RST_SHIFT_RSTn);
-
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
 
     /* Initialize and enable LED */
     APP_LED_INIT;

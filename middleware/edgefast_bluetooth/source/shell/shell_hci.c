@@ -16,7 +16,7 @@
 #include <bluetooth/conn.h>
 
 #if (defined(CONFIG_BT_HCI_MESH_EXT) && (CONFIG_BT_HCI_MESH_EXT > 0))
-shell_status_t cmd_mesh_adv(shell_handle_t shell, int32_t argc, char *argv[])
+int cmd_mesh_adv(const struct shell *sh, size_t argc, char *argv[])
 {
 	struct net_buf *buf;
 	int err;

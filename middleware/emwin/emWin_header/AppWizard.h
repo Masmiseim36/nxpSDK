@@ -9,7 +9,7 @@
 *                                                                    *
 **********************************************************************
 
-** emWin V6.38 - Graphical user interface for embedded applications **
+** emWin V6.46 - Graphical user interface for embedded applications **
 All  Intellectual Property rights  in the Software belongs to  SEGGER.
 emWin is protected by  international copyright laws.  Knowledge of the
 source code may not be used to write a similar product.  This file may
@@ -34,7 +34,7 @@ License model:            emWin License Agreement, dated August 20th 2011 and Am
 Licensed platform:        NXP's ARM 7/9, Cortex-M0, M3, M4, M7, A7, M33
 ----------------------------------------------------------------------
 Support and Update Agreement (SUA)
-SUA period:               2011-08-19 - 2024-09-02
+SUA period:               2011-08-19 - 2025-09-02
 Contact to extend SUA:    sales@segger.com
 ----------------------------------------------------------------------
 File        : AppWizard.h
@@ -180,6 +180,16 @@ Purpose     : Interface of AppWizard
 #define APPW_SET_TOGGLE 2
 
 //
+// Actuating
+//
+#define APPW_DO_DRAG_LIN 0
+#define APPW_DO_DRAG_CCW 1
+#define APPW_DO_DRAG_CW  2
+#define APPW_DO_ACTUATE  3
+#define APPW_DO_DOWN     4
+#define APPW_DO_UP       5
+
+//
 // Please do not change existing values because they are used to determine the font type when reading XBF fonts!
 //
 #define MODE_FONT_1BPP     0       // Monochrome mode
@@ -299,7 +309,8 @@ enum {
   APPW_NOTIFICATION_PIDRELEASED,
   APPW_NOTIFICATION_FIXED,
   APPW_NOTIFICATION_UNPINNED,
-  APPW_NOTIFICATION_ROTATED
+  APPW_NOTIFICATION_ROTATED,
+  APPW_NOTIFICATION_LANGCHANGED
 };
 
 //
@@ -328,7 +339,8 @@ enum {
   ATOM_OBJECT_GEO,
   ATOM_SCREEN_GEO,
   ATOM_OBJECT_PROP,
-  ATOM_CONSTANT
+  ATOM_CONSTANT,
+  ATOM_ACTIVE        // WM_GetActiveWindow() is used here, Makes only sense for drawings.
 };
 
 //
@@ -339,6 +351,8 @@ enum {
   ATOM_DETAIL_Y0 = DISPOSE_INDEX_Y0,
   ATOM_DETAIL_X1 = DISPOSE_INDEX_X1,
   ATOM_DETAIL_Y1 = DISPOSE_INDEX_Y1,
+  ATOM_DETAIL_XCENTER,
+  ATOM_DETAIL_YCENTER,
   ATOM_DETAIL_XSIZE,
   ATOM_DETAIL_YSIZE
 };
@@ -434,98 +448,95 @@ enum {
   APPW_JOB_NULL = -1,
   /*  1 */ APPW_JOB_SETENABLE = 1,  // (pPara + 0)->v     - 1 = On, 0 = Off
   /*  2 */ APPW_JOB_SETVIS,         // (pPara + 0)->v     - 1 = On, 0 = Off
-  /*  3 */ APPW_JOB_ANIMCOORD,      // (pPara + 0)->v     - End value
+  /*  3 */ APPW_JOB_SETCOORD,       // (pPara + 0)->v     - Value
                                     // (pPara + 1)->v     - Index of coordinate
-                                    // (pPara + 2)->pFunc - Ease func
-                                    // (pPara + 3)->v     - Period
-  /*  4 */ APPW_JOB_ANIMVALUE,      // (pPara + 0)->v     - End value
-                                    // (pPara + 1)->pFunc - Ease func
-                                    // (pPara + 2)->v     - Period
-  /*  5 */ APPW_JOB_ANIMRANGE,      // (pPara + 0)->v     - Start value
-                                    // (pPara + 1)->v     - End value
-                                    // (pPara + 2)->pFunc - Ease func
-                                    // (pPara + 3)->v     - Period
-  /*  6 */ APPW_JOB_SETCOORD,       // (pPara + 0)->v     - Value
-                                    // (pPara + 1)->v     - Index of coordinate
-  /*  7 */ APPW_JOB_SETCOLOR,       // (pPara + 0)->v     - Color to be used
+  /*  4 */ APPW_JOB_SETCOLOR,       // (pPara + 0)->v     - Color to be used
                                     // (pPara + 1)->v     - Index of color
-  /*  8 */ APPW_JOB_SETBKCOLOR,     // (pPara + 0)->v     - BkColor to be used
-  /*  9 */ APPW_JOB_ADDVALUE,       // (pPara + 0)->v     - Value to be added
-  /* 10 */ APPW_JOB_SETVALUE,       // (pPara + 0)->v     - Value to be set
-  /* 11 */ APPW_JOB_SETPERIOD,      // (pPara + 0)->v     - Value to be set
-  /* 12 */ APPW_JOB_SETSCALE,       // (pPara + 0)->v     - Value to be set
-  /* 13 */ APPW_JOB_SETANGLE,       // (pPara + 0)->v     - Value to be set
-  /* 14 */ APPW_JOB_SETALPHA,       // (pPara + 0)->v     - Value to be set
-  /* 15 */ APPW_JOB_SETSIZE,        // (pPara + 0)->v     - Value to be used
+  /*  5 */ APPW_JOB_SETBKCOLOR,     // (pPara + 0)->v     - BkColor to be used
+  /*  6 */ APPW_JOB_ADDVALUE,       // (pPara + 0)->v     - Value to be added
+  /*  7 */ APPW_JOB_SETVALUE,       // (pPara + 0)->v     - Value to be set
+  /*  8 */ APPW_JOB_SETPERIOD,      // (pPara + 0)->v     - Value to be set
+  /*  9 */ APPW_JOB_SETSCALE,       // (pPara + 0)->v     - Value to be set
+  /* 10 */ APPW_JOB_SETANGLE,       // (pPara + 0)->v     - Value to be set
+  /* 11 */ APPW_JOB_SETALPHA,       // (pPara + 0)->v     - Value to be set
+  /* 12 */ APPW_JOB_SETSIZE,        // (pPara + 0)->v     - Value to be used
                                     // (pPara + 1)->v     - Index of axis
-  /* 16 */ APPW_JOB_CASCADECOORD,   // (pPara + 0)->v     - End value              //TBD: Obsolete
-                                    // (pPara + 1)->v     - Index of coordinate
-                                    // (pPara + 2)->v     - Emitter Id of trigger
-  /* 17 */ APPW_JOB_SHIFTSCREEN,    // (pPara + 0)->v     - Screen Id
+  /* 13 */ APPW_JOB_SETFONT,        // (pPara + 0)->v     - Number of items
+                                    // (pPara + 0)->p     - Pointer to first APPW_PARA_ITEM required for font creation
+                                    // (pPara + 0)->pFunc - Source file names separated by semicolon (=== In AppWizard application only ===)
+  /* 14 */ APPW_JOB_SHIFTSCREEN,    // (pPara + 0)->v     - Screen Id
                                     // (pPara + 1)->v     - Index of edge
                                     // (pPara + 2)->pFunc - Ease func
                                     // (pPara + 3)->v     - Period
                                     // (pPara + 4)->v     - Disclose
-  /* 18 */ APPW_JOB_SHIFTWINDOW,    // (pPara + 0)->v     - Window Id
+  /* 15 */ APPW_JOB_SHIFTWINDOW,    // (pPara + 0)->v     - Window Id
                                     // (pPara + 1)->v     - Index of edge
                                     // (pPara + 2)->pFunc - Ease func
                                     // (pPara + 3)->v     - Period
                                     // (pPara + 4)->v     - Disclose
-  /* 19 */ APPW_JOB_SET,            // === NO PARAMETERS ===
-  /* 20 */ APPW_JOB_CLEAR,          // === NO PARAMETERS ===
-  /* 21 */ APPW_JOB_TOGGLE,         // === NO PARAMETERS ===
-  /* 22 */ APPW_JOB_START,          // === NO PARAMETERS ===
-  /* 23 */ APPW_JOB_STOP,           // === NO PARAMETERS ===
-  /* 24 */ APPW_JOB_SETTEXT,        // (pPara + 0)->v     - Text resource Id (if (pPara + 0)->p == NULL)
+  /* 16 */ APPW_JOB_SET,            // === NO PARAMETERS ===
+  /* 17 */ APPW_JOB_CLEAR,          // === NO PARAMETERS ===
+  /* 18 */ APPW_JOB_TOGGLE,         // === NO PARAMETERS ===
+  /* 19 */ APPW_JOB_START,          // === NO PARAMETERS ===
+  /* 20 */ APPW_JOB_STOP,           // === NO PARAMETERS ===
+  /* 21 */ APPW_JOB_SETTEXT,        // (pPara + 0)->v     - Text resource Id (if (pPara + 0)->p == NULL)
                                     // (pPara + 0)->p     - Handle           (if (pPara + 0)->v < 0)
-  /* 25 */ APPW_JOB_SHOWSCREEN,     // (pPara + 0)->v     - Screen Id
-  /* 26 */ APPW_JOB_SETLANG,        // (pPara + 0)->v     - Index of language 
-  /* 27 */ APPW_JOB_SETFOCUS,       // === NO PARAMETERS ===
-  /* 28 */ APPW_JOB_ENABLEPID,      // (pPara + 0)->v     - 1 = On, 0 = Off
-  /* 29 */ APPW_JOB_CLOSESCREEN,    // (pPara + 0)->v     - Screen Id
-  /* 30 */ APPW_JOB_SETX0,          // (pPara + 0)->v     - Value
-  /* 31 */ APPW_JOB_SETY0,          // (pPara + 0)->v     - Value
-  /* 32 */ APPW_JOB_SETX1,          // (pPara + 0)->v     - Value
-  /* 33 */ APPW_JOB_SETY1,          // (pPara + 0)->v     - Value
-  /* 34 */ APPW_JOB_MODALMESSAGE,   // (pPara + 0)->v     - Screen Id
-  /* 35 */ APPW_JOB_CALC,           // === NO PARAMETERS ===
-  /* 36 */ APPW_JOB_ANIMCREATE,     // (pPara + 0)->p     - GUI: Pointer to APPW_ANIM_DATA structure, AppWizard: NULL
+  /* 22 */ APPW_JOB_SHOWSCREEN,     // (pPara + 0)->v     - Screen Id
+  /* 23 */ APPW_JOB_SETLANG,        // (pPara + 0)->v     - Index of language 
+  /* 24 */ APPW_JOB_SETFOCUS,       // === NO PARAMETERS ===
+  /* 25 */ APPW_JOB_ENABLEPID,      // (pPara + 0)->v     - 1 = On, 0 = Off
+  /* 26 */ APPW_JOB_CLOSESCREEN,    // (pPara + 0)->v     - Screen Id
+  /* 27 */ APPW_JOB_SETX0,          // (pPara + 0)->v     - Value
+  /* 28 */ APPW_JOB_SETY0,          // (pPara + 0)->v     - Value
+  /* 29 */ APPW_JOB_SETX1,          // (pPara + 0)->v     - Value
+  /* 30 */ APPW_JOB_SETY1,          // (pPara + 0)->v     - Value
+  /* 31 */ APPW_JOB_MODALMESSAGE,   // (pPara + 0)->v     - Screen Id
+  /* 32 */ APPW_JOB_CALC,           // === NO PARAMETERS ===
+  /* 33 */ APPW_JOB_ANIMCREATE,     // (pPara + 0)->p     - GUI: Pointer to APPW_ANIM_DATA structure, AppWizard: NULL
                                     // (pPara + 0)->v     - GUI: 0,                                   AppWizard: Animation Id
-  /* 37 */ APPW_JOB_ANIMSTOP,       // (pPara + 0)->v     - Animation Id
+  /* 34 */ APPW_JOB_ANIMSTOP,       // (pPara + 0)->v     - Animation Id
                                     // (pPara + 1)->v     - 1 = Delete animation, 0 = Remain animation
-  /* 38 */ APPW_JOB_ANIMSTART,      // (pPara + 0)->v     - Animation Id
+  /* 35 */ APPW_JOB_ANIMSTART,      // (pPara + 0)->v     - Animation Id
                                     // (pPara + 1)->v     - Number of loops (<0 = endless)
-  /* 39 */ APPW_JOB_SETBITMAP,      // (pPara + 0)->v     - Index
+  /* 36 */ APPW_JOB_SETBITMAP,      // (pPara + 0)->v     - Index
                                     // (pPara + 1)->p     - INT: Pointer to Image-Data / EXT: Pointer to Image-Filename (EXT)
                                     // (pPara + 1)->v     - 0 (INT) / 1 (EXT)
                                     // (pPara + 2)->v     - FileSize
                                     // (pPara + 3)->p     - Source file name (=== In AppWizard application only ===)
                                     // (pPara + 3)->v     - If set to 1 the source file name is in const memory
-  /* 40 */ APPW_JOB_SETSTART,       // (pPara + 0)->v     - Value
-  /* 41 */ APPW_JOB_SETEND,         // (pPara + 0)->v     - Value
-  /* 42 */ APPW_JOB_INVALIDATE,     // === NO PARAMETERS ===
-  /* 43 */ APPW_JOB_SETITEM,        // (pPara + 0)->v     - Type: 0 = text resource, 1 = object
+  /* 37 */ APPW_JOB_SETSTART,       // (pPara + 0)->v     - Value
+  /* 38 */ APPW_JOB_SETEND,         // (pPara + 0)->v     - Value
+  /* 39 */ APPW_JOB_INVALIDATE,     // === NO PARAMETERS ===
+  /* 40 */ APPW_JOB_SETITEM,        // (pPara + 0)->v     - Type: 0 = text resource, 1 = object
                                     // (pPara + 1)->v     - 0: Text resource Id, 1: HB/LB: screen Id/object Id
                                     // (pPara + 2)->v     - Source: Row index    (Listview, Dropdown, Listbox)
                                     // (pPara + 3)->v     - Source: Column index (Listview only)
                                     // (pPara + 4)->v     - Target: Row index    (Listview, Dropdown, Listbox)
                                     // (pPara + 5)->v     - Target: Column index (Listview only)
-  /* 44 */ APPW_JOB_ADDITEM,        // (pPara + 0)->v     - Type: 0 = text resource, 1 = object
+  /* 41 */ APPW_JOB_ADDITEM,        // (pPara + 0)->v     - Type: 0 = text resource, 1 = object
                                     // (pPara + 1)->v     - 0: Text resource Id, 1: HB/LB: screen Id/object Id
                                     // (pPara + 2)->v     - Source: Row index    (Listview, Dropdown, Listbox)
                                     // (pPara + 3)->v     - Source: Column index (Listview only)
                                     // (pPara + 4)->v     - Target: Column index (Listview only)
-  /* 45 */ APPW_JOB_INSITEM,        // (pPara + 0)->v     - Type: 0 = text resource, 1 = object
+  /* 42 */ APPW_JOB_INSITEM,        // (pPara + 0)->v     - Type: 0 = text resource, 1 = object
                                     // (pPara + 1)->v     - 0: Text resource Id, 1: HB/LB: screen Id/object Id
                                     // (pPara + 2)->v     - Source: Row index    (Listview, Dropdown, Listbox)
                                     // (pPara + 3)->v     - Source: Column index (Listview only)
                                     // (pPara + 4)->v     - Target: Row index    (Listview, Dropdown, Listbox)
                                     // (pPara + 5)->v     - Target: Column index (Listview only)
-  /* 46 */ APPW_JOB_DELITEM,        // (pPara + 0)->v     - Item index to be deleted
-  /* 47 */ APPW_JOB_MOVETO,         // (pPara + 0)->v     - Value
-  /* 48 */ APPW_JOB_SETRANGE,       // (pPara + 0)->v     - Start value
+  /* 43 */ APPW_JOB_DELITEM,        // (pPara + 0)->v     - Item index to be deleted
+  /* 44 */ APPW_JOB_MOVETO,         // (pPara + 0)->v     - Value
+  /* 45 */ APPW_JOB_SETRANGE,       // (pPara + 0)->v     - Start value
                                     // (pPara + 1)->v     - End value
-  /* 49 */ APPW_JOB_ROTATEDISPLAY   // (pPara + 0)->v     - Rotation command (0, CW, CCW, 180, LEFT, RIGHT) to be used
+  /* 46 */ APPW_JOB_ROTATEDISPLAY,  // (pPara + 0)->v     - Rotation command (0, CW, CCW, 180, LEFT, RIGHT) to be used
+  /* 47 */ APPW_JOB_EXIT,           // === NO PARAMETERS ===
+  /* 48 */ APPW_JOB_SCREENSHOT,     // === NO PARAMETERS ===
+  /* 49 */ APPW_JOB_ACTUATE         // (pPara + 0)->v     - Object Id
+                                    // (pPara + 1)->v     - DRAG_LIN: xPos0 (LWord) yPos0 (HWord), DRAG_CCW/DRAG_CW: start angle (LWord) end angle (HWord), ACTUATE: xPos down (LWord) yPos down (HWord), DOWN/UP: xPos (LWord) yPos (HWord)
+                                    // (pPara + 2)->v     - DRAG_LIN: xPos1 (LWord) yPos1 (HWord), DRAG_CCW/DRAG_CW: radius (LWord), ACTUATE: xPos up (LWord) yPos up (HWord)
+                                    // (pPara + 3)->v     - Type: 0 = DRAG_LIN, 1 = DRAG_CCW, 2 = DRAG_CW, 3 = ACTUATE, 4 = DOWN, 5 = UP
+                                    // (pPara + 4)->pFunc - DRAG, DRAGUP: Ease func
+                                    // (pPara + 5)->v     - DRAG, DRAGUP: Period
 };
 
 //
@@ -625,10 +636,11 @@ enum {
   /* 90 */ APPW_SET_PROP_VISIBLE3    ,
   /*  1 */ APPW_SET_PROP_SWITCHOFF   ,
   /*  2 */ APPW_SET_PROP_3STATE      ,
-  /*  3 */ APPW_SET_PROP_WHEELTEXT   ,
-  /*  4 */ APPW_SET_PROP_WHEELBITMAPS,
-  /*  5 */ APPW_SET_PROP_SCROLLERH   ,
-  /*  6 */ APPW_SET_PROP_SCROLLERV   ,
+  /*  3 */ APPW_SET_PROP_FIXED2      ,
+  /*  4 */ APPW_SET_PROP_WHEELTEXT   ,
+  /*  5 */ APPW_SET_PROP_WHEELBITMAPS,
+  /*  6 */ APPW_SET_PROP_SCROLLERH   ,
+  /*  7 */ APPW_SET_PROP_SCROLLERV   ,
 };
 
 //
@@ -643,10 +655,11 @@ enum {
 //
 // Use of parameter
 //
-#define ARG_V(x)     { (U32)x, (const void *)0, (void (*)(void))0 }
-#define ARG_P(x)     { (U32)0, (const void *)x, (void (*)(void))0 }
-#define ARG_VP(x, y) { (U32)x, (const void *)y, (void (*)(void))0 }
-#define ARG_F(x)     { (U32)0, (const void *)0, (void (*)(void))x }
+#define ARG_V(v)             { (U32)v, (const void *)0, (void (*)(void))NULL  }
+#define ARG_P(p)             { (U32)0, (const void *)p, (void (*)(void))NULL  }
+#define ARG_VP(v, p)         { (U32)v, (const void *)p, (void (*)(void))NULL  }
+#define ARG_VPF(v, p, pFunc) { (U32)v, (const void *)p, (void (*)(void))pFunc }
+#define ARG_F(pFunc)         { (U32)0, (const void *)0, (void (*)(void))pFunc }
 
 //
 // Distinguishing between different possible text sources in APPW_GetLockedText()
@@ -672,38 +685,38 @@ enum {
 //
 // Internal macros
 //
-#define MANAGE_GET_DISPOSE_FUNCSETUP_JOBS(OBJECT_TYPE)                                      \
-  case APPW_MSG_GET_DISPOSE:                                                                \
-    pMsg->Data.p = (const void *)&((WM_##OBJECT_TYPE *)GUI_ALLOC_h2p(pMsg->hWin))->Dispose; \
-    break;                                                                                  \
-  case APPW_MSG_GET_TYPE:                                                                   \
-    pMsg->Data.v = TYPE_##OBJECT_TYPE;                                                      \
-    break;                                                                                  \
-  case APPW_MSG_GET_FUNCSETUP:                                                              \
-    pMsg->Data.pFunc = (void(*)(void))_Setup;                                               \
-    break;                                                                                  \
-  case APPW_MSG_GET_JOBS:                                                                   \
-    pMsg->Data.p = (const void *)_aJobs;                                                    \
-    pMsg->MsgId  = GUI_COUNTOF(_aJobs);                                                     \
+#define MANAGE_GET_DISPOSE_FUNCSETUP_JOBS(OBJECT_TYPE)                                    \
+  case APPW_MSG_GET_DISPOSE:                                                              \
+    pMsg->Data.pData = (void *)&((WM_##OBJECT_TYPE *)GUI_ALLOC_h2p(pMsg->hWin))->Dispose; \
+    break;                                                                                \
+  case APPW_MSG_GET_TYPE:                                                                 \
+    pMsg->Data.v = TYPE_##OBJECT_TYPE;                                                    \
+    break;                                                                                \
+  case APPW_MSG_GET_FUNCSETUP:                                                            \
+    pMsg->Data.pFunc = (void(*)(void))_Setup;                                             \
+    break;                                                                                \
+  case APPW_MSG_GET_JOBS:                                                                 \
+    pMsg->Data.p = (const void *)_aJobs;                                                  \
+    pMsg->MsgId  = GUI_COUNTOF(_aJobs);                                                   \
     break
 
-#define MANAGE_GET_DISPOSE_FUNCSETUP(OBJECT_TYPE)                                           \
-  case APPW_MSG_GET_DISPOSE:                                                                \
-    pMsg->Data.p = (const void *)&((WM_##OBJECT_TYPE *)GUI_ALLOC_h2p(pMsg->hWin))->Dispose; \
-    break;                                                                                  \
-  case APPW_MSG_GET_TYPE:                                                                   \
-    pMsg->Data.v = TYPE_##OBJECT_TYPE;                                                      \
-    break;                                                                                  \
-  case APPW_MSG_GET_FUNCSETUP:                                                              \
-    pMsg->Data.pFunc = (void(*)(void))_Setup;                                               \
+#define MANAGE_GET_DISPOSE_FUNCSETUP(OBJECT_TYPE)                                         \
+  case APPW_MSG_GET_DISPOSE:                                                              \
+    pMsg->Data.pData = (void *)&((WM_##OBJECT_TYPE *)GUI_ALLOC_h2p(pMsg->hWin))->Dispose; \
+    break;                                                                                \
+  case APPW_MSG_GET_TYPE:                                                                 \
+    pMsg->Data.v = TYPE_##OBJECT_TYPE;                                                    \
+    break;                                                                                \
+  case APPW_MSG_GET_FUNCSETUP:                                                            \
+    pMsg->Data.pFunc = (void(*)(void))_Setup;                                             \
     break
 
 //
 // Macros for drawing objects
 //
-#define MANAGE_PREPAINT(OBJ_CAST)                \
-    pObj = (OBJ_CAST *)GUI_LOCK_H(pMsg->hWin); { \
-      APPW_DrawingPrepare(pObj->aIdDraw);        \
+#define MANAGE_PREPAINT(OBJ_CAST)                     \
+    pObj = (OBJ_CAST *)GUI_LOCK_H(pMsg->hWin); {      \
+      APPW_DrawingPrepare(pObj->aIdDraw, pMsg->hWin); \
     } GUI_UNLOCK_H(pObj)
 
 #define MANAGE_POSTPAINT() APPW_DrawingCleanup()
@@ -902,27 +915,6 @@ typedef struct {
 
 /*********************************************************************
 *
-*       APPW_PARA_ITEM
-*/
-typedef struct {
-  U32          v;
-  const void * p;
-  void      (* pFunc)(void);
-} APPW_PARA_ITEM;
-
-/*********************************************************************
-*
-*       APPW_SETUP_ITEM
-*/
-typedef struct {
-  int            Id;
-  unsigned       Command;
-  APPW_PARA_ITEM aPara[6];
-  APPW_SETUP_ITEM_EXT
-} APPW_SETUP_ITEM;
-
-/*********************************************************************
-*
 *       APPW_COMP_ITEM
 *
 * Purpose:
@@ -986,6 +978,27 @@ typedef struct {
   const APPW_ATOM      * pAtom;  // Pointer to first operand (TBD...)
   I32                  * pVal;   // Array for calculating operand values
 } APPW_CALC;
+
+/*********************************************************************
+*
+*       APPW_PARA_ITEM
+*/
+typedef struct {
+  U32          v;
+  const void * p;
+  void      (* pFunc)(void);
+} APPW_PARA_ITEM;
+
+/*********************************************************************
+*
+*       APPW_SETUP_ITEM
+*/
+typedef struct {
+  int            Id;
+  unsigned       Command;
+  APPW_PARA_ITEM aPara[6];
+  APPW_SETUP_ITEM_EXT
+} APPW_SETUP_ITEM;
 
 /*********************************************************************
 *
@@ -1145,8 +1158,8 @@ typedef struct {
 *   File access
 */
 typedef struct {
-  GUI_GET_DATA_FUNC        * pfGetDataBGJ;                                                   // Function for getting data of (B)MP, (G)IF and (J)PEG files
-  GUI_GET_DATA_FUNC        * pfGetDataImage;                                                 // Function for getting data of streamed bitmaps and text resource files
+  GUI_GET_DATA_FUNC_I      * pfGetDataBGJ;                                                   // Function for getting data of (B)MP, (G)IF and (J)PEG files
+  GUI_GET_DATA_FUNC_II     * pfGetDataImage;                                                 // Function for getting data of streamed bitmaps and text resource files
   GUI_XBF_GET_DATA_FUNC    * pfGetDataFont;                                                  // Function for getting data of XBF fonts
   U32                     (* pfGetDataFile)  (void * p, U8 * pData, U32 NumBytes, U32 Off);  // Function for getting data of generic files
   void                  * (* pfOpenFontFile) (const char * pFilename);                       // Opens a file in resource (sub)folder 'Font'
@@ -1344,7 +1357,6 @@ typedef struct {
   GUI_COLOR           aColor[3];
   int                 TextId;
   WM_HTIMER           hTimer;
-  APPW_FONT         * pFont;
   U16                 FrameRadius;
   U16                 FrameSize;
 } WM_OBJECT_BUTTON;
@@ -1401,7 +1413,6 @@ typedef struct {
   U32                 State;
   APPW_DRAW_OBJECT    apDraw[6];
   int                 aTextId[2];
-  APPW_FONT         * pFont;
 } WM_OBJECT_SWITCH;
 
 /*********************************************************************
@@ -1418,7 +1429,6 @@ typedef struct {
   int                 xOffText;
   int                 yOffText;
   int                 TextId;
-  APPW_FONT         * pFont;
   //
   // Elements required for decimal mode
   //
@@ -1444,7 +1454,6 @@ typedef struct {
   U16                 aIdDraw[2];  // Pre- and Post-draw
   U32                 State;
   unsigned            Mode;
-  APPW_FONT         * pFont;
   U16                 FrameRadius;
   U16                 FrameSize;
   GUI_COLOR           FrameColor;
@@ -1555,7 +1564,6 @@ typedef struct {
   U16                 aIdDraw[2];  // Pre- and Post-draw
   U32                 State;
   unsigned            Mode;
-  APPW_FONT         * pFont;
   int                 IndexText;
   U16                 FrameRadius;
   U16                 FrameSize;
@@ -1571,10 +1579,10 @@ typedef struct {
   APPW_DISPOSE        Dispose;     // Dispose structure
   U16                 aIdDraw[2];  // Pre- and Post-draw
   APPW_DRAW_OBJECT    apDraw[2];
-  APPW_FONT         * pFont;
   U8                  FrameRadius;
   U8                  FrameSize;
   GUI_COLOR           FrameColor;
+  const APPW_CONTENT* pContent;
 } WM_OBJECT_DROPDOWN;
 
 /*********************************************************************
@@ -1594,6 +1602,7 @@ typedef struct {
   U8                  FrameSize;
   U8                  FocusSize;
   U8                  Flags;
+  const APPW_CONTENT* pContent;
 } WM_OBJECT_LISTVIEW;
 
 /*********************************************************************
@@ -1604,9 +1613,9 @@ typedef struct {
   LISTBOX_Obj         Widget;      // GUI/WM-Widget
   APPW_DISPOSE        Dispose;     // Dispose structure
   U16                 aIdDraw[2];  // Pre- and Post-draw
-  APPW_FONT         * pFont;
   GUI_COLOR           FrameColor;
   U8                  FrameSize;
+  const APPW_CONTENT* pContent;
 } WM_OBJECT_LISTBOX;
 
 /*********************************************************************
@@ -1642,8 +1651,8 @@ typedef struct {
   U16                 aIdDraw[2];  // Pre- and Post-draw
   GUI_COLOR           aColor[2];   // Optional colors for alpha bitmaps (0: normal, 1: disabled)
   APPW_DRAW_OBJECT    apDraw[4];
-  APPW_FONT         * pFont;
   U16                 Offset;
+  const APPW_CONTENT* pContent;
 } WM_OBJECT_RADIO;
 
 /*********************************************************************
@@ -1658,7 +1667,6 @@ typedef struct {
   GUI_COLOR           aColor[2];   // Optional colors for alpha bitmaps (0: normal, 1: disabled)
   APPW_DRAW_OBJECT    apDraw[6];
   int                 TextId;
-  APPW_FONT         * pFont;
   U16                 Offset;
 } WM_OBJECT_CHECKBOX;
 
@@ -1679,20 +1687,22 @@ typedef struct {
 
 /*********************************************************************
 *
-*       Public Data (to be supplied by project)
+*       Public Data
 *
 **********************************************************************
 */
-extern       APPW_ROOT_INFO    ** APPW_ppRootList;
-extern       APPW_ROOT_INFO     * APPW_apRootList[];
-extern       APPW_VAR_OBJECT    * APPW_paVarList;
-extern       APPW_DRAWING_ITEM ** APPW_ppDrawingList;
-extern const APPW_SCROLLER_DEF  * APPW_paScrollerDef;
+extern       APPW_ROOT_INFO    ** APPW_ppRootList;     // Pointer to array of root information pointers
+extern       APPW_VAR_OBJECT    * APPW_paVarList;      // Pointer to variables
+extern       APPW_DRAWING_ITEM ** APPW_ppDrawingList;  // Pointer to array of drawing pointers
+extern const APPW_SCROLLER_DEF  * APPW_paScrollerDef;  // Pointer to scroller definitions
 
-extern       unsigned             APPW_NumScreens;
-extern       unsigned             APPW_NumVars;
-extern       unsigned             APPW_NumDrawings;
-extern       unsigned             APPW_NumScrollers;
+extern       unsigned             APPW_NumScreens;     // Number of screens
+extern       unsigned             APPW_NumVars;        // Number of variabless
+extern       unsigned             APPW_NumDrawings;    // Number of drawings
+extern       unsigned             APPW_NumScrollers;   // Number of scroller definitions
+
+extern       U8                   APPW_Run;
+extern       void              (* APPW__pfInvalidateWindow)(WM_HWIN hWin);
 
 extern const APPW_DRAWING_INFO    APPW__aDrawingFunc[];
 extern const int                  APPW__NumDrawingFuncs;
@@ -1731,12 +1741,12 @@ DEFAULT_CRCB(WINDOW);
 //
 // OWindow
 //
-int  WM_OBJECT_WINDOW_SetPara          (WM_HWIN hWin, APPW_ROOT_INFO * pRoot);
+int WM_OBJECT_WINDOW_SetPara(WM_HWIN hWin, APPW_ROOT_INFO * pRoot);
 
 //
 // OTimer
 //
-WM_HWIN WM_OBJECT_TIMER_Create (APPW_DISPOSE * pDispose, WM_HWIN hParent, int Id);
+WM_HWIN WM_OBJECT_TIMER_Create(APPW_DISPOSE * pDispose, WM_HWIN hParent, int Id);
 
 //
 // AppWizard.c (private functions, not to be documented)
@@ -1764,6 +1774,7 @@ void                      APPW_GetAtomInfo             (const APPW_ATOM * pAtom,
 I32                       APPW_GetAtomValue            (const APPW_ATOM * pAtom);
 APPW_ROOT_INFO          * APPW_GetCurrentRootInfo      (WM_HWIN hWin);
 int                       APPW_GetFocusWidth           (void);
+const GUI_FONT          * APPW_GetFontFromPara         (APPW_PARA_ITEM * pPara);
 GUI_HMEM                  APPW_GetLockedText           (char ** ppBuffer, APPW_PARA_ITEM * pPara);
 int                       APPW_GetOpponent             (int Index);
 const char              * APPW_GetResourcePath         (void);
@@ -1773,6 +1784,7 @@ APPW_ROOT_INFO          * APPW_GetRootInfo             (WM_HWIN hRoot, int * pRo
 APPW_ROOT_INFO          * APPW_GetRootInfoByHandle     (WM_HWIN hWin);
 APPW_ROOT_INFO          * APPW_GetRootInfoByIndex      (int RootIndex);
 APPW_ROOT_INFO          * APPW_GetRootInfoByRootId     (U16 RootId);
+void                   (* APPW_GetScreenshotFunc(void))(void);
 U8                        APPW_GetSupportFocus         (void);
 U8                        APPW_GetSupportScroller      (void);
 void                      APPW_Init                    (const char * pResourcePath);
@@ -1791,13 +1803,12 @@ void                      APPW_SetDefaultPositionRoot  (WM_HWIN hRoot);
 void                      APPW_SetFocusInfo            (APPW_DRAW_FOCUS_INFO * pInfo);
 void                      APPW_SetpfInitFS             (void (* pFunc)(void));
 void                      APPW_SetpfInitText           (void (* pFunc)(void));
+void                      APPW_SetScreenshotFunc       (void (* pFunc)(void));
 void                      APPW_SetSupportFocus         (U8 SupportFocus);
 void                      APPW_SetSupportScroller      (U8 SupportScroller);
 void                      APPW_SetWidgetFocusable      (WM_HWIN hWin, APPW_PARA_ITEM * pPara);
 void                      APPW_TextInitMem             (const APPW_TEXT_INIT * pPara);
 void                      APPW_TextInitExt             (const APPW_TEXT_INIT * pPara);
-
-extern void (* APPW__pfInvalidateWindow)(WM_HWIN hWin);
 
 //
 // AppWizard.c (public functions, to be documented)
@@ -1842,9 +1853,10 @@ int                       APPW_CalcCond                (const APPW_COND * pCond,
 //
 // AppWizard_Drawing.c
 //
-void                      APPW_DrawingPrepare          (U16 * pIdDraw);
+void                      APPW_DrawingPrepare          (U16 * pIdDraw, WM_HWIN hWin);
 void                      APPW_DrawingDraw             (int DrawingIndex);
 void                      APPW_DrawingCleanup          (void);
+WM_HWIN                   APPW_GetActiveWindow         (void);
 
 //
 // AppWizard_FileAccess.c
@@ -1856,8 +1868,8 @@ const APPW_X_FILEACCESS * APPW_GetFileAccessLowLevel   (void);
 const GUI_XBF_TYPE      * APPW_GetFileType             (U8 Type);
 const APPW_MEMACCESS    * APPW_GetMemAccess            (void);
 void                      APPW_GetStreamedBitmapInfoEXT(const APPW_DRAW_OBJECT * pDraw, GUI_BITMAPSTREAM_INFO * pInfo);
-int                       APPW_MakeFont                (const APPW_SETUP_ITEM * pSetup, GUI_FONT * pFont, GUI_XBF_DATA * pData);
-int                       APPW_MakeFontEx              (const APPW_PARA_ITEM * pPara, GUI_FONT * pFont, GUI_XBF_DATA * pData);
+int                       APPW_MakeFont                (const APPW_SETUP_ITEM * pSetup);
+int                       APPW_MakeFontEx              (const APPW_PARA_ITEM * pPara);
 void                      APPW_SetFileAccess           (APPW_X_FILEACCESS * pFileAccess);
 
 //
@@ -1876,17 +1888,20 @@ WM_HWIN                   APPW_GetVarWin               (void);
 int                       APPW_CalcTerm                (const APPW_CALC * pCalc);
 
 //
-// APPWConf.c / Resource.c
+// APPWConf.c,   generated by export function(s)
 //
 void                      APPW__GetResource            (APPW_ROOT_INFO         *** pppRootInfo,    int * pNumScreens,
                                                         APPW_VAR_OBJECT         ** ppaVarList,     int * pNumVars,
                                                         const APPW_SCROLLER_DEF ** ppaScrollerDef, int * pNumScrollers,
                                                         APPW_DRAWING_ITEM      *** pppDrawingList, int * pNumDrawings,
                                                                                                    int * pCreateFlags);
+//
+// Resource.c,   generated by export function(s)
+//
 void                      APPW__GetTextInit            (GUI_CONST_STORAGE APPW_TEXT_INIT ** ppTextInit);
 
 //
-// APPW_X_xxx.c
+// APPW_X_xxx.c, generated by export function(s)
 //
 void                      APPW_X_Config                (void);
 void                      APPW_X_InitText              (void);

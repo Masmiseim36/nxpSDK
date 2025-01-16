@@ -10,11 +10,19 @@
 
 #if (defined(CONFIG_BT_VCP_VOL_CTLR) && (CONFIG_BT_VCP_VOL_CTLR > 0))
 
+#include <stdlib.h>
+
 #include <zephyr/types.h>
+
+#include <sys/byteorder.h>
+#include <sys/util.h>
+#include <porting.h>
+
+#include <bluetooth/hci.h>
 #include <bluetooth/conn.h>
 #include <bluetooth/audio/vcp.h>
+
 #include "fsl_shell.h"
-#include <stdlib.h>
 
 #include "shell_bt.h"
 
@@ -157,7 +165,7 @@ static void vcs_aics_set_manual_mode_cb(struct bt_aics *inst, int err)
 			    "Set manual mode failed (%d) for inst %p",
 			    err, inst);
 	} else {
-		shell_print(ctx_shell, "Manuel mode set for inst %p", inst);
+		shell_print(ctx_shell, "Manual mode set for inst %p", inst);
 	}
 }
 
@@ -326,7 +334,8 @@ static struct bt_vcp_vol_ctlr_cb vcp_cbs = {
 #endif /* CONFIG_BT_VCP_VOL_CTLR_MAX_VOCS_INST > 0 */
 };
 
-static shell_status_t cmd_vcp_vol_ctlr_discover(shell_handle_t sh, int32_t argc, char *argv[])
+static int cmd_vcp_vol_ctlr_discover(const struct shell *sh, size_t argc,
+				   char **argv)
 {
 	static bool cb_registered;
 	int result;
@@ -339,7 +348,7 @@ static shell_status_t cmd_vcp_vol_ctlr_discover(shell_handle_t sh, int32_t argc,
 		result = bt_vcp_vol_ctlr_cb_register(&vcp_cbs);
 		if (result != 0) {
 			shell_print(sh, "CB register failed: %d", result);
-			return (shell_status_t)result;
+			return result;
 		}
 
 		cb_registered = true;
@@ -347,7 +356,7 @@ static shell_status_t cmd_vcp_vol_ctlr_discover(shell_handle_t sh, int32_t argc,
 
 	if (default_conn == NULL) {
 		shell_error(sh, "Not connected");
-		return kStatus_SHELL_Error;
+		return -ENOEXEC;
 	}
 
 	result = bt_vcp_vol_ctlr_discover(default_conn, &vcp_vol_ctlr);
@@ -355,16 +364,17 @@ static shell_status_t cmd_vcp_vol_ctlr_discover(shell_handle_t sh, int32_t argc,
 		shell_print(sh, "Fail: %d", result);
 	}
 
-	return (shell_status_t)result;
+	return result;
 }
 
-static shell_status_t cmd_vcp_vol_ctlr_state_get(shell_handle_t sh, int32_t argc, char *argv[])
+static int cmd_vcp_vol_ctlr_state_get(const struct shell *sh, size_t argc,
+				    char **argv)
 {
 	int result;
 
 	if (default_conn == NULL) {
 		shell_error(sh, "Not connected");
-		return kStatus_SHELL_Error;
+		return -ENOEXEC;
 	}
 
 	result = bt_vcp_vol_ctlr_read_state(vcp_vol_ctlr);
@@ -372,16 +382,17 @@ static shell_status_t cmd_vcp_vol_ctlr_state_get(shell_handle_t sh, int32_t argc
 		shell_print(sh, "Fail: %d", result);
 	}
 
-	return (shell_status_t)result;
+	return result;
 }
 
-static shell_status_t cmd_vcp_vol_ctlr_flags_get(shell_handle_t sh, int32_t argc, char *argv[])
+static int cmd_vcp_vol_ctlr_flags_get(const struct shell *sh, size_t argc,
+				    char **argv)
 {
 	int result;
 
 	if (default_conn == NULL) {
 		shell_error(sh, "Not connected");
-		return kStatus_SHELL_Error;
+		return -ENOEXEC;
 	}
 
 	result = bt_vcp_vol_ctlr_read_flags(vcp_vol_ctlr);
@@ -389,16 +400,17 @@ static shell_status_t cmd_vcp_vol_ctlr_flags_get(shell_handle_t sh, int32_t argc
 		shell_print(sh, "Fail: %d", result);
 	}
 
-	return (shell_status_t)result;
+	return result;
 }
 
-static shell_status_t cmd_vcp_vol_ctlr_volume_down(shell_handle_t sh, int32_t argc, char *argv[])
+static int cmd_vcp_vol_ctlr_volume_down(const struct shell *sh, size_t argc,
+				      char **argv)
 {
 	int result;
 
 	if (default_conn == NULL) {
 		shell_error(sh, "Not connected");
-		return kStatus_SHELL_Error;
+		return -ENOEXEC;
 	}
 
 	result = bt_vcp_vol_ctlr_vol_down(vcp_vol_ctlr);
@@ -406,17 +418,18 @@ static shell_status_t cmd_vcp_vol_ctlr_volume_down(shell_handle_t sh, int32_t ar
 		shell_print(sh, "Fail: %d", result);
 	}
 
-	return (shell_status_t)result;
+	return result;
 }
 
-static shell_status_t cmd_vcp_vol_ctlr_volume_up(shell_handle_t sh, int32_t argc, char *argv[])
+static int cmd_vcp_vol_ctlr_volume_up(const struct shell *sh, size_t argc,
+				    char **argv)
 
 {
 	int result;
 
 	if (default_conn == NULL) {
 		shell_error(sh, "Not connected");
-		return kStatus_SHELL_Error;
+		return -ENOEXEC;
 	}
 
 	result = bt_vcp_vol_ctlr_vol_up(vcp_vol_ctlr);
@@ -424,16 +437,17 @@ static shell_status_t cmd_vcp_vol_ctlr_volume_up(shell_handle_t sh, int32_t argc
 		shell_print(sh, "Fail: %d", result);
 	}
 
-	return (shell_status_t)result;
+	return result;
 }
 
-static shell_status_t cmd_vcp_vol_ctlr_unmute_volume_down(shell_handle_t sh, int32_t argc, char *argv[])
+static int cmd_vcp_vol_ctlr_unmute_volume_down(const struct shell *sh,
+					     size_t argc, char **argv)
 {
 	int result;
 
 	if (default_conn == NULL) {
 		shell_error(sh, "Not connected");
-		return kStatus_SHELL_Error;
+		return -ENOEXEC;
 	}
 
 	result = bt_vcp_vol_ctlr_unmute_vol_down(vcp_vol_ctlr);
@@ -441,16 +455,17 @@ static shell_status_t cmd_vcp_vol_ctlr_unmute_volume_down(shell_handle_t sh, int
 		shell_print(sh, "Fail: %d", result);
 	}
 
-	return (shell_status_t)result;
+	return result;
 }
 
-static shell_status_t cmd_vcp_vol_ctlr_unmute_volume_up(shell_handle_t sh, int32_t argc, char *argv[])
+static int cmd_vcp_vol_ctlr_unmute_volume_up(const struct shell *sh,
+					   size_t argc, char **argv)
 {
 	int result;
 
 	if (default_conn == NULL) {
 		shell_error(sh, "Not connected");
-		return kStatus_SHELL_Error;
+		return -ENOEXEC;
 	}
 
 	result = bt_vcp_vol_ctlr_unmute_vol_up(vcp_vol_ctlr);
@@ -458,10 +473,11 @@ static shell_status_t cmd_vcp_vol_ctlr_unmute_volume_up(shell_handle_t sh, int32
 		shell_print(sh, "Fail: %d", result);
 	}
 
-	return (shell_status_t)result;
+	return result;
 }
 
-static shell_status_t cmd_vcp_vol_ctlr_volume_set(shell_handle_t sh, int32_t argc, char *argv[])
+static int cmd_vcp_vol_ctlr_volume_set(const struct shell *sh, size_t argc,
+				     char **argv)
 
 {
 	unsigned long volume;
@@ -469,20 +485,20 @@ static shell_status_t cmd_vcp_vol_ctlr_volume_set(shell_handle_t sh, int32_t arg
 
 	if (default_conn == NULL) {
 		shell_error(sh, "Not connected");
-		return kStatus_SHELL_Error;
+		return -ENOEXEC;
 	}
 
 	volume = shell_strtoul(argv[1], 0, &result);
 	if (result != 0) {
 		shell_error(sh, "Failed to parse volume: %d", result);
 
-		return kStatus_SHELL_Error;
+		return -ENOEXEC;
 	}
 
 	if (volume > UINT8_MAX) {
 		shell_error(sh, "Volume shall be 0-255, was %lu", volume);
 
-		return kStatus_SHELL_Error;
+		return -ENOEXEC;
 	}
 
 	result = bt_vcp_vol_ctlr_set_vol(vcp_vol_ctlr, volume);
@@ -490,17 +506,18 @@ static shell_status_t cmd_vcp_vol_ctlr_volume_set(shell_handle_t sh, int32_t arg
 		shell_print(sh, "Fail: %d", result);
 	}
 
-	return (shell_status_t)result;
+	return result;
 }
 
 
-static shell_status_t cmd_vcp_vol_ctlr_unmute(shell_handle_t sh, int32_t argc, char *argv[])
+static int cmd_vcp_vol_ctlr_unmute(const struct shell *sh, size_t argc,
+				 char **argv)
 {
 	int result;
 
 	if (default_conn == NULL) {
 		shell_error(sh, "Not connected");
-		return kStatus_SHELL_Error;
+		return -ENOEXEC;
 	}
 
 	result = bt_vcp_vol_ctlr_unmute(vcp_vol_ctlr);
@@ -508,16 +525,17 @@ static shell_status_t cmd_vcp_vol_ctlr_unmute(shell_handle_t sh, int32_t argc, c
 		shell_print(sh, "Fail: %d", result);
 	}
 
-	return (shell_status_t)result;
+	return result;
 }
 
-static shell_status_t cmd_vcp_vol_ctlr_mute(shell_handle_t sh, int32_t argc, char *argv[])
+static int cmd_vcp_vol_ctlr_mute(const struct shell *sh, size_t argc,
+				 char **argv)
 {
 	int result;
 
 	if (default_conn == NULL) {
 		shell_error(sh, "Not connected");
-		return kStatus_SHELL_Error;
+		return -ENOEXEC;
 	}
 
 	result = bt_vcp_vol_ctlr_mute(vcp_vol_ctlr);
@@ -525,31 +543,32 @@ static shell_status_t cmd_vcp_vol_ctlr_mute(shell_handle_t sh, int32_t argc, cha
 		shell_print(sh, "Fail: %d", result);
 	}
 
-	return (shell_status_t)result;
+	return result;
 }
 
-static shell_status_t cmd_vcp_vol_ctlr_vocs_state_get(shell_handle_t sh, int32_t argc, char *argv[])
+static int cmd_vcp_vol_ctlr_vocs_state_get(const struct shell *sh, size_t argc,
+					 char **argv)
 {
 	unsigned long index;
 	int result = 0;
 
 	if (default_conn == NULL) {
 		shell_error(sh, "Not connected");
-		return kStatus_SHELL_Error;
+		return -ENOEXEC;
 	}
 
 	index = shell_strtoul(argv[1], 0, &result);
 	if (result != 0) {
 		shell_error(sh, "Failed to parse index: %d", result);
 
-		return kStatus_SHELL_Error;
+		return -ENOEXEC;
 	}
 
 	if (index >= vcp_included.vocs_cnt) {
 		shell_error(sh, "Index shall be less than %u, was %lu",
 			    vcp_included.vocs_cnt, index);
 
-		return kStatus_SHELL_Error;
+		return -ENOEXEC;
 	}
 
 	result = bt_vocs_state_get(vcp_included.vocs[index]);
@@ -557,31 +576,32 @@ static shell_status_t cmd_vcp_vol_ctlr_vocs_state_get(shell_handle_t sh, int32_t
 		shell_print(sh, "Fail: %d", result);
 	}
 
-	return (shell_status_t)result;
+	return result;
 }
 
-static shell_status_t cmd_vcp_vol_ctlr_vocs_location_get(shell_handle_t sh, int32_t argc, char *argv[])
+static int cmd_vcp_vol_ctlr_vocs_location_get(const struct shell *sh,
+					    size_t argc, char **argv)
 {
 	unsigned long index;
 	int result = 0;
 
 	if (default_conn == NULL) {
 		shell_error(sh, "Not connected");
-		return kStatus_SHELL_Error;
+		return -ENOEXEC;
 	}
 
 	index = shell_strtoul(argv[1], 0, &result);
 	if (result != 0) {
 		shell_error(sh, "Failed to parse index: %d", result);
 
-		return kStatus_SHELL_Error;
+		return -ENOEXEC;
 	}
 
 	if (index >= vcp_included.vocs_cnt) {
 		shell_error(sh, "Index shall be less than %u, was %lu",
 			    vcp_included.vocs_cnt, index);
 
-		return kStatus_SHELL_Error;
+		return -ENOEXEC;
 	}
 
 	result = bt_vocs_location_get(vcp_included.vocs[index]);
@@ -589,10 +609,11 @@ static shell_status_t cmd_vcp_vol_ctlr_vocs_location_get(shell_handle_t sh, int3
 		shell_print(sh, "Fail: %d", result);
 	}
 
-	return (shell_status_t)result;
+	return result;
 }
 
-static shell_status_t cmd_vcp_vol_ctlr_vocs_location_set(shell_handle_t sh, int32_t argc, char *argv[])
+static int cmd_vcp_vol_ctlr_vocs_location_set(const struct shell *sh,
+					    size_t argc, char **argv)
 {
 	unsigned long location;
 	unsigned long index;
@@ -600,34 +621,34 @@ static shell_status_t cmd_vcp_vol_ctlr_vocs_location_set(shell_handle_t sh, int3
 
 	if (default_conn == NULL) {
 		shell_error(sh, "Not connected");
-		return kStatus_SHELL_Error;
+		return -ENOEXEC;
 	}
 
 	index = shell_strtoul(argv[1], 0, &result);
 	if (result != 0) {
 		shell_error(sh, "Failed to parse index: %d", result);
 
-		return kStatus_SHELL_Error;
+		return -ENOEXEC;
 	}
 
 	if (index >= vcp_included.vocs_cnt) {
 		shell_error(sh, "Index shall be less than %u, was %lu",
 			    vcp_included.vocs_cnt, index);
 
-		return kStatus_SHELL_Error;
+		return -ENOEXEC;
 	}
 
 	location = shell_strtoul(argv[2], 0, &result);
 	if (result != 0) {
 		shell_error(sh, "Failed to parse location: %d", result);
 
-		return kStatus_SHELL_Error;
+		return -ENOEXEC;
 	}
 
-#if 0 /* result always false. */
+#if 0 /* EDGEFAST: Useless code */
 	if (location > UINT32_MAX) {
 		shell_error(sh, "Invalid location %lu", location);
-		return kStatus_SHELL_Error;
+		return -ENOEXEC;
 
 	}
 #endif
@@ -637,10 +658,11 @@ static shell_status_t cmd_vcp_vol_ctlr_vocs_location_set(shell_handle_t sh, int3
 		shell_print(sh, "Fail: %d", result);
 	}
 
-	return (shell_status_t)result;
+	return result;
 }
 
-static shell_status_t cmd_vcp_vol_ctlr_vocs_offset_set(shell_handle_t sh, int32_t argc, char *argv[])
+static int cmd_vcp_vol_ctlr_vocs_offset_set(const struct shell *sh,
+					  size_t argc, char **argv)
 {
 	unsigned long index;
 	int result = 0;
@@ -648,34 +670,34 @@ static shell_status_t cmd_vcp_vol_ctlr_vocs_offset_set(shell_handle_t sh, int32_
 
 	if (default_conn == NULL) {
 		shell_error(sh, "Not connected");
-		return kStatus_SHELL_Error;
+		return -ENOEXEC;
 	}
 
 	index = shell_strtoul(argv[1], 0, &result);
 	if (result != 0) {
 		shell_error(sh, "Failed to parse index: %d", result);
 
-		return kStatus_SHELL_Error;
+		return -ENOEXEC;
 	}
 
 	if (index >= vcp_included.vocs_cnt) {
 		shell_error(sh, "Index shall be less than %u, was %lu",
 			    vcp_included.vocs_cnt, index);
 
-		return kStatus_SHELL_Error;
+		return -ENOEXEC;
 	}
 
 	offset = shell_strtol(argv[2], 0, &result);
 	if (result != 0) {
 		shell_error(sh, "Failed to parse offset: %d", result);
 
-		return kStatus_SHELL_Error;
+		return -ENOEXEC;
 	}
 
 	if (!IN_RANGE(offset, BT_VOCS_MIN_OFFSET, BT_VOCS_MAX_OFFSET)) {
 		shell_error(sh, "Offset shall be %d-%d, was %ld",
 			    BT_VOCS_MIN_OFFSET, BT_VOCS_MAX_OFFSET, offset);
-		return kStatus_SHELL_Error;
+		return -ENOEXEC;
 	}
 
 	result = bt_vocs_state_set(vcp_included.vocs[index],
@@ -684,31 +706,32 @@ static shell_status_t cmd_vcp_vol_ctlr_vocs_offset_set(shell_handle_t sh, int32_
 		shell_print(sh, "Fail: %d", result);
 	}
 
-	return (shell_status_t)result;
+	return result;
 }
 
-static shell_status_t cmd_vcp_vol_ctlr_vocs_output_description_get(shell_handle_t sh, int32_t argc, char *argv[])
+static int cmd_vcp_vol_ctlr_vocs_output_description_get(const struct shell *sh,
+						      size_t argc, char **argv)
 {
 	unsigned long index;
 	int result = 0;
 
 	if (default_conn == NULL) {
 		shell_error(sh, "Not connected");
-		return kStatus_SHELL_Error;
+		return -ENOEXEC;
 	}
 
 	index = shell_strtoul(argv[1], 0, &result);
 	if (result != 0) {
 		shell_error(sh, "Failed to parse index: %d", result);
 
-		return kStatus_SHELL_Error;
+		return -ENOEXEC;
 	}
 
 	if (index >= vcp_included.vocs_cnt) {
 		shell_error(sh, "Index shall be less than %u, was %lu",
 			    vcp_included.vocs_cnt, index);
 
-		return kStatus_SHELL_Error;
+		return -ENOEXEC;
 	}
 
 	result = bt_vocs_description_get(vcp_included.vocs[index]);
@@ -716,31 +739,32 @@ static shell_status_t cmd_vcp_vol_ctlr_vocs_output_description_get(shell_handle_
 		shell_print(sh, "Fail: %d", result);
 	}
 
-	return (shell_status_t)result;
+	return result;
 }
 
-static shell_status_t cmd_vcp_vol_ctlr_vocs_output_description_set(shell_handle_t sh, int32_t argc, char *argv[])
+static int cmd_vcp_vol_ctlr_vocs_output_description_set(const struct shell *sh,
+						      size_t argc, char **argv)
 {
 	unsigned long index;
 	int result = 0;
 
 	if (default_conn == NULL) {
 		shell_error(sh, "Not connected");
-		return kStatus_SHELL_Error;
+		return -ENOEXEC;
 	}
 
 	index = shell_strtoul(argv[1], 0, &result);
 	if (result != 0) {
 		shell_error(sh, "Failed to parse index: %d", result);
 
-		return kStatus_SHELL_Error;
+		return -ENOEXEC;
 	}
 
 	if (index >= vcp_included.vocs_cnt) {
 		shell_error(sh, "Index shall be less than %u, was %lu",
 			    vcp_included.vocs_cnt, index);
 
-		return kStatus_SHELL_Error;
+		return -ENOEXEC;
 	}
 
 	result = bt_vocs_description_set(vcp_included.vocs[index], argv[2]);
@@ -748,31 +772,32 @@ static shell_status_t cmd_vcp_vol_ctlr_vocs_output_description_set(shell_handle_
 		shell_print(sh, "Fail: %d", result);
 	}
 
-	return (shell_status_t)result;
+	return result;
 }
 
-static shell_status_t cmd_vcp_vol_ctlr_aics_input_state_get(shell_handle_t sh, int32_t argc, char *argv[])
+static int cmd_vcp_vol_ctlr_aics_input_state_get(const struct shell *sh,
+					       size_t argc, char **argv)
 {
 	unsigned long index;
 	int result = 0;
 
 	if (default_conn == NULL) {
 		shell_error(sh, "Not connected");
-		return kStatus_SHELL_Error;
+		return -ENOEXEC;
 	}
 
 	index = shell_strtoul(argv[1], 0, &result);
 	if (result != 0) {
 		shell_error(sh, "Failed to parse index: %d", result);
 
-		return kStatus_SHELL_Error;
+		return -ENOEXEC;
 	}
 
 	if (index >= vcp_included.aics_cnt) {
 		shell_error(sh, "Index shall be less than %u, was %lu",
 			    vcp_included.vocs_cnt, index);
 
-		return kStatus_SHELL_Error;
+		return -ENOEXEC;
 	}
 
 	result = bt_aics_state_get(vcp_included.aics[index]);
@@ -780,31 +805,32 @@ static shell_status_t cmd_vcp_vol_ctlr_aics_input_state_get(shell_handle_t sh, i
 		shell_print(sh, "Fail: %d", result);
 	}
 
-	return (shell_status_t)result;
+	return result;
 }
 
-static shell_status_t cmd_vcp_vol_ctlr_aics_gain_setting_get(shell_handle_t sh, int32_t argc, char *argv[])
+static int cmd_vcp_vol_ctlr_aics_gain_setting_get(const struct shell *sh,
+						size_t argc, char **argv)
 {
 	unsigned long index;
 	int result = 0;
 
 	if (default_conn == NULL) {
 		shell_error(sh, "Not connected");
-		return kStatus_SHELL_Error;
+		return -ENOEXEC;
 	}
 
 	index = shell_strtoul(argv[1], 0, &result);
 	if (result != 0) {
 		shell_error(sh, "Failed to parse index: %d", result);
 
-		return kStatus_SHELL_Error;
+		return -ENOEXEC;
 	}
 
 	if (index >= vcp_included.aics_cnt) {
 		shell_error(sh, "Index shall be less than %u, was %lu",
 			    vcp_included.vocs_cnt, index);
 
-		return kStatus_SHELL_Error;
+		return -ENOEXEC;
 	}
 
 	result = bt_aics_gain_setting_get(vcp_included.aics[index]);
@@ -812,31 +838,32 @@ static shell_status_t cmd_vcp_vol_ctlr_aics_gain_setting_get(shell_handle_t sh, 
 		shell_print(sh, "Fail: %d", result);
 	}
 
-	return (shell_status_t)result;
+	return result;
 }
 
-static shell_status_t cmd_vcp_vol_ctlr_aics_input_type_get(shell_handle_t sh, int32_t argc, char *argv[])
+static int cmd_vcp_vol_ctlr_aics_input_type_get(const struct shell *sh,
+					      size_t argc, char **argv)
 {
 	unsigned long index;
 	int result = 0;
 
 	if (default_conn == NULL) {
 		shell_error(sh, "Not connected");
-		return kStatus_SHELL_Error;
+		return -ENOEXEC;
 	}
 
 	index = shell_strtoul(argv[1], 0, &result);
 	if (result != 0) {
 		shell_error(sh, "Failed to parse index: %d", result);
 
-		return kStatus_SHELL_Error;
+		return -ENOEXEC;
 	}
 
 	if (index >= vcp_included.aics_cnt) {
 		shell_error(sh, "Index shall be less than %u, was %lu",
 			    vcp_included.vocs_cnt, index);
 
-		return kStatus_SHELL_Error;
+		return -ENOEXEC;
 	}
 
 	result = bt_aics_type_get(vcp_included.aics[index]);
@@ -844,31 +871,32 @@ static shell_status_t cmd_vcp_vol_ctlr_aics_input_type_get(shell_handle_t sh, in
 		shell_print(sh, "Fail: %d", result);
 	}
 
-	return (shell_status_t)result;
+	return result;
 }
 
-static shell_status_t cmd_vcp_vol_ctlr_aics_input_status_get(shell_handle_t sh, int32_t argc, char *argv[])
+static int cmd_vcp_vol_ctlr_aics_input_status_get(const struct shell *sh,
+						size_t argc, char **argv)
 {
 	unsigned long index;
 	int result = 0;
 
 	if (default_conn == NULL) {
 		shell_error(sh, "Not connected");
-		return kStatus_SHELL_Error;
+		return -ENOEXEC;
 	}
 
 	index = shell_strtoul(argv[1], 0, &result);
 	if (result != 0) {
 		shell_error(sh, "Failed to parse index: %d", result);
 
-		return kStatus_SHELL_Error;
+		return -ENOEXEC;
 	}
 
 	if (index >= vcp_included.aics_cnt) {
 		shell_error(sh, "Index shall be less than %u, was %lu",
 			    vcp_included.vocs_cnt, index);
 
-		return kStatus_SHELL_Error;
+		return -ENOEXEC;
 	}
 
 	result = bt_aics_status_get(vcp_included.aics[index]);
@@ -876,31 +904,32 @@ static shell_status_t cmd_vcp_vol_ctlr_aics_input_status_get(shell_handle_t sh, 
 		shell_print(sh, "Fail: %d", result);
 	}
 
-	return (shell_status_t)result;
+	return result;
 }
 
-static shell_status_t cmd_vcp_vol_ctlr_aics_input_unmute(shell_handle_t sh, int32_t argc, char *argv[])
+static int cmd_vcp_vol_ctlr_aics_input_unmute(const struct shell *sh,
+					    size_t argc, char **argv)
 {
 	unsigned long index;
 	int result = 0;
 
 	if (default_conn == NULL) {
 		shell_error(sh, "Not connected");
-		return kStatus_SHELL_Error;
+		return -ENOEXEC;
 	}
 
 	index = shell_strtoul(argv[1], 0, &result);
 	if (result != 0) {
 		shell_error(sh, "Failed to parse index: %d", result);
 
-		return kStatus_SHELL_Error;
+		return -ENOEXEC;
 	}
 
 	if (index >= vcp_included.aics_cnt) {
 		shell_error(sh, "Index shall be less than %u, was %lu",
 			    vcp_included.vocs_cnt, index);
 
-		return kStatus_SHELL_Error;
+		return -ENOEXEC;
 	}
 
 	result = bt_aics_unmute(vcp_included.aics[index]);
@@ -908,31 +937,32 @@ static shell_status_t cmd_vcp_vol_ctlr_aics_input_unmute(shell_handle_t sh, int3
 		shell_print(sh, "Fail: %d", result);
 	}
 
-	return (shell_status_t)result;
+	return result;
 }
 
-static shell_status_t cmd_vcp_vol_ctlr_aics_input_mute(shell_handle_t sh, int32_t argc, char *argv[])
+static int cmd_vcp_vol_ctlr_aics_input_mute(const struct shell *sh,
+					  size_t argc, char **argv)
 {
 	unsigned long index;
 	int result = 0;
 
 	if (default_conn == NULL) {
 		shell_error(sh, "Not connected");
-		return kStatus_SHELL_Error;
+		return -ENOEXEC;
 	}
 
 	index = shell_strtoul(argv[1], 0, &result);
 	if (result != 0) {
 		shell_error(sh, "Failed to parse index: %d", result);
 
-		return kStatus_SHELL_Error;
+		return -ENOEXEC;
 	}
 
 	if (index >= vcp_included.aics_cnt) {
 		shell_error(sh, "Index shall be less than %u, was %lu",
 			    vcp_included.vocs_cnt, index);
 
-		return kStatus_SHELL_Error;
+		return -ENOEXEC;
 	}
 
 	result = bt_aics_mute(vcp_included.aics[index]);
@@ -940,31 +970,32 @@ static shell_status_t cmd_vcp_vol_ctlr_aics_input_mute(shell_handle_t sh, int32_
 		shell_print(sh, "Fail: %d", result);
 	}
 
-	return (shell_status_t)result;
+	return result;
 }
 
-static shell_status_t cmd_vcp_vol_ctlr_aics_manual_input_gain_set(shell_handle_t sh, int32_t argc, char *argv[])
+static int cmd_vcp_vol_ctlr_aics_manual_input_gain_set(const struct shell *sh,
+						     size_t argc, char **argv)
 {
 	unsigned long index;
 	int result = 0;
 
 	if (default_conn == NULL) {
 		shell_error(sh, "Not connected");
-		return kStatus_SHELL_Error;
+		return -ENOEXEC;
 	}
 
 	index = shell_strtoul(argv[1], 0, &result);
 	if (result != 0) {
 		shell_error(sh, "Failed to parse index: %d", result);
 
-		return kStatus_SHELL_Error;
+		return -ENOEXEC;
 	}
 
 	if (index >= vcp_included.aics_cnt) {
 		shell_error(sh, "Index shall be less than %u, was %lu",
 			    vcp_included.vocs_cnt, index);
 
-		return kStatus_SHELL_Error;
+		return -ENOEXEC;
 	}
 
 	result = bt_aics_manual_gain_set(vcp_included.aics[index]);
@@ -972,31 +1003,32 @@ static shell_status_t cmd_vcp_vol_ctlr_aics_manual_input_gain_set(shell_handle_t
 		shell_print(sh, "Fail: %d", result);
 	}
 
-	return (shell_status_t)result;
+	return result;
 }
 
-static shell_status_t cmd_vcp_vol_ctlr_aics_auto_input_gain_set(shell_handle_t sh, int32_t argc, char *argv[])
+static int cmd_vcp_vol_ctlr_aics_auto_input_gain_set(const struct shell *sh,
+						   size_t argc, char **argv)
 {
 	unsigned long index;
 	int result = 0;
 
 	if (default_conn == NULL) {
 		shell_error(sh, "Not connected");
-		return kStatus_SHELL_Error;
+		return -ENOEXEC;
 	}
 
 	index = shell_strtoul(argv[1], 0, &result);
 	if (result != 0) {
 		shell_error(sh, "Failed to parse index: %d", result);
 
-		return kStatus_SHELL_Error;
+		return -ENOEXEC;
 	}
 
 	if (index >= vcp_included.aics_cnt) {
 		shell_error(sh, "Index shall be less than %u, was %lu",
 			    vcp_included.vocs_cnt, index);
 
-		return kStatus_SHELL_Error;
+		return -ENOEXEC;
 	}
 
 	result = bt_aics_automatic_gain_set(vcp_included.aics[index]);
@@ -1004,10 +1036,11 @@ static shell_status_t cmd_vcp_vol_ctlr_aics_auto_input_gain_set(shell_handle_t s
 		shell_print(sh, "Fail: %d", result);
 	}
 
-	return (shell_status_t)result;
+	return result;
 }
 
-static shell_status_t cmd_vcp_vol_ctlr_aics_gain_set(shell_handle_t sh, int32_t argc, char *argv[])
+static int cmd_vcp_vol_ctlr_aics_gain_set(const struct shell *sh, size_t argc,
+					char **argv)
 {
 	unsigned long index;
 	int result = 0;
@@ -1015,31 +1048,31 @@ static shell_status_t cmd_vcp_vol_ctlr_aics_gain_set(shell_handle_t sh, int32_t 
 
 	if (default_conn == NULL) {
 		shell_error(sh, "Not connected");
-		return kStatus_SHELL_Error;
+		return -ENOEXEC;
 	}
 
 	index = shell_strtoul(argv[1], 0, &result);
 	if (result != 0) {
 		shell_error(sh, "Could not parse index: %d", result);
-		return kStatus_SHELL_Error;
+		return -ENOEXEC;
 	}
 
 	if (index >= vcp_included.aics_cnt) {
 		shell_error(sh, "Index shall be less than %u, was %lu",
 			    vcp_included.aics_cnt, index);
-		return kStatus_SHELL_Error;
+		return -ENOEXEC;
 	}
 
 	gain = shell_strtol(argv[2], 0, &result);
 	if (result != 0) {
 		shell_error(sh, "Could not parse gain: %d", result);
-		return kStatus_SHELL_Error;
+		return -ENOEXEC;
 	}
 
 	if (!IN_RANGE(gain, INT8_MIN, INT8_MAX)) {
 		shell_error(sh, "Gain shall be %d-%d, was %ld",
 			    INT8_MIN, INT8_MAX, gain);
-		return kStatus_SHELL_Error;
+		return -ENOEXEC;
 	}
 
 	result = bt_aics_gain_set(vcp_included.aics[index], gain);
@@ -1047,31 +1080,32 @@ static shell_status_t cmd_vcp_vol_ctlr_aics_gain_set(shell_handle_t sh, int32_t 
 		shell_print(sh, "Fail: %d", result);
 	}
 
-	return (shell_status_t)result;
+	return result;
 }
 
-static shell_status_t cmd_vcp_vol_ctlr_aics_input_description_get(shell_handle_t sh, int32_t argc, char *argv[])
+static int cmd_vcp_vol_ctlr_aics_input_description_get(const struct shell *sh,
+						     size_t argc, char **argv)
 {
 	unsigned long index;
 	int result = 0;
 
 	if (default_conn == NULL) {
 		shell_error(sh, "Not connected");
-		return kStatus_SHELL_Error;
+		return -ENOEXEC;
 	}
 
 	index = shell_strtoul(argv[1], 0, &result);
 	if (result != 0) {
 		shell_error(sh, "Failed to parse index: %d", result);
 
-		return kStatus_SHELL_Error;
+		return -ENOEXEC;
 	}
 
 	if (index >= vcp_included.aics_cnt) {
 		shell_error(sh, "Index shall be less than %u, was %lu",
 			    vcp_included.vocs_cnt, index);
 
-		return kStatus_SHELL_Error;
+		return -ENOEXEC;
 	}
 
 	result = bt_aics_description_get(vcp_included.aics[index]);
@@ -1079,31 +1113,32 @@ static shell_status_t cmd_vcp_vol_ctlr_aics_input_description_get(shell_handle_t
 		shell_print(sh, "Fail: %d", result);
 	}
 
-	return (shell_status_t)result;
+	return result;
 }
 
-static shell_status_t cmd_vcp_vol_ctlr_aics_input_description_set(shell_handle_t sh, int32_t argc, char *argv[])
+static int cmd_vcp_vol_ctlr_aics_input_description_set(const struct shell *sh,
+						     size_t argc, char **argv)
 {
 	unsigned long index;
 	int result = 0;
 
 	if (default_conn == NULL) {
 		shell_error(sh, "Not connected");
-		return kStatus_SHELL_Error;
+		return -ENOEXEC;
 	}
 
 	index = shell_strtoul(argv[1], 0, &result);
 	if (result != 0) {
 		shell_error(sh, "Failed to parse index: %d", result);
 
-		return kStatus_SHELL_Error;
+		return -ENOEXEC;
 	}
 
 	if (index >= vcp_included.aics_cnt) {
 		shell_error(sh, "Index shall be less than %u, was %lu",
 			    vcp_included.vocs_cnt, index);
 
-		return kStatus_SHELL_Error;
+		return -ENOEXEC;
 	}
 
 	result = bt_aics_description_set(vcp_included.aics[index], argv[2]);
@@ -1111,10 +1146,10 @@ static shell_status_t cmd_vcp_vol_ctlr_aics_input_description_set(shell_handle_t
 		shell_print(sh, "Fail: %d", result);
 	}
 
-	return (shell_status_t)result;
+	return result;
 }
 
-static shell_status_t cmd_vcp_vol_ctlr(shell_handle_t sh, int32_t argc, char *argv[])
+static int cmd_vcp_vol_ctlr(const struct shell *sh, size_t argc, char **argv)
 {
 	if (argc > 1) {
 		shell_error(sh, "%s unknown parameter: %s",
@@ -1123,7 +1158,7 @@ static shell_status_t cmd_vcp_vol_ctlr(shell_handle_t sh, int32_t argc, char *ar
 		shell_error(sh, "%s Missing subcommand", argv[0]);
 	}
 
-	return kStatus_SHELL_Error;
+	return -ENOEXEC;
 }
 
 SHELL_STATIC_SUBCMD_SET_CREATE(vcp_vol_ctlr_cmds,
@@ -1221,7 +1256,7 @@ SHELL_STATIC_SUBCMD_SET_CREATE(vcp_vol_ctlr_cmds,
 	SHELL_SUBCMD_SET_END
 );
 
-SHELL_CMD_REGISTER(vcp_vol_ctlr, vcp_vol_ctlr_cmds,
+SHELL_CMD_ARG_REGISTER(vcp_vol_ctlr, &vcp_vol_ctlr_cmds,
 		       "Bluetooth VCP client shell commands",
 		       cmd_vcp_vol_ctlr, 1, 1);
 

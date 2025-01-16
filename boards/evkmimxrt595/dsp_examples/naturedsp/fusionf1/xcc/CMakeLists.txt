@@ -1,0 +1,351 @@
+# CROSS COMPILER SETTING
+set(CMAKE_SYSTEM_NAME Generic)
+cmake_minimum_required(VERSION 2.6)
+
+# THE VERSION NUMBER
+set(Tutorial_VERSION_MAJOR 1)
+set(Tutorial_VERSION_MINOR 0)
+
+# ENABLE ASM
+enable_language(ASM)
+
+set(CMAKE_STATIC_LIBRARY_PREFIX)
+set(CMAKE_STATIC_LIBRARY_SUFFIX)
+
+set(CMAKE_EXECUTABLE_LIBRARY_PREFIX)
+set(CMAKE_EXECUTABLE_LIBRARY_SUFFIX)
+
+# CURRENT DIRECTORY
+set(ProjDirPath ${CMAKE_CURRENT_SOURCE_DIR})
+
+set(EXECUTABLE_OUTPUT_PATH ${ProjDirPath}/${CMAKE_BUILD_TYPE})
+set(LIBRARY_OUTPUT_PATH ${ProjDirPath}/${CMAKE_BUILD_TYPE})
+
+
+project(dsp_naturedsp_dsp)
+
+set(MCUX_SDK_PROJECT_NAME dsp_naturedsp_dsp)
+
+SET(CMAKE_ASM_FLAGS_DEBUG "${CMAKE_ASM_FLAGS_DEBUG} -DDEBUG")
+
+SET(CMAKE_ASM_FLAGS_DEBUG "${CMAKE_ASM_FLAGS_DEBUG} -DMCUXPRESSO_SDK")
+
+SET(CMAKE_ASM_FLAGS_DEBUG "${CMAKE_ASM_FLAGS_DEBUG} -g")
+
+SET(CMAKE_ASM_FLAGS_DEBUG "${CMAKE_ASM_FLAGS_DEBUG} --xtensa-core=nxp_rt500_RI23_11_newlib")
+
+SET(CMAKE_ASM_FLAGS_DEBUG "${CMAKE_ASM_FLAGS_DEBUG} --xtensa-system=${XTENSA_SYSTEM}")
+
+SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -DNDEBUG")
+
+SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -DMCUXPRESSO_SDK")
+
+SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} --xtensa-core=nxp_rt500_RI23_11_newlib")
+
+SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} --xtensa-system=${XTENSA_SYSTEM}")
+
+SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -include ${ProjDirPath}/../mcux_config.h")
+
+SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DDEBUG")
+
+SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DSDK_DEBUGCONSOLE=1")
+
+SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DMCUX_META_BUILD")
+
+SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DMCUXPRESSO_SDK")
+
+SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DCPU_MIMXRT595SFFOC_dsp")
+
+SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -O0")
+
+SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -g")
+
+SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -Wall")
+
+SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -fsigned-char")
+
+SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -Wno-unused")
+
+SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -Wno-missing-braces")
+
+SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -fmessage-length=0")
+
+SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -std=gnu99")
+
+SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} --xtensa-core=nxp_rt500_RI23_11_newlib")
+
+SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} --xtensa-system=${XTENSA_SYSTEM}")
+
+SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -include ${ProjDirPath}/../mcux_config.h")
+
+SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DNDEBUG")
+
+SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DSDK_DEBUGCONSOLE=1")
+
+SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DMCUX_META_BUILD")
+
+SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DMCUXPRESSO_SDK")
+
+SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DCPU_MIMXRT595SFFOC_dsp")
+
+SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -Os")
+
+SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -Wall")
+
+SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -fsigned-char")
+
+SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -Wno-unused")
+
+SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -Wno-missing-braces")
+
+SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -fmessage-length=0")
+
+SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -std=gnu99")
+
+SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} --xtensa-core=nxp_rt500_RI23_11_newlib")
+
+SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} --xtensa-system=${XTENSA_SYSTEM}")
+
+SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DDEBUG")
+
+SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DSDK_DEBUGCONSOLE=1")
+
+SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DMCUX_META_BUILD")
+
+SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DMCUXPRESSO_SDK")
+
+SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DCPU_MIMXRT595SFFOC_dsp")
+
+SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -O0")
+
+SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -g")
+
+SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -Wall")
+
+SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -fsigned-char")
+
+SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -Wno-unused")
+
+SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -Wno-missing-braces")
+
+SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -fmessage-length=0")
+
+SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -std=c++11")
+
+SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} --xtensa-core=nxp_rt500_RI23_11_newlib")
+
+SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} --xtensa-system=${XTENSA_SYSTEM}")
+
+SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -DNDEBUG")
+
+SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -DSDK_DEBUGCONSOLE=1")
+
+SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -DMCUX_META_BUILD")
+
+SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -DMCUXPRESSO_SDK")
+
+SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -DCPU_MIMXRT595SFFOC_dsp")
+
+SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -Os")
+
+SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -Wall")
+
+SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -fsigned-char")
+
+SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -Wno-unused")
+
+SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -Wno-missing-braces")
+
+SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -fmessage-length=0")
+
+SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -std=c++11")
+
+SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} --xtensa-core=nxp_rt500_RI23_11_newlib")
+
+SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} --xtensa-system=${XTENSA_SYSTEM}")
+
+SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -mlsp=${CMAKE_CURRENT_LIST_DIR}/../../../../../../devices/MIMXRT595S/xtensa/gdbio")
+
+SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -Wl,--orphan-handling=place")
+
+SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} --xtensa-core=nxp_rt500_RI23_11_newlib")
+
+SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} --xtensa-system=${XTENSA_SYSTEM}")
+
+SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -mlsp=${CMAKE_CURRENT_LIST_DIR}/../../../../../../devices/MIMXRT595S/xtensa/min-rt")
+
+SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -Wl,--orphan-handling=place")
+
+SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} --xtensa-core=nxp_rt500_RI23_11_newlib")
+
+SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} --xtensa-system=${XTENSA_SYSTEM}")
+
+include_directories(${ProjDirPath}/..)
+
+include_directories(${ProjDirPath}/../../../../../../devices/MIMXRT595S)
+
+include_directories(${ProjDirPath}/../../../../../../devices/MIMXRT595S/periph)
+
+include_directories(${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers)
+
+include_directories(${ProjDirPath}/../../../../../../devices/MIMXRT595S/utilities/debug_console_lite)
+
+include_directories(${ProjDirPath}/../../../../../../devices/MIMXRT595S/utilities/str)
+
+include_directories(${ProjDirPath}/../../../../../../components/uart)
+
+include_directories(${ProjDirPath}/../../../../../../middleware/cadence/naturedsp/fusionf1/include)
+
+include_directories(${ProjDirPath}/..)
+
+include_directories(${ProjDirPath}/../../../../../../devices/MIMXRT595S)
+
+include_directories(${ProjDirPath}/../../../../../../devices/MIMXRT595S/periph)
+
+include_directories(${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers)
+
+include_directories(${ProjDirPath}/../../../../../../devices/MIMXRT595S/utilities/debug_console_lite)
+
+include_directories(${ProjDirPath}/../../../../../../devices/MIMXRT595S/utilities/str)
+
+include_directories(${ProjDirPath}/../../../../../../components/uart)
+
+include_directories(${ProjDirPath}/../../../../../../middleware/cadence/naturedsp/fusionf1/include)
+
+include_directories(${ProjDirPath}/..)
+
+include_directories(${ProjDirPath}/../../../../../../devices/MIMXRT595S)
+
+include_directories(${ProjDirPath}/../../../../../../devices/MIMXRT595S/periph)
+
+include_directories(${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers)
+
+include_directories(${ProjDirPath}/../../../../../../devices/MIMXRT595S/utilities/debug_console_lite)
+
+include_directories(${ProjDirPath}/../../../../../../devices/MIMXRT595S/utilities/str)
+
+include_directories(${ProjDirPath}/../../../../../../components/uart)
+
+include_directories(${ProjDirPath}/../../../../../../middleware/cadence/naturedsp/fusionf1/include)
+
+add_executable(dsp_naturedsp_dsp.elf 
+"${ProjDirPath}/../naturedsp_input.h"
+"${ProjDirPath}/../main.c"
+"${ProjDirPath}/../srtm_naturedsp_test.c"
+"${ProjDirPath}/../srtm_naturedsp_test.h"
+"${ProjDirPath}/../board_fusionf1.h"
+"${ProjDirPath}/../board_fusionf1.c"
+"${ProjDirPath}/../pin_mux.c"
+"${ProjDirPath}/../pin_mux.h"
+"${ProjDirPath}/../hardware_init.c"
+"${ProjDirPath}/../app.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/fsl_device_registers.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/periph/PERI_ADC.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/periph/PERI_AHB_SECURE_CTRL.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/periph/PERI_AXI_SWITCH_AMIB.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/periph/PERI_AXI_SWITCH_ASIB.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/periph/PERI_CACHE64_CTRL.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/periph/PERI_CACHE64_POLSEL.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/periph/PERI_CASPER.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/periph/PERI_CLKCTL0.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/periph/PERI_CLKCTL1.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/periph/PERI_CMP.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/periph/PERI_CRC.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/periph/PERI_CTIMER.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/periph/PERI_DEBUGGER_MAILBOX.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/periph/PERI_DMA.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/periph/PERI_DMIC.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/periph/PERI_FLEXCOMM.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/periph/PERI_FLEXIO.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/periph/PERI_FLEXSPI.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/periph/PERI_FREQME.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/periph/PERI_GPIO.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/periph/PERI_HASHCRYPT.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/periph/PERI_I2C.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/periph/PERI_I2S.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/periph/PERI_I3C.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/periph/PERI_INPUTMUX.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/periph/PERI_IOPCTL.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/periph/PERI_LCDIF.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/periph/PERI_MIPI_DSI_HOST.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/periph/PERI_MRT.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/periph/PERI_MU.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/periph/PERI_OCOTP.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/periph/PERI_OSTIMER.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/periph/PERI_OTFAD.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/periph/PERI_PINT.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/periph/PERI_PMC.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/periph/PERI_POWERQUAD.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/periph/PERI_PUF.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/periph/PERI_ROMCP.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/periph/PERI_RSTCTL0.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/periph/PERI_RSTCTL1.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/periph/PERI_RTC.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/periph/PERI_SCT.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/periph/PERI_SEMA42.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/periph/PERI_SPI.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/periph/PERI_SYSCTL0.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/periph/PERI_SYSCTL1.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/periph/PERI_TRNG.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/periph/PERI_USART.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/periph/PERI_USBHSD.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/periph/PERI_USBHSDCD.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/periph/PERI_USBHSH.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/periph/PERI_USBPHY.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/periph/PERI_USDHC.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/periph/PERI_UTICK.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/periph/PERI_WWDT.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/MIMXRT595S_dsp.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/MIMXRT595S_dsp_COMMON.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/MIMXRT595S_dsp_features.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers/fsl_clock.c"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers/fsl_clock.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers/fsl_i2s_bridge.c"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers/fsl_i2s_bridge.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers/fsl_inputmux_connections.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers/fsl_reset.c"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers/fsl_reset.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers/fsl_soc_mipi_dsi.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers/fsl_common.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers/fsl_common.c"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers/fsl_common_dsp.c"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers/fsl_common_dsp.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers/fsl_flexcomm.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers/fsl_flexcomm.c"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers/fsl_usart.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers/fsl_usart.c"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers/fsl_inputmux.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers/fsl_inputmux.c"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers/fsl_gpio.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers/fsl_gpio.c"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers/fsl_iopctl.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/utilities/debug_console_lite/fsl_assert.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/utilities/debug_console_lite/fsl_assert.c"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/utilities/str/fsl_str.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/utilities/str/fsl_str.c"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/utilities/debug_console_lite/fsl_debug_console.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/utilities/debug_console_lite/fsl_debug_console.c"
+"${ProjDirPath}/../../../../../../components/uart/fsl_adapter_uart.h"
+"${ProjDirPath}/../../../../../../components/uart/fsl_adapter_usart.c"
+"${ProjDirPath}/../../../../../../middleware/cadence/naturedsp/fusionf1/include/NatureDSP_Signal.h"
+"${ProjDirPath}/../../../../../../middleware/cadence/naturedsp/fusionf1/include/NatureDSP_types.h"
+"${ProjDirPath}/../mcux_config.h"
+)
+
+
+TARGET_LINK_LIBRARIES(dsp_naturedsp_dsp.elf -Wl,--start-group)
+
+target_link_libraries(dsp_naturedsp_dsp.elf debug ${ProjDirPath}/../../../../../../middleware/cadence/naturedsp/fusionf1/libnaturedsp.a)
+
+
+target_link_libraries(dsp_naturedsp_dsp.elf optimized ${ProjDirPath}/../../../../../../middleware/cadence/naturedsp/fusionf1/libnaturedsp.a)
+
+TARGET_LINK_LIBRARIES(dsp_naturedsp_dsp.elf -Wl,--end-group)
+
+add_custom_command(TARGET dsp_naturedsp_dsp.elf POST_BUILD
+COMMAND ${CMAKE_OBJCOPY} --xtensa-params= -Obinary ${ProjDirPath}/${CMAKE_BUILD_TYPE}/${MCUX_SDK_PROJECT_NAME}.elf ${CMAKE_CURRENT_LIST_DIR}/../binary/dsp_reset_${CMAKE_BUILD_TYPE}.bin --xtensa-core=nxp_rt500_RI23_11_newlib --xtensa-system=${XTENSA_SYSTEM} --only-section=.ResetVector.text
+COMMAND ${CMAKE_OBJCOPY} --xtensa-params= -Obinary ${ProjDirPath}/${CMAKE_BUILD_TYPE}/${MCUX_SDK_PROJECT_NAME}.elf ${CMAKE_CURRENT_LIST_DIR}/../binary/dsp_text_${CMAKE_BUILD_TYPE}.bin --xtensa-core=nxp_rt500_RI23_11_newlib --xtensa-system=${XTENSA_SYSTEM} --only-section=.WindowVectors.text --only-section=.Level2InterruptVector.text --only-section=.Level3InterruptVector.literal --only-section=.Level3InterruptVector.text --only-section=.DebugExceptionVector.literal --only-section=.DebugExceptionVector.text --only-section=.NMIExceptionVector.literal --only-section=.NMIExceptionVector.text --only-section=.KernelExceptionVector.text --only-section=.UserExceptionVector.text --only-section=.DoubleExceptionVector.text --only-section=.text
+COMMAND ${CMAKE_OBJCOPY} --xtensa-params= -Obinary ${ProjDirPath}/${CMAKE_BUILD_TYPE}/${MCUX_SDK_PROJECT_NAME}.elf ${CMAKE_CURRENT_LIST_DIR}/../binary/dsp_data_${CMAKE_BUILD_TYPE}.bin --xtensa-core=nxp_rt500_RI23_11_newlib --xtensa-system=${XTENSA_SYSTEM} --only-section=.clib.rodata --only-section=.rtos.rodata --only-section=.rodata --only-section=.clib.data --only-section=.rtos.percpu.data --only-section=.data --only-section=.bss
+COMMAND ${CMAKE_OBJCOPY} --xtensa-params= -Obinary ${ProjDirPath}/${CMAKE_BUILD_TYPE}/${MCUX_SDK_PROJECT_NAME}.elf ${ProjDirPath}/${CMAKE_BUILD_TYPE}/${MCUX_SDK_PROJECT_NAME}.bin
+)
+

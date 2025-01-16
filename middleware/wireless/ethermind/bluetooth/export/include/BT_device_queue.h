@@ -92,7 +92,7 @@ void em_device_queue_shutdown(void);
  *
  *  \par Description:
  *       This function is the Bluetooth-ON handler for Device Queue module, and it
- *       performs bluetooth specific initializations for the Device Queue module.
+ *       performs Bluetooth specific initializations for the Device Queue module.
  */
 void device_queue_bt_init ( void );
 
@@ -102,7 +102,7 @@ void device_queue_bt_init ( void );
  *
  *  \par Description:
  *       This function is the Bluetooth-OFF handler for Device Queue module, and it
- *       performs bluetooth specific shutdown for the Device Queue module.
+ *       performs Bluetooth specific shutdown for the Device Queue module.
  */
 void device_queue_bt_shutdown ( void );
 
@@ -279,8 +279,13 @@ API_RESULT device_queue_get_local_addr
  *  \par Description:
  *
  *
- *  \param [in]
- *
+ *  \param [in] hndl Reference of the Device Handle for which local address
+ *              is to be updated.
+ *  \param [in] addr Reference of the Device Address which needs to be updated
+ *              as the local address in the index pointed by hndl. If this
+ *              parameter is NULL, then the "Current Address" maintained by
+ *              Device Queue is updated as the Local Address for the instance
+ *              pointed to by hndl parameter.
  *
  *  \return
  *      API_RESULT: API_SUCCESS or one of the error codes as defined in

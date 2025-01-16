@@ -8,17 +8,13 @@
 
 #include <stdio.h>
 #include "fsl_debug_console.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 #include "fsl_sd.h"
 #include "sdmmc_config.h"
-#include "fsl_power.h"
-#include "fsl_gpio.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-
 
 /*! @brief Data block count accessed in card */
 #define DATA_BLOCK_COUNT (5U)
@@ -166,9 +162,7 @@ int main(void)
     char ch         = '0';
     bool isReadOnly;
 
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
     BOARD_SD_Config(card, SDCARD_DetectCallBack, BOARD_SDMMC_SD_HOST_IRQ_PRIORITY, NULL);
 
     PRINTF("\r\nSDCARD interrupt example.\r\n");

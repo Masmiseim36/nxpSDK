@@ -43,13 +43,12 @@
   @param[in]     blockSize  number of samples in input vector
   @param[out]    pResult    maximum value returned here
   @param[out]    pIndex     index of maximum value returned here
-  @return        none
  */
 
 #if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE)
 
 #include "arm_helium_utils.h"
-void arm_absmax_q31(
+ARM_DSP_ATTRIBUTE void arm_absmax_q31(
   const q31_t * pSrc,
         uint32_t blockSize,
         q31_t * pResult,
@@ -101,7 +100,7 @@ void arm_absmax_q31(
 }
 #else
 #if defined(ARM_MATH_DSP)
-void arm_absmax_q31(
+ARM_DSP_ATTRIBUTE void arm_absmax_q31(
   const q31_t * pSrc,
         uint32_t blockSize,
         q31_t * pResult,
@@ -188,7 +187,7 @@ void arm_absmax_q31(
   *pIndex = outIndex;  
 }
 #else
-void arm_absmax_q31(
+ARM_DSP_ATTRIBUTE void arm_absmax_q31(
   const q31_t * pSrc,
         uint32_t blockSize,
         q31_t * pResult,

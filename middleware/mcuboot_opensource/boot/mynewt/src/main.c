@@ -51,6 +51,10 @@
 void boot_custom_start(uintptr_t flash_base, struct boot_rsp *rsp);
 #endif
 
+#if MYNEWT_VAL(BOOT_PREBOOT)
+void boot_preboot(void);
+#endif
+
 #if defined(MCUBOOT_SERIAL)
 #define BOOT_SERIAL_REPORT_DUR  \
     (MYNEWT_VAL(OS_CPUTIME_FREQ) / MYNEWT_VAL(BOOT_SERIAL_REPORT_FREQ))
@@ -215,7 +219,7 @@ main(void)
     struct boot_rsp rsp;
     uintptr_t flash_base;
     int rc;
-    fih_int fih_rc = FIH_FAILURE;
+    fih_ret fih_rc = FIH_FAILURE;
 
     hal_bsp_init();
 
@@ -225,7 +229,7 @@ main(void)
 #endif
 
 #if defined(MCUBOOT_SERIAL) || defined(MCUBOOT_HAVE_LOGGING) || \
-        MYNEWT_VAL(CRYPTO) || MYNEWT_VAL(HASH)
+        MYNEWT_VAL(CRYPTO) || MYNEWT_VAL(HASH) || MYNEWT_VAL(BOOT_MYNEWT_SYSINIT)
     /* initialize uart/crypto without os */
     os_dev_initialize_all(OS_DEV_INIT_PRIMARY);
     os_dev_initialize_all(OS_DEV_INIT_SECONDARY);
@@ -239,9 +243,12 @@ main(void)
     flash_map_init();
 #endif
 
+#if MYNEWT_VAL(BOOT_PREBOOT)
+    boot_preboot();
+#endif
     FIH_CALL(boot_go, fih_rc, &rsp);
-    if (fih_not_eq(fih_rc, FIH_SUCCESS)) {
-        assert(fih_int_decode(fih_rc) == FIH_POSITIVE_VALUE);
+    if (FIH_NOT_EQ(fih_rc, FIH_SUCCESS)) {
+        assert(fih_rc == FIH_SUCCESS);
         FIH_PANIC;
     }
 
@@ -251,6 +258,7 @@ main(void)
 #if MYNEWT_VAL(BOOT_CUSTOM_START)
     boot_custom_start(flash_base, &rsp);
 #else
+    hal_bsp_deinit();
     hal_system_start((void *)(flash_base + rsp.br_image_off +
                               rsp.br_hdr->ih_hdr_size));
 #endif

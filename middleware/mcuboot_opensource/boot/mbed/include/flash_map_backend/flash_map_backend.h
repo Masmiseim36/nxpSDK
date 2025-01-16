@@ -75,6 +75,26 @@ struct flash_area {
     uint32_t fa_size;
 };
 
+static inline uint8_t flash_area_get_id(const struct flash_area *fa)
+{
+    return fa->fa_id;
+}
+
+static inline uint8_t flash_area_get_device_id(const struct flash_area *fa)
+{
+    return fa->fa_device_id;
+}
+
+static inline uint32_t flash_area_get_off(const struct flash_area *fa)
+{
+    return fa->fa_off;
+}
+
+static inline uint32_t flash_area_get_size(const struct flash_area *fa)
+{
+    return fa->fa_size;
+}
+
 /**
  * @brief Structure describing a sector within a flash area.
  *
@@ -93,6 +113,16 @@ struct flash_sector {
      */
     uint32_t fs_size;
 };
+
+static inline uint32_t flash_sector_get_off(const struct flash_sector *fs)
+{
+    return fs->fs_off;
+}
+
+static inline uint32_t flash_sector_get_size(const struct flash_sector *fs)
+{
+    return fs->fs_size;
+}
 
 /*
  * Start using flash area.
@@ -113,7 +143,7 @@ int flash_area_erase(const struct flash_area * fap, uint32_t off, uint32_t len);
 /*
  * Alignment restriction for flash writes.
  */
-uint8_t flash_area_align(const struct flash_area * fap);
+uint32_t flash_area_align(const struct flash_area * fap);
 
 /*
  * What is value is read from erased flash bytes.
@@ -131,7 +161,6 @@ int flash_area_id_from_image_slot(int slot);
 int flash_area_id_from_multi_image_slot(int image_index, int slot);
 
 
-int flash_area_id_to_image_slot(int area_id);
 /**
  * Converts the specified flash area ID and image index (in multi-image setup)
  * to an image slot index.

@@ -27,6 +27,10 @@
 
 #if (((defined(CONFIG_BT_SMP)) && (CONFIG_BT_SMP)))
 #if CONFIG_BT_AES_128_ENCRYPT_SW
+#if defined(CONFIG_BT_USE_SW_SECLIB) && (CONFIG_BT_USE_SW_SECLIB > 0)
+#include "SecLib.h"
+#include "CryptoLibSW.h"
+#else
 #include "mbedtls/aes.h"
 #include "mbedtls/entropy.h"
 #include "mbedtls/ctr_drbg.h"
@@ -34,6 +38,7 @@ static mbedtls_entropy_context entropy;
 static mbedtls_ctr_drbg_context rng_ctx;
 SDK_ALIGN(static uint8_t out_aes_crypt_buff[MAX(16U, EDGEFAST_BT_CACHE_LINESIZE)], MAX(16U, EDGEFAST_BT_CACHE_LINESIZE));
 static OSA_MUTEX_HANDLE_DEFINE(aes_crypt_mutex_handle);
+#endif
 #endif /* CONFIG_BT_AES_128_ENCRYPT_SW */
 #else
 #include "BT_common.h"
@@ -111,108 +116,111 @@ static int bt_aes_128_encrypt(const uint8_t in[16],
 {
 #if (((defined(CONFIG_BT_SMP)) && (CONFIG_BT_SMP)))
 #if CONFIG_BT_AES_128_ENCRYPT_SW
+#if defined(CONFIG_BT_USE_SW_SECLIB) && (CONFIG_BT_USE_SW_SECLIB > 0)
+	AES_128_Encrypt(in, key, out);
+#else
 	mbedtls_aes_context ctx;
-    osa_status_t ret;
-    static uint8_t mutex_initialized = 0;
-    if (mutex_initialized == 0)
-    {
-        ret = OSA_MutexCreate((osa_semaphore_handle_t)(aes_crypt_mutex_handle));
-        if (KOSA_StatusSuccess != ret)
-        {
-            return -ENOBUFS;
-        }
-        mutex_initialized = 1;
-    }
-    (void)OSA_MutexLock((osa_mutex_handle_t)aes_crypt_mutex_handle, osaWaitForever_c);   
+	osa_status_t ret;
+	static uint8_t mutex_initialized = 0;
+	if (mutex_initialized == 0)
+	{
+		ret = OSA_MutexCreate((osa_semaphore_handle_t)(aes_crypt_mutex_handle));
+		if (KOSA_StatusSuccess != ret)
+		{
+			return -ENOBUFS;
+		}
+		mutex_initialized = 1;
+	}
+	(void)OSA_MutexLock((osa_mutex_handle_t)aes_crypt_mutex_handle, osaWaitForever_c);
 	mbedtls_aes_init(&ctx);
 
 	if(0 != mbedtls_aes_setkey_enc(&ctx, (const unsigned char *)key, 128))
 	{
-        (void)OSA_MutexUnlock((osa_mutex_handle_t)aes_crypt_mutex_handle);
+		(void)OSA_MutexUnlock((osa_mutex_handle_t)aes_crypt_mutex_handle);
 		return -1;
 	}
 
 	if(0 != mbedtls_aes_crypt_ecb(&ctx, MBEDTLS_AES_ENCRYPT, (const unsigned char *)in, (unsigned char *)out_aes_crypt_buff))
 	{
-        (void)OSA_MutexUnlock((osa_mutex_handle_t)aes_crypt_mutex_handle);
+		(void)OSA_MutexUnlock((osa_mutex_handle_t)aes_crypt_mutex_handle);
 		return -1;
 	}
-    (void)memcpy(out, (unsigned char *)out_aes_crypt_buff, 16);
+	(void)memcpy(out, (unsigned char *)out_aes_crypt_buff, 16);
 	mbedtls_aes_free(&ctx);
-    (void)OSA_MutexUnlock((osa_mutex_handle_t)aes_crypt_mutex_handle);
-
-    return 0;
+	(void)OSA_MutexUnlock((osa_mutex_handle_t)aes_crypt_mutex_handle);
+#endif
+	return 0;
 #else
-    struct bt_hci_cmd_le_encrypt_rp_cb cb;
-    struct bt_le_encrypt_rsp_cb_data cb_data;
-    int err;
-    uint8_t tmpKey[16];
-    uint8_t tmpIn[16];
-    osa_status_t ret;
-    API_RESULT retval;
-    uint8_t status;
+	struct bt_hci_cmd_le_encrypt_rp_cb cb;
+	struct bt_le_encrypt_rsp_cb_data cb_data;
+	int err;
+	uint8_t tmpKey[16];
+	uint8_t tmpIn[16];
+	osa_status_t ret;
+	API_RESULT retval;
+	uint8_t status;
 
-    LOG_DBG("key %s in %s", bt_hex(key, 16), bt_hex(in, 16));
+	LOG_DBG("key %s in %s", bt_hex(key, 16), bt_hex(in, 16));
 
-    sys_memcpy_swap(tmpKey, key, 16);
-    sys_memcpy_swap(tmpIn, in, 16);
+	sys_memcpy_swap(tmpKey, key, 16);
+	sys_memcpy_swap(tmpIn, in, 16);
 
-    memset(&cb, 0, sizeof(cb));
-    memset(&cb_data, 0, sizeof(cb_data));
+	memset(&cb, 0, sizeof(cb));
+	memset(&cb_data, 0, sizeof(cb_data));
 
-    cb.cb = bt_le_encrypt_rsp_cb;
-    cb.user_data = (void *)&cb_data;
+	cb.cb = bt_le_encrypt_rsp_cb;
+	cb.user_data = (void *)&cb_data;
 
-    /* Register LE Encrypt rsp callback */
-    err = hci_cmd_le_encrypt_rp_cb_register(&cb);
-    if (0 != err)
-    {
-            return err;
-    }
+	/* Register LE Encrypt rsp callback */
+	err = hci_cmd_le_encrypt_rp_cb_register(&cb);
+	if (0 != err)
+	{
+		return err;
+	}
 
-    ret = OSA_SemaphoreCreate((osa_semaphore_handle_t)(cb_data.semaphoreHandle), 0);
-    if (KOSA_StatusSuccess != ret)
-    {
-            return -ENOBUFS;
-    }
-    cb_data.sync = (osa_semaphore_handle_t)(cb_data.semaphoreHandle);
-    cb_data.status = BT_HCI_ERR_UNSPECIFIED;
-    cb_data.enc_data = out;
+	ret = OSA_SemaphoreCreate((osa_semaphore_handle_t)(cb_data.semaphoreHandle), 0);
+	if (KOSA_StatusSuccess != ret)
+	{
+		return -ENOBUFS;
+	}
+	cb_data.sync = (osa_semaphore_handle_t)(cb_data.semaphoreHandle);
+	cb_data.status = BT_HCI_ERR_UNSPECIFIED;
+	cb_data.enc_data = out;
 
 	/* Send HCI LE Enscrypt request. Invoke HCI Encrypt. */
-    retval = BT_smp_128B_encrypt_pl ((UCHAR *)tmpKey, (UCHAR *)tmpIn, (UCHAR *)&cb_data.counter);
+	retval = BT_smp_128B_encrypt_pl ((UCHAR *)tmpKey, (UCHAR *)tmpIn, (UCHAR *)&cb_data.counter);
 
 #ifdef BT_PAL_CRYPTO_DEBUG
-    PRINTF("+++CRYPTO++%d\r\n", cb_data.counter);
+	PRINTF("+++CRYPTO++%d\r\n", cb_data.counter);
 #endif
 
-    if (API_SUCCESS == retval)
-    {
+	if (API_SUCCESS == retval)
+	{
 		/* Waiting for command complete */
 		ret = OSA_SemaphoreWait(cb_data.sync, HCI_CMD_TIMEOUT);
 #if 0
 		assert(KOSA_StatusSuccess == ret);
 #endif
-    }
+	}
 
-    (void)OSA_SemaphoreDestroy(cb_data.sync);
-    (void)hci_cmd_le_encrypt_rp_cb_unregister(&cb);
+	(void)OSA_SemaphoreDestroy(cb_data.sync);
+	(void)hci_cmd_le_encrypt_rp_cb_unregister(&cb);
 
-    status = cb_data.status;
-    if (status) {
-            LOG_WRN("status 0x%02x", status);
-            switch (status) {
-            case BT_HCI_ERR_CONN_LIMIT_EXCEEDED:
-                    return -ECONNREFUSED;
-            default:
-                    return -EIO;
-            }
-    }
-    sys_mem_swap(out, 16);
-    return 0;
+	status = cb_data.status;
+	if (status) {
+		LOG_WRN("status 0x%02x", status);
+		switch (status) {
+		case BT_HCI_ERR_CONN_LIMIT_EXCEEDED:
+			return -ECONNREFUSED;
+		default:
+			return -EIO;
+		}
+	}
+	sys_mem_swap(out, 16);
+	return 0;
 #endif /* CONFIG_BT_AES_128_ENCRYPT_SW */
 #else
-    return -1;
+	return -1;
 #endif /* CONFIG_BT_SMP */
 }
 
@@ -232,13 +240,13 @@ static void bt_le_encrypt_rsp_monitor_cb(struct net_buf *buf, void *cb_param)
 	evt = (struct bt_hci_evt_cmd_complete *)buf->data;
 	counter = evt->ncmd;
 
-    PRINTF("-----%d\r\n", counter);
+	PRINTF("-----%d\r\n", counter);
 }
 
 void bt_le_encrypt_monitor(void)
 {
-    static struct bt_hci_cmd_le_encrypt_rp_cb cb;
-    static struct bt_le_encrypt_rsp_cb_data cb_data;
+	static struct bt_hci_cmd_le_encrypt_rp_cb cb;
+	static struct bt_le_encrypt_rsp_cb_data cb_data;
 
 	memset(&cb, 0, sizeof(cb));
 	memset(&cb_data, 0, sizeof(cb_data));
@@ -254,26 +262,28 @@ void bt_le_encrypt_monitor(void)
 
 static int prng_reseed()
 {
-    uint8_t seed[8];
-    int ret, i;
+	uint8_t seed[8];
+	int ret, i;
 
-    for (i = 0; i < (sizeof(seed) / 8); i++) {
-            struct bt_hci_rp_le_rand *rp;
-            struct net_buf *rsp;
+	for (i = 0; i < (sizeof(seed) / 8); i++) {
+		struct bt_hci_rp_le_rand *rp;
+		struct net_buf *rsp;
 
-            ret = bt_hci_cmd_send_sync(BT_HCI_OP_LE_RAND, NULL, &rsp);
-            if (ret) {
-                    return ret;
-            }
+		ret = bt_hci_cmd_send_sync(BT_HCI_OP_LE_RAND, NULL, &rsp);
+		if (ret) {
+			return ret;
+		}
 
-            rp = (struct bt_hci_rp_le_rand *)rsp->data;
-            memcpy(&seed[i * 8], rp->rand, 8);
+		rp = (struct bt_hci_rp_le_rand *)rsp->data;
+		memcpy(&seed[i * 8], rp->rand, 8);
 
-            net_buf_unref(rsp);
-    }
+		net_buf_unref(rsp);
+	}
 #if (((defined(CONFIG_BT_SMP)) && (CONFIG_BT_SMP)))
 #if CONFIG_BT_AES_128_ENCRYPT_SW
-
+#if defined(CONFIG_BT_USE_SW_SECLIB) && (CONFIG_BT_USE_SW_SECLIB > 0)
+	(void)SecLib_set_rng_seed(*((uint32_t *)seed));
+#else
 	mbedtls_entropy_init(&entropy);
 
 	mbedtls_ctr_drbg_init(&rng_ctx);
@@ -282,12 +292,12 @@ static int prng_reseed()
 	{
 		return -1;
 	}
-
+#endif
 #endif /* CONFIG_BT_AES_128_ENCRYPT_SW */
 #else
-    srand(*((uint32_t *)seed));
+	srand(*((uint32_t *)seed));
 #endif /* CONFIG_BT_SMP */
-    return 0;
+	return 0;
 }
 
 int prng_init(void)
@@ -296,44 +306,48 @@ int prng_init(void)
 #if CONFIG_BT_AES_128_ENCRYPT_SW
 #else
 #ifdef BT_PAL_CRYPTO_DEBUG
-    bt_le_encrypt_monitor();
+	bt_le_encrypt_monitor();
 #endif
 #endif /* CONFIG_BT_AES_128_ENCRYPT_SW */
 #endif /* CONFIG_BT_SMP */
-    /* Check first that HCI_LE_Rand is supported */
-    if (!BT_CMD_TEST(bt_dev.supported_commands, 27, 7)) {
-            return -ENOTSUP;
-    }
+	/* Check first that HCI_LE_Rand is supported */
+	if (!BT_CMD_TEST(bt_dev.supported_commands, 27, 7)) {
+		return -ENOTSUP;
+	}
 
-    return prng_reseed();
+	return prng_reseed();
 }
 
 int bt_rand(void *buf, size_t len)
 {
-    uint32_t rng;
+	uint32_t rng;
 	if (buf == NULL || len == 0) {
 		return -EINVAL;
 	}
 
-    for (size_t index = 0; index < len; index+=sizeof(rng))
-    {
+	for (size_t index = 0; index < len; index+=sizeof(rng))
+	{
 #if (((defined(CONFIG_BT_SMP)) && (CONFIG_BT_SMP)))
 #if CONFIG_BT_AES_128_ENCRYPT_SW
+#if defined(CONFIG_BT_USE_SW_SECLIB) && (CONFIG_BT_USE_SW_SECLIB > 0)
+		rng = SecLib_get_random();
+#else
 		if(0 != mbedtls_ctr_drbg_random(&rng_ctx, (unsigned char *)&rng, 4))
 		{
 			return -1;
 		}
+#endif
 #endif /* CONFIG_BT_AES_128_ENCRYPT_SW */
 #else
-        rng = (uint32_t)rand();
+		rng = (uint32_t)rand();
 #endif /* CONFIG_BT_SMP */
-        for (size_t i = 0; i < MIN(len, (len - index));i++)
-        {
-            ((uint8_t *)buf)[index + i] = ((uint8_t *)&rng)[i];
-        }
-    }
+		for (size_t i = 0; i < MIN(len, (len - index));i++)
+		{
+			((uint8_t *)buf)[index + i] = ((uint8_t *)&rng)[i];
+		}
+	}
 
-    return 0;
+	return 0;
 }
 
 int bt_encrypt_le(const uint8_t key[16], const uint8_t plaintext[16],
@@ -342,7 +356,7 @@ int bt_encrypt_le(const uint8_t key[16], const uint8_t plaintext[16],
 	int err;
 	uint8_t tmpKey[16];
 	uint8_t tmpPlaintext[16];
-        
+
 	if (key == NULL || plaintext == NULL || enc_data == NULL) {
 		return -EINVAL;
 	}
@@ -370,13 +384,15 @@ int bt_encrypt_le(const uint8_t key[16], const uint8_t plaintext[16],
 int bt_encrypt_be(const uint8_t key[16], const uint8_t plaintext[16],
 		  uint8_t enc_data[16])
 {
+	int err;
+
 	LOG_DBG("key %s plaintext %s", bt_hex(key, 16), bt_hex(plaintext, 16));
 
-	bt_aes_128_encrypt(plaintext, key, enc_data);
+	err = bt_aes_128_encrypt(plaintext, key, enc_data);
 
 	LOG_DBG("enc_data %s", bt_hex(enc_data, 16));
 
-	return 0;
+	return err;
 }
 
 int bt_aes_128_cmac_be(const uint8_t *key, const uint8_t *in, size_t len,
@@ -398,56 +414,56 @@ int bt_aes_128_cmac_be(const uint8_t *key, const uint8_t *in, size_t len,
 static void bt_crypto_left_shift_one_bit(uint8_t *input,
                                    uint8_t *output)
 {
-    int32_t i;
-    uint8_t overflow = 0u;
+	int32_t i;
+	uint8_t overflow = 0u;
 
-    for ( i=15; i>=0; i-- )
-    {
-        output[i] = input[i] << 1u;
-        output[i] |= overflow;
-        overflow = ((input[i] & 0x80u) > 0u) ? 1u : 0u;
-    }
+	for ( i=15; i>=0; i-- )
+	{
+		output[i] = input[i] << 1u;
+		output[i] |= overflow;
+		overflow = ((input[i] & 0x80u) > 0u) ? 1u : 0u;
+	}
 }
 
 static void bt_crypto_xor128(uint8_t *a,
                           const uint8_t *b,
                           uint8_t *out)
 {
-    uint32_t i;
+	uint32_t i;
 
-    for (i=0u;i<16u; i++)
-    {
-      out[i] = a[i] ^ b[i];
-    }
+	for (i=0u;i<16u; i++)
+	{
+		out[i] = a[i] ^ b[i];
+	}
 }
 
 static void bt_crypto_padding(uint8_t *lastb,
                            uint8_t *pad,
                            uint32_t length)
 {
-    uint32_t j;
+	uint32_t j;
 
-    /* original last block */
-    for ( j=0u; j<16u; j++ ) {
-        if ( j < length ) {
-            pad[j] = lastb[j];
-        } else if ( j == length ) {
-            pad[j] = 0x80u;
-        } else {
-            pad[j] = 0x00u;
-        }
-    }
+	/* original last block */
+	for ( j=0u; j<16u; j++ ) {
+		if ( j < length ) {
+			pad[j] = lastb[j];
+		} else if ( j == length ) {
+			pad[j] = 0x80u;
+		} else {
+			pad[j] = 0x00u;
+		}
+	}
 }
 
 int bt_aes_128_cmac_setup(bt_aes_128_cmac_state_t *state, const uint8_t key[16])
 {
-    uint8_t const_Rb[16] = {0x00u, 0x00u, 0x00u, 0x00u,
-                            0x00u, 0x00u, 0x00u, 0x00u,
-                            0x00u, 0x00u, 0x00u, 0x00u,
-                            0x00u, 0x00u, 0x00u, 0x87u};
-    uint8_t L[16] = { 0 };
-    uint8_t Z[16] = { 0 };
-    uint8_t tmp[16] = {0};
+	uint8_t const_Rb[16] = {0x00u, 0x00u, 0x00u, 0x00u,
+				0x00u, 0x00u, 0x00u, 0x00u,
+				0x00u, 0x00u, 0x00u, 0x00u,
+				0x00u, 0x00u, 0x00u, 0x87u};
+	uint8_t L[16] = { 0 };
+	uint8_t Z[16] = { 0 };
+	uint8_t tmp[16] = {0};
 
 	if (NULL == state)
 	{
@@ -462,26 +478,26 @@ int bt_aes_128_cmac_setup(bt_aes_128_cmac_state_t *state, const uint8_t key[16])
 	bt_aes_128_encrypt(Z,key,L);
 
 	if ( (L[0] & 0x80u) == 0u )
-    {
-        /* If MSB(L) = 0, then K1 = L << 1 */
-        bt_crypto_left_shift_one_bit(L,state->k1);
-    }
-    else
-    {
-        /* Else K1 = ( L << 1 ) (+) Rb */
-        bt_crypto_left_shift_one_bit(L,tmp);
-        bt_crypto_xor128(tmp,const_Rb,state->k1);
-    }
+	{
+		/* If MSB(L) = 0, then K1 = L << 1 */
+		bt_crypto_left_shift_one_bit(L,state->k1);
+	}
+	else
+	{
+		/* Else K1 = ( L << 1 ) (+) Rb */
+		bt_crypto_left_shift_one_bit(L,tmp);
+		bt_crypto_xor128(tmp,const_Rb,state->k1);
+	}
 
-    if ( (state->k1[0] & 0x80u) == 0u )
-    {
-        bt_crypto_left_shift_one_bit(state->k1,state->k2);
-    }
-    else
-    {
-        bt_crypto_left_shift_one_bit(state->k1,tmp);
-        bt_crypto_xor128(tmp,const_Rb,state->k2);
-    }
+	if ( (state->k1[0] & 0x80u) == 0u )
+	{
+		bt_crypto_left_shift_one_bit(state->k1,state->k2);
+	}
+	else
+	{
+		bt_crypto_left_shift_one_bit(state->k1,tmp);
+		bt_crypto_xor128(tmp,const_Rb,state->k2);
+	}
 	return 0;
 }
 
@@ -542,10 +558,10 @@ int bt_aes_128_cmac_update(bt_aes_128_cmac_state_t *state, const uint8_t * data,
 	}
 
 	for (i = 0u; i < n; i++)
-    {
-        bt_crypto_xor128(state->x, &input[sizeof(state->data) * i], state->y); /* Y := Mi (+) X  */
-        bt_aes_128_encrypt(state->y, state->key, state->x); /* X := AES-128(KEY, Y) */
-    }
+	{
+		bt_crypto_xor128(state->x, &input[sizeof(state->data) * i], state->y); /* Y := Mi (+) X  */
+		bt_aes_128_encrypt(state->y, state->key, state->x); /* X := AES-128(KEY, Y) */
+	}
 
 	state->len = len - n * sizeof(state->data);
 	if (state->len > 0)
@@ -558,7 +574,7 @@ int bt_aes_128_cmac_update(bt_aes_128_cmac_state_t *state, const uint8_t * data,
 
 int bt_aes_128_cmac_final(uint8_t tag[16], bt_aes_128_cmac_state_t *state)
 {
-    uint8_t M_last[16] = {0};
+	uint8_t M_last[16] = {0};
 	uint8_t padded[16] = {0};
 
 	if (sizeof(state->data) == state->len)
@@ -567,11 +583,11 @@ int bt_aes_128_cmac_final(uint8_t tag[16], bt_aes_128_cmac_state_t *state)
 	}
 	else
 	{
-        bt_crypto_padding(&state->data[0], padded, state->len);
-        bt_crypto_xor128(padded, state->k2, M_last);
+		bt_crypto_padding(&state->data[0], padded, state->len);
+		bt_crypto_xor128(padded, state->k2, M_last);
 	}
-    bt_crypto_xor128(state->x, M_last, state->y);
-    bt_aes_128_encrypt(state->y, state->key, state->x);
+	bt_crypto_xor128(state->x, M_last, state->y);
+	bt_aes_128_encrypt(state->y, state->key, state->x);
 
 	memcpy(tag, state->x, 16u);
 

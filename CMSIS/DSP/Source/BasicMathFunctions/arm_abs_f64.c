@@ -43,10 +43,9 @@
   @param[in]     pSrc       points to the input vector
   @param[out]    pDst       points to the output vector
   @param[in]     blockSize  number of samples in each vector
-  @return        none
  */
 
-void arm_abs_f64(
+ARM_DSP_ATTRIBUTE void arm_abs_f64(
   const float64_t * pSrc,
         float64_t * pDst,
         uint32_t blockSize)

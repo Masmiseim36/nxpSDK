@@ -20,24 +20,21 @@
 #define BT_VCP_OPCODE_UNMUTE                            0x05
 #define BT_VCP_OPCODE_MUTE                              0x06
 
-STRUCT_PACKED_PRE
 struct vcs_state {
 	uint8_t volume;
 	uint8_t mute;
 	uint8_t change_counter;
-} STRUCT_PACKED_POST;
+} __packed;
 
-STRUCT_PACKED_PRE
 struct vcs_control {
 	uint8_t opcode;
 	uint8_t counter;
-} STRUCT_PACKED_POST;
+} __packed;
 
-STRUCT_PACKED_PRE
 struct vcs_control_vol {
 	struct vcs_control cp;
 	uint8_t volume;
-} STRUCT_PACKED_POST;
+} __packed;
 
 struct bt_vcp_vol_ctlr {
 	struct vcs_state state;
@@ -62,11 +59,11 @@ struct bt_vcp_vol_ctlr {
 	struct bt_uuid_16 uuid;
 	struct bt_conn *conn;
 
-#if defined(CONFIG_BT_VCP_VOL_CTLR_VOCS) && (CONFIG_BT_VCP_VOL_CTLR_VOCS > 0) 
+#if defined(CONFIG_BT_VCP_VOL_CTLR_VOCS) && (CONFIG_BT_VCP_VOL_CTLR_VOCS > 0)
 	uint8_t vocs_inst_cnt;
 	struct bt_vocs *vocs[CONFIG_BT_VCP_VOL_CTLR_MAX_VOCS_INST];
 #endif /* CONFIG_BT_VCP_VOL_CTLR_VOCS */
-#if defined(CONFIG_BT_VCP_VOL_CTLR_AICS) && (CONFIG_BT_VCP_VOL_CTLR_AICS > 0) 
+#if defined(CONFIG_BT_VCP_VOL_CTLR_AICS) && (CONFIG_BT_VCP_VOL_CTLR_AICS > 0)
 	uint8_t aics_inst_cnt;
 	struct bt_aics *aics[CONFIG_BT_VCP_VOL_CTLR_MAX_AICS_INST];
 #endif /* CONFIG_BT_VCP_VOL_CTLR_AICS */

@@ -15,13 +15,13 @@
 #define LE_CONN_LATENCY		0x0000
 #define LE_CONN_TIMEOUT		0x002a
 
-#if (defined(CONFIG_BT_BREDR) && ((CONFIG_BT_BREDR) > 0U))
+#if (defined(CONFIG_BT_CLASSIC) && ((CONFIG_BT_CLASSIC) > 0U))
 #define LMP_FEAT_PAGES_COUNT	3
 #else
 #define LMP_FEAT_PAGES_COUNT	1
 #endif
 
-#define BT_INIT_TIMEOUT	BT_MSEC(5000)
+#define BT_INIT_TIMEOUT	K_MSEC(5000)
 
 /* SCO  settings */
 #define BT_VOICE_CVSD_16BIT     0x0060
@@ -30,6 +30,7 @@
 enum {
 	BT_EVENT_CMD_TX,
 	BT_EVENT_CONN_TX_QUEUE,
+	BT_EVENT_CONN_FREE_TX,
 };
 
 /* bt_dev flags: the flags defined here represent BT controller state */
@@ -41,12 +42,40 @@ enum {
 	BT_DEV_HAS_PUB_KEY,
 	BT_DEV_PUB_KEY_BUSY,
 
-	BT_DEV_SCANNING,
+	/** The application explicitly instructed the stack to scan for advertisers
+	 * using the API @ref bt_le_scan_start().
+	 */
 	BT_DEV_EXPLICIT_SCAN,
+
+	/** The application either explicitly or implicitly instructed the stack to scan
+	 * for advertisers.
+	 *
+	 * Examples of such cases
+	 *  - Explicit scanning, @ref BT_DEV_EXPLICIT_SCAN.
+	 *  - The application instructed the stack to automatically connect if a given device
+	 *    is detected.
+	 *  - The application wants to connect to a peer device using private addresses, but
+	 *    the controller resolving list is too small. The host will fallback to using
+	 *    host-based privacy and first scan for the device before it initiates a connection.
+	 *  - The application wants to synchronize to a periodic advertiser.
+	 *    The host will implicitly start scanning if it is not already doing so.
+	 *
+	 * The host needs to keep track of this state to ensure it can restart scanning
+	 * when a connection is established/lost, explicit scanning is started or stopped etc.
+	 * Also, when the scanner and advertiser share the same identity, the scanner may need
+	 * to be restarted upon RPA refresh.
+	 */
+	BT_DEV_SCANNING,
+
+	/* Cached parameters used when initially enabling the scanner.
+	 * These are needed to ensure the same parameters are used when restarting
+	 * the scanner after refreshing an RPA.
+	 */
 	BT_DEV_ACTIVE_SCAN,
 	BT_DEV_SCAN_FILTER_DUP,
 	BT_DEV_SCAN_FILTERED,
 	BT_DEV_SCAN_LIMITED,
+
 	BT_DEV_INITIATING,
 
 	BT_DEV_RPA_VALID,
@@ -55,11 +84,11 @@ enum {
 	BT_DEV_ID_PENDING,
 	BT_DEV_STORE_ID,
 
-#if (defined(CONFIG_BT_BREDR) && ((CONFIG_BT_BREDR) > 0U))
+#if (defined(CONFIG_BT_CLASSIC) && ((CONFIG_BT_CLASSIC) > 0U))
 	BT_DEV_ISCAN,
 	BT_DEV_PSCAN,
 	BT_DEV_INQUIRY,
-#endif /* CONFIG_BT_BREDR */
+#endif /* CONFIG_BT_CLASSIC */
 
 	/* Total number of flags - must be at the end of the enum */
 	BT_DEV_NUM_FLAGS,
@@ -263,35 +292,40 @@ struct bt_dev_le {
 #if (defined(CONFIG_BT_CONN) && ((CONFIG_BT_CONN) > 0U))
 	/* Controller buffer information */
 	uint16_t		mtu;
-	osa_semaphore_handle_t		pkts;
-	OSA_SEMAPHORE_HANDLE_DEFINE(pkts_handle);
+	struct k_sem		pkts;
 	uint16_t		acl_mtu;
-	osa_semaphore_handle_t		acl_pkts;
-	OSA_SEMAPHORE_HANDLE_DEFINE(acl_pkts_handle);
+	struct k_sem		acl_pkts;
 #endif /* CONFIG_BT_CONN */
 #if (defined(CONFIG_BT_ISO) && ((CONFIG_BT_ISO) > 0U))
 	uint16_t		iso_mtu;
 	uint8_t			iso_limit;
-	osa_semaphore_handle_t		iso_pkts;
-	OSA_SEMAPHORE_HANDLE_DEFINE(iso_pkts_handle);
+	struct k_sem		iso_pkts;
 #endif /* CONFIG_BT_ISO */
+#if (defined(CONFIG_BT_BROADCASTER) && (CONFIG_BT_BROADCASTER > 0))
+	uint16_t max_adv_data_len;
+#endif /* CONFIG_BT_BROADCASTER */
 
 #if (defined(CONFIG_BT_SMP) && ((CONFIG_BT_SMP) > 0U))
-	/* Size of the the controller resolving list */
+	/* Size of the controller resolving list */
 	uint8_t                    rl_size;
 	/* Number of entries in the resolving list. rl_entries > rl_size
 	 * means that host-side resolving is used.
 	 */
 	uint8_t                    rl_entries;
 #endif /* CONFIG_BT_SMP */
+	/* List of `struct bt_conn` that have either pending data to send, or
+	 * something to process (e.g. a disconnection event).
+	 *
+	 * Each element in this list contains a reference to its `conn` object.
+	 */
+	sys_slist_t		conn_ready;
 };
 
-#if (defined(CONFIG_BT_BREDR) && ((CONFIG_BT_BREDR) > 0U))
+#if (defined(CONFIG_BT_CLASSIC) && ((CONFIG_BT_CLASSIC) > 0U))
 struct bt_dev_br {
 	/* Max controller's acceptable ACL packet length */
 	uint16_t         mtu;
-	osa_semaphore_handle_t  pkts;
-	OSA_SEMAPHORE_HANDLE_DEFINE(pkts_handle);
+	struct k_sem  pkts;
 	uint16_t         esco_pkt_type;
 };
 #endif
@@ -304,21 +338,8 @@ struct bt_dev_br {
 #define BT_DEV_VS_FEAT_MAX  1
 #define BT_DEV_VS_CMDS_MAX  2
 
-#if (defined(CONFIG_BT_CONN) && ((CONFIG_BT_CONN) > 0U))
-#if (defined(CONFIG_BT_ISO) && ((CONFIG_BT_ISO) > 0U))
-/* command FIFO + conn_change signal + MAX_CONN + CONFIG_BT_ISO_MAX_CHAN */
-#define EV_COUNT (2 + CONFIG_BT_MAX_CONN + CONFIG_BT_ISO_MAX_CHAN * CONFIG_BT_ISO_TX_BUF_COUNT)
-#else
-/* command FIFO + conn_change signal + MAX_CONN */
-#define EV_COUNT (2 + CONFIG_BT_MAX_CONN)
-#endif /* CONFIG_BT_ISO */
-#else
-/* command FIFO */
-#define EV_COUNT 1
-#endif /* CONFIG_BT_CONN */
-
 /* State tracking for the local Bluetooth controller */
-struct _bt_dev {
+struct bt_dev {
 	/* Local Identity Address(es) */
 	bt_addr_le_t            id_addr[CONFIG_BT_ID_MAX];
 	uint8_t                    id_count;
@@ -331,7 +352,7 @@ struct _bt_dev {
 #else
 	/* Pointer to reserved advertising set */
 	struct bt_le_ext_adv    *adv;
-#if (CONFIG_BT_ID_MAX > 1) && (CONFIG_BT_EXT_ADV_MAX_ADV_SET > 1)
+#if defined(CONFIG_BT_CONN) && (CONFIG_BT_EXT_ADV_MAX_ADV_SET > 1)
 	/* When supporting multiple concurrent connectable advertising sets
 	 * with multiple identities, we need to know the identity of
 	 * the terminating advertising set to identify the connection object.
@@ -378,48 +399,34 @@ struct _bt_dev {
 	/* LE controller specific features */
 	struct bt_dev_le	le;
 
-#if (defined(CONFIG_BT_BREDR) && ((CONFIG_BT_BREDR) > 0U))
+#if (defined(CONFIG_BT_CLASSIC) && ((CONFIG_BT_CLASSIC) > 0U))
 	/* BR/EDR controller specific features */
 	struct bt_dev_br	br;
 #endif
-#if 0
+
 	/* Number of commands controller can accept */
-	osa_semaphore_handle_t		ncmd_sem;
-	OSA_SEMAPHORE_HANDLE_DEFINE(ncmd_sem_handle);
-#endif
+	struct k_sem		ncmd_sem;
+
 	/* Initialization done */
-	osa_semaphore_handle_t		init_done;
-	OSA_SEMAPHORE_HANDLE_DEFINE(init_done_handle);
+	struct k_sem		init_done;
 
 	/* Last sent HCI command */
 	struct net_buf		*sent_cmd;
 
-#if !(defined(CONFIG_BT_RECV_IS_RX_THREAD) && (CONFIG_BT_RECV_IS_RX_THREAD > 0))
 	/* Queue for incoming HCI events & ACL data */
-	osa_msgq_handle_t rx_queue;
-    OSA_MSGQ_HANDLE_DEFINE(rx_queue_handle, CONFIG_BT_MSG_QUEUE_COUNT, sizeof(void *));
-#endif
+	sys_slist_t 		rx_queue;
 
 	/* Queue for outgoing HCI commands */
-	osa_msgq_handle_t		cmd_tx_queue;
-	OSA_MSGQ_HANDLE_DEFINE(cmd_tx_queue_handle, CONFIG_BT_MSG_QUEUE_COUNT, sizeof(void *));
+	struct k_fifo		cmd_tx_queue;
+
 #if 0
+#if DT_HAS_CHOSEN(zephyr_bt_hci)
+	const struct device *hci;
+#else
 	/* Registered HCI driver */
 	const struct bt_hci_driver *drv;
 #endif
-	/* New msg availiable */
-#define BT_DEV_SEND_COMMAND BIT(0)
-#define BT_DEV_SEND_ISO     BIT(1)
-#define BT_DEV_CONN_CHANGED BIT(2)
-
-	osa_event_handle_t		new_event;
-	OSA_EVENT_HANDLE_DEFINE(new_event_handle);
-	osa_msgq_handle_t		conn_changed;
-	OSA_MSGQ_HANDLE_DEFINE(conn_changed_handle, EV_COUNT, sizeof(void *));
-#if (defined(CONFIG_BT_ISO) && (CONFIG_BT_ISO > 0))
-	osa_msgq_handle_t		iso_conn;
-	OSA_MSGQ_HANDLE_DEFINE(iso_conn_handle, EV_COUNT, sizeof(void *));
-#endif /* CONFIG_BT_ISO */
+#endif
 
 #if (defined(CONFIG_BT_PRIVACY) && ((CONFIG_BT_PRIVACY) > 0U))
 	/* Local Identity Resolving Key */
@@ -429,6 +436,7 @@ struct _bt_dev {
 	/* Only 1 RPA per identity */
 	bt_addr_t		rpa[CONFIG_BT_ID_MAX];
 #endif
+
 	/* Work used for RPA rotation */
 	struct k_work_delayable rpa_update;
 
@@ -446,12 +454,12 @@ struct _bt_dev {
 #endif
 };
 
-extern struct _bt_dev bt_dev;
-#if ((defined(CONFIG_BT_SMP) && ((CONFIG_BT_SMP) > 0U)) || (defined(CONFIG_BT_BREDR) && ((CONFIG_BT_BREDR) > 0U)))
+extern struct bt_dev bt_dev;
+#if ((defined(CONFIG_BT_SMP) && ((CONFIG_BT_SMP) > 0U)) || (defined(CONFIG_BT_CLASSIC) && ((CONFIG_BT_CLASSIC) > 0U)))
 extern const struct bt_conn_auth_cb *bt_auth;
 extern sys_slist_t bt_auth_info_cbs;
 enum bt_security_err bt_security_err_get(uint8_t hci_err);
-#endif /* CONFIG_BT_SMP || CONFIG_BT_BREDR */
+#endif /* CONFIG_BT_SMP || CONFIG_BT_CLASSIC */
 
 /* Data type to store state related with command to be updated
  * when command completes successfully.
@@ -491,6 +499,29 @@ uint8_t bt_get_phy(uint8_t hci_phy);
  * @return CTE type (@ref bt_df_cte_type).
  */
 int bt_get_df_cte_type(uint8_t hci_cte_type);
+
+/** Start or restart scanner if needed
+ *
+ * Examples of cases where it may be required to start/restart a scanner:
+ * - When the auto-connection establishement feature is used:
+ *   - When the host sets a connection context for auto-connection establishment.
+ *   - When a connection was established.
+ *     The host may now be able to retry to automatically set up a connection.
+ *   - When a connection was disconnected/lost.
+ *     The host may now be able to retry to automatically set up a connection.
+ *   - When the application stops explicit scanning.
+ *     The host may now be able to retry to automatically set up a connection.
+ *   - The application tries to connect to another device, but fails.
+ *     The host may now be able to retry to automatically set up a connection.
+ * - When the application wants to connect to a device, but we need
+ *   to fallback to host privacy.
+ * - When the application wants to establish a periodic sync to a device
+ *   and the application has not already started scanning.
+ *
+ * @param fast_scan Use fast scan parameters or slow scan parameters
+ *
+ * @return 0 in case of success, or a negative error code on failure.
+ */
 int bt_le_scan_update(bool fast_scan);
 
 int bt_le_create_conn(const struct bt_conn *conn);
@@ -508,12 +539,14 @@ int bt_recv(struct net_buf *buf);
 uint16_t ethermind_hci_event_callback(uint8_t event_type,
                         uint8_t *event_data, uint8_t  event_datalen);
 
-void bt_conn_unpair(uint8_t id, const bt_addr_le_t *addr);
+void bt_conn_unpair(uint8_t id, const bt_addr_le_t *addr, const bt_addr_le_t *rpa);
 
 /* Don't require everyone to include bt_pal_keys.h */
 struct bt_keys;
 void bt_id_add(struct bt_keys *keys);
 void bt_id_del(struct bt_keys *keys);
+
+struct bt_keys *bt_id_find_conflict(struct bt_keys *candidate);
 
 int bt_setup_random_id_addr(void);
 int bt_setup_public_id_addr(void);
@@ -597,6 +630,8 @@ struct bt_hci_cmd_le_encrypt_rp_cb
 void bt_hci_le_per_adv_subevent_data_request(struct net_buf *buf);
 void bt_hci_le_per_adv_response_report(struct net_buf *buf);
 
+void bt_tx_irq_raise(void);
+
 int hci_cmd_le_encrypt_rp_cb_register(struct bt_hci_cmd_le_encrypt_rp_cb *cb);
 int hci_cmd_le_encrypt_rp_cb_unregister(struct bt_hci_cmd_le_encrypt_rp_cb *cb);
 
@@ -607,5 +642,7 @@ struct bt_hci_acl_hdr_simulation
 };
 
 bool update_sec_level(struct bt_conn *conn);
+
+void bt_conn_give_pkts(struct bt_conn *conn);
 
 #endif /* __HCI_CORE_H__ */

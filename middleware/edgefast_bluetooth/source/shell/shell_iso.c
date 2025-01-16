@@ -26,8 +26,16 @@
 #include <bluetooth/iso.h>
 
 #include "shell_bt.h"
+
+#if (defined(CONFIG_BT_ISO_TX) && (CONFIG_BT_ISO_TX > 0))
+#define DEFAULT_IO_QOS                                                                             \
+	{                                                                                          \
+		.sdu = 40u, .phy = BT_GAP_LE_PHY_2M, .rtn = 2u,                                    \
+	}
+
 #define TX_BUF_TIMEOUT K_SECONDS(1)
 
+static struct bt_iso_chan_io_qos iso_tx_qos = DEFAULT_IO_QOS;
 static uint32_t cis_sn_last;
 static uint32_t bis_sn_last;
 static int64_t cis_sn_last_updated_ticks;
@@ -45,7 +53,6 @@ static int64_t bis_sn_last_updated_ticks;
 static uint32_t get_next_sn(uint32_t last_sn, int64_t *last_ticks,
 			    uint32_t interval_us)
 {
-#if 0
 	int64_t uptime_ticks, delta_ticks;
 	uint64_t delta_us;
 	uint64_t sn_incr;
@@ -63,24 +70,10 @@ static uint32_t get_next_sn(uint32_t last_sn, int64_t *last_ticks,
 	next_sn = (sn_incr + last_sn);
 
 	return (uint32_t)next_sn;
-#else
-	int64_t uptime_ms, delta_ms;
-	uint64_t delta_us;
-	uint64_t seq_num_incr;
-	uint64_t next_seq_num;
-
-	uptime_ms   = (int64_t)OSA_TimeGetMsec();
-	delta_ms    = uptime_ms - *last_ticks;
-	*last_ticks = uptime_ms;
-
-	delta_us     = delta_ms * 1000;
-	seq_num_incr = delta_us / interval_us;
-	next_seq_num = (seq_num_incr + last_sn);
-
-	return (uint32_t)next_seq_num;
-#endif
 }
+#endif /* CONFIG_BT_ISO_TX */
 
+#if (defined(CONFIG_BT_ISO_RX) && (CONFIG_BT_ISO_RX > 0))
 static void iso_recv(struct bt_iso_chan *chan, const struct bt_iso_recv_info *info,
 		struct net_buf *buf)
 {
@@ -89,6 +82,7 @@ static void iso_recv(struct bt_iso_chan *chan, const struct bt_iso_recv_info *in
 			    chan, buf->len, info->seq_num, info->ts);
 	}
 }
+#endif /* CONFIG_BT_ISO_RX */
 
 static void iso_connected(struct bt_iso_chan *chan)
 {
@@ -100,25 +94,19 @@ static void iso_connected(struct bt_iso_chan *chan)
 
 	err = bt_iso_chan_get_info(chan, &iso_info);
 	if (err != 0) {
-		PRINTF("Failed to get ISO info: %d", err);
+		printk("Failed to get ISO info: %d", err);
 		return;
 	}
 
+#if (defined(CONFIG_BT_ISO_TX) && (CONFIG_BT_ISO_TX > 0))
 	if (iso_info.type == BT_ISO_CHAN_TYPE_CONNECTED) {
 		cis_sn_last = 0U;
-		#if 0
 		cis_sn_last_updated_ticks = k_uptime_ticks();
-		#else
-		cis_sn_last_updated_ticks = (int64_t)OSA_TimeGetMsec();
-		#endif
 	} else {
 		bis_sn_last = 0U;
-		#if 0
 		bis_sn_last_updated_ticks = k_uptime_ticks();
-		#else
-		bis_sn_last_updated_ticks = (int64_t)OSA_TimeGetMsec();
-		#endif
 	}
+#endif /* CONFIG_BT_ISO_TX */
 }
 
 static void iso_disconnected(struct bt_iso_chan *chan, uint8_t reason)
@@ -128,19 +116,12 @@ static void iso_disconnected(struct bt_iso_chan *chan, uint8_t reason)
 }
 
 static struct bt_iso_chan_ops iso_ops = {
-	.recv		= iso_recv,
-	.connected	= iso_connected,
-	.disconnected	= iso_disconnected,
+#if (defined(CONFIG_BT_ISO_RX) && (CONFIG_BT_ISO_RX > 0))
+	.recv = iso_recv,
+#endif /* CONFIG_BT_ISO_RX */
+	.connected = iso_connected,
+	.disconnected = iso_disconnected,
 };
-
-#define DEFAULT_IO_QOS \
-{ \
-	.sdu		= 40u, \
-	.phy		= BT_GAP_LE_PHY_2M, \
-	.rtn		= 2u, \
-}
-
-static struct bt_iso_chan_io_qos iso_tx_qos = DEFAULT_IO_QOS;
 
 #if (defined(CONFIG_BT_ISO_UNICAST) && (CONFIG_BT_ISO_UNICAST > 0))
 static uint32_t cis_sdu_interval_us;
@@ -159,12 +140,13 @@ struct bt_iso_chan iso_chan = {
 	.qos = &cis_iso_qos,
 };
 
-NET_BUF_POOL_FIXED_DEFINE(tx_pool, 1, BT_ISO_SDU_BUF_SIZE(CONFIG_BT_ISO_TX_MTU), NULL);
+NET_BUF_POOL_FIXED_DEFINE(tx_pool, 1, BT_ISO_SDU_BUF_SIZE(CONFIG_BT_ISO_TX_MTU),
+			  CONFIG_BT_CONN_TX_USER_DATA_SIZE, NULL);
 
 #if (defined(CONFIG_BT_ISO_CENTRAL) && (CONFIG_BT_ISO_CENTRAL > 0))
 static struct bt_iso_cig *cig;
 
-static long parse_interval(shell_handle_t sh, const char *interval_str)
+static long parse_interval(const struct shell *sh, const char *interval_str)
 {
 	unsigned long interval;
 	int err;
@@ -188,7 +170,7 @@ static long parse_interval(shell_handle_t sh, const char *interval_str)
 	return interval;
 }
 
-static long parse_latency(shell_handle_t sh, const char *latency_str)
+static long parse_latency(const struct shell *sh, const char *latency_str)
 {
 	unsigned long latency;
 	int err;
@@ -212,15 +194,17 @@ static long parse_latency(shell_handle_t sh, const char *latency_str)
 	return latency;
 }
 
-static shell_status_t cmd_cig_create(shell_handle_t shell, int32_t argc, char *argv[])
+
+
+static int cmd_cig_create(const struct shell *sh, size_t argc, char *argv[])
 {
 	int err;
-	struct bt_iso_cig_param param;
+	struct bt_iso_cig_param param = {0};
 	struct bt_iso_chan *chans[CIS_ISO_CHAN_COUNT];
 
 	if (cig != NULL) {
-		shell_error(shell, "Already created");
-		return kStatus_SHELL_Error;
+		shell_error(sh, "Already created");
+		return -ENOEXEC;
 	}
 
 	chans[0] = &iso_chan;
@@ -243,9 +227,9 @@ static shell_status_t cmd_cig_create(shell_handle_t shell, int32_t argc, char *a
 		long interval;
 
 		interval = shell_strtoul(argv[2], 0, &err);
-		interval = parse_interval(shell, argv[2]);
+		interval = parse_interval(sh, argv[2]);
 		if (interval < 0) {
-			return (shell_status_t)interval;
+			return interval;
 		}
 
 		param.c_to_p_interval = interval;
@@ -256,9 +240,9 @@ static shell_status_t cmd_cig_create(shell_handle_t shell, int32_t argc, char *a
 	if (argc > 3) {
 		long interval;
 
-		interval = parse_interval(shell, argv[3]);
+		interval = parse_interval(sh, argv[3]);
 		if (interval < 0) {
-			return (shell_status_t)interval;
+			return interval;
 		}
 
 		param.p_to_c_interval = interval;
@@ -279,15 +263,15 @@ static shell_status_t cmd_cig_create(shell_handle_t shell, int32_t argc, char *a
 
 		packing = shell_strtoul(argv[4], 0, &err);
 		if (err != 0) {
-			shell_error(shell, "Could not parse packing: %d", err);
+			shell_error(sh, "Could not parse packing: %d", err);
 
-			return kStatus_SHELL_Error;
+			return -ENOEXEC;
 		}
 
 		if (packing != BT_ISO_PACKING_SEQUENTIAL && packing != BT_ISO_PACKING_INTERLEAVED) {
-			shell_error(shell, "Invalid packing %lu", packing);
+			shell_error(sh, "Invalid packing %lu", packing);
 
-			return kStatus_SHELL_Error;
+			return -ENOEXEC;
 		}
 
 		param.packing = packing;
@@ -300,15 +284,15 @@ static shell_status_t cmd_cig_create(shell_handle_t shell, int32_t argc, char *a
 
 		framing = shell_strtoul(argv[5], 0, &err);
 		if (err != 0) {
-			shell_error(shell, "Could not parse framing: %d", err);
+			shell_error(sh, "Could not parse framing: %d", err);
 
-			return kStatus_SHELL_Error;
+			return -ENOEXEC;
 		}
 
 		if (framing != BT_ISO_FRAMING_UNFRAMED && framing != BT_ISO_FRAMING_FRAMED) {
-			shell_error(shell, "Invalid framing %lu", framing);
+			shell_error(sh, "Invalid framing %lu", framing);
 
-			return kStatus_SHELL_Error;
+			return -ENOEXEC;
 		}
 
 		param.framing = framing;
@@ -319,10 +303,10 @@ static shell_status_t cmd_cig_create(shell_handle_t shell, int32_t argc, char *a
 	if (argc > 6) {
 		long latency;
 
-		latency = parse_latency(shell, argv[6]);
+		latency = parse_latency(sh, argv[6]);
 
 		if (latency < 0) {
-			return (shell_status_t)latency;
+			return latency;
 		}
 
 		param.c_to_p_latency = latency;
@@ -333,10 +317,10 @@ static shell_status_t cmd_cig_create(shell_handle_t shell, int32_t argc, char *a
 	if (argc > 7) {
 		long latency;
 
-		latency = parse_latency(shell, argv[7]);
+		latency = parse_latency(sh, argv[7]);
 
 		if (latency < 0) {
-			return (shell_status_t)latency;
+			return latency;
 		}
 
 		param.p_to_c_latency = latency;
@@ -349,15 +333,15 @@ static shell_status_t cmd_cig_create(shell_handle_t shell, int32_t argc, char *a
 
 		sdu = shell_strtoul(argv[7], 0, &err);
 		if (err != 0) {
-			shell_error(shell, "Could not parse sdu: %d", err);
+			shell_error(sh, "Could not parse sdu: %d", err);
 
-			return kStatus_SHELL_Error;
+			return -ENOEXEC;
 		}
 
 		if (sdu > BT_ISO_MAX_SDU) {
-			shell_error(shell, "Invalid sdu %lu", sdu);
+			shell_error(sh, "Invalid sdu %lu", sdu);
 
-			return kStatus_SHELL_Error;
+			return -ENOEXEC;
 		}
 
 		if (chans[0]->qos->tx) {
@@ -374,17 +358,17 @@ static shell_status_t cmd_cig_create(shell_handle_t shell, int32_t argc, char *a
 
 		phy = shell_strtoul(argv[8], 0, &err);
 		if (err != 0) {
-			shell_error(shell, "Could not parse phy: %d", err);
+			shell_error(sh, "Could not parse phy: %d", err);
 
-			return kStatus_SHELL_Error;
+			return -ENOEXEC;
 		}
 
 		if (phy != BT_GAP_LE_PHY_1M &&
 		    phy != BT_GAP_LE_PHY_2M &&
 		    phy != BT_GAP_LE_PHY_CODED) {
-			shell_error(shell, "Invalid phy %lu", phy);
+			shell_error(sh, "Invalid phy %lu", phy);
 
-			return kStatus_SHELL_Error;
+			return -ENOEXEC;
 		}
 
 		if (chans[0]->qos->tx) {
@@ -401,15 +385,15 @@ static shell_status_t cmd_cig_create(shell_handle_t shell, int32_t argc, char *a
 
 		rtn = shell_strtoul(argv[9], 0, &err);
 		if (err != 0) {
-			shell_error(shell, "Could not parse rtn: %d", err);
+			shell_error(sh, "Could not parse rtn: %d", err);
 
-			return kStatus_SHELL_Error;
+			return -ENOEXEC;
 		}
 
 		if (rtn > BT_ISO_CONNECTED_RTN_MAX) {
-			shell_error(shell, "Invalid rtn %lu", rtn);
+			shell_error(sh, "Invalid rtn %lu", rtn);
 
-			return kStatus_SHELL_Error;
+			return -ENOEXEC;
 		}
 
 		if (chans[0]->qos->tx) {
@@ -427,37 +411,37 @@ static shell_status_t cmd_cig_create(shell_handle_t shell, int32_t argc, char *a
 
 	err = bt_iso_cig_create(&param, &cig);
 	if (err) {
-		shell_error(shell, "Unable to create CIG (err %d)", err);
-		return kStatus_SHELL_Success;
+		shell_error(sh, "Unable to create CIG (err %d)", err);
+		return 0;
 	}
 
-	shell_print(shell, "CIG created");
+	shell_print(sh, "CIG created");
 
-	return kStatus_SHELL_Success;
+	return 0;
 }
 
-static shell_status_t cmd_cig_term(shell_handle_t shell, int32_t argc, char *argv[])
+static int cmd_cig_term(const struct shell *sh, size_t argc, char *argv[])
 {
 	int err;
 
 	if (cig == NULL) {
-		shell_error(shell, "CIG not created");
-		return kStatus_SHELL_Error;
+		shell_error(sh, "CIG not created");
+		return -ENOEXEC;
 	}
 
 	err = bt_iso_cig_terminate(cig);
 	if (err) {
-		shell_error(shell, "Unable to terminate CIG (err %d)", err);
-		return kStatus_SHELL_Success;
+		shell_error(sh, "Unable to terminate CIG (err %d)", err);
+		return 0;
 	}
 
-	shell_print(shell, "CIG terminated");
+	shell_print(sh, "CIG terminated");
 	cig = NULL;
 
-	return kStatus_SHELL_Success;
+	return 0;
 }
 
-static shell_status_t cmd_connect(shell_handle_t shell, int32_t argc, char *argv[])
+static int cmd_connect(const struct shell *sh, size_t argc, char *argv[])
 {
 	struct bt_iso_connect_param connect_param = {
 		.acl = default_conn,
@@ -466,8 +450,8 @@ static shell_status_t cmd_connect(shell_handle_t shell, int32_t argc, char *argv
 	int err;
 
 	if (iso_chan.iso == NULL) {
-		shell_error(shell, "ISO channel not initialized in a CIG");
-		return kStatus_SHELL_Success;
+		shell_error(sh, "ISO channel not initialized in a CIG");
+		return 0;
 	}
 
 #if (defined(CONFIG_BT_SMP) && (CONFIG_BT_SMP > 0))
@@ -478,13 +462,13 @@ static shell_status_t cmd_connect(shell_handle_t shell, int32_t argc, char *argv
 
 	err = bt_iso_chan_connect(&connect_param, 1);
 	if (err) {
-		shell_error(shell, "Unable to connect (err %d)", err);
-		return kStatus_SHELL_Success;
+		shell_error(sh, "Unable to connect (err %d)", err);
+		return 0;
 	}
 
-	shell_print(shell, "ISO Connect pending...");
+	shell_print(sh, "ISO Connect pending...");
 
-	return kStatus_SHELL_Success;
+	return 0;
 }
 #endif /* CONFIG_BT_ISO_CENTRAL */
 
@@ -523,7 +507,7 @@ struct bt_iso_server iso_server = {
 	.accept = iso_accept,
 };
 
-static shell_status_t cmd_listen(shell_handle_t shell, int32_t argc, char *argv[])
+static int cmd_listen(const struct shell *sh, size_t argc, char *argv[])
 {
 	int err;
 	static struct bt_iso_chan_io_qos *tx_qos, *rx_qos;
@@ -538,8 +522,8 @@ static shell_status_t cmd_listen(shell_handle_t shell, int32_t argc, char *argv[
 		tx_qos = &iso_tx_qos;
 		rx_qos = &iso_rx_qos;
 	} else {
-		shell_error(shell, "Invalid argument - use tx, rx or txrx");
-		return kStatus_SHELL_Error;
+		shell_error(sh, "Invalid argument - use tx, rx or txrx");
+		return -ENOEXEC;
 	}
 
 #if (defined(CONFIG_BT_SMP) && (CONFIG_BT_SMP > 0))
@@ -550,19 +534,19 @@ static shell_status_t cmd_listen(shell_handle_t shell, int32_t argc, char *argv[
 
 	err = bt_iso_server_register(&iso_server);
 	if (err) {
-		shell_error(shell, "Unable to register ISO cap (err %d)",
+		shell_error(sh, "Unable to register ISO cap (err %d)",
 			    err);
-		return (shell_status_t)err;
+		return err;
 	}
 
 	/* Setup peripheral iso data direction only if register is success */
 	iso_chan.qos->tx = tx_qos;
 	iso_chan.qos->rx = rx_qos;
-	return (shell_status_t)err;
+	return err;
 }
 #endif /* CONFIG_BT_ISO_PERIPHERAL */
 
-static shell_status_t cmd_send(shell_handle_t shell, int32_t argc, char *argv[])
+static int cmd_send(const struct shell *sh, size_t argc, char *argv[])
 {
 	static uint8_t buf_data[CONFIG_BT_ISO_TX_MTU] = {
 		[0 ... (CONFIG_BT_ISO_TX_MTU - 1)] = 0xff
@@ -575,20 +559,20 @@ static shell_status_t cmd_send(shell_handle_t shell, int32_t argc, char *argv[])
 	if (argc > 1) {
 		count = shell_strtoul(argv[1], 0, &ret);
 		if (ret != 0) {
-			shell_error(shell, "Could not parse count: %d", ret);
+			shell_error(sh, "Could not parse count: %d", ret);
 
-			return kStatus_SHELL_Error;
+			return -ENOEXEC;
 		}
 	}
 
 	if (!iso_chan.iso) {
-		shell_error(shell, "Not bound");
-		return kStatus_SHELL_Success;
+		shell_error(sh, "Not bound");
+		return 0;
 	}
 
 	if (!iso_chan.qos->tx) {
-		shell_error(shell, "Transmission QoS disabled");
-		return kStatus_SHELL_Error;
+		shell_error(sh, "Transmission QoS disabled");
+		return -ENOEXEC;
 	}
 
 	len = MIN(iso_chan.qos->tx->sdu, CONFIG_BT_ISO_TX_MTU);
@@ -596,64 +580,65 @@ static shell_status_t cmd_send(shell_handle_t shell, int32_t argc, char *argv[])
 				  cis_sdu_interval_us);
 
 	while (count--) {
-		buf = net_buf_alloc(&tx_pool, osaWaitForever_c);
+		buf = net_buf_alloc(&tx_pool, TX_BUF_TIMEOUT);
 		if (buf == NULL) {
-			shell_error(shell, "Failed to get buffer...");
-			return kStatus_SHELL_Error;
+			shell_error(sh, "Failed to get buffer...");
+			return -ENOEXEC;
 		}
 
 		net_buf_reserve(buf, BT_ISO_CHAN_SEND_RESERVE);
 
 		net_buf_add_mem(buf, buf_data, len);
-		shell_info(shell, "send: %d bytes of data with PSN %u", len, cis_sn_last);
+		shell_info(sh, "send: %d bytes of data with PSN %u", len, cis_sn_last);
 		ret = bt_iso_chan_send(&iso_chan, buf, cis_sn_last);
 		if (ret < 0) {
-			shell_print(shell, "Unable to send: %d", -ret);
+			shell_print(sh, "Unable to send: %d", -ret);
 			net_buf_unref(buf);
-			return kStatus_SHELL_Error;
+			return -ENOEXEC;
 		}
 	}
 
-	shell_print(shell, "ISO sending...");
+	shell_print(sh, "ISO sending...");
 
-	return kStatus_SHELL_Success;
+	return 0;
 }
 
-static shell_status_t cmd_disconnect(shell_handle_t shell, int32_t argc, char *argv[])
+static int cmd_disconnect(const struct shell *sh, size_t argc,
+			      char *argv[])
 {
 	int err;
 
 	err = bt_iso_chan_disconnect(&iso_chan);
 	if (err) {
-		shell_error(shell, "Unable to disconnect (err %d)", err);
-		return kStatus_SHELL_Success;
+		shell_error(sh, "Unable to disconnect (err %d)", err);
+		return 0;
 	}
 
-	shell_print(shell, "ISO Disconnect pending...");
+	shell_print(sh, "ISO Disconnect pending...");
 
-	return kStatus_SHELL_Success;
+	return 0;
 }
 
-static shell_status_t cmd_tx_sync_read_cis(shell_handle_t shell, int32_t argc, char *argv[])
+static int cmd_tx_sync_read_cis(const struct shell *sh, size_t argc, char *argv[])
 {
 	struct bt_iso_tx_info tx_info;
 	int err;
 
 	if (!iso_chan.iso) {
-		shell_error(shell, "Not bound");
-		return kStatus_SHELL_Success;
+		shell_error(sh, "Not bound");
+		return 0;
 	}
 
 	err = bt_iso_chan_get_tx_sync(&iso_chan, &tx_info);
 	if (err) {
-		shell_error(shell, "Unable to read sync info (err %d)", err);
-		return kStatus_SHELL_Success;
+		shell_error(sh, "Unable to read sync info (err %d)", err);
+		return 0;
 	}
 
-	shell_print(shell, "TX sync info:\n\tTimestamp=%u\n\tOffset=%u\n\tSequence number=%u",
+	shell_print(sh, "TX sync info:\n\tTimestamp=%u\n\tOffset=%u\n\tSequence number=%u",
 		tx_info.ts, tx_info.offset, tx_info.seq_num);
 
-	return kStatus_SHELL_Success;
+	return 0;
 }
 #endif /* CONFIG_BT_ISO_UNICAST */
 
@@ -674,9 +659,10 @@ static struct bt_iso_chan *bis_channels[BIS_ISO_CHAN_COUNT] = { &bis_iso_chan };
 static uint32_t bis_sdu_interval_us;
 
 NET_BUF_POOL_FIXED_DEFINE(bis_tx_pool, BIS_ISO_CHAN_COUNT,
-			  BT_ISO_SDU_BUF_SIZE(CONFIG_BT_ISO_TX_MTU), NULL);
+			  BT_ISO_SDU_BUF_SIZE(CONFIG_BT_ISO_TX_MTU),
+			  CONFIG_BT_CONN_TX_USER_DATA_SIZE, NULL);
 
-static shell_status_t cmd_broadcast(shell_handle_t shell, int32_t argc, char *argv[])
+static int cmd_broadcast(const struct shell *sh, size_t argc, char *argv[])
 {
 	static uint8_t buf_data[CONFIG_BT_ISO_TX_MTU] = {
 		[0 ... (CONFIG_BT_ISO_TX_MTU - 1)] = 0xff
@@ -689,20 +675,20 @@ static shell_status_t cmd_broadcast(shell_handle_t shell, int32_t argc, char *ar
 	if (argc > 1) {
 		count = shell_strtoul(argv[1], 0, &ret);
 		if (ret != 0) {
-			shell_error(shell, "Could not parse count: %d", ret);
+			shell_error(sh, "Could not parse count: %d", ret);
 
-			return kStatus_SHELL_Error;
+			return -ENOEXEC;
 		}
 	}
 
 	if (!bis_iso_chan.iso) {
-		shell_error(shell, "BIG not created");
-		return kStatus_SHELL_Error;
+		shell_error(sh, "BIG not created");
+		return -ENOEXEC;
 	}
 
 	if (!bis_iso_qos.tx) {
-		shell_error(shell, "BIG not setup as broadcaster");
-		return kStatus_SHELL_Error;
+		shell_error(sh, "BIG not setup as broadcaster");
+		return -ENOEXEC;
 	}
 
 	len = MIN(bis_iso_chan.qos->tx->sdu, CONFIG_BT_ISO_TX_MTU);
@@ -710,38 +696,38 @@ static shell_status_t cmd_broadcast(shell_handle_t shell, int32_t argc, char *ar
 				  bis_sdu_interval_us);
 
 	while (count--) {
-		buf = net_buf_alloc(&bis_tx_pool, osaWaitForever_c);
+		buf = net_buf_alloc(&bis_tx_pool, TX_BUF_TIMEOUT);
 		if (buf == NULL) {
-			shell_error(shell, "Failed to get buffer...");
-			return kStatus_SHELL_Error;
+			shell_error(sh, "Failed to get buffer...");
+			return -ENOEXEC;
 		}
 
 		net_buf_reserve(buf, BT_ISO_CHAN_SEND_RESERVE);
 
 		net_buf_add_mem(buf, buf_data, len);
-		shell_info(shell, "send: %d bytes of data with PSN %u", len, bis_sn_last);
+		shell_info(sh, "send: %d bytes of data with PSN %u", len, bis_sn_last);
 		ret = bt_iso_chan_send(&bis_iso_chan, buf, bis_sn_last);
 		if (ret < 0) {
-			shell_print(shell, "Unable to broadcast: %d", -ret);
+			shell_print(sh, "Unable to broadcast: %d", -ret);
 			net_buf_unref(buf);
-			return kStatus_SHELL_Error;
+			return -ENOEXEC;
 		}
 	}
 
-	shell_print(shell, "ISO broadcasting...");
+	shell_print(sh, "ISO broadcasting...");
 
-	return kStatus_SHELL_Success;
+	return 0;
 }
 
-static shell_status_t cmd_big_create(shell_handle_t shell, int32_t argc, char *argv[])
+static int cmd_big_create(const struct shell *sh, size_t argc, char *argv[])
 {
 	int err;
 	struct bt_iso_big_create_param param = {0};
 	struct bt_le_ext_adv *adv = adv_sets[selected_adv];
 
 	if (!adv) {
-		shell_error(shell, "No (periodic) advertising set selected");
-		return kStatus_SHELL_Error;
+		shell_error(sh, "No (periodic) advertising set selected");
+		return -ENOEXEC;
 	}
 
 	/* TODO: Allow setting QOS from shell */
@@ -763,13 +749,13 @@ static shell_status_t cmd_big_create(shell_handle_t shell, int32_t argc, char *a
 			uint8_t bcode_len = hex2bin(argv[1], strlen(argv[1]), param.bcode,
 						    sizeof(param.bcode));
 			if (!bcode_len || bcode_len != sizeof(param.bcode)) {
-				shell_error(shell, "Invalid Broadcast Code Length");
-				return kStatus_SHELL_Error;
+				shell_error(sh, "Invalid Broadcast Code Length");
+				return -ENOEXEC;
 			}
 			param.encryption = true;
 		} else {
-			shell_help(shell);
-			return kStatus_SHELL_Error;
+			shell_help(sh);
+			return SHELL_CMD_HELP_PRINTED;
 		}
 	} else {
 		memset(param.bcode, 0, sizeof(param.bcode));
@@ -777,40 +763,40 @@ static shell_status_t cmd_big_create(shell_handle_t shell, int32_t argc, char *a
 
 	err = bt_iso_big_create(adv, &param, &big);
 	if (err) {
-		shell_error(shell, "Unable to create BIG (err %d)", err);
-		return kStatus_SHELL_Success;
+		shell_error(sh, "Unable to create BIG (err %d)", err);
+		return 0;
 	}
 
-	shell_print(shell, "BIG created");
+	shell_print(sh, "BIG created");
 
-	return kStatus_SHELL_Success;
+	return 0;
 }
 
-static shell_status_t cmd_tx_sync_read_bis(shell_handle_t shell, int32_t argc, char *argv[])
+static int cmd_tx_sync_read_bis(const struct shell *sh, size_t argc, char *argv[])
 {
 	struct bt_iso_tx_info tx_info;
 	int err;
 
 	if (!bis_iso_chan.iso) {
-		shell_error(shell, "BIG not created");
-		return kStatus_SHELL_Error;
+		shell_error(sh, "BIG not created");
+		return -ENOEXEC;
 	}
 
 	err = bt_iso_chan_get_tx_sync(&bis_iso_chan, &tx_info);
 	if (err) {
-		shell_error(shell, "Unable to read sync info (err %d)", err);
-		return kStatus_SHELL_Success;
+		shell_error(sh, "Unable to read sync info (err %d)", err);
+		return 0;
 	}
 
-	shell_print(shell, "TX sync info:\n\tTimestamp=%u\n\tOffset=%u\n\tSequence number=%u",
+	shell_print(sh, "TX sync info:\n\tTimestamp=%u\n\tOffset=%u\n\tSequence number=%u",
 		tx_info.ts, tx_info.offset, tx_info.seq_num);
 
-	return kStatus_SHELL_Success;
+	return 0;
 }
 #endif /* CONFIG_BT_ISO_BROADCASTER */
 
 #if (defined(CONFIG_BT_ISO_SYNC_RECEIVER) && (CONFIG_BT_ISO_SYNC_RECEIVER > 0))
-static shell_status_t cmd_big_sync(shell_handle_t shell, int32_t argc, char *argv[])
+static int cmd_big_sync(const struct shell *sh, size_t argc, char *argv[])
 {
 	int err;
 	/* TODO: Add support to select which PA sync to BIG sync to */
@@ -819,21 +805,21 @@ static shell_status_t cmd_big_sync(shell_handle_t shell, int32_t argc, char *arg
 	unsigned long bis_bitfield;
 
 	if (!pa_sync) {
-		shell_error(shell, "No PA sync selected");
-		return kStatus_SHELL_Error;
+		shell_error(sh, "No PA sync selected");
+		return -ENOEXEC;
 	}
 
 	bis_bitfield = shell_strtoul(argv[1], 0, &err);
 	if (err != 0) {
-		shell_error(shell, "Could not parse bis_bitfield: %d", err);
+		shell_error(sh, "Could not parse bis_bitfield: %d", err);
 
-		return kStatus_SHELL_Error;
+		return -ENOEXEC;
 	}
 
 	if (bis_bitfield > BIT_MASK(BT_ISO_BIS_INDEX_MAX)) {
-		shell_error(shell, "Invalid bis_bitfield: %lu", bis_bitfield);
+		shell_error(sh, "Invalid bis_bitfield: %lu", bis_bitfield);
 
-		return kStatus_SHELL_Error;
+		return -ENOEXEC;
 	}
 
 	bis_iso_qos.tx = NULL;
@@ -851,23 +837,23 @@ static shell_status_t cmd_big_sync(shell_handle_t shell, int32_t argc, char *arg
 
 			i++;
 			if (i == argc) {
-				shell_help(shell);
-				return kStatus_SHELL_Error;
+				shell_help(sh);
+				return SHELL_CMD_HELP_PRINTED;
 			}
 
 			mse = shell_strtoul(argv[i], 0, &err);
 			if (err != 0) {
-				shell_error(shell, "Could not parse mse: %d", err);
+				shell_error(sh, "Could not parse mse: %d", err);
 
-				return kStatus_SHELL_Error;
+				return -ENOEXEC;
 			}
 
 			if (!IN_RANGE(mse,
 				      BT_ISO_SYNC_MSE_MIN,
 				      BT_ISO_SYNC_MSE_MAX)) {
-				shell_error(shell, "Invalid mse %lu", mse);
+				shell_error(sh, "Invalid mse %lu", mse);
 
-				return kStatus_SHELL_Error;
+				return -ENOEXEC;
 			}
 
 			param.mse = mse;
@@ -876,26 +862,26 @@ static shell_status_t cmd_big_sync(shell_handle_t shell, int32_t argc, char *arg
 
 			i++;
 			if (i == argc) {
-				shell_help(shell);
-				return kStatus_SHELL_Error;
+				shell_help(sh);
+				return SHELL_CMD_HELP_PRINTED;
 			}
 
 			sync_timeout = shell_strtoul(argv[i], 0, &err);
 			if (err != 0) {
-				shell_error(shell,
+				shell_error(sh,
 					    "Could not parse sync_timeout: %d",
 					    err);
 
-				return kStatus_SHELL_Error;
+				return -ENOEXEC;
 			}
 
 			if (!IN_RANGE(sync_timeout,
 				      BT_ISO_SYNC_MSE_MIN,
 				      BT_ISO_SYNC_MSE_MAX)) {
-				shell_error(shell, "Invalid sync_timeout %lu",
+				shell_error(sh, "Invalid sync_timeout %lu",
 					    sync_timeout);
 
-				return kStatus_SHELL_Error;
+				return -ENOEXEC;
 			}
 
 			param.sync_timeout = sync_timeout;
@@ -904,8 +890,8 @@ static shell_status_t cmd_big_sync(shell_handle_t shell, int32_t argc, char *arg
 
 			i++;
 			if (i == argc) {
-				shell_help(shell);
-				return kStatus_SHELL_Error;
+				shell_help(sh);
+				return SHELL_CMD_HELP_PRINTED;
 			}
 
 			memset(param.bcode, 0, sizeof(param.bcode));
@@ -913,50 +899,51 @@ static shell_status_t cmd_big_sync(shell_handle_t shell, int32_t argc, char *arg
 					    sizeof(param.bcode));
 
 			if (bcode_len == 0) {
-				shell_error(shell, "Invalid Broadcast Code");
+				shell_error(sh, "Invalid Broadcast Code");
 
-				return kStatus_SHELL_Error;
+				return -ENOEXEC;
 			}
 
 			param.encryption = true;
 		} else {
 			shell_help(sh);
-			return kStatus_SHELL_Error;
+			return SHELL_CMD_HELP_PRINTED;
 		}
 	}
 
 	err = bt_iso_big_sync(pa_sync, &param, &big);
 	if (err) {
-		shell_error(shell, "Unable to sync to BIG (err %d)", err);
-		return kStatus_SHELL_Success;
+		shell_error(sh, "Unable to sync to BIG (err %d)", err);
+		return 0;
 	}
 
-	shell_print(shell, "BIG syncing");
+	shell_print(sh, "BIG syncing");
 
-	return kStatus_SHELL_Success;
+	return 0;
 }
 #endif /* CONFIG_BT_ISO_SYNC_RECEIVER */
 
-static shell_status_t cmd_big_term(shell_handle_t shell, int32_t argc, char *argv[])
+static int cmd_big_term(const struct shell *sh, size_t argc, char *argv[])
 {
 	int err;
 
 	err = bt_iso_big_terminate(big);
 	if (err) {
-		shell_error(shell, "Unable to terminate BIG (err %d)", err);
-		return kStatus_SHELL_Success;
+		shell_error(sh, "Unable to terminate BIG (err %d)", err);
+		return 0;
 	}
 
-	shell_print(shell, "BIG terminated");
+	shell_print(sh, "BIG terminated");
 
-	return kStatus_SHELL_Success;
+	return 0;
 }
 #endif /* CONFIG_BT_ISO_BROADCAST*/
 
 SHELL_STATIC_SUBCMD_SET_CREATE(iso_cmds,
 #if (defined(CONFIG_BT_ISO_UNICAST) && (CONFIG_BT_ISO_UNICAST > 0))
 #if (defined(CONFIG_BT_ISO_CENTRAL) && (CONFIG_BT_ISO_CENTRAL > 0))
-	SHELL_CMD_ARG(cig_create, NULL, "[dir=tx,rx,txrx] [C to P interval] [P to C interval] "
+	SHELL_CMD_ARG(cig_create, NULL,
+		      "[dir=tx,rx,txrx] [C to P interval] [P to C interval] "
 		      "[packing] [framing] [C to P latency] [P to C latency] [sdu] [phy] [rtn]",
 		      cmd_cig_create, 1, 10),
 	SHELL_CMD_ARG(cig_term, NULL, "Terminate the CIG", cmd_cig_term, 1, 0),
@@ -973,10 +960,10 @@ SHELL_STATIC_SUBCMD_SET_CREATE(iso_cmds,
 	SHELL_CMD_ARG(listen, NULL, "<dir=tx,rx,txrx>", cmd_listen, 2, 0),
 #endif /* CONFIG_BT_SMP */
 #endif /* CONFIG_BT_ISO_PERIPHERAL */
-	SHELL_CMD_ARG(send, NULL, "Send to ISO Channel [count]",
-		      cmd_send, 1, 1),
-	SHELL_CMD_ARG(disconnect, NULL, "Disconnect ISO Channel",
-		      cmd_disconnect, 1, 0),
+#if (defined(CONFIG_BT_ISO_TX) && (CONFIG_BT_ISO_TX > 0))
+	SHELL_CMD_ARG(send, NULL, "Send to ISO Channel [count]", cmd_send, 1, 1),
+#endif /* CONFIG_BT_ISO_TX */
+	SHELL_CMD_ARG(disconnect, NULL, "Disconnect ISO Channel", cmd_disconnect, 1, 0),
 	SHELL_CMD_ARG(tx_sync_read_cis, NULL, "Read CIS TX sync info", cmd_tx_sync_read_cis, 1, 0),
 #endif /* CONFIG_BT_ISO_UNICAST */
 #if (defined(CONFIG_BT_ISO_BROADCASTER) && (CONFIG_BT_ISO_BROADCASTER > 0))
@@ -986,8 +973,10 @@ SHELL_STATIC_SUBCMD_SET_CREATE(iso_cmds,
 	SHELL_CMD_ARG(tx_sync_read_bis, NULL, "Read BIS TX sync info", cmd_tx_sync_read_bis, 1, 0),
 #endif /* CONFIG_BT_ISO_BROADCASTER */
 #if (defined(CONFIG_BT_ISO_SYNC_RECEIVER) && (CONFIG_BT_ISO_SYNC_RECEIVER > 0))
-	SHELL_CMD_ARG(sync-big, NULL, "Synchronize to a BIG as a receiver <BIS bitfield> [mse] "
-		      "[timeout] [enc <broadcast code>]", cmd_big_sync, 2, 4),
+	SHELL_CMD_ARG(sync-big, NULL,
+		      "Synchronize to a BIG as a receiver <BIS bitfield> [mse] "
+		      "[timeout] [enc <broadcast code>]",
+		      cmd_big_sync, 2, 4),
 #endif /* CONFIG_BT_ISO_SYNC_RECEIVER */
 #if (defined(CONFIG_BT_ISO_BROADCAST) && (CONFIG_BT_ISO_BROADCAST > 0))
 	SHELL_CMD_ARG(term-big, NULL, "Terminate a BIG", cmd_big_term, 1, 0),
@@ -995,19 +984,20 @@ SHELL_STATIC_SUBCMD_SET_CREATE(iso_cmds,
 	SHELL_SUBCMD_SET_END
 );
 
-static shell_status_t cmd_iso(shell_handle_t shell, int32_t argc, char *argv[])
+static int cmd_iso(const struct shell *sh, size_t argc, char **argv)
 {
-	if (argc > 1) {
-		shell_error(shell, "%s unknown parameter: %s",
-			    argv[0], argv[1]);
-	} else {
-		shell_error(shell, "%s Missing subcommand", argv[0]);
+	if (argc == 1) {
+		shell_help(sh);
+
+		return SHELL_CMD_HELP_PRINTED;
 	}
 
-	return kStatus_SHELL_Error;
+	shell_error(sh, "%s unknown parameter: %s", argv[0], argv[1]);
+
+	return -EINVAL;
 }
 
-SHELL_CMD_REGISTER(iso, iso_cmds, "Bluetooth ISO shell commands",
+SHELL_CMD_ARG_REGISTER(iso, &iso_cmds, "Bluetooth ISO shell commands",
 		       cmd_iso, 1, 1);
 
 void bt_ShellIsoInit(shell_handle_t shell)
@@ -1018,4 +1008,4 @@ void bt_ShellIsoInit(shell_handle_t shell)
     }
 }
 
-#endif /*  */
+#endif /* CONFIG_BT_ISO */

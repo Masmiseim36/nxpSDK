@@ -46,12 +46,11 @@
   @param[in]     pSrcReal    points to real input vector
   @param[out]    pCmplxDst   points to complex output vector
   @param[in]     numSamples  number of samples in each vector
-  @return        none
  */
 
 #if defined(ARM_MATH_MVE_FLOAT16) && !defined(ARM_MATH_AUTOVECTORIZE)
 
-void arm_cmplx_mult_real_f16(
+ARM_DSP_ATTRIBUTE void arm_cmplx_mult_real_f16(
   const float16_t * pSrcCmplx,
   const float16_t * pSrcReal,
         float16_t * pCmplxDst,
@@ -98,7 +97,7 @@ void arm_cmplx_mult_real_f16(
 }
 
 #else
-void arm_cmplx_mult_real_f16(
+ARM_DSP_ATTRIBUTE void arm_cmplx_mult_real_f16(
   const float16_t * pSrcCmplx,
   const float16_t * pSrcReal,
         float16_t * pCmplxDst,

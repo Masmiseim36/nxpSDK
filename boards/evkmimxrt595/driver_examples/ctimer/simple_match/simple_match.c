@@ -11,17 +11,13 @@
  ******************************************************************************/
 
 #include "fsl_debug_console.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 #include "fsl_ctimer.h"
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define CTIMER          CTIMER2         /* Timer 2 */
-#define CTIMER_MAT_OUT  kCTIMER_Match_0 /* Match output 0 */
-#define CTIMER_CLK_FREQ CLOCK_GetCtimerClkFreq(2)
 
 /*******************************************************************************
  * Prototypes
@@ -44,12 +40,7 @@ int main(void)
     ctimer_match_config_t matchConfig;
 
     /* Init hardware*/
-    /* Use MAIN clock for the Ctimer2 */
-    CLOCK_AttachClk(kMAIN_CLK_to_CTIMER2);
-
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
 
 #if defined(BOARD_HAS_NO_CTIMER_OUTPUT_PIN_CONNECTED_TO_LED)
     LED_RED1_INIT(LOGIC_LED_OFF);

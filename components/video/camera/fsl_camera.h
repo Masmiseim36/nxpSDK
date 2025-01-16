@@ -1,6 +1,5 @@
 /*
  * Copyright  2017 NXP
- * All rights reserved.
  *
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -47,6 +46,7 @@ typedef struct _camera_config
     uint8_t framePerSec;                 /*!< Frame per second. */
     uint8_t mipiChannel;                 /*!< MIPI virtual channel. */
     uint8_t csiLanes;                    /*!< MIPI CSI data lanes number. */
+    uint32_t fwaddress;                  /*!< Saved FW memory address. */
 } camera_config_t;
 
 #endif /* _FSL_CAMERA_H_ */

@@ -45,10 +45,9 @@
   @param[in]     nRows     number of rows in the matrix
   @param[in]     nColumns  number of columns in the matrix
   @param[in]     pData     points to the matrix data array
-  @return        none
  */
 
-void arm_mat_init_q31(
+ARM_DSP_ATTRIBUTE void arm_mat_init_q31(
   arm_matrix_instance_q31 * S,
   uint16_t nRows,
   uint16_t nColumns,

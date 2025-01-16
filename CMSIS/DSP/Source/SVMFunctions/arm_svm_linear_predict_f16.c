@@ -45,14 +45,13 @@
  * @param[in]    S          Pointer to an instance of the linear SVM structure.
  * @param[in]    in         Pointer to input vector
  * @param[out]   pResult    Decision value
- * @return none.
  *
  */
 #if defined(ARM_MATH_MVE_FLOAT16) && !defined(ARM_MATH_AUTOVECTORIZE)
 
 #include "arm_helium_utils.h"
 
-void arm_svm_linear_predict_f16(
+ARM_DSP_ATTRIBUTE void arm_svm_linear_predict_f16(
     const arm_svm_linear_instance_f16 *S,
     const float16_t * in,
     int32_t * pResult)
@@ -283,7 +282,7 @@ void arm_svm_linear_predict_f16(
 }
 
 #else
-void arm_svm_linear_predict_f16(
+ARM_DSP_ATTRIBUTE void arm_svm_linear_predict_f16(
     const arm_svm_linear_instance_f16 *S,
     const float16_t * in,
     int32_t * pResult)

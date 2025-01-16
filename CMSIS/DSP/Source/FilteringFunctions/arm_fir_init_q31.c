@@ -40,11 +40,10 @@
 /**
   @brief         Initialization function for the Q31 FIR filter.
   @param[in,out] S          points to an instance of the Q31 FIR filter structure
-  @param[in] 	 numTaps    number of filter coefficients in the filter
+  @param[in]     numTaps    number of filter coefficients in the filter
   @param[in]     pCoeffs    points to the filter coefficients buffer
   @param[in]     pState     points to the state buffer
   @param[in]     blockSize  number of samples processed
-  @return        none
 
   @par           Details
                    <code>pCoeffs</code> points to the array of filter coefficients stored in time reversed order:
@@ -71,7 +70,7 @@
   
  */
 
-void arm_fir_init_q31(
+ARM_DSP_ATTRIBUTE void arm_fir_init_q31(
         arm_fir_instance_q31 * S,
         uint16_t numTaps,
   const q31_t * pCoeffs,
@@ -86,7 +85,7 @@ void arm_fir_init_q31(
 
   /* Clear state buffer. The size is always (blockSize + numTaps - 1) */
   #if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE)
-  memset(pState, 0, (numTaps + (blockSize - 1U) + 2*ROUND_UP(blockSize, 4)) * sizeof(q31_t));
+  memset(pState, 0, (numTaps + (blockSize - 1U) + 2*ARM_ROUND_UP(blockSize, 4)) * sizeof(q31_t));
   #else
   memset(pState, 0, (numTaps + (blockSize - 1U)) * sizeof(q31_t));
   #endif

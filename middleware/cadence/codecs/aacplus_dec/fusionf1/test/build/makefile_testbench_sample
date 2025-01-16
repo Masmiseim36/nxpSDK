@@ -1,0 +1,279 @@
+#
+# Copyright (c) 2006-2022 Cadence Design Systems, Inc.
+# 
+# Permission is hereby granted, free of charge, to any person obtaining
+# a copy of this software and associated documentation files (the
+# "Software"), to deal in the Software without restriction, including
+# without limitation the rights to use, copy, modify, merge, publish,
+# distribute, sublicense, and/or sell copies of the Software, and to
+# permit persons to whom the Software is furnished to do so, subject to
+# the following conditions:
+# 
+# The above copyright notice and this permission notice shall be included
+# in all copies or substantial portions of the Software.
+# 
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+# IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+# CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+# TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+# SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+#
+
+# Top-level makefile for binary and source licensees to generate
+# an example test program for an AAC decoder library.
+
+# Certain codecs cannot now be built with the native compiler (gcc)
+# Note: there's also a copy of this code in makefile_aacmchplus_dec_lib
+
+LINK_LOAS = 0
+XTCORE =
+
+ifeq "$(CPU)" "gcc"
+CXX = g++ $(XTCORE)
+CC = g++ $(XTCORE)
+AR = ar $(XTCORE)
+RM_R = rm -rf
+MKPATH = mkdir -p
+else
+CC = xt-clang $(XTCORE)
+ISS = xt-run $(XTCORE)
+CONFIGDIR := $(shell $(ISS) $(XTCORE) --show-config=config)
+include $(CONFIGDIR)/misc/hostenv.mk
+endif
+
+ifeq ($(DEBUG), 1)
+OPT = -O0 -g
+else
+OPT = -Os
+endif
+
+ifeq "$(CPU)" "gcc"
+CFLAGS = $(OPT) -Wall  -D__XTENSA_HIFI2__ $(EXTRA_CFLAGS) -DWAV_HEADER -DCSTUB_HIFI2 -DEXT_LOAS_SUPPORT
+CFLAGS += -DCSTUB_HIFI2 -malign-double
+else
+CFLAGS = $(OPT) -Wall  -mlongcalls -D__XTENSA_HIFI2__ $(EXTRA_CFLAGS) -DWAV_HEADER
+endif
+
+LDFLAGS = $(EXTRA_LDFLAGS)
+
+ifeq ($(PROFILE),1)
+  CFLAGS += -DPROFILE=1
+endif
+
+ifeq ($(WRITE_THROUGH),1)
+  LDFLAGS += \
+	-Wl,--defsym,_memmap_cacheattr_reset=0 \
+	-Wl,--defsym,_memmap_cacheattr_reset=_memmap_cacheattr_wt_trapnull
+endif
+
+INCLUDE = -I$(ROOTDIR)/include 
+
+ROOTDIR = ../..
+OBJDIR = objs
+
+ifeq "$(CPU)" "gcc"
+OBJS_CSTUB = $(OBJDIR)/cstub-DC_330HiFi_syn.o
+endif
+
+OBJS = \
+	xa_aac_dec_error_handler.o \
+	xa_aac_dec_sample_testbench.o
+
+OBJS_OBJS = $(addprefix $(OBJDIR)/,$(OBJS))
+
+AACMCHPLUSV2LIB = $(ROOTDIR)/lib/xa_aacmchplus_v2_dec.a
+AACMCHPLUSV2LIBL = $(ROOTDIR)/lib/xa_aacmchplus_v2_loas_dec.a
+
+AACMCHPLUSV2BIN = xa_aacmchplus_v2_dec_test
+AACMCHPLUSV2LOASBIN = xa_aacmchplus_v2_loas_dec_test
+
+ifeq ($(LINK_LOAS), 1)
+AACMCHPLUSLIB = $(ROOTDIR)/lib/xa_aacmchplus_loas_dec.a
+AACMCHLIB = $(ROOTDIR)/lib/xa_aacmch_loas_dec.a
+AACPLUSV2LIB = $(ROOTDIR)/lib/xa_aacplus_v2_loas_dec.a
+AACPLUSLIB = $(ROOTDIR)/lib/xa_aacplus_loas_dec.a
+AACLIB = $(ROOTDIR)/lib/xa_aac_loas_dec.a
+
+AACMCHPLUSBIN = xa_aacmchplus_loas_dec_test
+AACMCHBIN = xa_aacmch_loas_dec_test
+AACPLUSV2BIN = xa_aacplus_v2_loas_dec_test
+AACPLUSBIN = xa_aacplus_loas_dec_test
+AACBIN = xa_aac_loas_dec_test
+
+CFLAGS += -DAACLOAS_SUPPORT
+else
+AACMCHPLUSLIB = $(ROOTDIR)/lib/xa_aacmchplus_dec.a
+AACMCHLIB = $(ROOTDIR)/lib/xa_aacmch_dec.a
+AACPLUSV2LIB = $(ROOTDIR)/lib/xa_aacplus_v2_dec.a
+AACPLUSLIB = $(ROOTDIR)/lib/xa_aacplus_dec.a
+AACLIB = $(ROOTDIR)/lib/xa_aac_dec.a
+
+AACMCHPLUSBIN = xa_aacmchplus_dec_test
+AACMCHBIN = xa_aacmch_dec_test
+AACPLUSV2BIN = xa_aacplus_v2_dec_test
+AACPLUSBIN =  xa_aacplus_dec_test
+AACBIN = xa_aac_dec_test
+endif
+
+.PHONY: install all aacmch aacmchplus aacmchplus_v2 aacmchplus_v2_loas aac aacplus aacplus_v2 dabplus clean .FORCE \
+	aac_dec \
+	aacplus_dec \
+	aacplus_v2_dec \
+	aacmch_dec \
+	aacmchplus_dec 
+
+all:
+	@echo "Please specify target:"
+	@echo "    aacmchplus_v2_loas"
+	@echo "    aacmchplus_v2"
+	@echo "    aacmchplus"
+	@echo "    aacmch"
+	@echo "    aacplus_v2"
+	@echo "    aacplus"
+	@echo "    aac"
+
+ifeq "$(CPU)" "gcc"
+AACMCHPLUSV2LIB = $(ROOTDIR)/lib/xgcc_aacmchplus_v2_dec.a
+AACMCHPLUSV2LIBL = $(ROOTDIR)/lib/xgcc_aacmchplus_v2_loas_dec.a
+
+AACMCHPLUSV2BIN = xgcc_aacmchplus_v2_dec_test
+AACMCHPLUSV2LOASBIN = xgcc_aacmchplus_v2_loas_dec_test
+
+
+ifeq ($(LINK_LOAS), 1)
+AACLIB = $(ROOTDIR)/lib/xgcc_aac_dec.a
+AACPLUSLIB = $(ROOTDIR)/lib/xgcc_aacplus_dec.a
+AACPLUSV2LIB = $(ROOTDIR)/lib/xgcc_aacplus_v2_dec.a
+AACMCHLIB = $(ROOTDIR)/lib/xgcc_aacmch_dec.a
+AACMCHPLUSLIB = $(ROOTDIR)/lib/xgcc_aacmchplus_dec.a
+
+AACBIN = xgcc_aac_dec_test
+AACPLUSBIN = xgcc_aacplus_dec_test
+AACPLUSV2BIN = xgcc_aacplus_v2_dec_test
+AACMCHBIN = xgcc_aacmch_dec_test
+AACMCHPLUSBIN = xgcc_aacmchplus_dec_test
+else
+AACLIB = $(ROOTDIR)/lib/xgcc_aac_loas_dec.a
+AACPLUSLIB = $(ROOTDIR)/lib/xgcc_aacplus_loas_dec.a
+AACPLUSV2LIB = $(ROOTDIR)/lib/xgcc_aacplus_v2_loas_dec.a
+AACMCHLIB = $(ROOTDIR)/lib/xgcc_aacmch_loas_dec.a
+AACMCHPLUSLIB = $(ROOTDIR)/lib/xgcc_aacmchplus_loas_dec.a
+
+AACBIN = xgcc_aac_loas_dec_test
+AACPLUSBIN = xgcc_aacplus_loas_dec_test
+AACPLUSV2BIN = xgcc_aacplus_v2_loas_dec_test
+AACMCHBIN = xgcc_aacmch_loas_dec_test
+AACMCHPLUSBIN = xgcc_aacmchplus_loas_dec_test
+endif
+endif
+
+aac aac_dec: $(AACBIN)
+aacplus aacplus_dec: $(AACPLUSBIN)
+aacplus_v2 aacplus_v2_dec: $(AACPLUSV2BIN)
+aacmch aacmch_dec: $(AACMCHBIN)
+aacmchplus aacmchplus_dec: $(AACMCHPLUSBIN)
+aacmchplus_v2: $(AACMCHPLUSV2BIN)
+aacmchplus_v2_loas: $(AACMCHPLUSV2LOASBIN)
+
+# For the following libraries C-stub is NOT supported.
+
+
+
+
+
+
+ifeq "$(CPU)" "gcc"
+$(OBJS_CSTUB) : $(ROOTDIR)/test/src/cstub-DC_330HiFi_syn.cpp
+	$(CC) -c $(OPT) $(INCLUDE) -o $(OBJS_CSTUB) $(ROOTDIR)/test/src/cstub-DC_330HiFi_syn.cpp 
+
+xgcc_aacmchplus_v2_dec_test: CFLAGS += -DSMALL_INPUT_CHUNK_FEED
+xgcc_aacmchplus_v2_dec_test: $(OBJDIR) $(OBJS_OBJS) $(AACMCHPLUSV2LIB) $(OBJS_CSTUB)
+	$(CC) -o $@ $(OBJS_CSTUB) $(OBJS_OBJS) $(AACMCHPLUSV2LIB) $(LDFLAGS)
+
+xgcc_aacmchplus_v2_loas_dec_test: CFLAGS += -DEXTERN_DWNMIX_DVBINFO -DAPPLY_ISO_DRC -DSMALL_INPUT_CHUNK_FEED
+xgcc_aacmchplus_v2_loas_dec_test: $(OBJDIR) $(OBJS_OBJS) $(AACMCHPLUSV2LIBL) $(OBJS_CSTUB)
+	$(CC) -o $@ $(OBJS_CSTUB) $(OBJS_OBJS) $(AACMCHPLUSV2LIBL) $(LDFLAGS)
+
+
+$(AACBIN): CFLAGS += -DSMALL_INPUT_CHUNK_FEED
+$(AACBIN): $(OBJDIR) $(OBJS_OBJS) $(AACLIB) $(OBJS_CSTUB)
+	$(CC) -o $@ $(OBJS_CSTUB) $(OBJS_OBJS) $(AACLIB) $(LDFLAGS)
+
+$(AACPLUSBIN): CFLAGS += -DSMALL_INPUT_CHUNK_FEED
+$(AACPLUSBIN): $(OBJDIR) $(OBJS_OBJS) $(AACPLUSLIB) $(OBJS_CSTUB)
+	$(CC) -o $@ $(OBJS_CSTUB) $(OBJS_OBJS) $(AACPLUSLIB) $(LDFLAGS)
+
+$(AACPLUSV2BIN): CFLAGS += -DSMALL_INPUT_CHUNK_FEED
+$(AACPLUSV2BIN): $(OBJDIR) $(OBJS_OBJS) $(AACPLUSV2LIB) $(OBJS_CSTUB) 
+	$(CC) -o $@ $(OBJS_CSTUB) $(OBJS_OBJS) $(AACPLUSV2LIB) $(LDFLAGS)
+
+xgcc_dabplus_dec_test: CFLAGS += -DDAB_PLUS
+xgcc_dabplus_dec_test: $(OBJDIR) $(OBJS_OBJS) $(DABPLUSLIB) $(OBJS_CSTUB)
+	$(CC) -o $@ $(OBJS_CSTUB) $(OBJS_OBJS) $(DABPLUSLIB) $(LDFLAGS)
+
+$(AACMCHPLUSBIN): CFLAGS += -DSMALL_INPUT_CHUNK_FEED
+$(AACMCHPLUSBIN): $(OBJDIR) $(OBJS_OBJS) $(AACMCHPLUSLIB) $(OBJS_CSTUB)
+	$(CC) -o $@ $(OBJS_CSTUB) $(OBJS_OBJS) $(AACMCHPLUSLIB) $(LDFLAGS)
+
+$(AACMCHBIN): CFLAGS += -DSMALL_INPUT_CHUNK_FEED
+$(AACMCHBIN): $(OBJDIR) $(OBJS_OBJS) $(AACMCHLIB) $(OBJS_CSTUB)
+	$(CC) -o $@ $(OBJS_CSTUB) $(OBJS_OBJS) $(AACMCHLIB) $(LDFLAGS)
+else
+xa_aacmchplus_v2_dec_test: CFLAGS += -DSMALL_INPUT_CHUNK_FEED
+xa_aacmchplus_v2_dec_test: $(OBJDIR) $(OBJS_OBJS) $(AACMCHPLUSV2LIB)
+	$(CC) -o $@ $(OBJS_OBJS) $(AACMCHPLUSV2LIB) $(LDFLAGS)
+
+xa_aacmchplus_v2_loas_dec_test: CFLAGS += -DEXTERN_DWNMIX_DVBINFO -DAPPLY_ISO_DRC -DSMALL_INPUT_CHUNK_FEED
+xa_aacmchplus_v2_loas_dec_test: $(OBJDIR) $(OBJS_OBJS) $(AACMCHPLUSV2LIBL)
+	$(CC) -o $@ $(OBJS_OBJS) $(AACMCHPLUSV2LIBL) $(LDFLAGS)
+
+
+$(AACBIN): CFLAGS += -DSMALL_INPUT_CHUNK_FEED
+$(AACBIN): $(OBJDIR) $(OBJS_OBJS) $(AACLIB)
+	$(CC) -o $@ $(OBJS_OBJS) $(AACLIB) $(LDFLAGS)
+
+$(AACPLUSBIN): CFLAGS += -DSMALL_INPUT_CHUNK_FEED
+$(AACPLUSBIN): $(OBJDIR) $(OBJS_OBJS) $(AACPLUSLIB)
+	$(CC) -o $@ $(OBJS_OBJS) $(AACPLUSLIB) $(LDFLAGS)
+
+$(AACPLUSV2BIN): CFLAGS += -DSMALL_INPUT_CHUNK_FEED
+$(AACPLUSV2BIN): $(OBJDIR) $(OBJS_OBJS) $(AACPLUSV2LIB)
+	$(CC) -o $@ $(OBJS_OBJS) $(AACPLUSV2LIB) $(LDFLAGS)
+
+xa_dabplus_dec_test: CFLAGS += -DDAB_PLUS
+xa_dabplus_dec_test: $(OBJDIR) $(OBJS_OBJS) $(DABPLUSLIB)
+	$(CC) -o $@ $(OBJS_OBJS) $(DABPLUSLIB) $(LDFLAGS)
+
+$(AACMCHPLUSBIN): CFLAGS += -DSMALL_INPUT_CHUNK_FEED
+$(AACMCHPLUSBIN): $(OBJDIR) $(OBJS_OBJS) $(AACMCHPLUSLIB)
+	$(CC) -o $@ $(OBJS_OBJS) $(AACMCHPLUSLIB) $(LDFLAGS)
+
+$(AACMCHBIN): CFLAGS += -DSMALL_INPUT_CHUNK_FEED
+$(AACMCHBIN): $(OBJDIR) $(OBJS_OBJS) $(AACMCHLIB)
+	$(CC) -o $@ $(OBJS_OBJS) $(AACMCHLIB) $(LDFLAGS)
+
+endif
+
+
+
+
+clean:
+	rm -f xa_aacmch_dec_test xgcc_aacmch_dec_test \
+	      xa_aacmchplus_dec_test xgcc_aacmchplus_dec_test \
+	      aacmchplus_xa_v2_dec_test xgcc_aacmchplus_v2_dec_test \
+	      aacmchplus_v2_xa_loas_dec_test xgcc_aacmchplus_v2_loas_dec_test \
+	      aac xa_aacplus_dec_test xgcc_aac aacplus_dec_test \
+	      aacplus_xa_v2_dec_test xgcc_aacplus_v2_dec_test \
+	      xa_dabplus_dec_test xgcc_dabpl_dec_test \
+		  xa_aac_dec_test xa_aacmchplus_v2_dec_test xa_aacmchplus_v2_loas_dec_test  xa_aacplus_v2_dec_test \
+		  xa_aac_loas_dec_test xa_aacplus_loas_dec_test xa_aacplus_v2_loas_dec_test xa_aacmch_loas_dec_test xa_aacmchplus_loas_dec_test
+	-$(RM_R) $(OBJDIR)
+	@echo "CPU=$(CPU)"
+
+$(OBJDIR):
+	-$(MKPATH) $(OBJDIR)
+
+$(OBJS_OBJS): $(OBJDIR)/%.o: $(ROOTDIR)/test/src/%.c
+	$(CC) -c $(CFLAGS) $(INCLUDE) -o $@ $<

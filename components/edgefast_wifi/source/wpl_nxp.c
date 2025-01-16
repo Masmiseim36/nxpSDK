@@ -1,6 +1,5 @@
 /*
  * Copyright 2020-2024 NXP
- * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -28,21 +27,41 @@
 
 #define EVENT_BIT(event) ((uint32_t)1U << (event))
 
-#define WPL_SYNC_INIT_GROUP (EVENT_BIT(WLAN_REASON_INITIALIZED) | EVENT_BIT(WLAN_REASON_INITIALIZATION_FAILED))
+#define WPL_SYNC_INIT_GROUP (EVENT_BIT(WPL_EVENT_INITIALIZED) | EVENT_BIT(WPL_EVENT_INITIALIZATION_FAILED))
 
 #define WPL_SYNC_CONNECT_GROUP                                                                  \
-    (EVENT_BIT(WLAN_REASON_SUCCESS) | EVENT_BIT(WLAN_REASON_CONNECT_FAILED) |                    \
-        EVENT_BIT(WLAN_REASON_NETWORK_NOT_FOUND) | EVENT_BIT(WLAN_REASON_NETWORK_AUTH_FAILED) | \
-        EVENT_BIT(WLAN_REASON_ADDRESS_FAILED))
+    (EVENT_BIT(WPL_EVENT_SUCCESS) | EVENT_BIT(WPL_EVENT_CONNECT_FAILED) |                    \
+        EVENT_BIT(WPL_EVENT_NETWORK_NOT_FOUND) | EVENT_BIT(WPL_EVENT_NETWORK_AUTH_FAILED) | \
+        EVENT_BIT(WPL_EVENT_ADDRESS_FAILED))
 
-#define WPL_SYNC_DISCONNECT_GROUP EVENT_BIT(WLAN_REASON_USER_DISCONNECT)
+#define WPL_SYNC_DISCONNECT_GROUP EVENT_BIT(WPL_EVENT_USER_DISCONNECT)
 
-#define WPL_SYNC_UAP_START_GROUP (EVENT_BIT(WLAN_REASON_UAP_SUCCESS) | EVENT_BIT(WLAN_REASON_UAP_START_FAILED))
+#define WPL_SYNC_UAP_START_GROUP (EVENT_BIT(WPL_EVENT_UAP_SUCCESS) | EVENT_BIT(WPL_EVENT_UAP_START_FAILED))
 
-#define WPL_SYNC_UAP_STOP_GROUP (EVENT_BIT(WLAN_REASON_UAP_STOPPED) | EVENT_BIT(WLAN_REASON_UAP_STOP_FAILED))
+#define WPL_SYNC_UAP_STOP_GROUP (EVENT_BIT(WPL_EVENT_UAP_STOPPED) | EVENT_BIT(WPL_EVENT_UAP_STOP_FAILED))
 
-#define EVENT_SCAN_DONE     23
-#define WPL_SYNC_SCAN_GROUP EVENT_BIT(EVENT_SCAN_DONE)
+#define WPL_SYNC_SCAN_GROUP EVENT_BIT(WPL_EVENT_SCAN_DONE)
+
+#define WPL_EVENT_UNUSED                0
+#define WPL_EVENT_INITIALIZED           1
+#define WPL_EVENT_INITIALIZATION_FAILED 2
+#define WPL_EVENT_SUCCESS               3
+#define WPL_EVENT_CONNECT_FAILED        4
+#define WPL_EVENT_NETWORK_NOT_FOUND     5
+#define WPL_EVENT_NETWORK_AUTH_FAILED   6
+#define WPL_EVENT_ADDRESS_FAILED        7
+#define WPL_EVENT_USER_DISCONNECT       8
+#define WPL_EVENT_UAP_SUCCESS           9
+#define WPL_EVENT_UAP_START_FAILED      10
+#define WPL_EVENT_UAP_STOPPED           11
+#define WPL_EVENT_UAP_STOP_FAILED       12
+#define WPL_EVENT_SCAN_DONE             13
+#define __WPL_EVENT_COUNT               14
+#define __WPL_EVENT_MAX                 24
+
+#if __WPL_EVENT_COUNT >= __WPL_EVENT_MAX
+#error "__WPL_EVENT_COUNT >= __WPL_EVENT_MAX"
+#endif
 
 typedef enum _wpl_state
 {
@@ -66,10 +85,45 @@ static char *ssids_json                  = NULL;
  ******************************************************************************/
 int wlan_event_callback(enum wlan_event_reason reason, void *data);
 static int WLP_process_results(unsigned int count);
+static int WPL_map_event(enum wlan_event_reason reason);
 
 /*******************************************************************************
  * Code
  ******************************************************************************/
+
+static int WPL_map_event(enum wlan_event_reason reason)
+{
+    switch (reason)
+    {
+        case WLAN_REASON_INITIALIZED:
+            return WPL_EVENT_INITIALIZED;
+        case WLAN_REASON_INITIALIZATION_FAILED:
+            return WPL_EVENT_INITIALIZATION_FAILED;
+        case WLAN_REASON_SUCCESS:
+            return WPL_EVENT_SUCCESS;
+        case WLAN_REASON_CONNECT_FAILED:
+            return WPL_EVENT_CONNECT_FAILED;
+        case WLAN_REASON_NETWORK_NOT_FOUND:
+            return WPL_EVENT_NETWORK_NOT_FOUND;
+        case WLAN_REASON_NETWORK_AUTH_FAILED:
+            return WPL_EVENT_NETWORK_AUTH_FAILED;
+        case WLAN_REASON_ADDRESS_FAILED:
+            return WPL_EVENT_ADDRESS_FAILED;
+        case WLAN_REASON_USER_DISCONNECT:
+            return WPL_EVENT_USER_DISCONNECT;
+        case WLAN_REASON_UAP_SUCCESS:
+            return WPL_EVENT_UAP_SUCCESS;
+        case WLAN_REASON_UAP_START_FAILED:
+            return WPL_EVENT_UAP_START_FAILED;
+        case WLAN_REASON_UAP_STOPPED:
+            return WPL_EVENT_UAP_STOPPED;
+        case WLAN_REASON_UAP_STOP_FAILED:
+            return WPL_EVENT_UAP_STOP_FAILED;
+        default:
+            return WPL_EVENT_UNUSED;
+    }
+}
+
 /* Callback Function passed to WLAN Connection Manager. The callback function
  * gets called when there are WLAN Events that need to be handled by the
  * application.
@@ -81,7 +135,7 @@ int wlan_event_callback(enum wlan_event_reason reason, void *data)
 #endif
     if (s_wplState >= WPL_INITIALIZED)
     {
-        (void)xEventGroupSetBits(s_wplSyncEvent, EVENT_BIT((uint32_t)reason));
+        (void)xEventGroupSetBits(s_wplSyncEvent, EVENT_BIT((uint32_t)WPL_map_event(reason)));
     }
 
     switch (reason)
@@ -230,12 +284,12 @@ wpl_ret_t WPL_Start(linkLostCb_t callbackFunction)
     if (status == WPLRET_SUCCESS)
     {
         syncBit = xEventGroupWaitBits(s_wplSyncEvent, WPL_SYNC_INIT_GROUP, pdTRUE, pdFALSE, WPL_SYNC_TIMEOUT_MS);
-        if ((syncBit & EVENT_BIT(WLAN_REASON_INITIALIZED)) != 0U)
+        if ((syncBit & EVENT_BIT(WPL_EVENT_INITIALIZED)) != 0U)
         {
             s_linkLostCb = callbackFunction;
             status       = WPLRET_SUCCESS;
         }
-        else if ((syncBit & EVENT_BIT(WLAN_REASON_INITIALIZATION_FAILED)) != 0U)
+        else if ((syncBit & EVENT_BIT(WPL_EVENT_INITIALIZATION_FAILED)) != 0U)
         {
             status = WPLRET_FAIL;
         }
@@ -353,11 +407,11 @@ wpl_ret_t WPL_Start_AP(const char *ssid, const char *password, int chan)
         {
             syncBit =
                 xEventGroupWaitBits(s_wplSyncEvent, WPL_SYNC_UAP_START_GROUP, pdTRUE, pdFALSE, WPL_SYNC_TIMEOUT_MS);
-            if ((syncBit & EVENT_BIT(WLAN_REASON_UAP_SUCCESS)) != 0U)
+            if ((syncBit & EVENT_BIT(WPL_EVENT_UAP_SUCCESS)) != 0U)
             {
                 status = WPLRET_SUCCESS;
             }
-            else if ((syncBit & EVENT_BIT(WLAN_REASON_UAP_START_FAILED)) != 0U)
+            else if ((syncBit & EVENT_BIT(WPL_EVENT_UAP_START_FAILED)) != 0U)
             {
                 status = WPLRET_FAIL;
             }
@@ -418,11 +472,11 @@ wpl_ret_t WPL_Stop_AP(void)
         {
             syncBit =
                 xEventGroupWaitBits(s_wplSyncEvent, WPL_SYNC_UAP_STOP_GROUP, pdTRUE, pdFALSE, WPL_SYNC_TIMEOUT_MS);
-            if ((syncBit & EVENT_BIT(WLAN_REASON_UAP_STOPPED)) != 0U)
+            if ((syncBit & EVENT_BIT(WPL_EVENT_UAP_STOPPED)) != 0U)
             {
                 status = WPLRET_SUCCESS;
             }
-            else if ((syncBit & EVENT_BIT(WLAN_REASON_UAP_STOP_FAILED)) != 0U)
+            else if ((syncBit & EVENT_BIT(WPL_EVENT_UAP_STOP_FAILED)) != 0U)
             {
                 status = WPLRET_FAIL;
             }
@@ -463,7 +517,7 @@ static int WLP_process_results(unsigned int count)
     if (ssids_json == NULL)
     {
         PRINTF("[!] Memory allocation failed\r\n");
-        (void)xEventGroupSetBits(s_wplSyncEvent, EVENT_BIT(EVENT_SCAN_DONE));
+        (void)xEventGroupSetBits(s_wplSyncEvent, EVENT_BIT(WPL_EVENT_SCAN_DONE));
         return WM_FAIL;
     }
 
@@ -530,7 +584,7 @@ static int WLP_process_results(unsigned int count)
                 PRINTF("[!] JSON creation failed\r\n");
                 vPortFree(ssids_json);
                 ssids_json = NULL;
-                (void)xEventGroupSetBits(s_wplSyncEvent, EVENT_BIT(EVENT_SCAN_DONE));
+                (void)xEventGroupSetBits(s_wplSyncEvent, EVENT_BIT(WPL_EVENT_SCAN_DONE));
                 return WM_FAIL;
             }
         }
@@ -539,7 +593,7 @@ static int WLP_process_results(unsigned int count)
     /* End of JSON "]}" */
     (void)strcpy(ssids_json + ssids_json_idx, "]}");
 
-    (void)xEventGroupSetBits(s_wplSyncEvent, EVENT_BIT(EVENT_SCAN_DONE));
+    (void)xEventGroupSetBits(s_wplSyncEvent, EVENT_BIT(WPL_EVENT_SCAN_DONE));
     return WM_SUCCESS;
 }
 
@@ -566,7 +620,7 @@ char *WPL_Scan(void)
     if (status == WPLRET_SUCCESS)
     {
         syncBit = xEventGroupWaitBits(s_wplSyncEvent, WPL_SYNC_SCAN_GROUP, pdTRUE, pdFALSE, WPL_SYNC_TIMEOUT_MS);
-        if ((syncBit & EVENT_BIT(EVENT_SCAN_DONE)) != 0U)
+        if ((syncBit & EVENT_BIT(WPL_EVENT_SCAN_DONE)) != 0U)
         {
             status = WPLRET_SUCCESS;
         }
@@ -735,19 +789,19 @@ wpl_ret_t WPL_Join(char *label)
         {
             status = WPLRET_SUCCESS;
         }
-        else if ((syncBit & EVENT_BIT(WLAN_REASON_CONNECT_FAILED)) != 0U)
+        else if ((syncBit & EVENT_BIT(WPL_EVENT_CONNECT_FAILED)) != 0U)
         {
             status = WPLRET_FAIL;
         }
-        else if ((syncBit & EVENT_BIT(WLAN_REASON_NETWORK_NOT_FOUND)) != 0U)
+        else if ((syncBit & EVENT_BIT(WPL_EVENT_NETWORK_NOT_FOUND)) != 0U)
         {
             status = WPLRET_NOT_FOUND;
         }
-        else if ((syncBit & EVENT_BIT(WLAN_REASON_NETWORK_AUTH_FAILED)) != 0U)
+        else if ((syncBit & EVENT_BIT(WPL_EVENT_NETWORK_AUTH_FAILED)) != 0U)
         {
             status = WPLRET_AUTH_FAILED;
         }
-        else if ((syncBit & EVENT_BIT(WLAN_REASON_ADDRESS_FAILED)) != 0U)
+        else if ((syncBit & EVENT_BIT(WPL_EVENT_ADDRESS_FAILED)) != 0U)
         {
             status = WPLRET_ADDR_FAILED;
         }
@@ -811,7 +865,7 @@ wpl_ret_t WPL_Leave(void)
     if (status == WPLRET_SUCCESS)
     {
         syncBit = xEventGroupWaitBits(s_wplSyncEvent, WPL_SYNC_DISCONNECT_GROUP, pdTRUE, pdFALSE, WPL_SYNC_TIMEOUT_MS);
-        if ((syncBit & EVENT_BIT(WLAN_REASON_USER_DISCONNECT)) != 0U)
+        if ((syncBit & EVENT_BIT(WPL_EVENT_USER_DISCONNECT)) != 0U)
         {
             status = WPLRET_SUCCESS;
         }

@@ -144,12 +144,15 @@ void wifi_nxp_wpa_supp_event_proc_mgmt_rx(void *if_priv, nxp_wifi_event_mlme_t *
 void wifi_nxp_wpa_supp_event_proc_eapol_rx(void *if_priv,
                                            nxp_wifi_event_eapol_mlme_t *eapol_rx,
                                            unsigned int event_len);
+void wifi_nxp_wpa_supp_event_signal_change(void *if_priv);
+
 void wifi_nxp_wpa_supp_event_mgmt_tx_status(void *if_priv, nxp_wifi_event_mlme_t *mlme_event, unsigned int event_len);
 
 void wifi_nxp_wpa_supp_event_proc_ecsa_complete(void *if_priv, nxp_wifi_ch_switch_info *ch_switch_info);
 void wifi_nxp_wpa_supp_event_proc_dfs_cac_started(void *if_priv, nxp_wifi_dfs_cac_info *dfs_cac_info);
 void wifi_nxp_wpa_supp_event_proc_dfs_cac_finished(void *if_priv, nxp_wifi_dfs_cac_info *dfs_cac_info);
 
+#if CONFIG_HOSTAPD
 void *wifi_nxp_hostapd_dev_init(void *hapd_drv_if_ctx,
                                 const char *iface_name,
                                 rtos_hostapd_dev_callbk_fns *hostapd_callbk_fns);
@@ -165,6 +168,7 @@ int wifi_nxp_hostapd_set_rts(void *if_priv, int rts_threshold);
 int wifi_nxp_hostapd_set_frag(void *if_priv, int frag_threshold);
 int wifi_nxp_hostapd_stop_ap(void *if_priv);
 int wifi_nxp_hostapd_set_acl(void *if_priv, struct hostapd_acl_params *params);
+#endif /* CONFIG_HOSTAPD */
 int wifi_nxp_wpa_dpp_listen(void *if_priv, bool enable);
 bool wifi_nxp_wpa_get_modes(void *if_priv);
 #endif /* CONFIG_WPA_SUPP */

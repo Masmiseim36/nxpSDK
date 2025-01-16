@@ -7,31 +7,12 @@
 
 #include <stdio.h>
 #include "fsl_debug_console.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 
-#include "fsl_power.h"
-#include "fsl_gpio.h"
-#include "fsl_pint.h"
-#include "fsl_inputmux.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define EXAMPLE_INT_IRQn                (PIN_INT0_IRQn)
-#define EXAMPLE_SENSOR_INT_GPIO         GPIO
-#define EXAMPLE_SENSOR_INT_PORT         0
-#define EXAMPLE_SENSOR_INT_PIN          22
-#define EXAMPLE_SENSOR_INT_INPUTMUX_SEL kINPUTMUX_GpioPort0Pin22ToPintsel
-
-/*!< Power down all unnecessary blocks during deep sleep*/
-#define EXAMPLE_DEEPSLEEP_RUNCFG0 (SYSCTL0_PDRUNCFG0_RBBSRAM_PD_MASK | SYSCTL0_PDRUNCFG0_RBB_PD_MASK)
-#define EXAMPLE_DEEPSLEEP_RAM_APD 0xFFC00000U /* 0x280000 - 0x4FFFFF keep powered */
-#define EXAMPLE_DEEPSLEEP_RAM_PPD 0x0U
-#define EXAMPLE_EXCLUDE_FROM_DEEPSLEEP                                                                       \
-    (((const uint32_t[]){EXAMPLE_DEEPSLEEP_RUNCFG0,                                                          \
-                         (SYSCTL0_PDSLEEPCFG1_FLEXSPI0_SRAM_APD_MASK | SYSCTL0_PDSLEEPCFG1_SRAM_SLEEP_MASK), \
-                         EXAMPLE_DEEPSLEEP_RAM_APD, EXAMPLE_DEEPSLEEP_RAM_PPD}))
 /* FXOS8700 and MMA8451 have the same register address */
 #define ACCEL_REG_OUT_X_MSB    0x01
 #define ACCEL_REG_F_SETUP      0x09
@@ -58,9 +39,6 @@
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
-void EXAMPLE_InitWakeupPin(void);
-void EXAMPLE_EnterDeepSleep(void);
-void APP_ACCEL_IntHandler(void);
 static void APP_ACCEL_Init(void);
 static status_t APP_ACCEL_WriteReg(uint8_t reg, uint8_t value);
 static status_t APP_ACCEL_ReadRegs(uint8_t reg, uint8_t *pValues, uint32_t bytes);
@@ -73,38 +51,6 @@ static volatile bool wakeFlag;
 /*******************************************************************************
  * Code
  ******************************************************************************/
-static void EXAMPLE_PinIntHandler(pint_pin_int_t pintr, uint32_t pmatch_status)
-{
-    APP_ACCEL_IntHandler();
-}
-
-void EXAMPLE_InitWakeupPin(void)
-{
-    gpio_pin_config_t gpioPinConfigStruct;
-
-    /* Set SW pin as GPIO input. */
-    gpioPinConfigStruct.pinDirection = kGPIO_DigitalInput;
-    GPIO_PinInit(EXAMPLE_SENSOR_INT_GPIO, EXAMPLE_SENSOR_INT_PORT, EXAMPLE_SENSOR_INT_PIN, &gpioPinConfigStruct);
-
-    /* Configure the Input Mux block and connect the trigger source to PinInt channle. */
-    INPUTMUX_Init(INPUTMUX);
-    INPUTMUX_AttachSignal(INPUTMUX, kPINT_PinInt0, EXAMPLE_SENSOR_INT_INPUTMUX_SEL); /* Using channel 0. */
-    INPUTMUX_Deinit(INPUTMUX); /* Turnoff clock to inputmux to save power. Clock is only needed to make changes */
-
-    /* Configure the interrupt for SW pin. */
-    PINT_Init(PINT);
-    PINT_PinInterruptConfig(PINT, kPINT_PinInt0, kPINT_PinIntEnableFallEdge, EXAMPLE_PinIntHandler);
-    PINT_EnableCallback(PINT); /* Enable callbacks for PINT */
-
-    EnableDeepSleepIRQ(EXAMPLE_INT_IRQn);
-}
-
-void EXAMPLE_EnterDeepSleep(void)
-{
-    /* Enter deep sleep mode by using power API. */
-    POWER_EnterDeepSleep(EXAMPLE_EXCLUDE_FROM_DEEPSLEEP);
-}
-
 
 /*  ACCEL write register wrap function */
 static status_t APP_ACCEL_WriteReg(uint8_t reg, uint8_t value)
@@ -189,12 +135,7 @@ int main(void)
     status_t status;
     uint32_t i;
 
-    /* Use 48 MHz clock for the FLEXCOMM4 */
-    CLOCK_AttachClk(kFRO_DIV4_to_FLEXCOMM4);
-
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
 
     PRINTF("\r\nI2C example -- Accelerometer Event Trigger\r\n");
 

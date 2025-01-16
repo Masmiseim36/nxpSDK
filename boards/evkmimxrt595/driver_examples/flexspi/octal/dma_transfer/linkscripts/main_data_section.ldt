@@ -17,6 +17,7 @@
        *memset.o(.text .text* .rodata .rodata*)
        *fsl_dma.o(.text .text* .rodata .rodata*)
        *fsl_flexspi_dma.o(.text .text* .rodata .rodata*)
+       *fsl_reset.o(.text .text* .rodata .rodata*)
        *(.data*)
        . = ALIGN(128);
        __VECTOR_RAM = .;

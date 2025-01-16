@@ -29,13 +29,13 @@ define symbol usb_bdt_size             = 0x0;
 if (isdefinedsymbol(__stack_size__)) {
   define symbol __size_cstack__        = __stack_size__;
 } else {
-  define symbol __size_cstack__        = 0x400;
+  define symbol __size_cstack__        = 0x0400;
 }
 
 if (isdefinedsymbol(__heap_size__)) {
   define symbol __size_heap__          = __heap_size__;
 } else {
-  define symbol __size_heap__          = 0x400;
+  define symbol __size_heap__          = 0x1000;
 }
 
 /* The SRAM region [0x10000-0x1BFFF] is reserved for ROM code. */
@@ -100,7 +100,9 @@ initialize by copy { readwrite, section .textrw, section CodeQuickAccess, sectio
   object fsl_adapter_flexspi_nor_flash.o,
   object mflash_drv.o,
   object  fsl_cache.o,
-  object fsl_flexspi.o,};
+  object fsl_flexspi.o,
+  object fsl_reset.o,
+};
 
 do not initialize  { section .noinit, section m_usb_bdt, section m_usb_global  };
 
@@ -110,13 +112,14 @@ place at address mem: m_interrupts_start    { readonly section .intvec };
 define block ._bt_gatt_service_static with fixed order { readonly section ._bt_gatt_service_static*};
 define block ._bt_settings_static with fixed order { readonly section ._bt_settings*};
 define block ._bt_conn_cb with fixed order { readonly section ._bt_conn_cb*};
+define block ._bt_ias_cb with fixed order { readonly section ._bt_ias_cb*};
 define block ._bt_l2cap_fixed_chan with fixed order { readonly section ._bt_l2cap_fixed_chan*};
 define block ._bt_l2cap_br_fixed_chan with fixed order { readonly section ._bt_l2cap_br_fixed_chan*};
 define block ._settings_handler_static with fixed order { readonly section ._settings_handler_static*};
 define block ._k_mem_slab with fixed order { readwrite section ._k_mem_slab*};
 define block ._net_buf_pool with fixed order { readwrite section ._net_buf_pool*};
 
-place in TEXT_region                        { block RO,block ._bt_gatt_service_static, block ._bt_settings_static, block ._bt_conn_cb, block ._bt_l2cap_fixed_chan, block ._bt_l2cap_br_fixed_chan, block ._settings_handler_static };
+place in TEXT_region                        { block RO,block ._bt_gatt_service_static, block ._bt_settings_static, block ._bt_conn_cb, block ._bt_ias_cb, block ._bt_l2cap_fixed_chan, block ._bt_l2cap_br_fixed_chan, block ._settings_handler_static };
 place in m_interrupts_ram_region            { section m_interrupts_ram };
 place in DATA_region                        { section CodeQuickAccess, section DataQuickAccess };
 place in DATA_region                        { block RW, block ._net_buf_pool, block ._k_mem_slab };

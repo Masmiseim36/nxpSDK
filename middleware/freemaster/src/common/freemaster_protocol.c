@@ -1,20 +1,17 @@
 /*
  * Copyright (c) 2007-2015 Freescale Semiconductor, Inc.
- * Copyright 2018-2021 NXP
+ * Copyright 2018-2021, 2024 NXP
  *
- * License: NXP LA_OPT_NXP_Software_License
+ * License: NXP LA_OPT_Online Code Hosting NXP_Software_License
  *
- * NXP Confidential. This software is owned or controlled by NXP and may
+ * NXP Proprietary. This software is owned or controlled by NXP and may
  * only be used strictly in accordance with the applicable license terms.
  * By expressly accepting such terms or by downloading, installing,
  * activating and/or otherwise using the software, you are agreeing that
  * you have read, and that you agree to comply with and are bound by,
  * such license terms.  If you do not agree to be bound by the applicable
  * license terms, then you may not retain, install, activate or otherwise
- * use the software.  This code may only be used in a microprocessor,
- * microcontroller, sensor or digital signal processor ("NXP Product")
- * supplied directly or indirectly from NXP.  See the full NXP Software
- * License Agreement in license/LA_OPT_NXP_Software_License.pdf
+ * use the software.
  *
  * FreeMASTER Communication Driver - protocol implementation
  */
@@ -365,10 +362,11 @@ FMSTR_BOOL FMSTR_ProtocolDecoder(FMSTR_BPTR msgBuffIO, FMSTR_SIZE msgSize, FMSTR
         case FMSTR_CMD_GETSTRLEN:
             responseEnd = FMSTR_GetStringLen(msgBuffIO, &statusCode);
             break;
-
+#if FMSTR_USE_URES > 0
         case FMSTR_CMD_URESRWI:
             responseEnd = FMSTR_UresControl(msgBuffIO, msgSize, &statusCode);
             break;
+#endif /* FMSTR_USE_URES */
 #endif /* FMSTR_USE_TSA */
 
 #if FMSTR_USE_APPCMD > 0
@@ -574,6 +572,7 @@ FMSTR_GetConfig_exit:
 const FMSTR_CHAR *_FMSTR_GetAccessPassword(FMSTR_U8 requiredAccess)
 {
     const FMSTR_CHAR *password = NULL;
+    FMSTR_UNUSED(requiredAccess);
 
 #if defined(FMSTR_RESTRICTED_ACCESS_R_PASSWORD)
     if (requiredAccess >= FMSTR_RESTRICTED_ACCESS_R)
@@ -758,6 +757,8 @@ FMSTR_BPTR _FMSTR_ReadMem(FMSTR_SESSION *session, FMSTR_BPTR msgBuffIO, FMSTR_U8
         *retStatus = FMSTR_STC_EAUTH;
         return response;
     }
+#else
+    FMSTR_UNUSED(session);
 #endif
 
     /* Get the Address from incomming buffer */
@@ -813,6 +814,8 @@ FMSTR_BPTR _FMSTR_ReadMemBaseAddress(FMSTR_SESSION *session, FMSTR_BPTR msgBuffI
         *retStatus = FMSTR_STC_EAUTH;
         return response;
     }
+#else
+    FMSTR_UNUSED(session);
 #endif
 
     /* Get the Relative address to base from incoming buffer */
@@ -869,6 +872,8 @@ FMSTR_BPTR _FMSTR_WriteMem(FMSTR_SESSION *session, FMSTR_BPTR msgBuffIO, FMSTR_U
         *retStatus = FMSTR_STC_EAUTH;
         return response;
     }
+#else
+    FMSTR_UNUSED(session);
 #endif
 
     /* Get the Flags from incomming buffer */

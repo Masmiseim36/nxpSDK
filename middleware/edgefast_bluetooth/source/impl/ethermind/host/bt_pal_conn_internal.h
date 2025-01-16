@@ -15,20 +15,50 @@
 
 #include <bluetooth/iso.h>
 
-typedef enum {
+typedef enum __packed {
 	BT_CONN_DISCONNECTED,         /* Disconnected, conn is completely down */
 	BT_CONN_DISCONNECT_COMPLETE,  /* Received disconn comp event, transition to DISCONNECTED */
-	BT_CONN_CONNECTING_SCAN,      /* Central passive scanning */
-	BT_CONN_CONNECTING_AUTO,      /* Central connection establishment w/ filter */
-	BT_CONN_CONNECTING_ADV,       /* Peripheral connectable advertising */
-	BT_CONN_CONNECTING_DIR_ADV,   /* Peripheral directed advertising */
-	BT_CONN_CONNECTING,           /* Central connection establishment */
+
+	BT_CONN_INITIATING,           /* Central connection establishment */
+	/** Central scans for a device preceding establishing a connection to it.
+	 *
+	 * This can happen when:
+	 * - The application has explicitly configured the stack to connect to the device,
+	 *   but the controller resolving list is too small. The stack therefore first
+	 *   scans to be able to retrieve the currently used (private) address, resolving
+	 *   the address in the host if needed.
+	 * - The stack uses this connection context for automatic connection establishment
+	 *   without the use of filter accept list. Instead of immediately starting
+	 *   the initiator, it first starts scanning. This allows the application to start
+	 *   scanning while automatic connection establishment in ongoing.
+	 *   It also allows the stack to use host based privacy for cases where this is needed.
+	 */
+	BT_CONN_SCAN_BEFORE_INITIATING,
+
+	/** Central initiates a connection to a device in the filter accept list.
+	 *
+	 * For this type of connection establishment, the controller's initiator is started
+	 * immediately. That is, it is assumed that the controller resolving list
+	 * holds all entries that are part of the filter accept list if private addresses are used.
+	 */
+	BT_CONN_INITIATING_FILTER_LIST,
+
+	BT_CONN_ADV_CONNECTABLE,       /* Peripheral connectable advertising */
+	BT_CONN_ADV_DIR_CONNECTABLE,   /* Peripheral directed advertising */
 	BT_CONN_CONNECTED,            /* Peripheral or Central connected */
 	BT_CONN_DISCONNECTING,        /* Peripheral or Central issued disconnection command */
 } bt_conn_state_t;
 
 /* bt_conn flags: the flags defined here represent connection parameters */
 enum {
+	/** The connection context is used for automatic connection establishment
+	 *
+	 * That is, with @ref bt_conn_le_create_auto() or bt_le_set_auto_conn().
+	 * This flag is set even after the connection has been established so
+	 * that the connection can be reestablished once disconnected.
+	 * The connection establishment may be performed with or without the filter
+	 * accept list.
+	 */
 	BT_CONN_AUTO_CONNECT,
 	BT_CONN_BR_LEGACY_SECURE,             /* 16 digits legacy PIN tracker */
 	BT_CONN_USER,                         /* user I/O when pairing */
@@ -54,7 +84,8 @@ enum {
 	BT_CONN_CTE_REQ_ENABLED,              /* CTE request procedure is enabled */
 	BT_CONN_CTE_RSP_ENABLED,              /* CTE response procedure is enabled */
 
-    BT_CONN_UNPAIRING,                /* Disconnected, unpairing */
+	BT_CONN_UNPAIRING,                /* Disconnected, unpairing */
+	BT_CONN_WAIT_PKTS,                    /* Waiting for number of completed packets */
 
 	/* Total number of flags - must be at the end of the enum */
 	BT_CONN_NUM_FLAGS,
@@ -78,12 +109,13 @@ struct bt_conn_le {
 #if (defined(CONFIG_BT_GAP_AUTO_UPDATE_CONN_PARAMS) && (CONFIG_BT_GAP_AUTO_UPDATE_CONN_PARAMS > 0U))
 	uint8_t  conn_param_retry_countdown;
 #endif
-	uint8_t			features[8];
 
-	struct bt_keys		*keys;
+	uint8_t features[8];
+
+	struct bt_keys *keys;
 
 #if (defined(CONFIG_BT_USER_PHY_UPDATE) && ((CONFIG_BT_USER_PHY_UPDATE) > 0U))
-	struct bt_conn_le_phy_info      phy;
+	struct bt_conn_le_phy_info phy;
 #endif
 
 #if (defined(CONFIG_BT_USER_DATA_LEN_UPDATE) && ((CONFIG_BT_USER_DATA_LEN_UPDATE) > 0U))
@@ -91,7 +123,7 @@ struct bt_conn_le {
 #endif
 };
 
-#if (defined(CONFIG_BT_BREDR) && ((CONFIG_BT_BREDR) > 0U))
+#if (defined(CONFIG_BT_CLASSIC) && ((CONFIG_BT_CLASSIC) > 0U))
 /* For now reserve space for 2 pages of LMP remote features */
 #define LMP_MAX_PAGES 2
 
@@ -105,13 +137,19 @@ struct bt_conn_br {
 
 	struct bt_keys_link_key	*link_key;
 
-    struct net_buf *pending_l2cap_ecbfc_req;
+	struct net_buf *pending_l2cap_ecbfc_req;
 };
 
 struct bt_conn_sco {
 	/* Reference to ACL Connection */
 	struct bt_conn          *acl;
+
+	/* Reference to the struct bt_sco_chan */
+	struct bt_sco_chan      *chan;
+
 	uint16_t                pkt_type;
+	uint8_t                 dev_class[3];
+	uint8_t                 link_type;
 };
 #endif
 
@@ -139,6 +177,9 @@ struct bt_conn_iso {
 
 	/** Stored information about the ISO stream */
 	struct bt_iso_info info;
+
+	/** Queue from which conn will pull data */
+	struct k_fifo                   txq;
 };
 
 typedef void (*bt_conn_tx_cb_t)(struct bt_conn *conn, void *user_data, int err);
@@ -148,11 +189,18 @@ struct bt_conn_tx {
 
 	bt_conn_tx_cb_t cb;
 	void *user_data;
-
-	/* Number of pending packets without a callback after this one */
-	uint32_t pending_no_cb;
 };
 
+struct acl_data {
+	/* Extend the bt_buf user data */
+	struct bt_buf_data buf_data;
+
+	/* Index into the bt_conn storage array */
+	uint8_t  index;
+
+	/** ACL connection handle */
+	uint16_t handle;
+};
 
 struct bt_conn {
 	uint16_t			handle;
@@ -164,15 +212,11 @@ struct bt_conn {
 	/* Which local identity address this connection uses */
 	uint8_t                    id;
 
-#if ((defined(CONFIG_BT_SMP) && ((CONFIG_BT_SMP) > 0U)) || (defined(CONFIG_BT_BREDR) && ((CONFIG_BT_BREDR) > 0U)))
-	bt_security_t		 sec_level;
-	bt_security_t		 required_sec_level;
-	uint8_t			     encrypt;
-    uint8_t              key_size;
-    uint8_t              hci_err;
-    enum bt_security_err sec_err;
-    struct k_work        sec_changed_work;
-#endif /* CONFIG_BT_SMP || CONFIG_BT_BREDR */
+#if ((defined(CONFIG_BT_SMP) && ((CONFIG_BT_SMP) > 0U)) || (defined(CONFIG_BT_CLASSIC) && ((CONFIG_BT_CLASSIC) > 0U)))
+	bt_security_t		sec_level;
+	bt_security_t		required_sec_level;
+	uint8_t			encrypt;
+#endif /* CONFIG_BT_SMP || CONFIG_BT_CLASSIC */
 
 #if (defined(CONFIG_BT_DF_CONNECTION_CTE_RX) && ((CONFIG_BT_DF_CONNECTION_CTE_RX) > 0U))
 	/**
@@ -190,22 +234,14 @@ struct bt_conn {
 	uint16_t rx_len;
 	struct net_buf		*rx;
 
-	/* Sent but not acknowledged TX packets with a callback */
+	/* Pending TX that are awaiting the NCP event. len(tx_pending) == in_ll */
 	sys_slist_t		tx_pending;
-	/* Sent but not acknowledged TX packets without a callback before
-	 * the next packet (if any) in tx_pending.
-	 */
-	uint32_t                   pending_no_cb;
 
 	/* Completed TX for which we need to call the callback */
 	sys_slist_t		tx_complete;
 #if (defined(CONFIG_BT_CONN_TX) && (CONFIG_BT_CONN_TX > 0))
 	struct k_work           tx_complete_work;
 #endif /* CONFIG_BT_CONN_TX */
-
-	/* Queue for outgoing ACL data */
-	osa_msgq_handle_t		tx_queue;
-    OSA_MSGQ_HANDLE_DEFINE(tx_queue_handle, CONFIG_BT_MSG_QUEUE_COUNT, sizeof(void*));
 
 	/* Active L2CAP channels */
 	sys_slist_t		channels;
@@ -221,7 +257,7 @@ struct bt_conn {
 	union {
 #endif
 		struct bt_conn_le	le;
-#if (defined(CONFIG_BT_BREDR) && ((CONFIG_BT_BREDR) > 0U))
+#if (defined(CONFIG_BT_CLASSIC) && ((CONFIG_BT_CLASSIC) > 0U))
 		struct bt_conn_br	br;
 		struct bt_conn_sco	sco;
 #endif
@@ -242,14 +278,87 @@ struct bt_conn {
 	/* ethermind status */
 	uint8_t deviceId;
 	/* security level sync semaphore. */
-	osa_semaphore_handle_t sem_security_level_updated;
-	OSA_SEMAPHORE_HANDLE_DEFINE(sem_security_level_updated_handle);
+	struct k_sem sec_lvl_updated;
+
+	/* Callback into the higher-layers (L2CAP / ISO) to return a buffer for
+	 * sending `amount` of bytes to HCI.
+	 *
+	 * Scheduling from which channel to pull (e.g. for L2CAP) is done at the
+	 * upper layer's discretion.
+	 */
+	struct net_buf * (*tx_data_pull)(struct bt_conn *conn,
+					 size_t amount,
+					 size_t *length);
+
+	/* Get (and clears for ACL conns) callback and user-data for `buf`. */
+	void (*get_and_clear_cb)(struct bt_conn *conn, struct net_buf *buf,
+				 bt_conn_tx_cb_t *cb, void **ud);
+
+	/* Return true if upper layer has data to send over HCI */
+	bool (*has_data)(struct bt_conn *conn);
+
+	/* For ACL: List of data-ready L2 channels. Used by TX processor for
+	 * pulling HCI fragments. Channels are only ever removed from this list
+	 * when a whole PDU (ie all its frags) have been sent.
+	 */
+	sys_slist_t		l2cap_data_ready;
+
+	/* Node for putting this connection in a data-ready mode for the bt_dev.
+	 * This will be used by the TX processor to then fetch HCI frags from it.
+	 */
+	sys_snode_t		_conn_ready;
+	atomic_t		_conn_ready_lock;
+
+	/* Holds the number of packets that have been sent to the controller but
+	 * not yet ACKd (by receiving an Number of Completed Packets). This
+	 * variable can be used for deriving a QoS or waterlevel scheme in order
+	 * to maximize throughput/latency.
+	 * It's an optimization so we don't chase `tx_pending` all the time.
+	 */
+	atomic_t		in_ll;
+
+	/* Next buffer should be an ACL/ISO HCI fragment */
+	bool			next_is_frag;
 
 	/* Must be at the end so that everything else in the structure can be
 	 * memset to zero without affecting the ref.
 	 */
 	atomic_t		ref;
 };
+
+/* Holds the callback and a user-data field for the upper layer. This callback
+ * shall be called when the buffer is ACK'd by the controller (by a Num Complete
+ * Packets event) or if the connection dies.
+ *
+ * Flow control in the spec be crazy, look it up. LL is allowed to choose
+ * between sending NCP events always or not at all on disconnect.
+ *
+ * We pack the struct to make sure it fits in the net_buf user_data field.
+ */
+struct closure {
+	void *cb;
+	void *data;
+} __packed;
+
+#if (defined(CONFIG_BT_CONN_TX_USER_DATA_SIZE) && (CONFIG_BT_CONN_TX_USER_DATA_SIZE > 0))
+BUILD_ASSERT(sizeof(struct closure) <= CONFIG_BT_CONN_TX_USER_DATA_SIZE);
+#endif
+
+static inline void make_closure(void *storage, void *cb, void *data)
+{
+	((struct closure *)storage)->cb = cb;
+	((struct closure *)storage)->data = data;
+}
+
+static inline void *closure_cb(void *storage)
+{
+	return ((struct closure *)storage)->cb;
+}
+
+static inline void *closure_data(void *storage)
+{
+	return ((struct closure *)storage)->data;
+}
 
 void bt_conn_reset_rx_state(struct bt_conn *conn);
 
@@ -299,11 +408,16 @@ int bt_conn_iso_init(void);
 /* Cleanup ISO references */
 void bt_iso_cleanup_acl(struct bt_conn *iso_conn);
 
+void bt_iso_reset(void);
+
 /* Add a new BR/EDR connection */
 struct bt_conn *bt_conn_add_br(const bt_addr_t *peer);
 
 /* Add a new SCO connection */
 struct bt_conn *bt_conn_add_sco(const bt_addr_t *peer, int link_type);
+
+/* Cleanup SCO ACL reference */
+void bt_sco_cleanup_acl(struct bt_conn *sco_conn);
 
 /* Cleanup SCO references */
 void bt_sco_cleanup(struct bt_conn *sco_conn);
@@ -332,7 +446,7 @@ static inline bool bt_conn_is_handle_valid(struct bt_conn *conn)
 	case BT_CONN_DISCONNECTING:
 	case BT_CONN_DISCONNECT_COMPLETE:
 		return true;
-	case BT_CONN_CONNECTING:
+	case BT_CONN_INITIATING:
 		/* ISO connection handle assigned at connect state */
 		if (IS_ENABLED(CONFIG_BT_ISO) &&
 		    conn->type == BT_CONN_TYPE_ISO) {
@@ -348,7 +462,7 @@ static inline bool bt_conn_is_handle_valid(struct bt_conn *conn)
 bool bt_conn_is_peer_addr_le(const struct bt_conn *conn, uint8_t id,
 			     const bt_addr_le_t *peer);
 
-/* Helpers for identifying & looking up connections based on the the index to
+/* Helpers for identifying & looking up connections based on the index to
  * the connection list. This is useful for O(1) lookups, but can't be used
  * e.g. as the handle since that's assigned to us by the controller.
  */
@@ -382,6 +496,9 @@ bool le_param_req(struct bt_conn *conn, struct bt_le_conn_param *param);
 void notify_tx_power_report(struct bt_conn *conn,
 			    struct bt_conn_le_tx_power_report report);
 
+void notify_path_loss_threshold_report(struct bt_conn *conn,
+				       struct bt_conn_le_path_loss_threshold_report report);
+
 #if (defined(CONFIG_BT_SMP) && ((CONFIG_BT_SMP) > 0U))
 /* If role specific LTK is present */
 bool bt_conn_ltk_present(const struct bt_conn *conn);
@@ -394,11 +511,11 @@ int bt_conn_le_start_encryption(struct bt_conn *conn, uint8_t rand[8],
 void bt_conn_identity_resolved(struct bt_conn *conn);
 #endif /* CONFIG_BT_SMP */
 
-#if ((defined(CONFIG_BT_SMP) && ((CONFIG_BT_SMP) > 0U)) || (defined(CONFIG_BT_BREDR) && ((CONFIG_BT_BREDR) > 0U)))
+#if ((defined(CONFIG_BT_SMP) && ((CONFIG_BT_SMP) > 0U)) || (defined(CONFIG_BT_CLASSIC) && ((CONFIG_BT_CLASSIC) > 0U)))
 /* Notify higher layers that connection security changed */
 void bt_conn_security_changed(struct bt_conn *conn, uint8_t hci_err,
 			      enum bt_security_err err);
-#endif /* CONFIG_BT_SMP || CONFIG_BT_BREDR */
+#endif /* CONFIG_BT_SMP || CONFIG_BT_CLASSIC */
 
 /* Prepare a PDU to be sent over a connection */
 #if (defined(CONFIG_NET_BUF_LOG) && ((CONFIG_NET_BUF_LOG) > 0U))
@@ -411,14 +528,14 @@ struct net_buf *bt_conn_create_pdu_timeout_debug(struct net_buf_pool *pool,
 					 __func__, __LINE__)
 
 #define bt_conn_create_pdu(_pool, _reserve) \
-	bt_conn_create_pdu_timeout_debug(_pool, _reserve, osaWaitForever_c, \
-					 __func__, __line__)
+	bt_conn_create_pdu_timeout_debug(_pool, _reserve, K_FOREVER, \
+					 __func__, __LINE__)
 #else
 struct net_buf *bt_conn_create_pdu_timeout(struct net_buf_pool *pool,
 					   size_t reserve, k_timeout_t timeout);
 
 #define bt_conn_create_pdu(_pool, _reserve) \
-	bt_conn_create_pdu_timeout(_pool, _reserve, osaWaitForever_c)
+	bt_conn_create_pdu_timeout(_pool, _reserve, K_FOREVER)
 #endif
 
 /* Prepare a PDU to be sent over a connection */
@@ -432,14 +549,14 @@ struct net_buf *bt_conn_create_frag_timeout_debug(size_t reserve,
 					  __func__, __LINE__)
 
 #define bt_conn_create_frag(_reserve) \
-	bt_conn_create_frag_timeout_debug(_reserve, osaWaitForever_c, \
+	bt_conn_create_frag_timeout_debug(_reserve, K_FOREVER, \
 					  __func__, __LINE__)
 #else
 struct net_buf *bt_conn_create_frag_timeout(size_t reserve,
 					    k_timeout_t timeout);
 
 #define bt_conn_create_frag(_reserve) \
-	bt_conn_create_frag_timeout(_reserve, osaWaitForever_c)
+	bt_conn_create_frag_timeout(_reserve, K_FOREVER)
 #endif
 
 /* Initialize connection management */
@@ -447,10 +564,22 @@ int bt_conn_init(void);
 
 /* Reset states of connections and set state to BT_CONN_DISCONNECTED. */
 void bt_conn_cleanup_all(void);
-/* Selects based on connection type right semaphore for ACL packets */
-osa_semaphore_handle_t bt_conn_get_pkts(struct bt_conn *conn);
 
-void bt_conn_process_tx(struct bt_conn *conn);
+/* Selects based on connection type right semaphore for ACL packets */
+struct k_sem *bt_conn_get_pkts(struct bt_conn *conn);
+
+void bt_conn_tx_processor(void);
+
+/* To be called by upper layers when they want to send something.
+ * Functions just like an IRQ.
+ *
+ * Note: This fn will take and hold a reference to `conn` until the IRQ for that
+ * conn is serviced.
+ * For the current implementation, that means:
+ * - ref the conn when putting on an "conn-ready" slist
+ * - unref the conn when popping the conn from the slist
+ */
+void bt_conn_data_ready(struct bt_conn *conn);
 
 /* false - continue, true - stop */
 typedef bool (*bt_conn_scan_cb_t)(struct bt_conn *conn, void *param);

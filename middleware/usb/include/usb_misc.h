@@ -330,7 +330,7 @@ _Pragma("diag_suppress=Pm120")
 #define USB_LINK_USB_GLOBAL_BSS
 #define USB_LINK_USB_BDT_BSS
             _Pragma("diag_default=Pm120")
-#define USB_LINK_DMA_NONINIT_DATA      _Pragma("location = \"m_usb_dma_noninit_data\"")
+#define USB_LINK_DMA_NONINIT_DATA      _Pragma("location = \"CacheLineData\"")
 #define USB_LINK_NONCACHE_NONINIT_DATA _Pragma("location = \"NonCacheable\"")
 #elif defined(__CC_ARM) || (defined(__ARMCC_VERSION))
 
@@ -351,9 +351,9 @@ _Pragma("diag_suppress=Pm120")
 #define USB_LINK_USB_GLOBAL_BSS
 #define USB_LINK_USB_BDT_BSS
 #if defined(__CC_ARM)
-#define USB_LINK_DMA_NONINIT_DATA __attribute__((section("m_usb_dma_noninit_data"))) __attribute__((zero_init))
+#define USB_LINK_DMA_NONINIT_DATA __attribute__((section("CacheLineData"))) __attribute__((zero_init))
 #else
-#define USB_LINK_DMA_NONINIT_DATA __attribute__((section(".bss.m_usb_dma_noninit_data")))
+#define USB_LINK_DMA_NONINIT_DATA __attribute__((section("CacheLineData")))
 #endif
 #if defined(__CC_ARM)
 #define USB_LINK_NONCACHE_NONINIT_DATA __attribute__((section("NonCacheable"))) __attribute__((zero_init))
@@ -371,7 +371,7 @@ _Pragma("diag_suppress=Pm120")
 #define USB_LINK_USB_BDT             __attribute__((section("m_usb_bdt, \"aw\", %nobits @")))
 #define USB_LINK_USB_GLOBAL_BSS
 #define USB_LINK_USB_BDT_BSS
-#define USB_LINK_DMA_NONINIT_DATA      __attribute__((section("m_usb_dma_noninit_data, \"aw\", %nobits @")))
+#define USB_LINK_DMA_NONINIT_DATA      __attribute__((section("CacheLineData, \"aw\", %nobits @")))
 #define USB_LINK_NONCACHE_NONINIT_DATA __attribute__((section("NonCacheable, \"aw\", %nobits @")))
 
 #elif (defined(__DSC__) && defined(__CW__))
@@ -426,7 +426,7 @@ _Pragma("diag_suppress=Pm120")
 #if (defined(USB_DEVICE_CONFIG_BUFFER_PROPERTY_CACHEABLE) && (USB_DEVICE_CONFIG_BUFFER_PROPERTY_CACHEABLE)) || \
     (defined(USB_HOST_CONFIG_BUFFER_PROPERTY_CACHEABLE) && (USB_HOST_CONFIG_BUFFER_PROPERTY_CACHEABLE))
 #define USB_DMA_DATA_NONINIT_SUB USB_LINK_DMA_NONINIT_DATA
-#define USB_DMA_DATA_INIT_SUB    USB_LINK_DMA_INIT_DATA(m_usb_dma_init_data)
+#define USB_DMA_DATA_INIT_SUB    USB_LINK_DMA_INIT_DATA(CacheLineData.init)
 #define USB_CONTROLLER_DATA      USB_LINK_NONCACHE_NONINIT_DATA
 #else
 #if (defined(DATA_SECTION_IS_CACHEABLE) && (DATA_SECTION_IS_CACHEABLE))
@@ -448,7 +448,7 @@ _Pragma("diag_suppress=Pm120")
     (defined(USB_HOST_CONFIG_BUFFER_PROPERTY_CACHEABLE) && (USB_HOST_CONFIG_BUFFER_PROPERTY_CACHEABLE))
 #define USB_GLOBAL               USB_LINK_DMA_NONINIT_DATA
 #define USB_DMA_DATA_NONINIT_SUB USB_LINK_DMA_NONINIT_DATA
-#define USB_DMA_DATA_INIT_SUB    USB_LINK_DMA_INIT_DATA(m_usb_dma_init_data)
+#define USB_DMA_DATA_INIT_SUB    USB_LINK_DMA_INIT_DATA(CacheLineData.init)
 #define USB_CONTROLLER_DATA      USB_LINK_NONCACHE_NONINIT_DATA
 #else
 #if (defined(DATA_SECTION_IS_CACHEABLE) && (DATA_SECTION_IS_CACHEABLE))
@@ -472,7 +472,7 @@ _Pragma("diag_suppress=Pm120")
 #define USB_GLOBAL               USB_LINK_DMA_NONINIT_DATA
 #define USB_BDT                  USB_LINK_NONCACHE_NONINIT_DATA
 #define USB_DMA_DATA_NONINIT_SUB USB_LINK_DMA_NONINIT_DATA
-#define USB_DMA_DATA_INIT_SUB    USB_LINK_DMA_INIT_DATA(m_usb_dma_init_data)
+#define USB_DMA_DATA_INIT_SUB    USB_LINK_DMA_INIT_DATA(CacheLineData.init)
 #define USB_CONTROLLER_DATA      USB_LINK_NONCACHE_NONINIT_DATA
 
 #else

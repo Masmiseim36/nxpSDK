@@ -581,6 +581,114 @@ status_t SDMMCHOST_TransferFunction(sdmmchost_t *host, sdmmchost_transfer_t *con
     return error;
 }
 
+#if defined SDMMCHOST_ENABLE_CACHE_LINE_ALIGN_TRANSFER && SDMMCHOST_ENABLE_CACHE_LINE_ALIGN_TRANSFER
+status_t SDMMCHOST_ScatterGatherTransferFunction(sdmmchost_t *host, sdmmchost_scatter_gather_transfer_t *content)
+{
+    sdmmchost_scatter_gather_data_list_t *dataList;
+    status_t error = kStatus_Success;
+    uint32_t event = 0U;
+    usdhc_adma_config_t dmaConfig;
+
+    (void)SDMMC_OSAMutexLock(&host->lock, osaWaitForever_c);
+
+    if (content->data != NULL)
+    {
+        (void)memset(&dmaConfig, 0, sizeof(usdhc_adma_config_t));
+        /* config adma */
+        dmaConfig.dmaMode = SDMMCHOST_DMA_MODE;
+#if !(defined(FSL_FEATURE_USDHC_HAS_NO_RW_BURST_LEN) && FSL_FEATURE_USDHC_HAS_NO_RW_BURST_LEN)
+        dmaConfig.burstLen = kUSDHC_EnBurstLenForINCR;
+#endif
+        dmaConfig.admaTable      = host->dmaDesBuffer;
+        dmaConfig.admaTableWords = host->dmaDesBufferWordsNum;
+
+        if ((host->cacheAlignBuffer == NULL) || ((host->cacheAlignBufferSize == 0U)))
+        {
+            /* application should register cache line size align buffer for host driver maintain the unalign data
+             * transfer */
+            assert(false);
+            return kStatus_InvalidArgument;
+        }
+
+#if ((defined __DCACHE_PRESENT) && __DCACHE_PRESENT) || (defined FSL_FEATURE_HAS_L1CACHE && FSL_FEATURE_HAS_L1CACHE)
+#if !(defined(FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL) && FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL)
+        if (host->enableCacheControl == kSDMMCHOST_CacheControlRWBuffer)
+        {
+            /* no matter read or write transfer, clean the cache line anyway to avoid data miss */
+            dataList = &content->data->sgData;
+            while (dataList != NULL)
+            {
+                DCACHE_CleanByRange((uint32_t)(dataList->dataAddr), dataList->dataSize);
+                dataList = dataList->dataList;
+            }
+        }
+#endif
+#endif
+    }
+
+    /* clear redundant transfer event flag */
+    (void)SDMMC_OSAEventClear(&(host->hostEvent), SDMMCHOST_TRANSFER_CMD_EVENT);
+
+    error = USDHC_TransferScatterGatherADMANonBlocking(host->hostController.base, &host->handle, &dmaConfig, content);
+    if (error == kStatus_Success)
+    {
+        /* wait command event */
+        if ((kStatus_Fail == SDMMC_OSAEventWait(&(host->hostEvent), SDMMCHOST_TRANSFER_CMD_EVENT,
+                                                SDMMCHOST_TRANSFER_COMPLETE_TIMEOUT, &event)) ||
+            ((event & SDMMC_OSA_EVENT_TRANSFER_CMD_FAIL) != 0U))
+        {
+            error = kStatus_Fail;
+        }
+        else
+        {
+            if (content->data != NULL)
+            {
+                if ((event & SDMMC_OSA_EVENT_TRANSFER_DATA_SUCCESS) == 0U)
+                {
+                    if (((event & SDMMC_OSA_EVENT_TRANSFER_DATA_FAIL) != 0U) ||
+                        (kStatus_Fail == SDMMC_OSAEventWait(&(host->hostEvent), SDMMCHOST_TRANSFER_DATA_EVENT,
+                                                            SDMMCHOST_TRANSFER_COMPLETE_TIMEOUT, &event) ||
+                         ((event & SDMMC_OSA_EVENT_TRANSFER_DATA_FAIL) != 0U)))
+                    {
+                        error = kStatus_Fail;
+                    }
+                }
+            }
+        }
+    }
+
+    if (error != kStatus_Success)
+    {
+        /* host error recovery */
+        SDMMCHOST_ErrorRecovery(host->hostController.base);
+    }
+    else
+    {
+        if ((content->data != NULL) && (content->data->dataDirection == kUSDHC_TransferDirectionReceive))
+        {
+#if ((defined __DCACHE_PRESENT) && __DCACHE_PRESENT) || (defined FSL_FEATURE_HAS_L1CACHE && FSL_FEATURE_HAS_L1CACHE)
+#if !(defined(FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL) && FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL)
+            /* invalidate the cache for read */
+            if (host->enableCacheControl == kSDMMCHOST_CacheControlRWBuffer)
+            {
+                dataList = &content->data->sgData;
+                while (dataList != NULL)
+                {
+                    DCACHE_InvalidateByRange((uint32_t)(dataList->dataAddr), dataList->dataSize);
+                    dataList = dataList->dataList;
+                }
+            }
+#endif
+#endif
+        }
+    }
+
+    (void)SDMMC_OSAMutexUnlock(&host->lock);
+
+    return error;
+}
+#endif
+
 static void SDMMCHOST_ErrorRecovery(USDHC_Type *base)
 {
     uint32_t status = 0U;

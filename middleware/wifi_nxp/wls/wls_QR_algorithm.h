@@ -3,10 +3,9 @@
  *
  * @brief This file contains header for QR math functions
  *
- * Copyright 2023 NXP
+ * Copyright 2023-2024 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
- *
  */
 
 /************************************************************************
@@ -17,7 +16,7 @@
 #define WLS_QR_ALGORITHM_H
 
 // MAX_MAT_SIZE needs to be >=2*SIG_SUBSP_DIM_MAX
-#define MAX_MAT_SIZE 16
+#define MAX_MAT_SIZE 32
 
 #ifdef ARM_DS5
 #define SQRTF(x) __sqrt(x)

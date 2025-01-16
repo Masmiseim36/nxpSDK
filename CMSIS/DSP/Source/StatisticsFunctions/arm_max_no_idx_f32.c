@@ -46,12 +46,11 @@
   @param[in]     pSrc       points to the input vector
   @param[in]     blockSize  number of samples in input vector
   @param[out]    pResult    maximum value returned here
-  @return        none
  */
 
 #if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)
 
-void arm_max_no_idx_f32(
+ARM_DSP_ATTRIBUTE void arm_max_no_idx_f32(
     const float32_t *pSrc,
     uint32_t   blockSize,
     float32_t *pResult)
@@ -106,7 +105,7 @@ void arm_max_no_idx_f32(
 
 #else
 
-void arm_max_no_idx_f32(
+ARM_DSP_ATTRIBUTE void arm_max_no_idx_f32(
     const float32_t *pSrc,
     uint32_t   blockSize,
     float32_t *pResult)

@@ -55,7 +55,6 @@
   @brief         Hanning window generating function (f32).
   @param[out]    pDst       points to the output generated window
   @param[in]     blockSize  number of samples in the window
-  @return        none
  
   @par Parameters of the window
   
@@ -71,7 +70,7 @@
 
 
 
-void arm_hanning_f32(
+ARM_DSP_ATTRIBUTE void arm_hanning_f32(
         float32_t * pDst,
         uint32_t blockSize)
 {

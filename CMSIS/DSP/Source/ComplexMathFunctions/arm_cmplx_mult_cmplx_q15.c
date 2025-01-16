@@ -43,7 +43,6 @@
   @param[in]     pSrcB       points to second input vector
   @param[out]    pDst        points to output vector
   @param[in]     numSamples  number of samples in each vector
-  @return        none
 
   @par           Scaling and Overflow Behavior
                    The function implements 1.15 by 1.15 multiplications and finally output is converted into 3.13 format.
@@ -51,7 +50,7 @@
 
 #if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE)
 
-void arm_cmplx_mult_cmplx_q15(
+ARM_DSP_ATTRIBUTE void arm_cmplx_mult_cmplx_q15(
   const q15_t * pSrcA,
   const q15_t * pSrcB,
         q15_t * pDst,
@@ -170,7 +169,7 @@ void arm_cmplx_mult_cmplx_q15(
   }
 }
 #else
-void arm_cmplx_mult_cmplx_q15(
+ARM_DSP_ATTRIBUTE void arm_cmplx_mult_cmplx_q15(
   const q15_t * pSrcA,
   const q15_t * pSrcB,
         q15_t * pDst,

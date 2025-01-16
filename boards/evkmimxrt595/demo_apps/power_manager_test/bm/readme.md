@@ -1,5 +1,6 @@
-Overview
-========
+# power_manager_test_bm
+
+## Overview
 The power manager test application demonstrates the basic usage of power manager framework without RTOS.
 The demo tests all features of power manager framework, including notification manager, wakeup source manager and so on.
 The demo shows how the various power mode switch to each other based on power manager framework. However, in actual low power use case, to save energy and reduce the consumption even more, many things can be done including:
@@ -9,60 +10,16 @@ The demo shows how the various power mode switch to each other based on power ma
  - Other low power consideration based on the actual application hardware.
  - Debug pins(e.g SWD_DIO) would consume additional power, had better to disable related pins or disconnect them.
 
-SDK version
-===========
-- Version: 2.16.000
-
-Toolchain supported
-===================
-- IAR embedded Workbench  9.60.1
-- Keil MDK  5.39.0
-- GCC ARM Embedded  13.2.1
-- MCUXpresso  11.10.0
-
-Hardware requirements
-=====================
-- Mini/micro USB cable
-- EVK-MIMXRT595 board
-- Personal Computer
-
-Board settings
-==============
-
-Prepare the Demo
-================
-1.  Connect a micro USB cable between the PC host and the CMSIS DAP USB port (J40) on the board.
-2.  Open a serial terminal with the following settings:
-    - 115200 baud rate
-    - 8 data bits
-    - No parity
-    - One stop bit
-    - No flow control
-3.  Download the program to the target board.
-4.  Either press the reset button on your board or launch the debugger in your IDE to begin running the demo.
-
-Running the demo
-================
-The log below shows the output of the power manager test demo in the terminal window:
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Power Manager Test.
-
-Please select the desired power mode:
-        Press A to enter: Sleep
-        Press B to enter: Deep Sleep
-        Press C to enter: Deep Power Down
-        Press D to enter: Full Deep Power Down
-
-Waiting for power mode select...
-
-Next Loop
-
-Please select the desired power mode:
-        Press A to enter: Sleep
-        Press B to enter: Deep Sleep
-        Press C to enter: Deep Power Down
-        Press D to enter: Full Deep Power Down
-
-Waiting for power mode select...
-
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+## Supported Boards
+- [MIMXRT1170-EVKB](../../../_boards/evkbmimxrt1170/demo_apps/power_manager_test/bm/example_board_readme.md)
+- [EVK-MIMXRT595](../../../_boards/evkmimxrt595/demo_apps/power_manager_test/bm/example_board_readme.md)
+- [EVK-MIMXRT685](../../../_boards/evkmimxrt685/demo_apps/power_manager_test/bm/example_board_readme.md)
+- [FRDM-MCXN947](../../../_boards/frdmmcxn947/demo_apps/power_manager_test/bm/example_board_readme.md)
+- [FRDM-MCXW71](../../../_boards/frdmmcxw71/demo_apps/power_manager_test/bm/example_board_readme.md)
+- [FRDM-RW612](../../../_boards/frdmrw612/demo_apps/power_manager_test/bm/example_board_readme.md)
+- [K32W148-EVK](../../../_boards/k32w148evk/demo_apps/power_manager_test/bm/example_board_readme.md)
+- [KW45B41Z-EVK](../../../_boards/kw45b41zevk/demo_apps/power_manager_test/bm/example_board_readme.md)
+- [KW47-EVK](../../../_boards/kw47evk/demo_apps/power_manager_test/bm/example_board_readme.md)
+- [MCX-N9XX-EVK](../../../_boards/mcxn9xxevk/demo_apps/power_manager_test/bm/example_board_readme.md)
+- [MCX-W72-EVK](../../../_boards/mcxw72evk/demo_apps/power_manager_test/bm/example_board_readme.md)
+- [RD-RW612-BGA](../../../_boards/rdrw612bga/demo_apps/power_manager_test/bm/example_board_readme.md)

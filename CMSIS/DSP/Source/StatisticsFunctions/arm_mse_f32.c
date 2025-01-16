@@ -43,7 +43,6 @@
   @param[in]     pSrcB       points to the second input vector
   @param[in]     blockSize   number of samples in input vector
   @param[out]    pResult      mean square error
-  @return        none
  */
 
 #if !defined(ARM_MATH_AUTOVECTORIZE)
@@ -51,7 +50,7 @@
 #if defined(ARM_MATH_MVEF)
 #include "arm_helium_utils.h"
 
-void arm_mse_f32(
+ARM_DSP_ATTRIBUTE void arm_mse_f32(
     const float32_t * pSrcA,
     const float32_t * pSrcB,
     uint32_t    blockSize,
@@ -105,7 +104,7 @@ void arm_mse_f32(
 #endif
 
 #if defined(ARM_MATH_NEON) 
-void arm_mse_f32(
+ARM_DSP_ATTRIBUTE void arm_mse_f32(
     const float32_t * pSrcA,
     const float32_t * pSrcB,
     uint32_t    blockSize,
@@ -175,7 +174,7 @@ void arm_mse_f32(
 #if (!defined(ARM_MATH_MVEF) && !defined(ARM_MATH_NEON)) || defined(ARM_MATH_AUTOVECTORIZE)
 
 
-void arm_mse_f32(
+ARM_DSP_ATTRIBUTE void arm_mse_f32(
     const float32_t * pSrcA,
     const float32_t * pSrcB,
     uint32_t    blockSize,

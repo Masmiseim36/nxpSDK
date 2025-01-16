@@ -74,20 +74,20 @@
                    The folder Scripts is containing a Python script that can be used
                    to generate the filter, dct and window arrays.
  
-  @par          
+  @par
                 This function should be used only if you don't know the FFT sizes that 
                 you'll need at build time. The use of this function will prevent the 
                 linker from removing the FFT tables that are not needed and the library 
                 code size will be bigger than needed.
 
-  @par          
+  @par
                 If you use CMSIS-DSP as a static library, and if you know the MFCC sizes 
                 that you need at build time, then it is better to use the initialization
                 functions defined for each MFCC size.
 
  */
 
-arm_status arm_mfcc_init_f16(
+ARM_DSP_ATTRIBUTE arm_status arm_mfcc_init_f16(
   arm_mfcc_instance_f16 * S,
   uint32_t fftLen,
   uint32_t nbMelFilters,
@@ -121,7 +121,7 @@ arm_status arm_mfcc_init_f16(
 
 #if defined(ARM_MFCC_CFFT_BASED)
 #define MFCC_INIT_F16(LEN)                    \
-arm_status arm_mfcc_init_##LEN##_f16(         \
+ARM_DSP_ATTRIBUTE arm_status arm_mfcc_init_##LEN##_f16(         \
   arm_mfcc_instance_f16 * S,                  \
   uint32_t nbMelFilters,                      \
   uint32_t nbDctOutputs,                      \
@@ -149,7 +149,7 @@ arm_status arm_mfcc_init_##LEN##_f16(         \
 }
 #else
 #define MFCC_INIT_F16(LEN)                       \
-arm_status arm_mfcc_init_##LEN##_f16(            \
+ARM_DSP_ATTRIBUTE arm_status arm_mfcc_init_##LEN##_f16(            \
   arm_mfcc_instance_f16 * S,                     \
   uint32_t nbMelFilters,                         \
   uint32_t nbDctOutputs,                         \
@@ -204,7 +204,7 @@ arm_status arm_mfcc_init_##LEN##_f16(            \
                    The folder Scripts is containing a Python script that can be used
                    to generate the filter, dct and window arrays.
 */
-MFCC_INIT_F16(32);
+MFCC_INIT_F16(32)
 
 /**
   @brief         Initialization of the MFCC F16 instance structure for 64 samples MFCC
@@ -233,7 +233,7 @@ MFCC_INIT_F16(32);
                    The folder Scripts is containing a Python script that can be used
                    to generate the filter, dct and window arrays.
 */
-MFCC_INIT_F16(64);
+MFCC_INIT_F16(64)
 
 /**
   @brief         Initialization of the MFCC F16 instance structure for 128 samples MFCC
@@ -262,7 +262,7 @@ MFCC_INIT_F16(64);
                    The folder Scripts is containing a Python script that can be used
                    to generate the filter, dct and window arrays.
 */
-MFCC_INIT_F16(128);
+MFCC_INIT_F16(128)
 
 /**
   @brief         Initialization of the MFCC F16 instance structure for 256 samples MFCC
@@ -291,7 +291,7 @@ MFCC_INIT_F16(128);
                    The folder Scripts is containing a Python script that can be used
                    to generate the filter, dct and window arrays.
 */
-MFCC_INIT_F16(256);
+MFCC_INIT_F16(256)
 
 /**
   @brief         Initialization of the MFCC F16 instance structure for 512 samples MFCC
@@ -320,7 +320,7 @@ MFCC_INIT_F16(256);
                    The folder Scripts is containing a Python script that can be used
                    to generate the filter, dct and window arrays.
 */
-MFCC_INIT_F16(512);
+MFCC_INIT_F16(512)
 
 /**
   @brief         Initialization of the MFCC F16 instance structure for 1024 samples MFCC
@@ -349,7 +349,7 @@ MFCC_INIT_F16(512);
                    The folder Scripts is containing a Python script that can be used
                    to generate the filter, dct and window arrays.
 */
-MFCC_INIT_F16(1024);
+MFCC_INIT_F16(1024)
 
 /**
   @brief         Initialization of the MFCC F16 instance structure for 2048 samples MFCC
@@ -378,7 +378,7 @@ MFCC_INIT_F16(1024);
                    The folder Scripts is containing a Python script that can be used
                    to generate the filter, dct and window arrays.
 */
-MFCC_INIT_F16(2048);
+MFCC_INIT_F16(2048)
 
 /**
   @brief         Initialization of the MFCC F16 instance structure for 4096 samples MFCC
@@ -407,7 +407,7 @@ MFCC_INIT_F16(2048);
                    The folder Scripts is containing a Python script that can be used
                    to generate the filter, dct and window arrays.
 */
-MFCC_INIT_F16(4096);
+MFCC_INIT_F16(4096)
 
 #endif /* defined(ARM_FLOAT16_SUPPORTED) */
 /**

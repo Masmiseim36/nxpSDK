@@ -9,7 +9,7 @@
 *                                                                    *
 **********************************************************************
 
-** emWin V6.38 - Graphical user interface for embedded applications **
+** emWin V6.46 - Graphical user interface for embedded applications **
 All  Intellectual Property rights  in the Software belongs to  SEGGER.
 emWin is protected by  international copyright laws.  Knowledge of the
 source code may not be used to write a similar product.  This file may
@@ -34,7 +34,7 @@ License model:            emWin License Agreement, dated August 20th 2011 and Am
 Licensed platform:        NXP's ARM 7/9, Cortex-M0, M3, M4, M7, A7, M33
 ----------------------------------------------------------------------
 Support and Update Agreement (SUA)
-SUA period:               2011-08-19 - 2024-09-02
+SUA period:               2011-08-19 - 2025-09-02
 Contact to extend SUA:    sales@segger.com
 ----------------------------------------------------------------------
 File        : MULTIEDIT_Private.h
@@ -73,11 +73,13 @@ Purpose     : MULTIEDIT include
 *
 *  Used for partial invalidation. Stored in pObj->InvalidFlags.
 */
-#define INVALID_NUMCHARS (1 << 0)
-#define INVALID_NUMLINES (1 << 1)
-#define INVALID_TEXTSIZE (1 << 2)
-#define INVALID_CURSORXY (1 << 3)
-#define INVALID_LINEPOSB (1 << 4)
+#define INVALID_NUMCHARS   (1 << 0)
+#define INVALID_NUMLINES   (1 << 1)
+#define INVALID_TEXTSIZE   (1 << 2)
+#define INVALID_CURSORXY   (1 << 3)
+#define INVALID_CURSORLINE (1 << 4)
+#define INVALID_LINEPOSB   (1 << 5)
+#define INVALID_SCROLL     (1 << 6)
 
 //
 // MULTIEDIT properties
@@ -108,8 +110,8 @@ typedef struct {
   U32              CursorLine;          // Number of current cursor line
   U32              CursorPosChar;       // Character offset number of cursor
   U32              CursorPosByte;       // Byte offset number of cursor
-  I16              CursorPosX;          // Cursor position in X
-  I16              CursorPosY;          // Cursor position in Y
+  I32              CursorPosX;          // Cursor position in X
+  I32              CursorPosY;          // Cursor position in Y
   U32              CacheLinePosByte;
   U32              CacheLineNumber;
   U32              CacheFirstVisibleLine;
@@ -118,6 +120,7 @@ typedef struct {
   WM_SCROLL_STATE  ScrollStateH;
   U16              Flags;
   WM_HTIMER        hTimer;
+  int              TimerPeriod;
   GUI_WRAPMODE     WrapMode;
   int              MotionPosY;
   int              MotionPosOld;

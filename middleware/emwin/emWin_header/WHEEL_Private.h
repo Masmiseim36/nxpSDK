@@ -9,7 +9,7 @@
 *                                                                    *
 **********************************************************************
 
-** emWin V6.38 - Graphical user interface for embedded applications **
+** emWin V6.46 - Graphical user interface for embedded applications **
 All  Intellectual Property rights  in the Software belongs to  SEGGER.
 emWin is protected by  international copyright laws.  Knowledge of the
 source code may not be used to write a similar product.  This file may
@@ -34,7 +34,7 @@ License model:            emWin License Agreement, dated August 20th 2011 and Am
 Licensed platform:        NXP's ARM 7/9, Cortex-M0, M3, M4, M7, A7, M33
 ----------------------------------------------------------------------
 Support and Update Agreement (SUA)
-SUA period:               2011-08-19 - 2024-09-02
+SUA period:               2011-08-19 - 2025-09-02
 Contact to extend SUA:    sales@segger.com
 ----------------------------------------------------------------------
 File        : WHEEL.h
@@ -122,6 +122,7 @@ typedef struct {
   GUI_HMEM         ahOverlay[3];    // Separate memory blocks of GUI_DRAW_HANDLEs for overlay bitmaps
   WHEEL_ITEM_ATTR  aAttrOverlay[3]; // Alignment & color of overlay bitmaps
   WM_HMEM          hContext;        // Motion context
+  WIDGET_DRAW_ITEM_FUNC * pfDrawItem;
 } WHEEL_OBJ;
 
 /*********************************************************************
@@ -133,7 +134,7 @@ typedef struct {
 void         WHEEL__SetMotionFlags        (WHEEL_OBJ * pObj);
 void         WHEEL__AddBitmapObjects      (WHEEL_Handle hObj, const GUI_HMEM                    * phMem, unsigned NumItems, U8 Align, I16 xOff, I16 yOff, GUI_COLOR Color);
 void         WHEEL__SetCenterBitmapObjects(WHEEL_Handle hObj, unsigned Index, const GUI_HMEM    * phMem, unsigned NumItems, U8 Align, I16 xOff, I16 yOff, GUI_COLOR Color);
-const char * WHEEL__GetItemTextLocked     (WHEEL_Handle hObj, unsigned Index, unsigned Row);
+char       * WHEEL__GetItemTextLocked     (WHEEL_Handle hObj, unsigned Index, unsigned Row);
 void         WHEEL__ClipPos               (WHEEL_OBJ * pObj);
 
 /*********************************************************************

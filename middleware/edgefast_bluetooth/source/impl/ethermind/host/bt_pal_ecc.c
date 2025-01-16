@@ -70,7 +70,7 @@ int bt_pub_key_gen(struct bt_pub_key_cb *new_cb)
 		return -EINVAL;
 	}
 
-	SYS_SLIST_FOR_EACH_CONTAINER(&pub_key_cb_slist, cb, node, struct bt_pub_key_cb) {
+	SYS_SLIST_FOR_EACH_CONTAINER(&pub_key_cb_slist, cb, node) {
 		if (cb == new_cb) {
 			LOG_WRN("Callback already registered");
 			return -EALREADY;
@@ -91,7 +91,7 @@ int bt_pub_key_gen(struct bt_pub_key_cb *new_cb)
 		LOG_ERR("Sending LE P256 Public Key command failed");
 		atomic_clear_bit(bt_dev.flags, BT_DEV_PUB_KEY_BUSY);
 
-		SYS_SLIST_FOR_EACH_CONTAINER(&pub_key_cb_slist, cb, node, struct bt_pub_key_cb) {
+		SYS_SLIST_FOR_EACH_CONTAINER(&pub_key_cb_slist, cb, node) {
 			if (cb->func) {
 				cb->func(NULL);
 			}
@@ -110,7 +110,7 @@ void bt_pub_key_hci_disrupted(void)
 
 	atomic_clear_bit(bt_dev.flags, BT_DEV_PUB_KEY_BUSY);
 
-	SYS_SLIST_FOR_EACH_CONTAINER(&pub_key_cb_slist, cb, node, struct bt_pub_key_cb) {
+	SYS_SLIST_FOR_EACH_CONTAINER(&pub_key_cb_slist, cb, node) {
 		if (cb->func) {
 			cb->func(NULL);
 		}
@@ -118,6 +118,7 @@ void bt_pub_key_hci_disrupted(void)
 
 	sys_slist_init(&pub_key_cb_slist);
 }
+
 const uint8_t *bt_pub_key_get(void)
 {
 	if (IS_ENABLED(CONFIG_BT_USE_DEBUG_KEYS) &&
@@ -214,7 +215,7 @@ void bt_hci_evt_le_pkey_complete(struct net_buf *buf)
 		atomic_set_bit(bt_dev.flags, BT_DEV_HAS_PUB_KEY);
 	}
 
-	SYS_SLIST_FOR_EACH_CONTAINER(&pub_key_cb_slist, cb, node, struct bt_pub_key_cb) {
+	SYS_SLIST_FOR_EACH_CONTAINER(&pub_key_cb_slist, cb, node) {
 		if (cb->func) {
 			cb->func(evt->status ? NULL : pub_key);
 		}

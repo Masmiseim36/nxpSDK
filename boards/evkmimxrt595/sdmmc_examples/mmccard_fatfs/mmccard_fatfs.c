@@ -13,11 +13,8 @@
 #include "fsl_debug_console.h"
 #include "ff.h"
 #include "diskio.h"
+#include "app.h"
 #include "sdmmc_config.h"
-#include "pin_mux.h"
-#include "clock_config.h"
-#include "board.h"
-#include "fsl_power.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -62,9 +59,7 @@ int main(void)
     BYTE work[FF_MAX_SS];
     FRESULT result;
 
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
     BOARD_MMC_Config(&g_mmc, BOARD_SDMMC_MMC_HOST_IRQ_PRIORITY);
 
     PRINTF("\r\nFATFS example to demonstrate how to use FATFS with MMC card.\r\n");

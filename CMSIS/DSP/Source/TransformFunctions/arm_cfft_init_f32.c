@@ -76,7 +76,7 @@ CFFT_RADIX4BY2_REARRANGE_TWIDDLES_F32(16);
 
 
 #define CFFTINIT_F32(LEN,LENTWIDDLE)                                               \
-arm_status arm_cfft_init_##LEN##_f32(                                           \
+ARM_DSP_ATTRIBUTE arm_status arm_cfft_init_##LEN##_f32(                                           \
   arm_cfft_instance_f32 * S)                                                    \
 {                                                                               \
     /*  Initialise the default arm status */                                    \
@@ -95,7 +95,7 @@ arm_status arm_cfft_init_##LEN##_f32(                                           
     status=arm_cfft_radix4by2_rearrange_twiddles_##LENTWIDDLE##_f32(S);         \
                                                                                 \
     return (status);                                                            \
-};
+}
 
 #else
 
@@ -105,7 +105,7 @@ arm_status arm_cfft_init_##LEN##_f32(                                           
   S->pTwiddle = arm_cfft_sR_##EXT##_len##SIZE.pTwiddle;
 
 #define CFFTINIT_F32(LEN,LENTWIDDLE)                                          \
-arm_status arm_cfft_init_##LEN##_f32(arm_cfft_instance_f32 * S)\
+ARM_DSP_ATTRIBUTE arm_status arm_cfft_init_##LEN##_f32(arm_cfft_instance_f32 * S)\
 {                                                              \
     /*  Initialise the default arm status */                   \
         arm_status status = ARM_MATH_SUCCESS;                  \
@@ -119,7 +119,7 @@ arm_status arm_cfft_init_##LEN##_f32(arm_cfft_instance_f32 * S)\
         FFTINIT(f32,LEN);                                      \
                                                                \
         return (status);                                       \
-};
+}
 
 #endif /* defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE) */
 
@@ -134,7 +134,7 @@ arm_status arm_cfft_init_##LEN##_f32(arm_cfft_instance_f32 * S)\
                 Other versions can still initialize directly the data structure using 
                 variables declared in arm_const_structs.h
  */
-CFFTINIT_F32(4096,4096);
+CFFTINIT_F32(4096,4096)
 
 
 /**
@@ -148,7 +148,7 @@ CFFTINIT_F32(4096,4096);
                 Other versions can still initialize directly the data structure using 
                 variables declared in arm_const_structs.h
  */
-CFFTINIT_F32(2048,1024);
+CFFTINIT_F32(2048,1024)
 
 
 /**
@@ -162,7 +162,7 @@ CFFTINIT_F32(2048,1024);
                 Other versions can still initialize directly the data structure using 
                 variables declared in arm_const_structs.h
  */
-CFFTINIT_F32(1024,1024);
+CFFTINIT_F32(1024,1024)
 
 
 /**
@@ -176,7 +176,7 @@ CFFTINIT_F32(1024,1024);
                 Other versions can still initialize directly the data structure using 
                 variables declared in arm_const_structs.h
  */
-CFFTINIT_F32(512,256);
+CFFTINIT_F32(512,256)
 
 
 /**
@@ -190,7 +190,7 @@ CFFTINIT_F32(512,256);
                 Other versions can still initialize directly the data structure using 
                 variables declared in arm_const_structs.h
  */
-CFFTINIT_F32(256,256);
+CFFTINIT_F32(256,256)
 
 
 /**
@@ -204,7 +204,7 @@ CFFTINIT_F32(256,256);
                 Other versions can still initialize directly the data structure using 
                 variables declared in arm_const_structs.h
  */
-CFFTINIT_F32(128,64);
+CFFTINIT_F32(128,64)
 
 
 /**
@@ -218,7 +218,7 @@ CFFTINIT_F32(128,64);
                 Other versions can still initialize directly the data structure using 
                 variables declared in arm_const_structs.h
  */
-CFFTINIT_F32(64,64);
+CFFTINIT_F32(64,64)
  
 
 /**
@@ -232,7 +232,7 @@ CFFTINIT_F32(64,64);
                 Other versions can still initialize directly the data structure using 
                 variables declared in arm_const_structs.h
  */
-CFFTINIT_F32(32,16);
+CFFTINIT_F32(32,16)
 
 
 /**
@@ -246,7 +246,7 @@ CFFTINIT_F32(32,16);
                 Other versions can still initialize directly the data structure using 
                 variables declared in arm_const_structs.h
  */
-CFFTINIT_F32(16,16);
+CFFTINIT_F32(16,16)
 
 
 /**
@@ -257,22 +257,23 @@ CFFTINIT_F32(16,16);
                    - \ref ARM_MATH_SUCCESS        : Operation successful
                    - \ref ARM_MATH_ARGUMENT_ERROR : an error is detected
 
-  @par          Use of this function is mandatory only for the MVE version of the FFT.
+  @par
+                Use of this function is mandatory only for the MVE version of the FFT.
                 Other versions can still initialize directly the data structure using 
                 variables declared in arm_const_structs.h
  
-  @par          
+  @par
                 This function should be used only if you don't know the FFT sizes that 
                 you'll need at build time. The use of this function will prevent the 
                 linker from removing the FFT tables that are not needed and the library 
                 code size will be bigger than needed.
 
-  @par          
+  @par
                 If you use CMSIS-DSP as a static library, and if you know the FFT sizes 
                 that you need at build time, then it is better to use the initialization
                 functions defined for each FFT size.
  */
-arm_status arm_cfft_init_f32(
+ARM_DSP_ATTRIBUTE arm_status arm_cfft_init_f32(
   arm_cfft_instance_f32 * S,
   uint16_t fftLen)
 {

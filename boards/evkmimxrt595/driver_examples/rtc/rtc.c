@@ -7,15 +7,13 @@
  */
 
 #include "fsl_debug_console.h"
-#include "pin_mux.h"
 #include "board.h"
+#include "app.h"
 #include "fsl_rtc.h"
 
-#include <stdbool.h>
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-
 
 /*******************************************************************************
  * Prototypes
@@ -59,11 +57,7 @@ int main(void)
     rtc_datetime_t date;
 
     /* Board pin, clock, debug console init */
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
-
-    CLOCK_EnableOsc32K(true);
+    BOARD_InitHardware();
 
     /* Init RTC */
     RTC_Init(RTC);

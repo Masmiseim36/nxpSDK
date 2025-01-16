@@ -42,10 +42,9 @@
   @param[in]     pSrc       points to input vector 
   @param[out]    pDst       points to output vector
   @param[in]     blockSize  number of samples in each vector
-  @return        none
  */
 
-void arm_not_u32(
+ARM_DSP_ATTRIBUTE void arm_not_u32(
     const uint32_t * pSrc,
           uint32_t * pDst,
           uint32_t blockSize)

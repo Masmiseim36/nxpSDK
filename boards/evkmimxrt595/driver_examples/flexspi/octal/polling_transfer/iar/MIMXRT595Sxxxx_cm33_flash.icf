@@ -90,6 +90,11 @@ initialize by copy {
   readonly object ABImemcpy.o,
   readonly object ABImemset.o,
   readonly object flexspi_octal_flash_ops.o,
+  readonly object fsl_reset.o,
+  readonly object I64DivZer.o,
+  readonly object ABImemclr4.o,
+  readonly object ABImemset48.o,
+  readonly object I64DivMod.o,
   section .textrw,
   section CodeQuickAccess,
   section DataQuickAccess

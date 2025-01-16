@@ -55,6 +55,11 @@ static void find_key_in_use(struct bt_conn *conn, void *data)
 	__ASSERT_NO_MSG(data != NULL);
 
 	if (conn->state == BT_CONN_CONNECTED) {
+		const bt_addr_le_t *dst = bt_conn_get_dst(conn);
+
+		if (dst == NULL) {
+			return;
+		}
 		key = bt_keys_find_addr(conn->id, bt_conn_get_dst(conn));
 		if (key == NULL) {
 			return;
@@ -78,6 +83,11 @@ static bool key_is_in_use(uint8_t id)
 	return kdata.in_use;
 }
 #endif /* CONFIG_BT_KEYS_OVERWRITE_OLDEST */
+
+void bt_keys_reset(void)
+{
+	memset(key_pool, 0, sizeof(key_pool));
+}
 
 struct bt_keys *bt_keys_get_addr(uint8_t id, const bt_addr_le_t *addr)
 {
@@ -167,6 +177,10 @@ void bt_foreach_bond(uint8_t id, void (*func)(const struct bt_bond_info *info,
 			bt_addr_le_copy(&info.addr, &keys->addr);
 			func(&info, user_data);
 		}
+	}
+
+	if (IS_ENABLED(CONFIG_BT_CLASSIC)) {
+		bt_foreach_bond_br(func, user_data);
 	}
 }
 
@@ -521,11 +535,11 @@ uint32_t bt_keys_get_aging_counter_val(void)
 {
 	return aging_counter_val;
 }
+
 struct bt_keys *bt_keys_get_last_keys_updated(void)
 {
 	return last_keys_updated;
 }
-
 #endif /* CONFIG_BT_KEYS_OVERWRITE_OLDEST */
 #endif /* ZTEST_UNITTEST */
 

@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2021 NXP
+ * Copyright 2018-2021, 2024 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -27,10 +27,10 @@
 extern "C" {
 #endif
 
-void lv_port_pre_init(void);
 void lv_port_disp_init(void);
 void lv_port_indev_init(void);
 extern void BOARD_TouchIntHandler(void);
+void DEMO_CleanInvalidateCacheByAddr(void *addr, uint32_t size);
 
 #if defined(__cplusplus)
 }

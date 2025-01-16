@@ -115,10 +115,9 @@
   @param[in]     pSrc       points to the block of input data
   @param[out]    pDst       points to the block of output data
   @param[in]     blockSize  number of samples to process
-  @return        none
  */
 
-void arm_iir_lattice_f32(
+ARM_DSP_ATTRIBUTE void arm_iir_lattice_f32(
   const arm_iir_lattice_instance_f32 * S,
   const float32_t * pSrc,
         float32_t * pDst,

@@ -60,14 +60,13 @@
   @param[in]     qb                  second array of quaternions
   @param[out]    qr                   elementwise product of quaternions
   @param[in]     nbQuaternions       number of quaternions in the array
-  @return        none
  */
 
 #if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)
 
 #include "arm_helium_utils.h"
 
-void arm_quaternion_product_f32(const float32_t *qa, 
+ARM_DSP_ATTRIBUTE void arm_quaternion_product_f32(const float32_t *qa, 
     const float32_t *qb, 
     float32_t *qr,
     uint32_t nbQuaternions)
@@ -127,7 +126,7 @@ void arm_quaternion_product_f32(const float32_t *qa,
 
 #else
 
-void arm_quaternion_product_f32(const float32_t *qa, 
+ARM_DSP_ATTRIBUTE void arm_quaternion_product_f32(const float32_t *qa, 
     const float32_t *qb, 
     float32_t *qr,
     uint32_t nbQuaternions)

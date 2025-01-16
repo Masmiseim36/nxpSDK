@@ -66,7 +66,6 @@
   @param[in]     pSrc        points to input vector
   @param[out]    pDst        points to output vector
   @param[in]     numSamples  number of samples in each vector
-  @return        none
  */
 
 #if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
@@ -78,7 +77,7 @@
 #include "arm_helium_utils.h"
 
 
-void arm_cmplx_mag_f32(
+ARM_DSP_ATTRIBUTE void arm_cmplx_mag_f32(
   const float32_t * pSrc,
         float32_t * pDst,
         uint32_t numSamples)
@@ -153,7 +152,7 @@ void arm_cmplx_mag_f32(
 }
 
 #else
-void arm_cmplx_mag_f32(
+ARM_DSP_ATTRIBUTE void arm_cmplx_mag_f32(
   const float32_t * pSrc,
         float32_t * pDst,
         uint32_t numSamples)

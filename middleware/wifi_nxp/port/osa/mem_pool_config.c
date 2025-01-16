@@ -40,7 +40,7 @@
 #define POOL_ID1_BUF0_CNT 2
 
 /* Buffer descriptor size already part of TX size so don't add again */
-#define POOL_ID1_BUF0_SZ 4600
+#define POOL_ID1_BUF0_SZ 5200
 
 // Pool 1 total buffer size calculation
 #define POOL_ID1_SZ (POOL_ID1_BUF0_SZ * POOL_ID1_BUF0_CNT)
@@ -97,7 +97,7 @@
 
 // Buffer 0
 
-#define POOL_ID4_BUF0_CNT 4
+#define POOL_ID4_BUF0_CNT 8
 
 /* Buffer descriptor size already part of TX size so don't add again */
 #define POOL_ID4_BUF0_SZ 256
@@ -217,7 +217,7 @@
 
 // Buffer 0
 
-#define POOL_ID10_BUF0_CNT 4
+#define POOL_ID10_BUF0_CNT 1
 
 /* Buffer descriptor size already part of TX size so don't add again */
 #define POOL_ID10_BUF0_SZ 1792
@@ -257,7 +257,7 @@
 
 // Buffer 0
 
-#define POOL_ID12_BUF0_CNT 4
+#define POOL_ID12_BUF0_CNT 1
 
 /* Buffer descriptor size already part of TX size so don't add again */
 #define POOL_ID12_BUF0_SZ 2560
@@ -277,7 +277,7 @@
 
 // Buffer 0
 
-#define POOL_ID13_BUF0_CNT 4
+#define POOL_ID13_BUF0_CNT 1
 
 /* Buffer descriptor size already part of TX size so don't add again */
 #define POOL_ID13_BUF0_SZ 3072
@@ -297,7 +297,7 @@
 
 // Buffer 0
 
-#define POOL_ID14_BUF0_CNT 4
+#define POOL_ID14_BUF0_CNT 1
 
 /* Buffer descriptor size already part of TX size so don't add again */
 #define POOL_ID14_BUF0_SZ 4096
@@ -344,26 +344,26 @@ static MemPool_t buf_3072_MemPool;
 static MemPool_t buf_4096_MemPool;
 
 /***************** Preallocated pmAdapter pool memory ************************/
-uint8_t ALIGNED_START(32) pmAdapterBufferPool[POOL_ID0_POOL_SZ];
+SDK_ALIGN(uint8_t pmAdapterBufferPool[POOL_ID0_POOL_SZ], 32);
 
 /***************** Preallocated pmPrivate pool memory ************************/
-uint8_t ALIGNED_START(32) pmPrivateBufferPool[POOL_ID1_POOL_SZ];
+SDK_ALIGN(uint8_t pmPrivateBufferPool[POOL_ID1_POOL_SZ], 32);
 
 /***************** Preallocated buffer 32 pool memory ************************/
-uint8_t ALIGNED_START(32) buf_32_BufferPool[POOL_ID2_POOL_SZ];
+SDK_ALIGN(uint8_t buf_32_BufferPool[POOL_ID2_POOL_SZ], 32);
 
-uint8_t ALIGNED_START(32) buf_128_BufferPool[POOL_ID3_POOL_SZ];
-uint8_t ALIGNED_START(32) buf_256_BufferPool[POOL_ID4_POOL_SZ];
-uint8_t ALIGNED_START(32) buf_512_BufferPool[POOL_ID5_POOL_SZ];
-uint8_t ALIGNED_START(32) buf_768_BufferPool[POOL_ID6_POOL_SZ];
-uint8_t ALIGNED_START(32) buf_1024_BufferPool[POOL_ID7_POOL_SZ];
-uint8_t ALIGNED_START(32) buf_1280_BufferPool[POOL_ID8_POOL_SZ];
-uint8_t ALIGNED_START(32) buf_1536_BufferPool[POOL_ID9_POOL_SZ];
-uint8_t ALIGNED_START(32) buf_1792_BufferPool[POOL_ID10_POOL_SZ];
-uint8_t ALIGNED_START(32) buf_2048_BufferPool[POOL_ID11_POOL_SZ];
-uint8_t ALIGNED_START(32) buf_2560_BufferPool[POOL_ID12_POOL_SZ];
-uint8_t ALIGNED_START(32) buf_3072_BufferPool[POOL_ID13_POOL_SZ];
-uint8_t ALIGNED_START(32) buf_4096_BufferPool[POOL_ID14_POOL_SZ];
+SDK_ALIGN(uint8_t buf_128_BufferPool[POOL_ID3_POOL_SZ], 32);
+SDK_ALIGN(uint8_t buf_256_BufferPool[POOL_ID4_POOL_SZ], 32);
+SDK_ALIGN(uint8_t buf_512_BufferPool[POOL_ID5_POOL_SZ], 32);
+SDK_ALIGN(uint8_t buf_768_BufferPool[POOL_ID6_POOL_SZ], 32);
+SDK_ALIGN(uint8_t buf_1024_BufferPool[POOL_ID7_POOL_SZ], 32);
+SDK_ALIGN(uint8_t buf_1280_BufferPool[POOL_ID8_POOL_SZ], 32);
+SDK_ALIGN(uint8_t buf_1536_BufferPool[POOL_ID9_POOL_SZ], 32);
+SDK_ALIGN(uint8_t buf_1792_BufferPool[POOL_ID10_POOL_SZ], 32);
+SDK_ALIGN(uint8_t buf_2048_BufferPool[POOL_ID11_POOL_SZ], 32);
+SDK_ALIGN(uint8_t buf_2560_BufferPool[POOL_ID12_POOL_SZ], 32);
+SDK_ALIGN(uint8_t buf_3072_BufferPool[POOL_ID13_POOL_SZ], 32);
+SDK_ALIGN(uint8_t buf_4096_BufferPool[POOL_ID14_POOL_SZ], 32);
 
 int mem_pool_init()
 {

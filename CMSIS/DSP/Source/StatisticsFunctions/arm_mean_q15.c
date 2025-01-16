@@ -42,7 +42,6 @@
   @param[in]     pSrc       points to the input vector
   @param[in]     blockSize  number of samples in input vector
   @param[out]    pResult    mean value returned here
-  @return        none
 
   @par           Scaling and Overflow Behavior
                    The function is implemented using a 32-bit internal accumulator.
@@ -54,7 +53,7 @@
  */
 
 #if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE)
-void arm_mean_q15(
+ARM_DSP_ATTRIBUTE void arm_mean_q15(
   const q15_t * pSrc,
         uint32_t blockSize,
         q15_t * pResult)
@@ -94,7 +93,7 @@ void arm_mean_q15(
     *pResult = (q15_t) (sum / (int32_t) blockSize);
 }
 #else
-void arm_mean_q15(
+ARM_DSP_ATTRIBUTE void arm_mean_q15(
   const q15_t * pSrc,
         uint32_t blockSize,
         q15_t * pResult)

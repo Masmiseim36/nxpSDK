@@ -35,24 +35,20 @@
 
 #define BT_BAP_BASS_VALID_OPCODE(opcode) ((opcode) <= BT_BAP_BASS_OP_REM_SRC)
 
-STRUCT_PACKED_PRE
 struct bt_bap_bass_cp_scan_stop {
 	uint8_t opcode;
-} STRUCT_PACKED_POST;
+} __packed;
 
-STRUCT_PACKED_PRE
 struct bt_bap_bass_cp_scan_start {
 	uint8_t opcode;
-} STRUCT_PACKED_POST;
+} __packed;
 
-STRUCT_PACKED_PRE
 struct bt_bap_bass_cp_subgroup {
 	uint32_t bis_sync;
 	uint8_t metadata_len;
 	uint8_t metadata[0];
-} STRUCT_PACKED_POST;
+} __packed;
 
-STRUCT_PACKED_PRE
 struct bt_bap_bass_cp_add_src {
 	uint8_t opcode;
 	bt_addr_le_t addr;
@@ -64,9 +60,8 @@ struct bt_bap_bass_cp_add_src {
 #if 0
 	struct bt_bap_bass_cp_subgroup subgroups[0];
 #endif
-} STRUCT_PACKED_POST;
+} __packed;
 
-STRUCT_PACKED_PRE
 struct bt_bap_bass_cp_mod_src {
 	uint8_t opcode;
 	uint8_t src_id;
@@ -76,20 +71,18 @@ struct bt_bap_bass_cp_mod_src {
 #if 0
 	struct bt_bap_bass_cp_subgroup subgroups[0];
 #endif
-} STRUCT_PACKED_POST;
+} __packed;
 
-STRUCT_PACKED_PRE
 struct bt_bap_bass_cp_broadcase_code {
 	uint8_t opcode;
 	uint8_t src_id;
 	uint8_t broadcast_code[16];
-} STRUCT_PACKED_POST;
+} __packed;
 
-STRUCT_PACKED_PRE
 struct bt_bap_bass_cp_rem_src {
 	uint8_t opcode;
 	uint8_t src_id;
-} STRUCT_PACKED_POST;
+} __packed;
 
 union bt_bap_bass_cp {
 	uint8_t opcode;
@@ -133,4 +126,17 @@ static inline const char *bt_bap_big_enc_state_str(uint8_t state)
 	default:
 		return "unknown state";
 	}
+}
+
+static inline bool valid_bis_syncs(uint32_t bis_sync)
+{
+	if (bis_sync == BT_BAP_BIS_SYNC_NO_PREF) {
+		return true;
+	}
+
+	if (bis_sync > BIT_MASK(31)) { /* Max BIS index */
+		return false;
+	}
+
+	return true;
 }

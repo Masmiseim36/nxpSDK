@@ -43,13 +43,12 @@
   @param[in]     pSrc       points to the input vector
   @param[in]     blockSize  number of samples in input vector
   @param[out]    pResult    minimum value returned here
-  @return        none
  */
 #if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE)
 
 #include "arm_helium_utils.h"
 
-void arm_absmin_no_idx_q15(
+ARM_DSP_ATTRIBUTE void arm_absmin_no_idx_q15(
   const q15_t * pSrc,
         uint32_t blockSize,
         q15_t * pResult)
@@ -102,7 +101,7 @@ void arm_absmin_no_idx_q15(
 
 #else
 #if defined(ARM_MATH_DSP)
-void arm_absmin_no_idx_q15(
+ARM_DSP_ATTRIBUTE void arm_absmin_no_idx_q15(
   const q15_t * pSrc,
         uint32_t blockSize,
         q15_t * pResult)
@@ -178,7 +177,7 @@ void arm_absmin_no_idx_q15(
   *pResult = out;                                                                                           \
 }
 #else
-void arm_absmin_no_idx_q15(
+ARM_DSP_ATTRIBUTE void arm_absmin_no_idx_q15(
   const q15_t * pSrc,
         uint32_t blockSize,
         q15_t * pResult)

@@ -83,9 +83,6 @@ pd_status_t PDPTN5110_HalInit(pd_handle pdHandle)
     (void)Reg_BusReadBlock(pdInstance, pd_interface_rev, 2,
                            (uint8_t *)&pdInstance->tcpcRegCache.GLOBAL.pd_interface_rev);
 
-    /* Store power control to default status */
-    Reg_BusWriteByte(pdInstance, power_control, 0x60U);
-
     /*  Enable and clear all interrupt */
     if (Reg_CacheRead(pdInstance, GLOBAL, pd_interface_rev) >= PD_INTERFACE_REV2VER1)
     {

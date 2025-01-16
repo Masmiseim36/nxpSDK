@@ -74,7 +74,7 @@ enum bt_gatt_perm {
 
 	/** @brief Attribute prepare write permission.
 	 *
-	 *  If set, allows prepare writes with use of BT_GATT_WRITE_FLAG_PREPARE
+	 *  If set, allows prepare writes with use of ``BT_GATT_WRITE_FLAG_PREPARE``
 	 *  passed to write callback.
 	 */
 	BT_GATT_PERM_PREPARE_WRITE = BIT(6),
@@ -142,7 +142,7 @@ struct bt_gatt_attr;
  *  @param offset Offset to start reading from
  *
  *  @return Number of bytes read, or in case of an error
- *          BT_GATT_ERR() with a specific BT_ATT_ERR_* error code.
+ *          ``BT_GATT_ERR()`` with a specific ``BT_ATT_ERR_*`` error code.
  */
 typedef ssize_t (*bt_gatt_attr_read_func_t)(struct bt_conn *conn,
 					    const struct bt_gatt_attr *attr,
@@ -157,10 +157,10 @@ typedef ssize_t (*bt_gatt_attr_read_func_t)(struct bt_conn *conn,
  *  @param buf    Buffer with the data to write
  *  @param len    Number of bytes in the buffer
  *  @param offset Offset to start writing from
- *  @param flags  Flags (BT_GATT_WRITE_FLAG_*)
+ *  @param flags  Flags (``BT_GATT_WRITE_FLAG_*``)
  *
  *  @return Number of bytes written, or in case of an error
- *          BT_GATT_ERR() with a specific BT_ATT_ERR_* error code.
+ *          ``BT_GATT_ERR()`` with a specific ``BT_ATT_ERR_*`` error code.
  */
 typedef ssize_t (*bt_gatt_attr_write_func_t)(struct bt_conn *conn,
 					     const struct bt_gatt_attr *attr,
@@ -171,6 +171,7 @@ typedef ssize_t (*bt_gatt_attr_write_func_t)(struct bt_conn *conn,
 struct bt_gatt_attr {
 	/** Attribute UUID */
 	const struct bt_uuid *uuid;
+	/** Attribute read callback */
 	bt_gatt_attr_read_func_t read;
 	/** Attribute write callback */
 	bt_gatt_attr_write_func_t write;
@@ -180,7 +181,7 @@ struct bt_gatt_attr {
 	uint16_t handle;
 	/** @brief Attribute permissions.
 	 *
-	 * Will be 0 if returned from bt_gatt_discover().
+	 * Will be 0 if returned from ``bt_gatt_discover()``.
 	 */
 	uint16_t perm;
 };
@@ -236,6 +237,7 @@ struct bt_gatt_cb {
 
 	sys_snode_t node;
 };
+
 /** @brief GATT authorization callback structure. */
 struct bt_gatt_authorization_cb {
 	/** @brief Authorize the GATT read operation.
@@ -400,6 +402,27 @@ struct bt_gatt_cpf {
  * @{
  */
 
+/** Converts a GATT error to string.
+ *
+ * The GATT errors are created with @ref BT_GATT_ERR.
+ *
+ * The error codes are described in the Bluetooth Core specification,
+ * Vol 3, Part F, Section 3.4.1.1.
+ *
+ * The ATT and GATT documentation found in Vol 4, Part F and
+ * Part G describe when the different error codes are used.
+ *
+ * See also the defined BT_ATT_ERR_* macros.
+ *
+ * @return The string representation of the GATT error code.
+ *         If @kconfig{CONFIG_BT_ATT_ERR_TO_STR} is not enabled,
+ *         this just returns the empty string.
+ */
+static inline const char *bt_gatt_err_to_str(int gatt_err)
+{
+	return bt_att_err_to_str((gatt_err) < 0 ? -(gatt_err) : (gatt_err));
+}
+
 /** @brief Register GATT callbacks.
  *
  *  Register callbacks to monitor the state of GATT. The callback struct
@@ -428,11 +451,12 @@ void bt_gatt_cb_register(struct bt_gatt_cb *cb);
  *  @return Zero on success or negative error code otherwise
  */
 int bt_gatt_authorization_cb_register(const struct bt_gatt_authorization_cb *cb);
+
 /** @brief Register GATT service.
  *
  *  Register GATT service. Applications can make use of
- *  macros such as BT_GATT_PRIMARY_SERVICE, BT_GATT_CHARACTERISTIC,
- *  BT_GATT_DESCRIPTOR, etc.
+ *  macros such as ``BT_GATT_PRIMARY_SERVICE``, ``BT_GATT_CHARACTERISTIC``,
+ *  ``BT_GATT_DESCRIPTOR``, etc.
  *
  *  When using @kconfig{CONFIG_BT_SETTINGS} then all services that should have
  *  bond configuration loaded, i.e. CCC values, must be registered before
@@ -452,7 +476,7 @@ int bt_gatt_authorization_cb_register(const struct bt_gatt_authorization_cb *cb)
  *  @param svc Service containing the available attributes
  *
  *  @return 0 in case of success or negative value in case of error.
- *  @return -EAGAIN if `bt_init()` has been called but `settings_load()` hasn't yet.
+ *  @return -EAGAIN if ``bt_init()`` has been called but ``settings_load()`` hasn't yet.
  */
 int bt_gatt_service_register(struct bt_gatt_service *svc);
 
@@ -484,8 +508,8 @@ enum {
  *  @param handle Attribute handle found.
  *  @param user_data Data given.
  *
- *  @return BT_GATT_ITER_CONTINUE if should continue to the next attribute.
- *  @return BT_GATT_ITER_STOP to stop.
+ *  @return ``BT_GATT_ITER_CONTINUE`` if should continue to the next attribute.
+ *  @return ``BT_GATT_ITER_STOP`` to stop.
  */
 typedef uint8_t (*bt_gatt_attr_func_t)(const struct bt_gatt_attr *attr,
 				       uint16_t handle,
@@ -540,7 +564,7 @@ struct bt_gatt_attr *bt_gatt_attr_next(const struct bt_gatt_attr *attr);
  *
  *  Find the attribute with the matching UUID.
  *  To limit the search to a service set the attr to the service attributes and
- *  the attr_count to the service attribute count .
+ *  the ``attr_count`` to the service attribute count .
  *
  *  @param attr        Pointer to an attribute that serves as the starting point
  *                     for the search of a match for the UUID.
@@ -567,7 +591,7 @@ uint16_t bt_gatt_attr_get_handle(const struct bt_gatt_attr *attr);
  *
  * @param attr A Characteristic Attribute.
  *
- * @note The user_data of the attribute must of type @ref bt_gatt_chrc.
+ * @note The ``user_data`` of the attribute must of type @ref bt_gatt_chrc.
  *
  * @return the handle of the corresponding Characteristic Value. The value will
  *         be zero (the invalid handle) if @p attr was not a characteristic
@@ -598,7 +622,7 @@ ssize_t bt_gatt_attr_read(struct bt_conn *conn, const struct bt_gatt_attr *attr,
  *
  *  Read service attribute value from local database storing the result into
  *  buffer after encoding it.
- *  @note Only use this with attributes which user_data is a bt_uuid.
+ *  @note Only use this with attributes which ``user_data`` is a ``bt_uuid``.
  *
  *  @param conn Connection object.
  *  @param attr Attribute to read.
@@ -635,7 +659,7 @@ ssize_t bt_gatt_attr_read_service(struct bt_conn *conn,
  *
  *  Helper macro to statically define service structure array. Each element
  *  of the array is linked to the service attribute array which is also
- *  defined in this scope using _attrs_def macro.
+ *  defined in this scope using ``_attrs_def`` macro.
  *
  *  @param _name         Name of service structure array.
  *  @param _instances    Array of instances to pass as user context to the
@@ -647,7 +671,7 @@ ssize_t bt_gatt_attr_read_service(struct bt_conn *conn,
  */
 #define BT_GATT_SERVICE_INSTANCE_DEFINE(				 \
 	_name, _instances, _instance_num, _attrs_def)			 \
-	BUILD_ASSERT_MSG(ARRAY_SIZE(_instances) == _instance_num,		 \
+	BUILD_ASSERT(ARRAY_SIZE(_instances) == _instance_num,		 \
 		"The number of array elements does not match its size"); \
 	LISTIFY(_instance_num, _BT_GATT_ATTRS_ARRAY_DEFINE, (;),	 \
 		_instances, _attrs_def);				 \
@@ -691,13 +715,13 @@ ssize_t bt_gatt_attr_read_service(struct bt_conn *conn,
  */
 #define BT_GATT_SECONDARY_SERVICE(_service)				\
 	BT_GATT_ATTRIBUTE(BT_UUID_GATT_SECONDARY, BT_GATT_PERM_READ,	\
-			 bt_gatt_attr_read_service, NULL, _service)
+			 bt_gatt_attr_read_service, NULL, (void *)_service)
 
 /** @brief Read Include Attribute helper.
  *
  *  Read include service attribute value from local database storing the result
  *  into buffer after encoding it.
- *  @note Only use this with attributes which user_data is a bt_gatt_include.
+ *  @note Only use this with attributes which user_data is a ``bt_gatt_include``.
  *
  *  @param conn Connection object.
  *  @param attr Attribute to read.
@@ -727,7 +751,7 @@ ssize_t bt_gatt_attr_read_included(struct bt_conn *conn,
  *
  *  Read characteristic attribute value from local database storing the result
  *  into buffer after encoding it.
- *  @note Only use this with attributes which user_data is a bt_gatt_chrc.
+ *  @note Only use this with attributes which ``user_data`` is a ``bt_gatt_chrc``.
  *
  *  @param conn Connection object.
  *  @param attr Attribute to read.
@@ -757,7 +781,7 @@ ssize_t bt_gatt_attr_read_chrc(struct bt_conn *conn,
  *
  *  @param _uuid Characteristic attribute uuid.
  *  @param _props Characteristic attribute properties,
- *                a bitmap of BT_GATT_CHRC_* macros.
+ *                a bitmap of ``BT_GATT_CHRC_*`` macros.
  *  @param _perm Characteristic Attribute access permissions,
  *               a bitmap of @ref bt_gatt_perm values.
  *  @param _read Characteristic Attribute read callback
@@ -1387,7 +1411,7 @@ struct bt_gatt_exchange_params {
  *  @retval -ENOMEM ATT request queue is full and blocking would cause deadlock.
  *  Allow a pending request to resolve before retrying, or call this function
  *  outside the BT RX thread to get blocking behavior. Queue size is controlled
- *  by @kconfig{CONFIG_BT_L2CAP_TX_BUF_COUNT}.
+ *  by @kconfig{CONFIG_BT_ATT_TX_COUNT}.
  *
  *  @retval -EALREADY The MTU exchange procedure has been already performed.
  */
@@ -1510,10 +1534,10 @@ struct bt_gatt_discover_params {
 	uint16_t end_handle;
 	/** Discover type */
 	uint8_t type;
-#if (defined(CONFIG_BT_GATT_AUTO_DISCOVER_CCC) && (CONFIG_BT_GATT_AUTO_DISCOVER_CCC > 0U))
+#if (defined(CONFIG_BT_GATT_AUTO_DISCOVER_CCC) && (CONFIG_BT_GATT_AUTO_DISCOVER_CCC > 0U)) || defined(__DOXYGEN__)
 	/** Only for stack-internal use, used for automatic discovery. */
 	struct bt_gatt_subscribe_params *sub_params;
-#endif /* defined(CONFIG_BT_GATT_AUTO_DISCOVER_CCC) */
+#endif /* defined(CONFIG_BT_GATT_AUTO_DISCOVER_CCC) || defined(__DOXYGEN__) */
 #if (defined(CONFIG_BT_EATT) && (CONFIG_BT_EATT > 0))
 	enum bt_att_chan_opt chan_opt;
 #endif /* CONFIG_BT_EATT */
@@ -1553,7 +1577,7 @@ struct bt_gatt_discover_params {
  *  @retval -ENOMEM ATT request queue is full and blocking would cause deadlock.
  *  Allow a pending request to resolve before retrying, or call this function
  *  outside the BT RX thread to get blocking behavior. Queue size is controlled
- *  by @kconfig{CONFIG_BT_L2CAP_TX_BUF_COUNT}.
+ *  by @kconfig{CONFIG_BT_ATT_TX_COUNT}.
  */
 int bt_gatt_discover(struct bt_conn *conn,
 		     struct bt_gatt_discover_params *params);
@@ -1861,6 +1885,7 @@ enum {
 	 *  @note Internal use only.
 	 */
 	BT_GATT_SUBSCRIBE_FLAG_WRITE_PENDING,
+
 	/** @brief Sent flag
 	 *
 	 *  If set, indicates that a subscription request (CCC write) has
@@ -1885,18 +1910,16 @@ struct bt_gatt_subscribe_params {
 	 */
 	bt_gatt_subscribe_func_t subscribe;
 
-	/** @deprecated{subscribe CCC write response callback} */
-	bt_gatt_write_func_t write;
 	/** Subscribe value handle */
 	uint16_t value_handle;
 	/** Subscribe CCC handle */
 	uint16_t ccc_handle;
-#if (defined(CONFIG_BT_GATT_AUTO_DISCOVER_CCC) && (CONFIG_BT_GATT_AUTO_DISCOVER_CCC > 0U))
+#if (defined(CONFIG_BT_GATT_AUTO_DISCOVER_CCC) && (CONFIG_BT_GATT_AUTO_DISCOVER_CCC > 0U)) || defined(__DOXYGEN__)
 	/** Subscribe End handle (for automatic discovery) */
 	uint16_t end_handle;
 	/** Discover parameters used when ccc_handle = 0 */
 	struct bt_gatt_discover_params *disc_params;
-#endif /* CONFIG_BT_GATT_AUTO_DISCOVER_CCC */
+#endif /* defined(CONFIG_BT_GATT_AUTO_DISCOVER_CCC) || defined(__DOXYGEN__) */
 	/** Subscribe value */
 	uint16_t value;
 #if (defined(CONFIG_BT_SMP) && (CONFIG_BT_SMP > 0))
@@ -1905,7 +1928,7 @@ struct bt_gatt_subscribe_params {
 	 * level are silently discarded.
 	 */
 	bt_security_t min_security;
-#endif /* CONFIG_BT_SMP > 0 */
+#endif
 	/** Subscription flags */
 	ATOMIC_DEFINE(flags, BT_GATT_SUBSCRIBE_NUM_FLAGS);
 
@@ -1988,7 +2011,8 @@ int bt_gatt_resubscribe(uint8_t id, const bt_addr_le_t *peer,
  *  called from the BT RX thread, as this would cause a deadlock.
  *
  *  @param conn Connection object.
- *  @param params Subscribe parameters.
+ *  @param params Subscribe parameters. The parameters shall be a @ref bt_gatt_subscribe_params from
+ *                a previous call to bt_gatt_subscribe().
  *
  *  @retval 0 Successfully queued request. Will call @p params->write on
  *  resolution.

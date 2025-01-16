@@ -1,7 +1,5 @@
 /*
- * Copyright 2018-2021 NXP
- * All rights reserved.
- *
+ * Copyright 2018-2021, 2023 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -18,9 +16,9 @@
 #if defined(SDK_I2C_BASED_COMPONENT_USED) && SDK_I2C_BASED_COMPONENT_USED
 #include "fsl_i2c.h"
 #endif /* SDK_I2C_BASED_COMPONENT_USED */
-#if defined BOARD_USE_CODEC
+#if defined(SDK_I3C_BASED_COMPONENT_USED) && SDK_I3C_BASED_COMPONENT_USED
 #include "fsl_i3c.h"
-#endif
+#endif /* SDK_I3C_BASED_COMPONENT_USED */
 
 /*******************************************************************************
  * Definitions
@@ -123,7 +121,7 @@ status_t BOARD_InitPsRam(void)
     flexspi_device_config_t deviceconfig = {
         .flexspiRootClk       = 396000000, /* 396MHZ SPI serial clock, DDR serial clock 198M */
         .isSck2Enabled        = false,
-        .flashSize            = 0x2000, /* 64Mb/KByte */
+        .flashSize            = 0x2000,    /* 64Mb/KByte */
         .CSIntervalUnit       = kFLEXSPI_CsIntervalUnit1SckCycle,
         .CSInterval           = 5,
         .CSHoldTime           = 3,
@@ -176,6 +174,7 @@ status_t BOARD_InitPsRam(void)
     uint32_t mr0Val[1];
     uint32_t mr4Val[1];
     uint32_t mr8Val[1];
+    uint32_t cache64PhymemSizes[] = CACHE64_CTRL_PHYMEM_SIZES;
     flexspi_config_t config;
     cache64_config_t cacheCfg;
     status_t status = kStatus_Success;
@@ -196,8 +195,13 @@ status_t BOARD_InitPsRam(void)
     CLOCK_EnableClock(kCLOCK_Flexspi1);
 #endif
 
-    /* As cache depends on FlexSPI power and clock, cache must be initialized after FlexSPI power/clock is set */
-    CACHE64_GetDefaultConfig(&cacheCfg);
+    /* As cache depends on FlexSPI power and clock, cache must be initialized after FlexSPI power/clock is set.
+     * Don't use CACHE64_GetDefaultConfig() in mpi_loader_extram_loader case since it calls global variable which
+     * is not initialized in SystemInitHook().
+     */
+    (void)memset(&cacheCfg, 0, sizeof(cache64_config_t));
+    cacheCfg.boundaryAddr[0] = cache64PhymemSizes[1];
+    cacheCfg.policy[0]       = kCACHE64_PolicyWriteBack;
     CACHE64_Init(CACHE64_POLSEL1, &cacheCfg);
 #if BOARD_ENABLE_PSRAM_CACHE
     CACHE64_EnableWriteBuffer(CACHE64_CTRL1, true);
@@ -224,7 +228,7 @@ status_t BOARD_InitPsRam(void)
     config.ahbConfig.buffer[0].masterIndex    = 11;   /* GPU/Display */
     config.ahbConfig.buffer[0].bufferSize     = 1024; /* Allocate 1KB bytes for GPU/Display */
     config.ahbConfig.buffer[0].enablePrefetch = true;
-    config.ahbConfig.buffer[0].priority       = 7; /* Set GPU/Display to highest priority. */
+    config.ahbConfig.buffer[0].priority       = 7;    /* Set GPU/Display to highest priority. */
     /* All other masters use last buffer with 1KB bytes. */
     config.ahbConfig.buffer[FSL_FEATURE_FLEXSPI_AHB_BUFFER_COUNT - 1].bufferSize = 1024;
 #if !(defined(FSL_FEATURE_FLEXSPI_HAS_NO_MCR0_COMBINATIONEN) && FSL_FEATURE_FLEXSPI_HAS_NO_MCR0_COMBINATIONEN)
@@ -551,7 +555,7 @@ status_t BOARD_I2C_Receive(I2C_Type *base,
 }
 #endif
 
-#if defined BOARD_USE_CODEC
+#if defined(SDK_I3C_BASED_COMPONENT_USED) && SDK_I3C_BASED_COMPONENT_USED
 void BOARD_I3C_Init(I3C_Type *base, uint32_t clkSrc_Hz)
 {
     i3c_master_config_t i3cConfig;
@@ -605,10 +609,12 @@ status_t BOARD_I3C_Receive(I3C_Type *base,
 
     return I3C_MasterTransferBlocking(base, &masterXfer);
 }
+#endif /* SDK_I3C_BASED_COMPONENT_USED */
 
+#if defined BOARD_USE_CODEC
 void BOARD_Codec_I2C_Init(void)
 {
-#if BOARD_I3C_CODEC
+#if BOARD_I3C_CODEC && (defined(SDK_I3C_BASED_COMPONENT_USED) && SDK_I3C_BASED_COMPONENT_USED)
     BOARD_I3C_Init(BOARD_CODEC_I2C_BASEADDR, BOARD_CODEC_I2C_CLOCK_FREQ);
 #else
     BOARD_I2C_Init(BOARD_CODEC_I2C_BASEADDR, BOARD_CODEC_I2C_CLOCK_FREQ);
@@ -618,7 +624,7 @@ void BOARD_Codec_I2C_Init(void)
 status_t BOARD_Codec_I2C_Send(
     uint8_t deviceAddress, uint32_t subAddress, uint8_t subAddressSize, const uint8_t *txBuff, uint8_t txBuffSize)
 {
-#if BOARD_I3C_CODEC
+#if BOARD_I3C_CODEC && (defined(SDK_I3C_BASED_COMPONENT_USED) && SDK_I3C_BASED_COMPONENT_USED)
     return BOARD_I3C_Send(BOARD_CODEC_I2C_BASEADDR, deviceAddress, subAddress, subAddressSize, (uint8_t *)txBuff,
 #else
     return BOARD_I2C_Send(BOARD_CODEC_I2C_BASEADDR, deviceAddress, subAddress, subAddressSize, (uint8_t *)txBuff,
@@ -629,7 +635,7 @@ status_t BOARD_Codec_I2C_Send(
 status_t BOARD_Codec_I2C_Receive(
     uint8_t deviceAddress, uint32_t subAddress, uint8_t subAddressSize, uint8_t *rxBuff, uint8_t rxBuffSize)
 {
-#if BOARD_I3C_CODEC
+#if BOARD_I3C_CODEC && (defined(SDK_I3C_BASED_COMPONENT_USED) && SDK_I3C_BASED_COMPONENT_USED)
     return BOARD_I3C_Receive(BOARD_CODEC_I2C_BASEADDR, deviceAddress, subAddress, subAddressSize, rxBuff, rxBuffSize);
 #else
     return BOARD_I2C_Receive(BOARD_CODEC_I2C_BASEADDR, deviceAddress, subAddress, subAddressSize, rxBuff, rxBuffSize);

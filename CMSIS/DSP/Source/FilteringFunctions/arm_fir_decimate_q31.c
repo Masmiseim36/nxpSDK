@@ -43,7 +43,6 @@
   @param[in]     pSrc       points to the block of input data
   @param[out]    pDst       points to the block of output data
   @param[in]     blockSize  number of input samples to process
-  @return        none
 
   @par           Scaling and Overflow Behavior
                    The function is implemented using an internal 64-bit accumulator.
@@ -60,7 +59,7 @@
 
 #include "arm_helium_utils.h"
 
-void arm_fir_decimate_q31(
+ARM_DSP_ATTRIBUTE void arm_fir_decimate_q31(
   const arm_fir_decimate_instance_q31 * S,
   const q31_t * pSrc,
         q31_t * pDst,
@@ -303,7 +302,7 @@ void arm_fir_decimate_q31(
     }
 }
 #else
-void arm_fir_decimate_q31(
+ARM_DSP_ATTRIBUTE void arm_fir_decimate_q31(
   const arm_fir_decimate_instance_q31 * S,
   const q31_t * pSrc,
         q31_t * pDst,

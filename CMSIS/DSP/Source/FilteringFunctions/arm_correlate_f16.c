@@ -47,7 +47,6 @@
   @param[in]     pSrcB      points to the second input sequence
   @param[in]     srcBLen    length of the second input sequence
   @param[out]    pDst       points to the location where the output result is written.  Length 2 * max(srcALen, srcBLen) - 1.
-  @return        none
  */
 
 #if defined(ARM_MATH_MVE_FLOAT16) && !defined(ARM_MATH_AUTOVECTORIZE)
@@ -256,7 +255,7 @@
 
 
 
-void arm_correlate_f16(
+ARM_DSP_ATTRIBUTE void arm_correlate_f16(
   const float16_t * pSrcA,
         uint32_t srcALen,
   const float16_t * pSrcB,
@@ -457,7 +456,7 @@ void arm_correlate_f16(
 }
 
 #else
-void arm_correlate_f16(
+ARM_DSP_ATTRIBUTE void arm_correlate_f16(
   const float16_t * pSrcA,
         uint32_t srcALen,
   const float16_t * pSrcB,

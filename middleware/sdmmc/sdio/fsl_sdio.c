@@ -645,6 +645,209 @@ status_t SDIO_IO_Read_Extended(
     return error;
 }
 
+#if SDMMCHOST_ENABLE_CACHE_LINE_ALIGN_TRANSFER
+status_t SDIO_IO_Write_Extended_Scatter_Gather(sdio_card_t *card,
+                                               sdio_func_num_t func,
+                                               uint32_t regAddr,
+                                               sdmmchost_scatter_gather_data_list_t *dataList,
+                                               uint32_t count,
+                                               uint32_t flags)
+{
+    assert(card != NULL);
+    assert(dataList != NULL);
+    assert(func <= kSDIO_FunctionNum7);
+
+    sdmmchost_scatter_gather_transfer_t content = {0U};
+    sdmmchost_cmd_t command                     = {0U};
+    sdmmchost_scatter_gather_data_t data        = {0U};
+    bool blockMode                              = false;
+    bool opCode                                 = false;
+    status_t error                              = kStatus_Success;
+
+    (void)SDMMC_OSAMutexLock(&card->lock, osaWaitForever_c);
+
+    /* check if card support block mode */
+    if (((card->cccrflags & (uint32_t)kSDIO_CCCRSupportMultiBlock) != 0U) &&
+        ((flags & SDIO_EXTEND_CMD_BLOCK_MODE_MASK) != 0U))
+    {
+        blockMode = true;
+    }
+
+    if ((flags & SDIO_EXTEND_CMD_OP_CODE_MASK) != 0U)
+    {
+        opCode = true;
+    }
+
+    /* check the byte size counter in non-block mode
+     * so you need read CIS for each function first,before you do read/write
+     */
+    if (!blockMode)
+    {
+        if ((func == kSDIO_FunctionNum0) && (card->commonCIS.fn0MaxBlkSize != 0U) &&
+            (count > card->commonCIS.fn0MaxBlkSize))
+        {
+            error = kStatus_SDMMC_SDIO_InvalidArgument;
+        }
+        else if ((func != kSDIO_FunctionNum0) && (card->funcCIS[(uint32_t)func - 1U].ioMaxBlockSize != 0U) &&
+                 (count > card->funcCIS[(uint32_t)func - 1U].ioMaxBlockSize))
+        {
+            error = kStatus_SDMMC_SDIO_InvalidArgument;
+        }
+        else
+        {
+            /* Intentional empty */
+        }
+    }
+
+    if (error == kStatus_Success)
+    {
+        command.index    = (uint32_t)kSDIO_RWIOExtended;
+        command.argument = ((uint32_t)func << SDIO_CMD_ARGUMENT_FUNC_NUM_POS) |
+                           ((regAddr & SDIO_CMD_ARGUMENT_REG_ADDR_MASK) << SDIO_CMD_ARGUMENT_REG_ADDR_POS) |
+                           (1UL << SDIO_CMD_ARGUMENT_RW_POS) | (count & SDIO_EXTEND_CMD_COUNT_MASK) |
+                           ((blockMode ? 1UL : 0UL) << SDIO_EXTEND_CMD_ARGUMENT_BLOCK_MODE_POS |
+                            ((opCode ? 1UL : 0UL) << SDIO_EXTEND_CMD_ARGUMENT_OP_CODE_POS));
+        command.responseType = kCARD_ResponseTypeR5;
+        command.responseErrorFlags =
+            ((uint32_t)kSDIO_StatusCmdCRCError | (uint32_t)kSDIO_StatusIllegalCmd | (uint32_t)kSDIO_StatusError |
+             (uint32_t)kSDIO_StatusFunctionNumError | (uint32_t)kSDIO_StatusOutofRange);
+
+        if (blockMode)
+        {
+            if (func == kSDIO_FunctionNum0)
+            {
+                data.blockSize = card->io0blockSize;
+            }
+            else
+            {
+                data.blockSize = card->ioFBR[(uint32_t)func - 1U].ioBlockSize;
+            }
+        }
+        else
+        {
+            data.blockSize = count;
+        }
+
+        data.dataDirection = kUSDHC_TransferDirectionSend;
+        memcpy(&data.sgData, dataList, sizeof(data.sgData));
+
+        content.command = &command;
+        content.data    = &data;
+        error           = SDMMCHOST_ScatterGatherTransferFunction(card->host, &content);
+        if (kStatus_Success != error)
+        {
+            error = kStatus_SDMMC_TransferFailed;
+        }
+    }
+
+    (void)SDMMC_OSAMutexUnlock(&card->lock);
+
+    return error;
+}
+
+status_t SDIO_IO_Read_Extended_Scatter_Gather(sdio_card_t *card,
+                                              sdio_func_num_t func,
+                                              uint32_t regAddr,
+                                              sdmmchost_scatter_gather_data_list_t *dataList,
+                                              uint32_t count,
+                                              uint32_t flags)
+{
+    assert(card != NULL);
+    assert(buffer != NULL);
+    assert(func <= kSDIO_FunctionNum7);
+
+    sdmmchost_scatter_gather_transfer_t content = {0U};
+    sdmmchost_cmd_t command                     = {0U};
+    sdmmchost_scatter_gather_data_t data        = {0U};
+    bool blockMode                              = false;
+    bool opCode                                 = false;
+    status_t error                              = kStatus_Success;
+
+    (void)SDMMC_OSAMutexLock(&card->lock, osaWaitForever_c);
+
+    /* check if card support block mode */
+    if (((card->cccrflags & (uint32_t)kSDIO_CCCRSupportMultiBlock) != 0U) &&
+        ((flags & SDIO_EXTEND_CMD_BLOCK_MODE_MASK) != 0U))
+    {
+        blockMode = true;
+    }
+
+    /* op code =0 : read/write to fixed addr
+     *  op code =1 :read/write addr incrementing
+     */
+    if ((flags & SDIO_EXTEND_CMD_OP_CODE_MASK) != 0U)
+    {
+        opCode = true;
+    }
+
+    /* check the byte size counter in non-block mode
+     * so you need read CIS for each function first,before you do read/write
+     */
+    if (!blockMode)
+    {
+        if ((func == kSDIO_FunctionNum0) && (card->commonCIS.fn0MaxBlkSize != 0U) &&
+            (count > card->commonCIS.fn0MaxBlkSize))
+        {
+            error = kStatus_SDMMC_SDIO_InvalidArgument;
+        }
+        else if ((func != kSDIO_FunctionNum0) && (card->funcCIS[(uint32_t)func - 1U].ioMaxBlockSize != 0U) &&
+                 (count > card->funcCIS[(uint32_t)func - 1U].ioMaxBlockSize))
+        {
+            error = kStatus_SDMMC_SDIO_InvalidArgument;
+        }
+        else
+        {
+            /* Intentional empty */
+        }
+    }
+
+    if (error == kStatus_Success)
+    {
+        command.index    = (uint32_t)kSDIO_RWIOExtended;
+        command.argument = ((uint32_t)func << SDIO_CMD_ARGUMENT_FUNC_NUM_POS) |
+                           ((regAddr & SDIO_CMD_ARGUMENT_REG_ADDR_MASK) << SDIO_CMD_ARGUMENT_REG_ADDR_POS) |
+                           (count & SDIO_EXTEND_CMD_COUNT_MASK) |
+                           ((blockMode ? 1UL : 0UL) << SDIO_EXTEND_CMD_ARGUMENT_BLOCK_MODE_POS |
+                            ((opCode ? 1UL : 0UL) << SDIO_EXTEND_CMD_ARGUMENT_OP_CODE_POS));
+        command.responseType = kCARD_ResponseTypeR5;
+        command.responseErrorFlags =
+            ((uint32_t)kSDIO_StatusCmdCRCError | (uint32_t)kSDIO_StatusIllegalCmd | (uint32_t)kSDIO_StatusError |
+             (uint32_t)kSDIO_StatusFunctionNumError | (uint32_t)kSDIO_StatusOutofRange);
+
+        if (blockMode)
+        {
+            if (func == kSDIO_FunctionNum0)
+            {
+                data.blockSize = card->io0blockSize;
+            }
+            else
+            {
+                data.blockSize = card->ioFBR[(uint32_t)func - 1U].ioBlockSize;
+            }
+        }
+        else
+        {
+            data.blockSize = count;
+        }
+
+        data.dataDirection = kUSDHC_TransferDirectionReceive;
+        memcpy(&data.sgData, dataList, sizeof(data.sgData));
+
+        content.command = &command;
+        content.data    = &data;
+        error           = SDMMCHOST_ScatterGatherTransferFunction(card->host, &content);
+        if (kStatus_Success != error)
+        {
+            error = kStatus_SDMMC_TransferFailed;
+        }
+    }
+
+    (void)SDMMC_OSAMutexUnlock(&card->lock);
+
+    return error;
+}
+#endif
+
 status_t SDIO_IO_Transfer(sdio_card_t *card,
                           sdio_command_t cmd,
                           uint32_t argument,

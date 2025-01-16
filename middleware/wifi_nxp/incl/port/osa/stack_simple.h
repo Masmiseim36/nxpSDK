@@ -1,9 +1,12 @@
-/****************************************************************************
- *
+/*
  *  Copyright (c) 2023, Michael Becker (michael.f.becker@gmail.com)
- *
- *  This file is part of the FreeRTOS Add-ons project.
- *
+ *  Copyright 2023-2024 NXP
+ */
+/*!\file stack_simple.h
+ *\brief This file is part of the FreeRTOS Add-ons project.
+ */
+
+/*
  *  Source Code:
  *  https://github.com/michaelbecker/freertos-addons
  *
@@ -35,12 +38,6 @@
  *  CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
  *  TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
  *  SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
- *
- ***************************************************************************/
-/*
- *  Copyright 2023 NXP
- *
- *  SPDX-License-Identifier: BSD-3-Clause
  *
  */
 

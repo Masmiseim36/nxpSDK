@@ -8,6 +8,7 @@
 
 #include "includes.h"
 
+#if CONFIG_HOSTAPD
 #ifdef CONFIG_DPP
 #include "utils/common.h"
 #include "common/ieee802_11_defs.h"
@@ -1798,3 +1799,4 @@ void gas_serv_deinit(struct hostapd_data *hapd)
 {
 }
 #endif /* CONFIG_DPP */
+#endif /* CONFIG_HOSTAPD */

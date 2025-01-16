@@ -419,11 +419,11 @@ static void USB_HostMsdCswCallback(void *param, usb_host_transfer_t *transfer, u
                 }
             }
         }
-        else if (status == kStatus_USB_TransferCancel) /* case 2: cancel */
+        else if (status == kStatus_USB_TransferCancel)   /* case 2: cancel */
         {
             USB_HostMsdCommandDone(msdInstance, status); /* command cancel */
         }
-        else /* case 3: error */
+        else                                             /* case 3: error */
         {
             if (msdInstance->msdCommand.retryTime > 0U)
             {
@@ -519,11 +519,11 @@ static void USB_HostMsdCbwCallback(void *param, usb_host_transfer_t *transfer, u
                 }
             }
         }
-        else if (status == kStatus_USB_TransferCancel) /* case 2: cancel */
+        else if (status == kStatus_USB_TransferCancel)   /* case 2: cancel */
         {
             USB_HostMsdCommandDone(msdInstance, status); /* command cancel */
         }
-        else /* case 3: error */
+        else                                             /* case 3: error */
         {
             if (msdInstance->msdCommand.retryTime > 0U)
             {
@@ -593,11 +593,11 @@ static void USB_HostMsdDataCallback(void *param, usb_host_transfer_t *transfer, 
                 USB_HostMsdCommandDone(msdInstance, kStatus_USB_Error);
             }
         }
-        else if (status == kStatus_USB_TransferCancel) /* case 2: cancel */
+        else if (status == kStatus_USB_TransferCancel)   /* case 2: cancel */
         {
             USB_HostMsdCommandDone(msdInstance, status); /* command cancel */
         }
-        else /* case 3: error */
+        else                                             /* case 3: error */
         {
             /* mass reset recovery to finish ufi command */
             msdInstance->internalResetRecovery = 1U;
@@ -925,8 +925,8 @@ usb_status_t USB_HostMsdInit(usb_device_handle deviceHandle, usb_host_class_hand
     temp                    = (uint32_t *)infoValue;
     msdInstance->hostHandle = (usb_host_handle)temp;
     (void)USB_HostHelperGetPeripheralInformation(deviceHandle, (uint32_t)kUSB_HostGetDeviceControlPipe, &infoValue);
-    temp                                          = (uint32_t *)infoValue;
-    msdInstance->controlPipe                      = (usb_host_pipe_handle)temp;
+    temp                                           = (uint32_t *)infoValue;
+    msdInstance->controlPipe                       = (usb_host_pipe_handle)temp;
     msdInstance->msdCommand.cbwBlock->CBWSignature = USB_LONG_TO_LITTLE_ENDIAN(USB_HOST_MSD_CBW_SIGNATURE);
     status = USB_HostMallocTransfer(msdInstance->hostHandle, &(msdInstance->msdCommand.transfer));
     if (status != kStatus_USB_Success)

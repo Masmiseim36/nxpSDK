@@ -13,7 +13,6 @@
 #include <stdint.h>
 
 #include "srtm_config_audio.h"
-#include "srtm_config_nn.h"
 
 /*!
  * @addtogroup srtm

@@ -65,12 +65,11 @@
   @param[in]     pSrcB       points to second input vector
   @param[out]    pDst        points to output vector
   @param[in]     numSamples  number of samples in each vector
-  @return        none
  */
 
 #if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)
 
-void arm_cmplx_mult_cmplx_f32(
+ARM_DSP_ATTRIBUTE void arm_cmplx_mult_cmplx_f32(
   const float32_t * pSrcA,
   const float32_t * pSrcB,
         float32_t * pDst,
@@ -179,7 +178,7 @@ void arm_cmplx_mult_cmplx_f32(
 }
 
 #else
-void arm_cmplx_mult_cmplx_f32(
+ARM_DSP_ATTRIBUTE void arm_cmplx_mult_cmplx_f32(
   const float32_t * pSrcA,
   const float32_t * pSrcB,
         float32_t * pDst,

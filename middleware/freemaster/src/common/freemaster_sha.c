@@ -1,35 +1,17 @@
 /*
- * Copyright 2018-2020 NXP
- *
- * License: NXP LA_OPT_NXP_Software_License
- *
- * NXP Confidential. This software is owned or controlled by NXP and may
- * only be used strictly in accordance with the applicable license terms.
- * By expressly accepting such terms or by downloading, installing,
- * activating and/or otherwise using the software, you are agreeing that
- * you have read, and that you agree to comply with and are bound by,
- * such license terms.  If you do not agree to be bound by the applicable
- * license terms, then you may not retain, install, activate or otherwise
- * use the software.  This code may only be used in a microprocessor,
- * microcontroller, sensor or digital signal processor ("NXP Product")
- * supplied directly or indirectly from NXP.  See the full NXP Software
- * License Agreement in license/LA_OPT_NXP_Software_License.pdf
- *
- * FreeMASTER Communication Driver - protocol implementation
- */
-
-/*
- * This code is based on original implementation by Brad Conte. Extended to
- * support big-endian platforms for FreeMASTER driver needs.
- * Origin: https://github.com/B-Con/crypto-algorithms
- *
  * Author:     Brad Conte (brad AT bradconte.com)
  * Copyright:
  * Disclaimer: This code is presented "as is" without any guarantees.
  * Details:    Implementation of the SHA1 hashing algorithm.
                Algorithm specification can be found here:
-                * http://csrc.nist.gov/publications/fips/fips180-2/fips180-2withchangenotice.pdf
+               http://csrc.nist.gov/publications/fips/fips180-2/fips180-2withchangenotice.pdf
                This implementation uses little endian byte order.
+ * Origin: https://github.com/B-Con/crypto-algorithms
+ *
+ * Copyright 2018-2020, 2024 NXP
+ * This code is based on original implementation by Brad Conte. Extended to
+ * support big-endian platforms for FreeMASTER driver needs.
+ *
  */
 
 #include "freemaster.h"

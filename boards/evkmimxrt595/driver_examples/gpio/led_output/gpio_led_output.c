@@ -6,19 +6,14 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
 #include "fsl_debug_console.h"
 #include "fsl_gpio.h"
+#include "app.h"
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define APP_BOARD_TEST_LED_PORT 0U
-#define APP_BOARD_TEST_LED_PIN  14U
-#define APP_SW_PORT             0U
-#define APP_SW_PIN              10U
 #define APP_SW_STATE_RELEASED         0U
 #define APP_SW_STATE_CONFIRM_PRESSED  1U
 #define APP_SW_STATE_PRESSED          2U
@@ -69,9 +64,7 @@ int main(void)
     };
 
     /* Board pin, clock, debug console init */
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
 
     /* Print a note to terminal. */
     PRINTF("\r\n GPIO Driver example\r\n");

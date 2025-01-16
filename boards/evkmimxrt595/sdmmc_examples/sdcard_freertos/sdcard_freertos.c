@@ -12,12 +12,9 @@
 #include "FreeRTOS.h"
 #include "semphr.h"
 #include "task.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 #include "sdmmc_config.h"
-#include "fsl_power.h"
-#include "fsl_gpio.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -216,9 +213,7 @@ static void AccessCardTask(void *pvParameters)
 /*! @brief Main function */
 int main(void)
 {
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
 
     PRINTF("\r\nSDCARD freertos example.\r\n");
 

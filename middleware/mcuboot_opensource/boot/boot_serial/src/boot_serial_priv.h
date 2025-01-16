@@ -37,9 +37,12 @@ extern "C" {
  * From newtmgr.h
  */
 #define MGMT_ERR_OK             0
-#define MGMT_ERR_EUNKNOWN       2
+#define MGMT_ERR_EUNKNOWN       1
+#define MGMT_ERR_ENOMEM         2
 #define MGMT_ERR_EINVAL         3
+#define MGMT_ERR_ENOENT         5
 #define MGMT_ERR_ENOTSUP        8
+#define MGMT_ERR_EBUSY		10
 
 #define NMGR_OP_READ            0
 #define NMGR_OP_WRITE           2
@@ -52,14 +55,26 @@ extern "C" {
 #define NMGR_ID_CONS_ECHO_CTRL  1
 #define NMGR_ID_RESET           5
 
+#ifndef __packed
+#define __packed __attribute__((__packed__))
+#endif
+
 struct nmgr_hdr {
-    uint8_t  nh_op;             /* NMGR_OP_XXX */
+#if (__BYTE_ORDER__ == __ORDER_BIG_ENDIAN__)
+    uint8_t  _res1:3;
+    uint8_t  nh_version:2;
+    uint8_t  nh_op:3;		/* NMGR_OP_XXX */
+#else
+    uint8_t  nh_op:3;		/* NMGR_OP_XXX */
+    uint8_t  nh_version:2;
+    uint8_t  _res1:3;
+#endif
     uint8_t  nh_flags;
     uint16_t nh_len;            /* length of the payload */
     uint16_t nh_group;          /* NMGR_GROUP_XXX */
     uint8_t  nh_seq;            /* sequence number */
     uint8_t  nh_id;             /* message ID within group */
-};
+} __packed;
 
 /*
  * From imgmgr.h

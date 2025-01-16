@@ -152,8 +152,7 @@ static int set_setting(const char *name, size_t len_rd, settings_read_cb read_cb
 				       " (err %zd)", len);
 			} else {
 				LOG_ERR("Invalid length ID address in storage");
-				BT_HEXDUMP_DBG(&bt_dev.id_addr, len,
-					       "data read");
+				LOG_HEXDUMP_DBG(&bt_dev.id_addr, len, "data read");
 			}
 			(void)memset(bt_dev.id_addr, 0,
 				     sizeof(bt_dev.id_addr));
@@ -163,8 +162,7 @@ static int set_setting(const char *name, size_t len_rd, settings_read_cb read_cb
 
 			bt_dev.id_count = len / sizeof(bt_dev.id_addr[0]);
 			for (i = 0; i < bt_dev.id_count; i++) {
-				LOG_DBG("ID[%d] %s", i,
-				       bt_addr_le_str(&bt_dev.id_addr[i]));
+				LOG_DBG("ID[%d] %s", i, bt_addr_le_str(&bt_dev.id_addr[i]));
 			}
 		}
 
@@ -218,8 +216,7 @@ static int set_setting(const char *name, size_t len_rd, settings_read_cb read_cb
 
 			count = len / sizeof(bt_dev.irk[0]);
 			for (i = 0; i < count; i++) {
-				LOG_DBG("IRK[%d] %s", i,
-				       bt_hex(bt_dev.irk[i], 16));
+				LOG_DBG("IRK[%d] %s", i, bt_hex(bt_dev.irk[i], 16));
 			}
 		}
 
@@ -414,7 +411,7 @@ static void do_store_id(struct k_work *work)
 	}
 }
 
-BT_WORK_DEFINE(store_id_work, do_store_id);
+K_WORK_DEFINE(store_id_work, do_store_id);
 
 int bt_settings_store_id(void)
 {
@@ -439,7 +436,7 @@ static void do_store_irk(struct k_work *work)
 #endif
 }
 
-BT_WORK_DEFINE(store_irk_work, do_store_irk);
+K_WORK_DEFINE(store_irk_work, do_store_irk);
 
 int bt_settings_store_irk(void)
 {

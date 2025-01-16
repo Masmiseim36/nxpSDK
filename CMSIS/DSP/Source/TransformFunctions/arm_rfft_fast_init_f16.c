@@ -50,7 +50,7 @@
                    - \ref ARM_MATH_ARGUMENT_ERROR : an error is detected
  */
 
-arm_status arm_rfft_fast_init_32_f16( arm_rfft_fast_instance_f16 * S ) {
+ARM_DSP_ATTRIBUTE arm_status arm_rfft_fast_init_32_f16( arm_rfft_fast_instance_f16 * S ) {
 
   arm_status status;
 
@@ -76,7 +76,7 @@ arm_status arm_rfft_fast_init_32_f16( arm_rfft_fast_instance_f16 * S ) {
                    - \ref ARM_MATH_ARGUMENT_ERROR : an error is detected
  */
 
-arm_status arm_rfft_fast_init_64_f16( arm_rfft_fast_instance_f16 * S ) {
+ARM_DSP_ATTRIBUTE arm_status arm_rfft_fast_init_64_f16( arm_rfft_fast_instance_f16 * S ) {
 
   arm_status status;
 
@@ -102,7 +102,7 @@ arm_status arm_rfft_fast_init_64_f16( arm_rfft_fast_instance_f16 * S ) {
                    - \ref ARM_MATH_ARGUMENT_ERROR : an error is detected
  */
 
-arm_status arm_rfft_fast_init_128_f16( arm_rfft_fast_instance_f16 * S ) {
+ARM_DSP_ATTRIBUTE arm_status arm_rfft_fast_init_128_f16( arm_rfft_fast_instance_f16 * S ) {
 
   arm_status status;
 
@@ -128,7 +128,7 @@ arm_status arm_rfft_fast_init_128_f16( arm_rfft_fast_instance_f16 * S ) {
                    - \ref ARM_MATH_ARGUMENT_ERROR : an error is detected
 */
 
-arm_status arm_rfft_fast_init_256_f16( arm_rfft_fast_instance_f16 * S ) {
+ARM_DSP_ATTRIBUTE arm_status arm_rfft_fast_init_256_f16( arm_rfft_fast_instance_f16 * S ) {
 
   arm_status status;
 
@@ -154,7 +154,7 @@ arm_status arm_rfft_fast_init_256_f16( arm_rfft_fast_instance_f16 * S ) {
                    - \ref ARM_MATH_ARGUMENT_ERROR : an error is detected
  */
 
-arm_status arm_rfft_fast_init_512_f16( arm_rfft_fast_instance_f16 * S ) {
+ARM_DSP_ATTRIBUTE arm_status arm_rfft_fast_init_512_f16( arm_rfft_fast_instance_f16 * S ) {
 
   arm_status status;
 
@@ -180,7 +180,7 @@ arm_status arm_rfft_fast_init_512_f16( arm_rfft_fast_instance_f16 * S ) {
                    - \ref ARM_MATH_ARGUMENT_ERROR : an error is detected
  */
 
-arm_status arm_rfft_fast_init_1024_f16( arm_rfft_fast_instance_f16 * S ) {
+ARM_DSP_ATTRIBUTE arm_status arm_rfft_fast_init_1024_f16( arm_rfft_fast_instance_f16 * S ) {
 
   arm_status status;
 
@@ -205,7 +205,7 @@ arm_status arm_rfft_fast_init_1024_f16( arm_rfft_fast_instance_f16 * S ) {
                    - \ref ARM_MATH_SUCCESS        : Operation successful
                    - \ref ARM_MATH_ARGUMENT_ERROR : an error is detected
  */
-arm_status arm_rfft_fast_init_2048_f16( arm_rfft_fast_instance_f16 * S ) {
+ARM_DSP_ATTRIBUTE arm_status arm_rfft_fast_init_2048_f16( arm_rfft_fast_instance_f16 * S ) {
 
   arm_status status;
 
@@ -231,7 +231,7 @@ arm_status arm_rfft_fast_init_2048_f16( arm_rfft_fast_instance_f16 * S ) {
                    - \ref ARM_MATH_ARGUMENT_ERROR : an error is detected
  */
 
-arm_status arm_rfft_fast_init_4096_f16( arm_rfft_fast_instance_f16 * S ) {
+ARM_DSP_ATTRIBUTE arm_status arm_rfft_fast_init_4096_f16( arm_rfft_fast_instance_f16 * S ) {
 
   arm_status status;
 
@@ -260,23 +260,24 @@ arm_status arm_rfft_fast_init_4096_f16( arm_rfft_fast_instance_f16 * S ) {
   @par           Description
                    The parameter <code>fftLen</code> specifies the length of RFFT/CIFFT process.
                    Supported FFT Lengths are 32, 64, 128, 256, 512, 1024, 2048, 4096.
+
   @par
-                   This Function also initializes Twiddle factor table pointer and Bit reversal table pointer.
- 
-  @par          
+                This Function also initializes Twiddle factor table pointer and Bit reversal table pointer.
+
+  @par
                 This function should be used only if you don't know the FFT sizes that 
                 you'll need at build time. The use of this function will prevent the 
                 linker from removing the FFT tables that are not needed and the library 
                 code size will be bigger than needed.
 
-  @par          
+  @par
                 If you use CMSIS-DSP as a static library, and if you know the FFT sizes 
                 that you need at build time, then it is better to use the initialization
                 functions defined for each FFT size.
 
  */
 
-arm_status arm_rfft_fast_init_f16(
+ARM_DSP_ATTRIBUTE arm_status arm_rfft_fast_init_f16(
   arm_rfft_fast_instance_f16 * S,
   uint16_t fftLen)
 {

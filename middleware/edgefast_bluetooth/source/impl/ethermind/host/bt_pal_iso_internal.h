@@ -116,14 +116,14 @@ struct net_buf *bt_iso_create_pdu_timeout_debug(struct net_buf_pool *pool,
 					__func__, __LINE__)
 
 #define bt_iso_create_pdu(_pool, _reserve) \
-	bt_iso_create_pdu_timeout_debug(_pool, _reserve, osaWaitForever_c, \
-					__func__, __line__)
+	bt_iso_create_pdu_timeout_debug(_pool, _reserve, K_FOREVER, \
+					__func__, __LINE__)
 #else
 struct net_buf *bt_iso_create_pdu_timeout(struct net_buf_pool *pool,
 					  size_t reserve, k_timeout_t timeout);
 
 #define bt_iso_create_pdu(_pool, _reserve) \
-	bt_iso_create_pdu_timeout(_pool, _reserve, osaWaitForever_c)
+	bt_iso_create_pdu_timeout(_pool, _reserve, K_FOREVER)
 #endif
 
 /* Allocate ISO Fragment */
@@ -137,16 +137,16 @@ struct net_buf *bt_iso_create_frag_timeout_debug(size_t reserve,
 					 __func__, __LINE__)
 
 #define bt_iso_create_frag(_reserve) \
-	bt_iso_create_frag_timeout_debug(_reserve, osaWaitForever_c, \
+	bt_iso_create_frag_timeout_debug(_reserve, K_FOREVER, \
 					 __func__, __LINE__)
 #else
 struct net_buf *bt_iso_create_frag_timeout(size_t reserve, k_timeout_t timeout);
 
 #define bt_iso_create_frag(_reserve) \
-	bt_iso_create_frag_timeout(_reserve, osaWaitForever_c)
+	bt_iso_create_frag_timeout(_reserve, K_FOREVER)
 #endif
 
-#if (defined(CONFIG_BT_DEBUG_ISO) && (CONFIG_BT_DEBUG_ISO > 0))
+#if (defined(CONFIG_BT_ISO_LOG_LEVEL_DBG) && (CONFIG_BT_ISO_LOG_LEVEL_DBG > 0))
 void bt_iso_chan_set_state_debug(struct bt_iso_chan *chan,
 				 enum bt_iso_state state,
 				 const char *func, int line);
@@ -154,7 +154,15 @@ void bt_iso_chan_set_state_debug(struct bt_iso_chan *chan,
 	bt_iso_chan_set_state_debug(_chan, _state, __func__, __LINE__)
 #else
 void bt_iso_chan_set_state(struct bt_iso_chan *chan, enum bt_iso_state state);
-#endif /* CONFIG_BT_DEBUG_ISO */
+#endif /* CONFIG_BT_ISO_LOG_LEVEL_DBG */
 
 /* Process incoming data for a connection */
 void bt_iso_recv(struct bt_conn *iso, struct net_buf *buf, uint8_t flags);
+
+/* Whether the HCI ISO data packet contains a timestamp or not.
+ * Per spec, the TS flag can only be set for the first fragment.
+ */
+enum bt_iso_timestamp {
+	BT_ISO_TS_ABSENT = 0,
+	BT_ISO_TS_PRESENT,
+};

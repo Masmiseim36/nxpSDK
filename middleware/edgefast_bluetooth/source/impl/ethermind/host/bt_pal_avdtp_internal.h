@@ -105,11 +105,10 @@ struct bt_avdtp_req {
 #endif
 };
 
-STRUCT_PACKED_PRE
 struct bt_avdtp_single_sig_hdr {
 	uint8_t hdr;
 	uint8_t signal_id;
-} STRUCT_PACKED_POST;
+} __packed;
 
 #define BT_AVDTP_SIG_HDR_LEN sizeof(struct bt_avdtp_single_sig_hdr)
 

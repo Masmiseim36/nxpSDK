@@ -4,17 +4,15 @@
 **                          MIMXRT555SFFOC_cm33
 **
 **     Compiler:            GNU C Compiler
-**     Reference manual:    iMXRT500RM Rev.0, 01/2021
-**     Version:             rev. 4.0, 2020-05-12
-**     Build:               b210303
+**     Reference manual:    iMXRT500RM Rev.1, 07/2022
+**     Version:             rev. 5.0, 2021-07-28
+**     Build:               b241125
 **
 **     Abstract:
 **         Linker file for the GNU C Compiler
 **
 **     Copyright 2016 Freescale Semiconductor, Inc.
-**     Copyright 2016-2021 NXP
-**     All rights reserved.
-**
+**     Copyright 2016-2024 NXP
 **     SPDX-License-Identifier: BSD-3-Clause
 **
 **     http:                 www.nxp.com

@@ -107,8 +107,6 @@ int wpa_supp_mbo_set_cell_capa(const struct netif *dev, unsigned char mbo_cell_c
 
 int wpa_supp_mbo_set_oce(const struct netif *dev, unsigned char oce);
 
-void wpa_supp_set_bgscan(const struct netif *dev, const int short_interval, const int signal_threshold, const int long_interval);
-
 int wpa_supp_set_okc(const struct netif *dev, unsigned char okc);
 
 int wpa_supp_roam(const struct netif *dev, unsigned char *bssid);
@@ -117,7 +115,7 @@ int wpa_supp_ft_ds(const struct netif *dev, unsigned char *bssid);
 
 int wpa_supp_notify_assoc(const struct netif *dev);
 
-int wpa_supp_get_sta_info(const struct netif *dev, unsigned char *sta_addr, unsigned char *is_11n_enabled);
+int wpa_supp_req_status(enum requested_ops ops);
 
 #if CONFIG_WPA_SUPP_WPS
 int wpa_supp_start_wps_pbc(const struct netif *dev, int is_ap);
@@ -157,6 +155,7 @@ int wpa_supp_dpp_reconfig(const struct netif *dev, const char *cmd);
 int wpa_supp_dpp_configurator_sign(const struct netif *dev, int is_ap, const char *cmd);
 #endif
 
+#if CONFIG_HOSTAPD
 int wpa_supp_start_ap(const struct netif *dev, struct wlan_network *network, int reload);
 
 void wpa_supp_set_ap_max_num_sta(const struct netif *dev, unsigned int max_num_sta);
@@ -175,11 +174,14 @@ void wpa_supp_set_ap_11d_state(const struct netif *dev, int state);
 
 int wpa_supp_stop_ap(const struct netif *dev, struct wlan_network *network);
 
-int wpa_supp_req_status(enum requested_ops ops);
-
 int wpa_supp_set_mac_acl(const struct netif *dev, int filter_mode, char mac_count, unsigned char *mac_addr);
 
 int wpa_supp_deauth_sta(struct netif *dev, const u8* sta_addr);
+
+void wpa_supp_notify_acs(const struct netif *dev);
+
+int wpa_supp_get_sta_info(const struct netif *dev, unsigned char *sta_addr, unsigned char *is_11n_enabled);
+#endif
 
 int wpa_supp_deinit(void);
 

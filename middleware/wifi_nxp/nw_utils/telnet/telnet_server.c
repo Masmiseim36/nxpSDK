@@ -51,7 +51,6 @@ void SocketTelnetServer(void *pvParameters)
 {
     int sockfd, newsockfd, clilen;
     struct sockaddr_in serv_addr, cli_addr;
-    err_t err;
 
     /* Parameters are not used - suppress compiler error. */
     LWIP_UNUSED_ARG(pvParameters);

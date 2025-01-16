@@ -1,5 +1,6 @@
-Overview
-========
+# pmc_temperature_sensor
+
+## Overview
 
 The demo shows how to measure the temperature within the PMC module.
 
@@ -7,47 +8,7 @@ In this demo, the ADC input channel is mapped to an internal temperature sensor.
 any key into debug console would trigger a series of ADC conversions. When the conversions are done, the temperature is
 calculated per the specific formula.
 
-
-SDK version
-===========
-- Version: 2.16.000
-
-Toolchain supported
-===================
-- IAR embedded Workbench  9.60.1
-- Keil MDK  5.39.0
-- GCC ARM Embedded  13.2.1
-- MCUXpresso  11.10.0
-
-Hardware requirements
-=====================
-- Micro USB cable
-- EVK-MIMXRT595 board
-- Personal Computer
-
-Board settings
-==============
-
-
-Prepare the Demo
-================
-1.  Connect a micro USB cable between the PC host and the CMSIS DAP USB port (J40) on the board
-2.  Open a serial terminal with the following settings:
-    - 115200 baud rate
-    - 8 data bits
-    - No parity
-    - One stop bit
-    - No flow control
-3.  Download the program to the target board.
-4.  Launch the debugger in your IDE to begin running the demo.
-
-Running the demo
-================
-The log below shows the output of the demo in the terminal window:
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-PMC Temperature Sensor Demo
-ADC Full Range: 4096
-Please press any key to get temperature from the internal temperature sensor.
-Current temperature: 28.59
-Current temperature: 28.67
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+## Supported Boards
+- [EVK-MCIMX7ULP](../../_boards/evkmcimx7ulp/demo_apps/pmc_temperature_sensor/example_board_readme.md)
+- [EVK-MIMXRT595](../../_boards/evkmimxrt595/demo_apps/pmc_temperature_sensor/example_board_readme.md)
+- [MIMXRT700-EVK](../../_boards/mimxrt700evk/demo_apps/pmc_temperature_sensor/example_board_readme.md)

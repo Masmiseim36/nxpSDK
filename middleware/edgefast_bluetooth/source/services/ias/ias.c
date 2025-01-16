@@ -21,8 +21,14 @@
 #include <bluetooth/services/ias.h>
 
 
+#include "fsl_component_log.h"
+
+LOG_MODULE_DEFINE(bt_ias, kLOG_LevelTrace);
+
 #define BT_IAS_ALERT_LVL_LEN 1
 
+/* IAS CB */
+STRUCT_SECTION_DEFINE(bt_ias_cb);
 
 #if defined(CONFIG_BT_IAS_SEC_AUTH) && (CONFIG_BT_IAS_SEC_AUTH > 0)
 #define IAS_ALERT_LEVEL_PERM BT_GATT_PERM_WRITE_AUTHEN
@@ -38,14 +44,13 @@ struct alerting_device {
 
 static struct alerting_device devices[CONFIG_BT_MAX_CONN];
 static enum bt_ias_alert_lvl curr_lvl;
-static struct bt_ias_cb s_bt_ias_cb = {0};
+
 static void set_alert_level(void)
 {
-	enum bt_ias_alert_lvl alert_level;
-        struct bt_ias_cb *cb;
+	enum bt_ias_alert_lvl alert_level = BT_IAS_ALERT_LVL_NO_ALERT;
 
-	alert_level = devices[0].alert_level;
-	for (int i = 1; i < CONFIG_BT_MAX_CONN; i++) {
+	/* Set the alert_level as the highest requested by any device */
+	for (int i = 0; i < CONFIG_BT_MAX_CONN; i++) {
 		if (alert_level < devices[i].alert_level) {
 			alert_level = devices[i].alert_level;
 		}
@@ -58,20 +63,26 @@ static void set_alert_level(void)
 	curr_lvl = alert_level;
 
 	if (alert_level == BT_IAS_ALERT_LVL_HIGH_ALERT) {
-                if (s_bt_ias_cb.high_alert) {
-                        s_bt_ias_cb.high_alert();
-                }
-		PRINTF("High alert");
+		STRUCT_SECTION_FOREACH(bt_ias_cb, cb) {
+			if (cb->high_alert) {
+				cb->high_alert();
+			}
+		}
+		LOG_DBG("High alert");
 	} else if (alert_level == BT_IAS_ALERT_LVL_MILD_ALERT) {
-                    if (s_bt_ias_cb.mild_alert) {
-                            s_bt_ias_cb.mild_alert();
-                    }
-                    PRINTF("Mild alert");
+		STRUCT_SECTION_FOREACH(bt_ias_cb, cb) {
+			if (cb->mild_alert) {
+				cb->mild_alert();
+			}
+		}
+		LOG_DBG("Mild alert");
 	} else {
-                  if (s_bt_ias_cb.no_alert) {
-                          s_bt_ias_cb.no_alert();
-                  }
-                  PRINTF("No alert");
+		STRUCT_SECTION_FOREACH(bt_ias_cb, cb) {
+			if (cb->no_alert) {
+				cb->no_alert();
+			}
+		}
+		LOG_DBG("No alert");
 	}
 }
 
@@ -114,7 +125,12 @@ static ssize_t bt_ias_write_alert_lvl(struct bt_conn *conn, const struct bt_gatt
 	alert_val = (enum bt_ias_alert_lvl)net_buf_simple_pull_u8(&data);
 	devices[bt_conn_index(conn)].alert_level = alert_val;
 
-	if ( alert_val > BT_IAS_ALERT_LVL_HIGH_ALERT) {
+    /* EDGEFAST: Fix the building warning if BT_IAS_ALERT_LVL_NO_ALERT = 0 */
+#if BT_IAS_ALERT_LVL_NO_ALERT > 0
+	if (alert_val < BT_IAS_ALERT_LVL_NO_ALERT || alert_val > BT_IAS_ALERT_LVL_HIGH_ALERT) {
+#else
+	if (alert_val > BT_IAS_ALERT_LVL_HIGH_ALERT) {
+#endif
 		return BT_GATT_ERR(BT_ATT_ERR_VALUE_NOT_ALLOWED);
 	}
 	set_alert_level();
@@ -122,31 +138,9 @@ static ssize_t bt_ias_write_alert_lvl(struct bt_conn *conn, const struct bt_gatt
 	return len;
 }
 
-#if 0
 BT_CONN_CB_DEFINE(conn_callbacks) = {
 	.disconnected = disconnected,
 };
-#else
-struct bt_conn_cb conn_callbacks = {
-	.disconnected = disconnected,
-};
-#endif
-
-/* Init/deinit APIs */
-int bt_ias_init(struct bt_ias_cb *cb)
-{
-    memcpy(&s_bt_ias_cb,cb, sizeof(struct bt_ias_cb));
-	
-	bt_conn_cb_register(&conn_callbacks);
-
-    return 0;
-}
-
-int bt_ias_deinit(void)
-{
-    memset(&s_bt_ias_cb,0x0, sizeof(struct bt_ias_cb));
-    return 0;
-}
 
 /* Immediate Alert Service Declaration */
 BT_GATT_SERVICE_DEFINE(ias_svc,

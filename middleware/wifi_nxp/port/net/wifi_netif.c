@@ -53,7 +53,7 @@ static struct nxp_wifi_device gs_nxp_wifi_dev;
 static void netmgr_task(osa_task_param_t arg);
 
 /* OSA_TASKS: name, priority, instances, stackSz, useFloat */
-static OSA_TASK_DEFINE(netmgr_task, OSA_PRIORITY_NORMAL, 1, CONFIG_NETMGR_STACK_SIZE, 0);
+static OSA_TASK_DEFINE(netmgr_task, WLAN_TASK_PRI_HIGH, 1, CONFIG_NETMGR_STACK_SIZE, 0);
 
 OSA_TASK_HANDLE_DEFINE(netmgr_task_Handle);
 
@@ -346,7 +346,11 @@ static void process_data_packet(const t_u8 *rcvdata,
 #endif
 )
 {
+#if FSL_USDHC_ENABLE_SCATTER_GATHER_TRANSFER
+    RxPD *rxpd                   = (RxPD *)(void *)((t_u8 *)p->payload + INTF_HEADER_LEN);
+#else
     RxPD *rxpd                   = (RxPD *)(void *)((t_u8 *)rcvdata + INTF_HEADER_LEN);
+#endif
     mlan_bss_type recv_interface = (mlan_bss_type)(rxpd->bss_type);
     u16_t header_type;
 
@@ -444,6 +448,7 @@ static void process_data_packet(const t_u8 *rcvdata,
     {
         LINK_STATS_INC(link.memerr);
         LINK_STATS_INC(link.drop);
+        mlan_adap->priv[recv_interface]->rx_overrun_cnt++;
         return;
     }
 
@@ -552,6 +557,7 @@ static void process_data_packet(const t_u8 *rcvdata,
 #endif
         /* Unicast ARP also need do rx reorder */
         case ETHTYPE_ARP:
+#if CONFIG_11N
             if (recv_interface == MLAN_BSS_TYPE_STA || recv_interface == MLAN_BSS_TYPE_UAP)
             {
                 int rv = wrapper_wlan_handle_rx_packet(datalen, rxpd, p, payload);
@@ -563,11 +569,16 @@ static void process_data_packet(const t_u8 *rcvdata,
                     (void)pbuf_free(p);
                 }
             }
+#if UAP_SUPPORT
             else
             {
                 wrapper_wlan_update_uap_rxrate_info(rxpd);
                 deliver_packet_above(p, recv_interface);
             }
+#endif
+#else  /* ! CONFIG_11N */
+            deliver_packet_above(p, recv_interface);
+#endif /* CONFIG_11N */
             p = NULL;
             break;
         case ETHTYPE_EAPOL:
@@ -615,6 +626,8 @@ static struct pbuf *wifi_low_level_input(struct nxp_wifi_device *ps_nxp_wifi_dev
 
         /* Remove this pbuf from its descriptor. */
         ps_nxp_wifi_dev->rx_pbuf[ps_nxp_wifi_dev->us_rx_tail] = 0;
+
+        pbuf_header(p, -(s16_t)sizeof(mlan_buffer));
 
         LWIP_DEBUGF(NETIF_DEBUG, ("nxp_wifi_low_level_input: DMA buffer 0x%p received, size=%u [tail=%u head=%u]\n",
                                   p->payload, p->tot_len, ps_nxp_wifi_dev->us_rx_tail, ps_nxp_wifi_dev->us_rx_head));
@@ -671,11 +684,19 @@ void handle_data_packet(const t_u8 interface, const t_u8 *rcvdata, const t_u16 d
 #if FSL_USDHC_ENABLE_SCATTER_GATHER_TRANSFER
     struct nxp_wifi_device *ps_nxp_wifi_dev = (struct nxp_wifi_device *)&gs_nxp_wifi_dev;
     struct pbuf *p;
-    t_u8 interface2;
+//    t_u8 interface2;
 
     while ((p = wifi_low_level_input(ps_nxp_wifi_dev)) != NULL)
     {
-        interface2 = *((t_u8 *)p->payload + sizeof(mlan_buffer) + INTF_HEADER_LEN);
+        /* Directly use rxpd from pbuf */
+        RxPD *rxpd = (RxPD *)(void *)((t_u8 *)p->payload + INTF_HEADER_LEN);
+//        u16_t header_len = INTF_HEADER_LEN + rxpd->rx_pkt_offset; 
+        /* Skip interface header and RxPD */
+//        pbuf_header(p, -(s16_t)header_len);
+
+        mlan_bss_type interface2 = (mlan_bss_type)(rxpd->bss_type);
+
+//        interface2 = *((t_u8 *)p->payload + sizeof(mlan_buffer) + INTF_HEADER_LEN);
         if (interface2 < MAX_INTERFACES_SUPPORTED && netif_arr[interface2] != NULL)
         {
             process_data_packet((t_u8 *)p->payload + sizeof(mlan_buffer), p->tot_len, p);
@@ -702,6 +723,7 @@ void handle_amsdu_data_packet(t_u8 interface, t_u8 *rcvdata, t_u16 datalen)
         w_pkt_e("[amsdu] No pbuf available. Dropping packet");
         LINK_STATS_INC(link.memerr);
         LINK_STATS_INC(link.drop);
+        mlan_adap->priv[interface]->rx_overrun_cnt++;
         return;
     }
     deliver_packet_above(p, interface);
@@ -777,7 +799,9 @@ extern int retry_attempts;
  *       to become availale since the stack doesn't retry to send a packet
  *       dropped because of memory failure (except for the TCP timers).
  */
-
+#if CONFIG_WIFI_PKT_FWD
+#define MAX_RETRY_PKT_FWD 3
+#endif
 static err_t low_level_output(struct netif *netif, struct pbuf *p)
 {
     int ret;
@@ -788,6 +812,13 @@ static err_t low_level_output(struct netif *netif, struct pbuf *p)
 #endif
     t_u8 interface   = ethernetif->interface;
     t_u8 *wmm_outbuf = NULL;
+
+#if !UAP_SUPPORT
+    if (interface > WLAN_BSS_ROLE_STA)
+    {
+        return ERR_MEM;
+    }
+#endif
 
 #if CONFIG_WMM
     t_u8 tid                      = 0;
@@ -803,7 +834,7 @@ static err_t low_level_output(struct netif *netif, struct pbuf *p)
 
     if (interface > WLAN_BSS_TYPE_UAP)
     {
-        wifi_wmm_drop_no_media(interface);
+        LWIP_DEBUGF(NETIF_DEBUG, ("Illegal interface! [interface=%u]\n", interface));
         return ERR_MEM;
     }
 
@@ -813,13 +844,10 @@ static err_t low_level_output(struct netif *netif, struct pbuf *p)
         return ERR_OK;
     }
 
-    if (interface == WLAN_BSS_TYPE_STA)
+    if (wifi_add_to_bypassq(interface, p, p->tot_len) == WM_SUCCESS)
     {
-        if (wifi_add_to_bypassq(interface, p, p->tot_len) == WM_SUCCESS)
-        {
-            LINK_STATS_INC(link.xmit);
-            return ERR_OK;
-        }
+        LINK_STATS_INC(link.xmit);
+        return ERR_OK;
     }
 
     wifi_wmm_da_to_ra(p->payload, ra);
@@ -832,23 +860,40 @@ static err_t low_level_output(struct netif *netif, struct pbuf *p)
         }
         else
         {
-            retry = retry_attempts;
+#if CONFIG_WIFI_PKT_FWD
+            if (interface == WLAN_BSS_TYPE_UAP)
+            {
+                retry = MAX_RETRY_PKT_FWD;
+            }
+            else
+#endif
+            {
+                retry = retry_attempts;
+            }
         }
 
         wmm_outbuf = wifi_wmm_get_outbuf_enh(&outbuf_len, (mlan_wmm_ac_e)pkt_prio, interface, ra, &is_tx_pause);
         ret        = (wmm_outbuf == NULL) ? true : false;
 
-        if (ret == true && is_tx_pause == true)
+        /* uAP case doesn't need to delay to let powersave task run,
+         * as FW won't go into sleep mode when uAP enabled. And this
+         * delay will block uAP packet forward case */
+#if CONFIG_WIFI_PKT_FWD
+        if (interface != WLAN_BSS_TYPE_UAP)
+#endif
         {
-            OSA_TimeDelay(1);
+            if (ret == true && is_tx_pause == true)
+            {
+                OSA_TimeDelay(1);
+            }
         }
-
         retry--;
     } while (ret == true && retry > 0);
 
     if (ret == true)
     {
         wifi_wmm_drop_retried_drop(interface);
+        mlan_adap->priv[interface]->tx_overrun_cnt++;
         return ERR_MEM;
     }
 #else
@@ -856,6 +901,7 @@ static err_t low_level_output(struct netif *netif, struct pbuf *p)
 
     if (wmm_outbuf == NULL)
     {
+        mlan_adap->priv[interface]->tx_overrun_cnt++;
         return ERR_MEM;
     }
 #endif
@@ -925,6 +971,7 @@ static err_t low_level_output(struct netif *netif, struct pbuf *p)
     if (ret == -WM_E_NOMEM)
     {
         LINK_STATS_INC(link.err);
+        mlan_adap->priv[interface]->tx_overrun_cnt++;
         ret = ERR_MEM;
     }
     else if (ret == -WM_E_BUSY)
@@ -938,6 +985,16 @@ static err_t low_level_output(struct netif *netif, struct pbuf *p)
 
     return ret;
 }
+
+#if CONFIG_WIFI_PKT_FWD
+int net_wifi_pkt_fwd(uint8_t interface, void *stack_buffer)
+{
+    if (interface == WLAN_BSS_TYPE_UAP)
+        return low_level_output(net_get_uap_interface(), (struct pbuf *)stack_buffer);
+    else
+        return low_level_output(net_get_sta_interface(), (struct pbuf *)stack_buffer);
+}
+#endif
 
 #if CONFIG_WPS2
 void wps_register_rx_callback(void (*WPSEAPoLRxDataHandler)(const t_u8 *buf, const size_t len))
@@ -1272,6 +1329,7 @@ err_t lwip_netif_init(struct netif *netif)
     return ERR_OK;
 }
 
+#if UAP_SUPPORT
 err_t lwip_netif_uap_init(struct netif *netif)
 {
     struct ethernetif *ethernetif;
@@ -1311,6 +1369,6 @@ err_t lwip_netif_uap_init(struct netif *netif)
 
     return ERR_OK;
 }
-
+#endif
 
 #endif

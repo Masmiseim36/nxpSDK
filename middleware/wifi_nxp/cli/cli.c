@@ -46,12 +46,12 @@
 static void uart_task(osa_task_param_t arg);
 
 #if CONFIG_UART_INTERACTIVE
-static OSA_TASK_DEFINE(uart_task, PRIORITY_RTOS_TO_OSA(3), 1, CONFIG_UART_STACK_SIZE, 0);
+static OSA_TASK_DEFINE(uart_task, WLAN_TASK_PRI_HIGH, 1, CONFIG_UART_STACK_SIZE, 0);
 #else
 #if CONFIG_NCP
-static OSA_TASK_DEFINE(uart_task, PRIORITY_RTOS_TO_OSA(1), 1, CONFIG_UART_STACK_SIZE, 0);
+static OSA_TASK_DEFINE(uart_task, WLAN_TASK_PRI_LOW, 1, CONFIG_UART_STACK_SIZE, 0);
 #else
-static OSA_TASK_DEFINE(uart_task, PRIORITY_RTOS_TO_OSA(0), 1, CONFIG_UART_STACK_SIZE, 0);
+static OSA_TASK_DEFINE(uart_task, WLAN_TASK_PRI_IDLE, 1, CONFIG_UART_STACK_SIZE, 0);
 #endif
 #endif
 #endif
@@ -75,9 +75,9 @@ static void cli_task(osa_task_param_t arg);
 
 /* OSA_TASKS: name, priority, instances, stackSz, useFloat */
 #if CONFIG_UART_INTERACTIVE
-static OSA_TASK_DEFINE(cli_task, PRIORITY_RTOS_TO_OSA(3), 1, CONFIG_CLI_STACK_SIZE, 0);
+static OSA_TASK_DEFINE(cli_task, WLAN_TASK_PRI_HIGH, 1, CONFIG_CLI_STACK_SIZE, 0);
 #else
-static OSA_TASK_DEFINE(cli_task, PRIORITY_RTOS_TO_OSA(1), 1, CONFIG_CLI_STACK_SIZE, 0);
+static OSA_TASK_DEFINE(cli_task, WLAN_TASK_PRI_LOW, 1, CONFIG_CLI_STACK_SIZE, 0);
 #endif
 
 OSA_TASK_HANDLE_DEFINE(cli_task_Handle);

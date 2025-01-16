@@ -26,7 +26,7 @@
 #include "sd8987_wlan.h"
 #include "uart8987_bt.h"
 #endif
-#elif defined(SD9177)
+#elif defined(SD9177) || defined(IW610)
 #if !(CONFIG_WIFI_IND_DNLD) && !defined(CONFIG_BT_IND_DNLD)
 #include "sduart_nw61x_se.h"
 #else

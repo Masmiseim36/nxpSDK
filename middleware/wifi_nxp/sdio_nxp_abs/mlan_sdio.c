@@ -7,36 +7,77 @@
  *  SPDX-License-Identifier: BSD-3-Clause
  *
  */
-#include <wmerrno.h>
-#include <fsl_os_abstraction.h>
-#include <board.h>
-#include <wifi_bt_config.h>
 
 #if defined(SDK_OS_FREE_RTOS)
 
+#include <wmerrno.h>
+#include <fsl_os_abstraction.h>
 #include <mlan_sdio_api.h>
+#include <mlan_main_defs.h>
+#include <board.h>
+#include <wifi_bt_config.h>
 #include <fsl_common.h>
 #include <fsl_clock.h>
 #include <fsl_sdio.h>
 #include <fsl_sdmmc_spec.h>
 #include <fsl_usdhc.h>
 
+#include "fsl_sdmmc_host.h"
+#include "fsl_sdmmc_common.h"
+#if ((defined __DCACHE_PRESENT) && __DCACHE_PRESENT) || (defined FSL_FEATURE_HAS_L1CACHE && FSL_FEATURE_HAS_L1CACHE)
+#if !(defined(FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL) && FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL)
+#include "fsl_cache.h"
+#endif
+#endif
+
+/* Command port */
+#define CMD_PORT_SLCT 0x8000U
+
+#define MLAN_SDIO_BYTE_MODE_MASK 0x80000000U
+
 #define SDIO_CMD_TIMEOUT 2000
+
+#if FSL_USDHC_ENABLE_SCATTER_GATHER_TRANSFER
+
+static size_t sg_idx, num_sg;
+
+static sdmmchost_scatter_gather_data_list_t sgDataList[SDIO_MP_AGGR_DEF_PKT_LIMIT_MAX];
+
+void sg_init_table()
+{
+    memset(&sgDataList, 0, sizeof(sgDataList));
+    sg_idx = 0;
+}
+
+void sg_set_num(size_t n_sg)
+{
+    num_sg = n_sg;
+}
+
+void sg_set_buf(uint32_t *buf, size_t len)
+{
+    sgDataList[sg_idx].dataAddr = buf;
+    sgDataList[sg_idx].dataSize = len;
+    if (sg_idx > 0)
+    {
+        sgDataList[sg_idx - 1].dataList = &sgDataList[sg_idx];
+    }
+
+    sg_idx++;
+}
+#endif
 
 extern void handle_cdint(int error);
 
 static sdio_card_t wm_g_sd;
-
 static OSA_MUTEX_HANDLE_DEFINE(sdio_mutex);
-
-void sdio_enable_interrupt(void);
 
 int sdio_drv_creg_read(int addr, int fn, uint32_t *resp)
 {
-    osa_status_t ret;
+    osa_status_t status;
 
-    ret = OSA_MutexLock(&sdio_mutex, osaWaitForever_c);
-    if (ret != KOSA_StatusSuccess)
+    status = OSA_MutexLock((osa_mutex_handle_t)sdio_mutex, osaWaitForever_c);
+    if (status != KOSA_StatusSuccess)
     {
         sdio_e("failed to get mutex\r\n");
         return 0;
@@ -44,21 +85,21 @@ int sdio_drv_creg_read(int addr, int fn, uint32_t *resp)
 
     if (SDIO_IO_Read_Direct(&wm_g_sd, (sdio_func_num_t)fn, (uint32_t)addr, (uint8_t *)resp) != KOSA_StatusSuccess)
     {
-        (void)OSA_MutexUnlock(&sdio_mutex);
+        (void)OSA_MutexUnlock((osa_mutex_handle_t)sdio_mutex);
         return 0;
     }
 
-    (void)OSA_MutexUnlock(&sdio_mutex);
+    (void)OSA_MutexUnlock((osa_mutex_handle_t)sdio_mutex);
 
     return 1;
 }
 
 int sdio_drv_creg_write(int addr, int fn, uint8_t data, uint32_t *resp)
 {
-    osa_status_t ret;
+    osa_status_t status;
 
-    ret = OSA_MutexLock(&sdio_mutex, osaWaitForever_c);
-    if (ret != KOSA_StatusSuccess)
+    status = OSA_MutexLock((osa_mutex_handle_t)sdio_mutex, osaWaitForever_c);
+    if (status != KOSA_StatusSuccess)
     {
         sdio_e("failed to get mutex\r\n");
         return 0;
@@ -66,25 +107,25 @@ int sdio_drv_creg_write(int addr, int fn, uint8_t data, uint32_t *resp)
 
     if (SDIO_IO_Write_Direct(&wm_g_sd, (sdio_func_num_t)fn, (uint32_t)addr, &data, true) != KOSA_StatusSuccess)
     {
-        (void)OSA_MutexUnlock(&sdio_mutex);
-        return 0;
+        (void)OSA_MutexUnlock((osa_mutex_handle_t)sdio_mutex);
+        return false;
     }
 
     *resp = data;
 
-    (void)OSA_MutexUnlock(&sdio_mutex);
+    (void)OSA_MutexUnlock((osa_mutex_handle_t)sdio_mutex);
 
     return 1;
 }
 
 int sdio_drv_read(uint32_t addr, uint32_t fn, uint32_t bcnt, uint32_t bsize, uint8_t *buf, uint32_t *resp)
 {
-    osa_status_t ret;
+    osa_status_t status;
     uint32_t flags = 0;
     uint32_t param;
 
-    ret = OSA_MutexLock(&sdio_mutex, osaWaitForever_c);
-    if (ret != KOSA_StatusSuccess)
+    status = OSA_MutexLock((osa_mutex_handle_t)sdio_mutex, osaWaitForever_c);
+    if (status != KOSA_StatusSuccess)
     {
         sdio_e("failed to get mutex\r\n");
         return 0;
@@ -106,22 +147,66 @@ int sdio_drv_read(uint32_t addr, uint32_t fn, uint32_t bcnt, uint32_t bsize, uin
         return 0;
     }
 
-    (void)OSA_MutexUnlock(&sdio_mutex);
+    (void)OSA_MutexUnlock((osa_mutex_handle_t)sdio_mutex);
 
     return 1;
 }
 
-int sdio_drv_write(uint32_t addr, uint32_t fn, uint32_t bcnt, uint32_t bsize, uint8_t *buf, uint32_t *resp)
+#if FSL_USDHC_ENABLE_SCATTER_GATHER_TRANSFER
+int sdio_drv_read_mb(uint32_t addr, uint32_t fn, uint32_t bcnt, uint32_t bsize)
 {
-    osa_status_t ret;
+    osa_status_t status;
     uint32_t flags = 0;
     uint32_t param;
 
-    ret = OSA_MutexLock(&sdio_mutex, osaWaitForever_c);
-    if (ret != KOSA_StatusSuccess)
+    status = OSA_MutexLock((osa_mutex_handle_t)sdio_mutex, osaWaitForever_c);
+    if (status != KOSA_StatusSuccess)
     {
         sdio_e("failed to get mutex\r\n");
-        return false;
+        return 0;
+    }
+
+    if (bcnt > 1U)
+    {
+        flags |= SDIO_EXTEND_CMD_BLOCK_MODE_MASK;
+        param = bcnt;
+    }
+    else
+    {
+        param = bsize;
+    }
+
+    if (SDIO_IO_Read_Extended_Scatter_Gather(&wm_g_sd, (sdio_func_num_t)fn, addr, sgDataList, param, flags) != KOSA_StatusSuccess)
+    {
+        (void)OSA_MutexUnlock((osa_mutex_handle_t)sdio_mutex);
+        return 0;
+    }
+
+    (void)OSA_MutexUnlock((osa_mutex_handle_t)sdio_mutex);
+
+#if 0
+    PRINTF("num sg : %d\r\n", num_sg);
+    for (i = 0; i < num_sg; i++)
+    {
+        dump_hex(sgDataList[i].dataAddr, sgDataList[i].dataSize);
+    }
+#endif
+
+    return 1;
+}
+#endif
+
+int sdio_drv_write(uint32_t addr, uint32_t fn, uint32_t bcnt, uint32_t bsize, uint8_t *buf, uint32_t *resp)
+{
+    osa_status_t status;
+    uint32_t flags = 0;
+    uint32_t param;
+
+    status = OSA_MutexLock((osa_mutex_handle_t)sdio_mutex, osaWaitForever_c);
+    if (status != KOSA_StatusSuccess)
+    {
+        sdio_e("failed to get mutex\r\n");
+        return 0;
     }
 
     if (bcnt > 1U)
@@ -136,11 +221,11 @@ int sdio_drv_write(uint32_t addr, uint32_t fn, uint32_t bcnt, uint32_t bsize, ui
 
     if (SDIO_IO_Write_Extended(&wm_g_sd, (sdio_func_num_t)fn, addr, buf, param, flags) != KOSA_StatusSuccess)
     {
-        (void)OSA_MutexUnlock(&sdio_mutex);
-        return 0;
+        (void)OSA_MutexUnlock((osa_mutex_handle_t)sdio_mutex);
+        return false;
     }
 
-    (void)OSA_MutexUnlock(&sdio_mutex);
+    (void)OSA_MutexUnlock((osa_mutex_handle_t)sdio_mutex);
 
     return 1;
 }
@@ -183,8 +268,8 @@ static void sdio_controller_init(void)
 
 static int sdio_card_init(void)
 {
-    int ret = WM_SUCCESS;
-    uint32_t resp;
+    int ret       = WM_SUCCESS;
+    uint32_t resp = 0;
 
     if (SDIO_HostInit(&wm_g_sd) != KOSA_StatusSuccess)
     {
@@ -216,7 +301,7 @@ static int sdio_card_init(void)
     wm_g_sd.operationVoltage = kSDMMC_OperationVoltage180V;
 #endif
 
-#if !defined(COEX_APP_SUPPORT) || (defined(COEX_APP_SUPPORT) && !defined(CONFIG_WIFI_IND_DNLD))
+#if !defined(COEX_APP_SUPPORT) || (defined(COEX_APP_SUPPORT) && !(CONFIG_WIFI_IND_DNLD))
     BOARD_WIFI_BT_Enable(true);
 #endif
 
@@ -235,7 +320,11 @@ static int sdio_card_init(void)
     /* Enable IO in card */
     (void)sdio_drv_creg_write(0x2, 0, 0x2, &resp);
 
+#if defined(SD9177) || defined(SD8978) || defined(IW610)
+    (void)SDIO_SetBlockSize(&wm_g_sd, (sdio_func_num_t)0, 1);
+#elif defined(SD8801) || defined(SD8987)
     (void)SDIO_SetBlockSize(&wm_g_sd, (sdio_func_num_t)0, 256);
+#endif
     (void)SDIO_SetBlockSize(&wm_g_sd, (sdio_func_num_t)1, 256);
     (void)SDIO_SetBlockSize(&wm_g_sd, (sdio_func_num_t)2, 256);
 
@@ -293,10 +382,10 @@ static void print_card_info(sdio_card_t *card)
 
 int sdio_drv_init(void (*cd_int)(int))
 {
-    osa_status_t ret;
+    osa_status_t status;
 
-    ret = OSA_MutexCreate(&sdio_mutex);
-    if (ret != KOSA_StatusSuccess)
+    status = OSA_MutexCreate((osa_mutex_handle_t)sdio_mutex);
+    if (status != KOSA_StatusSuccess)
     {
         sdio_e("Failed to create mutex");
         return -WM_FAIL;
@@ -321,12 +410,12 @@ int sdio_drv_init(void (*cd_int)(int))
 
 void sdio_drv_deinit(void)
 {
-    osa_status_t ret;
+    osa_status_t status;
 
     SDIO_Deinit(&wm_g_sd);
 
-    ret = OSA_MutexDestroy(&sdio_mutex);
-    if (ret != KOSA_StatusSuccess)
+    status = OSA_MutexDestroy((osa_mutex_handle_t)sdio_mutex);
+    if (status != KOSA_StatusSuccess)
     {
         sdio_e("Failed to delete mutex");
     }

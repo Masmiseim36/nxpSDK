@@ -2,7 +2,7 @@
  *
  *  @brief  This file provides functions for process 11k(RRM) feature
  *
- *  Copyright 2022 NXP
+ *  Copyright 2024 NXP
  *
  *  SPDX-License-Identifier: BSD-3-Clause
  *
@@ -1011,7 +1011,7 @@ void wlan_dot11k_formatRrmCapabilities(IEEEtypes_RrmEnabledCapabilities_t *pRrmC
     (void)memset((void *)pRrmCapIe, 0x00, sizeof(IEEEtypes_RrmEnabledCapabilities_t));
 
     pRrmCapIe->LinkMeas       = 1;
-    pRrmCapIe->NborRpt        = 1;
+    pRrmCapIe->NborRpt        = 0;
     pRrmCapIe->BcnPassiveMeas = 1;
     pRrmCapIe->BcnActiveMeas  = 1;
     pRrmCapIe->BcnTableMeas   = 1;

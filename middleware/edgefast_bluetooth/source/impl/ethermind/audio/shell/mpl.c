@@ -13,13 +13,20 @@
 #if (defined(CONFIG_BT_MPL) && (CONFIG_BT_MPL > 0))
 
 #include <stdlib.h>
-#include "fsl_shell.h"
+
+#include <sys/byteorder.h>
+#include <sys/util.h>
+#include <porting.h>
+
+#include <bluetooth/hci.h>
 #include <bluetooth/bluetooth.h>
 #include <bluetooth/conn.h>
 
+#include <bluetooth/audio/media_proxy.h>
+
+#include "fsl_shell.h"
 #include "shell_bt.h"
 
-#include <bluetooth/audio/media_proxy.h>
 #include "mpl_internal.h"
 
 #define BT_DBG_ENABLED IS_ENABLED(CONFIG_BT_MPL_LOG_LEVEL_DBG)
@@ -28,7 +35,8 @@
 
 #if (defined(CONFIG_BT_MPL_LOG_LEVEL_DBG) && (CONFIG_BT_MPL_LOG_LEVEL_DBG > 0)) && \
 	(defined(CONFIG_BT_TESTING) && (CONFIG_BT_TESTING > 0))
-static shell_status_t cmd_mpl_test_set_media_state(shell_handle_t sh, int32_t argc, char *argv[])
+int cmd_mpl_test_set_media_state(const struct shell *sh, size_t argc,
+				 char *argv[])
 {
 	unsigned long state;
 	int err = 0;
@@ -37,40 +45,42 @@ static shell_status_t cmd_mpl_test_set_media_state(shell_handle_t sh, int32_t ar
 	if (err != 0) {
 		shell_error(sh, "Could not parse state: %d", err);
 
-		return kStatus_SHELL_Error;
+		return -ENOEXEC;
 	}
 
 	if (state > UINT8_MAX) {
 		shell_error(sh, "Invalid state %lu", state);
 
-		return kStatus_SHELL_Error;
+		return -ENOEXEC;
 	}
 
 	mpl_test_media_state_set(state);
 
-	return kStatus_SHELL_Success;
+	return 0;
 }
 
 #if (defined(CONFIG_BT_MPL_OBJECTS) && (CONFIG_BT_MPL_OBJECTS > 0))
-static shell_status_t cmd_mpl_test_unset_parent_group(shell_handle_t sh, int32_t argc, char *argv[])
+int cmd_mpl_test_unset_parent_group(const struct shell *sh, size_t argc,
+				    char *argv[])
 {
 	mpl_test_unset_parent_group();
 
-	return kStatus_SHELL_Success;
+	return 0;
 }
 #endif /* CONFIG_BT_MPL_OBJECTS */
 #endif /* CONFIG_BT_MPL_LOG_LEVEL_DBG && CONFIG_BT_TESTING */
 
 #if (defined(CONFIG_BT_MPL_LOG_LEVEL_DBG) && (CONFIG_BT_MPL_LOG_LEVEL_DBG > 0))
-static shell_status_t cmd_mpl_debug_dump_state(shell_handle_t sh, int32_t argc, char *argv[])
+int cmd_mpl_debug_dump_state(const struct shell *sh, size_t argc,
+			     char *argv[])
 {
 	mpl_debug_dump_state();
 
-	return kStatus_SHELL_Success;
+	return 0;
 }
 #endif /* CONFIG_BT_MPL_LOG_LEVEL_DBG */
 
-static shell_status_t cmd_media_proxy_pl_init(shell_handle_t sh, int32_t argc, char *argv[])
+int cmd_media_proxy_pl_init(const struct shell *sh, size_t argc, char *argv[])
 {
 	if (!ctx_shell) {
 		ctx_shell = sh;
@@ -82,116 +92,132 @@ static shell_status_t cmd_media_proxy_pl_init(shell_handle_t sh, int32_t argc, c
 		shell_error(sh, "Could not init mpl");
 	}
 
-	return (shell_status_t)err;
+	return err;
 }
 
-static shell_status_t cmd_mpl_test_player_name_cb(shell_handle_t sh, int32_t argc, char *argv[])
+int cmd_mpl_test_player_name_cb(const struct shell *sh, size_t argc,
+				char *argv[])
 {
 	mpl_test_player_name_changed_cb();
 
-	return kStatus_SHELL_Success;
+	return 0;
 }
 
-static shell_status_t cmd_mpl_test_player_icon_url_cb(shell_handle_t sh, int32_t argc, char *argv[])
+int cmd_mpl_test_player_icon_url_cb(const struct shell *sh, size_t argc,
+				    char *argv[])
 {
 	mpl_test_player_icon_url_changed_cb();
 
-	return kStatus_SHELL_Success;
+	return 0;
 }
 
-static shell_status_t cmd_mpl_test_track_changed_cb(shell_handle_t sh, int32_t argc, char *argv[])
+int cmd_mpl_test_track_changed_cb(const struct shell *sh, size_t argc,
+				  char *argv[])
 {
 	mpl_test_track_changed_cb();
-	return kStatus_SHELL_Success;
+	return 0;
 }
 
-static shell_status_t cmd_mpl_test_title_changed_cb(shell_handle_t sh, int32_t argc, char *argv[])
+int cmd_mpl_test_title_changed_cb(const struct shell *sh, size_t argc,
+				  char *argv[])
 {
 	mpl_test_title_changed_cb();
-	return kStatus_SHELL_Success;
+	return 0;
 }
 
-static shell_status_t cmd_mpl_test_duration_changed_cb(shell_handle_t sh, int32_t argc, char *argv[])
+int cmd_mpl_test_duration_changed_cb(const struct shell *sh, size_t argc,
+				     char *argv[])
 {
 	mpl_test_duration_changed_cb();
-	return kStatus_SHELL_Success;
+	return 0;
 }
 
-static shell_status_t cmd_mpl_test_position_changed_cb(shell_handle_t sh, int32_t argc, char *argv[])
+int cmd_mpl_test_position_changed_cb(const struct shell *sh, size_t argc,
+				     char *argv[])
 {
 	mpl_test_position_changed_cb();
-	return kStatus_SHELL_Success;
+	return 0;
 }
 
-static shell_status_t cmd_mpl_test_playback_speed_changed_cb(shell_handle_t sh, int32_t argc, char *argv[])
+int cmd_mpl_test_playback_speed_changed_cb(const struct shell *sh, size_t argc,
+					   char *argv[])
 {
 	mpl_test_playback_speed_changed_cb();
-	return kStatus_SHELL_Success;
+	return 0;
 }
 
-static shell_status_t cmd_mpl_test_seeking_speed_changed_cb(shell_handle_t sh, int32_t argc, char *argv[])
+int cmd_mpl_test_seeking_speed_changed_cb(const struct shell *sh, size_t argc,
+					  char *argv[])
 {
 	mpl_test_seeking_speed_changed_cb();
-	return kStatus_SHELL_Success;
+	return 0;
 }
 
-#if (defined(CONFIG_BT_MPL_OBJECTS) && (CONFIG_BT_MPL_OBJECTS > 0))
-static shell_status_t cmd_mpl_test_current_track_id_changed_cb(shell_handle_t sh, int32_t argc, char *argv[])
+#ifdef CONFIG_BT_MPL_OBJECTS
+int cmd_mpl_test_current_track_id_changed_cb(const struct shell *sh, size_t argc,
+					     char *argv[])
 {
 	mpl_test_current_track_id_changed_cb();
-	return kStatus_SHELL_Success;
+	return 0;
 }
 
-static shell_status_t cmd_mpl_test_next_track_id_changed_cb(shell_handle_t sh, int32_t argc, char *argv[])
+int cmd_mpl_test_next_track_id_changed_cb(const struct shell *sh, size_t argc,
+					  char *argv[])
 {
 	mpl_test_next_track_id_changed_cb();
-	return kStatus_SHELL_Success;
+	return 0;
 }
 
-static shell_status_t cmd_mpl_test_current_group_id_changed_cb(shell_handle_t sh, int32_t argc, char *argv[])
+int cmd_mpl_test_current_group_id_changed_cb(const struct shell *sh, size_t argc,
+					     char *argv[])
 {
 	mpl_test_current_group_id_changed_cb();
-	return kStatus_SHELL_Success;
+	return 0;
 }
 
-static shell_status_t cmd_mpl_test_parent_group_id_changed_cb(shell_handle_t sh, int32_t argc, char *argv[])
+int cmd_mpl_test_parent_group_id_changed_cb(const struct shell *sh, size_t argc,
+					    char *argv[])
 {
 	mpl_test_parent_group_id_changed_cb();
-	return kStatus_SHELL_Success;
+	return 0;
 }
 #endif /* CONFIG_BT_MPL_OBJECTS */
 
-static shell_status_t cmd_mpl_test_playing_order_changed_cb(shell_handle_t sh, int32_t argc, char *argv[])
+int cmd_mpl_test_playing_order_changed_cb(const struct shell *sh, size_t argc,
+					  char *argv[])
 {
 	mpl_test_playing_order_changed_cb();
-	return kStatus_SHELL_Success;
+	return 0;
 }
 
-static shell_status_t cmd_mpl_test_state_changed_cb(shell_handle_t sh, int32_t argc, char *argv[])
+int cmd_mpl_test_state_changed_cb(const struct shell *sh, size_t argc,
+				  char *argv[])
 {
 	mpl_test_media_state_changed_cb();
-	return kStatus_SHELL_Success;
+	return 0;
 }
 
-static shell_status_t cmd_mpl_test_media_opcodes_supported_changed_cb(shell_handle_t sh, int32_t argc, char *argv[])
+int cmd_mpl_test_media_opcodes_supported_changed_cb(const struct shell *sh, size_t argc,
+						    char *argv[])
 {
 	mpl_test_opcodes_supported_changed_cb();
-	return kStatus_SHELL_Success;
+	return 0;
 }
 
 #if (defined(CONFIG_BT_MPL_OBJECTS) && (CONFIG_BT_MPL_OBJECTS > 0))
-static shell_status_t cmd_mpl_test_search_results_changed_cb(shell_handle_t sh, int32_t argc, char *argv[])
+int cmd_mpl_test_search_results_changed_cb(const struct shell *sh, size_t argc,
+					   char *argv[])
 {
 	mpl_test_search_results_changed_cb();
-	return kStatus_SHELL_Success;
+	return 0;
 }
 #endif /* CONFIG_BT_MPL_OBJECTS */
 
-static shell_status_t cmd_mpl(shell_handle_t sh, int32_t argc, char *argv[])
+static int cmd_mpl(const struct shell *sh, size_t argc, char **argv)
 {
 	shell_error(sh, "%s unknown parameter: %s", argv[0], argv[1]);
 
-	return kStatus_SHELL_Error;
+	return -ENOEXEC;
 }
 
 SHELL_STATIC_SUBCMD_SET_CREATE(mpl_cmds,
@@ -276,7 +302,7 @@ SHELL_STATIC_SUBCMD_SET_CREATE(mpl_cmds,
  * and https://github.com/nexB/scancode-toolkit/commit/6abbc4a22973f40ab74f6f8d948dd06416c97bd4
  */
 #define CMD_NQM cmd_mpl
-SHELL_CMD_REGISTER(mpl, mpl_cmds, "Media player (MPL) related commands",
+SHELL_CMD_ARG_REGISTER(mpl, &mpl_cmds, "Media player (MPL) related commands",
 		       CMD_NQM, 1, 1);
 
 void bt_ShellMplInit(shell_handle_t shell)

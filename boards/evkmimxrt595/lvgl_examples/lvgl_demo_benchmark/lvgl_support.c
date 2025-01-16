@@ -1,6 +1,5 @@
 /*
- * Copyright 2019-2022 NXP
- * All rights reserved.
+ * Copyright 2019-2022, 2024 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -28,7 +27,7 @@
 #include "fsl_gt911.h"
 #endif
 
-#if LV_USE_GPU_NXP_VG_LITE
+#if LV_USE_DRAW_VGLITE
 #include "vg_lite.h"
 #include "vglite_support.h"
 #endif
@@ -72,11 +71,11 @@
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
-static void DEMO_FlushDisplay(lv_disp_drv_t *disp_drv, const lv_area_t *area, lv_color_t *color_p);
+static void DEMO_FlushDisplay(lv_display_t *disp_drv, const lv_area_t *area, uint8_t *color_p);
 
 static void DEMO_InitTouch(void);
 
-static void DEMO_ReadTouch(lv_indev_drv_t *drv, lv_indev_data_t *data);
+static void DEMO_ReadTouch(lv_indev_t *drv, lv_indev_data_t *data);
 
 static void DEMO_BufferSwitchOffCallback(void *param, void *switchOffBuffer);
 
@@ -147,39 +146,16 @@ static dc_fb_info_t fbInfo;
  * Code
  ******************************************************************************/
 
-void lv_port_pre_init(void)
-{
-}
-
 void lv_port_disp_init(void)
 {
-    static lv_disp_draw_buf_t disp_buf;
-    static lv_disp_drv_t disp_drv; /*Descriptor of a display driver*/
+    lv_display_t * disp_drv; /*Descriptor of a display driver*/
 
     memset((void *)DEMO_BUFFER0_ADDR, 0, DEMO_BUFFER_WIDTH * DEMO_BUFFER_HEIGHT * DEMO_BUFFER_BYTE_PER_PIXEL);
     memset((void *)DEMO_BUFFER1_ADDR, 0, DEMO_BUFFER_WIDTH * DEMO_BUFFER_HEIGHT * DEMO_BUFFER_BYTE_PER_PIXEL);
 
-#if DEMO_DISPLAY_USE_PARTIAL_REFRESH
-    /* In partial refresh mode, buffer 0 is lvgl working area, it should be larger than
-     * 1/10 of full screen buffer, in this examples it is full screen size. Buffer 1 is a
-     * full screen buffer. LVGL updated areas will first be merge and updated in buffer 1,
-     * then the dirty region in buffer 1 will be sent to LCD controller at the right time.
-     */
-    lv_disp_draw_buf_init(&disp_buf, (void *)DEMO_BUFFER0_ADDR, NULL, DEMO_BUFFER_WIDTH * DEMO_BUFFER_HEIGHT);
-#else /* DEMO_DISPLAY_USE_PARTIAL_REFRESH */
-
-#if DEMO_USE_ROTATE
-    lv_disp_draw_buf_init(&disp_buf, (void *)LVGL_BUFFER_ADDR, NULL, DEMO_BUFFER_WIDTH * DEMO_BUFFER_HEIGHT);
-#else
-    lv_disp_draw_buf_init(&disp_buf, (void *)DEMO_BUFFER0_ADDR, (void *)DEMO_BUFFER1_ADDR,
-                          DEMO_BUFFER_WIDTH * DEMO_BUFFER_HEIGHT);
-#endif
-
-#endif /* DEMO_DISPLAY_USE_PARTIAL_REFRESH */
-
     status_t status;
 
-#if LV_USE_GPU_NXP_VG_LITE
+#if LV_USE_DRAW_VGLITE
     /* Initialize GPU. */
     BOARD_PrepareVGLiteController();
 #endif
@@ -204,7 +180,11 @@ void lv_port_disp_init(void)
     fbInfo.strideBytes = DEMO_BUFFER_STRIDE_BYTE;
     g_dc.ops->setLayerConfig(&g_dc, 0, &fbInfo);
 
-    g_dc.ops->setCallback(&g_dc, 0, DEMO_BufferSwitchOffCallback, &disp_drv);
+    /*------------------------------------
+     * Create a display and set a flush_cb
+     * -----------------------------------*/
+    disp_drv = lv_display_create(LVGL_BUFFER_WIDTH, LVGL_BUFFER_HEIGHT);
+    g_dc.ops->setCallback(&g_dc, 0, DEMO_BufferSwitchOffCallback, disp_drv);
 
 #if defined(SDK_OS_FREE_RTOS)
     s_transferDone = xSemaphoreCreateBinary();
@@ -224,6 +204,7 @@ void lv_port_disp_init(void)
 
     /* Clear initial frame. */
     /* lvgl starts render in frame buffer 0, so show frame buffer 1 first. */
+
     memset((void *)DEMO_BUFFER1_ADDR, 0, DEMO_BUFFER_STRIDE_BYTE * DEMO_BUFFER_HEIGHT);
     g_dc.ops->setFrameBuffer(&g_dc, 0, (void *)DEMO_BUFFER1_ADDR);
 
@@ -239,31 +220,28 @@ void lv_port_disp_init(void)
      * Register the display in LittlevGL
      *----------------------------------*/
 
-    lv_disp_drv_init(&disp_drv); /*Basic initialization*/
-
     /*Set up the functions to access to your display*/
+    lv_display_set_flush_cb(disp_drv, DEMO_FlushDisplay);
 
-    /*Set the resolution of the display*/
-    disp_drv.hor_res = LVGL_BUFFER_WIDTH;
-    disp_drv.ver_res = LVGL_BUFFER_HEIGHT;
-
-    /*Used to copy the buffer's content to the display*/
-    disp_drv.flush_cb = DEMO_FlushDisplay;
-
-    /*Set a display buffer*/
-    disp_drv.draw_buf = &disp_buf;
-
-    /* Partial refresh */
 #if DEMO_DISPLAY_USE_PARTIAL_REFRESH
-    disp_drv.full_refresh = 0;
+    /* In partial refresh mode, buffer 0 is lvgl working area, it should be larger than
+     * 1/10 of full screen buffer, in this examples it is full screen size. Buffer 1 is a
+     * full screen buffer. LVGL updated areas will first be merge and updated in buffer 1,
+     * then the dirty region in buffer 1 will be sent to LCD controller at the right time.
+     */
+    lv_display_set_buffers(disp_drv, (void *)DEMO_BUFFER0_ADDR, NULL, DEMO_BUFFER_WIDTH * DEMO_BUFFER_HEIGHT * DEMO_BUFFER_BYTE_PER_PIXEL, LV_DISPLAY_RENDER_MODE_PARTIAL);
+#else /* DEMO_DISPLAY_USE_PARTIAL_REFRESH */
+
+#if DEMO_USE_ROTATE
+    lv_display_set_buffers(disp_drv, (void *)LVGL_BUFFER_ADDR, NULL, DEMO_BUFFER_WIDTH * DEMO_BUFFER_HEIGHT * DEMO_BUFFER_BYTE_PER_PIXEL, LV_DISPLAY_RENDER_MODE_FULL);
 #else
-    disp_drv.full_refresh = 1;
+    lv_display_set_buffers(disp_drv, (void *)DEMO_BUFFER0_ADDR, (void *)DEMO_BUFFER1_ADDR,
+                          DEMO_BUFFER_WIDTH * DEMO_BUFFER_HEIGHT * DEMO_BUFFER_BYTE_PER_PIXEL, LV_DISPLAY_RENDER_MODE_FULL);
 #endif
 
-    /*Finally register the driver*/
-    lv_disp_drv_register(&disp_drv);
+#endif /* DEMO_DISPLAY_USE_PARTIAL_REFRESH */
 
-#if LV_USE_GPU_NXP_VG_LITE
+#if LV_USE_DRAW_VGLITE
     if (vg_lite_init(DEFAULT_VG_LITE_TW_WIDTH, DEFAULT_VG_LITE_TW_HEIGHT) != VG_LITE_SUCCESS)
     {
         PRINTF("VGLite init error. STOP.");
@@ -285,11 +263,11 @@ void lv_port_disp_init(void)
 static void DEMO_BufferSwitchOffCallback(void *param, void *switchOffBuffer)
 {
 #if DEMO_DISPLAY_USE_PARTIAL_REFRESH
-    lv_disp_drv_t *disp_drv = (lv_disp_drv_t *)param;
+    lv_display_t *disp_drv = (lv_display_t *)param;
 
     /* IMPORTANT!!!
      * Inform the graphics library that you are ready with the flushing*/
-    lv_disp_flush_ready(disp_drv);
+    lv_display_flush_ready(disp_drv);
 #endif
 
 #if defined(SDK_OS_FREE_RTOS)
@@ -323,22 +301,25 @@ static void DEMO_WaitBufferSwitchOff(void)
 }
 
 #if DEMO_DISPLAY_USE_PARTIAL_REFRESH
-static void copy_area(const lv_area_t *area, lv_color_t *color_p, uint8_t *fb, uint32_t fbStrideBytes)
+static void copy_area(const lv_area_t *area, uint8_t *color_p, uint8_t *fb, uint32_t fbStrideBytes)
 {
     uint32_t y;
     uint32_t areaWidth = lv_area_get_width(area);
+    uint32_t value;
 
-    fb += (area->y1 * fbStrideBytes + area->x1 * sizeof(lv_color_t));
+    fb += (area->y1 * fbStrideBytes + area->x1 * DEMO_BUFFER_BYTE_PER_PIXEL);
 
     for (y = area->y1; y <= area->y2; y++)
     {
-        memcpy(fb, color_p, areaWidth * sizeof(lv_color_t));
+        memcpy(fb, color_p, areaWidth * DEMO_BUFFER_BYTE_PER_PIXEL);
+        /* Round up to get correct value to match alignment */
         fb += fbStrideBytes;
-        color_p += areaWidth;
+        value = (areaWidth * DEMO_BUFFER_BYTE_PER_PIXEL) / LV_DRAW_BUF_STRIDE_ALIGN + ((((areaWidth * DEMO_BUFFER_BYTE_PER_PIXEL) % LV_DRAW_BUF_STRIDE_ALIGN) != 0) ? 1 :0);
+        color_p += value * LV_DRAW_BUF_STRIDE_ALIGN;
     }
 }
 
-static void DEMO_FlushDisplay(lv_disp_drv_t *disp_drv, const lv_area_t *area, lv_color_t *color_p)
+static void DEMO_FlushDisplay(lv_display_t *disp_drv, const lv_area_t *area, uint8_t *color_p)
 {
     static lv_area_t damaged;
     static bool first_flush = true;
@@ -405,11 +386,11 @@ static void DEMO_FlushDisplay(lv_disp_drv_t *disp_drv, const lv_area_t *area, lv
 
         /* IMPORTANT!!!
          * Inform the graphics library that you are ready with the flushing*/
-        lv_disp_flush_ready(disp_drv);
+        lv_display_flush_ready(disp_drv);
     }
 }
 #else
-static void DEMO_FlushDisplay(lv_disp_drv_t *disp_drv, const lv_area_t *area, lv_color_t *color_p)
+static void DEMO_FlushDisplay(lv_display_t *disp_drv, const lv_area_t *area, uint8_t *color_p)
 {
 #if DEMO_USE_ROTATE
 
@@ -451,7 +432,7 @@ static void DEMO_FlushDisplay(lv_disp_drv_t *disp_drv, const lv_area_t *area, lv
 
     /* IMPORTANT!!!
      * Inform the graphics library that you are ready with the flushing*/
-    lv_disp_flush_ready(disp_drv);
+    lv_display_flush_ready(disp_drv);
 
 #else  /* DEMO_USE_ROTATE */
 
@@ -461,27 +442,20 @@ static void DEMO_FlushDisplay(lv_disp_drv_t *disp_drv, const lv_area_t *area, lv
 
     /* IMPORTANT!!!
      * Inform the graphics library that you are ready with the flushing*/
-    lv_disp_flush_ready(disp_drv);
+    lv_display_flush_ready(disp_drv);
 #endif /* DEMO_USE_ROTATE */
 }
 #endif
 
 void lv_port_indev_init(void)
 {
-    static lv_indev_drv_t indev_drv;
-
-    /*------------------
-     * Touchpad
-     * -----------------*/
-
     /*Initialize your touchpad */
     DEMO_InitTouch();
 
     /*Register a touchpad input device*/
-    lv_indev_drv_init(&indev_drv);
-    indev_drv.type    = LV_INDEV_TYPE_POINTER;
-    indev_drv.read_cb = DEMO_ReadTouch;
-    lv_indev_drv_register(&indev_drv);
+    lv_indev_t * indev = lv_indev_create();
+    lv_indev_set_type(indev, LV_INDEV_TYPE_POINTER);
+    lv_indev_set_read_cb(indev, DEMO_ReadTouch);
 }
 
 #if ((DEMO_PANEL == DEMO_PANEL_RM67162) || (DEMO_PANEL_RK055AHD091 == DEMO_PANEL) || \
@@ -530,7 +504,7 @@ static void DEMO_InitTouch(void)
 }
 
 /* Will be called by the library to read the touchpad */
-static void DEMO_ReadTouch(lv_indev_drv_t *drv, lv_indev_data_t *data)
+static void DEMO_ReadTouch(lv_indev_t *drv, lv_indev_data_t *data)
 {
     touch_event_t touch_event;
     static int touch_x = 0;
@@ -604,7 +578,7 @@ static void DEMO_InitTouch(void)
 }
 
 /* Will be called by the library to read the touchpad */
-static void DEMO_ReadTouch(lv_indev_drv_t *drv, lv_indev_data_t *data)
+static void DEMO_ReadTouch(lv_indev_t *drv, lv_indev_data_t *data)
 {
     static int touch_x = 0;
     static int touch_y = 0;
@@ -655,7 +629,7 @@ static void DEMO_InitTouch(void)
 }
 
 /* Will be called by the library to read the touchpad */
-static void DEMO_ReadTouch(lv_indev_drv_t *drv, lv_indev_data_t *data)
+static void DEMO_ReadTouch(lv_indev_t *drv, lv_indev_data_t *data)
 {
     touch_event_t touch_event;
     static int touch_x = 0;
@@ -676,3 +650,8 @@ static void DEMO_ReadTouch(lv_indev_drv_t *drv, lv_indev_data_t *data)
     data->point.y = touch_y;
 }
 #endif
+
+void DEMO_CleanInvalidateCacheByAddr(void *addr, uint32_t size)
+{
+
+}

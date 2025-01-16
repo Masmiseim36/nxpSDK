@@ -6,5 +6,6 @@
        *fsl_memcpy.o(.text .text* .rodata .rodata*)
        *memcpy.o(.text .text* .rodata .rodata*)
        *memset.o(.text .text* .rodata .rodata*)
+       *fsl_reset.o(.text .text* .rodata .rodata*)
 </#if>
        *(.data*)

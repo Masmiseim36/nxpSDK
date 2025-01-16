@@ -9,6 +9,7 @@
 #ifndef EAP_REGISTER_H
 #define EAP_REGISTER_H
 
+#if CONFIG_HOSTAPD
 int eap_server_register_methods(void);
-
+#endif /* CONFIG_HOSTAPD */
 #endif /* EAP_REGISTER_H */

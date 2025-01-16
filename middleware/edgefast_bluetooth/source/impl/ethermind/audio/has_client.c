@@ -6,6 +6,13 @@
 
 #if (defined(CONFIG_BT_HAS_CLIENT) && (CONFIG_BT_HAS_CLIENT > 0))
 
+#include <errno.h>
+#include <stdbool.h>
+#include <stddef.h>
+#include <stdint.h>
+#include <string.h>
+
+#include <porting.h>
 #include <bluetooth/bluetooth.h>
 #include <bluetooth/gatt.h>
 #include <bluetooth/audio/has.h>
@@ -19,21 +26,7 @@
 #define LOG_MODULE_NAME bt_has_client
 #include "fsl_component_log.h"
 
-#ifndef LOG_DBG
-#define LOG_DBG BT_DBG
-#endif
 
-#ifndef LOG_ERR
-#define LOG_ERR BT_ERR
-#endif
-
-#ifndef LOG_HEXDUMP_DBG
-#define LOG_HEXDUMP_DBG BT_HEXDUMP_DBG
-#endif
-
-#ifndef LOG_WRN
-#define LOG_WRN BT_WARN
-#endif
 
 #define HAS_INST(_has) CONTAINER_OF(_has, struct bt_has_client, has)
 #define HANDLE_IS_VALID(handle) ((handle) != 0x0000)
@@ -819,17 +812,6 @@ static int features_discover(struct bt_has_client *inst)
 	return bt_gatt_discover(inst->conn, &inst->params.discover);
 }
 
-#if 0
-BT_CONN_CB_DEFINE(conn_cb) = {
-	.disconnected = disconnected,
-};
-#else
-static void disconnected(struct bt_conn *conn, uint8_t reason);
-static struct bt_conn_cb conn_cb = {
-	.disconnected = disconnected,
-};
-#endif
-
 int bt_has_client_cb_register(const struct bt_has_client_cb *cb)
 {
 	CHECKIF(!cb) {
@@ -841,8 +823,6 @@ int bt_has_client_cb_register(const struct bt_has_client_cb *cb)
 	}
 
 	client_cb = cb;
-
-	bt_conn_cb_register(&conn_cb);
 
 	return 0;
 }
@@ -1022,10 +1002,8 @@ static void disconnected(struct bt_conn *conn, uint8_t reason)
 	inst_cleanup(inst);
 }
 
-#if 0
 BT_CONN_CB_DEFINE(conn_cb) = {
 	.disconnected = disconnected,
 };
-#endif
 
 #endif /* CONFIG_BT_HAS_CLIENT */

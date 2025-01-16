@@ -521,11 +521,10 @@ static void arm_cfft_radix4by2_inverse_f16_mve(const arm_cfft_instance_f16 * S,f
   @param[in]     bitReverseFlag flag that enables / disables bit reversal of output
                    - value = 0: disables bit reversal of output
                    - value = 1: enables bit reversal of output
-  @return        none
  */
 
 
-void arm_cfft_f16(
+ARM_DSP_ATTRIBUTE void arm_cfft_f16(
   const arm_cfft_instance_f16 * S,
         float16_t * pSrc,
         uint8_t ifftFlag,
@@ -615,10 +614,9 @@ extern void arm_radix4_butterfly_f16(
   @param[in]     bitReverseFlag flag that enables / disables bit reversal of output
                    - value = 0: disables bit reversal of output
                    - value = 1: enables bit reversal of output
-  @return        none
  */
 
-void arm_cfft_f16(
+ARM_DSP_ATTRIBUTE void arm_cfft_f16(
     const arm_cfft_instance_f16 * S,
     float16_t * p1,
     uint8_t ifftFlag,

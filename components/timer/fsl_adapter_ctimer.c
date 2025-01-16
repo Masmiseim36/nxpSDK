@@ -1,6 +1,5 @@
 /*
  * Copyright 2018-2019, 2023 NXP
- * All rights reserved.
  *
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -98,6 +97,7 @@ static hal_timer_status_t HAL_CTimerConfigTimeout(hal_timer_handle_t halTimerHan
 ************************************************************************************/
 hal_timer_status_t HAL_TimerInit(hal_timer_handle_t halTimerHandle, hal_timer_config_t *halTimerConfig)
 {
+    IRQn_Type instanceIrq[] = CTIMER_IRQS;
     hal_timer_handle_struct_t *halTimerState = halTimerHandle;
     ctimer_config_t config;
     assert(sizeof(hal_timer_handle_struct_t) == HAL_TIMER_HANDLE_SIZE);
@@ -110,6 +110,7 @@ hal_timer_status_t HAL_TimerInit(hal_timer_handle_t halTimerHandle, hal_timer_co
     halTimerState->instance                = halTimerConfig->instance;
     halTimerState->timerClock_Hz           = (uint32_t)halTimerConfig->srcClock_Hz / (uint32_t)(config.prescale + 1U);
     s_timerHandle[halTimerState->instance] = halTimerHandle;
+    NVIC_SetPriority(instanceIrq[halTimerState->instance], HAL_TIMER_ISR_PRIORITY);
     return HAL_CTimerConfigTimeout(halTimerHandle, halTimerState->timeout);
 }
 /*************************************************************************************/

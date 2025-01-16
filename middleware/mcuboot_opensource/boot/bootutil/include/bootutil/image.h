@@ -158,7 +158,7 @@ struct image_tlv {
 #define IS_ENCRYPTED(hdr) (((hdr)->ih_flags & IMAGE_F_ENCRYPTED_AES128) \
                         || ((hdr)->ih_flags & IMAGE_F_ENCRYPTED_AES256))
 
-#ifdef CONFIG_MCUBOOT_ENCRYPTED_XIP_SUPPORT
+#if defined(CONFIG_ENCRYPT_XIP_EXT_ENABLE) && !defined(CONFIG_ENCRYPT_XIP_EXT_OVERWRITE_ONLY)
 /* Both slots are used for staging encrypted image */
 #define MUST_DECRYPT(fap, idx, hdr) (IS_ENCRYPTED(hdr))
 #else

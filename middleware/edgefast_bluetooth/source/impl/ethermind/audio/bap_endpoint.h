@@ -100,6 +100,11 @@ struct bt_bap_broadcast_source {
 
 	uint8_t broadcast_code[BT_AUDIO_BROADCAST_CODE_SIZE];
 
+	/* The complete codec specific configured data for each stream in the subgroup.
+	 * This contains both the subgroup and the BIS-specific data for each stream.
+	 */
+	struct bt_audio_codec_cfg codec_cfg[BROADCAST_STREAM_CNT];
+
 	/* The subgroups containing the streams used to create the broadcast source */
 	sys_slist_t subgroups;
 };
@@ -129,6 +134,11 @@ enum bt_bap_broadcast_sink_flag {
 
 struct bt_bap_broadcast_sink_subgroup {
 	uint32_t bis_indexes;
+};
+
+struct bt_bap_broadcast_sink_bis {
+	uint8_t index;
+	struct bt_iso_chan *chan;
 	struct bt_audio_codec_cfg codec_cfg;
 };
 
@@ -146,7 +156,7 @@ struct bt_bap_broadcast_sink {
 	struct bt_audio_codec_qos codec_qos;
 	struct bt_le_per_adv_sync *pa_sync;
 	struct bt_iso_big *big;
-	struct bt_iso_chan *bis[CONFIG_BT_BAP_BROADCAST_SNK_STREAM_COUNT];
+	struct bt_bap_broadcast_sink_bis bis[CONFIG_BT_BAP_BROADCAST_SNK_STREAM_COUNT];
 	struct bt_bap_broadcast_sink_subgroup subgroups[CONFIG_BT_BAP_BROADCAST_SNK_SUBGROUP_COUNT];
 	const struct bt_bap_scan_delegator_recv_state *recv_state;
 	/* The streams used to create the broadcast sink */

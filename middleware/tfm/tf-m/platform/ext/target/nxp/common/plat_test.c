@@ -70,7 +70,7 @@ void tfm_plat_test_secure_timer_start(void)
     CLOCK_SetClkDiv(kCLOCK_DivCtimer2Clk, 1u, true);
 #endif
     
-#if defined(CPU_MCXN947VDF_cm33_core0)
+#if defined(CPU_MCXN947VDF_cm33_core0) || defined(CPU_MCXN547VDF_cm33_core0)
     CLOCK_SetClkDiv(CTIMER_CLK_DIVIDE, 1u);
 #endif
 

@@ -7,15 +7,12 @@
  */
 
 #include "fsl_debug_console.h"
-#include "pin_mux.h"
 #include "board.h"
+#include "app.h"
 #include "fsl_iap.h"
-#include <stdbool.h>
 /*******************************************************************************
  * Definitions
  *******************************************************************************/
-#define EXAMPLE_OTP_CLK         SystemCoreClock
-#define EXAMPLE_FUSE_LAST_INDEX 511
 
 /*******************************************************************************
  * Prototypes
@@ -36,9 +33,7 @@ int main(void)
     char ch;
 
     /* Init board hardware. */
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
 
     PRINTF("IAP OTP example\r\n");
 

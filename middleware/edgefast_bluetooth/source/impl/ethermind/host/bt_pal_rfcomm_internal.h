@@ -47,7 +47,6 @@ struct bt_rfcomm_session {
 #endif
 };
 
-ENUM_PACKED_PRE
 enum bt_rfcomm_state
 {
 	BT_RFCOMM_STATE_IDLE,
@@ -58,7 +57,7 @@ enum bt_rfcomm_state
 	BT_RFCOMM_STATE_USER_DISCONNECT,
 	BT_RFCOMM_STATE_DISCONNECTING,
 	BT_RFCOMM_STATE_DISCONNECTED,
-}ENUM_PACKED_POST;
+};
 typedef enum bt_rfcomm_state bt_rfcomm_state_t;
 
 /* rfcomm control response */
@@ -68,21 +67,19 @@ typedef enum bt_rfcomm_state bt_rfcomm_state_t;
 #define BT_RFCOMM_PN_RESPONSE_FRAME_SIZE_MISMATCH 0x03
 #define BT_RFCOMM_PN_RESPONSE_CBFC_MISMATCH       0x04
 
-STRUCT_PACKED_PRE
 struct bt_rfcomm_hdr {
 	uint8_t address;
 	uint8_t control;
 	uint8_t length;
-} STRUCT_PACKED_POST;
+} __packed;
 
 #define BT_RFCOMM_SABM  0x2f
 #define BT_RFCOMM_UA    0x63
 #define BT_RFCOMM_UIH   0xef
-STRUCT_PACKED_PRE
 struct bt_rfcomm_msg_hdr {
 	uint8_t type;
 	uint8_t len;
-} STRUCT_PACKED_POST;
+} __packed;
 
 #define BT_RFCOMM_DISC  0x43
 #define BT_RFCOMM_DM    0x0f

@@ -45,10 +45,12 @@ mlan_status wlan_cmd_tx_bf_cfg(IN pmlan_private pmpriv,
                                IN t_void *pdata_buf);
 /** Handle the command response TX BF configuration */
 mlan_status wlan_ret_tx_bf_cfg(IN pmlan_private pmpriv, IN HostCmd_DS_COMMAND *resp, IN mlan_ioctl_req *pioctl_buf);
+#ifdef STA_SUPPORT
 /** Append the 802_11N tlv */
 t_u32 wlan_cmd_append_11n_tlv(IN mlan_private *pmpriv, IN BSSDescriptor_t *pbss_desc, OUT t_u8 **ppbuffer);
 /** wlan fill HT cap tlv */
 void wlan_fill_ht_cap_tlv(mlan_private *priv, MrvlIETypes_HTCap_t *pht_cap, t_u16 bands);
+#endif /* STA_SUPPORT */
 /** Miscellaneous configuration handler */
 mlan_status wlan_11n_cfg_ioctl(IN pmlan_adapter pmadapter, IN pmlan_ioctl_req pioctl_req);
 /** Delete Tx BA stream table entry */
@@ -191,8 +193,10 @@ INLINE
 static t_u8
 wlan_is_ampdu_allowed(mlan_private * priv, raListTbl * ptr, int tid)
 {
+#if UAP_SUPPORT
     if (GET_BSS_ROLE(priv) == MLAN_BSS_ROLE_UAP)
         return is_station_ampdu_allowed(priv, ptr, tid);
+#endif /* UAP_SUPPORT */
     if (priv->sec_info.wapi_enabled && !priv->sec_info.wapi_key_on)
         return MFALSE;
 
@@ -239,6 +243,7 @@ INLINE
 static t_u8
 wlan_is_amsdu_allowed(mlan_private * priv, raListTbl * ptr, int tid)
 {
+#if UAP_SUPPORT
     sta_node *sta_ptr = MNULL;
     if (GET_BSS_ROLE(priv) == MLAN_BSS_ROLE_UAP) {
         if ((sta_ptr = wlan_get_station_entry(priv, ptr->ra))) {
@@ -246,6 +251,7 @@ wlan_is_amsdu_allowed(mlan_private * priv, raListTbl * ptr, int tid)
                 return MFALSE;
         }
     }
+#endif /* UAP_SUPPORT */
 #define TXRATE_BITMAP_INDEX_MCS0_7 2
     return (((priv->aggr_prio_tbl[tid].amsdu != BA_STREAM_NOT_ALLOWED)
              && ((priv->is_data_rate_auto)
@@ -318,6 +324,7 @@ static int wlan_is_11n_enabled(mlan_private *priv, t_u8 *ra)
 {
     int ret = MFALSE;
     ENTER();
+#if UAP_SUPPORT
     if (GET_BSS_ROLE(priv) == MLAN_BSS_ROLE_UAP)
     {
         if ((!(ra[0] & 0x01U)) && (priv->is_11n_enabled))
@@ -325,6 +332,7 @@ static int wlan_is_11n_enabled(mlan_private *priv, t_u8 *ra)
             ret = (int)is_station_11n_enabled(priv, ra);
         }
     }
+#endif /* UAP_SUPPORT */
     LEAVE();
     return ret;
 }

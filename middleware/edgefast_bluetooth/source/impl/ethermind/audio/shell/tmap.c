@@ -6,63 +6,42 @@
 /*
  * Copyright (c) 2023 Nordic Semiconductor ASA
  * Copyright (C) 2022-2023 NXP
- * 
+ *
  * SPDX-License-Identifier: Apache-2.0
  */
 
 #if (defined(CONFIG_BT_TMAP) && (CONFIG_BT_TMAP > 0))
 
-#include <bluetooth/audio/tmap.h>
-#include "fsl_shell.h"
+#include <sys/byteorder.h>
 #include <sys/util.h>
+#include <porting.h>
 
+#include <bluetooth/hci.h>
+#include <bluetooth/audio/tmap.h>
+
+#include "fsl_shell.h"
 #include "shell_bt.h"
 
-#define TMAP_CG_SUPPORTED                                                                          \
-	(IS_ENABLED(CONFIG_BT_CAP_INITIATOR) && IS_ENABLED(CONFIG_BT_BAP_UNICAST_CLIENT) &&        \
-	 IS_ENABLED(CONFIG_BT_TBS) && IS_ENABLED(CONFIG_BT_VCP_VOL_CTLR))
-
-#define TMAP_CT_SUPPORTED                                                                          \
-	(IS_ENABLED(CONFIG_BT_CAP_ACCEPTOR) && IS_ENABLED(CONFIG_BT_BAP_UNICAST_SERVER) &&         \
-	 IS_ENABLED(CONFIG_BT_TBS_CLIENT) &&                                                       \
-	 (IS_ENABLED(CONFIG_BT_ASCS_ASE_SNK) &&                                                    \
-	  IS_ENABLED(CONFIG_BT_VCP_VOL_REND) == IS_ENABLED(CONFIG_BT_ASCS_ASE_SNK)))
-
-#define TMAP_UMS_SUPPORTED                                                                         \
-	(IS_ENABLED(CONFIG_BT_CAP_INITIATOR) &&                                                    \
-	 IS_ENABLED(CONFIG_BT_BAP_UNICAST_CLIENT_ASE_SNK) && IS_ENABLED(CONFIG_BT_VCP_VOL_CTLR) && \
-	 IS_ENABLED(CONFIG_BT_MCS))
-
-#define TMAP_UMR_SUPPORTED                                                                         \
-	(IS_ENABLED(CONFIG_BT_CAP_ACCEPTOR) && IS_ENABLED(CONFIG_BT_ASCS_ASE_SNK) &&               \
-	 IS_ENABLED(CONFIG_BT_VCP_VOL_REND))
-
-#define TMAP_BMS_SUPPORTED                                                                         \
-	(IS_ENABLED(CONFIG_BT_CAP_INITIATOR) && IS_ENABLED(CONFIG_BT_BAP_BROADCAST_SOURCE))
-
-#define TMAP_BMR_SUPPORTED                                                                         \
-	(IS_ENABLED(CONFIG_BT_CAP_ACCEPTOR) && IS_ENABLED(CONFIG_BT_BAP_BROADCAST_SINK))
-
-static shell_status_t cmd_tmap_init(shell_handle_t sh, int32_t argc, char *argv[])
+static int cmd_tmap_init(const struct shell *sh, size_t argc, char **argv)
 {
-	const enum bt_tmap_role role = (enum bt_tmap_role)((TMAP_CG_SUPPORTED ? BT_TMAP_ROLE_CG : 0U) |
-				       (TMAP_CT_SUPPORTED ? BT_TMAP_ROLE_CT : 0U) |
-				       (TMAP_UMS_SUPPORTED ? BT_TMAP_ROLE_UMS : 0U) |
-				       (TMAP_UMR_SUPPORTED ? BT_TMAP_ROLE_UMR : 0U) |
-				       (TMAP_BMS_SUPPORTED ? BT_TMAP_ROLE_BMS : 0U) |
-				       (TMAP_BMR_SUPPORTED ? BT_TMAP_ROLE_BMR : 0U));
+	enum bt_tmap_role role = (enum bt_tmap_role)((BT_TMAP_CG_SUPPORTED ? BT_TMAP_ROLE_CG : 0U) |
+				       (BT_TMAP_CT_SUPPORTED ? BT_TMAP_ROLE_CT : 0U) |
+				       (BT_TMAP_UMS_SUPPORTED ? BT_TMAP_ROLE_UMS : 0U) |
+				       (BT_TMAP_UMR_SUPPORTED ? BT_TMAP_ROLE_UMR : 0U) |
+				       (BT_TMAP_BMS_SUPPORTED ? BT_TMAP_ROLE_BMS : 0U) |
+				       (BT_TMAP_BMR_SUPPORTED ? BT_TMAP_ROLE_BMR : 0U));
 	int err;
 
-	shell_info(sh, "Registering TMAS with role: %u", role);
+	shell_info(sh, "Registering TMAS with role: 0x%04X", role);
 
 	err = bt_tmap_register(role);
 	if (err != 0) {
 		shell_error(sh, "bt_tmap_register (err %d)", err);
 
-		return kStatus_SHELL_Error;
+		return -ENOEXEC;
 	}
 
-	return (shell_status_t)0;
+	return 0;
 }
 
 static void tmap_discover_cb(enum bt_tmap_role role, struct bt_conn *conn, int err)
@@ -72,21 +51,21 @@ static void tmap_discover_cb(enum bt_tmap_role role, struct bt_conn *conn, int e
 		return;
 	}
 
-	shell_print(ctx_shell, "tmap discovered for conn %p: role 0x%02x", conn, role);
+	shell_print(ctx_shell, "tmap discovered for conn %p: role 0x%04x", conn, role);
 }
 
 static const struct bt_tmap_cb tmap_cb = {
 	.discovery_complete = tmap_discover_cb,
 };
 
-static shell_status_t cmd_tmap_discover(shell_handle_t sh, int32_t argc, char *argv[])
+static int cmd_tmap_discover(const struct shell *sh, size_t argc, char **argv)
 {
 	int err;
 
 	if (default_conn == NULL) {
 		shell_error(sh, "Not connected");
 
-		return kStatus_SHELL_Error;
+		return -ENOEXEC;
 	}
 
 	if (!ctx_shell) {
@@ -97,13 +76,13 @@ static shell_status_t cmd_tmap_discover(shell_handle_t sh, int32_t argc, char *a
 	if (err != 0) {
 		shell_error(sh, "bt_tmap_discover (err %d)", err);
 
-		return kStatus_SHELL_Error;
+		return -ENOEXEC;
 	}
 
-	return (shell_status_t)err;
+	return err;
 }
 
-static shell_status_t cmd_tmap(shell_handle_t sh, int32_t argc, char *argv[])
+static int cmd_tmap(const struct shell *sh, size_t argc, char **argv)
 {
 	if (argc > 1) {
 		shell_error(sh, "%s unknown parameter: %s", argv[0], argv[1]);
@@ -111,7 +90,7 @@ static shell_status_t cmd_tmap(shell_handle_t sh, int32_t argc, char *argv[])
 		shell_error(sh, "%s missing subcomand", argv[0]);
 	}
 
-	return kStatus_SHELL_Error;
+	return -ENOEXEC;
 }
 
 SHELL_STATIC_SUBCMD_SET_CREATE(tmap_cmds,
@@ -120,10 +99,7 @@ SHELL_STATIC_SUBCMD_SET_CREATE(tmap_cmds,
 	SHELL_SUBCMD_SET_END
 );
 
-#if 0
 SHELL_CMD_ARG_REGISTER(tmap, &tmap_cmds, "Bluetooth tmap client shell commands", cmd_tmap, 1, 1);
-#else
-SHELL_CMD_REGISTER(tmap, tmap_cmds, "Bluetooth tmap client shell commands", cmd_tmap, 1, 1);
 
 void bt_ShellTmapInit(shell_handle_t shell)
 {
@@ -132,6 +108,5 @@ void bt_ShellTmapInit(shell_handle_t shell)
         shell_print(shell, "Shell register command %s failed!", g_shellCommandtmap.pcCommand);
     }
 }
-#endif
 
 #endif /* CONFIG_BT_TMAP */

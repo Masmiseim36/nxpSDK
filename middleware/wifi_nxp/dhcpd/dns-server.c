@@ -222,8 +222,15 @@ void dhcp_enable_dns_server(char **domain_names)
         {
             dnss.count_qnames++;
         }
+#if !CONFIG_MEM_POOLS
         dnss.list_qnames = OSA_MemoryAllocate(dnss.count_qnames * sizeof(struct dns_qname));
+#else
+        /*TODO:This function is not called from anywhere .
+         * Please make sure to assign correct memory pool
+         * whenever this function will be used. */
 
+        dnss.list_qnames = OSA_MemoryPoolAllocate(buf_1280_MemoryPool);
+#endif
         for (i = 0; i < dnss.count_qnames; i++)
         {
             (void)memset(dnss.list_qnames[i].qname, 0, sizeof(struct dns_qname));
@@ -301,7 +308,11 @@ void dns_free_allocations(void)
     if (dnss.list_qnames != NULL)
     {
         dnss.count_qnames = 0;
+#if !CONFIG_MEM_POOLS
         OSA_MemoryFree(dnss.list_qnames);
+#else
+        OSA_MemoryPoolFree(buf_1280_MemoryPool, dnss.list_qnames);
+#endif
         dnss.list_qnames = NULL;
     }
     if (dnss.dnssock != -1)

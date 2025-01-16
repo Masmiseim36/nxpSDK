@@ -37,7 +37,7 @@ jpeg_CreateDecompress (j_decompress_ptr cinfo, int version, size_t structsize)
   if (version != JPEG_LIB_VERSION)
     ERREXIT2(cinfo, JERR_BAD_LIB_VERSION, JPEG_LIB_VERSION, version);
   if (structsize != SIZEOF(struct jpeg_decompress_struct))
-    ERREXIT2(cinfo, JERR_BAD_STRUCT_SIZE, 
+    ERREXIT2(cinfo, JERR_BAD_STRUCT_SIZE,
 	     (int) SIZEOF(struct jpeg_decompress_struct), (int) structsize);
 
   /* For debugging purposes, we zero the whole master structure.
@@ -123,7 +123,7 @@ default_decompress_parms (j_decompress_ptr cinfo)
     cinfo->jpeg_color_space = JCS_GRAYSCALE;
     cinfo->out_color_space = JCS_GRAYSCALE;
     break;
-    
+
   case 3:
     cid0 = cinfo->comp_info[0].component_id;
     cid1 = cinfo->comp_info[1].component_id;
@@ -160,7 +160,7 @@ default_decompress_parms (j_decompress_ptr cinfo)
     /* Always guess RGB is proper output colorspace. */
     cinfo->out_color_space = JCS_RGB;
     break;
-    
+
   case 4:
     if (cinfo->saw_Adobe_marker) {
       switch (cinfo->Adobe_transform) {
@@ -181,7 +181,7 @@ default_decompress_parms (j_decompress_ptr cinfo)
     }
     cinfo->out_color_space = JCS_CMYK;
     break;
-    
+
   default:
     cinfo->jpeg_color_space = JCS_UNKNOWN;
     cinfo->out_color_space = JCS_UNKNOWN;
@@ -372,27 +372,37 @@ jpeg_has_multiple_scans (j_decompress_ptr cinfo)
 GLOBAL(boolean)
 jpeg_finish_decompress (j_decompress_ptr cinfo)
 {
-  if ((cinfo->global_state == DSTATE_SCANNING ||
-       cinfo->global_state == DSTATE_RAW_OK) && ! cinfo->buffered_image) {
-    /* Terminate final pass of non-buffered mode */
-    if (cinfo->output_scanline < cinfo->output_height)
-      ERREXIT(cinfo, JERR_TOO_LITTLE_DATA);
-    (*cinfo->master->finish_output_pass) (cinfo);
-    cinfo->global_state = DSTATE_STOPPING;
-  } else if (cinfo->global_state == DSTATE_BUFIMAGE) {
-    /* Finishing after a buffered-image operation */
-    cinfo->global_state = DSTATE_STOPPING;
-  } else if (cinfo->global_state != DSTATE_STOPPING) {
-    /* STOPPING = repeat call after a suspension, anything else is error */
-    ERREXIT1(cinfo, JERR_BAD_STATE, cinfo->global_state);
+#if LIB_JPEG_USE_HW_ACCEL
+  if (cinfo->format_supported)
+  {
+      JPEG_DECODER_Type *jpegdec = cinfo->jpegdec;
+      JPEGDEC_Deinit(jpegdec);
   }
-  /* Read until EOI */
-  while (! cinfo->inputctl->eoi_reached) {
-    if ((*cinfo->inputctl->consume_input) (cinfo) == JPEG_SUSPENDED)
-      return FALSE;		/* Suspend, come back later */
+  else
+#endif
+  {
+      if ((cinfo->global_state == DSTATE_SCANNING ||
+           cinfo->global_state == DSTATE_RAW_OK) && ! cinfo->buffered_image) {
+        /* Terminate final pass of non-buffered mode */
+        if (cinfo->output_scanline < cinfo->output_height)
+          ERREXIT(cinfo, JERR_TOO_LITTLE_DATA);
+        (*cinfo->master->finish_output_pass) (cinfo);
+        cinfo->global_state = DSTATE_STOPPING;
+      } else if (cinfo->global_state == DSTATE_BUFIMAGE) {
+        /* Finishing after a buffered-image operation */
+        cinfo->global_state = DSTATE_STOPPING;
+      } else if (cinfo->global_state != DSTATE_STOPPING) {
+        /* STOPPING = repeat call after a suspension, anything else is error */
+        ERREXIT1(cinfo, JERR_BAD_STATE, cinfo->global_state);
+      }
+      /* Read until EOI */
+      while (! cinfo->inputctl->eoi_reached) {
+        if ((*cinfo->inputctl->consume_input) (cinfo) == JPEG_SUSPENDED)
+          return FALSE;		/* Suspend, come back later */
+      }
+      /* Do final cleanup */
+      (*cinfo->src->term_source) (cinfo);
   }
-  /* Do final cleanup */
-  (*cinfo->src->term_source) (cinfo);
   /* We can use jpeg_abort to release memory and reset global_state */
   jpeg_abort((j_common_ptr) cinfo);
   return TRUE;

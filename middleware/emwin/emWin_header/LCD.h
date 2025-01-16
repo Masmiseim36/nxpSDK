@@ -9,7 +9,7 @@
 *                                                                    *
 **********************************************************************
 
-** emWin V6.38 - Graphical user interface for embedded applications **
+** emWin V6.46 - Graphical user interface for embedded applications **
 All  Intellectual Property rights  in the Software belongs to  SEGGER.
 emWin is protected by  international copyright laws.  Knowledge of the
 source code may not be used to write a similar product.  This file may
@@ -34,7 +34,7 @@ License model:            emWin License Agreement, dated August 20th 2011 and Am
 Licensed platform:        NXP's ARM 7/9, Cortex-M0, M3, M4, M7, A7, M33
 ----------------------------------------------------------------------
 Support and Update Agreement (SUA)
-SUA period:               2011-08-19 - 2024-09-02
+SUA period:               2011-08-19 - 2025-09-02
 Contact to extend SUA:    sales@segger.com
 ----------------------------------------------------------------------
 File        : LCD.h
@@ -374,15 +374,15 @@ typedef void tLCDDEV_DrawBitmap   (int x0, int y0, int xsize, int ysize,
 * and the LCD_GetpCapFunc routines.
 */
 
-#define LCD_DEVCAP_XSIZE             0x01    /* Quest horiz. res. of display */
-#define LCD_DEVCAP_YSIZE             0x02    /* Quest vert. res. of display */
-#define LCD_DEVCAP_VXSIZE            0x03    /* Quest vert. res. of virtual disp.*/
-#define LCD_DEVCAP_VYSIZE            0x04    /* Quest vert. res. of virtual disp.*/
-#define LCD_DEVCAP_XORG              0x05    /* X-origin ... usually 0 */
-#define LCD_DEVCAP_YORG              0x06    /* Y-origin ... usually 0 */
-#define LCD_DEVCAP_CONTROLLER        0x07    /* LCD Controller (Numerical) */
-#define LCD_DEVCAP_BITSPERPIXEL      0x08    /* Bits per pixel ... 1/2/4/8 */
-#define LCD_DEVCAP_NUMCOLORS         0x09    /* Quest number of colors */
+#define LCD_DEVCAP_XSIZE             0x01    // Quest horiz. res. of display
+#define LCD_DEVCAP_YSIZE             0x02    // Quest vert. res. of display
+#define LCD_DEVCAP_VXSIZE            0x03    // Quest vert. res. of virtual disp.*/
+#define LCD_DEVCAP_VYSIZE            0x04    // Quest vert. res. of virtual disp.*/
+#define LCD_DEVCAP_XORG              0x05    // X-origin ... usually 0
+#define LCD_DEVCAP_YORG              0x06    // Y-origin ... usually 0
+#define LCD_DEVCAP_CONTROLLER        0x07    // LCD Controller (Numerical)
+#define LCD_DEVCAP_BITSPERPIXEL      0x08    // Bits per pixel ... 1/2/4/8
+#define LCD_DEVCAP_NUMCOLORS         0x09    // Quest number of colors
 #define LCD_DEVCAP_XMAG              0x0A
 #define LCD_DEVCAP_YMAG              0x0B
 #define LCD_DEVCAP_MIRROR_X          0x0C
@@ -393,6 +393,7 @@ typedef void tLCDDEV_DrawBitmap   (int x0, int y0, int xsize, int ysize,
 #define LCD_DEVCAP_YSIZE_SIM         0x11
 #define LCD_DEVCAP_VXSIZE_SIM        0x12
 #define LCD_DEVCAP_VYSIZE_SIM        0x13
+#define LCD_DEVCAP_THRESHOLD         0x14    // Get threshold in pixels for calling HW function
 
 int LCD_GetXSizeMax(void);
 int LCD_GetYSizeMax(void);
@@ -501,19 +502,21 @@ int  LCD_ROTATE_SetSelEx              (int Index, int LayerIndex);
 #define LCD_DEVFUNC_SETFUNC       0x16 /* ...setting a function pointer */
 #define LCD_DEVFUNC_REFRESH       0x17 /* ...refreshing the display */
 #define LCD_DEVFUNC_SETRECT       0x18 /* ...setting the drawing rectangle */
+#define LCD_DEVFUNC_SETTHRESHOLD  0x19 /* ...setting threshold for calling HW function */
                                        /* Setting a function pointer for... */
-#define LCD_DEVFUNC_FILLRECT      0x19 /* ...filling a rectangular area */
-#define LCD_DEVFUNC_DRAWBMP_1BPP  0x20 /* ...drawing a 1bpp bitmap */
-#define LCD_DEVFUNC_COPYBUFFER    0x21 /* ...copying complete frame buffers */
-#define LCD_DEVFUNC_SHOWBUFFER    0x22 /* ...shows the given buffer */
-#define LCD_DEVFUNC_COPYRECT      0x23 /* ...copying a rectangular area */
-#define LCD_DEVFUNC_DRAWBMP_16BPP 0x24 /* ...drawing a 16bpp bitmap */
-#define LCD_DEVFUNC_DRAWBMP_8BPP  0x25 /* ...drawing a 8bpp bitmap */
-#define LCD_DEVFUNC_READPIXEL     0x26 /* ...reading a pixel index */
-#define LCD_DEVFUNC_READMPIXELS   0x27 /* ...reading multiple pixel indices */
-#define LCD_DEVFUNC_DRAWBMP_32BPP 0x28 /* ...drawing a 32bpp bitmap */
-#define LCD_DEVFUNC_SET_BUFFERPTR 0x29 /* ...setting an array of buffer pointers */
-#define LCD_DEVFUNC_EXIT          0x30 /* ...free memory and shut down controller */
+#define LCD_DEVFUNC_FILLRECT      0x1A /* ...filling a rectangular area */
+#define LCD_DEVFUNC_DRAWBMP_1BPP  0x1B /* ...drawing a 1bpp bitmap */
+#define LCD_DEVFUNC_COPYBUFFER    0x1C /* ...copying complete frame buffers */
+#define LCD_DEVFUNC_SHOWBUFFER    0x1D /* ...shows the given buffer */
+#define LCD_DEVFUNC_COPYRECT      0x1E /* ...copying a rectangular area */
+#define LCD_DEVFUNC_DRAWBMP_16BPP 0x1F /* ...drawing a 16bpp bitmap */
+#define LCD_DEVFUNC_DRAWBMP_8BPP  0x20 /* ...drawing a 8bpp bitmap */
+#define LCD_DEVFUNC_READPIXEL     0x21 /* ...reading a pixel index */
+#define LCD_DEVFUNC_READMPIXELS   0x22 /* ...reading multiple pixel indices */
+#define LCD_DEVFUNC_DRAWBMP_32BPP 0x23 /* ...drawing a 32bpp bitmap */
+#define LCD_DEVFUNC_SET_BUFFERPTR 0x24 /* ...setting an array of buffer pointers */
+#define LCD_DEVFUNC_EXIT          0x25 /* ...free memory and shut down controller */
+#define LCD_DEVFUNC_INIT_PRIVATE  0x26 /* ...initializing the display driver */
 
 /*********************************************************************
 *

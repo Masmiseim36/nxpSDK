@@ -3,10 +3,9 @@
  *
  * @brief This file contains header file for fixed-point FFT functions
  *
- * Copyright 2023 NXP
+ * Copyright 2023-2024 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
- *
  */
 
 /************************************************************************
@@ -61,9 +60,12 @@ void radix2IfftStride(INT16 *pSrc, int Nfft, const INT16 *pCoeff, int lenCoeff);
 void radix2FftFlt(float *pBfr, int Nfft, const float *pCoeff, int lenCoeff);
 void radix2IfftFlt(float *pBfr, int Nfft, const float *pCoeff, int lenCoeff);
 
-#define MAX_FFT_FLT 64
+#define MAX_FFT_FLT 1024
+#if (MAX_FFT_FLT == 64)
 extern const float twiddleTableFlt[2 * MAX_FFT_FLT];
-
+#else
+extern const float *twiddleTableFlt;
+#endif
 #ifdef TWIDDLE_HALF_SIZE
 extern const INT16 radix4FftTwiddleArr[MAX_FFT_SIZE];
 #else

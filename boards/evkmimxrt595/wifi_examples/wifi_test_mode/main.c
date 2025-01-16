@@ -13,8 +13,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 // SDK Included Files
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
 #include "fsl_debug_console.h"
 #include "wlan_bt_fw.h"
@@ -22,22 +20,17 @@
 #include "wifi.h"
 #include "wm_net.h"
 #include <osa.h>
+#if CONFIG_NXP_WIFI_SOFTAP_SUPPORT
 #include "dhcp-server.h"
+#endif
 #include "cli.h"
 #include "iperf.h"
 
+#include "app.h"
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define APP_DEBUG_UART_TYPE     kSerialPort_Uart
-#define APP_DEBUG_UART_INSTANCE 12U
-#define APP_DEBUG_UART_CLK_FREQ CLOCK_GetFlexcommClkFreq(12)
-#define APP_DEBUG_UART_FRG_CLK \
-    (&(const clock_frg_clk_config_t){12U, kCLOCK_FrgPllDiv, 255U, 0U}) /*!< Select FRG0 mux as frg_pll */
-#define APP_DEBUG_UART_CLK_ATTACH kFRG_to_FLEXCOMM12
-#define APP_DEBUG_UART_BAUDRATE   115200
-
 
 /*******************************************************************************
  * Prototypes
@@ -46,25 +39,11 @@
 /*******************************************************************************
  * Code
  ******************************************************************************/
-/* Initialize debug console. */
-void APP_InitAppDebugConsole(void)
-{
-    uint32_t uartClkSrcFreq;
-
-    /* attach FRG0 clock to FLEXCOMM12 (debug console) */
-    CLOCK_SetFRGClock(APP_DEBUG_UART_FRG_CLK);
-    CLOCK_AttachClk(APP_DEBUG_UART_CLK_ATTACH);
-
-    uartClkSrcFreq = APP_DEBUG_UART_CLK_FREQ;
-
-    DbgConsole_Init(APP_DEBUG_UART_INSTANCE, APP_DEBUG_UART_BAUDRATE, APP_DEBUG_UART_TYPE, uartClkSrcFreq);
-}
-
 #define MAIN_TASK_STACK_SIZE 4096
 
 static void main_task(osa_task_param_t arg);
 
-static OSA_TASK_DEFINE(main_task, OSA_PRIORITY_BELOW_NORMAL, 1, MAIN_TASK_STACK_SIZE, 0);
+static OSA_TASK_DEFINE(main_task, WLAN_TASK_PRI_LOW, 1, MAIN_TASK_STACK_SIZE, 0);
 
 OSA_TASK_HANDLE_DEFINE(main_task_Handle);
 
@@ -74,7 +53,9 @@ static void printSeparator(void)
 }
 
 static struct wlan_network sta_network;
+#if CONFIG_NXP_WIFI_SOFTAP_SUPPORT
 static struct wlan_network uap_network;
+#endif
 
 /* Callback Function passed to WLAN Connection Manager. The callback function
  * gets called when there are WLAN Events that need to be handled by the
@@ -196,6 +177,7 @@ int wlan_event_callback(enum wlan_event_reason reason, void *data)
         case WLAN_REASON_CHAN_SWITCH:
             PRINTF("app_cb: WLAN: channel switch\r\n");
             break;
+#if CONFIG_NXP_WIFI_SOFTAP_SUPPORT
         case WLAN_REASON_UAP_SUCCESS:
             PRINTF("app_cb: WLAN: UAP Started\r\n");
 
@@ -242,6 +224,7 @@ int wlan_event_callback(enum wlan_event_reason reason, void *data)
             PRINTF("DHCP Server stopped successfully\r\n");
             printSeparator();
             break;
+#endif /* CONFIG_NXP_WIFI_SOFTAP_SUPPORT */
         case WLAN_REASON_PS_ENTER:
             PRINTF("app_cb: WLAN: PS_ENTER\r\n");
             break;
@@ -293,20 +276,7 @@ int main(void)
 {
     OSA_Init();
 
-    RESET_ClearPeripheralReset(kHSGPIO0_RST_SHIFT_RSTn);
-    RESET_ClearPeripheralReset(kHSGPIO3_RST_SHIFT_RSTn);
-    RESET_ClearPeripheralReset(kHSGPIO4_RST_SHIFT_RSTn);
-
-    BOARD_InitBootPins();
-    BOARD_InitPinsM2();
-    BOARD_InitBootClocks();
-    APP_InitAppDebugConsole();
-
-    /* Configure 32K OSC clock. */
-    CLOCK_EnableOsc32K(true);               /* Enable 32KHz Oscillator clock */
-    CLOCK_EnableClock(kCLOCK_Rtc);          /* Enable the RTC peripheral clock */
-    RTC->CTRL &= ~RTC_CTRL_SWRESET_MASK;    /* Make sure the reset bit is cleared */
-    RTC->CTRL &= ~RTC_CTRL_RTC_OSC_PD_MASK; /* The RTC Oscillator is powered up */
+    BOARD_InitHardware();
 
     printSeparator();
     PRINTF("wifi test mode demo\r\n");

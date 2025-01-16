@@ -7,6 +7,9 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+#ifndef BT_ASCS_INTERNAL_H
+#define BT_ASCS_INTERNAL_H
+
 #define BT_ASCS_ASE_ID_NONE              0x00
 
 /* The number of ASEs in the notification when the opcode is unsupported or the length of the
@@ -23,35 +26,31 @@
 #define BT_ASCS_QOS_FRAMING_FRAMED       0x01
 
 /* Format of the ASE characteristic, defined in Table 4.2 */
-STRUCT_PACKED_PRE
 struct bt_ascs_ase_status {
 	uint8_t  id;
 	uint8_t  state;
 #if 0 /* Walkaround "unknown-size array" error. */
 	uint8_t  params[0];
 #endif
-} STRUCT_PACKED_POST;
+} __packed;
 
-STRUCT_PACKED_PRE
 struct bt_ascs_codec_config {
 	uint8_t len;
 	uint8_t type;
 #if 0 /* Walkaround "unknown-size array" error. */
 	uint8_t data[0];
 #endif
-} STRUCT_PACKED_POST;
+} __packed;
 
-STRUCT_PACKED_PRE
 struct bt_ascs_codec {
 	uint8_t  id;
 	uint16_t cid;
 	uint16_t vid;
-} STRUCT_PACKED_POST;
+} __packed;
 
 #define BT_ASCS_PD_NO_PREF 0x00000000
 
 /* ASE_State = 0x01 (Codec Configured), defined in Table 4.3. */
-STRUCT_PACKED_PRE
 struct bt_ascs_ase_status_config {
 	uint8_t  framing;
 	uint8_t  phy;
@@ -65,10 +64,9 @@ struct bt_ascs_ase_status_config {
 	uint8_t  cc_len;
 	/* LTV-formatted Codec-Specific Configuration */
 	struct bt_ascs_codec_config cc[0];
-} STRUCT_PACKED_POST;
+} __packed;
 
 /* ASE_State = 0x02 (QoS Configured), defined in Table 4.4. */
-STRUCT_PACKED_PRE
 struct bt_ascs_ase_status_qos {
 	uint8_t  cig_id;
 	uint8_t  cis_id;
@@ -79,45 +77,41 @@ struct bt_ascs_ase_status_qos {
 	uint8_t  rtn;
 	uint16_t latency;
 	uint8_t  pd[3];
-} STRUCT_PACKED_POST;
+} __packed;
 
 /* ASE_Status = 0x03 (Enabling) defined in Table 4.5.
  */
-STRUCT_PACKED_PRE
 struct bt_ascs_ase_status_enable {
 	uint8_t  cig_id;
 	uint8_t  cis_id;
 	uint8_t  metadata_len;
 	uint8_t  metadata[0];
-} STRUCT_PACKED_POST;
+} __packed;
 
 /* ASE_Status =  0x04 (Streaming) defined in Table 4.5.
  */
-STRUCT_PACKED_PRE
 struct bt_ascs_ase_status_stream {
 	uint8_t  cig_id;
 	uint8_t  cis_id;
 	uint8_t  metadata_len;
 	uint8_t  metadata[0];
-} STRUCT_PACKED_POST;
+} __packed;
 
 /* ASE_Status = 0x05 (Disabling) as defined in Table 4.5.
  */
-STRUCT_PACKED_PRE
 struct bt_ascs_ase_status_disable {
 	uint8_t  cig_id;
 	uint8_t  cis_id;
 	uint8_t  metadata_len;
 	uint8_t  metadata[0];
-} STRUCT_PACKED_POST;
+} __packed;
 
 /* ASE Control Point Protocol */
-STRUCT_PACKED_PRE
 struct bt_ascs_ase_cp {
 	/* Request/Notification opcode */
 	uint8_t  op;
 	uint8_t  pdu[0];
-} STRUCT_PACKED_POST;
+} __packed;
 
 /* Opcodes */
 #define BT_ASCS_CONFIG_OP                0x01
@@ -130,7 +124,6 @@ struct bt_ascs_ase_cp {
 #define BT_ASCS_CONFIG_PHY_LE_2M         0x02
 #define BT_ASCS_CONFIG_PHY_LE_CODED      0x03
 
-STRUCT_PACKED_PRE
 struct bt_ascs_config {
 	/* ASE ID */
 	uint8_t  ase;
@@ -146,18 +139,16 @@ struct bt_ascs_config {
 #if 0 /* Walkaround "unknown-size array" error. */
 	struct bt_ascs_codec_config cc[0];
 #endif
-} STRUCT_PACKED_POST;
+} __packed;
 
-STRUCT_PACKED_PRE
 struct bt_ascs_config_op {
 	/* Number of ASEs */
 	uint8_t  num_ases;
 	/* Config Parameters */
 	struct bt_ascs_config cfg[0];
-} STRUCT_PACKED_POST;
+} __packed;
 
 #define BT_ASCS_QOS_OP                   0x02
-STRUCT_PACKED_PRE
 struct bt_ascs_qos {
 	/* ASE ID */
 	uint8_t  ase;
@@ -179,18 +170,16 @@ struct bt_ascs_qos {
 	uint16_t latency;
 	/* Presentation Delay */
 	uint8_t  pd[3];
-} STRUCT_PACKED_POST;
+} __packed;
 
-STRUCT_PACKED_PRE
 struct bt_ascs_qos_op {
 	/* Number of ASEs */
 	uint8_t  num_ases;
 	/* QoS Parameters */
 	struct bt_ascs_qos qos[0];
-} STRUCT_PACKED_POST;
+} __packed;
 
 #define BT_ASCS_ENABLE_OP                0x03
-STRUCT_PACKED_PRE
 struct bt_ascs_metadata {
 	/* ASE ID */
 	uint8_t  ase;
@@ -200,62 +189,55 @@ struct bt_ascs_metadata {
 #if 0 /* Walkaround "unknown-size array" error. */
 	uint8_t  data[0];
 #endif
-} STRUCT_PACKED_POST;
+} __packed;
 
-STRUCT_PACKED_PRE
 struct bt_ascs_enable_op {
 	/* Number of ASEs */
 	uint8_t  num_ases;
 	/* Metadata */
 	struct bt_ascs_metadata metadata[0];
-} STRUCT_PACKED_POST;
+} __packed;
 
 #define BT_ASCS_START_OP                 0x04
-STRUCT_PACKED_PRE
 struct bt_ascs_start_op {
 	/* Number of ASEs */
 	uint8_t  num_ases;
 	/* ASE IDs */
 	uint8_t  ase[0];
-} STRUCT_PACKED_POST;
+} __packed;
 
 #define BT_ASCS_DISABLE_OP               0x05
-STRUCT_PACKED_PRE
 struct bt_ascs_disable_op {
 	/* Number of ASEs */
 	uint8_t  num_ases;
 	/* ASE IDs */
 	uint8_t  ase[0];
-} STRUCT_PACKED_POST;
+} __packed;
 
 #define BT_ASCS_STOP_OP                  0x06
-STRUCT_PACKED_PRE
 struct bt_ascs_stop_op {
 	/* Number of ASEs */
 	uint8_t  num_ases;
 	/* ASE IDs */
 	uint8_t  ase[0];
-} STRUCT_PACKED_POST;
+} __packed;
 
 #define BT_ASCS_METADATA_OP              0x07
-STRUCT_PACKED_PRE
 struct bt_ascs_metadata_op {
 	/* Number of ASEs */
 	uint8_t  num_ases;
 	/* Metadata */
 	struct bt_ascs_metadata metadata[0];
-} STRUCT_PACKED_POST;
+} __packed;
 
 #define BT_ASCS_RELEASE_OP              0x08
-STRUCT_PACKED_PRE
 struct bt_ascs_release_op {
 	/* Number of ASEs */
 	uint8_t  num_ases;
 	/* Ase IDs */
 	uint8_t  ase[0];
-} STRUCT_PACKED_POST;
+} __packed;
 
-STRUCT_PACKED_PRE
 struct bt_ascs_cp_ase_rsp {
 	/* ASE ID */
 	uint8_t  id;
@@ -263,9 +245,8 @@ struct bt_ascs_cp_ase_rsp {
 	uint8_t  code;
 	/* Response reason */
 	uint8_t  reason;
-} STRUCT_PACKED_POST;
+} __packed;
 
-STRUCT_PACKED_PRE
 struct bt_ascs_cp_rsp {
 	/* Opcode */
 	uint8_t  op;
@@ -273,7 +254,7 @@ struct bt_ascs_cp_rsp {
 	uint8_t  num_ase;
 	/* ASE response */
 	struct bt_ascs_cp_ase_rsp ase_rsp[0];
-} STRUCT_PACKED_POST;
+} __packed;
 
 static inline const char *bt_ascs_op_str(uint8_t op)
 {
@@ -379,3 +360,5 @@ int bt_ascs_disable_ase(struct bt_bap_ep *ep);
 int bt_ascs_release_ase(struct bt_bap_ep *ep);
 
 void bt_ascs_foreach_ep(struct bt_conn *conn, bt_bap_ep_func_t func, void *user_data);
+
+#endif /* BT_ASCS_INTERNAL_H */

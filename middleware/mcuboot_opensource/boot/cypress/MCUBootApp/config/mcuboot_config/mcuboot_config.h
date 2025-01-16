@@ -36,9 +36,6 @@
 
 /* Uncomment for ECDSA signatures using curve P-256. */
 #define MCUBOOT_SIGN_EC256
-#define NUM_ECC_BYTES (256 / 8) 	// P-256 curve size in bytes, rnok: to make compilable
-
-// #define MCUBOOT_SIGN_EC
 
 /*
  * Upgrade mode
@@ -93,6 +90,12 @@
 #endif
 
 /*
+ * Currently there is no configuration option, for this platform,
+ * that enables the system specific mcumgr commands in mcuboot
+ */
+#define MCUBOOT_PERUSER_MGMT_GROUP_ENABLED 0
+
+/*
  * Logging
  */
 
@@ -130,7 +133,8 @@
  * defining BOOT_LOG_LEVEL before #including `bootutil_log.h`
  */
 #define MCUBOOT_HAVE_LOGGING 1
-
+/* Define this to support native mcuboot logging system */
+#define CONFIG_MCUBOOT 1
 /*
  * Assertions
  */
@@ -143,6 +147,20 @@
 #define MCUBOOT_WATCHDOG_FEED()         \
     do {                                \
         /* TODO: to be implemented */   \
+    } while (0)
+
+/* Uncomment these if support of encrypted upgrade image is needed */
+#ifdef ENC_IMG
+#define MCUBOOT_ENC_IMAGES
+#define MCUBOOT_ENCRYPT_EC256
+#define NUM_ECC_BYTES (256 / 8)
+#endif /* ENC_IMG */
+
+/*
+ * No direct idle call implemented
+ */
+#define MCUBOOT_CPU_IDLE() \
+    do {                   \
     } while (0)
 
 #endif /* MCUBOOT_CONFIG_H */

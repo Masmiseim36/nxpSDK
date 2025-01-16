@@ -8,17 +8,13 @@
  */
 
 #include "fsl_debug_console.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 #include "fsl_lpadc.h"
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_LPADC_BASE         ADC0
-#define DEMO_LPADC_USER_CHANNEL 0U
-#define DEMO_LPADC_USER_CMDID   15U /* The available command number are 1-15 */
 
 /*******************************************************************************
  * Prototypes
@@ -48,16 +44,7 @@ int main(void)
     lpadc_conv_command_config_t mLpadcCommandConfigStruct;
     lpadc_conv_result_t mLpadcResultConfigStruct;
 
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
-
-    SYSCTL0->PDRUNCFG0_CLR = SYSCTL0_PDRUNCFG0_ADC_PD_MASK;
-    SYSCTL0->PDRUNCFG0_CLR = SYSCTL0_PDRUNCFG0_ADC_LP_MASK;
-
-    RESET_PeripheralReset(kADC0_RST_SHIFT_RSTn);
-    CLOCK_AttachClk(kFRO_DIV4_to_ADC_CLK);
-    CLOCK_SetClkDiv(kCLOCK_DivAdcClk, 1);
+    BOARD_InitHardware();
 
     PRINTF("LPADC Polling Example\r\n");
 

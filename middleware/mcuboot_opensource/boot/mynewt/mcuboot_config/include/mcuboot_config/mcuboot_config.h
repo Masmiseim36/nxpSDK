@@ -26,8 +26,14 @@
 #else
 #define MCUBOOT_IMAGE_NUMBER 1
 #endif
+#if MYNEWT_VAL(BOOTUTIL_VERSION_CMP_USE_BUILD_NUMBER)
+#define MCUBOOT_VERSION_CMP_USE_BUILD_NUMBER
+#endif
 #if MYNEWT_VAL(BOOT_SERIAL)
 #define MCUBOOT_SERIAL 1
+#endif
+#if MYNEWT_VAL(BOOT_SERIAL_MGMT_ECHO)
+#define MCUBOOT_BOOT_MGMT_ECHO 1
 #endif
 #if MYNEWT_VAL(BOOTUTIL_VALIDATE_SLOT0)
 #define MCUBOOT_VALIDATE_PRIMARY_SLOT 1
@@ -40,9 +46,6 @@
 #endif
 #if MYNEWT_VAL(BOOTUTIL_SIGN_EC256)
 #define MCUBOOT_SIGN_EC256 1
-  #ifndef MCUBOOT_USE_TINYCRYPT
-  #error "EC256 requires the use of tinycrypt."
-  #endif
 #endif
 #if MYNEWT_VAL(BOOTUTIL_SIGN_RSA)
 #define MCUBOOT_SIGN_RSA 1
@@ -50,9 +53,6 @@
 #endif
 #if MYNEWT_VAL(BOOTUTIL_SIGN_ED25519)
 #define MCUBOOT_SIGN_ED25519 1
-#endif
-#if MYNEWT_VAL(BOOTUTIL_SIGN_EC)
-#define MCUBOOT_SIGN_EC 1
 #endif
 #if MYNEWT_VAL(BOOTUTIL_ENCRYPT_RSA)
 #define MCUBOOT_ENCRYPT_RSA 1
@@ -88,8 +88,51 @@
 #if MYNEWT_VAL(BOOTUTIL_BOOTSTRAP)
 #define MCUBOOT_BOOTSTRAP 1
 #endif
+#if MYNEWT_VAL_CHOICE(BOOTUTIL_DOWNGRADE_PREVENTION, version)
+#define MCUBOOT_DOWNGRADE_PREVENTION                     1
+/* MCUBOOT_DOWNGRADE_PREVENTION_SECURITY_COUNTER is used later as bool value so it is
+ * always defined, (unlike MCUBOOT_DOWNGRADE_PREVENTION which is only used in
+ * preprocessor condition and my be not defined) */
+#define MCUBOOT_DOWNGRADE_PREVENTION_SECURITY_COUNTER    0
+#elif MYNEWT_VAL_CHOICE(BOOTUTIL_DOWNGRADE_PREVENTION, security_counter)
+#define MCUBOOT_DOWNGRADE_PREVENTION                     1
+#define MCUBOOT_DOWNGRADE_PREVENTION_SECURITY_COUNTER    1
+#endif
+#if MYNEWT_VAL(BOOTUTIL_HW_DOWNGRADE_PREVENTION)
+#define MCUBOOT_HW_ROLLBACK_PROT 1
+#endif
+
+#if MYNEWT_VAL(MCUBOOT_MEASURED_BOOT)
+#define MCUBOOT_MEASURED_BOOT       1
+#endif
+
+#if MYNEWT_VAL(MCUBOOT_MEASURED_BOOT_MAX_RECORD_SZ)
+#define MAX_BOOT_RECORD_SZ          MYNEWT_VAL(MCUBOOT_MEASURED_BOOT_MAX_RECORD_SZ)
+#endif
+
+#if MYNEWT_VAL(MCUBOOT_DATA_SHARING)
+#define MCUBOOT_DATA_SHARING        1
+#endif
+
+#if MYNEWT_VAL(MCUBOOT_SHARED_DATA_BASE)
+#define MCUBOOT_SHARED_DATA_BASE    MYNEWT_VAL(MCUBOOT_SHARED_DATA_BASE)
+#endif
+
+#if MYNEWT_VAL(MCUBOOT_SHARED_DATA_SIZE)
+#define MCUBOOT_SHARED_DATA_SIZE    MYNEWT_VAL(MCUBOOT_SHARED_DATA_SIZE)
+#endif
+
+/*
+ * Currently there is no configuration option, for this platform,
+ * that enables the system specific mcumgr commands in mcuboot
+ */
+#define MCUBOOT_PERUSER_MGMT_GROUP_ENABLED 0
 
 #define MCUBOOT_MAX_IMG_SECTORS       MYNEWT_VAL(BOOTUTIL_MAX_IMG_SECTORS)
+
+#if MYNEWT_VAL(MCU_FLASH_MIN_WRITE_SIZE) > 8
+#define MCUBOOT_BOOT_MAX_ALIGN  MYNEWT_VAL(MCU_FLASH_MIN_WRITE_SIZE)
+#endif
 
 #if MYNEWT_VAL(BOOTUTIL_FEED_WATCHDOG) && MYNEWT_VAL(WATCHDOG_INTERVAL)
 #include <hal/hal_watchdog.h>
@@ -100,5 +143,12 @@
 #else
 #define MCUBOOT_WATCHDOG_FEED()    do {} while (0)
 #endif
+
+/*
+ * No direct idle call implemented
+ */
+#define MCUBOOT_CPU_IDLE() \
+    do {                   \
+    } while (0)
 
 #endif /* __MCUBOOT_CONFIG_H__ */

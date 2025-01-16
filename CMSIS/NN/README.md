@@ -4,6 +4,7 @@ performance and minimize the memory footprint of neural networks on Arm Cortex-M
 
 ## Supported Framework
 The library follows the [int8](https://www.tensorflow.org/lite/performance/quantization_spec) and int16 quantization specification of TensorFlow Lite for Microcontrollers.
+This means CMSIS-NN is bit-exact with Tensorflow Lite reference kernels. In some cases TFL and TFLM reference kernels may not be bit-exact. In that case CMSIS-NN follows TFLM reference kernels. The unit test readme provides an [overview](https://github.com/ARM-software/CMSIS-NN/blob/main/Tests/UnitTest/README.md#tests-depending-on-tflm-interpreter).
 
 ## Branches and Tags
 There is a single branch called 'main'.
@@ -23,19 +24,19 @@ processors here are Cortex-M4 or a Cortex-M33 configured with optional DSP exten
 Processors with Arm Helium Technology use the Arm M-profile Vector Extension(MVE) instructions for optimization.
 Examples are Cortex-M55 or Cortex-M85 configured with MVE.
 
-| Operator        | C <br> int8 | C<br>int16 | C<br>int4* | DSP<br>int8 | DSP<br>int16 | DSP<br>int4* | MVE<br>int8 | MVE<br>int16 |
-| --------------- | ----------- | ---------- |------------| ------------| -------------|--------------| ------------| -------------|
-| Conv2D          | Yes         | Yes        | Yes        | Yes         | Yes          | Yes          | Yes         | Yes          |
-| DepthwiseConv2D | Yes         | Yes        | Yes        | Yes         | Yes          | Yes          | Yes         | Yes          |
-| TransposeConv2D | Yes         | No         | No         | No          | No           | No           | No          | No           |
-| Fully Connected | Yes         | Yes        | Yes        | Yes         | Yes          | Yes          | Yes         | Yes          |
-| Add             | Yes         | Yes        | N/A        | Yes         | Yes          | N/A          | Yes         | Yes          |
-| Mul             | Yes         | Yes        | N/A        | Yes         | Yes          | N/A          | Yes         | Yes          |
-| MaxPooling      | Yes         | Yes        | N/A        | Yes         | Yes          | N/A          | Yes         | Yes          |
-| AvgPooling      | Yes         | Yes        | N/A        | Yes         | Yes          | N/A          | Yes         | Yes          |
-| Softmax         | Yes         | Yes        | N/A        | Yes         | Yes          | N/A          | Yes         | No           |
-| LSTM            | Yes         | NA         | No         | Yes         | NA           | No           | Yes         | NA           |
-| SVDF            | Yes         | No         | No         | Yes         | No           | No           | Yes         | No           |
+| Operator        | C <br> int8 | C<br>int16 | C<br>int4* | DSP<br>int8 | DSP<br>int16 | DSP<br>int4* | MVE<br>int8 | MVE<br>int16 | MVE<br>int4* |
+| --------------- | ----------- | ---------- |------------|-------------| -------------|--------------|-------------| -------------|--------------|
+| Conv2D          | Yes         | Yes        | Yes        | Yes         | Yes          | Yes          | Yes         | Yes          | Yes          |
+| DepthwiseConv2D | Yes         | Yes        | Yes        | Yes         | Yes          | Yes          | Yes         | Yes          | Yes          |
+| TransposeConv2D | Yes         | No         | No         | Yes         | No           | No           | Yes         | No           | No           |
+| Fully Connected | Yes         | Yes        | Yes        | Yes         | Yes          | Yes          | Yes         | Yes          | Yes          |
+| Add             | Yes         | Yes        | N/A        | Yes         | Yes          | N/A          | Yes         | Yes          | N/A          |
+| Mul             | Yes         | Yes        | N/A        | Yes         | Yes          | N/A          | Yes         | Yes          | N/A          |
+| MaxPooling      | Yes         | Yes        | N/A        | Yes         | Yes          | N/A          | Yes         | Yes          | N/A          |
+| AvgPooling      | Yes         | Yes        | N/A        | Yes         | Yes          | N/A          | Yes         | Yes          | N/A          |
+| Softmax         | Yes         | Yes        | N/A        | Yes         | Yes          | N/A          | Yes         | No           | N/A          |
+| LSTM            | Yes         | NA         | No         | Yes         | NA           | No           | Yes         | NA           | No           |
+| SVDF            | Yes         | No         | No         | Yes         | No           | No           | Yes         | No           | No           |
 
 * int4 weights + int8 activations
 
@@ -54,7 +55,7 @@ the function to an appropriate Doxygen group as well.
 
 ### Doxygen
 Function prototypes must have a detailed comment header in Doxygen format. You can execute the doxygen document generation
-script in the Doxygen folder to check that no errors are introduced.
+script in the Documentation/Doxygen folder to check that no errors are introduced.
 
 ### Unit Tests
 For any new features and bug fixes, new unit tests are needed. Improvements have to be verifed by unit tests. If you do
@@ -87,14 +88,16 @@ cmake .. -DCMAKE_TOOLCHAIN_FILE=</path/to/ethos-u-core-platform>/cmake/toolchain
 ```
 
 ### Compiler Options
-Default optimization level is set at Ofast. Please change according to project needs. Just bear in mind this can impact
-performance. With only optimization level -O0, *ARM_MATH_AUTOVECTORIZE* needs to be defined for processors with Helium
+Default optimization level is set at Ofast. This can be overwritten with CMake on command line by using <nobr>*"-DCMSIS_OPTIMIZATION_LEVEL"*</nobr>. Please change according to project needs. 
+Just bear in mind this can impact performance. With only optimization level -O0, *ARM_MATH_AUTOVECTORIZE* needs to be defined for processors with Helium
 Technology.
 
 The compiler option *'-fomit-frame-pointer'* is enabled by default at -O and higher. When no optimization level is specified,
 you may need to specify '-fomit-frame-pointer'.
 
 The compiler option *'-fno-builtin'* does not utilize optimized implementations of e.g. memcpy and memset, which are heavily used by CMSIS-NN. It can significantly downgrade performance. So this should be avoided. The compiler option *'-ffreestanding'* should also be avoided as it enables '-fno-builtin' implicitly.
+
+Another option is to enable CMSIS_NN_USE_SINGLE_ROUNDING. This may affect the output. If enabling this the equivalent flag should be enabled in TFL/TFLM.
 
 ### Supported Compilers
 * CMSIS-NN is tested on Arm Compiler 6 and on Arm GNU Toolchain.

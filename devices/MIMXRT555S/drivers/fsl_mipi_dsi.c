@@ -230,7 +230,7 @@ static uint32_t DSI_GetInstance(const MIPI_DSI_HOST_Type *base)
     /* Find the instance index from base address mappings. */
     for (instance = 0; instance < ARRAY_SIZE(s_dsiBases); instance++)
     {
-        if (s_dsiBases[instance] == base)
+        if (MSDK_REG_SECURE_ADDR(s_dsiBases[instance]) == MSDK_REG_SECURE_ADDR(base))
         {
             break;
         }
@@ -470,6 +470,10 @@ void DSI_Init(MIPI_DSI_HOST_Type *base, const dsi_config_t *config)
  */
 void DSI_Deinit(MIPI_DSI_HOST_Type *base)
 {
+#if defined(DSI_RESETS_ARRAY)
+    RESET_PeripheralReset(s_dsiResets[DSI_GetInstance(base)]);
+#endif
+
 #if !(defined(FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL) && FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL)
     (void)CLOCK_DisableClock(s_dsiClocks[DSI_GetInstance(base)]);
 #endif /* FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL */
@@ -533,7 +537,7 @@ void DSI_SetDpiConfig(MIPI_DSI_HOST_Type *base,
     assert(NULL != config);
 
     /* coefficient DPI event size to number of DSI bytes. */
-    float coff = ((float)numLanes * (float)dsiHsBitClkFreq_Hz) / ((float)dpiPixelClkFreq_Hz * 8);
+    float coff = ((float)numLanes * (float)dsiHsBitClkFreq_Hz) / ((float)dpiPixelClkFreq_Hz * 8.0f);
 
 #if (defined(FSL_FEATURE_MIPI_DSI_HOST_HAS_PXL2DPI) && FSL_FEATURE_MIPI_DSI_HOST_HAS_PXL2DPI)
     SOC_MIPI_DSI_SetPixelDpiMap(base, (uint32_t)config->dpiColorCoding);
@@ -586,22 +590,9 @@ void DSI_SetDpiConfig(MIPI_DSI_HOST_Type *base,
     base->CFG_DPI_VBP = config->vbp;
     base->CFG_DPI_VFP = config->vfp;
 
-    base->CFG_DPI_VACTIVE = config->panelHeight - 1UL;
+    base->CFG_DPI_VACTIVE = config->panelHeight;
     base->CFG_DPI_VC      = config->virtualChannel;
 }
-
-#if defined(FSL_FEATURE_MIPI_DSI_HOST_DBI_HAS_PIXEL_FORMAT) && FSL_FEATURE_MIPI_DSI_HOST_DBI_HAS_PIXEL_FORMAT
-/*!
- * brief Configure the DBI pixel format.
- *
- * param base MIPI DSI host peripheral base address.
- * param format of the pixel.
- */
-void DSI_SetDbiPixelFormat(MIPI_DSI_HOST_Type *base, dsi_dbi_pixel_format_t format)
-{
-    base->CFG_DBI_PIXEL_FORMAT = (uint32_t)format;
-}
-#endif
 
 /*!
  * brief Initializes the D-PHY
@@ -621,9 +612,9 @@ uint32_t DSI_InitDphy(MIPI_DSI_HOST_Type *base, const dsi_dphy_config_t *config,
     assert(config);
 
 #if !((defined(FSL_FEATURE_MIPI_DSI_HOST_NO_DPHY_PLL) && (FSL_FEATURE_MIPI_DSI_HOST_NO_DPHY_PLL)))
-    uint32_t cn;
-    uint32_t cm;
-    uint32_t co;
+    uint32_t cn = 0x0U;
+    uint32_t cm = 0x0U;
+    uint32_t co = 0x0U;
     uint32_t outputPllFreq;
 
     outputPllFreq = DSI_DphyGetPllDivider(&cn, &cm, &co, refClkFreq_Hz, config->txHsBitClk_Hz);
@@ -705,13 +696,13 @@ uint32_t DSI_InitDphy(MIPI_DSI_HOST_Type *base, const dsi_dphy_config_t *config,
  */
 void DSI_DeinitDphy(MIPI_DSI_HOST_Type *base)
 {
+    /* Power down the DPHY. */
+    base->DPHY_PD_REG = 1U;
+
 #if !((defined(FSL_FEATURE_MIPI_DSI_HOST_NO_DPHY_PLL) && (FSL_FEATURE_MIPI_DSI_HOST_NO_DPHY_PLL)))
     /* Power down the PLL. */
     base->PD_PLL = 1U;
 #endif
-
-    /* Power down the DPHY. */
-    base->AUTO_PD_EN = 1U;
 }
 
 /*!

@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2023 NXP
+ * Copyright 2019-2024 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -11,8 +11,11 @@
 
 #include <string.h>
 #include <stdint.h>
-#include "fsl_debug_console.h"
 #include "fsl_shell.h"
+/* If XCACHE is present */
+#if FSL_FEATURE_SOC_XCACHE_COUNT
+#include "fsl_cache.h"
+#endif
 
 /* Enable AAC decoder*/
 #if XA_AAC_DECODER
@@ -75,7 +78,9 @@
 
 /* Audio in/out buffers for one-shot DSP handling. */
 static uint8_t *s_audioInput  = (uint8_t *)AUDIO_SHARED_BUFFER_1;
+#if (XA_OPUS_ENCODER || XA_SBC_ENCODER || XA_PCM_GAIN || XA_SRC_PP_FX)
 static uint8_t *s_audioOutput = (uint8_t *)AUDIO_SHARED_BUFFER_2;
+#endif
 /*${macro:end}*/
 
 /*******************************************************************************
@@ -95,7 +100,9 @@ static shell_status_t shellDecoder(shell_handle_t shellHandle, int32_t argc, cha
 #if (XA_OPUS_ENCODER || XA_SBC_ENCODER)
 static shell_status_t shellEncoder(shell_handle_t shellHandle, int32_t argc, char **argv);
 #endif
+#ifdef SD_ENABLED
 static shell_status_t shellFile(shell_handle_t shellHandle, int32_t argc, char **argv);
+#endif
 #if XA_SRC_PP_FX
 static shell_status_t shellSRC(shell_handle_t shellHandle, int32_t argc, char **argv);
 #endif
@@ -112,6 +119,7 @@ static shell_status_t shellGAIN(shell_handle_t shellHandle, int32_t argc, char *
 /*${variable:start}*/
 SHELL_COMMAND_DEFINE(version, "\r\n\"version\": Query DSP for component versions\r\n", shellEcho, 0);
 
+#ifdef SD_ENABLED
 #if XA_MP3_DECODER == 1 || XA_AAC_DECODER || XA_VORBIS_DECODER
 SHELL_COMMAND_DEFINE(file,
                      "\r\n\"file\": Perform audio file decode and playback on DSP\r\n"
@@ -128,6 +136,7 @@ SHELL_COMMAND_DEFINE(file,
                      ,
                      shellFile,
                      SHELL_IGNORE_PARAMETER_COUNT);
+#endif
 #endif
 
 /* Enable just aac and mp3 to save memory*/
@@ -239,12 +248,13 @@ static shell_status_t shellEcho(shell_handle_t shellHandle, int32_t argc, char *
     return kStatus_SHELL_Success;
 }
 
+#ifdef SD_ENABLED
 static shell_status_t shellFile(shell_handle_t shellHandle, int32_t argc, char **argv)
 {
-    app_handle_t *app = (app_handle_t *)g_handleShellMessageCallbackData;
-    srtm_message msg  = {0};
-    DIR directory;
-    FILINFO fileInformation;
+    app_handle_t *app       = (app_handle_t *)g_handleShellMessageCallbackData;
+    srtm_message msg        = {0};
+    DIR directory           = {0};
+    FILINFO fileInformation = {0};
     const char *filename, *dot;
     char *file_ptr;
     uint32_t count = 0;
@@ -439,6 +449,9 @@ static shell_status_t shellFile(shell_handle_t shellHandle, int32_t argc, char *
         }
 
         error = f_read(&app->fileObject, file_ptr, FILE_PLAYBACK_INITIAL_READ_SIZE, &bytes_read);
+#if FSL_FEATURE_SOC_XCACHE_COUNT
+        XCACHE_CleanInvalidateCacheByRange((uint32_t)file_ptr, FILE_PLAYBACK_INITIAL_READ_SIZE);
+#endif
         if (error)
         {
             PRINTF("[CM33 CMD] file read fail\r\n");
@@ -462,6 +475,7 @@ static shell_status_t shellFile(shell_handle_t shellHandle, int32_t argc, char *
 
     return kStatus_SHELL_Success;
 }
+#endif
 
 #if (XA_AAC_DECODER || XA_MP3_DECODER || XA_VORBIS_DECODER || XA_OPUS_DECODER || XA_SBC_DECODER)
 static shell_status_t shellDecoder(shell_handle_t shellHandle, int32_t argc, char **argv)
@@ -548,6 +562,10 @@ static shell_status_t shellDecoder(shell_handle_t shellHandle, int32_t argc, cha
 
     /* Copy encoded audio clip into shared memory buffer */
     memcpy(s_audioInput, encoded_data, msg.param[2]);
+#if FSL_FEATURE_SOC_XCACHE_COUNT
+    XCACHE_CleanInvalidateCacheByRange((uint32_t)s_audioInput, msg.param[2]);
+#endif
+
 
     g_handleShellMessageCallback(&msg, g_handleShellMessageCallbackData);
     return kStatus_SHELL_Success;
@@ -615,7 +633,9 @@ static shell_status_t shellEncoder(shell_handle_t shellHandle, int32_t argc, cha
 
     /* Copy pcm audio clip into shared memory buffer */
     memcpy(s_audioInput, pcm_data, msg.param[2]);
-
+#if FSL_FEATURE_SOC_XCACHE_COUNT
+    XCACHE_CleanInvalidateCacheByRange((uint32_t)s_audioInput, msg.param[2]);
+#endif
     g_handleShellMessageCallback(&msg, g_handleShellMessageCallbackData);
     return kStatus_SHELL_Success;
 }
@@ -656,7 +676,9 @@ static shell_status_t shellSRC(shell_handle_t shellHandle, int32_t argc, char **
     }
 
     memcpy(s_audioInput, SRTM_MP3_REFBUFFER, sizeof(SRTM_MP3_REFBUFFER));
-
+#if FSL_FEATURE_SOC_XCACHE_COUNT
+    XCACHE_CleanInvalidateCacheByRange((uint32_t)s_audioInput, msg.param[1]);
+#endif
     g_handleShellMessageCallback(&msg, g_handleShellMessageCallbackData);
     return kStatus_SHELL_Success;
 }
@@ -698,7 +720,9 @@ static shell_status_t shellGAIN(shell_handle_t shellHandle, int32_t argc, char *
     }
 
     memcpy(s_audioInput, SRTM_MP3_REFBUFFER, sizeof(SRTM_MP3_REFBUFFER));
-
+#if FSL_FEATURE_SOC_XCACHE_COUNT
+    XCACHE_CleanInvalidateCacheByRange((uint32_t)s_audioInput, msg.param[1]);
+#endif
     g_handleShellMessageCallback(&msg, g_handleShellMessageCallbackData);
     return kStatus_SHELL_Success;
 }
@@ -718,7 +742,9 @@ void shellCmd(handleShellMessageCallback_t *handleShellMessageCallback, void *ar
 #if (XA_OPUS_ENCODER || XA_SBC_ENCODER)
     SHELL_RegisterCommand(s_shellHandle, SHELL_COMMAND(encoder));
 #endif
+#ifdef SD_ENABLED
     SHELL_RegisterCommand(s_shellHandle, SHELL_COMMAND(file));
+#endif
 #if XA_SRC_PP_FX
     SHELL_RegisterCommand(s_shellHandle, SHELL_COMMAND(src));
 #endif
@@ -840,7 +866,9 @@ static void handleDSPMessageInner(app_handle_t *app, srtm_message *msg, bool *no
                             PRINTF("[CM33 CMD] Invalid reference data\r\n");
                             return;
                         }
-
+#if FSL_FEATURE_SOC_XCACHE_COUNT
+    XCACHE_CleanInvalidateCacheByRange((uint32_t)s_audioOutput, reference_data_size);
+#endif
                         for (int i = 0; (i < msg->param[6]) && (i < reference_data_size); i++)
                         {
                             if (s_audioOutput[i] != reference_data[i])
@@ -885,6 +913,7 @@ static void handleDSPMessageInner(app_handle_t *app, srtm_message *msg, bool *no
                     PRINTF("[CM33 CMD] %s", string_buff);
                     break;
 
+#ifdef SD_ENABLED
                 case SRTM_Command_FileStart:
                     if (msg->error != SRTM_Status_Success)
                     {
@@ -909,7 +938,10 @@ static void handleDSPMessageInner(app_handle_t *app, srtm_message *msg, bool *no
 
                     file_ptr = (char *)AUDIO_SHARED_BUFFER_1;
                     error    = f_read(&app->fileObject, file_ptr,
-                                   msg->param[0] == 0 ? FILE_PLAYBACK_READ_SIZE : msg->param[0], &bytes_read);
+                            msg->param[0] == 0 ? FILE_PLAYBACK_READ_SIZE : msg->param[0], &bytes_read);
+#if FSL_FEATURE_SOC_XCACHE_COUNT
+                            XCACHE_CleanInvalidateCacheByRange((uint32_t)file_ptr, msg->param[0]);
+#endif
                     if (error)
                     {
                         PRINTF("[CM33 CMD] File read failure: %d\r\n", error);
@@ -980,6 +1012,7 @@ static void handleDSPMessageInner(app_handle_t *app, srtm_message *msg, bool *no
                     *notify_shell = true;
                     break;
                 }
+#endif
                 default:
                     PRINTF("[CM33 CMD] Incoming unknown message category %d \r\n", msg->head.category);
                     break;

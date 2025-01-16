@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 NXP
+ * Copyright 2019, 2024 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -201,6 +201,10 @@ status_t flexspi_nor_flash_erase_sector(FLEXSPI_Type *base, uint32_t address)
 
 status_t flexspi_nor_flash_page_program(FLEXSPI_Type *base, uint32_t dstAddr, const uint32_t *src)
 {
+#if defined(FLASH_ENABLE_OCTAL_CMD)
+    assert(((uint32_t)dstAddr & (0x1UL)) == 0UL);
+#endif
+
     status_t status;
     flexspi_transfer_t flashXfer;
 

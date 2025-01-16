@@ -617,9 +617,14 @@ extern "C" {
  *  \brief Ethermind SDP dbase initializer
  *
  *  \par Description:
- *  This function initializes SDP dbase records statically.
+ *  When SDP_DYNAMIC_DB is not defined, this function initializes SDP dbase
+ *  records statically.
  *  It is called as a part of EtherMind stack initialization.
  *
+ *  When SDP_DYNAMIC_DB is defined, this function initializes SDP dbase
+ *  for dynamic records creation.
+ *  It is called as a part of EtherMind Bluetooth ON procedure.
+ * 
  *  \param None
  *
  *  \return None
@@ -1056,6 +1061,22 @@ API_RESULT BT_dbase_get_service_class_uuids
 
 #ifdef SDP_DYNAMIC_DB
 /**
+ *  \brief Ethermind SDP dbase shutdown routine
+ *
+ *  \par Description:
+ *  This function shutsdown SDP dbase.
+ *  It is called as a part of EtherMind Bluetooth OFF procedure.
+ *
+ *  \param None
+ *
+ *  \return None
+ */
+void BT_dbase_shutdown
+     (
+         void
+     );
+
+/**
  *  \brief To create an SDP database record at runtime.
  *
  *  \par Description:
@@ -1317,6 +1338,7 @@ API_RESULT BT_dbase_add_languagebase_attr_id_list
                UINT16 base_id
            );
 
+#ifndef SDP_DB_ADD_PROFILE_DESC_LIST_UUID_128_BIT_SUPPORT
 /**
  *  \brief To add BluetoothProfileDescriptorList attibute to an SDP database record at runtime.
  *
@@ -1342,6 +1364,41 @@ API_RESULT BT_dbase_add_profile_descriptor_list
                UINT16 profile_uuid,
                UINT16 version
            );
+#else /* SDP_DB_ADD_PROFILE_DESC_LIST_UUID_128_BIT_SUPPORT */
+/**
+ *  \brief To add BluetoothProfileDescriptorList attibute to an SDP database record at runtime.
+ *
+ *  \par Description:
+ *       This function adds BluetoothProfileDescriptorList attribute to an existing SDP database record.
+ *
+ *  \param [in] record_handle
+ *         Identifies the SDP record to which the attribute to be added
+ *
+ *  \param [in] profile_uuid
+ *         UUID assigned to the profile - 16/32/128 bit
+ *
+ *  \param [in] version
+ *         16-bit profile version number
+ *
+ *  \return
+ *       API_RESULT: API_SUCCESS on success otherwise an error code
+ *                      describing the cause of failure.
+ */
+API_RESULT BT_dbase_add_profile_descriptor_list_ex
+           (
+               UINT32    record_handle,
+               S_UUID  * profile_uuid,
+               UINT16    version
+           );
+
+#define BT_dbase_add_profile_descriptor_list(record_handle, profile_uuid, version) \
+        { \
+            S_UUID  temp_profile_uuid_16b; \
+            temp_profile_uuid_16b.uuid_type = UUID_16; \
+            temp_profile_uuid_16b.uuid_union.uuid_16 = (profile_uuid); \
+            BT_dbase_add_profile_descriptor_list_ex((record_handle), &temp_profile_uuid_16b, (version)); \
+        }
+#endif /* SDP_DB_ADD_PROFILE_DESC_LIST_UUID_128_BIT_SUPPORT */
 
 /**
  *  \brief To add ServiceName attibute to an SDP database record at runtime.

@@ -24,8 +24,8 @@
  */
 
  
-#ifndef _DISTANCE_FUNCTIONS_H_
-#define _DISTANCE_FUNCTIONS_H_
+#ifndef DISTANCE_FUNCTIONS_H_
+#define DISTANCE_FUNCTIONS_H_
 
 #include "arm_math_types.h"
 #include "arm_math_memory.h"
@@ -45,7 +45,7 @@ extern "C"
 
 
 /**
- * @defgroup groupDistance Distance functions
+ * @defgroup groupDistance Distance Functions
  *
  * Distance functions for use with clustering algorithms.
  * There are distance functions for float vectors and boolean vectors.
@@ -373,7 +373,6 @@ arm_status arm_dtw_distance_f32(const arm_matrix_instance_f32 *pDistance,
  * @param[in]    pDTW  Cost matrix (Query rows * Template columns)
  * @param[out]   pPath Warping path in cost matrix 2*(nb rows + nb columns)
  * @param[out]   pathLength Length of path in number of points
- * @return none
  * 
  */
 

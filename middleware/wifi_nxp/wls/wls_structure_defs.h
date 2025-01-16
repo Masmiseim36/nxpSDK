@@ -3,10 +3,9 @@
  *
  * @brief This file contains header file for CSI structure definitions
  *
- * Copyright 2023 NXP
+ * Copyright 2023-2024 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
- *
  */
 
 /************************************************************************
@@ -29,91 +28,6 @@
 #define UINT32 unsigned int
 #define UINT64 unsigned long long
 #endif
-
-typedef struct csiHeaderInfoStruct
-{
-    unsigned char csi;
-    unsigned char LTF;
-    unsigned short dataLength;
-    unsigned short FCF;
-    unsigned short dataParameter;
-    unsigned int HTCF;
-    unsigned int TSF;
-    unsigned char ADDR1[6];
-    unsigned char ADDR2[6];
-    unsigned char SBFnIndex;
-    // unsigned short PKTinfo;
-    unsigned char rxDevBw;
-    unsigned char nRx;
-    unsigned char nTx;
-    unsigned char Ng;
-    unsigned char sigBw;
-    unsigned char psb;
-    unsigned char packetType;
-
-    unsigned char cfoCourseEst;
-    // unsigned int LSig;
-    unsigned char LSigRate;
-    unsigned char LSigRateMbps;
-    unsigned short LSigLength;
-    unsigned char LSigParity;
-    unsigned char LSigTail;
-
-    unsigned char cfoFineEst;
-
-    unsigned char HtSigMcs;
-    unsigned char HtSigCbw20_40;
-    unsigned short HtSigLength;
-
-    unsigned char HtSigSmoothing;
-    unsigned char HtSigNotSounding;
-    unsigned char HtSigAggregation;
-    unsigned char HtSigStbc;
-    unsigned char HtSigFecCoding;
-    unsigned char HtSigShortGi;
-    unsigned char HtSigNoExtSpatStreams;
-    unsigned char HtSigCrc;
-    unsigned char HtSigTailBits;
-
-    unsigned char VhtSigBw;
-    unsigned char VhtSigStbc;
-    unsigned char VhtSigGroupId;
-    unsigned char VhtSigSuNoSts;
-    unsigned short VhtSigPartialAid;
-    unsigned char VhtSigTxOpPsNotAllwd;
-
-    unsigned char VhtSigShortGi;
-    unsigned char VhtSigShortGiDisAmb;
-    unsigned char VhtSigSuCoding;
-    unsigned char VhtSigLdpcExtraSymb;
-    unsigned char VhtSigMcs;
-    unsigned char VhtSigBeamformed;
-    unsigned char VhtSigCrc;
-    unsigned char VhtSigTail;
-
-    unsigned char rxNoiseFloor, rxNfA, rxNfB, rxNfC, rxNfD;
-    unsigned char rxRssi, rxRssiA, rxRssiB, rxRssiC, rxRssiD;
-
-    unsigned char LltfDvgaCtrMax;
-    unsigned char LltfBbCtrMax;
-    unsigned char LltfIfCtrMax;
-    unsigned char LltfLnaCtrMax;
-    unsigned char LltfSlnaMax;
-
-    unsigned char HtDvgaCtrMax;
-    unsigned char HtBbCtrMax;
-    unsigned char HtIfCtrMax;
-    unsigned char HtLnaCtrMax;
-    unsigned char HtSlnaMax;
-
-    unsigned char isLtf;
-    unsigned char NgDsfShift;
-    unsigned char scOffset;
-
-    int totalGainLltf;
-    int totalGainCsi;
-
-} CsiHeaderInfo;
 
 #define SOC_W8X64
 #define SOC_W8864
@@ -320,7 +234,7 @@ typedef struct hal_rxinfo
 
 typedef struct hal_csirxinfo
 {
-#ifdef SMAC_BFINFO
+#if defined(SMAC_BFINFO) && defined(RAW_HEADER)
     // DWORD-0
     UINT32 header_length : 13;
     UINT32 rsvd0 : 3;
@@ -385,7 +299,7 @@ typedef struct hal_csirxinfo
     UINT32 timestamp_7;
     // DWORD-20
     UINT32 timestamp_8;
-#else
+#elif defined(RAW_HEADER)
     // DWORD-0
     UINT32 data_length : 13; // Includes BF_INFO, LTF Data, and CSI Data. Length in dwords
     UINT32 ltf : 1;
@@ -471,8 +385,62 @@ typedef struct hal_csirxinfo
     UINT32 timestamp_7;
     // DWORD-20
     UINT32 timestamp_8;
+#else
+    // DWORD-0
+    UINT32 data_length : 13; // Includes BF_INFO, LTF Data, and CSI Data. Length in dwords
+    UINT32 rsvd1 : 3;
+    UINT32 signature : 16;   // 0xABCD: tagged by MAC HW
+    // DWORD-1
+    UINT32 header_signature; // 0x00010203
+    // DWORD-2
+    UINT32 pktinfo : 20;
+    UINT32 rsvd2 : 12;
+    // DWORD-3
+    UINT32 tsf;
+    // DWORD-4
+    UINT32 tsf_hi;
+    // DWORD-5
+    UINT32 addr1_lo;
+    // DWORD-6
+    UINT32 addr1_hi : 16;
+    UINT32 addr2_lo : 16;
+    // DWORD-7
+    UINT32 addr2_hi;
+    // DWORD-8
+    UINT32 rx_rssi_a : 8;
+    UINT32 rx_rssi_b : 8;
+    UINT32 rx_nf_a : 8;
+    UINT32 rx_nf_b : 8;
+    // DWORD-9
+    UINT32 SINR : 8;
+    UINT32 chan : 8;
+    UINT32 ap_type : 8;
+    UINT32 chip_id : 8;
+    // DWORD-10
+    UINT32 fcf : 16;
+    UINT32 rsvd3 : 16;
 #endif
 } hal_csirxinfo_t;
+
+typedef struct hal_tddestruct
+{
+    // DWORD-0
+    UINT32 cfo : 17;
+    UINT32 dta : 11;
+    UINT32 rsvd0 : 4;
+
+    // DWORD-1
+    UINT32 tod;
+    // DWORD-2
+    UINT32 toa_hi;
+    // DWORD-3
+    UINT32 toa_lo : 8;
+    UINT32 M1_idx : 9;
+    UINT32 M2_idx : 9;
+    UINT32 rsvd1 : 6;
+    // DWORD-4
+    UINT32 IQ_Data[1];
+} hal_tddestruct_t;
 
 typedef struct hal_pktinfo
 {

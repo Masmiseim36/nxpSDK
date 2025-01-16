@@ -130,3 +130,29 @@ function(add_config_file CONFIG_FILE INCLUDE_PATH MODULE_NAME)
       target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC ${INCLUDE_PATH})
     endif()
 endfunction()
+
+function(group_link_libraries)
+    get_property(
+            SDK_LIB_FILES
+            TARGET ${MCUX_SDK_PROJECT_NAME}
+            PROPERTY LINK_LIBRARIES)
+
+    foreach(item ${SDK_LIB_FILES})
+        string(REGEX MATCH "::@.*|-Wl,--start-group|-Wl,--end-group" match "${item}")
+        if (match)
+            continue()
+        else ()
+            list(APPEND already_added_libs ${item})
+        endif ()
+    endforeach()
+
+    list(REMOVE_DUPLICATES already_added_libs)
+    # clear link libraries before reordering
+    set_property(TARGET ${MCUX_SDK_PROJECT_NAME} PROPERTY LINK_LIBRARIES "")
+    # wrap all link libraries
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--start-group)
+
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${already_added_libs})
+
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--end-group)
+endfunction()

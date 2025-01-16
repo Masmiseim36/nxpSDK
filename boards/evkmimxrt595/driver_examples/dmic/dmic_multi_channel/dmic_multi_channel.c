@@ -6,7 +6,7 @@
  */
 #include <stdlib.h>
 #include <string.h>
-#include "pin_mux.h"
+#include "app.h"
 #include "board.h"
 #include "fsl_codec_common.h"
 #include "fsl_debug_console.h"
@@ -17,63 +17,9 @@
 #include "fsl_i2s.h"
 #include "fsl_i2s_dma.h"
 #include "fsl_inputmux.h"
-#include <stdbool.h>
-#include "fsl_codec_adapter.h"
-#include "fsl_cs42448.h"
-#include "fsl_power.h"
-
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_I2S_TX          (I2S5)
-#define DEMO_I2S_SAMPLE_RATE 48000
-#define I2S_CLOCK_DIVIDER    (24576000 / DEMO_I2S_SAMPLE_RATE / 32 / 8)
-
-#define DEMO_ENABLE_DMIC_0 1
-#define DEMO_ENABLE_DMIC_1 1
-#define DEMO_ENABLE_DMIC_2 1
-#define DEMO_ENABLE_DMIC_3 1
-#define DEMO_ENABLE_DMIC_4 1
-#define DEMO_ENABLE_DMIC_5 1
-#define DEMO_ENABLE_DMIC_6 1
-#define DEMO_ENABLE_DMIC_7 1
-
-#define DEMO_DMA_MEMCPY_CHANNEL_0 0
-#define DEMO_DMA_MEMCPY_CHANNEL_1 1
-
-#define DEMO_DMIC_NUMS 8U
-
-#define DEMO_DMA_CHANNEL_TRIGGER_INPUT_A  kINPUTMUX_Dma0TrigOutAToDma0
-#define DEMO_DMA_CHANNEL_TRIGGER_INPUT_B  kINPUTMUX_Dma0TrigOutBToDma0
-#define DEMO_DMA_CHANNEL_TRIGGER_OUTPUT_A 0
-#define DEMO_DMA_CHANNEL_TRIGGER_OUTPUT_B 1
-#define DEMO_DMA_CHANNEL_TRIGGER_OUTPUT0  kINPUTMUX_Dma0OtrigChannel0ToTriginChannels
-#define DEMO_DMA_CHANNEL_TRIGGER_OUTPUT1  kINPUTMUX_Dma0OtrigChannel1ToTriginChannels
-
-#define DEMO_DMA            (DMA0)
-#define DEMO_DMA1           (DMA1)
-#define DEMO_I2S_TX_CHANNEL (11)
-
-#define DEMO_DMIC_DMA_RX_CHANNEL_0 16U
-#define DEMO_DMIC_DMA_RX_CHANNEL_1 17U
-#define DEMO_DMIC_DMA_RX_CHANNEL_2 18U
-#define DEMO_DMIC_DMA_RX_CHANNEL_3 19U
-#define DEMO_DMIC_DMA_RX_CHANNEL_4 20U
-#define DEMO_DMIC_DMA_RX_CHANNEL_5 21U
-#define DEMO_DMIC_DMA_RX_CHANNEL_6 22U
-#define DEMO_DMIC_DMA_RX_CHANNEL_7 23U
-
-#define DEMO_DMIC_CHANNEL_0          kDMIC_Channel0
-#define DEMO_DMIC_CHANNEL_1          kDMIC_Channel1
-#define DEMO_DMIC_CHANNEL_2          kDMIC_Channel2
-#define DEMO_DMIC_CHANNEL_3          kDMIC_Channel3
-#define DEMO_DMIC_CHANNEL_4          kDMIC_Channel4
-#define DEMO_DMIC_CHANNEL_5          kDMIC_Channel5
-#define DEMO_DMIC_CHANNEL_6          kDMIC_Channel6
-#define DEMO_DMIC_CHANNEL_7          kDMIC_Channel7
-#define DEMO_TDM_DATA_START_POSITION 1U
-
-#define DEMO_CODEC_I2C_INSTANCE 2U
 #define FIFO_DEPTH           (15U)
 #define PLAYBACK_BUFFER_SIZE (1024)
 #define PLAYBACK_BUFFER_NUM  (2U)
@@ -116,8 +62,6 @@
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
-void BORAD_CodecReset(bool state);
-
 static void i2s_Callback(I2S_Type *base, i2s_dma_handle_t *handle, status_t completionStatus, void *userData);
 static void memcpy_channel_callback(struct _dma_handle *handle, void *userData, bool transferDone, uint32_t intmode);
 static void DEMO_DMAChannelConfigurations(void);
@@ -150,18 +94,6 @@ static void dmic_Callback(DMIC_Type *base, dmic_dma_handle_t *handle, status_t s
 /*******************************************************************************
  * Variables
  ******************************************************************************/
-cs42448_config_t cs42448Config = {
-    .DACMode      = kCS42448_ModeSlave,
-    .ADCMode      = kCS42448_ModeSlave,
-    .reset        = NULL,
-    .master       = false,
-    .i2cConfig    = {.codecI2CInstance = DEMO_CODEC_I2C_INSTANCE},
-    .format       = {.sampleRate = 48000U, .bitWidth = 24U},
-    .bus          = kCS42448_BusTDM,
-    .slaveAddress = CS42448_I2C_ADDR,
-};
-
-codec_config_t boardCodecConfig = {.codecDevType = kCODEC_CS42448, .codecDevConfig = &cs42448Config};
 static i2s_config_t tx_config;
 static uint32_t volatile s_RecordEmptyBlock = PLAYBACK_BUFFER_NUM;
 /* DMIC dma handle for 8 channel */
@@ -210,7 +142,6 @@ static volatile bool s_isDMICTriggerred   = false;
 /*******************************************************************************
  * Code
  ******************************************************************************/
-
 /*!
  * @brief Main function
  */
@@ -220,47 +151,7 @@ int main(void)
     i2s_transfer_t i2sTxTransfer;
 
     /* Board pin, clock, debug console init */
-    gpio_pin_config_t gpio_config = {
-        kGPIO_DigitalOutput,
-        1,
-    };
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
-
-    RESET_PeripheralReset(kINPUTMUX_RST_SHIFT_RSTn);
-    INPUTMUX_Init(INPUTMUX);
-    INPUTMUX_EnableSignal(INPUTMUX, kINPUTMUX_Dmic0Ch0ToDmac0Ch16RequestEna, true);
-    INPUTMUX_EnableSignal(INPUTMUX, kINPUTMUX_Dmic0Ch1ToDmac0Ch17RequestEna, true);
-    INPUTMUX_EnableSignal(INPUTMUX, kINPUTMUX_Dmic0Ch2ToDmac0Ch18RequestEna, true);
-    INPUTMUX_EnableSignal(INPUTMUX, kINPUTMUX_Dmic0Ch3ToDmac0Ch19RequestEna, true);
-    INPUTMUX_EnableSignal(INPUTMUX, kINPUTMUX_Dmic0Ch4ToDmac0Ch20RequestEna, true);
-    INPUTMUX_EnableSignal(INPUTMUX, kINPUTMUX_Dmic0Ch5ToDmac0Ch21RequestEna, true);
-    INPUTMUX_EnableSignal(INPUTMUX, kINPUTMUX_Dmic0Ch6ToDmac0Ch22RequestEna, true);
-    INPUTMUX_EnableSignal(INPUTMUX, kINPUTMUX_Dmic0Ch7ToDmac0Ch23RequestEna, true);
-    INPUTMUX_EnableSignal(INPUTMUX, kINPUTMUX_Flexcomm5TxToDmac0Ch11RequestEna, true);
-    INPUTMUX_Deinit(INPUTMUX);
-
-    /* attach main clock to I2C */
-    CLOCK_AttachClk(kFRO_DIV4_to_FLEXCOMM2);
-
-    /* attach AUDIO PLL clock to FLEXCOMM5 (I2S5) */
-    CLOCK_AttachClk(kAUDIO_PLL_to_FLEXCOMM5);
-
-    /* attach AUDIO PLL clock to MCLK */
-    CLOCK_AttachClk(kAUDIO_PLL_to_MCLK_CLK);
-    CLOCK_SetClkDiv(kCLOCK_DivMclkClk, 2);
-    SYSCTL1->MCLKPINDIR = SYSCTL1_MCLKPINDIR_MCLKPINDIR_MASK;
-    /* DMIC source from audio pll, divider 8, 24.576M/8=3.072MHZ */
-    CLOCK_AttachClk(kAUDIO_PLL_to_DMIC);
-    CLOCK_SetClkDiv(kCLOCK_DivDmicClk, 8);
-
-    cs42448Config.i2cConfig.codecI2CSourceClock = CLOCK_GetFlexcommClkFreq(2);
-    cs42448Config.format.mclk_HZ                = CLOCK_GetMclkClkFreq();
-
-    RESET_ClearPeripheralReset(kHSGPIO1_RST_SHIFT_RSTn);
-    GPIO_PortInit(GPIO, 1);
-    GPIO_PinInit(GPIO, 1, 6, &gpio_config);
+    BOARD_InitHardware();
 
     PRINTF("DMIC multi channel example.\r\n");
 

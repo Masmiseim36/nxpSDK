@@ -39,10 +39,9 @@
   @param[in]     theta    input value in degrees
   @param[out]    pSinVal  points to processed sine output
   @param[out]    pCosVal  points to processed cosine output
-  @return        none
  */
 
-void arm_sin_cos_f32(
+ARM_DSP_ATTRIBUTE void arm_sin_cos_f32(
   float32_t theta,
   float32_t * pSinVal,
   float32_t * pCosVal)

@@ -7,9 +7,8 @@
 
 #include <stdlib.h>
 #include <string.h>
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 #include "fsl_nor_flash.h"
 #include "fsl_common.h"
 #include "fsl_debug_console.h"
@@ -17,18 +16,9 @@
 #include "fsl_cache.h"
 #endif
 
-#include "fsl_flexspi.h"
-#include "fsl_flexspi_nor_flash.h"
-#include "fsl_power.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define EXAMPLE_FLEXSPI           FLEXSPI0
-#define EXAMPLE_FLEXSPI_AMBA_BASE FlexSPI0_AMBA_BASE
-#define FLASH_SIZE                0x10000 /* 64Mb/KByte */
-#define FLASH_PAGE_SIZE           256
-#define NOR_FLASH_START_ADDRESS   (20U * 0x1000U)
-
 #ifndef DEMO_ENABLE_FLASH_CHIP_ERASE
 #define DEMO_ENABLE_FLASH_CHIP_ERASE 0
 #endif
@@ -36,7 +26,6 @@
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
-
 
 /*******************************************************************************
  * variables
@@ -50,44 +39,6 @@ nor_handle_t norHandle = {NULL};
 /*******************************************************************************
  * Code
  ******************************************************************************/
-flexspi_mem_config_t mem_Config = {
-    .deviceConfig =
-        {
-            .flexspiRootClk       = 99000000,
-            .flashSize            = FLASH_SIZE,
-            .CSIntervalUnit       = kFLEXSPI_CsIntervalUnit1SckCycle,
-            .CSInterval           = 2,
-            .CSHoldTime           = 3,
-            .CSSetupTime          = 3,
-            .dataValidTime        = 2,
-            .columnspace          = 0,
-            .enableWordAddress    = 0,
-            .AWRSeqIndex          = 0,
-            .AWRSeqNumber         = 0,
-            .ARDSeqIndex          = NOR_CMD_LUT_SEQ_IDX_READ,
-            .ARDSeqNumber         = 1,
-            .AHBWriteWaitUnit     = kFLEXSPI_AhbWriteWaitUnit2AhbCycle,
-            .AHBWriteWaitInterval = 0,
-        },
-    .devicePort         = kFLEXSPI_PortA1,
-    .deviceType         = kSerialNorCfgOption_DeviceType_MacronixOctalDDR,
-    .CurrentCommandMode = kSerialNorCommandMode_1_1_1,
-    .transferMode       = kSerialNorTransferMode_DDR,
-    .quadMode           = kSerialNorQuadMode_NotConfig,
-    .enhanceMode        = kSerialNorEnhanceMode_Disabled,
-    .commandPads        = kFLEXSPI_8PAD,
-    .queryPads          = kFLEXSPI_1PAD,
-    .busyOffset         = 0,
-    .busyBitPolarity    = 0,
-
-};
-
-nor_config_t norConfig = {
-    .memControlConfig = &mem_Config,
-    .driverBaseAddr   = EXAMPLE_FLEXSPI,
-};
-
-
 
 /*Error trap function*/
 void ErrorTrap(void)
@@ -106,16 +57,7 @@ int main(void)
 {
     status_t status;
 
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
-
-    POWER_DisablePD(kPDRUNCFG_APD_FLEXSPI0_SRAM);
-    POWER_DisablePD(kPDRUNCFG_PPD_FLEXSPI0_SRAM);
-    POWER_ApplyPD();
-
-    CLOCK_AttachClk(kAUX0_PLL_to_FLEXSPI0_CLK);
-    CLOCK_SetClkDiv(kCLOCK_DivFlexspi0Clk, 4);
+    BOARD_InitHardware();
 
     PRINTF("\r\n***NOR Flash Component Demo Start!***\r\n");
 

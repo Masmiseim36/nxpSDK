@@ -43,7 +43,6 @@
   @param[in]     pSrc       points to the block of input data
   @param[out]    pDst       points to the block of output data
   @param[in]     blockSize  number of samples to process
-  @return        none
 
   @par           Scaling and Overflow Behavior
                    The function is implemented using a 64-bit internal accumulator.
@@ -196,7 +195,7 @@ static void arm_fir_q15_1_8_mve(const arm_fir_instance_q15 * S,
 }
 
 
-void arm_fir_q15(
+ARM_DSP_ATTRIBUTE void arm_fir_q15(
   const arm_fir_instance_q15 * S,
   const q15_t * pSrc,
         q15_t * pDst,
@@ -456,7 +455,7 @@ switch(nbTaps) {
 }
 
 #else
-void arm_fir_q15(
+ARM_DSP_ATTRIBUTE void arm_fir_q15(
   const arm_fir_instance_q15 * S,
   const q15_t * pSrc,
         q15_t * pDst,

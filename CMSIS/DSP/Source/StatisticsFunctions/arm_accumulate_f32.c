@@ -43,14 +43,13 @@
  @param[in]     pSrc       points to the input vector.
  @param[in]     blockSize  number of samples in input vector.
  @param[out]    pResult    sum of values in input vector.
- @return        none
  */
 
 #if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)
 
 #include "arm_helium_utils.h"
 
-void arm_accumulate_f32(
+ARM_DSP_ATTRIBUTE void arm_accumulate_f32(
                         const float32_t * pSrc,
                         uint32_t blockSize,
                         float32_t * pResult)
@@ -100,7 +99,7 @@ void arm_accumulate_f32(
 #else
 
 #if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
-void arm_accumulate_f32(
+ARM_DSP_ATTRIBUTE void arm_accumulate_f32(
                         const float32_t * pSrc,
                         uint32_t blockSize,
                         float32_t * pResult)
@@ -150,7 +149,7 @@ void arm_accumulate_f32(
 }
 
 #else
-void arm_accumulate_f32(
+ARM_DSP_ATTRIBUTE void arm_accumulate_f32(
                         const float32_t * pSrc,
                         uint32_t blockSize,
                         float32_t * pResult)

@@ -17,16 +17,14 @@
 #define BT_HCI_OP_LE_TEST_TX_COUNT              BT_OP(BT_OGF_VS, 0x0085)
 #define BT_HCI_OP_LE_SET_TX_POWER               BT_OP(BT_OGF_VS, 0x0087)
 
-STRUCT_PACKED_PRE
 struct bt_hci_le_config {
 	uint8_t  tx_power;
 	uint8_t  feloss;
-} STRUCT_PACKED_POST;
+} __packed;
 
-STRUCT_PACKED_PRE
 struct bt_hci_command {
-	uint8_t ogf;
-	uint8_t ocf;
+	uint16_t ogf;
+	uint16_t ocf;
 	uint16_t opcode;
 	uint8_t param_len;
 };
@@ -98,7 +96,6 @@ struct bt_hci_command {
  */
 
 #define BT_HCI_OP_TX_TEST                BT_OP(BT_OGF_VS, 0x0019)
-STRUCT_PACKED_PRE
 struct bt_hci_cp_tx_test {
 	uint8_t          rx_on_start;
 	uint8_t 	     synt_on_start;
@@ -114,7 +111,7 @@ struct bt_hci_cp_tx_test {
 	uint8_t 	     whitening;
 	uint8_t 	     num_pkt[4];
 	uint8_t 	     tx_pwr;
-} STRUCT_PACKED_POST;
+} __packed;
 
 /**
  *  \brief To start a test where the DUT generates test reference
@@ -171,7 +168,6 @@ struct bt_hci_cp_tx_test {
  */
 
 #define BT_HCI_OP_RX_TEST                BT_OP(BT_OGF_VS, 0x0018)
-STRUCT_PACKED_PRE
 struct bt_hci_cp_rx_test {
 	uint8_t	       test_scenario;
 	uint8_t        tx_channel;
@@ -182,6 +178,6 @@ struct bt_hci_cp_rx_test {
 	uint8_t 	   tx_am_addr;
 	uint8_t        tx_addr[BT_BD_ADDR_SIZE];
 	uint8_t 	   report_err_pkt;
-} STRUCT_PACKED_POST;
+} __packed;
 
 #endif /* _SHELL_TEST_MODE_H__ */

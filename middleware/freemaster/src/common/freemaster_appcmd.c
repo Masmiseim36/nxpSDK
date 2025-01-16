@@ -1,20 +1,17 @@
 /*
  * Copyright (c) 2007-2015 Freescale Semiconductor, Inc.
- * Copyright 2018-2020 NXP
+ * Copyright 2018-2020, 2024 NXP
  *
- * License: NXP LA_OPT_NXP_Software_License
+ * License: NXP LA_OPT_Online Code Hosting NXP_Software_License
  *
- * NXP Confidential. This software is owned or controlled by NXP and may
+ * NXP Proprietary. This software is owned or controlled by NXP and may
  * only be used strictly in accordance with the applicable license terms.
  * By expressly accepting such terms or by downloading, installing,
  * activating and/or otherwise using the software, you are agreeing that
  * you have read, and that you agree to comply with and are bound by,
  * such license terms.  If you do not agree to be bound by the applicable
  * license terms, then you may not retain, install, activate or otherwise
- * use the software.  This code may only be used in a microprocessor,
- * microcontroller, sensor or digital signal processor ("NXP Product")
- * supplied directly or indirectly from NXP.  See the full NXP Software
- * License Agreement in license/LA_OPT_NXP_Software_License.pdf
+ * use the software.
  *
  * FreeMASTER Communication Driver - Application Commands handling
  */
@@ -99,6 +96,8 @@ FMSTR_BPTR FMSTR_StoreAppCmd(FMSTR_SESSION *session, FMSTR_BPTR msgBuffIO, FMSTR
         *retStatus = FMSTR_STC_SERVBUSY;
         return response;
     }
+#else
+    FMSTR_UNUSED(session);
 #endif
 
     /* the previous command not yet processed */
@@ -172,6 +171,8 @@ FMSTR_BPTR FMSTR_GetAppCmdStatus(FMSTR_SESSION *session, FMSTR_BPTR msgBuffIO, F
         *retStatus = FMSTR_STC_SERVBUSY;
         return msgBuffIO;
     }
+#else
+    FMSTR_UNUSED(session);
 #endif
 
     /* time to execute the command's callback */
@@ -224,6 +225,8 @@ FMSTR_BPTR FMSTR_GetAppCmdRespData(FMSTR_SESSION *session, FMSTR_BPTR msgBuffIO,
         *retStatus = FMSTR_STC_SERVBUSY;
         return response;
     }
+#else
+    FMSTR_UNUSED(session);
 #endif
 
     /* the previous command not yet processed */

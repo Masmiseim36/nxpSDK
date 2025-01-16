@@ -9,29 +9,12 @@
 #include "fsl_debug_console.h"
 #include "fsl_spi.h"
 #include "fsl_flexio_spi.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define BOARD_FLEXIO_BASE   FLEXIO0
-#define FLEXIO_SPI_MOSI_PIN 13U
-#define FLEXIO_SPI_MISO_PIN 14U
-#define FLEXIO_SPI_SCK_PIN  15U
-#define FLEXIO_SPI_PCS0_PIN 12U
-
-#define BOARD_SPI_SLAVE_BASE SPI5
-
-#define MASTER_SPI_IRQ FLEXIO_IRQn
-#define SLAVE_SPI_IRQ  FLEXCOMM5_IRQn
-
-/* Select flexio clock source */
-#define FLEXIO_CLOCK_SRC (kFRO_DIV2_to_FLEXIO)
-/* Clock divider for flexio clock source */
-#define FLEXIO_CLOCK_DIVIDER   (8U)
-#define FLEXIO_CLOCK_FREQUENCY CLOCK_GetFlexioClkFreq()
 #define TRANSFER_SIZE     256U    /*! Transfer dataSize */
 #define TRANSFER_BAUDRATE 500000U /*! Transfer baudrate - 500k */
 
@@ -91,18 +74,7 @@ void SPI_SlaveUserCallback(SPI_Type *base, spi_slave_handle_t *handle, status_t 
 
 int main(void)
 {
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
-
-    /* Clock setting for Flexio */
-    CLOCK_AttachClk(FLEXIO_CLOCK_SRC);
-    CLOCK_SetClkDiv(kCLOCK_DivFlexioClk, FLEXIO_CLOCK_DIVIDER);
-
-    /* Use 48 MHz clock for the FLEXCOMM5 */
-    CLOCK_AttachClk(kFRO_DIV4_to_FLEXCOMM5);
-
-    RESET_ClearPeripheralReset(kFLEXIO_RST_SHIFT_RSTn);
+    BOARD_InitHardware();
 
     PRINTF("FLEXIO Master - SPI Slave interrupt example start.\r\n");
     PRINTF("This example use one flexio spi as master and one spi instance as slave on one board.\r\n");

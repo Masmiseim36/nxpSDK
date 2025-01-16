@@ -1,12 +1,12 @@
 /*
- *  Copyright 2008-2022 NXP
+ *  Copyright 2008-2022, 2024 NXP
  *
  *  SPDX-License-Identifier: BSD-3-Clause
  *
  */
 
-/*! \file dhcp-server.h
- *  \brief DHCP server
+/*!\file dhcp-server.h
+ *\brief The file provides DHCP server configuration interfaces.
  *
  * The DHCP Server is required in the provisioning mode of the application to
  * assign IP Address to Wireless Clients that connect to the WM.
@@ -119,7 +119,7 @@ int dhcp_server_start(void *intrfc_handle);
  *
  * However, application can also start dns server without any domain names
  * specified to solve following issue.
- * Some of the client devices do not show WiFi signal strength symbol when
+ * Some of the client devices do not show Wi-Fi signal strength symbol when
  * connected to micro-AP in open mode, if dns queries are not resolved.
  * With dns server support enabled, dns server responds with ERROR_REFUSED
  * indicating that the DNS server refuses to provide whatever data client is

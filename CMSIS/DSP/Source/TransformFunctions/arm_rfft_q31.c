@@ -32,7 +32,7 @@
  * Internal functions prototypes
  * -------------------------------------------------------------------- */
 
-void arm_split_rfft_q31(
+ARM_DSP_ATTRIBUTE void arm_split_rfft_q31(
         q31_t * pSrc,
         uint32_t fftLen,
   const q31_t * pATable,
@@ -40,7 +40,7 @@ void arm_split_rfft_q31(
         q31_t * pDst,
         uint32_t modifier);
 
-void arm_split_rifft_q31(
+ARM_DSP_ATTRIBUTE void arm_split_rifft_q31(
         q31_t * pSrc,
         uint32_t fftLen,
   const q31_t * pATable,
@@ -58,7 +58,6 @@ void arm_split_rifft_q31(
   @param[in]     S     points to an instance of the Q31 RFFT/RIFFT structure
   @param[in]     pSrc  points to input buffer (Source buffer is modified by this function)
   @param[out]    pDst  points to output buffer
-  @return        none
 
   @par           Input an output formats
                    Internally input is downscaled by 2 for every stage to avoid saturations inside CFFT/CIFFT process.
@@ -103,7 +102,7 @@ void arm_split_rifft_q31(
                    
  */
 
-void arm_rfft_q31(
+ARM_DSP_ATTRIBUTE void arm_rfft_q31(
   const arm_rfft_instance_q31 * S,
         q31_t * pSrc,
         q31_t * pDst)
@@ -151,7 +150,6 @@ void arm_rfft_q31(
   @param[in]     pBTable   points to twiddle Coef B buffer
   @param[out]    pDst      points to output buffer
   @param[in]     modifier  twiddle coefficient modifier that supports different size FFTs with the same twiddle factor table
-  @return        none
  */
 
 #if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE)
@@ -159,14 +157,8 @@ void arm_rfft_q31(
 #include "arm_helium_utils.h"
 #include "arm_vec_fft.h"
 
-#if defined(__CMSIS_GCC_H)
 
-#define MVE_CMPLX_MULT_FX_AxB_S32(A,B)          vqdmladhxq_s32(vqdmlsdhq_s32((__typeof(A))vuninitializedq_s32(), A, B), A, B)
-#define MVE_CMPLX_MULT_FX_AxConjB_S32(A,B)      vqdmladhq_s32(vqdmlsdhxq_s32((__typeof(A))vuninitializedq_s32(), A, B), A, B)
-
-#endif 
-
-void arm_split_rfft_q31(
+ARM_DSP_ATTRIBUTE void arm_split_rfft_q31(
     q31_t       *pSrc,
     uint32_t     fftLen,
     const q31_t       *pATable,
@@ -201,12 +193,9 @@ void arm_split_rfft_q31(
         q31x4_t         in2 = vldrwq_gather_shifted_offset_s32(pSrc, offset);
         q31x4_t         coefA = vldrwq_gather_shifted_offset_s32(pCoefAb, offsetCoef);
         q31x4_t         coefB = vldrwq_gather_shifted_offset_s32(pCoefBb, offsetCoef);
-#if defined(__CMSIS_GCC_H)
-        q31x4_t         out = vhaddq_s32(MVE_CMPLX_MULT_FX_AxB_S32(in1, coefA),MVE_CMPLX_MULT_FX_AxConjB_S32(coefB, in2));
-#else
+
         q31x4_t         out = vhaddq_s32(MVE_CMPLX_MULT_FX_AxB(in1, coefA, q31x4_t),
                                          MVE_CMPLX_MULT_FX_AxConjB(coefB, in2, q31x4_t));
-#endif
         vst1q(pOut1, out);
         pOut1 += 4;
 
@@ -224,7 +213,7 @@ void arm_split_rfft_q31(
     pDst[1] = 0;
 }
 #else
-void arm_split_rfft_q31(
+ARM_DSP_ATTRIBUTE void arm_split_rfft_q31(
         q31_t * pSrc,
         uint32_t fftLen,
   const q31_t * pATable,
@@ -319,12 +308,11 @@ void arm_split_rfft_q31(
   @param[in]     pBTable   points to twiddle Coef B buffer
   @param[out]    pDst      points to output buffer
   @param[in]     modifier  twiddle coefficient modifier that supports different size FFTs with the same twiddle factor table
-  @return        none
  */
 
 #if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE)
 
-void arm_split_rifft_q31(
+ARM_DSP_ATTRIBUTE void arm_split_rifft_q31(
         q31_t * pSrc,
         uint32_t fftLen,
   const q31_t * pATable,
@@ -360,13 +348,9 @@ void arm_split_rifft_q31(
         q31x4_t         coefB = vldrwq_gather_shifted_offset_s32(pCoefBb, offsetCoef);
 
         /* can we avoid the conjugate here ? */
-#if defined(__CMSIS_GCC_H)
-        q31x4_t         out = vhaddq_s32(MVE_CMPLX_MULT_FX_AxConjB_S32(in1, coefA),
-                                     vmulq_s32(conj, MVE_CMPLX_MULT_FX_AxB_S32(in2, coefB)));
-#else
         q31x4_t         out = vhaddq_s32(MVE_CMPLX_MULT_FX_AxConjB(in1, coefA, q31x4_t),
                                          vmulq_s32(conj, MVE_CMPLX_MULT_FX_AxB(in2, coefB, q31x4_t)));
-#endif
+
         vst1q_s32(pDst, out);
         pDst += 4;
 
@@ -378,7 +362,7 @@ void arm_split_rifft_q31(
     }
 }
 #else
-void arm_split_rifft_q31(
+ARM_DSP_ATTRIBUTE void arm_split_rifft_q31(
         q31_t * pSrc,
         uint32_t fftLen,
   const q31_t * pATable,

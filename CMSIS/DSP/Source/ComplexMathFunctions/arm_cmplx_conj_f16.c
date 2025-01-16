@@ -44,12 +44,11 @@
   @param[in]     pSrc        points to the input vector
   @param[out]    pDst        points to the output vector
   @param[in]     numSamples  number of samples in each vector
-  @return        none
  */
 
 #if defined(ARM_MATH_MVE_FLOAT16) && !defined(ARM_MATH_AUTOVECTORIZE)
 
-void arm_cmplx_conj_f16(
+ARM_DSP_ATTRIBUTE void arm_cmplx_conj_f16(
     const float16_t * pSrc,
     float16_t * pDst,
     uint32_t numSamples)
@@ -99,7 +98,7 @@ void arm_cmplx_conj_f16(
 }
 
 #else
-void arm_cmplx_conj_f16(
+ARM_DSP_ATTRIBUTE void arm_cmplx_conj_f16(
   const float16_t * pSrc,
         float16_t * pDst,
         uint32_t numSamples)

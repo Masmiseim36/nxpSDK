@@ -1,6 +1,5 @@
 /*
  * Copyright 2021 NXP
- * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -44,7 +43,7 @@
 #endif /* PM_RESC_GROUP_ARRAY_SIZE */
 
 #ifndef PM_RESC_MASK_ARRAY_SIZE
-#define PM_RESC_MASK_ARRAY_SIZE ((PM_CONSTRAINT_COUNT) / 32 + 1)
+#define PM_RESC_MASK_ARRAY_SIZE ((PM_CONSTRAINT_COUNT) / 32U + 1U)
 #endif /* PM_RESC_MASK_ARRAY_SIZE */
 
 #define PM_RESOURCE_OFF          (0U)
@@ -61,7 +60,7 @@
 #define PM_FULL_ON_COUNTER_MASK      (0xC0U)
 
 #ifndef PM_ENCODE_RESC
-#define PM_ENCODE_RESC(opMode, rescShift) ((((uint32_t)(opMode)) << 8UL) | (rescShift))
+#define PM_ENCODE_RESC(opMode, rescShift) ((((uint32_t)(opMode)) << 8UL) | (uint32_t)(rescShift))
 #endif /* PM_ENCODE_RESC */
 
 #ifndef PM_DECODE_RESC

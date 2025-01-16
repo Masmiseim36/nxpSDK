@@ -51,7 +51,6 @@ extern "C" {
 #define BT_HCI_VS_FW_VAR_FW_LOADER              0x0003
 #define BT_HCI_VS_FW_VAR_RESCUE_IMG             0x0004
 #define BT_HCI_OP_VS_READ_VERSION_INFO		BT_OP(BT_OGF_VS, 0x0001)
-STRUCT_PACKED_PRE
 struct bt_hci_rp_vs_read_version_info {
 	uint8_t  status;
 	uint16_t hw_platform;
@@ -60,41 +59,36 @@ struct bt_hci_rp_vs_read_version_info {
 	uint8_t  fw_version;
 	uint16_t fw_revision;
 	uint32_t fw_build;
-} STRUCT_PACKED_POST;
+} __packed;
 
 #define BT_HCI_OP_VS_READ_SUPPORTED_COMMANDS	BT_OP(BT_OGF_VS, 0x0002)
-STRUCT_PACKED_PRE
 struct bt_hci_rp_vs_read_supported_commands {
 	uint8_t  status;
 	uint8_t  commands[64];
-} STRUCT_PACKED_POST;
+} __packed;
 
 #define BT_HCI_OP_VS_READ_SUPPORTED_FEATURES	BT_OP(BT_OGF_VS, 0x0003)
-STRUCT_PACKED_PRE
 struct bt_hci_rp_vs_read_supported_features {
 	uint8_t  status;
 	uint8_t  features[8];
-} STRUCT_PACKED_POST;
+} __packed;
 
 #define BT_HCI_OP_VS_SET_EVENT_MASK             BT_OP(BT_OGF_VS, 0x0004)
-STRUCT_PACKED_PRE
 struct bt_hci_cp_vs_set_event_mask {
 	uint8_t  event_mask[8];
-} STRUCT_PACKED_POST;
+} __packed;
 
 #define BT_HCI_VS_RESET_SOFT                    0x00
 #define BT_HCI_VS_RESET_HARD                    0x01
 #define BT_HCI_OP_VS_RESET                      BT_OP(BT_OGF_VS, 0x0005)
-STRUCT_PACKED_PRE
 struct bt_hci_cp_vs_reset {
 	uint8_t  type;
-} STRUCT_PACKED_POST;
+} __packed;
 
 #define BT_HCI_OP_VS_WRITE_BD_ADDR              BT_OP(BT_OGF_VS, 0x0006)
-STRUCT_PACKED_PRE
 struct bt_hci_cp_vs_write_bd_addr {
 	bt_addr_t bdaddr;
-} STRUCT_PACKED_POST;
+} __packed;
 
 #define BT_HCI_VS_TRACE_DISABLED                0x00
 #define BT_HCI_VS_TRACE_ENABLED                 0x01
@@ -102,143 +96,125 @@ struct bt_hci_cp_vs_write_bd_addr {
 #define BT_HCI_VS_TRACE_HCI_EVTS                0x00
 #define BT_HCI_VS_TRACE_VDC                     0x01
 #define BT_HCI_OP_VS_SET_TRACE_ENABLE           BT_OP(BT_OGF_VS, 0x0007)
-STRUCT_PACKED_PRE
 struct bt_hci_cp_vs_set_trace_enable {
 	uint8_t  enable;
 	uint8_t  type;
-} STRUCT_PACKED_POST;
+} __packed;
 
 #define BT_HCI_OP_VS_READ_BUILD_INFO            BT_OP(BT_OGF_VS, 0x0008)
-STRUCT_PACKED_PRE
 struct bt_hci_rp_vs_read_build_info {
 	uint8_t  status;
 	uint8_t  info[0];
-} STRUCT_PACKED_POST;
+} __packed;
 
-STRUCT_PACKED_PRE
 struct bt_hci_vs_static_addr {
 	bt_addr_t bdaddr;
 	uint8_t      ir[16];
-} STRUCT_PACKED_POST;
+} __packed;
 
 #define BT_HCI_OP_VS_READ_STATIC_ADDRS          BT_OP(BT_OGF_VS, 0x0009)
-STRUCT_PACKED_PRE
 struct bt_hci_rp_vs_read_static_addrs {
 	uint8_t   status;
 	uint8_t   num_addrs;
 	struct bt_hci_vs_static_addr a[0];
-} STRUCT_PACKED_POST;
+} __packed;
 
 #define BT_HCI_OP_VS_READ_KEY_HIERARCHY_ROOTS   BT_OP(BT_OGF_VS, 0x000a)
-STRUCT_PACKED_PRE
 struct bt_hci_rp_vs_read_key_hierarchy_roots {
 	uint8_t  status;
 	uint8_t  ir[16];
 	uint8_t  er[16];
-} STRUCT_PACKED_POST;
+} __packed;
 
 #define BT_HCI_OP_VS_READ_CHIP_TEMP             BT_OP(BT_OGF_VS, 0x000b)
-STRUCT_PACKED_PRE
 struct bt_hci_rp_vs_read_chip_temp {
 	uint8_t  status;
 	int8_t  temps;
-} STRUCT_PACKED_POST;
+} __packed;
 
-STRUCT_PACKED_PRE
 struct bt_hci_vs_cmd {
 	uint16_t vendor_id;
 	uint16_t opcode_base;
-} STRUCT_PACKED_POST;
+} __packed;
 
 #define BT_HCI_VS_VID_ANDROID                   0x0001
 #define BT_HCI_VS_VID_MICROSOFT                 0x0002
 #define BT_HCI_OP_VS_READ_HOST_STACK_CMDS       BT_OP(BT_OGF_VS, 0x000c)
-STRUCT_PACKED_PRE
 struct bt_hci_rp_vs_read_host_stack_cmds {
 	uint8_t   status;
 	uint8_t   num_cmds;
 	struct bt_hci_vs_cmd c[0];
-} STRUCT_PACKED_POST;
+} __packed;
 
 #define BT_HCI_VS_SCAN_REQ_REPORTS_DISABLED     0x00
 #define BT_HCI_VS_SCAN_REQ_REPORTS_ENABLED      0x01
 #define BT_HCI_OP_VS_SET_SCAN_REQ_REPORTS       BT_OP(BT_OGF_VS, 0x000d)
-STRUCT_PACKED_PRE
 struct bt_hci_cp_vs_set_scan_req_reports {
 	uint8_t  enable;
-} STRUCT_PACKED_POST;
+} __packed;
 
 #define BT_HCI_VS_LL_HANDLE_TYPE_ADV       0x00
 #define BT_HCI_VS_LL_HANDLE_TYPE_SCAN      0x01
 #define BT_HCI_VS_LL_HANDLE_TYPE_CONN      0x02
 #define BT_HCI_VS_LL_TX_POWER_LEVEL_NO_PREF     0x7F
 #define BT_HCI_OP_VS_WRITE_TX_POWER_LEVEL       BT_OP(BT_OGF_VS, 0x000e)
-STRUCT_PACKED_PRE
 struct bt_hci_cp_vs_write_tx_power_level {
 	uint8_t  handle_type;
 	uint16_t handle;
 	int8_t  tx_power_level;
-} STRUCT_PACKED_POST;
-STRUCT_PACKED_PRE
+} __packed;
 struct bt_hci_rp_vs_write_tx_power_level {
 	uint8_t  status;
 	uint8_t  handle_type;
 	uint16_t handle;
 	int8_t  selected_tx_power;
-} STRUCT_PACKED_POST;
+} __packed;
 
 #define BT_HCI_OP_VS_READ_TX_POWER_LEVEL        BT_OP(BT_OGF_VS, 0x000f)
-STRUCT_PACKED_PRE
 struct bt_hci_cp_vs_read_tx_power_level {
 	uint8_t  handle_type;
 	uint16_t handle;
-} STRUCT_PACKED_POST;
-STRUCT_PACKED_PRE
+} __packed;
 struct bt_hci_rp_vs_read_tx_power_level {
 	uint8_t  status;
 	uint8_t  handle_type;
 	uint16_t handle;
 	int8_t  tx_power_level;
-} STRUCT_PACKED_POST;
+} __packed;
 
 #define BT_HCI_OP_VS_READ_USB_TRANSPORT_MODE    BT_OP(BT_OGF_VS, 0x0010)
-STRUCT_PACKED_PRE
 struct bt_hci_rp_vs_read_usb_transport_mode {
 	uint8_t  status;
 	uint8_t  num_supported_modes;
 	uint8_t  supported_mode[0];
-} STRUCT_PACKED_POST;
+} __packed;
 
 #define BT_HCI_VS_USB_H2_MODE                  0x00
 #define BT_HCI_VS_USB_H4_MODE                  0x01
 
 #define BT_HCI_OP_VS_SET_USB_TRANSPORT_MODE    BT_OP(BT_OGF_VS, 0x0011)
-STRUCT_PACKED_PRE
 struct bt_hci_cp_vs_set_usb_transport_mode {
 	uint8_t  mode;
-} STRUCT_PACKED_POST;
+} __packed;
 
 #define BT_HCI_OP_VS_SET_MIN_NUM_USED_CHANS    BT_OP(BT_OGF_VS, 0x0012)
-STRUCT_PACKED_PRE
 struct bt_hci_cp_vs_set_min_num_used_chans {
 	uint16_t handle;
 	uint8_t  phys;
 	uint8_t  min_used_chans;
-} STRUCT_PACKED_POST;
+} __packed;
 
 /* Events */
 
-STRUCT_PACKED_PRE
 struct bt_hci_evt_vs {
 	uint8_t  subevent;
-} STRUCT_PACKED_POST;
+} __packed;
 
 #define BT_HCI_EVT_VS_FATAL_ERROR              0x02
 
 #define BT_HCI_EVT_VS_ERROR_DATA_TYPE_STACK_FRAME   0x01
 #define BT_HCI_EVT_VS_ERROR_DATA_TYPE_CTRL_ASSERT   0x02
 #define BT_HCI_EVT_VS_ERROR_DATA_TYPE_TRACE         0x03
-STRUCT_PACKED_PRE
 struct bt_hci_vs_fata_error_cpu_data_cortex_m {
 	uint32_t a1;
 	uint32_t a2;
@@ -247,26 +223,23 @@ struct bt_hci_vs_fata_error_cpu_data_cortex_m {
 	uint32_t ip;
 	uint32_t lr;
 	uint32_t xpsr;
-} STRUCT_PACKED_POST;
+} __packed;
 #define BT_HCI_EVT_VS_ERROR_CPU_TYPE_CORTEX_M  0x01
-STRUCT_PACKED_PRE
 struct bt_hci_vs_fatal_error_stack_frame {
 	uint32_t reason;
 	uint8_t cpu_type;
 	uint8_t cpu_data[0];
-} STRUCT_PACKED_POST;
+} __packed;
 
-STRUCT_PACKED_PRE
 struct bt_hci_evt_vs_fatal_error_trace_data {
 	uint64_t pc;
 	uint8_t err_info[0];
-} STRUCT_PACKED_POST;
+} __packed;
 
-STRUCT_PACKED_PRE
 struct bt_hci_evt_vs_fatal_error {
 	uint8_t type;
 	uint8_t data[0];
-} STRUCT_PACKED_POST;
+} __packed;
 
 #define BT_HCI_VS_TRACE_LMP_TX                 0x01
 #define BT_HCI_VS_TRACE_LMP_RX                 0x02
@@ -274,28 +247,24 @@ struct bt_hci_evt_vs_fatal_error {
 #define BT_HCI_VS_TRACE_LLCP_RX                0x04
 #define BT_HCI_VS_TRACE_LE_CONN_IND            0x05
 #define BT_HCI_EVT_VS_TRACE_INFO               0x03
-STRUCT_PACKED_PRE
 struct bt_hci_evt_vs_trace_info {
 	uint8_t  type;
 	uint8_t  data[0];
-} STRUCT_PACKED_POST;
+} __packed;
 
 #define BT_HCI_EVT_VS_SCAN_REQ_RX              0x04
-STRUCT_PACKED_PRE
 struct bt_hci_evt_vs_scan_req_rx {
 	bt_addr_le_t addr;
 	int8_t         rssi;
-} STRUCT_PACKED_POST;
+} __packed;
 
-STRUCT_PACKED_PRE
 struct bt_hci_le_iq_sample16 {
 	int16_t i;
 	int16_t q;
-} STRUCT_PACKED_POST;
+} __packed;
 
 #define BT_HCI_EVT_VS_LE_CONNECTIONLESS_IQ_REPORT 0x5
 #define BT_HCI_VS_LE_CTE_REPORT_NO_VALID_SAMPLE   0x8000
-STRUCT_PACKED_PRE
 struct bt_hci_evt_vs_le_connectionless_iq_report {
 	uint16_t sync_handle;
 	uint8_t chan_idx;
@@ -307,10 +276,9 @@ struct bt_hci_evt_vs_le_connectionless_iq_report {
 	uint16_t per_evt_counter;
 	uint8_t sample_count;
 	struct bt_hci_le_iq_sample16 sample[0];
-} STRUCT_PACKED_POST;
+} __packed;
 
 #define BT_HCI_EVT_VS_LE_CONNECTION_IQ_REPORT 0x6
-STRUCT_PACKED_PRE
 struct bt_hci_evt_vs_le_connection_iq_report {
 	uint16_t conn_handle;
 	uint8_t rx_phy;
@@ -323,7 +291,7 @@ struct bt_hci_evt_vs_le_connection_iq_report {
 	uint16_t conn_evt_counter;
 	uint8_t sample_count;
 	struct bt_hci_le_iq_sample16 sample[0];
-} STRUCT_PACKED_POST;
+} __packed;
 
 /* Event mask bits */
 
@@ -344,13 +312,11 @@ struct bt_hci_evt_vs_le_connection_iq_report {
 #define BT_HCI_OP_VS_MESH                      BT_OP(BT_OGF_VS, 0x0042)
 #define BT_HCI_MESH_EVT_PREFIX                 0xF0
 
-STRUCT_PACKED_PRE
 struct bt_hci_cp_mesh {
 	uint8_t         opcode;
-} STRUCT_PACKED_POST;
+} __packed;
 
 #define BT_HCI_OC_MESH_GET_OPTS                0x00
-STRUCT_PACKED_PRE
 struct bt_hci_rp_mesh_get_opts {
 	uint8_t      status;
 	uint8_t      opcode;
@@ -364,33 +330,29 @@ struct bt_hci_rp_mesh_get_opts {
 	uint8_t      max_tx_window;
 	uint8_t      evt_prefix_len;
 	uint8_t      evt_prefix;
-} STRUCT_PACKED_POST;
+} __packed;
 
 #define BT_HCI_MESH_PATTERN_LEN_MAX            0x0f
 
 #define BT_HCI_OC_MESH_SET_SCAN_FILTER         0x01
-STRUCT_PACKED_PRE
 struct bt_hci_mesh_pattern {
 	uint8_t pattern_len;
 	uint8_t pattern[0];
-} STRUCT_PACKED_POST;
+} __packed;
 
-STRUCT_PACKED_PRE
 struct bt_hci_cp_mesh_set_scan_filter {
 	uint8_t      scan_filter;
 	uint8_t      filter_dup;
 	uint8_t      num_patterns;
 	uint8_t      patterns[0];
-} STRUCT_PACKED_POST;
-STRUCT_PACKED_PRE
+} __packed;
 struct bt_hci_rp_mesh_set_scan_filter {
 	uint8_t      status;
 	uint8_t      opcode;
 	uint8_t      scan_filter;
-} STRUCT_PACKED_POST;
+} __packed;
 
 #define BT_HCI_OC_MESH_ADVERTISE               0x02
-STRUCT_PACKED_PRE
 struct bt_hci_cp_mesh_advertise {
 	uint8_t      adv_slot;
 	uint8_t      own_addr_type;
@@ -406,16 +368,14 @@ struct bt_hci_cp_mesh_advertise {
 	uint8_t      scan_filter;
 	uint8_t      data_len;
 	uint8_t      data[31];
-} STRUCT_PACKED_POST;
-STRUCT_PACKED_PRE
+} __packed;
 struct bt_hci_rp_mesh_advertise {
 	uint8_t      status;
 	uint8_t      opcode;
 	uint8_t      adv_slot;
-} STRUCT_PACKED_POST;
+} __packed;
 
 #define BT_HCI_OC_MESH_ADVERTISE_TIMED         0x03
-STRUCT_PACKED_PRE
 struct bt_hci_cp_mesh_advertise_timed {
 	uint8_t      adv_slot;
 	uint8_t      own_addr_type;
@@ -429,54 +389,46 @@ struct bt_hci_cp_mesh_advertise_timed {
 	uint16_t     tx_window;
 	uint8_t      data_len;
 	uint8_t      data[31];
-} STRUCT_PACKED_POST;
-STRUCT_PACKED_PRE
+} __packed;
 struct bt_hci_rp_mesh_advertise_timed {
 	uint8_t      status;
 	uint8_t      opcode;
 	uint8_t      adv_slot;
-} STRUCT_PACKED_POST;
+} __packed;
 
 #define BT_HCI_OC_MESH_ADVERTISE_CANCEL        0x04
-STRUCT_PACKED_PRE
 struct bt_hci_cp_mesh_advertise_cancel {
 	uint8_t      adv_slot;
-} STRUCT_PACKED_POST;
-STRUCT_PACKED_PRE
+} __packed;
 struct bt_hci_rp_mesh_advertise_cancel {
 	uint8_t      status;
 	uint8_t      opcode;
 	uint8_t      adv_slot;
-} STRUCT_PACKED_POST;
+} __packed;
 
 #define BT_HCI_OC_MESH_SET_SCANNING            0x05
-STRUCT_PACKED_PRE
 struct bt_hci_cp_mesh_set_scanning {
 	uint8_t      enable;
 	uint8_t      ch_map;
 	uint8_t      scan_filter;
-} STRUCT_PACKED_POST;
-STRUCT_PACKED_PRE
+} __packed;
 struct bt_hci_rp_mesh_set_scanning {
 	uint8_t      status;
 	uint8_t      opcode;
-} STRUCT_PACKED_POST;
+} __packed;
 
 /* Events */
-STRUCT_PACKED_PRE
 struct bt_hci_evt_mesh {
 	uint8_t  prefix;
 	uint8_t  subevent;
-} STRUCT_PACKED_POST;
+} __packed;
 
 #define BT_HCI_EVT_MESH_ADV_COMPLETE           0x00
-STRUCT_PACKED_PRE
 struct bt_hci_evt_mesh_adv_complete {
 	uint8_t         adv_slot;
-} STRUCT_PACKED_POST;
+} __packed;
 
 #define BT_HCI_EVT_MESH_SCANNING_REPORT        0x01
-STRUCT_PACKED_PRE
 struct bt_hci_evt_mesh_scan_report {
 	bt_addr_le_t addr;
 	uint8_t         chan;
@@ -484,12 +436,11 @@ struct bt_hci_evt_mesh_scan_report {
 	uint32_t        instant;
 	uint8_t         data_len;
 	uint8_t         data[0];
-} STRUCT_PACKED_POST;
-STRUCT_PACKED_PRE
+} __packed;
 struct bt_hci_evt_mesh_scanning_report {
 	uint8_t num_reports;
 	uint8_t reports[0];
-} STRUCT_PACKED_POST;
+} __packed;
 
 #ifdef __cplusplus
 }

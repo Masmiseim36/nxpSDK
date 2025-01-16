@@ -56,14 +56,13 @@
   @param[in]     pSrc       points to input vector.
   @param[out]    pDst       points to output vector.
   @param[in]     blockSize  number of samples in each vector.
-  @return        none
  */
 
 #if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)
 
 #include "arm_helium_utils.h"
 
-void arm_negate_f32(
+ARM_DSP_ATTRIBUTE void arm_negate_f32(
   const float32_t * pSrc,
         float32_t * pDst,
         uint32_t blockSize)
@@ -105,7 +104,7 @@ void arm_negate_f32(
 }
 
 #else
-void arm_negate_f32(
+ARM_DSP_ATTRIBUTE void arm_negate_f32(
   const float32_t * pSrc,
         float32_t * pDst,
         uint32_t blockSize)

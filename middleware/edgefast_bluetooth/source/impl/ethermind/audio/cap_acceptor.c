@@ -6,31 +6,24 @@
 
 #if (defined(CONFIG_BT_CAP_ACCEPTOR) && (CONFIG_BT_CAP_ACCEPTOR > 0))
 
-#include <sys/check.h>
+#include <stdbool.h>
+#include <stddef.h>
+#include <stdint.h>
+
+#include <porting.h>
 #include <bluetooth/gatt.h>
 #include <bluetooth/audio/tbs.h>
 #include <bluetooth/audio/csip.h>
+#include <bluetooth/conn.h>
+#include <bluetooth/uuid.h>
+#include <sys/check.h>
+#include <sys/util_macro.h>
+
 #include "cap_internal.h"
 
 #define BT_DBG_ENABLED IS_ENABLED(CONFIG_BT_DEBUG_CAP)
 #define LOG_MODULE_NAME bt_cap
 #include "fsl_component_log.h"
-
-#ifndef LOG_DBG
-#define LOG_DBG BT_DBG
-#endif
-
-#ifndef LOG_ERR
-#define LOG_ERR BT_ERR
-#endif
-
-#ifndef LOG_HEXDUMP_DBG
-#define LOG_HEXDUMP_DBG BT_HEXDUMP_DBG
-#endif
-
-#ifndef LOG_WRN
-#define LOG_WRN BT_WARN
-#endif
 
 #if (defined(CONFIG_BT_CAP_ACCEPTOR_SET_MEMBER) && (CONFIG_BT_CAP_ACCEPTOR_SET_MEMBER > 0))
 

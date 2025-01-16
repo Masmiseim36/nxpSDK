@@ -5,17 +5,15 @@
 **                          MIMXRT595SFFOC_cm33
 **
 **     Compiler:            Keil ARM C/C++ Compiler
-**     Reference manual:    iMXRT500RM Rev.0, 01/2021
+**     Reference manual:    iMXRT500RM Rev.1, 07/2022
 **     Version:             rev. 5.0, 2021-07-28
-**     Build:               b210730
+**     Build:               b241125
 **
 **     Abstract:
 **         Linker file for the Keil ARM C/C++ Compiler
 **
 **     Copyright 2016 Freescale Semiconductor, Inc.
-**     Copyright 2016-2021 NXP
-**     All rights reserved.
-**
+**     Copyright 2016-2024 NXP
 **     SPDX-License-Identifier: BSD-3-Clause
 **
 **     http:                 www.nxp.com
@@ -31,7 +29,7 @@
 #if (defined(__stack_size__))
   #define Stack_Size                   __stack_size__
 #else
-  #define Stack_Size                   0x1000
+  #define Stack_Size                   0x0400
 #endif
 
 #if (defined(__heap_size__))

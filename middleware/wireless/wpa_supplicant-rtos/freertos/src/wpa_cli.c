@@ -51,13 +51,13 @@ void test_hlr_cli(int argc, char **argv)
 }
 #endif
 
+#if CONFIG_HOSTAPD
 static struct cli_command wpa_cli[] = {
 //    {"wpa_cli", "<standard wpa cli options>", test_wpa_cli},
-#if CONFIG_HOSTAPD
 //    {"hostapd_cli", "<standard hostapd cli options>", test_hostapd_cli},
     {"wlan-hlr-cli", "<standard hlr cli options>", test_hlr_cli},
-#endif
 };
+#endif
 
 #if CONFIG_HOSTAPD
 extern int hlr_cli_init(void);
@@ -66,7 +66,9 @@ extern int hlr_cli_deinit(void);
 
 int wpa_cli_init(void)
 {
+#if CONFIG_HOSTAPD
     unsigned int i;
+
     for (i = 0; i < sizeof(wpa_cli) / sizeof(struct cli_command); i++)
     {
         if (cli_register_command(&wpa_cli[i]) != 0)
@@ -75,7 +77,6 @@ int wpa_cli_init(void)
         }
     }
 
-#if CONFIG_HOSTAPD
     return hlr_cli_init();
 #else
     return WM_SUCCESS;
@@ -84,6 +85,7 @@ int wpa_cli_init(void)
 
 int wpa_cli_deinit(void)
 {
+#if CONFIG_HOSTAPD
     unsigned int i;
 
     for (i = 0; i < sizeof(wpa_cli) / sizeof(struct cli_command); i++)
@@ -94,7 +96,6 @@ int wpa_cli_deinit(void)
         }
     }
 
-#if CONFIG_HOSTAPD
     return hlr_cli_deinit();
 #else
     return WM_SUCCESS;

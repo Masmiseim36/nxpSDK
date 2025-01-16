@@ -2,7 +2,23 @@
 @page middleware_log Middleware Change Log
 
 @section USB USB stack for MCUXpresso SDK
-  The current version of USB stack is 2.10.0.
+  The current version of USB stack is 2.11.0.
+  - 2.11.0
+    - Improvement:
+      - Support USB for KConfig Configuration System and CMake Build System.
+      - Enable cache maintentance on i.MX RT 4-digit series and mimxrt700evk.
+      - Split usb audio cases for LPC54xxx series with others.
+  - 2.10.1
+    - Improvement:
+      - Host cdc acm
+        - Add link state detection in DHCP and DNS processing.
+        - Unify and simplify application processing log.
+        - Add static IP supporting.
+      - Update USB device controller drivers to support Zephyr.
+      - Upadte default USB OR register settings to pass USB certification/compliance. 
+    - Bug fixes:
+      - update device echi driver to fix the issue that EPCOMPLERE bit is not cleared after transfer is canceled.
+      - update usb host hub class to fix the wrong hub descriptor class code.
   - 2.10.0
     - New features and demos:
       - Implement the USB Host ECM.

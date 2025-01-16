@@ -1,6 +1,5 @@
 /*
- * Copyright 2020, 2022 NXP
- * All rights reserved.
+ * Copyright 2020, 2022, 2024 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -84,22 +83,38 @@
 
 /* @brief I3C device bus characteristics */
 #define I3C_BUS_DEV_BCR_DEV_MASTER     0x01U
+
+/*!< 0 - I3C Target, 1 - I3C Controller capable, Other - Reserved. */
 #define I3C_BUS_DEV_BCR_DEV_ROLE_SHIFT 6U
 #define I3C_BUS_DEV_BCR_DEV_ROLE_MASK  0xC0U
 #define I3C_BUS_DEV_BCR_DEV_ROLE(x)    (((x) << I3C_BUS_DEV_BCR_DEV_ROLE_SHIFT) & I3C_BUS_DEV_BCR_DEV_ROLE_MASK)
 
+/*!< Supports optional advanced capabilities */
 #define I3C_BUS_DEV_BCR_MODE_SHIFT 5U
 #define I3C_BUS_DEV_BCR_MODE_MASK  0x20U
 #define I3C_BUS_DEV_BCR_MODE(x)    (((x) << I3C_BUS_DEV_BCR_MODE_SHIFT) & I3C_BUS_DEV_BCR_MODE_MASK)
 
+/*!< Virtual Target, exposes other downstream Device(s) or not. */
+#define I3C_BUS_DEV_BCR_VIRTUAL_TARGET_SHIFT 4U
+#define I3C_BUS_DEV_BCR_VIRTUAL_TARGET_MASK  0x10U
+#define I3C_BUS_DEV_BCR_VIRTUAL_TARGET(x)    (((x) << I3C_BUS_DEV_BCR_VIRTUAL_TARGET_SHIFT) & I3C_BUS_DEV_BCR_VIRTUAL_TARGET_MASK)
+
+/*!< 0 - No data bytes follow IBI, 1 - There's one or more bytes. */
+#define I3C_BUS_DEV_BCR_OFFLINE_CAP_SHIFT 3U
+#define I3C_BUS_DEV_BCR_OFFLINE_CAP_TARGET_MASK  0x08U
+#define I3C_BUS_DEV_BCR_OFFLINE_CAP_TARGET(x)    (((x) << I3C_BUS_DEV_BCR_OFFLINE_CAP_SHIFT) & I3C_BUS_DEV_BCR_OFFLINE_CAP_TARGET_MASK)
+
+/*!< 0 - No data bytes follow IBI, 1 - There's one or more bytes. */
 #define I3C_BUS_DEV_BCR_IBI_PAYLOAD_SHIFT 2U
 #define I3C_BUS_DEV_BCR_IBI_PAYLOAD_MASK  0x04U
 #define I3C_BUS_DEV_BCR_IBI_PAYLOAD(x)    (((x) << I3C_BUS_DEV_BCR_IBI_PAYLOAD_SHIFT) & I3C_BUS_DEV_BCR_IBI_PAYLOAD_MASK)
 
+/*!< 0 - No capable, 1 - Capable. */
 #define I3C_BUS_DEV_BCR_IBI_REQUEST_SHIFT 1U
 #define I3C_BUS_DEV_BCR_IBI_REQUEST_MASK  0x02U
 #define I3C_BUS_DEV_BCR_IBI_REQUEST(x)    (((x) << I3C_BUS_DEV_BCR_IBI_REQUEST_SHIFT) & I3C_BUS_DEV_BCR_IBI_REQUEST_MASK)
 
+/*!< 0 - No limitation, 1 - Limitation. */
 #define I3C_BUS_DEV_BCR_SPEED_LIMIT_SHIFT 0U
 #define I3C_BUS_DEV_BCR_SPEED_LIMIT_MASK  0x01U
 #define I3C_BUS_DEV_BCR_SPEED_LIMIT(x)    (((x) << I3C_BUS_DEV_BCR_SPEED_LIMIT_SHIFT) & I3C_BUS_DEV_BCR_SPEED_LIMIT_MASK)
@@ -228,6 +243,7 @@ struct _i3c_device_control_info
     i3c_device_hw_ops_t *funcs; /*!< Pointer to I3C device hardware operation API sets.*/
     void *resource;             /*!< Pointer to keep I3C device specific resource.*/
     bool isSecondary;           /*!< Specify if the device is secondary device.*/
+    bool isHotJoin;             /*!< Enable hot-join if it's secondary master.*/
     void *privateData;          /*!< Pointer to keep I3C device private data.*/
 };
 
@@ -585,6 +601,7 @@ status_t I3C_BusI3CSlaveCreate(i3c_device_t *i3cDev,
 
 /*!
  * @brief I3C slave device request Hot Join on bus.
+ * @deprecated Do not use this function. Must request hot-join before slave is enabled.
  *
  * @param i3cDev Pointer to device structure creating as I3C device.
  */

@@ -138,7 +138,6 @@ static void i3c_master_ibi_callback(I3C_Type *base,
             }
             else
             {
-                /* Handle ibi data*/
                 void *ibiData = malloc(handle->ibiPayloadSize);
                 (void)memcpy(ibiData, (void *)handle->ibiBuff, handle->ibiPayloadSize);
                 (void)I3C_BusMasterHandleIBI(master, handle->ibiAddress, ibiData, handle->ibiPayloadSize);
@@ -150,6 +149,10 @@ static void i3c_master_ibi_callback(I3C_Type *base,
             if (ibiState == kI3C_IbiAckNackPending)
             {
                 I3C_MasterEmitIBIResponse(base, kI3C_IbiRespAck);
+                while ((I3C_MasterGetStatusFlags(base) & (uint32_t)kI3C_MasterControlDoneFlag) == 0U)
+                {
+                }
+                I3C_MasterClearStatusFlags(base, (uint32_t)kI3C_MasterControlDoneFlag);
             }
             else
             {
@@ -158,7 +161,19 @@ static void i3c_master_ibi_callback(I3C_Type *base,
             break;
 
         case kI3C_IbiHotJoin:
-            (void)I3C_BusMasterDoDAA(master);
+            if (ibiState == kI3C_IbiAckNackPending)
+            {
+                /* Ack the hot-join request. */
+                I3C_MasterEmitIBIResponse(base, kI3C_IbiRespManual);
+                while ((I3C_MasterGetStatusFlags(base) & (uint32_t)kI3C_MasterControlDoneFlag) == 0U)
+                {
+                }
+                I3C_MasterClearStatusFlags(base, (uint32_t)kI3C_MasterControlDoneFlag);
+            }
+            else
+            {
+                (void)I3C_BusMasterDoDAA(master);
+            }
             break;
 
         default:
@@ -228,6 +243,7 @@ static status_t I3C_MasterAdapterInit(i3c_device_t *master)
     {
         masterConfig.enableMaster = kI3C_MasterCapable;
         masterConfig.enableSlave  = true;
+        masterConfig.isHotJoin    = masterControlInfo->isHotJoin;
         masterPrivate->devList    = malloc(I3C_SLAVELIST_MAX_LEN);
         masterPrivate->devCount   = 0U;
         (void)memset((void *)masterPrivate->devList, 0, I3C_SLAVELIST_MAX_LEN);
@@ -259,7 +275,7 @@ static status_t I3C_MasterAdapterInit(i3c_device_t *master)
             I3C_SlaveTransferNonBlocking(base, g_i3c_s_handle,
                                          ((uint32_t)kI3C_SlaveCompletionEvent | (uint32_t)kI3C_SlaveReceivedCCCEvent |
                                           (uint32_t)kI3C_SlaveRequestSentEvent));
-        I3C_SlaveDisableInterrupts(base, (uint32_t)kI3C_SlaveTxReadyFlag);
+        I3C_SlaveDisableInterrupts(base, (uint32_t)kI3C_SlaveTxReadyFlag | (uint32_t)kI3C_SlaveMatchedFlag);
     }
     return result;
 }
@@ -378,7 +394,7 @@ static status_t I3CMasterAdapterTransfer(I3C_Type *base,
     g_completionStatus     = kStatus_Success;
 
     /*TODO: wait for module idle */
-    if (g_transferPolling == true)
+    if (g_transferPolling)
     {
         result = I3C_MasterTransferBlocking(base, xfer);
     }
@@ -424,6 +440,7 @@ static status_t I3CMasterAdapterTransfer(I3C_Type *base,
 
     return result;
 }
+
 static status_t I3C_MasterAdapterTransmitCCC(i3c_device_t *master, i3c_ccc_cmd_t *cmd)
 {
     assert(master != NULL);
@@ -565,7 +582,7 @@ static void I3C_MasterAdapterTakeOverMasterShip(i3c_device_t *master)
                     (void)memset(newI3CDev, 0, sizeof(i3c_device_t));
 
                     newI3CDev->info.dynamicAddr = cccDev->dynamicAddr >> 1U;
-                    newI3CDev->info.bcr         = cccDev->dcr;
+                    newI3CDev->info.bcr         = cccDev->bcr;
                     newI3CDev->info.dcr         = cccDev->dcr;
                     newI3CDev->info.staticAddr  = cccDev->staticAddr >> 1U;
 

@@ -20,18 +20,16 @@
 /* VOCS opcodes */
 #define BT_VOCS_OPCODE_SET_OFFSET                  0x01
 
-STRUCT_PACKED_PRE
 struct bt_vocs_control {
 	uint8_t opcode;
 	uint8_t counter;
 	int16_t offset;
-} STRUCT_PACKED_POST;
+} __packed;
 
-STRUCT_PACKED_PRE
 struct bt_vocs_state {
 	int16_t offset;
 	uint8_t change_counter;
-} STRUCT_PACKED_POST;
+} __packed;
 
 struct bt_vocs {
 	bool client_instance;

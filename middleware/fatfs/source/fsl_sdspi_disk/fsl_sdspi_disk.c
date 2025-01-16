@@ -10,7 +10,7 @@
 #include "ffconf.h"
 /* This fatfs subcomponent is disabled by default
  * To enable it, define following macro in ffconf.h */
-#ifdef SDSPI_DISK_ENABLE
+#if defined(SDSPI_DISK_ENABLE) && (SDSPI_DISK_ENABLE == 1)
 
 #include <assert.h>
 #include <stdio.h>
@@ -96,7 +96,7 @@ DRESULT sdspi_disk_ioctl(BYTE pdrv, BYTE cmd, void* buff)
         case GET_SECTOR_SIZE:
             if (buff)
             {
-                *(uint32_t *)buff = g_card.blockSize;
+                *(WORD *)buff = g_card.blockSize;
             }
             else
             {
@@ -227,4 +227,4 @@ void sdspi_host_init(void)
     /* Saves card state. */
     g_card.host = &g_host;
 }
-#endif /* SDSPI_DISK_ENABLE */
+#endif /* defined(SDSPI_DISK_ENABLE) && (SDSPI_DISK_ENABLE == 1 */

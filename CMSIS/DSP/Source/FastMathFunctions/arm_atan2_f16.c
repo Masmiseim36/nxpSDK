@@ -113,10 +113,10 @@ __STATIC_FORCEINLINE float16_t arm_atan_f16(float16_t x)
  
   @par         Compute the Arc tangent of y/x:
                    The sign of y and x are used to determine the right quadrant
-                   and compute the right angle.
+                   and compute the right angle. Returned value is between -Pi and Pi.
 
 */
-arm_status arm_atan2_f16(float16_t y,float16_t x,float16_t *result)
+ARM_DSP_ATTRIBUTE arm_status arm_atan2_f16(float16_t y,float16_t x,float16_t *result)
 {
     if ((_Float16)x > 0.0f16)
     {
@@ -135,7 +135,7 @@ arm_status arm_atan2_f16(float16_t y,float16_t x,float16_t *result)
         }
         else
         {
-            if (signbit(y))
+            if (signbit((float)y))
             {
                *result= -(_Float16)PIF16;
             }

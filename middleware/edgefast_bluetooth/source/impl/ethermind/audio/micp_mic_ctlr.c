@@ -9,38 +9,33 @@
 
 #if (defined(CONFIG_BT_MICP_MIC_CTLR) && (CONFIG_BT_MICP_MIC_CTLR > 0))
 
-#include <zephyr/types.h>
+#include <stdbool.h>
+#include <stddef.h>
+#include <stdint.h>
+#include <string.h>
 
-#include <sys/check.h>
-
+#include <porting.h>
+#include <bluetooth/att.h>
+#include <bluetooth/audio/aics.h>
+#include <bluetooth/audio/micp.h>
 #include <bluetooth/bluetooth.h>
 #include <bluetooth/conn.h>
 #include <bluetooth/gatt.h>
-#include <bluetooth/audio/micp.h>
+#include <bluetooth/uuid.h>
+
+#include <sys/atomic.h>
+#include <sys/check.h>
+#include <sys/slist.h>
+#include <sys/util.h>
+#include <zephyr/types.h>
+
+//#include "common/bt_str.h"
 
 #include "micp_internal.h"
 
 #define BT_DBG_ENABLED IS_ENABLED(CONFIG_BT_DEBUG_MICP_MIC_CTLR)
 #define LOG_MODULE_NAME bt_micp_mic_ctlr
 #include "fsl_component_log.h"
-
-#ifndef LOG_DBG
-#define LOG_DBG BT_DBG
-#endif
-
-#ifndef LOG_ERR
-#define LOG_ERR BT_ERR
-#endif
-
-#ifndef LOG_HEXDUMP_DBG
-#define LOG_HEXDUMP_DBG BT_HEXDUMP_DBG
-#endif
-
-#ifndef LOG_WRN
-#define LOG_WRN BT_WARN
-#endif
-
-//#include "common/bt_str.h"
 
 /* Callback functions */
 static sys_slist_t micp_mic_ctlr_cbs = SYS_SLIST_STATIC_INIT(&micp_mic_ctlr_cbs);
@@ -57,7 +52,7 @@ static void micp_mic_ctlr_mute_changed(struct bt_micp_mic_ctlr *mic_ctlr, int er
 {
 	struct bt_micp_mic_ctlr_cb *listener, *next;
 
-	SYS_SLIST_FOR_EACH_CONTAINER_SAFE(&micp_mic_ctlr_cbs, listener, next, _node, struct bt_micp_mic_ctlr_cb) {
+	SYS_SLIST_FOR_EACH_CONTAINER_SAFE(&micp_mic_ctlr_cbs, listener, next, _node) {
 		if (listener->mute) {
 			listener->mute(mic_ctlr, err, mute_val);
 		}
@@ -68,7 +63,7 @@ static void micp_mic_ctlr_mute_written(struct bt_micp_mic_ctlr *mic_ctlr, int er
 {
 	struct bt_micp_mic_ctlr_cb *listener, *next;
 
-	SYS_SLIST_FOR_EACH_CONTAINER_SAFE(&micp_mic_ctlr_cbs, listener, next, _node, struct bt_micp_mic_ctlr_cb) {
+	SYS_SLIST_FOR_EACH_CONTAINER_SAFE(&micp_mic_ctlr_cbs, listener, next, _node) {
 		if (mute_val == BT_MICP_MUTE_UNMUTED) {
 			if (listener->unmute_written) {
 				listener->unmute_written(mic_ctlr, err);
@@ -85,11 +80,11 @@ static void micp_mic_ctlr_discover_complete(struct bt_micp_mic_ctlr *mic_ctlr, i
 {
 	struct bt_micp_mic_ctlr_cb *listener, *next;
 
-	SYS_SLIST_FOR_EACH_CONTAINER_SAFE(&micp_mic_ctlr_cbs, listener, next, _node, struct bt_micp_mic_ctlr_cb) {
+	SYS_SLIST_FOR_EACH_CONTAINER_SAFE(&micp_mic_ctlr_cbs, listener, next, _node) {
 		if (listener->discover) {
 			uint8_t aics_cnt = 0U;
 
-#if defined(CONFIG_BT_MICP_MIC_CTLR_AICS) && (CONFIG_BT_MICP_MIC_CTLR_AICS > 0) 
+#if defined(CONFIG_BT_MICP_MIC_CTLR_AICS) && (CONFIG_BT_MICP_MIC_CTLR_AICS > 0)
 			if (err == 0) {
 				aics_cnt = mic_ctlr->aics_inst_cnt;
 			}
@@ -186,7 +181,7 @@ static void micp_mic_ctlr_aics_state_cb(struct bt_aics *inst, int err, int8_t ga
 {
 	struct bt_micp_mic_ctlr_cb *listener, *next;
 
-	SYS_SLIST_FOR_EACH_CONTAINER_SAFE(&micp_mic_ctlr_cbs, listener, next, _node, struct bt_micp_mic_ctlr_cb) {
+	SYS_SLIST_FOR_EACH_CONTAINER_SAFE(&micp_mic_ctlr_cbs, listener, next, _node) {
 		if (listener->aics_cb.state) {
 			listener->aics_cb.state(inst, err, gain, mute, mode);
 		}
@@ -198,7 +193,7 @@ static void micp_mic_ctlr_aics_gain_setting_cb(struct bt_aics *inst, int err, ui
 {
 	struct bt_micp_mic_ctlr_cb *listener, *next;
 
-	SYS_SLIST_FOR_EACH_CONTAINER_SAFE(&micp_mic_ctlr_cbs, listener, next, _node, struct bt_micp_mic_ctlr_cb) {
+	SYS_SLIST_FOR_EACH_CONTAINER_SAFE(&micp_mic_ctlr_cbs, listener, next, _node) {
 		if (listener->aics_cb.gain_setting) {
 			listener->aics_cb.gain_setting(inst, err, units, minimum, maximum);
 		}
@@ -209,7 +204,7 @@ static void micp_mic_ctlr_aics_type_cb(struct bt_aics *inst, int err, uint8_t ty
 {
 	struct bt_micp_mic_ctlr_cb *listener, *next;
 
-	SYS_SLIST_FOR_EACH_CONTAINER_SAFE(&micp_mic_ctlr_cbs, listener, next, _node, struct bt_micp_mic_ctlr_cb) {
+	SYS_SLIST_FOR_EACH_CONTAINER_SAFE(&micp_mic_ctlr_cbs, listener, next, _node) {
 		if (listener->aics_cb.type) {
 			listener->aics_cb.type(inst, err, type);
 		}
@@ -220,7 +215,7 @@ static void micp_mic_ctlr_aics_status_cb(struct bt_aics *inst, int err, bool act
 {
 	struct bt_micp_mic_ctlr_cb *listener, *next;
 
-	SYS_SLIST_FOR_EACH_CONTAINER_SAFE(&micp_mic_ctlr_cbs, listener, next, _node, struct bt_micp_mic_ctlr_cb) {
+	SYS_SLIST_FOR_EACH_CONTAINER_SAFE(&micp_mic_ctlr_cbs, listener, next, _node) {
 		if (listener->aics_cb.status) {
 			listener->aics_cb.status(inst, err, active);
 		}
@@ -231,7 +226,7 @@ static void micp_mic_ctlr_aics_description_cb(struct bt_aics *inst, int err, cha
 {
 	struct bt_micp_mic_ctlr_cb *listener, *next;
 
-	SYS_SLIST_FOR_EACH_CONTAINER_SAFE(&micp_mic_ctlr_cbs, listener, next, _node, struct bt_micp_mic_ctlr_cb) {
+	SYS_SLIST_FOR_EACH_CONTAINER_SAFE(&micp_mic_ctlr_cbs, listener, next, _node) {
 		if (listener->aics_cb.description) {
 			listener->aics_cb.description(inst, err, description);
 		}
@@ -260,7 +255,7 @@ static void micp_mic_ctlr_aics_discover_cb(struct bt_aics *inst, int err)
 		micp_mic_ctlr_discover_complete(mic_ctlr, err);
 	}
 
-	SYS_SLIST_FOR_EACH_CONTAINER_SAFE(&micp_mic_ctlr_cbs, listener, next, _node, struct bt_micp_mic_ctlr_cb) {
+	SYS_SLIST_FOR_EACH_CONTAINER_SAFE(&micp_mic_ctlr_cbs, listener, next, _node) {
 		if (listener->aics_cb.discover) {
 			listener->aics_cb.discover(inst, err);
 		}
@@ -271,7 +266,7 @@ static void micp_mic_ctlr_aics_set_gain_cb(struct bt_aics *inst, int err)
 {
 	struct bt_micp_mic_ctlr_cb *listener, *next;
 
-	SYS_SLIST_FOR_EACH_CONTAINER_SAFE(&micp_mic_ctlr_cbs, listener, next, _node, struct bt_micp_mic_ctlr_cb) {
+	SYS_SLIST_FOR_EACH_CONTAINER_SAFE(&micp_mic_ctlr_cbs, listener, next, _node) {
 		if (listener->aics_cb.set_gain) {
 			listener->aics_cb.set_gain(inst, err);
 		}
@@ -282,7 +277,7 @@ static void micp_mic_ctlr_aics_unmute_cb(struct bt_aics *inst, int err)
 {
 	struct bt_micp_mic_ctlr_cb *listener, *next;
 
-	SYS_SLIST_FOR_EACH_CONTAINER_SAFE(&micp_mic_ctlr_cbs, listener, next, _node, struct bt_micp_mic_ctlr_cb) {
+	SYS_SLIST_FOR_EACH_CONTAINER_SAFE(&micp_mic_ctlr_cbs, listener, next, _node) {
 		if (listener->aics_cb.unmute) {
 			listener->aics_cb.unmute(inst, err);
 		}
@@ -293,7 +288,7 @@ static void micp_mic_ctlr_aics_mute_cb(struct bt_aics *inst, int err)
 {
 	struct bt_micp_mic_ctlr_cb *listener, *next;
 
-	SYS_SLIST_FOR_EACH_CONTAINER_SAFE(&micp_mic_ctlr_cbs, listener, next, _node, struct bt_micp_mic_ctlr_cb) {
+	SYS_SLIST_FOR_EACH_CONTAINER_SAFE(&micp_mic_ctlr_cbs, listener, next, _node) {
 		if (listener->aics_cb.mute) {
 			listener->aics_cb.mute(inst, err);
 		}
@@ -304,7 +299,7 @@ static void micp_mic_ctlr_aics_set_manual_mode_cb(struct bt_aics *inst, int err)
 {
 	struct bt_micp_mic_ctlr_cb *listener, *next;
 
-	SYS_SLIST_FOR_EACH_CONTAINER_SAFE(&micp_mic_ctlr_cbs, listener, next, _node, struct bt_micp_mic_ctlr_cb) {
+	SYS_SLIST_FOR_EACH_CONTAINER_SAFE(&micp_mic_ctlr_cbs, listener, next, _node) {
 		if (listener->aics_cb.set_manual_mode) {
 			listener->aics_cb.set_manual_mode(inst, err);
 		}
@@ -315,7 +310,7 @@ static void micp_mic_ctlr_aics_set_auto_mode_cb(struct bt_aics *inst, int err)
 {
 	struct bt_micp_mic_ctlr_cb *listener, *next;
 
-	SYS_SLIST_FOR_EACH_CONTAINER_SAFE(&micp_mic_ctlr_cbs, listener, next, _node, struct bt_micp_mic_ctlr_cb) {
+	SYS_SLIST_FOR_EACH_CONTAINER_SAFE(&micp_mic_ctlr_cbs, listener, next, _node) {
 		if (listener->aics_cb.set_auto_mode) {
 			listener->aics_cb.set_auto_mode(inst, err);
 		}
@@ -393,7 +388,7 @@ static uint8_t micp_discover_func(struct bt_conn *conn,
 		LOG_DBG("Discovery complete");
 		(void)memset(params, 0, sizeof(*params));
 
-#if defined(CONFIG_BT_MICP_MIC_CTLR_AICS) && (CONFIG_BT_MICP_MIC_CTLR_AICS > 0) 
+#if defined(CONFIG_BT_MICP_MIC_CTLR_AICS) && (CONFIG_BT_MICP_MIC_CTLR_AICS > 0)
 		/* Discover included services */
 		mic_ctlr->discover_params.start_handle = mic_ctlr->start_handle;
 		mic_ctlr->discover_params.end_handle = mic_ctlr->end_handle;
@@ -501,7 +496,7 @@ static void micp_mic_ctlr_reset(struct bt_micp_mic_ctlr *mic_ctlr)
 	mic_ctlr->start_handle = 0;
 	mic_ctlr->end_handle = 0;
 	mic_ctlr->mute_handle = 0;
-#if defined(CONFIG_BT_MICP_MIC_CTLR_AICS) && (CONFIG_BT_MICP_MIC_CTLR_AICS > 0) 
+#if defined(CONFIG_BT_MICP_MIC_CTLR_AICS) && (CONFIG_BT_MICP_MIC_CTLR_AICS > 0)
 	mic_ctlr->aics_inst_cnt = 0;
 #endif /* CONFIG_BT_MICP_MIC_CTLR_AICS */
 
@@ -522,15 +517,9 @@ static void disconnected(struct bt_conn *conn, uint8_t reason)
 	}
 }
 
-#if 0
 BT_CONN_CB_DEFINE(conn_callbacks) = {
 	.disconnected = disconnected,
 };
-#else
-static struct bt_conn_cb conn_callbacks = {
-	.disconnected = disconnected,
-};
-#endif
 
 int bt_micp_mic_ctlr_discover(struct bt_conn *conn, struct bt_micp_mic_ctlr **mic_ctlr_out)
 {
@@ -592,8 +581,6 @@ int bt_micp_mic_ctlr_discover(struct bt_conn *conn, struct bt_micp_mic_ctlr **mi
 	}
 #endif /* CONFIG_BT_MICP_MIC_CTLR_AICS */
 
-	bt_conn_cb_register(&conn_callbacks);
-
 	mic_ctlr->conn = bt_conn_ref(conn);
 	mic_ctlr->discover_params.func = primary_discover_func;
 	mic_ctlr->discover_params.uuid = mics_uuid;
@@ -617,7 +604,7 @@ int bt_micp_mic_ctlr_cb_register(struct bt_micp_mic_ctlr_cb *cb)
 		return -EINVAL;
 	}
 
-	SYS_SLIST_FOR_EACH_CONTAINER(&micp_mic_ctlr_cbs, tmp, _node, struct bt_micp_mic_ctlr_cb) {
+	SYS_SLIST_FOR_EACH_CONTAINER(&micp_mic_ctlr_cbs, tmp, _node) {
 		if (tmp == cb) {
 			LOG_DBG("Already registered");
 			return -EALREADY;
@@ -629,7 +616,7 @@ int bt_micp_mic_ctlr_cb_register(struct bt_micp_mic_ctlr_cb *cb)
 	return 0;
 }
 
-#if defined(CONFIG_BT_MICP_MIC_CTLR_AICS) && (CONFIG_BT_MICP_MIC_CTLR_AICS > 0) 
+#if defined(CONFIG_BT_MICP_MIC_CTLR_AICS) && (CONFIG_BT_MICP_MIC_CTLR_AICS > 0)
 int bt_micp_mic_ctlr_included_get(struct bt_micp_mic_ctlr *mic_ctlr,
 				  struct bt_micp_included *included)
 {

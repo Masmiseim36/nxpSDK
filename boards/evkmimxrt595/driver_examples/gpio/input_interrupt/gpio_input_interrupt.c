@@ -6,23 +6,16 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
+#include "app.h"
 #include "fsl_common.h"
 #include "fsl_debug_console.h"
 #include "fsl_gpio.h"
-
 #include "pin_mux.h"
-#include "clock_config.h"
+
 #include "board.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define APP_SW_PORT              0U
-#define APP_SW_PIN               10U
-#define APP_GPIO_INTA_IRQHandler GPIO_INTA_DriverIRQHandler
-#define APP_SW_IRQ               GPIO_INTA_IRQn
-#define APP_SW_CONNECTED_LEVEL   0U
-#define APP_SW_NAME              "SW2"
-
 
 /*******************************************************************************
  * Prototypes
@@ -63,9 +56,7 @@ int main(void)
     gpio_interrupt_config_t config = {kGPIO_PinIntEnableEdge, kGPIO_PinIntEnableLowOrFall};
 
     /* hardware initialiize, include IOMUX, Uart debug initialize */
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
     PRINTF("GPIO Driver example.\r\n");
 
     /* Init input switch GPIO. */

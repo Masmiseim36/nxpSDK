@@ -6,17 +6,14 @@
  */
 
 #include "fsl_debug_console.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 #include "fsl_powerquad.h"
 #include "math.h"
 
-#include "fsl_power.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_POWERQUAD POWERQUAD
 #define EXAMPLE_ASSERT_TRUE(x)            \
     if (!(x))                             \
     {                                     \
@@ -170,14 +167,7 @@ static const float s_corrOutputRef[EXAMPLE_CORR_RESULT_LEN] = {
 int main(void)
 {
     /* Board pin, clock, debug console init */
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
-
-    /* Power up PQ RAM. */
-    POWER_DisablePD(kPDRUNCFG_PPD_PQ_SRAM);
-    /* Apply power setting. */
-    POWER_ApplyPD();
+    BOARD_InitHardware();
 
     PRINTF("POWERQUAD FIR fast example started\r\n");
 

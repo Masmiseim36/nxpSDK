@@ -12,10 +12,10 @@
 
 #include <porting.h>
 #include <zephyr/types.h>
-#include "fsl_shell.h"
 #include <bluetooth/gatt.h>
 #include <bluetooth/bluetooth.h>
 #include <bluetooth/audio/cap.h>
+#include "fsl_shell.h"
 #include "shell_bt.h"
 
 static size_t ad_cap_announcement_data_add(struct bt_data data[], size_t data_size)
@@ -34,7 +34,7 @@ static size_t ad_cap_announcement_data_add(struct bt_data data[], size_t data_si
 }
 
 #if defined(CONFIG_BT_CAP_ACCEPTOR_SET_MEMBER) && (CONFIG_BT_CAP_ACCEPTOR_SET_MEMBER > 0)
-extern shell_handle_t ctx_shell;
+extern const struct shell *ctx_shell;
 static struct bt_csip_set_member_svc_inst *cap_csip_svc_inst;
 static uint8_t sirk_read_rsp = BT_CSIP_READ_SIRK_REQ_RSP_ACCEPT;
 
@@ -76,17 +76,17 @@ static struct bt_csip_set_member_cb csip_set_member_cbs = {
 	.sirk_read_req = sirk_read_req_cb,
 };
 
-static shell_status_t cmd_cap_acceptor_init(shell_handle_t sh, int32_t argc,
-				 char *argv[])
+static int cmd_cap_acceptor_init(const struct shell *sh, size_t argc,
+				 char **argv)
 {
 	struct bt_csip_set_member_register_param param = {
 		.set_size = 2,
 		.rank = 1,
 		.lockable = true,
 		/* Using the CSIS test sample SIRK */
-		.set_sirk = { 0xcd, 0xcc, 0x72, 0xdd, 0x86, 0x8c, 0xcd, 0xce,
-			      0x22, 0xfd, 0xa1, 0x21, 0x09, 0x7d, 0x7d, 0x45 },
-		.cb = &csip_set_member_cbs
+		.sirk = { 0xcd, 0xcc, 0x72, 0xdd, 0x86, 0x8c, 0xcd, 0xce,
+			  0x22, 0xfd, 0xa1, 0x21, 0x09, 0x7d, 0x7d, 0x45 },
+		.cb = &csip_set_member_cbs,
 	};
 	int err = 0;
 
@@ -99,7 +99,7 @@ static shell_status_t cmd_cap_acceptor_init(shell_handle_t sh, int32_t argc,
 			argn++;
 			if (argn == argc) {
 				shell_help(sh);
-				return kStatus_SHELL_Error;
+				return SHELL_CMD_HELP_PRINTED;
 			}
 
 			set_size = shell_strtoul(argv[argn], 0, &err);
@@ -107,14 +107,14 @@ static shell_status_t cmd_cap_acceptor_init(shell_handle_t sh, int32_t argc,
 				shell_error(sh, "Could not parse set_size: %d",
 					    err);
 
-				return kStatus_SHELL_Error;
+				return -ENOEXEC;
 			}
 
 			if (set_size > UINT8_MAX) {
 				shell_error(sh, "Invalid set_size: %lu",
 					    set_size);
 
-				return kStatus_SHELL_Error;
+				return -ENOEXEC;
 			}
 
 			param.set_size = set_size;
@@ -124,7 +124,7 @@ static shell_status_t cmd_cap_acceptor_init(shell_handle_t sh, int32_t argc,
 			argn++;
 			if (argn == argc) {
 				shell_help(sh);
-				return kStatus_SHELL_Error;
+				return SHELL_CMD_HELP_PRINTED;
 			}
 
 			rank = shell_strtoul(argv[argn], 0, &err);
@@ -132,13 +132,13 @@ static shell_status_t cmd_cap_acceptor_init(shell_handle_t sh, int32_t argc,
 				shell_error(sh, "Could not parse rank: %d",
 					    err);
 
-				return kStatus_SHELL_Error;
+				return -ENOEXEC;
 			}
 
 			if (rank > UINT8_MAX) {
 				shell_error(sh, "Invalid rank: %lu", rank);
 
-				return kStatus_SHELL_Error;
+				return -ENOEXEC;
 			}
 
 			param.rank = rank;
@@ -150,20 +150,20 @@ static shell_status_t cmd_cap_acceptor_init(shell_handle_t sh, int32_t argc,
 			argn++;
 			if (argn == argc) {
 				shell_help(sh);
-				return kStatus_SHELL_Error;
+				return SHELL_CMD_HELP_PRINTED;
 			}
 
-			len = hex2bin(argv[argn], strlen(argv[argn]),
-				      param.set_sirk, sizeof(param.set_sirk));
+			len = hex2bin(argv[argn], strlen(argv[argn]), param.sirk,
+				      sizeof(param.sirk));
 			if (len == 0) {
 				shell_error(sh, "Could not parse SIRK");
 
-				return kStatus_SHELL_Error;
+				return -ENOEXEC;
 			}
 		} else {
 			shell_help(sh);
 
-			return kStatus_SHELL_Error;
+			return SHELL_CMD_HELP_PRINTED;
 		}
 	}
 
@@ -171,21 +171,13 @@ static shell_status_t cmd_cap_acceptor_init(shell_handle_t sh, int32_t argc,
 	if (err != 0) {
 		shell_error(sh, "Could not register CAS: %d", err);
 
-		return (shell_status_t)err;
+		return err;
 	}
 
-	return kStatus_SHELL_Success;
+	return 0;
 }
 
-static shell_status_t cmd_cap_acceptor_print_sirk(shell_handle_t sh, int32_t argc,
-				       char *argv[])
-{
-	bt_csip_set_member_print_sirk(cap_csip_svc_inst);
-
-	return kStatus_SHELL_Success;
-}
-
-static shell_status_t cmd_cap_acceptor_lock(shell_handle_t sh, int32_t argc,
+static int cmd_cap_acceptor_lock(const struct shell *sh, size_t argc,
 				 char *argv[])
 {
 	int err;
@@ -194,15 +186,15 @@ static shell_status_t cmd_cap_acceptor_lock(shell_handle_t sh, int32_t argc,
 	if (err != 0) {
 		shell_error(sh, "Failed to set lock: %d", err);
 
-		return kStatus_SHELL_Error;
+		return -ENOEXEC;
 	}
 
 	shell_print(sh, "Set locked");
 
-	return kStatus_SHELL_Success;
+	return 0;
 }
 
-static shell_status_t cmd_cap_acceptor_release(shell_handle_t sh, int32_t argc,
+static int cmd_cap_acceptor_release(const struct shell *sh, size_t argc,
 				    char *argv[])
 {
 	bool force = false;
@@ -214,7 +206,7 @@ static shell_status_t cmd_cap_acceptor_release(shell_handle_t sh, int32_t argc,
 		} else {
 			shell_error(sh, "Unknown parameter: %s", argv[1]);
 
-			return kStatus_SHELL_Error;
+			return -ENOEXEC;
 		}
 	}
 
@@ -223,16 +215,68 @@ static shell_status_t cmd_cap_acceptor_release(shell_handle_t sh, int32_t argc,
 	if (err != 0) {
 		shell_error(sh, "Failed to release lock: %d", err);
 
-		return kStatus_SHELL_Error;
+		return -ENOEXEC;
 	}
 
 	shell_print(sh, "Set released");
 
-	return kStatus_SHELL_Success;
+	return 0;
 }
 
-static shell_status_t cmd_cap_acceptor_set_sirk_rsp(shell_handle_t sh, int32_t argc,
-					 char *argv[])
+static int cmd_cap_acceptor_sirk(const struct shell *sh, size_t argc, char *argv[])
+{
+	uint8_t sirk[BT_CSIP_SIRK_SIZE];
+	size_t len;
+	int err;
+
+	if (cap_csip_svc_inst == NULL) {
+		shell_error(sh, "CSIS not registered");
+
+		return -ENOEXEC;
+	}
+
+	len = hex2bin(argv[1], strlen(argv[1]), sirk, sizeof(sirk));
+	if (len != sizeof(sirk)) {
+		shell_error(sh, "Invalid SIRK Length: %zu", len);
+
+		return -ENOEXEC;
+	}
+
+	err = bt_csip_set_member_sirk(cap_csip_svc_inst, sirk);
+	if (err != 0) {
+		shell_error(sh, "Failed to set SIRK: %d", err);
+		return -ENOEXEC;
+	}
+
+	shell_print(sh, "SIRK updated");
+
+	return 0;
+}
+
+static int cmd_cap_acceptor_get_sirk(const struct shell *sh, size_t argc, char *argv[])
+{
+	uint8_t sirk[BT_CSIP_SIRK_SIZE];
+	int err;
+
+	if (cap_csip_svc_inst == NULL) {
+		shell_error(sh, "CSIS not registered");
+
+		return -ENOEXEC;
+	}
+
+	err = bt_csip_set_member_get_sirk(cap_csip_svc_inst, sirk);
+	if (err != 0) {
+		shell_error(sh, "Failed to get SIRK: %d", err);
+		return -ENOEXEC;
+	}
+
+	shell_print(sh, "SIRK");
+	shell_hexdump(sh, sirk, sizeof(sirk));
+
+	return 0;
+}
+
+static int cmd_cap_acceptor_sirk_rsp(const struct shell *sh, size_t argc, char *argv[])
 {
 	if (strcmp(argv[1], "accept") == 0) {
 		sirk_read_rsp = BT_CSIP_READ_SIRK_REQ_RSP_ACCEPT;
@@ -244,41 +288,39 @@ static shell_status_t cmd_cap_acceptor_set_sirk_rsp(shell_handle_t sh, int32_t a
 		sirk_read_rsp = BT_CSIP_READ_SIRK_REQ_RSP_OOB_ONLY;
 	} else {
 		shell_error(sh, "Unknown parameter: %s", argv[1]);
-		return kStatus_SHELL_Error;
+		return -ENOEXEC;
 	}
 
-	return kStatus_SHELL_Success;
+	return 0;
 }
 
-static shell_status_t cmd_cap_acceptor(shell_handle_t sh, int32_t argc, char *argv[])
+static int cmd_cap_acceptor(const struct shell *sh, size_t argc, char **argv)
 {
 	shell_error(sh, "%s unknown parameter: %s", argv[0], argv[1]);
 
-	return kStatus_SHELL_Error;
+	return -ENOEXEC;
 }
 
-SHELL_STATIC_SUBCMD_SET_CREATE(cap_acceptor_cmds,
+SHELL_STATIC_SUBCMD_SET_CREATE(
+	cap_acceptor_cmds,
 	SHELL_CMD_ARG(init, NULL,
 		      "Initialize the service and register callbacks "
 		      "[size <int>] [rank <int>] [not-lockable] [sirk <data>]",
 		      cmd_cap_acceptor_init, 1, 4),
-	SHELL_CMD_ARG(lock, NULL,
-		      "Lock the set",
-		      cmd_cap_acceptor_lock, 1, 0),
-	SHELL_CMD_ARG(release, NULL,
-		      "Release the set [force]",
-		      cmd_cap_acceptor_release, 1, 1),
-	SHELL_CMD_ARG(print_sirk, NULL,
-		      "Print the currently used SIRK",
-		      cmd_cap_acceptor_print_sirk, 1, 0),
-	SHELL_CMD_ARG(set_sirk_rsp, NULL,
+	SHELL_CMD_ARG(lock, NULL, "Lock the set", cmd_cap_acceptor_lock, 1, 0),
+	SHELL_CMD_ARG(release, NULL, "Release the set [force]", cmd_cap_acceptor_release, 1, 1),
+	SHELL_CMD_ARG(sirk, NULL, "Set the currently used SIRK <sirk>", cmd_cap_acceptor_sirk, 2,
+		      0),
+	SHELL_CMD_ARG(get_sirk, NULL, "Get the currently used SIRK", cmd_cap_acceptor_get_sirk, 1,
+		      0),
+	SHELL_CMD_ARG(sirk_rsp, NULL,
 		      "Set the response used in SIRK requests "
 		      "<accept, accept_enc, reject, oob>",
-		      cmd_cap_acceptor_set_sirk_rsp, 2, 0),
-		      SHELL_SUBCMD_SET_END
+		      cmd_cap_acceptor_sirk_rsp, 2, 0),
+	SHELL_SUBCMD_SET_END
 );
 
-SHELL_CMD_REGISTER(cap_acceptor, cap_acceptor_cmds, "Bluetooth CAP acceptor shell commands",
+SHELL_CMD_ARG_REGISTER(cap_acceptor, &cap_acceptor_cmds, "Bluetooth CAP acceptor shell commands",
 		       cmd_cap_acceptor, 1, 1);
 
 void bt_ShellCapAcceptorInit(shell_handle_t shell)

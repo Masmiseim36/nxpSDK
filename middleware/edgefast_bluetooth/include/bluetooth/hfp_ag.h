@@ -3,7 +3,7 @@
  */
 
 /*
- * Copyright (c) 2021 NXP Corporation
+ * Copyright (c) 2021, 2024 NXP Corporation
  *
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -22,13 +22,13 @@ extern "C" {
 #endif
 
 /** @brief bt hfp ag volume type */
-typedef enum _hf_volume_type_t
+typedef enum _hf_ag_volume_type_t
 {
     /*speaker */
-    hf_volume_type_speaker, 
+    hf_ag_volume_type_speaker, 
     /* mic */
-    hf_volume_type_mic, 
-} hf_volume_type_t;
+    hf_ag_volume_type_mic, 
+} hf_ag_volume_type_t;
 
 /** @brief bt hf call status */
 typedef enum _hfp_ag_call_status_t
@@ -72,13 +72,13 @@ typedef struct _hfp_ag_get_config
 typedef enum
 {
     /*no  call setup in progress */
-    HFP_AG_CALL_SETUP_STATUS_IDLE              = 0, 
+    HFP_AG_CALL_SETUP_STATUS_IDLE              = 0,
     /* incoming call setup in progress */
-    HFP_AG_CALL_SETUP_STATUS_INCOMING          = 1, 
+    HFP_AG_CALL_SETUP_STATUS_INCOMING          = 1,
     /*outgoing call setup in dialing state */
-    HFP_AG_CALL_SETUP_STATUS_OUTGOING_DIALING  = 2, 
+    HFP_AG_CALL_SETUP_STATUS_OUTGOING_DIALING  = 2,
     /*outgoing call setup in alerting state */
-    HFP_AG_CALL_SETUP_STATUS_OUTGOING_ALERTING = 3, 
+    HFP_AG_CALL_SETUP_STATUS_OUTGOING_ALERTING = 3,
 } hfp_ag_call_setup_status_t;
 /** @brief bt hf call status */
 typedef struct _hfp_ag_cind_t
@@ -122,6 +122,36 @@ struct bt_hfp_ag_cb
      */
     void (*disconnected)(struct bt_hfp_ag *hfp_ag);
 
+    /** HF SCO/eSCO connected Callback
+     *
+     *  If this callback is provided it will be called whenever the
+     *  SCO/eSCO connection completes.
+     *
+     *  @param ag HFP AG object.
+     *  @param sco_conn SCO/eSCO Connection object.
+     */
+    void (*sco_connected)(struct bt_hfp_ag *ag, struct bt_conn *sco_conn);
+
+    /** HF SCO/eSCO disconnected Callback
+     *
+     *  If this callback is provided it will be called whenever the
+     *  SCO/eSCO connection gets disconnected.
+     *
+     *  @param ag HFP AG object.
+     *  @param sco_conn SCO/eSCO Connection object.
+     */
+    void (*sco_disconnected)(struct bt_hfp_ag *ag);
+
+    /** Get config after connection.
+     *
+     *  This callback is used to get config #hfp_ag_get_config
+     *  It is same as the second parameter of #bt_hfp_ag_connect.
+     *
+     *  @param hfp_ag  bt hfp ag Connection object.
+     *  @param config  get the config from upper layer.
+     */
+    void (*get_config)(struct bt_hfp_ag *hfp_ag, hfp_ag_get_config **config);
+
     /** AG volume_control Callback
      *
      *  This callback provides volume_control indicator value to the application
@@ -130,7 +160,7 @@ struct bt_hfp_ag_cb
      *  @param type the hfp volue type, for speaker or mic.
      *  @param value service indicator value received from the AG.
      */
-    void (*volume_control)(struct bt_hfp_ag *hfp_ag, hf_volume_type_t type, int value);
+    void (*volume_control)(struct bt_hfp_ag *hfp_ag, hf_ag_volume_type_t type, int value);
     /** AG remote support feature Callback
      *
      *  This callback provides the remote hfp unit supported feature
@@ -161,23 +191,23 @@ struct bt_hfp_ag_cb
      *  @param value  call information.
      */
     void (*dial)(struct bt_hfp_ag *hfp_ag, char *number);
-    
+
     /** AG remote voice recognition activation Callback
      *
      *  This callback provides call indicator voice recognition activation of peer HF to the application
      *
      *  @param hfp_ag  bt hfp ag Connection object.
      *  @param value  voice recognition activation information.
-     */    
+     */
      void (*brva)(struct bt_hfp_ag *hfp_ag, uint32_t value);
-     
+
      /** AG remote noise reduction and echo canceling Callback
      *
      *  This callback provides call indicator voice recognition activation of peer HF to the application
      *
      *  @param hfp_ag  bt hfp ag Connection object.
      *  @param value  Noise Reduction and Echo Canceling information.
-     */    
+     */
      void (*nrec)(struct bt_hfp_ag *hfp_ag, uint32_t value);
      /** AG remote codec negotiate Callback
      *
@@ -185,10 +215,27 @@ struct bt_hfp_ag_cb
      *
      *  @param hfp_ag  bt hfp ag Connection object.
      *  @param value  codec index of peer HF.
-     */    
-     void (*codec_negotiate)(struct bt_hfp_ag *hfp_ag, uint32_t value);     
-     
-    
+     */
+     void (*codec_negotiate)(struct bt_hfp_ag *hfp_ag, uint32_t value);
+
+    /** AG connection request callback
+     *
+     *  This callback is provided it will be called whenever the
+     *  codec conenction request is triggered by HF, when "AT+BCC" AT
+     *  command received.
+     *
+     *  @param ag HFP AG object.
+     */
+    void (*codec_connect_req)(struct bt_hfp_ag *hfp_ag);
+
+    /** HF supported codec Ids callback
+     *
+     *  If this callback is provided it will be called whenever the
+     *  supported codec ids are updated.
+     *
+     *  @param ag HFP AG object.
+     */
+    void (*codec)(struct bt_hfp_ag *ag, uint32_t ids);
      /** AG multiparty call status indicator Callback
      *
      *  This callback provides multiparty call status indicator Callback of peer HF to the application
@@ -196,8 +243,48 @@ struct bt_hfp_ag_cb
      *  @param hfp_ag  bt hfp ag Connection object.
      *  @param option  Multiparty call option.
      *  @param index   Multiparty call index.
-     */    
+     */
      void (*chld)(struct bt_hfp_ag *hfp_ag, uint8_t option, uint8_t index);
+     
+     /** AG receive Standard list current calls command callback
+     *
+     *  If this callback is provided it will be called whenever the
+     *  AT command `AT+CLCC` is received.
+     *
+     *  @param hfp_ag  bt hfp ag Connection object.
+     */
+     void (*clcc)(struct bt_hfp_ag *ag);
+     
+    /** AG memory dialing request Callback
+     *
+     *  If this callback is provided it will be called whenever a
+     *  new call is requested with memory dialing from HFP unit
+     *
+     *  @param ag HFP AG object.
+     *  @param location AG memory call location
+     */
+    void (*memory_dial)(struct bt_hfp_ag *ag, uint32_t location);
+    
+     /** AG last dialing request Callback
+     *
+     *  If this callback is provided it will be called whenever a
+     *  new call is requested with last dialing from HFP unit side.
+     *
+     *  @param ag HFP AG object.
+     */
+    void (*last_dial)(struct bt_hfp_ag *ag);
+    
+   
+     /** AG received a DTMF Code callback
+     *
+     *  If this callback is provided it will be called whenever the
+     *  AT command 'AT+VTS=<code>' is received from HFP unit side.
+     *
+     *  @param ag HFP AG object.
+     *  @param dtmf_code A specific DTMF code
+     */
+     void (*recv_dtmf_codes)(struct bt_hfp_ag *ag, char dtmf_code);
+     
     /** AG unkown at Callback
      *
      *  This callback provides AG unkown at  value to the application, the unkown at command could be handled by application
@@ -209,7 +296,7 @@ struct bt_hfp_ag_cb
     void (*unkown_at)(struct bt_hfp_ag *hfp_ag, char *value, uint32_t length);
 };
 
-/** @brief hfp_ag discover callback function 
+/** @brief hfp_ag discover callback function
  *
  *  @param conn   Pointer to bt_conn structure.
  *  @param channel the server channel of hfp ag
@@ -217,7 +304,7 @@ struct bt_hfp_ag_cb
 
 typedef int (*bt_hfp_ag_discover_callback)(struct bt_conn *conn, uint8_t channel);
 
-/** BT HFP AG Initialize 
+/** BT HFP AG Initialize
  *
  *  This function called to initialize bt hfp ag
  *
@@ -227,7 +314,7 @@ typedef int (*bt_hfp_ag_discover_callback)(struct bt_conn *conn, uint8_t channel
 
 int bt_hfp_ag_init(void);
 
-/** BT HFP AG Deinitialize 
+/** BT HFP AG Deinitialize
  *
  *  This function called to initialize bt hfp ag
  *
@@ -236,6 +323,17 @@ int bt_hfp_ag_init(void);
  */
 
 int bt_hfp_ag_deinit(void);
+
+/** @brief hfp ag register callback
+ *
+ *  #bt_hfp_ag_connect can register callback too.
+ *
+ *  @param cb  bt hfp ag callback
+ *
+ *  @return 0 in case of success or otherwise in case
+ *  of error.
+ */
+int bt_hfp_ag_register_cb(struct bt_hfp_ag_cb *cb);
 
 /** @brief hfp ag Connect.
  *
@@ -248,7 +346,7 @@ int bt_hfp_ag_deinit(void);
  *
  *  @param conn Pointer to bt_conn structure.
  *  @param config  bt hfp ag congigure
- *  @param cb  bt hfp ag congigure
+ *  @param cb  bt hfp ag callback
  *  @param phfp_ag  Pointer to pointer of bt hfp ag Connection object
  *
  *  @return 0 in case of success or otherwise in case
@@ -274,7 +372,7 @@ int bt_hfp_ag_connect(struct bt_conn *conn,
  */
 int bt_hfp_ag_disconnect(struct bt_hfp_ag *hfp_ag);
 
-/** @brief hfp ag discover 
+/** @brief hfp ag discover
  *
  *  This function is to be called after the conn parameter is obtained by
  *  performing a GAP procedure. The API is to be used to establish hfp ag
@@ -288,7 +386,7 @@ int bt_hfp_ag_disconnect(struct bt_hfp_ag *hfp_ag);
  */
 int bt_hfp_ag_discover(struct bt_conn *conn, bt_hfp_ag_discover_callback discoverCallback);
 
-/** @brief hfp ag open audio for codec 
+/** @brief hfp ag open audio for codec
  *
  *  This function is to open audio codec for hfp funciton
  *
@@ -297,7 +395,7 @@ int bt_hfp_ag_discover(struct bt_conn *conn, bt_hfp_ag_discover_callback discove
  */
 void bt_hfp_ag_open_audio(struct bt_hfp_ag *hfp_ag, uint8_t codec);
 
-/** @brief hfp ag close audio for codec 
+/** @brief hfp ag close audio for codec
  *
  *  This function is to close audio codec for hfp funciton
  *
@@ -315,7 +413,7 @@ void bt_hfp_ag_close_audio(struct bt_hfp_ag *hfp_ag);
  *
  *  This function is to be configure hfp ag supported features.
  *  If the function is not called, will use default supported features
- *  
+ *
  *  @param phfp_ag  pointer to bt hfp ag connection object
  *  @param supported_features  suppported features of hfp ag
  *
@@ -324,9 +422,9 @@ void bt_hfp_ag_close_audio(struct bt_hfp_ag *hfp_ag);
  */
 int bt_hfp_ag_register_supp_features(struct bt_hfp_ag *hfp_ag, uint32_t supported_features);
 
- /** @brief hfp ag to get peer hfp hp support feautes 
+ /** @brief hfp ag to get peer hfp hp support feautes
   *
-  *  This function is to be called to get hfp hp support feautes 
+  *  This function is to be called to get hfp hp support feautes
   *
   *  @param phfp_ag  pointer to bt hfp ag connection object
   *
@@ -338,7 +436,7 @@ uint32_t bt_hfp_ag_get_peer_supp_features(struct bt_hfp_ag *hfp_ag);
  *
  *  This function is to be configure hfp ag cind setting supported features.
  *  If the function is not called, will use default supported features
- *  
+ *
  *  @param phfp_ag  pointer to bt hfp ag connection object
  *  @param cind     pointer to  hfp ag cwind
  *
@@ -347,9 +445,9 @@ uint32_t bt_hfp_ag_get_peer_supp_features(struct bt_hfp_ag *hfp_ag);
  */
 int bt_hfp_ag_register_cind_features(struct bt_hfp_ag *hfp_ag, char *cind);
 
-/** @brief hfp ag to disable voice recognition 
+/** @brief hfp ag to disable voice recognition
   *
-  *  This function is o disabl voice recognition 
+  *  This function is o disabl voice recognition
   *
   *  @param phfp_ag  pointer to bt hfp ag connection object
   *
@@ -358,7 +456,7 @@ int bt_hfp_ag_register_cind_features(struct bt_hfp_ag *hfp_ag, char *cind);
   */
 int bt_hfp_ag_send_disable_voice_recognition(struct bt_hfp_ag *hfp_ag);
 
-/** @brief hfp ag to enable voice recognition 
+/** @brief hfp ag to enable voice recognition
  *
  *  This function is used to enable voice recognition
  *
@@ -369,9 +467,9 @@ int bt_hfp_ag_send_disable_voice_recognition(struct bt_hfp_ag *hfp_ag);
  */
 int bt_hfp_ag_send_enable_voice_recognition(struct bt_hfp_ag *hfp_ag);
 
-/** @brief hfp ag to disable noise reduction and echo canceling 
+/** @brief hfp ag to disable noise reduction and echo canceling
  *
- *  This function is o noise reduction and echo canceling  
+ *  This function is o noise reduction and echo canceling
  *
  *  @param phfp_ag  pointer to bt hfp ag connection object
  *
@@ -380,9 +478,9 @@ int bt_hfp_ag_send_enable_voice_recognition(struct bt_hfp_ag *hfp_ag);
  */
 int bt_hfp_ag_send_disable_voice_ecnr(struct bt_hfp_ag *hfp_ag);
 
-/** @brief hfp ag to enable noise reduction and echo canceling 
+/** @brief hfp ag to enable noise reduction and echo canceling
  *
- *  This function is to enable noise reduction and echo canceling 
+ *  This function is to enable noise reduction and echo canceling
  *
  *  @param phfp_ag  pointer to bt hfp ag connection object
  *
@@ -414,7 +512,7 @@ int bt_hfp_ag_set_cops(struct bt_hfp_ag *hfp_ag, char *name);
  *  @return 0 in case of success or otherwise in case
  *  of error.
  */
-int  bt_hfp_ag_set_volume_control(struct bt_hfp_ag *hfp_ag, hf_volume_type_t type, int value);
+int  bt_hfp_ag_set_volume_control(struct bt_hfp_ag *hfp_ag, hf_ag_volume_type_t type, int value);
 
 /** @brief hfp ag to set inband ring tone support
  *
@@ -581,6 +679,67 @@ int bt_hfp_ag_send_ccwa_indicator(struct bt_hfp_ag *hfp_ag, char *number);
  *  of error.
  */
 int bt_hfp_ag_codec_selector(struct bt_hfp_ag *hfp_ag, uint8_t value);
+
+
+/** @brief hfp ag set current call list to hfp hp
+ *
+ *  This function is hfp ag set odec selector to hfp hp for codec negotiation
+ *
+ *  @param phfp_ag  pointer to bt hfp ag connection object
+ *  @param call_list  point to current call list
+ *
+ *  @return 0 in case of success or otherwise in case
+ *  of error.
+ */
+int bt_hfp_ag_set_clcc(struct bt_hfp_ag *hfp_ag, char *call_list);
+
+/** @brief hfp ag set call hold status indicator to hfp hp
+ *
+ *  This function is hfp ag set call hold status indicator to hfp hp
+ *
+ *  @param phfp_ag  pointer to bt hfp ag connection object
+ *  @param value    value of call hold status indicator
+ *
+ *  @return 0 in case of success or otherwise in case
+ *  of error.
+ */
+int bt_hfp_ag_send_callheld_indicator(struct bt_hfp_ag *hfp_ag, uint8_t value);
+
+/** @brief hfp ag get supported indicators for HFP AG
+ *
+ *  This function is user set supported indicators for HFP AG
+ *
+ *  @param phfp_ag  pointer to bt hfp ag connection object
+ *  @param cind_setting   point to value of supported indicators
+ *
+ *  @return 0 in case of success or otherwise in case
+ *  of error.
+ */
+int bt_hfp_ag_get_cind_setting(struct bt_hfp_ag *hfp_ag, hfp_ag_cind_t *cind_setting);
+
+/** @brief hfp ag set supported indicators for HFP AG
+ *
+ *  This function is set supported indicators for HFP AG
+ *
+ *  @param phfp_ag  pointer to bt hfp ag connection object
+ *  @param cind_setting   point to value of supported indicators
+ *
+ *  @return 0 in case of success or otherwise in case
+ *  of error.
+ */
+int bt_hfp_ag_set_cind_setting(struct bt_hfp_ag *hfp_ag, hfp_ag_cind_t *cind_setting);
+
+/** @brief hfp ag send the standard calling line identification notification unsolicited result code.
+ *
+ *  This function is send the standard calling line identification notification unsolicited result code to hf
+ *
+ *  @param phfp_ag  pointer to bt hfp ag connection object
+ *  @param clip_result   point to standard calling line identification result
+ *
+ *  @return 0 in case of success or otherwise in case
+ *  of error.
+ */
+int  bt_hfp_ag_send_clip(struct bt_hfp_ag *hfp_ag, uint8_t *clip_result);
 
 /** @brief hfp ag set unknown at command response to hfp fp
  *

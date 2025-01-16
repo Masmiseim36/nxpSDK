@@ -126,10 +126,9 @@
   @param[in]     S             points to an instance of the floating-point DCT4/IDCT4 structure
   @param[in]     pState        points to state buffer
   @param[in,out] pInlineBuffer points to the in-place input and output buffer
-  @return        none
  */
 
-void arm_dct4_f32(
+ARM_DSP_ATTRIBUTE void arm_dct4_f32(
   const arm_dct4_instance_f32 * S,
         float32_t * pState,
         float32_t * pInlineBuffer)

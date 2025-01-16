@@ -50,13 +50,12 @@
   @param[in]     qa       first quaternion
   @param[in]     qb       second quaternion
   @param[out]    qr       product of two quaternions
-  @return        none
  */
 
 #if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)
 
 #include "arm_helium_utils.h"
-void arm_quaternion_product_single_f32(const float32_t *qa, 
+ARM_DSP_ATTRIBUTE void arm_quaternion_product_single_f32(const float32_t *qa, 
     const float32_t *qb, 
     float32_t *qr)
 {
@@ -91,7 +90,7 @@ void arm_quaternion_product_single_f32(const float32_t *qa,
 }
 
 #else
-void arm_quaternion_product_single_f32(const float32_t *qa, 
+ARM_DSP_ATTRIBUTE void arm_quaternion_product_single_f32(const float32_t *qa, 
     const float32_t *qb, 
     float32_t *qr)
 {

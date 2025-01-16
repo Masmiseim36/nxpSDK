@@ -3,10 +3,9 @@
  *
  * @brief This file contains header file for CSI processing functions
  *
- * Copyright 2023 NXP
+ * Copyright 2023-2024 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
- *
  */
 
 /************************************************************************
@@ -124,6 +123,11 @@ int findFirstPath(hal_pktinfo_t *pktinfo, unsigned int *pdpOutBuffer, int maxIdx
 
 void dumpRawComplex(hal_pktinfo_t *pktinfo, unsigned int *fftBuffer, int peakIdx, unsigned int *destArray);
 
-#endif
+int determine_tdde_firstpath(hal_pktinfo_t *pktinfo,
+                             hal_wls_packet_params_t *packetparams,
+                             hal_tddestruct_t *tdde_ptr,
+                             unsigned int *procBuffer,
+                             char MIN_comb);
 
+#endif
 #endif /* CONFIG_WLS_CSI_PROC */

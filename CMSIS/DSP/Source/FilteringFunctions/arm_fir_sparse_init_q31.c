@@ -46,7 +46,6 @@
   @param[in]     pTapDelay  points to the array of offset times
   @param[in]     maxDelay   maximum offset time supported
   @param[in]     blockSize  number of samples that will be processed per block
-  @return        none
 
   @par           Details
                    <code>pCoeffs</code> holds the filter coefficients and has length <code>numTaps</code>.
@@ -56,7 +55,7 @@
                    <code>blockSize</code> is the number of words processed by <code>arm_fir_sparse_q31()</code> function.
  */
 
-void arm_fir_sparse_init_q31(
+ARM_DSP_ATTRIBUTE void arm_fir_sparse_init_q31(
         arm_fir_sparse_instance_q31 * S,
         uint16_t numTaps,
   const q31_t * pCoeffs,

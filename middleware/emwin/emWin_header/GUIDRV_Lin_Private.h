@@ -9,7 +9,7 @@
 *                                                                    *
 **********************************************************************
 
-** emWin V6.38 - Graphical user interface for embedded applications **
+** emWin V6.46 - Graphical user interface for embedded applications **
 All  Intellectual Property rights  in the Software belongs to  SEGGER.
 emWin is protected by  international copyright laws.  Knowledge of the
 source code may not be used to write a similar product.  This file may
@@ -34,7 +34,7 @@ License model:            emWin License Agreement, dated August 20th 2011 and Am
 Licensed platform:        NXP's ARM 7/9, Cortex-M0, M3, M4, M7, A7, M33
 ----------------------------------------------------------------------
 Support and Update Agreement (SUA)
-SUA period:               2011-08-19 - 2024-09-02
+SUA period:               2011-08-19 - 2025-09-02
 Contact to extend SUA:    sales@segger.com
 ----------------------------------------------------------------------
 File        : GUIDRV_Lin_Private.h
@@ -144,6 +144,18 @@ extern "C" {     /* Make sure we have C-declarations in C++ programs */
   #define WRITE_MEM32P(p, Data)            LCD_WRITE_MEM32P(p, Data)
 #endif
 
+//
+// Private functions
+//
+#define LCD_DEVFUNC_SET_THRESHOLD (LCD_DEVFUNC_INIT_PRIVATE + 1)
+
+//
+// Set to 1 if FillRect should be used in DrawHLine and DrawVLine
+//
+#ifndef   GUIDRV_LIN_USE_FILLRECT
+  #define GUIDRV_LIN_USE_FILLRECT 0
+#endif
+
 #define OFF2PTR08(VRAMAddr, Off)     (U8  *)((U8 *)VRAMAddr + (Off     ))
 #define OFF2PTR16(VRAMAddr, Off)     (U16 *)((U8 *)VRAMAddr + (Off << 1))
 #define OFF2PTR32(VRAMAddr, Off)     (U32 *)((U8 *)VRAMAddr + (Off << 2))
@@ -172,6 +184,7 @@ extern "C" {     /* Make sure we have C-declarations in C++ programs */
   int xPos, yPos;                                             \
   int Alpha;                                                  \
   int IsVisible;                                              \
+  int Threshold;                                              \
   void (* pfFillRect)  (int /* LayerIndex */,                 \
                         int /* x0 */,                         \
                         int /* y0 */,                         \
@@ -207,7 +220,8 @@ extern "C" {     /* Make sure we have C-declarations in C++ programs */
                         int /* ySize */);                     \
   void (* pfSetPos)    (int /* LayerIndex */,                 \
                         int /* xPos */,                       \
-                        int /* yPos */);
+                        int /* yPos */);                      \
+  void (* pfRefresh)   (int /* LayerIndex */);
 
 #ifndef   PRIVATE_CONTEXT_MEMBERS
   #define PRIVATE_CONTEXT_MEMBERS
@@ -253,6 +267,8 @@ extern "C" {     /* Make sure we have C-declarations in C++ programs */
     return (void (*)(void))_ShowBuffer;                                             \
   case LCD_DEVFUNC_SETFUNC:                                                         \
     return (void (*)(void))_SetDevFunc;                                             \
+  case LCD_DEVFUNC_REFRESH:                                                         \
+    return (void (*)(void))_Refresh;                                                \
   case LCD_DEVFUNC_FILLRECT:                                                        \
     return (void (*)(void))((DRIVER_CONTEXT *)(*ppDevice)->u.pContext)->pfFillRect; \
   case LCD_DEVFUNC_DRAWBMP_1BPP:                                                    \
@@ -260,7 +276,9 @@ extern "C" {     /* Make sure we have C-declarations in C++ programs */
   case LCD_DEVFUNC_DRAWBMP_8BPP:                                                    \
     return (void (*)(void))((DRIVER_CONTEXT *)(*ppDevice)->u.pContext)->pfDrawBMP8; \
   case LCD_DEVFUNC_COPYRECT:                                                        \
-    return (void (*)(void))((DRIVER_CONTEXT *)(*ppDevice)->u.pContext)->pfCopyRect;
+    return (void (*)(void))((DRIVER_CONTEXT *)(*ppDevice)->u.pContext)->pfCopyRect; \
+  case LCD_DEVFUNC_SETTHRESHOLD:                                                    \
+    return (void (*)(void))GUIDRV_Lin_SetThreshold;
 
 //
 // Definition of default function management for _GetDevProp()
@@ -273,7 +291,9 @@ extern "C" {     /* Make sure we have C-declarations in C++ programs */
   case LCD_DEVCAP_VXSIZE:               \
     return pContext->vxSize;            \
   case LCD_DEVCAP_VYSIZE:               \
-    return pContext->vySize;
+    return pContext->vySize;            \
+  case LCD_DEVCAP_THRESHOLD:            \
+    return pContext->Threshold;
 
 //
 // Definition of default function management for _GetDevData()
@@ -307,6 +327,9 @@ extern "C" {     /* Make sure we have C-declarations in C++ programs */
       break;                                                                                                                                                                 \
     case LCD_DEVFUNC_COPYRECT:                                                                                                                                               \
       pContext->pfCopyRect   = (void (*)(int LayerIndex, int x0, int y0, int x1, int y1, int xSize, int ySize))pFunc;                                                        \
+      break;                                                                                                                                                                 \
+    case LCD_DEVFUNC_REFRESH:                                                                                                                                                \
+      pContext->pfRefresh    = (void (*)(int LayerIndex))pFunc;                                                                                                              \
       break;                                                                                                                                                                 \
     case LCD_DEVFUNC_SETPOS:                                                                                                                                                 \
       pContext->pfSetPos     = (void (*)(int LayerIndex, int xPos, int yPos))pFunc;                                                                                          \
@@ -358,6 +381,8 @@ typedef struct {
 *
 **********************************************************************
 */
+#if !defined(GUIDRV_LIN_EXCLUDE_CODE)
+
 static I32 _GetDevProp(GUI_DEVICE * pDevice, int Index);
 
 /*********************************************************************
@@ -371,9 +396,21 @@ static I32 _GetDevProp(GUI_DEVICE * pDevice, int Index);
 *   0 on success, 1 on error
 */
 static int _InitOnce(GUI_DEVICE * pDevice) {
+  void (* pFunc)(GUI_DEVICE *);
+
   if (pDevice->u.pContext == NULL) {
+    //
+    // Allocate memory for context
+    //
     pDevice->u.pContext = GUI_ALLOC_GetFixedBlock(sizeof(DRIVER_CONTEXT));
     GUI__memset((U8 *)pDevice->u.pContext, 0, sizeof(DRIVER_CONTEXT));
+    //
+    // Optional extended initialization of driver variants
+    //
+    pFunc = (void (*)(GUI_DEVICE *))pDevice->pDeviceAPI->pfGetDevFunc(&pDevice, LCD_DEVFUNC_INIT_PRIVATE);
+    if (pFunc) {
+      pFunc(pDevice);
+    }
   }
   return pDevice->u.pContext ? 0 : 1;
 }
@@ -705,6 +742,23 @@ static void _ShowBuffer(GUI_DEVICE * pDevice, int Index) {
 
 /*********************************************************************
 *
+*       _Refresh
+*/
+static void _Refresh(GUI_DEVICE * pDevice) {
+  #if (!defined(WIN32))
+    DRIVER_CONTEXT * pContext;
+    
+    pContext = (DRIVER_CONTEXT *)pDevice->u.pContext;
+    if (pContext->pfRefresh) {
+      pContext->pfRefresh(pDevice->LayerIndex);
+    }
+  #else
+    GUI_USE_PARA(pDevice);
+  #endif
+}
+
+/*********************************************************************
+*
 *       _SetOrg
 *
 * Purpose:
@@ -757,6 +811,8 @@ static void _SetOrg(GUI_DEVICE * pDevice, int x, int y) {
       Data.xPos = pContext->vySize - pContext->ySize  - y;
       Data.yPos = pContext->vxSize - pContext->xSize  - x;
       break;
+    default:
+      break;
     }
     LCD_X_DisplayDriver(pDevice->LayerIndex, LCD_X_SETORG, (void *)&Data);
   #endif
@@ -805,8 +861,9 @@ static void _SetVSize(GUI_DEVICE * pDevice, int xSize, int ySize) {
   DRIVER_CONTEXT * pContext;
   #if defined(WIN32)
     int NumBuffers;
-  #endif
 
+    pContext = NULL;
+  #endif
   _InitOnce(pDevice);
   if (pDevice->u.pContext) {
     #if defined(WIN32)
@@ -832,7 +889,9 @@ static void _SetVSize(GUI_DEVICE * pDevice, int xSize, int ySize) {
     }
   }
   #if defined(WIN32)
-    SIM_Lin_SetVRAMSize(pDevice->LayerIndex, pContext->vxSize, pContext->vySize, pContext->xSize, pContext->ySize);
+    if (pContext) {
+      SIM_Lin_SetVRAMSize(pDevice->LayerIndex, pContext->vxSize, pContext->vySize, pContext->xSize, pContext->ySize);
+    }
   #endif
 }
 
@@ -861,6 +920,8 @@ static void _SetSize(GUI_DEVICE * pDevice, int xSize, int ySize) {
     LCD_X_DisplayDriver(pDevice->LayerIndex, LCD_X_SETSIZE, (void *)&Data);
   }
 }
+
+#endif  // GUIDRV_LIN_EXCLUDE_CODE
 
 #if defined(__cplusplus)
 }

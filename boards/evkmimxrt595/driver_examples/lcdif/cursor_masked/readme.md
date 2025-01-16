@@ -1,5 +1,6 @@
-Overview
-========
+# lcdif_cursor_masked
+
+## Overview
 This example demonstrates how to use the LCDIF cursor in masked mode.
 In this exapmle, the screen is devided into two parts: red and blue. A cursor
 is moving in the screen, the cursor contains 4 parts like this:
@@ -19,43 +20,6 @@ Part 2 is the backgroud frame buffer color.
 Part 3 is foreground color set by LCDIF_SetCursorColor, it is white.
 Part 4 is the invertion of backgroud frame buffer color.
 
-SDK version
-===========
-- Version: 2.16.000
-
-Toolchain supported
-===================
-- IAR embedded Workbench  9.60.1
-- Keil MDK  5.39.0
-- GCC ARM Embedded  13.2.1
-- MCUXpresso  11.10.0
-
-Hardware requirements
-=====================
-- Micro USB cable
-- EVK-MIMXRT595 board
-- Personal Computer
-- RK055AHD091 panel or RK055MHD091 panel
-
-Board settings
-==============
-Connect the MIPI panel to EVK-MIMXRT595 board J44.
-
-Prepare the Demo
-================
-1.  Connect a micro USB cable between the PC host and the CMSIS DAP USB port (J40) on the board
-2.  Open a serial terminal with the following settings:
-    - 115200 baud rate
-    - 8 data bits
-    - No parity
-    - One stop bit
-    - No flow control
-3.  Build the project, this project uses RK055MHD091 panel by default, to use the RK055AHD091 panel,
-    change #define USE_MIPI_PANEL MIPI_PANEL_RK055MHD091 to #define USE_MIPI_PANEL MIPI_PANEL_RK055AHD091
-    in lcdif_support.h.
-4.  Download the program to the target board.
-5.  Launch the debugger in your IDE to begin running the demo.
-
-Running the demo
-================
-When the example runs, the screen shows what described in overview.
+## Supported Boards
+- [EVK-MIMXRT595](../../../_boards/evkmimxrt595/driver_examples/lcdif/lcdif_examples_readme.md)
+- [MIMXRT700-EVK](../../../_boards/mimxrt700evk/driver_examples/lcdif/lcdif_examples_readme.md)

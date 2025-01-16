@@ -14,14 +14,13 @@
 #include <ctype.h>
 
 #include "httpsclient.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
 #include "lwip/netifapi.h"
 #include "lwip/opt.h"
 #include "lwip/tcpip.h"
 #include "lwip/dhcp.h"
 #include "lwip/prot/dhcp.h"
+#include "app.h"
 #include "mflash_drv.h"
 #include "fsl_debug_console.h"
 #include "ota_config.h"
@@ -36,21 +35,9 @@
 #include "wpl.h"
 #endif
 
-#include "fsl_common.h"
-#include "fsl_gpio.h"
-#include "fsl_power.h"
-#include "ksdk_mbedtls.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define APP_DEBUG_UART_TYPE     kSerialPort_Uart
-#define APP_DEBUG_UART_INSTANCE 12U
-#define APP_DEBUG_UART_CLK_FREQ CLOCK_GetFlexcommClkFreq(12)
-#define APP_DEBUG_UART_FRG_CLK \
-    (&(const clock_frg_clk_config_t){12U, kCLOCK_FrgPllDiv, 255U, 0U}) /*!< Select FRG0 mux as frg_pll */
-#define APP_DEBUG_UART_CLK_ATTACH kFRG_to_FLEXCOMM12
-#define APP_DEBUG_UART_BAUDRATE   115200
-#define FlexSPI_AMBA_BASE FlexSPI0_AMBA_BASE
 
 /*******************************************************************************
  * Prototypes
@@ -105,20 +92,6 @@ static shell_handle_t s_shellHandle;
 /*******************************************************************************
  * Code
  ******************************************************************************/
-/* Initialize debug console. */
-void APP_InitAppDebugConsole(void)
-{
-    uint32_t uartClkSrcFreq;
-
-    /* attach FRG0 clock to FLEXCOMM12 (debug console) */
-    CLOCK_SetFRGClock(APP_DEBUG_UART_FRG_CLK);
-    CLOCK_AttachClk(APP_DEBUG_UART_CLK_ATTACH);
-
-    uartClkSrcFreq = APP_DEBUG_UART_CLK_FREQ;
-
-    DbgConsole_Init(APP_DEBUG_UART_INSTANCE, APP_DEBUG_UART_BAUDRATE, APP_DEBUG_UART_TYPE, uartClkSrcFreq);
-}
-
 
 #ifdef WIFI_MODE
 static shell_status_t shellCmd_wifi(shell_handle_t shellHandle, int32_t argc, char **argv)
@@ -498,24 +471,7 @@ failed_init:
  */
 int main(void)
 {
-    RESET_ClearPeripheralReset(kHSGPIO0_RST_SHIFT_RSTn);
-    RESET_ClearPeripheralReset(kHSGPIO3_RST_SHIFT_RSTn);
-    RESET_ClearPeripheralReset(kHSGPIO4_RST_SHIFT_RSTn);
-
-    BOARD_InitBootPins();
-    BOARD_InitPinsM2();
-    BOARD_InitBootClocks();
-    APP_InitAppDebugConsole();
-
-    /* Make sure casper ram buffer has power up */
-    POWER_DisablePD(kPDRUNCFG_PPD_CASPER_SRAM);
-    POWER_ApplyPD();
-
-    /* Configure 32K OSC clock. */
-    CLOCK_EnableOsc32K(true);               /* Enable 32KHz Oscillator clock */
-    CLOCK_EnableClock(kCLOCK_Rtc);          /* Enable the RTC peripheral clock */
-    RTC->CTRL &= ~RTC_CTRL_SWRESET_MASK;    /* Make sure the reset bit is cleared */
-    RTC->CTRL &= ~RTC_CTRL_RTC_OSC_PD_MASK; /* The RTC Oscillator is powered up */
+    BOARD_InitHardware();
     CRYPTO_InitHardware();
 
     mflash_drv_init();

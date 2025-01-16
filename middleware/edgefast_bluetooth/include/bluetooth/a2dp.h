@@ -25,6 +25,39 @@ extern "C" {
 
 /** SBC IE length */
 #define BT_A2DP_SBC_IE_LENGTH      (4u)
+/** If the F bit is set to 0, this field indicates the number of frames contained
+ *  in this packet. If the F bit is set to 1, this field indicates the number
+ *  of remaining fragments, including the current fragment.
+ *  Therefore, the last counter value shall be one.
+ */
+#define BT_A2DP_SBC_MEDIA_HDR_NUM_FRAMES_GET(hdr) (hdr & 0x0FU)
+/** Set to 1 for the last packet of a fragmented SBC frame, otherwise set to 0. */
+#define BT_A2DP_SBC_MEDIA_HDR_L_GET(hdr)          ((hdr & 0x20U) >> 5U)
+/** Set to 1 for the starting packet of a fragmented SBC frame, otherwise set to 0. */
+#define BT_A2DP_SBC_MEDIA_HDR_S_GET(hdr)          ((hdr & 0x40U) >> 6U)
+/** Set to 1 if the SBC frame is fragmented, otherwise set to 0. */
+#define BT_A2DP_SBC_MEDIA_HDR_F_GET(hdr)          ((hdr & 0x80U) >> 7U)
+/** If the F bit is set to 0, this field indicates the number of frames contained
+ *  in this packet. If the F bit is set to 1, this field indicates the number
+ *  of remaining fragments, including the current fragment.
+ *  Therefore, the last counter value shall be one.
+ */
+#define BT_A2DP_SBC_MEDIA_HDR_NUM_FRAMES_SET(hdr, val)\
+	hdr = (((hdr) & ~0x0FU) | (val & 0x0FU))
+/** Set to 1 for the last packet of a fragmented SBC frame, otherwise set to 0. */
+#define BT_A2DP_SBC_MEDIA_HDR_L_SET(hdr, val)\
+	hdr = (((hdr) & ~0x20U) | ((val << 5U) & 0x20U))
+/** Set to 1 for the starting packet of a fragmented SBC frame, otherwise set to 0. */
+#define BT_A2DP_SBC_MEDIA_HDR_S_SET(hdr, val)\
+	hdr = (((hdr) & ~0x40U) | ((val << 6U) & 0x40U))
+/** Set to 1 if the SBC frame is fragmented, otherwise set to 0. */
+#define BT_A2DP_SBC_MEDIA_HDR_F_SET(hdr, val)\
+	hdr = (((hdr) & ~0x80U) | ((val << 7U) & 0x80U))
+/** construct sbc header. */
+#define BT_A2DP_SBC_MEDIA_HDR_ENCODE(num_frames, l, s, f)\
+	((num_frames & 0x0FU) | ((l << 5U) & 0x20U) |\
+	 ((s << 6U) & 0x40U) | ((f << 7U) & 0x80U))
+
 /** MPEG1,2 IE length */
 #define BT_A2DP_MPEG_1_2_IE_LENGTH (4u)
 /** MPEG2,4 IE length */
@@ -297,6 +330,12 @@ struct bt_a2dp_control_cb {
 	/** @brief the media streaming data, only for sink.
 	 *
 	 *  @param data the data buffer pointer.
+	 *  If CONFIG_A2DP_CODEC_EXTERNAL is set: if SBC, data's format is
+	 *  BT_AVDTP_MEDIA_HDR_SIZE + 1 byte SBC payload header + SBC media frames;
+	 *  if other codecs, data's format is BT_AVDTP_MEDIA_HDR_SIZE + codec media data.
+	 *  If CONFIG_A2DP_CODEC_EXTERNAL is not set: if SBC, data's format is PCM data;
+	 *  if other codecs, data's format is BT_AVDTP_MEDIA_HDR_SIZE + codec media data
+	 *  because stack doesn't support other codecs' encoder/decoder.
 	 *  @param length the data length.
 	 */
 	void (*sink_streamer_data)(uint8_t *data, uint32_t length);
@@ -516,7 +555,7 @@ int bt_a2dp_configure_endpoint(struct bt_a2dp *a2dp, struct bt_a2dp_endpoint *en
  */
 int bt_a2dp_deconfigure(struct bt_a2dp_endpoint *endpoint);
 
-/** @brief start a2dp streamer, it is source only.
+/** @brief start a2dp streamer.
  *
  *  @param endpoint The endpoint.
  *
@@ -524,7 +563,7 @@ int bt_a2dp_deconfigure(struct bt_a2dp_endpoint *endpoint);
  */
 int bt_a2dp_start(struct bt_a2dp_endpoint *endpoint);
 
-/** @brief stop a2dp streamer, it is source only.
+/** @brief stop a2dp streamer.
  *
  *  @param endpoint The registered endpoint.
  *
@@ -550,6 +589,14 @@ int bt_a2dp_reconfigure(struct bt_a2dp_endpoint *endpoint,
  *
  *  @param endpoint The endpoint.
  *  @param data The streamer data.
+ *  If CONFIG_A2DP_CODEC_EXTERNAL is set: if SBC, data's format is
+ *  BT_AVDTP_MEDIA_HDR_SIZE + 1 byte SBC payload header + SBC media frames,
+ *  app doesn't need to set any value of BT_AVDTP_MEDIA_HDR_SIZE, just need to
+ *  keep it's buffer space; if other codecs, data's format is
+ *  BT_AVDTP_MEDIA_HDR_SIZE + codec media data.
+ *  If CONFIG_A2DP_CODEC_EXTERNAL is not set: if SBC, data's format is PCM data;
+ *  if other codecs, data's format is BT_AVDTP_MEDIA_HDR_SIZE + codec media data
+ *  because stack doesn't support other codecs' encoder/decoder.
  *  @param datalen The streamer data length.
  *
  *  @return 0 in case of success and error code in case of error.

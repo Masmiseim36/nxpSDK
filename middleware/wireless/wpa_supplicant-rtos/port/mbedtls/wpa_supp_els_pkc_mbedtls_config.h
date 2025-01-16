@@ -167,7 +167,9 @@ void *pvPortCalloc(size_t num, size_t size); /*Calloc for HEAP3.*/
  *
  * Comment if your system does not support time functions
  */
-//#define MBEDTLS_HAVE_TIME
+#if !defined(CONFIG_HAVE_TIME_DISABLE)
+#define MBEDTLS_HAVE_TIME
+#endif
 
 /**
  * \def MBEDTLS_HAVE_TIME_DATE
@@ -188,7 +190,9 @@ void *pvPortCalloc(size_t num, size_t size); /*Calloc for HEAP3.*/
  * mbedtls_platform_gmtime_r() at compile-time by using the macro
  * MBEDTLS_PLATFORM_GMTIME_R_ALT.
  */
-//#define MBEDTLS_HAVE_TIME_DATE
+#if !defined(CONFIG_HAVE_TIME_DISABLE)
+#define MBEDTLS_HAVE_TIME_DATE
+#endif
 
 /**
  * \def MBEDTLS_PLATFORM_MEMORY
@@ -257,7 +261,9 @@ void *pvPortCalloc(size_t num, size_t size); /*Calloc for HEAP3.*/
  * platform function
  */
 //#define MBEDTLS_PLATFORM_EXIT_ALT
-//#define MBEDTLS_PLATFORM_TIME_ALT
+#if !defined(CONFIG_HAVE_TIME_DISABLE)
+#define MBEDTLS_PLATFORM_TIME_ALT
+#endif
 //#define MBEDTLS_PLATFORM_FPRINTF_ALT
 //#define MBEDTLS_PLATFORM_PRINTF_ALT
 //#define MBEDTLS_PLATFORM_SNPRINTF_ALT
@@ -3956,7 +3962,9 @@ void *pvPortCalloc(size_t num, size_t size); /*Calloc for HEAP3.*/
  * unconditionally use the implementation for mbedtls_platform_gmtime_r()
  * supplied at compile time.
  */
-//#define MBEDTLS_PLATFORM_GMTIME_R_ALT
+#if !defined(CONFIG_HAVE_TIME_DISABLE)
+#define MBEDTLS_PLATFORM_GMTIME_R_ALT
+#endif
 
 /**
  * Enable the verified implementations of ECDH primitives from Project Everest

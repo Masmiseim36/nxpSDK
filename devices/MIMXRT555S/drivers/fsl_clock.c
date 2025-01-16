@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2022 NXP
+ * Copyright 2016-2022, 2024 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -25,6 +25,8 @@
 #define FRO_192MHZ_RD_TRIM 0x2B
 #define FRO_96MHZ_SC_TRIM  0x2E
 #define FRO_96MHZ_RD_TRIM  0x2D
+
+#define PLL_PFD_LOCK_TIMEOUT 200U
 
 /*******************************************************************************
  * Variables
@@ -1428,10 +1430,11 @@ void CLOCK_InitSysPll(const clock_sys_pll_config_t *config)
  *  param divider    : The PFD divider value.
  *  note It is recommended that PFD settings are kept between 12-35.
  */
-void CLOCK_InitSysPfd(clock_pfd_t pfd, uint8_t divider)
+status_t CLOCK_InitSysPfd(clock_pfd_t pfd, uint8_t divider)
 {
     uint32_t pfdIndex = (uint32_t)pfd;
     uint32_t syspfd;
+    uint32_t timeout = PLL_PFD_LOCK_TIMEOUT;
 
     syspfd = CLKCTL0->SYSPLL0PFD &
              ~(((uint32_t)CLKCTL0_SYSPLL0PFD_PFD0_CLKGATE_MASK | (uint32_t)CLKCTL0_SYSPLL0PFD_PFD0_MASK)
@@ -1445,9 +1448,16 @@ void CLOCK_InitSysPfd(clock_pfd_t pfd, uint8_t divider)
     /* Wait for output becomes stable. */
     while ((CLKCTL0->SYSPLL0PFD & ((uint32_t)CLKCTL0_SYSPLL0PFD_PFD0_CLKRDY_MASK << (8UL * pfdIndex))) == 0UL)
     {
+        timeout--;
+        if (timeout == 0U)
+        {
+            return kStatus_Timeout;
+        }
     }
     /* Clear ready status flag. */
     CLKCTL0->SYSPLL0PFD |= ((uint32_t)CLKCTL0_SYSPLL0PFD_PFD0_CLKRDY_MASK << (8UL * pfdIndex));
+
+    return kStatus_Success;
 }
 
 /* Initialize the Audio PLL Clk */
@@ -1519,10 +1529,11 @@ void CLOCK_InitAudioPll(const clock_audio_pll_config_t *config)
  *  param divider    : The PFD divider value.
  *  note It is recommended that PFD settings are kept between 12-35.
  */
-void CLOCK_InitAudioPfd(clock_pfd_t pfd, uint8_t divider)
+status_t CLOCK_InitAudioPfd(clock_pfd_t pfd, uint8_t divider)
 {
     uint32_t pfdIndex = (uint32_t)pfd;
     uint32_t syspfd;
+    uint32_t timeout = PLL_PFD_LOCK_TIMEOUT;
 
     syspfd = CLKCTL1->AUDIOPLL0PFD &
              ~(((uint32_t)CLKCTL1_AUDIOPLL0PFD_PFD0_CLKGATE_MASK | (uint32_t)CLKCTL1_AUDIOPLL0PFD_PFD0_MASK)
@@ -1536,9 +1547,16 @@ void CLOCK_InitAudioPfd(clock_pfd_t pfd, uint8_t divider)
     /* Wait for output becomes stable. */
     while ((CLKCTL1->AUDIOPLL0PFD & ((uint32_t)CLKCTL1_AUDIOPLL0PFD_PFD0_CLKRDY_MASK << (8UL * pfdIndex))) == 0UL)
     {
+        timeout--;
+        if (timeout == 0U)
+        {
+            return kStatus_Timeout;
+        }  
     }
     /* Clear ready status flag. */
     CLKCTL1->AUDIOPLL0PFD |= ((uint32_t)CLKCTL1_AUDIOPLL0PFD_PFD0_CLKRDY_MASK << (8UL * pfdIndex));
+
+    return kStatus_Success;
 }
 
 /*! @brief  Enable/Disable sys osc clock from external crystal clock.

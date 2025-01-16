@@ -9,7 +9,7 @@
 *                                                                    *
 **********************************************************************
 
-** emWin V6.38 - Graphical user interface for embedded applications **
+** emWin V6.46 - Graphical user interface for embedded applications **
 All  Intellectual Property rights  in the Software belongs to  SEGGER.
 emWin is protected by  international copyright laws.  Knowledge of the
 source code may not be used to write a similar product.  This file may
@@ -34,7 +34,7 @@ License model:            emWin License Agreement, dated August 20th 2011 and Am
 Licensed platform:        NXP's ARM 7/9, Cortex-M0, M3, M4, M7, A7, M33
 ----------------------------------------------------------------------
 Support and Update Agreement (SUA)
-SUA period:               2011-08-19 - 2024-09-02
+SUA period:               2011-08-19 - 2025-09-02
 Contact to extend SUA:    sales@segger.com
 ----------------------------------------------------------------------
 File        : WHEEL.h
@@ -151,6 +151,8 @@ int  WHEEL_GetSel                (WHEEL_Handle hObj);
 int  WHEEL_GetUserData           (WHEEL_Handle hObj, void * pDest, int NumBytes);
 int  WHEEL_InsertItemText        (WHEEL_Handle hObj, unsigned Index, unsigned Row, const char * s);
 int  WHEEL_IsMoving              (WHEEL_Handle hObj);
+int  WHEEL_OwnerDrawMorph        (const WIDGET_ITEM_DRAW_INFO * pDrawItemInfo);
+int  WHEEL_OwnerDrawPlain        (const WIDGET_ITEM_DRAW_INFO * pDrawItemInfo);
 void WHEEL_MoveToPos             (WHEEL_Handle hObj, int Index);
 void WHEEL_MoveToPosEx           (WHEEL_Handle hObj, int Index, U32 Period);
 void WHEEL_SetAlign              (WHEEL_Handle hObj, U8 Align);
@@ -167,6 +169,7 @@ void WHEEL_SetCenterTextAttrPlain(WHEEL_Handle hObj, unsigned Index, U8 Align, I
 void WHEEL_SetHBorder            (WHEEL_Handle hObj, U16 BorderText);
 int  WHEEL_SetItemText           (WHEEL_Handle hObj, unsigned Index, unsigned Row, const char * s);
 void WHEEL_SetMode               (WHEEL_Handle hObj, U16 Mode);
+void WHEEL_SetOwnerDraw          (WHEEL_Handle hObj, WIDGET_DRAW_ITEM_FUNC * pfDrawItem);
 void WHEEL_SetOverlay            (WHEEL_Handle hObj, unsigned Index, const GUI_BITMAP * pBitmap, U8 Align, I16 xOff, I16 yOff);
 void WHEEL_SetOverlayColor       (WHEEL_Handle hObj, unsigned Index, GUI_COLOR Color);
 void WHEEL_SetPeriod             (WHEEL_Handle hObj, U32 Period);

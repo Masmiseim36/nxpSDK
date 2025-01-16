@@ -8,17 +8,14 @@
 /*  Standard C Included Files */
 #include <stdio.h>
 #include <string.h>
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
 #include "fsl_debug_console.h"
 #include "fsl_i2c.h"
+#include "app.h"
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define EXAMPLE_I2C_SLAVE_BASE    I2C11
-#define I2C_SLAVE_CLOCK_FREQUENCY CLOCK_GetFlexcommClkFreq(11)
 #define EXAMPLE_I2C_SLAVE ((I2C_Type *)EXAMPLE_I2C_SLAVE_BASE)
 
 #define I2C_MASTER_SLAVE_ADDR_7BIT 0x7EU
@@ -44,12 +41,7 @@ int main(void)
     status_t reVal = kStatus_Fail;
     uint8_t subaddress;
 
-    /* Use 48 MHz clock for the FLEXCOMM11 */
-    CLOCK_AttachClk(kFRO_DIV4_to_FLEXCOMM11);
-
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
 
     PRINTF("\r\nI2C board2board polling example -- Slave transfer.\r\n\r\n");
 

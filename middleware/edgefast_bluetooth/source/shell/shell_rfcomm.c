@@ -26,7 +26,7 @@
 #include <bluetooth/rfcomm.h>
 #include <bluetooth/sdp.h>
 
-#if (defined(CONFIG_BT_BREDR) && ((CONFIG_BT_BREDR) > 0U))
+#if (defined(CONFIG_BT_CLASSIC) && ((CONFIG_BT_CLASSIC) > 0U))
 
 #include "fsl_shell.h"
 
@@ -36,7 +36,7 @@
 
 #if (defined(CONFIG_BT_RFCOMM) && (CONFIG_BT_RFCOMM > 0))
 
-NET_BUF_POOL_FIXED_DEFINE(pool, 1, DATA_MTU, NULL);
+NET_BUF_POOL_FIXED_DEFINE(pool, 1, DATA_MTU, CONFIG_NET_BUF_USER_DATA_SIZE, NULL);
 
 static struct bt_sdp_attribute spp_attrs[] = {
 	BT_SDP_NEW_SERVICE,
@@ -144,62 +144,62 @@ static int rfcomm_accept(struct bt_conn *conn, struct bt_rfcomm_dlc **dlc)
 
 	*dlc = &rfcomm_dlc;
 
-	return kStatus_SHELL_Success;
+	return 0;
 }
 
 struct bt_rfcomm_server rfcomm_server = {
 	.accept = &rfcomm_accept,
 };
 
-static shell_status_t cmd_register(shell_handle_t shell, int32_t argc, char *argv[])
+static int cmd_register(const struct shell *sh, size_t argc, char *argv[])
 {
 	int ret;
 
 	if (rfcomm_server.channel) {
-		shell_error(shell, "Already registered");
-		return kStatus_SHELL_Error;
+		shell_error(sh, "Already registered");
+		return -ENOEXEC;
 	}
 
 	rfcomm_server.channel = BT_RFCOMM_CHAN_SPP;
 
 	ret = bt_rfcomm_server_register(&rfcomm_server);
 	if (ret < 0) {
-		shell_error(shell, "Unable to register channel %x", ret);
+		shell_error(sh, "Unable to register channel %x", ret);
 		rfcomm_server.channel = 0U;
-		return kStatus_SHELL_Error;
+		return -ENOEXEC;
 	} else {
-		shell_print(shell, "RFCOMM channel %u registered",
+		shell_print(sh, "RFCOMM channel %u registered",
 			    rfcomm_server.channel);
 		bt_sdp_register_service(&spp_rec);
 	}
 
-	return kStatus_SHELL_Success;
+	return 0;
 }
 
-static shell_status_t cmd_connect(shell_handle_t shell, int32_t argc, char *argv[])
+static int cmd_connect(const struct shell *sh, size_t argc, char *argv[])
 {
 	uint8_t channel;
 	int err;
 
 	if (!default_conn) {
-		shell_error(shell, "Not connected");
-		return kStatus_SHELL_Error;
+		shell_error(sh, "Not connected");
+		return -ENOEXEC;
 	}
 
 	channel = strtoul(argv[1], NULL, 16);
 
 	err = bt_rfcomm_dlc_connect(default_conn, &rfcomm_dlc, channel);
 	if (err < 0) {
-		shell_error(shell, "Unable to connect to channel %d (err %u)",
+		shell_error(sh, "Unable to connect to channel %d (err %u)",
 			    channel, err);
 	} else {
-		shell_print(shell, "RFCOMM connection pending");
+		shell_print(sh, "RFCOMM connection pending");
 	}
 
-	return (shell_status_t)err;
+	return err;
 }
 
-static shell_status_t cmd_send(shell_handle_t shell, int32_t argc, char *argv[])
+static int cmd_send(const struct shell *sh, size_t argc, char *argv[])
 {
 	uint8_t buf_data[DATA_MTU] = { [0 ... (DATA_MTU - 1)] = 0xff };
 	int ret, len, count = 1;
@@ -218,24 +218,24 @@ static shell_status_t cmd_send(shell_handle_t shell, int32_t argc, char *argv[])
 		ret = bt_rfcomm_dlc_send(&rfcomm_dlc, buf);
         net_buf_unref(buf);
 		if (ret < 0) {
-			shell_error(shell, "Unable to send: %d", -ret);
-			return kStatus_SHELL_Error;
+			shell_error(sh, "Unable to send: %d", -ret);
+			return -ENOEXEC;
 		}
 	}
 
-	return kStatus_SHELL_Success;
+	return 0;
 }
 
-static shell_status_t cmd_disconnect(shell_handle_t shell, int32_t argc, char *argv[])
+static int cmd_disconnect(const struct shell *sh, size_t argc, char *argv[])
 {
 	int err;
 
 	err = bt_rfcomm_dlc_disconnect(&rfcomm_dlc);
 	if (err) {
-		shell_error(shell, "Unable to disconnect: %u", -err);
+		shell_error(sh, "Unable to disconnect: %u", -err);
 	}
 
-	return (shell_status_t)err;
+	return err;
 }
 
 #define HELP_NONE "[none]"
@@ -249,20 +249,20 @@ SHELL_STATIC_SUBCMD_SET_CREATE(rfcomm_cmds,
 	SHELL_SUBCMD_SET_END
 );
 
-static shell_status_t cmd_rfcomm(shell_handle_t shell, int32_t argc, char *argv[])
+static int cmd_rfcomm(const struct shell *sh, size_t argc, char *argv[])
 {
 	if (argc == 1) {
-		shell_help(shell);
+		shell_help(sh);
 		/* shell returns 1 when help is printed */
-		return kStatus_SHELL_PrintCmdHelp;
+		return SHELL_CMD_HELP_PRINTED;
 	}
 
-	shell_error(shell, "%s unknown parameter: %s", argv[0], argv[1]);
+	shell_error(sh, "%s unknown parameter: %s", argv[0], argv[1]);
 
-	return kStatus_SHELL_Error;
+	return -ENOEXEC;
 }
 
-SHELL_CMD_REGISTER(rfcomm, rfcomm_cmds, "Bluetooth RFCOMM shell commands",
+SHELL_CMD_ARG_REGISTER(rfcomm, &rfcomm_cmds, "Bluetooth RFCOMM shell commands",
 		       cmd_rfcomm, 1, 1);
 
 #endif /* CONFIG_BT_RFCOMM */
@@ -277,4 +277,4 @@ void bt_ShellRfcommInit(shell_handle_t shell)
 #endif /* CONFIG_BT_RFCOMM */
 }
 
-#endif /* CONFIG_BT_BREDR */
+#endif /* CONFIG_BT_CLASSIC */

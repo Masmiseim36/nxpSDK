@@ -1,0 +1,5 @@
+@Start
+@Input_path ../test_inp/
+@Output_path ../test_out/
+-w16 -ifile:sample_loas.bin -ofile:sample_loas.wav -bloas  
+@Stop

@@ -24,7 +24,7 @@
  */
 
 /* Board specific includes. */
-#include "pin_mux.h"
+#include "app.h"
 #include "board.h"
 
 /* Trustzone config. */
@@ -36,15 +36,6 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-/**
- * @brief Start address of non-secure application.
- */
-#define mainNONSECURE_APP_START_ADDRESS DEMO_CODE_START_NS
-#if (DEMO_CODE_START_NS == 0x08100000U)
-#define BOARD_InitTrustZone XIP_BOARD_InitTrustZone
-#else
-#define BOARD_InitTrustZone RAM_BOARD_InitTrustZone
-#endif
 
 /* Start address of non-secure application */
 #define mainNONSECURE_APP_START_ADDRESS DEMO_CODE_START_NS
@@ -114,12 +105,7 @@ int main(void)
      * exceptions. */
 
     /* Init board hardware. */
-    /* Set non-secure vector table */
-    SCB_NS->VTOR = mainNONSECURE_APP_START_ADDRESS;
-
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
 
     /* Boot the non-secure code. */
     BootNonSecure(mainNONSECURE_APP_START_ADDRESS);

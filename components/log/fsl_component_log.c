@@ -1,6 +1,5 @@
 /*
  * Copyright 2020 NXP
- * All rights reserved.
  *
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -524,7 +523,7 @@ void LOG_Printf(log_module_t const *module, log_level_t level, unsigned int time
 {
     va_list ap;
     log_print_buffer_t buffer;
-    uint8_t printBuf[LOG_MAX_MEESSAGE_LENGTH];
+    uint8_t printBuf[LOG_MAX_MESSAGE_LENGTH];
 
     (void)module;
 
@@ -549,7 +548,7 @@ void LOG_Printf(log_module_t const *module, log_level_t level, unsigned int time
 #endif
     {
         buffer.buffer = printBuf;
-        buffer.length = LOG_MAX_MEESSAGE_LENGTH;
+        buffer.length = LOG_MAX_MESSAGE_LENGTH;
         buffer.sofar  = 0;
     }
 

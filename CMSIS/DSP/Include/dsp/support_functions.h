@@ -24,8 +24,8 @@
  */
 
  
-#ifndef _SUPPORT_FUNCTIONS_H_
-#define _SUPPORT_FUNCTIONS_H_
+#ifndef SUPPORT_FUNCTIONS_H_
+#define SUPPORT_FUNCTIONS_H_
 
 #include "arm_math_types.h"
 #include "arm_math_memory.h"
@@ -499,16 +499,16 @@ const q7_t * pSrc,
 
 
 /**
- * @brief Weighted sum
+ * @brief Weighted average
  *
  *
  * @param[in]    *in           Array of input values.
  * @param[in]    *weigths      Weights
  * @param[in]    blockSize     Number of samples in the input array.
- * @return Weighted sum
+ * @return Weighted average
  *
  */
-float32_t arm_weighted_sum_f32(const float32_t *in
+float32_t arm_weighted_average_f32(const float32_t *in
   , const float32_t *weigths
   , uint32_t blockSize);
 
@@ -522,7 +522,6 @@ float32_t arm_weighted_sum_f32(const float32_t *in
  * @param[out]   out        Barycenter
  * @param[in]    nbVectors  Number of vectors
  * @param[in]    vecDim     Dimension of space (vector dimension)
- * @return       None
  *
  */
 void arm_barycenter_f32(const float32_t *in

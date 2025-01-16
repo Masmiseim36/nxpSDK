@@ -10,6 +10,7 @@
 
 #include "utils/includes.h"
 
+#if CONFIG_HOSTAPD
 #ifdef CONFIG_DPP
 #include "utils/common.h"
 #include "utils/eloop.h"
@@ -2812,3 +2813,4 @@ void hostapd_dpp_remove_bi(void *ctx, struct dpp_bootstrap_info *bi)
 
 #endif /* CONFIG_DPP2 */
 #endif /* CONFIG_DPP */
+#endif /* CONFIG_HOSTAPD */

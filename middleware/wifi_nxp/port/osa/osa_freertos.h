@@ -15,6 +15,19 @@
 #include "timers.h"
 #include "portmacro.h"
 
+#ifndef configMAX_PRIORITIES
+#error Define configMAX_PRIORITIES in FreeRTOSConfig.h
+#elif configMAX_PRIORITIES < 5
+#error configMAX_PRIORITIES must be defined to be greater than or equal to 5
+#endif
+/*** Priority setting ***/
+#define OSA_PRIORITY(x) (PRIORITY_RTOS_TO_OSA((configMAX_PRIORITIES - x)))
+#define WLAN_TASK_PRI_HIGHEST (OSA_PRIORITY(1))
+#define WLAN_TASK_PRI_HIGH    (OSA_PRIORITY(2))
+#define WLAN_TASK_PRI_NORMAL  (OSA_PRIORITY(3))
+#define WLAN_TASK_PRI_LOW     (OSA_PRIORITY(4))
+#define WLAN_TASK_PRI_IDLE    (OSA_PRIORITY(5))
+
 /**
  *  Handle for memory pools.
  *

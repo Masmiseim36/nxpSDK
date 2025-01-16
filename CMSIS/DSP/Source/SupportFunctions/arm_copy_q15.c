@@ -42,10 +42,9 @@
   @param[in]     pSrc       points to input vector
   @param[out]    pDst       points to output vector
   @param[in]     blockSize  number of samples in each vector
-  @return        none
  */
 #if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE)
-void arm_copy_q15(
+ARM_DSP_ATTRIBUTE void arm_copy_q15(
   const q15_t * pSrc,
         q15_t * pDst,
         uint32_t blockSize)
@@ -78,7 +77,7 @@ void arm_copy_q15(
   }
 }
 #else
-void arm_copy_q15(
+ARM_DSP_ATTRIBUTE void arm_copy_q15(
   const q15_t * pSrc,
         q15_t * pDst,
         uint32_t blockSize)

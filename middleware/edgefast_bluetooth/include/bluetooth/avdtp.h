@@ -15,7 +15,6 @@ extern "C" {
 #endif
 
 /** @brief AVDTP SEID Information */
-STRUCT_PACKED_PRE
 struct bt_avdtp_seid_info {
 	/** Stream End Point ID */
 	uint8_t id:6;
@@ -29,7 +28,7 @@ struct bt_avdtp_seid_info {
 	uint8_t tsep:1;
 	/** Reserved */
 	uint8_t rfa1:3;
-} STRUCT_PACKED_POST;
+} __packed;
 
 /** @brief AVDTP Local SEP*/
 struct bt_avdtp_seid_lsep {
@@ -47,6 +46,35 @@ struct bt_avdtp_stream {
 	uint8_t state; /* current state of the stream */
 	struct bt_avdtp_stream *next;
 };
+
+/*
+ *  AVDTP Media Packet Header (data is big endian in packet)
+ *
+ *              7   6   5   4   3   2   1   0
+ *  Byte 0:   |     CC        | X | P |  V   |
+ *  Byte 1:   |             PT           | M |
+ *  Byte 2:   |          Seq No              |
+ *  Byte 3:   |          Seq No              |
+ *  Byte 4:   |            TS                |
+ *  Byte 5:   |            TS                |
+ *  Byte 6:   |            TS                |
+ *  Byte 7:   |            TS                |
+ *  Byte 8:   |           SSRC               |
+ *  Byte 9:   |           SSRC               |
+ *  Byte10:   |           SSRC               |
+ *  Byte11:   |           SSRC               |
+ *
+ *  V   : Version
+ *  P   : Padding
+ *  X   : Extension
+ *  CC  : CSRC Count (must be 0 in this stack)
+ *  M   : Marker
+ *  PT  : Payload Type
+ *  Seq : Sequence Number
+ *  TS  : Time Stamp
+ *  SSRC: Synchronization Source
+ */
+#define BT_AVDTP_MEDIA_HDR_SIZE (12U)
 
 #ifdef __cplusplus
 }

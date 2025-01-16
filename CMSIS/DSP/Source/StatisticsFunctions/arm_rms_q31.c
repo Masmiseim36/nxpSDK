@@ -42,7 +42,6 @@
   @param[in]     pSrc       points to the input vector
   @param[in]     blockSize  number of samples in input vector
   @param[out]    pResult    root mean square value returned here
-  @return        none
 
   @par           Scaling and Overflow Behavior
                    The function is implemented using an internal 64-bit accumulator.
@@ -58,7 +57,7 @@
  */
 #if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE)
 
-void arm_rms_q31(
+ARM_DSP_ATTRIBUTE void arm_rms_q31(
   const q31_t * pSrc,
         uint32_t blockSize,
         q31_t * pResult)
@@ -73,7 +72,7 @@ void arm_rms_q31(
 }
 
 #else
-void arm_rms_q31(
+ARM_DSP_ATTRIBUTE void arm_rms_q31(
   const q31_t * pSrc,
         uint32_t blockSize,
         q31_t * pResult)

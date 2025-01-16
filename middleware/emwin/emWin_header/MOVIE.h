@@ -9,7 +9,7 @@
 *                                                                    *
 **********************************************************************
 
-** emWin V6.38 - Graphical user interface for embedded applications **
+** emWin V6.46 - Graphical user interface for embedded applications **
 All  Intellectual Property rights  in the Software belongs to  SEGGER.
 emWin is protected by  international copyright laws.  Knowledge of the
 source code may not be used to write a similar product.  This file may
@@ -34,7 +34,7 @@ License model:            emWin License Agreement, dated August 20th 2011 and Am
 Licensed platform:        NXP's ARM 7/9, Cortex-M0, M3, M4, M7, A7, M33
 ----------------------------------------------------------------------
 Support and Update Agreement (SUA)
-SUA period:               2011-08-19 - 2024-09-02
+SUA period:               2011-08-19 - 2025-09-02
 Contact to extend SUA:    sales@segger.com
 ----------------------------------------------------------------------
 File        : MOVIE.h
@@ -149,7 +149,7 @@ void             MOVIE_SetCenterBitmap(MOVIE_Handle hObj, const GUI_BITMAP * pBm
 void             MOVIE_SetColor       (MOVIE_Handle hObj, unsigned ColorIndex, GUI_COLOR Color);
 void             MOVIE_SetColors      (MOVIE_Handle hObj, GUI_COLOR ColorCenter, GUI_COLOR ColorPanel, GUI_COLOR ColorLeft, GUI_COLOR ColorRight, GUI_COLOR ColorBk);
 void             MOVIE_SetData        (MOVIE_Handle hObj, const U8 * pData, U32 Size, int DoLoop, GUI_MOVIE_FUNC * pfNotify);
-void             MOVIE_SetDataEx      (MOVIE_Handle hObj, GUI_GET_DATA_FUNC * pfGetData, void * pVoidImage, void * pVoidTable, int DoLoop, GUI_MOVIE_FUNC * pfNotify);
+void             MOVIE_SetDataEx      (MOVIE_Handle hObj, GUI_MOVIE_GET_DATA_FUNC * pfGetData, void * pVoidImage, void * pVoidTable, int DoLoop, GUI_MOVIE_FUNC * pfNotify);
 void             MOVIE_SetPanelBitmaps(MOVIE_Handle hObj, const GUI_BITMAP * pBmPlay, const GUI_BITMAP * pBmPause, const GUI_BITMAP * pBmStart);
 void             MOVIE_SetPeriod      (MOVIE_Handle hObj, unsigned PeriodIndex, int Period);
 void             MOVIE_SetPeriods     (MOVIE_Handle hObj, int PeriodShiftIn, int PeriodShiftOut, int PeriodInactive);

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2020,2023 NXP
+ * Copyright 2019-2020,2023,2024 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -12,6 +12,10 @@
 
 /*
  * Change log:
+ *
+ *   1.0.2
+ *     - Add support for DC8000.
+ *     - Add support for tile input format.
  *
  *   1.0.1
  *     - Fix MISRA-C 2012 issues.

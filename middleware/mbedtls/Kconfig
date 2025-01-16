@@ -1,0 +1,186 @@
+
+menu "mbedtls"
+    
+    config MCUX_COMPONENT_middleware.mbedtls.port.ele_s400_option
+        bool "Component middleware.mbedtls.port.ele_s400"
+        select MCUX_COMPONENT_driver.s3mu
+        select MCUX_COMPONENT_component.ele_crypto
+    
+    config MCUX_COMPONENT_middleware.mbedtls.port.ele_s400_ecc_opaque_option
+        bool "Component middleware.mbedtls.port.ele_s400_ecc_opaque"
+        select MCUX_COMPONENT_driver.s3mu
+        select MCUX_COMPONENT_component.ele_crypto
+    
+    config MCUX_COMPONENT_middleware.mbedtls.port.els_pkc_option
+        bool "Component middleware.mbedtls.port.els_pkc"
+        select MCUX_COMPONENT_middleware.mbedtls.port.els
+        select MCUX_COMPONENT_component.els_pkc
+        
+        if MCUX_COMPONENT_middleware.mbedtls.port.els_pkc
+            choice
+                prompt "Component middleware.mbedtls.port.els_pkc anyOf 1"
+                default MCUX_DEPENDENCY_COMPONENT_middleware.mbedtls.port.els_pkc_DEPEND_ANYOF_1_OPTION_1
+                
+                config MCUX_DEPENDENCY_COMPONENT_middleware.mbedtls.port.els_pkc_DEPEND_ANYOF_1_OPTION_1
+                    bool "Component MCUX_DEPENDENCY_COMPONENT_middleware.mbedtls.port.els_pkc_DEPEND_ANYOF_1_OPTION_1"
+                    depends on MCUX_HW_DEVICE_LPC55S36 || MCUX_HW_DEVICE_MCXN235 || MCUX_HW_DEVICE_MCXN236 || MCUX_HW_DEVICE_MCXN546 || MCUX_HW_DEVICE_MCXN547 || MCUX_HW_DEVICE_MCXN946 || MCUX_HW_DEVICE_MCXN947
+
+                config MCUX_DEPENDENCY_COMPONENT_middleware.mbedtls.port.els_pkc_DEPEND_ANYOF_1_OPTION_2
+                    bool "Component MCUX_DEPENDENCY_COMPONENT_middleware.mbedtls.port.els_pkc_DEPEND_ANYOF_1_OPTION_2"
+                    select MCUX_COMPONENT_driver.trng
+                    depends on MCUX_HW_DEVICE_RW610 || MCUX_HW_DEVICE_RW612
+                
+            endchoice
+        endif
+        
+    
+    config MCUX_COMPONENT_middleware.mbedtls.port.els
+        bool "Component middleware.mbedtls.port.els"
+        select MCUX_COMPONENT_component.els_pkc.els
+    
+    config MCUX_COMPONENT_middleware.mbedtls.port.sssapi_option
+        bool "Component middleware.mbedtls.port.sssapi"
+        select MCUX_COMPONENT_middleware.secure-subsystem.elemu.port_kw45_k4w1
+        depends on MCUX_HW_DEVICE_K32W1480 || MCUX_HW_DEVICE_KW45B41Z52 || MCUX_HW_DEVICE_KW45B41Z53 || MCUX_HW_DEVICE_KW45B41Z82 || MCUX_HW_DEVICE_KW45B41Z83 || MCUX_HW_DEVICE_KW45Z41052 || MCUX_HW_DEVICE_KW45Z41053 || MCUX_HW_DEVICE_KW45Z41082 || MCUX_HW_DEVICE_KW45Z41083 || MCUX_HW_DEVICE_KW45B41Z83_NBU || MCUX_HW_DEVICE_KW47B42Z83 || MCUX_HW_DEVICE_KW47B42Z96 || MCUX_HW_DEVICE_KW47B42Z97 || MCUX_HW_DEVICE_KW47B42ZB2 || MCUX_HW_DEVICE_KW47B42ZB3 || MCUX_HW_DEVICE_KW47B42ZB6 || MCUX_HW_DEVICE_KW47B42ZB7 || MCUX_HW_DEVICE_KW47Z420B2 || MCUX_HW_DEVICE_KW47Z420B3 || MCUX_HW_DEVICE_KW47Z42082 || MCUX_HW_DEVICE_KW47Z42092 || MCUX_HW_DEVICE_MCXW716A || MCUX_HW_DEVICE_MCXW716C || MCUX_HW_DEVICE_MCXW727A || MCUX_HW_DEVICE_MCXW727C || MCUX_HW_DEVICE_MCXW727D
+    
+    config MCUX_COMPONENT_middleware.mbedtls.port.ksdk_option
+        bool "Component middleware.mbedtls.port.ksdk"
+        if MCUX_COMPONENT_middleware.mbedtls.port.ksdk
+            choice
+                prompt "MbedTLS2.x KSDK port variants"
+
+                config MCUX_DEPENDENCY_COMPONENT_middleware.mbedtls.port.ksdk_DEPEND_ANYOF_1_OPTION_1
+                    bool "Component MCUX_DEPENDENCY_COMPONENT_middleware.mbedtls.port.ksdk_DEPEND_ANYOF_1_OPTION_1"
+                    select MCUX_COMPONENT_driver.sha
+                    select MCUX_COMPONENT_driver.rng
+                    select MCUX_COMPONENT_driver.aes
+                    depends on MCUX_HW_DEVICE_LPC54S005 || MCUX_HW_DEVICE_LPC54S016 || MCUX_HW_DEVICE_LPC54S018 || MCUX_HW_DEVICE_LPC54S018M
+                
+                config MCUX_DEPENDENCY_COMPONENT_middleware.mbedtls.port.ksdk_DEPEND_ANYOF_1_OPTION_2
+                    bool "Component MCUX_DEPENDENCY_COMPONENT_middleware.mbedtls.port.ksdk_DEPEND_ANYOF_1_OPTION_2"
+                    select MCUX_COMPONENT_driver.sha
+                    select MCUX_COMPONENT_driver.rng
+                    depends on MCUX_HW_DEVICE_LPC54005 || MCUX_HW_DEVICE_LPC54016 || MCUX_HW_DEVICE_LPC54018 || MCUX_HW_DEVICE_LPC54018M || MCUX_HW_DEVICE_LPC54628
+                
+                config MCUX_DEPENDENCY_COMPONENT_middleware.mbedtls.port.ksdk_DEPEND_ANYOF_1_OPTION_3
+                    bool "Component MCUX_DEPENDENCY_COMPONENT_middleware.mbedtls.port.ksdk_DEPEND_ANYOF_1_OPTION_3"
+                    select MCUX_COMPONENT_driver.rng
+                    depends on MCUX_HW_DEVICE_LPC54605 || MCUX_HW_DEVICE_LPC54606 || MCUX_HW_DEVICE_LPC54607 || MCUX_HW_DEVICE_LPC54608 || MCUX_HW_DEVICE_LPC54616 || MCUX_HW_DEVICE_LPC54618
+                
+                config MCUX_DEPENDENCY_COMPONENT_middleware.mbedtls.port.ksdk_DEPEND_ANYOF_1_OPTION_4
+                    bool "Component MCUX_DEPENDENCY_COMPONENT_middleware.mbedtls.port.ksdk_DEPEND_ANYOF_1_OPTION_4"
+                    select MCUX_COMPONENT_driver.rng_1
+                    select MCUX_COMPONENT_driver.casper
+                    select MCUX_COMPONENT_driver.hashcrypt
+                    depends on MCUX_HW_DEVICE_LPC55S04 || MCUX_HW_DEVICE_LPC55S06 || MCUX_HW_DEVICE_LPC55S14 || MCUX_HW_DEVICE_LPC55S16 || MCUX_HW_DEVICE_LPC55S26 || MCUX_HW_DEVICE_LPC55S28 || MCUX_HW_DEVICE_LPC55S66 || MCUX_HW_DEVICE_LPC55S69
+                
+                config MCUX_DEPENDENCY_COMPONENT_middleware.mbedtls.port.ksdk_DEPEND_ANYOF_1_OPTION_5
+                    bool "Component MCUX_DEPENDENCY_COMPONENT_middleware.mbedtls.port.ksdk_DEPEND_ANYOF_1_OPTION_5"
+                    select MCUX_COMPONENT_driver.trng
+                    select MCUX_COMPONENT_driver.casper
+                    select MCUX_COMPONENT_driver.hashcrypt
+                    depends on MCUX_HW_DEVICE_MIMXRT533S || MCUX_HW_DEVICE_MIMXRT555S || MCUX_HW_DEVICE_MIMXRT595S || MCUX_HW_DEVICE_MIMXRT633S || MCUX_HW_DEVICE_MIMXRT685S
+                
+                config MCUX_DEPENDENCY_COMPONENT_middleware.mbedtls.port.ksdk_DEPEND_ANYOF_1_OPTION_6
+                    bool "Component MCUX_DEPENDENCY_COMPONENT_middleware.mbedtls.port.ksdk_DEPEND_ANYOF_1_OPTION_6"
+                    select MCUX_COMPONENT_driver.dcp
+                    select MCUX_COMPONENT_driver.trng
+                    select MCUX_COMPONENT_driver.cache_armv7_m7
+                    depends on MCUX_HW_DEVICE_MIMXRT1011 || MCUX_HW_DEVICE_MIMXRT1021 || MCUX_HW_DEVICE_MIMXRT1024 || MCUX_HW_DEVICE_MIMXRT1041 || MCUX_HW_DEVICE_MIMXRT1042 || MCUX_HW_DEVICE_MIMXRT1051 || MCUX_HW_DEVICE_MIMXRT1052 || MCUX_HW_DEVICE_MIMXRT1061 || MCUX_HW_DEVICE_MIMXRT1062 || MCUX_HW_DEVICE_MIMXRT1064
+                
+                config MCUX_DEPENDENCY_COMPONENT_middleware.mbedtls.port.ksdk_DEPEND_ANYOF_1_OPTION_7
+                    bool "Component MCUX_DEPENDENCY_COMPONENT_middleware.mbedtls.port.ksdk_DEPEND_ANYOF_1_OPTION_7"
+                    select MCUX_COMPONENT_driver.trng
+                    select MCUX_COMPONENT_middleware.mmcau.cm0p
+                    depends on MCUX_HW_DEVICE_K32L2A31A || MCUX_HW_DEVICE_K32L2A41A
+                
+                config MCUX_DEPENDENCY_COMPONENT_middleware.mbedtls.port.ksdk_DEPEND_ANYOF_1_OPTION_8
+                    bool "Component MCUX_DEPENDENCY_COMPONENT_middleware.mbedtls.port.ksdk_DEPEND_ANYOF_1_OPTION_8"
+                    select MCUX_COMPONENT_driver.trng
+                    select MCUX_COMPONENT_middleware.mmcau.cm4_cm7
+                    depends on MCUX_HW_DEVICE_MK80F25615 || MCUX_HW_DEVICE_MKV56F24 || MCUX_HW_DEVICE_MKV58F24
+                
+                config MCUX_DEPENDENCY_COMPONENT_middleware.mbedtls.port.ksdk_DEPEND_ANYOF_1_OPTION_9
+                    bool "Component MCUX_DEPENDENCY_COMPONENT_middleware.mbedtls.port.ksdk_DEPEND_ANYOF_1_OPTION_9"
+                    select MCUX_COMPONENT_driver.rnga
+                    select MCUX_COMPONENT_middleware.mmcau.cm4_cm7
+                    depends on MCUX_HW_DEVICE_MK24F12 || MCUX_HW_DEVICE_MK63F12  || MCUX_HW_DEVICE_MK64F12 || MCUX_HW_DEVICE_MKW21D5 || MCUX_HW_DEVICE_MKW22D5 || MCUX_HW_DEVICE_MKW24D5
+                
+                config MCUX_DEPENDENCY_COMPONENT_middleware.mbedtls.port.ksdk_DEPEND_ANYOF_1_OPTION_10
+                    bool "Component MCUX_DEPENDENCY_COMPONENT_middleware.mbedtls.port.ksdk_DEPEND_ANYOF_1_OPTION_10"
+                    select MCUX_COMPONENT_driver.rnga
+                    select MCUX_COMPONENT_middleware.mmcau.cm0p
+                    depends on MCUX_HW_DEVICE_MKM35Z7
+                
+                config MCUX_DEPENDENCY_COMPONENT_middleware.mbedtls.port.ksdk_DEPEND_ANYOF_1_OPTION_11
+                    bool "Component MCUX_DEPENDENCY_COMPONENT_middleware.mbedtls.port.ksdk_DEPEND_ANYOF_1_OPTION_11"
+                    select MCUX_COMPONENT_driver.cau3
+                    select MCUX_COMPONENT_driver.trng
+                    depends on MCUX_HW_DEVICE_K32L3A60
+                
+                config MCUX_DEPENDENCY_COMPONENT_middleware.mbedtls.port.ksdk_DEPEND_ANYOF_1_OPTION_12
+                    bool "Component MCUX_DEPENDENCY_COMPONENT_middleware.mbedtls.port.ksdk_DEPEND_ANYOF_1_OPTION_12"
+                    select MCUX_COMPONENT_driver.trng
+                    select MCUX_COMPONENT_driver.ltc
+                    select MCUX_COMPONENT_middleware.mmcau.cm4_cm7
+                    depends on MCUX_HW_DEVICE_MK82F25615 || MCUX_HW_DEVICE_MCIMX7U5
+                
+                config MCUX_DEPENDENCY_COMPONENT_middleware.mbedtls.port.ksdk_DEPEND_ANYOF_1_OPTION_13
+                    bool "Component MCUX_DEPENDENCY_COMPONENT_middleware.mbedtls.port.ksdk_DEPEND_ANYOF_1_OPTION_13"
+                    select MCUX_COMPONENT_driver.trng
+                    select MCUX_COMPONENT_driver.ltc
+                    depends on MCUX_HW_DEVICE_MKW41Z4
+                
+                config MCUX_DEPENDENCY_COMPONENT_middleware.mbedtls.port.ksdk_DEPEND_ANYOF_1_OPTION_14
+                    bool "Component MCUX_DEPENDENCY_COMPONENT_middleware.mbedtls.port.ksdk_DEPEND_ANYOF_1_OPTION_14"
+                    select MCUX_COMPONENT_driver.caam
+                    depends on MCUX_HW_DEVICE_MIMXRT1165 || MCUX_HW_DEVICE_MIMXRT1166 || MCUX_HW_DEVICE_MIMXRT1171 || MCUX_HW_DEVICE_MIMXRT1172 || MCUX_HW_DEVICE_MIMXRT1173 || MCUX_HW_DEVICE_MIMXRT1175 || MCUX_HW_DEVICE_MIMXRT1176
+            endchoice
+        endif
+
+    config MCUX_COMPONENT_middleware.mbedtls
+        bool "Component middleware.mbedtls"
+        
+        if MCUX_COMPONENT_middleware.mbedtls
+            choice MCUX_COMPONENT_middleware.mbedtls.port.selection
+                prompt "MbedTLS 2.x HW port sub-components"
+                config MCUX_COMPONENT_middleware.mbedtls.port.ksdk
+                    bool "Select MCUX_COMPONENT_middleware.mbedtls.port.ksdk"
+                    select MCUX_COMPONENT_middleware.mbedtls.port.ksdk_option
+                config MCUX_COMPONENT_middleware.mbedtls.port.sssapi
+                    bool "Select MCUX_COMPONENT_middleware.mbedtls.port.sssapi"
+                    select MCUX_COMPONENT_middleware.mbedtls.port.sssapi_option
+                config MCUX_COMPONENT_middleware.mbedtls.port.ele_s400
+                    bool "Select MCUX_COMPONENT_middleware.mbedtls.port.ele_s400"
+                    select MCUX_COMPONENT_middleware.mbedtls.port.ele_s400_option
+                config MCUX_COMPONENT_middleware.mbedtls.port.ele_s400_ecc_opaque
+                    bool "Select MCUX_COMPONENT_middleware.mbedtls.port.ele_s400_ecc_opaque"
+                    select MCUX_COMPONENT_middleware.mbedtls.port.ele_s400_ecc_opaque_option
+                config MCUX_COMPONENT_middleware.mbedtls.port.els_pkc
+                    bool "Select MCUX_COMPONENT_middleware.mbedtls.port.els_pkc"
+                    select MCUX_COMPONENT_middleware.mbedtls.port.els_pkc_option
+            endchoice
+        endif
+        
+    config MCUX_PRJSEG_middleware.mbedtls.default_heap_stack
+        bool "Select middleware.mbedtls.default_heap_stack"
+    config MCUX_COMPONENT_middleware.mbedtls.tests
+        bool "Component middleware.mbedtls.tests"
+    config MCUX_COMPONENT_middleware.mbedtls.3rdparty
+        bool "Component middleware.mbedtls.3rdparty"
+
+if MCUX_COMPONENT_middleware.mbedtls
+    
+    config MBEDTLS_USER_CONFIG_ENABLE
+	bool "User mbedTLS config file"
+	help
+	  Enable Mbedtls user config file that will be included at the end of the generic config file.
+
+    config MBEDTLS_USER_CONFIG_FILE
+    string "User configuration file for MbedTLS" if MBEDTLS_USER_CONFIG_ENABLE
+    help
+        User config file that can override or include mbedtls configs not addressed by the generic config file.
+
+endif # MCUX_COMPONENT_middleware.mbedtls
+
+endmenu

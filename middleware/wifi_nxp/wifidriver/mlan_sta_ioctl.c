@@ -36,6 +36,7 @@ Change log:
 mlan_status wlan_misc_ioctl_region(IN pmlan_adapter pmadapter, IN pmlan_ioctl_req pioctl_req);
 t_u8 wlan_get_random_charactor(pmlan_adapter pmadapter);
 
+#if (CONFIG_WIFI_RTS_THRESHOLD) || (CONFIG_WIFI_FRAG_THRESHOLD)
 /**
  *  @brief Set/Get SNMP MIB handler
  *
@@ -101,6 +102,133 @@ exit:
     LEAVE();
     return ret;
 }
+#endif
+
+/**
+ *  @brief Set/Get Infra/Ad-hoc band configuration
+ *
+ *  @param pmadapter	A pointer to mlan_adapter structure
+ *  @param pioctl_req	A pointer to ioctl request buffer
+ *
+ *  @return		MLAN_STATUS_SUCCESS --success, otherwise fail
+ */
+static mlan_status wlan_radio_ioctl_band_cfg(IN pmlan_adapter pmadapter, IN pmlan_ioctl_req pioctl_req)
+{
+    t_u8 i = 0;
+    t_u16 global_band = 0;
+    t_u16 infra_band              = 0;
+    mlan_ds_radio_cfg *radio_cfg = MNULL;
+    mlan_private *pmpriv         = pmadapter->priv[pioctl_req->bss_index];
+
+    ENTER();
+
+    radio_cfg = (mlan_ds_radio_cfg *)pioctl_req->pbuf;
+    if (pioctl_req->action == MLAN_ACT_SET)
+    {
+        infra_band    = radio_cfg->param.band_cfg.config_bands;
+
+        /* SET Infra band */
+        if ((infra_band | pmadapter->fw_bands) & ~pmadapter->fw_bands)
+        {
+            pioctl_req->status_code = MLAN_ERROR_INVALID_PARAMETER;
+            LEAVE();
+            return MLAN_STATUS_FAILURE;
+        }
+
+
+        for (i = 0; i < pmadapter->priv_num; i++)
+        {
+            if (pmadapter->priv[i] && pmadapter->priv[i] != pmpriv &&
+                GET_BSS_ROLE(pmadapter->priv[i]) == MLAN_BSS_ROLE_STA)
+                global_band |= pmadapter->priv[i]->config_bands;
+        }
+        global_band |= infra_band;
+
+        if (wlan_set_regiontable(pmpriv, (t_u8)pmadapter->region_code, global_band
+        ))
+        {
+            pioctl_req->status_code = MLAN_ERROR_IOCTL_FAIL;
+            LEAVE();
+            return MLAN_STATUS_FAILURE;
+        }
+
+        if (wlan_11d_set_universaltable(pmpriv, global_band
+        ))
+        {
+            pioctl_req->status_code = MLAN_ERROR_IOCTL_FAIL;
+            LEAVE();
+            return MLAN_STATUS_FAILURE;
+        }
+        pmpriv->config_bands    = infra_band;
+        pmadapter->config_bands = global_band;
+
+    }
+    else
+    {
+        radio_cfg->param.band_cfg.config_bands = pmpriv->config_bands;            /* Infra
+                                                                                     Bands
+                                                                                   */
+        radio_cfg->param.band_cfg.adhoc_start_band = pmadapter->adhoc_start_band; /* Adhoc
+                                                                                     Band
+                                                                                   */
+        radio_cfg->param.band_cfg.adhoc_channel = pmpriv->adhoc_channel;          /* Adhoc
+                                                                                     Channel
+                                                                                   */
+        radio_cfg->param.band_cfg.fw_bands = pmadapter->fw_bands;                 /* FW
+                                                                                     support
+                                                                                     Bands
+                                                                                   */
+        PRINTM(MINFO, "Global config band = %d\n", pmadapter->config_bands);
+        radio_cfg->param.band_cfg.sec_chan_offset = pmadapter->chan_bandwidth;    /* adhoc
+                                                                                     channel
+                                                                                     bandwidth
+                                                                                   */
+    }
+
+    LEAVE();
+    return MLAN_STATUS_SUCCESS;
+}
+
+/**
+ *  @brief Radio command handler
+ *
+ *  @param pmadapter	A pointer to mlan_adapter structure
+ *  @param pioctl_req	A pointer to ioctl request buffer
+ *
+ *  @return		MLAN_STATUS_SUCCESS --success, otherwise fail
+ */
+static mlan_status wlan_radio_ioctl(IN pmlan_adapter pmadapter, IN pmlan_ioctl_req pioctl_req)
+{
+    mlan_status status           = MLAN_STATUS_SUCCESS;
+    mlan_ds_radio_cfg *radio_cfg = MNULL;
+
+    ENTER();
+
+    if (pioctl_req->buf_len < sizeof(mlan_ds_radio_cfg))
+    {
+        PRINTM(MWARN, "MLAN IOCTL information buffer length is too short.\n");
+        pioctl_req->data_read_written = 0;
+        pioctl_req->buf_len_needed    = sizeof(mlan_ds_radio_cfg);
+        pioctl_req->status_code       = MLAN_ERROR_INVALID_PARAMETER;
+        LEAVE();
+        return MLAN_STATUS_RESOURCE;
+    }
+    radio_cfg = (mlan_ds_radio_cfg *)pioctl_req->pbuf;
+    switch (radio_cfg->sub_command)
+    {
+        case MLAN_OID_BAND_CFG:
+            status = wlan_radio_ioctl_band_cfg(pmadapter, pioctl_req);
+            break;
+        default:
+            pioctl_req->status_code = MLAN_ERROR_IOCTL_INVALID;
+            status                  = MLAN_STATUS_FAILURE;
+            break;
+    }
+
+    LEAVE();
+    return status;
+}
+
 
 /**
  *  @brief Start BSS
@@ -724,6 +852,7 @@ t_u8 wlan_get_random_charactor(pmlan_adapter pmadapter)
 }
 
 
+#ifdef WPA
 /**
  *  @brief Set WEP keys
  *
@@ -746,6 +875,10 @@ static mlan_status wlan_sec_ioctl_set_wpa_key(IN pmlan_adapter pmadapter, IN pml
     mlan_status ret      = MLAN_STATUS_SUCCESS;
     mlan_private *pmpriv = pmadapter->priv[pioctl_req->bss_index];
     mlan_ds_sec_cfg *sec = MNULL;
+#ifndef KEY_PARAM_SET_V2
+    t_u8 broadcast_mac_addr[] = {0xff, 0xff, 0xff, 0xff, 0xff, 0xff};
+    t_u8 remove_key           = MFALSE;
+#endif /* KEY_PARAM_SET_V2 */
 
     ENTER();
 
@@ -759,11 +892,51 @@ static mlan_status wlan_sec_ioctl_set_wpa_key(IN pmlan_adapter pmadapter, IN pml
         goto exit;
     }
 
+#ifndef KEY_PARAM_SET_V2
+#ifdef ENABLE_WPA_NONE
+    if ((pmpriv->bss_mode == MLAN_BSS_MODE_IBSS) && pmpriv->sec_info.wpa_enabled)
+    {
+        /*
+         * IBSS/WPA-None uses only one key (Group) for both receiving and
+         *  sending unicast and multicast packets.
+         */
+        /* Send the key as PTK to firmware */
+        sec->param.encrypt_key.key_index = MLAN_KEY_INDEX_UNICAST;
+        ret = wlan_prepare_cmd(pmpriv, HostCmd_CMD_802_11_KEY_MATERIAL, HostCmd_ACT_GEN_SET, KEY_INFO_ENABLED, MNULL,
+                               &sec->param.encrypt_key);
+        if (ret)
+            goto exit;
+
+        /* Send the key as GTK to firmware */
+        sec->param.encrypt_key.key_index = ~MLAN_KEY_INDEX_UNICAST;
+    }
+#endif /* ENABLE_WPA_NONE */
+#endif /* KEY_PARAM_SET_V2 */
 
 
 
+#ifdef KEY_PARAM_SET_V2
     ret = wlan_prepare_cmd(pmpriv, HostCmd_CMD_802_11_KEY_MATERIAL, HostCmd_ACT_GEN_SET, 0, (t_void *)pioctl_req,
                            &sec->param.encrypt_key);
+#else
+    if (__memcmp(pmadapter, sec->param.encrypt_key.mac_addr, broadcast_mac_addr, MLAN_MAC_ADDR_LENGTH))
+    {
+        sec->param.encrypt_key.key_index |= MLAN_KEY_INDEX_UNICAST;
+    }
+
+    if (remove_key == MTRUE)
+    {
+        /* Send request to firmware */
+        ret = wlan_prepare_cmd(pmpriv, HostCmd_CMD_802_11_KEY_MATERIAL, HostCmd_ACT_GEN_SET, !(KEY_INFO_ENABLED),
+                               (t_void *)pioctl_req, &sec->param.encrypt_key);
+    }
+    else
+    {
+        /* Send request to firmware */
+        ret = wlan_prepare_cmd(pmpriv, HostCmd_CMD_802_11_KEY_MATERIAL, HostCmd_ACT_GEN_SET, KEY_INFO_ENABLED,
+                               (t_void *)pioctl_req, &sec->param.encrypt_key);
+    }
+#endif /* KEY_PARAM_SET_V2 */
 
     if (ret == MLAN_STATUS_SUCCESS)
     {
@@ -774,6 +947,7 @@ exit:
     LEAVE();
     return ret;
 }
+#endif /* WPA */
 
 
 /**
@@ -792,10 +966,12 @@ static mlan_status wlan_sec_ioctl_encrypt_key(IN pmlan_adapter pmadapter, IN pml
     sec = (mlan_ds_sec_cfg *)(void *)pioctl_req->pbuf;
     if (pioctl_req->action == MLAN_ACT_SET)
     {
+#ifdef WPA
             if (sec->param.encrypt_key.key_len > MAX_WEP_KEY_SIZE)
         {
             status = wlan_sec_ioctl_set_wpa_key(pmadapter, pioctl_req);
         }
+#endif /* WPA */
     }
     else
     {
@@ -1328,6 +1504,7 @@ mlan_status wlan_ops_sta_ioctl(t_void *adapter, pmlan_ioctl_req pioctl_req)
 
     if (pioctl_req != MNULL)
     {
+        CHECK_BSS_TYPE(pioctl_req->bss_index, MLAN_STATUS_FAILURE);
         pmpriv = pmadapter->priv[pioctl_req->bss_index];
     }
     else
@@ -1341,9 +1518,14 @@ mlan_status wlan_ops_sta_ioctl(t_void *adapter, pmlan_ioctl_req pioctl_req)
         case MLAN_IOCTL_BSS:
             status = wlan_bss_ioctl(pmadapter, pioctl_req);
             break;
+        case MLAN_IOCTL_RADIO_CFG:
+            status = wlan_radio_ioctl(pmadapter, pioctl_req);
+            break;
+#if (CONFIG_WIFI_RTS_THRESHOLD) || (CONFIG_WIFI_FRAG_THRESHOLD)
         case MLAN_IOCTL_SNMP_MIB:
             status = wlan_snmp_mib_ioctl(pmadapter, pioctl_req);
             break;
+#endif
         case MLAN_IOCTL_SEC_CFG:
             status = wlan_sec_cfg_ioctl(pmadapter, pioctl_req);
             break;

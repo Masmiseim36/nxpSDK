@@ -45,7 +45,7 @@
  */
 
 #include <stdlib.h>
-#include "slist.h"
+#include "osa/slist.h"
 
 void SlAddNodeToTail(SlNode_t *Head, SlNode_t *Node)
 {

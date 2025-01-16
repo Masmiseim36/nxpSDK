@@ -2,10 +2,9 @@
   *
   * @brief This file contains fixed-point radix-4 FFT function
   *
-  * Copyright 2023 NXP
+  * Copyright 2023-2024 NXP
   *
   * SPDX-License-Identifier: BSD-3-Clause
-  *
   */
 
 /************************************************************************
@@ -15,10 +14,13 @@
 #include <osa.h>
 #if CONFIG_WLS_CSI_PROC
 
+//
 #include <stdio.h>
 #include "wls_param_defines.h"
 #include "wls_radix4Fft.h"
-//#include "math.h"
+#if (MAX_FFT_FLT != 64)
+#include "math.h"
+#endif
 
 //#define ARM_DEBUG
 #if defined(MAX_FFT_SIZE_2048)
@@ -2090,7 +2092,7 @@ void radix4IfftStride(INT16* pSrc, INT16* pDst, int Nfft, const INT16* pCoeff, i
 }
 #endif
 
-#define FFT_SCALE
+//#define FFT_SCALE
 void radix2Ifft(INT16* pBfr, int Nfft, const INT16* pCoeff, int lenCoeff){
 
 	int ii, jj, mm, nn;
@@ -2178,6 +2180,7 @@ void radix2Ifft(INT16* pBfr, int Nfft, const INT16* pCoeff, int lenCoeff){
 	}
 }
 
+#if (MAX_FFT_FLT == 64)
 const float twiddleTableFlt[2 * MAX_FFT_FLT] = {
 	1.00000000f,       0.00000000f,      0.995184720f,     0.0980171412f,      0.980785251f,      0.195090324f,      0.956940353f,      0.290284663f,      0.923879504f,      0.382683456f,      0.881921232f,      0.471396744f,
 	0.831469595f,      0.555570245f,      0.773010433f,      0.634393334f,      0.707106769f,      0.707106769f,      0.634393275f,      0.773010433f,      0.555570185f,      0.831469655f,      0.471396655f,      0.881921291f,
@@ -2191,7 +2194,9 @@ const float twiddleTableFlt[2 * MAX_FFT_FLT] = {
 	0.555570424f,     -0.831469476f,      0.634393334f,     -0.773010433f,      0.707107008f,     -0.707106531f,      0.773010552f,     -0.634393156f,      0.831469595f,     -0.555570304f,      0.881921351f,     -0.471396536f,
 	0.923879564f,     -0.382683426f,      0.956940413f,     -0.290284395f,      0.980785310f,     -0.195090234f,      0.995184779f,    -0.0980167687f
 };
-
+#else
+const float *twiddleTableFlt = NULL;
+#endif
 
 void radix2FftFlt(float* pBfr, int Nfft, const float* pCoeff, int lenCoeff) {
 
@@ -2202,7 +2207,9 @@ void radix2FftFlt(float* pBfr, int Nfft, const float* pCoeff, int lenCoeff) {
 	float z0I, z0Q, z1I, z1Q;
 	float y0I, y0Q, y1I, y1Q;
 
+#if (MAX_FFT_FLT == 64)
 	const float *coeffPtr;
+#endif
 	float *loopPtr;
 	unsigned long long tempVal0, tempVal1;
 	unsigned long long *dataPtr = (unsigned long long *)pBfr;
@@ -2232,13 +2239,19 @@ void radix2FftFlt(float* pBfr, int Nfft, const float* pCoeff, int lenCoeff) {
 	coeffStride = lenCoeff >> 1;
 	for (ii = 0;ii<log2Nfft;ii++) {
 		loopPtr = pBfr;
+#if (MAX_FFT_FLT == 64)
 		coeffPtr = pCoeff;
-
+#endif
 		for (mm = 0;mm<loop2;mm++) {
 
+#if (MAX_FFT_FLT == 64)
 			W1I = coeffPtr[0]; // cosf(2 * PI * mm * coeffStride / MAX_FFT_FLT); //
 			W1Q = coeffPtr[1]; // sinf(2 * PI * mm * coeffStride / MAX_FFT_FLT); //
 			coeffPtr += 2 * coeffStride;
+#else
+			W1I = cosf(2 * PI * mm * coeffStride / MAX_FFT_FLT); //
+			W1Q = sinf(2 * PI * mm * coeffStride / MAX_FFT_FLT); //
+#endif
 			for (nn = loop1;nn>0;nn--) {
 				z0I = loopPtr[0];
 				z0Q = loopPtr[1];
@@ -2274,8 +2287,9 @@ void radix2IfftFlt(float* pBfr, int Nfft, const float* pCoeff, int lenCoeff) {
 	float x1I, x1Q, W1I, W1Q;
 	float z0I, z0Q, z1I, z1Q;
 	float y0I, y0Q, y1I, y1Q;
-
+#if (MAX_FFT_FLT == 64)
 	const float *coeffPtr;
+#endif
 	float *loopPtr;
 	unsigned long long tempVal0, tempVal1;
 	unsigned long long *dataPtr = (unsigned long long *)pBfr;
@@ -2305,13 +2319,18 @@ void radix2IfftFlt(float* pBfr, int Nfft, const float* pCoeff, int lenCoeff) {
 	coeffStride = lenCoeff >> 1;
 	for (ii = 0;ii<log2Nfft;ii++) {
 		loopPtr = pBfr;
+#if (MAX_FFT_FLT == 64)
 		coeffPtr = pCoeff;
-
+#endif
 		for (mm = 0;mm<loop2;mm++) {
-
+#if (MAX_FFT_FLT == 64)
 			W1I = coeffPtr[0]; // cosf(2 * PI * mm * coeffStride / MAX_FFT_FLT); //
 			W1Q = coeffPtr[1]; // sinf(2 * PI * mm * coeffStride / MAX_FFT_FLT); //
 			coeffPtr += 2*coeffStride;
+#else
+			W1I = cosf(2 * PI * mm * coeffStride / MAX_FFT_FLT); //
+			W1Q = sinf(2 * PI * mm * coeffStride / MAX_FFT_FLT); //
+#endif
 			for (nn = loop1;nn>0;nn--) {
 				z0I = loopPtr[0];
 				z0Q = loopPtr[1];

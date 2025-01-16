@@ -42,7 +42,7 @@ Change Log:
 #define WLAN_TX_PWR_200MW 23
 /** 2000mW */
 #define WLAN_TX_PWR_CN_2000MW 33
-#if defined(RW610)
+#if defined(RW610) || defined(IW610)
 /** 22dBm */
 #define WLAN_TX_PWR_WW_DEFAULT 22
 #else
@@ -367,9 +367,7 @@ static const chan_freq_power_t channel_freq_power_CAN_A[] = {
     {108, 5540, WLAN_TX_PWR_US_DEFAULT, (bool)MTRUE},  {112, 5560, WLAN_TX_PWR_US_DEFAULT, (bool)MTRUE},
     {116, 5580, WLAN_TX_PWR_US_DEFAULT, (bool)MTRUE},  {132, 5660, WLAN_TX_PWR_US_DEFAULT, (bool)MTRUE},
     {136, 5680, WLAN_TX_PWR_US_DEFAULT, (bool)MTRUE},  {140, 5700, WLAN_TX_PWR_US_DEFAULT, (bool)MTRUE},
-#if CONFIG_11AC
-     {144, 5720, WLAN_TX_PWR_US_DEFAULT, (bool)MTRUE},
-#endif
+    {144, 5720, WLAN_TX_PWR_US_DEFAULT, (bool)MTRUE},
     {149, 5745, WLAN_TX_PWR_US_DEFAULT, (bool)MFALSE}, {153, 5765, WLAN_TX_PWR_US_DEFAULT, (bool)MFALSE},
     {157, 5785, WLAN_TX_PWR_US_DEFAULT, (bool)MFALSE}, {161, 5805, WLAN_TX_PWR_US_DEFAULT, (bool)MFALSE},
     {165, 5825, WLAN_TX_PWR_US_DEFAULT, (bool)MFALSE}};
@@ -597,6 +595,7 @@ t_u8 AdhocRates_A[A_SUPPORTED_RATES] = {0x8c, 0x12, 0x98, 0x24, 0xb0, 0x48, 0x60
  */
 t_u8 SupportedRates_A[A_SUPPORTED_RATES] = {0x0c, 0x12, 0x18, 0x24, 0xb0, 0x48, 0x60, 0x6c, 0};
 
+#if CONFIG_11N
 /**
  * The rates supported by the card
  */
@@ -605,6 +604,16 @@ static t_u16 WlanDataRates[WLAN_SUPPORTED_RATES_EXT] = {
     0x1A,  0x27, 0x34, 0x4E, 0x68, 0x75, 0x82, 0x0C, 0x1B, 0x36, 0x51, 0x6C, 0xA2, 0xD8, 0xF3,
     0x10E, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
     0x00,  0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
+#else
+/**
+ * The rates supported by the card
+ */
+t_u16 WlanDataRates[WLAN_SUPPORTED_RATES] = {0x02, 0x04, 0x0B, 0x16, 0x00, 0x0C, 0x12, 0x18, 0x24, 0x30, 0x48, 0x60,
+                                             0x6C, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+                                             0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+                                             0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+                                             0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
+#endif
 
 /**
  * The rates supported in B mode
@@ -817,16 +826,19 @@ mlan_status wlan_misc_country_2_cfp_table_code(pmlan_adapter pmadapter, t_u8 *co
  */
 t_u32 wlan_index_to_data_rate(pmlan_adapter pmadapter, t_u8 index, t_u8 ht_info)
 {
+#if CONFIG_11N
 #define MCS_NUM_SUPP 8
     t_u16 mcs_num_supp              = MCS_NUM_SUPP;
     t_u16 mcs_rate[4][MCS_NUM_SUPP] = {{0x1b, 0x36, 0x51, 0x6c, 0xa2, 0xd8, 0xf3, 0x10e},  /*LG 40M*/
                                        {0x1e, 0x3c, 0x5a, 0x78, 0xb4, 0xf0, 0x10e, 0x12c}, /*SG 40M */
                                        {0x0d, 0x1a, 0x27, 0x34, 0x4e, 0x68, 0x75, 0x82},   /*LG 20M */
                                        {0x0e, 0x1c, 0x2b, 0x39, 0x56, 0x73, 0x82, 0x90}};  /*SG 20M */
+#endif
     t_u32 rate = 0;
 
     ENTER();
 
+#if CONFIG_11N
     if (ht_info & MBIT(0))
     {
         if (index == MLAN_RATE_BITMAP_MCS0)
@@ -857,10 +869,16 @@ t_u32 wlan_index_to_data_rate(pmlan_adapter pmadapter, t_u8 index, t_u8 ht_info)
             rate = WlanDataRates[0];
     }
     else
+#endif /* ENABLE_802_11N */
     {
+#if CONFIG_11N
         /* 11n non HT rates */
         if (index >= WLAN_SUPPORTED_RATES_EXT)
         {
+#else
+        if (index >= WLAN_SUPPORTED_RATES)
+        {
+#endif
             index = 0;
         }
         rate = WlanDataRates[index];
@@ -887,11 +905,13 @@ t_u32 wlan_index_to_data_rate(pmlan_adapter pmadapter,
 #endif
 )
 {
+#if CONFIG_11N
 #define MCS_NUM_SUPP 8U
     t_u16 mcs_rate[4][MCS_NUM_SUPP] = {{0x1b, 0x36, 0x51, 0x6c, 0xa2, 0xd8, 0xf3, 0x10e},  /*LG 40M*/
                                        {0x1e, 0x3c, 0x5a, 0x78, 0xb4, 0xf0, 0x10e, 0x12c}, /*SG 40M */
                                        {0x0d, 0x1a, 0x27, 0x34, 0x4e, 0x68, 0x75, 0x82},   /*LG 20M */
                                        {0x0e, 0x1c, 0x2b, 0x39, 0x56, 0x73, 0x82, 0x90}};  /*SG 20M */
+#endif
 
 #if CONFIG_11AC
 #define MCS_NUM_AC 10
@@ -992,6 +1012,7 @@ t_u32 wlan_index_to_data_rate(pmlan_adapter pmadapter,
     }
     else
 #endif
+#if CONFIG_11N
         if ((tx_rate_info & 0x3U) == (t_u8)MLAN_RATE_FORMAT_HT)
     {
         /* HT rate */
@@ -1027,10 +1048,16 @@ t_u32 wlan_index_to_data_rate(pmlan_adapter pmadapter,
         }
     }
     else
+#endif /* CONFIG_11N */
     {
+#if CONFIG_11N
         /* 11n non HT rates */
         if (index >= WLAN_SUPPORTED_RATES_EXT)
         {
+#else
+        if (index >= WLAN_SUPPORTED_RATES)
+        {
+#endif
             index = 0;
         }
         rate = WlanDataRates[index];
@@ -1073,6 +1100,7 @@ t_u32 wlan_get_active_data_rates(mlan_private *pmpriv,
     return k;
 }
 
+#ifdef STA_SUPPORT
 /**
  *  @brief This function search through all the regions cfp table to find the channel,
  *            if the channel is found then gets the MIN txpower of the channel
@@ -1387,6 +1415,7 @@ const chan_freq_power_t *wlan_find_cfp_by_band_and_freq(mlan_adapter *pmadapter,
     LEAVE();
     return cfp;
 }
+#endif /* STA_SUPPORT */
 
 /**
  *  @brief Check if Rate Auto

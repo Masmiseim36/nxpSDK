@@ -7,30 +7,13 @@
  */
 
 #include "fsl_spi.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 #include "fsl_debug_console.h"
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#ifndef USE_HS_SPI
-#define USE_HS_SPI 0
-#endif
-
-#if USE_HS_SPI
-#define EXAMPLE_SPI_SLAVE     SPI14
-#define EXAMPLE_SPI_SLAVE_IRQ FLEXCOMM14_IRQn
-#define SPI_SLAVE_IRQHandler  FLEXCOMM14_IRQHandler
-#else
-#define EXAMPLE_SPI_SLAVE     SPI5
-#define EXAMPLE_SPI_SLAVE_IRQ FLEXCOMM5_IRQn
-#define SPI_SLAVE_IRQHandler  FLEXCOMM5_IRQHandler
-#endif
-
-#define EXAMPLE_SPI_SSEL 0
-#define EXAMPLE_SPI_SPOL kSPI_SpolActiveAllLow
 
 /*******************************************************************************
  * Prototypes
@@ -79,17 +62,7 @@ int main(void)
     uint32_t err                   = 0U;
 
     /* Init the boards */
-#if USE_HS_SPI
-    /* Use 48 MHz clock for the FLEXCOMM14 */
-    CLOCK_AttachClk(kFRO_DIV4_to_FLEXCOMM14);
-#else
-    /* Use 48 MHz clock for the FLEXCOMM5 */
-    CLOCK_AttachClk(kFRO_DIV4_to_FLEXCOMM5);
-#endif
-
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
 
     PRINTF("\r\nSPI board to board interrupt slave example started!\r\n");
 

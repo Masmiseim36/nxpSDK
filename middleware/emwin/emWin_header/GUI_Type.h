@@ -9,7 +9,7 @@
 *                                                                    *
 **********************************************************************
 
-** emWin V6.38 - Graphical user interface for embedded applications **
+** emWin V6.46 - Graphical user interface for embedded applications **
 All  Intellectual Property rights  in the Software belongs to  SEGGER.
 emWin is protected by  international copyright laws.  Knowledge of the
 source code may not be used to write a similar product.  This file may
@@ -34,7 +34,7 @@ License model:            emWin License Agreement, dated August 20th 2011 and Am
 Licensed platform:        NXP's ARM 7/9, Cortex-M0, M3, M4, M7, A7, M33
 ----------------------------------------------------------------------
 Support and Update Agreement (SUA)
-SUA period:               2011-08-19 - 2024-09-02
+SUA period:               2011-08-19 - 2025-09-02
 Contact to extend SUA:    sales@segger.com
 ----------------------------------------------------------------------
 File        : GUI_Type.h
@@ -405,21 +405,21 @@ DECLARE_FONT(PROP_AA4);
 DECLARE_FONT(PROP_AA4_EXT);
 
 /* MONO: Monospaced fonts */
-#define GUI_FONTTYPE_MONO       \
-  GUIMONO_DispChar,             \
-  GUIMONO_GetCharDistX,         \
-  GUIMONO_GetFontInfo,          \
-  GUIMONO_IsInFont,             \
-  (GUI_GETCHARINFO *)0,         \
+#define GUI_FONTTYPE_MONO           \
+  GUIMONO_DispChar,                 \
+  GUIMONO_GetCharDistX,             \
+  GUIMONO_GetFontInfo,              \
+  GUIMONO_IsInFont,                 \
+  (GUI_GETCHARINFO *)0,             \
   (tGUI_ENC_APIList*)0
 
 /* PROP: Proportional fonts */
-#define GUI_FONTTYPE_PROP       \
-  GUIPROP_DispChar,             \
-  GUIPROP_GetCharDistX,         \
-  GUIPROP_GetFontInfo,          \
-  GUIPROP_IsInFont,             \
-  (GUI_GETCHARINFO *)0,         \
+#define GUI_FONTTYPE_PROP           \
+  GUIPROP_DispChar,                 \
+  GUIPROP_GetCharDistX,             \
+  GUIPROP_GetFontInfo,              \
+  GUIPROP_IsInFont,                 \
+  (GUI_GETCHARINFO *)0,             \
   (tGUI_ENC_APIList*)0
 
 /* PROP_EXT: Extended proportional fonts */
@@ -441,21 +441,21 @@ DECLARE_FONT(PROP_AA4_EXT);
   (tGUI_ENC_APIList*)0
 
 /* PROP: Proportional fonts SJIS */
-#define GUI_FONTTYPE_PROP_SJIS  \
-  GUIPROP_DispChar,             \
-  GUIPROP_GetCharDistX,         \
-  GUIPROP_GetFontInfo,          \
-  GUIPROP_IsInFont,             \
-  (GUI_GETCHARINFO *)0,         \
+#define GUI_FONTTYPE_PROP_SJIS      \
+  GUIPROP_DispChar,                 \
+  GUIPROP_GetCharDistX,             \
+  GUIPROP_GetFontInfo,              \
+  GUIPROP_IsInFont,                 \
+  (GUI_GETCHARINFO *)0,             \
   &GUI_ENC_APIList_SJIS
 
 /* PROPAA: Proportional, antialiased fonts */
-#define GUI_FONTTYPE_PROPAA       \
-  GUIPROPAA_DispChar,             \
-  GUIPROPAA_GetCharDistX,         \
-  GUIPROPAA_GetFontInfo,          \
-  GUIPROPAA_IsInFont,             \
-  (GUI_GETCHARINFO *)0,           \
+#define GUI_FONTTYPE_PROPAA         \
+  GUIPROPAA_DispChar,               \
+  GUIPROPAA_GetCharDistX,           \
+  GUIPROPAA_GetFontInfo,            \
+  GUIPROPAA_IsInFont,               \
+  (GUI_GETCHARINFO *)0,             \
   (tGUI_ENC_APIList*)0
 
 /* PROP_AA2: Proportional, antialiased fonts, 2bpp */
@@ -536,6 +536,19 @@ struct GUI_FONT {
   U8 Baseline;
   U8 LHeight;     /* Height of a small lower case character (a,x) */
   U8 CHeight;     /* Height of a small upper case character (A,X) */
+};
+
+/*********************************************************************
+*
+*       GUI_KERNING_INFO
+*/
+typedef struct GUI_KERNING_INFO GUI_KERNING_INFO;
+
+struct GUI_KERNING_INFO {
+  const GUI_FONT   * pFont;
+  const U16        * pData;
+  U32                NumItems;
+  GUI_KERNING_INFO * pNext;
 };
 
 /*********************************************************************
@@ -626,6 +639,30 @@ typedef struct tGUI_SIF_APIList_struct {
 *
 *       External binary font structures (XBF)
 */
+/*********************************************************************
+*
+*       GUI_XBF_GET_DATA_FUNC
+* 
+*  Description
+*    A callback which is used for loading XBF files into RAM, e.g. from
+*    a file system.
+*    
+*    For more details about GetData functions in general, please refer
+*    to the chapter \ref{FileAccess}.
+* 
+*  Parameters
+*    Off:      Current byte offset in the file.
+*    NumBytes: Number of bytes to be read.
+*    pVoid:    [IN] Parameter is passed to the callback function when
+*                   requesting font data. It can be used for example to
+*                   pass a file handle to the callback function.
+*    pBuffer:  [IN] Pointer to a preallocated buffer where the read file data
+*                   should be written to.
+* 
+*  Return value
+*    == 0: On success.
+*    == 1: On error.
+*/
 typedef int GUI_XBF_GET_DATA_FUNC(U32 Off, U16 NumBytes, void * pVoid, void * pBuffer);
 
 typedef struct {
@@ -669,7 +706,6 @@ typedef struct tGUI_XBF_APIList_struct {
 #define GUI_XBF_TYPE_PROP_STD         GUI_XBF_TYPE_PROP_EXT        // Should be used if the parameter \a{pFont} points to a standard framed proportional font.
 #define GUI_XBF_TYPE_PROP_STD_AA2     GUI_XBF_TYPE_PROP_AA2_EXT    // Should be used if the parameter \a{pFont} points to a standard proportional font that uses 2bpp anti-aliasing.
 #define GUI_XBF_TYPE_PROP_STD_AA4     GUI_XBF_TYPE_PROP_AA4_EXT    // Should be used if the parameter \a{pFont} points to a standard proportional font that uses 4bpp anti-aliasing.
-
 
 /*********************************************************************
 *

@@ -1,6 +1,5 @@
 /*
  * Copyright 2018-2024 NXP
- * All rights reserved.
  *
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -24,6 +23,7 @@
 #if (defined(SERIAL_MANAGER_NON_BLOCKING_MODE) && (SERIAL_MANAGER_NON_BLOCKING_MODE == 0U))
 #error When SERIAL_MANAGER_NON_BLOCKING_MODE=0, DEBUG_CONSOLE_TRANSFER_NON_BLOCKING can not be set.
 #else
+#undef SERIAL_MANAGER_NON_BLOCKING_MODE
 #define SERIAL_MANAGER_NON_BLOCKING_MODE (1U)
 #endif
 #else
@@ -262,7 +262,7 @@
 #endif
 /*! @brief Enable or disable SerialManager_Task() handle TX to prevent recursive calling */
 #ifndef SERIAL_MANAGER_TASK_HANDLE_TX
-#define SERIAL_MANAGER_TASK_HANDLE_TX (1U)
+#define SERIAL_MANAGER_TASK_HANDLE_TX (0U)
 #endif
 #endif
 

@@ -11,24 +11,13 @@
  ******************************************************************************/
 
 #include "fsl_debug_console.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 #include "fsl_wwdt.h"
 
-#if !defined(FSL_FEATURE_WWDT_HAS_NO_PDCFG) || (!FSL_FEATURE_WWDT_HAS_NO_PDCFG)
-#include "fsl_power.h"
-#endif
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define WWDT                WWDT0
-#define APP_LED_INIT        LED_RED_INIT(LOGIC_LED_OFF)
-#define APP_LED_ON          LED_RED_ON()
-#define APP_LED_TOGGLE      LED_RED_TOGGLE()
-#define APP_WDT_IRQn        WDT0_IRQn
-#define APP_WDT_IRQ_HANDLER WDT0_IRQHandler
-#define WDT_CLK_FREQ        CLOCK_GetWdtClkFreq(0)
 
 /*******************************************************************************
  * Prototypes
@@ -90,18 +79,7 @@ int main(void)
     bool timeOutResetEnable;
 
     /* Init hardware*/
-    CLOCK_EnableClock(kCLOCK_HsGpio0);
-    RESET_PeripheralReset(kHSGPIO0_RST_SHIFT_RSTn);
-
-    SYSCTL0->PDRUNCFG0_CLR = SYSCTL0_PDRUNCFG0_LPOSC_PD_MASK;
-    CLOCK_AttachClk(kLPOSC_to_WDT0_CLK);
-
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
-#if !defined(FSL_FEATURE_WWDT_HAS_NO_PDCFG) || (!FSL_FEATURE_WWDT_HAS_NO_PDCFG)
-    POWER_DisablePD(kPDRUNCFG_PD_LPOSC);
-#endif
+    BOARD_InitHardware();
 
     /* Set Red LED to initially be high */
     APP_LED_INIT;

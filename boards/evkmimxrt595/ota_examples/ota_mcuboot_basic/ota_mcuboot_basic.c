@@ -9,9 +9,9 @@
 #include "fsl_device_registers.h"
 #include "fsl_debug_console.h"
 #include "fsl_shell.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "clock_config.h"
+#include "app.h"
 
 #include "mcuboot_app_support.h"
 #include "mflash_drv.h"
@@ -20,19 +20,9 @@
 
 #include <ctype.h>
 
-#include "fsl_common.h"
-#include "fsl_gpio.h"
-#include "fsl_power.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define APP_DEBUG_UART_TYPE     kSerialPort_Uart
-#define APP_DEBUG_UART_INSTANCE 12U
-#define APP_DEBUG_UART_CLK_FREQ CLOCK_GetFlexcommClkFreq(12)
-#define APP_DEBUG_UART_FRG_CLK \
-    (&(const clock_frg_clk_config_t){12U, kCLOCK_FrgPllDiv, 255U, 0U}) /*!< Select FRG0 mux as frg_pll */
-#define APP_DEBUG_UART_CLK_ATTACH kFRG_to_FLEXCOMM12
-#define APP_DEBUG_UART_BAUDRATE   115200
 
 /*******************************************************************************
  * Prototypes
@@ -85,20 +75,6 @@ static hashctx_t sha256_xmodem_ctx;
 /*******************************************************************************
  * Code
  ******************************************************************************/
-/* Initialize debug console. */
-void APP_InitAppDebugConsole(void)
-{
-    uint32_t uartClkSrcFreq;
-
-    /* attach FRG0 clock to FLEXCOMM12 (debug console) */
-    CLOCK_SetFRGClock(APP_DEBUG_UART_FRG_CLK);
-    CLOCK_AttachClk(APP_DEBUG_UART_CLK_ATTACH);
-
-    uartClkSrcFreq = APP_DEBUG_UART_CLK_FREQ;
-
-    DbgConsole_Init(APP_DEBUG_UART_INSTANCE, APP_DEBUG_UART_BAUDRATE, APP_DEBUG_UART_TYPE, uartClkSrcFreq);
-}
-
 
 static void hexdump(const void *src, size_t size)
 {
@@ -473,13 +449,7 @@ int main(void)
     s_shellHandle = &s_shellHandleBuffer[0];
 
     /* Init board hardware. */
-    BOARD_InitBootPins();
-    BOARD_InitBootClocks();
-    APP_InitAppDebugConsole();
-
-    /* Make sure casper ram buffer has power up */
-    POWER_DisablePD(kPDRUNCFG_PPD_CASPER_SRAM);
-    POWER_ApplyPD();
+    BOARD_InitHardware();
     
     ret = mflash_drv_init();
     if (ret)

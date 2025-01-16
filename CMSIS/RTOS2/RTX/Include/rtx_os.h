@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2021 Arm Limited. All rights reserved.
+ * Copyright (c) 2013-2023 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -38,9 +38,9 @@ extern "C"
  
  
 /// Kernel Information
-#define osRtxVersionAPI      20010003   ///< API version (2.1.3)
-#define osRtxVersionKernel   50050004   ///< Kernel version (5.5.4)
-#define osRtxKernelId     "RTX V5.5.4"  ///< Kernel identification string
+#define osRtxVersionAPI      20030000   ///< API version (2.3.0)
+#define osRtxVersionKernel   50090000   ///< Kernel version (5.9.0)
+#define osRtxKernelId     "RTX V5.9.0"  ///< Kernel identification string
  
  
 //  ==== Common definitions ====
@@ -60,6 +60,10 @@ extern "C"
 #define osRtxFlagSystemObject   0x01U
 #define osRtxFlagSystemMemory   0x02U
  
+/// Object Attribute Class definitions
+#define osRtxAttrClass_Pos      4U
+#define osRtxAttrClass_Msk      0xF0U
+ 
  
 //  ==== Kernel definitions ====
  
@@ -69,6 +73,11 @@ extern "C"
 #define osRtxKernelRunning              ((uint8_t)osKernelRunning)
 #define osRtxKernelLocked               ((uint8_t)osKernelLocked)
 #define osRtxKernelSuspended            ((uint8_t)osKernelSuspended)
+ 
+/// Kernel Protect definitions
+#define osRtxKernelProtectPrivileged    0x01U
+#define osRtxKernelProtectClass_Pos     4U
+#define osRtxKernelProtectClass_Msk     0xF0U
  
  
 //  ==== Thread definitions ====
@@ -124,9 +133,10 @@ typedef struct osRtxThread_s {
   uint32_t                         sp;  ///< Current Stack Pointer
   uint32_t                thread_addr;  ///< Thread entry address
   uint32_t                  tz_memory;  ///< TrustZone Memory Identifier
-#ifdef RTX_TF_M_EXTENSION
-  uint32_t                  tz_module;  ///< TrustZone Module Identifier
-#endif
+  uint8_t                        zone;  ///< Thread Zone
+  uint8_t                 reserved[3];
+  struct osRtxThread_s     *wdog_next;  ///< Link pointer to next Thread in Watchdog list
+  uint32_t                  wdog_tick;  ///< Watchdog tick counter
 } osRtxThread_t;
  
  
@@ -137,8 +147,8 @@ typedef struct osRtxThread_s {
 #define osRtxTimerStopped       0x01U   ///< Timer Stopped
 #define osRtxTimerRunning       0x02U   ///< Timer Running
  
-/// Timer Type definitions
-#define osRtxTimerPeriodic      ((uint8_t)osTimerPeriodic)
+/// Timer attribute definitions
+#define osRtxTimerPeriodic      0x01U   ///< Timer Periodic mode
  
 /// Timer Function Information
 typedef struct {
@@ -151,7 +161,7 @@ typedef struct osRtxTimer_s {
   uint8_t                          id;  ///< Object Identifier
   uint8_t                       state;  ///< Object State
   uint8_t                       flags;  ///< Object Flags
-  uint8_t                        type;  ///< Timer Type (Periodic/One-shot)
+  uint8_t                        attr;  ///< Object Attributes
   const char                    *name;  ///< Object Name
   struct osRtxTimer_s           *prev;  ///< Pointer to previous active Timer
   struct osRtxTimer_s           *next;  ///< Pointer to next active Timer
@@ -168,7 +178,7 @@ typedef struct {
   uint8_t                          id;  ///< Object Identifier
   uint8_t              reserved_state;  ///< Object State (not used)
   uint8_t                       flags;  ///< Object Flags
-  uint8_t                    reserved;
+  uint8_t                        attr;  ///< Object Attributes
   const char                    *name;  ///< Object Name
   osRtxThread_t          *thread_list;  ///< Waiting Threads List
   uint32_t                event_flags;  ///< Event Flags
@@ -200,7 +210,7 @@ typedef struct {
   uint8_t                          id;  ///< Object Identifier
   uint8_t              reserved_state;  ///< Object State (not used)
   uint8_t                       flags;  ///< Object Flags
-  uint8_t                    reserved;
+  uint8_t                        attr;  ///< Object Attributes
   const char                    *name;  ///< Object Name
   osRtxThread_t          *thread_list;  ///< Waiting Threads List
   uint16_t                     tokens;  ///< Current number of tokens
@@ -225,7 +235,7 @@ typedef struct {
   uint8_t                          id;  ///< Object Identifier
   uint8_t              reserved_state;  ///< Object State (not used)
   uint8_t                       flags;  ///< Object Flags
-  uint8_t                    reserved;
+  uint8_t                        attr;  ///< Object Attributes
   const char                    *name;  ///< Object Name
   osRtxThread_t          *thread_list;  ///< Waiting Threads List
   osRtxMpInfo_t               mp_info;  ///< Memory Pool Info
@@ -249,7 +259,7 @@ typedef struct {
   uint8_t                          id;  ///< Object Identifier
   uint8_t              reserved_state;  ///< Object State (not used)
   uint8_t                       flags;  ///< Object Flags
-  uint8_t                    reserved;
+  uint8_t                        attr;  ///< Object Attributes
   const char                    *name;  ///< Object Name
   osRtxThread_t          *thread_list;  ///< Waiting Threads List
   osRtxMpInfo_t               mp_info;  ///< Memory Pool Info
@@ -267,7 +277,7 @@ typedef struct {
   uint8_t                          id;  ///< Object Identifier
   uint8_t                       state;  ///< Object State
   uint8_t                       flags;  ///< Object Flags
-  uint8_t                    reserved;
+  uint8_t                        attr;  ///< Object Attributes
   const char                    *name;  ///< Object Name
   osRtxThread_t          *thread_list;  ///< Threads List
 } osRtxObject_t;
@@ -279,57 +289,57 @@ typedef struct {
 typedef struct {
   const char                   *os_id;  ///< OS Identification
   uint32_t                    version;  ///< OS Version
-  struct {                              ///< Kernel Info
+  struct {
     uint8_t                     state;  ///< State
     volatile uint8_t          blocked;  ///< Blocked
     uint8_t                    pendSV;  ///< Pending SV
-    uint8_t                  reserved;
+    uint8_t                   protect;  ///< Protect options
     uint32_t                     tick;  ///< Tick counter
-  } kernel;
+  } kernel;                             ///< Kernel Info
   int32_t                   tick_irqn;  ///< Tick Timer IRQ Number
-  struct {                              ///< Thread Info
-    struct {                            ///< Thread Run Info
+  struct {
+    struct {
       osRtxThread_t             *curr;  ///< Current running Thread
       osRtxThread_t             *next;  ///< Next Thread to Run
-    } run;
+    } run;                              ///< Thread Run Info
     osRtxObject_t               ready;  ///< Ready List Object
     osRtxThread_t               *idle;  ///< Idle Thread
     osRtxThread_t         *delay_list;  ///< Delay List
     osRtxThread_t          *wait_list;  ///< Wait List (no Timeout)
     osRtxThread_t     *terminate_list;  ///< Terminate Thread List
-    uint32_t                 reserved;
-    struct {                            ///< Thread Round Robin Info
+    osRtxThread_t          *wdog_list;  ///< Watchdog List
+    struct {
       osRtxThread_t           *thread;  ///< Round Robin Thread
       uint32_t                timeout;  ///< Round Robin Timeout
-    } robin;
-  } thread;
-  struct {                              ///< Timer Info
+    } robin;                            ///< Thread Round Robin Info
+  } thread;                             ///< Thread Info
+  struct {
     osRtxTimer_t                *list;  ///< Active Timer List
     osRtxThread_t             *thread;  ///< Timer Thread
     osRtxMessageQueue_t           *mq;  ///< Timer Message Queue
     void                (*tick)(void);  ///< Timer Tick Function
-  } timer;
-  struct {                              ///< ISR Post Processing Queue
+  } timer;                              ///< Timer Info
+  struct {
     uint16_t                      max;  ///< Maximum Items
     uint16_t                      cnt;  ///< Item Count
     uint16_t                       in;  ///< Incoming Item Index
     uint16_t                      out;  ///< Outgoing Item Index
     void                       **data;  ///< Queue Data
-  } isr_queue;
-  struct {                                      ///< ISR Post Processing functions
-    void          (*thread)(osRtxThread_t*);    ///< Thread Post Processing function
-    void (*event_flags)(osRtxEventFlags_t*);    ///< Event Flags Post Processing function
-    void    (*semaphore)(osRtxSemaphore_t*);    ///< Semaphore Post Processing function
-    void (*memory_pool)(osRtxMemoryPool_t*);    ///< Memory Pool Post Processing function
-    void        (*message)(osRtxMessage_t*);    ///< Message Post Processing function
-  } post_process;
-  struct {                              ///< Memory Pools (Variable Block Size)
+  } isr_queue;                          ///< ISR Post Processing Queue
+  struct {
+    void          (*thread)(osRtxThread_t*);  ///< Thread Post Processing function
+    void (*event_flags)(osRtxEventFlags_t*);  ///< Event Flags Post Processing function
+    void    (*semaphore)(osRtxSemaphore_t*);  ///< Semaphore Post Processing function
+    void (*memory_pool)(osRtxMemoryPool_t*);  ///< Memory Pool Post Processing function
+    void        (*message)(osRtxMessage_t*);  ///< Message Post Processing function
+  } post_process;                             ///< ISR Post Processing functions
+  struct {
     void                       *stack;  ///< Stack Memory
     void                     *mp_data;  ///< Memory Pool Data Memory
     void                     *mq_data;  ///< Message Queue Data Memory
     void                      *common;  ///< Common Memory
-  } mem;
-  struct {                              ///< Memory Pools (Fixed Block Size)
+  } mem;                                ///< Memory Pools (Variable Block Size)
+  struct {
     osRtxMpInfo_t              *stack;  ///< Stack for Threads
     osRtxMpInfo_t             *thread;  ///< Thread Control Blocks
     osRtxMpInfo_t              *timer;  ///< Timer Control Blocks
@@ -338,7 +348,7 @@ typedef struct {
     osRtxMpInfo_t          *semaphore;  ///< Semaphore Control Blocks
     osRtxMpInfo_t        *memory_pool;  ///< Memory Pool Control Blocks
     osRtxMpInfo_t      *message_queue;  ///< Message Queue Control Blocks
-  } mpi;
+  } mpi;                                ///< Memory Pools (Fixed Block Size)
 } osRtxInfo_t;
  
 extern osRtxInfo_t osRtxInfo;           ///< OS Runtime Information
@@ -399,6 +409,7 @@ extern osRtxObjectMemUsage_t osRtxMessageQueueMemUsage;
 #define osRtxErrorTimerQueueOverflow    3U  ///< User Timer Callback Queue overflow detected for timer.
 #define osRtxErrorClibSpace             4U  ///< Standard C/C++ library libspace not available: increase \c OS_THREAD_LIBSPACE_NUM.
 #define osRtxErrorClibMutex             5U  ///< Standard C/C++ library mutex initialization failed.
+#define osRtxErrorSVC                   6U  ///< Invalid SVC function called.
  
 /// OS Error Callback function
 extern uint32_t osRtxErrorNotify (uint32_t code, void *object_id);
@@ -412,62 +423,63 @@ extern void SVC_Handler     (void);
 extern void PendSV_Handler  (void);
 extern void SysTick_Handler (void);
  
-/// OS Trusted Firmware M Extension
-#ifdef RTX_TF_M_EXTENSION
-extern uint32_t osRtxTzGetModuleId (void);
-#endif
- 
  
 //  ==== OS External Configuration ====
  
 /// OS Configuration flags
-#define osRtxConfigPrivilegedMode   (1UL<<0)    ///< Threads in Privileged mode
-#define osRtxConfigStackCheck       (1UL<<1)    ///< Stack overrun checking
-#define osRtxConfigStackWatermark   (1UL<<2)    ///< Stack usage Watermark
+#define osRtxConfigPrivilegedMode   (1UL<<0)   ///< Threads in Privileged mode
+#define osRtxConfigStackCheck       (1UL<<1)   ///< Stack overrun checking
+#define osRtxConfigStackWatermark   (1UL<<2)   ///< Stack usage Watermark
+#define osRtxConfigSafetyFeatures   (1UL<<3)   ///< Safety features enabled
+#define osRtxConfigSafetyClass      (1UL<<4)   ///< Safety Class feature enabled
+#define osRtxConfigExecutionZone    (1UL<<5)   ///< Execution Zone enabled
+#define osRtxConfigThreadWatchdog   (1UL<<6)   ///< Thread Watchdog enabled
+#define osRtxConfigObjPtrCheck      (1UL<<7)   ///< Object Pointer Checking enabled
+#define osRtxConfigSVCPtrCheck      (1UL<<8)   ///< SVC Pointer Checking enabled
  
 /// OS Configuration structure
 typedef struct {
-  uint32_t                             flags;   ///< OS Configuration Flags
-  uint32_t                         tick_freq;   ///< Kernel Tick Frequency
-  uint32_t                     robin_timeout;   ///< Round Robin Timeout Tick
-  struct {                                      ///< ISR Post Processing Queue
-    void                              **data;   ///< Queue Data
-    uint16_t                             max;   ///< Maximum Items
-    uint16_t                         padding;
-  } isr_queue;
-  struct {                                      ///< Memory Pools (Variable Block Size)
-    void                         *stack_addr;   ///< Stack Memory Address
-    uint32_t                      stack_size;   ///< Stack Memory Size
-    void                       *mp_data_addr;   ///< Memory Pool Memory Address
-    uint32_t                    mp_data_size;   ///< Memory Pool Memory Size
-    void                       *mq_data_addr;   ///< Message Queue Data Memory Address
-    uint32_t                    mq_data_size;   ///< Message Queue Data Memory Size
-    void                        *common_addr;   ///< Common Memory Address
-    uint32_t                     common_size;   ///< Common Memory Size
-  } mem;
-  struct {                                      ///< Memory Pools (Fixed Block Size)
-    osRtxMpInfo_t                     *stack;   ///< Stack for Threads
-    osRtxMpInfo_t                    *thread;   ///< Thread Control Blocks
-    osRtxMpInfo_t                     *timer;   ///< Timer Control Blocks
-    osRtxMpInfo_t               *event_flags;   ///< Event Flags Control Blocks
-    osRtxMpInfo_t                     *mutex;   ///< Mutex Control Blocks
-    osRtxMpInfo_t                 *semaphore;   ///< Semaphore Control Blocks
-    osRtxMpInfo_t               *memory_pool;   ///< Memory Pool Control Blocks
-    osRtxMpInfo_t             *message_queue;   ///< Message Queue Control Blocks
-  } mpi;
-  uint32_t                 thread_stack_size;   ///< Default Thread Stack Size
+  uint32_t                             flags;  ///< OS Configuration Flags
+  uint32_t                         tick_freq;  ///< Kernel Tick Frequency
+  uint32_t                     robin_timeout;  ///< Round Robin Timeout Tick
+  struct {
+    void                              **data;  ///< Queue Data
+    uint16_t                             max;  ///< Maximum Items
+    uint16_t                         padding;  ///< Padding
+  } isr_queue;                                 ///< ISR Post Processing Queue
+  struct {
+    void                         *stack_addr;  ///< Stack Memory Address
+    uint32_t                      stack_size;  ///< Stack Memory Size
+    void                       *mp_data_addr;  ///< Memory Pool Memory Address
+    uint32_t                    mp_data_size;  ///< Memory Pool Memory Size
+    void                       *mq_data_addr;  ///< Message Queue Data Memory Address
+    uint32_t                    mq_data_size;  ///< Message Queue Data Memory Size
+    void                        *common_addr;  ///< Common Memory Address
+    uint32_t                     common_size;  ///< Common Memory Size
+  } mem;                                       ///< Memory Pools (Variable Block Size)
+  struct {
+    osRtxMpInfo_t                     *stack;  ///< Stack for Threads
+    osRtxMpInfo_t                    *thread;  ///< Thread Control Blocks
+    osRtxMpInfo_t                     *timer;  ///< Timer Control Blocks
+    osRtxMpInfo_t               *event_flags;  ///< Event Flags Control Blocks
+    osRtxMpInfo_t                     *mutex;  ///< Mutex Control Blocks
+    osRtxMpInfo_t                 *semaphore;  ///< Semaphore Control Blocks
+    osRtxMpInfo_t               *memory_pool;  ///< Memory Pool Control Blocks
+    osRtxMpInfo_t             *message_queue;  ///< Message Queue Control Blocks
+  } mpi;                                       ///< Memory Pools (Fixed Block Size)
+  uint32_t                 thread_stack_size;  ///< Default Thread Stack Size
   const
-  osThreadAttr_t           *idle_thread_attr;   ///< Idle Thread Attributes
+  osThreadAttr_t           *idle_thread_attr;  ///< Idle Thread Attributes
   const
-  osThreadAttr_t          *timer_thread_attr;   ///< Timer Thread Attributes
-  void               (*timer_thread)(void *);   ///< Timer Thread Function
-  int32_t               (*timer_setup)(void);   ///< Timer Setup Function
+  osThreadAttr_t          *timer_thread_attr;  ///< Timer Thread Attributes
+  void               (*timer_thread)(void *);  ///< Timer Thread Function
+  int32_t               (*timer_setup)(void);  ///< Timer Setup Function
   const
-  osMessageQueueAttr_t        *timer_mq_attr;   ///< Timer Message Queue Attributes
-  uint32_t                     timer_mq_mcnt;   ///< Timer Message Queue maximum Messages
+  osMessageQueueAttr_t        *timer_mq_attr;  ///< Timer Message Queue Attributes
+  uint32_t                     timer_mq_mcnt;  ///< Timer Message Queue maximum Messages
 } osRtxConfig_t;
  
-extern const osRtxConfig_t osRtxConfig;         ///< OS Configuration
+extern const osRtxConfig_t osRtxConfig;        ///< OS Configuration
  
  
 #ifdef  __cplusplus

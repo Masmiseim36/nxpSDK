@@ -20,7 +20,7 @@
 extern "C" {
 #endif
 
-#define USER_DATA_MIN   4
+#define USER_DATA_MIN   CONFIG_BT_CONN_TX_USER_DATA_SIZE
 
 typedef int (*ipsp_rx_cb_t)(struct net_buf *buf);
 

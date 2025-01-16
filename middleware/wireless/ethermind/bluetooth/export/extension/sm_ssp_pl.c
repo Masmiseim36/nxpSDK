@@ -274,6 +274,11 @@ API_RESULT BT_sm_get_remote_iocaps_pl
     return retval;
 }
 
+__attribute__((weak)) API_RESULT sm_pairing_accept(BT_DEVICE_ADDR* device_addr)
+{
+    return API_SUCCESS;
+}
+
 /* ----------------------------------------- Internal Functions */
 /** To return IO Capability to SM Core */
 API_RESULT sm_get_io_capability_pl
@@ -285,6 +290,7 @@ API_RESULT sm_get_io_capability_pl
     UINT32 si;
     UCHAR mitm_reqd, bonding;
     BT_DEVICE_ADDR device_addr;
+    API_RESULT retval;
 
 #ifdef BT_BRSC
     UCHAR sc_only_mode;
@@ -294,6 +300,12 @@ API_RESULT sm_get_io_capability_pl
     BT_INIT_BD_ADDR(&device_addr);
 
     (BT_IGNORE_RETURN_VALUE) device_queue_get_remote_addr (&sm_devices[di].device_handle,&device_addr);
+
+    retval = sm_pairing_accept(&device_addr);
+    if (retval != API_SUCCESS)
+    {
+        return retval;
+    }
 
 #ifdef SM_IO_CAP_DYNAMIC
     /* Set Local IO Cap */
@@ -367,6 +379,11 @@ API_RESULT sm_get_io_capability_pl
          *              10 - General Bonding
          */
         bonding = (sm_devices[di].remote_io_cap.auth_reqs & 0x06U);
+
+        if ((!SM_IS_BONDABLE()) && (0x02 == bonding))
+        {
+            return HC_PAIRING_NOT_ALLOWED;
+        }
     }
     else
     {
@@ -458,6 +475,11 @@ API_RESULT sm_get_io_capability_pl
     /*
      *  Set Local Authentication Requirements.
      */
+    if (!SM_IS_BONDABLE())
+    {
+        bonding = 0;
+    }
+
     io_cap->auth_reqs = mitm_reqd | bonding;
 
 #ifdef SM_AUTHREQ_DYNAMIC

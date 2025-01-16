@@ -1,6 +1,5 @@
 /*
  * Copyright 2018-2019 NXP
- * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -12,6 +11,7 @@
 #include "fsl_codec_i2c.h"
 /*!
  * @addtogroup ak4497
+ * @ingroup codec
  * @{
  */
 
@@ -19,10 +19,10 @@
  * Definitions
  ******************************************************************************/
 /*! @name Driver version */
-/*@{*/
+/*! @{ */
 /*! @brief CLOCK driver version 2.1.2 */
 #define FSL_AK4497_DRIVER_VERSION (MAKE_VERSION(2, 1, 2))
-/*@}*/
+/*! @} */
 
 /*! @brief ak4497 handle size */
 #ifndef AK4497_I2C_HANDLER_SIZE

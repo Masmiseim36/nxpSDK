@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 ARM Limited. All rights reserved.
+ * Copyright (c) 2013-2024 ARM Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * $Date:        31. March 2020
+ * $Date:        13. May 2024
  * $Revision:    V2.3
  *
  * Project:      USB Device Driver definitions
@@ -84,8 +84,6 @@ typedef struct _ARM_USBD_STATE {
 #define ARM_USBD_EVENT_OUT              (1UL << 1)      ///< OUT Packet(s)
 #define ARM_USBD_EVENT_IN               (1UL << 2)      ///< IN Packet(s)
 
-
-#ifndef __DOXYGEN_MW__                  // exclude from middleware documentation
 
 // Function documentation
 /**
@@ -216,7 +214,6 @@ typedef struct _ARM_USBD_STATE {
   \fn          void ARM_USBD_SignalDeviceEvent (uint32_t event)
   \brief       Signal USB Device Event.
   \param[in]   event \ref USBD_dev_events
-  \return      none
 */
 /**
   \fn          void ARM_USBD_SignalEndpointEvent (uint8_t ep_addr, uint32_t event)
@@ -225,7 +222,6 @@ typedef struct _ARM_USBD_STATE {
                 - ep_addr.0..3: Address
                 - ep_addr.7:    Direction
   \param[in]   event \ref USBD_ep_events
-  \return      none
 */
 
 typedef void (*ARM_USBD_SignalDeviceEvent_t)   (uint32_t event);                    ///< Pointer to \ref ARM_USBD_SignalDeviceEvent : Signal USB Device Event.
@@ -269,8 +265,6 @@ typedef struct _ARM_DRIVER_USBD {
   int32_t               (*EndpointTransferAbort)     (uint8_t ep_addr);                                   ///< Pointer to \ref ARM_USBD_EndpointTransferAbort : Abort current USB Endpoint transfer.
   uint16_t              (*GetFrameNumber)            (void);                                              ///< Pointer to \ref ARM_USBD_GetFrameNumber : Get current USB Frame Number.
 } const ARM_DRIVER_USBD;
-
-#endif /* __DOXYGEN_MW__ */
 
 #ifdef  __cplusplus
 }

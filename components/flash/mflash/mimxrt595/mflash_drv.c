@@ -64,7 +64,7 @@ static flexspi_device_config_t deviceconfig = {
     .AHBWriteWaitInterval = 0,
 };
 
-static uint32_t customLUT[CUSTOM_LUT_LENGTH] = {
+const uint32_t customLUT[CUSTOM_LUT_LENGTH] = {
 
     /*  OPI DDR read */
     [4 * NOR_CMD_LUT_SEQ_IDX_READ + 0] =
@@ -361,8 +361,12 @@ static int32_t mflash_drv_init_internal(void)
     /* Configure flash settings according to serial flash feature. */
     FLEXSPI_SetFlashConfig(MFLASH_FLEXSPI, &deviceconfig, FLASH_PORT);
 
+    uint32_t tmpLUT[CUSTOM_LUT_LENGTH] = {0x00U};
+
+    memcpy(tmpLUT, customLUT, sizeof(tmpLUT));
+
     /* Update LUT table. */
-    FLEXSPI_UpdateLUT(MFLASH_FLEXSPI, 0, customLUT, CUSTOM_LUT_LENGTH);
+    FLEXSPI_UpdateLUT(MFLASH_FLEXSPI, 0, tmpLUT, CUSTOM_LUT_LENGTH);
 
     /* Do software reset. */
     FLEXSPI_SoftwareReset(MFLASH_FLEXSPI);

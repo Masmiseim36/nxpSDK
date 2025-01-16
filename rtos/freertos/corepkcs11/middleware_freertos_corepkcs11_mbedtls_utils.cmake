@@ -3,18 +3,23 @@
 include_guard(GLOBAL)
 message("${CMAKE_CURRENT_LIST_FILE} component is included.")
 
-if(CONFIG_USE_middleware_pkcs11 AND CONFIG_USE_middleware_mbedtls)
+      target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
+          ${CMAKE_CURRENT_LIST_DIR}/source/dependency/3rdparty/mbedtls_utils/mbedtls_utils.c
+        )
 
-target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
-  ${CMAKE_CURRENT_LIST_DIR}/source/dependency/3rdparty/mbedtls_utils/mbedtls_utils.c
-)
+  
+      target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
+          ${CMAKE_CURRENT_LIST_DIR}/source/dependency/3rdparty/mbedtls_utils
+        )
 
-target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
-  ${CMAKE_CURRENT_LIST_DIR}/source/dependency/3rdparty/mbedtls_utils
-)
+    if(CONFIG_USE_COMPONENT_CONFIGURATION)
+  message("===>Import configuration from ${CMAKE_CURRENT_LIST_FILE}")
 
-else()
+      target_compile_definitions(${MCUX_SDK_PROJECT_NAME} PUBLIC
+                  -DMBEDTLS_THREADING_ALT
+                        -DMBEDTLS_THREADING_C
+              )
+  
+  
+  endif()
 
-message(SEND_ERROR "middleware_freertos_corepkcs11_mbedtls_utils dependency does not meet, please check ${CMAKE_CURRENT_LIST_FILE}.")
-
-endif()

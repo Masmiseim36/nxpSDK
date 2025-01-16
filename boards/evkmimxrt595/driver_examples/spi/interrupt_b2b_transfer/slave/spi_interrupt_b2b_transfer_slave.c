@@ -7,28 +7,13 @@
  */
 
 #include "fsl_spi.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 #include "fsl_debug_console.h"
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#ifndef USE_HS_SPI
-#define USE_HS_SPI 0
-#endif
-
-#if USE_HS_SPI
-#define EXAMPLE_SPI_SLAVE     SPI14
-#define EXAMPLE_SPI_SLAVE_IRQ FLEXCOMM14_IRQn
-#else
-#define EXAMPLE_SPI_SLAVE     SPI5
-#define EXAMPLE_SPI_SLAVE_IRQ FLEXCOMM5_IRQn
-#endif
-
-#define EXAMPLE_SPI_SSEL 0
-#define EXAMPLE_SPI_SPOL kSPI_SpolActiveAllLow
 
 /*******************************************************************************
  * Prototypes
@@ -57,17 +42,7 @@ int main(void)
     spi_transfer_t xfer = {0};
     spi_slave_config_t userConfig;
 
-#if USE_HS_SPI
-    /* Use 48 MHz clock for the FLEXCOMM14 */
-    CLOCK_AttachClk(kFRO_DIV4_to_FLEXCOMM14);
-#else
-    /* Use 48 MHz clock for the FLEXCOMM5 */
-    CLOCK_AttachClk(kFRO_DIV4_to_FLEXCOMM5);
-#endif
-
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
     PRINTF("\n\rSlave is working....\n\r");
 
     /*

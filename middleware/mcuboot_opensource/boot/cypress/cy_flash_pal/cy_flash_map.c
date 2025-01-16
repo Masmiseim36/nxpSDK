@@ -355,7 +355,7 @@ int flash_area_erase(const struct flash_area *fa, uint32_t off, uint32_t len)
 }
 
 /*< Returns this `flash_area`s alignment */
-size_t flash_area_align(const struct flash_area *fa)
+uint32_t flash_area_align(const struct flash_area *fa)
 {
     int ret = -1;
     if (fa->fa_device_id == FLASH_DEVICE_INTERNAL_FLASH)
@@ -436,11 +436,6 @@ int flash_area_id_to_multi_image_slot(int image_index, int area_id)
     }
 
     return -1;
-}
-
-int flash_area_id_to_image_slot(int area_id)
-{
-    return flash_area_id_to_multi_image_slot(0, area_id);
 }
 
 uint8_t flash_area_erased_val(const struct flash_area *fap)

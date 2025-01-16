@@ -28,77 +28,68 @@ enum l2cap_conn_list_action {
 
 #define BT_L2CAP_PSM_RFCOMM             0x0003
 
-STRUCT_PACKED_PRE
 struct bt_l2cap_hdr {
 	uint16_t len;
 	uint16_t cid;
-} STRUCT_PACKED_POST;
-STRUCT_PACKED_PRE
+} __packed;
 struct bt_l2cap_sig_hdr {
 	uint8_t  code;
 	uint8_t  ident;
 	uint16_t len;
-} STRUCT_PACKED_POST;
+} __packed;
 
 #define BT_L2CAP_REJ_NOT_UNDERSTOOD     0x0000
 #define BT_L2CAP_REJ_MTU_EXCEEDED       0x0001
 #define BT_L2CAP_REJ_INVALID_CID        0x0002
 
 #define BT_L2CAP_CMD_REJECT             0x01
-STRUCT_PACKED_PRE
 struct bt_l2cap_cmd_reject {
 	uint16_t reason;
 	uint8_t  data[0];
-} STRUCT_PACKED_POST;
-STRUCT_PACKED_PRE
+} __packed;
 struct bt_l2cap_cmd_reject_cid_data {
 	uint16_t scid;
 	uint16_t dcid;
-} STRUCT_PACKED_POST;
+} __packed;
 
 
 #define BT_L2CAP_DISCONN_REQ            0x06
-STRUCT_PACKED_PRE
 struct bt_l2cap_disconn_req {
 	uint16_t dcid;
 	uint16_t scid;
-} STRUCT_PACKED_POST;
+} __packed;
 
 #define BT_L2CAP_DISCONN_RSP            0x07
-STRUCT_PACKED_PRE
 struct bt_l2cap_disconn_rsp {
 	uint16_t dcid;
 	uint16_t scid;
-} STRUCT_PACKED_POST;
+} __packed;
 
 
 #define BT_L2CAP_CONN_PARAM_REQ         0x12
-STRUCT_PACKED_PRE
 struct bt_l2cap_conn_param_req {
 	uint16_t min_interval;
 	uint16_t max_interval;
 	uint16_t latency;
 	uint16_t timeout;
-} STRUCT_PACKED_POST;
+} __packed;
 
 #define BT_L2CAP_CONN_PARAM_ACCEPTED    0x0000
 #define BT_L2CAP_CONN_PARAM_REJECTED    0x0001
 
 #define BT_L2CAP_CONN_PARAM_RSP         0x13
-STRUCT_PACKED_PRE
 struct bt_l2cap_conn_param_rsp {
 	uint16_t result;
-} STRUCT_PACKED_POST;
+} __packed;
 
 #define BT_L2CAP_LE_CONN_REQ            0x14
-STRUCT_PACKED_PRE
 struct bt_l2cap_le_conn_req {
 	uint16_t psm;
 	uint16_t scid;
 	uint16_t mtu;
 	uint16_t mps;
 	uint16_t credits;
-} STRUCT_PACKED_POST;
+} __packed;
 
 /* valid results in conn response on LE */
 #define BT_L2CAP_LE_SUCCESS             0x0000
@@ -117,51 +108,46 @@ struct bt_l2cap_le_conn_req {
 #define BT_L2CAP_LE_ERR_AUTHORIZATION_PENDING   0x000F
 
 #define BT_L2CAP_LE_CONN_RSP            0x15
-STRUCT_PACKED_PRE
 struct bt_l2cap_le_conn_rsp {
 	uint16_t dcid;
 	uint16_t mtu;
 	uint16_t mps;
 	uint16_t credits;
 	uint16_t result;
-} STRUCT_PACKED_POST;
+} __packed;
 
 #define BT_L2CAP_LE_CREDITS             0x16
-STRUCT_PACKED_PRE
 struct bt_l2cap_le_credits {
 	uint16_t cid;
 	uint16_t credits;
-} STRUCT_PACKED_POST;
+} __packed;
 
 #define BT_L2CAP_ECRED_CONN_REQ         0x17
-STRUCT_PACKED_PRE
 struct bt_l2cap_ecred_conn_req {
 	uint16_t psm;
 	uint16_t mtu;
 	uint16_t mps;
 	uint16_t credits;
 	uint16_t scid[0];
-} STRUCT_PACKED_POST;
+} __packed;
 
 #define BT_L2CAP_ECRED_CONN_RSP         0x18
-STRUCT_PACKED_PRE
 struct bt_l2cap_ecred_conn_rsp {
 	uint16_t mtu;
 	uint16_t mps;
 	uint16_t credits;
 	uint16_t result;
 	uint16_t dcid[0];
-} STRUCT_PACKED_POST;
+} __packed;
 
 #define L2CAP_ECRED_CHAN_MAX_PER_REQ 5
 
 #define BT_L2CAP_ECRED_RECONF_REQ       0x19
-STRUCT_PACKED_PRE
 struct bt_l2cap_ecred_reconf_req {
 	uint16_t mtu;
 	uint16_t mps;
 	uint16_t scid[0];
-} STRUCT_PACKED_POST;
+} __packed;
 
 #define BT_L2CAP_RECONF_SUCCESS         0x0000
 #define BT_L2CAP_RECONF_INVALID_MTU     0x0001
@@ -170,10 +156,9 @@ struct bt_l2cap_ecred_reconf_req {
 #define BT_L2CAP_RECONF_OTHER_UNACCEPT  0x0004
 
 #define BT_L2CAP_ECRED_RECONF_RSP       0x1a
-STRUCT_PACKED_PRE
 struct bt_l2cap_ecred_reconf_rsp {
 	uint16_t result;
-} STRUCT_PACKED_POST;
+} __packed;
 
 struct bt_l2cap_fixed_chan {
 	uint16_t		cid;
@@ -229,7 +214,7 @@ struct bt_l2cap_br_fixed_chan {
 
 #define BR_CHAN(_ch) CONTAINER_OF(_ch, struct bt_l2cap_br_chan, chan)
 
-        
+
 /*
  * Notify L2CAP channels of a change in encryption state passing additionally
  * HCI status of performed security procedure.
@@ -242,7 +227,7 @@ struct net_buf *bt_l2cap_create_pdu_timeout(struct net_buf_pool *pool,
 					    size_t timeout);
 
 #define bt_l2cap_create_pdu(_pool, _reserve) \
-	bt_l2cap_create_pdu_timeout(_pool, _reserve, osaWaitForever_c)
+	bt_l2cap_create_pdu_timeout(_pool, _reserve, K_FOREVER)
 
 /* Prepare a L2CAP Response PDU to be sent over a connection */
 struct net_buf *bt_l2cap_create_rsp(struct net_buf *buf, size_t reserve);
@@ -293,6 +278,12 @@ struct bt_l2cap_ecred_cb {
 void bt_l2cap_register_ecred_cb(const struct bt_l2cap_ecred_cb *cb);
 /* Returns a server if it exists for given psm. */
 struct bt_l2cap_server *bt_l2cap_server_lookup_psm(uint16_t psm);
+
+
+/* Pull data from the L2CAP layer */
+struct net_buf *l2cap_data_pull(struct bt_conn *conn,
+				size_t amount,
+				size_t *length);
 
 int l2cap_br_ecred_init(struct bt_conn *conn,
 			       struct bt_l2cap_br_chan *ch, uint16_t psm);

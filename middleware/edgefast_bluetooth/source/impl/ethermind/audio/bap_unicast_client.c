@@ -27,45 +27,30 @@
 #include "../host/bt_pal_conn_internal.h"
 #include "../host/bt_pal_iso_internal.h"
 
-#include "bap_iso.h"
+#include "ascs_internal.h"
 #include "audio_internal.h"
+#include "bap_iso.h"
 #include "bap_endpoint.h"
-#include "pacs_internal.h"
 #include "bap_unicast_client_internal.h"
+#include "pacs_internal.h"
+
+BUILD_ASSERT(CONFIG_BT_BAP_UNICAST_CLIENT_ASE_SNK_COUNT > 0 ||
+		     CONFIG_BT_BAP_UNICAST_CLIENT_ASE_SRC_COUNT > 0,
+	     "CONFIG_BT_BAP_UNICAST_CLIENT_ASE_SNK_COUNT or "
+	     "CONFIG_BT_BAP_UNICAST_CLIENT_ASE_SRC_COUNT shall be non-zero");
+
+BUILD_ASSERT(CONFIG_BT_BAP_UNICAST_CLIENT_ASE_SNK_COUNT == 0 ||
+		     CONFIG_BT_BAP_UNICAST_CLIENT_ASE_SNK_COUNT > 1,
+	     "CONFIG_BT_BAP_UNICAST_CLIENT_ASE_SNK_COUNT shall be either 0 or > 1");
+
+BUILD_ASSERT(CONFIG_BT_BAP_UNICAST_CLIENT_ASE_SRC_COUNT == 0 ||
+		     CONFIG_BT_BAP_UNICAST_CLIENT_ASE_SRC_COUNT > 1,
+	     "CONFIG_BT_BAP_UNICAST_CLIENT_ASE_SRC_COUNT shall be either 0 or > 1");
 
 #define LOG_ENABLE IS_ENABLED(CONFIG_BT_DEBUG_BAP_UNICAST_CLIENT)
 #define LOG_MODULE_NAME bt_bap_unicast_client
 #include "fsl_component_log.h"
 LOG_MODULE_DEFINE(LOG_MODULE_NAME, kLOG_LevelTrace);
-
-#ifndef LOG_DBG
-#define LOG_DBG BT_DBG
-#endif
-
-#ifndef LOG_ERR
-#define LOG_ERR BT_ERR
-#endif
-
-#ifndef LOG_HEXDUMP_DBG
-#define LOG_HEXDUMP_DBG BT_HEXDUMP_DBG
-#endif
-
-#ifndef LOG_WRN
-#define LOG_WRN BT_WARN
-#endif
-
-BUILD_ASSERT_MSG(CONFIG_BT_BAP_UNICAST_CLIENT_ASE_SNK_COUNT > 0 ||
-		     CONFIG_BT_BAP_UNICAST_CLIENT_ASE_SRC_COUNT > 0,
-	     "CONFIG_BT_BAP_UNICAST_CLIENT_ASE_SNK_COUNT or "
-	     "CONFIG_BT_BAP_UNICAST_CLIENT_ASE_SRC_COUNT shall be non-zero");
-
-BUILD_ASSERT_MSG(CONFIG_BT_BAP_UNICAST_CLIENT_ASE_SNK_COUNT == 0 ||
-		     CONFIG_BT_BAP_UNICAST_CLIENT_ASE_SNK_COUNT > 1,
-	     "CONFIG_BT_BAP_UNICAST_CLIENT_ASE_SNK_COUNT shall be either 0 or > 1");
-
-BUILD_ASSERT_MSG(CONFIG_BT_BAP_UNICAST_CLIENT_ASE_SRC_COUNT == 0 ||
-		     CONFIG_BT_BAP_UNICAST_CLIENT_ASE_SRC_COUNT > 1,
-	     "CONFIG_BT_BAP_UNICAST_CLIENT_ASE_SRC_COUNT shall be either 0 or > 1");
 
 #define PAC_DIR_UNUSED(dir) ((dir) != BT_AUDIO_DIR_SINK && (dir) != BT_AUDIO_DIR_SOURCE)
 struct bt_bap_unicast_client_ep {
@@ -344,17 +329,6 @@ static void unicast_client_ep_iso_connected(struct bt_bap_ep *ep)
 	if (stream_ops != NULL && stream_ops->connected != NULL) {
 		stream_ops->connected(stream);
 	}
-
-	if (ep->receiver_ready && ep->dir == BT_AUDIO_DIR_SOURCE) {
-		const int err = unicast_client_send_start(ep);
-
-		if (err != 0) {
-			LOG_DBG("Failed to send start: %d", err);
-
-			/* TBD: Should we release the stream then? */
-			ep->receiver_ready = false;
-		}
-	}
 }
 
 static void unicast_client_iso_connected(struct bt_iso_chan *chan)
@@ -597,6 +571,8 @@ static void unicast_client_ep_idle_state(struct bt_bap_ep *ep)
 	struct bt_bap_stream *stream = ep->stream;
 	const struct bt_bap_stream_ops *ops;
 
+	ep->receiver_ready = false;
+
 	if (stream == NULL) {
 		return;
 	}
@@ -682,6 +658,8 @@ static void unicast_client_ep_config_state(struct bt_bap_ep *ep, struct net_buf_
 	struct bt_bap_stream *stream;
 	void *cc;
 
+	ep->receiver_ready = false;
+
 	if (client_ep->release_requested) {
 		LOG_DBG("Released was requested, change local state to idle");
 		ep->reason = BT_HCI_ERR_LOCALHOST_TERM_CONN;
@@ -755,6 +733,8 @@ static void unicast_client_ep_qos_state(struct bt_bap_ep *ep, struct net_buf_sim
 	const struct bt_bap_stream_ops *ops;
 	struct bt_ascs_ase_status_qos *qos;
 	struct bt_bap_stream *stream;
+
+	ep->receiver_ready = false;
 
 	if (buf->len < sizeof(*qos)) {
 		LOG_ERR("QoS status too short");
@@ -913,7 +893,7 @@ static void unicast_client_ep_streaming_state(struct bt_bap_ep *ep, struct net_b
 	}
 
 	stream_status = net_buf_simple_pull_mem(buf, sizeof(*stream_status));
-        (void)stream_status;
+	(void)stream_status;
 
 	LOG_DBG("dir %s cig 0x%02x cis 0x%02x", bt_audio_dir_str(ep->dir), ep->cig_id, ep->cis_id);
 
@@ -941,6 +921,8 @@ static void unicast_client_ep_disabling_state(struct bt_bap_ep *ep, struct net_b
 	struct bt_ascs_ase_status_disable *disable;
 	struct bt_bap_stream *stream;
 
+	ep->receiver_ready = false;
+
 	if (buf->len < sizeof(*disable)) {
 		LOG_ERR("Disabling status too short");
 		return;
@@ -953,7 +935,7 @@ static void unicast_client_ep_disabling_state(struct bt_bap_ep *ep, struct net_b
 	}
 
 	disable = net_buf_simple_pull_mem(buf, sizeof(*disable));
-        (void)disable;
+	(void)disable;
 
 	LOG_DBG("dir %s cig 0x%02x cis 0x%02x", bt_audio_dir_str(ep->dir), ep->cig_id, ep->cis_id);
 
@@ -968,6 +950,8 @@ static void unicast_client_ep_disabling_state(struct bt_bap_ep *ep, struct net_b
 static void unicast_client_ep_releasing_state(struct bt_bap_ep *ep, struct net_buf_simple *buf)
 {
 	struct bt_bap_stream *stream;
+
+	ep->receiver_ready = false;
 
 	stream = ep->stream;
 	if (stream == NULL) {
@@ -1004,7 +988,7 @@ static void unicast_client_ep_set_status(struct bt_bap_ep *ep, struct net_buf_si
 	}
 
 	client_ep = CONTAINER_OF(ep, struct bt_bap_unicast_client_ep, ep);
-        (void)client_ep;
+	(void)client_ep;
 
 	status = net_buf_simple_pull_mem(buf, sizeof(*status));
 
@@ -1043,7 +1027,6 @@ static void unicast_client_ep_set_status(struct bt_bap_ep *ep, struct net_buf_si
 
 	switch (status->state) {
 	case BT_BAP_EP_STATE_IDLE:
-		ep->receiver_ready = false;
 		unicast_client_ep_idle_state(ep);
 		break;
 	case BT_BAP_EP_STATE_CODEC_CONFIGURED:
@@ -1063,8 +1046,6 @@ static void unicast_client_ep_set_status(struct bt_bap_ep *ep, struct net_buf_si
 				bt_bap_ep_state_str(ep->status.state));
 			return;
 		}
-
-		ep->receiver_ready = false;
 
 		unicast_client_ep_config_state(ep, buf);
 		break;
@@ -1105,8 +1086,6 @@ static void unicast_client_ep_set_status(struct bt_bap_ep *ep, struct net_buf_si
 				return;
 			}
 		}
-
-		ep->receiver_ready = false;
 
 		unicast_client_ep_qos_state(ep, buf, old_state);
 		break;
@@ -1164,8 +1143,6 @@ static void unicast_client_ep_set_status(struct bt_bap_ep *ep, struct net_buf_si
 			return;
 		}
 
-		ep->receiver_ready = false;
-
 		unicast_client_ep_disabling_state(ep, buf);
 		break;
 	case BT_BAP_EP_STATE_RELEASING:
@@ -1192,8 +1169,6 @@ static void unicast_client_ep_set_status(struct bt_bap_ep *ep, struct net_buf_si
 				bt_bap_ep_state_str(ep->status.state));
 			return;
 		}
-
-		ep->receiver_ready = false;
 
 		unicast_client_ep_releasing_state(ep, buf);
 		break;
@@ -1373,7 +1348,7 @@ static uint8_t unicast_client_cp_notify(struct bt_conn *conn,
 		}
 
 		ase_rsp = net_buf_simple_pull_mem(&buf, sizeof(*ase_rsp));
-                (void)ase_rsp;
+		(void)ase_rsp;
 
 		LOG_DBG("op %s (0x%02x) id 0x%02x code %s (0x%02x) "
 			"reason %s (0x%02x)", bt_ascs_op_str(rsp->op), rsp->op,
@@ -1552,7 +1527,7 @@ static void long_ase_read(struct bt_bap_unicast_client_ep *client_ep)
 
 		/* Wait a connection interval to retry */
 		err = k_work_reschedule(&client_ep->ase_read_work,
-					BT_CONN_INTERVAL_TO_US(conn_info.le.interval) / 1000);
+					K_USEC(BT_CONN_INTERVAL_TO_US(conn_info.le.interval)));
 		if (err < 0) {
 			LOG_DBG("Failed to reschedule ASE long read work: %d", err);
 		}
@@ -1678,7 +1653,7 @@ static void pac_record_cb(struct bt_conn *conn, const struct bt_audio_codec_cap 
 		struct unicast_client *client = &uni_cli_insts[bt_conn_index(conn)];
 		const enum bt_audio_dir dir = client->dir;
 
-		/* TBD: Since the PAC records are optionally notifyable we may want to supply the
+		/* TBD: Since the PAC records are optionally notifiable we may want to supply the
 		 * index and total count of records in the callback, so that it easier for the
 		 * upper layers to determine when a new set of PAC records is being reported.
 		 */
@@ -1790,7 +1765,6 @@ static int unicast_client_ep_config(struct bt_bap_ep *ep, struct net_buf_simple 
 				    const struct bt_audio_codec_cfg *codec_cfg)
 {
 	struct bt_ascs_config *req;
-	uint8_t cc_len;
 
 	LOG_DBG("ep %p buf %p codec %p", ep, buf, codec_cfg);
 
@@ -1822,12 +1796,9 @@ static int unicast_client_ep_config(struct bt_bap_ep *ep, struct net_buf_simple 
 	req->codec.cid = codec_cfg->cid;
 	req->codec.vid = codec_cfg->vid;
 
-	cc_len = buf->len;
 	req->cc_len = codec_cfg->data_len;
 	net_buf_simple_add_mem(buf, codec_cfg->data, codec_cfg->data_len);
 
-        (void)cc_len;
-        
 	return 0;
 }
 
@@ -2198,7 +2169,7 @@ static int bt_audio_cig_create(struct bt_bap_unicast_group *group,
 	cis_count = 0U;
 	for (size_t i = 0U; i < ARRAY_SIZE(group->cis); i++) {
 		if (group->cis[i] == NULL) {
-			/* A NULL CIS acts as a NULL terminater */
+			/* A NULL CIS acts as a NULL terminator */
 			break;
 		}
 
@@ -2232,7 +2203,7 @@ static int bt_audio_cig_reconfigure(struct bt_bap_unicast_group *group,
 	cis_count = 0U;
 	for (size_t i = 0U; i < ARRAY_SIZE(group->cis); i++) {
 		if (group->cis[i] == NULL) {
-			/* A NULL CIS acts as a NULL terminater */
+			/* A NULL CIS acts as a NULL terminator */
 			break;
 		}
 
@@ -2259,7 +2230,7 @@ static void audio_stream_qos_cleanup(const struct bt_conn *conn,
 {
 	struct bt_bap_stream *stream;
 
-	SYS_SLIST_FOR_EACH_CONTAINER(&group->streams, stream, _node, struct bt_bap_stream) {
+	SYS_SLIST_FOR_EACH_CONTAINER(&group->streams, stream, _node) {
 		if (stream->conn != conn) {
 			/* Channel not part of this ACL, skip */
 			continue;
@@ -2279,34 +2250,6 @@ static int unicast_client_cig_terminate(struct bt_bap_unicast_group *group)
 	LOG_DBG("group %p", group);
 
 	return bt_iso_cig_terminate(group->cig);
-}
-
-static int unicast_client_stream_connect(struct bt_bap_stream *stream)
-{
-	struct bt_iso_connect_param param;
-	struct bt_iso_chan *iso_chan;
-
-	iso_chan = bt_bap_stream_iso_chan_get(stream);
-
-	LOG_DBG("stream %p iso %p", stream, iso_chan);
-
-	if (stream == NULL || iso_chan == NULL) {
-		return -EINVAL;
-	}
-
-	param.acl = stream->conn;
-	param.iso_chan = iso_chan;
-
-	switch (iso_chan->state) {
-	case BT_ISO_STATE_DISCONNECTED:
-		return bt_iso_chan_connect(&param, 1);
-	case BT_ISO_STATE_CONNECTING:
-		return -EBUSY;
-	case BT_ISO_STATE_CONNECTED:
-		return -EALREADY;
-	default:
-		return bt_iso_chan_connect(&param, 1);
-	}
 }
 
 static int unicast_group_add_iso(struct bt_bap_unicast_group *group, struct bt_bap_iso *iso)
@@ -2344,7 +2287,7 @@ static void unicast_group_del_iso(struct bt_bap_unicast_group *group, struct bt_
 	__ASSERT_NO_MSG(group != NULL);
 	__ASSERT_NO_MSG(iso != NULL);
 
-	SYS_SLIST_FOR_EACH_CONTAINER(&group->streams, stream, _node, struct bt_bap_stream) {
+	SYS_SLIST_FOR_EACH_CONTAINER(&group->streams, stream, _node) {
 		if (stream->ep->iso == iso) {
 			/* still in use by some other stream */
 			return;
@@ -2528,7 +2471,7 @@ static void unicast_group_free(struct bt_bap_unicast_group *group)
 
 	__ASSERT_NO_MSG(group != NULL);
 
-	SYS_SLIST_FOR_EACH_CONTAINER_SAFE(&group->streams, stream, next, _node, struct bt_bap_stream) {
+	SYS_SLIST_FOR_EACH_CONTAINER_SAFE(&group->streams, stream, next, _node) {
 		struct bt_bap_iso *bap_iso = stream->bap_iso;
 		struct bt_bap_ep *ep = stream->ep;
 
@@ -2559,24 +2502,24 @@ static int stream_param_check(const struct bt_bap_unicast_group_stream_param *pa
 {
 	CHECKIF(param->stream == NULL)
 	{
-		LOG_ERR("param->stream is NULL");
+		LOG_DBG("param->stream is NULL");
 		return -EINVAL;
 	}
 
 	CHECKIF(param->qos == NULL)
 	{
-		LOG_ERR("param->qos is NULL");
+		LOG_DBG("param->qos is NULL");
 		return -EINVAL;
 	}
 
 	if (param->stream != NULL && param->stream->group != NULL) {
-		LOG_WRN("stream %p already part of group %p", param->stream, param->stream->group);
+		LOG_DBG("stream %p already part of group %p", param->stream, param->stream->group);
 		return -EALREADY;
 	}
 
 	CHECKIF(bt_audio_verify_qos(param->qos) != BT_BAP_ASCS_REASON_NONE)
 	{
-		LOG_ERR("Invalid QoS");
+		LOG_DBG("Invalid QoS");
 		return -EINVAL;
 	}
 
@@ -2725,7 +2668,7 @@ int bt_bap_unicast_group_add_streams(struct bt_bap_unicast_group *unicast_group,
 	}
 
 	total_stream_cnt = num_param;
-	SYS_SLIST_FOR_EACH_CONTAINER(&unicast_group->streams, tmp_stream, _node, struct bt_bap_stream) {
+	SYS_SLIST_FOR_EACH_CONTAINER(&unicast_group->streams, tmp_stream, _node) {
 		total_stream_cnt++;
 	}
 
@@ -2793,7 +2736,7 @@ int bt_bap_unicast_group_delete(struct bt_bap_unicast_group *unicast_group)
 		return -EINVAL;
 	}
 
-	SYS_SLIST_FOR_EACH_CONTAINER(&unicast_group->streams, stream, _node, struct bt_bap_stream) {
+	SYS_SLIST_FOR_EACH_CONTAINER(&unicast_group->streams, stream, _node) {
 		/* If a stream has an endpoint, it is not ready to be removed
 		 * from a group, as it is not in an idle state
 		 */
@@ -2863,7 +2806,6 @@ int bt_bap_unicast_client_qos(struct bt_conn *conn, struct bt_bap_unicast_group 
 	struct net_buf_simple *buf;
 	struct bt_bap_ep *ep;
 	bool conn_stream_found;
-	bool cig_connected;
 	int err;
 
 	if (conn == NULL) {
@@ -2877,14 +2819,8 @@ int bt_bap_unicast_client_qos(struct bt_conn *conn, struct bt_bap_unicast_group 
 	 */
 	conn_stream_found = false;
 
-	/* User to determine if any stream in the group is in
-	 * the connected state
-	 */
-	cig_connected = false;
-        (void)cig_connected;
-
 	/* Validate streams before starting the QoS execution */
-	SYS_SLIST_FOR_EACH_CONTAINER(&group->streams, stream, _node, struct bt_bap_stream) {
+	SYS_SLIST_FOR_EACH_CONTAINER(&group->streams, stream, _node) {
 		if (stream->conn != conn) {
 			/* Channel not part of this ACL, skip */
 			continue;
@@ -2948,7 +2884,7 @@ int bt_bap_unicast_client_qos(struct bt_conn *conn, struct bt_bap_unicast_group 
 
 	(void)memset(op, 0, sizeof(*op));
 	ep = NULL; /* Needed to find the control point handle */
-	SYS_SLIST_FOR_EACH_CONTAINER(&group->streams, stream, _node, struct bt_bap_stream) {
+	SYS_SLIST_FOR_EACH_CONTAINER(&group->streams, stream, _node) {
 		if (stream->conn != conn) {
 			/* Channel not part of this ACL, skip */
 			continue;
@@ -3050,6 +2986,55 @@ int bt_bap_unicast_client_metadata(struct bt_bap_stream *stream, const uint8_t m
 	return bt_bap_unicast_client_ep_send(stream->conn, ep, buf);
 }
 
+int bt_bap_unicast_client_connect(struct bt_bap_stream *stream)
+{
+	struct bt_iso_connect_param param;
+	struct bt_iso_chan *iso_chan;
+	enum bt_iso_state iso_state;
+
+	LOG_DBG("stream %p", stream);
+
+	if (stream == NULL) {
+		LOG_DBG("stream is NULL");
+
+		return -EINVAL;
+	}
+
+	iso_chan = bt_bap_stream_iso_chan_get(stream);
+	if (iso_chan == NULL) {
+		LOG_DBG("iso_chan is NULL");
+
+		return -EINVAL;
+	}
+
+	LOG_DBG("stream %p iso %p", stream, iso_chan);
+
+	param.acl = stream->conn;
+	param.iso_chan = iso_chan;
+
+	iso_state = iso_chan->state;
+	if (iso_state == BT_ISO_STATE_DISCONNECTED) {
+		const int err = bt_iso_chan_connect(&param, 1);
+
+		if (err == 0 || err == -EBUSY) { /* Expected / known return values */
+			return err;
+		}
+
+		/* unknown return value*/
+		LOG_DBG("Unexpected err %d from bt_iso_chan_connect", err);
+
+		return -ENOEXEC;
+	} else if (iso_state == BT_ISO_STATE_CONNECTING || iso_state == BT_ISO_STATE_CONNECTED) {
+		LOG_DBG("iso_chan %p already connecting or connected (%u)", iso_chan, iso_state);
+
+		return -EALREADY;
+	}
+
+	LOG_DBG("iso_chan %p in invalid state state (%u), cannot connect", iso_chan, iso_state);
+
+	return -EBADMSG;
+}
+
 int bt_bap_unicast_client_start(struct bt_bap_stream *stream)
 {
 	struct bt_bap_ep *ep = stream->ep;
@@ -3063,37 +3048,21 @@ int bt_bap_unicast_client_start(struct bt_bap_stream *stream)
 		return -ENOTCONN;
 	}
 
-	/* If an ASE is in the Enabling state, and if the Unicast Client has
-	 * not yet established a CIS for that ASE, the Unicast Client shall
-	 * attempt to establish a CIS by using the Connected Isochronous Stream
-	 * Central Establishment procedure.
-	 */
-	err = unicast_client_stream_connect(stream);
-	if (err == 0) {
-		if (ep->dir == BT_AUDIO_DIR_SOURCE) {
-			/* Set bool and wait for ISO to be connected to send the
-			 * receiver start ready
-			 */
-			ep->receiver_ready = true;
-		}
-	} else if (err == -EALREADY) {
-		LOG_DBG("ISO %p already connected", bt_bap_stream_iso_chan_get(stream));
+	/* As per the ASCS spec, only source streams can be started by the client */
+	if (ep->dir == BT_AUDIO_DIR_SINK) {
+		LOG_DBG("Stream %p is not a source stream", stream);
 
-		if (ep->dir == BT_AUDIO_DIR_SOURCE) {
-			ep->receiver_ready = true;
+		return -EINVAL;
+	}
 
-			err = unicast_client_send_start(ep);
-			if (err != 0) {
-				LOG_DBG("Failed to send start: %d", err);
+	ep->receiver_ready = true;
 
-				/* TBD: Should we release the stream then? */
-				ep->receiver_ready = false;
+	err = unicast_client_send_start(ep);
+	if (err != 0) {
+		LOG_DBG("Failed to send start: %d", err);
 
-				return err;
-			}
-		}
-	} else {
-		LOG_DBG("unicast_client_stream_connect failed: %d", err);
+		/* TBD: Should we release the stream then? */
+		ep->receiver_ready = false;
 
 		return err;
 	}
@@ -3328,7 +3297,7 @@ static uint8_t unicast_client_ase_read_func(struct bt_conn *conn, uint8_t err,
 	unicast_client_ep_set_status(ep, buf);
 	cb_err = unicast_client_ep_subscribe(conn, ep);
 	if (cb_err != 0) {
-		LOG_DBG("Failed to subcribe to ep %p: %d", ep, cb_err);
+		LOG_DBG("Failed to subscribe to ep %p: %d", ep, cb_err);
 		goto fail;
 	}
 
@@ -3800,7 +3769,6 @@ static uint8_t unicast_client_pacs_context_read_func(struct bt_conn *conn, uint8
 	struct net_buf_simple buf;
 	struct bt_pacs_context *context;
 	int cb_err;
-	int index;
 
 	memset(read, 0, sizeof(*read));
 
@@ -3813,11 +3781,6 @@ static uint8_t unicast_client_pacs_context_read_func(struct bt_conn *conn, uint8
 	net_buf_simple_init_with_data(&buf, (void *)data, length);
 	context = net_buf_simple_pull_mem(&buf, sizeof(*context));
 
-	index = bt_conn_index(conn);
-        
-        (void)context;
-        (void)index;
-
 discover_loc:
 	/* Read ASE instances */
 	cb_err = unicast_client_pacs_location_discover(conn);
@@ -3826,6 +3789,8 @@ discover_loc:
 
 		discover_cb(conn, cb_err);
 	}
+
+    (void)context;
 
 	return BT_GATT_ITER_STOP;
 }
@@ -4033,7 +3998,7 @@ static uint8_t unicast_client_pac_discover_cb(struct bt_conn *conn,
 	int err;
 
 	if (attr == NULL) {
-		LOG_ERR("Unable to find %s PAC", bt_audio_dir_str(client->dir));
+		LOG_DBG("Unable to find %s PAC", bt_audio_dir_str(client->dir));
 
 		discover_cb(conn, BT_ATT_ERR_ATTRIBUTE_NOT_FOUND);
 

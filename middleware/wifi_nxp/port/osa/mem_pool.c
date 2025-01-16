@@ -122,7 +122,7 @@ void *OSA_MemoryPoolAllocate(MemoryPool_t pool)
     /*********************************/
     MemPool_t *MemPool;
     SlNode_t *Node;
-    unsigned char *ptr;
+    unsigned char *ptr = NULL;
     /*********************************/
 
     MemPool = (MemPool_t *)pool;
@@ -139,6 +139,11 @@ void *OSA_MemoryPoolAllocate(MemoryPool_t pool)
 
     OSA_MutexUnlock((osa_mutex_handle_t)MemPool->Lock);
 
+    if (Node == NULL)
+    {
+        return NULL;
+    }
+
     ptr = ((unsigned char *)Node) + MemPool->Alignment;
 
     return (void *)ptr;
@@ -152,17 +157,20 @@ void OSA_MemoryPoolFree(MemoryPool_t pool, void *memory)
     unsigned char *ptr;
     /*********************************/
 
-    MemPool = (MemPool_t *)pool;
+    if(memory != NULL)
+    {
+        MemPool = (MemPool_t *)pool;
 
-    ptr = ((unsigned char *)memory) - MemPool->Alignment;
+        ptr = ((unsigned char *)memory) - MemPool->Alignment;
 
-    Node = (SlNode_t *)ptr;
+        Node = (SlNode_t *)ptr;
 
-    OSA_MutexLock((osa_mutex_handle_t)MemPool->Lock, osaWaitForever_c);
+        OSA_MutexLock((osa_mutex_handle_t)MemPool->Lock, osaWaitForever_c);
 
-    PushOnStack(&MemPool->Stack, Node);
+        PushOnStack(&MemPool->Stack, Node);
 
-    OSA_MutexUnlock((osa_mutex_handle_t)MemPool->Lock);
+        OSA_MutexUnlock((osa_mutex_handle_t)MemPool->Lock);
+    }
 }
 
 #elif defined(FSL_RTOS_THREADX)

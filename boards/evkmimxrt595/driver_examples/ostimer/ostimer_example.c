@@ -6,37 +6,17 @@
  */
 
 #include "fsl_debug_console.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 #include "fsl_ostimer.h"
 
-#include "fsl_power.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#if defined(OSTIMER0)
-#define EXAMPLE_OSTIMER OSTIMER0
-#else
-#define EXAMPLE_OSTIMER OSTIMER
-#endif
-#define EXAMPLE_OSTIMER_FREQ CLOCK_GetLpOscFreq()
-#define EXAMPLE_DEEPSLEEP_RUNCFG0 \
-    (SYSCTL0_PDRUNCFG0_LPOSC_PD_MASK)         /*!< Power down all unnecessary blocks during deep sleep*/
-#define EXAMPLE_DEEPSLEEP_RAM_APD 0xFFC00000U /* 0x280000 - 0x4FFFFF keep powered */
-#define EXAMPLE_DEEPSLEEP_RAM_PPD 0x0U
-#define EXAMPLE_EXCLUDE_FROM_DEEPSLEEP                                                                              \
-    (((const uint32_t[]){EXAMPLE_DEEPSLEEP_RUNCFG0,                                                                 \
-                         (SYSCTL0_PDSLEEPCFG1_FLEXSPI0_SRAM_APD_MASK | SYSCTL0_PDSLEEPCFG1_FLEXSPI1_SRAM_APD_MASK | \
-                          SYSCTL0_PDSLEEPCFG1_FLEXSPI0_SRAM_PPD_MASK | SYSCTL0_PDSLEEPCFG1_FLEXSPI1_SRAM_PPD_MASK), \
-                         EXAMPLE_DEEPSLEEP_RAM_APD, EXAMPLE_DEEPSLEEP_RAM_PPD}))
-#define EXAMPLE_EnableDeepSleepIRQ() EnableDeepSleepIRQ(OS_EVENT_IRQn)
 
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
-/* Enter deep sleep mode. */
-void EXAMPLE_EnterDeepSleep(void);
 
 /*******************************************************************************
  * Variables
@@ -46,12 +26,6 @@ volatile bool matchFlag = false;
 /*******************************************************************************
  * Code
  ******************************************************************************/
-void EXAMPLE_EnterDeepSleep(void)
-{
-    /* Enter deep sleep mode by using power API. */
-    POWER_EnterDeepSleep(EXAMPLE_EXCLUDE_FROM_DEEPSLEEP);
-}
-
 /* User Callback. */
 void EXAMPLE_OstimerCallback(void)
 {
@@ -77,11 +51,7 @@ static status_t EXAMPLE_SetMatchInterruptTime(OSTIMER_Type *base, uint32_t ms, u
 int main(void)
 {
     /* Board pin, clock, debug console init */
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
-
-    CLOCK_AttachClk(kLPOSC_to_OSTIMER_CLK);
+    BOARD_InitHardware();
 
     PRINTF("Press any key to start example.\r\n\r\n");
     GETCHAR();

@@ -9,6 +9,7 @@
 #ifndef GAS_SERV_H
 #define GAS_SERV_H
 
+#if CONFIG_HOSTAPD
 /* First 16 ANQP InfoIDs can be included in the optimized bitmap */
 #define ANQP_REQ_CAPABILITY_LIST           (1 << (ANQP_CAPABILITY_LIST - ANQP_QUERY_LIST))
 #define ANQP_REQ_VENUE_NAME                (1 << (ANQP_VENUE_NAME - ANQP_QUERY_LIST))
@@ -64,4 +65,5 @@ void gas_serv_deinit(struct hostapd_data *hapd);
 void gas_serv_req_dpp_processing(
     struct hostapd_data *hapd, const u8 *sa, u8 dialog_token, int prot, struct wpabuf *buf);
 
+#endif /* CONFIG_HOSTAPD */
 #endif /* GAS_SERV_H */

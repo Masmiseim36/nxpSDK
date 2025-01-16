@@ -36,6 +36,7 @@ Change log:
 /********************************************************
         Global Variables
 ********************************************************/
+#ifdef STA_SUPPORT
 static mlan_operations mlan_sta_ops = {
     /* cmd handler */
     wlan_ops_sta_prepare_cmd,
@@ -44,6 +45,8 @@ static mlan_operations mlan_sta_ops = {
     /* BSS role: STA */
     MLAN_BSS_ROLE_STA,
 };
+#endif
+#if UAP_SUPPORT
 static mlan_operations mlan_uap_ops = {
     /* cmd handler */
     wlan_ops_uap_prepare_cmd,
@@ -52,16 +55,19 @@ static mlan_operations mlan_uap_ops = {
     /* BSS role: uAP */
     MLAN_BSS_ROLE_UAP,
 };
+#endif
 
 /** mlan function table */
 static mlan_operations *mlan_ops[] = {
+#ifdef STA_SUPPORT
     &mlan_sta_ops,
+#endif
+#if UAP_SUPPORT
     &mlan_uap_ops,
+#endif
     MNULL,
 };
-#if defined(RW610)
-extern bus_operations imu_ops;
-#endif
+extern bus_operations bus_ops;
 /** Global moal_assert callback */
 t_void (*assert_callback)(IN t_void *pmoal_handle, IN t_u32 cond) = MNULL;
 #ifdef DEBUG_LEVEL1
@@ -225,9 +231,7 @@ mlan_status mlan_register(IN pmlan_device pmdevice, OUT t_void **ppmlan_adapter)
         }
     }
 
-#if defined(RW610)
-    (void)__memcpy(pmadapter, &pmadapter->bus_ops, &imu_ops, sizeof(bus_operations));
-#endif
+    (void)__memcpy(pmadapter, &pmadapter->bus_ops, &bus_ops, sizeof(bus_operations));
 
     /* Initialize lock variables */
     if (wlan_init_lock_list(pmadapter) != MLAN_STATUS_SUCCESS)
@@ -284,14 +288,18 @@ MLAN_API mlan_status mlan_unregister(IN t_void *pmlan_adapter)
 {
     mlan_status ret         = MLAN_STATUS_SUCCESS;
     mlan_adapter *pmadapter = (mlan_adapter *)pmlan_adapter;
+#if !CONFIG_MEM_POOLS
     pmlan_callbacks pcb;
+#endif
     t_s32 i = 0;
 
     MASSERT(pmlan_adapter);
 
     ENTER();
 
+#if !CONFIG_MEM_POOLS
     pcb = &pmadapter->callbacks;
+#endif
 
     wlan_free_adapter(pmadapter);
 
@@ -301,13 +309,21 @@ MLAN_API mlan_status mlan_unregister(IN t_void *pmlan_adapter)
         if (pmadapter->priv[i] != MNULL)
         {
             wlan_delete_station_list(pmadapter->priv[i]);
+#if !CONFIG_MEM_POOLS
             (void)pcb->moal_mfree(pmadapter->pmoal_handle, (t_u8 *)pmadapter->priv[i]);
+#else
+            OSA_MemoryPoolFree(pmPrivateMemoryPool, pmadapter->priv[i]);
+#endif
             pmadapter->priv[i] = MNULL;
         }
     }
 
+#if !CONFIG_MEM_POOLS
     /* Free mlan_adapter */
     (void)pcb->moal_mfree(pmadapter->pmoal_handle, (t_u8 *)pmadapter);
+#else
+    OSA_MemoryPoolFree(pmAdapterMemoryPool, pmadapter);
+#endif
 
     LEAVE();
     return ret;

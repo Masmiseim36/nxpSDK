@@ -8,6 +8,8 @@
  */
 
 #include "utils/includes.h"
+
+#if CONFIG_HOSTAPD
 #include <math.h>
 
 #include "utils/common.h"
@@ -1098,3 +1100,4 @@ enum hostapd_chan_status acs_init(struct hostapd_iface *iface)
 
     return HOSTAPD_CHAN_ACS;
 }
+#endif /* CONFIG_HOSTAPD */

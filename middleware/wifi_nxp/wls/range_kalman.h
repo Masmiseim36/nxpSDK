@@ -1,12 +1,12 @@
 #if CONFIG_WLS_CSI_PROC
+
 /** @file range_kalman.h
  *
  * @brief This file contains Kalman filter for WLS range measurements
  *
- * Copyright 2023 NXP
+ * Copyright 2023-2024 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
- *
  */
 
 #ifndef RANGE_KALMAN

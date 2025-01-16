@@ -12,11 +12,7 @@
 #include <stdint.h>
 
 /* Required for __REV definition */
-#if defined(__IAR_SYSTEMS_ICC__)
-#include "cmsis_iccarm.h"
-#elif defined(__CC_ARM)
-#include "cmsis_armcc.h"
-#endif
+#include "cmsis_compiler.h"
 
 /*============================================================================
                          USEFUL MACROS
@@ -179,7 +175,7 @@ static inline uint8_t __hal_ctz(uint32_t x)
 #define CONTAINER_OF_VALIDATE(ptr, type, field)                                    \
     BUILD_ASSERT(SAME_TYPE(*(ptr), ((type *)0)->field) || SAME_TYPE(*(ptr), void), \
                  "pointer type mismatch in CONTAINER_OF");
-#else /* __cplusplus */
+#else  /* __cplusplus */
 #define CONTAINER_OF_VALIDATE(ptr, type, field)
 #endif /* __cplusplus */
 #else  /* __IAR_SYSTEMS_ICC__ */

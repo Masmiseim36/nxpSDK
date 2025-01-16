@@ -11,16 +11,14 @@
  ******************************************************************************/
 #include "fsl_device_registers.h"
 #include "fsl_debug_console.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 
 #include "fsl_crc.h"
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-
 
 /*******************************************************************************
  * Prototypes
@@ -110,9 +108,7 @@ int main(void)
     uint32_t checksum32;
 
     /* Init hardware */
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
 
     PRINTF("CRC Peripheral Driver Example\r\n\r\n");
 

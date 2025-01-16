@@ -47,13 +47,12 @@
 
 #define BT_MONITOR_BASE_HDR_LEN  6
 
-#if (defined(CONFIG_BT_BREDR) && ((CONFIG_BT_BREDR) > 0U))
+#if (defined(CONFIG_BT_CLASSIC) && ((CONFIG_BT_CLASSIC) > 0U))
 #define BT_MONITOR_EXT_HDR_MAX 19
 #else
 #define BT_MONITOR_EXT_HDR_MAX 15
 #endif
 
-STRUCT_PACKED_PRE
 struct bt_monitor_hdr {
 	uint16_t  data_len;
 	uint16_t  opcode;
@@ -61,27 +60,24 @@ struct bt_monitor_hdr {
 	uint8_t   hdr_len;
 
 	uint8_t   ext[BT_MONITOR_EXT_HDR_MAX];
-} STRUCT_PACKED_POST;
+} __packed;
 
-STRUCT_PACKED_PRE
 struct bt_monitor_ts32 {
 	uint8_t   type;
 	uint32_t  ts32;
-} STRUCT_PACKED_POST;
+} __packed;
 
-STRUCT_PACKED_PRE
 struct bt_monitor_new_index {
 	uint8_t  type;
 	uint8_t  bus;
 	uint8_t  bdaddr[6];
 	char  name[8];
-} STRUCT_PACKED_POST;
+} __packed;
 
-STRUCT_PACKED_PRE
 struct bt_monitor_user_logging {
 	uint8_t  priority;
 	uint8_t  ident_len;
-} STRUCT_PACKED_POST;
+} __packed;
 
 static inline uint8_t bt_monitor_opcode(struct net_buf *buf)
 {

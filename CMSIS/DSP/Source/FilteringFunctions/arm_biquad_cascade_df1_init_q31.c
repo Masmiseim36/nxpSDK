@@ -44,7 +44,6 @@
   @param[in]     pCoeffs     points to the filter coefficients.
   @param[in]     pState      points to the state buffer.
   @param[in]     postShift   Shift to be applied after the accumulator.  Varies according to the coefficients format
-  @return        none
 
   @par           Coefficient and State Ordering
                    The coefficients are stored in the array <code>pCoeffs</code> in the following order:
@@ -67,7 +66,7 @@
                    The state variables are updated after each block of data is processed; the coefficients are untouched.
  */
 
-void arm_biquad_cascade_df1_init_q31(
+ARM_DSP_ATTRIBUTE void arm_biquad_cascade_df1_init_q31(
         arm_biquad_casd_df1_inst_q31 * S,
         uint8_t numStages,
   const q31_t * pCoeffs,

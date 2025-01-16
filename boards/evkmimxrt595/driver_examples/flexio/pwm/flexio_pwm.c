@@ -9,21 +9,12 @@
 #include "fsl_device_registers.h"
 #include "fsl_debug_console.h"
 #include "fsl_flexio.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_TIME_DELAY_FOR_DUTY_CYCLE_UPDATE (2000000U)
-#define DEMO_FLEXIO_BASEADDR                  FLEXIO0
-#define DEMO_FLEXIO_OUTPUTPIN                 (12U) /* Select FXIO2_D12 as PWM output */
-#define DEMO_FLEXIO_TIMER_CH                  (0U)  /* Flexio timer0 used */
-
-#define DEMO_FLEXIO_CLOCK_FREQUENCY CLOCK_GetFlexioClkFreq()
-/* FLEXIO output PWM frequency */
-#define DEMO_FLEXIO_FREQUENCY (48000U)
 #define FLEXIO_MAX_FREQUENCY (DEMO_FLEXIO_CLOCK_FREQUENCY / 2U)
 #define FLEXIO_MIN_FREQUENCY (DEMO_FLEXIO_CLOCK_FREQUENCY / 512U)
 
@@ -219,18 +210,7 @@ int main(void)
     flexio_config_t fxioUserConfig;
 
     /* Init board hardware */
-    const clock_frg_clk_config_t flexio_frg = {17U, kCLOCK_FrgMainClk, 255U, 0U};
-
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
-
-    /* Clock setting for Flexio, 396MHz/33 = 12MHz */
-    CLOCK_SetFRGClock(&flexio_frg);
-    CLOCK_AttachClk(kFRG_to_FLEXIO);
-    CLOCK_SetClkDiv(kCLOCK_DivFlexioClk, 33);
-
-    RESET_ClearPeripheralReset(kFLEXIO_RST_SHIFT_RSTn);
+    BOARD_InitHardware();
 
     /* Init flexio, use default configure
      * Disable doze and fast access mode

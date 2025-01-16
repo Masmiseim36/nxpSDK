@@ -9,7 +9,7 @@
 *                                                                    *
 **********************************************************************
 
-** emWin V6.38 - Graphical user interface for embedded applications **
+** emWin V6.46 - Graphical user interface for embedded applications **
 All  Intellectual Property rights  in the Software belongs to  SEGGER.
 emWin is protected by  international copyright laws.  Knowledge of the
 source code may not be used to write a similar product.  This file may
@@ -34,7 +34,7 @@ License model:            emWin License Agreement, dated August 20th 2011 and Am
 Licensed platform:        NXP's ARM 7/9, Cortex-M0, M3, M4, M7, A7, M33
 ----------------------------------------------------------------------
 Support and Update Agreement (SUA)
-SUA period:               2011-08-19 - 2024-09-02
+SUA period:               2011-08-19 - 2025-09-02
 Contact to extend SUA:    sales@segger.com
 ----------------------------------------------------------------------
 File        : MULTIEDIT.h
@@ -101,6 +101,9 @@ Purpose     : MULTIEDIT include
 #define MULTIEDIT_CI_CURSOR_BK          0                   // Background color for cursor
 #define MULTIEDIT_CI_CURSOR_FG          1                   // Foreground color for cursor
 
+#define GUI_MULTIEDIT_SHOWCURSOR        (1 << 10)
+#define GUI_MULTIEDIT_CURSORBLINK       (1 << 11)
+
 /*********************************************************************
 *
 *                         Public Types
@@ -154,6 +157,8 @@ int              MULTIEDIT_GetTextFromLine      (MULTIEDIT_HANDLE hObj, char * s
 int              MULTIEDIT_GetTextFromPos       (MULTIEDIT_HANDLE hObj, char * sDest, int MaxLen, int CharStart, int LineStart, int CharEnd, int LineEnd);
 int              MULTIEDIT_GetTextSize          (MULTIEDIT_HANDLE hObj);
 int              MULTIEDIT_GetUserData          (MULTIEDIT_HANDLE hObj, void * pDest, int NumBytes);
+int              MULTIEDIT_ReadBytesFromPos     (MULTIEDIT_HANDLE hObj, char * sDest, U32 SizeOfBuffer, U32 Off);
+int              MULTIEDIT_ReadCharsFromPos     (MULTIEDIT_HANDLE hObj, char * sDest, U32 SizeOfBuffer, U32 Offset);
 void             MULTIEDIT_SetTextAlign         (MULTIEDIT_HANDLE hObj, int Align);
 void             MULTIEDIT_SetAutoScrollH       (MULTIEDIT_HANDLE hObj, int OnOff);
 void             MULTIEDIT_SetAutoScrollV       (MULTIEDIT_HANDLE hObj, int OnOff);

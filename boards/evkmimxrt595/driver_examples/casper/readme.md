@@ -1,42 +1,9 @@
-Overview
-========
+# casper
+
+## Overview
 The CASPER Example project is a demonstration program that uses the KSDK software implement modular exponentiation algorithm using the CASPER software driver.
 
-
-SDK version
-===========
-- Version: 2.16.000
-
-Toolchain supported
-===================
-- IAR embedded Workbench  9.60.1
-- Keil MDK  5.39.0
-- MCUXpresso  11.10.0
-- GCC ARM Embedded  13.2.1
-
-Hardware requirements
-=====================
-- Micro USB cable
-- EVK-MIMXRT595 board
-- Personal Computer
-
-Board settings
-==============
-
-
-Prepare the Demo
-================
-1.  Connect a micro USB cable between the PC host and the CMSIS DAP USB port (J40) on the board
-2.  Open a serial terminal with the following settings:
-    - 115200 baud rate
-    - 8 data bits
-    - No parity
-    - One stop bit
-    - No flow control
-3.  Download the program to the target board.
-4.  Launch the debugger in your IDE to begin running the demo.
-Running the demo
-================
+## Running the demo
 The log below shows the output of the Casper example in the terminal window:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ModExp Test pass.
@@ -104,3 +71,14 @@ Round: 6
 Round: 7
 All EC double scalar multiplication tests were succesfull.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+## Supported Boards
+- [EVK9-MIMX8ULP](../../_boards/evk9mimx8ulp/driver_examples/casper/example_board_readme.md)
+- [EVK-MIMX8ULP](../../_boards/evkmimx8ulp/driver_examples/casper/example_board_readme.md)
+- [EVK-MIMXRT595](../../_boards/evkmimxrt595/driver_examples/casper/example_board_readme.md)
+- [EVK-MIMXRT685](../../_boards/evkmimxrt685/driver_examples/casper/example_board_readme.md)
+- [LPCXpresso55S06](../../_boards/lpcxpresso55s06/driver_examples/casper/example_board_readme.md)
+- [LPCXpresso55S16](../../_boards/lpcxpresso55s16/driver_examples/casper/example_board_readme.md)
+- [LPCXpresso55S28](../../_boards/lpcxpresso55s28/driver_examples/casper/example_board_readme.md)
+- [LPCXpresso55S69](../../_boards/lpcxpresso55s69/driver_examples/casper/example_board_readme.md)
+- [MIMXRT685-AUD-EVK](../../_boards/mimxrt685audevk/driver_examples/casper/example_board_readme.md)

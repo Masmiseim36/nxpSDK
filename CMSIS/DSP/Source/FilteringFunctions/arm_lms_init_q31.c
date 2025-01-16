@@ -46,7 +46,6 @@
   @param[in]     mu         step size that controls filter coefficient updates
   @param[in]     blockSize  number of samples to process
   @param[in]     postShift  bit shift applied to coefficients
-  @return        none
 
   @par           Details
                    <code>pCoeffs</code> points to the array of filter coefficients stored in time reversed order:
@@ -59,7 +58,7 @@
                    <code>arm_lms_q31()</code>.
  */
 
-void arm_lms_init_q31(
+ARM_DSP_ATTRIBUTE void arm_lms_init_q31(
   arm_lms_instance_q31 * S,
   uint16_t numTaps,
   q31_t * pCoeffs,

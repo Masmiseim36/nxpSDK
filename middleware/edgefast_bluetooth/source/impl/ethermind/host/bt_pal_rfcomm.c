@@ -15,7 +15,7 @@
 #include "fsl_component_log.h"
 LOG_MODULE_DEFINE(LOG_MODULE_NAME, kLOG_LevelTrace);
 
-#if (defined(CONFIG_BT_BREDR) && ((CONFIG_BT_BREDR) > 0U))
+#if (defined(CONFIG_BT_CLASSIC) && ((CONFIG_BT_CLASSIC) > 0U))
 #if (defined(CONFIG_BT_RFCOMM) && ((CONFIG_BT_RFCOMM) > 0U))
 #include <bluetooth/bluetooth.h>
 #include <bluetooth/conn.h>
@@ -44,12 +44,14 @@ typedef enum _rfcomm_state
     RFCOMM_STOP_PENDING      = 0x06U,
 }rfcomm_state_t;
 
-#define RFCOMM_DEFAULT_MTU      127
+#define RFCOMM_DEFAULT_MTU      RFCOMM_L2CAP_DEFAULT_MTU /* RFCOMM L2CAP default MTU size */
 
 #define RFCOMM_CHANNEL_START    0x01
 #define RFCOMM_CHANNEL_END      0x1e
 
-NET_BUF_POOL_FIXED_DEFINE(rfcomm_pool, 1, RFCOMM_DEFAULT_MTU, NULL);
+/* RFCOMM_DEFAULT_MTU - the rfcomm used length */
+#define RFCOMM_MAX_PDU (RFCOMM_DEFAULT_MTU - sizeof(struct bt_rfcomm_hdr) - 1 - BT_RFCOMM_FCS_SIZE)
+NET_BUF_POOL_FIXED_DEFINE(rfcomm_pool, 1, BT_RFCOMM_BUF_SIZE(RFCOMM_MAX_PDU), CONFIG_NET_BUF_USER_DATA_SIZE, NULL);
 
 /*******************************************************************************
  * Variables
@@ -351,7 +353,7 @@ static struct bt_rfcomm_control * rfcomm_get_control(RFCOMM_HANDLE * rfcomm_hdl,
     case RFCOMM_SEND_FC_ON:
     case RFCOMM_SEND_FC_OFF:
       /** Scan the control list: Match bd_addr*/
-      SYS_SLIST_FOR_EACH_CONTAINER_SAFE(&rfcomm_control_list, control, tmp, node, struct bt_rfcomm_control)
+      SYS_SLIST_FOR_EACH_CONTAINER_SAFE(&rfcomm_control_list, control, tmp, node)
       {
           if(NULL != control->dlc)
           {
@@ -374,7 +376,7 @@ static struct bt_rfcomm_control * rfcomm_get_control(RFCOMM_HANDLE * rfcomm_hdl,
 
     case RFCOMM_SEND_RPN:
       /** Scan the control list */
-      SYS_SLIST_FOR_EACH_CONTAINER_SAFE(&rfcomm_control_list, control, tmp, node, struct bt_rfcomm_control)
+      SYS_SLIST_FOR_EACH_CONTAINER_SAFE(&rfcomm_control_list, control, tmp, node)
       {
           if(NULL != control->dlc)
           {
@@ -402,7 +404,7 @@ static struct bt_rfcomm_control * rfcomm_get_control(RFCOMM_HANDLE * rfcomm_hdl,
 
     case RFCOMM_SEND_PN:
       /** Scan the control list: Match channel and bd_addr */
-      SYS_SLIST_FOR_EACH_CONTAINER_SAFE(&rfcomm_control_list, control, tmp, node, struct bt_rfcomm_control)
+      SYS_SLIST_FOR_EACH_CONTAINER_SAFE(&rfcomm_control_list, control, tmp, node)
       {
           if(NULL != control->dlc)
           {
@@ -431,7 +433,7 @@ static struct bt_rfcomm_control * rfcomm_get_control(RFCOMM_HANDLE * rfcomm_hdl,
     case RFCOMM_SEND_MSC:
     case RFCOMM_SEND_RLS:
       /** Scan the control list: Match channel, dlci and bd_addr */
-      SYS_SLIST_FOR_EACH_CONTAINER_SAFE(&rfcomm_control_list, control, tmp, node, struct bt_rfcomm_control)
+      SYS_SLIST_FOR_EACH_CONTAINER_SAFE(&rfcomm_control_list, control, tmp, node)
       {
           if((control_type == control->type) &&
              (rfcomm_hdl->server_channel == (control->dlc->dlci>>1U)) &&
@@ -468,7 +470,7 @@ static struct bt_rfcomm_control_cb * rfcomm_get_control_callback(struct bt_rfcom
     case RFCOMM_SEND_FC_ON:
     case RFCOMM_SEND_FC_OFF:
       /** Scan the callback list: Match bd_addr */
-      SYS_SLIST_FOR_EACH_CONTAINER_SAFE(&rfcomm_control_cb_list, ctr_cb, tmp, node, struct bt_rfcomm_control_cb)
+      SYS_SLIST_FOR_EACH_CONTAINER_SAFE(&rfcomm_control_cb_list, ctr_cb, tmp, node)
       {
           if(NULL != control->dlc)
           {
@@ -490,7 +492,7 @@ static struct bt_rfcomm_control_cb * rfcomm_get_control_callback(struct bt_rfcom
     case RFCOMM_SEND_RPN:
     case RFCOMM_SEND_PN:
       /** Scan the callback list: Match channel and bd_addr */
-      SYS_SLIST_FOR_EACH_CONTAINER_SAFE(&rfcomm_control_cb_list, ctr_cb, tmp, node, struct bt_rfcomm_control_cb)
+      SYS_SLIST_FOR_EACH_CONTAINER_SAFE(&rfcomm_control_cb_list, ctr_cb, tmp, node)
       {
           if(NULL != control->dlc)
           {
@@ -516,7 +518,7 @@ static struct bt_rfcomm_control_cb * rfcomm_get_control_callback(struct bt_rfcom
     case RFCOMM_SEND_MSC:
     case RFCOMM_SEND_RLS:
       /** Scan the callback list: Match channel, dlci and bd_addr */
-      SYS_SLIST_FOR_EACH_CONTAINER_SAFE(&rfcomm_control_cb_list, ctr_cb, tmp, node, struct bt_rfcomm_control_cb)
+      SYS_SLIST_FOR_EACH_CONTAINER_SAFE(&rfcomm_control_cb_list, ctr_cb, tmp, node)
       {
           if((ctr_cb->channel == (control->dlc->dlci>>1U)) &&
              (ctr_cb->role == control->dlc->role) &&
@@ -769,8 +771,8 @@ static API_RESULT rfcomm_callback(uint8_t event_type, RFCOMM_HANDLE * handle, ui
     case RFCOMM_RESET:
         LOG_INF ("[RFCOMM] RFCOMM CB: Received RFCOMM Close/Reset. Result = 0x%04X\n",result);
 
-        if (((API_SUCCESS == result) && (RFCOMM_IN_DISCONNECT == dlc->state)) /** RFCOMM CLOSE event for initializing rfcomm disconnect */
-            || ((0x2642 == result) && (RFCOMM_CONNECTED == dlc->state)))      /** RFCOMM CLOSE event for accepting rfcomm disconnect, 0x0042-RFCOMM_DLCI_CLOSED_BY_DISC_COMMAND */
+        if ((RFCOMM_IN_DISCONNECT == dlc->state) /** RFCOMM CLOSE event for initializing rfcomm disconnect */
+            || (RFCOMM_CONNECTED == dlc->state)) /** RFCOMM CLOSE event for accepting rfcomm disconnect */
         {
             (void)rfcomm_dlcs_remove_dlc(dlc, s_index);
 
@@ -792,11 +794,14 @@ static API_RESULT rfcomm_callback(uint8_t event_type, RFCOMM_HANDLE * handle, ui
         LOG_INF ("[RFCOMM] RFCOMM CB: Received RFCOMM Write. Result = 0x%04X\n",result);
         if ((NULL != dlc->ops) && (NULL != dlc->ops->sent))
         {
-            buf = bt_rfcomm_create_pdu(&rfcomm_pool);
-            net_buf_add_mem(buf, data, strlen((char const *)data));
-            /** Call application registered sent callback */
-            dlc->ops->sent(dlc, buf);
-            net_buf_unref(buf);
+            if (data != NULL)
+            {
+                struct net_buf buf;
+
+                net_buf_simple_init_with_data(&buf.b, data, datalen);
+                /** Call application registered sent callback */
+                dlc->ops->sent(dlc, &buf);
+            }
         }
         break;
 
@@ -805,10 +810,10 @@ static API_RESULT rfcomm_callback(uint8_t event_type, RFCOMM_HANDLE * handle, ui
 
         if ((NULL != dlc->ops) && (NULL != dlc->ops->recv))
         {
-            if(strlen((char const *)data) > 0)
+            if ((data != NULL) && (datalen > 0))
             {
                 buf = bt_rfcomm_create_pdu(&rfcomm_pool);
-                net_buf_add_mem(buf, data, strlen((char const *)data));
+                net_buf_add_mem(buf, data, datalen);
                 /** Call application registered recv callback */
                 dlc->ops->recv(dlc, buf);
                 net_buf_unref(buf);
@@ -854,7 +859,7 @@ static API_RESULT rfcomm_callback(uint8_t event_type, RFCOMM_HANDLE * handle, ui
           if(NULL != ctr_cb->cb)
           {
               ctr_cb->cb(&rfcomm_control, err);
-          } 
+          }
       break;
 #endif /** (defined(CONFIG_BT_RFCOMM_ENABLE_CONTROL_CMD) && (CONFIG_BT_RFCOMM_ENABLE_CONTROL_CMD > 0)) */
 
@@ -948,7 +953,7 @@ static API_RESULT rfcomm_control_callback(uint8_t event_type, RFCOMM_HANDLE * ha
         ctr_cb->cb(control, err);
     }
 
-	if (true == sys_slist_find(&rfcomm_control_list, &control->node))
+	if (true == sys_slist_find(&rfcomm_control_list, &control->node, NULL))
 	{
 		sys_slist_find_and_remove(&rfcomm_control_list, &control->node);
 	}
@@ -1247,7 +1252,7 @@ int bt_rfcomm_register_control_callback(struct bt_rfcomm_control_cb *ctr_cb)
         return -EINVAL;
     }
 
-	if (false == sys_slist_find(&rfcomm_control_cb_list, &ctr_cb->node))
+	if (false == sys_slist_find(&rfcomm_control_cb_list, &ctr_cb->node, NULL))
 	{
 		sys_slist_prepend(&rfcomm_control_cb_list, &ctr_cb->node);
 	}
@@ -1267,7 +1272,7 @@ int bt_rfcomm_unregister_control_callback(struct bt_rfcomm_control_cb *cb)
         return -EINVAL;;
     }
 
-	if (true == sys_slist_find(&rfcomm_control_cb_list, &cb->node))
+	if (true == sys_slist_find(&rfcomm_control_cb_list, &cb->node, NULL))
 	{
 		sys_slist_find_and_remove(&rfcomm_control_cb_list, &cb->node);
 	}
@@ -1339,7 +1344,7 @@ static int bt_rfcomm_send_test(struct bt_rfcomm_control *control)
         RFCOMM_SET_HANDLE(&rfcomm_hdl, bt_conn_get_dst_br(control->conn)->val, 0U, rfcomm_control_callback);
     }
 
-	if (false == sys_slist_find(&rfcomm_control_list, &control->node))
+	if (false == sys_slist_find(&rfcomm_control_list, &control->node, NULL))
 	{
 		sys_slist_prepend(&rfcomm_control_list, &control->node);
 	}
@@ -1405,7 +1410,7 @@ static int bt_rfcomm_send_flow_control(struct bt_rfcomm_control *control)
         RFCOMM_SET_HANDLE(&rfcomm_hdl, bt_conn_get_dst_br(control->conn)->val, 0U, rfcomm_control_callback);
     }
 
-	if (false == sys_slist_find(&rfcomm_control_list, &control->node))
+	if (false == sys_slist_find(&rfcomm_control_list, &control->node, NULL))
 	{
 		sys_slist_prepend(&rfcomm_control_list, &control->node);
 	}
@@ -1483,7 +1488,7 @@ static int bt_rfcomm_get_rpn(struct bt_rfcomm_control *control)
     }
 
     /** add control into control list */
-	if (false == sys_slist_find(&rfcomm_control_list, &control->node))
+	if (false == sys_slist_find(&rfcomm_control_list, &control->node, NULL))
 	{
 		sys_slist_prepend(&rfcomm_control_list, &control->node);
 	}
@@ -1545,7 +1550,7 @@ static int bt_rfcomm_set_rpn(struct bt_rfcomm_control *control)
         RFCOMM_SET_HANDLE(&rfcomm_hdl, bt_conn_get_dst_br(control->conn)->val, control->channel, rfcomm_control_callback);
     }
 
-	if (false == sys_slist_find(&rfcomm_control_list, &control->node))
+	if (false == sys_slist_find(&rfcomm_control_list, &control->node, NULL))
 	{
 		sys_slist_prepend(&rfcomm_control_list, &control->node);
 	}
@@ -1611,7 +1616,7 @@ static int bt_rfcomm_send_pn(struct bt_rfcomm_control *control)
         RFCOMM_SET_HANDLE(&rfcomm_hdl, bt_conn_get_dst_br(control->conn)->val, control->channel, rfcomm_control_callback);
     }
 
-	if (false == sys_slist_find(&rfcomm_control_list, &control->node))
+	if (false == sys_slist_find(&rfcomm_control_list, &control->node, NULL))
 	{
 		sys_slist_prepend(&rfcomm_control_list, &control->node);
 	}
@@ -1744,7 +1749,7 @@ static int bt_rfcomm_send_rls(struct bt_rfcomm_control *control)
     set_rfcomm_handle_with_dlc(control->dlc, &rfcomm_hdl);
     rfcomm_hdl.notify_cb = rfcomm_control_callback;
 
-	if (false == sys_slist_find(&rfcomm_control_list, &control->node))
+	if (false == sys_slist_find(&rfcomm_control_list, &control->node, NULL))
 	{
 		sys_slist_prepend(&rfcomm_control_list, &control->node);
 	}
@@ -1791,7 +1796,7 @@ static int bt_rfcomm_send_msc(struct bt_rfcomm_control *control)
     set_rfcomm_handle_with_dlc(control->dlc, &rfcomm_hdl);
     rfcomm_hdl.notify_cb = rfcomm_control_callback;
 
-	if (false == sys_slist_find(&rfcomm_control_list, &control->node))
+	if (false == sys_slist_find(&rfcomm_control_list, &control->node, NULL))
 	{
 		sys_slist_prepend(&rfcomm_control_list, &control->node);
 	}
@@ -1866,6 +1871,7 @@ int bt_rfcomm_send_control(struct bt_rfcomm_control *control)
 
 void bt_rfcomm_init(void)
 {
+    BT_rfcomm_register_mtu(RFCOMM_DEFAULT_MTU);
 #if 1
     /*rfcomm_bt_init(); is implemented in rfcomm_init.c and is called by bluetooth_on_upper_pl()*/
 #else  /*implement in zephyr API*/
@@ -1879,4 +1885,4 @@ void bt_rfcomm_init(void)
 #endif
 }
 #endif  /** (defined(CONFIG_BT_RFCOMM) && ((CONFIG_BT_RFCOMM) > 0U)) */
-#endif  /** (defined(CONFIG_BT_BREDR) && ((CONFIG_BT_BREDR) > 0U)) */
+#endif  /** (defined(CONFIG_BT_CLASSIC) && ((CONFIG_BT_CLASSIC) > 0U)) */

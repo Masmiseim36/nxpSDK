@@ -11,29 +11,30 @@
 
 #if (defined(CONFIG_BT_CSIP_SET_COORDINATOR) && (CONFIG_BT_CSIP_SET_COORDINATOR > 0))
 
-#include <zephyr/types.h>
-#include <bluetooth/conn.h>
-
-
-#include <zephyr/types.h>
-#include "fsl_shell.h"
 #include <stdlib.h>
+
+#include <zephyr/types.h>
+
+#include <sys/byteorder.h>
+#include <sys/util.h>
+#include <porting.h>
+
+#include <bluetooth/hci.h>
+#include <bluetooth/conn.h>
 #include <bluetooth/gatt.h>
 #include <bluetooth/bluetooth.h>
+
+#include "fsl_shell.h"
 
 #include "shell_bt.h"
 
 #include <bluetooth/audio/csip.h>
 
-#ifndef printk
-#define printk PRINTF
-#endif
-
 static uint8_t members_found;
 static struct k_work_delayable discover_members_timer;
 static struct bt_conn *conns[CONFIG_BT_MAX_CONN];
 static const struct bt_csip_set_coordinator_set_member *set_members[CONFIG_BT_MAX_CONN];
-struct bt_csip_set_coordinator_csis_inst *cur_inst;
+static struct bt_csip_set_coordinator_csis_inst *cur_inst;
 static bt_addr_le_t addr_found[CONFIG_BT_MAX_CONN];
 static const struct bt_csip_set_coordinator_set_member *locked_members[CONFIG_BT_MAX_CONN];
 
@@ -78,17 +79,10 @@ static void disconnected_cb(struct bt_conn *conn, uint8_t reason)
 	conns[conn_index] = NULL;
 }
 
-#if 0
 BT_CONN_CB_DEFINE(conn_callbacks) = {
 	.connected = connected_cb,
 	.disconnected = disconnected_cb
 };
-#else
-static struct bt_conn_cb conn_callbacks = {
-	.connected = connected_cb,
-	.disconnected = disconnected_cb
-};
-#endif
 
 static void csip_discover_cb(struct bt_conn *conn,
 			     const struct bt_csip_set_coordinator_set_member *member,
@@ -195,7 +189,7 @@ static struct bt_le_scan_cb csip_set_coordinator_scan_callbacks = {
 
 static bool csip_found(struct bt_data *data, void *user_data)
 {
-	if (bt_csip_set_coordinator_is_set_member(cur_inst->info.set_sirk, data)) {
+	if (bt_csip_set_coordinator_is_set_member(cur_inst->info.sirk, data)) {
 		bt_addr_le_t *addr = user_data;
 		char addr_str[BT_ADDR_LE_STR_LEN];
 
@@ -251,7 +245,8 @@ static void discover_members_timer_handler(struct k_work *work)
 	}
 }
 
-static shell_status_t cmd_csip_set_coordinator_discover(shell_handle_t sh, int32_t argc, char *argv[])
+static int cmd_csip_set_coordinator_discover(const struct shell *sh,
+					     size_t argc, char *argv[])
 {
 	unsigned long member_index = 0U;
 	char addr[BT_ADDR_LE_STR_LEN];
@@ -272,14 +267,14 @@ static shell_status_t cmd_csip_set_coordinator_discover(shell_handle_t sh, int32
 			shell_error(sh, "Could not parse member_index: %d",
 				    err);
 
-			return kStatus_SHELL_Error;
+			return -ENOEXEC;
 		}
 
 		if (member_index > ARRAY_SIZE(conns)) {
 			shell_error(sh, "Invalid member_index: %lu",
 				    member_index);
 
-			return kStatus_SHELL_Error;
+			return -ENOEXEC;
 		}
 	}
 
@@ -298,10 +293,11 @@ static shell_status_t cmd_csip_set_coordinator_discover(shell_handle_t sh, int32
 		shell_error(sh, "Fail: %d", err);
 	}
 
-	return (shell_status_t)err;
+	return err;
 }
 
-static shell_status_t cmd_csip_set_coordinator_discover_members(shell_handle_t sh, int32_t argc, char *argv[])
+static int cmd_csip_set_coordinator_discover_members(const struct shell *sh,
+						     size_t argc, char *argv[])
 {
 	int err;
 
@@ -309,7 +305,7 @@ static shell_status_t cmd_csip_set_coordinator_discover_members(shell_handle_t s
 
 	if (cur_inst == NULL) {
 		shell_error(sh, "NULL set");
-		return kStatus_SHELL_Error;
+		return -EINVAL;
 	}
 
 	if (cur_inst->info.set_size > ARRAY_SIZE(set_members)) {
@@ -320,7 +316,7 @@ static shell_status_t cmd_csip_set_coordinator_discover_members(shell_handle_t s
 		shell_error(sh,
 			    "Set size (%u) larger than max connections (%u)",
 			    cur_inst->info.set_size, ARRAY_SIZE(set_members));
-		return kStatus_SHELL_Error;
+		return -EINVAL;
 	}
 
 	/* Reset and populate based on current connections */
@@ -337,8 +333,7 @@ static shell_status_t cmd_csip_set_coordinator_discover_members(shell_handle_t s
 			const struct bt_csip_set_coordinator_csis_inst *inst =
 				&set_members[i]->insts[j];
 
-			if (memcmp(inst->info.set_sirk, cur_inst->info.set_sirk,
-				   BT_CSIP_SET_SIRK_SIZE) == 0) {
+			if (memcmp(inst->info.sirk, cur_inst->info.sirk, BT_CSIP_SIRK_SIZE) == 0) {
 				bt_addr_le_copy(&addr_found[members_found++],
 						bt_conn_get_dst(conns[i]));
 				break;
@@ -350,12 +345,12 @@ static shell_status_t cmd_csip_set_coordinator_discover_members(shell_handle_t s
 		if (members_found == cur_inst->info.set_size) {
 			shell_print(sh, "All members already known");
 
-			return (shell_status_t)0;
+			return 0;
 		} else if (members_found > cur_inst->info.set_size) {
 			shell_error(sh, "Found %u members but set size is %u", members_found,
 				    cur_inst->info.set_size);
 
-			return kStatus_SHELL_Error;
+			return -ENOEXEC;
 		}
 	}
 
@@ -368,7 +363,7 @@ static shell_status_t cmd_csip_set_coordinator_discover_members(shell_handle_t s
 		shell_error(sh,
 			    "Could not schedule discover_members_timer %d",
 			    err);
-		return (shell_status_t)err;
+		return err;
 	}
 
 	bt_le_scan_cb_register(&csip_set_coordinator_scan_callbacks);
@@ -378,17 +373,18 @@ static shell_status_t cmd_csip_set_coordinator_discover_members(shell_handle_t s
 		shell_error(sh, "Could not start scan: %d", err);
 	}
 
-	return (shell_status_t)err;
+	return err;
 }
 
-static shell_status_t cmd_csip_set_coordinator_lock_set(shell_handle_t sh, int32_t argc, char *argv[])
+static int cmd_csip_set_coordinator_lock_set(const struct shell *sh,
+					     size_t argc, char *argv[])
 {
 	int err;
 	int conn_count = 0;
 
 	if (cur_inst == NULL) {
 		shell_error(sh, "No set selected");
-		return kStatus_SHELL_Error;
+		return -ENOEXEC;
 	}
 
 	for (size_t i = 0; i < ARRAY_SIZE(locked_members); i++) {
@@ -403,17 +399,18 @@ static shell_status_t cmd_csip_set_coordinator_lock_set(shell_handle_t sh, int32
 		shell_error(sh, "Fail: %d", err);
 	}
 
-	return (shell_status_t)err;
+	return err;
 }
 
-static shell_status_t cmd_csip_set_coordinator_release_set(shell_handle_t sh, int32_t argc, char *argv[])
+static int cmd_csip_set_coordinator_release_set(const struct shell *sh,
+						size_t argc, char *argv[])
 {
 	int err;
 	int conn_count = 0;
 
 	if (cur_inst == NULL) {
 		shell_error(sh, "No set selected");
-		return kStatus_SHELL_Error;
+		return -ENOEXEC;
 	}
 
 	for (size_t i = 0; i < ARRAY_SIZE(locked_members); i++) {
@@ -428,10 +425,11 @@ static shell_status_t cmd_csip_set_coordinator_release_set(shell_handle_t sh, in
 		shell_error(sh, "Fail: %d", err);
 	}
 
-	return (shell_status_t)err;
+	return err;
 }
 
-static shell_status_t cmd_csip_set_coordinator_ordered_access(shell_handle_t sh, int32_t argc, char *argv[])
+static int cmd_csip_set_coordinator_ordered_access(const struct shell *sh,
+						   size_t argc, char *argv[])
 {
 	int err;
 	unsigned long member_count = (unsigned long)ARRAY_SIZE(set_members);
@@ -443,14 +441,14 @@ static shell_status_t cmd_csip_set_coordinator_ordered_access(shell_handle_t sh,
 			shell_error(sh, "Could not parse member_count: %d",
 				    err);
 
-			return kStatus_SHELL_Error;
+			return -ENOEXEC;
 		}
 
 		if (member_count > ARRAY_SIZE(members)) {
 			shell_error(sh, "Invalid member_count: %lu",
 				    member_count);
 
-			return kStatus_SHELL_Error;
+			return -ENOEXEC;
 		}
 	}
 
@@ -466,10 +464,11 @@ static shell_status_t cmd_csip_set_coordinator_ordered_access(shell_handle_t sh,
 		shell_error(sh, "Fail: %d", err);
 	}
 
-	return (shell_status_t)err;
+	return err;
 }
 
-static shell_status_t cmd_csip_set_coordinator_lock(shell_handle_t sh, int32_t argc, char *argv[])
+static int cmd_csip_set_coordinator_lock(const struct shell *sh, size_t argc,
+					 char *argv[])
 {
 	int err;
 	unsigned long member_index = 0;
@@ -477,7 +476,7 @@ static shell_status_t cmd_csip_set_coordinator_lock(shell_handle_t sh, int32_t a
 
 	if (cur_inst == NULL) {
 		shell_error(sh, "No set selected");
-		return kStatus_SHELL_Error;
+		return -ENOEXEC;
 	}
 
 	if (argc > 1) {
@@ -486,14 +485,14 @@ static shell_status_t cmd_csip_set_coordinator_lock(shell_handle_t sh, int32_t a
 			shell_error(sh, "Could not parse member_index: %d",
 				    err);
 
-			return kStatus_SHELL_Error;
+			return -ENOEXEC;
 		}
 
 		if (member_index > ARRAY_SIZE(set_members)) {
 			shell_error(sh, "Invalid member_index: %lu",
 				    member_index);
 
-			return kStatus_SHELL_Error;
+			return -ENOEXEC;
 		}
 	}
 
@@ -504,10 +503,11 @@ static shell_status_t cmd_csip_set_coordinator_lock(shell_handle_t sh, int32_t a
 		shell_error(sh, "Fail: %d", err);
 	}
 
-	return (shell_status_t)err;
+	return err;
 }
 
-static shell_status_t cmd_csip_set_coordinator_release(shell_handle_t sh, int32_t argc, char *argv[])
+static int cmd_csip_set_coordinator_release(const struct shell *sh, size_t argc,
+					    char *argv[])
 {
 	int err;
 	unsigned long member_index = 0;
@@ -515,7 +515,7 @@ static shell_status_t cmd_csip_set_coordinator_release(shell_handle_t sh, int32_
 
 	if (cur_inst == NULL) {
 		shell_error(sh, "No set selected");
-		return kStatus_SHELL_Error;
+		return -ENOEXEC;
 	}
 
 	if (argc > 1) {
@@ -524,14 +524,14 @@ static shell_status_t cmd_csip_set_coordinator_release(shell_handle_t sh, int32_
 			shell_error(sh, "Could not parse member_index: %d",
 				    err);
 
-			return kStatus_SHELL_Error;
+			return -ENOEXEC;
 		}
 
 		if (member_index > ARRAY_SIZE(set_members)) {
 			shell_error(sh, "Invalid member_index: %lu",
 				    member_index);
 
-			return kStatus_SHELL_Error;
+			return -ENOEXEC;
 		}
 	}
 
@@ -542,10 +542,11 @@ static shell_status_t cmd_csip_set_coordinator_release(shell_handle_t sh, int32_
 		shell_error(sh, "Fail: %d", err);
 	}
 
-	return (shell_status_t)err;
+	return err;
 }
 
-static shell_status_t cmd_csip_set_coordinator(shell_handle_t sh, int32_t argc, char *argv[])
+static int cmd_csip_set_coordinator(const struct shell *sh, size_t argc,
+				    char **argv)
 {
 	if (argc > 1) {
 		shell_error(sh, "%s unknown parameter: %s",
@@ -554,7 +555,7 @@ static shell_status_t cmd_csip_set_coordinator(shell_handle_t sh, int32_t argc, 
 		shell_error(sh, "%s Missing subcommand", argv[0]);
 	}
 
-	return kStatus_SHELL_Error;
+	return -ENOEXEC;
 }
 
 SHELL_STATIC_SUBCMD_SET_CREATE(csip_set_coordinator_cmds,
@@ -582,7 +583,7 @@ SHELL_STATIC_SUBCMD_SET_CREATE(csip_set_coordinator_cmds,
 	SHELL_SUBCMD_SET_END
 );
 
-SHELL_CMD_REGISTER(csip_set_coordinator, csip_set_coordinator_cmds,
+SHELL_CMD_ARG_REGISTER(csip_set_coordinator, &csip_set_coordinator_cmds,
 		       "Bluetooth csip_set_coordinator shell commands",
 		       cmd_csip_set_coordinator, 1, 1);
 
@@ -592,8 +593,6 @@ void bt_ShellCsipSetCoordinatorInit(shell_handle_t shell)
     {
         shell_print(shell, "Shell register command %s failed!", g_shellCommandcsip_set_coordinator.pcCommand);
     }
-
-	bt_conn_cb_register(&conn_callbacks);
 }
 
 #endif /* CONFIG_BT_CSIP_SET_COORDINATOR */

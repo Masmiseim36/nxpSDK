@@ -1,5 +1,6 @@
-Overview
-========
+# usart_9bit_interrupt_transfer
+
+## Overview
 The usart_9bit_interrupt_transfer example shows how to use usart driver in 9-bit mode in multi-slave system.
 Master can send data to slave with certain address specifically, and slave can only receive data when it is addressed.
 
@@ -7,69 +8,14 @@ In this example, one usart instance is used with address configured. Its TX and 
 First it sends a piece of data out, then addresses itself, after that sends the other piece of data. Only data
 sent after the address can be received by itself.
 
-SDK version
-===========
-- Version: 2.16.000
-
-Toolchain supported
-===================
-- IAR embedded Workbench  9.60.1
-- Keil MDK  5.39.0
-- GCC ARM Embedded  13.2.1
-- MCUXpresso  11.10.0
-
-Hardware requirements
-=====================
-- Micro USB cable
-- MIMXRT685-AUD-EVK board
-- Personal Computer
-
-Board settings
-==============
-Make sure the JP42 2-3 is connected.
-
-Using instance 4 of UART interface to transfer data to itself.
-TX pin is connected with RX pin.
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-UART4     CONNECTS TO          UART4
-Pin Name    Board Location     Pin Name  Board Location
-TXD         J27-2               RXD       J27-1
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Prepare the Demo
-================
-1.  Connect a micro USB cable between the PC host and the CMSIS DAP USB port (J5) on the board
-2.  Open a serial terminal with the following settings:
-    - 115200 baud rate
-    - 8 data bits
-    - No parity
-    - One stop bit
-    - No flow control
-3.  Download the program to the target board.
-4.  Launch the debugger in your IDE to begin running the demo.
-
-Running the demo
-================
-When the demo runs successfully, the log would be seen on the terminal like:
-
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-USART 9-bit mode example begins
-USART is configured with address, only data sent to itself after matched address can be received
-USART will send first piece of data out:
-
-0x 0  0x 1  0x 2  0x 3  0x 4  0x 5  0x 6  0x 7  
-0x 8  0x 9  0x a  0x b  0x c  0x d  0x e  0x f  
-
-USART will address itself
-USART will send the other piece of data out:
-
-0x10  0x11  0x12  0x13  0x14  0x15  0x16  0x17  
-0x18  0x19  0x1a  0x1b  0x1c  0x1d  0x1e  0x1f  
-
-USART received data:
-
-0x10  0x11  0x12  0x13  0x14  0x15  0x16  0x17  
-0x18  0x19  0x1a  0x1b  0x1c  0x1d  0x1e  0x1f  
-
-All data matches!
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+## Supported Boards
+- [EVK-MIMXRT685](../../../../_boards/evkmimxrt685/driver_examples/usart/9bit_interrupt_transfer/example_board_readme.md)
+- [LPCXpresso51U68](../../../../_boards/lpcxpresso51u68/driver_examples/usart/9bit_interrupt_transfer/example_board_readme.md)
+- [LPCXpresso54628](../../../../_boards/lpcxpresso54628/driver_examples/usart/9bit_interrupt_transfer/example_board_readme.md)
+- [LPCXpresso54S018](../../../../_boards/lpcxpresso54s018/driver_examples/usart/9bit_interrupt_transfer/example_board_readme.md)
+- [LPCXpresso54S018M](../../../../_boards/lpcxpresso54s018m/driver_examples/usart/9bit_interrupt_transfer/example_board_readme.md)
+- [LPCXpresso55S06](../../../../_boards/lpcxpresso55s06/driver_examples/usart/9bit_interrupt_transfer/example_board_readme.md)
+- [LPCXpresso55S16](../../../../_boards/lpcxpresso55s16/driver_examples/usart/9bit_interrupt_transfer/example_board_readme.md)
+- [LPCXpresso55S28](../../../../_boards/lpcxpresso55s28/driver_examples/usart/9bit_interrupt_transfer/example_board_readme.md)
+- [LPCXpresso55S69](../../../../_boards/lpcxpresso55s69/driver_examples/usart/9bit_interrupt_transfer/example_board_readme.md)
+- [MIMXRT685-AUD-EVK](../../../../_boards/mimxrt685audevk/driver_examples/usart/9bit_interrupt_transfer/example_board_readme.md)

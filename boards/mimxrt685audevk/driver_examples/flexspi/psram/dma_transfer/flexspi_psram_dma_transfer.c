@@ -7,29 +7,12 @@
 
 #include "fsl_flexspi.h"
 #include "fsl_flexspi_dma.h"
+#include "app.h"
 #include "fsl_debug_console.h"
 
-#include "pin_mux.h"
-#include "clock_config.h"
-#include "board.h"
-#include "fsl_common.h"
-#include "fsl_dma.h"
-#include "fsl_inputmux.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define EXAMPLE_FLEXSPI                    BOARD_FLEXSPI_PSRAM
-#define EXAMPLE_FLEXSPI_AMBA_BASE          FlexSPI_AMBA_BASE
-#define EXAMPLE_FLEXSPI_PORT               kFLEXSPI_PortA1
-#define HYPERRAM_CMD_LUT_SEQ_IDX_READDATA  0
-#define HYPERRAM_CMD_LUT_SEQ_IDX_WRITEDATA 1
-#define HYPERRAM_CMD_LUT_SEQ_IDX_READREG   2
-#define HYPERRAM_CMD_LUT_SEQ_IDX_WRITEREG  3
-#define HYPERRAM_CMD_LUT_SEQ_IDX_RESET     4
-#define DRAM_SIZE                          0x800000U
-#define EXAMPLE_DMA                        DMA0
-#define EXAMPLE_TX_CHANNEL                 29
-#define EXAMPLE_RX_CHANNEL                 28
 
 /*******************************************************************************
  * Prototypes
@@ -59,11 +42,6 @@ static flexspi_dma_handle_t flexspiHandle;
 /*******************************************************************************
  * Code
  ******************************************************************************/
-
-dma_handle_t dmaTxHandle = {0};
-dma_handle_t dmaRxHandle = {0};
-
-
 
 static void flexspi_callback(FLEXSPI_Type *base, flexspi_dma_handle_t *handle, status_t status, void *userData)
 {
@@ -144,36 +122,7 @@ int main(void)
     uint32_t i = 0;
     status_t result;
 
-    BOARD_InitBootPins();
-    BOARD_InitPsRamPins();
-    BOARD_InitBootClocks();
-    BOARD_InitDebugConsole();
-
-    status_t status = BOARD_InitPsRam();
-    if (status != kStatus_Success)
-    {
-        assert(false);
-    }
-
-    /* Configure DMAMUX. */
-    RESET_PeripheralReset(kINPUTMUX_RST_SHIFT_RSTn);
-
-    INPUTMUX_Init(INPUTMUX);
-    INPUTMUX_AttachSignal(INPUTMUX, EXAMPLE_TX_CHANNEL, kINPUTMUX_FlexspiTxToDma0);
-    INPUTMUX_AttachSignal(INPUTMUX, EXAMPLE_RX_CHANNEL, kINPUTMUX_FlexspiRxToDma0);
-    /* Enable trigger. */
-    INPUTMUX_EnableSignal(INPUTMUX, kINPUTMUX_Dmac0InputTriggerFlexspiTxEna, true);
-    INPUTMUX_EnableSignal(INPUTMUX, kINPUTMUX_Dmac0InputTriggerFlexspiRxEna, true);
-    /* Turnoff clock to inputmux to save power. Clock is only needed to make changes */
-    INPUTMUX_Deinit(INPUTMUX);
-
-    /* DMA init */
-    DMA_Init(EXAMPLE_DMA);
-
-    DMA_EnableChannel(EXAMPLE_DMA, EXAMPLE_TX_CHANNEL);
-    DMA_EnableChannel(EXAMPLE_DMA, EXAMPLE_RX_CHANNEL);
-    DMA_CreateHandle(&dmaTxHandle, EXAMPLE_DMA, EXAMPLE_TX_CHANNEL);
-    DMA_CreateHandle(&dmaRxHandle, EXAMPLE_DMA, EXAMPLE_RX_CHANNEL);
+    BOARD_InitHardware();
 
     /* Create handle for flexspi. */
     FLEXSPI_TransferCreateHandleDMA(EXAMPLE_FLEXSPI, &flexspiHandle, flexspi_callback, NULL, &dmaTxHandle,

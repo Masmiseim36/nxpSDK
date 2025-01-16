@@ -6,17 +6,14 @@
  */
 
 /*  SDK Included Files */
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
 #include "fsl_debug_console.h"
 #include "fsl_i2c.h"
+#include "app.h"
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define EXAMPLE_I2C_SLAVE_BASE    I2C4
-#define I2C_SLAVE_CLOCK_FREQUENCY CLOCK_GetFlexCommClkFreq(4U)
 
 #define EXAMPLE_I2C_SLAVE ((I2C_Type *)EXAMPLE_I2C_SLAVE_BASE)
 
@@ -76,12 +73,7 @@ int main(void)
 {
     i2c_slave_config_t slaveConfig;
 
-    /* Use 16 MHz clock for the FLEXCOMM4 */
-    CLOCK_AttachClk(kSFRO_to_FLEXCOMM4);
-
-    BOARD_InitBootPins();
-    BOARD_InitBootClocks();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
 
     PRINTF("\r\nI2C board2board DMA example -- Slave transfer.\r\n\r\n");
 

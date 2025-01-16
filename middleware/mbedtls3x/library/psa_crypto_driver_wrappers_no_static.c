@@ -174,8 +174,9 @@ psa_status_t psa_driver_wrapper_get_key_buffer_size(
         case PSA_CRYPTO_ELS_PKC_LOCATION_S50_ENC_STORAGE_DATA:
         case PSA_CRYPTO_ELS_PKC_LOCATION_S50_BLOB_STORAGE:
         case PSA_CRYPTO_ELS_PKC_LOCATION_S50_KEY_GEN_STORAGE:
+        case PSA_CRYPTO_ELS_PKC_LOCATION_S50_RFC3394_STORAGE:
             *key_buffer_size = els_pkc_opaque_size_function_key_buff_size( 
-                               psa_get_key_id(attributes));
+                               attributes);
             return( ( *key_buffer_size != 0 ) ?
                     PSA_SUCCESS : PSA_ERROR_NOT_SUPPORTED );
 #endif /* PSA_CRYPTO_DRIVER_ELS_PKC */
@@ -272,6 +273,7 @@ psa_status_t psa_driver_wrapper_export_public_key(
 #endif
 
 
+
 #if (defined(PSA_CRYPTO_DRIVER_ELS_PKC) )
             status = els_pkc_transparent_export_public_key
                 (attributes,
@@ -330,6 +332,7 @@ psa_status_t psa_driver_wrapper_export_public_key(
         case PSA_CRYPTO_ELS_PKC_LOCATION_S50_ENC_STORAGE_DATA:
         case PSA_CRYPTO_ELS_PKC_LOCATION_S50_BLOB_STORAGE:
         case PSA_CRYPTO_ELS_PKC_LOCATION_S50_KEY_GEN_STORAGE:
+        case PSA_CRYPTO_ELS_PKC_LOCATION_S50_RFC3394_STORAGE:
             return( els_pkc_opaque_export_public_key
             (attributes,
                             key_buffer,
@@ -384,6 +387,7 @@ psa_status_t psa_driver_wrapper_get_builtin_key(
         case PSA_CRYPTO_ELS_PKC_LOCATION_S50_ENC_STORAGE_DATA:
         case PSA_CRYPTO_ELS_PKC_LOCATION_S50_BLOB_STORAGE:
         case PSA_CRYPTO_ELS_PKC_LOCATION_S50_KEY_GEN_STORAGE:
+        case PSA_CRYPTO_ELS_PKC_LOCATION_S50_RFC3394_STORAGE:
             return( els_pkc_opaque_get_builtin_key
             (slot_number,
                             attributes,

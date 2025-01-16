@@ -23,12 +23,14 @@
 
 /*! @name Driver version */
 /*! @{ */
-/*! @brief TRNG driver version 2.0.16.
+/*! @brief TRNG driver version 2.0.17.
  *
- * Current version: 2.0.16
+ * Current version: 2.0.17
  *
 
  * Change log:
+ * - version 2.0.17
+ *   - Added support for RT700.
  * - version 2.0.16
  *   - Added support for Dual oscillator mode.
  * - version 2.0.15
@@ -65,7 +67,7 @@
  *   - add support for KL8x and KL28Z
  *   - update default OSCDIV for K81 to divide by 2
  */
-#define FSL_TRNG_DRIVER_VERSION (MAKE_VERSION(2, 0, 16))
+#define FSL_TRNG_DRIVER_VERSION (MAKE_VERSION(2, 0, 17))
 /*! @} */
 
 /*! @brief TRNG sample mode. Used by trng_config_t. */

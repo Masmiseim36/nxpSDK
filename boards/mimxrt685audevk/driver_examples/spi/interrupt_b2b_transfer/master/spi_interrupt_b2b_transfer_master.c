@@ -7,21 +7,13 @@
  */
 
 #include "fsl_spi.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 #include "fsl_debug_console.h"
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define EXAMPLE_SPI_MASTER          SPI5
-#define EXAMPLE_SPI_MASTER_IRQ      FLEXCOMM5_IRQn
-#define EXAMPLE_SPI_MASTER_CLK_SRC  kCLOCK_Flexcomm5
-#define EXAMPLE_SPI_MASTER_CLK_FREQ CLOCK_GetFlexCommClkFreq(5U)
-
-#define EXAMPLE_SPI_SSEL 0
-#define EXAMPLE_SPI_SPOL kSPI_SpolActiveAllLow
 
 /*******************************************************************************
  * Prototypes
@@ -51,11 +43,7 @@ int main(void)
     uint32_t i       = 0;
     uint32_t srcFreq = 0;
 
-    CLOCK_AttachClk(kSFRO_to_FLEXCOMM5);
-
-    BOARD_InitBootPins();
-    BOARD_InitBootClocks();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
     PRINTF("\n\rMaster Start...\n\r");
     /*
      * userConfig.enableLoopback = false;

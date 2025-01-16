@@ -13,19 +13,14 @@
 #include <stdlib.h>
 #include "fsl_device_registers.h"
 #include "fsl_debug_console.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 
 #include "fsl_puf.h"
 
-#include "fsl_power.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define CORE_CLK_FREQ CLOCK_GetFreq(kCLOCK_CoreSysClk)
-/* Worst-case time in ms to fully discharge PUF SRAM */
-#define PUF_DISCHARGE_TIME 400
 #define PUF_INTRINSIC_KEY_SIZE 16
 
 /*******************************************************************************
@@ -57,9 +52,7 @@ int main(void)
     uint8_t intrinsicKey[PUF_INTRINSIC_KEY_SIZE] = {0};
 
     /* Init hardware */
-    BOARD_InitBootPins();
-    BOARD_InitBootClocks();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
 
     /* Initialize random number generator used to generate key mask for HW key */
     /* In real application, the seed shall be obtained from a hardware random number generator. */

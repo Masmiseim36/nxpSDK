@@ -8,15 +8,12 @@
 
 #include "fsl_device_registers.h"
 #include "fsl_debug_console.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 
-#include "fsl_power.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-
 
 /*******************************************************************************
  * Prototypes
@@ -37,14 +34,7 @@ int main(void)
     char ch;
 
     /* Init board hardware. */
-    BOARD_InitBootPins();
-
-    /* Clock was initialized in mpi_loader_extram_loader, just need to set global variables here. */
-    POWER_UpdateOscSettlingTime(BOARD_SYSOSC_SETTLING_US); /* Updated XTAL oscillator settling time */
-    CLOCK_SetXtalFreq(BOARD_XTAL_SYS_CLK_HZ);              /* Sets external XTAL OSC freq */
-    SystemCoreClock = BOARD_BOOTCLOCKRUN_CORE_CLOCK;
-
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
 
     PRINTF("hello world.\r\n");
 

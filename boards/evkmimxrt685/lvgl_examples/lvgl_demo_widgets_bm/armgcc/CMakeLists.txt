@@ -1,6 +1,6 @@
 # CROSS COMPILER SETTING
-SET(CMAKE_SYSTEM_NAME Generic)
-CMAKE_MINIMUM_REQUIRED (VERSION 3.10.0)
+set(CMAKE_SYSTEM_NAME Generic)
+cmake_minimum_required(VERSION 3.10.0)
 
 # THE VERSION NUMBER
 SET (MCUXPRESSO_CMAKE_FORMAT_MAJOR_VERSION 2)
@@ -14,27 +14,26 @@ if(CMAKE_SCRIPT_MODE_FILE)
 endif()
 
 
-# ENABLE ASM
-ENABLE_LANGUAGE(ASM)
+set(CMAKE_STATIC_LIBRARY_PREFIX)
+set(CMAKE_STATIC_LIBRARY_SUFFIX)
 
-SET(CMAKE_STATIC_LIBRARY_PREFIX)
-SET(CMAKE_STATIC_LIBRARY_SUFFIX)
-
-SET(CMAKE_EXECUTABLE_LIBRARY_PREFIX)
-SET(CMAKE_EXECUTABLE_LIBRARY_SUFFIX)
+set(CMAKE_EXECUTABLE_LIBRARY_PREFIX)
+set(CMAKE_EXECUTABLE_LIBRARY_SUFFIX)
 
 # CURRENT DIRECTORY
-SET(ProjDirPath ${CMAKE_CURRENT_SOURCE_DIR})
+set(ProjDirPath ${CMAKE_CURRENT_SOURCE_DIR})
 
-SET(EXECUTABLE_OUTPUT_PATH ${ProjDirPath}/${CMAKE_BUILD_TYPE})
-SET(LIBRARY_OUTPUT_PATH ${ProjDirPath}/${CMAKE_BUILD_TYPE})
+set(EXECUTABLE_OUTPUT_PATH ${ProjDirPath}/${CMAKE_BUILD_TYPE})
+set(LIBRARY_OUTPUT_PATH ${ProjDirPath}/${CMAKE_BUILD_TYPE})
 
 
-project(lvgl_demo_widgets_bm)
+project(lvgl_demo_widgets_bm_cm33)
 
-set(MCUX_BUILD_TYPES debug release flash_debug flash_release)
+enable_language(ASM)
 
-set(MCUX_SDK_PROJECT_NAME lvgl_demo_widgets_bm.elf)
+set(MCUX_BUILD_TYPES debug flash_debug release flash_release)
+
+set(MCUX_SDK_PROJECT_NAME lvgl_demo_widgets_bm_cm33.elf)
 
 if (NOT DEFINED SdkRootDirPath)
     SET(SdkRootDirPath ${ProjDirPath}/../../../../..)
@@ -45,30 +44,32 @@ include(${ProjDirPath}/flags.cmake)
 include(${ProjDirPath}/config.cmake)
 
 add_executable(${MCUX_SDK_PROJECT_NAME} 
-"${SdkRootDirPath}/boards/evkmimxrt685/lvgl_examples/RTE_Device.h"
 "${ProjDirPath}/../lvgl_demo_widgets_bm.c"
-"${ProjDirPath}/../lv_conf.h"
+"${ProjDirPath}/../lvgl_demo_utils.c"
+"${ProjDirPath}/../lvgl_demo_utils.h"
 "${ProjDirPath}/../pin_mux.c"
 "${ProjDirPath}/../pin_mux.h"
-"${ProjDirPath}/../board.c"
+"${ProjDirPath}/../hardware_init.c"
+"${ProjDirPath}/../app.h"
 "${ProjDirPath}/../board.h"
-"${ProjDirPath}/../clock_config.c"
+"${ProjDirPath}/../board.c"
 "${ProjDirPath}/../clock_config.h"
+"${ProjDirPath}/../clock_config.c"
+"${ProjDirPath}/../lv_conf.h"
 "${ProjDirPath}/../lvgl_support.h"
 "${ProjDirPath}/../lvgl_support.c"
-"${SdkRootDirPath}/boards/evkmimxrt685/lvgl_examples/lvgl_demo_utils.h"
-"${SdkRootDirPath}/boards/evkmimxrt685/lvgl_examples/lvgl_demo_utils.c"
+"${ProjDirPath}/../lvgl_support_board.h"
+"${ProjDirPath}/../RTE_Device.h"
+"${ProjDirPath}/../mcux_config.h"
 )
 
 target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
-    ${SdkRootDirPath}/boards/evkmimxrt685/lvgl_examples
     ${ProjDirPath}/..
 )
 
-set_source_files_properties("${SdkRootDirPath}/boards/evkmimxrt685/lvgl_examples/RTE_Device.h" PROPERTIES COMPONENT_CONFIG_FILE "RTE_Device.MIMXRT685S")
 set_source_files_properties("${ProjDirPath}/../lv_conf.h" PROPERTIES COMPONENT_CONFIG_FILE "middleware_lvgl_template")
-set_source_files_properties("${ProjDirPath}/../lvgl_support.h" PROPERTIES COMPONENT_CONFIG_FILE "middleware_lvgl_template")
 set_source_files_properties("${ProjDirPath}/../lvgl_support.c" PROPERTIES COMPONENT_CONFIG_FILE "middleware_lvgl_template")
+set_source_files_properties("${ProjDirPath}/../RTE_Device.h" PROPERTIES COMPONENT_CONFIG_FILE "device_RTE.MIMXRT685S")
 
 include(${SdkRootDirPath}/devices/MIMXRT685S/all_lib_device.cmake)
 
@@ -83,7 +84,10 @@ target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${TARGET_LINK_SYSTEM_LIBR
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--end-group)
 
 ADD_CUSTOM_COMMAND(TARGET ${MCUX_SDK_PROJECT_NAME} POST_BUILD COMMAND ${CMAKE_OBJCOPY}
--Obinary ${EXECUTABLE_OUTPUT_PATH}/${MCUX_SDK_PROJECT_NAME} ${EXECUTABLE_OUTPUT_PATH}/sdk20-app.bin)
+-Obinary ${EXECUTABLE_OUTPUT_PATH}/${MCUX_SDK_PROJECT_NAME} ${EXECUTABLE_OUTPUT_PATH}/lvgl_demo_widgets_bm.bin)
 
-set_target_properties(${MCUX_SDK_PROJECT_NAME} PROPERTIES ADDITIONAL_CLEAN_FILES "output.map;${EXECUTABLE_OUTPUT_PATH}/sdk20-app.bin")
+set_target_properties(${MCUX_SDK_PROJECT_NAME} PROPERTIES ADDITIONAL_CLEAN_FILES "output.map;${EXECUTABLE_OUTPUT_PATH}/lvgl_demo_widgets_bm.bin")
+
+# wrap all libraries with -Wl,--start-group -Wl,--end-group to prevent link order issue
+group_link_libraries()
 

@@ -5,34 +5,24 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-#include "pin_mux.h"
 #include "board.h"
+#include "app.h"
 #include "fsl_debug_console.h"
 #include "fsl_dma.h"
 #include "fsl_inputmux.h"
 
-#include "fsl_pint.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_DMA           DMA0
-#define DEMO_DMA_CHANNEL   0
-#define DEMO_INPUT_MUX_SRC kINPUTMUX_NsGpioPint0Int0ToDma0
 #define BUFF_LENGTH 4U
 
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
-void DMA_HardwareTriggerConfig();
 
 /*******************************************************************************
  * Variables
  ******************************************************************************/
-dma_channel_trigger_t s_channelTrigger = {
-    .type  = kDMA_RisingEdgeTrigger,
-    .burst = kDMA_SingleTransfer,
-    .wrap  = kDMA_NoWrap,
-};
 dma_handle_t g_DMA_Handle;
 volatile bool g_Transfer_Done                                                           = false;
 DMA_ALLOCATE_DATA_TRANSFER_BUFFER(uint32_t s_srcBuffer[BUFF_LENGTH], sizeof(uint32_t))  = {0x01, 0x02, 0x03, 0x04};
@@ -42,26 +32,6 @@ extern dma_channel_trigger_t s_channelTrigger;
 /*******************************************************************************
  * Code
  ******************************************************************************/
-void PINT_Callback(pint_pin_int_t pintr, uint32_t pmatch_status)
-{
-    PRINTF("\r\n\r\nSW1 is pressed.");
-}
-
-
-void DMA_HardwareTriggerConfig()
-{
-    PINT_Init(PINT);
-
-    /* Connect trigger sources to PINT */
-    INPUTMUX_Init(INPUTMUX);
-    INPUTMUX_AttachSignal(INPUTMUX, kPINT_PatternMatchInp0Src, kINPUTMUX_GpioPort1Pin1ToPintsel); /* SW1 */
-
-    PINT_PinInterruptConfig(PINT, kPINT_PinInt0, kPINT_PinIntEnableRiseEdge, PINT_Callback);
-
-    PINT_EnableCallbackByIndex(PINT, kPINT_PinInt0);
-
-    PRINTF("\r\n\r\nPress SW1 to trigger one shot DMA transfer.");
-}
 
 /* User callback function for DMA transfer. */
 void DMA_Callback(dma_handle_t *handle, void *param, bool transferDone, uint32_t tcds)
@@ -80,9 +50,7 @@ int main(void)
     uint32_t i = 0;
     dma_channel_config_t transferConfig;
 
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
 
     PRINTF("DMA hardware trigger example begin.\r\n\r\n");
     PRINTF("Destination Buffer:\r\n");

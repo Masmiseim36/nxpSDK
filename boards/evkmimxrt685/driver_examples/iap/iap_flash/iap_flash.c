@@ -7,37 +7,19 @@
 
 #include <stdlib.h>
 #include <string.h>
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 #include "fsl_common.h"
 #include "fsl_debug_console.h"
 #include "fsl_iap.h"
 
-#include "fsl_power.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define EXAMPLE_NOR_INSTANCE       0U        /* FLEXSPI */
-#define NOR_FLASH_OP_START_ADDRESS 0x200000U /* Operation on 2MB offset */
-#define NOR_FLASH_OP_SIZE          0x2000U   /* Test 8KB region */
-
-/* Predefined flash option */
-#define EXAMPLE_NOR_FLASH_MXIC_OSPI      0xC1503051U /* Macronix OctalSPI flash */
-#define EXAMPLE_NOR_FLASH_MXIC_OSPI_OPT1 0x20000014U
-
-#define EXAMPLE_NOR_FLASH         EXAMPLE_NOR_FLASH_MXIC_OSPI /* MXIC flash on EVK board */
-#define EXAMPLE_NOR_FLASH_OPTION1 EXAMPLE_NOR_FLASH_MXIC_OSPI_OPT1
-
-#define FLASH_NEED_RESET 1
 
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
-AT_QUICKACCESS_SECTION_CODE(status_t BOARD_FlexspiInit(uint32_t instance,
-                                                       flexspi_nor_config_t *config,
-                                                       serial_nor_config_option_t *option));
-
 
 /*******************************************************************************
  * variables
@@ -49,33 +31,6 @@ static uint32_t mem_readBuffer[(NOR_FLASH_OP_SIZE + 3) / 4];
 /*******************************************************************************
  * Code
  ******************************************************************************/
-AT_QUICKACCESS_SECTION_CODE(status_t BOARD_FlexspiInit(uint32_t instance,
-                                                       flexspi_nor_config_t *config,
-                                                       serial_nor_config_option_t *option))
-{
-    // Reset external flash
-    GPIO->CLR[2] = 1 << 12;
-    for (uint32_t i = 0; i < 6000; i++)
-        __NOP();
-    GPIO->SET[2] = 1 << 12;
-    // Clear FLEXSPI NOR flash configure context
-    SYSCTL0->FLEXSPI_BOOTROM_SCRATCH0 = 0;
-
-    status_t status = IAP_FlexspiNorAutoConfig(instance, config, option);
-    if ((CACHE64->CCR & CACHE64_CTRL_CCR_ENCACHE_MASK) != 0)
-    {
-        /* set command to invalidate all ways and write GO bit to initiate command */
-        CACHE64->CCR = CACHE64_CTRL_CCR_INVW1_MASK | CACHE64_CTRL_CCR_INVW0_MASK;
-        CACHE64->CCR |= CACHE64_CTRL_CCR_GO_MASK;
-        /* Wait until the command completes */
-        while (CACHE64->CCR & CACHE64_CTRL_CCR_GO_MASK)
-        {
-        }
-        /* As a precaution clear the bits to avoid inadvertently re-running this command. */
-        CACHE64->CCR &= ~(CACHE64_CTRL_CCR_INVW0_MASK | CACHE64_CTRL_CCR_INVW1_MASK);
-    }
-    return status;
-}
 /*!
  * @brief Main function
  */
@@ -89,14 +44,7 @@ int main(void)
     uint8_t *pReadBuf  = (uint8_t *)mem_readBuffer;
     uint8_t *pWriteBuf = (uint8_t *)mem_writeBuffer;
 
-    RESET_PeripheralReset(kHSGPIO2_RST_SHIFT_RSTn);
-
-    BOARD_InitBootPins();
-    BOARD_InitBootClocks();
-    BOARD_InitDebugConsole();
-
-    /* Switch flexspi clock to FFRO*/
-    IAP_FlexspiSetClockSource(3);
+    BOARD_InitHardware();
 
     PRINTF("\r\nIAP flash example started!\r\n");
 

@@ -6,9 +6,8 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 #include "fsl_usart.h"
 #include "fsl_usart_dma.h"
 #include "fsl_dma.h"
@@ -16,13 +15,6 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_USART                USART0
-#define DEMO_USART_CLK_SRC        kCLOCK_Flexcomm0
-#define DEMO_USART_CLK_FREQ       CLOCK_GetFlexCommClkFreq(0U)
-#define USART_RX_DMA_CHANNEL      0
-#define USART_TX_DMA_CHANNEL      1
-#define EXAMPLE_UART_DMA_BASEADDR DMA0
-
 #define ECHO_BUFFER_LENGTH 8
 
 /*******************************************************************************
@@ -78,9 +70,7 @@ int main(void)
     usart_transfer_t sendXfer;
     usart_transfer_t receiveXfer;
 
-    BOARD_InitBootPins();
-    BOARD_InitBootClocks();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
 
     /* Initialize the UART. */
     /*

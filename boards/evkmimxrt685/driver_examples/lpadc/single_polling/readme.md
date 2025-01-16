@@ -1,5 +1,6 @@
-Overview
-========
+# lpadc_single_polling
+
+## Overview
 
 The lpadc_single_polling example shows the simplest way to use LPADC driver.
 
@@ -11,46 +12,14 @@ Then read the conversion result value and print it to debug console.
 Note, the default setting of initialization for the ADC converter is just an available configuration. User can change
 the configuration structure's setting in application to fit the special requirement.
 
-
-SDK version
-===========
-- Version: 2.16.000
-
-Toolchain supported
-===================
-- IAR embedded Workbench  9.60.1
-- Keil MDK  5.39.0
-- GCC ARM Embedded  13.2.1
-- MCUXpresso  11.10.0
-
-Hardware requirements
-=====================
-- Micro USB cable
-- EVK-MIMXRT685 board
-- Personal Computer
-
-Board settings
-==============
-- Set VREF_L to GND, VREF_H to 1.8V (connect JP9, JP10).
-- Input voltage signal(0~1.8V) to J30-1(LPADC0 CH0).
-
-Prepare the Demo
-================
-1.  Connect a micro USB cable between the PC host and the CMSIS DAP USB port (J5) on the board
-2.  Open a serial terminal with the following settings:
-    - 115200 baud rate
-    - 8 data bits
-    - No parity
-    - One stop bit
-    - No flow control
-3.  Download the program to the target board.
-4.  Launch the debugger in your IDE to begin running the demo.
-
-Running the demo
-================
-When the demo runs successfully, following information can be seen on the terminal:
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-LPADC Single Polling Example
-Please press any key to get user channel's ADC value.
-ADC value: 2714
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+## Supported Boards
+- [EVK9-MIMX8ULP](../../../_boards/evk9mimx8ulp/driver_examples/lpadc/single_polling/example_board_readme.md)
+- [EVK-MCIMX7ULP](../../../_boards/evkmcimx7ulp/driver_examples/lpadc/single_polling/example_board_readme.md)
+- [EVK-MIMX8ULP](../../../_boards/evkmimx8ulp/driver_examples/lpadc/single_polling/example_board_readme.md)
+- [EVK-MIMXRT685](../../../_boards/evkmimxrt685/driver_examples/lpadc/single_polling/example_board_readme.md)
+- [FRDM-MCXW71](../../../_boards/frdmmcxw71/driver_examples/lpadc/single_polling/example_board_readme.md)
+- [K32W148-EVK](../../../_boards/k32w148evk/driver_examples/lpadc/single_polling/example_board_readme.md)
+- [KW45B41Z-EVK](../../../_boards/kw45b41zevk/driver_examples/lpadc/single_polling/example_board_readme.md)
+- [KW47-EVK](../../../_boards/kw47evk/driver_examples/lpadc/single_polling/example_board_readme.md)
+- [MCX-W72-EVK](../../../_boards/mcxw72evk/driver_examples/lpadc/single_polling/example_board_readme.md)
+- [MIMXRT685-AUD-EVK](../../../_boards/mimxrt685audevk/driver_examples/lpadc/single_polling/example_board_readme.md)

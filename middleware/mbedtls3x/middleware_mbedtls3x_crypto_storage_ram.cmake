@@ -3,28 +3,23 @@
 include_guard(GLOBAL)
 message("${CMAKE_CURRENT_LIST_FILE} component is included.")
 
-if(CONFIG_USE_middleware_mbedtls3x_crypto)
+      target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
+          ${CMAKE_CURRENT_LIST_DIR}/port/psa_its/psa_its_ram.c
+        )
 
-target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
-  ${CMAKE_CURRENT_LIST_DIR}/port/psa_its/psa_its_ram.c
-)
+  
+      target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
+          ${CMAKE_CURRENT_LIST_DIR}/include
+          ${CMAKE_CURRENT_LIST_DIR}/library
+        )
 
-target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
-  ${CMAKE_CURRENT_LIST_DIR}/include
-  ${CMAKE_CURRENT_LIST_DIR}/library
-)
-
-if(CONFIG_USE_COMPONENT_CONFIGURATION)
+    if(CONFIG_USE_COMPONENT_CONFIGURATION)
   message("===>Import configuration from ${CMAKE_CURRENT_LIST_FILE}")
 
-  target_compile_definitions(${MCUX_SDK_PROJECT_NAME} PUBLIC
-    -DMBEDTLS_PSA_ITS_RAM
-  )
+      target_compile_definitions(${MCUX_SDK_PROJECT_NAME} PUBLIC
+                  -DMBEDTLS_PSA_ITS_RAM
+              )
+  
+  
+  endif()
 
-endif()
-
-else()
-
-message(SEND_ERROR "middleware_mbedtls3x_crypto_storage_ram dependency does not meet, please check ${CMAKE_CURRENT_LIST_FILE}.")
-
-endif()

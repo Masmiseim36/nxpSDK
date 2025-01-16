@@ -1,6 +1,5 @@
 /*
  * Copyright 2020-2021 NXP
- * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -8,25 +7,16 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include "pin_mux.h"
 #include "board.h"
+#include "app.h"
 #include "fsl_debug_console.h"
 #include "fsl_component_serial_manager.h"
 #include "fsl_shell.h"
 #include "fsl_sx1502.h"
 
-#include <stdbool.h>
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define SX1502_INIT_REGDATA (0xFFU)
-#define SX1502_INIT_REGDIR  (0xFFU)
-
-#define BOARD_SX1502_I2C_INSTANCE 1
-#define BOARD_SX1502_I2C_BASEADDR I2C1
-
-#define LED_NUMBERS     7U
-#define PATTERN_NUMBERS 4U
 #define SHELL_Printf PRINTF
 /*******************************************************************************
  * Prototypes
@@ -38,13 +28,6 @@ static shell_status_t PatternControl(shell_handle_t shellHandle, int32_t argc, c
 /*******************************************************************************
  * Variables
  ******************************************************************************/
-sx1502_config_t sx1502Config = {
-    .initRegDataValue  = SX1502_INIT_REGDATA,
-    .initRegDirValue   = SX1502_INIT_REGDIR,
-    .sx1502I2CInstance = BOARD_SX1502_I2C_INSTANCE,
-};
-
-sx1502_handle_t sx1502Handle;
 SHELL_COMMAND_DEFINE(led,
                      "\r\n\"led arg1 arg2\":\r\n Usage:\r\n    arg1: 1|2|3|4...         "
                      "   Led index\r\n    arg2: on|off                Led status\r\n",
@@ -276,15 +259,7 @@ static shell_status_t PatternControl(shell_handle_t shellHandle, int32_t argc, c
 /*! @brief Main function */
 int main(void)
 {
-    CLOCK_AttachClk(kSFRO_to_FLEXCOMM1);
-
-    BOARD_InitBootPins();
-    BOARD_InitBootClocks();
-    BOARD_InitDebugConsole();
-
-    RESET_PeripheralReset(kHSGPIO0_RST_SHIFT_RSTn);
-
-    sx1502Config.sx1502I2CSourceClock = CLOCK_GetFlexCommClkFreq(1U);
+    BOARD_InitHardware();
 
     /* Init SX1502 */
     PRINTF("Configure SX1502 IO expander driver.\r\n");

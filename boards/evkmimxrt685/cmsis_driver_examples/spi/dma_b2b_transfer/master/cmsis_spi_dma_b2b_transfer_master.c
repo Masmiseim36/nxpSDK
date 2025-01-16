@@ -8,15 +8,12 @@
 #include "fsl_device_registers.h"
 #include "fsl_debug_console.h"
 #include "fsl_spi_cmsis.h"
-#include "pin_mux.h"
 #include "board.h"
+#include "app.h"
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DRIVER_MASTER_SPI                 Driver_SPI5
-#define EXAMPLE_LPSPI_MASTER_DMA_BASEADDR DMA0
-
 #define TRANSFER_SIZE     64U     /* Transfer dataSize */
 #define TRANSFER_BAUDRATE 500000U /* Transfer baudrate - 500k */
 
@@ -36,11 +33,6 @@ volatile bool isTransferCompleted = false;
 /*******************************************************************************
  * Code
  ******************************************************************************/
-
-uint32_t SPI5_GetFreq(void)
-{
-    return CLOCK_GetFlexCommClkFreq(5U);
-}
 void SPI_MasterSignalEvent_t(uint32_t event)
 {
     /* user code */
@@ -52,10 +44,7 @@ void SPI_MasterSignalEvent_t(uint32_t event)
  */
 int main(void)
 {
-    CLOCK_AttachClk(kSFRO_to_FLEXCOMM5);
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
 
     PRINTF("SPI CMSIS driver board to board dma example.\r\n");
     PRINTF("This example use one board as master and another as slave.\r\n");

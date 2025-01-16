@@ -26,9 +26,9 @@ enum _hashcrypt_status
  */
 /*! @name Driver version */
 /*! @{ */
-/*! @brief HASHCRYPT driver version. Version 2.2.15.
+/*! @brief HASHCRYPT driver version. Version 2.2.16.
  *
- * Current version: 2.2.15
+ * Current version: 2.2.16
  *
  * Change log:
  * - Version 2.0.0
@@ -94,8 +94,10 @@ enum _hashcrypt_status
  *   - Modify function hashcrypt_get_data() to prevent issue with unaligned access
  * - Version 2.2.15
  *    - Add wait on DIGEST BIT inside hashcrypt_sha_one_block() to fix issues with some optimization flags
+ * - Version 2.2.16
+ *    - Add DSB instruction inside hashcrypt_sha_ldm_stm_16_words() to fix issues with some optimization flags
  */
-#define FSL_HASHCRYPT_DRIVER_VERSION (MAKE_VERSION(2, 2, 15))
+#define FSL_HASHCRYPT_DRIVER_VERSION (MAKE_VERSION(2, 2, 16))
 /*! @} */
 
 /*! @brief Algorithm definitions correspond with the values for Mode field in Control register !*/

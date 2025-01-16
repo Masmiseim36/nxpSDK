@@ -7,18 +7,13 @@
  */
 
 #include "fsl_debug_console.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 #include "fsl_sctimer.h"
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-
-#define SCTIMER_CLK_FREQ        CLOCK_GetFreq(kCLOCK_BusClk)
-#define DEMO_FIRST_SCTIMER_OUT  kSCTIMER_Out_0
-#define DEMO_SECOND_SCTIMER_OUT kSCTIMER_Out_1
 
 /*******************************************************************************
  * Prototypes
@@ -43,9 +38,7 @@ int main(void)
     uint32_t sctimerClock;
 
     /* Board pin, clock, debug console init */
-    BOARD_InitBootPins();
-    BOARD_InitBootClocks();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
 
     sctimerClock = SCTIMER_CLK_FREQ;
 

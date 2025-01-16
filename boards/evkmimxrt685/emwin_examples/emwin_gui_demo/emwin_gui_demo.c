@@ -8,8 +8,8 @@
 
 #include "fsl_device_registers.h"
 #include "fsl_debug_console.h"
-#include "pin_mux.h"
 #include "board.h"
+#include "app.h"
 #include "emwin_support.h"
 
 #include "GUI.h"
@@ -20,12 +20,9 @@
 #include "RADIO.h"
 #include "MULTIPAGE.h"
 
-#include "fsl_dma.h"
-#include <stdbool.h>
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define EXAMPLE_LPSPI_MASTER_DMA_BASEADDR DMA0
 
 #ifndef GUI_NORMAL_FONT
 #define GUI_NORMAL_FONT (&GUI_Font16_ASCII)
@@ -64,17 +61,6 @@
 /*******************************************************************************
  * Code
  ******************************************************************************/
-
-uint32_t SPI5_GetFreq(void)
-{
-    return CLOCK_GetFlexCommClkFreq(5U);
-}
-
-uint32_t I2C2_GetFreq(void)
-{
-    return CLOCK_GetFlexCommClkFreq(2U);
-}
-
 
 static DROPDOWN_Handle hDropdown0;
 static RADIO_Handle hRadio0;
@@ -240,16 +226,7 @@ static void cbPageWin2(WM_MESSAGE *pMsg)
  */
 int main(void)
 {
-    BOARD_InitBootPins();
-    BOARD_InitBootClocks();
-    BOARD_InitDebugConsole();
-
-    /* Use 48 MHz clock for the SPI5 */
-    CLOCK_AttachClk(kFFRO_to_FLEXCOMM5);
-    /* Use 16 MHz clock for the I2C2 */
-    CLOCK_AttachClk(kSFRO_to_FLEXCOMM2);
-
-    DMA_Init(EXAMPLE_LPSPI_MASTER_DMA_BASEADDR);
+    BOARD_InitHardware();
 
     PRINTF("GUI demo start.\r\n");
 

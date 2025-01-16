@@ -9,19 +9,17 @@
  */
 
 // SDK Included Files
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
 #include "fsl_debug_console.h"
 #include "lwip/tcpip.h"
 #include "ping.h"
+#include "app.h"
 #include "wpl.h"
 #include "stdbool.h"
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-
 
 #ifndef main_task_PRIORITY
 #define main_task_PRIORITY 0
@@ -207,10 +205,7 @@ static void main_task(void *param)
 int main(void)
 {
     /* Initialize the hardware */
-    BOARD_InitBootPins();
-    BOARD_InitPinsM2();
-    BOARD_InitBootClocks();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
 
     /* Create the main Task */
     if (xTaskCreate(main_task, "main_task", main_task_STACK_DEPTH, NULL, main_task_PRIORITY, &mainTaskHandle) != pdPASS)

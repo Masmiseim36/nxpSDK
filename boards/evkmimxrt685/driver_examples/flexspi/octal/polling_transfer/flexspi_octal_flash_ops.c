@@ -1,6 +1,5 @@
 /*
- * Copyright 2019-2022 NXP
- * All rights reserved.
+ * Copyright 2019-2022, 2024 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -29,6 +28,8 @@ extern const uint32_t OctalReadDDRLUTCommandSeq[4];
  ******************************************************************************/
 void flexspi_nor_disable_cache(flexspi_cache_status_t *cacheStatus)
 {
+    (void)memset(cacheStatus, 0, sizeof(flexspi_cache_status_t));
+
 #if (defined __CORTEX_M) && (__CORTEX_M == 7U)
 #if defined(__DCACHE_PRESENT) && (__DCACHE_PRESENT == 1U)
     /* Disable D cache. */
@@ -467,6 +468,10 @@ status_t flexspi_nor_flash_erase_sector(FLEXSPI_Type *base, uint32_t address)
 
 status_t flexspi_nor_flash_page_program(FLEXSPI_Type *base, uint32_t dstAddr, const uint32_t *src)
 {
+#if defined(FLASH_ENABLE_OCTAL_CMD)
+    assert(((uint32_t)dstAddr & (0x1UL)) == 0UL);
+#endif
+  
     status_t status;
     flexspi_transfer_t flashXfer;
 
@@ -576,6 +581,10 @@ void flexspi_nor_flash_init(FLEXSPI_Type *base)
     flexspi_nor_disable_cache(&cacheStatus);
 #endif
 
+    /* Copy LUT information from flash region into RAM region, because LUT update maybe corrupt read sequence(LUT[0])
+     * and load wrong LUT table from FLASH region. */
+    memcpy(tempCustomLUT, customLUTOctalMode, sizeof(tempCustomLUT));
+
     /*Get FLEXSPI default settings and configure the flexspi. */
     FLEXSPI_GetDefaultConfig(&config);
 
@@ -609,9 +618,6 @@ void flexspi_nor_flash_init(FLEXSPI_Type *base)
     memcpy(tmpFastReadSDRLUTCommandSeq, FastReadSDRLUTCommandSeq, sizeof(FastReadSDRLUTCommandSeq));
 #endif
 
-    /* Copy LUT information from flash region into RAM region, because LUT update maybe corrupt read sequence(LUT[0])
-     * and load wrong LUT table from FLASH region. */
-    memcpy(tempCustomLUT, customLUTOctalMode, sizeof(tempCustomLUT));
     /* Update LUT table into a specific mode, such as octal SDR mode or octal DDR mode based on application's
      * requirement. */
     FLEXSPI_UpdateLUT(base, 0, tempCustomLUT, CUSTOM_LUT_LENGTH);

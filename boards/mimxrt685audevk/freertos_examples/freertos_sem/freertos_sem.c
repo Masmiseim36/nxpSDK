@@ -16,14 +16,12 @@
 /* Freescale includes. */
 #include "fsl_device_registers.h"
 #include "fsl_debug_console.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-
 #define TASK_PRIO          (configMAX_PRIORITIES - 1)
 #define CONSUMER_LINE_SIZE 3
 SemaphoreHandle_t xSemaphore_producer;
@@ -43,9 +41,7 @@ static void consumer_task(void *pvParameters);
 int main(void)
 {
     /* Init board hardware. */
-    BOARD_InitBootPins();
-    BOARD_InitBootClocks();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
     if (xTaskCreate(producer_task, "PRODUCER_TASK", configMINIMAL_STACK_SIZE + 128, NULL, TASK_PRIO, NULL) != pdPASS)
     {
         PRINTF("Task creation failed!.\r\n");

@@ -7,22 +7,15 @@
 /*  Standard C Included Files */
 #include <string.h>
 /*  SDK Included Files */
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
 #include "fsl_debug_console.h"
+#include "app.h"
 #include "fsl_icm42688p.h"
 #include "fsl_component_i3c.h"
 
-#include "fsl_component_i3c_adapter.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define EXAMPLE_MASTER             I3C
-#define EXAMPLE_I2C_BAUDRATE       400000
-#define I3C_MASTER_CLOCK_FREQUENCY CLOCK_GetI3cClkFreq()
-#define I3C_MASTER_SLAVE_ADDR_7BIT 0x01A
-#define SENSOR_STATIC_ADDRESS      0x69U
 
 /*******************************************************************************
  * Prototypes
@@ -45,11 +38,6 @@ static i3c_device_ibi_info_t dev_icm42688pIbi = {
 /*******************************************************************************
  * Code
  ******************************************************************************/
-i3c_master_adapter_resource_t demo_masterResource = {.base      = EXAMPLE_MASTER,
-                                                     .transMode = kI3C_MasterTransferInterruptMode};
-i3c_device_control_info_t i3cMasterCtlInfo        = {
-           .funcs = (i3c_device_hw_ops_t *)&master_ops, .resource = &demo_masterResource, .isSecondary = false};
-
 void icm42688p_ibi_callback(i3c_device_t *dev, const void *ibiData, uint32_t ibiLen)
 {
     icm42688p_ibiFlag = true;
@@ -96,15 +84,7 @@ status_t I3C_ReadSensor(uint8_t deviceAddress, uint8_t regAddress, uint8_t *regD
  */
 int main(void)
 {
-    /* Attach main clock to I3C, 500MHz / 20 = 25MHZ. */
-    CLOCK_AttachClk(kMAIN_CLK_to_I3C_CLK);
-    CLOCK_SetClkDiv(kCLOCK_DivI3cClk, 20);
-
-    BOARD_InitBootPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
-
-    demo_masterResource.clockInHz = I3C_MASTER_CLOCK_FREQUENCY;
+    BOARD_InitHardware();
 
     PRINTF("\r\nI3C bus master read sensor example.\r\n");
 

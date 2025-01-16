@@ -7,34 +7,17 @@
  */
 
 #include "fsl_debug_console.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 #include "fsl_lpadc.h"
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_LPADC_BASE              ADC0
-#define DEMO_LPADC_TEMP_SENS_CHANNEL 7U
-#define DEMO_LPADC_USER_CMDID        15U /* The available command numbers are 1-15 */
-#define DEMO_LPADC_TEMPERATURE_SLOPE                                                              \
-    -1.536f                              /* Temperature sensor slope with the unit as mV/Celsius. \
-                                          Please refer to the Data Sheet for details. */
-#define DEMO_LPADC_TEMPERATURE_INTERCEPT                                                      \
-    807.0f /* The voltage of the temperature sensor channel at 0 Celsius with the unit as mV. \
-           Please refer to the Data Sheet for details. */
-#define DEMO_LPADC_USE_HIGH_RESOLUTION 0U
-#define DEMO_LPADC_IRQn                ADC0_IRQn
-#define DEMO_LPADC_IRQ_HANDLER_FUNC    ADC0_IRQHandler
-#define DEMO_LPADC_SAMPLE_CHANNEL_MODE kLPADC_SampleChannelDiffBothSideAB
-#define DEMO_LPADC_VREEFP              1.8f /* LPADC positive reference voltage value with the unit as V. */
-#define DEMO_LPADC_VREFN               0.0f /* LPADC negative reference voltage value with the unit as V. */
 
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
-float DEMO_MeasureTemperature(ADC_Type *base, uint32_t commandId, uint32_t index);
 static void ADC_Configuration(void);
 
 /*******************************************************************************
@@ -52,28 +35,6 @@ const uint32_t g_LpadcFullRange = 4096U;
 /*******************************************************************************
  * Code
  ******************************************************************************/
-/*!
- * brief Measure Temperature sensor.
- */
-float DEMO_MeasureTemperature(ADC_Type *base, uint32_t commandId, uint32_t index)
-{
-    lpadc_conv_result_t convResultStruct;
-    float Vtemp              = 0.0f;
-    uint32_t convResultShift = 0U;
-    float parameterSlope     = DEMO_LPADC_TEMPERATURE_SLOPE;
-    float parameterIntercept = DEMO_LPADC_TEMPERATURE_INTERCEPT;
-    float temperature        = -273.15f; /* Absolute zero degree as the incorrect return value. */
-
-    if (true == LPADC_GetConvResult(base, &convResultStruct))
-    {
-        Vtemp       = (((convResultStruct.convValue >> convResultShift) *
-                  ((DEMO_LPADC_VREEFP - DEMO_LPADC_VREFN) * 1000.0f / g_LpadcFullRange)));
-        temperature = (Vtemp - parameterIntercept) / parameterSlope;
-    }
-
-    return temperature;
-}
-
 void DEMO_LPADC_IRQ_HANDLER_FUNC(void)
 {
     g_CurrentTemperature           = DEMO_MeasureTemperature(DEMO_LPADC_BASE, DEMO_LPADC_USER_CMDID, 0U);
@@ -86,18 +47,7 @@ void DEMO_LPADC_IRQ_HANDLER_FUNC(void)
  */
 int main(void)
 {
-    BOARD_InitBootPins();
-    BOARD_InitBootClocks();
-    BOARD_InitDebugConsole();
-
-    SYSCTL0->PDRUNCFG0_CLR = SYSCTL0_PDRUNCFG0_ADC_PD_MASK;
-    SYSCTL0->PDRUNCFG0_CLR = SYSCTL0_PDRUNCFG0_ADC_LP_MASK;
-    /* Power up the ADC temperature sensor via SYSCTL. */
-    SYSCTL0->PDRUNCFG0_CLR = SYSCTL0_PDRUNCFG0_ADCTEMPSNS_PD_MASK;
-
-    RESET_PeripheralReset(kADC0_RST_SHIFT_RSTn);
-    CLOCK_AttachClk(kSFRO_to_ADC_CLK);
-    CLOCK_SetClkDiv(kCLOCK_DivAdcClk, 1);
+    BOARD_InitHardware();
 
     PRINTF("LPADC Temperature Measurement Example\r\n");
 
@@ -207,7 +157,7 @@ static void ADC_Configuration(void)
     g_LpadcCommandConfigStruct.channelNumber       = DEMO_LPADC_TEMP_SENS_CHANNEL;
     g_LpadcCommandConfigStruct.sampleChannelMode   = DEMO_LPADC_SAMPLE_CHANNEL_MODE;
     g_LpadcCommandConfigStruct.sampleTimeMode      = kLPADC_SampleTimeADCK131;
-    g_LpadcCommandConfigStruct.hardwareAverageMode = kLPADC_HardwareAverageCount128;
+    g_LpadcCommandConfigStruct.hardwareAverageMode = DEMO_LPADC_HARDWARE_AVERAGE;
 #if defined(FSL_FEATURE_LPADC_TEMP_SENS_BUFFER_SIZE)
     g_LpadcCommandConfigStruct.loopCount = FSL_FEATURE_LPADC_TEMP_SENS_BUFFER_SIZE - 1U;
 #endif /* FSL_FEATURE_LPADC_TEMP_SENS_BUFFER_SIZE */

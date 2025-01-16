@@ -1,59 +1,29 @@
-Overview
-========
+# wwdt_example
+
+## Overview
 The WWDT Example project is to demonstrate usage of the KSDK wdog driver.
 In this example,quick test to show user how to feed watch dog.
 User need to feed the watch dog in time before it warning or timeout interrupt.
 The WINDOW register determines the highest TV value allowed when a watchdog feed is
-performed. 
+performed.
 
-SDK version
-===========
-- Version: 2.16.000
-
-Toolchain supported
-===================
-- IAR embedded Workbench  9.60.1
-- Keil MDK  5.39.0
-- GCC ARM Embedded  13.2.1
-- MCUXpresso  11.10.0
-
-Hardware requirements
-=====================
-- Micro USB cable
-- MIMXRT685-AUD-EVK board
-- Personal Computer
-
-Board settings
-==============
-
-
-Prepare the Demo
-================
-1.  Connect a micro USB cable between the PC host and the CMSIS DAP USB port (J5) on the board
-2.  Open a serial terminal with the following settings:
-    - 115200 baud rate
-    - 8 data bits
-    - No parity
-    - One stop bit
-    - No flow control
-3.  Download the program to the target board.
-4.  Launch the debugger in your IDE to begin running the demo.
-
-Running the demo
-================
-The log below shows example output of the WWDT driver demo in the terminal window:
-
---- Time out reset test start ---
-Watchdog reset occurred
-
---- Window mode refresh test start ---
- WDOG has been refreshed!
- WDOG has been refreshed!
- WDOG has been refreshed!
- WDOG has been refreshed!
- WDOG has been refreshed!
- WDOG has been refreshed!
- WDOG has been refreshed!
- WDOG has been refreshed!
- WDOG has been refreshed!
- WDOG has been refreshed!
+## Supported Boards
+- [EVK-MIMXRT595](../../../_boards/evkmimxrt595/driver_examples/wwdt/example_board_readme.md)
+- [EVK-MIMXRT685](../../../_boards/evkmimxrt685/driver_examples/wwdt/example_board_readme.md)
+- [FRDM-MCXA153](../../../_boards/frdmmcxa153/driver_examples/wwdt/example_board_readme.md)
+- [FRDM-MCXA156](../../../_boards/frdmmcxa156/driver_examples/wwdt/example_board_readme.md)
+- [FRDM-MCXA166](../../../_boards/frdmmcxa166/driver_examples/wwdt/example_board_readme.md)
+- [FRDM-MCXA276](../../../_boards/frdmmcxa276/driver_examples/wwdt/example_board_readme.md)
+- [FRDM-MCXN236](../../../_boards/frdmmcxn236/driver_examples/wwdt/example_board_readme.md)
+- [FRDM-RW612](../../../_boards/frdmrw612/driver_examples/wwdt/example_board_readme.md)
+- [LPC845BREAKOUT](../../../_boards/lpc845breakout/driver_examples/wwdt/example_board_readme.md)
+- [LPCXpresso51U68](../../../_boards/lpcxpresso51u68/driver_examples/wwdt/example_board_readme.md)
+- [LPCXpresso54628](../../../_boards/lpcxpresso54628/driver_examples/wwdt/example_board_readme.md)
+- [LPCXpresso802](../../../_boards/lpcxpresso802/driver_examples/wwdt/example_board_readme.md)
+- [LPCXpresso804](../../../_boards/lpcxpresso804/driver_examples/wwdt/example_board_readme.md)
+- [LPCXpresso824MAX](../../../_boards/lpcxpresso824max/driver_examples/wwdt/example_board_readme.md)
+- [LPCXpresso845MAX](../../../_boards/lpcxpresso845max/driver_examples/wwdt/example_board_readme.md)
+- [LPCXpresso860MAX](../../../_boards/lpcxpresso860max/driver_examples/wwdt/example_board_readme.md)
+- [MIMXRT685-AUD-EVK](../../../_boards/mimxrt685audevk/driver_examples/wwdt/example_board_readme.md)
+- [MIMXRT700-EVK](../../../_boards/mimxrt700evk/driver_examples/wwdt/example_board_readme.md)
+- [RD-RW612-BGA](../../../_boards/rdrw612bga/driver_examples/wwdt/example_board_readme.md)

@@ -11,11 +11,11 @@
 #include "pin_mux.h"
 #include "clock_config.h"
 #include "board.h"
+#include "app.h"
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-
 
 /*******************************************************************************
  * Prototypes
@@ -25,7 +25,7 @@
  * Define the function which runs in external memory(XIP).
  * The XIP code can be put into ".xip_section" section.
  */
-__attribute__((section(".xip_section"))) void Demo_FuncXip(void)
+__attribute__((noinline, section(".xip_section"))) void Demo_FuncXip(void)
 {
     /* Do something. Run the code in external flash(XIP). */
     PRINTF("Run in flash.\r\n");
@@ -41,9 +41,7 @@ int main(void)
     char ch;
 
     /* Init board hardware. */
-    BOARD_InitBootPins();
-    BOARD_InitBootClocks();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
 
     PRINTF("hello world.\r\n");
     Demo_FuncXip();

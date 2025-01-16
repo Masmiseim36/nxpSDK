@@ -6,27 +6,16 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
+#include "app.h"
 #include "fsl_debug_console.h"
 #include "fsl_device_registers.h"
 #include "fsl_spi.h"
 #include "fsl_spi_dma.h"
 #include "fsl_dma.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define EXAMPLE_SPI_MASTER            SPI5
-#define EXAMPLE_SPI_MASTER_IRQ        FLEXCOMM5_IRQn
-#define EXAMPLE_SPI_MASTER_CLK_SRC    kCLOCK_Flexcomm5
-#define EXAMPLE_SPI_MASTER_CLK_FREQ   CLOCK_GetFlexCommClkFreq(5U)
-#define EXAMPLE_SPI_MASTER_RX_CHANNEL 10
-#define EXAMPLE_SPI_MASTER_TX_CHANNEL 11
-
-#define EXAMPLE_SPI_SSEL        0
-#define EXAMPLE_DMA             DMA0
-#define EXAMPLE_MASTER_SPI_SPOL kSPI_SpolActiveAllLow
 #define TRANSFER_SIZE 64U /*! Transfer dataSize */
 
 /*******************************************************************************
@@ -68,11 +57,7 @@ static void SPI_MasterUserCallback(SPI_Type *base, spi_dma_handle_t *handle, sta
 int main(void)
 {
     /* Initialize board setting. */
-    CLOCK_AttachClk(kSFRO_to_FLEXCOMM5);
-
-    BOARD_InitBootPins();
-    BOARD_InitBootClocks();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
 
     /* Print project information. */
     PRINTF("This is SPI DMA transfer master example.\r\n");

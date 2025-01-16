@@ -1,82 +1,19 @@
-Overview
-========
+# powerquad_benchmark_vector
+
+## Overview
 This example shows how to use powerquad driver vector functions.
 The powerquad driver API results are compared to the reference result.
 
-SDK version
-===========
-- Version: 2.16.000
-
-Toolchain supported
-===================
-- MCUXpresso  11.10.0
-- Keil MDK  5.39.0
-- IAR embedded Workbench  9.60.1
-- GCC ARM Embedded  13.2.1
-
-Hardware requirements
-=====================
-- Micro USB cable
-- EVK-MIMXRT685 board
-- Personal Computer
-
-Board settings
-==============
-
-
-Prepare the Demo
-================
-1.  Connect a micro USB cable between the PC host and the CMSIS DAP USB port (J5) on the board
-2.  Open a serial terminal with the following settings:
-    - 115200 baud rate
-    - 8 data bits
-    - No parity
-    - One stop bit
-    - No flow control
-3.  Download the program to the target board.
-4.  Launch the debugger in your IDE to begin running the demo.
-
-Running the demo
-================
-NOTE: Depending on the toolchain configuration, the benchmark result might be different.
-~~~~~~~~~~~~~~~~~~~~~
-CMSIS DSP benchmark vector test start.
-PQ_VectorLnF32Test: xxx
-PQ_VectorLnQ31Test: xxx
-PQ_VectorInvF32Test: xxx
-PQ_VectorInvQ31Test:  xxx
-PQ_VectorSqrtF32Test: xxx
-PQ_VectorSqrtQ31Test: xxx
-PQ_VectorInvSqrtF32Test: xxx
-PQ_VectorInvSqrtQ31Test: xxx
-PQ_VectorEtoxF32Test: xxx
-PQ_VectorEtoxQ31Test: xxx
-PQ_VectorEtonxF32Test: xxx
-PQ_VectorEtonxQ31Test: xxx
-PQ_BiquadCascadedf2F32Test: xxx
-PQ_BiquadCascadedf2Q31Test: xxx
-PQ_VectorLnFPTest: xxx
-PQ_VectorLnFXTest: xxx
-PQ_VectorInvFPTest: xxx
-PQ_VectorInvFXTest: xxx
-PQ_VectorSqrtFPTest: xxx
-PQ_VectorSqrtFXTest: xxx
-PQ_VectorInvSqrtFPTest: xxx
-PQ_VectorInvSqrtFXTest: xxx
-PQ_VectorEtoxFPTest: xxx
-PQ_VectorEtoxFXTest: xxx
-PQ_VectorEtonxFPTest: xxx
-PQ_VectorEtonxFXTest: xxx
-PQ_16ByteBiquadCascadedf2FPTest: xxx
-PQ_16ByteBiquadCascadedf2FXTest: xxx
-PQ_VectorSqrtQ31Test: xxx
-PQ_VectorSqrtQ15Test: xxx
-PQ_VectorSinF32Test: xxx
-PQ_VectorSinQ31Test: xxx
-PQ_VectorSinQ15Test: xxx
-PQ_VectorCosF32Test: xxx
-PQ_VectorCosQ31Test: xxx
-PQ_VectorCosQ15Test: xxx
-
-CMSIS DSP benchmark vector test succeeded.
-~~~~~~~~~~~~~~~~~~~~~
+## Supported Boards
+- [EVK9-MIMX8ULP](../../../_boards/evk9mimx8ulp/driver_examples/powerquad/benchmark_vector/example_board_readme.md)
+- [EVK-MIMX8ULP](../../../_boards/evkmimx8ulp/driver_examples/powerquad/benchmark_vector/example_board_readme.md)
+- [EVK-MIMXRT595](../../../_boards/evkmimxrt595/driver_examples/powerquad/benchmark_vector/example_board_readme.md)
+- [EVK-MIMXRT685](../../../_boards/evkmimxrt685/driver_examples/powerquad/benchmark_vector/example_board_readme.md)
+- [FRDM-MCXN947](../../../_boards/frdmmcxn947/driver_examples/powerquad/benchmark_vector/example_board_readme.md)
+- [FRDM-RW612](../../../_boards/frdmrw612/driver_examples/powerquad/benchmark_vector/example_board_readme.md)
+- [LPCXpresso55S36](../../../_boards/lpcxpresso55s36/driver_examples/powerquad/benchmark_vector/example_board_readme.md)
+- [LPCXpresso55S69](../../../_boards/lpcxpresso55s69/driver_examples/powerquad/benchmark_vector/example_board_readme.md)
+- [MCX-N5XX-EVK](../../../_boards/mcxn5xxevk/driver_examples/powerquad/benchmark_vector/example_board_readme.md)
+- [MCX-N9XX-EVK](../../../_boards/mcxn9xxevk/driver_examples/powerquad/benchmark_vector/example_board_readme.md)
+- [MIMXRT685-AUD-EVK](../../../_boards/mimxrt685audevk/driver_examples/powerquad/benchmark_vector/example_board_readme.md)
+- [RD-RW612-BGA](../../../_boards/rdrw612bga/driver_examples/powerquad/benchmark_vector/example_board_readme.md)

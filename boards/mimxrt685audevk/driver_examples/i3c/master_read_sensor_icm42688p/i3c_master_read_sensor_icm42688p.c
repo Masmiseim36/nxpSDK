@@ -7,22 +7,15 @@
 /*  Standard C Included Files */
 #include <string.h>
 /*  SDK Included Files */
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
 #include "fsl_debug_console.h"
 #include "fsl_i3c.h"
+#include "app.h"
 #include "fsl_icm42688p.h"
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define EXAMPLE_MASTER             I3C
-#define EXAMPLE_I2C_BAUDRATE       400000
-#define I3C_MASTER_CLOCK_FREQUENCY CLOCK_GetI3cClkFreq()
-#define SENSOR_ADDR                0x09U
-#define STATIC_I2C_ADDR            0x69U
-#define I3C_TIME_OUT_INDEX         100000000U
 #define SENSOR_MIPI_VENDOR_ID      0x235U
 
 #ifndef EXAMPLE_I2C_BAUDRATE
@@ -200,13 +193,7 @@ int main(void)
     i3c_device_info_t *devList;
     uint8_t devCount;
 
-    /* Attach main clock to I3C, 500MHz / 20 = 25MHZ. */
-    CLOCK_AttachClk(kMAIN_CLK_to_I3C_CLK);
-    CLOCK_SetClkDiv(kCLOCK_DivI3cClk, 20);
-
-    BOARD_InitBootPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
 
     PRINTF("\r\nI3C master read sensor data example.\r\n");
 

@@ -1,0 +1,5 @@
+@Start
+@Input_path ../test_inp/
+@Output_path ../test_out/
+-ifile:hihat.wav -ofile:hihat.sbc -b31
+@Stop

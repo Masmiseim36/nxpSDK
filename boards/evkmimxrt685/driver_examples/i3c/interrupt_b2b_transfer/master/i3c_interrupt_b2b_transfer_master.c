@@ -7,23 +7,23 @@
 /*  Standard C Included Files */
 #include <string.h>
 /*  SDK Included Files */
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
 #include "fsl_debug_console.h"
 #include "fsl_i3c.h"
+#include "app.h"
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define EXAMPLE_MASTER             I3C
-#define EXAMPLE_I2C_BAUDRATE       400000
-#define EXAMPLE_I3C_OD_BAUDRATE    1500000
-#define EXAMPLE_I3C_PP_BAUDRATE    4000000
-#define I3C_MASTER_CLOCK_FREQUENCY CLOCK_GetI3cClkFreq()
-#define I3C_MASTER_SLAVE_ADDR_7BIT 0x1E
-#define WAIT_TIME                  1000
-#define I3C_DATA_LENGTH            33
+#ifndef EXAMPLE_I2C_BAUDRATE
+#define EXAMPLE_I2C_BAUDRATE 400000
+#endif
+#ifndef EXAMPLE_I3C_OD_BAUDRATE
+#define EXAMPLE_I3C_OD_BAUDRATE 2000000
+#endif
+#ifndef EXAMPLE_I3C_PP_BAUDRATE
+#define EXAMPLE_I3C_PP_BAUDRATE 4000000
+#endif
 #ifndef I3C_MASTER_SLAVE_ADDR_7BIT
 #define I3C_MASTER_SLAVE_ADDR_7BIT 0x1EU
 #endif
@@ -31,7 +31,10 @@
 #define I3C_DATA_LENGTH 33U
 #endif
 #ifndef EXAMPLE_I3C_HDR_SUPPORT
-#define EXAMPLE_I3C_HDR_SUPPORT 0
+#define EXAMPLE_I3C_HDR_SUPPORT 1
+#endif
+#ifdef EXAMPLE_I3C_HDR_SUPPORT
+#define EXAMPLE_I3C_IBI_SUPPORT
 #endif
 #ifndef WAIT_TIME
 #define WAIT_TIME 1000
@@ -81,7 +84,7 @@ static void i3c_master_ibi_callback(I3C_Type *base,
             {
                 handle->ibiBuff = g_master_ibiBuff;
             }
-            else
+            else if (ibiState == kI3C_IbiReady)
             {
                 memcpy(g_ibiUserBuff, (void *)handle->ibiBuff, handle->ibiPayloadSize);
             }
@@ -118,13 +121,7 @@ int main(void)
     i3c_master_transfer_t masterXfer;
     uint8_t slaveAddr = 0;
 
-    /* Attach main clock to I3C, 500MHz / 10 = 50MHz. */
-    CLOCK_AttachClk(kMAIN_CLK_to_I3C_CLK);
-    CLOCK_SetClkDiv(kCLOCK_DivI3cClk, 10);
-
-    BOARD_InitBootPins();
-    BOARD_InitBootClocks();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
 
     PRINTF("\r\nI3C board2board interrupt example -- Master transfer.\r\n");
 

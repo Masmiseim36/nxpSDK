@@ -7,23 +7,16 @@
  */
 
 #include "fsl_debug_console.h"
+#include "app.h"
 #include "fsl_iap.h"
 
-#include "pin_mux.h"
-#include "board.h"
-#include <stdbool.h>
 /*******************************************************************************
  * Definitions
  *******************************************************************************/
-#define EXAMPLE_BOOT_INTERFACES        "0: USART 1: I2C 2: SPI 3: USB HID 4:FlexSPI 7:SD 8:MMC"
-#define EXAMPLE_BOOT_INTERFACE_FLEXSPI (4U)
-#define EXAMPLE_BOOT_INTERFACE_SD      (7U)
-#define EXAMPLE_BOOT_INTERFACE_MMC     (8U)
 
 /*******************************************************************************
  * Prototypes
  *******************************************************************************/
-bool EXAMPLE_IsValidInterface(uint8_t idx);
 
 /*******************************************************************************
  * Variables
@@ -32,12 +25,6 @@ bool EXAMPLE_IsValidInterface(uint8_t idx);
 /*******************************************************************************
  * Code
  *******************************************************************************/
-
-bool EXAMPLE_IsValidInterface(uint8_t idx)
-{
-    return (idx <= 8U) && (idx != 5U) && (idx != 6U);
-}
-
 static uint8_t getIndex(char ch)
 {
     uint8_t idx = 0xFFU;
@@ -57,14 +44,7 @@ int main(void)
     char ch;
 
     /* Init board hardware. */
-    BOARD_InitBootPins();
-    BOARD_InitBootClocks();
-    BOARD_InitDebugConsole();
-
-    /* Enable the FlexSPI reset pin P2_12. */
-    OCOTP->OTP_SHADOW[0x61] |= (1U << 14U);  /* FlexSPI reset pin enable */
-    OCOTP->OTP_SHADOW[0x61] |= (2U << 15U);  /* FlexSPI reset port */
-    OCOTP->OTP_SHADOW[0x61] |= (12U << 18U); /* FlexSPI reset pin */
+    BOARD_InitHardware();
 
     PRINTF("===== IAP Boot example, input the parameter: =====\r\n");
     while (true)

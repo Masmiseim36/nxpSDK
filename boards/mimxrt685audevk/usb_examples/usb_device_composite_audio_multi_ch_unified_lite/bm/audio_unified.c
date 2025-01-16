@@ -65,8 +65,7 @@ usb_status_t USB_DeviceAudioProcessTerminalRequest(uint32_t audioCommand,
 /*******************************************************************************
  * Variables
  ******************************************************************************/
-USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE)
-uint8_t audioPlayDataBuff[AUDIO_SPEAKER_DATA_WHOLE_BUFFER_COUNT_NORMAL * AUDIO_PLAY_BUFFER_SIZE_ONE_FRAME];
+AT_NONCACHEABLE_SECTION_ALIGN(uint8_t audioPlayDataBuff[AUDIO_SPEAKER_DATA_WHOLE_BUFFER_COUNT_NORMAL * AUDIO_PLAY_BUFFER_SIZE_ONE_FRAME], 4U);
 #if defined(USB_DEVICE_AUDIO_USE_SYNC_MODE) && (USB_DEVICE_AUDIO_USE_SYNC_MODE > 0U)
 USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE)
 uint8_t audioPlayPacket[FS_ISO_OUT_ENDP_PACKET_SIZE];
@@ -109,7 +108,7 @@ uint32_t USB_AudioSpeakerBufferSpaceUsed(void)
     }
 }
 
-/* The USB_AudioSpeakerPutBuffer() function fills the audioRecDataBuff with audioPlayPacket in every callback*/
+/* The USB_AudioSpeakerPutBuffer() function fills the audioPlayDataBuff with audioPlayPacket in every callback*/
 void USB_AudioSpeakerPutBuffer(uint8_t *buffer, uint32_t size)
 {
     uint32_t audioSpeakerPreWriteDataCount = 0U;

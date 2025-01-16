@@ -1,5 +1,6 @@
-Overview
-========
+# power_manager
+
+## Overview
 The power manager demo application demonstrates how to change power modes in the KSDK. The difference between this demo
 and power_mode_switch is, this demo uses a notification framework to inform application about the mode change.
 Application could register callback to the notification framework, when power mode changes, the callback
@@ -16,103 +17,20 @@ User can also set the wakeup source following the debug console prompts.
  - Set the proper pin state (direction and logic level) according to the actual application hardware. Otherwise, there would be current leakage on the pin, which will increase the power consumption.
  - Other low power consideration based on the actual application hardware.
 
-SDK version
-===========
-- Version: 2.16.000
-
-Toolchain supported
-===================
-- IAR embedded Workbench  9.60.1
-- Keil MDK  5.39.0
-- GCC ARM Embedded  13.2.1
-- MCUXpresso  11.10.0
-
-Hardware requirements
-=====================
-- Micro USB cable
-- EVK-MIMXRT685 board
-- Personal Computer
-
-Board settings
-==============
-- Keep J2 and J19 unconnected to avoid unintentional reset by IF_RST signal in full deep power down mode.
-- For low power purpose, the demo requires pad voltage supply to be fixed as follows:
-  VDDIO_0: 1.8V (connecting JP20 1-2, and PMIC SW2_OUT using default setting 1.8V)
-  VDDIO_1: 1.8V (connecting JP12 1-2, supply from PMIC SW2_OUT))
-  VDDIO_2: 3.3V (connecting JP27 1-2, and PMIC LDO2_OUT using default setting 3.3V)
-  NOTE: By default, the demo allows wide voltage supply on VDDIO_1. To further reduce the leakage,
-        Vdde1Range can be set to narrow range kPadVol_171_198. Special care should be taken that
-        supplying wrong voltage on the pads is harmful to the device.
-
-Prepare the Demo
-================
-1.  Connect a micro USB cable between the PC host and the CMSIS DAP USB port (J5) on the board
-2.  Open a serial terminal with the following settings:
-    - 115200 baud rate
-    - 8 data bits
-    - No parity
-    - One stop bit
-    - No flow control
-3.  Download the program to the target board.
-4.  Launch the debugger in your IDE to begin running the demo.
-
-Running the demo
-================
-The log below shows in the terminal window:
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Power Manager Demo.
-The "user key" is: SW1
-Select an option
-        1. Sleep mode
-        2. Deep Sleep mode
-        3. Deep power down mode
-        4. Full deep power down mode
-/* Type in '1' into UART terminal */
-Entering Sleep [Press the user key to wakeup] ...
-/* Press the user key on board */
-Pin event occurs
-Wakeup.
-Select an option
-        1. Sleep mode
-        2. Deep Sleep mode
-        3. Deep power down mode
-        4. Full deep power down mode
-/* Type in '2' into UART terminal */
-Entering Deep Sleep [Press the user key to wakeup] ...
-/* Press the user key on board */
-Pin event occurs
-Wakeup.
-Select an option
-        1. Sleep mode
-        2. Deep Sleep mode
-        3. Deep power down mode
-        4. Full deep power down mode
-/* Type in '3' into UART terminal */
-Entering Deep Powerdown [Reset to wakeup] ...
-Press any key to confirm to enter the deep sleep mode and wakeup the device by reset.
-/* Type in any key into UART terminal */
-
-/* Press the reset key on board. */
-Board wake up from deep or full deep power down mode.
-Power Manager Demo.
-The "user key" is: SW1
-Select an option
-        1. Sleep mode
-        2. Deep Sleep mode
-        3. Deep power down mode
-        4. Full deep power down mode
-/* Type in '4' into UART terminal */
-Entering Full Deep Powerdown [Reset to wakeup] ...
-Press any key to confirm to enter the deep sleep mode and wakeup the device by reset.
-/* Type in any key into UART terminal */
-
-/* Press the reset key on board. */
-Board wake up from deep or full deep power down mode.
-Power Manager Demo.
-The "user key" is: SW1
-Select an option
-        1. Sleep mode
-        2. Deep Sleep mode
-        3. Deep power down mode
-        4. Full deep power down mode
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+## Supported Boards
+- [EVK-MIMXRT595](../../_boards/evkmimxrt595/demo_apps/power_manager/example_board_readme.md)
+- [EVK-MIMXRT685](../../_boards/evkmimxrt685/demo_apps/power_manager/example_board_readme.md)
+- [FRDM-K22F](../../_boards/frdmk22f/demo_apps/power_manager/example_board_readme.md)
+- [FRDM-K32L2A4S](../../_boards/frdmk32l2a4s/demo_apps/power_manager/example_board_readme.md)
+- [FRDM-K32L2B](../../_boards/frdmk32l2b/demo_apps/power_manager/example_board_readme.md)
+- [FRDM-KE15Z](../../_boards/frdmke15z/demo_apps/power_manager/example_board_readme.md)
+- [FRDM-KE16Z](../../_boards/frdmke16z/demo_apps/power_manager/example_board_readme.md)
+- [FRDM-KE17Z](../../_boards/frdmke17z/demo_apps/power_manager/example_board_readme.md)
+- [FRDM-KE17Z512](../../_boards/frdmke17z512/demo_apps/power_manager/example_board_readme.md)
+- [FRDM-MCXC041](../../_boards/frdmmcxc041/demo_apps/power_manager/example_board_readme.md)
+- [FRDM-MCXC242](../../_boards/frdmmcxc242/demo_apps/power_manager/example_board_readme.md)
+- [FRDM-MCXC444](../../_boards/frdmmcxc444/demo_apps/power_manager/example_board_readme.md)
+- [MIMXRT685-AUD-EVK](../../_boards/mimxrt685audevk/demo_apps/power_manager/example_board_readme.md)
+- [TWR-KM34Z50MV3](../../_boards/twrkm34z50mv3/demo_apps/power_manager/example_board_readme.md)
+- [TWR-KM34Z75M](../../_boards/twrkm34z75m/demo_apps/power_manager/example_board_readme.md)
+- [TWR-KM35Z75M](../../_boards/twrkm35z75m/demo_apps/power_manager/example_board_readme.md)

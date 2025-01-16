@@ -12,10 +12,13 @@
 #include "semphr.h"
 #include "ff.h"
 #include <stdbool.h>
+
+#include <porting.h>
 #include <sys/atomic.h>
 #include <sys/byteorder.h>
 #include <sys/util.h>
 #include <sys/slist.h>
+
 #include <bluetooth/bluetooth.h>
 #include <bluetooth/conn.h>
 #include "fsl_debug_console.h"
@@ -23,6 +26,8 @@
 #include "app_shell.h"
 #include <bluetooth/hfp_hf.h>
 #include "app_handsfree.h"
+#include "app_connect.h"
+
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -39,20 +44,22 @@ static shell_status_t shellBt(shell_handle_t shellHandle, int32_t argc, char **a
 SHELL_COMMAND_DEFINE(bt,
                      "\r\n\"bt\": BT related function\r\n"
                      "  USAGE: bt [dial|aincall|eincall]\r\n"
-                     "    dial          dial out call.\r\n" 
+                     "    dial          dial out call.\r\n"
                      "    aincall       accept the incoming call.\r\n"
                      "    eincall       end an incoming call.\r\n"
-                     "    svr           start voice recognition.\r\n" 
-                     "    evr           stop voice recognition.\r\n" 
-                     "    clip          enable CLIP notification.\r\n" 
-                     "    disclip       disable CLIP notification.\r\n"  
-                     "    ccwa          enable call waiting notification.\r\n" 
-                     "    disccwa       disable call waiting notification.\r\n"                       
-                     "    micVolume     Update mic Volume.\r\n" 
-                     "    speakerVolume Update Speaker Volume.\r\n"                           
-                     "    lastdial      call the last dial number.\r\n" 
-                     "    voicetag      Get Voice-tag Phone Number (BINP).\r\n"   
-                     "    multipcall    multiple call option.\r\n",
+                     "    svr           start voice recognition.\r\n"
+                     "    evr           stop voice recognition.\r\n"
+                     "    clip          enable CLIP notification.\r\n"
+                     "    disclip       disable CLIP notification.\r\n"
+                     "    ccwa          enable call waiting notification.\r\n"
+                     "    disccwa       disable call waiting notification.\r\n"
+                     "    micVolume     Update mic Volume.\r\n"
+                     "    speakerVolume Update Speaker Volume.\r\n"
+                     "    lastdial      call the last dial number.\r\n"
+                     "    voicetag      Get Voice-tag Phone Number (BINP).\r\n"
+                     "    multipcall    multiple call option.\r\n"
+                     "    triggercodec  trigger codec connection.\r\n"
+                     "    getIndicatorStatus Get peer's indicators' status.\r\n",
                      shellBt,
                      SHELL_IGNORE_PARAMETER_COUNT);
 
@@ -79,7 +86,7 @@ static uint32_t hfp_get_value_from_str(char *ch)
       if (selectIndex == 0U)
       {
           PRINTF("The Dial parameter is wrong\r\n");
-      }  
+      }
       else if(selectIndex == 1U)
       {
         value = (ch[0] - '0');
@@ -90,8 +97,8 @@ static uint32_t hfp_get_value_from_str(char *ch)
       }
       return value;
 }
- 
-   
+
+
 static shell_status_t shellBt(shell_handle_t shellHandle, int32_t argc, char **argv)
 {
 
@@ -123,17 +130,17 @@ static shell_status_t shellBt(shell_handle_t shellHandle, int32_t argc, char **a
         if (selectIndex == 0U)
         {
             PRINTF("The Dial parameter is wrong\r\n");
-        }     
+        }
         hfp_dial(ch);
-    }  
+    }
     else if (strcmp(argv[1], "svr") == 0)
     {
         hfp_start_voice_recognition();
-    } 
+    }
     else if (strcmp(argv[1], "evr") == 0)
     {
         hfp_stop_voice_recognition();
-    } 
+    }
      else if (strcmp(argv[1], "micVolume") == 0)
     {
         if (argc < 2)
@@ -143,7 +150,7 @@ static shell_status_t shellBt(shell_handle_t shellHandle, int32_t argc, char **a
         }
         hfp_volume_update(hf_volume_type_mic, hfp_get_value_from_str(argv[2]));
 
-    } 
+    }
     else if (strcmp(argv[1], "speakerVolume") == 0)
     {
         if (argc < 2)
@@ -152,12 +159,12 @@ static shell_status_t shellBt(shell_handle_t shellHandle, int32_t argc, char **a
             return kStatus_SHELL_Error;
         }
         hfp_volume_update(hf_volume_type_speaker, hfp_get_value_from_str(argv[2]));
-    }    
+    }
 
    else if (strcmp(argv[1], "lastdial") == 0)
    {
       hfp_last_dial();
-    }  
+    }
    else if (strcmp(argv[1], "memorydial") == 0)
    {
       if (argc < 2)
@@ -166,7 +173,7 @@ static shell_status_t shellBt(shell_handle_t shellHandle, int32_t argc, char **a
           return kStatus_SHELL_Error;
       }
       dial_memory(hfp_get_value_from_str(argv[2]));
-    }  
+    }
     else if (strcmp(argv[1], "clip") == 0)
     {
        hfp_enable_clip(1);
@@ -182,7 +189,7 @@ static shell_status_t shellBt(shell_handle_t shellHandle, int32_t argc, char **a
     else if (strcmp(argv[1], "disccwa") == 0)
     {
        hfp_enable_ccwa(0);
-    }    
+    }
      else if (strcmp(argv[1], "multipcall") == 0)
     {
         if (argc < 2)
@@ -191,8 +198,8 @@ static shell_status_t shellBt(shell_handle_t shellHandle, int32_t argc, char **a
             return kStatus_SHELL_Error;
         }
         hfp_multiparty_call_option(hfp_get_value_from_str(argv[2]));
-    }    
-    
+    }
+
     else if (strcmp(argv[1], "aincall") == 0)
     {
 
@@ -203,10 +210,18 @@ static shell_status_t shellBt(shell_handle_t shellHandle, int32_t argc, char **a
 
       hfp_hf_get_last_voice_tag_number();
     }
-    
+
     else if (strcmp(argv[1], "eincall") == 0)
     {
       hfp_RejectCall();
+    }
+    else if (strcmp(argv[1], "triggercodec") == 0)
+    {
+        hfp_trigger_codec_connection();
+    }
+    else if (strcmp(argv[1], "getIndicatorStatus") == 0)
+    {
+        bt_hfp_hf_get_peer_indicator_status(default_conn);
     }
     else
     {

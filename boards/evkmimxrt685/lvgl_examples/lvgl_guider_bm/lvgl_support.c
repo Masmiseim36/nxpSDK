@@ -1,51 +1,37 @@
 /*
- * Copyright 2019-2021 NXP
- * All rights reserved.
+ * Copyright 2019-2021, 2024 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-#include "lvgl_support.h"
-#include "lvgl.h"
 #if defined(SDK_OS_FREE_RTOS)
 #include "FreeRTOS.h"
 #include "semphr.h"
 #endif
 
 #include "board.h"
-#include "lvgl_support.h"
 #include "fsl_gpio.h"
 #include "fsl_debug_console.h"
 #include "fsl_ili9341.h"
 #include "fsl_ft6x06.h"
 #include "fsl_spi_cmsis.h"
 #include "fsl_i2c_cmsis.h"
+#include "lvgl_support_board.h"
+#include "lvgl_support.h"
+#include "lvgl.h"
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-
-/* Port Me, Start. */
-#define BOARD_TOUCH_I2C           Driver_I2C2
-#define BOARD_TOUCH_I2C_IRQ       FLEXCOMM2_IRQn
-#define BOARD_TOUCH_I2C_FREQ_FUNC I2C2_GetFreq
-#define BOARD_TOUCH_I2C_FREQ      CLOCK_GetFlexCommClkFreq(2U)
-
-#define BOARD_LCD_SPI           Driver_SPI5
-#define BOARD_LCD_SPI_BAUDRATE  10000000U
-#define BOARD_LCD_SPI_IRQ       FLEXCOMM5_IRQn
-#define BOARD_LCD_SPI_FREQ_FUNC SPI5_GetFreq
-#define BOARD_LCD_SPI_FREQ      CLOCK_GetFlexCommClkFreq(5U)
-#define BOARD_LCD_SPI_DMA_IRQ   DMA0_IRQn
-/* Port Me, End. */
 
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
 static void DEMO_InitLcd(void);
 static void DEMO_InitTouch(void);
-static void DEMO_ReadTouch(lv_indev_drv_t *drv, lv_indev_data_t *data);
-static void DEMO_FlushDisplay(lv_disp_drv_t *disp_drv, const lv_area_t *area, lv_color_t *color_p);
+static void DEMO_ReadTouch(lv_indev_t *drv, lv_indev_data_t *data);
+static void DEMO_FlushDisplay(lv_display_t *disp_drv, const lv_area_t *area, uint8_t *color_p);
+
 /*******************************************************************************
  * Variables
  ******************************************************************************/
@@ -58,14 +44,10 @@ static SemaphoreHandle_t s_transferDone;
 #else
 static volatile bool s_transferDone;
 #endif
-SDK_ALIGN(static uint8_t s_frameBuffer[2][LCD_VIRTUAL_BUF_SIZE * LCD_FB_BYTE_PER_PIXEL], 4);
+SDK_ALIGN(static uint8_t s_frameBuffer[CONFIG_LVGL_SUPPORT_VDB_COUNT][LCD_VIRTUAL_BUF_SIZE * LCD_FB_BYTE_PER_PIXEL], 4);
 /*******************************************************************************
  * Code
  ******************************************************************************/
-void lv_port_pre_init(void)
-{
-}
-
 uint32_t BOARD_LCD_SPI_FREQ_FUNC(void)
 {
     return BOARD_LCD_SPI_FREQ;
@@ -140,8 +122,7 @@ static void DEMO_InitLcd(void)
         1,
     };
 
-    /* attach clock to SPI */
-    CLOCK_AttachClk(kFFRO_to_FLEXCOMM5);
+    BOARD_INIT_LCD_SPI_CLOCK();
 
     /* Init data/command GPIO output . */
     GPIO_PortInit(BOARD_LCD_DC_GPIO, BOARD_LCD_DC_GPIO_PORT);
@@ -177,38 +158,23 @@ static void DEMO_InitLcd(void)
 
 void lv_port_disp_init(void)
 {
-    static lv_disp_draw_buf_t disp_buf;
-
-    memset(s_frameBuffer, 0, sizeof(s_frameBuffer));
-    lv_disp_draw_buf_init(&disp_buf, s_frameBuffer[0], s_frameBuffer[1], LCD_VIRTUAL_BUF_SIZE);
-
+    lv_display_t * disp_drv; /*Descriptor of a display driver*/
     /*-------------------------
      * Initialize your display
      * -----------------------*/
     DEMO_InitLcd();
 
-    /*-----------------------------------
-     * Register the display in LittlevGL
-     *----------------------------------*/
+    disp_drv = lv_display_create(LCD_WIDTH, LCD_HEIGHT);
 
-    static lv_disp_drv_t disp_drv; /*Descriptor of a display driver*/
-    lv_disp_drv_init(&disp_drv);   /*Basic initialization*/
-
-    /*Set the resolution of the display*/
-    disp_drv.hor_res = LCD_WIDTH;
-    disp_drv.ver_res = LCD_HEIGHT;
-
-    /*Used to copy the buffer's content to the display*/
-    disp_drv.flush_cb = DEMO_FlushDisplay;
-
-    /*Set a display buffer*/
-    disp_drv.draw_buf = &disp_buf;
-
-    /*Finally register the driver*/
-    lv_disp_drv_register(&disp_drv);
+#if (CONFIG_LVGL_SUPPORT_VDB_COUNT == 2)
+    lv_display_set_buffers(disp_drv, s_frameBuffer[0], s_frameBuffer[1], LCD_VIRTUAL_BUF_SIZE, LV_DISPLAY_RENDER_MODE_PARTIAL);
+#else
+    lv_display_set_buffers(disp_drv, s_frameBuffer[0], NULL, LCD_VIRTUAL_BUF_SIZE, LV_DISPLAY_RENDER_MODE_PARTIAL);
+#endif
+    lv_display_set_flush_cb(disp_drv, DEMO_FlushDisplay);
 }
 
-static void DEMO_FlushDisplay(lv_disp_drv_t *disp_drv, const lv_area_t *area, lv_color_t *color_p)
+static void DEMO_FlushDisplay(lv_display_t *disp_drv, const lv_area_t *area, uint8_t *color_p)
 {
     lv_coord_t x1 = area->x1;
     lv_coord_t y1 = area->y1;
@@ -219,6 +185,11 @@ static void DEMO_FlushDisplay(lv_disp_drv_t *disp_drv, const lv_area_t *area, lv
     const uint8_t *pdata = (const uint8_t *)color_p;
     uint32_t send_size   = (x2 - x1 + 1) * (y2 - y1 + 1) * LCD_FB_BYTE_PER_PIXEL;
 
+    /* Swap the 2 bytes of RGB565 color */
+    lv_draw_sw_rgb565_swap(s_frameBuffer[0], (LCD_VIRTUAL_BUF_SIZE));
+#if (CONFIG_LVGL_SUPPORT_VDB_COUNT == 2)
+    lv_draw_sw_rgb565_swap(s_frameBuffer[1], (LCD_VIRTUAL_BUF_SIZE));
+#endif
     /*Column addresses*/
     DEMO_SPI_LCD_WriteCmd(ILI9341_CMD_COLADDR);
     data[0] = (x1 >> 8) & 0xFF;
@@ -244,20 +215,13 @@ static void DEMO_FlushDisplay(lv_disp_drv_t *disp_drv, const lv_area_t *area, lv
 
 void lv_port_indev_init(void)
 {
-    static lv_indev_drv_t indev_drv;
-
-    /*------------------
-     * Touchpad
-     * -----------------*/
-
     /*Initialize your touchpad */
     DEMO_InitTouch();
 
     /*Register a touchpad input device*/
-    lv_indev_drv_init(&indev_drv);
-    indev_drv.type    = LV_INDEV_TYPE_POINTER;
-    indev_drv.read_cb = DEMO_ReadTouch;
-    lv_indev_drv_register(&indev_drv);
+    lv_indev_t * indev = lv_indev_create();
+    lv_indev_set_type(indev, LV_INDEV_TYPE_POINTER);
+    lv_indev_set_read_cb(indev, DEMO_ReadTouch);
 }
 
 static void I2C_MasterSignalEvent(uint32_t event)
@@ -276,10 +240,9 @@ static void DEMO_InitTouch(void)
      */
     NVIC_SetPriority(BOARD_TOUCH_I2C_IRQ, 0);
 
-    /* attach clock to I2C */
-    CLOCK_AttachClk(kSFRO_to_FLEXCOMM2);
+    BOARD_INIT_TOUCH_I2C_CLOCK();
 
-    /*Init I2C */
+    /*Init I2C1 */
     BOARD_TOUCH_I2C.Initialize(I2C_MasterSignalEvent);
     BOARD_TOUCH_I2C.PowerControl(ARM_POWER_FULL);
     BOARD_TOUCH_I2C.Control(ARM_I2C_BUS_SPEED, ARM_I2C_BUS_SPEED_FAST);
@@ -294,7 +257,7 @@ static void DEMO_InitTouch(void)
 }
 
 /* Will be called by the library to read the touchpad */
-static void DEMO_ReadTouch(lv_indev_drv_t *drv, lv_indev_data_t *data)
+static void DEMO_ReadTouch(lv_indev_t *drv, lv_indev_data_t *data)
 {
     touch_event_t touch_event;
     static int touch_x = 0;

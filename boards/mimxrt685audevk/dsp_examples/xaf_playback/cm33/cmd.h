@@ -6,8 +6,8 @@
  */
 
 /*${header:start}*/
+#include "main.h"
 #include "dsp_config.h"
-#include "main_cm33.h"
 #include "srtm_config.h"
 /*${header:end}*/
 

@@ -1,0 +1,5 @@
+@Start
+@Input_path ../test_inp/
+@Output_path ../test_out/
+-b rawbsac -p44100 -c2 -w16 -ifile:sample.bsac -ofile:sample.wav
+@Stop

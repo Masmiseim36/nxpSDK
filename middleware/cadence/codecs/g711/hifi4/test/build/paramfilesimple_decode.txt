@@ -1,0 +1,6 @@
+@Start
+@Input_path ../test_inp/
+@Output_path ../test_out/
+sweep-le.aa sweep-decoded.aa A
+f2_le.aa plc_decoded_f2_10_a.raw A -plc fe10_le.g192
+@Stop

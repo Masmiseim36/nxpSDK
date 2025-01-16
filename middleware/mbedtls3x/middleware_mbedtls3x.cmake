@@ -3,15 +3,9 @@
 include_guard(GLOBAL)
 message("${CMAKE_CURRENT_LIST_FILE} component is included.")
 
-if(CONFIG_USE_middleware_mbedtls3x_template AND CONFIG_USE_middleware_mbedtls3x_crypto AND CONFIG_USE_middleware_mbedtls3x_ssl AND CONFIG_USE_middleware_mbedtls3x_x509)
+      target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
+          ${CMAKE_CURRENT_LIST_DIR}/include
+          ${CMAKE_CURRENT_LIST_DIR}/library
+        )
 
-target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
-  ${CMAKE_CURRENT_LIST_DIR}/include
-  ${CMAKE_CURRENT_LIST_DIR}/library
-)
-
-else()
-
-message(SEND_ERROR "middleware_mbedtls3x dependency does not meet, please check ${CMAKE_CURRENT_LIST_FILE}.")
-
-endif()
+  

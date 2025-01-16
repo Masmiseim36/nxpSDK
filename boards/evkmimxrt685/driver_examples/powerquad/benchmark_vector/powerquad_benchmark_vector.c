@@ -6,9 +6,8 @@
  */
 
 #include "fsl_debug_console.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 #include "fsl_powerquad.h"
 #include "arm_math.h"
 #include "arm_const_structs.h"
@@ -18,11 +17,9 @@
  * The result could be compared with the software method using CMSIS DSP.
  */
 
-#include "fsl_power.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_POWERQUAD POWERQUAD
 #define MATRIX_TEST_LOOP 10000
 #define MATH_TEST_LOOP   100000
 #define FIR_TEST_LOOP    100000
@@ -163,14 +160,7 @@ static volatile uint32_t s_timeMs;
  */
 int main(void)
 {
-    BOARD_InitBootPins();
-    BOARD_InitBootClocks();
-    BOARD_InitDebugConsole();
-
-    /* Power up PQ RAM. */
-    SYSCTL0->PDRUNCFG1_CLR = SYSCTL0_PDRUNCFG1_PQ_SRAM_APD_MASK | SYSCTL0_PDRUNCFG1_PQ_SRAM_PPD_MASK;
-    /* Apply power setting. */
-    POWER_ApplyPD();
+    BOARD_InitHardware();
 
     PRINTF("\r\nCMSIS DSP benchmark vector test start.\r\n");
 

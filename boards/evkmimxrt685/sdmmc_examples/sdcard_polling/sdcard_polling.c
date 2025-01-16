@@ -8,17 +8,13 @@
 
 #include <stdio.h>
 #include "fsl_debug_console.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 #include "fsl_sd.h"
 #include "sdmmc_config.h"
-#include "fsl_pca9420.h"
-#include "fsl_power.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_SDCARD_SWITCH_VOLTAGE_FUNCTION_EXIST
 
 /*! @brief Data block count accessed in card */
 #define DATA_BLOCK_COUNT (5U)
@@ -30,10 +26,6 @@
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
-void BOARD_PowerOffSDCARD(void);
-void BOARD_PowerOnSDCARD(void);
-void BOARD_USDHC_Switch_VoltageTo1V8(void);
-void BOARD_USDHC_Switch_VoltageTo3V3(void);
 /*!
  * @brief printf the card information log.
  *
@@ -64,26 +56,6 @@ SDK_ALIGN(uint8_t g_dataRead[DATA_BUFFER_SIZE], BOARD_SDMMC_DATA_BUFFER_ALIGN_SI
 /*******************************************************************************
  * Code
  ******************************************************************************/
-static pca9420_handle_t pca9420Handle;
-
-
-void BOARD_USDHC_Switch_VoltageTo1V8(void)
-{
-    bool result = PCA9420_SwitchMode(&pca9420Handle, kPCA9420_Mode1);
-    if (!result)
-    {
-        assert(false);
-    }
-}
-
-void BOARD_USDHC_Switch_VoltageTo3V3(void)
-{
-    bool result = PCA9420_SwitchMode(&pca9420Handle, kPCA9420_Mode0);
-    if (!result)
-    {
-        assert(false);
-    }
-}
 
 /*******************************************************************************
  * Code
@@ -175,39 +147,7 @@ int main(void)
     char ch         = '0';
     bool isReadOnly;
 
-    pca9420_config_t pca9420Config;
-    pca9420_modecfg_t pca9420ModeCfg[2];
-    uint32_t i;
-
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
-
-    /*Make sure USDHC ram buffer has power up*/
-    POWER_DisablePD(kPDRUNCFG_APD_USDHC0_SRAM);
-    POWER_DisablePD(kPDRUNCFG_PPD_USDHC0_SRAM);
-    POWER_DisablePD(kPDRUNCFG_PD_LPOSC);
-    POWER_ApplyPD();
-
-    /* PMIC PCA9420 */
-    CLOCK_AttachClk(kSFRO_to_FLEXCOMM15);
-    BOARD_PMIC_I2C_Init();
-    PCA9420_GetDefaultConfig(&pca9420Config);
-    pca9420Config.I2C_SendFunc    = BOARD_PMIC_I2C_Send;
-    pca9420Config.I2C_ReceiveFunc = BOARD_PMIC_I2C_Receive;
-    PCA9420_Init(&pca9420Handle, &pca9420Config);
-    for (i = 0; i < ARRAY_SIZE(pca9420ModeCfg); i++)
-    {
-        PCA9420_GetDefaultModeConfig(&pca9420ModeCfg[i]);
-    }
-    pca9420ModeCfg[0].ldo2OutVolt = kPCA9420_Ldo2OutVolt3V300;
-    pca9420ModeCfg[1].ldo2OutVolt = kPCA9420_Ldo2OutVolt1V800;
-    PCA9420_WriteModeConfigs(&pca9420Handle, kPCA9420_Mode0, &pca9420ModeCfg[0], ARRAY_SIZE(pca9420ModeCfg));
-
-    /* SDIO0 */
-    CLOCK_AttachClk(kLPOSC_DIV32_to_32KHZWAKE_CLK);
-    CLOCK_AttachClk(kAUX0_PLL_to_SDIO0_CLK);
-    CLOCK_SetClkDiv(kCLOCK_DivSdio0Clk, 1);
+    BOARD_InitHardware();
     BOARD_SD_Config(card, NULL, BOARD_SDMMC_SD_HOST_IRQ_PRIORITY, NULL);
 
     PRINTF("\r\nSDCARD polling example.\r\n");

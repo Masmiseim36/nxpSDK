@@ -7,35 +7,19 @@
 
 #include <stdlib.h>
 #include <string.h>
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 #include "fsl_common.h"
 #include "fsl_debug_console.h"
 #include "fsl_iap.h"
 
-#include "fsl_power.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define EXAMPLE_NOR_INSTANCE       0U        /* FLEXSPI */
-#define NOR_FLASH_OP_START_ADDRESS 0x200000U /* Operation on 2MB offset */
-#define NOR_FLASH_OP_SIZE          0x2000U   /* Test 8KB region */
-
-/* Predefined flash option */
-#define EXAMPLE_NOR_FLASH_MXIC_QSPI      0xC1000001U /* Macronix QuadSPI flash */
-#define EXAMPLE_NOR_FLASH_MXIC_QSPI_OPT1 0x20000006U
-
-#define EXAMPLE_NOR_FLASH         EXAMPLE_NOR_FLASH_MXIC_QSPI /* MXIC flash on EVK board */
-#define EXAMPLE_NOR_FLASH_OPTION1 EXAMPLE_NOR_FLASH_MXIC_QSPI_OPT1
 
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
-AT_QUICKACCESS_SECTION_CODE(status_t BOARD_FlexspiInit(uint32_t instance,
-                                                       flexspi_nor_config_t *config,
-                                                       serial_nor_config_option_t *option));
-
 
 /*******************************************************************************
  * variables
@@ -60,14 +44,7 @@ int main(void)
     uint8_t *pReadBuf  = (uint8_t *)mem_readBuffer;
     uint8_t *pWriteBuf = (uint8_t *)mem_writeBuffer;
 
-    RESET_PeripheralReset(kHSGPIO2_RST_SHIFT_RSTn);
-
-    BOARD_InitBootPins();
-    BOARD_InitBootClocks();
-    BOARD_InitDebugConsole();
-
-    /* Switch flexspi clock to FFRO*/
-    IAP_FlexspiSetClockSource(3);
+    BOARD_InitHardware();
 
     PRINTF("\r\nIAP flash example started!\r\n");
 

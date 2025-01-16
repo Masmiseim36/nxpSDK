@@ -6,31 +6,15 @@
  */
 
 #include <stdio.h>
-#include "pin_mux.h"
+#include "app.h"
 #include "board.h"
 #include "fsl_debug_console.h"
 #include "fsl_i2s_dma.h"
 #include "fsl_codec_common.h"
 #include "fsl_codec_adapter.h"
-#include <stdbool.h>
-#include "fsl_cs42448.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_I2S_MASTER_CLOCK_FREQUENCY CLOCK_GetMclkClkFreq()
-#define DEMO_AUDIO_SAMPLE_RATE          (48000)
-#define DEMO_AUDIO_PROTOCOL             kCODEC_BusI2S
-#define DEMO_I2S_TX                     (I2S3)
-#define DEMO_I2S_RX                     (I2S1)
-#define DEMO_DMA                        (DMA0)
-#define DEMO_I2S_TX_CHANNEL             (7)
-#define DEMO_I2S_RX_CHANNEL             (2)
-#define DEMO_I2S_CLOCK_DIVIDER          (24576000 / DEMO_AUDIO_SAMPLE_RATE / 32 / 8)
-#define DEMO_I2S_TX_MODE                kI2S_MasterSlaveNormalSlave
-#define DEMO_I2S_RX_MODE                kI2S_MasterSlaveNormalMaster
-#define DEMO_CODEC_I2C_BASEADDR         I2C2
-#define DEMO_CODEC_I2C_INSTANCE         2U
-#define DEMO_TDM_DATA_START_POSITION    1U
 #define BUFFER_SIZE   (1024U)
 #define BUFFER_NUMBER (4U)
 /* demo audio sample rate */
@@ -42,18 +26,6 @@ extern void BORAD_CodecReset(bool state);
 /*******************************************************************************
  * Variables
  ******************************************************************************/
-cs42448_config_t cs42448Config = {
-    .DACMode      = kCS42448_ModeSlave,
-    .ADCMode      = kCS42448_ModeSlave,
-    .reset        = NULL,
-    .master       = false,
-    .i2cConfig    = {.codecI2CInstance = DEMO_CODEC_I2C_INSTANCE},
-    .format       = {.sampleRate = 48000U, .bitWidth = 24U},
-    .bus          = kCS42448_BusTDM,
-    .slaveAddress = CS42448_I2C_ADDR,
-};
-
-codec_config_t boardCodecConfig = {.codecDevType = kCODEC_CS42448, .codecDevConfig = &cs42448Config};
 AT_NONCACHEABLE_SECTION_ALIGN(static uint8_t Buffer[BUFFER_NUMBER * BUFFER_SIZE], 4);
 static uint32_t tx_index = 0U, rx_index = 0U;
 volatile uint32_t emptyBlock = BUFFER_NUMBER;
@@ -85,27 +57,7 @@ int main(void)
 {
     i2s_transfer_t xfer;
 
-    BOARD_InitBootPins();
-    BOARD_InitBootClocks();
-    BOARD_InitDebugConsole();
-
-    CLOCK_EnableClock(kCLOCK_InputMux);
-
-    /* I2C */
-    CLOCK_AttachClk(kFFRO_to_FLEXCOMM2);
-
-    /* attach AUDIO PLL clock to FLEXCOMM1 (I2S1) */
-    CLOCK_AttachClk(kAUDIO_PLL_to_FLEXCOMM1);
-    /* attach AUDIO PLL clock to FLEXCOMM3 (I2S3) */
-    CLOCK_AttachClk(kAUDIO_PLL_to_FLEXCOMM3);
-
-    /* attach AUDIO PLL clock to MCLK */
-    CLOCK_AttachClk(kAUDIO_PLL_to_MCLK_CLK);
-    CLOCK_SetClkDiv(kCLOCK_DivMclkClk, 1);
-    SYSCTL1->MCLKPINDIR = SYSCTL1_MCLKPINDIR_MCLKPINDIR_MASK;
-
-    cs42448Config.i2cConfig.codecI2CSourceClock = CLOCK_GetFlexCommClkFreq(2);
-    cs42448Config.format.mclk_HZ                = CLOCK_GetMclkClkFreq();
+    BOARD_InitHardware();
 
     PRINTF("I2S TDM record playback example started!\n\r");
 

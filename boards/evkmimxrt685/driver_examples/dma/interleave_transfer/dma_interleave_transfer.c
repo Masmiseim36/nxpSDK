@@ -6,16 +6,14 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 #include "fsl_debug_console.h"
 #include "fsl_dma.h"
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-
 #define BUFF_LENGTH        4U
 #define DMA_DESCRIPTOR_NUM 2U
 /*******************************************************************************
@@ -52,9 +50,7 @@ int main(void)
 {
     uint32_t i = 0;
 
-    BOARD_InitBootPins();
-    BOARD_InitBootClocks();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
 
     /* Print source buffer */
     PRINTF("DMA interleave transfer example begin.\r\n\r\n");

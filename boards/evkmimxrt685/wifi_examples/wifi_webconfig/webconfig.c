@@ -11,9 +11,8 @@
  * Includes
  ******************************************************************************/
 #include "lwip/tcpip.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 #include "wpl.h"
 #include "timers.h"
 #include "httpsrv.h"
@@ -27,7 +26,6 @@
 
 #include "FreeRTOS.h"
 
-#include "fsl_gpio.h"
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
@@ -44,7 +42,6 @@ static uint32_t CleanUpClient();
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-
 typedef enum board_wifi_states
 {
     WIFI_STATE_CLIENT,
@@ -622,19 +619,7 @@ static uint32_t CleanUpClient()
 int main(void)
 {
     /* Initialize the hardware */
-    BOARD_InitBootPins();
-    BOARD_InitBootClocks();
-    BOARD_InitDebugConsole();
-
-    /* Define the init structure for the OSPI reset pin*/
-    gpio_pin_config_t reset_config = {
-        kGPIO_DigitalOutput,
-        1,
-    };
-
-    /* Init output OSPI reset pin. */
-    GPIO_PortInit(BOARD_FLASH_RESET_GPIO, BOARD_FLASH_RESET_GPIO_PORT);
-    GPIO_PinInit(BOARD_FLASH_RESET_GPIO, BOARD_FLASH_RESET_GPIO_PORT, BOARD_FLASH_RESET_GPIO_PIN, &reset_config);
+    BOARD_InitHardware();
 
     /* Create the main Task */
     if (xTaskCreate(main_task, "main_task", 2048, NULL, configMAX_PRIORITIES - 4, &g_BoardState.mainTask) != pdPASS)

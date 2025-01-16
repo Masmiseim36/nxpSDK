@@ -22,9 +22,8 @@
 #include "diskio.h"
 
 #include "fsl_device_registers.h"
-#include "fsl_debug_console.h"
-#include "pin_mux.h"
 #include "clock_config.h"
+#include "fsl_debug_console.h"
 #include "board.h"
 
 #if (defined(FSL_FEATURE_SOC_SYSMPU_COUNT) && (FSL_FEATURE_SOC_SYSMPU_COUNT > 0U))
@@ -38,9 +37,6 @@
 #if (USB_DEVICE_CONFIG_USE_TASK < 1)
 #error This application requires USB_DEVICE_CONFIG_USE_TASK value defined > 0 in usb_device_config.h. Please recompile with this option.
 #endif
-#include <stdbool.h>
-#include "fsl_power.h"
-#include "sdmmc_config.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -73,7 +69,6 @@ void USB_DeviceDisconnected(void);
 /*******************************************************************************
  * Variables
  ******************************************************************************/
-extern sd_card_t g_sd;
 const uint16_t g_OpSupported[] = {
     MTP_OPERATION_GET_DEVICE_INFO,
     MTP_OPERATION_OPEN_SESSION,
@@ -246,9 +241,9 @@ usb_device_mtp_obj_prop_list_t g_ObjPropList = {
 /* 2-byte unicode */
 USB_DMA_INIT_DATA_ALIGN(2U)
 uint8_t g_StorageRootPath[] = {
-#if defined(SD_DISK_ENABLE)
+#if (defined(SD_DISK_ENABLE) && (SD_DISK_ENABLE > 0U))
     SDDISK + '0',
-#elif defined(MMC_DISK_ENABLE)
+#elif (defined(MMC_DISK_ENABLE) && (MMC_DISK_ENABLE > 0U))
     MMCDISK + '0',
 #else
     '0',
@@ -289,80 +284,6 @@ USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) uint32_t g_mtpTransferBuffer[USB
 /*******************************************************************************
  * Code
  ******************************************************************************/
-
-void USB_IRQHandler(void)
-{
-    USB_DeviceLpcIp3511IsrFunction(g_mtp.deviceHandle);
-}
-
-void USB_DeviceClockInit(void)
-{
-    uint8_t usbClockDiv = 1;
-    uint32_t usbClockFreq;
-    usb_phy_config_struct_t phyConfig = {
-        BOARD_USB_PHY_D_CAL,
-        BOARD_USB_PHY_TXCAL45DP,
-        BOARD_USB_PHY_TXCAL45DM,
-    };
-
-    /* enable USB IP clock */
-    CLOCK_SetClkDiv(kCLOCK_DivPfc1Clk, 5);
-    CLOCK_AttachClk(kXTALIN_CLK_to_USB_CLK);
-    CLOCK_SetClkDiv(kCLOCK_DivUsbHsFclk, usbClockDiv);
-    CLOCK_EnableUsbhsDeviceClock();
-    RESET_PeripheralReset(kUSBHS_PHY_RST_SHIFT_RSTn);
-    RESET_PeripheralReset(kUSBHS_DEVICE_RST_SHIFT_RSTn);
-    RESET_PeripheralReset(kUSBHS_HOST_RST_SHIFT_RSTn);
-    RESET_PeripheralReset(kUSBHS_SRAM_RST_SHIFT_RSTn);
-    /*Make sure USDHC ram buffer has power up*/
-    POWER_DisablePD(kPDRUNCFG_APD_USBHS_SRAM);
-    POWER_DisablePD(kPDRUNCFG_PPD_USBHS_SRAM);
-    POWER_ApplyPD();
-
-    /* save usb ip clock freq*/
-    usbClockFreq = g_xtalFreq / usbClockDiv;
-    /* enable USB PHY PLL clock, the phy bus clock (480MHz) source is same with USB IP */
-    CLOCK_EnableUsbHs0PhyPllClock(kXTALIN_CLK_to_USB_CLK, usbClockFreq);
-
-#if defined(FSL_FEATURE_USBHSD_USB_RAM) && (FSL_FEATURE_USBHSD_USB_RAM)
-    for (int i = 0; i < FSL_FEATURE_USBHSD_USB_RAM; i++)
-    {
-        ((uint8_t *)FSL_FEATURE_USBHSD_USB_RAM_BASE_ADDRESS)[i] = 0x00U;
-    }
-#endif
-    USB_EhciPhyInit(CONTROLLER_ID, BOARD_XTAL_SYS_CLK_HZ, &phyConfig);
-
-    /* the following code should run after phy initialization and should wait some microseconds to make sure utmi clock
-     * valid */
-    /* enable usb1 host clock */
-    CLOCK_EnableClock(kCLOCK_UsbhsHost);
-    /*  Wait until host_needclk de-asserts */
-    while (SYSCTL0->USBCLKSTAT & SYSCTL0_USBCLKSTAT_HOST_NEED_CLKST_MASK)
-    {
-        __ASM("nop");
-    }
-    /*According to reference mannual, device mode setting has to be set by access usb host register */
-    USBHSH->PORTMODE |= USBHSH_PORTMODE_DEV_ENABLE_MASK;
-    /* disable usb1 host clock */
-    CLOCK_DisableClock(kCLOCK_UsbhsHost);
-}
-void USB_DeviceIsrEnable(void)
-{
-    uint8_t irqNumber;
-
-    uint8_t usbDeviceIP3511Irq[] = USBHSD_IRQS;
-    irqNumber                    = usbDeviceIP3511Irq[CONTROLLER_ID - kUSB_ControllerLpcIp3511Hs0];
-
-    /* Install isr, set priority, and enable IRQ. */
-    NVIC_SetPriority((IRQn_Type)irqNumber, USB_DEVICE_INTERRUPT_PRIORITY);
-    EnableIRQ((IRQn_Type)irqNumber);
-}
-#if USB_DEVICE_CONFIG_USE_TASK
-void USB_DeviceTaskFn(void *deviceHandle)
-{
-    USB_DeviceLpcIp3511TaskFunction(deviceHandle);
-}
-#endif
 
 /*!
  * @brief device mtp callback function.
@@ -774,6 +695,7 @@ void USB_DeviceDiskOperationTask(void *arg)
     usb_mtp_disk_operation_msgq_struct_t msgQ;
     usb_device_mtp_response_struct_t response;
 
+    (void)memset(&msgQ, 0, sizeof(msgQ));
     while (1)
     {
         if (pdTRUE == xQueueReceive(g_mtp.queueHandle, &msgQ, portMAX_DELAY))
@@ -874,10 +796,7 @@ int main(void)
 void main(void)
 #endif
 {
-    BOARD_InitBootPins();
-    BOARD_InitBootClocks();
-    BOARD_SD_Config(&g_sd, NULL, USB_DEVICE_INTERRUPT_PRIORITY - 1U, NULL);
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
 
     if (xTaskCreate(APP_task,                       /* pointer to the task */
                     (char const *)"app task",       /* task name for kernel awareness debugging */

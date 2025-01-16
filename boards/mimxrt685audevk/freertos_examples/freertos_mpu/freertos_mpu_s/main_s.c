@@ -24,8 +24,7 @@
  */
 
 /* Board specific includes. */
-#include "pin_mux.h"
-#include "clock_config.h"
+#include "app.h"
 #include "board.h"
 
 /* Trustzone config. */
@@ -37,22 +36,6 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-/**
- * @brief Start address of non-secure application.
- */
-#define mainNONSECURE_APP_START_ADDRESS DEMO_CODE_START_NS
-
-#if (DEMO_CODE_START_NS == 0x08100000U)
-#define BOARD_InitTrustZone XIP_BOARD_InitTrustZone
-#else
-#define BOARD_InitTrustZone RAM_BOARD_InitTrustZone
-#endif
-/**
- * @brief LED port and pins.
- */
-#define LED_PORT      BOARD_LED_BLUE_GPIO_PORT
-#define GREEN_LED_PIN BOARD_LED_GREEN_GPIO_PIN
-#define BLUE_LED_PIN  BOARD_LED_BLUE_GPIO_PIN
 
 /* Start address of non-secure application */
 #define mainNONSECURE_APP_START_ADDRESS DEMO_CODE_START_NS
@@ -122,22 +105,7 @@ int main(void)
      * exceptions. */
 
     /* Init board hardware. */
-    gpio_pin_config_t xLedConfig = {.pinDirection = kGPIO_DigitalOutput, .outputLogic = 1};
-
-    /* Initialize GPIO for LEDs. */
-    GPIO_PortInit(GPIO, LED_PORT);
-    GPIO_PinInit(GPIO, LED_PORT, GREEN_LED_PIN, &(xLedConfig));
-    GPIO_PinInit(GPIO, LED_PORT, BLUE_LED_PIN, &(xLedConfig));
-
-    /* Set non-secure vector table */
-    SCB_NS->VTOR = mainNONSECURE_APP_START_ADDRESS;
-
-    /* attach main clock divide to FLEXCOMM0 (debug console) */
-    CLOCK_AttachClk(BOARD_DEBUG_UART_CLK_ATTACH);
-
-    BOARD_InitBootPins();
-    BOARD_InitBootClocks();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
 
     /* Boot the non-secure code. */
     BootNonSecure(mainNONSECURE_APP_START_ADDRESS);

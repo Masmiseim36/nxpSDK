@@ -119,67 +119,8 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #define INCLUDE_xTaskGetHandle              0
 #define INCLUDE_xTaskResumeFromISR          1
 
+/****************** Macro definitions ***************/
 
-
-#if defined(__ICCARM__)||defined(__CC_ARM)||defined(__GNUC__)
-    /* Clock manager provides in this variable system core clock frequency */
-    #include <stdint.h>
-    extern uint32_t SystemCoreClock;
-#endif
-
-
-#ifndef configENABLE_FPU
-  #define configENABLE_FPU                        1
-#endif
-#ifndef configENABLE_MPU
-  #define configENABLE_MPU                        0
-#endif
-#ifndef configENABLE_TRUSTZONE
-  #define configENABLE_TRUSTZONE                  0
-#endif
-#ifndef configRUN_FREERTOS_SECURE_ONLY
-  #define configRUN_FREERTOS_SECURE_ONLY          1
-#endif
-
-/* Redefine: Mutex is needed for SRTM communication */
-#undef configUSE_MUTEXES
-#define configUSE_MUTEXES                       1
-
-#ifndef configTOTAL_HEAP_SIZE
-#define configTOTAL_HEAP_SIZE ((size_t)(40 * 1024))
-#endif
-
-/* Interrupt nesting behaviour configuration. Cortex-M specific. */
-#ifdef __NVIC_PRIO_BITS
-/* __BVIC_PRIO_BITS will be specified when CMSIS is being used. */
-#define configPRIO_BITS __NVIC_PRIO_BITS
-#else
-#define configPRIO_BITS 3 /* 7 priority levels */
-#endif
-
-#define configSTACK_DEPTH_TYPE uint32_t
-
-/* The lowest interrupt priority that can be used in a call to a "set priority"
-function. */
-#define configLIBRARY_LOWEST_INTERRUPT_PRIORITY ((1U << (configPRIO_BITS)) - 1)
-
-/* The highest interrupt priority that can be used by any interrupt service
-routine that makes calls to interrupt safe FreeRTOS API functions.  DO NOT CALL
-INTERRUPT SAFE FREERTOS API FUNCTIONS FROM ANY INTERRUPT THAT HAS A HIGHER
-PRIORITY THAN THIS! (higher priorities are lower numeric values. */
-#define configLIBRARY_MAX_SYSCALL_INTERRUPT_PRIORITY 2
-
-/* Interrupt priorities used by the kernel port layer itself.  These are generic
-to all Cortex-M ports, and do not rely on any particular library functions. */
-#define configKERNEL_INTERRUPT_PRIORITY (configLIBRARY_LOWEST_INTERRUPT_PRIORITY << (8 - configPRIO_BITS))
-/* !!!! configMAX_SYSCALL_INTERRUPT_PRIORITY must not be set to zero !!!!
-See http://www.FreeRTOS.org/RTOS-Cortex-M3-M4.html. */
-#define configMAX_SYSCALL_INTERRUPT_PRIORITY (configLIBRARY_MAX_SYSCALL_INTERRUPT_PRIORITY << (8 - configPRIO_BITS))
-
-/* Definitions that map the FreeRTOS port interrupt handlers to their CMSIS
-standard names. */
-#define vPortSVCHandler SVC_Handler
-#define vPortPendSVHandler PendSV_Handler
-#define vPortSysTickHandler SysTick_Handler
+#include "FreeRTOSConfigBoard.h"
 
 #endif /* FREERTOS_CONFIG_H */

@@ -21,6 +21,9 @@ static const struct bt_data ad[] = {
 	BT_DATA_BYTES(BT_DATA_UUID16_ALL, BT_UUID_16_ENCODE(BT_UUID_IPSS_VAL))
 };
 
+static const struct bt_data sd[] = {
+	BT_DATA(BT_DATA_NAME_COMPLETE, CONFIG_BT_DEVICE_NAME, sizeof(CONFIG_BT_DEVICE_NAME) - 1),
+};
 
 /* 6LowPan entry point */
 static int ipsp_rx_cb(struct net_buf *buf)
@@ -135,7 +138,7 @@ static void bt_ready(int err)
     bt_conn_auth_cb_register(&auth_cb_display);
 #endif
 
-    err = bt_le_adv_start(BT_LE_ADV_CONN_NAME, ad, ARRAY_SIZE(ad), NULL, 0);
+    err = bt_le_adv_start(BT_LE_ADV_CONN, ad, ARRAY_SIZE(ad), sd, ARRAY_SIZE(sd));
     if (err)
     {
         PRINTF("Advertising failed to start (err %d)\n", err);
@@ -143,7 +146,7 @@ static void bt_ready(int err)
     }
 
     PRINTF("Advertising successfully started\n");
-    
+
 	/* Initialize IPSP Node */
 	ipsp_init(ipsp_rx_cb);
 	err = ipsp_listen();

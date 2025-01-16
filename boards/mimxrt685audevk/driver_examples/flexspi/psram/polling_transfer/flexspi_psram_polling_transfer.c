@@ -6,24 +6,12 @@
  */
 
 #include "fsl_flexspi.h"
+#include "app.h"
 #include "fsl_debug_console.h"
 
-#include "pin_mux.h"
-#include "clock_config.h"
-#include "board.h"
-#include "fsl_common.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define EXAMPLE_FLEXSPI                    BOARD_FLEXSPI_PSRAM
-#define EXAMPLE_FLEXSPI_AMBA_BASE          FlexSPI_AMBA_BASE
-#define EXAMPLE_FLEXSPI_PORT               kFLEXSPI_PortA1
-#define HYPERRAM_CMD_LUT_SEQ_IDX_READDATA  0
-#define HYPERRAM_CMD_LUT_SEQ_IDX_WRITEDATA 1
-#define HYPERRAM_CMD_LUT_SEQ_IDX_READREG   2
-#define HYPERRAM_CMD_LUT_SEQ_IDX_WRITEREG  3
-#define HYPERRAM_CMD_LUT_SEQ_IDX_RESET     4
-#define DRAM_SIZE                          0x800000U
 
 /*******************************************************************************
  * Prototypes
@@ -38,7 +26,6 @@ static uint8_t s_hyper_ram_read_buffer[1024];
 /*******************************************************************************
  * Code
  ******************************************************************************/
-
 
 status_t flexspi_hyper_ram_ipcommand_write_data(FLEXSPI_Type *base, uint32_t address, uint32_t *buffer, uint32_t length)
 {
@@ -95,16 +82,7 @@ int main(void)
     uint32_t i  = 0;
     status_t st = kStatus_Success;
 
-    BOARD_InitBootPins();
-    BOARD_InitPsRamPins();
-    BOARD_InitBootClocks();
-    BOARD_InitDebugConsole();
-
-    status_t status = BOARD_InitPsRam();
-    if (status != kStatus_Success)
-    {
-        assert(false);
-    }
+    BOARD_InitHardware();
 
     PRINTF("FLEXSPI example started!\r\n");
 

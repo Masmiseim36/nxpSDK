@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<BuildTarget tool="xtensa" version="1.0">
+  <BuildSettings>
+    <BaseSettings path="project">
+      <PreprocessorOptions>
+        <StringListMapOptions>
+          <StringListMapEntry>
+            <key>Includes</key>
+            <value flag="-I" inheritance="donotinherit">
+              <ListEntry>${xt_project_loc}/..</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../devices/MIMXRT685S</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../devices/MIMXRT685S/periph</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../devices/MIMXRT685S/drivers</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../devices/MIMXRT685S/utilities/debug_console_lite</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../devices/MIMXRT685S/utilities/str</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../components/serial_manager</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../components/uart</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../middleware/multicore/rpmsg-lite/lib/include</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../middleware/multicore/rpmsg-lite/lib/include/environment/xos</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../middleware/multicore/rpmsg-lite/lib/include/platform/imxrt600_hifi4</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../middleware/cadence/codecs/aacplus_dec/hifi4/include/aac_dec</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../middleware/cadence/codecs/asrc_src_pp/hifi4/include/src_pp</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../middleware/cadence/codecs/bsac/hifi4/include/aac_dec</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../middleware/cadence/codecs/dabplus/hifi4/include/aac_dec</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../middleware/cadence/codecs/drm/hifi4/include/drm_dec</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../middleware/cadence/codecs/g711/hifi4/include/g711_codec</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../middleware/cadence/codecs/g722/hifi4/include/g722_codec</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../middleware/cadence/codecs/mp3_dec/hifi4/include/mp3_dec</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../middleware/cadence/codecs/opus/hifi4/include/opus_codec</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../middleware/cadence/codecs/opus/hifi4/include/ogg_lib</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../middleware/cadence/codecs/sbc_dec/hifi4/include/sbc_dec</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../middleware/cadence/codecs/sbc_enc/hifi4/include/sbc_enc</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../middleware/cadence/codecs/vorbis_dec/hifi4/include/vorbis_dec</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../middleware/cadence/multicore-xaf/xa_af_hostless/algo/hifi-dpf/include</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../middleware/cadence/multicore-xaf/xa_af_hostless/algo/hifi-dpf/include/audio</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../middleware/cadence/multicore-xaf/xa_af_hostless/algo/hifi-dpf/include/lib</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../middleware/cadence/multicore-xaf/xa_af_hostless/algo/hifi-dpf/include/sys/xos-msgq</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../middleware/cadence/multicore-xaf/xa_af_hostless/algo/hifi-dpf/include/sys/xos-msgq/iss</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../middleware/cadence/multicore-xaf/xa_af_hostless/algo/host-apf/include</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../middleware/cadence/multicore-xaf/xa_af_hostless/algo/host-apf/include/sys/xos-msgq</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../middleware/cadence/multicore-xaf/xa_af_hostless/algo/xa_af_hostless/include</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../middleware/cadence/multicore-xaf/xa_af_hostless/include</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../middleware/cadence/multicore-xaf/xa_af_hostless/include/audio</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../middleware/cadence/multicore-xaf/xa_af_hostless/include/sysdeps/xos/include</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../middleware/cadence/multicore-xaf/xa_af_hostless/include/sysdeps/mc_ipc</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../middleware/cadence/multicore-xaf/xa_af_hostless/test/include</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../middleware/cadence/multicore-xaf/xa_af_hostless/test/include/audio</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../middleware/cadence/multicore-xaf/xa_af_hostless/test/plugins</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../middleware/cadence/multicore-xaf/xa_af_hostless/test/plugins/nxp/vit_pre_proc</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../middleware/cadence/multicore-xaf/xa_af_hostless/test/plugins/nxp/voice_seeker</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../middleware/cadence/multicore-xaf/xa_af_hostless/xf_shared/include</ListEntry>
+            </value>
+          </StringListMapEntry>
+        </StringListMapOptions>
+        <KeyValueListMapOptions>
+          <KeyValueListMapEntry>
+            <key>Defines</key>
+            <value flag="-D">
+              <ListEntry key="NDEBUG" value=""/>
+              <ListEntry key="XA_PCM_GAIN" value="1"/>
+              <ListEntry key="XA_CAPTURER" value="1"/>
+              <ListEntry key="XA_RENDERER" value="1"/>
+              <ListEntry key="SDK_DEBUGCONSOLE" value="1"/>
+              <ListEntry key="XOS_CLOCK_FREQ" value="594000000"/>
+              <ListEntry key="XF_CORE_ID" value="0"/>
+              <ListEntry key="XF_CFG_CORES_NUM" value="1"/>
+              <ListEntry key="RENDERER_I2S" value=""/>
+              <ListEntry key="CAPTURER_DMIC" value=""/>
+              <ListEntry key="FIO_LOCAL_FS" value=""/>
+              <ListEntry key="HAVE_XOS" value=""/>
+              <ListEntry key="HIFI_ONLY_XAF" value=""/>
+              <ListEntry key="MCUX_META_BUILD" value=""/>
+              <ListEntry key="MCUXPRESSO_SDK" value=""/>
+              <ListEntry key="CPU_MIMXRT685SFVKB_dsp" value=""/>
+              <ListEntry key="SERIAL_PORT_TYPE_UART" value="1"/>
+            </value>
+          </KeyValueListMapEntry>
+        </KeyValueListMapOptions>
+      </PreprocessorOptions>
+      <CompilerOptions>
+        <StringListMapOptions>
+          <StringListMapEntry>
+            <key>CompilerAdditionalOptions</key>
+            <value flag="" inheritance="append">
+                        <ListEntry>-include ${xt_project_loc}/../mcux_config.h&#13;
+-Wno-unused&#13;
+-Wno-missing-braces&#13;
+-fmessage-length=0&#13;
+-std=gnu99&#13;
+--xtensa-core=nxp_rt600_RI23_11_newlib&#13;
+--xtensa-system=${XTENSA_SYSTEM}&#13;
+-mno-mul16&#13;
+-mno-mul32&#13;
+-mno-div32&#13;
+-INLINE:requested</ListEntry></value>
+          </StringListMapEntry>
+        </StringListMapOptions>
+        <SingleFlagMapOptions>
+          <SingleFlagMapEntry>
+            <key>OptimizeSpace</key>
+            <value use="true" flag="-Os"/>
+          </SingleFlagMapEntry>
+          <SingleFlagMapEntry>
+            <key>CompilerEnableLongCall</key>
+            <value use="true" flag="-mlongcalls"/>
+          </SingleFlagMapEntry>
+          <SingleFlagMapEntry>
+            <key>WarningSetting</key>
+            <value use="true" flag="-Wall"/>
+          </SingleFlagMapEntry>
+          <SingleFlagMapEntry>
+            <key>SignCharType</key>
+            <value use="true" flag="-fsigned-char"/>
+          </SingleFlagMapEntry>
+        </SingleFlagMapOptions>
+      </CompilerOptions>
+      <AssemblerOptions>
+        <StringListMapOptions>
+          <StringListMapEntry>
+            <key>AssemblerAdditionalOptions</key>
+            <value inheritance="append">
+              <ListEntry>--xtensa-core=nxp_rt600_RI23_11_newlib&#13;
+--xtensa-system=${XTENSA_SYSTEM}</ListEntry>
+            </value>
+          </StringListMapEntry>
+        </StringListMapOptions>
+      </AssemblerOptions>
+      <LinkerOptions>
+        <LinkerSupport custom="true" key="-mlsp" value="${xt_project_loc}/../../../../../../devices/MIMXRT685S/xtensa/min-rt"/>
+        <StringListMapOptions>
+          <StringListMapEntry>
+            <key>Libraries</key>
+            <value inheritance="prepend" flag="-l">
+              <ListEntry>xos</ListEntry>
+            </value>
+          </StringListMapEntry>
+          <StringListMapEntry>
+            <key>LinkerAdditionalOptions</key>
+            <value inheritance="append">
+              <ListEntry>-Wl,--orphan-handling=place&#13;
+--xtensa-core=nxp_rt600_RI23_11_newlib&#13;
+--xtensa-system=${XTENSA_SYSTEM}&#13;
+-Wl,--start-group&#13;
+${xt_project_loc}/../../../../../../middleware/cadence/codecs/aacplus_dec/hifi4/lib/xa_aacplus_v2_loas_dec.a&#13;
+${xt_project_loc}/../../../../../../middleware/cadence/codecs/asrc_src_pp/hifi4/lib/xa_asrc_src_pp.a&#13;
+${xt_project_loc}/../../../../../../middleware/cadence/codecs/bsac/hifi4/lib/xa_bsac_dec.a&#13;
+${xt_project_loc}/../../../../../../middleware/cadence/codecs/dabplus/hifi4/lib/xa_dabplus_dec.a&#13;
+${xt_project_loc}/../../../../../../middleware/cadence/codecs/drm/hifi4/lib/xa_drm_dec.a&#13;
+${xt_project_loc}/../../../../../../middleware/cadence/codecs/g711/hifi4/lib/xa_g711_codec.a&#13;
+${xt_project_loc}/../../../../../../middleware/cadence/codecs/g722/hifi4/lib/xa_g722_codec.a&#13;
+${xt_project_loc}/../../../../../../middleware/cadence/codecs/mp3_dec/hifi4/lib/xa_mp3_dec.a&#13;
+${xt_project_loc}/../../../../../../middleware/cadence/codecs/opus/hifi4/lib/xa_opus_codec.a&#13;
+${xt_project_loc}/../../../../../../middleware/cadence/codecs/opus/hifi4/lib/xa_opus_dec.a&#13;
+${xt_project_loc}/../../../../../../middleware/cadence/codecs/opus/hifi4/lib/xa_opus_enc.a&#13;
+${xt_project_loc}/../../../../../../middleware/cadence/codecs/opus/hifi4/lib/silk/xa_opus_silk_codec.a&#13;
+${xt_project_loc}/../../../../../../middleware/cadence/codecs/opus/hifi4/lib/silk/xa_opus_silk_dec.a&#13;
+${xt_project_loc}/../../../../../../middleware/cadence/codecs/opus/hifi4/lib/silk/xa_opus_silk_enc.a&#13;
+${xt_project_loc}/../../../../../../middleware/cadence/codecs/opus/hifi4/lib/celt/xa_opus_celt_codec.a&#13;
+${xt_project_loc}/../../../../../../middleware/cadence/codecs/opus/hifi4/lib/celt/xa_opus_celt_dec.a&#13;
+${xt_project_loc}/../../../../../../middleware/cadence/codecs/opus/hifi4/lib/celt/xa_opus_celt_enc.a&#13;
+${xt_project_loc}/../../../../../../middleware/cadence/codecs/sbc_dec/hifi4/lib/xa_sbc_dec.a&#13;
+${xt_project_loc}/../../../../../../middleware/cadence/codecs/sbc_enc/hifi4/lib/xa_sbc_enc.a&#13;
+${xt_project_loc}/../../../../../../middleware/cadence/codecs/vorbis_dec/hifi4/lib/xa_vorbis_dec.a&#13;
+-Wl,--end-group&#13;
+</ListEntry>
+            </value>
+          </StringListMapEntry>
+        </StringListMapOptions>
+      </LinkerOptions>
+    </BaseSettings>
+    <OverriddenSettings/>
+  </BuildSettings>
+</BuildTarget>

@@ -8,14 +8,12 @@
 #include "fsl_device_registers.h"
 #include "fsl_debug_console.h"
 #include "fsl_spi_cmsis.h"
-#include "pin_mux.h"
 #include "board.h"
+#include "app.h"
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DRIVER_SLAVE_SPI Driver_SPI5
-
 #define TRANSFER_SIZE 64U /* Transfer dataSize */
 
 /*******************************************************************************
@@ -34,11 +32,6 @@ volatile bool isTransferCompleted = false;
 /*******************************************************************************
  * Code
  ******************************************************************************/
-
-uint32_t SPI5_GetFreq(void)
-{
-    return CLOCK_GetFlexCommClkFreq(5U);
-}
 void SPI_SlaveSignalEvent_t(uint32_t event)
 {
     /* user code */
@@ -50,10 +43,7 @@ void SPI_SlaveSignalEvent_t(uint32_t event)
  */
 int main(void)
 {
-    CLOCK_AttachClk(kSFRO_to_FLEXCOMM5);
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
 
     PRINTF("SPI CMSIS driver board to board interrupt example.\r\n");
 

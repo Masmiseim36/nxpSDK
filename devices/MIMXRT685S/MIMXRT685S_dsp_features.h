@@ -1,7 +1,7 @@
 /*
 ** ###################################################################
 **     Version:             rev. 1.0, 2018-06-19
-**     Build:               b240521
+**     Build:               b241127
 **
 **     Abstract:
 **         Chip specific module features.
@@ -204,6 +204,10 @@
 #define FSL_FEATURE_ACMP_HAS_C1_DMODE_BIT (1)
 /* @brief Has C2 RRE Bit */
 #define FSL_FEATURE_ACMP_HAS_C2_RRE_BIT (0)
+/* @brief If support 3v domain */
+#define FSL_FEATURE_ACMP_HAS_NO_3V_DOMAIN (0)
+/* @brief If has acmp sample signal */
+#define FSL_FEATURE_ACMP_HAS_NO_SAMPLE_SIGNAL (1)
 
 /* CRC module features */
 
@@ -356,6 +360,8 @@
 #define FSL_FEATURE_FLEXSPI_SUPPORT_ADDRESS_SHIFT (0)
 /* @brief FlexSPI AHB RX buffer size (byte) */
 #define FSL_FEATURE_FLEXSPI_AHB_RX_BUFFER_SIZEn(x) (2048)
+/* @brief FlexSPI Array Length */
+#define FSL_FEATURE_FLEXSPI_ARRAY_LEN (1)
 
 /* GPIO module features */
 

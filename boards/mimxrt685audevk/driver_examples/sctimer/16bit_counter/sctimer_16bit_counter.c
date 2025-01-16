@@ -7,20 +7,13 @@
  */
 
 #include "fsl_debug_console.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 #include "fsl_sctimer.h"
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define SCTIMER_NEED_CHANGE_CLOCK_SOURCE 1
-#define DEMO_CLOCK_MODE                  kSCTIMER_Input_ClockMode
-#define DEMO_CLOCK_SEL                   kSCTIMER_Clock_On_Rise_Input_7
-#define SCTIMER_CLK_FREQ                 CLOCK_GetSctClkFreq()
-#define DEMO_FIRST_SCTIMER_OUT           kSCTIMER_Out_0
-#define DEMO_SECOND_SCTIMER_OUT          kSCTIMER_Out_6
 #define MAX_UP_COUNTER_VALUE     (0xFFFFU * 256U)
 #define MAX_UPDOWN_COUNTER_VALUE (0x1FFFFU * 256U)
 
@@ -68,13 +61,7 @@ int main(void)
     sctimer_event_active_direction_t activeDirL, activeDirH;
 
     /* Board pin, clock, debug console init */
-    BOARD_InitBootPins();
-    BOARD_InitBootClocks();
-    BOARD_InitDebugConsole();
-
-    /* attach FFRO clock to SCTimer input7 (48MHz / 1 = 48MHz). */
-    CLOCK_AttachClk(kFFRO_to_SCT_CLK);
-    CLOCK_SetClkDiv(kCLOCK_DivSctClk, 1);
+    BOARD_InitHardware();
 
     sctimerClock = SCTIMER_CLK_FREQ;
 

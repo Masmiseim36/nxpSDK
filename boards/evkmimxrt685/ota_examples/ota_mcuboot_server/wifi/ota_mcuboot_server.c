@@ -20,9 +20,8 @@
 
 #include "lwip/api.h"
 
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 
 #include "httpsrv.h"
 #include "httpsrv_port.h"
@@ -35,13 +34,9 @@
 #include "flash_map.h"
 #include "mcuboot_app_support.h"
 
-#include "fsl_common.h"
-#include "fsl_gpio.h"
-#include "fsl_power.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-
 
 #ifndef HTTPD_DEBUG
 #define HTTPD_DEBUG LWIP_DBG_ON
@@ -170,8 +165,7 @@ static int ssi_ota_image_info(HTTPSRV_SSI_PARAM_STRUCT *param)
             char versionstr[40];
             int slotused;
 
-            status = mflash_drv_read(fa->fa_off, (uint32_t *)&ih, sizeof(ih));
-            if (status != kStatus_Success)
+            if (bl_flash_read(fa->fa_off, (uint32_t *)&ih, sizeof(ih)) != 0)
             {
                 PRINTF("Failed to read image header/n");
                 return 0;
@@ -706,30 +700,7 @@ static void main_thread(void *arg)
 
 int main(void)
 {
-    BOARD_InitBootPins();
-    BOARD_InitBootClocks();
-    BOARD_InitDebugConsole();
-
-    /* Define the init structure for the OSPI reset pin*/
-    gpio_pin_config_t reset_config = {
-        kGPIO_DigitalOutput,
-        1,
-    };
-
-    /* Init output OSPI reset pin. */
-    GPIO_PortInit(GPIO, 2);
-    GPIO_PinInit(GPIO, 2, 12, &reset_config);
-
-    /* Make sure casper ram buffer has power up */
-    POWER_DisablePD(kPDRUNCFG_APD_CASPER_SRAM);
-    POWER_DisablePD(kPDRUNCFG_PPD_CASPER_SRAM);
-
-    /* Enable the FlexSPI reset pin P2_12 by the ROM */
-    uint32_t flexspi_rom_reset = 0;
-    flexspi_rom_reset |= (1U << 14U);  /* FlexSPI reset pin enable */
-    flexspi_rom_reset |= (2U << 15U);  /* FlexSPI reset port */
-    flexspi_rom_reset |= (12U << 18U); /* FlexSPI reset pin */
-    OCOTP->OTP_SHADOW[0x61] = flexspi_rom_reset;
+    BOARD_InitHardware();
 
     mflash_drv_init();
 

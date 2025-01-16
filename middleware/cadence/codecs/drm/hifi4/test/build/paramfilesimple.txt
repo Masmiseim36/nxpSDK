@@ -1,0 +1,6 @@
+@Start
+@Input_path ../test_inp/
+@Output_path ../test_out/
+-if thetest_aac.drm         -of thetest_aac.wav
+-if thetest_xheaac.drm     -of thetest_xheaac.wav
+@Stop

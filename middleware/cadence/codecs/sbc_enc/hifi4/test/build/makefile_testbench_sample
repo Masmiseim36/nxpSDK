@@ -1,0 +1,93 @@
+#
+# Copyright (c) 2009-2020 Cadence Design Systems, Inc.
+# 
+# Permission is hereby granted, free of charge, to any person obtaining
+# a copy of this software and associated documentation files (the
+# "Software"), to deal in the Software without restriction, including
+# without limitation the rights to use, copy, modify, merge, publish,
+# distribute, sublicense, and/or sell copies of the Software, and to
+# permit persons to whom the Software is furnished to do so, subject to
+# the following conditions:
+# 
+# The above copyright notice and this permission notice shall be included
+# in all copies or substantial portions of the Software.
+# 
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+# IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+# CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+# TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+# SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+#
+
+ROOTDIR = ../..
+
+CC = xt-xcc $(XTCORE)
+ISS = xt-run $(XTCORE)
+
+CONFIGDIR := $(shell $(ISS) --show-config=config)
+include $(CONFIGDIR)/misc/hostenv.mk
+
+ifeq ($(DEBUG),1)
+  OPT_O2 = -O0 -g
+else
+  OPT_O2 = -O2
+endif
+
+CFLAGS = -Wall -Werror  $(EXTRA_CFLAGS) $(STDDEFS)
+CFLAGS+=-I$(ROOTDIR)/include
+
+LDFLAGS = $(EXTRA_LDFLAGS)
+
+ifeq ($(WRITE_THROUGH),1)
+  LDFLAGS += \
+	-Wl,--defsym,_memmap_cacheattr_reset=0 \
+	-Wl,--defsym,_memmap_cacheattr_reset=_memmap_cacheattr_wt_trapnull
+endif
+
+SBCDECBIN = xa_sbc_dec_test
+SBCENCBIN = xa_sbc_enc_test
+
+SRCDIR = $(ROOTDIR)/test/src
+
+OBJDIR = objs
+
+SBCDECOBJS = \
+	xa_sbc_dec_error_handler.o \
+	xa_sbc_dec_sample_testbench.o 
+
+SBCENCOBJS = \
+	xa_sbc_enc_error_handler.o \
+	xa_sbc_enc_sample_testbench.o 
+
+OBJS_SBCDECOBJS = $(addprefix $(OBJDIR)/,$(SBCDECOBJS))
+OBJS_SBCENCOBJS = $(addprefix $(OBJDIR)/,$(SBCENCOBJS))
+
+all:
+	@echo "Please specify target: sbc_dec or sbc_enc"
+
+sbc_dec: $(SBCDECBIN)
+
+sbc_enc: $(SBCENCBIN)
+
+$(SBCDECBIN): LIBNAME = xa_sbc_dec.a
+$(SBCDECBIN): $(OBJDIR) $(OBJS_SBCDECOBJS)
+	$(CC) -o $@ $(OBJS_SBCDECOBJS) $(ROOTDIR)/lib/$(LIBNAME) $(LDFLAGS)
+	
+$(SBCENCBIN): LIBNAME = xa_sbc_enc.a
+$(SBCENCBIN): $(OBJDIR) $(OBJS_SBCENCOBJS)
+	$(CC) -o $@ $(OBJS_SBCENCOBJS) $(ROOTDIR)/lib/$(LIBNAME) $(LDFLAGS)
+
+$(OBJDIR):
+	-$(MKPATH) $(OBJDIR)
+
+$(OBJS_SBCDECOBJS): $(OBJDIR)/%.o: $(SRCDIR)/%.c
+	$(CC) -c $(OPT_O2) $(CFLAGS) -o $@ $<
+
+$(OBJS_SBCENCOBJS): $(OBJDIR)/%.o: $(SRCDIR)/%.c
+	$(CC) -c $(OPT_O2) $(CFLAGS) -o $@ $<
+
+clean:
+	-$(RM) $(SBCDECBIN) $(SBCENCBIN) 
+	-$(RM_R) $(OBJDIR)

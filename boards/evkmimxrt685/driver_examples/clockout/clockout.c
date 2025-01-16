@@ -8,25 +8,12 @@
 
 #include "fsl_device_registers.h"
 #include "fsl_debug_console.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define APP_CLOCK_OUT_SELECT_ARRAY                                                                                  \
-    {                                                                                                               \
-        kSFRO_to_CLKOUT, kXTALIN_CLK_to_CLKOUT, kLPOSC_to_CLKOUT, kFFRO_to_CLKOUT, kMAIN_CLK_to_CLKOUT,             \
-            kDSP_MAIN_to_CLKOUT, kMAIN_PLL_to_CLKOUT, kAUX0_PLL_to_CLKOUT, kDSP_PLL_to_CLKOUT, kAUX1_PLL_to_CLKOUT, \
-            kAUDIO_PLL_to_CLKOUT,                                                                                   \
-    }
-#define APP_CLOCK_OUT_NAME_ARRAY                                                                                    \
-    {                                                                                                               \
-        "SFRO Clock", "External Clock", "Low Power Oscillator Clock", "FFRO Clock", "Main Clock", "DSP Main Clock", \
-            "Main System PLL", "SYSPLL0 AUX0 PLL", "DSP PLL", "SYSPLL0 AUX1 PLL", "AUDIO PLL",                      \
-    }
-
 
 /*******************************************************************************
  * Prototypes
@@ -44,12 +31,7 @@ int main(void)
     uint8_t divideValue;
     uint32_t dividedFreq;
 
-    BOARD_InitBootPins();
-    BOARD_InitBootClocks();
-    BOARD_InitDebugConsole();
-
-    CLOCK_InitSysPfd(kCLOCK_Pfd1, 19U); /* Enable DSP PLL clock */
-    CLOCK_InitSysPfd(kCLOCK_Pfd3, 19U); /* Enable AUX1 PLL clock */
+    BOARD_InitHardware();
 
     PRINTF("\r\nClock Output Driver Example.\r\n");
 

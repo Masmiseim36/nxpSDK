@@ -1,0 +1,124 @@
+#
+# Copyright (c) 2012-2021 Cadence Design Systems, Inc.
+# 
+# Permission is hereby granted, free of charge, to any person obtaining
+# a copy of this software and associated documentation files (the
+# "Software"), to deal in the Software without restriction, including
+# without limitation the rights to use, copy, modify, merge, publish,
+# distribute, sublicense, and/or sell copies of the Software, and to
+# permit persons to whom the Software is furnished to do so, subject to
+# the following conditions:
+# 
+# The above copyright notice and this permission notice shall be included
+# in all copies or substantial portions of the Software.
+# 
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+# IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+# CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+# TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+# SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+#
+
+# Top-level makefile for binary and source licensees to generate
+# example test programs for the GSM-HR codec library
+
+ROOTDIR = ../..
+
+CC = xt-xcc $(XTCORE)
+ISS = xt-run $(XTCORE)
+
+CONFIGDIR := $(shell $(ISS) --show-config=config)
+include $(CONFIGDIR)/misc/hostenv.mk
+
+ifeq ($(DEBUG),1)
+CFLAGS = -O0 -D__PROFILE__ -g -Wall
+else
+CFLAGS = -O2 -D__PROFILE__ -Wall
+endif
+
+CFLAGS += -I$(ROOTDIR)/include \
+		 -I$(ROOTDIR)/include/g711_codec 
+
+CFLAGS += $(EXTRA_CFLAGS) 
+
+G711DECBIN = xa_g711_dec_test
+G711ENCBIN = xa_g711_enc_test
+
+G711ENCTEST = xa_g711_enc
+G711DECTEST = xa_g711_dec
+
+SRCDIR = $(ROOTDIR)/test/src
+
+LIBNAME = xa_g711_codec.a
+LIBS = $(ROOTDIR)/lib/$(LIBNAME)
+LIBENCNAME = xa_g711_enc.a
+LIBENCS = $(ROOTDIR)/lib/$(LIBENCNAME)
+LIBDECNAME = xa_g711_dec.a
+LIBDECS = $(ROOTDIR)/lib/$(LIBDECNAME)
+
+OBJDIR = objs
+
+ENC_OBJS =  xa_g711_enc_sample_testbench.o
+
+DEC_OBJS =  xa_g711_dec_sample_testbench.o 
+
+COM_OBJS =   \
+	xa_g711_codec_error_handler.o
+
+ENCOBJS_OBJS = $(addprefix $(OBJDIR)/,$(ENC_OBJS))
+DECOBJS_OBJS = $(addprefix $(OBJDIR)/,$(DEC_OBJS))
+COMOBJS_OBJS = $(addprefix $(OBJDIR)/,$(COM_OBJS))
+
+
+all: xa_g711_codec_test
+
+xa_g711_codec_test: $(OBJDIR) $(G711DECBIN) $(G711ENCBIN)
+
+$(G711ENCBIN): $(ENCOBJS_OBJS) $(COMOBJS_OBJS) $(LIBS)
+	$(CC) -o $@ $^  $(EXTRA_LDFLAGS)
+
+$(G711DECBIN): $(DECOBJS_OBJS) $(COMOBJS_OBJS) $(LIBS)
+	$(CC) -o $@ $^  $(EXTRA_LDFLAGS)
+	
+encoder: xa_g711_encode_test
+xa_g711_encode_test: $(OBJDIR) $(G711ENCTEST) 
+$(G711ENCTEST): $(ENCOBJS_OBJS) $(COMOBJS_OBJS) $(LIBENCS)
+	$(CC) -o $(G711ENCBIN) $^
+
+decoder: xa_g711_decode_test
+xa_g711_decode_test: $(OBJDIR) $(G711DECTEST)
+
+$(G711DECTEST): $(DECOBJS_OBJS) $(COMOBJS_OBJS) $(LIBDECS)
+	$(CC) -o $(G711DECBIN) $^
+
+g711_enc: clean_obj $(OBJDIR) $(ENCOBJS_OBJS) $(COMOBJS_OBJS)
+	$(CC) -o xa_g711_enc_test $(ENCOBJS_OBJS) $(COMOBJS_OBJS) $(LIBS)
+
+g711_dec: clean_obj $(OBJDIR) $(DECOBJS_OBJS) $(COMOBJS_OBJS)
+	$(CC) -o xa_g711_dec_test $(DECOBJS_OBJS) $(COMOBJS_OBJS) $(LIBS)
+
+$(OBJDIR):
+	-$(MKPATH) $@
+
+
+$(ENCOBJS_OBJS): $(OBJDIR)/%.o: $(SRCDIR)/%.c
+	$(CC) -c $(CFLAGS) -o $@ $<
+
+$(DECOBJS_OBJS): $(OBJDIR)/%.o: $(SRCDIR)/%.c
+	$(CC) -c $(CFLAGS) -o $@ $<
+
+$(COMOBJS_OBJS): $(OBJDIR)/%.o: $(SRCDIR)/%.c
+	$(CC) -c $(CFLAGS) -o $@ $<
+
+run:
+	$(ISS) --turbocache=tracecache.bin  ./$(G711ENCBIN)
+	$(ISS) --turbocache=tracecache.bin  ./$(G711DECBIN)
+
+clean_obj:
+	-$(RM_R) $(OBJDIR)
+
+clean:
+	-$(RM) xa_*test xa_*_enc xa_*_dec
+	-$(RM_R) $(OBJDIR)

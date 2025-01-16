@@ -11,17 +11,13 @@
  ******************************************************************************/
 
 #include "fsl_debug_console.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 #include "fsl_ctimer.h"
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define CTIMER          CTIMER0         /* Timer 0 */
-#define CTIMER_MAT_OUT  kCTIMER_Match_0 /* Match output 0 */
-#define CTIMER_CLK_FREQ CLOCK_GetCtimerClkFreq(0)
 #ifndef CTIMER_MAT_PWM_PERIOD_CHANNEL
 #define CTIMER_MAT_PWM_PERIOD_CHANNEL kCTIMER_Match_3
 #endif
@@ -60,12 +56,7 @@ int main(void)
     uint32_t timerClock;
 
     /* Init hardware*/
-    /* Use 16 MHz clock for the Ctimer0 */
-    CLOCK_AttachClk(kSFRO_to_CTIMER0);
-
-    BOARD_InitBootPins();
-    BOARD_InitBootClocks();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
 
     /* CTimer0 counter uses the AHB clock, some CTimer1 modules use the Aysnc clock */
     srcClock_Hz = CTIMER_CLK_FREQ;

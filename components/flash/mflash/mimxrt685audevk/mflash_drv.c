@@ -63,7 +63,7 @@ static flexspi_device_config_t deviceconfig = {
 };
 #endif
 
-static uint32_t customLUT[CUSTOM_LUT_LENGTH] = {
+const uint32_t customLUT[CUSTOM_LUT_LENGTH] = {
     /* Normal read mode -SDR */
     [4 * NOR_CMD_LUT_SEQ_IDX_READ_NORMAL] =
         FLEXSPI_LUT_SEQ(kFLEXSPI_Command_SDR, kFLEXSPI_1PAD, 0x03, kFLEXSPI_Command_RADDR_SDR, kFLEXSPI_1PAD, 0x18),
@@ -379,8 +379,12 @@ static int32_t mflash_drv_init_internal(void)
     FLEXSPI_SetFlashConfig(MFLASH_FLEXSPI, &deviceconfig, FLASH_PORT);
 #endif
 
+    uint32_t tmpLUT[CUSTOM_LUT_LENGTH] = {0x00U};
+
+    memcpy(tmpLUT, customLUT, sizeof(tmpLUT));
+
     /* Update LUT table. */
-    FLEXSPI_UpdateLUT(MFLASH_FLEXSPI, 0, customLUT, CUSTOM_LUT_LENGTH);
+    FLEXSPI_UpdateLUT(MFLASH_FLEXSPI, 0, tmpLUT, CUSTOM_LUT_LENGTH);
 
     status = flexspi_nor_enable_quad_mode(MFLASH_FLEXSPI);
     if (status != kStatus_Success)

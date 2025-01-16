@@ -9,9 +9,9 @@
 #include "fsl_device_registers.h"
 #include "fsl_debug_console.h"
 #include "fsl_shell.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "clock_config.h"
+#include "app.h"
 
 #include "mcuboot_app_support.h"
 #include "mflash_drv.h"
@@ -20,9 +20,6 @@
 
 #include <ctype.h>
 
-#include "fsl_common.h"
-#include "fsl_gpio.h"
-#include "fsl_power.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -78,7 +75,6 @@ static hashctx_t sha256_xmodem_ctx;
 /*******************************************************************************
  * Code
  ******************************************************************************/
-
 
 static void hexdump(const void *src, size_t size)
 {
@@ -453,30 +449,7 @@ int main(void)
     s_shellHandle = &s_shellHandleBuffer[0];
 
     /* Init board hardware. */
-    BOARD_InitBootPins();
-    BOARD_InitBootClocks();
-    BOARD_InitDebugConsole();
-
-    /* Define the init structure for the QSPI reset pin*/
-    gpio_pin_config_t reset_config = {
-        kGPIO_DigitalOutput,
-        1,
-    };
-
-    /* Init output QSPI reset pin. */
-    GPIO_PortInit(GPIO, 2);
-    GPIO_PinInit(GPIO, 2, 12, &reset_config);
-
-    /* Make sure casper ram buffer has power up */
-    POWER_DisablePD(kPDRUNCFG_APD_CASPER_SRAM);
-    POWER_DisablePD(kPDRUNCFG_PPD_CASPER_SRAM);
-
-    /* Enable the FlexSPI reset pin P2_12 by the ROM */
-    uint32_t flexspi_rom_reset = 0;
-    flexspi_rom_reset |= (1U << 14U);  /* FlexSPI reset pin enable */
-    flexspi_rom_reset |= (2U << 15U);  /* FlexSPI reset port */
-    flexspi_rom_reset |= (12U << 18U); /* FlexSPI reset pin */
-    OCOTP->OTP_SHADOW[0x61] = flexspi_rom_reset;
+    BOARD_InitHardware();
     
     ret = mflash_drv_init();
     if (ret)

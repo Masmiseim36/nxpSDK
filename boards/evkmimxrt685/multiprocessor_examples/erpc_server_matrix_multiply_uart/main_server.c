@@ -6,20 +6,16 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
 #include "erpc_server_setup.h"
 #include "c_erpc_matrix_multiply_server.h"
 #include "erpc_matrix_multiply_common.h"
 #include "erpc_error_handler.h"
+#include "app.h"
 
-#include "fsl_device_registers.h"
-#include "fsl_usart_cmsis.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define ERPC_DEMO_UART Driver_USART0
 
 /*******************************************************************************
  * Variables
@@ -33,12 +29,6 @@ erpc_server_t server;
 /*******************************************************************************
  * Code
  ******************************************************************************/
-
-uint32_t USART0_GetFreq(void)
-{
-    return CLOCK_GetFlexCommClkFreq(0);
-}
-
 
 /*!
  * @brief erpcMatrixMultiply function implementation.
@@ -80,9 +70,7 @@ void erpcMatrixMultiply(Matrix matrix1, Matrix matrix2, Matrix result_matrix)
  */
 int main(void)
 {
-    BOARD_InitBootPins();
-    BOARD_InitBootClocks();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
 
     /* UART transport layer initialization */
     erpc_transport_t transport;

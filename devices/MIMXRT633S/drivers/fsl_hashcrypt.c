@@ -224,8 +224,15 @@ __STATIC_FORCEINLINE void hashcrypt_sha_ldm_stm_16_words(HASHCRYPT_Type *base, c
     *ldst = lsrc[1];
     */
 
+    /* Data Synchronization Barrier prevent compiler from reordering memory write when -O2 or higher is used. */
+    /* The address is passed to the crypto engine for hashing below, therefore out   */
+    /* of order memory write due to compiler optimization must be prevented. */
+    __DSB();
+    
     base->MEMADDR = HASHCRYPT_MEMADDR_BASE(src);
     base->MEMCTRL = HASHCRYPT_MEMCTRL_MASTER(1) | HASHCRYPT_MEMCTRL_COUNT(1);
+    
+    __DSB();
 }
 
 /*!

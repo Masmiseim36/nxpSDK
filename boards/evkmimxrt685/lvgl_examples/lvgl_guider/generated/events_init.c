@@ -1,6 +1,5 @@
 /*
  * Copyright 2020 NXP
- * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -9,7 +8,7 @@
  *      INCLUDES
  *********************/
 #include <stdio.h>
-#include "lvgl/lvgl.h"
+#include "lvgl.h"
 #include "events_init.h"
 
 /*********************

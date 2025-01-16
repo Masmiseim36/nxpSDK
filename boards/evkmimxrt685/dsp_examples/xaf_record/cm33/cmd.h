@@ -7,7 +7,7 @@
 
 /*${header:start}*/
 #include "dsp_config.h"
-#include "main_cm33.h"
+#include "main.h"
 #include "srtm_config.h"
 /*${header:end}*/
 

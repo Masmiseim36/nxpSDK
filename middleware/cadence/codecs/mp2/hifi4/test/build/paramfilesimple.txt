@@ -1,0 +1,5 @@
+@Start
+@Input_path ../test_inp/
+@Output_path ../test_out/
+-ifile:l2-fl11.mp2 -ofile:l2-fl11.wav
+@Stop

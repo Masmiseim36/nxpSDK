@@ -7,7 +7,7 @@
 **     Compiler:            Xtensa Compiler
 **     Reference manual:    MIMXRT685 User manual Rev. 0.95 11 November 2019
 **     Version:             rev. 2.0, 2019-11-12
-**     Build:               b201016
+**     Build:               b240823
 **
 **     Abstract:
 **         Provides a system configuration function and a global variable that
@@ -15,9 +15,7 @@
 **         the oscillator (PLL) that is part of the microcontroller device.
 **
 **     Copyright 2016 Freescale Semiconductor, Inc.
-**     Copyright 2016-2020 NXP
-**     All rights reserved.
-**
+**     Copyright 2016-2024 NXP
 **     SPDX-License-Identifier: BSD-3-Clause
 **
 **     http:                 www.nxp.com
@@ -35,7 +33,7 @@
 /*!
  * @file MIMXRT685S
  * @version 1.0
- * @date 161020
+ * @date 230824
  * @brief Device specific configuration file for MIMXRT685S (implementation file)
  *
  * Provides a system configuration function and a global variable that contains

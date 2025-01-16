@@ -1,5 +1,6 @@
-Overview
-========
+# trng_random
+
+## Overview
 The True Random Number Generator (TRNG) is a hardware accelerator module that generates a 512-bit
 entropy as needed by an entropy consuming module or by other post processing functions. The TRNG
 Example project is a demonstration program that uses the KSDK software to generate random numbers
@@ -18,57 +19,22 @@ to TRNG_GetRandomData() return entropy bits collected with new TRNG settings.
 The issue is fixed in TRNG driver version 2.0.3, by regenerating entropy bits with new
 TRNG settings already during TRNG_Init().
 
-
-
-SDK version
-===========
-- Version: 2.16.000
-
-Toolchain supported
-===================
-- IAR embedded Workbench  9.60.1
-- Keil MDK  5.39.0
-- GCC ARM Embedded  13.2.1
-- MCUXpresso  11.10.0
-
-Hardware requirements
-=====================
-- Micro USB cable
-- MIMXRT685-AUD-EVK board
-- Personal Computer
-
-Board settings
-==============
-
-
-Prepare the Demo
-================
-1.  Connect a micro USB cable between the PC host and the CMSIS DAP USB port (J5) on the board
-2.  Open a serial terminal with the following settings:
-    - 115200 baud rate
-    - 8 data bits
-    - No parity
-    - One stop bit
-    - No flow control
-3.  Download the program to the target board.
-4.  Launch the debugger in your IDE to begin running the demo.
-
-Running the demo
-================
-The log below shows the output of the trng example in the terminal window:
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-TRNG Peripheral Driver Example
-Generate 10 random numbers: 
-Random[0] = 0x201FEB53
-Random[1] = 0x85A32C28
-Random[2] = 0xDC66342C
-Random[3] = 0xFD43ACFF
-Random[4] = 0x1CD53C0
-Random[5] = 0xB27EDBEB
-Random[6] = 0x32AB81D5
-Random[7] = 0x6AA5B70F
-Random[8] = 0x81C41286
-Random[9] = 0xC9620BD8
-
- Press any key to continue... 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+## Supported Boards
+- [EVKB-IMXRT1050](../../../_boards/evkbimxrt1050/driver_examples/trng/random/example_board_readme.md)
+- [MIMXRT1060-EVKB](../../../_boards/evkbmimxrt1060/driver_examples/trng/random/example_board_readme.md)
+- [MIMXRT1060-EVKC](../../../_boards/evkcmimxrt1060/driver_examples/trng/random/example_board_readme.md)
+- [EVK-MCIMX7ULP](../../../_boards/evkmcimx7ulp/driver_examples/trng/random/example_board_readme.md)
+- [EVK-MIMXRT1010](../../../_boards/evkmimxrt1010/driver_examples/trng/random/example_board_readme.md)
+- [EVK-MIMXRT1015](../../../_boards/evkmimxrt1015/driver_examples/trng/random/example_board_readme.md)
+- [EVK-MIMXRT1020](../../../_boards/evkmimxrt1020/driver_examples/trng/random/example_board_readme.md)
+- [MIMXRT1024-EVK](../../../_boards/evkmimxrt1024/driver_examples/trng/random/example_board_readme.md)
+- [MIMXRT1040-EVK](../../../_boards/evkmimxrt1040/driver_examples/trng/random/example_board_readme.md)
+- [EVK-MIMXRT1064](../../../_boards/evkmimxrt1064/driver_examples/trng/random/example_board_readme.md)
+- [EVK-MIMXRT595](../../../_boards/evkmimxrt595/driver_examples/trng/random/example_board_readme.md)
+- [EVK-MIMXRT685](../../../_boards/evkmimxrt685/driver_examples/trng/random/example_board_readme.md)
+- [FRDM-K32L2A4S](../../../_boards/frdmk32l2a4s/driver_examples/trng/random/example_board_readme.md)
+- [FRDM-K32L3A6](../../../_boards/frdmk32l3a6/driver_examples/trng/random/example_board_readme.md)
+- [FRDM-RW612](../../../_boards/frdmrw612/driver_examples/trng/random/example_board_readme.md)
+- [MIMXRT685-AUD-EVK](../../../_boards/mimxrt685audevk/driver_examples/trng/random/example_board_readme.md)
+- [MIMXRT700-EVK](../../../_boards/mimxrt700evk/driver_examples/trng/random/example_board_readme.md)
+- [RD-RW612-BGA](../../../_boards/rdrw612bga/driver_examples/trng/random/example_board_readme.md)

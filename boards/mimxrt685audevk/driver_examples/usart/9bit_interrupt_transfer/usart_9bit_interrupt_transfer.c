@@ -5,20 +5,14 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
 #include "fsl_debug_console.h"
+#include "app.h"
 #include "fsl_usart.h"
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_USART            USART4
-#define DEMO_USART_CLK_SRC    kCLOCK_Flexcomm0
-#define DEMO_USART_CLK_FREQ   CLOCK_GetFlexCommClkFreq(0U)
-#define DEMO_USART_IRQHandler FLEXCOMM0_IRQHandler
-#define DEMO_USART_IRQn       FLEXCOMM0_IRQn
 
 #define EXAMPLE_ADDRESS 0x7EU
 #define TRANSFER_SIZE   16U
@@ -62,10 +56,7 @@ void USART_UserCallback(USART_Type *base, usart_handle_t *handle, status_t statu
 int main(void)
 {
     uint32_t i;
-    CLOCK_AttachClk(kFFRO_to_FLEXCOMM4);
-    BOARD_InitBootPins();
-    BOARD_InitBootClocks();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
     PRINTF(
         "USART 9-bit mode example begins\r\nUSART is configured with address, only data sent to itself after matched "
         "address can be received\r\n");

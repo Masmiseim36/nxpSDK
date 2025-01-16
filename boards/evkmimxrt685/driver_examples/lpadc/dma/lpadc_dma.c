@@ -6,8 +6,7 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-#include "pin_mux.h"
-#include "clock_config.h"
+#include "app.h"
 #include "board.h"
 #include "fsl_debug_console.h"
 #include "fsl_dma.h"
@@ -17,19 +16,6 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_LPADC_BASE             ADC0
-#define DEMO_LPADC_USER_CHANNEL     0U
-#define DEMO_LPADC_USER_CMDID       1U /* The available command number are 1-15 */
-#define DEMO_LPADC_RESFIFO_REG_ADDR (uint32_t)(&(ADC0->RESFIFO))
-#define DEMO_RESULT_FIFO_READY_FLAG kLPADC_ResultFIFOReadyFlag
-
-#define DEMO_DMA_BASE             DMA0
-#define DEMO_DMA_ADC_CHANNEL      0U
-#define DEMO_DMA_TRANSFER_TYPE    kDMA_MemoryToMemory
-#define DEMO_DMA_HARDWARE_TRIGGER true
-#define DEMO_DMA_ADC_CONNECTION   kINPUTMUX_AdcToDma0
-
-#define DEMO_INPUTMUX_BASE INPUTMUX
 #define DMA_DESCRIPTOR_NUM     2U
 #define DEMO_CADC_SAMPLE_COUNT 3U /* The lpadc sample count. */
 /*******************************************************************************
@@ -79,15 +65,7 @@ void DEMO_DMA_Callback(dma_handle_t *handle, void *param, bool transferDone, uin
 int main(void)
 {
     /* Initialize board hardware. */
-    BOARD_InitBootPins();
-    BOARD_InitBootClocks();
-    BOARD_InitDebugConsole();
-
-    SYSCTL0->PDRUNCFG0_CLR = SYSCTL0_PDRUNCFG0_ADC_PD_MASK;
-    SYSCTL0->PDRUNCFG0_CLR = SYSCTL0_PDRUNCFG0_ADC_LP_MASK;
-    RESET_PeripheralReset(kADC0_RST_SHIFT_RSTn);
-    CLOCK_AttachClk(kSFRO_to_ADC_CLK);
-    CLOCK_SetClkDiv(kCLOCK_DivAdcClk, 1);
+    BOARD_InitHardware();
     PRINTF("LPADC DMA Example\r\n");
 
     /* Configure peripherals. */

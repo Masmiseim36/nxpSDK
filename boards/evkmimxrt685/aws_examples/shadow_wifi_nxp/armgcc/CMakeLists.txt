@@ -1,6 +1,6 @@
 # CROSS COMPILER SETTING
-SET(CMAKE_SYSTEM_NAME Generic)
-CMAKE_MINIMUM_REQUIRED (VERSION 3.10.0)
+set(CMAKE_SYSTEM_NAME Generic)
+cmake_minimum_required(VERSION 3.10.0)
 
 # THE VERSION NUMBER
 SET (MCUXPRESSO_CMAKE_FORMAT_MAJOR_VERSION 2)
@@ -14,23 +14,22 @@ if(CMAKE_SCRIPT_MODE_FILE)
 endif()
 
 
-# ENABLE ASM
-ENABLE_LANGUAGE(ASM)
+set(CMAKE_STATIC_LIBRARY_PREFIX)
+set(CMAKE_STATIC_LIBRARY_SUFFIX)
 
-SET(CMAKE_STATIC_LIBRARY_PREFIX)
-SET(CMAKE_STATIC_LIBRARY_SUFFIX)
-
-SET(CMAKE_EXECUTABLE_LIBRARY_PREFIX)
-SET(CMAKE_EXECUTABLE_LIBRARY_SUFFIX)
+set(CMAKE_EXECUTABLE_LIBRARY_PREFIX)
+set(CMAKE_EXECUTABLE_LIBRARY_SUFFIX)
 
 # CURRENT DIRECTORY
-SET(ProjDirPath ${CMAKE_CURRENT_SOURCE_DIR})
+set(ProjDirPath ${CMAKE_CURRENT_SOURCE_DIR})
 
-SET(EXECUTABLE_OUTPUT_PATH ${ProjDirPath}/${CMAKE_BUILD_TYPE})
-SET(LIBRARY_OUTPUT_PATH ${ProjDirPath}/${CMAKE_BUILD_TYPE})
+set(EXECUTABLE_OUTPUT_PATH ${ProjDirPath}/${CMAKE_BUILD_TYPE})
+set(LIBRARY_OUTPUT_PATH ${ProjDirPath}/${CMAKE_BUILD_TYPE})
 
 
 project(aws_shadow_wifi_nxp)
+
+enable_language(ASM)
 
 set(MCUX_BUILD_TYPES flash_debug flash_release)
 
@@ -45,63 +44,66 @@ include(${ProjDirPath}/flags.cmake)
 include(${ProjDirPath}/config.cmake)
 
 add_executable(${MCUX_SDK_PROJECT_NAME} 
-"${ProjDirPath}/../main_wifi.c"
-"${ProjDirPath}/../lwipopts.h"
-"${ProjDirPath}/../pin_mux.c"
-"${ProjDirPath}/../pin_mux.h"
-"${ProjDirPath}/../config_files/core_mqtt_config.h"
-"${ProjDirPath}/../config_files/core_pkcs11_config.h"
-"${ProjDirPath}/../config_files/demo_config.h"
-"${ProjDirPath}/../config_files/kvstore_config.h"
-"${ProjDirPath}/../config_files/shadow_config.h"
+"${ProjDirPath}/../app_config.h"
+"${ProjDirPath}/../aws_mbedtls_config.h"
 "${ProjDirPath}/../aws_clientcredential.h"
 "${ProjDirPath}/../aws_clientcredential_keys.h"
+"${ProjDirPath}/../core_mqtt_config.h"
+"${ProjDirPath}/../core_pkcs11_config.h"
+"${ProjDirPath}/../demo_config.h"
 "${ProjDirPath}/../freertos_tasks_c_additions.h"
-"${ProjDirPath}/../config_files/aws_mbedtls_config.h"
-"${ProjDirPath}/../app_config.h"
+"${ProjDirPath}/../kvstore_config.h"
+"${ProjDirPath}/../shadow_config.h"
 "${ProjDirPath}/../wifi_config.h"
+"${ProjDirPath}/../aws_dev_mode_key_provisioning.h"
+"${ProjDirPath}/../aws_dev_mode_key_provisioning.c"
+"${ProjDirPath}/../lwipopts.h"
+"${ProjDirPath}/../iot_pkcs11_pal.c"
+"${ProjDirPath}/../shadow_device_task.c"
+"${ProjDirPath}/../shadow_update_task.c"
+"${ProjDirPath}/../main_wifi.c"
 "${ProjDirPath}/../sdmmc_config.c"
 "${ProjDirPath}/../sdmmc_config.h"
 "${ProjDirPath}/../wifi_bt_config.c"
 "${ProjDirPath}/../wifi_bt_config.h"
-"${ProjDirPath}/../config_files/FreeRTOSConfig.h"
-"${ProjDirPath}/../aws_dev_mode_key_provisioning.h"
-"${ProjDirPath}/../aws_dev_mode_key_provisioning.c"
-"${ProjDirPath}/../board.c"
 "${ProjDirPath}/../board.h"
-"${ProjDirPath}/../clock_config.c"
+"${ProjDirPath}/../board.c"
 "${ProjDirPath}/../clock_config.h"
-"${ProjDirPath}/../iot_pkcs11_pal.c"
+"${ProjDirPath}/../clock_config.c"
+"${ProjDirPath}/../pin_mux.c"
+"${ProjDirPath}/../pin_mux.h"
+"${ProjDirPath}/../hardware_init.c"
+"${ProjDirPath}/../app.h"
+"${ProjDirPath}/../FreeRTOSConfig_Gen.h"
+"${ProjDirPath}/../fsl_debug_console_conf.h"
+"${ProjDirPath}/../fsl_os_abstraction_config.h"
+"${ProjDirPath}/../mcux_config.h"
 )
 
 target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
-    ${ProjDirPath}/../config_files
-    ${SdkRootDirPath}/boards/evkmimxrt685
     ${ProjDirPath}/..
-    ${SdkRootDirPath}/boards/evkmimxrt685/aws_examples/common
 )
 
-set_source_files_properties("${ProjDirPath}/../lwipopts.h" PROPERTIES COMPONENT_CONFIG_FILE "middleware_lwip_template")
-set_source_files_properties("${ProjDirPath}/../config_files/core_mqtt_config.h" PROPERTIES COMPONENT_CONFIG_FILE "middleware_freertos_coremqtt_template")
-set_source_files_properties("${ProjDirPath}/../config_files/core_pkcs11_config.h" PROPERTIES COMPONENT_CONFIG_FILE "middleware_freertos_corepkcs11_template")
-set_source_files_properties("${ProjDirPath}/../config_files/demo_config.h" PROPERTIES COMPONENT_CONFIG_FILE "middleware_iot_reference_template")
-set_source_files_properties("${ProjDirPath}/../config_files/kvstore_config.h" PROPERTIES COMPONENT_CONFIG_FILE "middleware_iot_reference_template")
-set_source_files_properties("${ProjDirPath}/../config_files/shadow_config.h" PROPERTIES COMPONENT_CONFIG_FILE "middleware_aws_iot_device_shadow_template")
-set_source_files_properties("${ProjDirPath}/../app_config.h" PROPERTIES COMPONENT_CONFIG_FILE "middleware_wifi_template")
-set_source_files_properties("${ProjDirPath}/../wifi_config.h" PROPERTIES COMPONENT_CONFIG_FILE "middleware_wifi_template")
 set_source_files_properties("${ProjDirPath}/../sdmmc_config.c" PROPERTIES COMPONENT_CONFIG_FILE "middleware_sdmmc_usdhc_template")
 set_source_files_properties("${ProjDirPath}/../sdmmc_config.h" PROPERTIES COMPONENT_CONFIG_FILE "middleware_sdmmc_usdhc_template")
-set_source_files_properties("${ProjDirPath}/../wifi_bt_config.c" PROPERTIES COMPONENT_CONFIG_FILE "middleware_wifi_wifi_bt_config_template")
-set_source_files_properties("${ProjDirPath}/../wifi_bt_config.h" PROPERTIES COMPONENT_CONFIG_FILE "middleware_wifi_wifi_bt_config_template")
-set_source_files_properties("${ProjDirPath}/../config_files/FreeRTOSConfig.h" PROPERTIES COMPONENT_CONFIG_FILE "middleware_freertos-kernel_template")
+set_source_files_properties("${ProjDirPath}/../FreeRTOSConfig_Gen.h" PROPERTIES COMPONENT_CONFIG_FILE "middleware_freertos-kernel_config")
+set_source_files_properties("${ProjDirPath}/../fsl_os_abstraction_config.h" PROPERTIES COMPONENT_CONFIG_FILE "component_osa_template_config")
 
 if(CMAKE_BUILD_TYPE STREQUAL flash_debug)
-     target_compile_definitions(${MCUX_SDK_PROJECT_NAME}  PRIVATE MBEDTLS_CONFIG_FILE="aws_mbedtls_config.h")
-endif(CMAKE_BUILD_TYPE STREQUAL flash_debug)
+     target_compile_definitions(${MCUX_SDK_PROJECT_NAME}  PRIVATE $<$<COMPILE_LANGUAGE:C>:MBEDTLS_CONFIG_FILE="aws_mbedtls_config.h">)
+endif()
 
 if(CMAKE_BUILD_TYPE STREQUAL flash_release)
-     target_compile_definitions(${MCUX_SDK_PROJECT_NAME}  PRIVATE MBEDTLS_CONFIG_FILE="aws_mbedtls_config.h")
-endif(CMAKE_BUILD_TYPE STREQUAL flash_release)
+     target_compile_definitions(${MCUX_SDK_PROJECT_NAME}  PRIVATE $<$<COMPILE_LANGUAGE:C>:MBEDTLS_CONFIG_FILE="aws_mbedtls_config.h">)
+endif()
+
+if(CMAKE_BUILD_TYPE STREQUAL flash_debug)
+     target_compile_definitions(${MCUX_SDK_PROJECT_NAME}  PRIVATE $<$<COMPILE_LANGUAGE:CXX>:MBEDTLS_CONFIG_FILE="ksdk_mbedtls_config.h">)
+endif()
+
+if(CMAKE_BUILD_TYPE STREQUAL flash_release)
+     target_compile_definitions(${MCUX_SDK_PROJECT_NAME}  PRIVATE $<$<COMPILE_LANGUAGE:CXX>:MBEDTLS_CONFIG_FILE="ksdk_mbedtls_config.h">)
+endif()
 
 include(${SdkRootDirPath}/devices/MIMXRT685S/all_lib_device.cmake)
 
@@ -116,7 +118,10 @@ target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${TARGET_LINK_SYSTEM_LIBR
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--end-group)
 
 ADD_CUSTOM_COMMAND(TARGET ${MCUX_SDK_PROJECT_NAME} POST_BUILD COMMAND ${CMAKE_OBJCOPY}
--Obinary ${EXECUTABLE_OUTPUT_PATH}/${MCUX_SDK_PROJECT_NAME} ${EXECUTABLE_OUTPUT_PATH}/sdk20-app.bin)
+-Obinary ${EXECUTABLE_OUTPUT_PATH}/${MCUX_SDK_PROJECT_NAME} ${EXECUTABLE_OUTPUT_PATH}/aws_shadow_wifi_nxp.bin)
 
-set_target_properties(${MCUX_SDK_PROJECT_NAME} PROPERTIES ADDITIONAL_CLEAN_FILES "output.map;${EXECUTABLE_OUTPUT_PATH}/sdk20-app.bin")
+set_target_properties(${MCUX_SDK_PROJECT_NAME} PROPERTIES ADDITIONAL_CLEAN_FILES "output.map;${EXECUTABLE_OUTPUT_PATH}/aws_shadow_wifi_nxp.bin")
+
+# wrap all libraries with -Wl,--start-group -Wl,--end-group to prevent link order issue
+group_link_libraries()
 

@@ -12,6 +12,15 @@
 
 #include "fsl_common.h"
 
+    /* This check here is required, because same function name exisit for KWxx platforms,
+    that is using same function to do its HW init with same function name.*/
+#if (( defined(FSL_FEATURE_SOC_TRNG_COUNT) && (FSL_FEATURE_SOC_TRNG_COUNT > 0))      || \
+    ( defined(FSL_FEATURE_SOC_RNG_COUNT) && (FSL_FEATURE_SOC_RNG_COUNT > 0))         || \
+    ( defined(FSL_FEATURE_SOC_LPC_RNG_COUNT) && (FSL_FEATURE_SOC_LPC_RNG_COUNT > 0)) || \
+    ( defined(FSL_FEATURE_SOC_LPC_RNG1_COUNT) && (FSL_FEATURE_SOC_LPC_RNG1_COUNT > 0)))
+#include "hw_init.h"
+#endif
+
 #if defined(FSL_FEATURE_SOC_TRNG_COUNT) && (FSL_FEATURE_SOC_TRNG_COUNT > 0)
 #include "fsl_trng.h"
 #elif defined(FSL_FEATURE_SOC_RNG_COUNT) && (FSL_FEATURE_SOC_RNG_COUNT > 0)
@@ -24,26 +33,7 @@
 #include "sss_crypto.h"
 #endif
 
-static void mbedtls_mcux_rng_init(void)
-{
-#if defined(FSL_FEATURE_SOC_TRNG_COUNT) && (FSL_FEATURE_SOC_TRNG_COUNT > 0)
-#if defined(TRNG)
-#define TRNG0 TRNG
-#endif
-    trng_config_t trngConfig;
-
-    TRNG_GetDefaultConfig(&trngConfig);
-    /* Set sample mode of the TRNG ring oscillator to Von Neumann, for better random data.*/
-    /* Initialize TRNG */
-    TRNG_Init(TRNG0, &trngConfig);
-#elif defined(FSL_FEATURE_SOC_RNG_COUNT) && (FSL_FEATURE_SOC_RNG_COUNT > 0)
-    RNGA_Init(RNG);
-    RNGA_Seed(RNG, SIM->UIDL);
-#elif defined(FSL_FEATURE_SOC_LPC_RNG1_COUNT) && (FSL_FEATURE_SOC_LPC_RNG1_COUNT > 0)
-    RNG_Init(RNG);
-#endif
-}
-
+extern uint32_t g_isCryptoHWInitialized;
 /* Entropy poll callback for a hardware source */
 /* TBD - We should add a mutex when entering this function for threaded implementations */
 int mbedtls_hardware_poll(void *data, unsigned char *output, size_t len, size_t *olen)
@@ -52,14 +42,21 @@ int mbedtls_hardware_poll(void *data, unsigned char *output, size_t len, size_t 
     *olen = len;
     return kStatus_Success;
 #else
-    static bool rng_init_is_done = false;
     status_t result              = kStatus_Success;
 
-    if (rng_init_is_done == false)
+    /* This check here is required, because same function name exisit for KWxx platforms,
+    that is using same function to do its HW init with same function name.*/
+#if (( defined(FSL_FEATURE_SOC_TRNG_COUNT) && (FSL_FEATURE_SOC_TRNG_COUNT > 0))      || \
+    ( defined(FSL_FEATURE_SOC_RNG_COUNT) && (FSL_FEATURE_SOC_RNG_COUNT > 0))         || \
+    ( defined(FSL_FEATURE_SOC_LPC_RNG_COUNT) && (FSL_FEATURE_SOC_LPC_RNG_COUNT > 0)) || \
+    ( defined(FSL_FEATURE_SOC_LPC_RNG1_COUNT) && (FSL_FEATURE_SOC_LPC_RNG1_COUNT > 0)))
+    /* Temp HW initialization for platforms, which are using psa-apis in examples,
+    but does not have the psa-crypto-driver available*/
+    if (g_isCryptoHWInitialized == ELS_PKC_CRYPTOHW_UNINITIALIZED)
     {
-        mbedtls_mcux_rng_init();
-        rng_init_is_done = true;
+        CRYPTO_InitHardware();
     }
+#endif
 
 #if defined(FSL_FEATURE_SOC_TRNG_COUNT) && (FSL_FEATURE_SOC_TRNG_COUNT > 0)
 #ifndef TRNG0

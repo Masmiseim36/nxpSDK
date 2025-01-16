@@ -6,7 +6,7 @@
  */
 #include <stdlib.h>
 #include <string.h>
-#include "pin_mux.h"
+#include "app.h"
 #include "board.h"
 #include "fsl_codec_common.h"
 #include "fsl_debug_console.h"
@@ -22,67 +22,9 @@
 #include "semphr.h"
 #include "task.h"
 #include "fsl_sx1502.h"
-#include <stdbool.h>
-#include "fsl_gpio.h"
-#include "fsl_codec_adapter.h"
-#include "fsl_cs42448.h"
-
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_ENABLE_DMIC_0 1 /* 1: dmic 0 enabled, 0: dmic 0 disabled */
-#define DEMO_ENABLE_DMIC_1 1
-#define DEMO_ENABLE_DMIC_2 1
-#define DEMO_ENABLE_DMIC_3 1
-
-#define DEMO_ENABLE_DMIC_4 1
-#define DEMO_ENABLE_DMIC_5 1
-#define DEMO_ENABLE_DMIC_6 1
-#define DEMO_ENABLE_DMIC_7 1
-
-#define DEMO_I2S_MASTER_CLOCK_FREQUENCY CLOCK_GetMclkClkFreq()
-#define DEMO_I2S_TX                     (I2S3)
-#define DEMO_I2S_SAMPLE_RATE            48000
-#define I2S_CLOCK_DIVIDER               (24576000 / DEMO_I2S_SAMPLE_RATE / 32 / 8)
-#define DEMO_DMA_MEMCPY_LEFT_CHANNEL    0U
-#define DEMO_DMA_MEMCPY_RIGHT_CHANNEL   1U
-
-#define DEMO_RECORD_PLAYBACK_TIME_MS       10000U
-#define DEMO_AUTO_ENTER_SLEEP_MODE_TIME_MS 20000U
-
-#define DEMO_DMA_CHANNEL_TRIGGER_INPUT_A   kINPUTMUX_Dma0TrigOutAToDma0
-#define DEMO_DMA_CHANNEL_TRIGGER_OUTPUT_A  kINPUTMUX_Dma0OtrigChannel16ToTriginChannels
-#define DEMO_DMA_CHANNEL_OUT_TRIGGER_INDEX 0
-
-#define DEMO_DMA            (DMA0)
-#define DEMO_I2S_TX_CHANNEL (7)
-
-#define DEMO_DMIC_DMA_RX_CHANNEL_0 16U
-#define DEMO_DMIC_DMA_RX_CHANNEL_1 17U
-#define DEMO_DMIC_DMA_RX_CHANNEL_2 18U
-#define DEMO_DMIC_DMA_RX_CHANNEL_3 19U
-#define DEMO_DMIC_DMA_RX_CHANNEL_4 20U
-#define DEMO_DMIC_DMA_RX_CHANNEL_5 21U
-#define DEMO_DMIC_DMA_RX_CHANNEL_6 22U
-#define DEMO_DMIC_DMA_RX_CHANNEL_7 23U
-#define DEMO_DMIC_NUMS             (8U)
-
-#define DEMO_DMA_MEMCPY_CHANNEL_0 0
-#define DEMO_DMA_MEMCPY_CHANNEL_1 1
-
-#define DEMO_DMIC_CHANNEL_0       kDMIC_Channel0
-#define DEMO_DMIC_CHANNEL_1       kDMIC_Channel1
-#define DEMO_DMIC_CHANNEL_2       kDMIC_Channel2
-#define DEMO_DMIC_CHANNEL_3       kDMIC_Channel3
-#define DEMO_DMIC_CHANNEL_4       kDMIC_Channel4
-#define DEMO_DMIC_CHANNEL_5       kDMIC_Channel5
-#define DEMO_DMIC_CHANNEL_6       kDMIC_Channel6
-#define DEMO_DMIC_CHANNEL_7       kDMIC_Channel7
-#define DEMO_CODEC_I2C_BASEADDR   I2C2
-#define DEMO_CODEC_I2C_INSTANCE   2U
-#define DEMO_CODEC_I2C_CLOCK_FREQ CLOCK_GetFlexCommClkFreq(2U)
-
-#define DEMO_SX1502_I2C_INSTANCE 1
 #define FIFO_DEPTH           (15U)
 #define PLAYBACK_BUFFER_SIZE (1024)
 #define PLAYBACK_BUFFER_NUM  (2U)
@@ -139,8 +81,6 @@
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
-void BOARD_InitCodec(void);
-void BOARD_InitSX1502(void);
 static void i2s_Callback(I2S_Type *base, i2s_dma_handle_t *handle, status_t completionStatus, void *userData);
 static void memcpy_channel_callback(struct _dma_handle *handle, void *userData, bool transferDone, uint32_t intmode);
 static void DEMO_DMAChannelConfigurations(void);
@@ -174,27 +114,6 @@ static void RecordPlayBackTask(void *pvParameters);
 /*******************************************************************************
  * Variables
  ******************************************************************************/
-cs42448_config_t cs42448Config = {
-    .DACMode      = kCS42448_ModeSlave,
-    .ADCMode      = kCS42448_ModeSlave,
-    .reset        = NULL,
-    .master       = false,
-    .i2cConfig    = {.codecI2CInstance = DEMO_CODEC_I2C_INSTANCE},
-    .format       = {.sampleRate = 48000U, .bitWidth = 24U},
-    .bus          = kCS42448_BusTDM,
-    .slaveAddress = CS42448_I2C_ADDR,
-};
-
-codec_config_t boardCodecConfig = {.codecDevType = kCODEC_CS42448, .codecDevConfig = &cs42448Config};
-
-sx1502_config_t sx1502Config = {
-    .initRegDataValue  = 0xFFU,
-    .initRegDirValue   = 0,
-    .sx1502I2CInstance = DEMO_SX1502_I2C_INSTANCE,
-};
-
-sx1502_handle_t sx1502Handle;
-codec_handle_t s_codecHandle;
 static i2s_config_t tx_config;
 static uint32_t volatile s_RecordEmptyBlock = PLAYBACK_BUFFER_NUM;
 /* DMIC dma handle for 8 channel */
@@ -249,24 +168,6 @@ extern sx1502_handle_t sx1502Handle;
  * Code
  ******************************************************************************/
 
-void BOARD_InitCodec(void)
-{
-    if (CODEC_Init(&s_codecHandle, &boardCodecConfig) != kStatus_Success)
-    {
-        PRINTF("CODEC_Init failed!\r\n");
-        assert(false);
-    }
-}
-
-void BOARD_InitSX1502(void)
-{
-    if (SX1502_Init(&sx1502Handle, &sx1502Config) != kStatus_Success)
-    {
-        PRINTF("SX1502_Init failed!\r\n");
-        assert(false);
-    }
-}
-
 /*!
  * @brief Main function
  */
@@ -274,30 +175,7 @@ void BOARD_InitSX1502(void)
 int main(void)
 {
     /* Board pin, clock, debug console init */
-    BOARD_InitBootPins();
-    BOARD_InitBootClocks();
-    BOARD_InitDebugConsole();
-
-    CLOCK_EnableClock(kCLOCK_InputMux);
-
-    /* attach AUDIO PLL clock to FLEXCOMM3 (I2S3) */
-    CLOCK_AttachClk(kAUDIO_PLL_to_FLEXCOMM3);
-    /* I2C */
-    CLOCK_AttachClk(kFFRO_to_FLEXCOMM2);
-    CLOCK_AttachClk(kSFRO_to_FLEXCOMM1);
-
-    /* attach AUDIO PLL clock to MCLK */
-    CLOCK_AttachClk(kAUDIO_PLL_to_MCLK_CLK);
-    CLOCK_SetClkDiv(kCLOCK_DivMclkClk, 2);
-    SYSCTL1->MCLKPINDIR = SYSCTL1_MCLKPINDIR_MCLKPINDIR_MASK;
-
-    CLOCK_AttachClk(kAUDIO_PLL_to_DMIC_CLK);
-    CLOCK_SetClkDiv(kCLOCK_DivDmicClk, 8);
-
-    cs42448Config.i2cConfig.codecI2CSourceClock = CLOCK_GetFlexCommClkFreq(2);
-    cs42448Config.format.mclk_HZ                = CLOCK_GetMclkClkFreq();
-
-    sx1502Config.sx1502I2CSourceClock = CLOCK_GetFlexCommClkFreq(1U);
+    BOARD_InitHardware();
     BOARD_InitCodec();
     BOARD_InitSX1502();
     DEMO_DMAChannelConfigurations();

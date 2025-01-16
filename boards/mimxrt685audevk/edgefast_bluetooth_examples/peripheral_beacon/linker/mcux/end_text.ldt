@@ -27,6 +27,15 @@
     . = ALIGN(4);
   } > BOARD_FLASH
 
+  ._bt_ias_cb :
+  {
+    . = ALIGN(4);
+    _bt_ias_cb_list_start = .;
+    KEEP(*(SORT(._bt_ias_cb.static.*)))
+    _bt_ias_cb_list_end = .;
+    . = ALIGN(4);
+  } > BOARD_FLASH
+
   ._bt_gatt_service_static :
   {
     . = ALIGN(4);
@@ -69,4 +78,4 @@
     . = ORIGIN(LITTLEFS_FLASH_region) + LENGTH(LITTLEFS_FLASH_region) - 1;
     BYTE(0xFF);
   } > LITTLEFS_FLASH_region
-  
+

@@ -6,25 +6,16 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
+#include "app.h"
 #include "fsl_debug_console.h"
 #include "fsl_device_registers.h"
 #include "fsl_spi.h"
 #include "fsl_spi_dma.h"
 #include "fsl_dma.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define EXAMPLE_SPI_SLAVE            SPI5
-#define EXAMPLE_SPI_SLAVE_IRQ        FLEXCOMM5_IRQn
-#define EXAMPLE_SPI_SLAVE_RX_CHANNEL 10
-#define EXAMPLE_SPI_SLAVE_TX_CHANNEL 11
-
-#define EXAMPLE_DMA            DMA0
-#define EXAMPLE_SPI_SSEL       0
-#define EXAMPLE_SLAVE_SPI_SPOL kSPI_SpolActiveAllLow
 #define TRANSFER_SIZE 64U /*! Transfer dataSize */
 
 /*******************************************************************************
@@ -66,11 +57,7 @@ static void SPI_SlaveUserCallback(SPI_Type *base, spi_dma_handle_t *handle, stat
 int main(void)
 {
     /* Initialzie board setting. */
-    CLOCK_AttachClk(kSFRO_to_FLEXCOMM5);
-
-    BOARD_InitBootPins();
-    BOARD_InitBootClocks();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
 
     /* Print project information. */
     PRINTF("This is SPI DMA transfer slave example.\r\n");

@@ -3,7 +3,7 @@
  * Copyright 2019 NXP
  * All rights reserved.
  *
- * SPDX-License-Identifier: BS
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 #ifndef _FSL_DSP_H_
 #define _FSL_DSP_H_

@@ -2,8 +2,6 @@
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  *
- * All rights reserved.
- *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -18,9 +16,8 @@
 #include "semphr.h"
 #include "timers.h"
 
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 #include "fsl_debug_console.h"
 #include "fsl_component_serial_manager.h"
 #include "fsl_shell.h"
@@ -35,16 +32,6 @@ LOG_MODULE_DEFINE(log_main, kLOG_LevelTrace);
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define LED_NUMBERS  3U
-#define LED_1_INIT() LED_RED_INIT(LOGIC_LED_OFF)
-#define LED_2_INIT() LED_GREEN_INIT(LOGIC_LED_OFF)
-#define LED_3_INIT() LED_BLUE_INIT(LOGIC_LED_OFF)
-#define LED_1_ON()   LED_RED_ON()
-#define LED_1_OFF()  LED_RED_OFF()
-#define LED_2_ON()   LED_GREEN_ON()
-#define LED_2_OFF()  LED_GREEN_OFF()
-#define LED_3_ON()   LED_BLUE_ON()
-#define LED_3_OFF()  LED_BLUE_OFF()
 #define APP_LOG_RINGBUFFER_SIZE 512
 /* Task priorities. */
 #define APP_LOG_PRIORITY   (configMAX_PRIORITIES - 1)
@@ -52,7 +39,6 @@ LOG_MODULE_DEFINE(log_main, kLOG_LevelTrace);
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
-void Led_Init(void);
 
 static void APP_LogTask(void *pvParameters);
 static unsigned int APP_LogTimestamp(void);
@@ -102,13 +88,6 @@ char s_logLevelString[16];
 /*******************************************************************************
  * Code
  ******************************************************************************/
-
-void Led_Init(void)
-{
-    LED_1_INIT();
-    LED_2_INIT();
-    LED_3_INIT();
-}
 
 static void APP_LogOutput(char *arg)
 {
@@ -274,12 +253,7 @@ void log_backend_ringbuffer_update(uint8_t *buffer, size_t head, size_t tail)
 int main(void)
 {
     /* Init board hardware. */
-    CLOCK_EnableClock(kCLOCK_HsGpio0);
-    RESET_PeripheralReset(kHSGPIO0_RST_SHIFT_RSTn);
-
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
     if (xTaskCreate(APP_LogTask, "APP_LogTask", APP_LOG_STACK_SIZE, NULL, APP_LOG_PRIORITY, NULL) != pdPASS)
     {
         PRINTF("Task creation failed!.\r\n");

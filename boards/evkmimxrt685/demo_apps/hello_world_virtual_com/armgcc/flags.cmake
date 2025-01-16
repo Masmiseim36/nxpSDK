@@ -12,43 +12,51 @@ ENDIF()
 
 SET(CMAKE_ASM_FLAGS_DEBUG " \
     ${CMAKE_ASM_FLAGS_DEBUG} \
-    -DDEBUG \
     -D__STARTUP_CLEAR_BSS \
-    -mcpu=cortex-m33 \
+    -DMCUXPRESSO_SDK \
+    -DCPU_MIMXRT685SFVKB_cm33 \
+    -DDEBUG_CONSOLE_TRANSFER_NON_BLOCKING \
+    -g \
     -mthumb \
-    ${FPU} \
-")
-SET(CMAKE_ASM_FLAGS_RELEASE " \
-    ${CMAKE_ASM_FLAGS_RELEASE} \
-    -DNDEBUG \
-    -D__STARTUP_CLEAR_BSS \
     -mcpu=cortex-m33 \
-    -mthumb \
     ${FPU} \
 ")
 SET(CMAKE_ASM_FLAGS_FLASH_DEBUG " \
     ${CMAKE_ASM_FLAGS_FLASH_DEBUG} \
-    -DDEBUG \
     -D__STARTUP_CLEAR_BSS \
-    -mcpu=cortex-m33 \
+    -DMCUXPRESSO_SDK \
+    -DCPU_MIMXRT685SFVKB_cm33 \
+    -DDEBUG_CONSOLE_TRANSFER_NON_BLOCKING \
+    -g \
     -mthumb \
+    -mcpu=cortex-m33 \
+    ${FPU} \
+")
+SET(CMAKE_ASM_FLAGS_RELEASE " \
+    ${CMAKE_ASM_FLAGS_RELEASE} \
+    -D__STARTUP_CLEAR_BSS \
+    -DMCUXPRESSO_SDK \
+    -DCPU_MIMXRT685SFVKB_cm33 \
+    -DDEBUG_CONSOLE_TRANSFER_NON_BLOCKING \
+    -mthumb \
+    -mcpu=cortex-m33 \
     ${FPU} \
 ")
 SET(CMAKE_ASM_FLAGS_FLASH_RELEASE " \
     ${CMAKE_ASM_FLAGS_FLASH_RELEASE} \
-    -DNDEBUG \
     -D__STARTUP_CLEAR_BSS \
-    -mcpu=cortex-m33 \
+    -DMCUXPRESSO_SDK \
+    -DCPU_MIMXRT685SFVKB_cm33 \
+    -DDEBUG_CONSOLE_TRANSFER_NON_BLOCKING \
     -mthumb \
+    -mcpu=cortex-m33 \
     ${FPU} \
 ")
 SET(CMAKE_C_FLAGS_DEBUG " \
     ${CMAKE_C_FLAGS_DEBUG} \
+    -include ${ProjDirPath}/../mcux_config.h \
     -DDEBUG \
-    -DCPU_MIMXRT685SFVKB_cm33 \
-    -DBOOT_HEADER_ENABLE=1 \
     -DUSB_STACK_USE_DEDICATED_RAM=1 \
-    -DDEBUG_CONSOLE_TRANSFER_NON_BLOCKING \
     -DSERIAL_PORT_TYPE_USBCDC=1 \
     -DPRINTF_FLOAT_ENABLE=0 \
     -DSCANF_FLOAT_ENABLE=0 \
@@ -56,69 +64,34 @@ SET(CMAKE_C_FLAGS_DEBUG " \
     -DSCANF_ADVANCED_ENABLE=0 \
     -DUSB_STACK_BM \
     -DBOARD_USE_VIRTUALCOM=1 \
+    -DMCUX_META_BUILD \
     -DMCUXPRESSO_SDK \
-    -DUSB_DEVICE_CONFIG_CDC_ACM=1 \
-    -DSDK_OS_BAREMETAL \
+    -DCPU_MIMXRT685SFVKB_cm33 \
+    -DDEBUG_CONSOLE_TRANSFER_NON_BLOCKING \
+    -DBOOT_HEADER_ENABLE=1 \
     -DSERIAL_PORT_TYPE_UART=1 \
+    -DUSB_DEVICE_CONFIG_CDC_ACM=1 \
+    -DUSE_RTOS=0 \
     -g \
     -O0 \
     -mno-unaligned-access \
-    -mcpu=cortex-m33 \
     -Wall \
-    -mthumb \
-    -MMD \
-    -MP \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
     -fno-builtin \
-    -mapcs \
-    -std=gnu99 \
-    ${FPU} \
-    ${DEBUG_CONSOLE_CONFIG} \
-")
-SET(CMAKE_C_FLAGS_RELEASE " \
-    ${CMAKE_C_FLAGS_RELEASE} \
-    -DNDEBUG \
-    -DCPU_MIMXRT685SFVKB_cm33 \
-    -DBOOT_HEADER_ENABLE=1 \
-    -DUSB_STACK_USE_DEDICATED_RAM=1 \
-    -DDEBUG_CONSOLE_TRANSFER_NON_BLOCKING \
-    -DSERIAL_PORT_TYPE_USBCDC=1 \
-    -DPRINTF_FLOAT_ENABLE=0 \
-    -DSCANF_FLOAT_ENABLE=0 \
-    -DPRINTF_ADVANCED_ENABLE=0 \
-    -DSCANF_ADVANCED_ENABLE=0 \
-    -DUSB_STACK_BM \
-    -DBOARD_USE_VIRTUALCOM=1 \
-    -DMCUXPRESSO_SDK \
-    -DUSB_DEVICE_CONFIG_CDC_ACM=1 \
-    -DSDK_OS_BAREMETAL \
-    -DSERIAL_PORT_TYPE_UART=1 \
-    -Os \
-    -mno-unaligned-access \
-    -mcpu=cortex-m33 \
-    -Wall \
     -mthumb \
-    -MMD \
-    -MP \
-    -fno-common \
-    -ffunction-sections \
-    -fdata-sections \
-    -fno-builtin \
     -mapcs \
     -std=gnu99 \
+    -mcpu=cortex-m33 \
     ${FPU} \
     ${DEBUG_CONSOLE_CONFIG} \
 ")
 SET(CMAKE_C_FLAGS_FLASH_DEBUG " \
     ${CMAKE_C_FLAGS_FLASH_DEBUG} \
+    -include ${ProjDirPath}/../mcux_config.h \
     -DDEBUG \
-    -DFSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1 \
-    -DCPU_MIMXRT685SFVKB_cm33 \
-    -DBOOT_HEADER_ENABLE=1 \
     -DUSB_STACK_USE_DEDICATED_RAM=1 \
-    -DDEBUG_CONSOLE_TRANSFER_NON_BLOCKING \
     -DSERIAL_PORT_TYPE_USBCDC=1 \
     -DPRINTF_FLOAT_ENABLE=0 \
     -DSCANF_FLOAT_ENABLE=0 \
@@ -126,35 +99,68 @@ SET(CMAKE_C_FLAGS_FLASH_DEBUG " \
     -DSCANF_ADVANCED_ENABLE=0 \
     -DUSB_STACK_BM \
     -DBOARD_USE_VIRTUALCOM=1 \
+    -DMCUX_META_BUILD \
     -DMCUXPRESSO_SDK \
-    -DUSB_DEVICE_CONFIG_CDC_ACM=1 \
-    -DSDK_OS_BAREMETAL \
+    -DCPU_MIMXRT685SFVKB_cm33 \
+    -DDEBUG_CONSOLE_TRANSFER_NON_BLOCKING \
+    -DBOOT_HEADER_ENABLE=1 \
     -DSERIAL_PORT_TYPE_UART=1 \
+    -DUSB_DEVICE_CONFIG_CDC_ACM=1 \
+    -DUSE_RTOS=0 \
     -g \
     -O0 \
     -mno-unaligned-access \
-    -mcpu=cortex-m33 \
     -Wall \
-    -mthumb \
-    -MMD \
-    -MP \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
     -fno-builtin \
+    -mthumb \
     -mapcs \
     -std=gnu99 \
+    -mcpu=cortex-m33 \
+    ${FPU} \
+    ${DEBUG_CONSOLE_CONFIG} \
+")
+SET(CMAKE_C_FLAGS_RELEASE " \
+    ${CMAKE_C_FLAGS_RELEASE} \
+    -include ${ProjDirPath}/../mcux_config.h \
+    -DNDEBUG \
+    -DUSB_STACK_USE_DEDICATED_RAM=1 \
+    -DSERIAL_PORT_TYPE_USBCDC=1 \
+    -DPRINTF_FLOAT_ENABLE=0 \
+    -DSCANF_FLOAT_ENABLE=0 \
+    -DPRINTF_ADVANCED_ENABLE=0 \
+    -DSCANF_ADVANCED_ENABLE=0 \
+    -DUSB_STACK_BM \
+    -DBOARD_USE_VIRTUALCOM=1 \
+    -DMCUX_META_BUILD \
+    -DMCUXPRESSO_SDK \
+    -DCPU_MIMXRT685SFVKB_cm33 \
+    -DDEBUG_CONSOLE_TRANSFER_NON_BLOCKING \
+    -DBOOT_HEADER_ENABLE=1 \
+    -DSERIAL_PORT_TYPE_UART=1 \
+    -DUSB_DEVICE_CONFIG_CDC_ACM=1 \
+    -DUSE_RTOS=0 \
+    -Os \
+    -mno-unaligned-access \
+    -Wall \
+    -fno-common \
+    -ffunction-sections \
+    -fdata-sections \
+    -fno-builtin \
+    -mthumb \
+    -mapcs \
+    -std=gnu99 \
+    -mcpu=cortex-m33 \
     ${FPU} \
     ${DEBUG_CONSOLE_CONFIG} \
 ")
 SET(CMAKE_C_FLAGS_FLASH_RELEASE " \
     ${CMAKE_C_FLAGS_FLASH_RELEASE} \
+    -include ${ProjDirPath}/../mcux_config.h \
     -DNDEBUG \
-    -DFSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1 \
-    -DCPU_MIMXRT685SFVKB_cm33 \
-    -DBOOT_HEADER_ENABLE=1 \
     -DUSB_STACK_USE_DEDICATED_RAM=1 \
-    -DDEBUG_CONSOLE_TRANSFER_NON_BLOCKING \
     -DSERIAL_PORT_TYPE_USBCDC=1 \
     -DPRINTF_FLOAT_ENABLE=0 \
     -DSCANF_FLOAT_ENABLE=0 \
@@ -162,136 +168,139 @@ SET(CMAKE_C_FLAGS_FLASH_RELEASE " \
     -DSCANF_ADVANCED_ENABLE=0 \
     -DUSB_STACK_BM \
     -DBOARD_USE_VIRTUALCOM=1 \
+    -DMCUX_META_BUILD \
     -DMCUXPRESSO_SDK \
-    -DUSB_DEVICE_CONFIG_CDC_ACM=1 \
-    -DSDK_OS_BAREMETAL \
+    -DCPU_MIMXRT685SFVKB_cm33 \
+    -DDEBUG_CONSOLE_TRANSFER_NON_BLOCKING \
+    -DBOOT_HEADER_ENABLE=1 \
     -DSERIAL_PORT_TYPE_UART=1 \
+    -DUSB_DEVICE_CONFIG_CDC_ACM=1 \
+    -DUSE_RTOS=0 \
     -Os \
     -mno-unaligned-access \
-    -mcpu=cortex-m33 \
     -Wall \
-    -mthumb \
-    -MMD \
-    -MP \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
     -fno-builtin \
+    -mthumb \
     -mapcs \
     -std=gnu99 \
+    -mcpu=cortex-m33 \
     ${FPU} \
     ${DEBUG_CONSOLE_CONFIG} \
 ")
 SET(CMAKE_CXX_FLAGS_DEBUG " \
     ${CMAKE_CXX_FLAGS_DEBUG} \
     -DDEBUG \
-    -DCPU_MIMXRT685SFVKB_cm33 \
-    -DBOOT_HEADER_ENABLE=1 \
+    -DMCUX_META_BUILD \
     -DMCUXPRESSO_SDK \
-    -DSERIAL_PORT_TYPE_USBCDC=1 \
+    -DCPU_MIMXRT685SFVKB_cm33 \
     -DDEBUG_CONSOLE_TRANSFER_NON_BLOCKING \
-    -DUSB_DEVICE_CONFIG_CDC_ACM=1 \
+    -DBOOT_HEADER_ENABLE=1 \
     -DSERIAL_PORT_TYPE_UART=1 \
+    -DSERIAL_PORT_TYPE_USBCDC=1 \
+    -DUSB_DEVICE_CONFIG_CDC_ACM=1 \
+    -DUSE_RTOS=0 \
     -g \
     -O0 \
-    -mcpu=cortex-m33 \
     -Wall \
-    -mthumb \
-    -MMD \
-    -MP \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
     -fno-builtin \
-    -mapcs \
-    -fno-rtti \
-    -fno-exceptions \
-    ${FPU} \
-    ${DEBUG_CONSOLE_CONFIG} \
-")
-SET(CMAKE_CXX_FLAGS_RELEASE " \
-    ${CMAKE_CXX_FLAGS_RELEASE} \
-    -DNDEBUG \
-    -DCPU_MIMXRT685SFVKB_cm33 \
-    -DBOOT_HEADER_ENABLE=1 \
-    -DMCUXPRESSO_SDK \
-    -DSERIAL_PORT_TYPE_USBCDC=1 \
-    -DDEBUG_CONSOLE_TRANSFER_NON_BLOCKING \
-    -DUSB_DEVICE_CONFIG_CDC_ACM=1 \
-    -DSERIAL_PORT_TYPE_UART=1 \
-    -Os \
-    -mcpu=cortex-m33 \
-    -Wall \
     -mthumb \
-    -MMD \
-    -MP \
-    -fno-common \
-    -ffunction-sections \
-    -fdata-sections \
-    -fno-builtin \
     -mapcs \
     -fno-rtti \
     -fno-exceptions \
+    -mcpu=cortex-m33 \
     ${FPU} \
     ${DEBUG_CONSOLE_CONFIG} \
 ")
 SET(CMAKE_CXX_FLAGS_FLASH_DEBUG " \
     ${CMAKE_CXX_FLAGS_FLASH_DEBUG} \
     -DDEBUG \
-    -DCPU_MIMXRT685SFVKB_cm33 \
-    -DBOOT_HEADER_ENABLE=1 \
+    -DMCUX_META_BUILD \
     -DMCUXPRESSO_SDK \
-    -DSERIAL_PORT_TYPE_USBCDC=1 \
+    -DCPU_MIMXRT685SFVKB_cm33 \
     -DDEBUG_CONSOLE_TRANSFER_NON_BLOCKING \
-    -DUSB_DEVICE_CONFIG_CDC_ACM=1 \
+    -DBOOT_HEADER_ENABLE=1 \
     -DSERIAL_PORT_TYPE_UART=1 \
+    -DSERIAL_PORT_TYPE_USBCDC=1 \
+    -DUSB_DEVICE_CONFIG_CDC_ACM=1 \
+    -DUSE_RTOS=0 \
     -g \
     -O0 \
-    -mcpu=cortex-m33 \
     -Wall \
-    -mthumb \
-    -MMD \
-    -MP \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
     -fno-builtin \
+    -mthumb \
     -mapcs \
     -fno-rtti \
     -fno-exceptions \
+    -mcpu=cortex-m33 \
+    ${FPU} \
+    ${DEBUG_CONSOLE_CONFIG} \
+")
+SET(CMAKE_CXX_FLAGS_RELEASE " \
+    ${CMAKE_CXX_FLAGS_RELEASE} \
+    -DNDEBUG \
+    -DMCUX_META_BUILD \
+    -DMCUXPRESSO_SDK \
+    -DCPU_MIMXRT685SFVKB_cm33 \
+    -DDEBUG_CONSOLE_TRANSFER_NON_BLOCKING \
+    -DBOOT_HEADER_ENABLE=1 \
+    -DSERIAL_PORT_TYPE_UART=1 \
+    -DSERIAL_PORT_TYPE_USBCDC=1 \
+    -DUSB_DEVICE_CONFIG_CDC_ACM=1 \
+    -DUSE_RTOS=0 \
+    -Os \
+    -Wall \
+    -fno-common \
+    -ffunction-sections \
+    -fdata-sections \
+    -fno-builtin \
+    -mthumb \
+    -mapcs \
+    -fno-rtti \
+    -fno-exceptions \
+    -mcpu=cortex-m33 \
     ${FPU} \
     ${DEBUG_CONSOLE_CONFIG} \
 ")
 SET(CMAKE_CXX_FLAGS_FLASH_RELEASE " \
     ${CMAKE_CXX_FLAGS_FLASH_RELEASE} \
     -DNDEBUG \
-    -DCPU_MIMXRT685SFVKB_cm33 \
-    -DBOOT_HEADER_ENABLE=1 \
+    -DMCUX_META_BUILD \
     -DMCUXPRESSO_SDK \
-    -DSERIAL_PORT_TYPE_USBCDC=1 \
+    -DCPU_MIMXRT685SFVKB_cm33 \
     -DDEBUG_CONSOLE_TRANSFER_NON_BLOCKING \
-    -DUSB_DEVICE_CONFIG_CDC_ACM=1 \
+    -DBOOT_HEADER_ENABLE=1 \
     -DSERIAL_PORT_TYPE_UART=1 \
+    -DSERIAL_PORT_TYPE_USBCDC=1 \
+    -DUSB_DEVICE_CONFIG_CDC_ACM=1 \
+    -DUSE_RTOS=0 \
     -Os \
-    -mcpu=cortex-m33 \
     -Wall \
-    -mthumb \
-    -MMD \
-    -MP \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
     -fno-builtin \
+    -mthumb \
     -mapcs \
     -fno-rtti \
     -fno-exceptions \
+    -mcpu=cortex-m33 \
     ${FPU} \
     ${DEBUG_CONSOLE_CONFIG} \
 ")
 SET(CMAKE_EXE_LINKER_FLAGS_DEBUG " \
     ${CMAKE_EXE_LINKER_FLAGS_DEBUG} \
     -g \
-    -mcpu=cortex-m33 \
+    -Xlinker \
+    -Map=output.map \
     -Wall \
     -fno-common \
     -ffunction-sections \
@@ -299,42 +308,13 @@ SET(CMAKE_EXE_LINKER_FLAGS_DEBUG " \
     -fno-builtin \
     -mthumb \
     -mapcs \
-    -Xlinker \
-    --gc-sections \
-    -Xlinker \
-    -static \
-    -Xlinker \
-    -z \
-    -Xlinker \
-    muldefs \
-    -Xlinker \
-    -Map=output.map \
+    -Wl,--gc-sections \
+    -Wl,-static \
+    -Wl,-z \
+    -Wl,muldefs \
+    -Wl,-Map=output.map \
     -Wl,--print-memory-usage \
-    ${FPU} \
-    ${SPECS} \
-    -T\"${ProjDirPath}/MIMXRT685Sxxxx_cm33_ram.ld\" -static \
-")
-SET(CMAKE_EXE_LINKER_FLAGS_RELEASE " \
-    ${CMAKE_EXE_LINKER_FLAGS_RELEASE} \
     -mcpu=cortex-m33 \
-    -Wall \
-    -fno-common \
-    -ffunction-sections \
-    -fdata-sections \
-    -fno-builtin \
-    -mthumb \
-    -mapcs \
-    -Xlinker \
-    --gc-sections \
-    -Xlinker \
-    -static \
-    -Xlinker \
-    -z \
-    -Xlinker \
-    muldefs \
-    -Xlinker \
-    -Map=output.map \
-    -Wl,--print-memory-usage \
     ${FPU} \
     ${SPECS} \
     -T\"${ProjDirPath}/MIMXRT685Sxxxx_cm33_ram.ld\" -static \
@@ -342,7 +322,8 @@ SET(CMAKE_EXE_LINKER_FLAGS_RELEASE " \
 SET(CMAKE_EXE_LINKER_FLAGS_FLASH_DEBUG " \
     ${CMAKE_EXE_LINKER_FLAGS_FLASH_DEBUG} \
     -g \
-    -mcpu=cortex-m33 \
+    -Xlinker \
+    -Map=output.map \
     -Wall \
     -fno-common \
     -ffunction-sections \
@@ -350,24 +331,21 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLASH_DEBUG " \
     -fno-builtin \
     -mthumb \
     -mapcs \
-    -Xlinker \
-    --gc-sections \
-    -Xlinker \
-    -static \
-    -Xlinker \
-    -z \
-    -Xlinker \
-    muldefs \
-    -Xlinker \
-    -Map=output.map \
+    -Wl,--gc-sections \
+    -Wl,-static \
+    -Wl,-z \
+    -Wl,muldefs \
+    -Wl,-Map=output.map \
     -Wl,--print-memory-usage \
+    -mcpu=cortex-m33 \
     ${FPU} \
     ${SPECS} \
     -T\"${ProjDirPath}/MIMXRT685Sxxxx_cm33_flash.ld\" -static \
 ")
-SET(CMAKE_EXE_LINKER_FLAGS_FLASH_RELEASE " \
-    ${CMAKE_EXE_LINKER_FLAGS_FLASH_RELEASE} \
-    -mcpu=cortex-m33 \
+SET(CMAKE_EXE_LINKER_FLAGS_RELEASE " \
+    ${CMAKE_EXE_LINKER_FLAGS_RELEASE} \
+    -Xlinker \
+    -Map=output.map \
     -Wall \
     -fno-common \
     -ffunction-sections \
@@ -375,17 +353,35 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLASH_RELEASE " \
     -fno-builtin \
     -mthumb \
     -mapcs \
-    -Xlinker \
-    --gc-sections \
-    -Xlinker \
-    -static \
-    -Xlinker \
-    -z \
-    -Xlinker \
-    muldefs \
+    -Wl,--gc-sections \
+    -Wl,-static \
+    -Wl,-z \
+    -Wl,muldefs \
+    -Wl,-Map=output.map \
+    -Wl,--print-memory-usage \
+    -mcpu=cortex-m33 \
+    ${FPU} \
+    ${SPECS} \
+    -T\"${ProjDirPath}/MIMXRT685Sxxxx_cm33_ram.ld\" -static \
+")
+SET(CMAKE_EXE_LINKER_FLAGS_FLASH_RELEASE " \
+    ${CMAKE_EXE_LINKER_FLAGS_FLASH_RELEASE} \
     -Xlinker \
     -Map=output.map \
+    -Wall \
+    -fno-common \
+    -ffunction-sections \
+    -fdata-sections \
+    -fno-builtin \
+    -mthumb \
+    -mapcs \
+    -Wl,--gc-sections \
+    -Wl,-static \
+    -Wl,-z \
+    -Wl,muldefs \
+    -Wl,-Map=output.map \
     -Wl,--print-memory-usage \
+    -mcpu=cortex-m33 \
     ${FPU} \
     ${SPECS} \
     -T\"${ProjDirPath}/MIMXRT685Sxxxx_cm33_flash.ld\" -static \

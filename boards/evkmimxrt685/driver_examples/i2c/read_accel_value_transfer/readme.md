@@ -1,5 +1,6 @@
-Overview
-========
+# i2c_read_accel_value_transfer
+
+## Overview
 The i2c_read_accel_value example shows how to use I2C driver to communicate with an i2c device:
 
  1. How to use the i2c driver to read a i2c device who_am_I register.
@@ -8,57 +9,16 @@ The i2c_read_accel_value example shows how to use I2C driver to communicate with
 In this example, the values of three-axis accelerometer print to the serial terminal on PC through
 the virtual serial port on board.
 
-SDK version
-===========
-- Version: 2.16.000
-
-Toolchain supported
-===================
-- IAR embedded Workbench  9.60.1
-- Keil MDK  5.39.0
-- GCC ARM Embedded  13.2.1
-- MCUXpresso  11.10.0
-
-Hardware requirements
-=====================
-- Micro USB cable
-- EVK-MIMXRT685 board
-- Personal Computer
-
-Board settings
-==============
-Make sure J15 and J30 are shorted.
-
-Prepare the Demo
-================
-1.  Connect a micro USB cable between the PC host and the CMSIS DAP USB port (J5) on the board
-2.  Open a serial terminal with the following settings:
-    - 115200 baud rate
-    - 8 data bits
-    - No parity
-    - One stop bit
-    - No flow control
-3.  Download the program to the target board.
-4.  Launch the debugger in your IDE to begin running the demo.
-
-Running the demo
-================
-The following message shows in the terminal if the example runs successfully.
-
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-I2C example -- Read Accelerometer Value
-Found an FXOS8700 on board , the device address is 0x1e.
-The accel values:
-status_reg = 0xff , x =   -88 , y =   -84 , z =  2084 
-status_reg = 0xff , x =   -84 , y =   -88 , z =  2096 
-status_reg = 0xff , x =   -84 , y =   -88 , z =  2092 
-status_reg = 0xff , x =   -76 , y =   -88 , z =  2104 
-status_reg = 0xff , x =   -80 , y =   -88 , z =  2096 
-status_reg = 0xff , x =   -84 , y =   -80 , z =  2100 
-status_reg = 0xff , x =   -80 , y =   -80 , z =  2080 
-status_reg = 0xff , x =   -72 , y =   -92 , z =  2088 
-status_reg = 0xff , x =   -84 , y =   -88 , z =  2084 
-status_reg = 0xff , x =   -88 , y =   -88 , z =  2104 
-
-End of I2C example .
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+## Supported Boards
+- [EVK-MIMXRT595](../../../_boards/evkmimxrt595/driver_examples/i2c/read_accel_value_transfer/example_board_readme.md)
+- [EVK-MIMXRT685](../../../_boards/evkmimxrt685/driver_examples/i2c/read_accel_value_transfer/example_board_readme.md)
+- [FRDM-K22F](../../../_boards/frdmk22f/driver_examples/i2c/read_accel_value_transfer/example_board_readme.md)
+- [FRDM-K32L2B](../../../_boards/frdmk32l2b/driver_examples/i2c/read_accel_value_transfer/example_board_readme.md)
+- [FRDM-KE02Z40M](../../../_boards/frdmke02z40m/driver_examples/i2c/read_accel_value_transfer/example_board_readme.md)
+- [LPCXpresso55S06](../../../_boards/lpcxpresso55s06/driver_examples/i2c/read_accel_value_transfer/example_board_readme.md)
+- [LPCXpresso55S16](../../../_boards/lpcxpresso55s16/driver_examples/i2c/read_accel_value_transfer/example_board_readme.md)
+- [LPCXpresso55S28](../../../_boards/lpcxpresso55s28/driver_examples/i2c/read_accel_value_transfer/example_board_readme.md)
+- [LPCXpresso55S69](../../../_boards/lpcxpresso55s69/driver_examples/i2c/read_accel_value_transfer/example_board_readme.md)
+- [TWR-KM34Z50MV3](../../../_boards/twrkm34z50mv3/driver_examples/i2c/read_accel_value_transfer/example_board_readme.md)
+- [TWR-KM34Z75M](../../../_boards/twrkm34z75m/driver_examples/i2c/read_accel_value_transfer/example_board_readme.md)
+- [TWR-KM35Z75M](../../../_boards/twrkm35z75m/driver_examples/i2c/read_accel_value_transfer/example_board_readme.md)

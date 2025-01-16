@@ -6,17 +6,14 @@
  */
 
 #include "fsl_debug_console.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 #include "fsl_powerquad.h"
 #include "math.h"
 
-#include "fsl_power.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_POWERQUAD POWERQUAD
 #define MATH_PI        3.1415926535898
 #define FLOAT_2_Q31(x) ((int32_t)((x)*2147483648.0f))
 #define FLOAT_2_Q15(x) (int16_t) __SSAT(((int32_t)((x)*32768.0f)), 16)
@@ -131,14 +128,7 @@ static void PQ_Vector16BiquadCascadeDf2FX(int32_t *pSrc, int32_t *pDst)
 int main(void)
 {
     /* Board pin, clock, debug console init */
-    BOARD_InitBootPins();
-    BOARD_InitBootClocks();
-    BOARD_InitDebugConsole();
-
-    /* Power up PQ RAM. */
-    SYSCTL0->PDRUNCFG1_CLR = SYSCTL0_PDRUNCFG1_PQ_SRAM_APD_MASK | SYSCTL0_PDRUNCFG1_PQ_SRAM_PPD_MASK;
-    /* Apply power setting. */
-    POWER_ApplyPD();
+    BOARD_InitHardware();
 
     PRINTF("POWERQUAD filter example started\r\n");
 

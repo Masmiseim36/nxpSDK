@@ -1,0 +1,6 @@
+# Getting Started
+
+## Hardware Settings
+  - Connect JP43 1-2, R488 1-2, R479 1-2, R429 1-2, R480 1-2, R481 1-2, R510 1-2, R474 1-2, R482 1-2, R478 1-2, JP8 1-2, R491 1-2, R394 1-2, R395 1-2
+  - For MIMXRT685-AUDIO-EVK Rev A board, recorder audio is from MIC U4. This DMIC provides one channel audio data, software copies it for 16 USB recorder channels, so 16 recorder channels use the same audio data. There are 4 line-out that occupy 8 channels for this board, so only 8 channels audio data (total is 16 channels) is played at the same time. Users can select to play the first 8 channels or the last 8 ones by the macro USB_AUDIO_MULTI_CHANNEL_PLAY_SEL.
+  - Note: when USB_AUDIO_MULTI_CHANNEL_PLAY_SEL is 1, channel 1-2 is on the line out 1, channel 3-4 is on the line out 2, channel 5-6 is on the line out 3, channel 7-8 is on the line out 4; when USB_AUDIO_MULTI_CHANNEL_PLAY_SEL is 2, channel 9-10 is on the line out 1, channel 11-12 is on the line out 2, channel 13-14 is on the line out 3, channel 15-16 is on the line out 4. This macro is 1 by default which means the first 8 channels are played.

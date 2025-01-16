@@ -7,22 +7,13 @@
  */
 
 #include "fsl_spi.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 #include "fsl_debug_console.h"
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define EXAMPLE_SPI_MASTER          SPI5
-#define EXAMPLE_SPI_MASTER_IRQ      FLEXCOMM5_IRQn
-#define EXAMPLE_SPI_MASTER_CLK_SRC  kCLOCK_Flexcomm5
-#define EXAMPLE_SPI_MASTER_CLK_FREQ CLOCK_GetFlexCommClkFreq(5U)
-#define SPI_MASTER_IRQHandler       FLEXCOMM5_IRQHandler
-
-#define EXAMPLE_SPI_SSEL 0
-#define EXAMPLE_SPI_SPOL kSPI_SpolActiveAllLow
 
 /*******************************************************************************
  * Prototypes
@@ -79,11 +70,7 @@ int main(void)
     uint32_t err                     = 0U;
 
     /* Init the boards */
-    CLOCK_AttachClk(kSFRO_to_FLEXCOMM5);
-
-    BOARD_InitBootPins();
-    BOARD_InitBootClocks();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
 
     PRINTF("\r\nSPI board to board interrupt master example started!\r\n");
 

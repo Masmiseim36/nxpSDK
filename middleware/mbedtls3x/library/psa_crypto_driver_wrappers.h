@@ -332,6 +332,7 @@ static inline psa_status_t psa_driver_wrapper_sign_message(
         case PSA_CRYPTO_ELS_PKC_LOCATION_S50_ENC_STORAGE_DATA:
         case PSA_CRYPTO_ELS_PKC_LOCATION_S50_BLOB_STORAGE:
         case PSA_CRYPTO_ELS_PKC_LOCATION_S50_KEY_GEN_STORAGE:
+        case PSA_CRYPTO_ELS_PKC_LOCATION_S50_RFC3394_STORAGE:
             status = els_pkc_opaque_sign_message(
                         attributes,
                         key_buffer,
@@ -482,6 +483,7 @@ static inline psa_status_t psa_driver_wrapper_verify_message(
         case PSA_CRYPTO_ELS_PKC_LOCATION_S50_ENC_STORAGE_DATA:
         case PSA_CRYPTO_ELS_PKC_LOCATION_S50_BLOB_STORAGE:
         case PSA_CRYPTO_ELS_PKC_LOCATION_S50_KEY_GEN_STORAGE:
+        case PSA_CRYPTO_ELS_PKC_LOCATION_S50_RFC3394_STORAGE:
             return( els_pkc_opaque_verify_message(
                         attributes,
                         key_buffer,
@@ -668,6 +670,7 @@ static inline psa_status_t psa_driver_wrapper_sign_hash(
         case PSA_CRYPTO_ELS_PKC_LOCATION_S50_ENC_STORAGE_DATA:
         case PSA_CRYPTO_ELS_PKC_LOCATION_S50_BLOB_STORAGE:
         case PSA_CRYPTO_ELS_PKC_LOCATION_S50_KEY_GEN_STORAGE:
+        case PSA_CRYPTO_ELS_PKC_LOCATION_S50_RFC3394_STORAGE:
             return( els_pkc_opaque_sign_hash( attributes,
                                                key_buffer,
                                                key_buffer_size,
@@ -837,6 +840,7 @@ static inline psa_status_t psa_driver_wrapper_verify_hash(
         case PSA_CRYPTO_ELS_PKC_LOCATION_S50_ENC_STORAGE_DATA:
         case PSA_CRYPTO_ELS_PKC_LOCATION_S50_BLOB_STORAGE:
         case PSA_CRYPTO_ELS_PKC_LOCATION_S50_KEY_GEN_STORAGE:
+        case PSA_CRYPTO_ELS_PKC_LOCATION_S50_RFC3394_STORAGE:
             return( els_pkc_opaque_verify_hash( attributes,
                                                  key_buffer,
                                                  key_buffer_size,
@@ -1125,6 +1129,7 @@ static inline psa_status_t psa_driver_wrapper_get_key_buffer_size_from_key_data(
         case PSA_CRYPTO_ELS_PKC_LOCATION_S50_ENC_STORAGE_DATA:
         case PSA_CRYPTO_ELS_PKC_LOCATION_S50_BLOB_STORAGE:
         case PSA_CRYPTO_ELS_PKC_LOCATION_S50_KEY_GEN_STORAGE:
+        case PSA_CRYPTO_ELS_PKC_LOCATION_S50_RFC3394_STORAGE:
             *key_buffer_size = els_pkc_opaque_size_function( attributes,
                                                  data,
                                                  data_length);
@@ -1270,6 +1275,7 @@ static inline psa_status_t psa_driver_wrapper_generate_key(
         case PSA_CRYPTO_ELS_PKC_LOCATION_S50_ENC_STORAGE_DATA:
         case PSA_CRYPTO_ELS_PKC_LOCATION_S50_BLOB_STORAGE:
         case PSA_CRYPTO_ELS_PKC_LOCATION_S50_KEY_GEN_STORAGE:
+        case PSA_CRYPTO_ELS_PKC_LOCATION_S50_RFC3394_STORAGE:
             status = els_pkc_opaque_generate_key(
                 attributes, key_buffer, key_buffer_size, key_buffer_length );
             break;
@@ -1309,6 +1315,7 @@ static inline psa_status_t psa_driver_wrapper_destroy_key(
         case PSA_CRYPTO_ELS_PKC_LOCATION_S50_ENC_STORAGE_DATA:
         case PSA_CRYPTO_ELS_PKC_LOCATION_S50_BLOB_STORAGE:
         case PSA_CRYPTO_ELS_PKC_LOCATION_S50_KEY_GEN_STORAGE:
+        case PSA_CRYPTO_ELS_PKC_LOCATION_S50_RFC3394_STORAGE:
             status = els_pkc_opaque_destroy_key(
                 attributes, key_buffer, key_buffer_size);
             break;
@@ -1410,6 +1417,7 @@ static inline psa_status_t psa_driver_wrapper_import_key(
 
 
 
+
 #if (defined(PSA_CRYPTO_DRIVER_ELS_PKC) )
             status = els_pkc_transparent_import_key
                 (attributes,
@@ -1457,6 +1465,7 @@ static inline psa_status_t psa_driver_wrapper_import_key(
         case PSA_CRYPTO_ELS_PKC_LOCATION_S50_ENC_STORAGE_DATA:
         case PSA_CRYPTO_ELS_PKC_LOCATION_S50_BLOB_STORAGE:
         case PSA_CRYPTO_ELS_PKC_LOCATION_S50_KEY_GEN_STORAGE:
+        case PSA_CRYPTO_ELS_PKC_LOCATION_S50_RFC3394_STORAGE:
             return( els_pkc_opaque_import_key
             (attributes,
                             data,
@@ -1542,6 +1551,7 @@ static inline psa_status_t psa_driver_wrapper_export_key(
         case PSA_CRYPTO_ELS_PKC_LOCATION_S50_ENC_STORAGE_DATA:
         case PSA_CRYPTO_ELS_PKC_LOCATION_S50_BLOB_STORAGE:
         case PSA_CRYPTO_ELS_PKC_LOCATION_S50_KEY_GEN_STORAGE:
+        case PSA_CRYPTO_ELS_PKC_LOCATION_S50_RFC3394_STORAGE:
             return( els_pkc_opaque_export_key
             (attributes,
                             key_buffer,
@@ -1774,6 +1784,7 @@ static inline psa_status_t psa_driver_wrapper_cipher_encrypt(
         case PSA_CRYPTO_ELS_PKC_LOCATION_S50_ENC_STORAGE_DATA:
         case PSA_CRYPTO_ELS_PKC_LOCATION_S50_BLOB_STORAGE:
         case PSA_CRYPTO_ELS_PKC_LOCATION_S50_KEY_GEN_STORAGE:
+        case PSA_CRYPTO_ELS_PKC_LOCATION_S50_RFC3394_STORAGE:
             return (els_pkc_opaque_cipher_encrypt( attributes,
                                          key_buffer,
                                          key_buffer_size,
@@ -1946,6 +1957,7 @@ static inline psa_status_t psa_driver_wrapper_cipher_decrypt(
         case PSA_CRYPTO_ELS_PKC_LOCATION_S50_ENC_STORAGE_DATA:
         case PSA_CRYPTO_ELS_PKC_LOCATION_S50_BLOB_STORAGE:
         case PSA_CRYPTO_ELS_PKC_LOCATION_S50_KEY_GEN_STORAGE:
+        case PSA_CRYPTO_ELS_PKC_LOCATION_S50_RFC3394_STORAGE:
            return ( els_pkc_opaque_cipher_decrypt( attributes,
                                                      key_buffer,
                                                      key_buffer_size,
@@ -2066,6 +2078,7 @@ static inline psa_status_t psa_driver_wrapper_cipher_encrypt_setup(
         case PSA_CRYPTO_ELS_PKC_LOCATION_S50_ENC_STORAGE_DATA:
         case PSA_CRYPTO_ELS_PKC_LOCATION_S50_BLOB_STORAGE:
         case PSA_CRYPTO_ELS_PKC_LOCATION_S50_KEY_GEN_STORAGE:
+        case PSA_CRYPTO_ELS_PKC_LOCATION_S50_RFC3394_STORAGE:
             status = els_pkc_opaque_cipher_encrypt_setup(
                 &operation->ctx.opaque_els_pkc_driver_ctx,
                 attributes,
@@ -2182,6 +2195,7 @@ static inline psa_status_t psa_driver_wrapper_cipher_decrypt_setup(
         case PSA_CRYPTO_ELS_PKC_LOCATION_S50_ENC_STORAGE_DATA:
         case PSA_CRYPTO_ELS_PKC_LOCATION_S50_BLOB_STORAGE:
         case PSA_CRYPTO_ELS_PKC_LOCATION_S50_KEY_GEN_STORAGE:
+        case PSA_CRYPTO_ELS_PKC_LOCATION_S50_RFC3394_STORAGE:
             status = els_pkc_opaque_cipher_decrypt_setup(
                          &operation->ctx.opaque_els_pkc_driver_ctx,
                          attributes,
@@ -2854,6 +2868,7 @@ static inline psa_status_t psa_driver_wrapper_aead_encrypt(
         case PSA_CRYPTO_ELS_PKC_LOCATION_S50_ENC_STORAGE_DATA:
         case PSA_CRYPTO_ELS_PKC_LOCATION_S50_BLOB_STORAGE:
         case PSA_CRYPTO_ELS_PKC_LOCATION_S50_KEY_GEN_STORAGE:
+        case PSA_CRYPTO_ELS_PKC_LOCATION_S50_RFC3394_STORAGE:
             status = els_pkc_opaque_aead_encrypt(
                          attributes, key_buffer, key_buffer_size,
                          alg,
@@ -2985,6 +3000,7 @@ static inline psa_status_t psa_driver_wrapper_aead_decrypt(
         case PSA_CRYPTO_ELS_PKC_LOCATION_S50_ENC_STORAGE_DATA:
         case PSA_CRYPTO_ELS_PKC_LOCATION_S50_BLOB_STORAGE:
         case PSA_CRYPTO_ELS_PKC_LOCATION_S50_KEY_GEN_STORAGE:
+        case PSA_CRYPTO_ELS_PKC_LOCATION_S50_RFC3394_STORAGE:
             status = els_pkc_opaque_aead_decrypt(
                          attributes, key_buffer, key_buffer_size,
                          alg,
@@ -3073,6 +3089,7 @@ static inline psa_status_t psa_driver_wrapper_aead_encrypt_setup(
         case PSA_CRYPTO_ELS_PKC_LOCATION_S50_ENC_STORAGE_DATA:
         case PSA_CRYPTO_ELS_PKC_LOCATION_S50_BLOB_STORAGE:
         case PSA_CRYPTO_ELS_PKC_LOCATION_S50_KEY_GEN_STORAGE:
+        case PSA_CRYPTO_ELS_PKC_LOCATION_S50_RFC3394_STORAGE:
             operation->id = PSA_CRYPTO_ELS_PKC_OPAQUE_DRIVER_ID;
             status = els_pkc_opaque_aead_encrypt_setup(
                         &operation->ctx.opaque_els_pkc_driver_ctx,
@@ -3164,6 +3181,7 @@ static inline psa_status_t psa_driver_wrapper_aead_decrypt_setup(
         case PSA_CRYPTO_ELS_PKC_LOCATION_S50_ENC_STORAGE_DATA:
         case PSA_CRYPTO_ELS_PKC_LOCATION_S50_BLOB_STORAGE:
         case PSA_CRYPTO_ELS_PKC_LOCATION_S50_KEY_GEN_STORAGE:
+        case PSA_CRYPTO_ELS_PKC_LOCATION_S50_RFC3394_STORAGE:
             operation->id = PSA_CRYPTO_ELS_PKC_OPAQUE_DRIVER_ID;
             status = els_pkc_opaque_aead_decrypt_setup(
                         &operation->ctx.opaque_els_pkc_driver_ctx,
@@ -3688,6 +3706,7 @@ static inline psa_status_t psa_driver_wrapper_mac_compute(
         case PSA_CRYPTO_ELS_PKC_LOCATION_S50_ENC_STORAGE_DATA:
         case PSA_CRYPTO_ELS_PKC_LOCATION_S50_BLOB_STORAGE:
         case PSA_CRYPTO_ELS_PKC_LOCATION_S50_KEY_GEN_STORAGE:
+        case PSA_CRYPTO_ELS_PKC_LOCATION_S50_RFC3394_STORAGE:
             status = els_pkc_opaque_mac_compute(
                 attributes, key_buffer, key_buffer_size, alg,
                 input, input_length,
@@ -3800,6 +3819,7 @@ static inline psa_status_t psa_driver_wrapper_mac_sign_setup(
         case PSA_CRYPTO_ELS_PKC_LOCATION_S50_ENC_STORAGE_DATA:
         case PSA_CRYPTO_ELS_PKC_LOCATION_S50_BLOB_STORAGE:
         case PSA_CRYPTO_ELS_PKC_LOCATION_S50_KEY_GEN_STORAGE:
+        case PSA_CRYPTO_ELS_PKC_LOCATION_S50_RFC3394_STORAGE:
             status = els_pkc_opaque_mac_sign_setup(
                 &operation->ctx.opaque_els_pkc_driver_ctx,
                 attributes,
@@ -3914,6 +3934,7 @@ static inline psa_status_t psa_driver_wrapper_mac_verify_setup(
         case PSA_CRYPTO_ELS_PKC_LOCATION_S50_ENC_STORAGE_DATA:
         case PSA_CRYPTO_ELS_PKC_LOCATION_S50_BLOB_STORAGE:
         case PSA_CRYPTO_ELS_PKC_LOCATION_S50_KEY_GEN_STORAGE:
+        case PSA_CRYPTO_ELS_PKC_LOCATION_S50_RFC3394_STORAGE:
             status = els_pkc_opaque_mac_verify_setup(
                 &operation->ctx.opaque_els_pkc_driver_ctx,
                 attributes,
@@ -4404,6 +4425,7 @@ static inline psa_status_t psa_driver_wrapper_key_agreement(
         case PSA_CRYPTO_ELS_PKC_LOCATION_S50_ENC_STORAGE_DATA:
         case PSA_CRYPTO_ELS_PKC_LOCATION_S50_BLOB_STORAGE:
         case PSA_CRYPTO_ELS_PKC_LOCATION_S50_KEY_GEN_STORAGE:
+        case PSA_CRYPTO_ELS_PKC_LOCATION_S50_RFC3394_STORAGE:
             return( els_pkc_opaque_key_agreement( attributes,
                          key_buffer,
                          key_buffer_size,

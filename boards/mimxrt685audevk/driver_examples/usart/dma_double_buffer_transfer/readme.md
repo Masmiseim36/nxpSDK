@@ -1,5 +1,6 @@
-Overview
-========
+# usart_dma_double_buffer_transfer
+
+## Overview
 This example shows how to use the DMA driver to implement a double buffer receive scheme from the USART
 
 The example shows the double buffer constructed using two descriptors (g_pingpong_desc). These descriptors are cycled from one to the other.
@@ -19,47 +20,19 @@ The intent of this example is to illustrate how a double-buffer scheme can be im
 be limited to how quickly the echo printer can read-out the data from the ping pong buffer and display it. This means that the example will 
 work well if characters are entered at a rate where the DMA callback to echo the string can keep up with the input stream. Connecting the USART
 RX to a continuous fast speed will cause the DMA to fall behind.
- 
 
-SDK version
-===========
-- Version: 2.16.000
-
-Toolchain supported
-===================
-- IAR embedded Workbench  9.60.1
-- Keil MDK  5.39.0
-- GCC ARM Embedded  13.2.1
-- MCUXpresso  11.10.0
-
-Hardware requirements
-=====================
-- Micro USB cable
-- MIMXRT685-AUD-EVK board
-- Personal Computer
-
-Board settings
-==============
-
-
-Prepare the Demo
-================
-1.  Connect a micro USB cable between the PC host and the CMSIS DAP USB port (J5) on the board
-2.  Open a serial terminal with the following settings:
-    - 115200 baud rate
-    - 8 data bits
-    - No parity
-    - One stop bit
-    - No flow control
-3.  Download the program to the target board.
-4.  Launch the debugger in your IDE to begin running the demo.
-
-Running the demo
-================
-When the demo runs successfully, the log would be seen on the terminal like:
-
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-USART Receive Double Buffer Example. The USART will echo the double buffer after each 8 bytes :
-CallBack A
-CallBack B
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+## Supported Boards
+- [EVK-MIMXRT595](../../../../_boards/evkmimxrt595/driver_examples/usart/dma_double_buffer_transfer/example_board_readme.md)
+- [EVK-MIMXRT685](../../../../_boards/evkmimxrt685/driver_examples/usart/dma_double_buffer_transfer/example_board_readme.md)
+- [FRDM-RW612](../../../../_boards/frdmrw612/driver_examples/usart/dma_double_buffer_transfer/example_board_readme.md)
+- [LPCXpresso51U68](../../../../_boards/lpcxpresso51u68/driver_examples/usart/dma_double_buffer_transfer/example_board_readme.md)
+- [LPCXpresso54628](../../../../_boards/lpcxpresso54628/driver_examples/usart/dma_double_buffer_transfer/example_board_readme.md)
+- [LPCXpresso54S018](../../../../_boards/lpcxpresso54s018/driver_examples/usart/dma_double_buffer_transfer/example_board_readme.md)
+- [LPCXpresso54S018M](../../../../_boards/lpcxpresso54s018m/driver_examples/usart/dma_double_buffer_transfer/example_board_readme.md)
+- [LPCXpresso55S06](../../../../_boards/lpcxpresso55s06/driver_examples/usart/dma_double_buffer_transfer/example_board_readme.md)
+- [LPCXpresso55S16](../../../../_boards/lpcxpresso55s16/driver_examples/usart/dma_double_buffer_transfer/example_board_readme.md)
+- [LPCXpresso55S28](../../../../_boards/lpcxpresso55s28/driver_examples/usart/dma_double_buffer_transfer/example_board_readme.md)
+- [LPCXpresso55S36](../../../../_boards/lpcxpresso55s36/driver_examples/usart/dma_double_buffer_transfer/example_board_readme.md)
+- [LPCXpresso55S69](../../../../_boards/lpcxpresso55s69/driver_examples/usart/dma_double_buffer_transfer/example_board_readme.md)
+- [MIMXRT685-AUD-EVK](../../../../_boards/mimxrt685audevk/driver_examples/usart/dma_double_buffer_transfer/example_board_readme.md)
+- [RD-RW612-BGA](../../../../_boards/rdrw612bga/driver_examples/usart/dma_double_buffer_transfer/example_board_readme.md)

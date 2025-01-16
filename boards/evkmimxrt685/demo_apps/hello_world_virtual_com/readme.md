@@ -1,48 +1,42 @@
-Overview
-========
+# hello_world_virtual_com
+
+## Overview
 Hello World Virtual Com demonstrates the use of virtual com to print the "Hello World" string to the terminal.
 Different with Hello World demo (a HW UART peripheral is used to transmit data), the demo transmits data based on
 a serial port simulated by the USB device stack on target board side via USB peripheral.
-The purpose of this demo is to demonstrate how to use virtual com and provide a simple project for debugging and further development. 
+The purpose of this demo is to demonstrate how to use virtual com and provide a simple project for debugging and further development.
 
-SDK version
-===========
-- Version: 2.16.000
-
-Toolchain supported
-===================
-- Keil MDK  5.39.0
-- GCC ARM Embedded  13.2.1
-- MCUXpresso  11.10.0
-- IAR embedded Workbench  9.60.1
-
-Hardware requirements
-=====================
-- Two Micro USB cables
-- EVK-MIMXRT685 board
-- Personal Computer
-
-Board settings
-==============
-No special settings are required.
-
-Prepare the Demo
-================
-1.  Connect a USB cable between the host PC and the OpenSDA USB port(J5) on the target board for downloading
-    the program and supply power for the board, connect another USB cable between host PC and USB port(J7)
-	on the target board.
-2.  Download the program to the target board.
-3.  Either press the reset button on your board or launch the debugger in your IDE to begin running the demo.
-4.  A COM port is enumerated in the Device Manager. If it prompts for CDC driver installation, please reference the virtual_com_readme.pdf which can be found at below directory:
-    In Release package: <install_dir>\devices\<soc>\utilities\virtual_com_readme.pdf .to install the CDC driver.
-5.  Open the COM port in a terminal tool, such as TeraTerm, SSCOM, Putty, Putty is recommended while virtual com
-is used.
-6.  Then user can communicate with target boards through virtual com.
-
-Running the demo
-================
-The log below shows the output of the hello world demo in the terminal window:
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-hello world.
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-The debug console virtual com will echo back the received characters.
+## Supported Boards
+- [EVKB-IMXRT1050](../../_boards/evkbimxrt1050/demo_apps/hello_world_virtual_com/example_board_readme.md)
+- [MIMXRT1060-EVKB](../../_boards/evkbmimxrt1060/demo_apps/hello_world_virtual_com/example_board_readme.md)
+- [MIMXRT1170-EVKB](../../_boards/evkbmimxrt1170/demo_apps/hello_world_virtual_com/example_board_readme.md)
+- [MIMXRT1060-EVKC](../../_boards/evkcmimxrt1060/demo_apps/hello_world_virtual_com/example_board_readme.md)
+- [EVK-MIMXRT1010](../../_boards/evkmimxrt1010/demo_apps/hello_world_virtual_com/example_board_readme.md)
+- [EVK-MIMXRT1015](../../_boards/evkmimxrt1015/demo_apps/hello_world_virtual_com/example_board_readme.md)
+- [EVK-MIMXRT1020](../../_boards/evkmimxrt1020/demo_apps/hello_world_virtual_com/example_board_readme.md)
+- [MIMXRT1024-EVK](../../_boards/evkmimxrt1024/demo_apps/hello_world_virtual_com/example_board_readme.md)
+- [MIMXRT1040-EVK](../../_boards/evkmimxrt1040/demo_apps/hello_world_virtual_com/example_board_readme.md)
+- [EVK-MIMXRT1064](../../_boards/evkmimxrt1064/demo_apps/hello_world_virtual_com/example_board_readme.md)
+- [MIMXRT1160-EVK](../../_boards/evkmimxrt1160/demo_apps/hello_world_virtual_com/example_board_readme.md)
+- [MIMXRT1180-EVK](../../_boards/evkmimxrt1180/demo_apps/hello_world_virtual_com/example_board_readme.md)
+- [EVK-MIMXRT595](../../_boards/evkmimxrt595/demo_apps/hello_world_virtual_com/example_board_readme.md)
+- [EVK-MIMXRT685](../../_boards/evkmimxrt685/demo_apps/hello_world_virtual_com/example_board_readme.md)
+- [FRDM-K22F](../../_boards/frdmk22f/demo_apps/hello_world_virtual_com/example_board_readme.md)
+- [FRDM-K32L2A4S](../../_boards/frdmk32l2a4s/demo_apps/hello_world_virtual_com/example_board_readme.md)
+- [FRDM-K32L2B](../../_boards/frdmk32l2b/demo_apps/hello_world_virtual_com/example_board_readme.md)
+- [FRDM-MCXC242](../../_boards/frdmmcxc242/demo_apps/hello_world_virtual_com/example_board_readme.md)
+- [FRDM-MCXC444](../../_boards/frdmmcxc444/demo_apps/hello_world_virtual_com/example_board_readme.md)
+- [FRDM-MCXN947](../../_boards/frdmmcxn947/demo_apps/hello_world_virtual_com/example_board_readme.md)
+- [FRDM-RW612](../../_boards/frdmrw612/demo_apps/hello_world_virtual_com/example_board_readme.md)
+- [LPCXpresso54628](../../_boards/lpcxpresso54628/demo_apps/hello_world_virtual_com/example_board_readme.md)
+- [LPCXpresso54S018](../../_boards/lpcxpresso54s018/demo_apps/hello_world_virtual_com/example_board_readme.md)
+- [LPCXpresso54S018M](../../_boards/lpcxpresso54s018m/demo_apps/hello_world_virtual_com/example_board_readme.md)
+- [LPCXpresso55S16](../../_boards/lpcxpresso55s16/demo_apps/hello_world_virtual_com/example_board_readme.md)
+- [LPCXpresso55S28](../../_boards/lpcxpresso55s28/demo_apps/hello_world_virtual_com/example_board_readme.md)
+- [LPCXpresso55S36](../../_boards/lpcxpresso55s36/demo_apps/hello_world_virtual_com/example_board_readme.md)
+- [LPCXpresso55S69](../../_boards/lpcxpresso55s69/demo_apps/hello_world_virtual_com/example_board_readme.md)
+- [MCX-N5XX-EVK](../../_boards/mcxn5xxevk/demo_apps/hello_world_virtual_com/example_board_readme.md)
+- [MCX-N9XX-EVK](../../_boards/mcxn9xxevk/demo_apps/hello_world_virtual_com/example_board_readme.md)
+- [MIMXRT685-AUD-EVK](../../_boards/mimxrt685audevk/demo_apps/hello_world_virtual_com/example_board_readme.md)
+- [MIMXRT700-EVK](../../_boards/mimxrt700evk/demo_apps/hello_world_virtual_com/example_board_readme.md)
+- [RD-RW612-BGA](../../_boards/rdrw612bga/demo_apps/hello_world_virtual_com/example_board_readme.md)

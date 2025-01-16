@@ -1,6 +1,5 @@
 /*
- * Copyright 2019 NXP
- * All rights reserved.
+ * Copyright 2019, 2024 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -26,7 +25,6 @@
 extern "C" {
 #endif
 
-void lv_port_pre_init(void);
 void lv_port_disp_init(void);
 void lv_port_indev_init(void);
 

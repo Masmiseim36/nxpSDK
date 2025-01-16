@@ -1,0 +1,105 @@
+
+menu "mbedtls3x"
+    config MCUX_COMPONENT_middleware.mbedtls3x.template
+        bool "Component middleware.mbedtls3x.template"
+    config MCUX_COMPONENT_middleware.mbedtls3x.port.config
+        bool "Component middleware.mbedtls3x.port.config"
+    config MCUX_COMPONENT_middleware.mbedtls3x.port.psa_crypto_config
+        bool "Component middleware.mbedtls3x.port.psa_crypto_config"
+    config MCUX_COMPONENT_middleware.mbedtls3x.port.hw_init
+        bool "Component middleware.mbedtls3x.port.hw_init"
+
+    config MCUX_COMPONENT_middleware.mbedtls3x.port.rng
+        bool "Component middleware.mbedtls3x.port.rng"
+        select MCUX_COMPONENT_middleware.mbedtls3x
+        select MCUX_COMPONENT_middleware.mbedtls3x.port.config
+
+        if MCUX_COMPONENT_middleware.mbedtls3x.port.rng
+            choice
+                prompt "Component middleware.mbedtls3x.port.rng anyOf 1"
+                default MCUX_DEPENDENCY_COMPONENT_middleware.mbedtls3x.port.rng_DEPEND_ANYOF_1_OPTION_1
+
+                config MCUX_DEPENDENCY_COMPONENT_middleware.mbedtls3x.port.rng_DEPEND_ANYOF_1_OPTION_1
+                    bool "Component MCUX_DEPENDENCY_COMPONENT_middleware.mbedtls3x.port.rng_DEPEND_ANYOF_1_OPTION_1"
+                    select MCUX_COMPONENT_driver.rng_1
+                    select MCUX_COMPONENT_middleware.mbedtls3x.port.hw_init
+                    depends on MCUX_HW_DEVICE_LPC55S16
+
+                config MCUX_DEPENDENCY_COMPONENT_middleware.mbedtls3x.port.rng_DEPEND_ANYOF_1_OPTION_2
+                    bool "Component MCUX_DEPENDENCY_COMPONENT_middleware.mbedtls3x.port.rng_DEPEND_ANYOF_1_OPTION_2"
+                    select MCUX_COMPONENT_driver.trng
+                    select MCUX_COMPONENT_middleware.mbedtls3x.port.hw_init
+                    depends on MCUX_HW_DEVICE_MIMXRT685S || MCUX_HW_DEVICE_RW610 || MCUX_HW_DEVICE_RW612
+
+                config MCUX_DEPENDENCY_COMPONENT_middleware.mbedtls3x.port.rng_DEPEND_ANYOF_1_OPTION_3
+                    bool "Component MCUX_DEPENDENCY_COMPONENT_middleware.mbedtls3x.port.rng_DEPEND_ANYOF_1_OPTION_3"
+                    select MCUX_COMPONENT_middleware.secure-subsystem.elemu
+                    select MCUX_COMPONENT_driver.elemu
+                    depends on MCUX_HW_DEVICE_KW45B41Z83 || MCUX_HW_DEVICE_K32W1480 || MCUX_HW_DEVICE_MCXW716C || MCUX_HW_DEVICE_MCXW716A || MCUX_HW_DEVICE_KW47B42ZB7 || MCUX_HW_DEVICE_MCXW727C
+            endchoice
+        endif
+
+
+    config MCUX_COMPONENT_middleware.mbedtls3x.port.tfm
+        bool "Component middleware.mbedtls3x.port.tfm"
+        select MCUX_COMPONENT_middleware.tfm.ns
+        select MCUX_COMPONENT_middleware.mbedtls3x.no_psa
+        select MCUX_COMPONENT_middleware.mbedtls3x.port.config
+
+    config MCUX_COMPONENT_middleware.mbedtls3x.tests
+        bool "Component middleware.mbedtls3x.tests"
+
+    config MCUX_COMPONENT_middleware.mbedtls3x.crypto_storage_default
+        bool "Component middleware.mbedtls3x.crypto_storage_default"
+        select MCUX_COMPONENT_middleware.mbedtls3x.crypto
+
+    config MCUX_COMPONENT_middleware.mbedtls3x.crypto_storage_fatfs
+        bool "Component middleware.mbedtls3x.crypto_storage_fatfs"
+        select MCUX_COMPONENT_middleware.mbedtls3x.crypto
+        select MCUX_COMPONENT_driver.usdhc
+        select MCUX_COMPONENT_component.rgpio_adapter
+        select MCUX_COMPONENT_middleware.sdmmc.host.usdhc
+        select MCUX_COMPONENT_middleware.sdmmc.host.usdhc.non_blocking
+        select MCUX_COMPONENT_middleware.sdmmc.sd
+        select MCUX_COMPONENT_middleware.fatfs.sd
+        select MCUX_COMPONENT_middleware.fatfs
+
+    config MCUX_COMPONENT_middleware.mbedtls3x.crypto_storage_ram
+        bool "Component middleware.mbedtls3x.crypto_storage_ram"
+        select MCUX_COMPONENT_middleware.mbedtls3x.crypto
+    config MCUX_COMPONENT_middleware.mbedtls3x.crypto.no_psa
+        bool "Component middleware.mbedtls3x.crypto.no_psa"
+
+    config MCUX_COMPONENT_middleware.mbedtls3x.crypto
+        bool "Component middleware.mbedtls3x.crypto"
+        select MCUX_COMPONENT_middleware.mbedtls3x.crypto.no_psa
+    config MCUX_COMPONENT_middleware.mbedtls3x.x509
+        bool "Component middleware.mbedtls3x.x509"
+
+    config MCUX_COMPONENT_middleware.mbedtls3x.ssl.no_psa
+        bool "Component middleware.mbedtls3x.ssl.no_psa"
+        select MCUX_COMPONENT_middleware.mbedtls3x.crypto.no_psa
+        select MCUX_COMPONENT_middleware.mbedtls3x.x509
+
+    config MCUX_COMPONENT_middleware.mbedtls3x.ssl
+        bool "Component middleware.mbedtls3x.ssl"
+        select MCUX_COMPONENT_middleware.mbedtls3x.ssl.no_psa
+        select MCUX_COMPONENT_middleware.mbedtls3x.crypto
+        select MCUX_COMPONENT_middleware.mbedtls3x.x509
+
+    config MCUX_COMPONENT_middleware.mbedtls3x.no_psa
+        bool "Component middleware.mbedtls3x.no_psa"
+        select MCUX_COMPONENT_middleware.mbedtls3x.template
+        select MCUX_COMPONENT_middleware.mbedtls3x.crypto.no_psa
+        select MCUX_COMPONENT_middleware.mbedtls3x.ssl.no_psa
+        select MCUX_COMPONENT_middleware.mbedtls3x.x509
+
+    config MCUX_COMPONENT_middleware.mbedtls3x
+        bool "Component middleware.mbedtls3x"
+        select MCUX_COMPONENT_middleware.mbedtls3x.template
+        select MCUX_COMPONENT_middleware.mbedtls3x.crypto
+        select MCUX_COMPONENT_middleware.mbedtls3x.ssl
+        select MCUX_COMPONENT_middleware.mbedtls3x.x509
+    config MCUX_PRJSEG_middleware.mbedtls3x.default_heap_stack
+        bool "Select middleware.mbedtls3x.default_heap_stack"
+endmenu

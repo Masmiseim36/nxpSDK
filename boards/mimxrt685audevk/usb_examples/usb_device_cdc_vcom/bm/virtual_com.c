@@ -7,11 +7,10 @@
  */
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdbool.h>
+/*${standard_header_anchor}*/
 #include "fsl_device_registers.h"
-#include "fsl_debug_console.h"
-#include "pin_mux.h"
 #include "clock_config.h"
+#include "fsl_debug_console.h"
 #include "board.h"
 
 #include "usb_device_config.h"
@@ -36,7 +35,6 @@
     defined(FSL_FEATURE_USB_KHCI_USB_RAM) && (FSL_FEATURE_USB_KHCI_USB_RAM > 0U)
 extern uint8_t USB_EnterLowpowerMode(void);
 #endif
-#include "fsl_power.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -123,84 +121,17 @@ volatile static uint8_t s_comOpen            = 0;
 /*******************************************************************************
  * Code
  ******************************************************************************/
-
-void USB_IRQHandler(void)
-{
-    USB_DeviceLpcIp3511IsrFunction(s_cdcVcom.deviceHandle);
-}
-
-void USB_DeviceClockInit(void)
-{
-    uint8_t usbClockDiv = 1;
-    uint32_t usbClockFreq;
-    usb_phy_config_struct_t phyConfig = {
-        BOARD_USB_PHY_D_CAL,
-        BOARD_USB_PHY_TXCAL45DP,
-        BOARD_USB_PHY_TXCAL45DM,
-    };
-
-    /* enable USB IP clock */
-    CLOCK_SetClkDiv(kCLOCK_DivPfc1Clk, 5);
-    CLOCK_AttachClk(kXTALIN_CLK_to_USB_CLK);
-    CLOCK_SetClkDiv(kCLOCK_DivUsbHsFclk, usbClockDiv);
-    CLOCK_EnableUsbhsDeviceClock();
-    RESET_PeripheralReset(kUSBHS_PHY_RST_SHIFT_RSTn);
-    RESET_PeripheralReset(kUSBHS_DEVICE_RST_SHIFT_RSTn);
-    RESET_PeripheralReset(kUSBHS_HOST_RST_SHIFT_RSTn);
-    RESET_PeripheralReset(kUSBHS_SRAM_RST_SHIFT_RSTn);
-    /*Make sure USDHC ram buffer has power up*/
-    POWER_DisablePD(kPDRUNCFG_APD_USBHS_SRAM);
-    POWER_DisablePD(kPDRUNCFG_PPD_USBHS_SRAM);
-    POWER_ApplyPD();
-
-    /* save usb ip clock freq*/
-    usbClockFreq = g_xtalFreq / usbClockDiv;
-    /* enable USB PHY PLL clock, the phy bus clock (480MHz) source is same with USB IP */
-    CLOCK_EnableUsbHs0PhyPllClock(kXTALIN_CLK_to_USB_CLK, usbClockFreq);
-
-#if defined(FSL_FEATURE_USBHSD_USB_RAM) && (FSL_FEATURE_USBHSD_USB_RAM)
-    for (int i = 0; i < FSL_FEATURE_USBHSD_USB_RAM; i++)
-    {
-        ((uint8_t *)FSL_FEATURE_USBHSD_USB_RAM_BASE_ADDRESS)[i] = 0x00U;
-    }
-#endif
-    USB_EhciPhyInit(CONTROLLER_ID, BOARD_XTAL_SYS_CLK_HZ, &phyConfig);
-
-    /* the following code should run after phy initialization and should wait some microseconds to make sure utmi clock
-     * valid */
-    /* enable usb1 host clock */
-    CLOCK_EnableClock(kCLOCK_UsbhsHost);
-    /*  Wait until host_needclk de-asserts */
-    while (SYSCTL0->USBCLKSTAT & SYSCTL0_USBCLKSTAT_HOST_NEED_CLKST_MASK)
-    {
-        __ASM("nop");
-    }
-    /*According to reference mannual, device mode setting has to be set by access usb host register */
-    USBHSH->PORTMODE |= USBHSH_PORTMODE_DEV_ENABLE_MASK;
-    /* disable usb1 host clock */
-    CLOCK_DisableClock(kCLOCK_UsbhsHost);
-}
-void USB_DeviceIsrEnable(void)
-{
-    uint8_t irqNumber;
-
-    uint8_t usbDeviceIP3511Irq[] = USBHSD_IRQS;
-    irqNumber                    = usbDeviceIP3511Irq[CONTROLLER_ID - kUSB_ControllerLpcIp3511Hs0];
-
-    /* Install isr, set priority, and enable IRQ. */
-    NVIC_SetPriority((IRQn_Type)irqNumber, USB_DEVICE_INTERRUPT_PRIORITY);
-    EnableIRQ((IRQn_Type)irqNumber);
-}
-#if USB_DEVICE_CONFIG_USE_TASK
-void USB_DeviceTaskFn(void *deviceHandle)
-{
-    USB_DeviceLpcIp3511TaskFunction(deviceHandle);
-}
-#endif
 /*!
  * @brief CDC class specific callback function.
  *
- * This function handles the CDC class specific requests.
+ * This function handles the CDC class specific requests. For the current case, device is waiting for data from host.
+ * Once device receives data, kUSB_DeviceCdcEventRecvResponse event will be asserted. In kUSB_DeviceCdcEventRecvResponse
+ * event, the received data lenght is saved to s_recvSize. If s_recvSize is 0, device will call USB_DeviceCdcAcmRecv to
+ * schedule buffer for next receiving event directly and it means there is no data to echo to host. If s_recvSize is not
+ * 0, USB_DeviceCdcVcomTask will copy the received data into s_currSendBuf then send back to host. Once data is echoed
+ * back completely, USB_DeviceCdcAcmRecv is called in kUSB_DeviceCdcEventSendResponse event to be ready to receive the
+ * next data from host. Instead, USB_DeviceCdcAcmRecv also can be called in kUSB_DeviceCdcEventRecvResponse event as
+ * long as the received data is handled completely.
  *
  * @param handle          The CDC ACM class handle.
  * @param event           The CDC ACM class event type.
@@ -239,7 +170,10 @@ usb_status_t USB_DeviceCdcVcomCallback(class_handle_t handle, uint32_t event, vo
                 if ((epCbParam->buffer != NULL) || ((epCbParam->buffer == NULL) && (epCbParam->length == 0)))
                 {
                     /* User: add your own code for send complete event */
-                    /* Schedule buffer for next receive event */
+                    /* In this case, the received data has been sent back to host, then now schedule buffer for next
+                       receiving event. Note that USB_DeviceCdcAcmRecv also can be called in
+                       kUSB_DeviceCdcEventRecvResponse as long as we make sure the received data can be handled properly
+                     */
                     error = USB_DeviceCdcAcmRecv(handle, USB_CDC_VCOM_BULK_OUT_ENDPOINT, s_currRecvBuf,
                                                  g_UsbDeviceCdcVcomDicEndpoints[1].maxPacketSize);
 #if defined(FSL_FEATURE_USB_KHCI_KEEP_ALIVE_ENABLED) && (FSL_FEATURE_USB_KHCI_KEEP_ALIVE_ENABLED > 0U) && \
@@ -259,6 +193,10 @@ usb_status_t USB_DeviceCdcVcomCallback(class_handle_t handle, uint32_t event, vo
         {
             if ((1U == s_cdcVcom.attach) && (1U == s_cdcVcom.startTransactions))
             {
+                /* Save the received data length, the data will be handled in USB_DeviceCdcVcomTask. Certainly, the
+                   received data also can be handled by any other user's application. Meanwhile, once complete handling
+                   the received data then we can also call USB_DeviceCdcAcmRecv here to be ready to receive the next
+                   data.  */
                 s_recvSize = epCbParam->length;
                 error      = kStatus_USB_Success;
 
@@ -268,9 +206,10 @@ usb_status_t USB_DeviceCdcVcomCallback(class_handle_t handle, uint32_t event, vo
                 s_waitForDataReceive = 0;
                 USB0->INTEN |= USB_INTEN_SOFTOKEN_MASK;
 #endif
+                /* There is no data to echo to host (host sends 0 length data packet), now directly schedule buffer for
+                 * next receiving event */
                 if (0U == s_recvSize)
                 {
-                    /* Schedule buffer for next receive event */
                     error = USB_DeviceCdcAcmRecv(handle, USB_CDC_VCOM_BULK_OUT_ENDPOINT, s_currRecvBuf,
                                                  g_UsbDeviceCdcVcomDicEndpoints[1].maxPacketSize);
 #if defined(FSL_FEATURE_USB_KHCI_KEEP_ALIVE_ENABLED) && (FSL_FEATURE_USB_KHCI_KEEP_ALIVE_ENABLED > 0U) && \
@@ -394,9 +333,9 @@ usb_status_t USB_DeviceCdcVcomCallback(class_handle_t handle, uint32_t event, vo
             acmInfo->serialStateBuf[1] = USB_DEVICE_CDC_NOTIF_SERIAL_STATE; /* bNotification */
             acmInfo->serialStateBuf[2] = 0x00;                              /* wValue */
             acmInfo->serialStateBuf[3] = 0x00;
-            acmInfo->serialStateBuf[4] = 0x00; /* wIndex */
+            acmInfo->serialStateBuf[4] = 0x00;                              /* wIndex */
             acmInfo->serialStateBuf[5] = 0x00;
-            acmInfo->serialStateBuf[6] = UART_BITMAP_SIZE; /* wLength */
+            acmInfo->serialStateBuf[6] = UART_BITMAP_SIZE;                  /* wLength */
             acmInfo->serialStateBuf[7] = 0x00;
             /* Notify to host the line state */
             acmInfo->serialStateBuf[4] = acmReqParam->interfaceIndex;
@@ -732,9 +671,7 @@ int main(void)
 void main(void)
 #endif
 {
-    BOARD_InitBootPins();
-    BOARD_InitBootClocks();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
 
     APPInit();
 

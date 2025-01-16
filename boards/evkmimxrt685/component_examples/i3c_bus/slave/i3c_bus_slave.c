@@ -7,21 +7,14 @@
 /*  Standard C Included Files */
 #include <string.h>
 /*  SDK Included Files */
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
 #include "fsl_debug_console.h"
 #include "fsl_component_i3c.h"
+#include "app.h"
 
-#include "fsl_component_i3c_adapter.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define EXAMPLE_MASTER             I3C
-#define EXAMPLE_I2C_BAUDRATE       400000
-#define I3C_MASTER_CLOCK_FREQUENCY CLOCK_GetI3cClkFreq()
-#define I3C_MASTER_SLAVE_ADDR_7BIT 0x1E
-
 #ifndef EXAMPLE_I2C_BAUDRATE
 #define EXAMPLE_I2C_BAUDRATE    400000U
 #endif
@@ -35,7 +28,18 @@
 #define I3C_MASTER_SLAVE_ADDR_7BIT 0x1E
 #endif
 
-#define I3C_NXP_VENDOR_ID 0x11B
+/* Device 48-bit Provisioned ID. */
+#define I3C_NXP_VENDOR_ID              0x11BU
+#define I3C_DEVICE_PROVISION_ID        0x2U
+#define I3C_DEVICE_REJOIN_PROVISION_ID 0x3U
+
+/* Generic Device. */
+#if defined(FSL_FEATURE_I3C_HAS_IBI_PAYLOAD_SIZE_OPTIONAL_BYTE) && FSL_FEATURE_I3C_HAS_IBI_PAYLOAD_SIZE_OPTIONAL_BYTE
+#define EXAMPLE_I3C_BCR I3C_BUS_DEV_BCR_DEV_ROLE(I3C_BUS_DEV_BCR_DEV_MASTER) | I3C_BUS_DEV_BCR_MODE_MASK | I3C_BUS_DEV_BCR_IBI_PAYLOAD_MASK
+#else
+#define EXAMPLE_I3C_BCR I3C_BUS_DEV_BCR_DEV_ROLE(I3C_BUS_DEV_BCR_DEV_MASTER) | I3C_BUS_DEV_BCR_MODE_MASK
+#endif
+#define EXAMPLE_I3C_DCR 0U
 
 /*******************************************************************************
  * Prototypes
@@ -52,11 +56,55 @@ extern i3c_device_control_info_t i3cMasterCtlInfo;
 /*******************************************************************************
  * Code
  ******************************************************************************/
-i3c_master_adapter_resource_t demo_masterResource = {.base      = EXAMPLE_MASTER,
-                                                     .transMode = kI3C_MasterTransferInterruptMode};
-i3c_device_control_info_t i3cMasterCtlInfo        = {
-           .funcs = (i3c_device_hw_ops_t *)&master_ops, .resource = &demo_masterResource, .isSecondary = true};
+status_t APP_GetTargetDynmicAddr(i3c_bus_t *demo_i3cBus, uint8_t *addr)
+{
+    for (list_element_handle_t listItem = demo_i3cBus->i3cDevList.head; listItem != NULL; listItem = listItem->next)
+    {
+        if ((i3c_device_t *)listItem == &demo_slaveDev)
+        {
+            continue;
+        }
+        else
+        {
+            *addr = ((i3c_device_t *)listItem)->info.dynamicAddr;
+            return kStatus_Success;
+        }
+    }
 
+    return kStatus_Fail;
+}
+
+void APP_PrintDeviceInfo(i3c_bus_t *demo_i3cBus)
+{
+    i3c_device_information_t devInfo;
+    status_t result;
+    uint32_t i = 0;
+
+    PRINTF(">> Current I3C devices on the bus:\r\n");
+    for (list_element_handle_t listItem = demo_i3cBus->i3cDevList.head; listItem != NULL; listItem = listItem->next)
+    {
+        if ((i3c_device_t *)listItem == &demo_slaveDev)
+        {
+            continue;
+        }
+        else
+        {
+            devInfo = ((i3c_device_t *)listItem)->info;
+
+            result = I3C_BusMasterGetDeviceInfo(&demo_slaveDev, devInfo.dynamicAddr, &devInfo);
+            if (result == kStatus_Success)
+            {
+                PRINTF("Device %u:\r\n", i);
+                PRINTF("Vendor ID - 0x%X. Part Number - 0x%X\r\n", devInfo.vendorID, devInfo.partNumber);
+                PRINTF("Dynamic Address - 0x%X. Static Address - 0x%X.\r\n", devInfo.dynamicAddr, devInfo.staticAddr);
+                PRINTF("Max read length - %u. Max write length - %u.\r\n", devInfo.maxReadLength, devInfo.maxWriteLength);
+                PRINTF("BCR - 0x%X. DCR - 0x%X.\r\n", devInfo.bcr, devInfo.dcr);
+            }
+
+            i++;
+        }
+    }
+}
 
 /*!
  * @brief Main function
@@ -64,23 +112,10 @@ i3c_device_control_info_t i3cMasterCtlInfo        = {
 int main(void)
 {
     i3c_device_information_t masterInfo;
-    i3c_device_information_t devInfo;
     i3c_bus_config_t busConfig;
     status_t result;
 
-    /* Attach main clock to I3C, 500MHz / 10 = 50MHz. */
-    CLOCK_AttachClk(kMAIN_CLK_to_I3C_CLK);
-    CLOCK_SetClkDiv(kCLOCK_DivI3cClk, 10);
-
-    /* Attach lposc_1m clock to I3C time control, clear halt for slow clock. */
-    CLOCK_AttachClk(kLPOSC_to_I3C_TC_CLK);
-    CLOCK_SetClkDiv(kCLOCK_DivI3cTcClk, 1);
-    CLOCK_SetClkDiv(kCLOCK_DivI3cSlowClk, 1);
-
-    BOARD_InitBootPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
-    demo_masterResource.clockInHz = I3C_MASTER_CLOCK_FREQUENCY;
+    BOARD_InitHardware();
 
     PRINTF("\r\nI3C bus slave example.\r\n");
 
@@ -93,23 +128,56 @@ int main(void)
 
     memset(&masterInfo, 0, sizeof(masterInfo));
     masterInfo.staticAddr = I3C_MASTER_SLAVE_ADDR_7BIT;
-    masterInfo.bcr        = 0x60U;
-#if defined(FSL_FEATURE_I3C_HAS_IBI_PAYLOAD_SIZE_OPTIONAL_BYTE) && FSL_FEATURE_I3C_HAS_IBI_PAYLOAD_SIZE_OPTIONAL_BYTE
-    masterInfo.bcr |= I3C_BUS_DEV_BCR_IBI_PAYLOAD_MASK;
-#endif
-    masterInfo.dcr        = 0x00U;
+    masterInfo.bcr        = EXAMPLE_I3C_BCR;
+    masterInfo.dcr        = EXAMPLE_I3C_DCR;
     masterInfo.vendorID   = I3C_NXP_VENDOR_ID;
-    I3C_BusMasterCreate(&demo_slaveDev, &demo_i3cBus, &masterInfo, &i3cMasterCtlInfo);
+    masterInfo.partNumber = I3C_DEVICE_PROVISION_ID;
+    i3cMasterCtlInfo.isSecondary = true;
+
+    result = I3C_BusMasterCreate(&demo_slaveDev, &demo_i3cBus, &masterInfo, &i3cMasterCtlInfo);
+    if (result != kStatus_Success)
+    {
+        PRINTF("I3C_BusMasterCreate fails with error %u.\r\n", result);
+        return result;
+    }
 
     PRINTF("I3C bus secondary master creates.\r\n");
 
     /* Wait for address assignment finish. */
-    while (EXAMPLE_MASTER->SDYNADDR == 0U)
+#if defined(I3C_SDYNADDR_DADDR_MASK)
+    while ((EXAMPLE_MASTER->SDYNADDR & I3C_SDYNADDR_DADDR_MASK) == 0U)
+#else
+    while ((EXAMPLE_MASTER->SMAPCTRL0 & I3C_SMAPCTRL0_DA_MASK) == 0U)
+#endif
     {
     }
-    PRINTF("I3C bus second master requires to be primary master.\r\n");
+    SDK_DelayAtLeastUs(10000, SDK_DEVICE_MAXIMUM_CPU_CLOCK_FREQUENCY);
 
-    /* Request mastership. */
+#if !defined(EXAMPLE_HAS_NO_HJ_SUPPORT)
+    while ((EXAMPLE_MASTER->SSTATUS & I3C_SSTATUS_HJDIS_MASK) != 0U)
+    {
+    }
+
+    PRINTF("Secondary master creates again with hot-join.\r\n");
+    i3cMasterCtlInfo.isHotJoin = true;
+    masterInfo.partNumber = I3C_DEVICE_REJOIN_PROVISION_ID;
+    result = I3C_BusMasterCreate(&demo_slaveDev, &demo_i3cBus, &masterInfo, &i3cMasterCtlInfo);
+    if (result != kStatus_Success)
+    {
+        PRINTF("I3C_BusMasterCreate fails with error %u.\r\n", result);
+        return result;
+    }
+
+    /* Wait hot-join over. */
+    while((EXAMPLE_MASTER->SSTATUS & I3C_SSTATUS_EVDET_MASK) != I3C_SSTATUS_EVDET_MASK);
+    SDK_DelayAtLeastUs(10000, SDK_DEVICE_MAXIMUM_CPU_CLOCK_FREQUENCY);
+#endif
+
+    while ((EXAMPLE_MASTER->SSTATUS & I3C_SSTATUS_MRDIS_MASK) != 0U)
+    {
+    }
+
+    PRINTF("I3C bus second master requires to be primary master.\r\n");
     result = I3C_BusSlaveRequestMasterShip(&demo_slaveDev);
     if (result != kStatus_Success)
     {
@@ -120,36 +188,9 @@ int main(void)
     while (demo_i3cBus.currentMaster != &demo_slaveDev)
     {
     }
-
     PRINTF("I3C bus mastership takeover.\r\n");
 
-    uint8_t slaveAddr = 0xFF;
-    for (list_element_handle_t listItem = demo_i3cBus.i3cDevList.head; listItem != NULL; listItem = listItem->next)
-    {
-        if ((i3c_device_t *)listItem == &demo_slaveDev)
-        {
-            continue;
-        }
-        else
-        {
-            slaveAddr = ((i3c_device_t *)listItem)->info.dynamicAddr;
-            break;
-        }
-    }
-    if (slaveAddr == 0xFFU)
-    {
-        PRINTF("I3C dynamic address is wrong.\r\n");
-        return kStatus_Fail;
-    }
-
-    result = I3C_BusMasterGetDeviceInfo(&demo_slaveDev, slaveAddr, &devInfo);
-    if (result != kStatus_Success)
-    {
-        PRINTF("I3C bus master get device info fails with error code %u.\r\n", result);
-        return result;
-    }
-
-    PRINTF("I3C bus get device info:\r\nDynamicAddr - 0x%X, VendorID - 0x%X.\r\n", devInfo.dynamicAddr, devInfo.vendorID);
+    APP_PrintDeviceInfo(&demo_i3cBus);
 
     while (1)
     {

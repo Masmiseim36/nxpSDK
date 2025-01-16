@@ -1,5 +1,6 @@
-Overview
-========
+# acmp_round_robin
+
+## Overview
 The ACMP Round-Robin project is a simple demonstration program that uses the SDK software. User
 must set the round-robin mode trigger in specific board properly according to the board resource
 before running the example. When the example running, it sets positive port as fixed channel and
@@ -8,46 +9,7 @@ as round-robin checker channel. The example will enter stop mode and wait user t
 of round-robin checker channel. It will exit stop mode after the voltage of round-robin checker
 channel changed by user.
 
-
-SDK version
-===========
-- Version: 2.16.000
-
-Toolchain supported
-===================
-- IAR embedded Workbench  9.60.1
-- Keil MDK  5.39.0
-- GCC ARM Embedded  13.2.1
-- MCUXpresso  11.10.0
-
-Hardware requirements
-=====================
-- Micro USB cable
-- EVK-MIMXRT685 board
-- Personal Computer
-
-Board settings
-==============
-This example project uses ACMP instance 0 to compare the voltage signal input from channel A(J1-9)
-with the voltage signal(half of VDDA) output by ACMP's internal DAC. In order to observe the low
-power wakeup phenomenon, channel A(J1-9) should be connected to GND signal(J25-1) on the board before
-the example running. Example will exit deep sleep mode when channel A(J1-9) is disconnected from GND signal
-and the disconnected time is last for about 1s.
-
-Prepare the Demo
-================
-1.  Connect a micro USB cable between the PC host and the CMSIS DAP USB port (J5) on the board
-2.  Open a serial terminal with the following settings:
-    - 115200 baud rate
-    - 8 data bits
-    - No parity
-    - One stop bit
-    - No flow control
-3.  Download the program to the target board.
-4.  Launch the debugger in your IDE to begin running the demo.
-
-Running the demo
-================
+## Running the demo
 When the demo runs successfully, following information can be seen on the OpenSDA terminal:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -61,3 +23,12 @@ The system entered into stop mode.
 The system exited from stop mode!
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+## Supported Boards
+- [EVK-MIMXRT595](../../../_boards/evkmimxrt595/driver_examples/acmp/round_robin/example_board_readme.md)
+- [EVK-MIMXRT685](../../../_boards/evkmimxrt685/driver_examples/acmp/round_robin/example_board_readme.md)
+- [FRDM-KE15Z](../../../_boards/frdmke15z/driver_examples/acmp/round_robin/example_board_readme.md)
+- [FRDM-KE16Z](../../../_boards/frdmke16z/driver_examples/acmp/round_robin/example_board_readme.md)
+- [FRDM-KE17Z](../../../_boards/frdmke17z/driver_examples/acmp/round_robin/example_board_readme.md)
+- [FRDM-KE17Z512](../../../_boards/frdmke17z512/driver_examples/acmp/round_robin/example_board_readme.md)
+- [MIMXRT685-AUD-EVK](../../../_boards/mimxrt685audevk/driver_examples/acmp/round_robin/example_board_readme.md)

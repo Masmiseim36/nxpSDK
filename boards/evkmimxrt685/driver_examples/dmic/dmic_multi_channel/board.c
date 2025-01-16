@@ -183,6 +183,7 @@ status_t BOARD_InitPsRam(void)
     uint32_t mr0Val[1];
     uint32_t mr4Val[1];
     uint32_t mr8Val[1];
+    uint32_t cache64PhymemSizes[] = CACHE64_CTRL_PHYMEM_SIZES;
     flexspi_config_t config;
     cache64_config_t cacheCfg;
     status_t status = kStatus_Success;
@@ -198,8 +199,13 @@ status_t BOARD_InitPsRam(void)
     /* Explicitly enable FlexSPI clock for PSRAM loader case which need to set FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL. */
     CLOCK_EnableClock(kCLOCK_Flexspi);
 
-    /* As cache depends on FlexSPI power and clock, cache must be initialized after FlexSPI power/clock is set */
-    CACHE64_GetDefaultConfig(&cacheCfg);
+    /* As cache depends on FlexSPI power and clock, cache must be initialized after FlexSPI power/clock is set.
+     * Don't use CACHE64_GetDefaultConfig() in mpi_loader_extram_loader case since it calls global variable which
+     * is not initialized in SystemInitHook().
+     */
+    (void)memset(&cacheCfg, 0, sizeof(cache64_config_t));
+    cacheCfg.boundaryAddr[0] = cache64PhymemSizes[0];
+    cacheCfg.policy[0]       = kCACHE64_PolicyWriteBack;
     CACHE64_Init(CACHE64_POLSEL, &cacheCfg);
 #if BOARD_ENABLE_PSRAM_CACHE
     CACHE64_EnableWriteBuffer(CACHE64, true);

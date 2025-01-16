@@ -11,9 +11,18 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>36</version>
+        <version>37</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
+        <option>
+          <name>OG_32_64DeviceCoreSlave</name>
+          <version>34</version>
+          <state>0</state>
+        </option>
+        <option>
+          <name>GOutputSo</name>
+          <state>0</state>
+        </option>
         <option>
           <name>BrowseInfoPath</name>
           <state>Debug\BrowseInfo</state>
@@ -70,7 +79,7 @@
         </option>
         <option>
           <name>OGLastSavedByProductVersion</name>
-          <state>9.30.1.48832</state>
+          <state>9.60.1.2936</state>
         </option>
         <option>
           <name>OGChipSelectEditMenu</name>
@@ -98,7 +107,7 @@
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>33</version>
+          <version>34</version>
           <state>58</state>
         </option>
         <option>
@@ -115,7 +124,7 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>33</version>
+          <version>34</version>
           <state>58</state>
         </option>
         <option>
@@ -138,7 +147,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>33</version>
+          <version>34</version>
           <state>58</state>
         </option>
         <option>
@@ -217,31 +226,40 @@
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>38</version>
+        <version>39</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
+          <name>CCPointerAutentiction</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCBranchTargetIdentification</name>
+          <state>0</state>
+        </option>
+        <option>
           <name>CCDefines</name>
           <state>DEBUG</state>
-          <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
-          <state>BOOT_HEADER_ENABLE=1</state>
-          <state>CPU_MIMXRT685SFVKB_cm33</state>
-          <state>DSP_NCACHE</state>
-          <state>CPU_MIMXRT685SFVKB=1</state>
-          <state>USB_STACK_FREERTOS_HEAP_SIZE=16384</state>
-          <state>USB_STACK_USE_DEDICATED_RAM=1</state>
           <state>XA_CAPTURER=1</state>
           <state>XA_PCM_GAIN=1</state>
           <state>XA_RENDERER</state>
           <state>USB_STACK_FREERTOS</state>
           <state>DSP_IMAGE_COPY_TO_RAM=1</state>
+          <state>DSP_NCACHE</state>
+          <state>USB_STACK_FREERTOS_HEAP_SIZE=16384</state>
+          <state>USB_STACK_USE_DEDICATED_RAM=1</state>
+          <state>SDK_DEBUGCONSOLE=1</state>
+          <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
+          <state>CPU_MIMXRT685SFVKB_cm33</state>
+          <state>OSA_USED</state>
+          <state>BOOT_HEADER_ENABLE=1</state>
+          <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
-          <state>BOARD_USE_CODEC=1</state>
+          <state>CODEC_MULTI_ADAPTERS=1</state>
           <state>CODEC_WM8904_ENABLE</state>
           <state>SDK_I3C_BASED_COMPONENT_USED=1</state>
-          <state>DEBUG_CONSOLE_RX_ENABLE=0</state>
-          <state>SERIAL_PORT_TYPE_UART=1</state>
+          <state>USE_RTOS=1</state>
           <state>SDK_OS_FREE_RTOS</state>
         </option>
         <option>
@@ -282,7 +300,7 @@
         </option>
         <option>
           <name>CCDiagSuppress</name>
-          <state>Pa082,Pa050</state>
+          <state/>
         </option>
         <option>
           <name>CCDiagRemark</name>
@@ -319,11 +337,11 @@
         </option>
         <option>
           <name>IExtraOptionsCheck</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>IExtraOptions</name>
-          <state/>
+          <state>--diag_suppress=Pa082,Pa050</state>
         </option>
         <option>
           <name>CCLangConformance</name>
@@ -359,38 +377,42 @@
         </option>
         <option>
           <name>PreInclude</name>
-          <state/>
+          <state>$PROJ_DIR$/../mcux_config.h</state>
         </option>
         <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/include/platform/imxrt600_m33</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/include/environment/freertos</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/include</state>
-          <state>$PROJ_DIR$/../../../../../../components/pca9420</state>
-          <state>$PROJ_DIR$/../../../../../../components/codec/wm8904</state>
-          <state>$PROJ_DIR$/../../../../../../components/codec/port/wm8904</state>
-          <state>$PROJ_DIR$/../../../../../../components/codec/port</state>
-          <state>$PROJ_DIR$/../../../../../../components/codec</state>
-          <state>$PROJ_DIR$/../../../../../../components/i2c</state>
-          <state>$PROJ_DIR$/../../../../../../components/codec/i2c</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/usb/device</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
-          <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM33_NTZ/non_secure</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/shell</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/debug_console</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities</state>
-          <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../flash_config</state>
-          <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../../components/lists</state>
-          <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
-          <state>$PROJ_DIR$/../../../../../../components/osa</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/m-profile</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/periph</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities</state>
+          <state>$PROJ_DIR$/../../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/str</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/debug_console</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/shell</state>
+          <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
+          <state>$PROJ_DIR$/../../../../../../components/codec/i2c</state>
+          <state>$PROJ_DIR$/../../../../../../components/codec</state>
+          <state>$PROJ_DIR$/../../../../../../components/codec/port</state>
+          <state>$PROJ_DIR$/../../../../../../components/codec/port/wm8904</state>
+          <state>$PROJ_DIR$/../../../../../../components/codec/wm8904</state>
+          <state>$PROJ_DIR$/../../../../../../components/i2c</state>
+          <state>$PROJ_DIR$/../../../../../../components/uart</state>
+          <state>$PROJ_DIR$/../../../../../../components/osa</state>
+          <state>$PROJ_DIR$/../../../../../../components/pmic/pca9420</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/usb/device</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/usb/device/class</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg-lite/lib/include</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg-lite/lib/include/environment/freertos</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg-lite/lib/include/platform/imxrt600_m33</state>
+          <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include</state>
+          <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM33_NTZ/non_secure</state>
+          <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/template</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -492,11 +514,11 @@
         </option>
         <option>
           <name>IccExceptions2</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>IccRTTI2</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>OICompilerExtraOption</name>
@@ -504,6 +526,14 @@
         </option>
         <option>
           <name>CCStackProtection</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCPosRadRwpi</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCPosSharedSlave</name>
           <state>0</state>
         </option>
       </data>
@@ -515,6 +545,10 @@
         <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
+        <option>
+          <name>A_32_64Device</name>
+          <state>1</state>
+        </option>
         <option>
           <name>AObjPrefix</name>
           <state>1</state>
@@ -562,9 +596,11 @@
         </option>
         <option>
           <name>ADefines</name>
-          <state>DEBUG</state>
-          <state>DSP_NCACHE</state>
           <state>DSP_IMAGE_COPY_TO_RAM=1</state>
+          <state>DSP_NCACHE</state>
+          <state>MCUXPRESSO_SDK</state>
+          <state>CPU_MIMXRT685SFVKB_cm33</state>
+          <state>OSA_USED</state>
         </option>
         <option>
           <name>AList</name>
@@ -656,9 +692,39 @@
         </option>
         <option>
           <name>AUserIncludes</name>
-          <state>$PROJ_DIR$/../../dsp/binary</state>
           <state>$PROJ_DIR$/..</state>
+          <state>$PROJ_DIR$/../../hifi4/binary</state>
+          <state>$PROJ_DIR$/../../../../flash_config</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/m-profile</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/periph</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities</state>
+          <state>$PROJ_DIR$/../../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/str</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/debug_console</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/shell</state>
+          <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
+          <state>$PROJ_DIR$/../../../../../../components/codec/i2c</state>
+          <state>$PROJ_DIR$/../../../../../../components/codec</state>
+          <state>$PROJ_DIR$/../../../../../../components/codec/port</state>
+          <state>$PROJ_DIR$/../../../../../../components/codec/port/wm8904</state>
+          <state>$PROJ_DIR$/../../../../../../components/codec/wm8904</state>
+          <state>$PROJ_DIR$/../../../../../../components/i2c</state>
+          <state>$PROJ_DIR$/../../../../../../components/uart</state>
+          <state>$PROJ_DIR$/../../../../../../components/osa</state>
+          <state>$PROJ_DIR$/../../../../../../components/pmic/pca9420</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/usb/device</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/usb/device/class</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg-lite/lib/include</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg-lite/lib/include/environment/freertos</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg-lite/lib/include/platform/imxrt600_m33</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include</state>
+          <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM33_NTZ/non_secure</state>
+          <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/template</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -696,7 +762,7 @@
         </option>
         <option>
           <name>OOCOutputFile</name>
-          <state>sdk20-app.bin</state>
+          <state>dsp_xaf_usb_demo.bin</state>
         </option>
         <option>
           <name>OOCCommandLineProducer</name>
@@ -710,27 +776,18 @@
     </settings>
     <settings>
       <name>CUSTOM</name>
-      <archiveVersion>3</archiveVersion>
+      <archiveVersion>4</archiveVersion>
       <data>
         <extensions/>
         <cmdline/>
-        <hasPrio>0</hasPrio>
         <buildSequence>inputOutputBased</buildSequence>
-      </data>
-    </settings>
-    <settings>
-      <name>BUILDACTION</name>
-      <archiveVersion>2</archiveVersion>
-      <data>
-        <prebuild/>
-        <postbuild/>
       </data>
     </settings>
     <settings>
       <name>ILINK</name>
       <archiveVersion>0</archiveVersion>
       <data>
-        <version>27</version>
+        <version>28</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -759,7 +816,7 @@
         </option>
         <option>
           <name>IlinkRawBinaryFile</name>
-          <state>$PROJ_DIR$/../../dsp/binary/dsp_literal_debug.bin</state>
+          <state>$PROJ_DIR$/../../../../../../boards/evkmimxrt685/dsp_examples/xaf_usb_demo/hifi4/binary/dsp_literal_release.bin</state>
         </option>
         <option>
           <name>IlinkRawBinarySymbol</name>
@@ -846,8 +903,8 @@
         </option>
         <option>
           <name>IlinkExtraOptions</name>
-          <state>--image_input=$PROJ_DIR$/../../dsp/binary/dsp_data_debug.bin,__dsp_data_bin,__dsp_data_section,4</state>
-          <state>--image_input=$PROJ_DIR$/../../dsp/binary/dsp_ncache_debug.bin,__dsp_ncache_bin,__dsp_ncache_section,4</state>
+          <state>--image_input=$PROJ_DIR$/../../../../../../boards/evkmimxrt685/dsp_examples/xaf_usb_demo/hifi4/binary/dsp_data_release.bin,__dsp_data_bin,__dsp_data_section,4</state>
+          <state>--image_input=$PROJ_DIR$/../../../../../../boards/evkmimxrt685/dsp_examples/xaf_usb_demo/hifi4/binary/dsp_ncache_release.bin,__dsp_ncache_bin,__dsp_ncache_section,4</state>
         </option>
         <option>
           <name>IlinkLowLevelInterfaceSlave</name>
@@ -1051,7 +1108,7 @@
         </option>
         <option>
           <name>IlinkRawBinaryFile2</name>
-          <state>$PROJ_DIR$/../../dsp/binary/dsp_text_debug.bin</state>
+          <state>$PROJ_DIR$/../../../../../../boards/evkmimxrt685/dsp_examples/xaf_usb_demo/hifi4/binary/dsp_text_release.bin</state>
         </option>
         <option>
           <name>IlinkRawBinarySymbol2</name>
@@ -1101,6 +1158,10 @@
           <name>IlinkFpuProcessor</name>
           <state>1</state>
         </option>
+        <option>
+          <name>IlinkSharedSlave</name>
+          <state>0</state>
+        </option>
       </data>
     </settings>
     <settings>
@@ -1124,6 +1185,14 @@
         </option>
       </data>
     </settings>
+    <settings>
+      <name>BUILDACTION</name>
+      <archiveVersion>2</archiveVersion>
+      <data>
+        <prebuild/>
+        <postbuild/>
+      </data>
+    </settings>
   </configuration>
   <configuration>
     <name>flash_release</name>
@@ -1135,9 +1204,18 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>36</version>
+        <version>37</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
+        <option>
+          <name>OG_32_64DeviceCoreSlave</name>
+          <version>34</version>
+          <state>38</state>
+        </option>
+        <option>
+          <name>GOutputSo</name>
+          <state>0</state>
+        </option>
         <option>
           <name>BrowseInfoPath</name>
           <state>Release\BrowseInfo</state>
@@ -1222,7 +1300,7 @@
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>33</version>
+          <version>34</version>
           <state>58</state>
         </option>
         <option>
@@ -1239,7 +1317,7 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>33</version>
+          <version>34</version>
           <state>58</state>
         </option>
         <option>
@@ -1262,7 +1340,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>33</version>
+          <version>34</version>
           <state>58</state>
         </option>
         <option>
@@ -1341,31 +1419,40 @@
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>38</version>
+        <version>39</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
+          <name>CCPointerAutentiction</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCBranchTargetIdentification</name>
+          <state>0</state>
+        </option>
+        <option>
           <name>CCDefines</name>
-          <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
-          <state>CPU_MIMXRT685SFVKB_cm33</state>
-          <state>BOOT_HEADER_ENABLE=1</state>
           <state>NDEBUG</state>
-          <state>DSP_NCACHE</state>
-          <state>CPU_MIMXRT685SFVKB=1</state>
-          <state>USB_STACK_FREERTOS_HEAP_SIZE=16384</state>
-          <state>USB_STACK_USE_DEDICATED_RAM=1</state>
           <state>XA_CAPTURER=1</state>
           <state>XA_PCM_GAIN=1</state>
           <state>XA_RENDERER</state>
           <state>USB_STACK_FREERTOS</state>
           <state>DSP_IMAGE_COPY_TO_RAM=1</state>
+          <state>DSP_NCACHE</state>
+          <state>USB_STACK_FREERTOS_HEAP_SIZE=16384</state>
+          <state>USB_STACK_USE_DEDICATED_RAM=1</state>
+          <state>SDK_DEBUGCONSOLE=1</state>
+          <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
+          <state>CPU_MIMXRT685SFVKB_cm33</state>
+          <state>OSA_USED</state>
+          <state>BOOT_HEADER_ENABLE=1</state>
+          <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
-          <state>BOARD_USE_CODEC=1</state>
+          <state>CODEC_MULTI_ADAPTERS=1</state>
           <state>CODEC_WM8904_ENABLE</state>
           <state>SDK_I3C_BASED_COMPONENT_USED=1</state>
-          <state>DEBUG_CONSOLE_RX_ENABLE=0</state>
-          <state>SERIAL_PORT_TYPE_UART=1</state>
+          <state>USE_RTOS=1</state>
           <state>SDK_OS_FREE_RTOS</state>
         </option>
         <option>
@@ -1406,7 +1493,7 @@
         </option>
         <option>
           <name>CCDiagSuppress</name>
-          <state>Pa082,Pa050</state>
+          <state/>
         </option>
         <option>
           <name>CCDiagRemark</name>
@@ -1427,7 +1514,7 @@
         <option>
           <name>CCAllowList</name>
           <version>1</version>
-          <state>00100000</state>
+          <state>11111110</state>
         </option>
         <option>
           <name>CCDebugInfo</name>
@@ -1443,11 +1530,11 @@
         </option>
         <option>
           <name>IExtraOptionsCheck</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>IExtraOptions</name>
-          <state/>
+          <state>--diag_suppress=Pa082,Pa050</state>
         </option>
         <option>
           <name>CCLangConformance</name>
@@ -1483,38 +1570,42 @@
         </option>
         <option>
           <name>PreInclude</name>
-          <state/>
+          <state>$PROJ_DIR$/../mcux_config.h</state>
         </option>
         <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/include/platform/imxrt600_m33</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/include/environment/freertos</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/include</state>
-          <state>$PROJ_DIR$/../../../../../../components/pca9420</state>
-          <state>$PROJ_DIR$/../../../../../../components/codec/wm8904</state>
-          <state>$PROJ_DIR$/../../../../../../components/codec/port/wm8904</state>
-          <state>$PROJ_DIR$/../../../../../../components/codec/port</state>
-          <state>$PROJ_DIR$/../../../../../../components/codec</state>
-          <state>$PROJ_DIR$/../../../../../../components/i2c</state>
-          <state>$PROJ_DIR$/../../../../../../components/codec/i2c</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/usb/device</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
-          <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM33_NTZ/non_secure</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/shell</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/debug_console</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities</state>
-          <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../flash_config</state>
-          <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../../components/lists</state>
-          <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
-          <state>$PROJ_DIR$/../../../../../../components/osa</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/m-profile</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/periph</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities</state>
+          <state>$PROJ_DIR$/../../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/str</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/debug_console</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/shell</state>
+          <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
+          <state>$PROJ_DIR$/../../../../../../components/codec/i2c</state>
+          <state>$PROJ_DIR$/../../../../../../components/codec</state>
+          <state>$PROJ_DIR$/../../../../../../components/codec/port</state>
+          <state>$PROJ_DIR$/../../../../../../components/codec/port/wm8904</state>
+          <state>$PROJ_DIR$/../../../../../../components/codec/wm8904</state>
+          <state>$PROJ_DIR$/../../../../../../components/i2c</state>
+          <state>$PROJ_DIR$/../../../../../../components/uart</state>
+          <state>$PROJ_DIR$/../../../../../../components/osa</state>
+          <state>$PROJ_DIR$/../../../../../../components/pmic/pca9420</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/usb/device</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/usb/device/class</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg-lite/lib/include</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg-lite/lib/include/environment/freertos</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg-lite/lib/include/platform/imxrt600_m33</state>
+          <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include</state>
+          <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM33_NTZ/non_secure</state>
+          <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/template</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1539,7 +1630,7 @@
         </option>
         <option>
           <name>CCOptLevelSlave</name>
-          <state>1</state>
+          <state>3</state>
         </option>
         <option>
           <name>CCPosIndRopi</name>
@@ -1616,11 +1707,11 @@
         </option>
         <option>
           <name>IccExceptions2</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>IccRTTI2</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>OICompilerExtraOption</name>
@@ -1628,6 +1719,14 @@
         </option>
         <option>
           <name>CCStackProtection</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCPosRadRwpi</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCPosSharedSlave</name>
           <state>0</state>
         </option>
       </data>
@@ -1639,6 +1738,10 @@
         <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
+        <option>
+          <name>A_32_64Device</name>
+          <state>1</state>
+        </option>
         <option>
           <name>AObjPrefix</name>
           <state>1</state>
@@ -1678,7 +1781,7 @@
         </option>
         <option>
           <name>ADebug</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>AltRegisterNames</name>
@@ -1686,8 +1789,11 @@
         </option>
         <option>
           <name>ADefines</name>
-          <state>DSP_NCACHE</state>
           <state>DSP_IMAGE_COPY_TO_RAM=1</state>
+          <state>DSP_NCACHE</state>
+          <state>MCUXPRESSO_SDK</state>
+          <state>CPU_MIMXRT685SFVKB_cm33</state>
+          <state>OSA_USED</state>
         </option>
         <option>
           <name>AList</name>
@@ -1779,9 +1885,39 @@
         </option>
         <option>
           <name>AUserIncludes</name>
-          <state>$PROJ_DIR$/../../dsp/binary</state>
           <state>$PROJ_DIR$/..</state>
+          <state>$PROJ_DIR$/../../hifi4/binary</state>
+          <state>$PROJ_DIR$/../../../../flash_config</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/m-profile</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/periph</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities</state>
+          <state>$PROJ_DIR$/../../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/str</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/debug_console</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/shell</state>
+          <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
+          <state>$PROJ_DIR$/../../../../../../components/codec/i2c</state>
+          <state>$PROJ_DIR$/../../../../../../components/codec</state>
+          <state>$PROJ_DIR$/../../../../../../components/codec/port</state>
+          <state>$PROJ_DIR$/../../../../../../components/codec/port/wm8904</state>
+          <state>$PROJ_DIR$/../../../../../../components/codec/wm8904</state>
+          <state>$PROJ_DIR$/../../../../../../components/i2c</state>
+          <state>$PROJ_DIR$/../../../../../../components/uart</state>
+          <state>$PROJ_DIR$/../../../../../../components/osa</state>
+          <state>$PROJ_DIR$/../../../../../../components/pmic/pca9420</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/usb/device</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/usb/device/class</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg-lite/lib/include</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg-lite/lib/include/environment/freertos</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg-lite/lib/include/platform/imxrt600_m33</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include</state>
+          <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM33_NTZ/non_secure</state>
+          <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/template</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -1819,7 +1955,7 @@
         </option>
         <option>
           <name>OOCOutputFile</name>
-          <state>sdk20-app.bin</state>
+          <state>dsp_xaf_usb_demo.bin</state>
         </option>
         <option>
           <name>OOCCommandLineProducer</name>
@@ -1833,27 +1969,18 @@
     </settings>
     <settings>
       <name>CUSTOM</name>
-      <archiveVersion>3</archiveVersion>
+      <archiveVersion>4</archiveVersion>
       <data>
         <extensions/>
         <cmdline/>
-        <hasPrio>0</hasPrio>
         <buildSequence>inputOutputBased</buildSequence>
-      </data>
-    </settings>
-    <settings>
-      <name>BUILDACTION</name>
-      <archiveVersion>2</archiveVersion>
-      <data>
-        <prebuild/>
-        <postbuild/>
       </data>
     </settings>
     <settings>
       <name>ILINK</name>
       <archiveVersion>0</archiveVersion>
       <data>
-        <version>27</version>
+        <version>28</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -1882,7 +2009,7 @@
         </option>
         <option>
           <name>IlinkRawBinaryFile</name>
-          <state>$PROJ_DIR$/../../dsp/binary/dsp_literal_release.bin</state>
+          <state>$PROJ_DIR$/../../../../../../boards/evkmimxrt685/dsp_examples/xaf_usb_demo/hifi4/binary/dsp_literal_release.bin</state>
         </option>
         <option>
           <name>IlinkRawBinarySymbol</name>
@@ -1969,8 +2096,8 @@
         </option>
         <option>
           <name>IlinkExtraOptions</name>
-          <state>--image_input=$PROJ_DIR$/../../dsp/binary/dsp_data_release.bin,__dsp_data_bin,__dsp_data_section,4</state>
-          <state>--image_input=$PROJ_DIR$/../../dsp/binary/dsp_ncache_release.bin,__dsp_ncache_bin,__dsp_ncache_section,4</state>
+          <state>--image_input=$PROJ_DIR$/../../../../../../boards/evkmimxrt685/dsp_examples/xaf_usb_demo/hifi4/binary/dsp_data_release.bin,__dsp_data_bin,__dsp_data_section,4</state>
+          <state>--image_input=$PROJ_DIR$/../../../../../../boards/evkmimxrt685/dsp_examples/xaf_usb_demo/hifi4/binary/dsp_ncache_release.bin,__dsp_ncache_bin,__dsp_ncache_section,4</state>
         </option>
         <option>
           <name>IlinkLowLevelInterfaceSlave</name>
@@ -2174,7 +2301,7 @@
         </option>
         <option>
           <name>IlinkRawBinaryFile2</name>
-          <state>$PROJ_DIR$/../../dsp/binary/dsp_text_release.bin</state>
+          <state>$PROJ_DIR$/../../../../../../boards/evkmimxrt685/dsp_examples/xaf_usb_demo/hifi4/binary/dsp_text_release.bin</state>
         </option>
         <option>
           <name>IlinkRawBinarySymbol2</name>
@@ -2224,6 +2351,10 @@
           <name>IlinkFpuProcessor</name>
           <state>1</state>
         </option>
+        <option>
+          <name>IlinkSharedSlave</name>
+          <state>0</state>
+        </option>
       </data>
     </settings>
     <settings>
@@ -2247,17 +2378,22 @@
         </option>
       </data>
     </settings>
+    <settings>
+      <name>BUILDACTION</name>
+      <archiveVersion>2</archiveVersion>
+      <data>
+        <prebuild/>
+        <postbuild/>
+      </data>
+    </settings>
   </configuration>
   <group>
     <name>source</name>
     <file>
-      <name>$PROJ_DIR$/../dsp_config.h</name>
+      <name>$PROJ_DIR$/../main.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../main_cm33.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../main_cm33.h</name>
+      <name>$PROJ_DIR$/../main.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../cmd.c</name>
@@ -2272,13 +2408,13 @@
       <name>$PROJ_DIR$/../dsp_ipc.h</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../dsp_config.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../srtm_config.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../srtm_config_audio.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../srtm_config_nn.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../rpmsg_config.h</name>
@@ -2308,16 +2444,10 @@
       <name>$PROJ_DIR$/../audio_unified.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../FreeRTOSConfig.h</name>
-    </file>
-  </group>
-  <group>
-    <name>board</name>
-    <file>
-      <name>$PROJ_DIR$/../pin_mux.c</name>
+      <name>$PROJ_DIR$/../dsp_support.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../pin_mux.h</name>
+      <name>$PROJ_DIR$/../dsp_support.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../dsp_support.c</name>
@@ -2332,187 +2462,316 @@
       <name>$PROJ_DIR$/../pmic_support.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../board.c</name>
+      <name>$PROJ_DIR$/../FreeRTOSConfig_Gen.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../board.h</name>
+      <name>$PROJ_DIR$/../fsl_debug_console_conf.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../clock_config.c</name>
+      <name>$PROJ_DIR$/../fsl_os_abstraction_config.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../clock_config.h</name>
+      <name>$PROJ_DIR$/../mcux_config.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../rpmsg_config.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../usb_device_config.h</name>
     </file>
   </group>
   <group>
     <name>dsp_binary</name>
     <file>
-      <name>$PROJ_DIR$/../../dsp/binary/dsp_data_debug.bin</name>
+      <name>$PROJ_DIR$/../../hifi4/binary/dsp_literal_release.bin</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../dsp/binary/dsp_data_release.bin</name>
+      <name>$PROJ_DIR$/../../hifi4/binary/dsp_text_release.bin</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../dsp/binary/dsp_literal_debug.bin</name>
+      <name>$PROJ_DIR$/../../hifi4/binary/dsp_data_release.bin</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../dsp/binary/dsp_literal_release.bin</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../dsp/binary/dsp_ncache_debug.bin</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../dsp/binary/dsp_ncache_release.bin</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../dsp/binary/dsp_text_debug.bin</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../dsp/binary/dsp_text_release.bin</name>
+      <name>$PROJ_DIR$/../../hifi4/binary/dsp_ncache_release.bin</name>
     </file>
   </group>
   <group>
-    <name>doc</name>
+    <name>board</name>
     <file>
-      <name>$PROJ_DIR$/../readme.md</name>
+      <name>$PROJ_DIR$/../board.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../board.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../clock_config.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../clock_config.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../pin_mux.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../pin_mux.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../hardware_init.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../app.h</name>
     </file>
   </group>
   <group>
-    <name>usb</name>
+    <name>flash_config</name>
+    <file>
+      <name>$PROJ_DIR$/../../../../flash_config/flash_config.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../flash_config/flash_config.h</name>
+    </file>
+  </group>
+  <group>
+    <name>CMSIS</name>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/cmsis_compiler.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/cmsis_version.h</name>
+    </file>
     <group>
-      <name>device</name>
-      <group>
-        <name>source</name>
-        <file>
-          <name>$PROJ_DIR$/../usb_device_ch9.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../usb_device_ch9.h</name>
-        </file>
-        <group>
-          <name>lpcip3511</name>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/usb/device/usb_device_lpcip3511.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/usb/device/usb_device_lpcip3511.h</name>
-          </file>
-        </group>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/usb/device/usb_device_dci.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/usb/device/usb_device_dci.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/usb/device/usb_device_dci.h</name>
-        </file>
-      </group>
-      <group>
-        <name>class</name>
-        <file>
-          <name>$PROJ_DIR$/../usb_device_class.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../usb_device_class.h</name>
-        </file>
-        <group>
-          <name>audio</name>
-          <file>
-            <name>$PROJ_DIR$/../usb_device_audio.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../usb_device_audio.h</name>
-          </file>
-        </group>
-      </group>
-      <group>
-        <name>include</name>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/usb/device/usb_device.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/usb/device/usb_device.h</name>
-        </file>
-      </group>
-    </group>
-    <group>
-      <name>phy</name>
+      <name>m-profile</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/usb/phy/usb_phy.c</name>
+        <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/m-profile/cmsis_iccarm_m.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/usb/phy/usb_phy.h</name>
+        <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/m-profile/armv8m_mpu.h</name>
       </file>
     </group>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/core_cm33.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/tz_context.h</name>
+    </file>
+  </group>
+  <group>
+    <name>device</name>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/fsl_device_registers.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/MIMXRT685S_cm33.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/MIMXRT685S_cm33_COMMON.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/MIMXRT685S_cm33_features.h</name>
+    </file>
     <group>
-      <name>include</name>
+      <name>periph</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/usb/include/usb.h</name>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/periph/PERI_ADC.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/usb/include/usb_misc.h</name>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/periph/PERI_AHB_SECURE_CTRL.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/usb/include/usb_spec.h</name>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/periph/PERI_CACHE64_CTRL.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/periph/PERI_CACHE64_POLSEL.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/periph/PERI_CASPER.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/periph/PERI_CLKCTL0.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/periph/PERI_CLKCTL1.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/periph/PERI_CMP.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/periph/PERI_CRC.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/periph/PERI_CTIMER.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/periph/PERI_DMA.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/periph/PERI_DMIC.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/periph/PERI_FLEXCOMM.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/periph/PERI_FLEXSPI.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/periph/PERI_FREQME.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/periph/PERI_GPIO.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/periph/PERI_HASHCRYPT.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/periph/PERI_I2C.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/periph/PERI_I2S.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/periph/PERI_I3C.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/periph/PERI_INPUTMUX.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/periph/PERI_IOPCTL.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/periph/PERI_MRT.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/periph/PERI_MU.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/periph/PERI_OCOTP.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/periph/PERI_OSTIMER.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/periph/PERI_OTFAD.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/periph/PERI_PINT.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/periph/PERI_PMC.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/periph/PERI_POWERQUAD.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/periph/PERI_PUF.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/periph/PERI_RSTCTL0.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/periph/PERI_RSTCTL1.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/periph/PERI_RTC.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/periph/PERI_SCT.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/periph/PERI_SEMA42.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/periph/PERI_SPI.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/periph/PERI_SYSCTL0.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/periph/PERI_SYSCTL1.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/periph/PERI_TRNG.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/periph/PERI_USART.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/periph/PERI_USBHSD.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/periph/PERI_USBHSDCD.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/periph/PERI_USBHSH.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/periph/PERI_USBPHY.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/periph/PERI_USDHC.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/periph/PERI_UTICK.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/periph/PERI_WWDT.h</name>
+      </file>
+    </group>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/system_MIMXRT685S_cm33.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/system_MIMXRT685S_cm33.h</name>
+    </file>
+  </group>
+  <group>
+    <name>startup</name>
+    <group>
+      <name>iar</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/iar/startup_MIMXRT685S_cm33.s</name>
       </file>
     </group>
   </group>
   <group>
     <name>drivers</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_dsp.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_dsp.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_inputmux.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_inputmux.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_mu.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_mu.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_i3c.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_i3c.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_ctimer.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_ctimer.c</name>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_clock.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_clock.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_clock.c</name>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_dsp.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_i2c.h</name>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_dsp.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_i2c.c</name>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_i2s_bridge.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_sema42.h</name>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_i2s_bridge.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_sema42.c</name>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_inputmux_connections.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_gpio.h</name>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_power.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_gpio.c</name>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_power.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_reset.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_reset.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_cache.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_cache.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_common.h</name>
@@ -2527,34 +2786,10 @@
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_common_arm.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_power.h</name>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_ctimer.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_power.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_reset.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_reset.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_flexspi.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_flexspi.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_cache.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_cache.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_usart.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_usart.c</name>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_ctimer.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_flexcomm.h</name>
@@ -2563,152 +2798,119 @@
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_flexcomm.c</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_usart.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_usart.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_i2c.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_i2c.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_flexspi.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_flexspi.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_i3c.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_i3c.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_inputmux.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_inputmux.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_gpio.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_gpio.c</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_iopctl.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_inputmux_connections.h</name>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_mu.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_mu.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_sema42.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_sema42.c</name>
     </file>
   </group>
   <group>
-    <name>rpmsg_lite</name>
+    <name>utilities</name>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/fsl_assert.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/fsl_assert.c</name>
+    </file>
     <group>
-      <name>include</name>
-      <group>
-        <name>platform</name>
-        <group>
-          <name>imxrt600_m33</name>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/include/platform/imxrt600_m33/rpmsg_platform.h</name>
-          </file>
-        </group>
-      </group>
+      <name>str</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/include/rpmsg_queue.h</name>
-      </file>
-      <group>
-        <name>environment</name>
-        <group>
-          <name>freertos</name>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/include/environment/freertos/rpmsg_env_specific.h</name>
-          </file>
-        </group>
-      </group>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/include/rpmsg_lite.h</name>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/str/fsl_str.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/include/rpmsg_ns.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/include/llist.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/include/rpmsg_default_config.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/include/virtio_ring.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/include/virtqueue.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/include/rpmsg_compiler.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/include/rpmsg_env.h</name>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/str/fsl_str.c</name>
       </file>
     </group>
     <group>
-      <name>rpmsg_lite</name>
-      <group>
-        <name>porting</name>
-        <group>
-          <name>platform</name>
-          <group>
-            <name>imxrt600_m33</name>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/porting/platform/imxrt600_m33/rpmsg_platform.c</name>
-            </file>
-          </group>
-        </group>
-        <group>
-          <name>environment</name>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/porting/environment/rpmsg_env_freertos.c</name>
-          </file>
-        </group>
-      </group>
+      <name>debug_console</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/rpmsg_queue.c</name>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/debug_console/fsl_debug_console.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/rpmsg_lite.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/rpmsg_ns.c</name>
-      </file>
-    </group>
-    <group>
-      <name>common</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/common/llist.c</name>
-      </file>
-    </group>
-    <group>
-      <name>virtio</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/virtio/virtqueue.c</name>
-      </file>
-    </group>
-  </group>
-  <group>
-    <name>pmic_driver</name>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../components/pca9420/fsl_pca9420.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../components/pca9420/fsl_pca9420.c</name>
-    </file>
-  </group>
-  <group>
-    <name>codec</name>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../components/codec/wm8904/fsl_wm8904.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../components/codec/wm8904/fsl_wm8904.c</name>
-    </file>
-    <group>
-      <name>port</name>
-      <group>
-        <name>wm8904</name>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../components/codec/port/wm8904/fsl_codec_wm8904_adapter.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../components/codec/port/wm8904/fsl_codec_wm8904_adapter.h</name>
-        </file>
-      </group>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/codec/port/fsl_codec_adapter.h</name>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/debug_console/fsl_debug_console.c</name>
       </file>
     </group>
     <file>
-      <name>$PROJ_DIR$/../../../../../../components/codec/fsl_codec_common.h</name>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/shell/fsl_shell.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../components/codec/fsl_codec_common.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../components/codec/i2c/fsl_codec_i2c.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../components/codec/i2c/fsl_codec_i2c.c</name>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/shell/fsl_shell.c</name>
     </file>
   </group>
   <group>
     <name>component</name>
+    <group>
+      <name>lists</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/lists/fsl_component_generic_list.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/lists/fsl_component_generic_list.c</name>
+      </file>
+    </group>
+    <group>
+      <name>serial_manager</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/serial_manager/fsl_component_serial_manager.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/serial_manager/fsl_component_serial_port_internal.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/serial_manager/fsl_component_serial_manager.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/serial_manager/fsl_component_serial_port_uart.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/serial_manager/fsl_component_serial_port_uart.c</name>
+      </file>
+    </group>
     <group>
       <name>i2c</name>
       <file>
@@ -2728,39 +2930,9 @@
       </file>
     </group>
     <group>
-      <name>serial_manager</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/serial_manager/fsl_component_serial_port_uart.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/serial_manager/fsl_component_serial_port_uart.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/serial_manager/fsl_component_serial_manager.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/serial_manager/fsl_component_serial_port_internal.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/serial_manager/fsl_component_serial_manager.c</name>
-      </file>
-    </group>
-    <group>
-      <name>lists</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/lists/fsl_component_generic_list.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/lists/fsl_component_generic_list.c</name>
-      </file>
-    </group>
-    <group>
       <name>osa</name>
       <file>
         <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction_config.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction_free_rtos.h</name>
@@ -2769,58 +2941,244 @@
         <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction_free_rtos.c</name>
       </file>
     </group>
+    <group>
+      <name>pmic</name>
+      <group>
+        <name>pca9420</name>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../components/pmic/pca9420/fsl_pca9420.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../components/pmic/pca9420/fsl_pca9420.h</name>
+        </file>
+      </group>
+    </group>
   </group>
   <group>
-    <name>freertos</name>
+    <name>codec</name>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../components/codec/i2c/fsl_codec_i2c.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../components/codec/i2c/fsl_codec_i2c.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../components/codec/fsl_codec_common.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../components/codec/fsl_codec_common.c</name>
+    </file>
     <group>
-      <name>freertos-kernel</name>
+      <name>port</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/codec/port/fsl_codec_adapter.c</name>
+      </file>
       <group>
-        <name>portable</name>
+        <name>wm8904</name>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../components/codec/port/wm8904/fsl_codec_wm8904_adapter.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../components/codec/port/wm8904/fsl_codec_wm8904_adapter.c</name>
+        </file>
+      </group>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/codec/port/fsl_codec_adapter.h</name>
+      </file>
+    </group>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../components/codec/wm8904/fsl_wm8904.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../components/codec/wm8904/fsl_wm8904.c</name>
+    </file>
+  </group>
+  <group>
+    <name>usb</name>
+    <group>
+      <name>include</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/usb/include/usb.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/usb/include/usb_misc.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/usb/include/usb_spec.h</name>
+      </file>
+    </group>
+    <group>
+      <name>device</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/usb/device/usb_device.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/usb/device/usb_device_lpcip3511.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/usb/device/usb_device_lpcip3511.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/usb/device/usb_device_dci.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/usb/device/usb_device_dci.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/usb/device/usb_device_ch9.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/usb/device/usb_device_ch9.h</name>
+      </file>
+      <group>
+        <name>class</name>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/usb/device/class/usb_device_class.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/usb/device/class/usb_device_class.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/usb/device/class/usb_device_audio.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/usb/device/class/usb_device_audio.h</name>
+        </file>
+      </group>
+    </group>
+    <group>
+      <name>phy</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/usb/phy/usb_phy.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/usb/phy/usb_phy.h</name>
+      </file>
+    </group>
+  </group>
+  <group>
+    <name>rpmsg-lite</name>
+    <group>
+      <name>rpmsg-lite</name>
+      <group>
+        <name>lib</name>
         <group>
-          <name>IAR</name>
+          <name>include</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg-lite/lib/include/llist.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg-lite/lib/include/rpmsg_compiler.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg-lite/lib/include/rpmsg_default_config.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg-lite/lib/include/rpmsg_env.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg-lite/lib/include/rpmsg_lite.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg-lite/lib/include/virtio_ring.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg-lite/lib/include/virtqueue.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg-lite/lib/include/rpmsg_queue.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg-lite/lib/include/rpmsg_ns.h</name>
+          </file>
           <group>
-            <name>ARM_CM33_NTZ</name>
+            <name>environment</name>
             <group>
-              <name>non_secure</name>
+              <name>freertos</name>
               <file>
-                <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM33_NTZ/non_secure/mpu_wrappers_v2_asm.S</name>
+                <name>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg-lite/lib/include/environment/freertos/rpmsg_env_specific.h</name>
               </file>
+            </group>
+          </group>
+          <group>
+            <name>platform</name>
+            <group>
+              <name>imxrt600_m33</name>
               <file>
-                <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM33_NTZ/non_secure/port.c</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM33_NTZ/non_secure/portasm.h</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM33_NTZ/non_secure/portasm.s</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM33_NTZ/non_secure/portmacro.h</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM33_NTZ/non_secure/portmacrocommon.h</name>
+                <name>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg-lite/lib/include/platform/imxrt600_m33/rpmsg_platform.h</name>
               </file>
             </group>
           </group>
         </group>
         <group>
-          <name>MemMang</name>
+          <name>common</name>
           <file>
-            <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/MemMang/ReadMe.url</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/MemMang/heap_4.c</name>
+            <name>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg-lite/lib/common/llist.c</name>
           </file>
         </group>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/readme.txt</name>
-        </file>
+        <group>
+          <name>rpmsg_lite</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg-lite/lib/rpmsg_lite/rpmsg_lite.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg-lite/lib/rpmsg_lite/rpmsg_queue.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg-lite/lib/rpmsg_lite/rpmsg_ns.c</name>
+          </file>
+          <group>
+            <name>porting</name>
+            <group>
+              <name>environment</name>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg-lite/lib/rpmsg_lite/porting/environment/rpmsg_env_freertos.c</name>
+              </file>
+            </group>
+            <group>
+              <name>platform</name>
+              <group>
+                <name>imxrt600_m33</name>
+                <file>
+                  <name>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg-lite/lib/rpmsg_lite/porting/platform/imxrt600_m33/rpmsg_platform.c</name>
+                </file>
+              </group>
+            </group>
+          </group>
+        </group>
+        <group>
+          <name>virtio</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg-lite/lib/virtio/virtqueue.c</name>
+          </file>
+        </group>
       </group>
+    </group>
+  </group>
+  <group>
+    <name>freertos</name>
+    <group>
+      <name>freertos-kernel</name>
       <file>
         <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/croutine.c</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/event_groups.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/list.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/queue.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/stream_buffer.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/tasks.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/timers.c</name>
       </file>
       <group>
         <name>include</name>
@@ -2855,12 +3213,6 @@
           <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/mpu_wrappers.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/newlib-freertos.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/picolibc-freertos.h</name>
-        </file>
-        <file>
           <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/portable.h</name>
         </file>
         <file>
@@ -2890,112 +3242,64 @@
         <file>
           <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/timers.h</name>
         </file>
+      </group>
+      <group>
+        <name>portable</name>
+        <group>
+          <name>MemMang</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/MemMang/ReadMe.url</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/MemMang/heap_4.c</name>
+          </file>
+        </group>
         <file>
-          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/freertos_tasks_c_additions.h</name>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/readme.txt</name>
+        </file>
+        <group>
+          <name>IAR</name>
+          <group>
+            <name>ARM_CM33_NTZ</name>
+            <group>
+              <name>non_secure</name>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM33_NTZ/non_secure/mpu_wrappers_v2_asm.S</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM33_NTZ/non_secure/port.c</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM33_NTZ/non_secure/portasm.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM33_NTZ/non_secure/portasm.s</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM33_NTZ/non_secure/portmacro.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM33_NTZ/non_secure/portmacrocommon.h</name>
+              </file>
+            </group>
+          </group>
+        </group>
+      </group>
+      <group>
+        <name>template</name>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/template/FreeRTOSConfig.h</name>
         </file>
       </group>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/list.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/queue.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/stream_buffer.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/tasks.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/timers.c</name>
-      </file>
     </group>
   </group>
   <group>
-    <name>utilities</name>
+    <name>doc</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/shell/fsl_shell.c</name>
+      <name>$PROJ_DIR$/../readme.md</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/shell/fsl_shell.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/debug_console/fsl_debug_console.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/debug_console/fsl_debug_console.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/debug_console/fsl_debug_console_conf.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/fsl_assert.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/fsl_assert.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/str/fsl_str.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/str/fsl_str.h</name>
-    </file>
-  </group>
-  <group>
-    <name>device</name>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/fsl_device_registers.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/MIMXRT685S_cm33.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/MIMXRT685S_cm33_features.h</name>
-    </file>
-  </group>
-  <group>
-    <name>flash_config</name>
-    <file>
-      <name>$PROJ_DIR$/../../../../flash_config/flash_config.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../flash_config/flash_config.h</name>
-    </file>
-  </group>
-  <group>
-    <name>MIMXRT685S</name>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/system_MIMXRT685S_cm33.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/system_MIMXRT685S_cm33.h</name>
-    </file>
-    <group>
-      <name>iar</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/iar/startup_MIMXRT685S_cm33.s</name>
-      </file>
-    </group>
-  </group>
-  <group>
-    <name>CMSIS</name>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/cmsis_compiler.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/cmsis_iccarm.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/cmsis_version.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/core_cm33.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/mpu_armv8.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/tz_context.h</name>
+      <name>$PROJ_DIR$/../example_board_readme.md</name>
     </file>
   </group>
 </project>

@@ -163,7 +163,7 @@ enum _usart_interrupt_enable
  */
 enum _usart_flags
 {
-    kUSART_TxError            = (USART_FIFOSTAT_TXERR_MASK),       /*!< TEERR bit, sets if TX buffer is error */
+    kUSART_TxError            = (USART_FIFOSTAT_TXERR_MASK),       /*!< TXERR bit, sets if TX buffer is error */
     kUSART_RxError            = (USART_FIFOSTAT_RXERR_MASK),       /*!< RXERR bit, sets if RX buffer is error */
     kUSART_TxFifoEmptyFlag    = (USART_FIFOSTAT_TXEMPTY_MASK),     /*!< TXEMPTY bit, sets if TX buffer is empty */
     kUSART_TxFifoNotFullFlag  = (USART_FIFOSTAT_TXNOTFULL_MASK),   /*!< TXNOTFULL bit, sets if TX buffer is not full */
@@ -498,10 +498,8 @@ static inline uint32_t USART_GetStatusFlags(USART_Type *base)
 /*!
  * @brief Clear USART status flags.
  *
- * This function clear supported USART status flags
- * Flags that can be cleared or set are:
- *      kUSART_TxError
- *      kUSART_RxError
+ * This function clear supported USART status flags.
+ * The mask is a logical OR of enumeration members. See @ref kUSART_AllClearFlags.
  * For example:
  * @code
  *     USART_ClearStatusFlags(USART1, kUSART_TxError | kUSART_RxError)

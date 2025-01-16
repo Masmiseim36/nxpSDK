@@ -7,19 +7,13 @@
  */
 
 #include "fsl_spi.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 #include "fsl_debug_console.h"
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define EXAMPLE_SPI_SLAVE     SPI5
-#define EXAMPLE_SPI_SLAVE_IRQ FLEXCOMM5_IRQn
-
-#define EXAMPLE_SPI_SSEL 0
-#define EXAMPLE_SPI_SPOL kSPI_SpolActiveAllLow
 
 /*******************************************************************************
  * Prototypes
@@ -48,11 +42,7 @@ int main(void)
     spi_transfer_t xfer = {0};
     spi_slave_config_t userConfig;
 
-    CLOCK_AttachClk(kSFRO_to_FLEXCOMM5);
-
-    BOARD_InitBootPins();
-    BOARD_InitBootClocks();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
     PRINTF("\n\rSlave is working....\n\r");
 
     /*

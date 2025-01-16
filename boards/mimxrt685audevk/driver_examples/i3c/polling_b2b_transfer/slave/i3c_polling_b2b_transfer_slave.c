@@ -7,20 +7,14 @@
 /*  Standard C Included Files */
 #include <string.h>
 /*  SDK Included Files */
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
 #include "fsl_debug_console.h"
 #include "fsl_i3c.h"
+#include "app.h"
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define EXAMPLE_SLAVE              I3C
-#define I3C_SLAVE_CLOCK_FREQUENCY  CLOCK_GetLpOscFreq()
-#define I3C_TIME_OUT_INDEX         100000000
-#define I3C_MASTER_SLAVE_ADDR_7BIT 0x1EU
-#define I3C_DATA_LENGTH            34U
 #ifndef I3C_MASTER_SLAVE_ADDR_7BIT
 #define I3C_MASTER_SLAVE_ADDR_7BIT 0x1EU
 #endif
@@ -28,7 +22,7 @@
 #define I3C_DATA_LENGTH 34U
 #endif
 #ifndef EXAMPLE_I3C_HDR_SUPPORT
-#define EXAMPLE_I3C_HDR_SUPPORT 0
+#define EXAMPLE_I3C_HDR_SUPPORT 1
 #endif
 
 /*******************************************************************************
@@ -132,23 +126,7 @@ int main(void)
 #endif
     i3c_slave_config_t slaveConfig;
 
-    /* Attach main clock to I3C, 500MHz / 20 = 25MHz. */
-    CLOCK_AttachClk(kMAIN_CLK_to_I3C_CLK);
-    CLOCK_SetClkDiv(kCLOCK_DivI3cClk, 20);
-
-    /* Attach lposc_1m clock to I3C time control, clear halt for slow clock. */
-    CLOCK_AttachClk(kLPOSC_to_I3C_TC_CLK);
-    CLOCK_SetClkDiv(kCLOCK_DivI3cTcClk, 1);
-    CLOCK_SetClkDiv(kCLOCK_DivI3cSlowClk, 1);
-
-    /* Attach lposc_1m clock to I3C time control, clear halt for slow clock. */
-    CLOCK_AttachClk(kLPOSC_to_I3C_TC_CLK);
-    CLOCK_SetClkDiv(kCLOCK_DivI3cTcClk, 1);
-    CLOCK_SetClkDiv(kCLOCK_DivI3cSlowClk, 1);
-
-    BOARD_InitBootPins();
-    BOARD_InitBootClocks();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
 
     PRINTF("\r\nI3C board2board polling example -- Slave transfer.\r\n\r\n");
 

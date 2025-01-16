@@ -1,6 +1,5 @@
 /*
- * Copyright 2020 NXP
- * All rights reserved.
+ * Copyright 2020, 2024 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -10,20 +9,17 @@
 
 #include "fsl_debug_console.h"
 #include "lvgl_support.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 #include "lvgl.h"
 #include "gui_guider.h"
 #include "events_init.h"
 #include "custom.h"
+#include "lvgl_demo_utils.h"
 
-#include "fsl_dma.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define EXAMPLE_LPSPI_MASTER_DMA_BASEADDR DMA0
-
 
 /*******************************************************************************
  * Variables
@@ -34,24 +30,28 @@ lv_ui guider_ui;
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
+void print_cb(lv_log_level_t level, const char * buf);
 
 #if LV_USE_LOG
-static void print_cb(const char *buf)
+void print_cb(lv_log_level_t level, const char * buf)
 {
+    LV_UNUSED(level);
+
     PRINTF("\r%s\n", buf);
 }
 #endif
 
 static void AppTask(void *param)
 {
+    lv_init();
+    lv_port_disp_init();
+    lv_port_indev_init();
+
 #if LV_USE_LOG
     lv_log_register_print_cb(print_cb);
 #endif
 
-    lv_port_pre_init();
-    lv_init();
-    lv_port_disp_init();
-    lv_port_indev_init();
+    LV_LOG("lvgl guider demo started\r\n");
 
     s_lvgl_initialized = true;
 
@@ -61,8 +61,7 @@ static void AppTask(void *param)
 
     for (;;)
     {
-        lv_task_handler();
-        vTaskDelay(5);
+        vTaskDelay(lv_timer_handler());
     }
 }
 
@@ -77,12 +76,10 @@ int main(void)
     BaseType_t stat;
 
     /* Init board hardware. */
-    BOARD_InitPins();
-    BOARD_InitBootClocks();
-    BOARD_InitDebugConsole();
-    DMA_Init(EXAMPLE_LPSPI_MASTER_DMA_BASEADDR);
+    BOARD_InitHardware();
+    DEMO_InitUsTimer();
 
-    stat = xTaskCreate(AppTask, "lvgl", configMINIMAL_STACK_SIZE + 800, NULL, tskIDLE_PRIORITY + 2, NULL);
+    stat = xTaskCreate(AppTask, "lvgl", 1024, NULL, tskIDLE_PRIORITY + 2, NULL);
 
     if (pdPASS != stat)
     {

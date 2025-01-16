@@ -12,9 +12,8 @@
 
 #include "fsl_device_registers.h"
 #include "fsl_debug_console.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 
 #include "fsl_casper.h"
 
@@ -29,11 +28,9 @@
 
 #include <string.h>
 
-#include "fsl_power.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-
 #define TEST_ASSERT(a)       \
     if (!(a))                \
     {                        \
@@ -99,13 +96,7 @@ static uint8_t plaintext[2048 / 8];
 int main(void)
 {
     /* Init hardware */
-    BOARD_InitBootPins();
-    BOARD_InitBootClocks();
-    BOARD_InitDebugConsole();
-    /*Make sure casper ram buffer has power up*/
-    POWER_DisablePD(kPDRUNCFG_APD_CASPER_SRAM);
-    POWER_DisablePD(kPDRUNCFG_PPD_CASPER_SRAM);
-    POWER_ApplyPD();
+    BOARD_InitHardware();
 
     /* Initialize CASPER */
     CASPER_Init(CASPER);

@@ -9,6 +9,7 @@
 #include <errno/errno.h>
 #include <toolchain.h>
 #include <porting.h>
+#include <bluetooth/l2cap.h>
 #include <bluetooth/gatt.h>
 #include <bluetooth/hci.h>
 #include <bluetooth/uuid.h>
@@ -18,7 +19,7 @@
 
 #define MSG_LEN             5
 
-NET_BUF_POOL_DEFINE(buf_pool, 1, MSG_LEN, USER_DATA_MIN, NULL);
+NET_BUF_POOL_DEFINE(buf_pool, 1, BT_L2CAP_SDU_BUF_SIZE(MSG_LEN), USER_DATA_MIN, NULL);
 static uint8_t s_Msg[MSG_LEN] = {'h','e','l','l','o'};
 
 static void bt_ready(int err);
@@ -130,7 +131,7 @@ static void device_found(const bt_addr_le_t *addr, int8_t rssi, uint8_t type,
 static bool device_scanned(struct bt_data *data, void *user_data)
 {
     bt_addr_le_t *addr = user_data;
-    struct bt_uuid *uuid;
+    const struct bt_uuid *uuid;
     uint16_t u16;
     int err;
     int i;
@@ -327,10 +328,11 @@ void central_ipsp_task(void *pvParameters)
     while (1)
     {
         vTaskDelay(5000);
-        
+
         buf = net_buf_alloc(&buf_pool, osaWaitNone_c);
         if (NULL != buf)
         {
+            net_buf_reserve(buf, BT_L2CAP_SDU_CHAN_SEND_RESERVE);
             net_buf_add_mem(buf, s_Msg, MSG_LEN);
             err = ipsp_send(buf);
             if (err)
@@ -344,7 +346,7 @@ void central_ipsp_task(void *pvParameters)
                 {
                     PRINTF("IPSP send failed (err %d)\r\n", err);
                 }
-                
+
             }
             else
             {

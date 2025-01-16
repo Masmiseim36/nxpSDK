@@ -8,20 +8,17 @@
 /*  Standard C Included Files */
 #include <string.h>
 /*  SDK Included Files */
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
 #include "fsl_debug_console.h"
 #include "fsl_i2c.h"
 #include "Driver_I2C.h"
 #include "fsl_i2c_cmsis.h"
 #include "fsl_i2c_dma.h"
+#include "app.h"
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define EXAMPLE_DMA        DMA0
-#define EXAMPLE_I2C_MASTER (Driver_I2C4)
 
 #define I2C_DATA_LENGTH       32U
 #define I2C_MASTER_SLAVE_ADDR 0x7E
@@ -41,12 +38,6 @@ volatile bool g_MasterCompletionFlag = false;
 /*******************************************************************************
  * Code
  ******************************************************************************/
-
-uint32_t I2C4_GetFreq(void)
-{
-    return CLOCK_GetFlexCommClkFreq(4U);
-}
-
 void I2C_MasterSignalEvent_t(uint32_t event)
 {
     /*  Transfer done */
@@ -61,12 +52,7 @@ void I2C_MasterSignalEvent_t(uint32_t event)
  */
 int main(void)
 {
-    /* Use 16 MHz clock for the FLEXCOMM4 */
-    CLOCK_AttachClk(kSFRO_to_FLEXCOMM4);
-
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
     /* Init DMA for example*/
     DMA_Init(EXAMPLE_DMA);
 

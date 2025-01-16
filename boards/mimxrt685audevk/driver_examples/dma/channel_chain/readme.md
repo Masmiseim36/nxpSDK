@@ -1,59 +1,37 @@
-Overview
-========
-The DMA channel chain transfer example is a simple demonstration program about how to use channel chain feaute with the SDK software.
-In this example three channel is used, 
-          
-          ------->channel1
+# dma_channel_chain
+
+## Overview
+The DMA channel chain transfer example is a simple demonstration program about how to use channel
+chain feaute with the SDK software.
+In this example three channel is used,
+```
+          ------->channel1------->channel0
           |
-channel0-->------>channel0
+channel0-->
           |
           ------->channel2
+```
+Channel0 is configured with two descriptor, first descriptor is linked to the second, then trigger
+the channel0 by software, after channel0 first descriptor finish, it will trigger channel1 and
+channel2 start transfer, after channel1 descriptor exhaust it will trigger channel0, then channel0
+second descritpor will be carried out, after second descriptor exhaust, example finish.
 
-Channel0 is configured with two descriptor, first descriptor is linked to the second, then trigger the channel0 by software, after channel0 first descriptor finish, it will trigger channel1 and channel2 start transfer, and trigger channel0 again, then channel0 second descritpor will be carried out, after second descriptor exhaust, example finish.
-
-
-SDK version
-===========
-- Version: 2.16.000
-
-Toolchain supported
-===================
-- IAR embedded Workbench  9.60.1
-- Keil MDK  5.39.0
-- GCC ARM Embedded  13.2.1
-- MCUXpresso  11.10.0
-
-Hardware requirements
-=====================
-- Micro USB cable
-- MIMXRT685-AUD-EVK board
-- Personal Computer
-
-Board settings
-==============
-
-
-Prepare the Demo
-================
-1.  Connect a micro USB cable between the PC host and the CMSIS DAP USB port (J5) on the board
-2.  Open a serial terminal with the following settings:
-    - 115200 baud rate
-    - 8 data bits
-    - No parity
-    - One stop bit
-    - No flow control
-3.  Download the program to the target board.
-4.  Launch the debugger in your IDE to begin running the demo.
-
-Running the demo
-================
-When the example runs successfully, the following message is displayed in the terminal:
-~~~~~~~~~~~~~~~~~~~~~
-DMA channel chain example begin.
-Destination Buffer:
-0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0
-DMA channel chain example finish.
-Destination Buffer:
-1	2	3	4	11	22	33	44 111 222 333 444	1111 2222 3333 4444
-~~~~~~~~~~~~~~~~~~~~~
-
+## Supported Boards
+- [EVK-MIMXRT595](../../../_boards/evkmimxrt595/driver_examples/dma/channel_chain/example_board_readme.md)
+- [EVK-MIMXRT685](../../../_boards/evkmimxrt685/driver_examples/dma/channel_chain/example_board_readme.md)
+- [FRDM-RW612](../../../_boards/frdmrw612/driver_examples/dma/channel_chain/example_board_readme.md)
+- [LPC845BREAKOUT](../../../_boards/lpc845breakout/driver_examples/dma/channel_chain/example_board_readme.md)
+- [LPCXpresso51U68](../../../_boards/lpcxpresso51u68/driver_examples/dma/channel_chain/example_board_readme.md)
+- [LPCXpresso54628](../../../_boards/lpcxpresso54628/driver_examples/dma/channel_chain/example_board_readme.md)
+- [LPCXpresso54S018](../../../_boards/lpcxpresso54s018/driver_examples/dma/channel_chain/example_board_readme.md)
+- [LPCXpresso54S018M](../../../_boards/lpcxpresso54s018m/driver_examples/dma/channel_chain/example_board_readme.md)
+- [LPCXpresso55S06](../../../_boards/lpcxpresso55s06/driver_examples/dma/channel_chain/example_board_readme.md)
+- [LPCXpresso55S16](../../../_boards/lpcxpresso55s16/driver_examples/dma/channel_chain/example_board_readme.md)
+- [LPCXpresso55S28](../../../_boards/lpcxpresso55s28/driver_examples/dma/channel_chain/example_board_readme.md)
+- [LPCXpresso55S36](../../../_boards/lpcxpresso55s36/driver_examples/dma/channel_chain/example_board_readme.md)
+- [LPCXpresso55S69](../../../_boards/lpcxpresso55s69/driver_examples/dma/channel_chain/example_board_readme.md)
+- [LPCXpresso824MAX](../../../_boards/lpcxpresso824max/driver_examples/dma/channel_chain/example_board_readme.md)
+- [LPCXpresso845MAX](../../../_boards/lpcxpresso845max/driver_examples/dma/channel_chain/example_board_readme.md)
+- [LPCXpresso860MAX](../../../_boards/lpcxpresso860max/driver_examples/dma/channel_chain/example_board_readme.md)
+- [MIMXRT685-AUD-EVK](../../../_boards/mimxrt685audevk/driver_examples/dma/channel_chain/example_board_readme.md)
+- [RD-RW612-BGA](../../../_boards/rdrw612bga/driver_examples/dma/channel_chain/example_board_readme.md)

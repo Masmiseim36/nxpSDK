@@ -1,18 +1,18 @@
 /*
- * Copyright 2019-2020 NXP
+ * Copyright 2019-2024 NXP
  * All rights reserved.
  *
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-#include "dsp_ipc.h"
 #include "FreeRTOS.h"
 #include "semphr.h"
 #include "queue.h"
 #include "rpmsg_lite.h"
 #include "rpmsg_ns.h"
 #include "rpmsg_queue.h"
+#include "dsp_ipc.h"
 #include "srtm_config.h"
 
 /*******************************************************************************
@@ -89,25 +89,25 @@ static void inline dsp_ipc_unlock()
     xSemaphoreGive(dsp_ipc.mutex);
 }
 
-void inline dsp_ipc_send_sync(srtm_message *msg)
+void dsp_ipc_send_sync(srtm_message *msg)
 {
     rpmsg_lite_send(dsp_ipc.my_rpmsg, dsp_ipc.my_ept, dsp_ipc.remote_addr, (char *)msg, sizeof(srtm_message), RL_BLOCK);
 }
 
-void inline dsp_ipc_recv_sync(srtm_message *msg)
+void dsp_ipc_recv_sync(srtm_message *msg)
 {
     rpmsg_queue_recv(dsp_ipc.my_rpmsg, dsp_ipc.my_queue, (uint32_t *)&(dsp_ipc.remote_addr), (char *)msg,
                      sizeof(srtm_message), RL_NULL, RL_BLOCK);
 }
 
-void inline dsp_ipc_send_async(srtm_message_async *msg)
+void dsp_ipc_send_async(srtm_message_async *msg)
 {
     xQueueSend(dsp_ipc.queue, msg, portMAX_DELAY);
 }
 
 void dsp_ipc_queue_worker_task()
 {
-    srtm_message_async msg_async;
+    srtm_message_async msg_async = {0};
     BaseType_t rc;
 
     while (1)

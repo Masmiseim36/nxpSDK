@@ -8,19 +8,13 @@
  */
 
 #include "fsl_debug_console.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 #include "fsl_lpadc.h"
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_LPADC_BASE             ADC0
-#define DEMO_LPADC_IRQn             ADC0_IRQn
-#define DEMO_LPADC_IRQ_HANDLER_FUNC ADC0_IRQHandler
-#define DEMO_LPADC_USER_CHANNEL     0U
-#define DEMO_LPADC_USER_CMDID       15U
 
 /*******************************************************************************
  * Prototypes
@@ -58,15 +52,7 @@ int main(void)
     lpadc_conv_trigger_config_t mLpadcTriggerConfigStruct;
     lpadc_conv_command_config_t mLpadcCommandConfigStruct;
 
-    BOARD_InitBootPins();
-    BOARD_InitBootClocks();
-    BOARD_InitDebugConsole();
-
-    SYSCTL0->PDRUNCFG0_CLR = SYSCTL0_PDRUNCFG0_ADC_PD_MASK;
-    SYSCTL0->PDRUNCFG0_CLR = SYSCTL0_PDRUNCFG0_ADC_LP_MASK;
-    RESET_PeripheralReset(kADC0_RST_SHIFT_RSTn);
-    CLOCK_AttachClk(kSFRO_to_ADC_CLK);
-    CLOCK_SetClkDiv(kCLOCK_DivAdcClk, 1);
+    BOARD_InitHardware();
 
     PRINTF("LPADC Single Interrupt Example\r\n");
 

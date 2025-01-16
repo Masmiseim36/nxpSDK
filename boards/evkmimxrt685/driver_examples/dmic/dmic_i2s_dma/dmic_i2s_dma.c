@@ -6,7 +6,7 @@
  */
 #include <stdlib.h>
 #include <string.h>
-#include "pin_mux.h"
+#include "app.h"
 #include "board.h"
 #include "fsl_debug_console.h"
 #include "fsl_device_registers.h"
@@ -16,35 +16,9 @@
 #include "fsl_i2s.h"
 #include "fsl_i2s_dma.h"
 #include "fsl_codec_common.h"
-#include <stdbool.h>
-#include "fsl_codec_adapter.h"
-#include "fsl_wm8904.h"
-#include "fsl_i2s_bridge.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-
-#define DMAREQ_DMIC0                    16U
-#define DEMO_I2S_MASTER_CLOCK_FREQUENCY CLOCK_GetMclkClkFreq()
-#define DEMO_I2S_TX                     (I2S3)
-#define DEMO_I2S_CLOCK_DIVIDER                                                                                 \
-    (24576000U / 48000U / 16U / 2) /* I2S source clock 24.576MHZ, sample rate 48KHZ, bits width 16, 2 channel, \
-                                  so bitclock should be 48KHZ * 16 = 768KHZ, divider should be 24.576MHZ / 768KHZ */
-#define DEMO_DMIC_NUMS 2U
-
-#define DEMO_DMA               (DMA0)
-#define DEMO_DMIC_RX_CHANNEL   DMAREQ_DMIC0
-#define DEMO_DMIC_RX_CHANNEL_1 17
-#define DEMO_I2S_TX_CHANNEL    (7)
-#define DEMO_I2S_TX_MODE       kI2S_MasterSlaveNormalSlave
-
-#define DEMO_DMIC_CHANNEL          kDMIC_Channel0
-#define DEMO_DMIC_CHANNEL_1        kDMIC_Channel1
-#define DEMO_DMIC_CHANNEL_1_ENABLE DMIC_CHANEN_EN_CH1(1)
-#define DEMO_DMIC_CHANNEL_ENABLE   DMIC_CHANEN_EN_CH0(1)
-#define DEMO_AUDIO_BIT_WIDTH       (16)
-#define DEMO_AUDIO_SAMPLE_RATE     (48000)
-#define DEMO_AUDIO_PROTOCOL        kCODEC_BusI2S
 #ifndef DEMO_DMIC_NUMS
 #define DEMO_DMIC_NUMS 1U
 #endif
@@ -63,18 +37,6 @@
 /*******************************************************************************
  * Variables
  ******************************************************************************/
-wm8904_config_t wm8904Config = {
-    .i2cConfig          = {.codecI2CInstance = BOARD_CODEC_I2C_INSTANCE},
-    .recordSource       = kWM8904_RecordSourceLineInput,
-    .recordChannelLeft  = kWM8904_RecordChannelLeft2,
-    .recordChannelRight = kWM8904_RecordChannelRight2,
-    .playSource         = kWM8904_PlaySourceDAC,
-    .slaveAddress       = WM8904_I2C_ADDRESS,
-    .protocol           = kWM8904_ProtocolI2S,
-    .format             = {.sampleRate = kWM8904_SampleRate48kHz, .bitWidth = kWM8904_BitWidth16},
-    .master             = true,
-};
-codec_config_t boardCodecConfig = {.codecDevType = kCODEC_WM8904, .codecDevConfig = &wm8904Config};
 static i2s_config_t tx_config;
 extern codec_config_t boardCodecConfig;
 static uint8_t s_buffer[PLAYBACK_BUFFER_SIZE * BUFFER_NUM];
@@ -141,64 +103,6 @@ codec_handle_t codecHandle;
 /*******************************************************************************
  * Code
  ******************************************************************************/
-static void i2c_release_bus_delay(void)
-{
-    uint32_t i = 0;
-    for (i = 0; i < 100; i++)
-    {
-        __NOP();
-    }
-}
-
-void BOARD_I3C_ReleaseBus(void)
-{
-    uint8_t i = 0;
-
-    GPIO_PortInit(BOARD_INITI3CPINSASGPIO_I3C0_SDA_PERIPHERAL, BOARD_INITI3CPINSASGPIO_I3C0_SDA_PORT);
-    GPIO_PortInit(BOARD_INITI3CPINSASGPIO_I3C0_SCL_PERIPHERAL, BOARD_INITI3CPINSASGPIO_I3C0_SCL_PORT);
-
-    BOARD_InitI3CPinsAsGPIO();
-
-    /* Drive SDA low first to simulate a start */
-    GPIO_PinWrite(BOARD_INITI3CPINSASGPIO_I3C0_SDA_PERIPHERAL, BOARD_INITI3CPINSASGPIO_I3C0_SDA_PORT,
-                  BOARD_INITI3CPINSASGPIO_I3C0_SDA_PIN, 0U);
-    i2c_release_bus_delay();
-
-    /* Send 9 pulses on SCL */
-    for (i = 0; i < 9; i++)
-    {
-        GPIO_PinWrite(BOARD_INITI3CPINSASGPIO_I3C0_SCL_PERIPHERAL, BOARD_INITI3CPINSASGPIO_I3C0_SCL_PORT,
-                      BOARD_INITI3CPINSASGPIO_I3C0_SCL_PIN, 0U);
-        i2c_release_bus_delay();
-
-        GPIO_PinWrite(BOARD_INITI3CPINSASGPIO_I3C0_SDA_PERIPHERAL, BOARD_INITI3CPINSASGPIO_I3C0_SDA_PORT,
-                      BOARD_INITI3CPINSASGPIO_I3C0_SDA_PIN, 1U);
-        i2c_release_bus_delay();
-
-        GPIO_PinWrite(BOARD_INITI3CPINSASGPIO_I3C0_SCL_PERIPHERAL, BOARD_INITI3CPINSASGPIO_I3C0_SCL_PORT,
-                      BOARD_INITI3CPINSASGPIO_I3C0_SCL_PIN, 1U);
-        i2c_release_bus_delay();
-        i2c_release_bus_delay();
-    }
-
-    /* Send stop */
-    GPIO_PinWrite(BOARD_INITI3CPINSASGPIO_I3C0_SCL_PERIPHERAL, BOARD_INITI3CPINSASGPIO_I3C0_SCL_PORT,
-                  BOARD_INITI3CPINSASGPIO_I3C0_SCL_PIN, 0U);
-    i2c_release_bus_delay();
-
-    GPIO_PinWrite(BOARD_INITI3CPINSASGPIO_I3C0_SDA_PERIPHERAL, BOARD_INITI3CPINSASGPIO_I3C0_SDA_PORT,
-                  BOARD_INITI3CPINSASGPIO_I3C0_SDA_PIN, 0U);
-    i2c_release_bus_delay();
-
-    GPIO_PinWrite(BOARD_INITI3CPINSASGPIO_I3C0_SCL_PERIPHERAL, BOARD_INITI3CPINSASGPIO_I3C0_SCL_PORT,
-                  BOARD_INITI3CPINSASGPIO_I3C0_SCL_PIN, 1U);
-    i2c_release_bus_delay();
-
-    GPIO_PinWrite(BOARD_INITI3CPINSASGPIO_I3C0_SDA_PERIPHERAL, BOARD_INITI3CPINSASGPIO_I3C0_SDA_PORT,
-                  BOARD_INITI3CPINSASGPIO_I3C0_SDA_PIN, 1U);
-    i2c_release_bus_delay();
-}
-
 
 void dmic_Callback(DMIC_Type *base, dmic_dma_handle_t *handle, status_t status, void *userData)
 {
@@ -226,41 +130,7 @@ int main(void)
     i2s_transfer_t i2sTxTransfer;
 
     /* Board pin, clock, debug console init */
-    BOARD_InitBootPins();
-    BOARD_InitBootClocks();
-    BOARD_InitDebugConsole();
-    BOARD_I3C_ReleaseBus();
-    BOARD_InitI3CPins();
-
-    CLOCK_EnableClock(kCLOCK_InputMux);
-
-    /* attach main clock to I3C (500MHz / 20 = 25MHz). */
-    CLOCK_AttachClk(kMAIN_CLK_to_I3C_CLK);
-    CLOCK_SetClkDiv(kCLOCK_DivI3cClk, 20);
-
-    /* attach AUDIO PLL clock to FLEXCOMM1 (I2S1) */
-    CLOCK_AttachClk(kAUDIO_PLL_to_FLEXCOMM1);
-    /* attach AUDIO PLL clock to FLEXCOMM3 (I2S3) */
-    CLOCK_AttachClk(kAUDIO_PLL_to_FLEXCOMM3);
-
-    /* attach AUDIO PLL clock to MCLK */
-    CLOCK_AttachClk(kAUDIO_PLL_to_MCLK_CLK);
-    CLOCK_SetClkDiv(kCLOCK_DivMclkClk, 1);
-    SYSCTL1->MCLKPINDIR = SYSCTL1_MCLKPINDIR_MCLKPINDIR_MASK;
-
-    /* DMIC source from audio pll, divider 8, 24.576M/8=3.072MHZ */
-    CLOCK_AttachClk(kAUDIO_PLL_to_DMIC_CLK);
-    CLOCK_SetClkDiv(kCLOCK_DivDmicClk, 8);
-
-    wm8904Config.i2cConfig.codecI2CSourceClock = CLOCK_GetI3cClkFreq();
-    wm8904Config.mclk_HZ                       = CLOCK_GetMclkClkFreq();
-
-    /* Set shared signal set 0: SCK, WS from Flexcomm1 */
-    I2S_BRIDGE_SetShareSignalSrc(kI2S_BRIDGE_ShareSet0, kI2S_BRIDGE_SignalSCK, kI2S_BRIDGE_Flexcomm1);
-    I2S_BRIDGE_SetShareSignalSrc(kI2S_BRIDGE_ShareSet0, kI2S_BRIDGE_SignalWS, kI2S_BRIDGE_Flexcomm1);
-    /* Set flexcomm3 SCK, WS from shared signal set 0 */
-    I2S_BRIDGE_SetFlexcommSignalShareSet(kI2S_BRIDGE_Flexcomm3, kI2S_BRIDGE_SignalSCK, kI2S_BRIDGE_ShareSet0);
-    I2S_BRIDGE_SetFlexcommSignalShareSet(kI2S_BRIDGE_Flexcomm3, kI2S_BRIDGE_SignalWS, kI2S_BRIDGE_ShareSet0);
+    BOARD_InitHardware();
 
     PRINTF("Configure codec\r\n");
 

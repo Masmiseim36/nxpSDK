@@ -1,6 +1,5 @@
 /*
  * Copyright 2020 NXP
- * All rights reserved.
  *
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -112,7 +111,7 @@ flexspi_device_config_t deviceconfig = {
     .AHBWriteWaitInterval = 0,
 };
 
-static const uint32_t customLUT[CUSTOM_LUT_LENGTH] = {
+static uint32_t customLUT[CUSTOM_LUT_LENGTH] = {
 
     /*  OPI DDR read */
     [4 * NOR_CMD_LUT_SEQ_IDX_READ + 0] =

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<BuildTarget tool="xtensa" version="1.0">
+  <BuildSettings>
+    <BaseSettings path="project">
+      <PreprocessorOptions>
+        <StringListMapOptions>
+          <StringListMapEntry>
+            <key>Includes</key>
+            <value flag="-I" inheritance="donotinherit">
+              <ListEntry>${xt_project_loc}/..</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../devices/MIMXRT798S</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../devices/MIMXRT798S/periph</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../devices/periph</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../devices/MIMXRT798S/drivers</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../devices/MIMXRT798S/utilities/debug_console_lite</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../devices/MIMXRT798S/utilities/str</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../components/uart</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../middleware/cadence/naturedsp/hifi4/include</ListEntry>
+            </value>
+          </StringListMapEntry>
+        </StringListMapOptions>
+        <KeyValueListMapOptions>
+          <KeyValueListMapEntry>
+            <key>Defines</key>
+            <value flag="-D">
+              <ListEntry key="NDEBUG" value=""/>
+              <ListEntry key="SDK_DEBUGCONSOLE" value="1"/>
+              <ListEntry key="MCUX_META_BUILD" value=""/>
+              <ListEntry key="MCUXPRESSO_SDK" value=""/>
+              <ListEntry key="CPU_MIMXRT798SGFOA_hifi4" value=""/>
+            </value>
+          </KeyValueListMapEntry>
+        </KeyValueListMapOptions>
+      </PreprocessorOptions>
+      <CompilerOptions>
+        <StringListMapOptions>
+          <StringListMapEntry>
+            <key>CompilerAdditionalOptions</key>
+            <value flag="" inheritance="append">
+                        <ListEntry>-include ${xt_project_loc}/../mcux_config.h&#13;
+-Wno-unused&#13;
+-Wno-missing-braces&#13;
+-fmessage-length=0&#13;
+-std=gnu99&#13;
+--xtensa-core=rt700_hifi4_RI23_11_nlib&#13;
+--xtensa-system=${XTENSA_SYSTEM}</ListEntry></value>
+          </StringListMapEntry>
+        </StringListMapOptions>
+        <SingleFlagMapOptions>
+          <SingleFlagMapEntry>
+            <key>OptimizeSpace</key>
+            <value use="true" flag="-Os"/>
+          </SingleFlagMapEntry>
+          <SingleFlagMapEntry>
+            <key>WarningSetting</key>
+            <value use="true" flag="-Wall"/>
+          </SingleFlagMapEntry>
+          <SingleFlagMapEntry>
+            <key>SignCharType</key>
+            <value use="true" flag="-fsigned-char"/>
+          </SingleFlagMapEntry>
+        </SingleFlagMapOptions>
+      </CompilerOptions>
+      <AssemblerOptions>
+        <StringListMapOptions>
+          <StringListMapEntry>
+            <key>AssemblerAdditionalOptions</key>
+            <value inheritance="append">
+              <ListEntry>--xtensa-core=rt700_hifi4_RI23_11_nlib&#13;
+--xtensa-system=${XTENSA_SYSTEM}</ListEntry>
+            </value>
+          </StringListMapEntry>
+        </StringListMapOptions>
+      </AssemblerOptions>
+      <LinkerOptions>
+        <LinkerSupport custom="true" key="-mlsp" value="${xt_project_loc}/../../../../../../devices/MIMXRT798S/xtensa/hifi4/min-rt"/>
+        <StringListMapOptions>
+          <StringListMapEntry>
+            <key>LinkerAdditionalOptions</key>
+            <value inheritance="append">
+              <ListEntry>-Wl,--orphan-handling=place&#13;
+--xtensa-core=rt700_hifi4_RI23_11_nlib&#13;
+--xtensa-system=${XTENSA_SYSTEM}&#13;
+-Wl,--start-group&#13;
+${xt_project_loc}/../../../../../../middleware/cadence/naturedsp/hifi4_rt700/libnaturedsp.a&#13;
+-Wl,--end-group&#13;
+</ListEntry>
+            </value>
+          </StringListMapEntry>
+        </StringListMapOptions>
+      </LinkerOptions>
+    </BaseSettings>
+    <OverriddenSettings/>
+  </BuildSettings>
+</BuildTarget>

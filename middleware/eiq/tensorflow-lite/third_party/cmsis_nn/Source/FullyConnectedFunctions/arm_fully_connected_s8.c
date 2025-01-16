@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright 2010-2023 Arm Limited and/or its affiliates <open-source-office@arm.com>
+ * SPDX-FileCopyrightText: Copyright 2010-2024 Arm Limited and/or its affiliates <open-source-office@arm.com>
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -21,8 +21,8 @@
  * Title:        arm_fully_connected_s8
  * Description:  Fully connected function compatible with TF Lite.
  *
- * $Date:        13 January 2023
- * $Revision:    V.5.1.0
+ * $Date:        6 February 2024
+ * $Revision:    V.5.3.0
  *
  * Target :  Arm(R) M-Profile Architecture
  *
@@ -60,15 +60,24 @@ arm_cmsis_nn_status arm_fully_connected_s8(const cmsis_nn_context *ctx,
                                            int8_t *output)
 {
     (void)bias_dims;
-    (void)ctx;
-    (void)fc_params->filter_offset;
 
     int32_t batch_cnt = input_dims->n;
 
+#if defined(ARM_MATH_MVEI)
+    if (ctx->buf == NULL)
+    {
+        return (ARM_CMSIS_NN_ARG_ERROR);
+    }
+#endif
+
+    const int32_t *kernel_sum = (const int32_t *)ctx->buf;
+
     while (batch_cnt)
     {
+
         arm_nn_vec_mat_mult_t_s8(input,
                                  kernel,
+                                 kernel_sum,
                                  bias,
                                  output,
                                  fc_params->input_offset,
@@ -79,7 +88,9 @@ arm_cmsis_nn_status arm_fully_connected_s8(const cmsis_nn_context *ctx,
                                  output_dims->c, /* row_dim or output_depth */
                                  fc_params->activation.min,
                                  fc_params->activation.max,
-                                 1L);
+                                 1L,
+                                 fc_params->filter_offset);
+
         input += filter_dims->n;
         output += output_dims->c;
         batch_cnt--;

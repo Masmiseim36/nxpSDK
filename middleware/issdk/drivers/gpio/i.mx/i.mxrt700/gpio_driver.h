@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 NXP
+ * Copyright 2024 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -26,11 +26,14 @@
 */
 typedef enum port_number
 {
-    GPIO1_NUM = 0,
-    GPIO2_NUM = 1,
-    GPIO3_NUM = 2,
-    GPIO4_NUM = 3,
-    GPIO5_NUM = 4,
+    GPIO0_NUM = 0,
+    GPIO1_NUM = 1,
+    GPIO2_NUM = 2,
+    GPIO3_NUM = 3,
+    GPIO4_NUM = 4,
+    GPIO5_NUM = 5,
+    GPIO6_NUM = 6,
+    GPIO7_NUM = 7,
     TOTAL_NUMBER_PORT
 } port_number_t;
 

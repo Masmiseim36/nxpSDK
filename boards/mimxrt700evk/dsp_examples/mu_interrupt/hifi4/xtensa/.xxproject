@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xxProperties>
+  <propertyGroup name="build.exclusion.data">
+    <buildExclusionDatas>
+      <exclusionSet name="Default" selected="1">
+        <excludedEntry data="/.*/bin/.*"/>
+      </exclusionSet>
+    </buildExclusionDatas>
+  </propertyGroup>
+  <propertyGroup name="project.information">
+    <version value="3.0"/>
+  </propertyGroup>
+  <propertyGroup name="library.dependencies">
+    <libraryDependencies targetMappingRule="2"/>
+  </propertyGroup>
+  <propertyGroup name="build.property">
+    <buildTarget defaultTarget="Debug"/>
+  </propertyGroup>
+  <propertyGroup name="build.auto.includes">
+    <exportDirs autoConsumeDirs="true" includeDepDirs="false" mode="auto"/>
+  </propertyGroup>
+  <propertyGroup name="build.custom.steps">
+  <post-build enable="true"><content>${xt_project_loc}/../post_build.bat</content></post-build><pre-clean enable="true"><content>${xt_project_loc}/../pre_clean.bat</content></pre-clean></propertyGroup>
+</xxProperties>

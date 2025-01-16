@@ -1,0 +1,17 @@
+	    *(.data*)
+	    . = ALIGN(4);
+	    _net_buf_pool_list_start = .;
+	    KEEP(*(SORT(._net_buf_pool*)))
+	    _net_buf_pool_list_end = .;
+	    . = ALIGN(4);
+	    _k_mem_slab_list_start = .;
+	    KEEP(*(SORT(._k_mem_slab*)))
+	    _k_mem_slab_list_end = .;
+	    . = ALIGN(32);
+        *(CacheLineData.init)
+        . = ALIGN(32);
+        <#if memory.name=="SRAM">
+        *libethermind_lc3_ndsp_common.a(.text .text* .rodata .rodata*)
+        *libethermind_lc3_ndsp_encoder.a(.text .text* .rodata .rodata*)
+        *libethermind_lc3_ndsp_decoder.a(.text .text* .rodata .rodata*)
+        </#if>

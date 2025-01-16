@@ -1,13 +1,15 @@
 /*
- * Copyright 2018 - 2019 NXP
- * All rights reserved.
+ * Copyright 2018 - 2019, 2023 NXP
  *
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 #include "fsl_device_registers.h"
 #include "fsl_gpio.h"
+#if !(defined(FSL_FEATURE_PORT_HAS_NO_INTERRUPT) && FSL_FEATURE_PORT_HAS_NO_INTERRUPT) && \
+    defined(FSL_FEATURE_SOC_PORT_COUNT)
 #include "fsl_port.h"
+#endif
 #include "fsl_adapter_gpio.h"
 
 /* Component ID definition, used by tools. */
@@ -91,14 +93,15 @@ static void HAL_GpioInterruptHandle(uint8_t port)
 
     head = s_GpioHead;
 
-#if (defined(FSL_FEATURE_PORT_HAS_NO_INTERRUPT) && FSL_FEATURE_PORT_HAS_NO_INTERRUPT)
-    pinInterruptSetFlag = GPIO_GpioGetInterruptFlags(s_GpioPort[port]);
-    /* Clear external interrupt flag. */
-    GPIO_GpioClearInterruptFlags(s_GpioPort[port], pinInterruptSetFlag);
-#else
+#if !(defined(FSL_FEATURE_PORT_HAS_NO_INTERRUPT) && FSL_FEATURE_PORT_HAS_NO_INTERRUPT) && \
+    defined(FSL_FEATURE_SOC_PORT_COUNT)
     pinInterruptSetFlag = GPIO_PortGetInterruptFlags(s_GpioPort[port]);
     /* Clear external interrupt flag. */
     GPIO_PortClearInterruptFlags(s_GpioPort[port], pinInterruptSetFlag);
+#else
+    pinInterruptSetFlag = GPIO_GpioGetInterruptFlags(s_GpioPort[port]);
+    /* Clear external interrupt flag. */
+    GPIO_GpioClearInterruptFlags(s_GpioPort[port], pinInterruptSetFlag);
 #endif
     if (0U != pinInterruptSetFlag)
     {
@@ -201,66 +204,8 @@ static hal_gpio_status_t HAL_GpioRemoveItem(hal_gpio_state_t **head, hal_gpio_st
     return kStatus_HAL_GpioSuccess;
 }
 
-#if (defined(FSL_FEATURE_PORT_HAS_NO_INTERRUPT) && FSL_FEATURE_PORT_HAS_NO_INTERRUPT)
-
-#if (FSL_FEATURE_SOC_GPIO_COUNT > 0U)
-void GPIOA_INT0_IRQHandler(void);
-void GPIOA_INT0_IRQHandler(void)
-{
-    HAL_GpioInterruptHandle(0);
-    SDK_ISR_EXIT_BARRIER;
-}
-
-void GPIOA_INT1_IRQHandler(void);
-void GPIOA_INT1_IRQHandler(void)
-{
-    GPIOA_INT0_IRQHandler();
-}
-#endif
-
-#if (FSL_FEATURE_SOC_GPIO_COUNT > 1U)
-void GPIOB_INT0_IRQHandler(void);
-void GPIOB_INT0_IRQHandler(void)
-{
-    HAL_GpioInterruptHandle(1);
-    SDK_ISR_EXIT_BARRIER;
-}
-void GPIOB_INT1_IRQHandler(void);
-void GPIOB_INT1_IRQHandler(void)
-{
-    GPIOB_INT0_IRQHandler();
-}
-#endif
-
-#if (FSL_FEATURE_SOC_GPIO_COUNT > 2U)
-void GPIOC_INT0_IRQHandler(void);
-void GPIOC_INT0_IRQHandler(void)
-{
-    HAL_GpioInterruptHandle(2);
-    SDK_ISR_EXIT_BARRIER;
-}
-void GPIOC_INT1_IRQHandler(void);
-void GPIOC_INT1_IRQHandler(void)
-{
-    GPIOC_INT0_IRQHandler();
-}
-#endif
-
-#if (FSL_FEATURE_SOC_GPIO_COUNT > 3U)
-void GPIOD_INT0_IRQHandler(void);
-void GPIOD_INT0_IRQHandler(void)
-{
-    HAL_GpioInterruptHandle(3);
-    SDK_ISR_EXIT_BARRIER;
-}
-void GPIOD_INT1_IRQHandler(void);
-void GPIOD_INT1_IRQHandler(void)
-{
-    GPIOD_INT0_IRQHandler();
-}
-#endif
-
-#else
+#if !(defined(FSL_FEATURE_PORT_HAS_NO_INTERRUPT) && FSL_FEATURE_PORT_HAS_NO_INTERRUPT) && \
+    (defined(FSL_FEATURE_SOC_PORT_COUNT))
 
 #if (FSL_FEATURE_SOC_GPIO_COUNT > 0U)
 void PORTA_IRQHandler(void);
@@ -344,6 +289,256 @@ void PORTF_IRQHandler(void);
 void PORTF_IRQHandler(void)
 {
     HAL_GpioInterruptHandle(5);
+    SDK_ISR_EXIT_BARRIER;
+}
+#endif
+
+#else
+
+#if (FSL_FEATURE_SOC_GPIO_COUNT > 0U)
+void GPIOA_INT0_IRQHandler(void);
+void GPIOA_INT0_IRQHandler(void)
+{
+    HAL_GpioInterruptHandle(0);
+    SDK_ISR_EXIT_BARRIER;
+}
+
+void GPIOA_INT1_IRQHandler(void);
+void GPIOA_INT1_IRQHandler(void)
+{
+    GPIOA_INT0_IRQHandler();
+}
+#endif
+
+#if (FSL_FEATURE_SOC_GPIO_COUNT > 1U)
+void GPIOB_INT0_IRQHandler(void);
+void GPIOB_INT0_IRQHandler(void)
+{
+    HAL_GpioInterruptHandle(1);
+    SDK_ISR_EXIT_BARRIER;
+}
+void GPIOB_INT1_IRQHandler(void);
+void GPIOB_INT1_IRQHandler(void)
+{
+    GPIOB_INT0_IRQHandler();
+}
+#endif
+
+#if (FSL_FEATURE_SOC_GPIO_COUNT > 2U)
+void GPIOC_INT0_IRQHandler(void);
+void GPIOC_INT0_IRQHandler(void)
+{
+    HAL_GpioInterruptHandle(2);
+    SDK_ISR_EXIT_BARRIER;
+}
+void GPIOC_INT1_IRQHandler(void);
+void GPIOC_INT1_IRQHandler(void)
+{
+    GPIOC_INT0_IRQHandler();
+}
+#endif
+
+#if (FSL_FEATURE_SOC_GPIO_COUNT > 3U)
+void GPIOD_INT0_IRQHandler(void);
+void GPIOD_INT0_IRQHandler(void)
+{
+    HAL_GpioInterruptHandle(3);
+    SDK_ISR_EXIT_BARRIER;
+}
+void GPIOD_INT1_IRQHandler(void);
+void GPIOD_INT1_IRQHandler(void)
+{
+    GPIOD_INT0_IRQHandler();
+}
+#endif
+
+#if (FSL_FEATURE_SOC_GPIO_COUNT > 0U)
+void GPIO00_DriverIRQHandler(void);
+void GPIO00_DriverIRQHandler(void)
+{
+    HAL_GpioInterruptHandle(0);
+    SDK_ISR_EXIT_BARRIER;
+}
+
+void GPIO01_DriverIRQHandler(void);
+void GPIO01_DriverIRQHandler(void)
+{
+    GPIO00_DriverIRQHandler();
+}
+#endif
+
+#if (FSL_FEATURE_SOC_GPIO_COUNT > 1U)
+void GPIO10_DriverIRQHandler(void);
+void GPIO10_DriverIRQHandler(void)
+{
+    HAL_GpioInterruptHandle(1);
+    SDK_ISR_EXIT_BARRIER;
+}
+void GPIO11_DriverIRQHandler(void);
+void GPIO11_DriverIRQHandler(void)
+{
+    GPIO10_DriverIRQHandler();
+}
+#endif
+
+#if (FSL_FEATURE_SOC_GPIO_COUNT > 2U)
+void GPIO20_DriverIRQHandler(void);
+void GPIO20_DriverIRQHandler(void)
+{
+    HAL_GpioInterruptHandle(2);
+    SDK_ISR_EXIT_BARRIER;
+}
+void GPIO21_DriverIRQHandler(void);
+void GPIO21_DriverIRQHandler(void)
+{
+    GPIO20_DriverIRQHandler();
+}
+#endif
+
+#if (FSL_FEATURE_SOC_GPIO_COUNT > 3U)
+void GPIO30_DriverIRQHandler(void);
+void GPIO30_DriverIRQHandler(void)
+{
+    HAL_GpioInterruptHandle(3);
+    SDK_ISR_EXIT_BARRIER;
+}
+void GPIO31_DriverIRQHandler(void);
+void GPIO31_DriverIRQHandler(void)
+{
+    GPIO30_DriverIRQHandler();
+}
+#endif
+
+#if (FSL_FEATURE_SOC_GPIO_COUNT > 4U)
+void GPIO40_DriverIRQHandler(void);
+void GPIO40_DriverIRQHandler(void)
+{
+    HAL_GpioInterruptHandle(4);
+    SDK_ISR_EXIT_BARRIER;
+}
+void GPIO41_DriverIRQHandler(void);
+void GPIO41_DriverIRQHandler(void)
+{
+    GPIO40_DriverIRQHandler();
+}
+#endif
+
+#if (FSL_FEATURE_SOC_GPIO_COUNT > 5U)
+void GPIO50_DriverIRQHandler(void);
+void GPIO50_DriverIRQHandler(void)
+{
+    HAL_GpioInterruptHandle(5);
+    SDK_ISR_EXIT_BARRIER;
+}
+void GPIO51_DriverIRQHandler(void);
+void GPIO51_DriverIRQHandler(void)
+{
+    GPIO50_DriverIRQHandler();
+}
+#endif
+
+#if (FSL_FEATURE_SOC_GPIO_COUNT > 6U)
+void GPIO60_DriverIRQHandler(void);
+void GPIO60_DriverIRQHandler(void)
+{
+    HAL_GpioInterruptHandle(6);
+    SDK_ISR_EXIT_BARRIER;
+}
+void GPIO61_DriverIRQHandler(void);
+void GPIO61_DriverIRQHandler(void)
+{
+    GPIO60_DriverIRQHandler();
+}
+#endif
+
+#if (FSL_FEATURE_SOC_GPIO_COUNT > 7U)
+void GPIO70_DriverIRQHandler(void);
+void GPIO70_DriverIRQHandler(void)
+{
+    HAL_GpioInterruptHandle(7);
+    SDK_ISR_EXIT_BARRIER;
+}
+void GPIO71_DriverIRQHandler(void);
+void GPIO71_DriverIRQHandler(void)
+{
+    GPIO70_DriverIRQHandler();
+}
+#endif
+
+#if (FSL_FEATURE_SOC_GPIO_COUNT > 8U)
+void GPIO80_DriverIRQHandler(void);
+void GPIO80_DriverIRQHandler(void)
+{
+    HAL_GpioInterruptHandle(8);
+    SDK_ISR_EXIT_BARRIER;
+}
+void GPIO81_DriverIRQHandler(void);
+void GPIO81_DriverIRQHandler(void)
+{
+    GPIO80_DriverIRQHandler();
+}
+#endif
+
+#if (FSL_FEATURE_SOC_GPIO_COUNT > 9U)
+void GPIO90_DriverIRQHandler(void);
+void GPIO90_DriverIRQHandler(void)
+{
+    HAL_GpioInterruptHandle(9);
+    SDK_ISR_EXIT_BARRIER;
+}
+void GPIO91_DriverIRQHandler(void);
+void GPIO91_DriverIRQHandler(void)
+{
+    GPIO90_DriverIRQHandler();
+}
+#endif
+
+#if (FSL_FEATURE_SOC_GPIO_COUNT > 10U)
+void GPIO100_DriverIRQHandler(void);
+void GPIO100_DriverIRQHandler(void)
+{
+    HAL_GpioInterruptHandle(10);
+    SDK_ISR_EXIT_BARRIER;
+}
+void GPIO101_DriverIRQHandler(void);
+void GPIO101_DriverIRQHandler(void)
+{
+    GPIO100_DriverIRQHandler();
+}
+#endif
+
+#if (FSL_FEATURE_SOC_GPIO_COUNT > 0U)
+void GPIO0_IRQHandler(void);
+void GPIO0_IRQHandler(void)
+{
+    HAL_GpioInterruptHandle(0);
+    SDK_ISR_EXIT_BARRIER;
+}
+#endif
+
+#if (FSL_FEATURE_SOC_GPIO_COUNT > 1U)
+void GPIO1_IRQHandler(void);
+void GPIO1_IRQHandler(void)
+{
+    HAL_GpioInterruptHandle(1);
+    SDK_ISR_EXIT_BARRIER;
+}
+#endif
+
+#if (FSL_FEATURE_SOC_GPIO_COUNT > 2U)
+void GPIO2_IRQHandler(void);
+void GPIO2_IRQHandler(void)
+{
+    HAL_GpioInterruptHandle(2);
+    SDK_ISR_EXIT_BARRIER;
+}
+#endif
+
+#if (FSL_FEATURE_SOC_GPIO_COUNT > 3U)
+void GPIO3_IRQHandler(void);
+void GPIO3_IRQHandler(void)
+{
+    HAL_GpioInterruptHandle(3);
     SDK_ISR_EXIT_BARRIER;
 }
 #endif
@@ -462,13 +657,14 @@ hal_gpio_status_t HAL_GpioGetTriggerMode(hal_gpio_handle_t gpioHandle, hal_gpio_
 hal_gpio_status_t HAL_GpioSetTriggerMode(hal_gpio_handle_t gpioHandle, hal_gpio_interrupt_trigger_t gpioTrigger)
 {
     hal_gpio_state_t *gpioState;
-#if (defined(FSL_FEATURE_PORT_HAS_NO_INTERRUPT) && FSL_FEATURE_PORT_HAS_NO_INTERRUPT)
-    gpio_interrupt_config_t pinInt;
-    static const IRQn_Type irqNo[] = GPIO_IRQS;
-#else
-    PORT_Type *portList[] = PORT_BASE_PTRS;
+#if !(defined(FSL_FEATURE_PORT_HAS_NO_INTERRUPT) && FSL_FEATURE_PORT_HAS_NO_INTERRUPT) && \
+    defined(FSL_FEATURE_SOC_PORT_COUNT)
+    PORT_Type *portList[]          = PORT_BASE_PTRS;
     static const IRQn_Type irqNo[] = PORT_IRQS;
     port_interrupt_t pinInt;
+#else
+    gpio_interrupt_config_t pinInt;
+    static const IRQn_Type irqNo[] = GPIO_IRQS;
 #endif
 
     assert(gpioHandle);
@@ -479,45 +675,51 @@ hal_gpio_status_t HAL_GpioSetTriggerMode(hal_gpio_handle_t gpioHandle, hal_gpio_
     switch (gpioTrigger)
     {
         case kHAL_GpioInterruptLogicZero:
-#if (defined(FSL_FEATURE_PORT_HAS_NO_INTERRUPT) && FSL_FEATURE_PORT_HAS_NO_INTERRUPT)
-            pinInt = kGPIO_InterruptLogicZero;
-#else
+#if !(defined(FSL_FEATURE_PORT_HAS_NO_INTERRUPT) && FSL_FEATURE_PORT_HAS_NO_INTERRUPT) && \
+    defined(FSL_FEATURE_SOC_PORT_COUNT)
             pinInt = kPORT_InterruptLogicZero;
+#else
+            pinInt = kGPIO_InterruptLogicZero;
 #endif
             break;
         case kHAL_GpioInterruptLogicOne:
-#if (defined(FSL_FEATURE_PORT_HAS_NO_INTERRUPT) && FSL_FEATURE_PORT_HAS_NO_INTERRUPT)
-            pinInt = kGPIO_InterruptLogicOne;
-#else
+#if !(defined(FSL_FEATURE_PORT_HAS_NO_INTERRUPT) && FSL_FEATURE_PORT_HAS_NO_INTERRUPT) && \
+    defined(FSL_FEATURE_SOC_PORT_COUNT)
             pinInt = kPORT_InterruptLogicOne;
+#else
+            pinInt = kGPIO_InterruptLogicOne;
 #endif
             break;
         case kHAL_GpioInterruptRisingEdge:
-#if (defined(FSL_FEATURE_PORT_HAS_NO_INTERRUPT) && FSL_FEATURE_PORT_HAS_NO_INTERRUPT)
-            pinInt = kGPIO_InterruptRisingEdge;
-#else
+#if !(defined(FSL_FEATURE_PORT_HAS_NO_INTERRUPT) && FSL_FEATURE_PORT_HAS_NO_INTERRUPT) && \
+    defined(FSL_FEATURE_SOC_PORT_COUNT)
             pinInt = kPORT_InterruptRisingEdge;
+#else
+            pinInt = kGPIO_InterruptRisingEdge;
 #endif
             break;
         case kHAL_GpioInterruptFallingEdge:
-#if (defined(FSL_FEATURE_PORT_HAS_NO_INTERRUPT) && FSL_FEATURE_PORT_HAS_NO_INTERRUPT)
-            pinInt = kGPIO_InterruptFallingEdge;
-#else
+#if !(defined(FSL_FEATURE_PORT_HAS_NO_INTERRUPT) && FSL_FEATURE_PORT_HAS_NO_INTERRUPT) && \
+    defined(FSL_FEATURE_SOC_PORT_COUNT)
             pinInt = kPORT_InterruptFallingEdge;
+#else
+            pinInt = kGPIO_InterruptFallingEdge;
 #endif
             break;
         case kHAL_GpioInterruptEitherEdge:
-#if (defined(FSL_FEATURE_PORT_HAS_NO_INTERRUPT) && FSL_FEATURE_PORT_HAS_NO_INTERRUPT)
-            pinInt = kGPIO_InterruptEitherEdge;
-#else
+#if !(defined(FSL_FEATURE_PORT_HAS_NO_INTERRUPT) && FSL_FEATURE_PORT_HAS_NO_INTERRUPT) && \
+    defined(FSL_FEATURE_SOC_PORT_COUNT)
             pinInt = kPORT_InterruptEitherEdge;
+#else
+            pinInt = kGPIO_InterruptEitherEdge;
 #endif
             break;
         default:
-#if (defined(FSL_FEATURE_PORT_HAS_NO_INTERRUPT) && FSL_FEATURE_PORT_HAS_NO_INTERRUPT)
-            pinInt = kGPIO_InterruptStatusFlagDisabled;
-#else
+#if !(defined(FSL_FEATURE_PORT_HAS_NO_INTERRUPT) && FSL_FEATURE_PORT_HAS_NO_INTERRUPT) && \
+    defined(FSL_FEATURE_SOC_PORT_COUNT)
             pinInt = kPORT_InterruptOrDMADisabled;
+#else
+            pinInt = kGPIO_InterruptStatusFlagDisabled;
 #endif
             break;
     }
@@ -525,10 +727,11 @@ hal_gpio_status_t HAL_GpioSetTriggerMode(hal_gpio_handle_t gpioHandle, hal_gpio_
     gpioState->trigger = (uint8_t)gpioTrigger;
 
     /* initialize port interrupt */
-#if (defined(FSL_FEATURE_PORT_HAS_NO_INTERRUPT) && FSL_FEATURE_PORT_HAS_NO_INTERRUPT)
-    GPIO_SetPinInterruptConfig(s_GpioPort[gpioState->port], gpioState->pin, pinInt);
-#else
+#if !(defined(FSL_FEATURE_PORT_HAS_NO_INTERRUPT) && FSL_FEATURE_PORT_HAS_NO_INTERRUPT) && \
+    defined(FSL_FEATURE_SOC_PORT_COUNT)
     PORT_SetPinInterruptConfig(portList[gpioState->port], gpioState->pin, pinInt);
+#else
+    GPIO_SetPinInterruptConfig(s_GpioPort[gpioState->port], gpioState->pin, pinInt);
 #endif
     NVIC_SetPriority(irqNo[gpioState->port], HAL_GPIO_ISR_PRIORITY);
     NVIC_EnableIRQ(irqNo[gpioState->port]);
@@ -581,6 +784,9 @@ hal_gpio_status_t HAL_GpioExitLowpower(hal_gpio_handle_t gpioHandle)
     }
 
     GPIO_PinInit(s_GpioPort[gpioState->port], gpioState->pin, &gpioPinconfig);
-    (void)HAL_GpioSetTriggerMode(gpioHandle, (hal_gpio_interrupt_trigger_t)gpioState->trigger);
+    if (kHAL_GpioDirectionIn == gpioState->direction)
+    {
+        (void)HAL_GpioSetTriggerMode(gpioHandle, (hal_gpio_interrupt_trigger_t)gpioState->trigger);
+    }
     return kStatus_HAL_GpioSuccess;
 }

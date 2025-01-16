@@ -17,91 +17,195 @@ limitations under the License.
 #include "tensorflow/lite/c/common.h"
 #include "tensorflow/lite/micro/kernels/kernel_util.h"
 #include "tensorflow/lite/micro/micro_context.h"
+#include "tensorflow/lite/micro/micro_log.h"
+#include "NeutronDriver.h"
 
-extern "C" {
-#include "neutron-firmware.h"
+#if defined(__ICCARM__)
+extern "C" void *memalign(size_t alignment, size_t size) {
+  return aligned_alloc(alignment, size);
 }
+#elif defined(__ARMCC_VERSION)
+extern "C" void *memalign(size_t alignment, size_t size) {
+  void* ptr = NULL;
+  posix_memalign(&ptr, alignment, size);
+  return ptr;
+}
+#endif
 
 namespace tflite {
 namespace {
 
-struct NeutronConfig {
-  int buffer_idx;
-};
+typedef struct {
+  NeutronModelConfig model_config;
+  NeutronDataConfig data_config;
+  NeutronModelHandle model_handle;
+  int inputs_index;
+  int outputs_index;
+} NeutronTfLiteConfig;
 
-#define MAX_BASE_ADDR_NUM 6
+#ifdef EXTERNAL_MEM
+static NeutronConfig *n_config = nullptr;
+
+void copy(void *dst, void *src, uint32_t size, uint32_t channel) {
+  memcpy(dst, src, size);
+}
+void wait(uint32_t channel) {
+}
+#endif
+
+static int driver_ref_count = 0;
 
 void* Init(TfLiteContext* context, const char* buffer, size_t length) {
   TFLITE_DCHECK(context->AllocatePersistentBuffer != nullptr);
 
-  neutronFwInit();
+  if (driver_ref_count++ == 0) {
+    NeutronError error = ENONE;
+    error = neutronInit();
+    if (error != ENONE) {
+      MicroPrintf("Internal Neutron NPU driver error %x in init!", error);
+    }
+  }
 
-  return context->AllocatePersistentBuffer(context, sizeof(NeutronConfig));
+  return context->AllocatePersistentBuffer(context, sizeof(NeutronTfLiteConfig));
 }
 
 TfLiteStatus Prepare(TfLiteContext* context, TfLiteNode* node) {
   TFLITE_DCHECK(context != nullptr);
-  TF_LITE_ENSURE(context, node->inputs->size > 0);
   TFLITE_DCHECK(node->user_data != nullptr);
-  TF_LITE_ENSURE(context, node->custom_initial_data_size > 0);
+  TF_LITE_ENSURE(context, node->inputs->size > 2);
+  TF_LITE_ENSURE(context, node->outputs->size > 0);
 
-  NeutronConfig* neutron_data = static_cast<NeutronConfig*>(node->user_data);
+  TfLiteStatus status = kTfLiteOk;
+  NeutronTfLiteConfig* neutron = static_cast<NeutronTfLiteConfig*>(node->user_data);
   MicroContext* micro_context = GetMicroContext(context);
-  TfLiteTensor* microcode = micro_context->AllocateTempInputTensor(node, node->inputs->size - 2);
+
   TF_LITE_ENSURE_STATUS(context->RequestScratchBufferInArena(
-      context, microcode->bytes, &neutron_data->buffer_idx));
+      context, node->inputs->size * sizeof(void*), &neutron->inputs_index));
+  TF_LITE_ENSURE_STATUS(context->RequestScratchBufferInArena(
+      context, node->outputs->size * sizeof(void*), &neutron->outputs_index));
+
+  TfLiteTensor* microcode = micro_context->AllocateTempInputTensor(node, node->inputs->size - 3);
+  TfLiteTensor* weights = micro_context->AllocateTempInputTensor(node, node->inputs->size - 2);
+
+  NeutronError error = ENONE;
+  neutron->model_config = {
+    .microcode = microcode->data.data,
+    .weights = weights->data.data
+  };
+  
+  NeutronModelHandle hdl_mem   = static_cast<NeutronModelHandle>(
+          context->AllocatePersistentBuffer(context, neutronGetModelContextSize()));
+  if (hdl_mem == nullptr)
+  {
+      return kTfLiteError;
+  }
+  neutron->model_handle = hdl_mem;
+  error = neutronModelPrepare(&neutron->model_config, &neutron->model_handle);
+
+  if (error != ENONE) {
+    if ((GET_ERROR_COMPONENT(error) == ERROR_COMPONENT_DRIVER) &&
+        (GET_ERROR_CATEGORY(error) == ERROR_CATEGORY_DRIVER_UCODE)) {
+      MicroPrintf("Incompatible Neutron NPU microcode and driver versions! Please, convert the model with Neutron converter tool intended for this SDK release.");
+    } else {
+      MicroPrintf("Internal Neutron NPU driver error %x in model prepare!", error);
+    }
+    status = kTfLiteError;
+  }
+
   micro_context->DeallocateTempTfLiteTensor(microcode);
+  micro_context->DeallocateTempTfLiteTensor(weights);
+
+#ifdef EXTERNAL_MEM
+  n_config = (NeutronConfig *)malloc(sizeof(NeutronConfig));
+  n_config->copy = copy;
+  n_config->wait = wait;
+  error = neutronSetConfig(n_config);
+  if (error != ENONE) {
+    MicroPrintf("Set Neutron NPU config error %x in model prepare!", error);
+    return kTfLiteError;
+  }
+#endif
+
+  return status;
+}
+
+TfLiteStatus Eval(TfLiteContext* context, TfLiteNode* node) {
+  TFLITE_DCHECK(context != nullptr);
+  TFLITE_DCHECK(node->user_data != nullptr);
+
+  NeutronTfLiteConfig* neutron = static_cast<NeutronTfLiteConfig*>(node->user_data);
+
+  neutron->data_config.inputs = reinterpret_cast<const void**>(context->GetScratchBuffer(context, neutron->inputs_index));
+  neutron->data_config.outputs = reinterpret_cast<void**>(context->GetScratchBuffer(context, neutron->outputs_index));
+
+  for (int i = 0; i < node->inputs->size - 3; i++) {
+    TfLiteEvalTensor* input = context->GetEvalTensor(context, node->inputs->data[i]);
+    neutron->data_config.inputs[i] = input->data.data;
+  }
+
+  for (int i = 0; i < node->outputs->size - 1; i++) {
+    TfLiteEvalTensor* output = context->GetEvalTensor(context, node->outputs->data[i]);
+    neutron->data_config.outputs[i] = output->data.data;
+  }
+
+  if (node->outputs->size > 0) {
+    TfLiteEvalTensor* scratch = context->GetEvalTensor(context, node->outputs->data[node->outputs->size - 1]);
+    neutron->data_config.outputs[node->outputs->size - 1] = scratch->data.data;
+  }
+
+#ifdef EXTERNAL_MEM
+  neutron->data_config.scratchWeights = (void *)SCRATCH_WEIGHTS_SRAM_ADDR;
+#endif
+
+#ifdef NEUTRON_PROFILE
+  uint8_t profile = 0;
+  static NeutronTraceConfig trace_config = {
+	.traceConfig = profile,
+	.traceBuffer = nullptr,
+	.traceBufferSize = 0
+  };
+  neutronSetTrace(neutron->model_handle, &trace_config);
+#endif
+  
+  NeutronError error = ENONE;
+  error = neutronRunBlocking(neutron->model_handle, &neutron->data_config);
+  if (error != ENONE) {
+    MicroPrintf("Internal Neutron NPU driver error %x in model run!", error);
+    return kTfLiteError;
+  }
 
   return kTfLiteOk;
 }
 
-TfLiteStatus Eval(TfLiteContext* context, TfLiteNode* node) {
-  TFLITE_DCHECK(node->user_data != nullptr);
+void Free(TfLiteContext* context, void* buffer) {
   TFLITE_DCHECK(context != nullptr);
-  TFLITE_DCHECK(context->GetScratchBuffer != nullptr);
+  TFLITE_DCHECK(buffer != nullptr);
 
-  void* base_addrs[MAX_BASE_ADDR_NUM] = {nullptr};
-  int base_addr_num = 0;
+  NeutronTfLiteConfig* neutron = static_cast<NeutronTfLiteConfig*>(buffer);
 
-  for (int i = 0; i < node->inputs->size - 2; i++) {
-    TfLiteEvalTensor* input = context->GetEvalTensor(context, node->inputs->data[i]);
-    base_addrs[base_addr_num++] = input->data.data;
+  NeutronError error = ENONE;
+  error = neutronModelUnprepare(neutron->model_handle);
+  if (error != ENONE) {
+    MicroPrintf("Internal Neutron NPU driver error %x in model unprepare!", error);
   }
 
-  TfLiteEvalTensor* microcode = context->GetEvalTensor(context, node->inputs->data[node->inputs->size - 2]);
-  TfLiteEvalTensor* weights = context->GetEvalTensor(context, node->inputs->data[node->inputs->size - 1]);
-  base_addrs[base_addr_num++] = weights->data.data;
-
-  for (int i = 0; i < node->outputs->size - 1; i++) {
-    TfLiteEvalTensor* output = context->GetEvalTensor(context, node->outputs->data[i]);
-    base_addrs[base_addr_num++] = output->data.data;
+  if (--driver_ref_count == 0) {
+    error = neutronDeinit();
+    if (error != ENONE) {
+      MicroPrintf("Internal Neutron NPU driver error %x in deinit!", error);
+    }
   }
 
-  TfLiteEvalTensor* scratch = context->GetEvalTensor(context, node->outputs->data[node->outputs->size - 1]);
-  base_addrs[base_addr_num++] = scratch->data.data;
-
-  NeutronConfig* neutron_data = static_cast<NeutronConfig*>(node->user_data);
-  void* microcode_data = context->GetScratchBuffer(context, neutron_data->buffer_idx);
-  const RuntimeShape& microcode_shape = tflite::micro::GetTensorShape(microcode);
-  memcpy(microcode_data, microcode->data.data, microcode_shape.FlatSize());
-
-  neutronFwInterpreter(microcode_data, base_addrs, base_addr_num);
-
-  return kTfLiteOk;
+#ifdef EXTERNAL_MEM
+  free(n_config);
+#endif
 }
 
 }  // namespace
 
-TfLiteRegistration* Register_NEUTRON_GRAPH() {
-  static TfLiteRegistration r = {
-        /*init=*/Init,
-        /*free=*/nullptr,
-        /*prepare=*/Prepare,
-        /*invoke=*/Eval,
-        /*profiling_string=*/nullptr,
-        /*builtin_code=*/0,
-        /*custom_name=*/nullptr,
-        /*version=*/0};
+TFLMRegistration* Register_NEUTRON_GRAPH() {
+  static TFLMRegistration r =
+      tflite::micro::RegisterOp(Init, Prepare, Eval, Free, nullptr);
   return &r;
 }
 

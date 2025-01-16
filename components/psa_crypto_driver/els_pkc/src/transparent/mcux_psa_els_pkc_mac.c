@@ -1,6 +1,5 @@
 /*
  * Copyright 2023-2024 NXP
- * All rights reserved.
  *
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -33,6 +32,12 @@ psa_status_t els_pkc_transparent_mac_compute(const psa_key_attributes_t *attribu
                              size_t *mac_length)
 {
     psa_status_t status;
+
+    /* els-pkc does not support SHA1 with HMAC, hence return from here with PSA_ERROR_NOT_SUPPORTED*/
+    if (((PSA_ALG_IS_HMAC(alg)) == true) && (PSA_ALG_HMAC_GET_HASH(alg) != PSA_ALG_SHA_256))
+    {
+        return PSA_ERROR_NOT_SUPPORTED;
+    }
 
 #if defined(PSA_CRYPTO_DRIVER_THREAD_EN)
     if (mcux_mutex_lock(&els_pkc_hwcrypto_mutex)) {
@@ -85,6 +90,12 @@ psa_status_t els_pkc_transparent_mac_sign_setup(els_pkc_transparent_mac_operatio
                                 size_t key_buffer_size, psa_algorithm_t alg)
 {
     psa_status_t status;
+
+    /* els-pkc does not support SHA1 with HMAC, hence return from here with PSA_ERROR_NOT_SUPPORTED*/
+    if (((PSA_ALG_IS_HMAC(alg)) == true) && (PSA_ALG_HMAC_GET_HASH(alg) != PSA_ALG_SHA_256))
+    {
+        return PSA_ERROR_NOT_SUPPORTED;
+    }
 
 #if defined(PSA_CRYPTO_DRIVER_THREAD_EN)
     if (mcux_mutex_lock(&els_pkc_hwcrypto_mutex)) {

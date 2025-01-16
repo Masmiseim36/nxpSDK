@@ -1,6 +1,5 @@
 /*
  * Copyright 2023 NXP
- * All rights reserved.
  *
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -36,6 +35,15 @@ psa_status_t els_pkc_transparent_hash_setup(els_pkc_hash_operation_t *operation,
 {
     psa_status_t status;
 
+    /* Use of SHA1 from els_pkc is restricted as it takes more time
+    in comparison to mbedTLS SW implementation of SHA1*/
+#if !defined(MCUX_PSA_CRYPTO_DRIVER_USE_ELS_PKC_SHA1)
+    if (PSA_ALG_SHA_1 == alg)
+    {
+        return PSA_ERROR_NOT_SUPPORTED;
+    }
+#endif
+
 #if defined(PSA_CRYPTO_DRIVER_THREAD_EN)
     if (mcux_mutex_lock(&els_pkc_hwcrypto_mutex)) {
         return PSA_ERROR_GENERIC_ERROR;
@@ -58,6 +66,15 @@ psa_status_t els_pkc_transparent_hash_compute(psa_algorithm_t alg, const uint8_t
                                                size_t hash_size, size_t *hash_length)
 {
     psa_status_t status;
+
+    /* Use of SHA1 from els_pkc is restricted as it takes more time
+    in comparison to mbedTLS SW implementation of SHA1*/
+#if !defined(MCUX_PSA_CRYPTO_DRIVER_USE_ELS_PKC_SHA1)
+    if (PSA_ALG_SHA_1 == alg)
+    {
+        return PSA_ERROR_NOT_SUPPORTED;
+    }
+#endif
 
 #if defined(PSA_CRYPTO_DRIVER_THREAD_EN)
     if (mcux_mutex_lock(&els_pkc_hwcrypto_mutex)) {

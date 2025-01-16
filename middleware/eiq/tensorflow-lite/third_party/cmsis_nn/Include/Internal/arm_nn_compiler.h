@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright 2023 Arm Limited and/or its affiliates <open-source-office@arm.com>
+ * SPDX-FileCopyrightText: Copyright 2023-2024 Arm Limited and/or its affiliates <open-source-office@arm.com>
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -21,8 +21,8 @@
  * Title:        arm_nn_compiler.h
  * Description:  Generic compiler header
  *
- * $Date:        31 January 2023
- * $Revision:    V.1.1.0
+ * $Date:        16 January 2024
+ * $Revision:    V.1.2.2
  *
  * Target :  Arm(R) M-Profile Architecture
  * -------------------------------------------------------------------- */
@@ -129,12 +129,16 @@
     #endif
 #endif
 
-#if ((__ARM_FEATURE_MVE & 3) == 3) || (__ARM_FEATURE_MVE & 1)
+#if defined(__ARM_FEATURE_MVE) && ((__ARM_FEATURE_MVE & 3) == 3) || (__ARM_FEATURE_MVE & 1)
     #include <arm_mve.h>
 #endif
 
 #if defined(__ARM_ARCH) || defined(__ARM_ACLE)
     #include <arm_acle.h>
+#endif
+
+#if defined(__GNUC__)
+    #include <stdint.h>
 #endif
 
 /**

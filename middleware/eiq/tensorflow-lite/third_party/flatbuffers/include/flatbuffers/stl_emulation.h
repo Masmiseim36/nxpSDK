@@ -31,7 +31,7 @@
   // __cplusplus >= 201703L - a compiler has support of 'static inline' variables.
   #if ((defined(__cplusplus) && __cplusplus >= 201703L) \
       || (defined(_MSVC_LANG) && _MSVC_LANG >= 201703L)) \
-      && !defined(__ICCARM__)
+         && !defined(__ICCARM__)
     #define FLATBUFFERS_USE_STD_OPTIONAL 1
   #else
     #define FLATBUFFERS_USE_STD_OPTIONAL 0
@@ -42,14 +42,18 @@
   #include <optional>
 #endif
 
-// The __cpp_lib_span is the predefined feature macro.
-#if defined(FLATBUFFERS_USE_STD_SPAN)
-    #include <span>
-#elif defined(__cpp_lib_span) && defined(__has_include)
-  #if __has_include(<span>)
-    #include <span>
-    #define FLATBUFFERS_USE_STD_SPAN
+#ifndef FLATBUFFERS_USE_STD_SPAN
+  // Testing __cpp_lib_span requires including either <version> or <span>,
+  // both of which were added in C++20.
+  // See: https://en.cppreference.com/w/cpp/utility/feature_test
+  #if defined(__cplusplus) && __cplusplus >= 202002L
+    #define FLATBUFFERS_USE_STD_SPAN 1
   #endif
+#endif // FLATBUFFERS_USE_STD_SPAN
+
+#if defined(FLATBUFFERS_USE_STD_SPAN)
+  #include <array>
+  #include <span>
 #else
   // Disable non-trivial ctors if FLATBUFFERS_SPAN_MINIMAL defined.
   #if !defined(FLATBUFFERS_TEMPLATES_ALIASES)
@@ -293,7 +297,7 @@ namespace internal {
   // > to a pointer to an array of To.
   // This helper is used for checking of 'From -> const From'.
   template<class To, std::size_t Extent, class From, std::size_t N>
-  struct is_span_convertable {
+  struct is_span_convertible {
     using type =
       typename std::conditional<std::is_convertible<From (*)[], To (*)[]>::value
                                 && (Extent == dynamic_extent || N == Extent),
@@ -415,7 +419,7 @@ class span FLATBUFFERS_FINAL_CLASS {
   // extent == 0 || extent == flatbuffers::dynamic_extent.
   // A dummy template argument N is need dependency for SFINAE.
   template<std::size_t N = 0,
-    typename internal::is_span_convertable<element_type, Extent, element_type, (N - N)>::type = 0>
+    typename internal::is_span_convertible<element_type, Extent, element_type, (N - N)>::type = 0>
   FLATBUFFERS_CONSTEXPR_CPP11 span() FLATBUFFERS_NOEXCEPT : data_(nullptr),
                                                             count_(0) {
     static_assert(extent == 0 || extent == dynamic_extent, "invalid span");
@@ -428,12 +432,12 @@ class span FLATBUFFERS_FINAL_CLASS {
   // std::remove_pointer_t<decltype(std::data(arr))>(*)[]
   // is convertible to element_type (*)[].
   template<std::size_t N,
-    typename internal::is_span_convertable<element_type, Extent, element_type, N>::type = 0>
+    typename internal::is_span_convertible<element_type, Extent, element_type, N>::type = 0>
   FLATBUFFERS_CONSTEXPR_CPP11 span(element_type (&arr)[N]) FLATBUFFERS_NOEXCEPT
       : data_(arr), count_(N) {}
 
   template<class U, std::size_t N,
-    typename internal::is_span_convertable<element_type, Extent, U, N>::type = 0>
+    typename internal::is_span_convertible<element_type, Extent, U, N>::type = 0>
   FLATBUFFERS_CONSTEXPR_CPP11 span(std::array<U, N> &arr) FLATBUFFERS_NOEXCEPT
      : data_(arr.data()), count_(N) {}
 
@@ -443,7 +447,7 @@ class span FLATBUFFERS_FINAL_CLASS {
   //   : data_(arr.data()), count_(N) {}
 
   template<class U, std::size_t N,
-    typename internal::is_span_convertable<element_type, Extent, U, N>::type = 0>
+    typename internal::is_span_convertible<element_type, Extent, U, N>::type = 0>
   FLATBUFFERS_CONSTEXPR_CPP11 span(const std::array<U, N> &arr) FLATBUFFERS_NOEXCEPT
     : data_(arr.data()), count_(N) {}
 
@@ -453,7 +457,7 @@ class span FLATBUFFERS_FINAL_CLASS {
   // if extent == std::dynamic_extent || N == extent is true and U (*)[]
   // is convertible to element_type (*)[].
   template<class U, std::size_t N,
-    typename internal::is_span_convertable<element_type, Extent, U, N>::type = 0>
+    typename internal::is_span_convertible<element_type, Extent, U, N>::type = 0>
   FLATBUFFERS_CONSTEXPR_CPP11 span(const flatbuffers::span<U, N> &s) FLATBUFFERS_NOEXCEPT
       : span(s.data(), s.size()) {
   }

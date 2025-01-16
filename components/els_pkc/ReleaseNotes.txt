@@ -1,0 +1,25 @@
+CLNS SDK (2.0.0) Release Notes
+
+- Release: SDK_V2.0.0 RT700 PRC
+- Version: SDK_V2.0.0
+- Date:    2024-10-18
+- Link to Nexus RepositoryManager: https://nl-nxrm.sw.nxp.com/service/rest/repository/browse/cccs-releases-raw/
+- Compiler: IAR ANSI C/C++ Compiler V8.40.1.212/W32 for ARM
+--- Test Target: 
+	RT700 A0 sample
+	Redfinch sample
+	Nirvana sample
+	Niobe4a sample
+
+--- New Features 
+   - Coverity (MISRA/CERT-C) violations resolved
+   - Improved code coverage
+   - Updated file structure (platform specific files are now located in platform specific folders, instead of manually merged with feature flags)
+   - Memory aliasing workaround improvements (translate addresses in 0x0000 0000-0x0078 0000 range to 0x20.. .... address range when passed to HW IPs)
+   - Switched to Online_Code_Hosting License (removes clause 2.2/2.3 distinction as it allows distribution by default, even in source; still requires use in combination with NXP product)
+   - AEAD oneshot decrypt operation (nxpClAead_crypt) outputs correct plaintext size
+   - AEAD oneshot decrypt operation (nxpClAead_crypt) verifies the tag instead of producing one
+   - Resolved EdDSA Verify bug
+   - Aligned deterministic ECDSA behavior for special case (r=0) to RFC6979 specification
+
+--- Known Issues Limitations:

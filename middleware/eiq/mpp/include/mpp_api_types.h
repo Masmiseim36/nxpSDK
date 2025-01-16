@@ -1,7 +1,19 @@
 /*
  * Copyright 2021-2024 NXP
  *
- * SPDX-License-Identifier: BSD-3-Clause
+ *  SPDX-License-Identifier: Apache-2.0
+ *
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
  */
 
 /*
@@ -24,15 +36,6 @@
 /** Maximum number of inference inputs and outputs **/
 #define MPP_INFERENCE_MAX_OUTPUTS 4 /*!< Maximum number of outputs supported by the pipeline */
 #define MPP_INFERENCE_MAX_INPUTS 1 /*!< Maximum number of inputs supported by the pipeline */
-
-/**Maximum priority for application tasks
-   Tasks created by the application should have a maximum priority otherwise
-   scheduling of pipeline processing tasks may be impacted */
-#define MPP_APP_MAX_PRIO        1
-
-/**Maximum priority for pipeline tasks
-   OS must support this number of priorities */
-#define MPP_PIPELINE_MAX_PRIO   MPP_APP_MAX_PRIO + 4
 
 /** Pipeline handle type */
 typedef void* mpp_t ;
@@ -99,9 +102,10 @@ typedef union {
 
 
 typedef struct {
-    mpp_stats_t *stats; /*!< API stats */
+    mpp_stats_t *stats;         /*!< API stats */
     unsigned int rc_cycle_min;  /*!< minimum cycle duration for RC tasks (ms), 0: sets default value */
     unsigned int rc_cycle_inc;  /*!< time increment for RC tasks (ms),  0: sets default value */
+    int pipeline_task_max_prio; /*!< pipeline tasks maximum priority. */
 } mpp_api_params_t;
 
 /** Pipeline creation parameters */
@@ -241,15 +245,15 @@ typedef enum
 
 /** tensor parameters */
 typedef struct{
-    const uint8_t* data;  /*!< output data */
+    const uint8_t* data;  /*!< data address */
     mpp_tensor_dims_t dims; /*!< tensor data dimensions */
     mpp_tensor_type_t type; /*!< tensor data type */
-} mpp_inference_out_tensor_params_t;
+} mpp_inference_tensor_params_t;
 
 /** Inference callback parameters */
 typedef struct {
     void *user_data;        /*!< callback will pass this pointer */
-    mpp_inference_out_tensor_params_t *out_tensors[MPP_INFERENCE_MAX_OUTPUTS]; /*!< output tensors parameters */
+    mpp_inference_tensor_params_t *out_tensors[MPP_INFERENCE_MAX_OUTPUTS]; /*!< output tensors parameters */
     int inference_time_ms;  /*!< inference run time measurement - output to user */
     mpp_inference_type_t inference_type; /*!< type of the inference */
 } mpp_inference_cb_param_t;

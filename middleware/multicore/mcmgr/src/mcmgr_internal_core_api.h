@@ -174,6 +174,9 @@ mcmgr_status_t mcmgr_trigger_event_internal(uint32_t remoteData, bool forcedWrit
  */
 mcmgr_core_t mcmgr_get_current_core_internal(void);
 
+mcmgr_status_t mcmgr_process_deferred_rx_isr_internal(void);
+
+
 /*! @} */
 
 #endif

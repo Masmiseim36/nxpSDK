@@ -1,0 +1,11 @@
+
+@Start
+@Input_path ../test_inp/
+@Output_path ../test_out/
+
+ABBA_44100.lp20.wav ABBA_44100_96000.bin 96000
+Female_Speech_German_48000_stereo_24bits.wav Female_Speech_German_48000_stereo_24bits_320000.bin 320000
+
+@Stop
+
+

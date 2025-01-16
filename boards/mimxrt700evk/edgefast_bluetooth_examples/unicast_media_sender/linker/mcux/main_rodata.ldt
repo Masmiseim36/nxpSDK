@@ -1,0 +1,2 @@
+*(EXCLUDE_FILE(*fsl_xspi.o *mflash_drv.o *libethermind_lc3_ndsp_common.a *libethermind_lc3_ndsp_encoder.a *libethermind_lc3_ndsp_decoder.a) .rodata*)
+*(EXCLUDE_FILE(*fsl_xspi.o *mflash_drv.o *libethermind_lc3_ndsp_common.a *libethermind_lc3_ndsp_encoder.a *libethermind_lc3_ndsp_decoder.a) .rodata)

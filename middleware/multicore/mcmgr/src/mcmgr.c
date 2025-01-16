@@ -232,3 +232,12 @@ mcmgr_core_t MCMGR_GetCurrentCore(void)
 {
     return mcmgr_get_current_core_internal();
 }
+
+mcmgr_status_t MCMGR_ProcessDeferredRxIsr(void)
+{
+#if (defined(MCMGR_DEFERRED_CALLBACK_ALLOWED) && (MCMGR_DEFERRED_CALLBACK_ALLOWED == 1U))
+    return mcmgr_process_deferred_rx_isr_internal();
+#else
+    return kStatus_MCMGR_NotImplemented;
+#endif
+}

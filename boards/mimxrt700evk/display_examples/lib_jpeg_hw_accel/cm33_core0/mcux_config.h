@@ -1,0 +1,20 @@
+/*
+ * Copyright 2024 NXP
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
+ */
+
+#ifndef _MCUX_CONFIG_H_
+#define _MCUX_CONFIG_H_
+
+#define DEMO_PANEL 4
+#define SSD1963_DRIVEN_BY 1
+// #define DEMO_SSD1963_BUFFER_FORMAT 0
+// #define DEMO_RM67162_BUFFER_FORMAT 0
+// #define DEMO_CO5300_BUFFER_FORMAT 0
+#define CONFIG_FLASH_BASE_ADDRESS 0x28000000
+// #define CONFIG_DBI_USE_MIPI_PANEL 0
+#define CONFIG_LV_ATTRIBUTE_MEM_ALIGN 
+#define CONFIG_LV_ATTRIBUTE_LARGE_CONST 
+
+#endif /* _MCUX_CONFIG_H_ */

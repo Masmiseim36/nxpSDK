@@ -2,7 +2,19 @@
  * Copyright 2020-2024 NXP.
  * All rights reserved.
  *
- * SPDX-License-Identifier: BSD-3-Clause
+ *  SPDX-License-Identifier: Apache-2.0
+ *
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
  */
 
 /*
@@ -71,7 +83,13 @@ hal_display_status_t HAL_DisplayDev_Lcdifv2Rk055_Getbufdesc(const display_dev_t 
 /**** static variables ****/
 
 #if (DEMO_BUFFER_FIXED_ADDRESS == 1)
+#if (DISPLAY_DEV_Lcdifv2Rk055_BUFFER_COUNT == 1)
+    static uint8_t *s_LcdBuffer[DISPLAY_DEV_Lcdifv2Rk055_BUFFER_COUNT] = { (uint8_t *) DEMO_BUFFER0_ADDR};
+#elif (DISPLAY_DEV_Lcdifv2Rk055_BUFFER_COUNT == 2)
     static uint8_t *s_LcdBuffer[DISPLAY_DEV_Lcdifv2Rk055_BUFFER_COUNT] = { (uint8_t *) DEMO_BUFFER0_ADDR, (uint8_t *) DEMO_BUFFER1_ADDR };
+#else
+#error "HAL: DisplayDev: Lcdifv2Rk055: DISPLAY_DEV_Lcdifv2Rk055_BUFFER_COUNT value not supported."
+#endif
 #else
 AT_NONCACHEABLE_SECTION_ALIGN(
     static uint8_t s_LcdBuffer[DISPLAY_DEV_Lcdifv2Rk055_BUFFER_COUNT][DISPLAY_DEV_Lcdifv2Rk055_HEIGHT][DISPLAY_DEV_Lcdifv2Rk055_WIDTH * HAL_DISPLAY_MAX_BPP],

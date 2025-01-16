@@ -1,0 +1,4 @@
+        *(EXCLUDE_FILE(*mflash_drv.o *fsl_xspi.o) .text)
+        *(EXCLUDE_FILE(*mflash_drv.o *fsl_xspi.o) .text*)
+        *(EXCLUDE_FILE(*mflash_drv.o *fsl_xspi.o) .rodata)
+        *(EXCLUDE_FILE(*mflash_drv.o *fsl_xspi.o) .rodata*)

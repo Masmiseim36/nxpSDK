@@ -1,6 +1,5 @@
 /*
  * Copyright 2024 NXP
- * All rights reserved.
  *
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -51,6 +50,44 @@ static psa_status_t ele_psa_hash_alg_to_ele_hash_alg(psa_algorithm_t alg, sss_al
 #endif /* PSA_WANT_ALG_SHA_512 */
 #if defined(PSA_WANT_ALG_SHA_1)
         case PSA_ALG_SHA_1:
+#endif /* PSA_WANT_ALG_SHA_1 */
+        default:
+            return PSA_ERROR_NOT_SUPPORTED;
+    }
+
+    return PSA_SUCCESS;
+}
+
+/**
+ * @brief Inverse to ele_psa_hash_alg_to_ele_hash_alg()
+ */
+static psa_status_t ele_ele_hash_alg_to_psa_hash_alg(sss_algorithm_t mode, psa_algorithm_t *alg)
+{
+    switch (mode)
+    {
+#if defined(PSA_WANT_ALG_SHA_224)
+        case kAlgorithm_SSS_SHA224:
+            *alg = PSA_ALG_SHA_224;
+            break;
+#endif /* PSA_WANT_ALG_SHA_224 */
+#if defined(PSA_WANT_ALG_SHA_256)
+        case kAlgorithm_SSS_SHA256:
+            *alg = PSA_ALG_SHA_256;
+            break;
+#endif /* PSA_WANT_ALG_SHA_256 */
+#if defined(PSA_WANT_ALG_SHA_384)
+        case kAlgorithm_SSS_SHA384:
+            *alg = PSA_ALG_SHA_384;
+            break;
+#endif /* PSA_WANT_ALG_SHA_384 */
+#if defined(PSA_WANT_ALG_SHA_512)
+        case kAlgorithm_SSS_SHA512:
+            *alg = PSA_ALG_SHA_512;
+            break;
+#endif /* PSA_WANT_ALG_SHA_512 */
+#if defined(PSA_WANT_ALG_SHA_1)
+        case kAlgorithm_SSS_SHA1:
+            *alg = PSA_ALG_SHA_1;
 #endif /* PSA_WANT_ALG_SHA_1 */
         default:
             return PSA_ERROR_NOT_SUPPORTED;
@@ -110,14 +147,45 @@ psa_status_t ele_s2xx_transparent_hash_setup(ele_s2xx_hash_operation_t *operatio
 psa_status_t ele_s2xx_transparent_hash_clone(const ele_s2xx_hash_operation_t *source_operation,
                                              ele_s2xx_hash_operation_t *target_operation)
 {
-        if (source_operation == NULL || target_operation == NULL) {
-            return PSA_ERROR_INVALID_ARGUMENT;
-        }
-        memcpy(target_operation, source_operation, sizeof(ele_s2xx_hash_operation_t));
-    //    return PSA_SUCCESS;
+#if defined(ELE_FEATURE_DIGEST_CLONE) && (ELE_FEATURE_DIGEST_CLONE == 1)
+    psa_status_t status = PSA_ERROR_CORRUPTION_DETECTED;
+    psa_algorithm_t alg = PSA_ALG_NONE;
 
-    /* HASH Context cloning is not supported on ELE200*/
+    if (source_operation == NULL || target_operation == NULL) {
+        return PSA_ERROR_INVALID_ARGUMENT;
+    }
+
+    /* Initialize target to same algorithm as source */
+    if ((status = ele_ele_hash_alg_to_psa_hash_alg(source_operation->ctx.algorithm, &alg)) != PSA_SUCCESS)
+    {
+        return status;
+    }
+
+    if ((status = ele_s2xx_transparent_hash_setup(target_operation, alg)) != PSA_SUCCESS)
+    {
+        return status;
+    }
+
+    /* Clone */
+    if (mcux_mutex_lock(&ele_hwcrypto_mutex))
+    {
+        return PSA_ERROR_COMMUNICATION_FAILURE;
+    }
+
+    if (sss_sscp_digest_clone((sss_sscp_digest_t *)&source_operation->ctx, &target_operation->ctx) != kStatus_SSS_Success)
+    {
+        return PSA_ERROR_GENERIC_ERROR;
+    }
+
+    if (mcux_mutex_unlock(&ele_hwcrypto_mutex))
+    {
+        return PSA_ERROR_BAD_STATE;
+    }
+
+    return status;
+#else /* ELE_FEATURE_DIGEST_CLONE */
     return PSA_ERROR_NOT_SUPPORTED;
+#endif /* ELE_FEATURE_DIGEST_CLONE */
 }
 
 psa_status_t ele_s2xx_transparent_hash_update(ele_s2xx_hash_operation_t *operation,

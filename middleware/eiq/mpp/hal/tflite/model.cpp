@@ -1,6 +1,8 @@
 /* Copyright 2019 The TensorFlow Authors. All Rights Reserved.
    Copyright 2021-2024 NXP
 
+SPDX-License-Identifier: Apache-2.0
+
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
@@ -29,7 +31,6 @@ limitations under the License.
 #include "tensorflow/lite/schema/schema_generated.h"
 
 #include "model.h"
-#include "limits.h"
 
 /* trick to replace 'float division' with 'multiply by integer and bitshift'
    integer is the inverse multiplied by factor to keep precision */
@@ -42,12 +43,24 @@ static tflite::MicroInterpreter* s_interpreter = nullptr;
 
 extern tflite::MicroOpResolver &MODEL_GetOpsResolver();
 
+uint8_t* MODEL_GetInputTensorData(tflite::MicroInterpreter* interpreter, mpp_tensor_dims_t* dims, mpp_tensor_type_t* type);
+uint8_t* MODEL_GetOutputTensorData(tflite::MicroInterpreter* interpreter, mpp_tensor_dims_t* dims, mpp_tensor_type_t* type, int idx);
+
 // An area of memory to use for input, output, and intermediate arrays.
 // (Can be adjusted based on the model needs.)
 constexpr int kTensorArenaSize = HAL_TFLM_TENSOR_ARENA_SIZE_KB * 1024;
-static uint8_t s_tensorArena[kTensorArenaSize] __ALIGNED(HAL_TFLITE_BUFFER_ALIGN);
 
-status_t MODEL_Init(const void *model_data, int model_size)
+// On some devices tensor arena should be non-cacheable
+#if defined(HAL_TENSOR_ARENA_NCACHE) && (HAL_TENSOR_ARENA_NCACHE == 1)
+static uint8_t s_tensorArena[kTensorArenaSize] __ALIGNED(HAL_TFLITE_BUFFER_ALIGN) __attribute__((section("NonCacheable")));
+#else
+static uint8_t s_tensorArena[kTensorArenaSize] __ALIGNED(HAL_TFLITE_BUFFER_ALIGN);
+#endif
+
+status_t MODEL_Init(const void *model_data,
+        mpp_inference_tensor_params_t *inputTensor,
+        mpp_inference_tensor_params_t *outputTensor[],
+        int nb_out_tensor)
 {
     // Map the model into a usable data structure. This doesn't involve any
     // copying or parsing, it's a very lightweight operation.
@@ -63,12 +76,11 @@ status_t MODEL_Init(const void *model_data, int model_size)
     // Pull in only the operation implementations we need.
     // This relies on a complete list of all the ops needed by this graph.
     // NOLINTNEXTLINE(runtime-global-variables)
-    tflite::MicroOpResolver &micro_op_resolver = MODEL_GetOpsResolver();
+    static tflite::MicroOpResolver &s_micro_op_resolver = MODEL_GetOpsResolver();
 
     // Build an interpreter to run the model with.
-    static tflite::MicroInterpreter static_interpreter(
-        s_model, micro_op_resolver, s_tensorArena, kTensorArenaSize);
-    s_interpreter = &static_interpreter;
+    s_interpreter = new tflite::MicroInterpreter(
+            s_model, s_micro_op_resolver, s_tensorArena, kTensorArenaSize);
 
     // Allocate memory from the tensor_arena for the model's tensors.
     TfLiteStatus allocate_status = s_interpreter->AllocateTensors();
@@ -77,6 +89,21 @@ status_t MODEL_Init(const void *model_data, int model_size)
     	HAL_LOGE("AllocateTensors() failed");
         return kStatus_Fail;
     }
+
+    inputTensor->data = MODEL_GetInputTensorData(s_interpreter, &inputTensor->dims, &inputTensor->type);
+
+    for(int i = 0; i < nb_out_tensor; i++)
+    {
+        outputTensor[i]->data = MODEL_GetOutputTensorData(s_interpreter, &outputTensor[i]->dims, &outputTensor[i]->type, i);
+    }
+
+    return kStatus_Success;
+}
+
+status_t MODEL_DeInit(void)
+{
+    s_interpreter->Reset();
+    delete s_interpreter;
 
     return kStatus_Success;
 }
@@ -119,44 +146,81 @@ uint8_t* GetTensorData(TfLiteTensor* tensor, mpp_tensor_dims_t* dims, mpp_tensor
     return tensor->data.uint8;
 }
 
-uint8_t* MODEL_GetInputTensorData(mpp_tensor_dims_t* dims, mpp_tensor_type_t* type)
+uint8_t* MODEL_GetInputTensorData(tflite::MicroInterpreter* interpreter, mpp_tensor_dims_t* dims, mpp_tensor_type_t* type)
 {
-	TfLiteTensor* inputTensor = s_interpreter->input(0);
+	TfLiteTensor* inputTensor = interpreter->input(0);
 
     return GetTensorData(inputTensor, dims, type);
 }
 
-uint8_t* MODEL_GetOutputTensorData(mpp_tensor_dims_t* dims, mpp_tensor_type_t* type, int idx)
+uint8_t* MODEL_GetOutputTensorData(tflite::MicroInterpreter* interpreter, mpp_tensor_dims_t* dims, mpp_tensor_type_t* type, int idx)
 {
     /* handles multiple outputs */
-    TfLiteTensor* outputTensor = s_interpreter->output(idx);
+    TfLiteTensor* outputTensor = interpreter->output(idx);
 
     return GetTensorData(outputTensor, dims, type);
 }
 
 // Convert and normalize unsigned 8-bit image data to model input format in-place.
-void MODEL_ConvertInput(uint8_t* data, mpp_tensor_dims_t* dims, mpp_tensor_type_t type, float mean, float std)
+void MODEL_ConvertInput(uint8_t* data, mpp_tensor_dims_t* dims, mpp_tensor_type_t type, int mean, int std)
 {
     int size = dims->data[2] * dims->data[1] * dims->data[3];
-    float tmp;
-    int inv_std = FAST_DIV_FACTOR / std;
-    int i_mean = mean;
+    /* Quantization parameters:
+     * input_scale : model input scale.
+     * input_zero_point: model input zero point.
+     */
+    float input_scale = s_interpreter->input(0)->params.scale;
+    float input_zero_point = s_interpreter->input(0)->params.zero_point;
+    int inv_scale = 0;
+    int i_zero_point = input_zero_point;
     switch (type)
     {
         case MPP_TENSOR_TYPE_UINT8:
             break;
         case MPP_TENSOR_TYPE_INT8:
-            for (int i = size - 1; i >= 0; i--)
+             /* to calculate quantized value:
+             * quantized_value = real_value / scale + zero_point
+             * to normalize the input data:
+             * normalized_value = (real_value - mean) / std
+             *
+             * these two formulas can be combined to perform both normalization and
+             * quantization in the same time:
+             * final_value = (real_value - mean) / (scale * std) + zero_point
+             */
+
+            /* check if normalization is needed. */
+            if ((mean != 0) || (std != 1))
             {
-                /* optimized form of: ((data[i] - SCHAR_MAX) / std) + mean */
-                data[i] = (int8_t) ((data[i] - SCHAR_MAX) * inv_std >> FAST_DIV_BITS) + i_mean;
+                if (std != 0)
+                {
+                    inv_scale = FAST_DIV_FACTOR / (input_scale * std);
+                    for (int i = size - 1; i >= 0; i--)
+                    {
+                        /* optimized form of: ((data[i] - i_mean) / scale) + zero_point */
+                        data[i] = (int8_t) ((data[i] - mean) * inv_scale >> FAST_DIV_BITS) + i_zero_point;
+                    }
+                 }
+                else
+                {
+                    HAL_LOGE("Standard deviation should be different of 0.");
+                    break;
+                }
+            }
+            else /* only quantization should be performed */
+            {
+                inv_scale = FAST_DIV_FACTOR / input_scale;
+                for (int i = size - 1; i >= 0; i--)
+                {
+                    /* optimized form of: (data[i] / scale) + zero_point */
+                    data[i] = (int8_t) (data[i] * inv_scale >> FAST_DIV_BITS) + i_zero_point;
+        	    }
             }
             break;
         case MPP_TENSOR_TYPE_FLOAT32:
             for (int i = size - 1; i >= 0; i--)
             {
                 reinterpret_cast<float*>(data)[i] =
-                    (static_cast<int>(data[i]) - mean) / std;
+                    (static_cast<int>(data[i]) - input_zero_point) / input_scale;
             }
             break;
         default:

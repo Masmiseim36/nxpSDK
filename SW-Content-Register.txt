@@ -39,6 +39,17 @@ bt_ble_hoststack           Name: Bluetooth and Bluetooth Low Energy Host
                            Location: middleware/wireless/ethermind           
                            Origin: Mindtree (Proprietary） NXP (BSD-3-Clause) 
 
+issdk                      Name: ISSDK                                       
+                           Version: 1.8                                      
+                           Outgoing License: BSD-3-Clause                    
+                           License File: ./COPYING-BSD-3                     
+                           Format: source code                               
+                           Description: NXP IoT Sensing SDK. It combines a   
+                           set of robust Sensor Drivers and algorithms along 
+                           with example applications.                        
+                           Location: middleware/issdk                        
+                           Origin: NXP (BSD-3-Clause)                        
+
 freertos-kernel            Name: FreeRTOS kernel                             
                            Version: 11.0.1                                   
                            Description: Open source RTOS kernel for small    
@@ -75,6 +86,20 @@ cmsis_drivers              Name: SDK CMSIS Peripheral Drivers
                            Origin: NXP (Apache-2.0) ARM (Apache-2.0) -       
                            https://github.com/ARM-software/CMSIS_6/releases/t
                            ag/v6.1.0                                         
+
+openvg                     Name: mcux-openvg                                 
+                           Version: 4.0.90                                   
+                           Outgoing License: MIT                             
+                           License File: middleware/openvg/LICENSE           
+                           Format: source code                               
+                           Description: VeriSilicon's OpenVG over VGLite     
+                           library                                           
+                           Location: middleware/openvg                       
+                           Origin: NXP (MIT and BSD-3-Clause) VeriSilicon    
+                           (MIT) - VSI internal, not publicly accessible The 
+                           Khronos Group Inc. (Apache and MIT) -             
+                           http://www.khronos.org/ Amazon (MIT) -            
+                           https://github.com/FreeRTOS/FreeRTOS-Kernel       
 
 wpa_supplicant             Name: wpa_supplicant-rtos                         
                            Version: 2.11.0                                   
@@ -131,6 +156,18 @@ vit                        Name: VIT_v4.10.0
                            Description: Voice Intelligent Technology library 
                            Location: middleware/audio_voice/components/vit   
                            Origin: NXP (Proprietary)                         
+
+vglite                     Name: vglite                                      
+                           Version: 4.0.90                                   
+                           Outgoing License: MIT                             
+                           License File: middleware/vglite/driver/LICENSE.txt
+                           Format: source code                               
+                           Description: VeriSilicon's platform independent   
+                           VGLite Graphics library                           
+                           Location: middleware/vglite/driver                
+                           Origin: VeriSilicon (MIT), NXP (MIT)              
+                           Url: http://www.verisilicon.com/,                 
+                           https://github.com/nxp-mcuxpresso/gpu-vglite      
 
 usb                        Name: USB                                         
                            Version: 2.11.0                                   
@@ -241,6 +278,15 @@ pkcs11                     Name: OASIS TC pkcs11
                            Location: middleware/pkcs11                       
                            Origin: OASIS TC, Amazon (MIT)                    
                            Url: https://github.com/amazon-freertos/pkcs11    
+
+multicore_mcmgr            Name: MCMGR                                       
+                           Version: 4.1.4                                    
+                           Outgoing License: BSD-3-Clause                    
+                           License File: ./COPYING-BSD-3                     
+                           Format: source code                               
+                           Description: Multicore manager                    
+                           Location: middleware/multicore/mcmgr              
+                           Origin: NXP (BSD-3-Clause)                        
 
 multicore                  Name: Multicore SDK                               
                            Version: 2.16.0                                   
@@ -364,6 +410,131 @@ lwip                       Name: lwIP TCP/IP Stack
                            Outgoing License: BSD-3-Clause                    
                            License File: middleware/lwip/COPYING             
 
+eiq_tensorflow_lite        Name: TensorFlow Lite for Microcontrollers        
+                           Version: 24-08-07 (commit d3475aa)                
+                           Description: Software library for running machine 
+                           learning models on embedded devices               
+                           Format: source code                               
+                           Location: middleware/eiq/tensorflow-lite          
+                           Origin: See middleware/eiq/tensorflow-lite/AUTHORS
+                           Url: https://github.com/tensorflow/tensorflow     
+                           Outgoing License: Apache-2.0                      
+                           License File:                                     
+                           middleware/eiq/tensorflow-lite/LICENSE            
+
+eiq_FFT2D                  Name: FFT2D                                       
+                           Version: NA                                       
+                           Description: FFT package in C                     
+                           Format: source code                               
+                           Location:                                         
+                           middleware/eiq/tensorflow-lite/third_party/fft2d  
+                           Origin: Takuya Ooura                              
+                           Url:                                              
+                           http://www.kurims.kyoto-u.ac.jp/~ooura/fft.html   
+                           Outgoing License: Public Domain                   
+                           License File:                                     
+                           middleware/eiq/tensorflow-lite/third_party/fft2d/L
+                           ICENSE                                            
+
+eiq_FlatBuffers            Name: FlatBuffers                                 
+                           Version: 23.5.26                                  
+                           Description: Cross platform serialization library 
+                           Format: source code                               
+                           Location:                                         
+                           middleware/eiq/tensorflow-lite/third_party/flatbuf
+                           fers                                              
+                           Origin: https://google.github.io/flatbuffers      
+                           Url: https://github.com/google/flatbuffers        
+                           Outgoing License: Apache-2.0                      
+                           License File:                                     
+                           middleware/eiq/tensorflow-lite/third_party/flatbuf
+                           fers/LICENSE.txt                                  
+
+eiq_gemmlowp               Name: gemmlowp                                    
+                           Version: NA (commit 719139c)                      
+                           Description: A small self-contained low-precision 
+                           GEMM library                                      
+                           Format: source code                               
+                           Location:                                         
+                           middleware/eiq/tensorflow-lite/third_party/gemmlow
+                           p                                                 
+                           Origin: See                                       
+                           middleware/eiq/tensorflow-lite/third_party/gemmlow
+                           p/AUTHORS                                         
+                           Url: https://github.com/google/gemmlowp           
+                           Outgoing License: Apache-2.0                      
+                           License File:                                     
+                           middleware/eiq/tensorflow-lite/third_party/gemmlow
+                           p/LICENSE                                         
+
+eiq_KissFFT                Name: Kiss FFT                                    
+                           Version: 1.3.0                                    
+                           Description: A mixed-radix Fast Fourier Transform 
+                           library                                           
+                           Format: source code                               
+                           Location:                                         
+                           middleware/eiq/tensorflow-lite/third_party/kissfft
+                           Origin: Mark Borgerding                           
+                           Url: https://github.com/mborgerding/kissfft       
+                           Outgoing License: BSD-3-Clause                    
+                           License File:                                     
+                           middleware/eiq/tensorflow-lite/third_party/kissfft
+                           /COPYING                                          
+
+eiq_ruy                    Name: ruy                                         
+                           Version: NA (commit d371283)                      
+                           Description: The ruy matrix multiplication library
+                           Format: source code                               
+                           Location:                                         
+                           middleware/eiq/tensorflow-lite/third_party/ruy    
+                           Origin: Google, Inc.                              
+                           Url: https://github.com/google/ruy                
+                           Outgoing License: Apache-2.0                      
+                           License File:                                     
+                           middleware/eiq/tensorflow-lite/third_party/ruy/LIC
+                           ENSE                                              
+
+eiq_tensorflow_lite_micro_cName: CMSIS-NN library                            
+msis_nn                    Version: v6.0.0 (commit 69823017)                 
+                           Description: A neural network kernels library for 
+                           Cortex-M cores from ARM                           
+                           Format: source code                               
+                           Location:                                         
+                           middleware/eiq/tensorflow-lite/third_party/cmsis_n
+                           n                                                 
+                           Origin: ARM                                       
+                           Url: https://github.com/ARM-software/CMSIS-NN     
+                           Outgoing License: Apache-2.0                      
+                           License File:                                     
+                           middleware/eiq/tensorflow-lite/third_party/cmsis_n
+                           n/LICENSE.txt                                     
+
+eiq_tensorflow_lite_micro_xName: Cadence HiFi4 Neural Network (NN) Library   
+tensa_nn                   Version: 2.9.0                                    
+                           Description: A neural network kernels library for 
+                           Xtensa cores from Cadence                         
+                           Format: source code                               
+                           Location:                                         
+                           middleware/eiq/tensorflow-lite/third_party/xa_nnli
+                           b_hifi4,                                          
+                           middleware/eiq/tensorflow-lite/tensorflow/lite/mic
+                           ro/kernels/xtensa_hifi                            
+                           Origin: Cadence Design Systems, Inc. (proprietary)
+                           Url: https://github.com/foss-xtensa/nnlib-hifi4   
+                           Outgoing License: LA_OPT_NXP_Software_License v57 
+                           July 2024 - Additional distribution license       
+                           granted, license in Section 2.3 applies           
+                           License File: ./LA_OPT_NXP_Software_License.txt   
+
+mpp                        Name: Multimedia Processing Pipelines (MPP)       
+                           Version: 3.2.0                                    
+                           Description: Library to build vision pipelines    
+                           Format: source code, header files                 
+                           Location: middleware/eiq/mpp                      
+                           Origin: NXP                                       
+                           Outgoing License: Apache-2.0                      
+                           License File: middleware/eiq/mpp/LICENSE          
+
 lvgl                       Name: LVGL                                        
                            Version: 9.2.1                                    
                            Outgoing License: MIT                             
@@ -396,6 +567,16 @@ littlefs                   Name: LittleFS
                            Origin: Christopher Haster                        
                            (https://github.com/geky/)                        
                            Url: https://github.com/littlefs-project/littlefs 
+
+libjpeg                    Name: LIBJPEG                                     
+                           Version: 9b                                       
+                           Outgoing License: IJG                             
+                           License File: middleware/libjpeg/README           
+                           Format: source code                               
+                           Description: JPEG image encoding, decoding, and   
+                           transcoding                                       
+                           Location: middleware/libjpeg                      
+                           Origin: IJG (IJG) - http://www.ijg.org            
 
 fatfs                      Name: FatFs                                       
                            Version: R0.15                                    
@@ -449,6 +630,18 @@ naturedsp_hifi4            Name: naturedsp
                            Description: Digital Signal Processing for Xtensa 
                            HiFi Audio Engines                                
                            Location: middleware/cadence/naturedsp/hifi4      
+                           Origin: Cadence Design Systems (Proprietary)      
+
+naturedsp_hifi1            Name: naturedsp                                   
+                           Version: 1.1.0                                    
+                           Outgoing License: LA_OPT_NXP_Software_License v57 
+                           July 2024 - No distribution permitted, license in 
+                           Section 2.2 applies.                              
+                           License File: ./LA_OPT_NXP_Software_License.txt   
+                           Format: source code                               
+                           Description: Digital Signal Processing for Xtensa 
+                           HiFi Audio Engines                                
+                           Location: middleware/cadence/naturedsp/hifi1      
                            Origin: Cadence Design Systems (Proprietary)      
 
 multicore_xaf              Name: dsp_audio_framework                         
@@ -531,6 +724,17 @@ dsp_audio_codec_drm_hifi4  Name: dsp_audio_codec_drm_hifi4
                            Location: middleware/cadence/codecs/drm/hifi4     
                            Origin: Cadence Design Systems                    
 
+dsp_audio_codec_lc3_hifi4  Name: dsp_audio_codec_lc3_hifi4                   
+                           Version: 1.12                                     
+                           Outgoing License: LA_OPT_NXP_Software_License v57 
+                           July 2024 - Additional distribution license       
+                           granted, license in Section 2.3 applies           
+                           License File: ./LA_OPT_NXP_Software_License.txt   
+                           Format: binary                                    
+                           Description: Tensilica HiFi LC3 Codec             
+                           Location: middleware/cadence/codecs/lc3/hifi4     
+                           Origin: Cadence Design Systems                    
+
 dsp_audio_codec_mp2_dec_hifName: dsp_audio_codec_mp2_dec_hifi4               
 i4                         Version: 3.26                                     
                            Outgoing License: LA_OPT_NXP_Software_License v57 
@@ -551,6 +755,17 @@ i4                         Version: 3.28.1
                            Format: binary                                    
                            Description: Tensilica HiFi MP3 Decoder           
                            Location: middleware/cadence/codecs/mp3_dec/hifi4 
+                           Origin: Cadence Design Systems                    
+
+dsp_audio_codec_mp3_enc_hifName: dsp_audio_codec_mp3_enc_hifi4               
+i4                         Version: 1.10                                     
+                           Outgoing License: LA_OPT_NXP_Software_License v57 
+                           July 2024 - Additional distribution license       
+                           granted, license in Section 2.3 applies           
+                           License File: ./LA_OPT_NXP_Software_License.txt   
+                           Format: binary                                    
+                           Description: Tensilica HiFi MP3 Encoder           
+                           Location: middleware/cadence/codecs/mp3_enc/hifi4 
                            Origin: Cadence Design Systems                    
 
 dsp_audio_codec_asrc_src_ppName: dsp_audio_codec_asrc_src_pp_hifi4           
@@ -624,6 +839,111 @@ cjson                      Name: CJSON
                            Url:                                              
                            https://github.com/DaveGamble/cJSON/releases/tag/v
                            1.7.4                                             
+
+dsp_audio_codec_aac_dec_hifName: dsp_audio_codec_aac_dec_hifi1               
+i1                         Version: 3.16                                     
+                           Outgoing License: LA_OPT_NXP_Software_License v57 
+                           July 2024 - Additional distribution license       
+                           granted, license in Section 2.3 applies           
+                           License File: ./LA_OPT_NXP_Software_License.txt   
+                           Format: binary                                    
+                           Description: Tensilica HiFi AAC-LC, aacPlus       
+                           (HE-AAC) and aacPlus v2 Decoder                   
+                           Location:                                         
+                           middleware/cadence/codecs/aacplus_dec/hifi1       
+                           Origin: Cadence Design Systems                    
+
+dsp_audio_codec_lc3_hifi1  Name: dsp_audio_codec_lc3_hifi1                   
+                           Version: 1.16                                     
+                           Outgoing License: LA_OPT_NXP_Software_License v57 
+                           July 2024 - Additional distribution license       
+                           granted, license in Section 2.3 applies           
+                           License File: ./LA_OPT_NXP_Software_License.txt   
+                           Format: binary                                    
+                           Description: Tensilica HiFi LC3 Decoder           
+                           Location: middleware/cadence/codecs/lc3/hifi1     
+                           Origin: Cadence Design Systems                    
+
+dsp_audio_codec_mp3_dec_hifName: dsp_audio_codec_mp3_dec_hifi1               
+i1                         Version: 3.28                                     
+                           Outgoing License: LA_OPT_NXP_Software_License v57 
+                           July 2024 - Additional distribution license       
+                           granted, license in Section 2.3 applies           
+                           License File: ./LA_OPT_NXP_Software_License.txt   
+                           Format: binary                                    
+                           Description: Tensilica HiFi MP3 Decoder           
+                           Location: middleware/cadence/codecs/mp3_dec/hifi1 
+                           Origin: Cadence Design Systems                    
+
+dsp_audio_codec_mp3_enc_hifName: dsp_audio_codec_mp3_enc_hifi1               
+i1                         Version: 1.10                                     
+                           Outgoing License: LA_OPT_NXP_Software_License v57 
+                           July 2024 - Additional distribution license       
+                           granted, license in Section 2.3 applies           
+                           License File: ./LA_OPT_NXP_Software_License.txt   
+                           Format: binary                                    
+                           Description: Tensilica HiFi MP3 Encoder           
+                           Location: middleware/cadence/codecs/mp3_enc/hifi1 
+                           Origin: Cadence Design Systems                    
+
+dsp_audio_codec_asrc_src_ppName: dsp_audio_codec_asrc_src_pp_hifi1           
+_hifi1                     Version: 1.18                                     
+                           Outgoing License: LA_OPT_NXP_Software_License v57 
+                           July 2024 - Additional distribution license       
+                           granted, license in Section 2.3 applies           
+                           License File: ./LA_OPT_NXP_Software_License.txt   
+                           Format: binary                                    
+                           Description: Tensilica HiFi Asynchronous and      
+                           Synchronous Sample Rate Converter (SRC)           
+                           Location:                                         
+                           middleware/cadence/codecs/asrc_src_pp/hifi1       
+                           Origin: Cadence Design Systems                    
+
+dsp_audio_codec_vorbis_dec_Name: dsp_audio_codec_vorbis_dec_hifi1            
+hifi1                      Version: 1.15                                     
+                           Outgoing License: LA_OPT_NXP_Software_License v57 
+                           July 2024 - Additional distribution license       
+                           granted, license in Section 2.3 applies           
+                           License File: ./LA_OPT_NXP_Software_License.txt   
+                           Format: binary                                    
+                           Description: Tensilica HiFi Vorbis Decoder (with  
+                           or without OGG container)                         
+                           Location:                                         
+                           middleware/cadence/codecs/vorbis_dec/hifi1        
+                           Origin: Cadence Design Systems                    
+
+dsp_audio_codec_opus_hifi1 Name: dsp_audio_codec_opus_hifi1                  
+                           Version: 1.24                                     
+                           Outgoing License: LA_OPT_NXP_Software_License v57 
+                           July 2024 - Additional distribution license       
+                           granted, license in Section 2.3 applies           
+                           License File: ./LA_OPT_NXP_Software_License.txt   
+                           Format: binary                                    
+                           Description: Cadence Tensilica HiFi Opus Codec    
+                           Location: middleware/cadence/codecs/opus/hifi1    
+                           Origin: Cadence Design Systems                    
+
+dsp_audio_codec_sbc_dec_hifName: dsp_audio_codec_sbc_dec_hifi1               
+i1                         Version: 1.9                                      
+                           Outgoing License: LA_OPT_NXP_Software_License v57 
+                           July 2024 - Additional distribution license       
+                           granted, license in Section 2.3 applies           
+                           License File: ./LA_OPT_NXP_Software_License.txt   
+                           Format: binary                                    
+                           Description: Cadence Tensilica HiFi SBC Decoder   
+                           Location: middleware/cadence/codecs/sbc_dec/hifi1 
+                           Origin: Cadence Design Systems                    
+
+dsp_audio_codec_sbc_enc_hifName: dsp_audio_codec_sbc_enc_hifi1               
+i1                         Version: 1.9                                      
+                           Outgoing License: LA_OPT_NXP_Software_License v57 
+                           July 2024 - Additional distribution license       
+                           granted, license in Section 2.3 applies           
+                           License File: ./LA_OPT_NXP_Software_License.txt   
+                           Format: binary                                    
+                           Description: Cadence Tensilica HiFi SBC Encoder   
+                           Location: middleware/cadence/codecs/sbc_enc/hifi1 
+                           Origin: Cadence Design Systems                    
 
 device-defender            Name: AWS IoT Device Defender Library             
                            Version: 1.3.0                                    
@@ -756,6 +1076,40 @@ wifi_tx_pwr_limits         Name: Wi-Fi module Tx power limits
                            Outgoing License: BSD-3-Clause                    
                            License File: ./COPYING-BSD-3                     
 
+unity                      Name: Unity                                       
+                           Version: 2.1.0                                    
+                           Description: Simple Unit Testing for C            
+                           Format: source code                               
+                           Location: devices/<device>/utilities/unity        
+                           Origin: ThrowTheSwitch.org (MIT)                  
+                           Url: https://github.com/ThrowTheSwitch/Unity/     
+                           Outgoing License: MIT                             
+                           License File:                                     
+                           https://github.com/ThrowTheSwitch/Unity/          
+
+psa_crypto_driver          Name: PSA CRYPTO DRIVER                           
+                           Version: 1.0.0                                    
+                           Description: PSA crypto driver interface to use   
+                           cryptographic library running on NXP crypto       
+                           Hardware IP                                       
+                           Format: source code                               
+                           Location: components/psa_crypto_driver            
+                           Origin: NXP (BSD-3-Clause)                        
+                           Outgoing License: BSD-3-Clause                    
+                           License File: ./COPYING-BSD-3                     
+
+els_pkc                    Name: ELS PKC                                     
+                           Version: 1.9.0                                    
+                           Description: Cryptographic library running on NXP 
+                           ELS and PKC Crypto Hardware IP                    
+                           Format: Static library, headers, sources          
+                           Location: components/els_pkc                      
+                           Origin: NXP (proprietary)                         
+                           Outgoing License: LA_OPT_NXP_Software_License v57 
+                           July 2024 - Additional distribution license       
+                           granted, license in Section 2.3 applies           
+                           License File: ./LA_OPT_NXP_Software_License.txt   
+
 SDK_Peripheral_Driver      Name: SDK Peripheral Driver                       
                            Version: 2.x.x                                    
                            Outgoing License: BSD-3-Clause                    
@@ -838,6 +1192,17 @@ fmstr                      Name: FreeMASTER
                            Location: middleware/freemaster/src               
                            Origin: NXP                                       
 
+segger_rtt                 Name: SEGGER Real Timer Transfer                  
+                           Version: 7.22                                     
+                           Description: SEGGER Real Timer Transfer           
+                           Format: source code                               
+                           Location: components/rtt                          
+                           Origin: SEGGER Microcontroller (proprietary)      
+                           Outgoing License: LA_OPT_NXP_Software_License v57 
+                           July 2024 - Additional distribution license       
+                           granted, license in Section 2.3 applies           
+                           License File: ./LA_OPT_NXP_Software_License.txt   
+
 CRC32-GS                   Name: CRC32 code                                  
                            Version: NA                                       
                            Description: CRC32 code written by Gary S. Brown  
@@ -861,3 +1226,17 @@ CMSIS_RTOS2_RTX            Name: CMSIS_RTOS2_RTX
                            Origin: NXP (Apache-2.0) ARM (Apache-2.0) -       
                            https://github.com/ARM-software/CMSIS-RTX/releases
                            /tag/v5.9.0                                       
+
+RISCV                      Name: RISCV core source                           
+                           Version: 1.0.0                                    
+                           Outgoing License: LA_OPT_NXP_Software_License v57 
+                           July 2024 - Additional distribution license       
+                           granted, license in Section 2.3 applies           
+                           License File: ./LA_OPT_NXP_Software_License.txt   
+                           Format: source code                               
+                           Description: RISCV core support source files      
+                           Location: arch/riscv                              
+                           Origin: BSD-2-Clause                              
+                           Url:                                              
+                           https://github.com/riscv-software-src/opensbi/tree
+                           /v1.4                                             

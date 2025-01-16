@@ -27,7 +27,7 @@
 /*******************************************************************************
  * Variables
  ******************************************************************************/
-#if defined(CPU_MCXN947VDF_cm33_core0) || defined(CPU_MCXN547VDF_cm33_core0) || defined(CPU_MCXA153VLH_cm33_nodsp) || defined(CPU_MCXA156VLL_cm33) || defined(CPU_MCXA156VLL)
+#if defined(CPU_MCXN947VDF_cm33_core0) || defined(CPU_MCXN547VDF_cm33_core0) || defined(CPU_MCXA153VLH) || defined(CPU_MCXA156VLL_cm33) || defined(CPU_MCXA156VLL)
 LPI2C_Type *const i2cBases[] = LPI2C_BASE_PTRS;
 #else
 I2C_Type *const i2cBases[] = I2C_BASE_PTRS;

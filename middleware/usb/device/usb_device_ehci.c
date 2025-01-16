@@ -9,12 +9,21 @@
 #include "usb_device_config.h"
 #include "fsl_device_registers.h"
 #include "usb.h"
+/* CONFIG_UDC_DRIVER is for Zephyr, it will not be defined in NXP MCUXpresso SDK */
+#if !((defined CONFIG_UDC_DRIVER) && (CONFIG_UDC_DRIVER))
 #include "usb_device.h"
+#endif
 #if ((defined(USB_DEVICE_CONFIG_EHCI)) && (USB_DEVICE_CONFIG_EHCI > 0U))
 
+/* CONFIG_UDC_DRIVER is for Zephyr, it will not be defined in NXP MCUXpresso SDK */
+#if ((defined CONFIG_UDC_DRIVER) && (CONFIG_UDC_DRIVER))
+#include "usb_device_mcux_drv_port.h"
+#include "usb_device_ehci.h"
+#else
 #include "usb_device_dci.h"
 
 #include "usb_device_ehci.h"
+#endif
 #if (defined(USB_DEVICE_CONFIG_LOW_POWER_MODE) && (USB_DEVICE_CONFIG_LOW_POWER_MODE > 0U))
 #if ((defined FSL_FEATURE_SOC_USBPHY_COUNT) && (FSL_FEATURE_SOC_USBPHY_COUNT > 0U))
 #include "usb_phy.h"
@@ -46,6 +55,10 @@
 #if defined FSL_FEATURE_MEMORY_HAS_ADDRESS_OFFSET && FSL_FEATURE_MEMORY_HAS_ADDRESS_OFFSET
 #define USB_DEV_MEMORY_CPU_2_DMA(x) MEMORY_ConvertMemoryMapAddress((uint32_t)(x), kMEMORY_Local2DMA)
 #define USB_DEV_MEMORY_DMA_2_CPU(x) MEMORY_ConvertMemoryMapAddress((uint32_t)(x), kMEMORY_DMA2Local)
+#endif
+
+#if (defined(FSL_FEATURE_USB_ATLANTIC_EHCI_SUPPORT) && (FSL_FEATURE_USB_ATLANTIC_EHCI_SUPPORT > 0U))
+#define USB_PHY_POLLING_DELAY (1000000U)
 #endif
 
 /*******************************************************************************
@@ -85,7 +98,7 @@ static usb_status_t USB_DeviceEhciNotification(usb_device_ehci_state_struct_t *e
 /* Apply for QH buffer, 2048-byte alignment */
 USB_RAM_ADDRESS_ALIGNMENT(2048)
 USB_CONTROLLER_DATA static uint8_t qh_buffer[(USB_DEVICE_CONFIG_EHCI - 1) * 2048 +
-                                             2 * USB_DEVICE_CONFIG_ENDPOINTS * 2 * sizeof(usb_device_ehci_qh_struct_t)];
+                                             USB_DEVICE_CONFIG_ENDPOINTS * 2 * sizeof(usb_device_ehci_qh_struct_t)];
 
 /* Apply for DTD buffer, 32-byte alignment */
 USB_RAM_ADDRESS_ALIGNMENT(32)
@@ -557,8 +570,12 @@ static void USB_DeviceEhciCancelControlPipe(usb_device_ehci_state_struct_t *ehci
         }
         else
         {
-            message.length += (currentDtd->reservedUnion.originalBufferInfo.originalBufferLength -
-                               currentDtd->dtdTokenUnion.dtdTokenBitmap.totalBytes);
+            if (currentDtd->reservedUnion.originalBufferInfo.originalBufferLength >=
+                currentDtd->dtdTokenUnion.dtdTokenBitmap.totalBytes)
+            {
+                message.length += (currentDtd->reservedUnion.originalBufferInfo.originalBufferLength -
+                                   currentDtd->dtdTokenUnion.dtdTokenBitmap.totalBytes);
+            }
         }
         /* Clear the endpoint transfer done status */
         ehciState->registerBase->EPCOMPLETE = primeBit;
@@ -761,8 +778,12 @@ static void USB_DeviceEhciInterruptTokenDone(usb_device_ehci_state_struct_t *ehc
 #endif
                         }
                         /* Save the transferred data length */
-                        message.length += (currentDtd->reservedUnion.originalBufferInfo.originalBufferLength -
-                                           currentDtd->dtdTokenUnion.dtdTokenBitmap.totalBytes);
+                        if (currentDtd->reservedUnion.originalBufferInfo.originalBufferLength >=
+                            currentDtd->dtdTokenUnion.dtdTokenBitmap.totalBytes)
+                        {
+                            message.length += (currentDtd->reservedUnion.originalBufferInfo.originalBufferLength -
+                                               currentDtd->dtdTokenUnion.dtdTokenBitmap.totalBytes);
+                        }
 
                         /* Move the dtd queue head pointer to next */
                         if (ehciState->dtdHard[index] == ehciState->dtdTail[index])
@@ -982,7 +1003,7 @@ static void USB_DeviceEhciInterruptSuspend(usb_device_ehci_state_struct_t *ehciS
 #else
 #if ((defined FSL_FEATURE_SOC_USBPHY_COUNT) && (FSL_FEATURE_SOC_USBPHY_COUNT > 0U))
 #if defined(FSL_FEATURE_USBHS_SUPPORT_EUSBn)
-        if (0U == (uint32_t)FSL_FEATURE_USBHS_SUPPORT_EUSBn(ehciState->registerBase))
+        if (0 == (int32_t)FSL_FEATURE_USBHS_SUPPORT_EUSBn(ehciState->registerBase))
         {
 #endif
             if (0U != (ehciState->registerPhyBase->USB1_VBUS_DET_STAT & USBPHY_USB1_VBUS_DET_STAT_VBUS_VALID_3V_MASK))
@@ -1456,6 +1477,9 @@ usb_status_t USB_DeviceEhciInit(uint8_t controllerId,
     usb_phydcd_config_struct_t phyDcdParamConfig;
     usb_phydcd_status_t phyDcdError = kStatus_phydcd_Success;
 #endif
+#if (defined(FSL_FEATURE_USB_ATLANTIC_EHCI_SUPPORT) && (FSL_FEATURE_USB_ATLANTIC_EHCI_SUPPORT > 0U))
+    uint32_t delay;
+#endif
 
     if ((controllerId < (uint8_t)kUSB_ControllerEhci0) ||
         ((uint32_t)((uint32_t)controllerId - (uint32_t)kUSB_ControllerEhci0) >= (sizeof(ehci_base) / sizeof(uint32_t))))
@@ -1478,7 +1502,7 @@ usb_status_t USB_DeviceEhciInit(uint8_t controllerId,
 #if (defined(USB_DEVICE_CONFIG_LOW_POWER_MODE) && (USB_DEVICE_CONFIG_LOW_POWER_MODE > 0U))
 #if ((defined FSL_FEATURE_SOC_USBPHY_COUNT) && (FSL_FEATURE_SOC_USBPHY_COUNT > 0U))
 #if defined(FSL_FEATURE_USBHS_SUPPORT_EUSBn)
-    if (0U == (uint32_t)FSL_FEATURE_USBHS_SUPPORT_EUSBn(ehciState->registerBase))
+    if (0 == (int32_t)FSL_FEATURE_USBHS_SUPPORT_EUSBn(ehciState->registerBase))
 #endif
     {
         ehciState->registerPhyBase = (USBPHY_Type *)USB_EhciPhyGetBase(controllerId);
@@ -1492,7 +1516,7 @@ usb_status_t USB_DeviceEhciInit(uint8_t controllerId,
 #endif
     /* For eUSB, do not need to reset controller. */
 #if defined(FSL_FEATURE_USBHS_SUPPORT_EUSBn)
-    if (0U == (uint32_t)FSL_FEATURE_USBHS_SUPPORT_EUSBn(ehciState->registerBase))
+    if (0 == (int32_t)FSL_FEATURE_USBHS_SUPPORT_EUSBn(ehciState->registerBase))
 #endif
     {
         /* Reset the controller. */
@@ -1515,6 +1539,33 @@ usb_status_t USB_DeviceEhciInit(uint8_t controllerId,
     /* Clear the controller mode field and set to device mode. */
     ehciState->registerBase->USBMODE &= ~USBHS_USBMODE_CM_MASK;
     ehciState->registerBase->USBMODE |= USBHS_USBMODE_CM(0x02U);
+#if (defined(FSL_FEATURE_USB_ATLANTIC_EHCI_SUPPORT) && (FSL_FEATURE_USB_ATLANTIC_EHCI_SUPPORT > 0U))
+    /* Compilance margin settings recommended by validation team */
+    /* Adjust PLL VCO calibration voltage to 3 (1.1V) */
+    ehciState->registerBase->CALIBRATION_CONTROL &= ~(USBC_CALIBRATION_CONTROL_PLLCAL_MASK);
+    ehciState->registerBase->CALIBRATION_CONTROL |=
+        ((3U << USBC_CALIBRATION_CONTROL_PLLCAL_SHIFT) | USBC_CALIBRATION_CONTROL_PLLCAL_START_MASK);
+    delay = USB_PHY_POLLING_DELAY;
+    /* Verify PLL calibration has been done (max time between CAL_START and CAL_DONE is 500us) */
+    while ((delay--) && (!(ehciState->registerBase->CALIBRATION_CONTROL & USBC_CALIBRATION_CONTROL_PLLCAL_DONE_MASK)))
+    {
+    }
+    ehciState->registerBase->CALIBRATION_CONTROL &= ~(USBC_CALIBRATION_CONTROL_PLLCAL_START_MASK);
+    /* Adjust impedance calibration threshold IMPCAL_VTH to 7 (900/23=39 ohms) */
+    ehciState->registerBase->CALIBRATION_CONTROL &= ~(USBC_CALIBRATION_CONTROL_IMPCAL_VTH_MASK);
+    ehciState->registerBase->CALIBRATION_CONTROL |=
+        ((7U << USBC_CALIBRATION_CONTROL_IMPCAL_VTH_SHIFT) | USBC_CALIBRATION_CONTROL_IMPCAL_START_MASK);
+    delay = USB_PHY_POLLING_DELAY;
+    /* Verify impedance calibration has been done (max time between CAL_START and CAL_DONE is 500us) */
+    while ((delay--) && (!(ehciState->registerBase->CALIBRATION_CONTROL & USBC_CALIBRATION_CONTROL_IMPCAL_DONE_MASK)))
+    {
+    }
+    ehciState->registerBase->CALIBRATION_CONTROL &= ~(USBC_CALIBRATION_CONTROL_IMPCAL_START_MASK);
+    /* Fixed the static value for impedance using Bit 11 and Bit [3:0] */
+    ehciState->registerBase->CALIBRATION_CONTROL |= USBC_CALIBRATION_CONTROL_EXT_FS_IMP_EN_MASK;
+    /* Adjust HS_SR_SEL[1:0] to b'11 */
+    ehciState->registerBase->TX_CHANNEL_CONTRL_0 |= USBC_TX_CHANNEL_CONTRL_0_HS_SR_SEL_MASK;
+#endif
 
     /* Set the EHCI to default status. */
     USB_DeviceEhciSetDefaultState(ehciState);
@@ -1944,7 +1995,11 @@ usb_status_t USB_DeviceEhciControl(usb_device_controller_handle ehciHandle, usb_
             if (NULL != param)
             {
                 temp16  = (uint16_t *)param;
-                *temp16 = ((uint16_t)USB_DEVICE_CONFIG_SELF_POWER
+#if defined(USB_DEVICE_CONFIG_SELF_POWER) && (USB_DEVICE_CONFIG_SELF_POWER > 0U)
+                *temp16 = ((uint16_t)1U
+#else
+                *temp16 = ((uint16_t)0U
+#endif
                            << (USB_REQUEST_STANDARD_GET_STATUS_DEVICE_SELF_POWERED_SHIFT))
 #if ((defined(USB_DEVICE_CONFIG_REMOTE_WAKEUP)) && (USB_DEVICE_CONFIG_REMOTE_WAKEUP > 0U))
                           | ((uint16_t)deviceHandle->remotewakeup
@@ -2039,7 +2094,7 @@ usb_status_t USB_DeviceEhciControl(usb_device_controller_handle ehciHandle, usb_
 #endif
 #if ((defined FSL_FEATURE_SOC_USBPHY_COUNT) && (FSL_FEATURE_SOC_USBPHY_COUNT > 0U))
 #if defined(FSL_FEATURE_USBHS_SUPPORT_EUSBn)
-            if (0U == (uint32_t)FSL_FEATURE_USBHS_SUPPORT_EUSBn(ehciState->registerBase))
+            if (0 == (int32_t)FSL_FEATURE_USBHS_SUPPORT_EUSBn(ehciState->registerBase))
 #endif
             {
                 ehciState->registerPhyBase->PWD = 0xFFFFFFFFU;
@@ -2051,7 +2106,7 @@ usb_status_t USB_DeviceEhciControl(usb_device_controller_handle ehciHandle, usb_
 #if (defined(FSL_FEATURE_USBPHY_28FDSOI) && (FSL_FEATURE_USBPHY_28FDSOI > 0U))
 #if ((defined FSL_FEATURE_SOC_USBPHY_COUNT) && (FSL_FEATURE_SOC_USBPHY_COUNT > 0U))
 #if defined(FSL_FEATURE_USBHS_SUPPORT_EUSBn)
-            if (0U == (uint32_t)FSL_FEATURE_USBHS_SUPPORT_EUSBn(ehciState->registerBase))
+            if (0 == (int32_t)FSL_FEATURE_USBHS_SUPPORT_EUSBn(ehciState->registerBase))
 #endif
             {
                 ehciState->registerPhyBase->USB1_VBUS_DETECT_SET |= USBPHY_USB1_VBUS_DETECT_VBUSVALID_TO_SESSVALID_MASK;
@@ -2063,7 +2118,7 @@ usb_status_t USB_DeviceEhciControl(usb_device_controller_handle ehciHandle, usb_
 #if (defined(USBPHY_CTRL_ENVBUSCHG_WKUP_MASK))
 #if ((defined FSL_FEATURE_SOC_USBPHY_COUNT) && (FSL_FEATURE_SOC_USBPHY_COUNT > 0U))
 #if defined(FSL_FEATURE_USBHS_SUPPORT_EUSBn)
-            if (0U == (uint32_t)FSL_FEATURE_USBHS_SUPPORT_EUSBn(ehciState->registerBase))
+            if (0 == (int32_t)FSL_FEATURE_USBHS_SUPPORT_EUSBn(ehciState->registerBase))
 #endif
             {
                 ehciState->registerPhyBase->CTRL |= USBPHY_CTRL_ENVBUSCHG_WKUP_MASK | USBPHY_CTRL_ENIDCHG_WKUP_MASK |
@@ -2090,7 +2145,7 @@ usb_status_t USB_DeviceEhciControl(usb_device_controller_handle ehciHandle, usb_
 #endif
 #if ((defined FSL_FEATURE_SOC_USBPHY_COUNT) && (FSL_FEATURE_SOC_USBPHY_COUNT > 0U))
 #if defined(FSL_FEATURE_USBHS_SUPPORT_EUSBn)
-            if (0U == (uint32_t)FSL_FEATURE_USBHS_SUPPORT_EUSBn(ehciState->registerBase))
+            if (0 == (int32_t)FSL_FEATURE_USBHS_SUPPORT_EUSBn(ehciState->registerBase))
 #endif
             {
                 ehciState->registerPhyBase->CTRL |= USBPHY_CTRL_CLKGATE_MASK;
@@ -2107,7 +2162,7 @@ usb_status_t USB_DeviceEhciControl(usb_device_controller_handle ehciHandle, usb_
             OSA_ENTER_CRITICAL();
 #if ((defined FSL_FEATURE_SOC_USBPHY_COUNT) && (FSL_FEATURE_SOC_USBPHY_COUNT > 0U))
 #if defined(FSL_FEATURE_USBHS_SUPPORT_EUSBn)
-            if (0U == (uint32_t)FSL_FEATURE_USBHS_SUPPORT_EUSBn(ehciState->registerBase))
+            if (0 == (int32_t)FSL_FEATURE_USBHS_SUPPORT_EUSBn(ehciState->registerBase))
 #endif
             {
                 ehciState->registerPhyBase->PWD = 0xFFFFFFFFU;
@@ -2118,7 +2173,7 @@ usb_status_t USB_DeviceEhciControl(usb_device_controller_handle ehciHandle, usb_
 #if (defined(FSL_FEATURE_USBPHY_28FDSOI) && (FSL_FEATURE_USBPHY_28FDSOI > 0U))
 #if ((defined FSL_FEATURE_SOC_USBPHY_COUNT) && (FSL_FEATURE_SOC_USBPHY_COUNT > 0U))
 #if defined(FSL_FEATURE_USBHS_SUPPORT_EUSBn)
-            if (0U == (uint32_t)FSL_FEATURE_USBHS_SUPPORT_EUSBn(ehciState->registerBase))
+            if (0 == (int32_t)FSL_FEATURE_USBHS_SUPPORT_EUSBn(ehciState->registerBase))
 #endif
             {
                 ehciState->registerPhyBase->USB1_VBUS_DETECT_SET |= USBPHY_USB1_VBUS_DETECT_VBUSVALID_TO_SESSVALID_MASK;
@@ -2130,7 +2185,7 @@ usb_status_t USB_DeviceEhciControl(usb_device_controller_handle ehciHandle, usb_
 #if (defined(USBPHY_CTRL_ENVBUSCHG_WKUP_MASK))
 #if ((defined FSL_FEATURE_SOC_USBPHY_COUNT) && (FSL_FEATURE_SOC_USBPHY_COUNT > 0U))
 #if defined(FSL_FEATURE_USBHS_SUPPORT_EUSBn)
-            if (0U == (uint32_t)FSL_FEATURE_USBHS_SUPPORT_EUSBn(ehciState->registerBase))
+            if (0 == (int32_t)FSL_FEATURE_USBHS_SUPPORT_EUSBn(ehciState->registerBase))
 #endif
             {
                 ehciState->registerPhyBase->CTRL |= USBPHY_CTRL_ENVBUSCHG_WKUP_MASK | USBPHY_CTRL_ENIDCHG_WKUP_MASK |
@@ -2157,7 +2212,7 @@ usb_status_t USB_DeviceEhciControl(usb_device_controller_handle ehciHandle, usb_
 #endif
 #if ((defined FSL_FEATURE_SOC_USBPHY_COUNT) && (FSL_FEATURE_SOC_USBPHY_COUNT > 0U))
 #if defined(FSL_FEATURE_USBHS_SUPPORT_EUSBn)
-            if (0U == (uint32_t)FSL_FEATURE_USBHS_SUPPORT_EUSBn(ehciState->registerBase))
+            if (0 == (int32_t)FSL_FEATURE_USBHS_SUPPORT_EUSBn(ehciState->registerBase))
 #endif
             {
                 ehciState->registerPhyBase->CTRL |= USBPHY_CTRL_CLKGATE_MASK;

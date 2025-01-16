@@ -2,7 +2,19 @@
  * Copyright 2022-2024 NXP.
  * All rights reserved.
  *
- * SPDX-License-Identifier: BSD-3-Clause
+ *  SPDX-License-Identifier: Apache-2.0
+ *
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
  */
 
 #include <FreeRTOS.h>
@@ -24,8 +36,6 @@
 #define _impl_PASTE(a,b) a##b
 #define _impl_CASSERT_LINE(predicate, line, file) \
     typedef char _impl_PASTE(assertion_failed_##file##_,line)[2*!!(predicate)-1];
-
-CASSERT(configMAX_PRIORITIES > MPP_PIPELINE_MAX_PRIO, hal_freertos_c);
 
 void vApplicationStackOverflowHook( TaskHandle_t xTask, char * pcTaskName )
 {
@@ -122,9 +132,9 @@ int hal_mutex_unlock (hal_mutex_t mutex)
 uint32_t hal_get_exec_time()
 {
     TaskStatus_t taskStatus[HAL_MAX_TASKS] = {0};
-    configRUN_TIME_COUNTER_TYPE runtime;
+    configRUN_TIME_COUNTER_TYPE runtime = 0;
     TaskHandle_t cur_task = xTaskGetCurrentTaskHandle();
-    uint32_t runtime_ms, tasks_time = 0;
+    uint32_t runtime_ms = 0, tasks_time = 0;
 
     uxTaskGetSystemState(taskStatus, HAL_MAX_TASKS, &runtime);
     for(int i= 0; i < HAL_MAX_TASKS; i++)
@@ -299,4 +309,9 @@ hal_eventbits_t hal_eventgrp_wait_bits( hal_event_group_t eventgrp,
 int hal_get_max_syscall_prio()
 {
     return configLIBRARY_MAX_SYSCALL_INTERRUPT_PRIORITY;
+}
+
+int hal_get_os_max_prio()
+{
+	return configMAX_PRIORITIES;
 }

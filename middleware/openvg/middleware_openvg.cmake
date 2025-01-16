@@ -3,17 +3,32 @@
 include_guard(GLOBAL)
 message("${CMAKE_CURRENT_LIST_FILE} component is included.")
 
-target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
-  ${CMAKE_CURRENT_LIST_DIR}/inc
-)
+      target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
+          ${CMAKE_CURRENT_LIST_DIR}/src/vg_api.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/vg_context.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/vg_egl.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/vg_image.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/vg_vgu.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/vg_egl_freertos.c
+        )
 
-if((CONFIG_TOOLCHAIN STREQUAL iar OR CONFIG_TOOLCHAIN STREQUAL armgcc))
-  target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE
-    -Wl,--start-group
-      ${CMAKE_CURRENT_LIST_DIR}/lib/libEGL.a
-      ${CMAKE_CURRENT_LIST_DIR}/lib/libGAL.a
-      ${CMAKE_CURRENT_LIST_DIR}/lib/libOpenVG.a
-      -Wl,--end-group
-  )
-endif()
+  
+      target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
+          ${CMAKE_CURRENT_LIST_DIR}/include
+          ${CMAKE_CURRENT_LIST_DIR}/include/Vivante
+          ${CMAKE_CURRENT_LIST_DIR}/include/EGL
+          ${CMAKE_CURRENT_LIST_DIR}/include/VG
+        )
+
+    if(CONFIG_USE_COMPONENT_CONFIGURATION)
+  message("===>Import configuration from ${CMAKE_CURRENT_LIST_FILE}")
+
+  
+            if(CONFIG_TOOLCHAIN STREQUAL armgcc)
+      target_compile_options(${MCUX_SDK_PROJECT_NAME} PUBLIC
+              -Wno-enum-compare
+            )
+      endif()
+      
+  endif()
 

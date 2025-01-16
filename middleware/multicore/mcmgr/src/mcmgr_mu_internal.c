@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2023 NXP
+ * Copyright 2017-2024 NXP
  * All rights reserved.
  *
  *
@@ -44,7 +44,10 @@ __attribute__((weak)) void MU_GenInt1FlagISR(void){};
 __attribute__((weak)) void MU_GenInt0FlagISR(void){};
 
 #if (defined(MIMXRT1187_cm7_SERIES) || defined(MIMXRT1187_cm33_SERIES) || defined(MIMXRT1189_cm7_SERIES) || \
-     defined(MIMXRT1189_cm33_SERIES))
+     defined(MIMXRT1189_cm33_SERIES) || defined(MIMXRT735S_cm33_core0_SERIES) ||                            \
+     defined(MIMXRT735S_cm33_core1_SERIES) || defined(MIMXRT758S_cm33_core0_SERIES) ||                      \
+     defined(MIMXRT758S_cm33_core1_SERIES) || defined(MIMXRT798S_cm33_core0_SERIES) ||                      \
+     defined(MIMXRT798S_cm33_core1_SERIES))
 /* MU ISR table */
 static void (*const MU_interrupts[MU_ISR_COUNT])(void) = {
     MU_Tx0EmptyFlagISR, MU_Tx1EmptyFlagISR, MU_Tx2EmptyFlagISR, MU_Tx3EmptyFlagISR,
@@ -86,7 +89,10 @@ static void mu_isr(MU_Type *base)
     /* Start with Transmit Empty status flags, these are all set after the reset so do not call callback unless
        the respective Transmit Interrupt Enable flag in the CR/TCR register is set. */
 #if (defined(MIMXRT1187_cm7_SERIES) || defined(MIMXRT1187_cm33_SERIES) || defined(MIMXRT1189_cm7_SERIES) || \
-     defined(MIMXRT1189_cm33_SERIES))
+     defined(MIMXRT1189_cm33_SERIES) || defined(MIMXRT735S_cm33_core0_SERIES) ||                            \
+     defined(MIMXRT735S_cm33_core1_SERIES) || defined(MIMXRT758S_cm33_core0_SERIES) ||                      \
+     defined(MIMXRT758S_cm33_core1_SERIES) || defined(MIMXRT798S_cm33_core0_SERIES) ||                      \
+     defined(MIMXRT798S_cm33_core1_SERIES))
     uint32_t tcr_tie_idx = 0;
     for (i = MU_ISR_FLAG_BASE; i < (MU_ISR_FLAG_BASE + MU_TR_COUNT); i++)
     {
@@ -117,24 +123,13 @@ static void mu_isr(MU_Type *base)
     }
 }
 
-#if (defined(MIMXRT1187_cm7_SERIES) || defined(MIMXRT1187_cm33_SERIES) || defined(MIMXRT1189_cm7_SERIES) || \
-     defined(MIMXRT1189_cm33_SERIES))
-
-#if defined(FSL_FEATURE_MU_SIDE_A)
+#if (defined(MIMXRT1187_cm33_SERIES) || defined(MIMXRT1189_cm33_SERIES))
 int MU1_IRQHandler(void)
 {
     mu_isr(MU1_MUA);
-    /* ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-     * exception return operation might vector to incorrect interrupt.
-     * For Cortex-M7, if core speed much faster than peripheral register write speed,
-     * the peripheral interrupt flags may be still set after exiting ISR, this results to
-     * the same error similar with errata 83869 */
-#if (defined __CORTEX_M) && ((__CORTEX_M == 4U) || (__CORTEX_M == 7U))
-    __DSB();
-#endif
     return 0;
 }
-#elif defined(FSL_FEATURE_MU_SIDE_B)
+#elif (defined(MIMXRT1187_cm7_SERIES) || defined(MIMXRT1189_cm7_SERIES))
 int MU1_IRQHandler(void)
 {
     mu_isr(MU1_MUB);
@@ -143,14 +138,24 @@ int MU1_IRQHandler(void)
      * For Cortex-M7, if core speed much faster than peripheral register write speed,
      * the peripheral interrupt flags may be still set after exiting ISR, this results to
      * the same error similar with errata 83869 */
-#if (defined __CORTEX_M) && ((__CORTEX_M == 4U) || (__CORTEX_M == 7U))
     __DSB();
-#endif
     return 0;
 }
-#endif
-#else
-#if defined(FSL_FEATURE_MU_SIDE_A)
+#elif (defined(MIMXRT735S_cm33_core0_SERIES) || defined(MIMXRT758S_cm33_core0_SERIES) || \
+       defined(MIMXRT798S_cm33_core0_SERIES))
+int MU1_A_IRQHandler(void)
+{
+    mu_isr(MU1_MUA);
+    return 0;
+}
+#elif (defined(MIMXRT735S_cm33_core1_SERIES) || defined(MIMXRT758S_cm33_core1_SERIES) || \
+       defined(MIMXRT798S_cm33_core1_SERIES))
+int MU1_B_IRQHandler(void)
+{
+    mu_isr(MU1_MUB);
+    return 0;
+}
+#elif defined(FSL_FEATURE_MU_SIDE_A)
 int MUA_IRQHandler(void)
 {
     mu_isr(MUA);
@@ -178,5 +183,4 @@ int MUB_IRQHandler(void)
 #endif
     return 0;
 }
-#endif
 #endif

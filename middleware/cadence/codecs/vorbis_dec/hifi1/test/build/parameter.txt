@@ -1,0 +1,8 @@
+@Start
+@Input_path ../test_inp/
+@Output_path ../test_out/
+-ifile:hihat.ogg -ofile:hihat.pcm
+-ifile:i9.vor -ofile:i9.pcm -r
+@Stop
+
+

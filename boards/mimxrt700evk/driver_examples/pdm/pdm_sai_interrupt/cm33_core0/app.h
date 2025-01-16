@@ -1,0 +1,52 @@
+/*
+ * Copyright 2023 NXP
+ * All rights reserved.
+ *
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
+ */
+#ifndef _APP_H_
+#define _APP_H_
+
+/*******************************************************************************
+ * Definitions
+ ******************************************************************************/
+/*${macro:start}*/
+#define DEMO_PDM                      PDM
+#define DEMO_PDM_CLK_FREQ             CLOCK_GetMicfilClkFreq()
+#define DEMO_PDM_FIFO_WATERMARK       (FSL_FEATURE_PDM_FIFO_DEPTH - 1U)
+#define DEMO_PDM_QUALITY_MODE         kPDM_QualityModeHigh
+#define DEMO_PDM_CHANNEL_GAIN         (kPDM_DfOutputGain5)
+#define DEMO_PDM_CIC_OVERSAMPLE_RATE  (16U)
+#define DEMO_PDM_ENABLE_CHANNEL_LEFT  (0U)
+#define DEMO_PDM_ENABLE_CHANNEL_RIGHT (1U)
+
+/* SAI instance and clock */
+#define DEMO_SAI                SAI0
+#define DEMO_SAI_CHANNEL        (0)
+#define DEMO_SAI_TX_SYNC_MODE   kSAI_ModeAsync
+#define DEMO_SAI_RX_SYNC_MODE   kSAI_ModeSync
+#define DEMO_SAI_MASTER_SLAVE   kSAI_Master
+#define DEMO_AUDIO_DATA_CHANNEL (2U)
+#define DEMO_AUDIO_BIT_WIDTH    kSAI_WordWidth32bits
+#define DEMO_AUDIO_SAMPLE_RATE  (kSAI_SampleRate16KHz)
+#define DEMO_AUDIO_MASTER_CLOCK DEMO_SAI_CLK_FREQ
+#define DEMO_SAI_CLOCK_SOURCE   kSAI_BclkSourceMclkDiv
+
+/* Get frequency of sai clock */
+#define DEMO_SAI_CLK_FREQ CLOCK_GetSaiClkFreq()
+
+/* Get frequency of lpi2c clock */
+#define DEMO_I2C_CLK_FREQ 24000000U /* CLOCK_GetLPI2cClkFreq(2) */
+#define BOARD_SAI_RXCONFIG(config, mode)
+/*${macro:end}*/
+
+/*******************************************************************************
+ * Prototypes
+ ******************************************************************************/
+/*${prototype:start}*/
+void BOARD_InitHardware(void);
+void BOARD_MasterClockConfig(void);
+/*${prototype:end}*/
+
+#endif /* _APP_H_ */

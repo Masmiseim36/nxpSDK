@@ -1,6 +1,5 @@
 /*
  * Copyright 2021 NXP
- * All rights reserved.
  *
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -111,6 +110,15 @@ void I2S0_Tx_IRQHandler(void)
 void I2S0_Rx_IRQHandler(void)
 {
     HAL_AudioFifoErrorIsr(I2S0);
+}
+#endif
+
+/* IRQHandler for SAI0 */
+#if defined(SAI0) && (FSL_FEATURE_SOC_I2S_COUNT > 0U)
+void SAI0_IRQHandler(void);
+void SAI0_IRQHandler(void)
+{
+    HAL_AudioFifoErrorIsr(SAI0);
 }
 #endif
 

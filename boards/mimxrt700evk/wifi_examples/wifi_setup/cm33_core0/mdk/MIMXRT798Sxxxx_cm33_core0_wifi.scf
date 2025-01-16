@@ -1,0 +1,147 @@
+#!armclang --target=arm-arm-none-eabi -march=armv8-m.main -E -x c
+/*
+** ###################################################################
+**     Processors:          MIMXRT798SGAWAR_cm33_core0
+**                          MIMXRT798SGFOA_cm33_core0
+**
+**     Compiler:            Keil ARM C/C++ Compiler
+**     Reference manual:    iMXRT700RM Rev.2 DraftA, 05/2024
+**     Version:             rev. 2.0, 2024-05-28
+**     Build:               b240528
+**
+**     Abstract:
+**         Linker file for the Keil ARM C/C++ Compiler
+**
+**     Copyright 2016 Freescale Semiconductor, Inc.
+**     Copyright 2016-2024 NXP
+**     SPDX-License-Identifier: BSD-3-Clause
+**
+**     http:                 www.nxp.com
+**     mail:                 support@nxp.com
+**
+** ###################################################################
+*/
+
+
+/* Sizes */
+#if (defined(__stack_size__))
+  #define Stack_Size                   __stack_size__
+#else
+  #define Stack_Size                   0x0400
+#endif
+
+#if (defined(__heap_size__))
+  #define Heap_Size                    __heap_size__
+#else
+  #define Heap_Size                    0x0400
+#endif
+
+/* The SRAM region [0x000000-0x013FFF] is reserved for ROM bootloader execution. Can be reused after boot. */
+/* The SRAM region [0x014000-0x07FFFF] is reserved for Non-cached shared memory or application data. */
+/* The SRAM region [0x080000-0x3FFFFF] is reserved for CPU0 application, last 2MB non-cacheable data for NPU/GPU/Display etc. */
+/* The SRAM region [0x400000-0x57FFFF] is reserved for HiFi4 application. */
+
+#if (defined(__ram_vector_table__))
+  #define __ram_vector_table_size__    0x00000300
+#else
+  #define __ram_vector_table_size__    0x00000000
+#endif
+
+#define m_interrupts_start             0x28004000
+#define m_interrupts_size              0x00000300
+
+#define m_text_start                   0x28004300
+#define m_text_size                    0x001FBD00
+
+#define m_core1_image_maximum_size     0x00080000
+#define m_ezhv_image_maximum_size      0x00008000
+
+#define m_interrupts_ram_start         0x20080000
+#define m_interrupts_ram_size          __ram_vector_table_size__
+
+#define m_data_start                   (m_interrupts_ram_start + m_interrupts_ram_size)
+#define m_data_size                    (0x00180000 - m_interrupts_ram_size)
+
+#define m_boot_flash_conf_start        0x28000000
+
+#if (defined(__use_shmem__))
+  #define m_rpmsg_sh_mem_start         0x20200000
+  #define m_rpmsg_sh_mem_size          0x00002000
+  #define m_ncache_start               0x20202000
+  #define m_ncache_size                0x001FE000
+#else
+  #define m_ncache_start               0x20200000
+  #define m_ncache_size                0x00200000
+#endif
+
+LR_m_flash_conf m_boot_flash_conf_start m_interrupts_start-m_boot_flash_conf_start {
+  FLASH_CONFIG m_boot_flash_conf_start m_interrupts_start-m_boot_flash_conf_start{ ; load address = execution address
+    * (.flash_conf)
+  }
+}
+
+LR_m_interrupts m_interrupts_start m_text_start+m_text_size-m_interrupts_start {
+  VECTOR_ROM m_interrupts_start FIXED m_interrupts_size { ; load address = execution address
+    * (.isr_vector,+FIRST)
+  }
+
+  ER_m_text m_text_start FIXED m_text_size { ; load address = execution address
+    * (InRoot$$Sections)
+    .ANY (+RO)
+  }
+  CORE1_REGION +0 ALIGN 16 m_core1_image_maximum_size {
+    .ANY (.core1_code)
+  }
+  EZHV_REGION +0 ALIGN 16 m_ezhv_image_maximum_size {
+    .ANY (.ezhv_code)
+  }
+#if (defined(__ram_vector_table__))
+  VECTOR_RAM m_interrupts_ram_start EMPTY m_interrupts_ram_size {
+  }
+#else
+  VECTOR_RAM m_interrupts_start EMPTY 0 {
+  }
+#endif
+
+#if (defined(__heap_noncacheable__))
+  RW_m_data m_data_start ALIGN 4 m_data_size-Stack_Size { ; RW data
+#else
+  RW_m_data m_data_start ALIGN 4 m_data_size-Stack_Size-Heap_Size { ; RW data
+#endif
+    * (RamFunction)
+    * (CodeQuickAccess)
+    * (DataQuickAccess)
+    .ANY (+RW +ZI)
+  }
+#if (!defined(__heap_noncacheable__))
+  ARM_LIB_HEAP +0 EMPTY Heap_Size {    ; Heap region growing up
+  }
+#endif
+  ARM_LIB_STACK m_data_start+m_data_size EMPTY -Stack_Size { ; Stack region growing down
+  }
+#if (defined(__heap_noncacheable__))
+  RW_m_ncache m_ncache_start m_ncache_size - Heap_Size { ; ncache data
+#else
+  RW_m_ncache m_ncache_start m_ncache_size { ; ncache data
+#endif
+    * (NonCacheable.init)
+    * (*NonCacheable)
+  }
+#if (defined(__heap_noncacheable__))
+  ARM_LIB_HEAP +0 EMPTY Heap_Size {    ; Heap region growing up
+  }
+  RW_m_ncache_unused +0 EMPTY m_ncache_size-ImageLength(RW_m_ncache)-Heap_Size { ; Empty region added for MPU configuration
+  }
+#else
+  RW_m_ncache_unused +0 EMPTY m_ncache_size-ImageLength(RW_m_ncache) { ; Empty region added for MPU configuration
+  }
+#endif
+
+#if (defined(__use_shmem__))
+  RPMSG_SH_MEM m_rpmsg_sh_mem_start UNINIT m_rpmsg_sh_mem_size { ; Shared memory used by RPMSG
+  * (rpmsg_sh_mem_section)
+  }
+  RPMSG_SH_MEM_unused +0 EMPTY m_rpmsg_sh_mem_size-ImageLength(RPMSG_SH_MEM) { ; Empty region added for MPU configuration
+  }
+#endif
+}

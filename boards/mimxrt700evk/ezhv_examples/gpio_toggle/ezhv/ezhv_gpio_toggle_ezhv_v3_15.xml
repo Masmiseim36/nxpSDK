@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ksdk:examples xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd manifest.xsd">
+  <externalDefinitions>
+    <definition extID="ezhv_MIMXRT798S"/>
+    <definition extID="RISCV_Include_Core.MIMXRT798S"/>
+    <definition extID="device.MIMXRT798S_CMSIS.MIMXRT798S"/>
+    <definition extID="device.MIMXRT798S_system.MIMXRT798S"/>
+    <definition extID="device.MIMXRT798S_startup.MIMXRT798S"/>
+    <definition extID="platform.drivers.clock.MIMXRT798S"/>
+    <definition extID="platform.drivers.lpc_iopctl.MIMXRT798S"/>
+    <definition extID="platform.drivers.reset.MIMXRT798S"/>
+    <definition extID="platform.drivers.common.MIMXRT798S"/>
+    <definition extID="platform.drivers.gpio.MIMXRT798S"/>
+    <definition extID="platform.drivers.lpflexcomm.MIMXRT798S"/>
+    <definition extID="platform.drivers.lpflexcomm_lpuart.MIMXRT798S"/>
+    <definition extID="platform.drivers.sema42.MIMXRT798S"/>
+    <definition extID="platform.utilities.assert_lite.MIMXRT798S"/>
+    <definition extID="utility.str.MIMXRT798S"/>
+    <definition extID="utility.debug_console_lite.MIMXRT798S"/>
+    <definition extID="component.lpuart_adapter.MIMXRT798S"/>
+    <definition extID="mcuxpresso"/>
+    <definition extID="com.nxp.mcuxpresso"/>
+  </externalDefinitions>
+  <example id="mimxrt700evk_ezhv_gpio_toggle_ezhv" name="ezhv_gpio_toggle_ezhv" device_core="ezhv_MIMXRT798S" dependency="RISCV_Include_Core.MIMXRT798S device.MIMXRT798S_CMSIS.MIMXRT798S device.MIMXRT798S_system.MIMXRT798S device.MIMXRT798S_startup.MIMXRT798S platform.drivers.clock.MIMXRT798S platform.drivers.lpc_iopctl.MIMXRT798S platform.drivers.reset.MIMXRT798S platform.drivers.common.MIMXRT798S platform.drivers.gpio.MIMXRT798S platform.drivers.lpflexcomm.MIMXRT798S platform.drivers.lpflexcomm_lpuart.MIMXRT798S platform.drivers.sema42.MIMXRT798S platform.utilities.assert_lite.MIMXRT798S utility.str.MIMXRT798S utility.debug_console_lite.MIMXRT798S component.lpuart_adapter.MIMXRT798S" category="ezhv_examples">
+    <projects>
+      <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
+    </projects>
+    <toolchainSettings>
+      <toolchainSetting id_refs="com.nxp.mcuxpresso"/>
+    </toolchainSettings>
+    <include_paths>
+      <include_path path="." project_relative_path="board" type="c_include"/>
+      <include_path path="." project_relative_path="source" type="asm_include"/>
+    </include_paths>
+    <source path="." project_relative_path="source" type="src">
+      <files mask="gpio_toggle_ezhv.c"/>
+    </source>
+    <source path="." project_relative_path="board" type="c_include">
+      <files mask="board.h"/>
+    </source>
+    <source path="." project_relative_path="board" type="src">
+      <files mask="board.c"/>
+    </source>
+    <source path="." project_relative_path="board" type="src">
+      <files mask="pin_mux.c"/>
+      <files mask="hardware_init.c"/>
+    </source>
+    <source path="." project_relative_path="board" type="c_include">
+      <files mask="pin_mux.h"/>
+      <files mask="app.h"/>
+    </source>
+    <source path="." project_relative_path="source" type="c_preinclude">
+      <files mask="mcux_config.h"/>
+    </source>
+    <source path="." project_relative_path="doc" type="doc">
+      <files mask="readme.md"/>
+    </source>
+    <source path="." project_relative_path="doc" type="doc">
+      <files mask="example_board_readme.md"/>
+    </source>
+  </example>
+</ksdk:examples>

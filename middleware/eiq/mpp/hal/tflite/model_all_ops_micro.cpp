@@ -2,7 +2,19 @@
  * Copyright 2022-2024 NXP
  * All rights reserved.
  *
- * SPDX-License-Identifier: BSD-3-Clause
+ *  SPDX-License-Identifier: Apache-2.0
+ *
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
  */
 
 #include "mpp_config.h"
@@ -16,6 +28,9 @@
 tflite::MicroOpResolver __attribute__((weak)) &MODEL_GetOpsResolver()
 {
     static tflite::MicroMutableOpResolver<114> s_microOpResolver;
+    if (s_microOpResolver.FindOp(tflite::BuiltinOperator_ZEROS_LIKE) != nullptr){
+        return s_microOpResolver;
+    }
 
     s_microOpResolver.AddAbs();
     s_microOpResolver.AddAdd();

@@ -1,0 +1,1 @@
+*(EXCLUDE_FILE(*fsl_xspi.o *mflash_drv.o) .rodata*)

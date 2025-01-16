@@ -15,11 +15,11 @@ limitations under the License.
 #ifndef TENSORFLOW_LITE_MICRO_KERNELS_NEUTRON_H_
 #define TENSORFLOW_LITE_MICRO_KERNELS_NEUTRON_H_
 
-#include "tensorflow/lite/c/common.h"
+#include "tensorflow/lite/micro/micro_common.h"
 
 namespace tflite {
 
-TfLiteRegistration* Register_NEUTRON_GRAPH();
+TFLMRegistration* Register_NEUTRON_GRAPH();
 
 const char* GetString_NEUTRON_GRAPH();
 

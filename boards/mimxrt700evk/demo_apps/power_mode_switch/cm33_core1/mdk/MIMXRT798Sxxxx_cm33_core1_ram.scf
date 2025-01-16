@@ -1,0 +1,88 @@
+#!armclang --target=arm-arm-none-eabi -march=armv8-m.main -E -x c
+/*
+** ###################################################################
+**     Processors:          MIMXRT798SGAWAR_cm33_core1
+**                          MIMXRT798SGFOA_cm33_core1
+**
+**     Compiler:            Keil ARM C/C++ Compiler
+**     Reference manual:    iMXRT700RM Rev.2 DraftA, 05/2024
+**     Version:             rev. 2.0, 2024-05-28
+**     Build:               b240528
+**
+**     Abstract:
+**         Linker file for the Keil ARM C/C++ Compiler
+**
+**     Copyright 2016 Freescale Semiconductor, Inc.
+**     Copyright 2016-2024 NXP
+**     SPDX-License-Identifier: BSD-3-Clause
+**
+**     http:                 www.nxp.com
+**     mail:                 support@nxp.com
+**
+** ###################################################################
+*/
+
+
+/* Sizes */
+#if (defined(__stack_size__))
+  #define Stack_Size                   __stack_size__
+#else
+  #define Stack_Size                   0x0400
+#endif
+
+#if (defined(__heap_size__))
+  #define Heap_Size                    __heap_size__
+#else
+  #define Heap_Size                    0x0400
+#endif
+
+/* The SRAM region [0x580000-0x5BFFFF] is reserved for shared memory or application data. */
+/* The SRAM region [0x5C0000-0x67FFFF] is reserved for CPU1 application. */
+/* The SRAM region [0x680000-0x77FFFF] is reserved for HiFi1 application. */
+
+#define m_interrupts_start             0x005A0000
+#define m_interrupts_size              0x00000200
+
+#define m_text_start                   0x005A0200
+#define m_text_size                    0x0000CE00
+
+#define m_data_start                   0x205AD000
+#define m_data_size                    0x00003000
+
+#if (defined(__use_shmem__))
+  #define m_rpmsg_sh_mem_start         0x20200000
+  #define m_rpmsg_sh_mem_size          0x00002000
+#elif (defined(__use_shmem_hifi1__))
+  #define m_rpmsg_sh_mem_start         0x20588000
+  #define m_rpmsg_sh_mem_size          0x20589FFF
+#endif
+
+LR_m_interrupts m_interrupts_start m_interrupts_size+m_text_size  {
+  VECTOR_ROM m_interrupts_start FIXED m_interrupts_size {
+    * (.isr_vector,+FIRST)
+  }
+
+  ER_m_text m_text_start FIXED m_text_size { ; load address = execution address
+    * (InRoot$$Sections)
+    .ANY (+RO)
+  }
+
+  RW_m_data m_data_start m_data_size-Stack_Size-Heap_Size { ; RW data
+    .ANY (+RW +ZI)
+    * (RamFunction)
+    * (CodeQuickAccess)
+    * (DataQuickAccess)
+  }
+  ARM_LIB_HEAP +0 EMPTY Heap_Size {    ; Heap region growing up
+  }
+  ARM_LIB_STACK m_data_start+m_data_size EMPTY -Stack_Size { ; Stack region growing down
+  }
+#if (defined(__use_shmem__))
+  RPMSG_SH_MEM m_rpmsg_sh_mem_start UNINIT m_rpmsg_sh_mem_size { ; Shared memory used by RPMSG
+  * (rpmsg_sh_mem_section)
+  }
+  RPMSG_SH_MEM_unused +0 EMPTY m_rpmsg_sh_mem_size-ImageLength(RPMSG_SH_MEM) { ; Empty region added for MPU configuration
+  }
+#endif
+}
+

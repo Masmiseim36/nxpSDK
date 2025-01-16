@@ -40,8 +40,6 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define IFNAME0 'N'
-#define IFNAME1 'X'
 
 /*******************************************************************************
  * Prototypes
@@ -87,21 +85,16 @@ static void USB_HostCdcRndisDataOutCallback(void *param, uint8_t *data, uint32_t
 usb_host_handle g_HostHandle = {0};
 
 #if defined(USB_HOST_CONFIG_CDC_ECM) && USB_HOST_CONFIG_CDC_ECM
-USB_HostCdcEcmInstance_t g_HostCdcEcmInstance = {0};
-USB_HostTaskFcn_t USB_HostClassTask           = USB_HostCdcEcmTask;
-
+USB_HostCdcEcmInstance_t g_HostCdcEcmInstance                                                     = {0};
 USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) uint8_t g_OutPutBuffer[CDC_ECM_DATA_BUFFER_LEN]   = {0};
 USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) uint8_t g_InPutBuffer[CDC_ECM_DATA_BUFFER_LEN]    = {0};
 USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) uint8_t g_NotifyBuffer[CDC_ECM_NOTIFY_BUFFER_LEN] = {0};
 uint8_t g_requestParamBuffer[CDC_ECM_REQUEST_BUFFER_LEN]                                          = {0};
 USB_HostCdcEcmRequestParam_t *g_requestParam =
     (USB_HostCdcEcmRequestParam_t *)(&g_HostCdcEcmInstance.requestParamBuffer);
-volatile uint8_t g_HostCdcEcmIdleEvent       = 0;
-SemaphoreHandle_t g_HostCdcEcmMutexSemaphore = NULL;
+static struct pbuf *s_pbufReceived = NULL;
 #elif defined(USB_HOST_CONFIG_CDC_RNDIS) && USB_HOST_CONFIG_CDC_RNDIS
 usb_host_rndis_instance_struct_t g_RndisInstance = {0};
-USB_HostTaskFcn_t USB_HostClassTask              = USB_HostCdcRndisTask;
-
 /* each g_RndisInstance should have its own's buffer */
 USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) uint8_t g_SendMessage[RNDIS_CONTROL_MESSAGE];
 USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) uint8_t g_GetMessage[RNDIS_CONTROL_MESSAGE];
@@ -128,7 +121,8 @@ static void USB_HostCdcEcmControlCallback(void *param, uint8_t *data, uint32_t d
     switch (ecmInstance->runPrevState)
     {
         case USB_HostCdcEcmRunSetControlInterface:
-            ecmInstance->runCurState = USB_HostCdcEcmRunSetDataInterface;
+            ecmInstance->runCurState  = USB_HostCdcEcmRunSetDataInterface;
+            ecmInstance->runWaitState = USB_HostCdcEcmRunIdle;
             break;
 
         case USB_HostCdcEcmRunSetDataInterface:
@@ -149,12 +143,10 @@ static void USB_HostCdcEcmControlCallback(void *param, uint8_t *data, uint32_t d
             }
             break;
 
-        case USB_HostCdcEcmRunSetEthernetMulticastFilters:
-        case USB_HostCdcEcmRunSetEthernetPowerManagementPatternFilter:
-        case USB_HostCdcEcmRunGetEthernetPowerManagementPatternFilter:
-        case USB_HostCdcEcmRunSetEthernetPacketFilter:
-        case USB_HostCdcEcmRunGetEthernetStatistic:
-            ecmInstance->runCurState = USB_HostCdcEcmRunIdle;
+        case USB_HostCdcEcmRunSetupTraffic:
+            ecmInstance->runCurState  = USB_HostCdcEcmRunTransfer;
+            ecmInstance->runWaitState = USB_HostCdcEcmRunIdle;
+            xEventGroupSetBits(ecmInstance->netifUsbStateEvent, CDC_ECM_STATE_XFER_INTERRUPT);
             break;
 
         default:
@@ -170,7 +162,6 @@ static void USB_HostCdcEcmControlCallback(void *param, uint8_t *data, uint32_t d
 static void USB_HostCdcEcmDataInCallback(void *param, uint8_t *data, uint32_t dataLength, usb_status_t status)
 {
     USB_HostCdcEcmInstance_t *ecmInstance = (USB_HostCdcEcmInstance_t *)param;
-    struct netif *netif                   = (struct netif *)ecmInstance->netif;
 
     if (status != kStatus_USB_Success)
     {
@@ -180,11 +171,7 @@ static void USB_HostCdcEcmDataInCallback(void *param, uint8_t *data, uint32_t da
         }
         else
         {
-            if (xSemaphoreTake(g_HostCdcEcmMutexSemaphore, portMAX_DELAY) == pdTRUE)
-            {
-                g_HostCdcEcmIdleEvent |= CDC_ECM_IDLE_DATARECV;
-                xSemaphoreGive(g_HostCdcEcmMutexSemaphore);
-            }
+            xEventGroupSetBits(ecmInstance->netifUsbStateEvent, CDC_ECM_STATE_XFER_DATA_IN);
             usb_echo("CDC-ECM bulk in transfer error.\r\n");
         }
         return;
@@ -192,25 +179,24 @@ static void USB_HostCdcEcmDataInCallback(void *param, uint8_t *data, uint32_t da
 
     if (dataLength > 0 && NULL != data)
     {
-        struct pbuf *pbuf;
-        pbuf = pbuf_alloc(PBUF_RAW, dataLength, PBUF_POOL);
-
-        if (pbuf)
+        if (!s_pbufReceived)
         {
-            pbuf->tot_len = dataLength;
-            pbuf->len     = dataLength;
+            s_pbufReceived = pbuf_alloc(PBUF_RAW, dataLength, PBUF_POOL);
+            if (s_pbufReceived)
+            {
+                s_pbufReceived->tot_len = dataLength;
+                s_pbufReceived->len     = dataLength;
 
-            /* in special case, when polling out packet, in packet maybe finihsed, the in packet will be not
-             * be handled */
-            memcpy(pbuf->payload, data, dataLength);
-            netif->input(pbuf, netif);
+                /* in special case, when polling out packet, in packet maybe finihsed, the in packet will be not
+                 * be handled */
+                memcpy(s_pbufReceived->payload, data, dataLength);
+                xEventGroupSetBits(ecmInstance->netifUsbStateEvent, CDC_ECM_STATE_LINK_RX);
+            }
         }
-    }
-
-    if (xSemaphoreTake(g_HostCdcEcmMutexSemaphore, portMAX_DELAY) == pdTRUE)
-    {
-        g_HostCdcEcmIdleEvent |= CDC_ECM_IDLE_DATARECV;
-        xSemaphoreGive(g_HostCdcEcmMutexSemaphore);
+        else
+        {
+            xEventGroupSetBits(ecmInstance->netifUsbStateEvent, CDC_ECM_STATE_LINK_RX);
+        }
     }
 
     xEventGroupSetBits(ecmInstance->netifUsbStateEvent, CDC_ECM_STATE_XFER_DATA_IN);
@@ -230,6 +216,7 @@ static void USB_HostCdcEcmDataOutCallback(void *param, uint8_t *data, uint32_t d
         }
         else
         {
+            xEventGroupSetBits(ecmInstance->netifUsbDataOutEvent, CDC_ECM_STATE_XFER_DATA_OUT);
             usb_echo("CDC-ECM bulk out transfer error.\r\n");
         }
         return;
@@ -256,11 +243,7 @@ static void USB_HostCdcEcmInterruptCallback(void *param, uint8_t *data, uint32_t
 
     if (status != kStatus_USB_Success)
     {
-        if (xSemaphoreTake(g_HostCdcEcmMutexSemaphore, portMAX_DELAY) == pdTRUE)
-        {
-            g_HostCdcEcmIdleEvent |= CDC_ECM_IDLE_NOTIFY;
-            xSemaphoreGive(g_HostCdcEcmMutexSemaphore);
-        }
+        xEventGroupSetBits(ecmInstance->netifUsbStateEvent, CDC_ECM_STATE_XFER_INTERRUPT);
         usb_echo("CDC-ECM interrupt in transfer error.\r\n");
         return;
     }
@@ -291,25 +274,19 @@ static void USB_HostCdcEcmInterruptCallback(void *param, uint8_t *data, uint32_t
             if (!netif_is_link_up(netif) && ecmInstance->deviceNetworkConnection &&
                 ecmInstance->deviceNetworkDownLinkSpeed && ecmInstance->deviceNetworkUpLinkSpeed)
             {
-                netifapi_netif_set_link_up(netif);
+                xEventGroupSetBits(ecmInstance->netifUsbStateEvent, CDC_ECM_STATE_LINK_UP);
             }
             else if (netif_is_link_up(netif) &&
                      (!ecmInstance->deviceNetworkConnection || !ecmInstance->deviceNetworkDownLinkSpeed ||
                       !ecmInstance->deviceNetworkUpLinkSpeed))
             {
-                netifapi_netif_set_link_down(netif);
+                xEventGroupSetBits(ecmInstance->netifUsbStateEvent, CDC_ECM_STATE_LINK_DOWN);
             }
             break;
 
         default:
             usb_echo("Interrupt transfer callback state error (%d).\r\n", notify_bNotificationCode);
             break;
-    }
-
-    if (xSemaphoreTake(g_HostCdcEcmMutexSemaphore, portMAX_DELAY) == pdTRUE)
-    {
-        g_HostCdcEcmIdleEvent |= CDC_ECM_IDLE_NOTIFY;
-        xSemaphoreGive(g_HostCdcEcmMutexSemaphore);
     }
 
     xEventGroupSetBits(ecmInstance->netifUsbStateEvent, CDC_ECM_STATE_XFER_INTERRUPT);
@@ -326,22 +303,20 @@ static void USB_HostCdcEcmControlIgmpFilterCallback(void *param,
 
     if (status != kStatus_USB_Success)
     {
-        usb_echo("Contorl transfer error (%d).\r\n", status);
+        usb_echo("IGMP Filter Contorl transfer error (%d).\r\n", status);
         return;
     }
 
-    xEventGroupSetBits(ecmInstance->netifUsbIgmpFilterEvent, 1);
+    xEventGroupSetBits(ecmInstance->netifUsbIgmpFilterEvent, CDC_ECM_STATE_LINK_SET_MCFILTER);
 
     return;
 }
 
-void USB_HostCdcEcmTask(void *param)
+void USB_HostCdcEcmTask(void *param, uint32_t *task_event)
 {
     USB_HostCdcEcmInstance_t *ecmInstance = (USB_HostCdcEcmInstance_t *)param;
-    struct netif *netif                   = (struct netif *)ecmInstance->netif;
+    struct netif *netif                   = ecmInstance->netif;
     static usb_host_cdc_ethernet_networking_desc_struct_t *ethernetNetworkingDesc;
-    static uint8_t powerManagementPatternFilter[CDC_ECM_POWER_MANAGEMENT_PATTERN_FILTER_LEN];
-    static uint32_t powerManagementPatternFilterLen;
     static uint8_t macStringDescBuffer[CDC_ECM_STRING_MAC_BUFFER_LEN];
 
     switch (ecmInstance->devWaitState)
@@ -357,7 +332,6 @@ void USB_HostCdcEcmTask(void *param)
             }
             else
             {
-                g_HostCdcEcmIdleEvent    = 0;
                 ecmInstance->devCurState = ecmInstance->devWaitState;
                 ecmInstance->runCurState = USB_HostCdcEcmRunSetControlInterface;
                 usb_echo("USB CDC-ECM device is attached.\r\n");
@@ -366,7 +340,13 @@ void USB_HostCdcEcmTask(void *param)
             break;
 
         case USB_DeviceStateDetached:
-            netifapi_netif_set_link_down(netif);
+            if (netif_is_up(netif))
+            {
+                netifapi_netif_set_down(netif);
+                netifapi_netif_set_addr(netif, IP4_ADDR_ANY, IP4_ADDR_ANY, IP4_ADDR_ANY);
+                netifapi_netif_set_up(netif);
+            }
+            xEventGroupSetBits(ecmInstance->netifUsbStateEvent, CDC_ECM_STATE_LINK_DOWN);
             USB_HostCdcDeinit(ecmInstance->deviceHandle, ecmInstance->classHandle);
             ecmInstance->deviceHandle               = NULL;
             ecmInstance->classHandle                = NULL;
@@ -381,7 +361,6 @@ void USB_HostCdcEcmTask(void *param)
             ecmInstance->deviceNetworkConnection    = 0;
             ecmInstance->deviceNetworkDownLinkSpeed = 0;
             ecmInstance->deviceNetworkUpLinkSpeed   = 0;
-            g_HostCdcEcmIdleEvent                   = 0;
             usb_echo("USB CDC-ECM device detached.\r\n");
             break;
     }
@@ -390,31 +369,6 @@ void USB_HostCdcEcmTask(void *param)
     {
         case USB_HostCdcEcmRunIdle:
         default:
-            if (xSemaphoreTake(g_HostCdcEcmMutexSemaphore, portMAX_DELAY) == pdTRUE)
-            {
-                if (netif_is_link_up(netif) && g_HostCdcEcmIdleEvent & CDC_ECM_IDLE_DATARECV)
-                {
-                    if (USB_HostCdcEcmDataRecv(ecmInstance->classHandle, ecmInstance->dataRecvBuffer,
-                                               CDC_ECM_DATA_BUFFER_LEN, USB_HostCdcEcmDataInCallback, ecmInstance))
-                    {
-                        usb_echo("Receive data error.\r\n");
-                    }
-                    g_HostCdcEcmIdleEvent &= ~CDC_ECM_IDLE_DATARECV;
-                }
-
-                if (g_HostCdcEcmIdleEvent & CDC_ECM_IDLE_NOTIFY)
-                {
-                    if (USB_HostCdcInterruptRecv(ecmInstance->classHandle, ecmInstance->notifyBuffer,
-                                                 CDC_ECM_NOTIFY_BUFFER_LEN, USB_HostCdcEcmInterruptCallback,
-                                                 ecmInstance) != kStatus_USB_Success)
-                    {
-                        usb_echo("Receive notification error.\r\n");
-                    }
-                    g_HostCdcEcmIdleEvent &= ~CDC_ECM_IDLE_NOTIFY;
-                }
-
-                xSemaphoreGive(g_HostCdcEcmMutexSemaphore);
-            }
             break;
 
         case USB_HostCdcEcmRunSetControlInterface:
@@ -474,8 +428,7 @@ void USB_HostCdcEcmTask(void *param)
             else if (ecmInstance->runWaitState == (USB_HostCdcEcmRunState_t)(2))
             {
                 ecmInstance->runPrevState               = ecmInstance->runCurState;
-                ecmInstance->runCurState                = USB_HostCdcEcmRunSetEthernetPacketFilter;
-                ecmInstance->runWaitState               = USB_HostCdcEcmRunIdle;
+                ecmInstance->runCurState                = USB_HostCdcEcmRunSetupTraffic;
                 g_requestParam->SetEthernetPacketFilter = ecmInstance->devicePktFilerBitmap;
                 USB_HostCdcEcmUnicodeMacAddressStrToNum((uint16_t *)(&macStringDescBuffer[2]),
                                                         ecmInstance->deviceMacAddress);
@@ -489,55 +442,11 @@ void USB_HostCdcEcmTask(void *param)
                 {
                     ((struct netif *)(ecmInstance->netif))->mtu = ecmInstance->deviceMaxSegmentSize - 14;
                 }
-                if (xSemaphoreTake(g_HostCdcEcmMutexSemaphore, portMAX_DELAY) == pdTRUE)
-                {
-                    g_HostCdcEcmIdleEvent |= CDC_ECM_IDLE_DATARECV;
-                    g_HostCdcEcmIdleEvent |= CDC_ECM_IDLE_NOTIFY;
-                    xSemaphoreGive(g_HostCdcEcmMutexSemaphore);
-                }
-                xEventGroupSetBits(ecmInstance->netifUsbStateEvent, CDC_ECM_STATE_XFER_MANUAL_UPDATE);
+                xEventGroupSetBits(ecmInstance->netifUsbStateEvent, CDC_ECM_STATE_UPDATE);
             }
             break;
 
-        case USB_HostCdcEcmRunSetEthernetMulticastFilters:
-            ecmInstance->runPrevState = ecmInstance->runCurState;
-            ecmInstance->runCurState  = USB_HostCdcEcmRunIdle;
-            if (USB_HostCdcEcmSetEthernetMulticastFilters(
-                    ecmInstance->classHandle, g_requestParam->SetEthernetMulticastFilters.filterNumSum,
-                    g_requestParam->SetEthernetMulticastFilters.multicastAddressList, USB_HostCdcEcmControlCallback,
-                    ecmInstance) != kStatus_USB_Success)
-            {
-                usb_echo("Send SetEthernetMulticastFilters request error.\r\n");
-            }
-            break;
-
-        case USB_HostCdcEcmRunSetEthernetPowerManagementPatternFilter:
-            ecmInstance->runPrevState       = ecmInstance->runCurState;
-            ecmInstance->runCurState        = USB_HostCdcEcmRunIdle;
-            powerManagementPatternFilterLen = USB_HostCdcEcmPowerManagementPatternFilterData(
-                g_requestParam->SetEthernetPowerManagementPatternFilter.filterData, powerManagementPatternFilter);
-            if (USB_HostCdcEcmSetEthernetPowerManagementPatternFilter(
-                    ecmInstance->classHandle, g_requestParam->SetEthernetPowerManagementPatternFilter.filternum,
-                    powerManagementPatternFilter, powerManagementPatternFilterLen, USB_HostCdcEcmControlCallback,
-                    ecmInstance) != kStatus_USB_Success)
-            {
-                usb_echo("Send SetEthernetPowerManagementPatternFilter request error.\r\n");
-            }
-            break;
-
-        case USB_HostCdcEcmRunGetEthernetPowerManagementPatternFilter:
-            ecmInstance->runPrevState = ecmInstance->runCurState;
-            ecmInstance->runCurState  = USB_HostCdcEcmRunIdle;
-            if (USB_HostCdcEcmGetEthernetPowerManagementPatternFilter(
-                    ecmInstance->classHandle, g_requestParam->GetEthernetPowerManagementPatternFilter.filternum,
-                    (uint8_t(*)[2]) & g_requestParam->GetEthernetPowerManagementPatternFilter.patternActive,
-                    USB_HostCdcEcmControlCallback, ecmInstance) != kStatus_USB_Success)
-            {
-                usb_echo("Send GetEthernetPowerManagementPatternFilter request error.\r\n");
-            }
-            break;
-
-        case USB_HostCdcEcmRunSetEthernetPacketFilter:
+        case USB_HostCdcEcmRunSetupTraffic:
             ecmInstance->runPrevState = ecmInstance->runCurState;
             ecmInstance->runCurState  = USB_HostCdcEcmRunIdle;
             if (USB_HostCdcEcmSetEthernetPacketFilter(ecmInstance->classHandle, g_requestParam->SetEthernetPacketFilter,
@@ -548,16 +457,30 @@ void USB_HostCdcEcmTask(void *param)
             }
             break;
 
-        case USB_HostCdcEcmRunGetEthernetStatistic:
+        case USB_HostCdcEcmRunTransfer:
             ecmInstance->runPrevState = ecmInstance->runCurState;
-            ecmInstance->runCurState  = USB_HostCdcEcmRunIdle;
-            if (USB_HostCdcEcmGetEthernetStatistic(ecmInstance->classHandle,
-                                                   g_requestParam->GetEthernetStatistic.featureSelector,
-                                                   (uint8_t(*)[4]) & g_requestParam->GetEthernetStatistic.statistics,
-                                                   USB_HostCdcEcmControlCallback, ecmInstance) != kStatus_USB_Success)
+            if (ecmInstance->deviceHandle)
             {
-                usb_echo("Send GetEthernetStatistic request error.\r\n");
+                if (*task_event & CDC_ECM_STATE_XFER_DATA_IN && netif_is_link_up(netif))
+                {
+                    if (USB_HostCdcEcmDataRecv(ecmInstance->classHandle, ecmInstance->dataRecvBuffer,
+                                               CDC_ECM_DATA_BUFFER_LEN, USB_HostCdcEcmDataInCallback, ecmInstance))
+                    {
+                        usb_echo("Receive data error.\r\n");
+                    }
+                }
+
+                if (*task_event & CDC_ECM_STATE_XFER_INTERRUPT)
+                {
+                    if (USB_HostCdcInterruptRecv(ecmInstance->classHandle, ecmInstance->notifyBuffer,
+                                                 CDC_ECM_NOTIFY_BUFFER_LEN, USB_HostCdcEcmInterruptCallback,
+                                                 ecmInstance) != kStatus_USB_Success)
+                    {
+                        usb_echo("Receive notification error.\r\n");
+                    }
+                }
             }
+            break;
     }
 }
 
@@ -618,12 +541,12 @@ usb_status_t USB_HostCdcEcmEvent(usb_device_handle deviceHandle,
                     g_HostCdcEcmInstance.controlInterfaceHandle != NULL)
                 {
                     g_HostCdcEcmInstance.devWaitState = USB_DeviceStateAttached;
+                    xEventGroupSetBits(g_HostCdcEcmInstance.netifUsbStateEvent, CDC_ECM_STATE_DEVICE_ATTACH);
                     USB_HostHelperGetPeripheralInformation(deviceHandle, kUSB_HostGetDevicePID, &info_value[0]);
                     USB_HostHelperGetPeripheralInformation(deviceHandle, kUSB_HostGetDeviceVID, &info_value[1]);
                     USB_HostHelperGetPeripheralInformation(deviceHandle, kUSB_HostGetDeviceAddress, &info_value[2]);
                     usb_echo("Device CDC-ECM attached: PID=0x%X, VID=0x%X, Address=%d.\r\n", info_value[0],
                              info_value[1], info_value[2]);
-                    xEventGroupSetBits(g_HostCdcEcmInstance.netifUsbStateEvent, CDC_ECM_STATE_DEVICE_ATTACH);
                 }
             }
             else
@@ -1276,37 +1199,6 @@ usb_status_t USB_HostCdcRndisEvent(usb_device_handle deviceHandle,
 }
 #endif
 
-static void USB_HostTask(void *hostHandle)
-{
-    while (1)
-    {
-        USB_HostTaskFn((usb_host_handle)hostHandle);
-    }
-}
-
-static void USB_HostApplicationTask(void *arg)
-{
-    while (1)
-    {
-#if defined(USB_HOST_CONFIG_CDC_ECM) && USB_HOST_CONFIG_CDC_ECM
-        xEventGroupWaitBits(g_HostCdcEcmInstance.netifUsbStateEvent, /* The event group handle. */
-                            CDC_ECM_STATE_MASK, /* The bit pattern the event group is waiting for. */
-                            pdTRUE,             /* BIT_n will be cleared automatically. */
-                            pdFALSE,            /* Don't wait for both bits, either bit unblock task. */
-                            portMAX_DELAY);     /* Block indefinitely to wait for the condition to be met. */
-        USB_HostCdcEcmTask(&g_HostCdcEcmInstance);
-#elif defined(USB_HOST_CONFIG_CDC_RNDIS) && USB_HOST_CONFIG_CDC_RNDIS
-        xEventGroupWaitBits(g_RndisInstance.event_group, /* The event group handle. */
-                            RNDIS_DEVICE_ATTACH | RNDIS_CONTROL_MSG | RNDIS_INTERRUPT_MSG |
-                                RNDIS_LWIP_INPUT,        /* The bit pattern the event group is waiting for. */
-                            pdTRUE,                      /* BIT_n will be cleared automatically. */
-                            pdFALSE,                     /* Don't wait for both bits, either bit unblock task. */
-                            portMAX_DELAY);              /* Block indefinitely to wait for the condition to be met. */
-        USB_HostCdcRndisTask(&g_RndisInstance);
-#endif
-    }
-}
-
 /**
  * @brief host callback function for device attach/detach
  * @param deviceHandle device handle.
@@ -1375,18 +1267,12 @@ static void USB_HostApplicationInit(uint8_t controllerId, struct netif *netif)
     g_HostCdcEcmInstance.dataSendBuffer             = &g_OutPutBuffer[0];
     g_HostCdcEcmInstance.notifyBuffer               = &g_NotifyBuffer[0];
     g_HostCdcEcmInstance.requestParamBuffer         = &g_requestParamBuffer[0];
+    g_HostCdcEcmInstance.deviceNetworkConnection    = 0;
+    g_HostCdcEcmInstance.deviceNetworkDownLinkSpeed = 0;
+    g_HostCdcEcmInstance.deviceNetworkUpLinkSpeed   = 0;
     g_HostCdcEcmInstance.netifUsbStateEvent         = xEventGroupCreate();
     g_HostCdcEcmInstance.netifUsbDataOutEvent       = xEventGroupCreate();
     g_HostCdcEcmInstance.netifUsbIgmpFilterEvent    = xEventGroupCreate();
-    g_HostCdcEcmInstance.deviceNetworkConnection    = 0U;
-    g_HostCdcEcmInstance.deviceNetworkDownLinkSpeed = 0U;
-    g_HostCdcEcmInstance.deviceNetworkUpLinkSpeed   = 0U;
-
-    g_HostCdcEcmMutexSemaphore = xSemaphoreCreateMutex();
-    if (g_HostCdcEcmMutexSemaphore == NULL)
-    {
-        usb_echo("Create Mutex Semaphore error.\r\n");
-    }
 
     if (xTaskCreate(USB_HostTask, "HostTask", 2000 / sizeof(portSTACK_TYPE), g_HostHandle, DEFAULT_THREAD_PRIO + 3,
                     NULL) != pdPASS)
@@ -1503,7 +1389,8 @@ static err_t _macCompare(const uint8_t (*mac1)[NETIF_MAX_HWADDR_LEN], const uint
 err_t USB_EthernetIfIgmpMacFilter(struct netif *netif, const ip4_addr_t *group, enum netif_mac_filter_action action)
 {
 #if defined(USB_HOST_CONFIG_CDC_ECM) && USB_HOST_CONFIG_CDC_ECM
-    static uint32_t usedFilters = 0U;
+    USB_HostCdcEcmInstance_t *ecmInstance = (USB_HostCdcEcmInstance_t *)netif->state;
+    static uint32_t usedFilters           = 0;
     static uint8_t multicastFilters[CDC_ECM_MAX_SUPPORT_MULTICAST_FILTERS][NETIF_MAX_HWADDR_LEN];
     uint8_t filter[CDC_ECM_MAX_SUPPORT_MULTICAST_FILTERS][NETIF_MAX_HWADDR_LEN];
     int filterLen  = 0;
@@ -1527,7 +1414,7 @@ err_t USB_EthernetIfIgmpMacFilter(struct netif *netif, const ip4_addr_t *group, 
                 if (_macCompare((uint8_t(*)[NETIF_MAX_HWADDR_LEN])multicastFilters[i], &mac))
                 {
                     memcpy(filter[filterLen++], multicastFilters[i], NETIF_MAX_HWADDR_LEN);
-                    if (filterFind && g_HostCdcEcmInstance.deviceMCFilters >= usedFilters)
+                    if (filterFind && ecmInstance->deviceMCFilters >= usedFilters)
                     {
                         memcpy(multicastFilters[i - 1], multicastFilters[i], NETIF_MAX_HWADDR_LEN);
                     }
@@ -1573,41 +1460,44 @@ err_t USB_EthernetIfIgmpMacFilter(struct netif *netif, const ip4_addr_t *group, 
     }
 
 #if defined(USB_HOST_CONFIG_CDC_ECM) && USB_HOST_CONFIG_CDC_ECM
-    if (netif_is_link_up((struct netif *)g_HostCdcEcmInstance.netif))
+    if (netif_is_link_up((struct netif *)ecmInstance->netif))
     {
-        if (g_HostCdcEcmInstance.deviceMCFilters >= usedFilters && g_HostCdcEcmInstance.deviceMCFilters)
+        if (ecmInstance->deviceMCFilters >= usedFilters && ecmInstance->deviceMCFilters)
         {
-            if (!(g_HostCdcEcmInstance.devicePktFilerBitmap & CDC_ECM_ETH_PACKET_FILTER_MULTICAST))
+            if (!(ecmInstance->devicePktFilerBitmap & CDC_ECM_ETH_PACKET_FILTER_MULTICAST))
             {
-                g_HostCdcEcmInstance.devicePktFilerBitmap &= ~CDC_ECM_ETH_PACKET_FILTER_ALL_MULTICAST;
-                g_HostCdcEcmInstance.devicePktFilerBitmap |= CDC_ECM_ETH_PACKET_FILTER_MULTICAST;
-                if (USB_HostCdcEcmSetEthernetPacketFilter(
-                        g_HostCdcEcmInstance.classHandle, g_HostCdcEcmInstance.devicePktFilerBitmap,
-                        USB_HostCdcEcmControlIgmpFilterCallback, &g_HostCdcEcmInstance) != kStatus_USB_Success)
+                ecmInstance->devicePktFilerBitmap &= ~CDC_ECM_ETH_PACKET_FILTER_ALL_MULTICAST;
+                ecmInstance->devicePktFilerBitmap |= CDC_ECM_ETH_PACKET_FILTER_MULTICAST;
+                if (USB_HostCdcEcmSetEthernetPacketFilter(ecmInstance->classHandle, ecmInstance->devicePktFilerBitmap,
+                                                          USB_HostCdcEcmControlIgmpFilterCallback,
+                                                          ecmInstance) != kStatus_USB_Success)
                 {
                     usb_echo("Send SetEthernetPacketFilter request error.\r\n");
                 }
-                xEventGroupWaitBits(g_HostCdcEcmInstance.netifUsbIgmpFilterEvent, 1, pdTRUE, pdFALSE, portMAX_DELAY);
+                xEventGroupWaitBits(ecmInstance->netifUsbIgmpFilterEvent, CDC_ECM_STATE_LINK_SET_MCFILTER, pdTRUE,
+                                    pdFALSE, portMAX_DELAY);
             }
 
-            if (USB_HostCdcEcmSetEthernetMulticastFilters(
-                    g_HostCdcEcmInstance.classHandle, filterLen, (uint8_t(*)[6])filter,
-                    USB_HostCdcEcmControlIgmpFilterCallback, &g_HostCdcEcmInstance) != kStatus_USB_Success)
+            if (USB_HostCdcEcmSetEthernetMulticastFilters(ecmInstance->classHandle, filterLen, (uint8_t(*)[6])filter,
+                                                          USB_HostCdcEcmControlIgmpFilterCallback,
+                                                          ecmInstance) != kStatus_USB_Success)
             {
                 usb_echo("Send SetEthernetMulticastFilters request error.\r\n");
             }
-            xEventGroupWaitBits(g_HostCdcEcmInstance.netifUsbIgmpFilterEvent, 1, pdTRUE, pdFALSE, portMAX_DELAY);
+            xEventGroupWaitBits(ecmInstance->netifUsbIgmpFilterEvent, CDC_ECM_STATE_LINK_SET_MCFILTER, pdTRUE, pdFALSE,
+                                portMAX_DELAY);
         }
         else if (usedFilters)
         {
-            g_HostCdcEcmInstance.devicePktFilerBitmap |= CDC_ECM_ETH_PACKET_FILTER_ALL_MULTICAST;
-            if (USB_HostCdcEcmSetEthernetPacketFilter(
-                    g_HostCdcEcmInstance.classHandle, g_HostCdcEcmInstance.devicePktFilerBitmap,
-                    USB_HostCdcEcmControlIgmpFilterCallback, &g_HostCdcEcmInstance) != kStatus_USB_Success)
+            ecmInstance->devicePktFilerBitmap |= CDC_ECM_ETH_PACKET_FILTER_ALL_MULTICAST;
+            if (USB_HostCdcEcmSetEthernetPacketFilter(ecmInstance->classHandle, ecmInstance->devicePktFilerBitmap,
+                                                      USB_HostCdcEcmControlIgmpFilterCallback,
+                                                      ecmInstance) != kStatus_USB_Success)
             {
                 usb_echo("Send SetEthernetPacketFilter request error.\r\n");
             }
-            xEventGroupWaitBits(g_HostCdcEcmInstance.netifUsbIgmpFilterEvent, 1, pdTRUE, pdFALSE, portMAX_DELAY);
+            xEventGroupWaitBits(ecmInstance->netifUsbIgmpFilterEvent, CDC_ECM_STATE_LINK_SET_MCFILTER, pdTRUE, pdFALSE,
+                                portMAX_DELAY);
         }
     }
 #endif
@@ -1616,6 +1506,62 @@ err_t USB_EthernetIfIgmpMacFilter(struct netif *netif, const ip4_addr_t *group, 
 }
 #endif
 
+static void USB_HostTask(void *hostHandle)
+{
+    while (1)
+    {
+        USB_HostTaskFn((usb_host_handle)hostHandle);
+    }
+}
+
+static void USB_HostApplicationTask(void *arg)
+{
+    while (1)
+    {
+#if defined(USB_HOST_CONFIG_CDC_ECM) && USB_HOST_CONFIG_CDC_ECM
+        uint32_t task_event =
+            xEventGroupWaitBits(g_HostCdcEcmInstance.netifUsbStateEvent, /* The event group handle. */
+                                CDC_ECM_STATE_MASK, /* The bit pattern the event group is waiting for. */
+                                pdTRUE,             /* BIT_n will be cleared automatically. */
+                                pdFALSE,            /* Don't wait for both bits, either bit unblock task. */
+                                portMAX_DELAY);     /* Block indefinitely to wait for the condition to be met. */
+
+        if (netif_is_up((struct netif *)g_HostCdcEcmInstance.netif))
+        {
+            if ((task_event & CDC_ECM_STATE_LINK_RX) && s_pbufReceived)
+            {
+                ((struct netif *)(g_HostCdcEcmInstance.netif))->input(s_pbufReceived, g_HostCdcEcmInstance.netif);
+                s_pbufReceived = NULL;
+            }
+
+            if (task_event & CDC_ECM_STATE_LINK_UP)
+            {
+                netifapi_netif_set_link_up(g_HostCdcEcmInstance.netif);
+                xEventGroupSetBits(g_HostCdcEcmInstance.netifUsbStateEvent,
+                                   CDC_ECM_STATE_XFER_DATA_IN | CDC_ECM_STATE_LINK_RX);
+            }
+
+            if (task_event & CDC_ECM_STATE_LINK_DOWN)
+            {
+                netifapi_netif_set_link_down(g_HostCdcEcmInstance.netif);
+                xEventGroupClearBits(g_HostCdcEcmInstance.netifUsbStateEvent,
+                                     CDC_ECM_STATE_XFER_DATA_IN | CDC_ECM_STATE_LINK_RX);
+            }
+        }
+
+        USB_HostCdcEcmTask(&g_HostCdcEcmInstance, &task_event);
+#elif defined(USB_HOST_CONFIG_CDC_RNDIS) && USB_HOST_CONFIG_CDC_RNDIS
+        xEventGroupWaitBits(g_RndisInstance.event_group, /* The event group handle. */
+                            RNDIS_DEVICE_ATTACH | RNDIS_CONTROL_MSG | RNDIS_INTERRUPT_MSG |
+                                RNDIS_LWIP_INPUT,        /* The bit pattern the event group is waiting for. */
+                            pdTRUE,                      /* BIT_n will be cleared automatically. */
+                            pdFALSE,                     /* Don't wait for both bits, either bit unblock task. */
+                            portMAX_DELAY);              /* Block indefinitely to wait for the condition to be met. */
+        USB_HostCdcRndisTask(&g_RndisInstance);
+#endif
+    }
+}
+
 err_t USB_EthernetIfOutPut(struct netif *netif, struct pbuf *p)
 {
     err_t status = ERR_OK;
@@ -1623,39 +1569,45 @@ err_t USB_EthernetIfOutPut(struct netif *netif, struct pbuf *p)
 #if defined(USB_HOST_CONFIG_CDC_ECM) && USB_HOST_CONFIG_CDC_ECM
     USB_HostCdcEcmInstance_t *ecmInstance = (USB_HostCdcEcmInstance_t *)netif->state;
 
-    if (!netif_is_link_up(netif))
+    if (!ecmInstance->deviceHandle)
     {
-        usb_echo("USB CDC-ECM device is not attached or the network link is down.\r\n");
-        return ERR_CONN;
+        status = ERR_CONN;
     }
-
-    if (p->tot_len >= p->len)
+    else
     {
-        uint32_t total        = p->tot_len;
-        uint32_t transferDone = 0U;
-        uint32_t buflen       = 0U;
-
-        if (ecmInstance->dataState == USB_HostCdcEcmDataXfering)
+        if (!netif_is_link_up(netif))
         {
-            /*discard current data if send flag is not cleared*/
-            return ERR_BUF;
+            return ERR_CONN;
         }
 
-        while (total)
+        if (p->tot_len >= p->len)
         {
-            ecmInstance->dataState = USB_HostCdcEcmDataXfering;
-            buflen                 = total;
-            if (total > ecmInstance->deviceMaxSegmentSize)
-            {
-                buflen = ecmInstance->deviceMaxSegmentSize;
-            }
-            USB_HostCdcEcmDataSend(ecmInstance->classHandle, ((uint8_t *)p->payload + transferDone), buflen,
-                                   ecmInstance->deviceMaxSegmentSize, USB_HostCdcEcmDataOutCallback, ecmInstance);
-            transferDone += buflen;
-            total -= buflen;
+            uint32_t total        = p->tot_len;
+            uint32_t transferDone = 0U;
+            uint32_t buflen       = 0U;
 
-            xEventGroupWaitBits(ecmInstance->netifUsbDataOutEvent, CDC_ECM_STATE_XFER_DATA_OUT, pdTRUE, pdFALSE,
-                                portMAX_DELAY);
+            if (ecmInstance->dataState == USB_HostCdcEcmDataXfering)
+            {
+                /*discard current data if send flag is not cleared*/
+                return ERR_BUF;
+            }
+
+            while (total)
+            {
+                ecmInstance->dataState = USB_HostCdcEcmDataXfering;
+                buflen                 = total;
+                if (total > ecmInstance->deviceMaxSegmentSize)
+                {
+                    buflen = ecmInstance->deviceMaxSegmentSize;
+                }
+                USB_HostCdcEcmDataSend(ecmInstance->classHandle, ((uint8_t *)p->payload + transferDone), buflen,
+                                       ecmInstance->deviceMaxSegmentSize, USB_HostCdcEcmDataOutCallback, ecmInstance);
+                transferDone += buflen;
+                total -= buflen;
+
+                xEventGroupWaitBits(ecmInstance->netifUsbDataOutEvent, CDC_ECM_STATE_XFER_DATA_OUT, pdTRUE, pdFALSE,
+                                    portMAX_DELAY);
+            }
         }
     }
 #elif defined(USB_HOST_CONFIG_CDC_RNDIS) && USB_HOST_CONFIG_CDC_RNDIS
@@ -1696,11 +1648,12 @@ err_t USB_EthernetIfOutPut(struct netif *netif, struct pbuf *p)
         {
             if (p->tot_len < RNDIS_FRAME_MAX_FRAMELEN)
             {
-                u16_t uCopied = pbuf_copy_partial(p, rndisInstance->outPutBuffer, p->tot_len, 0);
+                uint8_t *buf = &((rndis_packet_msg_struct_t *)rndisInstance->outPutBuffer)->dataBuffer[0];
+                u16_t uCopied = pbuf_copy_partial(p, buf, p->tot_len, 0);
                 LWIP_ASSERT("uCopied != p->tot_len", uCopied == p->tot_len);
 
                 USB_HostRndisSendDataMsg(rndisInstance->classHandle, rndisInstance->outPutBuffer,
-                                         RNDIS_FRAME_MAX_FRAMELEN, 0, 0, 0, 0, 0, ((uint8_t *)&g_OutPutBuffer[0]),
+                                         RNDIS_FRAME_MAX_FRAMELEN, 0, 0, 0, 0, 0, buf,
                                          p->tot_len, USB_HostCdcRndisDataOutCallback, rndisInstance);
                 xEventGroupWaitBits(g_RndisInstance.lwipoutput, RNDIS_LWIP_OUTPUT, pdTRUE, pdFALSE, portMAX_DELAY);
             }

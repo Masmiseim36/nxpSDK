@@ -25,6 +25,9 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
+#define IFNAME0 'N'
+#define IFNAME1 'X'
+
 #if defined(USB_HOST_CONFIG_CDC_ECM) && USB_HOST_CONFIG_CDC_ECM
 #define CDC_ECM_DATA_BUFFER_LEN                     (CDC_ECM_FRAME_MAX_FRAMELEN)
 #define CDC_ECM_NOTIFY_NETWORK_CONNECTION_LEN       (8U)
@@ -35,17 +38,18 @@
 #define CDC_ECM_REQUEST_BUFFER_LEN                  (32U)
 #define CDC_ECM_MAX_SUPPORT_MULTICAST_FILTERS       (2U)
 
-#define CDC_ECM_STATE_DEVICE_ATTACH      (1U << 0)
-#define CDC_ECM_STATE_DEVICE_DETACH      (1U << 1)
-#define CDC_ECM_STATE_XFER_CONTROL       (1U << 2)
-#define CDC_ECM_STATE_XFER_INTERRUPT     (1U << 3)
-#define CDC_ECM_STATE_XFER_DATA_IN       (1U << 4)
-#define CDC_ECM_STATE_XFER_DATA_OUT      (1U << 5)
-#define CDC_ECM_STATE_XFER_MANUAL_UPDATE (1U << 6)
-#define CDC_ECM_STATE_MASK               (0x7FU)
-
-#define CDC_ECM_IDLE_DATARECV (1 << 0)
-#define CDC_ECM_IDLE_NOTIFY   (1 << 1)
+#define CDC_ECM_STATE_DEVICE_ATTACH     (1U << 0)
+#define CDC_ECM_STATE_DEVICE_DETACH     (1U << 1)
+#define CDC_ECM_STATE_XFER_CONTROL      (1U << 2)
+#define CDC_ECM_STATE_XFER_INTERRUPT    (1U << 3)
+#define CDC_ECM_STATE_XFER_DATA_IN      (1U << 4)
+#define CDC_ECM_STATE_XFER_DATA_OUT     (1U << 5)
+#define CDC_ECM_STATE_UPDATE            (1U << 6)
+#define CDC_ECM_STATE_LINK_UP           (1U << 7)
+#define CDC_ECM_STATE_LINK_DOWN         (1U << 8)
+#define CDC_ECM_STATE_LINK_RX           (1U << 9)
+#define CDC_ECM_STATE_LINK_SET_MCFILTER (1U << 10)
+#define CDC_ECM_STATE_MASK              (0x7FFU)
 #elif defined(USB_HOST_CONFIG_CDC_RNDIS) && USB_HOST_CONFIG_CDC_RNDIS
 #define RNDIS_DATA_MESSAGE       (RNDIS_FRAME_MAX_FRAMELEN + RNDIS_DAT_MSG_HEADER_SIZE + 1)
 #define RNDIS_CONTROL_MESSAGE    (1024)
@@ -79,11 +83,8 @@ typedef enum _usb_host_cdc_ecm_run_state_enum
     USB_HostCdcEcmRunSetControlInterface,
     USB_HostCdcEcmRunSetDataInterface,
     USB_HostCdcEcmRunPariseFunctionalDescriptor,
-    USB_HostCdcEcmRunSetEthernetMulticastFilters,
-    USB_HostCdcEcmRunSetEthernetPowerManagementPatternFilter,
-    USB_HostCdcEcmRunGetEthernetPowerManagementPatternFilter,
-    USB_HostCdcEcmRunSetEthernetPacketFilter,
-    USB_HostCdcEcmRunGetEthernetStatistic
+    USB_HostCdcEcmRunSetupTraffic,
+    USB_HostCdcEcmRunTransfer
 } USB_HostCdcEcmRunState_t;
 
 /*! @brief USB Host CDC-ECM data state map */
@@ -136,6 +137,10 @@ typedef struct _usb_host_cdc_ecm_instance_struct
     EventGroupHandle_t netifUsbStateEvent;
     EventGroupHandle_t netifUsbDataOutEvent;
     EventGroupHandle_t netifUsbIgmpFilterEvent;
+#else
+    uint32_t netifUsbStateEvent;
+    uint32_t netifUsbDataOutEvent;
+    uint32_t netifUsbIgmpFilterEvent;
 #endif
 } USB_HostCdcEcmInstance_t;
 
@@ -154,8 +159,9 @@ usb_status_t USB_HostCdcEcmEvent(usb_device_handle deviceHandle,
  * This function implements the host class action, it is used to create task.
  * @brief USB Host CDC-ECM class process function
  * @param param USB Host CDC-ECM instance pointer
+ * @param task_event Host CDC-ECM class task event
  */
-void USB_HostCdcEcmTask(void *param);
+void USB_HostCdcEcmTask(void *param, uint32_t *task_event);
 #elif defined(USB_HOST_CONFIG_CDC_RNDIS) && USB_HOST_CONFIG_CDC_RNDIS
 typedef struct _usb_host_rndis_instance_struct
 {
@@ -246,7 +252,6 @@ typedef struct _ethernetifConfig_struct
 typedef usb_status_t (*USB_HostEventFcn_t)(usb_device_handle deviceHandle,
                                            usb_host_configuration_handle configurationHandle,
                                            usb_host_event_t event_code);
-typedef void (*USB_HostTaskFcn_t)(void *param);
 
 /**
  * @brief Network interface initialization function
@@ -255,6 +260,7 @@ typedef void (*USB_HostTaskFcn_t)(void *param);
  */
 err_t USB_EthernetIfInIt(struct netif *netif);
 
+#if !defined(SDK_OS_FREE_RTOS)
 /**
  * @brief Network interface input process function
  * This function should be called when a packet is ready to be read from the interface. It is used by bare-metal
@@ -262,6 +268,7 @@ err_t USB_EthernetIfInIt(struct netif *netif);
  * @param netif the LwIP network interface structure for this ethernetif
  */
 void USB_EthernetIfInput(struct netif *netif);
+#endif
 
 /**
  * @brief Network interface output process function

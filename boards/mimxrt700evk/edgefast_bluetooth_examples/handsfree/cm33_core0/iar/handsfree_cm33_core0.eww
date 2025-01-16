@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<workspace>
+  <batchBuild>
+    <batchDefinition>
+      <name>all</name>
+      <member>
+        <project>handsfree_cm33_core0</project>
+        <configuration>flash_release</configuration>
+      </member>
+      <member>
+        <project>handsfree_cm33_core0</project>
+        <configuration>flash_debug</configuration>
+      </member>
+    </batchDefinition>
+    <batchDefinition>
+      <name>flash_release</name>
+      <member>
+        <project>handsfree_cm33_core0</project>
+        <configuration>flash_release</configuration>
+      </member>
+    </batchDefinition>
+    <batchDefinition>
+      <name>flash_debug</name>
+      <member>
+        <project>handsfree_cm33_core0</project>
+        <configuration>flash_debug</configuration>
+      </member>
+    </batchDefinition>
+  </batchBuild>
+  <project>
+    <path>$WS_DIR$/handsfree_cm33_core0.ewp</path>
+  </project>
+</workspace>

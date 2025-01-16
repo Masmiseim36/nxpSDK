@@ -1,0 +1,4 @@
+var a00206 =
+[
+    [ "MCUXCLEXAMPLE_FUNCTION", "a00206.html#af6e46674f1435d99ca3972b152c635ca", null ]
+];

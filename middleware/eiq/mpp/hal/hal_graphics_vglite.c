@@ -2,7 +2,19 @@
  * Copyright 2024 NXP.
  * All rights reserved.
  *
- * SPDX-License-Identifier: BSD-3-Clause
+ *  SPDX-License-Identifier: Apache-2.0
+ *
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
  */
 
 /*
@@ -67,12 +79,6 @@ int HAL_GfxDev_VGLite_Init(const gfx_dev_t *dev, void *param)
     status_t status = kStatus_Success;
     int error = 0;
 
-    if (hal_mutex_create(&s_mutex) != kStatus_Success)
-    {
-        HAL_LOGE("Failed to create GPU mutex\n");
-        return -1;
-    }
-
     /* initialize vglite controller */
     status = BOARD_PrepareVGLiteController();
     if (status != kStatus_Success)
@@ -92,6 +98,13 @@ int HAL_GfxDev_VGLite_Init(const gfx_dev_t *dev, void *param)
             vg_lite_close();
             error = -1;
         }
+
+        if (hal_mutex_create(&s_mutex) != kStatus_Success)
+        {
+            HAL_LOGE("Failed to create GPU mutex\n");
+            return -1;
+        }
+
         s_GfxVGLiteHandle.vgliteInit = 1;
     }
 
@@ -362,7 +375,7 @@ static int hal_vglite_scale(vg_lite_buffer_t *input_buffer,
 {
 
     int status = 0;
-    vg_lite_float_t width_scaling_f, height_scaling_f;
+    vg_lite_float_t width_scaling_f = 1.0f, height_scaling_f = 1.0f;
 
     /* get scaling width/height factors */
     if ((input_buffer->height != 0) || (input_buffer->width != 0))
@@ -376,7 +389,8 @@ static int hal_vglite_scale(vg_lite_buffer_t *input_buffer,
         return -1;
     }
 
-    vg_lite_scale(width_scaling_f, height_scaling_f, vglite_matrix);
+    if ((width_scaling_f != 1.0f) || (height_scaling_f != 1.0f))
+        vg_lite_scale(width_scaling_f, height_scaling_f, vglite_matrix);
 
     return status;
 }
@@ -387,7 +401,7 @@ static int hal_vglite_scale(vg_lite_buffer_t *input_buffer,
 static vg_lite_matrix_t hal_vglite_multiply_matrix(vg_lite_matrix_t *matrix_1, vg_lite_matrix_t *matrix2)
 {
     /* matrix that will store the product of matrix_1 & matrix_2 */
-    vg_lite_matrix_t mult_matrix;
+    vg_lite_matrix_t mult_matrix = {0};
     /* vg_lite_matrix_t is a 3x3 matrix */
     const int vg_nb_row = 3;
     const int vg_nb_coloumn = 3;
@@ -416,10 +430,10 @@ static int hal_vglite_flip(vg_lite_matrix_t *vglite_matrix, mpp_flip_mode_t flip
 {
     int status = 0;
     vg_lite_float_t translate_x = 0.0, translate_y = 0.0;
-    vg_lite_matrix_t mult_matrix;
+    vg_lite_matrix_t mult_matrix = {0};
 
     /* Set flip matrix. */
-    vg_lite_matrix_t vg_reflection_matrix;
+    vg_lite_matrix_t vg_reflection_matrix = {0};
     vg_lite_identity(&vg_reflection_matrix);
 
     switch (flip_mode)
@@ -524,17 +538,11 @@ static int hal_vglite_init_surface(gfx_rotate_config_t rotate, vg_lite_matrix_t 
     }
 
     /* translation is needed before rotation to keep image in the output window. */
-    vg_lite_translate(translate_x, translate_y, vglite_matrix);
-    rotate_degree = hal_vglite_set_surface_rotate(&rotate);
-    vg_lite_rotate(rotate_degree, vglite_matrix);
-
-    /* setup scaler configuration */
-    status = hal_vglite_scale(input_buffer, vglite_matrix, image_output_width,
-            image_output_height);
-    if (status != 0)
+    if (rotate.degree != ROTATE_0)
     {
-        HAL_LOGE("hal_vglite_scale() failed.\r\n");
-        return status;
+        vg_lite_translate(translate_x, translate_y, vglite_matrix);
+        rotate_degree = hal_vglite_set_surface_rotate(&rotate);
+        vg_lite_rotate(rotate_degree, vglite_matrix);
     }
 
     /* flip if needed */
@@ -547,6 +555,15 @@ static int hal_vglite_init_surface(gfx_rotate_config_t rotate, vg_lite_matrix_t 
             HAL_LOGE("hal_vglite_flip() failed\r\n");
             return status;
         }
+    }
+
+    /* setup scaler configuration */
+    status = hal_vglite_scale(input_buffer, vglite_matrix, image_output_width,
+            image_output_height);
+    if (status != 0)
+    {
+        HAL_LOGE("hal_vglite_scale() failed.\r\n");
+        return status;
     }
 
     return status;
@@ -671,9 +688,9 @@ int HAL_GfxDev_VGLite_Blit(const gfx_dev_t *dev, const gfx_surface_t *gfx_src,
     int error                                = 0;
     vg_lite_buffer_t *input_buffer_config    = &s_GfxVGLiteHandle.input_buffer_config;
     vg_lite_buffer_t *output_buffer_config   = &s_GfxVGLiteHandle.output_buffer_config;
-    gfx_surface_t src, dst;
-    gfx_rotate_config_t rotate;
-    int input_buff_alignment;
+    gfx_surface_t src = {0}, dst = {0};
+    gfx_rotate_config_t rotate = {0};
+    int input_buff_alignment = 0;
 
     if ( (gfx_src->buf == NULL) || (gfx_dst->buf == NULL) )
     {

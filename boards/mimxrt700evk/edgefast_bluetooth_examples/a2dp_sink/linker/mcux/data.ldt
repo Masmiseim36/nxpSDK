@@ -1,0 +1,4 @@
+        <#if memory.name=="SRAM_CMPT_alias2">
+        *fsl_xspi.o(.text*)
+        *mflash_drv.o(.text*)
+        </#if>

@@ -443,11 +443,11 @@ const Model* BuildModelWithUnusedOperatorOutputs() {
           TensorType_INT8, 0,
           builder->CreateString("test_unused_output_tensor"), 0, false)};
   constexpr size_t inputs_size = 0;
-  const int32_t inputs[inputs_size ? inputs_size : 1] = {};
+  const int32_t inputs[inputs_size] = {};
   constexpr size_t outputs_size = 1;
   const int32_t outputs[outputs_size] = {0};
   constexpr size_t operator_inputs_size = 0;
-  const int32_t operator_inputs[operator_inputs_size ? operator_inputs_size : 1] = {};
+  const int32_t operator_inputs[operator_inputs_size] = {};
   constexpr size_t operator_outputs_size = 2;
   const int32_t operator_outputs[operator_outputs_size] = {0, 1};
   constexpr size_t operators_size = 1;

@@ -5037,7 +5037,7 @@ vg_lite_error_t vg_lite_blit_rect(vg_lite_buffer_t* target,
     steps[0] = x_step;
     steps[1] = y_step;
     steps[2] = c_step;
-    VG_LITE_RETURN_ERROR(set_interpolation_steps(source->width, source->height, matrix, 0, steps));
+    VG_LITE_RETURN_ERROR(set_interpolation_steps(rect_w, rect_h, matrix, 0, steps));
 #else
     if (filter == VG_LITE_FILTER_LINEAR)
     {
@@ -5468,6 +5468,9 @@ vg_lite_error_t vg_lite_close(void)
     VGLITE_LOG("vg_lite_close\n");
 #endif
 
+    /* Ensure the GPU finishes potential pending tasks. */
+    VG_LITE_RETURN_ERROR(vg_lite_finish());
+
     if (s_context.scissor_layer)
     {
         vg_lite_free(s_context.scissor_layer);
@@ -5801,6 +5804,11 @@ vg_lite_error_t vg_lite_allocate(vg_lite_buffer_t * buffer)
         )
     {
         return VG_LITE_INVALID_ARGUMENT;
+    }
+
+    /* Default to tiled mode for ETC2 format */
+    if (buffer->format == VG_LITE_RGBA8888_ETC2_EAC) {
+        buffer->tiled = VG_LITE_TILED;
     }
 
     /* Set buffer->premultiplied properly according to buffer->format */
@@ -6562,8 +6570,6 @@ vg_lite_error_t vg_lite_update_linear_grad(vg_lite_ext_linear_gradient_t *grad)
         vg_lite_float_t color2[4];
         vg_lite_float_t weight;
 
-        if (i == 241)
-            i = 241;
         /* Compute gradient for current color array entry. */
         gradient = (vg_lite_float_t) i / (vg_lite_float_t) (width - 1);
 

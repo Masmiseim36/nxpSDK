@@ -1,0 +1,12 @@
+NXP Software Content Register
+
+Release Name: Mbed TLS
+Version: 3.6.3
+Outgoing License: Apache-2.0
+License File: LICENSE
+Format: source code
+Description: Cryptographic and SSL/TLS Library
+Location: https://github.com/nxp/nxp_mbedtls
+Origin:
+          NXP (BSD-3-Clause)
+          ARM (Apache-2.0) - https://github.com/Mbed-TLS/mbedtls/releases/tag/v3.6.3

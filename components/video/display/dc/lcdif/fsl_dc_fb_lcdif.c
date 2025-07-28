@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2020,2023 NXP
+ * Copyright 2019-2020,2023,2024 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -27,6 +27,7 @@ typedef struct
     video_pixel_format_t videoFormat;
     lcdif_fb_format_t lcdifFormat;
     lcdif_layer_input_order_t componentOrder;
+    lcdif_layer_decompress_mode_t decompressMode;
 } dc_fb_lcdif_pixel_foramt_map_t;
 #else
 typedef struct
@@ -40,7 +41,8 @@ typedef struct
  * Prototypes
  ******************************************************************************/
 #if defined(FSL_FEATURE_LCDIF_VERSION_DC8000) && FSL_FEATURE_LCDIF_VERSION_DC8000
-static status_t DC_FB_LCDIF_GetPixelFormat(video_pixel_format_t input, lcdif_fb_format_t *output, lcdif_layer_input_order_t *order);
+static status_t DC_FB_LCDIF_GetPixelFormat(video_pixel_format_t input, lcdif_fb_format_t *output,
+    lcdif_layer_input_order_t *order, lcdif_layer_decompress_mode_t *decompress);
 #else
 static status_t DC_FB_LCDIF_GetPixelFormat(video_pixel_format_t input, lcdif_fb_format_t *output);
 #endif
@@ -50,25 +52,31 @@ static status_t DC_FB_LCDIF_GetPixelFormat(video_pixel_format_t input, lcdif_fb_
  ******************************************************************************/
 #if defined(FSL_FEATURE_LCDIF_VERSION_DC8000) && FSL_FEATURE_LCDIF_VERSION_DC8000
 static const dc_fb_lcdif_pixel_foramt_map_t s_lcdifPixelFormatMap[] = {
-    {kVIDEO_PixelFormatXRGB8888, kLCDIF_PixelFormatARGB8888, kLCDIF_PixelInputOrderARGB},
-    {kVIDEO_PixelFormatRGBX8888, kLCDIF_PixelFormatARGB8888, kLCDIF_PixelInputOrderRGBA},
-    {kVIDEO_PixelFormatXBGR8888, kLCDIF_PixelFormatARGB8888, kLCDIF_PixelInputOrderABGR},
-    {kVIDEO_PixelFormatBGRX8888, kLCDIF_PixelFormatARGB8888, kLCDIF_PixelInputOrderBGRA},
-    {kVIDEO_PixelFormatRGB888, kLCDIF_PixelFormatRGB888, kLCDIF_PixelInputOrderARGB},
-    {kVIDEO_PixelFormatBGR888, kLCDIF_PixelFormatRGB888, kLCDIF_PixelInputOrderABGR},
-    {kVIDEO_PixelFormatRGB565, kLCDIF_PixelFormatRGB565, kLCDIF_PixelInputOrderARGB},
-    {kVIDEO_PixelFormatBGR565, kLCDIF_PixelFormatRGB565, kLCDIF_PixelInputOrderABGR},
-    {kVIDEO_PixelFormatXRGB1555, kLCDIF_PixelFormatARGB1555, kLCDIF_PixelInputOrderARGB},
-    {kVIDEO_PixelFormatRGBX5551, kLCDIF_PixelFormatARGB1555, kLCDIF_PixelInputOrderRGBA},
-    {kVIDEO_PixelFormatXBGR1555, kLCDIF_PixelFormatARGB1555, kLCDIF_PixelInputOrderABGR},
-    {kVIDEO_PixelFormatBGRX5551, kLCDIF_PixelFormatARGB1555, kLCDIF_PixelInputOrderBGRA},
-    {kVIDEO_PixelFormatXRGB4444, kLCDIF_PixelFormatARGB4444, kLCDIF_PixelInputOrderARGB},
-    {kVIDEO_PixelFormatRGBX4444, kLCDIF_PixelFormatARGB4444, kLCDIF_PixelInputOrderRGBA},
-    {kVIDEO_PixelFormatXBGR4444, kLCDIF_PixelFormatARGB4444, kLCDIF_PixelInputOrderABGR},
-    {kVIDEO_PixelFormatBGRX4444, kLCDIF_PixelFormatARGB4444, kLCDIF_PixelInputOrderBGRA},
-    {kVIDEO_PixelFormatVYUY, kLCDIF_PixelFormatYUV422Tiled, kLCDIF_PixelInputOrderARGB},
-    {kVIDEO_PixelFormatNV12, kLCDIF_PixelFormatYUV420Tiled, kLCDIF_PixelInputOrderARGB},
-    {kVIDEO_PixelFormatYUYV, kLCDIF_PixelFormatYUV422Tiled, kLCDIF_PixelInputOrderARGB},
+    {kVIDEO_PixelFormatXRGB8888, kLCDIF_PixelFormatARGB8888, kLCDIF_PixelInputOrderARGB, kLCDIF_DecompressNone},
+    {kVIDEO_PixelFormatRGBX8888, kLCDIF_PixelFormatARGB8888, kLCDIF_PixelInputOrderRGBA, kLCDIF_DecompressNone},
+    {kVIDEO_PixelFormatXBGR8888, kLCDIF_PixelFormatARGB8888, kLCDIF_PixelInputOrderABGR, kLCDIF_DecompressNone},
+    {kVIDEO_PixelFormatBGRX8888, kLCDIF_PixelFormatARGB8888, kLCDIF_PixelInputOrderBGRA, kLCDIF_DecompressNone},
+    {kVIDEO_PixelFormatRGB888, kLCDIF_PixelFormatRGB888, kLCDIF_PixelInputOrderARGB, kLCDIF_DecompressNone},
+    {kVIDEO_PixelFormatBGR888, kLCDIF_PixelFormatRGB888, kLCDIF_PixelInputOrderABGR, kLCDIF_DecompressNone},
+    {kVIDEO_PixelFormatRGB565, kLCDIF_PixelFormatRGB565, kLCDIF_PixelInputOrderARGB, kLCDIF_DecompressNone},
+    {kVIDEO_PixelFormatBGR565, kLCDIF_PixelFormatRGB565, kLCDIF_PixelInputOrderABGR, kLCDIF_DecompressNone},
+    {kVIDEO_PixelFormatXRGB1555, kLCDIF_PixelFormatARGB1555, kLCDIF_PixelInputOrderARGB, kLCDIF_DecompressNone},
+    {kVIDEO_PixelFormatRGBX5551, kLCDIF_PixelFormatARGB1555, kLCDIF_PixelInputOrderRGBA, kLCDIF_DecompressNone},
+    {kVIDEO_PixelFormatXBGR1555, kLCDIF_PixelFormatARGB1555, kLCDIF_PixelInputOrderABGR, kLCDIF_DecompressNone},
+    {kVIDEO_PixelFormatBGRX5551, kLCDIF_PixelFormatARGB1555, kLCDIF_PixelInputOrderBGRA, kLCDIF_DecompressNone},
+    {kVIDEO_PixelFormatXRGB4444, kLCDIF_PixelFormatARGB4444, kLCDIF_PixelInputOrderARGB, kLCDIF_DecompressNone},
+    {kVIDEO_PixelFormatRGBX4444, kLCDIF_PixelFormatARGB4444, kLCDIF_PixelInputOrderRGBA, kLCDIF_DecompressNone},
+    {kVIDEO_PixelFormatXBGR4444, kLCDIF_PixelFormatARGB4444, kLCDIF_PixelInputOrderABGR, kLCDIF_DecompressNone},
+    {kVIDEO_PixelFormatBGRX4444, kLCDIF_PixelFormatARGB4444, kLCDIF_PixelInputOrderBGRA, kLCDIF_DecompressNone},
+    {kVIDEO_PixelFormatVYUY, kLCDIF_PixelFormatYUV422Tiled, kLCDIF_PixelInputOrderARGB, kLCDIF_DecompressNone},
+    {kVIDEO_PixelFormatNV12, kLCDIF_PixelFormatYUV420Tiled, kLCDIF_PixelInputOrderARGB, kLCDIF_DecompressNone},
+    {kVIDEO_PixelFormatYUYV, kLCDIF_PixelFormatYUV422Tiled, kLCDIF_PixelInputOrderARGB, kLCDIF_DecompressNone},
+    {kVIDEO_PixelFormatRGB888Nonsample, kLCDIF_PixelFormatRGB888, kLCDIF_PixelInputOrderARGB, kLCDIF_DecompressDECNanoNoneSample},
+    {kVIDEO_PixelFormatRGB888Hsample, kLCDIF_PixelFormatRGB888, kLCDIF_PixelInputOrderARGB, kLCDIF_DecompressDECNanoHSample},
+    {kVIDEO_PixelFormatRGB888HVsample, kLCDIF_PixelFormatRGB888Tiled, kLCDIF_PixelInputOrderARGB, kLCDIF_DecompressDECNanoHVSample},
+    {kVIDEO_PixelFormatARGB8888Nonsample, kLCDIF_PixelFormatARGB8888, kLCDIF_PixelInputOrderARGB, kLCDIF_DecompressDECNanoNoneSample},
+    {kVIDEO_PixelFormatARGB8888Hsample, kLCDIF_PixelFormatARGB8888, kLCDIF_PixelInputOrderARGB, kLCDIF_DecompressDECNanoHSample},
+    {kVIDEO_PixelFormatARGB8888HVsample, kLCDIF_PixelFormatARGB8888Tiled, kLCDIF_PixelInputOrderARGB, kLCDIF_DecompressDECNanoHVSample},
 };
 #else
 static const dc_fb_lcdif_pixel_foramt_map_t s_lcdifPixelFormatMap[] = {
@@ -81,7 +89,8 @@ static const dc_fb_lcdif_pixel_foramt_map_t s_lcdifPixelFormatMap[] = {
  * Code
  ******************************************************************************/
 #if defined(FSL_FEATURE_LCDIF_VERSION_DC8000) && FSL_FEATURE_LCDIF_VERSION_DC8000
-static status_t DC_FB_LCDIF_GetPixelFormat(video_pixel_format_t input, lcdif_fb_format_t *output, lcdif_layer_input_order_t *order)
+static status_t DC_FB_LCDIF_GetPixelFormat(video_pixel_format_t input, lcdif_fb_format_t *output,
+    lcdif_layer_input_order_t *order, lcdif_layer_decompress_mode_t *decompress)
 {
     uint8_t i;
 
@@ -91,6 +100,7 @@ static status_t DC_FB_LCDIF_GetPixelFormat(video_pixel_format_t input, lcdif_fb_
         {
             *output = s_lcdifPixelFormatMap[i].lcdifFormat;
             *order = s_lcdifPixelFormatMap[i].componentOrder;
+            *decompress = s_lcdifPixelFormatMap[i].decompressMode;
             return kStatus_Success;
         }
     }
@@ -268,9 +278,10 @@ status_t DC_FB_LCDIF_SetLayerConfig(const dc_fb_t *dc, uint8_t layer, dc_fb_info
     status = DC_FB_LCDIF_GetPixelFormat(fbInfo->pixelFormat, &pixelFormat);
 #else
     lcdif_layer_input_order_t componentOrder;
+    lcdif_layer_decompress_mode_t decompressMode;
     uint32_t stride;
 
-    status = DC_FB_LCDIF_GetPixelFormat(fbInfo->pixelFormat, &pixelFormat, &componentOrder);
+    status = DC_FB_LCDIF_GetPixelFormat(fbInfo->pixelFormat, &pixelFormat, &componentOrder, &decompressMode);
 
     if ((layer == (DC_FB_LCDIF_MAX_LAYER - 1U)) &&
         ((pixelFormat == kLCDIF_PixelFormatYUV422Tiled) || (pixelFormat == kLCDIF_PixelFormatYUV420Tiled)))
@@ -289,6 +300,7 @@ status_t DC_FB_LCDIF_SetLayerConfig(const dc_fb_t *dc, uint8_t layer, dc_fb_info
 #if defined(FSL_FEATURE_LCDIF_VERSION_DC8000) && FSL_FEATURE_LCDIF_VERSION_DC8000
     dcHandle->layers[layer].fbConfig.enableClear     = false;
     dcHandle->layers[layer].fbConfig.inOrder         = componentOrder;
+    dcHandle->layers[layer].fbConfig.decompress      = decompressMode;
     dcHandle->layers[layer].fbConfig.colorkey.enable = false;
     dcHandle->layers[layer].fbConfig.rotateFlipMode  = kLCDIF_Rotate0;
     dcHandle->layers[layer].fbConfig.alpha.enable    = 0;
@@ -298,33 +310,42 @@ status_t DC_FB_LCDIF_SetLayerConfig(const dc_fb_t *dc, uint8_t layer, dc_fb_info
     dcHandle->layers[layer].fbConfig.height          = fbInfo->height;
     /* gamma is disabled by default, no need to configure. */
 
-    /* Special handling for tile input. */
-    if (pixelFormat == kLCDIF_PixelFormatYUV422Tiled)
+    switch (pixelFormat)
     {
-        /* YUV422 is 4x4 tiled, the stride shall be set to multiply 4. */
-        stride = fbInfo->strideBytes * 4U;
-    }
-    else if (pixelFormat == kLCDIF_PixelFormatYUV420Tiled)
-    {
-        /* YUV420 has 2 planner, the parameter is the stride of the 1st planner.
-           YUV420 planner 1 is 8x8 tiled, the stride shall be set to multiply 8. */
-        stride = fbInfo->strideBytes * 8U;
-    }
-    else if (pixelFormat == kLCDIF_PixelFormatRGB888)
-    {
-        /* Special handling for RGB888 */
-        if ((fbInfo->strideBytes % 3) != 0U)
-        {
-            return kStatus_InvalidArgument;
-        }
-        else
-        {
-            stride = fbInfo->strideBytes / 3U * 4U;
-        }
-    }
-    else
-    {
-        stride = fbInfo->strideBytes;
+        case kLCDIF_PixelFormatYUV422Tiled:
+        case kLCDIF_PixelFormatARGB8888Tiled:
+            /* YUV422 is 4x4 tiled, the stride shall be set to multiply 4. */
+            stride = fbInfo->strideBytes * 4U;
+            break;
+        case kLCDIF_PixelFormatYUV420Tiled:
+            /* YUV420 has 2 planner, the parameter is the stride of the 1st planner.
+               YUV420 planner 1 is 8x8 tiled, the stride shall be set to multiply 8. */
+            stride = fbInfo->strideBytes * 8U;
+            break;
+        case kLCDIF_PixelFormatRGB888:
+            /* Special handling for RGB888 */
+            if ((fbInfo->strideBytes % 3) != 0U)
+            {
+                return kStatus_InvalidArgument;
+            }
+            else
+            {
+                stride = fbInfo->strideBytes / 3U * 4U;
+            }
+            break;
+        case kLCDIF_PixelFormatRGB888Tiled:
+            if ((fbInfo->strideBytes % 3) != 0U)
+            {
+                return kStatus_InvalidArgument;
+            }
+            else
+            {
+                stride = fbInfo->strideBytes / 3U * 4U * 4U;
+            }
+            break;
+        default:
+            stride = fbInfo->strideBytes;
+            break;
     }
 
     switch (layer)

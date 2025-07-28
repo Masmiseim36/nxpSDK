@@ -26,17 +26,6 @@
 #include "fsl_debug_console.h"
 #endif
 
-#if CONFIG_WIFI_SMOKE_TESTS
-#if defined(SDK_OS_FREE_RTOS)
-
-#undef PRINTF
-extern void sm_printf(const char *fmt, ...);
-
-#define PRINTF sm_printf
-#elif __ZEPHYR__
-#endif
-#endif
-
 #ifdef __ZEPHYR__
 #ifndef PRINTF
 #define PRINTF printk

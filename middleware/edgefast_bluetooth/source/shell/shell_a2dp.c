@@ -400,6 +400,18 @@ static uint8_t vendor_endpoint_config[8] =
     VENDOR_SPECIFIC_VAL
 };
 
+#if defined(COEX_APP_SUPPORT) && defined(CONFIG_BT_A2DP_SOURCE)
+
+static OSA_TASK_HANDLE_DEFINE(a2dp_pcm_task_def);
+static osa_task_handle_t a2dp_pcm_task_handle;
+static void a2dp_pcm_task(osa_task_param_t arg);
+static OSA_TASK_DEFINE(a2dp_pcm_task, CONFIG_BT_A2DP_TASK_PRIORITY, 1, CONFIG_BT_A2DP_TASK_STACK_SIZE, 0);
+
+OSA_SEMAPHORE_HANDLE_DEFINE(a2dp_pcm_semaphore);
+static osa_semaphore_handle_t a2dp_pcm_lock;
+static uint16_t a2dp_play_time = 0U;
+#endif /* #if defined(COEX_APP_SUPPORT) && defined(CONFIG_BT_A2DP_SOURCE) */
+
 BT_A2DP_SBC_SINK_ENDPOINT(sink_sbc_endpoint);
 BT_A2DP_SBC_SOURCE_ENDPOINT(source_sbc_endpoint, A2DP_SBC_SAMP_FREQ_44100);
 struct bt_a2dp_endpoint sink_mpeg12_endpoint =
@@ -417,6 +429,54 @@ BT_A2DP_SINK_ENDPOINT_INIT(BT_A2DP_VENDOR, &vendor_endpoint_cap[0], NULL, NULL);
 struct bt_a2dp_endpoint source_vendor_endpoint =
 BT_A2DP_SOURCE_ENDPOINT_INIT(BT_A2DP_VENDOR, &vendor_endpoint_cap[0],
                              &vendor_endpoint_config[0], NULL, NULL);
+
+
+#if defined(COEX_APP_SUPPORT) && defined(CONFIG_BT_A2DP_SOURCE)
+
+int8_t a2dp_pcm_task_init(void)
+{
+    if (a2dp_pcm_task_handle == NULL)
+    {
+	    if (KOSA_StatusSuccess == OSA_TaskCreate((osa_task_handle_t)a2dp_pcm_task_def, OSA_TASK(a2dp_pcm_task), NULL))
+        {
+		    a2dp_pcm_task_handle = (osa_task_handle_t)a2dp_pcm_task_def;
+        }
+        else
+        {
+		    shell_error(ctx_shell, " fail to create a2dp pcm task\r\n");
+            return -EIO;
+        }
+    }
+
+    if (NULL == a2dp_pcm_lock)
+    {
+	    if (KOSA_StatusSuccess == OSA_SemaphoreCreate((osa_semaphore_handle_t)a2dp_pcm_semaphore, 0))
+        {
+		    a2dp_pcm_lock = (osa_semaphore_handle_t)a2dp_pcm_semaphore;
+        }
+        else
+        {
+		    OSA_TaskDestroy(a2dp_pcm_task_handle);
+            a2dp_pcm_task_handle = NULL;
+            return -EIO;
+        }
+    }
+}
+
+void a2dp_pcm_task(osa_task_param_t arg)
+{
+    while (1)
+    {
+	    OSA_SemaphoreWait(a2dp_pcm_semaphore, osaWaitForever_c);
+        while (a2dp_play_time--)
+        {
+            bt_a2dp_src_media_write(default_ep->ep, media_data, sizeof(media_data));
+            vTaskDelay((((1) * configTICK_RATE_HZ + 999U) / 1000U));
+        }
+    }
+}
+#endif /* #if defined(COEX_APP_SUPPORT) && defined(CONFIG_BT_A2DP_SOURCE) */
+
 
 static void shell_a2dp_print_capabilities(struct bt_a2dp_endpoint *endpoint)
 {
@@ -1584,12 +1644,12 @@ static int cmd_register_source_ep(const struct shell *sh, size_t argc, char *arg
 static int cmd_connect(const struct shell *sh, size_t argc, char *argv[])
 {
     shell_a2dp_init();
-    if (!default_conn) {
+    if (!default_br_conn) {
         shell_error(sh, "Not connected");
         return -EINVAL;
     }
 
-    default_a2dp = bt_a2dp_connect(default_conn);
+    default_a2dp = bt_a2dp_connect(default_br_conn);
     if (NULL == default_a2dp) {
         shell_error(sh, "fail to connect a2dp");
     }
@@ -1773,10 +1833,19 @@ static int cmd_send_media(const struct shell *sh, size_t argc, char *argv[])
     }
 
     time *= 1000u;
+#if defined(COEX_APP_SUPPORT) && defined(CONFIG_BT_A2DP_SOURCE)
+    {
+        a2dp_pcm_task_init();
+	    a2dp_play_time = time;
+        OSA_SemaphorePost(a2dp_pcm_semaphore);
+    }
+
+#else
     while (time--) {
         bt_a2dp_src_media_write(default_ep->ep, media_data, sizeof(media_data));
         vTaskDelay((((1)*configTICK_RATE_HZ + 999U) / 1000U));
     }
+#endif /* #if defined(COEX_APP_SUPPORT) && defined(CONFIG_BT_A2DP_SOURCE) */
 
     return 0;
 }

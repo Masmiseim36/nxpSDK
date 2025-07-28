@@ -1,6 +1,6 @@
 /*! *********************************************************************************
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2024 NXP
+ * Copyright 2016-2025 NXP
  * All rights reserved.
  *
  * \file
@@ -50,7 +50,7 @@
 #define AES_256_KEY_BITS     256u
 #define AES_256_KEY_BYTE_LEN BITLEN2BYTELEN(AES_256_KEY_BITS)
 
-#define AES_128_BLOCK_SIZE 16u /* [bytes] */
+#define AES_BLOCK_SIZE 16u /* [bytes] */
 
 #define BLOB_DATA_OVERLAY_BYTE_LEN 24U
 
@@ -58,8 +58,8 @@
 #define gSecLib_CCM_Encrypt_c 0u
 #define gSecLib_CCM_Decrypt_c 1u
 
-#define AES_BLOCK_SIZE 16u /* [bytes] */
-#define AESSW_BLK_SIZE (AES_BLOCK_SIZE)
+#define AES_128_BLOCK_SIZE AES_BLOCK_SIZE
+#define AESSW_BLK_SIZE     (AES_128_BLOCK_SIZE)
 
 /* Hashes */
 #define SHA1_HASH_SIZE  20u   /* [bytes] */
@@ -86,6 +86,11 @@
 #define gSecLibSha1Enable_d 0
 #endif
 
+/*! Enable or disable Bluetooth LE debug keys functionality */
+#ifndef gSecLibUseBleDebugKeys_d
+#define gSecLibUseBleDebugKeys_d 0
+#endif
+
 /*! Number of bytes in an S200 blob */
 #define gSecLibElkeBlobSize_c 40U
 
@@ -103,7 +108,8 @@ typedef enum
     gSecAllocError_c       = 1u,
     gSecError_c            = 2u,
     gSecInvalidPublicKey_c = 3u,
-    gSecResultPending_c    = 4u
+    gSecResultPending_c    = 4u,
+    gSecBadArgument_c      = 5u,
 } secResultType_t;
 
 /* Security block definition */
@@ -145,7 +151,7 @@ typedef enum
 void SecLib_Init(void);
 
 /*! *********************************************************************************
- * \brief  This function performs initialization of the cryptografic HW acceleration.
+ * \brief  This function performs initialization of the cryptographic HW acceleration.
  *
  ********************************************************************************** */
 void SecLib_ReInit(void);
@@ -201,62 +207,98 @@ void AES_128_Decrypt(const uint8_t *pInput, const uint8_t *pKey, uint8_t *pOutpu
  ********************************************************************************** */
 void AES_128_ECB_Encrypt(const uint8_t *pInput, uint32_t inputLen, const uint8_t *pKey, uint8_t *pOutput);
 
+#if !defined(gSecLibUsePsa_d) || (gSecLibUsePsa_d == 0)
 /*! *********************************************************************************
  * \brief  This function performs AES-128-CBC encryption on a message block.
- *         This function only accepts input lengths which are multiple
- *         of 16 bytes (AES 128 block size).
  *
- * \param[in]  pInput Pointer to the location of the input message.
  *
- * \param[in]  inputLen Input message length in bytes.
+ * \param[in]  pInput Pointer to the location of the plain text input message.
  *
- * \param[in]  pInitVector Pointer to the location of the 128-bit initialization vector.
+ * \param[in]  inputLen Input message length in bytes - must be a multiple of AES_BLOCK_SIZE
+ *
+ * \param[in, out]  pInitVector Pointer to the location of the 128-bit initialization vector.
+ *                 On exit the IV content is updated with ciphered output to be injected as next block IV.
+ *                 Because IV is modifiable, it cannot be RO (const).
  *
  * \param[in]  pKey Pointer to the location of the 128-bit key.
  *
  * \param[out]  pOutput Pointer to the location to store the ciphered output.
  *
+ * \return : gSecSuccess_c if no error,
+ *           gSecBadArgument_c in case of bad arguments,
+ *           gSecError_c in case of internal error.
+ *
  ********************************************************************************** */
-void AES_128_CBC_Encrypt(
+secResultType_t AES_128_CBC_Encrypt(
+    const uint8_t *pInput, uint32_t inputLen, uint8_t *pInitVector, const uint8_t *pKey, uint8_t *pOutput);
+
+/*! *********************************************************************************
+ * \brief  This function performs AES-128-CBC decryption on a message block.
+ *
+ * \param[in]  pInput Pointer to the location of the input ciphered message.
+ *
+ * \param[in]  inputLen Input message length in bytes - must be a multiple of AES_BLOCK_SIZE.
+ *
+ * \param[in, out]  pInitVector Pointer to the location of the 128-bit initialization vector.
+ *                 On exit the IV content is updated with ciphered output to be injected as next block IV.
+ *                 Because IV is modifiable, it cannot be RO (const).
+ *
+ * \param[in]  pKey Pointer to the location of the 128-bit key.
+ *
+ * \param[out]  pOutput Pointer to the location to store the plain text output.
+ *
+ * \return : gSecSuccess_c if no error,
+ *           gSecBadArgument_c in case of bad arguments,
+ *           gSecError_c in case of internal error.
+ *
+ ********************************************************************************** */
+secResultType_t AES_128_CBC_Decrypt(
     const uint8_t *pInput, uint32_t inputLen, uint8_t *pInitVector, const uint8_t *pKey, uint8_t *pOutput);
 
 /*! *********************************************************************************
  * \brief  This function performs AES-128-CBC encryption on a message block after
- *         padding it with 1 bit of 1 and 0 bits trail.
+ *         padding until AES block completion.
  *
- * \param[in]  pInput Pointer to the location of the input message.
+ * Padding scheme is ISO/IEC 7816-4: one 80h byte (1 bit), followed by as many 00h as
+ * required to fill a 128 bit block. Note that if the message length is a multiple of
+ * AES block size already, another block is appended to the original message.
  *
- * \param[in]  inputLen Input message length in bytes.
+ * \param[in]  pInput Pointer to the location of the input plain text message.
  *
- *             IMPORTANT: User must make sure that input and output
- *             buffers have at least inputLen + 16 bytes size
+ * \param[in]  inputLen Input message length in bytes - no specific constraint.
  *
- * \param[in]  pInitVector Pointer to the location of the 128-bit initialization vector.
+ *  IMPORTANT: User must make sure output buffer has at least inputLen + 16 bytes size.
+ *  This constraint does not apply to input buffer (any longer).
+ *
+ * \param[in, out]  pInitVector Pointer to the location of the 128-bit initialization vector.
+ *                 On exit the IV content is updated with ciphered output to be injected as next block IV.
+ *                 Because it is modifiable it cannot be RO (const).
  *
  * \param[in]  pKey Pointer to the location of the 128-bit key.
  *
- * \param[out] pOutput Pointer to the location to store the ciphered output.
+ * \param[out]  pOutput Pointer to the location to store the ciphered output.
  *
- * \return     uint32_t size of output buffer (after padding)
+ * \return value  size of output message after padding is appended.
  *
  ********************************************************************************** */
 uint32_t AES_128_CBC_Encrypt_And_Pad(
     uint8_t *pInput, uint32_t inputLen, uint8_t *pInitVector, const uint8_t *pKey, uint8_t *pOutput);
 
 /*! *********************************************************************************
- * \brief  This function performs AES-128-CBC decryption on a message block.
+ * \brief  This function performs AES-128-CBC decryption on a message block with
+ *         padding removal.
  *
- * \param[in]  pInput Pointer to the location of the input message.
+ * \param[in]  pInput Pointer to the location of the input ciphered message.
  *
- * \param[in]  inputLen Input message length in bytes.
+ * \param[in]  inputLen Input message length in bytes must be a multiple of AES block size
  *
  * \param[in]  pInitVector Pointer to the location of the 128-bit initialization vector.
  *
  * \param[in]  pKey Pointer to the location of the 128-bit key.
  *
- * \param[out] pOutput Pointer to the location to store the ciphered output.
+ * \param[out] pOutput Pointer to the location to store the plain text output.
  *
- * \return     uint32_t size of output buffer (after depadding the 0x80 0x00 ... padding sequence)
+ * \return size of output buffer (after depadding the 0x80 [0x00 .. ]. padding sequence)
  *
  ********************************************************************************** */
 uint32_t AES_128_CBC_Decrypt_And_Depad(
@@ -279,6 +321,7 @@ uint32_t AES_128_CBC_Decrypt_And_Depad(
  *
  ********************************************************************************** */
 void AES_128_CTR(const uint8_t *pInput, uint32_t inputLen, uint8_t *pCounter, const uint8_t *pKey, uint8_t *pOutput);
+#endif
 
 #if gSecLibAesOfbEnable_d
 /*! *********************************************************************************
@@ -334,6 +377,7 @@ void AES_128_CMAC(const uint8_t *pInput, const uint32_t inputLen, const uint8_t 
  ********************************************************************************** */
 void AES_128_CMAC_LsbFirstInput(const uint8_t *pInput, uint32_t inputLen, const uint8_t *pKey, uint8_t *pOutput);
 
+#if !defined(gSecLibUsePsa_d) || (gSecLibUsePsa_d == 0)
 /*! *********************************************************************************
  * \brief  This function performs AES 128 CMAC Pseudo-Random Function (AES-CMAC-PRF-128),
  *         according to rfc4615, on a message block.
@@ -420,14 +464,15 @@ secResultType_t AES_128_EAX_Decrypt(const uint8_t *pInput,
                                     uint8_t       *pOutput,
                                     uint8_t       *pTag);
 #endif
+#endif
 
 /*! *********************************************************************************
  * \brief  This function performs AES-128-CCM on a message block.
  *
- * \param[in]  pInput       Pointer to the location of the input message (plaintext or cyphertext).
+ * \param[in]  pInput       Pointer to the location of the input message (plaintext or ciphertext).
  *
  * \param[in]  inputLen     Length of the input plaintext in bytes when encrypting.
- *                          Length of the input cyphertext without the MAC length when decrypting.
+ *                          Length of the input ciphertext without the MAC length when decrypting.
  *
  * \param[in]  pAuthData    Pointer to the additional authentication data.
  *
@@ -440,7 +485,7 @@ secResultType_t AES_128_EAX_Decrypt(const uint8_t *pInput,
  * \param[in]  pKey         Pointer to the location of the 128-bit key.
  *
  * \param[out]  pOutput     Pointer to the location to store the plaintext data when encrypting.
- *                          Pointer to the location to store the cyphertext data when encrypting.
+ *                          Pointer to the location to store the ciphertext data when encrypting.
  *
  * \param[out]  pCbcMac     Pointer to the location to store the Message Authentication Code (MAC) when encrypting.
  *                          Pointer to the location where the received MAC can be found when decrypting.
@@ -463,6 +508,7 @@ uint8_t AES_128_CCM(const uint8_t *pInput,
                     uint8_t        macSize,
                     uint32_t       flags);
 
+#if !defined(gSecLibUsePsa_d) || (gSecLibUsePsa_d == 0)
 #if gSecLibSha1Enable_d
 /*! *********************************************************************************
  * \brief  This function allocates a memory buffer for a SHA1 context structure
@@ -593,6 +639,7 @@ void SHA256_HashUpdate(void *pContext, const uint8_t *pData, uint32_t numBytes);
  *
  ********************************************************************************** */
 void SHA256_HashFinish(void *pContext, uint8_t *pOutput);
+#endif
 
 /*! *********************************************************************************
  * \brief  This function performs all SHA256 steps on multiple bytes: initialize,
@@ -606,6 +653,7 @@ void SHA256_HashFinish(void *pContext, uint8_t *pOutput);
  ********************************************************************************** */
 void SHA256_Hash(const uint8_t *pData, uint32_t numBytes, uint8_t *pOutput);
 
+#if !defined(gSecLibUsePsa_d) || (gSecLibUsePsa_d == 0)
 /*! *********************************************************************************
  * \brief  This function allocates a memory buffer for a HMAC SHA256 context structure
  *
@@ -655,6 +703,7 @@ void HMAC_SHA256_Update(void *pContext, const uint8_t *pData, uint32_t numBytes)
  *
  ********************************************************************************** */
 void HMAC_SHA256_Finish(void *pContext, uint8_t *pOutput);
+#endif
 
 /*! *********************************************************************************
  * \brief  This function performs all HMAC SHA256 steps on multiple bytes: initialize,
@@ -917,6 +966,26 @@ void AES_MMO_CloneCtx(void *pDestCtx, void *pSourceCtx);
  *
  ********************************************************************************** */
 void AES_MMO_Init(void *pContext);
+
+/****************************************************************************
+ *
+ * \brief  Perform an MMO Block Update on the hash
+ *         H[j] = E(H[j-1], M[j]) ^ M[j]
+ *         where E(K,x) = AES-128 block cipher, K=key, x=text
+ *
+ *  Uses the AES_128_Encrypt function from SecLib.c
+ *
+ * \param[in/out] puHash MMO output buffer
+ * \param[in]     puBlock Block to hash
+ *
+ * \return none
+ *
+ * Note: This function works on 32 bit aligned input and output. The alignment has been
+ * taken care of by the caller.
+ *
+ *
+ ****************************************************************************/
+void AES_MMO_BlockUpdate(tuAES_Block *puHash, tuAES_Block *puBlock);
 
 /*! *********************************************************************************
  * \brief  This function performs AES MMO on multiple bytes and updates the context data.

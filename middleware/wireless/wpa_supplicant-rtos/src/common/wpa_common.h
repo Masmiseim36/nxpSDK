@@ -600,6 +600,13 @@ struct wpa_pasn_params_data
 #define WPA_PASN_PUBKEY_COMPRESSED_1 0x03
 #define WPA_PASN_PUBKEY_UNCOMPRESSED 0x04
 
+/* WPA3 specification - RSN Selection element */
+enum rsn_selection_variant {
+	RSN_SELECTION_RSNE = 0,
+	RSN_SELECTION_RSNE_OVERRIDE = 1,
+	RSN_SELECTION_RSNE_OVERRIDE_2 = 2,
+};
+
 int wpa_ft_parse_ies(const u8 *ies, size_t ies_len, struct wpa_ft_ies *parse, int use_sha384);
 
 struct wpa_eapol_ie_parse
@@ -657,6 +664,14 @@ struct wpa_eapol_ie_parse
     u16 aid;
     const u8 *wmm;
     size_t wmm_len;
+	const u8 *rsn_selection;
+	size_t rsn_selection_len;
+	const u8 *rsne_override;
+	size_t rsne_override_len;
+	const u8 *rsne_override_2;
+	size_t rsne_override_2_len;
+	const u8 *rsnxe_override;
+	size_t rsnxe_override_len;
 };
 
 int wpa_parse_kde_ies(const u8 *buf, size_t len, struct wpa_eapol_ie_parse *ie);
@@ -730,5 +745,8 @@ int wpa_pasn_validate_rsne(const struct wpa_ie_data *data);
 int wpa_pasn_parse_parameter_ie(const u8 *data, u8 len, bool from_ap, struct wpa_pasn_params_data *pasn_params);
 
 void wpa_pasn_add_rsnxe(struct wpabuf *buf, u16 capab);
+
+void rsn_set_snonce_cookie(u8 *snonce);
+bool rsn_is_snonce_cookie(const u8 *snonce);
 
 #endif /* WPA_COMMON_H */

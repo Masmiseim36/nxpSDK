@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2007-2015 Freescale Semiconductor, Inc.
- * Copyright 2018-2020, 2024 NXP
+ * Copyright 2018-2020, 2024-2025 NXP
  *
  * License: NXP LA_OPT_Online Code Hosting NXP_Software_License
  *
@@ -24,6 +24,8 @@
 #if FMSTR_USE_PIPES > 0 && FMSTR_DISABLE == 0
 
 #if FMSTR_USE_PIPE_PRINTF_VARG > 0
+/* Coverity: Intentional use of stdarg when user explicitly requires it. */
+/* coverity[misra_c_2012_rule_17_1_violation:FALSE] */
 #include <stdarg.h>
 #endif
 
@@ -125,9 +127,10 @@ typedef union
 typedef struct
 {
     FMSTR_PIPE_ITOA_FLAGS flags;
-    FMSTR_U8 radix;
-    FMSTR_U8 dtsize;
-    FMSTR_SIZE8 alen;
+    FMSTR_U8 radix;    /* print radix indicated by format (X, x, b, o, d, i, ...) */
+    FMSTR_U8 dtsize;   /* data size indicated by format modifiers (h, hh, l) */
+    FMSTR_SIZE alen;  /* print length */
+    FMSTR_SIZE stklen; /* size of data argument on stack */
 
 } FMSTR_PIPE_PRINTF_CTX;
 
@@ -165,7 +168,7 @@ static FMSTR_BOOL _FMSTR_PipeIToAFinalize(FMSTR_HPIPE pipeHandle, FMSTR_PIPE_PRI
 
 static FMSTR_BOOL _FMSTR_PipePrintfOne(FMSTR_HPIPE pipeHandle,
                                        const char *format,
-                                       void *parg,
+                                       void *parg, FMSTR_SIZE argSize,
                                        FMSTR_PIPE_ITOA_FUNC pItoaFunc);
 
 static FMSTR_BOOL _FMSTR_PipePrintfAny(FMSTR_HPIPE pipeHandle, va_list *parg, FMSTR_PIPE_PRINTF_CTX *pctx);
@@ -326,7 +329,11 @@ FMSTR_PIPE_SIZE FMSTR_PipeWrite(FMSTR_HPIPE pipeHandle,
         /* valid length only */
         if (pipeDataLen > 0U)
         {
-            /* total bytes available in the rest of buffer */
+            /* Calculate total bytes available in the rest of buffer */
+          
+            /* Coverity: Construction of the circular buffer logic ensures that this operation is 
+               positive and cannot wrap. No risk of signed/unsigned cast misinterpretation. */
+            /* coverity[cert_int31_c_violation:FALSE] */
             s = (FMSTR_PIPE_SIZE)((pbuff->size - pbuff->wp) * FMSTR_CFG_BUS_WIDTH);
             if (s > pipeDataLen)
             {
@@ -337,14 +344,19 @@ FMSTR_PIPE_SIZE FMSTR_PipeWrite(FMSTR_HPIPE pipeHandle,
             FMSTR_MemCpyFrom(pbuff->buff + pbuff->wp, pipeData, (FMSTR_SIZE8)s);
             pipeData += s / FMSTR_CFG_BUS_WIDTH;
 
-            /* advance & wrap pointer */
+            /* Advance & wrap pointer to start of the buffer if needed */
+            
+            /* Coverity: Conditions above and construction of the buffer logic ensures 
+               that wp cannot wrap around maximum value. Wrapping around a buffer size is 
+               intentional in the condition below. */
+            /* coverity[cert_int30_c_violation:FALSE] */
             pbuff->wp += s / FMSTR_CFG_BUS_WIDTH;
             if (pbuff->wp >= pbuff->size)
             {
                 pbuff->wp = 0;
             }
 
-            /* rest of frame to a (wrapped) beggining of buffer */
+            /* rest of frame to a (wrapped) beginning of buffer */
             pipeDataLen -= (FMSTR_SIZE8)s;
             if (pipeDataLen > 0U)
             {
@@ -365,7 +377,7 @@ FMSTR_PIPE_SIZE FMSTR_PipeWrite(FMSTR_HPIPE pipeHandle,
 
 /******************************************************************************
  *
- * @brief  PIPE API: Put zero-terminated string into pipe. Succeedes only
+ * @brief  PIPE API: Put zero-terminated string into pipe. Succeeds only
  * if full string fits into the output buffer and return TRUE if so.
  *
  ******************************************************************************/
@@ -375,14 +387,18 @@ FMSTR_BOOL FMSTR_PipePuts(FMSTR_HPIPE pipeHandle, const char *text)
     FMSTR_PIPE *pp            = (FMSTR_PIPE *)pipeHandle;
     FMSTR_PIPE_BUFF *pbuff    = &pp->tx;
     FMSTR_PIPE_SIZE bytesFree = _FMSTR_PipeGetBytesFree(pbuff);
-    FMSTR_PIPE_SIZE strLen    = (FMSTR_PIPE_SIZE)FMSTR_StrLen(text);
+    FMSTR_SIZE strLen = FMSTR_StrLen(text);
 
-    if (strLen > bytesFree)
+    /* Either put full string or nothing. This also prevents wrapping when converting to PIPE_SIZE.  */
+    if (strLen > (FMSTR_SIZE)bytesFree)
     {
         return FMSTR_FALSE;
     }
 
-    return FMSTR_PipeWrite(pipeHandle, (FMSTR_ADDR)text, strLen, 0) >= strLen ? FMSTR_TRUE : FMSTR_FALSE;
+    /* Coverity: Intentional cast of const char* to FMSTR_ADDR. */
+    /* coverity[misra_c_2012_rule_11_8_violation:FALSE] */
+    return FMSTR_PipeWrite(pipeHandle, (FMSTR_ADDR)text, (FMSTR_PIPE_SIZE)strLen, 0) >=
+        (FMSTR_PIPE_SIZE)strLen ? FMSTR_TRUE : FMSTR_FALSE;
 }
 
 /******************************************************************************
@@ -460,7 +476,7 @@ FMSTR_INLINE FMSTR_BOOL _FMSTR_PipePrintfFlush(FMSTR_HPIPE pipeHandle)
 
 /******************************************************************************
  *
- * @brief  Put one character into pipe's printf formating buffer
+ * @brief  Put one character into pipe's printf formatting buffer
  *
  *****************************************************************************/
 
@@ -491,7 +507,7 @@ FMSTR_INLINE FMSTR_BOOL _FMSTR_PipePrintfPutc(FMSTR_HPIPE pipeHandle, char c)
 /******************************************************************************
  *
  * @brief  This function finishes the number formatting, adds spacing, signs
- *         and reverses the string (the input is comming in reversed order)
+ *         and reverses the string (the input is coming in reversed order)
  *
  *****************************************************************************/
 
@@ -640,22 +656,27 @@ static FMSTR_BOOL _FMSTR_PipeIToAFinalize(FMSTR_HPIPE pipeHandle, FMSTR_PIPE_PRI
 static FMSTR_BOOL FMSTR_PipeU8ToA(FMSTR_HPIPE pipeHandle, const FMSTR_U8 *parg, FMSTR_PIPE_PRINTF_CTX *pctx)
 {
     FMSTR_PIPE *pp = (FMSTR_PIPE *)pipeHandle;
-    FMSTR_U8 arg   = *parg;
+    FMSTR_U8 arg;
     FMSTR_U8 dig;
     FMSTR_INDEX i;
 
+    /* We need 1 byte argument */
+    FMSTR_ASSERT_RETURN(pctx != NULL && pctx->stklen >= sizeof(arg), FMSTR_FALSE);
+    arg = *parg;
+      
     switch (pctx->radix)
     {
         case FMSTR_PIPE_ITOAFMT_CHAR:
+            FMSTR_ASSERT_RETURN(pp->printfBPtr <= (FMSTR_PIPES_PRINTF_BUFF_SIZE-1U), FMSTR_FALSE);
+            
+            /* Coverity: Intentional cast U8 to char. The 'arg' is the character being printed by local app. 
+               No risk of misinterpretation. */
+            /* coverity[cert_int31_c_violation:FALSE] */
             pp->printfBuff[pp->printfBPtr++] = (FMSTR_CHAR)arg;
             break;
 
         case FMSTR_PIPE_ITOAFMT_BIN:
-            if (FMSTR_PIPES_PRINTF_BUFF_SIZE < 8U)
-            {
-                return FMSTR_FALSE;
-            }
-
+            FMSTR_ASSERT_RETURN(pp->printfBPtr <= (FMSTR_PIPES_PRINTF_BUFF_SIZE-8U), FMSTR_FALSE);
             for (i = 0; i < 8; i++)
             {
                 if (arg == 0U)
@@ -672,11 +693,7 @@ static FMSTR_BOOL FMSTR_PipeU8ToA(FMSTR_HPIPE pipeHandle, const FMSTR_U8 *parg, 
             break;
 
         case FMSTR_PIPE_ITOAFMT_OCT:
-            if (FMSTR_PIPES_PRINTF_BUFF_SIZE < 3U)
-            {
-                return FMSTR_FALSE;
-            }
-
+            FMSTR_ASSERT_RETURN(pp->printfBPtr <= (FMSTR_PIPES_PRINTF_BUFF_SIZE-3U), FMSTR_FALSE);
             for (i = 0; i < 3; i++)
             {
                 if (arg == 0U)
@@ -693,11 +710,7 @@ static FMSTR_BOOL FMSTR_PipeU8ToA(FMSTR_HPIPE pipeHandle, const FMSTR_U8 *parg, 
             break;
 
         case FMSTR_PIPE_ITOAFMT_DEC:
-            if (FMSTR_PIPES_PRINTF_BUFF_SIZE < 3U)
-            {
-                return FMSTR_FALSE;
-            }
-
+            FMSTR_ASSERT_RETURN(pp->printfBPtr <= (FMSTR_PIPES_PRINTF_BUFF_SIZE-3U), FMSTR_FALSE);
             for (i = 0; i < 3; i++)
             {
                 if (arg == 0U)
@@ -715,11 +728,7 @@ static FMSTR_BOOL FMSTR_PipeU8ToA(FMSTR_HPIPE pipeHandle, const FMSTR_U8 *parg, 
 
         case FMSTR_PIPE_ITOAFMT_HEX:
         default:
-            if (FMSTR_PIPES_PRINTF_BUFF_SIZE < 2U)
-            {
-                return FMSTR_FALSE;
-            }
-
+            FMSTR_ASSERT_RETURN(pp->printfBPtr <= (FMSTR_PIPES_PRINTF_BUFF_SIZE-2U), FMSTR_FALSE);
             for (i = 0; i < 2; i++)
             {
                 if (arg == 0U)
@@ -761,6 +770,8 @@ static FMSTR_BOOL FMSTR_PipeS8ToA(FMSTR_HPIPE pipeHandle, const FMSTR_S8 *parg, 
         }
     }
 
+    /* Coverity: Intentional casting after checks above. */
+    /* coverity[misra_c_2012_rule_11_3_violation:FALSE] */
     return FMSTR_PipeU8ToA(pipeHandle, (const FMSTR_U8 *)&arg, pctx);
 }
 
@@ -774,22 +785,25 @@ static FMSTR_BOOL FMSTR_PipeS8ToA(FMSTR_HPIPE pipeHandle, const FMSTR_S8 *parg, 
 static FMSTR_BOOL FMSTR_PipeU16ToA(FMSTR_HPIPE pipeHandle, const FMSTR_U16 *parg, FMSTR_PIPE_PRINTF_CTX *pctx)
 {
     FMSTR_PIPE *pp = (FMSTR_PIPE *)pipeHandle;
-    FMSTR_U16 arg  = *parg;
+    FMSTR_U16 arg;
     FMSTR_U8 dig;
     FMSTR_INDEX i;
 
+    /* We need 2 byte argument */
+    FMSTR_ASSERT_RETURN(pctx != NULL && pctx->stklen >= sizeof(arg), FMSTR_FALSE);
+    arg = *parg;
+    
     switch (pctx->radix)
     {
         case FMSTR_PIPE_ITOAFMT_CHAR:
-            pp->printfBuff[pp->printfBPtr++] = (FMSTR_CHAR)arg;
+            FMSTR_ASSERT_RETURN(pp->printfBPtr <= (FMSTR_PIPES_PRINTF_BUFF_SIZE-1U), FMSTR_FALSE);
+            /* Coverity: Explicit arg testing ensures no risk of misinterpretation of cast. */
+            /* coverity[cert_int31_c_violation:FALSE] */
+            pp->printfBuff[pp->printfBPtr++] = arg <= 0x00ffU ? (FMSTR_CHAR)arg : (FMSTR_CHAR)'.';
             break;
 
         case FMSTR_PIPE_ITOAFMT_BIN:
-            if (FMSTR_PIPES_PRINTF_BUFF_SIZE < 16U)
-            {
-                return FMSTR_FALSE;
-            }
-
+            FMSTR_ASSERT_RETURN(pp->printfBPtr <= (FMSTR_PIPES_PRINTF_BUFF_SIZE-16U), FMSTR_FALSE);
             for (i = 0; i < 16; i++)
             {
                 if (arg == 0U)
@@ -806,11 +820,7 @@ static FMSTR_BOOL FMSTR_PipeU16ToA(FMSTR_HPIPE pipeHandle, const FMSTR_U16 *parg
             break;
 
         case FMSTR_PIPE_ITOAFMT_OCT:
-            if (FMSTR_PIPES_PRINTF_BUFF_SIZE < 6U)
-            {
-                return FMSTR_FALSE;
-            }
-
+            FMSTR_ASSERT_RETURN(pp->printfBPtr <= (FMSTR_PIPES_PRINTF_BUFF_SIZE-6U), FMSTR_FALSE);
             for (i = 0; i < 6; i++)
             {
                 if (arg == 0U)
@@ -827,11 +837,7 @@ static FMSTR_BOOL FMSTR_PipeU16ToA(FMSTR_HPIPE pipeHandle, const FMSTR_U16 *parg
             break;
 
         case FMSTR_PIPE_ITOAFMT_DEC:
-            if (FMSTR_PIPES_PRINTF_BUFF_SIZE < 5U)
-            {
-                return FMSTR_FALSE;
-            }
-
+            FMSTR_ASSERT_RETURN(pp->printfBPtr <= (FMSTR_PIPES_PRINTF_BUFF_SIZE-5U), FMSTR_FALSE);
             for (i = 0; i < 5; i++)
             {
                 if (arg == 0U)
@@ -849,11 +855,7 @@ static FMSTR_BOOL FMSTR_PipeU16ToA(FMSTR_HPIPE pipeHandle, const FMSTR_U16 *parg
 
         case FMSTR_PIPE_ITOAFMT_HEX:
         default:
-            if (FMSTR_PIPES_PRINTF_BUFF_SIZE < 4U)
-            {
-                return FMSTR_FALSE;
-            }
-
+            FMSTR_ASSERT_RETURN(pp->printfBPtr <= (FMSTR_PIPES_PRINTF_BUFF_SIZE-4U), FMSTR_FALSE);
             for (i = 0; i < 4; i++)
             {
                 if (arg == 0U)
@@ -895,6 +897,8 @@ static FMSTR_BOOL FMSTR_PipeS16ToA(FMSTR_HPIPE pipeHandle, const FMSTR_S16 *parg
         }
     }
 
+    /* Coverity: Intentional casting after checks above. */
+    /* coverity[misra_c_2012_rule_11_3_violation:FALSE] */
     return FMSTR_PipeU16ToA(pipeHandle, (const FMSTR_U16 *)&arg, pctx);
 }
 
@@ -908,22 +912,26 @@ static FMSTR_BOOL FMSTR_PipeS16ToA(FMSTR_HPIPE pipeHandle, const FMSTR_S16 *parg
 static FMSTR_BOOL FMSTR_PipeU32ToA(FMSTR_HPIPE pipeHandle, const FMSTR_U32 *parg, FMSTR_PIPE_PRINTF_CTX *pctx)
 {
     FMSTR_PIPE *pp = (FMSTR_PIPE *)pipeHandle;
-    FMSTR_U32 arg  = *parg;
+    FMSTR_U32 arg;
     FMSTR_U8 dig;
     FMSTR_INDEX i;
 
+    /* We need 2 byte argument */
+    FMSTR_ASSERT_RETURN(pctx != NULL && pctx->stklen >= sizeof(arg), FMSTR_FALSE);
+    arg = *parg;
+    
     switch (pctx->radix)
     {
         case FMSTR_PIPE_ITOAFMT_CHAR:
-            pp->printfBuff[pp->printfBPtr++] = (char)arg;
+            FMSTR_ASSERT_RETURN(pp->printfBPtr <= (FMSTR_PIPES_PRINTF_BUFF_SIZE-1U), FMSTR_FALSE);
+
+            /* Coverity: Explicit arg testing ensures no risk of misinterpretation of cast. */
+            /* coverity[cert_int31_c_violation:FALSE] */
+            pp->printfBuff[pp->printfBPtr++] = arg <= 0xffUL ? (FMSTR_CHAR)arg : (FMSTR_CHAR)'.';
             break;
 
         case FMSTR_PIPE_ITOAFMT_BIN:
-            if (FMSTR_PIPES_PRINTF_BUFF_SIZE < 32U)
-            {
-                return FMSTR_FALSE;
-            }
-
+            FMSTR_ASSERT_RETURN(pp->printfBPtr <= (FMSTR_PIPES_PRINTF_BUFF_SIZE-32U), FMSTR_FALSE);
             for (i = 0; i < 32; i++)
             {
                 if (arg == 0U)
@@ -940,11 +948,7 @@ static FMSTR_BOOL FMSTR_PipeU32ToA(FMSTR_HPIPE pipeHandle, const FMSTR_U32 *parg
             break;
 
         case FMSTR_PIPE_ITOAFMT_OCT:
-            if (FMSTR_PIPES_PRINTF_BUFF_SIZE < 11U)
-            {
-                return FMSTR_FALSE;
-            }
-
+            FMSTR_ASSERT_RETURN(pp->printfBPtr <= (FMSTR_PIPES_PRINTF_BUFF_SIZE-11U), FMSTR_FALSE);
             for (i = 0; i < 11; i++)
             {
                 if (arg == 0U)
@@ -961,11 +965,7 @@ static FMSTR_BOOL FMSTR_PipeU32ToA(FMSTR_HPIPE pipeHandle, const FMSTR_U32 *parg
             break;
 
         case FMSTR_PIPE_ITOAFMT_DEC:
-            if (FMSTR_PIPES_PRINTF_BUFF_SIZE < 10U)
-            {
-                return FMSTR_FALSE;
-            }
-
+            FMSTR_ASSERT_RETURN(pp->printfBPtr <= (FMSTR_PIPES_PRINTF_BUFF_SIZE-10U), FMSTR_FALSE);
             for (i = 0; i < 10; i++)
             {
                 if (arg == 0U)
@@ -983,11 +983,7 @@ static FMSTR_BOOL FMSTR_PipeU32ToA(FMSTR_HPIPE pipeHandle, const FMSTR_U32 *parg
 
         case FMSTR_PIPE_ITOAFMT_HEX:
         default:
-            if (FMSTR_PIPES_PRINTF_BUFF_SIZE < 8U)
-            {
-                return FMSTR_FALSE;
-            }
-
+            FMSTR_ASSERT_RETURN(pp->printfBPtr <= (FMSTR_PIPES_PRINTF_BUFF_SIZE-8U), FMSTR_FALSE);
             for (i = 0; i < 8; i++)
             {
                 if (arg == 0U)
@@ -1029,6 +1025,8 @@ static FMSTR_BOOL FMSTR_PipeS32ToA(FMSTR_HPIPE pipeHandle, const FMSTR_S32 *parg
         }
     }
 
+    /* Coverity: Intentional casting after checks above. */
+    /* coverity[misra_c_2012_rule_11_3_violation:FALSE] */
     return FMSTR_PipeU32ToA(pipeHandle, (const FMSTR_U32 *)&arg, pctx);
 }
 
@@ -1067,14 +1065,20 @@ static const char *FMSTR_PipeParseFormat(const char *format, FMSTR_PIPE_PRINTF_C
         format++;
     }
 
-    /* parse length */
+    /* parse print length */
     pctx->alen = 0;
     while (FMSTR_IS_DIGIT(*format))
     {
         c = *format++;
         c -= '0';
+        /* Coverity: Intentional. The 'alen' may wrap here, only causing a misformatted value. 
+           The value is checked later during Finalize. Also casting 'c' to unsigned
+           size is intentional here as it was already checked to be a digit char. */
+        /* coverity[cert_int30_c_violation:FALSE] */
         pctx->alen *= 10U;
-        pctx->alen += (FMSTR_SIZE8)c;
+        /* coverity[cert_int30_c_violation:FALSE] */
+        /* coverity[cert_int31_c_violation:FALSE] */
+        pctx->alen += (FMSTR_SIZE)c;
     }
 
     /* parse dtsize modifier */
@@ -1110,7 +1114,7 @@ static const char *FMSTR_PipeParseFormat(const char *format, FMSTR_PIPE_PRINTF_C
         /* HEXADECIMAL */
         case 'X':
             pctx->flags.flg.upperc = 1U;
-            pctx->radix            = FMSTR_PIPE_ITOAFMT_HEX;
+            pctx->radix = FMSTR_PIPE_ITOAFMT_HEX;
             break;
 
         /* hexadecimal */
@@ -1132,7 +1136,7 @@ static const char *FMSTR_PipeParseFormat(const char *format, FMSTR_PIPE_PRINTF_C
         case 'd':
         case 'i':
             pctx->flags.flg.signedtype = 1U;
-            pctx->radix                = FMSTR_PIPE_ITOAFMT_DEC;
+            pctx->radix = FMSTR_PIPE_ITOAFMT_DEC;
             break;
 
         /* decimal unsigned */
@@ -1149,7 +1153,7 @@ static const char *FMSTR_PipeParseFormat(const char *format, FMSTR_PIPE_PRINTF_C
         /* string */
         case 's':
             pctx->flags.flg.isstring = 1U;
-            pctx->dtsize             = (FMSTR_U8)sizeof(void *);
+            pctx->dtsize = (FMSTR_U8)sizeof(void *);
             break;
 
         /* unknown */
@@ -1170,7 +1174,7 @@ static const char *FMSTR_PipeParseFormat(const char *format, FMSTR_PIPE_PRINTF_C
 
 static FMSTR_BOOL _FMSTR_PipePrintfOne(FMSTR_HPIPE pipeHandle,
                                        const char *format,
-                                       void *parg,
+                                       void *parg, FMSTR_SIZE argSize,
                                        FMSTR_PIPE_ITOA_FUNC pItoaFunc)
 {
     FMSTR_BOOL ok = FMSTR_TRUE;
@@ -1195,11 +1199,13 @@ static FMSTR_BOOL _FMSTR_PipePrintfOne(FMSTR_HPIPE pipeHandle,
             if (ok != FMSTR_FALSE)
             {
                 format = FMSTR_PipeParseFormat(format, &ctx);
+                ctx.stklen = argSize;
 
                 if (ctx.flags.flg.isstring != 0U)
                 {
-                    const char *psz = (const char *)parg;
-                    ok              = FMSTR_PipePuts(pipeHandle, psz != NULL ? psz : "NULL");
+                    const char *psz;
+                    psz = (const char *)parg;
+                    ok  = FMSTR_PipePuts(pipeHandle, psz != NULL ? psz : "NULL");
                 }
                 else
                 {
@@ -1230,7 +1236,9 @@ static FMSTR_BOOL _FMSTR_PipePrintfOne(FMSTR_HPIPE pipeHandle,
 
 FMSTR_BOOL FMSTR_PipePrintfU8(FMSTR_HPIPE pipeHandle, const char *format, FMSTR_U8 arg)
 {
-    return _FMSTR_PipePrintfOne(pipeHandle, format, &arg, (FMSTR_PIPE_ITOA_FUNC)FMSTR_PipeU8ToA);
+    /* Coverity: Intentional cast of static function to a generic function pointer. */
+    /* coverity[misra_c_2012_rule_11_1_violation:FALSE] */
+    return _FMSTR_PipePrintfOne(pipeHandle, format, &arg, (FMSTR_SIZE)sizeof(arg), (FMSTR_PIPE_ITOA_FUNC)FMSTR_PipeU8ToA);
 }
 
 /******************************************************************************
@@ -1242,7 +1250,9 @@ FMSTR_BOOL FMSTR_PipePrintfU8(FMSTR_HPIPE pipeHandle, const char *format, FMSTR_
 
 FMSTR_BOOL FMSTR_PipePrintfS8(FMSTR_HPIPE pipeHandle, const char *format, FMSTR_S8 arg)
 {
-    return _FMSTR_PipePrintfOne(pipeHandle, format, &arg, (FMSTR_PIPE_ITOA_FUNC)FMSTR_PipeS8ToA);
+    /* Coverity: Intentional cast of static function to a generic function pointer. */
+    /* coverity[misra_c_2012_rule_11_1_violation:FALSE] */
+    return _FMSTR_PipePrintfOne(pipeHandle, format, &arg, (FMSTR_SIZE)sizeof(arg), (FMSTR_PIPE_ITOA_FUNC)FMSTR_PipeS8ToA);
 }
 
 /******************************************************************************
@@ -1254,7 +1264,9 @@ FMSTR_BOOL FMSTR_PipePrintfS8(FMSTR_HPIPE pipeHandle, const char *format, FMSTR_
 
 FMSTR_BOOL FMSTR_PipePrintfU16(FMSTR_HPIPE pipeHandle, const char *format, FMSTR_U16 arg)
 {
-    return _FMSTR_PipePrintfOne(pipeHandle, format, &arg, (FMSTR_PIPE_ITOA_FUNC)FMSTR_PipeU16ToA);
+    /* Coverity: Intentional cast of static function to a generic function pointer. */
+    /* coverity[misra_c_2012_rule_11_1_violation:FALSE] */
+    return _FMSTR_PipePrintfOne(pipeHandle, format, &arg, (FMSTR_SIZE)sizeof(arg), (FMSTR_PIPE_ITOA_FUNC)FMSTR_PipeU16ToA);
 }
 
 /******************************************************************************
@@ -1266,7 +1278,9 @@ FMSTR_BOOL FMSTR_PipePrintfU16(FMSTR_HPIPE pipeHandle, const char *format, FMSTR
 
 FMSTR_BOOL FMSTR_PipePrintfS16(FMSTR_HPIPE pipeHandle, const char *format, FMSTR_S16 arg)
 {
-    return _FMSTR_PipePrintfOne(pipeHandle, format, &arg, (FMSTR_PIPE_ITOA_FUNC)FMSTR_PipeS16ToA);
+    /* Coverity: Intentional cast of static function to a generic function pointer. */
+    /* coverity[misra_c_2012_rule_11_1_violation:FALSE] */
+    return _FMSTR_PipePrintfOne(pipeHandle, format, &arg, (FMSTR_SIZE)sizeof(arg), (FMSTR_PIPE_ITOA_FUNC)FMSTR_PipeS16ToA);
 }
 
 /******************************************************************************
@@ -1278,7 +1292,9 @@ FMSTR_BOOL FMSTR_PipePrintfS16(FMSTR_HPIPE pipeHandle, const char *format, FMSTR
 
 FMSTR_BOOL FMSTR_PipePrintfU32(FMSTR_HPIPE pipeHandle, const char *format, FMSTR_U32 arg)
 {
-    return _FMSTR_PipePrintfOne(pipeHandle, format, &arg, (FMSTR_PIPE_ITOA_FUNC)FMSTR_PipeU32ToA);
+    /* Coverity: Intentional cast of static function to a generic function pointer. */
+    /* coverity[misra_c_2012_rule_11_1_violation:FALSE] */
+    return _FMSTR_PipePrintfOne(pipeHandle, format, &arg, (FMSTR_SIZE)sizeof(arg), (FMSTR_PIPE_ITOA_FUNC)FMSTR_PipeU32ToA);
 }
 
 /******************************************************************************
@@ -1290,8 +1306,12 @@ FMSTR_BOOL FMSTR_PipePrintfU32(FMSTR_HPIPE pipeHandle, const char *format, FMSTR
 
 FMSTR_BOOL FMSTR_PipePrintfS32(FMSTR_HPIPE pipeHandle, const char *format, FMSTR_S32 arg)
 {
-    return _FMSTR_PipePrintfOne(pipeHandle, format, &arg, (FMSTR_PIPE_ITOA_FUNC)FMSTR_PipeS32ToA);
+    /* Coverity: Intentional cast of static function to a generic function pointer. */
+    /* coverity[misra_c_2012_rule_11_1_violation:FALSE] */
+    return _FMSTR_PipePrintfOne(pipeHandle, format, &arg, (FMSTR_SIZE)sizeof(arg), (FMSTR_PIPE_ITOA_FUNC)FMSTR_PipeS32ToA);
 }
+
+#if FMSTR_USE_PIPE_PRINTF_VARG > 0
 
 /******************************************************************************
  *
@@ -1308,11 +1328,17 @@ static FMSTR_BOOL _FMSTR_PipePrintfAny(FMSTR_HPIPE pipeHandle, va_list *parg, FM
         case 1:
             if (pctx->flags.flg.signedtype != 0U)
             {
+                /* Coverity: Intentional cast from va_arg/int to S8. */
+                /* coverity[cert_int31_c_violation:FALSE] */
+                /* coverity[misra_c_2012_rule_17_1_violation:FALSE] */
                 FMSTR_S8 arg = (FMSTR_S8)va_arg(*parg, int);
                 ok           = FMSTR_PipeS8ToA(pipeHandle, &arg, pctx);
             }
             else
             {
+                /* Coverity: Intentional cast from va_arg/unsigned int to U8. */
+                /* coverity[cert_int31_c_violation:FALSE] */
+                /* coverity[misra_c_2012_rule_17_1_violation:FALSE] */
                 FMSTR_U8 arg = (FMSTR_U8)va_arg(*parg, unsigned);
                 ok           = FMSTR_PipeU8ToA(pipeHandle, &arg, pctx);
             }
@@ -1321,11 +1347,17 @@ static FMSTR_BOOL _FMSTR_PipePrintfAny(FMSTR_HPIPE pipeHandle, va_list *parg, FM
         case 2:
             if (pctx->flags.flg.signedtype != 0U)
             {
+                /* Coverity: Intentional cast from va_arg/int to S16. */
+                /* coverity[cert_int31_c_violation:FALSE] */
+                /* coverity[misra_c_2012_rule_17_1_violation:FALSE] */
                 FMSTR_S16 arg = (FMSTR_S16)va_arg(*parg, int);
                 ok            = FMSTR_PipeS16ToA(pipeHandle, &arg, pctx);
             }
             else
             {
+                /* Coverity: Intentional cast from va_arg/unsigned int to U16. */
+                /* coverity[cert_int31_c_violation:FALSE] */
+                /* coverity[misra_c_2012_rule_17_1_violation:FALSE] */
                 FMSTR_U16 arg = (FMSTR_U16)va_arg(*parg, unsigned);
                 ok            = FMSTR_PipeU16ToA(pipeHandle, &arg, pctx);
             }
@@ -1334,11 +1366,13 @@ static FMSTR_BOOL _FMSTR_PipePrintfAny(FMSTR_HPIPE pipeHandle, va_list *parg, FM
         case 4:
             if (pctx->flags.flg.signedtype != 0U)
             {
+                /* coverity[misra_c_2012_rule_17_1_violation:FALSE] */
                 FMSTR_S32 arg = (FMSTR_S32)va_arg(*parg, long);
                 ok            = FMSTR_PipeS32ToA(pipeHandle, &arg, pctx);
             }
             else
             {
+                /* coverity[misra_c_2012_rule_17_1_violation:FALSE] */
                 FMSTR_U32 arg = (FMSTR_U32)va_arg(*parg, unsigned long);
                 ok            = FMSTR_PipeU32ToA(pipeHandle, &arg, pctx);
             }
@@ -1388,11 +1422,14 @@ static FMSTR_BOOL _FMSTR_PipePrintfV(FMSTR_HPIPE pipeHandle, const char *format,
 
                     if (ctx.flags.flg.isstring != 0U)
                     {
+                        /* coverity[misra_c_2012_rule_17_1_violation:FALSE] */
                         const char *psz = va_arg(*parg, char *);
-                        ok              = FMSTR_PipePuts(pipeHandle, psz != NULL ? psz : "NULL");
+                        ok = FMSTR_PipePuts(pipeHandle, psz != NULL ? psz : "NULL");
                     }
                     else
                     {
+                        /* Size of va_list argument */
+                        ctx.stklen = 4;
                         ok = _FMSTR_PipePrintfAny(pipeHandle, parg, &ctx);
                     }
                 }
@@ -1412,8 +1449,6 @@ static FMSTR_BOOL _FMSTR_PipePrintfV(FMSTR_HPIPE pipeHandle, const char *format,
     return (FMSTR_BOOL)(ok != FMSTR_FALSE);
 }
 
-#if FMSTR_USE_PIPE_PRINTF_VARG > 0
-
 /******************************************************************************
  *
  * @brief  PIPE API: The printf into the pipe
@@ -1424,9 +1459,17 @@ FMSTR_BOOL FMSTR_PipePrintf(FMSTR_HPIPE pipeHandle, const char *format, ...)
 {
     FMSTR_BOOL ok;
 
+    /* coverity[misra_c_2012_rule_17_1_violation:FALSE] */
     va_list args;
+    /* coverity[misra_c_2012_rule_17_1_violation:FALSE] */
     va_start(args, format);
+
+    /* Coverity: Intentional use of va_list to mimic the printf behavior. 
+       Can be disabled by USE_PIPE_PRINTF when unused. */
+    /* coverity[cert_exp47_c_violation:FALSE] */
     ok = _FMSTR_PipePrintfV(pipeHandle, format, &args);
+
+    /* coverity[misra_c_2012_rule_17_1_violation:FALSE] */
     va_end(args);
 
     return ok;
@@ -1477,8 +1520,13 @@ FMSTR_PIPE_SIZE FMSTR_PipeRead(FMSTR_HPIPE pipeHandle,
         /* rest of cyclic buffer */
         if (pipeDataLen > 0U)
         {
-            /* total bytes available in the rest of buffer */
+            /* Calculate total bytes available in the rest of buffer */
+          
+            /* Coverity: Construction of the circular buffer logic ensures that this operation is 
+               positive and cannot wrap. No risk of signed/unsigned cast misinterpretation. */
+            /* coverity[cert_int31_c_violation:FALSE] */
             s = (FMSTR_PIPE_SIZE)((pbuff->size - pbuff->rp) * FMSTR_CFG_BUS_WIDTH);
+            
             if (s > pipeDataLen)
             {
                 s = pipeDataLen;
@@ -1488,7 +1536,12 @@ FMSTR_PIPE_SIZE FMSTR_PipeRead(FMSTR_HPIPE pipeHandle,
             FMSTR_MemCpyTo(pipeData, pbuff->buff + pbuff->rp, (FMSTR_SIZE8)s);
             pipeData += s / FMSTR_CFG_BUS_WIDTH;
 
-            /* advance & wrap pointer */
+            /* Advance & wrap pointer to start of the buffer if needed */
+
+            /* Coverity: Conditions above and construction of the buffer logic ensures 
+               that rp cannot wrap around maximum value. Wrapping around a buffer size is 
+               intentional in the condition below. */
+            /* coverity[cert_int30_c_violation:FALSE] */
             pbuff->rp += s / FMSTR_CFG_BUS_WIDTH;
             if (pbuff->rp >= pbuff->size)
             {
@@ -1570,7 +1623,7 @@ FMSTR_INDEX FMSTR_FindPipeIndex(FMSTR_PIPE_PORT pipePort)
 static FMSTR_PIPE_SIZE _FMSTR_PipeGetBytesFree(FMSTR_PIPE_BUFF *pipeBuff)
 {
     FMSTR_PIPE_SIZE szFree;
-
+    
     if (pipeBuff->flags.flg.bIsFull != 0U)
     {
         szFree = 0;
@@ -1581,6 +1634,9 @@ static FMSTR_PIPE_SIZE _FMSTR_PipeGetBytesFree(FMSTR_PIPE_BUFF *pipeBuff)
     }
     else
     {
+        /* Coverity: Intentional. Construction of the circular buffer and the 
+           conditions above ensure the expression does not wrap. */
+        /* coverity[cert_int31_c_violation:FALSE] */
         szFree = (FMSTR_PIPE_SIZE)(pipeBuff->size - pipeBuff->wp + pipeBuff->rp);
     }
 
@@ -1601,6 +1657,9 @@ static FMSTR_PIPE_SIZE _FMSTR_PipeGetBytesReady(FMSTR_PIPE_BUFF *pipeBuff)
     }
     else
     {
+        /* Coverity: Intentional. Construction of the circular buffer and the 
+           conditions above ensure the expression does not wrap. */
+        /* coverity[cert_int31_c_violation:FALSE] */
         szFull = (FMSTR_PIPE_SIZE)(pipeBuff->size - pipeBuff->rp + pipeBuff->wp);
     }
 
@@ -1618,16 +1677,21 @@ static void _FMSTR_PipeDiscardBytes(FMSTR_PIPE_BUFF *pipeBuff, FMSTR_SIZE8 count
 
     if (discard > 0U)
     {
+        /* Coverity: Intentional. By design of the circular buffer, the 'rp' is always smaller than 'size'.
+           and there is no risk of misinterpretation during cast operations below. */
+        /* coverity[cert_int31_c_violation:FALSE] */
         FMSTR_PIPE_SIZE rest = (FMSTR_PIPE_SIZE)(pipeBuff->size - pipeBuff->rp);
         FMSTR_PIPE_SIZE rp;
 
         /* will RP wrap? */
         if (rest <= discard)
         {
+            /* coverity[cert_int31_c_violation:FALSE] */
             rp = (FMSTR_PIPE_SIZE)(discard - rest);
         }
         else
         {
+            /* coverity[cert_int31_c_violation:FALSE] */
             rp = (FMSTR_PIPE_SIZE)(pipeBuff->rp + discard);
         }
 
@@ -1646,7 +1710,11 @@ static FMSTR_BPTR _FMSTR_PipeReceive(FMSTR_BPTR msgBuffIO, FMSTR_PIPE *pp, FMSTR
 
     if (msgBuffSize > 0U)
     {
-        /* total bytes available in the rest of buffer */
+        /* Calculate total bytes available in the rest of buffer */
+      
+        /* Coverity: Construction of the circular buffer logic ensures that this operation is 
+           positive and cannot wrap. No risk of signed/unsigned cast misinterpretation. */
+        /* coverity[cert_int31_c_violation:FALSE] */
         s = (FMSTR_PIPE_SIZE)((pbuff->size - pbuff->wp) * FMSTR_CFG_BUS_WIDTH);
         if (s > (FMSTR_PIPE_SIZE)msgBuffSize)
         {
@@ -1656,7 +1724,12 @@ static FMSTR_BPTR _FMSTR_PipeReceive(FMSTR_BPTR msgBuffIO, FMSTR_PIPE *pp, FMSTR
         /* get the bytes */
         msgBuffIO = FMSTR_CopyFromBuffer(pbuff->buff + pbuff->wp, msgBuffIO, (FMSTR_SIZE8)s);
 
-        /* advance & wrap pointer */
+        /* Advance & wrap pointer to start of the buffer if needed */
+        
+        /* Coverity: Conditions above and construction of the buffer logic ensures 
+           that wp cannot wrap around maximum value. Wrapping around a buffer size is 
+           intentional in the condition below. */
+        /* coverity[cert_int30_c_violation:FALSE] */
         pbuff->wp += s / FMSTR_CFG_BUS_WIDTH;
         if (pbuff->wp >= pbuff->size)
         {
@@ -1690,7 +1763,11 @@ static FMSTR_BPTR _FMSTR_PipeTransmit(FMSTR_BPTR msgBuffIO, FMSTR_PIPE *pp, FMST
 
     if (msgBuffSize > 0U)
     {
-        /* total bytes available in the rest of buffer */
+        /* Calculate total bytes available in the rest of buffer */
+
+        /* Coverity: Construction of the circular buffer logic ensures that this operation is 
+           positive and cannot wrap. No risk of signed/unsigned cast misinterpretation. */
+        /* coverity[cert_int31_c_violation:FALSE] */
         s = (FMSTR_PIPE_SIZE)((pbuff->size - rp) * FMSTR_CFG_BUS_WIDTH);
         if (s > (FMSTR_PIPE_SIZE)msgBuffSize)
         {
@@ -1700,14 +1777,19 @@ static FMSTR_BPTR _FMSTR_PipeTransmit(FMSTR_BPTR msgBuffIO, FMSTR_PIPE *pp, FMST
         /* put bytes */
         msgBuffIO = FMSTR_CopyToBuffer(msgBuffIO, pbuff->buff + rp, (FMSTR_SIZE8)s);
 
-        /* advance & wrap pointer */
+        /* Advance & wrap pointer to start of the buffer if needed */
+        
+        /* Coverity: Conditions above and construction of the buffer logic ensures 
+           that rp cannot wrap around maximum value. Wrapping around a buffer size is 
+           intentional in the condition below. */
+        /* coverity[cert_int30_c_violation:FALSE] */
         rp += s / FMSTR_CFG_BUS_WIDTH;
         if (rp >= pbuff->size)
         {
             rp = 0;
         }
 
-        /* rest of frame to a (wrapped) beggining of buffer */
+        /* rest of frame to a (wrapped) beginning of buffer */
         msgBuffSize -= (FMSTR_SIZE8)s;
         if (msgBuffSize > 0U)
         {
@@ -1791,7 +1873,9 @@ FMSTR_BPTR FMSTR_GetPipe(FMSTR_SESSION *session, FMSTR_BPTR msgBuffIO, FMSTR_SIZ
             /* Put pipe name */
             if (pp->name != NULL)
             {
-                response = FMSTR_CopyToBuffer(response, (FMSTR_ADDR)pp->name, FMSTR_StrLen(pp->name));
+                /* Coverity: Intentional cast of const char* to FMSTR_ADDR. */
+                /* coverity[misra_c_2012_rule_11_8_violation:FALSE] */
+                response = FMSTR_CopyToBuffer(response, (FMSTR_ADDR)pp->name, (FMSTR_SIZE)FMSTR_StrLen(pp->name));
             }
             break;
 
@@ -1841,8 +1925,8 @@ FMSTR_BPTR FMSTR_PipeFrame(FMSTR_SESSION *session, FMSTR_BPTR msgBuffIO, FMSTR_S
     FMSTR_ASSERT(msgBuffIO != NULL);
     FMSTR_ASSERT(retStatus != NULL);
 
-    /* need at least port number and tx-discard bytes */
-    if (msgSize < 1U)
+    /* Need at least port number and tx-discard bytes. Also must keep length to fit size8 type. */
+    if (msgSize < 1U || msgSize > 0xFFU)
     {
         /* return status  */
         *retStatus = FMSTR_STC_PIPEERR;
@@ -1854,7 +1938,7 @@ FMSTR_BPTR FMSTR_PipeFrame(FMSTR_SESSION *session, FMSTR_BPTR msgBuffIO, FMSTR_S
 
 #if FMSTR_SESSION_COUNT > 1
     /* Is feature locked by me */
-    if (FMSTR_IsFeatureOwned(session, FMSTR_FEATURE_PIPE, (FMSTR_PIPE_PORT)(pipePort & 0x7fU)) == FMSTR_FALSE)
+    if (FMSTR_IsFeatureOwned(session, FMSTR_FEATURE_PIPE, (FMSTR_U8)(pipePort & 0x7fU)) == FMSTR_FALSE)
     {
         *retStatus = FMSTR_STC_SERVBUSY;
         return response;
@@ -1864,7 +1948,7 @@ FMSTR_BPTR FMSTR_PipeFrame(FMSTR_SESSION *session, FMSTR_BPTR msgBuffIO, FMSTR_S
 #endif
 
     /* get pipe by port */
-    pp = _FMSTR_FindPipe((FMSTR_PIPE_PORT)(pipePort & 0x7fU));
+    pp = _FMSTR_FindPipe((FMSTR_PIPE_PORT)(((FMSTR_PIPE_PORT)pipePort) & 0x7fU));
 
     /* pipe port must exist (i.e. be open) */
     if (pp == NULL)
@@ -1879,22 +1963,26 @@ FMSTR_BPTR FMSTR_PipeFrame(FMSTR_SESSION *session, FMSTR_BPTR msgBuffIO, FMSTR_S
     {
         if (pp->flags.flg.bExpectOdd == 0U)
         {
+            /* Discard invalid frame */
             msgSize = 0U;
         }
         else
         {
-            pp->flags.flg.bExpectOdd = pp->flags.flg.bExpectOdd != 0U ? 0U : 1U;
+            /* Toggle for next time */
+            pp->flags.flg.bExpectOdd = 0U;
         }
     }
     else
     {
         if (pp->flags.flg.bExpectOdd != 0U)
         {
+            /* Discard invalid frame */
             msgSize = 0U;
         }
         else
         {
-            pp->flags.flg.bExpectOdd = pp->flags.flg.bExpectOdd != 0U ? 0U : 1U;
+            /* Toggle for next time */
+            pp->flags.flg.bExpectOdd = 1U;
         }
     }
 
@@ -1957,17 +2045,25 @@ FMSTR_BPTR FMSTR_PipeFrame(FMSTR_SESSION *session, FMSTR_BPTR msgBuffIO, FMSTR_S
     {
         /* how many bytes are waiting to be sent? */
         FMSTR_PIPE_SIZE txAvail = _FMSTR_PipeGetBytesReady(&pp->tx);
-        /* how many bytes I can safely put? */
-        FMSTR_U8 txToSend = (FMSTR_U8)FMSTR_COMM_BUFFER_SIZE - 3U;
+        /* how many bytes can we safely put? */
+        FMSTR_SIZE txToSend = (FMSTR_SIZE)FMSTR_COMM_BUFFER_SIZE - 3U;
 
         /* round to bus width */
         txToSend /= FMSTR_CFG_BUS_WIDTH;
         txToSend *= FMSTR_CFG_BUS_WIDTH;
 
         /* get the lower of two values */
-        if (txAvail < (FMSTR_PIPE_SIZE)txToSend)
+        if (((FMSTR_SIZE)txAvail) < txToSend)
         {
-            txToSend = (FMSTR_U8)txAvail;
+            txToSend = (FMSTR_SIZE)txAvail;
+        }
+        
+        /* Pipe uses 8-bit lengths only, this sanity check shall never happen, but anyway */
+        if(txToSend > 0xffU)
+        {
+            /* Coverity: Intentional condition which may be evaluated as always false. */
+            /* coverity[misra_c_2012_rule_14_3_violation:FALSE] */
+            txToSend = 0xffU;
         }
 
         /* send pipe's transmit data back */
@@ -1980,7 +2076,7 @@ FMSTR_BPTR FMSTR_PipeFrame(FMSTR_SESSION *session, FMSTR_BPTR msgBuffIO, FMSTR_S
         /* put data */
         if (txToSend != 0U)
         {
-            response = _FMSTR_PipeTransmit(response, pp, txToSend);
+            response = _FMSTR_PipeTransmit(response, pp, (FMSTR_SIZE8)txToSend);
         }
     }
 

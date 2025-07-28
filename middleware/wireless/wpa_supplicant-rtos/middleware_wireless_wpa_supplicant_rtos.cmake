@@ -41,6 +41,9 @@ message("${CMAKE_CURRENT_LIST_FILE} component is included.")
           ${CMAKE_CURRENT_LIST_DIR}/wpa_supplicant/ctrl_iface_udp.c
           ${CMAKE_CURRENT_LIST_DIR}/wpa_supplicant/mbo.c
           ${CMAKE_CURRENT_LIST_DIR}/wpa_supplicant/wnm_sta.c
+          ${CMAKE_CURRENT_LIST_DIR}/wpa_supplicant/bgscan.c
+          ${CMAKE_CURRENT_LIST_DIR}/wpa_supplicant/bgscan_simple.c
+          ${CMAKE_CURRENT_LIST_DIR}/wpa_supplicant/bgscan_learn.c
           ${CMAKE_CURRENT_LIST_DIR}/src/utils/wpa_debug.c
           ${CMAKE_CURRENT_LIST_DIR}/freertos/src/supp_main.c
           ${CMAKE_CURRENT_LIST_DIR}/freertos/src/supp_api.c

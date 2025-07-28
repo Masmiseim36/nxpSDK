@@ -2635,7 +2635,6 @@ _draw_swing_pie_area(
         vg_lite_path_point_ptr start_point = stroke_conversion->swing_stroke;
         vg_lite_path_point_ptr end_point = NULL, real_end_point = NULL;
         vg_lite_path_point_ptr point, prev_point;
-        uint32_t count = 0;
 
         {
             if (end_at_prev_point)
@@ -2657,7 +2656,6 @@ _draw_swing_pie_area(
                 prev_point = point->prev;
                 point->prev = point->next;
                 point->next = prev_point;
-                count++;
             }
 
             if (end_point)
@@ -2692,7 +2690,6 @@ _draw_swing_pie_area(
         vg_lite_path_point_ptr start_point = stroke_conversion->swing_stroke;
         vg_lite_path_point_ptr end_point = NULL, real_end_point = NULL;
         vg_lite_path_point_ptr point, next_point;
-        uint32_t count = 0;
 
         {
             if (end_at_prev_point)
@@ -2714,7 +2711,6 @@ _draw_swing_pie_area(
                 next_point = point->next;
                 point->next = point->prev;
                 point->prev = next_point;
-                count++;
             }
             end_point->prev = start_point->next;
             start_point->next->next = end_point;

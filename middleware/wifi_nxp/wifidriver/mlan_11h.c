@@ -97,9 +97,9 @@ void wlan_11h_init(mlan_adapter *adapter)
     ENTER();
 
     /* Initialize 11H struct */
-    pstate_11h->usr_def_power_constraint        = WLAN_11H_TPC_POWERCONSTRAINT;
-    pstate_11h->min_tx_power_capability         = WLAN_11H_TPC_POWERCAPABILITY_MIN;
-    pstate_11h->max_tx_power_capability         = WLAN_11H_TPC_POWERCAPABILITY_MAX;
+    pstate_11h->usr_def_power_constraint        = (t_s8)WLAN_11H_TPC_POWERCONSTRAINT;
+    pstate_11h->min_tx_power_capability         = (t_s8)WLAN_11H_TPC_POWERCAPABILITY_MIN;
+    pstate_11h->max_tx_power_capability         = (t_s8)WLAN_11H_TPC_POWERCAPABILITY_MAX;
     pstate_11h->recvd_chanswann_event           = MFALSE;
     pstate_11h->master_radar_det_enable_pending = MFALSE;
     pstate_11h->slave_radar_det_enable_pending  = MFALSE;
@@ -120,7 +120,7 @@ void wlan_11h_init(mlan_adapter *adapter)
     util_init_list((pmlan_linked_list)(void *)&pstate_dfs->dfs_ts_head);
 
     /* Initialize RDH struct */
-    pstate_rdh->stage           = RDH_OFF;
+    pstate_rdh->stage           = (t_u8)RDH_OFF;
     pstate_rdh->priv_list_count = 0;
     pstate_rdh->priv_curr_idx   = 0;
     pstate_rdh->curr_channel    = 0;
@@ -186,7 +186,7 @@ t_bool wlan_11h_radar_detect_required(mlan_private *priv, t_u8 channel)
 
     required = wlan_get_cfp_radar_detect(priv, channel);
 
-    if (!priv->adapter->region_code)
+    if (priv->adapter->region_code == 0U)
     {
         PRINTM(MINFO,
                "11h: Radar detection in CFP code[BG:%#x, A:%#x] "
@@ -238,11 +238,11 @@ mlan_status wlan_get_non_dfs_chan(mlan_private *priv, t_u8 *chan)
     /* get the channel table first */
     for (i = 0; i < MAX_REGION_CHANNEL_NUM; i++)
     {
-        if (pmadapter->region_channel[i].valid)
+        if (pmadapter->region_channel[i].valid == (t_u8)MTRUE)
         {
             chn_tbl = &pmadapter->region_channel[i];
 
-            if (!chn_tbl || !chn_tbl->pcfp)
+            if ((chn_tbl == MNULL) || (chn_tbl->pcfp == MNULL))
             {
                 goto done;
             }

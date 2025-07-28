@@ -2,13 +2,13 @@
 /*  @file:    startup_MIMXRT555S.s                                           */
 /*  @purpose: CMSIS Cortex-M33 Core Device Startup File                      */
 /*            MIMXRT555S                                                     */
-/*  @version: 5.0                                                            */
-/*  @date:    2020-8-27                                                      */
-/*  @build:   b240823                                                        */
+/*  @version: 6.0                                                            */
+/*  @date:    2024-10-29                                                     */
+/*  @build:   b250520                                                        */
 /* ------------------------------------------------------------------------- */
 /*                                                                           */
 /* Copyright 1997-2016 Freescale Semiconductor, Inc.                         */
-/* Copyright 2016-2024 NXP                                                   */
+/* Copyright 2016-2025 NXP                                                   */
 /* SPDX-License-Identifier: BSD-3-Clause                                     */
 /*****************************************************************************/
 /* Version: GCC for ARM Embedded Processors                                  */

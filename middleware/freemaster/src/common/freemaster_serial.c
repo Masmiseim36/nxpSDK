@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2007-2015 Freescale Semiconductor, Inc.
- * Copyright 2018-2021, 2024 NXP
+ * Copyright 2018-2021, 2024-2025 NXP
  *
  * License: NXP LA_OPT_Online Code Hosting NXP_Software_License
  *
@@ -345,15 +345,18 @@ static void _FMSTR_SerialSendResponse(FMSTR_BPTR pResponse,
 
     FMSTR_UNUSED(identification);
 
-    if (nLength > 254U || pResponse != &fmstr_pCommBuffer[2])
+    if (nLength > 252U || pResponse != &fmstr_pCommBuffer[2])
     {
-        /* The Serial driver doesn't support bigger responses than 254 bytes, change the response to status error */
+        /* The Serial driver doesn't support responses longer than 254 bytes including 
+           status, length and checksum. If so, change the response to status error and 
+           trim data off. */
         statusCode = FMSTR_STC_RSPBUFFOVF;
         nLength    = 0U;
     }
 
     /* remember the buffer to be sent */
     fmstr_pTxBuff = fmstr_pCommBuffer;
+    
     /* Send the message with status, length and checksum. SOB is not counted as it is sent right here. */
     fmstr_nTxTodo = (FMSTR_SIZE8)(nLength + 3U);
 
@@ -508,7 +511,8 @@ static FMSTR_BOOL _FMSTR_Rx(FMSTR_BCHR rxChar)
 #if FMSTR_DEBUG_LEVEL >= 3
         FMSTR_DEBUG_PRINTF("FMSTR Rx Frame length: 0x%x\n", rxChar);
 #endif
-        /* total data length and the checksum */
+        /* Coverity: Intentional. Remaining data size must be obtained from the payload byte. */
+        /* coverity[cert_int31_c_violation:FALSE] */
         fmstr_nRxTodo = (FMSTR_SIZE8)(rxChar + 1U);
         FMSTR_Crc8AddByte(&fmstr_nRxCrc8, rxChar);
 
@@ -557,6 +561,7 @@ static FMSTR_BOOL _FMSTR_Rx(FMSTR_BCHR rxChar)
                 pMessageIO = FMSTR_ValueFromBuffer8(&size, pMessageIO);
 
                 /* do decode now! use "serial" as a globally unique pointer value as our identifier */
+                /* coverity[misra_c_2012_rule_7_4_violation:FALSE] */
                 processed = FMSTR_ProtocolDecoder(pMessageIO, size, cmd, (void *)"serial");
                 FMSTR_UNUSED(processed);
             }

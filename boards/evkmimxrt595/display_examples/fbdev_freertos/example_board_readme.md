@@ -6,7 +6,8 @@ Hardware requirements
 - Personal Computer
 - RK055AHD091 MIPI panel (Not necessary if use other panel)
 - RK055MHD091 MIPI panel (Not necessary if use other panel)
-- RM67162 smart MIPI panel (Not necessary if use other panel)
+- RM67162(G1120B0MIPI) smart MIPI panel (Not necessary if use other panel)
+- CO5300(ZC143AC72MIPI) smart MIPI panel (Not necessary if use other panel)
 
 Board settings
 ============
@@ -18,8 +19,11 @@ Connect MIPI panel to J44.
 
 Prepare the Demo
 ===============
-The demo use RK055MHD091 panel by default, to use other, change the macro DEMO_PANEL in
-mcux_config.h. Which number represents which panel can be found in display_support.h.
+The demo use RK055MHD091 panel by default, to use other panels,
+set the coresponding panel DEMO_PANEL_xxx(without '_SUPPORT') to y in prj.conf under board example folder before project generation.
+The supported panels can be found in examples\_boards\<board>\project_segments\display_support\Kconfig.prjseg.
+Or change the macro DEMO_PANEL in mcux_config.h of the project,
+which number represents which panel can be found in display_support.h
 
 1.  Connect a USB cable between the host PC and the OpenSDA USB port on the target board.
 2.  Open a serial terminal with the following settings:
@@ -34,10 +38,10 @@ mcux_config.h. Which number represents which panel can be found in display_suppo
 When Package is used
 -------------
 Modify `DEMO_PANEL` in mcux_config.h.
-`#define DEMO_PANEL 0` for "MikroE TFT Proto 5" CAPACITIVE FlexIO panel.
-`#define DEMO_PANEL 1` for "RK055HDMIPI4M" MIPI Rectangular panel.
+`#define DEMO_PANEL 4` for "MikroE TFT Proto 5" CAPACITIVE FlexIO panel.
+`#define DEMO_PANEL 0` for "RK055HDMIPI4M" MIPI Rectangular panel.
 `#define DEMO_PANEL 3` for "G1120B0MIPI" MIPI Circular panel.
-`#define DEMO_PANEL 4` for "RK055MHD091A0-CTG MIPI Rectangular panel.(default)
+`#define DEMO_PANEL 2` for "RK055MHD091A0-CTG MIPI Rectangular panel.(default)
 
 Running the demo
 ===============

@@ -1,5 +1,5 @@
 /*! *********************************************************************************
- * Copyright 2024 NXP
+ * Copyright 2024-2025 NXP
  *
  * \file
  *
@@ -8,22 +8,33 @@
  * SPDX-License-Identifier: BSD-3-Clause
  ********************************************************************************** */
 
-/*! *********************************************************************************
-*************************************************************************************
-* Include
-*************************************************************************************
-********************************************************************************** */
+/* -------------------------------------------------------------------------- */
+/*                                  Includes                                  */
+/* -------------------------------------------------------------------------- */
 
 #include "fsl_common.h"
 #include "fsl_component_mem_manager.h"
 #include "FreeRTOS.h"
 #include "portable.h"
 
-/*! *********************************************************************************
-*************************************************************************************
-* Public functions
-*************************************************************************************
-********************************************************************************** */
+/* -------------------------------------------------------------------------- */
+/*                                Private types                               */
+/* -------------------------------------------------------------------------- */
+
+/* Define the linked list structure.  This is used to link free blocks in order
+ * of their memory address.
+ * Note: This structure is based on the heap_4.c implementation, FreeRTOS doesn't
+ * expose an API to retrieve the buffer size so we have to re-define the structure
+ * here */
+typedef struct A_BLOCK_LINK
+{
+    struct A_BLOCK_LINK * pxNextFreeBlock; /**< The next free block in the list. */
+    size_t xBlockSize;                     /**< The size of the free block. */
+} BlockLink_t;
+
+/* -------------------------------------------------------------------------- */
+/*                              Public functions                              */
+/* -------------------------------------------------------------------------- */
 
 mem_status_t MEM_Init(void)
 {
@@ -82,6 +93,14 @@ mem_status_t MEM_BufferFreeAllWithId(uint8_t poolId)
     return kStatus_MemFreeError;
 }
 
+mem_status_t MEM_BufferCheck(void *buffer, uint32_t size)
+{
+    /* NOT IMPLEMENTED */
+    (void)buffer;
+    (void)size;
+    return kStatus_MemUnknownError;
+}
+
 uint32_t MEM_GetHeapUpperLimitByAreaId(uint8_t area_id)
 {
     /* NOT IMPLEMENTED */
@@ -120,9 +139,9 @@ uint32_t MEM_ResetFreeHeapSizeLowWaterMark(void)
 
 uint16_t MEM_BufferGetSize(void *buffer)
 {
-    /* NOT IMPLEMENTED */
-    (void)buffer;
-    return 0U;
+    uint8_t *pBlock = (uint8_t *)buffer - sizeof(BlockLink_t);
+
+    return (uint16_t)((((BlockLink_t *)pBlock)->xBlockSize - sizeof(BlockLink_t)) & 0xFFFFU);
 }
 
 void *MEM_BufferRealloc(void *buffer, uint32_t new_size)

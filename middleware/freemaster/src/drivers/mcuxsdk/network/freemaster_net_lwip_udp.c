@@ -97,14 +97,23 @@ static FMSTR_BOOL _FMSTR_NetLwipUdpInit(void)
     err = netconn_bind(fmstrUdpConn, IP_ADDR_ANY, FMSTR_NET_PORT);
     if (err != ERR_OK)
     {
+        /* Coverity: Intentionally ignore return code, going to return FALSE anyway */
+        /* coverity[misra_c_2012_directive_4_7_violation:FALSE] */
         (void)netconn_delete(fmstrUdpConn);
         fmstrUdpConn = NULL;
         return FMSTR_FALSE;
     }
 
+    /* Ignore coverity signed/unsigned warning in 3rd party code */
 #if FMSTR_NET_BLOCKING_TIMEOUT == 0
+    /* coverity[misra_c_2012_rule_10_1_violation:FALSE] */
+    /* coverity[misra_c_2012_rule_10_4_violation:FALSE] */
+    /* coverity[misra_c_2012_rule_10_8_violation:FALSE] */
     netconn_set_nonblocking(fmstrUdpConn, true);
 #else
+    /* coverity[misra_c_2012_rule_10_1_violation:FALSE] */
+    /* coverity[misra_c_2012_rule_10_4_violation:FALSE] */
+    /* coverity[misra_c_2012_rule_10_8_violation:FALSE] */
     netconn_set_nonblocking(fmstrUdpConn, false);
     netconn_set_recvtimeout(fmstrUdpConn, FMSTR_NET_BLOCKING_TIMEOUT);
 #endif
@@ -123,7 +132,7 @@ static FMSTR_S32 _FMSTR_NetLwipUdpRecv(FMSTR_BPTR msgBuff,
 {
     err_t err;
     int recvSize = 0;
-    struct netbuf *buf;
+    struct netbuf *buf = NULL;
 
     FMSTR_ASSERT(msgBuff != NULL);
     FMSTR_ASSERT(recvAddr != NULL);
@@ -138,16 +147,17 @@ static FMSTR_S32 _FMSTR_NetLwipUdpRecv(FMSTR_BPTR msgBuff,
 
     /* Receive data */
     err = netconn_recv(fmstrUdpConn, &buf);
-    if (err < 0 && err == ERR_WOULDBLOCK)
+    if (err == ERR_WOULDBLOCK)
     {
         return 0;
     }
-    if (err < 0)
+    if (err != ERR_OK || buf == NULL)
     {
         return -1;
     }
 
-    /* Copy received data */
+    /* Copy received data. Ignore coverity type-cast warning in 3rd party code */
+    /* coverity[misra_c_2012_rule_10_3_violation:FALSE] */
     recvSize = netbuf_copy(buf, msgBuff, msgMaxSize);
 
     /* Copy address of receiver */
@@ -155,7 +165,7 @@ static FMSTR_S32 _FMSTR_NetLwipUdpRecv(FMSTR_BPTR msgBuff,
 
     netbuf_delete(buf);
 
-    return recvSize;
+    return (FMSTR_S32)recvSize;
 }
 
 static FMSTR_S32 _FMSTR_NetLwipUdpSend(FMSTR_NET_ADDR *sendAddr, FMSTR_BPTR msgBuff, FMSTR_SIZE msgSize)
@@ -164,8 +174,10 @@ static FMSTR_S32 _FMSTR_NetLwipUdpSend(FMSTR_NET_ADDR *sendAddr, FMSTR_BPTR msgB
     struct netbuf *buf;
     err_t err;
 
+    /* Sanity checks */
     FMSTR_ASSERT(msgBuff != NULL);
     FMSTR_ASSERT(sendAddr != NULL);
+    FMSTR_ASSERT(msgSize <= 0x600U);
 
     buf = netbuf_new();
 
@@ -175,8 +187,8 @@ static FMSTR_S32 _FMSTR_NetLwipUdpSend(FMSTR_NET_ADDR *sendAddr, FMSTR_BPTR msgB
         goto ERROR;
     }
 
-    /* reference the message into the netbuf */
-    err = netbuf_ref(buf, msgBuff, msgSize);
+    /* Reference the message into the netbuf. Ignore coverity type-cast warning in 3rd party code */
+    err = netbuf_ref(buf, msgBuff, (u16_t)msgSize);
     if (err != ERR_OK)
     {
         sentSize = -1;

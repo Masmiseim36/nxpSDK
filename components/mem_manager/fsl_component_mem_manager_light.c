@@ -1073,6 +1073,55 @@ mem_status_t MEM_BufferFree(void *buffer /* IN: Block of memory to free*/)
     return ret;
 }
 
+mem_status_t MEM_BufferCheck(void *buffer, uint32_t size)
+{
+    mem_status_t ret = kStatus_MemSuccess;
+    void_ptr_t buffer_ptr;
+    buffer_ptr.void_ptr = buffer;
+
+    if (buffer == NULL)
+    {
+        ret = kStatus_MemUnknownError;
+    }
+    else
+    {
+        uint32_t regPrimask = DisableGlobalIRQ();
+
+        blockHeader_t *BlockHdr;
+        BlockHdr = (blockHeader_t *)(buffer_ptr.raw_address - BLOCK_HDR_SIZE);
+        /* checks buffer is valid */
+        if ((BlockHdr->used == MEMMANAGER_BLOCK_USED) && (BlockHdr->next != NULL))
+        {
+            memAreaPrivDesc_t *p_area = MEM_GetAreaByAreaId(BlockHdr->area_id);
+            if (p_area != NULL)
+            {
+                /* Not memory manager buffer, do not care */
+                if (((uint8_t*)buffer < (uint8_t*)p_area->start_address.raw_address) || 
+                    ((uint8_t*)buffer > (uint8_t*)p_area->end_address.raw_address))
+                {
+                    ret = kStatus_MemUnknownError;
+                }
+                else
+                {
+                    if( size > MEM_BufferGetSize(buffer) )
+                    {
+                      assert(false);
+                      ret = kStatus_MemOverFlowError;
+                    }
+                }
+            }
+            else 
+            {
+                ret = kStatus_MemUnknownError;
+            }
+        }
+
+        EnableGlobalIRQ(regPrimask);
+    }
+
+    return ret;
+}
+
 mem_status_t MEM_BufferFreeAllWithId(uint8_t poolId)
 {
     mem_status_t status = kStatus_MemSuccess;

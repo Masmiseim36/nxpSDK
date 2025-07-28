@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2007-2015 Freescale Semiconductor, Inc.
- * Copyright 2018-2021, 2024 NXP
+ * Copyright 2018-2021, 2024-2025 NXP
  *
  * License: NXP LA_OPT_Online Code Hosting NXP_Software_License
  *
@@ -63,7 +63,7 @@
 #define FMSTR_ADDR_VALID FMSTR_ADDR_VALID_Func
 FMSTR_INLINE FMSTR_BOOL FMSTR_ADDR_VALID_Func(FMSTR_ADDR addr)
 {
-    /* This function will be overriden if FMSTR_ADDR is not a pointer type */
+    /* This function shall be overriden if FMSTR_ADDR is not a pointer type */
     return addr != NULL ? FMSTR_TRUE : FMSTR_FALSE;
 }
 #endif
@@ -73,7 +73,8 @@ FMSTR_INLINE FMSTR_BOOL FMSTR_ADDR_VALID_Func(FMSTR_ADDR addr)
 #define FMSTR_CAST_PTR_TO_ADDR FMSTR_CAST_PTR_TO_ADDR_Func
 FMSTR_INLINE FMSTR_ADDR FMSTR_CAST_PTR_TO_ADDR_Func(const void *ptr)
 {
-    /* MISRA exception when casting const pointer to address type */
+    /* Coverity: Intentional cast of a const pointer to generic address type */
+    /* coverity[misra_c_2012_rule_11_8_violation:FALSE] */
     return (FMSTR_ADDR)ptr;
 }
 #endif
@@ -83,7 +84,8 @@ FMSTR_INLINE FMSTR_ADDR FMSTR_CAST_PTR_TO_ADDR_Func(const void *ptr)
 #define FMSTR_CAST_ADDR_TO_PTR FMSTR_CAST_ADDR_TO_PTR_Func
 FMSTR_INLINE void *FMSTR_CAST_ADDR_TO_PTR_Func(FMSTR_ADDR addr)
 {
-    /* MISRA exception here */
+    /* Coverity: Intentional cast of a generic address type to a void pointer */
+    /* coverity[misra_c_2012_rule_11_8_violation:FALSE] */
     return (void *)addr;
 }
 #endif
@@ -220,7 +222,9 @@ FMSTR_BOOL FMSTR_InitTsa(void);
 FMSTR_BPTR FMSTR_GetTsaInfo(FMSTR_BPTR msgBuffIO, FMSTR_U8 *retStatus);
 FMSTR_BPTR FMSTR_GetStringLen(FMSTR_BPTR msgBuffIO, FMSTR_U8 *retStatus);
 FMSTR_BOOL FMSTR_CheckTsaSpace(FMSTR_ADDR varAddr, FMSTR_SIZE varSize, FMSTR_BOOL writeAccess);
+#if FMSTR_USE_URES > 0
 FMSTR_BPTR FMSTR_UresControl(FMSTR_BPTR msgBuffIO, FMSTR_SIZE msgSize, FMSTR_U8 *retStatus);
+#endif
 #endif
 
 #if FMSTR_USE_PIPES > 0
@@ -266,21 +270,113 @@ FMSTR_BPTR FMSTR_ULebFromBuffer(FMSTR_U32 *pnum, FMSTR_BPTR src);
 FMSTR_SIZE FMSTR_GetAlignmentCorrection(FMSTR_ADDR addr, FMSTR_SIZE size);
 
 /******************************************************************************
- * aligned memory and buffer memory operations
+ * Memory operations
  ******************************************************************************/
 
-#define FMSTR_GetS8(addr)  (*(FMSTR_S8 *)(addr))
-#define FMSTR_GetU8(addr)  (*(FMSTR_U8 *)(addr))
-#define FMSTR_GetS16(addr) (*(FMSTR_S16 *)(addr))
-#define FMSTR_GetU16(addr) (*(FMSTR_U16 *)(addr))
-#define FMSTR_GetS32(addr) (*(FMSTR_S32 *)(addr))
-#define FMSTR_GetU32(addr) (*(FMSTR_U32 *)(addr))
-#define FMSTR_GetS64(addr) (*(FMSTR_S64 *)(addr))
-#define FMSTR_GetU64(addr) (*(FMSTR_U64 *)(addr))
+FMSTR_INLINE FMSTR_S8 _FMSTR_GetS8(FMSTR_ADDR addr)
+{
+    /* coverity[misra_c_2012_rule_11_3_violation:FALSE] */
+    FMSTR_S8* a = (FMSTR_S8*)addr;
+    return *a;
+}
+
+FMSTR_INLINE FMSTR_U8 _FMSTR_GetU8(FMSTR_ADDR addr)
+{
+    /* coverity[misra_c_2012_rule_11_3_violation:FALSE] */
+    FMSTR_U8* a = (FMSTR_U8*)addr;
+    return *a;
+}
+
+FMSTR_INLINE FMSTR_S16 _FMSTR_GetS16(FMSTR_ADDR addr)
+{
+    /* coverity[misra_c_2012_rule_11_3_violation:FALSE] */
+    FMSTR_S16* a = (FMSTR_S16*)addr;
+    return *a;
+}
+
+FMSTR_INLINE FMSTR_U16 _FMSTR_GetU16(FMSTR_ADDR addr)
+{
+    /* coverity[misra_c_2012_rule_11_3_violation:FALSE] */
+    FMSTR_U16* a = (FMSTR_U16*)addr;
+    return *a;
+}
+
+FMSTR_INLINE FMSTR_S32 _FMSTR_GetS32(FMSTR_ADDR addr)
+{
+    /* coverity[misra_c_2012_rule_11_3_violation:FALSE] */
+    FMSTR_S32* a = (FMSTR_S32*)addr;
+    return *a;
+}
+
+FMSTR_INLINE FMSTR_U32 _FMSTR_GetU32(FMSTR_ADDR addr)
+{
+    /* coverity[misra_c_2012_rule_11_3_violation:FALSE] */
+    FMSTR_U32* a = (FMSTR_U32*)addr;
+    return *a;
+}
+
+FMSTR_INLINE FMSTR_S64 _FMSTR_GetS64(FMSTR_ADDR addr)
+{
+    /* coverity[misra_c_2012_rule_11_3_violation:FALSE] */
+    FMSTR_S64* a = (FMSTR_S64*)addr;
+    return *a;
+}
+
+FMSTR_INLINE FMSTR_U64 _FMSTR_GetU64(FMSTR_ADDR addr)
+{
+    /* coverity[misra_c_2012_rule_11_3_violation:FALSE] */
+    FMSTR_U64* a = (FMSTR_U64*)addr;
+    return *a;
+}
+
+#ifndef FMSTR_GetS8
+#define FMSTR_GetS8(addr)  _FMSTR_GetS8(addr)
+#endif
+#ifndef FMSTR_GetU8
+#define FMSTR_GetU8(addr)  _FMSTR_GetU8(addr)
+#endif
+#ifndef FMSTR_GetS16
+#define FMSTR_GetS16(addr)  _FMSTR_GetS16(addr)
+#endif
+#ifndef FMSTR_GetU16
+#define FMSTR_GetU16(addr)  _FMSTR_GetU16(addr)
+#endif
+#ifndef FMSTR_GetS32
+#define FMSTR_GetS32(addr)  _FMSTR_GetS32(addr)
+#endif
+#ifndef FMSTR_GetU32
+#define FMSTR_GetU32(addr)  _FMSTR_GetU32(addr)
+#endif
+#ifndef FMSTR_GetS64
+#define FMSTR_GetS64(addr)  _FMSTR_GetS64(addr)
+#endif
+#ifndef FMSTR_GetU64
+#define FMSTR_GetU64(addr)  _FMSTR_GetU64(addr)
+#endif
 
 #if FMSTR_REC_FLOAT_TRIG > 0
-#define FMSTR_GetFloat(addr)  (*(FMSTR_FLOAT *)(addr))
-#define FMSTR_GetDouble(addr) (*(FMSTR_DOUBLE *)(addr))
+
+FMSTR_INLINE FMSTR_FLOAT _FMSTR_GetFloat(FMSTR_ADDR addr)
+{
+    /* coverity[misra_c_2012_rule_11_3_violation:FALSE] */
+    FMSTR_FLOAT* a = (FMSTR_FLOAT*)addr;
+    return *a;
+}
+
+FMSTR_INLINE FMSTR_DOUBLE _FMSTR_GetDouble(FMSTR_ADDR addr)
+{
+    /* coverity[misra_c_2012_rule_11_3_violation:FALSE] */
+    FMSTR_DOUBLE* a = (FMSTR_DOUBLE*)addr;
+    return *a;
+}
+
+#ifndef FMSTR_GetFloat
+#define FMSTR_GetFloat(addr)  _FMSTR_GetFloat(addr)
+#endif
+#ifndef FMSTR_GetDouble
+#define FMSTR_GetDouble(addr)  _FMSTR_GetDouble(addr)
+#endif
+
 #endif
 
 #ifdef __cplusplus

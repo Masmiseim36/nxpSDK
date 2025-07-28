@@ -1,11 +1,15 @@
 /*
- * Copyright 2024 NXP
+ * Copyright 2024-2025 NXP
  *
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #include "mcux_psa_s2xx_common_init.h" /* ELE Crypto port layer */
+
+#if (defined(ELEMU_HAS_LOADABLE_FW) && ELEMU_HAS_LOADABLE_FW)
+#include "ele_200_fw.h"
+#endif /* ELEMU_HAS_LOADABLE_FW */
 
 /******************************************************************************/
 /*************************** Mutex ********************************************/
@@ -79,7 +83,7 @@ static status_t ele_close_handles(void)
         sscp_mu_deinit(&g_ele_ctx.sscpContext);
 
     } while (0);
-    
+
     return 0;
 }
 
@@ -122,7 +126,7 @@ status_t CRYPTO_InitHardware(void)
         }
 
 #if (defined(ELEMU_HAS_LOADABLE_FW) && ELEMU_HAS_LOADABLE_FW)
-        result = ELEMU_loadFwLocal(ELEMUA);
+        result = ELEMU_loadFw(ELEMUA, (uint32_t *)fw);
         if (result != kStatus_Success)
         {
             break;
@@ -175,6 +179,15 @@ status_t CRYPTO_InitHardware(void)
         {
             break;
         }
+
+#if defined(SECURE_STORAGE)
+        /* Init secure storage */
+        if (PSA_SUCCESS != secure_storage_its_initialize())
+        {
+            result = kStatus_Fail;
+            break;
+        }
+#endif /* SECURE_STORAGE */
 
         result = kStatus_Success;
 
@@ -233,4 +246,33 @@ status_t CRYPTO_DeinitHardware(void)
     }
 
     return result;
+}
+
+
+/*!
+ * @brief Application reset for Crypto blocks.
+ *
+ * Wait for the secure subsystem module to be running
+ * This function is provided to be called by MCUXpresso SDK applications.
+ * It calls basic reinit for Crypto Hw acceleration and Hw entropy modules.
+ */
+void CRYPTO_ELEMU_reset(void)
+{
+    CRYPTO_DeinitHardware();
+    (void)ELEMU_LP_WakeupPathInit(ELEMUA);
+}
+
+
+/*!
+ * @brief Application Reinit for Crypto blocks.
+ *
+ * This function is provided to be called by MCUXpresso SDK applications.
+ * It calls basic reinit for Crypto Hw acceleration and Hw entropy modules.
+ */
+status_t CRYPTO_ReinitHardware(void)
+{
+    /* Reset the init state so the hardware will be reinitialized at the next cryptographic HW acceleration operation */
+    g_isCryptoHWInitialized = false;
+
+    return kStatus_Success;
 }

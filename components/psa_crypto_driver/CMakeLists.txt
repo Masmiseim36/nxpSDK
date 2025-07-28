@@ -54,6 +54,12 @@ if(CONFIG_SOC_SERIES_RW6XX)
             MBEDTLS_MCUX_ENTROPY
     )
 
+    target_compile_definitions(
+        McuxPsaCryptoDriverElsPkc 
+        PRIVATE
+            MBEDTLS_MCUX_USE_TRNG_AS_ENTROPY_SEED
+    )
+
     target_include_directories(McuxPsaCryptoDriverElsPkc
         PUBLIC
             #psa-crypto-driver for els_pkc include paths
@@ -177,8 +183,8 @@ else()
     target_include_directories(McuxPsaCryptoDriverElsPkc
         PRIVATE
             # SDK driver header files
-            ${ZEPHYR_HAL_NXP_MODULE_DIR}/mcux/mcux-sdk/drivers/common
-            ${ZEPHYR_HAL_NXP_MODULE_DIR}/mcux/mcux-sdk/drivers/trng
+            ${ZEPHYR_HAL_NXP_MODULE_DIR}/mcux/mcux-sdk-ng/drivers/common
+            ${ZEPHYR_HAL_NXP_MODULE_DIR}/mcux/mcux-sdk-ng/drivers/trng
             # zephyr includes for mutex functions for psa-crypto-driver
             ${CMAKE_CURRENT_LIST_DIR}/osal/zephyr
             ${CMAKE_CURRENT_LIST_DIR}/osal/.
@@ -190,7 +196,7 @@ else()
         McuxPsaCryptoDriverElsPkc 
         PRIVATE
             # SDK driver files
-            ${ZEPHYR_HAL_NXP_MODULE_DIR}/mcux/mcux-sdk/drivers/trng/fsl_trng.c
+            ${ZEPHYR_HAL_NXP_MODULE_DIR}/mcux/mcux-sdk-ng/drivers/trng/fsl_trng.c
     )
 
     target_compile_options(

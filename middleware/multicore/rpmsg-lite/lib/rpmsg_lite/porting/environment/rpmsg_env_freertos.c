@@ -2,7 +2,7 @@
  * Copyright (c) 2014, Mentor Graphics Corporation
  * Copyright (c) 2015 Xilinx, Inc.
  * Copyright (c) 2016 Freescale Semiconductor, Inc.
- * Copyright 2016-2024 NXP
+ * Copyright 2016-2025 NXP
  * Copyright 2021 ACRIOS Systems s.r.o.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -304,7 +304,8 @@ void env_free_memory(void *ptr)
  */
 void env_memset(void *ptr, int32_t value, uint32_t size)
 {
-    (void)memset(ptr, value, size);
+    /* Explicitly convert value to unsigned char range to ensure consistent behavior */
+    (void)memset(ptr, (unsigned char)(value & 0xFF), size);
 }
 
 /*!
@@ -720,11 +721,23 @@ int32_t env_create_queue(void **queue,
                          uint8_t *queue_static_storage,
                          rpmsg_static_queue_ctxt *queue_static_context)
 {
+    if (length < 0 || element_size < 0)
+    {
+        /* Length and size should not be negative */
+        *queue = NULL;
+        return -1;
+    }
     *queue = (void *)xQueueCreateStatic((UBaseType_t)length, (UBaseType_t)element_size, queue_static_storage,
                                         queue_static_context);
 #else
 int32_t env_create_queue(void **queue, int32_t length, int32_t element_size)
 {
+    if (length < 0 || element_size < 0)
+    {
+        /* Length and size should not be negative */
+        *queue = NULL;
+        return -1;
+    }
     *queue = xQueueCreate((UBaseType_t)length, (UBaseType_t)element_size);
 #endif
     if (*queue != ((void *)0))
@@ -832,12 +845,16 @@ int32_t env_get_queue(void *queue, void *msg, uintptr_t timeout_ms)
 
 int32_t env_get_current_queue_size(void *queue)
 {
+    UBaseType_t messages = 0;
+
     if (env_in_isr() != 0)
     {
-        return ((int32_t)uxQueueMessagesWaitingFromISR(queue));
+        messages = uxQueueMessagesWaitingFromISR(queue);
     }
     else
     {
-        return ((int32_t)uxQueueMessagesWaiting(queue));
+        messages = uxQueueMessagesWaiting(queue);
     }
+
+    return (messages > INT32_MAX) ? INT32_MAX : (int32_t)messages;
 }

@@ -52,10 +52,10 @@ void device_queue_free_pl (DEVICE_HANDLE    * hndl)
 void device_queue_full_pl(DEVICE_LINK_TYPE    link_type)
 {
 #if (defined BT_DUAL_MODE || defined CLASSIC_SEC_MANAGER)
-    UINT32 sm_index;
+    UINT32 sm_index = SM_MAX_DEVICES;
 #endif /* (defined BT_DUAL_MODE || defined CLASSIC_SEC_MANAGER) */
 
-    UCHAR  smp_index;
+    UCHAR  smp_index = SMP_MAX_DEVICES;
 
 #ifdef BT_DUAL_MODE
     API_RESULT retval;
@@ -99,13 +99,13 @@ void device_queue_full_pl(DEVICE_LINK_TYPE    link_type)
     {
         /* MISRA C-2012 Rule 15.7 */
     }
+#else
+    BT_IGNORE_UNUSED_PARAM(retval);
 #endif /* BT_LE */
 
 #else
     /* Ignore Parameter */
     BT_IGNORE_UNUSED_PARAM(link_type);
-    BT_IGNORE_UNUSED_PARAM(smp_index);
-
     /*
     * NOTE:
     *
@@ -122,6 +122,10 @@ void device_queue_full_pl(DEVICE_LINK_TYPE    link_type)
     sm_purge_device_list_pl(&sm_index);
 #endif /* CLASSIC_SEC_MANAGER */
 #endif /* BT_DUAL_MODE */
+#if (defined BT_DUAL_MODE || defined CLASSIC_SEC_MANAGER)
+    BT_IGNORE_UNUSED_PARAM(sm_index);
+#endif /* (defined BT_DUAL_MODE || defined CLASSIC_SEC_MANAGER) */
+    BT_IGNORE_UNUSED_PARAM(smp_index);
 }
 
 

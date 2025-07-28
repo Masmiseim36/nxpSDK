@@ -9,7 +9,7 @@
 *                                                                    *
 **********************************************************************
 
-** emWin V6.46 - Graphical user interface for embedded applications **
+** emWin V6.50 - Graphical user interface for embedded applications **
 All  Intellectual Property rights  in the Software belongs to  SEGGER.
 emWin is protected by  international copyright laws.  Knowledge of the
 source code may not be used to write a similar product.  This file may
@@ -143,11 +143,6 @@ extern "C" {     /* Make sure we have C-declarations in C++ programs */
 #ifndef   WRITE_MEM32P
   #define WRITE_MEM32P(p, Data)            LCD_WRITE_MEM32P(p, Data)
 #endif
-
-//
-// Private functions
-//
-#define LCD_DEVFUNC_SET_THRESHOLD (LCD_DEVFUNC_INIT_PRIVATE + 1)
 
 //
 // Set to 1 if FillRect should be used in DrawHLine and DrawVLine

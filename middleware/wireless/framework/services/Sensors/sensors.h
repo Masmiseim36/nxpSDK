@@ -1,7 +1,5 @@
 /*
- * Copyright 2021-2022, 2024 NXP
- * All rights reserved.
- *
+ * Copyright 2021-2022, 2024-2025 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -74,7 +72,8 @@ void SENSORS_Init(void);
 
 /*!
  * \brief Deinit sensor Module.
- *
+ * \note  The calling task should referesh the triggered measurement before deinitializing
+ *        the sensor module.
  */
 void SENSORS_Deinit(void);
 
@@ -89,9 +88,19 @@ void Sensors_SetLowpowerCriticalCb(const Sensors_LowpowerCriticalCBs_t *pfCallba
 
 /*!
  * \brief Trigger the ADC on the temperature.
- *
+ * \note  Triggering twice or triggering another type of measurement during an ongoing
+ *        one is unsupported and the new request will be ignored.
  */
 void SENSORS_TriggerTemperatureMeasurement(void);
+
+/*!
+ * \brief Trigger the ADC on the temperature. This an unsafe API, and MUST only be called
+          when the scheduler is stopped or when interrupts are masked.
+ * WARNING: Using this outside atomic sections is undefined behavior.
+ * \note  Usually used when exiting low power to trigger the measurement as early
+ *        as possible when interrupts are still masked, to optimize the active time
+ */
+void SENSORS_TriggerTemperatureMeasurementUnsafe(void);
 
 /*!
  * \brief Refresh temperature value in RAM.
@@ -110,7 +119,8 @@ int32_t SENSORS_GetTemperature(void);
 
 /*!
  * \brief Trigger the ADC on the battery.
- *
+ * \note  Triggering twice or triggering another type of measurement during an ongoing
+ *        one is unsupported and the new request will be ignored.
  */
 void SENSORS_TriggerBatteryMeasurement(void);
 

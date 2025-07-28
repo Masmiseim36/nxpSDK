@@ -47,6 +47,8 @@
 #ifndef STORAGE_IDLE_TASK_PRIORITY
 #if !defined(RW610_SERIES) && !defined(RW612_SERIES)
 #define STORAGE_IDLE_TASK_PRIORITY               (configMAX_PRIORITIES - 2)
+#elif (CONFIG_COEX_ENABLE_ZIGBEE)
+#define STORAGE_IDLE_TASK_PRIORITY               (OSA_TASK_PRIORITY_MIN - 4)
 #else
 #define STORAGE_IDLE_TASK_PRIORITY               (OSA_TASK_PRIORITY_MIN - 1)
 #endif

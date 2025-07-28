@@ -2512,7 +2512,7 @@ void smp_lesc_oob_handle_cmd_complete(UCHAR state, UCHAR * data, UINT16 datalen)
 
         case SMP_OOB_STATE_PUB_KEY_GEN:
             {
-                UCHAR * plain_text;
+                UCHAR * plain_text = NULL;
                 UINT16 plain_text_len = 0U;
 
                 if (SMP_OOB_PUBLIC_KEY_SIZE != datalen)
@@ -2540,28 +2540,29 @@ void smp_lesc_oob_handle_cmd_complete(UCHAR state, UCHAR * data, UINT16 datalen)
                 /* Allocate Plain Text Array for Plain Text Length Size */
                 plain_text = BT_alloc_mem(SMP_TBX_F4_PLAIN_TEXT_LEN);
 
-                /* Populate PlainText here */
-                BT_mem_set(&plain_text[plain_text_len],0x00,sizeof(UCHAR));
-                plain_text_len += sizeof(UCHAR);
-                BT_mem_copy(&plain_text[plain_text_len],smp_lesc_oob_data.pkey,SMP_OOB_PUBLIC_KEY_X_SIZE);
-                plain_text_len += SMP_OOB_PUBLIC_KEY_X_SIZE;
-                BT_mem_copy(&plain_text[plain_text_len],smp_lesc_oob_data.pkey,SMP_OOB_PUBLIC_KEY_X_SIZE);
-                plain_text_len += SMP_OOB_PUBLIC_KEY_X_SIZE;
+                if (NULL != plain_text)
+                {
+                    /* Populate PlainText here */
+                    BT_mem_set(&plain_text[plain_text_len], 0x00, sizeof(UCHAR));
+                    plain_text_len += sizeof(UCHAR);
+                    BT_mem_copy(&plain_text[plain_text_len], smp_lesc_oob_data.pkey, SMP_OOB_PUBLIC_KEY_X_SIZE);
+                    plain_text_len += SMP_OOB_PUBLIC_KEY_X_SIZE;
+                    BT_mem_copy(&plain_text[plain_text_len], smp_lesc_oob_data.pkey, SMP_OOB_PUBLIC_KEY_X_SIZE);
+                    plain_text_len += SMP_OOB_PUBLIC_KEY_X_SIZE;
 
-                /* Call the G2 Security function */
-                (BT_IGNORE_RETURN_VALUE) smp_tbx_128_aes_cmac
-                (
-                    AES_CMAC_MAC_GENERATE,
-                    SMP_AES_CMAC_LESC_CONF_VAL_GEN_OP,
-                    plain_text,
-                    plain_text_len,
-                    smp_lesc_oob_data.rand,
-                    SMP_AES_CMAC_MAC_SIZE,
-                    smp_lesc_oob_data.cnf_val,
-                    smp_lesc_oob_cnf_val_gen_complete,
-                    (UCHAR)SMP_TRUE,
-                    (UCHAR)SMP_FALSE
-                );
+                    /* Call the G2 Security function */
+                    (BT_IGNORE_RETURN_VALUE) smp_tbx_128_aes_cmac(
+                        AES_CMAC_MAC_GENERATE,
+                        SMP_AES_CMAC_LESC_CONF_VAL_GEN_OP,
+                        plain_text,
+                        plain_text_len,
+                        smp_lesc_oob_data.rand,
+                        SMP_AES_CMAC_MAC_SIZE,
+                        smp_lesc_oob_data.cnf_val,
+                        smp_lesc_oob_cnf_val_gen_complete,
+                        (UCHAR)SMP_TRUE,
+                        (UCHAR)SMP_FALSE);
+                }
             }
             break;
 
@@ -2607,6 +2608,9 @@ API_RESULT BT_smp_get_lk_ltk_pl
 
     /* Init */
     retval = API_SUCCESS;
+
+    /* Lock */
+    smp_lock();
 
     if (SMP_LESC_LK_LTK_IDLE != SMP_LESC_LK_LTK_GET_STATE(&smp_lesc_txp_keys))
     {
@@ -2751,12 +2755,18 @@ API_RESULT BT_smp_get_lk_ltk_pl
         }
     }
 
+    /* Unlock */
+    smp_unlock();
+
     return retval;
 }
 
 void smp_lesc_lk_ltk_complete (void)
 {
     UCHAR switch_state;
+
+    /* Lock */
+    smp_lock();
 
     switch_state = SMP_LESC_LK_LTK_GET_STATE(&smp_lesc_txp_keys);
 
@@ -2830,8 +2840,14 @@ void smp_lesc_lk_ltk_complete (void)
                 /* Change state to Link Key Generation */
                 SMP_LESC_LK_LTK_SET_STATE(&smp_lesc_txp_keys,SMP_LESC_LK_LTK_IDLE);
 
+                /* Unlock */
+                smp_unlock();
+
                 /* Print the output as LK- TODO post to appl thru Callback */
                 smp_lesc_lk_ltk_gen_handler(&smp_lesc_txp_keys);
+
+                /* Lock */
+                smp_lock();
             }
             break;
 
@@ -2839,6 +2855,9 @@ void smp_lesc_lk_ltk_complete (void)
             SMP_TRC("Invalid State\n");
             break;
     }
+
+    /* Unlock */
+    smp_unlock();
 }
 #endif /* SMP_LESC_CROSS_TXP_KEY_GEN */
 #endif /* SMP_LESC */

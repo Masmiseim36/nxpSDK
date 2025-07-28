@@ -105,7 +105,7 @@ status_t APP_ControlCallback_notify(pm_event_type_t eventType, uint8_t powerStat
     return kStatus_Success;
 }
 
-static void pint_intr_callback(pint_pin_int_t pintr, uint32_t pmatch_status)
+static void pint_intr_callback(pint_pin_int_t pintr, pint_status_t *status)
 {
     pintFlag = true;
 }
@@ -125,7 +125,8 @@ void APP_InitWakeupSource(void)
 
     /* Configure the interrupt for SW pin. */
     PINT_Init(PINT);
-    PINT_PinInterruptConfig(PINT, kPINT_PinInt0, kPINT_PinIntEnableFallEdge, pint_intr_callback);
+    PINT_PinInterruptConfig(PINT, kPINT_PinInt0, kPINT_PinIntEnableFallEdge);
+    PINT_SetCallback(PINT, pint_intr_callback);
 
     PM_InitWakeupSource(&g_UserkeyWakeupSource1, (uint32_t)PIN_INT1_IRQn, NULL, true);
     gpio_pin_config_t gpioPinConfigStruct1;
@@ -135,7 +136,8 @@ void APP_InitWakeupSource(void)
     INPUTMUX_AttachSignal(INPUTMUX, kPINT_PinInt1, APP_USER_WAKEUP_KEY1_INPUTMUX_SEL); /* Using channel 0. */
     INPUTMUX_Deinit(INPUTMUX); /* Turnoff clock to inputmux to save power. Clock is only needed to make changes */
 
-    PINT_PinInterruptConfig(PINT, kPINT_PinInt1, kPINT_PinIntEnableFallEdge, pint_intr_callback);
+    PINT_PinInterruptConfig(PINT, kPINT_PinInt1, kPINT_PinIntEnableFallEdge);
+    PINT_SetCallback(PINT, pint_intr_callback);
     PINT_EnableCallback(PINT); /* Enable callbacks for PINT */
 }
 

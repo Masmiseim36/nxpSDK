@@ -268,7 +268,7 @@ static RdspStatus VoiceSeeker_Initialize(voice_seeker_t *d)
         vsl_config.mic_xyz_mm[3][2] = 0.0f;   // Z
     }
 #else
-#if (DEVICE_ID_VS == Device_IMXRT500_FusionF1)
+#if (DEVICE_ID_VS == Device_IMXRT500_FUSIONF1)
     /* MIMXRT595-EVK */
 
     // MIC0 (U120)

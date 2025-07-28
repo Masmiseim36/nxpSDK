@@ -6,12 +6,13 @@ message("${CMAKE_CURRENT_LIST_FILE} component is included.")
       target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
           ${CMAKE_CURRENT_LIST_DIR}/platform/ext/common/uart_stdout.c
           ${CMAKE_CURRENT_LIST_DIR}/platform/ext/target/nxp/common/libc_dummy.c
+          ${CMAKE_CURRENT_LIST_DIR}/platform/ext/target/nxp/common/tfm_hal_ns_init.c
           ${CMAKE_CURRENT_LIST_DIR}/interface/src/tfm_crypto_api.c
           ${CMAKE_CURRENT_LIST_DIR}/interface/src/tfm_attest_api.c
           ${CMAKE_CURRENT_LIST_DIR}/interface/src/tfm_its_api.c
           ${CMAKE_CURRENT_LIST_DIR}/interface/src/tfm_ps_api.c
           ${CMAKE_CURRENT_LIST_DIR}/interface/src/tfm_platform_api.c
-          ${CMAKE_CURRENT_LIST_DIR}/interface/src/tfm_psa_ns_api.c
+          ${CMAKE_CURRENT_LIST_DIR}/interface/src/tfm_tz_psa_ns_api.c
         )
 
   

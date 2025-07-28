@@ -31,4 +31,5 @@ The system exited from stop mode!
 - [FRDM-KE16Z](../../../_boards/frdmke16z/driver_examples/acmp/round_robin/example_board_readme.md)
 - [FRDM-KE17Z](../../../_boards/frdmke17z/driver_examples/acmp/round_robin/example_board_readme.md)
 - [FRDM-KE17Z512](../../../_boards/frdmke17z512/driver_examples/acmp/round_robin/example_board_readme.md)
+- [FRDM-MCXE247](../../../_boards/frdmmcxe247/driver_examples/acmp/round_robin/example_board_readme.md)
 - [MIMXRT685-AUD-EVK](../../../_boards/mimxrt685audevk/driver_examples/acmp/round_robin/example_board_readme.md)

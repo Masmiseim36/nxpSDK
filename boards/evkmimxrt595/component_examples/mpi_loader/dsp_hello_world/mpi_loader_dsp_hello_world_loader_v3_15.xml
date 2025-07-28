@@ -49,6 +49,9 @@
     </memory>
     <toolchainSettings>
       <toolchainSetting id_refs="com.nxp.mcuxpresso">
+        <buildSteps>
+          <postBuildStep>arm-none-eabi-size "${BuildArtifactFileName}";arm-none-eabi-objcopy -v -O binary "${BuildArtifactFileName}" "sdk20-app.bin";checksum -p ${TargetChip} -d "sdk20-app.bin"</postBuildStep>
+        </buildSteps>
         <option id="gnu.c.compiler.option.preprocessor.def.symbols" type="stringList">
           <value>MCUXPRESSO_SDK</value>
           <value>CPU_MIMXRT595SFFOC_cm33</value>
@@ -56,6 +59,7 @@
           <value>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</value>
           <value>SDK_DEBUGCONSOLE=1</value>
           <value>MCUX_META_BUILD</value>
+          <value>MIMXRT595S_cm33_SERIES</value>
           <value>SDK_I2C_BASED_COMPONENT_USED=1</value>
         </option>
         <option id="com.crt.advproject.gas.fpu" type="enum">
@@ -131,12 +135,8 @@
       <files mask="CMakeLists.txt"/>
       <files mask="flags.cmake"/>
       <files mask="config.cmake"/>
-      <files mask="build_debug.bat"/>
-      <files mask="build_debug.sh"/>
       <files mask="build_flash_debug.bat"/>
       <files mask="build_flash_debug.sh"/>
-      <files mask="build_release.bat"/>
-      <files mask="build_release.sh"/>
       <files mask="build_flash_release.bat"/>
       <files mask="build_flash_release.sh"/>
     </source>
@@ -157,15 +157,12 @@
       <files mask="dsp_config.h"/>
     </source>
     <source path="iar" project_relative_path="MIMXRT595S/iar" type="linker" toolchain="iar">
-      <files mask="MIMXRT595Sxxxx_cm33_ram.icf"/>
       <files mask="MIMXRT595Sxxxx_cm33_flash.icf"/>
     </source>
     <source path="mdk" project_relative_path="MIMXRT595S/mdk" type="linker" toolchain="mdk">
-      <files mask="MIMXRT595Sxxxx_cm33_ram.scf"/>
       <files mask="MIMXRT595Sxxxx_cm33_flash.scf"/>
     </source>
     <source path="armgcc" project_relative_path="MIMXRT595S/armgcc" type="linker" toolchain="armgcc">
-      <files mask="MIMXRT595Sxxxx_cm33_ram.ld"/>
       <files mask="MIMXRT595Sxxxx_cm33_flash.ld"/>
     </source>
     <source path="." project_relative_path="board" type="c_include">
@@ -204,6 +201,9 @@
     </source>
     <source path="." project_relative_path="doc" type="doc">
       <files mask="example_board_readme.md"/>
+    </source>
+    <source path="." project_relative_path="doc" type="doc">
+      <files mask="examples_shared_readme.md"/>
     </source>
   </example>
 </ksdk:examples>

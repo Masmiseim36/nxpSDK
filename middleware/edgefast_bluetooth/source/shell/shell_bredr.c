@@ -60,8 +60,8 @@ static int cmd_auth_pincode(const struct shell *sh,
 	struct bt_conn *conn;
 	uint8_t max = 16U;
 
-	if (default_conn) {
-		conn = default_conn;
+	if (default_br_conn) {
+		conn = default_br_conn;
 	} else if (pairing_conn) {
 		conn = pairing_conn;
 	} else {
@@ -109,6 +109,61 @@ static int cmd_connect(const struct shell *sh, size_t argc, char *argv[])
 		/* unref connection obj in advance as app user */
 		bt_conn_unref(conn);
 	}
+
+	return 0;
+}
+
+static int cmd_disconnect(const struct shell *sh, size_t argc, char *argv[])
+{
+	struct bt_conn *conn;
+	int err;
+
+	if (default_br_conn && argc < 3) {
+		conn = bt_conn_ref(default_br_conn);
+	} else {
+		shell_error(sh, "No default connection");
+		return 0;
+	}
+
+	err = bt_conn_disconnect(conn, BT_HCI_ERR_REMOTE_USER_TERM_CONN);
+	if (err) {
+		shell_error(sh, "Disconnection failed (err %d)", err);
+		return err;
+	}
+
+	bt_conn_unref(conn);
+
+	return 0;
+}
+
+static int cmd_select(const struct shell *sh, size_t argc, char *argv[])
+{
+	char addr_str[BT_ADDR_STR_LEN];
+	struct bt_conn *conn;
+	bt_addr_t addr;
+	int err;
+
+	memset(&addr, 0, sizeof(addr));
+	err = bt_addr_from_str(argv[1], &addr);
+	if (err < 0) {
+		shell_error(sh, "Invalid peer address (err %d)", err);
+		return err;
+	}
+
+	conn = bt_conn_lookup_addr_br(&addr);
+	if (!conn) {
+		shell_error(sh, "No matching connection found");
+		return -ENOEXEC;
+	}
+
+	if (default_br_conn) {
+		bt_conn_unref(default_br_conn);
+	}
+
+	default_br_conn = conn;
+
+	bt_addr_to_str(&addr, addr_str, sizeof(addr_str));
+	shell_print(sh, "Selected conn is now: %s", addr_str);
 
 	return 0;
 }
@@ -801,7 +856,7 @@ static int cmd_sdp_find_record(const struct shell *sh,
 	int res;
 	const char *action;
 
-	if (!default_conn) {
+	if (!default_br_conn) {
 		shell_print(sh, "Not connected");
 		return 0;
 	}
@@ -821,7 +876,7 @@ static int cmd_sdp_find_record(const struct shell *sh,
 
 	shell_print(sh, "SDP UUID \'%s\' gets applied", action);
 
-	res = bt_sdp_discover(default_conn, &discov);
+	res = bt_sdp_discover(default_br_conn, &discov);
 	if (res) {
 		shell_error(sh, "SDP discovery failed: result %d", res);
 		return -ENOEXEC;
@@ -838,7 +893,7 @@ static int cmd_l2cap_connect(const struct shell *sh, size_t argc, char *argv[])
 	uint16_t psm;
 	int err;
 
-	if (!default_conn) {
+	if (!default_br_conn) {
 		shell_error(sh, "Not connected");
 		return -EINVAL;
 	}
@@ -864,7 +919,7 @@ static int cmd_l2cap_connect(const struct shell *sh, size_t argc, char *argv[])
             br_l2cap_channel->ch.chan.ops = &l2cap_mode_ops;
         }
 #endif
-	err = bt_l2cap_chan_connect(default_conn, &br_l2cap_channel->ch.chan, psm);
+	err = bt_l2cap_chan_connect(default_br_conn, &br_l2cap_channel->ch.chan, psm);
 	if (err < 0) {
 		shell_error(sh, "Unable to connect to psm %u (err %d)", psm,
 			    err);
@@ -881,7 +936,7 @@ static int cmd_l2cap_disconnect(const struct shell *sh, size_t argc, char *argv[
 	struct br_l2ch *br_l2cap_channel;
 	int err;
 
-	br_l2cap_channel = l2cap_channel_lookup_conn(default_conn);
+	br_l2cap_channel = l2cap_channel_lookup_conn(default_br_conn);
 	if (NULL == br_l2cap_channel) {
 		shell_error(sh, "Channel is not found");
 		return -EINVAL;
@@ -930,12 +985,12 @@ static int cmd_ecred_reconfigure(const struct shell *sh, size_t argc, char *argv
 	uint16_t mtu;
 	int err = 0;
 
-	if (!default_conn) {
+	if (!default_br_conn) {
 		shell_error(sh, "Not connected");
 		return -ENOEXEC;
 	}
 
-	br_l2cap_channel = l2cap_channel_lookup_conn(default_conn);
+	br_l2cap_channel = l2cap_channel_lookup_conn(default_br_conn);
 	if (NULL == br_l2cap_channel) {
 		shell_error(sh, "Not connected");
 		return -EINVAL;
@@ -967,7 +1022,7 @@ static int cmd_ecred_connect(const struct shell *sh, size_t argc, char *argv[])
 	uint16_t psm;
 	int err = 0;
 
-	if (!default_conn) {
+	if (!default_br_conn) {
 		shell_error(sh, "Not connected");
 
 		return -ENOEXEC;
@@ -1002,7 +1057,7 @@ static int cmd_ecred_connect(const struct shell *sh, size_t argc, char *argv[])
 		br_l2cap_channel->ch.required_sec_level = (bt_security_t)sec;
 	}
 
-	err = bt_l2cap_ecred_chan_connect(default_conn, l2cap_ecred_chans, psm);
+	err = bt_l2cap_ecred_chan_connect(default_br_conn, l2cap_ecred_chans, psm);
 	if (err < 0) {
 		shell_error(sh, "Unable to connect to psm %u (err %d)", psm,
 			    err);
@@ -1026,7 +1081,7 @@ static int cmd_l2cap_send(const struct shell *sh, size_t argc, char *argv[])
 		count = strtoul(argv[1], NULL, 10);
 	}
 
-	br_l2cap_channel = l2cap_channel_lookup_conn(default_conn);
+	br_l2cap_channel = l2cap_channel_lookup_conn(default_br_conn);
 	if (NULL == br_l2cap_channel) {
 		shell_error(sh, "Channel is not found");
 		return -EINVAL;
@@ -1134,12 +1189,93 @@ static int cmd_discovery_cb(const struct shell *sh, size_t argc, char *argv[])
 	return 0;
 }
 
+static int cmd_switch_role(const struct shell *sh, size_t argc, char *argv[])
+{
+	struct net_buf *buf = NULL;
+	struct bt_hci_cp_switch_role *cp;
+	struct bt_conn_info info;
+	const char *action;
+	int err;
+	uint8_t role;
+
+	if (!default_br_conn) {
+		shell_error(sh, "No br connected");
+		return -ENOEXEC;
+	}
+
+	err = bt_conn_get_info(default_br_conn, &info);
+	if (err) {
+		shell_print(ctx_shell, "Failed to get info");
+		return 0;
+	}
+
+	action = argv[1];
+	if (!strcmp(action, "0")) {
+		role = 0;
+	} else if (!strcmp(action, "1")) {
+		role = 1;
+	} else {
+		shell_help(sh);
+		return 0;
+	}
+
+	buf = bt_hci_cmd_create(BT_HCI_OP_SWITCH_ROLE, sizeof(*cp));
+	if (buf != NULL)
+	{
+		cp = net_buf_add(buf, sizeof(*cp));
+		memcpy(&cp->bdaddr, &info.br.dst->val[0], sizeof(cp->bdaddr));
+		/* 0 - Change own Role to Central for this BD_ADDR. */
+		/* 1 - Change own Role to Peripheral for this BD_ADDR. */
+		cp->role = role;
+		err = bt_hci_cmd_send_sync(BT_HCI_OP_SWITCH_ROLE, buf, NULL);
+		PRINTF("Switch role for br/edr connection, err %d\r\n", err);
+	}
+	else
+	{
+		PRINTF("Switch role cmd create fail\r\n");
+	}
+
+	return 0;
+}
+
+static const char *get_conn_role_str(uint8_t role)
+{
+	switch (role) {
+	case BT_CONN_ROLE_CENTRAL: return "central";
+	case BT_CONN_ROLE_PERIPHERAL: return "peripheral";
+	default: return "Invalid";
+	}
+}
+
+static int cmd_get_role(const struct shell *sh, size_t argc, char *argv[])
+{
+	struct bt_conn_info info;
+	int err;
+
+	if (!default_br_conn) {
+		shell_error(sh, "No br connected");
+		return -ENOEXEC;
+	}
+
+	err = bt_conn_get_info(default_br_conn, &info);
+	if (err) {
+		shell_print(ctx_shell, "Failed to get info");
+		return 0;
+	}
+
+	shell_print(ctx_shell, "Role: %s", get_conn_role_str(info.role));
+
+	return 0;
+}
+
 #define HELP_NONE "[none]"
 #define HELP_ADDR_LE "<address: XX:XX:XX:XX:XX:XX> <type: (public|random)>"
 
 SHELL_STATIC_SUBCMD_SET_CREATE(br_cmds,
 	SHELL_CMD_ARG(auth-pincode, NULL, "<pincode>", cmd_auth_pincode, 2, 0),
 	SHELL_CMD_ARG(connect, NULL, "<address>", cmd_connect, 2, 0),
+	SHELL_CMD_ARG(disconnect, NULL, HELP_ADDR_LE, cmd_disconnect, 1, 2),
+	SHELL_CMD_ARG(select, NULL, HELP_ADDR_LE, cmd_select, 2, 0),
 	SHELL_CMD_ARG(discovery, NULL,
 		      "<value: on, off> [length: 1-48] [mode: limited]",
 		      cmd_discovery, 2, 2),
@@ -1164,6 +1300,8 @@ SHELL_STATIC_SUBCMD_SET_CREATE(br_cmds,
 	SHELL_CMD_ARG(pscan, NULL, "<value: on, off>", cmd_connectable, 2, 0),
 	SHELL_CMD_ARG(sdp-find, NULL, "<HFPAG/A2SRC/PBAP_PCE>", cmd_sdp_find_record, 2, 0),
 	SHELL_CMD_ARG(discovery-cb-register, NULL, "<value: on, off>", cmd_discovery_cb, 2, 0),
+	SHELL_CMD_ARG(switch-role, NULL, "<value: 0 - central, 1 - peripheral", cmd_switch_role, 2, 0),
+	SHELL_CMD_ARG(get-role, NULL, HELP_NONE, cmd_get_role, 1, 0),
 	SHELL_SUBCMD_SET_END
 );
 
@@ -1190,4 +1328,133 @@ void bt_ShellBrEdrInit(shell_handle_t shell)
         shell_print(shell, "Shell register command %s failed!", g_shellCommandbr.pcCommand);
     }
 }
+
+#if (defined(CONFIG_BT_CLASSIC) && (CONFIG_BT_CLASSIC > 0))
+void auth_pincode_entry(struct bt_conn *conn, bool highsec)
+{
+	char addr[BT_ADDR_STR_LEN];
+	struct bt_conn_info info;
+
+	if (bt_conn_get_info(conn, &info) < 0) {
+		return;
+	}
+
+	if (info.type != BT_CONN_TYPE_BR) {
+		return;
+	}
+
+	bt_addr_to_str(info.br.dst, addr, sizeof(addr));
+
+	if (highsec) {
+		shell_print(ctx_shell, "Enter 16 digits wide PIN code for %s",
+			    addr);
+	} else {
+		shell_print(ctx_shell, "Enter PIN code for %s", addr);
+	}
+
+	/*
+	 * Save connection info since in security mode 3 (link level enforced
+	 * security) PIN request callback is called before connected callback
+	 */
+	if (!default_br_conn && !pairing_conn) {
+		pairing_conn = bt_conn_ref(conn);
+	}
+}
+#endif
+
+static void connected(struct bt_conn *conn, uint8_t err)
+{
+	char addr[BT_ADDR_LE_STR_LEN];
+	struct bt_conn_info info;
+	int info_err;
+
+	if (err) {
+		return;
+	}
+
+	conn_addr_str(conn, addr, sizeof(addr));
+
+	info_err = bt_conn_get_info(conn, &info);
+	if (info_err != 0) {
+		shell_error(ctx_shell, "Failed to connection information: %d", info_err);
+		return;
+	}
+
+	if (info.type != BT_CONN_TYPE_BR) {
+		return;
+	}
+
+	shell_print(ctx_shell, "BR Connected: %s", addr);
+
+	if (info.role == BT_CONN_ROLE_CENTRAL) {
+		if (default_br_conn != NULL) {
+			bt_conn_unref(default_br_conn);
+		}
+
+		default_br_conn = bt_conn_ref(conn);
+	} else if (info.role == BT_CONN_ROLE_PERIPHERAL) {
+		if (default_br_conn == NULL) {
+			default_br_conn = bt_conn_ref(conn);
+		}
+	} else {
+	}
+}
+
+static void disconnected_set_new_default_conn_cb(struct bt_conn *conn, void *user_data)
+{
+	struct bt_conn_info info;
+
+	if (default_br_conn != NULL) {
+		/* nop */
+		return;
+	}
+
+	if (bt_conn_get_info(conn, &info) != 0) {
+		shell_error(ctx_shell, "Unable to get info: conn %p", conn);
+		return;
+	}
+
+	if (info.state == BT_CONN_STATE_CONNECTED) {
+		char addr_str[BT_ADDR_STR_LEN];
+
+		default_br_conn = bt_conn_ref(conn);
+
+		bt_addr_to_str(info.br.dst, addr_str, sizeof(addr_str));
+		shell_print(ctx_shell, "Selected BR conn is now: %s", addr_str);
+	}
+}
+
+static void disconnected(struct bt_conn *conn, uint8_t reason)
+{
+	char addr[BT_ADDR_LE_STR_LEN];
+	struct bt_conn_info info;
+
+	if (bt_conn_get_info(conn, &info) != 0) {
+		shell_error(ctx_shell, "Unable to get info: conn %p", conn);
+	} else {
+		if (info.type != BT_CONN_TYPE_BR) {
+			return;
+		}
+	}
+
+	conn_addr_str(conn, addr, sizeof(addr));
+	shell_print(ctx_shell, "Disconnected: %s (reason 0x%02x)", addr, reason);
+
+	if (default_br_conn == conn) {
+		bt_conn_unref(default_br_conn);
+		default_br_conn = NULL;
+
+		/* If we are connected to other devices, set one of them as default */
+		bt_conn_foreach(BT_CONN_TYPE_BR, disconnected_set_new_default_conn_cb, NULL);
+	}
+	else
+	{
+	}
+}
+
+struct bt_conn_cb br_conn_callbacks = {
+	.connected = connected,
+	.disconnected = disconnected,
+};
+
 #endif /* CONFIG_BT_CLASSIC */

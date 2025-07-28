@@ -48,6 +48,7 @@ Main routine:
 ## Supported Boards
 - [EVK-MIMXRT595](../../../../../_boards/evkmimxrt595/driver_examples/spi/dma_b2b_transfer/master/example_board_readme.md)
 - [EVK-MIMXRT685](../../../../../_boards/evkmimxrt685/driver_examples/spi/dma_b2b_transfer/master/example_board_readme.md)
+- [FRDM-MCXW23](../../../../../_boards/frdmmcxw23/driver_examples/spi/dma_b2b_transfer/master/example_board_readme.md)
 - [FRDM-RW612](../../../../../_boards/frdmrw612/driver_examples/spi/dma_b2b_transfer/master/example_board_readme.md)
 - [LPCXpresso54628](../../../../../_boards/lpcxpresso54628/driver_examples/spi/dma_b2b_transfer/master/example_board_readme.md)
 - [LPCXpresso55S06](../../../../../_boards/lpcxpresso55s06/driver_examples/spi/dma_b2b_transfer/master/example_board_readme.md)
@@ -57,3 +58,4 @@ Main routine:
 - [LPCXpresso55S69](../../../../../_boards/lpcxpresso55s69/driver_examples/spi/dma_b2b_transfer/master/example_board_readme.md)
 - [MIMXRT685-AUD-EVK](../../../../../_boards/mimxrt685audevk/driver_examples/spi/dma_b2b_transfer/master/example_board_readme.md)
 - [RD-RW612-BGA](../../../../../_boards/rdrw612bga/driver_examples/spi/dma_b2b_transfer/master/example_board_readme.md)
+- [MCXW23-EVK](../../../../../_boards/mcxw23evk/driver_examples/spi/dma_b2b_transfer/master/example_board_readme.md)

@@ -24,6 +24,7 @@
 
 /*
  * Copyright (c) 2015 Verisure Innovation AB
+ * Copyright 2025 NXP
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
@@ -1730,6 +1731,54 @@ mdns_handle_tc_question(void *arg)
 }
 
 /**
+ * Stops timeouts which handle truncated question MDNS packets
+ * for the given netif and deallocates them and its associated pbufs
+ *
+ * @param netif   network interface on which packets were received
+ */
+static void
+mdns_stop_tc_question_timeouts(struct netif *netif)
+{
+  u8_t if_idx = netif_get_index(netif);
+  struct mdns_packet *pkt = pending_tc_questions;
+  struct mdns_packet *prev = NULL;
+
+  while (pkt != NULL) {
+    if (pkt->pbuf->if_idx == if_idx) {
+      /* cancel timeout for this question */
+      sys_untimeout(mdns_handle_tc_question, pkt);
+
+      /* remove from pending list */
+      if (prev == NULL) {
+        pending_tc_questions = pkt->next_tc_question;
+      } else {
+        prev->next_tc_question = pkt->next_tc_question;
+      }
+
+      /* free linked answers */
+      while (pkt->next_answer) {
+        struct mdns_packet *ans = pkt->next_answer;
+        pkt->next_answer = ans->next_answer;
+        pbuf_free(ans->pbuf);
+        LWIP_MEMPOOL_FREE(MDNS_PKTS, ans);
+      }
+
+      /* advance to next question */
+      struct mdns_packet *tmp = pkt;
+      pkt = pkt->next_tc_question;
+
+      /* free this question */
+      pbuf_free(tmp->pbuf);
+      LWIP_MEMPOOL_FREE(MDNS_PKTS, tmp);
+    } else {
+      /* advance to next question */
+      prev = pkt;
+      pkt = pkt->next_tc_question;
+    }
+  }
+}
+
+/**
  * Save time when a probe conflict occurs:
  *  - Check if we exceeded the maximum of 15 conflicts in 10seconds.
  *
@@ -2436,6 +2485,19 @@ mdns_resp_remove_netif(struct netif *netif)
   LWIP_ASSERT("mdns_resp_remove_netif: Null pointer", netif);
   mdns = NETIF_TO_HOST(netif);
   LWIP_ERROR("mdns_resp_remove_netif: Not an active netif", (mdns != NULL), return ERR_VAL);
+
+#if LWIP_IPV4
+  mdns_stop_multicast_timeouts_ipv4(netif);
+  mdns_stop_timeout(netif, mdns_send_unicast_msg_delayed_ipv4, &mdns->ipv4.unicast_msg_in_use);
+  mdns_stop_timeout(netif, mdns_send_multicast_msg_delayed_ipv4, &mdns->ipv4.multicast_msg_waiting);
+#endif
+#if LWIP_IPV6
+  mdns_stop_multicast_timeouts_ipv6(netif);
+  mdns_stop_timeout(netif, mdns_send_unicast_msg_delayed_ipv6, &mdns->ipv6.unicast_msg_in_use);
+  mdns_stop_timeout(netif, mdns_send_multicast_msg_delayed_ipv6, &mdns->ipv6.multicast_msg_waiting);
+#endif
+
+  mdns_stop_tc_question_timeouts(netif);
 
   sys_untimeout(mdns_probe_and_announce, netif);
 

@@ -22,6 +22,7 @@ In State 0, there is only PWM0 output, in State 1, there are both PWM0 and PWM1 
 - [EVK-MIMXRT595](../../../_boards/evkmimxrt595/driver_examples/sctimer/multi_state_pwm/example_board_readme.md)
 - [EVK-MIMXRT685](../../../_boards/evkmimxrt685/driver_examples/sctimer/multi_state_pwm/example_board_readme.md)
 - [FRDM-MCXN947](../../../_boards/frdmmcxn947/driver_examples/sctimer/multi_state_pwm/example_board_readme.md)
+- [FRDM-MCXW23](../../../_boards/frdmmcxw23/driver_examples/sctimer/multi_state_pwm/example_board_readme.md)
 - [FRDM-RW612](../../../_boards/frdmrw612/driver_examples/sctimer/multi_state_pwm/example_board_readme.md)
 - [LPC845BREAKOUT](../../../_boards/lpc845breakout/driver_examples/sctimer/multi_state_pwm/example_board_readme.md)
 - [LPCXpresso51U68](../../../_boards/lpcxpresso51u68/driver_examples/sctimer/multi_state_pwm/example_board_readme.md)
@@ -39,3 +40,4 @@ In State 0, there is only PWM0 output, in State 1, there are both PWM0 and PWM1 
 - [MCX-N9XX-EVK](../../../_boards/mcxn9xxevk/driver_examples/sctimer/multi_state_pwm/example_board_readme.md)
 - [MIMXRT685-AUD-EVK](../../../_boards/mimxrt685audevk/driver_examples/sctimer/multi_state_pwm/example_board_readme.md)
 - [RD-RW612-BGA](../../../_boards/rdrw612bga/driver_examples/sctimer/multi_state_pwm/example_board_readme.md)
+- [MCXW23-EVK](../../../_boards/mcxw23evk/driver_examples/sctimer/multi_state_pwm/example_board_readme.md)

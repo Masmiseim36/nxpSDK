@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2007-2015 Freescale Semiconductor, Inc.
- * Copyright 2018-2022, 2024 NXP
+ * Copyright 2018-2022, 2024-2025 NXP
  *
  * License: NXP LA_OPT_Online Code Hosting NXP_Software_License
  *
@@ -83,6 +83,9 @@ FMSTR_INLINE void _FMSTR_CopyMaskedDstAligned_U64(FMSTR_LP_U64 dest, FMSTR_LP_U8
     _FMSTR_CopyDstAligned_U64(&m, mask);
 
     x = *dest;
+
+    /* Coverity: Intentional bit-wise operation on unsigned types. */
+    /* coverity[cert_int31_c_violation:FALSE] */
     x = (x & ~m) | (v & m);
 
     *dest = x;
@@ -138,6 +141,9 @@ FMSTR_INLINE void _FMSTR_CopyMaskedDstAligned_U32(FMSTR_LP_U32 dest, FMSTR_LP_U8
     _FMSTR_CopyDstAligned_U32(&m, mask);
 
     x = *dest;
+
+    /* Coverity: Intentional bit-wise operation on unsigned types. */
+    /* coverity[cert_int31_c_violation:FALSE] */
     x = (x & ~m) | (v & m);
 
     *dest = x;
@@ -189,6 +195,9 @@ FMSTR_INLINE void _FMSTR_CopyMaskedDstAligned_U16(FMSTR_LP_U16 dest, FMSTR_LP_U8
     _FMSTR_CopyDstAligned_U16(&m, mask);
 
     x = *dest;
+
+    /* Coverity: Intentional bit-wise operation on unsigned types. */
+    /* coverity[cert_int31_c_violation:FALSE] */
     x = (x & ~m) | (v & m);
 
     *dest = x;
@@ -212,6 +221,9 @@ static void _FMSTR_MemCpyDstAligned(FMSTR_ADDR dest, FMSTR_ADDR src, FMSTR_SIZE 
         while (size >= sizeof(FMSTR_U64))
         {
             _FMSTR_CopyDstAligned_U64(d64, src8);
+            
+            /* Coverity: The size cannot underflow, guarded by the while condition */
+            /* coverity[overflow_const:FALSE] */
             size -= sizeof(FMSTR_U64);
             src8 += sizeof(FMSTR_U64);
             d64++;
@@ -228,6 +240,9 @@ static void _FMSTR_MemCpyDstAligned(FMSTR_ADDR dest, FMSTR_ADDR src, FMSTR_SIZE 
         while (size >= sizeof(FMSTR_U32))
         {
             _FMSTR_CopyDstAligned_U32(d32, src8);
+            
+            /* Coverity: The size cannot underflow, guarded by the while condition */
+            /* coverity[overflow_const:FALSE] */
             size -= sizeof(FMSTR_U32);
             src8 += sizeof(FMSTR_U32);
             d32++;
@@ -244,6 +259,9 @@ static void _FMSTR_MemCpyDstAligned(FMSTR_ADDR dest, FMSTR_ADDR src, FMSTR_SIZE 
         while (size >= sizeof(FMSTR_U16))
         {
             _FMSTR_CopyDstAligned_U16(d16, src8);
+            
+            /* Coverity: The size cannot underflow, guarded by the while condition */
+            /* coverity[overflow_const:FALSE] */
             size -= sizeof(FMSTR_U16);
             src8 += sizeof(FMSTR_U16);
             d16++;
@@ -279,6 +297,9 @@ static void _FMSTR_MemCpySrcAligned(FMSTR_ADDR dest, FMSTR_ADDR src, FMSTR_SIZE 
         while (size >= sizeof(FMSTR_U64))
         {
             _FMSTR_CopySrcAligned_U64(dest8, s64);
+            
+            /* Coverity: The size cannot underflow, guarded by the while condition */
+            /* coverity[overflow_const:FALSE] */
             size -= sizeof(FMSTR_U64);
             dest8 += sizeof(FMSTR_U64);
             s64++;
@@ -295,6 +316,9 @@ static void _FMSTR_MemCpySrcAligned(FMSTR_ADDR dest, FMSTR_ADDR src, FMSTR_SIZE 
         while (size >= sizeof(FMSTR_U32))
         {
             _FMSTR_CopySrcAligned_U32(dest8, s32);
+            
+            /* Coverity: The size cannot underflow, guarded by the while condition */
+            /* coverity[overflow_const:FALSE] */
             size -= sizeof(FMSTR_U32);
             dest8 += sizeof(FMSTR_U32);
             s32++;
@@ -311,6 +335,9 @@ static void _FMSTR_MemCpySrcAligned(FMSTR_ADDR dest, FMSTR_ADDR src, FMSTR_SIZE 
         while (size >= sizeof(FMSTR_U16))
         {
             _FMSTR_CopySrcAligned_U16(dest8, s16);
+
+            /* Coverity: The size cannot underflow, guarded by the while condition */
+            /* coverity[overflow_const:FALSE] */
             size -= sizeof(FMSTR_U16);
             dest8 += sizeof(FMSTR_U16);
             s16++;
@@ -347,6 +374,9 @@ static void _FMSTR_MemCpyMaskedDstAligned(FMSTR_ADDR dest, FMSTR_ADDR src, FMSTR
         while (size >= sizeof(FMSTR_U64))
         {
             _FMSTR_CopyMaskedDstAligned_U64(d64, src8, mask8);
+            
+            /* Coverity: The size cannot underflow, guarded by the while condition */
+            /* coverity[overflow_const:FALSE] */
             size -= sizeof(FMSTR_U64);
             src8 += sizeof(FMSTR_U64);
             mask8 += sizeof(FMSTR_U64);
@@ -364,6 +394,9 @@ static void _FMSTR_MemCpyMaskedDstAligned(FMSTR_ADDR dest, FMSTR_ADDR src, FMSTR
         while (size >= sizeof(FMSTR_U32))
         {
             _FMSTR_CopyMaskedDstAligned_U32(d32, src8, mask8);
+            
+            /* Coverity: The size cannot underflow, guarded by the while condition */
+            /* coverity[overflow_const:FALSE] */
             size -= sizeof(FMSTR_U32);
             src8 += sizeof(FMSTR_U32);
             mask8 += sizeof(FMSTR_U32);
@@ -381,6 +414,9 @@ static void _FMSTR_MemCpyMaskedDstAligned(FMSTR_ADDR dest, FMSTR_ADDR src, FMSTR
         while (size >= sizeof(FMSTR_U16))
         {
             _FMSTR_CopyMaskedDstAligned_U16(d16, src8, mask8);
+            
+            /* Coverity: The size cannot underflow, guarded by the while condition */
+            /* coverity[overflow_const:FALSE] */
             size -= sizeof(FMSTR_U16);
             src8 += sizeof(FMSTR_U16);
             mask8 += sizeof(FMSTR_U16);
@@ -728,6 +764,9 @@ FMSTR_BPTR FMSTR_ULebFromBuffer(FMSTR_U32 *pnum, FMSTR_BPTR src)
 
 FMSTR_BPTR FMSTR_ValueFromBuffer16BE(FMSTR_U16 *pnum, FMSTR_BPTR src)
 {
+    /* Coverity: False positive. Combining two U8 to a single U16.
+       No risk of misinterpretation. */
+    /* coverity[cert_int31_c_violation:FALSE] */
     *pnum = (FMSTR_U16)((((FMSTR_U16)(src[0])) << 8) | (src[1]));
     return (src + 2);
 }
@@ -762,10 +801,14 @@ FMSTR_WEAK FMSTR_SIZE FMSTR_GetAlignmentCorrection(FMSTR_ADDR addr, FMSTR_SIZE s
 
     if (size > 0U)
     {
+        /* Coverity: Intentional. The return difference still works fine even if this wraps. */
+        /* coverity[cert_int30_c_violation:FALSE] */
         aligned += (FMSTR_U32)(size - 1U);
         aligned &= (FMSTR_U32)~((FMSTR_U32)(size - 1U));
     }
 
+    /* Coverity: False positive. No risk of wrap in this case. */
+    /* coverity[cert_int30_c_violation:FALSE] */
     return (FMSTR_SIZE)(aligned - addrn);
 }
 
@@ -806,6 +849,8 @@ static FMSTR_BPTR FMSTR_LebDecode(FMSTR_BPTR in, void *result, FMSTR_SIZE size, 
 
         if (size > 0U)
         {
+            /* Coverity: Intentional cast of shift result back to U8. Also below. */
+            /* coverity[cert_int31_c_violation:FALSE] */
             *dest |= (FMSTR_U8)((v << shift));
             shift += 7U;
 
@@ -817,6 +862,7 @@ static FMSTR_BPTR FMSTR_LebDecode(FMSTR_BPTR in, void *result, FMSTR_SIZE size, 
 
                 if (size > 0U && shift > 0U)
                 {
+                    /* coverity[cert_int31_c_violation:FALSE] */
                     *dest |= (FMSTR_U8)(v >> (7U - shift));
                 }
             }
@@ -828,6 +874,7 @@ static FMSTR_BPTR FMSTR_LebDecode(FMSTR_BPTR in, void *result, FMSTR_SIZE size, 
     {
         if (size > 0U)
         {
+            /* coverity[cert_int31_c_violation:FALSE] */
             *dest |= (FMSTR_U8)(0xffU << shift);
             dest += dadd;
             size--;
@@ -921,13 +968,16 @@ FMSTR_BPTR FMSTR_UlebEncode(FMSTR_BPTR out, void *source, FMSTR_SIZE size)
             v = *src;
             src += sadd;
 
+            /* Coverity: Intentional cast of shift result back to U8. Also below. */
+            /* coverity[cert_int31_c_violation:FALSE] */
             b = ((FMSTR_BCHR)(v << shift)) & 0x7FU;
             *out |= b;
 
-            // shift is number of bits remaining in v
+            /* shift is number of bits remaining in v */
+            /* coverity[cert_int31_c_violation:FALSE] */
             v = (FMSTR_U8)(v >> (7U - shift));
 
-            // other bits to the next out byte
+            /* other bits to the next out byte */
             if (size > 0U || v != 0U)
             {
                 *out++ |= 0x80U;
@@ -996,7 +1046,8 @@ FMSTR_BPTR FMSTR_StringFromBuffer(FMSTR_BPTR in, FMSTR_CHAR *pStr, FMSTR_SIZE ma
     {
         in = FMSTR_ValueFromBuffer8(&b, in);
 
-        if (maxSize > 0U)
+        /* Base ASCII characters only, up to maximum size */
+        if (b < 0x80U && maxSize > 0U)
         {
             maxSize--;
             *pStr++ = (FMSTR_CHAR)(maxSize > 0U ? b : 0U);
@@ -1019,7 +1070,7 @@ FMSTR_BPTR FMSTR_StringCopyToBuffer(FMSTR_BPTR out, const FMSTR_CHAR *pStr)
         out = FMSTR_ValueToBuffer8(out, (FMSTR_U8)(*pStr++));
     }
 
-    out = FMSTR_ValueToBuffer8(out, (FMSTR_U8)0);
+    out = FMSTR_ValueToBuffer8(out, (FMSTR_U8)0U);
     return out;
 }
 
@@ -1044,16 +1095,18 @@ void FMSTR_Crc16AddByte(FMSTR_U16 *crc, FMSTR_U8 data)
 {
     FMSTR_INDEX x;
 
-    *crc ^= ((FMSTR_U16)data) << 8; /* XOR hi-byte of CRC w/dat    */
-    for (x = 8; x != 0; x--)        /* Then, for 8 bit shifts...   */
+    *crc ^= ((FMSTR_U16)data) << 8;
+    for (x = 8; x != 0; x--)
     {
         if ((*crc & 0x8000U) != 0U) /* Test hi order bit of CRC    */
         {
-            *crc = *crc << 1 ^ 0x1021U; /* if set, shift & XOR w/$1021 */
+            /* Coverity: Intentional cast back from int to U16 */
+            /* coverity[cert_int31_c_violation:FALSE] */
+            *crc = (FMSTR_U16)(*crc << 1 ^ 0x1021U);
         }
         else
         {
-            *crc <<= 1; /* Else, just shift left once. */
+            *crc <<= 1;
         }
     }
 }
@@ -1079,16 +1132,18 @@ void FMSTR_Crc8AddByte(FMSTR_U8 *crc, FMSTR_U8 data)
 {
     FMSTR_INDEX x;
 
-    *crc ^= data;            /* XOR hi-byte of CRC w/dat    */
-    for (x = 8; x != 0; x--) /* Then, for 8 bit shifts...   */
+    *crc ^= data;
+    for (x = 8; x != 0; x--)
     {
         if ((*crc & 0x80U) != 0U) /* Test hi order bit of CRC    */
         {
-            *crc = (FMSTR_U8)((*crc << 1) ^ 0x07U); /* if set, shift & XOR w/$07 */
+            /* Coverity: Intentional cast back from int to U16 */
+            /* coverity[cert_int31_c_violation:FALSE] */
+            *crc = (FMSTR_U8)((*crc << 1) ^ 0x07U);
         }
         else
         {
-            *crc <<= 1; /* Else, just shift left once. */
+            *crc <<= 1;
         }
     }
 }
@@ -1355,6 +1410,8 @@ FMSTR_INDEX _FMSTR_MemCmp(const void *b1, const void *b2, FMSTR_SIZE size)
     FMSTR_ASSERT_RETURN(p1 != NULL, 1);
     FMSTR_ASSERT_RETURN(p2 != NULL, -1);
 
+    /* Coverity: The size may wrap here when terminating the loop. */
+    /* coverity[cert_int30_c_violation:FALSE] */
     while (size-- > 0U)
     {
         c1  = *p1++;
@@ -1369,27 +1426,54 @@ FMSTR_INDEX _FMSTR_MemCmp(const void *b1, const void *b2, FMSTR_SIZE size)
     return 0;
 }
 
+/******************************************************************************
+ *
+ * @brief Standard strlen library function
+ *
+ ******************************************************************************/
+
 FMSTR_SIZE _FMSTR_StrLen(const FMSTR_CHAR *str)
 {
     const FMSTR_CHAR *s = str;
     FMSTR_SIZE len      = 0;
+    FMSTR_SIZE wrapTest;
 
     while (*s++ != (FMSTR_CHAR)0)
     {
-        len++;
+        /* Prevent wrapping and saturate at maximum FMSTR_SIZE value. */
+        wrapTest = len+1U;
+        if(wrapTest > len)
+        {
+            len = wrapTest;
+        }
     }
 
     return len;
 }
 
+/******************************************************************************
+ *
+ * @brief Standard memset library function
+ *
+ ******************************************************************************/
+
 void _FMSTR_MemSet(void *dest, FMSTR_U8 fill, FMSTR_SIZE size)
 {
     FMSTR_U8 *d = dest;
+    
+    /* Coverity: The size may wrap here when terminating the loop. */
+    /* coverity[cert_int30_c_violation:FALSE] */
     while (size-- > 0U)
     {
         *d++ = fill;
     }
 }
+
+/******************************************************************************
+ *
+ * @brief Random number generator
+ *
+ ******************************************************************************/
 
 FMSTR_U32 _FMSTR_Rand(void)
 {
@@ -1397,6 +1481,12 @@ FMSTR_U32 _FMSTR_Rand(void)
     FMSTR_ASSERT(0 == 1);
     return 0;
 }
+
+/******************************************************************************
+ *
+ * @brief Special aligned copying of operands
+ *
+ ******************************************************************************/
 
 void FMSTR_MemCpySrcAligned_8(FMSTR_ADDR dest, FMSTR_ADDR src)
 {
@@ -1428,6 +1518,35 @@ void FMSTR_MemCpySrcAligned_64(FMSTR_ADDR dest, FMSTR_ADDR src)
     FMSTR_LP_U64 src64 = (FMSTR_LP_U64)FMSTR_CAST_ADDR_TO_PTR(src);
 
     _FMSTR_CopySrcAligned_U64(dest8, src64);
+}
+
+/******************************************************************************
+ *
+ * @brief Determine if given address is safe against wrapping after adding a size.
+ *
+ ******************************************************************************/
+
+FMSTR_BOOL FMSTR_CheckNoWrapAddr(FMSTR_ADDR addr, FMSTR_SIZE size)
+{
+    volatile FMSTR_ADDR a2 = addr + size;
+    return addr <= a2;
+}
+
+/******************************************************************************
+ *
+ * @brief Calculate byte difference between addresses and assert that the difference is positive
+ *
+ ******************************************************************************/
+
+FMSTR_U32 FMSTR_CalcAddrDelta(FMSTR_ADDR addrLarger, FMSTR_ADDR addrSmaller)
+{
+    FMSTR_U32 delta;
+    FMSTR_ASSERT(addrLarger >= addrSmaller);
+    
+    /* Coverity: Intentional cast of pointer expression to unsigned integer. */
+    /* coverity[misra_c_2012_rule_10_8_violation:FALSE] */
+    delta = (FMSTR_U32)(addrLarger - addrSmaller);
+    return delta;
 }
 
 #endif /* !FMSTR_DISABLE */

@@ -2,7 +2,7 @@
  *
  *  @brief MLAN Interface
  *
- *  Copyright 2008-2022, 2024 NXP
+ *  Copyright 2008-2022, 2024-2025 NXP
  *
  *  SPDX-License-Identifier: BSD-3-Clause
  *
@@ -19,6 +19,7 @@
 #endif
 
 #define MLAN_WMSDK_MAX_WPA_IE_LEN 64U
+#define MLAN_RSN_MAX_IE_LEN       255U
 #define MLAN_MAX_MDIE_LEN         10U
 #define MLAN_MAX_VENDOR_IE_LEN    100U
 
@@ -320,6 +321,10 @@ int wifi_send_add_wpa3_password(int mode, char *ssid, char *password, unsigned i
 int wifi_send_add_wpa_pmk(int mode, char *ssid, char *bssid, char *pmk, unsigned int len);
 bool wifi_11d_is_channel_allowed(int channel);
 
+#if CONFIG_WPA_SUPP_P2P
+int wifi_set_p2p_mode_config(uint16_t mode_value);
+#endif
+
 #if CONFIG_11AX
 void wifi_request_get_fw_info(mlan_private *priv, mlan_fw_info *fw_info);
 
@@ -332,6 +337,10 @@ int wifi_mmsf_cfg(const t_u16 action, t_u8 *enable, t_u8 *Density, t_u8 *MMSF);
 int wifi_recovery_test(void);
 #endif
 
+#if CONFIG_WIFI_CHANNEL_LOAD
+int wifi_channel_load(wlan_802_11_chan_load_t *cfg);
+int wifi_get_channel_load(wlan_802_11_chan_load_t *cfg);
+#endif
 /**
  * Get the string representation of the wlan firmware extended version.
  *
@@ -494,11 +503,14 @@ extern t_u8 g_csi_event_for_wls;
 #endif
 
 #if UAP_SUPPORT
-int wifi_set_custom_ie(custom_ie *beacon_ies_data,
+int wifi_set_custom_ie(unsigned int bss_type,
+		       custom_ie *beacon_ies_data,
                        custom_ie *beacon_wps_ies_data,
                        custom_ie *proberesp_ies_data,
                        custom_ie *assocresp_ies_data);
 #endif
+
+unsigned int get_ie_index();
 
 #if CONFIG_11K
 /**
@@ -546,6 +558,9 @@ int wrapper_bssdesc_second_set(int bss_index,
 #endif
 #if CONFIG_11AX
                                bool *phecap_ie_present,
+#if CONFIG_11AX_TWT
+                               bool *twt_capab,
+#endif
 #endif
                                bool *wmm_ie_present,
                                uint16_t *band,
@@ -574,6 +589,8 @@ int wrapper_bssdesc_second_set(int bss_index,
 int wifi_get_mgmt_ie2(mlan_bss_type bss_type, void *buf, unsigned int *buf_len);
 int wifi_set_mgmt_ie2(mlan_bss_type bss_type, unsigned short mask, void *buf, unsigned int buf_len);
 int wifi_clear_mgmt_ie2(mlan_bss_type bss_type, int mgmt_bitmap_index);
+
+int wifi_get_mgmt_ie_by_index(mlan_bss_type bss_type, void *buffer, unsigned int *ie_len, int index);
 
 #if CONFIG_BG_SCAN
 int wifi_request_bgscan(mlan_private *pmpriv);
@@ -652,4 +669,20 @@ int wifi_get_auto_reconnect_config(wifi_auto_reconnect_config_t *auto_reconnect_
 #if CONFIG_INACTIVITY_TIMEOUT_EXT
 int wifi_sta_inactivityto(wifi_inactivity_to_t *inac_to, t_u16 cmd_action);
 #endif
+
+#if CONFIG_WIFI_GET_LOG
+/* Wi-Fi statistics */
+void wifi_iface_tx_stats(uint8_t *buf, int interface);
+void wifi_iface_rx_stats(uint8_t *buf, int interface);
+#endif
+
+#if (CONFIG_WPS2) || (CONFIG_WPA_SUPP_WPS)
+void check_for_wps_ie(const uint8_t *poui,
+                      t_u8 oui_type,
+                      bool *wps_IE_exist,
+                      t_u16 *wps_session,
+                      void *element_data,
+                      unsigned element_len);
+#endif /* CONFIG_WPA_SUPP_WPS */
+
 #endif /* __MLAN_API_H__ */

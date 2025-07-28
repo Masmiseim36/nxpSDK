@@ -1,6 +1,5 @@
 /*! *********************************************************************************
- * Copyright 2019-2022 NXP
- * All rights reserved.
+ * Copyright 2019-2022,2025 NXP
  *
  * \file
  *
@@ -315,6 +314,9 @@ static uint8_t NvWriteProdData(void *src_data, uint32_t size)
             }
         }
 
+        /* Coverity claims that callee's buffer array might be overrun but this is wrong,
+         * only up to modulo 16 bytes are ever written to it */
+        /* coverity[overrun-call:FALSE] */
         status = HAL_FlashProgramUnaligned(PROD_DATA_FLASH_ADDR, size, (uint8_t *)src_data);
         if (kStatus_HAL_Flash_Success != status)
         {
@@ -350,9 +352,9 @@ static uint8_t NvWriteProdData(void *src_data, uint32_t size)
 #endif
     return st;
 }
-static int SearchEccFaultsInHWParam(uint32_t hw_param_sz)
+static uint32_t SearchEccFaultsInHWParam(uint32_t hw_param_sz)
 {
-    int status = gHWParameterSuccess_c;
+    uint32_t status = gHWParameterSuccess_c;
 
     for (uint32_t i = 0U; i < hw_param_sz;)
     {
@@ -440,8 +442,11 @@ uint32_t NV_ReadHWParameters(hardwareParameters_t **pHwParams)
                 p_crc    = &gHardwareParameters[HW_PARAM_CRC_OFFSET];
                 p_crc[0] = (uint8_t)(crc & 0x00ffU);
                 p_crc[1] = (uint8_t)((crc >> 8U) & 0x00ffU);
-                /* The size to be written ios 2 octets after the CRC offset : this works for both legacy and new
+                /* The size to be written is 2 octets after the CRC offset : this works for both legacy and new
                  * structure */
+                /* Coverity claims that callee's buffer array might be overrun but this is wrong,
+                 * only up to modulo 16 bytes are ever written to it */
+                /* coverity[overrun-call:FALSE] */
                 status = NvWriteProdData(&gHardwareParameters[0], HW_PARAM_CRC_OFFSET + sizeof(uint16_t));
 
                 if (status != gHWParameterSuccess_c)
@@ -469,7 +474,7 @@ uint32_t NV_ReadHWParameters(hardwareParameters_t **pHwParams)
             /* If ECC error detected, need to erase  */
             if (status == gHWParameterError_c)
             {
-                if (HAL_FlashEraseSector(MAIN_FLASH_PROD_DATA_ADDR, PLATFORM_INTFLASH_SECTOR_SIZE) !=
+                if (HAL_FlashEraseSector(PROD_DATA_FLASH_ADDR, PLATFORM_INTFLASH_SECTOR_SIZE) !=
                     kStatus_HAL_Flash_Success)
                 {
                     status = gHWParameterError_c;
@@ -550,6 +555,11 @@ uint32_t NV_WriteHWParameters(void)
                     sizeof(mProdDataIdentifier));
 
         /*Re-writing the hardware parameters in Flash*/
+        /* Coverity claims that callee's buffer array might be overrun but this is wrong,
+         * only up to modulo 16 bytes are ever written to it */
+        /* coverity[overrun-call:FALSE] */
+        /* coverity[cert_arr30_c_violation:FALSE] */
+        /* coverity[cert_str31_c_violation:FALSE] */
         status = NvWriteProdData(gHardwareParameters_p, HW_PARAM_CRC_OFFSET + sizeof(uint16_t));
 
         EnableGlobalIRQ(regPrimask);
@@ -689,5 +699,11 @@ void HWParametersErase(void)
     gHardwareParameters_p = (hardwareParameters_t *)(void *)&gHardwareParameters[0];
 
     /*Re-writing the hardware parameters in Flash*/
+    /* Coverity claims that callee's buffer array might be overrun but this is wrong,
+     * only up to modulo 16 bytes are ever written to it */
+    /* coverity[overrun-call:FALSE] */
+    /* coverity[cert_arr30_c_violation:FALSE] */
+    /* coverity[cert_str31_c_violation:FALSE] */
+
     (void)NvWriteProdData(gHardwareParameters_p, HW_PARAM_CRC_OFFSET + sizeof(uint16_t));
 }

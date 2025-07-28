@@ -8,6 +8,7 @@
 
 #include "utils/includes.h"
 
+#ifdef CONFIG_AP
 #include "utils/common.h"
 #include "utils/eloop.h"
 #include "common/ieee802_11_defs.h"
@@ -835,3 +836,4 @@ int wnm_send_coloc_intf_req(struct hostapd_data *hapd,
 
     return 0;
 }
+#endif /* CONFIG_AP */

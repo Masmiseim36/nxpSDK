@@ -8,7 +8,7 @@
 
 #include "includes.h"
 
-#if CONFIG_EAP_AKA
+#if CONFIG_EAP_AKA && CONFIG_HOSTAPD
 
 #include "utils/common.h"
 #include "crypto/sha256.h"

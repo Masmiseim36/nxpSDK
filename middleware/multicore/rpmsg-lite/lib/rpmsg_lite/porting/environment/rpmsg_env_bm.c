@@ -2,7 +2,7 @@
  * Copyright (c) 2014, Mentor Graphics Corporation
  * Copyright (c) 2015 Xilinx, Inc.
  * Copyright (c) 2016 Freescale Semiconductor, Inc.
- * Copyright 2016-2024 NXP
+ * Copyright 2016-2025 NXP
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -44,6 +44,7 @@
 
 #include "rpmsg_compiler.h"
 #include "rpmsg_env.h"
+#include "rpmsg_lite.h"
 #include "rpmsg_platform.h"
 #include "virtqueue.h"
 
@@ -53,7 +54,7 @@
 static int32_t env_init_counter = 0;
 
 /* Max supported ISR counts */
-#define ISR_COUNT (12U)
+#define ISR_COUNT (32U)
 /*!
  * Structure to keep track of registered ISR's.
  */
@@ -71,14 +72,31 @@ static struct isr_info isr_table[ISR_COUNT];
  * env_wait_for_link_up
  *
  * Wait until the link_state parameter of the rpmsg_lite_instance is set.
- * Busy loop implementation for BM, timeout_ms parameter ignored for now.
+ * Busy loop implementation for BM.
  *
  */
 uint32_t env_wait_for_link_up(volatile uint32_t *link_state, uint32_t link_id, uint32_t timeout_ms)
 {
+    uint32_t tick_count = 0U;
+    uint32_t tick_temp;
+
     while (*link_state != 1U)
     {
+        env_sleep_msec(RL_MS_PER_INTERVAL);
+
+        if (RL_BLOCK != timeout_ms)
+        {
+            tick_temp = tick_count + (uint32_t)RL_MS_PER_INTERVAL;
+
+            if ((tick_temp < tick_count) || (tick_temp >= timeout_ms))
+            {
+                return 0U;
+            }
+
+            tick_count = tick_temp;
+        }
     }
+
     return 1U;
 }
 
@@ -179,7 +197,8 @@ void env_free_memory(void *ptr)
  */
 void env_memset(void *ptr, int32_t value, uint32_t size)
 {
-    (void)memset(ptr, value, size);
+    /* Explicitly convert value to unsigned char range to ensure consistent behavior */
+    (void)memset(ptr, (unsigned char)(value & 0xFF), size);
 }
 
 /*!

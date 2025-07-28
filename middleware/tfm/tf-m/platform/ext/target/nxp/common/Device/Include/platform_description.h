@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2018-2019 Arm Limited. All rights reserved.
- * Copyright 2019-2021 NXP. All rights reserved.
+ * Copyright (c) 2018-2024, Arm Limited. All rights reserved.
+ * Copyright 2019-2021, 2025 NXP
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,6 +21,6 @@
 //#include "platform_base_address.h"
 //#include "platform_pins.h"
 //#include "platform_regs.h"
-#include "cmsis.h"
+#include "tfm_hal_device_header.h"
 
 #endif  /* __PLATFORM_DESCRIPTION_H__ */

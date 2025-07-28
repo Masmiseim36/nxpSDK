@@ -426,7 +426,7 @@ static void dump_wlan_set_tx_cont_mode_usage(void)
     (void)PRINTF("Payload Pattern       (0 to 0xFFFFFFFF) (Enter hexadecimal value)\r\n");
     (void)PRINTF("CS Mode               (Applicable only when continuous wave is disabled) (0:disable, 1:enable)\r\n");
     (void)PRINTF("Active SubChannel     (0:low, 1:upper, 3:both)\r\n");
-    (void)PRINTF("Tx Data Rate          (Rate Index corresponding to legacy/HT/VHT rates)\r\n");
+    (void)PRINTF("Tx Data Rate          (Rate Index corresponding to legacy/HT/VHT rates) (Enter hexadecimal value)\r\n");
     (void)PRINTF("\r\n");
     (void)PRINTF("To Disable:\r\n");
 #if defined(SD9177) || defined(IW610)
@@ -481,7 +481,7 @@ static void wlan_rf_tx_cont_mode_set(int argc, char *argv[])
     }
     cs_mode    = strtol(argv[4], NULL, 10);
     act_sub_ch = strtol(argv[5], NULL, 10);
-    tx_rate    = strtol(argv[6], NULL, 10);
+    tx_rate    = strtol(argv[6], NULL, 16);
 
 disable:
     ret = wlan_set_rf_tx_cont_mode(enable_tx, cw_mode, payload_pattern, cs_mode, act_sub_ch, tx_rate);
@@ -495,7 +495,7 @@ disable:
         (void)PRINTF("  Active SubChannel     : %s\r\n", act_sub_ch == 0U ? "low" :
                                                          act_sub_ch == 1U ? "upper" :
                                                                             "both");
-        (void)PRINTF("  Tx Data Rate          : %d\r\n", tx_rate);
+        (void)PRINTF("  Tx Data Rate          : 0x%X\r\n", tx_rate);
     }
     else
     {
@@ -827,7 +827,7 @@ static void wlan_rf_tx_frame_set(int argc, char *argv[])
     if (argc == 2 && strtol(argv[1], NULL, 10) == 0)
     {
         enable            = 0;
-        data_rate         = 0;
+        data_rate         = 0xFFFFFFFF;
         frame_pattern     = 0;
         frame_length      = 1;
         adjust_burst_sifs = 0;
@@ -893,8 +893,8 @@ disable:
     {
         (void)PRINTF("Tx Frame configuration successful\r\n");
         (void)PRINTF("  Enable                    : %s\r\n", enable ? "enable" : "disable");
-        (void)PRINTF("  Tx Data Rate              : %d\r\n", data_rate);
-        (void)PRINTF("  Payload Pattern           : 0x%X\r\n", frame_pattern);
+        (void)PRINTF("  Tx Data Rate              : 0x%X\r\n", data_rate);
+        (void)PRINTF("  Payload Pattern           : 0x%08X\r\n", frame_pattern);
         (void)PRINTF("  Payload Length            : 0x%X\r\n", frame_length);
         (void)PRINTF("  Adjust Burst SIFS3 Gap    : %s\r\n", adjust_burst_sifs ? "enable" : "disable");
         (void)PRINTF("  Burst SIFS in us          : %d us\r\n", burst_sifs_in_us);

@@ -1,0 +1,8 @@
+@Start
+@Input_path  ../test_inp/
+@Output_path ../test_out/
+codspw_le.cod outsp1_swap.bin
+@Stop
+
+
+

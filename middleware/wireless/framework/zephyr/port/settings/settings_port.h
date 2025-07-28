@@ -45,6 +45,24 @@ extern "C" {
 #error "Must define a non volatile storage NVS partition for settings"
 #endif
 
+#ifndef gSettingsRedefineApiName_c
+#define gSettingsRedefineApiName_c 0
+#endif
+
+#if defined(gSettingsRedefineApiName_c) && (gSettingsRedefineApiName_c > 0)
+/* Re-define settings api name to avoid Multiple Definition errors when build with other components */
+#define settings_init                fwk_settings_init
+#define settings_load_subtree_direct fwk_settings_load_subtree_direct
+#define settings_save_one            fwk_settings_save_one
+#define settings_name_steq           fwk_settings_name_steq
+#define settings_name_next           fwk_settings_name_next
+#define settings_delete              fwk_settings_delete
+#define settings_commit_subtree      fwk_settings_commit_subtree
+#define settings_load_subtree        fwk_settings_load_subtree
+#define settings_load                fwk_settings_load
+#define settings_commit              fwk_settings_commit
+#endif
+
 #ifndef CONFIG_SETTINGS_NVS_SECTOR_COUNT
 #define CONFIG_SETTINGS_NVS_SECTOR_COUNT ((uint32_t)NV_STORAGE_SIZE / gPlatNvsSectorSize_c)
 #endif

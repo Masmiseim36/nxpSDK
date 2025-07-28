@@ -66,7 +66,7 @@
 #define BT_MAP_MCE_RSV_LEN_GET_MSG_LISTING(mce_mas, name, flags) \
         (((flags & BT_OBEX_REQ_START) ? \
          (sizeof(struct bt_map_get_msg_listing_hdr) + \
-          (((name == NULL) || (strlen(name) == 0)) ? sizeof(struct bt_obex_hdr_bytes) : \
+          (((name == NULL) || (strlen(name) == 0U)) ? sizeof(struct bt_obex_hdr_bytes) : \
           ((strlen(name) + 1U) * 2U + sizeof(struct bt_obex_hdr_bytes)))) \
          : sizeof(struct bt_map_ops_get_cont_hdr)) \
         + BT_L2CAP_BUF_SIZE(2U)) /* L2CAP I-frame Enhanced Control Field(2-byte) */
@@ -118,7 +118,7 @@
 #define BT_MAP_MCE_RSV_LEN_PUSH_MSG(mce_mas, name, flags) \
         (((flags & BT_OBEX_REQ_START) ? \
          (sizeof(struct bt_map_push_msg_hdr) + \
-          (((name == NULL) || (strlen(name) == 0)) ? sizeof(struct bt_obex_hdr_bytes) : \
+          (((name == NULL) || (strlen(name) == 0U)) ? sizeof(struct bt_obex_hdr_bytes) : \
           ((strlen(name) + 1U) * 2U + sizeof(struct bt_obex_hdr_bytes)))) \
          : sizeof(struct bt_map_ops_put_cont_hdr)) \
         + BT_L2CAP_BUF_SIZE(2U)) /* L2CAP I-frame Enhanced Control Field(2-byte) */

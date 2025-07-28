@@ -31,10 +31,12 @@ message("${CMAKE_CURRENT_LIST_FILE} component is included.")
 
       target_compile_definitions(${MCUX_SDK_PROJECT_NAME} PUBLIC
                   -DTF_LITE_STATIC_MEMORY
+                        -DKERNELS_OPTIMIZED_FOR_SPEED
               )
   
             if(CONFIG_TOOLCHAIN STREQUAL iar)
       target_compile_options(${MCUX_SDK_PROJECT_NAME} PUBLIC
+              --diag_suppress=Pa082,Pa050,Pe188,Pe069,Go003,Pa050,Pa082,Pa183,Pa084,Pa093,Pe069,Pe111,Pe161,Pe174,Pe177,Pe186,Pe188,Pe550,Pe611,Pe997,Pe1444,Pe1675,Pe830,Pe1097
               --diag_suppress=Pa082,Pa050,Pe188,Pe069,Go003,Pa050,Pa082,Pa084,Pa093,Pe069,Pe111,Pe161,Pe174,Pe177,Pe186,Pe188,Pe550,Pe611,Pe997,Pe1444,Pe1675,Pe830
             )
       endif()

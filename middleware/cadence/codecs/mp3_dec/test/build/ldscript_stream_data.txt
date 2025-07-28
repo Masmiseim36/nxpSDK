@@ -1,0 +1,11 @@
+
+SECTIONS
+{
+  .rodata 0 :
+  {
+    *(.rodata)
+    . = ALIGN(0x40);
+    stream_in = .;
+    *(.rodata.stream_in)
+  }
+}

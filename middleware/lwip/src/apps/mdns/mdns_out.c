@@ -5,6 +5,7 @@
 
 /*
  * Copyright (c) 2015 Verisure Innovation AB
+ * Copyright 2025 NXP
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
@@ -938,6 +939,30 @@ mdns_start_multicast_timeouts_ipv4(struct netif *netif)
                    &mdns->ipv4.multicast_timeout_25TTL);
   LWIP_DEBUGF(MDNS_DEBUG, ("MDNS: multicast timeout 1/4 of ttl started - IPv4\n"));
 }
+
+/** Stop all multicast timeouts for IPv4
+ *  Timeouts stopped:
+ *    - do not multicast within one second
+ *    - do not multicast a probe response within 250ms
+ *    - send a multicast answer on a QU question if not send recently.
+ *
+ *  @param netif network interface to stop timeouts on
+ */
+void
+mdns_stop_multicast_timeouts_ipv4(struct netif *netif)
+{
+  struct mdns_host *mdns = netif_mdns_data(netif);
+
+  mdns_stop_timeout(netif, mdns_multicast_timeout_reset_ipv4,
+                   &mdns->ipv4.multicast_timeout);
+  LWIP_DEBUGF(MDNS_DEBUG, ("MDNS: multicast timeout stopped - IPv4\n"));
+  mdns_stop_timeout(netif, mdns_multicast_probe_timeout_reset_ipv4,
+                   &mdns->ipv4.multicast_probe_timeout);
+  LWIP_DEBUGF(MDNS_DEBUG, ("MDNS: multicast probe timeout stopped - IPv4\n"));
+  mdns_stop_timeout(netif, mdns_multicast_timeout_25ttl_reset_ipv4,
+                   &mdns->ipv4.multicast_timeout_25TTL);
+  LWIP_DEBUGF(MDNS_DEBUG, ("MDNS: multicast timeout 1/4 of ttl stopped - IPv4\n"));
+}
 #endif
 
 #if LWIP_IPV6
@@ -1075,6 +1100,30 @@ mdns_start_multicast_timeouts_ipv6(struct netif *netif)
                    &mdns->ipv6.multicast_timeout_25TTL);
   LWIP_DEBUGF(MDNS_DEBUG, ("MDNS: multicast timeout 1/4 of ttl started - IPv6\n"));
 }
+
+/** Stop all multicast timeouts for IPv6
+ *  Timeouts stopped:
+ *    - do not multicast within one second
+ *    - do not multicast a probe response within 250ms
+ *    - send a multicast answer on a QU question if not send recently.
+ *
+ *  @param netif network interface to stop timeouts on
+ */
+void
+mdns_stop_multicast_timeouts_ipv6(struct netif *netif)
+{
+  struct mdns_host *mdns = netif_mdns_data(netif);
+
+  mdns_stop_timeout(netif, mdns_multicast_timeout_reset_ipv6,
+                   &mdns->ipv6.multicast_timeout);
+  LWIP_DEBUGF(MDNS_DEBUG, ("MDNS: multicast timeout stopped - IPv6\n"));
+  mdns_stop_timeout(netif, mdns_multicast_probe_timeout_reset_ipv6,
+                   &mdns->ipv6.multicast_probe_timeout);
+  LWIP_DEBUGF(MDNS_DEBUG, ("MDNS: multicast probe timeout stopped - IPv6\n"));
+  mdns_stop_timeout(netif, mdns_multicast_timeout_25ttl_reset_ipv6,
+                   &mdns->ipv6.multicast_timeout_25TTL);
+  LWIP_DEBUGF(MDNS_DEBUG, ("MDNS: multicast timeout 1/4 of ttl stopped - IPv6\n"));
+}
 #endif
 
 /**
@@ -1130,6 +1179,24 @@ mdns_set_timeout(struct netif *netif, u32_t msecs, sys_timeout_handler handler,
   }
   /* Now we have a timer running */
   *busy_flag = 1;
+}
+
+/**
+ *  Stop a timer which was set by mdns_set_timeout.
+ *
+ *  @param netif      Network interface info
+ *  @param handler    Callback function which was set to call
+ *  @param busy_flag  Pointer to flag that displays if the timer is running or not.
+ */
+void
+mdns_stop_timeout(struct netif *netif, sys_timeout_handler handler, u8_t *busy_flag)
+{
+  if(*busy_flag) {
+    /* stop timer */
+    sys_untimeout(handler, netif);
+    /* Now the timer is stopped */
+    *busy_flag = 0;
+  }
 }
 
 #ifdef LWIP_MDNS_SEARCH

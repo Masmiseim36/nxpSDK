@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016 - 2022 NXP
+ * Copyright 2016 - 2022, 2025 NXP
  * All rights reserved.
  *
  *
@@ -11,6 +11,8 @@
 
 #ifndef _HTTPSRV_CONFIG_H_
 #define _HTTPSRV_CONFIG_H_
+
+#include "lwip/opt.h"
 
 /* Configuration parameters.*/
 

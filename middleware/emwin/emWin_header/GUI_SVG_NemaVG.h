@@ -9,7 +9,7 @@
 *                                                                    *
 **********************************************************************
 
-** emWin V6.46 - Graphical user interface for embedded applications **
+** emWin V6.50 - Graphical user interface for embedded applications **
 All  Intellectual Property rights  in the Software belongs to  SEGGER.
 emWin is protected by  international copyright laws.  Knowledge of the
 source code may not be used to write a similar product.  This file may
@@ -55,15 +55,39 @@ Purpose     : NemaVG interface for SVG
 **********************************************************************
 */
 #ifndef   GUI_SVG_NEMA_VG_HEADER
-  #define GUI_SVG_NEMA_VG_HEADER       <nema_vg.h>
+  #define GUI_SVG_NEMA_VG_HEADER           <nema_vg.h>
+#endif
+
+#ifndef   GUI_SVG_NEMA_VG_VERSION_HEADER
+  #define GUI_SVG_NEMA_VG_VERSION_HEADER   <nema_vg_version.h>
 #endif
 
 #ifdef GUI_SVG_HAS_NEMAVG
   #include GUI_SVG_NEMA_VG_HEADER
+  #include GUI_SVG_NEMA_VG_VERSION_HEADER
 #endif
 
 #if defined(__cplusplus)
 extern "C" {     /* Make sure we have C-declarations in C++ programs */
+#endif
+
+/*********************************************************************
+*
+*       API version
+*
+**********************************************************************
+*/
+//
+// API versions
+//
+#define NEMA_VG_VERSION_1_1_5   (0x010105)
+#define NEMA_VG_VERSION_1_1_7   (0x010107)
+
+#ifndef GUI_SVG_HAS_NEMAVG
+  //
+  // NemaVG API version
+  //
+  #define NEMA_VG_API_VERSION            NEMA_VG_VERSION_1_1_5    // Minimum v1.1.5 required
 #endif
 
 /*********************************************************************
@@ -162,6 +186,9 @@ typedef void                 (GUI_SVG_NEMAVG_PAINTSETSTROKEWIDTH_FUNC)(NEMA_VG_P
 typedef void                 (GUI_SVG_NEMAVG_PAINTSETTEX_FUNC)        (NEMA_VG_PAINT_HANDLE paint, nema_img_obj_t* tex);
 typedef void                 (GUI_SVG_NEMAVG_PAINTSETTEXMATRIX_FUNC)  (NEMA_VG_PAINT_HANDLE paint, nema_matrix3x3_t m);
 typedef void                 (GUI_SVG_NEMAVG_PAINTDESTROY_FUNC)       (NEMA_VG_PAINT_HANDLE paint);
+typedef void                 (GUI_SVG_NEMAVG_STROKESETCAPSTYLE_FUNC)  (uint8_t start_cap_style, uint8_t end_cap_style);
+typedef void                 (GUI_SVG_NEMAVG_STROKESETJOINSTYLE_FUNC) (uint8_t join_style);
+typedef void                 (GUI_SVG_NEMAVG_STROKESETMITERLIMIT_FUNC)(float MiterLimit);
 
 /*********************************************************************
 *
@@ -218,6 +245,9 @@ typedef struct {
   GUI_SVG_NEMAVG_PAINTSETTEX_FUNC         * pfVgPaintSetTex;           // Pointer to NemaVG function \c{nema_vg_paint_set_tex()}
   GUI_SVG_NEMAVG_PAINTSETTEXMATRIX_FUNC   * pfVgPaintSetTexMatrix;     // Pointer to NemaVG function \c{nema_vg_paint_set_tex_matrix()}
   GUI_SVG_NEMAVG_PAINTDESTROY_FUNC        * pfVgPaintDestroy;          // Pointer to NemaVG function \c{nema_vg_paint_destroy()}
+  GUI_SVG_NEMAVG_STROKESETCAPSTYLE_FUNC   * pfVgStrokeSetCapStyle;     // Pointer to NemaVG function \c{nema_vg_stroke_set_cap_style()}
+  GUI_SVG_NEMAVG_STROKESETJOINSTYLE_FUNC  * pfVgStrokeSetJoinStyle;    // Pointer to NemaVG function \c{nema_vg_stroke_set_join_style()}
+  GUI_SVG_NEMAVG_STROKESETMITERLIMIT_FUNC * pfVgStrokeSetMiterLimit;   // Pointer to NemaVG function \c{nema_vg_stroke_set_miter_limit()}
 } GUI_SVG_NEMAVG_API_STRUCT;
 
 /*********************************************************************
@@ -226,6 +256,20 @@ typedef struct {
 *
 **********************************************************************
 */
+//
+// These functions are only available since v1.1.7, make sure they are
+// not referenced in GUI_SVG_DECLARE_NEMAVG_API if unavailable.
+//
+#if (NEMA_VG_API_VERSION < NEMA_VG_VERSION_1_1_7)
+  #define NEMA_VG_FUNCTIONS_1_1_7         NULL,    \
+                                          NULL,    \
+                                          NULL,
+#else
+  #define NEMA_VG_FUNCTIONS_1_1_7         nema_vg_stroke_set_cap_style,    \
+                                          nema_vg_stroke_set_join_style,   \
+                                          nema_vg_stroke_set_miter_limit,
+#endif
+
 /*********************************************************************
 *
 *       GUI_SVG_DECLARE_NEMAVG_API
@@ -273,6 +317,7 @@ typedef struct {
     nema_vg_paint_set_tex,                                   \
     nema_vg_paint_set_tex_matrix,                            \
     nema_vg_paint_destroy,                                   \
+    NEMA_VG_FUNCTIONS_1_1_7                                  \
   }
 
 #if defined(__cplusplus)

@@ -75,7 +75,7 @@
  ********************************************************************************** */
 void FLib_MemCpy(void *pDst, const void *pSrc, uint32_t cBytes)
 {
-#if gFLib_CheckBufferOverflow_d && defined(MEM_TRACKING)
+#if gFLib_CheckBufferOverflow_d
     (void)MEM_BufferCheck(pDst, cBytes);
 #endif
 
@@ -123,7 +123,7 @@ void FLib_MemCpyAligned32bit(void *to_ptr, const void *from_ptr, register uint32
 
     register uint32_t loops;
 
-#if gFLib_CheckBufferOverflow_d && defined(MEM_TRACKING)
+#if gFLib_CheckBufferOverflow_d
     (void)MEM_BufferCheck(to_ptr, number_of_bytes);
 #endif
 
@@ -235,19 +235,19 @@ void FLib_MemCpyDir(void *pBuf1, void *pBuf2, bool_t dir, uint32_t n)
  ********************************************************************************** */
 void FLib_MemCpyReverseOrder(void *pDst, const void *pSrc, uint32_t cBytes)
 {
-#if gFLib_CheckBufferOverflow_d && defined(MEM_TRACKING)
+#if gFLib_CheckBufferOverflow_d
     (void)MEM_BufferCheck(pDst, cBytes);
 #endif
     if (cBytes != 0UL)
     {
-        if ((cBytes % sizeof(uint32_t)) == 0u)
+        uint32_t N_words = (cBytes / sizeof(uint32_t));
+        if ((N_words > 0u) && (cBytes == N_words * sizeof(uint32_t)))
         {
             uint32_t        tmp;
-            uint32_t        N_words = (cBytes >> 2u);
-            const uint32_t *s_st    = (const uint32_t *)pSrc;
-            const uint32_t *s_nd    = &s_st[N_words - 1U];
-            uint32_t       *d_st    = (uint32_t *)pDst;
-            uint32_t       *d_nd    = &d_st[N_words - 1U];
+            const uint32_t *s_st = (const uint32_t *)pSrc;
+            const uint32_t *s_nd = &s_st[N_words - 1U];
+            uint32_t       *d_st = (uint32_t *)pDst;
+            uint32_t       *d_nd = &d_st[N_words - 1U];
 
             for (uint32_t i = N_words / 2u; i > 0u; i--)
             {
@@ -332,7 +332,7 @@ bool_t FLib_MemCmp(const void *pData1, /* IN: First memory block to compare */
  *
  * \param [in]     len        length of location to be compared
  *
- * \return  This function return TRUE if all octests match and FALSE otherwise.
+ * \return  This function return TRUE if all octets match and FALSE otherwise.
  *
  * \post
  *
@@ -373,7 +373,7 @@ bool_t FLib_MemCmpToVal(const void *pAddr, uint8_t val, uint32_t len)
  ********************************************************************************** */
 void FLib_MemSet(void *pData, uint8_t value, uint32_t cBytes)
 {
-#if gFLib_CheckBufferOverflow_d && defined(MEM_TRACKING)
+#if gFLib_CheckBufferOverflow_d
     (void)MEM_BufferCheck(pData, cBytes);
 #endif
 #if gUseToolchainMemFunc_d
@@ -425,7 +425,7 @@ void FLib_MemSet32Aligned(void *pData, uint32_t value, uint32_t cWords)
  ********************************************************************************** */
 void FLib_MemInPlaceCpy(void *pDst, void *pSrc, uint32_t cBytes)
 {
-#if gFLib_CheckBufferOverflow_d && defined(MEM_TRACKING)
+#if gFLib_CheckBufferOverflow_d
     (void)MEM_BufferCheck(pDst, cBytes);
 #endif
     if (pDst != pSrc)
@@ -572,42 +572,45 @@ uint32_t FLib_StrLen(const char *str)
  ********************************************************************************** */
 void FLib_ReverseByteOrderInPlace(void *buf, uint32_t cBytes)
 {
-    uint32_t i;
-
-    if ((cBytes % sizeof(uint32_t)) == 0u)
+    if (cBytes != 0UL)
     {
-        uint32_t  tmpU32;
-        uint32_t  N_words = (cBytes >> 2u);
-        uint32_t *p_st    = (uint32_t *)buf;
-        uint32_t *p_nd    = &p_st[N_words - 1u];
-        i                 = N_words / 2u;
-        while (i > 0u)
+        uint32_t i;
+        uint32_t N_words = (cBytes / sizeof(uint32_t));
+        if ((N_words > 0u) && (cBytes == N_words * sizeof(uint32_t)))
         {
-            tmpU32 = HAL_BSWAP32(*p_nd);
-            *p_nd  = HAL_BSWAP32(*p_st);
-            *p_st  = tmpU32;
-            p_nd--;
-            p_st++;
-            i--;
+            /* cBytes is a multiple of sizeof(uint32_t) */
+            uint32_t  tmpU32;
+            uint32_t *p_st = (uint32_t *)buf;
+            uint32_t *p_nd = &p_st[N_words - 1u];
+            i              = N_words / 2u;
+            while (i > 0u)
+            {
+                tmpU32 = HAL_BSWAP32(*p_nd);
+                *p_nd  = HAL_BSWAP32(*p_st);
+                *p_st  = tmpU32;
+                p_nd--;
+                p_st++;
+                i--;
+            }
+            if ((N_words & 1u) != 0u)
+            {
+                tmpU32 = HAL_BSWAP32(*p_nd);
+                *p_st  = tmpU32;
+            }
         }
-        if ((N_words & 1u) != 0u)
+        else
         {
-            tmpU32 = HAL_BSWAP32(*p_nd);
-            *p_st  = tmpU32;
-        }
-    }
-    else
-    {
-        uint8_t  tmpU8;
-        uint8_t *st    = buf;
-        uint8_t *l_end = &st[cBytes - 1u];
-        i              = cBytes / 2u;
-        while (i > 0u)
-        {
-            tmpU8    = *l_end;
-            *l_end-- = *st;
-            *st++    = tmpU8;
-            i--;
+            uint8_t  tmpU8;
+            uint8_t *st    = buf;
+            uint8_t *l_end = &st[cBytes - 1u];
+            i              = cBytes / 2u;
+            while (i > 0u)
+            {
+                tmpU8    = *l_end;
+                *l_end-- = *st;
+                *st++    = tmpU8;
+                i--;
+            }
         }
     }
 }

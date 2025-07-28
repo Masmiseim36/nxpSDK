@@ -300,14 +300,10 @@ void *os_realloc(void *ptr, size_t newsize)
     }
 
     p = os_zalloc(newsize);
-
     if (p)
     {
-        if (ptr != NULL)
-        {
             memcpy(p, ptr, newsize);
             os_free(ptr);
-        }
     }
 
     return p;

@@ -294,10 +294,12 @@ bs_list(char *buf, int len)
                 if (FIH_EQ(fih_rc, FIH_BOOT_HOOK_REGULAR))
                 {
 #if defined(MCUBOOT_ENC_IMAGES)
+#if !defined(MCUBOOT_SINGLE_APPLICATION_SLOT)
                     if (IS_ENCRYPTED(&hdr) && MUST_DECRYPT(fap, image_index, &hdr)) {
                         FIH_CALL(boot_image_validate_encrypted, fih_rc, fap,
                                  &hdr, tmpbuf, sizeof(tmpbuf));
                     } else {
+#endif
                         if (IS_ENCRYPTED(&hdr)) {
                             /*
                              * There is an image present which has an encrypted flag set but is
@@ -310,7 +312,7 @@ bs_list(char *buf, int len)
 
                         FIH_CALL(bootutil_img_validate, fih_rc, NULL, 0, &hdr,
                                  fap, tmpbuf, sizeof(tmpbuf), NULL, 0, NULL);
-#if defined(MCUBOOT_ENC_IMAGES)
+#if defined(MCUBOOT_ENC_IMAGES) && !defined(MCUBOOT_SINGLE_APPLICATION_SLOT)
                     }
 #endif
                 }
@@ -437,7 +439,7 @@ bs_set(char *buf, int len)
 #endif
 
     zcbor_state_t zsd[4];
-    zcbor_new_state(zsd, sizeof(zsd) / sizeof(zcbor_state_t), (uint8_t *)buf, len, 1);
+    zcbor_new_state(zsd, sizeof(zsd) / sizeof(zcbor_state_t), (uint8_t *)buf, len, 1, NULL, 0);
 
     struct zcbor_map_decode_key_val image_set_state_decode[] = {
         ZCBOR_MAP_DECODE_KEY_DECODER("confirm", zcbor_bool_decode, &confirm),
@@ -655,7 +657,7 @@ bs_upload(char *buf, int len)
 #endif
 
     zcbor_state_t zsd[4];
-    zcbor_new_state(zsd, sizeof(zsd) / sizeof(zcbor_state_t), (uint8_t *)buf, len, 1);
+    zcbor_new_state(zsd, sizeof(zsd) / sizeof(zcbor_state_t), (uint8_t *)buf, len, 1, NULL, 0);
 
     struct zcbor_map_decode_key_val image_upload_decode[] = {
         ZCBOR_MAP_DECODE_KEY_DECODER("image", zcbor_uint32_decode, &img_num_tmp),
@@ -908,7 +910,7 @@ bs_echo(char *buf, int len)
     uint32_t rc = MGMT_ERR_EINVAL;
 
     zcbor_state_t zsd[4];
-    zcbor_new_state(zsd, sizeof(zsd) / sizeof(zcbor_state_t), (uint8_t *)buf, len, 1);
+    zcbor_new_state(zsd, sizeof(zsd) / sizeof(zcbor_state_t), (uint8_t *)buf, len, 1, NULL, 0);
 
     if (!zcbor_map_start_decode(zsd)) {
         goto out;
@@ -932,7 +934,7 @@ bs_echo(char *buf, int len)
     }
 
     zcbor_map_start_encode(cbor_state, 10);
-    zcbor_tstr_put_term(cbor_state, "r");
+    zcbor_tstr_put_lit(cbor_state, "r");
     if (zcbor_tstr_encode(cbor_state, &value) && zcbor_map_end_encode(cbor_state, 10)) {
         boot_serial_output();
         return;
@@ -1023,11 +1025,11 @@ boot_serial_input(char *buf, int len)
         }
     } else if (hdr->nh_group == MGMT_GROUP_ID_DEFAULT) {
         switch (hdr->nh_id) {
-        case NMGR_ID_ECHO:
 #ifdef MCUBOOT_BOOT_MGMT_ECHO
+        case NMGR_ID_ECHO:
             bs_echo(buf, len);
-#endif
             break;
+#endif
         case NMGR_ID_CONS_ECHO_CTRL:
             bs_rc_rsp(0);
             break;
@@ -1165,10 +1167,6 @@ boot_serial_in_dec(char *in, int inlen, char *out, int *out_off, int maxout)
     len = ntohs(*(uint16_t *)out);
     if (len != *out_off - sizeof(uint16_t)) {
         return 0;
-    }
-
-    if (len > *out_off - sizeof(uint16_t)) {
-        len = *out_off - sizeof(uint16_t);
     }
 
     out += sizeof(uint16_t);

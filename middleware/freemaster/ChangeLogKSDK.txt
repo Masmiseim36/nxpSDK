@@ -2,7 +2,7 @@
 @page middleware_log Middleware Change Log
 
 @section fmstr FreeMASTER Communication Driver
-  Current version is 3.0.6. Visit https://www.nxp.com/freemaster for more information.
+  Visit https://www.nxp.com/freemaster for more information.
   Reach out for a support at https://community.nxp.com/community/freemaster.
   
   - 3.0.0
@@ -49,5 +49,22 @@
 
   - 3.0.7
     - General update for SDK 2.14
+
+  - 3.0.8
+    - General update for SDK v24.12.00
+    - Documentation updated for online publishing.
+    - License changed to NXP LA_OPT_Online Code Hosting NXP_Software_License
+    - Misra issues cleanup
+
+  - 3.0.9
+    - General update for SDK v25.03.00
+    - CMake files related to SDK moved to mcux/ subfolder
+    - Zephyr support added for Serial, CAN, RTT interfaces
+    - Zephyr shell and logging over FreeMASTER pipe
+
+  - 3.0.10
+    - General update for SDK v25.06.00
+    - Support for CAN-FD interface in both MCUX SDK and Zephyr
+    - Standardized SBOM component file added
 
 */

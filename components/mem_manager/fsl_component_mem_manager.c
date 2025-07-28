@@ -643,6 +643,14 @@ mem_status_t MEM_BufferFreeAllWithId(uint8_t poolId)
     return kStatus_MemSuccess;
 }
 
+mem_status_t MEM_BufferCheck(void *buffer, uint32_t size)
+{
+    /* NOT IMPLEMENTED */
+    (void)buffer;
+    (void)size;
+    return kStatus_MemUnknownError;
+}
+
 /*!
  * @brief Memory buffer realloc.
  *

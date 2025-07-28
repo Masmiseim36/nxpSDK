@@ -17,6 +17,10 @@ limitations under the License.
 #include "tensorflow/lite/micro/debug_log.h"
 
 #ifndef TF_LITE_STRIP_ERROR_STRINGS
+#include <cstdio>
+#endif
+
+#ifndef TF_LITE_STRIP_ERROR_STRINGS
 #ifdef SDK_DEBUGCONSOLE
 extern "C" {
 #include "fsl_debug_console.h"
@@ -38,3 +42,11 @@ extern "C" void DebugLog(const char* format, va_list args) {
 #endif /* SDK_DEBUGCONSOLE */
 #endif /* TF_LITE_STRIP_ERROR_STRINGS */
 }
+
+#ifndef TF_LITE_STRIP_ERROR_STRINGS
+// Only called from MicroVsnprintf (micro_log.h)
+extern "C" int DebugVsnprintf(char* buffer, size_t buf_size, const char* format,
+                              va_list vlist) {
+  return vsnprintf(buffer, buf_size, format, vlist);
+}
+#endif

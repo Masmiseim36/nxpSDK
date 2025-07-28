@@ -70,6 +70,23 @@ extern struct bt_csis *csis;
 
 #if (defined(CONFIG_BT_CONN) && (CONFIG_BT_CONN > 0))
 struct bt_conn *default_conn;
+#if (defined(CONFIG_BT_CLASSIC) && (CONFIG_BT_CLASSIC > 0))
+struct bt_conn *default_br_conn;
+#endif
+
+static struct bt_conn *shell_bt_default_conn(void)
+{
+	if (default_conn != NULL) {
+		return default_conn;
+#if (defined(CONFIG_BT_CLASSIC) && (CONFIG_BT_CLASSIC > 0))
+	} else if (default_br_conn != NULL) {
+		return default_br_conn;
+	} else {
+#endif
+	}
+
+	return NULL;
+}
 
 /* Connection context for BR/EDR legacy pairing in sec mode 3 */
 static struct bt_conn *pairing_conn;
@@ -793,13 +810,17 @@ static void connected(struct bt_conn *conn, uint8_t err)
 		goto done;
 	}
 
-	shell_print(ctx_shell, "Connected: %s", addr);
-
 	info_err = bt_conn_get_info(conn, &info);
 	if (info_err != 0) {
 		shell_error(ctx_shell, "Failed to connection information: %d", info_err);
 		goto done;
 	}
+
+	if (info.type != BT_CONN_TYPE_LE) {
+		return;
+	}
+
+	shell_print(ctx_shell, "BLE Connected: %s", addr);
 
 	if (info.role == BT_CONN_ROLE_CENTRAL) {
 		if (default_conn != NULL) {
@@ -851,6 +872,15 @@ static void disconnected_set_new_default_conn_cb(struct bt_conn *conn, void *use
 static void disconnected(struct bt_conn *conn, uint8_t reason)
 {
 	char addr[BT_ADDR_LE_STR_LEN];
+	struct bt_conn_info info;
+
+	if (bt_conn_get_info(conn, &info) != 0) {
+		shell_error(ctx_shell, "Unable to get info: conn %p", conn);
+	} else {
+		if (info.type != BT_CONN_TYPE_LE) {
+			return;
+		}
+	}
 
 	conn_addr_str(conn, addr, sizeof(addr));
 	shell_print(ctx_shell, "Disconnected: %s (reason 0x%02x)", addr, reason);
@@ -1199,10 +1229,17 @@ static void bt_ready(int err)
 
 #if (defined(CONFIG_BT_CONN) && (CONFIG_BT_CONN > 0))
 	default_conn = NULL;
+#if (defined(CONFIG_BT_CLASSIC) && (CONFIG_BT_CLASSIC > 0))
+	default_br_conn = NULL;
+#endif
 
 	/* Unregister to avoid register repeatedly */
 	bt_conn_cb_unregister(&conn_callbacks);
 	bt_conn_cb_register(&conn_callbacks);
+#if (defined(CONFIG_BT_CLASSIC) && (CONFIG_BT_CLASSIC > 0))
+	bt_conn_cb_unregister(&br_conn_callbacks);
+	bt_conn_cb_register(&br_conn_callbacks);
+#endif
 #endif /* CONFIG_BT_CONN */
 
 #if (defined(CONFIG_BT_PER_ADV_SYNC) && (CONFIG_BT_PER_ADV_SYNC > 0))
@@ -3330,8 +3367,9 @@ static int cmd_info(const struct shell *sh, size_t argc, char *argv[])
 	memset(&addr, 0, sizeof(addr));
 	switch (argc) {
 	case 1:
-		if (default_conn) {
-			conn = bt_conn_ref(default_conn);
+		conn = shell_bt_default_conn();
+		if (conn) {
+			conn = bt_conn_ref(conn);
 		}
 		break;
 	case 2:
@@ -3678,14 +3716,17 @@ static int cmd_security(const struct shell *sh, size_t argc, char *argv[])
 {
 	int err, sec;
 	struct bt_conn_info info;
+	struct bt_conn *conn;
 
-	if (!default_conn || (bt_conn_get_info(default_conn, &info) < 0)) {
+	conn = shell_bt_default_conn();
+
+	if (!conn || (bt_conn_get_info(conn, &info) < 0)) {
 		shell_error(sh, "Not connected");
 		return -ENOEXEC;
 	}
 
 	if (argc < 2) {
-		shell_print(sh, "BT_SECURITY_L%d", bt_conn_get_security(default_conn));
+		shell_print(sh, "BT_SECURITY_L%d", bt_conn_get_security(conn));
 
 		return 0;
 	}
@@ -3713,7 +3754,7 @@ static int cmd_security(const struct shell *sh, size_t argc, char *argv[])
 		}
 	}
 
-	err = bt_conn_set_security(default_conn, (bt_security_t)sec);
+	err = bt_conn_set_security(conn, (bt_security_t)sec);
 	if (err) {
 		shell_error(sh, "Setting security failed (err %d)", err);
 	}
@@ -3965,11 +4006,15 @@ static void auth_pairing_oob_data_request(struct bt_conn *conn,
 static void auth_pairing_complete(struct bt_conn *conn, bool bonded)
 {
 	char addr[BT_ADDR_LE_STR_LEN];
+	const bt_addr_le_t *dst;
 
-	bt_addr_le_to_str(bt_conn_get_dst(conn), addr, sizeof(addr));
+	dst = bt_conn_get_dst(conn);
+	if (dst != NULL) {
+		bt_addr_le_to_str(dst, addr, sizeof(addr));
 
-	shell_print(ctx_shell, "%s with %s", bonded ? "Bonded" : "Paired",
-		    addr);
+		shell_print(ctx_shell, "%s with %s", bonded ? "Bonded" : "Paired",
+			    addr);
+	}
 }
 
 static void auth_pairing_failed(struct bt_conn *conn, enum bt_security_err err)
@@ -3982,49 +4027,20 @@ static void auth_pairing_failed(struct bt_conn *conn, enum bt_security_err err)
 		    security_err_str(err), err);
 }
 
-#if (defined(CONFIG_BT_CLASSIC) && (CONFIG_BT_CLASSIC > 0))
-static void auth_pincode_entry(struct bt_conn *conn, bool highsec)
-{
-	char addr[BT_ADDR_STR_LEN];
-	struct bt_conn_info info;
-
-	if (bt_conn_get_info(conn, &info) < 0) {
-		return;
-	}
-
-	if (info.type != BT_CONN_TYPE_BR) {
-		return;
-	}
-
-	bt_addr_to_str(info.br.dst, addr, sizeof(addr));
-
-	if (highsec) {
-		shell_print(ctx_shell, "Enter 16 digits wide PIN code for %s",
-			    addr);
-	} else {
-		shell_print(ctx_shell, "Enter PIN code for %s", addr);
-	}
-
-	/*
-	 * Save connection info since in security mode 3 (link level enforced
-	 * security) PIN request callback is called before connected callback
-	 */
-	if (!default_conn && !pairing_conn) {
-		pairing_conn = bt_conn_ref(conn);
-	}
-}
-#endif
-
 #if (defined(CONFIG_BT_SMP_APP_PAIRING_ACCEPT) && (CONFIG_BT_SMP_APP_PAIRING_ACCEPT > 0))
 enum bt_security_err pairing_accept(
 	struct bt_conn *conn, const struct bt_conn_pairing_feat *const feat)
 {
-	shell_print(ctx_shell, "Remote pairing features: "
-			       "IO: 0x%02x, OOB: %d, AUTH: 0x%02x, Key: %d, "
-			       "Init Kdist: 0x%02x, Resp Kdist: 0x%02x",
-			       feat->io_capability, feat->oob_data_flag,
-			       feat->auth_req, feat->max_enc_key_size,
-			       feat->init_key_dist, feat->resp_key_dist);
+	if (feat != NULL) {
+		shell_print(ctx_shell, "Remote pairing features: "
+				"IO: 0x%02x, OOB: %d, AUTH: 0x%02x, Key: %d, "
+				"Init Kdist: 0x%02x, Resp Kdist: 0x%02x",
+				feat->io_capability, feat->oob_data_flag,
+				feat->auth_req, feat->max_enc_key_size,
+				feat->init_key_dist, feat->resp_key_dist);
+	} else {
+		shell_print(ctx_shell, "Remote pairing");
+	}
 
 	return BT_SECURITY_ERR_SUCCESS;
 }
@@ -4179,8 +4195,8 @@ static int cmd_auth_cancel(const struct shell *sh,
 {
 	struct bt_conn *conn;
 
-	if (default_conn) {
-		conn = default_conn;
+	if (shell_bt_default_conn()) {
+		conn = shell_bt_default_conn();
 	} else if (pairing_conn) {
 		conn = pairing_conn;
 	} else {
@@ -4200,24 +4216,24 @@ static int cmd_auth_cancel(const struct shell *sh,
 static int cmd_auth_passkey_confirm(const struct shell *sh,
 				    size_t argc, char *argv[])
 {
-	if (!default_conn) {
+	if (!shell_bt_default_conn()) {
 		shell_print(sh, "Not connected");
 		return -ENOEXEC;
 	}
 
-	bt_conn_auth_passkey_confirm(default_conn);
+	bt_conn_auth_passkey_confirm(shell_bt_default_conn());
 	return 0;
 }
 
 static int cmd_auth_pairing_confirm(const struct shell *sh,
 				    size_t argc, char *argv[])
 {
-	if (!default_conn) {
+	if (!shell_bt_default_conn()) {
 		shell_print(sh, "Not connected");
 		return -ENOEXEC;
 	}
 
-	bt_conn_auth_pairing_confirm(default_conn);
+	bt_conn_auth_pairing_confirm(shell_bt_default_conn());
 	return 0;
 }
 
@@ -4357,7 +4373,7 @@ static int cmd_auth_passkey(const struct shell *sh,
 	unsigned int passkey;
 	int err;
 
-	if (!default_conn) {
+	if (!shell_bt_default_conn()) {
 		shell_print(sh, "Not connected");
 		return -ENOEXEC;
 	}
@@ -4368,7 +4384,7 @@ static int cmd_auth_passkey(const struct shell *sh,
 		return -EINVAL;
 	}
 
-	err = bt_conn_auth_passkey_entry(default_conn, passkey);
+	err = bt_conn_auth_passkey_entry(shell_bt_default_conn(), passkey);
 	if (err) {
 		shell_error(sh, "Failed to set passkey (%d)", err);
 		return err;
@@ -4384,7 +4400,7 @@ static int cmd_auth_passkey_notify(const struct shell *sh,
 	unsigned long type;
 	int err;
 
-	if (!default_conn) {
+	if (!shell_bt_default_conn()) {
 		shell_print(sh, "Not connected");
 		return -ENOEXEC;
 	}
@@ -4400,7 +4416,7 @@ static int cmd_auth_passkey_notify(const struct shell *sh,
 		return -EINVAL;
 	}
 
-	err = bt_conn_auth_keypress_notify(default_conn, type);
+	err = bt_conn_auth_keypress_notify(shell_bt_default_conn(), type);
 	if (err) {
 		shell_error(sh, "bt_conn_auth_keypress_notify errno %d", err);
 		return err;
@@ -4423,7 +4439,7 @@ static int cmd_auth_oob_tk(const struct shell *sh, size_t argc, char *argv[])
 		return -EINVAL;
 	}
 
-	err = bt_le_oob_set_legacy_tk(default_conn, tk);
+	err = bt_le_oob_set_legacy_tk(shell_bt_default_conn(), tk);
 	if (err) {
 		shell_error(sh, "Failed to set TK (%d)", err);
 		return err;
@@ -4755,6 +4771,79 @@ SHELL_STATIC_SUBCMD_SET_CREATE(
 	SHELL_SUBCMD_SET_END);
 #endif
 
+#if (defined(CONFIG_BT_HCI_TEST) && (CONFIG_BT_HCI_TEST > 0U))
+#define ITERATIONS_PER_TASK     2
+void shell_hci_test_high_task(void *pvParameters)
+{
+	int err;
+	struct net_buf *rsp;
+
+        for (int i = 0; i < ITERATIONS_PER_TASK; i++) {
+                PRINTF("High_task READ_SUPPORTED_COMMANDS Start \n");
+                err = bt_hci_cmd_send_sync(BT_HCI_OP_READ_SUPPORTED_COMMANDS, NULL, &rsp);
+                if (err) {
+                        PRINTF("High_task bt_hci_cmd_send_sync READ_SUPPORTED_COMMANDS error \n");
+                }
+                PRINTF("High_task READ_SUPPORTED_COMMANDS Done \n");
+                net_buf_unref(rsp);
+
+                PRINTF("High_task READ_LOCAL_FEATURES Start \n");
+                err = bt_hci_cmd_send_sync(BT_HCI_OP_READ_LOCAL_FEATURES, NULL, &rsp);
+                if (err) {
+                        PRINTF("High_task bt_hci_cmd_send_sync READ_LOCAL_FEATURES error\n");
+                }
+                PRINTF("High_task READ_LOCAL_FEATURES Done \n");
+                net_buf_unref(rsp);
+        }
+	vTaskDelete(NULL);
+}
+
+void shell_hci_test_low_task(void *pvParameters)
+{
+        struct net_buf *rsp;
+        int err;
+
+        for (int i = 0; i < ITERATIONS_PER_TASK; i++) {
+                PRINTF("low_task READ_LOCAL_FEATURES Start \n");
+                err = bt_hci_cmd_send_sync(BT_HCI_OP_READ_LOCAL_FEATURES, NULL, &rsp);
+                if (err) {
+                        PRINTF("Low_task bt_hci_cmd_send_sync READ_LOCAL_FEATURES error \n");
+                }
+                PRINTF("low_task READ_LOCAL_FEATURES Done\n");
+                net_buf_unref(rsp);
+
+                PRINTF("low_task READ_LOCAL_VERSION_INFO Start \n");
+                err = bt_hci_cmd_send_sync(BT_HCI_OP_READ_LOCAL_VERSION_INFO, NULL, &rsp);
+                if (err) {
+                        PRINTF("Low_task bt_hci_cmd_send_sync READ_LOCAL_VERSION_INFO error \n");
+                }
+                PRINTF("low_task READ_LOCAL_VERSION_INFO Done \n");
+                net_buf_unref(rsp);
+        }
+        vTaskDelete(NULL);
+}
+static int cmd_bt_hci_test(const struct shell *sh, size_t argc, char *argv[])
+{
+	const char *reset_type;
+
+        shell_info(sh, "HCI command concurrency test start.");
+        if (xTaskCreate(shell_hci_test_low_task, "shell_hci_test_low_task", configMINIMAL_STACK_SIZE * 8, NULL,
+                	tskIDLE_PRIORITY + 1, NULL) != pdPASS)
+        {
+                shell_error(sh, "shell_hci_test_low_task create failed!\r\n");
+                return -1;
+        }
+
+        if (xTaskCreate(shell_hci_test_high_task, "shell_hci_test_high_task", configMINIMAL_STACK_SIZE * 8, NULL,
+                        configMAX_PRIORITIES - 1, NULL) != pdPASS)
+        {
+                shell_error(sh, "shell_hci_test_high_task create failed!\r\n");
+                return -1;
+        }
+    	return 0;
+}
+#endif /* CONFIG_BT_HCI_TEST */
+
 #if (defined(CONFIG_BT_IND_RESET) && (CONFIG_BT_IND_RESET > 0U))
 static int cmd_bt_ind_reset(const struct shell *sh, size_t argc, char *argv[])
 {
@@ -4996,7 +5085,9 @@ SHELL_STATIC_SUBCMD_SET_CREATE(bt_cmds,
 #if (defined(CONFIG_BT_IND_RESET) && (CONFIG_BT_IND_RESET > 0U))
         SHELL_CMD_ARG(ind_reset, NULL, HELP_NONE, cmd_bt_ind_reset, 2, 0),
 #endif /*#define CONFIG_BT_IND_RESET*/
-
+#if (defined(CONFIG_BT_HCI_TEST) && (CONFIG_BT_HCI_TEST > 0U))
+        SHELL_CMD_ARG(hci_test, NULL, HELP_NONE, cmd_bt_hci_test, 1, 0),
+#endif /*#define CONFIG_BT_HCI_TEST*/
 	SHELL_SUBCMD_SET_END
 );
 
@@ -5102,7 +5193,9 @@ void bt_CommandInit(shell_handle_t shell)
 #if (defined(CONFIG_BT_RF_TEST_MODE) && (CONFIG_BT_RF_TEST_MODE > 0))
     bt_ShellTestModeInit(shell);
 #endif /* CONFIG_BT_RF_TEST_MODE */
-
+#if (defined(CONFIG_BT_PLATFORM) && (CONFIG_BT_PLATFORM > 0))
+	bt_ShellPlatformInit(shell);
+#endif /* CONFIG_BT_PLATFORM */
 	bt_sh.sh = shell;
 	ctx_shell = &bt_sh;
 

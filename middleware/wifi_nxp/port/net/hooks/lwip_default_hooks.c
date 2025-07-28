@@ -20,7 +20,7 @@
 
 struct netif *lwip_hook_ip4_route_src(const ip4_addr_t *src, const ip4_addr_t *dest)
 {
-    struct netif *netif = NULL;
+    struct netif *net_if = NULL;
 
     if (src == NULL)
     {
@@ -28,15 +28,17 @@ struct netif *lwip_hook_ip4_route_src(const ip4_addr_t *src, const ip4_addr_t *d
     }
 
     /* iterate through netifs */
-    NETIF_FOREACH(netif)
+    NETIF_FOREACH(net_if)
     {
         /* is the netif up, does it have a link and a valid address? */
-        if (netif_is_up(netif) && netif_is_link_up(netif) && !ip4_addr_isany_val(*netif_ip4_addr(netif)))
+        if ((netif_is_up(net_if) != (t_u8)0)
+             && (netif_is_link_up(net_if) != (t_u8)0)
+             && (ip4_addr_isany_val(*netif_ip4_addr(net_if)) == (t_u8)0))
         {
             /*netif ip4 address matches bind_address*/
-            if (ip4_addr_eq(src, netif_ip4_addr(netif)))
+            if (ip4_addr_eq(src, netif_ip4_addr(net_if)) != (t_u8)0)
             {
-                return netif;
+                return net_if;
             }
         }
     }
@@ -51,17 +53,18 @@ u32_t *lwip_hook_tcp_out_add_tcpopts(struct pbuf *p, struct tcp_hdr *hdr, const 
     t_u16 destination_port;
     t_u32 seq_number;
     t_u32 ack_number;
+    int ret;
 
     source_port      = hdr->src;
     destination_port = hdr->dest;
     t_u32 hdr_len    = TCPH_HDRLEN_BYTES(hdr);
     seq_number       = ntohl(hdr->seqno) + p->tot_len - hdr_len;
     /* sequence number of the keep alive packet = the expected sequence number of next packet -1 */
-    seq_number = seq_number - 1;
+    seq_number = (t_u32)(seq_number - 1);
     seq_number = ntohl(seq_number);
     ack_number = hdr->ackno;
 
-    wlan_save_cloud_keep_alive_params(NULL, source_port, destination_port, seq_number, ack_number, 0);
+    ret = wlan_save_cloud_keep_alive_params(NULL, source_port, destination_port, seq_number, ack_number, 0);
 
     return opts;
 }

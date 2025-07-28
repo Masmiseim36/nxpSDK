@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2007-2015 Freescale Semiconductor, Inc.
- * Copyright 2018-2020, 2024 NXP
+ * Copyright 2018-2020, 2024-2025 NXP
  *
  * License: NXP LA_OPT_Online Code Hosting NXP_Software_License
  *
@@ -173,7 +173,14 @@ FMSTR_BPTR FMSTR_SetScope(FMSTR_SESSION *session, FMSTR_BPTR msgBuffIO, FMSTR_SI
     FMSTR_U8 responseCode = FMSTR_STS_OK;
     FMSTR_U8 scopeIndex;
 
-    /* Get recerder index */
+    /* Need at least one byte with oscilloscope index */
+    if (inputLen < 1U)
+    {
+        *retStatus = FMSTR_STC_INVSIZE;
+        return response;
+    }
+
+    /* Get oscilloscope index */
     msgBuffIO = FMSTR_ValueFromBuffer8(&scopeIndex, msgBuffIO);
     inputLen--;
 
@@ -196,15 +203,16 @@ FMSTR_BPTR FMSTR_SetScope(FMSTR_SESSION *session, FMSTR_BPTR msgBuffIO, FMSTR_SI
 
     scope = &fmstr_scopeCfg[scopeIndex];
 
-    while (inputLen != 0U && (responseCode == FMSTR_STS_OK))
+    while (inputLen >= 2U && (responseCode == FMSTR_STS_OK))
     {
         FMSTR_U8 opCode, opLen;
 
         /* Get Operation Code and data length */
         msgBuffIO = FMSTR_ValueFromBuffer8(&opCode, msgBuffIO);
         msgBuffIO = FMSTR_ValueFromBuffer8(&opLen, msgBuffIO);
+        inputLen -= 2U;
 
-        if ((opLen + 2U) > inputLen)
+        if (((FMSTR_SIZE)opLen) > inputLen)
         {
             *retStatus = FMSTR_STC_INVSIZE;
             return response;
@@ -227,7 +235,7 @@ FMSTR_BPTR FMSTR_SetScope(FMSTR_SESSION *session, FMSTR_BPTR msgBuffIO, FMSTR_SI
                 break;
         }
 
-        inputLen -= opLen + 2U;
+        inputLen -= opLen;
         msgBuffIO += opLen;
     }
 

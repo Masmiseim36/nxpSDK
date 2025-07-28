@@ -848,6 +848,11 @@ mlan_status wlan_ops_sta_process_cmdresp(IN t_void *priv, IN t_u16 cmdresp_no, I
         case HostCmd_CMD_802_11_RF_CHANNEL:
             ret = wlan_ret_802_11_rf_channel(pmpriv, resp, pioctl_buf);
             break;
+#if CONFIG_WPA_SUPP_P2P
+        case HOST_CMD_WIFI_DIRECT_MODE_CONFIG:
+            ret = wlan_ret_wifi_direct_mode(pmpriv, resp, pioctl_buf);
+            break;
+#endif
 #if CONFIG_WMM
         case HostCmd_CMD_WMM_PARAM_CONFIG:
             ret = wlan_ret_wmm_param_config(pmpriv, resp, pioctl_buf);

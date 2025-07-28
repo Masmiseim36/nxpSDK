@@ -246,6 +246,7 @@
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT595SFFOC_cm33</state>
+          <state>MIMXRT595S_cm33_SERIES</state>
           <state>OSA_USED</state>
           <state>BOOT_HEADER_ENABLE=1</state>
           <state>TIMER_PORT_TYPE_MRT=1</state>
@@ -389,6 +390,7 @@
           <state>$PROJ_DIR$/../../../../../../middleware/usb/pd</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/pd/ptn5110</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/pd/phy_interface</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/usb/config/pd</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM33_NTZ/non_secure</state>
@@ -578,6 +580,7 @@
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT595SFFOC_cm33</state>
+          <state>MIMXRT595S_cm33_SERIES</state>
           <state>OSA_USED</state>
         </option>
         <option>
@@ -689,6 +692,7 @@
           <state>$PROJ_DIR$/../../../../../../middleware/usb/pd</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/pd/ptn5110</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/pd/phy_interface</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/usb/config/pd</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM33_NTZ/non_secure</state>
@@ -1403,6 +1407,7 @@
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT595SFFOC_cm33</state>
+          <state>MIMXRT595S_cm33_SERIES</state>
           <state>OSA_USED</state>
           <state>BOOT_HEADER_ENABLE=1</state>
           <state>TIMER_PORT_TYPE_MRT=1</state>
@@ -1546,6 +1551,7 @@
           <state>$PROJ_DIR$/../../../../../../middleware/usb/pd</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/pd/ptn5110</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/pd/phy_interface</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/usb/config/pd</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM33_NTZ/non_secure</state>
@@ -1735,6 +1741,7 @@
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT595SFFOC_cm33</state>
+          <state>MIMXRT595S_cm33_SERIES</state>
           <state>OSA_USED</state>
         </option>
         <option>
@@ -1846,6 +1853,7 @@
           <state>$PROJ_DIR$/../../../../../../middleware/usb/pd</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/pd/ptn5110</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/pd/phy_interface</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/usb/config/pd</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM33_NTZ/non_secure</state>
@@ -2560,6 +2568,7 @@
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT595SFFOC_cm33</state>
+          <state>MIMXRT595S_cm33_SERIES</state>
           <state>OSA_USED</state>
           <state>BOOT_HEADER_ENABLE=1</state>
           <state>TIMER_PORT_TYPE_MRT=1</state>
@@ -2703,6 +2712,7 @@
           <state>$PROJ_DIR$/../../../../../../middleware/usb/pd</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/pd/ptn5110</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/pd/phy_interface</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/usb/config/pd</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM33_NTZ/non_secure</state>
@@ -2892,6 +2902,7 @@
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT595SFFOC_cm33</state>
+          <state>MIMXRT595S_cm33_SERIES</state>
           <state>OSA_USED</state>
         </option>
         <option>
@@ -3003,6 +3014,7 @@
           <state>$PROJ_DIR$/../../../../../../middleware/usb/pd</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/pd/ptn5110</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/pd/phy_interface</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/usb/config/pd</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM33_NTZ/non_secure</state>
@@ -3717,6 +3729,7 @@
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT595SFFOC_cm33</state>
+          <state>MIMXRT595S_cm33_SERIES</state>
           <state>OSA_USED</state>
           <state>BOOT_HEADER_ENABLE=1</state>
           <state>TIMER_PORT_TYPE_MRT=1</state>
@@ -3860,6 +3873,7 @@
           <state>$PROJ_DIR$/../../../../../../middleware/usb/pd</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/pd/ptn5110</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/pd/phy_interface</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/usb/config/pd</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM33_NTZ/non_secure</state>
@@ -4049,6 +4063,7 @@
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT595SFFOC_cm33</state>
+          <state>MIMXRT595S_cm33_SERIES</state>
           <state>OSA_USED</state>
         </option>
         <option>
@@ -4160,6 +4175,7 @@
           <state>$PROJ_DIR$/../../../../../../middleware/usb/pd</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/pd/ptn5110</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/pd/phy_interface</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/usb/config/pd</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM33_NTZ/non_secure</state>
@@ -5129,13 +5145,13 @@
     <group>
       <name>osa</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction.h</name>
-      </file>
-      <file>
         <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction_free_rtos.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction_free_rtos.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction.h</name>
       </file>
     </group>
   </group>
@@ -5319,6 +5335,9 @@
         <file>
           <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/timers.h</name>
         </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/freertos_tasks_c_additions.h</name>
+        </file>
       </group>
       <group>
         <name>portable</name>
@@ -5374,6 +5393,9 @@
     <name>doc</name>
     <file>
       <name>$PROJ_DIR$/../readme.md</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../examples_shared_readme.md</name>
     </file>
   </group>
 </project>

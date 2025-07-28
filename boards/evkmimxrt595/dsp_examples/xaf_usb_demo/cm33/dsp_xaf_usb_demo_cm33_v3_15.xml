@@ -46,13 +46,13 @@
     <definition extID="component.i3c_adapter.MIMXRT595S"/>
     <definition extID="component.usart_adapter.MIMXRT595S"/>
     <definition extID="component.osa_template_config.MIMXRT595S"/>
-    <definition extID="component.osa_interface.MIMXRT595S"/>
     <definition extID="component.osa.MIMXRT595S"/>
     <definition extID="component.osa_free_rtos.MIMXRT595S"/>
     <definition extID="driver.pca9420.MIMXRT595S"/>
     <definition extID="middleware.usb.common_header.MIMXRT595S"/>
     <definition extID="middleware.usb.device.common_header.MIMXRT595S"/>
     <definition extID="middleware.usb.device_controller_ip3511hs.MIMXRT595S"/>
+    <definition extID="middleware.usb.device.ip3511hs_config_header.MIMXRT595S"/>
     <definition extID="middleware.usb.device.controller.driver.MIMXRT595S"/>
     <definition extID="middleware.usb.device.stack.MIMXRT595S"/>
     <definition extID="middleware.usb.device.audio.MIMXRT595S"/>
@@ -65,6 +65,7 @@
     <definition extID="middleware.freertos-kernel.MIMXRT595S"/>
     <definition extID="middleware.freertos-kernel.heap_4.MIMXRT595S"/>
     <definition extID="middleware.freertos-kernel.cm33_non_trustzone.MIMXRT595S"/>
+    <definition extID="middleware.freertos-kernel.extension.MIMXRT595S"/>
     <definition extID="middleware.freertos-kernel.config.MIMXRT595S"/>
     <definition extID="iar"/>
     <definition extID="mdk"/>
@@ -74,7 +75,7 @@
     <definition extID="com.crt.advproject.config.exe.debug"/>
     <definition extID="com.crt.advproject.config.exe.release"/>
   </externalDefinitions>
-  <example id="evkmimxrt595_dsp_xaf_usb_demo_cm33" name="dsp_xaf_usb_demo_cm33" device_core="cm33_MIMXRT595S" dependency="platform.drivers.flash_config.evkmimxrt595.MIMXRT595S CMSIS_Include_core_cm.MIMXRT595S device.MIMXRT595S_CMSIS.MIMXRT595S device.MIMXRT595S_system.MIMXRT595S device.MIMXRT595S_startup.MIMXRT595S platform.drivers.clock.MIMXRT595S platform.drivers.dsp.MIMXRT595S platform.drivers.i2s_bridge.MIMXRT595S platform.drivers.inputmux_connections.MIMXRT595S platform.drivers.memory.MIMXRT595S platform.drivers.power.MIMXRT595S platform.drivers.reset.MIMXRT595S platform.drivers.soc_mipi_dsi.MIMXRT595S platform.drivers.cache_cache64.MIMXRT595S platform.drivers.common.MIMXRT595S platform.drivers.ctimer.MIMXRT595S platform.drivers.flexcomm.MIMXRT595S platform.drivers.flexcomm_usart.MIMXRT595S platform.drivers.flexcomm_i2c.MIMXRT595S platform.drivers.flexspi.MIMXRT595S platform.drivers.i3c.MIMXRT595S platform.drivers.iap3.MIMXRT595S platform.drivers.inputmux.MIMXRT595S platform.drivers.lpc_gpio.MIMXRT595S platform.drivers.lpc_iopctl.MIMXRT595S platform.drivers.mu.MIMXRT595S platform.drivers.sema42.MIMXRT595S platform.utilities.assert.MIMXRT595S platform.utilities.misc_utilities.MIMXRT595S component.lists.MIMXRT595S utility.str.MIMXRT595S utility.debug_console.MIMXRT595S utility.shell.MIMXRT595S component.serial_manager.MIMXRT595S component.serial_manager_uart.MIMXRT595S component.codec_i2c.MIMXRT595S driver.codec.MIMXRT595S component.codec_adapters.MIMXRT595S component.wm8904_adapter.MIMXRT595S driver.wm8904.MIMXRT595S component.i2c_adapter_interface.MIMXRT595S component.i3c_adapter.MIMXRT595S component.usart_adapter.MIMXRT595S component.osa_template_config.MIMXRT595S component.osa_interface.MIMXRT595S component.osa.MIMXRT595S component.osa_free_rtos.MIMXRT595S driver.pca9420.MIMXRT595S middleware.usb.common_header.MIMXRT595S middleware.usb.device.common_header.MIMXRT595S middleware.usb.device_controller_ip3511hs.MIMXRT595S middleware.usb.device.controller.driver.MIMXRT595S middleware.usb.device.stack.MIMXRT595S middleware.usb.device.audio.MIMXRT595S middleware.usb.phy.MIMXRT595S middleware.multicore.rpmsg-lite.MIMXRT595S middleware.multicore.rpmsg-lite.queue.MIMXRT595S middleware.multicore.rpmsg-lite.ns.MIMXRT595S middleware.multicore.rpmsg-lite.freertos.MIMXRT595S middleware.multicore.rpmsg-lite.evkmimxrt595.MIMXRT595S middleware.freertos-kernel.MIMXRT595S middleware.freertos-kernel.heap_4.MIMXRT595S middleware.freertos-kernel.cm33_non_trustzone.MIMXRT595S middleware.freertos-kernel.config.MIMXRT595S" category="dsp_examples">
+  <example id="evkmimxrt595_dsp_xaf_usb_demo_cm33" name="dsp_xaf_usb_demo_cm33" device_core="cm33_MIMXRT595S" dependency="platform.drivers.flash_config.evkmimxrt595.MIMXRT595S CMSIS_Include_core_cm.MIMXRT595S device.MIMXRT595S_CMSIS.MIMXRT595S device.MIMXRT595S_system.MIMXRT595S device.MIMXRT595S_startup.MIMXRT595S platform.drivers.clock.MIMXRT595S platform.drivers.dsp.MIMXRT595S platform.drivers.i2s_bridge.MIMXRT595S platform.drivers.inputmux_connections.MIMXRT595S platform.drivers.memory.MIMXRT595S platform.drivers.power.MIMXRT595S platform.drivers.reset.MIMXRT595S platform.drivers.soc_mipi_dsi.MIMXRT595S platform.drivers.cache_cache64.MIMXRT595S platform.drivers.common.MIMXRT595S platform.drivers.ctimer.MIMXRT595S platform.drivers.flexcomm.MIMXRT595S platform.drivers.flexcomm_usart.MIMXRT595S platform.drivers.flexcomm_i2c.MIMXRT595S platform.drivers.flexspi.MIMXRT595S platform.drivers.i3c.MIMXRT595S platform.drivers.iap3.MIMXRT595S platform.drivers.inputmux.MIMXRT595S platform.drivers.lpc_gpio.MIMXRT595S platform.drivers.lpc_iopctl.MIMXRT595S platform.drivers.mu.MIMXRT595S platform.drivers.sema42.MIMXRT595S platform.utilities.assert.MIMXRT595S platform.utilities.misc_utilities.MIMXRT595S component.lists.MIMXRT595S utility.str.MIMXRT595S utility.debug_console.MIMXRT595S utility.shell.MIMXRT595S component.serial_manager.MIMXRT595S component.serial_manager_uart.MIMXRT595S component.codec_i2c.MIMXRT595S driver.codec.MIMXRT595S component.codec_adapters.MIMXRT595S component.wm8904_adapter.MIMXRT595S driver.wm8904.MIMXRT595S component.i2c_adapter_interface.MIMXRT595S component.i3c_adapter.MIMXRT595S component.usart_adapter.MIMXRT595S component.osa_template_config.MIMXRT595S component.osa.MIMXRT595S component.osa_free_rtos.MIMXRT595S driver.pca9420.MIMXRT595S middleware.usb.common_header.MIMXRT595S middleware.usb.device.common_header.MIMXRT595S middleware.usb.device_controller_ip3511hs.MIMXRT595S middleware.usb.device.ip3511hs_config_header.MIMXRT595S middleware.usb.device.controller.driver.MIMXRT595S middleware.usb.device.stack.MIMXRT595S middleware.usb.device.audio.MIMXRT595S middleware.usb.phy.MIMXRT595S middleware.multicore.rpmsg-lite.MIMXRT595S middleware.multicore.rpmsg-lite.queue.MIMXRT595S middleware.multicore.rpmsg-lite.ns.MIMXRT595S middleware.multicore.rpmsg-lite.freertos.MIMXRT595S middleware.multicore.rpmsg-lite.evkmimxrt595.MIMXRT595S middleware.freertos-kernel.MIMXRT595S middleware.freertos-kernel.heap_4.MIMXRT595S middleware.freertos-kernel.cm33_non_trustzone.MIMXRT595S middleware.freertos-kernel.extension.MIMXRT595S middleware.freertos-kernel.config.MIMXRT595S" category="dsp_examples">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -95,9 +96,11 @@
           <value>XA_RENDERER</value>
           <value>USB_STACK_FREERTOS</value>
           <value>DSP_IMAGE_COPY_TO_RAM=1</value>
+          <value>__USE_SHMEM</value>
           <value>USB_STACK_USE_DEDICATED_RAM=1</value>
           <value>SDK_DEBUGCONSOLE=1</value>
           <value>MCUX_META_BUILD</value>
+          <value>MIMXRT595S_cm33_SERIES</value>
           <value>OSA_USED</value>
           <value>SERIAL_PORT_TYPE_UART=1</value>
           <value>SDK_I2C_BASED_COMPONENT_USED=1</value>
@@ -106,6 +109,20 @@
           <value>SDK_I3C_BASED_COMPONENT_USED=1</value>
           <value>USE_RTOS=1</value>
           <value>SDK_OS_FREE_RTOS</value>
+        </option>
+        <option id="com.crt.advproject.link.fpu" type="enum">
+          <value>com.crt.advproject.link.fpu.fpv4.hard</value>
+          <value>com.crt.advproject.link.fpu.fpv5sp.hard</value>
+        </option>
+        <option id="gnu.c.link.option.nostdlibs" type="boolean">
+          <value>true</value>
+        </option>
+        <option id="gnu.c.link.option.other" type="stringList">
+          <value>--defsym=__use_shmem__=1</value>
+          <value>-no-warn-rwx-segments</value>
+        </option>
+        <option id="gnu.c.link.option.group" type="boolean">
+          <value>true</value>
         </option>
         <option id="com.crt.advproject.gas.fpu" type="enum">
           <value>com.crt.advproject.gas.fpu.fpv4.hard</value>
@@ -129,19 +146,6 @@
         </option>
         <option id="gnu.c.compiler.option.warnings.toerrors" type="boolean">
           <value>false</value>
-        </option>
-        <option id="com.crt.advproject.link.fpu" type="enum">
-          <value>com.crt.advproject.link.fpu.fpv4.hard</value>
-          <value>com.crt.advproject.link.fpu.fpv5sp.hard</value>
-        </option>
-        <option id="gnu.c.link.option.nostdlibs" type="boolean">
-          <value>true</value>
-        </option>
-        <option id="gnu.c.link.option.other" type="stringList">
-          <value>-no-warn-rwx-segments</value>
-        </option>
-        <option id="gnu.c.link.option.group" type="boolean">
-          <value>true</value>
         </option>
       </toolchainSetting>
     </toolchainSettings>
@@ -203,7 +207,6 @@
       <files mask="main.h"/>
       <files mask="cmd.h"/>
       <files mask="usb_device_descriptor.h"/>
-      <files mask="usb_device_config.h"/>
       <files mask="usb_audio_config.h"/>
       <files mask="composite.h"/>
       <files mask="audio_unified.h"/>
@@ -222,6 +225,9 @@
       <files mask="srtm_config_audio.h"/>
       <files mask="rpmsg_config.h"/>
       <files mask="dsp_support.h"/>
+    </source>
+    <source path="." project_relative_path="source" type="c_include" config="true">
+      <files mask="usb_device_config.h"/>
     </source>
     <source path="." project_relative_path="source" type="src">
       <files mask="dsp_support.c"/>
@@ -268,11 +274,11 @@
     <source path="." project_relative_path="source" type="c_include" config="true">
       <files mask="FreeRTOSConfig_Gen.h"/>
       <files mask="fsl_os_abstraction_config.h"/>
+      <files mask="usb_device_config.h"/>
     </source>
     <source path="." project_relative_path="source" type="c_include">
       <files mask="fsl_debug_console_conf.h"/>
       <files mask="rpmsg_config.h"/>
-      <files mask="usb_device_config.h"/>
     </source>
     <source path="." project_relative_path="source" type="c_preinclude">
       <files mask="mcux_config.h"/>
@@ -282,6 +288,9 @@
     </source>
     <source path="." project_relative_path="doc" type="doc">
       <files mask="example_board_readme.md"/>
+    </source>
+    <source path="." project_relative_path="doc" type="doc">
+      <files mask="examples_shared_readme.md"/>
     </source>
   </example>
 </ksdk:examples>

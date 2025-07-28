@@ -351,10 +351,10 @@ static int le_set_tx_power(const struct shell *sh, size_t argc, char **argv)
     int err;
     struct net_buf *buf = NULL, *rsp=NULL;
 
-    if (argc < 1)
+    if (argc < 3)
     {
     	shell_print(sh, "the parameter count is wrong\r\n");
-        shell_print(sh, "Usage: le_test.set_tx_power tx_power[1]\n");
+        shell_print(sh, "Usage: le_test.set_tx_power tx_power[1] feloss[2]\n");
         return -EINVAL;
     }
 
@@ -544,7 +544,7 @@ SHELL_STATIC_SUBCMD_SET_CREATE(hci_cmds,
 );
 
 SHELL_STATIC_SUBCMD_SET_CREATE(le_cmds,
-    SHELL_CMD_ARG(set_tx_power, NULL, "tx_power[1]", le_set_tx_power, 2, 0),
+    SHELL_CMD_ARG(set_tx_power, NULL, "tx_power[1] feloss[2]", le_set_tx_power, 3, 0),
     SHELL_CMD_ARG(tx_test, NULL, "tx_channel[1] data_length[1] payload[1] phy[1]", le_tx_test, 2, 6),
     SHELL_CMD_ARG(rx_test, NULL, "rc_channel[1] phy[1] modulation[1]", le_rx_test, 2, 5),
     SHELL_CMD_ARG(end_test, NULL, "end the le test", le_end_test, 1, 0),

@@ -9,7 +9,7 @@
 *                                                                    *
 **********************************************************************
 
-** emWin V6.46 - Graphical user interface for embedded applications **
+** emWin V6.50 - Graphical user interface for embedded applications **
 All  Intellectual Property rights  in the Software belongs to  SEGGER.
 emWin is protected by  international copyright laws.  Knowledge of the
 source code may not be used to write a similar product.  This file may
@@ -417,6 +417,7 @@ int LCD_GetMirrorYEx        (int LayerIndex);
 int LCD_GetSwapXYEx         (int LayerIndex);
 int LCD_GetReversLUTEx      (int LayerIndex);
 int LCD_GetPhysColorsInRAMEx(int LayerIndex);
+int LCD_GetOrientationEx    (int LayerIndex);
 
 int LCD_GetXSize            (void);
 int LCD_GetYSize            (void);
@@ -431,6 +432,7 @@ int LCD_GetMirrorY          (void);
 int LCD_GetSwapXY           (void);
 int LCD_GetReversLUT        (void);
 int LCD_GetPhysColorsInRAM  (void);
+int LCD_GetOrientation      (void);
 
 I32 LCD__GetBPP      (U32 IndexMask);
 I32 LCD__GetBPPDevice(U32 IndexMask);
@@ -478,45 +480,46 @@ int  LCD_ROTATE_SetSelEx              (int Index, int LayerIndex);
 *
 *       Values for requesting and setting function pointers (display driver)
 */
-                                       /* Request of a function pointer for... */
-#define LCD_DEVFUNC_READRECT      0x01 /* ...reading a rectangular display area */
-#define LCD_DEVFUNC_SETALPHA      0x02 /* ...setting the alpha blending factor */
-#define LCD_DEVFUNC_SETPOS        0x03 /* ...setting the layer position */
-#define LCD_DEVFUNC_GETPOS        0x04 /* ...getting the layer position */
-#define LCD_DEVFUNC_SETSIZE       0x05 /* ...setting the layer size */
-#define LCD_DEVFUNC_SETVIS        0x06 /* ...setting the visibility of a layer */
-#define LCD_DEVFUNC_24BPP         0x07 /* ...drawing 24bpp bitmaps */
-#define LCD_DEVFUNC_SET_VRAM_ADDR 0x09 /* ...setting the VRAM address */
-#define LCD_DEVFUNC_SET_VSIZE     0x0A /* ...setting the VRAM size */
-#define LCD_DEVFUNC_SET_SIZE      0x0B /* ...setting the display size */
-#define LCD_DEVFUNC_INIT          0x0C /* ...initializing the display controller */
-#define LCD_DEVFUNC_CONTROLCACHE  0x0D /* ...controlling the cache */
-#define LCD_DEVFUNC_ON            0x0E /* ...switching the display on */
-#define LCD_DEVFUNC_OFF           0x0F /* ...switching the display off */
-#define LCD_DEVFUNC_SETLUTENTRY   0x10 /* ...setting a LUT entry */
-#define LCD_DEVFUNC_FILLPOLY      0x11 /* ...filling a polygon */
-#define LCD_DEVFUNC_FILLPOLYAA    0x12 /* ...filling an antialiased polygon */
-#define LCD_DEVFUNC_ALPHAMODE     0x13 /* ...setting the alpha blending mode */
-#define LCD_DEVFUNC_CHROMAMODE    0x14 /* ...setting the chroma blending mode */
-#define LCD_DEVFUNC_CHROMA        0x15 /* ...setting the chroma values */
-#define LCD_DEVFUNC_SETFUNC       0x16 /* ...setting a function pointer */
-#define LCD_DEVFUNC_REFRESH       0x17 /* ...refreshing the display */
-#define LCD_DEVFUNC_SETRECT       0x18 /* ...setting the drawing rectangle */
-#define LCD_DEVFUNC_SETTHRESHOLD  0x19 /* ...setting threshold for calling HW function */
-                                       /* Setting a function pointer for... */
-#define LCD_DEVFUNC_FILLRECT      0x1A /* ...filling a rectangular area */
-#define LCD_DEVFUNC_DRAWBMP_1BPP  0x1B /* ...drawing a 1bpp bitmap */
-#define LCD_DEVFUNC_COPYBUFFER    0x1C /* ...copying complete frame buffers */
-#define LCD_DEVFUNC_SHOWBUFFER    0x1D /* ...shows the given buffer */
-#define LCD_DEVFUNC_COPYRECT      0x1E /* ...copying a rectangular area */
-#define LCD_DEVFUNC_DRAWBMP_16BPP 0x1F /* ...drawing a 16bpp bitmap */
-#define LCD_DEVFUNC_DRAWBMP_8BPP  0x20 /* ...drawing a 8bpp bitmap */
-#define LCD_DEVFUNC_READPIXEL     0x21 /* ...reading a pixel index */
-#define LCD_DEVFUNC_READMPIXELS   0x22 /* ...reading multiple pixel indices */
-#define LCD_DEVFUNC_DRAWBMP_32BPP 0x23 /* ...drawing a 32bpp bitmap */
-#define LCD_DEVFUNC_SET_BUFFERPTR 0x24 /* ...setting an array of buffer pointers */
-#define LCD_DEVFUNC_EXIT          0x25 /* ...free memory and shut down controller */
-#define LCD_DEVFUNC_INIT_PRIVATE  0x26 /* ...initializing the display driver */
+                                        /* Request of a function pointer for... */
+#define LCD_DEVFUNC_READRECT       0x01 /* ...reading a rectangular display area */
+#define LCD_DEVFUNC_SETALPHA       0x02 /* ...setting the alpha blending factor */
+#define LCD_DEVFUNC_SETPOS         0x03 /* ...setting the layer position */
+#define LCD_DEVFUNC_GETPOS         0x04 /* ...getting the layer position */
+#define LCD_DEVFUNC_SETSIZE        0x05 /* ...setting the layer size */
+#define LCD_DEVFUNC_SETVIS         0x06 /* ...setting the visibility of a layer */
+#define LCD_DEVFUNC_24BPP          0x07 /* ...drawing 24bpp bitmaps */
+#define LCD_DEVFUNC_SET_VRAM_ADDR  0x09 /* ...setting the VRAM address */
+#define LCD_DEVFUNC_SET_VSIZE      0x0A /* ...setting the VRAM size */
+#define LCD_DEVFUNC_SET_SIZE       0x0B /* ...setting the display size */
+#define LCD_DEVFUNC_INIT           0x0C /* ...initializing the display controller */
+#define LCD_DEVFUNC_CONTROLCACHE   0x0D /* ...controlling the cache */
+#define LCD_DEVFUNC_ON             0x0E /* ...switching the display on */
+#define LCD_DEVFUNC_OFF            0x0F /* ...switching the display off */
+#define LCD_DEVFUNC_SETLUTENTRY    0x10 /* ...setting a LUT entry */
+#define LCD_DEVFUNC_FILLPOLY       0x11 /* ...filling a polygon */
+#define LCD_DEVFUNC_FILLPOLYAA     0x12 /* ...filling an antialiased polygon */
+#define LCD_DEVFUNC_ALPHAMODE      0x13 /* ...setting the alpha blending mode */
+#define LCD_DEVFUNC_CHROMAMODE     0x14 /* ...setting the chroma blending mode */
+#define LCD_DEVFUNC_CHROMA         0x15 /* ...setting the chroma values */
+#define LCD_DEVFUNC_SETFUNC        0x16 /* ...setting a function pointer */
+#define LCD_DEVFUNC_REFRESH        0x17 /* ...refreshing the display */
+#define LCD_DEVFUNC_SETRECT        0x18 /* ...setting the drawing rectangle */
+#define LCD_DEVFUNC_SETTHRESHOLD   0x19 /* ...setting threshold for calling HW function */
+                                        /* Setting a function pointer or data for... */
+#define LCD_DEVFUNC_FILLRECT       0x1A /* ...filling a rectangular area */
+#define LCD_DEVFUNC_DRAWBMP_1BPP   0x1B /* ...drawing a 1bpp bitmap */
+#define LCD_DEVFUNC_COPYBUFFER     0x1C /* ...copying complete frame buffers */
+#define LCD_DEVFUNC_SHOWBUFFER     0x1D /* ...shows the given buffer */
+#define LCD_DEVFUNC_COPYRECT       0x1E /* ...copying a rectangular area */
+#define LCD_DEVFUNC_DRAWBMP_16BPP  0x1F /* ...drawing a 16bpp bitmap */
+#define LCD_DEVFUNC_DRAWBMP_8BPP   0x20 /* ...drawing a 8bpp bitmap */
+#define LCD_DEVFUNC_READPIXEL      0x21 /* ...reading a pixel index */
+#define LCD_DEVFUNC_READMPIXELS    0x22 /* ...reading multiple pixel indices */
+#define LCD_DEVFUNC_DRAWBMP_32BPP  0x23 /* ...drawing a 32bpp bitmap */
+#define LCD_DEVFUNC_SET_BUFFERPTR  0x24 /* ...setting an array of buffer pointers */
+#define LCD_DEVFUNC_EXIT           0x25 /* ...free memory and shut down controller */
+#define LCD_DEVFUNC_INIT_PRIVATE   0x26 /* ...initializing the display driver */
+#define LCD_DEVFUNC_SET_THRESHOLD  0x27 /* ...setting the threshold value for calling the HW function */
 
 /*********************************************************************
 *

@@ -23,28 +23,22 @@
 #include "fsl_component_log.h"
 LOG_MODULE_DEFINE(LOG_MODULE_NAME, kLOG_LevelTrace);
 
-#if (defined(CONFIG_BT_CONN) && (CONFIG_BT_CONN > 0))
-#if (defined(CONFIG_BT_ISO) && ((CONFIG_BT_ISO) > 0))
-#define MAX_EVENT_COUNT CONFIG_BT_MAX_CONN + CONFIG_BT_ISO_MAX_CHAN
-#else
-#define MAX_EVENT_COUNT CONFIG_BT_MAX_CONN
-#endif /* CONFIG_BT_ISO */
-#elif (defined(CONFIG_BT_ISO) && ((CONFIG_BT_ISO) > 0))
-#define MAX_EVENT_COUNT CONFIG_BT_ISO_MAX_CHAN
-#endif /* CONFIG_BT_CONN */
-
-#if ((defined(CONFIG_BT_CONN) && (CONFIG_BT_CONN > 0U)) || (defined(CONFIG_BT_ISO) && (CONFIG_BT_ISO > 0U)))
-#define NUM_COMLETE_EVENT_SIZE BT_BUF_EVT_SIZE(                        \
-	sizeof(struct bt_hci_cp_host_num_completed_packets) +          \
-	MAX_EVENT_COUNT * sizeof(struct bt_hci_handle_count))
-/* Dedicated pool for HCI_Number_of_Completed_Packets. This event is always
- * consumed synchronously by bt_recv_prio() so a single buffer is enough.
- * Having a dedicated pool for it ensures that exhaustion of the RX pool
- * cannot block the delivery of this priority event.
+/* Events have a length field of 1 byte. This size fits all events.
+ *
+ * It's true that we don't put all kinds of events there (yet). However, the
+ * command complete event has an arbitrary payload, depending on opcode.
  */
-#define SYNC_EVT_SIZE NUM_COMLETE_EVENT_SIZE
+#define SYNC_EVT_SIZE (BT_BUF_RESERVE + BT_HCI_EVT_HDR_SIZE + 255)
+
+/* Pool for RX HCI buffers that are always freed by `bt_recv`
+ * before it returns.
+ *
+ * A singleton buffer shall be sufficient for correct operation.
+ * The buffer count may be increased as an optimization to allow
+ * the HCI transport to fill buffers in parallel with `bt_recv`
+ * consuming them.
+ */
 NET_BUF_POOL_FIXED_DEFINE(sync_evt_pool, 1, SYNC_EVT_SIZE, sizeof(struct bt_buf_data), NULL);
-#endif /* CONFIG_BT_CONN || CONFIG_BT_ISO */
 
 #if (defined(CONFIG_BT_BUF_EVT_DISCARDABLE_COUNT) && (CONFIG_BT_BUF_EVT_DISCARDABLE_COUNT > 0U))
 NET_BUF_POOL_FIXED_DEFINE(discardable_pool, CONFIG_BT_BUF_EVT_DISCARDABLE_COUNT,
@@ -104,9 +98,11 @@ struct net_buf *bt_buf_get_evt(uint8_t evt, bool discardable,
 	switch (evt) {
 #if ((defined(CONFIG_BT_CONN) && ((CONFIG_BT_CONN) > 0U)) || (defined(CONFIG_BT_ISO) && ((CONFIG_BT_ISO) > 0U)))
 	case BT_HCI_EVT_NUM_COMPLETED_PACKETS:
+#endif /* CONFIG_BT_CONN || CONFIG_BT_ISO */
+	case BT_HCI_EVT_CMD_STATUS:
+	case BT_HCI_EVT_CMD_COMPLETE:
 		buf = net_buf_alloc(&sync_evt_pool, timeout);
 		break;
-#endif /* CONFIG_BT_CONN || CONFIG_BT_ISO */
 	default:
 		if (discardable) {
 			buf = net_buf_alloc(&discardable_pool, timeout);

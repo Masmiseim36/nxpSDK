@@ -385,7 +385,7 @@ void hci_uart_transmit_cb
 #else /* EM_ENABLE_PAL_OS */
                 ret = BT_thread_cond_signal (&hci_uart_cond);
 
-                if (0U != ret)
+                if (0 != ret)
                 {
                     HCI_UART_ERR(
                     "[HCI-UART] SIGNAL from ISR failed with RET%d\r\n", ret);

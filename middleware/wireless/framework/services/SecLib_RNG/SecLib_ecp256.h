@@ -1,5 +1,5 @@
 /*! *********************************************************************************
- * Copyright 2022-2023 NXP
+ * Copyright 2022-2023, 2025 NXP
  * All rights reserved.
  *
  * \file
@@ -180,6 +180,7 @@ extern "C" {
  ********************************************************************************** */
 void SecLib_SetExternalMultiplicationCb(secLibCallback_t pfCallback);
 
+#if !defined(gSecLibUsePsa_d) || (gSecLibUsePsa_d == 0)
 /*! *********************************************************************************
  * \brief  This function performs calls the multiplication Callback.
  *
@@ -187,6 +188,7 @@ void SecLib_SetExternalMultiplicationCb(secLibCallback_t pfCallback);
  *
  ********************************************************************************** */
 void SecLib_ExecMultiplicationCb(computeDhKeyParam_t *pMsg);
+#endif
 
 /************************************************************************************
  * \brief Generates a new ECDH P256 Private/Public key pair
@@ -211,6 +213,14 @@ secResultType_t ECDH_P256_GenerateKeys(ecdhPublicKey_t *pOutPublicKey, ecdhPriva
  *
  ************************************************************************************/
 secResultType_t ECDH_P256_GenerateKeysSeg(computeDhKeyParam_t *pDhKeyData);
+
+/************************************************************************************
+ * \brief Checks whether a public key is valid (point is on the curve).
+ *
+ * \return TRUE if valid, FALSE if not
+ *
+ ************************************************************************************/
+bool_t ECP256_IsKeyValid(const ecp256Point_t *pKey);
 
 /************************************************************************************
  * \brief Computes the Diffie-Hellman Key for an ECDH P256 key pair.
@@ -277,6 +287,7 @@ secResultType_t ECDH_P256_ComputeA2BKeySecure(const ecdhPublicKey_t *pInPeerPubl
  ************************************************************************************/
 secResultType_t ECDH_P256_FreeE2EKeyDataSecure(ecdhDhKey_t *pE2EKeyData);
 
+#if !defined(gSecLibUsePsa_d) || (gSecLibUsePsa_d == 0)
 /*! *********************************************************************************
  * \brief ECP256R1 generate public from private key passed as argument
  *
@@ -569,6 +580,7 @@ secEcp256Status_t ECP256_DoublePointMulAdd(
  *
  ********************************************************************************** */
 secEcp256Status_t ECP256_PointInvert(uint32_t *R, uint32_t const *P);
+#endif
 
 /*! *********************************************************************************
  * \brief Return whether point is valid or not, i.e it belongs to the curve
@@ -580,6 +592,7 @@ secEcp256Status_t ECP256_PointInvert(uint32_t *R, uint32_t const *P);
  ********************************************************************************** */
 bool ECP256_PointValid(const ecp256Point_t *P);
 
+#if !defined(gSecLibUsePsa_d) || (gSecLibUsePsa_d == 0)
 /*! *********************************************************************************
  * \brief Multiply ECP256R1 point by scalar i.e R = fe * P
  *
@@ -622,6 +635,7 @@ secEcp256Status_t ECP256_GeneratePrivateKey(big_int256_t *pOutPrivateKey);
 secEcp256Status_t ECP256_GenerateKeyPairUltraFast(ecp256Point_t *pOutPublicKey,
                                                   big_int256_t  *pOutPrivateKey,
                                                   void          *pMultiplicationBuffer);
+#endif
 
 #ifdef __cplusplus
 }

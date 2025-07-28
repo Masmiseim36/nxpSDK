@@ -12,10 +12,10 @@ ENDIF()
 
 SET(CMAKE_ASM_FLAGS_DEBUG " \
     ${CMAKE_ASM_FLAGS_DEBUG} \
-    -DDEMO_CODE_START_NS=2883584 \
     -D__STARTUP_CLEAR_BSS \
     -DMCUXPRESSO_SDK \
     -DCPU_MIMXRT595SFFOC_cm33 \
+    -DMIMXRT595S_cm33_SERIES \
     -g \
     -mcmse \
     -mthumb \
@@ -24,10 +24,10 @@ SET(CMAKE_ASM_FLAGS_DEBUG " \
 ")
 SET(CMAKE_ASM_FLAGS_RELEASE " \
     ${CMAKE_ASM_FLAGS_RELEASE} \
-    -DDEMO_CODE_START_NS=2883584 \
     -D__STARTUP_CLEAR_BSS \
     -DMCUXPRESSO_SDK \
     -DCPU_MIMXRT595SFFOC_cm33 \
+    -DMIMXRT595S_cm33_SERIES \
     -mcmse \
     -mthumb \
     -mcpu=cortex-m33 \
@@ -35,10 +35,10 @@ SET(CMAKE_ASM_FLAGS_RELEASE " \
 ")
 SET(CMAKE_ASM_FLAGS_FLASH_DEBUG " \
     ${CMAKE_ASM_FLAGS_FLASH_DEBUG} \
-    -DDEMO_CODE_START_NS=135266304 \
     -D__STARTUP_CLEAR_BSS \
     -DMCUXPRESSO_SDK \
     -DCPU_MIMXRT595SFFOC_cm33 \
+    -DMIMXRT595S_cm33_SERIES \
     -g \
     -mcmse \
     -mthumb \
@@ -47,10 +47,10 @@ SET(CMAKE_ASM_FLAGS_FLASH_DEBUG " \
 ")
 SET(CMAKE_ASM_FLAGS_FLASH_RELEASE " \
     ${CMAKE_ASM_FLAGS_FLASH_RELEASE} \
-    -DDEMO_CODE_START_NS=135266304 \
     -D__STARTUP_CLEAR_BSS \
     -DMCUXPRESSO_SDK \
     -DCPU_MIMXRT595SFFOC_cm33 \
+    -DMIMXRT595S_cm33_SERIES \
     -mcmse \
     -mthumb \
     -mcpu=cortex-m33 \
@@ -61,9 +61,11 @@ SET(CMAKE_C_FLAGS_DEBUG " \
     -include ${ProjDirPath}/../mcux_config.h \
     -DDEBUG \
     -DDEMO_CODE_START_NS=2883584 \
+    -D__STARTUP_CLEAR_BSS \
     -DMCUX_META_BUILD \
     -DMCUXPRESSO_SDK \
     -DCPU_MIMXRT595SFFOC_cm33 \
+    -DMIMXRT595S_cm33_SERIES \
     -DBOOT_HEADER_ENABLE=1 \
     -g \
     -O0 \
@@ -85,9 +87,11 @@ SET(CMAKE_C_FLAGS_RELEASE " \
     -include ${ProjDirPath}/../mcux_config.h \
     -DNDEBUG \
     -DDEMO_CODE_START_NS=2883584 \
+    -D__STARTUP_CLEAR_BSS \
     -DMCUX_META_BUILD \
     -DMCUXPRESSO_SDK \
     -DCPU_MIMXRT595SFFOC_cm33 \
+    -DMIMXRT595S_cm33_SERIES \
     -DBOOT_HEADER_ENABLE=1 \
     -Os \
     -mcmse \
@@ -108,9 +112,11 @@ SET(CMAKE_C_FLAGS_FLASH_DEBUG " \
     -include ${ProjDirPath}/../mcux_config.h \
     -DDEBUG \
     -DDEMO_CODE_START_NS=135266304 \
+    -D__STARTUP_CLEAR_BSS \
     -DMCUX_META_BUILD \
     -DMCUXPRESSO_SDK \
     -DCPU_MIMXRT595SFFOC_cm33 \
+    -DMIMXRT595S_cm33_SERIES \
     -DBOOT_HEADER_ENABLE=1 \
     -g \
     -O0 \
@@ -132,9 +138,11 @@ SET(CMAKE_C_FLAGS_FLASH_RELEASE " \
     -include ${ProjDirPath}/../mcux_config.h \
     -DNDEBUG \
     -DDEMO_CODE_START_NS=135266304 \
+    -D__STARTUP_CLEAR_BSS \
     -DMCUX_META_BUILD \
     -DMCUXPRESSO_SDK \
     -DCPU_MIMXRT595SFFOC_cm33 \
+    -DMIMXRT595S_cm33_SERIES \
     -DBOOT_HEADER_ENABLE=1 \
     -Os \
     -mcmse \
@@ -153,10 +161,10 @@ SET(CMAKE_C_FLAGS_FLASH_RELEASE " \
 SET(CMAKE_CXX_FLAGS_DEBUG " \
     ${CMAKE_CXX_FLAGS_DEBUG} \
     -DDEBUG \
-    -DDEMO_CODE_START_NS=2883584 \
     -DMCUX_META_BUILD \
     -DMCUXPRESSO_SDK \
     -DCPU_MIMXRT595SFFOC_cm33 \
+    -DMIMXRT595S_cm33_SERIES \
     -DBOOT_HEADER_ENABLE=1 \
     -g \
     -O0 \
@@ -177,10 +185,10 @@ SET(CMAKE_CXX_FLAGS_DEBUG " \
 SET(CMAKE_CXX_FLAGS_RELEASE " \
     ${CMAKE_CXX_FLAGS_RELEASE} \
     -DNDEBUG \
-    -DDEMO_CODE_START_NS=2883584 \
     -DMCUX_META_BUILD \
     -DMCUXPRESSO_SDK \
     -DCPU_MIMXRT595SFFOC_cm33 \
+    -DMIMXRT595S_cm33_SERIES \
     -DBOOT_HEADER_ENABLE=1 \
     -Os \
     -mcmse \
@@ -200,10 +208,10 @@ SET(CMAKE_CXX_FLAGS_RELEASE " \
 SET(CMAKE_CXX_FLAGS_FLASH_DEBUG " \
     ${CMAKE_CXX_FLAGS_FLASH_DEBUG} \
     -DDEBUG \
-    -DDEMO_CODE_START_NS=135266304 \
     -DMCUX_META_BUILD \
     -DMCUXPRESSO_SDK \
     -DCPU_MIMXRT595SFFOC_cm33 \
+    -DMIMXRT595S_cm33_SERIES \
     -DBOOT_HEADER_ENABLE=1 \
     -g \
     -O0 \
@@ -224,10 +232,10 @@ SET(CMAKE_CXX_FLAGS_FLASH_DEBUG " \
 SET(CMAKE_CXX_FLAGS_FLASH_RELEASE " \
     ${CMAKE_CXX_FLAGS_FLASH_RELEASE} \
     -DNDEBUG \
-    -DDEMO_CODE_START_NS=135266304 \
     -DMCUX_META_BUILD \
     -DMCUXPRESSO_SDK \
     -DCPU_MIMXRT595SFFOC_cm33 \
+    -DMIMXRT595S_cm33_SERIES \
     -DBOOT_HEADER_ENABLE=1 \
     -Os \
     -mcmse \
@@ -248,6 +256,7 @@ SET(CMAKE_EXE_LINKER_FLAGS_DEBUG " \
     ${CMAKE_EXE_LINKER_FLAGS_DEBUG} \
     -Wl,--out-implib=./debug/freertos_mpu_s_CMSE_lib.o \
     -g \
+    -Wl,--cmse-implib \
     -Xlinker \
     -Map=output.map \
     -Wall \
@@ -259,9 +268,6 @@ SET(CMAKE_EXE_LINKER_FLAGS_DEBUG " \
     -mapcs \
     -Wl,--gc-sections \
     -Wl,-static \
-    -Wl,-z \
-    -Wl,muldefs \
-    -Wl,-Map=output.map \
     -Wl,--print-memory-usage \
     -mcpu=cortex-m33 \
     ${FPU} \
@@ -271,6 +277,7 @@ SET(CMAKE_EXE_LINKER_FLAGS_DEBUG " \
 SET(CMAKE_EXE_LINKER_FLAGS_RELEASE " \
     ${CMAKE_EXE_LINKER_FLAGS_RELEASE} \
     -Wl,--out-implib=./release/freertos_mpu_s_CMSE_lib.o \
+    -Wl,--cmse-implib \
     -Xlinker \
     -Map=output.map \
     -Wall \
@@ -282,9 +289,6 @@ SET(CMAKE_EXE_LINKER_FLAGS_RELEASE " \
     -mapcs \
     -Wl,--gc-sections \
     -Wl,-static \
-    -Wl,-z \
-    -Wl,muldefs \
-    -Wl,-Map=output.map \
     -Wl,--print-memory-usage \
     -mcpu=cortex-m33 \
     ${FPU} \
@@ -295,6 +299,7 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLASH_DEBUG " \
     ${CMAKE_EXE_LINKER_FLAGS_FLASH_DEBUG} \
     -Wl,--out-implib=./flash_debug/freertos_mpu_s_CMSE_lib.o \
     -g \
+    -Wl,--cmse-implib \
     -Xlinker \
     -Map=output.map \
     -Wall \
@@ -306,9 +311,6 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLASH_DEBUG " \
     -mapcs \
     -Wl,--gc-sections \
     -Wl,-static \
-    -Wl,-z \
-    -Wl,muldefs \
-    -Wl,-Map=output.map \
     -Wl,--print-memory-usage \
     -mcpu=cortex-m33 \
     ${FPU} \
@@ -318,6 +320,7 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLASH_DEBUG " \
 SET(CMAKE_EXE_LINKER_FLAGS_FLASH_RELEASE " \
     ${CMAKE_EXE_LINKER_FLAGS_FLASH_RELEASE} \
     -Wl,--out-implib=./flash_release/freertos_mpu_s_CMSE_lib.o \
+    -Wl,--cmse-implib \
     -Xlinker \
     -Map=output.map \
     -Wall \
@@ -329,9 +332,6 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLASH_RELEASE " \
     -mapcs \
     -Wl,--gc-sections \
     -Wl,-static \
-    -Wl,-z \
-    -Wl,muldefs \
-    -Wl,-Map=output.map \
     -Wl,--print-memory-usage \
     -mcpu=cortex-m33 \
     ${FPU} \

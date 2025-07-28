@@ -26,6 +26,18 @@ LIMITATION
 CHANGES
 =======
 
+July 2024: vglite_4_0_90
+-------------------------
+
+    1. Add updatestroke dirty mechanism.
+    2. Replace push_data to push_call for stroke pathdata to reduce time.
+    3. Refine decnano address/buffer length alignment requirements and format check.
+    4. Simplify close+ move patch to improve openvg perf.
+    5. Add a feature that getting hardware running time by vg_lite_get_parameter.
+    6. Change vg_lite_finish to vg_lite_flush in set_render_target to improve efficiency.
+    7. Optimize scissor rect code.reduce the number of vg_lite_finish.
+    8. Add moveto close opcode patch in draw_linear_grad and draw_radial_grad to solve benchmark render error.
+
 March 2024: vglite_4_0_70
 -------------------------
 

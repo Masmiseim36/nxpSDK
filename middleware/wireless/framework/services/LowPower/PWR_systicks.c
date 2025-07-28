@@ -129,7 +129,7 @@ void PWR_SysticksPostProcess(uint64_t expectedIdleTimeUs, uint64_t actualIdleTim
 #if defined(configUSE_TICKLESS_IDLE) && (configUSE_TICKLESS_IDLE > 0)
     TickType_t idleTimeTick;
 
-    if (actualIdleTimeUs > expectedIdleTimeUs)
+    if ((actualIdleTimeUs > expectedIdleTimeUs) && (expectedIdleTimeUs > 0U))
     {
         /* Add the error to be compensated on next low power period */
         cumulatedErrorUs += actualIdleTimeUs - expectedIdleTimeUs;

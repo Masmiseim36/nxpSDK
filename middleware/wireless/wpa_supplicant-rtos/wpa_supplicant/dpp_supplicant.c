@@ -3188,7 +3188,7 @@ int wpas_dpp_check_connect(struct wpa_supplicant *wpa_s, struct wpa_ssid *ssid, 
 
     if (!(ssid->key_mgmt & WPA_KEY_MGMT_DPP) || !bss)
         return 0; /* Not using DPP AKM - continue */
-    rsn = wpa_bss_get_ie(bss, WLAN_EID_RSN);
+    rsn = wpa_bss_get_rsne(wpa_s, bss, ssid, false);
     if (rsn && wpa_parse_wpa_ie(rsn, 2 + rsn[1], &ied) == 0 && !(ied.key_mgmt & WPA_KEY_MGMT_DPP))
         return 0; /* AP does not support DPP AKM - continue */
     if (wpa_sm_pmksa_exists(wpa_s->wpa, bss->bssid, ssid))

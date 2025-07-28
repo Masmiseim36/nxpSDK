@@ -31,9 +31,9 @@ enum requested_ops
     ROAM,
     FT_DS,
 #if CONFIG_WPA_SUPP_WPS
-    WPS_PBC,
-    WPS_PIN,
-    WPS_CANCEL,
+    OP_WPS_PBC,
+    OP_WPS_PIN,
+    OP_WPS_CANCEL,
 #endif
     START,
     STOP
@@ -107,6 +107,10 @@ int wpa_supp_mbo_set_cell_capa(const struct netif *dev, unsigned char mbo_cell_c
 
 int wpa_supp_mbo_set_oce(const struct netif *dev, unsigned char oce);
 
+void wpa_supp_set_bgscan(const struct netif *dev, const int short_interval, const int signal_threshold, const int long_interval);
+
+void wpa_supp_stop_bgscan(const struct netif *dev);
+
 int wpa_supp_set_okc(const struct netif *dev, unsigned char okc);
 
 int wpa_supp_roam(const struct netif *dev, unsigned char *bssid);
@@ -153,6 +157,27 @@ int wpa_supp_dpp_chirp(const struct netif *dev, int is_ap, const char *cmd);
 int wpa_supp_dpp_reconfig(const struct netif *dev, const char *cmd);
 
 int wpa_supp_dpp_configurator_sign(const struct netif *dev, int is_ap, const char *cmd);
+#endif
+
+#if CONFIG_WPA_SUPP_P2P
+int wpa_supp_p2p_find(const struct netif *dev, const char *cmd);
+int wpa_supp_p2p_stop_find(const struct netif *dev);
+int wpa_supp_p2p_listen(const struct netif *dev, const char *cmd);
+int wpa_supp_p2p_connect(const struct netif *dev, char *cmd);
+int wpa_supp_p2p_group_add(const struct netif *dev, char *cmd);
+int wpa_supp_p2p_get_passphrase(const struct netif *dev);
+int wpa_supp_p2p_invite(const struct netif *dev, char *cmd);
+int wpa_supp_p2p_prov_disc(const struct netif *dev, char *cmd);
+int wpas_supp_p2p_cancel(const struct netif *dev);
+int wpa_supp_p2p_remove_client(const struct netif *dev, char *cmd);
+int wpa_supp_p2p_update_security_info(struct wlan_network *network);
+int wpa_supp_p2p_update_mode_info(struct wlan_network *network);
+int wpa_supp_p2p_service_add(const struct netif *dev, char *cmd);
+int wpa_supp_p2p_serv_disc_req(const struct netif *dev, char *cmd);
+int wpa_supp_p2p_serv_disc_resp(const struct netif *dev, char *cmd);
+int wpa_supp_p2p_group_remove(const struct netif *dev, char *cmd);
+int wpa_supp_p2p_peer(const struct netif *dev, char *cmd, char *buf, size_t buflen);
+int wpa_supp_p2p_status(const struct netif *dev, char *buf, size_t buflen);
 #endif
 
 #if CONFIG_HOSTAPD

@@ -50,6 +50,9 @@ typedef enum _mlan_ioctl_req_id
 #if defined(STA_SUPPORT) && UAP_SUPPORT
     MLAN_OID_BSS_ROLE,
 #endif
+#if CONFIG_WPA_SUPP_P2P
+    MLAN_OID_WIFI_DIRECT_MODE,
+#endif
 #if UAP_HOST_MLME
 #if UAP_SUPPORT
     MLAN_OID_UAP_ADD_STATION = 0x0002001C,
@@ -276,7 +279,7 @@ typedef enum _mlan_scan_type
     MLAN_SCAN_TYPE_UNCHANGED = 0,
     MLAN_SCAN_TYPE_ACTIVE,
     MLAN_SCAN_TYPE_PASSIVE,
-#if defined(RW610) || defined(SD9177) || defined(IW610)
+#if defined(RW610) || defined(SD9177) || defined(IW610) || defined(SD8978) || defined(SD8987)
     MLAN_SCAN_TYPE_PASSIVE_TO_ACTIVE,
 #endif
 } mlan_scan_type;
@@ -717,6 +720,8 @@ typedef struct _wmm_parameter_t
 #define MLAN_11AX_TWT_SETUP_SUBID       0x114
 #define MLAN_11AX_TWT_TEARDOWN_SUBID    0x115
 #define MLAN_11AX_TWT_REPORT_SUBID      0x116
+#define MLAN_11AX_TWT_INFORMATION_SUBID 0x119
+#define MLAN_11AX_TWT_BTWT_SUBID        0x120
 #endif /* CONFIG_11AX_TWT */
 
 #if CONFIG_MMSF
@@ -1142,6 +1147,9 @@ typedef struct _mlan_ds_bss
 {
     /** Sub-command */
     mlan_ioctl_req_id sub_command;
+    t_u8 bss_type;
+    /** Action: set or get */
+    mlan_act_ioctl action;
     /** BSS parameter */
     union
     {
@@ -1180,6 +1188,9 @@ typedef struct _mlan_ds_bss
 #if defined(STA_SUPPORT) && UAP_SUPPORT
         /** BSS role */
         mlan_bss_role bss_role;
+#endif
+#if CONFIG_WPA_SUPP_P2P
+        t_u16 wfd_mode;
 #endif
         /** AP acs scan MLAN_OID_UAP_ACS_SCAN */
         mlan_uap_acs_scan ap_acs_scan;
@@ -1873,6 +1884,17 @@ typedef enum _mlan_psk_type
     MLAN_PSK_PASSWORD,
 } mlan_psk_type;
 
+#if CONFIG_WPA_SUPP_P2P
+typedef enum
+{
+    WIFI_DIRECT_MODE_NONE = 0,
+    WIFI_DIRECT_MODE_DEVICE,
+    WIFI_DIRECT_MODE_GO,
+    WIFI_DIRECT_MODE_CLIENT,
+    WIFI_DIRECT_MODE_NOT_SPECIFIED,
+} WifiDirect_op_mode;
+#endif
+
 /** The bit to indicate the key is for unicast */
 #define MLAN_KEY_INDEX_UNICAST 0x40000000
 /** The key index to indicate default key */
@@ -1902,14 +1924,14 @@ typedef enum _mlan_psk_type
 /** 40 bits RC4 - WEP */
 #define MIN_WEP_KEY_SIZE 5
 /** packet number size */
-#define PN_SIZE 16
+#define PN_SIZE 16U
 /** max seq size of wpa/wpa2 key */
-#define SEQ_MAX_SIZE 8
+#define SEQ_MAX_SIZE 8U
 
 /** key flag for tx_seq */
-#define KEY_FLAG_TX_SEQ_VALID 0x00000001
+#define KEY_FLAG_TX_SEQ_VALID 0x00000001U
 /** key flag for rx_seq */
-#define KEY_FLAG_RX_SEQ_VALID 0x00000002
+#define KEY_FLAG_RX_SEQ_VALID 0x00000002U
 /** key flag for group key */
 #define KEY_FLAG_GROUP_KEY 0x00000004U
 /** key flag for tx and rx */
@@ -1918,23 +1940,23 @@ typedef enum _mlan_psk_type
 #define KEY_FLAG_AES_MCAST_IGTK 0x00000010U
 #ifdef MAC80211_SUPPORT_MESH
 /** key flag for mesh group Rx key */
-#define KEY_FLAG_SET_GRP_TX_KEY 0x00000100
+#define KEY_FLAG_SET_GRP_TX_KEY 0x00000100U
 #endif
 /** key flag for remove key */
-#define KEY_FLAG_REMOVE_KEY 0x80000000
+#define KEY_FLAG_REMOVE_KEY 0x80000000U
 /** key flag for GCMP */
-#define KEY_FLAG_GCMP 0x00000020
+#define KEY_FLAG_GCMP 0x00000020U
 /** key flag for GCMP_256 */
-#define KEY_FLAG_GCMP_256 0x00000040
+#define KEY_FLAG_GCMP_256 0x00000040U
 /** key flag for ccmp 256 */
-#define KEY_FLAG_CCMP_256 0x00000080
+#define KEY_FLAG_CCMP_256 0x00000080U
 /** key flag for GMAC_128 */
-#define KEY_FLAG_GMAC_128 0x00000100
+#define KEY_FLAG_GMAC_128 0x00000100U
 /** key flag for GMAC_256 */
-#define KEY_FLAG_GMAC_256 0x00000200
+#define KEY_FLAG_GMAC_256 0x00000200U
 
 /* Clear all key indexes */
-#define KEY_INDEX_CLEAR_ALL 0x0000000F
+#define KEY_INDEX_CLEAR_ALL 0x0000000FU
 
 /** Type definition of mlan_ds_encrypt_key for MLAN_OID_SEC_CFG_ENCRYPT_KEY */
 typedef struct _mlan_ds_encrypt_key
@@ -2276,6 +2298,8 @@ typedef struct _mlan_ds_power_cfg
 #define HOST_SLEEP_COND_MAC_EVENT MBIT(2)
 /** Host sleep config condition: multicast data */
 #define HOST_SLEEP_COND_MULTICAST_DATA MBIT(3)
+/** Host sleep config condition: used for mef */
+#define HOST_SLEEP_COND_MEF MBIT(31)
 
 /** Host sleep config conditions: Default */
 #define HOST_SLEEP_DEF_COND (HOST_SLEEP_COND_BROADCAST_DATA | HOST_SLEEP_COND_UNICAST_DATA | HOST_SLEEP_COND_MAC_EVENT)
@@ -2309,11 +2333,13 @@ typedef struct _mlan_ds_hs_cfg
 #define DEEP_SLEEP_OFF 0
 
 /** Default idle time in milliseconds for auto deep sleep */
-#if defined(SD9177) || defined(IW610)
+#if defined(SD9177)
 #define DEEP_SLEEP_IDLE_TIME 300
 #else
 #define DEEP_SLEEP_IDLE_TIME 100
 #endif
+/* Minimum idle time in milliseconds for auto deep sleep */
+#define MIN_DEEP_SLEEP_IDLE_TIME 10
 
 typedef struct _mlan_ds_auto_ds
 {
@@ -2844,7 +2870,7 @@ typedef struct _mlan_ds_11ac_vht_cfg
 } mlan_ds_11ac_vht_cfg, *pmlan_ds_11ac_vht_cfg;
 
 #if CONFIG_11AX
-#define MAX_RU_COUNT    6
+#define MAX_RU_COUNT    6U
 #define MAX_RUTXPWR_NUM 140
 typedef MLAN_PACK_START struct _mlan_rupwrlimit_config_t
 {
@@ -3060,6 +3086,36 @@ typedef MLAN_PACK_START struct _mlan_ds_twt_report
     t_u8 data[54]; //WLAN_BTWT_REPORT_LEN* WLAN_BTWT_REPORT_MAX_NUM
 } MLAN_PACK_END mlan_ds_twt_report, *pmlan_ds_twt_report;
 
+/** Type definition of mlan_ds_twt_report for MLAN_OID_11AX_TWT_CFG */
+typedef MLAN_PACK_START struct _mlan_ds_twt_information
+{
+    /** TWT Flow Identifier. Range: [0-7] */
+    t_u8 flow_identifier;
+    /** TWT operation suspend duration in milli seconds. */
+    t_u32 suspend_duration;
+    /** TWT information state from FW. */
+    t_u8 information_state;
+} MLAN_PACK_END mlan_ds_twt_information, *pmlan_ds_twt_information;
+
+/** BTWT AP Config parameters */
+#define BTWT_AGREEMENT_MAX 5
+typedef MLAN_PACK_START struct _mlan_ds_btwt_set_t
+{
+    t_u8 btwt_id;
+    t_u16 bcast_mantissa;
+    t_u8 bcast_exponent;
+    t_u8 nominal_wake;
+} MLAN_PACK_END mlan_ds_btwt_set_t;
+
+typedef MLAN_PACK_START struct _mlan_ds_ap_btwt_cfg
+{
+    t_u8 bcast_bet_sta_wait;
+    t_u16 bcast_offset;
+    t_u8 bcast_twtli;
+    t_u8 count;
+    mlan_ds_btwt_set_t btwt_sets[BTWT_AGREEMENT_MAX];
+} MLAN_PACK_END mlan_ds_btwt_cfg, *pmlan_ds_btwt_cfg;
+
 /** Type definition of mlan_ds_twtcfg for MLAN_OID_11AX_TWT_CFG */
 typedef MLAN_PACK_START struct _mlan_ds_twtcfg
 {
@@ -3076,6 +3132,10 @@ typedef MLAN_PACK_START struct _mlan_ds_twtcfg
         mlan_ds_twt_teardown twt_teardown;
         /** TWT report for Sub ID: MLAN_11AX_TWT_REPORT_SUBID */
         mlan_ds_twt_report twt_report;
+        /** TWT information config for Sub ID: MLAN_11AX_TWT_INFORMATION_SUBID */
+        mlan_ds_twt_information twt_information;
+        /** BTWT config for Sub ID: MLAN_11AX_TWT_BTWT_SUBID */
+        mlan_ds_btwt_cfg  btwt_cfg;
     } param;
 } MLAN_PACK_END mlan_ds_twtcfg, *pmlan_ds_twtcfg;
 #endif /* CONFIG_11AX_TWT */
@@ -3166,6 +3226,7 @@ typedef struct _mlan_ds_11n_cfg
 {
     /** Sub-command */
     t_u32 sub_command;
+    t_u8 bss_type;
     /** 802.11n configuration parameter */
     union
     {
@@ -3528,7 +3589,7 @@ typedef struct _mlan_ds_misc_country_code
 /** action for set */
 #define SUBSCRIBE_EVT_ACT_BITWISE_SET 0x0002
 /** action for clear */
-#define SUBSCRIBE_EVT_ACT_BITWISE_CLR 0x0003
+#define SUBSCRIBE_EVT_ACT_BITWISE_CLR 0x0003U
 /** BITMAP for subscribe event rssi low */
 #define SUBSCRIBE_EVT_RSSI_LOW MBIT(0)
 /** BITMAP for subscribe event snr low */

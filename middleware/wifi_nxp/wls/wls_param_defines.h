@@ -47,7 +47,7 @@
 // #define FFT_PARALLEL
 // #define FFT_INPLACE
 // #define TDDE_FIRSTPATH
-#if defined(RW610)
+#if defined(RW610) || defined(IW610)
 #define STA_20_ONLY
 #endif
 

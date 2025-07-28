@@ -10,9 +10,7 @@
 
 #include <osa.h>
 
-#if defined(SD8801)
-#include "sd8801_wlan.h"
-#elif defined(SD8978)
+#if defined(SD8978)
 #if !(CONFIG_WIFI_IND_DNLD) && !defined(CONFIG_BT_IND_DNLD)
 #include "sduartIW416_wlan_bt.h"
 #else
@@ -26,12 +24,19 @@
 #include "sd8987_wlan.h"
 #include "uart8987_bt.h"
 #endif
-#elif defined(SD9177) || defined(IW610)
+#elif defined(SD9177)
 #if !(CONFIG_WIFI_IND_DNLD) && !defined(CONFIG_BT_IND_DNLD)
 #include "sduart_nw61x_se.h"
 #else
 #include "sd_nw61x_se.h"
 #include "uart_nw61x_se.h"
+#endif
+#elif defined(IW610)
+#if !(CONFIG_WIFI_IND_DNLD) && !defined(CONFIG_BT_IND_DNLD)
+#include "sduart_iw610_se.h"
+#else
+#include "sd_iw610_se.h"
+#include "uart_iw610_se.h"
 #endif
 #elif defined(RW610)
 extern const unsigned char *wlan_fw_bin;

@@ -255,7 +255,8 @@ void env_free_memory(void *ptr)
  */
 void env_memset(void *ptr, int32_t value, uint32_t size)
 {
-    (void)memset(ptr, value, size);
+    /* Explicitly convert value to unsigned char range to ensure consistent behavior */
+    (void)memset(ptr, (unsigned char)(value & 0xFF), size);
 }
 
 /*!
@@ -663,6 +664,12 @@ int32_t env_create_queue(void **queue, int32_t length, int32_t element_size)
 #endif
 {
     char *queue_ptr = ((void *)0);
+
+    /* Length and size should not be negative */
+    if (length < 0 || element_size < 0)
+    {
+        return -1;
+    }
 
 #if defined(RL_USE_STATIC_API) && (RL_USE_STATIC_API == 1)
     queue_ptr = (char *)queue_static_storage;

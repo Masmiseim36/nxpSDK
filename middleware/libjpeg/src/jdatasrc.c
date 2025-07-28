@@ -272,7 +272,7 @@ jpeg_mem_src (j_decompress_ptr cinfo,
   src->bytes_in_buffer = (size_t) insize;
   src->next_input_byte = (const JOCTET *) inbuffer;
 #if LIB_JPEG_USE_HW_ACCEL
-  cinfo->jpeg_size = insize;
+  cinfo->jpeg_size = (JDIMENSION)insize;
   cinfo->jpeg_buffer = (const JOCTET *) inbuffer;
 #endif
 }
@@ -286,10 +286,10 @@ GLOBAL(void)
 jpeg_set_output (j_decompress_ptr cinfo,
 	      const unsigned char * outbuffer, unsigned long stride)
 {
-  if (outbuffer == NULL || stride == 0)	/* Treat empty input as fatal error */
+  if (outbuffer == NULL || stride == 0U)	/* Treat empty input as fatal error */
     ERREXIT(cinfo, JERR_INPUT_EMPTY);
 
   cinfo->output_buffer = (const JOCTET *) outbuffer;
-  cinfo->output_pitch = stride;
+  cinfo->output_pitch = (JDIMENSION)stride;
 }
 #endif

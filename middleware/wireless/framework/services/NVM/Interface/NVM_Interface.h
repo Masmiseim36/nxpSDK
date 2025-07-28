@@ -729,13 +729,16 @@ extern void NvModuleDeInit(void);
  *          space and copies the data). It can only move a single element. It changes pData
  *          in the NVM table to point to the new location. If the specified element is
  *          already in RAM, the function cancels any pending saves and returns. The
- *          unmirrored functionality must be enabled if this function is required.
+ *          unmirrored functionality must be enabled if this function is invoked.
+ *          The new area is allocated from the heap using MEM_BufferAlloc and the contents
+ *          are copied so as to clone the original buffer.
  *
  * \param[in] ppData double pointer to the entity to be moved from flash to RAM
  *
  * \return gNVM_OK_c: if operation completed successfully\n
+ *         gNVM_IsMirroredDataSet_c: If the dataset is mirrored, copy is useless, operation is skipped\n
  *         gNVM_NoMemory_c: in case there is not a memory block free\n
- *         gNVM_NullPointer_c: if the provided pointer is NULL \n
+ *         gNVM_NullPointer_c: if the provided pointer is NULL\n
  *         gNVM_PointerOutOfRange_c: if the provided pointer is not found within the RAM table
  ********************************************************************************* */
 extern NVM_Status_t NvMoveToRam(void **ppData);
@@ -772,9 +775,11 @@ extern NVM_Status_t NvErase(void **ppData);
  *
  * \details This function saves the element or the entire NV table entry (dataset)
  *          pointed to by the ptrData argument, as soon as the NvIdle() function is
- *          called. If ptrData belongs to an unmirrored dataset, after the save the
- *          RAM pointer is freed and pData points to the flash backup. No other saves
- *          can be made while the data is in flash.
+ *          called. If ptrData belongs to an unmirrored dataset, the NvMoveToRam operation must
+ *          be run before calling NvSaveOnIdle.
+ *          On completion of the asynchronous save operation the RAM pointer is freed and pData
+ *          points to the flash backup. No other saves can be made while the data is in flash.
+ *
  *
  * \param[in] ptrData pointer to data to be saved
  * \param[in] saveAll specify if all the elements from the NVM table entry shall be saved
@@ -1009,7 +1014,9 @@ extern NVM_Status_t NvEraseEntryFromStorage(void *ptrData);
  *  \brief Saves the pointed element or the entire table entry to the storage system.
  *
  * \details The save operation is not performed on the idle task but within this function call.
- *          If ptrData belongs to an unmirrored dataset, after the save, the RAM pointer is
+ *          If ptrData belongs to an unmirrored dataset, a prior call to NvMoveToRam must be carried out
+ *          before invoking NvSyncSave. This results in allocating a buffer in the heap to receive the
+ *          dataset element to be saved. After the save operation, the RAM pointer is
  *          freed and pData points to the flash backup. Also, saveAll is ignored and only
  *          individual elements can be saved. No other saves can be made while the data is in flash.
  *
@@ -1023,6 +1030,10 @@ extern NVM_Status_t NvEraseEntryFromStorage(void *ptrData);
  *         gNVM_MetaInfoWriteError_c: meta tag couldn't be written\n
  *         gNVM_RecordWriteError_c: record couldn't be written\n
  *         gNVM_CriticalSectionActive_c: the module is in critical sequence
+ * Note that if the returned status is gNVM_CriticalSectionActive_c, the save request has been
+ * appended to a save queue and the actual save operation will be executed asynchronously after previous
+ * pending save operations have completed.
+ *
  ********************************************************************************* */
 extern NVM_Status_t NvSyncSave(void *ptrData, bool_t saveAll);
 

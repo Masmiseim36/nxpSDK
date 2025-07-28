@@ -13,6 +13,7 @@
 #include "fsl_os_abstraction.h"
 #include "wm_net.h"
 #include "ap/hostapd.h"
+#include "wpa_supplicant_i.h"
 
 #define SCAN_TIMEOUT   30
 #define SURVEY_TIMEOUT 30
@@ -315,6 +316,10 @@ static void wpa_drv_freertos_event_mgmt_tx_status(struct freertos_drv_if_ctx *if
     const struct ieee80211_hdr *hdr;
     u16 fc;
 
+#if CONFIG_WPA_SUPP_P2P
+    struct wpa_supplicant *wpa_s = if_ctx->supp_if_ctx;
+#endif
+
     wpa_printf(MSG_DEBUG, "Frame TX status event");
 
     hdr = (const struct ieee80211_hdr *)frame;
@@ -332,6 +337,11 @@ static void wpa_drv_freertos_event_mgmt_tx_status(struct freertos_drv_if_ctx *if
     if (if_ctx->hapd)
         hostapd_event_wrapper(if_ctx->hapd, EVENT_TX_STATUS, &event);
     else
+#if CONFIG_WPA_SUPP_P2P
+    if (wpa_s->ap_iface)
+        hostapd_event_wrapper(wpa_s->ap_iface->bss[0], EVENT_TX_STATUS, &event);
+    else
+#endif
 #endif
         wpa_supplicant_event_wrapper(if_ctx->supp_if_ctx, EVENT_TX_STATUS, &event);
 }
@@ -1230,12 +1240,17 @@ static int wpa_drv_freertos_get_capa(void *priv, struct wpa_driver_capa *capa)
     capa->flags |= WPA_DRIVER_FLAGS_AP_MLME;
     capa->flags |= WPA_DRIVER_FLAGS_AP_TEARDOWN_SUPPORT;
     capa->flags |= WPA_DRIVER_FLAGS_AP_CSA;
-#if !defined(RW610) && !defined(SD8801)
+#if !defined(RW610) && !defined(SD8801) && !defined(IW610)
     capa->flags |= WPA_DRIVER_FLAGS_HT_2040_COEX;
 #endif
     capa->flags |= WPA_DRIVER_FLAGS_HE_CAPABILITIES;
 
     capa->flags |= WPA_DRIVER_FLAGS_OFFCHANNEL_TX;
+
+#if CONFIG_WPA_SUPP_P2P
+    if (if_ctx->dev_ctx == net_get_wfd_interface())
+        capa->flags |= WPA_DRIVER_FLAGS_P2P_CAPABLE;
+#endif
 
     capa->flags2 |= WPA_DRIVER_FLAGS2_AP_SME;
 
@@ -1655,12 +1670,44 @@ out:
     return ret;
 }
 
+static int wpa_drv_freertos_probe_req_report(void *priv, int report)
+{
+    struct freertos_drv_if_ctx *if_ctx              = NULL;
+    const struct freertos_wpa_supp_dev_ops *dev_ops = NULL;
+    int status                                      = -1;
+
+    if (!priv)
+    {
+        wpa_printf(MSG_ERROR, "%s: Invalid handle", __func__);
+        goto out;
+    }
+    if_ctx = priv;
+
+    dev_ops = (struct freertos_wpa_supp_dev_ops *)if_ctx->dev_ops;
+
+    status = dev_ops->probe_req_report(if_ctx->dev_priv, report);
+
+    if (status)
+    {
+        wpa_printf(MSG_ERROR, "%s: Probe Req report failed", __func__);
+    }
+
+out:
+    return status;
+}
+
 static void wpa_drv_freertos_event_proc_mgmt_rx(struct freertos_drv_if_ctx *if_ctx, union wpa_event_data *event)
 {
 #ifdef CONFIG_HOSTAPD
+    struct wpa_supplicant *wpa_s = if_ctx->supp_if_ctx;
     if (if_ctx->hapd)
         hostapd_event_wrapper(if_ctx->hapd, EVENT_RX_MGMT, event);
     else
+#if CONFIG_WPA_SUPP_P2P
+    if (wpa_s->ap_iface)
+        hostapd_event_wrapper(wpa_s->ap_iface->bss[0], EVENT_RX_MGMT, event);
+    else
+#endif
 #endif
         wpa_supplicant_event_wrapper(if_ctx->supp_if_ctx, EVENT_RX_MGMT, event);
 }
@@ -1668,9 +1715,15 @@ static void wpa_drv_freertos_event_proc_mgmt_rx(struct freertos_drv_if_ctx *if_c
 static void wpa_drv_freertos_event_proc_eapol_rx(struct freertos_drv_if_ctx *if_ctx, union wpa_event_data *event)
 {
 #ifdef CONFIG_HOSTAPD
+    struct wpa_supplicant *wpa_s = if_ctx->supp_if_ctx;
     if (if_ctx->hapd)
         hostapd_event_wrapper(if_ctx->hapd, EVENT_EAPOL_RX, event);
     else
+#if CONFIG_WPA_SUPP_P2P
+    if (wpa_s->ap_iface)
+        hostapd_event_wrapper(wpa_s->ap_iface->bss[0], EVENT_EAPOL_RX, event);
+    else
+#endif
 #endif
         wpa_supplicant_event_wrapper(if_ctx->supp_if_ctx, EVENT_EAPOL_RX, event);
 }
@@ -2774,8 +2827,8 @@ static struct hostapd_hw_modes *wpa_drv_freertos_get_hw_feature_data(void *if_pr
         if (modes[2].channels == NULL || modes[2].rates == NULL)
             goto fail;
 
-        start = 5180;
-        end   = 5885;
+        start = 5170;
+        end   = 5895;
 
         k = 0;
         // 5G band1 Channel: 36, 40, 44, 48
@@ -2922,6 +2975,7 @@ const struct wpa_driver_ops wpa_driver_freertos_ops = {
     .send_action_cancel_wait  = wpa_drv_freertos_send_action_cancel_wait,
     .remain_on_channel        = wpa_drv_freertos_remain_on_channel,
     .cancel_remain_on_channel = wpa_drv_freertos_cancel_remain_on_channel,
+    .probe_req_report         = wpa_drv_freertos_probe_req_report,
     .hapd_init                = wpa_drv_freertos_hapd_init,
     .hapd_deinit              = wpa_drv_freertos_hapd_deinit,
     .get_survey               = wpa_drv_freertos_get_survey,

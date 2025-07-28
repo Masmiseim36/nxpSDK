@@ -16,8 +16,13 @@ FreeRTOS. The user uses an Internet browser to upload new version of firmware an
 1. The demo requires MCUBoot bootloader to be present in the FLASH memory to function properly.
    It is recommended to build and program the bootloader first, then go on with the application.
    Please refer to respective readme of the mcuboot_opensource example and follow the steps there before you continue.
-2. Before building the example application select Wi-Fi module macro in the `app_config.h`. (see `#define WIFI_<SoC Name>BOARD<Module Name>`).
-   For more information about Wi-Fi module connection see coresponding readme in WiFi examples directory.
+2. Before building the example application select Wi-Fi module:
+   - build from repository - select Wi-Fi module in Kconfig GUI
+   - build from zip package - change project macro related to Wi-Fi module `WIFI_<SoC Name>_BOARD_<Module Name>`, macro can be found in components\wifi_bt_module\incl\wifi_bt_module_config.h
+
+   For more information about Wi-Fi module connection see:
+   - readme_modules.md (select supported board)
+   - [Getting started guide](https://www.nxp.com/document/guide/getting-started-with-nxp-wi-fi-modules-using-i-mx-rt-platform:GS-WIFI-MODULES-IMXRT-PLATFORM)
 3. Prior launching the demo it is recommended to pre-build image with modified version of the application to test the OTA update process.
 4. Connect a USB cable between the PC host and the OpenSDA(or USB to Serial) USB port on the target board.
 5. Open a serial terminal on PC for OpenSDA serial(or USB to Serial) device with these settings:

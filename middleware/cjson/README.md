@@ -1,4 +1,6 @@
-# cJSON
+# MCUXpresso SDK : cJSON
+
+This repository is a fork of cJSON(https://github.com/DaveGamble/cJSON/releases/tag/v1.7.4). It is part of the MCUXpresso SDK overall delivery which is composed of several sub-repositories/projects. Navigate to the top/parent repository mcuxsdk-manifests(https://github.com/nxp-mcuxpresso/mcuxsdk-manifests) for the complete delivery of MCUXpresso SDK.
 
 Ultralightweight JSON parser in ANSI C.
 

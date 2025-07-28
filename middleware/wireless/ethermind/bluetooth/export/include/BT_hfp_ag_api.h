@@ -46,6 +46,12 @@
 #define HFP_AG_SEND_DATA_CNF                    0x06U
 #define HFP_AG_RECVD_DATA_IND                   0x07U
 /*@}*/
+
+/**
+ *  HFP AG Handle
+ */
+typedef  UINT32    HFP_AG_HANDLE;
+
 /* ----------------------------------------------- Structures/Data Types */
 /**
  *  \defgroup hfp_ag_defines Defines
@@ -79,12 +85,12 @@ typedef UCHAR HFP_AG_EVENTS;
 /** HFP Audio Gateway Event Notification Callback */
 typedef API_RESULT (* HFP_AG_EVENT_NOTIFY_CB)
                    (
+                       /* IN */ HFP_AG_HANDLE    handle,
                        /* IN */ HFP_AG_EVENTS    hfp_ag_event,
                        /* IN */ API_RESULT       result,
                        /* IN */ void *           data,
                        /* IN */ UINT16           data_length
                    );
-
 /** \} */
 /* ----------------------------------------------- Macros */
 
@@ -119,6 +125,17 @@ API_RESULT BT_hfp_ag_init
            );
 
 /**
+ *  \brief  To Shutdown HFP Audio Gateway
+ *
+ *  \par Description:
+ *       This API shutdowsn HFP Audio Gateway module.
+ *
+ *  \return
+ *      API_SUCCESS or one of the error codes as defined in \ref BLE_ERROR_CODES.
+ */
+API_RESULT BT_hfp_ag_shutdown(void);
+
+/**
  *  \brief To start HFP Audio Gateway
  *
  *  \par Description:
@@ -133,10 +150,8 @@ API_RESULT BT_hfp_ag_init
  *  \return
  *      API_SUCCESS or one of the error codes as defined in \ref BLE_ERROR_CODES.
  */
-API_RESULT BT_hfp_ag_start
-           (
-               /* IN */  UCHAR    server_channel
-           );
+#define BT_hfp_ag_start(sc)    \
+        BT_hfp_ag_instance_start((NULL), (sc))
 
 /**
  *  \brief To stop HFP Audio Gateway
@@ -148,7 +163,8 @@ API_RESULT BT_hfp_ag_start
  *  \return
  *      API_SUCCESS or one of the error codes as defined in \ref BLE_ERROR_CODES.
  */
-API_RESULT BT_hfp_ag_stop ( void );
+#define BT_hfp_ag_stop()   \
+        BT_hfp_ag_instance_stop(0x00)
 
 /**
  *  \brief  To establish connection with remote HFP Unit.
@@ -171,13 +187,9 @@ API_RESULT BT_hfp_ag_stop ( void );
  *  \note
  *       Result of the connection setup procedure completion will be indicated
  *       through application callback.
- *
  */
-API_RESULT BT_hfp_ag_connect
-           (
-               /* IN */  UCHAR      server_channel,
-               /* IN */  UCHAR *    bd_addr
-           );
+#define BT_hfp_ag_connect(sc, bd_addr) \
+        BT_hfp_ag_instance_connect(0x00, (sc), (bd_addr))
 
 /**
  *  \brief To disconnect from remote HFP Unit.
@@ -186,7 +198,7 @@ API_RESULT BT_hfp_ag_connect
  *       This API disconnects existing service level connection with the HFP Unit.
  *
  *  \param [in] bd_addr
- *         BD_ADDR of HFP Unit with whom connection need to be released
+ *         Remote Device address.
  *
  *  \return
  *      API_SUCCESS: Indicates disconnection procedure initiated successfully.
@@ -200,10 +212,8 @@ API_RESULT BT_hfp_ag_connect
  *  \note Result of the disconnection procedure completion will be indicated
  *        through application callback
  */
-API_RESULT BT_hfp_ag_disconnect
-           (
-               /* IN */  UCHAR *    bd_addr
-           );
+#define   BT_hfp_ag_disconnect(bd_addr)    \
+          bt_hfp_ag_device_instance_disconnect((0x00), (bd_addr))
 
 /**
  *  \brief To send Data/Response/Result Code to HFP Unit.
@@ -233,8 +243,145 @@ API_RESULT BT_hfp_ag_disconnect
  *  \note The mep_id is the output parameter; the application shall store this
  *        mep_id for initiating HDP control channel establishment procedures.
  */
-API_RESULT BT_hfp_ag_send_data
+#define BT_hfp_ag_send_data(rc, rcl)   \
+        BT_hfp_ag_instance_send_data(0x00, (rc), (rcl))
+
+/**
+ *  \brief To start HFP Audio Gateway
+ *
+ *  \par Description:
+ *       This API will switch on HFP AG function on the local device (i.e.)
+ *       enable AG to listen to peer (HFPU) initiated connections on a RFCOMM
+ *       channel and enables application to use the services of HFP AG profile.
+ *
+ * \param [out] hfp_ag_handle
+ *         Handle identifying a HFP AG connection.
+ *
+ *  \param [in] server_channel
+ *         The RFCOMM server channel in which the HFP AG will be listening for
+ *         peer initiated connection.
+ *
+ *  \return
+ *      API_SUCCESS or one of the error codes as defined in \ref BLE_ERROR_CODES.
+ */
+API_RESULT BT_hfp_ag_instance_start
            (
+                /* OUT */  HFP_AG_HANDLE    *hfp_ag_handle,
+                /* IN  */  UCHAR    server_channel
+           );
+
+/**
+ *  \brief To stop HFP Audio Gateway
+ *
+ *  \par Description:
+ *       This API enables user to switch off HFP AG function on the local device.
+ *       Existing active Hands Free connection if any will be released.
+ *
+ *  \param [in] hfp_ag_handle
+ *         Handle identifying a HFP AG connection.
+ *
+ *  \return
+ *      API_SUCCESS or one of the error codes as defined in \ref BLE_ERROR_CODES.
+ */
+API_RESULT BT_hfp_ag_instance_stop (/* IN */ HFP_AG_HANDLE hfp_ag_handle);
+
+/**
+ *  \brief  To establish connection with remote HFP Unit.
+ *
+ *  \par Description:
+ *       This API establishes service level connection between AG and a HFP Unit
+ *
+ *  \param [in] hfp_ag_handle
+ *         Handle identifying a HFP AG connection.
+ *
+ *  \param [in] server_channel
+ *         The server channel in which connection has to be initiated.
+ *
+ *  \param [in] bd_addr
+ *         BD_ADDR of HFP Unit with whom connection need to be established.
+ *
+ *  \return
+ *          API_SUCCESS: Indicates connection procedure initiated successfully
+ *          HFP_AG_ERR_INVALID_STATE: Profile is not started or already connected.
+ *          HFP_AG_ERR_MUTEX_LOCK_FAILED: Failed to Lock HFP AG Mutex.
+ *          HFP_AG_ERR_MUTEX_UNLOCK_FAILED: Failed to Unlock HFP AG Mutex.
+ *          Relevant error code from RFCOMM if any RFCOMM operation failed.
+ *  \note
+ *       Result of the connection setup procedure completion will be indicated
+ *       through application callback.
+ *
+ */
+API_RESULT BT_hfp_ag_instance_connect
+           (
+                /*IN */  HFP_AG_HANDLE     hfp_ag_handle,
+               /* IN */  UCHAR      server_channel,
+               /* IN */  UCHAR *    bd_addr
+           );
+
+/**
+ *  \brief To disconnect from remote HFP Unit.
+ *
+ *  \par Description:
+ *       This API disconnects existing service level connection with the HFP Unit.
+ *
+ *  \param [in] hfp_ag_handle
+ *         Handle identifying a HFP AG connection.
+ *
+ *  \return
+ *      API_SUCCESS: Indicates disconnection procedure initiated successfully.
+ *      HFP_AG_ERR_NULL_PARAMETER: Indicates BD_ADDR is NULL.
+ *      HFP_AG_ERR_INVALID_STATE: Profile is not started or not connected.
+ *      HFP_AG_ERR_MUTEX_LOCK_FAILED: Failed to Lock HFP AG Mutex.
+ *      HFP_AG_ERR_MUTEX_UNLOCK_FAILED: Failed to Unlock HFP AG Mutex.
+ *      HFP_AG_ERR_INVALID_PARAMETER: Failed to disconnect, wrong BD_ADDR is provided.
+ *      Relevant error code from RFCOMM if any RFCOMM operation failed.
+ *
+ *  \note Result of the disconnection procedure completion will be indicated
+ *        through application callback
+ */
+#define BT_hfp_ag_instance_disconnect(h)         \
+        bt_hfp_ag_device_instance_disconnect((h), NULL)
+
+API_RESULT bt_hfp_ag_device_instance_disconnect
+           (
+                /* IN */ HFP_AG_HANDLE    hfp_ag_handle,
+                /* IN */ UCHAR          * bd_addr
+           );
+
+/**
+ *  \brief To send Data/Response/Result Code to HFP Unit.
+ *
+ *  \par Description:
+ *       This API allows the application to send result code strings to
+ *       currently connected HFP Unit.
+ *
+ *  \param [in] hfp_ag_handle
+ *         Handle identifying a HFP AG connection.
+ *
+ *  \param [in] result_code
+ *         Contains information of the HDP Event Notification Callback which HDP
+ *         should use to report HDP events, the control channel PSM on which HDP
+ *         must receive control channel connection requests, the L2CAP configuration
+ *         parameters to be used during control channel connection, and the data
+ *         channel PSM on which data channel connection shall by HDP be accepted.
+ *
+ *  \param [in] result_code_length
+ *         Contains information of the HDP Event Notification Callback which HDP
+ *         should use to report HDP events, the control channel PSM on which HDP
+ *         must receive control channel connection requests, the L2CAP
+ *         configuration parameters to be used during control channel connection,
+ *         and the data channel PSM on which data channel connection shall by HDP
+ *         be accepted.
+ *
+ *  \return
+ *      API_SUCCESS or one of the error codes as defined in \ref BLE_ERROR_CODES.
+ *
+ *  \note The mep_id is the output parameter; the application shall store this
+ *        mep_id for initiating HDP control channel establishment procedures.
+ */
+API_RESULT BT_hfp_ag_instance_send_data
+           (
+                /*IN */ HFP_AG_HANDLE   hfp_ag_handle,
                /* IN */ UCHAR *    result_code,
                /* IN */ UINT16     result_code_length
            );

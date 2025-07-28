@@ -9,7 +9,7 @@
 *                                                                    *
 **********************************************************************
 
-** emWin V6.46 - Graphical user interface for embedded applications **
+** emWin V6.50 - Graphical user interface for embedded applications **
 All  Intellectual Property rights  in the Software belongs to  SEGGER.
 emWin is protected by  international copyright laws.  Knowledge of the
 source code may not be used to write a similar product.  This file may
@@ -151,6 +151,7 @@ typedef enum {
   DEVICE_CLASS_DRIVER = 0,
   DEVICE_CLASS_DRIVER_MODIFIER,   // Zoom or delta-pixel modifier
   DEVICE_CLASS_VNC,
+  DEVICE_CLASS_DIRTY,
   DEVICE_CLASS_SPRITE,
   DEVICE_CLASS_MEMDEV,
   DEVICE_CLASS_ALPHA,
@@ -203,6 +204,46 @@ extern const GUI_DEVICE_API GUI_MEMDEV_DEVICE_1;
 extern const GUI_DEVICE_API GUI_MEMDEV_DEVICE_8;
 extern const GUI_DEVICE_API GUI_MEMDEV_DEVICE_16;
 extern const GUI_DEVICE_API GUI_MEMDEV_DEVICE_32;
+
+#if GUI_SUPPORT_PROFILE
+
+/*********************************************************************
+*
+*       Instrumentation
+*/
+/*********************************************************************
+*
+*       GUI_PROFILE_API
+*/
+typedef struct {
+  void (*pfRecordEndCall)   (unsigned EventId);
+  void (*pfRecordEndCallU32)(unsigned EventId, U32 Para0);
+  void (*pfRecordVoid)      (unsigned EventId);
+  void (*pfRecordU32)       (unsigned EventId, U32 Para0);
+  void (*pfRecordU32x2)     (unsigned EventId, U32 Para0, U32 Para1);
+  void (*pfRecordU32x3)     (unsigned EventId, U32 Para0, U32 Para1, U32 Para2);
+  void (*pfRecordU32x4)     (unsigned EventId, U32 Para0, U32 Para1, U32 Para2, U32 Para3);
+  void (*pfRecordU32x5)     (unsigned EventId, U32 Para0, U32 Para1, U32 Para2, U32 Para3, U32 Para4);
+  void (*pfRecordU32x6)     (unsigned EventId, U32 Para0, U32 Para1, U32 Para2, U32 Para3, U32 Para4, U32 Para5);
+  void (*pfRecordU32x7)     (unsigned EventId, U32 Para0, U32 Para1, U32 Para2, U32 Para3, U32 Para4, U32 Para5, U32 Para6);
+  void (*pfRecordString)    (unsigned EventId, const char * pPara0);
+  void (*pfRecordStringx2)  (unsigned EventId, const char * pPara0, const char * pPara1);
+} GUI_PROFILE_API;
+
+U32  GUI_PROFILE_GetAPIDesc(const char ** psDesc);
+void GUI_PROFILE_SetAPI    (const GUI_PROFILE_API * pAPI, U32 IdOffset);
+void GUI_SYSVIEW_Init(void);
+
+/*********************************************************************
+*
+*       GUI_PROFILE
+*/
+typedef struct {
+  U32                    IdOffset;
+  const GUI_PROFILE_API * pAPI;
+} GUI_PROFILE;
+
+#endif
 
 /*********************************************************************
 *
@@ -259,6 +300,9 @@ struct GUI_CONTEXT {
     U8 DisableCliprect;
     U8 ClipBKActive;
   #endif
+  #if GUI_SUPPORT_PROFILE
+    GUI_PROFILE Profile;
+  #endif
   //
   // Array of pointers to device chains
   //
@@ -304,6 +348,10 @@ GUI_DEVICE * GUI_DEVICE__GetpDevice     (int LayerIndex, int DeviceClass);
 GUI_DEVICE * GUI_DEVICE_UnlinkTaskDevices(void);
 void         GUI_DEVICE_LinkDevices      (GUI_DEVICE * pDevice);
 
+/* Use of HW-functions */
+int GUI_DEVICE__CheckClassDrv  (void);
+int GUI_DEVICE__CheckClassDrvMD(void);
+
 /*********************************************************************
 *
 *       GUI_DIRTYDEVICE_INFO
@@ -329,6 +377,47 @@ int GUI_DIRTYDEVICE_Delete      (void);
 int GUI_DIRTYDEVICE_DeleteEx    (int LayerIndex);
 int GUI_DIRTYDEVICE_Fetch       (GUI_DIRTYDEVICE_INFO * pInfo);
 int GUI_DIRTYDEVICE_FetchEx     (GUI_DIRTYDEVICE_INFO * pInfo, int LayerIndex);
+
+/*********************************************************************
+*
+*       GUI_DIRTYTILES
+*/
+int  GUI_DIRTYTILES_CreateEx (int NumCols, int NumRows,  int LayerIndex);
+int  GUI_DIRTYTILES_Create   (int NumCols, int NumRows);
+int  GUI_DIRTYTILES_FetchEx  (GUI_RECT ** ppRects, U8 ** ppBytes, int LayerIndex);
+int  GUI_DIRTYTILES_Fetch    (GUI_RECT ** ppRects, U8 ** ppBytes);
+void GUI_DIRTYTILES_CleanUpEx(int LayerIndex);
+void GUI_DIRTYTILES_CleanUp  (void);
+//
+// DirtyTiles, internal use only
+//
+void * GUI_DIRTYTILES__CreateContext(int NumCols, int NumRows, int LayerIndex);
+int    GUI_DIRTYTILES__FetchContext (void * pVoid, GUI_RECT ** ppRects, U8 ** ppBytes);
+void   GUI_DIRTYTILES__AddDirtyRect (void * pVoid, int x0, int y0, int x1, int y1);
+void   GUI_DIRTYTILES__AddDirtyPixel(void * pVoid, int x, int y);
+void   GUI_DIRTYTILES__CleanUp      (void * pVoid);
+void   GUI_DIRTYTILES__MarkDirty    (void * pVoid);
+int    GUI_DIRTYTILES__GetNumCols   (void);
+int    GUI_DIRTYTILES__GetNumRows   (void);
+void   GUI_DIRTYTILES__SetNumCols   (int NumCols);
+void   GUI_DIRTYTILES__SetNumRows   (int NumRows);
+
+/*********************************************************************
+*
+*       GUI_DIRTY
+*/
+typedef struct GUI_DIRTY_DEVICE GUI_DIRTY_DEVICE;
+
+struct GUI_DIRTY_DEVICE {
+  GUI_DEVICE       * pDevice;
+  void            (* pfAddRect)(GUI_DEVICE * pDevice, int x0, int y0, int x1, int y1);
+  GUI_DIRTY_DEVICE * pNext;
+};
+
+extern void (* GUI__pfAddDirtyRect)(int x0, int y0, int x1, int y1);
+extern void (* GUI__pfAddDirtyPoly)(const GUI_POINT * pPoints, int NumPoints, int x, int y);
+
+void GUI_DIRTY__AddDevice(GUI_DEVICE * pDevice, GUI_DIRTY_DEVICE * pDirty, void (* pfAddRect)(GUI_DEVICE * pDevice, int x0, int y0, int x1, int y1));
 
 /*********************************************************************
 *
@@ -1083,19 +1172,7 @@ GUI_SVG_DRIVER * GUI_SVG_DRIVER_GetSelected   (void);
 int              GUI_SVG_DRIVER_HasBoundAPI   (GUI_SVG_DRIVER * pDriver);
 int              GUI_SVG_DRIVER_Select        (GUI_SVG_DRIVER * pDriver);
 void             GUI_SVG_DRIVER_SetHooks      (GUI_SVG_DRIVER * pDriver, const GUI_SVG_HOOKS * pHooks);
-//
-// Compatability macros
-//
-#define GUI_SVG_SetHooks(pHooks)                           GUI_SVG_DRIVER_SetHooks(GUI_SVG_DRIVER_GetSelected(), pHooks)
-#define GUI_SVG_SetAPI_VGLite(pAPI)                        GUI_SVG_DRIVER_BindAPI(GUI_SVG_DRIVER_VGLITE, pAPI); \
-                                                           GUI_SVG_DRIVER_Select(GUI_SVG_DRIVER_VGLITE)
-#define GUI_SVG_SetAPI_OpenVG(pAPI)                        GUI_SVG_DRIVER_BindAPI(GUI_SVG_DRIVER_OPENVG, pAPI); \
-                                                           GUI_SVG_DRIVER_Select(GUI_SVG_DRIVER_OPENVG)
-#define GUI_SVG_LoadAPI_OpenVG(pOpenVG, pEGL, cbLoad)      if (pOpenVG) {                                   \
-                                                             (pOpenVG)->pEGL = pEGL;                        \
-                                                             GUI_SVG_DRIVER_BindDynamicAPI(GUI_SVG_DRIVER_OPENVG, pOpenVG, cbLoad); \
-                                                             GUI_SVG_DRIVER_Select(GUI_SVG_DRIVER_OPENVG);  \
-                                                           }
+int              GUI_SVG_DRIVER_SetVersion    (GUI_SVG_DRIVER * pDriver, U8 Major, U8 Minor, U8 Bugfix);
 
 /*********************************************************************
 *
@@ -1526,8 +1603,8 @@ U16  GUI_UC_GetCharCode   (const char * s);
 void GUI_UC_SetEncodeNone (void);
 void GUI_UC_SetEncodeSJIS (void);
 void GUI_UC_SetEncodeUTF8 (void);
-void GUI_UC_SetBaseDir    (int Dir);  // Only available with new version of BIDI algorithm (GUI_USE_BIDI2 == 1)
-int  GUI_UC_GetBaseDir    (void);     // Only available with new version of BIDI algorithm (GUI_USE_BIDI2 == 1)
+void GUI_UC_SetBaseDir    (int Dir);
+int  GUI_UC_GetBaseDir    (void);
 
 void GUI_UC_DispString(const U16 * s);
 void GUI_UC2DB (U16 Code, U8 * pOut);
@@ -3154,21 +3231,38 @@ void GUI_MTOUCH_StoreEvent      (GUI_MTOUCH_EVENT * pEvent, GUI_MTOUCH_INPUT * p
 //
 // Proportional fonts
 //
-extern GUI_CONST_STORAGE GUI_FONT GUI_Font8_ASCII,        GUI_Font8_1;
-extern GUI_CONST_STORAGE GUI_FONT GUI_Font10S_ASCII,      GUI_Font10S_1;
-extern GUI_CONST_STORAGE GUI_FONT GUI_Font10_ASCII,       GUI_Font10_1;
-extern GUI_CONST_STORAGE GUI_FONT GUI_Font13_ASCII,       GUI_Font13_1;
-extern GUI_CONST_STORAGE GUI_FONT GUI_Font13B_ASCII,      GUI_Font13B_1;
-extern GUI_CONST_STORAGE GUI_FONT GUI_Font13H_ASCII,      GUI_Font13H_1;
-extern GUI_CONST_STORAGE GUI_FONT GUI_Font13HB_ASCII,     GUI_Font13HB_1;
-extern GUI_CONST_STORAGE GUI_FONT GUI_Font16_ASCII,       GUI_Font16_1,       GUI_Font16_HK,    GUI_Font16_1HK;
-extern GUI_CONST_STORAGE GUI_FONT GUI_Font16B_ASCII,      GUI_Font16B_1;
-extern GUI_CONST_STORAGE GUI_FONT GUI_Font20_ASCII,       GUI_Font20_1;
-extern GUI_CONST_STORAGE GUI_FONT GUI_Font20B_ASCII,      GUI_Font20B_1;
-extern GUI_CONST_STORAGE GUI_FONT GUI_Font24_ASCII,       GUI_Font24_1;
-extern GUI_CONST_STORAGE GUI_FONT GUI_Font24B_ASCII,      GUI_Font24B_1;
-extern GUI_CONST_STORAGE GUI_FONT GUI_Font32_ASCII,       GUI_Font32_1;
-extern GUI_CONST_STORAGE GUI_FONT GUI_Font32B_ASCII,      GUI_Font32B_1;
+extern GUI_CONST_STORAGE GUI_FONT GUI_Font8_1;
+extern GUI_CONST_STORAGE GUI_FONT GUI_Font8_ASCII;
+extern GUI_CONST_STORAGE GUI_FONT GUI_Font10S_1;
+extern GUI_CONST_STORAGE GUI_FONT GUI_Font10S_ASCII;
+extern GUI_CONST_STORAGE GUI_FONT GUI_Font10_1;
+extern GUI_CONST_STORAGE GUI_FONT GUI_Font10_ASCII;
+extern GUI_CONST_STORAGE GUI_FONT GUI_Font13B_1;
+extern GUI_CONST_STORAGE GUI_FONT GUI_Font13B_ASCII;
+extern GUI_CONST_STORAGE GUI_FONT GUI_Font13HB_1;
+extern GUI_CONST_STORAGE GUI_FONT GUI_Font13HB_ASCII;
+extern GUI_CONST_STORAGE GUI_FONT GUI_Font13H_1;
+extern GUI_CONST_STORAGE GUI_FONT GUI_Font13H_ASCII;
+extern GUI_CONST_STORAGE GUI_FONT GUI_Font13_1;
+extern GUI_CONST_STORAGE GUI_FONT GUI_Font13_ASCII;
+extern GUI_CONST_STORAGE GUI_FONT GUI_Font16B_1;
+extern GUI_CONST_STORAGE GUI_FONT GUI_Font16B_ASCII;
+extern GUI_CONST_STORAGE GUI_FONT GUI_Font16_1;
+extern GUI_CONST_STORAGE GUI_FONT GUI_Font16_1HK;
+extern GUI_CONST_STORAGE GUI_FONT GUI_Font16_ASCII;
+extern GUI_CONST_STORAGE GUI_FONT GUI_Font16_HK;
+extern GUI_CONST_STORAGE GUI_FONT GUI_Font20B_1;
+extern GUI_CONST_STORAGE GUI_FONT GUI_Font20B_ASCII;
+extern GUI_CONST_STORAGE GUI_FONT GUI_Font20_1;
+extern GUI_CONST_STORAGE GUI_FONT GUI_Font20_ASCII;
+extern GUI_CONST_STORAGE GUI_FONT GUI_Font24B_1;
+extern GUI_CONST_STORAGE GUI_FONT GUI_Font24B_ASCII;
+extern GUI_CONST_STORAGE GUI_FONT GUI_Font24_1;
+extern GUI_CONST_STORAGE GUI_FONT GUI_Font24_ASCII;
+extern GUI_CONST_STORAGE GUI_FONT GUI_Font32B_1;
+extern GUI_CONST_STORAGE GUI_FONT GUI_Font32B_ASCII;
+extern GUI_CONST_STORAGE GUI_FONT GUI_Font32_1;
+extern GUI_CONST_STORAGE GUI_FONT GUI_Font32_ASCII;
 
 //
 // Proportional fonts, framed
@@ -3176,38 +3270,138 @@ extern GUI_CONST_STORAGE GUI_FONT GUI_Font32B_ASCII,      GUI_Font32B_1;
 extern GUI_CONST_STORAGE GUI_FONT GUI_Font20F_ASCII;
 
 //
-// Monospaced
+// Monospaced fonts
 //
 extern GUI_CONST_STORAGE GUI_FONT GUI_Font4x6;
-extern GUI_CONST_STORAGE GUI_FONT GUI_Font6x8,            GUI_Font6x9;
-extern GUI_CONST_STORAGE GUI_FONT GUI_Font6x8_ASCII,      GUI_Font6x8_1;
-extern GUI_CONST_STORAGE GUI_FONT GUI_Font8x8,            GUI_Font8x9;
-extern GUI_CONST_STORAGE GUI_FONT GUI_Font8x8_ASCII,      GUI_Font8x8_1;
+extern GUI_CONST_STORAGE GUI_FONT GUI_Font6x8_1;
+extern GUI_CONST_STORAGE GUI_FONT GUI_Font6x8_ASCII;
+extern GUI_CONST_STORAGE GUI_FONT GUI_Font6x9_1;
+extern GUI_CONST_STORAGE GUI_FONT GUI_Font6x9_ASCII;
+extern GUI_CONST_STORAGE GUI_FONT GUI_Font8x8_1;
+extern GUI_CONST_STORAGE GUI_FONT GUI_Font8x8_ASCII;
+extern GUI_CONST_STORAGE GUI_FONT GUI_Font8x9_1;
+extern GUI_CONST_STORAGE GUI_FONT GUI_Font8x9_ASCII;
 extern GUI_CONST_STORAGE GUI_FONT GUI_Font8x10_ASCII;
 extern GUI_CONST_STORAGE GUI_FONT GUI_Font8x12_ASCII;
-extern GUI_CONST_STORAGE GUI_FONT GUI_Font8x13_ASCII,     GUI_Font8x13_1;
-extern GUI_CONST_STORAGE GUI_FONT GUI_Font8x15B_ASCII,    GUI_Font8x15B_1;
-extern GUI_CONST_STORAGE GUI_FONT GUI_Font8x16,           GUI_Font8x17,       GUI_Font8x18;
-extern GUI_CONST_STORAGE GUI_FONT GUI_Font8x16x1x2,       GUI_Font8x16x2x2,   GUI_Font8x16x3x3;
-extern GUI_CONST_STORAGE GUI_FONT GUI_Font8x16_ASCII,     GUI_Font8x16_1;
+extern GUI_CONST_STORAGE GUI_FONT GUI_Font8x13_1;
+extern GUI_CONST_STORAGE GUI_FONT GUI_Font8x13_ASCII;
+extern GUI_CONST_STORAGE GUI_FONT GUI_Font8x15B_1;
+extern GUI_CONST_STORAGE GUI_FONT GUI_Font8x15B_ASCII;
+extern GUI_CONST_STORAGE GUI_FONT GUI_Font8x16_1;
+extern GUI_CONST_STORAGE GUI_FONT GUI_Font8x16_ASCII;
+extern GUI_CONST_STORAGE GUI_FONT GUI_Font8x16x1x2_1;
+extern GUI_CONST_STORAGE GUI_FONT GUI_Font8x16x1x2_ASCII;
+extern GUI_CONST_STORAGE GUI_FONT GUI_Font8x16x2x2_1;
+extern GUI_CONST_STORAGE GUI_FONT GUI_Font8x16x2x2_ASCII;
+extern GUI_CONST_STORAGE GUI_FONT GUI_Font8x16x3x3_1;
+extern GUI_CONST_STORAGE GUI_FONT GUI_Font8x16x3x3_ASCII;
+extern GUI_CONST_STORAGE GUI_FONT GUI_Font8x17_1;
+extern GUI_CONST_STORAGE GUI_FONT GUI_Font8x17_ASCII;
+extern GUI_CONST_STORAGE GUI_FONT GUI_Font8x18_1;
+extern GUI_CONST_STORAGE GUI_FONT GUI_Font8x18_ASCII;
 
 //
-// Digits
+// Digit fonts, proportional
+//
+extern GUI_CONST_STORAGE GUI_FONT GUI_FontD32;
+extern GUI_CONST_STORAGE GUI_FONT GUI_FontD48;
+extern GUI_CONST_STORAGE GUI_FONT GUI_FontD64;
+extern GUI_CONST_STORAGE GUI_FONT GUI_FontD80;
+
+//
+// Digit fonts, monospaced
 //
 extern GUI_CONST_STORAGE GUI_FONT GUI_FontD24x32;
-extern GUI_CONST_STORAGE GUI_FONT GUI_FontD32;
 extern GUI_CONST_STORAGE GUI_FONT GUI_FontD36x48;
-extern GUI_CONST_STORAGE GUI_FONT GUI_FontD48;
 extern GUI_CONST_STORAGE GUI_FONT GUI_FontD48x64;
-extern GUI_CONST_STORAGE GUI_FONT GUI_FontD64;
 extern GUI_CONST_STORAGE GUI_FONT GUI_FontD60x80;
-extern GUI_CONST_STORAGE GUI_FONT GUI_FontD80;
 
 //
 // Comic fonts
 //
-extern GUI_CONST_STORAGE GUI_FONT GUI_FontComic18B_ASCII, GUI_FontComic18B_1;
-extern GUI_CONST_STORAGE GUI_FONT GUI_FontComic24B_ASCII, GUI_FontComic24B_1;
+extern GUI_CONST_STORAGE GUI_FONT GUI_FontComic18B_1;
+extern GUI_CONST_STORAGE GUI_FONT GUI_FontComic18B_ASCII;
+extern GUI_CONST_STORAGE GUI_FONT GUI_FontComic24B_1;
+extern GUI_CONST_STORAGE GUI_FONT GUI_FontComic24B_ASCII;
+
+//
+// Proportional fonts, antialiased
+//
+extern GUI_CONST_STORAGE GUI_FONT GUI_Font12_1_AA4;
+extern GUI_CONST_STORAGE GUI_FONT GUI_Font12_ASCII_AA4;
+extern GUI_CONST_STORAGE GUI_FONT GUI_Font16_1_AA4;
+extern GUI_CONST_STORAGE GUI_FONT GUI_Font16_ASCII_AA4;
+extern GUI_CONST_STORAGE GUI_FONT GUI_Font24_1_AA4;
+extern GUI_CONST_STORAGE GUI_FONT GUI_Font24_ASCII_AA4;
+extern GUI_CONST_STORAGE GUI_FONT GUI_Font32_1_AA4;
+extern GUI_CONST_STORAGE GUI_FONT GUI_Font32_ASCII_AA4;
+extern GUI_CONST_STORAGE GUI_FONT GUI_Font48_1_AA4;
+extern GUI_CONST_STORAGE GUI_FONT GUI_Font48_ASCII_AA4;
+extern GUI_CONST_STORAGE GUI_FONT GUI_Font64_1_AA4;
+extern GUI_CONST_STORAGE GUI_FONT GUI_Font64_ASCII_AA4;
+
+//
+// Monospaced fonts, antialiased
+//
+extern GUI_CONST_STORAGE GUI_FONT GUI_Font5x12_1_AA4;
+extern GUI_CONST_STORAGE GUI_FONT GUI_Font5x12_ASCII_AA4;
+extern GUI_CONST_STORAGE GUI_FONT GUI_Font8x16_1_AA4;
+extern GUI_CONST_STORAGE GUI_FONT GUI_Font8x16_ASCII_AA4;
+extern GUI_CONST_STORAGE GUI_FONT GUI_Font12x24_1_AA4;
+extern GUI_CONST_STORAGE GUI_FONT GUI_Font12x24_ASCII_AA4;
+extern GUI_CONST_STORAGE GUI_FONT GUI_Font16x32_1_AA4;
+extern GUI_CONST_STORAGE GUI_FONT GUI_Font16x32_ASCII_AA4;
+extern GUI_CONST_STORAGE GUI_FONT GUI_Font24x48_1_AA4;
+extern GUI_CONST_STORAGE GUI_FONT GUI_Font24x48_ASCII_AA4;
+extern GUI_CONST_STORAGE GUI_FONT GUI_Font32x64_1_AA4;
+extern GUI_CONST_STORAGE GUI_FONT GUI_Font32x64_ASCII_AA4;
+
+//
+// Digit fonts, proportional, antialiased
+//
+extern GUI_CONST_STORAGE GUI_FONT GUI_FontD32_AA4;
+extern GUI_CONST_STORAGE GUI_FONT GUI_FontD48_AA4;
+extern GUI_CONST_STORAGE GUI_FONT GUI_FontD64_AA4;
+extern GUI_CONST_STORAGE GUI_FONT GUI_FontD80_AA4;
+
+//
+// Digit fonts, monospaced, antialiased
+//
+extern GUI_CONST_STORAGE GUI_FONT GUI_FontD29x32_AA4;
+extern GUI_CONST_STORAGE GUI_FONT GUI_FontD42x48_AA4;
+extern GUI_CONST_STORAGE GUI_FONT GUI_FontD56x64_AA4;
+extern GUI_CONST_STORAGE GUI_FONT GUI_FontD71x80_AA4;
+
+/*********************************************************************
+*
+*       Kerning
+*/
+extern GUI_CONST_STORAGE U16 aF16_AA4_Kerning[];
+extern GUI_CONST_STORAGE U16 aF24_AA4_Kerning[];
+extern GUI_CONST_STORAGE U16 aF32_AA4_Kerning[];
+extern GUI_CONST_STORAGE U16 aF48_AA4_Kerning[];
+extern GUI_CONST_STORAGE U16 aF64_AA4_Kerning[];
+
+extern U32 F16_AA4_Kerning_NumPairs;
+extern U32 F24_AA4_Kerning_NumPairs;
+extern U32 F32_AA4_Kerning_NumPairs;
+extern U32 F48_AA4_Kerning_NumPairs;
+extern U32 F64_AA4_Kerning_NumPairs;
+
+/*********************************************************************
+*
+*       Compatibility macros
+*/
+#define GUI_Font6x8      GUI_Font6x8_ASCII
+#define GUI_Font6x9      GUI_Font6x9_ASCII
+#define GUI_Font8x8      GUI_Font8x8_ASCII
+#define GUI_Font8x9      GUI_Font8x9_ASCII
+#define GUI_Font8x16     GUI_Font8x16_ASCII
+#define GUI_Font8x16x1x2 GUI_Font8x16x1x2_ASCII
+#define GUI_Font8x16x2x2 GUI_Font8x16x2x2_ASCII
+#define GUI_Font8x16x3x3 GUI_Font8x16x3x3_ASCII
+#define GUI_Font8x17     GUI_Font8x17_ASCII
+#define GUI_Font8x18     GUI_Font8x18_ASCII
 
 /*********************************************************************
 *
@@ -3216,90 +3410,147 @@ extern GUI_CONST_STORAGE GUI_FONT GUI_FontComic24B_ASCII, GUI_FontComic24B_1;
 //
 // Proportional fonts
 //
-#define GUI_FONT_8_ASCII        &GUI_Font8_ASCII
-#define GUI_FONT_8_1            &GUI_Font8_1
-#define GUI_FONT_10S_ASCII      &GUI_Font10S_ASCII
-#define GUI_FONT_10S_1          &GUI_Font10S_1
-#define GUI_FONT_10_ASCII       &GUI_Font10_ASCII
-#define GUI_FONT_10_1           &GUI_Font10_1
-#define GUI_FONT_13_ASCII       &GUI_Font13_ASCII
-#define GUI_FONT_13_1           &GUI_Font13_1
-#define GUI_FONT_13B_ASCII      &GUI_Font13B_ASCII
-#define GUI_FONT_13B_1          &GUI_Font13B_1
-#define GUI_FONT_13H_ASCII      &GUI_Font13H_ASCII
-#define GUI_FONT_13H_1          &GUI_Font13H_1
-#define GUI_FONT_13HB_ASCII     &GUI_Font13HB_ASCII
-#define GUI_FONT_13HB_1         &GUI_Font13HB_1
-#define GUI_FONT_16_ASCII       &GUI_Font16_ASCII
-#define GUI_FONT_16_1           &GUI_Font16_1
-#define GUI_FONT_16_HK          &GUI_Font16_HK
-#define GUI_FONT_16_1HK         &GUI_Font16_1HK
-#define GUI_FONT_16B_ASCII      &GUI_Font16B_ASCII
-#define GUI_FONT_16B_1          &GUI_Font16B_1
-#define GUI_FONT_20_ASCII       &GUI_Font20_ASCII
-#define GUI_FONT_20_1           &GUI_Font20_1
-#define GUI_FONT_20B_ASCII      &GUI_Font20B_ASCII
-#define GUI_FONT_20B_1          &GUI_Font20B_1
-#define GUI_FONT_24_ASCII       &GUI_Font24_ASCII
-#define GUI_FONT_24_1           &GUI_Font24_1
-#define GUI_FONT_24B_ASCII      &GUI_Font24B_ASCII
-#define GUI_FONT_24B_1          &GUI_Font24B_1
-#define GUI_FONT_32_ASCII       &GUI_Font32_ASCII
-#define GUI_FONT_32_1           &GUI_Font32_1
-#define GUI_FONT_32B_ASCII      &GUI_Font32B_ASCII
-#define GUI_FONT_32B_1          &GUI_Font32B_1
+#define GUI_FONT_8_1             &GUI_Font8_1
+#define GUI_FONT_8_ASCII         &GUI_Font8_ASCII
+#define GUI_FONT_10S_1           &GUI_Font10S_1
+#define GUI_FONT_10S_ASCII       &GUI_Font10S_ASCII
+#define GUI_FONT_10_1            &GUI_Font10_1
+#define GUI_FONT_10_ASCII        &GUI_Font10_ASCII
+#define GUI_FONT_13B_1           &GUI_Font13B_1
+#define GUI_FONT_13B_ASCII       &GUI_Font13B_ASCII
+#define GUI_FONT_13HB_1          &GUI_Font13HB_1
+#define GUI_FONT_13HB_ASCII      &GUI_Font13HB_ASCII
+#define GUI_FONT_13H_1           &GUI_Font13H_1
+#define GUI_FONT_13H_ASCII       &GUI_Font13H_ASCII
+#define GUI_FONT_13_1            &GUI_Font13_1
+#define GUI_FONT_13_ASCII        &GUI_Font13_ASCII
+#define GUI_FONT_16B_1           &GUI_Font16B_1
+#define GUI_FONT_16B_ASCII       &GUI_Font16B_ASCII
+#define GUI_FONT_16_1            &GUI_Font16_1
+#define GUI_FONT_16_1HK          &GUI_Font16_1HK
+#define GUI_FONT_16_ASCII        &GUI_Font16_ASCII
+#define GUI_FONT_16_HK           &GUI_Font16_HK
+#define GUI_FONT_20B_1           &GUI_Font20B_1
+#define GUI_FONT_20B_ASCII       &GUI_Font20B_ASCII
+#define GUI_FONT_20_1            &GUI_Font20_1
+#define GUI_FONT_20_ASCII        &GUI_Font20_ASCII
+#define GUI_FONT_24B_1           &GUI_Font24B_1
+#define GUI_FONT_24B_ASCII       &GUI_Font24B_ASCII
+#define GUI_FONT_24_1            &GUI_Font24_1
+#define GUI_FONT_24_ASCII        &GUI_Font24_ASCII
+#define GUI_FONT_32B_1           &GUI_Font32B_1
+#define GUI_FONT_32B_ASCII       &GUI_Font32B_ASCII
+#define GUI_FONT_32_1            &GUI_Font32_1
+#define GUI_FONT_32_ASCII        &GUI_Font32_ASCII
 
 //
 // Proportional fonts, framed
 //
-#define GUI_FONT_20F_ASCII      &GUI_Font20F_ASCII
+#define GUI_FONT_20F_ASCII       &GUI_Font20F_ASCII
 
 //
-// Monospaced
+// Monospaced fonts
 //
-#define GUI_FONT_4X6            &GUI_Font4x6
-#define GUI_FONT_6X8            &GUI_Font6x8
-#define GUI_FONT_6X8_ASCII      &GUI_Font6x8_ASCII
-#define GUI_FONT_6X8_1          &GUI_Font6x8_1
-#define GUI_FONT_6X9            &GUI_Font6x9
-#define GUI_FONT_8X8            &GUI_Font8x8
-#define GUI_FONT_8X8_ASCII      &GUI_Font8x8_ASCII
-#define GUI_FONT_8X8_1          &GUI_Font8x8_1
-#define GUI_FONT_8X9            &GUI_Font8x9
-#define GUI_FONT_8X10_ASCII     &GUI_Font8x10_ASCII
-#define GUI_FONT_8X12_ASCII     &GUI_Font8x12_ASCII
-#define GUI_FONT_8X13_ASCII     &GUI_Font8x13_ASCII
-#define GUI_FONT_8X13_1         &GUI_Font8x13_1
-#define GUI_FONT_8X15B_ASCII    &GUI_Font8x15B_ASCII
-#define GUI_FONT_8X15B_1        &GUI_Font8x15B_1
-#define GUI_FONT_8X16           &GUI_Font8x16
-#define GUI_FONT_8X17           &GUI_Font8x17
-#define GUI_FONT_8X18           &GUI_Font8x18
-#define GUI_FONT_8X16X1X2       &GUI_Font8x16x1x2
-#define GUI_FONT_8X16X2X2       &GUI_Font8x16x2x2
-#define GUI_FONT_8X16X3X3       &GUI_Font8x16x3x3
-#define GUI_FONT_8X16_ASCII     &GUI_Font8x16_ASCII
-#define GUI_FONT_8X16_1         &GUI_Font8x16_1
+#define GUI_FONT_4X6             &GUI_Font4x6
+#define GUI_FONT_6X8             &GUI_Font6x8_ASCII
+#define GUI_FONT_6X8_1           &GUI_Font6x8_1
+#define GUI_FONT_6X8_ASCII       &GUI_Font6x8_ASCII
+#define GUI_FONT_6X9             &GUI_Font6x9_ASCII
+#define GUI_FONT_8X8             &GUI_Font8x8_ASCII
+#define GUI_FONT_8X8_1           &GUI_Font8x8_1
+#define GUI_FONT_8X8_ASCII       &GUI_Font8x8_ASCII
+#define GUI_FONT_8X9             &GUI_Font8x9_ASCII
+#define GUI_FONT_8X10_ASCII      &GUI_Font8x10_ASCII
+#define GUI_FONT_8X12_ASCII      &GUI_Font8x12_ASCII
+#define GUI_FONT_8X13_1          &GUI_Font8x13_1
+#define GUI_FONT_8X13_ASCII      &GUI_Font8x13_ASCII
+#define GUI_FONT_8X15B_1         &GUI_Font8x15B_1
+#define GUI_FONT_8X15B_ASCII     &GUI_Font8x15B_ASCI
+#define GUI_FONT_8X16            &GUI_Font8x16_ASCII
+#define GUI_FONT_8X16_1          &GUI_Font8x16_1
+#define GUI_FONT_8X16_ASCII      &GUI_Font8x16_ASCII
+#define GUI_FONT_8X16X1X2_1      &GUI_Font8x16x1x2_1
+#define GUI_FONT_8X16X1X2_ASCII  &GUI_Font8x16x1x2_ASCII
+#define GUI_FONT_8X16X2X2_1      &GUI_Font8x16x2x2_1
+#define GUI_FONT_8X16X2X2_ASCII  &GUI_Font8x16x2x2_ASCII
+#define GUI_FONT_8X16X3X3_1      &GUI_Font8x16x3x3_1
+#define GUI_FONT_8X16X3X3_ASCII  &GUI_Font8x16x3x3_ASCII
+#define GUI_FONT_8X17_1          &GUI_Font8x17_1
+#define GUI_FONT_8X17_ASCII      &GUI_Font8x17_ASCII
+#define GUI_FONT_8X18_1          &GUI_Font8x18_1
+#define GUI_FONT_8X18_ASCII      &GUI_Font8x18_ASCII
 
 //
-// Digits
+// Digit fonts, proportional
 //
-#define GUI_FONT_D24X32         &GUI_FontD24x32
-#define GUI_FONT_D32            &GUI_FontD32
-#define GUI_FONT_D36X48         &GUI_FontD36x48
-#define GUI_FONT_D48            &GUI_FontD48
-#define GUI_FONT_D48X64         &GUI_FontD48x64
-#define GUI_FONT_D64            &GUI_FontD64
-#define GUI_FONT_D60X80         &GUI_FontD60x80
-#define GUI_FONT_D80            &GUI_FontD80
+#define GUI_FONT_D32             &GUI_FontD32
+#define GUI_FONT_D48             &GUI_FontD48
+#define GUI_FONT_D64             &GUI_FontD64
+#define GUI_FONT_D80             &GUI_FontD80
+
+//
+// Digit fonts, monospaced
+//
+#define GUI_FONT_D24X32          &GUI_FontD24x32
+#define GUI_FONT_D36X48          &GUI_FontD36x48
+#define GUI_FONT_D48X64          &GUI_FontD48x64
+#define GUI_FONT_D60X80          &GUI_FontD60x80
 
 //
 // Comic fonts
 //
-#define GUI_FONT_COMIC18B_ASCII &GUI_FontComic18B_ASCII
-#define GUI_FONT_COMIC18B_1     &GUI_FontComic18B_1
-#define GUI_FONT_COMIC24B_ASCII &GUI_FontComic24B_ASCII
-#define GUI_FONT_COMIC24B_1     &GUI_FontComic24B_1
+#define GUI_FONT_COMIC18B_1      &GUI_FontComic18B_1
+#define GUI_FONT_COMIC18B_ASCII  &GUI_FontComic18B_A
+#define GUI_FONT_COMIC24B_1      &GUI_FontComic24B_1
+#define GUI_FONT_COMIC24B_ASCII  &GUI_FontComic24B_A
+
+//
+// Proportional fonts, antialiased
+//
+#define GUI_FONT_12_1_AA4        &GUI_Font12_1_AA4
+#define GUI_FONT_12_ASCII_AA4    &GUI_Font12_ASCII_AA4
+#define GUI_FONT_16_1_AA4        &GUI_Font16_1_AA4
+#define GUI_FONT_16_ASCII_AA4    &GUI_Font16_ASCII_AA4
+#define GUI_FONT_24_1_AA4        &GUI_Font24_1_AA4
+#define GUI_FONT_24_ASCII_AA4    &GUI_Font24_ASCII_AA4
+#define GUI_FONT_32_1_AA4        &GUI_Font32_1_AA4
+#define GUI_FONT_32_ASCII_AA4    &GUI_Font32_ASCII_AA4
+#define GUI_FONT_48_1_AA4        &GUI_Font48_1_AA4
+#define GUI_FONT_48_ASCII_AA4    &GUI_Font48_ASCII_AA4
+#define GUI_FONT_64_1_AA4        &GUI_Font64_1_AA4
+#define GUI_FONT_64_ASCII_AA4    &GUI_Font64_ASCII_AA4
+
+//
+// Monospaced fonts, antialiased
+//
+#define GUI_FONT_5X12_1_AA4      &GUI_Font5x12_1_AA4
+#define GUI_FONT_5X12_ASCII_AA4  &GUI_Font5x12_ASCII
+#define GUI_FONT_8X16_1_AA4      &GUI_Font8x16_1_AA4
+#define GUI_FONT_8X16_ASCII_AA4  &GUI_Font8x16_ASCII
+#define GUI_FONT_12X24_1_AA4     &GUI_Font12x24_1_AA
+#define GUI_FONT_12X24_ASCII_AA4 &GUI_Font12x24_ASCI
+#define GUI_FONT_16X32_1_AA4     &GUI_Font16x32_1_AA
+#define GUI_FONT_16X32_ASCII_AA4 &GUI_Font16x32_ASCI
+#define GUI_FONT_24X48_1_AA4     &GUI_Font24x48_1_AA
+#define GUI_FONT_24X48_ASCII_AA4 &GUI_Font24x48_ASCI
+#define GUI_FONT_32X64_1_AA4     &GUI_Font32x64_1_AA
+#define GUI_FONT_32X64_ASCII_AA4 &GUI_Font32x64_ASCI
+
+//
+// Digit fonts, proportional, antialiased
+//
+#define GUI_FONT_D32_AA4         &GUI_FontD32_AA4
+#define GUI_FONT_D48_AA4         &GUI_FontD48_AA4
+#define GUI_FONT_D64_AA4         &GUI_FontD64_AA4
+#define GUI_FONT_D80_AA4         &GUI_FontD80_AA4
+
+//
+// Digit fonts, monospaced, antialiased
+//
+#define GUI_FONT_D29X32_AA4      &GUI_FontD29x32_AA4
+#define GUI_FONT_D42X48_AA4      &GUI_FontD42x48_AA4
+#define GUI_FONT_D56X64_AA4      &GUI_FontD56x64_AA4
+#define GUI_FONT_D71X80_AA4      &GUI_FontD71x80_AA4
 
 /*********************************************************************
 *

@@ -53,7 +53,13 @@ static pd_nx20p_instance_t s_nx20pInstances[PD_CONFIG_MAX_PORT];
 static void PD_NX20PInitRegisters(uint8_t port)
 {
     uint8_t txBuf[2];
-    pd_nx20p_instance_t *nx20pInstance = &s_nx20pInstances[port - 1U];
+    pd_nx20p_instance_t *nx20pInstance =  NULL;
+    
+    if (port <= 0U)
+    {
+        return;
+    }
+    nx20pInstance = &s_nx20pInstances[port - 1U];
     /* Device control, exit dead-battery mode. Resets all registers to default values */
     nx20p_I2cWrite(nx20pInstance, (uint8_t *)"\x0B\x04", 2U);
 
@@ -77,7 +83,13 @@ static void PD_NX20PInitRegisters(uint8_t port)
 
 static void PD_NX20PCheckInit(uint8_t port)
 {
-    pd_nx20p_instance_t *nx20pInstance = &s_nx20pInstances[port - 1U];
+    pd_nx20p_instance_t *nx20pInstance = NULL;
+    
+    if (port <= 0U)
+    {
+        return;
+    }
+    nx20pInstance = &s_nx20pInstances[port - 1U];
     if (nx20pInstance->initialized == 0U)
     {
         nx20pInstance->initialized = 1U;
@@ -88,12 +100,13 @@ static void PD_NX20PCheckInit(uint8_t port)
 void PD_NX20PSetSinkOVP(uint8_t port, uint16_t voltage)
 {
     uint8_t txBuf[2];
-    pd_nx20p_instance_t *nx20pInstance = &s_nx20pInstances[port - 1U];
+    pd_nx20p_instance_t *nx20pInstance = NULL;
 
     if ((port == 0U) || (port > PD_CONFIG_MAX_PORT))
     {
         return;
     }
+    nx20pInstance = &s_nx20pInstances[port - 1U];
     PD_NX20PCheckInit(port);
 
     /* Set OVLO */
@@ -147,12 +160,13 @@ static uint16_t PD_NX20PGetSinkOVP(pd_nx20p_instance_t *nx20pInstance)
 void PD_NX20PSet5VSourceOCP(uint8_t port, uint16_t current)
 {
     uint8_t txBuf[2];
-    pd_nx20p_instance_t *nx20pInstance = &s_nx20pInstances[port - 1U];
+    pd_nx20p_instance_t *nx20pInstance = NULL;
 
     if ((port == 0U) || (port > PD_CONFIG_MAX_PORT))
     {
         return;
     }
+    nx20pInstance = &s_nx20pInstances[port - 1U];
     PD_NX20PCheckInit(port);
 
     /* Set OCP */
@@ -183,12 +197,13 @@ static uint16_t PD_NX20PGet5VSourceOCP(pd_nx20p_instance_t *nx20pInstance)
 void PD_NX20PClearInt(uint8_t port)
 {
     volatile uint8_t rxData;
-    pd_nx20p_instance_t *nx20pInstance = &s_nx20pInstances[port - 1U];
+    pd_nx20p_instance_t *nx20pInstance = NULL;
 
     if ((port == 0U) || (port > PD_CONFIG_MAX_PORT))
     {
         return;
     }
+    nx20pInstance = &s_nx20pInstances[port - 1U];
     PD_NX20PCheckInit(port);
 
     /* Clear interrupt */
@@ -198,7 +213,7 @@ void PD_NX20PClearInt(uint8_t port)
 
 void PD_NX20PInit(uint8_t port, uint32_t source5VOcpCurrent, uint32_t sinkOvpVoltage)
 {
-    pd_nx20p_instance_t *nx20pInstance        = &s_nx20pInstances[port - 1U];
+    pd_nx20p_instance_t *nx20pInstance        = NULL;
     pd_nx20p_config_t portsNX20PConfigArray[] = {
 #if (defined PD_DEMO_PORT1_ENABLE) && (PD_DEMO_PORT1_ENABLE)
         {
@@ -215,7 +230,7 @@ void PD_NX20PInit(uint8_t port, uint32_t source5VOcpCurrent, uint32_t sinkOvpVol
     {
         return;
     }
-
+    nx20pInstance = &s_nx20pInstances[port - 1U];
     portsNX20PConfigArray[port - 1].nx20pI2cSrcClock = HW_I2CGetFreq(portsNX20PConfigArray[port - 1].nx20pI2CMaster);
     nx20pInstance->nx20pSlaveAddress                 = portsNX20PConfigArray[port - 1].nx20pSlaveAddress;
 
@@ -237,14 +252,14 @@ void PD_NX20PInit(uint8_t port, uint32_t source5VOcpCurrent, uint32_t sinkOvpVol
 
 void PD_NX20PDeinit(uint8_t port)
 {
-    pd_nx20p_instance_t *nx20pInstance = &s_nx20pInstances[port - 1U];
+    pd_nx20p_instance_t *nx20pInstance = NULL;
 
     if ((port == 0U) || (port > PD_CONFIG_MAX_PORT) ||
         (port > (sizeof(s_nx20pInstances) / sizeof(pd_nx20p_instance_t))))
     {
         return;
     }
-
+    nx20pInstance = &s_nx20pInstances[port - 1U];
     PD_I2cDeinit(nx20pInstance->i2cHandle);
     nx20pInstance->i2cHandle = NULL;
     return;
@@ -252,7 +267,11 @@ void PD_NX20PDeinit(uint8_t port)
 
 void PD_NX20PExitDeadBatteryMode(uint8_t port)
 {
-    pd_nx20p_instance_t *nx20pInstance = &s_nx20pInstances[port - 1U];
-    nx20pInstance->initialized         = 1U;
+    if (port <= 0U)
+    {
+        return;
+    }
+    pd_nx20p_instance_t *nx20pInstance = &s_nx20pInstances[port - 1];
+    nx20pInstance->initialized         = 1;
     PD_NX20PInitRegisters(port);
 }

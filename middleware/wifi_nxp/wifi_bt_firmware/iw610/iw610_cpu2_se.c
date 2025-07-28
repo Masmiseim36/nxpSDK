@@ -13,9 +13,15 @@
 
 #if defined(CONFIG_BT_IND_DNLD)
 
+# if defined(CONFIG_BT_ONLY_DNLD)
 const uint8_t fw_cpu2[] = {
-#include <uart_iw610.bin.se.inc>
+#include <uart_iw610_bt.bin.se.inc>
 };
+#else
+const uint8_t fw_cpu2[] = {
+    #include <uartspi_iw610.bin.se.inc>
+};
+#endif
 
 const unsigned char *bt_fw_bin   = (const unsigned char *)(void *)&fw_cpu2[0];
 const unsigned int bt_fw_bin_len = sizeof(fw_cpu2);

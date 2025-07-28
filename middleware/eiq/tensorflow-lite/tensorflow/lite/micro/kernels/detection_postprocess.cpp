@@ -254,6 +254,25 @@ T ReInterpretTensor(TfLiteEvalTensor* tensor) {
   return reinterpret_cast<T>(tensor_base);
 }
 
+void DequantizeBoxEncodings(const TfLiteEvalTensor* input_box_encodings,
+                            int idx, float quant_zero_point, float quant_scale,
+                            int length_box_encoding,
+                            CenterSizeEncoding* box_centersize) {
+  const uint8_t* boxes =
+      tflite::micro::GetTensorData<uint8_t>(input_box_encodings) +
+      length_box_encoding * idx;
+  Dequantizer dequantize(quant_zero_point, quant_scale);
+  // See definition of the KeyPointBoxCoder at
+  // https://github.com/tensorflow/models/blob/master/research/object_detection/box_coders/keypoint_box_coder.py
+  // The first four elements are the box coordinates, which is the same as the
+  // FastRnnBoxCoder at
+  // https://github.com/tensorflow/models/blob/master/research/object_detection/box_coders/faster_rcnn_box_coder.py
+  box_centersize->y = dequantize(boxes[0]);
+  box_centersize->x = dequantize(boxes[1]);
+  box_centersize->h = dequantize(boxes[2]);
+  box_centersize->w = dequantize(boxes[3]);
+}
+
 TfLiteStatus DecodeCenterSizeBoxes(TfLiteContext* context, TfLiteNode* node,
                                    OpData* op_data) {
   // Parse input tensor boxencodings
@@ -280,6 +299,20 @@ TfLiteStatus DecodeCenterSizeBoxes(TfLiteContext* context, TfLiteNode* node,
         box_centersize = *reinterpret_cast<const CenterSizeEncoding*>(boxes);
         anchor =
             ReInterpretTensor<const CenterSizeEncoding*>(input_anchors)[idx];
+        break;
+      }
+        // Quantized
+      case kTfLiteUInt8: {
+        DequantizeBoxEncodings(
+            input_box_encodings, idx,
+            static_cast<float>(op_data->input_box_encodings.zero_point),
+            static_cast<float>(op_data->input_box_encodings.scale),
+            input_box_encodings->dims->data[2], &box_centersize);
+        DequantizeBoxEncodings(
+            input_anchors, idx,
+            static_cast<float>(op_data->input_anchors.zero_point),
+            static_cast<float>(op_data->input_anchors.scale), kNumCoordBox,
+            &anchor);
         break;
       }
       default:
@@ -419,6 +452,22 @@ float ComputeIntersectionOverUnion(const float* decoded_boxes, const int i,
       std::max<float>(intersection_ymax - intersection_ymin, 0.0) *
       std::max<float>(intersection_xmax - intersection_xmin, 0.0);
   return intersection_area / (area_i + area_j - intersection_area);
+}
+
+void DequantizeClassPredictions(const TfLiteEvalTensor* input_class_predictions,
+                                const int num_boxes,
+                                const int num_classes_with_background,
+                                float* scores, OpData* op_data) {
+  float quant_zero_point =
+      static_cast<float>(op_data->input_class_predictions.zero_point);
+  float quant_scale =
+      static_cast<float>(op_data->input_class_predictions.scale);
+  Dequantizer dequantize(quant_zero_point, quant_scale);
+  const uint8_t* scores_quant =
+      tflite::micro::GetTensorData<uint8_t>(input_class_predictions);
+  for (int idx = 0; idx < num_boxes * num_classes_with_background; ++idx) {
+    scores[idx] = dequantize(scores_quant[idx]);
+  }
 }
 
 // NonMaxSuppressionSingleClass() prunes out the box locations with high overlap
@@ -757,6 +806,15 @@ TfLiteStatus NonMaxSuppressionMultiClass(TfLiteContext* context,
 
   const float* scores;
   switch (input_class_predictions->type) {
+    case kTfLiteUInt8: {
+      float* temporary_scores = reinterpret_cast<float*>(
+          context->GetScratchBuffer(context, op_data->scores_idx));
+      DequantizeClassPredictions(input_class_predictions, num_boxes,
+                                 num_classes_with_background, temporary_scores,
+                                 op_data);
+      scores = temporary_scores;
+      break;
+    }
     case kTfLiteFloat32:
       scores = tflite::micro::GetTensorData<float>(input_class_predictions);
       break;

@@ -1,5 +1,5 @@
 /*
- * Copyright 2021, 2024 NXP
+ * Copyright 2021, 2024-2025 NXP
  *
  * License: NXP LA_OPT_Online Code Hosting NXP_Software_License
  *
@@ -136,9 +136,11 @@ static FMSTR_BOOL _FMSTR_NetLwipTcpInit(void)
     /* TCP listen port */
     destAddr4.sin_port = htons(FMSTR_NET_PORT);
 
-    /* Create new listen socket */
+    /* Create new listen socket. Ignore errno value prior to call. */
+    errno = 0;
+    /* coverity[misra_c_2012_rule_22_8_violation:FALSE] */
     fmstrTcpListenSock = lwip_socket(AF_INET, SOCK_STREAM, IPPROTO_IP); // TODO: IPv6?
-    if (fmstrTcpListenSock < 0)
+    if (errno != 0 || fmstrTcpListenSock < 0)
     {
         return FMSTR_FALSE;
     }
@@ -155,7 +157,8 @@ static FMSTR_BOOL _FMSTR_NetLwipTcpInit(void)
     }
 #endif
 
-    /* Socket bind */
+    /* Socket bind (intentional generic sockaddr casting) */
+    /* coverity[misra_c_2012_rule_11_3_violation:FALSE] */
     err = lwip_bind(fmstrTcpListenSock, (struct sockaddr *)&destAddr4, sizeof(destAddr4));
     if (err < 0)
     {
@@ -177,13 +180,15 @@ static FMSTR_BOOL _FMSTR_NetLwipTcpInit(void)
     bindAddr.sin_port        = htons(FMSTR_NET_PORT);
 
     /* Create new UDP listen socket */
+    errno = 0;
     fmstrUdpBroadcastSock = lwip_socket(AF_INET, SOCK_DGRAM, IPPROTO_IP);
-    if (fmstrUdpBroadcastSock < 0)
+    if (errno != 0 || fmstrUdpBroadcastSock < 0)
     {
         return FMSTR_FALSE;
     }
 
-    /* Socket bind */
+    /* Socket bind (intentional generic sockaddr casting) */
+    /* coverity[misra_c_2012_rule_11_3_violation:FALSE] */
     err = lwip_bind(fmstrUdpBroadcastSock, (struct sockaddr *)&bindAddr, sizeof(bindAddr));
     if (err < 0)
     {
@@ -261,9 +266,11 @@ static void _FMSTR_NetLwipTcpAccept(void)
     FMSTR_MemSet(&remote_addr, 0, sizeof(remote_addr));
     length = sizeof(remote_addr);
 
-    /* Accept socket */
+    /* Accept connection. Ignore errno value prior to accept call. */
+    errno = 0;
+    /* coverity[misra_c_2012_rule_22_8_violation:FALSE] */
     newSock = lwip_accept(fmstrTcpListenSock, &remote_addr, &length);
-    if (newSock >= 0)
+    if (errno == 0 && newSock >= 0)
     {
         FMSTR_TCP_SESSION *newSes;
 
@@ -313,13 +320,22 @@ static void _FMSTR_NetLwipTcpPoll(void)
 #else
     {
         int maxFd = 0;
+        int selected;
         fd_set readset;
         struct timeval tv;
 
+        /* Prepare FD set (ignore coverity warning in 3rd party code) */
+        /* coverity[misra_c_2012_rule_17_7_violation:FALSE] */
         FD_ZERO(&readset);
+        
         if (freeSes != NULL)
         {
-            /* Listen socket */
+            /* Set listening socket (ignore coverity warning in 3rd party code) */
+            /* coverity[misra_c_2012_rule_10_1_violation:FALSE] */
+            /* coverity[misra_c_2012_rule_10_4_violation:FALSE] */
+            /* coverity[misra_c_2012_rule_10_8_violation:FALSE] */
+            /* coverity[misra_c_2012_rule_14_4_violation:FALSE] */
+            /* coverity[cert_int31_c_violation:FALSE] */
             FD_SET(fmstrTcpListenSock, &readset);
             maxFd = fmstrTcpListenSock;
         }
@@ -333,6 +349,12 @@ static void _FMSTR_NetLwipTcpPoll(void)
         {
             if (fmstrTcpSessions[i].sock >= 0)
             {
+                /* Set session socket (ignore coverity warning in 3rd party code) */
+                /* coverity[misra_c_2012_rule_10_1_violation:FALSE] */
+                /* coverity[misra_c_2012_rule_10_4_violation:FALSE] */
+                /* coverity[misra_c_2012_rule_10_8_violation:FALSE] */
+                /* coverity[misra_c_2012_rule_14_4_violation:FALSE] */
+                /* coverity[cert_int31_c_violation:FALSE] */
                 FD_SET(fmstrTcpSessions[i].sock, &readset);
 
                 if (maxFd < fmstrTcpSessions[i].sock)
@@ -342,9 +364,18 @@ static void _FMSTR_NetLwipTcpPoll(void)
             }
         }
 
-        if (lwip_select(maxFd + 1, (fd_set *)&readset, NULL, NULL, &tv) >= 1)
+        /* Select ready sockets (ignore coverity warning in 3rd party code) */
+        errno = 0;
+        /* coverity[misra_c_2012_rule_18_6_violation:FALSE] */
+        /* coverity[misra_c_2012_rule_22_8_violation:FALSE] */
+        /* coverity[cert_dcl30_c_violation:FALSE] */
+        selected = lwip_select(maxFd + 1, (fd_set *)&readset, NULL, NULL, &tv);
+        if (errno == 0 && selected >= 1)
         {
-            /* Pending accept */
+            /* Pending accept (ignore coverity warning in 3rd party code) */
+            /* coverity[misra_c_2012_rule_10_1_violation:FALSE] */
+            /* coverity[misra_c_2012_rule_10_4_violation:FALSE] */
+            /* coverity[misra_c_2012_rule_14_4_violation:FALSE] */
             if (FD_ISSET(fmstrTcpListenSock, &readset))
             {
                 _FMSTR_NetLwipTcpAccept();
@@ -353,6 +384,8 @@ static void _FMSTR_NetLwipTcpPoll(void)
             /* Pending receive */
             for (i = 0; i < FMSTR_TCP_SESSION_COUNT; i++)
             {
+                /* coverity[misra_c_2012_rule_10_1_violation:FALSE] */
+                /* coverity[misra_c_2012_rule_10_4_violation:FALSE] */
                 if (fmstrTcpSessions[i].sock >= 0 && FD_ISSET(fmstrTcpSessions[i].sock, &readset))
                 {
                     fmstrTcpSessions[i].receivePending = FMSTR_TRUE;
@@ -393,32 +426,44 @@ static FMSTR_S32 _FMSTR_NetLwipTcpRecv(FMSTR_BPTR msgBuff,
     /* Receive UDP broadcast */
     if (ses->sock == fmstrUdpBroadcastSock)
     {
-        struct sockaddr remote_addr;
+        struct sockaddr remote_addr = { 0 };
         socklen_t length = sizeof(remote_addr);
 
         *isBroadcast = FMSTR_TRUE;
 
+        /* Ignore errno value prior and after receive call. */
+        errno = 0;
+        /* coverity[misra_c_2012_rule_22_8_violation:FALSE] */
+        /* coverity[misra_c_2012_rule_22_9_violation:FALSE] */
+        /* coverity[misra_c_2012_directive_4_7_violation:FALSE] */
         res = lwip_recvfrom(ses->sock, msgBuff, msgMaxSize, 0, &remote_addr, &length);
+        (void)errno;
 
         /* Copy address */
         _FMSTR_NetAddrToFmstr(&remote_addr, &ses->address);
-        /* Copy address */
         FMSTR_MemCpy(recvAddr, &ses->address, sizeof(FMSTR_NET_ADDR));
     }
     else
 #endif /* FMSTR_NET_AUTODISCOVERY */
     {
+        /* Ignore errno value prior and after receive call. */
+        errno = 0;
+        /* coverity[misra_c_2012_rule_22_8_violation:FALSE] */
         res = lwip_recv(ses->sock, msgBuff, msgMaxSize, 0);
+        (void)errno;
 
         /* Copy address */
         FMSTR_MemCpy(recvAddr, &ses->address, sizeof(FMSTR_NET_ADDR));
     }
+
 #if FMSTR_NET_BLOCKING_TIMEOUT != 0
+    /* In blocking mode, res=0 means socket is closed by peer */
     if (res == 0)
     {
         res = -1;
     }
 #else
+    /* In non-blocking mode, EWOULDBLOCK error or res=0 means no data */
     if (res < 0 && errno == EWOULDBLOCK)
     {
         res = 0;
@@ -428,14 +473,6 @@ static FMSTR_S32 _FMSTR_NetLwipTcpRecv(FMSTR_BPTR msgBuff,
         ses->receivePending = FMSTR_FALSE;
     }
 #endif
-    if (res < 0 && errno == EWOULDBLOCK)
-    {
-        res = 0;
-    }
-    if (res == 0)
-    {
-        ses->receivePending = FMSTR_FALSE;
-    }
 
     return res;
 }
@@ -472,14 +509,27 @@ static FMSTR_S32 _FMSTR_NetLwipTcpSend(FMSTR_NET_ADDR *sendAddr, FMSTR_BPTR msgB
         destAddr4.sin_port   = htons(sendAddr->port);
         FMSTR_MemCpy(&destAddr4.sin_addr.s_addr, sendAddr->addr.v4, 4);
 
-        /* Send data */
+        /* Send data (intentional generic sockaddr casting and no errno checking prior to call) */
+        errno = 0;
+        /* coverity[misra_c_2012_rule_11_3_violation:FALSE] */
+        /* coverity[misra_c_2012_rule_22_8_violation:FALSE] */
         res = lwip_sendto(ses->sock, msgBuff, msgSize, 0, (struct sockaddr *)&destAddr4, sizeof(destAddr4));
     }
     else
 #endif
     {
-        /* Send data */
+        /* Send data (intentional generic sockaddr casting and no errno checking prior to call) */
+        errno = 0;
+        /* coverity[misra_c_2012_rule_11_3_violation:FALSE] */
+        /* coverity[misra_c_2012_rule_22_8_violation:FALSE] */
         res = lwip_send(ses->sock, msgBuff, msgSize, 0);
+    }
+    
+    /* An error may also be indicated by errno. */
+    if(errno != 0)
+    {
+        FMSTR_ASSERT(res == -1);
+        res = -1;
     }
 
     return res;
@@ -506,7 +556,15 @@ static void _FMSTR_NetLwipTcpClose(FMSTR_NET_ADDR *addr)
 #endif
 
     /* Close socket */
-    (void)lwip_close(ses->sock);
+    if(ses->sock != -1)
+    {
+        /* Explicit close, no error checking. Also ignore errno value prior to call. */
+        /* coverity[misra_c_2012_rule_22_8_violation:FALSE] */
+        /* coverity[misra_c_2012_rule_22_9_violation:FALSE] */
+        /* coverity[misra_c_2012_directive_4_7_violation:FALSE] */
+        (void)lwip_close(ses->sock);
+        (void)errno;
+    }
 
     FMSTR_MemSet(ses, 0, sizeof(FMSTR_TCP_SESSION));
     ses->sock = -1;
@@ -524,16 +582,19 @@ static void _FMSTR_NetAddrToFmstr(struct sockaddr *remoteAddr, FMSTR_NET_ADDR *f
     FMSTR_ASSERT(remoteAddr != NULL);
     FMSTR_ASSERT(fmstrAddr != NULL);
 
-    if ((((struct sockaddr *)remoteAddr)->sa_family & AF_INET) != 0U)
+    if ((((struct sockaddr *)remoteAddr)->sa_family & (u8_t)AF_INET) != 0U)
     {
+        /* Coverity: Intentional sockaddr type cast. */
+        /* coverity[misra_c_2012_rule_11_3_violation:FALSE] */
         struct sockaddr_in *in = (struct sockaddr_in *)remoteAddr;
         fmstrAddr->type        = FMSTR_NET_ADDR_TYPE_V4;
         FMSTR_MemCpy(fmstrAddr->addr.v4, &in->sin_addr.s_addr, sizeof(fmstrAddr->addr.v4));
         fmstrAddr->port = htons(in->sin_port);
     }
 #if LWIP_IPV6
-    else if ((((struct sockaddr *)remoteAddr)->sa_family & AF_INET6) != 0U)
+    else if ((((struct sockaddr *)remoteAddr)->sa_family & (u8_t)AF_INET6) != 0U)
     {
+        /* coverity[misra_c_2012_rule_11_3_violation:FALSE] */
         struct sockaddr_in6 *in6 = (struct sockaddr_in6 *)remoteAddr;
 
         fmstrAddr->type = FMSTR_NET_ADDR_TYPE_V6;

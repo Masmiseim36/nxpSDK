@@ -43,7 +43,11 @@ SDK_ALIGN(uint8_t mp_regs_buffer[MAX_MP_REGS], BOARD_SDMMC_DATA_BUFFER_ALIGN_SIZ
 #endif
 
 /* We are allocating BSS list globally as we need heap for other purposes */
+#if defined(SD9177) && (defined(MIMXRT1176_cm7_SERIES) || defined(MIMXRT1175_cm7_SERIES) || defined(MIMXRT1173_cm7_SERIES) || defined(MIMXRT1172_SERIES) || defined(MIMXRT1171_SERIES))
+SDK_ALIGN(BSSDescriptor_t __attribute__((section(".wlan_data"))) BSS_List[MRVDRV_MAX_BSSID_LIST], 32);
+#else
 SDK_ALIGN(BSSDescriptor_t BSS_List[MRVDRV_MAX_BSSID_LIST], 32);
+#endif
 
 #if CONFIG_SCAN_CHANNEL_GAP
 
@@ -178,7 +182,7 @@ mlan_status wlan_init_priv(pmlan_private priv)
     priv->wpa_is_gtk_set = MFALSE;
 #endif /* STA_SUPPORT */
 
-#ifdef RW610
+#if defined(RW610) || defined(IW610)
     priv->tx_bf_cap = DEFAULT_11N_TX_BF_CAP;
 #else
     priv->tx_bf_cap = 0;
@@ -248,6 +252,13 @@ mlan_status wlan_init_priv(pmlan_private priv)
 
 #if CONFIG_WPA_SUPP_DPP
     priv->is_dpp_connect = MFALSE;
+#endif
+#if CONFIG_WPA_SUPP_P2P
+    priv->p2p_mgmt_bitmap_index = -1;
+#endif
+
+#if CONFIG_WIFI_GET_LOG
+    (void)__memset(pmadapter, &priv->stats, 0, sizeof(priv->stats));
 #endif
 
     LEAVE();

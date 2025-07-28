@@ -14,6 +14,8 @@ If the board does not have LED to show the status, then DSP core will send a fla
 to CM33 core when DSP core has locked the sema gate. CM33 core outputs the success log
 after it received the flag.
 
+This example cannot be imported into Config Tools because the xtensa toolchain is not supported.
+
 ## Supported Boards
 - [EVK9-MIMX8ULP](../../_boards/evk9mimx8ulp/dsp_examples/sema42/example_board_readme.md)
 - [EVK-MIMX8ULP](../../_boards/evkmimx8ulp/dsp_examples/sema42/example_board_readme.md)

@@ -42,6 +42,12 @@ message("${CMAKE_CURRENT_LIST_FILE} component is included.")
           ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/xtensa/transpose_conv.cpp
           ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/xtensa/pad.cpp
           ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/xtensa/lstm_eval_hifi.cpp
+          ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/xtensa/decompress.cpp
+          ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/xtensa/dequantize.cpp
+          ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/xtensa/hifimini/fully_connected.cpp
+          ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/xtensa/hifimini/svdf.cpp
+          ${CMAKE_CURRENT_LIST_DIR}/signal/micro/kernels/xtensa/fft_auto_scale_kernel.cpp
+          ${CMAKE_CURRENT_LIST_DIR}/signal/micro/kernels/xtensa/filter_bank_square_root.cpp
         )
 
   

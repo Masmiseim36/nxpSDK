@@ -40,7 +40,7 @@ t_void wlan_reset_connect_state(pmlan_private priv, t_u8 drv_disconnect)
 
     PRINTM(MINFO, "Handles disconnect event.\n");
 
-    if (drv_disconnect == MTRUE)
+    if (drv_disconnect == (t_u8)MTRUE)
     {
         priv->media_connected = MFALSE;
     }
@@ -72,7 +72,7 @@ t_void wlan_reset_connect_state(pmlan_private priv, t_u8 drv_disconnect)
 
     priv->tx_pause = 0;
 #if (CONFIG_WPS2) || (CONFIG_WPA_SUPP_WPS)
-    priv->wps.session_enable = MFALSE;
+    priv->wps.session_enable = (t_u8)MFALSE;
     (void)__memset(priv->adapter, (t_u8 *)&priv->wps.wps_ie, 0x00, sizeof(priv->wps.wps_ie));
 #endif /* CONFIG_WPS2 */
 
@@ -88,25 +88,20 @@ t_void wlan_reset_connect_state(pmlan_private priv, t_u8 drv_disconnect)
     if (priv->bss_mode == MLAN_BSS_MODE_IBSS)
     {
         priv->adhoc_state                        = (t_u8)ADHOC_IDLE;
-        priv->adhoc_is_link_sensed               = MFALSE;
+        priv->adhoc_is_link_sensed               = (t_u8)MFALSE;
         priv->intf_state_11h.adhoc_auto_sel_chan = MTRUE;
     }
 
 #if CONFIG_WMM_UAPSD
     /* Need to put uapsd_sem before getting ra_list.plock in wlan_ralist_del_all_enh */
-    if (priv->adapter->pps_uapsd_mode)
-    {
-        OSA_SemaphorePost((osa_semaphore_handle_t)uapsd_sem);
-    }
-    priv->adapter->tx_lock_flag   = MFALSE;
-    priv->adapter->pps_uapsd_mode = MFALSE;
+    (void)wifi_exit_uapsd_mode(priv);
 #endif
 
 #if CONFIG_GTK_REKEY_OFFLOAD
     (void)__memset(pmadapter, &priv->gtk_rekey, 0, sizeof(priv->gtk_rekey));
 #endif
 
-    if (drv_disconnect == MTRUE)
+    if (drv_disconnect == (t_u8)MTRUE)
     {
         /* Free Tx and Rx packets, report disconnect to upper layer */
         wlan_clean_txrx(priv);
@@ -129,7 +124,7 @@ t_void wlan_handle_disconnect_event(pmlan_private pmpriv)
 {
     ENTER();
 
-        wlan_reset_connect_state(pmpriv, MTRUE);
+        wlan_reset_connect_state(pmpriv, (t_u8)MTRUE);
 
     LEAVE();
 }

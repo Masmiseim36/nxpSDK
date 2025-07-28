@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2007-2015 Freescale Semiconductor, Inc.
- * Copyright 2018-2021, 2024 NXP
+ * Copyright 2018-2021, 2024-2025 NXP
  *
  * License: NXP LA_OPT_Online Code Hosting NXP_Software_License
  *
@@ -19,7 +19,9 @@
 #ifndef __FREEMASTER_TSA_H
 #define __FREEMASTER_TSA_H
 
-#include "freemaster.h"
+#ifndef __FREEMASTER_H
+#error Please include "freemaster.h" before "freemaster_tsa.h"
+#endif
 
 /*****************************************************************************
  Target-side Address translation structures and macros
@@ -187,11 +189,21 @@ typedef struct
 #define FMSTR_TSA_UINT16 "\xE1"
 #define FMSTR_TSA_UINT32 "\xE2"
 #define FMSTR_TSA_UINT64 "\xE3"
+#define FMSTR_TSA_UINT(size) ( \
+    (size) == 2 ? FMSTR_TSA_UINT16 : \
+    (size) == 4 ? FMSTR_TSA_UINT32 : \
+    (size) == 8 ? FMSTR_TSA_UINT64 : FMSTR_TSA_UINT8)
+
 /* S=1 TT=int */
 #define FMSTR_TSA_SINT8  "\xF0"
 #define FMSTR_TSA_SINT16 "\xF1"
 #define FMSTR_TSA_SINT32 "\xF2"
 #define FMSTR_TSA_SINT64 "\xF3"
+#define FMSTR_TSA_SINT(size) ( \
+    (size) == 2 ? FMSTR_TSA_SINT16 : \
+    (size) == 4 ? FMSTR_TSA_SINT32 : \
+    (size) == 8 ? FMSTR_TSA_SINT64 : FMSTR_TSA_SINT8)
+
 /* S=0 TT=frac */
 #define FMSTR_TSA_UFRAC_UQ(m, n) "\xE4:" #m "." #n /* UQm.n fractional m+n=bitsize */
 #define FMSTR_TSA_UFRAC16        "\xE5"            /* standard UQ1.15 */
@@ -346,11 +358,17 @@ extern "C" {
 
 #if FMSTR_USE_TSA > 0
 
-#define FMSTR_TSA_TABLE_LIST_BEGIN()                                                       \
-    FMSTR_ADDR FMSTR_TsaGetTable(FMSTR_SIZE tableIndex, FMSTR_SIZE *tableSize) \
-    {
+#define FMSTR_TSA_TABLE_LIST_BEGIN()                                            \
+    FMSTR_ADDR FMSTR_TsaGetTable(FMSTR_INDEX tableIndex, FMSTR_SIZE *tableSize) \
+    {                                         \
+        if (tableIndex < 0)                   \
+        {                                     \
+            return FMSTR_TsaInvalidTable();   \
+        }                                     \
+
+            
 #define FMSTR_TSA_TABLE(id)                   \
-    if (tableIndex-- == 0U)                   \
+    if (tableIndex-- == 0)                    \
     {                                         \
         FMSTR_TSA_FUNC_PROTO(id);             \
         return FMSTR_TSA_FUNC(id)(tableSize); \
@@ -360,22 +378,23 @@ extern "C" {
 #if FMSTR_USE_TSA_DYNAMIC > 0
 #define FMSTR_TSA_TABLE_LIST_END()                         \
     {                                                      \
-        if (tableIndex-- == 0U)                            \
+        FMSTR_TSA_FUNC_PROTO(dynamic_tsa);                 \
+        FMSTR_ADDR tableAddr = FMSTR_TSA_FUNC(dynamic_tsa)(tableSize); \
+        if (FMSTR_ValidateTsaTable(tableAddr) != FMSTR_FALSE && tableIndex-- == 0) \
         {                                                  \
-            FMSTR_TSA_FUNC_PROTO(dynamic_tsa);             \
-            return FMSTR_TSA_FUNC(dynamic_tsa)(tableSize); \
+            return tableAddr;                              \
         }                                                  \
         else                                               \
         {                                                  \
-            return NULL;                                   \
+            return FMSTR_TsaGetUserTable(tableIndex, tableSize); \
         }                                                  \
     }                                                      \
     }
 #else
-#define FMSTR_TSA_TABLE_LIST_END() \
-    {                              \
-        return NULL;               \
-    }                              \
+#define FMSTR_TSA_TABLE_LIST_END()                         \
+    {                                                      \
+        return FMSTR_TsaGetUserTable(tableIndex, tableSize); \
+    }                                                      \
     }
 #endif
 
@@ -384,7 +403,10 @@ extern "C" {
 ******************************************************************************/
 
 /* master TSA table-retrieval function */
-FMSTR_ADDR FMSTR_TsaGetTable(FMSTR_SIZE tableIndex, FMSTR_SIZE *tableSize);
+FMSTR_ADDR FMSTR_TsaGetTable(FMSTR_INDEX tableIndex, FMSTR_SIZE *tableSize);
+FMSTR_ADDR FMSTR_TsaGetUserTable(FMSTR_INDEX tableIndex, FMSTR_SIZE *tableSize);
+FMSTR_ADDR FMSTR_TsaInvalidTable(void);
+FMSTR_BOOL FMSTR_ValidateTsaTable(FMSTR_ADDR tableAddr);
 FMSTR_ADDR FMSTR_FindUresInTsa(FMSTR_ADDR resourceId);
 FMSTR_TSA_FUNC_PROTO(dynamic_tsa);
 

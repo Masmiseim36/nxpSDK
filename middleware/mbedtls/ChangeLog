@@ -1,5 +1,80 @@
 Mbed TLS ChangeLog (Sorted per branch, date)
 
+= Mbed TLS 2.28.10 branch released 2025-03-24
+
+Default behavior changes
+   * In TLS clients, if mbedtls_ssl_set_hostname() has not been called,
+     mbedtls_ssl_handshake() now fails with
+     MBEDTLS_ERR_SSL_CERTIFICATE_VERIFICATION_WITHOUT_HOSTNAME
+     if certificate-based authentication of the server is attempted.
+     This is because authenticating a server without knowing what name
+     to expect is usually insecure. To restore the old behavior, either
+     call mbedtls_ssl_set_hostname() with NULL as the hostname, or
+     enable the new compile-time option
+     MBEDTLS_SSL_CLI_ALLOW_WEAK_CERTIFICATE_VERIFICATION_WITHOUT_HOSTNAME.
+     The content of ssl->hostname after mbedtls_ssl_set_hostname(ssl, NULL)
+     has changed, see the documentation of the hostname field in the
+     mbedtls_ssl_context struct type for details.
+
+Security
+   * Note that TLS clients should generally call mbedtls_ssl_set_hostname()
+     if they use certificate authentication (i.e. not pre-shared keys).
+     Otherwise, in many scenarios, the server could be impersonated.
+     The library will now prevent the handshake and return
+     MBEDTLS_ERR_SSL_CERTIFICATE_VERIFICATION_WITHOUT_HOSTNAME
+     if mbedtls_ssl_set_hostname() has not been called.
+     CVE-2025-27809
+   * Zeroize temporary heap buffers used in PSA operations.
+   * Fix a vulnerability in the TLS 1.2 handshake. If memory allocation failed
+     or there was a cryptographic hardware failure when calculating the
+     Finished message, it could be calculated incorrectly. This would break
+     the security guarantees of the TLS handshake.
+     CVE-2025-27810
+
+Bugfix
+   * Use 'mbedtls_net_close' instead of 'close' in 'mbedtls_net_bind'
+     and 'mbedtls_net_connect' to prevent possible double close fd
+     problems. Fixes #9711.
+   * Fix compilation on MS-DOS DJGPP. Fixes #9813.
+   * Fix missing constraints on the AES-NI inline assembly which is used on
+     GCC-like compilers when building AES for generic x86_64 targets. This
+     may have resulted in incorrect code with some compilers, depending on
+     optimizations. Fixes #9819.
+   * Fix issue where psa_key_derivation_input_integer() is not detecting
+     bad state after an operation has been aborted.
+   * Fix definition of MBEDTLS_PRINTF_SIZET to prevent runtime crashes that
+     occurred whenever SSL debugging was enabled on a copy of Mbed TLS built
+     with Visual Studio 2013 or MinGW.
+     Fixes #10017.
+   * Remove Everest Visual Studio 2010 compatibility headers, which could
+     shadow standard CRT headers inttypes.h and stdbool.h with incomplete
+     implementatios if placed on the include path, eg. when building Mbed TLS
+     with the .sln file shipped with the project.
+
+= Mbed TLS 2.28.9 branch released 2024-08-30
+
+Security
+   * Unlike previously documented, enabling MBEDTLS_PSA_HMAC_DRBG_MD_TYPE does
+     not cause the PSA subsystem to use HMAC_DRBG: it uses HMAC_DRBG only when
+     MBEDTLS_PSA_CRYPTO_EXTERNAL_RNG and MBEDTLS_CTR_DRBG_C are disabled.
+     CVE-2024-45157
+
+Bugfix
+   * Fix the build in some configurations when check_config.h is not included.
+     Fix #9152.
+   * Fix issue of redefinition warning messages for _GNU_SOURCE in
+     entropy_poll.c and sha_256.c. There was a build warning during
+     building for linux platform.
+     Resolves #9026
+   * Fix error handling when creating a key in a dynamic secure element
+     (feature enabled by MBEDTLS_PSA_CRYPTO_SE_C). In a low memory condition,
+     the creation could return PSA_SUCCESS but using or destroying the key
+     would not work. Fixes #8537.
+   * Fix a memory leak that could occur when failing to process an RSA
+     key through some PSA functions due to low memory conditions.
+   * Document and enforce the limitation of mbedtls_psa_register_se_key()
+     to persistent keys. Resolves #9253.
+
 = Mbed TLS 2.28.8 branch released 2024-03-28
 
 Features

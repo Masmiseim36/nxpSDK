@@ -917,6 +917,29 @@ API_RESULT BT_hfp_unit_get_peer_supported_features
             0U                                     \
         )
 
+ /**
+  *  \brief To get peer HFP Audio Gateway's Indicator Status stored locally.
+  *
+  *  \par Description:
+  *       This API allows user to get the current status of AG's indicator
+          stored locally.
+  *
+  *  \param [in] handle
+  *         Connection Handle to identify the connection to remote AG.
+  *
+ *  \param [in] indicators_status
+ *         Pointer to HFP_UNIT_CIND_READ_RESULT result structure.
+  *
+  *  \return
+  *      API_SUCCESS: Successful return from API.
+  *      Relevant HF Unit error code describing the reason for failure.
+  */
+API_RESULT BT_hfp_unit_read_peer_indicator_status
+           (
+               /* IN  */  HFP_UNIT_HANDLE                handle,
+               /* OUT */  HFP_UNIT_CIND_READ_RESULT     *indicators_status
+           );
+
 /**
  *  \brief HFP Unit Call Management: Dial.
  *

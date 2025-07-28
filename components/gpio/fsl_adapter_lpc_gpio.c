@@ -1,6 +1,5 @@
 /*
- * Copyright 2018 - 2022 NXP
- *
+ * Copyright 2018 - 2022, 2025 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -90,7 +89,7 @@ static GPIO_Type *const s_GpioList[] = GPIO_BASE_PTRS;
  * Code
  ******************************************************************************/
 
-static void HAL_GpioInterruptCallback(pint_pin_int_t pintr, uint32_t pmatch_status)
+static void HAL_GpioInterruptCallback(pint_pin_int_t pintr, pint_status_t *status)
 {
     if (0U != (s_GpioInputMux[(uint8_t)pintr >> 3U] & (1U << ((uint8_t)pintr & 0x07U))))
     {
@@ -448,8 +447,8 @@ hal_gpio_status_t HAL_GpioSetTriggerMode(hal_gpio_handle_t gpioHandle, hal_gpio_
         INPUTMUX_Deinit(INPUTMUX);
 #endif
         /* Setup Pin Interrupt 0 for rising edge */
-        PINT_PinInterruptConfig(PINT, (pint_pin_int_t)gpioStateHandle->pin.pint.pintIndex, triggerType,
-                                HAL_GpioInterruptCallback);
+        PINT_PinInterruptConfig(PINT, (pint_pin_int_t)gpioStateHandle->pin.pint.pintIndex, triggerType);
+        PINT_SetCallback(PINT, HAL_GpioInterruptCallback);
         /* Enable the pin's PINT call back */
         PINT_EnableCallbackByIndex(PINT, (pint_pin_int_t)gpioStateHandle->pin.pint.pintIndex);
     }

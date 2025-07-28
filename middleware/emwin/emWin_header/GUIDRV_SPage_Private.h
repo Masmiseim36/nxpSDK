@@ -9,7 +9,7 @@
 *                                                                    *
 **********************************************************************
 
-** emWin V6.46 - Graphical user interface for embedded applications **
+** emWin V6.50 - Graphical user interface for embedded applications **
 All  Intellectual Property rights  in the Software belongs to  SEGGER.
 emWin is protected by  international copyright laws.  Knowledge of the
 source code may not be used to write a similar product.  This file may
@@ -218,11 +218,12 @@ int    GUIDRV__SPage_Init      (GUI_DEVICE * pDevice);
 *
 **********************************************************************
 */
-void GUIDRV__SPage_WriteCache  (DRIVER_CONTEXT * pContext, int x, int Page, U8 Data);
-U8   GUIDRV__SPage_ReadCache   (DRIVER_CONTEXT * pContext, int x, int Page);
-void GUIDRV__SPage_FlushCache  (DRIVER_CONTEXT * pContext);
-void GUIDRV__SPage_AddDirtyRect(DRIVER_CONTEXT * pContext, int Page0, int Page1, int x0, int x1);
-int  GUIDRV__SPage_ControlCache(GUI_DEVICE * pDevice, int Cmd);
+void   GUIDRV__SPage_WriteCache  (DRIVER_CONTEXT * pContext, int x, int Page, U8 Data);
+U8     GUIDRV__SPage_ReadCache   (DRIVER_CONTEXT * pContext, int x, int Page);
+void   GUIDRV__SPage_FlushCache  (DRIVER_CONTEXT * pContext);
+void   GUIDRV__SPage_AddDirtyRect(DRIVER_CONTEXT * pContext, int Page0, int Page1, int x0, int x1);
+int    GUIDRV__SPage_ControlCache(GUI_DEVICE * pDevice, int Cmd);
+void * GUIDRV__SPage_GetCacheAddr(GUI_DEVICE * pDevice);
 
 /*********************************************************************
 *

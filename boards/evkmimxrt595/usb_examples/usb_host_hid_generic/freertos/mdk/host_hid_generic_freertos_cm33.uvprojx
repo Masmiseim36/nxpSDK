@@ -332,9 +332,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../mcux_config.h -mno-unaligned-access  -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
-              <Define>DEBUG, USB_STACK_FREERTOS, USB_STACK_USE_DEDICATED_RAM=1, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT595SFFOC_cm33, OSA_USED, BOOT_HEADER_ENABLE=1, USE_RTOS=1, SDK_OS_FREE_RTOS</Define>
+              <Define>DEBUG, USB_STACK_FREERTOS, USB_STACK_USE_DEDICATED_RAM=1, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT595SFFOC_cm33, MIMXRT595S_cm33_SERIES, OSA_USED, BOOT_HEADER_ENABLE=1, USE_RTOS=1, SDK_OS_FREE_RTOS</Define>
               <Undefine/>
-              <IncludePath>..;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT595S;../../../../../../devices/MIMXRT595S/periph;../../../../../../devices/MIMXRT595S/drivers;../../../../../../devices/MIMXRT595S/utilities/debug_console_lite;../../../../../../components/lists;../../../../../../devices/MIMXRT595S/utilities/str;../../../../../../components/uart;../../../../../../components/osa;../../../../../../middleware/usb/include;../../../../../../middleware/usb/host;../../../../../../middleware/usb/host/class;../../../../../../middleware/usb/phy;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../../rtos/freertos/freertos-kernel/template</IncludePath>
+              <IncludePath>..;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT595S;../../../../../../devices/MIMXRT595S/periph;../../../../../../devices/MIMXRT595S/drivers;../../../../../../devices/MIMXRT595S/utilities/debug_console_lite;../../../../../../components/lists;../../../../../../devices/MIMXRT595S/utilities/str;../../../../../../components/uart;../../../../../../components/osa;../../../../../../middleware/usb/include;../../../../../../middleware/usb/host;../../../../../../middleware/usb/config/host/ip3516hs;../../../../../../middleware/usb/host/class;../../../../../../middleware/usb/phy;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../../rtos/freertos/freertos-kernel/template</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -350,9 +350,9 @@
             <uClangAs>1</uClangAs>
             <VariousControls>
               <MiscControls/>
-              <Define>MCUXPRESSO_SDK, CPU_MIMXRT595SFFOC_cm33, OSA_USED</Define>
+              <Define>MCUXPRESSO_SDK, CPU_MIMXRT595SFFOC_cm33, MIMXRT595S_cm33_SERIES, OSA_USED</Define>
               <Undefine/>
-              <IncludePath>..;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT595S;../../../../../../devices/MIMXRT595S/periph;../../../../../../devices/MIMXRT595S/drivers;../../../../../../devices/MIMXRT595S/utilities/debug_console_lite;../../../../../../components/lists;../../../../../../devices/MIMXRT595S/utilities/str;../../../../../../components/uart;../../../../../../components/osa;../../../../../../middleware/usb/include;../../../../../../middleware/usb/host;../../../../../../middleware/usb/host/class;../../../../../../middleware/usb/phy;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../../rtos/freertos/freertos-kernel/template</IncludePath>
+              <IncludePath>..;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT595S;../../../../../../devices/MIMXRT595S/periph;../../../../../../devices/MIMXRT595S/drivers;../../../../../../devices/MIMXRT595S/utilities/debug_console_lite;../../../../../../components/lists;../../../../../../devices/MIMXRT595S/utilities/str;../../../../../../components/uart;../../../../../../components/osa;../../../../../../middleware/usb/include;../../../../../../middleware/usb/host;../../../../../../middleware/usb/config/host/ip3516hs;../../../../../../middleware/usb/host/class;../../../../../../middleware/usb/phy;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../../rtos/freertos/freertos-kernel/template</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -1084,11 +1084,6 @@
           <GroupName>component/osa</GroupName>
           <Files>
             <File>
-              <FileName>fsl_os_abstraction.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/osa/fsl_os_abstraction.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_os_abstraction_free_rtos.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../components/osa/fsl_os_abstraction_free_rtos.h</FilePath>
@@ -1097,6 +1092,11 @@
               <FileName>fsl_os_abstraction_free_rtos.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../components/osa/fsl_os_abstraction_free_rtos.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/osa/fsl_os_abstraction.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1363,6 +1363,11 @@
               <FileType>5</FileType>
               <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/timers.h</FilePath>
             </File>
+            <File>
+              <FileName>freertos_tasks_c_additions.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/freertos_tasks_c_additions.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -1442,6 +1447,11 @@
               <FileName>readme.md</FileName>
               <FileType>5</FileType>
               <FilePath>../readme.md</FilePath>
+            </File>
+            <File>
+              <FileName>examples_shared_readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../examples_shared_readme.md</FilePath>
             </File>
             <File>
               <FileName>host_hid_generic_output.jpg</FileName>
@@ -1781,9 +1791,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../mcux_config.h -mno-unaligned-access  -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
-              <Define>DEBUG, USB_STACK_FREERTOS, USB_STACK_USE_DEDICATED_RAM=1, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT595SFFOC_cm33, OSA_USED, BOOT_HEADER_ENABLE=1, USE_RTOS=1, SDK_OS_FREE_RTOS</Define>
+              <Define>DEBUG, USB_STACK_FREERTOS, USB_STACK_USE_DEDICATED_RAM=1, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT595SFFOC_cm33, MIMXRT595S_cm33_SERIES, OSA_USED, BOOT_HEADER_ENABLE=1, USE_RTOS=1, SDK_OS_FREE_RTOS</Define>
               <Undefine/>
-              <IncludePath>..;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT595S;../../../../../../devices/MIMXRT595S/periph;../../../../../../devices/MIMXRT595S/drivers;../../../../../../devices/MIMXRT595S/utilities/debug_console_lite;../../../../../../components/lists;../../../../../../devices/MIMXRT595S/utilities/str;../../../../../../components/uart;../../../../../../components/osa;../../../../../../middleware/usb/include;../../../../../../middleware/usb/host;../../../../../../middleware/usb/host/class;../../../../../../middleware/usb/phy;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../../rtos/freertos/freertos-kernel/template</IncludePath>
+              <IncludePath>..;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT595S;../../../../../../devices/MIMXRT595S/periph;../../../../../../devices/MIMXRT595S/drivers;../../../../../../devices/MIMXRT595S/utilities/debug_console_lite;../../../../../../components/lists;../../../../../../devices/MIMXRT595S/utilities/str;../../../../../../components/uart;../../../../../../components/osa;../../../../../../middleware/usb/include;../../../../../../middleware/usb/host;../../../../../../middleware/usb/config/host/ip3516hs;../../../../../../middleware/usb/host/class;../../../../../../middleware/usb/phy;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../../rtos/freertos/freertos-kernel/template</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1799,9 +1809,9 @@
             <uClangAs>1</uClangAs>
             <VariousControls>
               <MiscControls/>
-              <Define>MCUXPRESSO_SDK, CPU_MIMXRT595SFFOC_cm33, OSA_USED</Define>
+              <Define>MCUXPRESSO_SDK, CPU_MIMXRT595SFFOC_cm33, MIMXRT595S_cm33_SERIES, OSA_USED</Define>
               <Undefine/>
-              <IncludePath>..;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT595S;../../../../../../devices/MIMXRT595S/periph;../../../../../../devices/MIMXRT595S/drivers;../../../../../../devices/MIMXRT595S/utilities/debug_console_lite;../../../../../../components/lists;../../../../../../devices/MIMXRT595S/utilities/str;../../../../../../components/uart;../../../../../../components/osa;../../../../../../middleware/usb/include;../../../../../../middleware/usb/host;../../../../../../middleware/usb/host/class;../../../../../../middleware/usb/phy;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../../rtos/freertos/freertos-kernel/template</IncludePath>
+              <IncludePath>..;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT595S;../../../../../../devices/MIMXRT595S/periph;../../../../../../devices/MIMXRT595S/drivers;../../../../../../devices/MIMXRT595S/utilities/debug_console_lite;../../../../../../components/lists;../../../../../../devices/MIMXRT595S/utilities/str;../../../../../../components/uart;../../../../../../components/osa;../../../../../../middleware/usb/include;../../../../../../middleware/usb/host;../../../../../../middleware/usb/config/host/ip3516hs;../../../../../../middleware/usb/host/class;../../../../../../middleware/usb/phy;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../../rtos/freertos/freertos-kernel/template</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -2533,11 +2543,6 @@
           <GroupName>component/osa</GroupName>
           <Files>
             <File>
-              <FileName>fsl_os_abstraction.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/osa/fsl_os_abstraction.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_os_abstraction_free_rtos.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../components/osa/fsl_os_abstraction_free_rtos.h</FilePath>
@@ -2546,6 +2551,11 @@
               <FileName>fsl_os_abstraction_free_rtos.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../components/osa/fsl_os_abstraction_free_rtos.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/osa/fsl_os_abstraction.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2812,6 +2822,11 @@
               <FileType>5</FileType>
               <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/timers.h</FilePath>
             </File>
+            <File>
+              <FileName>freertos_tasks_c_additions.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/freertos_tasks_c_additions.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -2891,6 +2906,11 @@
               <FileName>readme.md</FileName>
               <FileType>5</FileType>
               <FilePath>../readme.md</FilePath>
+            </File>
+            <File>
+              <FileName>examples_shared_readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../examples_shared_readme.md</FilePath>
             </File>
             <File>
               <FileName>host_hid_generic_output.jpg</FileName>
@@ -3230,9 +3250,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../mcux_config.h -mno-unaligned-access  -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
-              <Define>NDEBUG, USB_STACK_FREERTOS, USB_STACK_USE_DEDICATED_RAM=1, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT595SFFOC_cm33, OSA_USED, BOOT_HEADER_ENABLE=1, USE_RTOS=1, SDK_OS_FREE_RTOS</Define>
+              <Define>NDEBUG, USB_STACK_FREERTOS, USB_STACK_USE_DEDICATED_RAM=1, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT595SFFOC_cm33, MIMXRT595S_cm33_SERIES, OSA_USED, BOOT_HEADER_ENABLE=1, USE_RTOS=1, SDK_OS_FREE_RTOS</Define>
               <Undefine/>
-              <IncludePath>..;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT595S;../../../../../../devices/MIMXRT595S/periph;../../../../../../devices/MIMXRT595S/drivers;../../../../../../devices/MIMXRT595S/utilities/debug_console_lite;../../../../../../components/lists;../../../../../../devices/MIMXRT595S/utilities/str;../../../../../../components/uart;../../../../../../components/osa;../../../../../../middleware/usb/include;../../../../../../middleware/usb/host;../../../../../../middleware/usb/host/class;../../../../../../middleware/usb/phy;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../../rtos/freertos/freertos-kernel/template</IncludePath>
+              <IncludePath>..;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT595S;../../../../../../devices/MIMXRT595S/periph;../../../../../../devices/MIMXRT595S/drivers;../../../../../../devices/MIMXRT595S/utilities/debug_console_lite;../../../../../../components/lists;../../../../../../devices/MIMXRT595S/utilities/str;../../../../../../components/uart;../../../../../../components/osa;../../../../../../middleware/usb/include;../../../../../../middleware/usb/host;../../../../../../middleware/usb/config/host/ip3516hs;../../../../../../middleware/usb/host/class;../../../../../../middleware/usb/phy;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../../rtos/freertos/freertos-kernel/template</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -3248,9 +3268,9 @@
             <uClangAs>1</uClangAs>
             <VariousControls>
               <MiscControls/>
-              <Define>MCUXPRESSO_SDK, CPU_MIMXRT595SFFOC_cm33, OSA_USED</Define>
+              <Define>MCUXPRESSO_SDK, CPU_MIMXRT595SFFOC_cm33, MIMXRT595S_cm33_SERIES, OSA_USED</Define>
               <Undefine/>
-              <IncludePath>..;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT595S;../../../../../../devices/MIMXRT595S/periph;../../../../../../devices/MIMXRT595S/drivers;../../../../../../devices/MIMXRT595S/utilities/debug_console_lite;../../../../../../components/lists;../../../../../../devices/MIMXRT595S/utilities/str;../../../../../../components/uart;../../../../../../components/osa;../../../../../../middleware/usb/include;../../../../../../middleware/usb/host;../../../../../../middleware/usb/host/class;../../../../../../middleware/usb/phy;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../../rtos/freertos/freertos-kernel/template</IncludePath>
+              <IncludePath>..;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT595S;../../../../../../devices/MIMXRT595S/periph;../../../../../../devices/MIMXRT595S/drivers;../../../../../../devices/MIMXRT595S/utilities/debug_console_lite;../../../../../../components/lists;../../../../../../devices/MIMXRT595S/utilities/str;../../../../../../components/uart;../../../../../../components/osa;../../../../../../middleware/usb/include;../../../../../../middleware/usb/host;../../../../../../middleware/usb/config/host/ip3516hs;../../../../../../middleware/usb/host/class;../../../../../../middleware/usb/phy;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../../rtos/freertos/freertos-kernel/template</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -3982,11 +4002,6 @@
           <GroupName>component/osa</GroupName>
           <Files>
             <File>
-              <FileName>fsl_os_abstraction.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/osa/fsl_os_abstraction.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_os_abstraction_free_rtos.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../components/osa/fsl_os_abstraction_free_rtos.h</FilePath>
@@ -3995,6 +4010,11 @@
               <FileName>fsl_os_abstraction_free_rtos.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../components/osa/fsl_os_abstraction_free_rtos.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/osa/fsl_os_abstraction.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -4261,6 +4281,11 @@
               <FileType>5</FileType>
               <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/timers.h</FilePath>
             </File>
+            <File>
+              <FileName>freertos_tasks_c_additions.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/freertos_tasks_c_additions.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -4340,6 +4365,11 @@
               <FileName>readme.md</FileName>
               <FileType>5</FileType>
               <FilePath>../readme.md</FilePath>
+            </File>
+            <File>
+              <FileName>examples_shared_readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../examples_shared_readme.md</FilePath>
             </File>
             <File>
               <FileName>host_hid_generic_output.jpg</FileName>
@@ -4679,9 +4709,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../mcux_config.h -mno-unaligned-access  -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
-              <Define>NDEBUG, USB_STACK_FREERTOS, USB_STACK_USE_DEDICATED_RAM=1, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT595SFFOC_cm33, OSA_USED, BOOT_HEADER_ENABLE=1, USE_RTOS=1, SDK_OS_FREE_RTOS</Define>
+              <Define>NDEBUG, USB_STACK_FREERTOS, USB_STACK_USE_DEDICATED_RAM=1, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT595SFFOC_cm33, MIMXRT595S_cm33_SERIES, OSA_USED, BOOT_HEADER_ENABLE=1, USE_RTOS=1, SDK_OS_FREE_RTOS</Define>
               <Undefine/>
-              <IncludePath>..;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT595S;../../../../../../devices/MIMXRT595S/periph;../../../../../../devices/MIMXRT595S/drivers;../../../../../../devices/MIMXRT595S/utilities/debug_console_lite;../../../../../../components/lists;../../../../../../devices/MIMXRT595S/utilities/str;../../../../../../components/uart;../../../../../../components/osa;../../../../../../middleware/usb/include;../../../../../../middleware/usb/host;../../../../../../middleware/usb/host/class;../../../../../../middleware/usb/phy;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../../rtos/freertos/freertos-kernel/template</IncludePath>
+              <IncludePath>..;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT595S;../../../../../../devices/MIMXRT595S/periph;../../../../../../devices/MIMXRT595S/drivers;../../../../../../devices/MIMXRT595S/utilities/debug_console_lite;../../../../../../components/lists;../../../../../../devices/MIMXRT595S/utilities/str;../../../../../../components/uart;../../../../../../components/osa;../../../../../../middleware/usb/include;../../../../../../middleware/usb/host;../../../../../../middleware/usb/config/host/ip3516hs;../../../../../../middleware/usb/host/class;../../../../../../middleware/usb/phy;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../../rtos/freertos/freertos-kernel/template</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -4697,9 +4727,9 @@
             <uClangAs>1</uClangAs>
             <VariousControls>
               <MiscControls/>
-              <Define>MCUXPRESSO_SDK, CPU_MIMXRT595SFFOC_cm33, OSA_USED</Define>
+              <Define>MCUXPRESSO_SDK, CPU_MIMXRT595SFFOC_cm33, MIMXRT595S_cm33_SERIES, OSA_USED</Define>
               <Undefine/>
-              <IncludePath>..;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT595S;../../../../../../devices/MIMXRT595S/periph;../../../../../../devices/MIMXRT595S/drivers;../../../../../../devices/MIMXRT595S/utilities/debug_console_lite;../../../../../../components/lists;../../../../../../devices/MIMXRT595S/utilities/str;../../../../../../components/uart;../../../../../../components/osa;../../../../../../middleware/usb/include;../../../../../../middleware/usb/host;../../../../../../middleware/usb/host/class;../../../../../../middleware/usb/phy;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../../rtos/freertos/freertos-kernel/template</IncludePath>
+              <IncludePath>..;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT595S;../../../../../../devices/MIMXRT595S/periph;../../../../../../devices/MIMXRT595S/drivers;../../../../../../devices/MIMXRT595S/utilities/debug_console_lite;../../../../../../components/lists;../../../../../../devices/MIMXRT595S/utilities/str;../../../../../../components/uart;../../../../../../components/osa;../../../../../../middleware/usb/include;../../../../../../middleware/usb/host;../../../../../../middleware/usb/config/host/ip3516hs;../../../../../../middleware/usb/host/class;../../../../../../middleware/usb/phy;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../../rtos/freertos/freertos-kernel/template</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -5431,11 +5461,6 @@
           <GroupName>component/osa</GroupName>
           <Files>
             <File>
-              <FileName>fsl_os_abstraction.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/osa/fsl_os_abstraction.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_os_abstraction_free_rtos.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../components/osa/fsl_os_abstraction_free_rtos.h</FilePath>
@@ -5444,6 +5469,11 @@
               <FileName>fsl_os_abstraction_free_rtos.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../components/osa/fsl_os_abstraction_free_rtos.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/osa/fsl_os_abstraction.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -5710,6 +5740,11 @@
               <FileType>5</FileType>
               <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/timers.h</FilePath>
             </File>
+            <File>
+              <FileName>freertos_tasks_c_additions.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/freertos_tasks_c_additions.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -5789,6 +5824,11 @@
               <FileName>readme.md</FileName>
               <FileType>5</FileType>
               <FilePath>../readme.md</FilePath>
+            </File>
+            <File>
+              <FileName>examples_shared_readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../examples_shared_readme.md</FilePath>
             </File>
             <File>
               <FileName>host_hid_generic_output.jpg</FileName>

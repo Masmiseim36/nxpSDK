@@ -16,7 +16,7 @@
 
 /*
  * Copyright (c) 2010 Inico Technologies Ltd.
- * Copyright 2017, 2023 NXP
+ * Copyright 2017, 2023, 2025 NXP
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
@@ -667,15 +667,21 @@ mld6_set_max_response_delay(struct mld_data *mld, u16_t max_response_code) {
  */
 static void
 mld6_set_general_report_tmr(struct mld_data *mld) {
+  const u16_t mrd_ticks = mld->max_response_delay / MLD6_TMR_INTERVAL;
+
   if (mld->general_report_tmr == 0) {
     /* Timer not running - set time */
-    mld->general_report_tmr = 1 + (LWIP_RAND() % ((mld->max_response_delay / MLD6_TMR_INTERVAL) - 1));
+    mld->general_report_tmr = LWIP_RAND() % (mrd_ticks + 1);
   } else {
     /* Crop timer if new maximum is smaller than current remaining time */
-    const u16_t mrd_ticks = mld->max_response_delay / MLD6_TMR_INTERVAL;
     if (mld->general_report_tmr > mrd_ticks) {
       mld->general_report_tmr = mrd_ticks;
     }
+  }
+
+  /* If timer value is 0, set to 1 to ensure processing happens */
+  if (mld->general_report_tmr == 0) {
+    mld->general_report_tmr = 1;
   }
 }
 

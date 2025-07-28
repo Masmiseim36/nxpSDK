@@ -1689,6 +1689,11 @@ struct wpa_config
      */
     int wowlan_disconnect_on_deinit;
 
+	/**
+	 * rsn_overriding - RSN overriding (default behavior)
+	 */
+	enum wpas_rsn_overriding rsn_overriding;
+
 #ifdef CONFIG_PASN
 #ifdef CONFIG_TESTING_OPTIONS
     /*

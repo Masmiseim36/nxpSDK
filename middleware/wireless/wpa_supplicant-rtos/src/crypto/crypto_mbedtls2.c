@@ -2683,7 +2683,14 @@ struct wpabuf *crypto_ecdh_set_peerkey(struct crypto_ecdh *ecdh, int inc_y, cons
         }
         else if (key[0] == 0x02 || key[0] == 0x03)
         {          /* (inc_y == 0) */
-            --len; /*(repurpose len to prime_len)*/
+            if(len > 0)
+            {
+                --len; /*(repurpose len to prime_len)*/
+            }
+            else
+            {
+                return NULL;
+            }
 
             /* mbedtls_ecp_point_read_binary() does not currently support
              * MBEDTLS_ECP_PF_COMPRESSED format (buf[1] = 0x02 or 0x03)
@@ -3563,6 +3570,7 @@ struct wpabuf *crypto_ec_key_get_subject_public_key(struct crypto_ec_key *key)
         /* algorithm AlgorithmIdentifier */
         unsigned char *a = p;
         size_t alen;
+        int ret;
         mbedtls_asn1_get_tag(&p, end, &alen, MBEDTLS_ASN1_CONSTRUCTED | MBEDTLS_ASN1_SEQUENCE);
         p += alen;
         alen = (size_t)(p - a);
@@ -3576,8 +3584,16 @@ struct wpabuf *crypto_ec_key_get_subject_public_key(struct crypto_ec_key *key)
         os_memmove(p - alen, a, alen);
         len += alen;
         p -= alen;
-        len += mbedtls_asn1_write_len(&p, buf, (size_t)len);
-        len += mbedtls_asn1_write_tag(&p, buf, MBEDTLS_ASN1_CONSTRUCTED | MBEDTLS_ASN1_SEQUENCE);
+        if ((ret = mbedtls_asn1_write_len(&p, buf, (size_t)len)) < 0)
+        {
+            return NULL;
+        }
+        len += ret;
+        if ((ret = mbedtls_asn1_write_tag(&p, buf, MBEDTLS_ASN1_CONSTRUCTED | MBEDTLS_ASN1_SEQUENCE)) < 0)
+        {
+            return NULL;
+        }
+        len += ret;
     }
 #endif
     return wpabuf_alloc_copy(p, (size_t)len);
@@ -3609,6 +3625,7 @@ struct wpabuf *crypto_ec_key_get_ecprivate_key(struct crypto_ec_key *key, bool i
         unsigned char *p   = priv + sizeof(priv) - privlen;
         unsigned char *end = priv + sizeof(priv);
         size_t len;
+        int ret = MBEDTLS_ERR_ERROR_CORRUPTION_DETECTED;
         /* ECPrivateKey SEQUENCE */
         mbedtls_asn1_get_tag(&p, end, &len, MBEDTLS_ASN1_CONSTRUCTED | MBEDTLS_ASN1_SEQUENCE);
         /* version INTEGER */
@@ -3625,8 +3642,16 @@ struct wpabuf *crypto_ec_key_get_ecprivate_key(struct crypto_ec_key *key, bool i
         /* write new SEQUENCE header (we know that it fits in priv[]) */
         len = (size_t)(p - v);
         p   = v;
-        len += mbedtls_asn1_write_len(&p, priv, len);
-        len += mbedtls_asn1_write_tag(&p, priv, MBEDTLS_ASN1_CONSTRUCTED | MBEDTLS_ASN1_SEQUENCE);
+        if ((ret = mbedtls_asn1_write_len(&p, priv, len)) < 0)
+        {
+            return NULL;
+        }
+        len += ret;
+        if ((ret = mbedtls_asn1_write_tag(&p, priv, MBEDTLS_ASN1_CONSTRUCTED | MBEDTLS_ASN1_SEQUENCE)) < 0)
+        {
+            return NULL;
+        }
+        len += ret;
         wbuf = wpabuf_alloc_copy(p, len);
     }
 

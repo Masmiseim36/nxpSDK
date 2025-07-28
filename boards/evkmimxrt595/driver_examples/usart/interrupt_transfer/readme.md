@@ -11,6 +11,7 @@ Note: The example echo every 8 characters, so input 8 characters every time.
 ## Supported Boards
 - [EVK-MIMXRT595](../../../../_boards/evkmimxrt595/driver_examples/usart/interrupt_transfer/example_board_readme.md)
 - [EVK-MIMXRT685](../../../../_boards/evkmimxrt685/driver_examples/usart/interrupt_transfer/example_board_readme.md)
+- [FRDM-MCXW23](../../../../_boards/frdmmcxw23/driver_examples/usart/interrupt_transfer/example_board_readme.md)
 - [FRDM-RW612](../../../../_boards/frdmrw612/driver_examples/usart/interrupt_transfer/example_board_readme.md)
 - [LPCXpresso51U68](../../../../_boards/lpcxpresso51u68/driver_examples/usart/interrupt_transfer/example_board_readme.md)
 - [LPCXpresso54628](../../../../_boards/lpcxpresso54628/driver_examples/usart/interrupt_transfer/example_board_readme.md)
@@ -23,3 +24,4 @@ Note: The example echo every 8 characters, so input 8 characters every time.
 - [LPCXpresso55S69](../../../../_boards/lpcxpresso55s69/driver_examples/usart/interrupt_transfer/example_board_readme.md)
 - [MIMXRT685-AUD-EVK](../../../../_boards/mimxrt685audevk/driver_examples/usart/interrupt_transfer/example_board_readme.md)
 - [RD-RW612-BGA](../../../../_boards/rdrw612bga/driver_examples/usart/interrupt_transfer/example_board_readme.md)
+- [MCXW23-EVK](../../../../_boards/mcxw23evk/driver_examples/usart/interrupt_transfer/example_board_readme.md)

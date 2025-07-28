@@ -9,7 +9,7 @@
 *                                                                    *
 **********************************************************************
 
-** emWin V6.46 - Graphical user interface for embedded applications **
+** emWin V6.50 - Graphical user interface for embedded applications **
 All  Intellectual Property rights  in the Software belongs to  SEGGER.
 emWin is protected by  international copyright laws.  Knowledge of the
 source code may not be used to write a similar product.  This file may
@@ -103,6 +103,7 @@ void GAUGE_Callback(WM_MESSAGE *pMsg);
 **********************************************************************
 */
 void GAUGE_EnableCCW      (GAUGE_Handle hObj, int OnOff);
+void GAUGE_GetArcPositions(GAUGE_Handle hObj, unsigned Index, GUI_POINT * pStart, GUI_POINT * pEnd);
 I32  GAUGE_GetValue       (GAUGE_Handle hObj);
 void GAUGE_GetRange       (GAUGE_Handle hObj, I32 * pAng0, I32 * pAng1);
 void GAUGE_SetAlign       (GAUGE_Handle hObj, int Align);

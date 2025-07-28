@@ -207,6 +207,7 @@ message("${CMAKE_CURRENT_LIST_FILE} component is included.")
           ${CMAKE_CURRENT_LIST_DIR}/src/misc/lv_utils.c
           ${CMAKE_CURRENT_LIST_DIR}/src/osal/lv_cmsis_rtos2.c
           ${CMAKE_CURRENT_LIST_DIR}/src/osal/lv_freertos.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/osal/lv_linux.c
           ${CMAKE_CURRENT_LIST_DIR}/src/osal/lv_mqx.c
           ${CMAKE_CURRENT_LIST_DIR}/src/osal/lv_os.c
           ${CMAKE_CURRENT_LIST_DIR}/src/osal/lv_os_none.c

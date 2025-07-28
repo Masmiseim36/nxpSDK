@@ -1,6 +1,6 @@
 Release Name: MCUXpresso Software Development Kit (SDK)
-Release Version: 24.12.00
-Package License: LA_OPT_NXP_Software_License v57 July 2024 - Additional Distribution License granted, license in Section 2.3 applies
+Release Version: 25.06.00
+Package License: LA_OPT_NXP_Software_License v62 May 2025 - Additional Distribution License granted, license in Section 2.3 applies
 
 SDK_Examples               Name: SDK examples                                
                            Version: NA                                       
@@ -24,76 +24,56 @@ mcux-edgelock              Name: Edgelock Firmware
                            https://github.com/nxp-mcuxpresso/mcux-edgelock   
                            Origin: NXP (proprietary)                         
 
-SDK_Peripheral_Driver      Name: SDK Peripheral Driver                       
-                           Version: 2.x.x                                    
+RangeHTTPServer            Name: RangeHTTPServer                             
+                           Version: 1.2.0                                    
+                           Outgoing License: Apache-2.0                      
+                           License File:                                     
+                           https://www.apache.org/licenses/LICENSE-2.0.txt   
+                           Format: source code                               
+                           Description: Python SimpleHTTPServer extension for
+                           support of HTTP Range Requests                    
+                           Location:                                         
+                           boards/<board>/ota_examples/ota_mcuboot_client/htt
+                           ps_server                                         
+                           Url: https://github.com/danvk/RangeHTTPServer     
+                           Origin: https://github.com/danvk/RangeHTTPServer  
+
+FWK                        Name: Connectivity Framework                      
+                           Version: 7.0.2                                    
                            Outgoing License: BSD-3-Clause                    
                            License File: ./COPYING-BSD-3                     
-                           Format: source code                               
-                           Description: Peripheral drivers are designed for  
-                           the most common use cases identified for the      
-                           underlying hardware block.                        
-                           Location: devices/<device>/drivers                
+                           Format: source code & header files                
+                           Description: Connectivity Framework middleware for
+                           Connectivity stacks                               
+                           Location: middleware/wireless/framework           
                            Origin: NXP (BSD-3-Clause)                        
 
-SDK_Device                 Name: SDK SoC files                               
-                           Version: NA                                       
-                           Outgoing License: BSD-3-Clause                    
-                           License File: ./COPYING-BSD-3                     
-                           Format: source code, linker files                 
-                           Description: Device system files, template files, 
-                           IDE related startup and linker files.             
-                           Location: devices/<device>/                       
-                           Origin: NXP (BSD-3-Clause)                        
+SecLib                     Name: Connectivity SecLib                         
+                           Version: 7.0.2                                    
+                           Outgoing License: LA_OPT_NXP_Software_License v62 
+                           May 2025 - Additional distribution license        
+                           granted, license in Section 2.3 applies           
+                           License File: ./LA_OPT_NXP_Software_License.txt   
+                           Format: Binary libraries                          
+                           Description: Connectivity Security Library        
+                           Location:                                         
+                           middleware/wireless/framework/services/SecLib_RNG/
+                           lib_crypto_*.a                                    
+                           Origin: NXP                                       
 
-SDK_Components             Name: SDK components and board peripheral drivers 
-                           Version: NA                                       
-                           Outgoing License: BSD-3-Clause                    
-                           License File: ./COPYING-BSD-3                     
-                           Format: source code                               
-                           Description: SDK components and board peripheral  
-                           drivers, for example, flash and codec drivers.    
-                           Location: components/                             
-                           Origin: NXP (BSD-3-Clause), ITE (BSD-3-Clause)    
-
-CMSIS_NN                   Name: CMSIS_NN                                    
-                           Version: 6.0.0                                    
-                           Outgoing License: Apache License 2.0              
-                           License File: CMSIS/NN/LICENSE                    
-                           Format: source code                               
-                           Description: A collection of efficient neural     
-                           network kernels developed to maximize the         
-                           performance and minimize the memory footprint of  
-                           neural networks on Arm Cortex-M processors.       
-                           Location: CMSIS/NN                                
-                           Origin: ARM (Apache-2.0) -                        
-                           https://github.com/ARM-software/CMSIS-NN/releases/
-                           tag/v6.0.0                                        
-
-CMSIS                      Name: CMSIS                                       
-                           Version: 6.1.0                                    
-                           Outgoing License: Apache License 2.0              
-                           License File: CMSIS/LICENSE.txt                   
-                           Format: source code                               
-                           Description: Vendor-independent hardware          
-                           abstraction layer for microcontrollers that are   
-                           based on Arm Cortex processors, distributed by    
-                           ARM. cores                                        
-                           Location: CMSIS/                                  
-                           Origin: ARM (Apache-2.0) -                        
-                           https://github.com/ARM-software/CMSIS_6/releases/t
-                           ag/v6.1.0                                         
-
-CMSIS_DSP                  Name: CMSIS_DSP                                   
-                           Version: 1.16.2                                   
-                           Outgoing License: Apache License 2.0              
-                           License File: CMSIS/DSP/LICENSE                   
-                           Format: source code                               
-                           Description: It provides optimized compute kernels
-                           for Cortex-M and for Cortex-A.                    
-                           Location: CMSIS/DSP                               
-                           Origin: ARM (Apache-2.0) -                        
-                           https://github.com/ARM-software/CMSIS-DSP/releases
-                           /tag/v1.16.2 ARM (MIT)                            
+subsys                     Name: Zephyr components                           
+                           Version: 7.0.2                                    
+                           Outgoing License: Apache-2.0                      
+                           License File:                                     
+                           middleware/wireless/framework/zephyr/subsys/LICENS
+                           E                                                 
+                           Format: source code, header, cmake and Kconfig    
+                           files                                             
+                           Description: Zephyr components implementation over
+                           OSA in mcxu SDK                                   
+                           Location:                                         
+                           middleware/wireless/framework/zephyr/subsys       
+                           Origin: Zephyr (Apache-2.0)                       
 
 edgefast_bluetooth         Name: EdgeFast Protocol Abstraction Layer         
                            Version: 1.5.0                                    
@@ -110,8 +90,8 @@ edgefast_bluetooth         Name: EdgeFast Protocol Abstraction Layer
 bt_ble_hoststack           Name: Bluetooth and Bluetooth Low Energy Host     
                            Stack                                             
                            Version: 20.13.0                                  
-                           Outgoing License: LA_OPT_NXP_Software_License v57 
-                           July 2024 - Additional distribution license       
+                           Outgoing License: LA_OPT_NXP_Software_License v62 
+                           May 2025 - Additional distribution license        
                            granted, license in Section 2.3 applies           
                            License File: ./LA_OPT_NXP_Software_License.txt   
                            Format: Source, Binary libraries                  
@@ -191,6 +171,52 @@ openvg                     Name: mcux-openvg
                            http://www.khronos.org/ Amazon (MIT) -            
                            https://github.com/FreeRTOS/FreeRTOS-Kernel       
 
+psatest                    Name: PSA Test Suite                              
+                           Version: 1.4                                      
+                           Outgoing License: Apache-2.0                      
+                           License File:                                     
+                           middleware/tfm/psa-arch-tests/LICENSE.md          
+                           Format: source code                               
+                           Description: Arm Platform Security Architecture   
+                           Test Suite                                        
+                           Location: middleware/tfm/psa-arch-tests           
+                           Origin: ARM(Apache-2.0) -                         
+                           https://github.com/ARM-software/psa-arch-tests    
+
+tfm_t_cose                 Name: tfm_t_cose                                  
+                           Version: 2.1.1                                    
+                           Outgoing License: BSD-3-Clause                    
+                           License File:                                     
+                           middleware/tfm/tf-m/lib/ext/t_cose/LICENSE        
+                           Format: source code                               
+                           Description: t_cose is a partial implementation of
+                           the COSE standard (RFC 8152)                      
+                           Location: middleware/tfm/tf-m/lib/ext/t_cose      
+                           Origin: Laurence Lundblade (BSD-3-Clause)         
+
+mbedtls3x                  Name: Mbed TLS                                    
+                           Version: 3.5.0                                    
+                           Outgoing License: Apache-2.0                      
+                           License File: middleware/mbedtls3x/LICENSE        
+                           Format: source code                               
+                           Description: Cryptographic and SSL/TLS Library    
+                           Location: middleware/mbedtls3x                    
+                           Origin: ARM(Apache-2.0) -                         
+                           https://github.com/Mbed-TLS/mbedtls/releases/tag/v
+                           3.5.0                                             
+
+soem                       Name: Simple Open EtherCAT Master Library (SOEM)  
+                           Version: 1.4.0                                    
+                           Outgoing License: GPL-2.0 with a special exception
+                           License File: middleware/soem/LICENSE             
+                           Format: source code                               
+                           Description: An opensource EtherCAT master stack  
+                           which is used to write custom EtherCAT Master     
+                           applications.                                     
+                           Location: middleware/soem                         
+                           Origin: RT-Labs                                   
+                           Url: https://github.com/OpenEtherCATsociety/soem  
+
 wpa_supplicant             Name: wpa_supplicant-rtos                         
                            Version: 2.11.0                                   
                            Outgoing License: BSD-3-Clause                    
@@ -214,10 +240,10 @@ wifi                       Name: NXP Wi-Fi driver
                            Location: middleware/wifi_nxp                     
                            Origin: NXP (BSD-3-Clause)                        
 
-voice_seeker_hifi4         Name: VoiceSeeker (no AEC)                        
+voice_seeker_fusionf1      Name: VoiceSeeker (no AEC)                        
                            Version: 0.6.9                                    
-                           Outgoing License: LA_OPT_NXP_Software_License v57 
-                           July 2024 - Additional distribution license       
+                           Outgoing License: LA_OPT_NXP_Software_License v62 
+                           May 2025 - Additional distribution license        
                            granted, license in Section 2.3 applies           
                            License File: ./LA_OPT_NXP_Software_License.txt   
                            Format: Precompiled libraries, header files,      
@@ -227,8 +253,8 @@ voice_seeker_hifi4         Name: VoiceSeeker (no AEC)
                            solution. Acoustic Echo Cancellation (AEC) is not 
                            enabled in this free version.                     
                            Location:                                         
-                           middleware/audio_voice/components/voice_seeker/RT6
-                           85_HiFi4                                          
+                           middleware/audio_voice/components/voice_seeker/RT5
+                           95_FusionF1                                       
                            Origin: NXP (Proprietary) Cadence Design Systems  
                            (Proprietary)                                     
                            Url:                                              
@@ -237,8 +263,8 @@ voice_seeker_hifi4         Name: VoiceSeeker (no AEC)
 
 vit                        Name: VIT_v4.10.0                                 
                            Version: 4.10.0                                   
-                           Outgoing License: LA_OPT_NXP_Software_License v57 
-                           July 2024 - Additional distribution license       
+                           Outgoing License: LA_OPT_NXP_Software_License v62 
+                           May 2025 - Additional distribution license        
                            granted, license in Section 2.3 applies           
                            License File: ./LA_OPT_NXP_Software_License.txt   
                            Format: Precompiled libraries, header files,      
@@ -260,7 +286,7 @@ vglite                     Name: vglite
                            https://github.com/nxp-mcuxpresso/gpu-vglite      
 
 usb                        Name: USB                                         
-                           Version: 2.11.0                                   
+                           Version: 2.12.0                                   
                            Outgoing License: BSD-3-Clause                    
                            License File: ./COPYING-BSD-3                     
                            Format: source code                               
@@ -281,7 +307,7 @@ tinycbor                   Name: TinyCBOR
                            Url: https://github.com/intel/TinyCBOR            
 
 tfm                        Name: tfm                                         
-                           Version: 1.8                                      
+                           Version: 2.1.1                                    
                            Outgoing License: BSD-3-Clause                    
                            License File: middleware/tfm/tf-m/license.rst     
                            Format: source code                               
@@ -292,7 +318,7 @@ tfm                        Name: tfm
                            are-m.git                                         
 
 tfm_tests                  Name: tfm_tests                                   
-                           Version: 1.8                                      
+                           Version: 2.1.1                                    
                            Outgoing License: BSD-3-Clause                    
                            License File:                                     
                            middleware/tfm/tf-m-tests/license.rst             
@@ -313,52 +339,6 @@ tfm_qcbor                  Name: tfm_qcbor
                            Location: middleware/tfm/qcbor                    
                            Origin: Laurence Lundblade (BSD-3-Clause) -       
                            https://github.com/laurencelundblade/QCBOR.git    
-
-psatest                    Name: PSA Test Suite                              
-                           Version: 1.4                                      
-                           Outgoing License: Apache-2.0                      
-                           License File:                                     
-                           middleware/tfm/psa-arch-tests/LICENSE.md          
-                           Format: source code                               
-                           Description: Arm Platform Security Architecture   
-                           Test Suite                                        
-                           Location: middleware/tfm/psa-arch-tests           
-                           Origin: ARM(Apache-2.0) -                         
-                           https://github.com/ARM-software/psa-arch-tests    
-
-tfm_t_cose                 Name: tfm_t_cose                                  
-                           Version: 1.8                                      
-                           Outgoing License: BSD-3-Clause                    
-                           License File:                                     
-                           middleware/tfm/tf-m/lib/ext/t_cose/LICENSE        
-                           Format: source code                               
-                           Description: t_cose is a partial implementation of
-                           the COSE standard (RFC 8152)                      
-                           Location: middleware/tfm/tf-m/lib/ext/t_cose      
-                           Origin: Laurence Lundblade (BSD-3-Clause)         
-
-mbedcrypto                 Name: Mbed Crypto library                         
-                           Version: 3.4.0                                    
-                           Outgoing License: Apache-2.0                      
-                           License File: middleware/tfm/mbed-crypto/LICENSE  
-                           Format: source code                               
-                           Description: Cryptographic Library                
-                           Location: middleware/tfm/mbed-crypto              
-                           Origin: ARM(Apache-2.0) -                         
-                           https://github.com/Mbed-TLS/mbedtls/releases/tag/v
-                           3.4.0                                             
-
-soem                       Name: Simple Open EtherCAT Master Library (SOEM)  
-                           Version: 1.4.0                                    
-                           Outgoing License: GPL-2.0 with a special exception
-                           License File: middleware/soem/LICENSE             
-                           Format: source code                               
-                           Description: An opensource EtherCAT master stack  
-                           which is used to write custom EtherCAT Master     
-                           applications.                                     
-                           Location: middleware/soem                         
-                           Origin: RT-Labs                                   
-                           Url: https://github.com/OpenEtherCATsociety/soem  
 
 sdmmc                      Name: SD MMC SDIO Card middleware                 
                            Version: 2.2.7                                    
@@ -426,7 +406,7 @@ multicore_mcmgr            Name: MCMGR
                            Origin: NXP (BSD-3-Clause)                        
 
 multicore                  Name: Multicore SDK                               
-                           Version: 2.16.0                                   
+                           Version: 25.06.00                                 
                            Outgoing License: BSD-3-Clause                    
                            License File: ./COPYING-BSD-3                     
                            Format: source code                               
@@ -436,7 +416,7 @@ multicore                  Name: Multicore SDK
                            Origin: NXP (BSD-3-Clause)                        
 
 multicore_rpmsg_lite       Name: RPMsg-Lite                                  
-                           Version: 5.1.0                                    
+                           Version: 5.1.4                                    
                            Outgoing License: BSD-3-Clause                    
                            License File: ./COPYING-BSD-3                     
                            Format: source code                               
@@ -537,7 +517,7 @@ motor_control_mcat_float   Name: MCAT float
                            https://www.npmjs.org/package/simple-jsonrpc-js   
 
 mcuboot                    Name: MCUBoot                                     
-                           Version: 2.0.0                                    
+                           Version: 2.1.0                                    
                            Outgoing License: Apache-2.0                      
                            License File:                                     
                            middleware/mcuboot_opensource/LICENSE             
@@ -548,19 +528,37 @@ mcuboot                    Name: MCUBoot
                            Origin: MCUBoot https://www.mcuboot.com/          
                            Url: https://github.com/mcu-tools/mcuboot         
 
-mbedtls3x                  Name: Mbed TLS                                    
-                           Version: 3.5.0                                    
-                           Outgoing License: Apache-2.0                      
-                           License File: middleware/mbedtls3x/LICENSE        
+tinycrypt                  Name: TinyCrypt                                   
+                           Version: 0.2.8                                    
+                           Outgoing License: BSD-3-Clause                    
+                           License File:                                     
+                           middleware/mcuboot_opensource/ext/tinycrypt/LICENS
+                           E                                                 
                            Format: source code                               
-                           Description: Cryptographic and SSL/TLS Library    
-                           Location: middleware/mbedtls3x                    
-                           Origin: ARM(Apache-2.0) -                         
-                           https://github.com/Mbed-TLS/mbedtls/releases/tag/v
-                           3.5.0                                             
+                           Description: TinyCrypt Cryptographic Library      
+                           Location:                                         
+                           middleware/mcuboot_opensource/ext/tinycrypt       
+                           Origin:                                           
+                           https://github.com/mcu-tools/mcuboot/tree/main/ext
+                           /tinycrypt                                        
+
+mbedtls-asn1               Name: MbedTLS                                     
+                           Version: 3.0.0                                    
+                           Outgoing License: Apache-2.0                      
+                           License File:                                     
+                           middleware/mcuboot_opensource/ext/mbedtls-asn1/inc
+                           lude/common.h                                     
+                           Format: source code                               
+                           Description: A subset of MbedTLS 3.0 code for     
+                           ASN.1 parsing support                             
+                           Location:                                         
+                           middleware/mcuboot_opensource/ext/mbedtls-asn1    
+                           Origin:                                           
+                           https://github.com/mcu-tools/mcuboot/tree/main/ext
+                           /mbedtls-asn1                                     
 
 mbedtls                    Name: Mbed TLS                                    
-                           Version: 2.28.8                                   
+                           Version: 2.28.10                                  
                            Outgoing License: Apache-2.0                      
                            License File: middleware/mbedtls/LICENSE          
                            Format: source code                               
@@ -732,21 +730,28 @@ msis_nn                    Version: v6.0.0 (commit 69823017)
                            n/LICENSE.txt                                     
 
 eiq_tensorflow_lite_micro_xName: Cadence HiFi4 Neural Network (NN) Library   
-tensa_nn                   Version: 2.9.0                                    
+tensa_nn                   Version: 3.3.0                                    
                            Description: A neural network kernels library for 
                            Xtensa cores from Cadence                         
-                           Format: source code                               
-                           Location:                                         
-                           middleware/eiq/tensorflow-lite/third_party/xa_nnli
-                           b_hifi4,                                          
-                           middleware/eiq/tensorflow-lite/tensorflow/lite/mic
-                           ro/kernels/xtensa_hifi                            
+                           Format: library                                   
+                           Location: middleware/eiq/tensorflow-lite/lib      
                            Origin: Cadence Design Systems, Inc. (proprietary)
                            Url: https://github.com/foss-xtensa/nnlib-hifi4   
-                           Outgoing License: LA_OPT_NXP_Software_License v57 
-                           July 2024 - Additional distribution license       
+                           Outgoing License: LA_OPT_NXP_Software_License v62 
+                           May 2025 - Additional distribution license        
                            granted, license in Section 2.3 applies           
                            License File: ./LA_OPT_NXP_Software_License.txt   
+
+eiq_executorch             Name: ExecuTorch                                  
+                           Version: 0.5.0                                    
+                           Description: Software library for running machine 
+                           learning models on embedded devices               
+                           Format: source code                               
+                           Location: middleware/eiq/executorch               
+                           Origin: See middleware/eiq/executorch/            
+                           Url: https://github.com/pytorch/executorch        
+                           Outgoing License: BSD-3-Clause                    
+                           License File: middleware/eiq/executorch/LICENSE   
 
 mpp                        Name: Multimedia Processing Pipelines (MPP)       
                            Version: 3.2.0                                    
@@ -815,8 +820,8 @@ fatfs                      Name: FatFs
 
 emwin                      Name: emWin                                       
                            Version: 6.38                                     
-                           Outgoing License: LA_OPT_NXP_Software_License v57 
-                           July 2024 - Additional distribution license       
+                           Outgoing License: LA_OPT_NXP_Software_License v62 
+                           May 2025 - Additional distribution license        
                            granted, license in Section 2.3 applies           
                            License File: ./LA_OPT_NXP_Software_License.txt   
                            Format: Precompiled libraries, header files       
@@ -843,8 +848,8 @@ dhara                      Name: Dhara
 
 nnlib                      Name: Cadence Neural Network (NN) Library         
                            Version: 4.1.0                                    
-                           Outgoing License: LA_OPT_NXP_Software_License v57 
-                           July 2024 - No distribution permitted, license in 
+                           Outgoing License: LA_OPT_NXP_Software_License v62 
+                           May 2025 - No distribution permitted, license in  
                            Section 2.2 applies.                              
                            License File: ./LA_OPT_NXP_Software_License.txt   
                            Format: source code, header files, binary files   
@@ -867,22 +872,22 @@ naturedsp_hifi4            Name: naturedsp
                            Location: middleware/cadence/naturedsp/hifi4      
                            Origin: Cadence Design Systems (Proprietary)      
 
-naturedsp_hifi1            Name: naturedsp                                   
-                           Version: 1.1.0                                    
-                           Outgoing License: LA_OPT_NXP_Software_License v57 
-                           July 2024 - No distribution permitted, license in 
+naturedsp_fusionf1         Name: naturedsp                                   
+                           Version: 1.2.0                                    
+                           Outgoing License: LA_OPT_NXP_Software_License v62 
+                           May 2025 - No distribution permitted, license in  
                            Section 2.2 applies.                              
                            License File: ./LA_OPT_NXP_Software_License.txt   
-                           Format: source code                               
+                           Format: source code, precompiled library          
                            Description: Digital Signal Processing for Xtensa 
-                           HiFi Audio Engines                                
-                           Location: middleware/cadence/naturedsp/hifi1      
+                           Fusion Audio Engines                              
+                           Location: middleware/cadence/naturedsp/fusionf1   
                            Origin: Cadence Design Systems (Proprietary)      
 
 multicore_xaf              Name: dsp_audio_framework                         
                            Version: 3.6                                      
-                           Outgoing License: LA_OPT_NXP_Software_License v57 
-                           July 2024 - Additional distribution license       
+                           Outgoing License: LA_OPT_NXP_Software_License v62 
+                           May 2025 - Additional distribution license        
                            granted, license in Section 2.3 applies           
                            License File: ./LA_OPT_NXP_Software_License.txt   
                            Format: source code                               
@@ -891,179 +896,165 @@ multicore_xaf              Name: dsp_audio_framework
                            Location: middleware/cadence/multicore-xaf        
                            Origin: Cadence Design Systems, Inc. & NXP        
 
-dsp_audio_codec_aac_dec_hifName: dsp_audio_codec_aac_dec_hifi4               
-i4                         Version: 3.16                                     
-                           Outgoing License: LA_OPT_NXP_Software_License v57 
-                           July 2024 - Additional distribution license       
+dsp_audio_codec_aac_dec    Name: dsp_audio_codec_aac_dec                     
+                           Version: 3.17                                     
+                           Outgoing License: LA_OPT_NXP_Software_License v62 
+                           May 2025 - Additional distribution license        
                            granted, license in Section 2.3 applies           
                            License File: ./LA_OPT_NXP_Software_License.txt   
                            Format: binary                                    
                            Description: Tensilica HiFi AAC-LC, aacPlus       
                            (HE-AAC) and aacPlus v2 Decoder                   
-                           Location:                                         
-                           middleware/cadence/codecs/aacplus_dec/hifi4       
+                           Location: middleware/cadence/codecs/aacplus_dec   
                            Origin: Cadence Design Systems                    
 
-dsp_audio_codec_g711_hifi4 Name: dsp_audio_codec_g711_hifi4                  
-                           Version: 1.3p1                                    
-                           Outgoing License: LA_OPT_NXP_Software_License v57 
-                           July 2024 - Additional distribution license       
-                           granted, license in Section 2.3 applies           
-                           License File: ./LA_OPT_NXP_Software_License.txt   
-                           Format: binary                                    
-                           Description: Tensilica HiFi G.711 Codec           
-                           Location: middleware/cadence/codecs/g711/hifi4    
-                           Origin: Cadence Design Systems                    
-
-dsp_audio_codec_g722_hifi4 Name: dsp_audio_codec_g722_hifi4                  
-                           Version: 1.1                                      
-                           Outgoing License: LA_OPT_NXP_Software_License v57 
-                           July 2024 - Additional distribution license       
-                           granted, license in Section 2.3 applies           
-                           License File: ./LA_OPT_NXP_Software_License.txt   
-                           Format: binary                                    
-                           Description: Tensilica HiFi G.722 Codec           
-                           Location: middleware/cadence/codecs/g722/hifi4    
-                           Origin: Cadence Design Systems                    
-
-dsp_audio_codec_bsac_hifi4 Name: dsp_audio_codec_bsac_hifi4                  
-                           Version: 2.8                                      
-                           Outgoing License: LA_OPT_NXP_Software_License v57 
-                           July 2024 - Additional distribution license       
-                           granted, license in Section 2.3 applies           
-                           License File: ./LA_OPT_NXP_Software_License.txt   
-                           Format: binary                                    
-                           Description: Tensilica HiFi BSAC Decoder          
-                           Location: middleware/cadence/codecs/bsac/hifi4    
-                           Origin: Cadence Design Systems                    
-
-dsp_audio_codec_dabplus_hifName: dsp_audio_codec_dabplus_hifi4               
-i4                         Version: 2.14                                     
-                           Outgoing License: LA_OPT_NXP_Software_License v57 
-                           July 2024 - Additional distribution license       
-                           granted, license in Section 2.3 applies           
-                           License File: ./LA_OPT_NXP_Software_License.txt   
-                           Format: binary                                    
-                           Description: Tensilica HiFi DAB+ Decoder          
-                           Location: middleware/cadence/codecs/dabplus/hifi4 
-                           Origin: Cadence Design Systems                    
-
-dsp_audio_codec_drm_hifi4  Name: dsp_audio_codec_drm_hifi4                   
-                           Version: 2.14                                     
-                           Outgoing License: LA_OPT_NXP_Software_License v57 
-                           July 2024 - Additional distribution license       
-                           granted, license in Section 2.3 applies           
-                           License File: ./LA_OPT_NXP_Software_License.txt   
-                           Format: binary                                    
-                           Description: Tensilica HiFi DRM Decoder           
-                           Location: middleware/cadence/codecs/drm/hifi4     
-                           Origin: Cadence Design Systems                    
-
-dsp_audio_codec_lc3_hifi4  Name: dsp_audio_codec_lc3_hifi4                   
-                           Version: 1.12                                     
-                           Outgoing License: LA_OPT_NXP_Software_License v57 
-                           July 2024 - Additional distribution license       
-                           granted, license in Section 2.3 applies           
-                           License File: ./LA_OPT_NXP_Software_License.txt   
-                           Format: binary                                    
-                           Description: Tensilica HiFi LC3 Codec             
-                           Location: middleware/cadence/codecs/lc3/hifi4     
-                           Origin: Cadence Design Systems                    
-
-dsp_audio_codec_mp2_dec_hifName: dsp_audio_codec_mp2_dec_hifi4               
-i4                         Version: 3.26                                     
-                           Outgoing License: LA_OPT_NXP_Software_License v57 
-                           July 2024 - Additional distribution license       
-                           granted, license in Section 2.3 applies           
-                           License File: ./LA_OPT_NXP_Software_License.txt   
-                           Format: binary                                    
-                           Description: Tensilica HiFi MP2 Decoder           
-                           Location: middleware/cadence/codecs/mp2/hifi4     
-                           Origin: Cadence Design Systems                    
-
-dsp_audio_codec_mp3_dec_hifName: dsp_audio_codec_mp3_dec_hifi4               
-i4                         Version: 3.28.1                                   
-                           Outgoing License: LA_OPT_NXP_Software_License v57 
-                           July 2024 - Additional distribution license       
-                           granted, license in Section 2.3 applies           
-                           License File: ./LA_OPT_NXP_Software_License.txt   
-                           Format: binary                                    
-                           Description: Tensilica HiFi MP3 Decoder           
-                           Location: middleware/cadence/codecs/mp3_dec/hifi4 
-                           Origin: Cadence Design Systems                    
-
-dsp_audio_codec_mp3_enc_hifName: dsp_audio_codec_mp3_enc_hifi4               
-i4                         Version: 1.10                                     
-                           Outgoing License: LA_OPT_NXP_Software_License v57 
-                           July 2024 - Additional distribution license       
-                           granted, license in Section 2.3 applies           
-                           License File: ./LA_OPT_NXP_Software_License.txt   
-                           Format: binary                                    
-                           Description: Tensilica HiFi MP3 Encoder           
-                           Location: middleware/cadence/codecs/mp3_enc/hifi4 
-                           Origin: Cadence Design Systems                    
-
-dsp_audio_codec_asrc_src_ppName: dsp_audio_codec_asrc_src_pp_hifi4           
-_hifi4                     Version: 1.18                                     
-                           Outgoing License: LA_OPT_NXP_Software_License v57 
-                           July 2024 - Additional distribution license       
+dsp_audio_codec_asrc_src_ppName: dsp_audio_codec_asrc_src_pp                 
+                           Version: 1.21                                     
+                           Outgoing License: LA_OPT_NXP_Software_License v62 
+                           May 2025 - Additional distribution license        
                            granted, license in Section 2.3 applies           
                            License File: ./LA_OPT_NXP_Software_License.txt   
                            Format: binary                                    
                            Description: Tensilica HiFi Asynchronous and      
                            Synchronous Sample Rate Converter (SRC)           
-                           Location:                                         
-                           middleware/cadence/codecs/asrc_src_pp/hifi4       
+                           Location: middleware/cadence/codecs/asrc_src_pp   
                            Origin: Cadence Design Systems                    
 
-dsp_audio_codec_vorbis_dec_Name: dsp_audio_codec_vorbis_dec_hifi4            
-hifi4                      Version: 1.15p2                                   
-                           Outgoing License: LA_OPT_NXP_Software_License v57 
-                           July 2024 - Additional distribution license       
+dsp_audio_codec_bsac       Name: dsp_audio_codec_bsac                        
+                           Version: 2.8                                      
+                           Outgoing License: LA_OPT_NXP_Software_License v62 
+                           May 2025 - Additional distribution license        
+                           granted, license in Section 2.3 applies           
+                           License File: ./LA_OPT_NXP_Software_License.txt   
+                           Format: binary                                    
+                           Description: Tensilica HiFi BSAC Decoder          
+                           Location: middleware/cadence/codecs/bsac          
+                           Origin: Cadence Design Systems                    
+
+dsp_audio_codec_dabplus    Name: dsp_audio_codec_dabplus                     
+                           Version: 2.14                                     
+                           Outgoing License: LA_OPT_NXP_Software_License v62 
+                           May 2025 - Additional distribution license        
+                           granted, license in Section 2.3 applies           
+                           License File: ./LA_OPT_NXP_Software_License.txt   
+                           Format: binary                                    
+                           Description: Tensilica HiFi DAB+ Decoder          
+                           Location: middleware/cadence/codecs/dabplus       
+                           Origin: Cadence Design Systems                    
+
+dsp_audio_codec_drm        Name: dsp_audio_codec_drm                         
+                           Version: 2.14                                     
+                           Outgoing License: LA_OPT_NXP_Software_License v62 
+                           May 2025 - Additional distribution license        
+                           granted, license in Section 2.3 applies           
+                           License File: ./LA_OPT_NXP_Software_License.txt   
+                           Format: binary                                    
+                           Description: Tensilica HiFi DRM Decoder           
+                           Location: middleware/cadence/codecs/drm           
+                           Origin: Cadence Design Systems                    
+
+dsp_audio_codec_g711       Name: dsp_audio_codec_g711                        
+                           Version: 1.3p1                                    
+                           Outgoing License: LA_OPT_NXP_Software_License v62 
+                           May 2025 - Additional distribution license        
+                           granted, license in Section 2.3 applies           
+                           License File: ./LA_OPT_NXP_Software_License.txt   
+                           Format: binary                                    
+                           Description: Tensilica HiFi G.711 Codec           
+                           Location: middleware/cadence/codecs/g711          
+                           Origin: Cadence Design Systems                    
+
+dsp_audio_codec_g722       Name: dsp_audio_codec_g722                        
+                           Version: 1.1                                      
+                           Outgoing License: LA_OPT_NXP_Software_License v62 
+                           May 2025 - Additional distribution license        
+                           granted, license in Section 2.3 applies           
+                           License File: ./LA_OPT_NXP_Software_License.txt   
+                           Format: binary                                    
+                           Description: Tensilica HiFi G.722 Codec           
+                           Location: middleware/cadence/codecs/g722          
+                           Origin: Cadence Design Systems                    
+
+dsp_audio_codec_mp2_dec    Name: dsp_audio_codec_mp2_dec                     
+                           Version: 3.26                                     
+                           Outgoing License: LA_OPT_NXP_Software_License v62 
+                           May 2025 - Additional distribution license        
+                           granted, license in Section 2.3 applies           
+                           License File: ./LA_OPT_NXP_Software_License.txt   
+                           Format: binary                                    
+                           Description: Tensilica HiFi MP2 Decoder           
+                           Location: middleware/cadence/codecs/mp2           
+                           Origin: Cadence Design Systems                    
+
+dsp_audio_codec_mp3_dec    Name: dsp_audio_codec_mp3_dec                     
+                           Version: 3.30                                     
+                           Outgoing License: LA_OPT_NXP_Software_License v62 
+                           May 2025 - Additional distribution license        
+                           granted, license in Section 2.3 applies           
+                           License File: ./LA_OPT_NXP_Software_License.txt   
+                           Format: binary                                    
+                           Description: Tensilica HiFi MP3 Decoder           
+                           Location: middleware/cadence/codecs/mp3_dec       
+                           Origin: Cadence Design Systems                    
+
+dsp_audio_codec_mp3_enc    Name: dsp_audio_codec_mp3_enc                     
+                           Version: 1.12                                     
+                           Outgoing License: LA_OPT_NXP_Software_License v62 
+                           May 2025 - Additional distribution license        
+                           granted, license in Section 2.3 applies           
+                           License File: ./LA_OPT_NXP_Software_License.txt   
+                           Format: binary                                    
+                           Description: Tensilica HiFi MP3 Encoder           
+                           Location: middleware/cadence/codecs/mp3_enc       
+                           Origin: Cadence Design Systems                    
+
+dsp_audio_codec_opus       Name: dsp_audio_codec_opus                        
+                           Version: 1.27                                     
+                           Outgoing License: LA_OPT_NXP_Software_License v62 
+                           May 2025 - Additional distribution license        
+                           granted, license in Section 2.3 applies           
+                           License File: ./LA_OPT_NXP_Software_License.txt   
+                           Format: binary                                    
+                           Description: Cadence Tensilica HiFi Opus Codec    
+                           Location: middleware/cadence/codecs/opus          
+                           Origin: Cadence Design Systems                    
+
+dsp_audio_codec_sbc_dec    Name: dsp_audio_codec_sbc_dec                     
+                           Version: 1.6                                      
+                           Outgoing License: LA_OPT_NXP_Software_License v62 
+                           May 2025 - Additional distribution license        
+                           granted, license in Section 2.3 applies           
+                           License File: ./LA_OPT_NXP_Software_License.txt   
+                           Format: binary                                    
+                           Description: Cadence Tensilica HiFi SBC Decoder   
+                           Location: middleware/cadence/codecs/sbc_dec       
+                           Origin: Cadence Design Systems                    
+
+dsp_audio_codec_sbc_enc    Name: dsp_audio_codec_sbc_enc                     
+                           Version: 1.7                                      
+                           Outgoing License: LA_OPT_NXP_Software_License v62 
+                           May 2025 - Additional distribution license        
+                           granted, license in Section 2.3 applies           
+                           License File: ./LA_OPT_NXP_Software_License.txt   
+                           Format: binary                                    
+                           Description: Cadence Tensilica HiFi SBC Encoder   
+                           Location: middleware/cadence/codecs/sbc_enc       
+                           Origin: Cadence Design Systems                    
+
+dsp_audio_codec_vorbis_dec Name: dsp_audio_codec_vorbis_dec                  
+                           Version: 1.16                                     
+                           Outgoing License: LA_OPT_NXP_Software_License v62 
+                           May 2025 - Additional distribution license        
                            granted, license in Section 2.3 applies           
                            License File: ./LA_OPT_NXP_Software_License.txt   
                            Format: binary                                    
                            Description: Tensilica HiFi Vorbis Decoder (with  
                            or without OGG container)                         
-                           Location:                                         
-                           middleware/cadence/codecs/vorbis_dec/hifi4        
-                           Origin: Cadence Design Systems                    
-
-dsp_audio_codec_opus_hifi4 Name: dsp_audio_codec_opus_hifi4                  
-                           Version: 1.24                                     
-                           Outgoing License: LA_OPT_NXP_Software_License v57 
-                           July 2024 - Additional distribution license       
-                           granted, license in Section 2.3 applies           
-                           License File: ./LA_OPT_NXP_Software_License.txt   
-                           Format: binary                                    
-                           Description: Cadence Tensilica HiFi Opus Codec    
-                           Location: middleware/cadence/codecs/opus/hifi4    
-                           Origin: Cadence Design Systems                    
-
-dsp_audio_codec_sbc_dec_hifName: dsp_audio_codec_sbc_dec_hifi4               
-i4                         Version: 1.6                                      
-                           Outgoing License: LA_OPT_NXP_Software_License v57 
-                           July 2024 - Additional distribution license       
-                           granted, license in Section 2.3 applies           
-                           License File: ./LA_OPT_NXP_Software_License.txt   
-                           Format: binary                                    
-                           Description: Cadence Tensilica HiFi SBC Decoder   
-                           Location: middleware/cadence/codecs/sbc_dec/hifi4 
-                           Origin: Cadence Design Systems                    
-
-dsp_audio_codec_sbc_enc_hifName: dsp_audio_codec_sbc_enc_hifi4               
-i4                         Version: 1.7                                      
-                           Outgoing License: LA_OPT_NXP_Software_License v57 
-                           July 2024 - Additional distribution license       
-                           granted, license in Section 2.3 applies           
-                           License File: ./LA_OPT_NXP_Software_License.txt   
-                           Format: binary                                    
-                           Description: Cadence Tensilica HiFi SBC Encoder   
-                           Location: middleware/cadence/codecs/sbc_enc/hifi4 
+                           Location: middleware/cadence/codecs/vorbis_dec    
                            Origin: Cadence Design Systems                    
 
 cjson                      Name: CJSON                                       
-                           Version: 1.7.4                                    
+                           Version: 1.7.18                                   
                            Outgoing License: MIT                             
                            License File: middleware/cjson/LICENSE            
                            Format: source code                               
@@ -1073,7 +1064,7 @@ cjson                      Name: CJSON
                            Origin: Dave Gamble                               
                            Url:                                              
                            https://github.com/DaveGamble/cJSON/releases/tag/v
-                           1.7.4                                             
+                           1.7.18                                            
 
 dsp_audio_codec_lc3_hifi1  Name: dsp_audio_codec_lc3_hifi1                   
                            Version: 1.16                                     
@@ -1084,17 +1075,6 @@ dsp_audio_codec_lc3_hifi1  Name: dsp_audio_codec_lc3_hifi1
                            Format: binary                                    
                            Description: Tensilica HiFi LC3 Decoder           
                            Location: middleware/cadence/codecs/lc3/hifi1     
-                           Origin: Cadence Design Systems                    
-
-dsp_audio_codec_opus_hifi1 Name: dsp_audio_codec_opus_hifi1                  
-                           Version: 1.24                                     
-                           Outgoing License: LA_OPT_NXP_Software_License v57 
-                           July 2024 - Additional distribution license       
-                           granted, license in Section 2.3 applies           
-                           License File: ./LA_OPT_NXP_Software_License.txt   
-                           Format: binary                                    
-                           Description: Cadence Tensilica HiFi Opus Codec    
-                           Location: middleware/cadence/codecs/opus/hifi1    
                            Origin: Cadence Design Systems                    
 
 device-defender            Name: AWS IoT Device Defender Library             
@@ -1228,6 +1208,77 @@ wifi_tx_pwr_limits         Name: Wi-Fi module Tx power limits
                            Outgoing License: BSD-3-Clause                    
                            License File: ./COPYING-BSD-3                     
 
+SDK_Peripheral_Driver      Name: SDK Peripheral Driver                       
+                           Version: 2.x.x                                    
+                           Outgoing License: BSD-3-Clause                    
+                           License File: ./COPYING-BSD-3                     
+                           Format: source code                               
+                           Description: Peripheral drivers are designed for  
+                           the most common use cases identified for the      
+                           underlying hardware block.                        
+                           Location: devices/<device>/drivers                
+                           Origin: NXP (BSD-3-Clause)                        
+
+SDK_Device                 Name: SDK SoC files                               
+                           Version: NA                                       
+                           Outgoing License: BSD-3-Clause                    
+                           License File: ./COPYING-BSD-3                     
+                           Format: source code, linker files                 
+                           Description: Device system files, template files, 
+                           IDE related startup and linker files.             
+                           Location: devices/<device>/                       
+                           Origin: NXP (BSD-3-Clause)                        
+
+SDK_Components             Name: SDK components and board peripheral drivers 
+                           Version: NA                                       
+                           Outgoing License: BSD-3-Clause                    
+                           License File: ./COPYING-BSD-3                     
+                           Format: source code                               
+                           Description: SDK components and board peripheral  
+                           drivers, for example, flash and codec drivers.    
+                           Location: components/                             
+                           Origin: NXP (BSD-3-Clause), ITE (BSD-3-Clause)    
+
+CMSIS_NN                   Name: CMSIS_NN                                    
+                           Version: 6.0.0                                    
+                           Outgoing License: Apache License 2.0              
+                           License File: CMSIS/NN/LICENSE                    
+                           Format: source code                               
+                           Description: A collection of efficient neural     
+                           network kernels developed to maximize the         
+                           performance and minimize the memory footprint of  
+                           neural networks on Arm Cortex-M processors.       
+                           Location: CMSIS/NN                                
+                           Origin: ARM (Apache-2.0) -                        
+                           https://github.com/ARM-software/CMSIS-NN/releases/
+                           tag/v6.0.0                                        
+
+CMSIS                      Name: CMSIS                                       
+                           Version: 6.1.0                                    
+                           Outgoing License: Apache License 2.0              
+                           License File: CMSIS/LICENSE.txt                   
+                           Format: source code                               
+                           Description: Vendor-independent hardware          
+                           abstraction layer for microcontrollers that are   
+                           based on Arm Cortex processors, distributed by    
+                           ARM. cores                                        
+                           Location: CMSIS/                                  
+                           Origin: ARM (Apache-2.0) -                        
+                           https://github.com/ARM-software/CMSIS_6/releases/t
+                           ag/v6.1.0                                         
+
+CMSIS_DSP                  Name: CMSIS_DSP                                   
+                           Version: 1.16.2                                   
+                           Outgoing License: Apache License 2.0              
+                           License File: CMSIS/DSP/LICENSE                   
+                           Format: source code                               
+                           Description: It provides optimized compute kernels
+                           for Cortex-M and for Cortex-A.                    
+                           Location: CMSIS/DSP                               
+                           Origin: ARM (Apache-2.0) -                        
+                           https://github.com/ARM-software/CMSIS-DSP/releases
+                           /tag/v1.16.2 ARM (MIT)                            
+
 unity                      Name: Unity                                       
                            Version: 2.1.0                                    
                            Description: Simple Unit Testing for C            
@@ -1278,8 +1329,8 @@ CMSIS_RTOS2_RTX            Name: CMSIS_RTOS2_RTX
 
 fmstr                      Name: FreeMASTER                                  
                            Version: 3.0.7                                    
-                           Outgoing License: LA_OPT_NXP_Software_License v57 
-                           July 2024 - Additional distribution license       
+                           Outgoing License: LA_OPT_NXP_Software_License v62 
+                           May 2025 - Additional distribution license        
                            granted, license in Section 2.3 applies           
                            License File: ./LA_OPT_NXP_Software_License.txt   
                            Format: source code & header files                

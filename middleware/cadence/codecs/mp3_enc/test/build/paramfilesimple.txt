@@ -1,0 +1,6 @@
+@Start
+@Input_path ../test_inp/
+@Output_path ../test_out/
+-ifile:hihat.wav -ofile:hihat_128.mp3 -br:128
+// -ifile:castanets.wav -ofile:castanets_320.mp3 -br:320
+@Stop

@@ -1777,6 +1777,10 @@ int bt_conn_disconnect(struct bt_conn *conn, uint8_t reason)
 		else if (conn->type == BT_CONN_TYPE_BR) {
 			return bt_hci_connect_br_cancel(conn);
 		}
+		else if (conn->type == BT_CONN_TYPE_SCO) {
+			/* There is no HCI cmd to cancel SCO connecting from spec */
+			return -EPROTONOSUPPORT;
+		}
 #endif /* CONFIG_BT_CLASSIC */
 		else {
 			__ASSERT(false, "Invalid conn type %u", conn->type);
@@ -2567,6 +2571,7 @@ static void reset_pairing(struct bt_conn *conn)
 #if (defined(CONFIG_BT_CLASSIC) && ((CONFIG_BT_CLASSIC) > 0U))
 	if (conn->type == BT_CONN_TYPE_BR) {
 		atomic_clear_bit(conn->flags, BT_CONN_BR_PAIRING);
+		atomic_clear_bit(conn->flags, BT_CONN_BR_PAIRED);
 		atomic_clear_bit(conn->flags, BT_CONN_BR_PAIRING_INITIATOR);
 		atomic_clear_bit(conn->flags, BT_CONN_BR_LEGACY_SECURE);
 	}

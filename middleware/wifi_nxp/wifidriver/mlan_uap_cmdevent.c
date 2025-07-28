@@ -1023,7 +1023,7 @@ static mlan_status wlan_uap_cmd_add_station(pmlan_private pmpriv,
                                             pmlan_ioctl_req pioctl_buf)
 {
     mlan_ds_bss *bss                = MNULL;
-    HostCmd_DS_ADD_STATION *new_sta = (HostCmd_DS_ADD_STATION *)&cmd->params.sta_info;
+    HostCmd_DS_ADD_STATION *new_sta = (HostCmd_DS_ADD_STATION *)&cmd->params.station_info;
     sta_node *sta_ptr               = MNULL;
     t_u16 tlv_buf_left;
     t_u8 *pos        = MNULL;
@@ -1372,6 +1372,17 @@ mlan_status wlan_ops_uap_prepare_cmd(IN t_void *priv,
         case HostCmd_CMD_11N_DELBA:
             ret = wlan_cmd_11n_delba(pmpriv, cmd_ptr, pdata_buf);
             break;
+#if CONFIG_WPA_SUPP_P2P
+        case HostCmd_CMD_SET_BSS_MODE:
+            cmd_ptr->command = wlan_cpu_to_le16(cmd_no);
+            if (pdata_buf)
+                cmd_ptr->params.bss_mode.con_type = *(t_u8 *)pdata_buf;
+            else
+                cmd_ptr->params.bss_mode.con_type = BSS_MODE_WIFIDIRECT_GO;
+            cmd_ptr->size = wlan_cpu_to_le16(sizeof(HostCmd_DS_SET_BSS_MODE) + S_DS_GEN);
+            ret           = MLAN_STATUS_SUCCESS;
+            break;
+#endif
 #if UAP_HOST_MLME
         case HostCmd_CMD_ADD_NEW_STATION:
             ret = wlan_uap_cmd_add_station(pmpriv, cmd_ptr, cmd_action, (pmlan_ioctl_req)pioctl_buf);
@@ -1392,6 +1403,11 @@ mlan_status wlan_ops_uap_prepare_cmd(IN t_void *priv,
 #if CONFIG_WIFI_CLOCKSYNC
         case HostCmd_GPIO_TSF_LATCH_PARAM_CONFIG:
             ret = wlan_cmd_gpio_tsf_latch(pmpriv, cmd_ptr, cmd_action, pioctl_buf, pdata_buf);
+            break;
+#endif
+#if CONFIG_WPA_SUPP_P2P
+        case HOST_CMD_WIFI_DIRECT_MODE_CONFIG:
+            ret = wlan_cmd_wifi_direct_mode(pmpriv, cmd_ptr, cmd_action, pdata_buf);
             break;
 #endif
 #if CONFIG_11AX

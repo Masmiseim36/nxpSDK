@@ -1,6 +1,6 @@
 /*! *********************************************************************************
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2018, 2022-2024 NXP
+ * Copyright 2016-2018, 2022-2025 NXP
  * All rights reserved.
  *
  * \file
@@ -33,7 +33,9 @@
 #include "fwk_timer_manager.h"
 #endif
 
+#if defined(gPlatformHasNbu_d) && (gPlatformHasNbu_d == 1)
 #include "fwk_platform_ics.h"
+#endif
 
 #if gFSCI_IncludeMacCommands_c
 #include "FsciMacCommands.h"
@@ -160,15 +162,18 @@ bool_t (*pfFSCI_OtaSupportCalback)(clientPacket_t *pPacket) = NULL;
 *************************************************************************************
 ************************************************************************************/
 /* FSCI Error message */
-static gFsciErrorMsg_t mFsciErrorMsg = {{
-                                            gFSCI_StartMarker_c,
-                                            gFSCI_CnfOpcodeGroup_c,
-                                            mFsciMsgError_c,
-                                            sizeof(clientPacketStatus_t),
-                                        },
-                                        (uint8_t)gFsciSuccess_c,
-                                        0,
-                                        0};
+static gFsciErrorMsg_t mFsciErrorMsg = {
+    .header =
+        {
+            .startMarker = gFSCI_StartMarker_c,
+            .opGroup     = gFSCI_CnfOpcodeGroup_c,
+            .opCode      = mFsciMsgError_c,
+            .len         = sizeof(clientPacketStatus_t),
+        },
+    .status    = (uint8_t)gFsciSuccess_c,
+    .checksum  = 0u,
+    .checksum2 = 0u,
+};
 
 /* FSCI Ack message */
 #if gFsciTxAck_c
@@ -176,7 +181,7 @@ static gFsciAckMsg_t mFsciAckMsg = {
     {gFSCI_StartMarker_c, gFSCI_CnfOpcodeGroup_c, mFsciMsgAck_c, sizeof(uint8_t)}, 0, 0, 0};
 #endif
 
-/* FSCI OpCodes and coresponding handler functions */
+/* FSCI OpCodes and corresponding handler functions */
 static const gFsciOpCode_t FSCI_ReqOCtable[] = {
     {mFsciMsgModeSelectReq_c, FSCI_MsgModeSelectReqFunc},
     {mFsciMsgGetModeReq_c, FSCI_MsgGetModeReqFunc},
@@ -211,14 +216,16 @@ static const gFsciOpCode_t FSCI_ReqOCtable[] = {
     {mFsciGetUniqueId_c, FSCI_ReadUniqueId},
     {mFsciGetMcuId_c, FSCI_ReadMCUId},
     {mFsciGetSwVersions_c, FSCI_ReadModVer},
+#if defined(gPlatformHasNbu_d) && (gPlatformHasNbu_d == 1)
     {mFsciGetNbuVersion_c, FSCI_ReadNbuVer},
+#endif
 
 #if defined(gFSCI_MemAllocTest_Enabled_d) && (gFSCI_MemAllocTest_Enabled_d)
     {mFSCIMemAllocTestReq_c, FSCI_MemAllocTest},
 #endif
 };
 
-/* Used for maintaining backward compatibillity */
+/* Used for maintaining backward compatibility */
 static const opGroup_t mFsciModeSelectSAPs[] = {
     gFSCI_McpsSapId_c,  gFSCI_MlmeSapId_c, gFSCI_AspSapId_c,   gFSCI_NldeSapId_c, gFSCI_NlmeSapId_c,
     gFSCI_AspdeSapId_c, gFSCI_AfdeSapId_c, gFSCI_ApsmeSapId_c, gFSCI_ZdpSapId_c,
@@ -283,22 +290,25 @@ void fsciMsgHandler(clientPacket_t *pPkt, uint32_t fsciInterface)
  * \brief  Send an error message back to the external client.
  *         This function should not block even if there is no more dynamic memory available
  *
- * \param[in] errorCode the erros encountered
+ * \param[in] errorCode the error encountered
  * \param[in] fsciInterface the interface on which the packet was received
  *
  *
  ********************************************************************************** */
-#if !defined(gFsciOverRpmsg_c) || (gFsciOverRpmsg_c == 0)
 void FSCI_Error(uint8_t errorCode, uint32_t fsciInterface)
 {
     uint8_t virtInterface = FSCI_GetVirtualInterface(fsciInterface);
-    uint8_t size          = sizeof(mFsciErrorMsg) - 1u;
+    uint8_t size          = sizeof(gFsciErrorMsg_t) - offsetof(gFsciErrorMsg_t, header.opGroup);
 
     /* Don't cascade error messages. */
     if (mFsciErrorReported == 0u)
     {
-        mFsciErrorMsg.status   = errorCode;
-        mFsciErrorMsg.checksum = FSCI_computeChecksum(&mFsciErrorMsg.header.opGroup, (uint16_t)size - 2u);
+        uint16_t checksum_comp_sz = (offsetof(gFsciErrorMsg_t, checksum) - offsetof(gFsciErrorMsg_t, header.opGroup));
+        mFsciErrorMsg.status      = errorCode;
+        /* sizeof(gFsciErrorMsg_t) is 7 or 8 depending on length field size : checksum_comp_sz is 4 or 5
+         * and checksum is computed from offset 1  */
+        // coverity[overrun-buffer-arg:FALSE] Out-of-bounds access (OVERRUN) is false positive
+        mFsciErrorMsg.checksum = FSCI_computeChecksum(&mFsciErrorMsg.header.opGroup, checksum_comp_sz);
 
         if (virtInterface != 0u)
         {
@@ -311,36 +321,10 @@ void FSCI_Error(uint8_t errorCode, uint32_t fsciInterface)
             (void)virtInterface;
 #endif
         }
-
+#if !defined(gFsciOverRpmsg_c) || (gFsciOverRpmsg_c == 0)
         (void)SerialManager_WriteBlocking((serial_write_handle_t)gFsciSerialWriteHandle[fsciInterface],
                                           (uint8_t *)&mFsciErrorMsg, size);
-
-        mFsciErrorReported = 1u;
-    }
-}
-#else /* defined(gFsciOverRpmsg_c) || (gFsciOverRpmsg_c == 0) */
-void FSCI_Error(uint8_t errorCode, uint32_t fsciInterface)
-{
-    uint8_t virtInterface = FSCI_GetVirtualInterface(fsciInterface);
-    uint8_t size          = sizeof(mFsciErrorMsg) - 1u;
-
-    /* Don't cascade error messages. */
-    if (mFsciErrorReported == 0u)
-    {
-        mFsciErrorMsg.status   = errorCode;
-        mFsciErrorMsg.checksum = FSCI_computeChecksum(&mFsciErrorMsg.header.opGroup, (uint16_t)size - 2u);
-
-        if (virtInterface != 0u)
-        {
-#if (gFsciMaxVirtualInterfaces_c > 0)
-            mFsciErrorMsg.checksum2 = mFsciErrorMsg.checksum;
-            mFsciErrorMsg.checksum += virtInterface;
-            mFsciErrorMsg.checksum2 ^= mFsciErrorMsg.checksum;
-            size++;
 #else
-            (void)virtInterface;
-#endif
-        }
         union
         {
             void         *pVoid;
@@ -348,10 +332,11 @@ void FSCI_Error(uint8_t errorCode, uint32_t fsciInterface)
         } fsciHandle;
         fsciHandle.pVoid = gFsciSerialInterfaces[fsciInterface];
         fsciHandle.pfFSCI_Send((uint8_t *)&mFsciErrorMsg, size, FALSE);
+#endif
         mFsciErrorReported = 1u;
     }
 }
-#endif /* defined(gFsciOverRpmsg_c) || (gFsciOverRpmsg_c == 0) */
+
 #if gFsciTxAck_c
 /*! *********************************************************************************
  * \brief  Send an ack message back to the external client.
@@ -396,8 +381,8 @@ gFsciStatus_t FSCI_ResetReq(uint32_t fsciInterface)
 {
     clientPacket_t *pFsciPacket = MEM_BufferAlloc(sizeof(clientPacketHdr_t) + 2u);
     gFsciStatus_t   status      = gFsciSuccess_c;
-    uint8_t         checksum    = 0;
-    uint8_t         size        = 0;
+    uint8_t         checksum    = 0u;
+    uint8_t         size        = 0u;
 
     if (NULL == pFsciPacket)
     {
@@ -408,9 +393,9 @@ gFsciStatus_t FSCI_ResetReq(uint32_t fsciInterface)
         pFsciPacket->structured.header.startMarker = gFSCI_StartMarker_c;
         pFsciPacket->structured.header.opGroup     = gFSCI_ReqOpcodeGroup_c;
         pFsciPacket->structured.header.opCode      = mFsciMsgResetCPUReq_c;
-        pFsciPacket->structured.header.len         = 0;
-        size                                       = sizeof(clientPacketHdr_t) + 1;
-        checksum                                   = FSCI_computeChecksum(pFsciPacket->raw + 1, size - 2);
+        pFsciPacket->structured.header.len         = 0u;
+        size                                       = sizeof(clientPacketHdr_t) + 1u;
+        checksum                                   = FSCI_computeChecksum(pFsciPacket->raw + 1u, size - 2u);
         pFsciPacket->structured.payload[0]         = checksum;
         (void)Serial_SyncWrite(gFsciSerialInterfaces[fsciInterface], pFsciPacket->raw, size);
         (void)MEM_BufferFree(pFsciPacket);
@@ -432,7 +417,7 @@ gFsciStatus_t FSCI_ResetReq(uint32_t fsciInterface)
 bool_t FSCI_MsgModeSelectReqFunc(clientPacket_t *pData, uint32_t fsciInterface)
 {
     uint8_t         i;
-    uint8_t         payloadIndex = 0;
+    uint8_t         payloadIndex = 0u;
     gFsciOpGroup_t *p;
 
     fsciLen_t dataLen = pData->structured.header.len;
@@ -470,13 +455,13 @@ bool_t FSCI_MsgModeSelectReqFunc(clientPacket_t *pData, uint32_t fsciInterface)
 bool_t FSCI_MsgGetModeReqFunc(clientPacket_t *pData, uint32_t fsciInterface)
 {
     uint8_t         i;
-    uint8_t         payloadIndex = 0;
+    uint8_t         payloadIndex = 0u;
     gFsciOpGroup_t *p;
 
     pData->structured.payload[payloadIndex++] = (uint8_t)gFsciSuccess_c;
     pData->structured.payload[payloadIndex++] = (uint8_t)gFsciTxBlocking;
 
-    for (i = 0; i < NumberOfElements(mFsciModeSelectSAPs); i++)
+    for (i = 0u; i < NumberOfElements(mFsciModeSelectSAPs); i++)
     {
         p = FSCI_GetReqOpGroup(mFsciModeSelectSAPs[i], (uint8_t)fsciInterface);
         if (NULL != p)
@@ -523,7 +508,7 @@ bool_t FSCI_WriteMemoryBlock(clientPacket_t *pData, uint32_t fsciInterface)
     else
     {
         FSCI_Error((uint8_t)gFsciError_c, fsciInterface);
-        len = 0;
+        len = 0u;
     }
 
     pData->structured.header.len = (uint16_t)sizeof(len);
@@ -1074,10 +1059,10 @@ bool_t FSCI_ReadModVer(clientPacket_t *pData, uint32_t fsciInterface)
     bool_t          status = TRUE;
     clientPacket_t *pPkt;
     moduleInfo_t   *pInfo                    = gVERSION_TAGS_startAddr_d;
-    uint8_t         noOfEntriesSecondaryCore = 0;
+    uint8_t         noOfEntriesSecondaryCore = 0u;
 #if defined(CPU_K32W042S1M2VPJ_cm4) && (CPU_K32W042S1M2VPJ_cm4 == 1)
     uint8_t *pString  = MEM_BufferAlloc(MAX_REGISTERED_MODULES_STRLEN);
-    uint8_t  totalLen = 0;
+    uint8_t  totalLen = 0u;
     if (NULL != pString)
     {
         noOfEntriesSecondaryCore = ModVer_GetNoOfEntries_Multicore();
@@ -1142,6 +1127,7 @@ bool_t FSCI_ReadModVer(clientPacket_t *pData, uint32_t fsciInterface)
     return status;
 }
 
+#if defined(gPlatformHasNbu_d) && (gPlatformHasNbu_d == 1)
 /*! *********************************************************************************
 * \brief  This function reads NBU version information located retrieving it from
           NBU processor and passes it on over the serial interface
@@ -1218,6 +1204,7 @@ bool_t FSCI_ReadNbuVer(clientPacket_t *pData, uint32_t fsciInterface)
 
     return status;
 }
+#endif /* #if defined(gPlatformHasNbu_d) && (gPlatformHasNbu_d == 1) */
 
 #if defined(gFSCI_MemAllocTest_Enabled_d) && (gFSCI_MemAllocTest_Enabled_d)
 /*! *********************************************************************************
@@ -1234,18 +1221,18 @@ bool_t FSCI_ReadNbuVer(clientPacket_t *pData, uint32_t fsciInterface)
 bool_t FSCI_MemAllocTest(clientPacket_t *pData, uint32_t fsciInterface)
 {
     uint64_t systemTime;
-    uint8_t  coppyIndex = 0;
+    uint8_t  coppyIndex = 0u;
 
     /* Copy LRMinValue and LRMaxValue and enableNumberOfBuffers */
     FLib_MemCpy(&mFSCI_MemAllocBufferTest[mFSCI_MemAllocBufferTestIndex], pData->structured.payload, 9);
-    coppyIndex = coppyIndex + 9;
+    coppyIndex = coppyIndex + 9u;
 
     if (mFSCI_MemAllocBufferTest[mFSCI_MemAllocBufferTestIndex].enableNumberOfBuffers == TRUE)
     {
         /* Coppy numberOfBuffersValue and enableTimeOfNoAllocation if enableNumberOfBuffers enabled */
         FLib_MemCpy(&mFSCI_MemAllocBufferTest[mFSCI_MemAllocBufferTestIndex].numberOfBuffersValue,
-                    &pData->structured.payload[coppyIndex], 2);
-        coppyIndex = coppyIndex + 2;
+                    &pData->structured.payload[coppyIndex], 2u);
+        coppyIndex = coppyIndex + 2u;
     }
     else
     {
@@ -1259,8 +1246,8 @@ bool_t FSCI_MemAllocTest(clientPacket_t *pData, uint32_t fsciInterface)
     {
         /* Copy timeOfNoAllocationValue if enableTimeOfNoAllocation enabled */
         FLib_MemCpy(&mFSCI_MemAllocBufferTest[mFSCI_MemAllocBufferTestIndex].timeOfNoAllocationValue,
-                    &pData->structured.payload[coppyIndex], 4);
-        coppyIndex = coppyIndex + 4;
+                    &pData->structured.payload[coppyIndex], 4u);
+        coppyIndex = coppyIndex + 4u;
     }
 
     if (mFSCI_MemAllocBufferTest[mFSCI_MemAllocBufferTestIndex].enableTimeOfNoAllocation == TRUE)
@@ -1293,7 +1280,7 @@ bool_t FSCI_MemAllocTest(clientPacket_t *pData, uint32_t fsciInterface)
         mFSCI_MemAllocBufferTestIndex++;
         if (mFSCI_MemAllocBufferTestIndex == gFSCI_NotAllocMemoryBufferSize_c)
         {
-            mFSCI_MemAllocBufferTestIndex = 0;
+            mFSCI_MemAllocBufferTestIndex = 0u;
         }
 
         /* Prepare confirm packet  */
@@ -1318,9 +1305,9 @@ bool_t FSCI_MemAllocTest(clientPacket_t *pData, uint32_t fsciInterface)
  ********************************************************************************** */
 mem_alloc_test_status_t FSCI_MemAllocTestCanAllocate(void *pCaller)
 {
-    uint8_t  index = 0;
+    uint8_t  index;
     uint64_t systemTime;
-    for (index = 0; index < gFSCI_NotAllocMemoryBufferSize_c; index++)
+    for (index = 0u; index < gFSCI_NotAllocMemoryBufferSize_c; index++)
     {
         if (mFSCI_MemAllocBufferTest[index].enable == TRUE)
         {

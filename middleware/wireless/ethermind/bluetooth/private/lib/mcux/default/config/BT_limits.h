@@ -807,7 +807,7 @@
  *  Minimum Value: 1
  *  Maximum Value: as required.
  */
-#define L2CAP_MAX_CE                                    10U
+#define L2CAP_MAX_CE                                    16U
 
 /*
  *  Maximum number of connection-less channels (groups) that L2CAP needs
@@ -2193,6 +2193,16 @@
  */
 #define HFP_UNIT_MAX_ENH_VREC_TEXT_LEN                   64U
 
+ /* ----------------------------------------------------------------------- */
+ /* =============================  HFP AG  ================================ */
+ /* ----------------------------------------------------------------------- */
+ /*
+  *  Maximum number of simultaneous connections supported by HFP_AG
+  *
+  *  Minimum Value: 1
+  *  Maximum Value: RFCOMM_MAX_CONNECTION
+  */
+#define HFP_AG_MAX_CONNECTIONS                           2U
 
 /* ----------------------------------------------------------------------- */
 /* ===========================  HSP Unit ================================= */

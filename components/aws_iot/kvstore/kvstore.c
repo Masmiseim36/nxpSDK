@@ -116,13 +116,13 @@ static void prvCopyDefaultValue( KVStoreEntry_t * pEntry,
 static BaseType_t prvLoadConfigStore( void )
 {
     status_t flashStatus;
-    KeyValueStore_t * keyStorePtr = NULL;
+    const KeyValueStore_t * keyStorePtr = NULL;
     size_t index, keyIndex;
     uint32_t keyStoreSize = 0;
     BaseType_t result = pdFAIL, valueFound = pdFALSE;
 
 
-    flashStatus = mflash_file_mmap( KVSTORE_FILE_PATH, ( uint8_t ** ) &keyStorePtr, &keyStoreSize );
+    flashStatus = mflash_file_mmap( KVSTORE_FILE_PATH, ( const uint8_t ** ) &keyStorePtr, &keyStoreSize );
 
     if( flashStatus == kStatus_Success )
     {

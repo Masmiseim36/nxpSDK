@@ -45,13 +45,20 @@ void wifi_scan_start(struct wifi_message *msg)
 {
     struct wifi_nxp_ctx_rtos *wifi_if_ctx_rtos = (struct wifi_nxp_ctx_rtos *)wm_wifi.if_priv;
 
+#if CONFIG_WPA_SUPP_P2P
+    if (wm_wifi.wpa_supp_p2p_scan == true)
+    {
+        wifi_if_ctx_rtos = (struct wifi_nxp_ctx_rtos *)wm_wifi.if_priv_wfd;
+    }
+#endif
+
     if (wifi_if_ctx_rtos->scan_in_progress)
     {
         if (msg->reason == WIFI_EVENT_REASON_SUCCESS)
         {
             if (wm_wifi.supp_if_callbk_fns->scan_start_callbk_fn)
             {
-                wm_wifi.supp_if_callbk_fns->scan_start_callbk_fn(wm_wifi.if_priv);
+                wm_wifi.supp_if_callbk_fns->scan_start_callbk_fn(wifi_if_ctx_rtos);
             }
         }
     }
@@ -70,6 +77,13 @@ void wifi_scan_done(struct wifi_message *msg)
     }
     else
 #endif
+#if CONFIG_WPA_SUPP_P2P
+    if (wm_wifi.wpa_supp_p2p_scan == true)
+    {
+        wifi_if_ctx_rtos = (struct wifi_nxp_ctx_rtos *)wm_wifi.if_priv_wfd;
+    }
+    else
+#endif
     {
         wifi_if_ctx_rtos = (struct wifi_nxp_ctx_rtos *)wm_wifi.if_priv;
     }
@@ -80,7 +94,7 @@ void wifi_scan_done(struct wifi_message *msg)
     {
         if (wm_wifi.supp_if_callbk_fns->scan_abort_callbk_fn)
         {
-            wm_wifi.supp_if_callbk_fns->scan_abort_callbk_fn(wm_wifi.if_priv);
+            wm_wifi.supp_if_callbk_fns->scan_abort_callbk_fn(wifi_if_ctx_rtos);
         }
     }
 
@@ -96,7 +110,7 @@ void wifi_scan_done(struct wifi_message *msg)
             else
 #endif
             {
-                wm_wifi.supp_if_callbk_fns->scan_done_callbk_fn(wm_wifi.if_priv, wm_wifi.external_scan);
+                wm_wifi.supp_if_callbk_fns->scan_done_callbk_fn(wifi_if_ctx_rtos, wm_wifi.external_scan);
             }
         }
     }
@@ -107,12 +121,21 @@ void wifi_scan_done(struct wifi_message *msg)
 void wifi_process_remain_on_channel(struct wifi_message *msg)
 {
     struct wifi_nxp_ctx_rtos *wifi_if_ctx_rtos = (struct wifi_nxp_ctx_rtos *)wm_wifi.if_priv;
+    wifi_remain_channel_info *remain_channel_info = (wifi_remain_channel_info *)msg->data;
+
+#if CONFIG_WPA_SUPP_P2P
+    if (remain_channel_info->bss_type == MLAN_BSS_TYPE_WIFIDIRECT)
+    {
+        wifi_if_ctx_rtos = (struct wifi_nxp_ctx_rtos *)wm_wifi.if_priv_wfd;
+    }
+#endif
+
     if (wifi_if_ctx_rtos->supp_called_remain_on_chan == true)
     {
         if ((msg->reason == WIFI_EVENT_REASON_SUCCESS) &&
             (wm_wifi.supp_if_callbk_fns->remain_on_channel_callbk_fn != NULL))
         {
-            if (*(t_u8 *)(msg->data) == true)
+            if (remain_channel_info->cancel_channel == true)
             {
                 wm_wifi.supp_if_callbk_fns->remain_on_channel_callbk_fn(wifi_if_ctx_rtos, 1);
             }
@@ -134,18 +157,24 @@ void wifi_process_mgmt_tx_status(struct wifi_message *msg)
 {
     nxp_wifi_event_mlme_t *resp = &wm_wifi.mgmt_resp;
     resp->frame.frame_len       = 0;
+    struct wifi_nxp_ctx_rtos *wifi_if_ctx_rtos = (struct wifi_nxp_ctx_rtos *)wm_wifi.if_priv;
 
-    if (msg->reason == WIFI_EVENT_REASON_SUCCESS)
+#if CONFIG_WPA_SUPP_P2P
+    if ((t_u32)(msg->data) == MLAN_BSS_TYPE_WIFIDIRECT)
+    {
+        wifi_if_ctx_rtos = (struct wifi_nxp_ctx_rtos *)wm_wifi.if_priv_wfd;
+    }
+#endif
     {
         if (wm_wifi.supp_if_callbk_fns->mgmt_tx_status_callbk_fn)
         {
             if ((t_u32)(msg->data) == MLAN_BSS_TYPE_UAP)
             {
-                wm_wifi.supp_if_callbk_fns->mgmt_tx_status_callbk_fn(wm_wifi.hapd_if_priv, resp, resp->frame.frame_len);
+                wm_wifi.supp_if_callbk_fns->mgmt_tx_status_callbk_fn(wm_wifi.hapd_if_priv, resp, resp->frame.frame_len, msg->reason);
             }
             else
             {
-                wm_wifi.supp_if_callbk_fns->mgmt_tx_status_callbk_fn(wm_wifi.if_priv, resp, resp->frame.frame_len);
+                wm_wifi.supp_if_callbk_fns->mgmt_tx_status_callbk_fn(wifi_if_ctx_rtos, resp, resp->frame.frame_len, msg->reason);
             }
         }
     }

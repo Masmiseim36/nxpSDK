@@ -704,14 +704,11 @@ vg_lite_error_t vg_lite_append_path(vg_lite_path_t *path,
                     default:
                         return VG_LITE_INVALID_ARGUMENT;
                     }
-                    if (cmd[i] <= VLC_OP_LINE_REL && cmd[i] >= VLC_OP_MOVE) {
-                        /* Update move to and line path bounds. */
-                        path->bounding_box[0] = CDMIN(path->bounding_box[0], cx);
-                        path->bounding_box[2] = CDMAX(path->bounding_box[2], cx);
-                        path->bounding_box[1] = CDMIN(path->bounding_box[1], cy);
-                        path->bounding_box[3] = CDMAX(path->bounding_box[3], cy);
-                    }
-
+                    /* Update move to and line path bounds. */
+                    path->bounding_box[0] = CDMIN(path->bounding_box[0], cx);
+                    path->bounding_box[2] = CDMAX(path->bounding_box[2], cx);
+                    path->bounding_box[1] = CDMIN(path->bounding_box[1], cy);
+                    path->bounding_box[3] = CDMAX(path->bounding_box[3], cy);
                 }
             }
 #if gcFEATURE_VG_ARC_PATH
@@ -947,11 +944,14 @@ vg_lite_error_t vg_lite_draw(vg_lite_buffer_t *target,
 
     error = set_render_target(target);
     if (error != VG_LITE_SUCCESS) {
-        return error;
-    } else if (error == VG_LITE_NO_CONTEXT) {
-        /* If scissoring is enabled and no valid scissoring rectangles
-           are present, no drawing occurs */
-        return VG_LITE_SUCCESS;
+        if (error == VG_LITE_NO_CONTEXT) {
+            /* If scissoring is enabled and no valid scissoring rectangles
+               are present, no drawing occurs */
+            return VG_LITE_SUCCESS;
+        }
+        else {
+            return error;
+        }
     }
 
     width = s_context.tessbuf.tess_w_h & 0xFFFF;
@@ -970,6 +970,17 @@ vg_lite_error_t vg_lite_draw(vg_lite_buffer_t *target,
     }
 
     if (ts_is_fullscreen == 0){
+        if (path->path_type == VG_LITE_DRAW_STROKE_PATH || path->path_type == VG_LITE_DRAW_FILL_STROKE_PATH){
+            float add_width = path->stroke->line_width;
+            if (path->stroke->join_style == VG_LITE_JOIN_MITER)
+                add_width += path->stroke->miter_limit;
+            add_width = 1.5 * add_width;
+            path->bounding_box[0] -= add_width;
+            path->bounding_box[1] -= add_width;
+            path->bounding_box[2] += add_width;
+            path->bounding_box[3] += add_width;
+        }
+
         transform(&temp, (vg_lite_float_t)path->bounding_box[0], (vg_lite_float_t)path->bounding_box[1], matrix);
         point_min = point_max = temp;
     
@@ -1052,8 +1063,12 @@ vg_lite_error_t vg_lite_draw(vg_lite_buffer_t *target,
     }
     /* Setup tessellation loop. */
     if (path->path_type == VG_LITE_DRAW_STROKE_PATH || path->path_type == VG_LITE_DRAW_FILL_STROKE_PATH) {
-        for (y = point_min.y; y < point_max.y; y += height) {
-            for (x = point_min.x; x < point_max.x; x += width) {
+        int stroke_dx = ((path->stroke->line_width + 1) / 2) * matrix->m[0][0];
+        int stroke_dy = ((path->stroke->line_width + 1) / 2) * matrix->m[1][1];
+        int temp_x = point_min.x - stroke_dx > 0 ? point_min.x - stroke_dx : 0;
+        int temp_y = point_min.y - stroke_dy > 0 ? point_min.y - stroke_dy : 0;
+        for (y = temp_y; y < point_max.y; y += height) {
+            for (x = temp_x; x < point_max.x; x += width) {
                 /* Tessellate path. */
                 VG_LITE_RETURN_ERROR(push_stall(&s_context, 15));
                 VG_LITE_RETURN_ERROR(push_state(&s_context, 0x0A1B, 0x00011000));
@@ -1244,11 +1259,14 @@ vg_lite_error_t vg_lite_draw_pattern(vg_lite_buffer_t *target,
 
     error = set_render_target(target);
     if (error != VG_LITE_SUCCESS) {
-        return error;
-    } else if (error == VG_LITE_NO_CONTEXT) {
-        /* If scissoring is enabled and no valid scissoring rectangles
-           are present, no drawing occurs */
-        return VG_LITE_SUCCESS;
+        if (error == VG_LITE_NO_CONTEXT) {
+            /* If scissoring is enabled and no valid scissoring rectangles
+               are present, no drawing occurs */
+            return VG_LITE_SUCCESS;
+        }
+        else {
+            return error;
+        }
     }
 
     transparency_mode = (source->transparency_mode == VG_LITE_IMAGE_TRANSPARENT ? 0x8000:0);
@@ -1363,6 +1381,17 @@ vg_lite_error_t vg_lite_draw_pattern(vg_lite_buffer_t *target,
     matrix = *path_matrix;
 
     if (ts_is_fullscreen == 0){
+        if (path->path_type == VG_LITE_DRAW_STROKE_PATH || path->path_type == VG_LITE_DRAW_FILL_STROKE_PATH){
+            float add_width = path->stroke->line_width;
+            if (path->stroke->join_style == VG_LITE_JOIN_MITER)
+                add_width += path->stroke->miter_limit;
+            add_width = 1.5 * add_width;
+            path->bounding_box[0] -= add_width;
+            path->bounding_box[1] -= add_width;
+            path->bounding_box[2] += add_width;
+            path->bounding_box[3] += add_width;
+        }
+
         transform(&temp, (vg_lite_float_t)path->bounding_box[0], (vg_lite_float_t)path->bounding_box[1], &matrix);
         point_min = point_max = temp;
     
@@ -1416,6 +1445,7 @@ vg_lite_error_t vg_lite_draw_pattern(vg_lite_buffer_t *target,
     VG_LITE_RETURN_ERROR(push_state(&s_context, 0x0A34, 0x01000400 | format | quality | tiling | fill));
     VG_LITE_RETURN_ERROR(push_state(&s_context, 0x0A3B, 0x3F800000));      /* Path tessellation SCALE. */
     VG_LITE_RETURN_ERROR(push_state(&s_context, 0x0A3C, 0x00000000));      /* Path tessellation BIAS.  */
+    VG_LITE_RETURN_ERROR(push_state(&s_context, 0x0A02, color));
     /* Program matrix. */
     VG_LITE_RETURN_ERROR(push_state_ptr(&s_context, 0x0A40, (void *) &matrix.m[0][0]));
     VG_LITE_RETURN_ERROR(push_state_ptr(&s_context, 0x0A41, (void *) &matrix.m[0][1]));
@@ -1617,11 +1647,14 @@ vg_lite_error_t vg_lite_draw_linear_grad(vg_lite_buffer_t * target,
 
     error = set_render_target(target);
     if (error != VG_LITE_SUCCESS) {
-        return error;
-    } else if (error == VG_LITE_NO_CONTEXT) {
-        /* If scissoring is enabled and no valid scissoring rectangles
-           are present, no drawing occurs */
-        return VG_LITE_SUCCESS;
+        if (error == VG_LITE_NO_CONTEXT) {
+            /* If scissoring is enabled and no valid scissoring rectangles
+               are present, no drawing occurs */
+            return VG_LITE_SUCCESS;
+        }
+        else {
+            return error;
+        }
     }
 
     transparency_mode = (source->transparency_mode == VG_LITE_IMAGE_TRANSPARENT ? 0x8000:0);
@@ -1781,6 +1814,17 @@ vg_lite_error_t vg_lite_draw_linear_grad(vg_lite_buffer_t * target,
     matrix = path_matrix;
 
     if (ts_is_fullscreen == 0){
+        if (path->path_type == VG_LITE_DRAW_STROKE_PATH || path->path_type == VG_LITE_DRAW_FILL_STROKE_PATH){
+            float add_width = path->stroke->line_width;
+            if (path->stroke->join_style == VG_LITE_JOIN_MITER)
+                add_width += path->stroke->miter_limit;
+            add_width = 1.5 * add_width;
+            path->bounding_box[0] -= add_width;
+            path->bounding_box[1] -= add_width;
+            path->bounding_box[2] += add_width;
+            path->bounding_box[3] += add_width;
+        }
+
         transform(&temp, (vg_lite_float_t)path->bounding_box[0], (vg_lite_float_t)path->bounding_box[1], matrix);
         point_min = point_max = temp;
 
@@ -1892,8 +1936,12 @@ vg_lite_error_t vg_lite_draw_linear_grad(vg_lite_buffer_t * target,
     }
     /* Setup tessellation loop. */
     if (path->path_type == VG_LITE_DRAW_STROKE_PATH || path->path_type == VG_LITE_DRAW_FILL_STROKE_PATH) {
-        for (y = point_min.y; y < point_max.y; y += height) {
-            for (x = point_min.x; x < point_max.x; x += width) {
+        int stroke_dx = ((path->stroke->line_width + 1) / 2) * matrix->m[0][0];
+        int stroke_dy = ((path->stroke->line_width + 1) / 2) * matrix->m[1][1];
+        int temp_x = point_min.x - stroke_dx > 0 ? point_min.x - stroke_dx : 0;
+        int temp_y = point_min.y - stroke_dy > 0 ? point_min.y - stroke_dy : 0;
+        for (y = temp_y; y < point_max.y; y += height) {
+            for (x = temp_x; x < point_max.x; x += width) {
                 /* Tessellate path. */
                 VG_LITE_RETURN_ERROR(push_stall(&s_context, 15));
                 VG_LITE_RETURN_ERROR(push_state(&s_context, 0x0A1B, 0x00011000));
@@ -2083,11 +2131,14 @@ vg_lite_error_t vg_lite_draw_radial_grad(vg_lite_buffer_t * target,
 
     error = set_render_target(target);
     if (error != VG_LITE_SUCCESS) {
-        return error;
-    } else if (error == VG_LITE_NO_CONTEXT) {
-        /* If scissoring is enabled and no valid scissoring rectangles
-           are present, no drawing occurs */
-        return VG_LITE_SUCCESS;
+        if (error == VG_LITE_NO_CONTEXT) {
+            /* If scissoring is enabled and no valid scissoring rectangles
+               are present, no drawing occurs */
+            return VG_LITE_SUCCESS;
+        }
+        else {
+            return error;
+        }
     }
 
     transparency_mode = (source->transparency_mode == VG_LITE_IMAGE_TRANSPARENT ? 0x8000:0);
@@ -2468,6 +2519,17 @@ vg_lite_error_t vg_lite_draw_radial_grad(vg_lite_buffer_t * target,
     matrix = path_matrix;
 
     if (ts_is_fullscreen == 0){
+        if (path->path_type == VG_LITE_DRAW_STROKE_PATH || path->path_type == VG_LITE_DRAW_FILL_STROKE_PATH){
+            float add_width = path->stroke->line_width;
+            if (path->stroke->join_style == VG_LITE_JOIN_MITER)
+                add_width += path->stroke->miter_limit;
+            add_width = 1.5 * add_width;
+            path->bounding_box[0] -= add_width;
+            path->bounding_box[1] -= add_width;
+            path->bounding_box[2] += add_width;
+            path->bounding_box[3] += add_width;
+        }
+
         transform(&temp, (vg_lite_float_t)path->bounding_box[0], (vg_lite_float_t)path->bounding_box[1], matrix);
         point_min = point_max = temp;
 
@@ -2579,8 +2641,12 @@ vg_lite_error_t vg_lite_draw_radial_grad(vg_lite_buffer_t * target,
     }
     /* Setup tessellation loop. */
     if (path->path_type == VG_LITE_DRAW_STROKE_PATH || path->path_type == VG_LITE_DRAW_FILL_STROKE_PATH) {
-        for (y = point_min.y; y < point_max.y; y += height) {
-            for (x = point_min.x; x < point_max.x; x += width) {
+        int stroke_dx = ((path->stroke->line_width + 1) / 2) * matrix->m[0][0];
+        int stroke_dy = ((path->stroke->line_width + 1) / 2) * matrix->m[1][1];
+        int temp_x = point_min.x - stroke_dx > 0 ? point_min.x - stroke_dx : 0;
+        int temp_y = point_min.y - stroke_dy > 0 ? point_min.y - stroke_dy : 0;
+        for (y = temp_y; y < point_max.y; y += height) {
+            for (x = temp_x; x < point_max.x; x += width) {
                 /* Tessellate path. */
                 VG_LITE_RETURN_ERROR(push_stall(&s_context, 15));
                 VG_LITE_RETURN_ERROR(push_state(&s_context, 0x0A1B, 0x00011000));
@@ -3872,11 +3938,14 @@ vg_lite_error_t vg_lite_draw_linear_grad(vg_lite_buffer_t* target,
 
     error = set_render_target(target);
     if (error != VG_LITE_SUCCESS) {
-        return error;
-    } else if (error == VG_LITE_NO_CONTEXT) {
-        /* If scissoring is enabled and no valid scissoring rectangles
-           are present, no drawing occurs */
-        return VG_LITE_SUCCESS;
+        if (error == VG_LITE_NO_CONTEXT) {
+            /* If scissoring is enabled and no valid scissoring rectangles
+               are present, no drawing occurs */
+            return VG_LITE_SUCCESS;
+        }
+        else {
+            return error;
+        }
     }
 
     transparency_mode = (source->transparency_mode == VG_LITE_IMAGE_TRANSPARENT ? 0x8000:0);
@@ -4534,11 +4603,14 @@ vg_lite_error_t vg_lite_draw_radial_grad(vg_lite_buffer_t* target,
 
     error = set_render_target(target);
     if (error != VG_LITE_SUCCESS) {
-        return error;
-    } else if (error == VG_LITE_NO_CONTEXT) {
-        /* If scissoring is enabled and no valid scissoring rectangles
-           are present, no drawing occurs */
-        return VG_LITE_SUCCESS;
+        if (error == VG_LITE_NO_CONTEXT) {
+            /* If scissoring is enabled and no valid scissoring rectangles
+               are present, no drawing occurs */
+            return VG_LITE_SUCCESS;
+        }
+        else {
+            return error;
+        }
     }
 
     if ((target->format == VG_LITE_YUYV || target->format == VG_LITE_YUY2 || target->format == VG_LITE_YUY2_TILED

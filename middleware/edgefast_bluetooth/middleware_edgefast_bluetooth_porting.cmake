@@ -29,7 +29,7 @@ message("${CMAKE_CURRENT_LIST_FILE} component is included.")
       target_compile_definitions(${MCUX_SDK_PROJECT_NAME} PUBLIC
                   -DLOG_ENABLE_ASYNC_MODE=1
                         -DLOG_MAX_ARGUMENT_COUNT=10
-                        -DLOG_ENABLE_OVERWRITE=0
+                        -DLOG_ENABLE_OVERWRITE=1
               )
   
   

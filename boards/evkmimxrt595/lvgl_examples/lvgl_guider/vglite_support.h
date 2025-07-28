@@ -13,6 +13,7 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
+#define MAX_CONTIGUOUS_SIZE 0x080000
 
 /*******************************************************************************
  * API
@@ -21,7 +22,7 @@
 extern "C" {
 #endif                                          /* __cplusplus */
 
-#define VG_LITE_COMMAND_BUFFER_SIZE (128 << 10) /* 128 KB */
+#define VG_LITE_COMMAND_BUFFER_SIZE (64 << 10) /* 64 KB */
 
 /* Default tessellation window width and height, in pixels */
 #define DEFAULT_VG_LITE_TW_WIDTH  128 /* pixels */

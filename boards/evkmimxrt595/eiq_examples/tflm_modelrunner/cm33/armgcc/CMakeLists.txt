@@ -1,6 +1,6 @@
 # CROSS COMPILER SETTING
-SET(CMAKE_SYSTEM_NAME Generic)
-CMAKE_MINIMUM_REQUIRED (VERSION 3.10.0)
+set(CMAKE_SYSTEM_NAME Generic)
+cmake_minimum_required(VERSION 3.10.0)
 
 # THE VERSION NUMBER
 SET (MCUXPRESSO_CMAKE_FORMAT_MAJOR_VERSION 2)
@@ -14,25 +14,21 @@ if(CMAKE_SCRIPT_MODE_FILE)
 endif()
 
 
-# ENABLE ASM
-ENABLE_LANGUAGE(ASM)
-
-SET(CMAKE_STATIC_LIBRARY_PREFIX)
-SET(CMAKE_STATIC_LIBRARY_SUFFIX)
-
-SET(CMAKE_EXECUTABLE_LIBRARY_PREFIX)
-SET(CMAKE_EXECUTABLE_LIBRARY_SUFFIX)
+set(CMAKE_EXECUTABLE_LIBRARY_PREFIX)
+set(CMAKE_EXECUTABLE_LIBRARY_SUFFIX)
 
 # CURRENT DIRECTORY
-SET(ProjDirPath ${CMAKE_CURRENT_SOURCE_DIR})
+set(ProjDirPath ${CMAKE_CURRENT_SOURCE_DIR})
 
-SET(EXECUTABLE_OUTPUT_PATH ${ProjDirPath}/${CMAKE_BUILD_TYPE})
-SET(LIBRARY_OUTPUT_PATH ${ProjDirPath}/${CMAKE_BUILD_TYPE})
+set(EXECUTABLE_OUTPUT_PATH ${ProjDirPath}/${CMAKE_BUILD_TYPE})
+set(LIBRARY_OUTPUT_PATH ${ProjDirPath}/${CMAKE_BUILD_TYPE})
 
 
 project(tflm_modelrunner_cm33)
 
-set(MCUX_BUILD_TYPES flash_release flash_debug)
+enable_language(ASM)
+
+set(MCUX_BUILD_TYPES flash_debug flash_release)
 
 set(MCUX_SDK_PROJECT_NAME tflm_modelrunner_cm33.elf)
 
@@ -45,37 +41,45 @@ include(${ProjDirPath}/flags.cmake)
 include(${ProjDirPath}/config.cmake)
 
 add_executable(${MCUX_SDK_PROJECT_NAME} 
-"${ProjDirPath}/../source/main.cpp"
-"${ProjDirPath}/../source/modelrunner.h"
-"${ProjDirPath}/../source/modelrunner.cpp"
-"${ProjDirPath}/../source/tf_benchmark.h"
-"${ProjDirPath}/../source/tf_benchmark.cpp"
-"${ProjDirPath}/../source/cJSON/cJSON.h"
-"${ProjDirPath}/../source/cJSON/cJSON.c"
-"${ProjDirPath}/../source/base64/base64.h"
-"${ProjDirPath}/../source/base64/base64.c"
-"${ProjDirPath}/../source/json_results.cpp"
-"${ProjDirPath}/../scripts/cli.py"
-"${ProjDirPath}/../scripts/main.py"
-"${ProjDirPath}/../scripts/modelrunner.py"
-"${ProjDirPath}/../scripts/xexpect.py"
-"${ProjDirPath}/../scripts/requirements.txt"
-"${ProjDirPath}/../source/timer.h"
-"${ProjDirPath}/../source/timer.c"
+"${ProjDirPath}/../main.cpp"
+"${ProjDirPath}/../modelrunner.h"
+"${ProjDirPath}/../modelrunner.cpp"
+"${ProjDirPath}/../tf_benchmark.h"
+"${ProjDirPath}/../tf_benchmark.cpp"
+"${ProjDirPath}/../cJSON.h"
+"${ProjDirPath}/../cJSON.c"
+"${ProjDirPath}/../base64.h"
+"${ProjDirPath}/../base64.c"
+"${ProjDirPath}/../json_results.cpp"
+"${ProjDirPath}/../http.h"
+"${ProjDirPath}/../http.cpp"
+"${ProjDirPath}/../http_handler.h"
+"${ProjDirPath}/../http_handler.cpp"
+"${ProjDirPath}/../FreeRTOSConfig.h"
+"${ProjDirPath}/../FreeRTOSConfigBoard.h"
+"${ProjDirPath}/../lwipopts.h"
+"${ProjDirPath}/../picohttpparser.h"
+"${ProjDirPath}/../picohttpparser.c"
 "${ProjDirPath}/../flash_opts.h"
 "${ProjDirPath}/../flash_opts.c"
-"${ProjDirPath}/../clock_config.c"
+"${ProjDirPath}/../cli.py"
+"${ProjDirPath}/../main.py"
+"${ProjDirPath}/../modelrunner.py"
+"${ProjDirPath}/../xexpect.py"
+"${ProjDirPath}/../timer.c"
+"${ProjDirPath}/../timer.h"
+"${ProjDirPath}/../board.h"
+"${ProjDirPath}/../board.c"
 "${ProjDirPath}/../clock_config.h"
+"${ProjDirPath}/../clock_config.c"
 "${ProjDirPath}/../pin_mux.c"
 "${ProjDirPath}/../pin_mux.h"
-"${ProjDirPath}/../board.c"
-"${ProjDirPath}/../board.h"
-"${ProjDirPath}/../source/app.h"
+"${ProjDirPath}/../hardware_init.c"
+"${ProjDirPath}/../app.h"
+"${ProjDirPath}/../mcux_config.h"
 )
 
 target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
-    ${ProjDirPath}/../source
-    ${SdkRootDirPath}/middleware/eiq/common
     ${ProjDirPath}/..
 )
 
@@ -92,5 +96,11 @@ target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${TARGET_LINK_SYSTEM_LIBR
 
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--end-group)
 
-set_target_properties(${MCUX_SDK_PROJECT_NAME} PROPERTIES ADDITIONAL_CLEAN_FILES "output.map")
+ADD_CUSTOM_COMMAND(TARGET ${MCUX_SDK_PROJECT_NAME} POST_BUILD COMMAND ${CMAKE_OBJCOPY}
+-Obinary ${EXECUTABLE_OUTPUT_PATH}/${MCUX_SDK_PROJECT_NAME} ${EXECUTABLE_OUTPUT_PATH}/tflm_modelrunner.bin)
+
+set_target_properties(${MCUX_SDK_PROJECT_NAME} PROPERTIES ADDITIONAL_CLEAN_FILES "output.map;${EXECUTABLE_OUTPUT_PATH}/tflm_modelrunner.bin")
+
+# wrap all libraries with -Wl,--start-group -Wl,--end-group to prevent link order issue
+group_link_libraries()
 

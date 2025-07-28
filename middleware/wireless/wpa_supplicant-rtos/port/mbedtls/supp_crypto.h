@@ -8,6 +8,9 @@
  *  SPDX-License-Identifier: BSD-3-Clause
  *
  */
+#ifndef RTOS_SUPP_CRYPTO_H
+#define RTOS_SUPP_CRYPTO_H
+
 #ifdef RW610
 #include "wpa_supp_els_pkc_mbedtls_config.h"
 #endif
@@ -25,3 +28,4 @@ int _gettimeofday(struct timeval *tv, void *tzvp);
 #endif
 #endif
 #endif
+#endif /* RTOS_SUPP_CRYPTO_H */

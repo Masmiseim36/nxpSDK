@@ -38,12 +38,13 @@
     <definition extID="component.rt_gpio_adapter.MIMXRT595S"/>
     <definition extID="component.usart_adapter.MIMXRT595S"/>
     <definition extID="component.osa_template_config.MIMXRT595S"/>
-    <definition extID="component.osa_interface.MIMXRT595S"/>
     <definition extID="component.osa.MIMXRT595S"/>
     <definition extID="component.osa_free_rtos.MIMXRT595S"/>
-    <definition extID="driver.pca9420.MIMXRT595S"/>
     <definition extID="component.wifi_bt_module.tx_pwr_limits.MIMXRT595S"/>
     <definition extID="component.wifi_bt_module.config.MIMXRT595S"/>
+    <definition extID="component.wifi_bt_module.IW416.MIMXRT595S"/>
+    <definition extID="component.wifi_bt_module.board_murata_1xk_m2.MIMXRT595S"/>
+    <definition extID="driver.pca9420.MIMXRT595S"/>
     <definition extID="middleware.wifi.template.MIMXRT595S"/>
     <definition extID="middleware.wifi.osa_free_rtos.MIMXRT595S"/>
     <definition extID="middleware.wifi.osa.MIMXRT595S"/>
@@ -51,6 +52,7 @@
     <definition extID="middleware.wifi.fwdnld.MIMXRT595S"/>
     <definition extID="middleware.wifi.net.MIMXRT595S"/>
     <definition extID="middleware.wifi.net_free_rtos.MIMXRT595S"/>
+    <definition extID="middleware.wifi.net_free_rtos.iperf.MIMXRT595S"/>
     <definition extID="middleware.wifi.wifidriver.MIMXRT595S"/>
     <definition extID="middleware.wifi.wifidriver.softap.MIMXRT595S"/>
     <definition extID="middleware.wifi.MIMXRT595S"/>
@@ -65,6 +67,7 @@
     <definition extID="middleware.lwip.MIMXRT595S"/>
     <definition extID="middleware.lwip.sys_arch.dynamic.MIMXRT595S"/>
     <definition extID="middleware.lwip.apps.lwiperf.MIMXRT595S"/>
+    <definition extID="middleware.lwip.apps.lwiperf.non_generated_lwipopts.MIMXRT595S"/>
     <definition extID="middleware.wireless.wpa_supplicant.rtos.MIMXRT595S"/>
     <definition extID="middleware.wireless.wpa_supplicant.rtos.hostapd.MIMXRT595S"/>
     <definition extID="middleware.sdmmc.common.MIMXRT595S"/>
@@ -86,7 +89,7 @@
     <definition extID="com.crt.advproject.config.exe.debug"/>
     <definition extID="com.crt.advproject.config.exe.release"/>
   </externalDefinitions>
-  <example id="evkmimxrt595_wifi_wpa_supplicant_cm33" name="wifi_wpa_supplicant_cm33" device_core="cm33_MIMXRT595S" dependency="platform.drivers.flash_config.evkmimxrt595.MIMXRT595S CMSIS_Include_core_cm.MIMXRT595S device.MIMXRT595S_CMSIS.MIMXRT595S device.MIMXRT595S_system.MIMXRT595S device.MIMXRT595S_startup.MIMXRT595S platform.drivers.clock.MIMXRT595S platform.drivers.dsp.MIMXRT595S platform.drivers.i2s_bridge.MIMXRT595S platform.drivers.inputmux_connections.MIMXRT595S platform.drivers.memory.MIMXRT595S platform.drivers.power.MIMXRT595S platform.drivers.reset.MIMXRT595S platform.drivers.soc_mipi_dsi.MIMXRT595S platform.drivers.cache_cache64.MIMXRT595S platform.drivers.casper.MIMXRT595S platform.drivers.common.MIMXRT595S platform.drivers.flexcomm.MIMXRT595S platform.drivers.flexcomm_usart.MIMXRT595S platform.drivers.flexcomm_i2c.MIMXRT595S platform.drivers.flexspi.MIMXRT595S platform.drivers.hashcrypt.MIMXRT595S platform.drivers.iap3.MIMXRT595S platform.drivers.lpc_gpio.MIMXRT595S platform.drivers.lpc_iopctl.MIMXRT595S platform.drivers.trng.MIMXRT595S platform.drivers.usdhc.MIMXRT595S platform.utilities.assert.MIMXRT595S platform.utilities.misc_utilities.MIMXRT595S component.lists.MIMXRT595S utility.str.MIMXRT595S utility.debug_console.MIMXRT595S component.serial_manager.MIMXRT595S component.serial_manager_uart.MIMXRT595S component.rt_gpio_adapter.MIMXRT595S component.usart_adapter.MIMXRT595S component.osa_template_config.MIMXRT595S component.osa_interface.MIMXRT595S component.osa.MIMXRT595S component.osa_free_rtos.MIMXRT595S driver.pca9420.MIMXRT595S component.wifi_bt_module.tx_pwr_limits.MIMXRT595S component.wifi_bt_module.config.MIMXRT595S middleware.wifi.template.MIMXRT595S middleware.wifi.osa_free_rtos.MIMXRT595S middleware.wifi.osa.MIMXRT595S middleware.wifi.common_files.MIMXRT595S middleware.wifi.fwdnld.MIMXRT595S middleware.wifi.net.MIMXRT595S middleware.wifi.net_free_rtos.MIMXRT595S middleware.wifi.wifidriver.MIMXRT595S middleware.wifi.wifidriver.softap.MIMXRT595S middleware.wifi.MIMXRT595S middleware.wifi.sdio.MIMXRT595S middleware.wifi.mlan_sdio.MIMXRT595S middleware.wifi.fwdnld_intf_abs.MIMXRT595S middleware.wifi.cli.MIMXRT595S middleware.wifi.wls.MIMXRT595S middleware.mbedtls.port.ksdk_option.MIMXRT595S middleware.mbedtls.MIMXRT595S middleware.mbedtls.port.ksdk.MIMXRT595S middleware.lwip.MIMXRT595S middleware.lwip.sys_arch.dynamic.MIMXRT595S middleware.lwip.apps.lwiperf.MIMXRT595S middleware.wireless.wpa_supplicant.rtos.MIMXRT595S middleware.wireless.wpa_supplicant.rtos.hostapd.MIMXRT595S middleware.sdmmc.common.MIMXRT595S middleware.sdmmc.osa.freertos.MIMXRT595S middleware.sdmmc.sdio.MIMXRT595S middleware.sdmmc.host.usdhc.MIMXRT595S middleware.sdmmc.host.usdhc.non_blocking.MIMXRT595S middleware.sdmmc.usdhc.template.MIMXRT595S middleware.freertos-kernel.MIMXRT595S middleware.freertos-kernel.heap_4.MIMXRT595S middleware.freertos-kernel.cm33_non_trustzone.MIMXRT595S middleware.freertos-kernel.extension.MIMXRT595S middleware.freertos-kernel.config.MIMXRT595S" category="wifi_examples">
+  <example id="evkmimxrt595_wifi_wpa_supplicant_cm33" name="wifi_wpa_supplicant_cm33" device_core="cm33_MIMXRT595S" dependency="platform.drivers.flash_config.evkmimxrt595.MIMXRT595S CMSIS_Include_core_cm.MIMXRT595S device.MIMXRT595S_CMSIS.MIMXRT595S device.MIMXRT595S_system.MIMXRT595S device.MIMXRT595S_startup.MIMXRT595S platform.drivers.clock.MIMXRT595S platform.drivers.dsp.MIMXRT595S platform.drivers.i2s_bridge.MIMXRT595S platform.drivers.inputmux_connections.MIMXRT595S platform.drivers.memory.MIMXRT595S platform.drivers.power.MIMXRT595S platform.drivers.reset.MIMXRT595S platform.drivers.soc_mipi_dsi.MIMXRT595S platform.drivers.cache_cache64.MIMXRT595S platform.drivers.casper.MIMXRT595S platform.drivers.common.MIMXRT595S platform.drivers.flexcomm.MIMXRT595S platform.drivers.flexcomm_usart.MIMXRT595S platform.drivers.flexcomm_i2c.MIMXRT595S platform.drivers.flexspi.MIMXRT595S platform.drivers.hashcrypt.MIMXRT595S platform.drivers.iap3.MIMXRT595S platform.drivers.lpc_gpio.MIMXRT595S platform.drivers.lpc_iopctl.MIMXRT595S platform.drivers.trng.MIMXRT595S platform.drivers.usdhc.MIMXRT595S platform.utilities.assert.MIMXRT595S platform.utilities.misc_utilities.MIMXRT595S component.lists.MIMXRT595S utility.str.MIMXRT595S utility.debug_console.MIMXRT595S component.serial_manager.MIMXRT595S component.serial_manager_uart.MIMXRT595S component.rt_gpio_adapter.MIMXRT595S component.usart_adapter.MIMXRT595S component.osa_template_config.MIMXRT595S component.osa.MIMXRT595S component.osa_free_rtos.MIMXRT595S component.wifi_bt_module.tx_pwr_limits.MIMXRT595S component.wifi_bt_module.config.MIMXRT595S component.wifi_bt_module.IW416.MIMXRT595S component.wifi_bt_module.board_murata_1xk_m2.MIMXRT595S driver.pca9420.MIMXRT595S middleware.wifi.template.MIMXRT595S middleware.wifi.osa_free_rtos.MIMXRT595S middleware.wifi.osa.MIMXRT595S middleware.wifi.common_files.MIMXRT595S middleware.wifi.fwdnld.MIMXRT595S middleware.wifi.net.MIMXRT595S middleware.wifi.net_free_rtos.MIMXRT595S middleware.wifi.net_free_rtos.iperf.MIMXRT595S middleware.wifi.wifidriver.MIMXRT595S middleware.wifi.wifidriver.softap.MIMXRT595S middleware.wifi.MIMXRT595S middleware.wifi.sdio.MIMXRT595S middleware.wifi.mlan_sdio.MIMXRT595S middleware.wifi.fwdnld_intf_abs.MIMXRT595S middleware.wifi.cli.MIMXRT595S middleware.wifi.wls.MIMXRT595S middleware.mbedtls.port.ksdk_option.MIMXRT595S middleware.mbedtls.MIMXRT595S middleware.mbedtls.port.ksdk.MIMXRT595S middleware.lwip.MIMXRT595S middleware.lwip.sys_arch.dynamic.MIMXRT595S middleware.lwip.apps.lwiperf.MIMXRT595S middleware.lwip.apps.lwiperf.non_generated_lwipopts.MIMXRT595S middleware.wireless.wpa_supplicant.rtos.MIMXRT595S middleware.wireless.wpa_supplicant.rtos.hostapd.MIMXRT595S middleware.sdmmc.common.MIMXRT595S middleware.sdmmc.osa.freertos.MIMXRT595S middleware.sdmmc.sdio.MIMXRT595S middleware.sdmmc.host.usdhc.MIMXRT595S middleware.sdmmc.host.usdhc.non_blocking.MIMXRT595S middleware.sdmmc.usdhc.template.MIMXRT595S middleware.freertos-kernel.MIMXRT595S middleware.freertos-kernel.heap_4.MIMXRT595S middleware.freertos-kernel.cm33_non_trustzone.MIMXRT595S middleware.freertos-kernel.extension.MIMXRT595S middleware.freertos-kernel.config.MIMXRT595S" category="wifi_examples">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -97,6 +100,28 @@
     </memory>
     <toolchainSettings>
       <toolchainSetting id_refs="com.nxp.mcuxpresso">
+        <option id="com.crt.advproject.gcc.exe.debug.option.optimization.level" type="enum">
+          <value>gnu.c.optimization.level.general</value>
+        </option>
+        <option id="com.crt.advproject.gcc.fpu" type="enum">
+          <value>com.crt.advproject.gcc.fpu.fpv4.hard</value>
+          <value>com.crt.advproject.gcc.fpu.fpv5sp.hard</value>
+        </option>
+        <option id="gnu.c.compiler.option.optimization.flags" type="string">
+          <value>-fno-common</value>
+        </option>
+        <option id="com.crt.advproject.c.misc.dialect" type="enum">
+          <value>com.crt.advproject.misc.dialect.gnu99</value>
+        </option>
+        <option id="gnu.c.compiler.option.misc.other" type="string">
+          <value>-mcpu=cortex-m33 -c -ffunction-sections -fdata-sections -fno-builtin -fomit-frame-pointer</value>
+        </option>
+        <option id="gnu.c.compiler.option.warnings.allwarn" type="boolean">
+          <value>false</value>
+        </option>
+        <option id="gnu.c.compiler.option.warnings.toerrors" type="boolean">
+          <value>false</value>
+        </option>
         <option id="gnu.c.compiler.option.preprocessor.def.symbols" type="stringList">
           <value>MCUXPRESSO_SDK</value>
           <value>CPU_MIMXRT595SFFOC_cm33</value>
@@ -109,12 +134,14 @@
           <value>PRINTF_ADVANCED_ENABLE=1</value>
           <value>SDK_DEBUGCONSOLE=1</value>
           <value>MCUX_META_BUILD</value>
+          <value>MIMXRT595S_cm33_SERIES</value>
           <value>OSA_USED</value>
           <value>SERIAL_PORT_TYPE_UART=1</value>
+          <value>WIFI_IW416_BOARD_MURATA_1XK_M2</value>
           <value>SDK_I2C_BASED_COMPONENT_USED=1</value>
           <value>CONFIG_NXP_WIFI_SOFTAP_SUPPORT=1</value>
-          <value>SO_REUSE=1</value>
           <value>PRINTF_FLOAT_ENABLE=1</value>
+          <value>SO_REUSE=1</value>
           <value>SDK_OS_FREE_RTOS</value>
           <value>FSL_OSA_TASK_ENABLE=1</value>
           <value>CONFIG_HOSTAPD=1</value>
@@ -154,25 +181,6 @@
         <option id="com.crt.advproject.gas.fpu" type="enum">
           <value>com.crt.advproject.gas.fpu.fpv4.hard</value>
           <value>com.crt.advproject.gas.fpu.fpv5sp.hard</value>
-        </option>
-        <option id="com.crt.advproject.gcc.fpu" type="enum">
-          <value>com.crt.advproject.gcc.fpu.fpv4.hard</value>
-          <value>com.crt.advproject.gcc.fpu.fpv5sp.hard</value>
-        </option>
-        <option id="gnu.c.compiler.option.optimization.flags" type="string">
-          <value>-fno-common</value>
-        </option>
-        <option id="com.crt.advproject.c.misc.dialect" type="enum">
-          <value>com.crt.advproject.misc.dialect.gnu99</value>
-        </option>
-        <option id="gnu.c.compiler.option.misc.other" type="string">
-          <value>-mcpu=cortex-m33 -c -ffunction-sections -fdata-sections -fno-builtin -fomit-frame-pointer</value>
-        </option>
-        <option id="gnu.c.compiler.option.warnings.allwarn" type="boolean">
-          <value>false</value>
-        </option>
-        <option id="gnu.c.compiler.option.warnings.toerrors" type="boolean">
-          <value>false</value>
         </option>
       </toolchainSetting>
     </toolchainSettings>
@@ -257,9 +265,6 @@
       <files mask="wifi_bt_config.h"/>
       <files mask="FreeRTOSConfigBoard.h"/>
     </source>
-    <source path="." project_relative_path="source" type="c_include">
-      <files mask="app_config.h"/>
-    </source>
     <source path="iar" project_relative_path="MIMXRT595S/iar" type="linker" toolchain="iar">
       <files mask="MIMXRT595Sxxxx_cm33_flash.icf"/>
     </source>
@@ -291,6 +296,12 @@
     </source>
     <source path="." project_relative_path="doc" type="doc">
       <files mask="wifi_examples_readme.md"/>
+    </source>
+    <source path="." project_relative_path="doc" type="doc">
+      <files mask="readme_modules.md"/>
+    </source>
+    <source path="." project_relative_path="doc" type="doc">
+      <files mask="examples_shared_readme.md"/>
     </source>
   </example>
 </ksdk:examples>

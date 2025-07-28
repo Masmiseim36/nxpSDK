@@ -91,6 +91,8 @@ static u8 eloop_init_done = 0;
 static struct pool_info *eloop_pool;
 static struct eloop_timeout *eloop_timeout_pool_buf;
 
+extern OSA_MUTEX_HANDLE_DEFINE(wpa_supplicant_mutex);
+
 void eloop_alloc_deinit(void);
 
 int eloop_alloc_init()
@@ -699,10 +701,12 @@ void eloop_run(void)
             os_get_time(&now);
             if (!os_time_before(&now, &eloop.timeout->time))
             {
+                OSA_MutexLock((osa_mutex_handle_t)wpa_supplicant_mutex, osaWaitForever_c);
                 tmp           = eloop.timeout;
                 eloop.timeout = eloop.timeout->next;
                 tmp->handler(tmp->eloop_data, tmp->user_data);
                 eloop_remove_timeout(tmp);
+                OSA_MutexUnlock((osa_mutex_handle_t)wpa_supplicant_mutex);
             }
         }
 

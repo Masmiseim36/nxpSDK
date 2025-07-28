@@ -4,23 +4,23 @@ include_guard(GLOBAL)
 message("${CMAKE_CURRENT_LIST_FILE} component is included.")
 
       target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
-          ${CMAKE_CURRENT_LIST_DIR}/test/secure_fw/suites/spm/common/suites/irq_test.c
-          ${CMAKE_CURRENT_LIST_DIR}/test/secure_fw/suites/spm/irq/irq_testsuite.c
+          ${CMAKE_CURRENT_LIST_DIR}/tests_reg/test/secure_fw/suites/spm/common/suites/irq_test.c
+          ${CMAKE_CURRENT_LIST_DIR}/tests_reg/test/secure_fw/suites/spm/irq/non_secure/irq_testsuite.c
         )
 
   
       target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
-          ${CMAKE_CURRENT_LIST_DIR}/test/secure_fw/suites/spm/common/suites
-          ${CMAKE_CURRENT_LIST_DIR}/test/secure_fw/suites/spm/common/service
-          ${CMAKE_CURRENT_LIST_DIR}/test/secure_fw/suites/spm/irq
-          ${CMAKE_CURRENT_LIST_DIR}/test/secure_fw/suites/spm/common
+          ${CMAKE_CURRENT_LIST_DIR}/tests_reg/test/secure_fw/suites/spm/common/suites
+          ${CMAKE_CURRENT_LIST_DIR}/tests_reg/test/secure_fw/suites/spm/common/service
+          ${CMAKE_CURRENT_LIST_DIR}/tests_reg/test/secure_fw/suites/spm/irq/non_secure
+          ${CMAKE_CURRENT_LIST_DIR}/tests_reg/test/secure_fw/suites/spm/common
         )
 
     if(CONFIG_USE_COMPONENT_CONFIGURATION)
   message("===>Import configuration from ${CMAKE_CURRENT_LIST_FILE}")
 
       target_compile_definitions(${MCUX_SDK_PROJECT_NAME} PUBLIC
-                  -DTEST_NS_SLIH_IRQ
+                  -DTFM_PARTITION_SLIH_TEST
               )
   
   

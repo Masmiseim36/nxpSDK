@@ -15,7 +15,7 @@
 extern "C" {
 #endif
 
-#define TFM_NS_MAILBOX_AGENT                                           (0)
+#define TFM_NS_MAILBOX_AGENT                                           (262)
 #define TFM_SP_PS                                                      (256)
 #define TFM_SP_ITS                                                     (257)
 #define TFM_SP_CRYPTO                                                  (259)
@@ -30,8 +30,9 @@ extern "C" {
 #define TFM_SP_SLIH_TEST                                               (3008)
 #define TFM_SP_FLIH_TEST                                               (3009)
 #define TFM_SP_FPU_SERVICE_TEST                                        (3010)
+#define TFM_SFN_PARTITION1                                             (3011)
 
-#define TFM_MAX_USER_PARTITIONS                                        (15)
+#define TFM_MAX_USER_PARTITIONS                                        (16)
 
 #ifdef __cplusplus
 }

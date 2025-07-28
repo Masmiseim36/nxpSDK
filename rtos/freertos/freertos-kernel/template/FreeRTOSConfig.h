@@ -1,6 +1,8 @@
 /*
- * FreeRTOS Kernel V10.4.3
- * Copyright (C) 2020 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
+ * FreeRTOS Kernel V11.1.0
+ * Copyright (C) 2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *
+ * SPDX-License-Identifier: MIT
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
  * this software and associated documentation files (the "Software"), to deal in
@@ -33,6 +35,10 @@
 #endif
 
 #include "FreeRTOSConfig_Gen.h"
+
+#ifdef CONFIG_FREERTOS_USE_CUSTOM_CONFIG_FRAGMENT
+#include "FreeRTOSConfig_frag.h"
+#endif
 
 /* Handle macros required to be defined.
  * If these macros are not defined set them to 0.

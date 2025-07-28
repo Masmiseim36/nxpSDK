@@ -208,6 +208,7 @@ static API_RESULT ethermind_avrcp_cb(
         case AVRCP_CONNECT_CNF:
             if (event_result == API_SUCCESS)
             {
+                avrcp->control_connected = 1u;
                 if (avrcp_cbs.control_connected != NULL) {
                     avrcp_cbs.control_connected(avrcp->conn, 0);
                 }
@@ -233,6 +234,7 @@ static API_RESULT ethermind_avrcp_cb(
                 get_conn = NULL;
                 bt_conn_foreach(BT_CONN_TYPE_BR, avrcp_get_conn, &avrcp->ethermind_avrcp.bd_addr[0]);
                 avrcp->conn = get_conn;
+                avrcp->control_connected = 1u;
 
                 if ((avrcp->conn != NULL) && (avrcp_cbs.control_connected != NULL))
                 {
@@ -247,7 +249,10 @@ static API_RESULT ethermind_avrcp_cb(
             if (avrcp_cbs.control_disconnected != NULL) {
                 avrcp_cbs.control_disconnected(avrcp->conn, 0);
             }
-            avrcp->conn = NULL;
+            if (avrcp->browsing_connected == 0u) {
+                avrcp->conn = NULL;
+            }
+            avrcp->control_connected = 0u;
             break;
 
         case AVRCP_BOW_CONNECT_IND:
@@ -282,7 +287,10 @@ static API_RESULT ethermind_avrcp_cb(
             if (avrcp_cbs.browsing_disconnected) {
                 avrcp_cbs.browsing_disconnected(avrcp->conn, 0);
             }
-            avrcp->conn = NULL;
+            if (avrcp->control_connected == 0u) {
+                avrcp->conn = NULL;
+            }
+            avrcp->browsing_connected = 0u;
             break;
 
         case AVRCP_MESSAGE_SEND_CNF:
@@ -1741,6 +1749,7 @@ int bt_avrcp_send_vendor_dependent(struct bt_conn *conn, uint8_t pdu_id, void *p
             net_buf_add_be16(buf, add->uid_counter);
 
             pdu_info.pdu_id         = BT_AVRCP_PDU_ID_ADD_TO_NOW_PLAYING;
+            pdu_info.cmd_type       = BT_AVRCP_COMMAND_TYPE_CONTROL;
             pdu_info.vd_cmd_data    = buf->data;
             pdu_info.vd_cmd_datalen = buf->len;
             break;
@@ -1764,6 +1773,7 @@ int bt_avrcp_send_vendor_dependent(struct bt_conn *conn, uint8_t pdu_id, void *p
             net_buf_add_be16(buf, play->uid_counter);
 
             pdu_info.pdu_id         = BT_AVRCP_PDU_ID_PLAY_ITEMS;
+            pdu_info.cmd_type       = BT_AVRCP_COMMAND_TYPE_CONTROL;
             pdu_info.vd_cmd_data    = buf->data;
             pdu_info.vd_cmd_datalen = buf->len;
             break;

@@ -1,7 +1,6 @@
 /*! *********************************************************************************
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2024 NXP
- * All rights reserved.
+ * Copyright 2016-2025 NXP
  *
  * \file
  *
@@ -15,10 +14,15 @@
 #include "fwk_platform.h"
 #include "fwk_platform_rng.h"
 #include "fwk_platform_crypto.h"
-
 #include "mbedtls/entropy.h"
 #include "mbedtls/hmac_drbg.h"
 #include "mbedtls/md.h"
+#if !defined(gPlatformIsNbu_d)
+#include "fwk_workq.h"
+#endif
+#if defined(gPlatformHasNbu_d) || defined(gPlatformIsNbu_d)
+#include "fwk_platform_ics.h"
+#endif
 
 /*! *********************************************************************************
 *************************************************************************************
@@ -45,13 +49,25 @@ extern osa_status_t SecLibMutexUnlock(void);
 
 typedef struct rng_ctx_t
 {
-    bool_t   mRngCtxInitialized;
-    bool_t   mPrngIsSeeded;
-    bool_t   mPolyRngSeeded;
-    uint32_t mPolyRngRandom;
-    uint32_t mPRNG_Requests;
-    bool_t   mNeedReseed;
+    bool_t                  mRngCtxInitialized;
+    bool_t                  mPrngIsSeeded;
+    bool_t                  mPolyRngSeeded;
+    uint32_t                mPolyRngRandom;
+    uint32_t                mPRNG_Requests;
+    bool_t                  mNeedReseed;
+    mbedtls_entropy_context entropy_ctx;
 } RNG_context_t;
+
+/*! *********************************************************************************
+*************************************************************************************
+* Private prototypes
+*************************************************************************************
+********************************************************************************** */
+
+static int RNG_entropy_func(void *data, unsigned char *output, size_t len);
+#if !defined(gPlatformIsNbu_d)
+static void RNG_seed_needed_handler(fwk_work_t *work);
+#endif
 
 /*! *********************************************************************************
 *************************************************************************************
@@ -71,19 +87,17 @@ static RNG_context_t rng_ctx = {
     .mNeedReseed        = FALSE,
 };
 
+#if !defined(gPlatformIsNbu_d)
+static fwk_work_t seed_needed_work = {
+    .handler = RNG_seed_needed_handler,
+};
+#endif
+
 /*! *********************************************************************************
 *************************************************************************************
 * Public prototypes
 *************************************************************************************
 ********************************************************************************** */
-
-/*! *********************************************************************************
-*************************************************************************************
-* Private prototypes
-*************************************************************************************
-********************************************************************************** */
-
-static int RNG_entropy_func(void *data, unsigned char *output, size_t len);
 
 /*! *********************************************************************************
 *************************************************************************************
@@ -106,14 +120,36 @@ int RNG_Init(void)
 
     (void)PLATFORM_InitCrypto();
 
-    mbedtls_entropy_init(&mRngEntropyCtx);
-    mbedtls_hmac_drbg_init(&mRngHmacDrbgCtx);
-    rng_ctx.mRngCtxInitialized = TRUE;
     do
     {
+        if (rng_ctx.mRngCtxInitialized == TRUE)
+        {
+            result = gRngSuccess_d;
+            break;
+        }
+#if !defined(gPlatformIsNbu_d)
+        /* The workqueue is used to post and schedule seed
+         * trig upon user demand using RNG_NotifyReseedNeeded().
+         */
+        if (WORKQ_InitSysWorkQ() < 0)
+        {
+            break;
+        }
+#endif
         (void)SecLibMutexCreate();
 
         RNG_MUTEX_LOCK();
+
+#if defined(gPlatformHasNbu_d)
+        PLATFORM_RegisterReceivedSeedRequest(&RNG_NotifyReseedNeeded);
+#endif
+
+#if defined(gPlatformIsNbu_d)
+        PLATFORM_RegisterSetNewSeed(&RNG_SetExternalSeed);
+#endif
+        mbedtls_entropy_init(&mRngEntropyCtx);
+        mbedtls_hmac_drbg_init(&mRngHmacDrbgCtx);
+
         rngResult = mbedtls_entropy_func(&mRngEntropyCtx, (unsigned char *)&rng_ctx.mPolyRngRandom,
                                          sizeof(rng_ctx.mPolyRngRandom));
         RNG_MUTEX_UNLOCK();
@@ -122,7 +158,9 @@ int RNG_Init(void)
         {
             break;
         }
-        rng_ctx.mPolyRngSeeded = TRUE;
+        rng_ctx.mPolyRngSeeded     = TRUE;
+        rng_ctx.mRngCtxInitialized = TRUE;
+
         /* Set seed for pseudo random number generation */
         (void)RNG_SetSeed();
 
@@ -132,11 +170,40 @@ int RNG_Init(void)
     return result;
 }
 
+/*! *********************************************************************************
+ * \brief  Reinitialize the RNG module post-wakeup.
+ *         May do nothing, action is dependent on platform.
+ *
+ * \return  gRngSuccess_d if successful, gRngInternalError_d if operation fails.
+ *
+ * Note: Failure only possible for specific platforms.
+ *
+ ********************************************************************************** */
 int RNG_ReInit(void)
 {
     int result = gRngSuccess_d;
-    (void)PLATFORM_ResetCrypto();
+    if (PLATFORM_ResetCrypto() != 0)
+    {
+        result = gRngInternalError_d;
+    }
     return result;
+}
+
+/*! *********************************************************************************
+ * \brief  DeInitialize the RNG module.
+ *         Resets the RNG context variables. Only used for test purposes.
+ *
+ * \return none
+ *
+ ********************************************************************************** */
+void RNG_DeInit(void)
+{
+    rng_ctx.mRngCtxInitialized = FALSE;
+    rng_ctx.mPrngIsSeeded      = FALSE;
+    rng_ctx.mPolyRngSeeded     = FALSE;
+    rng_ctx.mPolyRngRandom     = 0xDEADBEEF;
+    rng_ctx.mPRNG_Requests     = gRngMaxRequests_d;
+    rng_ctx.mNeedReseed        = FALSE;
 }
 
 /*! *********************************************************************************
@@ -149,12 +216,32 @@ int RNG_ReInit(void)
  ********************************************************************************** */
 int RNG_GetTrueRandomNumber(uint32_t *pRandomNo)
 {
-    if ((rng_ctx.mPolyRngSeeded == TRUE) && (pRandomNo != NULL))
+    int ret;
+
+    do
     {
-        rng_ctx.mPolyRngRandom = (uint32_t)(((uint64_t)rng_ctx.mPolyRngRandom * 279470273UL) % 4294967291UL);
-        *pRandomNo             = rng_ctx.mPolyRngRandom;
-    }
-    return gRngSuccess_d;
+        if (pRandomNo == NULL)
+        {
+            ret = gRngBadArguments_d;
+            break;
+        }
+
+        if (rng_ctx.mRngCtxInitialized != TRUE)
+        {
+            ret = gRngNotInitialized_d;
+            break;
+        }
+
+        if (RNG_entropy_func(&mRngEntropyCtx, (unsigned char *)pRandomNo, sizeof(uint32_t)) == 0)
+        {
+            ret = gRngSuccess_d;
+        }
+        else
+        {
+            ret = gRngInternalError_d;
+        }
+    } while (0 != 0);
+    return ret;
 }
 
 /*! *********************************************************************************
@@ -175,22 +262,55 @@ int RNG_GetTrueRandomNumber(uint32_t *pRandomNo)
  ********************************************************************************** */
 int RNG_GetPseudoRandomData(uint8_t *pOut, uint8_t outBytes, uint8_t *pSeed)
 {
-    int drbgResult;
+    int ret;
 
-    if (rng_ctx.mRngCtxInitialized == TRUE)
+    NOT_USED(pSeed);
+
+    do
     {
-        if (rng_ctx.mPrngIsSeeded == TRUE)
+        int drbgResult;
+
+        if (pOut == NULL || outBytes == 0u)
+        {
+            ret = gRngBadArguments_d;
+            break;
+        }
+
+        if (rng_ctx.mRngCtxInitialized != TRUE)
+        {
+            ret = gRngNotInitialized_d;
+            break;
+        }
+
+        if (!rng_ctx.mPrngIsSeeded)
+        {
+            /* request reseed */
+            if (RNG_NotifyReseedNeeded() < 0)
+            {
+                /* if request fails, bad news */
+                ret = gRngInternalError_d;
+            }
+            else
+            {
+                /* wait for reseed to retry */
+                ret = gRngReseedPending_d;
+            }
+            break;
+        }
+        else
         {
             if (rng_ctx.mPRNG_Requests == gRngMaxRequests_d)
             {
-                RNG_NotifyReseedNeeded();
+                if (RNG_NotifyReseedNeeded() < 0)
+                {
+                    ret = gRngInternalError_d;
+                    break;
+                }
             }
+            /* Continue in spite of the gRngMaxRequests_d limit reached */
+            rng_ctx.mPRNG_Requests++;
 
-            if (outBytes == 0U)
-            {
-                return 0;
-            }
-            else if (outBytes > mPRNG_NoOfBytes_c)
+            if (outBytes > mPRNG_NoOfBytes_c)
             {
                 outBytes = mPRNG_NoOfBytes_c;
             }
@@ -199,35 +319,20 @@ int RNG_GetPseudoRandomData(uint8_t *pOut, uint8_t outBytes, uint8_t *pSeed)
                 ; // if (outBytes != 0U && outBytes <= mPRNG_NoOfBytes_c)
             }
 
-            if (pOut == NULL)
-            {
-                return 0;
-            }
-
             RNG_MUTEX_LOCK();
             drbgResult = mbedtls_hmac_drbg_random(&mRngHmacDrbgCtx, pOut, outBytes);
             RNG_MUTEX_UNLOCK();
 
-            rng_ctx.mPRNG_Requests++;
+            if (drbgResult != 0)
+            {
+                ret = gRngInternalError_d;
+                break;
+            }
+            ret = (int)outBytes;
+        }
+    } while (false);
 
-            if (drbgResult == 0)
-            {
-                return (int16_t)outBytes;
-            }
-            else
-            {
-                return 0;
-            }
-        }
-        else
-        {
-            return -1;
-        }
-    }
-    else
-    {
-        return 0;
-    }
+    return ret;
 }
 
 /*! *********************************************************************************
@@ -327,26 +432,22 @@ int RNG_SetSeed(void)
             drbgResult = mbedtls_hmac_drbg_seed(&mRngHmacDrbgCtx, pMdInfo, RNG_entropy_func, &mRngEntropyCtx,
                                                 mPrngPersonalizationString_c, sizeof(mPrngPersonalizationString_c));
             RNG_MUTEX_UNLOCK();
-            assert(drbgResult == 0);
-            if (drbgResult == 0)
-            {
-                status                = gRngSuccess_d;
-                rng_ctx.mPrngIsSeeded = TRUE;
-            }
         }
         else
         {
             RNG_MUTEX_LOCK();
             /* Reseed the HMAC DRBG with no additional seed data. */
             drbgResult = mbedtls_hmac_drbg_reseed(&mRngHmacDrbgCtx, NULL, 0);
-            assert(drbgResult == 0);
-            if (drbgResult == 0)
-            {
-                status                = gRngSuccess_d;
-                rng_ctx.mPrngIsSeeded = TRUE;
-            }
             RNG_MUTEX_UNLOCK();
         }
+
+        assert(drbgResult == 0);
+        if (drbgResult == 0)
+        {
+            status                = gRngSuccess_d;
+            rng_ctx.mPrngIsSeeded = TRUE;
+        }
+
         /* On RNG_mbedTLS as the seed is only managed by mbedTLS layer we cannot send it to another core */
         rng_ctx.mNeedReseed = FALSE;
 
@@ -358,8 +459,14 @@ int RNG_SetSeed(void)
 
 int RNG_NotifyReseedNeeded(void)
 {
+    int status = 1;
+
     rng_ctx.mNeedReseed = TRUE;
-    return 1;
+
+#if !defined(gPlatformIsNbu_d)
+    status = WORKQ_Submit(&seed_needed_work);
+#endif
+    return status;
 }
 
 bool_t RNG_IsReseedNeeded(void)
@@ -426,4 +533,14 @@ static int RNG_entropy_func(void *data, unsigned char *output, size_t len)
 
     return result;
 }
+
+#if !defined(gPlatformIsNbu_d)
+static void RNG_seed_needed_handler(fwk_work_t *work)
+{
+    if (rng_ctx.mNeedReseed == TRUE)
+    {
+        (void)RNG_SetSeed();
+    }
+}
+#endif
 /********************************** EOF ***************************************/

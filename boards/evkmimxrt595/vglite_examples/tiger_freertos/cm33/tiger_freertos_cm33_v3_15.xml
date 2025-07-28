@@ -32,6 +32,7 @@
     <definition extID="platform.drivers.mipi_dsi_smartdma.MIMXRT595S"/>
     <definition extID="platform.drivers.mipi_dsi.MIMXRT595S"/>
     <definition extID="platform.drivers.smartdma.MIMXRT595S"/>
+    <definition extID="platform.drivers.smartdma_rt500.MIMXRT595S"/>
     <definition extID="platform.utilities.assert_lite.MIMXRT595S"/>
     <definition extID="platform.utilities.misc_utilities.MIMXRT595S"/>
     <definition extID="utility.str.MIMXRT595S"/>
@@ -51,11 +52,13 @@
     <definition extID="driver.display-rm68191.MIMXRT595S"/>
     <definition extID="driver.display-rm68200.MIMXRT595S"/>
     <definition extID="driver.display-rm67162.MIMXRT595S"/>
+    <definition extID="driver.display-co5300.MIMXRT595S"/>
     <definition extID="driver.ssd1963.MIMXRT595S"/>
     <definition extID="middleware.vglite.MIMXRT595S"/>
     <definition extID="middleware.freertos-kernel.MIMXRT595S"/>
     <definition extID="middleware.freertos-kernel.heap_4.MIMXRT595S"/>
     <definition extID="middleware.freertos-kernel.cm33_non_trustzone.MIMXRT595S"/>
+    <definition extID="middleware.freertos-kernel.extension.MIMXRT595S"/>
     <definition extID="middleware.freertos-kernel.config.MIMXRT595S"/>
     <definition extID="iar"/>
     <definition extID="mdk"/>
@@ -65,7 +68,7 @@
     <definition extID="com.crt.advproject.config.exe.debug"/>
     <definition extID="com.crt.advproject.config.exe.release"/>
   </externalDefinitions>
-  <example id="evkmimxrt595_tiger_freertos_cm33" name="tiger_freertos_cm33" device_core="cm33_MIMXRT595S" dependency="platform.drivers.flash_config.evkmimxrt595.MIMXRT595S CMSIS_Include_core_cm.MIMXRT595S device.MIMXRT595S_CMSIS.MIMXRT595S device.MIMXRT595S_system.MIMXRT595S device.MIMXRT595S_startup.MIMXRT595S platform.drivers.clock.MIMXRT595S platform.drivers.dsp.MIMXRT595S platform.drivers.i2s_bridge.MIMXRT595S platform.drivers.inputmux_connections.MIMXRT595S platform.drivers.memory.MIMXRT595S platform.drivers.power.MIMXRT595S platform.drivers.reset.MIMXRT595S platform.drivers.soc_mipi_dsi.MIMXRT595S platform.drivers.cache_cache64.MIMXRT595S platform.drivers.common.MIMXRT595S platform.drivers.flexcomm.MIMXRT595S platform.drivers.flexcomm_usart.MIMXRT595S platform.drivers.flexio.MIMXRT595S platform.drivers.flexio_mculcd_smartdma.MIMXRT595S platform.drivers.flexio_mculcd.MIMXRT595S platform.drivers.flexspi.MIMXRT595S platform.drivers.iap3.MIMXRT595S platform.drivers.inputmux.MIMXRT595S platform.drivers.lcdif.MIMXRT595S platform.drivers.lpc_dma.MIMXRT595S platform.drivers.lpc_gpio.MIMXRT595S platform.drivers.lpc_iopctl.MIMXRT595S platform.drivers.mipi_dsi_smartdma.MIMXRT595S platform.drivers.mipi_dsi.MIMXRT595S platform.drivers.smartdma.MIMXRT595S platform.utilities.assert_lite.MIMXRT595S platform.utilities.misc_utilities.MIMXRT595S utility.str.MIMXRT595S utility.debug_console_lite.MIMXRT595S component.usart_adapter.MIMXRT595S driver.video-common.MIMXRT595S driver.dc-fb-common.MIMXRT595S driver.display-common.MIMXRT595S driver.fbdev.MIMXRT595S driver.dbi.MIMXRT595S driver.dbi_flexio_smartdma.MIMXRT595S driver.dc-fb-dsi-cmd.MIMXRT595S driver.dc-fb-lcdif.MIMXRT595S driver.dc-fb-ssd1963.MIMXRT595S driver.display-mipi-dsi-cmd.MIMXRT595S driver.display-hx8394.MIMXRT595S driver.display-rm68191.MIMXRT595S driver.display-rm68200.MIMXRT595S driver.display-rm67162.MIMXRT595S driver.ssd1963.MIMXRT595S middleware.vglite.MIMXRT595S middleware.freertos-kernel.MIMXRT595S middleware.freertos-kernel.heap_4.MIMXRT595S middleware.freertos-kernel.cm33_non_trustzone.MIMXRT595S middleware.freertos-kernel.config.MIMXRT595S" category="vglite_examples">
+  <example id="evkmimxrt595_tiger_freertos_cm33" name="tiger_freertos_cm33" device_core="cm33_MIMXRT595S" dependency="platform.drivers.flash_config.evkmimxrt595.MIMXRT595S CMSIS_Include_core_cm.MIMXRT595S device.MIMXRT595S_CMSIS.MIMXRT595S device.MIMXRT595S_system.MIMXRT595S device.MIMXRT595S_startup.MIMXRT595S platform.drivers.clock.MIMXRT595S platform.drivers.dsp.MIMXRT595S platform.drivers.i2s_bridge.MIMXRT595S platform.drivers.inputmux_connections.MIMXRT595S platform.drivers.memory.MIMXRT595S platform.drivers.power.MIMXRT595S platform.drivers.reset.MIMXRT595S platform.drivers.soc_mipi_dsi.MIMXRT595S platform.drivers.cache_cache64.MIMXRT595S platform.drivers.common.MIMXRT595S platform.drivers.flexcomm.MIMXRT595S platform.drivers.flexcomm_usart.MIMXRT595S platform.drivers.flexio.MIMXRT595S platform.drivers.flexio_mculcd_smartdma.MIMXRT595S platform.drivers.flexio_mculcd.MIMXRT595S platform.drivers.flexspi.MIMXRT595S platform.drivers.iap3.MIMXRT595S platform.drivers.inputmux.MIMXRT595S platform.drivers.lcdif.MIMXRT595S platform.drivers.lpc_dma.MIMXRT595S platform.drivers.lpc_gpio.MIMXRT595S platform.drivers.lpc_iopctl.MIMXRT595S platform.drivers.mipi_dsi_smartdma.MIMXRT595S platform.drivers.mipi_dsi.MIMXRT595S platform.drivers.smartdma.MIMXRT595S platform.drivers.smartdma_rt500.MIMXRT595S platform.utilities.assert_lite.MIMXRT595S platform.utilities.misc_utilities.MIMXRT595S utility.str.MIMXRT595S utility.debug_console_lite.MIMXRT595S component.usart_adapter.MIMXRT595S driver.video-common.MIMXRT595S driver.dc-fb-common.MIMXRT595S driver.display-common.MIMXRT595S driver.fbdev.MIMXRT595S driver.dbi.MIMXRT595S driver.dbi_flexio_smartdma.MIMXRT595S driver.dc-fb-dsi-cmd.MIMXRT595S driver.dc-fb-lcdif.MIMXRT595S driver.dc-fb-ssd1963.MIMXRT595S driver.display-mipi-dsi-cmd.MIMXRT595S driver.display-hx8394.MIMXRT595S driver.display-rm68191.MIMXRT595S driver.display-rm68200.MIMXRT595S driver.display-rm67162.MIMXRT595S driver.display-co5300.MIMXRT595S driver.ssd1963.MIMXRT595S middleware.vglite.MIMXRT595S middleware.freertos-kernel.MIMXRT595S middleware.freertos-kernel.heap_4.MIMXRT595S middleware.freertos-kernel.cm33_non_trustzone.MIMXRT595S middleware.freertos-kernel.extension.MIMXRT595S middleware.freertos-kernel.config.MIMXRT595S" category="vglite_examples">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -89,6 +92,7 @@
           <value>CUSTOM_VGLITE_MEMORY_CONFIG=1</value>
           <value>SDK_DEBUGCONSOLE=1</value>
           <value>MCUX_META_BUILD</value>
+          <value>MIMXRT595S_cm33_SERIES</value>
           <value>SDK_OS_FREE_RTOS</value>
         </option>
         <option id="com.crt.advproject.gas.fpu" type="enum">
@@ -243,6 +247,9 @@
     </source>
     <source path="." project_relative_path="doc" type="doc">
       <files mask="example_board_readme.md"/>
+    </source>
+    <source path="." project_relative_path="doc" type="doc">
+      <files mask="examples_shared_readme.md"/>
     </source>
   </example>
 </ksdk:examples>

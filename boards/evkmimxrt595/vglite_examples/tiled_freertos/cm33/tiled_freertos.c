@@ -23,11 +23,14 @@
  ******************************************************************************/
 
 #define DEFAULT_SIZE       256.0f;
-#if defined(CPU_MIMXRT798SGFOA_cm33_core0)
+#if defined(MIMXRT798S_cm33_core0_SERIES)
 #define TILED_BUFFER1_ADDR 0x60400000U
-#elif defined(CPU_MIMXRT595SFFOC_cm33)
+#elif defined(MIMXRT595S_cm33_SERIES)
 #define TILED_BUFFER1_ADDR 0x28400000U
-#elif defined(CPU_MIMXRT1176DVMAA_cm7) || defined(CPU_MIMXRT1166DVM6A_cm7)
+#elif defined(MIMXRT1176_cm7_SERIES) || defined(MIMXRT1175_cm7_SERIES) || \
+      defined(MIMXRT1173_cm7_SERIES) || defined(MIMXRT1172_SERIES)     || \
+      defined(MIMXRT1171_SERIES)     || defined(MIMXRT1166_cm7_SERIES) || \
+      defined(MIMXRT1165_cm7_SERIES)
 #define TILED_BUFFER1_ADDR 0x80400000U
 #else
 #error "Unsupported CPU"
@@ -153,6 +156,13 @@ static vg_lite_error_t init_vg_lite(void)
     tiled_buffer.format  = VG_LITE_RGB565;
     tiled_buffer.memory  = (void *)TILED_BUFFER1_ADDR;
     tiled_buffer.address = TILED_BUFFER1_ADDR;
+
+    /*
+     * Data is organized in 4x4 pixel tiles for the tiled raster images.
+     * Align height to 4 pixels. Required by the CO5300 display.
+     */
+    if (tiled_buffer.height & 0x3)
+        tiled_buffer.height = (tiled_buffer.height & (~(uint32_t)0x3)) + 4;
 
     /* Align stride to 64 bytes (required for the tiled raster images) */
     if (tiled_buffer.stride & 0x3f)

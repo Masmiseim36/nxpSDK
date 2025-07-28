@@ -276,23 +276,23 @@ include_directories(${ProjDirPath}/../../../../../../middleware/multicore/rpmsg-
 
 include_directories(${ProjDirPath}/../../../../../../middleware/multicore/rpmsg-lite/lib/include/platform/imxrt500_fusionf1)
 
-include_directories(${ProjDirPath}/../../../../../../middleware/cadence/codecs/aacplus_dec/fusionf1/include/aac_dec)
+include_directories(${ProjDirPath}/../../../../../../middleware/cadence/codecs/include)
 
-include_directories(${ProjDirPath}/../../../../../../middleware/cadence/codecs/asrc_src_pp/fusionf1/include/src_pp)
+include_directories(${ProjDirPath}/../../../../../../middleware/cadence/codecs/aacplus_dec/include/aac_dec)
 
-include_directories(${ProjDirPath}/../../../../../../middleware/cadence/codecs/mp3_dec/fusionf1/include/mp3_dec)
+include_directories(${ProjDirPath}/../../../../../../middleware/cadence/codecs/asrc_src_pp/include/src_pp)
 
-include_directories(${ProjDirPath}/../../../../../../middleware/cadence/codecs/mp3_enc/fusionf1/include/mp3_enc)
+include_directories(${ProjDirPath}/../../../../../../middleware/cadence/codecs/mp3_dec/include/mp3_dec)
 
-include_directories(${ProjDirPath}/../../../../../../middleware/cadence/codecs/opus/fusionf1/include/opus_codec)
+include_directories(${ProjDirPath}/../../../../../../middleware/cadence/codecs/opus/include/opus_codec)
 
-include_directories(${ProjDirPath}/../../../../../../middleware/cadence/codecs/opus/fusionf1/include/ogg_lib)
+include_directories(${ProjDirPath}/../../../../../../middleware/cadence/codecs/opus/include/ogg_lib)
 
 include_directories(${ProjDirPath}/../../../../../../middleware/cadence/codecs/sbc_dec/fusionf1/include/sbc_dec)
 
 include_directories(${ProjDirPath}/../../../../../../middleware/cadence/codecs/sbc_enc/fusionf1/include/sbc_enc)
 
-include_directories(${ProjDirPath}/../../../../../../middleware/cadence/codecs/vorbis_dec/fusionf1/include/vorbis_dec)
+include_directories(${ProjDirPath}/../../../../../../middleware/cadence/codecs/vorbis_dec/include/vorbis_dec)
 
 include_directories(${ProjDirPath}/../../../../../../middleware/cadence/multicore-xaf/xa_af_hostless/algo/hifi-dpf/include)
 
@@ -352,23 +352,23 @@ include_directories(${ProjDirPath}/../../../../../../middleware/multicore/rpmsg-
 
 include_directories(${ProjDirPath}/../../../../../../middleware/multicore/rpmsg-lite/lib/include/platform/imxrt500_fusionf1)
 
-include_directories(${ProjDirPath}/../../../../../../middleware/cadence/codecs/aacplus_dec/fusionf1/include/aac_dec)
+include_directories(${ProjDirPath}/../../../../../../middleware/cadence/codecs/include)
 
-include_directories(${ProjDirPath}/../../../../../../middleware/cadence/codecs/asrc_src_pp/fusionf1/include/src_pp)
+include_directories(${ProjDirPath}/../../../../../../middleware/cadence/codecs/aacplus_dec/include/aac_dec)
 
-include_directories(${ProjDirPath}/../../../../../../middleware/cadence/codecs/mp3_dec/fusionf1/include/mp3_dec)
+include_directories(${ProjDirPath}/../../../../../../middleware/cadence/codecs/asrc_src_pp/include/src_pp)
 
-include_directories(${ProjDirPath}/../../../../../../middleware/cadence/codecs/mp3_enc/fusionf1/include/mp3_enc)
+include_directories(${ProjDirPath}/../../../../../../middleware/cadence/codecs/mp3_dec/include/mp3_dec)
 
-include_directories(${ProjDirPath}/../../../../../../middleware/cadence/codecs/opus/fusionf1/include/opus_codec)
+include_directories(${ProjDirPath}/../../../../../../middleware/cadence/codecs/opus/include/opus_codec)
 
-include_directories(${ProjDirPath}/../../../../../../middleware/cadence/codecs/opus/fusionf1/include/ogg_lib)
+include_directories(${ProjDirPath}/../../../../../../middleware/cadence/codecs/opus/include/ogg_lib)
 
 include_directories(${ProjDirPath}/../../../../../../middleware/cadence/codecs/sbc_dec/fusionf1/include/sbc_dec)
 
 include_directories(${ProjDirPath}/../../../../../../middleware/cadence/codecs/sbc_enc/fusionf1/include/sbc_enc)
 
-include_directories(${ProjDirPath}/../../../../../../middleware/cadence/codecs/vorbis_dec/fusionf1/include/vorbis_dec)
+include_directories(${ProjDirPath}/../../../../../../middleware/cadence/codecs/vorbis_dec/include/vorbis_dec)
 
 include_directories(${ProjDirPath}/../../../../../../middleware/cadence/multicore-xaf/xa_af_hostless/algo/hifi-dpf/include)
 
@@ -428,23 +428,23 @@ include_directories(${ProjDirPath}/../../../../../../middleware/multicore/rpmsg-
 
 include_directories(${ProjDirPath}/../../../../../../middleware/multicore/rpmsg-lite/lib/include/platform/imxrt500_fusionf1)
 
-include_directories(${ProjDirPath}/../../../../../../middleware/cadence/codecs/aacplus_dec/fusionf1/include/aac_dec)
+include_directories(${ProjDirPath}/../../../../../../middleware/cadence/codecs/include)
 
-include_directories(${ProjDirPath}/../../../../../../middleware/cadence/codecs/asrc_src_pp/fusionf1/include/src_pp)
+include_directories(${ProjDirPath}/../../../../../../middleware/cadence/codecs/aacplus_dec/include/aac_dec)
 
-include_directories(${ProjDirPath}/../../../../../../middleware/cadence/codecs/mp3_dec/fusionf1/include/mp3_dec)
+include_directories(${ProjDirPath}/../../../../../../middleware/cadence/codecs/asrc_src_pp/include/src_pp)
 
-include_directories(${ProjDirPath}/../../../../../../middleware/cadence/codecs/mp3_enc/fusionf1/include/mp3_enc)
+include_directories(${ProjDirPath}/../../../../../../middleware/cadence/codecs/mp3_dec/include/mp3_dec)
 
-include_directories(${ProjDirPath}/../../../../../../middleware/cadence/codecs/opus/fusionf1/include/opus_codec)
+include_directories(${ProjDirPath}/../../../../../../middleware/cadence/codecs/opus/include/opus_codec)
 
-include_directories(${ProjDirPath}/../../../../../../middleware/cadence/codecs/opus/fusionf1/include/ogg_lib)
+include_directories(${ProjDirPath}/../../../../../../middleware/cadence/codecs/opus/include/ogg_lib)
 
 include_directories(${ProjDirPath}/../../../../../../middleware/cadence/codecs/sbc_dec/fusionf1/include/sbc_dec)
 
 include_directories(${ProjDirPath}/../../../../../../middleware/cadence/codecs/sbc_enc/fusionf1/include/sbc_enc)
 
-include_directories(${ProjDirPath}/../../../../../../middleware/cadence/codecs/vorbis_dec/fusionf1/include/vorbis_dec)
+include_directories(${ProjDirPath}/../../../../../../middleware/cadence/codecs/vorbis_dec/include/vorbis_dec)
 
 include_directories(${ProjDirPath}/../../../../../../middleware/cadence/multicore-xaf/xa_af_hostless/algo/hifi-dpf/include)
 
@@ -621,55 +621,20 @@ add_executable(dsp_xaf_usb_demo_dsp.elf
 "${ProjDirPath}/../../../../../../middleware/multicore/rpmsg-lite/lib/rpmsg_lite/porting/environment/rpmsg_env_xos.c"
 "${ProjDirPath}/../../../../../../middleware/multicore/rpmsg-lite/lib/include/platform/imxrt500_fusionf1/rpmsg_platform.h"
 "${ProjDirPath}/../../../../../../middleware/multicore/rpmsg-lite/lib/rpmsg_lite/porting/platform/imxrt500_fusionf1/rpmsg_platform.c"
-"${ProjDirPath}/../../../../../../middleware/cadence/codecs/aacplus_dec/fusionf1/include/xa_apicmd_standards.h"
-"${ProjDirPath}/../../../../../../middleware/cadence/codecs/aacplus_dec/fusionf1/include/xa_error_handler.h"
-"${ProjDirPath}/../../../../../../middleware/cadence/codecs/aacplus_dec/fusionf1/include/xa_error_standards.h"
-"${ProjDirPath}/../../../../../../middleware/cadence/codecs/aacplus_dec/fusionf1/include/xa_memory_standards.h"
-"${ProjDirPath}/../../../../../../middleware/cadence/codecs/aacplus_dec/fusionf1/include/xa_type_def.h"
-"${ProjDirPath}/../../../../../../middleware/cadence/codecs/aacplus_dec/fusionf1/include/aac_dec/xa_aac_dec_api.h"
-"${ProjDirPath}/../../../../../../middleware/cadence/codecs/asrc_src_pp/fusionf1/include/xa_api_defs.h"
-"${ProjDirPath}/../../../../../../middleware/cadence/codecs/asrc_src_pp/fusionf1/include/xa_apicmd_standards.h"
-"${ProjDirPath}/../../../../../../middleware/cadence/codecs/asrc_src_pp/fusionf1/include/xa_error_handler.h"
-"${ProjDirPath}/../../../../../../middleware/cadence/codecs/asrc_src_pp/fusionf1/include/xa_error_standards.h"
-"${ProjDirPath}/../../../../../../middleware/cadence/codecs/asrc_src_pp/fusionf1/include/xa_memory_standards.h"
-"${ProjDirPath}/../../../../../../middleware/cadence/codecs/asrc_src_pp/fusionf1/include/xa_type_def.h"
-"${ProjDirPath}/../../../../../../middleware/cadence/codecs/asrc_src_pp/fusionf1/include/src_pp/xa_src_pp_api.h"
-"${ProjDirPath}/../../../../../../middleware/cadence/codecs/mp3_dec/fusionf1/include/xa_apicmd_standards.h"
-"${ProjDirPath}/../../../../../../middleware/cadence/codecs/mp3_dec/fusionf1/include/xa_error_handler.h"
-"${ProjDirPath}/../../../../../../middleware/cadence/codecs/mp3_dec/fusionf1/include/xa_error_standards.h"
-"${ProjDirPath}/../../../../../../middleware/cadence/codecs/mp3_dec/fusionf1/include/xa_memory_standards.h"
-"${ProjDirPath}/../../../../../../middleware/cadence/codecs/mp3_dec/fusionf1/include/xa_type_def.h"
-"${ProjDirPath}/../../../../../../middleware/cadence/codecs/mp3_dec/fusionf1/include/mp3_dec/xa_mp3_dec_api.h"
-"${ProjDirPath}/../../../../../../middleware/cadence/codecs/mp3_enc/fusionf1/include/xa_apicmd_standards.h"
-"${ProjDirPath}/../../../../../../middleware/cadence/codecs/mp3_enc/fusionf1/include/xa_error_handler.h"
-"${ProjDirPath}/../../../../../../middleware/cadence/codecs/mp3_enc/fusionf1/include/xa_error_standards.h"
-"${ProjDirPath}/../../../../../../middleware/cadence/codecs/mp3_enc/fusionf1/include/xa_memory_standards.h"
-"${ProjDirPath}/../../../../../../middleware/cadence/codecs/mp3_enc/fusionf1/include/xa_type_def.h"
-"${ProjDirPath}/../../../../../../middleware/cadence/codecs/mp3_enc/fusionf1/include/mp3_enc/xa_mp3_enc_api.h"
-"${ProjDirPath}/../../../../../../middleware/cadence/codecs/opus/fusionf1/include/xa_error_handler.h"
-"${ProjDirPath}/../../../../../../middleware/cadence/codecs/opus/fusionf1/include/xa_error_standards.h"
-"${ProjDirPath}/../../../../../../middleware/cadence/codecs/opus/fusionf1/include/xa_type_def.h"
-"${ProjDirPath}/../../../../../../middleware/cadence/codecs/opus/fusionf1/include/opus_codec/xa_opus_codec_api.h"
-"${ProjDirPath}/../../../../../../middleware/cadence/codecs/opus/fusionf1/include/ogg_lib/xa_ogg_lib_api.h"
-"${ProjDirPath}/../../../../../../middleware/cadence/codecs/sbc_dec/fusionf1/include/xa_apicmd_standards.h"
-"${ProjDirPath}/../../../../../../middleware/cadence/codecs/sbc_dec/fusionf1/include/xa_error_handler.h"
-"${ProjDirPath}/../../../../../../middleware/cadence/codecs/sbc_dec/fusionf1/include/xa_error_standards.h"
-"${ProjDirPath}/../../../../../../middleware/cadence/codecs/sbc_dec/fusionf1/include/xa_memory_standards.h"
-"${ProjDirPath}/../../../../../../middleware/cadence/codecs/sbc_dec/fusionf1/include/xa_type_def.h"
+"${ProjDirPath}/../../../../../../middleware/cadence/codecs/include/xa_api_defs.h"
+"${ProjDirPath}/../../../../../../middleware/cadence/codecs/include/xa_apicmd_standards.h"
+"${ProjDirPath}/../../../../../../middleware/cadence/codecs/include/xa_error_handler.h"
+"${ProjDirPath}/../../../../../../middleware/cadence/codecs/include/xa_error_standards.h"
+"${ProjDirPath}/../../../../../../middleware/cadence/codecs/include/xa_memory_standards.h"
+"${ProjDirPath}/../../../../../../middleware/cadence/codecs/include/xa_type_def.h"
+"${ProjDirPath}/../../../../../../middleware/cadence/codecs/aacplus_dec/include/aac_dec/xa_aac_dec_api.h"
+"${ProjDirPath}/../../../../../../middleware/cadence/codecs/asrc_src_pp/include/src_pp/xa_src_pp_api.h"
+"${ProjDirPath}/../../../../../../middleware/cadence/codecs/mp3_dec/include/mp3_dec/xa_mp3_dec_api.h"
+"${ProjDirPath}/../../../../../../middleware/cadence/codecs/opus/include/opus_codec/xa_opus_codec_api.h"
+"${ProjDirPath}/../../../../../../middleware/cadence/codecs/opus/include/ogg_lib/xa_ogg_lib_api.h"
 "${ProjDirPath}/../../../../../../middleware/cadence/codecs/sbc_dec/fusionf1/include/sbc_dec/xa_sbc_dec_api.h"
-"${ProjDirPath}/../../../../../../middleware/cadence/codecs/sbc_enc/fusionf1/include/xa_apicmd_standards.h"
-"${ProjDirPath}/../../../../../../middleware/cadence/codecs/sbc_enc/fusionf1/include/xa_error_handler.h"
-"${ProjDirPath}/../../../../../../middleware/cadence/codecs/sbc_enc/fusionf1/include/xa_error_standards.h"
-"${ProjDirPath}/../../../../../../middleware/cadence/codecs/sbc_enc/fusionf1/include/xa_memory_standards.h"
-"${ProjDirPath}/../../../../../../middleware/cadence/codecs/sbc_enc/fusionf1/include/xa_type_def.h"
 "${ProjDirPath}/../../../../../../middleware/cadence/codecs/sbc_enc/fusionf1/include/sbc_enc/xa_sbc_enc_api.h"
-"${ProjDirPath}/../../../../../../middleware/cadence/codecs/vorbis_dec/fusionf1/doc/COPYING"
-"${ProjDirPath}/../../../../../../middleware/cadence/codecs/vorbis_dec/fusionf1/include/xa_apicmd_standards.h"
-"${ProjDirPath}/../../../../../../middleware/cadence/codecs/vorbis_dec/fusionf1/include/xa_error_handler.h"
-"${ProjDirPath}/../../../../../../middleware/cadence/codecs/vorbis_dec/fusionf1/include/xa_error_standards.h"
-"${ProjDirPath}/../../../../../../middleware/cadence/codecs/vorbis_dec/fusionf1/include/xa_memory_standards.h"
-"${ProjDirPath}/../../../../../../middleware/cadence/codecs/vorbis_dec/fusionf1/include/xa_type_def.h"
-"${ProjDirPath}/../../../../../../middleware/cadence/codecs/vorbis_dec/fusionf1/include/vorbis_dec/xa_vorbis_dec_api.h"
+"${ProjDirPath}/../../../../../../middleware/cadence/codecs/vorbis_dec/include/vorbis_dec/xa_vorbis_dec_api.h"
 "${ProjDirPath}/../../../../../../middleware/cadence/multicore-xaf/xa_af_hostless/algo/hifi-dpf/src/rbtree.c"
 "${ProjDirPath}/../../../../../../middleware/cadence/multicore-xaf/xa_af_hostless/algo/hifi-dpf/src/xa-class-audio-codec.c"
 "${ProjDirPath}/../../../../../../middleware/cadence/multicore-xaf/xa_af_hostless/algo/hifi-dpf/src/xa-class-base.c"
@@ -818,19 +783,16 @@ target_link_libraries(dsp_xaf_usb_demo_dsp.elf debug xos)
 target_link_libraries(dsp_xaf_usb_demo_dsp.elf optimized xos)
 
 
-target_link_libraries(dsp_xaf_usb_demo_dsp.elf debug ${ProjDirPath}/../../../../../../middleware/cadence/codecs/aacplus_dec/fusionf1/lib/xa_aacplus_v2_loas_dec.a)
+target_link_libraries(dsp_xaf_usb_demo_dsp.elf debug ${ProjDirPath}/../../../../../../middleware/cadence/codecs/aacplus_dec/lib/RT500_FusionF1/xa_aacplus_v2_loas_dec.a)
 
 
-target_link_libraries(dsp_xaf_usb_demo_dsp.elf debug ${ProjDirPath}/../../../../../../middleware/cadence/codecs/asrc_src_pp/fusionf1/lib/xa_asrc_src_pp.a)
+target_link_libraries(dsp_xaf_usb_demo_dsp.elf debug ${ProjDirPath}/../../../../../../middleware/cadence/codecs/asrc_src_pp/lib/RT500_FusionF1/xa_asrc_src_pp.a)
 
 
-target_link_libraries(dsp_xaf_usb_demo_dsp.elf debug ${ProjDirPath}/../../../../../../middleware/cadence/codecs/mp3_dec/fusionf1/lib/xa_mp3_dec.a)
+target_link_libraries(dsp_xaf_usb_demo_dsp.elf debug ${ProjDirPath}/../../../../../../middleware/cadence/codecs/mp3_dec/lib/RT500_FusionF1/xa_mp3_dec.a)
 
 
-target_link_libraries(dsp_xaf_usb_demo_dsp.elf debug ${ProjDirPath}/../../../../../../middleware/cadence/codecs/mp3_enc/fusionf1/lib/xa_mp3_enc.a)
-
-
-target_link_libraries(dsp_xaf_usb_demo_dsp.elf debug ${ProjDirPath}/../../../../../../middleware/cadence/codecs/opus/fusionf1/lib/xa_opus_codec.a)
+target_link_libraries(dsp_xaf_usb_demo_dsp.elf debug ${ProjDirPath}/../../../../../../middleware/cadence/codecs/opus/lib/RT500_FusionF1/xa_opus_codec.a)
 
 
 target_link_libraries(dsp_xaf_usb_demo_dsp.elf debug ${ProjDirPath}/../../../../../../middleware/cadence/codecs/sbc_dec/fusionf1/lib/xa_sbc_dec.a)
@@ -839,22 +801,19 @@ target_link_libraries(dsp_xaf_usb_demo_dsp.elf debug ${ProjDirPath}/../../../../
 target_link_libraries(dsp_xaf_usb_demo_dsp.elf debug ${ProjDirPath}/../../../../../../middleware/cadence/codecs/sbc_enc/fusionf1/lib/xa_sbc_enc.a)
 
 
-target_link_libraries(dsp_xaf_usb_demo_dsp.elf debug ${ProjDirPath}/../../../../../../middleware/cadence/codecs/vorbis_dec/fusionf1/lib/xa_vorbis_dec.a)
+target_link_libraries(dsp_xaf_usb_demo_dsp.elf debug ${ProjDirPath}/../../../../../../middleware/cadence/codecs/vorbis_dec/lib/RT500_FusionF1/xa_vorbis_dec.a)
 
 
-target_link_libraries(dsp_xaf_usb_demo_dsp.elf optimized ${ProjDirPath}/../../../../../../middleware/cadence/codecs/aacplus_dec/fusionf1/lib/xa_aacplus_v2_loas_dec.a)
+target_link_libraries(dsp_xaf_usb_demo_dsp.elf optimized ${ProjDirPath}/../../../../../../middleware/cadence/codecs/aacplus_dec/lib/RT500_FusionF1/xa_aacplus_v2_loas_dec.a)
 
 
-target_link_libraries(dsp_xaf_usb_demo_dsp.elf optimized ${ProjDirPath}/../../../../../../middleware/cadence/codecs/asrc_src_pp/fusionf1/lib/xa_asrc_src_pp.a)
+target_link_libraries(dsp_xaf_usb_demo_dsp.elf optimized ${ProjDirPath}/../../../../../../middleware/cadence/codecs/asrc_src_pp/lib/RT500_FusionF1/xa_asrc_src_pp.a)
 
 
-target_link_libraries(dsp_xaf_usb_demo_dsp.elf optimized ${ProjDirPath}/../../../../../../middleware/cadence/codecs/mp3_dec/fusionf1/lib/xa_mp3_dec.a)
+target_link_libraries(dsp_xaf_usb_demo_dsp.elf optimized ${ProjDirPath}/../../../../../../middleware/cadence/codecs/mp3_dec/lib/RT500_FusionF1/xa_mp3_dec.a)
 
 
-target_link_libraries(dsp_xaf_usb_demo_dsp.elf optimized ${ProjDirPath}/../../../../../../middleware/cadence/codecs/mp3_enc/fusionf1/lib/xa_mp3_enc.a)
-
-
-target_link_libraries(dsp_xaf_usb_demo_dsp.elf optimized ${ProjDirPath}/../../../../../../middleware/cadence/codecs/opus/fusionf1/lib/xa_opus_codec.a)
+target_link_libraries(dsp_xaf_usb_demo_dsp.elf optimized ${ProjDirPath}/../../../../../../middleware/cadence/codecs/opus/lib/RT500_FusionF1/xa_opus_codec.a)
 
 
 target_link_libraries(dsp_xaf_usb_demo_dsp.elf optimized ${ProjDirPath}/../../../../../../middleware/cadence/codecs/sbc_dec/fusionf1/lib/xa_sbc_dec.a)
@@ -863,7 +822,7 @@ target_link_libraries(dsp_xaf_usb_demo_dsp.elf optimized ${ProjDirPath}/../../..
 target_link_libraries(dsp_xaf_usb_demo_dsp.elf optimized ${ProjDirPath}/../../../../../../middleware/cadence/codecs/sbc_enc/fusionf1/lib/xa_sbc_enc.a)
 
 
-target_link_libraries(dsp_xaf_usb_demo_dsp.elf optimized ${ProjDirPath}/../../../../../../middleware/cadence/codecs/vorbis_dec/fusionf1/lib/xa_vorbis_dec.a)
+target_link_libraries(dsp_xaf_usb_demo_dsp.elf optimized ${ProjDirPath}/../../../../../../middleware/cadence/codecs/vorbis_dec/lib/RT500_FusionF1/xa_vorbis_dec.a)
 
 TARGET_LINK_LIBRARIES(dsp_xaf_usb_demo_dsp.elf -Wl,--end-group)
 

@@ -34,7 +34,11 @@ extern int wifi_supp_inject_frame(const unsigned int bss_type, const uint8_t *bu
 int l2_packet_send(struct l2_packet_data *l2, const u8 *dst_addr, u16 proto, const u8 *buf, size_t len)
 {
     unsigned int interface;
-
+#if CONFIG_WPA_SUPP_P2P
+    if (strstr(l2->ifname, "wf"))
+        interface = 2; //WLAN_BSS_TYPE_WIFIDIRECT;
+    else
+#endif
     if (strstr(l2->ifname, "ml"))
         interface = 0; //WLAN_BSS_TYPE_STA;
     else

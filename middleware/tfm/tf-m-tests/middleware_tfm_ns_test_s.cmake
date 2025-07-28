@@ -4,7 +4,7 @@ include_guard(GLOBAL)
 message("${CMAKE_CURRENT_LIST_FILE} component is included.")
 
       target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
-          ${CMAKE_CURRENT_LIST_DIR}/test/secure_fw/common_test_services/tfm_secure_client_service
+          ${CMAKE_CURRENT_LIST_DIR}/tests_reg/test/secure_fw/common_test_services/tfm_secure_client_service
         )
 
     if(CONFIG_USE_COMPONENT_CONFIGURATION)

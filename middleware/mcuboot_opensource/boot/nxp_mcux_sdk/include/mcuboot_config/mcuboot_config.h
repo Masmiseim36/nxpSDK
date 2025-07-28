@@ -42,20 +42,6 @@
 #define MCUBOOT_SIGN_ED25519
 #endif
 
-/* Uncomment to enable BOOTROM signature */
-#ifdef CONFIG_BOOT_SIGNATURE_TYPE_ROM
-#define MCUBOOT_SIGN_ROM
-#ifdef SOC_LPC55S69_SERIES
-#define HAB_IVT_OFFSET 0x0u
-#else
-#define HAB_IVT_OFFSET 0x1000u
-#endif
-#endif
-
-/* Uncomment to enable MBED_TLS */
-#ifdef COMPONENT_MBEDTLS
-#define MCUBOOT_USE_MBED_TLS
-#endif
 
 /* Uncomment to enable Hardware Key */
 #ifdef CONFIG_BOOT_HW_KEY
@@ -73,8 +59,10 @@
  * direct-xip mode is configured.
  */
 
-/* Uncomment to enable the overwrite-only code path. */
-/* #define MCUBOOT_OVERWRITE_ONLY */
+#ifdef CONFIG_BOOT_OVERWRITE_ONLY
+#define MCUBOOT_OVERWRITE_ONLY
+#endif
+
 
 #ifndef MCUBOOT_OVERWRITE_ONLY
    
@@ -106,7 +94,9 @@
 #else
 
 /* Upgrade mode: SWAP MODE (default) */ 
+#ifndef CONFIG_BOOT_SWAP_USING_MOVE
 #define CONFIG_BOOT_SWAP_USING_MOVE
+#endif
 #define MCUBOOT_SWAP_USING_MOVE 1
 
 #endif /* CONFIG_MCUBOOT_FLASH_REMAP_ENABLE */
@@ -130,13 +120,14 @@
  */
 
 /* Uncomment to use ARM's mbedTLS cryptographic primitives */
-#ifdef COMPONENT_MBEDTLS
+#if defined(CONFIG_BOOT_USE_MBEDTLS) || defined(COMPONENT_MBEDTLS)
 #define MCUBOOT_USE_MBED_TLS
-/* Uncomment to use Tinycrypt's. */
-/* #define MCUBOOT_USE_TINYCRYPT */
 #endif
 
-#ifdef COMPONENT_MCUBOOT_SECURE
+#ifdef CONFIG_BOOT_USE_TINYCRYPT
+#define MCUBOOT_USE_TINYCRYPT
+#endif
+
 /*
  * Always check the signature of the image in the primary slot before booting,
  * even if no upgrade was performed. This is recommended if the boot
@@ -144,7 +135,6 @@
  */
 #ifdef CONFIG_BOOT_SIGNATURE
 #define MCUBOOT_VALIDATE_PRIMARY_SLOT
-#endif
 #endif
 
 #ifdef CONFIG_UPDATEABLE_IMAGE_NUMBER
@@ -208,6 +198,11 @@
 #ifdef CONFIG_BOOT_ENCRYPT_RSA
 #define MCUBOOT_ENC_IMAGES
 #define MCUBOOT_ENCRYPT_RSA
+#endif
+
+#ifdef CONFIG_BOOT_ENCRYPT_ECDSA_P256
+#define MCUBOOT_ENC_IMAGES
+#define MCUBOOT_ENCRYPT_EC256
 #endif
 
 #ifdef CONFIG_BOOT_BOOTSTRAP

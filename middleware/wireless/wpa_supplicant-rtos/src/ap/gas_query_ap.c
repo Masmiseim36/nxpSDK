@@ -10,7 +10,7 @@
 
 #include "includes.h"
 
-#ifdef CONFIG_DPP
+#if defined(CONFIG_DPP) && CONFIG_HOSTAPD
 #include "utils/common.h"
 #include "utils/eloop.h"
 #include "utils/dl_list.h"

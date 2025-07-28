@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2017, 2020, 2023 NXP
+ * Copyright 2016-2017, 2020, 2023, 2025 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -319,8 +319,9 @@ status_t OV7670_Configure(camera_device_handle_t *handle, const ov7670_config_t 
 
     (void)OV7670_ContrastAdjustment(handle, config->contrast);
     (void)OV7670_BrightnessAdjustment(handle, config->brightness);
-    (void)OV7670_WriteReg(handle, 0xb0, 0x84); /*!< because of colors */
+    (void)OV7670_WriteReg(handle, 0xb0, 0x84); /* Automatic black Level Compensation */
     (void)OV7670_WriteReg(handle, 0xff, 0xff);
+    (void)OV7670_WriteReg(handle, 0x09, 0x00); /* Output Drive Capability: 1x */
 
     return kStatus_Success;
 }

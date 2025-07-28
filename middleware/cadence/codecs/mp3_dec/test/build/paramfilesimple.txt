@@ -1,0 +1,6 @@
+@Start
+@Input_path ../test_inp/
+@Output_path ../test_out/
+-ifile:hihat.mp3 -ofile:hihat_16bit.wav -pcmsz:16
+// -ifile:compl.mp3 -ofile:compl_24bit.wav -pcmsz:24
+@Stop

@@ -870,29 +870,6 @@
 /* #define BT_DISABLE_MUTEX */
 
 /*
- *  BT_HAVE_STATIC_DECL
- *
- *  This flag enables provision for declaring functions and/or globals in
- *  a file as 'static'.
- */
-#define BT_HAVE_STATIC_DECL
-
-#ifdef BT_HAVE_STATIC_DECL
-#define EM_HAVE_STATIC_DECL
-#endif /* BT_HAVE_STATIC_DECL */
-
-/*
- *  BT_HAVE_CONST_DECL
- *
- *  This flag enables provision for declaring globals in a file as 'const'.
- */
-#define BT_HAVE_CONST_DECL
-
-#ifdef BT_HAVE_CONST_DECL
-#define EM_HAVE_CONST_DECL
-#endif /* BT_HAVE_CONST_DECL */
-
-/*
  *  BT_HAVE_REENTRANT_DECL
  *
  *  This flag enables provision for declaring re-entrant functions.
@@ -4942,6 +4919,8 @@
  *  Dependency: None.
  */
 #define JPL_USE_APP_MEMORY
+/** To get statistical (state) information from JPL (in test mode) */
+#define JPL_TEST_MODE
 
 /* ----------------------------------------------------------------------- */
 /* ==== Module Profiling Flags =========================================== */

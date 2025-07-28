@@ -1,3 +1,7 @@
+# Copyright 2025 NXP
+#
+# SPDX-License-Identifier: BSD-3-Clause
+
 # TOOLCHAIN EXTENSION
 IF(WIN32)
     SET(TOOLCHAIN_EXT ".exe")

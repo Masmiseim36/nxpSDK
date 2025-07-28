@@ -1,0 +1,5 @@
+@Start
+@Input_path ../test_inp/
+@Output_path ../test_out/
+-ifile:thetest_48000ps_chbr32.nac -ofile:thetest_48000ps_chbr32.wav -r32 -bdabplus -w16
+@Stop

@@ -332,9 +332,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../mcux_config.h -mno-unaligned-access  -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
-              <Define>DEBUG, HAL_AUDIO_ISR_PRIORITY=0, USB_STACK_BM, USB_STACK_USE_DEDICATED_RAM=1, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT595SFFOC_cm33, OSA_USED, BOOT_HEADER_ENABLE=1, SDK_I2C_BASED_COMPONENT_USED=1, CODEC_MULTI_ADAPTERS=1, CODEC_WM8904_ENABLE, SDK_I3C_BASED_COMPONENT_USED=1, USE_RTOS=0</Define>
+              <Define>DEBUG, HAL_AUDIO_ISR_PRIORITY=0, USB_STACK_BM, USB_STACK_USE_DEDICATED_RAM=1, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT595SFFOC_cm33, MIMXRT595S_cm33_SERIES, OSA_USED, BOOT_HEADER_ENABLE=1, SDK_I2C_BASED_COMPONENT_USED=1, CODEC_MULTI_ADAPTERS=1, CODEC_WM8904_ENABLE, SDK_I3C_BASED_COMPONENT_USED=1, USE_RTOS=0</Define>
               <Undefine/>
-              <IncludePath>..;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT595S;../../../../../../devices/MIMXRT595S/periph;../../../../../../devices/MIMXRT595S/drivers;../../../../../../devices/MIMXRT595S/utilities/debug_console_lite;../../../../../../components/lists;../../../../../../devices/MIMXRT595S/utilities/str;../../../../../../components/codec/i2c;../../../../../../components/codec;../../../../../../components/codec/port;../../../../../../components/codec/port/wm8904;../../../../../../components/codec/wm8904;../../../../../../components/i2c;../../../../../../components/uart;../../../../../../components/osa;../../../../../../components/audio;../../../../../../middleware/usb/include;../../../../../../middleware/usb/device;../../../../../../middleware/usb/device/class;../../../../../../middleware/usb/phy</IncludePath>
+              <IncludePath>..;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT595S;../../../../../../devices/MIMXRT595S/periph;../../../../../../devices/MIMXRT595S/drivers;../../../../../../devices/MIMXRT595S/utilities/debug_console_lite;../../../../../../components/lists;../../../../../../devices/MIMXRT595S/utilities/str;../../../../../../components/codec/i2c;../../../../../../components/codec;../../../../../../components/codec/port;../../../../../../components/codec/port/wm8904;../../../../../../components/codec/wm8904;../../../../../../components/i2c;../../../../../../components/uart;../../../../../../components/audio;../../../../../../components/osa;../../../../../../middleware/usb/include;../../../../../../middleware/usb/device;../../../../../../middleware/usb/config/device/ip3511hs;../../../../../../middleware/usb/device/class;../../../../../../middleware/usb/phy</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -350,9 +350,9 @@
             <uClangAs>1</uClangAs>
             <VariousControls>
               <MiscControls/>
-              <Define>MCUXPRESSO_SDK, CPU_MIMXRT595SFFOC_cm33, OSA_USED</Define>
+              <Define>MCUXPRESSO_SDK, CPU_MIMXRT595SFFOC_cm33, MIMXRT595S_cm33_SERIES, OSA_USED</Define>
               <Undefine/>
-              <IncludePath>..;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT595S;../../../../../../devices/MIMXRT595S/periph;../../../../../../devices/MIMXRT595S/drivers;../../../../../../devices/MIMXRT595S/utilities/debug_console_lite;../../../../../../components/lists;../../../../../../devices/MIMXRT595S/utilities/str;../../../../../../components/codec/i2c;../../../../../../components/codec;../../../../../../components/codec/port;../../../../../../components/codec/port/wm8904;../../../../../../components/codec/wm8904;../../../../../../components/i2c;../../../../../../components/uart;../../../../../../components/osa;../../../../../../components/audio;../../../../../../middleware/usb/include;../../../../../../middleware/usb/device;../../../../../../middleware/usb/device/class;../../../../../../middleware/usb/phy</IncludePath>
+              <IncludePath>..;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT595S;../../../../../../devices/MIMXRT595S/periph;../../../../../../devices/MIMXRT595S/drivers;../../../../../../devices/MIMXRT595S/utilities/debug_console_lite;../../../../../../components/lists;../../../../../../devices/MIMXRT595S/utilities/str;../../../../../../components/codec/i2c;../../../../../../components/codec;../../../../../../components/codec/port;../../../../../../components/codec/port/wm8904;../../../../../../components/codec/wm8904;../../../../../../components/i2c;../../../../../../components/uart;../../../../../../components/audio;../../../../../../components/osa;../../../../../../middleware/usb/include;../../../../../../middleware/usb/device;../../../../../../middleware/usb/config/device/ip3511hs;../../../../../../middleware/usb/device/class;../../../../../../middleware/usb/phy</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -1281,26 +1281,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component/osa</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_os_abstraction.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/osa/fsl_os_abstraction.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_os_abstraction_bm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/osa/fsl_os_abstraction_bm.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_os_abstraction_bm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/osa/fsl_os_abstraction_bm.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>component/audio</GroupName>
           <Files>
             <File>
@@ -1312,6 +1292,26 @@
               <FileName>fsl_adapter_flexcomm_i2s.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../components/audio/fsl_adapter_flexcomm_i2s.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/osa</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_os_abstraction_bm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/osa/fsl_os_abstraction_bm.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction_bm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/osa/fsl_os_abstraction_bm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/osa/fsl_os_abstraction.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1437,6 +1437,11 @@
               <FileName>example_board_readme.md</FileName>
               <FileType>5</FileType>
               <FilePath>../example_board_readme.md</FilePath>
+            </File>
+            <File>
+              <FileName>examples_shared_readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../examples_shared_readme.md</FilePath>
             </File>
             <File>
               <FileName>run_vcom.jpg</FileName>
@@ -1826,9 +1831,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../mcux_config.h -mno-unaligned-access  -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
-              <Define>DEBUG, HAL_AUDIO_ISR_PRIORITY=0, USB_STACK_BM, USB_STACK_USE_DEDICATED_RAM=1, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT595SFFOC_cm33, OSA_USED, BOOT_HEADER_ENABLE=1, SDK_I2C_BASED_COMPONENT_USED=1, CODEC_MULTI_ADAPTERS=1, CODEC_WM8904_ENABLE, SDK_I3C_BASED_COMPONENT_USED=1, USE_RTOS=0</Define>
+              <Define>DEBUG, HAL_AUDIO_ISR_PRIORITY=0, USB_STACK_BM, USB_STACK_USE_DEDICATED_RAM=1, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT595SFFOC_cm33, MIMXRT595S_cm33_SERIES, OSA_USED, BOOT_HEADER_ENABLE=1, SDK_I2C_BASED_COMPONENT_USED=1, CODEC_MULTI_ADAPTERS=1, CODEC_WM8904_ENABLE, SDK_I3C_BASED_COMPONENT_USED=1, USE_RTOS=0</Define>
               <Undefine/>
-              <IncludePath>..;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT595S;../../../../../../devices/MIMXRT595S/periph;../../../../../../devices/MIMXRT595S/drivers;../../../../../../devices/MIMXRT595S/utilities/debug_console_lite;../../../../../../components/lists;../../../../../../devices/MIMXRT595S/utilities/str;../../../../../../components/codec/i2c;../../../../../../components/codec;../../../../../../components/codec/port;../../../../../../components/codec/port/wm8904;../../../../../../components/codec/wm8904;../../../../../../components/i2c;../../../../../../components/uart;../../../../../../components/osa;../../../../../../components/audio;../../../../../../middleware/usb/include;../../../../../../middleware/usb/device;../../../../../../middleware/usb/device/class;../../../../../../middleware/usb/phy</IncludePath>
+              <IncludePath>..;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT595S;../../../../../../devices/MIMXRT595S/periph;../../../../../../devices/MIMXRT595S/drivers;../../../../../../devices/MIMXRT595S/utilities/debug_console_lite;../../../../../../components/lists;../../../../../../devices/MIMXRT595S/utilities/str;../../../../../../components/codec/i2c;../../../../../../components/codec;../../../../../../components/codec/port;../../../../../../components/codec/port/wm8904;../../../../../../components/codec/wm8904;../../../../../../components/i2c;../../../../../../components/uart;../../../../../../components/audio;../../../../../../components/osa;../../../../../../middleware/usb/include;../../../../../../middleware/usb/device;../../../../../../middleware/usb/config/device/ip3511hs;../../../../../../middleware/usb/device/class;../../../../../../middleware/usb/phy</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1844,9 +1849,9 @@
             <uClangAs>1</uClangAs>
             <VariousControls>
               <MiscControls/>
-              <Define>MCUXPRESSO_SDK, CPU_MIMXRT595SFFOC_cm33, OSA_USED</Define>
+              <Define>MCUXPRESSO_SDK, CPU_MIMXRT595SFFOC_cm33, MIMXRT595S_cm33_SERIES, OSA_USED</Define>
               <Undefine/>
-              <IncludePath>..;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT595S;../../../../../../devices/MIMXRT595S/periph;../../../../../../devices/MIMXRT595S/drivers;../../../../../../devices/MIMXRT595S/utilities/debug_console_lite;../../../../../../components/lists;../../../../../../devices/MIMXRT595S/utilities/str;../../../../../../components/codec/i2c;../../../../../../components/codec;../../../../../../components/codec/port;../../../../../../components/codec/port/wm8904;../../../../../../components/codec/wm8904;../../../../../../components/i2c;../../../../../../components/uart;../../../../../../components/osa;../../../../../../components/audio;../../../../../../middleware/usb/include;../../../../../../middleware/usb/device;../../../../../../middleware/usb/device/class;../../../../../../middleware/usb/phy</IncludePath>
+              <IncludePath>..;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT595S;../../../../../../devices/MIMXRT595S/periph;../../../../../../devices/MIMXRT595S/drivers;../../../../../../devices/MIMXRT595S/utilities/debug_console_lite;../../../../../../components/lists;../../../../../../devices/MIMXRT595S/utilities/str;../../../../../../components/codec/i2c;../../../../../../components/codec;../../../../../../components/codec/port;../../../../../../components/codec/port/wm8904;../../../../../../components/codec/wm8904;../../../../../../components/i2c;../../../../../../components/uart;../../../../../../components/audio;../../../../../../components/osa;../../../../../../middleware/usb/include;../../../../../../middleware/usb/device;../../../../../../middleware/usb/config/device/ip3511hs;../../../../../../middleware/usb/device/class;../../../../../../middleware/usb/phy</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -2775,26 +2780,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component/osa</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_os_abstraction.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/osa/fsl_os_abstraction.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_os_abstraction_bm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/osa/fsl_os_abstraction_bm.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_os_abstraction_bm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/osa/fsl_os_abstraction_bm.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>component/audio</GroupName>
           <Files>
             <File>
@@ -2806,6 +2791,26 @@
               <FileName>fsl_adapter_flexcomm_i2s.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../components/audio/fsl_adapter_flexcomm_i2s.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/osa</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_os_abstraction_bm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/osa/fsl_os_abstraction_bm.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction_bm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/osa/fsl_os_abstraction_bm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/osa/fsl_os_abstraction.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2931,6 +2936,11 @@
               <FileName>example_board_readme.md</FileName>
               <FileType>5</FileType>
               <FilePath>../example_board_readme.md</FilePath>
+            </File>
+            <File>
+              <FileName>examples_shared_readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../examples_shared_readme.md</FilePath>
             </File>
             <File>
               <FileName>run_vcom.jpg</FileName>
@@ -3320,9 +3330,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../mcux_config.h -mno-unaligned-access  -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
-              <Define>NDEBUG, HAL_AUDIO_ISR_PRIORITY=0, USB_STACK_BM, USB_STACK_USE_DEDICATED_RAM=1, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT595SFFOC_cm33, OSA_USED, BOOT_HEADER_ENABLE=1, SDK_I2C_BASED_COMPONENT_USED=1, CODEC_MULTI_ADAPTERS=1, CODEC_WM8904_ENABLE, SDK_I3C_BASED_COMPONENT_USED=1, USE_RTOS=0</Define>
+              <Define>NDEBUG, HAL_AUDIO_ISR_PRIORITY=0, USB_STACK_BM, USB_STACK_USE_DEDICATED_RAM=1, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT595SFFOC_cm33, MIMXRT595S_cm33_SERIES, OSA_USED, BOOT_HEADER_ENABLE=1, SDK_I2C_BASED_COMPONENT_USED=1, CODEC_MULTI_ADAPTERS=1, CODEC_WM8904_ENABLE, SDK_I3C_BASED_COMPONENT_USED=1, USE_RTOS=0</Define>
               <Undefine/>
-              <IncludePath>..;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT595S;../../../../../../devices/MIMXRT595S/periph;../../../../../../devices/MIMXRT595S/drivers;../../../../../../devices/MIMXRT595S/utilities/debug_console_lite;../../../../../../components/lists;../../../../../../devices/MIMXRT595S/utilities/str;../../../../../../components/codec/i2c;../../../../../../components/codec;../../../../../../components/codec/port;../../../../../../components/codec/port/wm8904;../../../../../../components/codec/wm8904;../../../../../../components/i2c;../../../../../../components/uart;../../../../../../components/osa;../../../../../../components/audio;../../../../../../middleware/usb/include;../../../../../../middleware/usb/device;../../../../../../middleware/usb/device/class;../../../../../../middleware/usb/phy</IncludePath>
+              <IncludePath>..;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT595S;../../../../../../devices/MIMXRT595S/periph;../../../../../../devices/MIMXRT595S/drivers;../../../../../../devices/MIMXRT595S/utilities/debug_console_lite;../../../../../../components/lists;../../../../../../devices/MIMXRT595S/utilities/str;../../../../../../components/codec/i2c;../../../../../../components/codec;../../../../../../components/codec/port;../../../../../../components/codec/port/wm8904;../../../../../../components/codec/wm8904;../../../../../../components/i2c;../../../../../../components/uart;../../../../../../components/audio;../../../../../../components/osa;../../../../../../middleware/usb/include;../../../../../../middleware/usb/device;../../../../../../middleware/usb/config/device/ip3511hs;../../../../../../middleware/usb/device/class;../../../../../../middleware/usb/phy</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -3338,9 +3348,9 @@
             <uClangAs>1</uClangAs>
             <VariousControls>
               <MiscControls/>
-              <Define>MCUXPRESSO_SDK, CPU_MIMXRT595SFFOC_cm33, OSA_USED</Define>
+              <Define>MCUXPRESSO_SDK, CPU_MIMXRT595SFFOC_cm33, MIMXRT595S_cm33_SERIES, OSA_USED</Define>
               <Undefine/>
-              <IncludePath>..;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT595S;../../../../../../devices/MIMXRT595S/periph;../../../../../../devices/MIMXRT595S/drivers;../../../../../../devices/MIMXRT595S/utilities/debug_console_lite;../../../../../../components/lists;../../../../../../devices/MIMXRT595S/utilities/str;../../../../../../components/codec/i2c;../../../../../../components/codec;../../../../../../components/codec/port;../../../../../../components/codec/port/wm8904;../../../../../../components/codec/wm8904;../../../../../../components/i2c;../../../../../../components/uart;../../../../../../components/osa;../../../../../../components/audio;../../../../../../middleware/usb/include;../../../../../../middleware/usb/device;../../../../../../middleware/usb/device/class;../../../../../../middleware/usb/phy</IncludePath>
+              <IncludePath>..;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT595S;../../../../../../devices/MIMXRT595S/periph;../../../../../../devices/MIMXRT595S/drivers;../../../../../../devices/MIMXRT595S/utilities/debug_console_lite;../../../../../../components/lists;../../../../../../devices/MIMXRT595S/utilities/str;../../../../../../components/codec/i2c;../../../../../../components/codec;../../../../../../components/codec/port;../../../../../../components/codec/port/wm8904;../../../../../../components/codec/wm8904;../../../../../../components/i2c;../../../../../../components/uart;../../../../../../components/audio;../../../../../../components/osa;../../../../../../middleware/usb/include;../../../../../../middleware/usb/device;../../../../../../middleware/usb/config/device/ip3511hs;../../../../../../middleware/usb/device/class;../../../../../../middleware/usb/phy</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -4269,26 +4279,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component/osa</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_os_abstraction.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/osa/fsl_os_abstraction.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_os_abstraction_bm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/osa/fsl_os_abstraction_bm.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_os_abstraction_bm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/osa/fsl_os_abstraction_bm.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>component/audio</GroupName>
           <Files>
             <File>
@@ -4300,6 +4290,26 @@
               <FileName>fsl_adapter_flexcomm_i2s.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../components/audio/fsl_adapter_flexcomm_i2s.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/osa</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_os_abstraction_bm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/osa/fsl_os_abstraction_bm.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction_bm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/osa/fsl_os_abstraction_bm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/osa/fsl_os_abstraction.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -4425,6 +4435,11 @@
               <FileName>example_board_readme.md</FileName>
               <FileType>5</FileType>
               <FilePath>../example_board_readme.md</FilePath>
+            </File>
+            <File>
+              <FileName>examples_shared_readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../examples_shared_readme.md</FilePath>
             </File>
             <File>
               <FileName>run_vcom.jpg</FileName>
@@ -4814,9 +4829,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../mcux_config.h -mno-unaligned-access  -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
-              <Define>NDEBUG, HAL_AUDIO_ISR_PRIORITY=0, USB_STACK_BM, USB_STACK_USE_DEDICATED_RAM=1, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT595SFFOC_cm33, OSA_USED, BOOT_HEADER_ENABLE=1, SDK_I2C_BASED_COMPONENT_USED=1, CODEC_MULTI_ADAPTERS=1, CODEC_WM8904_ENABLE, SDK_I3C_BASED_COMPONENT_USED=1, USE_RTOS=0</Define>
+              <Define>NDEBUG, HAL_AUDIO_ISR_PRIORITY=0, USB_STACK_BM, USB_STACK_USE_DEDICATED_RAM=1, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT595SFFOC_cm33, MIMXRT595S_cm33_SERIES, OSA_USED, BOOT_HEADER_ENABLE=1, SDK_I2C_BASED_COMPONENT_USED=1, CODEC_MULTI_ADAPTERS=1, CODEC_WM8904_ENABLE, SDK_I3C_BASED_COMPONENT_USED=1, USE_RTOS=0</Define>
               <Undefine/>
-              <IncludePath>..;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT595S;../../../../../../devices/MIMXRT595S/periph;../../../../../../devices/MIMXRT595S/drivers;../../../../../../devices/MIMXRT595S/utilities/debug_console_lite;../../../../../../components/lists;../../../../../../devices/MIMXRT595S/utilities/str;../../../../../../components/codec/i2c;../../../../../../components/codec;../../../../../../components/codec/port;../../../../../../components/codec/port/wm8904;../../../../../../components/codec/wm8904;../../../../../../components/i2c;../../../../../../components/uart;../../../../../../components/osa;../../../../../../components/audio;../../../../../../middleware/usb/include;../../../../../../middleware/usb/device;../../../../../../middleware/usb/device/class;../../../../../../middleware/usb/phy</IncludePath>
+              <IncludePath>..;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT595S;../../../../../../devices/MIMXRT595S/periph;../../../../../../devices/MIMXRT595S/drivers;../../../../../../devices/MIMXRT595S/utilities/debug_console_lite;../../../../../../components/lists;../../../../../../devices/MIMXRT595S/utilities/str;../../../../../../components/codec/i2c;../../../../../../components/codec;../../../../../../components/codec/port;../../../../../../components/codec/port/wm8904;../../../../../../components/codec/wm8904;../../../../../../components/i2c;../../../../../../components/uart;../../../../../../components/audio;../../../../../../components/osa;../../../../../../middleware/usb/include;../../../../../../middleware/usb/device;../../../../../../middleware/usb/config/device/ip3511hs;../../../../../../middleware/usb/device/class;../../../../../../middleware/usb/phy</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -4832,9 +4847,9 @@
             <uClangAs>1</uClangAs>
             <VariousControls>
               <MiscControls/>
-              <Define>MCUXPRESSO_SDK, CPU_MIMXRT595SFFOC_cm33, OSA_USED</Define>
+              <Define>MCUXPRESSO_SDK, CPU_MIMXRT595SFFOC_cm33, MIMXRT595S_cm33_SERIES, OSA_USED</Define>
               <Undefine/>
-              <IncludePath>..;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT595S;../../../../../../devices/MIMXRT595S/periph;../../../../../../devices/MIMXRT595S/drivers;../../../../../../devices/MIMXRT595S/utilities/debug_console_lite;../../../../../../components/lists;../../../../../../devices/MIMXRT595S/utilities/str;../../../../../../components/codec/i2c;../../../../../../components/codec;../../../../../../components/codec/port;../../../../../../components/codec/port/wm8904;../../../../../../components/codec/wm8904;../../../../../../components/i2c;../../../../../../components/uart;../../../../../../components/osa;../../../../../../components/audio;../../../../../../middleware/usb/include;../../../../../../middleware/usb/device;../../../../../../middleware/usb/device/class;../../../../../../middleware/usb/phy</IncludePath>
+              <IncludePath>..;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT595S;../../../../../../devices/MIMXRT595S/periph;../../../../../../devices/MIMXRT595S/drivers;../../../../../../devices/MIMXRT595S/utilities/debug_console_lite;../../../../../../components/lists;../../../../../../devices/MIMXRT595S/utilities/str;../../../../../../components/codec/i2c;../../../../../../components/codec;../../../../../../components/codec/port;../../../../../../components/codec/port/wm8904;../../../../../../components/codec/wm8904;../../../../../../components/i2c;../../../../../../components/uart;../../../../../../components/audio;../../../../../../components/osa;../../../../../../middleware/usb/include;../../../../../../middleware/usb/device;../../../../../../middleware/usb/config/device/ip3511hs;../../../../../../middleware/usb/device/class;../../../../../../middleware/usb/phy</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -5763,26 +5778,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component/osa</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_os_abstraction.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/osa/fsl_os_abstraction.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_os_abstraction_bm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/osa/fsl_os_abstraction_bm.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_os_abstraction_bm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/osa/fsl_os_abstraction_bm.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>component/audio</GroupName>
           <Files>
             <File>
@@ -5794,6 +5789,26 @@
               <FileName>fsl_adapter_flexcomm_i2s.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../components/audio/fsl_adapter_flexcomm_i2s.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/osa</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_os_abstraction_bm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/osa/fsl_os_abstraction_bm.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction_bm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/osa/fsl_os_abstraction_bm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/osa/fsl_os_abstraction.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -5919,6 +5934,11 @@
               <FileName>example_board_readme.md</FileName>
               <FileType>5</FileType>
               <FilePath>../example_board_readme.md</FilePath>
+            </File>
+            <File>
+              <FileName>examples_shared_readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../examples_shared_readme.md</FilePath>
             </File>
             <File>
               <FileName>run_vcom.jpg</FileName>

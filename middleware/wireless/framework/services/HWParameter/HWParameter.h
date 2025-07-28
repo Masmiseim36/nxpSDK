@@ -16,6 +16,7 @@
 ********************************************************************************** */
 
 #include "EmbeddedTypes.h"
+#include "fwk_platform_definitions.h"
 
 /*!
  * @addtogroup HWParameter
@@ -103,7 +104,8 @@ typedef PACKED_STRUCT HwParameters_tag
        Existing data in flash will not be compatible after modifying the hardwareParameters_t typedef.
        In this case the size of the padding has to be adjusted.
     */
-    uint8_t reserved[1];
+    uint8_t  reserved[PROD_DATA_PADDING_SZ];
+    uint16_t crc;
     /* first byte of padding : actual size if 63 for legacy HwParameters but
       complement to 128 bytes in the new structure */
 }

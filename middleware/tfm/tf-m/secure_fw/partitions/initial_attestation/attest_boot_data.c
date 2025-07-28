@@ -15,7 +15,7 @@
 #ifdef TFM_PARTITION_MEASURED_BOOT
 #include "measured_boot_api.h"
 #include "boot_measurement.h"
-#include "psa/tfm/crypto.h"            //NXP to avoid file name conflicts between MbedTLS and TFM.
+#include "psa/crypto.h"
 #endif /* TFM_PARTITION_MEASURED_BOOT */
 
 #ifndef TFM_PARTITION_MEASURED_BOOT

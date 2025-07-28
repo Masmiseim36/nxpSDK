@@ -28,7 +28,7 @@ BOOT_LOG_MODULE_DECLARE(mcuboot);
 #define FLASH_DEVICE_BASE 0
 #define FLASH_DEVICE_NODE DT_INST(0, jedec_spi_nor)
 
-#elif defined(CONFIG_SOC_FAMILY_ESP32)
+#elif defined(CONFIG_SOC_FAMILY_ESPRESSIF_ESP32)
 
 #define FLASH_DEVICE_ID SPI_FLASH_0_ID
 #define FLASH_DEVICE_BASE 0
@@ -141,8 +141,12 @@ int flash_area_sector_from_off(off_t off, struct flash_sector *sector)
 
 uint8_t flash_area_get_device_id(const struct flash_area *fa)
 {
-	(void)fa;
-	return FLASH_DEVICE_ID;
+#if defined(CONFIG_ARM)
+    return fa->fa_id;
+#else
+    (void)fa;
+    return FLASH_DEVICE_ID;
+#endif
 }
 
 #define ERASED_VAL 0xff

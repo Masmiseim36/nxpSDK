@@ -2169,7 +2169,7 @@ static uint8_t att_read_type_req(struct bt_att_chan *chan, struct net_buf *buf)
 			     BT_ATT_ERR_INVALID_HANDLE);
 		return 0;
 	}
- 
+
 	/* Reading Database Hash is special as it may be used to make client change aware
 	* (Core Specification 5.4 Vol 3. Part G. 2.5.2.1 Robust Caching).
 	*
@@ -3882,6 +3882,9 @@ static void rx_async_work(struct k_work *work)
 	int err = -ENOENT;
 
 	LOG_DBG("RX workqueue");
+#if (defined(CONFIG_BT_ATT_TEST) && (CONFIG_BT_ATT_TEST > 0U))
+	PRINTF("ATT request start process...... \r\n");
+#endif /* defined(CONFIG_BT_ATT_TEST) */
 
 	if (!atomic_test_bit(chan->flags, ATT_CONNECTED)) {
 		LOG_WRN("Waiting for ATT channel ready");
@@ -4789,6 +4792,9 @@ static API_RESULT ethermind_bt_att_cb
 				}
 				(void)net_buf_add_mem(buf, eventdata, event_datalen);
 				LOG_DBG("RX queue put buf %p", buf);
+#if (defined(CONFIG_BT_ATT_TEST) && (CONFIG_BT_ATT_TEST > 0U))
+				PRINTF("ATT request received \r\n");
+#endif /* defined(CONFIG_BT_ATT_TEST) */
 				net_buf_put(&attChan->rx_queue, buf);
 				k_work_submit(&attChan->rx_work);
 			}

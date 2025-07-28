@@ -2,7 +2,7 @@
  * Copyright (c) 2014, Mentor Graphics Corporation
  * Copyright (c) 2015 Xilinx, Inc.
  * Copyright (c) 2016 Freescale Semiconductor, Inc.
- * Copyright 2016-2024 NXP
+ * Copyright 2016-2025 NXP
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -43,6 +43,7 @@
  **************************************************************************/
 
 #include "rpmsg_env.h"
+#include "rpmsg_lite.h"
 #include "rpmsg_platform.h"
 #include "virtqueue.h"
 
@@ -113,14 +114,31 @@ void *env_get_platform_context(void *env_context)
  * env_wait_for_link_up
  *
  * Wait until the link_state parameter of the rpmsg_lite_instance is set.
- * Busy loop implementation, timeout_ms parameter ignored for now, to be replaced by events.
+ * Busy loop implementation, timeout_ms parameter, to be replaced by events.
  *
  */
 uint32_t env_wait_for_link_up(volatile uint32_t *link_state, uint32_t link_id, uint32_t timeout_ms)
 {
+    uint32_t tick_count = 0U;
+    uint32_t tick_temp;
+
     while (*link_state != 1U)
     {
+        env_sleep_msec(RL_MS_PER_INTERVAL);
+
+        if (RL_BLOCK != timeout_ms)
+        {
+            tick_temp = tick_count + (uint32_t)RL_MS_PER_INTERVAL;
+
+            if ((tick_temp < tick_count) || (tick_temp >= timeout_ms))
+            {
+                return 0U;
+            }
+
+            tick_count = tick_temp;
+        }
     }
+
     return 1U;
 }
 
@@ -213,7 +231,8 @@ void env_free_memory(void *ptr)
  */
 void env_memset(void *ptr, int32_t value, uint32_t size)
 {
-    (void)memset(ptr, value, size);
+    /* Explicitly convert value to unsigned char range to ensure consistent behavior */
+    (void)memset(ptr, (unsigned char)(value & 0xFF), size);
 }
 
 /*!
@@ -662,6 +681,14 @@ int32_t env_create_queue(void **queue, int32_t length, int32_t element_size)
 {
     char name[100];
     struct mq_attr mqstat;
+
+    if (length < 0 || element_size < 0)
+    {
+        /* Length and size should not be negative */
+        *queue = NULL;
+        return -1;
+    }
+
 #if defined(RL_USE_STATIC_API) && (RL_USE_STATIC_API == 1)
     env_queue_t *q = (env_queue_t *)queue_static_context;
 #else
@@ -672,7 +699,7 @@ int32_t env_create_queue(void **queue, int32_t length, int32_t element_size)
         return -1;
     }
     /* Creates a unique queue in /dev/mq/PID_virtaddr_length */
-    sprintf(name, "/%u_0x%lx_%u", getpid(), (uint64_t)q, length);
+    sprintf(name, "/%u_0x%lx_%d", getpid(), (uint64_t)q, length);
     mqstat.mq_maxmsg   = length;
     mqstat.mq_msgsize  = element_size;
     mqstat.mq_flags    = 0;

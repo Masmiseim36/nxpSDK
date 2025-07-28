@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2007-2015 Freescale Semiconductor, Inc.
- * Copyright 2018-2021, 2024 NXP
+ * Copyright 2018-2021, 2024-2025 NXP
  *
  * License: NXP LA_OPT_Online Code Hosting NXP_Software_License
  *
@@ -27,19 +27,19 @@
 #if FMSTR_SESSION_COUNT > 1
 
 #if FMSTR_USE_SCOPE > 0
-#define _FMSTR_SC ((FMSTR_U8)(FMSTR_USE_SCOPE))
+#define _FMSTR_SC ((FMSTR_SIZE)(FMSTR_USE_SCOPE))
 #else
 #define _FMSTR_SC 0U
 #endif
 
 #if FMSTR_USE_RECORDER > 0
-#define _FMSTR_RC ((FMSTR_U8)(FMSTR_USE_RECORDER))
+#define _FMSTR_RC ((FMSTR_SIZE)(FMSTR_USE_RECORDER))
 #else
 #define _FMSTR_RC 0U
 #endif
 
 #if FMSTR_USE_PIPES > 0
-#define _FMSTR_PC ((FMSTR_U8)(FMSTR_USE_PIPES))
+#define _FMSTR_PC ((FMSTR_SIZE)(FMSTR_USE_PIPES))
 #else
 #define _FMSTR_PC 0U
 #endif
@@ -54,12 +54,12 @@
 
 /* Macros to convert instance to an index in one large fature locking array */
 
-#define FMSTR_FEATURE_SCOPE_INSTANCE(n)     ((FMSTR_U8)(n))
-#define FMSTR_FEATURE_REC_INSTANCE(n)       ((FMSTR_U8)(_FMSTR_SC + (FMSTR_U8)(n)))
-#define FMSTR_FEATURE_APPCMD_INSTANCE(n)    ((FMSTR_U8)(_FMSTR_SC + _FMSTR_RC + 0U))
-#define FMSTR_FEATURE_FLASHPROG_INSTANCE(n) ((FMSTR_U8)(_FMSTR_SC + _FMSTR_RC + _FMSTR_AC + 0U))
-#define FMSTR_FEATURE_PIPE_INSTANCE(n)      ((FMSTR_U8)(_FMSTR_SC + _FMSTR_RC + _FMSTR_AC + _FMSTR_FPG + (FMSTR_U8)(n)))
-#define FMSTR_FEATURE_LOCK_COUNT            ((FMSTR_U8)(_FMSTR_SC + _FMSTR_RC + _FMSTR_AC + _FMSTR_FPG + _FMSTR_PC))
+#define FMSTR_FEATURE_SCOPE_INSTANCE(n)     ((FMSTR_SIZE)(n))
+#define FMSTR_FEATURE_REC_INSTANCE(n)       ((FMSTR_SIZE)(_FMSTR_SC + (FMSTR_U8)(n)))
+#define FMSTR_FEATURE_APPCMD_INSTANCE(n)    ((FMSTR_SIZE)(_FMSTR_SC + _FMSTR_RC + 0U))
+#define FMSTR_FEATURE_FLASHPROG_INSTANCE(n) ((FMSTR_SIZE)(_FMSTR_SC + _FMSTR_RC + _FMSTR_AC + 0U))
+#define FMSTR_FEATURE_PIPE_INSTANCE(n)      ((FMSTR_SIZE)(_FMSTR_SC + _FMSTR_RC + _FMSTR_AC + _FMSTR_FPG + (FMSTR_U8)(n)))
+#define FMSTR_FEATURE_LOCK_COUNT            ((FMSTR_SIZE)(_FMSTR_SC + _FMSTR_RC + _FMSTR_AC + _FMSTR_FPG + _FMSTR_PC))
 
 typedef struct
 {
@@ -76,11 +76,14 @@ typedef struct
    when features are excluded from protocol. */
 const FMSTR_CHAR *_FMSTR_GetAccessPassword(FMSTR_U8 requiredAccess);
 FMSTR_BPTR _FMSTR_GetBoardConfig(FMSTR_BPTR msgBuffIO, FMSTR_U8 *retStatus);
-FMSTR_BPTR _FMSTR_AuthenticationStep1(FMSTR_SESSION *session, FMSTR_BPTR msgBuffIO, FMSTR_U8 *retStatus);
-FMSTR_BPTR _FMSTR_AuthenticationStep2(FMSTR_SESSION *session, FMSTR_BPTR msgBuffIO, FMSTR_U8 *retStatus);
 FMSTR_BPTR _FMSTR_ReadMem(FMSTR_SESSION *session, FMSTR_BPTR msgBuffIO, FMSTR_U8 *retStatus);
 FMSTR_BPTR _FMSTR_ReadMemBaseAddress(FMSTR_SESSION *session, FMSTR_BPTR msgBuffIO, FMSTR_U8 *retStatus);
 FMSTR_BPTR _FMSTR_WriteMem(FMSTR_SESSION *session, FMSTR_BPTR msgBuffIO, FMSTR_U8 *retStatus);
+
+#if FMSTR_CFG_F1_RESTRICTED_ACCESS != 0
+FMSTR_BPTR _FMSTR_AuthenticationStep1(FMSTR_SESSION *session, FMSTR_BPTR msgBuffIO, FMSTR_U8 *retStatus);
+FMSTR_BPTR _FMSTR_AuthenticationStep2(FMSTR_SESSION *session, FMSTR_BPTR msgBuffIO, FMSTR_U8 *retStatus);
+#endif
 
 static FMSTR_SESSION *_FMSTR_FindSession(void *identification, FMSTR_BOOL create);
 
@@ -213,6 +216,7 @@ FMSTR_BOOL FMSTR_Init(void)
     FMSTR_DEBUG_PRINTF("FMSTR Init finished, ok=%d\n", (int)ok);
 #endif
 
+    FMSTR_ASSERT(ok != FMSTR_FALSE);
     return ok;
 }
 
@@ -265,7 +269,7 @@ void FMSTR_SendResponse(FMSTR_BPTR response, FMSTR_SIZE length, FMSTR_U8 statusC
 #endif
     }
 
-#if FMSTR_DEBUG_LEVEL >= 2
+#if FMSTR_DEBUG_LEVEL >= 3
     FMSTR_DEBUG_PRINTF("FMSTR SendResponse Status: 0x%x, Len: 0x%x\n", statusCode, length);
 #endif
 
@@ -293,7 +297,7 @@ FMSTR_BOOL FMSTR_ProtocolDecoder(FMSTR_BPTR msgBuffIO, FMSTR_SIZE msgSize, FMSTR
     FMSTR_U8 statusCode          = FMSTR_STS_INVALID;
     FMSTR_SESSION *activeSession = NULL;
 
-#if FMSTR_DEBUG_LEVEL >= 2
+#if FMSTR_DEBUG_LEVEL >= 3
     FMSTR_DEBUG_PRINTF("FMSTR ProtocolDecoder Cmd: 0x%x, Len: 0x%x\n", cmdCode, msgSize);
 #endif
 
@@ -427,8 +431,13 @@ FMSTR_BOOL FMSTR_ProtocolDecoder(FMSTR_BPTR msgBuffIO, FMSTR_SIZE msgSize, FMSTR
     {
         /*lint -e{946,960} subtracting pointers is appropriate here */
         FMSTR_INDEX ptrDiff = (FMSTR_INDEX)(responseEnd - msgBuffIO);
-        FMSTR_SIZE respSize = (FMSTR_SIZE)ptrDiff;
 
+        /* Coverity: Intentional signed/unsigned cast. The 'responseEnd' value is always >= msgBuffIO 
+           and within the buffer size limit, so the result will not wrap and will be positive. 
+           No risk of misinterpretation. */
+        /* coverity[cert_int31_c_violation:FALSE] */
+        FMSTR_SIZE respSize = (FMSTR_SIZE)ptrDiff;
+        
         /* Non-variable length error responses are forced to 0 length */
         if ((statusCode & (FMSTR_STSF_VARLEN | FMSTR_STSF_ERROR)) == FMSTR_STSF_ERROR)
         {
@@ -495,7 +504,7 @@ FMSTR_BPTR _FMSTR_GetBoardConfig(FMSTR_BPTR msgBuffIO, FMSTR_U8 *retStatus)
     if (ix == 0)
     {
         FMSTR_INDEX i;
-        /* Get the configuration name from incomming buffer */
+        /* Get the configuration name from incoming buffer */
         msgBuffIO = FMSTR_StringFromBuffer(msgBuffIO, str, sizeof(str));
 
         /* Try to find the Index of the config item */
@@ -507,14 +516,15 @@ FMSTR_BPTR _FMSTR_GetBoardConfig(FMSTR_BPTR msgBuffIO, FMSTR_U8 *retStatus)
                 break;
             }
         }
-
-        if (ix == 0)
-        {
-            respCode = FMSTR_STC_EACCESS;
-            goto FMSTR_GetConfig_exit;
-        }
     }
 
+    /* Name not found or index invalid */
+    if (ix <= 0)
+    {
+        respCode = FMSTR_STC_EACCESS;
+        goto FMSTR_GetConfig_exit;
+    }
+    
     respCode = FMSTR_STS_OK | FMSTR_STSF_VARLEN;
     response = FMSTR_StringCopyToBuffer(response, fmstr_cfgParamNames[ix - 1]);
 
@@ -537,6 +547,9 @@ FMSTR_BPTR _FMSTR_GetBoardConfig(FMSTR_BPTR msgBuffIO, FMSTR_U8 *retStatus)
             response = FMSTR_StringCopyToBuffer(response, FMSTR_BUILDTIME_STR);
             break;
         case 6: /* F1 */
+            /* Coverity: Intentional use of invariant macro expression. */
+            /* coverity[misra_c_2012_rule_14_3_violation:FALSE] */
+            /* coverity[misra_c_2012_rule_10_4_violation:FALSE] */
             response = FMSTR_ValueToBuffer8(response, FMSTR_CFG_F1);
             break;
 #ifdef FMSTR_PLATFORM_BASE_ADDRESS
@@ -937,6 +950,8 @@ static FMSTR_FEATURE_LOCK *_FMSTR_FeatureGet(FMSTR_U8 featureType, FMSTR_U8 inst
         case FMSTR_FEATURE_SCOPE:
             if (instance < _FMSTR_SC)
             {
+                /* Coverity: Intentional constant type cast. */
+                /* coverity[misra_c_2012_rule_10_8_violation:FALSE] */
                 index = (FMSTR_INDEX)FMSTR_FEATURE_SCOPE_INSTANCE(instance);
             }
             break;
@@ -946,6 +961,7 @@ static FMSTR_FEATURE_LOCK *_FMSTR_FeatureGet(FMSTR_U8 featureType, FMSTR_U8 inst
         case FMSTR_FEATURE_REC:
             if (instance < _FMSTR_RC)
             {
+                /* coverity[misra_c_2012_rule_10_8_violation:FALSE] */
                 index = (FMSTR_INDEX)FMSTR_FEATURE_REC_INSTANCE(instance);
             }
             break;
@@ -955,6 +971,7 @@ static FMSTR_FEATURE_LOCK *_FMSTR_FeatureGet(FMSTR_U8 featureType, FMSTR_U8 inst
         case FMSTR_FEATURE_APPCMD:
             if (instance < _FMSTR_AC)
             {
+                /* coverity[misra_c_2012_rule_10_8_violation:FALSE] */
                 index = (FMSTR_INDEX)FMSTR_FEATURE_APPCMD_INSTANCE(instance);
             }
             break;
@@ -963,6 +980,7 @@ static FMSTR_FEATURE_LOCK *_FMSTR_FeatureGet(FMSTR_U8 featureType, FMSTR_U8 inst
         case FMSTR_FEATURE_FLASHPROG:
             if (instance < _FMSTR_FPG)
             {
+                /* coverity[misra_c_2012_rule_10_8_violation:FALSE] */
                 index = (FMSTR_INDEX)FMSTR_FEATURE_FLASHPROG_INSTANCE(instance);
             }
             break;
@@ -973,6 +991,7 @@ static FMSTR_FEATURE_LOCK *_FMSTR_FeatureGet(FMSTR_U8 featureType, FMSTR_U8 inst
             FMSTR_INDEX pipeIndex = FMSTR_FindPipeIndex(instance);
             if (pipeIndex < (FMSTR_INDEX)_FMSTR_PC)
             {
+                /* coverity[misra_c_2012_rule_10_8_violation:FALSE] */
                 index = (FMSTR_INDEX)FMSTR_FEATURE_PIPE_INSTANCE(pipeIndex);
             }
         }
@@ -984,7 +1003,8 @@ static FMSTR_FEATURE_LOCK *_FMSTR_FeatureGet(FMSTR_U8 featureType, FMSTR_U8 inst
             break;
     }
 
-    /* Check max size */
+    /* Coverity: Check max size, always check the index is within array. */
+    /* coverity[misra_c_2012_rule_14_3_violation:FALSE] */
     if (index < 0 || index > (FMSTR_INDEX)FMSTR_FEATURE_LOCK_COUNT)
     {
         return NULL;
@@ -1175,7 +1195,9 @@ static FMSTR_SESSION *_FMSTR_FindSession(void *identification, FMSTR_BOOL create
             return ses;
         }
 
-        /* Find free session */
+        /* Looking for the first free session */
+        /* Coverity: Intentional, may be always true when FMSTR_SESSION_COUNT==1. */
+        /* coverity[misra_c_2012_rule_14_3_violation:FALSE] */
         if (freeSession == NULL && ses->identification == NULL)
         {
             freeSession = ses;

@@ -42,9 +42,9 @@ extern void wlan_11h_priv_init(mlan_private *pmpriv);
 /** Check if radar detection is required on the specified channel */
 extern t_bool wlan_11h_radar_detect_required(mlan_private *priv, t_u8 channel);
 
-
-
+#if CONFIG_ECSA
 /** Get non-DFS channel */
 extern mlan_status wlan_get_non_dfs_chan(mlan_private *priv, t_u8 *chan);
+#endif
 
 #endif /*_MLAN_11H_ */

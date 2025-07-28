@@ -1,7 +1,22 @@
-Release Name: MCUBoot
-Release Version: 2.0.0
+Name: MCUBoot
+Version: 2.1.0
 Outgoing License: Apache License Version 2.0, January 2004
 License File: LICENSE
 Format: Source
 Description: MCUboot is a secure bootloader for 32-bits microcontrollers.
 Origin: https://github.com/mcu-tools/mcuboot
+
+Name: TinyCrypt
+Version: 0.2.8
+Outgoing License: BSD-3-Clause
+License File: ext/tinycrypt/LICENSE
+Format: Source
+Description: The TinyCrypt Library provides an implementation for constrained devices of a minimal set of standard cryptography primitives
+Origin: https://github.com/mcu-tools/mcuboot/tree/main/ext/tinycrypt
+
+Name: MbedTLS
+Version: 3.0.0
+Outgoing License: Apache License 2.0
+Format: Source
+Description: A subset of MbedTLS 3.0 code for ASN.1 parsing support
+Origin: https://github.com/mcu-tools/mcuboot/tree/main/ext/mbedtls-asn1

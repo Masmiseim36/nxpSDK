@@ -244,6 +244,7 @@
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT595SFFOC_cm33</state>
+          <state>MIMXRT595S_cm33_SERIES</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -558,6 +559,7 @@
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT595SFFOC_cm33</state>
+          <state>MIMXRT595S_cm33_SERIES</state>
         </option>
         <option>
           <name>AList</name>
@@ -1364,6 +1366,7 @@
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT595SFFOC_cm33</state>
+          <state>MIMXRT595S_cm33_SERIES</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -1678,6 +1681,7 @@
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT595SFFOC_cm33</state>
+          <state>MIMXRT595S_cm33_SERIES</state>
         </option>
         <option>
           <name>AList</name>
@@ -2638,6 +2642,9 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../example_board_readme.md</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../examples_shared_readme.md</name>
     </file>
   </group>
 </project>

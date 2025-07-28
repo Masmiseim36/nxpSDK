@@ -2,18 +2,17 @@
 ** ###################################################################
 **     Processors:          MIMXRT595SFAWC_cm33
 **                          MIMXRT595SFFOC_cm33
+**
 **     Compiler:            IAR ANSI C/C++ Compiler for ARM
-**     Reference manual:    iMXRT500RM Rev.0, 01/2021
+**     Reference manual:    iMXRT500RM Rev.1, 07/2022
 **     Version:             rev. 5.0, 2021-07-28
-**     Build:               b210728
+**     Build:               b241125
 **
 **     Abstract:
 **         Linker file for the IAR ANSI C/C++ Compiler for ARM
 **
 **     Copyright 2016 Freescale Semiconductor, Inc.
-**     Copyright 2016-2021 NXP
-**     All rights reserved.
-**
+**     Copyright 2016-2024 NXP
 **     SPDX-License-Identifier: BSD-3-Clause
 **
 **     http:                 www.nxp.com
@@ -38,8 +37,9 @@ if (isdefinedsymbol(__heap_size__)) {
 }
 
 /* The SRAM region [0x10000-0x1BFFF] is reserved for ROM code. */
-/* The SRAM region [0x0-0xFFFF], [0x1C000-0x1FFFF] is reserved for app-specific use cases. */
+/* The SRAM region [0x0-0xFFFF], [0x1C000-0x1FFFF] are reserved for app-specific use cases. */
 /* The SRAM region [0x20000-0x7FFFF] is reserved for Non-cached shared memory between M33 and DSP. */
+/* The SRAM region [0x80000-0x27FFFF] is reserved for DSP code and data. */
 
 define symbol __ram_vector_table_size__        =  isdefinedsymbol(__ram_vector_table__) ? 0x00000180 : 0;
 define symbol __ram_vector_table_offset__      =  isdefinedsymbol(__ram_vector_table__) ? 0x0000017F : 0;
@@ -89,12 +89,10 @@ define region USB_SRAM_region = mem:[from m_usb_sram_start + usb_bdt_size to m_u
 
 initialize by copy {
   readwrite,
-  /* Place in RAM flash and performance dependent functions  */
+  /* Place in RAM flash and performance dependent functions */
   object mflash_drv.o,
   object fsl_flexspi.o,
   object fsl_cache.o,
-  object bignum.o,
-  object bl_api.o,
   section .textrw,
   section CodeQuickAccess,
   section DataQuickAccess

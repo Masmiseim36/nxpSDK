@@ -750,6 +750,7 @@ static int get_input(char *get_inbuf, unsigned int *bp)
         if (get_inbuf[*bp] == '\t')
         {
             get_inbuf[*bp] = '\0';
+            // coverity[overflow_sink:SUPPRESS]
             tab_complete(get_inbuf, bp);
             continue;
         }
@@ -1229,7 +1230,7 @@ int cli_unregister_commands(const struct cli_command *commands, int num_commands
 
 #if defined(SDK_OS_FREE_RTOS)
 #if CONFIG_UART_INTERRUPT
-static void uart_task(void *pvParameters)
+static void uart_init(void)
 {
     usart_config.srcclk = BOARD_DEBUG_UART_CLK_FREQ;
     usart_config.base   = BOARD_DEBUG_UART;
@@ -1240,7 +1241,10 @@ static void uart_task(void *pvParameters)
     {
         vTaskSuspend(NULL);
     }
+}
 
+static void uart_task(void *pvParameters)
+{
     /* Receive user input and send it back to terminal. */
     while (1)
     {
@@ -1297,6 +1301,12 @@ int cli_init(void)
     {
         return WM_SUCCESS;
     }
+
+#if defined(SDK_OS_FREE_RTOS)
+#if CONFIG_UART_INTERRUPT
+    uart_init();
+#endif
+#endif
 
     (void)PRINTF("CLI Build: %s [%s]", __DATE__, __TIME__);
     (void)PRINTF("\r\nCopyright  2024  NXP\r\n");

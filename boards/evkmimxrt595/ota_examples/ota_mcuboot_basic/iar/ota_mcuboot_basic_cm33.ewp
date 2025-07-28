@@ -247,6 +247,7 @@
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT595SFFOC_cm33</state>
+          <state>MIMXRT595S_cm33_SERIES</state>
           <state>BOOT_HEADER_ENABLE=1</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>MFLASH_FILE_BASEADDR=7340032</state>
@@ -377,10 +378,9 @@
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S/periph</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S/utilities</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S/utilities/shell</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
@@ -576,6 +576,7 @@
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT595SFFOC_cm33</state>
+          <state>MIMXRT595S_cm33_SERIES</state>
         </option>
         <option>
           <name>AList</name>
@@ -674,10 +675,9 @@
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S/periph</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S/utilities</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S/utilities/shell</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
@@ -1399,6 +1399,7 @@
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT595SFFOC_cm33</state>
+          <state>MIMXRT595S_cm33_SERIES</state>
           <state>BOOT_HEADER_ENABLE=1</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>MFLASH_FILE_BASEADDR=7340032</state>
@@ -1529,10 +1530,9 @@
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S/periph</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S/utilities</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S/utilities/shell</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
@@ -1728,6 +1728,7 @@
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT595SFFOC_cm33</state>
+          <state>MIMXRT595S_cm33_SERIES</state>
         </option>
         <option>
           <name>AList</name>
@@ -1826,10 +1827,9 @@
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S/periph</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S/utilities</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S/utilities/shell</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
@@ -2692,10 +2692,10 @@
   <group>
     <name>utilities</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/utilities/fsl_assert.h</name>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/utilities/debug_console/fsl_assert.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/utilities/fsl_assert.c</name>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/utilities/debug_console/fsl_assert.c</name>
     </file>
     <group>
       <name>str</name>
@@ -2918,6 +2918,9 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../example_board_readme.md</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../examples_shared_readme.md</name>
     </file>
   </group>
 </project>

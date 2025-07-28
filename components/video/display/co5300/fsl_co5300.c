@@ -87,7 +87,7 @@ status_t CO5300_Init(display_handle_t *handle, const display_config_t *config)
     {
         dscPixelFormat = kMIPI_DCS_Pixel16Bits;
     }
-    else if (config->pixelFormat == kVIDEO_PixelFormatRGB888)
+    else if ((kVIDEO_PixelFormatXRGB8888 == config->pixelFormat) || (kVIDEO_PixelFormatRGB888 == config->pixelFormat))
     {
         dscPixelFormat = kMIPI_DCS_Pixel24Bits;
     }

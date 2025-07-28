@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2007-2015 Freescale Semiconductor, Inc.
- * Copyright 2018-2021, 2024 NXP
+ * Copyright 2018-2021, 2024-2025 NXP
  *
  * License: NXP LA_OPT_Online Code Hosting NXP_Software_License
  *
@@ -46,6 +46,10 @@
 #elif FMSTR_PLATFORM_56F800E
 #define FMSTR_PLATFORM "56F800E"
 #include "freemaster_56f800e.h"
+#elif FMSTR_PLATFORM_ZEPHYR
+/* Zephyr platform uses CPU settings from Zephyr configuration */
+#define FMSTR_PLATFORM "ZEPHYR"
+#include "freemaster_zephyr.h"
 #else
 /* If you are looking for legacy Motorola and Freescale platforms like 56F800,
    HC08, HC12, ColdFire, please refer to FreeMASTER driver v2.0 available at
@@ -69,10 +73,6 @@
 #define FMSTR_FALSE (0U)
 #endif
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 /* Pipe usage modes */
 #define FMSTR_PIPE_MODE_CONSOLE 0x00U
 #define FMSTR_PIPE_MODE_UINT    0x04U
@@ -92,6 +92,10 @@ extern "C" {
 /******************************************************************************
  * Types definition
  ******************************************************************************/
+
+ #ifdef __cplusplus
+extern "C" {
+#endif
 
 /* application command-specific types */
 typedef unsigned char FMSTR_APPCMD_CODE;
@@ -177,7 +181,7 @@ typedef struct
  * ASSERT functionality
  ******************************************************************************/
 
-#if defined(DEBUG)
+#if defined(DEBUG) || (FMSTR_DEBUG_LEVEL > 0)
 #include <assert.h>
 #define FMSTR_ASSERT(condition) assert(condition)
 #else

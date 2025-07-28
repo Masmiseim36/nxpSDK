@@ -30,8 +30,9 @@
 #if LV_USE_DRAW_VGLITE
 #include "vg_lite.h"
 #include "vglite_support.h"
+#include "lv_vglite_utils.h"
 #endif
-
+#include "fsl_cache.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -68,6 +69,7 @@
 #define LVGL_BUFFER_ADDR 0x28800000U
 #endif
 
+#define DEMO_FB_SIZE (DEMO_BUFFER_STRIDE_BYTE * DEMO_FB_HEIGHT)
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
@@ -150,8 +152,8 @@ void lv_port_disp_init(void)
 {
     lv_display_t * disp_drv; /*Descriptor of a display driver*/
 
-    memset((void *)DEMO_BUFFER0_ADDR, 0, DEMO_BUFFER_WIDTH * DEMO_BUFFER_HEIGHT * DEMO_BUFFER_BYTE_PER_PIXEL);
-    memset((void *)DEMO_BUFFER1_ADDR, 0, DEMO_BUFFER_WIDTH * DEMO_BUFFER_HEIGHT * DEMO_BUFFER_BYTE_PER_PIXEL);
+    memset((void *)DEMO_BUFFER0_ADDR, 0, DEMO_FB_SIZE);
+    memset((void *)DEMO_BUFFER1_ADDR, 0, DEMO_FB_SIZE);
 
     status_t status;
 
@@ -173,8 +175,8 @@ void lv_port_disp_init(void)
 
     g_dc.ops->getLayerDefaultConfig(&g_dc, 0, &fbInfo);
     fbInfo.pixelFormat = DEMO_BUFFER_PIXEL_FORMAT;
-    fbInfo.width       = DEMO_BUFFER_WIDTH;
-    fbInfo.height      = DEMO_BUFFER_HEIGHT;
+    fbInfo.width       = DEMO_FB_WIDTH;
+    fbInfo.height      = DEMO_FB_HEIGHT;
     fbInfo.startX      = DEMO_BUFFER_START_X;
     fbInfo.startY      = DEMO_BUFFER_START_Y;
     fbInfo.strideBytes = DEMO_BUFFER_STRIDE_BYTE;
@@ -205,7 +207,7 @@ void lv_port_disp_init(void)
     /* Clear initial frame. */
     /* lvgl starts render in frame buffer 0, so show frame buffer 1 first. */
 
-    memset((void *)DEMO_BUFFER1_ADDR, 0, DEMO_BUFFER_STRIDE_BYTE * DEMO_BUFFER_HEIGHT);
+    memset((void *)DEMO_BUFFER1_ADDR, 0, DEMO_BUFFER_STRIDE_BYTE * DEMO_FB_HEIGHT);
     g_dc.ops->setFrameBuffer(&g_dc, 0, (void *)DEMO_BUFFER1_ADDR);
 
     /* Wait for frame buffer sent to display controller video memory. */
@@ -229,14 +231,13 @@ void lv_port_disp_init(void)
      * full screen buffer. LVGL updated areas will first be merge and updated in buffer 1,
      * then the dirty region in buffer 1 will be sent to LCD controller at the right time.
      */
-    lv_display_set_buffers(disp_drv, (void *)DEMO_BUFFER0_ADDR, NULL, DEMO_BUFFER_WIDTH * DEMO_BUFFER_HEIGHT * DEMO_BUFFER_BYTE_PER_PIXEL, LV_DISPLAY_RENDER_MODE_PARTIAL);
+    lv_display_set_buffers_with_stride(disp_drv, (void *)DEMO_BUFFER0_ADDR, NULL, DEMO_FB_SIZE, DEMO_BUFFER_STRIDE_BYTE, LV_DISPLAY_RENDER_MODE_PARTIAL);
 #else /* DEMO_DISPLAY_USE_PARTIAL_REFRESH */
 
 #if DEMO_USE_ROTATE
     lv_display_set_buffers(disp_drv, (void *)LVGL_BUFFER_ADDR, NULL, DEMO_BUFFER_WIDTH * DEMO_BUFFER_HEIGHT * DEMO_BUFFER_BYTE_PER_PIXEL, LV_DISPLAY_RENDER_MODE_FULL);
 #else
-    lv_display_set_buffers(disp_drv, (void *)DEMO_BUFFER0_ADDR, (void *)DEMO_BUFFER1_ADDR,
-                          DEMO_BUFFER_WIDTH * DEMO_BUFFER_HEIGHT * DEMO_BUFFER_BYTE_PER_PIXEL, LV_DISPLAY_RENDER_MODE_FULL);
+    lv_display_set_buffers_with_stride(disp_drv, (void *)DEMO_BUFFER0_ADDR, (void *)DEMO_BUFFER1_ADDR, DEMO_FB_SIZE, DEMO_BUFFER_STRIDE_BYTE, LV_DISPLAY_RENDER_MODE_FULL);
 #endif
 
 #endif /* DEMO_DISPLAY_USE_PARTIAL_REFRESH */
@@ -301,6 +302,23 @@ static void DEMO_WaitBufferSwitchOff(void)
 }
 
 #if DEMO_DISPLAY_USE_PARTIAL_REFRESH
+#if LV_USE_DRAW_VGLITE
+static void copy_area(const lv_area_t *area, uint8_t *color_p, uint8_t *fb, uint32_t fbStrideBytes, uint8_t align_bytes)
+{
+    uint32_t y;
+    uint32_t areaWidth = lv_area_get_width(area);
+
+    fb += (area->y1 * fbStrideBytes + area->x1 * DEMO_BUFFER_BYTE_PER_PIXEL);
+
+    for (y = area->y1; y <= area->y2; y++)
+    {
+        memcpy(fb, color_p, areaWidth * DEMO_BUFFER_BYTE_PER_PIXEL);
+        fb += fbStrideBytes;
+        /* Round up to get correct value to match alignment */
+        color_p += LV_ROUND_UP((areaWidth * DEMO_BUFFER_BYTE_PER_PIXEL), align_bytes);
+    }
+}
+#else
 static void copy_area(const lv_area_t *area, uint8_t *color_p, uint8_t *fb, uint32_t fbStrideBytes)
 {
     uint32_t y;
@@ -312,12 +330,13 @@ static void copy_area(const lv_area_t *area, uint8_t *color_p, uint8_t *fb, uint
     for (y = area->y1; y <= area->y2; y++)
     {
         memcpy(fb, color_p, areaWidth * DEMO_BUFFER_BYTE_PER_PIXEL);
-        /* Round up to get correct value to match alignment */
         fb += fbStrideBytes;
+        /* Round up to get correct value to match alignment */
         value = (areaWidth * DEMO_BUFFER_BYTE_PER_PIXEL) / LV_DRAW_BUF_STRIDE_ALIGN + ((((areaWidth * DEMO_BUFFER_BYTE_PER_PIXEL) % LV_DRAW_BUF_STRIDE_ALIGN) != 0) ? 1 :0);
         color_p += value * LV_DRAW_BUF_STRIDE_ALIGN;
     }
 }
+#endif
 
 static void DEMO_FlushDisplay(lv_display_t *disp_drv, const lv_area_t *area, uint8_t *color_p)
 {
@@ -325,8 +344,14 @@ static void DEMO_FlushDisplay(lv_display_t *disp_drv, const lv_area_t *area, uin
     static bool first_flush = true;
 
     uint8_t *fb = (uint8_t *)DEMO_BUFFER1_ADDR;
+    uint8_t cf = lv_display_get_color_format(disp_drv);
 
+#if LV_USE_DRAW_VGLITE
+    uint8_t align_bytes = vglite_get_stride_alignment(cf);
+    copy_area(area, color_p, fb, DEMO_BUFFER_STRIDE_BYTE, align_bytes);
+#else
     copy_area(area, color_p, fb, DEMO_BUFFER_STRIDE_BYTE);
+#endif
 
     if (first_flush == true)
     {
@@ -419,14 +444,11 @@ static void DEMO_FlushDisplay(lv_display_t *disp_drv, const lv_area_t *area, uin
     void *inactiveFrameBuffer = s_inactiveFrameBuffer;
 
     /* Use CPU to rotate the panel. */
-    for (uint32_t y = 0; y < LVGL_BUFFER_HEIGHT; y++)
-    {
-        for (uint32_t x = 0; x < LVGL_BUFFER_WIDTH; x++)
-        {
-            ((lv_color_t *)inactiveFrameBuffer)[(DEMO_BUFFER_HEIGHT - x) * DEMO_BUFFER_WIDTH + y] =
-                color_p[y * LVGL_BUFFER_WIDTH + x];
-        }
-    }
+    lv_draw_sw_rotate(color_p, inactiveFrameBuffer,
+                      ROTATED_FB_WIDTH, ROTATED_FB_HEIGHT,
+                      ROTATED_FB_WIDTH * DEMO_BUFFER_BYTE_PER_PIXEL,
+                      DEMO_FB_WIDTH * DEMO_BUFFER_BYTE_PER_PIXEL,
+                      LV_DISPLAY_ROTATION_270, disp_drv->color_format);
 
     g_dc.ops->setFrameBuffer(&g_dc, 0, inactiveFrameBuffer);
 

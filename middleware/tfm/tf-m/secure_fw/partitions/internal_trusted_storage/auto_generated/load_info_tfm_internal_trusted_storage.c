@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021-2022, Arm Limited. All rights reserved.
+ * Copyright (c) 2021-2024, Arm Limited. All rights reserved.
  * Copyright (c) 2021-2023 Cypress Semiconductor Corporation (an Infineon
  * company) or an affiliate of Cypress Semiconductor Corporation. All rights
  * reserved.
@@ -27,7 +27,7 @@
 
 #define TFM_SP_ITS_NDEPS                                        (0)
 #define TFM_SP_ITS_NSERVS                                       (1)
-#if TFM_LVL == 3
+#if TFM_ISOLATION_LEVEL == 3
 #define TFM_SP_ITS_NASSETS                                      (0 + 1)
 #else
 #define TFM_SP_ITS_NASSETS                                      (0)
@@ -35,7 +35,7 @@
 #define TFM_SP_ITS_NIRQS                                        (0)
 
 /* Memory region declaration */
-#if TFM_LVL == 3
+#if TFM_ISOLATION_LEVEL == 3
 REGION_DECLARE(Image$$, PT_TFM_SP_ITS_PRIVATE, _DATA_START$$Base);
 REGION_DECLARE(Image$$, PT_TFM_SP_ITS_PRIVATE, _DATA_END$$Base);
 #endif
@@ -54,7 +54,7 @@ struct partition_tfm_sp_its_load_info_t {
     uintptr_t                       stack_addr;
     uintptr_t                       heap_addr;
     struct service_load_info_t      services[TFM_SP_ITS_NSERVS];
-#if TFM_LVL == 3
+#if TFM_ISOLATION_LEVEL == 3
     struct asset_desc_t             assets[TFM_SP_ITS_NASSETS];
 #else
 #endif
@@ -62,11 +62,11 @@ struct partition_tfm_sp_its_load_info_t {
 
 /* Partition load, deps, service load data. Put to a dedicated section. */
 #if defined(__ICCARM__)
-#pragma location = ".part_load_priority_normal"
+#pragma location = ".part_load_priority_02"
 __root
 #endif /* __ICCARM__ */
 const struct partition_tfm_sp_its_load_info_t tfm_sp_its_load
-    __attribute__((used, section(".part_load_priority_normal"))) = {
+    __attribute__((used, section(".part_load_priority_02"))) = {
     .load_info = {
         .psa_ff_ver                 = 0x0101 | PARTITION_INFO_MAGIC,
         .pid                        = TFM_SP_ITS,
@@ -98,7 +98,7 @@ const struct partition_tfm_sp_its_load_info_t tfm_sp_its_load
             .version                = 1,
         },
     },
-#if TFM_LVL == 3
+#if TFM_ISOLATION_LEVEL == 3
     .assets                         = {
         {
             .mem.start              = (uintptr_t)&REGION_NAME(Image$$, PT_TFM_SP_ITS_PRIVATE, _DATA_START$$Base),
@@ -112,14 +112,14 @@ const struct partition_tfm_sp_its_load_info_t tfm_sp_its_load
 
 /* Placeholder for partition and service runtime space. Do not reference it. */
 #if defined(__ICCARM__)
-#pragma location=".bss.part_runtime_priority_normal"
+#pragma location=".bss.part_runtime_priority_02"
 __root
 #endif /* __ICCARM__ */
 static struct partition_t tfm_sp_its_partition_runtime_item
-    __attribute__((used, section(".bss.part_runtime_priority_normal")));
+    __attribute__((used, section(".bss.part_runtime_priority_02")));
 #if defined(__ICCARM__)
-#pragma location = ".bss.serv_runtime_priority_normal"
+#pragma location = ".bss.serv_runtime_priority_02"
 __root
 #endif /* __ICCARM__ */
 static struct service_t tfm_sp_its_service_runtime_item[TFM_SP_ITS_NSERVS]
-    __attribute__((used, section(".bss.serv_runtime_priority_normal")));
+    __attribute__((used, section(".bss.serv_runtime_priority_02")));

@@ -3147,12 +3147,12 @@ static int wpa_supplicant_ctrl_iface_scan_result(struct wpa_supplicant *wpa_s,
     ie = wpa_bss_get_vendor_ie(bss, WPA_IE_VENDOR_TYPE);
     if (ie)
         pos = wpa_supplicant_ie_txt(pos, end, "WPA", ie, 2 + ie[1]);
-    ie2 = wpa_bss_get_ie(bss, WLAN_EID_RSN);
+    ie2 = wpa_bss_get_rsne(wpa_s, bss, NULL, false);
     if (ie2)
     {
         pos = wpa_supplicant_ie_txt(pos, end, mesh ? "RSN" : "WPA2", ie2, 2 + ie2[1]);
     }
-    rsnxe = wpa_bss_get_ie(bss, WLAN_EID_RSNX);
+    rsnxe = wpa_bss_get_rsnxe(wpa_s, bss, NULL, false);
     if (ieee802_11_rsnx_capab(rsnxe, WLAN_RSNX_CAPAB_SAE_H2E))
     {
         ret = os_snprintf(pos, end - pos, "[SAE-H2E]");
@@ -5246,10 +5246,10 @@ static int print_bss_info(
         ie = wpa_bss_get_vendor_ie(bss, WPA_IE_VENDOR_TYPE);
         if (ie)
             pos = wpa_supplicant_ie_txt(pos, end, "WPA", ie, 2 + ie[1]);
-        ie2 = wpa_bss_get_ie(bss, WLAN_EID_RSN);
+        ie2 = wpa_bss_get_rsne(wpa_s, bss, NULL, false);
         if (ie2)
             pos = wpa_supplicant_ie_txt(pos, end, mesh ? "RSN" : "WPA2", ie2, 2 + ie2[1]);
-        rsnxe = wpa_bss_get_ie(bss, WLAN_EID_RSNX);
+        rsnxe = wpa_bss_get_rsnxe(wpa_s, bss, NULL, false);
         if (ieee802_11_rsnx_capab(rsnxe, WLAN_RSNX_CAPAB_SAE_H2E))
         {
             ret = os_snprintf(pos, end - pos, "[SAE-H2E]");

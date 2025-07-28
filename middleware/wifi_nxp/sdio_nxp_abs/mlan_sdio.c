@@ -30,6 +30,12 @@
 #endif
 #endif
 
+#if CONFIG_WIFI_SG_DEBUG
+#define wifi_sg_d(...) wmlog("wifi SG", ##__VA_ARGS__)
+#else
+#define wifi_sg_d(...)
+#endif /* ! CONFIG_WIFI_SG_DEBUG */
+
 /* Command port */
 #define CMD_PORT_SLCT 0x8000U
 
@@ -39,31 +45,55 @@
 
 #if FSL_USDHC_ENABLE_SCATTER_GATHER_TRANSFER
 
-static size_t sg_idx, num_sg;
+static size_t sg_tx_idx, sg_rx_idx;
 
-static sdmmchost_scatter_gather_data_list_t sgDataList[SDIO_MP_AGGR_DEF_PKT_LIMIT_MAX];
+static sdmmchost_scatter_gather_data_list_t sgDataListtx[SDIO_MP_AGGR_DEF_PKT_LIMIT_MAX];
+static sdmmchost_scatter_gather_data_list_t sgDataListrx[SDIO_MP_AGGR_DEF_PKT_LIMIT_MAX];
 
-void sg_init_table()
+void sg_rx_init_table()
 {
-    memset(&sgDataList, 0, sizeof(sgDataList));
-    sg_idx = 0;
+    memset(&sgDataListrx, 0, sizeof(sgDataListrx));
+    sg_rx_idx = 0;
 }
 
-void sg_set_num(size_t n_sg)
+void sg_rx_set_buf(uint32_t *buf, size_t len)
 {
-    num_sg = n_sg;
-}
-
-void sg_set_buf(uint32_t *buf, size_t len)
-{
-    sgDataList[sg_idx].dataAddr = buf;
-    sgDataList[sg_idx].dataSize = len;
-    if (sg_idx > 0)
+    if (sg_rx_idx > SDIO_MP_AGGR_DEF_PKT_LIMIT_MAX)
     {
-        sgDataList[sg_idx - 1].dataList = &sgDataList[sg_idx];
+       return;
     }
 
-    sg_idx++;
+    sgDataListrx[sg_rx_idx].dataAddr = buf;
+    sgDataListrx[sg_rx_idx].dataSize = len;
+    if (sg_rx_idx > 0)
+    {
+        sgDataListrx[sg_rx_idx - 1].dataList = &sgDataListrx[sg_rx_idx];
+    }
+
+    sg_rx_idx++;
+}
+
+void sg_tx_init_table()
+{
+    memset(&sgDataListtx, 0, sizeof(sgDataListtx));
+    sg_tx_idx = 0;
+}
+
+void sg_tx_set_buf(uint32_t *buf, size_t len)
+{
+    if (sg_tx_idx > SDIO_MP_AGGR_DEF_PKT_LIMIT_MAX)
+    {
+        return;
+    }
+
+    sgDataListtx[sg_tx_idx].dataAddr = buf;
+    sgDataListtx[sg_tx_idx].dataSize = len;
+    if (sg_tx_idx > 0)
+    {
+        sgDataListtx[sg_tx_idx - 1].dataList = &sgDataListtx[sg_tx_idx];
+    }
+
+    sg_tx_idx++;
 }
 #endif
 
@@ -75,6 +105,7 @@ static OSA_MUTEX_HANDLE_DEFINE(sdio_mutex);
 int sdio_drv_creg_read(int addr, int fn, uint32_t *resp)
 {
     osa_status_t status;
+    uint8_t read_val = 0;
 
     status = OSA_MutexLock((osa_mutex_handle_t)sdio_mutex, osaWaitForever_c);
     if (status != KOSA_StatusSuccess)
@@ -83,11 +114,13 @@ int sdio_drv_creg_read(int addr, int fn, uint32_t *resp)
         return 0;
     }
 
-    if (SDIO_IO_Read_Direct(&wm_g_sd, (sdio_func_num_t)fn, (uint32_t)addr, (uint8_t *)resp) != KOSA_StatusSuccess)
+    if (SDIO_IO_Read_Direct(&wm_g_sd, (sdio_func_num_t)fn, (uint32_t)addr, &read_val) != KOSA_StatusSuccess)
     {
         (void)OSA_MutexUnlock((osa_mutex_handle_t)sdio_mutex);
         return 0;
     }
+
+    *resp = read_val;
 
     (void)OSA_MutexUnlock((osa_mutex_handle_t)sdio_mutex);
 
@@ -159,6 +192,11 @@ int sdio_drv_read_mb(uint32_t addr, uint32_t fn, uint32_t bcnt, uint32_t bsize)
     uint32_t flags = 0;
     uint32_t param;
 
+    if (sg_rx_idx == 0)
+    {
+        return 1;
+    }
+
     status = OSA_MutexLock((osa_mutex_handle_t)sdio_mutex, osaWaitForever_c);
     if (status != KOSA_StatusSuccess)
     {
@@ -176,7 +214,7 @@ int sdio_drv_read_mb(uint32_t addr, uint32_t fn, uint32_t bcnt, uint32_t bsize)
         param = bsize;
     }
 
-    if (SDIO_IO_Read_Extended_Scatter_Gather(&wm_g_sd, (sdio_func_num_t)fn, addr, sgDataList, param, flags) != KOSA_StatusSuccess)
+    if (SDIO_IO_Read_Extended_Scatter_Gather(&wm_g_sd, (sdio_func_num_t)fn, addr, sgDataListrx, param, flags) != KOSA_StatusSuccess)
     {
         (void)OSA_MutexUnlock((osa_mutex_handle_t)sdio_mutex);
         return 0;
@@ -184,11 +222,11 @@ int sdio_drv_read_mb(uint32_t addr, uint32_t fn, uint32_t bcnt, uint32_t bsize)
 
     (void)OSA_MutexUnlock((osa_mutex_handle_t)sdio_mutex);
 
-#if 0
-    PRINTF("num sg : %d\r\n", num_sg);
-    for (i = 0; i < num_sg; i++)
+#if CONFIG_WIFI_SG_DEBUG
+    wifi_sg_d("num rx sg : %d\r\n", sg_rx_idx);
+    for (int i = 0; i < sg_rx_idx; i++)
     {
-        dump_hex(sgDataList[i].dataAddr, sgDataList[i].dataSize);
+        dump_hex(sgDataListrx[i].dataAddr, sgDataListrx[i].dataSize);
     }
 #endif
 
@@ -229,6 +267,50 @@ int sdio_drv_write(uint32_t addr, uint32_t fn, uint32_t bcnt, uint32_t bsize, ui
 
     return 1;
 }
+
+#if FSL_USDHC_ENABLE_SCATTER_GATHER_TRANSFER
+int sdio_drv_write_mb(uint32_t addr, uint32_t fn, uint32_t bcnt, uint32_t bsize)
+{
+    osa_status_t status;
+    uint32_t flags = 0;
+    uint32_t param;
+
+#if CONFIG_WIFI_SG_DEBUG
+    wifi_sg_d("num tx sg : %d", sg_tx_idx);
+    for (int i = 0; i < sg_tx_idx; i++)
+    {
+        dump_hex(sgDataListtx[i].dataAddr, sgDataListtx[i].dataSize);
+    }
+#endif
+
+    status = OSA_MutexLock((osa_mutex_handle_t)sdio_mutex, osaWaitForever_c);
+    if (status != KOSA_StatusSuccess)
+    {
+        sdio_e("failed to get mutex\r\n");
+        return 0;
+    }
+
+    if (bcnt > 1U)
+    {
+        flags |= SDIO_EXTEND_CMD_BLOCK_MODE_MASK;
+        param = bcnt;
+    }
+    else
+    {
+        param = bsize;
+    }
+
+    if (SDIO_IO_Write_Extended_Scatter_Gather(&wm_g_sd, (sdio_func_num_t)fn, addr, sgDataListtx, param, flags) != KOSA_StatusSuccess)
+    {
+        (void)OSA_MutexUnlock((osa_mutex_handle_t)sdio_mutex);
+        return 0;
+    }
+
+    (void)OSA_MutexUnlock((osa_mutex_handle_t)sdio_mutex);
+
+    return 1;
+}
+#endif
 
 static void SDIO_CardInterruptCallBack(void *userData)
 {

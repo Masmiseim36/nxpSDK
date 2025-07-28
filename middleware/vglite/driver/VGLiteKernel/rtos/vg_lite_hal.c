@@ -235,11 +235,13 @@ void vg_lite_hal_initialize(void)
     /* TODO: Turn on the clock. */
 }
 
+static void vg_lite_exit(void);
 void vg_lite_hal_deinitialize(void)
 {
     /* TODO: Remove clock. */
     vSemaphoreDelete(device->int_queue);
     /* TODO: Remove power. */
+    vg_lite_exit();
 }
 
 static int split_node(heap_node_t *node, unsigned long size)

@@ -13,6 +13,11 @@ message("${CMAKE_CURRENT_LIST_FILE} component is included.")
           ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/cmsis_nn/softmax.cpp
           ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/cmsis_nn/unidirectional_sequence_lstm.cpp
           ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/cmsis_nn/svdf.cpp
+          ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/cmsis_nn/batch_matmul.cpp
+          ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/cmsis_nn/maximum_minimum.cpp
+          ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/cmsis_nn/pad.cpp
+          ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/cmsis_nn/transpose.cpp
+          ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/cmsis_nn/transpose_conv.cpp
           ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/sub.cpp
           ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/logistic.cpp
           ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/reduce.cpp
@@ -21,8 +26,6 @@ message("${CMAKE_CURRENT_LIST_FILE} component is included.")
           ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/lstm_eval.cpp
           ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/reshape.cpp
           ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/leaky_relu.cpp
-          ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/transpose_conv.cpp
-          ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/pad.cpp
           ${CMAKE_CURRENT_LIST_DIR}/third_party/cmsis_nn/Source/LSTMFunctions/arm_lstm_unidirectional_s16.c
           ${CMAKE_CURRENT_LIST_DIR}/third_party/cmsis_nn/Source/LSTMFunctions/arm_lstm_unidirectional_s8.c
           ${CMAKE_CURRENT_LIST_DIR}/third_party/cmsis_nn/Source/BasicMathFunctions/arm_elementwise_mul_acc_s16.c
@@ -32,6 +35,8 @@ message("${CMAKE_CURRENT_LIST_FILE} component is included.")
           ${CMAKE_CURRENT_LIST_DIR}/third_party/cmsis_nn/Source/BasicMathFunctions/arm_elementwise_mul_s16_s8.c
           ${CMAKE_CURRENT_LIST_DIR}/third_party/cmsis_nn/Source/BasicMathFunctions/arm_elementwise_mul_s8.c
           ${CMAKE_CURRENT_LIST_DIR}/third_party/cmsis_nn/Source/BasicMathFunctions/arm_elementwise_mul_s16.c
+          ${CMAKE_CURRENT_LIST_DIR}/third_party/cmsis_nn/Source/BasicMathFunctions/arm_minimum_s8.c
+          ${CMAKE_CURRENT_LIST_DIR}/third_party/cmsis_nn/Source/BasicMathFunctions/arm_maximum_s8.c
           ${CMAKE_CURRENT_LIST_DIR}/third_party/cmsis_nn/Source/SVDFunctions/arm_svdf_get_buffer_sizes_s8.c
           ${CMAKE_CURRENT_LIST_DIR}/third_party/cmsis_nn/Source/SVDFunctions/arm_svdf_s8.c
           ${CMAKE_CURRENT_LIST_DIR}/third_party/cmsis_nn/Source/SVDFunctions/arm_svdf_state_s16_s8.c
@@ -41,6 +46,7 @@ message("${CMAKE_CURRENT_LIST_FILE} component is included.")
           ${CMAKE_CURRENT_LIST_DIR}/third_party/cmsis_nn/Source/ConcatenationFunctions/arm_concatenation_s8_y.c
           ${CMAKE_CURRENT_LIST_DIR}/third_party/cmsis_nn/Source/ReshapeFunctions/arm_reshape_s8.c
           ${CMAKE_CURRENT_LIST_DIR}/third_party/cmsis_nn/Source/ConvolutionFunctions/arm_transpose_conv_s8.c
+          ${CMAKE_CURRENT_LIST_DIR}/third_party/cmsis_nn/Source/ConvolutionFunctions/arm_transpose_conv_wrapper_s8.c
           ${CMAKE_CURRENT_LIST_DIR}/third_party/cmsis_nn/Source/ConvolutionFunctions/arm_convolve_wrapper_s4.c
           ${CMAKE_CURRENT_LIST_DIR}/third_party/cmsis_nn/Source/ConvolutionFunctions/arm_nn_mat_mult_kernel_row_offset_s8_s16.c
           ${CMAKE_CURRENT_LIST_DIR}/third_party/cmsis_nn/Source/ConvolutionFunctions/arm_convolve_get_buffer_sizes_s4.c
@@ -77,6 +83,10 @@ message("${CMAKE_CURRENT_LIST_FILE} component is included.")
           ${CMAKE_CURRENT_LIST_DIR}/third_party/cmsis_nn/Source/ConvolutionFunctions/arm_depthwise_conv_get_buffer_sizes_s8.c
           ${CMAKE_CURRENT_LIST_DIR}/third_party/cmsis_nn/Source/ConvolutionFunctions/arm_convolve_s8.c
           ${CMAKE_CURRENT_LIST_DIR}/third_party/cmsis_nn/Source/FullyConnectedFunctions/arm_fully_connected_s16.c
+          ${CMAKE_CURRENT_LIST_DIR}/third_party/cmsis_nn/Source/FullyConnectedFunctions/arm_fully_connected_wrapper_s8.c
+          ${CMAKE_CURRENT_LIST_DIR}/third_party/cmsis_nn/Source/FullyConnectedFunctions/arm_fully_connected_per_channel_s8.c
+          ${CMAKE_CURRENT_LIST_DIR}/third_party/cmsis_nn/Source/FullyConnectedFunctions/arm_batch_matmul_s16.c
+          ${CMAKE_CURRENT_LIST_DIR}/third_party/cmsis_nn/Source/FullyConnectedFunctions/arm_batch_matmul_s8.c
           ${CMAKE_CURRENT_LIST_DIR}/third_party/cmsis_nn/Source/FullyConnectedFunctions/arm_vector_sum_s8_s64.c
           ${CMAKE_CURRENT_LIST_DIR}/third_party/cmsis_nn/Source/FullyConnectedFunctions/arm_fully_connected_get_buffer_sizes_s8.c
           ${CMAKE_CURRENT_LIST_DIR}/third_party/cmsis_nn/Source/FullyConnectedFunctions/arm_fully_connected_s4.c
@@ -87,6 +97,7 @@ message("${CMAKE_CURRENT_LIST_FILE} component is included.")
           ${CMAKE_CURRENT_LIST_DIR}/third_party/cmsis_nn/Source/ActivationFunctions/arm_relu_q15.c
           ${CMAKE_CURRENT_LIST_DIR}/third_party/cmsis_nn/Source/ActivationFunctions/arm_nn_activation_s16.c
           ${CMAKE_CURRENT_LIST_DIR}/third_party/cmsis_nn/Source/ActivationFunctions/arm_relu6_s8.c
+          ${CMAKE_CURRENT_LIST_DIR}/third_party/cmsis_nn/Source/NNSupportFunctions/arm_nn_vec_mat_mult_t_per_ch_s8.c
           ${CMAKE_CURRENT_LIST_DIR}/third_party/cmsis_nn/Source/NNSupportFunctions/arm_nn_lstm_step_s16.c
           ${CMAKE_CURRENT_LIST_DIR}/third_party/cmsis_nn/Source/NNSupportFunctions/arm_nn_mat_mul_core_1x_s8.c
           ${CMAKE_CURRENT_LIST_DIR}/third_party/cmsis_nn/Source/NNSupportFunctions/arm_q7_to_q15_with_offset.c
@@ -111,6 +122,8 @@ message("${CMAKE_CURRENT_LIST_FILE} component is included.")
           ${CMAKE_CURRENT_LIST_DIR}/third_party/cmsis_nn/Source/NNSupportFunctions/arm_nn_depthwise_conv_nt_t_s4.c
           ${CMAKE_CURRENT_LIST_DIR}/third_party/cmsis_nn/Source/NNSupportFunctions/arm_nn_vec_mat_mul_result_acc_s8_s16.c
           ${CMAKE_CURRENT_LIST_DIR}/third_party/cmsis_nn/Source/NNSupportFunctions/arm_nn_vec_mat_mult_t_s4.c
+          ${CMAKE_CURRENT_LIST_DIR}/third_party/cmsis_nn/Source/NNSupportFunctions/arm_nn_transpose_conv_row_s8_s32.c
+          ${CMAKE_CURRENT_LIST_DIR}/third_party/cmsis_nn/Source/NNSupportFunctions/arm_nn_vec_mat_mult_t_s16_s16.c
           ${CMAKE_CURRENT_LIST_DIR}/third_party/cmsis_nn/Source/SoftmaxFunctions/arm_softmax_u8.c
           ${CMAKE_CURRENT_LIST_DIR}/third_party/cmsis_nn/Source/SoftmaxFunctions/arm_nn_softmax_common_s8.c
           ${CMAKE_CURRENT_LIST_DIR}/third_party/cmsis_nn/Source/SoftmaxFunctions/arm_softmax_s8.c
@@ -122,6 +135,8 @@ message("${CMAKE_CURRENT_LIST_FILE} component is included.")
           ${CMAKE_CURRENT_LIST_DIR}/third_party/cmsis_nn/Source/PoolingFunctions/arm_avgpool_get_buffer_sizes_s8.c
           ${CMAKE_CURRENT_LIST_DIR}/third_party/cmsis_nn/Source/PoolingFunctions/arm_avgpool_get_buffer_sizes_s16.c
           ${CMAKE_CURRENT_LIST_DIR}/third_party/cmsis_nn/Source/PoolingFunctions/arm_max_pool_s8.c
+          ${CMAKE_CURRENT_LIST_DIR}/third_party/cmsis_nn/Source/PadFunctions/arm_pad_s8.c
+          ${CMAKE_CURRENT_LIST_DIR}/third_party/cmsis_nn/Source/TransposeFunctions/arm_transpose_s8.c
         )
 
   

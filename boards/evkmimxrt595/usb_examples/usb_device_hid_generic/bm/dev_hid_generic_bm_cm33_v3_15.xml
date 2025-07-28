@@ -30,12 +30,12 @@
     <definition extID="utility.debug_console_lite.MIMXRT595S"/>
     <definition extID="component.usart_adapter.MIMXRT595S"/>
     <definition extID="component.osa_template_config.MIMXRT595S"/>
-    <definition extID="component.osa_interface.MIMXRT595S"/>
     <definition extID="component.osa.MIMXRT595S"/>
     <definition extID="component.osa_bm.MIMXRT595S"/>
     <definition extID="middleware.usb.common_header.MIMXRT595S"/>
     <definition extID="middleware.usb.device.common_header.MIMXRT595S"/>
     <definition extID="middleware.usb.device_controller_ip3511hs.MIMXRT595S"/>
+    <definition extID="middleware.usb.device.ip3511hs_config_header.MIMXRT595S"/>
     <definition extID="middleware.usb.device.controller.driver.MIMXRT595S"/>
     <definition extID="middleware.usb.device.stack.MIMXRT595S"/>
     <definition extID="middleware.usb.device.hid.MIMXRT595S"/>
@@ -48,7 +48,7 @@
     <definition extID="com.crt.advproject.config.exe.debug"/>
     <definition extID="com.crt.advproject.config.exe.release"/>
   </externalDefinitions>
-  <example id="evkmimxrt595_dev_hid_generic_bm_cm33" name="dev_hid_generic_bm_cm33" device_core="cm33_MIMXRT595S" dependency="platform.drivers.flash_config.evkmimxrt595.MIMXRT595S CMSIS_Include_core_cm.MIMXRT595S device.MIMXRT595S_CMSIS.MIMXRT595S device.MIMXRT595S_system.MIMXRT595S device.MIMXRT595S_startup.MIMXRT595S platform.drivers.clock.MIMXRT595S platform.drivers.dsp.MIMXRT595S platform.drivers.i2s_bridge.MIMXRT595S platform.drivers.inputmux_connections.MIMXRT595S platform.drivers.memory.MIMXRT595S platform.drivers.power.MIMXRT595S platform.drivers.reset.MIMXRT595S platform.drivers.soc_mipi_dsi.MIMXRT595S platform.drivers.cache_cache64.MIMXRT595S platform.drivers.common.MIMXRT595S platform.drivers.flexcomm.MIMXRT595S platform.drivers.flexcomm_usart.MIMXRT595S platform.drivers.flexspi.MIMXRT595S platform.drivers.iap3.MIMXRT595S platform.drivers.lpc_gpio.MIMXRT595S platform.drivers.lpc_iopctl.MIMXRT595S platform.utilities.assert_lite.MIMXRT595S platform.utilities.misc_utilities.MIMXRT595S component.lists.MIMXRT595S utility.str.MIMXRT595S utility.debug_console_lite.MIMXRT595S component.usart_adapter.MIMXRT595S component.osa_template_config.MIMXRT595S component.osa_interface.MIMXRT595S component.osa.MIMXRT595S component.osa_bm.MIMXRT595S middleware.usb.common_header.MIMXRT595S middleware.usb.device.common_header.MIMXRT595S middleware.usb.device_controller_ip3511hs.MIMXRT595S middleware.usb.device.controller.driver.MIMXRT595S middleware.usb.device.stack.MIMXRT595S middleware.usb.device.hid.MIMXRT595S middleware.usb.phy.MIMXRT595S" category="usb_examples">
+  <example id="evkmimxrt595_dev_hid_generic_bm_cm33" name="dev_hid_generic_bm_cm33" device_core="cm33_MIMXRT595S" dependency="platform.drivers.flash_config.evkmimxrt595.MIMXRT595S CMSIS_Include_core_cm.MIMXRT595S device.MIMXRT595S_CMSIS.MIMXRT595S device.MIMXRT595S_system.MIMXRT595S device.MIMXRT595S_startup.MIMXRT595S platform.drivers.clock.MIMXRT595S platform.drivers.dsp.MIMXRT595S platform.drivers.i2s_bridge.MIMXRT595S platform.drivers.inputmux_connections.MIMXRT595S platform.drivers.memory.MIMXRT595S platform.drivers.power.MIMXRT595S platform.drivers.reset.MIMXRT595S platform.drivers.soc_mipi_dsi.MIMXRT595S platform.drivers.cache_cache64.MIMXRT595S platform.drivers.common.MIMXRT595S platform.drivers.flexcomm.MIMXRT595S platform.drivers.flexcomm_usart.MIMXRT595S platform.drivers.flexspi.MIMXRT595S platform.drivers.iap3.MIMXRT595S platform.drivers.lpc_gpio.MIMXRT595S platform.drivers.lpc_iopctl.MIMXRT595S platform.utilities.assert_lite.MIMXRT595S platform.utilities.misc_utilities.MIMXRT595S component.lists.MIMXRT595S utility.str.MIMXRT595S utility.debug_console_lite.MIMXRT595S component.usart_adapter.MIMXRT595S component.osa_template_config.MIMXRT595S component.osa.MIMXRT595S component.osa_bm.MIMXRT595S middleware.usb.common_header.MIMXRT595S middleware.usb.device.common_header.MIMXRT595S middleware.usb.device_controller_ip3511hs.MIMXRT595S middleware.usb.device.ip3511hs_config_header.MIMXRT595S middleware.usb.device.controller.driver.MIMXRT595S middleware.usb.device.stack.MIMXRT595S middleware.usb.device.hid.MIMXRT595S middleware.usb.phy.MIMXRT595S" category="usb_examples">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -68,6 +68,7 @@
           <value>USB_STACK_USE_DEDICATED_RAM=1</value>
           <value>SDK_DEBUGCONSOLE=1</value>
           <value>MCUX_META_BUILD</value>
+          <value>MIMXRT595S_cm33_SERIES</value>
           <value>OSA_USED</value>
           <value>USE_RTOS=0</value>
         </option>
@@ -199,18 +200,19 @@
     </source>
     <source path="." project_relative_path="source" type="c_include" config="true">
       <files mask="fsl_os_abstraction_config.h"/>
+      <files mask="usb_device_config.h"/>
     </source>
     <source path="." project_relative_path="source" type="c_preinclude">
       <files mask="mcux_config.h"/>
-    </source>
-    <source path="." project_relative_path="source" type="c_include">
-      <files mask="usb_device_config.h"/>
     </source>
     <source path="." project_relative_path="doc" type="doc">
       <files mask="readme.md"/>
       <files mask="cpu_platform.jpg"/>
       <files mask="usb_device_hid_generic_test_tool_open.jpg"/>
       <files mask="usb_device_hid_generic_test_tool_send.jpg"/>
+    </source>
+    <source path="." project_relative_path="doc" type="doc">
+      <files mask="examples_shared_readme.md"/>
     </source>
   </example>
 </ksdk:examples>

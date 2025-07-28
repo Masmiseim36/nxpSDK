@@ -100,6 +100,8 @@ int wifi_nxp_wpa_supp_remain_on_channel(void *if_priv, unsigned int freq, unsign
 
 int wifi_nxp_wpa_supp_cancel_remain_on_channel(void *if_priv);
 
+int wifi_nxp_wpa_supp_probe_req_report(void *if_priv, int report);
+
 void wifi_nxp_wpa_supp_event_proc_mac_changed(void *if_priv);
 
 void wifi_nxp_wpa_supp_event_proc_chan_list_changed(void *if_priv, const char *alpha2);
@@ -146,7 +148,10 @@ void wifi_nxp_wpa_supp_event_proc_eapol_rx(void *if_priv,
                                            unsigned int event_len);
 void wifi_nxp_wpa_supp_event_signal_change(void *if_priv);
 
-void wifi_nxp_wpa_supp_event_mgmt_tx_status(void *if_priv, nxp_wifi_event_mlme_t *mlme_event, unsigned int event_len);
+void wifi_nxp_wpa_supp_event_mgmt_tx_status(void *if_priv,
+					    nxp_wifi_event_mlme_t *mlme_event,
+					    unsigned int event_len,
+					    enum wifi_event_reason result);
 
 void wifi_nxp_wpa_supp_event_proc_ecsa_complete(void *if_priv, nxp_wifi_ch_switch_info *ch_switch_info);
 void wifi_nxp_wpa_supp_event_proc_dfs_cac_started(void *if_priv, nxp_wifi_dfs_cac_info *dfs_cac_info);

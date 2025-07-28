@@ -212,6 +212,13 @@ mlan_status mlan_register(IN pmlan_device pmdevice, OUT t_void **ppmlan_adapter)
                 pmadapter->priv[i]->bss_role = MLAN_BSS_ROLE_UAP;
                 pmadapter->priv[i]->bss_mode = MLAN_BSS_MODE_AUTO;
             }
+#if CONFIG_WPA_SUPP_P2P
+            else if (pmdevice->bss_attr[i].bss_type == MLAN_BSS_TYPE_WIFIDIRECT)
+            {
+                pmadapter->priv[i]->bss_role = MLAN_BSS_ROLE_STA;
+                pmadapter->priv[i]->bss_mode = MLAN_BSS_MODE_INFRA;
+            }
+#endif
             else
             {
                 /*Do Nothing*/

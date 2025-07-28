@@ -332,9 +332,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../mcux_config.h -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
-              <Define>DEBUG, XA_PCM_GAIN=1, XA_VIT_PRE_PROC=1, XA_RENDERER=1, XA_CAPTURER=1, VIT_MODELS_ALL=1, DSP_IMAGE_COPY_TO_RAM=1, BOARD_DMIC_NUM=2, BOARD_PCM_WIDTH=16, SDK_I3C_BASED_COMPONENT_USED=1, XA_VOICE_SEEKER=1, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT595SFFOC_cm33, BOOT_HEADER_ENABLE=1, SERIAL_PORT_TYPE_UART=1, SDK_I2C_BASED_COMPONENT_USED=1, CODEC_MULTI_ADAPTERS=1, CODEC_WM8904_ENABLE, SDK_OS_FREE_RTOS</Define>
+              <Define>DEBUG, XA_PCM_GAIN=1, XA_VIT_PRE_PROC=1, XA_RENDERER=1, XA_CAPTURER=1, VIT_MODELS_ALL=1, DSP_IMAGE_COPY_TO_RAM=1, __USE_SHMEM, BOARD_DMIC_NUM=2, BOARD_PCM_WIDTH=16, SDK_I3C_BASED_COMPONENT_USED=1, XA_VOICE_SEEKER=1, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT595SFFOC_cm33, MIMXRT595S_cm33_SERIES, BOOT_HEADER_ENABLE=1, SERIAL_PORT_TYPE_UART=1, SDK_I2C_BASED_COMPONENT_USED=1, CODEC_MULTI_ADAPTERS=1, CODEC_WM8904_ENABLE, SDK_OS_FREE_RTOS</Define>
               <Undefine/>
-              <IncludePath>..;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT595S;../../../../../../devices/MIMXRT595S/periph;../../../../../../devices/MIMXRT595S/drivers;../../../../../../devices/MIMXRT595S/utilities;../../../../../../components/lists;../../../../../../devices/MIMXRT595S/utilities/str;../../../../../../devices/MIMXRT595S/utilities/debug_console;../../../../../../devices/MIMXRT595S/utilities/shell;../../../../../../components/serial_manager;../../../../../../components/codec/i2c;../../../../../../components/codec;../../../../../../components/codec/port;../../../../../../components/codec/port/wm8904;../../../../../../components/codec/wm8904;../../../../../../components/i2c;../../../../../../components/uart;../../../../../../components/pmic/pca9420;../../../../../../middleware/multicore/rpmsg-lite/lib/include;../../../../../../middleware/multicore/rpmsg-lite/lib/include/environment/freertos;../../../../../../middleware/multicore/rpmsg-lite/lib/include/platform/imxrt500_m33;../../../../../../middleware/audio_voice/components/vit/FusionF1/Lib;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../../rtos/freertos/freertos-kernel/template</IncludePath>
+              <IncludePath>..;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT595S;../../../../../../devices/MIMXRT595S/periph;../../../../../../devices/MIMXRT595S/drivers;../../../../../../devices/MIMXRT595S/utilities/debug_console;../../../../../../components/lists;../../../../../../devices/MIMXRT595S/utilities/str;../../../../../../devices/MIMXRT595S/utilities/shell;../../../../../../components/serial_manager;../../../../../../components/codec/i2c;../../../../../../components/codec;../../../../../../components/codec/port;../../../../../../components/codec/port/wm8904;../../../../../../components/codec/wm8904;../../../../../../components/i2c;../../../../../../components/uart;../../../../../../components/pmic/pca9420;../../../../../../middleware/multicore/rpmsg-lite/lib/include;../../../../../../middleware/multicore/rpmsg-lite/lib/include/environment/freertos;../../../../../../middleware/multicore/rpmsg-lite/lib/include/platform/imxrt500_m33;../../../../../../middleware/audio_voice/components/vit/FusionF1/Lib;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../../rtos/freertos/freertos-kernel/template</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -350,9 +350,9 @@
             <uClangAs>1</uClangAs>
             <VariousControls>
               <MiscControls/>
-              <Define>DSP_IMAGE_COPY_TO_RAM=1, MCUXPRESSO_SDK, CPU_MIMXRT595SFFOC_cm33</Define>
+              <Define>DSP_IMAGE_COPY_TO_RAM=1, MCUXPRESSO_SDK, CPU_MIMXRT595SFFOC_cm33, MIMXRT595S_cm33_SERIES</Define>
               <Undefine/>
-              <IncludePath>..;../../fusionf1/binary;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT595S;../../../../../../devices/MIMXRT595S/periph;../../../../../../devices/MIMXRT595S/drivers;../../../../../../devices/MIMXRT595S/utilities;../../../../../../components/lists;../../../../../../devices/MIMXRT595S/utilities/str;../../../../../../devices/MIMXRT595S/utilities/debug_console;../../../../../../devices/MIMXRT595S/utilities/shell;../../../../../../components/serial_manager;../../../../../../components/codec/i2c;../../../../../../components/codec;../../../../../../components/codec/port;../../../../../../components/codec/port/wm8904;../../../../../../components/codec/wm8904;../../../../../../components/i2c;../../../../../../components/uart;../../../../../../components/pmic/pca9420;../../../../../../middleware/multicore/rpmsg-lite/lib/include;../../../../../../middleware/multicore/rpmsg-lite/lib/include/environment/freertos;../../../../../../middleware/multicore/rpmsg-lite/lib/include/platform/imxrt500_m33;../../../../../../middleware/audio_voice/components/vit/FusionF1/Lib;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../../rtos/freertos/freertos-kernel/template</IncludePath>
+              <IncludePath>..;../../fusionf1/binary;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT595S;../../../../../../devices/MIMXRT595S/periph;../../../../../../devices/MIMXRT595S/drivers;../../../../../../devices/MIMXRT595S/utilities/debug_console;../../../../../../components/lists;../../../../../../devices/MIMXRT595S/utilities/str;../../../../../../devices/MIMXRT595S/utilities/shell;../../../../../../components/serial_manager;../../../../../../components/codec/i2c;../../../../../../components/codec;../../../../../../components/codec/port;../../../../../../components/codec/port/wm8904;../../../../../../components/codec/wm8904;../../../../../../components/i2c;../../../../../../components/uart;../../../../../../components/pmic/pca9420;../../../../../../middleware/multicore/rpmsg-lite/lib/include;../../../../../../middleware/multicore/rpmsg-lite/lib/include/environment/freertos;../../../../../../middleware/multicore/rpmsg-lite/lib/include/platform/imxrt500_m33;../../../../../../middleware/audio_voice/components/vit/FusionF1/Lib;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../../rtos/freertos/freertos-kernel/template</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -368,7 +368,7 @@
             <ScatterFile>MIMXRT595Sxxxx_cm33_flash.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler --info=sizes,totals,unused,veneers</Misc>
+            <Misc>--remove --predefine="-D__use_shmem__=1" --entry=Reset_Handler --info=sizes,totals,unused,veneers</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -1156,12 +1156,12 @@
             <File>
               <FileName>fsl_assert.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/utilities/fsl_assert.h</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT595S/utilities/debug_console/fsl_assert.h</FilePath>
             </File>
             <File>
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/utilities/fsl_assert.c</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT595S/utilities/debug_console/fsl_assert.c</FilePath>
             </File>
             <File>
               <FileName>fsl_memcpy.S</FileName>
@@ -1698,6 +1698,11 @@
               <FileType>5</FileType>
               <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/timers.h</FilePath>
             </File>
+            <File>
+              <FileName>freertos_tasks_c_additions.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/freertos_tasks_c_additions.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -1782,6 +1787,11 @@
               <FileName>example_board_readme.md</FileName>
               <FileType>5</FileType>
               <FilePath>../example_board_readme.md</FilePath>
+            </File>
+            <File>
+              <FileName>examples_shared_readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../examples_shared_readme.md</FilePath>
             </File>
           </Files>
         </Group>
@@ -2116,9 +2126,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../mcux_config.h -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
-              <Define>NDEBUG, XA_PCM_GAIN=1, XA_VIT_PRE_PROC=1, XA_RENDERER=1, XA_CAPTURER=1, VIT_MODELS_ALL=1, DSP_IMAGE_COPY_TO_RAM=1, BOARD_DMIC_NUM=2, BOARD_PCM_WIDTH=16, SDK_I3C_BASED_COMPONENT_USED=1, XA_VOICE_SEEKER=1, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT595SFFOC_cm33, BOOT_HEADER_ENABLE=1, SERIAL_PORT_TYPE_UART=1, SDK_I2C_BASED_COMPONENT_USED=1, CODEC_MULTI_ADAPTERS=1, CODEC_WM8904_ENABLE, SDK_OS_FREE_RTOS</Define>
+              <Define>NDEBUG, XA_PCM_GAIN=1, XA_VIT_PRE_PROC=1, XA_RENDERER=1, XA_CAPTURER=1, VIT_MODELS_ALL=1, DSP_IMAGE_COPY_TO_RAM=1, __USE_SHMEM, BOARD_DMIC_NUM=2, BOARD_PCM_WIDTH=16, SDK_I3C_BASED_COMPONENT_USED=1, XA_VOICE_SEEKER=1, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT595SFFOC_cm33, MIMXRT595S_cm33_SERIES, BOOT_HEADER_ENABLE=1, SERIAL_PORT_TYPE_UART=1, SDK_I2C_BASED_COMPONENT_USED=1, CODEC_MULTI_ADAPTERS=1, CODEC_WM8904_ENABLE, SDK_OS_FREE_RTOS</Define>
               <Undefine/>
-              <IncludePath>..;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT595S;../../../../../../devices/MIMXRT595S/periph;../../../../../../devices/MIMXRT595S/drivers;../../../../../../devices/MIMXRT595S/utilities;../../../../../../components/lists;../../../../../../devices/MIMXRT595S/utilities/str;../../../../../../devices/MIMXRT595S/utilities/debug_console;../../../../../../devices/MIMXRT595S/utilities/shell;../../../../../../components/serial_manager;../../../../../../components/codec/i2c;../../../../../../components/codec;../../../../../../components/codec/port;../../../../../../components/codec/port/wm8904;../../../../../../components/codec/wm8904;../../../../../../components/i2c;../../../../../../components/uart;../../../../../../components/pmic/pca9420;../../../../../../middleware/multicore/rpmsg-lite/lib/include;../../../../../../middleware/multicore/rpmsg-lite/lib/include/environment/freertos;../../../../../../middleware/multicore/rpmsg-lite/lib/include/platform/imxrt500_m33;../../../../../../middleware/audio_voice/components/vit/FusionF1/Lib;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../../rtos/freertos/freertos-kernel/template</IncludePath>
+              <IncludePath>..;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT595S;../../../../../../devices/MIMXRT595S/periph;../../../../../../devices/MIMXRT595S/drivers;../../../../../../devices/MIMXRT595S/utilities/debug_console;../../../../../../components/lists;../../../../../../devices/MIMXRT595S/utilities/str;../../../../../../devices/MIMXRT595S/utilities/shell;../../../../../../components/serial_manager;../../../../../../components/codec/i2c;../../../../../../components/codec;../../../../../../components/codec/port;../../../../../../components/codec/port/wm8904;../../../../../../components/codec/wm8904;../../../../../../components/i2c;../../../../../../components/uart;../../../../../../components/pmic/pca9420;../../../../../../middleware/multicore/rpmsg-lite/lib/include;../../../../../../middleware/multicore/rpmsg-lite/lib/include/environment/freertos;../../../../../../middleware/multicore/rpmsg-lite/lib/include/platform/imxrt500_m33;../../../../../../middleware/audio_voice/components/vit/FusionF1/Lib;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../../rtos/freertos/freertos-kernel/template</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2134,9 +2144,9 @@
             <uClangAs>1</uClangAs>
             <VariousControls>
               <MiscControls/>
-              <Define>DSP_IMAGE_COPY_TO_RAM=1, MCUXPRESSO_SDK, CPU_MIMXRT595SFFOC_cm33</Define>
+              <Define>DSP_IMAGE_COPY_TO_RAM=1, MCUXPRESSO_SDK, CPU_MIMXRT595SFFOC_cm33, MIMXRT595S_cm33_SERIES</Define>
               <Undefine/>
-              <IncludePath>..;../../fusionf1/binary;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT595S;../../../../../../devices/MIMXRT595S/periph;../../../../../../devices/MIMXRT595S/drivers;../../../../../../devices/MIMXRT595S/utilities;../../../../../../components/lists;../../../../../../devices/MIMXRT595S/utilities/str;../../../../../../devices/MIMXRT595S/utilities/debug_console;../../../../../../devices/MIMXRT595S/utilities/shell;../../../../../../components/serial_manager;../../../../../../components/codec/i2c;../../../../../../components/codec;../../../../../../components/codec/port;../../../../../../components/codec/port/wm8904;../../../../../../components/codec/wm8904;../../../../../../components/i2c;../../../../../../components/uart;../../../../../../components/pmic/pca9420;../../../../../../middleware/multicore/rpmsg-lite/lib/include;../../../../../../middleware/multicore/rpmsg-lite/lib/include/environment/freertos;../../../../../../middleware/multicore/rpmsg-lite/lib/include/platform/imxrt500_m33;../../../../../../middleware/audio_voice/components/vit/FusionF1/Lib;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../../rtos/freertos/freertos-kernel/template</IncludePath>
+              <IncludePath>..;../../fusionf1/binary;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT595S;../../../../../../devices/MIMXRT595S/periph;../../../../../../devices/MIMXRT595S/drivers;../../../../../../devices/MIMXRT595S/utilities/debug_console;../../../../../../components/lists;../../../../../../devices/MIMXRT595S/utilities/str;../../../../../../devices/MIMXRT595S/utilities/shell;../../../../../../components/serial_manager;../../../../../../components/codec/i2c;../../../../../../components/codec;../../../../../../components/codec/port;../../../../../../components/codec/port/wm8904;../../../../../../components/codec/wm8904;../../../../../../components/i2c;../../../../../../components/uart;../../../../../../components/pmic/pca9420;../../../../../../middleware/multicore/rpmsg-lite/lib/include;../../../../../../middleware/multicore/rpmsg-lite/lib/include/environment/freertos;../../../../../../middleware/multicore/rpmsg-lite/lib/include/platform/imxrt500_m33;../../../../../../middleware/audio_voice/components/vit/FusionF1/Lib;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../../rtos/freertos/freertos-kernel/template</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -2152,7 +2162,7 @@
             <ScatterFile>MIMXRT595Sxxxx_cm33_flash.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler --info=sizes,totals,unused,veneers</Misc>
+            <Misc>--remove --predefine="-D__use_shmem__=1" --entry=Reset_Handler --info=sizes,totals,unused,veneers</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -2940,12 +2950,12 @@
             <File>
               <FileName>fsl_assert.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/utilities/fsl_assert.h</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT595S/utilities/debug_console/fsl_assert.h</FilePath>
             </File>
             <File>
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/utilities/fsl_assert.c</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT595S/utilities/debug_console/fsl_assert.c</FilePath>
             </File>
             <File>
               <FileName>fsl_memcpy.S</FileName>
@@ -3482,6 +3492,11 @@
               <FileType>5</FileType>
               <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/timers.h</FilePath>
             </File>
+            <File>
+              <FileName>freertos_tasks_c_additions.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/freertos_tasks_c_additions.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -3566,6 +3581,11 @@
               <FileName>example_board_readme.md</FileName>
               <FileType>5</FileType>
               <FilePath>../example_board_readme.md</FilePath>
+            </File>
+            <File>
+              <FileName>examples_shared_readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../examples_shared_readme.md</FilePath>
             </File>
           </Files>
         </Group>

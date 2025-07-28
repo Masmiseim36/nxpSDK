@@ -1691,6 +1691,16 @@ int wpa_parse_wpa_ie_rsn(const u8 *rsn_ie, size_t rsn_ie_len, struct wpa_ie_data
         data->key_mgmt     = WPA_KEY_MGMT_OSEN;
         data->proto        = WPA_PROTO_OSEN;
     }
+	else if (rsn_ie_len >= 2 + 4 + 2 && rsn_ie[1] >= 4 + 2 &&
+		   rsn_ie[1] == rsn_ie_len - 2 &&
+		   (WPA_GET_BE32(&rsn_ie[2]) == RSNE_OVERRIDE_IE_VENDOR_TYPE ||
+			WPA_GET_BE32(&rsn_ie[2]) ==
+			RSNE_OVERRIDE_2_IE_VENDOR_TYPE) &&
+		   WPA_GET_LE16(&rsn_ie[2 + 4]) == RSN_VERSION)
+	{
+		pos = rsn_ie + 2 + 4 + 2;
+		left = rsn_ie_len - 2 - 4 - 2;
+	}
     else
     {
         const struct rsn_ie_hdr *hdr;
@@ -3245,6 +3255,42 @@ static int wpa_parse_generic(const u8 *pos, struct wpa_eapol_ie_parse *ie)
         return 0;
     }
 
+	if (RSN_SELECTOR_GET(pos + 2) == RSNE_OVERRIDE_IE_VENDOR_TYPE) {
+		ie->rsne_override = pos;
+		ie->rsne_override_len = pos[1] + 2;
+		wpa_hexdump(MSG_DEBUG,
+				"RSN: RSNE Override element in EAPOL-Key",
+				ie->rsne_override, ie->rsne_override_len);
+		return 0;
+	}
+
+	if (RSN_SELECTOR_GET(pos + 2) == RSNE_OVERRIDE_2_IE_VENDOR_TYPE) {
+		ie->rsne_override_2 = pos;
+		ie->rsne_override_2_len = pos[1] + 2;
+		wpa_hexdump(MSG_DEBUG,
+				"RSN: RSNE Override 2 element in EAPOL-Key",
+				ie->rsne_override_2, ie->rsne_override_2_len);
+		return 0;
+	}
+
+	if (RSN_SELECTOR_GET(pos + 2) == RSNXE_OVERRIDE_IE_VENDOR_TYPE) {
+		ie->rsnxe_override = pos;
+		ie->rsnxe_override_len = pos[1] + 2;
+		wpa_hexdump(MSG_DEBUG,
+				"RSN: RSNXE Override element in EAPOL-Key",
+				ie->rsnxe_override, ie->rsnxe_override_len);
+		return 0;
+	}
+
+	if (RSN_SELECTOR_GET(pos + 2) == RSN_SELECTION_IE_VENDOR_TYPE) {
+		ie->rsn_selection = pos + 2 + RSN_SELECTOR_LEN;
+		ie->rsn_selection_len = pos[1] - RSN_SELECTOR_LEN;
+		wpa_hexdump(MSG_DEBUG,
+				"RSN: RSN Selection element in EAPOL-Key",
+				ie->rsn_selection, ie->rsn_selection_len);
+		return 0;
+	}
+
     return 2;
 }
 
@@ -3883,3 +3929,24 @@ void wpa_pasn_add_rsnxe(struct wpabuf *buf, u16 capab)
 }
 
 #endif /* CONFIG_PASN */
+
+void rsn_set_snonce_cookie(u8 *snonce)
+{
+	u8 *pos;
+
+	pos = snonce + WPA_NONCE_LEN - 6;
+	WPA_PUT_BE24(pos, OUI_WFA);
+	pos += 3;
+	WPA_PUT_BE24(pos, 0x000029);
+}
+
+
+bool rsn_is_snonce_cookie(const u8 *snonce)
+{
+	const u8 *pos;
+
+	pos = snonce + WPA_NONCE_LEN - 6;
+	return WPA_GET_BE24(pos) == OUI_WFA &&
+		WPA_GET_BE24(pos + 3) == 0x000029;
+}
+

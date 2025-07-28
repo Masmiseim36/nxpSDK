@@ -32,7 +32,6 @@
     <definition extID="component.rt_gpio_adapter.MIMXRT595S"/>
     <definition extID="component.usart_adapter.MIMXRT595S"/>
     <definition extID="component.osa_template_config.MIMXRT595S"/>
-    <definition extID="component.osa_interface.MIMXRT595S"/>
     <definition extID="component.osa.MIMXRT595S"/>
     <definition extID="component.osa_bm.MIMXRT595S"/>
     <definition extID="middleware.fatfs.MIMXRT595S"/>
@@ -52,7 +51,7 @@
     <definition extID="com.crt.advproject.config.exe.debug"/>
     <definition extID="com.crt.advproject.config.exe.release"/>
   </externalDefinitions>
-  <example id="evkmimxrt595_mmccard_fatfs_cm33" name="mmccard_fatfs_cm33" device_core="cm33_MIMXRT595S" dependency="platform.drivers.flash_config.evkmimxrt595.MIMXRT595S CMSIS_Include_core_cm.MIMXRT595S device.MIMXRT595S_CMSIS.MIMXRT595S device.MIMXRT595S_system.MIMXRT595S device.MIMXRT595S_startup.MIMXRT595S platform.drivers.clock.MIMXRT595S platform.drivers.dsp.MIMXRT595S platform.drivers.i2s_bridge.MIMXRT595S platform.drivers.inputmux_connections.MIMXRT595S platform.drivers.memory.MIMXRT595S platform.drivers.power.MIMXRT595S platform.drivers.reset.MIMXRT595S platform.drivers.soc_mipi_dsi.MIMXRT595S platform.drivers.cache_cache64.MIMXRT595S platform.drivers.common.MIMXRT595S platform.drivers.flexcomm.MIMXRT595S platform.drivers.flexcomm_usart.MIMXRT595S platform.drivers.flexspi.MIMXRT595S platform.drivers.iap3.MIMXRT595S platform.drivers.lpc_gpio.MIMXRT595S platform.drivers.lpc_iopctl.MIMXRT595S platform.drivers.usdhc.MIMXRT595S platform.utilities.assert_lite.MIMXRT595S platform.utilities.misc_utilities.MIMXRT595S component.lists.MIMXRT595S utility.str.MIMXRT595S utility.debug_console_lite.MIMXRT595S component.rt_gpio_adapter.MIMXRT595S component.usart_adapter.MIMXRT595S component.osa_template_config.MIMXRT595S component.osa_interface.MIMXRT595S component.osa.MIMXRT595S component.osa_bm.MIMXRT595S middleware.fatfs.MIMXRT595S middleware.fatfs.template_mmc.MIMXRT595S middleware.fatfs.mmc.MIMXRT595S middleware.sdmmc.common.MIMXRT595S middleware.sdmmc.osa.freertos.MIMXRT595S middleware.sdmmc.mmc.MIMXRT595S middleware.sdmmc.host.usdhc.MIMXRT595S middleware.sdmmc.host.usdhc.non_blocking.MIMXRT595S middleware.sdmmc.usdhc.template.MIMXRT595S" category="sdmmc_examples/mmccard_fatfs">
+  <example id="evkmimxrt595_mmccard_fatfs_cm33" name="mmccard_fatfs_cm33" device_core="cm33_MIMXRT595S" dependency="platform.drivers.flash_config.evkmimxrt595.MIMXRT595S CMSIS_Include_core_cm.MIMXRT595S device.MIMXRT595S_CMSIS.MIMXRT595S device.MIMXRT595S_system.MIMXRT595S device.MIMXRT595S_startup.MIMXRT595S platform.drivers.clock.MIMXRT595S platform.drivers.dsp.MIMXRT595S platform.drivers.i2s_bridge.MIMXRT595S platform.drivers.inputmux_connections.MIMXRT595S platform.drivers.memory.MIMXRT595S platform.drivers.power.MIMXRT595S platform.drivers.reset.MIMXRT595S platform.drivers.soc_mipi_dsi.MIMXRT595S platform.drivers.cache_cache64.MIMXRT595S platform.drivers.common.MIMXRT595S platform.drivers.flexcomm.MIMXRT595S platform.drivers.flexcomm_usart.MIMXRT595S platform.drivers.flexspi.MIMXRT595S platform.drivers.iap3.MIMXRT595S platform.drivers.lpc_gpio.MIMXRT595S platform.drivers.lpc_iopctl.MIMXRT595S platform.drivers.usdhc.MIMXRT595S platform.utilities.assert_lite.MIMXRT595S platform.utilities.misc_utilities.MIMXRT595S component.lists.MIMXRT595S utility.str.MIMXRT595S utility.debug_console_lite.MIMXRT595S component.rt_gpio_adapter.MIMXRT595S component.usart_adapter.MIMXRT595S component.osa_template_config.MIMXRT595S component.osa.MIMXRT595S component.osa_bm.MIMXRT595S middleware.fatfs.MIMXRT595S middleware.fatfs.template_mmc.MIMXRT595S middleware.fatfs.mmc.MIMXRT595S middleware.sdmmc.common.MIMXRT595S middleware.sdmmc.osa.freertos.MIMXRT595S middleware.sdmmc.mmc.MIMXRT595S middleware.sdmmc.host.usdhc.MIMXRT595S middleware.sdmmc.host.usdhc.non_blocking.MIMXRT595S middleware.sdmmc.usdhc.template.MIMXRT595S" category="sdmmc_examples/mmccard_fatfs">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -70,6 +69,7 @@
           <value>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</value>
           <value>SDK_DEBUGCONSOLE=1</value>
           <value>MCUX_META_BUILD</value>
+          <value>MIMXRT595S_cm33_SERIES</value>
           <value>OSA_USED</value>
           <value>USE_RTOS=0</value>
           <value>MMC_ENABLED=1</value>
@@ -214,6 +214,9 @@
     </source>
     <source path="." project_relative_path="doc" type="doc">
       <files mask="example_board_readme.md"/>
+    </source>
+    <source path="." project_relative_path="doc" type="doc">
+      <files mask="examples_shared_readme.md"/>
     </source>
   </example>
 </ksdk:examples>

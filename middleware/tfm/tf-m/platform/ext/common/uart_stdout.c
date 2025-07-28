@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017-2020 ARM Limited
+ * Copyright (c) 2017-2023 ARM Limited
  *
  * Licensed under the Apace License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -37,6 +37,8 @@ int stdio_output_string(const unsigned char *str, uint32_t len)
 {
     int32_t ret;
 
+    /* Add a busy wait before sending. */
+    while (STDIO_DRIVER.GetStatus().tx_busy);
     ret = STDIO_DRIVER.Send(str, len);
     if (ret != ARM_DRIVER_OK) {
         return 0;
@@ -47,12 +49,15 @@ int stdio_output_string(const unsigned char *str, uint32_t len)
     return STDIO_DRIVER.GetTxCount();
 }
 
+uint32_t stdio_is_initialized = 0;
+
 /* Redirects printf to STDIO_DRIVER in case of ARMCLANG*/
 #if defined(__ARMCC_VERSION)
 /* Struct FILE is implemented in stdio.h. Used to redirect printf to
  * STDIO_DRIVER
  */
 FILE __stdout;
+FILE __stderr;
 /* __ARMCC_VERSION is only defined starting from Arm compiler version 6 */
 int fputc(int ch, FILE *f)
 {
@@ -99,6 +104,8 @@ void stdio_init(void)
     (void)ret;
 
     (void)STDIO_DRIVER.Control(ARM_USART_CONTROL_TX, 1);
+
+    stdio_is_initialized = true;
 }
 
 void stdio_uninit(void)
@@ -110,4 +117,6 @@ void stdio_uninit(void)
     ret = STDIO_DRIVER.Uninitialize();
     ASSERT_HIGH(ret);
     (void)ret;
+
+    stdio_is_initialized = false;
 }

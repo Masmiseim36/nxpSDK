@@ -53,7 +53,7 @@ jpeg_start_decompress (j_decompress_ptr cinfo)
      6. Only support SOF0 and SOF1 marker, which means does not support progressive_mode and arith_code
   */
   if ((cinfo->jpeg_color_space == cinfo->out_color_space) && (cinfo->scale_num == cinfo->scale_denom)
-     && ((cinfo->data_precision == 8U) || (cinfo->data_precision == 12))
+     && ((cinfo->data_precision == 8) || (cinfo->data_precision == 12))
      && (((uint32_t)cinfo->jpeg_buffer & 0xF) == 0U)
      && ((uint32_t)cinfo->jpeg_buffer != 0U) && (cinfo->jpeg_size != 0U)
      && ((cinfo->image_height & 0x7U) == 0U) && ((cinfo->image_width & 0x7U) == 0U)
@@ -80,7 +80,7 @@ jpeg_start_decompress (j_decompress_ptr cinfo)
                  the libjpeg decodes them and generates YUV444 pixel, but for JPEGDEC, the
                  generated pixel format are the same as the dource format. To align the behaviour
                  these 2 formats are not supported. */
-              if ((cinfo->max_v_samp_factor == 1U) && (cinfo->max_h_samp_factor == 1U))
+              if ((cinfo->max_v_samp_factor == 1) && (cinfo->max_h_samp_factor == 1))
               {
                   cinfo->format_supported = TRUE;
                   format = kJPEGDEC_PixelFormatYUV444;
@@ -114,7 +114,7 @@ jpeg_start_decompress (j_decompress_ptr cinfo)
       decConfig.pixelFormat = format;
       decConfig.height = cinfo->image_height;
       decConfig.width = cinfo->image_width;
-      decConfig.pixelDepth = cinfo->data_precision;
+      decConfig.pixelDepth = (uint32_t)cinfo->data_precision;
       decConfig.clearStreamBuf = false;
       decConfig.autoStart = false;
 

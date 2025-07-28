@@ -50,7 +50,9 @@ static uint8_t vdll_cmd_buf[WIFI_FW_CMDBUF_SIZE] = {0};
 #endif
 static int seqnum;
 // static int pm_handle;
-
+#ifdef IW610
+bool cal_data_valid_fw;
+#endif
 /*
  * Used to authorize the SDIO interrupt handler to accept the incoming
  * packet from the SDIO interface. If this flag is set a semaphore is
@@ -72,6 +74,12 @@ OSA_SEMAPHORE_HANDLE_DEFINE(sdio_command_resp_sem);
 
 #if CONFIG_TX_RX_ZERO_COPY
 extern void net_tx_zerocopy_process_cb(void *destAddr, void *srcAddr, uint32_t len);
+#endif
+
+#if FSL_USDHC_ENABLE_SCATTER_GATHER_TRANSFER
+void net_tx_sg_zerocopy_process_cb(void *srcAddr, uint32_t len);
+t_u8 * net_tx_sg_zerocopy_process_header(void *Addr);
+void net_tx_sg_zerocopy_process_set_buf(void *Addr, uint32_t len);
 #endif
 
 static struct
@@ -98,12 +106,18 @@ void wrapper_wlan_cmd_11n_cfg(HostCmd_DS_COMMAND *cmd);
 static uint32_t dev_value1 = -1;
 uint8_t dev_mac_addr[MLAN_MAC_ADDR_LENGTH];
 uint8_t dev_mac_addr_uap[MLAN_MAC_ADDR_LENGTH];
+uint8_t dev_mac_addr_wfd[MLAN_MAC_ADDR_LENGTH];
 static uint8_t dev_fw_ver_ext[MLAN_MAX_VER_STR_LEN];
 
 static mlan_status wifi_send_fw_data(t_u8 *data, t_u32 txlen)
 {
+#if FSL_USDHC_ENABLE_SCATTER_GATHER_TRANSFER
+    t_u32 blksize = MLAN_SDIO_BLOCK_SIZE;
+#endif
     t_u32 tx_blocks = 0, buflen = 0;
+#if !FSL_USDHC_ENABLE_SCATTER_GATHER_TRANSFER
     uint32_t resp;
+#endif
     bool ret;
 #if CONFIG_WIFI_FW_DEBUG
     int ret_cb;
@@ -148,8 +162,12 @@ static mlan_status wifi_send_fw_data(t_u8 *data, t_u32 txlen)
         mlan_adap->mp_wr_bitmap &= ~(1U << txportno);
     }
 
+#if FSL_USDHC_ENABLE_SCATTER_GATHER_TRANSFER
+    ret = sdio_drv_write_mb(mlan_adap->ioport + txportno, 1, tx_blocks, blksize);
+#else
     /* send CMD53 */
     ret = sdio_drv_write(mlan_adap->ioport + txportno, 1, tx_blocks, buflen, data, &resp);
+#endif
 
     txportno++;
     if (txportno == mlan_adap->mp_end_port)
@@ -247,6 +265,12 @@ int wifi_get_device_mac_addr(wifi_mac_addr_t *mac_addr)
 int wifi_get_device_uap_mac_addr(wifi_mac_addr_t *mac_addr_uap)
 {
     (void)memcpy(mac_addr_uap->mac, dev_mac_addr_uap, MLAN_MAC_ADDR_LENGTH);
+    return WM_SUCCESS;
+}
+
+int wifi_get_device_wfd_mac_addr(wifi_mac_addr_t *mac_addr_wfd)
+{
+    (void)memcpy(mac_addr_wfd->mac, dev_mac_addr_wfd, MLAN_MAC_ADDR_LENGTH);
     return WM_SUCCESS;
 }
 
@@ -500,6 +524,10 @@ static mlan_status wlan_handle_cmd_resp_packet(t_u8 *pmbuf)
             {
                 wifi_get_mac_address_from_cmdresp((HostCmd_DS_COMMAND *)(void *)cmdresp, dev_mac_addr_uap);
             }
+            else if (bss_type == MLAN_BSS_TYPE_WIFIDIRECT)
+            {
+                wifi_get_mac_address_from_cmdresp((HostCmd_DS_COMMAND *)(void *)cmdresp, dev_mac_addr_wfd);
+            }
             else
             {
                 wifi_get_mac_address_from_cmdresp((HostCmd_DS_COMMAND *)(void *)cmdresp, dev_mac_addr);
@@ -513,6 +541,15 @@ static mlan_status wlan_handle_cmd_resp_packet(t_u8 *pmbuf)
 #endif
         case HostCmd_CMD_GET_HW_SPEC:
             (void)wlan_ret_get_hw_spec((mlan_private *)mlan_adap->priv[0], (HostCmd_DS_COMMAND *)(void *)cmdresp, NULL);
+#ifdef IW610
+#if !defined(OVERRIDE_CALIBRATION_DATA)
+            t_u32 fw_cap_ext;
+            fw_cap_ext = mlan_adap->priv[0]->adapter->fw_cap_ext;
+            cal_data_valid_fw = (((fw_cap_ext & 0x0800) == 0) ? 0 : 1);
+#else
+            cal_data_valid_fw = 0;
+#endif
+#endif
             break;
         case HostCmd_CMD_VERSION_EXT:
             wifi_get_firmware_ver_ext_from_cmdresp((HostCmd_DS_COMMAND *)(void *)cmdresp, dev_fw_ver_ext);
@@ -609,14 +646,6 @@ static mlan_status wlan_decode_rx_packet(t_u8 *pmbuf, t_u32 upld_type)
         msg.event = (uint16_t)upld_type;
         (void)memcpy((void *)msg.data, (const void *)pmbuf, sdiopkt->size);
 
-#if CONFIG_WMM
-        if (upld_type == MLAN_TYPE_EVENT && sdiopkt->hostcmd.command == EVENT_TX_DATA_PAUSE)
-        {
-            wifi_handle_event_data_pause(msg.data);
-            wifi_free_eventbuf(msg.data);
-            return MLAN_STATUS_SUCCESS;
-        }
-#endif
         status = OSA_MsgQPut(bus.event_queue, &msg);
 
         if (status != KOSA_StatusSuccess)
@@ -671,7 +700,7 @@ static t_u8 *wlan_read_rcv_packet(t_u32 port, t_u32 rxlen, t_u32 rx_blocks, t_u3
         {
             ret = sdio_drv_read(port, 1, rx_blocks, blksize, inbuf, &resp);
         }
-        else //if (aggr == true)
+        else
         {
             ret = sdio_drv_read_mb(port, 1, rx_blocks, blksize);
             *type = MLAN_TYPE_DATA;
@@ -968,6 +997,40 @@ static void wlan_get_mac_addr_uap(void)
 }
 #endif
 
+#if CONFIG_WPA_SUPP_P2P
+static void wlan_get_mac_addr_wfd(void)
+{
+    t_u32 tx_blocks = 1, buflen = MLAN_SDIO_BLOCK_SIZE;
+    uint32_t resp;
+    t_u16 seq_number = 0;
+
+    wifi_sdio_lock();
+
+    (void)memset(outbuf, 0, buflen);
+    seq_number = HostCmd_SET_SEQ_NO_BSS_INFO(0 /* seq_num */, 0 /* bss_num */, MLAN_BSS_TYPE_WIFIDIRECT);
+
+    /* sdiopkt = outbuf */
+    wifi_prepare_get_mac_addr_cmd(&sdiopkt->hostcmd, seq_number);
+
+    sdiopkt->pkttype = MLAN_TYPE_CMD;
+    sdiopkt->size    = sdiopkt->hostcmd.size + INTF_HEADER_LEN;
+
+    last_cmd_sent = HostCmd_CMD_802_11_MAC_ADDRESS;
+
+    /* send CMD53 to write the command to get mac address */
+#if defined(SD8801)
+    sdio_drv_write(mlan_adap->ioport, 1, tx_blocks, buflen, (t_u8 *)outbuf, &resp);
+#elif defined(SD8978) || defined(SD8987) || defined(SD8997) || defined(SD9097) || defined(SD9098) || defined(SD9177) || defined(IW610)
+    (void)sdio_drv_write(mlan_adap->ioport | CMD_PORT_SLCT, 1, tx_blocks, buflen, (t_u8 *)outbuf, &resp);
+#endif
+
+    wifi_sdio_unlock();
+
+    wifi_sdio_wait_for_cmdresp();
+
+}
+#endif
+
 void wifi_prepare_get_fw_ver_ext_cmd(HostCmd_DS_COMMAND *cmd, int seq_number, int version_str_sel);
 static void wlan_get_fw_ver_ext(int version_str_sel)
 {
@@ -1122,6 +1185,9 @@ static void wlan_enable_amsdu(void)
 #endif /* CONFIG_ENABLE_AMSDU_RX */
 #endif /* CONFIG_11N */
 
+/* This function was only used in sd_wifi_deinit, and now is replaced by wifi_send_shutdown_cmd with the same 0xaa cmd
+ */
+ #if 0
 static void wlan_cmd_shutdown(void)
 {
     t_u32 tx_blocks = 1, buflen = MLAN_SDIO_BLOCK_SIZE;
@@ -1142,6 +1208,7 @@ static void wlan_cmd_shutdown(void)
 
     (void)sdio_drv_write(mlan_adap->ioport, 1, tx_blocks, buflen, (t_u8 *)outbuf, &resp);
 }
+#endif
 
 void wlan_prepare_mac_control_cmd(HostCmd_DS_COMMAND *cmd, t_u16 seq_number);
 static void wlan_set_mac_ctrl(void)
@@ -1259,36 +1326,9 @@ static void wlan_fw_init_cfg(void)
 #endif
         wifi_io_d("CMD : LOW_POWER_MODE (0x128)");
 
-        (void)wlan_set_low_power_mode();
+        wlan_set_low_power_mode();
     }
 #endif
-
-    if (cal_data_valid)
-    {
-#if CONFIG_FW_VDLL
-        while (pmadapter->vdll_in_progress == MTRUE)
-        {
-            OSA_TimeDelay(50);
-        }
-#endif
-        wifi_io_d("CMD : SET_CAL_DATA (0x8f)");
-
-        _wlan_set_cal_data();
-    }
-
-    /* When cal data set command is sent, fimrware looses alignment of SDIO Tx buffers.
-     * So we need to send reconfigure command. This can be removed if fix is added in firmware.
-     */
-    wifi_io_d("CMD : RECONFIGURE_TX_BUFF (0xd9)");
-
-#if CONFIG_FW_VDLL
-    while (pmadapter->vdll_in_progress == MTRUE)
-    {
-        OSA_TimeDelay(50);
-    }
-#endif
-
-    wlan_reconfigure_tx_buffers();
 
     if (mac_addr_valid)
     {
@@ -1325,6 +1365,37 @@ static void wlan_fw_init_cfg(void)
 #endif
 
     wlan_get_hw_spec();
+
+    if (cal_data_valid
+#ifdef IW610
+        && !cal_data_valid_fw
+#endif
+    )
+    {
+#if CONFIG_FW_VDLL
+        while (pmadapter->vdll_in_progress == MTRUE)
+        {
+            OSA_TimeDelay(50);
+        }
+#endif
+        wifi_io_d("CMD : SET_CAL_DATA (0x8f)");
+
+        _wlan_set_cal_data();
+    }
+
+    /* When cal data set command is sent, fimrware looses alignment of SDIO Tx buffers.
+     * So we need to send reconfigure command. This can be removed if fix is added in firmware.
+     */
+    wifi_io_d("CMD : RECONFIGURE_TX_BUFF (0xd9)");
+
+#if CONFIG_FW_VDLL
+    while (pmadapter->vdll_in_progress == MTRUE)
+    {
+        OSA_TimeDelay(50);
+    }
+#endif
+
+    wlan_reconfigure_tx_buffers();
 
 #if CONFIG_FW_VDLL
     while (pmadapter->vdll_in_progress == MTRUE)
@@ -1372,6 +1443,10 @@ static void wlan_fw_init_cfg(void)
 
 #if UAP_SUPPORT
     wlan_get_mac_addr_uap();
+#endif
+
+#if CONFIG_WPA_SUPP_P2P
+    wlan_get_mac_addr_wfd();
 #endif
 
     if (wm_wifi.wifi_init_done == 0U)
@@ -1575,8 +1650,13 @@ mlan_status wlan_get_wr_port_data(t_u8 *pport)
 static mlan_status wifi_tx_data(t_u8 start_port, t_u8 ports, t_u8 pkt_cnt, t_u32 txlen)
 {
     t_u32 cmd53_port;
+#if FSL_USDHC_ENABLE_SCATTER_GATHER_TRANSFER
+    t_u32 blksize = MLAN_SDIO_BLOCK_SIZE;
+#endif
     t_u32 tx_blocks = 0, buflen = 0;
+#if !FSL_USDHC_ENABLE_SCATTER_GATHER_TRANSFER
     uint32_t resp;
+#endif
     bool ret;
 #if CONFIG_WIFI_FW_DEBUG
     int ret_cb;
@@ -1611,8 +1691,12 @@ static mlan_status wifi_tx_data(t_u8 start_port, t_u8 ports, t_u8 pkt_cnt, t_u32
 
     //(void)PRINTF("cmd53_port=%x, ports=%x, start_port=%x, pkt_cnt=%d, txlen=%d, txblocks=%d\r\n", cmd53_port, ports, start_port, pkt_cnt, txlen, tx_blocks);
 
+#if FSL_USDHC_ENABLE_SCATTER_GATHER_TRANSFER
+    ret = sdio_drv_write_mb(cmd53_port, 1, tx_blocks, blksize);
+#else
     /* send CMD53 */
     ret = sdio_drv_write(cmd53_port, 1, tx_blocks, buflen, (t_u8 *)outbuf, &resp);
+#endif
 
     if (ret == false)
     {
@@ -1667,7 +1751,7 @@ mlan_status wlan_xmit_wmm_pkt(t_u8 interface, t_u32 txlen, t_u8 *tx_buf)
     if (mlan_adap->priv[interface]->adapter->pps_uapsd_mode &&
         wifi_check_last_packet_indication(mlan_adap->priv[interface]))
     {
-#if CONFIG_TX_RX_ZERO_COPY
+#if CONFIG_TX_RX_ZERO_COPY || FSL_USDHC_ENABLE_SCATTER_GATHER_TRANSFER
         process_pkt_hdrs_flags(&((outbuf_t *)tx_buf)->intf_header[0], MRVDRV_TxPD_POWER_MGMT_LAST_PACKET);
 #else
         process_pkt_hdrs_flags((t_u8 *)tx_buf, MRVDRV_TxPD_POWER_MGMT_LAST_PACKET);
@@ -1683,6 +1767,8 @@ mlan_status wlan_xmit_wmm_pkt(t_u8 interface, t_u32 txlen, t_u8 *tx_buf)
 
 #if CONFIG_TX_RX_ZERO_COPY
     net_tx_zerocopy_process_cb(outbuf + buf_block_len, tx_buf, txlen);
+#elif FSL_USDHC_ENABLE_SCATTER_GATHER_TRANSFER
+    net_tx_sg_zerocopy_process_cb(tx_buf, tx_blocks * buflen);
 #else
     memcpy(outbuf + buf_block_len, tx_buf, txlen);
 #endif
@@ -1868,12 +1954,27 @@ mlan_status wlan_flush_wmm_pkt(t_u8 pkt_count)
 
 mlan_status wlan_xmit_pkt(t_u8 *buffer, t_u32 txlen, t_u8 interface, t_u32 tx_control)
 {
-
-    (void)interface;
+#if FSL_USDHC_ENABLE_SCATTER_GATHER_TRANSFER
+    t_u32 tx_blocks = 0, buflen = 0;
+//    t_u8 *payload = NULL;
+#endif
 
     wifi_io_info_d("OUT: i/f: %d len: %d", interface, txlen);
 
+#if FSL_USDHC_ENABLE_SCATTER_GATHER_TRANSFER
+    process_pkt_hdrs((void *)(buffer + sizeof(mlan_linked_list)), txlen, interface, 0, tx_control);
+
+    calculate_sdio_write_params(txlen, &tx_blocks, &buflen);
+
+    net_tx_sg_zerocopy_process_cb((void *)buffer, tx_blocks * buflen);
+//    payload = net_tx_sg_zerocopy_process_header((outbuf_t *)buffer);
+
+//    process_pkt_hdrs((t_u8 *)payload, txlen, interface, 0, tx_control);
+
+//    net_tx_sg_zerocopy_process_set_buf((outbuf_t *)buffer, tx_blocks * buflen);
+#else
     process_pkt_hdrs((t_u8 *)buffer, txlen, interface, 0, tx_control);
+#endif
 
     return wifi_send_fw_data(buffer, txlen);
 }
@@ -2151,10 +2252,10 @@ static mlan_status wlan_get_rd_port(mlan_adapter *pmadapter, t_u32 *pport, t_u32
             if (!pkt_cnt)
                 start_port = *pport;
 #elif defined(SD8978) || defined(SD8987) || defined(SD8997) || defined(SD9097) || defined(SD9098) || defined(SD9177) || defined(IW610)
-        if (start_port == -1)
-        {
-            start_port = *pport;
-        }
+            if (start_port == -1)
+            {
+                start_port = *pport;
+            }
 #endif
 
 #if defined(SD8801)
@@ -2170,7 +2271,7 @@ static mlan_status wlan_get_rd_port(mlan_adapter *pmadapter, t_u32 *pport, t_u32
 #if FSL_USDHC_ENABLE_SCATTER_GATHER_TRANSFER
             if (rxdataAddr)
             {
-                sg_set_buf(rxdataAddr, rx_len);
+                sg_rx_set_buf(rxdataAddr, rx_len);
                 num_sg++;
             }
 #endif
@@ -2216,7 +2317,7 @@ static mlan_status wlan_get_rd_port(mlan_adapter *pmadapter, t_u32 *pport, t_u32
 
         if (*pport == -1 || ports == 0)
         {
-            wifi_io_e("wlan_get_rd_port : Returning FAILURE");
+            wifi_io_d("wlan_get_rd_port : Returning FAILURE %d %d\r\n", *pport, ports);
             return MLAN_STATUS_FAILURE;
         }
 
@@ -2229,8 +2330,8 @@ static mlan_status wlan_get_rd_port(mlan_adapter *pmadapter, t_u32 *pport, t_u32
 #if defined(SD8801)
             cmd53_port = (pmadapter->ioport | SDIO_MPA_ADDR_BASE | (ports << 4)) + start_port;
 #elif defined(SD8978) || defined(SD8987) || defined(SD8997) || defined(SD9097) || defined(SD9098) || defined(SD9177) || defined(IW610)
-        port_count = ports - 1U;
-        cmd53_port = (pmadapter->ioport | SDIO_MPA_ADDR_BASE | (port_count << 8)) + start_port;
+            port_count = ports - 1U;
+            cmd53_port = (pmadapter->ioport | SDIO_MPA_ADDR_BASE | (port_count << 8)) + start_port;
 #endif
             *pport = cmd53_port;
 
@@ -2243,10 +2344,6 @@ static mlan_status wlan_get_rd_port(mlan_adapter *pmadapter, t_u32 *pport, t_u32
         {
             *pport = mlan_adap->ioport + *pport;
         }
-
-#if FSL_USDHC_ENABLE_SCATTER_GATHER_TRANSFER
-        sg_set_num(num_sg);
-#endif
 
         wifi_io_d("port=%x mp_rd_bitmap=0x%x -> 0x%x\n", *pport, rd_bitmap, pmadapter->mp_rd_bitmap);
 #if defined(SD8801)
@@ -2453,7 +2550,7 @@ static void handle_sdio_packet_read(mlan_adapter *pmadapter)
 
 #if FSL_USDHC_ENABLE_SCATTER_GATHER_TRANSFER
         num_sg = 0;
-        sg_init_table();
+        sg_rx_init_table();
 #endif
 
         ret = _handle_sdio_packet_read(pmadapter, &packet, &datalen, &pkt_type);
@@ -2469,27 +2566,19 @@ static void handle_sdio_packet_read(mlan_adapter *pmadapter)
 #if FSL_USDHC_ENABLE_SCATTER_GATHER_TRANSFER
             if (num_sg > 0)
             {
-//                extern void net_rx_notify();
-
-//                net_rx_notify();
-                wm_wifi.data_input_callback(0, NULL, 0);
-#if 0
-                for (sg_idx = 0; sg_idx < num_sg; sg_idx++)
+                if (wifi_rx_status == WIFI_DATA_BLOCK)
                 {
-                    SDIOPkt *insdiopkt = (SDIOPkt *)(void *)rx_bufs[sg_idx];
-                    size               = insdiopkt->size;
-                    pkt_type           = insdiopkt->pkttype;
-
-                    interface = *((t_u8 *)packet + INTF_HEADER_LEN);
-
-                    //PRINTF("IN: i/f: %d len: %d\r\n", interface, size);
-
-                    if (bus.wifi_low_level_input != NULL)
-                    {
-                        (void)bus.wifi_low_level_input(interface, rx_bufs[sg_idx], size);
-                    }
+                    wifi_rx_block_cnt++;
+                    return;
                 }
-#endif
+
+                if (mlan_adap->ps_state == PS_STATE_SLEEP)
+                {
+                    OSA_RWLockWriteUnlock(&sleep_rwlock);
+                    mlan_adap->ps_state = PS_STATE_AWAKE;
+                }
+
+                wm_wifi.data_input_callback(0, NULL, 0);
             }
             else
 #endif
@@ -2891,7 +2980,12 @@ mlan_status sd_wifi_init(enum wlan_type type, const uint8_t *fw_start_addr, cons
 
         } else {
             ret = MLAN_STATUS_FAILURE;
-	}
+        }
+    }
+
+    if (wifi_shutdown_enable)
+    {
+        wifi_shutdown_enable = false;
     }
     return ret;
 }
@@ -2900,6 +2994,29 @@ mlan_status sd_wifi_init(enum wlan_type type, const uint8_t *fw_start_addr, cons
 mlan_status sd_wifi_reinit(enum wlan_type type, const uint8_t *fw_start_addr, const size_t size, uint8_t fw_reload)
 {
     mlan_status ret = MLAN_STATUS_SUCCESS;
+
+#if !defined(SD8978)
+#if (CONFIG_WIFI_IND_RESET)
+    if (wifi_reset_in_progress() == true)
+    {
+        /* During wifi reset, need to initializes
+           the wifi driver struct */
+        ret = sd_wifi_preinit();
+        if (ret != MLAN_STATUS_SUCCESS)
+        {
+            return MLAN_STATUS_FAILURE;
+        }
+        else
+        { /* Do Nothing */
+        }
+
+        mlan_adap->fw_start_addr = fw_start_addr;
+    }
+    else
+    { /* Do Nothing */
+    }
+#endif
+#endif
 
     if (fw_reload == FW_RELOAD_NO_EMULATION)
     {
@@ -2933,6 +3050,10 @@ mlan_status sd_wifi_reinit(enum wlan_type type, const uint8_t *fw_start_addr, co
         }
     }
 
+    if (wifi_shutdown_enable)
+    {
+        wifi_shutdown_enable = false;
+    }
     return ret;
 }
 #endif
@@ -2947,8 +3068,20 @@ void sd_wifi_deinit(void)
     mac_addr_valid = false;
     //	pm_deregister_cb(pm_handle);
 
-    (void)wlan_cmd_shutdown();
-    sdio_drv_deinit();
+    // (void)wlan_cmd_shutdown();
+#if !defined(SD8978)
+#if (CONFIG_WIFI_IND_DNLD) && (CONFIG_WIFI_IND_RESET)
+    if (wifi_reset_in_progress() == true)
+    { /* wifi_reset is based on inband IR, which does not do SDIO device re-enumerate,
+        so could not deinit SD Host and SD Card */
+    }
+    else
+#endif
+#endif
+    { 
+        (void)sdio_drv_deinit();
+    }
+
     (void)mlan_subsys_deinit();
     (void)wlan_deinit_struct();
 }
@@ -3005,7 +3138,7 @@ void wifi_print_wakeup_reason(t_u16 hs_wakeup_reason)
 {
     if (hs_wakeup_reason == 0)
     {
-        PRINTF("Woken up by unknown reason\r\n");
+        PRINTF("Woken up by pin\r\n");
     }
     else if (hs_wakeup_reason == 1)
     {

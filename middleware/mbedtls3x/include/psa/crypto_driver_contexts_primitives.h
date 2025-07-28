@@ -33,6 +33,10 @@
 #include "cc3xx_crypto_primitives_private.h"
 #endif /* PSA_CRYPTO_DRIVER_CC3XX */
 
+#if defined(PSA_CRYPTO_DRIVER_DCP)
+#include "dcp_crypto_primitives.h"
+#endif /* PSA_CRYPTO_DRIVER_DCP */
+
 #if defined(MBEDTLS_TEST_LIBTESTDRIVER1)
 #include <libtestdriver1/include/psa/crypto.h>
 #endif
@@ -47,6 +51,14 @@
 
 #if defined(PSA_CRYPTO_DRIVER_ELS_PKC)
 #include "els_pkc_crypto_primitives.h"
+#endif
+
+#if defined(PSA_CRYPTO_DRIVER_CAAM)
+#include "caam_crypto_primitives.h"
+#endif
+
+#if defined(PSA_CRYPTO_DRIVER_HASHCRYPT)
+#include "hashcrypt_crypto_primitives.h"
 #endif
 
 #if defined(PSA_CRYPTO_DRIVER_TEST)
@@ -110,6 +122,9 @@ typedef union {
 #if defined(PSA_CRYPTO_DRIVER_CC3XX)
     cc3xx_hash_operation_t cc3xx_driver_ctx;
 #endif
+#if defined(PSA_CRYPTO_DRIVER_DCP)
+    mcux_dcp_hash_operation_t dcp_driver_ctx;
+#endif
 #if defined(PSA_CRYPTO_DRIVER_ELE_S2XX)
     ele_s2xx_hash_operation_t ele_driver_ctx;
 #endif
@@ -118,6 +133,12 @@ typedef union {
 #endif
 #if defined(PSA_CRYPTO_DRIVER_ELS_PKC)
     els_pkc_hash_operation_t els_pkc_driver_ctx;
+#endif
+#if defined(PSA_CRYPTO_DRIVER_CAAM)
+    mcux_caam_hash_operation_t caam_driver_ctx;
+#endif
+#if defined(PSA_CRYPTO_DRIVER_HASHCRYPT)
+    mcux_hashcrypt_hash_operation_t hashcrypt_driver_ctx;
 #endif
 } psa_driver_hash_context_t;
 

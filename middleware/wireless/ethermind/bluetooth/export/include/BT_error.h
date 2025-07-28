@@ -1533,6 +1533,7 @@ typedef UINT16    API_RESULT;
 #define HFP_AG_ERR_INVALID_PARAMETER            (0x0012U | HFP_AG_ERR_ID)
 #define HFP_AG_ERR_STOP_PENDING                 (0x0013U | HFP_AG_ERR_ID)
 #define HFP_AG_ERR_INVALID_STATE                (0x0014U | HFP_AG_ERR_ID)
+#define HFP_AG_ERR_NO_FREE_ENTITY               (0x0015U | HFP_AG_ERR_ID)
 
 
 /* ======================================= Section 'DUNP DT' */

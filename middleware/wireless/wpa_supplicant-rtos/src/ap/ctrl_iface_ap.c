@@ -8,6 +8,7 @@
 
 #include "utils/includes.h"
 
+#ifdef CONFIG_AP
 #include "utils/common.h"
 #include "common/ieee802_11_defs.h"
 #include "common/sae.h"
@@ -985,3 +986,4 @@ void *hostapd_ctrl_iface_pmksa_create_entry(const u8 *aa, char *cmd)
 
 #endif /* CONFIG_MESH */
 #endif /* CONFIG_PMKSA_CACHE_EXTERNAL */
+#endif /* CONFIG_AP */

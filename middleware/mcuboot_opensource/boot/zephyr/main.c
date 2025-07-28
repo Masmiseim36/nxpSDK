@@ -27,10 +27,15 @@
 #include <soc.h>
 #include <zephyr/linker/linker-defs.h>
 
+#if defined(CONFIG_BOOT_DISABLE_CACHES)
+#include <zephyr/cache.h>
+#endif
+
 #if defined(CONFIG_ARM)
 #include <cmsis_core.h>
 #endif
 
+#include "io/io.h"
 #include "target.h"
 
 #include "bootutil/bootutil_log.h"
@@ -41,7 +46,7 @@
 #include "flash_map_backend/flash_map_backend.h"
 
 /* Check if Espressif target is supported */
-#ifdef CONFIG_SOC_FAMILY_ESP32
+#ifdef CONFIG_SOC_FAMILY_ESPRESSIF_ESP32
 
 #include <bootloader_init.h>
 #include <esp_loader.h>
@@ -62,7 +67,7 @@
 #define IMAGE1_PRIMARY_SIZE \
           DT_PROP_BY_IDX(DT_NODE_BY_FIXED_PARTITION_LABEL(image_1), reg, 1)
 
-#endif /* CONFIG_SOC_FAMILY_ESP32 */
+#endif /* CONFIG_SOC_FAMILY_ESPRESSIF_ESP32 */
 
 #ifdef CONFIG_MCUBOOT_SERIAL
 #include "boot_serial/boot_serial.h"
@@ -74,20 +79,12 @@ const struct boot_uart_funcs boot_funcs = {
 };
 #endif
 
-#ifdef CONFIG_BOOT_SERIAL_BOOT_MODE
-#include <zephyr/retention/bootmode.h>
-#endif
-
 #if defined(CONFIG_BOOT_USB_DFU_WAIT) || defined(CONFIG_BOOT_USB_DFU_GPIO)
 #include <zephyr/usb/class/usb_dfu.h>
 #endif
 
 #if CONFIG_MCUBOOT_CLEANUP_ARM_CORE
 #include <arm_cleanup.h>
-#endif
-
-#ifdef CONFIG_BOOT_SERIAL_PIN_RESET
-#include <zephyr/drivers/hwinfo.h>
 #endif
 
 /* CONFIG_LOG_MINIMAL is the legacy Kconfig property,
@@ -132,66 +129,7 @@ K_SEM_DEFINE(boot_log_sem, 1, 1);
         * !defined(ZEPHYR_LOG_MODE_MINIMAL)
 	*/
 
-#ifdef CONFIG_SOC_FAMILY_NRF
-#include <helpers/nrfx_reset_reason.h>
-
-static inline bool boot_skip_serial_recovery()
-{
-    uint32_t rr = nrfx_reset_reason_get();
-
-    return !(rr == 0 || (rr & NRFX_RESET_REASON_RESETPIN_MASK));
-}
-#else
-static inline bool boot_skip_serial_recovery()
-{
-    return false;
-}
-#endif
-
 BOOT_LOG_MODULE_REGISTER(mcuboot);
-
-/* Validate serial recovery configuration */
-#ifdef CONFIG_MCUBOOT_SERIAL
-#if !defined(CONFIG_BOOT_SERIAL_ENTRANCE_GPIO) && \
-    !defined(CONFIG_BOOT_SERIAL_WAIT_FOR_DFU) && \
-    !defined(CONFIG_BOOT_SERIAL_BOOT_MODE) && \
-    !defined(CONFIG_BOOT_SERIAL_NO_APPLICATION) && \
-    !defined(CONFIG_BOOT_SERIAL_PIN_RESET)
-#error "Serial recovery selected without an entrance mode set"
-#endif
-#endif
-
-#ifdef CONFIG_MCUBOOT_INDICATION_LED
-
-/*
- * The led0 devicetree alias is optional. If present, we'll use it
- * to turn on the LED whenever the button is pressed.
- */
-#if DT_NODE_EXISTS(DT_ALIAS(mcuboot_led0))
-#define LED0_NODE DT_ALIAS(mcuboot_led0)
-#elif DT_NODE_EXISTS(DT_ALIAS(bootloader_led0))
-#warning "bootloader-led0 alias is deprecated; use mcuboot-led0 instead"
-#define LED0_NODE DT_ALIAS(bootloader_led0)
-#endif
-
-#if DT_NODE_HAS_STATUS(LED0_NODE, okay) && DT_NODE_HAS_PROP(LED0_NODE, gpios)
-static const struct gpio_dt_spec led0 = GPIO_DT_SPEC_GET(LED0_NODE, gpios);
-#else
-/* A build error here means your board isn't set up to drive an LED. */
-#error "Unsupported board: led0 devicetree alias is not defined"
-#endif
-
-void led_init(void)
-{
-    if (!device_is_ready(led0.port)) {
-        BOOT_LOG_ERR("Didn't find LED device referred by the LED0_NODE\n");
-        return;
-    }
-
-    gpio_pin_configure_dt(&led0, GPIO_OUTPUT);
-    gpio_pin_set_dt(&led0, 0);
-}
-#endif /* CONFIG_MCUBOOT_INDICATION_LED */
 
 void os_heap_init(void);
 
@@ -219,16 +157,26 @@ static void do_boot(struct boot_rsp *rsp)
     /* Get ram address for image */
     vt = (struct arm_vector_table *)(rsp->br_hdr->ih_load_addr + rsp->br_hdr->ih_hdr_size);
 #else
-    uintptr_t flash_base;
     int rc;
+    const struct flash_area *fap;
+    static uint32_t dst[2];
 
     /* Jump to flash image */
-    rc = flash_device_base(rsp->br_flash_dev_id, &flash_base);
+    rc = flash_area_open(rsp->br_flash_dev_id, &fap);
     assert(rc == 0);
 
-    vt = (struct arm_vector_table *)(flash_base +
-                                     rsp->br_image_off +
-                                     rsp->br_hdr->ih_hdr_size);
+    rc = flash_area_read(fap, rsp->br_hdr->ih_hdr_size, dst, sizeof(dst));
+    assert(rc == 0);
+#ifndef CONFIG_ASSERT
+    /* Enter a lock up as asserts are disabled */
+    if (rc != 0) {
+        while (1);
+    }
+#endif
+
+    flash_area_close(fap);
+
+    vt = (struct arm_vector_table *)dst;
 #endif
 
     if (IS_ENABLED(CONFIG_SYSTEM_TIMER_HAS_DISABLE_SUPPORT)) {
@@ -242,10 +190,12 @@ static void do_boot(struct boot_rsp *rsp)
 #if CONFIG_MCUBOOT_CLEANUP_ARM_CORE
     cleanup_arm_nvic(); /* cleanup NVIC registers */
 
-#ifdef CONFIG_CPU_CORTEX_M_HAS_CACHE
-    /* Disable instruction cache and data cache before chain-load the application */
-    SCB_DisableDCache();
-    SCB_DisableICache();
+#if defined(CONFIG_BOOT_DISABLE_CACHES)
+    /* Flush and disable instruction/data caches before chain-loading the application */
+    (void)sys_cache_instr_flush_all();
+    (void)sys_cache_data_flush_all();
+    sys_cache_instr_disable();
+    sys_cache_data_disable();
 #endif
 
 #if CONFIG_CPU_HAS_ARM_MPU || CONFIG_CPU_HAS_NXP_MPU
@@ -291,7 +241,7 @@ static void do_boot(struct boot_rsp *rsp)
 
 #elif defined(CONFIG_XTENSA) || defined(CONFIG_RISCV)
 
-#ifndef CONFIG_SOC_FAMILY_ESP32
+#ifndef CONFIG_SOC_FAMILY_ESPRESSIF_ESP32
 
 #define SRAM_BASE_ADDRESS	0xBE030000
 
@@ -320,7 +270,7 @@ static void copy_img_to_SRAM(int slot, unsigned int hdr_offset)
 done:
     flash_area_close(fap);
 }
-#endif /* !CONFIG_SOC_FAMILY_ESP32 */
+#endif /* !CONFIG_SOC_FAMILY_ESPRESSIF_ESP32 */
 
 /* Entry point (.ResetVector) is at the very beginning of the image.
  * Simply copy the image to a suitable location and jump there.
@@ -332,7 +282,7 @@ static void do_boot(struct boot_rsp *rsp)
     BOOT_LOG_INF("br_image_off = 0x%x\n", rsp->br_image_off);
     BOOT_LOG_INF("ih_hdr_size = 0x%x\n", rsp->br_hdr->ih_hdr_size);
 
-#ifdef CONFIG_SOC_FAMILY_ESP32
+#ifdef CONFIG_SOC_FAMILY_ESPRESSIF_ESP32
     int slot = (rsp->br_image_off == IMAGE0_PRIMARY_START_ADDRESS) ?
                 PRIMARY_SLOT : SECONDARY_SLOT;
     /* Load memory segments and start from entry point */
@@ -344,7 +294,7 @@ static void do_boot(struct boot_rsp *rsp)
     /* Jump to entry point */
     start = (void *)(SRAM_BASE_ADDRESS + rsp->br_hdr->ih_hdr_size);
     ((void (*)(void))start)();
-#endif /* CONFIG_SOC_FAMILY_ESP32 */
+#endif /* CONFIG_SOC_FAMILY_ESPRESSIF_ESP32 */
 }
 
 #else
@@ -437,85 +387,13 @@ void zephyr_boot_log_stop(void)
         * !defined(CONFIG_LOG_PROCESS_THREAD) && !defined(ZEPHYR_LOG_MODE_MINIMAL)
         */
 
-#if defined(CONFIG_BOOT_SERIAL_ENTRANCE_GPIO) || defined(CONFIG_BOOT_USB_DFU_GPIO)
-
-#ifdef CONFIG_MCUBOOT_SERIAL
-#define BUTTON_0_DETECT_DELAY CONFIG_BOOT_SERIAL_DETECT_DELAY
-#else
-#define BUTTON_0_DETECT_DELAY CONFIG_BOOT_USB_DFU_DETECT_DELAY
-#endif
-
-#define BUTTON_0_NODE DT_ALIAS(mcuboot_button0)
-
-#if DT_NODE_EXISTS(BUTTON_0_NODE) && DT_NODE_HAS_PROP(BUTTON_0_NODE, gpios)
-static const struct gpio_dt_spec button0 = GPIO_DT_SPEC_GET(BUTTON_0_NODE, gpios);
-#else
-#error "Serial recovery/USB DFU button must be declared in device tree as 'mcuboot_button0'"
-#endif
-
-static bool detect_pin(void)
-{
-    int rc;
-    int pin_active;
-
-    if (!device_is_ready(button0.port)) {
-        __ASSERT(false, "GPIO device is not ready.\n");
-        return false;
-    }
-
-    rc = gpio_pin_configure_dt(&button0, GPIO_INPUT);
-    __ASSERT(rc == 0, "Failed to initialize boot detect pin.\n");
-
-    rc = gpio_pin_get_dt(&button0);
-    pin_active = rc;
-
-    __ASSERT(rc >= 0, "Failed to read boot detect pin.\n");
-
-    if (pin_active) {
-        if (BUTTON_0_DETECT_DELAY > 0) {
-#ifdef CONFIG_MULTITHREADING
-            k_sleep(K_MSEC(50));
-#else
-            k_busy_wait(50000);
-#endif
-
-            /* Get the uptime for debounce purposes. */
-            int64_t timestamp = k_uptime_get();
-
-            for(;;) {
-                rc = gpio_pin_get_dt(&button0);
-                pin_active = rc;
-                __ASSERT(rc >= 0, "Failed to read boot detect pin.\n");
-
-                /* Get delta from when this started */
-                uint32_t delta = k_uptime_get() -  timestamp;
-
-                /* If not pressed OR if pressed > debounce period, stop. */
-                if (delta >= BUTTON_0_DETECT_DELAY || !pin_active) {
-                    break;
-                }
-
-                /* Delay 1 ms */
-#ifdef CONFIG_MULTITHREADING
-                k_sleep(K_MSEC(1));
-#else
-                k_busy_wait(1000);
-#endif
-            }
-        }
-    }
-
-    return (bool)pin_active;
-}
-#endif
-
 #ifdef CONFIG_MCUBOOT_SERIAL
 static void boot_serial_enter()
 {
     int rc;
 
 #ifdef CONFIG_MCUBOOT_INDICATION_LED
-    gpio_pin_set_dt(&led0, 1);
+    io_led_set(1);
 #endif
 
     mcuboot_status_change(MCUBOOT_STATUS_SERIAL_DFU_ENTERED);
@@ -534,14 +412,6 @@ int main(void)
     int rc;
     FIH_DECLARE(fih_rc, FIH_FAILURE);
 
-#ifdef CONFIG_BOOT_SERIAL_BOOT_MODE
-    int32_t boot_mode;
-#endif
-
-#ifdef CONFIG_BOOT_SERIAL_PIN_RESET
-    uint32_t reset_cause;
-#endif
-
     MCUBOOT_WATCHDOG_SETUP();
     MCUBOOT_WATCHDOG_FEED();
 
@@ -553,7 +423,7 @@ int main(void)
 
 #ifdef CONFIG_MCUBOOT_INDICATION_LED
     /* LED init */
-    led_init();
+    io_led_init();
 #endif
 
     os_heap_init();
@@ -565,25 +435,22 @@ int main(void)
     mcuboot_status_change(MCUBOOT_STATUS_STARTUP);
 
 #ifdef CONFIG_BOOT_SERIAL_ENTRANCE_GPIO
-    if (detect_pin() &&
-            !boot_skip_serial_recovery()) {
+    if (io_detect_pin() &&
+            !io_boot_skip_serial_recovery()) {
         boot_serial_enter();
     }
 #endif
 
 #ifdef CONFIG_BOOT_SERIAL_PIN_RESET
-    rc = hwinfo_get_reset_cause(&reset_cause);
-
-    if (rc == 0 && reset_cause == RESET_PIN) {
-        (void)hwinfo_clear_reset_cause();
+    if (io_detect_pin_reset()) {
         boot_serial_enter();
     }
 #endif
 
 #if defined(CONFIG_BOOT_USB_DFU_GPIO)
-    if (detect_pin()) {
+    if (io_detect_pin()) {
 #ifdef CONFIG_MCUBOOT_INDICATION_LED
-        gpio_pin_set_dt(&led0, 1);
+        io_led_set(1);
 #endif
 
         mcuboot_status_change(MCUBOOT_STATUS_USB_DFU_ENTERED);
@@ -624,20 +491,17 @@ int main(void)
     uint32_t start = k_uptime_get_32();
 
 #ifdef CONFIG_MCUBOOT_INDICATION_LED
-    gpio_pin_set_dt(&led0, 1);
+    io_led_set(1);
 #endif
 #endif
 
     FIH_CALL(boot_go, fih_rc, &rsp);
 
 #ifdef CONFIG_BOOT_SERIAL_BOOT_MODE
-    boot_mode = bootmode_check(BOOT_MODE_TYPE_BOOTLOADER);
-
-    if (boot_mode == 1) {
+    if (io_detect_boot_mode()) {
         /* Boot mode to stay in bootloader, clear status and enter serial
          * recovery mode
          */
-        bootmode_clear();
         boot_serial_enter();
     }
 #endif
@@ -651,7 +515,7 @@ int main(void)
     boot_serial_check_start(&boot_funcs,timeout_in_ms);
 
 #ifdef CONFIG_MCUBOOT_INDICATION_LED
-    gpio_pin_set_dt(&led0, 0);
+    io_led_set(0);
 #endif
 #endif
 

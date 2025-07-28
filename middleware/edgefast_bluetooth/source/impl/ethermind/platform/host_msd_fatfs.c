@@ -22,17 +22,6 @@
 
 #include "fsl_debug_console.h"
 
-#if (defined(CONFIG_BT_SNOOP) && (CONFIG_BT_SNOOP > 0))
-#undef CONFIG_BT_HOST_USB_IRQ_ENABLE
-#define CONFIG_BT_HOST_USB_IRQ_ENABLE 1
-#undef CONFIG_BT_HOST_USB_ENABLE
-#define CONFIG_BT_HOST_USB_ENABLE 1
-#endif
-
-#ifndef CONFIG_BT_DEBUG_HOST_MSD_FATFS
-#define CONFIG_BT_DEBUG_HOST_MSD_FATFS 0
-#endif
-
 #define LOG_ENABLE CONFIG_BT_DEBUG_HOST_MSD_FATFS
 #define LOG_MODULE_NAME bt_host_msd_fatfs
 #include "fsl_component_log.h"

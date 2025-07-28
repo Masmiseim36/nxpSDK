@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2007-2015 Freescale Semiconductor, Inc.
- * Copyright 2018-2021, 2024 NXP
+ * Copyright 2018-2021, 2024-2025 NXP
  *
  * License: NXP LA_OPT_Online Code Hosting NXP_Software_License
  *
@@ -160,6 +160,7 @@ static void _FMSTR_PdBdmPoll(void)
             /* Destroy the last CRC in memory */
             _pdbdm.commBuffer[i] = ~crc;
             /* Decode received packet. Use "pdbdm" as a globally unique pointer value as our identifier */
+            /* coverity[misra_c_2012_rule_7_4_violation:FALSE] */
             (void)FMSTR_ProtocolDecoder(_pdbdm.commBuffer, _pdbdm.pcktSize, _pdbdm.cmdStatus, (void*)"pdbdm");
         }
 #if FMSTR_DEBUG_LEVEL >= 2
@@ -188,8 +189,10 @@ static void _FMSTR_PdBdmSendResponse(FMSTR_BPTR pResponse, FMSTR_SIZE nLength, F
 {
     FMSTR_U8   crc;
     FMSTR_SIZE i;
+    
     /* Check the response that is valid to provided address? */
     FMSTR_ASSERT(pResponse == _pdbdm.commBuffer);
+    FMSTR_ASSERT_RETURN(nLength <= (FMSTR_SIZE)FMSTR_COMM_BUFFER_SIZE, /* void */);
 
     /* Compute CRC8 data consistency check, including status and packet length */
     FMSTR_Crc8Init(&crc);

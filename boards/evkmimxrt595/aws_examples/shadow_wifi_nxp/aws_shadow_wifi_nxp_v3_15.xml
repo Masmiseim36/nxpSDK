@@ -42,15 +42,16 @@
     <definition extID="component.serial_manager_uart.MIMXRT595S"/>
     <definition extID="component.rt_gpio_adapter.MIMXRT595S"/>
     <definition extID="component.usart_adapter.MIMXRT595S"/>
-    <definition extID="component.mflash_offchip.MIMXRT595S"/>
     <definition extID="component.osa_template_config.MIMXRT595S"/>
-    <definition extID="component.osa_interface.MIMXRT595S"/>
     <definition extID="component.osa.MIMXRT595S"/>
     <definition extID="component.osa_free_rtos.MIMXRT595S"/>
     <definition extID="middleware.edgefast_wifi_nxp.MIMXRT595S"/>
-    <definition extID="driver.pca9420.MIMXRT595S"/>
     <definition extID="component.wifi_bt_module.tx_pwr_limits.MIMXRT595S"/>
     <definition extID="component.wifi_bt_module.config.MIMXRT595S"/>
+    <definition extID="component.wifi_bt_module.IW416.MIMXRT595S"/>
+    <definition extID="component.wifi_bt_module.board_murata_1xk_m2.MIMXRT595S"/>
+    <definition extID="driver.pca9420.MIMXRT595S"/>
+    <definition extID="component.mflash_offchip.MIMXRT595S"/>
     <definition extID="middleware.wifi.template.MIMXRT595S"/>
     <definition extID="middleware.wifi.osa_free_rtos.MIMXRT595S"/>
     <definition extID="middleware.wifi.osa.MIMXRT595S"/>
@@ -80,6 +81,7 @@
     <definition extID="middleware.freertos-kernel.MIMXRT595S"/>
     <definition extID="middleware.freertos-kernel.heap_4.MIMXRT595S"/>
     <definition extID="middleware.freertos-kernel.cm33_non_trustzone.MIMXRT595S"/>
+    <definition extID="middleware.freertos-kernel.extension.MIMXRT595S"/>
     <definition extID="middleware.freertos-kernel.config.MIMXRT595S"/>
     <definition extID="middleware.freertos.backoffalgorithm.MIMXRT595S"/>
     <definition extID="middleware.freertos.corejson.MIMXRT595S"/>
@@ -96,7 +98,7 @@
     <definition extID="com.crt.advproject.config.exe.debug"/>
     <definition extID="com.crt.advproject.config.exe.release"/>
   </externalDefinitions>
-  <example id="evkmimxrt595_aws_shadow_wifi_nxp" name="aws_shadow_wifi_nxp" device_core="cm33_MIMXRT595S" dependency="platform.drivers.flash_config.evkmimxrt595.MIMXRT595S CMSIS_Include_core_cm.MIMXRT595S device.MIMXRT595S_CMSIS.MIMXRT595S device.MIMXRT595S_system.MIMXRT595S device.MIMXRT595S_startup.MIMXRT595S platform.drivers.clock.MIMXRT595S platform.drivers.dsp.MIMXRT595S platform.drivers.i2s_bridge.MIMXRT595S platform.drivers.inputmux_connections.MIMXRT595S platform.drivers.memory.MIMXRT595S platform.drivers.power.MIMXRT595S platform.drivers.reset.MIMXRT595S platform.drivers.soc_mipi_dsi.MIMXRT595S platform.drivers.cache_cache64.MIMXRT595S platform.drivers.casper.MIMXRT595S platform.drivers.common.MIMXRT595S platform.drivers.flexcomm.MIMXRT595S platform.drivers.flexcomm_usart.MIMXRT595S platform.drivers.flexcomm_i2c.MIMXRT595S platform.drivers.flexspi.MIMXRT595S platform.drivers.hashcrypt.MIMXRT595S platform.drivers.iap3.MIMXRT595S platform.drivers.lpc_gpio.MIMXRT595S platform.drivers.lpc_iopctl.MIMXRT595S platform.drivers.trng.MIMXRT595S platform.drivers.usdhc.MIMXRT595S middleware.iot_reference.kvstore.MIMXRT595S middleware.iot_reference.logging.MIMXRT595S middleware.iot_reference.mqtt_agent.MIMXRT595S middleware.iot_reference.mqtt_agent_interface.MIMXRT595S middleware.iot_reference.transport_mbedtls.MIMXRT595S platform.utilities.assert.MIMXRT595S platform.utilities.misc_utilities.MIMXRT595S component.lists.MIMXRT595S utility.str.MIMXRT595S utility.debug_console.MIMXRT595S component.serial_manager.MIMXRT595S component.serial_manager_uart.MIMXRT595S component.rt_gpio_adapter.MIMXRT595S component.usart_adapter.MIMXRT595S component.mflash_offchip.MIMXRT595S component.osa_template_config.MIMXRT595S component.osa_interface.MIMXRT595S component.osa.MIMXRT595S component.osa_free_rtos.MIMXRT595S middleware.edgefast_wifi_nxp.MIMXRT595S driver.pca9420.MIMXRT595S component.wifi_bt_module.tx_pwr_limits.MIMXRT595S component.wifi_bt_module.config.MIMXRT595S middleware.wifi.template.MIMXRT595S middleware.wifi.osa_free_rtos.MIMXRT595S middleware.wifi.osa.MIMXRT595S middleware.wifi.common_files.MIMXRT595S middleware.wifi.fwdnld.MIMXRT595S middleware.wifi.net.MIMXRT595S middleware.wifi.wifidriver.MIMXRT595S middleware.wifi.wifidriver.softap.MIMXRT595S middleware.wifi.MIMXRT595S middleware.wifi.sdio.MIMXRT595S middleware.wifi.mlan_sdio.MIMXRT595S middleware.wifi.fwdnld_intf_abs.MIMXRT595S middleware.mbedtls.port.ksdk_option.MIMXRT595S middleware.mbedtls.MIMXRT595S middleware.mbedtls.port.ksdk.MIMXRT595S middleware.lwip.MIMXRT595S middleware.lwip.sys_arch.dynamic.MIMXRT595S middleware.sdmmc.common.MIMXRT595S middleware.sdmmc.osa.freertos.MIMXRT595S middleware.sdmmc.sdio.MIMXRT595S middleware.sdmmc.host.usdhc.MIMXRT595S middleware.sdmmc.host.usdhc.non_blocking.MIMXRT595S middleware.sdmmc.usdhc.template.MIMXRT595S middleware.pkcs11.MIMXRT595S middleware.aws_iot.device_shadow.template.MIMXRT595S middleware.aws_iot.device_shadow.MIMXRT595S middleware.freertos-kernel.MIMXRT595S middleware.freertos-kernel.heap_4.MIMXRT595S middleware.freertos-kernel.cm33_non_trustzone.MIMXRT595S middleware.freertos-kernel.config.MIMXRT595S middleware.freertos.backoffalgorithm.MIMXRT595S middleware.freertos.corejson.MIMXRT595S middleware.freertos.coremqtt.MIMXRT595S middleware.freertos.coremqtt-agent.MIMXRT595S middleware.freertos.corepkcs11.MIMXRT595S middleware.freertos.corepkcs11.mbedtls.MIMXRT595S middleware.freertos.corepkcs11.mbedtls_utils.MIMXRT595S" category="aws_examples">
+  <example id="evkmimxrt595_aws_shadow_wifi_nxp" name="aws_shadow_wifi_nxp" device_core="cm33_MIMXRT595S" dependency="platform.drivers.flash_config.evkmimxrt595.MIMXRT595S CMSIS_Include_core_cm.MIMXRT595S device.MIMXRT595S_CMSIS.MIMXRT595S device.MIMXRT595S_system.MIMXRT595S device.MIMXRT595S_startup.MIMXRT595S platform.drivers.clock.MIMXRT595S platform.drivers.dsp.MIMXRT595S platform.drivers.i2s_bridge.MIMXRT595S platform.drivers.inputmux_connections.MIMXRT595S platform.drivers.memory.MIMXRT595S platform.drivers.power.MIMXRT595S platform.drivers.reset.MIMXRT595S platform.drivers.soc_mipi_dsi.MIMXRT595S platform.drivers.cache_cache64.MIMXRT595S platform.drivers.casper.MIMXRT595S platform.drivers.common.MIMXRT595S platform.drivers.flexcomm.MIMXRT595S platform.drivers.flexcomm_usart.MIMXRT595S platform.drivers.flexcomm_i2c.MIMXRT595S platform.drivers.flexspi.MIMXRT595S platform.drivers.hashcrypt.MIMXRT595S platform.drivers.iap3.MIMXRT595S platform.drivers.lpc_gpio.MIMXRT595S platform.drivers.lpc_iopctl.MIMXRT595S platform.drivers.trng.MIMXRT595S platform.drivers.usdhc.MIMXRT595S middleware.iot_reference.kvstore.MIMXRT595S middleware.iot_reference.logging.MIMXRT595S middleware.iot_reference.mqtt_agent.MIMXRT595S middleware.iot_reference.mqtt_agent_interface.MIMXRT595S middleware.iot_reference.transport_mbedtls.MIMXRT595S platform.utilities.assert.MIMXRT595S platform.utilities.misc_utilities.MIMXRT595S component.lists.MIMXRT595S utility.str.MIMXRT595S utility.debug_console.MIMXRT595S component.serial_manager.MIMXRT595S component.serial_manager_uart.MIMXRT595S component.rt_gpio_adapter.MIMXRT595S component.usart_adapter.MIMXRT595S component.osa_template_config.MIMXRT595S component.osa.MIMXRT595S component.osa_free_rtos.MIMXRT595S middleware.edgefast_wifi_nxp.MIMXRT595S component.wifi_bt_module.tx_pwr_limits.MIMXRT595S component.wifi_bt_module.config.MIMXRT595S component.wifi_bt_module.IW416.MIMXRT595S component.wifi_bt_module.board_murata_1xk_m2.MIMXRT595S driver.pca9420.MIMXRT595S component.mflash_offchip.MIMXRT595S middleware.wifi.template.MIMXRT595S middleware.wifi.osa_free_rtos.MIMXRT595S middleware.wifi.osa.MIMXRT595S middleware.wifi.common_files.MIMXRT595S middleware.wifi.fwdnld.MIMXRT595S middleware.wifi.net.MIMXRT595S middleware.wifi.wifidriver.MIMXRT595S middleware.wifi.wifidriver.softap.MIMXRT595S middleware.wifi.MIMXRT595S middleware.wifi.sdio.MIMXRT595S middleware.wifi.mlan_sdio.MIMXRT595S middleware.wifi.fwdnld_intf_abs.MIMXRT595S middleware.mbedtls.port.ksdk_option.MIMXRT595S middleware.mbedtls.MIMXRT595S middleware.mbedtls.port.ksdk.MIMXRT595S middleware.lwip.MIMXRT595S middleware.lwip.sys_arch.dynamic.MIMXRT595S middleware.sdmmc.common.MIMXRT595S middleware.sdmmc.osa.freertos.MIMXRT595S middleware.sdmmc.sdio.MIMXRT595S middleware.sdmmc.host.usdhc.MIMXRT595S middleware.sdmmc.host.usdhc.non_blocking.MIMXRT595S middleware.sdmmc.usdhc.template.MIMXRT595S middleware.pkcs11.MIMXRT595S middleware.aws_iot.device_shadow.template.MIMXRT595S middleware.aws_iot.device_shadow.MIMXRT595S middleware.freertos-kernel.MIMXRT595S middleware.freertos-kernel.heap_4.MIMXRT595S middleware.freertos-kernel.cm33_non_trustzone.MIMXRT595S middleware.freertos-kernel.extension.MIMXRT595S middleware.freertos-kernel.config.MIMXRT595S middleware.freertos.backoffalgorithm.MIMXRT595S middleware.freertos.corejson.MIMXRT595S middleware.freertos.coremqtt.MIMXRT595S middleware.freertos.coremqtt-agent.MIMXRT595S middleware.freertos.corepkcs11.MIMXRT595S middleware.freertos.corepkcs11.mbedtls.MIMXRT595S middleware.freertos.corepkcs11.mbedtls_utils.MIMXRT595S" category="aws_examples">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -119,11 +121,13 @@
           <value>MBEDTLS_CONFIG_FILE='"aws_mbedtls_config.h"'</value>
           <value>SDK_DEBUGCONSOLE=1</value>
           <value>MCUX_META_BUILD</value>
+          <value>MIMXRT595S_cm33_SERIES</value>
           <value>DEBUG_CONSOLE_TRANSFER_NON_BLOCKING</value>
           <value>OSA_USED</value>
           <value>SERIAL_PORT_TYPE_UART=1</value>
-          <value>MFLASH_FILE_BASEADDR=7340032</value>
+          <value>WIFI_IW416_BOARD_MURATA_1XK_M2</value>
           <value>SDK_I2C_BASED_COMPONENT_USED=1</value>
+          <value>MFLASH_FILE_BASEADDR=7340032</value>
           <value>CONFIG_NXP_WIFI_SOFTAP_SUPPORT=1</value>
           <value>SDIO_ENABLED=1</value>
           <value>SDK_OS_FREE_RTOS</value>
@@ -236,9 +240,6 @@
       <files mask="main_text.ldt"/>
     </source>
     <source path="." project_relative_path="source" type="c_include">
-      <files mask="app_config.h"/>
-    </source>
-    <source path="." project_relative_path="source" type="c_include">
       <files mask="aws_mbedtls_config.h"/>
     </source>
     <source path="." project_relative_path="source" type="c_include">
@@ -247,7 +248,6 @@
       <files mask="core_mqtt_config.h"/>
       <files mask="core_pkcs11_config.h"/>
       <files mask="demo_config.h"/>
-      <files mask="freertos_tasks_c_additions.h"/>
       <files mask="kvstore_config.h"/>
       <files mask="shadow_config.h"/>
     </source>
@@ -325,6 +325,12 @@
     </source>
     <source path="." project_relative_path="doc" type="doc">
       <files mask="example_board_readme.md"/>
+    </source>
+    <source path="." project_relative_path="doc" type="doc">
+      <files mask="examples_shared_readme.md"/>
+    </source>
+    <source path="." project_relative_path="doc" type="doc">
+      <files mask="readme_modules.md"/>
     </source>
   </example>
 </ksdk:examples>

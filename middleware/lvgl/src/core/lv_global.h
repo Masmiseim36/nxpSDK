@@ -39,6 +39,10 @@ extern "C" {
 #include "../font/lv_font_fmt_txt_private.h"
 #endif
 
+#if LV_USE_OS != LV_OS_NONE && defined(__linux__)
+#include "../osal/lv_linux_private.h"
+#endif
+
 #include "../tick/lv_tick.h"
 #include "../layouts/lv_layout.h"
 
@@ -228,6 +232,9 @@ typedef struct lv_global_t {
 
 #if LV_USE_OS != LV_OS_NONE
     lv_mutex_t lv_general_mutex;
+#if defined(__linux__)
+    lv_proc_stat_t linux_last_proc_stat;
+#endif
 #endif
 
 #if LV_USE_OS == LV_OS_FREERTOS

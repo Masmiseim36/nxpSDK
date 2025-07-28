@@ -3,7 +3,49 @@
 include_guard(GLOBAL)
 message("${CMAKE_CURRENT_LIST_FILE} component is included.")
 
-      if(CONFIG_BOARD STREQUAL frdmmcxn947)
+      if(CONFIG_BOARD STREQUAL kw47evk)
+    target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
+          ${CMAKE_CURRENT_LIST_DIR}/platform/ext/target/nxp/kw47evk/target_cfg.c
+          ${CMAKE_CURRENT_LIST_DIR}/platform/ext/target/nxp/kw47evk/Device/Source/startup_kw47evk.c
+        )
+    endif()
+
+        if(CONFIG_BOARD STREQUAL frdmmcxw72)
+    target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
+          ${CMAKE_CURRENT_LIST_DIR}/platform/ext/target/nxp/frdmmcxw72/target_cfg.c
+          ${CMAKE_CURRENT_LIST_DIR}/platform/ext/target/nxp/frdmmcxw72/Device/Source/startup_frdmmcxw72.c
+        )
+    endif()
+
+        if(CONFIG_BOARD STREQUAL rdrw612bga)
+    target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
+          ${CMAKE_CURRENT_LIST_DIR}/platform/ext/target/nxp/rdrw612bga/target_cfg.c
+          ${CMAKE_CURRENT_LIST_DIR}/platform/ext/target/nxp/rdrw612bga/Device/Source/startup_rdrw612bga.c
+        )
+    endif()
+
+        if(CONFIG_BOARD STREQUAL frdmrw612)
+    target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
+          ${CMAKE_CURRENT_LIST_DIR}/platform/ext/target/nxp/frdmrw612/target_cfg.c
+          ${CMAKE_CURRENT_LIST_DIR}/platform/ext/target/nxp/frdmrw612/Device/Source/startup_frdmrw612.c
+        )
+    endif()
+
+        if(CONFIG_BOARD STREQUAL mcxw72evk)
+    target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
+          ${CMAKE_CURRENT_LIST_DIR}/platform/ext/target/nxp/mcxw72evk/target_cfg.c
+          ${CMAKE_CURRENT_LIST_DIR}/platform/ext/target/nxp/mcxw72evk/Device/Source/startup_mcxw72evk.c
+        )
+    endif()
+
+        if(CONFIG_BOARD STREQUAL frdmmcxn236)
+    target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
+          ${CMAKE_CURRENT_LIST_DIR}/platform/ext/target/nxp/frdmmcxn236/target_cfg.c
+          ${CMAKE_CURRENT_LIST_DIR}/platform/ext/target/nxp/frdmmcxn236/Device/Source/startup_frdmmcxn236.c
+        )
+    endif()
+
+        if(CONFIG_BOARD STREQUAL frdmmcxn947)
     target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
           ${CMAKE_CURRENT_LIST_DIR}/platform/ext/target/nxp/frdmmcxn947/target_cfg.c
           ${CMAKE_CURRENT_LIST_DIR}/platform/ext/target/nxp/frdmmcxn947/Device/Source/startup_frdmmcxn947.c
@@ -17,10 +59,17 @@ message("${CMAKE_CURRENT_LIST_FILE} component is included.")
         )
     endif()
 
-        if(CONFIG_BOARD STREQUAL frdmrw612)
+        if(CONFIG_BOARD STREQUAL mcxw71evk)
     target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
-          ${CMAKE_CURRENT_LIST_DIR}/platform/ext/target/nxp/frdmrw612/target_cfg.c
-          ${CMAKE_CURRENT_LIST_DIR}/platform/ext/target/nxp/frdmrw612/Device/Source/startup_frdmrw612.c
+          ${CMAKE_CURRENT_LIST_DIR}/platform/ext/target/nxp/mcxw71evk/target_cfg.c
+          ${CMAKE_CURRENT_LIST_DIR}/platform/ext/target/nxp/mcxw71evk/Device/Source/startup_mcxw71evk.c
+        )
+    endif()
+
+        if(CONFIG_BOARD STREQUAL frdmmcxw71)
+    target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
+          ${CMAKE_CURRENT_LIST_DIR}/platform/ext/target/nxp/frdmmcxw71/target_cfg.c
+          ${CMAKE_CURRENT_LIST_DIR}/platform/ext/target/nxp/frdmmcxw71/Device/Source/startup_frdmmcxw71.c
         )
     endif()
 
@@ -31,13 +80,6 @@ message("${CMAKE_CURRENT_LIST_FILE} component is included.")
         )
     endif()
 
-        if(CONFIG_BOARD STREQUAL rdrw612bga)
-    target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
-          ${CMAKE_CURRENT_LIST_DIR}/platform/ext/target/nxp/rdrw612bga/target_cfg.c
-          ${CMAKE_CURRENT_LIST_DIR}/platform/ext/target/nxp/rdrw612bga/Device/Source/startup_rdrw612bga.c
-        )
-    endif()
-
         if(CONFIG_BOARD STREQUAL mcxn5xxevk)
     target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
           ${CMAKE_CURRENT_LIST_DIR}/platform/ext/target/nxp/mcxn5xxevk/target_cfg.c
@@ -45,58 +87,20 @@ message("${CMAKE_CURRENT_LIST_FILE} component is included.")
         )
     endif()
 
-  
-      if(CONFIG_BOARD STREQUAL frdmmcxn947)
-    target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
-          ${CMAKE_CURRENT_LIST_DIR}/platform/ext/target/nxp/common
-          ${CMAKE_CURRENT_LIST_DIR}/platform/ext/target/nxp/frdmmcxn947
-          ${CMAKE_CURRENT_LIST_DIR}/platform/ext/target/nxp/frdmmcxn947/Device/Include
-          ${CMAKE_CURRENT_LIST_DIR}/platform/ext/target/nxp/frdmmcxn947/partition
+        if(CONFIG_BOARD STREQUAL kw45b41zevk)
+    target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
+          ${CMAKE_CURRENT_LIST_DIR}/platform/ext/target/nxp/kw45b41zevk/target_cfg.c
+          ${CMAKE_CURRENT_LIST_DIR}/platform/ext/target/nxp/kw45b41zevk/Device/Source/startup_kw45b41zevk.c
         )
     endif()
 
-        if(CONFIG_BOARD STREQUAL lpcxpresso55s69)
+  
+      if(CONFIG_BOARD STREQUAL lpcxpresso55s69)
     target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
           ${CMAKE_CURRENT_LIST_DIR}/platform/ext/target/nxp/common
           ${CMAKE_CURRENT_LIST_DIR}/platform/ext/target/nxp/lpcxpresso55s69
           ${CMAKE_CURRENT_LIST_DIR}/platform/ext/target/nxp/lpcxpresso55s69/Device/Include
           ${CMAKE_CURRENT_LIST_DIR}/platform/ext/target/nxp/lpcxpresso55s69/partition
-        )
-    endif()
-
-        if(CONFIG_BOARD STREQUAL frdmrw612)
-    target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
-          ${CMAKE_CURRENT_LIST_DIR}/platform/ext/target/nxp/common
-          ${CMAKE_CURRENT_LIST_DIR}/platform/ext/target/nxp/frdmrw612
-          ${CMAKE_CURRENT_LIST_DIR}/platform/ext/target/nxp/frdmrw612/Device/Include
-          ${CMAKE_CURRENT_LIST_DIR}/platform/ext/target/nxp/frdmrw612/partition
-        )
-    endif()
-
-        if(CONFIG_BOARD STREQUAL mcxn9xxevk)
-    target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
-          ${CMAKE_CURRENT_LIST_DIR}/platform/ext/target/nxp/common
-          ${CMAKE_CURRENT_LIST_DIR}/platform/ext/target/nxp/mcxn9xxevk
-          ${CMAKE_CURRENT_LIST_DIR}/platform/ext/target/nxp/mcxn9xxevk/Device/Include
-          ${CMAKE_CURRENT_LIST_DIR}/platform/ext/target/nxp/mcxn9xxevk/partition
-        )
-    endif()
-
-        if(CONFIG_BOARD STREQUAL rdrw612bga)
-    target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
-          ${CMAKE_CURRENT_LIST_DIR}/platform/ext/target/nxp/common
-          ${CMAKE_CURRENT_LIST_DIR}/platform/ext/target/nxp/rdrw612bga
-          ${CMAKE_CURRENT_LIST_DIR}/platform/ext/target/nxp/rdrw612bga/Device/Include
-          ${CMAKE_CURRENT_LIST_DIR}/platform/ext/target/nxp/rdrw612bga/partition
-        )
-    endif()
-
-        if(CONFIG_BOARD STREQUAL mcxn5xxevk)
-    target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
-          ${CMAKE_CURRENT_LIST_DIR}/platform/ext/target/nxp/common
-          ${CMAKE_CURRENT_LIST_DIR}/platform/ext/target/nxp/mcxn5xxevk
-          ${CMAKE_CURRENT_LIST_DIR}/platform/ext/target/nxp/mcxn5xxevk/Device/Include
-          ${CMAKE_CURRENT_LIST_DIR}/platform/ext/target/nxp/mcxn5xxevk/partition
         )
     endif()
 

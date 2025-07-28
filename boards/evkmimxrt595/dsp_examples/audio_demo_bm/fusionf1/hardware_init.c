@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2024 NXP
+ * Copyright 2019-2025 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -45,10 +45,12 @@ static dma_handle_t s_dmicRxDmaHandle;
 
 #if (XCHAL_DCACHE_SIZE > 0)
 AT_NONCACHEABLE_SECTION_ALIGN(static uint8_t s_buffer[BUFFER_SIZE * BUFFER_NUM], 4);
-AT_NONCACHEABLE_SECTION_ALIGN(dma_descriptor_t s_dmaDescriptorPingpong[2], 16);
+AT_NONCACHEABLE_SECTION_ALIGN(dma_descriptor_t s_dmaDescriptorPingpong[2U], 16);
+AT_NONCACHEABLE_SECTION_ALIGN(dma_descriptor_t s_dmaDescriptorPingpongI2S[2U], 16);
 #else
 SDK_ALIGN(static uint8_t s_buffer[BUFFER_SIZE * BUFFER_NUM], 4);
-SDK_ALIGN(dma_descriptor_t s_dmaDescriptorPingpong[2], 16);
+SDK_ALIGN(dma_descriptor_t s_dmaDescriptorPingpong[2U], 16);
+SDK_ALIGN(dma_descriptor_t s_dmaDescriptorPingpongI2S[2U], 16);
 #endif
 
 static dmic_transfer_t s_receiveXfer[2U] = {
@@ -80,14 +82,6 @@ void dmic_Callback(DMIC_Type *base, dmic_dma_handle_t *handle, status_t status, 
     if (s_emptyBlock)
     {
         s_emptyBlock--;
-    }
-}
-
-void i2s_Callback(I2S_Type *base, i2s_dma_handle_t *handle, status_t completionStatus, void *userData)
-{
-    if (s_emptyBlock < BUFFER_NUM)
-    {
-        s_emptyBlock++;
     }
 }
 
@@ -185,6 +179,8 @@ static void BOARD_Init_I2S(void)
 
 void BOARD_InitHardware(void)
 {
+    dma_channel_config_t transferConfig;
+
     XOS_Init();
     BOARD_InitBootPins();
     BOARD_InitDebugConsole();
@@ -207,10 +203,31 @@ void BOARD_InitHardware(void)
     DMA_CreateHandle(&s_i2sTxDmaHandle, DEMO_DMA, DEMO_I2S_TX_CHANNEL);
     DMA_CreateHandle(&s_dmicRxDmaHandle, DEMO_DMA, DEMO_DMIC_RX_CHANNEL);
 
-    I2S_TxTransferCreateHandleDMA(DEMO_I2S_TX, &s_i2sTxHandle, &s_i2sTxDmaHandle, i2s_Callback, NULL);
+    DMA_PrepareChannelTransfer(
+        &transferConfig, s_buffer, (void *)&DEMO_I2S_TX->FIFOWR,
+        DMA_CHANNEL_XFER(true, false, true, false, 2U, kDMA_AddressInterleave1xWidth, kDMA_AddressInterleave0xWidth, BUFFER_SIZE),
+        kDMA_MemoryToPeripheral, NULL, s_dmaDescriptorPingpongI2S);
+
+    DMA_SubmitChannelTransfer(&s_i2sTxDmaHandle, &transferConfig);
+
+    DMA_SetupDescriptor(s_dmaDescriptorPingpongI2S,
+        DMA_CHANNEL_XFER(true, false, false, true, 2U, kDMA_AddressInterleave1xWidth, kDMA_AddressInterleave0xWidth, BUFFER_SIZE),
+        &s_buffer[BUFFER_SIZE], (void *)&DEMO_I2S_TX->FIFOWR, &s_dmaDescriptorPingpongI2S[1U]);
+
+    DMA_SetupDescriptor(&s_dmaDescriptorPingpongI2S[1U],
+        DMA_CHANNEL_XFER(true, false, true, false, 2U, kDMA_AddressInterleave1xWidth, kDMA_AddressInterleave0xWidth, BUFFER_SIZE),
+        s_buffer, (void *)&DEMO_I2S_TX->FIFOWR, s_dmaDescriptorPingpongI2S);
+
     DMIC_TransferCreateHandleDMA(DMIC0, &s_dmicDmaHandle, dmic_Callback, NULL, &s_dmicRxDmaHandle);
     DMIC_InstallDMADescriptorMemory(&s_dmicDmaHandle, s_dmaDescriptorPingpong, 2U);
     DMIC_TransferReceiveDMA(DMIC0, &s_dmicDmaHandle, s_receiveXfer, DEMO_DMIC_CHANNEL);
+
+    while (s_emptyBlock == BUFFER_NUM)
+    {}
+
+    DEMO_I2S_TX->FIFOCFG |= I2S_FIFOCFG_DMATX_MASK;
+    DMA_StartTransfer(&s_i2sTxDmaHandle);
+    I2S_Enable(DEMO_I2S_TX);
 }
 
 void BOARD_LoopbackFunc()
@@ -219,18 +236,7 @@ void BOARD_LoopbackFunc()
     PRINTF("[DSP Main] DMIC->DMA->I2S->CODEC running \r\n\r\n");
     while (1)
     {
-        if (s_emptyBlock < BUFFER_NUM)
-        {
-            i2sTxTransfer.data     = s_buffer + s_writeIndex * BUFFER_SIZE;
-            i2sTxTransfer.dataSize = BUFFER_SIZE;
-            if (I2S_TxTransferSendDMA(DEMO_I2S_TX, &s_i2sTxHandle, i2sTxTransfer) == kStatus_Success)
-            {
-                if (++s_writeIndex >= BUFFER_NUM)
-                {
-                    s_writeIndex = 0U;
-                }
-            }
-        }
+        ;
     }
 }
 

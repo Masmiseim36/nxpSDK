@@ -247,6 +247,7 @@
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT595SFFOC_cm33</state>
+          <state>MIMXRT595S_cm33_SERIES</state>
           <state>BOOT_HEADER_ENABLE=1</state>
           <state>SDK_OS_FREE_RTOS</state>
         </option>
@@ -393,6 +394,7 @@
           <state>$PROJ_DIR$/../../../../../components/video/display/rm68191</state>
           <state>$PROJ_DIR$/../../../../../components/video/display/rm68200</state>
           <state>$PROJ_DIR$/../../../../../components/video/display/rm67162</state>
+          <state>$PROJ_DIR$/../../../../../components/video/display/co5300</state>
           <state>$PROJ_DIR$/../../../../../components/display/ssd1963</state>
           <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include</state>
           <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM33_NTZ/non_secure</state>
@@ -582,6 +584,7 @@
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT595SFFOC_cm33</state>
+          <state>MIMXRT595S_cm33_SERIES</state>
         </option>
         <option>
           <name>AList</name>
@@ -697,6 +700,7 @@
           <state>$PROJ_DIR$/../../../../../components/video/display/rm68191</state>
           <state>$PROJ_DIR$/../../../../../components/video/display/rm68200</state>
           <state>$PROJ_DIR$/../../../../../components/video/display/rm67162</state>
+          <state>$PROJ_DIR$/../../../../../components/video/display/co5300</state>
           <state>$PROJ_DIR$/../../../../../components/display/ssd1963</state>
           <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include</state>
           <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM33_NTZ/non_secure</state>
@@ -1410,6 +1414,7 @@
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT595SFFOC_cm33</state>
+          <state>MIMXRT595S_cm33_SERIES</state>
           <state>BOOT_HEADER_ENABLE=1</state>
           <state>SDK_OS_FREE_RTOS</state>
         </option>
@@ -1556,6 +1561,7 @@
           <state>$PROJ_DIR$/../../../../../components/video/display/rm68191</state>
           <state>$PROJ_DIR$/../../../../../components/video/display/rm68200</state>
           <state>$PROJ_DIR$/../../../../../components/video/display/rm67162</state>
+          <state>$PROJ_DIR$/../../../../../components/video/display/co5300</state>
           <state>$PROJ_DIR$/../../../../../components/display/ssd1963</state>
           <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include</state>
           <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM33_NTZ/non_secure</state>
@@ -1745,6 +1751,7 @@
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT595SFFOC_cm33</state>
+          <state>MIMXRT595S_cm33_SERIES</state>
         </option>
         <option>
           <name>AList</name>
@@ -1860,6 +1867,7 @@
           <state>$PROJ_DIR$/../../../../../components/video/display/rm68191</state>
           <state>$PROJ_DIR$/../../../../../components/video/display/rm68200</state>
           <state>$PROJ_DIR$/../../../../../components/video/display/rm67162</state>
+          <state>$PROJ_DIR$/../../../../../components/video/display/co5300</state>
           <state>$PROJ_DIR$/../../../../../components/display/ssd1963</state>
           <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include</state>
           <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM33_NTZ/non_secure</state>
@@ -2573,6 +2581,7 @@
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT595SFFOC_cm33</state>
+          <state>MIMXRT595S_cm33_SERIES</state>
           <state>BOOT_HEADER_ENABLE=1</state>
           <state>SDK_OS_FREE_RTOS</state>
         </option>
@@ -2719,6 +2728,7 @@
           <state>$PROJ_DIR$/../../../../../components/video/display/rm68191</state>
           <state>$PROJ_DIR$/../../../../../components/video/display/rm68200</state>
           <state>$PROJ_DIR$/../../../../../components/video/display/rm67162</state>
+          <state>$PROJ_DIR$/../../../../../components/video/display/co5300</state>
           <state>$PROJ_DIR$/../../../../../components/display/ssd1963</state>
           <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include</state>
           <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM33_NTZ/non_secure</state>
@@ -2908,6 +2918,7 @@
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT595SFFOC_cm33</state>
+          <state>MIMXRT595S_cm33_SERIES</state>
         </option>
         <option>
           <name>AList</name>
@@ -3023,6 +3034,7 @@
           <state>$PROJ_DIR$/../../../../../components/video/display/rm68191</state>
           <state>$PROJ_DIR$/../../../../../components/video/display/rm68200</state>
           <state>$PROJ_DIR$/../../../../../components/video/display/rm67162</state>
+          <state>$PROJ_DIR$/../../../../../components/video/display/co5300</state>
           <state>$PROJ_DIR$/../../../../../components/display/ssd1963</state>
           <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include</state>
           <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM33_NTZ/non_secure</state>
@@ -3736,6 +3748,7 @@
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT595SFFOC_cm33</state>
+          <state>MIMXRT595S_cm33_SERIES</state>
           <state>BOOT_HEADER_ENABLE=1</state>
           <state>SDK_OS_FREE_RTOS</state>
         </option>
@@ -3882,6 +3895,7 @@
           <state>$PROJ_DIR$/../../../../../components/video/display/rm68191</state>
           <state>$PROJ_DIR$/../../../../../components/video/display/rm68200</state>
           <state>$PROJ_DIR$/../../../../../components/video/display/rm67162</state>
+          <state>$PROJ_DIR$/../../../../../components/video/display/co5300</state>
           <state>$PROJ_DIR$/../../../../../components/display/ssd1963</state>
           <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include</state>
           <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM33_NTZ/non_secure</state>
@@ -4071,6 +4085,7 @@
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT595SFFOC_cm33</state>
+          <state>MIMXRT595S_cm33_SERIES</state>
         </option>
         <option>
           <name>AList</name>
@@ -4186,6 +4201,7 @@
           <state>$PROJ_DIR$/../../../../../components/video/display/rm68191</state>
           <state>$PROJ_DIR$/../../../../../components/video/display/rm68200</state>
           <state>$PROJ_DIR$/../../../../../components/video/display/rm67162</state>
+          <state>$PROJ_DIR$/../../../../../components/video/display/co5300</state>
           <state>$PROJ_DIR$/../../../../../components/display/ssd1963</state>
           <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include</state>
           <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM33_NTZ/non_secure</state>
@@ -5090,12 +5106,6 @@
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers/fsl_smartdma_rt500.h</name>
     </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers/fsl_smartdma_mcxn.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers/fsl_smartdma_mcxn.h</name>
-    </file>
   </group>
   <group>
     <name>utilities</name>
@@ -5216,6 +5226,12 @@
     <file>
       <name>$PROJ_DIR$/../../../../../components/video/display/rm67162/fsl_rm67162.c</name>
     </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../components/video/display/co5300/fsl_co5300.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../components/video/display/co5300/fsl_co5300.c</name>
+    </file>
   </group>
   <group>
     <name>lcdc</name>
@@ -5313,6 +5329,9 @@
         <file>
           <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/timers.h</name>
         </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/freertos_tasks_c_additions.h</name>
+        </file>
       </group>
       <group>
         <name>portable</name>
@@ -5371,6 +5390,9 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../example_board_readme.md</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../examples_shared_readme.md</name>
     </file>
   </group>
 </project>

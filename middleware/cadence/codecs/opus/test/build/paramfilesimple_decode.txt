@@ -1,0 +1,8 @@
+
+@Start
+@Input_path ../test_inp/
+@Output_path ../test_out/
+-fs:48000 -numch:2 -ifile:testvector04_trim.bit -ofile:testvector04-48000-2ch_trim.out
+-btype:ogg -ifile:opus51_trim.webm.ogg -ofile:opus51_trim-48000-6ch.out
+@Stop
+ 

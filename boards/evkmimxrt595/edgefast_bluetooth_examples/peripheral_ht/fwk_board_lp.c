@@ -16,9 +16,14 @@
 #include "fwk_debug.h"
 #include "fsl_usart.h"
 #include "fsl_debug_console.h"
-#ifdef CONFIG_BT_SETTINGS
-#include "fsl_adapter_flash.h"
 #include "fsl_flexspi.h"
+#ifdef CONFIG_BT_SETTINGS
+#ifdef EDGEFAST_BT_LITTLEFS_MFLASH
+#include "mflash_common.h"
+#include "mflash_drv.h"
+#else
+#include "fsl_adapter_flash.h"
+#endif
 #endif
 
 /* -------------------------------------------------------------------------- */

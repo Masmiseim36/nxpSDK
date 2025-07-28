@@ -18,6 +18,7 @@
 #include "includes.h"
 #include "fsl_os_abstraction.h"
 
+#if CONFIG_HOSTAPD
 #if !defined(CONFIG_FREERTOS) && !defined(__ZEPHYR__)
 #include <sys/un.h>
 #endif
@@ -1837,3 +1838,4 @@ char *sim_get_username(const u8 *identity, size_t identity_len)
 
     return dup_binstr(identity, pos);
 }
+#endif /* CONFIG_HOSTAPD */

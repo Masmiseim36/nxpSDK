@@ -27,8 +27,13 @@
 #define EM_ENABLE_PAL_OS
 #define EM_PLATFORM_MAIN
 
-#define EM_HAVE_STATIC_DECL
-#define EM_HAVE_CONST_DECL
+#ifndef EM_HAVE_STATIC_DECL
+#define EM_HAVE_STATIC_DECL     1U
+#endif /* EM_HAVE_STATIC_DECL */
+
+#ifndef EM_HAVE_CONST_DECL
+#define EM_HAVE_CONST_DECL      1U
+#endif /* EM_HAVE_CONST_DECL */
 
 #ifdef printf
 #undef printf

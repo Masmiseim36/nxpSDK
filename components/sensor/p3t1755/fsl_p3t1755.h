@@ -10,8 +10,13 @@
 #include "fsl_common.h"
 
 /* Registers. */
-#define P3T1755_TEMPERATURE_REG (0x00U)
-#define P3T1755_CONFIG_REG      (0x01U)
+#define P3T1755_TEMPERATURE_REG      (0x00U)
+#define P3T1755_CONFIG_REG           (0x01U)
+#define P3T1755_TEMPERATURE_LOW_REG  (0x02U)
+#define P3T1755_TEMPERATURE_HIGH_REG (0x03U)
+
+#define P3T1755_CONFIG_REG_SD_MODE_POS 0
+#define P3T1755_CONFIG_REG_OS_MODE_POS 7
 
 /*! @brief Define sensor access function. */
 typedef status_t (*sensor_write_transfer_func_t)(uint8_t deviceAddress,
@@ -23,11 +28,13 @@ typedef status_t (*sensor_read_transfer_func_t)(uint8_t deviceAddress,
                                                 uint8_t *regData,
                                                 size_t dataSize);
 
+
 typedef struct _p3t1755_handle
 {
+    uint8_t sensorAddress;
     sensor_write_transfer_func_t writeTransfer;
     sensor_read_transfer_func_t readTransfer;
-    uint8_t sensorAddress;
+    uint8_t configReg;
 } p3t1755_handle_t;
 
 typedef struct _p3t1755_config
@@ -35,6 +42,7 @@ typedef struct _p3t1755_config
     sensor_write_transfer_func_t writeTransfer;
     sensor_read_transfer_func_t readTransfer;
     uint8_t sensorAddress;
+    uint8_t oneshotMode;
 } p3t1755_config_t;
 
 #if defined(__cplusplus)
@@ -83,6 +91,16 @@ status_t P3T1755_ReadReg(p3t1755_handle_t *handle, uint32_t regAddress, uint8_t 
  * @return kStatus_Success if success or kStatus_Fail if error.
  */
 status_t P3T1755_ReadTemperature(p3t1755_handle_t *handle, double *temperature);
+
+/*!
+ * @brief Initiate one-shot measurement.
+ *
+ * @param handle The pointer to #p3t1755_handle_t.
+ *
+ * @return kStatus_Success if success or kStatus_Fail if error.
+ */
+status_t P3T1755_OneShotMeasurement(p3t1755_handle_t *handle);
+
 #if defined(__cplusplus)
 }
 #endif /* __cplusplus */

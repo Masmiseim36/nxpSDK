@@ -46,6 +46,7 @@ Embedded Artists 2EL module datasheet: https://www.embeddedartists.com/doc/ds/2E
 
 AzureWave Solution Board settings
 =================================
+The hardware should be reworked according to the Hardware Rework Guide for MIMXRT595-EVK and Murata M.2 Module in document Hardware Rework Guide for EdgeFast BT PAL.
 The hardware should be reworked according to the Hardware Rework Guide for MIMXRT595-EVK and AW-AM510MA in document Hardware Rework Guide for EdgeFast BT PAL.
 The hardware should be reworked according to the Hardware Rework Guide for MIMXRT595-EVK and AW-CM358MA in document Hardware Rework Guide for EdgeFast BT PAL.
 

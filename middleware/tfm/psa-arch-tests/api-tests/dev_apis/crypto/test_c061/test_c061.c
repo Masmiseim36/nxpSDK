@@ -27,19 +27,18 @@ const client_test_t test_c061_crypto_list[] = {
 };
 
 extern  uint32_t g_test_count;
-//NXP static uint8_t  output[BUFFER_SIZE], tag[SIZE_128B];
 
 int32_t psa_aead_verify_test(caller_security_t caller __UNUSED)
 {
 #if ((defined(ARCH_TEST_CCM) || defined(ARCH_TEST_GCM)) && defined(ARCH_TEST_AES_128))
-    uint8_t  output[BUFFER_SIZE]; //NXP
+    uint8_t               output[BUFFER_SIZE]; //NXP
     int32_t               i, status;
     size_t                length, verify_length;
     int                   num_checks = sizeof(check1)/sizeof(check1[0]);
     psa_key_attributes_t  attributes = PSA_KEY_ATTRIBUTES_INIT;
     psa_aead_operation_t  operation = PSA_AEAD_OPERATION_INIT;
     psa_key_id_t          key;
-    size_t output_size;
+    size_t output_size;  //NXP
 
     if (num_checks == 0)
     {
@@ -96,15 +95,16 @@ int32_t psa_aead_verify_test(caller_security_t caller __UNUSED)
                  BUFFER_SIZE, &length);
         TEST_ASSERT_EQUAL(status, PSA_SUCCESS, TEST_CHECKPOINT_NUM(8));
 
-	// NXP
+        // NXP
         if (check1[i].output_size && check1[i].output_size == BUFFER_SIZE ) {
             output_size = check1[i].output_size - length;
         } else {
             output_size = check1[i].output_size;
         }
+
         /* Finish authenticating and decrypting a message in an AEAD operation */
         status = val->crypto_function(VAL_CRYPTO_AEAD_VERIFY, &operation, output + length,
-                output_size, &verify_length, check1[i].tag, check1[i].tag_length);
+                 output_size, &verify_length, check1[i].tag, check1[i].tag_length);  // NXP
         TEST_ASSERT_DUAL(status,
                          check1[i].expected_status[0],
                          check1[i].expected_status[1],

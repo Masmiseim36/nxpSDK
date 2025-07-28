@@ -7,7 +7,6 @@
 
 #include "psa/initial_attestation.h"
 #include "psa/client.h"
-#include "psa/tfm/crypto_types.h"         //NXP to avoid file name conflicts between MbedTLS and TFM.
 #include "psa_manifest/sid.h"
 #include "tfm_attest_defs.h"
 

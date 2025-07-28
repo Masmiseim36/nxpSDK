@@ -32,9 +32,6 @@ Select the panel
 ================
 RK055MHD091 MIPI panel is used by default, follow the steps to configure the sw to support different panel.
 
-Tips: In the 24.12.00 release, due to alignment mismatch issues, we decided to disable VGLITE on the evkmimxrt595 platform to support the LVGL functionality.
-
-
 When Kconfig is used
 -------------
 Select the panel in Kconfig "Panel Selection".
@@ -42,10 +39,10 @@ Select the panel in Kconfig "Panel Selection".
 When Package is used
 -------------
 Modify `DEMO_PANEL` in mcux_config.h.
-`#define DEMO_PANEL 0` for "MikroE TFT Proto 5" CAPACITIVE FlexIO panel.
-`#define DEMO_PANEL 1` for "RK055HDMIPI4M" MIPI Rectangular panel.
+`#define DEMO_PANEL 4` for "MikroE TFT Proto 5" CAPACITIVE FlexIO panel.
+`#define DEMO_PANEL 0` for "RK055HDMIPI4M" MIPI Rectangular panel.
 `#define DEMO_PANEL 3` for "G1120B0MIPI" MIPI Circular panel.
-`#define DEMO_PANEL 4` for "RK055MHD091A0-CTG MIPI Rectangular panel.(default)
+`#define DEMO_PANEL 2` for "RK055MHD091A0-CTG MIPI Rectangular panel.(default)
 
 To use DBI panels: SSD1963 and RM67162, below change is needed:
 ```

@@ -246,6 +246,7 @@
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT595SFFOC_cm33</state>
+          <state>MIMXRT595S_cm33_SERIES</state>
           <state>OSA_USED</state>
           <state>BOOT_HEADER_ENABLE=1</state>
           <state>USE_RTOS=1</state>
@@ -386,6 +387,7 @@
           <state>$PROJ_DIR$/../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/device</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/usb/config/device/ip3511hs</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/device/class</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/common</state>
@@ -580,6 +582,7 @@
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT595SFFOC_cm33</state>
+          <state>MIMXRT595S_cm33_SERIES</state>
           <state>OSA_USED</state>
         </option>
         <option>
@@ -687,6 +690,7 @@
           <state>$PROJ_DIR$/../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/device</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/usb/config/device/ip3511hs</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/device/class</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/common</state>
@@ -1405,6 +1409,7 @@
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT595SFFOC_cm33</state>
+          <state>MIMXRT595S_cm33_SERIES</state>
           <state>OSA_USED</state>
           <state>BOOT_HEADER_ENABLE=1</state>
           <state>USE_RTOS=1</state>
@@ -1545,6 +1550,7 @@
           <state>$PROJ_DIR$/../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/device</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/usb/config/device/ip3511hs</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/device/class</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/common</state>
@@ -1739,6 +1745,7 @@
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT595SFFOC_cm33</state>
+          <state>MIMXRT595S_cm33_SERIES</state>
           <state>OSA_USED</state>
         </option>
         <option>
@@ -1846,6 +1853,7 @@
           <state>$PROJ_DIR$/../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/device</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/usb/config/device/ip3511hs</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/device/class</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/common</state>
@@ -2564,6 +2572,7 @@
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT595SFFOC_cm33</state>
+          <state>MIMXRT595S_cm33_SERIES</state>
           <state>OSA_USED</state>
           <state>BOOT_HEADER_ENABLE=1</state>
           <state>USE_RTOS=1</state>
@@ -2704,6 +2713,7 @@
           <state>$PROJ_DIR$/../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/device</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/usb/config/device/ip3511hs</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/device/class</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/common</state>
@@ -2898,6 +2908,7 @@
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT595SFFOC_cm33</state>
+          <state>MIMXRT595S_cm33_SERIES</state>
           <state>OSA_USED</state>
         </option>
         <option>
@@ -3005,6 +3016,7 @@
           <state>$PROJ_DIR$/../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/device</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/usb/config/device/ip3511hs</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/device/class</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/common</state>
@@ -3723,6 +3735,7 @@
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT595SFFOC_cm33</state>
+          <state>MIMXRT595S_cm33_SERIES</state>
           <state>OSA_USED</state>
           <state>BOOT_HEADER_ENABLE=1</state>
           <state>USE_RTOS=1</state>
@@ -3863,6 +3876,7 @@
           <state>$PROJ_DIR$/../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/device</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/usb/config/device/ip3511hs</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/device/class</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/common</state>
@@ -4057,6 +4071,7 @@
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT595SFFOC_cm33</state>
+          <state>MIMXRT595S_cm33_SERIES</state>
           <state>OSA_USED</state>
         </option>
         <option>
@@ -4164,6 +4179,7 @@
           <state>$PROJ_DIR$/../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/device</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/usb/config/device/ip3511hs</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/device/class</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/common</state>
@@ -5092,13 +5108,13 @@
     <group>
       <name>osa</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction.h</name>
-      </file>
-      <file>
         <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction_free_rtos.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction_free_rtos.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction.h</name>
       </file>
     </group>
   </group>
@@ -5309,6 +5325,9 @@
         <file>
           <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/timers.h</name>
         </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/freertos_tasks_c_additions.h</name>
+        </file>
       </group>
       <group>
         <name>portable</name>
@@ -5364,6 +5383,9 @@
     <name>doc</name>
     <file>
       <name>$PROJ_DIR$/../readme.md</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../examples_shared_readme.md</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../bm_timing.jpg</name>

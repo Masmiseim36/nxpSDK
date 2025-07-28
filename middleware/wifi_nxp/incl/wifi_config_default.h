@@ -18,10 +18,10 @@
 
 #include "wifi_config.h"
 
-#if defined(RW610) || defined(SD8978) || defined(SD8987) || defined(SD8801) || defined(SD9177) || defined(IW610)
+#if defined(RW610) || defined(SD8978) || defined(SD8987) || defined(SD9177) || defined(IW610)
 
 /*
- * #define OVERRIDE_CALIBRATION_DATA "wifi_cal_data_rw61x_override.h"
+ * #define OVERRIDE_CALIBRATION_DATA "wifi_cal_data_override.h"
  * if use the specific calibration data
  */
 #if !defined(OVERRIDE_CALIBRATION_DATA)
@@ -62,7 +62,7 @@
 #endif
 
 #if !defined CONFIG_MAX_AP_ENTRIES
-#if defined(SD8978) || defined(SD8987) || defined(SD8801) || defined(SD9177) || defined(IW610)
+#if defined(SD8978) || defined(SD8987) || defined(SD9177) || defined(IW610)
 #define CONFIG_MAX_AP_ENTRIES 10
 #else
 #define CONFIG_MAX_AP_ENTRIES 30
@@ -75,13 +75,8 @@
 #endif
 #endif
 
-#if defined(SD8801)
-#undef CONFIG_5GHz_SUPPORT
-#define CONFIG_5GHz_SUPPORT 0
-#endif
-
 #if !defined CONFIG_FW_DNLD_ASYNC
-#if defined(SD8978) || defined(SD8987) || defined(SD8801) || defined(SD9177) || defined(IW610)
+#if defined(SD8978) || defined(SD8987) || defined(SD9177) || defined(IW610)
 #define CONFIG_FW_DNLD_ASYNC 0
 #endif
 #endif
@@ -93,7 +88,7 @@
 #endif
 
 #if CONFIG_11AC
-#if defined(SD8801) || defined(SD8978)
+#if defined(SD8978)
 #undef CONFIG_11AC
 #define CONFIG_11AC 0
 #endif
@@ -110,6 +105,17 @@
 #define CONFIG_11AX 0
 #endif
 
+#if !defined CONFIG_MULTI_BSSID_SUPPORT
+#if defined(RW610) || defined(SD9177) || defined(IW610)
+#define CONFIG_MULTI_BSSID_SUPPORT CONFIG_11AX
+#endif
+#endif
+
+#if !CONFIG_MULTI_BSSID_SUPPORT
+#undef CONFIG_MULTI_BSSID_SUPPORT
+#define CONFIG_MULTI_BSSID_SUPPORT CONFIG_11AX
+#endif
+
 #if !defined CONFIG_11AX_TWT
 #if defined(RW610) || defined(SD9177) || defined(IW610)
 #define CONFIG_11AX_TWT CONFIG_11AX
@@ -121,17 +127,28 @@
 #define CONFIG_11AX_TWT 0
 #endif
 
+#if !defined CONFIG_SET_SU
+#if defined(RW610) || defined(SD9177) || defined(IW610)
+#define CONFIG_SET_SU CONFIG_11AX
+#endif
+#endif
+
+#if !CONFIG_11AX
+#undef CONFIG_SET_SU
+#define CONFIG_SET_SU 0
+#endif
+
 /* WMM options */
 #if !defined CONFIG_WMM
 #if defined(RW610)
 #define CONFIG_WMM 1
-#elif defined(SD8978) || defined(SD8987) || defined(SD8801) || defined(SD9177) || defined(IW610)
+#elif defined(SD8978) || defined(SD8987) || defined(SD9177) || defined(IW610)
 #define CONFIG_WMM 0
 #endif
 #endif
 
 #if !defined CONFIG_SDIO_MULTI_PORT_RX_AGGR
-#if defined(SD8978) || defined(SD8987) || defined(SD8801) || defined(SD9177) || defined(IW610)
+#if defined(SD8978) || defined(SD8987) || defined(SD9177) || defined(IW610)
 #define CONFIG_SDIO_MULTI_PORT_RX_AGGR 1
 #endif
 #endif
@@ -144,7 +161,7 @@
 #endif
 
 #if !defined CONFIG_SDIO_MULTI_PORT_TX_AGGR
-#if defined(SD8978) || defined(SD8987) || defined(SD8801) || defined(SD9177) || defined(IW610)
+#if defined(SD8978) || defined(SD8987) || defined(SD9177) || defined(IW610)
 #define CONFIG_SDIO_MULTI_PORT_TX_AGGR CONFIG_WMM
 #endif
 #endif
@@ -159,9 +176,28 @@
 #define CONFIG_SDIO_MULTI_PORT_TX_AGGR 0
 #endif
 
+/* TX/RX aggregation SLIM*/
+#ifndef CONFIG_WIFI_SLIM_TX_RX_AGGR
+#define CONFIG_WIFI_SLIM_TX_RX_AGGR 0
+#endif
+
+#if CONFIG_WIFI_SLIM_TX_RX_AGGR
+
+#if CONFIG_SDIO_MULTI_PORT_RX_AGGR
+#undef CONFIG_SDIO_MULTI_PORT_RX_AGGR
+#define CONFIG_SDIO_MULTI_PORT_RX_AGGR 0
+#endif
+
+#if CONFIG_SDIO_MULTI_PORT_TX_AGGR
+#undef CONFIG_SDIO_MULTI_PORT_TX_AGGR
+#define CONFIG_SDIO_MULTI_PORT_TX_AGGR 0
+#endif
+
+#endif /* CONFIG_WIFI_SLIM_TX_RX_AGGR */
+
 /** Multi port aggregation packet limit */
 #if !defined CONFIG_SDIO_MP_AGGR_DEF_PKT_LIMIT
-#if defined(SD8978) || defined(SD8987) || defined(SD8801) || defined(SD9177) || defined(IW610)
+#if defined(SD8978) || defined(SD8987) || defined(SD9177) || defined(IW610)
 #define CONFIG_SDIO_MP_AGGR_DEF_PKT_LIMIT (4 + (CONFIG_WMM * 4))
 #endif
 #endif
@@ -175,8 +211,14 @@
 #endif
 #endif
 
+#if !defined CONFIG_MEF_CFG
+#if defined(RW610) || defined(SD8978) || defined(SD8987) || defined(SD9177) || defined(IW610)
+#define CONFIG_MEF_CFG 0
+#endif
+#endif
+
 #if !defined CONFIG_RF_TEST_MODE
-#if defined(RW610) || defined(SD8978) || defined(SD8987) || defined(SD8801) || defined(SD9177) || defined(IW610)
+#if defined(RW610) || defined(SD8978) || defined(SD8987) || defined(SD9177) || defined(IW610)
 #define CONFIG_RF_TEST_MODE 0
 #endif
 #endif
@@ -201,7 +243,7 @@
 #endif
 
 #if CONFIG_COMPRESS_TX_PWTBL
-#if defined(SD8978) || defined(SD8987) || defined(SD8801)
+#if defined(SD8978) || defined(SD8987)
 #undef CONFIG_COMPRESS_TX_PWTBL
 #define CONFIG_COMPRESS_TX_PWTBL 0
 #endif
@@ -214,27 +256,20 @@
 #endif
 
 #if CONFIG_COMPRESS_RU_TX_PWTBL
-#if defined(SD8978) || defined(SD8987) || defined(SD8801)
+#if defined(SD8978) || defined(SD8987)
 #undef CONFIG_COMPRESS_RU_TX_PWTBL
 #define CONFIG_COMPRESS_RU_TX_PWTBL 0
 #endif
 #endif
 
 #if !defined CONFIG_WIFI_FEATURES
-#if defined(RW610) || defined(SD8978) || defined(SD8987) || defined(SD8801) || defined(SD9177) || defined(IW610)
-#define CONFIG_WIFI_FEATURES 0
-#endif
-#endif
-
-#if CONFIG_WIFI_FEATURES
-#if defined(SD8801)
-#undef CONFIG_WIFI_FEATURES
+#if defined(RW610) || defined(SD8978) || defined(SD8987) || defined(SD9177) || defined(IW610)
 #define CONFIG_WIFI_FEATURES 0
 #endif
 #endif
 
 #if !defined CONFIG_OFFLOAD
-#if defined(RW610) || defined(SD8978) || defined(SD8987) || defined(SD8801) || defined(SD9177) || defined(IW610)
+#if defined(RW610) || defined(SD8978) || defined(SD8987) || defined(SD9177) || defined(IW610)
 #define CONFIG_OFFLOAD CONFIG_WIFI_FEATURES
 #endif
 #endif
@@ -251,7 +286,7 @@
 #endif
 
 #if !defined PRINTF_FLOAT_ENABLE
-#if defined(RW610) || defined(SD8978) || defined(SD8987) || defined(SD8801) || defined(SD9177) || defined(IW610)
+#if defined(RW610) || defined(SD8978) || defined(SD8987) || defined(SD9177) || defined(IW610)
 #define PRINTF_FLOAT_ENABLE 0
 #endif
 #endif
@@ -263,15 +298,20 @@
 #endif
 
 #if !defined CONFIG_AMSDU_IN_AMPDU
-#if defined(RW610) || defined(SD8978) || defined(SD8987) || defined(SD8801) || defined(SD9177) || defined(IW610)
+#if defined(RW610) || defined(SD8978) || defined(SD8987) || defined(SD9177) || defined(IW610)
 #define CONFIG_AMSDU_IN_AMPDU 0
 #endif
 #endif
 
 #if !defined CONFIG_SCAN_WITH_RSSIFILTER
-#if defined(RW610) || defined(SD8978) || defined(SD8987) || defined(SD8801) || defined(SD9177) || defined(IW610)
+#if defined(RW610) || defined(SD8978) || defined(SD8987) || defined(SD9177) || defined(IW610)
 #define CONFIG_SCAN_WITH_RSSIFILTER 1
 #endif
+#endif
+
+#if !CONFIG_HOSTAPD
+#undef CONFIG_WPA_SUPP_P2P
+#define CONFIG_WPA_SUPP_P2P 0
 #endif
 
 /* WLAN white/black list opt */
@@ -286,7 +326,7 @@
 #if !defined CONFIG_WIFI_DTIM_PERIOD
 #if defined(RW610)
 #define CONFIG_WIFI_DTIM_PERIOD 1
-#elif defined(SD8978) || defined(SD8987) || defined(SD8801) || defined(SD9177) || defined(IW610)
+#elif defined(SD8978) || defined(SD8987) || defined(SD9177) || defined(IW610)
 #define CONFIG_WIFI_DTIM_PERIOD 0
 #endif
 #endif
@@ -294,21 +334,29 @@
 #if !defined CONFIG_UART_INTERRUPT
 #if defined(RW610)
 #define CONFIG_UART_INTERRUPT 1
-#elif defined(SD8978) || defined(SD8987) || defined(SD8801) || defined(SD9177) || defined(IW610)
+#elif defined(SD8978) || defined(SD8987) || defined(SD9177) || defined(IW610)
 #define CONFIG_UART_INTERRUPT 0
 #endif
 #endif
 
 #if !defined CONFIG_WIFI_MAX_CLIENTS_CNT
-#if defined(RW610) || defined(SD8978) || defined(SD8987) || defined(SD8801) || defined(SD9177) || defined(IW610)
+#if defined(RW610) || defined(SD8978) || defined(SD8987) || defined(SD9177) || defined(IW610)
 #define CONFIG_WIFI_MAX_CLIENTS_CNT 1
+#endif
+#endif
+
+#if !defined CONFIG_WIFI_RTS_THRESHOLD
+#if defined(RW610)
+#define CONFIG_WIFI_RTS_THRESHOLD 1
+#elif defined(SD8978) || defined(SD8987) || defined(SD9177) || defined(IW610)
+#define CONFIG_WIFI_RTS_THRESHOLD 0
 #endif
 #endif
 
 #if !defined CONFIG_WIFI_FRAG_THRESHOLD
 #if defined(RW610)
 #define CONFIG_WIFI_FRAG_THRESHOLD 1
-#elif defined(SD8978) || defined(SD8987) || defined(SD8801) || defined(SD9177) || defined(IW610)
+#elif defined(SD8978) || defined(SD8987) || defined(SD9177) || defined(IW610)
 #define CONFIG_WIFI_FRAG_THRESHOLD 0
 #endif
 #endif
@@ -316,7 +364,7 @@
 #if !defined CONFIG_WMM_UAPSD
 #if defined(RW610)
 #define CONFIG_WMM_UAPSD 1
-#elif defined(SD8978) || defined(SD8987) || defined(SD8801) || defined(SD9177) || defined(IW610)
+#elif defined(SD8978) || defined(SD8987) || defined(SD9177) || defined(IW610)
 #define CONFIG_WMM_UAPSD 0
 #endif
 #endif
@@ -324,7 +372,7 @@
 #if !defined CONFIG_WIFI_GET_LOG
 #if defined(RW610)
 #define CONFIG_WIFI_GET_LOG 1
-#elif defined(SD8978) || defined(SD8987) || defined(SD8801) || defined(SD9177) || defined(IW610)
+#elif defined(SD8978) || defined(SD8987) || defined(SD9177) || defined(IW610)
 #define CONFIG_WIFI_GET_LOG 0
 #endif
 #endif
@@ -332,26 +380,26 @@
 #if !defined CONFIG_WIFI_TX_PER_TRACK
 #if defined(RW610)
 #define CONFIG_WIFI_TX_PER_TRACK 0
-#elif defined(SD8978) || defined(SD8987) || defined(SD8801) || defined(SD9177) || defined(IW610)
+#elif defined(SD8978) || defined(SD8987) || defined(SD9177) || defined(IW610)
 #define CONFIG_WIFI_TX_PER_TRACK 0
 #endif
 #endif
 
 #if CONFIG_WIFI_TX_PER_TRACK
-#if defined(SD8978) || defined(SD8987) || defined(SD8801) || defined(SD9177) || defined(IW610)
+#if defined(SD8978) || defined(SD8987) || defined(SD9177) || defined(IW610)
 #undef CONFIG_WIFI_TX_PER_TRACK
 #define CONFIG_WIFI_TX_PER_TRACK 0
 #endif
 #endif
 
 #if !defined CONFIG_POWER_MANAGER
-#if defined(RW610) || defined(SD8978) || defined(SD8987) || defined(SD8801) || defined(SD9177) || defined(IW610)
+#if defined(RW610) || defined(SD8978) || defined(SD8987) || defined(SD9177) || defined(IW610)
 #define CONFIG_POWER_MANAGER 0
 #endif
 #endif
 
 #if CONFIG_POWER_MANAGER
-#if defined(SD8978) || defined(SD8987) || defined(SD8801) || defined(SD9177) || defined(IW610)
+#if defined(SD8978) || defined(SD8987) || defined(SD9177) || defined(IW610)
 #undef CONFIG_POWER_MANAGER
 #define CONFIG_POWER_MANAGER 0
 #endif
@@ -360,50 +408,42 @@
 #if !defined CONFIG_CSI
 #if defined(RW610)
 #define CONFIG_CSI 1
-#elif defined(SD8978) || defined(SD8987) || defined(SD8801) || defined(SD9177) || defined(IW610)
+#elif defined(SD8978) || defined(SD8987) || defined(SD9177) || defined(IW610)
 #define CONFIG_CSI 0
 #endif
 #endif
 
-#if CONFIG_CSI
-#if defined(SD8801)
-#undef CONFIG_CSI
-#define CONFIG_CSI 0
-#endif
-#endif
-
-#if !defined CONFIG_WIFI_RESET
-#if defined(RW610) || defined(SD8978) || defined(SD8987) || defined(SD8801) || defined(SD9177) || defined(IW610)
-#define CONFIG_WIFI_RESET 1
+#if !defined CONFIG_WIFI_CHANNEL_LOAD
+#if defined(RW610) || defined(IW610) || defined(SD8978) || defined(SD8987) || defined(SD9177)
+#define CONFIG_WIFI_CHANNEL_LOAD 1
 #endif
 #endif
 
 #if !defined CONFIG_NET_MONITOR
-#if defined(RW610)
+#if defined(RW610) || defined(IW610)
 #define CONFIG_NET_MONITOR 1
-#elif defined(SD8978) || defined(SD8987) || defined(SD8801) || defined(SD9177) || defined(IW610)
+#elif defined(SD8978) || defined(SD8987) || defined(SD9177)
 #define CONFIG_NET_MONITOR 0
 #endif
 #endif
 
+#if !defined HOST_TXRX_MGMT_FRAME
+#if defined(RW610) || defined(IW610)
+#define HOST_TXRX_MGMT_FRAME 1
+#elif defined(SD8978) || defined(SD8987) || defined(SD9177)
+#define HOST_TXRX_MGMT_FRAME 0
+#endif
+#endif
+
 #if CONFIG_NET_MONITOR
-#if defined(SD8978) || defined(SD8987) || defined(SD8801) || defined(SD9177) || defined(IW610)
+#if defined(SD8978) || defined(SD8987) || defined(SD9177)
 #undef CONFIG_NET_MONITOR
 #define CONFIG_NET_MONITOR 0
 #endif
 #endif
 
 #if !defined CONFIG_WIFI_MEM_ACCESS
-#if defined(RW610)
-#define CONFIG_WIFI_MEM_ACCESS 0
-#elif defined(SD8978) || defined(SD8987) || defined(SD8801) || defined(SD9177) || defined(IW610)
-#define CONFIG_WIFI_MEM_ACCESS 0
-#endif
-#endif
-
-#if CONFIG_WIFI_MEM_ACCESS
-#if defined(SD8801)
-#undef CONFIG_WIFI_MEM_ACCESS
+#if defined(SD8978) || defined(SD8987) || defined(SD9177) || defined(IW610) || defined(RW610)
 #define CONFIG_WIFI_MEM_ACCESS 0
 #endif
 #endif
@@ -411,30 +451,19 @@
 #if !defined CONFIG_WIFI_REG_ACCESS
 #if defined(RW610)
 #define CONFIG_WIFI_REG_ACCESS 1
-#elif defined(SD8978) || defined(SD8987) || defined(SD8801) || defined(SD9177) || defined(IW610)
-#define CONFIG_WIFI_REG_ACCESS 0
-#endif
-#endif
-
-#if CONFIG_WIFI_REG_ACCESS
-#if defined(SD8801)
-#undef CONFIG_WIFI_REG_ACCESS
+#elif defined(SD8978) || defined(SD8987) || defined(SD9177) || defined(IW610)
 #define CONFIG_WIFI_REG_ACCESS 0
 #endif
 #endif
 
 #if !defined CONFIG_ECSA
-#if defined(RW610)
 #define CONFIG_ECSA 1
-#elif defined(SD8978) || defined(SD8987) || defined(SD8801) || defined(SD9177) || defined(IW610)
-#define CONFIG_ECSA 0
-#endif
 #endif
 
 #if !defined CONFIG_RX_ABORT_CFG
 #if defined(RW610)
 #define CONFIG_RX_ABORT_CFG 1
-#elif defined(SD8978) || defined(SD8987) || defined(SD8801) || defined(SD9177) || defined(IW610)
+#elif defined(SD8978) || defined(SD8987) || defined(SD9177) || defined(IW610)
 #define CONFIG_RX_ABORT_CFG 0
 #endif
 #endif
@@ -442,7 +471,7 @@
 #if !defined CONFIG_RX_ABORT_CFG_EXT
 #if defined(RW610)
 #define CONFIG_RX_ABORT_CFG_EXT 1
-#elif defined(SD8978) || defined(SD8987) || defined(SD8801) || defined(SD9177) || defined(IW610)
+#elif defined(SD8978) || defined(SD8987) || defined(SD9177) || defined(IW610)
 #define CONFIG_RX_ABORT_CFG_EXT 0
 #endif
 #endif
@@ -450,7 +479,7 @@
 #if !defined CONFIG_CCK_DESENSE_CFG
 #if defined(RW610)
 #define CONFIG_CCK_DESENSE_CFG 1
-#elif defined(SD8978) || defined(SD8987) || defined(SD8801) || defined(SD9177) || defined(IW610)
+#elif defined(SD8978) || defined(SD8987) || defined(SD9177) || defined(IW610)
 #define CONFIG_CCK_DESENSE_CFG 0
 #endif
 #endif
@@ -458,7 +487,7 @@
 #if !defined CONFIG_IPS
 #if defined(RW610)
 #define CONFIG_IPS 1
-#elif defined(SD8978) || defined(SD8987) || defined(SD8801) || defined(SD9177) || defined(IW610)
+#elif defined(SD8978) || defined(SD8987) || defined(SD9177) || defined(IW610)
 #define CONFIG_IPS 0
 #endif
 #endif
@@ -466,7 +495,7 @@
 #if !defined CONFIG_SUBSCRIBE_EVENT_SUPPORT
 #if defined(RW610)
 #define CONFIG_SUBSCRIBE_EVENT_SUPPORT 1
-#elif defined(SD8978) || defined(SD8987) || defined(SD8801) || defined(SD9177) || defined(IW610)
+#elif defined(SD8978) || defined(SD8987) || defined(SD9177) || defined(IW610)
 #define CONFIG_SUBSCRIBE_EVENT_SUPPORT 0
 #endif
 #endif
@@ -474,7 +503,7 @@
 #if !defined CONFIG_WIFI_FORCE_RTS
 #if defined(RW610)
 #define CONFIG_WIFI_FORCE_RTS 1
-#elif defined(SD8978) || defined(SD8987) || defined(SD8801) || defined(SD9177) || defined(IW610)
+#elif defined(SD8978) || defined(SD8987) || defined(SD9177) || defined(IW610)
 #define CONFIG_WIFI_FORCE_RTS 0
 #endif
 #endif
@@ -482,7 +511,7 @@
 #if !defined CONFIG_TX_AMPDU_PROT_MODE
 #if defined(RW610)
 #define CONFIG_TX_AMPDU_PROT_MODE 1
-#elif defined(SD8978) || defined(SD8987) || defined(SD8801) || defined(SD9177) || defined(IW610)
+#elif defined(SD8978) || defined(SD8987) || defined(SD9177) || defined(IW610)
 #define CONFIG_TX_AMPDU_PROT_MODE 0
 #endif
 #endif
@@ -490,7 +519,7 @@
 #if !defined CONFIG_TSP
 #if defined(RW610)
 #define CONFIG_TSP 1
-#elif defined(SD8978) || defined(SD8987) || defined(SD8801) || defined(SD9177) || defined(IW610)
+#elif defined(SD8978) || defined(SD8987) || defined(SD9177) || defined(IW610)
 #define CONFIG_TSP 0
 #endif
 #endif
@@ -498,7 +527,7 @@
 #if !defined CONFIG_TX_RX_HISTOGRAM
 #if defined(RW610)
 #define CONFIG_TX_RX_HISTOGRAM 1
-#elif defined(SD8978) || defined(SD8987) || defined(SD8801) || defined(SD9177) || defined(IW610)
+#elif defined(SD8978) || defined(SD8987) || defined(SD9177) || defined(IW610)
 #define CONFIG_TX_RX_HISTOGRAM 0
 #endif
 #endif
@@ -514,7 +543,7 @@
 #if !defined CONFIG_WIFI_CAPA
 #if defined(RW610)
 #define CONFIG_WIFI_CAPA 1
-#elif defined(SD8978) || defined(SD8987) || defined(SD8801) || defined(SD9177) || defined(IW610)
+#elif defined(SD8978) || defined(SD8987) || defined(SD9177) || defined(IW610)
 #define CONFIG_WIFI_CAPA 0
 #endif
 #endif
@@ -522,26 +551,19 @@
 #if !defined CONFIG_ROAMING
 #if defined(RW610)
 #define CONFIG_ROAMING 1
-#elif defined(SD8978) || defined(SD8987) || defined(SD8801) || defined(SD9177) || defined(IW610)
+#elif defined(SD8978) || defined(SD8987) || defined(SD9177) || defined(IW610)
 #define CONFIG_ROAMING 0
 #endif
 #endif
 
 #if !defined CONFIG_CLOUD_KEEP_ALIVE
-#if defined(RW610) || defined(SD8978) || defined(SD8987) || defined(SD8801) || defined(SD9177) || defined(IW610)
-#define CONFIG_CLOUD_KEEP_ALIVE 0
-#endif
-#endif
-
-#if CONFIG_CLOUD_KEEP_ALIVE
-#if defined(SD8801)
-#undef CONFIG_CLOUD_KEEP_ALIVE
+#if defined(RW610) || defined(SD8978) || defined(SD8987) || defined(SD9177) || defined(IW610)
 #define CONFIG_CLOUD_KEEP_ALIVE 0
 #endif
 #endif
 
 #if !defined CONFIG_TURBO_MODE
-#if defined(RW610) || defined(SD8978) || defined(SD8987) || defined(SD8801) || defined(SD9177) || defined(IW610)
+#if defined(RW610) || defined(SD8978) || defined(SD8987) || defined(SD9177) || defined(IW610)
 #define CONFIG_TURBO_MODE CONFIG_WMM
 #endif
 #endif
@@ -556,14 +578,7 @@
 #endif
 
 #if !defined CONFIG_AUTO_RECONNECT
-#if defined(RW610) || defined(SD8978) || defined(SD8987) || defined(SD8801) || defined(SD9177) || defined(IW610)
-#define CONFIG_AUTO_RECONNECT 0
-#endif
-#endif
-
-#if CONFIG_AUTO_RECONNECT
-#if defined(SD8801)
-#undef CONFIG_AUTO_RECONNECT
+#if defined(RW610) || defined(SD8978) || defined(SD8987) || defined(SD9177) || defined(IW610)
 #define CONFIG_AUTO_RECONNECT 0
 #endif
 #endif
@@ -574,24 +589,10 @@
 #endif
 #endif
 
-#if CONFIG_EXT_SCAN_SUPPORT
-#if defined(SD8801)
-#undef CONFIG_EXT_SCAN_SUPPORT
-#define CONFIG_EXT_SCAN_SUPPORT 0
-#endif
-#endif
-
 #if !defined CONFIG_WIFI_EU_CRYPTO
 #if defined(RW610)
 #define CONFIG_WIFI_EU_CRYPTO 1
-#elif defined(SD8978) || defined(SD8987) || defined(SD8801) || defined(SD9177) || defined(IW610)
-#define CONFIG_WIFI_EU_CRYPTO 0
-#endif
-#endif
-
-#if CONFIG_WIFI_EU_CRYPTO
-#if defined(SD8801)
-#undef CONFIG_WIFI_EU_CRYPTO
+#elif defined(SD8978) || defined(SD8987) || defined(SD9177) || defined(IW610)
 #define CONFIG_WIFI_EU_CRYPTO 0
 #endif
 #endif
@@ -603,7 +604,7 @@
 #endif
 
 #if CONFIG_WIFI_IND_DNLD
-#if defined(RW610) || defined(SD8801)
+#if defined(RW610)
 #undef CONFIG_WIFI_IND_DNLD
 #define CONFIG_WIFI_IND_DNLD 0
 #endif
@@ -616,20 +617,26 @@
 #endif
 
 #if CONFIG_WIFI_IND_RESET
-#if defined(RW610) || defined(SD8801)
+#if defined(RW610)
 #undef CONFIG_WIFI_IND_RESET
 #define CONFIG_WIFI_IND_RESET 0
 #endif
 #endif
 
+#if !defined CONFIG_WIFI_RESET
+#if defined(RW610) || defined(SD8978) || defined(SD8987) || defined(SD9177) || defined(IW610)
+#define CONFIG_WIFI_RESET 1
+#endif
+#endif
+
 #if !defined CONFIG_HOST_SLEEP
-#if defined(RW610) || defined(SD8978) || defined(SD8987) || defined(SD8801) || defined(SD9177) || defined(IW610)
+#if defined(RW610) || defined(SD8978) || defined(SD8987) || defined(SD9177) || defined(IW610)
 #define CONFIG_HOST_SLEEP 0
 #endif
 #endif
 
 #if !defined CONFIG_DRIVER_FIPS
-#if defined(RW610) || defined(SD8978) || defined(SD8987) || defined(SD8801) || defined(SD9177) || defined(IW610)
+#if defined(RW610) || defined(SD8978) || defined(SD8987) || defined(SD9177) || defined(IW610)
 #define CONFIG_DRIVER_FIPS 0
 #endif
 #endif
@@ -642,8 +649,11 @@
 #undef CONFIG_FIPS
 #endif
 
+/* 802.11k and 802.11v are necessary for Wi-Fi6 MBO certification.
+   Keep the same capability with 802.11ax. */
+
 #if !defined CONFIG_11K
-#if defined(RW610) || defined(SD8978) || defined(SD8987) || defined(SD8801) || defined(SD9177) || defined(IW610)
+#if defined(RW610) || defined(SD8978) || defined(SD8987) || defined(SD9177) || defined(IW610)
 #define CONFIG_11K 0
 #endif
 #endif
@@ -654,7 +664,7 @@
 #endif
 
 #if !defined CONFIG_11V
-#if defined(RW610) || defined(SD8978) || defined(SD8987) || defined(SD8801) || defined(SD9177) || defined(IW610)
+#if defined(RW610) || defined(SD8978) || defined(SD8987) || defined(SD9177) || defined(IW610)
 #define CONFIG_11V 0
 #endif
 #endif
@@ -665,15 +675,15 @@
 #endif
 
 #if !defined CONFIG_TCP_ACK_ENH
-#if defined(SD9177) || defined(IW610)
-#define CONFIG_TCP_ACK_ENH 1
+#if defined(SD9177)
+#define CONFIG_TCP_ACK_ENH 0
 #endif
 #endif
 
 #if CONFIG_TCP_ACK_ENH
-#if defined(RW610) || defined(SD8978) || defined(SD8987) || defined(SD8801)
+#if defined(RW610) || defined(SD8978) || defined(SD8987) || defined(IW610) || defined(SD9177)
 #undef CONFIG_TCP_ACK_ENH
-#define CONFIG_TCP_ACK_ENH
+#define CONFIG_TCP_ACK_ENH 0
 #endif
 #endif
 
@@ -694,7 +704,7 @@
  * Config options for wpa supplicant
  */
 #if !defined CONFIG_WPA_SUPP
-#if defined(RW610) || defined(SD8978) || defined(SD8987) || defined(SD8801) || defined(SD9177) || defined(IW610)
+#if defined(RW610) || defined(SD8978) || defined(SD8987) || defined(SD9177) || defined(IW610)
 #define CONFIG_WPA_SUPP 0
 #endif
 #endif
@@ -723,7 +733,7 @@
 #if !defined CONFIG_DRIVER_OWE
 #if defined(RW610)
 #define CONFIG_DRIVER_OWE 1
-#elif defined(SD8978) || defined(SD8987) || defined(SD8801) || defined(SD9177) || defined(IW610)
+#elif defined(SD8978) || defined(SD8987) || defined(SD9177) || defined(IW610)
 #define CONFIG_DRIVER_OWE 0
 #endif
 #endif
@@ -739,20 +749,20 @@
 #if !defined CONFIG_11R
 #if defined(RW610)
 #define CONFIG_11R 1
-#elif defined(SD8978) || defined(SD8987) || defined(SD8801) || defined(SD9177) || defined(IW610)
+#elif defined(SD8978) || defined(SD8987) || defined(SD9177) || defined(IW610)
 #define CONFIG_11R 0
 #endif
 #endif
 
 #if CONFIG_11R
-#if defined(RW610) || defined(SD8801) || defined(SD9177) || defined(IW610)
+#if defined(RW610) || defined(SD9177) || defined(IW610)
 #undef CONFIG_11R
 #define CONFIG_11R CONFIG_WPA_SUPP
 #endif
 #endif
 
 #if !defined CONFIG_WPA_SUPP_WPS
-#if defined(RW610) || defined(SD8978) || defined(SD8987) || defined(SD8801) || defined(SD9177) || defined(IW610)
+#if defined(RW610) || defined(SD8978) || defined(SD8987) || defined(SD9177) || defined(IW610)
 #define CONFIG_WPA_SUPP_WPS 0
 #endif
 #endif
@@ -763,7 +773,7 @@
 #endif
 
 #if !defined CONFIG_WPA_SUPP_WPA3
-#if defined(RW610) || defined(SD8978) || defined(SD8987) || defined(SD8801) || defined(SD9177) || defined(IW610)
+#if defined(RW610) || defined(SD8978) || defined(SD8987) || defined(SD9177) || defined(IW610)
 #define CONFIG_WPA_SUPP_WPA3 CONFIG_WPA_SUPP
 #endif
 #endif
@@ -774,46 +784,78 @@
 #endif
 
 #if !defined CONFIG_WPA_SUPP_DPP
-#if defined(RW610) || defined(SD8978) || defined(SD8987) || defined(SD8801) || defined(SD9177) || defined(IW610)
+#if defined(RW610) || defined(SD8978) || defined(SD8987) || defined(SD9177) || defined(IW610)
 #define CONFIG_WPA_SUPP_DPP 0
 #endif
 #endif
 
 #if CONFIG_WPA_SUPP_DPP
-#if defined(SD8978) || defined(SD8987) || defined(SD8801)
+#if defined(SD8978) || defined(SD8987)
 #undef CONFIG_WPA_SUPP_DPP
 #define CONFIG_WPA_SUPP_DPP 0
 #endif
 #endif
 
 #if !defined CONFIG_WPA_SUPP_DPP2
-#if defined(RW610) || defined(SD8978) || defined(SD8987) || defined(SD8801) || defined(SD9177) || defined(IW610)
+#if defined(RW610) || defined(SD8978) || defined(SD8987) || defined(SD9177) || defined(IW610)
 #define CONFIG_WPA_SUPP_DPP2 0
 #endif
 #endif
 
 #if CONFIG_WPA_SUPP_DPP2
-#if defined(SD8978) || defined(SD8987) || defined(SD8801)
+#if defined(SD8978) || defined(SD8987)
 #undef CONFIG_WPA_SUPP_DPP2
 #define CONFIG_WPA_SUPP_DPP2 CONFIG_WPA_SUPP_DPP
 #endif
 #endif
 
 #if !defined CONFIG_WPA_SUPP_DPP3
-#if defined(RW610) || defined(SD8978) || defined(SD8987) || defined(SD8801) || defined(SD9177) || defined(IW610)
+#if defined(RW610) || defined(SD8978) || defined(SD8987) || defined(SD9177) || defined(IW610)
 #define CONFIG_WPA_SUPP_DPP3 0
 #endif
 #endif
 
 #if CONFIG_WPA_SUPP_DPP3
-#if defined(SD8978) || defined(SD8987) || defined(SD8801)
+#if defined(SD8978) || defined(SD8987)
 #undef CONFIG_WPA_SUPP_DPP3
 #define CONFIG_WPA_SUPP_DPP3 (CONFIG_WPA_SUPP_DPP && CONFIG_WPA_SUPP_DPP2)
 #endif
 #endif
 
+#if !defined CONFIG_RX_CHAN_INFO
+#if defined(RW610) || defined(SD8978) || defined(SD8987) || defined(SD9177) || defined(IW610)
+#define CONFIG_RX_CHAN_INFO CONFIG_WPA_SUPP_DPP
+#endif
+#endif
+
+#if !CONFIG_RX_CHAN_INFO
+#undef CONFIG_RX_CHAN_INFO
+#define CONFIG_RX_CHAN_INFO CONFIG_WPA_SUPP_DPP
+#endif
+
+#if !CONFIG_WPA_SUPP_DPP
+#undef CONFIG_RX_CHAN_INFO
+#define CONFIG_RX_CHAN_INFO 0
+#endif
+
+#if !defined CONFIG_TXPD_RXPD_V3
+#if defined(RW610) || defined(SD8978) || defined(SD8987) || defined(SD9177) || defined(IW610)
+#define CONFIG_TXPD_RXPD_V3 CONFIG_WPA_SUPP_DPP
+#endif
+#endif
+
+#if !CONFIG_TXPD_RXPD_V3
+#undef CONFIG_TXPD_RXPD_V3
+#define CONFIG_TXPD_RXPD_V3 CONFIG_WPA_SUPP_DPP
+#endif
+
+#if !CONFIG_WPA_SUPP_DPP
+#undef CONFIG_TXPD_RXPD_V3
+#define CONFIG_TXPD_RXPD_V3 0
+#endif
+
 #if !defined CONFIG_WPA_SUPP_CRYPTO_ENTERPRISE
-#if defined(RW610) || defined(SD8978) || defined(SD8987) || defined(SD8801) || defined(SD9177) || defined(IW610)
+#if defined(RW610) || defined(SD8978) || defined(SD8987) || defined(SD9177) || defined(IW610)
 #define CONFIG_WPA_SUPP_CRYPTO_ENTERPRISE 0
 #endif
 #endif
@@ -824,7 +866,7 @@
 #endif
 
 #if !defined CONFIG_WPA_SUPP_CRYPTO_AP_ENTERPRISE
-#if defined(RW610) || defined(SD8978) || defined(SD8987) || defined(SD8801) || defined(SD9177) || defined(IW610)
+#if defined(RW610) || defined(SD8978) || defined(SD8987) || defined(SD9177) || defined(IW610)
 #define CONFIG_WPA_SUPP_CRYPTO_AP_ENTERPRISE 0
 #endif
 #endif
@@ -835,7 +877,7 @@
 #endif
 
 #if !defined CONFIG_EAP_TLS
-#if defined(RW610) || defined(SD8978) || defined(SD8987) || defined(SD8801) || defined(SD9177) || defined(IW610)
+#if defined(RW610) || defined(SD8978) || defined(SD8987) || defined(SD9177) || defined(IW610)
 #define CONFIG_EAP_TLS 0
 #endif
 #endif
@@ -848,7 +890,7 @@
 #endif
 
 #if !defined CONFIG_EAP_PEAP
-#if defined(RW610) || defined(SD8978) || defined(SD8987) || defined(SD8801) || defined(SD9177) || defined(IW610)
+#if defined(RW610) || defined(SD8978) || defined(SD8987) || defined(SD9177) || defined(IW610)
 #define CONFIG_EAP_PEAP 0
 #endif
 #endif
@@ -859,7 +901,7 @@
 #endif
 
 #if !defined CONFIG_EAP_TTLS
-#if defined(RW610) || defined(SD8978) || defined(SD8987) || defined(SD8801) || defined(SD9177) || defined(IW610)
+#if defined(RW610) || defined(SD8978) || defined(SD8987) || defined(SD9177) || defined(IW610)
 #define CONFIG_EAP_TTLS 0
 #endif
 #endif
@@ -870,7 +912,7 @@
 #endif
 
 #if !defined CONFIG_EAP_FAST
-#if defined(RW610) || defined(SD8978) || defined(SD8987) || defined(SD8801) || defined(SD9177) || defined(IW610)
+#if defined(RW610) || defined(SD8978) || defined(SD8987) || defined(SD9177) || defined(IW610)
 #define CONFIG_EAP_FAST 0
 #endif
 #endif
@@ -881,7 +923,7 @@
 #endif
 
 #if !defined CONFIG_EAP_SIM
-#if defined(RW610) || defined(SD8978) || defined(SD8987) || defined(SD8801) || defined(SD9177) || defined(IW610)
+#if defined(RW610) || defined(SD8978) || defined(SD8987) || defined(SD9177) || defined(IW610)
 #define CONFIG_EAP_SIM 0
 #endif
 #endif
@@ -892,7 +934,7 @@
 #endif
 
 #if !defined CONFIG_EAP_AKA
-#if defined(RW610) || defined(SD8978) || defined(SD8987) || defined(SD8801) || defined(SD9177) || defined(IW610)
+#if defined(RW610) || defined(SD8978) || defined(SD8987) || defined(SD9177) || defined(IW610)
 #define CONFIG_EAP_AKA 0
 #endif
 #endif
@@ -903,7 +945,7 @@
 #endif
 
 #if !defined CONFIG_EAP_AKA_PRIME
-#if defined(RW610) || defined(SD8978) || defined(SD8987) || defined(SD8801) || defined(SD9177) || defined(IW610)
+#if defined(RW610) || defined(SD8978) || defined(SD8987) || defined(SD9177) || defined(IW610)
 #define CONFIG_EAP_AKA_PRIME 0
 #endif
 #endif
@@ -914,7 +956,7 @@
 #endif
 
 #if !defined CONFIG_EAP_MSCHAPV2
-#if defined(RW610) || defined(SD8978) || defined(SD8987) || defined(SD8801) || defined(SD9177) || defined(IW610)
+#if defined(RW610) || defined(SD8978) || defined(SD8987) || defined(SD9177) || defined(IW610)
 #define CONFIG_EAP_MSCHAPV2 (CONFIG_EAP_PEAP || CONFIG_EAP_TTLS || CONFIG_EAP_FAST)
 #endif
 #endif
@@ -926,7 +968,7 @@
 #endif
 
 #if !defined CONFIG_EAP_GTC
-#if defined(RW610) || defined(SD8978) || defined(SD8987) || defined(SD8801) || defined(SD9177) || defined(IW610)
+#if defined(RW610) || defined(SD8978) || defined(SD8987) || defined(SD9177) || defined(IW610)
 #define CONFIG_EAP_GTC (CONFIG_EAP_PEAP || CONFIG_EAP_TTLS || CONFIG_EAP_FAST)
 #endif
 #endif
@@ -938,7 +980,7 @@
 #endif
 
 #if !defined CONFIG_WPS2
-#if defined(RW610) || defined(SD8978) || defined(SD8987) || defined(SD8801) || defined(SD9177) || defined(IW610)
+#if defined(RW610) || defined(SD8978) || defined(SD8987) || defined(SD9177) || defined(IW610)
 #define CONFIG_WPS2 0
 #endif
 #endif
@@ -949,7 +991,7 @@
 #endif
 
 #if !defined CONFIG_WPA2_ENTP
-#if defined(RW610) || defined(SD8978) || defined(SD8987) || defined(SD8801) || defined(SD9177) || defined(IW610)
+#if defined(RW610) || defined(SD8978) || defined(SD8987) || defined(SD9177) || defined(IW610)
 #define CONFIG_WPA2_ENTP 0
 #endif
 #endif
@@ -960,7 +1002,7 @@
 #endif
 
 #if !defined CONFIG_PEAP_MSCHAPV2
-#if defined(RW610) || defined(SD8978) || defined(SD8987) || defined(SD8801) || defined(SD9177) || defined(IW610)
+#if defined(RW610) || defined(SD8978) || defined(SD8987) || defined(SD9177) || defined(IW610)
 #define CONFIG_PEAP_MSCHAPV2 0
 #endif
 #endif
@@ -971,13 +1013,13 @@
 #endif
 
 #if !defined CONFIG_WIFI_USB_FILE_ACCESS
-#if defined(RW610) || defined(SD8978) || defined(SD8987) || defined(SD8801) || defined(SD9177) || defined(IW610)
+#if defined(RW610) || defined(SD8978) || defined(SD8987) || defined(SD9177) || defined(IW610)
 #define CONFIG_WIFI_USB_FILE_ACCESS 0
 #endif
 #endif
 
 #if !defined CONFIG_MMSF
-#if defined(RW610)
+#if defined(RW610) || defined(IW610)
 #define CONFIG_MMSF 1
 #endif
 #endif
@@ -1022,10 +1064,74 @@
 #endif
 #endif
 
+#if !defined CONFIG_WIFI_TX_BUFF
+#define CONFIG_WIFI_TX_BUFF 0
+#endif
+
+#if !defined CONFIG_WLS_CSI_PROC
+#define CONFIG_WLS_CSI_PROC 0
+#endif
+
+#if !defined CONFIG_WIFI_PS_DEBUG
+#define CONFIG_WIFI_PS_DEBUG 0
+#endif
+
+#if !defined CONFIG_MEM_POOLS
+#define CONFIG_MEM_POOLS 0
+#endif
+
+#if !defined CONFIG_RSN_REPLAY_DETECTION
+#define CONFIG_RSN_REPLAY_DETECTION 0
+#endif
+
+#if !defined CONFIG_MULTI_CHAN
+#define CONFIG_MULTI_CHAN 0
+#endif
+
+#if !defined CONFIG_WIFI_IND_RESET
+#define CONFIG_WIFI_IND_RESET 0
+#endif
+
 #if !defined CONFIG_FW_VDLLV2
 #if defined(RW610)
 #define CONFIG_FW_VDLLV2 1
 #endif
+#endif
+
+#if !defined CONFIG_RSN_REPLAY_DETECTION
+#define CONFIG_RSN_REPLAY_DETECTION 0
+#endif
+
+#if !defined CONFIG_11MC
+#define CONFIG_11MC 0
+#endif
+
+#if !defined CONFIG_11AZ
+#define CONFIG_11AZ 0
+#endif
+
+#if !defined CONFIG_FW_VDLL
+#define CONFIG_FW_VDLL 0
+#endif
+
+#if !defined CONFIG_MULTI_CHAN
+#define CONFIG_MULTI_CHAN 0
+#endif
+
+#if !defined CONFIG_RSN_REPLAY_DETECTION
+#define CONFIG_RSN_REPLAY_DETECTION 0
+#endif
+
+#if !defined CONFIG_WIFI_IND_RESET
+#define CONFIG_WIFI_IND_RESET 0
+#endif
+
+#if !defined CONFIG_WIFI_RECOVERY
+#define CONFIG_WIFI_RECOVERY 0
+#endif
+
+#if !defined CONFIG_IMD3_CFG
+#define CONFIG_IMD3_CFG 0
 #endif
 
 /** Wi-Fi NXP internal macros */
@@ -1051,12 +1157,6 @@
 #define CONFIG_BG_SCAN             1
 #define CONFIG_HOST_MLME           1
 #define UAP_HOST_MLME              1
-#define CONFIG_WIFI_RTS_THRESHOLD  1
-#define CONFIG_MEF_CFG             1
-#define CONFIG_MULTI_BSSID_SUPPORT 1
-#define CONFIG_SET_SU              1
-#define CONFIG_RX_CHAN_INFO        1
-#define CONFIG_TXPD_RXPD_V3        1
 
 #if CONFIG_WNM_PS
 #if defined(RW610)
@@ -1166,6 +1266,22 @@
 #define CONFIG_WIFI_HTC_DEBUG 0
 #endif
 
+#if !defined CONFIG_NO_WIFI_TCPIP_INIT
+#define CONFIG_NO_WIFI_TCPIP_INIT 0
+#endif
+
+#if !defined CONFIG_NET_DEBUG
+#define CONFIG_NET_DEBUG 0
+#endif
+
+#if !defined FSL_USDHC_ENABLE_SCATTER_GATHER_TRANSFER
+#define FSL_USDHC_ENABLE_SCATTER_GATHER_TRANSFER 0
+#endif
+
+#if !defined CONFIG_UART_WIFI_BRIDGE
+#define CONFIG_UART_WIFI_BRIDGE 0
+#endif
+
 /*
  * Heap debug options
  */
@@ -1232,11 +1348,16 @@
 #if UAP_SUPPORT
 #if defined(RW610)
 #define CONFIG_WIFI_PKT_FWD 1
+#elif defined(SD8978) || defined(SD8987) || defined(SD9177) || defined(IW610)
+#define CONFIG_WIFI_PKT_FWD CONFIG_WMM
+#endif
+#endif /* UAP_SUPPORT */
 #else
-#define CONFIG_WIFI_PKT_FWD 0
+#if defined(SD8978) || defined(SD8987) || defined(SD9177) || defined(IW610)
+#undef CONFIG_WIFI_PKT_FWD
+#define CONFIG_WIFI_PKT_FWD CONFIG_WMM
 #endif
-#endif
-#endif
+#endif /* !CONFIG_WIFI_PKT_FWD */
 
 /*
  * Wi-Fi SLIM feature options
@@ -1258,21 +1379,15 @@
 #define CONFIG_WIFI_SLIM_DISABLE_DBG 0
 #endif
 
+#ifndef CONFIG_WIFI_SLIM_WMM
+#define CONFIG_WIFI_SLIM_WMM 0
+#endif
+
 #if CONFIG_WIFI_SLIM_ROAM
 
 #if CONFIG_ROAMING
 #undef CONFIG_ROAMING
 #define CONFIG_ROAMING 0
-#endif
-
-#if CONFIG_11K
-#undef CONFIG_11K
-#define CONFIG_11K 0
-#endif
-
-#if CONFIG_11V
-#undef CONFIG_11V
-#define CONFIG_11V 0
 #endif
 
 #if CONFIG_11R
@@ -1283,13 +1398,6 @@
 #endif /* CONFIG_WIFI_SLIM_ROAM */
 
 #if CONFIG_WIFI_SLIM_STA
-
-#if defined(RW610)
-#if CONFIG_5GHz_SUPPORT
-#undef CONFIG_5GHz_SUPPORT
-#define CONFIG_5GHz_SUPPORT 0
-#endif
-#endif
 
 #if CONFIG_CLOUD_KEEP_ALIVE
 #undef CONFIG_CLOUD_KEEP_ALIVE
@@ -1353,6 +1461,16 @@
 #if CONFIG_MAX_AP_ENTRIES
 #undef CONFIG_MAX_AP_ENTRIES
 #define CONFIG_MAX_AP_ENTRIES 5
+#endif
+
+#if CONFIG_CSI
+#undef CONFIG_CSI
+#define CONFIG_CSI 0
+#endif
+
+#if CONFIG_NET_MONITOR
+#undef CONFIG_NET_MONITOR
+#define CONFIG_NET_MONITOR 0
 #endif
 
 #endif /* CONFIG_WIFI_SLIM_STA */

@@ -210,7 +210,7 @@ static void wpas_wps_security_workaround(struct wpa_supplicant *wpa_s,
 
     wpa_printf(MSG_DEBUG, "WPS: AP found from BSS table");
 
-    ie = wpa_bss_get_ie(bss, WLAN_EID_RSN);
+    ie = wpa_bss_get_rsne(wpa_s, bss, ssid, false);
     if (ie && wpa_parse_wpa_ie(ie, 2 + ie[1], &adv) == 0)
     {
         wpa2 = 1;

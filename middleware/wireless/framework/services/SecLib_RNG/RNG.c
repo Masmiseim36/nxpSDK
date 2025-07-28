@@ -1,19 +1,25 @@
 /*! *********************************************************************************
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2017, 2019, 2023-2024 NXP
- * All rights reserved.
+ * Copyright 2016-2017, 2019, 2023-2025 NXP
  *
  * \file
  *
  * SPDX-License-Identifier: BSD-3-Clause
  ********************************************************************************** */
 #include <stdalign.h>
+#include <stdint.h>
+#include "fwk_config.h"
 #include "RNG_Interface.h"
 #include "FunctionLib.h"
 #include "fsl_common.h" /* includes fsl_device_registers.h */
 #include "fsl_os_abstraction.h"
 #include "fwk_platform_rng.h"
-#include "fwk_config.h"
+#if !defined(gPlatformIsNbu_d)
+#include "fwk_workq.h"
+#endif
+#if defined(gPlatformHasNbu_d) || defined(gPlatformIsNbu_d)
+#include "fwk_platform_ics.h"
+#endif
 
 #ifndef gRngUseSecLib_d
 #define gRngUseSecLib_d 1
@@ -47,6 +53,8 @@
 #else
 #include "fsl_rnga.h"
 #endif
+#elif defined(gRngUseRngAdapter_c) && (gRngUseRngAdapter_c > 0)
+#include "fsl_adapter_rng.h"
 #endif
 #endif
 #if defined(gRngSeedStorageAddr_d) || defined(gRngSeedHwParamStorage_d)
@@ -111,20 +119,6 @@ typedef struct rng_ctx_t
 
 /*! *********************************************************************************
 *************************************************************************************
-* Private memory declarations
-*************************************************************************************
-********************************************************************************** */
-
-static RNG_context_t rng_ctx = {
-    .Initialized                               = FALSE,
-    .mPrngIsSeeded                             = FALSE,
-    .needReseed                                = FALSE,
-    .PrngSeed[0 ... mPRNG_NoOfLongWords_c - 1] = 0U,
-    .mPRNG_Requests                            = gRngMaxRequests_d,
-};
-
-/*! *********************************************************************************
-*************************************************************************************
 * Public prototypes
 *************************************************************************************
 ********************************************************************************** */
@@ -146,8 +140,8 @@ static void TRNG_ISR(void);
 static void TRNG_GoToSleep(void);
 #endif
 
-static int      RNG_Specific_Init(uint32_t *pSeed);
-static uint16_t RNG_Specific_GetRandomData(uint8_t *pOut, uint16_t outBytes);
+static int RNG_Specific_Init(uint32_t *pSeed);
+static int RNG_Specific_GetRandomData(uint8_t *pOut, uint16_t outBytes);
 
 #if defined(gRngSeedHwParamStorage_d) || defined(gRngSeedStorageAddr_d)
 static uint32_t Rng_read_seed_from_flash(void);
@@ -155,6 +149,29 @@ static void     Rng_save_seed_to_flash(uint32_t seed);
 #endif
 
 static int RNG_GetPseudoRandomDataWithContext(void *ctx_data, unsigned char *output, size_t len);
+#if !defined(gPlatformIsNbu_d)
+static void RNG_seed_needed_handler(fwk_work_t *work);
+#endif
+
+/*! *********************************************************************************
+*************************************************************************************
+* Private memory declarations
+*************************************************************************************
+********************************************************************************** */
+
+static RNG_context_t rng_ctx = {
+    .Initialized                               = FALSE,
+    .mPrngIsSeeded                             = FALSE,
+    .needReseed                                = FALSE,
+    .PrngSeed[0 ... mPRNG_NoOfLongWords_c - 1] = 0U,
+    .mPRNG_Requests                            = gRngMaxRequests_d,
+};
+
+#if !defined(gPlatformIsNbu_d)
+static fwk_work_t seed_needed_work = {
+    .handler = RNG_seed_needed_handler,
+};
+#endif
 
 /*! *********************************************************************************
 *************************************************************************************
@@ -180,6 +197,15 @@ int RNG_Init(void)
             status = gRngSuccess_d;
             break;
         }
+#if !defined(gPlatformIsNbu_d)
+        /* The workqueue is used to post and schedule seed
+         * trig upon user demand using RNG_NotifyReseedNeeded().
+         */
+        if (WORKQ_InitSysWorkQ() < 0)
+        {
+            break;
+        }
+#endif
         /* Create mutex here in case it was not done already.
          * Does nothing without error otherwise.
          */
@@ -187,10 +213,17 @@ int RNG_Init(void)
         {
             break;
         }
+#if defined(gPlatformHasNbu_d)
+        PLATFORM_RegisterReceivedSeedRequest(&RNG_NotifyReseedNeeded);
+#endif
 
-        rng_ctx.mPrngIsSeeded = FALSE;
-
-        status = RNG_Specific_Init(rng_ctx.PrngSeed);
+#if defined(gPlatformIsNbu_d)
+        PLATFORM_RegisterSetNewSeed(&RNG_SetExternalSeed);
+#endif
+        rng_ctx.mPrngIsSeeded  = FALSE;
+        rng_ctx.needReseed     = FALSE;
+        rng_ctx.mPRNG_Requests = gRngMaxRequests_d;
+        status                 = RNG_Specific_Init(rng_ctx.PrngSeed);
         /* RNG_Specific_Init retuns with mPrngIsSeeded set to TRUE if the seed can be obtained synchronously */
 
         if (status != gRngSuccess_d)
@@ -211,6 +244,14 @@ int RNG_Init(void)
     return status;
 }
 
+/*! *********************************************************************************
+ * \brief  Reinitialize the RNG module post-wakeup action
+ *         Does nothing except for Secure-Subsystem that require an action to get
+ *         ready after wakeup.
+ *
+ * \return  Status of the RNG initialization sequence.
+ *
+ ********************************************************************************** */
 int RNG_ReInit(void)
 {
     int status = gRngSuccess_d;
@@ -220,19 +261,49 @@ int RNG_ReInit(void)
     return status;
 }
 
+/*! *********************************************************************************
+ * \brief  DeInitialize the RNG module.
+ *         Resets the RNG context variables. Only used for test purposes.
+ *
+ * \return none
+ *
+ ********************************************************************************** */
+void RNG_DeInit(void)
+{
+    rng_ctx.Initialized   = FALSE;
+    rng_ctx.mPrngIsSeeded = FALSE;
+    rng_ctx.needReseed    = FALSE;
+}
+
 int RNG_GetTrueRandomNumber(uint32_t *pRandomNo)
 {
-    int status = -1;
+    int status;
 
-    uint16_t nb_bytes = 0u;
-    if (rng_ctx.Initialized)
+    do
     {
-        nb_bytes = RNG_Specific_GetRandomData((uint8_t *)pRandomNo, sizeof(uint32_t));
-        if (nb_bytes == sizeof(uint32_t))
+        int rng_ret;
+
+        if (pRandomNo == NULL)
         {
-            status = 0;
+            status = gRngBadArguments_d;
+            break;
         }
-    }
+        if (!rng_ctx.Initialized)
+        {
+            status = gRngNotInitialized_d;
+            break;
+        }
+
+        rng_ret = RNG_Specific_GetRandomData((uint8_t *)pRandomNo, sizeof(uint32_t));
+        if (rng_ret <= 0)
+        {
+            status = gRngInternalError_d;
+            break;
+        }
+
+        status = gRngSuccess_d;
+
+    } while (false);
     return status;
 }
 
@@ -256,100 +327,186 @@ int RNG_GetTrueRandomNumber(uint32_t *pRandomNo)
  * \param[in]     outBytes - the number of bytes to be copied (1-20)
  * \param[in]     pSeed - optional user SEED. Should be NULL if not used.
  *
- * \return  The number of bytes copied or -1 if reseed is needed
+ * \return  If positive ( > 0) the number of random bytes produced,
+ *          If negative denotes an error:
+ *              gRngBadArguments_d if pOut is NULL or outBytes is 0 OR
+ *              gRngNotInitialized_d if RNG_Init was not priorly called OR
+ *              gRngInternalError_d in case of driver error OR
+ *              gRngReseedPending_d if new call happened whereas reseed request
+ *              was pending already .
  *
  ********************************************************************************** */
 int RNG_GetPseudoRandomData(uint8_t *pOut, uint8_t outBytes, uint8_t *pSeed)
 {
-    uint16_t outputBytes = 0UL;
-    if (rng_ctx.Initialized && rng_ctx.mPrngIsSeeded)
+    int ret;
+    do
     {
-        outputBytes = outBytes;
+        uint16_t outputBytes = 0u;
+
+        if (pOut == NULL || outBytes == 0u)
+        {
+            ret = gRngBadArguments_d;
+            break;
+        }
+
+        if (rng_ctx.Initialized != TRUE)
+        {
+            ret = gRngNotInitialized_d;
+            break;
+        }
+
+        outputBytes = (uint16_t)outBytes;
 
 #if !defined gRngUseSecureSubSystem_d || (gRngUseSecureSubSystem_d == 0)
-        uint32_t i;
-        /* PRNG buffer used for both input and output */
-        uint32_t prngBuffer[mPRNG_NoOfLongWords_c] = {0};
-
-        if (pSeed != NULL)
+        if (!rng_ctx.mPrngIsSeeded)
         {
-            rng_ctx.mPRNG_Requests = 1U;
-        }
-
-        if (rng_ctx.mPRNG_Requests == gRngMaxRequests_d)
-        {
-            RNG_NotifyReseedNeeded();
-        }
-
-        rng_ctx.mPRNG_Requests++;
-
-        /* b. XVAL = (XKEY + XSEEDj) mod 2^b */
-        for (i = 0u; i < mPRNG_NoOfLongWords_c; i++)
-        {
-            prngBuffer[i] = rng_ctx.PrngSeed[i]; /* PrngSeed is the XKEY */
-        }
-        /* a. XSEEDj = optional user input. */
-        if (pSeed != NULL)
-        {
-            for (i = 0; i < mPRNG_NoOfBytes_c; i++)
+            /* request reseed */
+            if (RNG_NotifyReseedNeeded() < 0)
             {
-                ((uint8_t *)prngBuffer)[i] += pSeed[i];
+                /* if request fails, bad news */
+                ret = gRngInternalError_d;
+            }
+            else
+            {
+                /* wait for reseed to retry */
+                ret = gRngReseedPending_d;
+            }
+            break;
+        }
+        else
+        {
+            uint16_t i;
+            /* PRNG buffer used for both input and output */
+            uint32_t prngBuffer[mPRNG_NoOfLongWords_c] = {0UL};
+
+            if (pSeed != NULL)
+            {
+                rng_ctx.mPRNG_Requests = 1U;
+            }
+
+            if (rng_ctx.mPRNG_Requests == gRngMaxRequests_d)
+            {
+                if (RNG_NotifyReseedNeeded() < 0)
+                {
+                    ret = gRngInternalError_d;
+                    break;
+                }
+            }
+            /* Continue in spite of the gRngMaxRequests_d limit reached */
+            rng_ctx.mPRNG_Requests++;
+
+            /* b. XVAL = (XKEY + XSEEDj) mod 2^b */
+            for (i = 0u; i < mPRNG_NoOfLongWords_c; i++)
+            {
+                prngBuffer[i] = rng_ctx.PrngSeed[i]; /* PrngSeed is the XKEY */
+            }
+            /* a. XSEEDj = optional user input. */
+            if (pSeed != NULL)
+            {
+                for (i = 0u; i < mPRNG_NoOfBytes_c; i++)
+                {
+                    ((uint8_t *)prngBuffer)[i] += pSeed[i];
+                }
+            }
+
+            /* c. xj = G(t,XVAL) mod q
+            ***************************/
+#if (defined gRngUseLehmerGen_c && (gRngUseLehmerGen_c > 0))
+            for (i = 0u; i < mPRNG_NoOfLongWords_c; i++)
+            {
+                uint32_t rand_val;
+                rand_val      = RNG_LCG(rng_ctx.PrngSeed[i]); /* PrngSeed is the XKEY */
+                prngBuffer[i] = rand_val;
+            }
+#else
+            SHA256_Hash((uint8_t *)prngBuffer, mPRNG_NoOfBytes_c, (uint8_t *)prngBuffer);
+#endif
+            /* d. XKEY = (1 + XKEY + xj) mod 2^b */
+            rng_ctx.PrngSeed[0] += 1U; /* PrngSeed is the XKEY */
+            for (i = 0u; i < mPRNG_NoOfLongWords_c; i++)
+            {
+                rng_ctx.PrngSeed[i] += prngBuffer[i];
+            }
+
+            /* Check if the length provided exceeds the output data size */
+            if (outputBytes > mPRNG_NoOfBytes_c)
+            {
+                outputBytes = mPRNG_NoOfBytes_c;
+            }
+            /* Copy the generated number */
+            for (i = 0u; i < outputBytes; i++)
+            {
+                pOut[i] = ((uint8_t *)prngBuffer)[i];
             }
         }
-
-        /* c. xj = G(t,XVAL) mod q
-        ***************************/
-
-#if (defined gRngUseLehmerGen_c && (gRngUseLehmerGen_c > 0))
-        for (i = 0u; i < mPRNG_NoOfLongWords_c; i++)
-        {
-            uint32_t rand_val;
-            rand_val      = RNG_LCG(rng_ctx.PrngSeed[i]); /* PrngSeed is the XKEY */
-            prngBuffer[i] = rand_val;
-        }
-#else
-        SHA256_Hash((uint8_t *)prngBuffer, mPRNG_NoOfBytes_c, (uint8_t *)prngBuffer);
-#endif
-        /* d. XKEY = (1 + XKEY + xj) mod 2^b */
-        rng_ctx.PrngSeed[0] += 1U; /* PrngSeed is the XKEY */
-        for (i = 0; i < mPRNG_NoOfLongWords_c; i++)
-        {
-            rng_ctx.PrngSeed[i] += prngBuffer[i];
-        }
-
-        /* Check if the length provided exceeds the output data size */
-        if (outputBytes > mPRNG_NoOfBytes_c)
-        {
-            outputBytes = mPRNG_NoOfBytes_c;
-        }
-        /* Copy the generated number */
-        for (i = 0; i < (uint32_t)outputBytes; i++)
-        {
-            pOut[i] = ((uint8_t *)prngBuffer)[i];
-        }
+        ret = (int)outputBytes;
 #else /* gRngUseSecureSubSystem_d */
         if (outputBytes > mPRNG_NoOfBytes_c)
         {
             outputBytes = mPRNG_NoOfBytes_c;
         }
-        outputBytes = RNG_Specific_GetRandomData(pOut, outputBytes);
+        ret = RNG_Specific_GetRandomData(pOut, (uint16_t)outputBytes);
 #endif
-    }
-    return (int16_t)outputBytes;
+
+    } while (false);
+    return ret;
 }
 
 static int RNG_GetPseudoRandomDataWithContext(void *ctx_data, unsigned char *output, size_t len)
 {
     NOT_USED(ctx_data);
-    int st = -1;
-    int nb_produced;
+    int st = gRngBadArguments_d;
 
-    nb_produced = RNG_GetPseudoRandomData(output, (uint8_t)len, NULL);
-
-    if (nb_produced == (int)len)
+    do
     {
-        st = 0;
-    }
+        uint8_t *p;
+        size_t   req_sz;
+        if (len == 0u)
+        {
+            st = gRngBadArguments_d;
+            break;
+        }
+        if (output == NULL)
+        {
+            st = gRngBadArguments_d;
+            break;
+        }
+
+        p      = output;
+        req_sz = len;
+
+        while (req_sz > 0u)
+        {
+            uint32_t sz = MIN(req_sz, mPRNG_NoOfBytes_c);
+
+            st = RNG_GetPseudoRandomData(p, (uint8_t)sz, NULL);
+
+            if ((st > 0) && (st == (int)sz))
+            {
+                req_sz -= sz;
+                p += sz;
+            }
+            else
+            {
+                /* st contains an error code */
+                break;
+            }
+        }
+        if (st < 0)
+        {
+            break;
+        }
+        /* The expectation from the external caller of the function pointer is that 0 is returned
+           if its request is fulfilled, i.e. all random bytes were produced  */
+        if (req_sz == 0u)
+        {
+            st = 0;
+        }
+        else
+        {
+            st = -1;
+        }
+    } while (false);
     return st;
 }
 
@@ -363,7 +520,14 @@ static int RNG_GetPseudoRandomDataWithContext(void *ctx_data, unsigned char *out
  ********************************************************************************** */
 fpRngPrng_t RNG_GetPrngFunc(void)
 {
-    return RNG_GetPseudoRandomDataWithContext;
+    if (rng_ctx.mPrngIsSeeded == TRUE)
+    {
+        return RNG_GetPseudoRandomDataWithContext;
+    }
+    else
+    {
+        return NULL;
+    }
 }
 
 /*! *********************************************************************************
@@ -376,16 +540,34 @@ fpRngPrng_t RNG_GetPrngFunc(void)
  ********************************************************************************** */
 void *RNG_GetPrngContext(void)
 {
-    return (void *)&rng_ctx;
+    if (rng_ctx.Initialized == TRUE)
+    {
+        return (void *)&rng_ctx;
+    }
+    else
+    {
+        return NULL;
+    }
 }
 
 int RNG_SetSeed(void)
 {
-    int status = gRngInternalError_d;
-    if (rng_ctx.Initialized == TRUE)
+    int status;
+    do
     {
-        uint16_t nb_bytes = 0U;
-        nb_bytes          = RNG_Specific_GetRandomData((uint8_t *)rng_ctx.PrngSeed, mPRNG_NoOfBytes_c);
+        if (rng_ctx.Initialized != TRUE)
+        {
+            status = gRngNotInitialized_d;
+            break;
+        }
+
+        uint16_t nb_bytes = 0u;
+        status            = RNG_Specific_GetRandomData((uint8_t *)rng_ctx.PrngSeed, mPRNG_NoOfBytes_c);
+        if (status <= 0)
+        {
+            break;
+        }
+        nb_bytes = (uint16_t)status;
         if (nb_bytes == mPRNG_NoOfBytes_c)
         {
             rng_ctx.mPRNG_Requests = 1U;
@@ -398,32 +580,49 @@ int RNG_SetSeed(void)
             }
             else
             {
+                status = gRngInternalError_d;
                 assert(0);
             }
         }
         else
         {
+            status = gRngInternalError_d;
             assert(0);
         }
-    }
+    } while (false);
     return status;
 }
 
 int RNG_NotifyReseedNeeded(void)
 {
     int status;
-    /* On NBU side, PLATFORM_RequestRngSeed sends an RPMSG to the Host core,
-     * however on the the Host side, RNG_NotifyReseedNeeded is also called from ISR
-     * but PLATFORM_RequestRngSeed just returns 1 */
-    status = PLATFORM_RequestRngSeed();
-    assert(status >= 0);
-    rng_ctx.needReseed = TRUE;
 
+    do
+    {
+        /* On NBU side, PLATFORM_RequestRngSeed sends an RPMSG to the Host core,
+         * however on the the Host side, RNG_NotifyReseedNeeded is also called from ISR
+         * but PLATFORM_RequestRngSeed just returns 1 */
+        status = PLATFORM_RequestRngSeed();
+        if (status < 0)
+        {
+            break;
+        }
+        rng_ctx.needReseed = TRUE;
+#if !defined(gPlatformIsNbu_d)
+        /* On MCU, submit a seed request to work queue  */
+        status = WORKQ_Submit(&seed_needed_work);
+        if (status < 0)
+        {
+            break;
+        }
+#endif
+    } while (false);
     return status;
 }
 
 bool_t RNG_IsReseedNeeded(void)
 {
+    /* Return whether reseeding is required or not */
     return rng_ctx.needReseed;
 }
 
@@ -431,11 +630,13 @@ int RNG_SetExternalSeed(uint8_t *external_seed)
 {
     int status = gRngInternalError_d;
     FLib_MemCpy(rng_ctx.PrngSeed, external_seed, mPRNG_NoOfBytes_c);
+    /* Inject entropy from externeal seed octet string */
     status = PLATFORM_SendRngSeed(external_seed, mPRNG_NoOfBytes_c);
     if (status >= 0)
     {
         rng_ctx.mPRNG_Requests = 1U;
         rng_ctx.mPrngIsSeeded  = TRUE;
+        rng_ctx.needReseed     = FALSE;
         status                 = gRngSuccess_d;
     }
     else
@@ -541,16 +742,15 @@ static int RNG_Specific_Init(uint32_t *pSeed)
     return status;
 }
 
-static uint16_t RNG_Specific_GetRandomData(uint8_t *pOut, uint16_t outBytes)
+static int RNG_Specific_GetRandomData(uint8_t *pOut, uint16_t outBytes)
 {
-    uint16_t nb_bytes = 0U;
+    int ret = gRngInternalError_d;
     if (RNGA_GetRandomData(RNG, pOut, (size_t)outBytes) == 0)
     {
-        nb_bytes = outBytes;
+        ret = (int)outBytes;
     }
-    assert(nb_bytes == outBytes);
 
-    return nb_bytes;
+    return ret;
 }
 #else /* CPU_QN908X */
 static int RNG_Specific_Init(uint32_t *pSeed)
@@ -572,18 +772,18 @@ static int RNG_Specific_Init(uint32_t *pSeed)
     return status;
 }
 
-static uint16_t RNG_Specific_GetRandomData(uint8_t *pOut, uint16_t outBytes)
+static int RNG_Specific_GetRandomData(uint8_t *pOut, uint16_t outBytes)
 {
-    uint16_t nb_bytes = 0U;
+    int ret = gRngInternalError_d;
     POWER_EnableADC(true);
     RNG_Enable(RNG, true);
     if (RNG_GetRandomData(RNG, (uint8_t *)pOut, (size_t)outBytes) == 0)
     {
-        nb_bytes = outBytes;
+        ret = (int)outBytes;
     }
     RNG_Enable(RNG, false);
     POWER_EnableADC(false);
-    return nb_bytes;
+    return ret;
 }
 
 #endif
@@ -635,26 +835,24 @@ static int RNG_Specific_Init(uint32_t *pSeed)
     return status;
 }
 
-static uint16_t RNG_Specific_GetRandomData(uint8_t *pOut, uint16_t outBytes)
+static int RNG_Specific_GetRandomData(uint8_t *pOut, uint16_t outBytes)
 {
-    uint16_t nb_bytes = 0U;
+    int ret;
     do
     {
-        if ((TRNG0->MCTL & TRNG_MCTL_ENT_VAL_MASK) == 0U)
-        {
-            break;
-        }
+        /* Entropy valid wait loop part of function below, no need to check here. */
         if ((uint8_t)TRNG_GetRandomData(TRNG0, pOut, (size_t)outBytes) != 0U)
         {
+            ret = gRngInternalError_d;
             break;
         }
-        nb_bytes = outBytes;
+        ret = (int)outBytes;
 
     } while (false);
 
     TRNG_GoToSleep();
 
-    return nb_bytes;
+    return ret;
 }
 #elif gRNG_UsePhyRngForInitialSeed_d
 static int RNG_Specific_Init(uint32_t *pSeed)
@@ -664,12 +862,15 @@ static int RNG_Specific_Init(uint32_t *pSeed)
     return gRngSuccess_d;
 }
 
-static uint16_t RNG_Specific_GetRandomData(uint32_t *pOut, uint16_t outBytes)
+static int RNG_Specific_GetRandomData(uint32_t *pOut, uint16_t outBytes)
 {
-    assert(outBytes == sizeof(uint32_t));
-    PhyGetRandomNo(pOut);
-    nb_bytes = sizeof(uint32_t);
-    return nb_bytes;
+    int ret = gRngBadArguments_d;
+    if (outBytes == sizeof(uint32_t))
+    {
+        PhyGetRandomNo(pOut);
+        ret = (int)sizeof(uint32_t);
+    }
+    return ret;
 }
 #elif defined(FSL_FEATURE_SOC_SIM_COUNT) && (FSL_FEATURE_SOC_SIM_COUNT > 1)
 static int RNG_Specific_Init(uint32_t *pSeed)
@@ -692,35 +893,42 @@ static int RNG_Specific_GetRandomU32(uint32_t *pRandomNo, int16_t *returned_byte
 
 #elif defined gRngUseSecureSubSystem_d && (gRngUseSecureSubSystem_d != 0)
 
-static uint16_t RNG_Specific_GetRandomData(uint8_t *pOut, uint16_t outBytes)
+static int RNG_Specific_GetRandomData(uint8_t *pOut, uint16_t outBytes)
 {
-    uint16_t       outputBytes = 0;
+    int            ret;
     sss_sscp_rng_t rctx;
     bool           init_passed = false;
     do
     {
-        RNG_MUTEX_LOCK();
-
-        if ((outBytes == 0U) || (pOut == NULL))
+        if ((pOut == NULL) || (outBytes == 0U))
         {
+            ret = gRngBadArguments_d;
             break;
         }
+
+        RNG_MUTEX_LOCK();
+
         if (CRYPTO_InitHardware() != kStatus_Success)
         {
+            ret = gRngNotInitialized_d;
             break;
         }
 
         if (sss_sscp_rng_context_init(&g_sssSession, &rctx, SSS_HIGH_QUALITY_RNG) != kStatus_SSS_Success)
         {
+            ret = gRngInternalError_d;
             break;
         }
         init_passed = true;
         if (sss_sscp_rng_get_random(&rctx, pOut, outBytes) != kStatus_SSS_Success)
         {
+            ret = gRngInternalError_d;
             break;
         }
-        outputBytes = outBytes;
+        ret = (int)outBytes;
+
     } while (false);
+
     if (init_passed)
     {
         if (sss_sscp_rng_free(&rctx) != kStatus_SSS_Success)
@@ -729,17 +937,24 @@ static uint16_t RNG_Specific_GetRandomData(uint8_t *pOut, uint16_t outBytes)
         }
     }
     RNG_MUTEX_UNLOCK();
-    return outputBytes;
+
+    return ret;
 }
 
 static int RNG_Specific_Init(uint32_t *pSeed)
 {
-    int status;
+    int status = gRngInternalError_d;
     do
     {
         uint16_t Obtained_size;
+        int      st;
 
-        Obtained_size = RNG_Specific_GetRandomData((uint8_t *)pSeed, mPRNG_NoOfBytes_c);
+        st = RNG_Specific_GetRandomData((uint8_t *)pSeed, mPRNG_NoOfBytes_c);
+        if (st <= 0)
+        {
+            break;
+        }
+        Obtained_size = (uint16_t)st;
         if (Obtained_size != mPRNG_NoOfBytes_c)
         {
             RAISE_ERROR(status, gRngInternalError_d);
@@ -751,6 +966,66 @@ static int RNG_Specific_Init(uint32_t *pSeed)
     } while (false);
 
     return status;
+}
+
+#elif defined(gRngUseRngAdapter_c) && (gRngUseRngAdapter_c > 0)
+
+static int RNG_Specific_Init(uint32_t *pSeed)
+{
+    int              ret = 0;
+    hal_rng_status_t status;
+
+    do
+    {
+        status = HAL_RngInit();
+        if ((status != kStatus_HAL_RngSuccess) && (status != KStatus_HAL_RngNotSupport))
+        {
+            ret = gRngInternalError_d;
+            break;
+        }
+
+        if (RNG_Specific_GetRandomData((uint8_t *)pSeed, mPRNG_NoOfBytes_c) <= 0)
+        {
+            ret = gRngInternalError_d;
+            break;
+        }
+
+        rng_ctx.mPrngIsSeeded = TRUE;
+
+    } while (false);
+
+    return ret;
+}
+
+static int RNG_Specific_GetRandomData(uint8_t *pOut, uint16_t outBytes)
+{
+    int              ret = 0;
+    hal_rng_status_t status;
+
+    do
+    {
+        status = HAL_RngHwGetData(pOut, outBytes);
+
+        if (status != kStatus_HAL_RngSuccess)
+        {
+            if (status != KStatus_HAL_RngNotSupport)
+            {
+                ret = gRngInternalError_d;
+                break;
+            }
+
+            status = HAL_RngGetData(pOut, outBytes);
+
+            if (status != kStatus_HAL_RngSuccess)
+            {
+                ret = gRngInternalError_d;
+                break;
+            }
+            ret = (int)outBytes;
+        }
+    } while (false);
+
+    return ret;
 }
 
 #else
@@ -765,12 +1040,13 @@ static int RNG_Specific_Init(uint32_t *pSeed)
     return gRngSuccess_d;
 }
 
-static uint16_t RNG_Specific_GetRandomData(uint8_t *pOut, uint16_t outBytes)
+static int RNG_Specific_GetRandomData(uint8_t *pOut, uint16_t outBytes)
 {
     (void)pOut;
     (void)outBytes;
-    return 0U;
+    return 0;
 }
+
 #endif
 
 #if (defined gRngUseLehmerGen_c && (gRngUseLehmerGen_c > 0))
@@ -816,4 +1092,14 @@ static uint32_t RNG_LCG(uint32_t prev_state)
 }
 #endif
 
+#if !defined(gPlatformIsNbu_d)
+static void RNG_seed_needed_handler(fwk_work_t *work)
+{
+    /* Execute ressed request from WorkQ */
+    if (rng_ctx.needReseed == TRUE)
+    {
+        (void)RNG_SetSeed();
+    }
+}
+#endif
 /********************************** EOF ***************************************/

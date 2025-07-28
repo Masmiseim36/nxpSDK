@@ -29,9 +29,9 @@
     <definition extID="component.lists.MIMXRT595S"/>
     <definition extID="utility.str.MIMXRT595S"/>
     <definition extID="utility.debug_console_lite.MIMXRT595S"/>
-    <definition extID="component.usart_adapter.MIMXRT595S"/>
     <definition extID="component.i3c_bus.MIMXRT595S"/>
     <definition extID="component.i3c_bus_adapter.MIMXRT595S"/>
+    <definition extID="component.usart_adapter.MIMXRT595S"/>
     <definition extID="iar"/>
     <definition extID="mdk"/>
     <definition extID="armgcc"/>
@@ -40,7 +40,7 @@
     <definition extID="com.crt.advproject.config.exe.debug"/>
     <definition extID="com.crt.advproject.config.exe.release"/>
   </externalDefinitions>
-  <example id="evkmimxrt595_i3c_bus_slave_cm33" name="i3c_bus_slave_cm33" device_core="cm33_MIMXRT595S" dependency="platform.drivers.flash_config.evkmimxrt595.MIMXRT595S CMSIS_Include_core_cm.MIMXRT595S device.MIMXRT595S_CMSIS.MIMXRT595S device.MIMXRT595S_system.MIMXRT595S device.MIMXRT595S_startup.MIMXRT595S platform.drivers.clock.MIMXRT595S platform.drivers.dsp.MIMXRT595S platform.drivers.i2s_bridge.MIMXRT595S platform.drivers.inputmux_connections.MIMXRT595S platform.drivers.memory.MIMXRT595S platform.drivers.power.MIMXRT595S platform.drivers.reset.MIMXRT595S platform.drivers.soc_mipi_dsi.MIMXRT595S platform.drivers.cache_cache64.MIMXRT595S platform.drivers.common.MIMXRT595S platform.drivers.flexcomm.MIMXRT595S platform.drivers.flexcomm_usart.MIMXRT595S platform.drivers.flexspi.MIMXRT595S platform.drivers.i3c.MIMXRT595S platform.drivers.iap3.MIMXRT595S platform.drivers.lpc_gpio.MIMXRT595S platform.drivers.lpc_iopctl.MIMXRT595S platform.utilities.assert_lite.MIMXRT595S platform.utilities.misc_utilities.MIMXRT595S component.lists.MIMXRT595S utility.str.MIMXRT595S utility.debug_console_lite.MIMXRT595S component.usart_adapter.MIMXRT595S component.i3c_bus.MIMXRT595S component.i3c_bus_adapter.MIMXRT595S" category="component_examples/i3c">
+  <example id="evkmimxrt595_i3c_bus_slave_cm33" name="i3c_bus_slave_cm33" device_core="cm33_MIMXRT595S" dependency="platform.drivers.flash_config.evkmimxrt595.MIMXRT595S CMSIS_Include_core_cm.MIMXRT595S device.MIMXRT595S_CMSIS.MIMXRT595S device.MIMXRT595S_system.MIMXRT595S device.MIMXRT595S_startup.MIMXRT595S platform.drivers.clock.MIMXRT595S platform.drivers.dsp.MIMXRT595S platform.drivers.i2s_bridge.MIMXRT595S platform.drivers.inputmux_connections.MIMXRT595S platform.drivers.memory.MIMXRT595S platform.drivers.power.MIMXRT595S platform.drivers.reset.MIMXRT595S platform.drivers.soc_mipi_dsi.MIMXRT595S platform.drivers.cache_cache64.MIMXRT595S platform.drivers.common.MIMXRT595S platform.drivers.flexcomm.MIMXRT595S platform.drivers.flexcomm_usart.MIMXRT595S platform.drivers.flexspi.MIMXRT595S platform.drivers.i3c.MIMXRT595S platform.drivers.iap3.MIMXRT595S platform.drivers.lpc_gpio.MIMXRT595S platform.drivers.lpc_iopctl.MIMXRT595S platform.utilities.assert_lite.MIMXRT595S platform.utilities.misc_utilities.MIMXRT595S component.lists.MIMXRT595S utility.str.MIMXRT595S utility.debug_console_lite.MIMXRT595S component.i3c_bus.MIMXRT595S component.i3c_bus_adapter.MIMXRT595S component.usart_adapter.MIMXRT595S" category="component_examples/i3c">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -58,6 +58,23 @@
           <value>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</value>
           <value>SDK_DEBUGCONSOLE=1</value>
           <value>MCUX_META_BUILD</value>
+          <value>MIMXRT595S_cm33_SERIES</value>
+        </option>
+        <option id="com.crt.advproject.link.fpu" type="enum">
+          <value>com.crt.advproject.link.fpu.fpv4.hard</value>
+          <value>com.crt.advproject.link.fpu.fpv5sp.hard</value>
+        </option>
+        <option id="gnu.c.link.option.nostdlibs" type="boolean">
+          <value>true</value>
+        </option>
+        <option id="com.crt.advproject.link.memory.heapAndStack" type="string">
+          <value>&amp;Heap:Default;Default;0x800&amp;Stack:Default;Default;Default</value>
+        </option>
+        <option id="gnu.c.link.option.other" type="stringList">
+          <value>-no-warn-rwx-segments</value>
+        </option>
+        <option id="gnu.c.link.option.group" type="boolean">
+          <value>true</value>
         </option>
         <option id="com.crt.advproject.gas.fpu" type="enum">
           <value>com.crt.advproject.gas.fpu.fpv4.hard</value>
@@ -81,19 +98,6 @@
         </option>
         <option id="gnu.c.compiler.option.warnings.toerrors" type="boolean">
           <value>false</value>
-        </option>
-        <option id="com.crt.advproject.link.fpu" type="enum">
-          <value>com.crt.advproject.link.fpu.fpv4.hard</value>
-          <value>com.crt.advproject.link.fpu.fpv5sp.hard</value>
-        </option>
-        <option id="gnu.c.link.option.nostdlibs" type="boolean">
-          <value>true</value>
-        </option>
-        <option id="gnu.c.link.option.other" type="stringList">
-          <value>-no-warn-rwx-segments</value>
-        </option>
-        <option id="gnu.c.link.option.group" type="boolean">
-          <value>true</value>
         </option>
       </toolchainSetting>
     </toolchainSettings>
@@ -132,12 +136,8 @@
       <files mask="CMakeLists.txt"/>
       <files mask="flags.cmake"/>
       <files mask="config.cmake"/>
-      <files mask="build_debug.bat"/>
-      <files mask="build_debug.sh"/>
       <files mask="build_flash_debug.bat"/>
       <files mask="build_flash_debug.sh"/>
-      <files mask="build_release.bat"/>
-      <files mask="build_release.sh"/>
       <files mask="build_flash_release.bat"/>
       <files mask="build_flash_release.sh"/>
     </source>
@@ -159,15 +159,12 @@
       <files mask="clock_config.c"/>
     </source>
     <source path="iar" project_relative_path="MIMXRT595S/iar" type="linker" toolchain="iar">
-      <files mask="MIMXRT595Sxxxx_cm33_ram.icf"/>
       <files mask="MIMXRT595Sxxxx_cm33_flash.icf"/>
     </source>
     <source path="armgcc" project_relative_path="MIMXRT595S/armgcc" type="linker" toolchain="armgcc">
-      <files mask="MIMXRT595Sxxxx_cm33_ram.ld"/>
       <files mask="MIMXRT595Sxxxx_cm33_flash.ld"/>
     </source>
     <source path="mdk" project_relative_path="MIMXRT595S/mdk" type="linker" toolchain="mdk">
-      <files mask="MIMXRT595Sxxxx_cm33_ram.scf"/>
       <files mask="MIMXRT595Sxxxx_cm33_flash.scf"/>
     </source>
     <source path="." project_relative_path="board" type="src">
@@ -186,6 +183,9 @@
     </source>
     <source path="." project_relative_path="doc" type="doc">
       <files mask="example_board_readme.md"/>
+    </source>
+    <source path="." project_relative_path="doc" type="doc">
+      <files mask="examples_shared_readme.md"/>
     </source>
   </example>
 </ksdk:examples>

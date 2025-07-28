@@ -286,21 +286,33 @@ PWR_ReturnStatus_t PWR_ReleaseLowPowerModeConstraint(PWR_LowpowerMode_t mode)
 void PWR_AllowDeviceToSleep(void)
 {
     /* Is it not allowed to call this function without calling PWR_DisallowDeviceToSleep first */
-    assert(lpDisallowCount > 0U);
-
     uint32_t intMask = DisableGlobalIRQ();
-    lpDisallowCount--;
-    EnableGlobalIRQ(intMask);
+    if (lpDisallowCount > 0U)
+    {
+        lpDisallowCount--;
+        EnableGlobalIRQ(intMask);
+    }
+    else
+    {
+        EnableGlobalIRQ(intMask);
+        assert(0);
+    }
 }
 
 void PWR_DisallowDeviceToSleep(void)
 {
     /* Do not allow overflow because it would desync the counter with PWR_AllowDeviceToSleep */
-    assert(lpDisallowCount + 1U != 0U);
-
     uint32_t intMask = DisableGlobalIRQ();
-    lpDisallowCount++;
-    EnableGlobalIRQ(intMask);
+    if (lpDisallowCount != (uint8_t)UINT8_MAX)
+    {
+        lpDisallowCount++;
+        EnableGlobalIRQ(intMask);
+    }
+    else
+    {
+        EnableGlobalIRQ(intMask);
+        assert(0);
+    }
 }
 
 uint8_t PWR_IsDeviceAllowedToSleep(void)

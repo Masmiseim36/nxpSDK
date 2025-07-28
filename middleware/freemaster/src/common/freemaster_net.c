@@ -1,5 +1,5 @@
 /*
- * Copyright 2021, 2024 NXP
+ * Copyright 2021, 2024-2025 NXP
  *
  * License: NXP LA_OPT_Online Code Hosting NXP_Software_License
  *
@@ -25,13 +25,20 @@
 #include "freemaster_net.h"
 #include "freemaster_utils.h"
 
-/* Offset command payload in network buffer */
-#define FMSTR_NET_PAYLOAD_OFFSET 6
+/* Offset of data 'payload' in network buffer (skip total length, seq.number, cmd, payload length) */
+#define FMSTR_NET_PAYLOAD_OFFSET 6U
+
+/* FreeMASTER communication buffer (in/out) plus the total length, sequence number, command, payload len and CRC */
+#define FMSTR_NET_FRAME_SIZE (((FMSTR_SIZE)FMSTR_COMM_BUFFER_SIZE) + FMSTR_NET_PAYLOAD_OFFSET + 1U)
 
 typedef struct FMSTR_NET_SESSION_S
 {
-    FMSTR_U32 lastUsed;     /* Last used session */
+    FMSTR_U32 id;           /* Session identifier for debugging purposes only.  */
+    FMSTR_U32 lastUsed;     /* Age of first usage, the smaller value the older. Zero means unused. */
     FMSTR_NET_ADDR address; /* TCP/UDP address */
+    FMSTR_BCHR ioBuffer[FMSTR_NET_FRAME_SIZE]; /* Session's receive buffer */
+    FMSTR_SIZE rxDataLen;   /* Number of valid bytes in the receive buffer */
+    FMSTR_U8 seqNumber;     /* Last sent sequence number (=repeated last received) */
 } FMSTR_NET_SESSION;
 
 /***********************************
@@ -39,14 +46,10 @@ typedef struct FMSTR_NET_SESSION_S
  ***********************************/
 
 /* Network sessions */
-static FMSTR_NET_SESSION fmstr_pNetSessions[FMSTR_SESSION_COUNT];
-static FMSTR_U32 fmstr_nSessionCounter = 0U;
-
-/* FreeMASTER communication buffer (in/out) plus the Length, sequence number, command, payload and CRC */
-static FMSTR_BCHR fmstr_pNetBuffer[FMSTR_COMM_BUFFER_SIZE + 2 + 1 + 1 + 2 + 1];
-
-static FMSTR_SIZE fmstr_nReceived = 0U;
-static FMSTR_U8 fmstr_nSeqNumber  = 1U;
+static FMSTR_NET_SESSION fmstr_netSessions[FMSTR_SESSION_COUNT];
+static FMSTR_NET_SESSION fmstr_adhocSession;
+static FMSTR_U32 fmstr_nSessionAgeCount = 0U;
+static FMSTR_U32 fmstr_nSessionIdLast = 0U;
 
 /***********************************
  *  local function prototypes
@@ -65,10 +68,11 @@ static FMSTR_NET_SESSION *_FMSTR_FindNetSession(FMSTR_NET_ADDR *addr, FMSTR_BOOL
 static void _FMSTR_NetCloseSession(FMSTR_NET_SESSION *ses);
 
 static FMSTR_BOOL _FMSTR_NetProcess(void);
-static void _FMSTR_NetSendStatus(FMSTR_BCHR nErrCode, FMSTR_NET_SESSION *session);
+static void _FMSTR_NetSendStatus(FMSTR_BCHR nErrCode, FMSTR_NET_SESSION *ses);
+static void _FMSTR_NetSendSessionFrame(FMSTR_SIZE nLength, FMSTR_U8 statusCode, FMSTR_NET_SESSION *ses);
 
 #if FMSTR_NET_AUTODISCOVERY != 0
-static void _FMSTR_NetSendDiscovery(const FMSTR_NET_ADDR *address);
+static void _FMSTR_NetSendDiscovery(FMSTR_NET_SESSION *ses);
 #endif /* FMSTR_NET_AUTODISCOVERY */
 
 /***********************************
@@ -84,7 +88,7 @@ const FMSTR_TRANSPORT_INTF FMSTR_NET = {
 
 /******************************************************************************
  *
- * @brief    Network communication initialization
+ * @brief    API: Network communication initialization
  *
  ******************************************************************************/
 
@@ -98,7 +102,7 @@ static FMSTR_BOOL _FMSTR_NetInit(void)
     FMSTR_ASSERT_RETURN(FMSTR_NET_DRV.Close != NULL, FMSTR_FALSE);
     FMSTR_ASSERT_RETURN(FMSTR_NET_DRV.GetCaps != NULL, FMSTR_FALSE);
 
-    FMSTR_MemSet(&fmstr_pNetSessions, 0, sizeof(fmstr_pNetSessions));
+    FMSTR_MemSet(&fmstr_netSessions, 0, sizeof(fmstr_netSessions));
 
     /* Call initialization of network driver */
     if (FMSTR_NET_DRV.Init() == FMSTR_FALSE)
@@ -106,7 +110,7 @@ static FMSTR_BOOL _FMSTR_NetInit(void)
         return FMSTR_FALSE;
     }
 
-    return FMSTR_FALSE;
+    return FMSTR_TRUE;
 }
 
 /*******************************************************************************
@@ -121,46 +125,38 @@ static FMSTR_BOOL _FMSTR_NetInit(void)
 
 static void _FMSTR_NetPoll(void)
 {
-    FMSTR_BOOL res = FMSTR_FALSE;
+    /* Poll network driver */
+    FMSTR_NET_DRV.Poll();
 
-    do
-    {
-        /* Poll network driver */
-        FMSTR_NET_DRV.Poll();
-
-        /* Process the protocol */
-        res = _FMSTR_NetProcess();
-
-        /* Repeat until the current frame is fully processed (or communication is idle) */
-    } while (res == FMSTR_FALSE);
+    /* Process the protocol */
+    (void)_FMSTR_NetProcess();
 }
 
 /******************************************************************************
  *
- * @brief    Finalize transmit buffer before transmitting
+ * @brief    API: Send protocol response. Called by upper layer.
  *
  * @param    nLength - response length (1 for status + data length)
- *
+ * @param    identification - a context, in our case a pointer to NET_SESSION
+ * @param    pResponse - pointer to response payload, the buffer is actually the
+ *                   one we used during message reception.
  *
  * This Function takes the data already prepared in the transmit buffer
- * (inlcuding the status byte). It computes the check sum and kicks on tx.
+ * It computes the check sum and kicks on TX.
  *
  ******************************************************************************/
 
 static void _FMSTR_NetSendResponse(FMSTR_BPTR pResponse, FMSTR_SIZE nLength, FMSTR_U8 statusCode, void *identification)
 {
-    FMSTR_U16 i;
-    FMSTR_U8 c;
-    FMSTR_U16 todo;
-    FMSTR_U16 sent   = 0U;
-    FMSTR_S32 res    = 1;
-    FMSTR_BCHR chSum = 0U;
-    FMSTR_BPTR pMessageIO;
+    FMSTR_NET_SESSION *ses = (FMSTR_NET_SESSION *)identification;
+    FMSTR_ASSERT(ses != NULL);
 
-    FMSTR_NET_SESSION *session = (FMSTR_NET_SESSION *)identification;
-    FMSTR_ASSERT(session != NULL);
+    /* Note that is is okay to assume the caller's buffer is actually our own session buffer at offset 6.
+       This is the way all our responses were constructed here. */
+    FMSTR_ASSERT(pResponse == &ses->ioBuffer[FMSTR_NET_PAYLOAD_OFFSET]);
 
-    if ((nLength > (FMSTR_SIZE)(FMSTR_COMM_BUFFER_SIZE)) || pResponse != &fmstr_pNetBuffer[FMSTR_NET_PAYLOAD_OFFSET])
+    /* Sanity check the response length */
+    if ((nLength > (FMSTR_SIZE)(FMSTR_COMM_BUFFER_SIZE)))
     {
         /* The Network driver doesn't support bigger responses than FMSTR_COMM_BUFFER_SIZE bytes, change the response to
          * status error */
@@ -168,16 +164,35 @@ static void _FMSTR_NetSendResponse(FMSTR_BPTR pResponse, FMSTR_SIZE nLength, FMS
         nLength    = 0U;
     }
 
-    pMessageIO = &fmstr_pNetBuffer[0];
+    /* Send the frame from the session's buffer directly */
+    _FMSTR_NetSendSessionFrame(nLength, statusCode, ses);
+}
 
-    /* Send the message with status, length and checksum. */
-    todo = (FMSTR_U16)(nLength + 7U);
+/* Actual frame sending code - send a frame stored in the session's IO buffer */
+
+static void _FMSTR_NetSendSessionFrame(FMSTR_SIZE nLength, FMSTR_U8 statusCode, FMSTR_NET_SESSION *ses)
+{
+    FMSTR_U8 c;
+    FMSTR_SIZE i;
+    FMSTR_SIZE todo;
+    FMSTR_S32 sent, one;
+    FMSTR_BCHR chSum = 0U;
+    FMSTR_BPTR pMessageIO;
+    FMSTR_BPTR pResponse;
+
+    /* Maximum length we can put to output buffer. */
+    FMSTR_ASSERT_RETURN(nLength < (FMSTR_SIZE)FMSTR_COMM_BUFFER_SIZE, /* void */);
+    
+    pMessageIO = &ses->ioBuffer[0];
+
+    /* Send the message with length, seq, status and other info. */
+    todo = nLength + 7U;
 
     /* Total frame length */
-    pMessageIO = FMSTR_ValueToBuffer16BE(pMessageIO, todo);
+    pMessageIO = FMSTR_ValueToBuffer16BE(pMessageIO, (FMSTR_U16)todo);
 
     /* Sequence number */
-    pMessageIO = FMSTR_ValueToBuffer8(pMessageIO, fmstr_nSeqNumber);
+    pMessageIO = FMSTR_ValueToBuffer8(pMessageIO, ses->seqNumber);
 
     /* Status code */
     pMessageIO = FMSTR_ValueToBuffer8(pMessageIO, (FMSTR_BCHR)statusCode);
@@ -189,7 +204,7 @@ static void _FMSTR_NetSendResponse(FMSTR_BPTR pResponse, FMSTR_SIZE nLength, FMS
     FMSTR_Crc8Init(&chSum);
 
     /* Checksum CRC8 */
-    pResponse = &fmstr_pNetBuffer[3];
+    pResponse = &ses->ioBuffer[3];
     for (i = 0; i < nLength + 3U; i++)
     {
         /* Get from FMSTR buffer */
@@ -202,19 +217,24 @@ static void _FMSTR_NetSendResponse(FMSTR_BPTR pResponse, FMSTR_SIZE nLength, FMS
     /* Store checksum after the message */
     pResponse = FMSTR_ValueToBuffer8(pResponse, chSum);
 
-    /* Send via network */
-    while (res > 0 && sent < todo)
+    /* Send via network in a busy blocking loop. */
+    sent = 0;
+    while (todo > 0U)
     {
-        res = FMSTR_NET_DRV.Send(&session->address, &fmstr_pNetBuffer[sent], todo - sent);
+        one = FMSTR_NET_DRV.Send(&ses->address, &ses->ioBuffer[sent], todo);
 
-        if (res < 0)
+        if (one < 0 || (sent+one) > (FMSTR_S32)todo)
         {
+#if FMSTR_DEBUG_LEVEL >= 2
+            FMSTR_DEBUG_PRINTF("NET Send error, session %lu\n", ses->id);
+#endif
             /* Socket error condition */
-            _FMSTR_NetCloseSession(session);
+            _FMSTR_NetCloseSession(ses);
             return;
         }
 
-        sent += (FMSTR_U16)res;
+        sent += one;
+        todo -= (FMSTR_SIZE)one;
     }
 }
 
@@ -222,117 +242,156 @@ static void _FMSTR_NetSendResponse(FMSTR_BPTR pResponse, FMSTR_SIZE nLength, FMS
  *
  * @brief    Process network communication
  *
- * This function returns TRUE when network transmission is complete.
- * It returns FALSE when received middle of the frame (TCP) and needs to be
- * called asap after any new data are received.
+ * @return   This function returns TRUE when at least some data were received
+ *           so there is a chance something more will happen if called
+ *           immediately again.
  *
  ******************************************************************************/
 
 static FMSTR_BOOL _FMSTR_NetProcess(void)
 {
-    FMSTR_BCHR chSum = 0U, crc;
+    FMSTR_BOOL isBroadcast = FMSTR_FALSE;
+    FMSTR_BCHR chSum, crc;
+    FMSTR_S32 received;
+    FMSTR_BPTR pMessageIO, pCmdPayload, pCrc;
+    FMSTR_S32 messageLen;
+    FMSTR_U8 cmdCode;
+    FMSTR_U16 cmdLen;
+    FMSTR_U16 todo;
     FMSTR_U16 i;
     FMSTR_U8 c;
-    int received   = 0;
-    FMSTR_U16 todo = 0;
-    FMSTR_BPTR pMessageIO, pCmdPayload, pCrc;
-    FMSTR_U8 cmd = 0;
-    FMSTR_U16 nLength;
-    FMSTR_BOOL isBroadcast = FMSTR_FALSE;
 
     FMSTR_NET_SESSION *session = NULL;
     FMSTR_NET_ADDR address;
     FMSTR_MemSet(&address, 0, sizeof(address));
 
-    /* Receive data */
-    received = FMSTR_NET_DRV.Recv(&fmstr_pNetBuffer[fmstr_nReceived], (FMSTR_COMM_BUFFER_SIZE + 7) - fmstr_nReceived,
-                                  &address, &isBroadcast);
+    /* Receive data from any client into an adhoc session */
+    fmstr_adhocSession.rxDataLen = 0;
+    received = FMSTR_NET_DRV.Recv(fmstr_adhocSession.ioBuffer, sizeof(fmstr_adhocSession.ioBuffer), &address, &isBroadcast);
 
-    if (received < 0)
+    if(received == 0)
     {
-        /* Find session, but not create it */
+        /* Communication is idle */
+        return FMSTR_FALSE;
+    }
+
+    /* A client wants to disconnect or suspicious data length received. */
+    if (received < 0 || received > 0xffffL)
+    {
+        /* Find session if exists (do not create it) */
         session = _FMSTR_FindNetSession(&address, FMSTR_FALSE);
         if (session != NULL)
         {
             _FMSTR_NetCloseSession(session);
         }
-    }
-
-    if (received <= 0)
-    {
         return FMSTR_TRUE;
     }
-
-    fmstr_nReceived += (FMSTR_SIZE)received;
 
     if (isBroadcast == FMSTR_FALSE)
     {
-        /* Find session and create it */
+        /* Find client session, create it if the address is seen for the first time */
         session = _FMSTR_FindNetSession(&address, FMSTR_TRUE);
-    }
+        FMSTR_ASSERT_RETURN(session != NULL, FMSTR_FALSE);
 
-    pMessageIO = &fmstr_pNetBuffer[0];
+        /* Copy received data to session's buffer. Does it fit? */
+        /* Coverity: Intentional cast of existing rxDataLen to signed value */
+        /* coverity[cert_int31_c_violation:FALSE] */
+        messageLen = ((FMSTR_S32)session->rxDataLen) + received;
 
-    /* Received total length */
-    if (fmstr_nReceived < 2U)
-    {
-        return FMSTR_FALSE;
-    }
-
-    pMessageIO = FMSTR_ValueFromBuffer16BE(&todo, pMessageIO);
-
-    /* Sanity check of todo length */
-    if (todo > ((FMSTR_U16)FMSTR_COMM_BUFFER_SIZE + 7U))
-    {
-        if (session != NULL)
+        if(messageLen > 0 && messageLen <= (FMSTR_S32)sizeof(session->ioBuffer))
         {
-            _FMSTR_NetCloseSession(session);
+            FMSTR_MemCpy(&session->ioBuffer[session->rxDataLen], fmstr_adhocSession.ioBuffer, (FMSTR_SIZE)received);
+            session->rxDataLen += (FMSTR_SIZE)received;
+            pMessageIO = &session->ioBuffer[0];
         }
+        else
+        {
+            /* Broken session */
+#if FMSTR_DEBUG_LEVEL >= 2
+            FMSTR_DEBUG_PRINTF("NET Recv fragment too long, session %lu\n", session->id);
+#endif
+            _FMSTR_NetCloseSession(session);
+            return FMSTR_TRUE;
+        }
+    }
+    else
+    {
+        /* Broadcast is processed immediately in the adhoc session. */
+        session = &fmstr_adhocSession;
+        FMSTR_MemCpy(&session->address, &address, sizeof(address));
+        pMessageIO = fmstr_adhocSession.ioBuffer;
+        messageLen = received;
+    }
+
+    /* Process the message at pMessageIO[0..messageLen]. The 'session' is always valid here */
+    FMSTR_ASSERT(session != NULL);
+
+    /* Need at least total length half-word */
+    if (messageLen < 2)
+    {
         return FMSTR_TRUE;
     }
 
-    /* Not enough data in buffer */
-    if (fmstr_nReceived < todo)
+    /* Fetch 'todo' total frame length */
+    todo = 0U;
+    pMessageIO = FMSTR_ValueFromBuffer16BE(&todo, pMessageIO);
+
+    /* Sanity check of total length */
+    if (todo > (FMSTR_U16)FMSTR_NET_FRAME_SIZE)
     {
-        return FMSTR_FALSE;
+#if FMSTR_DEBUG_LEVEL >= 2
+        FMSTR_DEBUG_PRINTF("NET Recv frame length broken, session %lu\n", session->id);
+#endif
+        _FMSTR_NetCloseSession(session);
+        return FMSTR_TRUE;
     }
 
+    /* Not enough data received (yet) in buffer */
+    if (messageLen < (FMSTR_S32)todo)
+    {
+        return FMSTR_TRUE;
+    }
+
+    /* Frame is now received completely in session's buffer. Start over next time. */
+    session->rxDataLen = 0;
+
     /* Initialize CRC algorithms */
+    chSum = 0;
     FMSTR_Crc8Init(&chSum);
 
     /* Sequence number */
-    pMessageIO = FMSTR_ValueFromBuffer8(&fmstr_nSeqNumber, pMessageIO);
+    pMessageIO = FMSTR_ValueFromBuffer8(&session->seqNumber, pMessageIO);
 
     /* Pointer to start checking CRC */
     pCrc = pMessageIO;
 
     /* Command code */
-    pMessageIO = FMSTR_ValueFromBuffer8(&cmd, pMessageIO);
+    pMessageIO = FMSTR_ValueFromBuffer8(&cmdCode, pMessageIO);
 
     /* Command length */
-    pMessageIO = FMSTR_ValueFromBuffer16BE(&nLength, pMessageIO);
+    pMessageIO = FMSTR_ValueFromBuffer16BE(&cmdLen, pMessageIO);
 
-    /* Bad data length */
-    if (todo != (nLength + 7U))
+    /* Total length shall be command length + the overhead header bytes + CRC  */
+    if (todo != (cmdLen + FMSTR_NET_PAYLOAD_OFFSET + 1U))
     {
-        if (session != NULL)
-        {
-            _FMSTR_NetCloseSession(session);
-        }
+#if FMSTR_DEBUG_LEVEL >= 2
+        FMSTR_DEBUG_PRINTF("NET Recv data length bad, session %lu\n", session->id);
+#endif
+        _FMSTR_NetCloseSession(session);
         return FMSTR_TRUE;
     }
 
-    /* Command payload */
+    /* Command payload will be processed after CRC check */
     pCmdPayload = pMessageIO;
 
-    /* Skip command length for get CRC */
-    pMessageIO = FMSTR_SkipInBuffer(pMessageIO, nLength);
+    /* Skip command length to seek to CRC position */
+    pMessageIO = FMSTR_SkipInBuffer(pMessageIO, cmdLen);
 
     /* CRC */
     pMessageIO = FMSTR_ValueFromBuffer8(&crc, pMessageIO);
 
-    /* Count CRC */
-    for (i = 0; i < nLength + 3U; i++)
+    /* Count CRC from the whole command */
+    for (i = 0; i < cmdLen + 3U; i++)
     {
         /* Get from FMSTR buffer */
         pCrc = FMSTR_ValueFromBuffer8(&c, pCrc);
@@ -344,65 +403,49 @@ static FMSTR_BOOL _FMSTR_NetProcess(void)
     /* Checksum */
     if (crc == chSum)
     {
-        /* Network PING command */
-        if (cmd == FMSTR_NET_PING)
+        /* Network PING command is processed here. */
+        if (cmdCode == FMSTR_NET_PING)
         {
-            if (isBroadcast == FMSTR_FALSE)
-            {
-                /* PING response to unicast request. */
-                _FMSTR_NetSendStatus(FMSTR_STS_OK, session);
-            }
+            _FMSTR_NetSendStatus(FMSTR_STS_OK, session);
         }
 #if FMSTR_NET_AUTODISCOVERY != 0
-        /* Network auto-discovery command */
-        else if (cmd == FMSTR_NET_DISCOVERY)
+        /* Network auto-discovery command processed by this layer directly. */
+        else if (cmdCode == FMSTR_NET_DISCOVERY)
         {
-            /* Send discovery (also to broadcast) */
-            _FMSTR_NetSendDiscovery(&address);
-
-            /* Invalidate the session immediatelly, so it is reused next time */
-            if (session != NULL)
-            {
-                session->lastUsed = 0U;
-            }
+            /* Send discovery */
+            _FMSTR_NetSendDiscovery(session);
         }
 #endif
-        /* Decode protocol only when not receive data from broadcast */
         else
         {
-            /* Decode protocol only for unicast communiction */
-            if (isBroadcast == FMSTR_FALSE)
-            {
-                (void)FMSTR_ProtocolDecoder(pCmdPayload, nLength, cmd, session);
-            }
+            /* Other messages are decoded the standard way */
+            (void)FMSTR_ProtocolDecoder(pCmdPayload, cmdLen, cmdCode, session);
         }
     }
     else
     {
-        /* Report error only for unicast communiction */
-        if (isBroadcast == FMSTR_FALSE)
-        {
-            _FMSTR_NetSendStatus(FMSTR_STC_CMDCSERR, session);
-        }
+        /* Invalid checksum means corrupted protocol. */
+#if FMSTR_DEBUG_LEVEL >= 2
+        FMSTR_DEBUG_PRINTF("NET Recv checksum bad, session %lu\n", session->id);
+#endif
+        _FMSTR_NetCloseSession(session);
     }
-
-    fmstr_nReceived = 0U;
 
     return FMSTR_TRUE;
 }
 
 #if FMSTR_NET_AUTODISCOVERY != 0
-static void _FMSTR_NetSendDiscovery(const FMSTR_NET_ADDR *address)
+static void _FMSTR_NetSendDiscovery(FMSTR_NET_SESSION *ses)
 {
     FMSTR_NET_IF_CAPS caps;
-    FMSTR_NET_SESSION session;
     FMSTR_BPTR pMessageIO;
-    FMSTR_U8 nameLen  = 0;
+    FMSTR_SIZE nameLen  = 0;
     FMSTR_U8 protocol = 0;
 
     /* Get protocol from low-level */
     FMSTR_MemSet(&caps, 0, sizeof(caps));
     FMSTR_NET_DRV.GetCaps(&caps);
+
     if ((caps.flags & FMSTR_NET_IF_CAPS_FLAG_UDP) != 0U)
     {
         protocol = (FMSTR_U8)FMSTR_NET_PROTOCOL_UDP;
@@ -416,16 +459,21 @@ static void _FMSTR_NetSendDiscovery(const FMSTR_NET_ADDR *address)
         FMSTR_ASSERT(FMSTR_FALSE);
     }
 
-    FMSTR_MemCpy(&session.address, address, sizeof(FMSTR_NET_ADDR));
-
-    /* Lenght of board name */
-    nameLen = (FMSTR_U8)(FMSTR_StrLen(FMSTR_APPLICATION_STR) + 1U);
-    if (nameLen > ((FMSTR_U8)FMSTR_COMM_BUFFER_SIZE - 3U))
+    /* Board name length must fit to a buffer */
+    nameLen = FMSTR_StrLen(FMSTR_APPLICATION_STR);
+    if (nameLen > (((FMSTR_SIZE)FMSTR_COMM_BUFFER_SIZE) - 4U))
     {
-        nameLen = (FMSTR_U8)FMSTR_COMM_BUFFER_SIZE - 3U;
+        /* Only send trimmed value */
+        nameLen = ((FMSTR_SIZE)FMSTR_COMM_BUFFER_SIZE) - 4U;
+    }
+    else
+    {
+        /* Also send terminating zero */
+        nameLen += 1U;
     }
 
-    pMessageIO = &fmstr_pNetBuffer[6];
+    /* Optimize send process by giving space for header right now. */
+    pMessageIO = &ses->ioBuffer[FMSTR_NET_PAYLOAD_OFFSET];
 
     /* Discovery command version */
     pMessageIO = FMSTR_ValueToBuffer8(pMessageIO, FMSTR_NET_DISCOVERY_VERSION);
@@ -433,33 +481,53 @@ static void _FMSTR_NetSendDiscovery(const FMSTR_NET_ADDR *address)
     /* Protocol (TCP/UDP) */
     pMessageIO = FMSTR_ValueToBuffer8(pMessageIO, protocol);
 
-    /* Length of board name */
-    pMessageIO = FMSTR_ValueToBuffer8(pMessageIO, nameLen);
+    /* Length of board name fits into a single byte as checked above */
+    /* coverity[cert_int31_c_violation:FALSE] */
+    pMessageIO = FMSTR_ValueToBuffer8(pMessageIO, (FMSTR_U8)nameLen);
 
-    /* Copy name */
+    /* Coverity: Intentional constants string cast and copy. */
+    /* coverity[misra_c_2012_rule_7_4_violation:FALSE] */
     pMessageIO = FMSTR_CopyToBuffer(pMessageIO, (FMSTR_ADDR)(char *)FMSTR_APPLICATION_STR, nameLen);
 
-    /* send response */
-    _FMSTR_NetSendResponse(&fmstr_pNetBuffer[6], (FMSTR_SIZE)nameLen + 3U, FMSTR_STS_OK, &session);
+    /* send response 3 fixed bytes and the name */
+    _FMSTR_NetSendSessionFrame((FMSTR_SIZE)nameLen + 3U, FMSTR_STS_OK, ses);
 }
 #endif /* FMSTR_NET_AUTODISCOVERY */
 
-static void _FMSTR_NetSendStatus(FMSTR_BCHR nErrCode, FMSTR_NET_SESSION *session)
+static void _FMSTR_NetSendStatus(FMSTR_BCHR nErrCode, FMSTR_NET_SESSION *ses)
 {
     /* fill & send single-byte response */
-    _FMSTR_NetSendResponse(&fmstr_pNetBuffer[6], 0U, nErrCode, session);
+    _FMSTR_NetSendSessionFrame(0U, nErrCode, ses);
 }
 
 static void _FMSTR_NetCloseSession(FMSTR_NET_SESSION *ses)
 {
     FMSTR_ASSERT(ses != NULL);
 
-    /* Close socket */
-    FMSTR_NET_DRV.Close(&ses->address);
+    /* Only close socket for sessions actually used before.
+       Note that adhoc session is never closed this way. */
+    if(ses->lastUsed > 0U)
+    {
+#if FMSTR_DEBUG_LEVEL >= 1
+        FMSTR_DEBUG_PRINTF("NET Closing session %lu\n", ses->id);
+#endif
+        /* Close socket or other network resources bound to the session */
+        FMSTR_NET_DRV.Close(&ses->address);
 
-    /* Free protocol session, if closed socket */
-    FMSTR_FreeSession(ses);
+        /* Free upper-layer protocol session */
+        FMSTR_FreeSession(ses);
+    }
+
+    /* Initialize session data */
+    ses->lastUsed = 0;
+    ses->rxDataLen = 0;
+    ses->id = 0;
 }
+
+/* Locate NET session to work with. When create is true, we always force-find a session
+   even if we discard some (the oldest). It is not our responsibility to count valid
+   sessions. The lower-layer knows more about the session nature and if it needs
+   to maintain a context (like TCP) or not (like UDP). */
 
 static FMSTR_NET_SESSION *_FMSTR_FindNetSession(FMSTR_NET_ADDR *addr, FMSTR_BOOL create)
 {
@@ -470,45 +538,65 @@ static FMSTR_NET_SESSION *_FMSTR_FindNetSession(FMSTR_NET_ADDR *addr, FMSTR_BOOL
 
     FMSTR_ASSERT(addr != NULL);
 
-    fmstr_nSessionCounter++;
+    /* Session aging counter will never wrap, but anyway do explicitly here. */
+    if(fmstr_nSessionAgeCount >= 0xffffffffUL)
+    {
+        fmstr_nSessionAgeCount = 0;
+    }
+    
+    /* Same with session Id, do not let it wrap to 0 if it really happens. */
+    if(fmstr_nSessionIdLast >= 0xffffffffUL)
+    {
+        fmstr_nSessionIdLast = 0;
+    }
+      
 
     for (i = 0; i < FMSTR_SESSION_COUNT; i++)
     {
-        ses = &fmstr_pNetSessions[i];
+        ses = &fmstr_netSessions[i];
 
         /* Find session by address */
         if (FMSTR_MemCmp(&ses->address, addr, sizeof(FMSTR_NET_ADDR)) == 0)
         {
             /* Found session */
-            ses->lastUsed = fmstr_nSessionCounter;
+            ses->lastUsed = ++fmstr_nSessionAgeCount;
             return ses;
         }
 
-        /* Find free session */
+        /* Find free session. Ignore always-true warning in single-session configs. */
+        /* coverity[misra_c_2012_rule_14_3_violation:FALSE] */
         if (freeSession == NULL && ses->lastUsed == 0U)
         {
             freeSession = ses;
         }
 
         /* Find oldest session */
+        /* coverity[misra_c_2012_rule_14_3_violation:FALSE] */
         if (oldestSession == NULL || oldestSession->lastUsed > ses->lastUsed)
         {
             oldestSession = ses;
         }
     }
 
+    /* Not found by address, return a new session */
     ses = (freeSession != NULL ? freeSession : oldestSession);
 
+    /* Coverity: Always make sure the ses is valid before accessing it. */
+    /* coverity[misra_c_2012_rule_14_3_violation:FALSE] */
     if (ses != NULL && create != FMSTR_FALSE)
     {
-        /* If reusing last used session, call protocol to free this session */
-        if (ses->lastUsed != 0U)
-        {
-            _FMSTR_NetCloseSession(ses);
-        }
+        /* Free the session (only if currently active) */
+        _FMSTR_NetCloseSession(ses);
 
+        ses->id = ++fmstr_nSessionIdLast;
+        ses->lastUsed = ++fmstr_nSessionAgeCount;
+
+        /* Map the session to the requested address. */
         FMSTR_MemCpy(&ses->address, addr, sizeof(FMSTR_NET_ADDR));
-        ses->lastUsed = fmstr_nSessionCounter;
+
+#if FMSTR_DEBUG_LEVEL >= 1
+        FMSTR_DEBUG_PRINTF("NET Session %lu initialized (client port %u)\n", ses->id, ses->address.port);
+#endif
     }
 
     return ses;

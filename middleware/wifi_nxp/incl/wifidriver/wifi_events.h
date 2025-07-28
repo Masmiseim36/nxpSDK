@@ -112,6 +112,8 @@ enum wifi_event
     WIFI_EVENT_STA_MAC_ADDR_CONFIG,
     /** UAP MAC address configuration */
     WIFI_EVENT_UAP_MAC_ADDR_CONFIG,
+    /** WFD MAC address configuration */
+    WIFI_EVENT_WFD_MAC_ADDR_CONFIG,
     /** Network DHCP configuration */
     WIFI_EVENT_NET_DHCP_CONFIG,
     /** Supplicant PMK */
@@ -181,6 +183,9 @@ enum wifi_event
     WIFI_EVENT_REGION_POWER_CFG,
     /** TX Data Pause */
     WIFI_EVENT_TX_DATA_PAUSE,
+#if CONFIG_WIFI_CHANNEL_LOAD
+    WIFI_EVENT_CHAN_LOAD,
+#endif
     /** Event to indicate end of Wi-Fi events */
     WIFI_EVENT_LAST,
     /* other events can be added after this, however this must
@@ -205,6 +210,10 @@ enum wlan_bss_type
     WLAN_BSS_TYPE_STA = 0,
     /** uAP */
     WLAN_BSS_TYPE_UAP = 1,
+#if CONFIG_WPA_SUPP_P2P
+    /** WiFi Direct */
+    WLAN_BSS_TYPE_WIFIDIRECT = 2,
+#endif
     /** Any */
     WLAN_BSS_TYPE_ANY = 0xff,
 };

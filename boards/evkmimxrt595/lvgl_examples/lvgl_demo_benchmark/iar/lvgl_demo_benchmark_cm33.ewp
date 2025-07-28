@@ -245,11 +245,14 @@
           <state>SSD1963_DATA_WITDH=8</state>
           <state>FLEXIO_MCULCD_DATA_BUS_WIDTH=8</state>
           <state>SDK_DEBUGCONSOLE_UART</state>
+          <state>DBI_FLEXIO_USE_SMARTDMA=1</state>
+          <state>CUSTOM_VGLITE_MEMORY_CONFIG=0</state>
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
           <state>CPU_MIMXRT595SFFOC_cm33</state>
+          <state>MIMXRT595S_cm33_SERIES</state>
           <state>BOOT_HEADER_ENABLE=1</state>
           <state>LV_CONF_INCLUDE_SIMPLE=1</state>
           <state>SDK_OS_FREE_RTOS</state>
@@ -386,6 +389,7 @@
           <state>$PROJ_DIR$/../../../../../components/video</state>
           <state>$PROJ_DIR$/../../../../../components/video/display/dc</state>
           <state>$PROJ_DIR$/../../../../../components/video/display</state>
+          <state>$PROJ_DIR$/../../../../../components/video/display/fbdev</state>
           <state>$PROJ_DIR$/../../../../../components/video/display/dbi</state>
           <state>$PROJ_DIR$/../../../../../components/video/display/dbi/flexio</state>
           <state>$PROJ_DIR$/../../../../../components/video/display/dc/dsi_cmd</state>
@@ -396,6 +400,7 @@
           <state>$PROJ_DIR$/../../../../../components/video/display/rm68191</state>
           <state>$PROJ_DIR$/../../../../../components/video/display/rm68200</state>
           <state>$PROJ_DIR$/../../../../../components/video/display/rm67162</state>
+          <state>$PROJ_DIR$/../../../../../components/video/display/co5300</state>
           <state>$PROJ_DIR$/../../../../../components/touch/gt911</state>
           <state>$PROJ_DIR$/../../../../../components/touch/ft3267</state>
           <state>$PROJ_DIR$/../../../../../components/touch/ft5406</state>
@@ -605,6 +610,7 @@
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT595SFFOC_cm33</state>
+          <state>MIMXRT595S_cm33_SERIES</state>
         </option>
         <option>
           <name>AList</name>
@@ -709,6 +715,7 @@
           <state>$PROJ_DIR$/../../../../../components/video</state>
           <state>$PROJ_DIR$/../../../../../components/video/display/dc</state>
           <state>$PROJ_DIR$/../../../../../components/video/display</state>
+          <state>$PROJ_DIR$/../../../../../components/video/display/fbdev</state>
           <state>$PROJ_DIR$/../../../../../components/video/display/dbi</state>
           <state>$PROJ_DIR$/../../../../../components/video/display/dbi/flexio</state>
           <state>$PROJ_DIR$/../../../../../components/video/display/dc/dsi_cmd</state>
@@ -719,6 +726,7 @@
           <state>$PROJ_DIR$/../../../../../components/video/display/rm68191</state>
           <state>$PROJ_DIR$/../../../../../components/video/display/rm68200</state>
           <state>$PROJ_DIR$/../../../../../components/video/display/rm67162</state>
+          <state>$PROJ_DIR$/../../../../../components/video/display/co5300</state>
           <state>$PROJ_DIR$/../../../../../components/touch/gt911</state>
           <state>$PROJ_DIR$/../../../../../components/touch/ft3267</state>
           <state>$PROJ_DIR$/../../../../../components/touch/ft5406</state>
@@ -1451,11 +1459,14 @@
           <state>SSD1963_DATA_WITDH=8</state>
           <state>FLEXIO_MCULCD_DATA_BUS_WIDTH=8</state>
           <state>SDK_DEBUGCONSOLE_UART</state>
+          <state>DBI_FLEXIO_USE_SMARTDMA=1</state>
+          <state>CUSTOM_VGLITE_MEMORY_CONFIG=0</state>
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
           <state>CPU_MIMXRT595SFFOC_cm33</state>
+          <state>MIMXRT595S_cm33_SERIES</state>
           <state>BOOT_HEADER_ENABLE=1</state>
           <state>LV_CONF_INCLUDE_SIMPLE=1</state>
           <state>SDK_OS_FREE_RTOS</state>
@@ -1592,6 +1603,7 @@
           <state>$PROJ_DIR$/../../../../../components/video</state>
           <state>$PROJ_DIR$/../../../../../components/video/display/dc</state>
           <state>$PROJ_DIR$/../../../../../components/video/display</state>
+          <state>$PROJ_DIR$/../../../../../components/video/display/fbdev</state>
           <state>$PROJ_DIR$/../../../../../components/video/display/dbi</state>
           <state>$PROJ_DIR$/../../../../../components/video/display/dbi/flexio</state>
           <state>$PROJ_DIR$/../../../../../components/video/display/dc/dsi_cmd</state>
@@ -1602,6 +1614,7 @@
           <state>$PROJ_DIR$/../../../../../components/video/display/rm68191</state>
           <state>$PROJ_DIR$/../../../../../components/video/display/rm68200</state>
           <state>$PROJ_DIR$/../../../../../components/video/display/rm67162</state>
+          <state>$PROJ_DIR$/../../../../../components/video/display/co5300</state>
           <state>$PROJ_DIR$/../../../../../components/touch/gt911</state>
           <state>$PROJ_DIR$/../../../../../components/touch/ft3267</state>
           <state>$PROJ_DIR$/../../../../../components/touch/ft5406</state>
@@ -1811,6 +1824,7 @@
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT595SFFOC_cm33</state>
+          <state>MIMXRT595S_cm33_SERIES</state>
         </option>
         <option>
           <name>AList</name>
@@ -1915,6 +1929,7 @@
           <state>$PROJ_DIR$/../../../../../components/video</state>
           <state>$PROJ_DIR$/../../../../../components/video/display/dc</state>
           <state>$PROJ_DIR$/../../../../../components/video/display</state>
+          <state>$PROJ_DIR$/../../../../../components/video/display/fbdev</state>
           <state>$PROJ_DIR$/../../../../../components/video/display/dbi</state>
           <state>$PROJ_DIR$/../../../../../components/video/display/dbi/flexio</state>
           <state>$PROJ_DIR$/../../../../../components/video/display/dc/dsi_cmd</state>
@@ -1925,6 +1940,7 @@
           <state>$PROJ_DIR$/../../../../../components/video/display/rm68191</state>
           <state>$PROJ_DIR$/../../../../../components/video/display/rm68200</state>
           <state>$PROJ_DIR$/../../../../../components/video/display/rm67162</state>
+          <state>$PROJ_DIR$/../../../../../components/video/display/co5300</state>
           <state>$PROJ_DIR$/../../../../../components/touch/gt911</state>
           <state>$PROJ_DIR$/../../../../../components/touch/ft3267</state>
           <state>$PROJ_DIR$/../../../../../components/touch/ft5406</state>
@@ -2431,6 +2447,9 @@
       <name>$PROJ_DIR$/../lvgl_freertos.h</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../FreeRTOSConfig_frag.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../pin_mux.c</name>
     </file>
     <file>
@@ -2447,6 +2466,12 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../display_support.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../vglite_support.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../vglite_support.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../lv_conf.h</name>
@@ -2871,12 +2896,6 @@
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers/fsl_smartdma_rt500.h</name>
     </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers/fsl_smartdma_mcxn.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers/fsl_smartdma_mcxn.h</name>
-    </file>
   </group>
   <group>
     <name>utilities</name>
@@ -2930,6 +2949,12 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../components/video/display/fsl_display.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../components/video/display/fbdev/fsl_fbdev.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../components/video/display/fbdev/fsl_fbdev.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../components/video/display/dbi/fsl_dbi.h</name>
@@ -2990,6 +3015,12 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../components/video/display/rm67162/fsl_rm67162.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../components/video/display/co5300/fsl_co5300.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../components/video/display/co5300/fsl_co5300.c</name>
     </file>
   </group>
   <group>
@@ -4673,6 +4704,9 @@
           <name>$PROJ_DIR$/../../../../../middleware/lvgl/src/osal/lv_freertos.c</name>
         </file>
         <file>
+          <name>$PROJ_DIR$/../../../../../middleware/lvgl/src/osal/lv_linux.c</name>
+        </file>
+        <file>
           <name>$PROJ_DIR$/../../../../../middleware/lvgl/src/osal/lv_mqx.c</name>
         </file>
         <file>
@@ -4695,6 +4729,9 @@
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../middleware/lvgl/src/osal/lv_freertos.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/lvgl/src/osal/lv_linux_private.h</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../middleware/lvgl/src/osal/lv_mqx.h</name>
@@ -5575,6 +5612,9 @@
         <file>
           <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/timers.h</name>
         </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/freertos_tasks_c_additions.h</name>
+        </file>
       </group>
       <group>
         <name>portable</name>
@@ -5633,6 +5673,9 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../lvgl_examples_readme.md</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../examples_shared_readme.md</name>
     </file>
   </group>
 </project>

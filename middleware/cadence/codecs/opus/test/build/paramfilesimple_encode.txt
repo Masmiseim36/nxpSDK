@@ -1,0 +1,8 @@
+
+@Start
+@Input_path ../test_inp/
+@Output_path ../test_out/
+-app:audio -fs:48000 -numch:2 -bps:128000 -ifile:testvector11-48000-2ch_trim.out -ofile:testvector11-48kHz-2ch-128kbps_trim.bit
+-app:voip  -fs:16000 -numch:1 -bps:20000 -ifile:testvector11-16000-1ch_trim.out -ofile:testvector11-16kHz-1ch-20kbps_trim.bit
+@Stop
+ 

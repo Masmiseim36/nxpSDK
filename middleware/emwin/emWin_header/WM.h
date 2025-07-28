@@ -9,7 +9,7 @@
 *                                                                    *
 **********************************************************************
 
-** emWin V6.46 - Graphical user interface for embedded applications **
+** emWin V6.50 - Graphical user interface for embedded applications **
 All  Intellectual Property rights  in the Software belongs to  SEGGER.
 emWin is protected by  international copyright laws.  Knowledge of the
 source code may not be used to write a similar product.  This file may
@@ -98,14 +98,6 @@ extern "C" {     /* Make sure we have C-declarations in C++ programs */
 /* Send a message if visibility of a window has changed */
 #ifndef   WM_SUPPORT_NOTIFY_VIS_CHANGED
   #define WM_SUPPORT_NOTIFY_VIS_CHANGED 0
-#endif
-
-#ifndef   WM_SUPPORT_CPP
-  #if defined (_MSC_VER)
-    #define WM_SUPPORT_CPP 1
-  #else
-    #define WM_SUPPORT_CPP 0
-  #endif
 #endif
 
 /* Different return value of WM_Exec() and WM_Exec1() */
@@ -314,70 +306,72 @@ typedef struct {
 
 #define WM_SIZE                     0x0005  /* Is sent to a window after its size has changed (Same as WIN32, do not change !) */
 
-#define WM_DELETE                   11      /* Delete (Destroy) command: This tells the client to free its data strutures since the window
+#define WM_DELETE                   0x000B  /* Delete (Destroy) command: This tells the client to free its data strutures since the window
                                                it is associates with no longer exists.*/
 #define WM_TOUCH                    0x0240  /* Touch screen message */
-#define WM_TOUCH_CHILD              13      /* Touch screen message to ancestors */
-#define WM_KEY                      14      /* Key has been pressed */
+#define WM_TOUCH_CHILD              0x000D  /* Touch screen message to ancestors */
+#define WM_KEY                      0x000E  /* Key has been pressed */
 
 #define WM_PAINT                    0x000F  /* Repaint window (because content is (partially) invalid */
 
 #if GUI_SUPPORT_MOUSE
-#define WM_MOUSEOVER                16      /* Mouse has moved, no key pressed */
-#define WM_MOUSEOVER_END            18      /* Mouse has moved, no key pressed */
+#define WM_MOUSEOVER                0x0010  /* Mouse has moved, no key pressed */
+#define WM_MOUSEOVER_END            0x0012  /* Mouse has moved, no key pressed */
 #endif
 
-#define WM_PID_STATE_CHANGED        17      /* Pointer input device state has changed */
+#define WM_PID_STATE_CHANGED        0x0011  /* Pointer input device state has changed */
 
-#define WM_GET_INSIDE_RECT          20      /* get inside rectangle: client rectangle minus pixels lost to effect */
-#define WM_GET_ID                   21      /* Get id of widget */
-#define WM_SET_ID                   22      /* Set id of widget */
-#define WM_GET_CLIENT_WINDOW        23      /* Get window handle of client window. Default is the same as window */
-#define WM_CAPTURE_RELEASED         24      /* Let window know that mouse capture is over */
+#define WM_GET_INSIDE_RECT          0x0014  /* get inside rectangle: client rectangle minus pixels lost to effect */
+#define WM_GET_ID                   0x0015  /* Get id of widget */
+#define WM_SET_ID                   0x0016  /* Set id of widget */
+#define WM_GET_CLIENT_WINDOW        0x0017  /* Get window handle of client window. Default is the same as window */
+#define WM_CAPTURE_RELEASED         0x0018  /* Let window know that mouse capture is over */
 
-#define WM_INIT_DIALOG              29      /* Inform dialog that it is ready for init */
+#define WM_INIT_DIALOG              0x001D  /* Inform dialog that it is ready for init */
 
-#define WM_SET_FOCUS                30      /* Inform window that it has gotten or lost the focus */
-#define WM_GET_ACCEPT_FOCUS         31      /* Find out if window can accept the focus */
-#define WM_NOTIFY_CHILD_HAS_FOCUS   32      /* Sent to parent when child receives / loses focus */
+#define WM_SET_FOCUS                0x001E  /* Inform window that it has gotten or lost the focus */
+#define WM_GET_ACCEPT_FOCUS         0x001F  /* Find out if window can accept the focus */
+#define WM_NOTIFY_CHILD_HAS_FOCUS   0x0020  /* Sent to parent when child receives / loses focus */
 
-#define WM_NOTIFY_OWNER_KEY         33      /* Some widgets (e.g. listbox) notify owner when receiving key messages */
+#define WM_NOTIFY_OWNER_KEY         0x0021  /* Some widgets (e.g. listbox) notify owner when receiving key messages */
 
-#define WM_GET_BKCOLOR              34      /* Return back ground color (only frame window and similar) */
-#define WM_GET_SCROLL_STATE         35      /* Query state of scroll bar */
+#define WM_GET_BKCOLOR              0x0022  /* Return back ground color (only frame window and similar) */
+#define WM_GET_SCROLL_STATE         0x0023  /* Query state of scroll bar */
 
-#define WM_SET_SCROLL_STATE         36      /* Set scroll info ... only effective for scrollbars */
+#define WM_SET_SCROLL_STATE         0x0024  /* Set scroll info ... only effective for scrollbars */
 
-#define WM_NOTIFY_CLIENTCHANGE      37      /* Client area may have changed */
-#define WM_NOTIFY_PARENT            38      /* Notify parent. Information is detailed as notification code */
-#define WM_NOTIFY_PARENT_REFLECTION 39      /* Notify parent reflection.
+#define WM_NOTIFY_CLIENTCHANGE      0x0025  /* Client area may have changed */
+#define WM_NOTIFY_PARENT            0x0026  /* Notify parent. Information is detailed as notification code */
+#define WM_NOTIFY_PARENT_REFLECTION 0x0027  /* Notify parent reflection.
                                                Sometimes send back as a result of the WM_NOTIFY_PARENT message
                                                to let child react on behalf of its parent.
                                                Information is detailed as notification code */
-#define WM_NOTIFY_ENABLE            40      /* Enable or disable widget */
-#define WM_NOTIFY_VIS_CHANGED       41      /* Visibility of a window has or may have changed */
+#define WM_NOTIFY_ENABLE            0x0028  /* Enable or disable widget */
+#define WM_NOTIFY_VIS_CHANGED       0x0029  /* Visibility of a window has or may have changed */
 
-#define WM_HANDLE_DIALOG_STATUS     42      /* Set or get dialog status */
-#define WM_GET_RADIOGROUP           43      /* Send to all siblings and children of a radio control when
+#define WM_HANDLE_DIALOG_STATUS     0x002A  /* Set or get dialog status */
+#define WM_GET_RADIOGROUP           0x002B  /* Send to all siblings and children of a radio control when
                                                selection changed */
-#define WM_MENU                     44      /* Send to owner window of menu widget */
-#define WM_SCREENSIZE_CHANGED       45      /* Send to all windows when size of screen has changed */
-#define WM_PRE_PAINT                46      /* Send to a window before it receives a WM_PAINT message */
-#define WM_POST_PAINT               47      /* Send to a window after (the last) WM_PAINT message */
+#define WM_MENU                     0x002C  /* Send to owner window of menu widget */
+#define WM_SCREENSIZE_CHANGED       0x002D  /* Send to all windows when size of screen has changed */
+#define WM_PRE_PAINT                0x002E  /* Send to a window before it receives a WM_PAINT message */
+#define WM_POST_PAINT               0x002F  /* Send to a window after (the last) WM_PAINT message */
 
-#define WM_MOTION                   48      /* Automatic motion messages */
+#define WM_MOTION                   0x0030  /* Automatic motion messages */
 
-#define WM_GET_WINDOW_ID            49      /* Return widget type specific Id (DebugId) */
+#define WM_GET_WINDOW_ID            0x0031  /* Return widget type specific Id (DebugId) */
 
-#define WM_PRE_BANDING              50      /* Send before starting banding process */
-#define WM_POST_BANDING             51      /* Send after finishing banding process */
+#define WM_PRE_BANDING              0x0032  /* Send before starting banding process */
+#define WM_POST_BANDING             0x0033  /* Send after finishing banding process */
 
-#define WM_USER_DATA                52      /* Send immediately after setting user data */
-#define WM_SET_CALLBACK             53      /* Send immediately after setting user data */
+#define WM_USER_DATA                0x0034  /* Send immediately after setting user data */
+#define WM_SET_CALLBACK             0x0035  /* Send immediately after setting user data */
 
-#define WM_GET_OFFSET               54      /* Return alignment offset */
+#define WM_GET_OFFSET               0x0036  /* Return alignment offset */
 
-#define WM_GET_CONTENT_RECT         55      /* Get content rectangle, e.g. for LISTVIEW: InsideRect minus the HEADER */
+#define WM_GET_CONTENT_RECT         0x0037  /* Get content rectangle, e.g. for LISTVIEW: InsideRect minus the HEADER */
+
+#define WM_LAYOUT_TOO_SMALL         0x0038  /* This message will be sent when a layout is too small */
 
 #define WM_GESTURE                  0x0119  /* Gesture message */
 
@@ -537,10 +531,10 @@ typedef struct {
                                            // If using WM_CF_LATE_CLIP the WM makes sure only one message will be sent to an invalid window and
                                            // the clipping will be done by the drawing routines. The \c{Sample} folder of emWin contains the
                                            // example \c{WM_LateClipping.c} to show the effect.
-#define WM_CF_MEMDEV_ON_REDRAW (1UL << 13) // Equals WM_CF_MEMDEV with the difference that the according window is drawn the first time without
-                                           // using a Memory Device. The WM will automatically use a Memory Device for redrawing. This flag can
-                                           // be used as a replacement of WM_CF_MEMDEV. It typically accelerates the initial rendering of the
-                                           // window, but maintains the advantage of flicker free updates.
+#define WM_CF_MEMDEV_ON_REDRAW (1UL << 13) /* Equals WM_CF_MEMDEV with the difference that the according window is drawn the first time without
+                                              using a Memory Device. The WM will automatically use a Memory Device for redrawing. This flag can
+                                              be used as a replacement of WM_CF_MEMDEV. It typically accelerates the initial rendering of the
+                                              window, but maintains the advantage of flicker free updates. */
 #define WM_SF_INVALID_DRAW     (1UL << 14) /* Tells the WM to redraw the window using the static memory device */
 #define WM_SF_DELETE           (1UL << 15) /* The window will be deleted on the next time WM_Exec() is called */
 #define WM_CF_STATIC           (1UL << 16) // A static memory device is used for drawing. That means if a window with this flag receives a
@@ -561,6 +555,8 @@ typedef struct {
                                            // these unnecessary drawing operations can be avoided. Attention, if there is a non transparent window
                                            // in the foreground, which is smaller than the window in the back, tiling will be used and multiple paint
                                            // events into the memory device will be performed!
+#define WM_SF_LAYOUT           (1UL << 25) /* Window position and/or size is managed by layout */
+#define WM_SF_LAYOUT_ITEM      (1UL << 26) /* Position is managed by layout */
 
 /*********************************************************************
 *
@@ -604,9 +600,6 @@ struct WM_Obj {
     GUI_MEMDEV_Handle hMem; /* Static memory device */
   #endif
   U32 Status;           /* Status flags */
-  #if WM_SUPPORT_CPP
-    void * ObjPtr;
-  #endif
 };
 
 typedef void WM_tfPollPID(void);
@@ -670,6 +663,8 @@ void    WM_Rect2Client               (WM_HWIN hWin, GUI_RECT * pRect);
 void    WM_SetAnchor                 (WM_HWIN hWin, U16 AnchorFlags);
 void    WM_SetHasTrans               (WM_HWIN hWin);
 void    WM_SetId                     (WM_HWIN hObj, int Id);
+void    WM_SetRect                   (WM_HWIN hWin, int x0, int y0, int x1, int y1);
+void    WM_SetRectEx                 (WM_HWIN hWin, GUI_RECT * pRect);
 void    WM_SetStayOnTop              (WM_HWIN hWin, int OnOff);
 void    WM_SetTransState             (WM_HWIN hWin, unsigned State);
 int     WM_SetUntouchable            (WM_HWIN hWin, int OnOff);
@@ -902,6 +897,10 @@ WM_HWIN WM_GetModalWindow(void);
 int     WM_SetModalLayer(int LayerIndex);
 int     WM_GetModalLayer(void);
 
+/* Layouts */
+extern int  (* WM__pfUpdateLayoutPositions)(WM_Obj * pObj);
+extern void (* WM__pfDeleteMainLayout)     (WM_Obj * pObj);
+
 /*********************************************************************
 *
 *       Message related functions
@@ -943,7 +942,6 @@ int       WM__SetUserDataEx(WM_HWIN hWin, const void * pSrc, int NumBytes, int S
 int     WM_HasCaptured   (WM_HWIN hWin);
 WM_HWIN WM_GetCapture    (int * pAutoRelease);
 void    WM_SetCapture    (WM_HWIN hObj, int AutoRelease);
-void    WM_SetCaptureMove(WM_HWIN hWin, const GUI_PID_STATE * pState, int MinVisibility, int LimitTop); /* Not yet documented */
 void    WM_ReleaseCapture(void);
 
 /*********************************************************************

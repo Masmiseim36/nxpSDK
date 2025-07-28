@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2022, 2023 NXP
+ * Copyright 2018-2022, 2023, 2025 NXP
  *
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -12,7 +12,7 @@
 
 typedef struct _hal_timer_handle_struct_t
 {
-    uint32_t timeout;
+    uint64_t timeout;
     uint32_t timerClock_Hz;
     hal_timer_callback_t callback;
     void *callbackParam;
@@ -105,17 +105,18 @@ void HAL_TimerInstallCallback(hal_timer_handle_t halTimerHandle, hal_timer_callb
     halTimerState->callbackParam             = callbackParam;
 }
 
-uint32_t HAL_TimerGetMaxTimeout(hal_timer_handle_t halTimerHandle)
+uint64_t HAL_TimerGetMaxTimeout(hal_timer_handle_t halTimerHandle)
 {
     uint32_t reserveCount;
     uint64_t retValue;
+    uint64_t hwTmrResolutionMask;
     uint32_t reserveMs = 4U;
     assert(halTimerHandle);
     hal_timer_handle_struct_t *halTimerState = halTimerHandle;
     reserveCount                             = (uint32_t)MSEC_TO_COUNT((reserveMs), (halTimerState->timerClock_Hz));
-
-    retValue = COUNT_TO_USEC(((uint64_t)0xFFFFFFFF - (uint64_t)reserveCount), (uint64_t)halTimerState->timerClock_Hz);
-    return (uint32_t)((retValue > 0xFFFFFFFFU) ? (0xFFFFFFFFU - reserveMs * 1000U) : (uint32_t)retValue);
+    hwTmrResolutionMask = 	(((uint64_t)1 << HAL_TIMER_RANGE_IN_BITS) - 1);
+    retValue = COUNT_TO_USEC((hwTmrResolutionMask - (uint64_t)reserveCount), (uint64_t)halTimerState->timerClock_Hz);
+    return (retValue > hwTmrResolutionMask) ? (hwTmrResolutionMask - reserveMs * 1000U) : retValue;
 }
 
 /* return micro us */
@@ -127,10 +128,11 @@ uint32_t HAL_TimerGetCurrentTimerCount(hal_timer_handle_t halTimerHandle)
                                    halTimerState->timerClock_Hz);
 }
 
-hal_timer_status_t HAL_TimerUpdateTimeout(hal_timer_handle_t halTimerHandle, uint32_t timeout)
+hal_timer_status_t HAL_TimerUpdateTimeout(hal_timer_handle_t halTimerHandle, uint64_t timeout)
 {
     hal_timer_handle_struct_t *halTimerState = halTimerHandle;
     uint64_t timerTicks                      = OSTIMER_GetCurrentTimerValue(s_ostimerBase[halTimerState->instance]);
+    halTimerState->timeout                   = timeout;
     /* Translate the millisecond to ostimer count value. */
     timerTicks += USEC_TO_COUNT(timeout, halTimerState->timerClock_Hz);
 
@@ -148,4 +150,19 @@ void HAL_TimerExitLowpower(hal_timer_handle_t halTimerHandle)
 void HAL_TimerEnterLowpower(hal_timer_handle_t halTimerHandle)
 {
     assert(halTimerHandle);
+}
+
+uint64_t HAL_TimerGetCurrentTicks(hal_timer_handle_t halTimerHandle)
+{
+    assert(halTimerHandle);
+    hal_timer_handle_struct_t *halTimerState = halTimerHandle;
+    return OSTIMER_GetCurrentTimerValue(s_ostimerBase[halTimerState->instance]);
+}
+
+void HAL_TimerUpdateMatchValueInTicks(hal_timer_handle_t halTimerHandle, uint64_t matchValue)
+{
+    hal_timer_handle_struct_t *halTimerState = halTimerHandle;
+    status_t status = OSTIMER_SetMatchValue(s_ostimerBase[halTimerState->instance], matchValue, ostimer_callback_table[halTimerState->instance]);
+    (void)status;
+    assert(status == kStatus_Success);
 }

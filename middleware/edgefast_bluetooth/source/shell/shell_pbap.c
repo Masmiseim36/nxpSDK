@@ -581,7 +581,7 @@ static int cmd_connect(const struct shell *sh, size_t argc, char *argv[])
         }
     }
 
-    retval = bt_sdp_discover(default_conn, &discov_pbap_pce);
+    retval = bt_sdp_discover(default_br_conn, &discov_pbap_pce);
     if (retval)
     {
         shell_error(sh, "SDP discovery failed: %d", retval);
@@ -1242,7 +1242,7 @@ struct appl_params
      */
     struct pbap_hdr search_value;
 };
-#define CURRENT_PATH_MAX_LEN 30
+#define CURRENT_PATH_MAX_LEN 50
 typedef struct app_pbap_pse_
 {
     struct bt_pbap_pse *pbap_pseHandle;
@@ -1676,6 +1676,7 @@ static void app_pse_pull_phonebook_cb(struct bt_pbap_pse *pbap_pse,
         if ((char *)BT_str_str(name, "telecom") == NULL)
         {
             memcpy(g_PbapPse.name, g_PbapPse.currentpath, strlen(g_PbapPse.currentpath));
+            g_PbapPse.name[strlen(g_PbapPse.currentpath)] = '\0';
             strcat(g_PbapPse.name, name);
         }
         else
@@ -1851,6 +1852,11 @@ static void app_pse_set_phonebook_path_cb(struct bt_pbap_pse *pbap_pse, char *na
                     if (endwith(g_PbapPse.currentpath, "telecom"))
                     {
                         strcat((char *)g_PbapPse.currentpath, "/");
+                        if(strlen(g_PbapPse.currentpath) + strlen(path_name) > CURRENT_PATH_MAX_LEN)
+                        {
+                            result = BT_PBAP_NOT_FOUND_RSP;
+                            break;
+                        }
                         strcat((char *)g_PbapPse.currentpath, path_name);
                         result = BT_PBAP_SUCCESS_RSP;
                         break;

@@ -246,6 +246,7 @@
           <state>XA_CAPTURER=1</state>
           <state>VIT_MODELS_ALL=1</state>
           <state>DSP_IMAGE_COPY_TO_RAM=1</state>
+          <state>__USE_SHMEM</state>
           <state>BOARD_DMIC_NUM=2</state>
           <state>BOARD_PCM_WIDTH=16</state>
           <state>SDK_I3C_BASED_COMPONENT_USED=1</state>
@@ -254,6 +255,7 @@
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT595SFFOC_cm33</state>
+          <state>MIMXRT595S_cm33_SERIES</state>
           <state>BOOT_HEADER_ENABLE=1</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
@@ -387,10 +389,9 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/periph</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities/shell</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/i2c</state>
@@ -594,6 +595,7 @@
           <state>DSP_IMAGE_COPY_TO_RAM=1</state>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT595SFFOC_cm33</state>
+          <state>MIMXRT595S_cm33_SERIES</state>
         </option>
         <option>
           <name>AList</name>
@@ -693,10 +695,9 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/periph</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities/shell</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/i2c</state>
@@ -824,6 +825,7 @@
         </option>
         <option>
           <name>IlinkConfigDefines</name>
+          <state>__use_shmem__=1</state>
         </option>
         <option>
           <name>IlinkMapFile</name>
@@ -1426,6 +1428,7 @@
           <state>XA_CAPTURER=1</state>
           <state>VIT_MODELS_ALL=1</state>
           <state>DSP_IMAGE_COPY_TO_RAM=1</state>
+          <state>__USE_SHMEM</state>
           <state>BOARD_DMIC_NUM=2</state>
           <state>BOARD_PCM_WIDTH=16</state>
           <state>SDK_I3C_BASED_COMPONENT_USED=1</state>
@@ -1434,6 +1437,7 @@
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT595SFFOC_cm33</state>
+          <state>MIMXRT595S_cm33_SERIES</state>
           <state>BOOT_HEADER_ENABLE=1</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
@@ -1567,10 +1571,9 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/periph</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities/shell</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/i2c</state>
@@ -1774,6 +1777,7 @@
           <state>DSP_IMAGE_COPY_TO_RAM=1</state>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT595SFFOC_cm33</state>
+          <state>MIMXRT595S_cm33_SERIES</state>
         </option>
         <option>
           <name>AList</name>
@@ -1873,10 +1877,9 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/periph</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities/shell</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/i2c</state>
@@ -2004,6 +2007,7 @@
         </option>
         <option>
           <name>IlinkConfigDefines</name>
+          <state>__use_shmem__=1</state>
         </option>
         <option>
           <name>IlinkMapFile</name>
@@ -2826,10 +2830,10 @@
   <group>
     <name>utilities</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities/fsl_assert.h</name>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities/debug_console/fsl_assert.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities/fsl_assert.c</name>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities/debug_console/fsl_assert.c</name>
     </file>
     <group>
       <name>str</name>
@@ -3183,6 +3187,9 @@
         <file>
           <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/timers.h</name>
         </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/freertos_tasks_c_additions.h</name>
+        </file>
       </group>
       <group>
         <name>portable</name>
@@ -3241,6 +3248,9 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../example_board_readme.md</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../examples_shared_readme.md</name>
     </file>
   </group>
 </project>

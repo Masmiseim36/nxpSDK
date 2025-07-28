@@ -50,6 +50,16 @@
 #include "cc3xx.h"
 
 #endif
+/* Headers for dcp transparent driver */
+#if defined(PSA_CRYPTO_DRIVER_DCP)
+#include "dcp.h"
+
+#endif
+/* Headers for ela_csec transparent driver */
+#if defined(PSA_CRYPTO_DRIVER_ELA_CSEC)
+#include "ela_csec.h"
+
+#endif
 /* Headers for ele_s2xx transparent driver */
 #if defined(PSA_CRYPTO_DRIVER_ELE_S2XX)
 #include "ele_s2xx.h"
@@ -75,6 +85,26 @@
 #include "els_pkc_driver.h"
 
 #endif
+/* Headers for caam opaque driver */
+#if defined(PSA_CRYPTO_DRIVER_CAAM)
+#include "caam.h"
+
+#endif
+/* Headers for caam transparent driver */
+#if defined(PSA_CRYPTO_DRIVER_CAAM)
+#include "caam.h"
+
+#endif
+/* Headers for hashcrypt transparent driver */
+#if defined(PSA_CRYPTO_DRIVER_HASHCRYPT)
+#include "hashcrypt.h"
+
+#endif
+/* Headers for casper transparent driver */
+#if defined(PSA_CRYPTO_DRIVER_CASPER)
+#include "casper.h"
+
+#endif
 
 /* END-driver headers */
 
@@ -88,11 +118,17 @@
 #define P256_TRANSPARENT_DRIVER_ID (4)
 #define TFM_BUILTIN_KEY_TRANSPARENT_DRIVER_ID (5)
 #define CC3XX_TRANSPARENT_DRIVER_ID (6)
-#define ELE_S2XX_TRANSPARENT_DRIVER_ID (7)
-#define ELE_S4XX_OPAQUE_DRIVER_ID (8)
-#define ELE_S4XX_TRANSPARENT_DRIVER_ID (9)
-#define ELS_PKC_OPAQUE_DRIVER_ID (10)
-#define ELS_PKC_TRANSPARENT_DRIVER_ID (11)
+#define DCP_TRANSPARENT_DRIVER_ID (7)
+#define ELA_CSEC_TRANSPARENT_DRIVER_ID (8)
+#define ELE_S2XX_TRANSPARENT_DRIVER_ID (9)
+#define ELE_S4XX_OPAQUE_DRIVER_ID (10)
+#define ELE_S4XX_TRANSPARENT_DRIVER_ID (11)
+#define ELS_PKC_OPAQUE_DRIVER_ID (12)
+#define ELS_PKC_TRANSPARENT_DRIVER_ID (13)
+#define CAAM_OPAQUE_DRIVER_ID (14)
+#define CAAM_TRANSPARENT_DRIVER_ID (15)
+#define HASHCRYPT_TRANSPARENT_DRIVER_ID (16)
+#define CASPER_TRANSPARENT_DRIVER_ID (17)
 
 /* END-driver id */
 
@@ -176,10 +212,19 @@ psa_status_t psa_driver_wrapper_get_key_buffer_size(
         case PSA_CRYPTO_ELS_PKC_LOCATION_S50_KEY_GEN_STORAGE:
         case PSA_CRYPTO_ELS_PKC_LOCATION_S50_RFC3394_STORAGE:
             *key_buffer_size = els_pkc_opaque_size_function_key_buff_size( 
-                               attributes);
+                                                                attributes);
             return( ( *key_buffer_size != 0 ) ?
                     PSA_SUCCESS : PSA_ERROR_NOT_SUPPORTED );
 #endif /* PSA_CRYPTO_DRIVER_ELS_PKC */
+
+#if defined(PSA_CRYPTO_DRIVER_CAAM)
+        case 0x000001:
+            *key_buffer_size = caam_common_size_function(key_type,
+                                                        key_bits );
+            return( ( *key_buffer_size != 0 ) ?
+                    PSA_SUCCESS : PSA_ERROR_NOT_SUPPORTED );
+            break;
+#endif /* PSA_CRYPTO_DRIVER_CAAM */
 
         default:
             (void)key_type;
@@ -274,6 +319,8 @@ psa_status_t psa_driver_wrapper_export_public_key(
 
 
 
+
+
 #if (defined(PSA_CRYPTO_DRIVER_ELS_PKC) )
             status = els_pkc_transparent_export_public_key
                 (attributes,
@@ -287,6 +334,9 @@ psa_status_t psa_driver_wrapper_export_public_key(
             if( status != PSA_ERROR_NOT_SUPPORTED )
                 return( status );
 #endif
+
+
+
 
 
 #endif /* PSA_CRYPTO_ACCELERATOR_DRIVER_PRESENT */
@@ -327,6 +377,7 @@ psa_status_t psa_driver_wrapper_export_public_key(
 
 
 
+
 #if defined(PSA_CRYPTO_DRIVER_ELS_PKC)
         case PSA_CRYPTO_ELS_PKC_LOCATION_S50_ENC_STORAGE_KEY:
         case PSA_CRYPTO_ELS_PKC_LOCATION_S50_ENC_STORAGE_DATA:
@@ -342,6 +393,28 @@ psa_status_t psa_driver_wrapper_export_public_key(
                             data_length
         ));
 #endif /* PSA_CRYPTO_DRIVER_ELS_PKC */
+#if defined(PSA_CRYPTO_DRIVER_ELE_S2XX)
+        case PSA_CRYPTO_LOCATION_S200_KEY_STORAGE:
+            return( ele_s2xx_opaque_export_public_key
+            (attributes,
+                            key_buffer,
+                            key_buffer_size,
+                            data,
+                            data_size,
+                            data_length
+        ));
+#endif /* PSA_CRYPTO_DRIVER_ELE_S2XX */
+#if (defined(PSA_CRYPTO_DRIVER_CAAM) )
+        case 0x000001:
+            return( caam_common_export_public_key
+            (attributes,
+                            key_buffer,
+                            key_buffer_size,
+                            data,
+                            data_size,
+                            data_length
+        ));
+#endif /* PSA_CRYPTO_DRIVER_CAAM */
 #endif /* PSA_CRYPTO_ACCELERATOR_DRIVER_PRESENT */
         default:
             /* Key is declared with a lifetime not known to us */
@@ -371,6 +444,7 @@ psa_status_t psa_driver_wrapper_get_builtin_key(
                             key_buffer_length
         ));
 #endif
+
 
 
 

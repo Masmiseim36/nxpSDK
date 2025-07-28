@@ -10,6 +10,7 @@
 #include "../tick/lv_tick.h"
 #include "../stdlib/lv_mem.h"
 #include "../stdlib/lv_sprintf.h"
+#include "../osal/lv_os.h"
 #include "lv_assert.h"
 #include "lv_ll.h"
 #include "lv_profiler.h"

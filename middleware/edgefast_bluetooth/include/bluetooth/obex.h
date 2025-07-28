@@ -124,9 +124,9 @@ enum bt_obex_req_flags
 
 static inline void bt_obex_add_hdr(struct net_buf *buf, uint8_t hi, uint8_t *value, uint16_t length)
 {
-    net_buf_add_u8(buf, hi);
-    net_buf_add_be16(buf, length + sizeof(struct bt_obex_hdr_bytes));
-    net_buf_add_mem(buf, value, length);
+    (void)net_buf_add_u8(buf, hi);
+    (void)net_buf_add_be16(buf, length + sizeof(struct bt_obex_hdr_bytes));
+    (void)net_buf_add_mem(buf, value, length);
 }
 
 static inline int bt_obex_get_hdr(struct net_buf *buf, uint8_t hi, uint8_t **value, uint16_t *length)
@@ -186,7 +186,7 @@ static inline void bt_obex_add_app_param(struct net_buf *buf, uint8_t tag_id, ui
     hdr = (struct bt_obex_hdr_bytes *)buf->data;
     if (buf->len == 0U)
     {
-        net_buf_add(buf, sizeof(struct bt_obex_hdr_bytes));
+        (void)net_buf_add(buf, sizeof(struct bt_obex_hdr_bytes));
         hdr->hi = BT_OBEX_HDR_APP_PARAM;
         hdr->length = sys_cpu_to_be16(sizeof(struct bt_obex_hdr_bytes));
     }
@@ -194,33 +194,33 @@ static inline void bt_obex_add_app_param(struct net_buf *buf, uint8_t tag_id, ui
     total_len += length + sizeof(struct bt_obex_tag_bytes);  /* Tag ID(1-byte), Length(1-byte) */
     hdr->length = sys_cpu_to_be16(total_len);
 
-    net_buf_add_u8(buf, tag_id);
-    net_buf_add_u8(buf, length);
-    net_buf_add_mem(buf, value, length);
+    (void)net_buf_add_u8(buf, tag_id);
+    (void)net_buf_add_u8(buf, length);
+    (void)net_buf_add_mem(buf, value, length);
 }
 
 #define BT_OBEX_ADD_APP_PARAM_U8(buf, tag_id, val) do { \
             uint8_t data = val; \
-            bt_obex_add_app_param(buf, tag_id, &data, sizeof(data)); \
-        } while(0);
+            bt_obex_add_app_param(buf, tag_id, &data, (uint8_t)sizeof(data)); \
+        } while(false);
 
 #define BT_OBEX_ADD_APP_PARAM_U16(buf, tag_id, val) do { \
             uint8_t data[2]; \
             sys_put_be16(val, data);  \
-            bt_obex_add_app_param(buf, tag_id, data, sizeof(data)); \
-        } while(0);
+            bt_obex_add_app_param(buf, tag_id, data, (uint8_t)sizeof(data)); \
+        } while(false);
 
 #define BT_OBEX_ADD_APP_PARAM_U32(buf, tag_id, val) do { \
             uint8_t data[4]; \
             sys_put_be32(val, data);  \
-            bt_obex_add_app_param(buf, tag_id, data, sizeof(data)); \
-        } while(0);
+            bt_obex_add_app_param(buf, tag_id, data, (uint8_t)sizeof(data)); \
+        } while(false);
 
 #define BT_OBEX_ADD_APP_PARAM_U64(buf, tag_id, val) do { \
             uint8_t data[8]; \
             sys_put_be64(val, data);  \
-            bt_obex_add_app_param(buf, tag_id, data, sizeof(data)); \
-        } while(0);
+            bt_obex_add_app_param(buf, tag_id, data, (uint8_t)sizeof(data)); \
+        } while(false);
 
 static inline int bt_obex_get_body(struct net_buf *buf, uint8_t **body, uint16_t *length)
 {
@@ -251,7 +251,7 @@ static inline void bt_obex_app_param_parse(struct net_buf *buf,
     {
         return;
     }
-    while (hdr_length)
+    while (hdr_length > 0U)
     {
         struct bt_data data;
 

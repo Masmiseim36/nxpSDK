@@ -4,7 +4,7 @@
  *  structures and declares global function prototypes used
  *  in MLAN module.
  *
- *  Copyright 2008-2024 NXP
+ *  Copyright 2008-2025 NXP
  *
  *  SPDX-License-Identifier: BSD-3-Clause
  *
@@ -191,23 +191,23 @@ typedef enum _KEY_INFO_TKIP
 /** KEY_INFO_AES*/
 typedef enum _KEY_INFO_AES
 {
-    KEY_INFO_AES_MCAST      = 0x01,
-    KEY_INFO_AES_UNICAST    = 0x02,
-    KEY_INFO_AES_ENABLED    = 0x04,
-    KEY_INFO_AES_MCAST_IGTK = 0x400,
+    KEY_INFO_AES_MCAST      = 0x01U,
+    KEY_INFO_AES_UNICAST    = 0x02U,
+    KEY_INFO_AES_ENABLED    = 0x04U,
+    KEY_INFO_AES_MCAST_IGTK = 0x400U,
 } KEY_INFO_AES;
 
 /** WPA AES key length */
-#define WPA_AES_KEY_LEN 16
+#define WPA_AES_KEY_LEN 16U
 /** WPA TKIP key length */
-#define WPA_TKIP_KEY_LEN 32
+#define WPA_TKIP_KEY_LEN 32U
 /** WPA AES IGTK key length */
-#define CMAC_AES_KEY_LEN 16
+#define CMAC_AES_KEY_LEN 16U
 /** IGTK key length */
-#define WPA_IGTK_KEY_LEN     16
-#define WPA_IGTK_256_KEY_LEN 32
-#define WPA_GCMP_KEY_LEN     32
-#define WPA_CCMP_256_KEY_LEN 32
+#define WPA_IGTK_KEY_LEN     16U
+#define WPA_IGTK_256_KEY_LEN 32U
+#define WPA_GCMP_KEY_LEN     32U
+#define WPA_CCMP_256_KEY_LEN 32U
 #endif /* WPA || WAPI_AP || HOST_AUTHENTICATOR */
 
 /** Maximum ethernet frame length sans FCS */
@@ -434,11 +434,13 @@ typedef enum _WLAN_802_11_WEP_STATUS
 /** TLV ID : Management Frame */
 #define TLV_TYPE_MGMT_FRAME (PROPRIETARY_TLV_BASE_ID + 0x68) /* 0x0168 */
 /** TLV type: management filter  */
-#define TLV_TYPE_MGMT_FRAME_WAKEUP (PROPRIETARY_TLV_BASE_ID + 0x116) /* 0x0216 */
+#define TLV_TYPE_MGMT_FRAME_WAKEUP (PROPRIETARY_TLV_BASE_ID + 0x116U) /* 0x0216 */
 
 #define TLV_TYPE_PREV_BSSID (PROPRIETARY_TLV_BASE_ID + 330)
 
-#define TLV_TYPE_CSI_MONITOR_CFG (PROPRIETARY_TLV_BASE_ID + 354) /*0x0262*/
+#define TLV_TYPE_CSI_MONITOR_CFG (PROPRIETARY_TLV_BASE_ID + 0x162U) /*0x0262*/
+
+#define TLV_TYPE_RSNO_IE (PROPRIETARY_TLV_BASE_ID + 0x167) /* 0x267 */
 
 /** ADDBA TID mask */
 #define ADDBA_TID_MASK (MBIT(2) | MBIT(3) | MBIT(4) | MBIT(5))
@@ -511,11 +513,10 @@ typedef enum _WLAN_802_11_WEP_STATUS
 #define CAPINFO_40MHZ_INTOLARENT MBIT(8)
 
 /** Default 11n capability mask for 2.4GHz */
-#if defined(SD8978) || defined(SD8987) || defined(SD8997) || defined(SD9097) || defined(SD9098) || defined(SD9177) || \
-    defined(IW610)
+#if defined(SD8978) || defined(SD8987) || defined(SD8997) || defined(SD9097) || defined(SD9098) || defined(SD9177)
 #define DEFAULT_11N_CAP_MASK_BG \
     (HWSPEC_SHORTGI20_SUPP | HWSPEC_RXSTBC_SUPP | HWSPEC_SHORTGI40_SUPP | HWSPEC_CHANBW40_SUPP | HWSPEC_LDPC_SUPP)
-#elif defined(SD8801) || defined(RW610)
+#elif defined(SD8801) || defined(RW610) || defined(IW610)
 #define DEFAULT_11N_CAP_MASK_BG (HWSPEC_SHORTGI20_SUPP | HWSPEC_RXSTBC_SUPP | HWSPEC_LDPC_SUPP)
 #endif
 /** Default 11n capability mask for 5GHz */
@@ -1264,6 +1265,11 @@ typedef MLAN_PACK_START struct _MrvlIEtypes_fw_cap_info_t
 #define HostCmd_CMD_CONFIG_GTK_REKEY_OFFLOAD_CFG 0x010f
 #endif
 
+#if CONFIG_WPA_SUPP_P2P
+/** Host Command ID: WIFI_DIRECT_MODE_CONFIG */
+#define HOST_CMD_WIFI_DIRECT_MODE_CONFIG 0x00eb
+#endif
+
 /** Host Command ID: Remain On Channel */
 #define HostCmd_CMD_802_11_REMAIN_ON_CHANNEL 0x010d
 
@@ -1334,6 +1340,10 @@ typedef MLAN_PACK_START struct _MrvlIEtypes_fw_cap_info_t
 #define HostCmd_CMD_CCK_DESENSE_CFG 0x0265
 #endif
 
+#ifdef CONFIG_WIFI_CHANNEL_LOAD
+#define HostCmd_CMD_802_11_GET_CH_LOAD 0x027b
+#endif
+
 /** Host Command ID: Tx Frame */
 #define HostCmd_CMD_802_11_TX_FRAME 0x0283
 
@@ -1355,6 +1365,8 @@ typedef enum _ENH_PS_MODES
 #define HostCmd_ACT_GEN_GET 0x0000U
 /** General purpose action : Set */
 #define HostCmd_ACT_GEN_SET 0x0001U
+/** General purpose action : Set Default */
+#define HostCmd_ACT_GEN_SET_DEFAULT 0x0002U
 /** Special purpose action : Set */
 #define HostCmd_ACT_SPC_SET 0x8001
 
@@ -1463,6 +1475,10 @@ typedef enum _ENH_PS_MODES
 #define HostCmd_CMD_CSI 0x025b
 #define CSI_CMD_ENABLE  0x0001
 #define CSI_CMD_DISABLE 0x0002
+#endif
+
+#if CONFIG_WPA_SUPP_P2P
+#define HostCmd_CMD_WIFI_DIRECT_MODE_CONFIG 0x00EB
 #endif
 
 #if CONFIG_11AX
@@ -1784,6 +1800,10 @@ typedef enum _ENH_PS_MODES
 
 #define EVENT_ACCESS_BY_HOST 0x00000098
 
+#if CONFIG_WIFI_CHANNEL_LOAD
+#define EVENT_CHAN_LOAD 0x00000099
+#endif
+
 /** Event ID mask */
 #define EVENT_ID_MASK 0xffff
 
@@ -1944,7 +1964,7 @@ typedef MLAN_PACK_START struct
 } MLAN_PACK_END MrvlIETypes_SmcAddrRange_t;
 
 #if CONFIG_HOST_SLEEP
-#define MAX_MGMT_FRAME_FILTER         2
+#define MAX_MGMT_FRAME_FILTER         2U
 #define EVENT_MANAGEMENT_FRAME_WAKEUP 0x00000088
 
 typedef MLAN_PACK_START struct _mgmt_frame_filter
@@ -2662,20 +2682,20 @@ typedef MLAN_PACK_START struct _MrvlIEtypes_RsnParamSet_t
 /** Key Info flag for unicast key */
 #define KEY_INFO_UCAST_KEY 0x02U
 /** Key Info flag for enable key */
-#define KEY_INFO_ENABLE_KEY 0x04
+#define KEY_INFO_ENABLE_KEY 0x04U
 /** Key Info flag for default key */
 #define KEY_INFO_DEFAULT_KEY 0x08U
 /** Key Info flag for TX key */
 #define KEY_INFO_TX_KEY 0x10U
 /** Key Info flag for RX key */
 #define KEY_INFO_RX_KEY       0x20U
-#define KEY_INFO_CMAC_AES_KEY 0x400
+#define KEY_INFO_CMAC_AES_KEY 0x400U
 /** PN size for WPA/WPA2 */
-#define WPA_PN_SIZE 8
+#define WPA_PN_SIZE 8U
 /** PN size for PMF IGTK */
-#define IGTK_PN_SIZE 8
+#define IGTK_PN_SIZE 8U
 /** WAPI KEY size */
-#define WAPI_KEY_SIZE 32
+#define WAPI_KEY_SIZE 32U
 /** key params fix size */
 #define KEY_PARAMS_FIXED_LEN 10U
 /** key index mask */
@@ -2983,6 +3003,16 @@ typedef MLAN_PACK_START struct _MrvlIETypes_ChanTRPCConfig_t
     t_u8 chan_num;
     mod_group_setting mod_group[0];
 } MLAN_PACK_END MrvlIETypes_ChanTRPCConfig_t;
+
+#if CONFIG_WPA_SUPP_P2P
+typedef MLAN_PACK_START struct _HostCmd_P2P_MODE_CONFIG
+{
+    /** Action Set or get */
+    t_u16 action;
+    /** P2P Mode */
+    t_u16 mode;
+} MLAN_PACK_END HostCmd_P2P_MODE_CONFIG;
+#endif
 
 /** Address type: broadcast */
 #define ADDR_TYPE_BROADCAST 1
@@ -3313,8 +3343,13 @@ typedef MLAN_PACK_START struct _HostCmd_DS_GET_HW_SPEC
     t_u32 fw_release_number;
     /** hw dev cap */
     t_u32 hw_dev_cap;
-    /** Reserved field */
-    t_u32 reserved_2;
+    /** Board type or Reserved field */
+#if defined(IW610)
+    t_u8 board_type;
+    t_u8 reserved_2[3];
+#else
+     t_u32 reserved_2;
+#endif
     /** Reserved field */
     t_u32 reserved_3;
     /** FW/HW Capability */
@@ -4061,8 +4096,10 @@ typedef MLAN_PACK_START struct _MrvlRateScope_t
     t_u16 ofdm_rate_bitmap;
     /** Bitmap of HT-MCSs allowed for initial rate */
     t_u16 ht_mcs_rate_bitmap[8];
+#if CONFIG_11AC
     /** VHT MCS rate bitmap */
     t_u16 vht_mcs_rate_bitmap[8];
+#endif
 #if CONFIG_11AX
     /** HE MCS rate bitmap */
     t_u16 he_mcs_rate_bitmap[8];
@@ -4257,6 +4294,13 @@ typedef MLAN_PACK_START struct _HostCmd_DS_802_11_RF_TX_POWER
 #define CONNECTION_TYPE_INFRA 0
 /** Connection type adhoc */
 #define CONNECTION_TYPE_ADHOC 1
+#if CONFIG_WPA_SUPP_P2P
+/** BSS Mode: WIFIDIRECT Client */
+#define BSS_MODE_WIFIDIRECT_CLIENT 0
+/** BSS Mode: WIFIDIRECT GO */
+#define BSS_MODE_WIFIDIRECT_GO 2
+#endif
+
 /** HostCmd_DS_SET_BSS_MODE */
 typedef MLAN_PACK_START struct _HostCmd_DS_SET_BSS_MODE
 {
@@ -4280,6 +4324,17 @@ typedef MLAN_PACK_START struct _HostCmd_DS_REMAIN_ON_CHANNEL
     /** remain time: Unit ms*/
     t_u32 remain_period;
 } MLAN_PACK_END HostCmd_DS_REMAIN_ON_CHANNEL;
+
+#if CONFIG_WPA_SUPP_P2P
+/** HostCmd_DS_WIFI_DIRECT_MODE */
+typedef MLAN_PACK_START struct _HostCmd_DS_WIFI_DIRECT_MODE
+{
+    /** Action 0-GET, 1-SET*/
+    t_u16 action;
+    /**0:disable 1:listen 2:GO 3:p2p client 4:find 5:stop find*/
+    t_u16 mode;
+} MLAN_PACK_END HostCmd_DS_WIFI_DIRECT_MODE;
+#endif
 
 #ifdef STA_SUPPORT
 
@@ -4716,6 +4771,36 @@ typedef MLAN_PACK_START struct _hostcmd_twt_report
     t_u8 data[54]; // WLAN_BTWT_REPORT_LEN* WLAN_BTWT_REPORT_MAX_NUM
 } MLAN_PACK_END hostcmd_twt_report, *phostcmd_twt_report;
 
+/** Type definition of hostcmd_twt_information */
+typedef MLAN_PACK_START struct _hostcmd_twt_information
+{
+    /** TWT Flow Identifier. Range: [0-7] */
+    t_u8 flow_identifier;
+    /** TWT operation suspend duration in milli seconds. */
+    t_u32 suspend_duration;
+    /** TWT information state from FW. */
+    t_u8 information_state;
+} MLAN_PACK_END hostcmd_twt_information, *phostcmd_twt_information;
+
+#define BTWT_AGREEMENT_MAX 5
+typedef PACK_START struct
+{
+    t_u8 btwt_id;
+    t_u16 bcast_mantissa;
+    t_u8 bcast_exponent;
+    t_u8 nominal_wake;
+} PACK_END hostcmd_btwt_set_t;
+/** BTWT AP Config parameters */
+
+typedef MLAN_PACK_START struct
+{
+    t_u8 bcast_bet_sta_wait;
+    t_u16 bcast_offset;
+    t_u8 bcast_twtli;
+    t_u8 count;
+    hostcmd_btwt_set_t btwt_sets[BTWT_AGREEMENT_MAX];
+} MLAN_PACK_END hostcmd_btwt_cfg, *phostcmd_btwt_cfg;
+
 /** HostCmd_DS_TWT_CFG */
 typedef MLAN_PACK_START struct _HostCmd_DS_TWT_CFG
 {
@@ -4732,6 +4817,10 @@ typedef MLAN_PACK_START struct _HostCmd_DS_TWT_CFG
         hostcmd_twt_teardown twt_teardown;
         /** TWT report for Sub ID: MLAN_11AX_TWT_REPORT_SUBID */
         hostcmd_twt_report twt_report;
+        /** TWT report for Sub ID: MLAN_11AX_TWT_INFORMATION_SUBID */
+        hostcmd_twt_information twt_information;
+        /** TWT report for Sub ID: MLAN_11AX_TWT_BTWT_SUBID */
+        hostcmd_btwt_cfg btwt_cfg;
     } param;
 } MLAN_PACK_END HostCmd_DS_TWT_CFG;
 #endif /* CONFIG_11AX_TWT */
@@ -5999,7 +6088,7 @@ typedef MLAN_PACK_START struct _MrvlIEtypes_mac_filter_t
     /** Number of STA MACs */
     t_u8 count;
     /** STA MAC addresses buffer */
-    t_u8 mac_address[1];
+    t_u8 mac_addr[1];
 } MLAN_PACK_END MrvlIEtypes_mac_filter_t;
 
 /** setting for band_config - band=5GHZ */
@@ -6312,7 +6401,7 @@ typedef MLAN_PACK_START struct _MrvlIEtypes_sta_info_t
     /** Header */
     MrvlIEtypesHeader_t header;
     /** STA MAC address */
-    t_u8 mac_address[MLAN_MAC_ADDR_LENGTH];
+    t_u8 mac_addr[MLAN_MAC_ADDR_LENGTH];
     /** Power mfg status */
     t_u8 power_mfg_status;
     /** RSSI */
@@ -6836,9 +6925,9 @@ typedef MLAN_PACK_START struct
 
 typedef MLAN_PACK_START struct
 {
-    t_u16 startFreq;
-    t_u8 chanWidth;
-    t_u8 chanNum;
+    t_u16 start_freq;
+    t_u8 channel_width;
+    t_u8 channel_num;
 
 } MLAN_PACK_END MrvlChannelDesc_t;
 
@@ -7576,6 +7665,32 @@ typedef MLAN_PACK_START struct _HostCmd_IMD3_CFG
 } MLAN_PACK_END HostCmd_IMD3_CFG;
 #endif
 
+#if CONFIG_WIFI_CHANNEL_LOAD
+typedef MLAN_PACK_START struct _HostCmd_DS_802_11_GET_CH_LOAD
+{
+    t_u16 action;
+    t_u16 ch_load;
+    t_s16 noise;
+    t_u16 rx_quality;
+    t_u16 duration;
+    t_u16 cca_th; /* not using cca_th in v18 */
+} MLAN_PACK_END HostCmd_DS_802_11_GET_CH_LOAD;
+
+typedef MLAN_PACK_START struct _CH_LOAD_EVENT_HEADER_t
+{
+    /** No of bytes in packet including this field */
+    t_u16 length;
+    /** Type: Event (3) */
+    t_u16 type;
+    /** Event ID */
+    t_u16 event_id;
+    /** BSS index number for multiple BSS support */
+    t_u8 bss_index;
+    /** BSS type */
+    t_u8 bss_type;
+} MLAN_PACK_END ch_load_event_t;
+#endif
+
 /** HostCmd_DS_80211_TX_FRAME */
 typedef MLAN_PACK_START struct _HostCmd_DS_80211_TX_FRAME
 {
@@ -7770,7 +7885,7 @@ typedef MLAN_PACK_START struct _HostCmd_DS_COMMAND
         /** EEPROM register access */
         HostCmd_DS_802_11_EEPROM_ACCESS eeprom;
         /** Memory access */
-        HostCmd_DS_MEM_ACCESS mem;
+        HostCmd_DS_MEM_ACCESS memory;
         /** Bridge mode */
         HostCmd_BRIDGE_MODE bridge_mode;
         /** Auto Reconnect */
@@ -7794,7 +7909,7 @@ typedef MLAN_PACK_START struct _HostCmd_DS_COMMAND
 #endif
 #endif /* UAP_SUPPORT */
 #if UAP_HOST_MLME
-        HostCmd_DS_ADD_STATION sta_info;
+        HostCmd_DS_ADD_STATION station_info;
 #endif
         /** Sleep period command */
         HostCmd_DS_802_11_SLEEP_PERIOD sleep_pd;
@@ -7807,6 +7922,9 @@ typedef MLAN_PACK_START struct _HostCmd_DS_COMMAND
         HostCmd_DS_SET_BSS_MODE bss_mode;
         HostCmd_DS_CMD_TX_DATA_PAUSE tx_data_pause;
         HostCmd_DS_REMAIN_ON_CHANNEL remain_on_chan;
+#if CONFIG_WPA_SUPP_P2P
+        HostCmd_DS_WIFI_DIRECT_MODE wifi_direct_mode;
+#endif
 #ifdef WLAN_LOW_POWER_ENABLE
         HostCmd_CONFIG_LOW_PWR_MODE low_pwr_mode_cfg;
 #endif /* WLAN_LOW_POWER_ENABLE */
@@ -7906,7 +8024,13 @@ typedef MLAN_PACK_START struct _HostCmd_DS_COMMAND
 #if CONFIG_IMD3_CFG
         HostCmd_IMD3_CFG imd3_cfg;
 #endif
+#if CONFIG_WIFI_CHANNEL_LOAD
+        HostCmd_DS_802_11_GET_CH_LOAD  channel_load;
+#endif
         HostCmd_DS_80211_TX_FRAME tx_frame;
+#if CONFIG_WPA_SUPP_P2P
+        HostCmd_P2P_MODE_CONFIG p2p_mode_config;
+#endif
     } params;
 } MLAN_PACK_END HostCmd_DS_COMMAND;
 

@@ -47,21 +47,9 @@ int boot_copy_region_pre_hook(int img_index, const struct flash_area *area, size
 {
 #ifdef CONFIG_ENCRYPT_XIP_EXT_OVERWRITE_ONLY
     status_t status;
-    
-#if defined(ENCRYPTED_XIP_IPED)
-    //check final size of the image
-    //align up to 4*page size
-    const uint32_t page_align = 4*MFLASH_PAGE_SIZE;
-    uint32_t iped_sz = size + (size % page_align == 0 ? 0 : (page_align - size % page_align));
-    //1.25x
-    iped_sz = iped_sz * 5 / 4;
-    if(iped_sz >= area->fa_size){
-        BOOT_LOG_ERR("Final size of encrypted image exceeds slot size!");
-        return -1;
-    }
-#endif
-    
-    status = encrypted_xip_cfg_write(boot_flash_meta_map);
+    const uint32_t enc_region_start = area->fa_off + BOOT_FLASH_BASE;
+       
+    status = encrypted_xip_cfg_write(boot_flash_meta_map, enc_region_start, size);
     if (status != kStatus_Success)
         return -1;
     

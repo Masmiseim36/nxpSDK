@@ -2,7 +2,7 @@
  *
  *  @brief  This file provides the support for network utility iperf
  *
- *  Copyright 2008-2022 NXP
+ *  Copyright 2008-2025 NXP
  *
  *  SPDX-License-Identifier: BSD-3-Clause
  *
@@ -18,7 +18,7 @@
 #include <wlan.h>
 
 #include "iperf.h"
-#include "lwiperf.h"
+#include "lwip/apps/lwiperf.h"
 #include "lwip/tcpip.h"
 
 #ifndef IPERF_UDP_CLIENT_RATE

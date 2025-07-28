@@ -1528,6 +1528,14 @@ void bt_hci_le_enh_conn_complete(struct bt_hci_evt_le_enh_conn_complete *evt)
 	}
 #endif /* defined(CONFIG_BT_USER_PHY_UPDATE) */
 
+#if (defined(CONFIG_BT_ATT_TEST) && (CONFIG_BT_ATT_TEST > 0U))
+	/* Add delay 2S to block the HCI_LE_Enhanced_conn_complete event process to verify ATT,
+	 *  then the peer will send the ATT cmd, then confirm the ATT cmd is processed after the
+	 *  HCI_LE_Enhanced_conn_complete process finish.
+	 */
+	(void)k_sleep(BT_SECONDS(2));
+#endif /* defined(CONFIG_BT_ATT_TEST) */
+
 	bt_conn_set_state(conn, BT_CONN_CONNECTED);
 
 	if (disconnect_reason) {
@@ -2058,6 +2066,18 @@ void bt_conn_unpair(uint8_t id, const bt_addr_le_t *addr, const bt_addr_le_t *rp
 				}
 			}
 
+			retval = BT_smp_search_identity_addr(&bd_addr, DQ_LE_LINK, &handle);
+			if (API_SUCCESS == retval)
+			{
+				(BT_IGNORE_RETURN_VALUE)BT_smp_mark_device_untrusted_pl(&handle);
+			}
+
+			retval = BT_smp_search_identity_addr(&bd_addr, DQ_BR_LINK, &handle);
+			if (API_SUCCESS == retval)
+			{
+				(BT_IGNORE_RETURN_VALUE)BT_smp_mark_device_untrusted_pl(&handle);
+			}
+
 			if (rpa != NULL)
 			{
 				bd_addr.type = rpa->type;
@@ -2121,32 +2141,38 @@ static void unpair(uint8_t id, const bt_addr_le_t *addr)
 			bt_lookup_id_addr(id, addr));
 	}
 
+	/* There may be two connections (one br and one ble) that use the same public address,
+	 * disconnect all of them, and delete all the keys of br and ble.
+	 */
 	conn = bt_conn_lookup_addr_le(id, &id_addr);
 	if (NULL != conn) {
-		atomic_set_bit(conn->flags, BT_CONN_UNPAIRING);
-		bt_conn_disconnect(conn, BT_HCI_ERR_REMOTE_USER_TERM_CONN);
+		atomic_set_bit(conn->flags, BT_CONN_UNPAIRING); /* make sure the key is cleared after disconnected */
+		if (conn->state == BT_CONN_CONNECTED) {
+			bt_conn_disconnect(conn, BT_HCI_ERR_REMOTE_USER_TERM_CONN);
+		}
 		bt_conn_unref(conn);
-		return;
 	}
 #if (defined(CONFIG_BT_CLASSIC) && ((CONFIG_BT_CLASSIC) > 0U))
 	conn = bt_conn_lookup_addr_br(&id_addr.a);
 	if (NULL != conn) {
-		atomic_set_bit(conn->flags, BT_CONN_UNPAIRING);
-		bt_conn_disconnect(conn, BT_HCI_ERR_REMOTE_USER_TERM_CONN);
+		atomic_set_bit(conn->flags, BT_CONN_UNPAIRING); /* make sure the key is cleared after disconnected */
+		if (conn->state == BT_CONN_CONNECTED) {
+			bt_conn_disconnect(conn, BT_HCI_ERR_REMOTE_USER_TERM_CONN);
+		}
 		bt_conn_unref(conn);
-		return;
 	}
 #endif
+	/* clear the keys that can be cleared, others (in Ethermind) will be cleared after disconnected */
 	bt_conn_unpair(id, &id_addr, addr);
 }
-#if 0
+
 static void unpair_remote(const struct bt_bond_info *info, void *data)
 {
 	uint8_t *id = (uint8_t *) data;
 
 	unpair(*id, &info->addr);
 }
-#endif
+
 int bt_unpair(uint8_t id, const bt_addr_le_t *addr)
 {
 #if (defined(CONFIG_BT_CLASSIC) && (CONFIG_BT_CLASSIC > 0))
@@ -2157,7 +2183,7 @@ int bt_unpair(uint8_t id, const bt_addr_le_t *addr)
 	API_RESULT retval;
 	DEVICE_LINK_TYPE    link_type;
 #if (defined(CONFIG_BT_CLASSIC) && (CONFIG_BT_CLASSIC > 0))
-	uint8_t count;
+	uint8_t count = SM_MAX_DEVICES; /* max count */
 #endif
 
 	if (id >= CONFIG_BT_ID_MAX) {
@@ -2201,10 +2227,10 @@ int bt_unpair(uint8_t id, const bt_addr_le_t *addr)
 			bt_addr_le_copy(&peer_addr, BT_ADDR_LE_ANY);
 			if (API_SUCCESS == retval)
 			{
-              			memcpy(peer_addr.a.val, bdaddr.addr, sizeof(peer_addr.a.val));
+				memcpy(peer_addr.a.val, bdaddr.addr, sizeof(peer_addr.a.val));
 				if (!bt_addr_le_cmp(&peer_addr, BT_ADDR_LE_ANY))
 				{
-                    			continue;
+					continue;
 				}
 
 				retval = device_queue_get_link_type
@@ -2214,12 +2240,16 @@ int bt_unpair(uint8_t id, const bt_addr_le_t *addr)
 				);
 				if ((API_SUCCESS == retval) && (DQ_LE_LINK == link_type))
 				{
-				peer_addr.type = bdaddr.type;
-				memcpy(peer_addr.a.val, bdaddr.addr, sizeof(peer_addr.a.val));
-				unpair(id, &peer_addr);
+					peer_addr.type = bdaddr.type;
+					memcpy(peer_addr.a.val, bdaddr.addr, sizeof(peer_addr.a.val));
+					unpair(id, &peer_addr);
 				}
 			}
 		}
+
+#if (defined(CONFIG_BT_MAX_PAIRED) && (CONFIG_BT_MAX_PAIRED > 0))
+		bt_foreach_bond(id, unpair_remote, &id);
+#endif
 
 		return 0;
 	}
@@ -2369,7 +2399,7 @@ static void hci_encrypt_change(struct net_buf *buf)
                  * Start SMP over BR/EDR if we are pairing and are
                  * master on the link
                  */
-                if (atomic_test_bit(conn->flags, BT_CONN_BR_PAIRING) &&
+                if (atomic_test_bit(conn->flags, BT_CONN_BR_PAIRED) &&
                     conn->role == BT_CONN_ROLE_CENTRAL) {
                     bt_smp_br_send_pairing_req(conn);
                 }
@@ -3376,8 +3406,13 @@ static int common_init(void)
 	}
 #endif
 
+#if (defined(CONFIG_BT_CENTRAL_ONLY) && (CONFIG_BT_CENTRAL_ONLY > 0U))
+	/* Set default link policy to support sniff mode */
+	BT_hci_write_default_link_policy_settings(0x04);
+#else
 	/* Set default link policy to support role switch and sniff mode */
 	BT_hci_write_default_link_policy_settings(0x05);
+#endif /* CONFIG_BT_CENTRAL_ONLY */
 
 	/* Read Local Supported Features */
 	err = bt_hci_cmd_send_sync(BT_HCI_OP_READ_LOCAL_FEATURES, NULL, &rsp);
@@ -4463,7 +4498,7 @@ uint16_t ethermind_hci_event_callback(uint8_t  event_type, uint8_t *event_data, 
 			opcode = cmdComplete->opcode;
 			if (cmd(bt_dev.sent_cmd)->opcode == opcode)
 			{
-				buf = bt_buf_get_rx(BT_BUF_EVT, K_FOREVER);
+				buf = bt_buf_get_evt(event_type, false, K_FOREVER);
 			}
 		}
 
@@ -4474,7 +4509,7 @@ uint16_t ethermind_hci_event_callback(uint8_t  event_type, uint8_t *event_data, 
 
 		if (NULL == buf)
 		{
-			buf = bt_buf_get_rx(BT_BUF_EVT, K_FOREVER);
+			buf = bt_buf_get_evt(event_type, false, K_FOREVER);
 		}
 	}
 	else
@@ -4882,6 +4917,18 @@ int bt_set_appearance(uint16_t appearance)
 #endif
 
 bool bt_addr_le_is_bonded(uint8_t id, const bt_addr_le_t *addr)
+{
+	if (IS_ENABLED(CONFIG_BT_SMP)) {
+		struct bt_keys *keys = bt_keys_find_addr(id, addr);
+
+		/* if there are any keys stored then device is bonded */
+		return keys && keys->keys;
+	} else {
+		return false;
+	}
+}
+
+bool bt_le_bond_exists(uint8_t id, const bt_addr_le_t *addr)
 {
 	if (IS_ENABLED(CONFIG_BT_SMP)) {
 		struct bt_keys *keys = bt_keys_find_addr(id, addr);

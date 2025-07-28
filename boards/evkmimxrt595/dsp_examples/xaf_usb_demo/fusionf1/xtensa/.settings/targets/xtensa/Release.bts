@@ -18,15 +18,15 @@
               <ListEntry>${xt_project_loc}/../../../../../../middleware/multicore/rpmsg-lite/lib/include</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../middleware/multicore/rpmsg-lite/lib/include/environment/xos</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../middleware/multicore/rpmsg-lite/lib/include/platform/imxrt500_fusionf1</ListEntry>
-              <ListEntry>${xt_project_loc}/../../../../../../middleware/cadence/codecs/aacplus_dec/fusionf1/include/aac_dec</ListEntry>
-              <ListEntry>${xt_project_loc}/../../../../../../middleware/cadence/codecs/asrc_src_pp/fusionf1/include/src_pp</ListEntry>
-              <ListEntry>${xt_project_loc}/../../../../../../middleware/cadence/codecs/mp3_dec/fusionf1/include/mp3_dec</ListEntry>
-              <ListEntry>${xt_project_loc}/../../../../../../middleware/cadence/codecs/mp3_enc/fusionf1/include/mp3_enc</ListEntry>
-              <ListEntry>${xt_project_loc}/../../../../../../middleware/cadence/codecs/opus/fusionf1/include/opus_codec</ListEntry>
-              <ListEntry>${xt_project_loc}/../../../../../../middleware/cadence/codecs/opus/fusionf1/include/ogg_lib</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../middleware/cadence/codecs/include</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../middleware/cadence/codecs/aacplus_dec/include/aac_dec</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../middleware/cadence/codecs/asrc_src_pp/include/src_pp</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../middleware/cadence/codecs/mp3_dec/include/mp3_dec</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../middleware/cadence/codecs/opus/include/opus_codec</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../middleware/cadence/codecs/opus/include/ogg_lib</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../middleware/cadence/codecs/sbc_dec/fusionf1/include/sbc_dec</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../middleware/cadence/codecs/sbc_enc/fusionf1/include/sbc_enc</ListEntry>
-              <ListEntry>${xt_project_loc}/../../../../../../middleware/cadence/codecs/vorbis_dec/fusionf1/include/vorbis_dec</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../middleware/cadence/codecs/vorbis_dec/include/vorbis_dec</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../middleware/cadence/multicore-xaf/xa_af_hostless/algo/hifi-dpf/include</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../middleware/cadence/multicore-xaf/xa_af_hostless/algo/hifi-dpf/include/audio</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../middleware/cadence/multicore-xaf/xa_af_hostless/algo/hifi-dpf/include/lib</ListEntry>
@@ -137,14 +137,13 @@
 --xtensa-core=nxp_rt500_RI23_11_newlib&#13;
 --xtensa-system=${XTENSA_SYSTEM}&#13;
 -Wl,--start-group&#13;
-${xt_project_loc}/../../../../../../middleware/cadence/codecs/aacplus_dec/fusionf1/lib/xa_aacplus_v2_loas_dec.a&#13;
-${xt_project_loc}/../../../../../../middleware/cadence/codecs/asrc_src_pp/fusionf1/lib/xa_asrc_src_pp.a&#13;
-${xt_project_loc}/../../../../../../middleware/cadence/codecs/mp3_dec/fusionf1/lib/xa_mp3_dec.a&#13;
-${xt_project_loc}/../../../../../../middleware/cadence/codecs/mp3_enc/fusionf1/lib/xa_mp3_enc.a&#13;
-${xt_project_loc}/../../../../../../middleware/cadence/codecs/opus/fusionf1/lib/xa_opus_codec.a&#13;
+${xt_project_loc}/../../../../../../middleware/cadence/codecs/aacplus_dec/lib/RT500_FusionF1/xa_aacplus_v2_loas_dec.a&#13;
+${xt_project_loc}/../../../../../../middleware/cadence/codecs/asrc_src_pp/lib/RT500_FusionF1/xa_asrc_src_pp.a&#13;
+${xt_project_loc}/../../../../../../middleware/cadence/codecs/mp3_dec/lib/RT500_FusionF1/xa_mp3_dec.a&#13;
+${xt_project_loc}/../../../../../../middleware/cadence/codecs/opus/lib/RT500_FusionF1/xa_opus_codec.a&#13;
 ${xt_project_loc}/../../../../../../middleware/cadence/codecs/sbc_dec/fusionf1/lib/xa_sbc_dec.a&#13;
 ${xt_project_loc}/../../../../../../middleware/cadence/codecs/sbc_enc/fusionf1/lib/xa_sbc_enc.a&#13;
-${xt_project_loc}/../../../../../../middleware/cadence/codecs/vorbis_dec/fusionf1/lib/xa_vorbis_dec.a&#13;
+${xt_project_loc}/../../../../../../middleware/cadence/codecs/vorbis_dec/lib/RT500_FusionF1/xa_vorbis_dec.a&#13;
 -Wl,--end-group&#13;
 </ListEntry>
             </value>

@@ -1,5 +1,7 @@
-The Independent JPEG Group's JPEG software
+MCUXpresso SDK : The Independent JPEG Group's JPEG software
 ==========================================
+
+This repository is a fork of The Independent JPEG Group's JPEG software(http://www.ijg.org/files/jpegsr9b.zip)(release 9b). Modifications have been made to adapt to NXP MCUXpresso SDK, with the macro "LIB_JPEG_USE_HW_ACCEL". It is part of the MCUXpresso SDK overall delivery which is composed of several sub-repositories/projects. Navigate to the top/parent repository mcuxsdk-manifests(https://github.com/nxp-mcuxpresso/mcuxsdk-manifests) for the complete delivery of MCUXpresso SDK.
 
 README for release 9b of 17-Jan-2016
 ====================================

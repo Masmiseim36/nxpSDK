@@ -5,6 +5,8 @@
 The dsp_audio_demo_bm demo application demonstrates starting DSP core with DSP
 image.
 
+This example cannot be imported into Config Tools because the xtensa toolchain is not supported.
+
 ## Supported Boards
 - [EVK-MIMXRT595](../../../_boards/evkmimxrt595/dsp_examples/audio_demo_bm/example_board_readme.md)
 - [EVK-MIMXRT685](../../../_boards/evkmimxrt685/dsp_examples/audio_demo_bm/example_board_readme.md)

@@ -1,5 +1,5 @@
 /*
- * Copyright 2020-2024 NXP
+ * Copyright 2020-2025 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -26,6 +26,7 @@
 #include "fsl_component_mem_manager.h"
 #include <stdlib.h>
 #include <string.h>
+#include <stdint.h>  /* For INT32_MAX */
 #include "virtqueue.h"
 
 static int32_t env_init_counter         = 0;
@@ -244,7 +245,8 @@ void env_free_memory(void *ptr)
  */
 void env_memset(void *ptr, int32_t value, uint32_t size)
 {
-    (void)memset(ptr, value, size);
+    /* Explicitly convert value to unsigned char range to ensure consistent behavior */
+    (void)memset(ptr, (unsigned char)(value & 0xFF), size);
 }
 
 /*!
@@ -496,7 +498,9 @@ void env_release_sync_lock(void *lock)
  */
 void env_sleep_msec(uint32_t num_msec)
 {
-    (void)tx_thread_sleep((num_msec * TX_TIMER_TICKS_PER_SECOND) / 1000);
+    // (void)tx_thread_sleep((num_msec * TX_TIMER_TICKS_PER_SECOND) / 1000);
+    (void)tx_thread_sleep((num_msec / 1000) * TX_TIMER_TICKS_PER_SECOND +
+                          ((num_msec % 1000) * TX_TIMER_TICKS_PER_SECOND) / 1000);
 }
 
 /*!
@@ -653,6 +657,19 @@ int32_t env_create_queue(void **queue, int32_t length, int32_t element_size)
 {
     struct TX_QUEUE *queue_ptr = ((void *)0);
     char *msgq_buffer_ptr      = ((void *)0);
+
+    if (length < 0 || element_size < 0)
+    {
+        /* Length and size should not be negative */
+        *queue = NULL;
+        return -1;
+    }
+
+    /* Additional integer overflow protection */
+    if (length > INT32_MAX / element_size)
+    {
+        return -1; /* Multiplication would overflow */
+    }
 
 #if defined(RL_USE_STATIC_API) && (RL_USE_STATIC_API == 1)
     queue_ptr       = (struct TX_QUEUE *)queue_static_context;

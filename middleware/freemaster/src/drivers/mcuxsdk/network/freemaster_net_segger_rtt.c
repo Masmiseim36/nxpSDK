@@ -1,5 +1,5 @@
 /*
- * Copyright 2021, 2024 NXP
+ * Copyright 2021, 2024-2025 NXP
  *
  * License: NXP LA_OPT_Online Code Hosting NXP_Software_License
  *
@@ -91,6 +91,7 @@ const FMSTR_NET_DRV_INTF FMSTR_NET_SEGGER_RTT = {
 #define FMSTR_RTT_BUFF_SIZE (FMSTR_COMM_BUFFER_SIZE + 7)
 static FMSTR_U8 fmstr_rttBuffer[FMSTR_RTT_BUFF_SIZE];
 #endif
+
 /******************************************************************************
  * Implementation
  ******************************************************************************/
@@ -98,15 +99,30 @@ static FMSTR_U8 fmstr_rttBuffer[FMSTR_RTT_BUFF_SIZE];
 static FMSTR_BOOL _FMSTR_RttInit(void)
 {
     SEGGER_RTT_Init();
-    SEGGER_RTT_SetTerminal(FMSTR_NET_SEGGER_RTT_BUFFER_INDEX);
+    
+    if(SEGGER_RTT_SetTerminal(FMSTR_NET_SEGGER_RTT_BUFFER_INDEX) < 0)
+    {
+        return FMSTR_FALSE;
+    }
 
 #if FMSTR_NET_SEGGER_RTT_BUFFER_INDEX > 0
-    SEGGER_RTT_ConfigUpBuffer(FMSTR_NET_SEGGER_RTT_BUFFER_INDEX, NULL, fmstr_rttBuffer, FMSTR_RTT_BUFF_SIZE,
-                              SEGGER_RTT_MODE_NO_BLOCK_SKIP);
-    SEGGER_RTT_ConfigDownBuffer(FMSTR_NET_SEGGER_RTT_BUFFER_INDEX, NULL, fmstr_rttBuffer, FMSTR_RTT_BUFF_SIZE, 0);
+    if(SEGGER_RTT_ConfigUpBuffer(FMSTR_NET_SEGGER_RTT_BUFFER_INDEX, NULL, fmstr_rttBuffer, FMSTR_RTT_BUFF_SIZE, SEGGER_RTT_MODE_NO_BLOCK_SKIP) < 0)
+    {
+        return FMSTR_FALSE;
+    }
+    if(SEGGER_RTT_ConfigDownBuffer(FMSTR_NET_SEGGER_RTT_BUFFER_INDEX, NULL, fmstr_rttBuffer, FMSTR_RTT_BUFF_SIZE, 0) < 0)
+    {
+        return FMSTR_FALSE;
+    }
 #else
-    SEGGER_RTT_ConfigUpBuffer(FMSTR_NET_SEGGER_RTT_BUFFER_INDEX, NULL, NULL, 0, SEGGER_RTT_MODE_NO_BLOCK_SKIP);
-    SEGGER_RTT_ConfigDownBuffer(FMSTR_NET_SEGGER_RTT_BUFFER_INDEX, NULL, NULL, 0, 0);
+    if(SEGGER_RTT_ConfigUpBuffer(FMSTR_NET_SEGGER_RTT_BUFFER_INDEX, NULL, NULL, 0, SEGGER_RTT_MODE_NO_BLOCK_SKIP) < 0)
+    {
+        return FMSTR_FALSE;
+    }
+    if(SEGGER_RTT_ConfigDownBuffer(FMSTR_NET_SEGGER_RTT_BUFFER_INDEX, NULL, NULL, 0, 0) < 0)
+    {
+        return FMSTR_FALSE;
+    }
 #endif
     return FMSTR_TRUE;
 }
@@ -120,20 +136,26 @@ static FMSTR_S32 _FMSTR_RttRecv(FMSTR_BPTR msgBuff,
                                 FMSTR_NET_ADDR *recvAddr,
                                 FMSTR_BOOL *isBroadcast)
 {
+    unsigned res;
+    
     FMSTR_ASSERT(msgBuff != NULL);
     FMSTR_ASSERT(recvAddr != NULL);
 
     FMSTR_MemCpy(recvAddr, &fmstr_rttDummyAddress, sizeof(FMSTR_NET_ADDR));
 
-    return SEGGER_RTT_Read(FMSTR_NET_SEGGER_RTT_BUFFER_INDEX, msgBuff, msgMaxSize);
+    res = SEGGER_RTT_Read(FMSTR_NET_SEGGER_RTT_BUFFER_INDEX, msgBuff, msgMaxSize);
+    return res <= (unsigned)msgMaxSize ? (FMSTR_S32)res : -1;
 }
 
 static FMSTR_S32 _FMSTR_RttSend(FMSTR_NET_ADDR *sendAddr, FMSTR_BPTR msgBuff, FMSTR_SIZE msgSize)
 {
+    unsigned res;
+
     FMSTR_ASSERT(msgBuff != NULL);
     FMSTR_ASSERT(sendAddr != NULL);
 
-    return SEGGER_RTT_Write(FMSTR_NET_SEGGER_RTT_BUFFER_INDEX, msgBuff, msgSize);
+    res = SEGGER_RTT_Write(FMSTR_NET_SEGGER_RTT_BUFFER_INDEX, msgBuff, msgSize);
+    return res <= (unsigned)msgSize ? (FMSTR_S32)res : -1;
 }
 
 static void _FMSTR_RttClose(FMSTR_NET_ADDR *addr)

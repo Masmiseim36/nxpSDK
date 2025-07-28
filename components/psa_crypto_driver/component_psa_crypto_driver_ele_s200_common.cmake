@@ -6,6 +6,8 @@ message("${CMAKE_CURRENT_LIST_FILE} component is included.")
       target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
           ${CMAKE_CURRENT_LIST_DIR}/ele_s200/src/common/mcux_psa_s2xx_common_init.c
           ${CMAKE_CURRENT_LIST_DIR}/ele_s200/src/common/mcux_psa_s2xx_entropy.c
+          ${CMAKE_CURRENT_LIST_DIR}/ele_s200/src/common/mcux_psa_s2xx_common_key_management.c
+          ${CMAKE_CURRENT_LIST_DIR}/ele_s200/src/common/mcux_psa_s2xx_common_compute.c
         )
 
   

@@ -8,7 +8,7 @@
 
 #include "utils/includes.h"
 
-#ifdef CONFIG_MBO
+#if defined(CONFIG_MBO) && CONFIG_HOSTAPD
 
 #include "utils/common.h"
 #include "common/ieee802_11_defs.h"

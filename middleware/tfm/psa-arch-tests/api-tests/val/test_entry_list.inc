@@ -43,8 +43,7 @@
     {242, &test_entry_c042},
     {243, &test_entry_c043},
     {244, &test_entry_c044},
-#if defined(PSA_CRYPTO_DRIVER_ELE_S2XX) \
-    && (!defined(ELE_FEATURE_DIGEST_CLONE) || (ELE_FEATURE_DIGEST_CLONE == 0))
+#if defined(ARCH_TEST_SKIP_HASH_CLONE)
     /* Do not do hash clone tests on S2XX devices that do not have
      * hash cloning support */
 #else

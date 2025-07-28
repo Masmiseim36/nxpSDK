@@ -39,14 +39,14 @@ static int32_t conn_download_normal_fw(const t_u8 *connfw_dl, t_u32 firmwarelen,
     t_u32 remaining_len = firmwarelen;
     uint32_t len        = 0;
 
-    if (firmwarelen <= 0)
+    if (firmwarelen == 0U)
     {
         return ret;
     }
 
-    if (intf->intf_s.fwdnld_intf_send)
+    if (intf->intf_s.fwdnld_intf_send != NULL)
     {
-        ret = intf->intf_s.fwdnld_intf_send(intf, (const void *)(connfw_dl + offset), remaining_len, &len);
+        ret = (int32_t)intf->intf_s.fwdnld_intf_send(intf, (const void *)(connfw_dl + offset), remaining_len, &len);
     }
 
     return ret;
@@ -58,20 +58,20 @@ static int32_t conn_download_normal_fw(const t_u8 *connfw_dl, t_u32 firmwarelen,
  * The firmware is stored in Flash.
  * in param intf returned from the interface init
  */
-int32_t firmware_download(const uint8_t *fw_start_addr, const size_t size, void *interface, uint8_t fw_reload)
+int32_t firmware_download(const uint8_t *fw_start_addr, const size_t size, void *intf, uint8_t fw_reload)
 {
     t_u32 firmwarelen;
     int32_t ret         = FWDNLD_STATUS_SUCCESS;
-    fwdnld_intf_t *intf = (fwdnld_intf_t *)interface;
+    fwdnld_intf_t *iface = (fwdnld_intf_t *)intf;
 
-    if (size == 0)
+    if (size == 0U)
     {
         return ret;
     }
 
-    if (intf->intf_s.fwdnld_intf_prepare)
+    if (iface->intf_s.fwdnld_intf_prepare != NULL)
     {
-        ret = intf->intf_s.fwdnld_intf_prepare(intf, NULL);
+        ret = (int32_t)iface->intf_s.fwdnld_intf_prepare(iface, NULL);
         if (ret != FWDNLD_STATUS_SUCCESS)
         {
             return ret;
@@ -79,9 +79,9 @@ int32_t firmware_download(const uint8_t *fw_start_addr, const size_t size, void 
     }
 
 #if (CONFIG_WIFI_IND_DNLD)
-    if ((fw_reload != 0) && (intf->intf_s.fwdnld_intf_check_reload))
+    if ((fw_reload != 0U) && (iface->intf_s.fwdnld_intf_check_reload != NULL))
     {
-        ret = intf->intf_s.fwdnld_intf_check_reload(intf, fw_reload);
+        ret = iface->intf_s.fwdnld_intf_check_reload(iface, fw_reload);
         if (ret != FWDNLD_STATUS_SUCCESS)
         {
             return ret;
@@ -101,16 +101,16 @@ int32_t firmware_download(const uint8_t *fw_start_addr, const size_t size, void 
             "Un-compressed image found, start download,"
             " len: %d",
             firmwarelen);
-        ret = conn_download_normal_fw(conn_fw, firmwarelen, intf);
+        ret = conn_download_normal_fw(conn_fw, firmwarelen, iface);
     }
 
     if (ret != FWDNLD_STATUS_SUCCESS)
     {
         return FWDNLD_STATUS_FAILURE;
     }
-    if (intf->intf_s.fwdnld_intf_check_ready)
+    if (iface->intf_s.fwdnld_intf_check_ready != NULL)
     {
-        return intf->intf_s.fwdnld_intf_check_ready(intf, NULL);
+        return (int32_t)iface->intf_s.fwdnld_intf_check_ready(iface, NULL);
     }
     return ret;
 }

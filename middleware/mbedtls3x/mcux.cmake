@@ -52,6 +52,20 @@ if(CONFIG_MCUX_COMPONENT_middleware.mbedtls3x.port.psa_crypto_config)
     )
 endif()
 
+if(CONFIG_MCUX_COMPONENT_middleware.mbedtls3x.port.only_accelerator_config)
+    mcux_component_version(${mbedtls3x_version})
+
+    mcux_add_source(
+        SOURCES port/mcux_mbedtls_accelerator_config.h
+                port/mcux_psa_defines.h
+        BASE_PATH ${SdkRootDirPath}/middleware/mbedtls3x/
+    )
+    mcux_add_include(
+        INCLUDES port
+        BASE_PATH ${SdkRootDirPath}/middleware/mbedtls3x/
+    )
+endif()
+
 if(CONFIG_MCUX_COMPONENT_middleware.mbedtls3x.port.hw_init)
     mcux_component_version(${mbedtls3x_version})
     mcux_add_source(
@@ -77,10 +91,24 @@ if(CONFIG_MCUX_COMPONENT_middleware.mbedtls3x.port.rng)
     )
 endif()
 
+if(CONFIG_MCUX_COMPONENT_middleware.mbedtls3x.port.only_entropy)
+    mcux_component_version(${mbedtls3x_version})
+
+    mcux_add_source(
+        SOURCES port/rng/psa_mcux_entropy.c
+        BASE_PATH ${SdkRootDirPath}/middleware/mbedtls3x/
+    )
+    mcux_add_include(
+        INCLUDES port/rng
+        BASE_PATH ${SdkRootDirPath}/middleware/mbedtls3x/
+    )
+endif()
+
 if(CONFIG_MCUX_COMPONENT_middleware.mbedtls3x.port.tfm)
     mcux_component_version(${mbedtls3x_version})
     mcux_add_source(
         SOURCES port/tfm/entropy_poll_alt.c
+        port/tfm/psa_can_do_apis.c
         BASE_PATH ${SdkRootDirPath}/middleware/mbedtls3x/
     )
     mcux_add_include(
@@ -183,6 +211,9 @@ endif()
 
 if(CONFIG_MCUX_COMPONENT_middleware.mbedtls3x.crypto.no_psa)
     mcux_component_version(${mbedtls3x_version})
+    mcux_add_armgcc_configuration(
+        CC  "-fomit-frame-pointer"
+    )
     mcux_add_source(
         SOURCES include/mbedtls/aes.h
                 include/mbedtls/aria.h
@@ -250,6 +281,7 @@ if(CONFIG_MCUX_COMPONENT_middleware.mbedtls3x.crypto.no_psa)
                 include/psa/build_info.h
                 include/psa/crypto.h
                 include/psa/crypto_adjust_auto_enabled.h
+                include/psa/crypto_adjust_config_dependencies.h
                 include/psa/crypto_adjust_config_key_pair_types.h
                 include/psa/crypto_adjust_config_synonyms.h
                 include/psa/crypto_builtin_composites.h
@@ -283,6 +315,8 @@ if(CONFIG_MCUX_COMPONENT_middleware.mbedtls3x.crypto.no_psa)
                 library/bignum.c
                 library/bignum_core.h
                 library/bignum_core.c
+                library/bignum_core_invasive.h
+                library/bignum_internal.h
                 library/bignum_mod.c
                 library/bignum_mod.h
                 library/bignum_mod_raw.c
@@ -413,6 +447,22 @@ if(CONFIG_MCUX_COMPONENT_middleware.mbedtls3x.crypto)
     mcux_add_include(
         INCLUDES include
                  library
+        BASE_PATH ${SdkRootDirPath}/middleware/mbedtls3x/
+    )
+endif()
+
+if(CONFIG_MCUX_COMPONENT_middleware.mbedtls3x.p256m)
+    mcux_component_version(${mbedtls3x_version})
+    mcux_add_source(
+        SOURCES 3rdparty/p256-m/p256-m/p256-m.h
+                3rdparty/p256-m/p256-m/p256-m.c
+                3rdparty/p256-m/p256-m_driver_entrypoints.h
+                3rdparty/p256-m/p256-m_driver_entrypoints.c
+        BASE_PATH ${SdkRootDirPath}/middleware/mbedtls3x/
+    )
+    mcux_add_include(
+        INCLUDES 3rdparty/p256-m/p256-m/
+                 3rdparty/p256-m/
         BASE_PATH ${SdkRootDirPath}/middleware/mbedtls3x/
     )
 endif()

@@ -102,6 +102,11 @@ void sg_init_table();
 void sg_set_num(size_t num_sg);
 void sg_set_buf(uint32_t *buf, size_t len);
 int sdio_drv_read_mb(uint32_t addr, uint32_t fn, uint32_t bcnt, uint32_t bsize);
+void sg_rx_init_table();
+void sg_tx_set_buf(uint32_t *buf, size_t len);
+void sg_tx_init_table();
+int sdio_drv_write_mb(uint32_t addr, uint32_t fn, uint32_t bcnt, uint32_t bsize);
+void sg_rx_set_buf(uint32_t *buf, size_t len);
 #endif
 
 /** Write Data to SDIO

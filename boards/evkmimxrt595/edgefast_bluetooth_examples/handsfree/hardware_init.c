@@ -184,7 +184,7 @@ hal_audio_config_t txMicConfig = {
     .sampleRate_Hz = (uint32_t)kHAL_AudioSampleRate8KHz,
 #if defined(WIFI_88W8987_BOARD_AW_CM358MA) || defined(WIFI_88W8987_BOARD_MURATA_1ZM_M2)
     .frameLength = 22, /* Here is 22 because the bt module will generate 22 bits clock after one clock WS. */
-#elif defined(WIFI_IW416_BOARD_AW_AM510MA) || defined(WIFI_IW416_BOARD_MURATA_1XK_M2)
+#elif defined(WIFI_IW416_BOARD_AW_AM510MA) || defined(WIFI_IW416_BOARD_MURATA_1XK_M2) || defined(WIFI_IW612_BOARD_MURATA_2EL_M2)
     .frameLength = 256, /* Here is 256 because the bt module will generate 256 bits clock after one clock WS. */
 #else
 #endif
@@ -216,7 +216,7 @@ hal_audio_config_t rxSpeakerConfig = {
     .sampleRate_Hz = (uint32_t)kHAL_AudioSampleRate8KHz,
 #if defined(WIFI_88W8987_BOARD_AW_CM358MA) || defined(WIFI_88W8987_BOARD_MURATA_1ZM_M2)
     .frameLength = 22, /* Here is 22 because the bt module will generate 22 bits clock after one clock WS. */
-#elif defined(WIFI_IW416_BOARD_AW_AM510MA) || defined(WIFI_IW416_BOARD_MURATA_1XK_M2)
+#elif defined(WIFI_IW416_BOARD_AW_AM510MA) || defined(WIFI_IW416_BOARD_MURATA_1XK_M2) || defined(WIFI_IW612_BOARD_MURATA_2EL_M2)
     .frameLength = 256, /* Here is 256 because the bt module will generate 256 bits clock after one clock WS. */
 #else
 #endif

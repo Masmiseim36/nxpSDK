@@ -426,6 +426,22 @@ static int wpa_get_beacon_ie(struct wpa_supplicant *wpa_s)
         ie = wpa_bss_get_ie(curr, WLAN_EID_RSNX);
         if (wpa_sm_set_ap_rsnxe(wpa_s->wpa, ie, ie ? 2 + ie[1] : 0))
             ret = -1;
+
+		ie = wpa_bss_get_vendor_ie(curr, RSNE_OVERRIDE_IE_VENDOR_TYPE);
+		if (wpa_sm_set_ap_rsne_override(wpa_s->wpa, ie,
+						ie ? 2 + ie[1] : 0))
+			ret = -1;
+
+		ie = wpa_bss_get_vendor_ie(curr,
+					   RSNE_OVERRIDE_2_IE_VENDOR_TYPE);
+		if (wpa_sm_set_ap_rsne_override_2(wpa_s->wpa, ie,
+						  ie ? 2 + ie[1] : 0))
+			ret = -1;
+
+		ie = wpa_bss_get_vendor_ie(curr, RSNXE_OVERRIDE_IE_VENDOR_TYPE);
+		if (wpa_sm_set_ap_rsnxe_override(wpa_s->wpa, ie,
+						 ie ? 2 + ie[1] : 0))
+			ret = -1;
     }
     else
     {

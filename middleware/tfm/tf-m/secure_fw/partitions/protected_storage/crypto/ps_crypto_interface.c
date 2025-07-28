@@ -12,7 +12,7 @@
 
 #include "config_tfm.h"
 #include "tfm_crypto_defs.h"
-#include "psa/tfm/crypto.h"     //NXP to avoid file name conflicts between MbedTLS and TFM.
+#include "psa/crypto.h"
 
 #ifndef PS_CRYPTO_AEAD_ALG
 #define PS_CRYPTO_AEAD_ALG PSA_ALG_GCM

@@ -817,6 +817,7 @@ hal_uart_dma_status_t HAL_UartDMAInit(hal_uart_handle_t handle,
 
     assert(handle);
     assert(dmaHandle);
+    assert(HAL_UART_DMA_HANDLE_SIZE >= sizeof(hal_uart_dma_state_t));
 
     /* DMA init process. */
     uartHandle    = (hal_uart_state_t *)handle;

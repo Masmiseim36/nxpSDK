@@ -246,7 +246,7 @@ mlan_status wlan_ops_process_rx_packet(IN t_void *adapter, IN pmlan_buffer pmbuf
           __memcmp(priv->adapter, priv->curr_addr, prx_pkt->eth803_hdr.dest_addr, MLAN_MAC_ADDR_LENGTH))) ||
         ((GET_BSS_ROLE(priv) == MLAN_BSS_ROLE_UAP) && ptx_tbl && (!ptx_tbl->ampdu_supported[0])))
     {
-        (void)wlan_process_rx_packet(pmadapter, pmbuf);
+        ret = wlan_process_rx_packet(pmadapter, pmbuf);
         goto done;
     }
 

@@ -245,12 +245,13 @@
           <state>SSD1963_DATA_WITDH=8</state>
           <state>FLEXIO_MCULCD_DATA_BUS_WIDTH=8</state>
           <state>LIBJPEG_USER_CONFIG_FILE="libjpeg_user_config.h"</state>
-          <state>DEMO_RM67162_USE_RG565</state>
-          <state>DEMO_SSD1963_USE_RG565</state>
+          <state>DEMO_RM67162_USE_RGB565</state>
+          <state>DEMO_SSD1963_USE_RGB565</state>
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT595SFFOC_cm33</state>
+          <state>MIMXRT595S_cm33_SERIES</state>
           <state>OSA_USED</state>
           <state>BOOT_HEADER_ENABLE=1</state>
           <state>USE_RTOS=0</state>
@@ -401,6 +402,7 @@
           <state>$PROJ_DIR$/../../../../../components/video/display/rm68191</state>
           <state>$PROJ_DIR$/../../../../../components/video/display/rm68200</state>
           <state>$PROJ_DIR$/../../../../../components/video/display/rm67162</state>
+          <state>$PROJ_DIR$/../../../../../components/video/display/co5300</state>
           <state>$PROJ_DIR$/../../../../../components/display/ssd1963</state>
           <state>$PROJ_DIR$/../../../../../middleware/fatfs/source</state>
           <state>$PROJ_DIR$/../../../../../middleware/fatfs/template</state>
@@ -595,6 +597,7 @@
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT595SFFOC_cm33</state>
+          <state>MIMXRT595S_cm33_SERIES</state>
           <state>OSA_USED</state>
         </option>
         <option>
@@ -713,6 +716,7 @@
           <state>$PROJ_DIR$/../../../../../components/video/display/rm68191</state>
           <state>$PROJ_DIR$/../../../../../components/video/display/rm68200</state>
           <state>$PROJ_DIR$/../../../../../components/video/display/rm67162</state>
+          <state>$PROJ_DIR$/../../../../../components/video/display/co5300</state>
           <state>$PROJ_DIR$/../../../../../components/display/ssd1963</state>
           <state>$PROJ_DIR$/../../../../../middleware/fatfs/source</state>
           <state>$PROJ_DIR$/../../../../../middleware/fatfs/template</state>
@@ -1431,12 +1435,13 @@
           <state>SSD1963_DATA_WITDH=8</state>
           <state>FLEXIO_MCULCD_DATA_BUS_WIDTH=8</state>
           <state>LIBJPEG_USER_CONFIG_FILE="libjpeg_user_config.h"</state>
-          <state>DEMO_RM67162_USE_RG565</state>
-          <state>DEMO_SSD1963_USE_RG565</state>
+          <state>DEMO_RM67162_USE_RGB565</state>
+          <state>DEMO_SSD1963_USE_RGB565</state>
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT595SFFOC_cm33</state>
+          <state>MIMXRT595S_cm33_SERIES</state>
           <state>OSA_USED</state>
           <state>BOOT_HEADER_ENABLE=1</state>
           <state>USE_RTOS=0</state>
@@ -1587,6 +1592,7 @@
           <state>$PROJ_DIR$/../../../../../components/video/display/rm68191</state>
           <state>$PROJ_DIR$/../../../../../components/video/display/rm68200</state>
           <state>$PROJ_DIR$/../../../../../components/video/display/rm67162</state>
+          <state>$PROJ_DIR$/../../../../../components/video/display/co5300</state>
           <state>$PROJ_DIR$/../../../../../components/display/ssd1963</state>
           <state>$PROJ_DIR$/../../../../../middleware/fatfs/source</state>
           <state>$PROJ_DIR$/../../../../../middleware/fatfs/template</state>
@@ -1781,6 +1787,7 @@
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT595SFFOC_cm33</state>
+          <state>MIMXRT595S_cm33_SERIES</state>
           <state>OSA_USED</state>
         </option>
         <option>
@@ -1899,6 +1906,7 @@
           <state>$PROJ_DIR$/../../../../../components/video/display/rm68191</state>
           <state>$PROJ_DIR$/../../../../../components/video/display/rm68200</state>
           <state>$PROJ_DIR$/../../../../../components/video/display/rm67162</state>
+          <state>$PROJ_DIR$/../../../../../components/video/display/co5300</state>
           <state>$PROJ_DIR$/../../../../../components/display/ssd1963</state>
           <state>$PROJ_DIR$/../../../../../middleware/fatfs/source</state>
           <state>$PROJ_DIR$/../../../../../middleware/fatfs/template</state>
@@ -2617,12 +2625,13 @@
           <state>SSD1963_DATA_WITDH=8</state>
           <state>FLEXIO_MCULCD_DATA_BUS_WIDTH=8</state>
           <state>LIBJPEG_USER_CONFIG_FILE="libjpeg_user_config.h"</state>
-          <state>DEMO_RM67162_USE_RG565</state>
-          <state>DEMO_SSD1963_USE_RG565</state>
+          <state>DEMO_RM67162_USE_RGB565</state>
+          <state>DEMO_SSD1963_USE_RGB565</state>
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT595SFFOC_cm33</state>
+          <state>MIMXRT595S_cm33_SERIES</state>
           <state>OSA_USED</state>
           <state>BOOT_HEADER_ENABLE=1</state>
           <state>USE_RTOS=0</state>
@@ -2773,6 +2782,7 @@
           <state>$PROJ_DIR$/../../../../../components/video/display/rm68191</state>
           <state>$PROJ_DIR$/../../../../../components/video/display/rm68200</state>
           <state>$PROJ_DIR$/../../../../../components/video/display/rm67162</state>
+          <state>$PROJ_DIR$/../../../../../components/video/display/co5300</state>
           <state>$PROJ_DIR$/../../../../../components/display/ssd1963</state>
           <state>$PROJ_DIR$/../../../../../middleware/fatfs/source</state>
           <state>$PROJ_DIR$/../../../../../middleware/fatfs/template</state>
@@ -2967,6 +2977,7 @@
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT595SFFOC_cm33</state>
+          <state>MIMXRT595S_cm33_SERIES</state>
           <state>OSA_USED</state>
         </option>
         <option>
@@ -3085,6 +3096,7 @@
           <state>$PROJ_DIR$/../../../../../components/video/display/rm68191</state>
           <state>$PROJ_DIR$/../../../../../components/video/display/rm68200</state>
           <state>$PROJ_DIR$/../../../../../components/video/display/rm67162</state>
+          <state>$PROJ_DIR$/../../../../../components/video/display/co5300</state>
           <state>$PROJ_DIR$/../../../../../components/display/ssd1963</state>
           <state>$PROJ_DIR$/../../../../../middleware/fatfs/source</state>
           <state>$PROJ_DIR$/../../../../../middleware/fatfs/template</state>
@@ -3803,12 +3815,13 @@
           <state>SSD1963_DATA_WITDH=8</state>
           <state>FLEXIO_MCULCD_DATA_BUS_WIDTH=8</state>
           <state>LIBJPEG_USER_CONFIG_FILE="libjpeg_user_config.h"</state>
-          <state>DEMO_RM67162_USE_RG565</state>
-          <state>DEMO_SSD1963_USE_RG565</state>
+          <state>DEMO_RM67162_USE_RGB565</state>
+          <state>DEMO_SSD1963_USE_RGB565</state>
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT595SFFOC_cm33</state>
+          <state>MIMXRT595S_cm33_SERIES</state>
           <state>OSA_USED</state>
           <state>BOOT_HEADER_ENABLE=1</state>
           <state>USE_RTOS=0</state>
@@ -3959,6 +3972,7 @@
           <state>$PROJ_DIR$/../../../../../components/video/display/rm68191</state>
           <state>$PROJ_DIR$/../../../../../components/video/display/rm68200</state>
           <state>$PROJ_DIR$/../../../../../components/video/display/rm67162</state>
+          <state>$PROJ_DIR$/../../../../../components/video/display/co5300</state>
           <state>$PROJ_DIR$/../../../../../components/display/ssd1963</state>
           <state>$PROJ_DIR$/../../../../../middleware/fatfs/source</state>
           <state>$PROJ_DIR$/../../../../../middleware/fatfs/template</state>
@@ -4153,6 +4167,7 @@
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT595SFFOC_cm33</state>
+          <state>MIMXRT595S_cm33_SERIES</state>
           <state>OSA_USED</state>
         </option>
         <option>
@@ -4271,6 +4286,7 @@
           <state>$PROJ_DIR$/../../../../../components/video/display/rm68191</state>
           <state>$PROJ_DIR$/../../../../../components/video/display/rm68200</state>
           <state>$PROJ_DIR$/../../../../../components/video/display/rm67162</state>
+          <state>$PROJ_DIR$/../../../../../components/video/display/co5300</state>
           <state>$PROJ_DIR$/../../../../../components/display/ssd1963</state>
           <state>$PROJ_DIR$/../../../../../middleware/fatfs/source</state>
           <state>$PROJ_DIR$/../../../../../middleware/fatfs/template</state>
@@ -4748,6 +4764,9 @@
   <group>
     <name>source</name>
     <file>
+      <name>$PROJ_DIR$/../pics.zip</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../sd_jpeg.c</name>
     </file>
     <file>
@@ -5204,12 +5223,6 @@
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers/fsl_smartdma_rt500.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers/fsl_smartdma_mcxn.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers/fsl_smartdma_mcxn.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers/fsl_usdhc.c</name>
     </file>
     <file>
@@ -5275,13 +5288,13 @@
     <group>
       <name>osa</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../components/osa/fsl_os_abstraction.h</name>
-      </file>
-      <file>
         <name>$PROJ_DIR$/../../../../../components/osa/fsl_os_abstraction_bm.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../components/osa/fsl_os_abstraction_bm.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/osa/fsl_os_abstraction.h</name>
       </file>
     </group>
   </group>
@@ -5358,6 +5371,12 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../components/video/display/rm67162/fsl_rm67162.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../components/video/display/co5300/fsl_co5300.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../components/video/display/co5300/fsl_co5300.c</name>
     </file>
   </group>
   <group>
@@ -5640,6 +5659,9 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../example_board_readme.md</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../examples_shared_readme.md</name>
     </file>
   </group>
 </project>

@@ -181,14 +181,14 @@ static int cmd_connect(const struct shell *sh, size_t argc, char *argv[])
 	uint8_t channel;
 	int err;
 
-	if (!default_conn) {
+	if (!default_br_conn) {
 		shell_error(sh, "Not connected");
 		return -ENOEXEC;
 	}
 
 	channel = strtoul(argv[1], NULL, 16);
 
-	err = bt_rfcomm_dlc_connect(default_conn, &rfcomm_dlc, channel);
+	err = bt_rfcomm_dlc_connect(default_br_conn, &rfcomm_dlc, channel);
 	if (err < 0) {
 		shell_error(sh, "Unable to connect to channel %d (err %u)",
 			    channel, err);

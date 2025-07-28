@@ -332,9 +332,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../mcux_config.h -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
-              <Define>DEBUG, USE_RTOS=1, DISABLE_LOGGING, XIP_IMAGE, XIP_EXTERNAL_FLASH, MBEDTLS_CONFIG_FILE='\"aws_mbedtls_config.h\"', SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT595SFFOC_cm33, DEBUG_CONSOLE_TRANSFER_NON_BLOCKING, OSA_USED, BOOT_HEADER_ENABLE=1, SERIAL_PORT_TYPE_UART=1, MFLASH_FILE_BASEADDR=7340032, SDK_I2C_BASED_COMPONENT_USED=1, CONFIG_NXP_WIFI_SOFTAP_SUPPORT=1, SDIO_ENABLED=1, SDK_OS_FREE_RTOS, MQTT_AGENT_DO_NOT_USE_CUSTOM_CONFIG, MBEDTLS_THREADING_ALT, MBEDTLS_THREADING_C</Define>
+              <Define>DEBUG, USE_RTOS=1, DISABLE_LOGGING, XIP_IMAGE, XIP_EXTERNAL_FLASH, MBEDTLS_CONFIG_FILE='\"aws_mbedtls_config.h\"', SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT595SFFOC_cm33, MIMXRT595S_cm33_SERIES, DEBUG_CONSOLE_TRANSFER_NON_BLOCKING, OSA_USED, BOOT_HEADER_ENABLE=1, SERIAL_PORT_TYPE_UART=1, WIFI_IW416_BOARD_MURATA_1XK_M2, SDK_I2C_BASED_COMPONENT_USED=1, MFLASH_FILE_BASEADDR=7340032, CONFIG_NXP_WIFI_SOFTAP_SUPPORT=1, SDIO_ENABLED=1, SDK_OS_FREE_RTOS, MQTT_AGENT_DO_NOT_USE_CUSTOM_CONFIG, MBEDTLS_THREADING_ALT, MBEDTLS_THREADING_C</Define>
               <Undefine/>
-              <IncludePath>..;../../../flash_config;../../../../../CMSIS/Core/Include;../../../../../CMSIS/Core/Include/m-profile;../../../../../devices/MIMXRT595S;../../../../../devices/MIMXRT595S/periph;../../../../../devices/MIMXRT595S/drivers;../../../../../components/aws_iot/kvstore;../../../../../components/aws_iot/logging;../../../../../components/aws_iot/mqtt_agent;../../../../../components/aws_iot/mqtt-agent-interface/include;../../../../../components/aws_iot/using_mbedtls_pkcs11;../../../../../devices/MIMXRT595S/utilities;../../../../../components/lists;../../../../../devices/MIMXRT595S/utilities/str;../../../../../devices/MIMXRT595S/utilities/debug_console;../../../../../components/serial_manager;../../../../../components/gpio;../../../../../components/uart;../../../../../components/flash/mflash;../../../../../components/flash/mflash/mimxrt595;../../../../../components/osa;../../../../../components/edgefast_wifi/include;../../../../../components/pmic/pca9420;../../../../../components/wifi_bt_module/AzureWave/tx_pwr_limits;../../../../../components/wifi_bt_module/Murata/tx_pwr_limits;../../../../../components/wifi_bt_module/u-blox/tx_pwr_limits;../../../../../components/wifi_bt_module/incl;../../../../../middleware/wifi_nxp;../../../../../middleware/wifi_nxp/incl;../../../../../middleware/wifi_nxp/incl/port/osa;../../../../../middleware/wifi_nxp/port/osa;../../../../../middleware/wifi_nxp/incl/port;../../../../../middleware/wifi_nxp/incl/wifidriver;../../../../../middleware/wifi_nxp/wifi_bt_firmware;../../../../../middleware/wifi_nxp/wifidriver;../../../../../middleware/wifi_nxp/wifidriver/incl;../../../../../middleware/wifi_nxp/wifi_bt_firmware/8801;../../../../../middleware/wifi_nxp/wifi_bt_firmware/IW416;../../../../../middleware/wifi_nxp/wifi_bt_firmware/8987;../../../../../middleware/wifi_nxp/wifi_bt_firmware/nw61x;../../../../../middleware/wifi_nxp/wifi_bt_firmware/iw610;../../../../../middleware/wifi_nxp/firmware_dnld;../../../../../middleware/wifi_nxp/sdio_nxp_abs;../../../../../middleware/wifi_nxp/sdio_nxp_abs/incl;../../../../../middleware/wifi_nxp/fwdnld_intf_abs;../../../../../middleware/wifi_nxp/incl/wlcmgr;../../../../../middleware/wifi_nxp/wifidriver/wpa_supp_if;../../../../../middleware/wifi_nxp/wifidriver/wpa_supp_if/incl;../../../../../middleware/wifi_nxp/certs;../../../../../middleware/wifi_nxp/incl/port/net;../../../../../middleware/wifi_nxp/port/net;../../../../../middleware/wifi_nxp/incl/port/net/hooks;../../../../../middleware/mbedtls/include;../../../../../middleware/mbedtls/library;../../../../../middleware/mbedtls/port/ksdk;../../../../../middleware/lwip/port;../../../../../middleware/lwip/src;../../../../../middleware/lwip/src/include;../../../../../middleware/lwip/src/include/lwip;../../../../../middleware/lwip/port/sys_arch/dynamic;../../../../../middleware/sdmmc/common;../../../../../middleware/sdmmc/osa;../../../../../middleware/sdmmc/sdio;../../../../../middleware/sdmmc/host/usdhc;../../../../../middleware/pkcs11;../../../../../middleware/aws_iot/device-shadow/template;../../../../../middleware/aws_iot/device-shadow/source/include;../../../../../rtos/freertos/freertos-kernel/include;../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../rtos/freertos/freertos-kernel/template;../../../../../rtos/freertos/backoffalgorithm/source/include;../../../../../rtos/freertos/corejson/source/include;../../../../../rtos/freertos/coremqtt/source/include;../../../../../rtos/freertos/coremqtt/source/interface;../../../../../rtos/freertos/coremqtt-agent/source/include;../../../../../rtos/freertos/corepkcs11/source/include;../../../../../rtos/freertos/corepkcs11/source/dependency/3rdparty/mbedtls_utils</IncludePath>
+              <IncludePath>..;../../../flash_config;../../../../../CMSIS/Core/Include;../../../../../CMSIS/Core/Include/m-profile;../../../../../devices/MIMXRT595S;../../../../../devices/MIMXRT595S/periph;../../../../../devices/MIMXRT595S/drivers;../../../../../components/aws_iot/kvstore;../../../../../components/aws_iot/logging;../../../../../components/aws_iot/mqtt_agent;../../../../../components/aws_iot/mqtt-agent-interface/include;../../../../../components/aws_iot/using_mbedtls_pkcs11;../../../../../devices/MIMXRT595S/utilities/debug_console;../../../../../components/lists;../../../../../devices/MIMXRT595S/utilities/str;../../../../../components/serial_manager;../../../../../components/gpio;../../../../../components/uart;../../../../../components/osa;../../../../../components/edgefast_wifi/include;../../../../../components/wifi_bt_module/AzureWave/tx_pwr_limits;../../../../../components/wifi_bt_module/Murata/tx_pwr_limits;../../../../../components/wifi_bt_module/u-blox/tx_pwr_limits;../../../../../components/wifi_bt_module/incl;../../../../../components/pmic/pca9420;../../../../../components/flash/mflash;../../../../../components/flash/mflash/mimxrt595;../../../../../middleware/wifi_nxp;../../../../../middleware/wifi_nxp/incl;../../../../../middleware/wifi_nxp/incl/port/osa;../../../../../middleware/wifi_nxp/port/osa;../../../../../middleware/wifi_nxp/incl/port;../../../../../middleware/wifi_nxp/incl/wifidriver;../../../../../middleware/wifi_nxp/wifi_bt_firmware;../../../../../middleware/wifi_nxp/wifidriver;../../../../../middleware/wifi_nxp/wifidriver/incl;../../../../../middleware/wifi_nxp/wifi_bt_firmware/IW416;../../../../../middleware/wifi_nxp/wifi_bt_firmware/8987;../../../../../middleware/wifi_nxp/wifi_bt_firmware/nw61x;../../../../../middleware/wifi_nxp/wifi_bt_firmware/iw610;../../../../../middleware/wifi_nxp/firmware_dnld;../../../../../middleware/wifi_nxp/sdio_nxp_abs;../../../../../middleware/wifi_nxp/sdio_nxp_abs/incl;../../../../../middleware/wifi_nxp/fwdnld_intf_abs;../../../../../middleware/wifi_nxp/incl/wlcmgr;../../../../../middleware/wifi_nxp/wifidriver/wpa_supp_if;../../../../../middleware/wifi_nxp/wifidriver/wpa_supp_if/incl;../../../../../middleware/wifi_nxp/certs;../../../../../middleware/wifi_nxp/incl/port/net;../../../../../middleware/wifi_nxp/port/net;../../../../../middleware/wifi_nxp/incl/port/net/hooks;../../../../../middleware/mbedtls/include;../../../../../middleware/mbedtls/library;../../../../../middleware/mbedtls/port/ksdk;../../../../../middleware/lwip/port;../../../../../middleware/lwip/src/include;../../../../../middleware/lwip/port/sys_arch/dynamic;../../../../../middleware/sdmmc/common;../../../../../middleware/sdmmc/osa;../../../../../middleware/sdmmc/sdio;../../../../../middleware/sdmmc/host/usdhc;../../../../../middleware/pkcs11;../../../../../middleware/aws_iot/device-shadow/template;../../../../../middleware/aws_iot/device-shadow/source/include;../../../../../rtos/freertos/freertos-kernel/include;../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../rtos/freertos/freertos-kernel/template;../../../../../rtos/freertos/backoffalgorithm/source/include;../../../../../rtos/freertos/corejson/source/include;../../../../../rtos/freertos/coremqtt/source/include;../../../../../rtos/freertos/coremqtt/source/interface;../../../../../rtos/freertos/coremqtt-agent/source/include;../../../../../rtos/freertos/corepkcs11/source/include;../../../../../rtos/freertos/corepkcs11/source/dependency/3rdparty/mbedtls_utils</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -350,9 +350,9 @@
             <uClangAs>1</uClangAs>
             <VariousControls>
               <MiscControls/>
-              <Define>MCUXPRESSO_SDK, CPU_MIMXRT595SFFOC_cm33, DEBUG_CONSOLE_TRANSFER_NON_BLOCKING, OSA_USED</Define>
+              <Define>MCUXPRESSO_SDK, CPU_MIMXRT595SFFOC_cm33, MIMXRT595S_cm33_SERIES, DEBUG_CONSOLE_TRANSFER_NON_BLOCKING, OSA_USED</Define>
               <Undefine/>
-              <IncludePath>..;../../../flash_config;../../../../../CMSIS/Core/Include;../../../../../CMSIS/Core/Include/m-profile;../../../../../devices/MIMXRT595S;../../../../../devices/MIMXRT595S/periph;../../../../../devices/MIMXRT595S/drivers;../../../../../components/aws_iot/kvstore;../../../../../components/aws_iot/logging;../../../../../components/aws_iot/mqtt_agent;../../../../../components/aws_iot/mqtt-agent-interface/include;../../../../../components/aws_iot/using_mbedtls_pkcs11;../../../../../devices/MIMXRT595S/utilities;../../../../../components/lists;../../../../../devices/MIMXRT595S/utilities/str;../../../../../devices/MIMXRT595S/utilities/debug_console;../../../../../components/serial_manager;../../../../../components/gpio;../../../../../components/uart;../../../../../components/flash/mflash;../../../../../components/flash/mflash/mimxrt595;../../../../../components/osa;../../../../../components/edgefast_wifi/include;../../../../../components/pmic/pca9420;../../../../../components/wifi_bt_module/AzureWave/tx_pwr_limits;../../../../../components/wifi_bt_module/Murata/tx_pwr_limits;../../../../../components/wifi_bt_module/u-blox/tx_pwr_limits;../../../../../components/wifi_bt_module/incl;../../../../../middleware/wifi_nxp;../../../../../middleware/wifi_nxp/incl;../../../../../middleware/wifi_nxp/incl/port/osa;../../../../../middleware/wifi_nxp/port/osa;../../../../../middleware/wifi_nxp/incl/port;../../../../../middleware/wifi_nxp/incl/wifidriver;../../../../../middleware/wifi_nxp/wifi_bt_firmware;../../../../../middleware/wifi_nxp/wifidriver;../../../../../middleware/wifi_nxp/wifidriver/incl;../../../../../middleware/wifi_nxp/wifi_bt_firmware/8801;../../../../../middleware/wifi_nxp/wifi_bt_firmware/IW416;../../../../../middleware/wifi_nxp/wifi_bt_firmware/8987;../../../../../middleware/wifi_nxp/wifi_bt_firmware/nw61x;../../../../../middleware/wifi_nxp/wifi_bt_firmware/iw610;../../../../../middleware/wifi_nxp/firmware_dnld;../../../../../middleware/wifi_nxp/sdio_nxp_abs;../../../../../middleware/wifi_nxp/sdio_nxp_abs/incl;../../../../../middleware/wifi_nxp/fwdnld_intf_abs;../../../../../middleware/wifi_nxp/incl/wlcmgr;../../../../../middleware/wifi_nxp/wifidriver/wpa_supp_if;../../../../../middleware/wifi_nxp/wifidriver/wpa_supp_if/incl;../../../../../middleware/wifi_nxp/certs;../../../../../middleware/wifi_nxp/incl/port/net;../../../../../middleware/wifi_nxp/port/net;../../../../../middleware/wifi_nxp/incl/port/net/hooks;../../../../../middleware/mbedtls/include;../../../../../middleware/mbedtls/library;../../../../../middleware/mbedtls/port/ksdk;../../../../../middleware/lwip/port;../../../../../middleware/lwip/src;../../../../../middleware/lwip/src/include;../../../../../middleware/lwip/src/include/lwip;../../../../../middleware/lwip/port/sys_arch/dynamic;../../../../../middleware/sdmmc/common;../../../../../middleware/sdmmc/osa;../../../../../middleware/sdmmc/sdio;../../../../../middleware/sdmmc/host/usdhc;../../../../../middleware/pkcs11;../../../../../middleware/aws_iot/device-shadow/template;../../../../../middleware/aws_iot/device-shadow/source/include;../../../../../rtos/freertos/freertos-kernel/include;../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../rtos/freertos/freertos-kernel/template;../../../../../rtos/freertos/backoffalgorithm/source/include;../../../../../rtos/freertos/corejson/source/include;../../../../../rtos/freertos/coremqtt/source/include;../../../../../rtos/freertos/coremqtt/source/interface;../../../../../rtos/freertos/coremqtt-agent/source/include;../../../../../rtos/freertos/corepkcs11/source/include;../../../../../rtos/freertos/corepkcs11/source/dependency/3rdparty/mbedtls_utils</IncludePath>
+              <IncludePath>..;../../../flash_config;../../../../../CMSIS/Core/Include;../../../../../CMSIS/Core/Include/m-profile;../../../../../devices/MIMXRT595S;../../../../../devices/MIMXRT595S/periph;../../../../../devices/MIMXRT595S/drivers;../../../../../components/aws_iot/kvstore;../../../../../components/aws_iot/logging;../../../../../components/aws_iot/mqtt_agent;../../../../../components/aws_iot/mqtt-agent-interface/include;../../../../../components/aws_iot/using_mbedtls_pkcs11;../../../../../devices/MIMXRT595S/utilities/debug_console;../../../../../components/lists;../../../../../devices/MIMXRT595S/utilities/str;../../../../../components/serial_manager;../../../../../components/gpio;../../../../../components/uart;../../../../../components/osa;../../../../../components/edgefast_wifi/include;../../../../../components/wifi_bt_module/AzureWave/tx_pwr_limits;../../../../../components/wifi_bt_module/Murata/tx_pwr_limits;../../../../../components/wifi_bt_module/u-blox/tx_pwr_limits;../../../../../components/wifi_bt_module/incl;../../../../../components/pmic/pca9420;../../../../../components/flash/mflash;../../../../../components/flash/mflash/mimxrt595;../../../../../middleware/wifi_nxp;../../../../../middleware/wifi_nxp/incl;../../../../../middleware/wifi_nxp/incl/port/osa;../../../../../middleware/wifi_nxp/port/osa;../../../../../middleware/wifi_nxp/incl/port;../../../../../middleware/wifi_nxp/incl/wifidriver;../../../../../middleware/wifi_nxp/wifi_bt_firmware;../../../../../middleware/wifi_nxp/wifidriver;../../../../../middleware/wifi_nxp/wifidriver/incl;../../../../../middleware/wifi_nxp/wifi_bt_firmware/IW416;../../../../../middleware/wifi_nxp/wifi_bt_firmware/8987;../../../../../middleware/wifi_nxp/wifi_bt_firmware/nw61x;../../../../../middleware/wifi_nxp/wifi_bt_firmware/iw610;../../../../../middleware/wifi_nxp/firmware_dnld;../../../../../middleware/wifi_nxp/sdio_nxp_abs;../../../../../middleware/wifi_nxp/sdio_nxp_abs/incl;../../../../../middleware/wifi_nxp/fwdnld_intf_abs;../../../../../middleware/wifi_nxp/incl/wlcmgr;../../../../../middleware/wifi_nxp/wifidriver/wpa_supp_if;../../../../../middleware/wifi_nxp/wifidriver/wpa_supp_if/incl;../../../../../middleware/wifi_nxp/certs;../../../../../middleware/wifi_nxp/incl/port/net;../../../../../middleware/wifi_nxp/port/net;../../../../../middleware/wifi_nxp/incl/port/net/hooks;../../../../../middleware/mbedtls/include;../../../../../middleware/mbedtls/library;../../../../../middleware/mbedtls/port/ksdk;../../../../../middleware/lwip/port;../../../../../middleware/lwip/src/include;../../../../../middleware/lwip/port/sys_arch/dynamic;../../../../../middleware/sdmmc/common;../../../../../middleware/sdmmc/osa;../../../../../middleware/sdmmc/sdio;../../../../../middleware/sdmmc/host/usdhc;../../../../../middleware/pkcs11;../../../../../middleware/aws_iot/device-shadow/template;../../../../../middleware/aws_iot/device-shadow/source/include;../../../../../rtos/freertos/freertos-kernel/include;../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../rtos/freertos/freertos-kernel/template;../../../../../rtos/freertos/backoffalgorithm/source/include;../../../../../rtos/freertos/corejson/source/include;../../../../../rtos/freertos/coremqtt/source/include;../../../../../rtos/freertos/coremqtt/source/interface;../../../../../rtos/freertos/coremqtt-agent/source/include;../../../../../rtos/freertos/corepkcs11/source/include;../../../../../rtos/freertos/corepkcs11/source/dependency/3rdparty/mbedtls_utils</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -378,11 +378,6 @@
         <Group>
           <GroupName>source</GroupName>
           <Files>
-            <File>
-              <FileName>app_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../app_config.h</FilePath>
-            </File>
             <File>
               <FileName>aws_mbedtls_config.h</FileName>
               <FileType>5</FileType>
@@ -412,11 +407,6 @@
               <FileName>demo_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../demo_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>freertos_tasks_c_additions.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../freertos_tasks_c_additions.h</FilePath>
             </File>
             <File>
               <FileName>kvstore_config.h</FileName>
@@ -1246,12 +1236,12 @@
             <File>
               <FileName>fsl_assert.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT595S/utilities/fsl_assert.h</FilePath>
+              <FilePath>../../../../../devices/MIMXRT595S/utilities/debug_console/fsl_assert.h</FilePath>
             </File>
             <File>
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT595S/utilities/fsl_assert.c</FilePath>
+              <FilePath>../../../../../devices/MIMXRT595S/utilities/debug_console/fsl_assert.c</FilePath>
             </File>
             <File>
               <FileName>fsl_memcpy.S</FileName>
@@ -1366,48 +1356,8 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>flash/mflash</GroupName>
-          <Files>
-            <File>
-              <FileName>mflash_common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/flash/mflash/mflash_common.h</FilePath>
-            </File>
-            <File>
-              <FileName>mflash_file.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/flash/mflash/mflash_file.c</FilePath>
-            </File>
-            <File>
-              <FileName>mflash_file.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/flash/mflash/mflash_file.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>flash/mflash/mimxrt595</GroupName>
-          <Files>
-            <File>
-              <FileName>mflash_drv.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/flash/mflash/mimxrt595/mflash_drv.c</FilePath>
-            </File>
-            <File>
-              <FileName>mflash_drv.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/flash/mflash/mimxrt595/mflash_drv.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>component/osa</GroupName>
           <Files>
-            <File>
-              <FileName>fsl_os_abstraction.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/osa/fsl_os_abstraction.h</FilePath>
-            </File>
             <File>
               <FileName>fsl_os_abstraction_free_rtos.h</FileName>
               <FileType>5</FileType>
@@ -1417,6 +1367,11 @@
               <FileName>fsl_os_abstraction_free_rtos.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../components/osa/fsl_os_abstraction_free_rtos.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/osa/fsl_os_abstraction.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1437,21 +1392,6 @@
               <FileName>wpl_nxp.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../components/edgefast_wifi/source/wpl_nxp.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component/pmic/pca9420</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_pca9420.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/pmic/pca9420/fsl_pca9420.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_pca9420.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/pmic/pca9420/fsl_pca9420.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1484,19 +1424,14 @@
               <FilePath>../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1ZM_WW.h</FilePath>
             </File>
             <File>
-              <FileName>wlan_txpwrlimit_cfg_murata_2DS_WW.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_2DS_WW.h</FilePath>
-            </File>
-            <File>
               <FileName>wlan_txpwrlimit_cfg_murata_2EL_WW.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_2EL_WW.h</FilePath>
             </File>
             <File>
-              <FileName>wlan_txpwrlimit_cfg_murata_NH_FCC.h</FileName>
+              <FileName>wlan_txpwrlimit_cfg_murata_NH.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_NH_FCC.h</FilePath>
+              <FilePath>../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_NH.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1517,6 +1452,56 @@
               <FileName>wifi_bt_module_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../components/wifi_bt_module/incl/wifi_bt_module_config.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/pmic/pca9420</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_pca9420.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/pmic/pca9420/fsl_pca9420.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_pca9420.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/pmic/pca9420/fsl_pca9420.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>flash/mflash</GroupName>
+          <Files>
+            <File>
+              <FileName>mflash_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/flash/mflash/mflash_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>mflash_file.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/flash/mflash/mflash_file.c</FilePath>
+            </File>
+            <File>
+              <FileName>mflash_file.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/flash/mflash/mflash_file.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>flash/mflash/mimxrt595</GroupName>
+          <Files>
+            <File>
+              <FileName>mflash_drv.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/flash/mflash/mimxrt595/mflash_drv.c</FilePath>
+            </File>
+            <File>
+              <FileName>mflash_drv.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/flash/mflash/mimxrt595/mflash_drv.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1649,9 +1634,9 @@
               <FilePath>../../../../../middleware/wifi_nxp/incl/wifi_cal_data_rw61x_3ant_diversity.h</FilePath>
             </File>
             <File>
-              <FileName>wifi_cal_data_rw61x_override.h</FileName>
+              <FileName>wifi_cal_data_override.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_nxp/incl/wifi_cal_data_rw61x_override.h</FilePath>
+              <FilePath>../../../../../middleware/wifi_nxp/incl/wifi_cal_data_override.h</FilePath>
             </File>
             <File>
               <FileName>WIFI_IW416_BOARD_AW_AM457_CAL_DATA_EXT.h</FileName>
@@ -1846,26 +1831,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>wifi/wifi_bt_firmware/8801</GroupName>
-          <Files>
-            <File>
-              <FileName>sd8801_wlan.bin.inc</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_nxp/wifi_bt_firmware/8801/sd8801_wlan.bin.inc</FilePath>
-            </File>
-            <File>
-              <FileName>sd8801_wlan.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_nxp/wifi_bt_firmware/8801/sd8801_wlan.h</FilePath>
-            </File>
-            <File>
-              <FileName>8801_cpu1.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/wifi_nxp/wifi_bt_firmware/8801/8801_cpu1.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>wifi/wifi_bt_firmware/IW416</GroupName>
           <Files>
             <File>
@@ -2019,14 +1984,24 @@
           <GroupName>wifi/wifi_bt_firmware/iw610</GroupName>
           <Files>
             <File>
-              <FileName>sduart_iw610.bin.se.inc</FileName>
+              <FileName>sduartspi_iw610.bin.se.inc</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_nxp/wifi_bt_firmware/iw610/sduart_iw610.bin.se.inc</FilePath>
+              <FilePath>../../../../../middleware/wifi_nxp/wifi_bt_firmware/iw610/sduartspi_iw610.bin.se.inc</FilePath>
             </File>
             <File>
               <FileName>sd_iw610.bin.se.inc</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/wifi_nxp/wifi_bt_firmware/iw610/sd_iw610.bin.se.inc</FilePath>
+            </File>
+            <File>
+              <FileName>uartspi_iw610.bin.se.inc</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/wifi_bt_firmware/iw610/uartspi_iw610.bin.se.inc</FilePath>
+            </File>
+            <File>
+              <FileName>sduart_iw610.bin.se.inc</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/wifi_bt_firmware/iw610/sduart_iw610.bin.se.inc</FilePath>
             </File>
             <File>
               <FileName>uart_iw610_bt.bin.se.inc</FileName>
@@ -5178,6 +5153,11 @@
               <FileType>5</FileType>
               <FilePath>../../../../../rtos/freertos/freertos-kernel/include/timers.h</FilePath>
             </File>
+            <File>
+              <FileName>freertos_tasks_c_additions.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/freertos_tasks_c_additions.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -5472,6 +5452,16 @@
               <FileName>example_board_readme.md</FileName>
               <FileType>5</FileType>
               <FilePath>../example_board_readme.md</FilePath>
+            </File>
+            <File>
+              <FileName>examples_shared_readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../examples_shared_readme.md</FilePath>
+            </File>
+            <File>
+              <FileName>readme_modules.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../readme_modules.md</FilePath>
             </File>
           </Files>
         </Group>
@@ -5806,9 +5796,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../mcux_config.h -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
-              <Define>NDEBUG, USE_RTOS=1, DISABLE_LOGGING, XIP_IMAGE, XIP_EXTERNAL_FLASH, MBEDTLS_CONFIG_FILE='\"aws_mbedtls_config.h\"', SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT595SFFOC_cm33, DEBUG_CONSOLE_TRANSFER_NON_BLOCKING, OSA_USED, BOOT_HEADER_ENABLE=1, SERIAL_PORT_TYPE_UART=1, MFLASH_FILE_BASEADDR=7340032, SDK_I2C_BASED_COMPONENT_USED=1, CONFIG_NXP_WIFI_SOFTAP_SUPPORT=1, SDIO_ENABLED=1, SDK_OS_FREE_RTOS, MQTT_AGENT_DO_NOT_USE_CUSTOM_CONFIG, MBEDTLS_THREADING_ALT, MBEDTLS_THREADING_C</Define>
+              <Define>NDEBUG, USE_RTOS=1, DISABLE_LOGGING, XIP_IMAGE, XIP_EXTERNAL_FLASH, MBEDTLS_CONFIG_FILE='\"aws_mbedtls_config.h\"', SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT595SFFOC_cm33, MIMXRT595S_cm33_SERIES, DEBUG_CONSOLE_TRANSFER_NON_BLOCKING, OSA_USED, BOOT_HEADER_ENABLE=1, SERIAL_PORT_TYPE_UART=1, WIFI_IW416_BOARD_MURATA_1XK_M2, SDK_I2C_BASED_COMPONENT_USED=1, MFLASH_FILE_BASEADDR=7340032, CONFIG_NXP_WIFI_SOFTAP_SUPPORT=1, SDIO_ENABLED=1, SDK_OS_FREE_RTOS, MQTT_AGENT_DO_NOT_USE_CUSTOM_CONFIG, MBEDTLS_THREADING_ALT, MBEDTLS_THREADING_C</Define>
               <Undefine/>
-              <IncludePath>..;../../../flash_config;../../../../../CMSIS/Core/Include;../../../../../CMSIS/Core/Include/m-profile;../../../../../devices/MIMXRT595S;../../../../../devices/MIMXRT595S/periph;../../../../../devices/MIMXRT595S/drivers;../../../../../components/aws_iot/kvstore;../../../../../components/aws_iot/logging;../../../../../components/aws_iot/mqtt_agent;../../../../../components/aws_iot/mqtt-agent-interface/include;../../../../../components/aws_iot/using_mbedtls_pkcs11;../../../../../devices/MIMXRT595S/utilities;../../../../../components/lists;../../../../../devices/MIMXRT595S/utilities/str;../../../../../devices/MIMXRT595S/utilities/debug_console;../../../../../components/serial_manager;../../../../../components/gpio;../../../../../components/uart;../../../../../components/flash/mflash;../../../../../components/flash/mflash/mimxrt595;../../../../../components/osa;../../../../../components/edgefast_wifi/include;../../../../../components/pmic/pca9420;../../../../../components/wifi_bt_module/AzureWave/tx_pwr_limits;../../../../../components/wifi_bt_module/Murata/tx_pwr_limits;../../../../../components/wifi_bt_module/u-blox/tx_pwr_limits;../../../../../components/wifi_bt_module/incl;../../../../../middleware/wifi_nxp;../../../../../middleware/wifi_nxp/incl;../../../../../middleware/wifi_nxp/incl/port/osa;../../../../../middleware/wifi_nxp/port/osa;../../../../../middleware/wifi_nxp/incl/port;../../../../../middleware/wifi_nxp/incl/wifidriver;../../../../../middleware/wifi_nxp/wifi_bt_firmware;../../../../../middleware/wifi_nxp/wifidriver;../../../../../middleware/wifi_nxp/wifidriver/incl;../../../../../middleware/wifi_nxp/wifi_bt_firmware/8801;../../../../../middleware/wifi_nxp/wifi_bt_firmware/IW416;../../../../../middleware/wifi_nxp/wifi_bt_firmware/8987;../../../../../middleware/wifi_nxp/wifi_bt_firmware/nw61x;../../../../../middleware/wifi_nxp/wifi_bt_firmware/iw610;../../../../../middleware/wifi_nxp/firmware_dnld;../../../../../middleware/wifi_nxp/sdio_nxp_abs;../../../../../middleware/wifi_nxp/sdio_nxp_abs/incl;../../../../../middleware/wifi_nxp/fwdnld_intf_abs;../../../../../middleware/wifi_nxp/incl/wlcmgr;../../../../../middleware/wifi_nxp/wifidriver/wpa_supp_if;../../../../../middleware/wifi_nxp/wifidriver/wpa_supp_if/incl;../../../../../middleware/wifi_nxp/certs;../../../../../middleware/wifi_nxp/incl/port/net;../../../../../middleware/wifi_nxp/port/net;../../../../../middleware/wifi_nxp/incl/port/net/hooks;../../../../../middleware/mbedtls/include;../../../../../middleware/mbedtls/library;../../../../../middleware/mbedtls/port/ksdk;../../../../../middleware/lwip/port;../../../../../middleware/lwip/src;../../../../../middleware/lwip/src/include;../../../../../middleware/lwip/src/include/lwip;../../../../../middleware/lwip/port/sys_arch/dynamic;../../../../../middleware/sdmmc/common;../../../../../middleware/sdmmc/osa;../../../../../middleware/sdmmc/sdio;../../../../../middleware/sdmmc/host/usdhc;../../../../../middleware/pkcs11;../../../../../middleware/aws_iot/device-shadow/template;../../../../../middleware/aws_iot/device-shadow/source/include;../../../../../rtos/freertos/freertos-kernel/include;../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../rtos/freertos/freertos-kernel/template;../../../../../rtos/freertos/backoffalgorithm/source/include;../../../../../rtos/freertos/corejson/source/include;../../../../../rtos/freertos/coremqtt/source/include;../../../../../rtos/freertos/coremqtt/source/interface;../../../../../rtos/freertos/coremqtt-agent/source/include;../../../../../rtos/freertos/corepkcs11/source/include;../../../../../rtos/freertos/corepkcs11/source/dependency/3rdparty/mbedtls_utils</IncludePath>
+              <IncludePath>..;../../../flash_config;../../../../../CMSIS/Core/Include;../../../../../CMSIS/Core/Include/m-profile;../../../../../devices/MIMXRT595S;../../../../../devices/MIMXRT595S/periph;../../../../../devices/MIMXRT595S/drivers;../../../../../components/aws_iot/kvstore;../../../../../components/aws_iot/logging;../../../../../components/aws_iot/mqtt_agent;../../../../../components/aws_iot/mqtt-agent-interface/include;../../../../../components/aws_iot/using_mbedtls_pkcs11;../../../../../devices/MIMXRT595S/utilities/debug_console;../../../../../components/lists;../../../../../devices/MIMXRT595S/utilities/str;../../../../../components/serial_manager;../../../../../components/gpio;../../../../../components/uart;../../../../../components/osa;../../../../../components/edgefast_wifi/include;../../../../../components/wifi_bt_module/AzureWave/tx_pwr_limits;../../../../../components/wifi_bt_module/Murata/tx_pwr_limits;../../../../../components/wifi_bt_module/u-blox/tx_pwr_limits;../../../../../components/wifi_bt_module/incl;../../../../../components/pmic/pca9420;../../../../../components/flash/mflash;../../../../../components/flash/mflash/mimxrt595;../../../../../middleware/wifi_nxp;../../../../../middleware/wifi_nxp/incl;../../../../../middleware/wifi_nxp/incl/port/osa;../../../../../middleware/wifi_nxp/port/osa;../../../../../middleware/wifi_nxp/incl/port;../../../../../middleware/wifi_nxp/incl/wifidriver;../../../../../middleware/wifi_nxp/wifi_bt_firmware;../../../../../middleware/wifi_nxp/wifidriver;../../../../../middleware/wifi_nxp/wifidriver/incl;../../../../../middleware/wifi_nxp/wifi_bt_firmware/IW416;../../../../../middleware/wifi_nxp/wifi_bt_firmware/8987;../../../../../middleware/wifi_nxp/wifi_bt_firmware/nw61x;../../../../../middleware/wifi_nxp/wifi_bt_firmware/iw610;../../../../../middleware/wifi_nxp/firmware_dnld;../../../../../middleware/wifi_nxp/sdio_nxp_abs;../../../../../middleware/wifi_nxp/sdio_nxp_abs/incl;../../../../../middleware/wifi_nxp/fwdnld_intf_abs;../../../../../middleware/wifi_nxp/incl/wlcmgr;../../../../../middleware/wifi_nxp/wifidriver/wpa_supp_if;../../../../../middleware/wifi_nxp/wifidriver/wpa_supp_if/incl;../../../../../middleware/wifi_nxp/certs;../../../../../middleware/wifi_nxp/incl/port/net;../../../../../middleware/wifi_nxp/port/net;../../../../../middleware/wifi_nxp/incl/port/net/hooks;../../../../../middleware/mbedtls/include;../../../../../middleware/mbedtls/library;../../../../../middleware/mbedtls/port/ksdk;../../../../../middleware/lwip/port;../../../../../middleware/lwip/src/include;../../../../../middleware/lwip/port/sys_arch/dynamic;../../../../../middleware/sdmmc/common;../../../../../middleware/sdmmc/osa;../../../../../middleware/sdmmc/sdio;../../../../../middleware/sdmmc/host/usdhc;../../../../../middleware/pkcs11;../../../../../middleware/aws_iot/device-shadow/template;../../../../../middleware/aws_iot/device-shadow/source/include;../../../../../rtos/freertos/freertos-kernel/include;../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../rtos/freertos/freertos-kernel/template;../../../../../rtos/freertos/backoffalgorithm/source/include;../../../../../rtos/freertos/corejson/source/include;../../../../../rtos/freertos/coremqtt/source/include;../../../../../rtos/freertos/coremqtt/source/interface;../../../../../rtos/freertos/coremqtt-agent/source/include;../../../../../rtos/freertos/corepkcs11/source/include;../../../../../rtos/freertos/corepkcs11/source/dependency/3rdparty/mbedtls_utils</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -5824,9 +5814,9 @@
             <uClangAs>1</uClangAs>
             <VariousControls>
               <MiscControls/>
-              <Define>MCUXPRESSO_SDK, CPU_MIMXRT595SFFOC_cm33, DEBUG_CONSOLE_TRANSFER_NON_BLOCKING, OSA_USED</Define>
+              <Define>MCUXPRESSO_SDK, CPU_MIMXRT595SFFOC_cm33, MIMXRT595S_cm33_SERIES, DEBUG_CONSOLE_TRANSFER_NON_BLOCKING, OSA_USED</Define>
               <Undefine/>
-              <IncludePath>..;../../../flash_config;../../../../../CMSIS/Core/Include;../../../../../CMSIS/Core/Include/m-profile;../../../../../devices/MIMXRT595S;../../../../../devices/MIMXRT595S/periph;../../../../../devices/MIMXRT595S/drivers;../../../../../components/aws_iot/kvstore;../../../../../components/aws_iot/logging;../../../../../components/aws_iot/mqtt_agent;../../../../../components/aws_iot/mqtt-agent-interface/include;../../../../../components/aws_iot/using_mbedtls_pkcs11;../../../../../devices/MIMXRT595S/utilities;../../../../../components/lists;../../../../../devices/MIMXRT595S/utilities/str;../../../../../devices/MIMXRT595S/utilities/debug_console;../../../../../components/serial_manager;../../../../../components/gpio;../../../../../components/uart;../../../../../components/flash/mflash;../../../../../components/flash/mflash/mimxrt595;../../../../../components/osa;../../../../../components/edgefast_wifi/include;../../../../../components/pmic/pca9420;../../../../../components/wifi_bt_module/AzureWave/tx_pwr_limits;../../../../../components/wifi_bt_module/Murata/tx_pwr_limits;../../../../../components/wifi_bt_module/u-blox/tx_pwr_limits;../../../../../components/wifi_bt_module/incl;../../../../../middleware/wifi_nxp;../../../../../middleware/wifi_nxp/incl;../../../../../middleware/wifi_nxp/incl/port/osa;../../../../../middleware/wifi_nxp/port/osa;../../../../../middleware/wifi_nxp/incl/port;../../../../../middleware/wifi_nxp/incl/wifidriver;../../../../../middleware/wifi_nxp/wifi_bt_firmware;../../../../../middleware/wifi_nxp/wifidriver;../../../../../middleware/wifi_nxp/wifidriver/incl;../../../../../middleware/wifi_nxp/wifi_bt_firmware/8801;../../../../../middleware/wifi_nxp/wifi_bt_firmware/IW416;../../../../../middleware/wifi_nxp/wifi_bt_firmware/8987;../../../../../middleware/wifi_nxp/wifi_bt_firmware/nw61x;../../../../../middleware/wifi_nxp/wifi_bt_firmware/iw610;../../../../../middleware/wifi_nxp/firmware_dnld;../../../../../middleware/wifi_nxp/sdio_nxp_abs;../../../../../middleware/wifi_nxp/sdio_nxp_abs/incl;../../../../../middleware/wifi_nxp/fwdnld_intf_abs;../../../../../middleware/wifi_nxp/incl/wlcmgr;../../../../../middleware/wifi_nxp/wifidriver/wpa_supp_if;../../../../../middleware/wifi_nxp/wifidriver/wpa_supp_if/incl;../../../../../middleware/wifi_nxp/certs;../../../../../middleware/wifi_nxp/incl/port/net;../../../../../middleware/wifi_nxp/port/net;../../../../../middleware/wifi_nxp/incl/port/net/hooks;../../../../../middleware/mbedtls/include;../../../../../middleware/mbedtls/library;../../../../../middleware/mbedtls/port/ksdk;../../../../../middleware/lwip/port;../../../../../middleware/lwip/src;../../../../../middleware/lwip/src/include;../../../../../middleware/lwip/src/include/lwip;../../../../../middleware/lwip/port/sys_arch/dynamic;../../../../../middleware/sdmmc/common;../../../../../middleware/sdmmc/osa;../../../../../middleware/sdmmc/sdio;../../../../../middleware/sdmmc/host/usdhc;../../../../../middleware/pkcs11;../../../../../middleware/aws_iot/device-shadow/template;../../../../../middleware/aws_iot/device-shadow/source/include;../../../../../rtos/freertos/freertos-kernel/include;../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../rtos/freertos/freertos-kernel/template;../../../../../rtos/freertos/backoffalgorithm/source/include;../../../../../rtos/freertos/corejson/source/include;../../../../../rtos/freertos/coremqtt/source/include;../../../../../rtos/freertos/coremqtt/source/interface;../../../../../rtos/freertos/coremqtt-agent/source/include;../../../../../rtos/freertos/corepkcs11/source/include;../../../../../rtos/freertos/corepkcs11/source/dependency/3rdparty/mbedtls_utils</IncludePath>
+              <IncludePath>..;../../../flash_config;../../../../../CMSIS/Core/Include;../../../../../CMSIS/Core/Include/m-profile;../../../../../devices/MIMXRT595S;../../../../../devices/MIMXRT595S/periph;../../../../../devices/MIMXRT595S/drivers;../../../../../components/aws_iot/kvstore;../../../../../components/aws_iot/logging;../../../../../components/aws_iot/mqtt_agent;../../../../../components/aws_iot/mqtt-agent-interface/include;../../../../../components/aws_iot/using_mbedtls_pkcs11;../../../../../devices/MIMXRT595S/utilities/debug_console;../../../../../components/lists;../../../../../devices/MIMXRT595S/utilities/str;../../../../../components/serial_manager;../../../../../components/gpio;../../../../../components/uart;../../../../../components/osa;../../../../../components/edgefast_wifi/include;../../../../../components/wifi_bt_module/AzureWave/tx_pwr_limits;../../../../../components/wifi_bt_module/Murata/tx_pwr_limits;../../../../../components/wifi_bt_module/u-blox/tx_pwr_limits;../../../../../components/wifi_bt_module/incl;../../../../../components/pmic/pca9420;../../../../../components/flash/mflash;../../../../../components/flash/mflash/mimxrt595;../../../../../middleware/wifi_nxp;../../../../../middleware/wifi_nxp/incl;../../../../../middleware/wifi_nxp/incl/port/osa;../../../../../middleware/wifi_nxp/port/osa;../../../../../middleware/wifi_nxp/incl/port;../../../../../middleware/wifi_nxp/incl/wifidriver;../../../../../middleware/wifi_nxp/wifi_bt_firmware;../../../../../middleware/wifi_nxp/wifidriver;../../../../../middleware/wifi_nxp/wifidriver/incl;../../../../../middleware/wifi_nxp/wifi_bt_firmware/IW416;../../../../../middleware/wifi_nxp/wifi_bt_firmware/8987;../../../../../middleware/wifi_nxp/wifi_bt_firmware/nw61x;../../../../../middleware/wifi_nxp/wifi_bt_firmware/iw610;../../../../../middleware/wifi_nxp/firmware_dnld;../../../../../middleware/wifi_nxp/sdio_nxp_abs;../../../../../middleware/wifi_nxp/sdio_nxp_abs/incl;../../../../../middleware/wifi_nxp/fwdnld_intf_abs;../../../../../middleware/wifi_nxp/incl/wlcmgr;../../../../../middleware/wifi_nxp/wifidriver/wpa_supp_if;../../../../../middleware/wifi_nxp/wifidriver/wpa_supp_if/incl;../../../../../middleware/wifi_nxp/certs;../../../../../middleware/wifi_nxp/incl/port/net;../../../../../middleware/wifi_nxp/port/net;../../../../../middleware/wifi_nxp/incl/port/net/hooks;../../../../../middleware/mbedtls/include;../../../../../middleware/mbedtls/library;../../../../../middleware/mbedtls/port/ksdk;../../../../../middleware/lwip/port;../../../../../middleware/lwip/src/include;../../../../../middleware/lwip/port/sys_arch/dynamic;../../../../../middleware/sdmmc/common;../../../../../middleware/sdmmc/osa;../../../../../middleware/sdmmc/sdio;../../../../../middleware/sdmmc/host/usdhc;../../../../../middleware/pkcs11;../../../../../middleware/aws_iot/device-shadow/template;../../../../../middleware/aws_iot/device-shadow/source/include;../../../../../rtos/freertos/freertos-kernel/include;../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../rtos/freertos/freertos-kernel/template;../../../../../rtos/freertos/backoffalgorithm/source/include;../../../../../rtos/freertos/corejson/source/include;../../../../../rtos/freertos/coremqtt/source/include;../../../../../rtos/freertos/coremqtt/source/interface;../../../../../rtos/freertos/coremqtt-agent/source/include;../../../../../rtos/freertos/corepkcs11/source/include;../../../../../rtos/freertos/corepkcs11/source/dependency/3rdparty/mbedtls_utils</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -5852,11 +5842,6 @@
         <Group>
           <GroupName>source</GroupName>
           <Files>
-            <File>
-              <FileName>app_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../app_config.h</FilePath>
-            </File>
             <File>
               <FileName>aws_mbedtls_config.h</FileName>
               <FileType>5</FileType>
@@ -5886,11 +5871,6 @@
               <FileName>demo_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../demo_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>freertos_tasks_c_additions.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../freertos_tasks_c_additions.h</FilePath>
             </File>
             <File>
               <FileName>kvstore_config.h</FileName>
@@ -6720,12 +6700,12 @@
             <File>
               <FileName>fsl_assert.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT595S/utilities/fsl_assert.h</FilePath>
+              <FilePath>../../../../../devices/MIMXRT595S/utilities/debug_console/fsl_assert.h</FilePath>
             </File>
             <File>
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT595S/utilities/fsl_assert.c</FilePath>
+              <FilePath>../../../../../devices/MIMXRT595S/utilities/debug_console/fsl_assert.c</FilePath>
             </File>
             <File>
               <FileName>fsl_memcpy.S</FileName>
@@ -6840,48 +6820,8 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>flash/mflash</GroupName>
-          <Files>
-            <File>
-              <FileName>mflash_common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/flash/mflash/mflash_common.h</FilePath>
-            </File>
-            <File>
-              <FileName>mflash_file.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/flash/mflash/mflash_file.c</FilePath>
-            </File>
-            <File>
-              <FileName>mflash_file.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/flash/mflash/mflash_file.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>flash/mflash/mimxrt595</GroupName>
-          <Files>
-            <File>
-              <FileName>mflash_drv.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/flash/mflash/mimxrt595/mflash_drv.c</FilePath>
-            </File>
-            <File>
-              <FileName>mflash_drv.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/flash/mflash/mimxrt595/mflash_drv.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>component/osa</GroupName>
           <Files>
-            <File>
-              <FileName>fsl_os_abstraction.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/osa/fsl_os_abstraction.h</FilePath>
-            </File>
             <File>
               <FileName>fsl_os_abstraction_free_rtos.h</FileName>
               <FileType>5</FileType>
@@ -6891,6 +6831,11 @@
               <FileName>fsl_os_abstraction_free_rtos.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../components/osa/fsl_os_abstraction_free_rtos.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/osa/fsl_os_abstraction.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -6911,21 +6856,6 @@
               <FileName>wpl_nxp.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../components/edgefast_wifi/source/wpl_nxp.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component/pmic/pca9420</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_pca9420.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/pmic/pca9420/fsl_pca9420.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_pca9420.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/pmic/pca9420/fsl_pca9420.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -6958,19 +6888,14 @@
               <FilePath>../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1ZM_WW.h</FilePath>
             </File>
             <File>
-              <FileName>wlan_txpwrlimit_cfg_murata_2DS_WW.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_2DS_WW.h</FilePath>
-            </File>
-            <File>
               <FileName>wlan_txpwrlimit_cfg_murata_2EL_WW.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_2EL_WW.h</FilePath>
             </File>
             <File>
-              <FileName>wlan_txpwrlimit_cfg_murata_NH_FCC.h</FileName>
+              <FileName>wlan_txpwrlimit_cfg_murata_NH.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_NH_FCC.h</FilePath>
+              <FilePath>../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_NH.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -6991,6 +6916,56 @@
               <FileName>wifi_bt_module_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../components/wifi_bt_module/incl/wifi_bt_module_config.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/pmic/pca9420</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_pca9420.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/pmic/pca9420/fsl_pca9420.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_pca9420.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/pmic/pca9420/fsl_pca9420.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>flash/mflash</GroupName>
+          <Files>
+            <File>
+              <FileName>mflash_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/flash/mflash/mflash_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>mflash_file.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/flash/mflash/mflash_file.c</FilePath>
+            </File>
+            <File>
+              <FileName>mflash_file.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/flash/mflash/mflash_file.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>flash/mflash/mimxrt595</GroupName>
+          <Files>
+            <File>
+              <FileName>mflash_drv.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/flash/mflash/mimxrt595/mflash_drv.c</FilePath>
+            </File>
+            <File>
+              <FileName>mflash_drv.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/flash/mflash/mimxrt595/mflash_drv.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -7123,9 +7098,9 @@
               <FilePath>../../../../../middleware/wifi_nxp/incl/wifi_cal_data_rw61x_3ant_diversity.h</FilePath>
             </File>
             <File>
-              <FileName>wifi_cal_data_rw61x_override.h</FileName>
+              <FileName>wifi_cal_data_override.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_nxp/incl/wifi_cal_data_rw61x_override.h</FilePath>
+              <FilePath>../../../../../middleware/wifi_nxp/incl/wifi_cal_data_override.h</FilePath>
             </File>
             <File>
               <FileName>WIFI_IW416_BOARD_AW_AM457_CAL_DATA_EXT.h</FileName>
@@ -7320,26 +7295,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>wifi/wifi_bt_firmware/8801</GroupName>
-          <Files>
-            <File>
-              <FileName>sd8801_wlan.bin.inc</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_nxp/wifi_bt_firmware/8801/sd8801_wlan.bin.inc</FilePath>
-            </File>
-            <File>
-              <FileName>sd8801_wlan.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_nxp/wifi_bt_firmware/8801/sd8801_wlan.h</FilePath>
-            </File>
-            <File>
-              <FileName>8801_cpu1.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/wifi_nxp/wifi_bt_firmware/8801/8801_cpu1.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>wifi/wifi_bt_firmware/IW416</GroupName>
           <Files>
             <File>
@@ -7493,14 +7448,24 @@
           <GroupName>wifi/wifi_bt_firmware/iw610</GroupName>
           <Files>
             <File>
-              <FileName>sduart_iw610.bin.se.inc</FileName>
+              <FileName>sduartspi_iw610.bin.se.inc</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_nxp/wifi_bt_firmware/iw610/sduart_iw610.bin.se.inc</FilePath>
+              <FilePath>../../../../../middleware/wifi_nxp/wifi_bt_firmware/iw610/sduartspi_iw610.bin.se.inc</FilePath>
             </File>
             <File>
               <FileName>sd_iw610.bin.se.inc</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/wifi_nxp/wifi_bt_firmware/iw610/sd_iw610.bin.se.inc</FilePath>
+            </File>
+            <File>
+              <FileName>uartspi_iw610.bin.se.inc</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/wifi_bt_firmware/iw610/uartspi_iw610.bin.se.inc</FilePath>
+            </File>
+            <File>
+              <FileName>sduart_iw610.bin.se.inc</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/wifi_bt_firmware/iw610/sduart_iw610.bin.se.inc</FilePath>
             </File>
             <File>
               <FileName>uart_iw610_bt.bin.se.inc</FileName>
@@ -10652,6 +10617,11 @@
               <FileType>5</FileType>
               <FilePath>../../../../../rtos/freertos/freertos-kernel/include/timers.h</FilePath>
             </File>
+            <File>
+              <FileName>freertos_tasks_c_additions.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/freertos_tasks_c_additions.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -10946,6 +10916,16 @@
               <FileName>example_board_readme.md</FileName>
               <FileType>5</FileType>
               <FilePath>../example_board_readme.md</FilePath>
+            </File>
+            <File>
+              <FileName>examples_shared_readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../examples_shared_readme.md</FilePath>
+            </File>
+            <File>
+              <FileName>readme_modules.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../readme_modules.md</FilePath>
             </File>
           </Files>
         </Group>

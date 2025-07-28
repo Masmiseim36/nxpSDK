@@ -1,5 +1,5 @@
 /*! *********************************************************************************
- * Copyright 2022-2023 NXP
+ * Copyright 2022-2025 NXP
  * All rights reserved.
  *
  * \file
@@ -78,6 +78,12 @@ extern osa_status_t SecLibMutexUnlock(void);
 #define gSecLibUseDspExtension_d 0
 #endif
 
+#define AES_BLOCK_ALIGN_MASK (0x0000000fUL)
+/* Compute number of whole AES block bytes */
+#define AES_WHOLE_BLOCK_BYTES(_LEN_) ((uint32_t)(_LEN_) & ~AES_BLOCK_ALIGN_MASK)
+/* Compute number of residual bytes constituting a partial AES block */
+#define AES_PARTIAL_BLOCK_BYTES(_LEN_) ((uint32_t)(_LEN_)&AES_BLOCK_ALIGN_MASK)
+
 /*! *********************************************************************************
 *************************************************************************************
 * Private type definitions
@@ -91,7 +97,7 @@ extern osa_status_t SecLibMutexUnlock(void);
 ************************************************************************************/
 #if gSecLibUseMutex_c
 /*! Mutex used to protect the AES Context when an RTOS is used. */
-static OSA_MUTEX_HANDLE_DEFINE(mSecLibMutexId);
+static OSA_MUTEX_HANDLE_DEFINE(mSecLibSssMutexId);
 #endif /* gSecLibUseMutex_c */
 
 static sss_ecp256_context_t  g_ECP_KeyPair;
@@ -101,7 +107,19 @@ static size_t  ecdhKeyPairBlobSize = (3 * ECP256_COORDINATE_LEN) + BLOB_DATA_OVE
 static uint8_t ecdhKeyPairBlob[(3 * ECP256_COORDINATE_LEN) + BLOB_DATA_OVERLAY_BYTE_LEN];
 
 static bool_t IsSecLibEcdhContextInit = false;
-
+#if (gSecLibUseBleDebugKeys_d == 1)
+/*! Bluetooth LE debug keys as specified in section 2.3.5.6.1 vol. 3, part H of the Bluetooth Core specification version 5.4 */
+static const ecp256KeyPair_t mBleDebugKeyPair = {
+    .public_key.components_8bit.x = {0x20, 0xb0, 0x03, 0xd2, 0xf2, 0x97, 0xbe, 0x2c, 0x5e, 0x2c, 0x83,
+                                     0xa7, 0xe9, 0xf9, 0xa5, 0xb9, 0xef, 0xf4, 0x91, 0x11, 0xac, 0xf4,
+                                     0xfd, 0xdb, 0xcc, 0x03, 0x01, 0x48, 0x0e, 0x35, 0x9d, 0xe6},
+    .public_key.components_8bit.y = {0xdc, 0x80, 0x9c, 0x49, 0x65, 0x2a, 0xeb, 0x6d, 0x63, 0x32, 0x9a,
+                                     0xbf, 0x5a, 0x52, 0x15, 0x5c, 0x76, 0x63, 0x45, 0xc2, 0x8f, 0xed,
+                                     0x30, 0x24, 0x74, 0x1c, 0x8e, 0xd0, 0x15, 0x89, 0xd2, 0x8b},
+    .private_key.raw_8bit         = {0x3f, 0x49, 0xf6, 0xd4, 0xa3, 0xc5, 0x5f, 0x38, 0x74, 0xc9, 0xb3,
+                                     0xe3, 0xd2, 0x10, 0x3f, 0x50, 0x4a, 0xff, 0x60, 0x7b, 0xeb, 0x40,
+                                     0xb7, 0x99, 0x58, 0x99, 0xb8, 0xa6, 0xcd, 0x3c, 0x1a, 0xbd}};
+#endif /* gSecLibUseBleDebugKeys_d */
 /*! *********************************************************************************
 *************************************************************************************
 * Public prototypes
@@ -126,29 +144,9 @@ static sss_status_t ELKE_BLE_SM_F5_DeriveKeysSecure(sss_sscp_object_t *pPubDhKey
                                                     uint8_t           *pMacKey,
                                                     uint8_t           *pLTKBlob);
 
-/*! *********************************************************************************
-*************************************************************************************
-* Private functions
-*************************************************************************************
-********************************************************************************** */
-
-#if gSecLibUseDspExtension_d
-static bool ECP256_LePointValid(const ecp256Point_t *P)
-{
-    ecp256Point_t tmp;
-    ECP256_PointCopy_and_change_endianness(tmp.raw, P->raw);
-    return ECP256_PointValid(&tmp);
-}
-#else
-
-extern bool_t EcP256_IsPointOnCurve(const uint32_t *X, const uint32_t *Y);
-
-static bool ECP256_LePointValid(const ecp256Point_t *P)
-{
-    return EcP256_IsPointOnCurve((const uint32_t *)&P->components_32bit.x[0],
-                                 (const uint32_t *)&P->components_32bit.y[0]);
-}
-#endif
+static uint8_t SecLib_Padding(const uint8_t *lastb, uint8_t pad_block[AES_BLOCK_SIZE], uint8_t length);
+static uint8_t SecLib_DePadding(const uint8_t pad_block[AES_BLOCK_SIZE]);
+static bool    ECP256_LePointValid(const ecp256Point_t *P);
 
 /*! *********************************************************************************
 *************************************************************************************
@@ -164,7 +162,7 @@ osa_status_t SecLibMutexCreate(void)
     if (!seclib_mutex_created)
     {
         /*! Initialize the SecLib Mutex here. If not already done by RNG module */
-        st = OSA_MutexCreate((osa_mutex_handle_t)mSecLibMutexId);
+        st = OSA_MutexCreate((osa_mutex_handle_t)mSecLibSssMutexId);
 
         if (KOSA_StatusSuccess != st)
         {
@@ -181,7 +179,7 @@ osa_status_t SecLibMutexCreate(void)
 osa_status_t SecLibMutexLock(void)
 {
 #if gSecLibUseMutex_c
-    return OSA_MutexLock((osa_mutex_handle_t)mSecLibMutexId, osaWaitForever_c);
+    return OSA_MutexLock((osa_mutex_handle_t)mSecLibSssMutexId, osaWaitForever_c);
 #else
     return KOSA_StatusSuccess;
 #endif
@@ -190,7 +188,7 @@ osa_status_t SecLibMutexLock(void)
 osa_status_t SecLibMutexUnlock(void)
 {
 #if gSecLibUseMutex_c
-    return OSA_MutexUnlock((osa_mutex_handle_t)mSecLibMutexId);
+    return OSA_MutexUnlock((osa_mutex_handle_t)mSecLibSssMutexId);
 #else
     return KOSA_StatusSuccess;
 #endif
@@ -334,128 +332,229 @@ void AES_128_ECB_Encrypt(const uint8_t *pInput, uint32_t inputLen, const uint8_t
 
 /*! *********************************************************************************
  * \brief  This function performs AES-128-CBC encryption on a message block.
- *         This function only accepts input lengths which are multiple
- *         of 16 bytes (AES 128 block size).
+ *
  *
  * \param[in]  pInput Pointer to the location of the input message.
  *
- * \param[in]  inputLen Input message length in bytes.
+ * \param[in]  inputLen Input message length in bytes - must be a multiple of AES_BLOCK_SIZE
  *
- * \param[in]  pInitVector Pointer to the location of the 128-bit initialization vector.
+ * \param[in, out]  pInitVector Pointer to the location of the 128-bit initialization vector.
+ *                 On exit the IV content is updated with ciphered output to be injected as next block IV.
+ *                 Because IV is modifiable, it cannot be RO (const).
  *
  * \param[in]  pKey Pointer to the location of the 128-bit key.
  *
  * \param[out]  pOutput Pointer to the location to store the ciphered output.
  *
+ * \return : gSecSuccess_c if no error,
+ *           gSecBadArgument_c in case of bad arguments,
+ *           gSecError_c in case of internal error.
+ *
  ********************************************************************************** */
-void AES_128_CBC_Encrypt(
+secResultType_t AES_128_CBC_Encrypt(
     const uint8_t *pInput, uint32_t inputLen, uint8_t *pInitVector, const uint8_t *pKey, uint8_t *pOutput)
 {
-    status_t      ret;
-    aes_context_t ctx;
+    status_t        st;
+    aes_context_t   ctx;
+    secResultType_t ret;
 
-    /* If the input length is not a multiple of AES 128 block size return */
-    if (!((inputLen == 0U) || ((inputLen % AES_128_BLOCK_SIZE) != 0U)))
+    do
     {
-        SECLIB_MUTEX_LOCK();
-
-        ret = SSS_aes_operation(&ctx, pInput, inputLen, pInitVector, pKey, AES_128_KEY_BITS, pOutput, true,
-                                kAlgorithm_SSS_AES_CBC);
-        if (ret != kStatus_Success)
+        if ((pInput == NULL) || (pInitVector == NULL) || (pKey == NULL) || (pOutput == NULL) ||
+            /* If the input length is not a non zero multiple of AES 128 block size,  return */
+            (inputLen < AES_BLOCK_SIZE) || (AES_PARTIAL_BLOCK_BYTES(inputLen) != 0U))
         {
-            assert(0);
+            ret = gSecBadArgument_c;
+            break;
         }
 
+        SECLIB_MUTEX_LOCK();
+
+        st = SSS_aes_operation(&ctx, pInput, inputLen, pInitVector, pKey, AES_128_KEY_BITS, pOutput, true,
+                               kAlgorithm_SSS_AES_CBC);
         SECLIB_MUTEX_UNLOCK();
-    }
-}
 
-/*! *********************************************************************************
- * \brief  This function performs AES-128-CBC encryption on a message block after
- *         padding it with 1 bit of 1 and 0 bits trail.
- *
- * \param[in]  pInput Pointer to the location of the input message.
- *
- * \param[in]  inputLen Input message length in bytes.
- *
- *             IMPORTANT: User must make sure that input and output
- *             buffers have at least inputLen + 16 bytes size
- *
- * \param[in]  pInitVector Pointer to the location of the 128-bit initialization vector.
- *
- * \param[in]  pKey Pointer to the location of the 128-bit key.
- *
- * \param[out]  pOutput Pointer to the location to store the ciphered output.
- *
- * Return value: size of output buffer (after padding)
- *
- ********************************************************************************** */
-uint32_t AES_128_CBC_Encrypt_And_Pad(
-    uint8_t *pInput, uint32_t inputLen, uint8_t *pInitVector, const uint8_t *pKey, uint8_t *pOutput)
-{
-    uint32_t      newLen = 0;
-    status_t      ret;
-    aes_context_t ctx;
+        if (st != kStatus_Success)
+        {
+            ret = gSecError_c;
+            break;
+        }
+        /* Update IV with last ciphered block to be injected at next call */
+        /* Note that inputLen is greater than or equal to AES_BLOCK_SIZE, otherwise would have exited
+           with gSecBadArgument_c, so difference cannot be negative */
+        FLib_MemCpy(pInitVector, &pOutput[inputLen - AES_BLOCK_SIZE], AES_BLOCK_SIZE);
 
-    /* compute new length */
-    newLen = inputLen + (AES_128_BLOCK_SIZE - (inputLen & (AES_128_BLOCK_SIZE - 1U)));
-    /* pad the input buffer with 1 bit of 1 and trail of 0's from inputLen to newLen */
-    for (uint32_t idx = 0U; idx < ((newLen - inputLen) - 1U); idx++)
-    {
-        pInput[newLen - 1U - idx] = 0x00U;
-    }
-    pInput[inputLen] = 0x80U;
+        ret = gSecSuccess_c;
+    } while (false);
 
-    SECLIB_MUTEX_LOCK();
-
-    ret = SSS_aes_operation(&ctx, pInput, newLen, pInitVector, pKey, AES_128_KEY_BITS, pOutput, true,
-                            kAlgorithm_SSS_AES_CBC);
-    if (ret != kStatus_Success)
-    {
-        assert(0);
-    }
-
-    SECLIB_MUTEX_UNLOCK();
-
-    return newLen;
+    return ret;
 }
 
 /*! *********************************************************************************
  * \brief  This function performs AES-128-CBC decryption on a message block.
  *
+ * \param[in]  pInput Pointer to the location of the input ciphered message.
+ *
+ * \param[in]  inputLen Input message length in bytes - must be a multiple of AES_BLOCK_SIZE.
+ *
+ * \param[in, out]  pInitVector Pointer to the location of the 128-bit initialization vector.
+ *                 On exit the IV content is updated with ciphered output to be injected as next block IV.
+ *                 Because IV is modifiable, it cannot be RO (const).
+ *
+ * \param[in]  pKey Pointer to the location of the 128-bit key.
+ *
+ * \param[out]  pOutput Pointer to the location to store the plain text output.
+ *
+ * \return : gSecSuccess_c if no error,
+ *           gSecBadArgument_c in case of bad arguments,
+ *           gSecError_c in case of internal error.
+ *
+ ********************************************************************************** */
+secResultType_t AES_128_CBC_Decrypt(
+    const uint8_t *pInput, uint32_t inputLen, uint8_t *pInitVector, const uint8_t *pKey, uint8_t *pOutput)
+{
+    secResultType_t ret;
+
+    do
+    {
+        status_t      st;
+        aes_context_t ctx;
+        if ((pInput == NULL) || (pInitVector == NULL) || (pKey == NULL) || (pOutput == NULL) ||
+            /* If the input length is not a non zero multiple of AES 128 block size,  return */
+            (inputLen < AES_BLOCK_SIZE) || (AES_PARTIAL_BLOCK_BYTES(inputLen) != 0U))
+        {
+            ret = gSecBadArgument_c;
+            break;
+        }
+
+        SECLIB_MUTEX_LOCK();
+        st = SSS_aes_operation(&ctx, pInput, inputLen, pInitVector, pKey, AES_128_KEY_BITS, pOutput, false,
+                               kAlgorithm_SSS_AES_CBC);
+        SECLIB_MUTEX_UNLOCK();
+
+        if (st != kStatus_Success)
+        {
+            ret = gSecError_c;
+            break;
+        }
+        /* Update IV with last ciphered block to be injected at next call */
+        /* Note that inputLen is greater than or equal to AES_BLOCK_SIZE, otherwise would have exited
+           with gSecBadArgument_c, so difference cannot be negative */
+        FLib_MemCpy(pInitVector, &pInput[inputLen - AES_BLOCK_SIZE], AES_BLOCK_SIZE);
+        ret = gSecSuccess_c;
+
+    } while (false);
+    return ret;
+}
+
+/*! *********************************************************************************
+ * \brief  This function performs AES-128-CBC encryption on a message block after
+ *         padding until AES block completion.
+ *
+ * Padding scheme is ISO/IEC 7816-4: one 80h byte (1 bit), followed by as many 00h as
+ * required to fill a 128 bit block. Note that if the message length is a multiple of
+ * AES block size already, another block is appended to the original message.
+ *
  * \param[in]  pInput Pointer to the location of the input message.
  *
- * \param[in]  inputLen Input message length in bytes.
+ * \param[in]  inputLen Input message length in bytes - no specific constraint.
  *
- * \param[in]  pInitVector Pointer to the location of the 128-bit initialization vector.
+ *  IMPORTANT: User must make sure output buffer has at least inputLen + 16 bytes size.
+ *  This constraint does not apply to input buffer (any longer).
+ *
+ * \param[in, out]  pInitVector Pointer to the location of the 128-bit initialization vector.
+ *                 On exit the IV content is updated with ciphered output to be injected as next block IV.
+ *                 Because it is modifiable it cannot be RO (const).
  *
  * \param[in]  pKey Pointer to the location of the 128-bit key.
  *
  * \param[out]  pOutput Pointer to the location to store the ciphered output.
  *
- * Return value: size of output buffer (after depadding)
+ * \return size of output message after padding is appended.
+ *
+ ********************************************************************************** */
+uint32_t AES_128_CBC_Encrypt_And_Pad(
+    uint8_t *pInput, uint32_t inputLen, uint8_t *pInitVector, const uint8_t *pKey, uint8_t *pOutput)
+{
+    uint32_t roundedLen = 0u;
+
+    do
+    {
+        uint8_t last_blk_msg_sz;
+        uint8_t last_block[AES_BLOCK_SIZE]; /* Buffer used to generate last block containing padding */
+        /* compute new length */
+        roundedLen      = AES_WHOLE_BLOCK_BYTES(inputLen);
+        last_blk_msg_sz = (uint8_t)(inputLen - roundedLen);
+        /* Perform AES-CBC operation on whole AES blocks */
+        if (AES_128_CBC_Encrypt(pInput, roundedLen, pInitVector, pKey, pOutput) != gSecSuccess_c)
+        {
+            roundedLen = 0u;
+            break;
+        }
+        pInput += roundedLen;
+        pOutput += roundedLen;
+        /* There may be a remainder modulus 16 : copy it to last_block on stack */
+        /* then add padding so as to fill the last_block array */
+        if (SecLib_Padding(pInput, last_block, last_blk_msg_sz) == 0u)
+        {
+            roundedLen = 0u;
+            break;
+        }
+        if (AES_128_CBC_Encrypt(last_block, AES_BLOCK_SIZE, pInitVector, pKey, pOutput) != gSecSuccess_c)
+        {
+            roundedLen = 0u;
+            break;
+        }
+        roundedLen += AES_BLOCK_SIZE;
+    } while (false);
+
+    return roundedLen;
+}
+
+/*! *********************************************************************************
+ * \brief  This function performs AES_128_CBC_Decrypt_And_Depad decryption on a message.
+ *
+ * \param[in]  pInput Pointer to the location of the input ciphered message.
+ *
+ * \param[in]  inputLen Input message length in bytes must be a multiple of AES block size
+ *
+ * \param[in]  pInitVector Pointer to the location of the 128-bit initialization vector.
+ *
+ * \param[in]  pKey Pointer to the location of the 128-bit key.
+ *
+ * \param[out] pOutput Pointer to the location to store the plain text output.
+ *
+ * \return size of output buffer (after depadding the 0x80 [0x00 .. ]. padding sequence)
  *
  ********************************************************************************** */
 uint32_t AES_128_CBC_Decrypt_And_Depad(
     const uint8_t *pInput, uint32_t inputLen, uint8_t *pInitVector, const uint8_t *pKey, uint8_t *pOutput)
 {
-    uint32_t      newLen = inputLen;
-    status_t      ret;
-    aes_context_t ctx;
+    uint32_t newLen = 0uL;
 
-    SECLIB_MUTEX_LOCK();
-
-    ret = SSS_aes_operation(&ctx, pInput, inputLen, pInitVector, pKey, AES_128_KEY_BITS, pOutput, false,
-                            kAlgorithm_SSS_AES_CBC);
-    if (ret != kStatus_Success)
+    if (inputLen > 0u)
     {
-        assert(0);
+        if (AES_128_CBC_Decrypt(pInput, inputLen, pInitVector, pKey, pOutput) == gSecSuccess_c)
+        {
+            uint8_t padding_len;
+            /* If we are here inputLen is a non 0 multiple of AES_BLOCK_SIZE, otherwise AES_128_CBC_Decrypt would have
+            returned an error.
+            Yet the test below is to prevent a false MISRA error detection.
+            */
+            if ((inputLen >= AES_BLOCK_SIZE) && (AES_PARTIAL_BLOCK_BYTES(inputLen) == 0u))
+            {
+                uint8_t *p_last_block = &pOutput[inputLen - AES_BLOCK_SIZE];
+                padding_len           = SecLib_DePadding(p_last_block);
+                if ((padding_len > 0u) && (padding_len <= AES_BLOCK_SIZE))
+                {
+                    /* Safe: inputLen is a multiple of AES_BLOCK_SIZE and >= AES_BLOCK_SIZE,
+                    padding_len is in [1..AES_BLOCK_SIZE], so subtraction cannot underflow */
+                    newLen = inputLen - (uint32_t)padding_len;
+                }
+            }
+        }
     }
-    SECLIB_MUTEX_UNLOCK();
-
-    while ((pOutput[--newLen] != 0x80U) && (newLen != 0U))
-    {
-    }
+    /* coverity [return_overflow:FALSE] see above */
     return newLen;
 }
 
@@ -484,7 +583,7 @@ void AES_128_CTR(const uint8_t *pInput, uint32_t inputLen, uint8_t *pCounter, co
 
     SECLIB_MUTEX_LOCK();
 
-    /* The lenght of the input does not need to be a multiple of AES 128 block size */
+    /* The length of the input does not need to be a multiple of AES 128 block size */
     ret = SSS_aes128_CTR_operation(&ctx, pInput, inputLen, pCounter, pKey, pOutput, true, streamBlk,
                                    (size_t *)&ctrOffset);
     if (ret != kStatus_Success)
@@ -688,6 +787,7 @@ void AES_128_CMAC_LsbFirstInput(const uint8_t *pInput, uint32_t inputLen, const 
     }
     else
     {
+        /* Round allocated size to the upper multiple of AES_128_BLOCK_SIZE */
         reversedMsg = (uint8_t *)MEM_BufferAlloc(((inputLen + 15U) >> 4) << 4);
         /* Some MEM_BufferAlloc implementations return a NULL pointer for a 0 length allocation */
     }
@@ -695,11 +795,11 @@ void AES_128_CMAC_LsbFirstInput(const uint8_t *pInput, uint32_t inputLen, const 
     if (reversedMsg != NULL)
     {
         uint8_t *p   = &reversedMsg[0];
-        size_t   cnt = inputLen;
+        uint32_t cnt = inputLen;
         pInput += cnt;
         do
         {
-            uint32_t currentCmacInputBlkLen = 0;
+            uint32_t currentCmacInputBlkLen = 0UL;
             if (cnt < AES_128_BLOCK_SIZE)
             {
                 /* If this is the first and single block it is legal for it to have an input length of 0
@@ -1274,7 +1374,7 @@ void HMAC_SHA256(const uint8_t *pKey, uint32_t keyLen, const uint8_t *pData, uin
 secResultType_t ECDH_P256_GenerateKeys(ecdhPublicKey_t *pOutPublicKey, ecdhPrivateKey_t *pOutPrivateKey)
 {
     secResultType_t ret = gSecSuccess_c;
-
+#if (gSecLibUseBleDebugKeys_d == 0)
     uint8_t *wrk_buf = NULL;
 
     SECLIB_MUTEX_LOCK();
@@ -1320,8 +1420,76 @@ secResultType_t ECDH_P256_GenerateKeys(ecdhPublicKey_t *pOutPublicKey, ecdhPriva
 
     } while (false);
     SECLIB_MUTEX_UNLOCK();
-
     (void)MEM_BufferFree(wrk_buf);
+#else  /* gSecLibUseBleDebugKeys_d */
+    SECLIB_MUTEX_LOCK();
+    do
+    {
+        if (pECPKeyPair != NULL)
+        {
+            break;
+        }
+
+        g_ECP_KeyPair.keyId = KEY_ID_BLE0;
+        pECPKeyPair         = &g_ECP_KeyPair;
+
+        if ((CRYPTO_InitHardware()) != kStatus_Success)
+        {
+            break;
+        }
+
+        if (sss_sscp_key_object_init(&pECPKeyPair->OwnKey, &g_keyStore) != kStatus_SSS_Success)
+        {
+            break;
+        }
+
+        if (sss_sscp_key_object_allocate_handle(&pECPKeyPair->OwnKey, KEY_ID_BLE0, kSSS_KeyPart_Pair,
+                                                kSSS_CipherType_EC_NIST_P, 96u,
+                                                mSecLibKeyPropCryptoAlgoAll_c) != kStatus_SSS_Success)
+        {
+            break;
+        }
+
+        if (sss_sscp_key_store_set_key(&g_keyStore, &pECPKeyPair->OwnKey, (const uint8_t *)&mBleDebugKeyPair, 96u, 256u,
+                                       kSSS_KeyPart_Pair) != kStatus_SSS_Success)
+        {
+            break;
+        }
+
+        if (sss_sscp_key_store_export_key(&g_keyStore, &pECPKeyPair->OwnKey, ecdhKeyPairBlob, &ecdhKeyPairBlobSize,
+                                          kSSS_blobType_ELKE_blob) != kStatus_SSS_Success)
+        {
+            RAISE_ERROR(ret, gSecError_c);
+        }
+
+        IsSecLibEcdhContextInit = true;
+    } while (false);
+    SECLIB_MUTEX_UNLOCK();
+
+    /* The NCCL output is BE and BLE expected LE */
+    ECP256_PointCopy_and_change_endianness((uint8_t *)pOutPublicKey, (const uint8_t *)&mBleDebugKeyPair.public_key);
+    ECP256_coordinate_copy_and_change_endianness((uint8_t *)pOutPrivateKey,
+                                                 (const uint8_t *)&mBleDebugKeyPair.private_key);
+    (void)g_ECP_KeyPair;
+#endif /* gSecLibUseBleDebugKeys_d */
+
+    return ret;
+}
+
+/************************************************************************************
+ * \brief Checks whether a public key is valid (point is on the curve).
+ *
+ * \return TRUE if valid, FALSE if not
+ *
+ ************************************************************************************/
+bool_t ECP256_IsKeyValid(const ecp256Point_t *pKey)
+{
+    bool_t ret = false;
+
+    if (ECP256_LePointValid(pKey))
+    {
+        ret = true;
+    }
 
     return ret;
 }
@@ -1451,7 +1619,7 @@ void ECDH_P256_FreeDhKeyDataSecure(computeDhKeyParam_t *pDhKeyData)
 {
     /* turn into void* first to avoid MISRA 11.3 */
     void *pKeyData = &pDhKeyData->outPoint;
-    (void)sss_sscp_key_object_free((sss_sscp_object_t *)pKeyData, kSSS_keyObjFree_KeysStoreNoDefragment);
+    (void)sss_sscp_key_object_free((sss_sscp_object_t *)pKeyData, kSSS_keyObjFree_KeysStoreDefragment);
 }
 
 /************************************************************************************
@@ -1742,11 +1910,11 @@ secResultType_t SecLib_DeriveBluetoothSKDSecure(const uint8_t *pInSKD,
     }
     if (bLTKObjectInitialized == true)
     {
-        (void)sss_sscp_key_object_free(&keyObjLTK, kSSS_keyObjFree_KeysStoreNoDefragment);
+        (void)sss_sscp_key_object_free(&keyObjLTK, kSSS_keyObjFree_KeysStoreDefragment);
     }
     if (bSKObjectInitialized == true)
     {
-        (void)sss_sscp_key_object_free(&keyObjSK, kSSS_keyObjFree_KeysStoreNoDefragment);
+        (void)sss_sscp_key_object_free(&keyObjSK, kSSS_keyObjFree_KeysStoreDefragment);
     }
 
     SECLIB_MUTEX_UNLOCK();
@@ -1815,7 +1983,7 @@ secResultType_t SecLib_ObfuscateKeySecure(const uint8_t *pKey, uint8_t *pBlob, c
 
     if (keyInit == true)
     {
-        (void)sss_sscp_key_object_free(&keyObj, kSSS_keyObjFree_KeysStoreNoDefragment);
+        (void)sss_sscp_key_object_free(&keyObj, kSSS_keyObjFree_KeysStoreDefragment);
     }
     SECLIB_MUTEX_UNLOCK();
     return result;
@@ -1877,7 +2045,7 @@ secResultType_t SecLib_DeobfuscateKeySecure(const uint8_t *pBlob, uint8_t *pKey)
 
     if (keyInit == true)
     {
-        (void)sss_sscp_key_object_free(&keyObj, kSSS_keyObjFree_KeysStoreNoDefragment);
+        (void)sss_sscp_key_object_free(&keyObj, kSSS_keyObjFree_KeysStoreDefragment);
     }
     SECLIB_MUTEX_UNLOCK();
     return result;
@@ -1914,7 +2082,7 @@ secResultType_t SecLib_VerifyBluetoothAh(uint8_t *pHash, const uint8_t *pKey, co
         {
             break;
         }
-        /* Initialize the r' value in the temporary location. 3 bytes of ramdom value.
+        /* Initialize the r' value in the temporary location. 3 bytes of random value.
          *  Initialize it reversed for AES.
          */
         for (uint8_t i = 0; i < 3u; i++)
@@ -2005,12 +2173,12 @@ secResultType_t SecLib_VerifyBluetoothAhSecure(uint8_t *pHash, const uint8_t *pK
         }
         contextInit = true;
 
-        /* Initialize the r' value in the temporary location. 3 bytes of ramdom value.
+        /* Initialize the r' value in the temporary location. 3 bytes of random value.
          *  Initialize it reversed for AES.
          */
-        for (int i = 0; i < 3; i++)
+        for (uint8_t i = 0u; i < 3u; i++)
         {
-            tempAddrPart[15 - i] = pR[i];
+            tempAddrPart[AES_BLOCK_SIZE - 1u - i] = pR[i];
         }
 
         if (sss_sscp_cipher_one_go(&context, NULL, 0, tempAddrPart, tempFullHash, 16U) != kStatus_SSS_Success)
@@ -2018,9 +2186,11 @@ secResultType_t SecLib_VerifyBluetoothAhSecure(uint8_t *pHash, const uint8_t *pK
             break;
         }
 
-        pHash[0] = tempFullHash[15];
-        pHash[1] = tempFullHash[14];
-        pHash[2] = tempFullHash[13];
+        /*! Copy the relevant bytes to the output. */
+        for (uint8_t i = 0; i < 3u; i++)
+        {
+            pHash[i] = tempFullHash[AES_BLOCK_SIZE - 1u - i];
+        }
 
         result = gSecSuccess_c;
 
@@ -2028,7 +2198,7 @@ secResultType_t SecLib_VerifyBluetoothAhSecure(uint8_t *pHash, const uint8_t *pK
 
     if (keyInit == true)
     {
-        (void)sss_sscp_key_object_free(&keyObj, kSSS_keyObjFree_KeysStoreNoDefragment);
+        (void)sss_sscp_key_object_free(&keyObj, kSSS_keyObjFree_KeysStoreDefragment);
     }
     if (contextInit == true)
     {
@@ -2038,20 +2208,489 @@ secResultType_t SecLib_VerifyBluetoothAhSecure(uint8_t *pHash, const uint8_t *pK
     return result;
 }
 
-#ifdef DBG_SECLIB
-void dump_octet_string(const char *str, const unsigned char *data, size_t len)
+/************************************************************************************
+ * \brief Generates a symmetric key in ELKE blob or plain text form .
+ *
+ * \param[in]  keySize the size of the generated key.
+ *
+ * \param[in] blobOutput true - blob, false - plain text output.
+ *
+ * \param[out] pOut   the address of the buffer to store the key.
+ *                    Storage for sss_sscp_object_t key reference
+ *
+ * \return gSecSuccess_c or error
+ *
+ ************************************************************************************/
+secResultType_t SecLib_GenerateSymmetricKey(const uint32_t keySize, const bool_t blobOutput, void *pOut)
 {
-    for (int i = 0; i < len; i++)
+    secResultType_t   result     = gSecError_c;
+    bool_t            keyObjFree = false;
+    sss_sscp_object_t keyObj;
+    SECLIB_MUTEX_LOCK();
+    do
     {
-        if (i % 16 == 0)
-            PRINTF("\r\n%s[%d]:\t", str, i);
-        if (data[i] < 0x10)
-            PRINTF("0%X", data[i]);
+        if ((CRYPTO_InitHardware()) != kStatus_Success)
+        {
+            break;
+        }
+
+        if (kStatus_SSS_Success != sss_sscp_key_object_init(&keyObj, &g_keyStore))
+        {
+            break;
+        }
+        keyObjFree = true;
+        if (kStatus_SSS_Success != sss_sscp_key_object_allocate_handle(&keyObj, ELE_S200_KEY_STORE_USER_ID_GENERIC,
+                                                                       kSSS_KeyPart_Default, kSSS_CipherType_SYMMETRIC,
+                                                                       keySize, mSecLibKeyPropCryptoAlgoAll_c))
+        {
+            break;
+        }
+        if (kStatus_SSS_Success != sss_sscp_key_store_generate_key(&g_keyStore, &keyObj, (size_t)(keySize << 3U), NULL))
+        {
+            break;
+        }
+        if (blobOutput == true)
+        {
+            size_t blobByteLen = gSecLibElkeBlobSize_c;
+            if (kStatus_SSS_Success !=
+                sss_sscp_key_store_export_key(&g_keyStore, &keyObj, pOut, &blobByteLen, kSSS_blobType_ELKE_blob))
+            {
+                break;
+            }
+        }
         else
-            PRINTF("%02X", data[i]);
+        {
+            size_t keyByteLen = (size_t)keySize;
+            size_t keyBitLen  = (size_t)(keySize << 3U);
+            if (kStatus_SSS_Success !=
+                sss_sscp_key_store_get_key(&g_keyStore, &keyObj, pOut, &keyByteLen, &keyBitLen, kSSS_KeyPart_Default))
+            {
+                break;
+            }
+        }
+        result = gSecSuccess_c;
+
+    } while (false);
+
+    if (keyObjFree == true)
+    {
+        (void)sss_sscp_key_object_free(&keyObj, kSSS_keyObjFree_KeysStoreDefragment);
     }
+    SECLIB_MUTEX_UNLOCK();
+    return result;
 }
+
+/************************************************************************************
+ * \brief Generates an EIRK blob from an ELKE blob or plain text symmetric key.
+ *
+ * \param[in]  pIRK pointer to the input IRK key.
+ *
+ * \param[in] blobInput true - pIRK points to an ELKE blob, false - pIRK points to a plain text key.
+ *
+ * \param[in] generateDKeyIRK true - DKeyIRK is slso generated and provided to NBU.
+ *
+ * \param[out] pOutEIRKblob   the address of the buffer to store the EIRK blob.
+ *
+ * \return gSecSuccess_c or error
+ *
+ ************************************************************************************/
+secResultType_t SecLib_GenerateBluetoothEIRKBlobSecure(const void  *pIRK,
+                                                       const bool_t blobInput,
+                                                       const bool_t generateDKeyIRK,
+                                                       uint8_t     *pOutEIRKblob)
+{
+    secResultType_t   result     = gSecError_c;
+    bool_t            keyObjFree = false;
+    sss_sscp_object_t keyObj;
+#ifdef REVERSE_EIRK
+    uint8_t tempKey[16];
 #endif
+    SECLIB_MUTEX_LOCK();
+    do
+    {
+        if ((CRYPTO_InitHardware()) != kStatus_Success)
+        {
+            break;
+        }
+
+        if (kStatus_SSS_Success != sss_sscp_key_object_init(&keyObj, &g_keyStore))
+        {
+            break;
+        }
+        keyObjFree = true;
+        if (kStatus_SSS_Success != sss_sscp_key_object_allocate_handle(&keyObj, ELE_S200_KEY_STORE_USER_ID_GENERIC,
+                                                                       kSSS_KeyPart_Default, kSSS_CipherType_SYMMETRIC,
+                                                                       16U, mSecLibKeyPropCryptoAlgoAll_c))
+        {
+            break;
+        }
+        if (blobInput == true)
+        {
+            if (kStatus_SSS_Success != sss_sscp_key_store_import_key(&g_keyStore, &keyObj, pIRK, gSecLibElkeBlobSize_c,
+                                                                     128U, kSSS_blobType_ELKE_blob))
+            {
+                break;
+            }
+        }
+        else
+        {
+            if (kStatus_SSS_Success !=
+                sss_sscp_key_store_set_key(&g_keyStore, &keyObj, pIRK, 16U, 128U, kSSS_KeyPart_Default))
+            {
+                break;
+            }
+        }
+
+        if (generateDKeyIRK == true)
+        {
+            sss_status_t ret;
+            /* Generate random NBU_DKEY_IRK and send it to NBU */
+            PLATFORM_RemoteActiveReq();
+            ret = sss_sscp_key_store_open_internal_key(&g_keyStore, kSSS_internalKey_NBU_DKEY_IRK);
+            PLATFORM_RemoteActiveRel();
+            if (kStatus_SSS_Success != ret)
+            {
+                break;
+            }
+        }
+
+        size_t eirkBlobByteLen = gSecLibEirkBlobSize_c;
+
+#ifdef REVERSE_EIRK
+        if (kStatus_SSS_Success !=
+            sss_sscp_key_store_export_key(&g_keyStore, &keyObj, tempKey, &eirkBlobByteLen, kSSS_blobType_NBU_EIRK_blob))
+#else
+        if (kStatus_SSS_Success != sss_sscp_key_store_export_key(&g_keyStore, &keyObj, pOutEIRKblob, &eirkBlobByteLen,
+                                                                 kSSS_blobType_NBU_EIRK_blob))
+#endif
+        {
+            break;
+        }
+        result = gSecSuccess_c;
+#ifdef REVERSE_EIRK
+        FLib_MemCpyReverseOrder(pOutEIRKblob, tempKey, 16U);
+#endif
+    } while (false);
+    if (keyObjFree == true)
+    {
+        (void)sss_sscp_key_object_free(&keyObj, kSSS_keyObjFree_KeysStoreDefragment);
+    }
+    SECLIB_MUTEX_UNLOCK();
+    return result;
+}
+
+/************************************************************************************
+ * \brief Computes the Edgelock to Edgelock key for an ECDH P256 key pair.
+ *
+ * \param[in]   pInPeerPublicKey     pointer to the public key.
+ * \param[out]  pOutE2EKey           pointer where the E2E key object is stored
+ *
+ * \return gSecSuccess_c or error
+ *
+ ************************************************************************************/
+secResultType_t ECDH_P256_ComputeA2BKeySecure(const ecdhPublicKey_t *pInPeerPublicKey, ecdhDhKey_t *pOutE2EKey)
+{
+    secResultType_t ret     = gSecError_c;
+    uint8_t        *wrk_buf = NULL;
+    SECLIB_MUTEX_LOCK();
+    sss_ecdh_context_t ecdh_ctx = {0};
+    do
+    {
+        if (pECPKeyPair == NULL)
+        {
+            ret = gSecError_c;
+            break;
+        }
+
+        size_t wrk_buf_sz = 3u * ECP256_COORDINATE_LEN;
+        wrk_buf           = MEM_BufferAlloc(wrk_buf_sz);
+        if (wrk_buf == NULL)
+        {
+            RAISE_ERROR(ret, gSecAllocError_c);
+        }
+        ecdh_ctx.ecdh_key_pair = pECPKeyPair;
+        ECP256_PointCopy_and_change_endianness((uint8_t *)&ecdh_ctx.Qp, (const uint8_t *)&pInPeerPublicKey->raw[0]);
+        ecdh_ctx.keepSharedSecret = true;
+
+        if (sss_ecdh_calc_EL2EL_key(&ecdh_ctx, wrk_buf, wrk_buf_sz) != kStatus_Success)
+        {
+            RAISE_ERROR(ret, gSecError_c);
+        }
+        FLib_MemCpy(pOutE2EKey->raw, (void *)&ecdh_ctx.sharedSecret, sizeof(sss_sscp_object_t));
+        (void)MEM_BufferFree(wrk_buf);
+
+        ret = gSecSuccess_c;
+
+    } while (false);
+    SECLIB_MUTEX_UNLOCK();
+    return ret;
+}
+
+/************************************************************************************
+ * \brief Free E2E key object
+ *
+ * \param[in]  pE2EKeyData   Pointer to the E2E key data to be freed.
+ *
+ * \return gSecSuccess_c or error
+ *
+ ************************************************************************************/
+secResultType_t ECDH_P256_FreeE2EKeyDataSecure(ecdhDhKey_t *pE2EKeyData)
+{
+    secResultType_t result = gSecError_c;
+    sscp_status_t   status = kStatus_SSCP_Fail;
+
+    /* turn into void* first to avoid MISRA 11.3 */
+    void *pKeyData = pE2EKeyData;
+
+    status = sss_sscp_key_object_free((sss_sscp_object_t *)pKeyData, kSSS_keyObjFree_KeysStoreDefragment);
+
+    if (kStatus_SSS_Success == status)
+    {
+        result = gSecSuccess_c;
+    }
+    return result;
+}
+
+/************************************************************************************
+ * \brief Generates an E2E blob from an ELKE blob or plain text symmetric key.
+ *
+ * \param[in]  pKey      pointer to the input key.
+ * \param[in]  keyType   input key type.
+ * \param[out] pOutKey   pointer to where the output E2E blob will be copied.
+ *
+ * \return gSecSuccess_c or error
+ *
+ ************************************************************************************/
+secResultType_t SecLib_ExportA2BBlobSecure(const void *pKey, const secInputKeyType_t keyType, uint8_t *pOutKey)
+{
+    secResultType_t   result     = gSecError_c;
+    bool_t            keyObjFree = false;
+    sss_sscp_object_t keyObj;
+
+    SECLIB_MUTEX_LOCK();
+    do
+    {
+        if ((CRYPTO_InitHardware()) != kStatus_Success)
+        {
+            break;
+        }
+
+        if (kStatus_SSS_Success != sss_sscp_key_object_init(&keyObj, &g_keyStore))
+        {
+            break;
+        }
+        keyObjFree = true;
+
+        if (gSecPlainText_c == keyType)
+        {
+            uint8_t tempKey[16];
+
+            FLib_MemCpyReverseOrder(tempKey, pKey, 16U);
+
+            if (kStatus_SSS_Success != sss_sscp_key_object_allocate_handle(&keyObj, ELE_S200_KEY_STORE_USER_ID_GENERIC,
+                                                                           kSSS_KeyPart_Default, kSSS_CipherType_NONE,
+                                                                           16U, SSS_KEYPROP_OPERATION_AES))
+            {
+                break;
+            }
+
+            if (kStatus_SSS_Success !=
+                sss_sscp_key_store_set_key(&g_keyStore, &keyObj, tempKey, 16U, 128U, kSSS_KeyPart_Default))
+            {
+                break;
+            }
+        }
+        else if (gSecElkeBlob_c == keyType)
+        {
+            if (kStatus_SSS_Success !=
+                sss_sscp_key_object_allocate_handle(&keyObj, ELE_S200_KEY_STORE_USER_ID_GENERIC, kSSS_KeyPart_Default,
+                                                    kSSS_CipherType_SYMMETRIC, 16U, mSecLibKeyPropCryptoAlgoAll_c))
+            {
+                break;
+            }
+
+            if (kStatus_SSS_Success != sss_sscp_key_store_import_key(&g_keyStore, &keyObj, pKey, gSecLibElkeBlobSize_c,
+                                                                     128U, kSSS_blobType_ELKE_blob))
+            {
+                break;
+            }
+        }
+        else if (gSecLtkElkeBlob_c == keyType)
+        {
+            if (kStatus_SSS_Success !=
+                sss_sscp_key_object_allocate_handle(
+                    &keyObj, ELE_S200_KEY_STORE_USER_ID_GENERIC, kSSS_KeyPart_Default, kSSS_CipherType_SYMMETRIC, 16U,
+                    kSSS_KeyProp_NoPlainRead | kSSS_KeyProp_NoPlainWrite | kSSS_KeyProp_CryptoAlgo_KDF))
+            {
+                break;
+            }
+
+            if (kStatus_SSS_Success != sss_sscp_key_store_import_key(&g_keyStore, &keyObj, pKey, gSecLibElkeBlobSize_c,
+                                                                     128U, kSSS_blobType_ELKE_blob))
+            {
+                break;
+            }
+        }
+        else
+        {
+            /* Invalid keyType. */
+            break;
+        }
+
+        size_t e2eBlobByteLen = gSecLibElkeBlobSize_c;
+
+        if (kStatus_SSS_Success !=
+            sss_sscp_key_store_export_key(&g_keyStore, &keyObj, pOutKey, &e2eBlobByteLen, kSSS_blobType_E2E_blob))
+        {
+            break;
+        }
+        result = gSecSuccess_c;
+    } while (false);
+    SECLIB_MUTEX_UNLOCK();
+    if (keyObjFree == true)
+    {
+        (void)sss_sscp_key_object_free(&keyObj, kSSS_keyObjFree_KeysStoreDefragment);
+    }
+    return result;
+}
+
+/************************************************************************************
+ * \brief Generates a symmetric key in ELKE blob or plain text form from an E2E blob.
+ *
+ * \param[in]  pKey      pointer to the input E2E blob.
+ * \param[in]  keyType   output key type.
+ * \param[out] pOutKey   pointer to where the output key will be copied.
+ *
+ * \return gSecSuccess_c or error
+ *
+ ************************************************************************************/
+secResultType_t SecLib_ImportA2BBlobSecure(const uint8_t *pKey, const secInputKeyType_t keyType, uint8_t *pOutKey)
+{
+    secResultType_t   result    = gSecError_c;
+    size_t            keyBitLen = 128U, keyByteLen = 16U;
+    sss_sscp_object_t keyObj;
+    bool_t            keyInit = false;
+    uint8_t           tempKey[16];
+
+    SECLIB_MUTEX_LOCK();
+    do
+    {
+        if ((CRYPTO_InitHardware()) != kStatus_Success)
+        {
+            break;
+        }
+
+        if (sss_sscp_key_object_init(&keyObj, &g_keyStore) != kStatus_SSS_Success)
+        {
+            break;
+        }
+        keyInit = true;
+
+        if (gSecPlainText_c == keyType)
+        {
+            if (sss_sscp_key_object_allocate_handle(&keyObj, ELE_S200_KEY_STORE_USER_ID_GENERIC, kSSS_KeyPart_Default,
+                                                    kSSS_CipherType_NONE, 16u,
+                                                    SSS_KEYPROP_OPERATION_AES) != kStatus_SSS_Success)
+            {
+                break;
+            }
+
+            if (sss_sscp_key_store_import_key(&g_keyStore, &keyObj, pKey, 40U, 8U * 40U, kSSS_blobType_E2E_blob) !=
+                kStatus_SSS_Success)
+            {
+                break;
+            }
+
+            if (sss_sscp_key_store_get_key(&g_keyStore, &keyObj, tempKey, &keyByteLen, &keyBitLen,
+                                           kSSS_KeyPart_Default) != kStatus_SSS_Success)
+            {
+                break;
+            }
+
+            FLib_MemCpyReverseOrder(pOutKey, tempKey, 16U);
+        }
+        else if (gSecElkeBlob_c == keyType)
+        {
+            size_t e2eBlobByteLen = gSecLibElkeBlobSize_c;
+
+            if (kStatus_SSS_Success !=
+                sss_sscp_key_object_allocate_handle(&keyObj, ELE_S200_KEY_STORE_USER_ID_GENERIC, kSSS_KeyPart_Default,
+                                                    kSSS_CipherType_SYMMETRIC, 16U, mSecLibKeyPropCryptoAlgoAll_c))
+            {
+                break;
+            }
+
+            if (sss_sscp_key_store_import_key(&g_keyStore, &keyObj, pKey, 40U, 8U * 40U, kSSS_blobType_E2E_blob) !=
+                kStatus_SSS_Success)
+            {
+                break;
+            }
+
+            if (kStatus_SSS_Success !=
+                sss_sscp_key_store_export_key(&g_keyStore, &keyObj, pOutKey, &e2eBlobByteLen, kSSS_blobType_ELKE_blob))
+            {
+                break;
+            }
+        }
+        else if (gSecLtkElkeBlob_c == keyType)
+        {
+            size_t e2eBlobByteLen = gSecLibElkeBlobSize_c;
+
+            if (sss_sscp_key_object_allocate_handle(
+                    &keyObj, ELE_S200_KEY_STORE_USER_ID_GENERIC, kSSS_KeyPart_Default, kSSS_CipherType_SYMMETRIC, 16u,
+                    kSSS_KeyProp_NoPlainRead | kSSS_KeyProp_NoPlainWrite | kSSS_KeyProp_CryptoAlgo_KDF) !=
+                kStatus_SSS_Success)
+            {
+                break;
+            }
+
+            if (sss_sscp_key_store_import_key(&g_keyStore, &keyObj, pKey, 40U, 8U * 40U, kSSS_blobType_E2E_blob) !=
+                kStatus_SSS_Success)
+            {
+                break;
+            }
+
+            if (kStatus_SSS_Success !=
+                sss_sscp_key_store_export_key(&g_keyStore, &keyObj, pOutKey, &e2eBlobByteLen, kSSS_blobType_ELKE_blob))
+            {
+                break;
+            }
+        }
+        else
+        {
+            /* Invalid keyType */
+            break;
+        }
+
+        result = gSecSuccess_c;
+    } while (false);
+    SECLIB_MUTEX_UNLOCK();
+
+    if (keyInit == true)
+    {
+        (void)sss_sscp_key_object_free(&keyObj, kSSS_keyObjFree_KeysStoreDefragment);
+    }
+    return result;
+}
+
+/*! *********************************************************************************
+*************************************************************************************
+* Private functions
+*************************************************************************************
+********************************************************************************** */
+
+static bool ECP256_LePointValid(const ecp256Point_t *P)
+{
+#if gSecLibUseDspExtension_d
+    ecp256Point_t tmp;
+    ECP256_PointCopy_and_change_endianness(tmp.raw, P->raw);
+    return ECP256_PointValid(&tmp);
+#else
+    extern bool_t EcP256_IsPointOnCurve(const uint32_t *X, const uint32_t *Y);
+    return EcP256_IsPointOnCurve((const uint32_t *)&P->components_32bit.x[0],
+                                 (const uint32_t *)&P->components_32bit.y[0]);
+#endif
+}
 
 /************************************************************************************
  * \private
@@ -2172,483 +2811,98 @@ static sss_status_t ELKE_BLE_SM_F5_DeriveKeysSecure(sss_sscp_object_t *pPubDhKey
     /* delete keys and contexts from S200 */
     if (bInitialized_MacKey)
     {
-        (void)sss_sscp_key_object_free(&keyObj__MacKey, kSSS_keyObjFree_KeysStoreNoDefragment);
+        (void)sss_sscp_key_object_free(&keyObj__MacKey, kSSS_keyObjFree_KeysStoreDefragment);
     }
 
     if (bInitialized_LTK)
     {
-        (void)sss_sscp_key_object_free(&keyObj__LTK, kSSS_keyObjFree_KeysStoreNoDefragment);
+        (void)sss_sscp_key_object_free(&keyObj__LTK, kSSS_keyObjFree_KeysStoreDefragment);
     }
 
     /* DHkey object from pDhKeyData->outPoint can be deleted here */
-    (void)sss_sscp_key_object_free(pPubDhKey, kSSS_keyObjFree_KeysStoreNoDefragment);
+    (void)sss_sscp_key_object_free(pPubDhKey, kSSS_keyObjFree_KeysStoreDefragment);
 
     SECLIB_MUTEX_UNLOCK();
 
     return result;
 }
 
-/************************************************************************************
- * \brief Generates a symmetric key in ELKE blob or plain text form .
+/*! *********************************************************************************
+ * \brief  This function pads an incomplete 16 byte block of data, where padding is
+ *         the concatenation of x and a single '1',
+ *         followed by the minimum number of '0's, so that the total length is equal to 128 bits.
+ * Padding scheme is ISO/IEC 7816-4: one 80h byte (1 bit), followed by as many 00h as
+ * required to fill a 128 bit block.
  *
- * \param[in]  keySize the size of the generated key.
+ * \param[in, out] lastb Pointer to the last block of message to be padded
  *
- * \param[in] blobOutput true - blob, false - plain text output.
+ * \param[in]  pad_block Padded block destination
  *
- * \param[out] pOut   the address of the buffer to store the key.
- *                    Storage for sss_sscp_object_t key reference
+ * \param[in]  length    Number of message bytes in the block to be padded : must be in [0..AES_BLOCK_SIZE-1]
  *
- * \return gSecSuccess_c or error
+ * \return  length of padding [1..AES_BLOCK_SIZE] if ok, 0 otherwise
  *
- ************************************************************************************/
-secResultType_t SecLib_GenerateSymmetricKey(const uint32_t keySize, const bool_t blobOutput, void *pOut)
+ ********************************************************************************** */
+static uint8_t SecLib_Padding(const uint8_t *lastb, uint8_t pad_block[AES_BLOCK_SIZE], uint8_t length)
 {
-    secResultType_t   result     = gSecError_c;
-    bool_t            keyObjFree = false;
-    sss_sscp_object_t keyObj;
-    SECLIB_MUTEX_LOCK();
-    do
+    uint8_t  padding_sz = 0;
+    uint32_t j;
+    if (length < AES_BLOCK_SIZE)
     {
-        if ((CRYPTO_InitHardware()) != kStatus_Success)
+        for (j = 0u; j < AES_BLOCK_SIZE; j++)
         {
-            break;
-        }
-
-        if (kStatus_SSS_Success != sss_sscp_key_object_init(&keyObj, &g_keyStore))
-        {
-            break;
-        }
-        keyObjFree = true;
-        if (kStatus_SSS_Success != sss_sscp_key_object_allocate_handle(&keyObj, ELE_S200_KEY_STORE_USER_ID_GENERIC,
-                                                                       kSSS_KeyPart_Default, kSSS_CipherType_SYMMETRIC,
-                                                                       keySize, mSecLibKeyPropCryptoAlgoAll_c))
-        {
-            break;
-        }
-        if (kStatus_SSS_Success != sss_sscp_key_store_generate_key(&g_keyStore, &keyObj, (size_t)(keySize << 3U), NULL))
-        {
-            break;
-        }
-        if (blobOutput == true)
-        {
-            size_t blobByteLen = gSecLibElkeBlobSize_c;
-            if (kStatus_SSS_Success !=
-                sss_sscp_key_store_export_key(&g_keyStore, &keyObj, pOut, &blobByteLen, kSSS_blobType_ELKE_blob))
+            /* there may be 0 bytes to copy if message was a multiple of AES_BLOCK_SIZE */
+            if (j < length)
             {
-                break;
+                /* original last block */
+                pad_block[j] = lastb[j];
             }
+            else if (j == length)
+            {
+                pad_block[j] = 0x80u;
+            }
+            else
+            {
+                pad_block[j] = 0x00u;
+            }
+        }
+        padding_sz = AES_BLOCK_SIZE - length;
+    }
+    return padding_sz;
+}
+
+/*! *********************************************************************************
+ * \brief  This function removes padding from an octet string (at most 16 bytes of data).
+ *
+ * \param[in] pIn Pointer to start of last AES block of a message to be depadded
+ *
+ * \return  if > 0 Final size of padding to be removed : must be in [1..AES_BLOCK_SIZE].
+ *          if 0 : error occurred the last block does not contain expected padding patter.
+ *
+ ********************************************************************************** */
+static uint8_t SecLib_DePadding(const uint8_t pad_block[AES_BLOCK_SIZE])
+{
+    uint8_t padding_sz = 0u;
+
+    for (uint8_t i = AES_BLOCK_SIZE; i > 0u; i--)
+    {
+        uint8_t ch = pad_block[i - 1u];
+        if (ch == 0x80u)
+        {
+            padding_sz = AES_BLOCK_SIZE - i + 1u;
+            break;
+        }
+        else if (ch != 0x00u)
+        {
+            /* not padding */
+            padding_sz = 0u;
+            break;
         }
         else
         {
-            size_t keyByteLen = (size_t)keySize;
-            size_t keyBitLen  = (size_t)(keySize << 3U);
-            if (kStatus_SSS_Success !=
-                sss_sscp_key_store_get_key(&g_keyStore, &keyObj, pOut, &keyByteLen, &keyBitLen, kSSS_KeyPart_Default))
-            {
-                break;
-            }
+            /* MISRA rule 15.7 but useless */
+            continue;
         }
-        result = gSecSuccess_c;
-
-    } while (false);
-
-    if (keyObjFree == true)
-    {
-        (void)sss_sscp_key_object_free(&keyObj, kSSS_keyObjFree_KeysStoreNoDefragment);
     }
-    SECLIB_MUTEX_UNLOCK();
-    return result;
-}
-
-/************************************************************************************
- * \brief Generates an EIRK blob from an ELKE blob or plain text symmetric key.
- *
- * \param[in]  pIRK pointer to the input IRK key.
- *
- * \param[in] blobInput true - pIRK points to an ELKE blob, false - pIRK points to a plain text key.
- *
- * \param[in] generateDKeyIRK true - DKeyIRK is slso generated and provided to NBU.
- *
- * \param[out] pOutEIRKblob   the address of the buffer to store the EIRK blob.
- *
- * \return gSecSuccess_c or error
- *
- ************************************************************************************/
-secResultType_t SecLib_GenerateBluetoothEIRKBlobSecure(const void  *pIRK,
-                                                       const bool_t blobInput,
-                                                       const bool_t generateDKeyIRK,
-                                                       uint8_t     *pOutEIRKblob)
-{
-    secResultType_t   result     = gSecError_c;
-    bool_t            keyObjFree = false;
-    sss_sscp_object_t keyObj;
-#ifdef REVERSE_EIRK
-    uint8_t tempKey[16];
-#endif
-    SECLIB_MUTEX_LOCK();
-    do
-    {
-        if ((CRYPTO_InitHardware()) != kStatus_Success)
-        {
-            break;
-        }
-
-        if (kStatus_SSS_Success != sss_sscp_key_object_init(&keyObj, &g_keyStore))
-        {
-            break;
-        }
-        keyObjFree = true;
-        if (kStatus_SSS_Success != sss_sscp_key_object_allocate_handle(&keyObj, ELE_S200_KEY_STORE_USER_ID_GENERIC,
-                                                                       kSSS_KeyPart_Default, kSSS_CipherType_SYMMETRIC,
-                                                                       16U, mSecLibKeyPropCryptoAlgoAll_c))
-        {
-            break;
-        }
-        if (blobInput == true)
-        {
-            if (kStatus_SSS_Success != sss_sscp_key_store_import_key(&g_keyStore, &keyObj, pIRK, gSecLibElkeBlobSize_c,
-                                                                     128U, kSSS_blobType_ELKE_blob))
-            {
-                break;
-            }
-        }
-        else
-        {
-            if (kStatus_SSS_Success !=
-                sss_sscp_key_store_set_key(&g_keyStore, &keyObj, pIRK, 16U, 128U, kSSS_KeyPart_Default))
-            {
-                break;
-            }
-        }
-
-        if (generateDKeyIRK == true)
-        {
-            sss_status_t ret;
-            /* Generate random NBU_DKEY_IRK and send it to NBU */
-            PLATFORM_RemoteActiveReq();
-            ret = sss_sscp_key_store_open_internal_key(&g_keyStore, kSSS_internalKey_NBU_DKEY_IRK);
-            PLATFORM_RemoteActiveRel();
-            if (kStatus_SSS_Success != ret)
-            {
-                break;
-            }
-        }
-
-        size_t eirkBlobByteLen = gSecLibEirkBlobSize_c;
-
-#ifdef REVERSE_EIRK
-        if (kStatus_SSS_Success !=
-            sss_sscp_key_store_export_key(&g_keyStore, &keyObj, tempKey, &eirkBlobByteLen, kSSS_blobType_NBU_EIRK_blob))
-#else
-        if (kStatus_SSS_Success != sss_sscp_key_store_export_key(&g_keyStore, &keyObj, pOutEIRKblob, &eirkBlobByteLen,
-                                                                 kSSS_blobType_NBU_EIRK_blob))
-#endif
-        {
-            break;
-        }
-        result = gSecSuccess_c;
-#ifdef REVERSE_EIRK
-        FLib_MemCpyReverseOrder(pOutEIRKblob, tempKey, 16U);
-#endif
-    } while (false);
-    if (keyObjFree == true)
-    {
-        (void)sss_sscp_key_object_free(&keyObj, kSSS_keyObjFree_KeysStoreNoDefragment);
-    }
-    SECLIB_MUTEX_UNLOCK();
-    return result;
-}
-
-/************************************************************************************
- * \brief Computes the Edgelock to Edgelock key for an ECDH P256 key pair.
- *
- * \param[in]   pInPeerPublicKey     pointer to the public key.
- * \param[out]  pOutE2EKey           pointer where the E2E key object is stored
- *
- * \return gSecSuccess_c or error
- *
- ************************************************************************************/
-secResultType_t ECDH_P256_ComputeA2BKeySecure(const ecdhPublicKey_t *pInPeerPublicKey, ecdhDhKey_t *pOutE2EKey)
-{
-    secResultType_t ret     = gSecError_c;
-    uint8_t        *wrk_buf = NULL;
-    SECLIB_MUTEX_LOCK();
-    sss_ecdh_context_t ecdh_ctx = {0};
-    do
-    {
-        if (pECPKeyPair == NULL)
-        {
-            ret = gSecError_c;
-            break;
-        }
-
-        size_t wrk_buf_sz = 3u * ECP256_COORDINATE_LEN;
-        wrk_buf           = MEM_BufferAlloc(wrk_buf_sz);
-        if (wrk_buf == NULL)
-        {
-            RAISE_ERROR(ret, gSecAllocError_c);
-        }
-        ecdh_ctx.ecdh_key_pair = pECPKeyPair;
-        ECP256_PointCopy_and_change_endianness((uint8_t *)&ecdh_ctx.Qp, (const uint8_t *)&pInPeerPublicKey->raw[0]);
-        ecdh_ctx.keepSharedSecret = true;
-
-        if (sss_ecdh_calc_EL2EL_key(&ecdh_ctx, wrk_buf, wrk_buf_sz) != kStatus_Success)
-        {
-            RAISE_ERROR(ret, gSecError_c);
-        }
-        FLib_MemCpy(pOutE2EKey->raw, (void *)&ecdh_ctx.sharedSecret, sizeof(sss_sscp_object_t));
-        (void)MEM_BufferFree(wrk_buf);
-
-        ret = gSecSuccess_c;
-
-    } while (false);
-    SECLIB_MUTEX_UNLOCK();
-    return ret;
-}
-
-/************************************************************************************
- * \brief Free E2E key object
- *
- * \param[in]  pE2EKeyData   Pointer to the E2E key data to be freed.
- *
- * \return gSecSuccess_c or error
- *
- ************************************************************************************/
-secResultType_t ECDH_P256_FreeE2EKeyDataSecure(ecdhDhKey_t *pE2EKeyData)
-{
-    secResultType_t result = gSecError_c;
-    sscp_status_t   status = kStatus_SSCP_Fail;
-
-    /* turn into void* first to avoid MISRA 11.3 */
-    void *pKeyData = pE2EKeyData;
-
-    status = sss_sscp_key_object_free((sss_sscp_object_t *)pKeyData, kSSS_keyObjFree_KeysStoreNoDefragment);
-
-    if (kStatus_SSS_Success == status)
-    {
-        result = gSecSuccess_c;
-    }
-    return result;
-}
-
-/************************************************************************************
- * \brief Generates an E2E blob from an ELKE blob or plain text symmetric key.
- *
- * \param[in]  pKey      pointer to the input key.
- * \param[in]  keyType   input key type.
- * \param[out] pOutKey   pointer to where the output E2E blob will be copied.
- *
- * \return gSecSuccess_c or error
- *
- ************************************************************************************/
-secResultType_t SecLib_ExportA2BBlobSecure(const void *pKey, const secInputKeyType_t keyType, uint8_t *pOutKey)
-{
-    secResultType_t   result     = gSecError_c;
-    bool_t            keyObjFree = false;
-    sss_sscp_object_t keyObj;
-
-    SECLIB_MUTEX_LOCK();
-    do
-    {
-        if ((CRYPTO_InitHardware()) != kStatus_Success)
-        {
-            break;
-        }
-
-        if (kStatus_SSS_Success != sss_sscp_key_object_init(&keyObj, &g_keyStore))
-        {
-            break;
-        }
-        keyObjFree = true;
-
-        if (gSecPlainText_c == keyType)
-        {
-            uint8_t tempKey[16];
-
-            FLib_MemCpyReverseOrder(tempKey, pKey, 16U);
-
-            if (kStatus_SSS_Success != sss_sscp_key_object_allocate_handle(&keyObj, ELE_S200_KEY_STORE_USER_ID_GENERIC,
-                                                                           kSSS_KeyPart_Default, kSSS_CipherType_NONE,
-                                                                           16U, SSS_KEYPROP_OPERATION_AES))
-            {
-                break;
-            }
-
-            if (kStatus_SSS_Success !=
-                sss_sscp_key_store_set_key(&g_keyStore, &keyObj, tempKey, 16U, 128U, kSSS_KeyPart_Default))
-            {
-                break;
-            }
-        }
-        else if (gSecElkeBlob_c == keyType)
-        {
-            if (kStatus_SSS_Success !=
-                sss_sscp_key_object_allocate_handle(&keyObj, ELE_S200_KEY_STORE_USER_ID_GENERIC, kSSS_KeyPart_Default,
-                                                    kSSS_CipherType_SYMMETRIC, 16U, mSecLibKeyPropCryptoAlgoAll_c))
-            {
-                break;
-            }
-
-            if (kStatus_SSS_Success != sss_sscp_key_store_import_key(&g_keyStore, &keyObj, pKey, gSecLibElkeBlobSize_c,
-                                                                     128U, kSSS_blobType_ELKE_blob))
-            {
-                break;
-            }
-        }
-        else if (gSecLtkElkeBlob_c == keyType)
-        {
-            if (kStatus_SSS_Success !=
-                sss_sscp_key_object_allocate_handle(
-                    &keyObj, ELE_S200_KEY_STORE_USER_ID_GENERIC, kSSS_KeyPart_Default, kSSS_CipherType_SYMMETRIC, 16U,
-                    kSSS_KeyProp_NoPlainRead | kSSS_KeyProp_NoPlainWrite | kSSS_KeyProp_CryptoAlgo_KDF))
-            {
-                break;
-            }
-
-            if (kStatus_SSS_Success != sss_sscp_key_store_import_key(&g_keyStore, &keyObj, pKey, gSecLibElkeBlobSize_c,
-                                                                     128U, kSSS_blobType_ELKE_blob))
-            {
-                break;
-            }
-        }
-        else
-        {
-            /* Invalid keyType. */
-            break;
-        }
-
-        size_t e2eBlobByteLen = gSecLibElkeBlobSize_c;
-
-        if (kStatus_SSS_Success !=
-            sss_sscp_key_store_export_key(&g_keyStore, &keyObj, pOutKey, &e2eBlobByteLen, kSSS_blobType_E2E_blob))
-        {
-            break;
-        }
-        result = gSecSuccess_c;
-    } while (false);
-    SECLIB_MUTEX_UNLOCK();
-    if (keyObjFree == true)
-    {
-        (void)sss_sscp_key_object_free(&keyObj, kSSS_keyObjFree_KeysStoreNoDefragment);
-    }
-    return result;
-}
-
-/************************************************************************************
- * \brief Generates a symmetric key in ELKE blob or plain text form from an E2E blob.
- *
- * \param[in]  pKey      pointer to the input E2E blob.
- * \param[in]  keyType   output key type.
- * \param[out] pOutKey   pointer to where the output key will be copied.
- *
- * \return gSecSuccess_c or error
- *
- ************************************************************************************/
-secResultType_t SecLib_ImportA2BBlobSecure(const uint8_t *pKey, const secInputKeyType_t keyType, uint8_t *pOutKey)
-{
-    secResultType_t   result    = gSecError_c;
-    size_t            keyBitLen = 128U, keyByteLen = 16U;
-    sss_sscp_object_t keyObj;
-    bool_t            keyInit = false;
-    uint8_t           tempKey[16];
-
-    SECLIB_MUTEX_LOCK();
-    do
-    {
-        if ((CRYPTO_InitHardware()) != kStatus_Success)
-        {
-            break;
-        }
-
-        if (sss_sscp_key_object_init(&keyObj, &g_keyStore) != kStatus_SSS_Success)
-        {
-            break;
-        }
-        keyInit = true;
-
-        if (gSecPlainText_c == keyType)
-        {
-            if (sss_sscp_key_object_allocate_handle(&keyObj, ELE_S200_KEY_STORE_USER_ID_GENERIC, kSSS_KeyPart_Default,
-                                                    kSSS_CipherType_NONE, 16u,
-                                                    SSS_KEYPROP_OPERATION_AES) != kStatus_SSS_Success)
-            {
-                break;
-            }
-
-            if (sss_sscp_key_store_import_key(&g_keyStore, &keyObj, pKey, 40U, 8U * 40U, kSSS_blobType_E2E_blob) !=
-                kStatus_SSS_Success)
-            {
-                break;
-            }
-
-            if (sss_sscp_key_store_get_key(&g_keyStore, &keyObj, tempKey, &keyByteLen, &keyBitLen,
-                                           kSSS_KeyPart_Default) != kStatus_SSS_Success)
-            {
-                break;
-            }
-
-            FLib_MemCpyReverseOrder(pOutKey, tempKey, 16U);
-        }
-        else if (gSecElkeBlob_c == keyType)
-        {
-            size_t e2eBlobByteLen = gSecLibElkeBlobSize_c;
-
-            if (kStatus_SSS_Success !=
-                sss_sscp_key_object_allocate_handle(&keyObj, ELE_S200_KEY_STORE_USER_ID_GENERIC, kSSS_KeyPart_Default,
-                                                    kSSS_CipherType_SYMMETRIC, 16U, mSecLibKeyPropCryptoAlgoAll_c))
-            {
-                break;
-            }
-
-            if (sss_sscp_key_store_import_key(&g_keyStore, &keyObj, pKey, 40U, 8U * 40U, kSSS_blobType_E2E_blob) !=
-                kStatus_SSS_Success)
-            {
-                break;
-            }
-
-            if (kStatus_SSS_Success !=
-                sss_sscp_key_store_export_key(&g_keyStore, &keyObj, pOutKey, &e2eBlobByteLen, kSSS_blobType_ELKE_blob))
-            {
-                break;
-            }
-        }
-        else if (gSecLtkElkeBlob_c == keyType)
-        {
-            size_t e2eBlobByteLen = gSecLibElkeBlobSize_c;
-
-            if (sss_sscp_key_object_allocate_handle(
-                    &keyObj, ELE_S200_KEY_STORE_USER_ID_GENERIC, kSSS_KeyPart_Default, kSSS_CipherType_SYMMETRIC, 16u,
-                    kSSS_KeyProp_NoPlainRead | kSSS_KeyProp_NoPlainWrite | kSSS_KeyProp_CryptoAlgo_KDF) !=
-                kStatus_SSS_Success)
-            {
-                break;
-            }
-
-            if (sss_sscp_key_store_import_key(&g_keyStore, &keyObj, pKey, 40U, 8U * 40U, kSSS_blobType_E2E_blob) !=
-                kStatus_SSS_Success)
-            {
-                break;
-            }
-
-            if (kStatus_SSS_Success !=
-                sss_sscp_key_store_export_key(&g_keyStore, &keyObj, pOutKey, &e2eBlobByteLen, kSSS_blobType_ELKE_blob))
-            {
-                break;
-            }
-        }
-        else
-        {
-            /* Invalid keyType */
-            break;
-        }
-
-        result = gSecSuccess_c;
-    } while (false);
-    SECLIB_MUTEX_UNLOCK();
-
-    if (keyInit == true)
-    {
-        (void)sss_sscp_key_object_free(&keyObj, kSSS_keyObjFree_KeysStoreNoDefragment);
-    }
-    return result;
+    return padding_sz;
 }

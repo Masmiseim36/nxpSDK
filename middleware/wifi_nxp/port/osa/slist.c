@@ -54,10 +54,14 @@ void SlAddNodeToTail(SlNode_t *Head, SlNode_t *Node)
     /********************/
 
     if (Head == NULL)
+    {
         return;
+    }
 
     if (Node == NULL)
+    {
         return;
+    }
 
     Current = Head;
 
@@ -77,10 +81,14 @@ void SlInsertNodeAfter(SlNode_t *Marker, SlNode_t *Node)
     /********************/
 
     if (Marker == NULL)
+    {
         return;
+    }
 
     if (Node == NULL)
+    {
         return;
+    }
 
     Temp         = Marker->Next;
     Marker->Next = Node;
@@ -96,13 +104,19 @@ void SlInsertNodeBefore(SlNode_t *Head, SlNode_t *Marker, SlNode_t *Node)
     /********************/
 
     if (Marker == NULL)
+    {
         return;
+    }
 
     if (Node == NULL)
+    {
         return;
+    }
 
     if (Head == NULL)
+    {
         return;
+    }
 
     Current = Head->Next;
     Prior   = Head;
@@ -119,7 +133,7 @@ void SlInsertNodeBefore(SlNode_t *Head, SlNode_t *Marker, SlNode_t *Node)
         Current = Current->Next;
     }
 
-    if (Found)
+    if (Found != 0)
     {
         Prior->Next = Node;
         Node->Next  = Current;
@@ -135,10 +149,14 @@ void SlRemoveNode(SlNode_t *Head, SlNode_t *Node)
     /********************/
 
     if (Head == NULL)
+    {
         return;
+    }
 
     if (Node == NULL)
+    {
         return;
+    }
 
     Current = Head->Next;
     Prior   = Head;
@@ -155,7 +173,7 @@ void SlRemoveNode(SlNode_t *Head, SlNode_t *Node)
         Current = Current->Next;
     }
 
-    if (Found)
+    if (Found != 0)
     {
         Prior->Next = Current->Next;
     }
@@ -168,7 +186,9 @@ SlNode_t *SlRemoveNodeFromHead(SlNode_t *Head)
     /********************/
 
     if (Head == NULL)
+    {
         return NULL;
+    }
 
     Node = Head->Next;
 
@@ -188,7 +208,9 @@ SlNode_t *SlRemoveNodeFromTail(SlNode_t *Head)
     /********************/
 
     if (Head == NULL)
+    {
         return NULL;
+    }
 
     Current = Head->Next;
     Prior   = Head;

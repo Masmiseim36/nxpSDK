@@ -1,5 +1,7 @@
 /*
  * Copyright (c) 2021-2022, Arm Limited. All rights reserved.
+ * Copyright (c) 2024, Cypress Semiconductor Corporation (an Infineon company)
+ * or an affiliate of Cypress Semiconductor Corporation. All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  *
@@ -15,11 +17,6 @@
 #define CONFIG_TFM_SPM_BACKEND_IPC                               1
 #define CONFIG_TFM_SPM_BACKEND_SFN                               0
 
-/* API calls */
-#define CONFIG_TFM_PSA_API_SFN_CALL                              0
-#define CONFIG_TFM_PSA_API_CROSS_CALL                            0
-#define CONFIG_TFM_PSA_API_SUPERVISOR_CALL                       1
-
 #define CONFIG_TFM_CONNECTION_BASED_SERVICE_API                  1
 #define CONFIG_TFM_MMIO_REGION_ENABLE                            1
 #define CONFIG_TFM_FLIH_API                                      1
@@ -27,15 +24,20 @@
 
 #if CONFIG_TFM_SPM_BACKEND_IPC == 1
 /* Trustzone NS agent working stack size. */
-#if defined(TFM_FIH_PROFILE_ON) && TFM_LVL == 1
+#if defined(TFM_FIH_PROFILE_ON) && TFM_ISOLATION_LEVEL == 1
 #define CONFIG_TFM_NS_AGENT_TZ_STACK_SIZE                        1768 //NXP adds 512 bytes
 #else
 #define CONFIG_TFM_NS_AGENT_TZ_STACK_SIZE                        1536 //NXP adds 512 bytes
 #endif
 
-/* SPM re-uses Trustzone NS agent stack. */
-#define CONFIG_TFM_SPM_THREAD_STACK_SIZE                             \
-            CONFIG_TFM_NS_AGENT_TZ_STACK_SIZE                       
+#if !defined CONFIG_TFM_USE_TRUSTZONE
+/* SPM has to have its own stack if Trustzone isn't present. */
+#if defined(TFM_FIH_PROFILE_ON)
+#define CONFIG_TFM_SPM_THREAD_STACK_SIZE                          1536
+#else
+#define CONFIG_TFM_SPM_THREAD_STACK_SIZE                          1024
+#endif
+#endif
 
 #elif CONFIG_TFM_SPM_BACKEND_SFN == 1
 /*
@@ -48,7 +50,7 @@
  * The minimum value is 0x400 to satisfy the SPM functional requirement.
  * Manifest tool will assure this.
  */
-#define CONFIG_TFM_TOTAL_STACK_SIZE                              (0 + 0x800 + PS_STACK_SIZE + ITS_STACK_SIZE + CRYPTO_STACK_SIZE + PLATFORM_SP_STACK_SIZE + ATTEST_STACK_SIZE + FWU_STACK_SIZE + 0x0D00 + 0x0220 + 0x0300 + 0x500 + 0x300 + 0x0400 + 0x0400 + 0x0400)
+#define CONFIG_TFM_TOTAL_STACK_SIZE                              (0 + NS_AGENT_MAILBOX_STACK_SIZE + PS_STACK_SIZE + ITS_STACK_SIZE + CRYPTO_STACK_SIZE + PLATFORM_SP_STACK_SIZE + ATTEST_STACK_SIZE + FWU_STACK_SIZE + 0x0D00 + 0x0220 + 0x0300 + 0x500 + 0x300 + 0x0400 + 0x0400 + 0x0400 + 0x200)
 #if (CONFIG_TFM_TOTAL_STACK_SIZE < 2048)
 #undef CONFIG_TFM_TOTAL_STACK_SIZE                             
 #define CONFIG_TFM_TOTAL_STACK_SIZE                              2048
@@ -59,5 +61,8 @@
     (((CONFIG_TFM_TOTAL_STACK_SIZE >> CONFIG_TFM_NS_AGENT_TZ_STK_SIZE_SHIFT_FACTOR) + 0x7) & (~0x7))
 
 #endif /* CONFIG_TFM_SPM_BACKEND_IPC == 1 */
+
+/* Define whether ARoT partitions are present. Can be used when applying protections. */
+#define CONFIG_TFM_AROT_PRESENT                                  1
 
 #endif /* __CONFIG_IMPL_H__ */

@@ -1,5 +1,5 @@
 /*
- * Copyright 2021-2024 NXP
+ * Copyright 2021-2025 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -17,9 +17,10 @@
      defined(WIFI_88W8987_BOARD_AW_CM358_USD) || defined(WIFI_88W8987_BOARD_AW_CM358MA) || \
      defined(WIFI_IW416_BOARD_MURATA_1XK_USD) || defined(WIFI_IW416_BOARD_MURATA_1XK_M2) || \
      defined(WIFI_88W8987_BOARD_MURATA_1ZM_USD) || defined (WIFI_88W8987_BOARD_MURATA_1ZM_M2) || \
-	 defined(WIFI_IW611_BOARD_MURATA_2DL_USD) || defined (WIFI_IW611_BOARD_MURATA_2DL_M2) || \
+     defined(WIFI_IW611_BOARD_MURATA_2DL_USD) || defined (WIFI_IW611_BOARD_MURATA_2DL_M2) || \
      defined(WIFI_AW611_BOARD_UBX_JODY_W5_USD) || defined (WIFI_AW611_BOARD_UBX_JODY_W5_M2) || \
-	 defined (WIFI_IW612_BOARD_MURATA_2EL_USD) || defined (WIFI_IW612_BOARD_MURATA_2EL_M2) )
+     defined (WIFI_IW612_BOARD_MURATA_2EL_USD) || defined (WIFI_IW612_BOARD_MURATA_2EL_M2) || \
+     defined(WIFI_IW610_BOARD_MURATA_2LL_M2) || defined(WIFI_IW416_BOARD_AW_AM510_ARDUINO))
 
 #ifndef CONTROLLER_INIT_ESCAPE
 #ifdef CONFIG_BT_IND_DNLD
@@ -27,6 +28,8 @@
 #include "uartIW416_bt.h"
 #elif defined(SD8987) /*CA2*/
 #include "uart8987_bt.h"
+#elif defined(IW610) /*NightHawk*/
+#include "uart_iw610_se.h"
 #elif defined(SD9177) /*FC*/
 #if defined (WIFI_IW612_BOARD_RD_USD)
 #include "uart_nw61x.h" /*non-secured FC firmware*/
@@ -42,6 +45,8 @@
 #include "sduartIW416_wlan_bt.h"
 #elif defined(SD8987) /*CA2*/
 #include "sduart8987_wlan_bt.h"
+#elif defined(IW610) /*NightHawk*/
+#include "sduart_iw610_se.h"
 #elif defined(SD9177) /*FC*/
 #if defined (WIFI_IW612_BOARD_RD_USD)
 #include "sduart_nw61x.h" /*non-secured FC firmware*/
@@ -100,6 +105,7 @@ void controller_init(void)
     (void) result;
 #ifdef CONFIG_BT_IND_DNLD
     /* BTonly firmware download over UART */
+    BOARD_WIFI_BT_Enable(false);
     BOARD_WIFI_BT_Enable(true);
     intf = uart_init_interface();
     assert(intf != NULL);
@@ -142,7 +148,8 @@ static void controller_hci_uart_init(void)
 #if (defined(WIFI_IW416_BOARD_AW_AM457_USD) || defined(WIFI_IW416_BOARD_AW_AM510_USD) ||      \
      defined(WIFI_IW416_BOARD_AW_AM510MA) || defined(WIFI_IW416_BOARD_MURATA_1XK_USD) ||      \
      defined(WIFI_IW416_BOARD_MURATA_1XK_M2) || defined(WIFI_88W8987_BOARD_MURATA_1ZM_USD) || \
-     defined(WIFI_88W8987_BOARD_MURATA_1ZM_M2))
+     defined(WIFI_88W8987_BOARD_MURATA_1ZM_M2) || defined(WIFI_IW610_BOARD_MURATA_2LL_M2) ||  \
+     defined(WIFI_IW416_BOARD_AW_AM510_ARDUINO))
     /*delay to make sure controller is ready to receive command*/
     OSA_TimeDelay(100);
 #endif

@@ -11,7 +11,7 @@
 #include "attest.h"
 #include "config_tfm.h"
 #include "psa/initial_attestation.h"
-#include "psa/tfm/crypto.h"            //NXP to avoid file name conflicts between MbedTLS and TFM.
+#include "psa/crypto.h"
 #include "q_useful_buf.h"
 
 #ifdef __cplusplus

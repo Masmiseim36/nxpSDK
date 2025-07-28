@@ -9,7 +9,7 @@
 *                                                                    *
 **********************************************************************
 
-** emWin V6.46 - Graphical user interface for embedded applications **
+** emWin V6.50 - Graphical user interface for embedded applications **
 All  Intellectual Property rights  in the Software belongs to  SEGGER.
 emWin is protected by  international copyright laws.  Knowledge of the
 source code may not be used to write a similar product.  This file may
@@ -44,8 +44,6 @@ Purpose     : Dialog box include
 
 #ifndef DIALOG_H
 #define DIALOG_H
-
-#include "WM.h"
 
 #include "BUTTON.h"
 #include "CALENDAR.h"

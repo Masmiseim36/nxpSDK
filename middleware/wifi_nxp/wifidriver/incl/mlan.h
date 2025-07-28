@@ -41,19 +41,14 @@ Change log:
 #define CONFIG_GTK_REKEY_OFFLOAD 0
 
 
+#if defined(SD9177)
+#define CONFIG_TCP_ACK_ENH 0
+#endif
 #if defined(SD9177) || defined(IW610)
-#define CONFIG_TCP_ACK_ENH 1
 #define CONFIG_FW_VDLL     1
+#if UAP_SUPPORT
 #if !CONFIG_WIFI_CAPA
 #define CONFIG_WIFI_CAPA 1
-#endif
-
-#if CONFIG_11AX
-#if !CONFIG_11K
-#define CONFIG_11K 1
-#endif
-#if !CONFIG_11V
-#define CONFIG_11V 1
 #endif
 #endif
 #endif

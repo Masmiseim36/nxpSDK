@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2021 NXP
+ * Copyright 2019-2021,2025 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -13,12 +13,12 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_PANEL_TFT_PROTO_5 0 /* MikroE TFT Proto 5" CAPACITIVE FlexIO Display */
-#define DEMO_PANEL_RK055AHD091 1 /* NXP "RK055HDMIPI4M" MIPI Rectangular Display  */
-#define DEMO_PANEL_RK055IQH091 2 /* NXP RESERVED                                  */
+#define DEMO_PANEL_TFT_PROTO_5 4 /* MikroE TFT Proto 5" CAPACITIVE FlexIO Display */
+#define DEMO_PANEL_RK055AHD091 0 /* NXP "RK055HDMIPI4M" MIPI Rectangular Display  */
+#define DEMO_PANEL_RK055IQH091 1 /* NXP RESERVED                                  */
 #define DEMO_PANEL_RM67162     3 /* NXP "G1120B0MIPI" MIPI Circular Display       */
-#define DEMO_PANEL_RK055MHD091 4 /* NXP "RK055MHD091A0-CTG MIPI Rectangular Display  */
-
+#define DEMO_PANEL_RK055MHD091 2 /* NXP "RK055MHD091A0-CTG MIPI Rectangular Display  */
+#define DEMO_PANEL_CO5300      6 /* NXP ZC143AC72MIPI MIPI Circular Display */
 /* @TEST_ANCHOR */
 
 /* Configure this macro in Kconfig or directly in the generated mcux_config.h. */
@@ -26,10 +26,12 @@
 #define DEMO_PANEL DEMO_PANEL_TFT_PROTO_5
 #endif
 
+#define DEMO_ALIGN_ADDR(addr, align) ((((addr) / (align) * (align)) == (addr)) ? (addr) : ((addr) / (align) * (align) + (align)))
+
 #if (DEMO_PANEL_TFT_PROTO_5 == DEMO_PANEL)
 
-#ifndef DEMO_SSD1963_USE_RG565
-#define DEMO_SSD1963_USE_RG565 1
+#ifndef DEMO_SSD1963_USE_RGB565
+#define DEMO_SSD1963_USE_RGB565 1
 #endif
 
 #ifndef DEMO_SSD1963_USE_FLEXIO_SMARTDMA
@@ -55,6 +57,8 @@
 #define DEMO_BUFFER_COUNT  1 /* 1 is enough for DBI interface display. */
 #define FRAME_BUFFER_ALIGN 4 /* SMARTDMA buffer should be 4 byte aligned. */
 
+#define DEMO_FB_WIDTH  (DEMO_PANEL_WIDTH)
+#define DEMO_FB_HEIGHT (DEMO_PANEL_HEIGHT)
 #define DEMO_BUFFER_WIDTH  (DEMO_PANEL_WIDTH)
 #define DEMO_BUFFER_HEIGHT (DEMO_PANEL_HEIGHT)
 
@@ -67,12 +71,14 @@
  * should be RGB888 or BGR888. When SMARTDMA used, the SMARTDMA could read RGB565 from frame
  * buffer, convert to RGB888 and send out.
  */
-#if DEMO_SSD1963_USE_RG565
+#if DEMO_SSD1963_USE_RGB565
 #define DEMO_BUFFER_PIXEL_FORMAT   kVIDEO_PixelFormatRGB565
 #define DEMO_BUFFER_BYTE_PER_PIXEL 2
+#define DEMO_BUFFER_STRIDE_BYTE DEMO_ALIGN_ADDR((DEMO_FB_WIDTH * DEMO_BUFFER_BYTE_PER_PIXEL), 32U)
 #else
 #define DEMO_BUFFER_PIXEL_FORMAT   kVIDEO_PixelFormatRGB888
 #define DEMO_BUFFER_BYTE_PER_PIXEL 3
+#define DEMO_BUFFER_STRIDE_BYTE DEMO_ALIGN_ADDR((DEMO_FB_WIDTH * DEMO_BUFFER_BYTE_PER_PIXEL), (192U))
 #endif
 
 #if !DEMO_SSD1963_USE_FLEXIO_SMARTDMA
@@ -143,12 +149,20 @@
 
 #endif
 
+#define DEMO_FB_WIDTH   DEMO_PANEL_WIDTH
+#define DEMO_FB_HEIGHT  DEMO_PANEL_HEIGHT
 #define DEMO_BUFFER_WIDTH   DEMO_PANEL_WIDTH
 #define DEMO_BUFFER_HEIGHT  DEMO_PANEL_HEIGHT
 
 /* Where the frame buffer is shown in the screen. */
 #define DEMO_BUFFER_START_X 0U
 #define DEMO_BUFFER_START_Y 0U
+
+#if (DEMO_BUFFER_PIXEL_FORMAT == kVIDEO_PixelFormatRGB565)
+#define DEMO_BUFFER_STRIDE_BYTE DEMO_ALIGN_ADDR((DEMO_FB_WIDTH * DEMO_BUFFER_BYTE_PER_PIXEL), 32U)
+#else
+#define DEMO_BUFFER_STRIDE_BYTE DEMO_ALIGN_ADDR((DEMO_FB_WIDTH * DEMO_BUFFER_BYTE_PER_PIXEL), 64U)
+#endif
 
 #elif (DEMO_PANEL_RM67162 == DEMO_PANEL)
 
@@ -158,18 +172,18 @@
  * MIPI_DSI + Smart DMA support three pixel formats:
  *
  * 1. RGB565: frame buffer format is RGB565, MIPI DSI send out data format is RGB565,
- *    to use this, set DEMO_RM67162_USE_RG565=1
+ *    to use this, set DEMO_RM67162_USE_RGB565=1
  *
  * 2. RGB888: frame buffer format is RGB888, MIPI DSI send out data format is RGB888,
- *    to use this, set DEMO_RM67162_USE_RG565=0, DEMO_RM67162_USE_XRGB8888=0
+ *    to use this, set DEMO_RM67162_USE_RGB565=0, DEMO_RM67162_USE_XRGB8888=0
  *
  * 3. XRGB8888: frame buffer format is XRGB888, SMARTDMA helps drop the useless byte
  *    and MIPI DSI send out data format is RGB888,
- *    to use this, set DEMO_RM67162_USE_RG565=0, DEMO_RM67162_USE_XRGB8888=1
+ *    to use this, set DEMO_RM67162_USE_RGB565=0, DEMO_RM67162_USE_XRGB8888=1
  */
 
-#ifndef DEMO_RM67162_USE_RG565
-#define DEMO_RM67162_USE_RG565 1
+#ifndef DEMO_RM67162_USE_RGB565
+#define DEMO_RM67162_USE_RGB565 1
 #endif
 
 #ifndef DEMO_RM67162_USE_XRGB8888
@@ -181,7 +195,7 @@
 #define DEMO_RM67162_BUFFER_RGB888   1
 #define DEMO_RM67162_BUFFER_XRGB8888 2
 
-#if DEMO_RM67162_USE_RG565
+#if DEMO_RM67162_USE_RGB565
 
 #define DEMO_RM67162_BUFFER_FORMAT DEMO_RM67162_BUFFER_RGB565
 
@@ -236,7 +250,8 @@
 
 #define DEMO_PANEL_WIDTH  (400U)
 #define DEMO_PANEL_HEIGHT (392U)
-
+#define DEMO_FB_WIDTH     DEMO_PANEL_WIDTH
+#define DEMO_FB_HEIGHT    DEMO_PANEL_HEIGHT
 #define DEMO_BUFFER_WIDTH   (400U)
 #define DEMO_BUFFER_HEIGHT  (392U)
 
@@ -244,9 +259,127 @@
 #define DEMO_BUFFER_START_X 4U
 #define DEMO_BUFFER_START_Y 0U
 
+#if DEMO_RM67162_USE_DSI_SMARTDMA
+#if (DEMO_RM67162_BUFFER_FORMAT == DEMO_RM67162_BUFFER_RGB565)
+#define DEMO_BUFFER_STRIDE_BYTE DEMO_ALIGN_ADDR((DEMO_FB_WIDTH * DEMO_BUFFER_BYTE_PER_PIXEL), 32U)
+#else
+/* For RGB888 format, the stride shall also be divisible by 3. */
+#define DEMO_BUFFER_STRIDE_BYTE DEMO_ALIGN_ADDR((DEMO_FB_WIDTH * DEMO_BUFFER_BYTE_PER_PIXEL), (192U))
+#endif
+#else
+/* No align requirement for MIPI APB. */
+#define DEMO_BUFFER_STRIDE_BYTE DEMO_FB_WIDTH * DEMO_BUFFER_BYTE_PER_PIXEL
 #endif
 
-#define DEMO_BUFFER_STRIDE_BYTE (DEMO_BUFFER_WIDTH * DEMO_BUFFER_BYTE_PER_PIXEL)
+#else /* Use panel ZC143AC72MIPI */
+
+/*
+ * Use the MIPI smart panel
+ *
+ * MIPI_DSI + Smart DMA support three pixel formats:
+ *
+ * 1. RGB565: frame buffer format is RGB565, MIPI DSI send out data format is RGB565,
+ *    to use this, set DEMO_CO5300_USE_RGB565=1
+ *
+ * 2. RGB888: frame buffer format is RGB888, MIPI DSI send out data format is RGB888,
+ *    to use this, set DEMO_CO5300_USE_RGB565=0, DEMO_CO5300_USE_XRGB8888=0
+ *
+ * 3. XRGB8888: frame buffer format is XRGB888, SMARTDMA helps drop the useless byte
+ *    and MIPI DSI send out data format is RGB888,
+ *    to use this, set DEMO_CO5300_USE_RGB565=0, DEMO_CO5300_USE_XRGB8888=1
+ */
+
+#ifndef DEMO_CO5300_USE_RGB565
+#define DEMO_CO5300_USE_RGB565 1
+#endif
+
+#ifndef DEMO_CO5300_USE_XRGB8888
+#define DEMO_CO5300_USE_XRGB8888 0
+#endif
+
+/* Pixel format macro mapping. */
+#define DEMO_CO5300_BUFFER_RGB565   0
+#define DEMO_CO5300_BUFFER_RGB888   1
+#define DEMO_CO5300_BUFFER_XRGB8888 2
+
+#if DEMO_CO5300_USE_RGB565
+
+#define DEMO_CO5300_BUFFER_FORMAT DEMO_CO5300_BUFFER_RGB565
+
+#else
+
+#if DEMO_CO5300_USE_XRGB8888
+#define DEMO_CO5300_BUFFER_FORMAT DEMO_CO5300_BUFFER_XRGB8888
+#else
+#define DEMO_CO5300_BUFFER_FORMAT DEMO_CO5300_BUFFER_RGB888
+#endif
+
+#endif
+
+/* Use SMARTDMA to send image to panel. */
+#ifndef DEMO_CO5300_USE_DSI_SMARTDMA
+#define DEMO_CO5300_USE_DSI_SMARTDMA 1
+#endif
+
+#if (((DEMO_CO5300_BUFFER_FORMAT == DEMO_CO5300_BUFFER_XRGB8888) || (DEMO_CO5300_BUFFER_FORMAT == DEMO_CO5300_BUFFER_RGB565)) \
+    && (!DEMO_CO5300_USE_DSI_SMARTDMA))
+#error Must use SMARTDMA when use XRGB8888 pixel format
+#endif
+
+#define DEMO_BUFFER_FIXED_ADDRESS 1
+
+/*
+ * Place frame buffer in on-board PSRAM.
+ */
+#define DEMO_BUFFER0_ADDR         0x28000000U
+#define DEMO_BUFFER1_ADDR         0x28200000U
+
+/* Definitions for the frame buffer. */
+/* 1 is enough, use 2 could render background buffer while display the foreground buffer. */
+#define DEMO_BUFFER_COUNT         2
+#define FRAME_BUFFER_ALIGN        4
+
+#if (DEMO_CO5300_BUFFER_FORMAT == DEMO_CO5300_BUFFER_RGB565)
+
+#define DEMO_BUFFER_PIXEL_FORMAT   kVIDEO_PixelFormatRGB565
+#define DEMO_BUFFER_BYTE_PER_PIXEL 2
+
+#elif (DEMO_CO5300_BUFFER_FORMAT == DEMO_CO5300_BUFFER_RGB888)
+
+#define DEMO_BUFFER_PIXEL_FORMAT   kVIDEO_PixelFormatRGB888
+#define DEMO_BUFFER_BYTE_PER_PIXEL 3
+
+#else
+
+#define DEMO_BUFFER_PIXEL_FORMAT   kVIDEO_PixelFormatXRGB8888
+#define DEMO_BUFFER_BYTE_PER_PIXEL 4
+
+#endif /* DEMO_CO5300_BUFFER_FORMAT */
+
+#define DEMO_PANEL_WIDTH  (480U)
+#define DEMO_PANEL_HEIGHT (466U)
+#define DEMO_FB_WIDTH     DEMO_PANEL_WIDTH
+#define DEMO_FB_HEIGHT    DEMO_PANEL_HEIGHT
+#define DEMO_BUFFER_WIDTH   (466U)
+#define DEMO_BUFFER_HEIGHT  (466U)
+
+/* Where the frame buffer is shown in the screen. */
+#define DEMO_BUFFER_START_X 6U
+#define DEMO_BUFFER_START_Y 0U
+
+#if DEMO_CO5300_USE_DSI_SMARTDMA
+#if (DEMO_CO5300_BUFFER_FORMAT == DEMO_CO5300_BUFFER_RGB565)
+#define DEMO_BUFFER_STRIDE_BYTE DEMO_ALIGN_ADDR((DEMO_FB_WIDTH * DEMO_BUFFER_BYTE_PER_PIXEL), 32U)
+#else
+/* For RGB888 format, the stride shall also be divisible by 3. */
+#define DEMO_BUFFER_STRIDE_BYTE DEMO_ALIGN_ADDR((DEMO_FB_WIDTH * DEMO_BUFFER_BYTE_PER_PIXEL), (192U))
+#endif
+#else
+/* No align requirement for MIPI APB. */
+#define DEMO_BUFFER_STRIDE_BYTE DEMO_FB_WIDTH * DEMO_BUFFER_BYTE_PER_PIXEL
+#endif
+
+#endif
 
 extern const dc_fb_t g_dc;
 

@@ -14,6 +14,7 @@ message("${CMAKE_CURRENT_LIST_FILE} component is included.")
           ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/unidirectional_sequence_lstm.cpp
           ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/svdf.cpp
           ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/sub.cpp
+          ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/batch_matmul.cpp
           ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/logistic.cpp
           ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/reduce.cpp
           ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/strided_slice.cpp
@@ -22,7 +23,9 @@ message("${CMAKE_CURRENT_LIST_FILE} component is included.")
           ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/reshape.cpp
           ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/leaky_relu.cpp
           ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/transpose_conv.cpp
+          ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/transpose.cpp
           ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/pad.cpp
+          ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/maximum_minimum.cpp
         )
 
   

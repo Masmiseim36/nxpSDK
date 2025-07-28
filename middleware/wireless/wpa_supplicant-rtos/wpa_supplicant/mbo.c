@@ -93,7 +93,7 @@ void wpas_mbo_check_pmf(struct wpa_supplicant *wpa_s, struct wpa_bss *bss, struc
         return;
     if (oce && oce[1] >= 1 && (oce[2] & OCE_IS_STA_CFON))
         return; /* STA-CFON is not required to enable PMF */
-    rsne = wpa_bss_get_ie(bss, WLAN_EID_RSN);
+    rsne = wpa_bss_get_rsne(wpa_s, bss, ssid, false);
     if (!rsne || wpa_parse_wpa_ie(rsne, 2 + rsne[1], &ie) < 0)
         return; /* AP is not using RSN */
 

@@ -91,4 +91,20 @@ message("${CMAKE_CURRENT_LIST_FILE} component is included.")
     )
     endif()
 
+        if((CONFIG_TOOLCHAIN STREQUAL xcc OR CONFIG_TOOLCHAIN STREQUAL xtensa) AND CONFIG_CORE_ID STREQUAL hifi4 AND CONFIG_DEVICE_ID STREQUAL MIMXRT685S)
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    -Wl,--start-group
+          ${CMAKE_CURRENT_LIST_DIR}/lib/hifi4/xcc/rt685s/libtflm.a
+        -Wl,--end-group
+    )
+    endif()
+
+        if((CONFIG_TOOLCHAIN STREQUAL xcc OR CONFIG_TOOLCHAIN STREQUAL xtensa) AND CONFIG_CORE_ID STREQUAL fusionf1 AND CONFIG_DEVICE_ID STREQUAL MIMXRT595S)
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    -Wl,--start-group
+          ${CMAKE_CURRENT_LIST_DIR}/lib/fusionf1/xcc/rt595s/libtflm.a
+        -Wl,--end-group
+    )
+    endif()
+
   

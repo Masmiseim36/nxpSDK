@@ -8,7 +8,7 @@
 
 #include "includes.h"
 
-#if CONFIG_EAP_SIM
+#if CONFIG_EAP_SIM && CONFIG_HOSTAPD
 
 #include "utils/common.h"
 #include "crypto/random.h"

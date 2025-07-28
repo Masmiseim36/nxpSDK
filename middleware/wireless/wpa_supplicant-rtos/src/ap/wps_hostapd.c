@@ -8,6 +8,7 @@
 
 #include "utils/includes.h"
 
+#ifdef CONFIG_AP
 #ifdef CONFIG_WPS
 #include "utils/common.h"
 #include "utils/eloop.h"
@@ -2201,3 +2202,4 @@ void hostapd_wps_nfc_token_disable(struct hostapd_data *hapd)
 
 #endif /* CONFIG_WPS_NFC */
 #endif /* CONFIG_WPS */
+#endif /* CONFIG_AP */

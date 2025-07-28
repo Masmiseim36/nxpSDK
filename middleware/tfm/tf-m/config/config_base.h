@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2022, Arm Limited. All rights reserved.
- * Copyright (c) 2023 Cypress Semiconductor Corporation (an Infineon
+ * Copyright (c) 2022-2024, Arm Limited. All rights reserved.
+ * Copyright (c) 2023-2024 Cypress Semiconductor Corporation (an Infineon
  * company) or an affiliate of Cypress Semiconductor Corporation. All rights
  * reserved.
  *
@@ -111,6 +111,16 @@
 #define CRYPTO_SINGLE_PART_FUNCS_DISABLED      0
 #endif
 
+/*
+ * The service assumes that the client interface and internal
+ * interface towards the library that provides the PSA Crypto
+ * core component maintain the same ABI. This is not the default
+ * when using the Mbed TLS reference implementation
+ */
+#ifndef CRYPTO_LIBRARY_ABI_COMPAT
+#define CRYPTO_LIBRARY_ABI_COMPAT (0)
+#endif
+
 /* The stack size of the Crypto Secure Partition */
 #ifndef CRYPTO_STACK_SIZE
 #define CRYPTO_STACK_SIZE                      0x1B00
@@ -197,6 +207,11 @@
 #define TFM_ITS_AUTH_TAG_LENGTH                16
 #endif
 
+/* The size of the key used when authentication/encryption of ITS files is enabled */
+#ifndef TFM_ITS_KEY_LENGTH
+#define TFM_ITS_KEY_LENGTH                16
+#endif
+
 /* The size of the nonce used when ITS file encryption is enabled */
 #ifndef TFM_ITS_ENC_NONCE_LENGTH
 #define TFM_ITS_ENC_NONCE_LENGTH               12
@@ -239,7 +254,14 @@
 #define PS_STACK_SIZE                          0x700
 #endif
 
-/* SPM Partition Configs */
+/* NS Agent Mailbox Partition Configs */
+
+/* The stack size of the NS Agent Mailbox Secure Partition */
+#ifndef NS_AGENT_MAILBOX_STACK_SIZE
+#define NS_AGENT_MAILBOX_STACK_SIZE            0x800
+#endif
+
+/* SPM Configs */
 
 #ifdef CONFIG_TFM_CONNECTION_POOL_ENABLE
 /* The maximal number of secure services that are connected or requested at the same time */
@@ -256,6 +278,11 @@
 /* Do not run the scheduler after handling a secure interrupt if the NSPE was pre-empted */
 #ifndef CONFIG_TFM_SCHEDULE_WHEN_NS_INTERRUPTED
 #define CONFIG_TFM_SCHEDULE_WHEN_NS_INTERRUPTED 0
+#endif
+
+/* Mask Non-Secure interrupts when executing in secure state. */
+#ifndef CONFIG_TFM_SECURE_THREAD_MASK_NS_INTERRUPT
+#define CONFIG_TFM_SECURE_THREAD_MASK_NS_INTERRUPT 0
 #endif
 
 /* Enable OTP/NV_COUNTERS emulation in RAM */

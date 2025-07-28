@@ -332,9 +332,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../mcux_config.h -mno-unaligned-access  -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
-              <Define>DEBUG, USB_STACK_BM, USB_STACK_USE_DEDICATED_RAM=1, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT595SFFOC_cm33, OSA_USED, BOOT_HEADER_ENABLE=1, USE_RTOS=0</Define>
+              <Define>DEBUG, USB_STACK_BM, USB_STACK_USE_DEDICATED_RAM=1, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT595SFFOC_cm33, MIMXRT595S_cm33_SERIES, OSA_USED, BOOT_HEADER_ENABLE=1, USE_RTOS=0</Define>
               <Undefine/>
-              <IncludePath>..;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT595S;../../../../../../devices/MIMXRT595S/periph;../../../../../../devices/MIMXRT595S/drivers;../../../../../../devices/MIMXRT595S/utilities/debug_console_lite;../../../../../../components/lists;../../../../../../devices/MIMXRT595S/utilities/str;../../../../../../components/uart;../../../../../../components/osa;../../../../../../middleware/usb/include;../../../../../../middleware/usb/host;../../../../../../middleware/usb/host/class;../../../../../../middleware/usb/dcd;../../../../../../middleware/usb/phy</IncludePath>
+              <IncludePath>..;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT595S;../../../../../../devices/MIMXRT595S/periph;../../../../../../devices/MIMXRT595S/drivers;../../../../../../devices/MIMXRT595S/utilities/debug_console_lite;../../../../../../components/lists;../../../../../../devices/MIMXRT595S/utilities/str;../../../../../../components/uart;../../../../../../components/osa;../../../../../../middleware/usb/include;../../../../../../middleware/usb/host;../../../../../../middleware/usb/config/host/ip3516hs;../../../../../../middleware/usb/host/class;../../../../../../middleware/usb/dcd;../../../../../../middleware/usb/config/dcd/hsdcd;../../../../../../middleware/usb/phy</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -350,9 +350,9 @@
             <uClangAs>1</uClangAs>
             <VariousControls>
               <MiscControls/>
-              <Define>MCUXPRESSO_SDK, CPU_MIMXRT595SFFOC_cm33, OSA_USED</Define>
+              <Define>MCUXPRESSO_SDK, CPU_MIMXRT595SFFOC_cm33, MIMXRT595S_cm33_SERIES, OSA_USED</Define>
               <Undefine/>
-              <IncludePath>..;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT595S;../../../../../../devices/MIMXRT595S/periph;../../../../../../devices/MIMXRT595S/drivers;../../../../../../devices/MIMXRT595S/utilities/debug_console_lite;../../../../../../components/lists;../../../../../../devices/MIMXRT595S/utilities/str;../../../../../../components/uart;../../../../../../components/osa;../../../../../../middleware/usb/include;../../../../../../middleware/usb/host;../../../../../../middleware/usb/host/class;../../../../../../middleware/usb/dcd;../../../../../../middleware/usb/phy</IncludePath>
+              <IncludePath>..;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT595S;../../../../../../devices/MIMXRT595S/periph;../../../../../../devices/MIMXRT595S/drivers;../../../../../../devices/MIMXRT595S/utilities/debug_console_lite;../../../../../../components/lists;../../../../../../devices/MIMXRT595S/utilities/str;../../../../../../components/uart;../../../../../../components/osa;../../../../../../middleware/usb/include;../../../../../../middleware/usb/host;../../../../../../middleware/usb/config/host/ip3516hs;../../../../../../middleware/usb/host/class;../../../../../../middleware/usb/dcd;../../../../../../middleware/usb/config/dcd/hsdcd;../../../../../../middleware/usb/phy</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -1099,11 +1099,6 @@
           <GroupName>component/osa</GroupName>
           <Files>
             <File>
-              <FileName>fsl_os_abstraction.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/osa/fsl_os_abstraction.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_os_abstraction_bm.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../components/osa/fsl_os_abstraction_bm.h</FilePath>
@@ -1112,6 +1107,11 @@
               <FileName>fsl_os_abstraction_bm.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../components/osa/fsl_os_abstraction_bm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/osa/fsl_os_abstraction.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1262,6 +1262,11 @@
               <FileName>readme.md</FileName>
               <FileType>5</FileType>
               <FilePath>../readme.md</FilePath>
+            </File>
+            <File>
+              <FileName>examples_shared_readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../examples_shared_readme.md</FilePath>
             </File>
             <File>
               <FileName>host_hid_mouse_keyboard_output.jpg</FileName>
@@ -1601,9 +1606,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../mcux_config.h -mno-unaligned-access  -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
-              <Define>DEBUG, USB_STACK_BM, USB_STACK_USE_DEDICATED_RAM=1, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT595SFFOC_cm33, OSA_USED, BOOT_HEADER_ENABLE=1, USE_RTOS=0</Define>
+              <Define>DEBUG, USB_STACK_BM, USB_STACK_USE_DEDICATED_RAM=1, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT595SFFOC_cm33, MIMXRT595S_cm33_SERIES, OSA_USED, BOOT_HEADER_ENABLE=1, USE_RTOS=0</Define>
               <Undefine/>
-              <IncludePath>..;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT595S;../../../../../../devices/MIMXRT595S/periph;../../../../../../devices/MIMXRT595S/drivers;../../../../../../devices/MIMXRT595S/utilities/debug_console_lite;../../../../../../components/lists;../../../../../../devices/MIMXRT595S/utilities/str;../../../../../../components/uart;../../../../../../components/osa;../../../../../../middleware/usb/include;../../../../../../middleware/usb/host;../../../../../../middleware/usb/host/class;../../../../../../middleware/usb/dcd;../../../../../../middleware/usb/phy</IncludePath>
+              <IncludePath>..;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT595S;../../../../../../devices/MIMXRT595S/periph;../../../../../../devices/MIMXRT595S/drivers;../../../../../../devices/MIMXRT595S/utilities/debug_console_lite;../../../../../../components/lists;../../../../../../devices/MIMXRT595S/utilities/str;../../../../../../components/uart;../../../../../../components/osa;../../../../../../middleware/usb/include;../../../../../../middleware/usb/host;../../../../../../middleware/usb/config/host/ip3516hs;../../../../../../middleware/usb/host/class;../../../../../../middleware/usb/dcd;../../../../../../middleware/usb/config/dcd/hsdcd;../../../../../../middleware/usb/phy</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1619,9 +1624,9 @@
             <uClangAs>1</uClangAs>
             <VariousControls>
               <MiscControls/>
-              <Define>MCUXPRESSO_SDK, CPU_MIMXRT595SFFOC_cm33, OSA_USED</Define>
+              <Define>MCUXPRESSO_SDK, CPU_MIMXRT595SFFOC_cm33, MIMXRT595S_cm33_SERIES, OSA_USED</Define>
               <Undefine/>
-              <IncludePath>..;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT595S;../../../../../../devices/MIMXRT595S/periph;../../../../../../devices/MIMXRT595S/drivers;../../../../../../devices/MIMXRT595S/utilities/debug_console_lite;../../../../../../components/lists;../../../../../../devices/MIMXRT595S/utilities/str;../../../../../../components/uart;../../../../../../components/osa;../../../../../../middleware/usb/include;../../../../../../middleware/usb/host;../../../../../../middleware/usb/host/class;../../../../../../middleware/usb/dcd;../../../../../../middleware/usb/phy</IncludePath>
+              <IncludePath>..;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT595S;../../../../../../devices/MIMXRT595S/periph;../../../../../../devices/MIMXRT595S/drivers;../../../../../../devices/MIMXRT595S/utilities/debug_console_lite;../../../../../../components/lists;../../../../../../devices/MIMXRT595S/utilities/str;../../../../../../components/uart;../../../../../../components/osa;../../../../../../middleware/usb/include;../../../../../../middleware/usb/host;../../../../../../middleware/usb/config/host/ip3516hs;../../../../../../middleware/usb/host/class;../../../../../../middleware/usb/dcd;../../../../../../middleware/usb/config/dcd/hsdcd;../../../../../../middleware/usb/phy</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -2368,11 +2373,6 @@
           <GroupName>component/osa</GroupName>
           <Files>
             <File>
-              <FileName>fsl_os_abstraction.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/osa/fsl_os_abstraction.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_os_abstraction_bm.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../components/osa/fsl_os_abstraction_bm.h</FilePath>
@@ -2381,6 +2381,11 @@
               <FileName>fsl_os_abstraction_bm.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../components/osa/fsl_os_abstraction_bm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/osa/fsl_os_abstraction.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2531,6 +2536,11 @@
               <FileName>readme.md</FileName>
               <FileType>5</FileType>
               <FilePath>../readme.md</FilePath>
+            </File>
+            <File>
+              <FileName>examples_shared_readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../examples_shared_readme.md</FilePath>
             </File>
             <File>
               <FileName>host_hid_mouse_keyboard_output.jpg</FileName>
@@ -2870,9 +2880,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../mcux_config.h -mno-unaligned-access  -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
-              <Define>NDEBUG, USB_STACK_BM, USB_STACK_USE_DEDICATED_RAM=1, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT595SFFOC_cm33, OSA_USED, BOOT_HEADER_ENABLE=1, USE_RTOS=0</Define>
+              <Define>NDEBUG, USB_STACK_BM, USB_STACK_USE_DEDICATED_RAM=1, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT595SFFOC_cm33, MIMXRT595S_cm33_SERIES, OSA_USED, BOOT_HEADER_ENABLE=1, USE_RTOS=0</Define>
               <Undefine/>
-              <IncludePath>..;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT595S;../../../../../../devices/MIMXRT595S/periph;../../../../../../devices/MIMXRT595S/drivers;../../../../../../devices/MIMXRT595S/utilities/debug_console_lite;../../../../../../components/lists;../../../../../../devices/MIMXRT595S/utilities/str;../../../../../../components/uart;../../../../../../components/osa;../../../../../../middleware/usb/include;../../../../../../middleware/usb/host;../../../../../../middleware/usb/host/class;../../../../../../middleware/usb/dcd;../../../../../../middleware/usb/phy</IncludePath>
+              <IncludePath>..;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT595S;../../../../../../devices/MIMXRT595S/periph;../../../../../../devices/MIMXRT595S/drivers;../../../../../../devices/MIMXRT595S/utilities/debug_console_lite;../../../../../../components/lists;../../../../../../devices/MIMXRT595S/utilities/str;../../../../../../components/uart;../../../../../../components/osa;../../../../../../middleware/usb/include;../../../../../../middleware/usb/host;../../../../../../middleware/usb/config/host/ip3516hs;../../../../../../middleware/usb/host/class;../../../../../../middleware/usb/dcd;../../../../../../middleware/usb/config/dcd/hsdcd;../../../../../../middleware/usb/phy</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2888,9 +2898,9 @@
             <uClangAs>1</uClangAs>
             <VariousControls>
               <MiscControls/>
-              <Define>MCUXPRESSO_SDK, CPU_MIMXRT595SFFOC_cm33, OSA_USED</Define>
+              <Define>MCUXPRESSO_SDK, CPU_MIMXRT595SFFOC_cm33, MIMXRT595S_cm33_SERIES, OSA_USED</Define>
               <Undefine/>
-              <IncludePath>..;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT595S;../../../../../../devices/MIMXRT595S/periph;../../../../../../devices/MIMXRT595S/drivers;../../../../../../devices/MIMXRT595S/utilities/debug_console_lite;../../../../../../components/lists;../../../../../../devices/MIMXRT595S/utilities/str;../../../../../../components/uart;../../../../../../components/osa;../../../../../../middleware/usb/include;../../../../../../middleware/usb/host;../../../../../../middleware/usb/host/class;../../../../../../middleware/usb/dcd;../../../../../../middleware/usb/phy</IncludePath>
+              <IncludePath>..;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT595S;../../../../../../devices/MIMXRT595S/periph;../../../../../../devices/MIMXRT595S/drivers;../../../../../../devices/MIMXRT595S/utilities/debug_console_lite;../../../../../../components/lists;../../../../../../devices/MIMXRT595S/utilities/str;../../../../../../components/uart;../../../../../../components/osa;../../../../../../middleware/usb/include;../../../../../../middleware/usb/host;../../../../../../middleware/usb/config/host/ip3516hs;../../../../../../middleware/usb/host/class;../../../../../../middleware/usb/dcd;../../../../../../middleware/usb/config/dcd/hsdcd;../../../../../../middleware/usb/phy</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -3637,11 +3647,6 @@
           <GroupName>component/osa</GroupName>
           <Files>
             <File>
-              <FileName>fsl_os_abstraction.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/osa/fsl_os_abstraction.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_os_abstraction_bm.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../components/osa/fsl_os_abstraction_bm.h</FilePath>
@@ -3650,6 +3655,11 @@
               <FileName>fsl_os_abstraction_bm.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../components/osa/fsl_os_abstraction_bm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/osa/fsl_os_abstraction.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3800,6 +3810,11 @@
               <FileName>readme.md</FileName>
               <FileType>5</FileType>
               <FilePath>../readme.md</FilePath>
+            </File>
+            <File>
+              <FileName>examples_shared_readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../examples_shared_readme.md</FilePath>
             </File>
             <File>
               <FileName>host_hid_mouse_keyboard_output.jpg</FileName>
@@ -4139,9 +4154,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../mcux_config.h -mno-unaligned-access  -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
-              <Define>NDEBUG, USB_STACK_BM, USB_STACK_USE_DEDICATED_RAM=1, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT595SFFOC_cm33, OSA_USED, BOOT_HEADER_ENABLE=1, USE_RTOS=0</Define>
+              <Define>NDEBUG, USB_STACK_BM, USB_STACK_USE_DEDICATED_RAM=1, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT595SFFOC_cm33, MIMXRT595S_cm33_SERIES, OSA_USED, BOOT_HEADER_ENABLE=1, USE_RTOS=0</Define>
               <Undefine/>
-              <IncludePath>..;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT595S;../../../../../../devices/MIMXRT595S/periph;../../../../../../devices/MIMXRT595S/drivers;../../../../../../devices/MIMXRT595S/utilities/debug_console_lite;../../../../../../components/lists;../../../../../../devices/MIMXRT595S/utilities/str;../../../../../../components/uart;../../../../../../components/osa;../../../../../../middleware/usb/include;../../../../../../middleware/usb/host;../../../../../../middleware/usb/host/class;../../../../../../middleware/usb/dcd;../../../../../../middleware/usb/phy</IncludePath>
+              <IncludePath>..;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT595S;../../../../../../devices/MIMXRT595S/periph;../../../../../../devices/MIMXRT595S/drivers;../../../../../../devices/MIMXRT595S/utilities/debug_console_lite;../../../../../../components/lists;../../../../../../devices/MIMXRT595S/utilities/str;../../../../../../components/uart;../../../../../../components/osa;../../../../../../middleware/usb/include;../../../../../../middleware/usb/host;../../../../../../middleware/usb/config/host/ip3516hs;../../../../../../middleware/usb/host/class;../../../../../../middleware/usb/dcd;../../../../../../middleware/usb/config/dcd/hsdcd;../../../../../../middleware/usb/phy</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -4157,9 +4172,9 @@
             <uClangAs>1</uClangAs>
             <VariousControls>
               <MiscControls/>
-              <Define>MCUXPRESSO_SDK, CPU_MIMXRT595SFFOC_cm33, OSA_USED</Define>
+              <Define>MCUXPRESSO_SDK, CPU_MIMXRT595SFFOC_cm33, MIMXRT595S_cm33_SERIES, OSA_USED</Define>
               <Undefine/>
-              <IncludePath>..;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT595S;../../../../../../devices/MIMXRT595S/periph;../../../../../../devices/MIMXRT595S/drivers;../../../../../../devices/MIMXRT595S/utilities/debug_console_lite;../../../../../../components/lists;../../../../../../devices/MIMXRT595S/utilities/str;../../../../../../components/uart;../../../../../../components/osa;../../../../../../middleware/usb/include;../../../../../../middleware/usb/host;../../../../../../middleware/usb/host/class;../../../../../../middleware/usb/dcd;../../../../../../middleware/usb/phy</IncludePath>
+              <IncludePath>..;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT595S;../../../../../../devices/MIMXRT595S/periph;../../../../../../devices/MIMXRT595S/drivers;../../../../../../devices/MIMXRT595S/utilities/debug_console_lite;../../../../../../components/lists;../../../../../../devices/MIMXRT595S/utilities/str;../../../../../../components/uart;../../../../../../components/osa;../../../../../../middleware/usb/include;../../../../../../middleware/usb/host;../../../../../../middleware/usb/config/host/ip3516hs;../../../../../../middleware/usb/host/class;../../../../../../middleware/usb/dcd;../../../../../../middleware/usb/config/dcd/hsdcd;../../../../../../middleware/usb/phy</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -4906,11 +4921,6 @@
           <GroupName>component/osa</GroupName>
           <Files>
             <File>
-              <FileName>fsl_os_abstraction.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/osa/fsl_os_abstraction.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_os_abstraction_bm.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../components/osa/fsl_os_abstraction_bm.h</FilePath>
@@ -4919,6 +4929,11 @@
               <FileName>fsl_os_abstraction_bm.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../components/osa/fsl_os_abstraction_bm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/osa/fsl_os_abstraction.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -5069,6 +5084,11 @@
               <FileName>readme.md</FileName>
               <FileType>5</FileType>
               <FilePath>../readme.md</FilePath>
+            </File>
+            <File>
+              <FileName>examples_shared_readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../examples_shared_readme.md</FilePath>
             </File>
             <File>
               <FileName>host_hid_mouse_keyboard_output.jpg</FileName>

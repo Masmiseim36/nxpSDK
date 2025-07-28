@@ -1,0 +1,151 @@
+#
+# Copyright (c) 2012-2020 Cadence Design Systems, Inc.
+# 
+# Permission is hereby granted, free of charge, to any person obtaining
+# a copy of this software and associated documentation files (the
+# "Software"), to deal in the Software without restriction, including
+# without limitation the rights to use, copy, modify, merge, publish,
+# distribute, sublicense, and/or sell copies of the Software, and to
+# permit persons to whom the Software is furnished to do so, subject to
+# the following conditions:
+# 
+# The above copyright notice and this permission notice shall be included
+# in all copies or substantial portions of the Software.
+# 
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+# IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+# CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+# TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+# SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+#
+
+# Top-level makefile for binary and source licensees to generate
+# example test programs for the GSM-HR codec library
+
+ROOTDIR = ../..
+
+
+# Tools settings.
+ifeq "$(CPU)" "gcc"
+	CC 	= g++ -m32
+	RM_R    = rm -rf
+	ISS 	= 
+else
+	CC       = xt-xcc
+	RM_R     = rm -rf
+	ISS 	= xt-run $(XTCORE)
+endif
+
+ifneq "$(CPU)" "gcc"
+CONFIGDIR := $(shell $(ISS) --show-config=config)
+include $(CONFIGDIR)/misc/hostenv.mk
+endif
+
+MKPATH = mkdir -p
+
+ifeq ($(DEBUG),1)
+CFLAGS = -O0  -g -Wall
+else
+CFLAGS = -O2  -Wall
+endif
+
+ifneq "$(CPU)" "gcc"
+CFLAGS += -D__PROFILE__
+endif
+
+CFLAGS += -I$(ROOTDIR)/include \
+	  -I$(ROOTDIR)/include/g722_codec 
+
+CFLAGS += $(EXTRA_CFLAGS)
+
+G722DECBIN = xa_g722_dec_test
+G722ENCBIN = xa_g722_enc_test
+
+G722ENCTEST = xa_g722_enc
+G722DECTEST = xa_g722_dec
+
+SRCDIR = $(ROOTDIR)/test/src
+
+LIBNAME = xa_g722_codec.a
+LIBS = $(ROOTDIR)/lib/$(LIBNAME)
+LIBENCNAME = xa_g722_enc.a
+LIBENCS = $(ROOTDIR)/lib/$(LIBENCNAME)
+LIBDECNAME = xa_g722_dec.a
+LIBDECS = $(ROOTDIR)/lib/$(LIBDECNAME)
+
+OBJDIR = objs
+
+ENC_OBJS =  xa_g722_enc_sample_testbench.o
+
+DEC_OBJS =  xa_g722_dec_sample_testbench.o
+
+COM_OBJS =  xa_g722_codec_error_handler.o
+	 
+ifeq "$(CPU)" "gcc"
+	COMCPP_OBJS = cstub-Xm_AE_HiFi2_LE5-0.o
+else
+	COMCPP_OBJS = 
+endif
+
+
+ENCOBJS_OBJS = $(addprefix $(OBJDIR)/,$(ENC_OBJS))
+DECOBJS_OBJS = $(addprefix $(OBJDIR)/,$(DEC_OBJS))
+COMOBJS_OBJS = $(addprefix $(OBJDIR)/,$(COM_OBJS))
+COMCPPOBJS_OBJS = $(addprefix $(OBJDIR)/,$(COMCPP_OBJS))
+
+
+all: xa_g722_codec_test
+
+xa_g722_codec_test: $(OBJDIR) $(G722DECBIN) $(G722ENCBIN)
+
+$(G722ENCBIN): $(ENCOBJS_OBJS) $(COMOBJS_OBJS) $(COMCPPOBJS_OBJS) $(LIBS)
+	$(CC) -o $@ $^  $(EXTRA_LDFLAGS)
+
+$(G722DECBIN): $(DECOBJS_OBJS) $(COMOBJS_OBJS) $(COMCPPOBJS_OBJS) $(LIBS)
+	$(CC) -o $@ $^  $(EXTRA_LDFLAGS)
+
+encoder: xa_g722_encode_test
+xa_g722_encode_test: $(OBJDIR) $(G722ENCTEST)
+$(G722ENCTEST): $(ENCOBJS_OBJS) $(COMOBJS_OBJS) $(LIBENCS)
+	$(CC) -o $(G722ENCBIN) $^
+
+decoder: xa_g722_decode_test
+xa_g722_decode_test: $(OBJDIR) $(G722DECTEST)
+
+$(G722DECTEST): $(DECOBJS_OBJS) $(COMOBJS_OBJS) $(LIBDECS)
+	$(CC) -o $(G722DECBIN) $^
+
+g722_enc: clean_obj $(OBJDIR) $(ENCOBJS_OBJS) $(COMOBJS_OBJS)
+	$(CC) -o xa_g722_enc_test $(ENCOBJS_OBJS) $(COMOBJS_OBJS) $(LIBS)
+
+g722_dec: clean_obj $(OBJDIR) $(DECOBJS_OBJS) $(COMOBJS_OBJS)
+	$(CC) -o xa_g722_dec_test $(DECOBJS_OBJS) $(COMOBJS_OBJS) $(LIBS)
+
+$(OBJDIR):
+	-$(MKPATH) $@
+
+
+$(ENCOBJS_OBJS): $(OBJDIR)/%.o: $(SRCDIR)/%.c
+	$(CC) -c $(CFLAGS) -o $@ $<
+
+$(DECOBJS_OBJS): $(OBJDIR)/%.o: $(SRCDIR)/%.c
+	$(CC) -c $(CFLAGS) -o $@ $<
+
+$(COMCPPOBJS_OBJS): $(OBJDIR)/%.o: $(SRCDIR)/%.cpp
+	$(CC) -c $(CFLAGS) -o $@ $<
+
+$(COMOBJS_OBJS): $(OBJDIR)/%.o: $(SRCDIR)/%.c
+	$(CC) -c $(CFLAGS) -o $@ $<
+
+run:
+	$(ISS) --turbo --turbocache=tracecache.bin ./$(G722ENCBIN)
+	$(ISS) --turbo --turbocache=tracecache.bin ./$(G722DECBIN)
+
+clean_obj:
+	-$(RM_R) $(OBJDIR)
+
+clean:
+	-$(RM) xa_*test xa_*_enc xa_*_dec
+	-$(RM_R) $(OBJDIR)

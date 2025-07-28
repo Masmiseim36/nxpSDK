@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2021, 2023 NXP
+ * Copyright 2019-2021, 2023, 2025 NXP
  *
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -200,8 +200,18 @@ static void MPI_HandleRelocTable(uint32_t *vect)
             relocTabEnd = imageLen;
             if ((imageType & MPI_TYPE_TZM_MASK) == MPI_TYPE_TZM_SECURE_PRESET)
             {
-                /* Has TZM preset data, need to minus the size for relocation table pointer. */
-                relocTabEnd -= MPI_TZM_PRESET_SIZE;
+                /* Ensure no wraparound occurs */
+                if (relocTabEnd >= MPI_TZM_PRESET_SIZE)
+                {
+                    /* Has TZM preset data, need to minus the size for relocation table pointer. */
+                    relocTabEnd -= MPI_TZM_PRESET_SIZE;
+                }
+                else
+                {
+                    /* Handle error: relocTabEnd is less than MPI_TZM_PRESET_SIZE */
+                    MPI_ASSERT(false);
+                    return;
+                }
             }
         }
         pRelocTab = (mpi_reloc_table_t *)(((uint32_t)vect) + relocTabEnd) - 1;

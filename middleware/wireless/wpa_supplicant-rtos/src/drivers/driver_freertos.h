@@ -180,6 +180,7 @@ struct freertos_wpa_supp_dev_ops
                      int cookie);
     int (*remain_on_channel)(void *priv, unsigned int freq, unsigned int duration);
     int (*cancel_remain_on_channel)(void *priv);
+    int (*probe_req_report)(void *priv, int report);
     void *(*hapd_init)(void *hapd_drv_if_ctx,
                        const char *iface_name,
                        struct freertos_hostapd_dev_callbk_fns *hostapd_callbk_fns);

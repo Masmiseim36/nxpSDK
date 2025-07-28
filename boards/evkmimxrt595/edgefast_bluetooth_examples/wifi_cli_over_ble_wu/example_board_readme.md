@@ -10,6 +10,7 @@ Hardware requirements
   - Embedded Artists 1XK M.2 Module (EAR00385)
   - Embedded Artists 1ZM M.2 Module (EAR00364)
   - Embedded Artists 2EL M.2 Module (Rev-A1) - direct M2 connection.
+  - Embedded Artists 2LL M.2 Module (EAR00500) - direct M2 connection.
 
 Board settings
 ==============
@@ -19,6 +20,7 @@ If you want to use AzureWave WIFI_88W8987_BOARD_AW_CM358MA, please change the ma
 If you want to use Embedded Artists Type 1XK module (EAR00385), please change the macro to WIFI_IW416_BOARD_MURATA_1XK_M2.
 If you want to use Embedded Artists Type 1ZM module (EAR00364), please change the macro to WIFI_88W8987_BOARD_MURATA_1ZM_M2.
 If you want to use Embedded Artists Type 2EL module (Rev-A1), please change the macro to WIFI_IW612_BOARD_MURATA_2EL_M2.
+If you want to use Embedded Artists 2LL M.2 Module(EAR00500), please change the macro to WIFI_IW610_BOARD_MURATA_2LL_M2.
 
 Jumper settings for RT595 (enables external 5V supply):
 =======================================================
@@ -39,9 +41,11 @@ Embedded Artists M.2 module resource page: https://www.embeddedartists.com/m2
 Embedded Artists 1XK module datasheet: https://www.embeddedartists.com/doc/ds/1XK_M2_Datasheet.pdf
 Embedded Artists 1ZM module datasheet: https://www.embeddedartists.com/doc/ds/1ZM_M2_Datasheet.pdf
 Embedded Artists 2EL module datasheet: https://www.embeddedartists.com/doc/ds/2EL_M2_Datasheet.pdf
+Embedded Artists 2LL module datasheet: https://www.embeddedartists.com/wp-content/uploads/2024/12/2LL_M2_Datasheet.pdf
 
 AzureWave Solution Board settings
 =================================
+The hardware should be reworked according to the Hardware Rework Guide for MIMXRT595-EVK and Murata M.2 Module in document Hardware Rework Guide for EdgeFast BT PAL.
 The hardware should be reworked according to the Hardware Rework Guide for MIMXRT595-EVK and AW-AM510MA in document Hardware Rework Guide for EdgeFast BT PAL.
 The hardware should be reworked according to the Hardware Rework Guide for MIMXRT595-EVK and AW-CM358MA in document Hardware Rework Guide for EdgeFast BT PAL.
 

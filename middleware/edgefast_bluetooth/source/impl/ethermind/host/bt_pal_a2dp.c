@@ -1278,11 +1278,6 @@ static void edgefast_a2dp_src_write_task (struct bt_a2dp_endpoint_state *ep_stat
         {
             /* Wait for data in buffer */
             return;
-            #if 0
-            BT_thread_mutex_lock (&a2dp_src_th_mutex);
-            BT_thread_cond_wait (&a2dp_src_th_cond, &a2dp_src_th_mutex);
-            BT_thread_mutex_unlock (&a2dp_src_th_mutex);
-            #endif
         }
         else if (APP_A2DP_SRC_WR_TH_STOP == sbc_encoder->a2dp_src_wr_th_state)
         {
@@ -2006,7 +2001,6 @@ static API_RESULT ethermind_a2dp_notify_cb
                 else
                 {
                     a2dp->a2dp_state = INTERNAL_STATE_CONFIGURED_OPENED;
-                    //a2dp->internal_selected_endpoint->config_result = (struct bt_a2dp_preset*)&a2dp->config_internal;
                     ep_state->config_internal = a2dp->config_internal;
                     a2dp_auto_configure_callback_call(a2dp, ep_state, 0);
                 }
@@ -2014,7 +2008,6 @@ static API_RESULT ethermind_a2dp_notify_cb
             else
             {
                 a2dp->a2dp_state = INTERNAL_STATE_CONFIGURED_OPENED;
-                //a2dp->internal_selected_endpoint->config_result = (struct bt_a2dp_preset*)&a2dp->config_internal;
                 ep_state->config_internal = a2dp->config_internal;
                 a2dp_configure_ep_callback_call(a2dp, ep_state, event_result);
             }
@@ -2362,20 +2355,6 @@ static API_RESULT ethermind_a2dp_notify_cb
             }
 
             ep_state->a2dp = a2dp;
-#if 0
-            if (a2dp->auto_configure_enabled != 0)
-            {
-                if (BT_A2DP_SOURCE == ep_state->endpoint->info.sep.tsep)
-                {
-#if ((defined(CONFIG_BT_A2DP_SOURCE)) && (CONFIG_BT_A2DP_SOURCE > 0U))
-                    a2dp->configured_from_peer = 1U;
-                    /* don't need do anything. */
-                    callbackRet = API_SUCCESS;
-#endif
-                    break;
-                }
-            }
-#endif
             /* Codec Configuration */
             ep_state->config_internal.len = a2dp_dev_info->codec_ie_len;
             memcpy
@@ -2541,26 +2520,6 @@ int bt_a2dp_init(void)
 
     return 0;
 }
-
-#if 0
-int bt_a2dp_deinit(void)
-{
-    if (a2dp_process_task_handle != NULL)
-    {
-        OSA_TaskDestroy(a2dp_process_task_handle);
-        a2dp_process_task_handle = NULL;
-    }
-
-    if (a2dp_lock != NULL)
-    {
-        OSA_TaskDestroy(a2dp_lock);
-        a2dp_lock = NULL;
-    }
-
-    /* JPL doesn't have de-init function */
-    return 0;
-}
-#endif
 
 int bt_a2dp_register_endpoint(struct bt_a2dp_endpoint *endpoint, uint8_t media_type, uint8_t role)
 {
@@ -2865,7 +2824,6 @@ int bt_a2dp_start(struct bt_a2dp_endpoint *endpoint)
     }
 
 #if !((defined(CONFIG_A2DP_CODEC_EXTERNAL)) && (CONFIG_A2DP_CODEC_EXTERNAL > 0U))
-    //ep_state->a2dp->source_start_play = cb;
 #if ((defined(CONFIG_BT_A2DP_SOURCE)) && (CONFIG_BT_A2DP_SOURCE > 0U))
     if (endpoint->info.sep.tsep == BT_A2DP_SOURCE)
     {
@@ -2907,7 +2865,6 @@ int bt_a2dp_stop(struct bt_a2dp_endpoint *endpoint)
         return -EINVAL;
     }
 
-    //ep_state->a2dp->source_suspend_play = cb;
     retval = BT_a2dp_suspend (ep_state->ethermind_a2dp_codec_index);
     if (API_SUCCESS != retval)
     {
@@ -3150,7 +3107,7 @@ int bt_a2dp_deconfigure(struct bt_a2dp_endpoint *endpoint)
     {
         return -EINVAL;
     }
-    //ep_state->a2dp->de_configure_cb = cb;
+
     retval = BT_a2dp_disconnect(ep_state->ethermind_a2dp_codec_index);
     if (API_SUCCESS != retval)
     {

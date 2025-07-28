@@ -155,7 +155,7 @@ static int wpa_supplicant_init_match(struct wpa_global *global)
 
 #include "config.h"
 static int idx = 0;
-static char ifname[NETIF_NAMESIZE];
+static char ifname[DEFAULT_BSS_MAX_COUNT][NETIF_NAMESIZE];
 static void iface_cb(struct netif *iface, void *user_data)
 {
     struct wpa_interface *ifaces = user_data;
@@ -167,23 +167,24 @@ static void iface_cb(struct netif *iface, void *user_data)
     link_addr = net_if_get_link_addr((struct net_if *)iface);
     os_memcpy(own_addr, link_addr->addr, link_addr->len);
 #else
-    os_memcpy(own_addr, iface->hwaddr, iface->hwaddr_len);
+    (void)os_memcpy((void *)own_addr, (const void *)iface->hwaddr, iface->hwaddr_len);
 #endif
 
-    memset(ifname, 0, sizeof(ifname));
+    (void)memset(ifname[idx], 0, sizeof(ifname[idx]));
 
 #ifdef __ZEPHYR__
     dev = net_if_get_device((struct net_if *)iface);
     strncpy(ifname, dev->name, NETIF_NAMESIZE - 1);
     ifname[NETIF_NAMESIZE - 1] = '\0';
 #else
-    (void)netifapi_netif_index_to_name(iface->num + 1, ifname);
+    (void)netifapi_netif_index_to_name(iface->num + 1, ifname[idx]);
 
-    wpa_printf(MSG_INFO, "iface_cb: iface %s ifindex %d %02x:%02x:%02x:%02x:%02x:%02x", ifname,
+    wpa_printf(MSG_INFO, "iface_cb: iface %s ifindex %d %02x:%02x:%02x:%02x:%02x:%02x", ifname[idx],
                netif_get_index(iface), own_addr[0], own_addr[1], own_addr[2], own_addr[3], own_addr[4], own_addr[5]);
 #endif
 
-    ifaces[idx++].ifname = ifname;
+    ifaces[idx].ifname = ifname[idx];
+    idx++;
 }
 
 void wpa_supplicant_event_wrapper_deep_copy_free(struct wpa_supplicant_event_msg *msg)
@@ -192,7 +193,9 @@ void wpa_supplicant_event_wrapper_deep_copy_free(struct wpa_supplicant_event_msg
     union wpa_event_data *data;
 
     if (msg == NULL || msg->data == NULL)
+    {
         return;
+    }
 
     event = msg->event;
     data  = msg->data;
@@ -237,48 +240,49 @@ int wpa_supplicant_event_wrapper_deep_copy(struct wpa_supplicant_event_msg *msg,
     union wpa_event_data *data_tmp;
 
     if (msg == NULL || msg->data == NULL || data == NULL)
+    {
         return -1;
-
+    }
     data_tmp = msg->data;
     /* Handle deep copy for some event data */
     if (event == EVENT_AUTH) {
-        if (data->auth.ies) {
+        if (data->auth.ies != NULL) {
             char *ies = os_zalloc(data->auth.ies_len);
 
-            if (!ies) {
+            if (ies == NULL) {
                 wpa_printf(MSG_ERROR, "%s: Failed to alloc ies", __func__);
                 return -1;
             }
 
-            os_memcpy(ies, data->auth.ies, data->auth.ies_len);
+            (void)os_memcpy((void *)ies, (const void *)data->auth.ies, data->auth.ies_len);
             data_tmp->auth.ies = (const u8 *)ies;
         }
     } else if (event == EVENT_RX_MGMT) {
-        if (data->rx_mgmt.frame) {
+        if (data->rx_mgmt.frame != NULL) {
             char *frame = os_zalloc(data->rx_mgmt.frame_len);
 
-            if (!frame) {
+            if (frame == NULL) {
                 wpa_printf(MSG_ERROR, "%s: Failed to alloc frame",
                   __func__);
                 return -1;
             }
 
-            os_memcpy(frame, data->rx_mgmt.frame, data->rx_mgmt.frame_len);
+            (void)os_memcpy((void *)frame, (const void *)data->rx_mgmt.frame, data->rx_mgmt.frame_len);
             data_tmp->rx_mgmt.frame = (const u8 *)frame;
         }
     } else if (event == EVENT_TX_STATUS) {
         const struct ieee80211_hdr *hdr;
 
-        if (data->tx_status.data) {
+        if (data->tx_status.data != NULL) {
             char *frame = os_zalloc(data->tx_status.data_len);
 
-            if (!frame) {
+            if (frame == NULL) {
                 wpa_printf(MSG_ERROR, "%s: Failed to alloc frame\n",
                   __func__);
                 return -1;
             }
 
-            os_memcpy(frame, data->tx_status.data, data->tx_status.data_len);
+            (void)os_memcpy((void *)frame, (const void *)data->tx_status.data, data->tx_status.data_len);
             data_tmp->tx_status.data = (const u8 *)frame;
             hdr = (const struct ieee80211_hdr *) frame;
             data_tmp->tx_status.dst = hdr->addr1;
@@ -286,182 +290,190 @@ int wpa_supplicant_event_wrapper_deep_copy(struct wpa_supplicant_event_msg *msg,
     } else if (event == EVENT_ASSOC) {
         char *addr = os_zalloc(ETH_ALEN);
 
-        if (!addr) {
+        if (addr == NULL) {
             wpa_printf(MSG_ERROR, "%s: Failed to alloc addr\n",
                 __func__);
             return -1;
         }
 
-        os_memcpy(addr, data->assoc_info.addr, ETH_ALEN);
+        (void)os_memcpy((void *)addr, (const void *)data->assoc_info.addr, ETH_ALEN);
         data_tmp->assoc_info.addr = (const u8 *)addr;
 
-        if (data->assoc_info.req_ies) {
+        if (data->assoc_info.req_ies != NULL) {
             char *req_ies = os_zalloc(data->assoc_info.req_ies_len);
 
-            if (!req_ies) {
+            if (req_ies == NULL) {
                 os_free(addr);
                 wpa_printf(MSG_ERROR, "%s: Failed to alloc req_ies\n",
                   __func__);
                 return -1;
             }
 
-            os_memcpy(req_ies, data->assoc_info.req_ies,
+            (void)os_memcpy((void *)req_ies, (const void *)data->assoc_info.req_ies,
                       data->assoc_info.req_ies_len);
             data_tmp->assoc_info.req_ies = (const u8 *)req_ies;
         }
-        if (data->assoc_info.resp_ies) {
+        if (data->assoc_info.resp_ies != NULL) {
             char *resp_ies = os_zalloc(data->assoc_info.resp_ies_len);
 
-            if (!resp_ies) {
+            if (resp_ies == NULL) {
                 os_free(addr);
                 wpa_printf(MSG_ERROR, "%s: Failed to alloc resp_ies\n",
                   __func__);
                 return -1;
             }
 
-            os_memcpy(resp_ies, data->assoc_info.resp_ies,
+            (void)os_memcpy((void *)resp_ies, (const void *)data->assoc_info.resp_ies,
                       data->assoc_info.resp_ies_len);
             data_tmp->assoc_info.resp_ies = (const u8 *)resp_ies;
         }
-        if (data->assoc_info.resp_frame) {
+        if (data->assoc_info.resp_frame != NULL) {
             char *resp_frame = os_zalloc(data->assoc_info.resp_frame_len);
 
-            if (!resp_frame) {
+            if (resp_frame == NULL) {
                 os_free(addr);
                 wpa_printf(MSG_ERROR, "%s: Failed to alloc resp_frame\n",
                   __func__);
                 return -1;
             }
 
-            os_memcpy(resp_frame, data->assoc_info.resp_frame,
+            (void)os_memcpy((void *)resp_frame, (const void *)data->assoc_info.resp_frame,
                       data->assoc_info.resp_frame_len);
             data_tmp->assoc_info.resp_frame = (const u8 *)resp_frame;
         }
     } else if (event == EVENT_ASSOC_REJECT) {
         char *bssid = os_zalloc(ETH_ALEN);
 
-        if (!bssid) {
+        if (bssid == NULL) {
             wpa_printf(MSG_ERROR, "%s: Failed to alloc bssid\n",
                 __func__);
             return -1;
         }
 
-        os_memcpy(bssid, data->assoc_reject.bssid, ETH_ALEN);
+        (void)os_memcpy((void *)bssid, (const void *)data->assoc_reject.bssid, ETH_ALEN);
         data_tmp->assoc_reject.bssid = (const u8 *)bssid;
 
-        if (data->assoc_reject.resp_ies) {
+        if (data->assoc_reject.resp_ies != NULL) {
             char *resp_ies = os_zalloc(data->assoc_reject.resp_ies_len);
 
-            if (!resp_ies) {
+            if (resp_ies == NULL) {
                 os_free(bssid);
                 wpa_printf(MSG_ERROR, "%s: Failed to alloc resp_ies\n",
                   __func__);
                 return -1;
             }
 
-            os_memcpy(resp_ies, data->assoc_reject.resp_ies,
+            (void)os_memcpy((void *)resp_ies, (const void *)data->assoc_reject.resp_ies,
                       data->assoc_reject.resp_ies_len);
             data_tmp->assoc_reject.resp_ies = (const u8 *)resp_ies;
         }
     } else if (event == EVENT_DEAUTH) {
         char *sa = os_zalloc(ETH_ALEN);
 
-        if (!sa) {
+        if (sa == NULL) {
             wpa_printf(MSG_ERROR, "%s: Failed to alloc SA\n",
                 __func__);
             return -1;
         }
 
-        os_memcpy(sa, data->deauth_info.addr, ETH_ALEN);
+        (void)os_memcpy((void *)sa, (const void *)data->deauth_info.addr, ETH_ALEN);
         data_tmp->deauth_info.addr = (const u8 *)sa;
-        if (data->deauth_info.ie) {
+        if (data->deauth_info.ie != NULL) {
             char *ie = os_zalloc(data->deauth_info.ie_len);
 
-            if (!ie) {
+            if (ie == NULL) {
                 os_free(sa);
                 wpa_printf(MSG_ERROR, "%s: Failed to alloc ie\n",
                   __func__);
                 return -1;
             }
 
-            os_memcpy(ie, data->deauth_info.ie, data->deauth_info.ie_len);
+            (void)os_memcpy((void *)ie, (const void *)data->deauth_info.ie, data->deauth_info.ie_len);
             data_tmp->deauth_info.ie = (const u8 *)ie;
         }
     } else if (event == EVENT_DISASSOC) {
         char *sa = os_zalloc(ETH_ALEN);
 
-        if (!sa) {
+        if (sa == NULL) {
             wpa_printf(MSG_ERROR, "%s: Failed to alloc SA\n",
                 __func__);
             return -1;
         }
 
-        os_memcpy(sa, data->disassoc_info.addr, ETH_ALEN);
+        (void)os_memcpy((void *)sa, (const void *)data->disassoc_info.addr, ETH_ALEN);
         data_tmp->disassoc_info.addr = (const u8 *)sa;
-        if (data->disassoc_info.ie) {
+        if (data->disassoc_info.ie != NULL) {
             char *ie = os_zalloc(data->disassoc_info.ie_len);
 
-            if (!ie) {
+            if (ie == NULL) {
                 os_free(sa);
                 wpa_printf(MSG_ERROR, "%s: Failed to alloc ie\n",
                   __func__);
                 return -1;
             }
 
-            os_memcpy(ie, data->disassoc_info.ie, data->disassoc_info.ie_len);
+            (void)os_memcpy((void *)ie, (const void *)data->disassoc_info.ie, data->disassoc_info.ie_len);
             data_tmp->disassoc_info.ie = (const u8 *)ie;
         }
     } else if (event == EVENT_UNPROT_DEAUTH) {
         char *sa = os_zalloc(ETH_ALEN);
         char *da = os_zalloc(ETH_ALEN);
 
-        if (!sa) {
-            if (da)
+        if (sa == NULL) {
+            if (da != NULL)
+            {
                 os_free(da);
+            }
             wpa_printf(MSG_ERROR, "%s: Failed to alloc sa\n",
                 __func__);
             return -1;
         }
 
-        if (!da) {
-            if (sa)
+        if (da == NULL) {
+            if (sa != NULL)
+            {
                 os_free(sa);
+            }
             wpa_printf(MSG_ERROR, "%s: Failed to alloc da\n",
                 __func__);
             return -1;
         }
-        os_memcpy(sa, data->unprot_deauth.sa, ETH_ALEN);
+        (void)os_memcpy((void *)sa, (const void *)data->unprot_deauth.sa, ETH_ALEN);
         data_tmp->unprot_deauth.sa = (const u8 *)sa;
-        os_memcpy(da, data->unprot_deauth.da, ETH_ALEN);
+        (void)os_memcpy((void *)da, (const void *)data->unprot_deauth.da, ETH_ALEN);
         data_tmp->unprot_deauth.da = (const u8 *)da;
     }  else if (event == EVENT_UNPROT_DISASSOC) {
         char *sa = os_zalloc(ETH_ALEN);
         char *da = os_zalloc(ETH_ALEN);
 
-        if (!sa) {
-            if (da)
+        if (sa == NULL) {
+            if (da != NULL)
+            {
                 os_free(da);
+            }
             wpa_printf(MSG_ERROR, "%s: Failed to alloc sa\n",
                 __func__);
             return -1;
         }
 
-        if (!da) {
-            if (sa)
+        if (da == NULL) {
+            if (sa != NULL)
+            {
                 os_free(sa);
+            }
             wpa_printf(MSG_ERROR, "%s: Failed to alloc da\n",
                 __func__);
             return -1;
         }
-        os_memcpy(sa, data->unprot_disassoc.sa, ETH_ALEN);
+        (void)os_memcpy((void *)sa, (const void *)data->unprot_disassoc.sa, ETH_ALEN);
         data_tmp->unprot_disassoc.sa = (const u8 *)sa;
-        os_memcpy(da, data->unprot_disassoc.da, ETH_ALEN);
+        (void)os_memcpy((void *)da, (const void *)data->unprot_disassoc.da, ETH_ALEN);
         data_tmp->unprot_disassoc.da = (const u8 *)da;
     } else if (event == EVENT_EAPOL_RX) {
         if (data->eapol_rx.data && data->eapol_rx.src) {
             char *frame = os_zalloc(data->eapol_rx.data_len);
 
-            if (!frame) {
+            if (frame == NULL) {
                 wpa_printf(MSG_ERROR, "%s: Failed to alloc frame",
                   __func__);
                 return -1;
@@ -469,23 +481,23 @@ int wpa_supplicant_event_wrapper_deep_copy(struct wpa_supplicant_event_msg *msg,
 
             char *addr = os_zalloc(ETH_ALEN);
 
-            if (!addr) {
+            if (addr == NULL) {
                 wpa_printf(MSG_ERROR, "%s: Failed to alloc addr\n",
                     __func__);
                 os_free(frame);
                 return -1;
             }
 
-            os_memcpy(frame, data->eapol_rx.data, data->eapol_rx.data_len);
+            (void)os_memcpy((void *)frame, (const void *)data->eapol_rx.data, data->eapol_rx.data_len);
             data_tmp->eapol_rx.data = (const u8 *)frame;
-            os_memcpy(addr, data->eapol_rx.src, ETH_ALEN);
+            (void)os_memcpy((void *)addr, (const void *)data->eapol_rx.src, ETH_ALEN);
             data_tmp->eapol_rx.src = (const u8 *)addr;
         }
     }
     return 0;
 }
 
-void process_wpa_supplicant_event()
+void process_wpa_supplicant_event(void)
 {
     void *mem;
     struct wpa_supplicant_event_msg *msg = NULL;
@@ -514,9 +526,10 @@ void process_wpa_supplicant_event()
                 }
                 else
 #endif
+                {
                     wpa_supplicant_event(msg->ctx, msg->event, msg->data);
-
-                if (msg->data)
+                }
+                if (msg->data != NULL)
                 {
                     wpa_supplicant_event_wrapper_deep_copy_free(msg);
                     os_free(msg->data);
@@ -537,7 +550,7 @@ static void notify_wpa_supplicant_event(wpa_supp_event_t event)
     k_sleep(K_MSEC(10));
 #else
     (void)OSA_EventSet((osa_event_handle_t)supplicant_event_Handle, (1U << event));
-    if (!__get_IPSR())
+    if (0U == __get_IPSR())
     {
         OSA_TaskYield();
         OSA_TimeDelay(10);
@@ -545,7 +558,7 @@ static void notify_wpa_supplicant_event(wpa_supp_event_t event)
 #endif
 }
 
-int send_wpa_supplicant_dummy_event()
+int send_wpa_supplicant_dummy_event(void)
 {
     notify_wpa_supplicant_event(DUMMY);
 
@@ -563,7 +576,7 @@ int send_wpa_supplicant_event(struct wpa_supplicant_event_msg *msg)
 #endif
     if (ret != 0)
     {
-        if (msg->data)
+        if (msg->data != NULL)
         {
             wpa_printf(MSG_ERROR, "Drop supplicant event %d for queue full", msg->event);
             wpa_supplicant_event_wrapper_deep_copy_free(msg);
@@ -599,8 +612,8 @@ static void supplicant_main_task(osa_task_param_t arg)
     }
 #endif
 
-    os_memset(&params, 0, sizeof(params));
-#if CONFIG_WPA_SUPP_DPP
+    (void)os_memset(&params, 0, sizeof(params));
+#if CONFIG_WPA_SUPP_DPP || CONFIG_WPA_SUPP_P2P
     params.wpa_debug_level = MSG_INFO;
 #else
     params.wpa_debug_level = CONFIG_WPA_SUPP_DEBUG_LEVEL;
@@ -610,6 +623,11 @@ static void supplicant_main_task(osa_task_param_t arg)
                params.wpa_debug_level);
 
     iface_count = 1;
+
+#ifdef CONFIG_P2P
+    iface_count++;
+#endif
+
 #if !CONFIG_HOSTAPD
 #if 0
     iface_count++;
@@ -676,6 +694,23 @@ static void supplicant_main_task(osa_task_param_t arg)
     hostapd_main_task(arg);
 #endif
 
+#ifdef CONFIG_P2P
+    netif = net_get_wfd_interface();
+
+    if (netif != NULL)
+    {
+        ifaces[idx].ctrl_interface = "test_wfd_ctrl";
+
+        iface_cb(netif, ifaces);
+    }
+    else
+    {
+        wpa_printf(MSG_ERROR, "Failed to initialize network interface wfd");
+        exitcode = -1;
+        goto out;
+    }
+#endif
+
     params.ctrl_interface = "test_ctrl";
     wpa_printf(MSG_INFO, "Using interface %s\n", ifaces[0].ifname);
 
@@ -690,7 +725,9 @@ static void supplicant_main_task(osa_task_param_t arg)
                                      params.match_iface_count ||
 #endif /* CONFIG_MATCH_IFACE */
                                      params.dbus_ctrl_interface))
+            {
                 break;
+            }
             wpa_printf(MSG_INFO, "Failed to initialize interface %d\n", i);
             exitcode = -1;
             break;
@@ -705,10 +742,28 @@ static void supplicant_main_task(osa_task_param_t arg)
         wpa_s->conf->okc = 1;
         wpa_s->conf->wps_cred_processing = 2;
         wpa_s->conf->filter_ssids = 1;
-        if (i == 0)
+        if (i == 0
+#ifdef CONFIG_P2P
+            || (strstr(wpa_s->ifname, "wf"))
+#endif
+		)
+        {
             wpa_s->conf->ap_scan = 1;
+            wpa_s->conf->rsn_overriding = RSN_OVERRIDING_ENABLED;
+        }
         else
+        {
             wpa_s->conf->ap_scan = 2;
+        }
+#ifdef CONFIG_P2P
+        if (strstr(wpa_s->ifname, "wf") != NULL)
+        {
+            wpa_s->conf->device_name = os_strdup("NXP device");
+            wpa_s->conf->config_methods = os_strdup("keypad push_button virtual_display");
+            wpa_s->conf->changed_parameters |= (CFG_CHANGED_DEVICE_NAME | CFG_CHANGED_CONFIG_METHODS);
+            wpa_supplicant_update_config(wpa_s);
+        }
+#endif
     }
  
 #if CONFIG_MATCH_IFACE
@@ -747,9 +802,9 @@ out:
 #endif
     {
         msg = (struct wpa_supplicant_event_msg *)mem;
-        if (msg)
+        if (msg != NULL)
         {
-            if (msg->data)
+            if (msg->data != NULL)
             {
                 wpa_supplicant_event_wrapper_deep_copy_free(msg);
                 os_free(msg->data);
@@ -802,7 +857,7 @@ int start_wpa_supplicant(char *iface_name)
         WPA_SUPP_TASK_PRIO, 0, K_NO_WAIT);
     k_thread_name_set(supplicant_thread, "wpa_supplicant");
 #else
-    int status;
+    osa_status_t status;
 
     status = OSA_EventCreate((osa_event_handle_t)supplicant_event_Handle, 1);
     if (status != KOSA_StatusSuccess)
@@ -860,19 +915,21 @@ static void hostapd_logger_cb(void *ctx, const u8 *addr, unsigned int module, in
 {
     struct hostapd_data *hapd = ctx;
     char *format, *module_str;
-    int maxlen;
+    int ret = 0;
+    unsigned int maxlen = 0U;
     int conf_syslog_level, conf_stdout_level;
     unsigned int conf_syslog, conf_stdout;
 
-    maxlen = len + 100;
+    maxlen = len + 100U;
     format = os_malloc(maxlen);
-    if (!format)
-        return;
-
-    if (hapd && hapd->conf)
+    if (format == NULL)
     {
-        conf_syslog_level = hapd->conf->logger_syslog_level;
-        conf_stdout_level = hapd->conf->logger_stdout_level;
+        return;
+    }
+    if ((hapd != NULL) && (hapd->conf != NULL))
+    {
+        conf_syslog_level = (int)hapd->conf->logger_syslog_level;
+        conf_stdout_level = (int)hapd->conf->logger_stdout_level;
         conf_syslog       = hapd->conf->logger_syslog;
         conf_stdout       = hapd->conf->logger_stdout;
     }
@@ -907,17 +964,41 @@ static void hostapd_logger_cb(void *ctx, const u8 *addr, unsigned int module, in
             break;
     }
 
-    if (hapd && hapd->conf && addr)
-        os_snprintf(format, maxlen, "%s: STA " MACSTR "%s%s: %s", hapd->conf->iface, MAC2STR(addr),
+    if ((hapd != NULL) && (hapd->conf != NULL) && (addr != NULL))
+    {
+        ret = os_snprintf(format, maxlen, "%s: STA " MACSTR "%s%s: %s", hapd->conf->iface, MAC2STR(addr),
                     module_str ? " " : "", module_str ? module_str : "", txt);
-    else if (hapd && hapd->conf)
-        os_snprintf(format, maxlen, "%s:%s%s %s", hapd->conf->iface, module_str ? " " : "",
+        if (ret < 0)
+        {
+            wpa_printf(MSG_ERROR, "Encoding error occurred \r\n");
+        }
+    }
+    else if ((hapd != NULL) && (hapd->conf != NULL))
+    {
+        ret = os_snprintf(format, maxlen, "%s:%s%s %s", hapd->conf->iface, module_str ? " " : "",
                     module_str ? module_str : "", txt);
-    else if (addr)
-        os_snprintf(format, maxlen, "STA " MACSTR "%s%s: %s", MAC2STR(addr), module_str ? " " : "",
+        if (ret < 0)
+        {
+            wpa_printf(MSG_ERROR, "Encoding error occurred \r\n");
+        }
+    }
+    else if (addr != NULL)
+    {
+        ret = os_snprintf(format, maxlen, "STA " MACSTR "%s%s: %s", MAC2STR(addr), module_str ? " " : "",
                     module_str ? module_str : "", txt);
+        if (ret < 0)
+        {
+            wpa_printf(MSG_ERROR, "Encoding error occurred \r\n");
+        }
+    }
     else
-        os_snprintf(format, maxlen, "%s%s%s", module_str ? module_str : "", module_str ? ": " : "", txt);
+    {
+        ret = os_snprintf(format, maxlen, "%s%s%s", module_str ? module_str : "", module_str ? ": " : "", txt);
+        if (ret < 0)
+        {
+            wpa_printf(MSG_ERROR, "Encoding error occurred \r\n");
+        }
+    }
 
 #if CONFIG_DEBUG_SYSLOG
     if (wpa_debug_syslog)
@@ -957,15 +1038,17 @@ static int hostapd_driver_init(struct hostapd_iface *iface)
     }
 
     /* Initialize the driver interface */
-    if (!(b[0] | b[1] | b[2] | b[3] | b[4] | b[5]))
+    if (0U == (b[0] | b[1] | b[2] | b[3] | b[4] | b[5]))
+    {
         b = NULL;
-
+    }
     os_memset(&params, 0, sizeof(params));
     for (i = 0; wpa_drivers[i]; i++)
     {
         if (wpa_drivers[i] != hapd->driver)
+        {
             continue;
-
+        }
         if (hglobal.drv_priv[i] == NULL && wpa_drivers[i]->global_init)
         {
             hglobal.drv_priv[i] = wpa_drivers[i]->global_init(iface->interfaces);
@@ -990,12 +1073,16 @@ static int hostapd_driver_init(struct hostapd_iface *iface)
     params.num_bridge = hapd->iface->num_bss;
     params.bridge     = os_calloc(hapd->iface->num_bss, sizeof(char *));
     if (params.bridge == NULL)
+    {
         return -1;
+    }
     for (i = 0; i < hapd->iface->num_bss; i++)
     {
         struct hostapd_data *bss = hapd->iface->bss[i];
         if (bss->conf->bridge[0])
+        {
             params.bridge[i] = bss->conf->bridge;
+        }
     }
 
     params.own_addr = hapd->own_addr;
@@ -1034,7 +1121,9 @@ static int hostapd_driver_init(struct hostapd_iface *iface)
         if (triggs && hapd->driver->set_wowlan)
         {
             if (hapd->driver->set_wowlan(hapd->drv_priv, triggs))
+            {
                 wpa_printf(MSG_ERROR, "set_wowlan failed");
+            }
         }
         os_free(triggs);
     }
@@ -1059,9 +1148,10 @@ static struct hostapd_iface *hostapd_interface_init(struct hapd_interfaces *inte
 
     wpa_printf(MSG_DEBUG, "Configuration file: %s", config_fname);
     iface = hostapd_init(interfaces, config_fname);
-    if (!iface)
+    if (iface == NULL)
+    {
         return NULL;
-
+    }
     if (if_name)
     {
         os_strlcpy(iface->conf->bss[0]->iface, if_name, sizeof(iface->conf->bss[0]->iface));
@@ -1071,11 +1161,13 @@ static struct hostapd_iface *hostapd_interface_init(struct hapd_interfaces *inte
 
     for (k = 0; k < debug; k++)
     {
-        if (iface->bss[0]->conf->logger_stdout_level > 0)
+        if (iface->bss[0]->conf->logger_stdout_level > HOSTAPD_LEVEL_DEBUG_VERBOSE)
+        {
             iface->bss[0]->conf->logger_stdout_level--;
+        }
     }
 
-    if (iface->conf->bss[0]->iface[0] == '\0' && !hostapd_drv_none(iface->bss[0]))
+    if (iface->conf->bss[0]->iface[0] == '\0' && (hostapd_drv_none(iface->bss[0]) == 0))
     {
         wpa_printf(MSG_ERROR, "Interface name not specified in %s, nor by '-i' parameter", config_fname);
         hostapd_interface_deinit_free(iface);
@@ -1110,16 +1202,19 @@ static int hostapd_global_init(struct hapd_interfaces *interfaces, const char *e
     random_init(entropy_file);
 
     for (i = 0; wpa_drivers[i]; i++)
+    {
         hglobal.drv_count++;
-    if (hglobal.drv_count == 0)
+    }
+    if (0U == hglobal.drv_count)
     {
         wpa_printf(MSG_ERROR, "No drivers enabled");
         return -1;
     }
     hglobal.drv_priv = os_calloc(hglobal.drv_count, sizeof(void *));
     if (hglobal.drv_priv == NULL)
+    {
         return -1;
-
+    }
     return 0;
 }
 
@@ -1129,8 +1224,10 @@ static void hostapd_global_deinit(const char *pid_file, int eloop_initialized)
 
     for (i = 0; wpa_drivers[i] && hglobal.drv_priv; i++)
     {
-        if (!hglobal.drv_priv[i])
+        if (hglobal.drv_priv[i] == NULL)
+        {
             continue;
+        }
         wpa_drivers[i]->global_deinit(hglobal.drv_priv[i]);
     }
     os_free(hglobal.drv_priv);
@@ -1193,7 +1290,9 @@ static const char *hostapd_msg_ifname_cb(void *ctx)
 {
     struct wpa_supplicant *wpa_s = ctx;
     if (wpa_s == NULL)
+    {
         return NULL;
+    }
     return wpa_s->ifname;
 }
 
@@ -1229,7 +1328,7 @@ struct hostapd_iface *hostapd_get_interface(const char *ifname)
     return interfaces.iface[0];
 }
 
-struct hostapd_data *hostapd_get_hapd()
+struct hostapd_data *hostapd_get_hapd(void)
 {
     struct hostapd_data *hapd = NULL;
     if (interfaces.iface && interfaces.iface[0] && interfaces.iface[0]->bss && interfaces.iface[0]->bss[0])
@@ -1250,7 +1349,7 @@ struct hostapd_config *hostapd_config_read2(const char *fname)
     struct hostapd_config *conf;
     int errors = 0;
     size_t i;
-#ifdef RW610
+#if defined(RW610) || defined(IW610)
     int aCWmin = 4, aCWmax = 10;
     struct hostapd_wmm_ac_params ac_bk = {aCWmin, aCWmax, 9, 0, 0}; /* background traffic */
     struct hostapd_wmm_ac_params ac_be = {aCWmin, aCWmax - 4, 5, 0, 0}; /* best effort traffic */
@@ -1277,7 +1376,7 @@ struct hostapd_config *hostapd_config_read2(const char *fname)
         // fclose(f);
         return NULL;
     }
-#ifdef RW610
+#if defined(RW610) || defined(IW610)
     conf->wmm_ac_params[0] = ac_be;
     conf->wmm_ac_params[1] = ac_bk;
     conf->wmm_ac_params[2] = ac_vi;
@@ -1301,19 +1400,19 @@ struct hostapd_config *hostapd_config_read2(const char *fname)
     bss->logger_stdout       = 0xffff;
     bss->nas_identifier      = os_strdup("ap.example.com");
     bss->eap_sim_db          = os_strdup("unix:/tmp/hlr_auc_gw.sock");
-#ifdef RW610
+#if defined(RW610) || defined(IW610)
     os_memcpy(conf->country, "US ", 3);
 #else	
-    os_memcpy(conf->country, "WW ", 3);
+    (void)os_memcpy(conf->country, "WW ", 3);
 #endif
     conf->hw_mode        = HOSTAPD_MODE_IEEE80211G;
-    bss->wps_state       = WPS_STATE_CONFIGURED;
+    bss->wps_state       = (int)WPS_STATE_CONFIGURED;
     bss->eap_server      = 1;
 #if CONFIG_WPA_SUPP_WPS
     bss->ap_setup_locked = 1;
 #endif
     conf->channel        = 1;
-    conf->acs            = conf->channel == 0;
+    conf->acs            = (u8)(conf->channel == 0U);
 #if CONFIG_ACS
     conf->acs_num_scans = 1;
 #endif /* CONFIG_ACS */
@@ -1327,11 +1426,15 @@ struct hostapd_config *hostapd_config_read2(const char *fname)
     bss->okc = 1;
 
     for (i = 0; i < conf->num_bss; i++)
+    {
         hostapd_set_security_params(conf->bss[i], 1);
+    }
     if (hostapd_config_check(conf, 1))
+    {
         errors++;
+    }
 #ifndef WPA_IGNORE_CONFIG_ERRORS
-    if (errors)
+    if (errors != 0)
     {
         wpa_printf(MSG_ERROR,
                    "%d errors found in configuration file "
@@ -1386,7 +1489,9 @@ static int hostapd_disable_iface_cb(struct hostapd_iface *hapd_iface)
 
 #ifdef NEED_AP_MLME
     for (j = 0; j < hapd_iface->num_bss; j++)
+    {
         hostapd_cleanup_cs_params(hapd_iface->bss[j]);
+    }
 #endif /* NEED_AP_MLME */
 
     /* Same as hostapd_interface_deinit() without deinitializing control
@@ -1424,7 +1529,7 @@ static void hostapd_main_task(osa_task_param_t arg)
     struct dpp_global_config dpp_conf;
 #endif /* CONFIG_DPP */
 
-    os_memset(&interfaces, 0, sizeof(interfaces));
+    (void)os_memset(&interfaces, 0, sizeof(interfaces));
     interfaces.reload_config      = hostapd_reload_config;
     interfaces.config_read_cb     = hostapd_config_read2;
     interfaces.for_each_interface = hostapd_for_each_interface;
@@ -1488,13 +1593,15 @@ static void hostapd_main_task(osa_task_param_t arg)
     for (i = 0; i < interfaces.count; i++)
     {
         interfaces.iface[i] = hostapd_interface_init(&interfaces, if_name, "hostapd.conf", debug);
-        if (!interfaces.iface[i])
+        if (interfaces.iface[i] == NULL)
         {
             wpa_printf(MSG_ERROR, "Failed to initialize interface");
             goto out;
         }
         if (start_ifaces_in_sync)
+        {
             interfaces.iface[i]->need_to_start_in_sync = 1;
+        }
     }
 
     /*
@@ -1509,8 +1616,9 @@ static void hostapd_main_task(osa_task_param_t arg)
     for (i = 0; i < interfaces.count; i++)
     {
         if (hostapd_driver_init(interfaces.iface[i]))
+        {
             goto out;
-
+        }
         interfaces.iface[i]->enable_iface_cb  = hostapd_enable_iface_cb;
         interfaces.iface[i]->disable_iface_cb = hostapd_disable_iface_cb;
     }
@@ -1530,8 +1638,10 @@ static void hostapd_task_cleanup(void)
     /* Deinitialize all interfaces */
     for (i = 0; i < interfaces.count; i++)
     {
-        if (!interfaces.iface[i])
+        if (interfaces.iface[i] == NULL)
+        {
             continue;
+        }
         interfaces.iface[i]->driver_ap_teardown =
             !!(interfaces.iface[i]->drv_flags & WPA_DRIVER_FLAGS_AP_TEARDOWN_SUPPORT);
         hostapd_interface_deinit_free(interfaces.iface[i]);
@@ -1546,7 +1656,9 @@ static void hostapd_task_cleanup(void)
 #endif /* CONFIG_DPP */
 
     if (interfaces.eloop_initialized)
+    {
         eloop_cancel_timeout(hostapd_periodic, &interfaces, NULL);
+    }
     hostapd_global_deinit(NULL, interfaces.eloop_initialized);
 
     return;

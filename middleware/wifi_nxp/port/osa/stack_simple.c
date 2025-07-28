@@ -55,11 +55,15 @@ void InitStack(Stack_t *Stack)
 
 void PushOnStack(Stack_t *Stack, SlNode_t *Node)
 {
-    if (!Stack)
+    if (Stack == NULL)
+    {
         return;
+    }
 
-    if (!Node)
+    if (Node == NULL)
+    {
         return;
+    }
 
     SlAddNodeToHead(&Stack->Head, Node);
     Stack->Count++;
@@ -69,8 +73,10 @@ SlNode_t *PopOffStack(Stack_t *Stack)
 {
     SlNode_t *Node;
 
-    if (!Stack)
+    if (Stack == NULL)
+    {
         return NULL;
+    }
 
     if (Stack->Count == 0)
     {

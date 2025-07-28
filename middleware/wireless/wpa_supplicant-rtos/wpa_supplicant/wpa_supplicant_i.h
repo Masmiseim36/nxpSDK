@@ -944,6 +944,7 @@ struct wpa_supplicant
     u64 drv_flags;
     u64 drv_flags2;
     unsigned int drv_enc;
+    unsigned int drv_key_mgmt;
     unsigned int drv_rrm_flags;
 
     /*
@@ -1654,6 +1655,7 @@ void wpas_connection_failed(struct wpa_supplicant *wpa_s, const u8 *bssid);
 void fils_connection_failure(struct wpa_supplicant *wpa_s);
 void fils_pmksa_cache_flush(struct wpa_supplicant *wpa_s);
 int wpas_driver_bss_selection(struct wpa_supplicant *wpa_s);
+bool wpas_rsn_overriding(struct wpa_supplicant *wpa_s, struct wpa_ssid *ssid);
 int wpas_is_p2p_prioritized(struct wpa_supplicant *wpa_s);
 void wpas_auth_failed(struct wpa_supplicant *wpa_s, char *reason);
 void wpas_clear_temp_disabled(struct wpa_supplicant *wpa_s, struct wpa_ssid *ssid, int clear_failures);
@@ -1890,4 +1892,9 @@ int wpas_pasn_auth_tx_status(struct wpa_supplicant *wpa_s, const u8 *data, size_
 int wpas_pasn_auth_rx(struct wpa_supplicant *wpa_s, const struct ieee80211_mgmt *mgmt, size_t len);
 
 int wpas_pasn_deauthenticate(struct wpa_supplicant *wpa_s, const u8 *bssid);
+bool wpas_ap_supports_rsn_overriding(struct wpa_supplicant *wpa_s,
+				     struct wpa_bss *bss);
+bool wpas_ap_supports_rsn_overriding_2(struct wpa_supplicant *wpa_s,
+				       struct wpa_bss *bss);
+
 #endif /* WPA_SUPPLICANT_I_H */

@@ -15,8 +15,7 @@
 #define _H_BT_SNOOP_
 
 /* ----------------------------------------- Header File Inclusion */
-#include "BT_common.h"
-
+#include "BT_os.h"
 
 /* ----------------------------------------- Global Definitions */
 /**

@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2020, 2024 NXP
+ * Copyright 2016-2020, 2024-2025 NXP
  *
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -264,8 +264,8 @@ extern const uint8_t gUseRtos_c;
 #define SIZE_IN_UINT32_UNITS(size) (((size) + sizeof(uint32_t) - 1) / sizeof(uint32_t))
 
 /*! @brief Constant to pass as timeout value in order to wait indefinitely. */
-#define osaWaitNone_c            ((uint32_t)(0))
-#define osaWaitForever_c         ((uint32_t)(-1))
+#define osaWaitNone_c            ((uint32_t)(0UL))
+#define osaWaitForever_c         ((uint32_t)(~0UL))
 #define osaEventFlagsAll_c       ((osa_event_flags_t)(0x00FFFFFF))
 #define osThreadStackArray(name) osThread_##name##_stack
 #define osThreadStackDef(name, stacksize, instances) \
@@ -1104,22 +1104,36 @@ int OSA_MsgQAvailableMsgs(osa_msgq_handle_t msgqHandle);
 osa_status_t OSA_MsgQDestroy(osa_msgq_handle_t msgqHandle);
 
 /*!
- * @brief Enable all interrupts.
+ * @brief Enable all interrupts managed by OS.
+ *
+ * Different operating system may have different implementaions.
+ * The enabled interrupt range may be configured through operating system.
+ * This function supports nested calls.
  */
 void OSA_InterruptEnable(void);
 
 /*!
- * @brief Disable all interrupts.
+ * @brief Disable all interrupts managed by OS.
+ *
+ * Different operating system may have different implementaions.
+ * The disabled interrupt range may be configured through operating system.
+ * This function supports nested calls.
  */
 void OSA_InterruptDisable(void);
 
 /*!
  * @brief Enable all interrupts using PRIMASK.
+ *
+ * This function enable all interrupts apart from non-maskable interrupts.
+ * This function supports nested calls.
  */
 void OSA_EnableIRQGlobal(void);
 
 /*!
  * @brief Disable all interrupts using PRIMASK.
+ *
+ * This function disable all interrupts apart from non-maskable interrupts.
+ * This function supports nested calls.
  */
 void OSA_DisableIRQGlobal(void);
 

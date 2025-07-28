@@ -8,7 +8,7 @@
                This implementation uses little endian byte order.
  * Origin: https://github.com/B-Con/crypto-algorithms
  *
- * Copyright 2018-2020, 2024 NXP
+ * Copyright 2018-2020, 2024-2025 NXP
  * This code is based on original implementation by Brad Conte. Extended to
  * support big-endian platforms for FreeMASTER driver needs.
  *
@@ -23,6 +23,10 @@
  * Local Functions
  ******************************************************************************/
 
+/* Coverity: Note that some CERT-C rules are intentionally violated in code below, marked with 
+   coverity comment. Typically for shifting, casting and wrapping SHA-1 state data. This is 
+   an inherent concept of SHA-1 algorithm. */
+
 #define ROTLEFT(a, b) (((a) << (b)) | ((a) >> (32 - (b))))
 
 static void FMSTR_Sha1Transform(FMSTR_SHA1_CTX *ctx, const FMSTR_U8 *data)
@@ -35,8 +39,11 @@ static void FMSTR_Sha1Transform(FMSTR_SHA1_CTX *ctx, const FMSTR_U8 *data)
         j = i * 4U;
 
         a = ((FMSTR_U32)data[j]) << 24;
+        /* coverity[cert_int30_c_violation:FALSE] */
         a += ((FMSTR_U32)data[j + 1U]) << 16;
+        /* coverity[cert_int30_c_violation:FALSE] */
         a += ((FMSTR_U32)data[j + 2U]) << 8;
+        /* coverity[cert_int30_c_violation:FALSE] */
         a += data[j + 3U];
         m[i] = a;
     }
@@ -55,6 +62,7 @@ static void FMSTR_Sha1Transform(FMSTR_SHA1_CTX *ctx, const FMSTR_U8 *data)
 
     for (i = 0; i < 20U; i++)
     {
+        /* coverity[cert_int30_c_violation:FALSE] */
         t = ROTLEFT(a, 5) + ((b & c) ^ (~b & d)) + e + ctx->k[0] + m[i];
         e = d;
         d = c;
@@ -65,6 +73,7 @@ static void FMSTR_Sha1Transform(FMSTR_SHA1_CTX *ctx, const FMSTR_U8 *data)
 
     for (; i < 40U; i++)
     {
+        /* coverity[cert_int30_c_violation:FALSE] */
         t = ROTLEFT(a, 5) + (b ^ c ^ d) + e + ctx->k[1] + m[i];
         e = d;
         d = c;
@@ -75,6 +84,7 @@ static void FMSTR_Sha1Transform(FMSTR_SHA1_CTX *ctx, const FMSTR_U8 *data)
 
     for (; i < 60U; i++)
     {
+        /* coverity[cert_int30_c_violation:FALSE] */
         t = ROTLEFT(a, 5) + ((b & c) ^ (b & d) ^ (c & d)) + e + ctx->k[2] + m[i];
         e = d;
         d = c;
@@ -85,6 +95,7 @@ static void FMSTR_Sha1Transform(FMSTR_SHA1_CTX *ctx, const FMSTR_U8 *data)
 
     for (; i < 80U; i++)
     {
+        /* coverity[cert_int30_c_violation:FALSE] */
         t = ROTLEFT(a, 5) + (b ^ c ^ d) + e + ctx->k[3] + m[i];
         e = d;
         d = c;
@@ -93,10 +104,15 @@ static void FMSTR_Sha1Transform(FMSTR_SHA1_CTX *ctx, const FMSTR_U8 *data)
         a = t;
     }
 
+    /* coverity[cert_int30_c_violation:FALSE] */
     ctx->state[0] += a;
+    /* coverity[cert_int30_c_violation:FALSE] */
     ctx->state[1] += b;
+    /* coverity[cert_int30_c_violation:FALSE] */
     ctx->state[2] += c;
+    /* coverity[cert_int30_c_violation:FALSE] */
     ctx->state[3] += d;
+    /* coverity[cert_int30_c_violation:FALSE] */
     ctx->state[4] += e;
 }
 
@@ -128,6 +144,8 @@ void FMSTR_Sha1Update(FMSTR_SHA1_CTX *ctx, const FMSTR_U8 *data, FMSTR_SIZE len)
     for (i = 0U; i < len; i++)
     {
         ctx->data[ctx->datalen] = data[i];
+
+        /* coverity[cert_int30_c_violation:FALSE] */
         ctx->datalen++;
         if (ctx->datalen == 64U)
         {
@@ -147,6 +165,7 @@ void FMSTR_Sha1Final(FMSTR_SHA1_CTX *ctx, FMSTR_U8 *hash)
     // Pad whatever data is left in the buffer.
     if (ctx->datalen < 56U)
     {
+        /* coverity[cert_int30_c_violation:FALSE] */
         ctx->data[i++] = 0x80U;
         while (i < 56U)
         {
@@ -155,6 +174,7 @@ void FMSTR_Sha1Final(FMSTR_SHA1_CTX *ctx, FMSTR_U8 *hash)
     }
     else
     {
+        /* coverity[cert_int30_c_violation:FALSE] */
         ctx->data[i++] = 0x80U;
         while (i < 64U)
         {
@@ -166,15 +186,25 @@ void FMSTR_Sha1Final(FMSTR_SHA1_CTX *ctx, FMSTR_U8 *hash)
 
     // Append to the padding the total message's length in bits and transform.
     i = ctx->datalen * 8U;
+    /* coverity[cert_int30_c_violation:FALSE] */
     ctx->bitlen += (FMSTR_U64)i;
+    /* coverity[cert_int31_c_violation:FALSE] */
     ctx->data[63] = (FMSTR_U8)(ctx->bitlen);
+    /* coverity[cert_int31_c_violation:FALSE] */
     ctx->data[62] = (FMSTR_U8)(ctx->bitlen >> 8);
+    /* coverity[cert_int31_c_violation:FALSE] */
     ctx->data[61] = (FMSTR_U8)(ctx->bitlen >> 16);
+    /* coverity[cert_int31_c_violation:FALSE] */
     ctx->data[60] = (FMSTR_U8)(ctx->bitlen >> 24);
+    /* coverity[cert_int31_c_violation:FALSE] */
     ctx->data[59] = (FMSTR_U8)(ctx->bitlen >> 32);
+    /* coverity[cert_int31_c_violation:FALSE] */
     ctx->data[58] = (FMSTR_U8)(ctx->bitlen >> 40);
+    /* coverity[cert_int31_c_violation:FALSE] */
     ctx->data[57] = (FMSTR_U8)(ctx->bitlen >> 48);
+    /* coverity[cert_int31_c_violation:FALSE] */
     ctx->data[56] = (FMSTR_U8)(ctx->bitlen >> 56);
+    
     FMSTR_Sha1Transform(ctx, ctx->data);
 
 #if FMSTR_PLATFORM_BIG_ENDIAN > 0

@@ -4,7 +4,7 @@
  *  structures and declares global function prototypes used
  *  in MLAN module.
  *
- *  Copyright 2008-2023 NXP
+ *  Copyright 2008-2025 NXP
  *
  *  SPDX-License-Identifier: BSD-3-Clause
  *
@@ -418,7 +418,7 @@ extern t_void (*assert_callback)(IN t_void *pmoal_handle, IN t_u32 cond);
 /** Maximum number of CFP codes for A */
 #define MRVDRV_MAX_CFP_CODE_A 5
 
-#ifdef RW610
+#if defined(RW610) || defined(IW610)
 /** Default region code */
 #define MRVDRV_DEFAULT_REGION_CODE 0x10
 #else
@@ -426,7 +426,7 @@ extern t_void (*assert_callback)(IN t_void *pmoal_handle, IN t_u32 cond);
 #define MRVDRV_DEFAULT_REGION_CODE 0x00
 #endif
 
-#ifdef RW610
+#if defined(RW610) || defined(IW610)
 /** Default country code */
 #define MRVDRV_DEFAULT_COUNTRY_CODE "US"
 #else
@@ -471,7 +471,7 @@ extern t_void (*assert_callback)(IN t_void *pmoal_handle, IN t_u32 cond);
 /** Default buffer space for beacons retrieved from scan responses */
 #define DEFAULT_SCAN_BEACON_BUFFER 4096
 
-#ifdef RW610
+#if defined(RW610) || defined(IW610)
 #define DEFAULT_11N_TX_BF_CAP 0x19870408
 #endif
 
@@ -723,7 +723,7 @@ typedef MLAN_PACK_START struct _eth_hdr
 } MLAN_PACK_END eth_hdr;
 
 /** Ethernet LLC frame header */
-typedef MLAN_PACK_START struct _eth_llc_hdr
+typedef MLAN_PACK_START struct _ethernet_llc_header
 {
     /* destination SAP */
     t_u8 dsap;
@@ -735,7 +735,7 @@ typedef MLAN_PACK_START struct _eth_llc_hdr
     t_u8 protid[3];
     /* ether type field */
     t_u16 type;
-} MLAN_PACK_END eth_llc_hdr;
+} MLAN_PACK_END ethernet_llc_header;
 
 /* The IPv4 header */
 typedef MLAN_PACK_START struct _ip_hdr
@@ -970,6 +970,8 @@ typedef struct _wlan_802_11_security_t
     mlan_auth_mode authentication_mode;
     /** Encryption mode */
     mlan_encryption_mode encryption_mode;
+    /** RSN Selector */
+    mlan_rsn_selector rsn_selector;
 } wlan_802_11_security_t;
 
 /** Current Basic Service Set State Structure */
@@ -1141,6 +1143,17 @@ typedef struct
     t_u8 session_enable;
 } wps_t;
 
+#if CONFIG_WPA_SUPP_P2P
+/** Data structure for P2P information */
+typedef struct
+{
+    /** WPS IE */
+    IEEEtypes_VendorSpecific_t p2p_ie;
+    /** Session enable flag */
+    t_u8 session_enable;
+} p2p_t;
+#endif
+
 typedef struct _mlan_private mlan_private;
 typedef struct _mlan_private *pmlan_private;
 
@@ -1257,6 +1270,10 @@ struct _mlan_private
     t_u8 frame_type;
     /** MAC address information */
     t_u8 curr_addr[MLAN_MAC_ADDR_LENGTH];
+#if CONFIG_WPA_SUPP_P2P
+    /** P2P MAC address information */
+    t_u8 curr_p2p_addr[MLAN_MAC_ADDR_LENGTH];
+#endif
     /** Media connection status */
     t_bool media_connected;
 
@@ -1433,7 +1450,7 @@ struct _mlan_private
     /** EWPA query 0: disable, 1: enable */
     bool ewpa_query;
     /** Encryption Key*/
-    t_u8 wpa_ie[MLAN_WMSDK_MAX_WPA_IE_LEN];
+    t_u8 wpa_ie[MLAN_RSN_MAX_IE_LEN];
     /** WPA IE length */
     t_u8 wpa_ie_len;
 #if CONFIG_11R
@@ -1507,8 +1524,16 @@ struct _mlan_private
     t_u8 default_scan_ies_len;
 #endif
 
-
 #if CONFIG_WPA_SUPP
+#if CONFIG_WPA_SUPP_P2P
+    p2p_t p2p;
+    int p2p_mgmt_bitmap_index;
+    int p2p_gc_network;
+    int p2p_go_network;
+    t_u8 p2p_go_ssid[MLAN_MAX_SSID_LENGTH];
+    t_u8 p2p_go_ssid_len;
+    int p2p_go_chan;
+#endif
 #if CONFIG_WPA_SUPP_WPS
     /** WPS */
     wps_t wps;
@@ -1609,8 +1634,9 @@ struct _mlan_private
     /** configured by DPP */
     bool is_dpp_connect;
 #endif
-    t_u32 tx_overrun_cnt;
-    t_u32 rx_overrun_cnt;
+#if CONFIG_WIFI_GET_LOG
+    wlan_stats_t stats;
+#endif
 };
 
 /** BA stream status */
@@ -2202,6 +2228,10 @@ struct _mlan_adapter
 #if CONFIG_WPA_SUPP
     /** WPA supplicant scan triggered */
     t_u8 wpa_supp_scan_triggered;
+#if CONFIG_WPA_SUPP_P2P
+    /** WPA supplicant p2p scan triggered */
+    t_u8 wpa_supp_p2p_scan_triggered;
+#endif
 #endif
 #if CONFIG_SCAN_CHANNEL_GAP
     /** channel statstics */
@@ -2393,6 +2423,18 @@ struct _mlan_adapter
     /* remain on channel flag */
     t_u8 remain_on_channel;
     t_u8 remain_bss_index;
+#if CONFIG_WIFI_CHANNEL_LOAD
+    /** channel load info for current channel */
+    t_u16 ch_load_param;
+    /** Noise floor value for current channel */
+    t_s16 noise;
+    /** rx quality info */
+    t_u16 rx_quality;
+#endif
+#if defined(IW610)
+    /* board type info from FW */
+    t_u8 board_type;
+#endif
 };
 
 /** Ethernet packet type for EAPOL */
@@ -2498,7 +2540,16 @@ mlan_status wlan_cmd_remain_on_channel(IN pmlan_private pmpriv,
                                        IN t_u16 cmd_action,
                                        IN t_void *pdata_buf);
 
-
+#if CONFIG_WPA_SUPP_P2P
+mlan_status wlan_bss_ioctl_wifi_direct_mode(IN pmlan_adapter pmadapter, IN pmlan_ioctl_req pioctl_req);
+mlan_status wlan_cmd_wifi_direct_mode(IN pmlan_private pmpriv,
+                                      IN HostCmd_DS_COMMAND *cmd,
+                                      IN t_u16 cmd_action,
+                                      IN t_void *pdata_buf);
+mlan_status wlan_ret_wifi_direct_mode(IN pmlan_private pmpriv,
+                                      IN HostCmd_DS_COMMAND *resp,
+                                      IN mlan_ioctl_req *pioctl_buf);
+#endif
 
 mlan_status wlan_radio_ioctl_radio_ctl(IN pmlan_adapter pmadapter, IN pmlan_ioctl_req pioctl_req);
 
@@ -2524,12 +2575,12 @@ mlan_status wlan_cmd_bgscan_config(IN mlan_private *pmpriv,
 mlan_status wlan_ret_bgscan_config(IN mlan_private *pmpriv, IN HostCmd_DS_COMMAND *resp, IN mlan_ioctl_req *pioctl_buf);
 #endif
 
-#if (CONFIG_ROAMING) || (CONFIG_SUBSCRIBE_EVENT_SUPPORT)
 /** Handler for subscribe event command */
 mlan_status wlan_cmd_subscribe_event(IN mlan_private *pmpriv,
                                      IN HostCmd_DS_COMMAND *cmd,
                                      IN t_u16 cmd_action,
-                                     IN t_void *pioctl_buf);
+                                     IN t_void *pdata_buf);
+#if (CONFIG_ROAMING) || (CONFIG_SUBSCRIBE_EVENT_SUPPORT)
 int wlan_parse_getdata(HostCmd_DS_COMMAND *resp, mlan_ds_subscribe_evt *sub_evt);
 #endif
 
@@ -2958,9 +3009,9 @@ static t_u8 queuing_ra_based(pmlan_private priv)
  *  @return 	   	        Number of Rates copied
  */
 INLINE
-static t_u32 wlan_copy_rates(t_u8 *dest, t_u32 pos, t_u8 *src, int len)
+static t_u32 wlan_copy_rates(t_u8 *dest, t_u32 pos, t_u8 *src, t_u32 len)
 {
-    int i;
+    t_u32 i;
 
     for (i = 0; i < len && src[i]; i++)
     {
@@ -3292,6 +3343,8 @@ static int wlan_get_privs_by_two_cond(mlan_adapter *pmadapter,
 t_u8 wifi_check_no_packet_indication(mlan_private *priv);
 /** Check if this is the last packet */
 t_u8 wifi_check_last_packet_indication(mlan_private *priv);
+/** Exit the UAPSD mode */
+void wifi_exit_uapsd_mode(mlan_private *priv);
 #endif
 
 mlan_status wlan_cmd_hs_wakeup_reason(pmlan_private pmpriv, HostCmd_DS_COMMAND *cmd, t_void *pdata_buf);
@@ -3316,4 +3369,7 @@ mlan_status wlan_ret_boot_sleep(pmlan_private pmpriv, HostCmd_DS_COMMAND *resp, 
 
 t_bool wlan_is_etsi_country(pmlan_adapter pmadapter, t_u8 *country_code);
 
+#if CONFIG_WIFI_CHANNEL_LOAD
+mlan_status wlan_cmd_get_channel_load(pmlan_private pmpriv, HostCmd_DS_COMMAND *cmd, t_u16 cmd_action, t_void *pdata_buf);
+#endif
 #endif /* !_MLAN_MAIN_H_ */

@@ -56,7 +56,7 @@ static mlan_status wlan_11n_dispatch_amsdu_pkt(mlan_private *priv, pmlan_buffer 
 #if defined(SDK_OS_FREE_RTOS)
         net_stack_buffer_copy_partial(pmbuf->lwip_pbuf, amsdu_inbuf + pmbuf->data_offset, prx_pd->rx_pkt_length, 0);
 #endif
-#if !CONFIG_TX_RX_ZERO_COPY
+#if !CONFIG_TX_RX_ZERO_COPY && !FSL_USDHC_ENABLE_SCATTER_GATHER_TRANSFER
 #if !CONFIG_MEM_POOLS
         OSA_MemoryFree(pmbuf->pbuf);
         net_stack_buffer_free(pmbuf->lwip_pbuf);
@@ -68,16 +68,18 @@ static mlan_status wlan_11n_dispatch_amsdu_pkt(mlan_private *priv, pmlan_buffer 
 
         (void)wlan_11n_deaggregate_pkt(priv, pmbuf);
 
-#if CONFIG_TX_RX_ZERO_COPY
+#if CONFIG_TX_RX_ZERO_COPY || FSL_USDHC_ENABLE_SCATTER_GATHER_TRANSFER
         /* Free the net stack buffer after deaggregation and delivered to stack */
 #if defined(SDK_OS_FREE_RTOS)
         net_stack_buffer_free(pmbuf->lwip_pbuf);
 #endif
 #else
+#if !FSL_USDHC_ENABLE_SCATTER_GATHER_TRANSFER
 #if !CONFIG_MEM_POOLS
         OSA_MemoryFree(pmbuf);
 #else
         OSA_MemoryPoolFree(buf_128_MemoryPool, pmbuf);
+#endif
 #endif
 #endif
         LEAVE();
@@ -189,7 +191,7 @@ static mlan_status wlan_11n_dispatch_pkt_until_start_win(t_void *priv, RxReorder
         (void)pmpriv->adapter->callbacks.moal_spin_unlock(pmpriv->adapter->pmoal_handle, pmpriv->rx_pkt_lock);
         if (rx_tmp_ptr != NULL)
         {
-            (void)wlan_11n_dispatch_pkt(priv, rx_tmp_ptr, rx_reor_tbl_ptr);
+            ret = wlan_11n_dispatch_pkt(priv, rx_tmp_ptr, rx_reor_tbl_ptr);
         }
     }
 
@@ -245,7 +247,7 @@ static mlan_status wlan_11n_free_rxreorder_pkt(t_void *priv, RxReorderTbl *rx_re
 #if defined(SDK_OS_FREE_RTOS)
             net_stack_buffer_free(((pmlan_buffer)rx_tmp_ptr)->lwip_pbuf);
 #endif
-#if !CONFIG_TX_RX_ZERO_COPY
+#if !CONFIG_TX_RX_ZERO_COPY && !FSL_USDHC_ENABLE_SCATTER_GATHER_TRANSFER
 #if !CONFIG_MEM_POOLS
             OSA_MemoryFree(((pmlan_buffer)rx_tmp_ptr)->pbuf);
             OSA_MemoryFree(rx_tmp_ptr);
@@ -929,7 +931,7 @@ t_u8 wlan_is_rsn_replay_attack(mlan_private *pmpriv, t_void *payload, RxReorderT
                prx_pd->seq_num, rx_reor_tbl_ptr->hi_curr_rx_count32, rx_reor_tbl_ptr->lo_curr_rx_count16,
                prx_pd->hi_rx_count32, prx_pd->lo_rx_count16);
         net_stack_buffer_free(((pmlan_buffer)payload)->lwip_pbuf);
-#if !CONFIG_TX_RX_ZERO_COPY
+#if !CONFIG_TX_RX_ZERO_COPY && !FSL_USDHC_ENABLE_SCATTER_GATHER_TRANSFER
 #if !CONFIG_MEM_POOLS
         OSA_MemoryFree(((pmlan_buffer)payload)->pbuf);
         OSA_MemoryFree(payload);
@@ -979,7 +981,7 @@ mlan_status mlan_11n_rxreorder_pkt(void *priv, t_u16 seq_num, t_u16 tid, t_u8 *t
     {
         if (pkt_type != PKT_TYPE_BAR)
         {
-            (void)wlan_11n_dispatch_pkt(priv, payload, rx_reor_tbl_ptr);
+            ret = wlan_11n_dispatch_pkt(priv, payload, rx_reor_tbl_ptr);
         }
 
         LEAVE();
@@ -989,7 +991,7 @@ mlan_status mlan_11n_rxreorder_pkt(void *priv, t_u16 seq_num, t_u16 tid, t_u8 *t
     {
         if ((pkt_type == PKT_TYPE_AMSDU) && (rx_reor_tbl_ptr->amsdu == 0U))
         {
-            (void)wlan_11n_dispatch_pkt(priv, payload, rx_reor_tbl_ptr);
+            ret = wlan_11n_dispatch_pkt(priv, payload, rx_reor_tbl_ptr);
             LEAVE();
             return ret;
         }
@@ -1024,7 +1026,7 @@ mlan_status mlan_11n_rxreorder_pkt(void *priv, t_u16 seq_num, t_u16 tid, t_u8 *t
                         rx_reor_tbl_ptr->last_seq = seq_num;
                         if (pkt_type != PKT_TYPE_BAR)
                         {
-                            (void)wlan_11n_dispatch_pkt(priv, payload, rx_reor_tbl_ptr);
+                            ret = wlan_11n_dispatch_pkt(priv, payload, rx_reor_tbl_ptr);
                         }
                     }
                     LEAVE();

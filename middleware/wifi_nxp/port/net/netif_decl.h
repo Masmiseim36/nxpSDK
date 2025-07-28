@@ -4,6 +4,8 @@
  *  SPDX-License-Identifier: BSD-3-Clause
  *
  */
+#ifndef _NETIF_DECL_H_
+#define _NETIF_DECL_H_
 
 #include <mlan_api.h>
 #include <wm_net.h>
@@ -97,7 +99,7 @@ struct eth_llc_hdr
 
 #if FSL_USDHC_ENABLE_SCATTER_GATHER_TRANSFER
 #define NETIF_TX_BUFFERS 32
-#define NETIF_RX_BUFFERS 32
+#define NETIF_RX_BUFFERS 48
 
 /**
  * npx wifi driver structure.
@@ -126,9 +128,12 @@ struct nxp_wifi_device
 };
 #endif
 /*------------------------------------------------------*/
-extern int wlan_get_mac_address(uint8_t *dest);
 extern void wlan_wake_up_card(void);
 
+#if CONFIG_WPA_SUPP_P2P
+extern int wlan_get_wfd_mac_address(t_u8 *);
+extern int wfd_bss_type;
+#endif
 
 #if CONFIG_WPA_SUPP
 // void (*l2_packet_rx_callback)(const struct pbuf *p);
@@ -157,8 +162,10 @@ struct ethernetif
     struct eth_addr *ethaddr;
     /* Interface to bss type identification that tells the FW wherether
        the data is for STA for UAP */
-    t_u8 interface;
+    t_u8 intf;
     /* Add whatever per-interface state that is needed here. */
 };
 
 #endif
+
+#endif /* _NETIF_DECL_H_ */

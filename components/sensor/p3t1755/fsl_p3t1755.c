@@ -40,11 +40,21 @@ status_t P3T1755_Init(p3t1755_handle_t *handle, p3t1755_config_t *config)
     assert(config->writeTransfer != NULL);
     assert(config->readTransfer != NULL);
 
+    status_t status = kStatus_Success;
+
     handle->writeTransfer = config->writeTransfer;
     handle->readTransfer  = config->readTransfer;
     handle->sensorAddress = config->sensorAddress;
 
-    return kStatus_Success;
+    if (config->oneshotMode) {
+		status = config->readTransfer(handle->sensorAddress, P3T1755_CONFIG_REG, &handle->configReg, 1);
+		/* Operate in shutdown mode. Set the OS bit to start the
+		 * one-shot temperature measurement.
+		 */
+		handle->configReg |= P3T1755_CONFIG_REG_SD_MODE_POS;
+		status = config->writeTransfer(handle->sensorAddress, P3T1755_CONFIG_REG, &handle->configReg, 1);
+	}
+    return status;
 }
 
 status_t P3T1755_ReadTemperature(p3t1755_handle_t *handle, double *temperature)
@@ -61,4 +71,14 @@ status_t P3T1755_ReadTemperature(p3t1755_handle_t *handle, double *temperature)
     }
 
     return result;
+}
+
+status_t P3T1755_OneShotMeasurement(p3t1755_handle_t *handle)
+{
+    status_t status = kStatus_Success;
+    /* Initiate one-shot measurement */
+    handle->configReg = handle->configReg | (1 << P3T1755_CONFIG_REG_OS_MODE_POS);
+    status = handle->writeTransfer(handle->sensorAddress, P3T1755_CONFIG_REG, &handle->configReg,
+                                    sizeof(handle->configReg));
+    return status;
 }

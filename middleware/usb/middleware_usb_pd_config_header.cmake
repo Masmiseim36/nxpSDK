@@ -3,5 +3,7 @@
 include_guard(GLOBAL)
 message("${CMAKE_CURRENT_LIST_FILE} component is included.")
 
-add_config_file(${CMAKE_CURRENT_LIST_DIR}/output/npw/pd_config/usb_pd_config.h ${CMAKE_CURRENT_LIST_DIR}/output/npw/pd_config middleware_usb_pd_config_header)
+            add_config_file(${CMAKE_CURRENT_LIST_DIR}/config/pd/usb_pd_config.h "" middleware_usb_pd_config_header)
+    
+  
 

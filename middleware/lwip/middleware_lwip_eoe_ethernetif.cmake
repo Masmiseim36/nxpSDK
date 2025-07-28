@@ -12,17 +12,4 @@ message("${CMAKE_CURRENT_LIST_FILE} component is included.")
           ${CMAKE_CURRENT_LIST_DIR}/port
         )
 
-    if(CONFIG_USE_COMPONENT_CONFIGURATION)
-  message("===>Import configuration from ${CMAKE_CURRENT_LIST_FILE}")
-
-      target_compile_definitions(${MCUX_SDK_PROJECT_NAME} PUBLIC
-                  -DCHECKSUM_GEN_IP=1
-                        -DCHECKSUM_GEN_UDP=1
-                        -DCHECKSUM_GEN_TCP=1
-                        -DCHECKSUM_GEN_ICMP=1
-                        -DCHECKSUM_CHECK_ICMP=1
-              )
   
-  
-  endif()
-

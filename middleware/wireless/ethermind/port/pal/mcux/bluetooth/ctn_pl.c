@@ -504,7 +504,7 @@ API_RESULT ctn_get_object_attributes_pl
     CHAR                    *readstr;
     CHAR                    *str_ptr, *str_ptr1;
     UCHAR                   object_full_name[MAX_CTN_FOLDER_NAME_LEN];
-    int                     i, len;
+    UINT32                  i, len;
     UINT32                  fsize, offset;
     UINT16                  count;
 

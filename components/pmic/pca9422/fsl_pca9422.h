@@ -1,5 +1,5 @@
 /*
- * Copyright 2023-2024 NXP
+ * Copyright 2023-2025 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -841,6 +841,31 @@ typedef enum _pca9422_power_mode
     kPCA9422_PowerModeMax   = 0x0CU, /* Max Power mode */
 } pca9422_power_mode_t;
 
+/*! @brief PCA9422 ON Key Configuration definition during mode control. */
+typedef enum _pca9422_on_cfg
+{
+    kPCA9422_OnCfgDisableModeControl =
+        0x00U, /* Disable On pin falling edge triggers transition back to ACTIVE mode during mode control. */
+    kPCA9422_OnCfgEnableModeControl =
+        0x80U, /* Enable On pin falling edge triggers transition back to ACTIVE mode during mode control. */
+} pca9422_on_cfg_t;
+
+/*! @brief PCA9422 Mode Control Selection definition. */
+typedef enum _pca9422_mode_sel
+{
+    kPCA9422_ModeSelI2C = 0x00U, /* Mode control select by MODE1_I2C and MODE0_I2C bits. */
+    kPCA9422_ModeSelPin = 0x40U, /* Mode control select by STBY_MODE1 and SLEEP_MODE0 pins. */
+} pca9422_mode_sel_t;
+
+/*! @brief PCA9422 Mode Setting definition by I2C. */
+typedef enum _pca9422_mode_i2c
+{
+    kPCA9422_ActiveModeI2C    = 0x00U, /* Active mode */
+    kPCA9422_SleepModeI2C     = 0x10U, /* Sleep mode */
+    kPCA9422_StandbyModeI2C   = 0x20U, /* Standby mode */
+    kPCA9422_DPStandbyModeI2C = 0x30U, /* DPStandby mode */
+} pca9422_mode_i2c_t;
+
 /*! @brief PCA9422 Standby control definition */
 typedef enum _pca9422_standby_ctrl
 {
@@ -1368,6 +1393,12 @@ typedef struct _pca9422_regulator_config
     /* Pointer to the user-defined I2C Receive Data function. */
     status_t (*I2C_ReceiveFunc)(
         uint8_t deviceAddress, uint32_t subAddress, uint8_t subAddressSize, uint8_t *rxBuff, uint8_t rxBuffSize);
+    /* On Pin config */
+    pca9422_on_cfg_t onCfg;
+    /* Mode Select */
+    pca9422_mode_sel_t modeSel;
+    /* Mode set by I2C */
+    pca9422_mode_i2c_t modeI2C;
     /* Standby Control */
     pca9422_standby_ctrl_t standbyCtrl;
     /* Standby configuration bit */
@@ -1663,6 +1694,9 @@ bool PCA9422_SetUSBSuspendMode(pca9422_handle_t *handle, bool enable);
  *
  *   pca9422RegConfig->I2C_SendFunc    = NULL;
  *   pca9422RegConfig->I2C_ReceiveFunc = NULL;
+ *   pca9422RegConfig->onCfg           = kPCA9422_OnCfgDisableModeControl;
+ *   pca9422RegConfig->modeSel         = kPCA9422_ModeSelPin;
+ *   pca9422RegConfig->modeI2C         = kPCA9422_ActiveModeI2C;
  *   pca9422RegConfig->standbyCtrl     = kPCA9422_StandbyCtrlPins;
  *   pca9422RegConfig->standbyCfg      = kPCA9422_StandbyCfgStandby;
  *   pca9422RegConfig->dvsCtrl2En      = kPCA9422_DVSCtrl2EnIgnore;

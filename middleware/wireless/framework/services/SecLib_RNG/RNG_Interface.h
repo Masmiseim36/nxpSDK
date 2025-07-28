@@ -19,9 +19,11 @@
 * Public macros
 *************************************************************************************
 ********************************************************************************** */
-#define gRngSuccess_d       (0x00)
-#define gRngInternalError_d (0x01)
-#define gRngNullPointer_d   (0x80)
+#define gRngSuccess_d        (0x00)
+#define gRngInternalError_d  (-1)
+#define gRngBadArguments_d   (-2)
+#define gRngNotInitialized_d (-3)
+#define gRngReseedPending_d  (-4)
 
 #ifndef gRngMaxRequests_d
 #define gRngMaxRequests_d (100000)
@@ -69,13 +71,24 @@ extern "C" {
 int RNG_Init(void);
 
 /*! *********************************************************************************
- * \brief  Reinitialize the RNG Software Module
- *         Depending on RNG HW module, reinitialization function may be required after
- *         wake up from power down (S200 case in particular).
+ * \brief  Reinitialize the RNG module post-wakeup.
+ *         May do nothing, action is dependent on platform.
  *
- * \return  Status of the RNG initialization procedure.
+ * \return  gRngSuccess_d if successful, gRngInternalError_d if operation fails.
+ *
+ * Note: Failure only possible for specific platforms.
+ *
  ********************************************************************************** */
 int RNG_ReInit(void);
+
+/*! *********************************************************************************
+ * \brief  DeInitialize the RNG module.
+ *         Resets the RNG context variables. Only used for test purposes.
+ *
+ * \return none
+ *
+ ********************************************************************************** */
+void RNG_DeInit(void);
 
 /*! *********************************************************************************
  * \brief  Generates a 32-bit statistically random number
@@ -95,15 +108,18 @@ int RNG_GetTrueRandomNumber(uint32_t *pRandomNo);
  *
  * \param[out]  pOut  Pointer to the output buffer (max 32 bytes or max 20 bytes)
  * \param[in]   outBytes  The number of bytes to be copied (1-32 or 1-20 depending on the implementation)
- * \param[in]   pSeed  Ignored - please set to NULL
- *              This parameter is ignored because it is no longer needed.
- *              The PRNG is automatically seeded from the true random source.
- *              The length of the seed if present is 32 bytes or 20 bytes (depending on the implementation).
+ * \param[in]   pSeed  used to inject 'entropy' - may be NULL if not used.
+ *              If NULL, The PRNG is automatically seeded from the true random source, otherwise the pSeed is combined
+ *              in order to inject entropy. The length of the seed may be 32 bytes or 20 bytes (depending on the implementation).
  *
- * \return  The number of bytes copied OR
- *          -1 if reseed is needed OR
- *          0 if he PRNG was not initialized or 0 bytes were requested or an error occurred
- *
+  * \return If positive ( > 0) the number of random bytes produced,
+ *          If negative denotes an error:
+ *              gRngBadArguments_d if pOut is NULL or outBytes is 0 OR
+ *              gRngNotInitialized_d if RNG_Init was not priorly called OR
+ *              gRngInternalError_d in case of driver error OR
+ *              gRngReseedPending_d if new call happened whereas reseed request
+ *              was pending already .
+
  ********************************************************************************** */
 int RNG_GetPseudoRandomData(uint8_t *pOut, uint8_t outBytes, uint8_t *pSeed);
 

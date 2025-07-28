@@ -85,7 +85,11 @@ Change log:
 /** Maximum BSS numbers */
 /* fixme: We have reduced this from 16 to 2. Ensure that this is Ok */
 #if UAP_SUPPORT
+#if CONFIG_WPA_SUPP_P2P
+#define MLAN_MAX_BSS_NUM 3U
+#else
 #define MLAN_MAX_BSS_NUM 2U
+#endif
 #else
 #define MLAN_MAX_BSS_NUM 1U
 #endif
@@ -115,7 +119,7 @@ Change log:
 #ifdef STA_SUPPORT
 /** Default Win size attached during ADDBA request */
 #ifndef MLAN_STA_AMPDU_DEF_TXWINSIZE
-#if (defined(SD9177) || defined(IW610)) && defined(COEX_APP_SUPPORT)
+#if defined(SD9177) && defined(COEX_APP_SUPPORT)
 #define MLAN_STA_AMPDU_DEF_TXWINSIZE 32
 #else
 #define MLAN_STA_AMPDU_DEF_TXWINSIZE 64
@@ -124,10 +128,14 @@ Change log:
 
 /** Default Win size attached during ADDBA response */
 #ifndef MLAN_STA_AMPDU_DEF_RXWINSIZE
-#if (defined(SD9177) || defined(IW610)) && !defined(COEX_APP_SUPPORT)
+#if defined(SD9177) && !defined(COEX_APP_SUPPORT)
 #define MLAN_STA_AMPDU_DEF_RXWINSIZE 64
 #else
+#if CONFIG_WIFI_SLIM_STA
+#define MLAN_STA_AMPDU_DEF_RXWINSIZE 16
+#else
 #define MLAN_STA_AMPDU_DEF_RXWINSIZE 32
+#endif
 #endif
 #endif
 #endif /* STA_SUPPORT */
@@ -135,7 +143,7 @@ Change log:
 #if UAP_SUPPORT
 /** Default Win size attached during ADDBA request */
 #ifndef MLAN_UAP_AMPDU_DEF_TXWINSIZE
-#if (defined(SD9177) || defined(IW610)) && defined(COEX_APP_SUPPORT)
+#if defined(SD9177) && defined(COEX_APP_SUPPORT)
 #define MLAN_UAP_AMPDU_DEF_TXWINSIZE 32
 #else
 #define MLAN_UAP_AMPDU_DEF_TXWINSIZE 64
@@ -144,10 +152,14 @@ Change log:
 
 /** Default Win size attached during ADDBA response */
 #ifndef MLAN_UAP_AMPDU_DEF_RXWINSIZE
-#if (defined(SD9177) || defined(IW610)) && !defined(COEX_APP_SUPPORT)
+#if defined(SD9177) && !defined(COEX_APP_SUPPORT)
 #define MLAN_UAP_AMPDU_DEF_RXWINSIZE 64
 #else
+#if CONFIG_WIFI_SLIM_UAP
+#define MLAN_UAP_AMPDU_DEF_RXWINSIZE 16
+#else
 #define MLAN_UAP_AMPDU_DEF_RXWINSIZE 32
+#endif
 #endif
 #endif
 
@@ -210,7 +222,7 @@ Change log:
 
 /** MU beamformer */
 #define DEFALUT_11AC_CAP_BEAMFORMING_RESET_MASK (MBIT(19))
-#ifdef RW610
+#if defined(RW610) || defined(IW610)
 /** Short GI for 80MHz/TVHT_MODE_4C */
 #define DEFALUT_11AC_CAP_SHORTGI_80MHZ_RESET_MASK (MBIT(5))
 /** HE Phy Cap Info(40MHz in 2.4GHz band) */
@@ -223,7 +235,7 @@ Change log:
 #define MLAN_RX_CMD_BUF_SIZE (2 * 1024)
 
 /** MLAN MAC Address Length */
-#define MLAN_MAC_ADDR_LENGTH (6U)
+#define MLAN_MAC_ADDR_LENGTH 6U
 /** MLAN 802.11 MAC Address */
 typedef t_u8 mlan_802_11_mac_addr[MLAN_MAC_ADDR_LENGTH];
 

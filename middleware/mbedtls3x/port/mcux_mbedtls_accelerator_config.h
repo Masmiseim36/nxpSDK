@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2022 NXP
+ * Copyright 2019-2022,2025 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -34,9 +34,11 @@
 #if (defined(FSL_FEATURE_SOC_TRNG_COUNT) && (FSL_FEATURE_SOC_TRNG_COUNT > 0)) ||                           \
     (defined(FSL_FEATURE_SOC_RNG_COUNT) && (FSL_FEATURE_SOC_RNG_COUNT > 0)) ||                             \
     (defined(FSL_FEATURE_SOC_LPC_RNG_COUNT) && (FSL_FEATURE_SOC_LPC_RNG_COUNT > 0)) ||                     \
-    (defined(FSL_FEATURE_EDGELOCK) && (FSL_FEATURE_EDGELOCK > 0)) ||                     \
+    (defined(FSL_FEATURE_EDGELOCK) && (FSL_FEATURE_EDGELOCK > 0)) ||                                       \
     (defined(FSL_FEATURE_SOC_LPC_RNG1_COUNT) && (FSL_FEATURE_SOC_LPC_RNG1_COUNT > 0)) || (defined(ELS)) || \
-    (defined(FSL_FEATURE_ELE_S4XX) && (FSL_FEATURE_ELE_S4XX > 0))
+    (defined(FSL_FEATURE_ELE_S4XX) && (FSL_FEATURE_ELE_S4XX > 0)) ||                                       \
+    (defined(FSL_FEATURE_SOC_CAAM_COUNT) && (FSL_FEATURE_SOC_CAAM_COUNT > 0)) ||                           \
+    (defined(FSL_FEATURE_SOC_ELA_CSEC_COUNT ) && (FSL_FEATURE_SOC_ELA_CSEC_COUNT > 0))
 
 #ifndef MBEDTLS_MCUX_ENTROPY
 #define MBEDTLS_MCUX_ENTROPY (1)
@@ -47,10 +49,22 @@
  * For ELE_S4XX, crypto storage can be defined if NVM nased SD manager is present
  * and ITS is implemented over FATFS.
  */
-#if (defined(FSL_FEATURE_ELE_S4XX) && defined(PSA_CRYPTO_DRIVER_ELE_S4XX) &&                \
-     defined(PSA_ELE_S4XX_SD_NVM_MANAGER) && defined(MBEDTLS_PSA_ITS_FILE_FATFS))
+#if (defined(FSL_FEATURE_ELE_S4XX) && defined(PSA_CRYPTO_DRIVER_ELE_S4XX) && \
+     (defined(PSA_ELE_S4XX_SD_NVM_MANAGER) && defined(MBEDTLS_PSA_ITS_FILE_FATFS)))
 #define MBEDTLS_PSA_CRYPTO_STORAGE_C
 #endif
+
+/*
+ * For ELE_S2XX, enable crypto storage with littlefs.
+ * // TODO Request feature macro for s2xx - use FSL_FEATURE_ELEMU_HAS_SEMA4_STATUS_REGISTER for now.
+ *         Also add an SECURE_STORAGE_ITS_LITTLEFS (or similar) macro for checking enablement.
+ */
+#if (defined(FSL_FEATURE_EDGELOCK) && (FSL_FEATURE_EDGELOCK > 0)) &&                                               \
+    (defined(FSL_FEATURE_ELEMU_HAS_SEMA4_STATUS_REGISTER) && (FSL_FEATURE_ELEMU_HAS_SEMA4_STATUS_REGISTER > 0)) && \
+    (defined(CONFIG_SECURE_STORAGE_ITS_MAX_DATA_SIZE))
+#define MBEDTLS_PSA_CRYPTO_STORAGE_C
+#endif
+
 
 /* ======== Define ALT functions ====================================== */
 
@@ -68,7 +82,7 @@
 
 #define MBEDTLS_ENTROPY_HARDWARE_ALT /* Use own hardware entropy collector */
 #endif
-#endif /* MBEDCRYPTO_MCUX_CRYPTO_HW_ACCELERATOR */
+#endif                               /* MBEDCRYPTO_MCUX_CRYPTO_HW_ACCELERATOR */
 
 /* ========= Application-specific paltform macros ======================*/
 #if !defined(MBEDTLS_PLATFORM_EXIT_MACRO)

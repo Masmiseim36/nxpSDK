@@ -375,7 +375,7 @@ jpeg_finish_decompress (j_decompress_ptr cinfo)
 #if LIB_JPEG_USE_HW_ACCEL
   if (cinfo->format_supported)
   {
-      JPEG_DECODER_Type *jpegdec = cinfo->jpegdec;
+      JPEG_DECODER_Type *jpegdec = (JPEG_DECODER_Type *)cinfo->jpegdec;
       JPEGDEC_Deinit(jpegdec);
   }
   else

@@ -1972,7 +1972,7 @@ static void app_avrcp_process_continue_packet(struct bt_avrcp_vendor_header *hea
             continue_rsp_header.parameter_len += header->parameter_len;
 
             if (header->packet_type != BT_AVRCP_PACKET_TYPE_END) {
-                if (bt_avrcp_send_vendor_dependent(default_conn, BT_AVRCP_PDU_ID_REQUEST_CONTINUING_RESPONSE, &header->pdu_id)) {
+                if (bt_avrcp_send_vendor_dependent(default_br_conn, BT_AVRCP_PDU_ID_REQUEST_CONTINUING_RESPONSE, &header->pdu_id)) {
                     continue_packet_finish = true;
                 }
             } else {
@@ -1980,7 +1980,7 @@ static void app_avrcp_process_continue_packet(struct bt_avrcp_vendor_header *hea
             }
         } else {
             if (header->packet_type != BT_AVRCP_PACKET_TYPE_END) {
-                (void)bt_avrcp_send_vendor_dependent(default_conn, BT_AVRCP_PDU_ID_ABORT_CONTINUING_RESPONSE, &header->pdu_id);
+                (void)bt_avrcp_send_vendor_dependent(default_br_conn, BT_AVRCP_PDU_ID_ABORT_CONTINUING_RESPONSE, &header->pdu_id);
             }
             continue_packet_finish = true;
         }
@@ -2099,7 +2099,7 @@ static void avrcp_auto_test(uint8_t print)
 {
     uint8_t pdu_id;
     int err;
-    struct bt_conn *conn = default_conn;
+    struct bt_conn *conn = default_br_conn;
 
     if (print == 0)
     {
@@ -2123,7 +2123,7 @@ static void avrcp_auto_test(uint8_t print)
             {
                 break;
             }
-            if (bt_avrcp_send_unit_info(default_conn))
+            if (bt_avrcp_send_unit_info(default_br_conn))
             {
                 shell_error(ctx_shell, "fail to call bt_avrcp_send_unit_info");
             }
@@ -2134,7 +2134,7 @@ static void avrcp_auto_test(uint8_t print)
             {
                 break;
             }
-            if (bt_avrcp_send_subunit_info(default_conn))
+            if (bt_avrcp_send_subunit_info(default_br_conn))
             {
                 shell_error(ctx_shell, "fail to call bt_avrcp_send_subunit_info");
             }
@@ -2199,7 +2199,7 @@ static void avrcp_auto_test(uint8_t print)
 
             pdu_id = BT_AVRCP_PDU_ID_GET_CAPABILITY;
             cap_id = BT_AVRCP_CAP_ID_COMPANY_ID;
-            if (bt_avrcp_send_vendor_dependent(default_conn, pdu_id, &cap_id))
+            if (bt_avrcp_send_vendor_dependent(default_br_conn, pdu_id, &cap_id))
             {
                 shell_error(ctx_shell, "fail to call bt_avrcp_send_vendor_dependent");
             }
@@ -2216,7 +2216,7 @@ static void avrcp_auto_test(uint8_t print)
             }
             pdu_id = BT_AVRCP_PDU_ID_GET_CAPABILITY;
             cap_id = BT_AVRCP_CAP_ID_EVENTS_SUPPORTED;
-            if (bt_avrcp_send_vendor_dependent(default_conn, pdu_id, &cap_id))
+            if (bt_avrcp_send_vendor_dependent(default_br_conn, pdu_id, &cap_id))
             {
                 shell_error(ctx_shell, "fail to call bt_avrcp_send_vendor_dependent");
             }
@@ -2229,7 +2229,7 @@ static void avrcp_auto_test(uint8_t print)
                 break;
             }
             pdu_id = BT_AVRCP_PDU_ID_LIST_PLAYER_APP_SETTING_ATTR;
-            if (bt_avrcp_send_vendor_dependent(default_conn, pdu_id, NULL))
+            if (bt_avrcp_send_vendor_dependent(default_br_conn, pdu_id, NULL))
             {
                 shell_error(ctx_shell, "fail to call bt_avrcp_send_vendor_dependent");
             }
@@ -2243,7 +2243,7 @@ static void avrcp_auto_test(uint8_t print)
                 break;
             }
             pdu_id = BT_AVRCP_PDU_ID_LIST_PLAYER_APP_SETTING_VAL;
-            if (bt_avrcp_send_vendor_dependent(default_conn, pdu_id, &attr_id))
+            if (bt_avrcp_send_vendor_dependent(default_br_conn, pdu_id, &attr_id))
             {
                 shell_error(ctx_shell, "fail to call bt_avrcp_send_vendor_dependent");
             }
@@ -2257,7 +2257,7 @@ static void avrcp_auto_test(uint8_t print)
             {
                 break;
             }
-            if (bt_avrcp_send_vendor_dependent(default_conn, BT_AVRCP_PDU_ID_ABORT_CONTINUING_RESPONSE, &req_pdu))
+            if (bt_avrcp_send_vendor_dependent(default_br_conn, BT_AVRCP_PDU_ID_ABORT_CONTINUING_RESPONSE, &req_pdu))
             {
                 shell_error(ctx_shell, "fail to call bt_avrcp_request_continuing_rsp");
             }
@@ -2276,7 +2276,7 @@ static void avrcp_auto_test(uint8_t print)
             attr->num_of_attr = 1;
             attr->attr_ids[0] = 1;
             pdu_id            = BT_AVRCP_PDU_ID_GET_CUR_PLAYER_APP_SETTING_VAL;
-            if (bt_avrcp_send_vendor_dependent(default_conn, pdu_id, attr))
+            if (bt_avrcp_send_vendor_dependent(default_br_conn, pdu_id, attr))
             {
                 shell_error(ctx_shell, "fail to call bt_avrcp_send_vendor_dependent");
             }
@@ -2296,7 +2296,7 @@ static void avrcp_auto_test(uint8_t print)
             attr_values->attr_vals[0].attr_id  = 1;
             attr_values->attr_vals[0].value_id = 1;
             pdu_id                             = BT_AVRCP_PDU_ID_SET_PLAYER_APP_SETTING_VAL;
-            if (bt_avrcp_send_vendor_dependent(default_conn, pdu_id, attr_values))
+            if (bt_avrcp_send_vendor_dependent(default_br_conn, pdu_id, attr_values))
             {
                 shell_error(ctx_shell, "fail to call bt_avrcp_send_vendor_dependent");
             }
@@ -2315,7 +2315,7 @@ static void avrcp_auto_test(uint8_t print)
             attr->num_of_attr = 1;
             attr->attr_ids[0] = 1;
             pdu_id            = BT_AVRCP_PDU_ID_GET_PLAYER_APP_SETTING_ATTR_TXT;
-            if (bt_avrcp_send_vendor_dependent(default_conn, pdu_id, attr))
+            if (bt_avrcp_send_vendor_dependent(default_br_conn, pdu_id, attr))
             {
                 shell_error(ctx_shell, "fail to call bt_avrcp_send_vendor_dependent");
             }
@@ -2336,7 +2336,7 @@ static void avrcp_auto_test(uint8_t print)
             text->attr_id      = 1;
             text->value_ids[0] = 1;
             pdu_id             = BT_AVRCP_PDU_ID_GET_PLAYER_APP_SETTING_VAL_TXT;
-            if (bt_avrcp_send_vendor_dependent(default_conn, pdu_id, text))
+            if (bt_avrcp_send_vendor_dependent(default_br_conn, pdu_id, text))
             {
                 shell_error(ctx_shell, "fail to call bt_avrcp_send_vendor_dependent");
             }
@@ -2355,7 +2355,7 @@ static void avrcp_auto_test(uint8_t print)
             set->num_of_char  = 1;
             set->char_sets[0] = 0x6a;
             pdu_id            = BT_AVRCP_PDU_ID_INFORM_DISPLAYABLE_CHAR_SET;
-            if (bt_avrcp_send_vendor_dependent(default_conn, pdu_id, set))
+            if (bt_avrcp_send_vendor_dependent(default_br_conn, pdu_id, set))
             {
                 shell_error(ctx_shell, "fail to call bt_avrcp_send_vendor_dependent");
             }
@@ -2371,7 +2371,7 @@ static void avrcp_auto_test(uint8_t print)
                 break;
             }
             pdu_id = BT_AVRCP_PDU_ID_INFORM_BATTERY_STATUS;
-            if (bt_avrcp_send_vendor_dependent(default_conn, pdu_id, &battery_status))
+            if (bt_avrcp_send_vendor_dependent(default_br_conn, pdu_id, &battery_status))
             {
                 shell_error(ctx_shell, "fail to call bt_avrcp_send_vendor_dependent");
             }
@@ -2390,7 +2390,7 @@ static void avrcp_auto_test(uint8_t print)
             memset(&attrs->identifier[0], 0, 8u);
             attrs->num_of_attr = 0u; /* get all attrs */
             pdu_id             = BT_AVRCP_PDU_ID_GET_ELEMENT_ATTRIBUTE;
-            if (bt_avrcp_send_vendor_dependent(default_conn, pdu_id, attrs))
+            if (bt_avrcp_send_vendor_dependent(default_br_conn, pdu_id, attrs))
             {
                 shell_error(ctx_shell, "fail to call bt_avrcp_send_vendor_dependent");
             }
@@ -2403,7 +2403,7 @@ static void avrcp_auto_test(uint8_t print)
             {
                 break;
             }
-            if (bt_avrcp_send_vendor_dependent(default_conn, BT_AVRCP_PDU_ID_GET_PLAY_STATUS, NULL))
+            if (bt_avrcp_send_vendor_dependent(default_br_conn, BT_AVRCP_PDU_ID_GET_PLAY_STATUS, NULL))
             {
                 shell_error(ctx_shell, "fail to call bt_avrcp_send_vendor_dependent");
             }
@@ -2420,7 +2420,7 @@ static void avrcp_auto_test(uint8_t print)
 
             reg.event_id = BT_AVRCP_EVENT_PLAYBACK_STATUS_CHANGED;
             reg.playback_interval = 0;
-            if (bt_avrcp_send_vendor_dependent(default_conn, BT_AVRCP_PDU_ID_REGISTER_NOTIFICATION, &reg))
+            if (bt_avrcp_send_vendor_dependent(default_br_conn, BT_AVRCP_PDU_ID_REGISTER_NOTIFICATION, &reg))
             {
                 shell_error(ctx_shell, "fail to call bt_avrcp_send_vendor_dependent");
             }
@@ -2434,7 +2434,7 @@ static void avrcp_auto_test(uint8_t print)
             {
                 break;
             }
-            if (bt_avrcp_send_vendor_dependent(default_conn, BT_AVRCP_PDU_ID_SET_ABSOLUTE_VOLUME, &volume))
+            if (bt_avrcp_send_vendor_dependent(default_br_conn, BT_AVRCP_PDU_ID_SET_ABSOLUTE_VOLUME, &volume))
             {
                 shell_error(ctx_shell, "fail to call bt_avrcp_send_vendor_dependent");
             }
@@ -2448,7 +2448,7 @@ static void avrcp_auto_test(uint8_t print)
             {
                 break;
             }
-            if (bt_avrcp_send_vendor_dependent(default_conn, BT_AVRCP_PDU_ID_SET_ADDRESSED_PLAYER, &player_id))
+            if (bt_avrcp_send_vendor_dependent(default_br_conn, BT_AVRCP_PDU_ID_SET_ADDRESSED_PLAYER, &player_id))
             {
                 shell_error(ctx_shell, "fail to call bt_avrcp_send_vendor_dependent");
             }
@@ -2461,7 +2461,7 @@ static void avrcp_auto_test(uint8_t print)
             {
                 break;
             }
-            if (bt_avrcp_set_borwsed_player(default_conn, 1))
+            if (bt_avrcp_set_borwsed_player(default_br_conn, 1))
             {
                 shell_error(ctx_shell, "fail to call bt_avrcp_set_borwsed_player");
             }
@@ -2480,7 +2480,7 @@ static void avrcp_auto_test(uint8_t print)
             search.length   = 7;
             search.str      = (uint8_t *)"folder1";
 
-            if (bt_avrcp_search(default_conn, &search))
+            if (bt_avrcp_search(default_br_conn, &search))
             {
                 shell_error(ctx_shell, "fail to call bt_avrcp_search");
             }
@@ -2500,7 +2500,7 @@ static void avrcp_auto_test(uint8_t print)
             add.uid[0]      = FOLDER_UID;
             add.uid_counter = 1;
             pdu_id          = BT_AVRCP_PDU_ID_ADD_TO_NOW_PLAYING;
-            if (bt_avrcp_send_vendor_dependent(default_conn, pdu_id, &add))
+            if (bt_avrcp_send_vendor_dependent(default_br_conn, pdu_id, &add))
             {
                 shell_error(ctx_shell, "fail to call bt_avrcp_send_vendor_dependent");
             }
@@ -2520,7 +2520,7 @@ static void avrcp_auto_test(uint8_t print)
             param.end_item   = 10;
             param.attr_count = 0; /* all attr */
 
-            if (bt_avrcp_get_folder_items(default_conn, &param))
+            if (bt_avrcp_get_folder_items(default_br_conn, &param))
             {
                 shell_error(ctx_shell, "fail to call bt_avrcp_get_folder_items");
             }
@@ -2540,7 +2540,7 @@ static void avrcp_auto_test(uint8_t print)
             param.end_item   = 10;
             param.attr_count = 0; /* all attr */
 
-            if (bt_avrcp_get_folder_items(default_conn, &param))
+            if (bt_avrcp_get_folder_items(default_br_conn, &param))
             {
                 shell_error(ctx_shell, "fail to call bt_avrcp_get_folder_items");
             }
@@ -2560,7 +2560,7 @@ static void avrcp_auto_test(uint8_t print)
             param.end_item   = 10;
             param.attr_count = 0; /* all attr */
 
-            if (bt_avrcp_get_folder_items(default_conn, &param))
+            if (bt_avrcp_get_folder_items(default_br_conn, &param))
             {
                 shell_error(ctx_shell, "fail to call bt_avrcp_get_folder_items");
             }
@@ -2580,7 +2580,7 @@ static void avrcp_auto_test(uint8_t print)
             param.end_item   = 10;
             param.attr_count = 0; /* all attr */
 
-            if (bt_avrcp_get_folder_items(default_conn, &param))
+            if (bt_avrcp_get_folder_items(default_br_conn, &param))
             {
                 shell_error(ctx_shell, "fail to call bt_avrcp_get_folder_items");
             }
@@ -2600,7 +2600,7 @@ static void avrcp_auto_test(uint8_t print)
             memset(change_path.folder_uid, 0, 8);
             change_path.folder_uid[0] = FOLDER_UID;
 
-            if (bt_avrcp_change_path(default_conn, &change_path))
+            if (bt_avrcp_change_path(default_br_conn, &change_path))
             {
                 shell_error(ctx_shell, "fail to call bt_avrcp_change_path");
             }
@@ -2622,7 +2622,7 @@ static void avrcp_auto_test(uint8_t print)
             get_item.uid_counter = 1;
             get_item.num_of_attr = 0; /* all */
 
-            if (bt_avrcp_get_items_attribute(default_conn, &get_item))
+            if (bt_avrcp_get_items_attribute(default_br_conn, &get_item))
             {
                 shell_error(ctx_shell, "fail to call bt_avrcp_get_items_attribute");
             }
@@ -2644,7 +2644,7 @@ static void avrcp_auto_test(uint8_t print)
             get_item.uid_counter = 1;
             get_item.num_of_attr = 0; /* all */
 
-            if (bt_avrcp_get_items_attribute(default_conn, &get_item))
+            if (bt_avrcp_get_items_attribute(default_br_conn, &get_item))
             {
                 shell_error(ctx_shell, "fail to call bt_avrcp_get_items_attribute");
             }
@@ -2666,7 +2666,7 @@ static void avrcp_auto_test(uint8_t print)
             get_item.uid_counter = 1;
             get_item.num_of_attr = 0; /* all */
 
-            if (bt_avrcp_get_items_attribute(default_conn, &get_item))
+            if (bt_avrcp_get_items_attribute(default_br_conn, &get_item))
             {
                 shell_error(ctx_shell, "fail to call bt_avrcp_get_items_attribute");
             }
@@ -2680,7 +2680,7 @@ static void avrcp_auto_test(uint8_t print)
             {
                 break;
             }
-            if (bt_avrcp_get_total_num_of_items(default_conn, 0))
+            if (bt_avrcp_get_total_num_of_items(default_br_conn, 0))
             {
                 shell_error(ctx_shell, "fail to call bt_avrcp_get_total_num_of_items");
             }
@@ -2701,7 +2701,7 @@ static void avrcp_auto_test(uint8_t print)
             play.uid[0]      = FOLDER_UID;
             play.uid_counter = 1;
             pdu_id           = BT_AVRCP_PDU_ID_PLAY_ITEMS;
-            if (bt_avrcp_send_vendor_dependent(default_conn, pdu_id, &play))
+            if (bt_avrcp_send_vendor_dependent(default_br_conn, pdu_id, &play))
             {
                 shell_error(ctx_shell, "fail to call bt_avrcp_send_vendor_dependent");
             }
@@ -2722,7 +2722,7 @@ static void avrcp_auto_test(uint8_t print)
             play.uid[0]      = search_uid;
             play.uid_counter = 1;
             pdu_id           = BT_AVRCP_PDU_ID_PLAY_ITEMS;
-            if (bt_avrcp_send_vendor_dependent(default_conn, pdu_id, &play))
+            if (bt_avrcp_send_vendor_dependent(default_br_conn, pdu_id, &play))
             {
                 shell_error(ctx_shell, "fail to call bt_avrcp_send_vendor_dependent");
             }
@@ -2743,7 +2743,7 @@ static void avrcp_auto_test(uint8_t print)
             play.uid[0]      = now_playing_uid;
             play.uid_counter = 1;
             pdu_id           = BT_AVRCP_PDU_ID_PLAY_ITEMS;
-            if (bt_avrcp_send_vendor_dependent(default_conn, pdu_id, &play))
+            if (bt_avrcp_send_vendor_dependent(default_br_conn, pdu_id, &play))
             {
                 shell_error(ctx_shell, "fail to call bt_avrcp_send_vendor_dependent");
             }
@@ -2809,7 +2809,7 @@ static int cmd_init_tg(const struct shell *sh, size_t argc, char *argv[])
 
 static int cmd_control_connect(const struct shell *sh, size_t argc, char *argv[])
 {
-    if (bt_avrcp_control_connect(default_conn))
+    if (bt_avrcp_control_connect(default_br_conn))
     {
         shell_print(sh, "fail to call bt_avrcp_control_connect");
     }
@@ -2818,7 +2818,7 @@ static int cmd_control_connect(const struct shell *sh, size_t argc, char *argv[]
 
 static int cmd_browsing_connect(const struct shell *sh, size_t argc, char *argv[])
 {
-    if (bt_avrcp_browsing_connect(default_conn))
+    if (bt_avrcp_browsing_connect(default_br_conn))
     {
         shell_print(sh, "fail to call bt_avrcp_browsing_connect");
     }
@@ -3308,7 +3308,7 @@ static uint8_t app_sdp_avrcp_user(struct bt_conn *conn,
 
             connect.l2cap_rpsm    = param;
             connect.max_recv_size = 512u;
-            if (bt_avrcp_cover_art_connect(default_cover_handle, default_conn, &connect))
+            if (bt_avrcp_cover_art_connect(default_cover_handle, default_br_conn, &connect))
             {
                 shell_print(ctx_shell, "fail to call bt_avrcp_cover_art_connect");
             }
@@ -3336,7 +3336,7 @@ static struct bt_sdp_discover_params discov_avrcp_ca =
 
 static int cmd_ca_init_connect(const struct shell *sh, size_t argc, char *argv[])
 {
-    int res = bt_sdp_discover(default_conn, &discov_avrcp_ca);
+    int res = bt_sdp_discover(default_br_conn, &discov_avrcp_ca);
     if (res)
     {
         shell_print(ctx_shell, "SDP discovery failed\r\n");
@@ -3381,7 +3381,7 @@ static int cmd_ct_reg_ntf(const struct shell *sh, size_t argc, char *argv[])
     reg.event_id = event;
     reg.playback_interval = playback_interval;
     test_enable = 0;
-    if (bt_avrcp_send_vendor_dependent(default_conn, BT_AVRCP_PDU_ID_REGISTER_NOTIFICATION, &reg))
+    if (bt_avrcp_send_vendor_dependent(default_br_conn, BT_AVRCP_PDU_ID_REGISTER_NOTIFICATION, &reg))
     {
         shell_error(ctx_shell, "fail to call bt_avrcp_send_vendor_dependent");
     }
@@ -3476,7 +3476,7 @@ static int cmd_tg_notify(const struct shell *sh, size_t argc, char *argv[])
             break;
     }
 
-    bt_avrcp_response_vendor_dependent(default_conn, BT_AVRCP_PDU_ID_REGISTER_NOTIFICATION,
+    bt_avrcp_response_vendor_dependent(default_br_conn, BT_AVRCP_PDU_ID_REGISTER_NOTIFICATION,
                                        registered_events[event - 1][1], BT_AVRCP_RESPONSE_TYPE_CHANGED,
                                        rsp, rsp_len);
 
@@ -3568,7 +3568,7 @@ static int cmd_sdp_get(const struct shell *sh, size_t argc, char *argv[])
     }
 
     sdp_services_count = 0;
-    res = bt_sdp_discover(default_conn, disc_param);
+    res = bt_sdp_discover(default_br_conn, disc_param);
     if (res)
     {
         shell_print(sh, "SDP discovery failed: result");

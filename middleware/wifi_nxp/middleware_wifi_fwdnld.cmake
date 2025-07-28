@@ -4,7 +4,6 @@ include_guard(GLOBAL)
 message("${CMAKE_CURRENT_LIST_FILE} component is included.")
 
       target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
-          ${CMAKE_CURRENT_LIST_DIR}/wifi_bt_firmware/8801/8801_cpu1.c
           ${CMAKE_CURRENT_LIST_DIR}/wifi_bt_firmware/IW416/IW416_cpu12.c
           ${CMAKE_CURRENT_LIST_DIR}/wifi_bt_firmware/IW416/IW416_cpu1.c
           ${CMAKE_CURRENT_LIST_DIR}/wifi_bt_firmware/IW416/IW416_cpu2.c
@@ -25,7 +24,6 @@ message("${CMAKE_CURRENT_LIST_FILE} component is included.")
       target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
           ${CMAKE_CURRENT_LIST_DIR}/incl
           ${CMAKE_CURRENT_LIST_DIR}/wifi_bt_firmware
-          ${CMAKE_CURRENT_LIST_DIR}/wifi_bt_firmware/8801
           ${CMAKE_CURRENT_LIST_DIR}/wifi_bt_firmware/IW416
           ${CMAKE_CURRENT_LIST_DIR}/wifi_bt_firmware/8987
           ${CMAKE_CURRENT_LIST_DIR}/wifi_bt_firmware/nw61x

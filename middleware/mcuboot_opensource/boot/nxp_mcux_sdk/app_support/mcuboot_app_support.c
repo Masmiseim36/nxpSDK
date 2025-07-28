@@ -49,6 +49,9 @@ struct image_trailer {
     uint8_t magic[BOOT_MAGIC_SZ];
 };
 
+_Static_assert(MFLASH_PAGE_SIZE >= sizeof(struct image_trailer),
+               "Unsupported page size");
+
 union boot_img_magic_t
 {
     struct {
@@ -359,7 +362,7 @@ static status_t boot_swap_ok(int image)
         faid = FLASH_AREA_IMAGE_SECONDARY(image);
     }
 
-    fa          = &boot_flash_map[faid];
+    fa  = &boot_flash_map[faid];
     off = fa->fa_off + fa->fa_size;
 
     status = bl_flash_read(off - MFLASH_PAGE_SIZE, buf, MFLASH_PAGE_SIZE);

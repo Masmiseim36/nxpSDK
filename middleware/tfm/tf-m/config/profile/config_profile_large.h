@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022, Arm Limited. All rights reserved.
+ * Copyright (c) 2022-2024, Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  *
@@ -31,6 +31,16 @@
 #endif
 
 /* Crypto Partition Configs */
+
+/*
+ * The service assumes that the client interface and internal
+ * interface towards the library that provides the PSA Crypto
+ * core component maintain the same ABI. This is not the default
+ * when using the Mbed TLS reference implementation
+ */
+#ifndef CRYPTO_LIBRARY_ABI_COMPAT
+#define CRYPTO_LIBRARY_ABI_COMPAT (0)
+#endif
 
 /*
  * Heap size for the crypto backend
@@ -100,6 +110,11 @@
 #define CRYPTO_NV_SEED                         1
 #endif
 
+/* Use external RNG to provide entropy */
+#ifndef CRYPTO_EXT_RNG
+#define CRYPTO_EXT_RNG                         0
+#endif
+
 /*
  * Only enable multi-part operations in Hash, MAC, AEAD and symmetric ciphers,
  * to optimize memory footprint in resource-constrained devices.
@@ -143,7 +158,9 @@
 #endif
 
 /* Set the initial attestation token profile */
-#ifndef ATTEST_TOKEN_PROFILE_PSA_IOT_1
+#if (!ATTEST_TOKEN_PROFILE_PSA_IOT_1) && \
+    (!ATTEST_TOKEN_PROFILE_PSA_2_0_0) && \
+    (!ATTEST_TOKEN_PROFILE_ARM_CCA)
 #define ATTEST_TOKEN_PROFILE_PSA_IOT_1         1
 #endif
 
@@ -183,7 +200,11 @@
 
 /* The stack size of the Internal Trusted Storage Secure Partition */
 #ifndef ITS_STACK_SIZE
+#ifndef ITS_ENCRYPTION
 #define ITS_STACK_SIZE                         0x720
+#else
+#define ITS_STACK_SIZE                         0xC00
+#endif
 #endif
 
 /* PS Partition Configs */
@@ -221,6 +242,11 @@
 /* The stack size of the Protected Storage Secure Partition */
 #ifndef PS_STACK_SIZE
 #define PS_STACK_SIZE                          0x700
+#endif
+
+/* The stack size of the NS Agent Mailbox Secure Partition */
+#ifndef NS_AGENT_MAILBOX_STACK_SIZE
+#define NS_AGENT_MAILBOX_STACK_SIZE            0x800
 #endif
 
 /* SPM Partition Configs */

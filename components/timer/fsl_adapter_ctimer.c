@@ -73,7 +73,7 @@ static hal_timer_status_t HAL_CTimerConfigTimeout(hal_timer_handle_t halTimerHan
     CTIMER_StopTimer(s_CtimerBase[halTimerState->instance]);
 
     /* Configuration 0 */
-    mCtimerMatchConfig.enableCounterReset = true;
+    mCtimerMatchConfig.enableCounterReset = HAL_CTIMER_COUNTER_RESET;
     mCtimerMatchConfig.enableCounterStop  = false;
     mCtimerMatchConfig.outControl         = kCTIMER_Output_NoAction;
     mCtimerMatchConfig.outPinInitState    = false;
@@ -158,6 +158,7 @@ uint32_t HAL_TimerGetMaxTimeout(hal_timer_handle_t halTimerHandle)
     retValue = COUNT_TO_USEC(((uint64_t)0xFFFFFFFF - (uint64_t)reserveCount), (uint64_t)halTimerState->timerClock_Hz);
     return (uint32_t)((retValue > 0xFFFFFFFFU) ? (0xFFFFFFFFU - reserveMs * 1000U) : (uint32_t)retValue);
 }
+
 /* return micro us */
 uint32_t HAL_TimerGetCurrentTimerCount(hal_timer_handle_t halTimerHandle)
 {
@@ -180,3 +181,17 @@ void HAL_TimerEnterLowpower(hal_timer_handle_t halTimerHandle)
 {
     assert(halTimerHandle);
 }
+
+uint32_t HAL_TimerGetCurrentTicks(hal_timer_handle_t halTimerHandle)
+{
+    assert(halTimerHandle);
+    hal_timer_handle_struct_t *halTimerState = halTimerHandle;
+    return s_CtimerBase[halTimerState->instance]->TC;
+}
+
+void HAL_TimerUpdateMatchValueInTicks(hal_timer_handle_t halTimerHandle, uint32_t matchValue)
+{
+    hal_timer_handle_struct_t *halTimerState       = halTimerHandle;
+    (s_CtimerBase[halTimerState->instance])->MR[0] = matchValue;
+}
+

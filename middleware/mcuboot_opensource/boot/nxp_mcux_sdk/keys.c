@@ -59,6 +59,13 @@ const struct bootutil_key bootutil_enc_key = {
     .key = enc_priv_key,
     .len = &enc_priv_key_len,
 };
+#elif defined(MCUBOOT_ENCRYPT_EC256)
+#include "enc-ecdsa-p256-priv-minimal.c"
+
+const struct bootutil_key bootutil_enc_key = {
+    .key = enc_priv_key,
+    .len = &enc_priv_key_len,
+};
 #elif defined(MCUBOOT_ENCRYPT_KW)
 #error "Encrypted images with AES-KW is not implemented yet."
 #endif

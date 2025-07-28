@@ -1,12 +1,37 @@
 # SecLib_RNG: Security library and random number generator
 ## Random number generator
 ### Overview
-The RNG module is part of the framework used for random number generation. It uses hardware RNG peripherals and a software pseudo-random number generation algorithm. If no hardware acceleration is present, the RNG module uses a software algorithm. On devices that have the SIM_UID registers, the UIDL is used as the initial seed for the random number generator.
+The RNG module is part of the framework used for random number generation. It uses hardware RNG peripherals as entropy sources (TRNG, Secure Subsystem, ...) to provide a true random number generator interface.
+A Pseudo-Random number generator (PRNG) implementation is available. The PRNG may depend of SecLib services (thus requiring a common mutex) to perform HMAC-SHA256, SHA256, AES-CTR, or alternateively a Lehmer Linear Congruential generator. A prerequisite for the PRNG to function with desired randomness is to be seeded using a proper source of entropy.
+If no hardware acceleration is present, the RNG may fallback to lesser quality ad-hoc source e.g  if present SIM_UID registers, the UIDL is used as the initial seed for the random number generator.
+
+### Initialization
+The RNG module requires an initialization via a call to RNG_Init. The RNG initialization involves a call to RNG_SetSeed.
+
+In the case of a dual core system consisting of a Host core and an NBU core, the Secure Subsystem is owned by the Host core. The Host core then has a direct access to its TRNG embedded in its secure subssystem.
+On the NBU code side, a request is emitted via RPMSG to the Host to provide a seed. On receipt of this request, the Host sets a 'reseed needed' flag (from the ISR context)
+If the core running the RNG service owns the TRNG entropy hardware (if any), it can get the seed directly form this hardware synchronously.
+In the case of an NBU that does not control the devices entropy source, that is owned by the Host, it request a seed from the Host processor via RPMSG exchange.
+On receipt of this request the Host sets a flag notifying of this request from the RPMSG ISR context.
+From the Idle thread, this flag is polled via the RNG_IsReseedNeeded API. If set the seed is regenerated and forwarded to the NBU via RPMSG.
+
+RNG_ReInit API is to be used at wake up time in the context of LowPower.
+RNG_DeInit is used for unit tests and coverage purposes but has no useful role in a real application.
+
+### Seed handling
+RNG_SetSeed: 
+RNG_SetExternalSeed may be used to inject application entropy to RNG context seed using a supplied array of bytes.
+RNG_IsReseedNeeded used from task in Host core to check whether seed must be sent to NBU core.
+
+
+RNG_GetTrueRandomNumber is the API used to generate a Random 32 bit number from a HW source of entropy. It is essential if only to seed the pseudo random number generator.
+
+RNG_GetPseudoRandomData is used to generate arrays of random bytes.
 
 ## Security Library
 
 ### Overview
-The framework provides support for cryptography in the security module. It supports both software and hardware encryption. Depending on the device, the hardware encryption uses either the S200, MMCAU, LTC, or CAU3 module instruction set or dedicated AES and SHA hardware blocks. 
+The framework provides support for cryptography in the security module. It supports both software and hardware encryption. Depending on the device, the hardware encryption uses either the S200, MMCAU, LTC, or CAU3 module instruction set or dedicated AES and SHA hardware blocks.
 
 Software implementation is provided in a library format.
 
@@ -27,7 +52,7 @@ Software implementation is provided in a library format.
 | ECDH_P256 shared  secret generation                         	| x (by 15 incremental steps) -> SecLib_ecdh.c 	| x   with MACRO SecLibECDHUseSSS 	| x             	| x                         	| x                       	| BLE pairing,              	|
 | EC_P256 key pair  generation                                	| x                                            	| x                               	| x             	| x                         	| x                       	|                           	|
 | EC_P256 public key generation from private key              	|                                              	|                                 	| x             	| x                         	| x                       	| Matter (ECDSA)            	|
-| ECDSA_P256 hash and msg signature  generation / verifcation 	|                                              	| only if owner of the key pair   	|               	| x                         	| x                       	| Matter                    	|
+| ECDSA_P256 hash and msg signature  generation / verification 	|                                              	| only if owner of the key pair   	|               	| x                         	| x                       	| Matter                    	|
 | SPAKE2+ P256 arithmetics                                    	|                                              	|                                 	|               	| x                         	| x                       	| Matter                    	|
 
 
@@ -68,7 +93,7 @@ gSecLibSssUseEncryptedKeys_d - Enable or disable S200 blobs SecLib support. 0 - 
   This is a function used by the Bluetooth LE Host Stack to extract the plaintext IRK key from the saved NVM blob.
 ##### SecLib_VerifyBluetoothAh
   This function is extracted from the legacy Bluetooth LE Host Stack implementation using plaintext keys.
-  
+
 ##### SecLib_VerifyBluetoothAhSecure
    Similar to  **SecLib_VerifyBluetoothAh** with modification to work with S200 key blob.
 ##### SecLib_GenerateSymmetricKey

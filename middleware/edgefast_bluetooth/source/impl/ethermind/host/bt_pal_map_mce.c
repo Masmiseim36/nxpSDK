@@ -57,8 +57,8 @@
 /* MAP MCE MNS RX buffer size */
 #define BT_MAP_MCE_MNS_RX_NET_BUF_SIZE (CONFIG_BT_MAP_MCE_MNS_MAX_PKT_LEN)
 
-#define EDGEFAST_MAP_MCE_LOCK   OSA_MutexLock(s_MapMceLock, osaWaitForever_c)
-#define EDGEFAST_MAP_MCE_UNLOCK OSA_MutexUnlock(s_MapMceLock)
+#define EDGEFAST_MAP_MCE_LOCK   (void)OSA_MutexLock(s_MapMceLock, osaWaitForever_c)
+#define EDGEFAST_MAP_MCE_UNLOCK (void)OSA_MutexUnlock(s_MapMceLock)
 
 /** @brief MAP MCE MAS structure */
 struct bt_map_mce_mas
@@ -102,11 +102,11 @@ NET_BUF_POOL_FIXED_DEFINE(mce_mns_rx_pool, BT_MAP_MCE_MNS_RX_NET_BUF_COUNT, BT_L
 static struct bt_map_mce_mas *map_mce_mas_get_instance(struct bt_conn * conn)
 {
     EDGEFAST_MAP_MCE_LOCK;
-    for (uint8_t index = 0; index < CONFIG_BT_MAP_MCE_MAS_NUM_INSTANCES; ++index)
+    for (uint8_t index = 0; index < (uint8_t)CONFIG_BT_MAP_MCE_MAS_NUM_INSTANCES; ++index)
     {
         if (map_mce_mas_instances[index].acl_conn == NULL)
         {
-            memset(&map_mce_mas_instances[index], 0U, sizeof(map_mce_mas_instances[index]));
+            memset(&map_mce_mas_instances[index], 0, sizeof(map_mce_mas_instances[index]));
             map_mce_mas_instances[index].acl_conn = conn;
             EDGEFAST_MAP_MCE_UNLOCK;
             return &map_mce_mas_instances[index];
@@ -120,11 +120,11 @@ static struct bt_map_mce_mas *map_mce_mas_get_instance(struct bt_conn * conn)
 static struct bt_map_mce_mns *map_mce_mns_get_instance(struct bt_conn * conn)
 {
     EDGEFAST_MAP_MCE_LOCK;
-    for (uint8_t index = 0; index < CONFIG_BT_MAP_MCE_MNS_NUM_INSTANCES; ++index)
+    for (uint8_t index = 0; index < (uint8_t)CONFIG_BT_MAP_MCE_MNS_NUM_INSTANCES; ++index)
     {
         if (map_mce_mns_instances[index].acl_conn == NULL)
         {
-            memset(&map_mce_mns_instances[index], 0U, sizeof(map_mce_mns_instances[index]));
+            memset(&map_mce_mns_instances[index], 0, sizeof(map_mce_mns_instances[index]));
             map_mce_mns_instances[index].acl_conn = conn;
             EDGEFAST_MAP_MCE_UNLOCK;
             return &map_mce_mns_instances[index];
@@ -158,7 +158,7 @@ static void map_mce_mns_free_instance(struct bt_map_mce_mns *map_mce_mns)
 static struct bt_map_mce_mas *map_mce_mas_lookup_instance(MAP_HANDLE handle)
 {
     EDGEFAST_MAP_MCE_LOCK;
-    for (uint8_t index = 0; index < CONFIG_BT_MAP_MCE_MAS_NUM_INSTANCES; ++index)
+    for (uint8_t index = 0; index < (uint8_t)CONFIG_BT_MAP_MCE_MAS_NUM_INSTANCES; ++index)
     {
         if ((map_mce_mas_instances[index].acl_conn != NULL) && (map_mce_mas_instances[index].handle == handle))
         {
@@ -174,7 +174,7 @@ static struct bt_map_mce_mas *map_mce_mas_lookup_instance(MAP_HANDLE handle)
 static struct bt_map_mce_mns *map_mce_mns_lookup_instance(MAP_HANDLE handle)
 {
     EDGEFAST_MAP_MCE_LOCK;
-    for (uint8_t index = 0; index < CONFIG_BT_MAP_MCE_MNS_NUM_INSTANCES; ++index)
+    for (uint8_t index = 0; index < (uint8_t)CONFIG_BT_MAP_MCE_MNS_NUM_INSTANCES; ++index)
     {
         if ((map_mce_mns_instances[index].acl_conn != NULL) && (map_mce_mns_instances[index].handle == handle))
         {
@@ -190,10 +190,10 @@ static struct bt_map_mce_mns *map_mce_mns_lookup_instance(MAP_HANDLE handle)
 static struct bt_map_mce_mas *map_mce_mas_lookup_instance_by_addr(uint8_t *bd_addr)
 {
     EDGEFAST_MAP_MCE_LOCK;
-    for (uint8_t index = 0; index < CONFIG_BT_MAP_MCE_MAS_NUM_INSTANCES; ++index)
+    for (uint8_t index = 0; index < (uint8_t)CONFIG_BT_MAP_MCE_MAS_NUM_INSTANCES; ++index)
     {
         if ((map_mce_mas_instances[index].acl_conn != NULL) &&
-            (memcmp(&map_mce_mas_instances[index].acl_conn->br.dst, bd_addr, BT_BD_ADDR_SIZE) == 0))
+            (memcmp(&map_mce_mas_instances[index].acl_conn->br.dst.val[0], bd_addr, BT_BD_ADDR_SIZE) == 0))
         {
             EDGEFAST_MAP_MCE_UNLOCK;
             return &map_mce_mas_instances[index];
@@ -207,10 +207,10 @@ static struct bt_map_mce_mas *map_mce_mas_lookup_instance_by_addr(uint8_t *bd_ad
 static struct bt_map_mce_mns *map_mce_mns_lookup_instance_by_addr(uint8_t *bd_addr)
 {
     EDGEFAST_MAP_MCE_LOCK;
-    for (uint8_t index = 0; index < CONFIG_BT_MAP_MCE_MNS_NUM_INSTANCES; ++index)
+    for (uint8_t index = 0; index < (uint8_t)CONFIG_BT_MAP_MCE_MNS_NUM_INSTANCES; ++index)
     {
         if ((map_mce_mns_instances[index].acl_conn != NULL) &&
-            (memcmp(&map_mce_mns_instances[index].acl_conn->br.dst, bd_addr, BT_BD_ADDR_SIZE) == 0))
+            (memcmp(&map_mce_mns_instances[index].acl_conn->br.dst.val[0], bd_addr, BT_BD_ADDR_SIZE) == 0))
         {
             EDGEFAST_MAP_MCE_UNLOCK;
             return &map_mce_mns_instances[index];
@@ -223,6 +223,8 @@ static struct bt_map_mce_mns *map_mce_mns_lookup_instance_by_addr(uint8_t *bd_ad
 
 static int bt_map_copy_tag_from_buf_to_stack(struct bt_obex_tag_bytes *tag, MAP_APPL_PARAMS *appl_param)
 {
+    int err = 0;
+
     switch (tag->id)
     {
         case BT_MAP_TAG_ID_MAX_LIST_COUNT:
@@ -266,7 +268,8 @@ static int bt_map_copy_tag_from_buf_to_stack(struct bt_obex_tag_bytes *tag, MAP_
             appl_param->retry = *tag->value;
             break;
         case BT_MAP_TAG_ID_NEW_MESSAGE:
-            return -EINVAL;
+            err = -EINVAL;
+            break;
         case BT_MAP_TAG_ID_NOTIFICATION_STATUS:
             appl_param->notification_status = *tag->value;
             break;
@@ -278,7 +281,8 @@ static int bt_map_copy_tag_from_buf_to_stack(struct bt_obex_tag_bytes *tag, MAP_
             break;
         case BT_MAP_TAG_ID_FOLDER_LISTING_SIZE:
         case BT_MAP_TAG_ID_LISTING_SIZE:
-            return -EINVAL;
+            err = -EINVAL;
+            break;
         case BT_MAP_TAG_ID_SUBJECT_LENGTH:
             appl_param->subject_length = *tag->value;
             break;
@@ -289,7 +293,8 @@ static int bt_map_copy_tag_from_buf_to_stack(struct bt_obex_tag_bytes *tag, MAP_
             appl_param->fraction_request = *tag->value;
             break;
         case BT_MAP_TAG_ID_FRACTION_DELIVER:
-            return -EINVAL;
+            err = -EINVAL;
+            break;
         case BT_MAP_TAG_ID_STATUS_INDICATOR:
             appl_param->status_indicator = *tag->value;
             break;
@@ -297,11 +302,13 @@ static int bt_map_copy_tag_from_buf_to_stack(struct bt_obex_tag_bytes *tag, MAP_
             appl_param->status_value = *tag->value;
             break;
         case BT_MAP_TAG_ID_MSE_TIME:
-            return -EINVAL;
+            err = -EINVAL;
+            break;
 #ifdef MAP_1_3
         case BT_MAP_TAG_ID_DATABASE_IDENTIFIER:
         case BT_MAP_TAG_ID_CONV_LIST_VER_CNTR:
-            return -EINVAL;
+            err = -EINVAL;
+            break;
         case BT_MAP_TAG_ID_PRESENCE_AVAILABILITY:
             appl_param->presence_availability = *tag->value;
             break;
@@ -329,7 +336,8 @@ static int bt_map_copy_tag_from_buf_to_stack(struct bt_obex_tag_bytes *tag, MAP_
             appl_param->conversation_id.value = tag->value;
             break;
         case BT_MAP_TAG_ID_FOLDER_VER_CNTR:
-            return -EINVAL;
+            err = -EINVAL;
+            break;
         case BT_MAP_TAG_ID_FILTER_MSG_HANDLE:
             appl_param->filter_msg_handle.length = tag->length;
             appl_param->filter_msg_handle.value = tag->value;
@@ -341,7 +349,8 @@ static int bt_map_copy_tag_from_buf_to_stack(struct bt_obex_tag_bytes *tag, MAP_
             appl_param->conv_parameter_mask = sys_get_be32(tag->value);
             break;
         case BT_MAP_TAG_ID_OWNER_UCI:
-            return -EINVAL;
+            err = -EINVAL;
+            break;
         case BT_MAP_TAG_ID_EXTENDED_DATA:
             appl_param->extended_data.length = tag->length;
             appl_param->extended_data.value = tag->value;
@@ -360,10 +369,11 @@ static int bt_map_copy_tag_from_buf_to_stack(struct bt_obex_tag_bytes *tag, MAP_
             break;
 #endif /* MAP_1_4 */
         default:
-            return -EINVAL;
+            err = -EINVAL;
+            break;
     }
 
-    return 0;
+    return err;
 }
 
 static int bt_map_copy_appl_param_from_buf_to_stack(struct net_buf *buf, MAP_APPL_PARAMS *appl_param, uint16_t *pkt_len)
@@ -379,16 +389,16 @@ static int bt_map_copy_appl_param_from_buf_to_stack(struct net_buf *buf, MAP_APP
         return err;
     }
 
-    *pkt_len += hdr_length + sizeof(struct bt_obex_hdr_bytes);
+    *pkt_len += hdr_length + (uint16_t)sizeof(struct bt_obex_hdr_bytes);
 
-    while (hdr_length)
+    while (hdr_length > 0U)
     {
-        err = bt_map_copy_tag_from_buf_to_stack((struct bt_obex_tag_bytes *)hdr_value, appl_param);
+        err = bt_map_copy_tag_from_buf_to_stack((struct bt_obex_tag_bytes *)(void *)hdr_value, appl_param);
         if (err < 0)
         {
             return err;
         }
-        tag.id = ((struct bt_obex_tag_bytes *)hdr_value)->id - 1;
+        tag.id = ((struct bt_obex_tag_bytes *)(void *)hdr_value)->id - 1U;
 #ifndef MAP_1_3
         MAP_SET_APPL_PARAM_FLAG
         (
@@ -403,7 +413,7 @@ static int bt_map_copy_appl_param_from_buf_to_stack(struct net_buf *buf, MAP_APP
             tag.id / (sizeof(appl_param->appl_param_flag[0]) * 8U)
         );
 #endif /* MAP_1_3 */
-        tag.length = ((struct bt_obex_tag_bytes *)hdr_value)->length + sizeof(struct bt_obex_tag_bytes);
+        tag.length = ((struct bt_obex_tag_bytes *)(void *)hdr_value)->length + (uint16_t)sizeof(struct bt_obex_tag_bytes);
         if (hdr_length < tag.length)
         {
             return -EINVAL;
@@ -417,6 +427,8 @@ static int bt_map_copy_appl_param_from_buf_to_stack(struct net_buf *buf, MAP_APP
 
 static int bt_map_copy_tag_from_stack_to_buf(uint8_t tag_id, MAP_APPL_PARAMS *appl_param, struct net_buf *buf)
 {
+    int err = 0;
+
     switch (tag_id)
     {
         case BT_MAP_TAG_ID_MAX_LIST_COUNT:
@@ -431,17 +443,20 @@ static int bt_map_copy_tag_from_stack_to_buf(uint8_t tag_id, MAP_APPL_PARAMS *ap
         case BT_MAP_TAG_ID_ATTACHMENT:
         case BT_MAP_TAG_ID_TRANSPARENT:
         case BT_MAP_TAG_ID_RETRY:
-            return -EINVAL;
+            err = -EINVAL;
+            break;
         case BT_MAP_TAG_ID_NEW_MESSAGE:
             BT_MAP_ADD_NEW_MESSAGE(buf, appl_param->new_message);
             break;
         case BT_MAP_TAG_ID_NOTIFICATION_STATUS:
-            return -EINVAL;
+            err = -EINVAL;
+            break;
         case BT_MAP_TAG_ID_MAS_INSTANCE_ID:
             BT_MAP_ADD_MAS_INSTANCE_ID(buf, appl_param->mas_instance_id);
             break;
         case BT_MAP_TAG_ID_PARAMETER_MASK:
-            return -EINVAL;
+            err = -EINVAL;
+            break;
         case BT_MAP_TAG_ID_FOLDER_LISTING_SIZE:
             BT_MAP_ADD_FOLDER_LISTING_SIZE(buf, appl_param->folder_listing_size);
             break;
@@ -451,52 +466,58 @@ static int bt_map_copy_tag_from_stack_to_buf(uint8_t tag_id, MAP_APPL_PARAMS *ap
         case BT_MAP_TAG_ID_SUBJECT_LENGTH:
         case BT_MAP_TAG_ID_CHARSET:
         case BT_MAP_TAG_ID_FRACTION_REQUEST:
-            return -EINVAL;
+            err = -EINVAL;
+            break;
         case BT_MAP_TAG_ID_FRACTION_DELIVER:
             BT_MAP_ADD_FRACTION_DELIVER(buf, appl_param->fraction_deliver);
             break;
         case BT_MAP_TAG_ID_STATUS_INDICATOR:
         case BT_MAP_TAG_ID_STATUS_VALUE:
-            return -EINVAL;
+            err = -EINVAL;
+            break;
         case BT_MAP_TAG_ID_MSE_TIME:
-            BT_MAP_ADD_MSE_TIME(buf, appl_param->mse_time.value, appl_param->mse_time.length);
+            BT_MAP_ADD_MSE_TIME(buf, appl_param->mse_time.value, (uint8_t)appl_param->mse_time.length);
             break;
 #ifdef MAP_1_3
         case BT_MAP_TAG_ID_DATABASE_IDENTIFIER:
-            BT_MAP_ADD_DATABASE_IDENTIFIER(buf, appl_param->database_identifier.value, appl_param->database_identifier.length);
+            BT_MAP_ADD_DATABASE_IDENTIFIER(buf, appl_param->database_identifier.value, (uint8_t)appl_param->database_identifier.length);
             break;
         case BT_MAP_TAG_ID_CONV_LIST_VER_CNTR:
-            BT_MAP_ADD_CONV_LIST_VER_CNTR(buf, appl_param->conv_listing_ver_cntr.value, appl_param->conv_listing_ver_cntr.length);
+            BT_MAP_ADD_CONV_LIST_VER_CNTR(buf, appl_param->conv_listing_ver_cntr.value, (uint8_t)appl_param->conv_listing_ver_cntr.length);
             break;
         case BT_MAP_TAG_ID_PRESENCE_AVAILABILITY:
             BT_MAP_ADD_PRESENCE_AVAILABILITY(buf, appl_param->presence_availability);
             break;
         case BT_MAP_TAG_ID_PRESENCE_TEXT:
-            BT_MAP_ADD_PRESENCE_TEXT(buf, appl_param->presence_text.value, appl_param->presence_text.length);
+            BT_MAP_ADD_PRESENCE_TEXT(buf, appl_param->presence_text.value, (uint8_t)appl_param->presence_text.length);
             break;
         case BT_MAP_TAG_ID_LAST_ACTIVITY:
-            BT_MAP_ADD_LAST_ACTIVITY(buf, appl_param->last_activity.value, appl_param->last_activity.length);
+            BT_MAP_ADD_LAST_ACTIVITY(buf, appl_param->last_activity.value, (uint8_t)appl_param->last_activity.length);
             break;
         case BT_MAP_TAG_ID_FILTER_LAST_ACTIVITY_BEGIN:
         case BT_MAP_TAG_ID_FILTER_LAST_ACTIVITY_END:
-            return -EINVAL;
+            err = -EINVAL;
+            break;
         case BT_MAP_TAG_ID_CHAT_STATE:
             BT_MAP_ADD_CHAT_STATE(buf, appl_param->chat_state);
             break;
         case BT_MAP_TAG_ID_CONVERSATION_ID:
-            return -EINVAL;
+            err = -EINVAL;
+            break;
         case BT_MAP_TAG_ID_FOLDER_VER_CNTR:
-            BT_MAP_ADD_FOLDER_VER_CNTR(buf, appl_param->folder_ver_cntr.value, appl_param->folder_ver_cntr.length);
+            BT_MAP_ADD_FOLDER_VER_CNTR(buf, appl_param->folder_ver_cntr.value, (uint8_t)appl_param->folder_ver_cntr.length);
             break;
         case BT_MAP_TAG_ID_FILTER_MSG_HANDLE:
         case BT_MAP_TAG_ID_NOTIFICATION_FILTER_MASK:
         case BT_MAP_TAG_ID_CONV_PARAMETER_MASK:
-            return -EINVAL;
+            err = -EINVAL;
+            break;
         case BT_MAP_TAG_ID_OWNER_UCI:
-            BT_MAP_ADD_OWNER_UCI(buf, appl_param->owner_uci.value, appl_param->owner_uci.length);
+            BT_MAP_ADD_OWNER_UCI(buf, appl_param->owner_uci.value, (uint8_t)appl_param->owner_uci.length);
             break;
         case BT_MAP_TAG_ID_EXTENDED_DATA:
-            return -EINVAL;
+            err = -EINVAL;
+            break;
         case BT_MAP_TAG_ID_MAP_SUPPORTED_FEATURES:
             BT_MAP_ADD_MAP_SUPPORTED_FEATURES(buf, appl_param->supported_features);
             break;
@@ -506,10 +527,11 @@ static int bt_map_copy_tag_from_stack_to_buf(uint8_t tag_id, MAP_APPL_PARAMS *ap
         case BT_MAP_TAG_ID_MODIFY_TEXT:
 #endif /* MAP_1_4 */
         default:
-            return -EINVAL;
+            err = -EINVAL;
+            break;
     }
 
-    return 0;
+    return err;
 }
 
 static void bt_map_copy_appl_param_from_stack_to_buf(struct net_buf *buf, MAP_APPL_PARAMS *appl_param)
@@ -536,7 +558,7 @@ static void bt_map_copy_appl_param_from_stack_to_buf(struct net_buf *buf, MAP_AP
         ) != 0U)
 #endif /* MAP_1_3 */
         {
-            bt_map_copy_tag_from_stack_to_buf(index + 1, appl_param, buf);
+            (void)bt_map_copy_tag_from_stack_to_buf(index + 1U, appl_param, buf);
         }
     }
 }
@@ -544,8 +566,8 @@ static void bt_map_copy_appl_param_from_stack_to_buf(struct net_buf *buf, MAP_AP
 #ifdef MAP_USE_NET_BUF
 static void bt_map_push_hdr(struct net_buf *buf, uint8_t hi, uint8_t *value, uint16_t length)
 {
-    net_buf_push_mem(buf, value, length);
-    net_buf_push_be16(buf, length + sizeof(struct bt_obex_hdr_bytes));
+    (void)net_buf_push_mem(buf, value, length);
+    net_buf_push_be16(buf, length + (uint16_t)sizeof(struct bt_obex_hdr_bytes));
     net_buf_push_u8(buf, hi);
 }
 
@@ -565,20 +587,20 @@ static void bt_map_push_hdr_u32(struct net_buf *buf, uint8_t hi, uint32_t value)
 static int map_mce_init(void)
 {
     UCHAR handle;
-    if (mce_init == 0)
+    if (mce_init == 0U)
     {
         BT_map_mce_init();
-        for (uint8_t index = 0U; index < CONFIG_BT_MAP_MCE_MAS_NUM_INSTANCES; index++)
+        for (uint8_t index = 0U; index < (uint8_t)CONFIG_BT_MAP_MCE_MAS_NUM_INSTANCES; index++)
         {
             map_mce_mas_instances[index].acl_conn = NULL;
         }
-        for (uint8_t index = 0U; index < CONFIG_BT_MAP_MCE_MNS_NUM_INSTANCES; index++)
+        for (uint8_t index = 0U; index < (uint8_t)CONFIG_BT_MAP_MCE_MNS_NUM_INSTANCES; index++)
         {
             map_mce_mns_instances[index].acl_conn = NULL;
         }
-        for (uint8_t index = 0; index < CONFIG_BT_MAP_MCE_MNS_NUM_INSTANCES; index++)
+        for (uint8_t index = 0; index < (uint8_t)CONFIG_BT_MAP_MCE_MNS_NUM_INSTANCES; index++)
         {
-            BT_map_mce_start(MAP_NTF_SERVICE, map_mce_callback, &handle);
+            (void)BT_map_mce_start(MAP_NTF_SERVICE, map_mce_callback, &handle);
         }
         if (NULL == s_MapMceLock)
         {
@@ -599,18 +621,22 @@ static int map_mce_init(void)
 
 static int map_mce_deinit(void)
 {
-    mce_init--;
-
-    if (mce_init == 0)
+    if (mce_init > 0U)
     {
-        for (uint8_t index = 0; index < CONFIG_BT_MAP_MCE_MNS_NUM_INSTANCES; index++)
+        mce_init--;
+    }
+
+    if (mce_init == 0U)
+    {
+        for (uint8_t index = 0; index < (uint8_t)CONFIG_BT_MAP_MCE_MNS_NUM_INSTANCES; index++)
         {
-            BT_map_mce_stop(MAP_NTF_SERVICE, &index);
+            MAP_HANDLE handle = index;
+            (void)BT_map_mce_stop(MAP_NTF_SERVICE, &handle);
         }
         BT_map_mce_shutdown();
         if (NULL != s_MapMceLock)
         {
-            OSA_MutexDestroy((osa_mutex_handle_t)s_MapMceLockMutex);
+            (void)OSA_MutexDestroy((osa_mutex_handle_t)s_MapMceLockMutex);
             s_MapMceLock = NULL;
         }
     }
@@ -622,11 +648,11 @@ int bt_map_mce_mas_register(struct bt_map_mce_mas_cb *cb)
 {
     int err;
 
-	if (!cb) {
+	if (cb == NULL) {
 		return -EINVAL;
 	}
 
-	if (mce_mas_cb) {
+	if (mce_mas_cb != NULL) {
 		return -EALREADY;
 	}
 
@@ -644,11 +670,11 @@ int bt_map_mce_mns_register(struct bt_map_mce_mns_cb *cb)
 {
     int err;
 
-	if (!cb) {
+	if (cb == NULL) {
 		return -EINVAL;
 	}
 
-	if (mce_mns_cb) {
+	if (mce_mns_cb != NULL) {
 		return -EALREADY;
 	}
 
@@ -666,7 +692,7 @@ int bt_map_mce_mas_unregister(void)
 {
     if (mce_mas_cb != NULL)
     {
-        map_mce_deinit();
+        (void)map_mce_deinit();
         mce_mas_cb = NULL;
     }
     return 0;
@@ -676,7 +702,7 @@ int bt_map_mce_mns_unregister(void)
 {
     if (mce_mns_cb != NULL)
     {
-        map_mce_deinit();
+        (void)map_mce_deinit();
         mce_mns_cb = NULL;
     }
     return 0;
@@ -707,6 +733,7 @@ static int bt_map_mce_connect(struct bt_conn *conn, uint16_t psm, uint8_t scn, u
     MAP_CONNECT_STRUCT connect_info;
     struct bt_conn_info info;
     struct bt_map_mce_mas *_mce_mas;
+    bt_addr_t bd_addr;
 #ifdef MAP_USE_NET_BUF
     uint16_t reserve = sizeof(struct map_mce_connect_hdr);
     uint16_t pkt_len = sizeof(struct map_mce_connect_hdr);
@@ -738,13 +765,18 @@ static int bt_map_mce_connect(struct bt_conn *conn, uint16_t psm, uint8_t scn, u
     (void)memset(&info, 0, sizeof(info));
     (void)memset(&connect_info, 0, sizeof(connect_info));
 
-    bt_conn_get_info(conn, &info);
+    if (bt_conn_get_info(conn, &info) != 0)
+    {
+        map_mce_mas_free_instance(_mce_mas);
+        return -EINVAL;
+    }
 
-    connect_info.bd_addr = (UCHAR *)&info.br.dst->val[0];
+    (void)memcpy(&bd_addr, info.br.dst, sizeof(bd_addr));
+    connect_info.bd_addr = (UCHAR *)(void *)&bd_addr;
     connect_info.psm = psm;
     connect_info.server_channel = scn;
     connect_info.max_recv_size = CONFIG_BT_MAP_MCE_MAS_MAX_PKT_LEN;
-    if (supported_features & 1UL << 19U)
+    if ((supported_features & BT_MAP_SUPPORTED_FEATURES_CONNECT_REQ) != 0U)
     {
         connect_info.map_supported_features = CONFIG_BT_MAP_MCE_MAS_SUPPORTED_FEATURES;
     }
@@ -753,7 +785,7 @@ static int bt_map_mce_connect(struct bt_conn *conn, uint16_t psm, uint8_t scn, u
     reserve += sizeof(struct bt_l2cap_hdr) + 2U; /* L2CAP I-frame Enhanced Control Field(2-byte) */
     buf = bt_conn_create_pdu(NULL, reserve);
 #ifdef MAP_1_3
-    if (supported_features & 1UL << 19U)
+    if ((supported_features & BT_MAP_SUPPORTED_FEATURES_CONNECT_REQ) != 0U)
     {
         BT_MAP_ADD_MAP_SUPPORTED_FEATURES(buf, CONFIG_BT_MAP_MCE_MAS_SUPPORTED_FEATURES);
         pkt_len += buf->len;
@@ -858,7 +890,7 @@ int bt_map_mce_get_folder_listing(struct bt_map_mce_mas *mce_mas, struct net_buf
     }
 
     BT_mem_set(&get_info, 0, sizeof(MAP_REQUEST_STRUCT));
-    get_info.wait = wait;
+    get_info.wait = (uint8_t)wait;
     MAP_RESET_APPL_PARAM_FLAG(appl_param.appl_param_flag);
     err = bt_map_copy_appl_param_from_buf_to_stack(buf, &appl_param, &pkt_len);
     if (err == 0)
@@ -874,7 +906,7 @@ int bt_map_mce_get_folder_listing(struct bt_map_mce_mas *mce_mas, struct net_buf
     }
 
 #ifdef MAP_USE_NET_BUF
-    if ((flags & BT_OBEX_REQ_START) != 0U)
+    if (((uint8_t)flags & (uint8_t)BT_OBEX_REQ_START) != 0U)
     {
         bt_map_push_hdr(buf, BT_MAP_HDR_TYPE, BT_MAP_TYPE_GET_FOLDER_LISTING, sizeof(BT_MAP_TYPE_GET_FOLDER_LISTING));
         pkt_len += BT_MAP_HEADER_SIZE + sizeof(BT_MAP_TYPE_GET_FOLDER_LISTING);
@@ -887,7 +919,7 @@ int bt_map_mce_get_folder_listing(struct bt_map_mce_mas *mce_mas, struct net_buf
             bt_map_push_hdr_u8(buf, OBEX_HDR_SRMP, 1U);
             pkt_len += BT_MAP_SRMP_SIZE;
         }
-        if ((flags & BT_OBEX_REQ_START) != 0U)
+        if (((uint8_t)flags & (uint8_t)BT_OBEX_REQ_START) != 0U)
         {
             bt_map_push_hdr_u8(buf, OBEX_HDR_SRM, 1U);
             pkt_len += BT_MAP_SRM_SIZE;
@@ -901,7 +933,7 @@ int bt_map_mce_get_folder_listing(struct bt_map_mce_mas *mce_mas, struct net_buf
     (void)pkt_len;
 #endif /* MAP_USE_NET_BUF */
 
-    if ((flags & BT_OBEX_REQ_START) != 0U)
+    if (((uint8_t)flags & (uint8_t)BT_OBEX_REQ_START) != 0U)
     {
         if (BT_map_mce_get_folder_listing(&mce_mas->handle, &get_info) != API_SUCCESS)
         {
@@ -920,7 +952,7 @@ int bt_map_mce_get_folder_listing(struct bt_map_mce_mas *mce_mas, struct net_buf
                 &map_header,
                 0,
                 &pkt_len
-            ))
+            ) != API_SUCCESS)
         {
             return -EIO;
         }
@@ -955,12 +987,12 @@ int bt_map_mce_set_folder(struct bt_map_mce_mas *mce_mas, char *name)
         if (name[2] == '/')
         {
             name_req.value = (uint8_t *)&name[3];
-            name_req.length = (strlen(&name[3]) == 0) ? 0 : strlen(&name[3]) + 1U;
+            name_req.length = (strlen(&name[3]) == 0U) ? 0U : (uint16_t)strlen(&name[3]) + 1U;
         }
         else if (name[2] != '\0')
         {
             name_req.value = (uint8_t *)&name[2];
-            name_req.length = strlen(&name[2]) + 1U;
+            name_req.length = (uint16_t)strlen(&name[2]) + 1U;
         }
         else
         {
@@ -980,13 +1012,13 @@ int bt_map_mce_set_folder(struct bt_map_mce_mas *mce_mas, char *name)
             else
             {
                 name_req.value = (uint8_t *)&name[2];
-                name_req.length = strlen(&name[2]) + 1U;
+                name_req.length = (uint16_t)strlen(&name[2]) + 1U;
             }
         }
         else if (name[0] != '\0')
         {
             name_req.value = (uint8_t *)name;
-            name_req.length = strlen(name) + 1U;
+            name_req.length = (uint16_t)strlen(name) + 1U;
         }
         else
         {
@@ -1052,14 +1084,14 @@ int bt_map_mce_get_msg_listing(struct bt_map_mce_mas *mce_mas, struct net_buf *b
     }
 
     BT_mem_set(&get_info, 0, sizeof(get_info));
-    get_info.wait = wait;
+    get_info.wait = (uint8_t)wait;
 
-    if ((flags & BT_OBEX_REQ_START) != 0U)
+    if (((uint8_t)flags & (uint8_t)BT_OBEX_REQ_START) != 0U)
     {
         if (name != NULL)
         {
             name_req.value = (uint8_t *)name;
-            name_req.length = (strlen(name) == 0) ? 0U : strlen(name) + 1U;
+            name_req.length = (strlen(name) == 0U) ? 0U : (uint16_t)strlen(name) + 1U;
         }
         else
         {
@@ -1084,7 +1116,7 @@ int bt_map_mce_get_msg_listing(struct bt_map_mce_mas *mce_mas, struct net_buf *b
     }
 
 #ifdef MAP_USE_NET_BUF
-    if ((flags & BT_OBEX_REQ_START) != 0U)
+    if (((uint8_t)flags & (uint8_t)BT_OBEX_REQ_START) != 0U)
     {
         if (name != NULL)
         {
@@ -1107,7 +1139,7 @@ int bt_map_mce_get_msg_listing(struct bt_map_mce_mas *mce_mas, struct net_buf *b
             bt_map_push_hdr_u8(buf, OBEX_HDR_SRMP, 1U);
             pkt_len += BT_MAP_SRMP_SIZE;
         }
-        if ((flags & BT_OBEX_REQ_START) != 0U)
+        if (((uint8_t)flags & (uint8_t)BT_OBEX_REQ_START) != 0U)
         {
             bt_map_push_hdr_u8(buf, OBEX_HDR_SRM, 1U);
             pkt_len += BT_MAP_SRM_SIZE;
@@ -1116,7 +1148,7 @@ int bt_map_mce_get_msg_listing(struct bt_map_mce_mas *mce_mas, struct net_buf *b
 #endif /* MAP_1_2 */
     bt_map_push_hdr_u32(buf, BT_MAP_HDR_CONNECTION_ID, 0U); /* TODO: fill connection ID */
     net_buf_push_be16(buf, pkt_len);
-    if ((flags & BT_OBEX_REQ_END) != 0U)
+    if (((uint8_t)flags & (uint8_t)BT_OBEX_REQ_END) != 0U)
     {
         net_buf_push_u8(buf, OBEX_GET_FINAL_OP);
     }
@@ -1128,7 +1160,7 @@ int bt_map_mce_get_msg_listing(struct bt_map_mce_mas *mce_mas, struct net_buf *b
     (void)pkt_len;
 #endif /* MAP_USE_NET_BUF */
 
-    if ((flags & BT_OBEX_REQ_START) != 0U)
+    if (((uint8_t)flags & (uint8_t)BT_OBEX_REQ_START) != 0U)
     {
         if (BT_map_mce_get_messages_listing(&mce_mas->handle, &get_info) != API_SUCCESS)
         {
@@ -1147,7 +1179,7 @@ int bt_map_mce_get_msg_listing(struct bt_map_mce_mas *mce_mas, struct net_buf *b
                 &map_header,
                 0,
                 &pkt_len
-            ))
+            ) != API_SUCCESS)
         {
             return -EIO;
         }
@@ -1173,15 +1205,15 @@ int bt_map_mce_get_msg(struct bt_map_mce_mas *mce_mas, struct net_buf *buf, char
     }
 
     BT_mem_set(&get_info, 0, sizeof(MAP_REQUEST_STRUCT));
-    get_info.wait = wait;
-    if ((flags & BT_OBEX_REQ_START) != 0U)
+    get_info.wait = (uint8_t)wait;
+    if (((uint8_t)flags & (uint8_t)BT_OBEX_REQ_START) != 0U)
     {
         if (name == NULL)
         {
             LOG_ERR("The name is not present or empty.");
             return -EINVAL;
         }
-        name_req.length = (strlen(name) == 0) ? 0U : strlen(name) + 1U;
+        name_req.length = (strlen(name) == 0U) ? 0U : (uint16_t)strlen(name) + 1U;
         name_req.value = (uint8_t *)name;
         get_info.name = &name_req;
         if (name_req.length > BT_MAP_MSG_HANDLE_SIZE / 2U)
@@ -1206,7 +1238,7 @@ int bt_map_mce_get_msg(struct bt_map_mce_mas *mce_mas, struct net_buf *buf, char
     }
 
 #ifdef MAP_USE_NET_BUF
-    if ((flags & BT_OBEX_REQ_START) != 0U)
+    if (((uint8_t)flags & (uint8_t)BT_OBEX_REQ_START) != 0U)
     {
         bt_map_push_hdr(buf, BT_MAP_HDR_TYPE, BT_MAP_TYPE_GET_MSG, sizeof(BT_MAP_TYPE_GET_MSG));
         pkt_len += BT_MAP_HEADER_SIZE + sizeof(BT_MAP_TYPE_GET_MSG);
@@ -1222,7 +1254,7 @@ int bt_map_mce_get_msg(struct bt_map_mce_mas *mce_mas, struct net_buf *buf, char
             bt_map_push_hdr_u8(buf, OBEX_HDR_SRMP, 1U);
             pkt_len += BT_MAP_SRMP_SIZE;
         }
-        if ((flags & BT_OBEX_REQ_START) != 0U)
+        if (((uint8_t)flags & (uint8_t)BT_OBEX_REQ_START) != 0U)
         {
             bt_map_push_hdr_u8(buf, OBEX_HDR_SRM, 1U);
             pkt_len += BT_MAP_SRM_SIZE;
@@ -1231,7 +1263,7 @@ int bt_map_mce_get_msg(struct bt_map_mce_mas *mce_mas, struct net_buf *buf, char
 #endif /* MAP_1_2 */
     bt_map_push_hdr_u32(buf, BT_MAP_HDR_CONNECTION_ID, 0U); /* TODO: fill connection ID */
     net_buf_push_be16(buf, pkt_len);
-    if ((flags & BT_OBEX_REQ_END) != 0U)
+    if (((uint8_t)flags & (uint8_t)BT_OBEX_REQ_END) != 0U)
     {
         net_buf_push_u8(buf, OBEX_GET_FINAL_OP);
     }
@@ -1243,7 +1275,7 @@ int bt_map_mce_get_msg(struct bt_map_mce_mas *mce_mas, struct net_buf *buf, char
     (void)pkt_len;
 #endif /* MAP_USE_NET_BUF */
 
-    if ((flags & BT_OBEX_REQ_START) != 0U)
+    if (((uint8_t)flags & (uint8_t)BT_OBEX_REQ_START) != 0U)
     {
         if (BT_map_mce_get_message(&mce_mas->handle, &get_info) != API_SUCCESS)
         {
@@ -1262,7 +1294,7 @@ int bt_map_mce_get_msg(struct bt_map_mce_mas *mce_mas, struct net_buf *buf, char
                 &map_header,
                 0,
                 &pkt_len
-            ))
+            ) != API_SUCCESS)
         {
             return -EIO;
         }
@@ -1288,7 +1320,7 @@ int bt_map_mce_set_msg_status(struct bt_map_mce_mas *mce_mas, struct net_buf *bu
     }
 
     BT_mem_set(&set_info, 0, sizeof(MAP_REQUEST_STRUCT));
-    if ((flags & BT_OBEX_REQ_START) != 0U)
+    if (((uint8_t)flags & (uint8_t)BT_OBEX_REQ_START) != 0U)
     {
         if (name == NULL)
         {
@@ -1296,7 +1328,7 @@ int bt_map_mce_set_msg_status(struct bt_map_mce_mas *mce_mas, struct net_buf *bu
             return -EINVAL;
         }
         name_req.value = (uint8_t *)name;
-        name_req.length = (strlen(name) == 0) ? 0U : strlen(name) + 1U;
+        name_req.length = (strlen(name) == 0U) ? 0U : (uint16_t)strlen(name) + 1U;
         set_info.name = &name_req;
         if (name_req.length > BT_MAP_MSG_HANDLE_SIZE / 2U)
         {
@@ -1319,12 +1351,12 @@ int bt_map_mce_set_msg_status(struct bt_map_mce_mas *mce_mas, struct net_buf *bu
     }
 
 #ifdef MAP_USE_NET_BUF
-    if ((flags & BT_OBEX_REQ_END) != 0U)
+    if (((uint8_t)flags & (uint8_t)BT_OBEX_REQ_END) != 0U)
     {
         BT_MAP_ADD_END_OF_BODY(buf, MAP_FILLER_BYTE, sizeof(MAP_FILLER_BYTE) - 1U);
         pkt_len += BT_MAP_HEADER_SIZE + sizeof(MAP_FILLER_BYTE) -  1U;
     }
-    if ((flags & BT_OBEX_REQ_START) != 0U)
+    if (((uint8_t)flags & (uint8_t)BT_OBEX_REQ_START) != 0U)
     {
         bt_map_push_hdr(buf, BT_MAP_HDR_TYPE, BT_MAP_TYPE_SET_MSG_STATUS, sizeof(BT_MAP_TYPE_SET_MSG_STATUS));
         pkt_len += BT_MAP_HEADER_SIZE + sizeof(BT_MAP_TYPE_SET_MSG_STATUS);
@@ -1333,7 +1365,7 @@ int bt_map_mce_set_msg_status(struct bt_map_mce_mas *mce_mas, struct net_buf *bu
     }
     bt_map_push_hdr_u32(buf, BT_MAP_HDR_CONNECTION_ID, 0U); /* TODO: fill connection ID */
     net_buf_push_be16(buf, pkt_len);
-    if ((flags & BT_OBEX_REQ_END) != 0U)
+    if (((uint8_t)flags & (uint8_t)BT_OBEX_REQ_END) != 0U)
     {
         net_buf_push_u8(buf, OBEX_PUT_FINAL_OP);
     }
@@ -1345,7 +1377,7 @@ int bt_map_mce_set_msg_status(struct bt_map_mce_mas *mce_mas, struct net_buf *bu
     (void)pkt_len;
 #endif /* MAP_USE_NET_BUF */
 
-    if ((flags & BT_OBEX_REQ_START) != 0U)
+    if (((uint8_t)flags & (uint8_t)BT_OBEX_REQ_START) != 0U)
     {
         if (BT_map_mce_set_message_status(&mce_mas->handle, &set_info) != API_SUCCESS)
         {
@@ -1362,9 +1394,9 @@ int bt_map_mce_set_msg_status(struct bt_map_mce_mas *mce_mas, struct net_buf *bu
                 MAP_MCE_SET_MESSAGE_STATUS_CNF,
                 BT_MAP_RSP_CONTINUE,
                 &map_header,
-                ((flags & BT_OBEX_REQ_END) != 0U) ? 0 : 1,
+                (((uint8_t)flags & (uint8_t)BT_OBEX_REQ_END) != 0U) ? 0U : 1U,
                 &pkt_len
-            ))
+            ) != API_SUCCESS)
         {
             return -EIO;
         }
@@ -1393,13 +1425,10 @@ int bt_map_mce_push_msg(struct bt_map_mce_mas *mce_mas, struct net_buf *buf, cha
     }
 
     BT_mem_set(&set_info, 0, sizeof(MAP_REQUEST_STRUCT));
-    if (bt_obex_get_body(buf, &body_req.value, &body_req.length) < 0)
-    {
-        body_req.value = NULL;
-        body_req.length = 0;
-    }
+    BT_mem_set(&body_req, 0, sizeof(MAP_HEADER_STRUCT));
+    (void)bt_map_mce_get_body(buf, &body_req.value, &body_req.length);
     set_info.body = &body_req;
-    if ((flags & BT_OBEX_REQ_START) != 0U)
+    if (((uint8_t)flags & (uint8_t)BT_OBEX_REQ_START) != 0U)
     {
         if (name == NULL)
         {
@@ -1408,7 +1437,7 @@ int bt_map_mce_push_msg(struct bt_map_mce_mas *mce_mas, struct net_buf *buf, cha
         }
         else
         {
-            name_req.length = (strlen(name) == 0) ? 0U : strlen(name) + 1U;
+            name_req.length = (strlen(name) == 0U) ? 0U : (uint16_t)strlen(name) + 1U;
             name_req.value = (uint8_t *)name;
         }
         set_info.name = &name_req;
@@ -1428,10 +1457,10 @@ int bt_map_mce_push_msg(struct bt_map_mce_mas *mce_mas, struct net_buf *buf, cha
         }
     }
 
-    more = ((flags & BT_OBEX_REQ_END) != 0U) ? 0 : 1;
+    more = (((uint8_t)flags & (uint8_t)BT_OBEX_REQ_END) != 0U) ? 0U : 1U;
 
 #ifdef MAP_USE_NET_BUF
-    if ((flags & BT_OBEX_REQ_START) != 0U)
+    if (((uint8_t)flags & (uint8_t)BT_OBEX_REQ_START) != 0U)
     {
         bt_map_push_hdr(buf, BT_MAP_HDR_NAME, name, name_req.length);
         pkt_len += BT_MAP_HEADER_SIZE + name_req.length;
@@ -1448,7 +1477,7 @@ int bt_map_mce_push_msg(struct bt_map_mce_mas *mce_mas, struct net_buf *buf, cha
 
     bt_map_push_hdr_u32(buf, BT_MAP_HDR_CONNECTION_ID, 0U); /* TODO: fill connection ID */
     net_buf_push_be16(buf, pkt_len);
-    if ((flags & BT_OBEX_REQ_END) != 0U)
+    if (((uint8_t)flags & (uint8_t)BT_OBEX_REQ_END) != 0U)
     {
         net_buf_push_u8(buf, OBEX_PUT_FINAL_OP);
     }
@@ -1460,7 +1489,7 @@ int bt_map_mce_push_msg(struct bt_map_mce_mas *mce_mas, struct net_buf *buf, cha
     (void)pkt_len;
 #endif /* MAP_USE_NET_BUF */
 
-    if ((flags & BT_OBEX_REQ_START) != 0U)
+    if (((uint8_t)flags & (uint8_t)BT_OBEX_REQ_START) != 0U)
     {
         if (BT_map_mce_push_message(&mce_mas->handle, &set_info, more, &actual) != API_SUCCESS)
         {
@@ -1479,7 +1508,7 @@ int bt_map_mce_push_msg(struct bt_map_mce_mas *mce_mas, struct net_buf *buf, cha
                 &map_header,
                 more,
                 &actual
-            ))
+            ) != API_SUCCESS)
         {
             return -EIO;
         }
@@ -1581,7 +1610,7 @@ int bt_map_mce_get_mas_inst_info(struct bt_map_mce_mas *mce_mas, struct net_buf 
     }
 
     BT_mem_set(&get_info, 0, sizeof(MAP_REQUEST_STRUCT));
-    get_info.wait = wait;
+    get_info.wait = (uint8_t)wait;
     MAP_RESET_APPL_PARAM_FLAG(appl_param.appl_param_flag);
     err = bt_map_copy_appl_param_from_buf_to_stack(buf, &appl_param, &pkt_len);
     if (err == 0)
@@ -1597,7 +1626,7 @@ int bt_map_mce_get_mas_inst_info(struct bt_map_mce_mas *mce_mas, struct net_buf 
     }
 
 #ifdef MAP_USE_NET_BUF
-    if ((flags & BT_OBEX_REQ_START) != 0U)
+    if (((uint8_t)flags & (uint8_t)BT_OBEX_REQ_START) != 0U)
     {
         bt_map_push_hdr(buf, BT_MAP_HDR_TYPE, BT_MAP_TYPE_GET_MAS_INST_INFO, sizeof(BT_MAP_TYPE_GET_MAS_INST_INFO));
         pkt_len += BT_MAP_HEADER_SIZE + sizeof(BT_MAP_TYPE_GET_MAS_INST_INFO);
@@ -1610,7 +1639,7 @@ int bt_map_mce_get_mas_inst_info(struct bt_map_mce_mas *mce_mas, struct net_buf 
             bt_map_push_hdr_u8(buf, OBEX_HDR_SRMP, 1U);
             pkt_len += BT_MAP_SRMP_SIZE;
         }
-        if ((flags & BT_OBEX_REQ_START) != 0U)
+        if (((uint8_t)flags & (uint8_t)BT_OBEX_REQ_START) != 0U)
         {
             bt_map_push_hdr_u8(buf, OBEX_HDR_SRM, 1U);
             pkt_len += BT_MAP_SRM_SIZE;
@@ -1663,12 +1692,12 @@ int bt_map_mce_set_owner_status(struct bt_map_mce_mas *mce_mas, struct net_buf *
     }
 
 #ifdef MAP_USE_NET_BUF
-    if ((flags & BT_OBEX_REQ_END) != 0U)
+    if (((uint8_t)flags & (uint8_t)BT_OBEX_REQ_END) != 0U)
     {
         BT_MAP_ADD_END_OF_BODY(buf, MAP_FILLER_BYTE, sizeof(MAP_FILLER_BYTE) - 1U);
         pkt_len += BT_MAP_HEADER_SIZE + sizeof(MAP_FILLER_BYTE) -  1U;
     }
-    if ((flags & BT_OBEX_REQ_START) != 0U)
+    if (((uint8_t)flags & (uint8_t)BT_OBEX_REQ_START) != 0U)
     {
         bt_map_push_hdr(buf, BT_MAP_HDR_TYPE, BT_MAP_TYPE_SET_OWNER_STATUS, sizeof(BT_MAP_TYPE_SET_OWNER_STATUS));
         pkt_len += BT_MAP_HEADER_SIZE + sizeof(BT_MAP_TYPE_SET_OWNER_STATUS);
@@ -1676,7 +1705,7 @@ int bt_map_mce_set_owner_status(struct bt_map_mce_mas *mce_mas, struct net_buf *
 #ifdef MAP_1_2
     if (mce_mas->goep_version >= BT_GOEP_VERSION_2_0)
     {
-        if ((flags & BT_OBEX_REQ_START) != 0U)
+        if (((uint8_t)flags & (uint8_t)BT_OBEX_REQ_START) != 0U)
         {
             bt_map_push_hdr_u8(buf, OBEX_HDR_SRM, 1U);
             pkt_len += BT_MAP_SRM_SIZE;
@@ -1685,7 +1714,7 @@ int bt_map_mce_set_owner_status(struct bt_map_mce_mas *mce_mas, struct net_buf *
 #endif /* MAP_1_2 */
     bt_map_push_hdr_u32(buf, BT_MAP_HDR_CONNECTION_ID, 0U); /* TODO: fill connection ID */
     net_buf_push_be16(buf, pkt_len);
-    if ((flags & BT_OBEX_REQ_END) != 0U)
+    if (((uint8_t)flags & (uint8_t)BT_OBEX_REQ_END) != 0U)
     {
         net_buf_push_u8(buf, OBEX_PUT_FINAL_OP);
     }
@@ -1697,7 +1726,7 @@ int bt_map_mce_set_owner_status(struct bt_map_mce_mas *mce_mas, struct net_buf *
     (void)pkt_len;
 #endif /* MAP_USE_NET_BUF */
 
-    if ((flags & BT_OBEX_REQ_START) != 0U)
+    if (((uint8_t)flags & (uint8_t)BT_OBEX_REQ_START) != 0U)
     {
         if (BT_map_mce_set_owner_status(&mce_mas->handle, &set_info) != API_SUCCESS)
         {
@@ -1714,9 +1743,9 @@ int bt_map_mce_set_owner_status(struct bt_map_mce_mas *mce_mas, struct net_buf *
                 MAP_MCE_SET_OWNER_STATUS_CNF,
                 BT_MAP_RSP_CONTINUE,
                 &map_header,
-                ((flags & BT_OBEX_REQ_END) != 0U) ? 0 : 1,
+                (((uint8_t)flags & (uint8_t)BT_OBEX_REQ_END) != 0U) ? 0U : 1U,
                 &pkt_len
-            ))
+            ) != API_SUCCESS)
         {
             return -EIO;
         }
@@ -1741,7 +1770,7 @@ int bt_map_mce_get_owner_status(struct bt_map_mce_mas *mce_mas, struct net_buf *
     }
 
     BT_mem_set(&get_info, 0, sizeof(MAP_REQUEST_STRUCT));
-    get_info.wait = wait;
+    get_info.wait = (uint8_t)wait;
     MAP_RESET_APPL_PARAM_FLAG(appl_param.appl_param_flag);
     err = bt_map_copy_appl_param_from_buf_to_stack(buf, &appl_param, &pkt_len);
     if (err == 0)
@@ -1757,7 +1786,7 @@ int bt_map_mce_get_owner_status(struct bt_map_mce_mas *mce_mas, struct net_buf *
     }
 
 #ifdef MAP_USE_NET_BUF
-    if ((flags & BT_OBEX_REQ_START) != 0U)
+    if (((uint8_t)flags & (uint8_t)BT_OBEX_REQ_START) != 0U)
     {
         bt_map_push_hdr(buf, BT_MAP_HDR_TYPE, BT_MAP_TYPE_GET_OWNER_STATUS, sizeof(BT_MAP_TYPE_GET_OWNER_STATUS));
         pkt_len += BT_MAP_HEADER_SIZE + sizeof(BT_MAP_TYPE_GET_OWNER_STATUS);
@@ -1770,7 +1799,7 @@ int bt_map_mce_get_owner_status(struct bt_map_mce_mas *mce_mas, struct net_buf *
             bt_map_push_hdr_u8(buf, OBEX_HDR_SRMP, 1U);
             pkt_len += BT_MAP_SRMP_SIZE;
         }
-        if ((flags & BT_OBEX_REQ_START) != 0U)
+        if (((uint8_t)flags & (uint8_t)BT_OBEX_REQ_START) != 0U)
         {
             bt_map_push_hdr_u8(buf, OBEX_HDR_SRM, 1U);
             pkt_len += BT_MAP_SRM_SIZE;
@@ -1784,7 +1813,7 @@ int bt_map_mce_get_owner_status(struct bt_map_mce_mas *mce_mas, struct net_buf *
     (void)pkt_len;
 #endif /* MAP_USE_NET_BUF */
 
-    if ((flags & BT_OBEX_REQ_START) != 0U)
+    if (((uint8_t)flags & (uint8_t)BT_OBEX_REQ_START) != 0U)
     {
         if (BT_map_mce_get_owner_status(&mce_mas->handle, &get_info) != API_SUCCESS)
         {
@@ -1803,7 +1832,7 @@ int bt_map_mce_get_owner_status(struct bt_map_mce_mas *mce_mas, struct net_buf *
                 &map_header,
                 0,
                 &pkt_len
-            ))
+            ) != API_SUCCESS)
         {
             return -EIO;
         }
@@ -1828,7 +1857,7 @@ int bt_map_mce_get_convo_listing(struct bt_map_mce_mas *mce_mas, struct net_buf 
     }
 
     BT_mem_set(&get_info, 0, sizeof(MAP_REQUEST_STRUCT));
-    get_info.wait = wait;
+    get_info.wait = (uint8_t)wait;
     MAP_RESET_APPL_PARAM_FLAG(appl_param.appl_param_flag);
     err = bt_map_copy_appl_param_from_buf_to_stack(buf, &appl_param, &pkt_len);
     if (err == 0)
@@ -1844,7 +1873,7 @@ int bt_map_mce_get_convo_listing(struct bt_map_mce_mas *mce_mas, struct net_buf 
     }
 
 #ifdef MAP_USE_NET_BUF
-    if ((flags & BT_OBEX_REQ_START) != 0U)
+    if (((uint8_t)flags & (uint8_t)BT_OBEX_REQ_START) != 0U)
     {
         bt_map_push_hdr(buf, BT_MAP_HDR_TYPE, BT_MAP_TYPE_GET_CONVO_LISTING, sizeof(BT_MAP_TYPE_GET_CONVO_LISTING));
         pkt_len += BT_MAP_HEADER_SIZE + sizeof(BT_MAP_TYPE_GET_CONVO_LISTING);
@@ -1857,7 +1886,7 @@ int bt_map_mce_get_convo_listing(struct bt_map_mce_mas *mce_mas, struct net_buf 
             bt_map_push_hdr_u8(buf, OBEX_HDR_SRMP, 1U);
             pkt_len += BT_MAP_SRMP_SIZE;
         }
-        if ((flags & BT_OBEX_REQ_START) != 0U)
+        if (((uint8_t)flags & (uint8_t)BT_OBEX_REQ_START) != 0U)
         {
             bt_map_push_hdr_u8(buf, OBEX_HDR_SRM, 1U);
             pkt_len += BT_MAP_SRM_SIZE;
@@ -1866,7 +1895,7 @@ int bt_map_mce_get_convo_listing(struct bt_map_mce_mas *mce_mas, struct net_buf 
 #endif /* MAP_1_2 */
     bt_map_push_hdr_u32(buf, BT_MAP_HDR_CONNECTION_ID, 0U); /* TODO: fill connection ID */
     net_buf_push_be16(buf, pkt_len);
-    if ((flags & BT_OBEX_REQ_END) != 0U)
+    if (((uint8_t)flags & (uint8_t)BT_OBEX_REQ_END) != 0U)
     {
         net_buf_push_u8(buf, OBEX_GET_FINAL_OP);
     }
@@ -1878,7 +1907,7 @@ int bt_map_mce_get_convo_listing(struct bt_map_mce_mas *mce_mas, struct net_buf 
     (void)pkt_len;
 #endif /* MAP_USE_NET_BUF */
 
-    if ((flags & BT_OBEX_REQ_START) != 0U)
+    if (((uint8_t)flags & (uint8_t)BT_OBEX_REQ_START) != 0U)
     {
         if (BT_map_mce_get_conversation_listing(&mce_mas->handle, &get_info) != API_SUCCESS)
         {
@@ -1895,9 +1924,9 @@ int bt_map_mce_get_convo_listing(struct bt_map_mce_mas *mce_mas, struct net_buf 
                 MAP_MCE_GET_CONVERSATION_LIST_CNF,
                 BT_MAP_RSP_CONTINUE,
                 &map_header,
-                ((flags & BT_OBEX_REQ_END) != 0U) ? 0 : 1,
+                (((uint8_t)flags & (uint8_t)BT_OBEX_REQ_END) != 0U) ? 0U : 1U,
                 &pkt_len
-            ))
+            ) != API_SUCCESS)
         {
             return -EIO;
         }
@@ -1976,7 +2005,7 @@ int bt_map_mce_send_event_response(struct bt_map_mce_mns *mce_mns, uint8_t resul
 
     BT_mem_set(&rsp_info, 0, sizeof(MAP_REQUEST_STRUCT));
     BT_mem_set(&map_header, 0, sizeof(map_header));
-    rsp_info.wait = wait;
+    rsp_info.wait = (uint8_t)wait;
     map_header.map_resp_info = &rsp_info;
     if (BT_map_mce_ns_send_response(&mce_mns->handle, MAP_MCE_NS_EVENT_REPORT_IND, result, &map_header) != API_SUCCESS)
     {
@@ -2435,7 +2464,7 @@ static API_RESULT map_mce_callback
                 {
                     mce_mas_cb->disconnected(mce_mas, event_result);
                 }
-                BT_map_mce_stop(MAP_ACCESS_SERVICE, &mce_mas->handle);
+                (void)BT_map_mce_stop(MAP_ACCESS_SERVICE, &mce_mas->handle);
                 map_mce_mas_free_instance(mce_mas);
             }
             else
@@ -2468,7 +2497,7 @@ static API_RESULT map_mce_callback
             {
                 mce_mas_cb->disconnected(mce_mas, event_result);
             }
-            BT_map_mce_stop(MAP_ACCESS_SERVICE, &mce_mas->handle);
+            (void)BT_map_mce_stop(MAP_ACCESS_SERVICE, &mce_mas->handle);
             map_mce_mas_free_instance(mce_mas);
         }
         break;
@@ -2482,7 +2511,7 @@ static API_RESULT map_mce_callback
             {
                 mce_mas_cb->disconnected(mce_mas, event_result);
             }
-            BT_map_mce_stop(MAP_ACCESS_SERVICE, &mce_mas->handle);
+            (void)BT_map_mce_stop(MAP_ACCESS_SERVICE, &mce_mas->handle);
             map_mce_mas_free_instance(mce_mas);
         }
         break;
@@ -2548,7 +2577,7 @@ static API_RESULT map_mce_callback
             {
                 break;
             }
-            conn = bt_conn_lookup_addr_br((const bt_addr_t *)event_header->map_connect_info->bd_addr);
+            conn = bt_conn_lookup_addr_br((const bt_addr_t *)(void *)event_header->map_connect_info->bd_addr);
             if (conn == NULL)
             {
                 break;
@@ -2594,7 +2623,7 @@ static API_RESULT map_mce_callback
             {
                 BT_MAP_ADD_BODY(buf, event_header->map_resp_info->body->value, event_header->map_resp_info->body->length);
             }
-            if (mce_mns->flag & BT_OBEX_REQ_END)
+            if (((uint8_t)mce_mns->flag & (uint8_t)BT_OBEX_REQ_END) != 0U)
             {
                 mce_mns->flag = BT_OBEX_REQ_START;
             }
@@ -2609,7 +2638,7 @@ static API_RESULT map_mce_callback
             {
                 BT_MAP_ADD_END_OF_BODY(buf, event_header->map_resp_info->body->value, event_header->map_resp_info->body->length);
             }
-            if (mce_mns->flag & BT_OBEX_REQ_END)
+            if (((uint8_t)mce_mns->flag & (uint8_t)BT_OBEX_REQ_END) != 0U)
             {
                 mce_mns->flag = BT_OBEX_REQ_UNSEG;
             }

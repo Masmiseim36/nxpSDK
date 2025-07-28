@@ -1,6 +1,5 @@
 /*! *********************************************************************************
- * Copyright 2016-2024 NXP
- * All rights reserved.
+ * Copyright 2016-2025 NXP
  *
  * \file
  *
@@ -22,7 +21,7 @@
 /*! \cond DOXY_SKIP_TAG */
 #define gFwkVerMajor_c 7
 #define gFwkVerMinor_c 0
-#define gFwkVerPatch_c 0
+#define gFwkVerPatch_c 2
 #define gFwkBuildNo_c  0
 #define gFwkModuleId_c 0xA3
 /*! \endcond */

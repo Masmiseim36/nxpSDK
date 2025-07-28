@@ -1,0 +1,58 @@
+{
+  "SPDXID": "SPDXRef-DOCUMENT",
+  "spdxVersion": "SPDX-2.3",
+  "creationInfo": {
+    "created": "2025-05-27T07:19:55Z",
+    "creators": [
+      "Organization: NXP"
+    ],
+    "licenseListVersion": "3.20"
+  },
+  "name": "nxp_mbedtls-v25.06.00",
+  "dataLicense": "CC0-1.0",
+  "documentNamespace": "https://nxp.com/spdx/45484dd3-2652-4038-ab3a-e77667851486",
+  "packages": [
+    {
+      "SPDXID": "SPDXRef-package-45484dd3-2652-4038-ab3a-e77667851486",
+      "name": "nxp_mbedtls",
+      "versionInfo": "v25.06.00",
+      "licenseConcluded": "(Apache-2.0)",
+      "licenseDeclared": "(Apache-2.0)",
+      "downloadLocation": "https://github.com/NXP/nxp_mbedtls",
+      "originator": "Organization: NXP",
+      "supplier": "NOASSERTION",
+      "externalRefs": [],
+      "filesAnalyzed": false
+    },
+    {
+      "SPDXID": "SPDXRef-package-83cbd343-73dd-44dc-8655-adc88fb3ccc6",
+      "name": "mbed TLS",
+      "versionInfo": "v3.6.3",
+      "licenseConcluded": "Apache-2.0",
+      "licenseDeclared": "Apache-2.0",
+      "homepage": "https://www.trustedfirmware.org/",
+      "downloadLocation": "https://bodhi.fedoraproject.org/updates/mbedtls-3.6.3-1.fc42",
+      "externalRefs": [
+        {
+          "referenceCategory": "SECURITY",
+          "referenceLocator": "cpe:2.3:a:mbed:mbedtls:3.6.3:*:*:*:*:*:*:*",
+          "referenceType": "cpe23Type"
+        }
+      ],
+      "filesAnalyzed": false,
+      "supplier": "NOASSERTION"
+    }
+  ],
+  "relationships": [
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-package-45484dd3-2652-4038-ab3a-e77667851486"
+    },
+    {
+      "spdxElementId": "SPDXRef-package-45484dd3-2652-4038-ab3a-e77667851486",
+      "relationshipType": "CONTAINS",
+      "relatedSpdxElement": "SPDXRef-package-83cbd343-73dd-44dc-8655-adc88fb3ccc6"
+    }
+  ]
+}

@@ -21,6 +21,11 @@
 extern "C" {
 #endif
 
+/** The HF indicator ID for enhanced driver safety */
+#define HF_INDICATOR_ENHANCED_DRIVER_SAFETY (0x0001U)
+/** The HF indicator ID for battery level */
+#define HF_INDICATOR_BATTERY_LEVEL (0x0002U)
+
 /** @brief bt hfp ag volume type */
 typedef enum _hf_ag_volume_type_t
 {
@@ -66,6 +71,13 @@ typedef struct _hfp_ag_get_config
     uint8_t bt_hfp_ag_dial;
 	/*bt hfp ag server channel value*/
     uint8_t server_channel;
+#if (defined CONFIG_BT_HFP_AG_HF_IND) && (CONFIG_BT_HFP_AG_HF_IND)
+    /* Enable the hf indicators in the SLC
+       Bit mask HF_INDICATOR_ENHANCED_DRIVER_SAFETY
+       Bit mask HF_INDICATOR_BATTERY_LEVEL
+     */
+    uint8_t hf_indicators_slc_enable;
+#endif
 } hfp_ag_get_config;
 
 /** @brief bt ag call setup status */
@@ -110,8 +122,9 @@ struct bt_hfp_ag_cb
      *  connection completes.
      *
      *  @param hfp_ag  bt hfp ag Connection object.
+     *  @param err error code. 0 means success, other values mean that connecting fail.
      */
-    void (*connected)(struct bt_hfp_ag *hfp_ag);
+    void (*connected)(struct bt_hfp_ag *hfp_ag, int err);
     /** AG disconnected callback to application
      *
      *  If this callback is provided it will be called whenever the
@@ -294,6 +307,27 @@ struct bt_hfp_ag_cb
      *  @param length unknow AT string length.
      */
     void (*unkown_at)(struct bt_hfp_ag *hfp_ag, char *value, uint32_t length);
+
+#if (defined CONFIG_BT_HFP_AG_HF_IND) && (CONFIG_BT_HFP_AG_HF_IND)
+    /** Battery Level Callback
+     *
+     *  This callback provides HF indicator callback when receiving
+     *  AT+BIEV=anum,value_of_indicator
+     *  When battery level hf indicator is enabled,
+     *  the value will be notified to AG through AT+BIEV=2,value_of_battery_level
+     *  if the value changes on HF side.
+     *  When enhanced driver safety HF indicator is enabled,
+     *  the value will be notified to AG through AT+BIEV=1,value_of_enhanced_driver_safety
+     *  if the value changes on HF side.
+     *
+     *  They can be enabled/disabled through get_config or bt_hfp_ag_connect's config in SLC.
+     *  And they can be enabled/disabled through bt_hfp_ag_set_hf_indicator after SLC.
+     *
+     *  @param hfp_ag  bt hfp ag Connection object.
+     *  @param value the battery level value
+     */
+    void (*hf_indicator)(struct bt_hfp_ag *hfp_ag, uint16_t indicator, uint32_t value);
+#endif /* CONFIG_BT_HFP_AG_HF_IND */
 };
 
 /** @brief hfp_ag discover callback function
@@ -754,6 +788,24 @@ int  bt_hfp_ag_send_clip(struct bt_hfp_ag *hfp_ag, uint8_t *clip_result);
  *  of error.
  */
 int bt_hfp_ag_unknown_at_response(struct bt_hfp_ag *hfp_ag, uint8_t *unknow_at_rsp, uint16_t unknow_at_rsplen);
+
+#if (defined CONFIG_BT_HFP_AG_HF_IND) && (CONFIG_BT_HFP_AG_HF_IND)
+/** @brief hfp ag set the hf indicators' value
+ *
+ *  Enable/disable the hf indicator, send an unsolicited +BIND indication.
+ *  Whenever the HF receives an unsolicited +BIND indication from the AG that changes the state
+ *  of a particular HF indicator from disabled to enabled, the HF should send the current state
+ *  of that indicator to the AG using the +BIEV command
+ * 
+ *  @param phfp_ag  pointer to bt hfp ag connection object
+ *  @param hf_indicator HF_INDICATOR_ENHANCED_DRIVER_SAFETY or HF_INDICATOR_BATTERY_LEVEL
+ *  @param enable true-enable hf indicator; false-disable hf indicator.
+ *
+ *  @return 0 in case of success or otherwise in case of error.
+ *            If the connected hf doesn't support the hf indicator, return -EOPNOTSUPP.
+ */
+int bt_hfp_ag_set_hf_indicator(struct bt_hfp_ag *hfp_ag, uint16_t hf_indicator, uint8_t enable);
+#endif /* CONFIG_BT_HFP_AG_HF_IND */
 
 #ifdef __cplusplus
 }

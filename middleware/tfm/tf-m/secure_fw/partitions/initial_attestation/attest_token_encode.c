@@ -19,7 +19,7 @@
 #endif
 #include "t_cose_common.h"
 #include "q_useful_buf.h"
-#include "psa/tfm/crypto.h"           //NXP to avoid file name conflicts between MbedTLS and TFM.
+#include "psa/crypto.h"
 #include "attest_key.h"
 #include "tfm_crypto_defs.h"
 
@@ -232,7 +232,6 @@ attest_token_encode_start(struct attest_token_encode_ctx *me,
 {
     enum psa_attest_err_t attest_ret;
     enum t_cose_err_t cose_ret;
-    enum attest_token_err_t return_value = ATTEST_TOKEN_ERR_SUCCESS;
     int32_t                 t_cose_options = 0;
     struct t_cose_key attest_key;
     psa_key_handle_t private_key = TFM_BUILTIN_KEY_ID_IAK;
@@ -270,12 +269,12 @@ attest_token_encode_start(struct attest_token_encode_ctx *me,
     cose_ret = t_cose_sign1_encode_parameters(&(me->signer_ctx),
                                               &(me->cbor_enc_ctx));
     if (cose_ret) {
-        return_value = t_cose_err_to_attest_err(cose_ret);
+        return t_cose_err_to_attest_err(cose_ret);
     }
 
     QCBOREncode_OpenMap(&(me->cbor_enc_ctx));
 
-    return return_value;
+    return ATTEST_TOKEN_ERR_SUCCESS;
 }
 
 /*

@@ -39,7 +39,7 @@ struct bus_message
 
 typedef struct
 {
-    int (*wifi_uap_downld_domain_params_p)(int band);
+    int (*wifi_uap_downld_domain_params_p)(mlan_private *pmpriv, int band);
 } wifi_uap_11d_apis_t;
 
 typedef struct mcast_filter
@@ -63,11 +63,12 @@ enum wifi_thread_event_t
 {
     WIFI_EVENT_STA            = 1,
     WIFI_EVENT_UAP            = 1 << 1,
-    WIFI_EVENT_SDIO           = 1 << 2,
+    WIFI_EVENT_WIFIDIRECT     = 1 << 2,
     WIFI_EVENT_SCAN           = 1 << 3,
     WIFI_EVENT_TX_DATA        = 1 << 4,
     WIFI_EVENT_TX_NULL_DATA   = 1 << 5,
     WIFI_EVENT_TX_BYPASS_DATA = 1 << 6,
+    WIFI_EVENT_SDIO           = 1 << 7,
 };
 
 typedef struct
@@ -98,6 +99,8 @@ typedef struct
     void (*data_input_callback)(const uint8_t interface, const uint8_t *buffer, const uint16_t len);
 #if FSL_USDHC_ENABLE_SCATTER_GATHER_TRANSFER
     void *(*wifi_get_rxbuf_desc)(t_u16 rx_len);
+    void (*wifi_flush_rxbuf_desc)();
+    void (*nxp_wifi_rxpbuf_reset)();
 #endif
     void (*amsdu_data_input_callback)(uint8_t interface, uint8_t *buffer, uint16_t len);
     void (*deliver_packet_above_callback)(void *rxpd, t_u8 interface, t_void *lwip_pbuf);
@@ -218,6 +221,10 @@ typedef struct
 #if CONFIG_WPA_SUPP
     void *if_priv;
     void *hapd_if_priv;
+#if CONFIG_WPA_SUPP_P2P
+    void *if_priv_wfd;
+    bool wpa_supp_p2p_scan;
+#endif
     wifi_nxp_callbk_fns_t *supp_if_callbk_fns;
     nxp_wifi_event_mlme_t mgmt_resp;
     nxp_wifi_assoc_event_mlme_t assoc_resp;
@@ -436,7 +443,7 @@ void wifi_user_scan_config_cleanup(void);
  *
  */
 void wifi_scan_stop(void);
-int wifi_remain_on_channel(const bool status, const uint8_t channel, const uint32_t duration);
+int wifi_remain_on_channel(const enum wlan_bss_type bss_type, const bool status, const uint8_t channel, const uint32_t duration);
 #if CONFIG_WPA_SUPP
 void wpa_supp_handle_link_lost(mlan_private *priv);
 
@@ -455,21 +462,21 @@ int wifi_setup_vht_cap(t_u32 *vht_capab, t_u8 *vht_mcs_set, t_u8 band);
 #if CONFIG_11AX
 int wifi_setup_he_cap(nxp_wifi_he_capabilities *he_cap, t_u8 band);
 #endif
-int wifi_nxp_send_assoc(nxp_wifi_assoc_info_t *assoc_info);
+int wifi_nxp_send_assoc(unsigned int bss_type, nxp_wifi_assoc_info_t *assoc_info);
 int wifi_nxp_send_mlme(unsigned int bss_type, int channel, unsigned int wait_time, const t_u8 *data, size_t data_len);
-int wifi_nxp_beacon_config(nxp_wifi_ap_info_t *params);
-int wifi_set_uap_rts(int rts_threshold);
-int wifi_set_uap_frag(int frag_threshold);
-int wifi_nxp_sta_add(nxp_wifi_sta_info_t *params);
-int wifi_nxp_sta_remove(const uint8_t *addr);
+int wifi_nxp_beacon_config(unsigned int bss_type, nxp_wifi_ap_info_t *params);
+int wifi_set_uap_rts(unsigned int bss_type, int rts_threshold);
+int wifi_set_uap_frag(unsigned int bss_type, int frag_threshold);
+int wifi_nxp_sta_add(unsigned int bss_type, nxp_wifi_sta_info_t *params);
+int wifi_nxp_sta_remove(unsigned int bss_type, const uint8_t *addr);
 void wifi_nxp_uap_disconnect(mlan_private *priv, t_u16 reason_code, t_u8 *mac);
-int wifi_nxp_stop_ap(void);
-int wifi_nxp_set_acl(nxp_wifi_acl_info_t *acl_params);
+int wifi_nxp_stop_ap(unsigned int bss_type);
+int wifi_nxp_set_acl(unsigned int bss_type, nxp_wifi_acl_info_t *acl_params);
 int wifi_nxp_set_country(unsigned int bss_type, const char *alpha2);
 int wifi_nxp_get_country(unsigned int bss_type, char *alpha2);
 int wifi_nxp_get_signal(unsigned int bss_type, nxp_wifi_signal_info_t *signal_params);
 int wifi_nxp_scan_res_num(void);
-int wifi_nxp_scan_res_get2(t_u32 table_idx, nxp_wifi_event_new_scan_result_t *scan_res);
+int wifi_nxp_scan_res_get2(unsigned int bss_type, t_u32 table_idx, nxp_wifi_event_new_scan_result_t *scan_res);
 #endif /* CONFIG_WPA_SUPP */
 
 
@@ -478,4 +485,15 @@ int send_wifi_driver_tx_data_event(t_u8 interface);
 int send_wifi_driver_tx_null_data_event(t_u8 interface);
 #endif
 
+#if !defined(SD8978)
+/**
+ * Use this function to check whether wifi reset is in progress.
+ */
+bool wifi_reset_in_progress(void);
+
+/**
+ * Use this function to mark wifi reset start and stop.
+ */
+void wifi_reset_set_state(bool enable);
+#endif
 #endif /* __WIFI_INTERNAL_H__ */

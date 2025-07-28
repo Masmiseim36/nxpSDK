@@ -132,7 +132,7 @@
         EnableGlobalIRQ(perf_primask);    \
     }
 
-#define FWK_DBG_PERF_DWT_CYCLE_CNT_STOP() DWT->CTRL &= 0x1; /* disable cycle counter */
+#define FWK_DBG_PERF_DWT_CYCLE_CNT_STOP() DWT->CTRL &= ~0x1; /* disable cycle counter */
 #else
 #define FWK_DBG_PERF_DWT_CYCLE_CNT_DECL
 #define FWK_DBG_PERF_DWT_CYCLE_CNT_START(...)

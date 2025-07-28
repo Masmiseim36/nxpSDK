@@ -788,7 +788,7 @@ static void SHELL_ProcessCommand(shell_context_handle_t *shellContextHandle, con
     shell_command_t *tmpCommand = NULL;
     const char *tmpCommandString;
     int32_t argc;
-    char *argv[SHELL_MAX_ARGS];
+    char *argv[SHELL_MAX_ARGS] = {NULL};
     list_element_handle_t p;
     uint8_t flag = 1;
     uint16_t tmpCommandLen;

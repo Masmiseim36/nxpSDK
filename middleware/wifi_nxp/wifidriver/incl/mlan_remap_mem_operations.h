@@ -25,19 +25,19 @@
 #undef __memset
 #endif
 /** Memset routine */
-#define __memset(adapter, s, c, len) memset((void *)(s), (int)(c), (size_t)(len))
+#define __memset(adapter, s, c, len) (void)memset((void *)(s), (int)(c), (size_t)(len))
 
 #ifdef __memmove
 #undef __memmove
 #endif
 /** Memmove routine */
-#define __memmove(adapter, dest, src, len) memmove((void *)(dest), (const void *)(src), (size_t)(len))
+#define __memmove(adapter, dest, src, len) (void)memmove((void *)(dest), (const void *)(src), (size_t)(len))
 
 #ifdef __memcpy
 #undef __memcpy
 #endif
 /** Memcpy routine */
-#define __memcpy(adapter, to, from, len) memcpy((void *)(to), (const void *)(from), (size_t)(len))
+#define __memcpy(adapter, to, from, len) (void)memcpy((void *)(to), (const void *)(from), (size_t)(len))
 
 #ifdef __memcmp
 #undef __memcmp

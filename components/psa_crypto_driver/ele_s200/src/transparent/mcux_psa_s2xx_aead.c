@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 NXP
+ * Copyright 2023, 2025 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -14,6 +14,7 @@
 
 #include "mcux_psa_s2xx_init.h"
 #include "mcux_psa_s2xx_aead.h"
+#include "mcux_psa_s2xx_common_compute.h"
 
 /* To be able to include the PSA style configuration */
 #include "mbedtls/build_info.h"
@@ -96,7 +97,7 @@ static status_t aes_aead_setkey(sss_sscp_object_t *sssKey, const uint8_t *key_bu
         return kStatus_Fail;
     }
     size_t key_bytes = key_bits >> 3u;
-    
+
     if ((sss_sscp_key_object_init(sssKey, &g_ele_ctx.keyStore)) != kStatus_SSS_Success)
     {
         return kStatus_Fail;
@@ -145,12 +146,12 @@ psa_status_t ele_s2xx_transparent_aead_encrypt(const psa_key_attributes_t *attri
     psa_key_type_t key_type  = psa_get_key_type(attributes);
     size_t key_bits          = psa_get_key_bits(attributes);
     sss_algorithm_t ele_alg  = 0;
-    sss_sscp_aead_t ctx      = {0};
     sss_sscp_object_t sssKey = {0};
-    size_t tag_length        = 0;
+    size_t tag_length        = 0u;
+    uint8_t *tag             = NULL;
 
     /* Algorithm needs to be a AEAD algo */
-    if (!PSA_ALG_IS_AEAD(alg))
+    if (false == PSA_ALG_IS_AEAD(alg))
     {
         return PSA_ERROR_INVALID_ARGUMENT;
     }
@@ -172,7 +173,7 @@ psa_status_t ele_s2xx_transparent_aead_encrypt(const psa_key_attributes_t *attri
     tag_length = PSA_ALG_AEAD_GET_TAG_LENGTH(alg);
 
     /* Key buffer or size can't be NULL */
-    if (!key_buffer || !key_buffer_size)
+    if (NULL == key_buffer || 0u == key_buffer_size)
     {
         return PSA_ERROR_INVALID_ARGUMENT;
     }
@@ -185,7 +186,7 @@ psa_status_t ele_s2xx_transparent_aead_encrypt(const psa_key_attributes_t *attri
     }
 
     /* Nonce can't be NULL */
-    if (!nonce || !nonce_length)
+    if (NULL == nonce || 0u == nonce_length)
     {
         return PSA_ERROR_INVALID_ARGUMENT;
     }
@@ -199,12 +200,12 @@ psa_status_t ele_s2xx_transparent_aead_encrypt(const psa_key_attributes_t *attri
     }
 
     /* Output buffer can't be NULL */
-    if (!ciphertext || !ciphertext_length)
+    if (NULL == ciphertext || NULL == ciphertext_length)
     {
         return PSA_ERROR_INVALID_ARGUMENT;
     }
 
-    *ciphertext_length = 0;
+    *ciphertext_length = 0u;
 
     if (mcux_mutex_lock(&ele_hwcrypto_mutex))
     {
@@ -213,35 +214,22 @@ psa_status_t ele_s2xx_transparent_aead_encrypt(const psa_key_attributes_t *attri
 
     if ((aes_aead_setkey(&sssKey, key_buffer, key_bits)) != kStatus_Success)
     {
-        return PSA_ERROR_GENERIC_ERROR;
+        status = PSA_ERROR_GENERIC_ERROR;
+        goto exit;
     }
 
-    if ((sss_sscp_aead_context_init(&ctx, &g_ele_ctx.sssSession, &sssKey, ele_alg, kMode_SSS_Encrypt)) !=
-        kStatus_SSS_Success)
+    tag    = (uint8_t *)(ciphertext + plaintext_length);
+    status = ele_s2xx_common_aead(nonce, nonce_length, additional_data, additional_data_length,
+                                  plaintext, plaintext_length, ciphertext, tag, &tag_length,
+                                  kMode_SSS_Encrypt, &sssKey, ele_alg);
+    if (PSA_SUCCESS != status)
     {
-        (void)sss_sscp_key_object_free(&sssKey, kSSS_keyObjFree_KeysStoreDefragment);
-        return PSA_ERROR_GENERIC_ERROR;
+        goto exit;
     }
 
-    size_t tlen = tag_length;
+    *ciphertext_length = plaintext_length + tag_length;
 
-    /* RUN AEAD */
-    if ((sss_sscp_aead_one_go(&ctx, plaintext, ciphertext, plaintext_length, (uint8_t *)nonce, nonce_length,
-                              additional_data, additional_data_length, (ciphertext + plaintext_length), &tlen)) !=
-        kStatus_SSS_Success)
-    {
-        (void)sss_sscp_aead_context_free(&ctx);
-        (void)sss_sscp_key_object_free(&sssKey, kSSS_keyObjFree_KeysStoreDefragment);
-        return PSA_ERROR_GENERIC_ERROR;
-    };
-
-    /* Free contexts */
-    if (sss_sscp_aead_context_free(&ctx) != kStatus_SSS_Success)
-    {
-        (void)sss_sscp_key_object_free(&sssKey, kSSS_keyObjFree_KeysStoreDefragment);
-        return PSA_ERROR_GENERIC_ERROR;
-    }
-
+exit:
     (void)sss_sscp_key_object_free(&sssKey, kSSS_keyObjFree_KeysStoreDefragment);
 
     if (mcux_mutex_unlock(&ele_hwcrypto_mutex))
@@ -249,9 +237,7 @@ psa_status_t ele_s2xx_transparent_aead_encrypt(const psa_key_attributes_t *attri
         return PSA_ERROR_BAD_STATE;
     }
 
-    *ciphertext_length = plaintext_length + tag_length;
-
-    return PSA_SUCCESS;
+    return status;
 }
 
 psa_status_t ele_s2xx_transparent_aead_decrypt(const psa_key_attributes_t *attributes,
@@ -272,14 +258,13 @@ psa_status_t ele_s2xx_transparent_aead_decrypt(const psa_key_attributes_t *attri
     psa_key_type_t key_type  = psa_get_key_type(attributes);
     size_t key_bits          = psa_get_key_bits(attributes);
     sss_algorithm_t ele_alg  = 0;
-    sss_sscp_aead_t ctx      = {0};
     sss_sscp_object_t sssKey = {0};
-    size_t tag_length        = 0;
+    size_t tag_length        = 0u;
     uint8_t *tag             = NULL;
-    size_t cipher_length     = 0;
+    size_t cipher_length     = 0u;
 
     /* Algorithm needs to be a AEAD algo */
-    if (!PSA_ALG_IS_AEAD(alg))
+    if (false == PSA_ALG_IS_AEAD(alg))
     {
         return PSA_ERROR_INVALID_ARGUMENT;
     }
@@ -294,7 +279,7 @@ psa_status_t ele_s2xx_transparent_aead_decrypt(const psa_key_attributes_t *attri
     tag_length = PSA_ALG_AEAD_GET_TAG_LENGTH(alg);
 
     /* Key buffer or size can't be NULL */
-    if (!key_buffer || !key_buffer_size)
+    if (NULL == key_buffer || 0u == key_buffer_size)
     {
         return PSA_ERROR_INVALID_ARGUMENT;
     }
@@ -307,12 +292,12 @@ psa_status_t ele_s2xx_transparent_aead_decrypt(const psa_key_attributes_t *attri
     }
 
     /* Input Buffer or size can't be NULL */
-    if (!ciphertext || !ciphertext_length)
+    if (NULL == ciphertext || 0u == ciphertext_length)
     {
         return PSA_ERROR_INVALID_ARGUMENT;
     }
 
-    if (!nonce || !nonce_length)
+    if (NULL == nonce || 0u == nonce_length)
     {
         return PSA_ERROR_INVALID_ARGUMENT;
     }
@@ -342,38 +327,30 @@ psa_status_t ele_s2xx_transparent_aead_decrypt(const psa_key_attributes_t *attri
     /* Tag is at the end of ciphertext */
     tag = (uint8_t *)(ciphertext + cipher_length);
 
+    if (mcux_mutex_lock(&ele_hwcrypto_mutex))
+    {
+        return PSA_ERROR_BAD_STATE;
+    }
+
     if ((aes_aead_setkey(&sssKey, key_buffer, key_bits)) != kStatus_Success)
     {
-        return PSA_ERROR_GENERIC_ERROR;
+        status = PSA_ERROR_GENERIC_ERROR;
+        goto exit;
     }
 
-    if ((sss_sscp_aead_context_init(&ctx, &g_ele_ctx.sssSession, &sssKey, ele_alg, kMode_SSS_Decrypt)) !=
-        kStatus_SSS_Success)
+    status = ele_s2xx_common_aead(nonce, nonce_length,
+                                  additional_data, additional_data_length,
+                                  ciphertext, cipher_length, plaintext,
+                                  tag, &tag_length,
+                                  kMode_SSS_Decrypt, &sssKey, ele_alg);
+    if (PSA_SUCCESS != status)
     {
-        (void)sss_sscp_key_object_free(&sssKey, kSSS_keyObjFree_KeysStoreDefragment);
-        return PSA_ERROR_GENERIC_ERROR;
+        goto exit;
     }
 
-    /* RUN AEAD */
-    if ((sss_sscp_aead_one_go(&ctx, ciphertext, plaintext, cipher_length, (uint8_t *)nonce, nonce_length,
-                              additional_data, additional_data_length, tag, &tag_length)) != kStatus_SSS_Success)
-    {
-        /* If AEAD decrypt failed in this case we cannot differentiate between root cause
-         * It may be due to some sanity check, but most likely due to tag mismatch between actual and expected value
-         * So threat all fails in this case as signature mismatch */
-        (void)sss_sscp_aead_context_free(&ctx);
-        (void)sss_sscp_key_object_free(&sssKey, kSSS_keyObjFree_KeysStoreDefragment);
-        mcux_mutex_unlock(&ele_hwcrypto_mutex);
-        return PSA_ERROR_INVALID_SIGNATURE;
-    };
+    *plaintext_length = cipher_length;
 
-    /* Free used contexts */
-    if (sss_sscp_aead_context_free(&ctx) != kStatus_SSS_Success)
-    {
-        (void)sss_sscp_key_object_free(&sssKey, kSSS_keyObjFree_KeysStoreDefragment);
-        return PSA_ERROR_GENERIC_ERROR;
-    }
-
+exit:
     (void)sss_sscp_key_object_free(&sssKey, kSSS_keyObjFree_KeysStoreDefragment);
 
     if (mcux_mutex_unlock(&ele_hwcrypto_mutex))
@@ -381,9 +358,7 @@ psa_status_t ele_s2xx_transparent_aead_decrypt(const psa_key_attributes_t *attri
         return PSA_ERROR_BAD_STATE;
     }
 
-    *plaintext_length = cipher_length;
-
-    return PSA_SUCCESS;
+    return status;
 }
 
 /** @} */ // end of psa_aead

@@ -133,6 +133,15 @@ enum wpa_sm_conf_params
     WPA_PARAM_OCI_FREQ_EAPOL_G2,
     WPA_PARAM_OCI_FREQ_FT_ASSOC,
     WPA_PARAM_OCI_FREQ_FILS_ASSOC,
+	WPA_PARAM_RSN_OVERRIDE,
+	WPA_PARAM_RSN_OVERRIDE_SUPPORT,
+};
+
+enum wpa_rsn_override {
+	RSN_OVERRIDE_NOT_USED,
+	RSN_OVERRIDE_RSNE,
+	RSN_OVERRIDE_RSNE_OVERRIDE,
+	RSN_OVERRIDE_RSNE_OVERRIDE_2,
 };
 
 struct rsn_supp_config
@@ -175,6 +184,9 @@ int wpa_sm_set_assoc_rsnxe(struct wpa_sm *sm, const u8 *ie, size_t len);
 int wpa_sm_set_ap_wpa_ie(struct wpa_sm *sm, const u8 *ie, size_t len);
 int wpa_sm_set_ap_rsn_ie(struct wpa_sm *sm, const u8 *ie, size_t len);
 int wpa_sm_set_ap_rsnxe(struct wpa_sm *sm, const u8 *ie, size_t len);
+int wpa_sm_set_ap_rsne_override(struct wpa_sm *sm, const u8 *ie, size_t len);
+int wpa_sm_set_ap_rsne_override_2(struct wpa_sm *sm, const u8 *ie, size_t len);
+int wpa_sm_set_ap_rsnxe_override(struct wpa_sm *sm, const u8 *ie, size_t len);
 int wpa_sm_get_mib(struct wpa_sm *sm, char *buf, size_t buflen);
 
 int wpa_sm_set_param(struct wpa_sm *sm, enum wpa_sm_conf_params param, unsigned int value);
@@ -302,6 +314,24 @@ static inline int wpa_sm_set_assoc_rsnxe_default(struct wpa_sm *sm, u8 *rsnxe, s
 static inline int wpa_sm_set_assoc_rsnxe(struct wpa_sm *sm, const u8 *rsnxe, size_t rsnxe_len)
 {
     return -1;
+}
+
+static inline int wpa_sm_set_ap_rsne_override(struct wpa_sm *sm, const u8 *ie,
+					      size_t len)
+{
+	return -1;
+}
+
+static inline int wpa_sm_set_ap_rsne_override_2(struct wpa_sm *sm, const u8 *ie,
+						size_t len)
+{
+	return -1;
+}
+
+static inline int wpa_sm_set_ap_rsnxe_override(struct wpa_sm *sm, const u8 *ie,
+					       size_t len)
+{
+	return -1;
 }
 
 static inline int wpa_sm_get_mib(struct wpa_sm *sm, char *buf, size_t buflen)

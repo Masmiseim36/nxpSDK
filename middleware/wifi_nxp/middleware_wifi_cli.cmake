@@ -12,8 +12,6 @@ message("${CMAKE_CURRENT_LIST_FILE} component is included.")
           ${CMAKE_CURRENT_LIST_DIR}/dhcpd/dhcp-server-cli.c
           ${CMAKE_CURRENT_LIST_DIR}/nw_utils/wifi_ping.c
           ${CMAKE_CURRENT_LIST_DIR}/nw_utils/iperf.c
-          ${CMAKE_CURRENT_LIST_DIR}/nw_utils/init_enet.c
-          ${CMAKE_CURRENT_LIST_DIR}/nw_utils/telnet/telnet_server.c
           ${CMAKE_CURRENT_LIST_DIR}/wlcmgr/wlan_basic_cli.c
           ${CMAKE_CURRENT_LIST_DIR}/wlcmgr/wlan_enhanced_tests.c
           ${CMAKE_CURRENT_LIST_DIR}/wlcmgr/wlan_tests.c
@@ -26,7 +24,6 @@ message("${CMAKE_CURRENT_LIST_FILE} component is included.")
           ${CMAKE_CURRENT_LIST_DIR}/incl
           ${CMAKE_CURRENT_LIST_DIR}/incl/wlcmgr
           ${CMAKE_CURRENT_LIST_DIR}/nw_utils
-          ${CMAKE_CURRENT_LIST_DIR}/nw_utils/telnet
         )
 
   

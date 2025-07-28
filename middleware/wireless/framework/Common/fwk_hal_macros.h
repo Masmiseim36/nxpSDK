@@ -1,15 +1,12 @@
 /*! *********************************************************************************
- * Copyright 2022-2024 NXP
- * All rights reserved.
- *
- * \file
- *
+ * Copyright 2022-2025 NXP
  * SPDX-License-Identifier: BSD-3-Clause
  ********************************************************************************** */
 #ifndef _HAL_MACROS_H_
 #define _HAL_MACROS_H_
 
 #include <stdint.h>
+#include <assert.h>
 
 /* Required for __REV definition */
 #include "cmsis_compiler.h"
@@ -28,8 +25,8 @@
  *****************************************************************************************/
 #if defined(__GNUC__)
 
-#define HAL_CLZ(x) ((uint8_t)(__builtin_clz(x) & 0x1fUL))
-#define HAL_CTZ(x) ((uint8_t)(__builtin_ctz(x) & 0x1fUL))
+#define HAL_CLZ(x) ((uint8_t)(__builtin_clz(x) & 0x3fUL))
+#define HAL_CTZ(x) ((uint8_t)(__builtin_ctz(x) & 0x3fUL))
 static inline uint32_t __hal_revb(uint32_t x)
 {
     unsigned int res;
@@ -40,8 +37,8 @@ static inline uint32_t __hal_revb(uint32_t x)
 
 #elif defined(__IAR_SYSTEMS_ICC__)
 
-#define HAL_CLZ(x)  ((uint8_t)(__iar_builtin_CLZ(x) & 0x1fUL))
-#define HAL_RBIT(x) ((uint32_t)(__iar_builtin_RBIT(x) & 0x1fUL))
+#define HAL_CLZ(x)  ((uint8_t)(__iar_builtin_CLZ(x) & 0x3fUL))
+#define HAL_RBIT(x) ((uint32_t)(__iar_builtin_RBIT(x)))
 
 static inline uint8_t __hal_ctz(uint32_t x)
 {
@@ -67,15 +64,15 @@ static inline uint8_t __hal_ctz(uint32_t x)
  *
  ****************************************************************************************
  */
-#define HAL_BSR(x) ((uint8_t)(31u - HAL_CLZ(x)))
+#define HAL_BSR(x) (((x) != 0UL) ? (uint8_t)(31U - (HAL_CLZ(x) & 0x1fU)) : 0xffU)
 #define HAL_BSF(x) HAL_CTZ(x)
 #define HAL_FFS(x) (HAL_CTZ(x) + 1U)
 
 /*!
  ****************************************************************************************
  * @brief
- * HAL_REV16 swap bytes in a 16 bit word : useful for htons/ntohs and all enddianness conversions
- * HAL_REV32 swap bytes in a 32 bit word : useful for htonl/ntohl and all enddianness conversions
+ * HAL_REV16 swap bytes in a 16 bit word : useful for htons/ntohs and all endianness conversions
+ * HAL_REV32 swap bytes in a 32 bit word : useful for htonl/ntohl and all endianness conversions
  ****************************************************************************************
  */
 #if defined(__GNUC__)
@@ -122,9 +119,9 @@ static inline uint8_t __hal_ctz(uint32_t x)
 #define KHz(x) (((uint32_t)x) * 1000U)
 #define MHz(x) (((uint32_t)x) * 1000000U)
 
-#define SET_BIT(bitmap, i) bitmap[((i) >> 5U)] |= (1U << ((i)&0x1f))
-#define CLR_BIT(bitmap, i) bitmap[((i) >> 5U)] &= ~(1U << ((i)&0x1f))
-#define GET_BIT(bitmap, i) (((bitmap[(i) >> 5U] & (1U << ((i)&0x1f))) >> ((i)&0x1f)) != 0U)
+#define SET_BIT(bitmap, i) bitmap[((i) >> 5U)] |= (1U << ((i)&0x1fU))
+#define CLR_BIT(bitmap, i) bitmap[((i) >> 5U)] &= ~(1U << ((i)&0x1fU))
+#define GET_BIT(bitmap, i) (((bitmap[(i) >> 5U] & (1U << ((i)&0x1fU))) >> ((i)&0x1f)) != 0U)
 
 /* LOG_1, LOG_2, LOG_4, LOG_8: used by LOG macro */
 #define LOG_1(n) (((n) >= (1u << 1U)) ? 1U : 0U)
@@ -210,10 +207,49 @@ static inline uint8_t __hal_ctz(uint32_t x)
  * @param field the name of the field within the struct @p ptr points to
  * @return a pointer to the structure that contains @p ptr
  */
-#define CONTAINER_OF(_PTR_, _TYPE_, _FIELD_)                         \
-    ({                                                               \
-        CONTAINER_OF_VALIDATE(_PTR_, _TYPE_, _FIELD_)                \
-        ((_TYPE_ *)(((char *)(_PTR_)) - offsetof(_TYPE_, _FIELD_))); \
+#define CONTAINER_OF(_PTR_, _TYPE_, _FIELD_)                                 \
+    ({                                                                       \
+        CONTAINER_OF_VALIDATE(_PTR_, _TYPE_, _FIELD_)                        \
+        ((_TYPE_ *)(void *)(((char *)(_PTR_)) - offsetof(_TYPE_, _FIELD_))); \
     })
+
+static inline uint32_t HAL_GetPowerOfTwoShift(uint32_t x)
+{
+    uint32_t ret;
+    uint32_t clz_result;
+    uint32_t shift_nbr;
+
+    if (x <= 1U)
+    {
+        ret = 0U;
+    }
+    else
+    {
+        assert(x <= ((0xFFFFFFFFU >> 1) + 1U));
+
+        /* Use Count Leading Zeros to round x to the smallest power of two greater than or equal to x */
+        clz_result = (uint32_t)HAL_CLZ(x - 1U);
+        shift_nbr  = (uint32_t)32U - clz_result;
+
+        x = (uint32_t)1U << shift_nbr;
+
+        /* Use Count Trailing Zeros to get the shift */
+        ret = HAL_CTZ(x);
+    }
+
+    return ret;
+}
+
+/**
+ * @brief Computes the shift count needed to represent a number as a power of two.
+ *
+ * This function calculates the number of right shifts required to reduce a power-of-two
+ * number equal to or greater than the input value `x` down to 1.
+ *
+ * @param x Input value.
+ * @return uint32_t Number of shifts.
+ */
+
+#define HAL_GETPOWEROF2SHIFT(x) HAL_GetPowerOfTwoShift(x)
 
 #endif

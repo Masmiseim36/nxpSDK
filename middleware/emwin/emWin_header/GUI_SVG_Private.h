@@ -9,7 +9,7 @@
 *                                                                    *
 **********************************************************************
 
-** emWin V6.46 - Graphical user interface for embedded applications **
+** emWin V6.50 - Graphical user interface for embedded applications **
 All  Intellectual Property rights  in the Software belongs to  SEGGER.
 emWin is protected by  international copyright laws.  Knowledge of the
 source code may not be used to write a similar product.  This file may
@@ -464,15 +464,14 @@ typedef struct {
   GUI_ARRAY                 haGradients; // Array of GUI_SVG_GRADIENTs, optional.
   GUI_ARRAY                 haImages;    // Array of GUI_SVG_IMAGE, optional.
   GUI_SVG_TRANSFORM_CONTEXT Transform;   // Parameters used for transformations.
-  GUI_SVG_PATH_CONTEXT      PathCtx;     // Path context, contains positions like pen position, required for normalizing paths.
   GUI_SVG_PARSER_CONTEXT    ParserCtx;   // Context for parser module.
-  void                    * pContext;    // Draw context managed by SVG driver.
   GUI_MEMDEV_Handle         hMemDev;     // Memdev used for caching the SVG.
   GUI_COLOR                 BkColor;     // Background color used for filling internal memory device.
   U8                        Flags;       // See GUI_SVG_FLAG...
 } GUI_SVG_Obj;
 
-typedef PTR_ADDR GUI_SVG_PATH_Handle;
+typedef PTR_ADDR GUI_SVG_PATH_Handle;        // Global path object
+typedef PTR_ADDR GUI_SVG_DRIVER_PATH_Handle; // Driver-dependent path object
 
 typedef enum {
   GUI_SVG_DRIVER_LIMITATION_NONE    =      (0),
@@ -494,33 +493,36 @@ typedef struct {
   GUI_SVG_HOOKS       Hooks;        // Additional optional driver/draw init hooks.
   const void        * pAPI;         // User supplied pointer to 2D vector API.
   GUI_HMEM            hContext;     // Additional data req. by the driver, allocated on demand.
+  void              * pContext;     // Additional data req. by the driver, allocated on demand.
   GUI_SVG_GPU_CONTEXT GPU;          // Global context allocated by the 2D vector API. May be NULL.
+  U32                 Version;      // Version of the API (MAJOR << 16 | MINOR << 8 | BUGFIX)
   U8                  DriverInited; // Flag set when driver has been inited.
 } GUI_SVG_DRIVER_CONTEXT;
 
 typedef struct {
   U32                           DriverLimitationFlags;
-  GUI_SVG_PATH_Handle        (* pfCreatePath)     (void);
-  void                       (* pfAppendPath)     (GUI_SVG_Obj * pObj, GUI_SVG_PATH_Handle hPath, int NumSegments, const U8 * pSegments, int NumData, const float * pCoordinates);
-  void                       (* pfFinalizePath)   (GUI_SVG_Obj * pObj, GUI_SVG_PATH_Handle hPath);
-  void                       (* pfDestroyPath)    (GUI_SVG_Obj * pObj, GUI_SVG_PATH_Handle hPath);
-  void                       (* pfDrawPath)       (GUI_SVG_Obj * pObj, GUI_SVG_PATH_Handle hPath, GUI_SVG_STYLE * pStyle);
-  void                       (* pfDrawImage)      (GUI_SVG_Obj * pObj, const GUI_SVG_RENDER_TARGET * pRT);
-  void                       (* pfEnableClipping) (int x, int y, int w, int h);
-  void                       (* pfDisableClipping)(void);
-  U8                         (* pfInitDriver)     (void);
-  void                       (* pfDeinitDriver)   (void);
+  GUI_SVG_DRIVER_PATH_Handle (* pfCreatePath)      (void);
+  void                       (* pfAppendPath)      (GUI_SVG_DRIVER_PATH_Handle hPath, int NumSegments, const U8 * pSegments, int NumData, const float * pCoordinates);
+  void                       (* pfFinalizePath)    (GUI_SVG_DRIVER_PATH_Handle hPath);
+  void                       (* pfDestroyPath)     (GUI_SVG_DRIVER_PATH_Handle hPath);
+  void                       (* pfDrawPath)        (GUI_SVG_DRIVER_PATH_Handle hPath, const GUI_SVG_STYLE * pStyle, const GUI_MATRIX * pMat);
+  void                       (* pfDrawImage)       (const GUI_SVG_RENDER_TARGET * pRT, const GUI_MATRIX * pMat);
+  U8                         (* pfMapPathCommand)  (GUI_SVG_PATH_COMMAND Cmd);
+  void                       (* pfEnableClipping)  (int x, int y, int w, int h);
+  void                       (* pfDisableClipping) (void);
+  U8                         (* pfInitDriver)      (void);
+  void                       (* pfDeinitDriver)    (void);
   void                     * (* pfCreateGPUContext)(void);
   void                       (* pfDeleteGPUContext)(void * pCtx);
-  U8                         (* pfBeginDraw)      (GUI_SVG_Obj * pObj);
-  void                       (* pfEndDraw)        (GUI_SVG_Obj * pObj);
-  void                       (* pfModifyImageSize)(U32 * pWidth, U32 * pHeight);
-  const LCD_API_COLOR_CONV * (* pfGetColorConv)   (void);
+  U8                         (* pfBeginDraw)       (void);
+  void                       (* pfEndDraw)         (void);
+  void                       (* pfModifyImageSize) (U32 * pWidth, U32 * pHeight);
+  const LCD_API_COLOR_CONV * (* pfGetColorConv)    (void);
   GUI_SVG_DRIVER              * pfGetDriver;
-  GUI_SVG_DRIVER_CONTEXT   * (* pfGetContext)     (void);
-  void                       (* pfLoadAPI)        (void * pAPI, GUI_SVG_LOAD_API_CALLBACK * cbLoadFunction);
-  int                        (* pfHasAPI)         (void);
-  U8                         (* pfSetHooks)       (void);
+  GUI_SVG_DRIVER_CONTEXT   * (* pfGetContext)      (void);
+  void                       (* pfLoadAPI)         (void * pAPI, GUI_SVG_LOAD_API_CALLBACK * cbLoadFunction);
+  int                        (* pfHasAPI)          (void);
+  U8                         (* pfSetHooks)        (void);
 } GUI_SVG_DRIVER_API;
 
 typedef int (DRAW_IMAGE_FILE_FUNC)(const void * pFileData, int FileSize, int x0, int y0);
@@ -593,12 +595,16 @@ typedef struct {
   U32    SizeOfElement;
 } ARRAY_Obj;
 
+typedef enum {
+  GUI_SVG_PATH_FLAG_NATIVE_FORMAT = 0x1,
+} GUI_SVG_PATH_FLAGS;
 //
 // Can be used by a GUI_SVG_DRIVER when the path data has to be manually managed.
 //
 typedef struct {
   ARRAY_Obj aSegments;
   ARRAY_Obj aData;
+  U32       Flags;
 } GUI_SVG_PATH_Obj;
 
 /*********************************************************************
@@ -614,15 +620,16 @@ void               GUI_SVG__Parse            (GUI_SVG_Obj * pObj, GUI_SVG_PARSIN
 //
 // Basic draw routines.
 //
-GUI_SVG_PATH_Handle   GUI_SVG__CreatePath       (void);
-void                  GUI_SVG__AppendPath       (GUI_SVG_Obj * pObj, GUI_SVG_PATH_Handle hPath, U8 Segment, float * pData);
-void                  GUI_SVG__FinalizePath     (GUI_SVG_Obj * pObj, GUI_SVG_PATH_Handle hPath);
-void                  GUI_SVG__DrawPath         (GUI_SVG_Obj * pObj, GUI_SVG_STYLE * pStyle, const GUI_SVG_PATH_Handle        * phPath);
-void                  GUI_SVG__DrawRect         (GUI_SVG_Obj * pObj, GUI_SVG_STYLE * pStyle, const GUI_SVG_RECT_PARAMETERS    * p);
-void                  GUI_SVG__DrawCircle       (GUI_SVG_Obj * pObj, GUI_SVG_STYLE * pStyle, const GUI_SVG_CIRCLE_PARAMETERS  * p);
-void                  GUI_SVG__DrawEllipse      (GUI_SVG_Obj * pObj, GUI_SVG_STYLE * pStyle, const GUI_SVG_ELLIPSE_PARAMETERS * p);
-void                  GUI_SVG__DrawLine         (GUI_SVG_Obj * pObj, GUI_SVG_STYLE * pStyle, const GUI_SVG_LINE_PARAMETERS    * p);
-void                  GUI_SVG__DrawImage        (GUI_SVG_Obj * pObj, U32 TagOffset, float x, float y, float w, float h);
+GUI_SVG_PATH_Handle   GUI_SVG__CreatePath  (void);
+void                  GUI_SVG__DeletePath  (GUI_SVG_PATH_Handle hPath);
+void                  GUI_SVG__AppendPath  (GUI_SVG_PATH_Handle hPath, U8 Segment, float * pData);
+void                  GUI_SVG__FinalizePath(GUI_SVG_PATH_Handle hPath);
+void                  GUI_SVG__DrawPath    (const GUI_SVG_PATH_Handle        * phPath, const GUI_SVG_STYLE * pStyle, const GUI_MATRIX * pMat);
+void                  GUI_SVG__DrawRect    (const GUI_SVG_RECT_PARAMETERS    * p,      const GUI_SVG_STYLE * pStyle, const GUI_MATRIX * pMat);
+void                  GUI_SVG__DrawCircle  (const GUI_SVG_CIRCLE_PARAMETERS  * p,      const GUI_SVG_STYLE * pStyle, const GUI_MATRIX * pMat);
+void                  GUI_SVG__DrawEllipse (const GUI_SVG_ELLIPSE_PARAMETERS * p,      const GUI_SVG_STYLE * pStyle, const GUI_MATRIX * pMat);
+void                  GUI_SVG__DrawLine    (const GUI_SVG_LINE_PARAMETERS    * p,      const GUI_SVG_STYLE * pStyle, const GUI_MATRIX * pMat);
+void                  GUI_SVG__DrawImage   (GUI_SVG_Obj * pObj, U32 TagOffset, float x, float y, float w, float h);
 //
 // Management of indentation level data.
 //
@@ -631,14 +638,20 @@ void                  GUI_SVG__DecIndent       (GUI_SVG_Obj * pObj);
 GUI_SVG_INDENT_DATA * GUI_SVG__GetCurrentIndent(GUI_SVG_Obj * pObj);
 void                  GUI_SVG__UnlockIndent    (GUI_SVG_Obj * pObj, GUI_SVG_INDENT_DATA ** ppData);
 //
-// Path buffers
+// Path buffers, used if the third-party API does not have path objects.
 //
-GUI_SVG_PATH_Handle  GUI_SVG_PATH__Create        (U32 NumInitalData, U32 NumInitialSegments, U32 NumAdditionalBytes);
-void                 GUI_SVG_PATH__Append        (GUI_SVG_PATH_Handle hPath, const U8 * pSegments, int NumSegments, const float * pData);
-GUI_SVG_PATH_COMMAND GUI_SVG_PATH__GetSegmentAt  (GUI_SVG_PATH_Handle hPath, U32 Index);
-const float        * GUI_SVG_PATH__GetDataAt     (GUI_SVG_PATH_Handle hPath, U32 Index);
-unsigned             GUI_SVG_PATH__GetNumSegments(GUI_SVG_PATH_Handle hPath);
-void                 GUI_SVG_PATH__Delete        (GUI_SVG_PATH_Handle hPath);
+GUI_SVG_DRIVER_PATH_Handle  GUI_SVG_PATH__Create        (U32 Flags, U32 NumInitalData, U32 NumInitialSegments, U32 NumAdditionalBytes);
+void                        GUI_SVG_PATH__Append        (GUI_SVG_DRIVER_PATH_Handle hPath, const U8 * pSegments, int NumSegments, const float * pData);
+GUI_SVG_PATH_COMMAND        GUI_SVG_PATH__GetSegmentAt  (GUI_SVG_DRIVER_PATH_Handle hPath, U32 Index);
+const float               * GUI_SVG_PATH__GetDataAt     (GUI_SVG_DRIVER_PATH_Handle hPath, U32 Index);
+unsigned                    GUI_SVG_PATH__GetNumSegments(GUI_SVG_DRIVER_PATH_Handle hPath);
+void                        GUI_SVG_PATH__Delete        (GUI_SVG_DRIVER_PATH_Handle hPath);
+//
+// Buffer management
+//
+void GUI_SVG__AppendToArray(ARRAY_Obj * pArray, const void * pData, int NumNewItems);
+void GUI_SVG__CreateArray  (ARRAY_Obj * pArray, int SizeOfItem, int NumItems);
+void GUI_SVG__FreeArray    (ARRAY_Obj * pArray);
 //
 // GPU context management
 //

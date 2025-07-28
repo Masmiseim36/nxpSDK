@@ -1669,9 +1669,7 @@ static void sdp_client_connected(struct bt_sdp_client *session, uint16_t status)
 	return;
 
 failed:
-	LOG_DBG("> ** FAILED performing SDP Operation: %02X\n", command);
-	LOG_DBG("> Return Value : 0x%04X\n", status);
-	sdp_client_notify_result(session, UUID_NOT_RESOLVED);
+	LOG_DBG("SDP failed\n");
 	sdp_client_disconnected(session);
 }
 

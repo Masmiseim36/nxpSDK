@@ -63,10 +63,21 @@ typedef enum _hal_timer_status
     kStatus_HAL_TimerOutOfRanger = MAKE_STATUS(kStatusGroup_HAL_TIMER, 4), /*!< timer is Out Of Ranger */
 } hal_timer_status_t;
 
+/*! @brief Definition of timer adapter handle size. */
+#if defined(TIMER_PORT_TYPE_OSTIMER)
+typedef uint64_t hal_timer_time_t;
+#define HAL_TIMER_RANGE_IN_BITS              (42U)
+#define HAL_TIMER_HANDLE_SIZE                (24U) /*!< 4 bytes extra because timeout needs to be 64bit instead of 32bit to cover full range of OS timer. */
+#else
+typedef uint32_t hal_timer_time_t;
+#define HAL_TIMER_RANGE_IN_BITS              (32U)
+#define HAL_TIMER_HANDLE_SIZE                (20U)
+#endif
+
 /*! @brief HAL timer configuration structure for HAL timer setting. */
 typedef struct _hal_timer_config
 {
-    uint32_t timeout;                     /*!< Timeout of the timer, should use microseconds, for example: if set timeout to 1000, mean 1000 microseconds
+    hal_timer_time_t timeout;                     /*!< Timeout of the timer, should use microseconds, for example: if set timeout to 1000, mean 1000 microseconds
                                                interval would generate timer timeout interrupt*/
     uint32_t srcClock_Hz;                 /*!< Source clock of the timer */
     uint8_t  instance;                    /*!< Hardware timer module instance, for example: if you want use FTM0,then the instance is configured to 0, if
@@ -76,9 +87,6 @@ typedef struct _hal_timer_config
     uint8_t  clockSrcSelect;              /*!< Select clock source. It is for timer clock select, if the lptmr does not
                                                want to use the default clock source*/
 } hal_timer_config_t;
-
-/*! @brief Definition of timer adapter handle size. */
-#define HAL_TIMER_HANDLE_SIZE                (20U)
 
 /*!
  * @brief Defines the timer handle
@@ -118,6 +126,11 @@ typedef void* hal_timer_handle_t;
 #define HAL_TIMER_ISR_PRIORITY (3U)
 #endif
 #endif
+#endif
+
+/*! @brief Definition to decide if after a match ctimer shall be reset or not. */
+#ifndef HAL_CTIMER_COUNTER_RESET
+#define HAL_CTIMER_COUNTER_RESET (true)
 #endif
 
 /************************************************************************************
@@ -216,7 +229,7 @@ uint32_t HAL_TimerGetCurrentTimerCount(hal_timer_handle_t halTimerHandle);
  * @retval kStatus_HAL_TimerSuccess The timer adapter module update timeout succeed.
  * @retval kStatus_HAL_TimerOutOfRanger The timer adapter set the timeout out of ranger.
  */
-hal_timer_status_t HAL_TimerUpdateTimeout(hal_timer_handle_t halTimerHandle, uint32_t timeout);
+hal_timer_status_t HAL_TimerUpdateTimeout(hal_timer_handle_t halTimerHandle, hal_timer_time_t timeout);
 
 /*!
  * @brief Get maximum Timer timeout
@@ -226,7 +239,7 @@ hal_timer_status_t HAL_TimerUpdateTimeout(hal_timer_handle_t halTimerHandle, uin
  * @param halTimerHandle     HAL timer adapter handle
  * @retval get the real-time timer maximum timeout value and return microseconds.
  */
-uint32_t HAL_TimerGetMaxTimeout(hal_timer_handle_t halTimerHandle);
+hal_timer_time_t HAL_TimerGetMaxTimeout(hal_timer_handle_t halTimerHandle);
 
 /*!
  * @brief Timer adapter power up function.
@@ -245,6 +258,23 @@ void HAL_TimerExitLowpower(hal_timer_handle_t halTimerHandle);
  * @param halTimerHandle     HAL timer adapter handle
  */
 void HAL_TimerEnterLowpower(hal_timer_handle_t halTimerHandle);
+
+
+/*!
+ * @brief Returns the current counter value in clock ticks
+ *
+ * @param halTimerHandle     HAL timer adapter handle
+ * @retval The counter value
+ */
+hal_timer_time_t HAL_TimerGetCurrentTicks(hal_timer_handle_t halTimerHandle);
+
+/*!
+ * @brief Updates the match value in timer ticks
+ *
+ * @param halTimerHandle     HAL timer adapter handle
+ * @param matchValue The new match value
+ */
+void HAL_TimerUpdateMatchValueInTicks(hal_timer_handle_t halTimerHandle, hal_timer_time_t matchValue);
 
 #if defined(__cplusplus)
 }

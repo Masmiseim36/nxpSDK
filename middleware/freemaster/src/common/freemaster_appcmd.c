@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2007-2015 Freescale Semiconductor, Inc.
- * Copyright 2018-2020, 2024 NXP
+ * Copyright 2018-2020, 2024-2025 NXP
  *
  * License: NXP LA_OPT_Online Code Hosting NXP_Software_License
  *
@@ -83,7 +83,7 @@ FMSTR_BOOL FMSTR_InitAppCmds(void)
 FMSTR_BPTR FMSTR_StoreAppCmd(FMSTR_SESSION *session, FMSTR_BPTR msgBuffIO, FMSTR_SIZE msgSize, FMSTR_U8 *retStatus)
 {
     FMSTR_BPTR response = msgBuffIO;
-    FMSTR_SIZE argsLen  = msgSize - 1U; /* args len is datalen minus one */
+    FMSTR_SIZE argsLen  = 0;
     FMSTR_U8 code;
 
     FMSTR_ASSERT(msgBuffIO != NULL);
@@ -107,7 +107,15 @@ FMSTR_BPTR FMSTR_StoreAppCmd(FMSTR_SESSION *session, FMSTR_BPTR msgBuffIO, FMSTR
         return response;
     }
 
-    msgBuffIO = FMSTR_ValueFromBuffer8(&code, msgBuffIO);
+    /* sanity check */
+    if (msgSize == 0U)
+    {
+        *retStatus = FMSTR_STC_INVSIZE;
+        return response;
+    }
+
+    /* args len is datalen minus one */
+    argsLen = msgSize - 1U;
 
     /* does the application command fit to buffer ? */
     if (argsLen > (FMSTR_SIZE)FMSTR_APPCMD_BUFF_SIZE)
@@ -115,6 +123,9 @@ FMSTR_BPTR FMSTR_StoreAppCmd(FMSTR_SESSION *session, FMSTR_BPTR msgBuffIO, FMSTR
         *retStatus = FMSTR_STC_INVBUFF;
         return response;
     }
+
+    /* Fetch command code */
+    msgBuffIO = FMSTR_ValueFromBuffer8(&code, msgBuffIO);
 
     /* store command data into dedicated buffer */
     fmstr_appCmd    = code;
@@ -236,10 +247,10 @@ FMSTR_BPTR FMSTR_GetAppCmdRespData(FMSTR_SESSION *session, FMSTR_BPTR msgBuffIO,
         return response;
     }
 
-    /* Get the data len from incomming buffer */
+    /* Get the data len from incoming buffer */
     msgBuffIO = FMSTR_SizeFromBuffer(&dataLen, msgBuffIO);
 
-    /* Get the data offset from incomming buffer */
+    /* Get the data offset from incoming buffer */
     msgBuffIO = FMSTR_SizeFromBuffer(&dataOffset, msgBuffIO);
 
     /* the response would not fit into comm buffer */
@@ -249,8 +260,16 @@ FMSTR_BPTR FMSTR_GetAppCmdRespData(FMSTR_SESSION *session, FMSTR_BPTR msgBuffIO,
         return response;
     }
 
-    /* the data would be fetched outside the app.cmd response data */
-    if ((((FMSTR_U16)dataOffset) + dataLen) > (FMSTR_SIZE8)fmstr_appCmdResultDataLen)
+    /* Coverity: Potential sum wrap would be detected by the compare operation. */
+    /* coverity[cert_int30_c_violation:FALSE] */
+    if((dataOffset + dataLen) <= dataOffset)
+    {
+        *retStatus = FMSTR_STC_INVSIZE;
+        return response;
+    }
+
+    /* prevent data to be fetched outside the app.cmd response data */
+    if ((FMSTR_SIZE)(dataOffset + dataLen) > (FMSTR_SIZE)fmstr_appCmdResultDataLen)
     {
         *retStatus = FMSTR_STC_INVSIZE;
         return response;
@@ -258,8 +277,8 @@ FMSTR_BPTR FMSTR_GetAppCmdRespData(FMSTR_SESSION *session, FMSTR_BPTR msgBuffIO,
 
     /* copy to buffer */
     {
-        FMSTR_ADDR appCmdBuffAddr = (FMSTR_ADDR)fmstr_appCmdBuff;
-        response                  = FMSTR_CopyToBuffer(response, appCmdBuffAddr, (FMSTR_SIZE8)dataLen);
+        FMSTR_ADDR appCmdBuffAddr = (FMSTR_ADDR)(fmstr_appCmdBuff + dataOffset);
+        response = FMSTR_CopyToBuffer(response, appCmdBuffAddr, (FMSTR_SIZE8)dataLen);
     }
 
     /* success  */
@@ -329,13 +348,17 @@ void FMSTR_AppCmdSetResponseData(FMSTR_ADDR resultDataAddr, FMSTR_SIZE resultDat
     /* any data supplied by user? */
     if (FMSTR_ADDR_VALID(resultDataAddr) != FMSTR_FALSE)
     {
+        /* command response shall fit into SIZE8 */
+        FMSTR_ASSERT(((FMSTR_U32)FMSTR_APPCMD_BUFF_SIZE) <= 0xffUL);
+
         /* response data length is trimmed if response data would not fit into buffer */
-        fmstr_appCmdResultDataLen = (FMSTR_SIZE8)resultDataLen;
-        if (fmstr_appCmdResultDataLen > (FMSTR_SIZE8)FMSTR_APPCMD_BUFF_SIZE)
+        if(resultDataLen > (FMSTR_SIZE)FMSTR_APPCMD_BUFF_SIZE)
         {
-            fmstr_appCmdResultDataLen = (FMSTR_SIZE8)FMSTR_APPCMD_BUFF_SIZE;
+            resultDataLen = (FMSTR_SIZE)FMSTR_APPCMD_BUFF_SIZE;
         }
 
+        /* remember the stored data size */
+        fmstr_appCmdResultDataLen = (FMSTR_SIZE8)resultDataLen;
         if (fmstr_appCmdResultDataLen > 0U)
         {
             FMSTR_ADDR appCmdBuffAddr = (FMSTR_ADDR)fmstr_appCmdBuff;

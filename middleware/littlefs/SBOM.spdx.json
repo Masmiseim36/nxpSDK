@@ -1,0 +1,68 @@
+{
+  "SPDXID": "SPDXRef-DOCUMENT",
+  "spdxVersion": "SPDX-2.3",
+  "creationInfo": {
+    "created": "2025-05-21T08:50:13Z",
+    "creators": [
+      "Organization: NXP"
+    ],
+    "licenseListVersion": "3.20"
+  },
+  "name": "littlefs-v25.06.00",
+  "dataLicense": "CC0-1.0",
+  "documentNamespace": "https://nxp.com/spdx/1ba3c973-955f-4f85-ada8-f30a44e0e8cc",
+  "packages": [
+    {
+      "SPDXID": "SPDXRef-package-1ba3c973-955f-4f85-ada8-f30a44e0e8cc",
+      "name": "littlefs",
+      "versionInfo": "v25.06.00",
+      "licenseConcluded": "(BSD-3-Clause)",
+      "licenseDeclared": "(BSD-3-Clause)",
+      "downloadLocation": "https://github.com/nxp-mcuxpresso/littlefs",
+      "originator": "Organization: NXP",
+      "supplier": "NOASSERTION",
+      "externalRefs": [],
+      "filesAnalyzed": false
+    },
+    {
+      "SPDXID": "SPDXRef-package-56ecc4ad-adb3-4631-a37c-79392d5eca6f",
+      "name": "littlefs-project/littlefs",
+      "versionInfo": "v2.9.1",
+      "licenseConcluded": "BSD-3-Clause",
+      "licenseDeclared": "BSD-3-Clause",
+      "downloadLocation": "NOASSERTION",
+      "originator": "Organization: littlefs-project",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceLocator": "pkg:github/littlefs-project/littlefs@v2.9.1",
+          "referenceType": "purl"
+        },
+        {
+          "referenceCategory": "OTHER",
+          "referenceLocator": "d939ae70-203c-4441-80c5-6d204540110a",
+          "referenceType": "BlackDuck-ComponentOrigin"
+        }
+      ],
+      "filesAnalyzed": false
+    }
+  ],
+  "relationships": [
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-package-1ba3c973-955f-4f85-ada8-f30a44e0e8cc"
+    },
+    {
+      "spdxElementId": "SPDXRef-package-1ba3c973-955f-4f85-ada8-f30a44e0e8cc",
+      "relationshipType": "DYNAMIC_LINK",
+      "relatedSpdxElement": "SPDXRef-package-56ecc4ad-adb3-4631-a37c-79392d5eca6f"
+    },
+    {
+      "spdxElementId": "SPDXRef-package-1ba3c973-955f-4f85-ada8-f30a44e0e8cc",
+      "relationshipType": "CONTAINS",
+      "relatedSpdxElement": "SPDXRef-package-56ecc4ad-adb3-4631-a37c-79392d5eca6f"
+    }
+  ]
+}

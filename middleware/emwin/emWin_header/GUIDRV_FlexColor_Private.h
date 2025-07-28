@@ -9,7 +9,7 @@
 *                                                                    *
 **********************************************************************
 
-** emWin V6.46 - Graphical user interface for embedded applications **
+** emWin V6.50 - Graphical user interface for embedded applications **
 All  Intellectual Property rights  in the Software belongs to  SEGGER.
 emWin is protected by  international copyright laws.  Knowledge of the
 source code may not be used to write a similar product.  This file may
@@ -138,6 +138,7 @@ struct DRIVER_CONTEXT {
   //
   // Cache related function pointers
   //
+  void (* pfSendRect)     (DRIVER_CONTEXT * _pContext, int _x0, int _y0, int _x1, int _y1);
   void (* pfSendCacheRect)(DRIVER_CONTEXT * _pContext, int _x0, int _y0, int _x1, int _y1);
   U32  (* pfReadData)     (DRIVER_CONTEXT * _pContext);
   void (* pfWriteData)    (DRIVER_CONTEXT * _pContext, U32 _PixelIndex);
@@ -190,6 +191,10 @@ struct DRIVER_CONTEXT {
   // Hardware routines
   //
   GUI_PORT_API HW_API;
+  //
+  // Tiles
+  //
+  void * pDirty;
 };
 
 /*********************************************************************

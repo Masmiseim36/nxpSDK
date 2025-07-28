@@ -46,6 +46,9 @@
     </memory>
     <toolchainSettings>
       <toolchainSetting id_refs="com.nxp.mcuxpresso">
+        <buildSteps>
+          <postBuildStep>arm-none-eabi-size "${BuildArtifactFileName}";arm-none-eabi-objcopy -v -O binary "${BuildArtifactFileName}" "extram_hello_world.bin";checksum -p ${TargetChip} -d "extram_hello_world.bin"</postBuildStep>
+        </buildSteps>
         <option id="gnu.c.compiler.option.preprocessor.def.symbols" type="stringList">
           <value>MCUXPRESSO_SDK</value>
           <value>CPU_MIMXRT595SFFOC_cm33</value>
@@ -53,6 +56,7 @@
           <value>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</value>
           <value>SDK_DEBUGCONSOLE=1</value>
           <value>MCUX_META_BUILD</value>
+          <value>MIMXRT595S_cm33_SERIES</value>
         </option>
         <option id="com.crt.advproject.gas.fpu" type="enum">
           <value>com.crt.advproject.gas.fpu.fpv4.hard</value>
@@ -176,6 +180,9 @@
     </source>
     <source path="." project_relative_path="doc" type="doc">
       <files mask="example_board_readme.md"/>
+    </source>
+    <source path="." project_relative_path="doc" type="doc">
+      <files mask="examples_shared_readme.md"/>
     </source>
   </example>
 </ksdk:examples>

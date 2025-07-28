@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2007-2015 Freescale Semiconductor, Inc.
- * Copyright 2018-2020, 2024 NXP
+ * Copyright 2018-2020, 2024-2025 NXP
  *
  * License: NXP LA_OPT_Online Code Hosting NXP_Software_License
  *
@@ -78,6 +78,19 @@
 #define FMSTR_CAN_RESPID 0x7AAU
 #endif
 
+/* enable CAN-FD mode - requires CAN-FD-capable low level driver */
+#ifndef FMSTR_CAN_USE_CANFD
+#define FMSTR_CAN_USE_CANFD 0
+#endif
+
+/* enable CAN-FD Bit-rate Switch in CAN-FD mode - requires CAN-FD-capable low level driver */
+#ifndef FMSTR_CANFD_USE_BRS
+#define FMSTR_CANFD_USE_BRS 0
+#endif
+
+/* flag indicating CAN flexible data rate support */
+#define FMSTR_CAN_IF_CAPS_FLAG_FD      0x01UL
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -85,6 +98,13 @@ extern "C" {
 /******************************************************************************
  * Types definition
  ******************************************************************************/
+
+/* CAN driver capabilities */
+typedef struct FMSTR_CAN_IF_CAPS_S
+{
+    /* Combination of FMSTR_CAN_IF_CAPS_xxx flags */
+    FMSTR_U32 flags;
+} FMSTR_CAN_IF_CAPS;
 
 /* FreeMASTER Driver interface between the CAN layer and hardware driver */
 typedef struct FMSTR_CAN_DRV_INTF_S
@@ -103,6 +123,8 @@ typedef struct FMSTR_CAN_DRV_INTF_S
     FMSTR_BOOL (*PrepareTxFrame)(void); /* Initialize transmit buffer; return false when Tx buffer is not available. */
     void (*PutTxFrameByte)(FMSTR_SIZE8 index, FMSTR_BCHR data); /* Fill one byte of transmit data. */
     void (*SendTxFrame)(FMSTR_SIZE8 len);                       /* Send the Tx buffer. */
+    void (*Poll)(void);                              /* General poll call (optional) */
+    void (*GetCaps)(FMSTR_CAN_IF_CAPS * caps);       /* Get CAN driver capabilities */
 
 } FMSTR_CAN_DRV_INTF;
 

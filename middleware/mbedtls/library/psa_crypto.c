@@ -1622,11 +1622,11 @@ exit:
 }
 
 MBEDTLS_STATIC_ASSERT((MBEDTLS_PSA_KA_MASK_EXTERNAL_ONLY & MBEDTLS_PSA_KA_MASK_DUAL_USE) == 0,
-                      "One or more key attribute flag is listed as both external-only and dual-use")
+                      "One or more key attribute flag is listed as both external-only and dual-use");
 MBEDTLS_STATIC_ASSERT((PSA_KA_MASK_INTERNAL_ONLY & MBEDTLS_PSA_KA_MASK_DUAL_USE) == 0,
-                      "One or more key attribute flag is listed as both internal-only and dual-use")
+                      "One or more key attribute flag is listed as both internal-only and dual-use");
 MBEDTLS_STATIC_ASSERT((PSA_KA_MASK_INTERNAL_ONLY & MBEDTLS_PSA_KA_MASK_EXTERNAL_ONLY) == 0,
-                      "One or more key attribute flag is listed as both internal-only and external-only")
+                      "One or more key attribute flag is listed as both internal-only and external-only");
 
 /** Validate that a key policy is internally well-formed.
  *
@@ -1831,6 +1831,9 @@ static psa_status_t psa_start_key_creation(
 
         status = psa_copy_key_material_into_slot(
             slot, (uint8_t *) (&slot_number), sizeof(slot_number));
+        if (status != PSA_SUCCESS) {
+            return status;
+        }
     }
 
     if (*p_drv == NULL && method == PSA_KEY_CREATION_REGISTER) {
@@ -2146,6 +2149,14 @@ psa_status_t mbedtls_psa_register_se_key(
         return PSA_ERROR_NOT_SUPPORTED;
     }
 
+    /* Not usable with volatile keys, even with an appropriate location,
+     * due to the API design.
+     * https://github.com/Mbed-TLS/mbedtls/issues/9253
+     */
+    if (PSA_KEY_LIFETIME_IS_VOLATILE(psa_get_key_lifetime(attributes))) {
+        return PSA_ERROR_INVALID_ARGUMENT;
+    }
+
     status = psa_start_key_creation(PSA_KEY_CREATION_REGISTER, attributes,
                                     &slot, &driver);
     if (status != PSA_SUCCESS) {
@@ -2258,6 +2269,50 @@ exit:
 /****************************************************************/
 /* Message digests */
 /****************************************************************/
+
+static int is_hash_supported(psa_algorithm_t alg)
+{
+    switch (alg) {
+#if defined(PSA_WANT_ALG_MD2)
+        case PSA_ALG_MD2:
+            return 1;
+#endif
+#if defined(PSA_WANT_ALG_MD4)
+        case PSA_ALG_MD4:
+            return 1;
+#endif
+#if defined(PSA_WANT_ALG_MD5)
+        case PSA_ALG_MD5:
+            return 1;
+#endif
+#if defined(PSA_WANT_ALG_RIPEMD160)
+        case PSA_ALG_RIPEMD160:
+            return 1;
+#endif
+#if defined(PSA_WANT_ALG_SHA_1)
+        case PSA_ALG_SHA_1:
+            return 1;
+#endif
+#if defined(PSA_WANT_ALG_SHA_224)
+        case PSA_ALG_SHA_224:
+            return 1;
+#endif
+#if defined(PSA_WANT_ALG_SHA_256)
+        case PSA_ALG_SHA_256:
+            return 1;
+#endif
+#if defined(PSA_WANT_ALG_SHA_384)
+        case PSA_ALG_SHA_384:
+            return 1;
+#endif
+#if defined(PSA_WANT_ALG_SHA_512)
+        case PSA_ALG_SHA_512:
+            return 1;
+#endif
+        default:
+            return 0;
+    }
+}
 
 psa_status_t psa_hash_abort(psa_hash_operation_t *operation)
 {
@@ -2913,16 +2968,44 @@ static psa_status_t psa_sign_verify_check_alg(int input_is_message,
         if (!PSA_ALG_IS_SIGN_MESSAGE(alg)) {
             return PSA_ERROR_INVALID_ARGUMENT;
         }
+    }
 
-        if (PSA_ALG_IS_SIGN_HASH(alg)) {
-            if (!PSA_ALG_IS_HASH(PSA_ALG_SIGN_GET_HASH(alg))) {
-                return PSA_ERROR_INVALID_ARGUMENT;
-            }
-        }
-    } else {
-        if (!PSA_ALG_IS_SIGN_HASH(alg)) {
-            return PSA_ERROR_INVALID_ARGUMENT;
-        }
+    psa_algorithm_t hash_alg = 0;
+    if (PSA_ALG_IS_SIGN_HASH(alg)) {
+        hash_alg = PSA_ALG_SIGN_GET_HASH(alg);
+    }
+
+    /* Now hash_alg==0 if alg by itself doesn't need a hash.
+     * This is good enough for sign-hash, but a guaranteed failure for
+     * sign-message which needs to hash first for all algorithms
+     * supported at the moment. */
+
+    if (hash_alg == 0 && input_is_message) {
+        return PSA_ERROR_INVALID_ARGUMENT;
+    }
+    if (hash_alg == PSA_ALG_ANY_HASH) {
+        return PSA_ERROR_INVALID_ARGUMENT;
+    }
+    /* Give up immediately if the hash is not supported. This has
+     * several advantages:
+     * - For mechanisms that don't use the hash at all (e.g.
+     *   ECDSA verification, randomized ECDSA signature), without
+     *   this check, the operation would succeed even though it has
+     *   been given an invalid argument. This would not be insecure
+     *   since the hash was not necessary, but it would be weird.
+     * - For mechanisms that do use the hash, we avoid an error
+     *   deep inside the execution. In principle this doesn't matter,
+     *   but there is a little more risk of a bug in error handling
+     *   deep inside than in this preliminary check.
+     * - When calling a driver, the driver might be capable of using
+     *   a hash that the core doesn't support. This could potentially
+     *   result in a buffer overflow if the hash is larger than the
+     *   maximum hash size assumed by the core.
+     * - Returning a consistent error makes it possible to test
+     *   not-supported hashes in a consistent way.
+     */
+    if (hash_alg != 0 && !is_hash_supported(hash_alg)) {
+        return PSA_ERROR_NOT_SUPPORTED;
     }
 
     return PSA_SUCCESS;
@@ -5179,6 +5262,12 @@ static psa_status_t psa_key_derivation_input_internal(
     psa_status_t status;
     psa_algorithm_t kdf_alg = psa_key_derivation_get_kdf_alg(operation);
 
+    if (kdf_alg == PSA_ALG_NONE) {
+        /* This is a blank or aborted operation. */
+        status = PSA_ERROR_BAD_STATE;
+        goto exit;
+    }
+
     status = psa_key_derivation_check_input_type(step, key_type);
     if (status != PSA_SUCCESS) {
         goto exit;
@@ -6088,16 +6177,22 @@ psa_status_t psa_crypto_local_input_alloc(const uint8_t *input, size_t input_len
     return PSA_SUCCESS;
 
 error:
-    mbedtls_free(local_input->buffer);
-    local_input->buffer = NULL;
+    if (local_input->buffer != NULL) {
+        mbedtls_platform_zeroize(local_input->buffer, local_input->length);
+        mbedtls_free(local_input->buffer);
+        local_input->buffer = NULL;
+    }
     local_input->length = 0;
     return status;
 }
 
 void psa_crypto_local_input_free(psa_crypto_local_input_t *local_input)
 {
-    mbedtls_free(local_input->buffer);
-    local_input->buffer = NULL;
+    if (local_input->buffer != NULL) {
+        mbedtls_platform_zeroize(local_input->buffer, local_input->length);
+        mbedtls_free(local_input->buffer);
+        local_input->buffer = NULL;
+    }
     local_input->length = 0;
 }
 
@@ -6140,8 +6235,11 @@ psa_status_t psa_crypto_local_output_free(psa_crypto_local_output_t *local_outpu
         return status;
     }
 
-    mbedtls_free(local_output->buffer);
-    local_output->buffer = NULL;
+    if (local_output->buffer != NULL) {
+        mbedtls_platform_zeroize(local_output->buffer, local_output->length);
+        mbedtls_free(local_output->buffer);
+        local_output->buffer = NULL;
+    }
     local_output->length = 0;
 
     return PSA_SUCCESS;

@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2024 NXP
+ * Copyright 2022-2025 NXP
  *
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -31,6 +31,44 @@
             .derivation_data           = {0x94, 0xbe, 0x03, 0xac, 0x8b, 0x59, 0x32, 0x45, 0x11, 0x7f, 0xf8, 0x3f}, \
         },                                                                                                         \
     }
+
+#define RECIPE_STEP_CREATE_NXP_CUST_DIE_EL2GOIMPORTTFM_KEK_SK                                                      \
+    {                                                                                                              \
+        .operation = OP_CKDF, .storage = STORAGE_FINAL_KEY,                                                        \
+        .ckdf = {                                                                                                  \
+            .source_key_slot           = NXP_DIE_MK_SK_SLOT,                                                       \
+            .target_key_id             = MBEDTLS_NXP_CUST_DIE_EL2GOIMPORTTFM_KEK_SK_ID,                            \
+            .key_properties.word.value = 0x40100021U,                                                              \
+            .derivation_data           = {0x00, 0x65, 0x32, 0x67, 0x69, 0x74, 0x66, 0x6d, 0x5f, 0x73, 0x6b, 0x00}, \
+        },                                                                                                         \
+    }
+
+const key_recipe_t recipe_cust_die_el2goimportfm_kek_sk = {
+    .number_of_steps = 1,
+    .steps =
+        {
+            RECIPE_STEP_CREATE_NXP_CUST_DIE_EL2GOIMPORTTFM_KEK_SK,
+        },
+};
+
+#define RECIPE_STEP_CREATE_NXP_CUST_DIE_EL2GOIMPORT_AUTH_SK                                                        \
+    {                                                                                                              \
+        .operation = OP_CKDF, .storage = STORAGE_FINAL_KEY,                                                        \
+        .ckdf = {                                                                                                  \
+            .source_key_slot           = NXP_DIE_MK_SK_SLOT,                                                       \
+            .target_key_id             = MBEDTLS_NXP_CUST_DIE_EL2GOIMPORT_AUTH_SK_ID,                              \
+            .key_properties.word.value = 0x40002021U,                                                              \
+            .derivation_data           = {0x00, 0x65, 0x32, 0x67, 0x69, 0x61, 0x75, 0x74, 0x5f, 0x73, 0x6b, 0x00}, \
+        },                                                                                                         \
+    }
+
+const key_recipe_t recipe_cust_die_el2goimport_auth_sk = {
+    .number_of_steps = 1,
+    .steps =
+        {
+            RECIPE_STEP_CREATE_NXP_CUST_DIE_EL2GOIMPORT_AUTH_SK,
+        },
+};
 
 #define RECIPE_STEP_CREATE_NXP_DIE_EL2GOIMPORT_KEK_SK                                                              \
     {                                                                                                              \
@@ -154,5 +192,11 @@ const key_recipe_t recipe_die_kek_sk = {
             RECIPE_STEP_CREATE_NXP_DIE_KEK_SK,
         },
 };
+
+const key_recipe_t *key_recipes_directory[] = {&recipe_cust_die_el2goimportfm_kek_sk, &recipe_cust_die_el2goimport_auth_sk,
+                                               &recipe_el2goimport_kek_sk, &recipe_el2goimporttfm_kek_sk, &recipe_el2goimport_auth_sk,
+                                               &recipe_el2goconn_auth_prk, &recipe_el2goattest_auth_prk, &recipe_die_kek_sk};
+
+size_t key_recipes_directory_size = sizeof(key_recipes_directory) / sizeof(key_recipes_directory[0]);
 
 #endif //_MCUXCLPSADRIVER_ORACLE_KEYRECIPES_

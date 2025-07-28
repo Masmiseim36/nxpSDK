@@ -75,22 +75,22 @@ static struct bt_pbap_pce s_PbapPceInstances[PBAP_PCE_MAX_ENTITY];
 #define EDGEFAST_PBAP_PCE_LOCK   OSA_MutexLock(s_PbapPceLock, osaWaitForever_c)
 #define EDGEFAST_PBAP_PCE_UNLOCK OSA_MutexUnlock(s_PbapPceLock)
 
-#define child_floader_count   7
-static char *child_floader_name[child_floader_count] = {"pb", "ich", "och", "mch", "cch", "spd", "fav"};
-static int startwith(char *str, char *prefix)
+#define child_floader_count   7U
+static char *child_floader[child_floader_count] = {"pb", "ich", "och", "mch", "cch", "spd", "fav"};
+static bool startwith(char *str, char *prefix)
 {
-    uint8_t str_len    = strlen(str);
-    uint8_t prefix_len = strlen(prefix);
+    uint8_t str_len    = (uint8_t)strlen(str);
+    uint8_t prefix_len = (uint8_t)strlen(prefix);
     if (prefix_len > str_len)
     {
         return 0;
     }
     return strncmp(str, prefix, prefix_len) == 0;
 }
-static int endwith(char *str, char *suffix)
+static bool endwith(char *str, char *suffix)
 {
-    uint8_t str_len    = strlen(str);
-    uint8_t suffix_len = strlen(suffix);
+    uint8_t str_len    = (uint8_t)strlen(str);
+    uint8_t suffix_len = (uint8_t)strlen(suffix);
     if (str_len < suffix_len)
     {
         return 0;
@@ -105,14 +105,14 @@ static struct bt_pbap_pce *pbap_pce_get_instance(struct bt_conn *conn)
     {
         if (s_PbapPceInstances[index].acl_conn == NULL)
         {
-            memset(&s_PbapPceInstances[index], 0U, sizeof(s_PbapPceInstances[index]));
+            (void)memset(&s_PbapPceInstances[index], 0, sizeof(s_PbapPceInstances[index]));
             s_PbapPceInstances[index].acl_conn = conn;
             s_PbapPceInstances[index].auth     = &auth_info[index];
-            EDGEFAST_PBAP_PCE_UNLOCK;
+            (void)EDGEFAST_PBAP_PCE_UNLOCK;
             return &s_PbapPceInstances[index];
         }
     }
-    EDGEFAST_PBAP_PCE_UNLOCK;
+    (void)EDGEFAST_PBAP_PCE_UNLOCK;
     return NULL;
 }
 
@@ -122,7 +122,7 @@ static void pbap_pce_free_instance(struct bt_pbap_pce *pbap_pce)
     {
         EDGEFAST_PBAP_PCE_LOCK;
         pbap_pce->acl_conn = NULL;
-        EDGEFAST_PBAP_PCE_UNLOCK;
+        (void)EDGEFAST_PBAP_PCE_UNLOCK;
     }
 }
 
@@ -133,11 +133,11 @@ static struct bt_pbap_pce *bt_pabp_pce_lookup_bt_handle(uint8_t handle)
     {
         if (handle == s_PbapPceInstances[index].pbap_handle)
         {
-            EDGEFAST_PBAP_PCE_UNLOCK;
+            (void)EDGEFAST_PBAP_PCE_UNLOCK;
             return &s_PbapPceInstances[index];
         }
     }
-    EDGEFAST_PBAP_PCE_UNLOCK;
+    (void)EDGEFAST_PBAP_PCE_UNLOCK;
     return NULL;
 }
 
@@ -148,11 +148,11 @@ static struct bt_pbap_pce *bt_pbap_pce_lookup_bt_conn(struct bt_conn *conn)
     {
         if (conn == s_PbapPceInstances[index].acl_conn)
         {
-            EDGEFAST_PBAP_PCE_UNLOCK;
+            (void)EDGEFAST_PBAP_PCE_UNLOCK;
             return &s_PbapPceInstances[index];
         }
     }
-    EDGEFAST_PBAP_PCE_UNLOCK;
+    (void)EDGEFAST_PBAP_PCE_UNLOCK;
     return NULL;
 }
 
@@ -168,10 +168,11 @@ static int bt_pal_pbap_pce_init(void)
     if (API_SUCCESS != retval)
     {
         LOG_ERR("Initialization Failed. Reason 0x%04X \n", retval);
+        return -EIO;
     }
     else
     {
-        BT_dbase_activate_record(pbap_pce_record_handle);
+        (void)BT_dbase_activate_record(pbap_pce_record_handle);
         LOG_INF("Successfully Initialized PBAP PCE\n");
     }
 
@@ -191,13 +192,13 @@ static int bt_pal_pbap_pce_init(void)
     {
         s_PbapPceInstances[index].acl_conn = NULL;
     }
-    return retval;
+    return 0;
 }
 
 int bt_pbap_pce_register(struct bt_pbap_pce_cb *cb)
 {
     int res;
-    if (!cb)
+    if (cb == NULL)
     {
         return -EINVAL;
     }
@@ -267,18 +268,15 @@ static void bt_pabp_set_appl_params_hdr_value(uint8_t tag_id, PBAP_APPL_PARAMS *
             BT_PBAP_ADD_PARAMS_PBAP_SUPPORTED_FEATURES(buf, appl_params->supported_features);
             break;
         default:
+            LOG_ERR("ERROR TAG\n");
             break;
     }
 }
 
 int bt_pbap_pce_disconnect(struct bt_pbap_pce *pbap_pce)
 {
-    API_RESULT retval = 0;
+    API_RESULT retval = 0U;
     if (pbap_pce == NULL)
-    {
-        return -EAGAIN;
-    }
-    if (NULL == pbap_pce)
     {
         return -EAGAIN;
     }
@@ -288,13 +286,14 @@ int bt_pbap_pce_disconnect(struct bt_pbap_pce *pbap_pce)
     if (API_SUCCESS != retval)
     {
         LOG_ERR("Stop Failed. Reason 0x%04X \n", retval);
+        return -EIO;
     }
-    return retval;
+    return 0;
 }
 
 static int bt_pal_pbap_pce_stop_instance(struct bt_pbap_pce *pbap_pce)
 {
-    API_RESULT retval = 0;
+    API_RESULT retval = 0U;
 
     if (pbap_pce == NULL)
     {
@@ -306,13 +305,14 @@ static int bt_pal_pbap_pce_stop_instance(struct bt_pbap_pce *pbap_pce)
     if (API_SUCCESS != retval)
     {
         LOG_ERR("Stop instance Failed. Reason 0x%04X \n", retval);
+        return -EIO;
     }
     else
     {
         LOG_INF("Successfully stopped PBAP PCE Entity %d \n", pbap_pce->pbap_handle);
     }
 
-    return retval;
+    return 0;
 }
 
 static void pbap_ascii_to_unicode(uint8_t *des, const uint8_t *src)
@@ -351,12 +351,14 @@ static void pbap_unicode_to_ascii(uint8_t *des, const uint8_t *src)
     des[i >> 1U] = 0x00U; /* terminate with  0x00 */
 }
 
-void bt_pbap_add_nonce(struct net_buf *buf, uint8_t tag_id, char *value)
+#if CONFIG_BT_ZEPHYR_BUF
+static void bt_pbap_add_nonce(struct net_buf *buf, uint8_t tag_id, char *value)
 {
     char nonce[16] = {0};
-    memcpy(nonce, value, 16);
+    (void)memcpy(nonce, value, 16);
     bt_obex_add_app_param(buf, tag_id, (uint8_t *)nonce, 16);
 }
+#endif 
 
 static int bt_pbap_get_appl_param_hdr_value(struct bt_obex_tag_bytes *tag, PBAP_APPL_PARAMS *appl_params)
 {
@@ -380,9 +382,9 @@ static int bt_pbap_get_appl_param_hdr_value(struct bt_obex_tag_bytes *tag, PBAP_
             appl_params->list_start_offset = sys_get_be16(tag->value);
             break;
         case BT_PBAP_TAG_ID_PROPERTY_SELECTOR:
-            memcpy(appl_params->filter, tag->value, sizeof(appl_params->filter));
+            (void)memcpy(appl_params->filter, tag->value, sizeof(appl_params->filter));
             value = sys_get_be64((uint8_t *)appl_params->filter);
-            memcpy(appl_params->filter, &value, sizeof(appl_params->filter));
+            (void)memcpy(appl_params->filter, &value, sizeof(appl_params->filter));
             break;
         case BT_PBAP_TAG_ID_FORMAT:
             appl_params->format = *tag->value;
@@ -394,18 +396,18 @@ static int bt_pbap_get_appl_param_hdr_value(struct bt_obex_tag_bytes *tag, PBAP_
             appl_params->new_missed_calls = *tag->value;
             break;
         case BT_PBAP_TAG_ID_PRIMARY_FOLDER_VERSION:
-            memcpy(appl_params->primary_folder_ver, tag->value, BT_PBAP_FLDR_VER_CNTR_SIZE);
+            (void)memcpy(appl_params->primary_folder_ver, tag->value, BT_PBAP_FLDR_VER_CNTR_SIZE);
             break;
         case BT_PBAP_TAG_ID_SECONDARY_FOLDER_VERSION:
-            memcpy(appl_params->secondary_folder_ver, tag->value, BT_PBAP_FLDR_VER_CNTR_SIZE);
+            (void)memcpy(appl_params->secondary_folder_ver, tag->value, BT_PBAP_FLDR_VER_CNTR_SIZE);
             break;
         case BT_PBAP_TAG_ID_VCARD_SELECTOR:
-            memcpy(appl_params->vcard_selector, tag->value, sizeof(appl_params->vcard_selector));
+            (void)memcpy(appl_params->vcard_selector, tag->value, sizeof(appl_params->vcard_selector));
             value = sys_get_be64((uint8_t *)appl_params->vcard_selector);
-            memcpy(appl_params->vcard_selector, &value, sizeof(appl_params->vcard_selector));
+            (void)memcpy((uint8_t *)appl_params->vcard_selector, &value, sizeof(appl_params->vcard_selector));
             break;
         case BT_PBAP_TAG_ID_DATABASE_IDENTIFIER:
-            memcpy(appl_params->database_identifier, tag->value, BT_PBAP_DATABASE_IDENTIFIER_SIZE);
+            (void)memcpy(appl_params->database_identifier, tag->value, BT_PBAP_DATABASE_IDENTIFIER_SIZE);
             break;
         case BT_PBAP_TAG_ID_VCARD_SELECTOR_OPERATOR:
             appl_params->vcard_selector_operator = *tag->value;
@@ -417,14 +419,15 @@ static int bt_pbap_get_appl_param_hdr_value(struct bt_obex_tag_bytes *tag, PBAP_
             appl_params->supported_features = sys_get_be32(tag->value);
             break;
         default:
+            LOG_ERR("ERROR TAG\n");
             break;
     }
     return 0;
 }
 
-static int bt_pbap_form_stack_param(struct net_buf *buf, PBAP_APPL_PARAMS *appl_params)
+static int bt_pbap_form_stack_param(struct net_buf *buf, PBAP_APPL_PARAMS *app_par)
 {
-    memset(appl_params, 0, sizeof(PBAP_APPL_PARAMS));
+    (void)memset(app_par, 0, sizeof(PBAP_APPL_PARAMS));
 
     uint16_t appl_param_len = 0;
     uint16_t hdr_length;
@@ -434,12 +437,12 @@ static int bt_pbap_form_stack_param(struct net_buf *buf, PBAP_APPL_PARAMS *appl_
     if (bt_obex_get_hdr(buf, OBEX_HDR_APP_PARAM, &hdr_value, &hdr_length) == 0)
     {
         appl_param_len = sizeof(struct bt_obex_hdr_bytes) + hdr_length;
-        while (hdr_length)
+        while (hdr_length > 0U)
         {
-            bt_pbap_get_appl_param_hdr_value((struct bt_obex_tag_bytes *)hdr_value, appl_params);
-            tag.id = ((struct bt_obex_tag_bytes *)hdr_value)->id - 1;
-            PBAP_SET_APPL_PARAM_FLAG(appl_params->appl_param_flag, (uint16_t)(1U << tag.id % BT_PBAP_APPL_PARAM_HDR_COUNT));
-            tag.length = ((struct bt_obex_tag_bytes *)hdr_value)->length + sizeof(struct bt_obex_tag_bytes);
+            (void)bt_pbap_get_appl_param_hdr_value((struct bt_obex_tag_bytes *)(void*)hdr_value, app_par);
+            tag.id = ((struct bt_obex_tag_bytes *)(void*)hdr_value)->id - 1U;
+            PBAP_SET_APPL_PARAM_FLAG(app_par->appl_param_flag, ((uint16_t)1U << tag.id % BT_PBAP_APPL_PARAM_HDR_COUNT));
+            tag.length = ((struct bt_obex_tag_bytes *)(void*)hdr_value)->length + (uint8_t)sizeof(struct bt_obex_tag_bytes);
             if (hdr_length < tag.length)
             {
                 return -EINVAL;
@@ -462,10 +465,13 @@ static void bt_pbap_add_pbap_hdr(struct bt_pbap_pce *pbap_pce,
     uint8_t opcode;
     uint16_t packet_length = appl_len;
     uint8_t hi;
-    uint8_t str_len;
+    uint16_t str_len;
     struct bt_obex_hdr_u8 bt_srm;
     struct bt_obex_hdr_u8 bt_srmp;
     struct bt_obex_hdr_u32 bt_conn_id;
+    (void)memset(&bt_srm, 0, sizeof(bt_srm));
+    (void)memset(&bt_srmp, 0, sizeof(bt_srmp));
+    (void)memset(&bt_conn_id, 0, sizeof(bt_conn_id));
 
     if (NULL == name)
     {
@@ -476,10 +482,10 @@ static void bt_pbap_add_pbap_hdr(struct bt_pbap_pce *pbap_pce,
         /* name*/
         hi      = OBEX_HDR_NAME;
         str_len = (uint16_t)strlen(name);
-        net_buf_push_mem(buf, name, str_len);
-        net_buf_push_be16(buf, str_len + 3);
+        (void)net_buf_push_mem(buf, name, str_len);
+        net_buf_push_be16(buf, str_len + 3U);
         net_buf_push_u8(buf, hi);
-        packet_length += str_len + 3;
+        packet_length += str_len + 3U;
 
         /* type */
         hi = OBEX_HDR_TYPE;
@@ -487,24 +493,25 @@ static void bt_pbap_add_pbap_hdr(struct bt_pbap_pce *pbap_pce,
         {
             case BT_PBAP_PCE_PULL_PHONEBOOK:
                 str_len = (uint16_t)strlen(BT_PBAP_TYPE_HDR_PHONEBOOK);
-                net_buf_push_mem(buf, BT_PBAP_TYPE_HDR_PHONEBOOK, str_len);
-                net_buf_push_be16(buf, str_len + 3);
+                (void)net_buf_push_mem(buf, (const void *)BT_PBAP_TYPE_HDR_PHONEBOOK, str_len);
+                net_buf_push_be16(buf, str_len + 3U);
                 break;
             case BT_PBAP_PCE_PULL_VCARD_LISTING:
                 str_len = (uint16_t)strlen(BT_PBAP_TYPE_HDR_VCARD_LIST);
-                net_buf_push_mem(buf, BT_PBAP_TYPE_HDR_VCARD_LIST, str_len);
-                net_buf_push_be16(buf, str_len + 3);
+                (void)net_buf_push_mem(buf, (const void *)BT_PBAP_TYPE_HDR_VCARD_LIST, str_len);
+                net_buf_push_be16(buf, str_len + 3U);
                 break;
             case BT_PBAP_PCE_PULL_VCARD_ENTRY:
                 str_len = (uint16_t)strlen(BT_PBAP_TYPE_HDR_VCARD);
-                net_buf_push_mem(buf, BT_PBAP_TYPE_HDR_VCARD, str_len);
-                net_buf_push_be16(buf, str_len + 3);
+                (void)net_buf_push_mem(buf, (const void *)BT_PBAP_TYPE_HDR_VCARD, str_len);
+                net_buf_push_be16(buf, str_len + 3U);
                 break;
             default:
+                LOG_ERR("ERROR COMMAND\n");
                 break;
         }
         net_buf_push_u8(buf, hi);
-        packet_length += str_len + 3;
+        packet_length += str_len + 3U;
     }
     /* SRM && SRMP */
     if (pbap_pce->goep_version >= BT_GOEP_VERSION_2_0)
@@ -513,26 +520,26 @@ static void bt_pbap_add_pbap_hdr(struct bt_pbap_pce *pbap_pce,
         {
             bt_srm.hi = OBEX_HDR_SRM;
             bt_srm.hv = OBEX_SRM_ENABLE;
-            packet_length += sizeof(struct bt_obex_hdr_u8);
-            net_buf_push_mem(buf, &bt_srm, sizeof(bt_srm));
+            packet_length += (uint16_t)sizeof(struct bt_obex_hdr_u8);
+            (void)net_buf_push_mem(buf, &bt_srm, sizeof(bt_srm));
         }
         if (wait)
         {
             bt_srmp.hi = OBEX_HDR_SRMP;
             bt_srm.hv  = OBEX_SRMP_WAIT;
-            packet_length += sizeof(bt_srmp);
-            net_buf_push_mem(buf, &bt_srmp, sizeof(bt_srmp));
+            packet_length += (uint16_t)sizeof(bt_srmp);
+            (void)net_buf_push_mem(buf, &bt_srmp, sizeof(bt_srmp));
         }
     }
 
     /* connection id */
     bt_conn_id.hi = OBEX_HDR_CONNECTION_ID;
     bt_conn_id.hv = 0;
-    packet_length += sizeof(bt_conn_id);
-    net_buf_push_mem(buf, &bt_conn_id, sizeof(bt_conn_id));
+    packet_length += (uint16_t)sizeof(bt_conn_id);
+    (void)net_buf_push_mem(buf, &bt_conn_id, sizeof(bt_conn_id));
 
     /* packet_length */
-    packet_length += 3;
+    packet_length += 3U;
     net_buf_push_be16(buf, packet_length);
 
     /* Opcode */
@@ -542,7 +549,7 @@ static void bt_pbap_add_pbap_hdr(struct bt_pbap_pce *pbap_pce,
 
 static int8_t bt_pal_pull_phonebook_param(char *name)
 {
-    /* Basic Name Requirements :  (xxx/) child_floader_name.vcf  */
+    /* Basic Name Requirements :  (xxx/) child_floader.vcf  */
     int8_t index = 0;
     uint8_t suffix_index = 0;
     char phonebook_name[10] = {0};
@@ -550,8 +557,8 @@ static int8_t bt_pal_pull_phonebook_param(char *name)
     {
         return -EINVAL;
     }
-    index = strlen(name) -1;
-    if (endwith(name, ".vcf") == 0)
+    index = (int8_t)strlen(name) -1;
+    if (endwith(name, (char *)".vcf") == 0)
     {
         return -EINVAL;
     }
@@ -567,11 +574,11 @@ static int8_t bt_pal_pull_phonebook_param(char *name)
         }
         index--;
     }
-    memcpy(phonebook_name, name + index + 1, suffix_index - index -1);
+    (void)memcpy(phonebook_name, name + index + 1, suffix_index - index -1);
     phonebook_name[suffix_index - index -1] = 0;
-    for (index = 0; index < child_floader_count; index++)
+    for (index = 0U; index < child_floader_count; index++)
     {
-        if (strcmp((char *)phonebook_name, child_floader_name[index]) == 0)
+        if (strcmp((char *)phonebook_name, child_floader[index]) == 0U)
         {
             break;
         }
@@ -585,12 +592,13 @@ static int8_t bt_pal_pull_phonebook_param(char *name)
 
 int bt_pbap_pce_pull_phonebook(struct bt_pbap_pce *pbap_pce, struct net_buf *buf, char *name, bool wait, enum bt_obex_req_flags flag)
 {
-    int retval = 0;
+    API_RESULT retval = 0U;
+    int appl_len = 0;
     PBAP_HEADER_STRUCT name_header;
     PBAP_APPL_PARAMS appl_params;
     PBAP_REQUEST_STRUCT req_info;
     PBAP_HEADERS pbap_header;
-    memset(&req_info, 0, sizeof(req_info));
+    (void)memset(&req_info, 0, sizeof(req_info));
     if (NULL == pbap_pce || NULL == buf)
     {
         return -EAGAIN;
@@ -600,7 +608,7 @@ int bt_pbap_pce_pull_phonebook(struct bt_pbap_pce *pbap_pce, struct net_buf *buf
     name_header.value  = NULL;
     name_header.length = 0;
     req_info.name      = &name_header;
-    if ((flag & BT_OBEX_REQ_START))
+    if (((uint8_t)flag & (uint8_t)BT_OBEX_REQ_START) != 0U)
     {
         if (bt_pal_pull_phonebook_param(name) < 0)
         {
@@ -613,14 +621,14 @@ int bt_pbap_pce_pull_phonebook(struct bt_pbap_pce *pbap_pce, struct net_buf *buf
     pbap_pce->lcl_wait = 0;
     if (wait)
     {
-        req_info.wait      = true;
+        req_info.wait      = 1U;
         pbap_pce->lcl_wait = wait;
     }
 
-    retval = bt_pbap_form_stack_param(buf, &appl_params);
-    if (retval < 0)
+    appl_len = bt_pbap_form_stack_param(buf, &appl_params);
+    if (appl_len < 0)
     {
-        PRINTF("INVAILD PARAMS\r\n");
+        LOG_ERR("INVAILD PARAMS\r\n");
         return -EINVAL;
     }
 
@@ -633,21 +641,21 @@ int bt_pbap_pce_pull_phonebook(struct bt_pbap_pce *pbap_pce, struct net_buf *buf
     bt_pbap_add_pbap_hdr(pbap_pce, buf, unicode_name, wait, retval, BT_PBAP_PCE_PULL_PHONEBOOK, flag);
 #endif
 
-    if (flag & BT_OBEX_REQ_START)
+    if (((uint8_t)flag & (uint8_t)BT_OBEX_REQ_START) != 0U)
     {
         retval = BT_pbap_pce_get_phonebook(pbap_pce->pbap_handle, &req_info);
     }
     else
     {
-        memset(&pbap_header, 0, sizeof(pbap_header));
+        (void)memset(&pbap_header, 0, sizeof(pbap_header));
         pbap_header.pbap_req_info = &req_info;
-        retval =BT_pbap_pce_send_request(pbap_pce->pbap_handle, PBAP_PCE_GET_PHONEBOOK_CFM, PBAP_SUCCESS_RSP, &pbap_header);
+        retval = BT_pbap_pce_send_request(pbap_pce->pbap_handle, PBAP_PCE_GET_PHONEBOOK_CFM, PBAP_SUCCESS_RSP, &pbap_header);
     }
 
     if (API_SUCCESS != retval)
     {
         LOG_ERR("Failed. Reason 0x%04X\r\n", retval);
-        return retval;
+        return -EIO;
     }
     else
     {
@@ -664,21 +672,21 @@ static int bt_pbap_pce_set_book_path_stack_param(PBAP_REQUEST_STRUCT *req_info, 
     {
         return -EINVAL;
     }
-    if (strcmp(name, "/") == 0)
+    if (strcmp(name, (char *)"/") == 0)
     {
         req_info->setpath_flag = PBAP_SET_ROOT_FOLDER;
         req_info->name->value  = NULL;
-        req_info->name->length = 0;
+        req_info->name->length = 0U;
         return 0;
     }
-    else if (strncmp(name, "..", 2U) == 0)
+    else if (strncmp(name, (char *)"..", 2U) == 0)
     {
         req_info->setpath_flag = PBAP_SET_PARENT_FOLDER;
         req_info->name->value  = NULL;
-        req_info->name->length = 0;
+        req_info->name->length = 0U;
         return 0;
     }
-    else if (strncmp(name, "./", 2U) == 0)
+    else if (strncmp(name, (char *)"./", 2U) == 0)
     {
         req_info->setpath_flag = PBAP_SET_CHILD_FOLDER;
         if (name[2] == '\0')
@@ -688,7 +696,7 @@ static int bt_pbap_pce_set_book_path_stack_param(PBAP_REQUEST_STRUCT *req_info, 
         else
         {
             req_info->name->value  = (uint8_t *)&name[2];
-            req_info->name->length = strlen(&name[2]);
+            req_info->name->length = (uint16_t)strlen(&name[2]);
             return 0;
         }
     }
@@ -696,8 +704,12 @@ static int bt_pbap_pce_set_book_path_stack_param(PBAP_REQUEST_STRUCT *req_info, 
     {
         req_info->setpath_flag = PBAP_SET_CHILD_FOLDER;
         req_info->name->value  = (uint8_t *)name;
-        req_info->name->length = strlen(name);
+        req_info->name->length = (uint16_t)strlen(name);
         return 0;
+    }
+    else
+    {
+        LOG_ERR("VAILD PATH\n");
     }
     return -EINVAL;
 }
@@ -709,14 +721,15 @@ static void bt_pbap_add_pbap_setPhonebookPath_hdr(struct net_buf *buf, char *nam
     uint16_t length;
     uint16_t packet_len;
     length = (uint16_t)strlen(name);
+    (void)memset(&bt_set_path_hdr, 0, sizeof(bt_set_path_hdr));
     bt_set_path_hdr.opcode = OBEX_SETPATH_OP;
-    bt_set_path_hdr.packet_length = 3;
+    bt_set_path_hdr.packet_length = 3U;
     /*FLAG*/
-    if (length == 1 && strcmp(name, "/") == 0)
+    if (length == 1U && strcmp(name, "/") == 0)
     {
         bt_set_path_hdr.Flags = 0x2U;
     }
-    else if (length == 2 && strcmp(name, "..") == 0)
+    else if (length == 2U && strcmp(name, "..") == 0)
     {
         bt_set_path_hdr.Flags = 0x3U;
     }
@@ -727,27 +740,27 @@ static void bt_pbap_add_pbap_setPhonebookPath_hdr(struct net_buf *buf, char *nam
             bt_set_path_hdr.Flags = 0x2U;
         }
     }
-    bt_set_path_hdr.packet_length += 1;
+    bt_set_path_hdr.packet_length += 1U;
     /*constant*/
     bt_set_path_hdr.constant = 0;
-    bt_set_path_hdr.packet_length += 1;
+    bt_set_path_hdr.packet_length += 1U;
     /*connextion_id*/
     bt_set_path_hdr.conn_id.hi = OBEX_HDR_CONNECTION_ID;
     bt_set_path_hdr.conn_id.hv = 0;
-    bt_set_path_hdr.packet_length += sizeof(struct bt_obex_hdr_u32);
+    bt_set_path_hdr.packet_length += (uint16_t)sizeof(struct bt_obex_hdr_u32);
 
     if (bt_set_path_hdr.Flags == 0x2U)
     {
         /* name */
         hi     = OBEX_HDR_NAME;
-        length = (uint16_t)strlen(name) + 3;
-        net_buf_push_mem(buf, name, length - 3);
+        length = (uint16_t)strlen(name) + 3U;
+        (void)net_buf_push_mem(buf, name, length - 3U);
         net_buf_push_be16(buf, length);
         net_buf_push_u8(buf, hi);
     }
     packet_len = bt_set_path_hdr.packet_length;
-    bt_set_path_hdr.packet_length = sys_cpu_to_be16(packet_len);
-    net_buf_push_mem(buf, &bt_set_path_hdr, sizeof(bt_set_path_hdr));
+    bt_set_path_hdr.packet_length = (uint16_t)sys_cpu_to_be16(packet_len);
+    (void)net_buf_push_mem(buf, &bt_set_path_hdr, sizeof(bt_set_path_hdr));
 }
 
 /*
@@ -758,18 +771,18 @@ static void bt_pbap_add_pbap_setPhonebookPath_hdr(struct net_buf *buf, char *nam
 */
 int bt_pbap_pce_set_phonebook_path(struct bt_pbap_pce *pbap_pce, struct net_buf *buf, char *name)
 {
-    int retval = 0;
+    API_RESULT retval = 0;
     PBAP_HEADER_STRUCT name_header;
     PBAP_REQUEST_STRUCT req_info;
     if (pbap_pce == NULL || buf == NULL)
     {
         return -EAGAIN;
     }
-    memset(&req_info, 0, sizeof(PBAP_REQUEST_STRUCT));
+    (void)memset(&req_info, 0, sizeof(PBAP_REQUEST_STRUCT));
     req_info.name = &name_header;
 
     retval = bt_pbap_pce_set_book_path_stack_param(&req_info, name);
-    if (retval != 0)
+    if (API_SUCCESS != retval)
     {
         return retval;
     }
@@ -782,7 +795,7 @@ int bt_pbap_pce_set_phonebook_path(struct bt_pbap_pce *pbap_pce, struct net_buf 
     if (API_SUCCESS != retval)
     {
         LOG_ERR(" Failed. Reason 0x%04X \n", retval);
-        return retval;
+        return -EIO;
     }
     else
     {
@@ -797,7 +810,7 @@ static int8_t bt_pal_pull_vcard_listing_param(char *name)
     uint8_t index = 0;
     for (index = 0; index < child_floader_count; index++)
     {
-        if (strcmp(name, child_floader_name[index]) == 0)
+        if (strcmp(name, child_floader[index]) == 0)
         {
             break;
         }
@@ -810,7 +823,8 @@ static int8_t bt_pal_pull_vcard_listing_param(char *name)
 }
 int bt_pbap_pce_pull_vcard_listing(struct bt_pbap_pce *pbap_pce, struct net_buf *buf, char *name, bool wait, enum bt_obex_req_flags flag)
 {
-    int retval = 0;
+    API_RESULT retval = 0U;
+    int appl_len = 0;
     PBAP_HEADER_STRUCT name_header;
     PBAP_APPL_PARAMS appl_params;
     PBAP_REQUEST_STRUCT req_info;
@@ -823,9 +837,9 @@ int bt_pbap_pce_pull_vcard_listing(struct bt_pbap_pce *pbap_pce, struct net_buf 
     name_header.value  = NULL;
     name_header.length = 0;
     req_info.name      = &name_header;
-    if ((flag & BT_OBEX_REQ_START))
+    if (((uint8_t)flag & (uint8_t)BT_OBEX_REQ_START) != 0U)
     {
-        if (name != NULL && strlen(name) > 0)
+        if (name != NULL && strlen(name) > 0U)
         {
             if(bt_pal_pull_vcard_listing_param(name) < 0)
             {
@@ -839,12 +853,12 @@ int bt_pbap_pce_pull_vcard_listing(struct bt_pbap_pce *pbap_pce, struct net_buf 
     pbap_pce->lcl_wait = 0;
     if (wait)
     {
-        req_info.wait      = true;
+        req_info.wait      = 1U;
         pbap_pce->lcl_wait = wait;
     }
 
-    retval = bt_pbap_form_stack_param(buf, &appl_params);
-    if (retval < 0)
+    appl_len = bt_pbap_form_stack_param(buf, &appl_params);
+    if (appl_len < 0)
     {
         LOG_ERR("INVAILD PARAMS\r\n");
         return -EINVAL;
@@ -856,20 +870,20 @@ int bt_pbap_pce_pull_vcard_listing(struct bt_pbap_pce *pbap_pce, struct net_buf 
     bt_pbap_add_pbap_hdr(pbap_pce, buf, name, wait, retval, BT_PBAP_PCE_PULL_VCARD_LISTING, flag);
 #endif
 
-    if (flag & BT_OBEX_REQ_START)
+    if (((uint8_t)flag & (uint8_t)BT_OBEX_REQ_START) != 0U)
     {
         retval = BT_pbap_pce_get_vcard_list(pbap_pce->pbap_handle, &req_info);
     }
     else
     {
-        memset(&pbap_header, 0, sizeof(pbap_header));
+        (void)memset(&pbap_header, 0, sizeof(pbap_header));
         pbap_header.pbap_req_info = &req_info;
         retval = BT_pbap_pce_send_request(pbap_pce->pbap_handle, PBAP_PCE_GET_VCARD_LIST_CFM, BT_PBAP_SUCCESS_RSP, &pbap_header);
     }
     if (API_SUCCESS != retval)
     {
         LOG_ERR("Failed. Reason 0x%04X\r\n", retval);
-        return retval;
+        return -EIO;
     }
     else
     {
@@ -888,9 +902,9 @@ static int8_t bt_pal_pull_vcard_entry_param(char *name)
     {
         return -EINVAL;
     }
-    if (endwith(name, ".vcf") == 0)
+    if (endwith(name, (char *)".vcf") == 0)
     {
-        if(startwith(name, "X-BT-UID:") == 0)
+        if(startwith(name, (char *)"X-BT-UID:") == 0)
         {
             return -EINVAL;
         }
@@ -900,7 +914,8 @@ static int8_t bt_pal_pull_vcard_entry_param(char *name)
 
 int bt_pbap_pce_pull_vcard_entry(struct bt_pbap_pce *pbap_pce, struct net_buf *buf, char *name, bool wait, enum bt_obex_req_flags flag)
 {
-    int retval = 0;
+    API_RESULT retval = 0U;
+    int appl_len = 0;
     PBAP_HEADER_STRUCT name_header;
     PBAP_APPL_PARAMS appl_params;
     PBAP_REQUEST_STRUCT req_info;
@@ -913,7 +928,7 @@ int bt_pbap_pce_pull_vcard_entry(struct bt_pbap_pce *pbap_pce, struct net_buf *b
     name_header.value  = NULL;
     name_header.length = 0;
     req_info.name      = &name_header;
-    if ((flag & BT_OBEX_REQ_START))
+    if (((uint8_t)flag & (uint8_t)BT_OBEX_REQ_START) != 0U)
     {
         if (name == NULL || bt_pal_pull_vcard_entry_param(name) < 0)
         {
@@ -926,12 +941,12 @@ int bt_pbap_pce_pull_vcard_entry(struct bt_pbap_pce *pbap_pce, struct net_buf *b
     pbap_pce->lcl_wait = 0;
     if (wait)
     {
-        req_info.wait      = true;
+        req_info.wait      = 1U;
         pbap_pce->lcl_wait = wait;
     }
 
-    retval = bt_pbap_form_stack_param(buf, &appl_params);
-    if (retval < 0)
+    appl_len = bt_pbap_form_stack_param(buf, &appl_params);
+    if (appl_len < 0)
     {
         LOG_ERR("INVAILD PARAMS\r\n");
         return -EINVAL;
@@ -943,20 +958,20 @@ int bt_pbap_pce_pull_vcard_entry(struct bt_pbap_pce *pbap_pce, struct net_buf *b
     bt_pbap_add_pbap_hdr(pbap_pce, buf, name, wait, retval, BT_PBAP_PCE_PULL_VCARD_ENTRY, flag);
 #endif
 
-    if (flag & BT_OBEX_REQ_START)
+    if (((uint8_t)flag & (uint8_t)BT_OBEX_REQ_START) != 0U)
     {
         retval = BT_pbap_pce_get_vcard(pbap_pce->pbap_handle, &req_info);
     }
     else
     {
-        memset(&pbap_header, 0, sizeof(pbap_header));
+        (void)memset(&pbap_header, 0, sizeof(pbap_header));
         pbap_header.pbap_req_info = &req_info;
         retval = BT_pbap_pce_send_request(pbap_pce->pbap_handle, PBAP_PCE_GET_VCARD_CFM, BT_PBAP_SUCCESS_RSP, &pbap_header);
     }
     if (API_SUCCESS != retval)
     {
         LOG_ERR("Failed. Reason 0x%04X\r\n", retval);
-        return retval;
+        return -EIO;
     }
     else
     {
@@ -1000,9 +1015,9 @@ static void appl_params_from_stack_to_buf(struct net_buf *buf, PBAP_APPL_PARAMS 
     for (uint8_t index = 0; index < BT_PBAP_APPL_PARAM_HDR_COUNT; ++index)
     {
         if (PBAP_GET_APPL_PARAM_FLAG(appl_param->appl_param_flag,
-                                     (uint16_t)1U << index % BT_PBAP_APPL_PARAM_HDR_COUNT) != 0)
+                                     ((uint16_t)1U << index % BT_PBAP_APPL_PARAM_HDR_COUNT)) != 0)
         {
-            bt_pabp_set_appl_params_hdr_value(index + 1, appl_param, buf);
+            bt_pabp_set_appl_params_hdr_value(index + 1U, appl_param, buf);
         }
     }
 }
@@ -1020,7 +1035,6 @@ static API_RESULT ethermind_pbap_pce_event_callback(
     PBAP_HEADER_STRUCT uid;
     struct net_buf *buf;
     PBAP_APPL_PARAMS *appl_param;
-    uint16_t disconn_reason = 0;
 
     struct bt_pbap_pce *pbap_pce = bt_pabp_pce_lookup_bt_handle((uint8_t)pbap_handle);
     switch (event_type)
@@ -1044,7 +1058,7 @@ static API_RESULT ethermind_pbap_pce_event_callback(
                 }
                 else
                 {
-                    bt_pal_pbap_pce_stop_instance(pbap_pce);
+                    (void)bt_pal_pbap_pce_stop_instance(pbap_pce);
                     pbap_pce_free_instance(pbap_pce);
                 }
             }
@@ -1053,7 +1067,6 @@ static API_RESULT ethermind_pbap_pce_event_callback(
             {
                 /* Transport close has been sent in the underlying layer so don't need call
                  * BT_pbap_pce_trans_disconnect. */
-                disconn_reason = BT_PBAP_FORBIDDEN_RSP;
                 break;
             }
 
@@ -1062,16 +1075,16 @@ static API_RESULT ethermind_pbap_pce_event_callback(
                 if (pbap_pce->auth == NULL || pbap_pce->auth->pin_code == NULL)
                 {
                     LOG_INF("pse want to authicate pce, please offer user_id and password if exit\r\n \n");
-                    if (pbap_pce_cb->get_auth_info)
+                    if (pbap_pce_cb->get_auth_info != NULL)
                     {
                         pbap_pce_cb->get_auth_info(pbap_pce, pbap_pce->auth);
                     }
                 }
                 if (pbap_pce->auth != NULL && pbap_pce->auth->pin_code != NULL &&
-                    strlen(pbap_pce->auth->pin_code) > 0)
+                    strlen(pbap_pce->auth->pin_code) > 0U)
                 {
-                    memset(&pbap_req_header, 0, sizeof(PBAP_HEADERS));
-                    memset(&connect_req_send, 0, sizeof(PBAP_HEADERS));
+                    (void)memset(&pbap_req_header, 0, sizeof(PBAP_HEADERS));
+                    (void)memset(&connect_req_send, 0, sizeof(PBAP_HEADERS));
                     password.value                    = (UCHAR *)pbap_pce->auth->pin_code;
                     password.length                   = (uint16_t)strlen(pbap_pce->auth->pin_code);
                     uid.value                         = (UCHAR *)pbap_pce->auth->user_id;
@@ -1094,8 +1107,7 @@ static API_RESULT ethermind_pbap_pce_event_callback(
                 }
                 else
                 {
-                    disconn_reason = BT_PBAP_FORBIDDEN_RSP;
-                    bt_pal_pbap_pce_stop_instance(pbap_pce);
+                    (void)bt_pal_pbap_pce_stop_instance(pbap_pce);
                     pbap_pce_free_instance(pbap_pce);
                     break;
                 }
@@ -1140,7 +1152,7 @@ static API_RESULT ethermind_pbap_pce_event_callback(
             {
                 /* no action*/
             }
-            if (pbap_pce_cb != NULL && pbap_pce_cb->pull_phonebook)
+            if (pbap_pce_cb != NULL && pbap_pce_cb->pull_phonebook != NULL)
             {
                 pbap_pce_cb->pull_phonebook(pbap_pce, event_result, buf);
             }
@@ -1176,7 +1188,7 @@ static API_RESULT ethermind_pbap_pce_event_callback(
             {
                 /* no action*/
             }
-            if (pbap_pce_cb != NULL && pbap_pce_cb->pull_vcard_listing)
+            if (pbap_pce_cb != NULL && pbap_pce_cb->pull_vcard_listing != NULL)
             {
                 pbap_pce_cb->pull_vcard_listing(pbap_pce, event_result, buf);
             }
@@ -1237,18 +1249,15 @@ static API_RESULT ethermind_pbap_pce_event_callback(
             break;
         case PBAP_PCE_TRANSPORT_CLOSE_CFM:
         case PBAP_PCE_TRANSPORT_CLOSE_IND:
-            bt_pal_pbap_pce_stop_instance(pbap_pce);
+            (void)bt_pal_pbap_pce_stop_instance(pbap_pce);
             pbap_pce_free_instance(pbap_pce);
             if (pbap_pce_cb != NULL && pbap_pce_cb->disconnected != NULL && pbap_pce != NULL)
             {
-                if (disconn_reason == BT_PBAP_FORBIDDEN_RSP)
-                {
-                    event_result = BT_PBAP_FORBIDDEN_RSP;
-                }
                 pbap_pce_cb->disconnected(pbap_pce, event_result);
             }
             break;
         default:
+            LOG_ERR("ERROR EVENT\n");
             break;
     }
     return API_SUCCESS;
@@ -1256,38 +1265,38 @@ static API_RESULT ethermind_pbap_pce_event_callback(
 
 static void bt_pbap_add_connect_hdr(struct net_buf *buf, char *password, uint32_t peer_feature)
 {
-    uint16_t packet_length = 1 + 2 + 1 + 1 + 2 + 19;
+    uint16_t packet_length = 1U + 2U + 1U + 1U + 2U + 19U;
 
     /*  opcode */
-    net_buf_add_u8(buf, OBEX_CONNECT_OP);
+    (void)net_buf_add_u8(buf, OBEX_CONNECT_OP);
     /* packet_length */
-    if (password)
+    if (password != NULL)
     {
-        packet_length += 21;
+        packet_length += 21U;
     }
-    packet_length += 9;
+    packet_length += 9U;
     net_buf_add_be16(buf, packet_length);
 
     /*version num*/
-    net_buf_add_u8(buf, 0x10);
+    (void)net_buf_add_u8(buf, 0x10);
 
     /* flags*/
-    net_buf_add_u8(buf, 0x0U);
+    (void)net_buf_add_u8(buf, 0x0U);
 
     /* maximum packet length*/
     net_buf_add_be32(buf, CONFIG_BT_PBAP_PCE_MAX_PKT_LEN);
 
     /*target*/
-    net_buf_add_u8(buf, OBEX_HDR_TARGET);
-    net_buf_add_be16(buf, 16 + 3);
-    net_buf_add_mem(buf, pbap_target_id, 16);
+    (void)net_buf_add_u8(buf, OBEX_HDR_TARGET);
+    net_buf_add_be16(buf, 16U + 3U);
+    net_buf_add_mem(buf, pbap_target_id, 16U);
 
     /* auth challenge*/
     if (password)
     {
         // BT_PBAP_ADD_AUTH_CHALLENGE_NONCE(buf, password);
     }
-    if (peer_feature)
+    if (peer_feature != 0U)
     {
         /* supported feature*/
         BT_PBAP_ADD_PARAMS_PBAP_SUPPORTED_FEATURES(buf, CONFIG_BT_PBAP_PCE_SUPPORTED_FEATURE);
@@ -1301,12 +1310,14 @@ static int bt_pbap_pce_connect(struct bt_conn *conn,
                                uint32_t peer_feature,
                                struct bt_pbap_pce **pbap_pce)
 {
-    API_RESULT retval = 0;
+    API_RESULT retval = 0U;
     struct bt_conn_info info;
     struct bt_pbap_pce *_pbap_pce;
     PBAP_CONNECT_STRUCT connect_info;
     PBAP_HEADER_STRUCT pass_word;
-    memset(&connect_info, 0, sizeof(connect_info));
+    uint8_t bt_addr[BT_BD_ADDR_SIZE] = {0};
+    (void)memset(&info, 0, sizeof(info));
+    (void)memset(&connect_info, 0, sizeof(connect_info));
 #if CONFIG_BT_ZEPHYR_BUF
     struct net_buf *buf;
     buf = bt_conn_create_pdu(NULL, BT_L2CAP_BUF_SIZE(2U));
@@ -1332,10 +1343,11 @@ static int bt_pbap_pce_connect(struct bt_conn *conn,
     _pbap_pce->peer_feature  = BT_PBAP_SUPPORTED_FEATURES_V11;
 
     bt_conn_get_info(conn, &info);
-    memcpy(connect_info.bd_addr, info.br.dst, BT_BD_ADDR_SIZE);
+    (void)memcpy(bt_addr, info.br.dst, BT_BD_ADDR_SIZE);
+    connect_info.bd_addr = bt_addr;
     /* no Authenticate*/
     connect_info.auth_flag = 0;
-    if (peer_feature)
+    if (peer_feature != 0U)
     {
         /* add pbap supported feature*/
         _pbap_pce->peer_feature              = peer_feature;
@@ -1343,7 +1355,7 @@ static int bt_pbap_pce_connect(struct bt_conn *conn,
     }
     connect_info.psm          = psm;
     connect_info.server_ch_no = channel;
-    if (psm)
+    if (psm != 0U)
     {
         _pbap_pce->goep_version = BT_GOEP_VERSION_2_0;
     }
@@ -1351,7 +1363,7 @@ static int bt_pbap_pce_connect(struct bt_conn *conn,
 
     if (auth != NULL)
     {
-        if (auth->pin_code != NULL && strlen(auth->pin_code) > 0)
+        if (auth->pin_code != NULL && strlen(auth->pin_code) > 0U)
         {
             pass_word.value           = (UCHAR *)auth->pin_code;
             pass_word.length          = (uint16_t)strlen(auth->pin_code);
@@ -1366,18 +1378,18 @@ static int bt_pbap_pce_connect(struct bt_conn *conn,
     {
         LOG_ERR("Initialization Failed. Reason 0x%04X \n", retval);
         pbap_pce_free_instance(_pbap_pce);
-        return retval;
+        return -EIO;
     }
     else
     {
-        PRINTF("Successfully START PBAP PCE entities \n");
+        LOG_INF("Successfully START PBAP PCE entities \n");
     }
 
     retval = BT_pbap_pce_connect(_pbap_pce->pbap_handle, &connect_info);
     if (API_SUCCESS != retval)
     {
         LOG_ERR("Failed. Reason 0x%04X\r\n", retval);
-        return retval;
+        return -EIO;
     }
     else
     {

@@ -510,7 +510,7 @@ static XA_ERRORCODE xa_opus_encoder_get_mem_info_size(XA_OPUS_Encoder *d, WORD32
 
     case 2:
         /* ...scratch buffer */
-        *(WORD32 *)pv_value = xa_opus_enc_get_scratch_byte_size();
+        *(WORD32 *)pv_value = xa_opus_enc_get_scratch_byte_size(d->channels, d->sample_rate);
         return XA_NO_ERROR;
 
     default:

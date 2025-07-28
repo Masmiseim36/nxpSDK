@@ -15,7 +15,7 @@
 /*${header:end}*/
 
 /*${function:start}*/
-#if (DEMO_PANEL_RM67162 == DEMO_PANEL)
+#if (DEMO_PANEL_RM67162 == DEMO_PANEL) || (DEMO_PANEL_CO5300 == DEMO_PANEL)
 void GPIO_INTA_IRQHandler(void)
 {
     uint32_t intStat;
@@ -51,7 +51,7 @@ void BOARD_InitHardware(void)
     GPIO_PortInit(GPIO, BOARD_MIPI_BL_PORT);
     GPIO_PortInit(GPIO, BOARD_MIPI_RST_PORT);
 
-#if (DEMO_PANEL_RM67162 == DEMO_PANEL)
+#if (DEMO_PANEL_RM67162 == DEMO_PANEL) || (DEMO_PANEL_CO5300 == DEMO_PANEL)
     GPIO_PortInit(GPIO, BOARD_MIPI_TE_PORT);
 #endif
 

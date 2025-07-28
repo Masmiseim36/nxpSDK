@@ -21,8 +21,13 @@
 #include <stdint.h>
 #include <wifi_events.h>
 #include <wifi.h>
+#if CONFIG_WPA_SUPP
+#if CONFIG_WPA_SUPP_WPS
+#include "lwip/netif.h"
+#endif
+#endif
 
-#define WLAN_DRV_VERSION "v1.3.r48.p31"
+#define WLAN_DRV_VERSION "v1.3.r48.p43"
 
 #if CONFIG_WPA2_ENTP
 #include <wm_mbedtls_helper_api.h>
@@ -44,6 +49,15 @@
 #else
 #define wlcm_d(...)
 #endif /* ! CONFIG_WLCMGR_DEBUG */
+
+#if CONFIG_WIFI_GET_LOG
+/** Wi-Fi statistics */
+#define WLAN_STATS_INC(priv, x) (++(priv->x))
+#define WLAN_STATS_GET(priv, x) (priv->x)
+#else
+#define WLAN_STATS_INC(priv, x)
+#define WLAN_STATS_GET(priv, x)
+#endif
 
 #if (defined(configSUPPORT_STATIC_ALLOCATION) && (configSUPPORT_STATIC_ALLOCATION > 0U)) && \
     !((defined(configSUPPORT_DYNAMIC_ALLOCATION) && (configSUPPORT_DYNAMIC_ALLOCATION == 1U)))
@@ -180,7 +194,7 @@ typedef enum
 #if defined(SD8997) || defined(SD9098) || defined(SD9064) || defined(RW610)
 #define HOST_WAKEUP_GPIO_PIN 12
 #define CARD_WAKEUP_GPIO_PIN 13
-#elif defined(SD9177) || defined(IW610)
+#elif defined(SD9177)
 #define HOST_WAKEUP_GPIO_PIN 17
 #define CARD_WAKEUP_GPIO_PIN 16
 #elif defined(WIFI_88W8987_BOARD_MURATA_1ZM_M2)
@@ -189,11 +203,15 @@ typedef enum
 #elif defined(WIFI_IW416_BOARD_MURATA_1XK_M2)
 #define HOST_WAKEUP_GPIO_PIN 2
 #define CARD_WAKEUP_GPIO_PIN 16
+#elif defined(WIFI_IW610_BOARD_MURATA_2LL_M2)
+#define HOST_WAKEUP_GPIO_PIN 4
+#define CARD_WAKEUP_GPIO_PIN 16
 #else
 #define HOST_WAKEUP_GPIO_PIN 1
 #define CARD_WAKEUP_GPIO_PIN 16
 #endif
 
+#define WLAN_MGMT_PROBE_RQST MBIT(4)
 #define WLAN_MGMT_DIASSOC MBIT(10)
 #define WLAN_MGMT_AUTH    MBIT(11)
 #define WLAN_MGMT_DEAUTH  MBIT(12)
@@ -1266,9 +1284,9 @@ struct wlan_network_security
     char eap_password[PASSWORD_MAX_LENGTH];
 #if CONFIG_EAP_MSCHAPV2
     /** whether verify peer with CA or not
-     *  0: not verify,
-     *  1: verify. */
-    bool verify_peer;
+     *  false: not verify,
+     *  true: verify. */
+    bool verify_peer_cert;
 #endif
     /** CA (Certificate Authority) certification blob (Binary Large Object) in PEM (Base64 ASCII)/DER (binary) format */
     unsigned char *ca_cert_data;
@@ -1382,6 +1400,9 @@ struct wifi_scan_params_t
 /** Wi-Fi firmware stat from \ref wifi_pkt_stats_t
  */
 typedef wifi_pkt_stats_t wlan_pkt_stats_t;
+/** Wi-Fi driver stat from \ref wifi_stats_t
+ */
+typedef wifi_stats_t wlan_stats_t;
 #endif
 
 /** Configuration for Wi-Fi scan channel list from
@@ -1480,14 +1501,18 @@ typedef wifi_twt_setup_config_t wlan_twt_setup_config_t;
  * \ref wifi_twt_teardown_config_t
  */
 typedef wifi_twt_teardown_config_t wlan_twt_teardown_config_t;
-/** Configuration for Broadcast TWT setup
+/** Configuration for Broadcast TWT Setup
  * \ref wifi_btwt_config_t
  */
 typedef wifi_btwt_config_t wlan_btwt_config_t;
-/** Configuration for TWT report
+/** Configuration for TWT Report
  * \ref wifi_twt_report_t
  */
 typedef wifi_twt_report_t wlan_twt_report_t;
+/** Configuration for TWT Information
+ * \ref wifi_twt_information_t
+ */
+typedef wifi_twt_information_t wlan_twt_information_t;
 #endif /* CONFIG_11AX_TWT */
 #if CONFIG_MMSF
 #define WLAN_AMPDU_DENSITY 0x30
@@ -1529,6 +1554,17 @@ typedef wifi_csi_config_params_t wlan_csi_config_params_t;
 typedef wifi_net_monitor_t wlan_net_monitor_t;
 #endif
 
+#if HOST_TXRX_MGMT_FRAME
+#define TXRX_MGMT_FRAME_HEADER_SIZE 8
+// frmctl + durationid + addr1 + addr2 + addr3 + seqctl + addr4
+#define TXRX_MGMT_FRAME_HEADER_LEN (2 + 2 + 6 + 6 + 6 + 2 + 6)
+
+/** Configuration for host tx frame from
+ * \ref wifi_host_tx_frame_params_t
+ */
+typedef wifi_host_tx_frame_params_t wlan_host_tx_frame_params_t;
+#endif
+
 #if (CONFIG_WIFI_IND_RESET) && (CONFIG_WIFI_IND_DNLD)
 /** Configuration for GPIO independent reset
  * \ref wifi_indrst_cfg_t
@@ -1548,6 +1584,10 @@ typedef txrate_setting wlan_txrate_setting;
  * \ref wifi_rssi_info_t
  */
 typedef wifi_rssi_info_t wlan_rssi_info_t;
+#endif
+
+#if CONFIG_WIFI_CHANNEL_LOAD
+typedef wifi_802_11_chan_load_t wlan_802_11_chan_load_t;
 #endif
 
 #if CONFIG_EXTERNAL_COEX_PTA
@@ -1694,7 +1734,7 @@ struct ipv6_config
     /** The address type: linklocal, site-local or global. */
     unsigned char addr_type;
     /** The state of IPv6 address (Tentative, Preferred, etc.). */
-    unsigned char addr_state;
+    uint8_t addr_state;
 };
 #endif
 
@@ -1924,6 +1964,11 @@ struct wlan_network
     /** Neighbor report support */
     bool neighbor_report_supported;
 #endif
+#if CONFIG_11AX
+#if CONFIG_11AX_TWT
+    bool twt_capab;
+#endif
+#endif
 };
 
 /** This structure is for IEEE PS (power save) configuration */
@@ -1979,6 +2024,8 @@ enum wlan_mon_task_event
 {
     HOST_SLEEP_HANDSHAKE = 1,
     HOST_SLEEP_EXIT,
+    HOST_SLEEP_UART_NOTIFY,
+    HOST_SLEEP_HS_SKIP,
     WIFI_RECOVERY_REQ,
 };
 
@@ -2111,9 +2158,9 @@ typedef struct _rx_pkt_he_rate_info
 /** Sum of RX packets. */
 typedef struct _rx_pkt_rate_info
 {
-    /** Sum of RX NSS (N*N MIMO spatial stream) packets. 
+    /** Sum of RX NSS (N*N MIMO spatial stream) packets.
     nss_txcnt[0] is for NSS 1,
-    nss_txcnt[1] is for NSS 2. 
+    nss_txcnt[1] is for NSS 2.
     */
     t_u32 nss_rxcnt[2];
     /** Sum of received packets for all STBC rates. */
@@ -2697,7 +2744,7 @@ int wlan_stop_network(const char *name);
  *  \return WM_SUCCESS if the MAC address was copied.
  *  \return -WM_E_INVAL if \a dest is NULL.
  */
-int wlan_get_mac_address(uint8_t *dest);
+int wlan_get_mac_address(unsigned char *dest);
 
 /** Retrieve the Wi-Fi MAC address of the uAP interface.
  *
@@ -2712,6 +2759,22 @@ int wlan_get_mac_address(uint8_t *dest);
  *  \return -WM_E_INVAL if \a dest is NULL.
  */
 int wlan_get_mac_address_uap(uint8_t *dest);
+
+#if CONFIG_WPA_SUPP_P2P
+/** Retrieve the wireless MAC address of wfd interface.
+ *
+ *  This function copies the MAC address of the wireless interface to
+ *  the 6-byte array pointed to by \a dest.  In the event of an error, nothing
+ *  is copied to \a dest.
+ *
+ *  \param[out] dest A pointer to a 6-byte array where the MAC address will be
+ *              copied.
+ *
+ *  \return WM_SUCCESS if the MAC address was copied.
+ *  \return -WM_E_INVAL if \a dest is NULL.
+ */
+int wlan_get_wfd_mac_address(unsigned char *dest);
+#endif
 
 /** Retrieve the IP address configuration of the station interface.
  *
@@ -3339,7 +3402,6 @@ int wlan_get_roaming_status(void);
 #endif
 
 #if CONFIG_HOST_SLEEP
-#ifdef RW610
 #if CONFIG_MEF_CFG
 /** Wowlan (wake on wireless LAN) configuration.
  * This function may be called to configure host sleep in firmware.
@@ -3377,7 +3439,6 @@ void wlan_config_host_sleep(bool is_manual, t_u8 is_periodic);
  * \return kStatus_Success if successful else return -WM_FAIL.
  */
 status_t wlan_hs_send_event(int id, void *data);
-#endif /*RW610*/
 
 /** Cancel host sleep.
  * This function is called to cancel the host sleep in the firmware.
@@ -3453,7 +3514,7 @@ int wlan_set_ieeeps_cfg(struct wlan_ieeeps_config *ps_cfg);
  * periodically wakes up to check if the AP has any pending packets for it. A
  * longer listen interval implies that the Wi-Fi SoC stays in power save for a
  * longer duration at the cost of additional delays while receiving data.
- * Note that choosing incorrect value for listen interval 
+ * Note that choosing incorrect value for listen interval
  * causes poor response from device during data transfer.
  * Actual listen interval selected by firmware is equal to closest DTIM.\n
  * For example:\n
@@ -3487,7 +3548,7 @@ void wlan_configure_delay_to_ps(unsigned int timeout_ms);
  *
  * param [in] timeout_ms: timout time, in milliseconds.
  *
- * \note The minimum value of \ref timeout_ms is 100.
+ * \note The minimum value of \ref timeout_ms is 10.
  */
 void wlan_configure_idle_time(unsigned int timeout_ms);
 
@@ -3938,14 +3999,6 @@ int wlan_uap_get_pmfcfg(uint8_t *mfpc, uint8_t *mfpr);
  */
 int wlan_set_packet_filters(wlan_flt_cfg_t *flt_cfg);
 
-/**
- * Use this API to enable ARP (address resolution protocol) offload in Wi-Fi firmware
- *
- * \return WM_SUCCESS if operation is successful.
- * \return -WM_FAIL if command fails.
- */
-int wlan_set_auto_arp(void);
-
 #if CONFIG_AUTO_PING
 /**
  * Use this API to enable ping offload in Wi-Fi firmware.
@@ -3956,22 +4009,18 @@ int wlan_set_auto_arp(void);
 int wlan_set_auto_ping(void);
 #endif /*  CONFIG_AUTO_PING */
 
+#if (CONFIG_HOST_SLEEP && CONFIG_MEF_CFG)
 /**
  * Use this API to enable WOWLAN (wake-on-wireless-LAN) on magic packet RX in Wi-Fi firmware
  *
+ * \param[in] bss_type:   0--for bss type as sta, 1--for bss type as uap
  * \param[in] ptn_cfg: A pointer to \ref wlan_wowlan_ptn_cfg_t containing wake on Wi-Fi pattern configuration
  *
  *\return WM_SUCCESS if operation is successful.
  *\return -WM_FAIL if command fails
  */
-int wlan_wowlan_cfg_ptn_match(wlan_wowlan_ptn_cfg_t *ptn_cfg);
-/**
- * Use this API to enable NS offload in Wi-Fi firmware.
- *
- * \return WM_SUCCESS if operation is successful.
- * \return -WM_FAIL if command fails.
- */
-int wlan_set_ipv6_ns_offload(void);
+int wlan_wowlan_cfg_ptn_match(enum wlan_bss_type bss_type, wlan_wowlan_ptn_cfg_t *ptn_cfg);
+#endif
 
 #if CONFIG_HOST_SLEEP
 
@@ -3980,22 +4029,6 @@ void wlan_hs_pre_cfg(void);
 
 /** Use this API to get and print the reason of waking up from host sleep */
 void wlan_hs_post_cfg(void);
-
-/**
- * Use this API to configure host sleep parameters in Wi-Fi firmware.
- *
- * \param[in] wakeup_condition: bit 0: WAKE_ON_ALL_BROADCAST
- *                              bit 1: WAKE_ON_UNICAST
- *                              bit 2: WAKE_ON_MAC_EVENT
- *                              bit 3: WAKE_ON_MULTICAST
- *                              bit 4: WAKE_ON_ARP_BROADCAST
- *                              bit 6: WAKE_ON_MGMT_FRAME
- *                              All bit 0 discard and not wakeup host
- *
- * \return WM_SUCCESS if operation is successful.
- * \return -WM_FAIL if command fails.
- */
-int wlan_send_host_sleep(uint32_t wakeup_condition);
 
 /**
  * Use this API to get host sleep wakeup reason from Wi-Fi firmware after waking up from host sleep by Wi-Fi.
@@ -4061,6 +4094,31 @@ int wlan_get_log(wlan_pkt_stats_t *stats);
  * \return -WM_FAIL if command fails.
  */
 int wlan_uap_get_log(wlan_pkt_stats_t *stats);
+
+/**
+ * Use this API to get the various statistics of STA/uAP from Wi-Fi driver
+ *
+ * \param[out] stats: A pointer to structure where stats collected from Wi-Fi driver
+ *	      can be copied.\n
+ *            Explore the elements of the \ref wlan_stats_t strucutre for
+ * 	      more information on stats.
+ *
+ * \param[in] bss_type: 0: STA, 1: uAP
+ *
+ * \return WM_SUCCESS if operation is successful.
+ * \return -WM_FAIL if command fails.
+ */
+int wlan_get_stats(wlan_stats_t *stats, enum wlan_bss_type bss_type);
+
+/**
+ * Use this API to reset the various statistics of STA/uAP from Wi-Fi driver
+ *
+ * \param[in] bss_type: 0: STA, 1: uAP
+ *
+ * \return WM_SUCCESS if operation is successful.
+ * \return -WM_FAIL if command fails.
+ */
+int wlan_reset_stats(enum wlan_bss_type bss_type);
 #endif
 
 /** Get station interface power save mode.
@@ -4072,6 +4130,15 @@ int wlan_uap_get_log(wlan_pkt_stats_t *stats);
  * \return -WM_E_INVAL if \a ps_mode was NULL.
  */
 int wlan_get_ps_mode(enum wlan_ps_mode *ps_mode);
+
+/** Get station interface power save configuration.
+ *
+ * \param[out] ps_mode_cfg A pointer to variable that stores power save mode configuration.
+ *
+ * \return WM_SUCCESS if successful.
+ * \return -WM_E_INVAL if \a ps_mode_cfg was NULL.
+ */
+int wlan_get_ps_mode_cfg(uint8_t *ps_mode_cfg);
 
 /** Send message to Wi-Fi connection manager thread.
  *
@@ -4442,8 +4509,8 @@ int wlan_set_sta_tx_power(t_u32 power_level);
 /**
  * Set worldwide safe mode TX power limits.
  * Set TX power limit and ru TX power limit according to the region code.
- * TX power limit: \ref rg_power_cfg_rw610
- * ru TX power limit: \ref ru_power_cfg_rw610
+ * TX power limit: \ref rg_power_cfg_info
+ * ru TX power limit: \ref ru_power_cfg_info
  *
  * \return WM_SUCCESS if successful.
  * \return -WM_FAIL if unsuccessful.
@@ -5596,7 +5663,7 @@ int wlan_set_crypto_AES_WRAP_encrypt(
 int wlan_set_crypto_AES_WRAP_decrypt(
     const t_u8 *Key, const t_u16 KeyLength, const t_u8 *KeyIV, const t_u16 KeyIVLength, t_u8 *Data, t_u16 *DataLength);
 
-/** Set crypto AES_CCMP (counter mode with cipher block chaining message authentication code protocol) 
+/** Set crypto AES_CCMP (counter mode with cipher block chaining message authentication code protocol)
  * algorithm encrypt command parameters.
  *
  * \param[in] Key: key
@@ -5890,17 +5957,18 @@ wlan_11ax_config_t *wlan_get_11ax_cfg(void);
 #if CONFIG_11AX_TWT
 /** Set broadcast TWT (target wake time) configuration parameters
  *
- * \param[in] btwt_config: Broadcast TWT setup parameters to be sent to firmware.
+ * \param[in] btwt_cfg Broadcast TWT Setup parameters to be sent to Firmware
  *
  * \return WM_SUCCESS if successful otherwise return -WM_FAIL.
  */
-int wlan_set_btwt_cfg(const wlan_btwt_config_t *btwt_config);
-
-/** Get broadcast TWT configuration parameters
+int wlan_set_btwt_cfg(wlan_btwt_config_t *btwt_cfg);
+/** Get broadcast TWT (target wake time) configuration parameters
  *
- * \return Broadcast TWT setup parameters default configuration array.
+ * \param[in] btwt_cfg Broadcast TWT Setup parameters to be sent to Firmware
+ *
+ * \return WM_SUCCESS if successful otherwise failure.
  */
-wlan_btwt_config_t *wlan_get_btwt_cfg(void);
+int wlan_get_btwt_cfg(wlan_btwt_config_t *btwt_cfg);
 
 /** Set TWT setup configuration parameters
  *
@@ -5938,6 +6006,13 @@ wlan_twt_teardown_config_t *wlan_get_twt_teardown_cfg(void);
  */
 int wlan_get_twt_report(wlan_twt_report_t *twt_report);
 
+/** Twt information
+ *
+ * \param[out] twt_information TWT information.
+ *
+ * \return WM_SUCCESS if successful otherwise failure.
+ */
+int wlan_twt_information(wlan_twt_information_t *twt_information);
 #endif /* CONFIG_11AX_TWT */
 
 #if CONFIG_MMSF
@@ -5965,6 +6040,19 @@ int wlan_get_mmsf(t_u8 *enable, t_u8 *Density, t_u8 *MMSF);
 
 #if CONFIG_WIFI_RECOVERY
 int wlan_recovery_test(void);
+#endif
+
+#if CONFIG_WIFI_CHANNEL_LOAD
+/**
+ * Set Wi-Fi channel load info.
+ *
+ */
+int wlan_channel_load(wlan_802_11_chan_load_t *chan_load);
+/**
+ * Get Wi-Fi channel load info.
+ *
+ */
+int wlan_get_channel_load(wlan_802_11_chan_load_t *chan_load);
 #endif
 
 #if CONFIG_WIFI_CLOCKSYNC
@@ -6500,7 +6588,17 @@ int wlan_mef_set_auto_arp(t_u8 mef_action);
  *
  */
 int wlan_mef_set_auto_ping(t_u8 mef_action);
-
+/** This function set multicast packet as low power wake up condition.
+ *
+ * \param[in] mef_action: To be\n
+ *                        0--discard multicast packet and not wake host\n
+ *                        1--discard multicast packet and wake host\n
+ *                        3--allow multicast packet and wake host.
+ *
+ * \return WM_SUCCESS if successful otherwise return -WM_FAIL.
+ *
+ */
+int wlan_mef_set_multicast(t_u8 mef_action);
 /** This function set/delete MEF entries configuration.
  *
  * \param[in] type:       MEF type: MEF_TYPE_DELETE, MEF_TYPE_AUTO_PING, MEF_TYPE_AUTO_ARP
@@ -6578,7 +6676,7 @@ wlan_csi_config_params_t *wlan_get_csi_cfg_param_default(void);
  */
 int wlan_set_csi_cfg_param_default(wlan_csi_config_params_t *in_csi_cfg);
 
-/** 
+/**
  * This function reset Wi-Fi CSI filter data.
  */
 void wlan_reset_csi_filter_data(void);
@@ -6615,7 +6713,7 @@ void wlan_wps_generate_pin(uint32_t *pin);
  * \return WM_SUCCESS if the pin entered is valid.
  * \return -WM_FAIL if invalid pin entered.
  */
-int wlan_start_wps_pin(const char *pin);
+int wlan_start_wps_pin(const struct netif *netif, const char *pin);
 
 /** Start WPS PBC (push button configuration) session.
  *
@@ -6625,7 +6723,7 @@ int wlan_start_wps_pin(const char *pin);
  * \return -WM_FAIL if invalid pin entered.
  *
  */
-int wlan_start_wps_pbc(void);
+int wlan_start_wps_pbc(const struct netif *netif);
 
 /** Cancel WPS session.
  *
@@ -6747,6 +6845,16 @@ void wlan_register_monitor_user_callback(int (*monitor_data_recv_callback)(void 
  *
  */
 void wlan_deregister_net_monitor_user_callback(void);
+#endif
+
+#if HOST_TXRX_MGMT_FRAME
+/**
+ * Send the mgmt/data frame config parameter and payload to FW.
+ *
+ *\param[in] mgmtframe: Frame header and payload
+ * \return WM_SUCCESS if successful otherwise return -WM_FAIL.
+ */
+int wlan_mgmtframe_tx_cfg(wlan_host_tx_frame_params_t *mgmtframe);
 #endif
 
 #if CONFIG_WIFI_CAPA
@@ -7204,6 +7312,250 @@ int wlan_dpp_reconfig(const char *cmd);
  * \return WM_SUCCESS if successful otherwise return -WM_FAIL.
  */
 int wlan_dpp_configurator_sign(int is_ap, const char *cmd);
+#endif
+
+#if CONFIG_WPA_SUPP_P2P
+/**
+ * Initiate P2P discovery.
+ *
+ * This function triggers the P2P discovery process by instructing
+ * wpa_supplicant to scan for available P2P devices. Optional arguments
+ * (such as scan timeout, scan type, or device filters) can be used to
+ * tailor the search behavior. Use this function when you want to start
+ * discovering nearby P2P devices for later connection or service discovery.
+ *
+ * \param[in] cmd Optional parameters for discovery (e.g., timeout, type).
+ *
+ * \return WM_SUCCESS if successful otherwise return -WM_FAIL.
+ */
+int wlan_p2p_find(const char *cmd);
+
+/**
+ * Stop the P2P discovery process.
+ *
+ * This command stops an ongoing P2P discovery process initiated by a previous
+ * call to wlan_p2p_find. It frees up radio resources and halts further
+ * scanning.
+ *
+ * \return WM_SUCCESS if successful otherwise return -WM_FAIL.
+ */
+int wlan_p2p_stop_find(void);
+
+/**
+ * Initiates P2P listen mode.
+ *
+ * This function sends a generic command to wpa_wpa_supplicant to initiate P2P
+ * listen mode.
+ *
+ * \param[in] cmd Optional parameters for listen (e.g. timeout).
+ *
+ * \return WM_SUCCESS if successful otherwise return -WM_FAIL.
+ */
+int wlan_p2p_listen(const char *cmd);
+
+/**
+ * Initiate a P2P connection.
+ *
+ * After identifying a target P2P device using the discovery process, this
+ * function begins the connection sequence. It negotiates connection parameters
+ * (often involving WPS configuration) and starts the group formation process.
+ *
+ * \param[in] cmd Connection parameters (e.g. Peer device address, WPS method
+ *                etc).
+ *
+ * \return WM_SUCCESS if successful otherwise return -WM_FAIL.
+ */
+int wlan_p2p_connect(char *cmd);
+
+/**
+ * Create a new P2P group.
+ *
+ * This function requests the creation of a new P2P group (i.e., starting a
+ * group owner instance) in wpa_supplicant. It configures the group parameters,
+ * including the SSID and security settings, so that client devices can join.
+ *
+ * \param[in] cmd Group configuration parameters.
+ *
+ * \return WM_SUCCESS if successful otherwise return -WM_FAIL.
+ */
+int wlan_p2p_group_add(char *cmd);
+
+/**
+ * Retrieve the group passphrase.
+ *
+ * Once a P2P group has been established, this function prints the WPA-PSK
+ * passphrase that secures the group. Client devices can use this passphrase to
+ * connect to the group.
+ *
+ * \return WM_SUCCESS if successful otherwise return -WM_FAIL.
+ */
+int wlan_p2p_get_passphrase(void);
+
+/**
+ * Issue a group invitation.
+ *
+ * This function sends an invitation request to a target P2P device,
+ * inviting it to join an existing P2P group. The invitation bypasses
+ * the standard negotiation procedure by directly inviting a device.
+ *
+ * \param[in] cmd Invitation parameters (e.g. Peer address, Group address etc).
+ *
+ * \return WM_SUCCESS if successful otherwise return -WM_FAIL.
+ */
+int wlan_p2p_invite(char *cmd);
+
+/**
+ * Initiate provisioning discovery.
+ *
+ * This command starts the provisioning discovery phase, which is used
+ * to determine the optimal method (e.g., PIN or PBC) for configuring a new
+ * P2P connection as part of the WPS process.
+ *
+ * \param[in] cmd Povisioning discovery parameters (e.g. device_addr,
+ *                config_methods etc).
+ *
+ * \return WM_SUCCESS if successful otherwise return -WM_FAIL.
+ */
+int wlan_p2p_prov_disc(char *cmd);
+
+/**
+ * Cancel ongoing P2P operations.
+ *
+ * This function cancels any active P2P operations, including discovery,
+ * connection attempts, or group formation. It resets the P2P state to idle,
+ * making it possible to start a new operation afterward.
+ *
+ *  \return WM_SUCCESS if successful otherwise return -WM_FAIL.
+ */
+int wlan_p2p_cancel(void);
+
+/**
+ * Remove a client from the P2P group.
+ *
+ * When a P2P group owner needs to disconnect a client, this function
+ * removes the specified client from the group. It ensures that the client’s
+ * association with the group is terminated, and cleans up related state.
+ *
+ * \param[in] cmd  The address of the client to be removed.
+ *
+ * \return WM_SUCCESS if successful otherwise return -WM_FAIL.
+ */
+int wlan_p2p_remove_client(char *cmd);
+
+/**
+ * Advertise a service.
+ *
+ * This function adds a service advertisement to the device’s P2P service
+ * discovery framework. It allows the device to broadcast information about
+ * services (e.g., file sharing, printing) that may be available to peers.
+ *
+ * \param[in] cmd  A string or binary blob representing the service data.
+ *
+ * \return WM_SUCCESS if successful otherwise return -WM_FAIL.
+ */
+int wlan_p2p_servvice_add(char *cmd);
+
+/**
+ * Send a service discovery request.
+ *
+ * A device can use this function to query a discovered P2P peer for details
+ * about available services. The request typically includes the type of service
+ * or specific query parameters, and the peer is expected to respond with
+ * matching service information.
+ *
+ * \param[in] cmd Service discovery request parameters.
+ *
+ * \return WM_SUCCESS if successful otherwise return -WM_FAIL.
+ */
+int wlan_p2p_serv_disc_req(char *cmd);
+
+/**
+ * Send a service discovery response.
+ *
+ * This function is used by a P2P device to respond to a service discovery
+ * request. It sends detailed information about the services that are available,
+ * enabling the requesting peer to decide if the advertised service meets its
+ * requirements.
+ *
+ * \param[in] cmd  Service discovery response parameters.
+ *
+ * \return WM_SUCCESS if successful otherwise return -WM_FAIL.
+ */
+int wlan_p2p_serv_disc_resp(char *cmd);
+
+/**
+ * Tear down an existing P2P group.
+ *
+ * This function ends an active P2P group by terminating the group owner
+ * instance and disconnecting all associated clients. It performs necessary
+ * resource cleanup and notifies clients that the group has been disbanded.
+ *
+ * \param[in] cmd  The wfd interface name
+ *
+ * \return WM_SUCCESS if successful otherwise return -WM_FAIL.
+ */
+int wlan_p2p_group_remove(char *cmd);
+
+/**
+ * Retrieves the list of available P2P peers.
+ *
+ * This function executes the equivalent of the wpa_cli 'p2p_peers' command.
+ * It fills the provided @p peers_buf with peer information and sets
+ * peers_buf_len to reflect the number of bytes written to the buffer.
+ *
+ * \param[out] peers_buf     Pointer to the buffer that will receive the list of
+ *                           peer addresses or identifiers.
+ * \param[in]  peer_buf_size The total size of the peers_buf in bytes.
+ * \param[out] peers_buf_len Pointer to an integer where the actual length
+ *                           (in bytes) of data written to @p peers_buf will be
+ *                           stored.
+ *
+ * \return WM_SUCCESS if successful otherwise return -WM_FAIL.
+ */
+int wlan_p2p_peers(char *peers_buf, int peer_buf_size, int *peers_buf_len);
+
+/**
+ *Retrieves detailed information for a specified P2P peer.
+ *
+ * This function sends a generic wpa_cli command (given by p2p_peer cmd) to
+ * obtain detailed information about a specific P2P peer. The resulting output
+ * is stored in the buffer provided by peer_info_buf, and the length of the
+ * retrieved information is returned via peer_info_len.
+ *
+ * \param[in]  cmd                A generic command string passed to wpa_cli. It
+ *                                should include the necessary parameters (e.g.,
+ *                                "p2p_peer <peer_address>") to specify the
+ *                                target peer.
+ * \param[out] peer_info_buf      Pointer to the buffer that will receive the
+ *                                detailed peer information.
+ * \param[in]  peer_info_buf_size The total size of the @p peer_info_buf in
+ *                                bytes.
+ * \param[out] peer_info_len      Pointer to an integer where the actual length
+ *                                (in bytes) of data written to @p peer_info_buf
+ *                                will be stored.
+ *
+ * \return WM_SUCCESS if successful otherwise return -WM_FAIL.
+ */
+int wlan_p2p_peer(char *cmd, char *peer_info_buf, int peer_info_buf_size, int *peer_info_len);
+
+/**
+ *Retrieves detailed information for a P2P interface.
+ *
+ * This function sends a generic wpa_cli command (given by status cmd) to
+ * obtain detailed information about a P2P interface. The resulting output
+ * is stored in the buffer provided by buf, and the length of the
+ * retrieved information is returned via reslen.
+ *
+ * \param[out] buf      Pointer to the buffer that will receive the
+ *                      detailed information.
+ * \param[in]  buflen   The total size of the buf in bytes.
+ * \param[out] reslen   Pointer to an integer where the actual length
+ *                      (in bytes) of data written to buf
+ *                      will be stored.
+ *
+ * \return WM_SUCCESS if successful otherwise return -WM_FAIL.
+ */
+int wlan_p2p_status(char *buf, size_t buflen, int *reslen);
 #endif
 
 #if CONFIG_IMD3_CFG

@@ -165,20 +165,22 @@
 #if (defined(SDK_COMPONENT_DEPENDENCY_FSL_COMMON) && (SDK_COMPONENT_DEPENDENCY_FSL_COMMON > 0U))
 typedef enum _mem_status
 {
-    kStatus_MemSuccess      = kStatus_Success,                          /* No error occurred */
-    kStatus_MemInitError    = MAKE_STATUS(kStatusGroup_MEM_MANAGER, 1), /* Memory initialization error */
-    kStatus_MemAllocError   = MAKE_STATUS(kStatusGroup_MEM_MANAGER, 2), /* Memory allocation error */
-    kStatus_MemFreeError    = MAKE_STATUS(kStatusGroup_MEM_MANAGER, 3), /* Memory free error */
-    kStatus_MemUnknownError = MAKE_STATUS(kStatusGroup_MEM_MANAGER, 4), /* something bad has happened... */
+    kStatus_MemSuccess       = kStatus_Success,                          /* No error occurred */
+    kStatus_MemInitError     = MAKE_STATUS(kStatusGroup_MEM_MANAGER, 1), /* Memory initialization error */
+    kStatus_MemAllocError    = MAKE_STATUS(kStatusGroup_MEM_MANAGER, 2), /* Memory allocation error */
+    kStatus_MemFreeError     = MAKE_STATUS(kStatusGroup_MEM_MANAGER, 3), /* Memory free error */
+    kStatus_MemOverFlowError = MAKE_STATUS(kStatusGroup_MEM_MANAGER, 4), /* Over flow has happened... */
+    kStatus_MemUnknownError  = MAKE_STATUS(kStatusGroup_MEM_MANAGER, 5), /* something bad has happened... */
 } mem_status_t;
 #else
 typedef enum _mem_status
 {
-    kStatus_MemSuccess      = 0, /* No error occurred */
-    kStatus_MemInitError    = 1, /* Memory initialization error */
-    kStatus_MemAllocError   = 2, /* Memory allocation error */
-    kStatus_MemFreeError    = 3, /* Memory free error */
-    kStatus_MemUnknownError = 4, /* something bad has happened... */
+    kStatus_MemSuccess       = 0, /* No error occurred */
+    kStatus_MemInitError     = 1, /* Memory initialization error */
+    kStatus_MemAllocError    = 2, /* Memory allocation error */
+    kStatus_MemFreeError     = 3, /* Memory free error */
+    kStatus_MemOverFlowError = 4, /* Over flow error */
+    kStatus_MemUnknownError  = 5, /* something bad has happened... */
 } mem_status_t;
 
 #endif
@@ -484,6 +486,17 @@ mem_status_t MEM_RegisterExtendedArea(memAreaCfg_t *area_desc, uint8_t *p_area_i
 mem_status_t MEM_UnRegisterExtendedArea(uint8_t area_id);
 
 #endif
+
+/*!
+* \brief     This function to check for buffer overflow when copying multiple bytes
+*
+* \param[in] p    - pointer to destination.
+* \param[in] size - number of bytes to copy
+*
+ * @return   kStatus_MemOverFlowError if buffer overflow.
+ *
+ */
+mem_status_t MEM_BufferCheck(void *buffer, uint32_t size);
 
 #if defined(__cplusplus)
 }

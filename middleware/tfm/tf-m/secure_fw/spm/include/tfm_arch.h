@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2023, Arm Limited. All rights reserved.
+ * Copyright (c) 2018-2024, Arm Limited. All rights reserved.
  * Copyright (c) 2022 Cypress Semiconductor Corporation (an Infineon
  * company) or an affiliate of Cypress Semiconductor Corporation. All rights
  * reserved.
@@ -67,10 +67,24 @@
  * priority level configurable on the platform, just below 0x80.
  */
 #define PENDSV_PRIO_FOR_SCHED ((1 << (__NVIC_PRIO_BITS - 1)) - 1)
-#else
+
+#if CONFIG_TFM_SECURE_THREAD_MASK_NS_INTERRUPT == 1
+#if (!defined(__ARM_ARCH_8_1M_MAIN__)) && (!defined(__ARM_ARCH_8M_MAIN__))
+#error CONFIG_TFM_SECURE_THREAD_MASK_NS_INTERRUPT is not supported in Baseline implementations
+#endif /* (!defined(__ARM_ARCH_8_1M_MAIN__)) && (!defined(__ARM_ARCH_8M_MAIN__)) */
+/* IMPORTANT NOTE:
+ *
+ * When AIRCR.PRIS is set, the Non-Secure execution can act on
+ * FAULTMASK_NS, PRIMASK_NS or BASEPRI_NS register to boost its priority
+ * number up to the value 0x80. To mask NS interrupts in secure thread
+ * execution, set the priority of Secure thread mode execution to this value.
+ */
+#define SECURE_THREAD_EXECUTION_PRIORITY 0x80
+#endif /* CONFIG_TFM_SECURE_THREAD_MASK_NS_INTERRUPT == 1 */
+#else /* CONFIG_TFM_USE_TRUSTZONE */
 /* If TZ is not in use, we have the full priority range available */
 #define PENDSV_PRIO_FOR_SCHED ((1 << __NVIC_PRIO_BITS) - 1)
-#endif
+#endif /* CONFIG_TFM_USE_TRUSTZONE */
 
 /* State context defined by architecture */
 struct tfm_state_context_t {
@@ -97,16 +111,6 @@ struct full_context_t {
     struct tfm_state_context_t      stat_ctx;
 };
 
-/*
- * Under cross call ABI, SPM can be preempted by interrupts, the interrupt
- * handling can set SPM API return value and makes the initial SPM API
- * return code invalid. Use one flag to indicate if the return code has been
- * force updated by interrupts, then SPM return code can be discarded as it
- * is out of date.
- */
-#define CROSS_RETCODE_EMPTY         0xEEEEEEED
-#define CROSS_RETCODE_UPDATED       0xEEEEEEEE
-
 /* Context control.
  * CAUTION: Assembly references this structure. DO CHECK the below functions
  * before changing the structure:
@@ -130,21 +134,13 @@ struct context_ctrl_t {
  * It is the same when de-privileged FLIH Function is ready to run.
  */
 struct context_flih_ret_t {
-    uint64_t stack_seal;    /* Two words stack seal */
+    uint64_t stack_seal;                  /* Two words stack seal                              */
     struct tfm_additional_context_t addi_ctx;
-    uint32_t psp;       /* PSP when interrupt exception ocurrs              */
-    uint32_t psplim;    /* PSPLIM when interrupt exception ocurrs when      */
-    struct tfm_state_context_t state_ctx; /* ctx on SVC_PREPARE_DEPRIV_FLIH */
-};
-
-/* A customized ABI format. */
-struct cross_call_abi_frame_t {
-    uint32_t      a0;
-    uint32_t      a1;
-    uint32_t      a2;
-    uint32_t      a3;
-    uint32_t      unused0;
-    uint32_t      unused1;
+    uint32_t exc_return;                  /* exception return value on SVC_PREPARE_DEPRIV_FLIH */
+    uint32_t dummy;                       /* dummy value for 8 bytes aligned                   */
+    uint32_t psp;                         /* PSP when interrupt exception ocurrs               */
+    uint32_t psplim;                      /* PSPLIM when interrupt exception ocurrs when       */
+    struct tfm_state_context_t state_ctx; /* ctx on SVC_PREPARE_DEPRIV_FLIH                    */
 };
 
 /* Assign stack and stack limit to the context control instance. */
@@ -162,13 +158,20 @@ struct cross_call_abi_frame_t {
 /* The last allocated pointer. */
 #define ARCH_CTXCTRL_ALLOCATED_PTR(x)         ((x)->sp)
 
-/* Prepare a exception return pattern on the stack. */
-#define ARCH_CTXCTRL_EXCRET_PATTERN(x, param, pfn, pfnlr) do {            \
-            (x)->r0 = (uint32_t)(param);                                  \
+/* Prepare an exception return pattern on the stack. */
+#define ARCH_CTXCTRL_EXCRET_PATTERN(x, param0, param1, param2, param3, pfn, pfnlr) do { \
+            (x)->r0 = (uint32_t)(param0);                                 \
+            (x)->r1 = (uint32_t)(param1);                                 \
+            (x)->r2 = (uint32_t)(param2);                                 \
+            (x)->r3 = (uint32_t)(param3);                                 \
             (x)->ra = (uint32_t)(pfn);                                    \
             (x)->lr = (uint32_t)(pfnlr);                                  \
             (x)->xpsr = XPSR_T32;                                         \
         } while (0)
+
+/* Set state context parameter r0. */
+#define ARCH_STATE_CTX_SET_R0(x, r0_val)                                  \
+            ((x)->r0             = (uint32_t)(r0_val))
 
 /*
  * Claim a statically initialized context control instance.
@@ -182,21 +185,6 @@ struct cross_call_abi_frame_t {
                 .sp_limit  = (uint32_t)stack_buf,                         \
                 .exc_ret   = 0,                                           \
             }
-
-/**
- * \brief Get Link Register
- * \details Returns the value of the Link Register (LR)
- * \return LR value
- */
-#if !defined ( __ICCARM__ )
-__attribute__ ((always_inline)) __STATIC_INLINE uint32_t __get_LR(void)
-{
-    register uint32_t result;
-
-    __ASM volatile ("MOV %0, LR\n" : "=r" (result));
-    return result;
-}
-#endif
 
 __STATIC_INLINE uint32_t __save_disable_irq(void)
 {
@@ -222,16 +210,15 @@ __STATIC_INLINE uint32_t __get_active_exc_num(void)
 }
 
 __attribute__ ((always_inline))
-__STATIC_INLINE void __set_CONTROL_SPSEL(uint32_t SPSEL)
+__STATIC_INLINE void __set_CONTROL_nPRIV(uint32_t nPRIV)
 {
     CONTROL_Type ctrl;
 
     ctrl.w = __get_CONTROL();
-    ctrl.b.SPSEL = SPSEL;
+    ctrl.b.nPRIV = nPRIV;
     __set_CONTROL(ctrl.w);
     __ISB();
 }
-
 
 /**
  * \brief Whether in privileged level
@@ -291,10 +278,10 @@ void tfm_arch_free_msp_and_exc_ret(uint32_t msp_base, uint32_t exc_return);
  * psa_wait(), by manipulating the control context - this is usaully setting the
  * R0 register of the thread context.
  */
-void tfm_arch_set_context_ret_code(void *p_ctx_ctrl, uint32_t ret_code);
+void tfm_arch_set_context_ret_code(const struct context_ctrl_t *p_ctx_ctrl, uint32_t ret_code);
 
 /* Init a thread context on thread stack and update the control context. */
-void tfm_arch_init_context(void *p_ctx_ctrl,
+void tfm_arch_init_context(struct context_ctrl_t *p_ctx_ctrl,
                            uintptr_t pfn, void *param, uintptr_t pfnlr);
 
 /*
@@ -303,7 +290,7 @@ void tfm_arch_init_context(void *p_ctx_ctrl,
  *
  * The p_ctx_ctrl must have been initialized by 'tfm_arch_init_context'.
  */
-uint32_t tfm_arch_refresh_hardware_context(void *p_ctx_ctrl);
+uint32_t tfm_arch_refresh_hardware_context(const struct context_ctrl_t *p_ctx_ctrl);
 
 /*
  * Lock the scheduler. Any scheduling attempt during locked period will not
@@ -324,20 +311,35 @@ void arch_acquire_sched_lock(void);
 uint32_t arch_release_sched_lock(void);
 
 /*
- * Start scheduling if scheduler is not locked, or the attempt is recorded and
- * return without starting the scheduler.
+ * Try to schedule if scheduler is not locked, otherwise record the schedule
+ * attempt and return without scheduling.
  */
-uint32_t tfm_arch_trigger_pendsv(void);
+uint32_t arch_attempt_schedule(void);
 
 /*
- * Switch to SPM stack area if the caller is not NS agent, lock scheduler and
- * target function in the backend will be called to return the value on the
- * caller stack. This function is non-preemptive.
+ * Thread Function Call at Thread mode. It is called in the IPC backend and
+ * isolation level 1. The function switches to the SPM stack to execute the
+ * target PSA API to avoid using up the Secure Partitions' stacks. The NS agent
+ * shares the stack with the SPM so it doesn't need to switch.
+ *
+ * The stack check process destroyes the caller registers so the input args and
+ * the target PSA API address are stored in the caller stack at the beginning.
+ * They are loaded again before the PSA API is called. This function is
+ * non-preemptive except for the target PSA API execution.
  *
  * NOTE: This function cannot be called by any C functions as it uses a
  * customized parameter passing method and puts the target function address in
  * r12. These input parameters a0~a3 come from standard PSA interface input.
+ * The return value is stored in r0 for the PSA API to return.
  */
-void arch_cross_call(uint32_t a0, uint32_t a1, uint32_t a2, uint32_t a3);
+void tfm_arch_thread_fn_call(uint32_t a0, uint32_t a1, uint32_t a2, uint32_t a3);
+
+/*
+ * Reset MSP to msp_base.
+ * Use PSP as the current stack in Thread mode.
+ * Execute two init functions in turn.
+ */
+void arch_clean_stack_and_launch(void *param, uintptr_t spm_init_func,
+                                 uintptr_t ns_agent_entry, uint32_t msp_base);
 
 #endif

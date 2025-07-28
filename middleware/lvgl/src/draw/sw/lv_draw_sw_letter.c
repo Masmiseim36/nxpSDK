@@ -32,7 +32,7 @@
  *  STATIC PROTOTYPES
  **********************/
 
-static void /* LV_ATTRIBUTE_FAST_MEM */ draw_letter_cb(lv_draw_unit_t * draw_unit, lv_draw_glyph_dsc_t * glyph_draw_dsc,
+static void /* LV_ATTRIBUTE_FAST_MEM */ draw_letter_cb(lv_draw_task_t * t, lv_draw_glyph_dsc_t * glyph_draw_dsc,
                                                        lv_draw_fill_dsc_t * fill_draw_dsc, const lv_area_t * fill_area);
 
 /**********************
@@ -51,12 +51,12 @@ static void /* LV_ATTRIBUTE_FAST_MEM */ draw_letter_cb(lv_draw_unit_t * draw_uni
  *   GLOBAL FUNCTIONS
  **********************/
 
-void lv_draw_sw_label(lv_draw_unit_t * draw_unit, const lv_draw_label_dsc_t * dsc, const lv_area_t * coords)
+void lv_draw_sw_label(lv_draw_task_t * t, const lv_draw_label_dsc_t * dsc, const lv_area_t * coords)
 {
     if(dsc->opa <= LV_OPA_MIN) return;
 
     LV_PROFILER_BEGIN;
-    lv_draw_label_iterate_characters(draw_unit, dsc, coords, draw_letter_cb);
+    lv_draw_label_iterate_characters(t, dsc, coords, draw_letter_cb);
     LV_PROFILER_END;
 }
 
@@ -64,7 +64,7 @@ void lv_draw_sw_label(lv_draw_unit_t * draw_unit, const lv_draw_label_dsc_t * ds
  *   STATIC FUNCTIONS
  **********************/
 
-static void LV_ATTRIBUTE_FAST_MEM draw_letter_cb(lv_draw_unit_t * draw_unit, lv_draw_glyph_dsc_t * glyph_draw_dsc,
+static void LV_ATTRIBUTE_FAST_MEM draw_letter_cb(lv_draw_task_t * t, lv_draw_glyph_dsc_t * glyph_draw_dsc,
                                                  lv_draw_fill_dsc_t * fill_draw_dsc, const lv_area_t * fill_area)
 {
     if(glyph_draw_dsc) {
@@ -77,7 +77,7 @@ static void LV_ATTRIBUTE_FAST_MEM draw_letter_cb(lv_draw_unit_t * draw_unit, lv_
                     border_draw_dsc.opa = glyph_draw_dsc->opa;
                     border_draw_dsc.color = glyph_draw_dsc->color;
                     border_draw_dsc.width = 1;
-                    lv_draw_sw_border(draw_unit, &border_draw_dsc, glyph_draw_dsc->bg_coords);
+                    lv_draw_sw_border(t, &border_draw_dsc, glyph_draw_dsc->bg_coords);
 #endif
                 }
                 break;
@@ -98,7 +98,7 @@ static void LV_ATTRIBUTE_FAST_MEM draw_letter_cb(lv_draw_unit_t * draw_unit, lv_
                     blend_dsc.blend_area = glyph_draw_dsc->letter_coords;
                     blend_dsc.mask_res = LV_DRAW_SW_MASK_RES_CHANGED;
 
-                    lv_draw_sw_blend(draw_unit, &blend_dsc);
+                    lv_draw_sw_blend(t, &blend_dsc);
                 }
                 break;
             case LV_FONT_GLYPH_FORMAT_IMAGE: {
@@ -110,7 +110,7 @@ static void LV_ATTRIBUTE_FAST_MEM draw_letter_cb(lv_draw_unit_t * draw_unit, lv_
                     img_dsc.scale_y = LV_SCALE_NONE;
                     img_dsc.opa = glyph_draw_dsc->opa;
                     img_dsc.src = glyph_draw_dsc->glyph_data;
-                    lv_draw_sw_image(draw_unit, &img_dsc, glyph_draw_dsc->letter_coords);
+                    lv_draw_sw_image(t, &img_dsc, glyph_draw_dsc->letter_coords);
 #endif
                 }
                 break;
@@ -121,7 +121,7 @@ static void LV_ATTRIBUTE_FAST_MEM draw_letter_cb(lv_draw_unit_t * draw_unit, lv_
     }
 
     if(fill_draw_dsc && fill_area) {
-        lv_draw_sw_fill(draw_unit, fill_draw_dsc, fill_area);
+        lv_draw_sw_fill(t, fill_draw_dsc, fill_area);
     }
 }
 

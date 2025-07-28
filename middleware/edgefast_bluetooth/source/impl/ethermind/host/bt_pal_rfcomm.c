@@ -750,8 +750,10 @@ static API_RESULT rfcomm_callback(uint8_t event_type, RFCOMM_HANDLE * handle, ui
                 dlc->dlci    = handle->dlci;
                 dlc->state   = RFCOMM_CONNECTED;
 
+                EDGEFAST_RFCOMM_LOCK;
                 dlc->_next = rfcomm_session[s_index].dlcs;
                 rfcomm_session[s_index].dlcs = dlc;
+                EDGEFAST_RFCOMM_UNLOCK;
 
                 /** Call application registered connected callback */
                 if ((NULL != dlc->ops) && (NULL != dlc->ops->connected))
@@ -1124,16 +1126,19 @@ int bt_rfcomm_dlc_connect(struct bt_conn *conn, struct bt_rfcomm_dlc *dlc, uint8
     else
     {
         /** check whether client channel is already connected */
+        EDGEFAST_RFCOMM_LOCK;
         for(dlc_hdl = rfcomm_session[index].dlcs; dlc_hdl; dlc_hdl = dlc_hdl->_next)
         {
             if((BT_RFCOMM_ROLE_INITIATOR == dlc_hdl->role) &&
                (channel == ((dlc_hdl->dlci)>>1)) &&
                (0 == memcmp(conn, dlc->session->conn, sizeof(struct bt_conn))))
             {
+                EDGEFAST_RFCOMM_UNLOCK;
                 LOG_ERR("[RFCOMM] Client channel %d is already connected.\n", channel);
                 return -EINVAL;
             }
         }
+        EDGEFAST_RFCOMM_UNLOCK;
     }
 
     /** Prepare RFCOMM Handle for Open */
@@ -1156,8 +1161,10 @@ int bt_rfcomm_dlc_connect(struct bt_conn *conn, struct bt_rfcomm_dlc *dlc, uint8
         dlc->dlci    = channel;
         dlc->state   = RFCOMM_IN_CONNECT;
 
+        EDGEFAST_RFCOMM_LOCK;
         dlc->_next = rfcomm_session[index].dlcs;
         rfcomm_session[index].dlcs = dlc;
+        EDGEFAST_RFCOMM_UNLOCK;
     }
     else
     {

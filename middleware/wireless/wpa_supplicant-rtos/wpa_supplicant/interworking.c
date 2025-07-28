@@ -1627,7 +1627,7 @@ int interworking_connect(struct wpa_supplicant *wpa_s, struct wpa_bss *bss, int 
 
     wpa_printf(MSG_DEBUG, "Interworking: Considering BSS " MACSTR " for connection", MAC2STR(bss->bssid));
 
-    if (!wpa_bss_get_ie(bss, WLAN_EID_RSN))
+    if (!wpa_bss_get_rsne(wpa_s, bss, NULL, false))
     {
         /*
          * We currently support only HS 2.0 networks and those are
@@ -2330,7 +2330,7 @@ static struct wpa_bss *pick_best_roaming_partner(struct wpa_supplicant *wpa_s,
         cred2 = interworking_credentials_available(wpa_s, bss, NULL);
         if (!cred2)
             continue;
-        if (!wpa_bss_get_ie(bss, WLAN_EID_RSN))
+        if (!wpa_bss_get_rsne(wpa_s, bss, NULL, false))
             continue;
         prio = roaming_prio(wpa_s, cred2, bss);
         wpa_printf(MSG_DEBUG, "Interworking: roaming_prio=%u for BSS " MACSTR " (cred=%d)", prio, MAC2STR(bss->bssid),
@@ -2380,7 +2380,7 @@ static void interworking_select_network(struct wpa_supplicant *wpa_s)
         if (!cred)
             continue;
 
-        if (!wpa_bss_get_ie(bss, WLAN_EID_RSN))
+        if (!wpa_bss_get_rsne(wpa_s, bss, NULL, false))
         {
             /*
              * We currently support only HS 2.0 networks and those

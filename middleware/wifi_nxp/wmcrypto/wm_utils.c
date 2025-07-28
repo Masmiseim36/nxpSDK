@@ -28,7 +28,9 @@ void fill_sequential_pattern(void *buffer, int size, uint8_t first_byte)
     uint8_t *l_buffer = buffer;
     int i;
     for (i = 0; i < size; i++, byte++)
+    {
         *(l_buffer + i) = byte;
+    }
 }
 
 bool verify_sequential_pattern(const void *buffer, int size, uint8_t first_byte)
@@ -37,8 +39,12 @@ bool verify_sequential_pattern(const void *buffer, int size, uint8_t first_byte)
     const uint8_t *l_buffer = buffer;
     int i;
     for (i = 0; i < size; i++, byte++)
+    {
         if (*(l_buffer + i) != byte)
+        {
             return false;
+        }
+    }
 
     /* Return verification success */
     return true;
@@ -47,8 +53,10 @@ bool verify_sequential_pattern(const void *buffer, int size, uint8_t first_byte)
 char *strdup(const char *s)
 {
     char *result = OSA_MemoryAllocate(strlen(s) + 1);
-    if (result)
-        strcpy(result, s);
+    if (result != NULL)
+    {
+        (void)strcpy(result, s);
+    }
     return result;
 }
 
@@ -67,8 +75,9 @@ int random_register_handler(random_hdlr_t func)
     for (i = 0; i < MAX_ENTROPY_HDLRS; i++)
     {
         if (entropy_hdlrs[i] != NULL)
+        {
             continue;
-
+        }
         entropy_hdlrs[i] = func;
         return WM_SUCCESS;
     }
@@ -83,7 +92,9 @@ int random_unregister_handler(random_hdlr_t func)
     for (i = 0; i < MAX_ENTROPY_HDLRS; i++)
     {
         if (entropy_hdlrs[i] != func)
+        {
             continue;
+        }
 
         entropy_hdlrs[i] = NULL;
         return WM_SUCCESS;
@@ -99,7 +110,9 @@ int random_register_seed_handler(random_hdlr_t func)
     for (i = 0; i < MAX_SEED_HDLRS; i++)
     {
         if (seed_hdlrs[i] != NULL)
+        {
             continue;
+        }
 
         seed_hdlrs[i] = func;
         return WM_SUCCESS;
@@ -115,7 +128,9 @@ int random_unregister_seed_handler(random_hdlr_t func)
     for (i = 0; i < MAX_SEED_HDLRS; i++)
     {
         if (seed_hdlrs[i] != func)
+        {
             continue;
+        }
 
         seed_hdlrs[i] = NULL;
         return WM_SUCCESS;
@@ -126,12 +141,12 @@ int random_unregister_seed_handler(random_hdlr_t func)
 
 static uint32_t seed;
 
-void random_initialize_seed()
+void random_initialize_seed(void)
 {
     int i;
     for (i = 0; i < MAX_SEED_HDLRS; i++)
     {
-        if (seed_hdlrs[i])
+        if (seed_hdlrs[i] != NULL)
         {
             seed ^= (*seed_hdlrs[i])();
         }
@@ -151,8 +166,10 @@ void get_random_sequence(void *buf, unsigned int size)
         return;
     }
 #endif /* __linux__ */
-    if (!seed)
+    if (seed == 0)
+    {
         random_initialize_seed();
+    }
 
     int32_t i;
     uint32_t feed_data = 0, curr_time;
@@ -161,7 +178,7 @@ void get_random_sequence(void *buf, unsigned int size)
 
     for (i = 0; i < MAX_ENTROPY_HDLRS; i++)
     {
-        if (entropy_hdlrs[i])
+        if (entropy_hdlrs[i] != NULL)
         {
             feed_data ^= (*entropy_hdlrs[i])();
         }
@@ -180,8 +197,10 @@ void get_random_sequence(void *buf, unsigned int size)
      * We will keep the value of seed unchanged as a handler may be
      * registered later to set the seed.
      */
-    if (!seed)
+    if (seed == 0)
+    {
         srand(feed_data);
+    }
 
     uint32_t random_num = 0;
     uint8_t *lbuf       = (uint8_t *)buf;
@@ -189,7 +208,9 @@ void get_random_sequence(void *buf, unsigned int size)
     {
         /* Get a new random number after every 4 bytes */
         if ((i & 3) == 0)
+        {
             random_num = rand() ^ feed_data;
+        }
         lbuf[i] = random_num & 0xff;
         random_num >>= 8;
     }
@@ -240,7 +261,9 @@ float wm_strtof(const char *str, char **endptr)
             dec_val                          = strtoul(temp_buf, NULL, 10);
             len                              = WM_MAX_FLOAT_PRECISION;
             while (len--)
+            {
                 powten *= 10;
+            }
             /* endptr is right now pointing just before '}'*/
             (*endptr)++;
         }
@@ -248,11 +271,15 @@ float wm_strtof(const char *str, char **endptr)
         {
             dec_val = strtoul(start_ptr, endptr, 10);
             while (start_ptr++ != *endptr)
+            {
                 powten *= 10;
+            }
         }
     }
     else
+    {
         return sign * (float)int_val;
+    }
 
     float dec_frac = (float)dec_val / powten;
     float result   = (float)(int_val + dec_frac);
@@ -267,7 +294,7 @@ float wm_strtof(const char *str, char **endptr)
      * code will not improve anything. Eg. If 50.1 is stored as 50.09
      * in memory, we cannot do much about it.
      */
-    uint32_t result_int_value = wm_int_part_of(result);
+    uint32_t result_int_value = (uint32_t)wm_int_part_of(result);
     float result_frac_value   = (float)(result)-result_int_value;
 
     /* Generally difference between two float values comes out to be in
@@ -275,9 +302,13 @@ float wm_strtof(const char *str, char **endptr)
      * Hence we multiply the result of subtraction to achieve the accuracy
      * within desired float precision. */
     if (wm_frac_part_of(dec_frac, powten / 10) > wm_frac_part_of(result_frac_value, powten / 10))
+    {
         result += ((dec_frac - result_frac_value) * powten);
+    }
     if (wm_frac_part_of(result_frac_value, powten / 10) > wm_frac_part_of(dec_frac, powten / 10))
+    {
         result += ((result_frac_value - dec_frac) * powten);
+    }
 
     return sign * result;
 }

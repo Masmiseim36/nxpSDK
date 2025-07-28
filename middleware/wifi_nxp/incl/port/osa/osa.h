@@ -19,7 +19,6 @@
 #if defined(SDK_OS_FREE_RTOS)
 #include <osa_freertos.h>
 #elif defined(FSL_RTOS_THREADX)
-#include "app_config.h"
 #include <osa_threadx.h>
 #elif (CONFIG_ZEPHYR)
 #include <osa_zephyr.h>

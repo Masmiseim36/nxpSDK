@@ -1221,6 +1221,11 @@ struct wpa_driver_associate_params
      * 2 = both hunting-and-pecking loop and hash-to-element enabled
      */
     int sae_pwe;
+
+	/**
+	 * rsn_overriding - wpa_supplicant RSN overriding support
+	 */
+	bool rsn_overriding;
 };
 
 enum hide_ssid
@@ -2058,6 +2063,8 @@ struct wpa_driver_capa
 #define WPA_DRIVER_FLAGS2_SA_QUERY_OFFLOAD_AP 0x0000000000000200ULL
 /** Driver supports background radar/CAC detection */
 #define WPA_DRIVER_RADAR_BACKGROUND 0x0000000000000400ULL
+/** Driver supports RSN override elements */
+#define WPA_DRIVER_FLAGS2_RSN_OVERRIDE_STA 0x0000000000400000ULL
     u64 flags2;
 
 #define FULL_AP_CLIENT_STATE_SUPP(drv_flags) (drv_flags & WPA_DRIVER_FLAGS_FULL_AP_CLIENT_STATE)

@@ -906,7 +906,7 @@ static int cmd_mce_mns_unregister(const struct shell *sh, size_t argc, char *arg
 
 static int cmd_mce_connect(const struct shell *sh, size_t argc, char *argv[])
 {
-    int err = bt_sdp_discover(default_conn, &discov_map_mse);
+    int err = bt_sdp_discover(default_br_conn, &discov_map_mse);
 
     if (err)
     {
@@ -3001,7 +3001,7 @@ static struct bt_sdp_discover_params discov_map_mce = {
     .pool = &sdp_client_pool,
 };
 
-struct bt_map_mse_mas_cb mse_mas_cb = {
+static struct bt_map_mse_mas_cb mse_mas_cb = {
     .connected = map_mse_mas_connected,
     .disconnected = map_mse_mas_disconnected,
     .abort = app_mse_abort_cb,
@@ -3020,7 +3020,7 @@ struct bt_map_mse_mas_cb mse_mas_cb = {
     .set_ntf_filter = app_mse_set_ntf_filter_cb,
 };
 
-struct bt_map_mse_mns_cb mse_mns_cb = {
+static struct bt_map_mse_mns_cb mse_mns_cb = {
     .connected = map_mse_mns_connected,
     .disconnected = map_mse_mns_disconnected,
     .send_event = app_mse_send_event_cb,
@@ -4461,7 +4461,7 @@ static void app_mse_set_ntf_reg_cb(struct bt_map_mse_mas *mse_mas, struct net_bu
             {
                 if (app_mse_instance.mse_mns == NULL)
                 {
-                    app_mse_instance.acl_conn = default_conn;
+                    app_mse_instance.acl_conn = default_br_conn;
                     if (bt_sdp_discover(app_mse_instance.acl_conn, &discov_map_mce) != 0)
                     {
                         shell_print(ctx_shell, "SDP discovery failed: result");

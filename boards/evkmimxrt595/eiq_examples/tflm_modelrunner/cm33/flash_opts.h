@@ -1,3 +1,9 @@
+/*
+* Copyright 2024-2025 NXP
+* All rights reserved.
+*
+* SPDX-License-Identifier: BSD-3-Clause
+*/
 #include "fsl_iap.h"
 
 #define INSTANCE 1U

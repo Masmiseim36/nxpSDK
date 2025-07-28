@@ -3,115 +3,86 @@ IF(NOT DEFINED FPU)
 ENDIF()  
 
 IF(NOT DEFINED SPECS)  
-    SET(SPECS "--specs=nosys.specs")  
+    SET(SPECS "--specs=nano.specs --specs=nosys.specs")  
 ENDIF()  
 
 IF(NOT DEFINED DEBUG_CONSOLE_CONFIG)  
-    SET(DEBUG_CONSOLE_CONFIG "-DSDK_DEBUGCONSOLE_UART")  
+    SET(DEBUG_CONSOLE_CONFIG "-DSDK_DEBUGCONSOLE=1")  
 ENDIF()  
 
-SET(CMAKE_ASM_FLAGS_FLASH_RELEASE " \
-    ${CMAKE_ASM_FLAGS_FLASH_RELEASE} \
-    -DNDEBUG \
-    -D__STARTUP_CLEAR_BSS \
-    -mcpu=cortex-m33 \
-    -mthumb \
-    ${FPU} \
-")
 SET(CMAKE_ASM_FLAGS_FLASH_DEBUG " \
     ${CMAKE_ASM_FLAGS_FLASH_DEBUG} \
-    -DDEBUG \
     -D__STARTUP_CLEAR_BSS \
-    -mcpu=cortex-m33 \
+    -DMCUXPRESSO_SDK \
+    -DCPU_MIMXRT595SFFOC_cm33 \
+    -DMIMXRT595S_cm33_SERIES \
+    -g \
     -mthumb \
+    -mcpu=cortex-m33 \
     ${FPU} \
 ")
-SET(CMAKE_C_FLAGS_FLASH_RELEASE " \
-    ${CMAKE_C_FLAGS_FLASH_RELEASE} \
-    -DNDEBUG \
-    -DFSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1 \
-    -DCPU_MIMXRT595SFFOC_cm33 \
-    -DBOOT_HEADER_ENABLE=1 \
-    -DMODEL_SIZE=1024*1024 \
-    -DPRINTF_ADVANCED_ENABLE=1 \
-    -DPRINTF_FLOAT_ENABLE=1 \
-    -DARM_MATH_CM33 \
-    -D__FPU_PRESENT=1 \
-    -DTF_LITE_STATIC_MEMORY \
+SET(CMAKE_ASM_FLAGS_FLASH_RELEASE " \
+    ${CMAKE_ASM_FLAGS_FLASH_RELEASE} \
+    -D__STARTUP_CLEAR_BSS \
     -DMCUXPRESSO_SDK \
-    -O3 \
-    -Wall \
-    -Wno-maybe-uninitialized \
-    -Wno-strict-aliasing \
-    -mcpu=cortex-m33 \
+    -DCPU_MIMXRT595SFFOC_cm33 \
+    -DMIMXRT595S_cm33_SERIES \
     -mthumb \
-    -MMD \
-    -MP \
-    -fno-common \
-    -ffunction-sections \
-    -fdata-sections \
-    -mapcs \
-    -std=gnu99 \
+    -mcpu=cortex-m33 \
     ${FPU} \
-    ${DEBUG_CONSOLE_CONFIG} \
 ")
 SET(CMAKE_C_FLAGS_FLASH_DEBUG " \
     ${CMAKE_C_FLAGS_FLASH_DEBUG} \
+    -include ${ProjDirPath}/../mcux_config.h \
     -DDEBUG \
-    -DFSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1 \
-    -DCPU_MIMXRT595SFFOC_cm33 \
-    -DBOOT_HEADER_ENABLE=1 \
-    -DMODEL_SIZE=1024*1024 \
+    -D__STARTUP_CLEAR_BSS \
     -DPRINTF_ADVANCED_ENABLE=1 \
     -DPRINTF_FLOAT_ENABLE=1 \
-    -DARM_MATH_CM33 \
-    -D__FPU_PRESENT=1 \
-    -DTF_LITE_STATIC_MEMORY \
+    -DMCUX_META_BUILD \
     -DMCUXPRESSO_SDK \
+    -DCPU_MIMXRT595SFFOC_cm33 \
+    -DMIMXRT595S_cm33_SERIES \
+    -DBOOT_HEADER_ENABLE=1 \
+    -DTF_LITE_STATIC_MEMORY \
+    -DKERNELS_OPTIMIZED_FOR_SPEED \
     -g \
     -O0 \
     -Wall \
-    -Wno-maybe-uninitialized \
-    -Wno-strict-aliasing \
-    -mcpu=cortex-m33 \
-    -mthumb \
-    -MMD \
-    -MP \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
+    -fno-builtin \
+    -mthumb \
     -mapcs \
     -std=gnu99 \
+    -mcpu=cortex-m33 \
     ${FPU} \
     ${DEBUG_CONSOLE_CONFIG} \
 ")
-SET(CMAKE_CXX_FLAGS_FLASH_RELEASE " \
-    ${CMAKE_CXX_FLAGS_FLASH_RELEASE} \
+SET(CMAKE_C_FLAGS_FLASH_RELEASE " \
+    ${CMAKE_C_FLAGS_FLASH_RELEASE} \
+    -include ${ProjDirPath}/../mcux_config.h \
     -DNDEBUG \
-    -DMODEL_SIZE=1024*1024 \
+    -D__STARTUP_CLEAR_BSS \
     -DPRINTF_ADVANCED_ENABLE=1 \
     -DPRINTF_FLOAT_ENABLE=1 \
-    -DARM_MATH_CM33 \
-    -D__FPU_PRESENT=1 \
-    -DCPU_MIMXRT595SFFOC_cm33 \
-    -DTF_LITE_STATIC_MEMORY \
+    -DMCUX_META_BUILD \
     -DMCUXPRESSO_SDK \
-    -O3 \
+    -DCPU_MIMXRT595SFFOC_cm33 \
+    -DMIMXRT595S_cm33_SERIES \
+    -DBOOT_HEADER_ENABLE=1 \
+    -DTF_LITE_STATIC_MEMORY \
+    -DKERNELS_OPTIMIZED_FOR_SPEED \
+    -Os \
     -Wall \
-    -fno-rtti \
-    -fno-exceptions \
-    -Wno-maybe-uninitialized \
-    -Wno-sign-compare \
-    -Wno-strict-aliasing \
-    -Wno-deprecated-declarations \
-    -mcpu=cortex-m33 \
-    -mthumb \
-    -MMD \
-    -MP \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
+    -fno-builtin \
+    -mthumb \
     -mapcs \
+    -std=gnu99 \
+    -mcpu=cortex-m33 \
     ${FPU} \
     ${DEBUG_CONSOLE_CONFIG} \
 ")
@@ -119,86 +90,96 @@ SET(CMAKE_CXX_FLAGS_FLASH_DEBUG " \
     ${CMAKE_CXX_FLAGS_FLASH_DEBUG} \
     -DDEBUG \
     -DMODEL_SIZE=1024*1024 \
-    -DPRINTF_ADVANCED_ENABLE=1 \
-    -DPRINTF_FLOAT_ENABLE=1 \
-    -DARM_MATH_CM33 \
-    -D__FPU_PRESENT=1 \
-    -DCPU_MIMXRT595SFFOC_cm33 \
-    -DTF_LITE_STATIC_MEMORY \
+    -DMCUX_META_BUILD \
     -DMCUXPRESSO_SDK \
+    -DCPU_MIMXRT595SFFOC_cm33 \
+    -DMIMXRT595S_cm33_SERIES \
+    -DBOOT_HEADER_ENABLE=1 \
+    -DTF_LITE_STATIC_MEMORY \
+    -DKERNELS_OPTIMIZED_FOR_SPEED \
     -g \
     -O0 \
     -Wall \
-    -fno-rtti \
-    -fno-exceptions \
-    -Wno-maybe-uninitialized \
-    -Wno-sign-compare \
-    -Wno-strict-aliasing \
-    -Wno-deprecated-declarations \
-    -mcpu=cortex-m33 \
-    -mthumb \
-    -MMD \
-    -MP \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
+    -fno-builtin \
+    -mthumb \
     -mapcs \
+    -fno-rtti \
+    -fno-exceptions \
+    -mcpu=cortex-m33 \
     ${FPU} \
     ${DEBUG_CONSOLE_CONFIG} \
 ")
-SET(CMAKE_EXE_LINKER_FLAGS_FLASH_RELEASE " \
-    ${CMAKE_EXE_LINKER_FLAGS_FLASH_RELEASE} \
-    -mcpu=cortex-m33 \
+SET(CMAKE_CXX_FLAGS_FLASH_RELEASE " \
+    ${CMAKE_CXX_FLAGS_FLASH_RELEASE} \
+    -DNDEBUG \
+    -DMODEL_SIZE=1024*1024 \
+    -DMCUX_META_BUILD \
+    -DMCUXPRESSO_SDK \
+    -DCPU_MIMXRT595SFFOC_cm33 \
+    -DMIMXRT595S_cm33_SERIES \
+    -DBOOT_HEADER_ENABLE=1 \
+    -DTF_LITE_STATIC_MEMORY \
+    -DKERNELS_OPTIMIZED_FOR_SPEED \
+    -Os \
     -Wall \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
+    -fno-builtin \
     -mthumb \
     -mapcs \
-    -Xlinker \
-    --gc-sections \
-    -Xlinker \
-    -static \
-    -Xlinker \
-    -z \
-    -Xlinker \
-    muldefs \
-    -Xlinker \
-    -Map=output.map \
-    -Wl,--print-memory-usage \
-    -Xlinker \
-    --defsym=__heap_size__=0x170000 \
-    -Xlinker \
-    --defsym=__stack_size__=0x17000 \
+    -fno-rtti \
+    -fno-exceptions \
+    -mcpu=cortex-m33 \
     ${FPU} \
-    ${SPECS} \
-    -T\"${ProjDirPath}/MIMXRT595Sxxxx_cm33_flash.ld\" -static \
+    ${DEBUG_CONSOLE_CONFIG} \
 ")
 SET(CMAKE_EXE_LINKER_FLAGS_FLASH_DEBUG " \
     ${CMAKE_EXE_LINKER_FLAGS_FLASH_DEBUG} \
     -g \
-    -mcpu=cortex-m33 \
+    -Xlinker \
+    --defsym=__heap_size__=0x200000 \
+    -Xlinker \
+    --defsym=__stack_size__=0x2000 \
+    -Xlinker \
+    -Map=output.map \
     -Wall \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
+    -fno-builtin \
     -mthumb \
     -mapcs \
+    -Wl,--gc-sections \
+    -Wl,-static \
+    -Wl,--print-memory-usage \
+    -mcpu=cortex-m33 \
+    ${FPU} \
+    ${SPECS} \
+    -T\"${ProjDirPath}/MIMXRT595Sxxxx_cm33_flash.ld\" -static \
+")
+SET(CMAKE_EXE_LINKER_FLAGS_FLASH_RELEASE " \
+    ${CMAKE_EXE_LINKER_FLAGS_FLASH_RELEASE} \
     -Xlinker \
-    --gc-sections \
+    --defsym=__heap_size__=0x200000 \
     -Xlinker \
-    -static \
-    -Xlinker \
-    -z \
-    -Xlinker \
-    muldefs \
+    --defsym=__stack_size__=0x2000 \
     -Xlinker \
     -Map=output.map \
+    -Wall \
+    -fno-common \
+    -ffunction-sections \
+    -fdata-sections \
+    -fno-builtin \
+    -mthumb \
+    -mapcs \
+    -Wl,--gc-sections \
+    -Wl,-static \
     -Wl,--print-memory-usage \
-    -Xlinker \
-    --defsym=__heap_size__=0x170000 \
-    -Xlinker \
-    --defsym=__stack_size__=0x17000 \
+    -mcpu=cortex-m33 \
     ${FPU} \
     ${SPECS} \
     -T\"${ProjDirPath}/MIMXRT595Sxxxx_cm33_flash.ld\" -static \

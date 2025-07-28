@@ -38,16 +38,17 @@
     <definition extID="component.flexcomm_i2c_adapter.MIMXRT595S"/>
     <definition extID="component.usart_adapter.MIMXRT595S"/>
     <definition extID="component.osa_template_config.MIMXRT595S"/>
-    <definition extID="component.osa_interface.MIMXRT595S"/>
     <definition extID="component.osa.MIMXRT595S"/>
     <definition extID="component.osa_free_rtos.MIMXRT595S"/>
     <definition extID="middleware.usb.common_header.MIMXRT595S"/>
     <definition extID="middleware.usb.pd.phy.ptn5110.MIMXRT595S"/>
     <definition extID="middleware.usb.pd.MIMXRT595S"/>
+    <definition extID="middleware.usb_pd.config_header.MIMXRT595S"/>
     <definition extID="middleware.usb.phy.MIMXRT595S"/>
     <definition extID="middleware.freertos-kernel.MIMXRT595S"/>
     <definition extID="middleware.freertos-kernel.heap_4.MIMXRT595S"/>
     <definition extID="middleware.freertos-kernel.cm33_non_trustzone.MIMXRT595S"/>
+    <definition extID="middleware.freertos-kernel.extension.MIMXRT595S"/>
     <definition extID="middleware.freertos-kernel.config.MIMXRT595S"/>
     <definition extID="iar"/>
     <definition extID="mdk"/>
@@ -57,7 +58,7 @@
     <definition extID="com.crt.advproject.config.exe.debug"/>
     <definition extID="com.crt.advproject.config.exe.release"/>
   </externalDefinitions>
-  <example id="evkmimxrt595_usb_pd_sink_battery_freertos_om13790host_cm33" name="usb_pd_sink_battery_freertos_om13790host_cm33" device_core="cm33_MIMXRT595S" dependency="platform.drivers.flash_config.evkmimxrt595.MIMXRT595S CMSIS_Include_core_cm.MIMXRT595S device.MIMXRT595S_CMSIS.MIMXRT595S device.MIMXRT595S_system.MIMXRT595S device.MIMXRT595S_startup.MIMXRT595S platform.drivers.clock.MIMXRT595S platform.drivers.dsp.MIMXRT595S platform.drivers.i2s_bridge.MIMXRT595S platform.drivers.inputmux_connections.MIMXRT595S platform.drivers.memory.MIMXRT595S platform.drivers.power.MIMXRT595S platform.drivers.reset.MIMXRT595S platform.drivers.soc_mipi_dsi.MIMXRT595S platform.drivers.cache_cache64.MIMXRT595S platform.drivers.common.MIMXRT595S platform.drivers.flexcomm.MIMXRT595S platform.drivers.flexcomm_usart.MIMXRT595S platform.drivers.flexcomm_i2c.MIMXRT595S platform.drivers.flexspi.MIMXRT595S platform.drivers.iap3.MIMXRT595S platform.drivers.inputmux.MIMXRT595S platform.drivers.lpc_gpio.MIMXRT595S platform.drivers.lpc_iopctl.MIMXRT595S platform.drivers.mrt.MIMXRT595S platform.drivers.pint.MIMXRT595S platform.utilities.assert_lite.MIMXRT595S platform.utilities.misc_utilities.MIMXRT595S component.lists.MIMXRT595S utility.str.MIMXRT595S utility.debug_console_lite.MIMXRT595S component.rt_gpio_adapter.MIMXRT595S component.mrt_adapter.MIMXRT595S component.i2c_adapter_interface.MIMXRT595S component.flexcomm_i2c_adapter.MIMXRT595S component.usart_adapter.MIMXRT595S component.osa_template_config.MIMXRT595S component.osa_interface.MIMXRT595S component.osa.MIMXRT595S component.osa_free_rtos.MIMXRT595S middleware.usb.common_header.MIMXRT595S middleware.usb.pd.phy.ptn5110.MIMXRT595S middleware.usb.pd.MIMXRT595S middleware.usb.phy.MIMXRT595S middleware.freertos-kernel.MIMXRT595S middleware.freertos-kernel.heap_4.MIMXRT595S middleware.freertos-kernel.cm33_non_trustzone.MIMXRT595S middleware.freertos-kernel.config.MIMXRT595S" category="usb_examples">
+  <example id="evkmimxrt595_usb_pd_sink_battery_freertos_om13790host_cm33" name="usb_pd_sink_battery_freertos_om13790host_cm33" device_core="cm33_MIMXRT595S" dependency="platform.drivers.flash_config.evkmimxrt595.MIMXRT595S CMSIS_Include_core_cm.MIMXRT595S device.MIMXRT595S_CMSIS.MIMXRT595S device.MIMXRT595S_system.MIMXRT595S device.MIMXRT595S_startup.MIMXRT595S platform.drivers.clock.MIMXRT595S platform.drivers.dsp.MIMXRT595S platform.drivers.i2s_bridge.MIMXRT595S platform.drivers.inputmux_connections.MIMXRT595S platform.drivers.memory.MIMXRT595S platform.drivers.power.MIMXRT595S platform.drivers.reset.MIMXRT595S platform.drivers.soc_mipi_dsi.MIMXRT595S platform.drivers.cache_cache64.MIMXRT595S platform.drivers.common.MIMXRT595S platform.drivers.flexcomm.MIMXRT595S platform.drivers.flexcomm_usart.MIMXRT595S platform.drivers.flexcomm_i2c.MIMXRT595S platform.drivers.flexspi.MIMXRT595S platform.drivers.iap3.MIMXRT595S platform.drivers.inputmux.MIMXRT595S platform.drivers.lpc_gpio.MIMXRT595S platform.drivers.lpc_iopctl.MIMXRT595S platform.drivers.mrt.MIMXRT595S platform.drivers.pint.MIMXRT595S platform.utilities.assert_lite.MIMXRT595S platform.utilities.misc_utilities.MIMXRT595S component.lists.MIMXRT595S utility.str.MIMXRT595S utility.debug_console_lite.MIMXRT595S component.rt_gpio_adapter.MIMXRT595S component.mrt_adapter.MIMXRT595S component.i2c_adapter_interface.MIMXRT595S component.flexcomm_i2c_adapter.MIMXRT595S component.usart_adapter.MIMXRT595S component.osa_template_config.MIMXRT595S component.osa.MIMXRT595S component.osa_free_rtos.MIMXRT595S middleware.usb.common_header.MIMXRT595S middleware.usb.pd.phy.ptn5110.MIMXRT595S middleware.usb.pd.MIMXRT595S middleware.usb_pd.config_header.MIMXRT595S middleware.usb.phy.MIMXRT595S middleware.freertos-kernel.MIMXRT595S middleware.freertos-kernel.heap_4.MIMXRT595S middleware.freertos-kernel.cm33_non_trustzone.MIMXRT595S middleware.freertos-kernel.extension.MIMXRT595S middleware.freertos-kernel.config.MIMXRT595S" category="usb_examples">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -77,6 +78,7 @@
           <value>I2C_RETRY_TIMES=40000</value>
           <value>SDK_DEBUGCONSOLE=1</value>
           <value>MCUX_META_BUILD</value>
+          <value>MIMXRT595S_cm33_SERIES</value>
           <value>OSA_USED</value>
           <value>TIMER_PORT_TYPE_MRT=1</value>
           <value>USE_RTOS=1</value>
@@ -218,15 +220,16 @@
     <source path="." project_relative_path="source" type="c_include" config="true">
       <files mask="FreeRTOSConfig_Gen.h"/>
       <files mask="fsl_os_abstraction_config.h"/>
+      <files mask="usb_pd_config.h"/>
     </source>
     <source path="." project_relative_path="source" type="c_preinclude">
       <files mask="mcux_config.h"/>
     </source>
-    <source path="." project_relative_path="source" type="c_include">
-      <files mask="usb_pd_config.h"/>
-    </source>
     <source path="." project_relative_path="doc" type="doc">
       <files mask="readme.md"/>
+    </source>
+    <source path="." project_relative_path="doc" type="doc">
+      <files mask="examples_shared_readme.md"/>
     </source>
   </example>
 </ksdk:examples>

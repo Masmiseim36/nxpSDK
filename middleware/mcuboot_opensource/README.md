@@ -1,3 +1,27 @@
+# MCUXpresso SDK : mcuxsdk-middleware-mcuboot_opensource
+
+## Overview
+This repository is a fork of MCUboot (https://github.com/mcu-tools/mcuboot) for MCUXpresso SDK delivery and it contains the components officially provided in NXP MCUXpresso SDK. This repository is part of the MCUXpresso SDK overall delivery which is composed of several sub-repositories/projects. Navigate to the top/parent repository (mcuxsdk-manifests) for the complete delivery of MCUXpresso SDK.
+
+## Documentation
+Overall details can be reviewed here: [MCUXpresso SDK Online Documentation](https://mcuxpresso.nxp.com/mcuxsdk/latest/html/introduction/README.html)  
+
+Visit [MCUboot - Documentation](https://docs.mcuboot.com/) to review details on the contents in this sub-repo.
+
+## Setup
+Instructions on how to install the MCUXpresso SDK provided from GitHub via west manifest [Getting Started with SDK - Detailed Installation Instructions](https://mcuxpresso.nxp.com/mcuxsdk/latest/html/gsd/installation.html#installation)
+
+## Contribution
+Contributions are not currently accepted.
+If the intended contribution is not related to NXP specific code, consider contributing directly to the upstream MCUboot project. Once this MCUboot fork is synchronized with the upstream project, such contributions will end up here as well.
+If the intended contribution is a bugfix or improvement for NXP porting layer or for code added or modified by NXP, please open an issue or contact NXP support.
+
+---------------------------------
+## NXP Fork
+This fork of MCUboot contains specific modifications and enhancements for NXP MCUXpresso SDK integration.
+
+See [changelog](ChangeLogKSDK.txt) for details.
+
 # [MCUboot](http://mcuboot.com/)
 
 [![Package on PyPI](https://img.shields.io/pypi/v/imgtool.svg)][pypi]
@@ -18,7 +42,7 @@
 [travis]: https://travis-ci.org/mcu-tools/mcuboot
 [license]: https://github.com/mcu-tools/mcuboot/blob/main/LICENSE
 
-This is MCUboot version 2.0.0
+This is MCUboot version 2.1.0
 
 MCUboot is a secure bootloader for 32-bits microcontrollers. It defines a
 common infrastructure for the bootloader and the system flash layout on

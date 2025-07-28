@@ -9,7 +9,7 @@
 *                                                                    *
 **********************************************************************
 
-** emWin V6.46 - Graphical user interface for embedded applications **
+** emWin V6.50 - Graphical user interface for embedded applications **
 All  Intellectual Property rights  in the Software belongs to  SEGGER.
 emWin is protected by  international copyright laws.  Knowledge of the
 source code may not be used to write a similar product.  This file may
@@ -48,7 +48,6 @@ Purpose     : FRAMEWIN private header file
 #include "WM_Intern.h"
 #include "FRAMEWIN.h"
 #include "WIDGET.h"
-#include "GUI_HOOK.h"
 
 #if GUI_WINSUPPORT
 
@@ -169,6 +168,13 @@ Purpose     : FRAMEWIN private header file
 *
 **********************************************************************
 */
+typedef int GUI_HOOK_FUNC(WM_MESSAGE* pMsg);
+
+typedef struct GUI_HOOK {
+  struct GUI_HOOK* pNext;
+  GUI_HOOK_FUNC*   pHookFunc;
+} GUI_HOOK;
+
 typedef struct {
   unsigned              (* pfGetBordersize)(FRAMEWIN_Handle hObj, unsigned Index);
   WIDGET_DRAW_ITEM_FUNC  * pfDrawSkin;

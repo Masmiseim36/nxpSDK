@@ -24,6 +24,10 @@
 
 #include "fsl_component_mem_manager.h"
 #include "fsl_component_timer_manager.h"
+#if ((defined(gFsciOverRpmsg_c) && (gFsciOverRpmsg_c == 1)) && \
+     (defined(gFsciUseDedicatedTask_c) && (gFsciUseDedicatedTask_c == 1)))
+#include "fsl_component_messaging.h"
+#endif /* (gFsciOverRpmsg_c == 1) && (gFsciUseDedicatedTask_c == 1) */
 
 #include "fsl_os_abstraction.h"
 #include <assert.h>
@@ -96,7 +100,8 @@ inline static void FSCI_rxCallback(void                              *pData,
 * Private type definitions
 *************************************************************************************
 ************************************************************************************/
-#if defined(gFsciUseDedicatedTask_c) && (gFsciUseDedicatedTask_c == 1)
+#if (defined(gFsciUseDedicatedTask_c) && (gFsciUseDedicatedTask_c == 1)) || \
+    (defined(gFsciOverRpmsg_c) && (gFsciOverRpmsg_c == 1))
 typedef struct
 {
     clientPacket_t *pFsciPacketToProcess;
@@ -154,7 +159,15 @@ static uint8_t mFsciSrcInterface = mFsciInvalidInterface_c;
 static OSA_TASK_DEFINE(FSCI_Task, gFsciTaskPriority_c, 1, gFsciTaskStackSize_c, FALSE);
 static OSA_TASK_HANDLE_DEFINE(gFsciTaskId);
 static OSA_EVENT_HANDLE_DEFINE(mFsciTaskEventId);
+#if (defined(gFsciOverRpmsg_c) && (gFsciOverRpmsg_c == 1))
+static messaging_t mFsciInputQueue;
+#else  /* (defined(gFsciOverRpmsg_c) && (gFsciOverRpmsg_c == 1)) */
 static fsciClientPacketInfo_t mFsciClientPacketInfo;
+#endif /* (defined(gFsciOverRpmsg_c) && (gFsciOverRpmsg_c == 1)) */
+#else  /* gFsciUseDedicatedTask_c */
+#if (defined(gFsciOverRpmsg_c) && (gFsciOverRpmsg_c == 1))
+static fsciClientPacketInfo_t mFsciClientPacketInfo;
+#endif /* (defined(gFsciOverRpmsg_c) && (gFsciOverRpmsg_c == 1)) */
 #endif /* gFsciUseDedicatedTask_c */
 
 /************************************************************************************
@@ -307,8 +320,9 @@ void FSCI_commInit(serial_handle_t *pSerCfg)
     }
 #if defined(gFsciUseDedicatedTask_c) && (gFsciUseDedicatedTask_c == 1)
     osa_status_t status;
-    mFsciClientPacketInfo.pFsciPacketToProcess = NULL;
-    mFsciClientPacketInfo.fsciInterface        = mFsciInvalidInterface_c;
+
+    /* Prepare fsci input queue.*/
+    MSG_QueueInit(&mFsciInputQueue);
 
     /* Init Fsci task */
     status = OSA_EventCreate((osa_event_handle_t)mFsciTaskEventId, TRUE);
@@ -316,6 +330,9 @@ void FSCI_commInit(serial_handle_t *pSerCfg)
     status = OSA_TaskCreate((osa_task_handle_t)gFsciTaskId, OSA_TASK(FSCI_Task), NULL);
     assert(KOSA_StatusSuccess == status);
     (void)status;
+#else  /* gFsciUseDedicatedTask_c */
+    mFsciClientPacketInfo.pFsciPacketToProcess = NULL;
+    mFsciClientPacketInfo.fsciInterface        = mFsciInvalidInterface_c;
 #endif /* gFsciUseDedicatedTask_c */
 }
 
@@ -341,11 +358,40 @@ static void FSCI_Task(osa_task_param_t argument)
 
         if (mFsciTaskEventFlags == (uint32_t)gFSCI_ClientPacketReady_c)
         {
+#if !defined(gFsciOverRpmsg_c) || (gFsciOverRpmsg_c == 0)
             /* a client packet is ready to be processed */
             assert(mFsciClientPacketInfo.pFsciPacketToProcess != NULL);
             assert(mFsciClientPacketInfo.fsciInterface != mFsciInvalidInterface_c);
             /* Process the client packet */
             (void)FSCI_ProcessRxPkt(mFsciClientPacketInfo.pFsciPacketToProcess, mFsciClientPacketInfo.fsciInterface);
+
+#else /* !defined(gFsciOverRpmsg_c) || (gFsciOverRpmsg_c == 0) */
+            /* Check for all existing messages in queue */
+            if (MSG_QueueGetHead(&mFsciInputQueue) != NULL)
+            {
+                /* Pointer for storing the messages received. */
+                fsciClientPacketInfo_t *pMsgOut = (fsciClientPacketInfo_t *)MSG_QueueRemoveHead(&mFsciInputQueue);
+
+                assert(pMsgOut != NULL);
+
+                if (pMsgOut != NULL)
+                {
+                    /* Process the client packet */
+                    (void)FSCI_ProcessRxPkt(pMsgOut->pFsciPacketToProcess, pMsgOut->fsciInterface);
+
+                    /* Messages must always be freed. */
+                    (void)MSG_Free(pMsgOut);
+                }
+
+#if defined(SDK_OS_FREE_RTOS) || defined(FSL_RTOS_THREADX)
+                /* Signal the main_thread again if there are more messages pending */
+                if (MSG_QueueGetHead(&mFsciInputQueue) != NULL)
+                {
+                    (void)OSA_EventSet((osa_event_handle_t)mFsciTaskEventId, (uint32_t)gFSCI_ClientPacketReady_c);
+                }
+#endif /* defined(SDK_OS_FREE_RTOS) || defined(FSL_RTOS_THREADX) */
+            }
+#endif /* !defined(gFsciOverRpmsg_c) || (gFsciOverRpmsg_c == 0) */
         }
     }
 }
@@ -605,17 +651,33 @@ void FSCI_receivePacket(void *param)
 #else /* !defined(gFsciOverRpmsg_c) || (gFsciOverRpmsg_c == 0) */
 void FSCI_receivePacket(void *param)
 {
-    mFsciClientPacketInfo.pFsciPacketToProcess = (clientPacket_t *)param;
-    mFsciSrcInterface                          = 0;
-    mFsciClientPacketInfo.fsciInterface        = mFsciSrcInterface;
+    mFsciSrcInterface = 0;
 
 #if defined(gFsciUseDedicatedTask_c) && (gFsciUseDedicatedTask_c == 1)
     /* store client packet information */
+    fsciClientPacketInfo_t *pMsgIn = NULL;
 
-    /* schedule FSCI_Task by raising gFSCI_ClientPacketReady_c event
-    FSCI_Task will process the client packet */
-    (void)OSA_EventSet((osa_event_handle_t)mFsciTaskEventId, (uint32_t)gFSCI_ClientPacketReady_c);
+    /* Allocate a buffer with enough space to store the packet */
+    pMsgIn = (fsciClientPacketInfo_t *)MSG_Alloc(sizeof(fsciClientPacketInfo_t));
+
+    assert(pMsgIn != NULL);
+
+    if (pMsgIn != NULL)
+    {
+        pMsgIn->pFsciPacketToProcess = (clientPacket_t *)param;
+        pMsgIn->fsciInterface        = mFsciSrcInterface;
+
+        /* Put message in the queue */
+        (void)MSG_QueueAddTail(&mFsciInputQueue, (void *)pMsgIn);
+
+        /* schedule FSCI_Task by raising gFSCI_ClientPacketReady_c event
+        FSCI_Task will process the client packet */
+        (void)OSA_EventSet((osa_event_handle_t)mFsciTaskEventId, (uint32_t)gFSCI_ClientPacketReady_c);
+    }
 #else
+    mFsciClientPacketInfo.pFsciPacketToProcess = (clientPacket_t *)param;
+    mFsciClientPacketInfo.fsciInterface        = mFsciSrcInterface;
+
     (void)FSCI_ProcessRxPkt(mFsciClientPacketInfo.pFsciPacketToProcess, mFsciClientPacketInfo.fsciInterface);
 #endif
 }
@@ -905,7 +967,7 @@ fsci_packetStatus_t FSCI_checkPacket(clientPacket_t *pData, uint16_t bytes, uint
 /*! *********************************************************************************
  * \brief  This function performs a XOR over the message to compute the CRC
  *
- * \param[in]  pBuffer - pointer to the messae
+ * \param[in]  pBuffer - pointer to the message
  * \param[in]  size - the length of the message
  *
  * \return  the CRC of the message
@@ -914,10 +976,10 @@ fsci_packetStatus_t FSCI_checkPacket(clientPacket_t *pData, uint16_t bytes, uint
 uint8_t FSCI_computeChecksum(const void *pBuffer, uint16_t size)
 {
     uint16_t index;
-    uint8_t  checksum = 0;
+    uint8_t  checksum = 0u;
 
     /* Compute the CRC from Opcode byte */
-    for (index = 0; index < size; index++)
+    for (index = 0u; index < size; index++)
     {
         checksum ^= ((const uint8_t *)pBuffer)[index];
     }

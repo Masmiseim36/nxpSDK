@@ -753,7 +753,7 @@ status_t SDIO_IO_Read_Extended_Scatter_Gather(sdio_card_t *card,
                                               uint32_t flags)
 {
     assert(card != NULL);
-    assert(buffer != NULL);
+    assert(dataList != NULL);
     assert(func <= kSDIO_FunctionNum7);
 
     sdmmchost_scatter_gather_transfer_t content = {0U};

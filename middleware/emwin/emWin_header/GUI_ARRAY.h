@@ -9,7 +9,7 @@
 *                                                                    *
 **********************************************************************
 
-** emWin V6.46 - Graphical user interface for embedded applications **
+** emWin V6.50 - Graphical user interface for embedded applications **
 All  Intellectual Property rights  in the Software belongs to  SEGGER.
 emWin is protected by  international copyright laws.  Knowledge of the
 source code may not be used to write a similar product.  This file may
@@ -75,6 +75,7 @@ int       GUI_ARRAY_AddItem         (GUI_ARRAY hArray, const void * pNew, int Le
 void      GUI_ARRAY_Delete          (GUI_ARRAY hArray);
 void      GUI_ARRAY_DeletePtr       (GUI_ARRAY * phArray);
 GUI_HMEM  GUI_ARRAY_GethItem        (GUI_ARRAY hArray, unsigned int Index);
+GUI_HMEM  GUI_ARRAY_GetLasthItem    (GUI_ARRAY hArray);
 unsigned  GUI_ARRAY_GetNumItems     (GUI_ARRAY hArray);
 void    * GUI_ARRAY_GetpItemLocked  (GUI_ARRAY hArray, unsigned int Index);
 int       GUI_ARRAY_SethItem        (GUI_ARRAY hArray, unsigned int Index, GUI_HMEM hItem);

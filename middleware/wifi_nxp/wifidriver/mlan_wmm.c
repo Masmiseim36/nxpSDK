@@ -18,7 +18,7 @@ Change log:
 /* Additional WMSDK header files */
 #include <wmerrno.h>
 #include <osa.h>
-#if CONFIG_TX_RX_ZERO_COPY
+#if CONFIG_TX_RX_ZERO_COPY || FSL_USDHC_ENABLE_SCATTER_GATHER_TRANSFER
 #include <wm_net.h>
 #endif
 /* Always keep this include at the end of all include files */
@@ -195,7 +195,7 @@ t_void wlan_init_wmm_param(pmlan_adapter pmadapter)
      * aifsn,ecw_max,ecw_min, tx_op_limit only when ucm is set to 1.
      * othewise the default setting/behavoir in firmware will be used.
      */
-#ifdef RW610
+#if defined(RW610) || defined(IW610)
     pmadapter->ac_params[AC_BE].aci_aifsn.acm   = 0;
     pmadapter->ac_params[AC_BE].aci_aifsn.aci   = AC_BE;
     pmadapter->ac_params[AC_BE].aci_aifsn.aifsn = 5;
@@ -289,6 +289,9 @@ t_void wlan_wmm_init(pmlan_adapter pmadapter)
 #endif
 #if UAP_SUPPORT
             if (priv->bss_type == MLAN_BSS_TYPE_UAP
+#if CONFIG_WPA_SUPP_P2P
+                || priv->bss_type == MLAN_BSS_TYPE_WIFIDIRECT
+#endif
             )
             {
                 priv->add_ba_param.tx_win_size = MLAN_UAP_AMPDU_DEF_TXWINSIZE;
@@ -418,7 +421,7 @@ t_u32 wlan_wmm_process_association_req(pmlan_private priv,
  *  @param pdata_buf    A pointer to data buffer
  *  @return             MLAN_STATUS_SUCCESS
  */
-mlan_status wlan_cmd_wmm_param_config(pmlan_private pmpriv, HostCmd_DS_COMMAND *cmd, t_u8 cmd_action, t_void *pdata_buf)
+mlan_status wlan_cmd_wmm_param_config(pmlan_private pmpriv, HostCmd_DS_COMMAND *cmd, t_u16 cmd_action, t_void *pdata_buf)
 {
     wmm_ac_parameters_t *ac_params        = (wmm_ac_parameters_t *)pdata_buf;
     HostCmd_DS_WMM_PARAM_CONFIG *pcmd_cfg = &cmd->params.param_config;
@@ -648,7 +651,7 @@ SUCC:
     mlan_adap->priv[interface]->wmm.pkts_queued[queue]--;
     ra_list->total_pkts--;
     ra_list->drop_count++;
-#if CONFIG_TX_RX_ZERO_COPY
+#if CONFIG_TX_RX_ZERO_COPY || FSL_USDHC_ENABLE_SCATTER_GATHER_TRANSFER
     /* Before replacement, need free the buffer from stack first */
     net_stack_buffer_free(buf->buffer);
 #endif
@@ -748,7 +751,7 @@ int wlan_wmm_add_buf_txqueue_enh(const uint8_t interface, const uint8_t *buffer,
     priv = mlan_adap->priv[interface];
 
     /* refer to low_level_output payload memcpy */
-#if CONFIG_TX_RX_ZERO_COPY
+#if CONFIG_TX_RX_ZERO_COPY || FSL_USDHC_ENABLE_SCATTER_GATHER_TRANSFER
     wifi_wmm_da_to_ra(&((outbuf_t *)buffer)->eth_header[0], ra);
 #else
     wifi_wmm_da_to_ra(&((outbuf_t *)buffer)->data[0], ra);
@@ -808,7 +811,7 @@ void wifi_wmm_buf_put(outbuf_t *buf)
 
     assert(mlan_adap->outbuf_pool.free_cnt < MAX_WMM_BUF_NUM);
 
-#if CONFIG_TX_RX_ZERO_COPY
+#if CONFIG_TX_RX_ZERO_COPY || FSL_USDHC_ENABLE_SCATTER_GATHER_TRANSFER
     /* Free driver's reference count for network buffer */
     net_stack_buffer_free(buf->buffer);
 #endif

@@ -22,8 +22,8 @@
  * Description:  Public header file to contain the CMSIS-NN structs for the
  *               TensorFlowLite micro compliant functions
  *
- * $Date:        11 April 2024
- * $Revision:    V.3.2.0
+ * $Date:        21 Oct 2024
+ * $Revision:    V.3.5.0
  *
  * Target :  Arm(R) M-Profile Architecture
  * -------------------------------------------------------------------- */
@@ -111,6 +111,17 @@ typedef struct
     int32_t shift;      /**< Shift value */
 } cmsis_nn_per_tensor_quant_params;
 
+/** CMSIS-NN object for quantization parameters.
+ *  This struct supports both per-tensor and per-channels requantization
+ *  and is recommended for new operators.
+ */
+typedef struct
+{
+    int32_t *multiplier;    /**< Multiplier values */
+    int32_t *shift;         /**< Shift values */
+    int32_t is_per_channel; /** Indicating if per channel or per tensor quantization */
+} cmsis_nn_quant_params;
+
 /** CMSIS-NN object for the quantized Relu activation */
 typedef struct
 {
@@ -165,10 +176,25 @@ typedef struct
 typedef struct
 {
     int32_t input_offset;  /**< The negative of the zero value for the input tensor */
-    int32_t filter_offset; /**< The negative of the zero value for the filter tensor. Not used */
+    int32_t filter_offset; /**< The negative of the zero value for the filter tensor */
     int32_t output_offset; /**< The negative of the zero value for the output tensor */
     cmsis_nn_activation activation;
 } cmsis_nn_fc_params;
+
+/** CMSIS-NN object for Batch Matmul layer parameters */
+typedef struct
+{
+    const bool adj_x;
+    const bool adj_y;
+    cmsis_nn_fc_params fc_params;
+} cmsis_nn_bmm_params;
+
+/** CMSIS-NN object for Transpose layer parameters */
+typedef struct
+{
+    const int32_t num_dims;
+    const uint32_t *permutations; /**< The dimensions applied to the input dimensions */
+} cmsis_nn_transpose_params;
 
 /** CMSIS-NN object for SVDF layer parameters */
 typedef struct

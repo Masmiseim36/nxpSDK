@@ -230,7 +230,9 @@ static FMSTR_BOOL _FMSTR_SerialLpuartIsReceiveRegFull(void)
 
    /* Clear the overrun bit for the receiver to continue normal operation. */
     if((sr & (uint32_t)kLPUART_RxOverrunFlag) != 0U)
-        LPUART_ClearStatusFlags(fmstr_serialBaseAddr, kLPUART_RxOverrunFlag);
+    {
+        (void)LPUART_ClearStatusFlags(fmstr_serialBaseAddr, (uint32_t)kLPUART_RxOverrunFlag);
+    }
 
     return (FMSTR_BOOL)((sr & (uint32_t)kLPUART_RxDataRegFullFlag) != 0U);
 }

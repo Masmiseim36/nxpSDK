@@ -24,6 +24,7 @@
  */
 
 #include <arm_cmse.h>
+#include <stdint.h>
 #include "nsc_functions.h"
 #include "secure_port_macros.h"
 
@@ -54,7 +55,10 @@ secureportNON_SECURE_CALLABLE uint32_t NSCFunction(Callback_t pxCallback)
     pxNonSecureCallback();
 
     /* Increment the secure side counter. */
-    ulSecureCounter += 1;
+    if (ulSecureCounter < UINT32_MAX)
+    {
+        ulSecureCounter += 1;
+    }
 
     /* Return the secure side counter. */
     return ulSecureCounter;

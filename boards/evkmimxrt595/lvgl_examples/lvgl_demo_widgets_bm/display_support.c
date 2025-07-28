@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2021 NXP
+ * Copyright 2019-2021,2025 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -24,8 +24,12 @@
 #endif
 #include "fsl_mipi_dsi.h"
 #else
-#include "fsl_dc_fb_dsi_cmd.h"
+#if (DEMO_PANEL_CO5300 == DEMO_PANEL)
+#include "fsl_co5300.h"
+#else
 #include "fsl_rm67162.h"
+#endif
+#include "fsl_dc_fb_dsi_cmd.h"
 #include "fsl_mipi_dsi.h"
 #include "fsl_inputmux.h"
 #include "fsl_mipi_dsi_smartdma.h"
@@ -42,7 +46,8 @@
  * Prototypes
  ******************************************************************************/
 #if (((DEMO_PANEL_TFT_PROTO_5 == DEMO_PANEL) && (DEMO_SSD1963_USE_FLEXIO_SMARTDMA)) || \
-     ((DEMO_PANEL_RM67162 == DEMO_PANEL) && (DEMO_RM67162_USE_DSI_SMARTDMA)))
+     ((DEMO_PANEL_RM67162 == DEMO_PANEL) && (DEMO_RM67162_USE_DSI_SMARTDMA)) ||\
+     ((DEMO_PANEL_CO5300 == DEMO_PANEL) && (DEMO_CO5300_USE_DSI_SMARTDMA)))
 static void BOARD_InitSmartDMA(void)
 {
     RESET_ClearPeripheralReset(kINPUTMUX_RST_SHIFT_RSTn);
@@ -247,7 +252,7 @@ status_t BOARD_PrepareDisplayController(void)
     status_t status;
 
     flexio_mculcd_smartdma_config_t flexioEzhConfig = {
-#if DEMO_SSD1963_USE_RG565
+#if DEMO_SSD1963_USE_RGB565
         .inputPixelFormat = kFLEXIO_MCULCD_RGB565,
 #else
         .inputPixelFormat = kFLEXIO_MCULCD_RGB888,
@@ -655,7 +660,7 @@ status_t BOARD_PrepareDisplayController(void)
     return kStatus_Success;
 }
 
-#elif (DEMO_PANEL_RM67162 == DEMO_PANEL)
+#elif (DEMO_PANEL_RM67162 == DEMO_PANEL) || (DEMO_PANEL_CO5300 == DEMO_PANEL)
 
 /*******************************************************************************
  * Definitions
@@ -696,14 +701,16 @@ static void BOARD_PullPanelPowerPin(bool pullUp);
 static void BOARD_InitMipiDsiClock(void);
 static status_t BOARD_DSI_Transfer(dsi_transfer_t *xfer);
 static status_t BOARD_DSI_MemWrite(uint8_t virtualChannel, const uint8_t *data, uint32_t length);
-#if DEMO_RM67162_USE_DSI_SMARTDMA
+#if (((DEMO_PANEL_RM67162 == DEMO_PANEL) && DEMO_RM67162_USE_DSI_SMARTDMA) || \
+    ((DEMO_PANEL_CO5300 == DEMO_PANEL) && DEMO_CO5300_USE_DSI_SMARTDMA))
 static status_t BOARD_DSI_MemWrite2D(
     uint8_t virtualChannel, const uint8_t *data, uint32_t minorLoop, uint32_t minorLoopOffset, uint32_t majorLoop);
 #endif
 /*******************************************************************************
  * Variables
  ******************************************************************************/
-#if DEMO_RM67162_USE_DSI_SMARTDMA
+#if (((DEMO_PANEL_RM67162 == DEMO_PANEL) && DEMO_RM67162_USE_DSI_SMARTDMA) || \
+    ((DEMO_PANEL_CO5300 == DEMO_PANEL) && DEMO_CO5300_USE_DSI_SMARTDMA))
 static dsi_smartdma_handle_t s_dsiDriverHandle;
 #else
 static dsi_mem_write_ctx_t s_dsiMemWriteCtx;
@@ -719,11 +726,13 @@ static mipi_dsi_device_t dsiDevice = {
     .virtualChannel = 0,
     .xferFunc       = BOARD_DSI_Transfer,
     .memWriteFunc   = BOARD_DSI_MemWrite,
-#if DEMO_RM67162_USE_DSI_SMARTDMA
+#if (((DEMO_PANEL_RM67162 == DEMO_PANEL) && DEMO_RM67162_USE_DSI_SMARTDMA) || \
+    ((DEMO_PANEL_CO5300 == DEMO_PANEL) && DEMO_CO5300_USE_DSI_SMARTDMA))
     .memWriteFunc2D = BOARD_DSI_MemWrite2D,
 #endif
 };
 
+#if (DEMO_PANEL_RM67162 == DEMO_PANEL)
 static const rm67162_resource_t rm67162Resource = {
     .dsiDevice    = &dsiDevice,
     .pullResetPin = BOARD_PullPanelResetPin,
@@ -734,6 +743,18 @@ static display_handle_t rm67162Handle = {
     .resource = &rm67162Resource,
     .ops      = &rm67162_ops,
 };
+#else
+static const co5300_resource_t co5300Resource = {
+    .dsiDevice    = &dsiDevice,
+    .pullResetPin = BOARD_PullPanelResetPin,
+    .pullPowerPin = BOARD_PullPanelPowerPin,
+};
+
+static display_handle_t co5300Handle = {
+    .resource = &co5300Resource,
+    .ops      = &co5300_ops,
+};
+#endif
 
 const dc_fb_dsi_cmd_config_t s_panelConfig = {
     .commonConfig =
@@ -753,10 +774,18 @@ const dc_fb_dsi_cmd_config_t s_panelConfig = {
     .useTEPin = true,
 };
 
+#if (DEMO_PANEL_RM67162 == DEMO_PANEL)
 static dc_fb_dsi_cmd_handle_t s_dcFbDsiCmdHandle = {
     .dsiDevice   = &dsiDevice,
     .panelHandle = &rm67162Handle,
 };
+#else
+static dc_fb_dsi_cmd_handle_t s_dcFbDsiCmdHandle = {
+    .dsiDevice   = &dsiDevice,
+    .panelHandle = &co5300Handle,
+};
+#endif
+
 
 const dc_fb_t g_dc = {
     .ops     = &g_dcFbOpsDsiCmd,
@@ -797,7 +826,8 @@ static status_t BOARD_DSI_Transfer(dsi_transfer_t *xfer)
     return DSI_TransferBlocking(DEMO_MIPI_DSI, xfer);
 }
 
-#if !DEMO_RM67162_USE_DSI_SMARTDMA
+#if (((DEMO_PANEL_RM67162 == DEMO_PANEL) && !DEMO_RM67162_USE_DSI_SMARTDMA) || \
+    ((DEMO_PANEL_CO5300 == DEMO_PANEL) && !DEMO_CO5300_USE_DSI_SMARTDMA))
 static status_t BOARD_DsiMemWriteSendChunck(void)
 {
     uint32_t curSendLen;
@@ -815,7 +845,8 @@ static status_t BOARD_DsiMemWriteSendChunck(void)
      * the MIPI DSC spec, the high byte should be send first, so swap the pixel byte
      * first.
      */
-#if (DEMO_RM67162_BUFFER_FORMAT == DEMO_RM67162_BUFFER_RGB565)
+#if (((DEMO_PANEL_RM67162 == DEMO_PANEL) && (DEMO_RM67162_BUFFER_FORMAT == DEMO_RM67162_BUFFER_RGB565)) || \
+    ((DEMO_PANEL_CO5300 == DEMO_PANEL) && (DEMO_CO5300_BUFFER_FORMAT == DEMO_CO5300_BUFFER_RGB565)))
     for (i = 0; i < curSendLen; i += 2)
     {
         s_dsiMemWriteTmpArray[i]     = *(s_dsiMemWriteCtx.txData + 1);
@@ -863,32 +894,39 @@ static void BOARD_DsiMemWriteCallback(MIPI_DSI_HOST_Type *base,
 {
     MIPI_DSI_MemoryDoneDriverCallback(status, &dsiDevice);
 }
-#endif /* !DEMO_RM67162_USE_DSI_SMARTDMA */
+#endif /* !DEMO_RM67162_USE_DSI_SMARTDMA || !DEMO_CO5300_USE_DSI_SMARTDMA */
 
 static status_t BOARD_DSI_MemWrite(uint8_t virtualChannel, const uint8_t *data, uint32_t length)
 {
-#if DEMO_RM67162_USE_DSI_SMARTDMA
+#if (((DEMO_PANEL_RM67162 == DEMO_PANEL) && DEMO_RM67162_USE_DSI_SMARTDMA) || \
+    ((DEMO_PANEL_CO5300 == DEMO_PANEL) && DEMO_CO5300_USE_DSI_SMARTDMA))
     dsi_smartdma_write_mem_transfer_t xfer = {
-#if (DEMO_RM67162_BUFFER_FORMAT == DEMO_RM67162_BUFFER_RGB565)
-        .inputFormat          = kDSI_SMARTDMA_InputPixelFormatRGB565,
-        .outputFormat         = kDSI_SMARTDMA_OutputPixelFormatRGB565,
-#elif (DEMO_RM67162_BUFFER_FORMAT == DEMO_RM67162_BUFFER_RGB888)
+#if (((DEMO_PANEL_RM67162 == DEMO_PANEL) && (DEMO_RM67162_BUFFER_FORMAT == DEMO_RM67162_BUFFER_RGB565)) || \
+    ((DEMO_PANEL_CO5300 == DEMO_PANEL) && (DEMO_CO5300_BUFFER_FORMAT == DEMO_CO5300_BUFFER_RGB565)))
+        .inputFormat  = kDSI_SMARTDMA_InputPixelFormatRGB565,
+        .outputFormat = kDSI_SMARTDMA_OutputPixelFormatRGB565,
+#elif (((DEMO_PANEL_RM67162 == DEMO_PANEL) && (DEMO_RM67162_BUFFER_FORMAT == DEMO_RM67162_BUFFER_RGB888)) || \
+    ((DEMO_PANEL_CO5300 == DEMO_PANEL) && (DEMO_CO5300_BUFFER_FORMAT == DEMO_CO5300_BUFFER_RGB888)))
         .inputFormat  = kDSI_SMARTDMA_InputPixelFormatRGB888,
         .outputFormat = kDSI_SMARTDMA_OutputPixelFormatRGB888,
 #else
         .inputFormat  = kDSI_SMARTDMA_InputPixelFormatXRGB8888,
         .outputFormat = kDSI_SMARTDMA_OutputPixelFormatRGB888,
-#endif /* DEMO_RM67162_BUFFER_FORMAT */
+#endif /* DEMO_RM67162_BUFFER_FORMAT || DEMO_CO5300_BUFFER_FORMAT */
         .data                 = data,
         .dataSize             = length,
         .twoDimension         = false,
         .virtualChannel       = virtualChannel,
+#if ((DEMO_PANEL_CO5300 == DEMO_PANEL) && (DEMO_CO5300_BUFFER_FORMAT == DEMO_CO5300_BUFFER_RGB565))
+        .disablePixelByteSwap = true,
+#else
         .disablePixelByteSwap = false,
+#endif
     };
 
     return DSI_TransferWriteMemorySMARTDMA(DEMO_MIPI_DSI, &s_dsiDriverHandle, &xfer);
 
-#else  /* DEMO_RM67162_USE_DSI_SMARTDMA */
+#else  /* DEMO_RM67162_USE_DSI_SMARTDMA || DEMO_CO5300_USE_DSI_SMARTDMA */
 
     status_t status;
 
@@ -918,15 +956,18 @@ static status_t BOARD_DSI_MemWrite(uint8_t virtualChannel, const uint8_t *data, 
 #endif
 }
 
-#if DEMO_RM67162_USE_DSI_SMARTDMA
+#if (((DEMO_PANEL_RM67162 == DEMO_PANEL) && DEMO_RM67162_USE_DSI_SMARTDMA) || \
+    ((DEMO_PANEL_CO5300 == DEMO_PANEL) && DEMO_CO5300_USE_DSI_SMARTDMA))
 static status_t BOARD_DSI_MemWrite2D(
     uint8_t virtualChannel, const uint8_t *data, uint32_t minorLoop, uint32_t minorLoopOffset, uint32_t majorLoop)
 {
     dsi_smartdma_write_mem_transfer_t xfer = {
-#if (DEMO_RM67162_BUFFER_FORMAT == DEMO_RM67162_BUFFER_RGB565)
-        .inputFormat          = kDSI_SMARTDMA_InputPixelFormatRGB565,
-        .outputFormat         = kDSI_SMARTDMA_OutputPixelFormatRGB565,
-#elif (DEMO_RM67162_BUFFER_FORMAT == DEMO_RM67162_BUFFER_RGB888)
+#if (((DEMO_PANEL_RM67162 == DEMO_PANEL) && (DEMO_RM67162_BUFFER_FORMAT == DEMO_RM67162_BUFFER_RGB565)) || \
+    ((DEMO_PANEL_CO5300 == DEMO_PANEL) && (DEMO_CO5300_BUFFER_FORMAT == DEMO_CO5300_BUFFER_RGB565)))
+        .inputFormat  = kDSI_SMARTDMA_InputPixelFormatRGB565,
+        .outputFormat = kDSI_SMARTDMA_OutputPixelFormatRGB565,
+#elif (((DEMO_PANEL_RM67162 == DEMO_PANEL) && (DEMO_RM67162_BUFFER_FORMAT == DEMO_RM67162_BUFFER_RGB888)) || \
+    ((DEMO_PANEL_CO5300 == DEMO_PANEL) && (DEMO_CO5300_BUFFER_FORMAT == DEMO_CO5300_BUFFER_RGB888)))
         .inputFormat  = kDSI_SMARTDMA_InputPixelFormatRGB888,
         .outputFormat = kDSI_SMARTDMA_OutputPixelFormatRGB888,
 #else
@@ -939,7 +980,11 @@ static status_t BOARD_DSI_MemWrite2D(
         .minorLoopOffset      = minorLoopOffset,
         .majorLoop            = majorLoop,
         .virtualChannel       = virtualChannel,
+#if ((DEMO_PANEL_CO5300 == DEMO_PANEL) && (DEMO_CO5300_BUFFER_FORMAT == DEMO_CO5300_BUFFER_RGB565))
+        .disablePixelByteSwap = true,
+#else
         .disablePixelByteSwap = false,
+#endif
     };
 
     return DSI_TransferWriteMemorySMARTDMA(DEMO_MIPI_DSI, &s_dsiDriverHandle, &xfer);
@@ -978,7 +1023,8 @@ static void BOARD_InitMipiDsiClock(void)
      * system pll clock is 528MHz defined in clock_config.c
      */
     CLOCK_AttachClk(kAUX1_PLL_to_MIPI_DPHY_CLK);
-#if (DEMO_RM67162_BUFFER_FORMAT == DEMO_RM67162_BUFFER_RGB565)
+#if (((DEMO_PANEL_RM67162 == DEMO_PANEL) && (DEMO_RM67162_BUFFER_FORMAT == DEMO_RM67162_BUFFER_RGB565)) || \
+    ((DEMO_PANEL_CO5300 == DEMO_PANEL) && (DEMO_CO5300_BUFFER_FORMAT == DEMO_CO5300_BUFFER_RGB565)))
     /* PFD value is in the range of 12~35. */
     CLOCK_InitSysPfd(kCLOCK_Pfd3, 30);
 #else
@@ -1105,7 +1151,8 @@ status_t BOARD_PrepareDisplayController(void)
 
     status = BOARD_InitDisplayInterface();
 
-#if DEMO_RM67162_USE_DSI_SMARTDMA
+#if (((DEMO_PANEL_RM67162 == DEMO_PANEL) && DEMO_RM67162_USE_DSI_SMARTDMA) || \
+    ((DEMO_PANEL_CO5300 == DEMO_PANEL) && DEMO_CO5300_USE_DSI_SMARTDMA))
     if (kStatus_Success == status)
     {
         BOARD_InitSmartDMA();

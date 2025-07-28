@@ -70,7 +70,7 @@ static INLINE t_void util_init_list_head(t_void *pmoal_handle,
 {
     /* Both next and prev point to self */
     util_init_list((pmlan_linked_list)(void *)phead);
-    if (lock_required != 0U)
+    if (lock_required != MFALSE)
     {
         (void)moal_init_lock(pmoal_handle, &phead->plock);
     }
@@ -251,11 +251,11 @@ static INLINE pmlan_linked_list util_dequeue_list(t_void *pmoal_handle,
     pnode = phead->pnext;
     if (pnode != MNULL && (pnode != (pmlan_linked_list)(void *)phead))
     {
-        util_unlink_list(pmoal_handle, phead, pnode, 0, 0);
+        util_unlink_list(pmoal_handle, phead, pnode, MNULL, MNULL);
     }
     else
     {
-        pnode = 0;
+        pnode = MNULL;
     }
     if (moal_spin_unlock != MNULL)
     {
@@ -506,25 +506,25 @@ static INLINE t_u8 util_scalar_conditional_write(t_void *pmoal_handle,
     switch (condition)
     {
         case MLAN_SCALAR_COND_EQUAL:
-            update = (pscalar->value == val_compare);
+            update = (t_u8)(pscalar->value == val_compare);
             break;
         case MLAN_SCALAR_COND_NOT_EQUAL:
-            update = (pscalar->value != val_compare);
+            update = (t_u8)(pscalar->value != val_compare);
             break;
         case MLAN_SCALAR_COND_GREATER_THAN:
-            update = (pscalar->value > val_compare);
+            update = (t_u8)(pscalar->value > val_compare);
             break;
         case MLAN_SCALAR_COND_GREATER_OR_EQUAL:
-            update = (pscalar->value >= val_compare);
+            update = (t_u8)(pscalar->value >= val_compare);
             break;
         case MLAN_SCALAR_COND_LESS_THAN:
-            update = (pscalar->value < val_compare);
+            update = (t_u8)(pscalar->value < val_compare);
             break;
         case MLAN_SCALAR_COND_LESS_OR_EQUAL:
-            update = (pscalar->value <= val_compare);
+            update = (t_u8)(pscalar->value <= val_compare);
             break;
         default:
-            update = MFALSE;
+            update = (t_u8)MFALSE;
             break;
     }
     if (update != 0U)
@@ -536,7 +536,7 @@ static INLINE t_u8 util_scalar_conditional_write(t_void *pmoal_handle,
     {
         (void)moal_spin_unlock(pmoal_handle, pscalar->plock);
     }
-    return (update) ? MTRUE : MFALSE;
+    return (update == (t_u8)MTRUE) ? ((t_u8)MTRUE) : ((t_u8)MFALSE);
 }
 
 #endif /* !_MLAN_UTIL_H_ */

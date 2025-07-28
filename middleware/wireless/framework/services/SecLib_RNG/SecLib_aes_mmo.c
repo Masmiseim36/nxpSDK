@@ -1,5 +1,5 @@
 /*! *********************************************************************************
- * Copyright 2021-2024 NXP
+ * Copyright 2021-2025 NXP
  *
  * \file
  *
@@ -30,6 +30,8 @@
 #define AES_MMO_HASH_SIZE  16u
 #define AES_MMO_BLOCK_SIZE AES_BLOCK_SIZE
 
+#define AES_MMO_MAX_HASHED_BYTES ((uint32_t)(UINT32_MAX >> 3))
+
 /*! *********************************************************************************
 *************************************************************************************
 * Private type definitions
@@ -55,7 +57,11 @@ typedef struct
 *************************************************************************************
 ********************************************************************************** */
 
-static void AesMmoBlockUpdate(tuAES_Block *puHash, tuAES_Block *puBlock);
+/*! *********************************************************************************
+*************************************************************************************
+* Public APIs implementation
+*************************************************************************************
+********************************************************************************** */
 
 /*! *********************************************************************************
  * \brief  This function allocates a memory buffer for a AES MMO context structure
@@ -112,6 +118,39 @@ void AES_MMO_Init(void *pContext)
     FLib_MemSet(context->digest.au8, 0u, sizeof(context->digest));
 }
 
+/****************************************************************************
+ *
+ * \brief  Perform an MMO Block Update on the hash
+ *         H[j] = E(H[j-1], M[j]) ^ M[j]
+ *         where E(K,x) = AES-128 block cipher, K=key, x=text
+ *
+ *  Uses the AES_128_Encrypt function from SecLib.c
+ *
+ * \param[in/out] puHash MMO output buffer
+ * \param[in]     puBlock Block to hash
+ *
+ * \return none
+ *
+ * Note: This function works on 32 bit aligned input and output. The alignment has been
+ * taken care of by the caller.
+ *
+ *
+ ****************************************************************************/
+void AES_MMO_BlockUpdate(tuAES_Block *puHash, tuAES_Block *puBlock)
+{
+    tuAES_Block uOut = {.au32 = {0uL}};
+
+    /* Block cipher using Hash as key */
+    AES_128_Encrypt((uint8_t *)puBlock, (uint8_t *)puHash, (uint8_t *)&uOut);
+
+    /* Prepare next hash as (result XOR block) */
+    for (uint8_t i = 0u; i < AES_MMO_BLOCK_SIZE / 4u; i++)
+    {
+        uOut.au32[i] ^= puBlock->au32[i];
+        puHash->au32[i] = uOut.au32[i];
+    }
+}
+
 /*! *********************************************************************************
  * \brief  This function performs AES MMO on multiple bytes and updates the context data
  *
@@ -123,47 +162,86 @@ void AES_MMO_Init(void *pContext)
  ********************************************************************************** */
 void AES_MMO_HashUpdate(void *pContext, const uint8_t *pData, uint32_t numBytes)
 {
-    uint16_t         blocks;
+    secResultType_t  ret;
     aesMmoContext_t *context = (aesMmoContext_t *)pContext;
 
-    /* update total byte count */
-    context->totalBytes += numBytes;
-    /* Check if we have at least 1 AES_MMO block */
-    if (context->bytes + numBytes < AES_MMO_BLOCK_SIZE)
+    do
     {
-        /* store bytes for later processing */
-        FLib_MemCpy(&context->buffer.au8[context->bytes], pData, numBytes);
-        context->bytes += (uint8_t)(numBytes & 0xffu);
-    }
-    else
-    {
-        /* Check for bytes leftover from previous update */
-        if (context->bytes > 0u)
-        {
-            uint8_t copyBytes = AES_MMO_BLOCK_SIZE - context->bytes;
+        uint8_t free_space_in_context_buffer;
 
-            FLib_MemCpy(&context->buffer.au8[context->bytes], pData, copyBytes);
-            AesMmoBlockUpdate(&context->digest, &context->buffer);
-            pData += copyBytes;
-            numBytes -= copyBytes;
-            context->bytes = 0u;
-        }
-        /* Hash 64 bytes blocks */
-        blocks = (uint16_t)(numBytes / AES_MMO_BLOCK_SIZE & 0xffffu);
-        for (uint16_t i = 0u; i < blocks; i++)
+        if (context->bytes >= AES_MMO_BLOCK_SIZE)
         {
-            FLib_MemCpy(&context->buffer.au8, pData, AES_MMO_BLOCK_SIZE);
-            AesMmoBlockUpdate(&context->digest, &context->buffer);
-            pData += AES_MMO_BLOCK_SIZE;
-            numBytes -= AES_MMO_BLOCK_SIZE;
+            /* impossible whenever accumulated buffer reach a block size the block is consumed right away */
+            ret = gSecError_c;
+            break;
         }
-        /* Check for remaining bytes */
-        if (numBytes > 0u)
+        /* Ensure that less than UINT32_MAX / 8 bytes have been hashed so far (this guarantee that the sum with numBytes
+         * will not overflow)*/
+        if (context->totalBytes >= AES_MMO_MAX_HASHED_BYTES)
         {
-            context->bytes = (uint8_t)(numBytes & 0xffu);
-            FLib_MemCpy(context->buffer.au8, pData, numBytes);
+            /* we never have to Hash so large data : context may be corrupted */
+            ret = gSecError_c;
+            break;
         }
-    }
+        if (numBytes > AES_MMO_MAX_HASHED_BYTES)
+        {
+            /* we never have to Hash so large data : caller error */
+            ret = gSecBadArgument_c;
+            break;
+        }
+
+        /* update total byte count */
+        context->totalBytes += numBytes;
+        /* Must check that numBytes do not cause overflow of bit counter */
+        if (context->totalBytes >= AES_MMO_MAX_HASHED_BYTES)
+        {
+            /* we never have to Hash so large data : context may be corrupted */
+            ret = gSecBadArgument_c;
+            break;
+        }
+
+        free_space_in_context_buffer = (uint8_t)AES_MMO_BLOCK_SIZE - context->bytes;
+        ret                          = gSecSuccess_c;
+        /* Check if we have at least 1 AES_MMO block */
+        if (numBytes < free_space_in_context_buffer)
+        {
+            /* store bytes for later processing */
+            FLib_MemCpy(&context->buffer.au8[context->bytes], pData, numBytes);
+            context->bytes += (uint8_t)(numBytes & 0xffu);
+        }
+        else
+        {
+            /* Check for bytes leftover from previous update */
+            if (context->bytes > 0u)
+            {
+                uint8_t copyBytes = free_space_in_context_buffer;
+
+                FLib_MemCpy(&context->buffer.au8[context->bytes], pData, copyBytes);
+                AES_MMO_BlockUpdate(&context->digest, &context->buffer);
+                pData += copyBytes;
+                numBytes -= copyBytes;
+                context->bytes = 0u;
+            }
+            /* Hash 64 bytes blocks */
+            while (numBytes >= AES_MMO_BLOCK_SIZE)
+            {
+                FLib_MemCpy(&context->buffer.au8, pData, AES_MMO_BLOCK_SIZE);
+                AES_MMO_BlockUpdate(&context->digest, &context->buffer);
+                pData += AES_MMO_BLOCK_SIZE;
+                numBytes -= AES_MMO_BLOCK_SIZE;
+            }
+            /* Check for remaining bytes */
+            if (numBytes > 0u)
+            {
+                context->bytes = (uint8_t)(numBytes & 0xffu);
+                /* Coverity False positive : free_space_in_context_buffer can only but remain less than 16 so numBytes
+                 * cannot underflow */
+                /* coverity [ overflow_sink:FALSE] */
+                FLib_MemCpy(context->buffer.au8, pData, numBytes);
+            }
+        }
+    } while (false);
+    NOT_USED(ret);
 }
 
 /*! *********************************************************************************
@@ -186,6 +264,7 @@ void AES_MMO_HashFinish(void *pContext, uint8_t *pOutput)
     uint32_t         uLen, uDataLen;
     uint32_t         u32DataLen;
 
+    /* we have already ascertained so far that context->totalBytes was less than AES_MMO_MAX_HASHED_BYTES */
     uDataLen = context->totalBytes;
     /* update remaining bytes */
     numBytes = context->bytes;
@@ -211,7 +290,7 @@ void AES_MMO_HashFinish(void *pContext, uint8_t *pOutput)
             *pu8Buf++ = 0u;
         }
 
-        AesMmoBlockUpdate(&context->digest, &context->buffer);
+        AES_MMO_BlockUpdate(&context->digest, &context->buffer);
 
         /* Reset padding and buffer pointer for final block */
         pu8Buf = &context->buffer.au8[0];
@@ -241,7 +320,7 @@ void AES_MMO_HashFinish(void *pContext, uint8_t *pOutput)
         *pu8Buf++ = 0u;
     }
 
-    AesMmoBlockUpdate(&context->digest, &context->buffer);
+    AES_MMO_BlockUpdate(&context->digest, &context->buffer);
 
     /* Copy the generated hash to the indicated output location */
     FLib_MemCpy(pOutput, context->digest.au8, AES_MMO_HASH_SIZE);
@@ -408,35 +487,3 @@ void HMAC_AES_MMO(const uint8_t *pKey, uint16_t keyLen, const uint8_t *pData, ui
 * Private functions
 *************************************************************************************
 ********************************************************************************** */
-/****************************************************************************
- *
- * \brief  Perform an MMO Block Update on the hash
- *         H[j] = E(H[j-1], M[j]) ^ M[j]
- *         where E(K,x) = AES-128 block cipher, K=key, x=text
- *
- *  Uses the AES_128_Encrypt function from SecLib.c
- *
- * \param[in/out] puHash MMO output buffer
- * \param[in]     puBlock Block to hash
- *
- * \return none
- *
- * Note: This function works on 32 bit aligned input and output. The alignment has been
- * taken care of by the caller.
- *
- *
- ****************************************************************************/
-static void AesMmoBlockUpdate(tuAES_Block *puHash, tuAES_Block *puBlock)
-{
-    tuAES_Block uOut = {.au32 = {0uL}};
-
-    /* Block cipher using Hash as key */
-    AES_128_Encrypt((uint8_t *)puBlock, (uint8_t *)puHash, (uint8_t *)&uOut);
-
-    /* Prepare next hash as (result XOR block) */
-    for (uint8_t i = 0u; i < AES_MMO_BLOCK_SIZE / 4u; i++)
-    {
-        uOut.au32[i] ^= puBlock->au32[i];
-        puHash->au32[i] = uOut.au32[i];
-    }
-}

@@ -48,6 +48,13 @@ static const uint8_t ssp_method[4 /* remote */][4 /* local */] = {
 	      { JUST_WORKS, JUST_WORKS, JUST_WORKS, JUST_WORKS },
 };
 
+#if (defined(CONFIG_BT_SMP_APP_PAIRING_ACCEPT) && (CONFIG_BT_SMP_APP_PAIRING_ACCEPT > 0U))
+/* all the sm_get_io_capability_pl is called with sm_lock,
+ * so it is ok to use on global variable to protect it.
+ */
+bool dont_pairing_accept_call;
+#endif
+
 static int ssp_passkey_neg_reply(struct bt_conn *conn);
 static int ssp_confirm_reply(struct bt_conn *conn);
 static uint8_t ssp_pair_method(const struct bt_conn *conn);
@@ -192,7 +199,13 @@ static uint8_t get_local_auth(const struct bt_conn *conn)
 		di = sm_search_device_entity (NULL, 0x0U, &handle);
 		if (di != SM_MAX_DEVICES) {
 			sm_lock();
+#if (defined(CONFIG_BT_SMP_APP_PAIRING_ACCEPT) && (CONFIG_BT_SMP_APP_PAIRING_ACCEPT > 0U))
+			dont_pairing_accept_call = true;
+#endif
 			retval = sm_get_io_capability_pl(di, &cap);
+#if (defined(CONFIG_BT_SMP_APP_PAIRING_ACCEPT) && (CONFIG_BT_SMP_APP_PAIRING_ACCEPT > 0U))
+			dont_pairing_accept_call = false;
+#endif
 			sm_unlock();
 		}
 	}
@@ -389,6 +402,9 @@ static int ssp_confirm_neg_reply(struct bt_conn *conn)
 
 static void ssp_pairing_complete(struct bt_conn *conn, uint8_t status)
 {
+	atomic_clear_bit(conn->flags, BT_CONN_BR_PAIRING);
+	atomic_set_bit_to(conn->flags, BT_CONN_BR_PAIRED, !status);
+
 	if (!status) {
 		bool bond = !atomic_test_bit(conn->flags, BT_CONN_BR_NOBOND);
 		struct bt_conn_auth_info_cb *listener, *next;
@@ -900,11 +916,15 @@ void bt_hci_io_capa_resp(struct net_buf *buf)
 #endif
 }
 
-#if defined(CONFIG_BT_SMP_APP_PAIRING_ACCEPT)
+#if (defined(CONFIG_BT_SMP_APP_PAIRING_ACCEPT) && (CONFIG_BT_SMP_APP_PAIRING_ACCEPT > 0U))
 API_RESULT sm_pairing_accept(BT_DEVICE_ADDR* device_addr)
 {
 	struct bt_conn *conn = NULL;
 	API_RESULT ret = API_SUCCESS;
+
+	if (dont_pairing_accept_call) {
+		return ret;
+	}
 
 	conn = bt_conn_lookup_addr_br((const bt_addr_t *)&device_addr->addr[0]);
 	if (conn != NULL) {

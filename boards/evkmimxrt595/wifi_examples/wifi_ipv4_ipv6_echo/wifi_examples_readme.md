@@ -15,3 +15,7 @@ Debug console UART is configured to use pins of J27, connect the board with PC b
 - board UART TX (pin 2 on J27) - connect to RX pin on converter
 - board GND (pin 7 on J29) - connect to GND pin on converter
 
+
+Wi-Fi
+=====
+[readme_modules.md](../readme_modules.md)

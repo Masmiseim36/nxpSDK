@@ -197,15 +197,18 @@ t_void wlan_wmm_delete_peer_ralist(pmlan_private priv, t_u8 *mac);
 /* process wmm_param_config command */
 mlan_status wlan_cmd_wmm_param_config(pmlan_private pmpriv,
                                       HostCmd_DS_COMMAND *cmd,
-                                      t_u8 cmd_action,
+                                      t_u16 cmd_action,
                                       t_void *pdata_buf);
 
 /* process wmm_param_config command response */
 mlan_status wlan_ret_wmm_param_config(pmlan_private pmpriv, const HostCmd_DS_COMMAND *resp, mlan_ioctl_req *pioctl_buf);
 
-#if CONFIG_WMM
 /* wmm enhance buffer pool */
+#if CONFIG_WIFI_SLIM_WMM
+#define MAX_WMM_BUF_NUM 8
+#else
 #define MAX_WMM_BUF_NUM 16
+#endif
 #define WMM_DATA_LEN    1580
 #define OUTBUF_WMM_LEN  (sizeof(outbuf_t))
 
@@ -214,7 +217,7 @@ typedef struct
     mlan_linked_list entry;
     t_u8 intf_header[INTF_HEADER_LEN];
     TxPD tx_pd;
-#if CONFIG_TX_RX_ZERO_COPY
+#if CONFIG_TX_RX_ZERO_COPY || FSL_USDHC_ENABLE_SCATTER_GATHER_TRANSFER
     t_u8 eth_header[ETH_HDR_LEN];
 #if CONFIG_AMSDU_IN_AMPDU
     t_u8 llc_header[LLC_SNAP_LEN];
@@ -228,6 +231,7 @@ typedef struct
 #endif
 } outbuf_t;
 
+#if CONFIG_WMM
 typedef struct
 {
     mlan_linked_list entry;

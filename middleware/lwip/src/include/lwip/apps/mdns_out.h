@@ -5,6 +5,7 @@
 
  /*
  * Copyright (c) 2015 Verisure Innovation AB
+ * Copyright 2025 NXP
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
@@ -108,6 +109,8 @@ err_t mdns_create_outpacket(struct netif *netif, struct mdns_outmsg *msg,
 err_t mdns_send_outpacket(struct mdns_outmsg *msg, struct netif *netif);
 void mdns_set_timeout(struct netif *netif, u32_t msecs,
                         sys_timeout_handler handler, u8_t *busy_flag);
+void mdns_stop_timeout(struct netif *netif, sys_timeout_handler handler,
+                       u8_t *busy_flag);
 #if LWIP_IPV4
 void mdns_multicast_timeout_reset_ipv4(void *arg);
 void mdns_multicast_probe_timeout_reset_ipv4(void *arg);
@@ -115,6 +118,7 @@ void mdns_multicast_timeout_25ttl_reset_ipv4(void *arg);
 void mdns_send_multicast_msg_delayed_ipv4(void *arg);
 void mdns_send_unicast_msg_delayed_ipv4(void *arg);
 void mdns_start_multicast_timeouts_ipv4(struct netif *netif);
+void mdns_stop_multicast_timeouts_ipv4(struct netif *netif);
 #endif
 #if LWIP_IPV6
 void mdns_multicast_timeout_reset_ipv6(void *arg);
@@ -123,6 +127,7 @@ void mdns_multicast_timeout_25ttl_reset_ipv6(void *arg);
 void mdns_send_multicast_msg_delayed_ipv6(void *arg);
 void mdns_send_unicast_msg_delayed_ipv6(void *arg);
 void mdns_start_multicast_timeouts_ipv6(struct netif *netif);
+void mdns_stop_multicast_timeouts_ipv6(struct netif *netif);
 #endif
 void mdns_prepare_txtdata(struct mdns_service *service);
 #ifdef LWIP_MDNS_SEARCH

@@ -184,4 +184,11 @@ static inline void wpa_bss_update_level(struct wpa_bss *bss, int new_level)
 
 void calculate_update_time(const struct os_reltime *fetch_time, unsigned int age_ms, struct os_reltime *update_time);
 
+const u8 * wpa_bss_get_rsne(struct wpa_supplicant *wpa_s,
+			    const struct wpa_bss *bss, struct wpa_ssid *ssid,
+			    bool mlo);
+const u8 * wpa_bss_get_rsnxe(struct wpa_supplicant *wpa_s,
+			     const struct wpa_bss *bss, struct wpa_ssid *ssid,
+			     bool mlo);
+
 #endif /* BSS_H */

@@ -17,8 +17,6 @@
 #define APP_FB_ALIGN FRAME_BUFFER_ALIGN
 
 #define APP_FB_USE_FIXED_ADDRESS 1
-/* The PSRAM size is 8M, not enough for three 720*1280 XRGB8888 buffers. */
-#define APP_FB_NUM   2
 #define APP_FB0_ADDR 0x28000000
 #define APP_FB1_ADDR 0x28400000
 

@@ -5,6 +5,7 @@ message("${CMAKE_CURRENT_LIST_FILE} component is included.")
 
       target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
           ${CMAKE_CURRENT_LIST_DIR}/port/tfm/entropy_poll_alt.c
+          ${CMAKE_CURRENT_LIST_DIR}/port/tfm/psa_can_do_apis.c
         )
 
   

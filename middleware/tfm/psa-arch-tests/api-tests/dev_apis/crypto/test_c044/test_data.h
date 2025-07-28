@@ -97,7 +97,7 @@ static const test_data check1[] = {
     .expected_data        = expected_output,
     .expected_data_size   = BUFFER_SIZE,
     .expected_data_length = AES_16B_KEY_SIZE,
-    .expected_status      = PSA_ERROR_INVALID_HANDLE, //NXP was PSA_ERROR_INVALID_ARGUMENT
+    .expected_status      = PSA_ERROR_INVALID_ARGUMENT
 },
 
 {

@@ -1,7 +1,7 @@
 /*
  * FreeRTOS Kernel V11.0.1
  * Copyright (C) 2021 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
- * Copyright 2023-2024 NXP
+ * Copyright 2024-2025 NXP
  *
  * SPDX-License-Identifier: MIT
  *
@@ -328,7 +328,10 @@ osa_status_t OSA_TimerDestroy(osa_timer_handle_t timerHandle)
 }
 
 void (*g_os_tick_hooks[MAX_CUSTOM_HOOKS])(void) = {NULL};
+
+#if !CONFIG_COEX_APP
 void (*g_os_idle_hooks[MAX_CUSTOM_HOOKS])(void) = {NULL};
+#endif
 
 /** The FreeRTOS Tick hook function. */
 void vApplicationTickHook(void)
@@ -344,6 +347,7 @@ void vApplicationTickHook(void)
     }
 }
 
+#if !CONFIG_COEX_APP
 void vApplicationIdleHook(void)
 {
     int i;
@@ -384,6 +388,7 @@ int OSA_SetupIdleFunction(void (*func)(void))
 
     return WM_SUCCESS;
 }
+#endif
 
 int OSA_SetupTickFunction(void (*func)(void))
 {
@@ -414,6 +419,7 @@ int OSA_SetupTickFunction(void (*func)(void))
     return WM_SUCCESS;
 }
 
+#if !CONFIG_COEX_APP
 int OSA_RemoveIdleFunction(void (*func)(void))
 {
     unsigned int i;
@@ -434,6 +440,7 @@ int OSA_RemoveIdleFunction(void (*func)(void))
 
     return WM_SUCCESS;
 }
+#endif
 
 int OSA_RemoveTickFunction(void (*func)(void))
 {

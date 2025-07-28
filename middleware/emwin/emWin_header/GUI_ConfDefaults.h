@@ -9,7 +9,7 @@
 *                                                                    *
 **********************************************************************
 
-** emWin V6.46 - Graphical user interface for embedded applications **
+** emWin V6.50 - Graphical user interface for embedded applications **
 All  Intellectual Property rights  in the Software belongs to  SEGGER.
 emWin is protected by  international copyright laws.  Knowledge of the
 source code may not be used to write a similar product.  This file may
@@ -51,12 +51,18 @@ Attention : Do not modify this file ! If you do, you will not
 
 #include "GUIConf.h"
 
-#ifndef   GUI_SUPPORT_BIDI
-  #define GUI_SUPPORT_BIDI 1
+#ifndef   GUI_SUPPORT_PROFILE
+  #define GUI_SUPPORT_PROFILE 0
 #endif
 
-#ifndef   GUI_USE_BIDI2
-  #define GUI_USE_BIDI2 1
+#ifdef GUI_SUPPORT_PROFILE
+  #ifndef GUI_SUPPORT_PROFILE_END_CALL
+    #define GUI_SUPPORT_PROFILE_END_CALL  1
+  #endif
+#endif
+
+#ifndef   GUI_SUPPORT_BIDI
+  #define GUI_SUPPORT_BIDI 1
 #endif
 
 #ifndef   LCD_MAX_LOG_COLORS
@@ -82,6 +88,10 @@ Attention : Do not modify this file ! If you do, you will not
   #else
     #define GUI_SIM_SUPPORT_EMBOS 1
   #endif
+#endif
+
+#ifndef   GUI_USE_CODEPOINT_TABLE
+  #define GUI_USE_CODEPOINT_TABLE 0
 #endif
 
 /**********************************************************************
@@ -123,11 +133,11 @@ Attention : Do not modify this file ! If you do, you will not
 #endif
 
 #ifndef GUI_BIDI_MAX_CHARS_PER_LINE
-  #if GUI_USE_BIDI2
-    #define GUI_BIDI_MAX_CHARS_PER_LINE 200
-  #else
-    #define GUI_BIDI_MAX_CHARS_PER_LINE  80
-  #endif
+  #define GUI_BIDI_MAX_CHARS_PER_LINE 200
+#endif
+
+#ifndef GUI_WINSUPPORT
+  #define GUI_WINSUPPORT      0
 #endif
 
 #ifndef GUI_SUPPORT_TOUCH

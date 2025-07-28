@@ -6,7 +6,6 @@ message("${CMAKE_CURRENT_LIST_FILE} component is included.")
       target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
           ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/kernels/kernel_util.cpp
           ${CMAKE_CURRENT_LIST_DIR}/tensorflow/compiler/mlir/lite/schema/schema_utils.cpp
-          ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/ethosu.cpp
           ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/kernels/internal/portable_tensor_utils.cpp
           ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/kernels/internal/quantization_util.cpp
           ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/kernels/internal/common.cpp
@@ -16,7 +15,6 @@ message("${CMAKE_CURRENT_LIST_FILE} component is included.")
           ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/kernels/internal/tensor_ctypes.cpp
           ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/core/api/tensor_utils.cpp
           ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/core/api/flatbuffer_conversions.cpp
-          ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/core/api/error_reporter.cpp
           ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/core/c/common.cpp
           ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/micro_context.cpp
           ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/if.cpp
@@ -30,7 +28,6 @@ message("${CMAKE_CURRENT_LIST_FILE} component is included.")
           ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/quantize_common.cpp
           ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/dequantize.cpp
           ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/zeros_like.cpp
-          ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/batch_matmul.cpp
           ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/depth_to_space.cpp
           ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/concatenation.cpp
           ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/slice.cpp
@@ -42,13 +39,11 @@ message("${CMAKE_CURRENT_LIST_FILE} component is included.")
           ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/micro_tensor_utils.cpp
           ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/squared_difference.cpp
           ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/split_v.cpp
-          ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/transpose.cpp
           ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/split.cpp
           ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/ceil.cpp
           ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/mul_common.cpp
           ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/select.cpp
           ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/log_softmax.cpp
-          ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/maximum_minimum.cpp
           ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/add_n.cpp
           ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/arg_min_max.cpp
           ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/activations.cpp
@@ -132,6 +127,14 @@ message("${CMAKE_CURRENT_LIST_FILE} component is included.")
           ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/arena_allocator/recording_single_arena_buffer_allocator.cpp
           ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/tflite_bridge/flatbuffer_conversions_bridge.cpp
           ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/tflite_bridge/micro_error_reporter.cpp
+          ${CMAKE_CURRENT_LIST_DIR}/tensorflow/compiler/mlir/lite/core/api/error_reporter.cpp
+          ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/kernels/internal/runtime_shape.cpp
+          ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/batch_matmul_common.cpp
+          ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/circular_buffer_flexbuffers_generated_data.cpp
+          ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/decompress.cpp
+          ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/decompress_common.cpp
+          ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/pad_common.cpp
+          ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/transpose_common.cpp
           ${CMAKE_CURRENT_LIST_DIR}/signal/micro/kernels/delay.cpp
           ${CMAKE_CURRENT_LIST_DIR}/signal/micro/kernels/energy.cpp
           ${CMAKE_CURRENT_LIST_DIR}/signal/micro/kernels/fft_auto_scale_kernel.cpp
@@ -173,6 +176,12 @@ message("${CMAKE_CURRENT_LIST_FILE} component is included.")
           ${CMAKE_CURRENT_LIST_DIR}/signal/src/square_root_32.cpp
           ${CMAKE_CURRENT_LIST_DIR}/signal/src/square_root_64.cpp
           ${CMAKE_CURRENT_LIST_DIR}/signal/src/window.cpp
+          ${CMAKE_CURRENT_LIST_DIR}/third_party/kissfft/kiss_fft.c
+          ${CMAKE_CURRENT_LIST_DIR}/third_party/kissfft/tools/kfc.c
+          ${CMAKE_CURRENT_LIST_DIR}/third_party/kissfft/tools/kiss_fastfir.c
+          ${CMAKE_CURRENT_LIST_DIR}/third_party/kissfft/tools/kiss_fftnd.c
+          ${CMAKE_CURRENT_LIST_DIR}/third_party/kissfft/tools/kiss_fftndr.c
+          ${CMAKE_CURRENT_LIST_DIR}/third_party/kissfft/tools/kiss_fftr.c
         )
 
   
@@ -188,8 +197,15 @@ message("${CMAKE_CURRENT_LIST_FILE} component is included.")
       endif()
           if(CONFIG_TOOLCHAIN STREQUAL armgcc)
       target_compile_options(${MCUX_SDK_PROJECT_NAME} PUBLIC
-              -std=c99
-              -std=c++17
+              -std=c17
+              -funsigned-char
+              -std=gnu++17
+            )
+      endif()
+          if(CONFIG_TOOLCHAIN STREQUAL iar)
+      target_compile_options(${MCUX_SDK_PROJECT_NAME} PUBLIC
+              --dlib_config
+              full
             )
       endif()
       

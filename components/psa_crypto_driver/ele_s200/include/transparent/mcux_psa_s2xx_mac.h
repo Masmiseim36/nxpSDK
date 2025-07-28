@@ -61,14 +61,11 @@ psa_status_t ele_s2xx_transparent_mac_compute(const psa_key_attributes_t *attrib
  * \retval  PSA_SUCCESS on success. Error code from \ref psa_status_t on
  *          failure
  */
-
-/* These are not implemented for now as ELE doesn't support multi-part operations */
-#if 0
-
 psa_status_t ele_s2xx_transparent_mac_sign_setup(ele_s2xx_transparent_mac_operation_t *operation,
-                                const psa_key_attributes_t *attributes,
-                                const uint8_t *key_buffer,
-                                size_t key_buffer_size, psa_algorithm_t alg);
+                                                 const psa_key_attributes_t *attributes,
+                                                 const uint8_t *key_buffer,
+                                                 size_t key_buffer_size,
+                                                 psa_algorithm_t alg);
 /*!
  * \brief Setup a MAC verifying object
  *
@@ -82,10 +79,10 @@ psa_status_t ele_s2xx_transparent_mac_sign_setup(ele_s2xx_transparent_mac_operat
  *          failure
  */
 psa_status_t ele_s2xx_transparent_mac_verify_setup(ele_s2xx_transparent_mac_operation_t *operation,
-                                  const psa_key_attributes_t *attributes,
-                                  const uint8_t *key_buffer,
-                                  size_t key_buffer_size,
-                                  psa_algorithm_t alg);
+                                                   const psa_key_attributes_t *attributes,
+                                                   const uint8_t *key_buffer,
+                                                   size_t key_buffer_size,
+                                                   psa_algorithm_t alg);
 /*!
  * \brief Update a MAC object with new data to authenticate
  *
@@ -98,7 +95,8 @@ psa_status_t ele_s2xx_transparent_mac_verify_setup(ele_s2xx_transparent_mac_oper
  */
 
 psa_status_t ele_s2xx_transparent_mac_update(ele_s2xx_transparent_mac_operation_t *operation,
-                            const uint8_t *input, size_t input_length);
+                                             const uint8_t *input,
+                                             size_t input_length);
 /*!
  * \brief Finalize a MAC signing operation by producing the MAC value
  *
@@ -111,8 +109,9 @@ psa_status_t ele_s2xx_transparent_mac_update(ele_s2xx_transparent_mac_operation_
  *          failure
  */
 psa_status_t ele_s2xx_transparent_mac_sign_finish(ele_s2xx_transparent_mac_operation_t *operation,
-                                 uint8_t *mac, size_t mac_size,
-                                 size_t *mac_length);
+                                                  uint8_t *mac,
+                                                  size_t mac_size,
+                                                  size_t *mac_length);
 /*!
  * \brief Finalize a MAC verifying operation by checking the produced
  *        MAC matches with the reference MAC value
@@ -125,7 +124,8 @@ psa_status_t ele_s2xx_transparent_mac_sign_finish(ele_s2xx_transparent_mac_opera
  *          failure
  */
 psa_status_t ele_s2xx_transparent_mac_verify_finish(ele_s2xx_transparent_mac_operation_t *operation,
-                                   const uint8_t *mac, size_t mac_length);
+                                                    const uint8_t *mac,
+                                                    size_t mac_length);
 /*!
  * \brief Abort a MAC operation
  *
@@ -135,8 +135,6 @@ psa_status_t ele_s2xx_transparent_mac_verify_finish(ele_s2xx_transparent_mac_ope
  *          failure
  */
 psa_status_t ele_s2xx_transparent_mac_abort(ele_s2xx_transparent_mac_operation_t *operation);
-
-#endif // Not Supported
 
 #ifdef __cplusplus
 }

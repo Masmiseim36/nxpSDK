@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 NXP
+ * Copyright 2024-2025 NXP
  *
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -48,8 +48,32 @@ static psa_status_t ele_psa_hash_alg_to_ele_hash_alg(psa_algorithm_t alg, sss_al
             *mode = kAlgorithm_SSS_SHA512;
             break;
 #endif /* PSA_WANT_ALG_SHA_512 */
+#if defined(ELE_HAVE_SHA3)
+#if defined(PSA_WANT_ALG_SHA3_224)
+        case PSA_ALG_SHA3_224:
+            *mode = kAlgorithm_SSS_SHA3_224;
+            break;
+#endif /* PSA_WANT_ALG_SHA3_224 */
+#if defined(PSA_WANT_ALG_SHA3_256)
+        case PSA_ALG_SHA3_256:
+            *mode = kAlgorithm_SSS_SHA3_256;
+            break;
+#endif /* PSA_WANT_ALG_SHA3_256 */
+#if defined(PSA_WANT_ALG_SHA3_384)
+        case PSA_ALG_SHA3_384:
+            *mode = kAlgorithm_SSS_SHA3_384;
+            break;
+#endif /* PSA_WANT_ALG_SHA3_384 */
+#if defined(PSA_WANT_ALG_SHA3_512)
+        case PSA_ALG_SHA3_512:
+            *mode = kAlgorithm_SSS_SHA3_512;
+            break;
+#endif /* PSA_WANT_ALG_SHA3_512 */
+#endif /* ELE_HAVE_SHA3 */
 #if defined(PSA_WANT_ALG_SHA_1)
         case PSA_ALG_SHA_1:
+            *mode = kAlgorithm_SSS_SHA1;
+            break;
 #endif /* PSA_WANT_ALG_SHA_1 */
         default:
             return PSA_ERROR_NOT_SUPPORTED;
@@ -58,6 +82,7 @@ static psa_status_t ele_psa_hash_alg_to_ele_hash_alg(psa_algorithm_t alg, sss_al
     return PSA_SUCCESS;
 }
 
+#if defined(ELE_FEATURE_DIGEST_CLONE) && (ELE_FEATURE_DIGEST_CLONE == 1)
 /**
  * @brief Inverse to ele_psa_hash_alg_to_ele_hash_alg()
  */
@@ -85,9 +110,32 @@ static psa_status_t ele_ele_hash_alg_to_psa_hash_alg(sss_algorithm_t mode, psa_a
             *alg = PSA_ALG_SHA_512;
             break;
 #endif /* PSA_WANT_ALG_SHA_512 */
+#if defined(ELE_HAVE_SHA3)
+#if defined(PSA_WANT_ALG_SHA3_224)
+        case kAlgorithm_SSS_SHA3_224:
+            *alg = PSA_ALG_SHA3_224;
+            break;
+#endif /* PSA_WANT_ALG_SHA3_224 */
+#if defined(PSA_WANT_ALG_SHA3_256)
+        case kAlgorithm_SSS_SHA3_256:
+            *alg = PSA_ALG_SHA3_256;
+            break;
+#endif /* PSA_WANT_ALG_SHA3_256 */
+#if defined(PSA_WANT_ALG_SHA3_384)
+        case kAlgorithm_SSS_SHA3_384:
+            *alg = PSA_ALG_SHA3_384;
+            break;
+#endif /* PSA_WANT_ALG_SHA3_384 */
+#if defined(PSA_WANT_ALG_SHA3_512)
+        case kAlgorithm_SSS_SHA3_512:
+            *alg = PSA_ALG_SHA3_512;
+            break;
+#endif /* PSA_WANT_ALG_SHA3_512 */
+#endif /* ELE_HAVE_SHA3 */
 #if defined(PSA_WANT_ALG_SHA_1)
         case kAlgorithm_SSS_SHA1:
             *alg = PSA_ALG_SHA_1;
+            break;
 #endif /* PSA_WANT_ALG_SHA_1 */
         default:
             return PSA_ERROR_NOT_SUPPORTED;
@@ -95,6 +143,7 @@ static psa_status_t ele_ele_hash_alg_to_psa_hash_alg(sss_algorithm_t mode, psa_a
 
     return PSA_SUCCESS;
 }
+#endif /* ELE_FEATURE_DIGEST_CLONE */
 
 /** \defgroup psa_hash PSA driver entry points for hashing
  *
@@ -109,36 +158,38 @@ psa_status_t ele_s2xx_transparent_hash_setup(ele_s2xx_hash_operation_t *operatio
 
     if (NULL == operation)
     {
-        // ELE_OSAL_LOG_ERR("hash operation is NULL");
         return PSA_ERROR_INVALID_ARGUMENT;
     }
 
-    memset(operation, 0, sizeof(ele_s2xx_hash_operation_t));
+    (void)memset(operation, 0, sizeof(ele_s2xx_hash_operation_t));
 
     if ((status = ele_psa_hash_alg_to_ele_hash_alg(alg, &operation->ctx.algorithm)) != PSA_SUCCESS)
     {
         return status;
     }
 
-    if (mcux_mutex_lock(&ele_hwcrypto_mutex))
+    if (mcux_mutex_lock(&ele_hwcrypto_mutex) != 0)
     {
-        return PSA_ERROR_COMMUNICATION_FAILURE;
+        return PSA_ERROR_GENERIC_ERROR;
     }
 
     if (sss_sscp_digest_context_init(&operation->ctx, &g_ele_ctx.sssSession, operation->ctx.algorithm,
                                      kMode_SSS_Digest) != kStatus_SSS_Success)
     {
-        return PSA_ERROR_GENERIC_ERROR;
+        status = PSA_ERROR_GENERIC_ERROR;
+        goto exit;
     }
 
     if (sss_sscp_digest_init(&operation->ctx) != kStatus_SSS_Success)
     {
-        return PSA_ERROR_GENERIC_ERROR;
+        status = PSA_ERROR_GENERIC_ERROR;
+        goto exit;
     }
 
-    if (mcux_mutex_unlock(&ele_hwcrypto_mutex))
+exit:
+    if (mcux_mutex_unlock(&ele_hwcrypto_mutex) != 0)
     {
-        return PSA_ERROR_BAD_STATE;
+        return PSA_ERROR_GENERIC_ERROR;
     }
 
     return status;
@@ -167,23 +218,27 @@ psa_status_t ele_s2xx_transparent_hash_clone(const ele_s2xx_hash_operation_t *so
     }
 
     /* Clone */
-    if (mcux_mutex_lock(&ele_hwcrypto_mutex))
-    {
-        return PSA_ERROR_COMMUNICATION_FAILURE;
-    }
-
-    if (sss_sscp_digest_clone((sss_sscp_digest_t *)&source_operation->ctx, &target_operation->ctx) != kStatus_SSS_Success)
+    if (mcux_mutex_lock(&ele_hwcrypto_mutex) != 0)
     {
         return PSA_ERROR_GENERIC_ERROR;
     }
 
-    if (mcux_mutex_unlock(&ele_hwcrypto_mutex))
+    if (sss_sscp_digest_clone((sss_sscp_digest_t *)&source_operation->ctx, &target_operation->ctx) != kStatus_SSS_Success)
     {
-        return PSA_ERROR_BAD_STATE;
+        status = PSA_ERROR_GENERIC_ERROR;
+        goto exit;
+    }
+
+exit:
+    if (mcux_mutex_unlock(&ele_hwcrypto_mutex) != 0)
+    {
+        return PSA_ERROR_GENERIC_ERROR;
     }
 
     return status;
 #else /* ELE_FEATURE_DIGEST_CLONE */
+    (void)source_operation;
+    (void)target_operation;
     return PSA_ERROR_NOT_SUPPORTED;
 #endif /* ELE_FEATURE_DIGEST_CLONE */
 }
@@ -192,9 +247,10 @@ psa_status_t ele_s2xx_transparent_hash_update(ele_s2xx_hash_operation_t *operati
                                               const uint8_t *input,
                                               size_t input_length)
 {
+    psa_status_t status = PSA_SUCCESS;
+
     if (NULL == operation)
     {
-        // ELE_OSAL_LOG_ERR("operation is NULL");
         return PSA_ERROR_INVALID_ARGUMENT;
     }
 
@@ -209,26 +265,27 @@ psa_status_t ele_s2xx_transparent_hash_update(ele_s2xx_hash_operation_t *operati
     /* if len not zero, but pointer is NULL */
     if (NULL == input)
     {
-        // ELE_OSAL_LOG_ERR("input is NULL");
         return PSA_ERROR_INVALID_ARGUMENT;
     }
 
-    if (mcux_mutex_lock(&ele_hwcrypto_mutex))
-    {
-        return PSA_ERROR_COMMUNICATION_FAILURE;
-    }
-
-    if (sss_sscp_digest_update(&operation->ctx, (uint8_t *)(uintptr_t)input, input_length) != kStatus_SSS_Success)
+    if (mcux_mutex_lock(&ele_hwcrypto_mutex) != 0)
     {
         return PSA_ERROR_GENERIC_ERROR;
     }
 
-    if (mcux_mutex_unlock(&ele_hwcrypto_mutex))
+    if (sss_sscp_digest_update(&operation->ctx, (uint8_t *)(uintptr_t)input, input_length) != kStatus_SSS_Success)
     {
-        return PSA_ERROR_BAD_STATE;
+        status = PSA_ERROR_GENERIC_ERROR;
+        goto exit;
     }
 
-    return PSA_SUCCESS;
+exit:
+    if (mcux_mutex_unlock(&ele_hwcrypto_mutex) != 0)
+    {
+        return PSA_ERROR_GENERIC_ERROR;
+    }
+
+    return status;
 }
 
 psa_status_t ele_s2xx_transparent_hash_finish(ele_s2xx_hash_operation_t *operation,
@@ -236,43 +293,58 @@ psa_status_t ele_s2xx_transparent_hash_finish(ele_s2xx_hash_operation_t *operati
                                               size_t hash_size,
                                               size_t *hash_length)
 {
+    psa_status_t status = PSA_SUCCESS;
+
     if (operation == NULL)
     {
         return PSA_ERROR_INVALID_ARGUMENT;
     }
 
     /* Check if hash_size is sufficient or not */
-    if (!hash || hash_size < operation->ctx.digestFullLen)
+    if (NULL == hash || hash_size < operation->ctx.digestFullLen)
     {
         return PSA_ERROR_BUFFER_TOO_SMALL;
     }
 
-    if (mcux_mutex_lock(&ele_hwcrypto_mutex))
-    {
-        return PSA_ERROR_COMMUNICATION_FAILURE;
-    }
-
-    if (sss_sscp_digest_finish(&operation->ctx, hash, &hash_size) != kStatus_SSS_Success)
+    if (mcux_mutex_lock(&ele_hwcrypto_mutex) != 0)
     {
         return PSA_ERROR_GENERIC_ERROR;
     }
 
-    *hash_length = operation->ctx.digestFullLen;
-
-    if (mcux_mutex_unlock(&ele_hwcrypto_mutex))
+    if (sss_sscp_digest_finish(&operation->ctx, hash, &hash_size) != kStatus_SSS_Success)
     {
-        return PSA_ERROR_BAD_STATE;
+        status = PSA_ERROR_GENERIC_ERROR;
+        goto exit;
     }
 
-    return PSA_SUCCESS;
+    *hash_length = operation->ctx.digestFullLen;
+
+exit:
+    if (mcux_mutex_unlock(&ele_hwcrypto_mutex) != 0)
+    {
+        return PSA_ERROR_GENERIC_ERROR;
+    }
+
+    return status;
 }
 
 psa_status_t ele_s2xx_transparent_hash_abort(ele_s2xx_hash_operation_t *operation)
 {
+    if (mcux_mutex_lock(&ele_hwcrypto_mutex) != 0)
+    {
+        return PSA_ERROR_GENERIC_ERROR;
+    }
+
     (void)sss_sscp_digest_context_free(&operation->ctx);
 
+    if (mcux_mutex_unlock(&ele_hwcrypto_mutex) != 0)
+    {
+        return PSA_ERROR_GENERIC_ERROR;
+    }
+
     /* Zeroize the context */
-    memset(operation, 0, sizeof(ele_s2xx_hash_operation_t));
+    (void)memset(operation, 0, sizeof(ele_s2xx_hash_operation_t));
+
     return PSA_SUCCESS;
 }
 
@@ -293,7 +365,7 @@ psa_status_t ele_s2xx_transparent_hash_compute(psa_algorithm_t alg,
         return status;
     }
 
-    if (!hash || !hash_size)
+    if (NULL == hash || 0u == hash_size)
     {
         return PSA_ERROR_BUFFER_TOO_SMALL;
     }
@@ -306,7 +378,7 @@ psa_status_t ele_s2xx_transparent_hash_compute(psa_algorithm_t alg,
      * call to memset would have undefined behavior. */
     if (hash_size != 0u)
     {
-        memset(hash, '!', hash_size);
+        (void)memset(hash, '!', hash_size);
     }
 
     if (hash_size < actual_hash_length)
@@ -314,30 +386,35 @@ psa_status_t ele_s2xx_transparent_hash_compute(psa_algorithm_t alg,
         return PSA_ERROR_BUFFER_TOO_SMALL;
     }
 
-    if (mcux_mutex_lock(&ele_hwcrypto_mutex))
+    if (mcux_mutex_lock(&ele_hwcrypto_mutex) != 0)
     {
-        return PSA_ERROR_COMMUNICATION_FAILURE;
+        return PSA_ERROR_GENERIC_ERROR;
     }
 
     if (sss_sscp_digest_context_init(&ctx, &g_ele_ctx.sssSession, mode, kMode_SSS_Digest) != kStatus_SSS_Success)
     {
-        return PSA_ERROR_GENERIC_ERROR;
+        status = PSA_ERROR_GENERIC_ERROR;
+        goto exit;
     }
 
     *hash_length = ctx.digestFullLen;
 
     if (sss_sscp_digest_one_go(&ctx, input, input_length, hash, hash_length) != kStatus_SSS_Success)
     {
-        return PSA_ERROR_GENERIC_ERROR;
+        status = PSA_ERROR_GENERIC_ERROR;
+        goto exit;
     }
 
     if (sss_sscp_digest_context_free(&ctx) != kStatus_SSS_Success)
     {
-        return PSA_ERROR_GENERIC_ERROR;
+        status = PSA_ERROR_GENERIC_ERROR;
+        goto exit;
     }
-    if (mcux_mutex_unlock(&ele_hwcrypto_mutex))
+
+exit:
+    if (mcux_mutex_unlock(&ele_hwcrypto_mutex) != 0)
     {
-        return PSA_ERROR_BAD_STATE;
+        return PSA_ERROR_GENERIC_ERROR;
     }
 
     return status;

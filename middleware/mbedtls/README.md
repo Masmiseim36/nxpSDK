@@ -1,3 +1,9 @@
+** DEPRECATION NOTICE : Mbed TLS 2.x has received its last update **
+====================================================================
+
+Mbed TLS 2.28.10 is the last release of the 2.28 LTS and won't receive bug fixes or security fixes anymore.
+Users are advised to upgrade to a maintained version.
+
 README for Mbed TLS
 ===================
 

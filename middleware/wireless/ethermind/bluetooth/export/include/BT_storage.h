@@ -13,8 +13,8 @@
 #define _H_BT_STORAGE_
 
 /* --------------------------------------------- Header File Inclusion */
-#include "BT_common.h"
-
+#include "BT_os.h"
+#include "BT_error.h"
 /* --------------------------------------------- Global Definitions */
 /**
  * \addtogroup bt_utils Utilities

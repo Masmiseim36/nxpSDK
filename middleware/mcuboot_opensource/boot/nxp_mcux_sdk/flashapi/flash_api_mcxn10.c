@@ -21,12 +21,12 @@
 
   A flash memory location must be in the erased state before being programmed. Cumulative programming of bits
   (back-to-back program operations without an intervening erase) within a flash phrase or page is not allowed.
-  Re-programming of existing 0s to 0 is not allowed as this overstresses the device. 
+  Re-programming of existing 0s to 0 is not allowed as this overstresses the device.
  */
 
 
-/* minimal write size is 16 bytes (phrase size) */
-#define ALIGN_VAL 16
+/* minimal write size defined by the phrase size - this is usually given by ECC constraints */
+#define ALIGN_VAL  MFLASH_PHRASE_SIZE
 
 #define ERASED_VAL 0xFF
 
@@ -277,4 +277,15 @@ int flash_area_id_from_multi_image_slot(int image_index, int slot)
 int flash_area_id_from_image_slot(int slot)
 {
     return flash_area_id_from_multi_image_slot(0, slot);
+}
+
+int flash_area_id_to_multi_image_slot(int image_index, int area_id)
+{
+    if (area_id == FLASH_AREA_IMAGE_PRIMARY(image_index)) {
+        return 0;
+    }
+    if (area_id == FLASH_AREA_IMAGE_SECONDARY(image_index)) {
+        return 1;
+    }
+    return -1;
 }

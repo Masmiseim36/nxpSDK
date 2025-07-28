@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2007-2015 Freescale Semiconductor, Inc.
- * Copyright 2018-2020, 2024 NXP
+ * Copyright 2018-2020, 2024-2025 NXP
  *
  * License: NXP LA_OPT_Online Code Hosting NXP_Software_License
  *
@@ -103,13 +103,18 @@ FMSTR_BOOL _FMSTR_RingBuffIsSpace(FMSTR_RING_BUFFER *ringBuff);
 FMSTR_BOOL _FMSTR_RingBuffHasData(FMSTR_RING_BUFFER *ringBuff);
 
 /* Copy 8 bit variable to destination from source address */
-void FMSTR_MemCpySrcAligned_8(FMSTR_ADDR destAddr, FMSTR_ADDR srcAddr);
+void FMSTR_MemCpySrcAligned_8(FMSTR_ADDR dest, FMSTR_ADDR src);
 /* Copy 16 bit variable to destination from source address */
-void FMSTR_MemCpySrcAligned_16(FMSTR_ADDR destAddr, FMSTR_ADDR srcAddr);
+void FMSTR_MemCpySrcAligned_16(FMSTR_ADDR dest, FMSTR_ADDR src);
 /* Copy 32 bit variable to destination from source address */
-void FMSTR_MemCpySrcAligned_32(FMSTR_ADDR destAddr, FMSTR_ADDR srcAddr);
+void FMSTR_MemCpySrcAligned_32(FMSTR_ADDR dest, FMSTR_ADDR src);
 /* Copy 64 bit variable to destination from source address */
-void FMSTR_MemCpySrcAligned_64(FMSTR_ADDR destAddr, FMSTR_ADDR srcAddr);
+void FMSTR_MemCpySrcAligned_64(FMSTR_ADDR dest, FMSTR_ADDR src);
+
+/* Determine if given address is safe against wrapping after adding a size */
+FMSTR_BOOL FMSTR_CheckNoWrapAddr(FMSTR_ADDR addr, FMSTR_SIZE size);
+/* Calculate byte difference between addresses and assert that the difference is positive */
+FMSTR_U32 FMSTR_CalcAddrDelta(FMSTR_ADDR addrLarger, FMSTR_ADDR addrSmaller);
 
 /******************************************************************************
  * Global variable declaration

@@ -33,7 +33,7 @@
 
 /*
  * Copyright (c) 2013-2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2018, 2020-2024 NXP
+ * Copyright 2016-2018, 2020-2025 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -48,6 +48,31 @@ extern "C" {
 // FSL
 #ifdef __REDLIB__
 #define LWIP_NO_INTTYPES_H 1
+#endif
+
+#ifndef X8_F
+#define X8_F  "02x"
+#endif
+#ifndef U16_F
+#define U16_F "u"
+#endif
+#ifndef S16_F
+#define S16_F "d"
+#endif
+#ifndef X16_F
+#define X16_F "x"
+#endif
+#ifndef U32_F
+#define U32_F "u"
+#endif
+#ifndef S32_F
+#define S32_F "d"
+#endif
+#ifndef X32_F
+#define X32_F "x"
+#endif
+#ifndef SZT_F
+#define SZT_F "u"
 #endif
 
 #ifndef LWIP_TIMEVAL_PRIVATE
@@ -129,6 +154,13 @@ typedef u32_t mem_ptr_t;
     PRINTF x;                                                                  \
   } while (0)
 #endif /* LWIP_PLATFORM_DIAG */
+
+#if defined(LWIP_DEFINE_LWIP_RAND_IN_CC_H) && LWIP_DEFINE_LWIP_RAND_IN_CC_H
+#ifndef LWIP_RAND
+uint32_t lwip_rand(void);
+#define LWIP_RAND() ((u32_t)lwip_rand())
+#endif
+#endif
 
 #include "arch/sys_arch.h"
 

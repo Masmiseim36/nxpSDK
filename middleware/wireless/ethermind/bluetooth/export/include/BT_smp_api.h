@@ -1773,6 +1773,30 @@ API_RESULT BT_smp_resolve_device
                UCHAR * bd_addr,
                SMP_PVT_ADDR_RESOLV_COMPLETE_CB rpa_resolv_handler
            );
+           
+/**
+ *  \fn BT_smp_search_rpa_connection
+ *
+ *  \brief Search for an active RPA connection for the given IRK
+ *
+ *  \par Description
+ *       This API helps to search for an active RPA Connected which is not bonded
+ *  that is resolvable by the IRK presented here. Typically used during CTKD procedure
+ *  when there is an RPA connection from the peer device with which SMP over BREDR is
+ *  ongoing for CTKD.
+ *
+ *  \param irk Identity Resolving Key to be used to search of matching RPA connected
+ *
+ *  \param handler Handler to notify the resolution status
+ *
+ * \return API_SUCCESS if Successful else and Error code describing
+ * cause of failure.
+ */
+API_RESULT BT_smp_search_rpa_connection
+           (
+               UCHAR * irk,
+               SMP_PVT_ADDR_RESOLV_COMPLETE_CB handler
+           );
 #endif /* HOST_RESOLVE_PVT_ADDR */
 
 

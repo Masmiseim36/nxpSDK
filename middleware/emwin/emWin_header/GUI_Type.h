@@ -9,7 +9,7 @@
 *                                                                    *
 **********************************************************************
 
-** emWin V6.46 - Graphical user interface for embedded applications **
+** emWin V6.50 - Graphical user interface for embedded applications **
 All  Intellectual Property rights  in the Software belongs to  SEGGER.
 emWin is protected by  international copyright laws.  Knowledge of the
 source code may not be used to write a similar product.  This file may
@@ -288,11 +288,22 @@ typedef struct GUI_FONT_PROP {
   const struct GUI_FONT_PROP * pNext;          /* Pointer to next               */
 } GUI_FONT_PROP;
 
+typedef struct {
+  const U16 * pData;
+  unsigned    NumItems;
+} GUI_PROP_TABLE_INFO;
+
 typedef struct GUI_FONT_PROP_EXT {
   U16P First;                                  /* First character               */
   U16P Last;                                   /* Last character                */
   const GUI_CHARINFO_EXT         * paCharInfo; /* Address of first character    */
   const struct GUI_FONT_PROP_EXT * pNext;      /* Pointer to next               */
+#if GUI_USE_CODEPOINT_TABLE
+  //
+  // Optional codepoint table saves ROM, is faster but unfortunately it makes existing SIF fonts incompatible
+  //
+  const GUI_PROP_TABLE_INFO      * pTable;     /* Optional pointer to table     */
+#endif
 } GUI_FONT_PROP_EXT;
 
 typedef struct {
@@ -733,7 +744,7 @@ typedef struct {
 typedef struct {
   GUI_TTF_DATA * pTTF;     // Pointer to GUI_TTF_DATA structure which contains location and size
                            // of font file.
-  U32 aImageTypeBuffer[4]; /* Buffer for image type structure */
+  U32 aImageTypeBuffer[6]; /* Buffer for image type structure */
   int PixelHeight;         // Pixel height of new font. It means the height of the surrounding
                            // rectangle between the glyphs 'g' anf 'f'. Please notice that it is
                            // not the distance between two lines of text. With other words the value

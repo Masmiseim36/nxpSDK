@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2007-2015 Freescale Semiconductor, Inc.
- * Copyright 2018-2021, 2024 NXP
+ * Copyright 2018-2021, 2024-2025 NXP
  *
  * License: NXP LA_OPT_Online Code Hosting NXP_Software_License
  *
@@ -40,10 +40,14 @@ static void _FMSTR_RxDone(void);
 static void _FMSTR_SendError(FMSTR_BCHR nErrCode);
 static FMSTR_BOOL _FMSTR_TxCan(void);
 static FMSTR_BOOL _FMSTR_RxCan(FMSTR_SIZE8 rxLen);
+static FMSTR_SIZE8 _FMSTR_GetMaxCANFrameLen(FMSTR_SIZE8 nLength);
 
 /******************************************************************************
  * Local variables
  ******************************************************************************/
+
+/* CAN driver capabilities */
+static FMSTR_CAN_IF_CAPS fmstr_canCaps;
 
 /* FreeMASTER communication buffer (in/out) plus the STS, LEN and CRC bytes */
 static FMSTR_BCHR fmstr_pCommBuffer[FMSTR_COMM_BUFFER_SIZE + 3 + 1];
@@ -77,7 +81,6 @@ static FMSTR_BPTR fmstr_pRxBuff;  /* pointer to next free place in RX buffer */
 static FMSTR_BCHR fmstr_nRxErr;   /* error raised during receive process */
 static FMSTR_BCHR fmstr_nRxCrc8;  /* checksum of data being received for short messages */
 static FMSTR_U8 fmstr_uTxCtlByte;
-static FMSTR_U8 fmstr_uTxFrmCtr; /* TX CAN frame counter (within one FreeMASTER frame) */
 
 /* Command ID */
 #ifdef FMSTR_CAN_CMDID
@@ -145,6 +148,21 @@ static FMSTR_BOOL _FMSTR_InitCan(void)
         return FMSTR_FALSE;
     }
 
+    /* get driver capabilities */
+    FMSTR_MemSet(&fmstr_canCaps, 0, sizeof(fmstr_canCaps));
+    if (FMSTR_CAN_DRV.GetCaps != NULL)
+    {
+        FMSTR_CAN_DRV.GetCaps(&fmstr_canCaps);
+    }
+
+    /* check driver's CAN FD capabilities */
+#if (defined(FMSTR_CAN_USE_CANFD) && FMSTR_CAN_USE_CANFD != 0)
+    if ((fmstr_canCaps.flags & FMSTR_CAN_IF_CAPS_FLAG_FD) == 0U)
+    {
+        return FMSTR_FALSE;
+    }
+#endif
+
     /* initialize all state variables */
     fmstr_wFlags.all = 0U;
     fmstr_nTxTodo    = 0U;
@@ -165,6 +183,12 @@ static FMSTR_BOOL _FMSTR_InitCan(void)
 
 static void _FMSTR_Poll(void)
 {
+    /* invoke low-level driver's poll if needed */
+    if (FMSTR_CAN_DRV.Poll != NULL)
+    {
+        FMSTR_CAN_DRV.Poll();
+    }
+
     /* handle the physical CAN module */
 #if FMSTR_POLL_DRIVEN > 0
     FMSTR_ProcessCanRx();
@@ -259,9 +283,11 @@ static void _FMSTR_SendResponse(FMSTR_BPTR pResponse, FMSTR_SIZE nLength, FMSTR_
 
     FMSTR_UNUSED(identification);
 
-    if (nLength > 254U || pResponse != &fmstr_pCommBuffer[2])
+    if (nLength > 252U || pResponse != &fmstr_pCommBuffer[2])
     {
-        /* The Serial driver doesn't support bigger responses than 254 bytes, change the response to status error */
+        /* The protocol (CAN/serial) driver doesn't support responses longer than 254 bytes
+           including the status, length and checksum bytes. If so, change the response to 
+           status error and trim data off. */
         statusCode = FMSTR_STC_RSPBUFFOVF;
         nLength    = 0U;
     }
@@ -328,33 +354,45 @@ static void _FMSTR_SendResponse(FMSTR_BPTR pResponse, FMSTR_SIZE nLength, FMSTR_
 static FMSTR_BOOL _FMSTR_TxCan(void)
 {
     FMSTR_U8 ch;
-    FMSTR_SIZE8 i, len = fmstr_nTxTodo;
+    FMSTR_SIZE8 i, len = fmstr_nTxTodo, maxLen;
 
     if (fmstr_wFlags.flg.bTxActive == 0U || fmstr_nTxTodo == 0U)
     {
         return FMSTR_FALSE;
     }
 
-    if (len > 7U)
+   /* Get max possible single-frame length (ctl byte and payload) */
+    maxLen = _FMSTR_GetMaxCANFrameLen(len+1);
+    /* Do not count the ctl byte now, it will be added later */
+    maxLen--;
+
+    /* Transmit as much as we can in this single frame */
+    if (len > maxLen)
     {
-        len = 7U;
+        len = maxLen;
     }
 
-    /* first byte is control */
+    /* First byte is the control byte */
     if (fmstr_wFlags.flg.bTxFirst != 0U)
     {
-        /* the first frame and the length*/
-        fmstr_uTxCtlByte          = (FMSTR_U8)(FMSTR_CANCTL_FST | len);
-        fmstr_uTxFrmCtr           = 0U;
+        /* The first frame */
+        fmstr_uTxCtlByte = (FMSTR_U8)(FMSTR_CANCTL_FST);
         fmstr_wFlags.flg.bTxFirst = 0U;
     }
     else
     {
-        /* the next frame */
+        /* Prepare the next frame */
+        /* Coverity: False positive. No risk of misinterpretation in this constant expression. */
+        /* coverity[cert_int31_c_violation:FALSE] */
         fmstr_uTxCtlByte &= (FMSTR_U8) ~(FMSTR_CANCTL_FST | FMSTR_CANCTL_LEN_MASK);
         fmstr_uTxCtlByte ^= FMSTR_CANCTL_TGL;
+    }
+
+    /* For CAN-FD lengths >7 leave the LEN bits in the control byte zero to
+       indicate that the real length shall be obtained from physical DLC value */
+    if (len <= 7)
+    {
         fmstr_uTxCtlByte |= (FMSTR_U8)len;
-        fmstr_uTxFrmCtr++;
     }
 
     /* is it the last frame? */
@@ -424,7 +462,7 @@ static FMSTR_BOOL _FMSTR_RxCan(FMSTR_SIZE8 rxLen)
     }
 
     /* first frame resets the state machine */
-    if ((ctl & FMSTR_CANCTL_FST) != 0U || fmstr_wFlags.flg.bRxFirst != 0U)
+    if (fmstr_wFlags.flg.bRxFirst != 0U || (ctl & FMSTR_CANCTL_FST) != 0U)
     {
         if ((ctl & FMSTR_CANCTL_FST) == 0U || /* must be the first frame! */
             (ctl & FMSTR_CANCTL_TGL) != 0U)   /* TGL must be zero! */
@@ -471,8 +509,15 @@ static FMSTR_BOOL _FMSTR_RxCan(FMSTR_SIZE8 rxLen)
     /* frame is valid, get the data */
     len = (FMSTR_SIZE8)(ctl & FMSTR_CANCTL_LEN_MASK);
 
+    /* zero length means to get it from the physiscal layer */
+    if(len == 0 && rxLen > 0)
+    {
+        /* note: the rxLen may be up to 64 for CAN-FD. */
+        len = rxLen - 1;
+    }
+
     /* sanity check of the real received frame length */
-    if (len >= rxLen)
+    if (len == 0 || len >= rxLen)
     {
         /* invalid frame length, re-start receiving */
         fmstr_nRxErr = FMSTR_STC_CANMSGERR;
@@ -568,7 +613,7 @@ static void _FMSTR_RxDone(void)
 
             /* now the len received should match the data bytes received
                note that command-byte, length and checksum are included in the nRxCtr */
-            if (fmstr_nRxCtr != (FMSTR_SIZE8)(len + 3U))
+            if (len >= 253U || fmstr_nRxCtr != (FMSTR_SIZE8)(len + 3U))
             {
                 fmstr_nRxErr = FMSTR_STC_CMDCSERR;
             }
@@ -601,8 +646,9 @@ static void _FMSTR_RxDone(void)
         /* standard FreeMASTER command to be passed above */
         else
         {
-            /* Decode and handle frame by SCI classic driver. Use "can" as a globally unique pointer value as our
-             * identifier */
+            /* Decode and handle frame same as for serial protocol. Use "can" as a globally 
+               unique pointer value as our identifier. */
+            /* coverity[misra_c_2012_rule_7_4_violation:FALSE] */
             if (FMSTR_ProtocolDecoder(pFrame, len, cmd, (void *)"can") == FMSTR_FALSE)
             {
                 /* if no response was generated, start listening again, otherwise,
@@ -699,6 +745,44 @@ void FMSTR_ProcessCanTx(void)
 #endif
         }
     }
+}
+
+/*
+ * Get maximum data length for CAN frame
+ *
+ * @param nLength - data length to send
+ *
+ * @return maximum data lenght for CAN frame
+ *
+*/
+
+static FMSTR_SIZE8 _FMSTR_GetMaxCANFrameLen(FMSTR_SIZE8 nLength)
+{
+    /* normal CAN length as default */
+    FMSTR_SIZE8 lenMax = 8;
+
+#if defined(FMSTR_CAN_USE_CANFD) && FMSTR_CAN_USE_CANFD !=0
+    static const FMSTR_SIZE8 lengths[] = { 64, 48, 32, 24, 20, 16, 12, 8, 0 };
+
+    /* is flexible data rate supported */
+    if ((fmstr_canCaps.flags & FMSTR_CAN_IF_CAPS_FLAG_FD) != 0U)
+    {
+        /* seek a beter maximum if it makes any sense */
+        if (nLength >= 12)
+        {
+            for (int i = 0; lengths[i] != 0; i++)
+            {
+                if (nLength >= lengths[i])
+                {
+                    lenMax = lengths[i];
+                    break;
+                }
+            }
+        }
+    }
+#endif
+
+    return lenMax;
 }
 
 #endif /* (FMSTR_MK_IDSTR(FMSTR_TRANSPORT) == FMSTR_CAN_ID) && FMSTR_DISABLE == 0 */

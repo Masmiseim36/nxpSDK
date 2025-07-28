@@ -1572,22 +1572,29 @@ EM_RESULT EM_fops_file_move
  *
  *  \return None
  */
-EM_RESULT EM_vfops_create_object_name
+EM_RESULT EM_vfops_create_object_name_safe
            (
                /* IN */  UCHAR * path,
                /* IN */  UCHAR * object,
-               /* OUT */ UCHAR * obj_name
+               /* OUT */ UCHAR * obj_name,
+               /* IN */  UINT16  obj_name_size
            )
 {
     if ((NULL == path) || (NULL == object) || (NULL == obj_name))
     {
         return EM_FAILURE;
     }
+    
+    /* Initialize the Object Name */
+    EM_mem_set(obj_name, 0, obj_name_size);
+    
+    /* Have space for terminating NULL */
+    obj_name_size --;
 
     /* Append the path of the new directory */
-    EM_str_copy (obj_name, path);
-    EM_str_cat (obj_name, EM_FOPS_PATH_SEP);
-    EM_str_cat (obj_name, object);
+    EM_str_n_copy (obj_name, path, obj_name_size);
+    EM_str_n_cat (obj_name, EM_FOPS_PATH_SEP, (obj_name_size - EM_str_len(obj_name)));
+    EM_str_n_cat (obj_name, object, (obj_name_size - EM_str_len(obj_name)));
 
     return EM_SUCCESS;
 }

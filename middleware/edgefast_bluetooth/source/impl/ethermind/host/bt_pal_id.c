@@ -999,11 +999,16 @@ void bt_id_add(struct bt_keys *keys)
 
 	struct bt_conn *conn;
 	int err;
+	bool enable_controller_res = true;
 
 	LOG_DBG("addr %s", bt_addr_le_str(&keys->addr));
 
 	__ASSERT_NO_MSG(keys != NULL);
 	/* We assume (and could assert) !bt_id_find_conflict(keys) here. */
+
+	if (keys->state & (BT_KEYS_ID_ADDED | BT_KEYS_ID_PENDING_ADD)) {
+		return;
+	}
 
 	/* Nothing to be done if host-side resolving is used */
 	if (!bt_dev.le.rl_size || bt_dev.le.rl_entries > bt_dev.le.rl_size) {
@@ -1054,6 +1059,10 @@ void bt_id_add(struct bt_keys *keys)
 	if (bt_dev.le.rl_entries) {
 		err = addr_res_enable(BT_HCI_ADDR_RES_DISABLE);
 		if (err) {
+			/* if fail to disable, it should already be enabled,
+			 * don't need to enable gain
+			 */
+			enable_controller_res = false;
 			LOG_WRN("Failed to disable address resolution");
 			goto done;
 		}
@@ -1062,6 +1071,7 @@ void bt_id_add(struct bt_keys *keys)
 	if (bt_dev.le.rl_entries == bt_dev.le.rl_size) {
 		LOG_WRN("Resolving list size exceeded. Switching to host.");
 
+		enable_controller_res = false; /* controller address resolution is disabled */
 		err = bt_hci_cmd_send_sync(BT_HCI_OP_LE_CLEAR_RL, NULL, NULL);
 		if (err) {
 			LOG_ERR("Failed to clear resolution list");
@@ -1102,7 +1112,9 @@ void bt_id_add(struct bt_keys *keys)
 	}
 
 done:
-	addr_res_enable(BT_HCI_ADDR_RES_ENABLE);
+	if (enable_controller_res) {
+		addr_res_enable(BT_HCI_ADDR_RES_ENABLE);
+	}
 
 #if (defined(CONFIG_BT_OBSERVER) && (CONFIG_BT_OBSERVER > 0U))
 	if (scan_enabled) {

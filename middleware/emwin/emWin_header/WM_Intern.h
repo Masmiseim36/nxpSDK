@@ -9,7 +9,7 @@
 *                                                                    *
 **********************************************************************
 
-** emWin V6.46 - Graphical user interface for embedded applications **
+** emWin V6.50 - Graphical user interface for embedded applications **
 All  Intellectual Property rights  in the Software belongs to  SEGGER.
 emWin is protected by  international copyright laws.  Knowledge of the
 source code may not be used to write a similar product.  This file may
@@ -220,6 +220,7 @@ void    WM__SendPIDMessage          (WM_HWIN hWin, WM_MESSAGE * pMsg);
 int     WM__SetScrollbarH           (WM_HWIN hWin, int OnOff);
 int     WM__SetScrollbarV           (WM_HWIN hWin, int OnOff);
 void    WM__UpdateChildPositions    (WM_Obj * pObj, int dx0, int dy0, int dx1, int dy1);
+void    WM__UpdateChildPositionsEx  (WM_Obj * pObj, int dx0, int dy0, int dx1, int dy1, GUI_RECT * pRectOld);
 void    WM_PID__GetPrevState        (GUI_PID_STATE * pPrevState, int Layer);
 void    WM_PID__SetPrevState        (GUI_PID_STATE * pPrevState, int Layer);
 void    WM__SendTouchMessage        (WM_HWIN hWin, WM_MESSAGE * pMsg);

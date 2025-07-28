@@ -1,6 +1,5 @@
 /*
- * Copyright 2023 NXP
- * All rights reserved.
+ * Copyright 2023, 2025 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -118,7 +117,7 @@ void APP_InitWakeupSource(void)
 
     /* Configure the interrupt for SW pin. */
     PINT_Init(PINT);
-    PINT_PinInterruptConfig(PINT, kPINT_PinInt0, kPINT_PinIntEnableFallEdge, NULL);
+    PINT_PinInterruptConfig(PINT, kPINT_PinInt0, kPINT_PinIntEnableFallEdge);
 
     PM_InitWakeupSource(&g_UserkeyWakeupSource1, (uint32_t)PIN_INT1_IRQn, NULL, true);
     gpio_pin_config_t gpioPinConfigStruct1;
@@ -128,7 +127,7 @@ void APP_InitWakeupSource(void)
     INPUTMUX_AttachSignal(INPUTMUX, kPINT_PinInt1, APP_USER_WAKEUP_KEY1_INPUTMUX_SEL); /* Using channel 0. */
     INPUTMUX_Deinit(INPUTMUX); /* Turnoff clock to inputmux to save power. Clock is only needed to make changes */
 
-    PINT_PinInterruptConfig(PINT, kPINT_PinInt1, kPINT_PinIntEnableFallEdge, NULL);
+    PINT_PinInterruptConfig(PINT, kPINT_PinInt1, kPINT_PinIntEnableFallEdge);
     PINT_EnableCallback(PINT); /* Enable callbacks for PINT */
 }
 

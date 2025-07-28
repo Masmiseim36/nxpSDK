@@ -29,12 +29,18 @@
     <definition extID="middleware.multicore.rpmsg-lite.queue.MIMXRT685S"/>
     <definition extID="middleware.multicore.rpmsg-lite.xos.MIMXRT685S"/>
     <definition extID="middleware.multicore.rpmsg-lite.evkmimxrt685_hifi4.MIMXRT685S"/>
-    <definition extID="middleware.cadence.codecs_hifi4.MIMXRT685S"/>
+    <definition extID="middleware.cadence.codecs.sbc_dec.hifi4.MIMXRT685S"/>
+    <definition extID="middleware.cadence.codecs.sbc_enc.hifi4.MIMXRT685S"/>
+    <definition extID="middleware.cadence.codecs.aacplus_dec.rt600_hifi4.MIMXRT685S"/>
+    <definition extID="middleware.cadence.codecs.asrc_src_pp.rt600_hifi4.MIMXRT685S"/>
+    <definition extID="middleware.cadence.codecs.mp3_dec.rt600_hifi4.MIMXRT685S"/>
+    <definition extID="middleware.cadence.codecs.opus.rt600_hifi4.MIMXRT685S"/>
+    <definition extID="middleware.cadence.codecs.vorbis_dec.rt600_hifi4.MIMXRT685S"/>
     <definition extID="middleware.cadence.multicore_xaf.MIMXRT685S"/>
     <definition extID="mcuxpresso"/>
     <definition extID="com.nxp.mcuxpresso"/>
   </externalDefinitions>
-  <example id="mimxrt685audevk_dsp_xaf_usb_demo_dsp" name="dsp_xaf_usb_demo_dsp" device_core="hifi4_MIMXRT685S" dependency="device.MIMXRT685S_CMSIS.MIMXRT685S device.MIMXRT685S_system.MIMXRT685S platform.drivers.clock.MIMXRT685S platform.drivers.i2s_bridge.MIMXRT685S platform.drivers.inputmux_connections.MIMXRT685S platform.drivers.reset.MIMXRT685S platform.drivers.common.MIMXRT685S platform.drivers.dmic_dma.MIMXRT685S platform.drivers.dmic.MIMXRT685S platform.drivers.flexcomm.MIMXRT685S platform.drivers.flexcomm_usart.MIMXRT685S platform.drivers.flexcomm_i2s.MIMXRT685S platform.drivers.inputmux.MIMXRT685S platform.drivers.lpc_dma.MIMXRT685S platform.drivers.lpc_gpio.MIMXRT685S platform.drivers.lpc_iopctl.MIMXRT685S platform.drivers.mu.MIMXRT685S platform.drivers.sema42.MIMXRT685S platform.utilities.assert_lite.MIMXRT685S utility.str.MIMXRT685S utility.debug_console_lite.MIMXRT685S component.serial_manager_uart.MIMXRT685S component.usart_adapter.MIMXRT685S middleware.multicore.rpmsg-lite.MIMXRT685S middleware.multicore.rpmsg-lite.queue.MIMXRT685S middleware.multicore.rpmsg-lite.xos.MIMXRT685S middleware.multicore.rpmsg-lite.evkmimxrt685_hifi4.MIMXRT685S middleware.cadence.codecs_hifi4.MIMXRT685S middleware.cadence.multicore_xaf.MIMXRT685S" category="dsp_examples">
+  <example id="mimxrt685audevk_dsp_xaf_usb_demo_dsp" name="dsp_xaf_usb_demo_dsp" device_core="hifi4_MIMXRT685S" dependency="device.MIMXRT685S_CMSIS.MIMXRT685S device.MIMXRT685S_system.MIMXRT685S platform.drivers.clock.MIMXRT685S platform.drivers.i2s_bridge.MIMXRT685S platform.drivers.inputmux_connections.MIMXRT685S platform.drivers.reset.MIMXRT685S platform.drivers.common.MIMXRT685S platform.drivers.dmic_dma.MIMXRT685S platform.drivers.dmic.MIMXRT685S platform.drivers.flexcomm.MIMXRT685S platform.drivers.flexcomm_usart.MIMXRT685S platform.drivers.flexcomm_i2s.MIMXRT685S platform.drivers.inputmux.MIMXRT685S platform.drivers.lpc_dma.MIMXRT685S platform.drivers.lpc_gpio.MIMXRT685S platform.drivers.lpc_iopctl.MIMXRT685S platform.drivers.mu.MIMXRT685S platform.drivers.sema42.MIMXRT685S platform.utilities.assert_lite.MIMXRT685S utility.str.MIMXRT685S utility.debug_console_lite.MIMXRT685S component.serial_manager_uart.MIMXRT685S component.usart_adapter.MIMXRT685S middleware.multicore.rpmsg-lite.MIMXRT685S middleware.multicore.rpmsg-lite.queue.MIMXRT685S middleware.multicore.rpmsg-lite.xos.MIMXRT685S middleware.multicore.rpmsg-lite.evkmimxrt685_hifi4.MIMXRT685S middleware.cadence.codecs.sbc_dec.hifi4.MIMXRT685S middleware.cadence.codecs.sbc_enc.hifi4.MIMXRT685S middleware.cadence.codecs.aacplus_dec.rt600_hifi4.MIMXRT685S middleware.cadence.codecs.asrc_src_pp.rt600_hifi4.MIMXRT685S middleware.cadence.codecs.mp3_dec.rt600_hifi4.MIMXRT685S middleware.cadence.codecs.opus.rt600_hifi4.MIMXRT685S middleware.cadence.codecs.vorbis_dec.rt600_hifi4.MIMXRT685S middleware.cadence.multicore_xaf.MIMXRT685S" category="dsp_examples">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -96,6 +102,9 @@
     </source>
     <source path="." project_relative_path="doc" type="doc">
       <files mask="example_board_readme.md"/>
+    </source>
+    <source path="." project_relative_path="doc" type="doc">
+      <files mask="examples_shared_readme.md"/>
     </source>
   </example>
 </ksdk:examples>

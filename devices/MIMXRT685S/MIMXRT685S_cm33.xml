@@ -3,9 +3,9 @@
   <vendor>nxp.com</vendor>
   <name>MIMXRT685S_cm33</name>
   <version>1.0</version>
-  <description>MIMXRT685SFAWBR,MIMXRT685SFFOB,MIMXRT685SFVKB</description>
+  <description>MIMXRT685SFAWBR,MIMXRT685SFFOB,MIMXRT685SFVKB,MIMXRT685SVFVKB</description>
   <licenseText>
-Copyright 2016-2024 NXP
+Copyright 2016-2025 NXP
 SPDX-License-Identifier: BSD-3-Clause
   </licenseText>
   <cpu>
@@ -3864,6 +3864,36 @@ SPDX-License-Identifier: BSD-3-Clause
               <bitOffset>31</bitOffset>
               <bitWidth>1</bitWidth>
               <access>read-write</access>
+            </field>
+          </fields>
+        </register>
+        <register>
+          <name>ESPIFCLKSEL0</name>
+          <description>ESPI clock selection</description>
+          <addressOffset>0x6A0</addressOffset>
+          <size>32</size>
+          <access>read-write</access>
+          <resetValue>0x7</resetValue>
+          <resetMask>0xFFFFFFFF</resetMask>
+          <fields>
+            <field>
+              <name>SEL</name>
+              <description>eSPI Functional Clock Source Selection.</description>
+              <bitOffset>0</bitOffset>
+              <bitWidth>3</bitWidth>
+              <access>read-write</access>
+              <enumeratedValues>
+                <enumeratedValue>
+                  <name>FFRO_CLK</name>
+                  <description>FFRO Clock (48/60m_irc).</description>
+                  <value>0</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>NONE</name>
+                  <description>None, this may be selected in order to reduce power when no output is needed.</description>
+                  <value>0x7</value>
+                </enumeratedValue>
+              </enumeratedValues>
             </field>
           </fields>
         </register>
@@ -18097,6 +18127,13 @@ SPDX-License-Identifier: BSD-3-Clause
               <name>DMAC1WAKE</name>
               <description>Wake for DMAC1. When 1, DMAC1 being busy will cause peripheral clocking to remain running until DMAC1 completes. This is generally used in conjunction with bit 1 and/or 2 in order to prevent peripheral clocking from being shut down as soon as the cause of wake-up is cleared, but before DMAC1 has completed its related activity.</description>
               <bitOffset>4</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>ESPIWAKE</name>
+              <description>Wake for ESPI. When 1, ESPI being busy will cause peripheral clocking to remain running until ESPI completes. This is generally used in conjunction with bit 1 and/or 2 in order to prevent peripheral clocking from being shut down as soon as the cause of wake-up is cleared, but before ESPI has completed its related activity.</description>
+              <bitOffset>5</bitOffset>
               <bitWidth>1</bitWidth>
               <access>read-write</access>
             </field>
@@ -95065,6 +95102,55 @@ SPDX-License-Identifier: BSD-3-Clause
                 </enumeratedValue>
               </enumeratedValues>
             </field>
+            <field>
+              <name>ESPI_CH0</name>
+              <description>ESPI Channel 0 enable</description>
+              <bitOffset>31</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+              <enumeratedValues>
+                <enumeratedValue>
+                  <name>DISABLED</name>
+                  <description>disable</description>
+                  <value>0</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>ENABLED</name>
+                  <description>enable</description>
+                  <value>0x1</value>
+                </enumeratedValue>
+              </enumeratedValues>
+            </field>
+          </fields>
+        </register>
+        <register>
+          <name>DMAC0_REQ_ENA1</name>
+          <description>DMAC0 request enable 1</description>
+          <addressOffset>0x744</addressOffset>
+          <size>32</size>
+          <access>read-write</access>
+          <resetValue>0x1</resetValue>
+          <resetMask>0xFFFFFFFF</resetMask>
+          <fields>
+            <field>
+              <name>ESPI_CH1</name>
+              <description>ESPI Channel 1 enable</description>
+              <bitOffset>0</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+              <enumeratedValues>
+                <enumeratedValue>
+                  <name>DISABLED</name>
+                  <description>disable</description>
+                  <value>0</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>ENABLED</name>
+                  <description>enable</description>
+                  <value>0x1</value>
+                </enumeratedValue>
+              </enumeratedValues>
+            </field>
           </fields>
         </register>
         <register>
@@ -95623,6 +95709,55 @@ SPDX-License-Identifier: BSD-3-Clause
                 <enumeratedValue>
                   <name>SET_ENA0_BIT</name>
                   <description>Sets the ENA0 Bit</description>
+                  <value>0x1</value>
+                </enumeratedValue>
+              </enumeratedValues>
+            </field>
+            <field>
+              <name>ESPI_CH0</name>
+              <description>ESPI Channel 0 enable set</description>
+              <bitOffset>31</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>write-only</access>
+              <enumeratedValues>
+                <enumeratedValue>
+                  <name>NO_EFFECT</name>
+                  <description>No Effect</description>
+                  <value>0</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>SET_ENA0_BIT</name>
+                  <description>Sets the ENA0 Bit</description>
+                  <value>0x1</value>
+                </enumeratedValue>
+              </enumeratedValues>
+            </field>
+          </fields>
+        </register>
+        <register>
+          <name>DMAC0_REQ_ENA1_SET</name>
+          <description>DMAC0 request enable set 1</description>
+          <addressOffset>0x74C</addressOffset>
+          <size>32</size>
+          <access>write-only</access>
+          <resetValue>0</resetValue>
+          <resetMask>0</resetMask>
+          <fields>
+            <field>
+              <name>ESPI_CH1</name>
+              <description>ESPI Channel 1 enable set</description>
+              <bitOffset>0</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>write-only</access>
+              <enumeratedValues>
+                <enumeratedValue>
+                  <name>NO_EFFECT</name>
+                  <description>No Effect</description>
+                  <value>0</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>SET_ENA0_BIT</name>
+                  <description>Sets the ENA1 Bit</description>
                   <value>0x1</value>
                 </enumeratedValue>
               </enumeratedValues>
@@ -96189,6 +96324,55 @@ SPDX-License-Identifier: BSD-3-Clause
                 </enumeratedValue>
               </enumeratedValues>
             </field>
+            <field>
+              <name>ESPI_CH0</name>
+              <description>ESPI Channel 0 enable clear</description>
+              <bitOffset>31</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>write-only</access>
+              <enumeratedValues>
+                <enumeratedValue>
+                  <name>NO_EFFECT</name>
+                  <description>No Effect</description>
+                  <value>0</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>CLR_ENA0_BIT</name>
+                  <description>Clears the ENA0 Bit</description>
+                  <value>0x1</value>
+                </enumeratedValue>
+              </enumeratedValues>
+            </field>
+          </fields>
+        </register>
+        <register>
+          <name>DMAC0_REQ_ENA1_CLR</name>
+          <description>DMAC0 request enable clear 1</description>
+          <addressOffset>0x754</addressOffset>
+          <size>32</size>
+          <access>write-only</access>
+          <resetValue>0</resetValue>
+          <resetMask>0</resetMask>
+          <fields>
+            <field>
+              <name>ESPI_CH1</name>
+              <description>ESPI Channel 1 enable clear</description>
+              <bitOffset>0</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>write-only</access>
+              <enumeratedValues>
+                <enumeratedValue>
+                  <name>NO_EFFECT</name>
+                  <description>No Effect</description>
+                  <value>0</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>CLR_ENA0_BIT</name>
+                  <description>Clears the ENA1 Bit</description>
+                  <value>0x1</value>
+                </enumeratedValue>
+              </enumeratedValues>
+            </field>
           </fields>
         </register>
         <register>
@@ -96736,6 +96920,55 @@ SPDX-License-Identifier: BSD-3-Clause
               <name>HASHCRYPT</name>
               <description>hash enable</description>
               <bitOffset>30</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+              <enumeratedValues>
+                <enumeratedValue>
+                  <name>DISABLED</name>
+                  <description>disable</description>
+                  <value>0</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>ENABLED</name>
+                  <description>enable</description>
+                  <value>0x1</value>
+                </enumeratedValue>
+              </enumeratedValues>
+            </field>
+            <field>
+              <name>ESPI_CH0</name>
+              <description>ESPI Channel 0 enable</description>
+              <bitOffset>31</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+              <enumeratedValues>
+                <enumeratedValue>
+                  <name>DISABLED</name>
+                  <description>disable</description>
+                  <value>0</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>ENABLED</name>
+                  <description>enable</description>
+                  <value>0x1</value>
+                </enumeratedValue>
+              </enumeratedValues>
+            </field>
+          </fields>
+        </register>
+        <register>
+          <name>DMAC1_REQ_ENA1</name>
+          <description>DMAC1 request enable 1</description>
+          <addressOffset>0x764</addressOffset>
+          <size>32</size>
+          <access>read-write</access>
+          <resetValue>0x1</resetValue>
+          <resetMask>0xFFFFFFFF</resetMask>
+          <fields>
+            <field>
+              <name>ESPI_CH1</name>
+              <description>ESPI Channel 1 enable</description>
+              <bitOffset>0</bitOffset>
               <bitWidth>1</bitWidth>
               <access>read-write</access>
               <enumeratedValues>
@@ -97313,6 +97546,55 @@ SPDX-License-Identifier: BSD-3-Clause
                 </enumeratedValue>
               </enumeratedValues>
             </field>
+            <field>
+              <name>ESPI_CH0</name>
+              <description>ESPI Channel 0 enable set</description>
+              <bitOffset>31</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>write-only</access>
+              <enumeratedValues>
+                <enumeratedValue>
+                  <name>NO_EFFECT</name>
+                  <description>No Effect</description>
+                  <value>0</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>SET_ENA0_BIT</name>
+                  <description>Sets the ENA0 Bit</description>
+                  <value>0x1</value>
+                </enumeratedValue>
+              </enumeratedValues>
+            </field>
+          </fields>
+        </register>
+        <register>
+          <name>DMAC1_REQ_ENA1_SET</name>
+          <description>DMAC1 request enable set 1</description>
+          <addressOffset>0x76C</addressOffset>
+          <size>32</size>
+          <access>write-only</access>
+          <resetValue>0</resetValue>
+          <resetMask>0</resetMask>
+          <fields>
+            <field>
+              <name>ESPI_CH1</name>
+              <description>ESPI Channel 1 enable set</description>
+              <bitOffset>0</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>write-only</access>
+              <enumeratedValues>
+                <enumeratedValue>
+                  <name>NO_EFFECT</name>
+                  <description>No Effect</description>
+                  <value>0</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>SET_ENA0_BIT</name>
+                  <description>Sets the ENA1 Bit</description>
+                  <value>0x1</value>
+                </enumeratedValue>
+              </enumeratedValues>
+            </field>
           </fields>
         </register>
         <register>
@@ -97871,6 +98153,55 @@ SPDX-License-Identifier: BSD-3-Clause
                 <enumeratedValue>
                   <name>CLR_ENA0_BIT</name>
                   <description>Clears the ENA0 Bit</description>
+                  <value>0x1</value>
+                </enumeratedValue>
+              </enumeratedValues>
+            </field>
+            <field>
+              <name>ESPI_CH0</name>
+              <description>ESPI Channel 0 enable clear</description>
+              <bitOffset>31</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>write-only</access>
+              <enumeratedValues>
+                <enumeratedValue>
+                  <name>NO_EFFECT</name>
+                  <description>No Effect</description>
+                  <value>0</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>CLR_ENA0_BIT</name>
+                  <description>Clears the ENA0 Bit</description>
+                  <value>0x1</value>
+                </enumeratedValue>
+              </enumeratedValues>
+            </field>
+          </fields>
+        </register>
+        <register>
+          <name>DMAC1_REQ_ENA1_CLR</name>
+          <description>DMAC1 request enable clear 1</description>
+          <addressOffset>0x774</addressOffset>
+          <size>32</size>
+          <access>write-only</access>
+          <resetValue>0</resetValue>
+          <resetMask>0</resetMask>
+          <fields>
+            <field>
+              <name>ESPI_CH1</name>
+              <description>ESPI Channel 1 enable clear</description>
+              <bitOffset>0</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>write-only</access>
+              <enumeratedValues>
+                <enumeratedValue>
+                  <name>NO_EFFECT</name>
+                  <description>No Effect</description>
+                  <value>0</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>CLR_ENA0_BIT</name>
+                  <description>Clears the ENA1 Bit</description>
                   <value>0x1</value>
                 </enumeratedValue>
               </enumeratedValues>
@@ -102447,7 +102778,7 @@ SPDX-License-Identifier: BSD-3-Clause
           <dim>4</dim>
           <dimIncrement>0x10</dimIncrement>
           <name>CHANNEL[%s]</name>
-          <description>Array of registers: INTVAL, TIMER, CTRL, STAT</description>
+          <description>Array of registers: CTRL, INTVAL, STAT, TIMER</description>
           <addressOffset>0</addressOffset>
           <register>
             <name>INTVAL</name>
@@ -106609,6 +106940,2999 @@ SPDX-License-Identifier: BSD-3-Clause
               <bitOffset>0</bitOffset>
               <bitWidth>32</bitWidth>
               <access>read-only</access>
+            </field>
+          </fields>
+        </register>
+      </registers>
+    </peripheral>
+    <peripheral>
+      <name>ESPI</name>
+      <description>a variant of SPI used by Intel to communicate with its processors via the PCH (aka Southbridge).</description>
+      <groupName>ESPI</groupName>
+      <baseAddress>0x40037000</baseAddress>
+      <addressBlock>
+        <offset>0</offset>
+        <size>0x198</size>
+        <usage>registers</usage>
+      </addressBlock>
+      <interrupt>
+        <name>ESPI</name>
+        <value>30</value>
+      </interrupt>
+      <registers>
+        <register>
+          <name>MCTRL</name>
+          <description>Master Control for whole peripheral</description>
+          <addressOffset>0</addressOffset>
+          <size>32</size>
+          <access>read-write</access>
+          <resetValue>0</resetValue>
+          <resetMask>0xFFFFFFFF</resetMask>
+          <fields>
+            <field>
+              <name>ENABLE</name>
+              <description>The main enable for the whole block</description>
+              <bitOffset>0</bitOffset>
+              <bitWidth>2</bitWidth>
+              <access>read-write</access>
+              <enumeratedValues>
+                <enumeratedValue>
+                  <name>DISABLED</name>
+                  <description>Disabled. Block is not operational</description>
+                  <value>0</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>ESPI</name>
+                  <description>eSPI</description>
+                  <value>0x1</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>LPC</name>
+                  <description>LPC</description>
+                  <value>0x2</value>
+                </enumeratedValue>
+              </enumeratedValues>
+            </field>
+            <field>
+              <name>PENA</name>
+              <description>Port enable bits.</description>
+              <bitOffset>8</bitOffset>
+              <bitWidth>5</bitWidth>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>P80ENA</name>
+              <description>Port 80 enable.</description>
+              <bitOffset>16</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>SBLKENA</name>
+              <description>Status block is enabled and mapped according to the STATADDR register.</description>
+              <bitOffset>17</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>USE60MHZ</name>
+              <description>If 1, then the functional clock provided to the block is 60MHz vs</description>
+              <bitOffset>20</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+            </field>
+          </fields>
+        </register>
+        <register>
+          <name>MSTAT</name>
+          <description>Master Status of whole peripheral</description>
+          <addressOffset>0x4</addressOffset>
+          <size>32</size>
+          <access>read-write</access>
+          <resetValue>0</resetValue>
+          <resetMask>0xFFFFFFFF</resetMask>
+          <fields>
+            <field>
+              <name>PortInt</name>
+              <description>Corresponding port is pending interrupt service</description>
+              <bitOffset>0</bitOffset>
+              <bitWidth>5</bitWidth>
+              <access>read-only</access>
+            </field>
+            <field>
+              <name>P80Int</name>
+              <description>Port80 has had a request and is pending service.</description>
+              <bitOffset>8</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>BusRst</name>
+              <description>If 1, the entered or left reset. Sticky - must clear.</description>
+              <bitOffset>9</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>IrqUpd</name>
+              <description>If 1, the bus had an IRQ update completion (for eSPI, IRQPush done; for LPC, SERIRQ done)</description>
+              <bitOffset>10</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>WireChg</name>
+              <description>If 1, one or more input VWire has changed since last cleared for eSPI; for LPC, SERIRQ started</description>
+              <bitOffset>11</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>Hstall</name>
+              <description>If 1, the Host is stalled on a read from or write to a port that has the StallRd or StallWr bit set in the PnCFG register</description>
+              <bitOffset>12</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>CRCERR</name>
+              <description>If 1, the CRC from the Master did not match the computed CRC</description>
+              <bitOffset>13</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>GPIO</name>
+              <description>If 1, the GPIO in ESPIMISC has had an input change</description>
+              <bitOffset>14</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>Busy</name>
+              <description>If 1, the bus is busy.</description>
+              <bitOffset>16</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-only</access>
+            </field>
+            <field>
+              <name>InRst</name>
+              <description>If 1, the bus in reset.</description>
+              <bitOffset>17</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-only</access>
+            </field>
+            <field>
+              <name>CompPend</name>
+              <description>If 1, completions are pending for eSPI; indicates quiet mode for LPC.</description>
+              <bitOffset>18</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-only</access>
+            </field>
+            <field>
+              <name>MastPend</name>
+              <description>If 1, Mastering is pending (flash or memory)</description>
+              <bitOffset>19</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-only</access>
+            </field>
+            <field>
+              <name>AlertPend</name>
+              <description>If 1, the Alert request pin is pending (whether separate pin or MISO)</description>
+              <bitOffset>20</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-only</access>
+            </field>
+          </fields>
+        </register>
+        <register>
+          <name>INTENSET</name>
+          <description>Interrupt Set (enable)</description>
+          <addressOffset>0x8</addressOffset>
+          <size>32</size>
+          <access>read-write</access>
+          <resetValue>0</resetValue>
+          <resetMask>0xFFFFFFFF</resetMask>
+          <fields>
+            <field>
+              <name>PortInt</name>
+              <description>If set to 1, corresponding port will interrupt main processor if matches IRule</description>
+              <bitOffset>0</bitOffset>
+              <bitWidth>5</bitWidth>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>P80Int</name>
+              <description>If set to 1, Port80 will interrupt main processor on update from Host.</description>
+              <bitOffset>8</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>BusRst</name>
+              <description>If 1, a change in Bus Reset status will interrupt main processor.</description>
+              <bitOffset>9</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>IrqUpd</name>
+              <description>If 1, completion of an IRQ update will interrupt main processor.</description>
+              <bitOffset>10</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>WireChg</name>
+              <description>If 1, when one or more VWire input has changed, will interrupt main processor.</description>
+              <bitOffset>11</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>Hstall</name>
+              <description>If 1, when the HStall bit is set in the MSTAT register, will interrupt the main processor.</description>
+              <bitOffset>12</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>CRCERR</name>
+              <description>If 1, when a CRC error detected, will interrupt main processor.</description>
+              <bitOffset>13</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>GPIO</name>
+              <description>If 1, when ESPICFG GPIO changes input value, will interrupt main processor.</description>
+              <bitOffset>14</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+            </field>
+          </fields>
+        </register>
+        <register>
+          <name>INTENCLR</name>
+          <description>Interrupt Clear (disable)</description>
+          <addressOffset>0xC</addressOffset>
+          <size>32</size>
+          <access>read-write</access>
+          <resetValue>0</resetValue>
+          <resetMask>0xFFFFFFFF</resetMask>
+          <fields>
+            <field>
+              <name>PortInt</name>
+              <description>If set to 1, clears corresponding port interrupt enable</description>
+              <bitOffset>0</bitOffset>
+              <bitWidth>5</bitWidth>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>P80Int</name>
+              <description>If set to 1, clears Port80 interrupt enable.</description>
+              <bitOffset>8</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>BusRst</name>
+              <description>If set to 1, clears Reset change interrupt enable.</description>
+              <bitOffset>9</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>IrqUpd</name>
+              <description>If set to 1, clears IRQ completion interrupt enable.</description>
+              <bitOffset>10</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>WireChg</name>
+              <description>If set to 1, clears Wire Change interrupt enable.</description>
+              <bitOffset>11</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>Hstall</name>
+              <description>If set to 1, clears HStall interrupt enable.</description>
+              <bitOffset>12</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>CRCERR</name>
+              <description>If set to 1, clears CRCERR interrupt enable.</description>
+              <bitOffset>13</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>GPIO</name>
+              <description>If set to 1, clears GPIO interrupt enable.</description>
+              <bitOffset>14</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+            </field>
+          </fields>
+        </register>
+        <register>
+          <name>INTSTAT</name>
+          <description>Masked interrupt status (causes)</description>
+          <addressOffset>0x10</addressOffset>
+          <size>32</size>
+          <access>read-write</access>
+          <resetValue>0</resetValue>
+          <resetMask>0xFFFFFFFF</resetMask>
+          <fields>
+            <field>
+              <name>PortInt</name>
+              <description>If set to 1, corresponding port will interrupt main processor if matches IRule</description>
+              <bitOffset>0</bitOffset>
+              <bitWidth>5</bitWidth>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>P80Int</name>
+              <description>If set to 1, Port80 will interrupt main processor on update from Host.</description>
+              <bitOffset>8</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>BusRst</name>
+              <description>If 1, a change in Bus Reset status will interrupt main processor.</description>
+              <bitOffset>9</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>IrqUpd</name>
+              <description>If 1, completion of an IRQ update will interrupt main processor.</description>
+              <bitOffset>10</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>WireChg</name>
+              <description>If 1, when one or more VWire input has changed, will interrupt main processor.</description>
+              <bitOffset>11</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>Hstall</name>
+              <description>If 1, when the HStall bit is set in the MSTAT register, will interrupt the main processor.</description>
+              <bitOffset>12</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>CRCERR</name>
+              <description>If 1, when a CRC error detected, will interrupt main processor.</description>
+              <bitOffset>13</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>GPIO</name>
+              <description>If 1, when ESPICFG GPIO changes input value, will interrupt main processor.</description>
+              <bitOffset>14</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+            </field>
+          </fields>
+        </register>
+        <register>
+          <name>DMACTRL</name>
+          <description>Selects DMA for Ports (if used)</description>
+          <addressOffset>0x14</addressOffset>
+          <size>32</size>
+          <access>read-write</access>
+          <resetValue>0</resetValue>
+          <resetMask>0xFFFFFFFF</resetMask>
+          <fields>
+            <field>
+              <name>DMA0EN</name>
+              <description>Enables the DMA use on the 1st channel for eSPI and selects what triggers it</description>
+              <bitOffset>0</bitOffset>
+              <bitWidth>2</bitWidth>
+              <access>read-write</access>
+              <enumeratedValues>
+                <enumeratedValue>
+                  <name>DISABLED</name>
+                  <description>Disabled. The DMA channel is not used</description>
+                  <value>0</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>TRIGGERD_ON_HOST_READ</name>
+                  <description>Triggers on Host Read empty (whether endpoint and a byte or mailbox and many bytes). Allows reload of memory</description>
+                  <value>0x1</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>TRIGGERS_ON_HOST_WRITE</name>
+                  <description>Triggers on Host Write complete/ready (whether endpoint and a byte or mailbox and many bytes).</description>
+                  <value>0x2</value>
+                </enumeratedValue>
+              </enumeratedValues>
+            </field>
+            <field>
+              <name>DMA1EN</name>
+              <description>Enables the DMA use on the 1st channel for eSPI and selects what triggers it</description>
+              <bitOffset>2</bitOffset>
+              <bitWidth>2</bitWidth>
+              <access>read-write</access>
+              <enumeratedValues>
+                <enumeratedValue>
+                  <name>DISABLED</name>
+                  <description>Disabled. The DMA channel is not used</description>
+                  <value>0</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>TRIGGERD_ON_HOST_READ</name>
+                  <description>Triggers on Host Read empty (whether endpoint and a byte or mailbox and many bytes). Allows reload of memory</description>
+                  <value>0x1</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>TRIGGERS_ON_HOST_WRITE</name>
+                  <description>Triggers on Host Write complete/ready (whether endpoint and a byte or mailbox and many bytes).</description>
+                  <value>0x2</value>
+                </enumeratedValue>
+              </enumeratedValues>
+            </field>
+            <field>
+              <name>DMA0PORT</name>
+              <description>Selects which port is operating the DMA: Value Meaning 0 to 7 Is normal port number up to max ports (e</description>
+              <bitOffset>8</bitOffset>
+              <bitWidth>4</bitWidth>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>DMA1PORT</name>
+              <description>Selects which port is operating the DMA: Value Meaning 0 to 7 Is normal port number up to max ports (e</description>
+              <bitOffset>12</bitOffset>
+              <bitWidth>4</bitWidth>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>CNT0</name>
+              <description>Used with Mailbox and Bus master to allow RAM contents to be copied</description>
+              <bitOffset>16</bitOffset>
+              <bitWidth>7</bitWidth>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>CNT1</name>
+              <description>Used with Mailbox and Bus master to allow RAM contents to be copied</description>
+              <bitOffset>24</bitOffset>
+              <bitWidth>7</bitWidth>
+              <access>read-write</access>
+            </field>
+          </fields>
+        </register>
+        <register>
+          <name>RAMBASE</name>
+          <description>Address of RAM to use for data. This tells the application where the RAM is located (up to 16K addressable).</description>
+          <addressOffset>0x18</addressOffset>
+          <size>32</size>
+          <access>read-write</access>
+          <resetValue>0</resetValue>
+          <resetMask>0xFFFFFFFF</resetMask>
+          <fields>
+            <field>
+              <name>ZERO</name>
+              <description>Always 0</description>
+              <bitOffset>0</bitOffset>
+              <bitWidth>12</bitWidth>
+              <access>read-only</access>
+            </field>
+            <field>
+              <name>RAM</name>
+              <description>Is location in System memory space where RAM is located that is used by this peripheral's bus master</description>
+              <bitOffset>12</bitOffset>
+              <bitWidth>20</bitWidth>
+              <access>read-write</access>
+            </field>
+          </fields>
+        </register>
+        <register>
+          <name>MAPBASE</name>
+          <description>Base0 and Base1 mapped offsets for ports</description>
+          <addressOffset>0x1C</addressOffset>
+          <size>32</size>
+          <access>read-write</access>
+          <resetValue>0</resetValue>
+          <resetMask>0xFFFFFFFF</resetMask>
+          <fields>
+            <field>
+              <name>BASE0</name>
+              <description>no description available</description>
+              <bitOffset>0</bitOffset>
+              <bitWidth>16</bitWidth>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>BASE1</name>
+              <description>no description available</description>
+              <bitOffset>16</bitOffset>
+              <bitWidth>16</bitWidth>
+              <access>read-write</access>
+            </field>
+          </fields>
+        </register>
+        <register>
+          <name>IRQPUSH</name>
+          <description>IRQ to drive into Host (with eSPI)</description>
+          <addressOffset>0x20</addressOffset>
+          <size>32</size>
+          <access>read-write</access>
+          <resetValue>0</resetValue>
+          <resetMask>0xFFFFFFFF</resetMask>
+          <fields>
+            <field>
+              <name>IRQ</name>
+              <description>Set to the IRQ to push across to the Host.</description>
+              <bitOffset>0</bitOffset>
+              <bitWidth>8</bitWidth>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>DONE</name>
+              <description>Will go to 1 when complete; this is just the same bit as IrqUpd in MSTAT, which can interrupt using INTENSET</description>
+              <bitOffset>8</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-only</access>
+            </field>
+          </fields>
+        </register>
+        <register>
+          <name>WIREWO</name>
+          <description>Wire states for Host to see; if LPC, this is the IRQ states.</description>
+          <addressOffset>0x24</addressOffset>
+          <size>32</size>
+          <access>read-write</access>
+          <resetValue>0</resetValue>
+          <resetMask>0xFFFFFFFF</resetMask>
+          <fields>
+            <field>
+              <name>WIRES</name>
+              <description>LPC: IRQ states to use</description>
+              <bitOffset>0</bitOffset>
+              <bitWidth>18</bitWidth>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>DONE</name>
+              <description>Set to 1 after last write has been pushed out to Host</description>
+              <bitOffset>31</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-only</access>
+            </field>
+          </fields>
+        </register>
+        <register>
+          <name>WIRERO</name>
+          <description>Wire states from Host</description>
+          <addressOffset>0x28</addressOffset>
+          <size>32</size>
+          <access>read-only</access>
+          <resetValue>0</resetValue>
+          <resetMask>0xFFFFFFFF</resetMask>
+          <fields>
+            <field>
+              <name>WIRES</name>
+              <description>eSPI: Indicates the latest states from the Host via VWire</description>
+              <bitOffset>0</bitOffset>
+              <bitWidth>22</bitWidth>
+              <access>read-only</access>
+            </field>
+          </fields>
+        </register>
+        <register>
+          <name>P80STAT</name>
+          <description>Port 80 Status (byte and prev byte)</description>
+          <addressOffset>0x30</addressOffset>
+          <size>32</size>
+          <access>read-write</access>
+          <resetValue>0</resetValue>
+          <resetMask>0xFFFFFFFF</resetMask>
+          <fields>
+            <field>
+              <name>CURR</name>
+              <description>Has the Current Port80 value.</description>
+              <bitOffset>0</bitOffset>
+              <bitWidth>8</bitWidth>
+              <access>read-only</access>
+            </field>
+            <field>
+              <name>PREV</name>
+              <description>Has the previous Port80 value.</description>
+              <bitOffset>8</bitOffset>
+              <bitWidth>8</bitWidth>
+              <access>read-only</access>
+            </field>
+            <field>
+              <name>CNT</name>
+              <description>A counter (set to 0 on enable of p80) which increments with each new value. Will wrap back to 0.</description>
+              <bitOffset>16</bitOffset>
+              <bitWidth>4</bitWidth>
+              <access>read-only</access>
+            </field>
+            <field>
+              <name>RST</name>
+              <description>Resets counter, CNT, back to 0.</description>
+              <bitOffset>20</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+              <modifiedWriteValues>oneToClear</modifiedWriteValues>
+            </field>
+          </fields>
+        </register>
+        <register>
+          <name>STATADDR</name>
+          <description>Location of Status block in memory space, if enabled.</description>
+          <addressOffset>0x34</addressOffset>
+          <size>32</size>
+          <access>read-write</access>
+          <resetValue>0</resetValue>
+          <resetMask>0xFFFFFFFF</resetMask>
+          <fields>
+            <field>
+              <name>OFF</name>
+              <description>The offset in Host space for the status block. It must be double-word aligned.</description>
+              <bitOffset>3</bitOffset>
+              <bitWidth>13</bitWidth>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>BASE</name>
+              <description>The meaning is dependent on type of port:</description>
+              <bitOffset>16</bitOffset>
+              <bitWidth>2</bitWidth>
+              <access>read-write</access>
+              <enumeratedValues>
+                <enumeratedValue>
+                  <name>OFFSET</name>
+                  <description>Is offset from 0 in host memory or IO space.</description>
+                  <value>0</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>BASE1</name>
+                  <description>Uses Base1 offset in host memory (see MAPBASE reg)</description>
+                  <value>0x1</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>BASE2</name>
+                  <description>Uses Base2 offset in host memory (see MAPBASE reg)</description>
+                  <value>0x2</value>
+                </enumeratedValue>
+              </enumeratedValues>
+            </field>
+          </fields>
+        </register>
+        <register>
+          <name>ESPICAP</name>
+          <description>eSPI Capabilities of MCU to send to Host</description>
+          <addressOffset>0x40</addressOffset>
+          <size>32</size>
+          <access>read-write</access>
+          <resetValue>0</resetValue>
+          <resetMask>0xFFFFFFFF</resetMask>
+          <fields>
+            <field>
+              <name>SPICAP</name>
+              <description>SPI mode allowed (host still has to select):</description>
+              <bitOffset>0</bitOffset>
+              <bitWidth>2</bitWidth>
+              <access>read-write</access>
+              <enumeratedValues>
+                <enumeratedValue>
+                  <name>SPI</name>
+                  <description>SPI only</description>
+                  <value>0</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>BSPI_SPI</name>
+                  <description>BiSPI and SPI</description>
+                  <value>0x1</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>FLEXSPI_SPI</name>
+                  <description>FLEXSPI and SPI</description>
+                  <value>0x2</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>ANY</name>
+                  <description>any</description>
+                  <value>0x3</value>
+                </enumeratedValue>
+              </enumeratedValues>
+            </field>
+            <field>
+              <name>MAXSPD</name>
+              <description>Maximum SPI Clock speed to allow (host still chooses):</description>
+              <bitOffset>4</bitOffset>
+              <bitWidth>3</bitWidth>
+              <access>read-write</access>
+              <enumeratedValues>
+                <enumeratedValue>
+                  <name>SMALL_THAN_20M</name>
+                  <description>&lt;=20MHz</description>
+                  <value>0</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>SMALL_THAN_25M</name>
+                  <description>&lt;=25MHz (may be 24Mhz)</description>
+                  <value>0x1</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>SMALL_THAN_33M</name>
+                  <description>&lt;=33MHz (may be 30MHz)</description>
+                  <value>0x2</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>SMALL_THAN_50M</name>
+                  <description>&lt;=50MHz (may be 48MHz)</description>
+                  <value>0x3</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>SMALL_THAN_66M</name>
+                  <description>&lt;= 66MHz (may be 60MHz)</description>
+                  <value>0x4</value>
+                </enumeratedValue>
+              </enumeratedValues>
+            </field>
+            <field>
+              <name>ALPIN</name>
+              <description>Allow Alert to be a pin if the Host wants</description>
+              <bitOffset>7</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>OOBOK</name>
+              <description>If 1, allow OOB</description>
+              <bitOffset>8</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>MEMMX</name>
+              <description>If 1, allow 128 byte payload for memory and OOB access, else limit to 64</description>
+              <bitOffset>9</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>FLASHMX</name>
+              <description>Selects max Flash payload size to allow:</description>
+              <bitOffset>10</bitOffset>
+              <bitWidth>2</bitWidth>
+              <access>read-write</access>
+              <enumeratedValues>
+                <enumeratedValue>
+                  <name>BYTE64</name>
+                  <description>64 bytes</description>
+                  <value>0</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>BYTE128</name>
+                  <description>128 bytes</description>
+                  <value>0x1</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>BYTE256</name>
+                  <description>256 bytes</description>
+                  <value>0x2</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>BYTE512</name>
+                  <description>512 bytes</description>
+                  <value>0x3</value>
+                </enumeratedValue>
+              </enumeratedValues>
+            </field>
+            <field>
+              <name>SAF</name>
+              <description>If 1, then Slave Attached Flash is possible with this firmware</description>
+              <bitOffset>12</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>SAFERA</name>
+              <description>Min Erase sector size allowed if SAF used</description>
+              <bitOffset>13</bitOffset>
+              <bitWidth>2</bitWidth>
+              <access>read-write</access>
+              <enumeratedValues>
+                <enumeratedValue>
+                  <name>MIN_2KB</name>
+                  <description>Minimally 2KB</description>
+                  <value>0</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>MIN_4KB</name>
+                  <description>Minimally 4KB</description>
+                  <value>0x1</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>MIN_8KB</name>
+                  <description>Minimally 8KB</description>
+                  <value>0x2</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>MIN_16KB</name>
+                  <description>Minimally 16KB</description>
+                  <value>0x3</value>
+                </enumeratedValue>
+              </enumeratedValues>
+            </field>
+          </fields>
+        </register>
+        <register>
+          <name>ESPICFG</name>
+          <description>eSPI Configuration settings from eSPI</description>
+          <addressOffset>0x44</addressOffset>
+          <size>32</size>
+          <access>read-only</access>
+          <resetValue>0</resetValue>
+          <resetMask>0xFFFFFFFF</resetMask>
+          <fields>
+            <field>
+              <name>MEMSZ</name>
+              <description>If 1, will use 128 byte payload for memory and OOB access, else limited to 64</description>
+              <bitOffset>0</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-only</access>
+            </field>
+            <field>
+              <name>FLASHSZ</name>
+              <description>Indicates max Flash payload size selected using same values as FLASHMX</description>
+              <bitOffset>1</bitOffset>
+              <bitWidth>2</bitWidth>
+              <access>read-only</access>
+            </field>
+            <field>
+              <name>SPIMOD</name>
+              <description>SPI Mode selected by Host</description>
+              <bitOffset>3</bitOffset>
+              <bitWidth>2</bitWidth>
+              <access>read-only</access>
+              <enumeratedValues>
+                <enumeratedValue>
+                  <name>SPI</name>
+                  <description>SPI</description>
+                  <value>0</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>BSPI</name>
+                  <description>BiSPI</description>
+                  <value>0x1</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>FLEXSPI</name>
+                  <description>FLEXSPI</description>
+                  <value>0x2</value>
+                </enumeratedValue>
+              </enumeratedValues>
+            </field>
+            <field>
+              <name>ALERT</name>
+              <description>Alert is a pin vs. MISO</description>
+              <bitOffset>5</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-only</access>
+            </field>
+            <field>
+              <name>ALERTOD</name>
+              <description>Alert is OD as a pin</description>
+              <bitOffset>6</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-only</access>
+            </field>
+            <field>
+              <name>SPISPD</name>
+              <description>SPI Speed selected by Host. See note in section 2.2 on higher eSPI clock speeds and system setup.</description>
+              <bitOffset>7</bitOffset>
+              <bitWidth>3</bitWidth>
+              <access>read-only</access>
+              <enumeratedValues>
+                <enumeratedValue>
+                  <name>LESS_AND_20M</name>
+                  <description>20MHz or less</description>
+                  <value>0</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>FREQ_25M_24M</name>
+                  <description>25MHz or 24MHz</description>
+                  <value>0x1</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>FREQ_33M_30M</name>
+                  <description>33MHz or 30MHz</description>
+                  <value>0x2</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>FREQ_50M_48M</name>
+                  <description>50MHz or 48MHz</description>
+                  <value>0x3</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>FREQ_66M_60M</name>
+                  <description>66MHz or 60MHz</description>
+                  <value>0x4</value>
+                </enumeratedValue>
+              </enumeratedValues>
+            </field>
+            <field>
+              <name>CRC</name>
+              <description>CRC checking is enabled</description>
+              <bitOffset>10</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-only</access>
+            </field>
+            <field>
+              <name>BUSMOK</name>
+              <description>Bus Master is OK</description>
+              <bitOffset>11</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-only</access>
+            </field>
+            <field>
+              <name>MEMENA</name>
+              <description>Channel 0 (memory) is enabled</description>
+              <bitOffset>12</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-only</access>
+            </field>
+            <field>
+              <name>VWOK</name>
+              <description>Channel 1 (Vwire) is enabled</description>
+              <bitOffset>13</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-only</access>
+            </field>
+            <field>
+              <name>OOBOK</name>
+              <description>Channel 2 (OOB) is enabled</description>
+              <bitOffset>14</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-only</access>
+            </field>
+            <field>
+              <name>FLSHERA</name>
+              <description>Flash erase size (and if enabled):</description>
+              <bitOffset>15</bitOffset>
+              <bitWidth>3</bitWidth>
+              <access>read-only</access>
+              <enumeratedValues>
+                <enumeratedValue>
+                  <name>DISABLED</name>
+                  <description>Flash is not enabled</description>
+                  <value>0</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>ERASE_4K</name>
+                  <description>Erase is 4K</description>
+                  <value>0x1</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>ERASE_64K</name>
+                  <description>Erase is 64K</description>
+                  <value>0x2</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>ERASE_4K_64K</name>
+                  <description>Erase allows 4K and 64K</description>
+                  <value>0x3</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>ERASE_128K</name>
+                  <description>Erase is 128K</description>
+                  <value>0x4</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>ERASE_256K</name>
+                  <description>Erase is 256K</description>
+                  <value>0x5</value>
+                </enumeratedValue>
+              </enumeratedValues>
+            </field>
+            <field>
+              <name>FLSHOK</name>
+              <description>Channel 3 (Flash) is enabled.</description>
+              <bitOffset>18</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-only</access>
+            </field>
+            <field>
+              <name>SAF</name>
+              <description>Is 1 if Slave Attached Flash is enabled. Only possible if SAF is set in ESPICAP.</description>
+              <bitOffset>19</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-only</access>
+            </field>
+          </fields>
+        </register>
+        <register>
+          <name>ESPIMISC</name>
+          <description>Miscellaneous uses, such as Alert pin as GPIO (when not used for Alert).</description>
+          <addressOffset>0x48</addressOffset>
+          <size>32</size>
+          <access>read-write</access>
+          <resetValue>0</resetValue>
+          <resetMask>0xFFFFFFFF</resetMask>
+          <fields>
+            <field>
+              <name>GPIO_OE</name>
+              <description>Set to 1 to make the Alert/Reset pin an output GPIO, else is input (High-Z)</description>
+              <bitOffset>0</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>GPIO_OD</name>
+              <description>Set to 1 to make the Alert/Reset pin act open-drain when GPIO_OE=1</description>
+              <bitOffset>1</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>GPIO_OUT</name>
+              <description>Used when GPIO_OE=1</description>
+              <bitOffset>2</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>GPIO_IN</name>
+              <description>Is the current state of the Alert/Reset pin, whether in input mode or not</description>
+              <bitOffset>3</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-only</access>
+            </field>
+            <field>
+              <name>RISGP</name>
+              <description>Reset# is a GPIO</description>
+              <bitOffset>4</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>PWRSAV</name>
+              <description>This bit, when set, will employ clock gating for the eSPI side</description>
+              <bitOffset>31</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+            </field>
+          </fields>
+        </register>
+        <register>
+          <name>P0CFG</name>
+          <description>no description available</description>
+          <addressOffset>0x100</addressOffset>
+          <size>32</size>
+          <access>read-write</access>
+          <resetValue>0</resetValue>
+          <resetMask>0xFFFFFFFF</resetMask>
+          <fields>
+            <field>
+              <name>Type</name>
+              <description>The Type field selects how the port interacts with the Host over the eSPI or LPC bus</description>
+              <bitOffset>0</bitOffset>
+              <bitWidth>4</bitWidth>
+              <access>read-write</access>
+              <enumeratedValues>
+                <enumeratedValue>
+                  <name>UNCONFIGURED</name>
+                  <description>Unconfigured (reset condition)</description>
+                  <value>0</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>ACPI_END</name>
+                  <description>ACPI style Endpoint</description>
+                  <value>0x1</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>ACPI_INDEX</name>
+                  <description>ACPI style Index/Data</description>
+                  <value>0x2</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>BUS_M_MEM_S</name>
+                  <description>Bus Master Mem Single</description>
+                  <value>0x4</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>BUS_M_FLASH_S</name>
+                  <description>Bus Master Flash Single</description>
+                  <value>0x5</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>MAILBOX_SHARED</name>
+                  <description>Mailbox Shared</description>
+                  <value>0x8</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>MAILBOX_SINGLE</name>
+                  <description>Mailbox Single</description>
+                  <value>0x9</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>MAILBOX_SPLIT</name>
+                  <description>Mailbox Split</description>
+                  <value>0xA</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>MAILBOX_OOB_SPLIT</name>
+                  <description>Mailbox OOB Split</description>
+                  <value>0xB</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>MAILBOX_OEM</name>
+                  <description>Mailbox OEM</description>
+                  <value>0xC</value>
+                </enumeratedValue>
+              </enumeratedValues>
+            </field>
+            <field>
+              <name>Direction</name>
+              <description>Meaning depends on Type, but generally picks the direction of the port (Host writes, Host reads, or both)</description>
+              <bitOffset>5</bitOffset>
+              <bitWidth>2</bitWidth>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>MBIntAll</name>
+              <description>Mailbox: Map interrupt on Read 1st and Write 1st to every read/write (special will still control 0th and last location)</description>
+              <bitOffset>7</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>StallRd</name>
+              <description>Stall on any Read of Index/Data and Mailbox (only)</description>
+              <bitOffset>8</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>StallWr</name>
+              <description>Stall on any Write of Index/Data and Mailbox</description>
+              <bitOffset>9</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>ErrorIgn</name>
+              <description>If 1, the Host will get an error when trying to perform a read or write that is blocked by the Direction field</description>
+              <bitOffset>10</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+            </field>
+          </fields>
+        </register>
+        <register>
+          <name>P0STAT</name>
+          <description>no description available</description>
+          <addressOffset>0x104</addressOffset>
+          <size>32</size>
+          <access>read-write</access>
+          <resetValue>0</resetValue>
+          <resetMask>0xFFFFFFFF</resetMask>
+          <fields>
+            <field>
+              <name>RDSTAT</name>
+              <description>Status of Host Read data</description>
+              <bitOffset>0</bitOffset>
+              <bitWidth>2</bitWidth>
+              <access>read-only</access>
+            </field>
+            <field>
+              <name>WRSTAT</name>
+              <description>Status of Host Writes</description>
+              <bitOffset>2</bitOffset>
+              <bitWidth>2</bitWidth>
+              <access>read-only</access>
+            </field>
+            <field>
+              <name>INTERR</name>
+              <description>Interrupt was caused by error</description>
+              <bitOffset>8</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>INTRD</name>
+              <description>Interrupt was caused by Read or 1st Read or Bus master Started.</description>
+              <bitOffset>9</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>INTWR</name>
+              <description>Interrupt was caused by Write or 1st Write or Bus master Started.</description>
+              <bitOffset>10</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>INTSPC</name>
+              <description>Interrupt was caused by: Bit Endpoint Idx/Data Mbox BusMaster/Flash SPC0 CMD Idx Change Write 0 Completed SPC1 - - Read 0 - SPC2 - - Write Last - SPC3 - - Read Last -</description>
+              <bitOffset>11</bitOffset>
+              <bitWidth>4</bitWidth>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>ERR</name>
+              <description>Cause of INTERR: Bit Endpoint, Idx/Data Mbox BusMaster/Flash ERR0 Host Write Over Host Write or Read invalid for Access Failed From-Host (cannot tell on Memory To-Host, but can for Flash write)</description>
+              <bitOffset>16</bitOffset>
+              <bitWidth>4</bitWidth>
+              <access>read-only</access>
+            </field>
+          </fields>
+        </register>
+        <register>
+          <name>P0IRuleStat</name>
+          <description>The Port Set Interrupt-Rule and Set User Status register is used to set: The interrupt causes per port. That is, it is used to select what events from the port should cause an interrupt, if any. The user Status bits. The status byte returned to the host will be composed of both these user bits (which the application defines) and automatically generated status. The interrupt masks then are matched by sticky cause bits in PnSTAT (which can be read and then write-1 cleared). The sticky bits are set whether the interrupt is masked or not, but the masks cause an interrupt when the bits are set and the port is int enabled via INTENSET.</description>
+          <addressOffset>0x108</addressOffset>
+          <size>32</size>
+          <access>read-write</access>
+          <resetValue>0</resetValue>
+          <resetMask>0xFFFFFFFF</resetMask>
+          <fields>
+            <field>
+              <name>USTAT</name>
+              <description>User defined status bits. These are salted into the status register as specified in section 4.1 and 4.6.</description>
+              <bitOffset>0</bitOffset>
+              <bitWidth>5</bitWidth>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>INTERR</name>
+              <description>Interrupt if an error is detected (classes of error defined in section 2.14)</description>
+              <bitOffset>8</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>INTRD</name>
+              <description>Interrupt if Read or 1st Read or Bus master Started.</description>
+              <bitOffset>9</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>INTWR</name>
+              <description>Interrupt if Write or 1st Write or Bus master Finished.</description>
+              <bitOffset>10</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>INTSPC</name>
+              <description>Interrupt if: Bit Endpoint Idx/Data Mbox BusMaster/Flash SPC0 CMD Idx Change Write 0 Completed SPC1 - - Read 0 - SPC2 - - Write Last - SPC3 - - Read Last -</description>
+              <bitOffset>11</bitOffset>
+              <bitWidth>4</bitWidth>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>SSTCL</name>
+              <description>Status set/clear</description>
+              <bitOffset>16</bitOffset>
+              <bitWidth>4</bitWidth>
+              <access>write-only</access>
+            </field>
+            <field>
+              <name>SRST</name>
+              <description>Resets the RdStatus and WrStatus in PStatus register</description>
+              <bitOffset>20</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>write-only</access>
+            </field>
+          </fields>
+        </register>
+        <register>
+          <name>P0ADDR</name>
+          <description>The Port Address register is used to set the mapped address in the LPC/eSPI memory space. For normal Ports, this is a 16-bit location in IO space or a 32-bit offset into PCIe address mapped space. It is not used for OOB, Bus Mastering, or Flash; see the PnOMFLEN register for those. For Endpoints, it is the base of a dword (64 bits). For Index/Data, it is the base of a word (32 bits). For mailbox memory, the address is modulus the length of the mailbox (x2 for both directions). So, if a 16-byte mailbox (single), the offset must have bits 3:0 set to 0 (that is &amp;~0xF). If split directions, then normally bits 4:0 would be set to 0 (that is &amp;~0x1F).</description>
+          <alternateGroup>PADDR</alternateGroup>
+          <addressOffset>0x10C</addressOffset>
+          <size>32</size>
+          <access>read-write</access>
+          <resetValue>0</resetValue>
+          <resetMask>0xFFFFFFFF</resetMask>
+          <fields>
+            <field>
+              <name>OFF</name>
+              <description>Offset from 0 or the selected mapped base for matching memory or IO</description>
+              <bitOffset>0</bitOffset>
+              <bitWidth>16</bitWidth>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>BASE_or_ASZ</name>
+              <description>The meaning is dependent on type of port:</description>
+              <bitOffset>16</bitOffset>
+              <bitWidth>2</bitWidth>
+              <access>read-write</access>
+              <enumeratedValues>
+                <enumeratedValue>
+                  <name>OFFSET_FROM_0</name>
+                  <description>Is offset from 0 in host memory or IO space.</description>
+                  <value>0</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>USE_BASE0</name>
+                  <description>Uses BASE0 offset in host memory</description>
+                  <value>0x1</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>USE_BASE1</name>
+                  <description>Uses BASE1 offset in host memory</description>
+                  <value>0x2</value>
+                </enumeratedValue>
+              </enumeratedValues>
+            </field>
+            <field>
+              <name>IDXOFF</name>
+              <description>For index/register only: This is the byte offset of the Index relative to the data (before or after, based on IDX1ST)</description>
+              <bitOffset>24</bitOffset>
+              <bitWidth>4</bitWidth>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>IDX1ST</name>
+              <description>For index/data register only: Is 1 if index is lower address than data (e</description>
+              <bitOffset>28</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+            </field>
+          </fields>
+        </register>
+        <register>
+          <name>P0OMFLEN</name>
+          <description>The Port OOB, Mastering, Flash length is used for OOB to Host and Bus Mastering and Flash to or from Host. The PnADDR register is not used for either OOB or Bus Mastering. Instead, this register (in same location) is written with byte length message (including address for Mastering and Flash) along with direction. Writing to the SSTCL field of the PIRuleState will notify the Host to perform the transaction. Clearing it before the Host has started a transaction will cancel it, but only if it has not yet seen the Status.</description>
+          <alternateGroup>POMFLEN</alternateGroup>
+          <addressOffset>0x10C</addressOffset>
+          <size>32</size>
+          <access>read-write</access>
+          <resetValue>0</resetValue>
+          <resetMask>0xFFFFFFFF</resetMask>
+          <fields>
+            <field>
+              <name>LEN</name>
+              <description>Length in bytes, 0 relative, to Send for OOB, Send or Retrieve for Mastering, Read or Write for Flash, Erase (in blocks) for Flash, or read data for SAF read</description>
+              <bitOffset>0</bitOffset>
+              <bitWidth>7</bitWidth>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>TRANS</name>
+              <description>Transfer request as: Type Value Meaning OOB 0 To Host OOB 1, 2, 3 Not used Master 0 To Host 32 (Host reads w/32-bit address) Master 1 To Host 64 (Host reads w/64-bit address) Master 2 From Host 32 (Host writes w/32-bit address) Master 3 From Host 64 (Host writes w/64-bit address) MAF Flash 1 Read Flash (location in RAM) MAF Flash 2 Write Flash (location in RAM) MAF Flash 3 Erase Flash (sector in RAM) SAF 0 Completion fail SAF 1 Completion with data SAF 2 Completion with no data</description>
+              <bitOffset>12</bitOffset>
+              <bitWidth>2</bitWidth>
+              <access>read-write</access>
+            </field>
+          </fields>
+        </register>
+        <register>
+          <name>P0DataIn</name>
+          <description>no description available</description>
+          <addressOffset>0x110</addressOffset>
+          <size>32</size>
+          <access>read-only</access>
+          <resetValue>0</resetValue>
+          <resetMask>0xFFFFFFFF</resetMask>
+          <fields>
+            <field>
+              <name>DATA_LEN</name>
+              <description>Meaning is dependent on type of port: If endpoint or index/data: is data byte If Mailbox or Bus master or Flash: is count in last message, 0 relative If SAF, is count in last message including address (so, +4), 0 relative</description>
+              <bitOffset>0</bitOffset>
+              <bitWidth>8</bitWidth>
+              <access>read-only</access>
+            </field>
+            <field>
+              <name>DIR</name>
+              <description>Direction of last access: 0 = Read By Host 1 = Write By Host</description>
+              <bitOffset>8</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-only</access>
+            </field>
+            <field>
+              <name>IDX</name>
+              <description>Index of last access (ie</description>
+              <bitOffset>16</bitOffset>
+              <bitWidth>10</bitWidth>
+              <access>read-only</access>
+            </field>
+          </fields>
+        </register>
+        <register>
+          <name>P0DataOut</name>
+          <description>no description available</description>
+          <alternateGroup>PDataOut</alternateGroup>
+          <addressOffset>0x114</addressOffset>
+          <size>32</size>
+          <access>read-write</access>
+          <resetValue>0</resetValue>
+          <resetMask>0xFFFFFFFF</resetMask>
+          <fields>
+            <field>
+              <name>DATA</name>
+              <description>Data to send to Host. Application can tell when taken via the PnStatus register.</description>
+              <bitOffset>0</bitOffset>
+              <bitWidth>8</bitWidth>
+              <access>read-write</access>
+            </field>
+          </fields>
+        </register>
+        <register>
+          <name>P0RAMUse</name>
+          <description>no description available</description>
+          <alternateGroup>PRAMUse</alternateGroup>
+          <addressOffset>0x114</addressOffset>
+          <size>32</size>
+          <access>read-write</access>
+          <resetValue>0</resetValue>
+          <resetMask>0xFFFFFFFF</resetMask>
+          <fields>
+            <field>
+              <name>OFF</name>
+              <description>This is the word offset into the RAM</description>
+              <bitOffset>0</bitOffset>
+              <bitWidth>12</bitWidth>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>LEN</name>
+              <description>This is the length of the mailbox or mastering area as 4&lt;&lt;LEN per direction</description>
+              <bitOffset>16</bitOffset>
+              <bitWidth>3</bitWidth>
+              <access>read-write</access>
+            </field>
+          </fields>
+        </register>
+        <register>
+          <name>P1CFG</name>
+          <description>no description available</description>
+          <addressOffset>0x120</addressOffset>
+          <size>32</size>
+          <access>read-write</access>
+          <resetValue>0</resetValue>
+          <resetMask>0xFFFFFFFF</resetMask>
+          <fields>
+            <field>
+              <name>Type</name>
+              <description>The Type field selects how the port interacts with the Host over the eSPI or LPC bus</description>
+              <bitOffset>0</bitOffset>
+              <bitWidth>4</bitWidth>
+              <access>read-write</access>
+              <enumeratedValues>
+                <enumeratedValue>
+                  <name>UNCONFIGURED</name>
+                  <description>Unconfigured (reset condition)</description>
+                  <value>0</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>ACPI_END</name>
+                  <description>ACPI style Endpoint</description>
+                  <value>0x1</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>ACPI_INDEX</name>
+                  <description>ACPI style Index/Data</description>
+                  <value>0x2</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>BUS_M_MEM_S</name>
+                  <description>Bus Master Mem Single</description>
+                  <value>0x4</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>BUS_M_FLASH_S</name>
+                  <description>Bus Master Flash Single</description>
+                  <value>0x5</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>MAILBOX_SHARED</name>
+                  <description>Mailbox Shared</description>
+                  <value>0x8</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>MAILBOX_SINGLE</name>
+                  <description>Mailbox Single</description>
+                  <value>0x9</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>MAILBOX_SPLIT</name>
+                  <description>Mailbox Split</description>
+                  <value>0xA</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>MAILBOX_OOB_SPLIT</name>
+                  <description>Mailbox OOB Split</description>
+                  <value>0xB</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>MAILBOX_OEM</name>
+                  <description>Mailbox OEM</description>
+                  <value>0xC</value>
+                </enumeratedValue>
+              </enumeratedValues>
+            </field>
+            <field>
+              <name>Direction</name>
+              <description>Meaning depends on Type, but generally picks the direction of the port (Host writes, Host reads, or both)</description>
+              <bitOffset>5</bitOffset>
+              <bitWidth>2</bitWidth>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>MBIntAll</name>
+              <description>Mailbox: Map interrupt on Read 1st and Write 1st to every read/write (special will still control 0th and last location)</description>
+              <bitOffset>7</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>StallRd</name>
+              <description>Stall on any Read of Index/Data and Mailbox (only)</description>
+              <bitOffset>8</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>StallWr</name>
+              <description>Stall on any Write of Index/Data and Mailbox</description>
+              <bitOffset>9</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>ErrorIgn</name>
+              <description>If 1, the Host will get an error when trying to perform a read or write that is blocked by the Direction field</description>
+              <bitOffset>10</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+            </field>
+          </fields>
+        </register>
+        <register>
+          <name>P1STAT</name>
+          <description>no description available</description>
+          <addressOffset>0x124</addressOffset>
+          <size>32</size>
+          <access>read-write</access>
+          <resetValue>0</resetValue>
+          <resetMask>0xFFFFFFFF</resetMask>
+          <fields>
+            <field>
+              <name>RDSTAT</name>
+              <description>Status of Host Read data</description>
+              <bitOffset>0</bitOffset>
+              <bitWidth>2</bitWidth>
+              <access>read-only</access>
+            </field>
+            <field>
+              <name>WRSTAT</name>
+              <description>Status of Host Writes</description>
+              <bitOffset>2</bitOffset>
+              <bitWidth>2</bitWidth>
+              <access>read-only</access>
+            </field>
+            <field>
+              <name>INTERR</name>
+              <description>Interrupt was caused by error</description>
+              <bitOffset>8</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>INTRD</name>
+              <description>Interrupt was caused by Read or 1st Read or Bus master Started.</description>
+              <bitOffset>9</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>INTWR</name>
+              <description>Interrupt was caused by Write or 1st Write or Bus master Started.</description>
+              <bitOffset>10</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>INTSPC</name>
+              <description>Interrupt was caused by: Bit Endpoint Idx/Data Mbox BusMaster/Flash SPC0 CMD Idx Change Write 0 Completed SPC1 - - Read 0 - SPC2 - - Write Last - SPC3 - - Read Last -</description>
+              <bitOffset>11</bitOffset>
+              <bitWidth>4</bitWidth>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>ERR</name>
+              <description>Cause of INTERR: Bit Endpoint, Idx/Data Mbox BusMaster/Flash ERR0 Host Write Over Host Write or Read invalid for Access Failed From-Host (cannot tell on Memory To-Host, but can for Flash write)</description>
+              <bitOffset>16</bitOffset>
+              <bitWidth>4</bitWidth>
+              <access>read-only</access>
+            </field>
+          </fields>
+        </register>
+        <register>
+          <name>P1IRuleStat</name>
+          <description>The Port Set Interrupt-Rule and Set User Status register is used to set: The interrupt causes per port. That is, it is used to select what events from the port should cause an interrupt, if any. The user Status bits. The status byte returned to the host will be composed of both these user bits (which the application defines) and automatically generated status. The interrupt masks then are matched by sticky cause bits in PnSTAT (which can be read and then write-1 cleared). The sticky bits are set whether the interrupt is masked or not, but the masks cause an interrupt when the bits are set and the port is int enabled via INTENSET.</description>
+          <addressOffset>0x128</addressOffset>
+          <size>32</size>
+          <access>read-write</access>
+          <resetValue>0</resetValue>
+          <resetMask>0xFFFFFFFF</resetMask>
+          <fields>
+            <field>
+              <name>USTAT</name>
+              <description>User defined status bits. These are salted into the status register as specified in section 4.1 and 4.6.</description>
+              <bitOffset>0</bitOffset>
+              <bitWidth>5</bitWidth>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>INTERR</name>
+              <description>Interrupt if an error is detected (classes of error defined in section 2.14)</description>
+              <bitOffset>8</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>INTRD</name>
+              <description>Interrupt if Read or 1st Read or Bus master Started.</description>
+              <bitOffset>9</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>INTWR</name>
+              <description>Interrupt if Write or 1st Write or Bus master Finished.</description>
+              <bitOffset>10</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>INTSPC</name>
+              <description>Interrupt if: Bit Endpoint Idx/Data Mbox BusMaster/Flash SPC0 CMD Idx Change Write 0 Completed SPC1 - - Read 0 - SPC2 - - Write Last - SPC3 - - Read Last -</description>
+              <bitOffset>11</bitOffset>
+              <bitWidth>4</bitWidth>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>SSTCL</name>
+              <description>Status set/clear</description>
+              <bitOffset>16</bitOffset>
+              <bitWidth>4</bitWidth>
+              <access>write-only</access>
+            </field>
+            <field>
+              <name>SRST</name>
+              <description>Resets the RdStatus and WrStatus in PStatus register</description>
+              <bitOffset>20</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>write-only</access>
+            </field>
+          </fields>
+        </register>
+        <register>
+          <name>P1ADDR</name>
+          <description>The Port Address register is used to set the mapped address in the LPC/eSPI memory space. For normal Ports, this is a 16-bit location in IO space or a 32-bit offset into PCIe address mapped space. It is not used for OOB, Bus Mastering, or Flash; see the PnOMFLEN register for those. For Endpoints, it is the base of a dword (64 bits). For Index/Data, it is the base of a word (32 bits). For mailbox memory, the address is modulus the length of the mailbox (x2 for both directions). So, if a 16-byte mailbox (single), the offset must have bits 3:0 set to 0 (that is &amp;~0xF). If split directions, then normally bits 4:0 would be set to 0 (that is &amp;~0x1F).</description>
+          <alternateGroup>PADDR</alternateGroup>
+          <addressOffset>0x12C</addressOffset>
+          <size>32</size>
+          <access>read-write</access>
+          <resetValue>0</resetValue>
+          <resetMask>0xFFFFFFFF</resetMask>
+          <fields>
+            <field>
+              <name>OFF</name>
+              <description>Offset from 0 or the selected mapped base for matching memory or IO</description>
+              <bitOffset>0</bitOffset>
+              <bitWidth>16</bitWidth>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>BASE_or_ASZ</name>
+              <description>The meaning is dependent on type of port:</description>
+              <bitOffset>16</bitOffset>
+              <bitWidth>2</bitWidth>
+              <access>read-write</access>
+              <enumeratedValues>
+                <enumeratedValue>
+                  <name>OFFSET_FROM_0</name>
+                  <description>Is offset from 0 in host memory or IO space.</description>
+                  <value>0</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>USE_BASE0</name>
+                  <description>Uses BASE0 offset in host memory</description>
+                  <value>0x1</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>USE_BASE1</name>
+                  <description>Uses BASE1 offset in host memory</description>
+                  <value>0x2</value>
+                </enumeratedValue>
+              </enumeratedValues>
+            </field>
+            <field>
+              <name>IDXOFF</name>
+              <description>For index/register only: This is the byte offset of the Index relative to the data (before or after, based on IDX1ST)</description>
+              <bitOffset>24</bitOffset>
+              <bitWidth>4</bitWidth>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>IDX1ST</name>
+              <description>For index/data register only: Is 1 if index is lower address than data (e</description>
+              <bitOffset>28</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+            </field>
+          </fields>
+        </register>
+        <register>
+          <name>P1OMFLEN</name>
+          <description>The Port OOB, Mastering, Flash length is used for OOB to Host and Bus Mastering and Flash to or from Host. The PnADDR register is not used for either OOB or Bus Mastering. Instead, this register (in same location) is written with byte length message (including address for Mastering and Flash) along with direction. Writing to the SSTCL field of the PIRuleState will notify the Host to perform the transaction. Clearing it before the Host has started a transaction will cancel it, but only if it has not yet seen the Status.</description>
+          <alternateGroup>POMFLEN</alternateGroup>
+          <addressOffset>0x12C</addressOffset>
+          <size>32</size>
+          <access>read-write</access>
+          <resetValue>0</resetValue>
+          <resetMask>0xFFFFFFFF</resetMask>
+          <fields>
+            <field>
+              <name>LEN</name>
+              <description>Length in bytes, 0 relative, to Send for OOB, Send or Retrieve for Mastering, Read or Write for Flash, Erase (in blocks) for Flash, or read data for SAF read</description>
+              <bitOffset>0</bitOffset>
+              <bitWidth>7</bitWidth>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>TRANS</name>
+              <description>Transfer request as: Type Value Meaning OOB 0 To Host OOB 1, 2, 3 Not used Master 0 To Host 32 (Host reads w/32-bit address) Master 1 To Host 64 (Host reads w/64-bit address) Master 2 From Host 32 (Host writes w/32-bit address) Master 3 From Host 64 (Host writes w/64-bit address) MAF Flash 1 Read Flash (location in RAM) MAF Flash 2 Write Flash (location in RAM) MAF Flash 3 Erase Flash (sector in RAM) SAF 0 Completion fail SAF 1 Completion with data SAF 2 Completion with no data</description>
+              <bitOffset>12</bitOffset>
+              <bitWidth>2</bitWidth>
+              <access>read-write</access>
+            </field>
+          </fields>
+        </register>
+        <register>
+          <name>P1DataIn</name>
+          <description>no description available</description>
+          <addressOffset>0x130</addressOffset>
+          <size>32</size>
+          <access>read-only</access>
+          <resetValue>0</resetValue>
+          <resetMask>0xFFFFFFFF</resetMask>
+          <fields>
+            <field>
+              <name>DATA_LEN</name>
+              <description>Meaning is dependent on type of port: If endpoint or index/data: is data byte If Mailbox or Bus master or Flash: is count in last message, 0 relative If SAF, is count in last message including address (so, +4), 0 relative</description>
+              <bitOffset>0</bitOffset>
+              <bitWidth>8</bitWidth>
+              <access>read-only</access>
+            </field>
+            <field>
+              <name>DIR</name>
+              <description>Direction of last access: 0 = Read By Host 1 = Write By Host</description>
+              <bitOffset>8</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-only</access>
+            </field>
+            <field>
+              <name>IDX</name>
+              <description>Index of last access (ie</description>
+              <bitOffset>16</bitOffset>
+              <bitWidth>10</bitWidth>
+              <access>read-only</access>
+            </field>
+          </fields>
+        </register>
+        <register>
+          <name>P1DataOut</name>
+          <description>no description available</description>
+          <alternateGroup>PDataOut</alternateGroup>
+          <addressOffset>0x134</addressOffset>
+          <size>32</size>
+          <access>read-write</access>
+          <resetValue>0</resetValue>
+          <resetMask>0xFFFFFFFF</resetMask>
+          <fields>
+            <field>
+              <name>DATA</name>
+              <description>Data to send to Host. Application can tell when taken via the PnStatus register.</description>
+              <bitOffset>0</bitOffset>
+              <bitWidth>8</bitWidth>
+              <access>read-write</access>
+            </field>
+          </fields>
+        </register>
+        <register>
+          <name>P1RAMUse</name>
+          <description>no description available</description>
+          <alternateGroup>PRAMUse</alternateGroup>
+          <addressOffset>0x134</addressOffset>
+          <size>32</size>
+          <access>read-write</access>
+          <resetValue>0</resetValue>
+          <resetMask>0xFFFFFFFF</resetMask>
+          <fields>
+            <field>
+              <name>OFF</name>
+              <description>This is the word offset into the RAM</description>
+              <bitOffset>0</bitOffset>
+              <bitWidth>12</bitWidth>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>LEN</name>
+              <description>This is the length of the mailbox or mastering area as 4&lt;&lt;LEN per direction</description>
+              <bitOffset>16</bitOffset>
+              <bitWidth>3</bitWidth>
+              <access>read-write</access>
+            </field>
+          </fields>
+        </register>
+        <register>
+          <name>P2CFG</name>
+          <description>no description available</description>
+          <addressOffset>0x140</addressOffset>
+          <size>32</size>
+          <access>read-write</access>
+          <resetValue>0</resetValue>
+          <resetMask>0xFFFFFFFF</resetMask>
+          <fields>
+            <field>
+              <name>Type</name>
+              <description>The Type field selects how the port interacts with the Host over the eSPI or LPC bus</description>
+              <bitOffset>0</bitOffset>
+              <bitWidth>4</bitWidth>
+              <access>read-write</access>
+              <enumeratedValues>
+                <enumeratedValue>
+                  <name>UNCONFIGURED</name>
+                  <description>Unconfigured (reset condition)</description>
+                  <value>0</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>ACPI_END</name>
+                  <description>ACPI style Endpoint</description>
+                  <value>0x1</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>ACPI_INDEX</name>
+                  <description>ACPI style Index/Data</description>
+                  <value>0x2</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>BUS_M_MEM_S</name>
+                  <description>Bus Master Mem Single</description>
+                  <value>0x4</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>BUS_M_FLASH_S</name>
+                  <description>Bus Master Flash Single</description>
+                  <value>0x5</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>MAILBOX_SHARED</name>
+                  <description>Mailbox Shared</description>
+                  <value>0x8</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>MAILBOX_SINGLE</name>
+                  <description>Mailbox Single</description>
+                  <value>0x9</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>MAILBOX_SPLIT</name>
+                  <description>Mailbox Split</description>
+                  <value>0xA</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>MAILBOX_OOB_SPLIT</name>
+                  <description>Mailbox OOB Split</description>
+                  <value>0xB</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>MAILBOX_OEM</name>
+                  <description>Mailbox OEM</description>
+                  <value>0xC</value>
+                </enumeratedValue>
+              </enumeratedValues>
+            </field>
+            <field>
+              <name>Direction</name>
+              <description>Meaning depends on Type, but generally picks the direction of the port (Host writes, Host reads, or both)</description>
+              <bitOffset>5</bitOffset>
+              <bitWidth>2</bitWidth>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>MBIntAll</name>
+              <description>Mailbox: Map interrupt on Read 1st and Write 1st to every read/write (special will still control 0th and last location)</description>
+              <bitOffset>7</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>StallRd</name>
+              <description>Stall on any Read of Index/Data and Mailbox (only)</description>
+              <bitOffset>8</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>StallWr</name>
+              <description>Stall on any Write of Index/Data and Mailbox</description>
+              <bitOffset>9</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>ErrorIgn</name>
+              <description>If 1, the Host will get an error when trying to perform a read or write that is blocked by the Direction field</description>
+              <bitOffset>10</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+            </field>
+          </fields>
+        </register>
+        <register>
+          <name>P2STAT</name>
+          <description>no description available</description>
+          <addressOffset>0x144</addressOffset>
+          <size>32</size>
+          <access>read-write</access>
+          <resetValue>0</resetValue>
+          <resetMask>0xFFFFFFFF</resetMask>
+          <fields>
+            <field>
+              <name>RDSTAT</name>
+              <description>Status of Host Read data</description>
+              <bitOffset>0</bitOffset>
+              <bitWidth>2</bitWidth>
+              <access>read-only</access>
+            </field>
+            <field>
+              <name>WRSTAT</name>
+              <description>Status of Host Writes</description>
+              <bitOffset>2</bitOffset>
+              <bitWidth>2</bitWidth>
+              <access>read-only</access>
+            </field>
+            <field>
+              <name>INTERR</name>
+              <description>Interrupt was caused by error</description>
+              <bitOffset>8</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>INTRD</name>
+              <description>Interrupt was caused by Read or 1st Read or Bus master Started.</description>
+              <bitOffset>9</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>INTWR</name>
+              <description>Interrupt was caused by Write or 1st Write or Bus master Started.</description>
+              <bitOffset>10</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>INTSPC</name>
+              <description>Interrupt was caused by: Bit Endpoint Idx/Data Mbox BusMaster/Flash SPC0 CMD Idx Change Write 0 Completed SPC1 - - Read 0 - SPC2 - - Write Last - SPC3 - - Read Last -</description>
+              <bitOffset>11</bitOffset>
+              <bitWidth>4</bitWidth>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>ERR</name>
+              <description>Cause of INTERR: Bit Endpoint, Idx/Data Mbox BusMaster/Flash ERR0 Host Write Over Host Write or Read invalid for Access Failed From-Host (cannot tell on Memory To-Host, but can for Flash write)</description>
+              <bitOffset>16</bitOffset>
+              <bitWidth>4</bitWidth>
+              <access>read-only</access>
+            </field>
+          </fields>
+        </register>
+        <register>
+          <name>P2IRuleStat</name>
+          <description>The Port Set Interrupt-Rule and Set User Status register is used to set: The interrupt causes per port. That is, it is used to select what events from the port should cause an interrupt, if any. The user Status bits. The status byte returned to the host will be composed of both these user bits (which the application defines) and automatically generated status. The interrupt masks then are matched by sticky cause bits in PnSTAT (which can be read and then write-1 cleared). The sticky bits are set whether the interrupt is masked or not, but the masks cause an interrupt when the bits are set and the port is int enabled via INTENSET.</description>
+          <addressOffset>0x148</addressOffset>
+          <size>32</size>
+          <access>read-write</access>
+          <resetValue>0</resetValue>
+          <resetMask>0xFFFFFFFF</resetMask>
+          <fields>
+            <field>
+              <name>USTAT</name>
+              <description>User defined status bits. These are salted into the status register as specified in section 4.1 and 4.6.</description>
+              <bitOffset>0</bitOffset>
+              <bitWidth>5</bitWidth>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>INTERR</name>
+              <description>Interrupt if an error is detected (classes of error defined in section 2.14)</description>
+              <bitOffset>8</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>INTRD</name>
+              <description>Interrupt if Read or 1st Read or Bus master Started.</description>
+              <bitOffset>9</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>INTWR</name>
+              <description>Interrupt if Write or 1st Write or Bus master Finished.</description>
+              <bitOffset>10</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>INTSPC</name>
+              <description>Interrupt if: Bit Endpoint Idx/Data Mbox BusMaster/Flash SPC0 CMD Idx Change Write 0 Completed SPC1 - - Read 0 - SPC2 - - Write Last - SPC3 - - Read Last -</description>
+              <bitOffset>11</bitOffset>
+              <bitWidth>4</bitWidth>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>SSTCL</name>
+              <description>Status set/clear</description>
+              <bitOffset>16</bitOffset>
+              <bitWidth>4</bitWidth>
+              <access>write-only</access>
+            </field>
+            <field>
+              <name>SRST</name>
+              <description>Resets the RdStatus and WrStatus in PStatus register</description>
+              <bitOffset>20</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>write-only</access>
+            </field>
+          </fields>
+        </register>
+        <register>
+          <name>P2ADDR</name>
+          <description>The Port Address register is used to set the mapped address in the LPC/eSPI memory space. For normal Ports, this is a 16-bit location in IO space or a 32-bit offset into PCIe address mapped space. It is not used for OOB, Bus Mastering, or Flash; see the PnOMFLEN register for those. For Endpoints, it is the base of a dword (64 bits). For Index/Data, it is the base of a word (32 bits). For mailbox memory, the address is modulus the length of the mailbox (x2 for both directions). So, if a 16-byte mailbox (single), the offset must have bits 3:0 set to 0 (that is &amp;~0xF). If split directions, then normally bits 4:0 would be set to 0 (that is &amp;~0x1F).</description>
+          <alternateGroup>PADDR</alternateGroup>
+          <addressOffset>0x14C</addressOffset>
+          <size>32</size>
+          <access>read-write</access>
+          <resetValue>0</resetValue>
+          <resetMask>0xFFFFFFFF</resetMask>
+          <fields>
+            <field>
+              <name>OFF</name>
+              <description>Offset from 0 or the selected mapped base for matching memory or IO</description>
+              <bitOffset>0</bitOffset>
+              <bitWidth>16</bitWidth>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>BASE_or_ASZ</name>
+              <description>The meaning is dependent on type of port:</description>
+              <bitOffset>16</bitOffset>
+              <bitWidth>2</bitWidth>
+              <access>read-write</access>
+              <enumeratedValues>
+                <enumeratedValue>
+                  <name>OFFSET_FROM_0</name>
+                  <description>Is offset from 0 in host memory or IO space.</description>
+                  <value>0</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>USE_BASE0</name>
+                  <description>Uses BASE0 offset in host memory</description>
+                  <value>0x1</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>USE_BASE1</name>
+                  <description>Uses BASE1 offset in host memory</description>
+                  <value>0x2</value>
+                </enumeratedValue>
+              </enumeratedValues>
+            </field>
+            <field>
+              <name>IDXOFF</name>
+              <description>For index/register only: This is the byte offset of the Index relative to the data (before or after, based on IDX1ST)</description>
+              <bitOffset>24</bitOffset>
+              <bitWidth>4</bitWidth>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>IDX1ST</name>
+              <description>For index/data register only: Is 1 if index is lower address than data (e</description>
+              <bitOffset>28</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+            </field>
+          </fields>
+        </register>
+        <register>
+          <name>P2OMFLEN</name>
+          <description>The Port OOB, Mastering, Flash length is used for OOB to Host and Bus Mastering and Flash to or from Host. The PnADDR register is not used for either OOB or Bus Mastering. Instead, this register (in same location) is written with byte length message (including address for Mastering and Flash) along with direction. Writing to the SSTCL field of the PIRuleState will notify the Host to perform the transaction. Clearing it before the Host has started a transaction will cancel it, but only if it has not yet seen the Status.</description>
+          <alternateGroup>POMFLEN</alternateGroup>
+          <addressOffset>0x14C</addressOffset>
+          <size>32</size>
+          <access>read-write</access>
+          <resetValue>0</resetValue>
+          <resetMask>0xFFFFFFFF</resetMask>
+          <fields>
+            <field>
+              <name>LEN</name>
+              <description>Length in bytes, 0 relative, to Send for OOB, Send or Retrieve for Mastering, Read or Write for Flash, Erase (in blocks) for Flash, or read data for SAF read</description>
+              <bitOffset>0</bitOffset>
+              <bitWidth>7</bitWidth>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>TRANS</name>
+              <description>Transfer request as: Type Value Meaning OOB 0 To Host OOB 1, 2, 3 Not used Master 0 To Host 32 (Host reads w/32-bit address) Master 1 To Host 64 (Host reads w/64-bit address) Master 2 From Host 32 (Host writes w/32-bit address) Master 3 From Host 64 (Host writes w/64-bit address) MAF Flash 1 Read Flash (location in RAM) MAF Flash 2 Write Flash (location in RAM) MAF Flash 3 Erase Flash (sector in RAM) SAF 0 Completion fail SAF 1 Completion with data SAF 2 Completion with no data</description>
+              <bitOffset>12</bitOffset>
+              <bitWidth>2</bitWidth>
+              <access>read-write</access>
+            </field>
+          </fields>
+        </register>
+        <register>
+          <name>P2DataIn</name>
+          <description>no description available</description>
+          <addressOffset>0x150</addressOffset>
+          <size>32</size>
+          <access>read-only</access>
+          <resetValue>0</resetValue>
+          <resetMask>0xFFFFFFFF</resetMask>
+          <fields>
+            <field>
+              <name>DATA_LEN</name>
+              <description>Meaning is dependent on type of port: If endpoint or index/data: is data byte If Mailbox or Bus master or Flash: is count in last message, 0 relative If SAF, is count in last message including address (so, +4), 0 relative</description>
+              <bitOffset>0</bitOffset>
+              <bitWidth>8</bitWidth>
+              <access>read-only</access>
+            </field>
+            <field>
+              <name>DIR</name>
+              <description>Direction of last access: 0 = Read By Host 1 = Write By Host</description>
+              <bitOffset>8</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-only</access>
+            </field>
+            <field>
+              <name>IDX</name>
+              <description>Index of last access (ie</description>
+              <bitOffset>16</bitOffset>
+              <bitWidth>10</bitWidth>
+              <access>read-only</access>
+            </field>
+          </fields>
+        </register>
+        <register>
+          <name>P2DataOut</name>
+          <description>no description available</description>
+          <alternateGroup>PDataOut</alternateGroup>
+          <addressOffset>0x154</addressOffset>
+          <size>32</size>
+          <access>read-write</access>
+          <resetValue>0</resetValue>
+          <resetMask>0xFFFFFFFF</resetMask>
+          <fields>
+            <field>
+              <name>DATA</name>
+              <description>Data to send to Host. Application can tell when taken via the PnStatus register.</description>
+              <bitOffset>0</bitOffset>
+              <bitWidth>8</bitWidth>
+              <access>read-write</access>
+            </field>
+          </fields>
+        </register>
+        <register>
+          <name>P2RAMUse</name>
+          <description>no description available</description>
+          <alternateGroup>PRAMUse</alternateGroup>
+          <addressOffset>0x154</addressOffset>
+          <size>32</size>
+          <access>read-write</access>
+          <resetValue>0</resetValue>
+          <resetMask>0xFFFFFFFF</resetMask>
+          <fields>
+            <field>
+              <name>OFF</name>
+              <description>This is the word offset into the RAM</description>
+              <bitOffset>0</bitOffset>
+              <bitWidth>12</bitWidth>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>LEN</name>
+              <description>This is the length of the mailbox or mastering area as 4&lt;&lt;LEN per direction</description>
+              <bitOffset>16</bitOffset>
+              <bitWidth>3</bitWidth>
+              <access>read-write</access>
+            </field>
+          </fields>
+        </register>
+        <register>
+          <name>P3CFG</name>
+          <description>no description available</description>
+          <addressOffset>0x160</addressOffset>
+          <size>32</size>
+          <access>read-write</access>
+          <resetValue>0</resetValue>
+          <resetMask>0xFFFFFFFF</resetMask>
+          <fields>
+            <field>
+              <name>Type</name>
+              <description>The Type field selects how the port interacts with the Host over the eSPI or LPC bus</description>
+              <bitOffset>0</bitOffset>
+              <bitWidth>4</bitWidth>
+              <access>read-write</access>
+              <enumeratedValues>
+                <enumeratedValue>
+                  <name>UNCONFIGURED</name>
+                  <description>Unconfigured (reset condition)</description>
+                  <value>0</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>ACPI_END</name>
+                  <description>ACPI style Endpoint</description>
+                  <value>0x1</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>ACPI_INDEX</name>
+                  <description>ACPI style Index/Data</description>
+                  <value>0x2</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>BUS_M_MEM_S</name>
+                  <description>Bus Master Mem Single</description>
+                  <value>0x4</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>BUS_M_FLASH_S</name>
+                  <description>Bus Master Flash Single</description>
+                  <value>0x5</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>MAILBOX_SHARED</name>
+                  <description>Mailbox Shared</description>
+                  <value>0x8</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>MAILBOX_SINGLE</name>
+                  <description>Mailbox Single</description>
+                  <value>0x9</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>MAILBOX_SPLIT</name>
+                  <description>Mailbox Split</description>
+                  <value>0xA</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>MAILBOX_OOB_SPLIT</name>
+                  <description>Mailbox OOB Split</description>
+                  <value>0xB</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>MAILBOX_OEM</name>
+                  <description>Mailbox OEM</description>
+                  <value>0xC</value>
+                </enumeratedValue>
+              </enumeratedValues>
+            </field>
+            <field>
+              <name>Direction</name>
+              <description>Meaning depends on Type, but generally picks the direction of the port (Host writes, Host reads, or both)</description>
+              <bitOffset>5</bitOffset>
+              <bitWidth>2</bitWidth>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>MBIntAll</name>
+              <description>Mailbox: Map interrupt on Read 1st and Write 1st to every read/write (special will still control 0th and last location)</description>
+              <bitOffset>7</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>StallRd</name>
+              <description>Stall on any Read of Index/Data and Mailbox (only)</description>
+              <bitOffset>8</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>StallWr</name>
+              <description>Stall on any Write of Index/Data and Mailbox</description>
+              <bitOffset>9</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>ErrorIgn</name>
+              <description>If 1, the Host will get an error when trying to perform a read or write that is blocked by the Direction field</description>
+              <bitOffset>10</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+            </field>
+          </fields>
+        </register>
+        <register>
+          <name>P3STAT</name>
+          <description>no description available</description>
+          <addressOffset>0x164</addressOffset>
+          <size>32</size>
+          <access>read-write</access>
+          <resetValue>0</resetValue>
+          <resetMask>0xFFFFFFFF</resetMask>
+          <fields>
+            <field>
+              <name>RDSTAT</name>
+              <description>Status of Host Read data</description>
+              <bitOffset>0</bitOffset>
+              <bitWidth>2</bitWidth>
+              <access>read-only</access>
+            </field>
+            <field>
+              <name>WRSTAT</name>
+              <description>Status of Host Writes</description>
+              <bitOffset>2</bitOffset>
+              <bitWidth>2</bitWidth>
+              <access>read-only</access>
+            </field>
+            <field>
+              <name>INTERR</name>
+              <description>Interrupt was caused by error</description>
+              <bitOffset>8</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>INTRD</name>
+              <description>Interrupt was caused by Read or 1st Read or Bus master Started.</description>
+              <bitOffset>9</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>INTWR</name>
+              <description>Interrupt was caused by Write or 1st Write or Bus master Started.</description>
+              <bitOffset>10</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>INTSPC</name>
+              <description>Interrupt was caused by: Bit Endpoint Idx/Data Mbox BusMaster/Flash SPC0 CMD Idx Change Write 0 Completed SPC1 - - Read 0 - SPC2 - - Write Last - SPC3 - - Read Last -</description>
+              <bitOffset>11</bitOffset>
+              <bitWidth>4</bitWidth>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>ERR</name>
+              <description>Cause of INTERR: Bit Endpoint, Idx/Data Mbox BusMaster/Flash ERR0 Host Write Over Host Write or Read invalid for Access Failed From-Host (cannot tell on Memory To-Host, but can for Flash write)</description>
+              <bitOffset>16</bitOffset>
+              <bitWidth>4</bitWidth>
+              <access>read-only</access>
+            </field>
+          </fields>
+        </register>
+        <register>
+          <name>P3IRuleStat</name>
+          <description>The Port Set Interrupt-Rule and Set User Status register is used to set: The interrupt causes per port. That is, it is used to select what events from the port should cause an interrupt, if any. The user Status bits. The status byte returned to the host will be composed of both these user bits (which the application defines) and automatically generated status. The interrupt masks then are matched by sticky cause bits in PnSTAT (which can be read and then write-1 cleared). The sticky bits are set whether the interrupt is masked or not, but the masks cause an interrupt when the bits are set and the port is int enabled via INTENSET.</description>
+          <addressOffset>0x168</addressOffset>
+          <size>32</size>
+          <access>read-write</access>
+          <resetValue>0</resetValue>
+          <resetMask>0xFFFFFFFF</resetMask>
+          <fields>
+            <field>
+              <name>USTAT</name>
+              <description>User defined status bits. These are salted into the status register as specified in section 4.1 and 4.6.</description>
+              <bitOffset>0</bitOffset>
+              <bitWidth>5</bitWidth>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>INTERR</name>
+              <description>Interrupt if an error is detected (classes of error defined in section 2.14)</description>
+              <bitOffset>8</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>INTRD</name>
+              <description>Interrupt if Read or 1st Read or Bus master Started.</description>
+              <bitOffset>9</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>INTWR</name>
+              <description>Interrupt if Write or 1st Write or Bus master Finished.</description>
+              <bitOffset>10</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>INTSPC</name>
+              <description>Interrupt if: Bit Endpoint Idx/Data Mbox BusMaster/Flash SPC0 CMD Idx Change Write 0 Completed SPC1 - - Read 0 - SPC2 - - Write Last - SPC3 - - Read Last -</description>
+              <bitOffset>11</bitOffset>
+              <bitWidth>4</bitWidth>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>SSTCL</name>
+              <description>Status set/clear</description>
+              <bitOffset>16</bitOffset>
+              <bitWidth>4</bitWidth>
+              <access>write-only</access>
+            </field>
+            <field>
+              <name>SRST</name>
+              <description>Resets the RdStatus and WrStatus in PStatus register</description>
+              <bitOffset>20</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>write-only</access>
+            </field>
+          </fields>
+        </register>
+        <register>
+          <name>P3ADDR</name>
+          <description>The Port Address register is used to set the mapped address in the LPC/eSPI memory space. For normal Ports, this is a 16-bit location in IO space or a 32-bit offset into PCIe address mapped space. It is not used for OOB, Bus Mastering, or Flash; see the PnOMFLEN register for those. For Endpoints, it is the base of a dword (64 bits). For Index/Data, it is the base of a word (32 bits). For mailbox memory, the address is modulus the length of the mailbox (x2 for both directions). So, if a 16-byte mailbox (single), the offset must have bits 3:0 set to 0 (that is &amp;~0xF). If split directions, then normally bits 4:0 would be set to 0 (that is &amp;~0x1F).</description>
+          <alternateGroup>PADDR</alternateGroup>
+          <addressOffset>0x16C</addressOffset>
+          <size>32</size>
+          <access>read-write</access>
+          <resetValue>0</resetValue>
+          <resetMask>0xFFFFFFFF</resetMask>
+          <fields>
+            <field>
+              <name>OFF</name>
+              <description>Offset from 0 or the selected mapped base for matching memory or IO</description>
+              <bitOffset>0</bitOffset>
+              <bitWidth>16</bitWidth>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>BASE_or_ASZ</name>
+              <description>The meaning is dependent on type of port:</description>
+              <bitOffset>16</bitOffset>
+              <bitWidth>2</bitWidth>
+              <access>read-write</access>
+              <enumeratedValues>
+                <enumeratedValue>
+                  <name>OFFSET_FROM_0</name>
+                  <description>Is offset from 0 in host memory or IO space.</description>
+                  <value>0</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>USE_BASE0</name>
+                  <description>Uses BASE0 offset in host memory</description>
+                  <value>0x1</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>USE_BASE1</name>
+                  <description>Uses BASE1 offset in host memory</description>
+                  <value>0x2</value>
+                </enumeratedValue>
+              </enumeratedValues>
+            </field>
+            <field>
+              <name>IDXOFF</name>
+              <description>For index/register only: This is the byte offset of the Index relative to the data (before or after, based on IDX1ST)</description>
+              <bitOffset>24</bitOffset>
+              <bitWidth>4</bitWidth>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>IDX1ST</name>
+              <description>For index/data register only: Is 1 if index is lower address than data (e</description>
+              <bitOffset>28</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+            </field>
+          </fields>
+        </register>
+        <register>
+          <name>P3OMFLEN</name>
+          <description>The Port OOB, Mastering, Flash length is used for OOB to Host and Bus Mastering and Flash to or from Host. The PnADDR register is not used for either OOB or Bus Mastering. Instead, this register (in same location) is written with byte length message (including address for Mastering and Flash) along with direction. Writing to the SSTCL field of the PIRuleState will notify the Host to perform the transaction. Clearing it before the Host has started a transaction will cancel it, but only if it has not yet seen the Status.</description>
+          <alternateGroup>POMFLEN</alternateGroup>
+          <addressOffset>0x16C</addressOffset>
+          <size>32</size>
+          <access>read-write</access>
+          <resetValue>0</resetValue>
+          <resetMask>0xFFFFFFFF</resetMask>
+          <fields>
+            <field>
+              <name>LEN</name>
+              <description>Length in bytes, 0 relative, to Send for OOB, Send or Retrieve for Mastering, Read or Write for Flash, Erase (in blocks) for Flash, or read data for SAF read</description>
+              <bitOffset>0</bitOffset>
+              <bitWidth>7</bitWidth>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>TRANS</name>
+              <description>Transfer request as: Type Value Meaning OOB 0 To Host OOB 1, 2, 3 Not used Master 0 To Host 32 (Host reads w/32-bit address) Master 1 To Host 64 (Host reads w/64-bit address) Master 2 From Host 32 (Host writes w/32-bit address) Master 3 From Host 64 (Host writes w/64-bit address) MAF Flash 1 Read Flash (location in RAM) MAF Flash 2 Write Flash (location in RAM) MAF Flash 3 Erase Flash (sector in RAM) SAF 0 Completion fail SAF 1 Completion with data SAF 2 Completion with no data</description>
+              <bitOffset>12</bitOffset>
+              <bitWidth>2</bitWidth>
+              <access>read-write</access>
+            </field>
+          </fields>
+        </register>
+        <register>
+          <name>P3DataIn</name>
+          <description>no description available</description>
+          <addressOffset>0x170</addressOffset>
+          <size>32</size>
+          <access>read-only</access>
+          <resetValue>0</resetValue>
+          <resetMask>0xFFFFFFFF</resetMask>
+          <fields>
+            <field>
+              <name>DATA_LEN</name>
+              <description>Meaning is dependent on type of port: If endpoint or index/data: is data byte If Mailbox or Bus master or Flash: is count in last message, 0 relative If SAF, is count in last message including address (so, +4), 0 relative</description>
+              <bitOffset>0</bitOffset>
+              <bitWidth>8</bitWidth>
+              <access>read-only</access>
+            </field>
+            <field>
+              <name>DIR</name>
+              <description>Direction of last access: 0 = Read By Host 1 = Write By Host</description>
+              <bitOffset>8</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-only</access>
+            </field>
+            <field>
+              <name>IDX</name>
+              <description>Index of last access (ie</description>
+              <bitOffset>16</bitOffset>
+              <bitWidth>10</bitWidth>
+              <access>read-only</access>
+            </field>
+          </fields>
+        </register>
+        <register>
+          <name>P3DataOut</name>
+          <description>no description available</description>
+          <alternateGroup>PDataOut</alternateGroup>
+          <addressOffset>0x174</addressOffset>
+          <size>32</size>
+          <access>read-write</access>
+          <resetValue>0</resetValue>
+          <resetMask>0xFFFFFFFF</resetMask>
+          <fields>
+            <field>
+              <name>DATA</name>
+              <description>Data to send to Host. Application can tell when taken via the PnStatus register.</description>
+              <bitOffset>0</bitOffset>
+              <bitWidth>8</bitWidth>
+              <access>read-write</access>
+            </field>
+          </fields>
+        </register>
+        <register>
+          <name>P3RAMUse</name>
+          <description>no description available</description>
+          <alternateGroup>PRAMUse</alternateGroup>
+          <addressOffset>0x174</addressOffset>
+          <size>32</size>
+          <access>read-write</access>
+          <resetValue>0</resetValue>
+          <resetMask>0xFFFFFFFF</resetMask>
+          <fields>
+            <field>
+              <name>OFF</name>
+              <description>This is the word offset into the RAM</description>
+              <bitOffset>0</bitOffset>
+              <bitWidth>12</bitWidth>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>LEN</name>
+              <description>This is the length of the mailbox or mastering area as 4&lt;&lt;LEN per direction</description>
+              <bitOffset>16</bitOffset>
+              <bitWidth>3</bitWidth>
+              <access>read-write</access>
+            </field>
+          </fields>
+        </register>
+        <register>
+          <name>P4CFG</name>
+          <description>no description available</description>
+          <addressOffset>0x180</addressOffset>
+          <size>32</size>
+          <access>read-write</access>
+          <resetValue>0</resetValue>
+          <resetMask>0xFFFFFFFF</resetMask>
+          <fields>
+            <field>
+              <name>Type</name>
+              <description>The Type field selects how the port interacts with the Host over the eSPI or LPC bus</description>
+              <bitOffset>0</bitOffset>
+              <bitWidth>4</bitWidth>
+              <access>read-write</access>
+              <enumeratedValues>
+                <enumeratedValue>
+                  <name>UNCONFIGURED</name>
+                  <description>Unconfigured (reset condition)</description>
+                  <value>0</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>ACPI_END</name>
+                  <description>ACPI style Endpoint</description>
+                  <value>0x1</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>ACPI_INDEX</name>
+                  <description>ACPI style Index/Data</description>
+                  <value>0x2</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>BUS_M_MEM_S</name>
+                  <description>Bus Master Mem Single</description>
+                  <value>0x4</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>BUS_M_FLASH_S</name>
+                  <description>Bus Master Flash Single</description>
+                  <value>0x5</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>MAILBOX_SHARED</name>
+                  <description>Mailbox Shared</description>
+                  <value>0x8</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>MAILBOX_SINGLE</name>
+                  <description>Mailbox Single</description>
+                  <value>0x9</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>MAILBOX_SPLIT</name>
+                  <description>Mailbox Split</description>
+                  <value>0xA</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>MAILBOX_OOB_SPLIT</name>
+                  <description>Mailbox OOB Split</description>
+                  <value>0xB</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>MAILBOX_OEM</name>
+                  <description>Mailbox OEM</description>
+                  <value>0xC</value>
+                </enumeratedValue>
+              </enumeratedValues>
+            </field>
+            <field>
+              <name>Direction</name>
+              <description>Meaning depends on Type, but generally picks the direction of the port (Host writes, Host reads, or both)</description>
+              <bitOffset>5</bitOffset>
+              <bitWidth>2</bitWidth>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>MBIntAll</name>
+              <description>Mailbox: Map interrupt on Read 1st and Write 1st to every read/write (special will still control 0th and last location)</description>
+              <bitOffset>7</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>StallRd</name>
+              <description>Stall on any Read of Index/Data and Mailbox (only)</description>
+              <bitOffset>8</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>StallWr</name>
+              <description>Stall on any Write of Index/Data and Mailbox</description>
+              <bitOffset>9</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>ErrorIgn</name>
+              <description>If 1, the Host will get an error when trying to perform a read or write that is blocked by the Direction field</description>
+              <bitOffset>10</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+            </field>
+          </fields>
+        </register>
+        <register>
+          <name>P4STAT</name>
+          <description>no description available</description>
+          <addressOffset>0x184</addressOffset>
+          <size>32</size>
+          <access>read-write</access>
+          <resetValue>0</resetValue>
+          <resetMask>0xFFFFFFFF</resetMask>
+          <fields>
+            <field>
+              <name>RDSTAT</name>
+              <description>Status of Host Read data</description>
+              <bitOffset>0</bitOffset>
+              <bitWidth>2</bitWidth>
+              <access>read-only</access>
+            </field>
+            <field>
+              <name>WRSTAT</name>
+              <description>Status of Host Writes</description>
+              <bitOffset>2</bitOffset>
+              <bitWidth>2</bitWidth>
+              <access>read-only</access>
+            </field>
+            <field>
+              <name>INTERR</name>
+              <description>Interrupt was caused by error</description>
+              <bitOffset>8</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>INTRD</name>
+              <description>Interrupt was caused by Read or 1st Read or Bus master Started.</description>
+              <bitOffset>9</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>INTWR</name>
+              <description>Interrupt was caused by Write or 1st Write or Bus master Started.</description>
+              <bitOffset>10</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>INTSPC</name>
+              <description>Interrupt was caused by: Bit Endpoint Idx/Data Mbox BusMaster/Flash SPC0 CMD Idx Change Write 0 Completed SPC1 - - Read 0 - SPC2 - - Write Last - SPC3 - - Read Last -</description>
+              <bitOffset>11</bitOffset>
+              <bitWidth>4</bitWidth>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>ERR</name>
+              <description>Cause of INTERR: Bit Endpoint, Idx/Data Mbox BusMaster/Flash ERR0 Host Write Over Host Write or Read invalid for Access Failed From-Host (cannot tell on Memory To-Host, but can for Flash write)</description>
+              <bitOffset>16</bitOffset>
+              <bitWidth>4</bitWidth>
+              <access>read-only</access>
+            </field>
+          </fields>
+        </register>
+        <register>
+          <name>P4IRuleStat</name>
+          <description>The Port Set Interrupt-Rule and Set User Status register is used to set: The interrupt causes per port. That is, it is used to select what events from the port should cause an interrupt, if any. The user Status bits. The status byte returned to the host will be composed of both these user bits (which the application defines) and automatically generated status. The interrupt masks then are matched by sticky cause bits in PnSTAT (which can be read and then write-1 cleared). The sticky bits are set whether the interrupt is masked or not, but the masks cause an interrupt when the bits are set and the port is int enabled via INTENSET.</description>
+          <addressOffset>0x188</addressOffset>
+          <size>32</size>
+          <access>read-write</access>
+          <resetValue>0</resetValue>
+          <resetMask>0xFFFFFFFF</resetMask>
+          <fields>
+            <field>
+              <name>USTAT</name>
+              <description>User defined status bits. These are salted into the status register as specified in section 4.1 and 4.6.</description>
+              <bitOffset>0</bitOffset>
+              <bitWidth>5</bitWidth>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>INTERR</name>
+              <description>Interrupt if an error is detected (classes of error defined in section 2.14)</description>
+              <bitOffset>8</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>INTRD</name>
+              <description>Interrupt if Read or 1st Read or Bus master Started.</description>
+              <bitOffset>9</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>INTWR</name>
+              <description>Interrupt if Write or 1st Write or Bus master Finished.</description>
+              <bitOffset>10</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>INTSPC</name>
+              <description>Interrupt if: Bit Endpoint Idx/Data Mbox BusMaster/Flash SPC0 CMD Idx Change Write 0 Completed SPC1 - - Read 0 - SPC2 - - Write Last - SPC3 - - Read Last -</description>
+              <bitOffset>11</bitOffset>
+              <bitWidth>4</bitWidth>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>SSTCL</name>
+              <description>Status set/clear</description>
+              <bitOffset>16</bitOffset>
+              <bitWidth>4</bitWidth>
+              <access>write-only</access>
+            </field>
+            <field>
+              <name>SRST</name>
+              <description>Resets the RdStatus and WrStatus in PStatus register</description>
+              <bitOffset>20</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>write-only</access>
+            </field>
+          </fields>
+        </register>
+        <register>
+          <name>P4ADDR</name>
+          <description>The Port Address register is used to set the mapped address in the LPC/eSPI memory space. For normal Ports, this is a 16-bit location in IO space or a 32-bit offset into PCIe address mapped space. It is not used for OOB, Bus Mastering, or Flash; see the PnOMFLEN register for those. For Endpoints, it is the base of a dword (64 bits). For Index/Data, it is the base of a word (32 bits). For mailbox memory, the address is modulus the length of the mailbox (x2 for both directions). So, if a 16-byte mailbox (single), the offset must have bits 3:0 set to 0 (that is &amp;~0xF). If split directions, then normally bits 4:0 would be set to 0 (that is &amp;~0x1F).</description>
+          <alternateGroup>PADDR</alternateGroup>
+          <addressOffset>0x18C</addressOffset>
+          <size>32</size>
+          <access>read-write</access>
+          <resetValue>0</resetValue>
+          <resetMask>0xFFFFFFFF</resetMask>
+          <fields>
+            <field>
+              <name>OFF</name>
+              <description>Offset from 0 or the selected mapped base for matching memory or IO</description>
+              <bitOffset>0</bitOffset>
+              <bitWidth>16</bitWidth>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>BASE_or_ASZ</name>
+              <description>The meaning is dependent on type of port:</description>
+              <bitOffset>16</bitOffset>
+              <bitWidth>2</bitWidth>
+              <access>read-write</access>
+              <enumeratedValues>
+                <enumeratedValue>
+                  <name>OFFSET_FROM_0</name>
+                  <description>Is offset from 0 in host memory or IO space.</description>
+                  <value>0</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>USE_BASE0</name>
+                  <description>Uses BASE0 offset in host memory</description>
+                  <value>0x1</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>USE_BASE1</name>
+                  <description>Uses BASE1 offset in host memory</description>
+                  <value>0x2</value>
+                </enumeratedValue>
+              </enumeratedValues>
+            </field>
+            <field>
+              <name>IDXOFF</name>
+              <description>For index/register only: This is the byte offset of the Index relative to the data (before or after, based on IDX1ST)</description>
+              <bitOffset>24</bitOffset>
+              <bitWidth>4</bitWidth>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>IDX1ST</name>
+              <description>For index/data register only: Is 1 if index is lower address than data (e</description>
+              <bitOffset>28</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+            </field>
+          </fields>
+        </register>
+        <register>
+          <name>P4OMFLEN</name>
+          <description>The Port OOB, Mastering, Flash length is used for OOB to Host and Bus Mastering and Flash to or from Host. The PnADDR register is not used for either OOB or Bus Mastering. Instead, this register (in same location) is written with byte length message (including address for Mastering and Flash) along with direction. Writing to the SSTCL field of the PIRuleState will notify the Host to perform the transaction. Clearing it before the Host has started a transaction will cancel it, but only if it has not yet seen the Status.</description>
+          <alternateGroup>POMFLEN</alternateGroup>
+          <addressOffset>0x18C</addressOffset>
+          <size>32</size>
+          <access>read-write</access>
+          <resetValue>0</resetValue>
+          <resetMask>0xFFFFFFFF</resetMask>
+          <fields>
+            <field>
+              <name>LEN</name>
+              <description>Length in bytes, 0 relative, to Send for OOB, Send or Retrieve for Mastering, Read or Write for Flash, Erase (in blocks) for Flash, or read data for SAF read</description>
+              <bitOffset>0</bitOffset>
+              <bitWidth>7</bitWidth>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>TRANS</name>
+              <description>Transfer request as: Type Value Meaning OOB 0 To Host OOB 1, 2, 3 Not used Master 0 To Host 32 (Host reads w/32-bit address) Master 1 To Host 64 (Host reads w/64-bit address) Master 2 From Host 32 (Host writes w/32-bit address) Master 3 From Host 64 (Host writes w/64-bit address) MAF Flash 1 Read Flash (location in RAM) MAF Flash 2 Write Flash (location in RAM) MAF Flash 3 Erase Flash (sector in RAM) SAF 0 Completion fail SAF 1 Completion with data SAF 2 Completion with no data</description>
+              <bitOffset>12</bitOffset>
+              <bitWidth>2</bitWidth>
+              <access>read-write</access>
+            </field>
+          </fields>
+        </register>
+        <register>
+          <name>P4DataIn</name>
+          <description>no description available</description>
+          <addressOffset>0x190</addressOffset>
+          <size>32</size>
+          <access>read-only</access>
+          <resetValue>0</resetValue>
+          <resetMask>0xFFFFFFFF</resetMask>
+          <fields>
+            <field>
+              <name>DATA_LEN</name>
+              <description>Meaning is dependent on type of port: If endpoint or index/data: is data byte If Mailbox or Bus master or Flash: is count in last message, 0 relative If SAF, is count in last message including address (so, +4), 0 relative</description>
+              <bitOffset>0</bitOffset>
+              <bitWidth>8</bitWidth>
+              <access>read-only</access>
+            </field>
+            <field>
+              <name>DIR</name>
+              <description>Direction of last access: 0 = Read By Host 1 = Write By Host</description>
+              <bitOffset>8</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-only</access>
+            </field>
+            <field>
+              <name>IDX</name>
+              <description>Index of last access (ie</description>
+              <bitOffset>16</bitOffset>
+              <bitWidth>10</bitWidth>
+              <access>read-only</access>
+            </field>
+          </fields>
+        </register>
+        <register>
+          <name>P4DataOut</name>
+          <description>no description available</description>
+          <alternateGroup>PDataOut</alternateGroup>
+          <addressOffset>0x194</addressOffset>
+          <size>32</size>
+          <access>read-write</access>
+          <resetValue>0</resetValue>
+          <resetMask>0xFFFFFFFF</resetMask>
+          <fields>
+            <field>
+              <name>DATA</name>
+              <description>Data to send to Host. Application can tell when taken via the PnStatus register.</description>
+              <bitOffset>0</bitOffset>
+              <bitWidth>8</bitWidth>
+              <access>read-write</access>
+            </field>
+          </fields>
+        </register>
+        <register>
+          <name>P4RAMUse</name>
+          <description>no description available</description>
+          <alternateGroup>PRAMUse</alternateGroup>
+          <addressOffset>0x194</addressOffset>
+          <size>32</size>
+          <access>read-write</access>
+          <resetValue>0</resetValue>
+          <resetMask>0xFFFFFFFF</resetMask>
+          <fields>
+            <field>
+              <name>OFF</name>
+              <description>This is the word offset into the RAM</description>
+              <bitOffset>0</bitOffset>
+              <bitWidth>12</bitWidth>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>LEN</name>
+              <description>This is the length of the mailbox or mastering area as 4&lt;&lt;LEN per direction</description>
+              <bitOffset>16</bitOffset>
+              <bitWidth>3</bitWidth>
+              <access>read-write</access>
             </field>
           </fields>
         </register>
@@ -115566,7 +118890,7 @@ SPDX-License-Identifier: BSD-3-Clause
           <dim>8</dim>
           <dimIncrement>0x100</dimIncrement>
           <name>CHANNEL[%s]</name>
-          <description>Array of registers: OSR, DIVHFCLK, PREAC2FSCOEF, PREAC4FSCOEF, GAINSHIFT, FIFO_CTRL, FIFO_STATUS, FIFO_DATA, PHY_CTRL, DC_CTRL</description>
+          <description>Array of registers: DC_CTRL, DIVHFCLK, FIFO_CTRL, FIFO_DATA, FIFO_STATUS, GAINSHIFT, OSR, PHY_CTRL, PREAC2FSCOEF, PREAC4FSCOEF</description>
           <addressOffset>0</addressOffset>
           <register>
             <name>OSR</name>
@@ -116713,7 +120037,7 @@ SPDX-License-Identifier: BSD-3-Clause
       <baseAddress>0x40134000</baseAddress>
       <addressBlock>
         <offset>0</offset>
-        <size>0x400</size>
+        <size>0x42C</size>
         <usage>registers</usage>
       </addressBlock>
       <interrupt>
@@ -118648,6 +121972,79 @@ SPDX-License-Identifier: BSD-3-Clause
             </field>
           </fields>
         </register>
+        <register>
+          <name>HADDRSTART</name>
+          <description>HADDR REMAP START ADDR</description>
+          <addressOffset>0x420</addressOffset>
+          <size>32</size>
+          <access>read-write</access>
+          <resetValue>0</resetValue>
+          <resetMask>0xFFFFFFFF</resetMask>
+          <fields>
+            <field>
+              <name>REMAPEN</name>
+              <description>AHB Bus address remap function enable</description>
+              <bitOffset>0</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+              <enumeratedValues>
+                <enumeratedValue>
+                  <name>REMAPEN_0</name>
+                  <description>HADDR REMAP Disabled</description>
+                  <value>0</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>REMAPEN_1</name>
+                  <description>HADDR REMAP Enabled</description>
+                  <value>0x1</value>
+                </enumeratedValue>
+              </enumeratedValues>
+            </field>
+            <field>
+              <name>ADDRSTART</name>
+              <description>HADDR remap range's start addr, 4K aligned</description>
+              <bitOffset>12</bitOffset>
+              <bitWidth>20</bitWidth>
+              <access>read-write</access>
+            </field>
+          </fields>
+        </register>
+        <register>
+          <name>HADDREND</name>
+          <description>HADDR REMAP END ADDR</description>
+          <addressOffset>0x424</addressOffset>
+          <size>32</size>
+          <access>read-write</access>
+          <resetValue>0</resetValue>
+          <resetMask>0xFFFFFFFF</resetMask>
+          <fields>
+            <field>
+              <name>ENDSTART</name>
+              <description>HADDR remap range's end addr, 4K aligned</description>
+              <bitOffset>12</bitOffset>
+              <bitWidth>20</bitWidth>
+              <access>read-write</access>
+            </field>
+          </fields>
+        </register>
+        <register>
+          <name>HADDROFFSET</name>
+          <description>HADDR REMAP OFFSET</description>
+          <addressOffset>0x428</addressOffset>
+          <size>32</size>
+          <access>read-write</access>
+          <resetValue>0</resetValue>
+          <resetMask>0xFFFFFFFF</resetMask>
+          <fields>
+            <field>
+              <name>ADDROFFSET</name>
+              <description>HADDR offset field, remapped address will be ADDR[31:12]=ADDR_original[31:12]+ADDROFFSET</description>
+              <bitOffset>12</bitOffset>
+              <bitWidth>20</bitWidth>
+              <access>read-write</access>
+            </field>
+          </fields>
+        </register>
       </registers>
     </peripheral>
     <peripheral>
@@ -118833,7 +122230,7 @@ SPDX-License-Identifier: BSD-3-Clause
           <dim>4</dim>
           <dimIncrement>0x40</dimIncrement>
           <name>CTX[%s]</name>
-          <description>Array of registers: CTX_KEY%s, CTX_CTR%s, CTX_RGD_W0, CTX_RGD_W1</description>
+          <description>Array of registers: CTX_CTR%s, CTX_KEY%s, CTX_RGD_W0, CTX_RGD_W1</description>
           <addressOffset>0xD00</addressOffset>
           <register>
             <dim>4</dim>
@@ -144007,7 +147404,7 @@ SPDX-License-Identifier: BSD-3-Clause
           <dim>16</dim>
           <dimIncrement>0x8</dimIncrement>
           <name>EV[%s]</name>
-          <description>Array of registers: EV_STATE, EV_CTRL</description>
+          <description>Array of registers: EV_CTRL, EV_STATE</description>
           <addressOffset>0x300</addressOffset>
           <register>
             <name>EV_STATE</name>
@@ -144210,7 +147607,7 @@ SPDX-License-Identifier: BSD-3-Clause
           <dim>10</dim>
           <dimIncrement>0x8</dimIncrement>
           <name>OUT[%s]</name>
-          <description>Array of registers: OUT_SET, OUT_CLR</description>
+          <description>Array of registers: OUT_CLR, OUT_SET</description>
           <addressOffset>0x500</addressOffset>
           <register>
             <name>OUT_SET</name>
@@ -159082,7 +162479,7 @@ SPDX-License-Identifier: BSD-3-Clause
         <value>29</value>
       </interrupt>
       <interrupt>
-        <name>Reserved46</name>
+        <name>ESPI</name>
         <value>30</value>
       </interrupt>
       <interrupt>

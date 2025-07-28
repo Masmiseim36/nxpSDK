@@ -333,10 +333,12 @@ void flash_reset_config(void)
 hal_flash_status_t HAL_FlashInit(void)
 {
     FLEXSPI_Type *base;
+#if 0
     /* As cache depends on FlexSPI power and clock, cache must be initialized after FlexSPI power/clock is set */
     cache64_config_t cacheCfg;
     CACHE64_GetDefaultConfig(&cacheCfg);
     CACHE64_Init(CACHE64_POLSEL, &cacheCfg);
+#endif
     flexspi_config_t config;
     uint32_t key;
     uint32_t localLUT[CUSTOM_LUT_LENGTH];

@@ -244,6 +244,7 @@
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT685SFVKB_cm33</state>
+          <state>MIMXRT685S_cm33_SERIES</state>
           <state>BOOT_HEADER_ENABLE=1</state>
         </option>
         <option>
@@ -566,6 +567,7 @@
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT685SFVKB_cm33</state>
+          <state>MIMXRT685S_cm33_SERIES</state>
         </option>
         <option>
           <name>AList</name>
@@ -1378,6 +1380,7 @@
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT685SFVKB_cm33</state>
+          <state>MIMXRT685S_cm33_SERIES</state>
           <state>BOOT_HEADER_ENABLE=1</state>
         </option>
         <option>
@@ -1700,6 +1703,7 @@
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT685SFVKB_cm33</state>
+          <state>MIMXRT685S_cm33_SERIES</state>
         </option>
         <option>
           <name>AList</name>
@@ -2512,6 +2516,7 @@
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT685SFVKB_cm33</state>
+          <state>MIMXRT685S_cm33_SERIES</state>
           <state>BOOT_HEADER_ENABLE=1</state>
         </option>
         <option>
@@ -2834,6 +2839,7 @@
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT685SFVKB_cm33</state>
+          <state>MIMXRT685S_cm33_SERIES</state>
         </option>
         <option>
           <name>AList</name>
@@ -3646,6 +3652,7 @@
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT685SFVKB_cm33</state>
+          <state>MIMXRT685S_cm33_SERIES</state>
           <state>BOOT_HEADER_ENABLE=1</state>
         </option>
         <option>
@@ -3968,6 +3975,7 @@
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT685SFVKB_cm33</state>
+          <state>MIMXRT685S_cm33_SERIES</state>
         </option>
         <option>
           <name>AList</name>
@@ -4881,15 +4889,6 @@
         <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/GUIDRV_SSD1926_Private.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/GUIDRV_Template.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/GUIDRV_TemplateI.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/GUIDRV_TemplateI_Private.h</name>
-      </file>
-      <file>
         <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/GUITDRV_ADS7846.h</name>
       </file>
       <file>
@@ -4915,9 +4914,6 @@
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/GUI_GIF_Private.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/GUI_HOOK.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/GUI_JPEG_Private.h</name>
@@ -4971,10 +4967,10 @@
         <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/GUI_Version.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/GUI__BiDi2_Brackets_800.h</name>
+        <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/GUI__BiDi_Brackets.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/GUI__BiDi2_Types_800.h</name>
+        <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/GUI__BiDi_Types.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/Global.h</name>
@@ -5192,6 +5188,9 @@
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/WM_Intern.h</name>
       </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/WM_Layout.h</name>
+      </file>
     </group>
     <group>
       <name>emWin_Config</name>
@@ -5305,6 +5304,9 @@
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../devices/MIMXRT685S/periph/PERI_DMIC.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../devices/MIMXRT685S/periph/PERI_ESPI.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../devices/MIMXRT685S/periph/PERI_FLEXCOMM.h</name>

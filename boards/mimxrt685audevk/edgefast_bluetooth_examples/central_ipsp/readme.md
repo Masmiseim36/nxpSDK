@@ -2,6 +2,7 @@
 
 ## Overview
 Application demonstrating very basic BLE Central role functionality by scanning for other BLE devices and establishing a connection to the first one with a strong enough signal.
+
 Except that this application specifically looks for IPSP Service and communicates between the devices that support IPSP is done using IPv6 packets over the Bluetooth Low Energy transport once connected.
 
 ## Prepare the Demo
@@ -41,3 +42,4 @@ Sending message...
 - [MIMXRT685-AUD-EVK](../../_boards/mimxrt685audevk/edgefast_bluetooth_examples/central_ipsp/example_board_readme.md)
 - [MIMXRT700-EVK](../../_boards/mimxrt700evk/edgefast_bluetooth_examples/central_ipsp/example_board_readme.md)
 - [RD-RW612-BGA](../../_boards/rdrw612bga/edgefast_bluetooth_examples/central_ipsp/example_board_readme.md)
+- [FRDM-MCXN947](../../_boards/frdmmcxn947/edgefast_bluetooth_examples/central_ipsp/example_board_readme.md)

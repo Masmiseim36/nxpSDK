@@ -51,6 +51,7 @@
     <definition extID="middleware.freertos-kernel.MIMXRT685S"/>
     <definition extID="middleware.freertos-kernel.heap_4.MIMXRT685S"/>
     <definition extID="middleware.freertos-kernel.cm33_non_trustzone.MIMXRT685S"/>
+    <definition extID="middleware.freertos-kernel.extension.MIMXRT685S"/>
     <definition extID="middleware.freertos-kernel.config.MIMXRT685S"/>
     <definition extID="iar"/>
     <definition extID="mdk"/>
@@ -60,7 +61,7 @@
     <definition extID="com.crt.advproject.config.exe.debug"/>
     <definition extID="com.crt.advproject.config.exe.release"/>
   </externalDefinitions>
-  <example id="mimxrt685audevk_dsp_xaf_record_cm33" name="dsp_xaf_record_cm33" device_core="cm33_MIMXRT685S" dependency="platform.drivers.flash_config.mimxrt685audevk.MIMXRT685S CMSIS_Include_core_cm.MIMXRT685S device.MIMXRT685S_CMSIS.MIMXRT685S device.MIMXRT685S_system.MIMXRT685S device.MIMXRT685S_startup.MIMXRT685S platform.drivers.clock.MIMXRT685S platform.drivers.dsp.MIMXRT685S platform.drivers.i2s_bridge.MIMXRT685S platform.drivers.inputmux_connections.MIMXRT685S platform.drivers.power.MIMXRT685S platform.drivers.reset.MIMXRT685S platform.drivers.cache_cache64.MIMXRT685S platform.drivers.common.MIMXRT685S platform.drivers.flexcomm.MIMXRT685S platform.drivers.flexcomm_usart.MIMXRT685S platform.drivers.flexcomm_i2c.MIMXRT685S platform.drivers.flexspi.MIMXRT685S platform.drivers.inputmux.MIMXRT685S platform.drivers.lpc_gpio.MIMXRT685S platform.drivers.lpc_iopctl.MIMXRT685S platform.drivers.mu.MIMXRT685S platform.drivers.sema42.MIMXRT685S platform.utilities.assert.MIMXRT685S platform.utilities.misc_utilities.MIMXRT685S component.lists.MIMXRT685S utility.str.MIMXRT685S utility.debug_console.MIMXRT685S utility.shell.MIMXRT685S component.serial_manager.MIMXRT685S component.serial_manager_uart.MIMXRT685S component.codec_i2c.MIMXRT685S driver.codec.MIMXRT685S component.codec_adapters.MIMXRT685S component.cs42448_adapter.MIMXRT685S driver.cs42448.MIMXRT685S component.rt_gpio_adapter.MIMXRT685S component.i2c_adapter_interface.MIMXRT685S component.flexcomm_i2c_adapter.MIMXRT685S component.usart_adapter.MIMXRT685S driver.pca9420.MIMXRT685S middleware.multicore.rpmsg-lite.MIMXRT685S middleware.multicore.rpmsg-lite.queue.MIMXRT685S middleware.multicore.rpmsg-lite.ns.MIMXRT685S middleware.multicore.rpmsg-lite.freertos.MIMXRT685S middleware.multicore.rpmsg-lite.evkmimxrt685.MIMXRT685S middleware.audio_voice.components.vit.hifi4_models.MIMXRT685S middleware.freertos-kernel.MIMXRT685S middleware.freertos-kernel.heap_4.MIMXRT685S middleware.freertos-kernel.cm33_non_trustzone.MIMXRT685S middleware.freertos-kernel.config.MIMXRT685S" category="dsp_examples">
+  <example id="mimxrt685audevk_dsp_xaf_record_cm33" name="dsp_xaf_record_cm33" device_core="cm33_MIMXRT685S" dependency="platform.drivers.flash_config.mimxrt685audevk.MIMXRT685S CMSIS_Include_core_cm.MIMXRT685S device.MIMXRT685S_CMSIS.MIMXRT685S device.MIMXRT685S_system.MIMXRT685S device.MIMXRT685S_startup.MIMXRT685S platform.drivers.clock.MIMXRT685S platform.drivers.dsp.MIMXRT685S platform.drivers.i2s_bridge.MIMXRT685S platform.drivers.inputmux_connections.MIMXRT685S platform.drivers.power.MIMXRT685S platform.drivers.reset.MIMXRT685S platform.drivers.cache_cache64.MIMXRT685S platform.drivers.common.MIMXRT685S platform.drivers.flexcomm.MIMXRT685S platform.drivers.flexcomm_usart.MIMXRT685S platform.drivers.flexcomm_i2c.MIMXRT685S platform.drivers.flexspi.MIMXRT685S platform.drivers.inputmux.MIMXRT685S platform.drivers.lpc_gpio.MIMXRT685S platform.drivers.lpc_iopctl.MIMXRT685S platform.drivers.mu.MIMXRT685S platform.drivers.sema42.MIMXRT685S platform.utilities.assert.MIMXRT685S platform.utilities.misc_utilities.MIMXRT685S component.lists.MIMXRT685S utility.str.MIMXRT685S utility.debug_console.MIMXRT685S utility.shell.MIMXRT685S component.serial_manager.MIMXRT685S component.serial_manager_uart.MIMXRT685S component.codec_i2c.MIMXRT685S driver.codec.MIMXRT685S component.codec_adapters.MIMXRT685S component.cs42448_adapter.MIMXRT685S driver.cs42448.MIMXRT685S component.rt_gpio_adapter.MIMXRT685S component.i2c_adapter_interface.MIMXRT685S component.flexcomm_i2c_adapter.MIMXRT685S component.usart_adapter.MIMXRT685S driver.pca9420.MIMXRT685S middleware.multicore.rpmsg-lite.MIMXRT685S middleware.multicore.rpmsg-lite.queue.MIMXRT685S middleware.multicore.rpmsg-lite.ns.MIMXRT685S middleware.multicore.rpmsg-lite.freertos.MIMXRT685S middleware.multicore.rpmsg-lite.evkmimxrt685.MIMXRT685S middleware.audio_voice.components.vit.hifi4_models.MIMXRT685S middleware.freertos-kernel.MIMXRT685S middleware.freertos-kernel.heap_4.MIMXRT685S middleware.freertos-kernel.cm33_non_trustzone.MIMXRT685S middleware.freertos-kernel.extension.MIMXRT685S middleware.freertos-kernel.config.MIMXRT685S" category="dsp_examples">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -82,17 +83,32 @@
           <value>XA_CAPTURER=1</value>
           <value>VIT_MODELS_ALL=1</value>
           <value>DSP_IMAGE_COPY_TO_RAM=1</value>
+          <value>__USE_SHMEM</value>
           <value>DSP_NCACHE</value>
           <value>XA_VOICE_SEEKER=1</value>
           <value>BOARD_DMIC_NUM=3</value>
           <value>BOARD_PCM_WIDTH=16</value>
           <value>SDK_DEBUGCONSOLE=1</value>
           <value>MCUX_META_BUILD</value>
+          <value>MIMXRT685S_cm33_SERIES</value>
           <value>SERIAL_PORT_TYPE_UART=1</value>
           <value>SDK_I2C_BASED_COMPONENT_USED=1</value>
           <value>CODEC_MULTI_ADAPTERS=1</value>
           <value>CODEC_CS42448_ENABLE</value>
           <value>SDK_OS_FREE_RTOS</value>
+        </option>
+        <option id="com.crt.advproject.link.fpu" type="enum">
+          <value>com.crt.advproject.link.fpu.fpv5sp.hard</value>
+        </option>
+        <option id="gnu.c.link.option.nostdlibs" type="boolean">
+          <value>true</value>
+        </option>
+        <option id="gnu.c.link.option.other" type="stringList">
+          <value>--defsym=__use_shmem__=1</value>
+          <value>-no-warn-rwx-segments</value>
+        </option>
+        <option id="gnu.c.link.option.group" type="boolean">
+          <value>true</value>
         </option>
         <option id="com.crt.advproject.gas.fpu" type="enum">
           <value>com.crt.advproject.gas.fpu.fpv5sp.hard</value>
@@ -114,18 +130,6 @@
         </option>
         <option id="gnu.c.compiler.option.warnings.toerrors" type="boolean">
           <value>false</value>
-        </option>
-        <option id="com.crt.advproject.link.fpu" type="enum">
-          <value>com.crt.advproject.link.fpu.fpv5sp.hard</value>
-        </option>
-        <option id="gnu.c.link.option.nostdlibs" type="boolean">
-          <value>true</value>
-        </option>
-        <option id="gnu.c.link.option.other" type="stringList">
-          <value>-no-warn-rwx-segments</value>
-        </option>
-        <option id="gnu.c.link.option.group" type="boolean">
-          <value>true</value>
         </option>
       </toolchainSetting>
     </toolchainSettings>
@@ -265,6 +269,9 @@
     </source>
     <source path="." project_relative_path="doc" type="doc">
       <files mask="example_board_readme.md"/>
+    </source>
+    <source path="." project_relative_path="doc" type="doc">
+      <files mask="examples_shared_readme.md"/>
     </source>
   </example>
 </ksdk:examples>

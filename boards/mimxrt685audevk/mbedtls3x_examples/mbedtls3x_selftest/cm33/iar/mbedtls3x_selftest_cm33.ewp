@@ -244,6 +244,7 @@
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT685SFVKB_cm33</state>
+          <state>MIMXRT685S_cm33_SERIES</state>
           <state>BOOT_HEADER_ENABLE=1</state>
           <state>MBEDTLS_CONFIG_FILE="mcux_mbedtls_config.h"</state>
         </option>
@@ -376,11 +377,11 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/include</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/library</state>
           <state>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port</state>
           <state>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port/hw_init</state>
           <state>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port/rng</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/include</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/library</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -566,6 +567,7 @@
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT685SFVKB_cm33</state>
+          <state>MIMXRT685S_cm33_SERIES</state>
         </option>
         <option>
           <name>AList</name>
@@ -667,11 +669,11 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/include</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/library</state>
           <state>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port</state>
           <state>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port/hw_init</state>
           <state>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port/rng</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/include</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/library</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -1380,6 +1382,7 @@
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT685SFVKB_cm33</state>
+          <state>MIMXRT685S_cm33_SERIES</state>
           <state>BOOT_HEADER_ENABLE=1</state>
           <state>MBEDTLS_CONFIG_FILE="mcux_mbedtls_config.h"</state>
         </option>
@@ -1512,11 +1515,11 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/include</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/library</state>
           <state>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port</state>
           <state>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port/hw_init</state>
           <state>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port/rng</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/include</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/library</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1702,6 +1705,7 @@
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT685SFVKB_cm33</state>
+          <state>MIMXRT685S_cm33_SERIES</state>
         </option>
         <option>
           <name>AList</name>
@@ -1803,11 +1807,11 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/include</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/library</state>
           <state>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port</state>
           <state>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port/hw_init</state>
           <state>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port/rng</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/include</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/library</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -2516,6 +2520,7 @@
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT685SFVKB_cm33</state>
+          <state>MIMXRT685S_cm33_SERIES</state>
           <state>BOOT_HEADER_ENABLE=1</state>
           <state>MBEDTLS_CONFIG_FILE="mcux_mbedtls_config.h"</state>
         </option>
@@ -2648,11 +2653,11 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/include</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/library</state>
           <state>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port</state>
           <state>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port/hw_init</state>
           <state>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port/rng</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/include</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/library</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -2838,6 +2843,7 @@
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT685SFVKB_cm33</state>
+          <state>MIMXRT685S_cm33_SERIES</state>
         </option>
         <option>
           <name>AList</name>
@@ -2939,11 +2945,11 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/include</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/library</state>
           <state>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port</state>
           <state>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port/hw_init</state>
           <state>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port/rng</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/include</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/library</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -3652,6 +3658,7 @@
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT685SFVKB_cm33</state>
+          <state>MIMXRT685S_cm33_SERIES</state>
           <state>BOOT_HEADER_ENABLE=1</state>
           <state>MBEDTLS_CONFIG_FILE="mcux_mbedtls_config.h"</state>
         </option>
@@ -3784,11 +3791,11 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/include</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/library</state>
           <state>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port</state>
           <state>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port/hw_init</state>
           <state>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port/rng</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/include</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/library</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -3974,6 +3981,7 @@
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT685SFVKB_cm33</state>
+          <state>MIMXRT685S_cm33_SERIES</state>
         </option>
         <option>
           <name>AList</name>
@@ -4075,11 +4083,11 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/include</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/library</state>
           <state>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port</state>
           <state>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port/hw_init</state>
           <state>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port/rng</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/include</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/library</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -4667,6 +4675,9 @@
         <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/periph/PERI_DMIC.h</name>
       </file>
       <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/periph/PERI_ESPI.h</name>
+      </file>
+      <file>
         <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/periph/PERI_FLEXCOMM.h</name>
       </file>
       <file>
@@ -4920,39 +4931,6 @@
   <group>
     <name>mbedtls3x</name>
     <group>
-      <name>port</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_config.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_accelerator_config.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_config.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_accelerator_config.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port/mcux_psa_defines.h</name>
-      </file>
-      <group>
-        <name>hw_init</name>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port/hw_init/hw_init.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port/hw_init/hw_init.h</name>
-        </file>
-      </group>
-      <group>
-        <name>rng</name>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port/rng/psa_mcux_entropy.c</name>
-        </file>
-      </group>
-    </group>
-    <group>
       <name>include</name>
       <group>
         <name>mbedtls</name>
@@ -5191,6 +5169,9 @@
           <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/include/psa/crypto_adjust_auto_enabled.h</name>
         </file>
         <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/include/psa/crypto_adjust_config_dependencies.h</name>
+        </file>
+        <file>
           <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/include/psa/crypto_adjust_config_key_pair_types.h</name>
         </file>
         <file>
@@ -5292,6 +5273,12 @@
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/library/bignum_core.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/library/bignum_core_invasive.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/library/bignum_internal.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/library/bignum_mod.c</name>
@@ -5750,6 +5737,39 @@
         <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/library/ssl_tls13_server.c</name>
       </file>
     </group>
+    <group>
+      <name>port</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_config.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_accelerator_config.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_config.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_accelerator_config.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port/mcux_psa_defines.h</name>
+      </file>
+      <group>
+        <name>hw_init</name>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port/hw_init/hw_init.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port/hw_init/hw_init.h</name>
+        </file>
+      </group>
+      <group>
+        <name>rng</name>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port/rng/psa_mcux_entropy.c</name>
+        </file>
+      </group>
+    </group>
   </group>
   <group>
     <name>doc</name>
@@ -5758,6 +5778,9 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../example_board_readme.md</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../examples_shared_readme.md</name>
     </file>
   </group>
 </project>

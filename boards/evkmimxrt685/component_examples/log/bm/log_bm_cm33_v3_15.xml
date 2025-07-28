@@ -31,12 +31,11 @@
     <definition extID="utility.shell.MIMXRT685S"/>
     <definition extID="component.serial_manager.MIMXRT685S"/>
     <definition extID="component.serial_manager_uart.MIMXRT685S"/>
-    <definition extID="component.panic.MIMXRT685S"/>
     <definition extID="component.usart_adapter.MIMXRT685S"/>
     <definition extID="component.osa_template_config.MIMXRT685S"/>
-    <definition extID="component.osa_interface.MIMXRT685S"/>
     <definition extID="component.osa.MIMXRT685S"/>
     <definition extID="component.osa_bm.MIMXRT685S"/>
+    <definition extID="component.panic.MIMXRT685S"/>
     <definition extID="iar"/>
     <definition extID="mdk"/>
     <definition extID="armgcc"/>
@@ -45,7 +44,7 @@
     <definition extID="com.crt.advproject.config.exe.debug"/>
     <definition extID="com.crt.advproject.config.exe.release"/>
   </externalDefinitions>
-  <example id="evkmimxrt685_log_bm_cm33" name="log_bm_cm33" device_core="cm33_MIMXRT685S" dependency="platform.drivers.flash_config.evkmimxrt685.MIMXRT685S CMSIS_Include_core_cm.MIMXRT685S device.MIMXRT685S_CMSIS.MIMXRT685S device.MIMXRT685S_system.MIMXRT685S device.MIMXRT685S_startup.MIMXRT685S platform.drivers.clock.MIMXRT685S platform.drivers.dsp.MIMXRT685S platform.drivers.i2s_bridge.MIMXRT685S platform.drivers.inputmux_connections.MIMXRT685S platform.drivers.power.MIMXRT685S platform.drivers.reset.MIMXRT685S platform.drivers.cache_cache64.MIMXRT685S platform.drivers.common.MIMXRT685S platform.drivers.flexcomm.MIMXRT685S platform.drivers.flexcomm_usart.MIMXRT685S platform.drivers.flexspi.MIMXRT685S platform.drivers.lpc_gpio.MIMXRT685S platform.drivers.lpc_iopctl.MIMXRT685S platform.utilities.assert.MIMXRT685S platform.utilities.misc_utilities.MIMXRT685S component.lists.MIMXRT685S utility.str.MIMXRT685S utility.debug_console.MIMXRT685S component.log.MIMXRT685S component.log.backend.debug_console.MIMXRT685S component.log.backend.ringbuffer.MIMXRT685S utility.shell.MIMXRT685S component.serial_manager.MIMXRT685S component.serial_manager_uart.MIMXRT685S component.panic.MIMXRT685S component.usart_adapter.MIMXRT685S component.osa_template_config.MIMXRT685S component.osa_interface.MIMXRT685S component.osa.MIMXRT685S component.osa_bm.MIMXRT685S" category="component_examples">
+  <example id="evkmimxrt685_log_bm_cm33" name="log_bm_cm33" device_core="cm33_MIMXRT685S" dependency="platform.drivers.flash_config.evkmimxrt685.MIMXRT685S CMSIS_Include_core_cm.MIMXRT685S device.MIMXRT685S_CMSIS.MIMXRT685S device.MIMXRT685S_system.MIMXRT685S device.MIMXRT685S_startup.MIMXRT685S platform.drivers.clock.MIMXRT685S platform.drivers.dsp.MIMXRT685S platform.drivers.i2s_bridge.MIMXRT685S platform.drivers.inputmux_connections.MIMXRT685S platform.drivers.power.MIMXRT685S platform.drivers.reset.MIMXRT685S platform.drivers.cache_cache64.MIMXRT685S platform.drivers.common.MIMXRT685S platform.drivers.flexcomm.MIMXRT685S platform.drivers.flexcomm_usart.MIMXRT685S platform.drivers.flexspi.MIMXRT685S platform.drivers.lpc_gpio.MIMXRT685S platform.drivers.lpc_iopctl.MIMXRT685S platform.utilities.assert.MIMXRT685S platform.utilities.misc_utilities.MIMXRT685S component.lists.MIMXRT685S utility.str.MIMXRT685S utility.debug_console.MIMXRT685S component.log.MIMXRT685S component.log.backend.debug_console.MIMXRT685S component.log.backend.ringbuffer.MIMXRT685S utility.shell.MIMXRT685S component.serial_manager.MIMXRT685S component.serial_manager_uart.MIMXRT685S component.usart_adapter.MIMXRT685S component.osa_template_config.MIMXRT685S component.osa.MIMXRT685S component.osa_bm.MIMXRT685S component.panic.MIMXRT685S" category="component_examples">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -63,6 +62,7 @@
           <value>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</value>
           <value>SDK_DEBUGCONSOLE=1</value>
           <value>MCUX_META_BUILD</value>
+          <value>MIMXRT685S_cm33_SERIES</value>
           <value>SERIAL_PORT_TYPE_UART=1</value>
           <value>USE_RTOS=0</value>
         </option>
@@ -136,12 +136,8 @@
       <files mask="CMakeLists.txt"/>
       <files mask="flags.cmake"/>
       <files mask="config.cmake"/>
-      <files mask="build_debug.bat"/>
-      <files mask="build_debug.sh"/>
       <files mask="build_flash_debug.bat"/>
       <files mask="build_flash_debug.sh"/>
-      <files mask="build_release.bat"/>
-      <files mask="build_release.sh"/>
       <files mask="build_flash_release.bat"/>
       <files mask="build_flash_release.sh"/>
     </source>
@@ -150,6 +146,9 @@
     </source>
     <source path="mdk" project_relative_path="source" type="configuration" toolchain="mdk">
       <files mask="evkmimxrt685_flash.ini"/>
+    </source>
+    <source path="." project_relative_path="source" type="other">
+      <files mask="log.mex"/>
     </source>
     <source path="." project_relative_path="source" type="src">
       <files mask="log_main.c"/>
@@ -163,15 +162,12 @@
       <files mask="clock_config.c"/>
     </source>
     <source path="iar" project_relative_path="source" type="linker" toolchain="iar">
-      <files mask="MIMXRT685Sxxxx_cm33_ram.icf"/>
       <files mask="MIMXRT685Sxxxx_cm33_flash.icf"/>
     </source>
     <source path="armgcc" project_relative_path="source" type="linker" toolchain="armgcc">
-      <files mask="MIMXRT685Sxxxx_cm33_ram.ld"/>
       <files mask="MIMXRT685Sxxxx_cm33_flash.ld"/>
     </source>
     <source path="mdk" project_relative_path="source" type="linker" toolchain="mdk">
-      <files mask="MIMXRT685Sxxxx_cm33_ram.scf"/>
       <files mask="MIMXRT685Sxxxx_cm33_flash.scf"/>
     </source>
     <source path="." project_relative_path="source" type="src">
@@ -196,6 +192,9 @@
     </source>
     <source path="." project_relative_path="source" type="doc">
       <files mask="example_board_readme.md"/>
+    </source>
+    <source path="." project_relative_path="source" type="doc">
+      <files mask="examples_shared_readme.md"/>
     </source>
   </example>
 </ksdk:examples>

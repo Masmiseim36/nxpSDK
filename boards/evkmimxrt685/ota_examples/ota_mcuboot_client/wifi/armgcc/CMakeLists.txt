@@ -14,9 +14,6 @@ if(CMAKE_SCRIPT_MODE_FILE)
 endif()
 
 
-set(CMAKE_STATIC_LIBRARY_PREFIX)
-set(CMAKE_STATIC_LIBRARY_SUFFIX)
-
 set(CMAKE_EXECUTABLE_LIBRARY_PREFIX)
 set(CMAKE_EXECUTABLE_LIBRARY_SUFFIX)
 
@@ -60,7 +57,6 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../init_wifi.c"
 "${ProjDirPath}/../lwipopts.h"
 "${ProjDirPath}/../wifi_config.h"
-"${ProjDirPath}/../app_config.h"
 "${ProjDirPath}/../flash_partitioning.h"
 "${ProjDirPath}/../flash_partitioning.c"
 "${ProjDirPath}/../sblconfig.h"

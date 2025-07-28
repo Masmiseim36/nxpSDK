@@ -526,6 +526,7 @@ add_executable(dsp_xaf_record_dsp.elf
 "${ProjDirPath}/../../../../../../devices/MIMXRT685S/periph/PERI_CTIMER.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT685S/periph/PERI_DMA.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT685S/periph/PERI_DMIC.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT685S/periph/PERI_ESPI.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT685S/periph/PERI_FLEXCOMM.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT685S/periph/PERI_FLEXSPI.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT685S/periph/PERI_FREQME.h"

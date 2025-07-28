@@ -244,6 +244,7 @@
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT685SFVKB_cm33</state>
+          <state>MIMXRT685S_cm33_SERIES</state>
           <state>BOOT_HEADER_ENABLE=1</state>
           <state>LV_CONF_INCLUDE_SIMPLE=1</state>
           <state>SDK_OS_FREE_RTOS</state>
@@ -578,6 +579,7 @@
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT685SFVKB_cm33</state>
+          <state>MIMXRT685S_cm33_SERIES</state>
         </option>
         <option>
           <name>AList</name>
@@ -1401,6 +1403,7 @@
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT685SFVKB_cm33</state>
+          <state>MIMXRT685S_cm33_SERIES</state>
           <state>BOOT_HEADER_ENABLE=1</state>
           <state>LV_CONF_INCLUDE_SIMPLE=1</state>
           <state>SDK_OS_FREE_RTOS</state>
@@ -1735,6 +1738,7 @@
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT685SFVKB_cm33</state>
+          <state>MIMXRT685S_cm33_SERIES</state>
         </option>
         <option>
           <name>AList</name>
@@ -2558,6 +2562,7 @@
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT685SFVKB_cm33</state>
+          <state>MIMXRT685S_cm33_SERIES</state>
           <state>BOOT_HEADER_ENABLE=1</state>
           <state>LV_CONF_INCLUDE_SIMPLE=1</state>
           <state>SDK_OS_FREE_RTOS</state>
@@ -2892,6 +2897,7 @@
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT685SFVKB_cm33</state>
+          <state>MIMXRT685S_cm33_SERIES</state>
         </option>
         <option>
           <name>AList</name>
@@ -3715,6 +3721,7 @@
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT685SFVKB_cm33</state>
+          <state>MIMXRT685S_cm33_SERIES</state>
           <state>BOOT_HEADER_ENABLE=1</state>
           <state>LV_CONF_INCLUDE_SIMPLE=1</state>
           <state>SDK_OS_FREE_RTOS</state>
@@ -4049,6 +4056,7 @@
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT685SFVKB_cm33</state>
+          <state>MIMXRT685S_cm33_SERIES</state>
         </option>
         <option>
           <name>AList</name>
@@ -4647,6 +4655,9 @@
       <name>$PROJ_DIR$/../lvgl_freertos.h</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../FreeRTOSConfig_frag.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../pin_mux.c</name>
     </file>
     <file>
@@ -4800,6 +4811,9 @@
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../devices/MIMXRT685S/periph/PERI_DMIC.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../devices/MIMXRT685S/periph/PERI_ESPI.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../devices/MIMXRT685S/periph/PERI_FLEXCOMM.h</name>
@@ -6655,6 +6669,9 @@
           <name>$PROJ_DIR$/../../../../../middleware/lvgl/src/osal/lv_freertos.c</name>
         </file>
         <file>
+          <name>$PROJ_DIR$/../../../../../middleware/lvgl/src/osal/lv_linux.c</name>
+        </file>
+        <file>
           <name>$PROJ_DIR$/../../../../../middleware/lvgl/src/osal/lv_mqx.c</name>
         </file>
         <file>
@@ -6677,6 +6694,9 @@
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../middleware/lvgl/src/osal/lv_freertos.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/lvgl/src/osal/lv_linux_private.h</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../middleware/lvgl/src/osal/lv_mqx.h</name>
@@ -7557,6 +7577,9 @@
         <file>
           <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/timers.h</name>
         </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/freertos_tasks_c_additions.h</name>
+        </file>
       </group>
       <group>
         <name>portable</name>
@@ -7615,6 +7638,9 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../lvgl_examples_readme.md</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../examples_shared_readme.md</name>
     </file>
   </group>
 </project>

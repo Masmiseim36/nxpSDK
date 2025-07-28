@@ -19,8 +19,13 @@ The client connects to a HTTPS server and requests an OTA binary for download an
     - use of DHCP/static IP
     - Default HTTPS server IP and port
     - Default OTA image file path on the server
-3. Before building the example application select Wi-Fi module macro in the `app_config.h`. (see `#define WIFI_<SoC Name>BOARD<Module Name>`).
-   For more information about Wi-Fi module connection see coresponding readme in WiFi examples directory.
+3. Before building the example application select Wi-Fi module:
+    - build from repository - select Wi-Fi module in Kconfig GUI
+    - build from zip package - change project macro related to Wi-Fi module `WIFI_<SoC Name>_BOARD_<Module Name>`, macro can be found in components\wifi_bt_module\incl\wifi_bt_module_config.h
+
+   For more information about Wi-Fi module connection see:
+    - readme_modules.md (select supported board)
+    - [Getting started guide](https://www.nxp.com/document/guide/getting-started-with-nxp-wi-fi-modules-using-i-mx-rt-platform:GS-WIFI-MODULES-IMXRT-PLATFORM)
 4. Connect a USB cable between the PC host and the OpenSDA (or USB to Serial) USB port on the target board.
 5. Open a serial terminal on PC for connected board with these settings:
     - 115200 baud rate

@@ -52,7 +52,7 @@ BT_UART_CTS_HOST |  J8(pin 4)  	   |   J27(pin 5)   |    USART4_RTS      | FC4_R
 ------------------------------------------------------------------------------------------------
 The pin connect for PCM interface as the following table,
 ------------------------------------------------------------------------------------
-PIN NAME | AW-AM457-USD |   I.MXRT685    | PIN NAME OF RT685 | GPIO NAME OF RT685
+PIN NAME | uSD-M.2 Adapter |   I.MXRT685    | PIN NAME OF RT685 | GPIO NAME OF RT685
 ------------------------------------------------------------------------------------
 PCM_IN   |  J5(pin 1)   |   J47(pin 7)   |      I2S2_TXD     | FC2_RXD_SDA_MOSI_DATA
 PCM_OUT  |  J5(pin 3)   |   J28(pin 4)   |      I2S5_RXD     | FC5_RXD_SDA_MOSI_DATA

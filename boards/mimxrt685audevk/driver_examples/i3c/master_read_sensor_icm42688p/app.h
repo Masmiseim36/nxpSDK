@@ -1,6 +1,5 @@
 /*
- * Copyright 2021 NXP
- * All rights reserved.
+ * Copyright 2021, 2025 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -13,7 +12,6 @@
  ******************************************************************************/
 /*${macro:start}*/
 #define EXAMPLE_MASTER             I3C
-#define EXAMPLE_I2C_BAUDRATE       400000
 #define I3C_MASTER_CLOCK_FREQUENCY CLOCK_GetI3cClkFreq()
 #define SENSOR_ADDR                0x09U
 #define STATIC_I2C_ADDR            0x69U

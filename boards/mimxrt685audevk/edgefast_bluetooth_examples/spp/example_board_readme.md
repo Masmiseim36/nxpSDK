@@ -38,6 +38,8 @@ BT_UART_RTS_HOST |  J45(pin 36)  	   |   U18B(J15)   |    USART5_RTS      | FC5_
 BT_UART_CTS_HOST |  J45(pin 34)  	   |   U18B(J17)   |    USART5_CTS      | FC5_CTS_SDA_SSEL0
 ------------------------------------------------------------------------------------------------
 
+The hardware should be reworked according to the Hardware Rework Guide for MIMXRT685-AUD-EVK and Murata M.2 Module in document Hardware Rework Guide for EdgeFast BT PAL.
+
 Note:
 After downloaded binary into qspiflash and boot from qspiflash directly, 
 please reset the board by pressing SW3 or power off and on the board to run the application.

@@ -11,6 +11,7 @@ slave is correct.
 ## Supported Boards
 - [EVK-MIMXRT595](../../../../_boards/evkmimxrt595/driver_examples/i2c/interrupt_b2b_transfer/slave/example_board_readme.md)
 - [EVK-MIMXRT685](../../../../_boards/evkmimxrt685/driver_examples/i2c/interrupt_b2b_transfer/slave/example_board_readme.md)
+- [FRDM-MCXW23](../../../../_boards/frdmmcxw23/driver_examples/i2c/interrupt_b2b_transfer/slave/example_board_readme.md)
 - [FRDM-RW612](../../../../_boards/frdmrw612/driver_examples/i2c/interrupt_b2b_transfer/slave/example_board_readme.md)
 - [LPCXpresso51U68](../../../../_boards/lpcxpresso51u68/driver_examples/i2c/interrupt_b2b_transfer/slave/example_board_readme.md)
 - [LPCXpresso54628](../../../../_boards/lpcxpresso54628/driver_examples/i2c/interrupt_b2b_transfer/slave/example_board_readme.md)
@@ -28,3 +29,4 @@ slave is correct.
 - [LPCXpresso860MAX](../../../../_boards/lpcxpresso860max/driver_examples/i2c/interrupt_b2b_transfer/slave/example_board_readme.md)
 - [MIMXRT685-AUD-EVK](../../../../_boards/mimxrt685audevk/driver_examples/i2c/interrupt_b2b_transfer/slave/example_board_readme.md)
 - [RD-RW612-BGA](../../../../_boards/rdrw612bga/driver_examples/i2c/interrupt_b2b_transfer/slave/example_board_readme.md)
+- [MCXW23-EVK](../../../../_boards/mcxw23evk/driver_examples/i2c/interrupt_b2b_transfer/slave/example_board_readme.md)

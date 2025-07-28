@@ -8,10 +8,7 @@
 #ifndef _WIFI_CONFIG_H_
 #define _WIFI_CONFIG_H_
 
-#include "app_config.h"
-#ifndef RW610
 #include "wifi_bt_module_config.h"
-#endif
 
 #define CONFIG_IPV6 1
 #define CONFIG_MAX_IPV6_ADDRESSES 3
@@ -23,7 +20,7 @@
 #define CONFIG_OFFLOAD       1
 #endif
 
-#if defined(SD8978) || defined(SD8987) || defined(SD8801) || defined(SD9177) || defined(IW610)
+#if defined(SD8978) || defined(SD8987) || defined(SD9177) || defined(IW610)
 #define CONFIG_WIFI_AUTO_POWER_SAVE 1
 #define CONFIG_WIFI_CAPA 1
 #define CONFIG_ROAMING    1
@@ -51,6 +48,15 @@
 #define CONFIG_ANT_DETECT 1
 #endif
 
+#if defined(SD8978) || defined(SD8987) || defined(SD9177) || defined(IW610)
+#ifndef CONFIG_WIFI_IND_DNLD
+#define CONFIG_WIFI_IND_DNLD 1
+#endif
+#ifndef CONFIG_WIFI_IND_RESET
+#define CONFIG_WIFI_IND_RESET 1
+#endif
+#endif
+
 /* WLCMGR debug */
 #define CONFIG_WLCMGR_DEBUG 0
 /*
@@ -74,7 +80,7 @@
 #define CONFIG_FW_VDLL_DEBUG 0
 #define CONFIG_DHCP_SERVER_DEBUG 0
 #define CONFIG_FWDNLD_IO_DEBUG 0
-
+#define CONFIG_WIFI_SG_DEBUG 0
 /*
  * Heap debug options
  */

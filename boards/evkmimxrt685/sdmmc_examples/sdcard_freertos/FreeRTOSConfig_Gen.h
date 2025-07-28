@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 NXP
+ * Copyright 2025 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -30,6 +30,7 @@
 #define configPROTECTED_KERNEL_OBJECT_POOL_SIZE 10
 // #define configHEAP_CLEAR_MEMORY_ON_FREE 0
 // #define configUSE_NEWLIB_REENTRANT 0
+// #define configUSE_PICOLIBC_TLS 0
 #define configINCLUDE_FREERTOS_TASK_C_ADDITIONS_H 1
 // #define configRECORD_STACK_HIGH_ADDRESS 0
 #define configUSE_TIMERS 1
@@ -86,7 +87,7 @@
 // #define configENABLE_TRUSTZONE 0
 #define configRUN_FREERTOS_SECURE_ONLY 1
 // #define configENABLE_MPU 0
-// #define configENABLE_FPU 0
+#define configENABLE_FPU 1
 // #define configENABLE_MVE 0
 #define configCHECK_HANDLER_INSTALLATION 1
 #define configUSE_TASK_NOTIFICATIONS 1

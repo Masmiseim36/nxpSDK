@@ -2,13 +2,13 @@
 /*  @file:    startup_MIMXRT685S_cm33.s                                      */
 /*  @purpose: CMSIS Cortex-M33 Core Device Startup File                      */
 /*            MIMXRT685S_cm33                                                */
-/*  @version: 2.0                                                            */
-/*  @date:    2019-11-12                                                     */
-/*  @build:   b240823                                                        */
+/*  @version: 3.0                                                            */
+/*  @date:    2024-10-29                                                     */
+/*  @build:   b250520                                                        */
 /* ------------------------------------------------------------------------- */
 /*                                                                           */
 /* Copyright 1997-2016 Freescale Semiconductor, Inc.                         */
-/* Copyright 2016-2024 NXP                                                   */
+/* Copyright 2016-2025 NXP                                                   */
 /* SPDX-License-Identifier: BSD-3-Clause                                     */
 /*****************************************************************************/
 /* Version: GCC for ARM Embedded Processors                                  */
@@ -72,7 +72,7 @@ __isr_vector:
     .long   HYPERVISOR_IRQHandler                           /* Hypervisor*/
     .long   SECUREVIOLATION_IRQHandler                      /* Secure violation*/
     .long   HWVAD0_IRQHandler                               /* Hardware Voice Activity Detector*/
-    .long   Reserved46_IRQHandler                           /* Reserved interrupt*/
+    .long   ESPI_IRQHandler                                 /* eSPI interface*/
     .long   RNG_IRQHandler                                  /* Random number Generator*/
     .long   RTC_IRQHandler                                  /* RTC alarm and wake-up*/
     .long   DSPWAKE_IRQHandler                              /* Wake-up from DSP*/
@@ -550,12 +550,12 @@ HWVAD0_IRQHandler:
 
     .align 1
     .thumb_func
-    .weak Reserved46_IRQHandler
-    .type Reserved46_IRQHandler, %function
-Reserved46_IRQHandler:
-    ldr   r0,=Reserved46_DriverIRQHandler
+    .weak ESPI_IRQHandler
+    .type ESPI_IRQHandler, %function
+ESPI_IRQHandler:
+    ldr   r0,=ESPI_DriverIRQHandler
     bx    r0
-    .size Reserved46_IRQHandler, . - Reserved46_IRQHandler
+    .size ESPI_IRQHandler, . - ESPI_IRQHandler
 
     .align 1
     .thumb_func
@@ -862,7 +862,7 @@ HASHCRYPT_IRQHandler:
     def_irq_handler    HYPERVISOR_DriverIRQHandler
     def_irq_handler    SECUREVIOLATION_DriverIRQHandler
     def_irq_handler    HWVAD0_DriverIRQHandler
-    def_irq_handler    Reserved46_DriverIRQHandler
+    def_irq_handler    ESPI_DriverIRQHandler
     def_irq_handler    RNG_DriverIRQHandler
     def_irq_handler    RTC_DriverIRQHandler
     def_irq_handler    DSPWAKE_DriverIRQHandler

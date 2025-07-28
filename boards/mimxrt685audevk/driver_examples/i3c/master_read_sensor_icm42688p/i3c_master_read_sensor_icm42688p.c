@@ -1,5 +1,5 @@
 /*
- * Copyright 2021-2023 NXP
+ * Copyright 2021-2023, 2025 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -18,15 +18,6 @@
  ******************************************************************************/
 #define SENSOR_MIPI_VENDOR_ID      0x235U
 
-#ifndef EXAMPLE_I2C_BAUDRATE
-#define EXAMPLE_I2C_BAUDRATE 400000
-#endif
-#ifndef EXAMPLE_I3C_OD_BAUDRATE
-#define EXAMPLE_I3C_OD_BAUDRATE 6250000
-#endif
-#ifndef EXAMPLE_I3C_PP_BAUDRATE
-#define EXAMPLE_I3C_PP_BAUDRATE 12500000
-#endif
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/

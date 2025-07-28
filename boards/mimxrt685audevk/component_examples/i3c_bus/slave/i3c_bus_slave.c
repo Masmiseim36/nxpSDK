@@ -1,5 +1,5 @@
 /*
- * Copyright 2020, 2023-2024 NXP
+ * Copyright 2020, 2023-2025 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -15,18 +15,7 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#ifndef EXAMPLE_I2C_BAUDRATE
-#define EXAMPLE_I2C_BAUDRATE    400000U
-#endif
-#ifndef EXAMPLE_I3C_OD_BAUDRATE
-#define EXAMPLE_I3C_OD_BAUDRATE 2000000U
-#endif
-#ifndef EXAMPLE_I3C_PP_BAUDRATE
-#define EXAMPLE_I3C_PP_BAUDRATE 4000000U
-#endif
-#ifndef I3C_MASTER_SLAVE_ADDR_7BIT
 #define I3C_MASTER_SLAVE_ADDR_7BIT 0x1E
-#endif
 
 /* Device 48-bit Provisioned ID. */
 #define I3C_NXP_VENDOR_ID              0x11BU
@@ -99,9 +88,8 @@ void APP_PrintDeviceInfo(i3c_bus_t *demo_i3cBus)
                 PRINTF("Dynamic Address - 0x%X. Static Address - 0x%X.\r\n", devInfo.dynamicAddr, devInfo.staticAddr);
                 PRINTF("Max read length - %u. Max write length - %u.\r\n", devInfo.maxReadLength, devInfo.maxWriteLength);
                 PRINTF("BCR - 0x%X. DCR - 0x%X.\r\n", devInfo.bcr, devInfo.dcr);
+                i++;
             }
-
-            i++;
         }
     }
 }
@@ -151,7 +139,7 @@ int main(void)
 #endif
     {
     }
-    SDK_DelayAtLeastUs(10000, SDK_DEVICE_MAXIMUM_CPU_CLOCK_FREQUENCY);
+    SDK_DelayAtLeastUs(EXAMPLE_EVENT_WAIT_DELAY_NS, SDK_DEVICE_MAXIMUM_CPU_CLOCK_FREQUENCY);
 
 #if !defined(EXAMPLE_HAS_NO_HJ_SUPPORT)
     while ((EXAMPLE_MASTER->SSTATUS & I3C_SSTATUS_HJDIS_MASK) != 0U)
@@ -170,7 +158,7 @@ int main(void)
 
     /* Wait hot-join over. */
     while((EXAMPLE_MASTER->SSTATUS & I3C_SSTATUS_EVDET_MASK) != I3C_SSTATUS_EVDET_MASK);
-    SDK_DelayAtLeastUs(10000, SDK_DEVICE_MAXIMUM_CPU_CLOCK_FREQUENCY);
+    SDK_DelayAtLeastUs(EXAMPLE_EVENT_WAIT_DELAY_NS, SDK_DEVICE_MAXIMUM_CPU_CLOCK_FREQUENCY);
 #endif
 
     while ((EXAMPLE_MASTER->SSTATUS & I3C_SSTATUS_MRDIS_MASK) != 0U)
@@ -190,6 +178,7 @@ int main(void)
     }
     PRINTF("I3C bus mastership takeover.\r\n");
 
+    SDK_DelayAtLeastUs(EXAMPLE_EVENT_WAIT_DELAY_NS, SDK_DEVICE_MAXIMUM_CPU_CLOCK_FREQUENCY);
     APP_PrintDeviceInfo(&demo_i3cBus);
 
     while (1)

@@ -44,6 +44,9 @@
     </memory>
     <toolchainSettings>
       <toolchainSetting id_refs="com.nxp.mcuxpresso">
+        <buildSteps>
+          <postBuildStep>arm-none-eabi-size "${BuildArtifactFileName}";arm-none-eabi-objcopy -v -O binary "${BuildArtifactFileName}" "extram_loader.bin";checksum -p ${TargetChip} -d "extram_loader.bin"</postBuildStep>
+        </buildSteps>
         <option id="gnu.c.compiler.option.preprocessor.def.symbols" type="stringList">
           <value>MCUXPRESSO_SDK</value>
           <value>CPU_MIMXRT685SFVKB_cm33</value>
@@ -53,6 +56,7 @@
           <value>FSL_SDK_DISABLE_DRIVER_RESET_CONTROL=1</value>
           <value>SDK_DEBUGCONSOLE=1</value>
           <value>MCUX_META_BUILD</value>
+          <value>MIMXRT685S_cm33_SERIES</value>
         </option>
         <option id="com.crt.advproject.gas.fpu" type="enum">
           <value>com.crt.advproject.gas.fpu.fpv5sp.hard</value>
@@ -172,6 +176,9 @@
     </source>
     <source path="." project_relative_path="doc" type="doc">
       <files mask="example_board_readme.md"/>
+    </source>
+    <source path="." project_relative_path="doc" type="doc">
+      <files mask="examples_shared_readme.md"/>
     </source>
   </example>
 </ksdk:examples>

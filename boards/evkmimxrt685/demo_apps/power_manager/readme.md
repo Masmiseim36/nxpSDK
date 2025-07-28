@@ -30,6 +30,7 @@ User can also set the wakeup source following the debug console prompts.
 - [FRDM-MCXC041](../../_boards/frdmmcxc041/demo_apps/power_manager/example_board_readme.md)
 - [FRDM-MCXC242](../../_boards/frdmmcxc242/demo_apps/power_manager/example_board_readme.md)
 - [FRDM-MCXC444](../../_boards/frdmmcxc444/demo_apps/power_manager/example_board_readme.md)
+- [FRDM-MCXE247](../../_boards/frdmmcxe247/demo_apps/power_manager/example_board_readme.md)
 - [MIMXRT685-AUD-EVK](../../_boards/mimxrt685audevk/demo_apps/power_manager/example_board_readme.md)
 - [TWR-KM34Z50MV3](../../_boards/twrkm34z50mv3/demo_apps/power_manager/example_board_readme.md)
 - [TWR-KM34Z75M](../../_boards/twrkm34z75m/demo_apps/power_manager/example_board_readme.md)

@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2018 NXP
+ * Copyright 2016-2018, 2025 NXP
  * All rights reserved.
  *
  *
@@ -43,6 +43,11 @@ int main(void)
     PRINTF("LPADC Single Polling Example\r\n");
 
     LPADC_GetDefaultConfig(&mLpadcConfigStruct);
+    /* Set to highest power level here, users need to properly match ADC clock and power level according 
+     * to application requirements. For specific correspondence, please refer to the data sheet. */
+#if defined(FSL_FEATURE_LPADC_HAS_CFG_PWRSEL) && (FSL_FEATURE_LPADC_HAS_CFG_PWRSEL == 1U)
+    mLpadcConfigStruct.powerLevelMode = kLPADC_PowerLevelAlt4;
+#endif /* FSL_FEATURE_LPADC_HAS_CFG_PWRSEL */
     mLpadcConfigStruct.enableAnalogPreliminary = true;
     LPADC_Init(DEMO_LPADC_BASE, &mLpadcConfigStruct);
 

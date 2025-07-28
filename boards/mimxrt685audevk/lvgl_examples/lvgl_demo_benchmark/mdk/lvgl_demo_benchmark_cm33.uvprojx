@@ -333,7 +333,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../mcux_config.h -fno-common  -fdata-sections  -fno-builtin  -mthumb  -fms-extensions -fno-exceptions</MiscControls>
-              <Define>DEBUG, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, LV_CONF_INCLUDE_SIMPLE=1, SDK_OS_FREE_RTOS</Define>
+              <Define>DEBUG, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT685SFVKB_cm33, MIMXRT685S_cm33_SERIES, BOOT_HEADER_ENABLE=1, LV_CONF_INCLUDE_SIMPLE=1, SDK_OS_FREE_RTOS</Define>
               <Undefine/>
               <IncludePath>..;../../../flash_config;../../../../../CMSIS/Core/Include;../../../../../CMSIS/Core/Include/m-profile;../../../../../CMSIS/Driver/Include;../../../../../devices/MIMXRT685S;../../../../../devices/MIMXRT685S/periph;../../../../../devices/MIMXRT685S/drivers;../../../../../devices/MIMXRT685S/cmsis_drivers;../../../../../devices/MIMXRT685S/utilities/debug_console_lite;../../../../../devices/MIMXRT685S/utilities/str;../../../../../components/uart;../../../../../components/touch/ft6x06;../../../../../components/display/ili9341;../../../../../middleware/lvgl;../../../../../middleware/lvgl/src/draw/nxp/vglite;../../../../../middleware/lvgl/template;../../../../../middleware/lvgl/demos;../../../../../middleware/lvgl/demos/transform;../../../../../middleware/lvgl/demos/benchmark;../../../../../middleware/lvgl/demos/benchmark/assets;../../../../../middleware/lvgl/demos/widgets;../../../../../middleware/lvgl/demos/widgets/assets;../../../../../rtos/freertos/freertos-kernel/include;../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../rtos/freertos/freertos-kernel/template</IncludePath>
             </VariousControls>
@@ -351,7 +351,7 @@
             <ClangAsOpt>2</ClangAsOpt>
             <VariousControls>
               <MiscControls/>
-              <Define>MCUXPRESSO_SDK, CPU_MIMXRT685SFVKB_cm33</Define>
+              <Define>MCUXPRESSO_SDK, CPU_MIMXRT685SFVKB_cm33, MIMXRT685S_cm33_SERIES</Define>
               <Undefine/>
               <IncludePath>..;../../../flash_config;../../../../../CMSIS/Core/Include;../../../../../CMSIS/Core/Include/m-profile;../../../../../CMSIS/Driver/Include;../../../../../devices/MIMXRT685S;../../../../../devices/MIMXRT685S/periph;../../../../../devices/MIMXRT685S/drivers;../../../../../devices/MIMXRT685S/cmsis_drivers;../../../../../devices/MIMXRT685S/utilities/debug_console_lite;../../../../../devices/MIMXRT685S/utilities/str;../../../../../components/uart;../../../../../components/touch/ft6x06;../../../../../components/display/ili9341;../../../../../middleware/lvgl;../../../../../middleware/lvgl/src/draw/nxp/vglite;../../../../../middleware/lvgl/template;../../../../../middleware/lvgl/demos;../../../../../middleware/lvgl/demos/transform;../../../../../middleware/lvgl/demos/benchmark;../../../../../middleware/lvgl/demos/benchmark/assets;../../../../../middleware/lvgl/demos/widgets;../../../../../middleware/lvgl/demos/widgets/assets;../../../../../rtos/freertos/freertos-kernel/include;../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../rtos/freertos/freertos-kernel/template</IncludePath>
             </VariousControls>
@@ -403,6 +403,11 @@
               <FileName>lvgl_freertos.h</FileName>
               <FileType>5</FileType>
               <FilePath>../lvgl_freertos.h</FilePath>
+            </File>
+            <File>
+              <FileName>FreeRTOSConfig_frag.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../FreeRTOSConfig_frag.h</FilePath>
             </File>
             <File>
               <FileName>pin_mux.c</FileName>
@@ -673,6 +678,11 @@
               <FileName>PERI_DMIC.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT685S/periph/PERI_DMIC.h</FilePath>
+            </File>
+            <File>
+              <FileName>PERI_ESPI.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT685S/periph/PERI_ESPI.h</FilePath>
             </File>
             <File>
               <FileName>PERI_FLEXCOMM.h</FileName>
@@ -3460,6 +3470,11 @@
               <FilePath>../../../../../middleware/lvgl/src/osal/lv_freertos.c</FilePath>
             </File>
             <File>
+              <FileName>lv_linux.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/src/osal/lv_linux.c</FilePath>
+            </File>
+            <File>
               <FileName>lv_mqx.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/lvgl/src/osal/lv_mqx.c</FilePath>
@@ -3498,6 +3513,11 @@
               <FileName>lv_freertos.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/lvgl/src/osal/lv_freertos.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_linux_private.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/src/osal/lv_linux_private.h</FilePath>
             </File>
             <File>
               <FileName>lv_mqx.h</FileName>
@@ -5224,6 +5244,11 @@
               <FileType>5</FileType>
               <FilePath>../../../../../rtos/freertos/freertos-kernel/include/timers.h</FilePath>
             </File>
+            <File>
+              <FileName>freertos_tasks_c_additions.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/freertos_tasks_c_additions.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -5308,6 +5333,11 @@
               <FileName>lvgl_examples_readme.md</FileName>
               <FileType>5</FileType>
               <FilePath>../lvgl_examples_readme.md</FilePath>
+            </File>
+            <File>
+              <FileName>examples_shared_readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../examples_shared_readme.md</FilePath>
             </File>
           </Files>
         </Group>
@@ -5643,7 +5673,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../mcux_config.h -fno-common  -fdata-sections  -fno-builtin  -mthumb  -fms-extensions -fno-exceptions</MiscControls>
-              <Define>DEBUG, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, LV_CONF_INCLUDE_SIMPLE=1, SDK_OS_FREE_RTOS</Define>
+              <Define>DEBUG, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT685SFVKB_cm33, MIMXRT685S_cm33_SERIES, BOOT_HEADER_ENABLE=1, LV_CONF_INCLUDE_SIMPLE=1, SDK_OS_FREE_RTOS</Define>
               <Undefine/>
               <IncludePath>..;../../../flash_config;../../../../../CMSIS/Core/Include;../../../../../CMSIS/Core/Include/m-profile;../../../../../CMSIS/Driver/Include;../../../../../devices/MIMXRT685S;../../../../../devices/MIMXRT685S/periph;../../../../../devices/MIMXRT685S/drivers;../../../../../devices/MIMXRT685S/cmsis_drivers;../../../../../devices/MIMXRT685S/utilities/debug_console_lite;../../../../../devices/MIMXRT685S/utilities/str;../../../../../components/uart;../../../../../components/touch/ft6x06;../../../../../components/display/ili9341;../../../../../middleware/lvgl;../../../../../middleware/lvgl/src/draw/nxp/vglite;../../../../../middleware/lvgl/template;../../../../../middleware/lvgl/demos;../../../../../middleware/lvgl/demos/transform;../../../../../middleware/lvgl/demos/benchmark;../../../../../middleware/lvgl/demos/benchmark/assets;../../../../../middleware/lvgl/demos/widgets;../../../../../middleware/lvgl/demos/widgets/assets;../../../../../rtos/freertos/freertos-kernel/include;../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../rtos/freertos/freertos-kernel/template</IncludePath>
             </VariousControls>
@@ -5661,7 +5691,7 @@
             <ClangAsOpt>2</ClangAsOpt>
             <VariousControls>
               <MiscControls/>
-              <Define>MCUXPRESSO_SDK, CPU_MIMXRT685SFVKB_cm33</Define>
+              <Define>MCUXPRESSO_SDK, CPU_MIMXRT685SFVKB_cm33, MIMXRT685S_cm33_SERIES</Define>
               <Undefine/>
               <IncludePath>..;../../../flash_config;../../../../../CMSIS/Core/Include;../../../../../CMSIS/Core/Include/m-profile;../../../../../CMSIS/Driver/Include;../../../../../devices/MIMXRT685S;../../../../../devices/MIMXRT685S/periph;../../../../../devices/MIMXRT685S/drivers;../../../../../devices/MIMXRT685S/cmsis_drivers;../../../../../devices/MIMXRT685S/utilities/debug_console_lite;../../../../../devices/MIMXRT685S/utilities/str;../../../../../components/uart;../../../../../components/touch/ft6x06;../../../../../components/display/ili9341;../../../../../middleware/lvgl;../../../../../middleware/lvgl/src/draw/nxp/vglite;../../../../../middleware/lvgl/template;../../../../../middleware/lvgl/demos;../../../../../middleware/lvgl/demos/transform;../../../../../middleware/lvgl/demos/benchmark;../../../../../middleware/lvgl/demos/benchmark/assets;../../../../../middleware/lvgl/demos/widgets;../../../../../middleware/lvgl/demos/widgets/assets;../../../../../rtos/freertos/freertos-kernel/include;../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../rtos/freertos/freertos-kernel/template</IncludePath>
             </VariousControls>
@@ -5713,6 +5743,11 @@
               <FileName>lvgl_freertos.h</FileName>
               <FileType>5</FileType>
               <FilePath>../lvgl_freertos.h</FilePath>
+            </File>
+            <File>
+              <FileName>FreeRTOSConfig_frag.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../FreeRTOSConfig_frag.h</FilePath>
             </File>
             <File>
               <FileName>pin_mux.c</FileName>
@@ -5983,6 +6018,11 @@
               <FileName>PERI_DMIC.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT685S/periph/PERI_DMIC.h</FilePath>
+            </File>
+            <File>
+              <FileName>PERI_ESPI.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT685S/periph/PERI_ESPI.h</FilePath>
             </File>
             <File>
               <FileName>PERI_FLEXCOMM.h</FileName>
@@ -8770,6 +8810,11 @@
               <FilePath>../../../../../middleware/lvgl/src/osal/lv_freertos.c</FilePath>
             </File>
             <File>
+              <FileName>lv_linux.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/src/osal/lv_linux.c</FilePath>
+            </File>
+            <File>
               <FileName>lv_mqx.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/lvgl/src/osal/lv_mqx.c</FilePath>
@@ -8808,6 +8853,11 @@
               <FileName>lv_freertos.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/lvgl/src/osal/lv_freertos.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_linux_private.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/src/osal/lv_linux_private.h</FilePath>
             </File>
             <File>
               <FileName>lv_mqx.h</FileName>
@@ -10534,6 +10584,11 @@
               <FileType>5</FileType>
               <FilePath>../../../../../rtos/freertos/freertos-kernel/include/timers.h</FilePath>
             </File>
+            <File>
+              <FileName>freertos_tasks_c_additions.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/freertos_tasks_c_additions.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -10618,6 +10673,11 @@
               <FileName>lvgl_examples_readme.md</FileName>
               <FileType>5</FileType>
               <FilePath>../lvgl_examples_readme.md</FilePath>
+            </File>
+            <File>
+              <FileName>examples_shared_readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../examples_shared_readme.md</FilePath>
             </File>
           </Files>
         </Group>
@@ -10953,7 +11013,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../mcux_config.h -fno-common  -fdata-sections  -fno-builtin  -mthumb  -fms-extensions -fno-exceptions</MiscControls>
-              <Define>NDEBUG, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, LV_CONF_INCLUDE_SIMPLE=1, SDK_OS_FREE_RTOS</Define>
+              <Define>NDEBUG, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT685SFVKB_cm33, MIMXRT685S_cm33_SERIES, BOOT_HEADER_ENABLE=1, LV_CONF_INCLUDE_SIMPLE=1, SDK_OS_FREE_RTOS</Define>
               <Undefine/>
               <IncludePath>..;../../../flash_config;../../../../../CMSIS/Core/Include;../../../../../CMSIS/Core/Include/m-profile;../../../../../CMSIS/Driver/Include;../../../../../devices/MIMXRT685S;../../../../../devices/MIMXRT685S/periph;../../../../../devices/MIMXRT685S/drivers;../../../../../devices/MIMXRT685S/cmsis_drivers;../../../../../devices/MIMXRT685S/utilities/debug_console_lite;../../../../../devices/MIMXRT685S/utilities/str;../../../../../components/uart;../../../../../components/touch/ft6x06;../../../../../components/display/ili9341;../../../../../middleware/lvgl;../../../../../middleware/lvgl/src/draw/nxp/vglite;../../../../../middleware/lvgl/template;../../../../../middleware/lvgl/demos;../../../../../middleware/lvgl/demos/transform;../../../../../middleware/lvgl/demos/benchmark;../../../../../middleware/lvgl/demos/benchmark/assets;../../../../../middleware/lvgl/demos/widgets;../../../../../middleware/lvgl/demos/widgets/assets;../../../../../rtos/freertos/freertos-kernel/include;../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../rtos/freertos/freertos-kernel/template</IncludePath>
             </VariousControls>
@@ -10971,7 +11031,7 @@
             <ClangAsOpt>2</ClangAsOpt>
             <VariousControls>
               <MiscControls/>
-              <Define>MCUXPRESSO_SDK, CPU_MIMXRT685SFVKB_cm33</Define>
+              <Define>MCUXPRESSO_SDK, CPU_MIMXRT685SFVKB_cm33, MIMXRT685S_cm33_SERIES</Define>
               <Undefine/>
               <IncludePath>..;../../../flash_config;../../../../../CMSIS/Core/Include;../../../../../CMSIS/Core/Include/m-profile;../../../../../CMSIS/Driver/Include;../../../../../devices/MIMXRT685S;../../../../../devices/MIMXRT685S/periph;../../../../../devices/MIMXRT685S/drivers;../../../../../devices/MIMXRT685S/cmsis_drivers;../../../../../devices/MIMXRT685S/utilities/debug_console_lite;../../../../../devices/MIMXRT685S/utilities/str;../../../../../components/uart;../../../../../components/touch/ft6x06;../../../../../components/display/ili9341;../../../../../middleware/lvgl;../../../../../middleware/lvgl/src/draw/nxp/vglite;../../../../../middleware/lvgl/template;../../../../../middleware/lvgl/demos;../../../../../middleware/lvgl/demos/transform;../../../../../middleware/lvgl/demos/benchmark;../../../../../middleware/lvgl/demos/benchmark/assets;../../../../../middleware/lvgl/demos/widgets;../../../../../middleware/lvgl/demos/widgets/assets;../../../../../rtos/freertos/freertos-kernel/include;../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../rtos/freertos/freertos-kernel/template</IncludePath>
             </VariousControls>
@@ -11023,6 +11083,11 @@
               <FileName>lvgl_freertos.h</FileName>
               <FileType>5</FileType>
               <FilePath>../lvgl_freertos.h</FilePath>
+            </File>
+            <File>
+              <FileName>FreeRTOSConfig_frag.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../FreeRTOSConfig_frag.h</FilePath>
             </File>
             <File>
               <FileName>pin_mux.c</FileName>
@@ -11293,6 +11358,11 @@
               <FileName>PERI_DMIC.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT685S/periph/PERI_DMIC.h</FilePath>
+            </File>
+            <File>
+              <FileName>PERI_ESPI.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT685S/periph/PERI_ESPI.h</FilePath>
             </File>
             <File>
               <FileName>PERI_FLEXCOMM.h</FileName>
@@ -14080,6 +14150,11 @@
               <FilePath>../../../../../middleware/lvgl/src/osal/lv_freertos.c</FilePath>
             </File>
             <File>
+              <FileName>lv_linux.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/src/osal/lv_linux.c</FilePath>
+            </File>
+            <File>
               <FileName>lv_mqx.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/lvgl/src/osal/lv_mqx.c</FilePath>
@@ -14118,6 +14193,11 @@
               <FileName>lv_freertos.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/lvgl/src/osal/lv_freertos.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_linux_private.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/src/osal/lv_linux_private.h</FilePath>
             </File>
             <File>
               <FileName>lv_mqx.h</FileName>
@@ -15844,6 +15924,11 @@
               <FileType>5</FileType>
               <FilePath>../../../../../rtos/freertos/freertos-kernel/include/timers.h</FilePath>
             </File>
+            <File>
+              <FileName>freertos_tasks_c_additions.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/freertos_tasks_c_additions.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -15928,6 +16013,11 @@
               <FileName>lvgl_examples_readme.md</FileName>
               <FileType>5</FileType>
               <FilePath>../lvgl_examples_readme.md</FilePath>
+            </File>
+            <File>
+              <FileName>examples_shared_readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../examples_shared_readme.md</FilePath>
             </File>
           </Files>
         </Group>
@@ -16263,7 +16353,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../mcux_config.h -fno-common  -fdata-sections  -fno-builtin  -mthumb  -fms-extensions -fno-exceptions</MiscControls>
-              <Define>NDEBUG, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, LV_CONF_INCLUDE_SIMPLE=1, SDK_OS_FREE_RTOS</Define>
+              <Define>NDEBUG, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT685SFVKB_cm33, MIMXRT685S_cm33_SERIES, BOOT_HEADER_ENABLE=1, LV_CONF_INCLUDE_SIMPLE=1, SDK_OS_FREE_RTOS</Define>
               <Undefine/>
               <IncludePath>..;../../../flash_config;../../../../../CMSIS/Core/Include;../../../../../CMSIS/Core/Include/m-profile;../../../../../CMSIS/Driver/Include;../../../../../devices/MIMXRT685S;../../../../../devices/MIMXRT685S/periph;../../../../../devices/MIMXRT685S/drivers;../../../../../devices/MIMXRT685S/cmsis_drivers;../../../../../devices/MIMXRT685S/utilities/debug_console_lite;../../../../../devices/MIMXRT685S/utilities/str;../../../../../components/uart;../../../../../components/touch/ft6x06;../../../../../components/display/ili9341;../../../../../middleware/lvgl;../../../../../middleware/lvgl/src/draw/nxp/vglite;../../../../../middleware/lvgl/template;../../../../../middleware/lvgl/demos;../../../../../middleware/lvgl/demos/transform;../../../../../middleware/lvgl/demos/benchmark;../../../../../middleware/lvgl/demos/benchmark/assets;../../../../../middleware/lvgl/demos/widgets;../../../../../middleware/lvgl/demos/widgets/assets;../../../../../rtos/freertos/freertos-kernel/include;../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../rtos/freertos/freertos-kernel/template</IncludePath>
             </VariousControls>
@@ -16281,7 +16371,7 @@
             <ClangAsOpt>2</ClangAsOpt>
             <VariousControls>
               <MiscControls/>
-              <Define>MCUXPRESSO_SDK, CPU_MIMXRT685SFVKB_cm33</Define>
+              <Define>MCUXPRESSO_SDK, CPU_MIMXRT685SFVKB_cm33, MIMXRT685S_cm33_SERIES</Define>
               <Undefine/>
               <IncludePath>..;../../../flash_config;../../../../../CMSIS/Core/Include;../../../../../CMSIS/Core/Include/m-profile;../../../../../CMSIS/Driver/Include;../../../../../devices/MIMXRT685S;../../../../../devices/MIMXRT685S/periph;../../../../../devices/MIMXRT685S/drivers;../../../../../devices/MIMXRT685S/cmsis_drivers;../../../../../devices/MIMXRT685S/utilities/debug_console_lite;../../../../../devices/MIMXRT685S/utilities/str;../../../../../components/uart;../../../../../components/touch/ft6x06;../../../../../components/display/ili9341;../../../../../middleware/lvgl;../../../../../middleware/lvgl/src/draw/nxp/vglite;../../../../../middleware/lvgl/template;../../../../../middleware/lvgl/demos;../../../../../middleware/lvgl/demos/transform;../../../../../middleware/lvgl/demos/benchmark;../../../../../middleware/lvgl/demos/benchmark/assets;../../../../../middleware/lvgl/demos/widgets;../../../../../middleware/lvgl/demos/widgets/assets;../../../../../rtos/freertos/freertos-kernel/include;../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../rtos/freertos/freertos-kernel/template</IncludePath>
             </VariousControls>
@@ -16333,6 +16423,11 @@
               <FileName>lvgl_freertos.h</FileName>
               <FileType>5</FileType>
               <FilePath>../lvgl_freertos.h</FilePath>
+            </File>
+            <File>
+              <FileName>FreeRTOSConfig_frag.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../FreeRTOSConfig_frag.h</FilePath>
             </File>
             <File>
               <FileName>pin_mux.c</FileName>
@@ -16603,6 +16698,11 @@
               <FileName>PERI_DMIC.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT685S/periph/PERI_DMIC.h</FilePath>
+            </File>
+            <File>
+              <FileName>PERI_ESPI.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT685S/periph/PERI_ESPI.h</FilePath>
             </File>
             <File>
               <FileName>PERI_FLEXCOMM.h</FileName>
@@ -19390,6 +19490,11 @@
               <FilePath>../../../../../middleware/lvgl/src/osal/lv_freertos.c</FilePath>
             </File>
             <File>
+              <FileName>lv_linux.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/src/osal/lv_linux.c</FilePath>
+            </File>
+            <File>
               <FileName>lv_mqx.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/lvgl/src/osal/lv_mqx.c</FilePath>
@@ -19428,6 +19533,11 @@
               <FileName>lv_freertos.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/lvgl/src/osal/lv_freertos.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_linux_private.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/src/osal/lv_linux_private.h</FilePath>
             </File>
             <File>
               <FileName>lv_mqx.h</FileName>
@@ -21154,6 +21264,11 @@
               <FileType>5</FileType>
               <FilePath>../../../../../rtos/freertos/freertos-kernel/include/timers.h</FilePath>
             </File>
+            <File>
+              <FileName>freertos_tasks_c_additions.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/freertos_tasks_c_additions.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -21238,6 +21353,11 @@
               <FileName>lvgl_examples_readme.md</FileName>
               <FileType>5</FileType>
               <FilePath>../lvgl_examples_readme.md</FilePath>
+            </File>
+            <File>
+              <FileName>examples_shared_readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../examples_shared_readme.md</FilePath>
             </File>
           </Files>
         </Group>

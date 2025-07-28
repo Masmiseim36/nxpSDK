@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 NXP
+ * Copyright 2025 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -30,7 +30,8 @@
 #define configPROTECTED_KERNEL_OBJECT_POOL_SIZE 10
 // #define configHEAP_CLEAR_MEMORY_ON_FREE 0
 // #define configUSE_NEWLIB_REENTRANT 0
-// #define configINCLUDE_FREERTOS_TASK_C_ADDITIONS_H 0
+// #define configUSE_PICOLIBC_TLS 0
+#define configINCLUDE_FREERTOS_TASK_C_ADDITIONS_H 1
 // #define configRECORD_STACK_HIGH_ADDRESS 0
 #define configUSE_TIMERS 1
 #define configTIMER_TASK_PRIORITY (configMAX_PRIORITIES-1)

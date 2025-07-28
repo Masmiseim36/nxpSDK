@@ -66,6 +66,7 @@
           <value>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</value>
           <value>SDK_DEBUGCONSOLE=1</value>
           <value>MCUX_META_BUILD</value>
+          <value>MIMXRT685S_cm33_SERIES</value>
           <value>LV_CONF_INCLUDE_SIMPLE=1</value>
         </option>
         <option id="com.crt.advproject.gas.hdrlib" type="enum">
@@ -90,7 +91,7 @@
           <value>true</value>
         </option>
         <option id="com.crt.advproject.link.memory.heapAndStack" type="string">
-          <value>&amp;Heap:Default;Default;Default&amp;Stack:Default;Default;0x1000</value>
+          <value>&amp;Heap:Default;Default;Default&amp;Stack:Default;Default;0x1800</value>
         </option>
         <option id="gnu.c.link.option.other" type="stringList">
           <value>-no-warn-rwx-segments</value>
@@ -134,9 +135,9 @@
     </debug_configurations>
     <include_paths>
       <include_path path="." project_relative_path="source" type="c_include"/>
-      <include_path path="generated" project_relative_path="source" type="c_include"/>
-      <include_path path="custom" project_relative_path="source" type="c_include"/>
-      <include_path path="generated/guider_customer_fonts" project_relative_path="source" type="c_include"/>
+      <include_path path="generated" project_relative_path="generated" type="c_include"/>
+      <include_path path="custom" project_relative_path="custom" type="c_include"/>
+      <include_path path="generated/guider_customer_fonts" project_relative_path="generated/guider_customer_fonts" type="c_include"/>
       <include_path path="." project_relative_path="board" type="c_include"/>
       <include_path path="." project_relative_path="source" type="asm_include"/>
     </include_paths>
@@ -181,24 +182,24 @@
     <source path="." project_relative_path="source" type="src">
       <files mask="lvgl_guider_bm.c"/>
     </source>
-    <source path="generated/guider_customer_fonts" project_relative_path="source" type="c_include">
+    <source path="generated/guider_customer_fonts" project_relative_path="generated/guider_customer_fonts" type="c_include">
       <files mask="guider_customer_fonts.h"/>
     </source>
-    <source path="generated" project_relative_path="source" type="src">
+    <source path="generated" project_relative_path="generated" type="src">
       <files mask="gui_guider.c"/>
       <files mask="events_init.c"/>
       <files mask="setup_scr_screen.c"/>
       <files mask="widgets_init.c"/>
     </source>
-    <source path="generated" project_relative_path="source" type="c_include">
+    <source path="generated" project_relative_path="generated" type="c_include">
       <files mask="gui_guider.h"/>
       <files mask="events_init.h"/>
       <files mask="widgets_init.h"/>
     </source>
-    <source path="custom" project_relative_path="source" type="src">
+    <source path="custom" project_relative_path="custom" type="src">
       <files mask="custom.c"/>
     </source>
-    <source path="custom" project_relative_path="source" type="c_include">
+    <source path="custom" project_relative_path="custom" type="c_include">
       <files mask="custom.h"/>
     </source>
     <source path="." project_relative_path="source" type="c_include">
@@ -264,6 +265,9 @@
     </source>
     <source path="." project_relative_path="doc" type="doc">
       <files mask="lvgl_examples_readme.md"/>
+    </source>
+    <source path="." project_relative_path="doc" type="doc">
+      <files mask="examples_shared_readme.md"/>
     </source>
   </example>
 </ksdk:examples>

@@ -2,7 +2,7 @@
 
 ## Overview
 The dsp_hello_world_usart demo application provides a sanity check for the SDK build
-environment running both ARM and DSP cores. It also demonstrates how the ARM 
+environment running both ARM and DSP cores. It also demonstrates how the ARM
 core application is used to start a DSP application.
 
 This demo contains two applications:
@@ -16,6 +16,8 @@ startup.  Pre-compiled DSP binary images are provided under dsp/binary/ director
 The debug configurations will build two separate applications that need to be
 loaded independently.  The ARM application will power and clock the DSP, so
 it must be loaded prior to loading the DSP application.
+
+This example cannot be imported into Config Tools because the xtensa toolchain is not supported.
 
 ## Supported Boards
 - [EVK9-MIMX8ULP](../../_boards/evk9mimx8ulp/dsp_examples/hello_world_usart/example_board_readme.md)

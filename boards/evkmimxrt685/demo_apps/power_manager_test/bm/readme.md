@@ -23,3 +23,4 @@ The demo shows how the various power mode switch to each other based on power ma
 - [MCX-N9XX-EVK](../../../_boards/mcxn9xxevk/demo_apps/power_manager_test/bm/example_board_readme.md)
 - [MCX-W72-EVK](../../../_boards/mcxw72evk/demo_apps/power_manager_test/bm/example_board_readme.md)
 - [RD-RW612-BGA](../../../_boards/rdrw612bga/demo_apps/power_manager_test/bm/example_board_readme.md)
+- [FRDM-MCXN236](../../../_boards/frdmmcxn236/demo_apps/power_manager_test/bm/example_board_readme.md)

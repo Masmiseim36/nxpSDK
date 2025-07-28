@@ -6,6 +6,8 @@ It uses the DMIC working with I2S. One channel Audio data is converted to sample
 Then, the data is placed into the memory buffer. Last, it is sent to the I2S
 buffer and output to the CODEC, where the audio data will be heard from lineout.
 
+This example cannot be imported into Config Tools because the xtensa toolchain is not supported.
+
 ## Supported Boards
 - [EVK-MIMXRT595](../../_boards/evkmimxrt595/dsp_examples/audio_demo_bm/example_board_readme.md)
 - [EVK-MIMXRT685](../../_boards/evkmimxrt685/dsp_examples/audio_demo_bm/example_board_readme.md)

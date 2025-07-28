@@ -86,7 +86,6 @@ int BOARD_CODEC_Init(void)
     }
 
     /* Initial volume kept low for hearing safety. */
-    /* Adjust it to your needs, 0x0006 for -51 dB, 0x0039 for 0 dB etc. */
     if (CODEC_SetVolume(&g_codecHandle, kCODEC_PlayChannelHeadphoneLeft | kCODEC_PlayChannelHeadphoneRight, 0x0020) !=
         kStatus_Success)
     {

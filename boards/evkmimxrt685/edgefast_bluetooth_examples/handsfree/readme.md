@@ -23,12 +23,15 @@ board running a HFP AG application. And the HF example support accept/reject/End
 5.  Either press the reset button on your board or launch the debugger in your IDE to begin running the example.
 
 ## Running the demo
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 USB Host stack successfully initialized
 Bluetooth initialized
 BR/EDR set connectable and discoverable done
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Now Start SDP Service and the Service is now discoverable by remote device
->>
+
 the bellow commands have been supported:
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 "bt": BT related function
  USAGE: bt [dial|aincall|eincall]
     dial          dial out call.
@@ -45,7 +48,7 @@ the bellow commands have been supported:
     lastdial      call the last dial number.
     voicetag      Get Voice-tag Phone Number (BINP).
     multipcall    multiple call option
-    
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 1) "dial" is used to dial out a call with phone number after device is connected, usage :
    bt dial 114
 2) "aincall" is used to accept the incoming call when a call is coming, usage :
@@ -61,6 +64,7 @@ the bellow commands have been supported:
    Phone call number: 133xxxxxxxx
 7) "disclip" is used to disable CLIP notification, you can't see the incoming call phone number is showing in screen when enable the feature
 8) "ccwa" is used to enable enable call waiting notification, you can in waiting call phone number is showing in screen when enable the feature and have multiple call
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	>> > CALL WAITING Received Number : 133xxxxxxxx
 	> Please use <multipcall> to handle multipe call operation
 	 bt multipcall 0. Release all Held Calls and set UUDB tone (Reject new incoming waiting call)
@@ -68,6 +72,7 @@ the bellow commands have been supported:
 	 bt multipcall 2. Hold Active Call and accept already held/new waiting call
 	 bt multipcall 3. Conference all calls
 	 bt multipcall 4. Connect other calls and disconnect self from TW
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 9) "disccwa" is used to disable call waiting notification, you can in waiting call phone number is not showing in screen when enable the feature and have multiple call
 10) "micVolume" is used to set mic volume, the value  is from 1 to 15, usage as:
     bt micVolume 8

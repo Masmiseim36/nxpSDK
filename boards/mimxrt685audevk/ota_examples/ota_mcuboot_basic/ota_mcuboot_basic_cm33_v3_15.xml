@@ -33,7 +33,6 @@
     <definition extID="middleware.mcuboot.tinycrypt.MIMXRT685S"/>
     <definition extID="middleware.mcuboot.nxp_app_support.MIMXRT685S"/>
     <definition extID="iar"/>
-    <definition extID="mdk"/>
     <definition extID="armgcc"/>
     <definition extID="mcuxpresso"/>
     <definition extID="com.nxp.mcuxpresso"/>
@@ -62,6 +61,7 @@
           <value>XIP_EXTERNAL_FLASH</value>
           <value>SDK_DEBUGCONSOLE=1</value>
           <value>MCUX_META_BUILD</value>
+          <value>MIMXRT685S_cm33_SERIES</value>
           <value>SERIAL_PORT_TYPE_UART=1</value>
           <value>MFLASH_FILE_BASEADDR=7340032</value>
         </option>
@@ -121,13 +121,6 @@
       <files mask="ota_mcuboot_basic_cm33.ewp"/>
       <files mask="ota_mcuboot_basic_cm33.eww"/>
     </source>
-    <source path="mdk" project_relative_path="./" type="workspace" toolchain="mdk">
-      <files mask="ota_mcuboot_basic_cm33.uvoptx"/>
-      <files mask="ota_mcuboot_basic_cm33.uvprojx"/>
-      <files mask="JLinkSettings.JLinkScript"/>
-      <files mask="JLinkSettings.ini"/>
-      <files mask="ota_mcuboot_basic_cm33.uvmpw"/>
-    </source>
     <source path="armgcc" project_relative_path="./" type="workspace" toolchain="armgcc">
       <files mask="build_all.bat"/>
       <files mask="build_all.sh"/>
@@ -146,9 +139,6 @@
     </source>
     <source path="iar" project_relative_path="mimxrt685audevk" type="configuration" toolchain="iar">
       <files mask="FlashIMXRT600_EVK_FLEXSPI_B_QSPI.board"/>
-    </source>
-    <source path="." project_relative_path="source" type="configuration" toolchain="mdk">
-      <files mask="mimxrt685audevk_flash_mcubootable.ini"/>
     </source>
     <source path="linker/mcux_linkscripts" project_relative_path="linkscripts" type="src" toolchain="mcuxpresso">
       <files mask="main_data.ldt"/>
@@ -178,9 +168,6 @@
     </source>
     <source path="iar" project_relative_path="MIMXRT685S/iar" type="linker" toolchain="iar">
       <files mask="MIMXRT685Sxxxx_cm33_flash_mcuboot.icf"/>
-    </source>
-    <source path="mdk" project_relative_path="MIMXRT685S/mdk" type="linker" toolchain="mdk">
-      <files mask="MIMXRT685Sxxxx_cm33_flash_mcuboot.scf"/>
     </source>
     <source path="armgcc" project_relative_path="MIMXRT685S/armgcc" type="linker" toolchain="armgcc">
       <files mask="MIMXRT685Sxxxx_cm33_flash_mcuboot.ld"/>
@@ -212,6 +199,9 @@
     </source>
     <source path="." project_relative_path="doc" type="doc">
       <files mask="example_board_readme.md"/>
+    </source>
+    <source path="." project_relative_path="doc" type="doc">
+      <files mask="examples_shared_readme.md"/>
     </source>
   </example>
 </ksdk:examples>

@@ -68,6 +68,7 @@
           <value>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</value>
           <value>SDK_DEBUGCONSOLE=1</value>
           <value>MCUX_META_BUILD</value>
+          <value>MIMXRT685S_cm33_SERIES</value>
           <value>LV_CONF_INCLUDE_SIMPLE=1</value>
         </option>
         <option id="com.crt.advproject.gas.hdrlib" type="enum">
@@ -92,7 +93,7 @@
           <value>true</value>
         </option>
         <option id="com.crt.advproject.link.memory.heapAndStack" type="string">
-          <value>&amp;Heap:Default;Default;Default&amp;Stack:Default;Default;0x1000</value>
+          <value>&amp;Heap:Default;Default;Default&amp;Stack:Default;Default;0x1800</value>
         </option>
         <option id="gnu.c.link.option.other" type="stringList">
           <value>-no-warn-rwx-segments</value>
@@ -240,6 +241,9 @@
     </source>
     <source path="." project_relative_path="doc" type="doc">
       <files mask="lvgl_examples_readme.md"/>
+    </source>
+    <source path="." project_relative_path="doc" type="doc">
+      <files mask="examples_shared_readme.md"/>
     </source>
   </example>
 </ksdk:examples>

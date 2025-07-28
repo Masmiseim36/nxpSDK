@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2017, 2020, 2024 NXP
+ * Copyright 2016-2017, 2020, 2024-2025 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -75,9 +75,9 @@ int main(void)
     /* Configure negative inputs are coming from 3v domain. */
     ACMP_GetDefaultDiscreteModeConfig(&acmpDiscreteconfig);
 #if defined(FSL_FEATURE_ACMP_HAS_C3_REG) && (FSL_FEATURE_ACMP_HAS_C3_REG == 1U)
-#if !(defined(FSL_FEATURE_ACMP_HAS_NO_3V_DOMAIN) && (FSL_FEATURE_ACMP_HAS_NO_3V_DOMAIN == 1U))
+#if !(defined(FSL_FEATURE_ACMP_HAS_C3_RDIVE_BIT) && (FSL_FEATURE_ACMP_HAS_C3_RDIVE_BIT == 0U))
     acmpDiscreteconfig.enableNegativeChannelDiscreteMode = true;
-#endif /* FSL_FEATURE_ACMP_HAS_NO_3V_DOMAIN */
+#endif /* FSL_FEATURE_ACMP_HAS_C3_RDIVE_BIT */
 #endif /* FSL_FEATURE_ACMP_HAS_C3_REG */
     ACMP_SetDiscreteModeConfig(DEMO_ACMP_BASEADDR, &acmpDiscreteconfig);
 

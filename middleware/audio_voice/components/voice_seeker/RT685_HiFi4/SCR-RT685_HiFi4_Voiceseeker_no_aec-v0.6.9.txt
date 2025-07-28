@@ -2,14 +2,14 @@ NXP Software Content Register
 
 Release - VoiceSeeker_v0.6.9
 
-Outgoing License: LA_OPT_NXP_Software_License v56 April 2024 - Additional distribution license granted - Section 2.3 applies
+Outgoing License: LA_OPT_NXP_Software_License v60 February 2025 - Additional distribution license granted - Section 2.3 applies
 License File:     LICENSE.txt
 
 Release tag: v0.6.9
 
 
 #### Voiceseeker no AEC package #######
-Outgoing License : LA_OPT_NXP_Software_License v56 April 2024 - Additional distribution license granted - Section 2.3 applies
+Outgoing License : LA_OPT_NXP_Software_License v60 February 2025 - Additional distribution license granted - Section 2.3 applies
 License file : LICENSE.txt
 Author: NXP
 Format: Voiceseeker no AEC package
@@ -31,7 +31,7 @@ Origin:                     NXP
 
 Name:                       libvoiceseeker_no_aec.a
 Version:                    0.6.9
-Outgoing License:           LA_OPT_NXP_Software_License v56 April 2024 - Additional distribution license granted - Section 2.3 applies
+Outgoing License:           LA_OPT_NXP_Software_License v60 February 2025 - Additional distribution license granted - Section 2.3 applies
 License File:               ./LICENSE.txt
 Package Category:           library
 Type of Content:            binary and headers
@@ -43,12 +43,12 @@ Origin:                     NXP (proprietary)
 
 --------------------------------------------
 
-Name:                       NatureDSP                                   
-Version:                    1.2.0                             
-Outgoing License:           LA_OPT_NXP_Software_License v56 April 2024 - Appendix A: Cadence Design Systems applies.
+Name:                       NatureDSP
+Version:                    1.2.0
+Outgoing License:           LA_OPT_NXP_Software_License v60 February 2025 - Appendix A: Cadence Design Systems applies.
 License File:               LICENSE.txt
 Package Category:           library
-Type of Content:            object code                               
+Type of Content:            object code
 Description:                Digital Signal Processing for Xtensa HiFi4 Audio Engines
 Release Location:           ./lib/libvoiceseeker_no_aec.a
 Origin:                     Cadence Design Systems (Proprietary) 

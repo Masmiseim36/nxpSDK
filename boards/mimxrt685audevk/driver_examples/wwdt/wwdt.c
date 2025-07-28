@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2019 NXP
+ * Copyright 2016-2019, 2025 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -111,11 +111,11 @@ int main(void)
     /*
      * Set watchdog feed time constant to approximately 4s
      * Set watchdog warning time to 512 ticks after feed time constant
-     * Set watchdog window time to 1s
+     * Set watchdog window time to 2s
      */
     config.timeoutValue = wdtFreq * 4;
     config.warningValue = 512;
-    config.windowValue  = wdtFreq * 1;
+    config.windowValue  = wdtFreq * 2;
     /* Configure WWDT to reset on timeout */
     config.enableWatchdogReset = true;
     /* Setup watchdog clock frequency(Hz). */
@@ -138,6 +138,7 @@ int main(void)
              * watchdog event will occur. User can set window same as timeout value if required. */
             delayWwdtWindow();
             WWDT_Refresh(WWDT);
+            APP_LED_TOGGLE;
             PRINTF(" WDOG has been refreshed!\r\n");
             /* SDK_DelayAtLeastUs can be replaced by Detail User code*/
             SDK_DelayAtLeastUs(1000, SDK_DEVICE_MAXIMUM_CPU_CLOCK_FREQUENCY);

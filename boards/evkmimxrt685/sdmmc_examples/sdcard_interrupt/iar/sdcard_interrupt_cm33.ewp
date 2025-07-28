@@ -244,6 +244,7 @@
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT685SFVKB_cm33</state>
+          <state>MIMXRT685S_cm33_SERIES</state>
           <state>BOOT_HEADER_ENABLE=1</state>
           <state>USE_RTOS=0</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
@@ -571,6 +572,7 @@
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT685SFVKB_cm33</state>
+          <state>MIMXRT685S_cm33_SERIES</state>
         </option>
         <option>
           <name>AList</name>
@@ -1386,6 +1388,7 @@
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT685SFVKB_cm33</state>
+          <state>MIMXRT685S_cm33_SERIES</state>
           <state>BOOT_HEADER_ENABLE=1</state>
           <state>USE_RTOS=0</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
@@ -1713,6 +1716,7 @@
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT685SFVKB_cm33</state>
+          <state>MIMXRT685S_cm33_SERIES</state>
         </option>
         <option>
           <name>AList</name>
@@ -2528,6 +2532,7 @@
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT685SFVKB_cm33</state>
+          <state>MIMXRT685S_cm33_SERIES</state>
           <state>BOOT_HEADER_ENABLE=1</state>
           <state>USE_RTOS=0</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
@@ -2855,6 +2860,7 @@
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT685SFVKB_cm33</state>
+          <state>MIMXRT685S_cm33_SERIES</state>
         </option>
         <option>
           <name>AList</name>
@@ -3670,6 +3676,7 @@
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT685SFVKB_cm33</state>
+          <state>MIMXRT685S_cm33_SERIES</state>
           <state>BOOT_HEADER_ENABLE=1</state>
           <state>USE_RTOS=0</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
@@ -3997,6 +4004,7 @@
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT685SFVKB_cm33</state>
+          <state>MIMXRT685S_cm33_SERIES</state>
         </option>
         <option>
           <name>AList</name>
@@ -4700,6 +4708,9 @@
         <name>$PROJ_DIR$/../../../../../devices/MIMXRT685S/periph/PERI_DMIC.h</name>
       </file>
       <file>
+        <name>$PROJ_DIR$/../../../../../devices/MIMXRT685S/periph/PERI_ESPI.h</name>
+      </file>
+      <file>
         <name>$PROJ_DIR$/../../../../../devices/MIMXRT685S/periph/PERI_FLEXCOMM.h</name>
       </file>
       <file>
@@ -4976,13 +4987,13 @@
     <group>
       <name>osa</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../components/osa/fsl_os_abstraction.h</name>
-      </file>
-      <file>
         <name>$PROJ_DIR$/../../../../../components/osa/fsl_os_abstraction_bm.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../components/osa/fsl_os_abstraction_bm.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/osa/fsl_os_abstraction.h</name>
       </file>
     </group>
     <group>
@@ -5056,6 +5067,9 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../example_board_readme.md</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../examples_shared_readme.md</name>
     </file>
   </group>
 </project>

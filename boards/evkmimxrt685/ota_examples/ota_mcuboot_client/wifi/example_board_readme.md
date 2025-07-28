@@ -8,3 +8,7 @@ Hardware requirements
 Board settings
 ==============
 
+
+Wi-Fi
+=====
+[readme_modules.md](../../../wifi_examples/readme_modules.md)

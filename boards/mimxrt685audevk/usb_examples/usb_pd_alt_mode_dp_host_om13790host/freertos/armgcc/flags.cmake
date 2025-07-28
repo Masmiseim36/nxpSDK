@@ -15,6 +15,7 @@ SET(CMAKE_ASM_FLAGS_DEBUG " \
     -D__STARTUP_CLEAR_BSS \
     -DMCUXPRESSO_SDK \
     -DCPU_MIMXRT685SFVKB_cm33 \
+    -DMIMXRT685S_cm33_SERIES \
     -DDEBUG_CONSOLE_TRANSFER_NON_BLOCKING \
     -g \
     -mthumb \
@@ -26,6 +27,7 @@ SET(CMAKE_ASM_FLAGS_FLASH_DEBUG " \
     -D__STARTUP_CLEAR_BSS \
     -DMCUXPRESSO_SDK \
     -DCPU_MIMXRT685SFVKB_cm33 \
+    -DMIMXRT685S_cm33_SERIES \
     -DDEBUG_CONSOLE_TRANSFER_NON_BLOCKING \
     -g \
     -mthumb \
@@ -37,6 +39,7 @@ SET(CMAKE_ASM_FLAGS_RELEASE " \
     -D__STARTUP_CLEAR_BSS \
     -DMCUXPRESSO_SDK \
     -DCPU_MIMXRT685SFVKB_cm33 \
+    -DMIMXRT685S_cm33_SERIES \
     -DDEBUG_CONSOLE_TRANSFER_NON_BLOCKING \
     -mthumb \
     -mcpu=cortex-m33 \
@@ -47,6 +50,7 @@ SET(CMAKE_ASM_FLAGS_FLASH_RELEASE " \
     -D__STARTUP_CLEAR_BSS \
     -DMCUXPRESSO_SDK \
     -DCPU_MIMXRT685SFVKB_cm33 \
+    -DMIMXRT685S_cm33_SERIES \
     -DDEBUG_CONSOLE_TRANSFER_NON_BLOCKING \
     -mthumb \
     -mcpu=cortex-m33 \
@@ -56,11 +60,13 @@ SET(CMAKE_C_FLAGS_DEBUG " \
     ${CMAKE_C_FLAGS_DEBUG} \
     -include ${ProjDirPath}/../mcux_config.h \
     -DDEBUG \
+    -D__STARTUP_CLEAR_BSS \
     -DSDK_OS_FREE_RTOS \
     -DI2C_RETRY_TIMES=40000 \
     -DMCUX_META_BUILD \
     -DMCUXPRESSO_SDK \
     -DCPU_MIMXRT685SFVKB_cm33 \
+    -DMIMXRT685S_cm33_SERIES \
     -DDEBUG_CONSOLE_TRANSFER_NON_BLOCKING \
     -DBOOT_HEADER_ENABLE=1 \
     -DSERIAL_PORT_TYPE_UART=1 \
@@ -84,11 +90,13 @@ SET(CMAKE_C_FLAGS_FLASH_DEBUG " \
     ${CMAKE_C_FLAGS_FLASH_DEBUG} \
     -include ${ProjDirPath}/../mcux_config.h \
     -DDEBUG \
+    -D__STARTUP_CLEAR_BSS \
     -DSDK_OS_FREE_RTOS \
     -DI2C_RETRY_TIMES=40000 \
     -DMCUX_META_BUILD \
     -DMCUXPRESSO_SDK \
     -DCPU_MIMXRT685SFVKB_cm33 \
+    -DMIMXRT685S_cm33_SERIES \
     -DDEBUG_CONSOLE_TRANSFER_NON_BLOCKING \
     -DBOOT_HEADER_ENABLE=1 \
     -DSERIAL_PORT_TYPE_UART=1 \
@@ -112,11 +120,13 @@ SET(CMAKE_C_FLAGS_RELEASE " \
     ${CMAKE_C_FLAGS_RELEASE} \
     -include ${ProjDirPath}/../mcux_config.h \
     -DNDEBUG \
+    -D__STARTUP_CLEAR_BSS \
     -DSDK_OS_FREE_RTOS \
     -DI2C_RETRY_TIMES=40000 \
     -DMCUX_META_BUILD \
     -DMCUXPRESSO_SDK \
     -DCPU_MIMXRT685SFVKB_cm33 \
+    -DMIMXRT685S_cm33_SERIES \
     -DDEBUG_CONSOLE_TRANSFER_NON_BLOCKING \
     -DBOOT_HEADER_ENABLE=1 \
     -DSERIAL_PORT_TYPE_UART=1 \
@@ -139,11 +149,13 @@ SET(CMAKE_C_FLAGS_FLASH_RELEASE " \
     ${CMAKE_C_FLAGS_FLASH_RELEASE} \
     -include ${ProjDirPath}/../mcux_config.h \
     -DNDEBUG \
+    -D__STARTUP_CLEAR_BSS \
     -DSDK_OS_FREE_RTOS \
     -DI2C_RETRY_TIMES=40000 \
     -DMCUX_META_BUILD \
     -DMCUXPRESSO_SDK \
     -DCPU_MIMXRT685SFVKB_cm33 \
+    -DMIMXRT685S_cm33_SERIES \
     -DDEBUG_CONSOLE_TRANSFER_NON_BLOCKING \
     -DBOOT_HEADER_ENABLE=1 \
     -DSERIAL_PORT_TYPE_UART=1 \
@@ -168,6 +180,7 @@ SET(CMAKE_CXX_FLAGS_DEBUG " \
     -DMCUX_META_BUILD \
     -DMCUXPRESSO_SDK \
     -DCPU_MIMXRT685SFVKB_cm33 \
+    -DMIMXRT685S_cm33_SERIES \
     -DDEBUG_CONSOLE_TRANSFER_NON_BLOCKING \
     -DBOOT_HEADER_ENABLE=1 \
     -DSERIAL_PORT_TYPE_UART=1 \
@@ -195,6 +208,7 @@ SET(CMAKE_CXX_FLAGS_FLASH_DEBUG " \
     -DMCUX_META_BUILD \
     -DMCUXPRESSO_SDK \
     -DCPU_MIMXRT685SFVKB_cm33 \
+    -DMIMXRT685S_cm33_SERIES \
     -DDEBUG_CONSOLE_TRANSFER_NON_BLOCKING \
     -DBOOT_HEADER_ENABLE=1 \
     -DSERIAL_PORT_TYPE_UART=1 \
@@ -222,6 +236,7 @@ SET(CMAKE_CXX_FLAGS_RELEASE " \
     -DMCUX_META_BUILD \
     -DMCUXPRESSO_SDK \
     -DCPU_MIMXRT685SFVKB_cm33 \
+    -DMIMXRT685S_cm33_SERIES \
     -DDEBUG_CONSOLE_TRANSFER_NON_BLOCKING \
     -DBOOT_HEADER_ENABLE=1 \
     -DSERIAL_PORT_TYPE_UART=1 \
@@ -248,6 +263,7 @@ SET(CMAKE_CXX_FLAGS_FLASH_RELEASE " \
     -DMCUX_META_BUILD \
     -DMCUXPRESSO_SDK \
     -DCPU_MIMXRT685SFVKB_cm33 \
+    -DMIMXRT685S_cm33_SERIES \
     -DDEBUG_CONSOLE_TRANSFER_NON_BLOCKING \
     -DBOOT_HEADER_ENABLE=1 \
     -DSERIAL_PORT_TYPE_UART=1 \
@@ -286,9 +302,6 @@ SET(CMAKE_EXE_LINKER_FLAGS_DEBUG " \
     -mapcs \
     -Wl,--gc-sections \
     -Wl,-static \
-    -Wl,-z \
-    -Wl,muldefs \
-    -Wl,-Map=output.map \
     -Wl,--print-memory-usage \
     -mcpu=cortex-m33 \
     ${FPU} \
@@ -313,9 +326,6 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLASH_DEBUG " \
     -mapcs \
     -Wl,--gc-sections \
     -Wl,-static \
-    -Wl,-z \
-    -Wl,muldefs \
-    -Wl,-Map=output.map \
     -Wl,--print-memory-usage \
     -mcpu=cortex-m33 \
     ${FPU} \
@@ -339,9 +349,6 @@ SET(CMAKE_EXE_LINKER_FLAGS_RELEASE " \
     -mapcs \
     -Wl,--gc-sections \
     -Wl,-static \
-    -Wl,-z \
-    -Wl,muldefs \
-    -Wl,-Map=output.map \
     -Wl,--print-memory-usage \
     -mcpu=cortex-m33 \
     ${FPU} \
@@ -365,9 +372,6 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLASH_RELEASE " \
     -mapcs \
     -Wl,--gc-sections \
     -Wl,-static \
-    -Wl,-z \
-    -Wl,muldefs \
-    -Wl,-Map=output.map \
     -Wl,--print-memory-usage \
     -mcpu=cortex-m33 \
     ${FPU} \

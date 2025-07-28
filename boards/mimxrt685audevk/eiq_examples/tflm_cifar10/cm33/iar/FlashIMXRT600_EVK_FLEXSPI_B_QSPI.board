@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<flash_board>
+  <pass>
+    <loader>$TOOLKIT_DIR$\config\flashloader\NXP\FlashIMXRT600_EVK_FLEXSPI.flash</loader>
+    <range>CODE 0x08000000 0x0fffffff</range>
+        <args>--Opt0
+0xc1000001
+--Opt1
+0x20000006</args>
+  </pass>
+  <pass>
+    <loader>$TOOLKIT_DIR$\config\flashloader\NXP\FlashIMXRT600_EVK_FLEXSPI.flash</loader>
+    <range>CODE 0x18000000 0x1fffffff</range>
+    <rel_offset>-0x10000000</rel_offset>
+        <args>--Opt0
+0xc1000001
+--Opt1
+0x20000006</args>
+  </pass>
+</flash_board>
+
+

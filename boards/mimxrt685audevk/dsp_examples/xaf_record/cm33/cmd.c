@@ -127,10 +127,12 @@ static shell_status_t shellRecDMIC(shell_handle_t shellHandle, int32_t argc, cha
     srtm_message msg = {0};
     initMessage(&msg);
 
-#if (defined(XA_VIT_PRE_PROC) && !defined(MIMXRT798S_cm33_core0_SERIES))
+#if (defined(CODEC_WM8904_ENABLE) || defined(CODEC_CS42448_ENABLE))
+#if defined(XA_VIT_PRE_PROC)
     BOARD_MuteRightChannel(true);
-#elif (!defined(MIMXRT798S_cm33_core0_SERIES))
+#else
     BOARD_MuteRightChannel(BOARD_DMIC_NUM == 1);
+#endif
 #endif
 
     msg.head.category = SRTM_MessageCategory_AUDIO;

@@ -1,6 +1,5 @@
 /*
- * Copyright 2021 NXP
- * All rights reserved.
+ * Copyright 2021, 2025 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -13,9 +12,6 @@
 /*${macro:start}*/
 #define EXAMPLE_SLAVE              I3C
 #define I3C_SLAVE_CLOCK_FREQUENCY  CLOCK_GetLpOscFreq()
-#define I3C_TIME_OUT_INDEX         100000000
-#define I3C_MASTER_SLAVE_ADDR_7BIT 0x1EU
-#define I3C_DATA_LENGTH            34U
 /*${macro:end}*/
 
 /*******************************************************************************

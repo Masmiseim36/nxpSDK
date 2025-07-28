@@ -31,7 +31,7 @@ extern usb_host_mouse_instance_t g_HostHidMouse;
 
 /*${function:start}*/
 #if (defined USB_HOST_APP_CHARGER_TYPE_SWITCH) && (USB_HOST_APP_CHARGER_TYPE_SWITCH)
-void pint_intr_callback(pint_pin_int_t pintr, uint32_t pmatch_status)
+void pint_intr_callback(pint_pin_int_t pintr, pint_status_t *status)
 {
     g_HostHidMouse.switchChargerTypeTriggered = 1U;
 }
@@ -49,7 +49,8 @@ void APP_InitSwitchChargerTypePin(void)
     PINT_Init(PINT);
 
     /* Setup Pin Interrupt 1 for falling edge */
-    PINT_PinInterruptConfig(PINT, kPINT_PinInt0, kPINT_PinIntEnableFallEdge, pint_intr_callback);
+    PINT_PinInterruptConfig(PINT, kPINT_PinInt0, kPINT_PinIntEnableFallEdge);
+    PINT_SetCallback(PINT, pint_intr_callback);
 
     /* Enable callbacks for PINT */
     PINT_EnableCallback(PINT);

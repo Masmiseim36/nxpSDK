@@ -23,7 +23,7 @@ dma_channel_trigger_t s_channelTrigger = {
 /*${variable:end}*/
 
 /*${function:start}*/
-void PINT_Callback(pint_pin_int_t pintr, uint32_t pmatch_status)
+void PINT_Callback(pint_pin_int_t pintr, pint_status_t *status)
 {
     PRINTF("\r\n\r\nSW1 is pressed.");
 }
@@ -43,7 +43,8 @@ void DMA_HardwareTriggerConfig()
     INPUTMUX_Init(INPUTMUX);
     INPUTMUX_AttachSignal(INPUTMUX, kPINT_PatternMatchInp0Src, kINPUTMUX_GpioPort1Pin1ToPintsel); /* SW1 */
 
-    PINT_PinInterruptConfig(PINT, kPINT_PinInt0, kPINT_PinIntEnableRiseEdge, PINT_Callback);
+    PINT_PinInterruptConfig(PINT, kPINT_PinInt0, kPINT_PinIntEnableRiseEdge);
+    PINT_SetCallback(PINT, PINT_Callback);
 
     PINT_EnableCallbackByIndex(PINT, kPINT_PinInt0);
 

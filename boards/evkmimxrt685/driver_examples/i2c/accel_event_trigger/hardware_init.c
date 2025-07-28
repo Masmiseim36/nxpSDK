@@ -1,7 +1,6 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2019 NXP
- * All rights reserved.
+ * Copyright 2016-2019, 2025 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -17,7 +16,7 @@
 /*${header:end}*/
 
 /*${function:start}*/
-static void EXAMPLE_PinIntHandler(pint_pin_int_t pintr, uint32_t pmatch_status)
+static void EXAMPLE_PinIntHandler(pint_pin_int_t pintr, pint_status_t *status)
 {
     APP_ACCEL_IntHandler();
 }
@@ -37,7 +36,8 @@ void EXAMPLE_InitWakeupPin(void)
 
     /* Configure the interrupt for SW pin. */
     PINT_Init(PINT);
-    PINT_PinInterruptConfig(PINT, kPINT_PinInt0, kPINT_PinIntEnableFallEdge, EXAMPLE_PinIntHandler);
+    PINT_PinInterruptConfig(PINT, kPINT_PinInt0, kPINT_PinIntEnableFallEdge);
+    PINT_SetCallback(PINT, EXAMPLE_PinIntHandler);
     PINT_EnableCallback(PINT); /* Enable callbacks for PINT */
 
     EnableDeepSleepIRQ(EXAMPLE_INT_IRQn);

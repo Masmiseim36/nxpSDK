@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 NXP
+ * Copyright 2021,2025 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -231,6 +231,7 @@ static void MenuTask(void *pvParameters)
 {
     char input;
     uint32_t startTicks       = 0;
+    uint32_t currentTicks     = 0;
     s_menuTasksSemaphore      = xSemaphoreCreateBinary();
     s_recordPlaybackSemaphore = xSemaphoreCreateBinary();
     s_sx1502TasksSemaphore    = xSemaphoreCreateBinary();
@@ -263,8 +264,10 @@ static void MenuTask(void *pvParameters)
             }
             else
             {
-                /* no input, sysem going to sleep automatically */
-                if (xTaskGetTickCount() - startTicks > DEMO_AUTO_ENTER_SLEEP_MODE_TIME_MS)
+                currentTicks = xTaskGetTickCount();
+                /* no input, system going to sleep automatically */
+                if (((currentTicks >= startTicks) && (currentTicks - startTicks > DEMO_AUTO_ENTER_SLEEP_MODE_TIME_MS)) ||
+                    ((currentTicks < startTicks) && ((UINT32_MAX - startTicks + currentTicks + 1) > DEMO_AUTO_ENTER_SLEEP_MODE_TIME_MS)))
                 {
                     DEMO_EnterSleepMode();
                     break;
@@ -279,6 +282,7 @@ static void MenuTask(void *pvParameters)
 static void RecordPlayBackTask(void *pvParameters)
 {
     uint32_t startTicks = 0U;
+    uint32_t currentTicks = 0U;
     i2s_transfer_t i2sTxTransfer;
     s_recordPlaybackSemaphore = xSemaphoreCreateBinary();
 
@@ -314,15 +318,17 @@ static void RecordPlayBackTask(void *pvParameters)
                 DMA_StartTransfer(&s_memcpyDmaHandle0);
             }
 
-            /* only playack 10000 ticks */
-            if (xTaskGetTickCount() - startTicks > DEMO_RECORD_PLAYBACK_TIME_MS)
+            /* Safely handle tick count wraparound */
+            currentTicks = xTaskGetTickCount();
+            if (((currentTicks >= startTicks) && (currentTicks - startTicks > DEMO_RECORD_PLAYBACK_TIME_MS)) ||
+                ((currentTicks < startTicks) && ((UINT32_MAX - startTicks + currentTicks + 1) > DEMO_RECORD_PLAYBACK_TIME_MS)))
             {
                 DEMO_AbortRecordPlayback();
                 break;
             }
         }
 
-        /* Acitve menu task */
+        /* Active menu task */
         xSemaphoreGive(s_menuTasksSemaphore);
     }
 }

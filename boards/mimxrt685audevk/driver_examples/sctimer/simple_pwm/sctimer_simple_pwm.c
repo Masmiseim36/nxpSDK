@@ -1,7 +1,6 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2019 NXP
- * All rights reserved.
+ * Copyright 2016-2019, 2025 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -54,8 +53,8 @@ int main(void)
     /* Configure first PWM with frequency 24kHZ from first output */
     pwmParam.output           = DEMO_FIRST_SCTIMER_OUT;
     pwmParam.level            = kSCTIMER_HighTrue;
-    pwmParam.dutyCyclePercent = 50;
-    if (SCTIMER_SetupPwm(SCT0, &pwmParam, kSCTIMER_CenterAlignedPwm, 24000U, sctimerClock, &event) == kStatus_Fail)
+    pwmParam.dutyCyclePercent = DUTY_CYCLE_CH1;
+    if (SCTIMER_SetupPwm(SCT0, &pwmParam, PWM_MODE, 24000U, sctimerClock, &event) == kStatus_Fail)
     {
         return -1;
     }
@@ -63,8 +62,8 @@ int main(void)
     /* Configure second PWM with different duty cycle but same frequency as before */
     pwmParam.output           = DEMO_SECOND_SCTIMER_OUT;
     pwmParam.level            = kSCTIMER_LowTrue;
-    pwmParam.dutyCyclePercent = 20;
-    if (SCTIMER_SetupPwm(SCT0, &pwmParam, kSCTIMER_CenterAlignedPwm, 24000U, sctimerClock, &event) == kStatus_Fail)
+    pwmParam.dutyCyclePercent = DUTY_CYCLE_CH2;
+    if (SCTIMER_SetupPwm(SCT0, &pwmParam, PWM_MODE, 24000U, sctimerClock, &event) == kStatus_Fail)
     {
         return -1;
     }

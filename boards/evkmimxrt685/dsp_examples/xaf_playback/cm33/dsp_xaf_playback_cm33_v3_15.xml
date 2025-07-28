@@ -44,7 +44,6 @@
     <definition extID="component.i3c_adapter.MIMXRT685S"/>
     <definition extID="component.usart_adapter.MIMXRT685S"/>
     <definition extID="component.osa_template_config.MIMXRT685S"/>
-    <definition extID="component.osa_interface.MIMXRT685S"/>
     <definition extID="component.osa.MIMXRT685S"/>
     <definition extID="component.osa_free_rtos.MIMXRT685S"/>
     <definition extID="driver.pca9420.MIMXRT685S"/>
@@ -65,6 +64,7 @@
     <definition extID="middleware.freertos-kernel.MIMXRT685S"/>
     <definition extID="middleware.freertos-kernel.heap_4.MIMXRT685S"/>
     <definition extID="middleware.freertos-kernel.cm33_non_trustzone.MIMXRT685S"/>
+    <definition extID="middleware.freertos-kernel.extension.MIMXRT685S"/>
     <definition extID="middleware.freertos-kernel.config.MIMXRT685S"/>
     <definition extID="iar"/>
     <definition extID="mdk"/>
@@ -74,7 +74,7 @@
     <definition extID="com.crt.advproject.config.exe.debug"/>
     <definition extID="com.crt.advproject.config.exe.release"/>
   </externalDefinitions>
-  <example id="evkmimxrt685_dsp_xaf_playback_cm33" name="dsp_xaf_playback_cm33" device_core="cm33_MIMXRT685S" dependency="platform.drivers.flash_config.evkmimxrt685.MIMXRT685S CMSIS_Include_core_cm.MIMXRT685S device.MIMXRT685S_CMSIS.MIMXRT685S device.MIMXRT685S_system.MIMXRT685S device.MIMXRT685S_startup.MIMXRT685S platform.drivers.clock.MIMXRT685S platform.drivers.dsp.MIMXRT685S platform.drivers.i2s_bridge.MIMXRT685S platform.drivers.inputmux_connections.MIMXRT685S platform.drivers.power.MIMXRT685S platform.drivers.reset.MIMXRT685S platform.drivers.cache_cache64.MIMXRT685S platform.drivers.common.MIMXRT685S platform.drivers.flexcomm.MIMXRT685S platform.drivers.flexcomm_usart.MIMXRT685S platform.drivers.flexcomm_i2c.MIMXRT685S platform.drivers.flexspi.MIMXRT685S platform.drivers.i3c.MIMXRT685S platform.drivers.inputmux.MIMXRT685S platform.drivers.lpc_gpio.MIMXRT685S platform.drivers.lpc_iopctl.MIMXRT685S platform.drivers.mu.MIMXRT685S platform.drivers.sema42.MIMXRT685S platform.drivers.usdhc.MIMXRT685S platform.utilities.assert.MIMXRT685S platform.utilities.misc_utilities.MIMXRT685S component.lists.MIMXRT685S utility.str.MIMXRT685S utility.debug_console.MIMXRT685S utility.shell.MIMXRT685S component.serial_manager.MIMXRT685S component.serial_manager_uart.MIMXRT685S component.codec_i2c.MIMXRT685S driver.codec.MIMXRT685S component.codec_adapters.MIMXRT685S component.wm8904_adapter.MIMXRT685S driver.wm8904.MIMXRT685S component.rt_gpio_adapter.MIMXRT685S component.i2c_adapter_interface.MIMXRT685S component.i3c_adapter.MIMXRT685S component.usart_adapter.MIMXRT685S component.osa_template_config.MIMXRT685S component.osa_interface.MIMXRT685S component.osa.MIMXRT685S component.osa_free_rtos.MIMXRT685S driver.pca9420.MIMXRT685S middleware.fatfs.MIMXRT685S middleware.fatfs.template_sd.MIMXRT685S middleware.fatfs.sd.MIMXRT685S middleware.multicore.rpmsg-lite.MIMXRT685S middleware.multicore.rpmsg-lite.queue.MIMXRT685S middleware.multicore.rpmsg-lite.ns.MIMXRT685S middleware.multicore.rpmsg-lite.freertos.MIMXRT685S middleware.multicore.rpmsg-lite.evkmimxrt685.MIMXRT685S middleware.sdmmc.common.MIMXRT685S middleware.sdmmc.osa.freertos.MIMXRT685S middleware.sdmmc.sd.MIMXRT685S middleware.sdmmc.host.usdhc.MIMXRT685S middleware.sdmmc.host.usdhc.non_blocking.MIMXRT685S middleware.sdmmc.usdhc.template.MIMXRT685S middleware.freertos-kernel.MIMXRT685S middleware.freertos-kernel.heap_4.MIMXRT685S middleware.freertos-kernel.cm33_non_trustzone.MIMXRT685S middleware.freertos-kernel.config.MIMXRT685S" category="dsp_examples">
+  <example id="evkmimxrt685_dsp_xaf_playback_cm33" name="dsp_xaf_playback_cm33" device_core="cm33_MIMXRT685S" dependency="platform.drivers.flash_config.evkmimxrt685.MIMXRT685S CMSIS_Include_core_cm.MIMXRT685S device.MIMXRT685S_CMSIS.MIMXRT685S device.MIMXRT685S_system.MIMXRT685S device.MIMXRT685S_startup.MIMXRT685S platform.drivers.clock.MIMXRT685S platform.drivers.dsp.MIMXRT685S platform.drivers.i2s_bridge.MIMXRT685S platform.drivers.inputmux_connections.MIMXRT685S platform.drivers.power.MIMXRT685S platform.drivers.reset.MIMXRT685S platform.drivers.cache_cache64.MIMXRT685S platform.drivers.common.MIMXRT685S platform.drivers.flexcomm.MIMXRT685S platform.drivers.flexcomm_usart.MIMXRT685S platform.drivers.flexcomm_i2c.MIMXRT685S platform.drivers.flexspi.MIMXRT685S platform.drivers.i3c.MIMXRT685S platform.drivers.inputmux.MIMXRT685S platform.drivers.lpc_gpio.MIMXRT685S platform.drivers.lpc_iopctl.MIMXRT685S platform.drivers.mu.MIMXRT685S platform.drivers.sema42.MIMXRT685S platform.drivers.usdhc.MIMXRT685S platform.utilities.assert.MIMXRT685S platform.utilities.misc_utilities.MIMXRT685S component.lists.MIMXRT685S utility.str.MIMXRT685S utility.debug_console.MIMXRT685S utility.shell.MIMXRT685S component.serial_manager.MIMXRT685S component.serial_manager_uart.MIMXRT685S component.codec_i2c.MIMXRT685S driver.codec.MIMXRT685S component.codec_adapters.MIMXRT685S component.wm8904_adapter.MIMXRT685S driver.wm8904.MIMXRT685S component.rt_gpio_adapter.MIMXRT685S component.i2c_adapter_interface.MIMXRT685S component.i3c_adapter.MIMXRT685S component.usart_adapter.MIMXRT685S component.osa_template_config.MIMXRT685S component.osa.MIMXRT685S component.osa_free_rtos.MIMXRT685S driver.pca9420.MIMXRT685S middleware.fatfs.MIMXRT685S middleware.fatfs.template_sd.MIMXRT685S middleware.fatfs.sd.MIMXRT685S middleware.multicore.rpmsg-lite.MIMXRT685S middleware.multicore.rpmsg-lite.queue.MIMXRT685S middleware.multicore.rpmsg-lite.ns.MIMXRT685S middleware.multicore.rpmsg-lite.freertos.MIMXRT685S middleware.multicore.rpmsg-lite.evkmimxrt685.MIMXRT685S middleware.sdmmc.common.MIMXRT685S middleware.sdmmc.osa.freertos.MIMXRT685S middleware.sdmmc.sd.MIMXRT685S middleware.sdmmc.host.usdhc.MIMXRT685S middleware.sdmmc.host.usdhc.non_blocking.MIMXRT685S middleware.sdmmc.usdhc.template.MIMXRT685S middleware.freertos-kernel.MIMXRT685S middleware.freertos-kernel.heap_4.MIMXRT685S middleware.freertos-kernel.cm33_non_trustzone.MIMXRT685S middleware.freertos-kernel.extension.MIMXRT685S middleware.freertos-kernel.config.MIMXRT685S" category="dsp_examples">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -105,6 +105,7 @@
           <value>DSP_NCACHE</value>
           <value>SDK_DEBUGCONSOLE=1</value>
           <value>MCUX_META_BUILD</value>
+          <value>MIMXRT685S_cm33_SERIES</value>
           <value>OSA_USED</value>
           <value>SERIAL_PORT_TYPE_UART=1</value>
           <value>SDK_I2C_BASED_COMPONENT_USED=1</value>
@@ -305,6 +306,9 @@
     </source>
     <source path="." project_relative_path="doc" type="doc">
       <files mask="example_board_readme.md"/>
+    </source>
+    <source path="." project_relative_path="doc" type="doc">
+      <files mask="examples_shared_readme.md"/>
     </source>
   </example>
 </ksdk:examples>

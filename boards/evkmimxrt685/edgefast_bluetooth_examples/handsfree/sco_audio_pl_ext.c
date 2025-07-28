@@ -14,6 +14,7 @@
 #include "fsl_codec_adapter.h"
 #include "fsl_debug_console.h"
 #include "ringtone.h"
+#include <sys/atomic.h>
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -25,7 +26,7 @@
 #define OVER_SAMPLE_RATE        (256U)
 
 #define BUFFER_SIZE      (1024U)
-#define BUFFER_NUMBER    (4U)
+#define BUFFER_NUMBER    (4)
 #define AUDIO_DUMMY_SIZE (64U)
 #define HFP_STREAMER_TASK_PRIORITY (6U)
 
@@ -70,9 +71,9 @@ OSA_SEMAPHORE_HANDLE_DEFINE(xSemaphoreScoAudio);
 
 static volatile uint8_t saiEnable= 0;
 static uint32_t txMic_index = 0U, rxMic_index = 0U;
-volatile int32_t emptyMicBlock = BUFFER_NUMBER;
+atomic_t emptyMicBlock = BUFFER_NUMBER;
 static uint32_t txSpeaker_index = 0U, rxSpeaker_index = 0U;
-volatile int32_t emptySpeakerBlock = BUFFER_NUMBER;
+atomic_t emptySpeakerBlock = BUFFER_NUMBER;
 static uint32_t rxSpeaker_test = 0U, rxMic_test = 0U;
 static volatile uint8_t s_ringTone = 0;
 static uint32_t cpy_index = 0U, tx_index = 0U;
@@ -114,9 +115,9 @@ static void txMicCallback(hal_audio_handle_t handle, hal_audio_status_t completi
     else
     {
 #if SCO_SAI_LOOPBACK
-        emptySpeakerBlock++;
+        (void)atomic_inc(&emptySpeakerBlock);
 #else
-        emptyMicBlock++;
+        (void)atomic_inc(&emptyMicBlock);
 #endif
         rxMic_test++;
         OSA_SemaphorePost(xSemaphoreScoAudio);
@@ -139,10 +140,10 @@ static void txMicCallback(hal_audio_handle_t handle, hal_audio_status_t completi
         if (s_8978ConsumerActualData)
         {
             s_8978ConsumerActualData = 0;
-            emptyMicBlock++;
+            (void)atomic_inc(&emptyMicBlock);
             OSA_SemaphorePost(xSemaphoreScoAudio);
 
-            if (emptyMicBlock < (BUFFER_NUMBER))
+            if (atomic_get(&emptyMicBlock) < (BUFFER_NUMBER))
             {
                 s_8978ConsumerActualData = 1;
                 xfer.data                = MicBuffer + txMic_index * BUFFER_SIZE;
@@ -168,7 +169,7 @@ static void txMicCallback(hal_audio_handle_t handle, hal_audio_status_t completi
         }
         else
         {
-            if (emptyMicBlock < (BUFFER_NUMBER - 2))
+            if (atomic_get(&emptyMicBlock) < (BUFFER_NUMBER - 2))
             {
                 s_8978ConsumerActualData = 1;
                 xfer.data                = MicBuffer + txMic_index * BUFFER_SIZE;
@@ -201,16 +202,16 @@ static void txSpeakerCallback(hal_audio_handle_t handle, hal_audio_status_t comp
     hal_audio_transfer_t xfer;
     if (s_ringTone == 1U)
     {
-        if ((emptySpeakerBlock > 0U) && (cpy_index < MUSIC_LEN / BUFFER_SIZE))
+        if ((atomic_get(&emptySpeakerBlock) > 0U) && (cpy_index < MUSIC_LEN / BUFFER_SIZE))
         {
             /* Fill in the buffers. */
             memcpy((uint8_t *)&SpeakerBuffer[BUFFER_SIZE * (cpy_index % BUFFER_NUMBER)],
                    (uint8_t *)&music[cpy_index * BUFFER_SIZE], sizeof(uint8_t) * BUFFER_SIZE);
-            emptySpeakerBlock--;
+            (void)atomic_dec(&emptySpeakerBlock);
             cpy_index++;
         }
 
-        if (emptySpeakerBlock < BUFFER_NUMBER)
+        if (atomic_get(&emptySpeakerBlock) < BUFFER_NUMBER)
         {
             /*  xfer structure */
             xfer.data     = (uint8_t *)&SpeakerBuffer[BUFFER_SIZE * (tx_index % BUFFER_NUMBER)];
@@ -220,7 +221,7 @@ static void txSpeakerCallback(hal_audio_handle_t handle, hal_audio_status_t comp
             {
                 tx_index++;
             }
-            emptySpeakerBlock++;
+            (void)atomic_inc(&emptySpeakerBlock);
         }
     }
     else
@@ -228,10 +229,10 @@ static void txSpeakerCallback(hal_audio_handle_t handle, hal_audio_status_t comp
         if (s_consumerActualData)
         {
             s_consumerActualData = 0;
-            emptySpeakerBlock++;
+            (void)atomic_inc(&emptySpeakerBlock);
             OSA_SemaphorePost(xSemaphoreScoAudio);
 
-            if (emptySpeakerBlock < (BUFFER_NUMBER))
+            if (atomic_get(&emptySpeakerBlock) < (BUFFER_NUMBER))
             {
                 s_consumerActualData = 1;
                 xfer.data            = SpeakerBuffer + txSpeaker_index * BUFFER_SIZE;
@@ -256,7 +257,7 @@ static void txSpeakerCallback(hal_audio_handle_t handle, hal_audio_status_t comp
         }
         else
         {
-            if (emptySpeakerBlock < (BUFFER_NUMBER - 2))
+            if (atomic_get(&emptySpeakerBlock) < (BUFFER_NUMBER - 2))
             {
                 s_consumerActualData = 1;
                 xfer.data            = SpeakerBuffer + txSpeaker_index * BUFFER_SIZE;
@@ -409,9 +410,9 @@ static API_RESULT audio_setup_pl_ext(uint8_t isRing, SCO_AUDIO_EP_INFO *ep_info)
 {
     txMic_index     = 0U;
     rxMic_index     = 0U;
-    emptyMicBlock   = BUFFER_NUMBER;
     txSpeaker_index = 0U, rxSpeaker_index = 0U;
-    emptySpeakerBlock = BUFFER_NUMBER;
+    (void)atomic_set(&emptySpeakerBlock, BUFFER_NUMBER);
+    (void)atomic_set(&emptyMicBlock, BUFFER_NUMBER);
     if (isRing)
     {
         Init_Board_RingTone_Audio(ep_info->sampl_freq, ep_info->sample_len);
@@ -448,7 +449,7 @@ void SCO_Edma_Task(void *handle)
         }
 #endif
 #if SCO_SAI_LOOPBACK
-        if (emptySpeakerBlock > 0)
+        if (atomic_get(&emptySpeakerBlock) > 0)
         {
             xfer.data     = SpeakerBuffer + rxSpeaker_index * BUFFER_SIZE;
             xfer.dataSize = BUFFER_SIZE;
@@ -462,7 +463,7 @@ void SCO_Edma_Task(void *handle)
                 rxSpeaker_index = 0U;
             }
         }
-        if (emptySpeakerBlock < BUFFER_NUMBER)
+        if (atomic_get(&emptySpeakerBlock) < BUFFER_NUMBER)
         {
             xfer.data     = SpeakerBuffer + txSpeaker_index * BUFFER_SIZE;
             xfer.dataSize = BUFFER_SIZE;
@@ -477,14 +478,12 @@ void SCO_Edma_Task(void *handle)
             }
         }
 #else
-        if (emptyMicBlock > 0U)
+        if (atomic_get(&emptyMicBlock) > 0U)
         {
             xfer.data     = MicBuffer + rxMic_index * BUFFER_SIZE;
             xfer.dataSize = BUFFER_SIZE;
 
-            OSA_ENTER_CRITICAL();
-            emptyMicBlock--;
-            OSA_EXIT_CRITICAL();
+            (void)atomic_dec(&emptyMicBlock);
             if (kStatus_HAL_AudioSuccess == HAL_AudioTransferReceiveNonBlocking((hal_audio_handle_t)&rx_mic_handle[0], &xfer))
             {
                 rxMic_index++;
@@ -495,7 +494,7 @@ void SCO_Edma_Task(void *handle)
             }
         }
 #if CODEC_SAI_LOOPBACK
-        if (emptyMicBlock < BUFFER_NUMBER)
+        if (atomic_get(&emptyMicBlock) < BUFFER_NUMBER)
         {
             xfer.data     = MicBuffer + txMic_index * BUFFER_SIZE;
             xfer.dataSize = BUFFER_SIZE;
@@ -510,14 +509,12 @@ void SCO_Edma_Task(void *handle)
             }
         }
 #else
-        if (emptySpeakerBlock > 0U)
+        if (atomic_get(&emptySpeakerBlock) > 0U)
         {
             xfer.data     = SpeakerBuffer + rxSpeaker_index * BUFFER_SIZE;
             xfer.dataSize = BUFFER_SIZE;
 
-            OSA_ENTER_CRITICAL();
-            emptySpeakerBlock--;
-            OSA_EXIT_CRITICAL();
+            (void)atomic_dec(&emptySpeakerBlock);
             if (kStatus_HAL_AudioSuccess == HAL_AudioTransferReceiveNonBlocking((hal_audio_handle_t)&rx_speaker_handle[0], &xfer))
             {
                 rxSpeaker_index++;
@@ -571,7 +568,7 @@ API_RESULT sco_audio_start_pl_ext(void)
         (void)result;
     }
 
-    emptyMicBlock = 0;
+    (void)atomic_set(&emptyMicBlock, 0);
     for (uint8_t index = 0; index < BUFFER_NUMBER; ++index)
     {
         xfer.data     = MicBuffer + rxMic_index * BUFFER_SIZE;
@@ -587,7 +584,7 @@ API_RESULT sco_audio_start_pl_ext(void)
         }
     }
 
-    emptySpeakerBlock = 0;
+    (void)atomic_set(&emptySpeakerBlock, 0);
     for (uint8_t index = 0; index < BUFFER_NUMBER; ++index)
     {
         xfer.data     = SpeakerBuffer + rxSpeaker_index * BUFFER_SIZE;
@@ -639,7 +636,7 @@ API_RESULT platform_audio_play_ringtone()
     {
         return API_SUCCESS;
     }
-    emptySpeakerBlock = BUFFER_NUMBER;
+    (void)atomic_set(&emptySpeakerBlock, BUFFER_NUMBER);
     if (s_ringTone == 0)
     {
         if (sco_audio_setup == 1)
@@ -655,15 +652,15 @@ API_RESULT platform_audio_play_ringtone()
     }
 
     memset(SpeakerBuffer, 0x0, BUFFER_NUMBER * BUFFER_SIZE);
-    if ((emptySpeakerBlock > 0U) && (cpy_index < MUSIC_LEN / BUFFER_SIZE))
+    if ((atomic_get(&emptySpeakerBlock) > 0U) && (cpy_index < MUSIC_LEN / BUFFER_SIZE))
     {
         /* Fill in the buffers. */
         memcpy((uint8_t *)&SpeakerBuffer[BUFFER_SIZE * (cpy_index % BUFFER_NUMBER)],
                (uint8_t *)&music[cpy_index * BUFFER_SIZE], sizeof(uint8_t) * BUFFER_SIZE);
-        emptySpeakerBlock--;
+        (void)atomic_dec(&emptySpeakerBlock);
         cpy_index++;
     }
-    if (emptySpeakerBlock < BUFFER_NUMBER)
+    if (atomic_get(&emptySpeakerBlock) < BUFFER_NUMBER)
     {
         /*  xfer structure */
         xfer.data     = (uint8_t *)&SpeakerBuffer[BUFFER_SIZE * (tx_index % BUFFER_NUMBER)];
@@ -673,7 +670,7 @@ API_RESULT platform_audio_play_ringtone()
         {
             tx_index++;
         }
-        emptySpeakerBlock++;
+        (void)atomic_inc(&emptySpeakerBlock);
     }
     return API_SUCCESS;
 }

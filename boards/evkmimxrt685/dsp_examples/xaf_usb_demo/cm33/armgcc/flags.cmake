@@ -17,6 +17,7 @@ SET(CMAKE_ASM_FLAGS_FLASH_DEBUG " \
     -DDSP_NCACHE \
     -DMCUXPRESSO_SDK \
     -DCPU_MIMXRT685SFVKB_cm33 \
+    -DMIMXRT685S_cm33_SERIES \
     -DOSA_USED \
     -g \
     -mthumb \
@@ -30,6 +31,7 @@ SET(CMAKE_ASM_FLAGS_FLASH_RELEASE " \
     -DDSP_NCACHE \
     -DMCUXPRESSO_SDK \
     -DCPU_MIMXRT685SFVKB_cm33 \
+    -DMIMXRT685S_cm33_SERIES \
     -DOSA_USED \
     -mthumb \
     -mcpu=cortex-m33 \
@@ -39,17 +41,20 @@ SET(CMAKE_C_FLAGS_FLASH_DEBUG " \
     ${CMAKE_C_FLAGS_FLASH_DEBUG} \
     -include ${ProjDirPath}/../mcux_config.h \
     -DDEBUG \
+    -D__STARTUP_CLEAR_BSS \
     -DXA_CAPTURER=1 \
     -DXA_PCM_GAIN=1 \
     -DXA_RENDERER \
     -DUSB_STACK_FREERTOS \
     -DDSP_IMAGE_COPY_TO_RAM=1 \
+    -D__USE_SHMEM \
     -DDSP_NCACHE \
     -DUSB_STACK_FREERTOS_HEAP_SIZE=16384 \
     -DUSB_STACK_USE_DEDICATED_RAM=1 \
     -DMCUX_META_BUILD \
     -DMCUXPRESSO_SDK \
     -DCPU_MIMXRT685SFVKB_cm33 \
+    -DMIMXRT685S_cm33_SERIES \
     -DOSA_USED \
     -DBOOT_HEADER_ENABLE=1 \
     -DSERIAL_PORT_TYPE_UART=1 \
@@ -78,17 +83,20 @@ SET(CMAKE_C_FLAGS_FLASH_RELEASE " \
     ${CMAKE_C_FLAGS_FLASH_RELEASE} \
     -include ${ProjDirPath}/../mcux_config.h \
     -DNDEBUG \
+    -D__STARTUP_CLEAR_BSS \
     -DXA_CAPTURER=1 \
     -DXA_PCM_GAIN=1 \
     -DXA_RENDERER \
     -DUSB_STACK_FREERTOS \
     -DDSP_IMAGE_COPY_TO_RAM=1 \
+    -D__USE_SHMEM \
     -DDSP_NCACHE \
     -DUSB_STACK_FREERTOS_HEAP_SIZE=16384 \
     -DUSB_STACK_USE_DEDICATED_RAM=1 \
     -DMCUX_META_BUILD \
     -DMCUXPRESSO_SDK \
     -DCPU_MIMXRT685SFVKB_cm33 \
+    -DMIMXRT685S_cm33_SERIES \
     -DOSA_USED \
     -DBOOT_HEADER_ENABLE=1 \
     -DSERIAL_PORT_TYPE_UART=1 \
@@ -118,6 +126,7 @@ SET(CMAKE_CXX_FLAGS_FLASH_DEBUG " \
     -DMCUX_META_BUILD \
     -DMCUXPRESSO_SDK \
     -DCPU_MIMXRT685SFVKB_cm33 \
+    -DMIMXRT685S_cm33_SERIES \
     -DOSA_USED \
     -DBOOT_HEADER_ENABLE=1 \
     -DSERIAL_PORT_TYPE_UART=1 \
@@ -144,6 +153,7 @@ SET(CMAKE_CXX_FLAGS_FLASH_RELEASE " \
     -DMCUX_META_BUILD \
     -DMCUXPRESSO_SDK \
     -DCPU_MIMXRT685SFVKB_cm33 \
+    -DMIMXRT685S_cm33_SERIES \
     -DOSA_USED \
     -DBOOT_HEADER_ENABLE=1 \
     -DSERIAL_PORT_TYPE_UART=1 \
@@ -167,27 +177,7 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLASH_DEBUG " \
     ${CMAKE_EXE_LINKER_FLAGS_FLASH_DEBUG} \
     -g \
     -Xlinker \
-    -Map=output.map \
-    -Wall \
-    -fno-common \
-    -ffunction-sections \
-    -fdata-sections \
-    -fno-builtin \
-    -mthumb \
-    -mapcs \
-    -Wl,--gc-sections \
-    -Wl,-static \
-    -Wl,-z \
-    -Wl,muldefs \
-    -Wl,-Map=output.map \
-    -Wl,--print-memory-usage \
-    -mcpu=cortex-m33 \
-    ${FPU} \
-    ${SPECS} \
-    -T\"${ProjDirPath}/MIMXRT685Sxxxx_cm33_flash.ld\" -static \
-")
-SET(CMAKE_EXE_LINKER_FLAGS_FLASH_RELEASE " \
-    ${CMAKE_EXE_LINKER_FLAGS_FLASH_RELEASE} \
+    --defsym=__use_shmem__=1 \
     -Xlinker \
     -Map=output.map \
     -Wall \
@@ -199,9 +189,27 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLASH_RELEASE " \
     -mapcs \
     -Wl,--gc-sections \
     -Wl,-static \
-    -Wl,-z \
-    -Wl,muldefs \
-    -Wl,-Map=output.map \
+    -Wl,--print-memory-usage \
+    -mcpu=cortex-m33 \
+    ${FPU} \
+    ${SPECS} \
+    -T\"${ProjDirPath}/MIMXRT685Sxxxx_cm33_flash.ld\" -static \
+")
+SET(CMAKE_EXE_LINKER_FLAGS_FLASH_RELEASE " \
+    ${CMAKE_EXE_LINKER_FLAGS_FLASH_RELEASE} \
+    -Xlinker \
+    --defsym=__use_shmem__=1 \
+    -Xlinker \
+    -Map=output.map \
+    -Wall \
+    -fno-common \
+    -ffunction-sections \
+    -fdata-sections \
+    -fno-builtin \
+    -mthumb \
+    -mapcs \
+    -Wl,--gc-sections \
+    -Wl,-static \
     -Wl,--print-memory-usage \
     -mcpu=cortex-m33 \
     ${FPU} \

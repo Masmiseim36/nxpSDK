@@ -42,6 +42,8 @@ For more details see XAF documentation.
 ## Known issues
 The "file stop" command doesn't stop the playback for some small files (with low sample rate).
 
+This example cannot be imported into Config Tools because the xtensa toolchain is not supported.
+
 ## Supported Boards
 - [EVK-MIMXRT595](../../_boards/evkmimxrt595/dsp_examples/xaf_playback/example_board_readme.md)
 - [EVK-MIMXRT685](../../_boards/evkmimxrt685/dsp_examples/xaf_playback/example_board_readme.md)

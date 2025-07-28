@@ -1,5 +1,6 @@
-Overview
-========
+# tflm_cifar10
+
+## Overview
 Convolutional neural network (CNN) example with the use of
 convolution, ReLU activation, pooling and fully-connected functions.
 
@@ -53,42 +54,9 @@ Files:
   model/output_postproc.cpp - model output processing
   video/* - camera and display handling
 
+This example cannot be imported into Config Tools because the xtensa toolchain is not supported.
 
-SDK version
-===========
-- Version: 2.16.000
-
-Toolchain supported
-===================
-- Xtensa C Compiler  14.01
-
-Hardware requirements
-=====================
-- Mini/micro USB cable
-- EVK-MIMXRT685 board
-- Personal computer
-
-Board settings
-==============
-
-Prepare the Demo
-================
-1. Build the HiFi4 project first to create the binary image.
-2. Replace the DSP binary files in the Cortex-M33 project with the files
-   generated into the <example_root>/hifi4/binary directory if necessary.
-3. Continue with the Cortex-M33 master project.
-4. Connect a USB cable between the host PC and the OpenSDA USB port on the target board.
-5. Open a serial terminal with the following settings:
-   - 115200 baud rate
-   - 8 data bits
-   - No parity
-   - One stop bit
-   - No flow control
-6. Download the program to the target board.
-7. Either press the reset button on your board or launch the debugger in your IDE to begin running the demo.
-
-Running the demo
-================
+## Running the demo
 The log below shows the output of the demo in the terminal window (compiled with ARM GCC):
 
 CIFAR-10 object recognition example using a TensorFlow Lite model.
@@ -121,3 +89,9 @@ Data for inference are ready
      Inference time: 64 ms
      Detected:      horse (60%)
 ----------------------------------------
+
+
+## Supported Boards
+- [MIMXRT700-EVK]
+- [EVK-MIMXRT685]
+- [MIMXRT685-AUD-EVK]

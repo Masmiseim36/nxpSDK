@@ -15,7 +15,7 @@
 #include "usb_host_config.h"
 #include "usb_phy.h"
 #include "usb_host.h"
-#include "fsl_adapter_flash.h"
+
 #if (defined(BUTTON_COUNT) && (BUTTON_COUNT > 0U))
 #include "fsl_component_button.h"
 #endif

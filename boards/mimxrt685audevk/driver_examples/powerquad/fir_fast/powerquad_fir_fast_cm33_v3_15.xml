@@ -53,6 +53,7 @@
           <value>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</value>
           <value>SDK_DEBUGCONSOLE=1</value>
           <value>MCUX_META_BUILD</value>
+          <value>MIMXRT685S_cm33_SERIES</value>
         </option>
         <option id="com.crt.advproject.gas.hdrlib" type="enum">
           <value>com.crt.advproject.gas.hdrlib.newlibnano</value>
@@ -143,12 +144,8 @@
       <files mask="CMakeLists.txt"/>
       <files mask="flags.cmake"/>
       <files mask="config.cmake"/>
-      <files mask="build_debug.bat"/>
-      <files mask="build_debug.sh"/>
       <files mask="build_flash_debug.bat"/>
       <files mask="build_flash_debug.sh"/>
-      <files mask="build_release.bat"/>
-      <files mask="build_release.sh"/>
       <files mask="build_flash_release.bat"/>
       <files mask="build_flash_release.sh"/>
     </source>
@@ -176,15 +173,12 @@
       <files mask="clock_config.c"/>
     </source>
     <source path="iar" project_relative_path="MIMXRT685S/iar" type="linker" toolchain="iar">
-      <files mask="MIMXRT685Sxxxx_cm33_ram.icf"/>
       <files mask="MIMXRT685Sxxxx_cm33_flash.icf"/>
     </source>
     <source path="armgcc" project_relative_path="MIMXRT685S/armgcc" type="linker" toolchain="armgcc">
-      <files mask="MIMXRT685Sxxxx_cm33_ram.ld"/>
       <files mask="MIMXRT685Sxxxx_cm33_flash.ld"/>
     </source>
     <source path="mdk" project_relative_path="MIMXRT685S/mdk" type="linker" toolchain="mdk">
-      <files mask="MIMXRT685Sxxxx_cm33_ram.scf"/>
       <files mask="MIMXRT685Sxxxx_cm33_flash.scf"/>
     </source>
     <source path="." project_relative_path="board" type="src">
@@ -203,6 +197,9 @@
     </source>
     <source path="." project_relative_path="doc" type="doc">
       <files mask="example_board_readme.md"/>
+    </source>
+    <source path="." project_relative_path="doc" type="doc">
+      <files mask="examples_shared_readme.md"/>
     </source>
   </example>
 </ksdk:examples>

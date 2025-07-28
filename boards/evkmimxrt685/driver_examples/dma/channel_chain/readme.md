@@ -19,6 +19,7 @@ second descritpor will be carried out, after second descriptor exhaust, example 
 ## Supported Boards
 - [EVK-MIMXRT595](../../../_boards/evkmimxrt595/driver_examples/dma/channel_chain/example_board_readme.md)
 - [EVK-MIMXRT685](../../../_boards/evkmimxrt685/driver_examples/dma/channel_chain/example_board_readme.md)
+- [FRDM-MCXW23](../../../_boards/frdmmcxw23/driver_examples/dma/channel_chain/example_board_readme.md)
 - [FRDM-RW612](../../../_boards/frdmrw612/driver_examples/dma/channel_chain/example_board_readme.md)
 - [LPC845BREAKOUT](../../../_boards/lpc845breakout/driver_examples/dma/channel_chain/example_board_readme.md)
 - [LPCXpresso51U68](../../../_boards/lpcxpresso51u68/driver_examples/dma/channel_chain/example_board_readme.md)
@@ -35,3 +36,4 @@ second descritpor will be carried out, after second descriptor exhaust, example 
 - [LPCXpresso860MAX](../../../_boards/lpcxpresso860max/driver_examples/dma/channel_chain/example_board_readme.md)
 - [MIMXRT685-AUD-EVK](../../../_boards/mimxrt685audevk/driver_examples/dma/channel_chain/example_board_readme.md)
 - [RD-RW612-BGA](../../../_boards/rdrw612bga/driver_examples/dma/channel_chain/example_board_readme.md)
+- [MCXW23-EVK](../../../_boards/mcxw23evk/driver_examples/dma/channel_chain/example_board_readme.md)

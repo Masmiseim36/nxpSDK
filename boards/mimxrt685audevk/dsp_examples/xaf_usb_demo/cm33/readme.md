@@ -43,6 +43,8 @@ It is possible to save the TRACE output into RAM using DUMP_TRACE_TO_BUF 1 defin
 Please see the initalization of the TRACE function in the xaf_main_dsp.c file.
 For more details see XAF documentation.
 
+This example cannot be imported into Config Tools because the xtensa toolchain is not supported.
+
 ## Supported Boards
 - [EVK-MIMXRT595](../../_boards/evkmimxrt595/dsp_examples/xaf_usb_demo/example_board_readme.md)
 - [EVK-MIMXRT685](../../_boards/evkmimxrt685/dsp_examples/xaf_usb_demo/example_board_readme.md)

@@ -67,7 +67,6 @@ note<br>
 - EVK-MIMXRT1064
 - FRDM-MCXA153
 - MIMXRT685-AUD-EVK
-- FRDM-MCXA276
 - LPCXpresso51U68
 - LPCXpresso54S018
 - [LPCXpresso55S16](../../_boards/lpcxpresso55s16/usb_examples/usb_device_video_virtual_camera/example_board_readme.md)

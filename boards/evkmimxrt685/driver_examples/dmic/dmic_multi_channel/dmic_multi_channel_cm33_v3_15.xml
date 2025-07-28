@@ -44,15 +44,12 @@
     <definition extID="armgcc"/>
     <definition extID="mcuxpresso"/>
     <definition extID="com.nxp.mcuxpresso"/>
-    <definition extID="com.crt.advproject.config.exe.debug"/>
-    <definition extID="com.crt.advproject.config.exe.release"/>
   </externalDefinitions>
   <example id="evkmimxrt685_dmic_multi_channel_cm33" name="dmic_multi_channel_cm33" device_core="cm33_MIMXRT685S" dependency="platform.drivers.flash_config.evkmimxrt685.MIMXRT685S CMSIS_Include_core_cm.MIMXRT685S device.MIMXRT685S_CMSIS.MIMXRT685S device.MIMXRT685S_system.MIMXRT685S device.MIMXRT685S_startup.MIMXRT685S platform.drivers.clock.MIMXRT685S platform.drivers.dsp.MIMXRT685S platform.drivers.i2s_bridge.MIMXRT685S platform.drivers.inputmux_connections.MIMXRT685S platform.drivers.power.MIMXRT685S platform.drivers.reset.MIMXRT685S platform.drivers.cache_cache64.MIMXRT685S platform.drivers.common.MIMXRT685S platform.drivers.dmic_dma.MIMXRT685S platform.drivers.dmic.MIMXRT685S platform.drivers.flexcomm.MIMXRT685S platform.drivers.flexcomm_usart.MIMXRT685S platform.drivers.flexcomm_i2s_dma.MIMXRT685S platform.drivers.flexcomm_i2s.MIMXRT685S platform.drivers.flexcomm_i2c.MIMXRT685S platform.drivers.flexspi.MIMXRT685S platform.drivers.inputmux.MIMXRT685S platform.drivers.lpc_dma.MIMXRT685S platform.drivers.lpc_gpio.MIMXRT685S platform.drivers.lpc_iopctl.MIMXRT685S platform.utilities.assert_lite.MIMXRT685S platform.utilities.misc_utilities.MIMXRT685S utility.str.MIMXRT685S utility.debug_console_lite.MIMXRT685S component.codec_i2c.MIMXRT685S driver.codec.MIMXRT685S component.codec_adapters.MIMXRT685S component.cs42448_adapter.MIMXRT685S driver.cs42448.MIMXRT685S component.i2c_adapter_interface.MIMXRT685S component.flexcomm_i2c_adapter.MIMXRT685S component.usart_adapter.MIMXRT685S" category="driver_examples/dmic">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
     <memory>
-      <memoryBlock id="QSPI_FLASH_MIMXRT685S" name="QSPI_FLASH" addr="08000000" size="00800000" type="ExtFlash" access="RO"/>
       <memoryBlock id="SRAM_MIMXRT685S" name="SRAM" addr="00080000" size="00180000" type="RAM" access="RW"/>
       <memoryBlock id="USB_RAM_MIMXRT685S" name="USB_RAM" addr="40140000" size="00004000" type="RAM" access="RW"/>
     </memory>
@@ -66,6 +63,7 @@
           <value>SDK_I2C_BASED_COMPONENT_USED=1</value>
           <value>SDK_DEBUGCONSOLE=1</value>
           <value>MCUX_META_BUILD</value>
+          <value>MIMXRT685S_cm33_SERIES</value>
           <value>CODEC_MULTI_ADAPTERS=1</value>
           <value>CODEC_CS42448_ENABLE</value>
         </option>
@@ -104,17 +102,6 @@
         </option>
       </toolchainSetting>
     </toolchainSettings>
-    <debug_configurations>
-      <debug_configuration id_refs="com.crt.advproject.config.exe.debug com.crt.advproject.config.exe.release">
-        <drivers>
-          <driver id_refs="QSPI_FLASH_MIMXRT685S">
-            <driverBinary path="../../../../../devices/MIMXRT685S/mcuxpresso" project_relative_path="binary" type="binary">
-              <files mask="MIMXRT600_FlexSPI_B_MXIC_OPI.cfx"/>
-            </driverBinary>
-          </driver>
-        </drivers>
-      </debug_configuration>
-    </debug_configurations>
     <include_paths>
       <include_path path="." project_relative_path="source" type="c_include"/>
       <include_path path="." project_relative_path="board" type="c_include"/>
@@ -187,6 +174,9 @@
     </source>
     <source path="." project_relative_path="doc" type="doc">
       <files mask="example_board_readme.md"/>
+    </source>
+    <source path="." project_relative_path="doc" type="doc">
+      <files mask="examples_shared_readme.md"/>
     </source>
   </example>
 </ksdk:examples>

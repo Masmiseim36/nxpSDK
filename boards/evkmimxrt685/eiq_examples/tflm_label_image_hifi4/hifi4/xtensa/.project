@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-  <name>tflm_label_image_hifi4</name>
+  <name>tflm_label_image_hifi4_dsp</name>
   <comment/>
   <projects>
     <project>XtensaInfo</project>
@@ -33,89 +33,9 @@
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
-      <name>source/demo_info.h</name>
+      <name>source/get_top_n.cpp</name>
       <type>1</type>
-      <locationURI>PARENT-1-PROJECT_LOC/source/demo_info.h</locationURI>
-    </link>
-    <link>
-      <name>source/image</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>source/image/image.h</name>
-      <type>1</type>
-      <locationURI>PARENT-1-PROJECT_LOC/source/image/image.h</locationURI>
-    </link>
-    <link>
-      <name>source/image</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>source/image/image_decode_raw.c</name>
-      <type>1</type>
-      <locationURI>PARENT-1-PROJECT_LOC/source/image/image_decode_raw.c</locationURI>
-    </link>
-    <link>
-      <name>source/image</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>source/image/image_utils.h</name>
-      <type>1</type>
-      <locationURI>PARENT-1-PROJECT_LOC/source/image/image_utils.h</locationURI>
-    </link>
-    <link>
-      <name>source/model</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>source/model/get_top_n.cpp</name>
-      <type>1</type>
-      <locationURI>PARENT-1-PROJECT_LOC/source/model/get_top_n.cpp</locationURI>
-    </link>
-    <link>
-      <name>source/model</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>source/model/get_top_n.h</name>
-      <type>1</type>
-      <locationURI>PARENT-1-PROJECT_LOC/source/model/get_top_n.h</locationURI>
-    </link>
-    <link>
-      <name>source/model</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>source/model/model.h</name>
-      <type>1</type>
-      <locationURI>PARENT-1-PROJECT_LOC/source/model/model.h</locationURI>
-    </link>
-    <link>
-      <name>source/model</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>source/model/output_postproc.h</name>
-      <type>1</type>
-      <locationURI>PARENT-1-PROJECT_LOC/source/model/output_postproc.h</locationURI>
-    </link>
-    <link>
-      <name>source/model</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>source/model/output_postproc.cpp</name>
-      <type>1</type>
-      <locationURI>PARENT-1-PROJECT_LOC/source/model/output_postproc.cpp</locationURI>
+      <locationURI>PARENT-1-PROJECT_LOC/get_top_n.cpp</locationURI>
     </link>
     <link>
       <name>source</name>
@@ -123,9 +43,29 @@
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
-      <name>source/demo_config.h</name>
+      <name>source/get_top_n.h</name>
       <type>1</type>
-      <locationURI>PARENT-1-PROJECT_LOC/source/demo_config.h</locationURI>
+      <locationURI>PARENT-1-PROJECT_LOC/get_top_n.h</locationURI>
+    </link>
+    <link>
+      <name>source</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>source/model.cpp</name>
+      <type>1</type>
+      <locationURI>PARENT-1-PROJECT_LOC/model.cpp</locationURI>
+    </link>
+    <link>
+      <name>source</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>source/model.h</name>
+      <type>1</type>
+      <locationURI>PARENT-1-PROJECT_LOC/model.h</locationURI>
     </link>
     <link>
       <name>source</name>
@@ -135,17 +75,7 @@
     <link>
       <name>source/demo_info.cpp</name>
       <type>1</type>
-      <locationURI>PARENT-1-PROJECT_LOC/source/demo_info.cpp</locationURI>
-    </link>
-    <link>
-      <name>source/image</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>source/image/image_data.h</name>
-      <type>1</type>
-      <locationURI>PARENT-1-PROJECT_LOC/source/image/image_data.h</locationURI>
+      <locationURI>PARENT-1-PROJECT_LOC/demo_info.cpp</locationURI>
     </link>
     <link>
       <name>source</name>
@@ -153,19 +83,59 @@
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
-      <name>source/labels.h</name>
+      <name>source/demo_info.h</name>
       <type>1</type>
-      <locationURI>PARENT-1-PROJECT_LOC/source/labels.h</locationURI>
+      <locationURI>PARENT-1-PROJECT_LOC/demo_info.h</locationURI>
     </link>
     <link>
-      <name>source/model</name>
+      <name>source</name>
       <type>2</type>
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
-      <name>source/model/model.cpp</name>
+      <name>source/timer_xtensa.c</name>
       <type>1</type>
-      <locationURI>PARENT-1-PROJECT_LOC/source/model/model.cpp</locationURI>
+      <locationURI>PARENT-1-PROJECT_LOC/timer_xtensa.c</locationURI>
+    </link>
+    <link>
+      <name>source</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>source/timer_xtensa.h</name>
+      <type>1</type>
+      <locationURI>PARENT-1-PROJECT_LOC/timer_xtensa.h</locationURI>
+    </link>
+    <link>
+      <name>source</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>source/timer.h</name>
+      <type>1</type>
+      <locationURI>PARENT-1-PROJECT_LOC/timer.h</locationURI>
+    </link>
+    <link>
+      <name>source</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>source/model_data.h</name>
+      <type>1</type>
+      <locationURI>PARENT-1-PROJECT_LOC/model_data.h</locationURI>
+    </link>
+    <link>
+      <name>source</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>source/model_mobilenet_ops_micro.cpp</name>
+      <type>1</type>
+      <locationURI>PARENT-1-PROJECT_LOC/model_mobilenet_ops_micro.cpp</locationURI>
     </link>
     <link>
       <name>source</name>
@@ -175,27 +145,117 @@
     <link>
       <name>source/main.cpp</name>
       <type>1</type>
-      <locationURI>PARENT-1-PROJECT_LOC/source/main.cpp</locationURI>
+      <locationURI>PARENT-1-PROJECT_LOC/main.cpp</locationURI>
     </link>
     <link>
-      <name>source/model</name>
+      <name>source</name>
       <type>2</type>
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
-      <name>source/model/model_mobilenet_ops_micro.cpp</name>
+      <name>source/board_init.h</name>
       <type>1</type>
-      <locationURI>PARENT-1-PROJECT_LOC/source/model/model_mobilenet_ops_micro.cpp</locationURI>
+      <locationURI>PARENT-1-PROJECT_LOC/board_init.h</locationURI>
     </link>
     <link>
-      <name>source/model</name>
+      <name>source</name>
       <type>2</type>
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
-      <name>source/model/model_data.h</name>
+      <name>source/image.h</name>
       <type>1</type>
-      <locationURI>PARENT-1-PROJECT_LOC/source/model/model_data.h</locationURI>
+      <locationURI>PARENT-1-PROJECT_LOC/image.h</locationURI>
+    </link>
+    <link>
+      <name>source</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>source/image_decode_raw.c</name>
+      <type>1</type>
+      <locationURI>PARENT-1-PROJECT_LOC/image_decode_raw.c</locationURI>
+    </link>
+    <link>
+      <name>source</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>source/image_utils.h</name>
+      <type>1</type>
+      <locationURI>PARENT-1-PROJECT_LOC/image_utils.h</locationURI>
+    </link>
+    <link>
+      <name>source</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>source/image_load.c</name>
+      <type>1</type>
+      <locationURI>PARENT-1-PROJECT_LOC/image_load.c</locationURI>
+    </link>
+    <link>
+      <name>source</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>source/image_data.h</name>
+      <type>1</type>
+      <locationURI>PARENT-1-PROJECT_LOC/image_data.h</locationURI>
+    </link>
+    <link>
+      <name>source</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>source/labels.h</name>
+      <type>1</type>
+      <locationURI>PARENT-1-PROJECT_LOC/labels.h</locationURI>
+    </link>
+    <link>
+      <name>source</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>source/stopwatch.bmp</name>
+      <type>1</type>
+      <locationURI>PARENT-1-PROJECT_LOC/stopwatch.bmp</locationURI>
+    </link>
+    <link>
+      <name>source</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>source/demo_config.h</name>
+      <type>1</type>
+      <locationURI>PARENT-1-PROJECT_LOC/demo_config.h</locationURI>
+    </link>
+    <link>
+      <name>source</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>source/output_postproc.h</name>
+      <type>1</type>
+      <locationURI>PARENT-1-PROJECT_LOC/output_postproc.h</locationURI>
+    </link>
+    <link>
+      <name>source</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>source/output_postproc.cpp</name>
+      <type>1</type>
+      <locationURI>PARENT-1-PROJECT_LOC/output_postproc.cpp</locationURI>
     </link>
     <link>
       <name>board</name>
@@ -203,9 +263,9 @@
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
-      <name>board/core_dsp.h</name>
+      <name>board/board_hifi4.h</name>
       <type>1</type>
-      <locationURI>PARENT-1-PROJECT_LOC/core_dsp.h</locationURI>
+      <locationURI>PARENT-1-PROJECT_LOC/board_hifi4.h</locationURI>
     </link>
     <link>
       <name>board</name>
@@ -213,9 +273,9 @@
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
-      <name>board/elf32xtensa.x</name>
+      <name>board/board_hifi4.c</name>
       <type>1</type>
-      <locationURI>PARENT-1-PROJECT_LOC/gdbio/ldscripts/elf32xtensa.x</locationURI>
+      <locationURI>PARENT-1-PROJECT_LOC/board_hifi4.c</locationURI>
     </link>
     <link>
       <name>board</name>
@@ -223,9 +283,9 @@
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
-      <name>board/specs</name>
+      <name>board/pin_mux.c</name>
       <type>1</type>
-      <locationURI>PARENT-1-PROJECT_LOC/gdbio/specs</locationURI>
+      <locationURI>PARENT-1-PROJECT_LOC/pin_mux.c</locationURI>
     </link>
     <link>
       <name>board</name>
@@ -233,9 +293,9 @@
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
-      <name>board/elf32xtensa.x</name>
+      <name>board/pin_mux.h</name>
       <type>1</type>
-      <locationURI>PARENT-1-PROJECT_LOC/min-rt/ldscripts/elf32xtensa.x</locationURI>
+      <locationURI>PARENT-1-PROJECT_LOC/pin_mux.h</locationURI>
     </link>
     <link>
       <name>board</name>
@@ -243,29 +303,549 @@
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
-      <name>board/specs</name>
+      <name>board/hardware_init.c</name>
       <type>1</type>
-      <locationURI>PARENT-1-PROJECT_LOC/min-rt/specs</locationURI>
+      <locationURI>PARENT-1-PROJECT_LOC/hardware_init.c</locationURI>
     </link>
     <link>
-      <name>component/uart</name>
+      <name>board</name>
       <type>2</type>
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
-      <name>component/uart/fsl_adapter_uart.h</name>
+      <name>board/app.h</name>
       <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/components/uart/fsl_adapter_uart.h</locationURI>
+      <locationURI>PARENT-1-PROJECT_LOC/app.h</locationURI>
     </link>
     <link>
-      <name>component/uart</name>
+      <name>device</name>
       <type>2</type>
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
-      <name>component/uart/fsl_adapter_usart.c</name>
+      <name>device/fsl_device_registers.h</name>
       <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/components/uart/fsl_adapter_usart.c</locationURI>
+      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT685S/fsl_device_registers.h</locationURI>
+    </link>
+    <link>
+      <name>device/periph</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>device/periph/PERI_ADC.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT685S/periph/PERI_ADC.h</locationURI>
+    </link>
+    <link>
+      <name>device/periph</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>device/periph/PERI_AHB_SECURE_CTRL.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT685S/periph/PERI_AHB_SECURE_CTRL.h</locationURI>
+    </link>
+    <link>
+      <name>device/periph</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>device/periph/PERI_CACHE64_CTRL.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT685S/periph/PERI_CACHE64_CTRL.h</locationURI>
+    </link>
+    <link>
+      <name>device/periph</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>device/periph/PERI_CACHE64_POLSEL.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT685S/periph/PERI_CACHE64_POLSEL.h</locationURI>
+    </link>
+    <link>
+      <name>device/periph</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>device/periph/PERI_CASPER.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT685S/periph/PERI_CASPER.h</locationURI>
+    </link>
+    <link>
+      <name>device/periph</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>device/periph/PERI_CLKCTL0.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT685S/periph/PERI_CLKCTL0.h</locationURI>
+    </link>
+    <link>
+      <name>device/periph</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>device/periph/PERI_CLKCTL1.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT685S/periph/PERI_CLKCTL1.h</locationURI>
+    </link>
+    <link>
+      <name>device/periph</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>device/periph/PERI_CMP.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT685S/periph/PERI_CMP.h</locationURI>
+    </link>
+    <link>
+      <name>device/periph</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>device/periph/PERI_CRC.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT685S/periph/PERI_CRC.h</locationURI>
+    </link>
+    <link>
+      <name>device/periph</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>device/periph/PERI_CTIMER.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT685S/periph/PERI_CTIMER.h</locationURI>
+    </link>
+    <link>
+      <name>device/periph</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>device/periph/PERI_DMA.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT685S/periph/PERI_DMA.h</locationURI>
+    </link>
+    <link>
+      <name>device/periph</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>device/periph/PERI_DMIC.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT685S/periph/PERI_DMIC.h</locationURI>
+    </link>
+    <link>
+      <name>device/periph</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>device/periph/PERI_ESPI.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT685S/periph/PERI_ESPI.h</locationURI>
+    </link>
+    <link>
+      <name>device/periph</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>device/periph/PERI_FLEXCOMM.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT685S/periph/PERI_FLEXCOMM.h</locationURI>
+    </link>
+    <link>
+      <name>device/periph</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>device/periph/PERI_FLEXSPI.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT685S/periph/PERI_FLEXSPI.h</locationURI>
+    </link>
+    <link>
+      <name>device/periph</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>device/periph/PERI_FREQME.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT685S/periph/PERI_FREQME.h</locationURI>
+    </link>
+    <link>
+      <name>device/periph</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>device/periph/PERI_GPIO.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT685S/periph/PERI_GPIO.h</locationURI>
+    </link>
+    <link>
+      <name>device/periph</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>device/periph/PERI_HASHCRYPT.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT685S/periph/PERI_HASHCRYPT.h</locationURI>
+    </link>
+    <link>
+      <name>device/periph</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>device/periph/PERI_I2C.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT685S/periph/PERI_I2C.h</locationURI>
+    </link>
+    <link>
+      <name>device/periph</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>device/periph/PERI_I2S.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT685S/periph/PERI_I2S.h</locationURI>
+    </link>
+    <link>
+      <name>device/periph</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>device/periph/PERI_I3C.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT685S/periph/PERI_I3C.h</locationURI>
+    </link>
+    <link>
+      <name>device/periph</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>device/periph/PERI_INPUTMUX.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT685S/periph/PERI_INPUTMUX.h</locationURI>
+    </link>
+    <link>
+      <name>device/periph</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>device/periph/PERI_IOPCTL.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT685S/periph/PERI_IOPCTL.h</locationURI>
+    </link>
+    <link>
+      <name>device/periph</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>device/periph/PERI_MRT.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT685S/periph/PERI_MRT.h</locationURI>
+    </link>
+    <link>
+      <name>device/periph</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>device/periph/PERI_MU.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT685S/periph/PERI_MU.h</locationURI>
+    </link>
+    <link>
+      <name>device/periph</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>device/periph/PERI_OCOTP.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT685S/periph/PERI_OCOTP.h</locationURI>
+    </link>
+    <link>
+      <name>device/periph</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>device/periph/PERI_OSTIMER.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT685S/periph/PERI_OSTIMER.h</locationURI>
+    </link>
+    <link>
+      <name>device/periph</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>device/periph/PERI_OTFAD.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT685S/periph/PERI_OTFAD.h</locationURI>
+    </link>
+    <link>
+      <name>device/periph</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>device/periph/PERI_PINT.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT685S/periph/PERI_PINT.h</locationURI>
+    </link>
+    <link>
+      <name>device/periph</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>device/periph/PERI_PMC.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT685S/periph/PERI_PMC.h</locationURI>
+    </link>
+    <link>
+      <name>device/periph</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>device/periph/PERI_POWERQUAD.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT685S/periph/PERI_POWERQUAD.h</locationURI>
+    </link>
+    <link>
+      <name>device/periph</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>device/periph/PERI_PUF.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT685S/periph/PERI_PUF.h</locationURI>
+    </link>
+    <link>
+      <name>device/periph</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>device/periph/PERI_RSTCTL0.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT685S/periph/PERI_RSTCTL0.h</locationURI>
+    </link>
+    <link>
+      <name>device/periph</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>device/periph/PERI_RSTCTL1.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT685S/periph/PERI_RSTCTL1.h</locationURI>
+    </link>
+    <link>
+      <name>device/periph</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>device/periph/PERI_RTC.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT685S/periph/PERI_RTC.h</locationURI>
+    </link>
+    <link>
+      <name>device/periph</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>device/periph/PERI_SCT.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT685S/periph/PERI_SCT.h</locationURI>
+    </link>
+    <link>
+      <name>device/periph</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>device/periph/PERI_SEMA42.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT685S/periph/PERI_SEMA42.h</locationURI>
+    </link>
+    <link>
+      <name>device/periph</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>device/periph/PERI_SPI.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT685S/periph/PERI_SPI.h</locationURI>
+    </link>
+    <link>
+      <name>device/periph</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>device/periph/PERI_SYSCTL0.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT685S/periph/PERI_SYSCTL0.h</locationURI>
+    </link>
+    <link>
+      <name>device/periph</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>device/periph/PERI_SYSCTL1.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT685S/periph/PERI_SYSCTL1.h</locationURI>
+    </link>
+    <link>
+      <name>device/periph</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>device/periph/PERI_TRNG.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT685S/periph/PERI_TRNG.h</locationURI>
+    </link>
+    <link>
+      <name>device/periph</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>device/periph/PERI_USART.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT685S/periph/PERI_USART.h</locationURI>
+    </link>
+    <link>
+      <name>device/periph</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>device/periph/PERI_USBHSD.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT685S/periph/PERI_USBHSD.h</locationURI>
+    </link>
+    <link>
+      <name>device/periph</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>device/periph/PERI_USBHSDCD.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT685S/periph/PERI_USBHSDCD.h</locationURI>
+    </link>
+    <link>
+      <name>device/periph</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>device/periph/PERI_USBHSH.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT685S/periph/PERI_USBHSH.h</locationURI>
+    </link>
+    <link>
+      <name>device/periph</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>device/periph/PERI_USBPHY.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT685S/periph/PERI_USBPHY.h</locationURI>
+    </link>
+    <link>
+      <name>device/periph</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>device/periph/PERI_USDHC.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT685S/periph/PERI_USDHC.h</locationURI>
+    </link>
+    <link>
+      <name>device/periph</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>device/periph/PERI_UTICK.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT685S/periph/PERI_UTICK.h</locationURI>
+    </link>
+    <link>
+      <name>device/periph</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>device/periph/PERI_WWDT.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT685S/periph/PERI_WWDT.h</locationURI>
+    </link>
+    <link>
+      <name>device</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>device/MIMXRT685S_dsp.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT685S/MIMXRT685S_dsp.h</locationURI>
+    </link>
+    <link>
+      <name>device</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>device/MIMXRT685S_dsp_COMMON.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT685S/MIMXRT685S_dsp_COMMON.h</locationURI>
+    </link>
+    <link>
+      <name>device</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>device/MIMXRT685S_dsp_features.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT685S/MIMXRT685S_dsp_features.h</locationURI>
     </link>
     <link>
       <name>drivers</name>
@@ -273,9 +853,9 @@
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
-      <name>drivers/fsl_usart.h</name>
+      <name>drivers/fsl_clock.c</name>
       <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT685S/drivers/fsl_usart.h</locationURI>
+      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT685S/drivers/fsl_clock.c</locationURI>
     </link>
     <link>
       <name>drivers</name>
@@ -283,9 +863,9 @@
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
-      <name>drivers/fsl_usart.c</name>
+      <name>drivers/fsl_clock.h</name>
       <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT685S/drivers/fsl_usart.c</locationURI>
+      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT685S/drivers/fsl_clock.h</locationURI>
     </link>
     <link>
       <name>drivers</name>
@@ -293,9 +873,9 @@
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
-      <name>drivers/fsl_gpio.h</name>
+      <name>drivers/fsl_i2s_bridge.c</name>
       <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT685S/drivers/fsl_gpio.h</locationURI>
+      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT685S/drivers/fsl_i2s_bridge.c</locationURI>
     </link>
     <link>
       <name>drivers</name>
@@ -303,9 +883,9 @@
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
-      <name>drivers/fsl_gpio.c</name>
+      <name>drivers/fsl_i2s_bridge.h</name>
       <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT685S/drivers/fsl_gpio.c</locationURI>
+      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT685S/drivers/fsl_i2s_bridge.h</locationURI>
     </link>
     <link>
       <name>drivers</name>
@@ -313,79 +893,29 @@
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
-      <name>drivers/fsl_iopctl.h</name>
+      <name>drivers/fsl_inputmux_connections.h</name>
       <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT685S/drivers/fsl_iopctl.h</locationURI>
+      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT685S/drivers/fsl_inputmux_connections.h</locationURI>
     </link>
     <link>
-      <name>utilities</name>
+      <name>drivers</name>
       <type>2</type>
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
-      <name>utilities/fsl_str.c</name>
+      <name>drivers/fsl_reset.c</name>
       <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT685S/utilities/str/fsl_str.c</locationURI>
+      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT685S/drivers/fsl_reset.c</locationURI>
     </link>
     <link>
-      <name>utilities</name>
+      <name>drivers</name>
       <type>2</type>
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
-      <name>utilities/fsl_str.h</name>
+      <name>drivers/fsl_reset.h</name>
       <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT685S/utilities/str/fsl_str.h</locationURI>
-    </link>
-    <link>
-      <name>utilities</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>utilities/fsl_debug_console.c</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT685S/utilities/debug_console_lite/fsl_debug_console.c</locationURI>
-    </link>
-    <link>
-      <name>utilities</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>utilities/fsl_debug_console.h</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT685S/utilities/debug_console_lite/fsl_debug_console.h</locationURI>
-    </link>
-    <link>
-      <name>utilities</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>utilities/fsl_assert.c</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT685S/utilities/debug_console_lite/fsl_assert.c</locationURI>
-    </link>
-    <link>
-      <name>utilities</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>utilities/fsl_assert.h</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT685S/utilities/debug_console_lite/fsl_assert.h</locationURI>
-    </link>
-    <link>
-      <name>eiq/tensorflow-lite/tensorflow/lite/micro</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>eiq/tensorflow-lite/tensorflow/lite/micro/debug_log.cpp</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/micro/debug_log.cpp</locationURI>
+      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT685S/drivers/fsl_reset.h</locationURI>
     </link>
     <link>
       <name>drivers</name>
@@ -453,9 +983,9 @@
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
-      <name>drivers/fsl_reset.h</name>
+      <name>drivers/fsl_usart.h</name>
       <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT685S/drivers/fsl_reset.h</locationURI>
+      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT685S/drivers/fsl_usart.h</locationURI>
     </link>
     <link>
       <name>drivers</name>
@@ -463,9 +993,9 @@
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
-      <name>drivers/fsl_reset.c</name>
+      <name>drivers/fsl_usart.c</name>
       <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT685S/drivers/fsl_reset.c</locationURI>
+      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT685S/drivers/fsl_usart.c</locationURI>
     </link>
     <link>
       <name>drivers</name>
@@ -473,9 +1003,9 @@
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
-      <name>drivers/fsl_clock.h</name>
+      <name>drivers/fsl_gpio.h</name>
       <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT685S/drivers/fsl_clock.h</locationURI>
+      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT685S/drivers/fsl_gpio.h</locationURI>
     </link>
     <link>
       <name>drivers</name>
@@ -483,529 +1013,129 @@
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
-      <name>drivers/fsl_clock.c</name>
+      <name>drivers/fsl_gpio.c</name>
       <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT685S/drivers/fsl_clock.c</locationURI>
+      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT685S/drivers/fsl_gpio.c</locationURI>
     </link>
     <link>
-      <name>device</name>
+      <name>drivers</name>
       <type>2</type>
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
-      <name>device/MIMXRT685S_dsp.h</name>
+      <name>drivers/fsl_iopctl.h</name>
       <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT685S/MIMXRT685S_dsp.h</locationURI>
+      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT685S/drivers/fsl_iopctl.h</locationURI>
     </link>
     <link>
-      <name>device</name>
+      <name>utilities</name>
       <type>2</type>
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
-      <name>device/MIMXRT685S_dsp_features.h</name>
+      <name>utilities/fsl_assert.h</name>
       <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT685S/MIMXRT685S_dsp_features.h</locationURI>
+      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT685S/utilities/debug_console_lite/fsl_assert.h</locationURI>
     </link>
     <link>
-      <name>device</name>
+      <name>utilities</name>
       <type>2</type>
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
-      <name>device/system_MIMXRT685S_dsp.c</name>
+      <name>utilities/fsl_assert.c</name>
       <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT685S/system_MIMXRT685S_dsp.c</locationURI>
+      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT685S/utilities/debug_console_lite/fsl_assert.c</locationURI>
     </link>
     <link>
-      <name>device</name>
+      <name>utilities/str</name>
       <type>2</type>
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
-      <name>device/system_MIMXRT685S_dsp.h</name>
+      <name>utilities/str/fsl_str.h</name>
       <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT685S/system_MIMXRT685S_dsp.h</locationURI>
+      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT685S/utilities/str/fsl_str.h</locationURI>
     </link>
     <link>
-      <name>eiq/tensorflow-lite/signal/micro/kernels</name>
+      <name>utilities/str</name>
       <type>2</type>
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
-      <name>eiq/tensorflow-lite/signal/micro/kernels/delay_flexbuffers_generated_data.h</name>
+      <name>utilities/str/fsl_str.c</name>
       <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/signal/micro/kernels/delay_flexbuffers_generated_data.h</locationURI>
+      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT685S/utilities/str/fsl_str.c</locationURI>
     </link>
     <link>
-      <name>eiq/tensorflow-lite/signal/micro/kernels</name>
+      <name>utilities/debug_console_lite</name>
       <type>2</type>
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
-      <name>eiq/tensorflow-lite/signal/micro/kernels/energy_flexbuffers_generated_data.h</name>
+      <name>utilities/debug_console_lite/fsl_debug_console.h</name>
       <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/signal/micro/kernels/energy_flexbuffers_generated_data.h</locationURI>
+      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT685S/utilities/debug_console_lite/fsl_debug_console.h</locationURI>
     </link>
     <link>
-      <name>eiq/tensorflow-lite/signal/micro/kernels</name>
+      <name>utilities/debug_console_lite</name>
       <type>2</type>
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
-      <name>eiq/tensorflow-lite/signal/micro/kernels/fft_flexbuffers_generated_data.h</name>
+      <name>utilities/debug_console_lite/fsl_debug_console.c</name>
       <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/signal/micro/kernels/fft_flexbuffers_generated_data.h</locationURI>
+      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT685S/utilities/debug_console_lite/fsl_debug_console.c</locationURI>
     </link>
     <link>
-      <name>eiq/tensorflow-lite/signal/micro/kernels</name>
+      <name>component/uart</name>
       <type>2</type>
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
-      <name>eiq/tensorflow-lite/signal/micro/kernels/filter_bank_flexbuffers_generated_data.h</name>
+      <name>component/uart/fsl_adapter_uart.h</name>
       <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/signal/micro/kernels/filter_bank_flexbuffers_generated_data.h</locationURI>
+      <locationURI>PARENT-6-PROJECT_LOC/components/uart/fsl_adapter_uart.h</locationURI>
     </link>
     <link>
-      <name>eiq/tensorflow-lite/signal/micro/kernels</name>
+      <name>component/uart</name>
       <type>2</type>
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
-      <name>eiq/tensorflow-lite/signal/micro/kernels/filter_bank_log_flexbuffers_generated_data.h</name>
+      <name>component/uart/fsl_adapter_usart.c</name>
       <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/signal/micro/kernels/filter_bank_log_flexbuffers_generated_data.h</locationURI>
+      <locationURI>PARENT-6-PROJECT_LOC/components/uart/fsl_adapter_usart.c</locationURI>
     </link>
     <link>
-      <name>eiq/tensorflow-lite/signal/micro/kernels</name>
+      <name>eiq/tensorflow-lite/tensorflow/compiler/mlir/lite/kernels/internal</name>
       <type>2</type>
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
-      <name>eiq/tensorflow-lite/signal/micro/kernels/filter_bank_spectral_subtraction_flexbuffers_generated_data.h</name>
+      <name>eiq/tensorflow-lite/tensorflow/compiler/mlir/lite/kernels/internal/compatibility_macros.h</name>
       <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/signal/micro/kernels/filter_bank_spectral_subtraction_flexbuffers_generated_data.h</locationURI>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/compiler/mlir/lite/kernels/internal/compatibility_macros.h</locationURI>
     </link>
     <link>
-      <name>eiq/tensorflow-lite/signal/micro/kernels</name>
+      <name>eiq/tensorflow-lite/tensorflow/compiler/mlir/lite/schema</name>
       <type>2</type>
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
-      <name>eiq/tensorflow-lite/signal/micro/kernels/framer_flexbuffers_generated_data.h</name>
+      <name>eiq/tensorflow-lite/tensorflow/compiler/mlir/lite/schema/schema_generated.h</name>
       <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/signal/micro/kernels/framer_flexbuffers_generated_data.h</locationURI>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/compiler/mlir/lite/schema/schema_generated.h</locationURI>
     </link>
     <link>
-      <name>eiq/tensorflow-lite/signal/micro/kernels</name>
+      <name>eiq/tensorflow-lite/tensorflow/compiler/mlir/lite/schema</name>
       <type>2</type>
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
-      <name>eiq/tensorflow-lite/signal/micro/kernels/irfft.h</name>
+      <name>eiq/tensorflow-lite/tensorflow/compiler/mlir/lite/schema/schema_utils.h</name>
       <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/signal/micro/kernels/irfft.h</locationURI>
-    </link>
-    <link>
-      <name>eiq/tensorflow-lite/signal/micro/kernels</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>eiq/tensorflow-lite/signal/micro/kernels/overlap_add_flexbuffers_generated_data.h</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/signal/micro/kernels/overlap_add_flexbuffers_generated_data.h</locationURI>
-    </link>
-    <link>
-      <name>eiq/tensorflow-lite/signal/micro/kernels</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>eiq/tensorflow-lite/signal/micro/kernels/pcan_flexbuffers_generated_data.h</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/signal/micro/kernels/pcan_flexbuffers_generated_data.h</locationURI>
-    </link>
-    <link>
-      <name>eiq/tensorflow-lite/signal/micro/kernels</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>eiq/tensorflow-lite/signal/micro/kernels/rfft.h</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/signal/micro/kernels/rfft.h</locationURI>
-    </link>
-    <link>
-      <name>eiq/tensorflow-lite/signal/micro/kernels</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>eiq/tensorflow-lite/signal/micro/kernels/stacker_flexbuffers_generated_data.h</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/signal/micro/kernels/stacker_flexbuffers_generated_data.h</locationURI>
-    </link>
-    <link>
-      <name>eiq/tensorflow-lite/signal/micro/kernels</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>eiq/tensorflow-lite/signal/micro/kernels/window_flexbuffers_generated_data.h</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/signal/micro/kernels/window_flexbuffers_generated_data.h</locationURI>
-    </link>
-    <link>
-      <name>eiq/tensorflow-lite/signal/src</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>eiq/tensorflow-lite/signal/src/circular_buffer.h</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/signal/src/circular_buffer.h</locationURI>
-    </link>
-    <link>
-      <name>eiq/tensorflow-lite/signal/src</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>eiq/tensorflow-lite/signal/src/complex.h</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/signal/src/complex.h</locationURI>
-    </link>
-    <link>
-      <name>eiq/tensorflow-lite/signal/src</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>eiq/tensorflow-lite/signal/src/energy.h</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/signal/src/energy.h</locationURI>
-    </link>
-    <link>
-      <name>eiq/tensorflow-lite/signal/src</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>eiq/tensorflow-lite/signal/src/fft_auto_scale.h</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/signal/src/fft_auto_scale.h</locationURI>
-    </link>
-    <link>
-      <name>eiq/tensorflow-lite/signal/src</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>eiq/tensorflow-lite/signal/src/filter_bank.h</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/signal/src/filter_bank.h</locationURI>
-    </link>
-    <link>
-      <name>eiq/tensorflow-lite/signal/src</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>eiq/tensorflow-lite/signal/src/filter_bank_log.h</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/signal/src/filter_bank_log.h</locationURI>
-    </link>
-    <link>
-      <name>eiq/tensorflow-lite/signal/src</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>eiq/tensorflow-lite/signal/src/filter_bank_spectral_subtraction.h</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/signal/src/filter_bank_spectral_subtraction.h</locationURI>
-    </link>
-    <link>
-      <name>eiq/tensorflow-lite/signal/src</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>eiq/tensorflow-lite/signal/src/filter_bank_square_root.h</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/signal/src/filter_bank_square_root.h</locationURI>
-    </link>
-    <link>
-      <name>eiq/tensorflow-lite/signal/src</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>eiq/tensorflow-lite/signal/src/irfft.h</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/signal/src/irfft.h</locationURI>
-    </link>
-    <link>
-      <name>eiq/tensorflow-lite/signal/src</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>eiq/tensorflow-lite/signal/src/log.h</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/signal/src/log.h</locationURI>
-    </link>
-    <link>
-      <name>eiq/tensorflow-lite/signal/src</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>eiq/tensorflow-lite/signal/src/max_abs.h</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/signal/src/max_abs.h</locationURI>
-    </link>
-    <link>
-      <name>eiq/tensorflow-lite/signal/src</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>eiq/tensorflow-lite/signal/src/msb.h</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/signal/src/msb.h</locationURI>
-    </link>
-    <link>
-      <name>eiq/tensorflow-lite/signal/src</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>eiq/tensorflow-lite/signal/src/overlap_add.h</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/signal/src/overlap_add.h</locationURI>
-    </link>
-    <link>
-      <name>eiq/tensorflow-lite/signal/src</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>eiq/tensorflow-lite/signal/src/pcan_argc_fixed.h</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/signal/src/pcan_argc_fixed.h</locationURI>
-    </link>
-    <link>
-      <name>eiq/tensorflow-lite/signal/src</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>eiq/tensorflow-lite/signal/src/rfft.h</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/signal/src/rfft.h</locationURI>
-    </link>
-    <link>
-      <name>eiq/tensorflow-lite/signal/src</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>eiq/tensorflow-lite/signal/src/square_root.h</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/signal/src/square_root.h</locationURI>
-    </link>
-    <link>
-      <name>eiq/tensorflow-lite/signal/src</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>eiq/tensorflow-lite/signal/src/window.h</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/signal/src/window.h</locationURI>
-    </link>
-    <link>
-      <name>eiq/tensorflow-lite/signal/src/kiss_fft_wrappers</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>eiq/tensorflow-lite/signal/src/kiss_fft_wrappers/kiss_fft_common.h</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/signal/src/kiss_fft_wrappers/kiss_fft_common.h</locationURI>
-    </link>
-    <link>
-      <name>eiq/tensorflow-lite/signal/src/kiss_fft_wrappers</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>eiq/tensorflow-lite/signal/src/kiss_fft_wrappers/kiss_fft_float.h</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/signal/src/kiss_fft_wrappers/kiss_fft_float.h</locationURI>
-    </link>
-    <link>
-      <name>eiq/tensorflow-lite/signal/src/kiss_fft_wrappers</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>eiq/tensorflow-lite/signal/src/kiss_fft_wrappers/kiss_fft_int16.h</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/signal/src/kiss_fft_wrappers/kiss_fft_int16.h</locationURI>
-    </link>
-    <link>
-      <name>eiq/tensorflow-lite/signal/src/kiss_fft_wrappers</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>eiq/tensorflow-lite/signal/src/kiss_fft_wrappers/kiss_fft_int32.h</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/signal/src/kiss_fft_wrappers/kiss_fft_int32.h</locationURI>
-    </link>
-    <link>
-      <name>eiq/tensorflow-lite/tensorflow/lite</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>eiq/tensorflow-lite/tensorflow/lite/builtin_op_data.h</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/builtin_op_data.h</locationURI>
-    </link>
-    <link>
-      <name>eiq/tensorflow-lite/tensorflow/lite</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>eiq/tensorflow-lite/tensorflow/lite/builtin_ops.h</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/builtin_ops.h</locationURI>
-    </link>
-    <link>
-      <name>eiq/tensorflow-lite/tensorflow/lite</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>eiq/tensorflow-lite/tensorflow/lite/context_util.h</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/context_util.h</locationURI>
-    </link>
-    <link>
-      <name>eiq/tensorflow-lite/tensorflow/lite</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>eiq/tensorflow-lite/tensorflow/lite/portable_type_to_tflitetype.h</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/portable_type_to_tflitetype.h</locationURI>
-    </link>
-    <link>
-      <name>eiq/tensorflow-lite/tensorflow/lite/c</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>eiq/tensorflow-lite/tensorflow/lite/c/builtin_op_data.h</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/c/builtin_op_data.h</locationURI>
-    </link>
-    <link>
-      <name>eiq/tensorflow-lite/tensorflow/lite/c</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>eiq/tensorflow-lite/tensorflow/lite/c/c_api_types.h</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/c/c_api_types.h</locationURI>
-    </link>
-    <link>
-      <name>eiq/tensorflow-lite/tensorflow/lite/c</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>eiq/tensorflow-lite/tensorflow/lite/c/common.h</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/c/common.h</locationURI>
-    </link>
-    <link>
-      <name>eiq/tensorflow-lite/tensorflow/lite/core</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>eiq/tensorflow-lite/tensorflow/lite/core/macros.h</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/core/macros.h</locationURI>
-    </link>
-    <link>
-      <name>eiq/tensorflow-lite/tensorflow/lite/core/api</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>eiq/tensorflow-lite/tensorflow/lite/core/api/error_reporter.h</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/core/api/error_reporter.h</locationURI>
-    </link>
-    <link>
-      <name>eiq/tensorflow-lite/tensorflow/lite/core/api</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>eiq/tensorflow-lite/tensorflow/lite/core/api/flatbuffer_conversions.h</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/core/api/flatbuffer_conversions.h</locationURI>
-    </link>
-    <link>
-      <name>eiq/tensorflow-lite/tensorflow/lite/core/api</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>eiq/tensorflow-lite/tensorflow/lite/core/api/tensor_utils.h</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/core/api/tensor_utils.h</locationURI>
-    </link>
-    <link>
-      <name>eiq/tensorflow-lite/tensorflow/lite/core/c</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>eiq/tensorflow-lite/tensorflow/lite/core/c/builtin_op_data.h</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/core/c/builtin_op_data.h</locationURI>
-    </link>
-    <link>
-      <name>eiq/tensorflow-lite/tensorflow/lite/core/c</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>eiq/tensorflow-lite/tensorflow/lite/core/c/c_api_types.h</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/core/c/c_api_types.h</locationURI>
-    </link>
-    <link>
-      <name>eiq/tensorflow-lite/tensorflow/lite/core/c</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>eiq/tensorflow-lite/tensorflow/lite/core/c/common.h</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/core/c/common.h</locationURI>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/compiler/mlir/lite/schema/schema_utils.h</locationURI>
     </link>
     <link>
       <name>eiq/tensorflow-lite/tensorflow/lite/kernels</name>
@@ -1156,16 +1286,6 @@
       <name>eiq/tensorflow-lite/tensorflow/lite/kernels/internal/types.h</name>
       <type>1</type>
       <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/types.h</locationURI>
-    </link>
-    <link>
-      <name>eiq/tensorflow-lite/tensorflow/lite/kernels/internal/optimized</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>eiq/tensorflow-lite/tensorflow/lite/kernels/internal/optimized/neon_check.h</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/optimized/neon_check.h</locationURI>
     </link>
     <link>
       <name>eiq/tensorflow-lite/tensorflow/lite/kernels/internal/reference</name>
@@ -1838,6 +1958,336 @@
       <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/reference/integer_ops/transpose_conv.h</locationURI>
     </link>
     <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/kernels/internal/optimized</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/kernels/internal/optimized/neon_check.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/optimized/neon_check.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/experimental/microfrontend/lib</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/experimental/microfrontend/lib/bits.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/experimental/microfrontend/lib/bits.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/experimental/microfrontend/lib</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/experimental/microfrontend/lib/fft.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/experimental/microfrontend/lib/fft.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/experimental/microfrontend/lib</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/experimental/microfrontend/lib/fft_util.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/experimental/microfrontend/lib/fft_util.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/experimental/microfrontend/lib</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/experimental/microfrontend/lib/filterbank.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/experimental/microfrontend/lib/filterbank.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/experimental/microfrontend/lib</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/experimental/microfrontend/lib/filterbank_util.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/experimental/microfrontend/lib/filterbank_util.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/experimental/microfrontend/lib</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/experimental/microfrontend/lib/frontend.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/experimental/microfrontend/lib/frontend.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/experimental/microfrontend/lib</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/experimental/microfrontend/lib/frontend_util.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/experimental/microfrontend/lib/frontend_util.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/experimental/microfrontend/lib</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/experimental/microfrontend/lib/kiss_fft_common.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/experimental/microfrontend/lib/kiss_fft_common.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/experimental/microfrontend/lib</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/experimental/microfrontend/lib/kiss_fft_int16.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/experimental/microfrontend/lib/kiss_fft_int16.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/experimental/microfrontend/lib</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/experimental/microfrontend/lib/log_lut.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/experimental/microfrontend/lib/log_lut.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/experimental/microfrontend/lib</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/experimental/microfrontend/lib/log_scale.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/experimental/microfrontend/lib/log_scale.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/experimental/microfrontend/lib</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/experimental/microfrontend/lib/log_scale_util.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/experimental/microfrontend/lib/log_scale_util.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/experimental/microfrontend/lib</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/experimental/microfrontend/lib/noise_reduction.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/experimental/microfrontend/lib/noise_reduction.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/experimental/microfrontend/lib</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/experimental/microfrontend/lib/noise_reduction_util.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/experimental/microfrontend/lib/noise_reduction_util.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/experimental/microfrontend/lib</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/experimental/microfrontend/lib/pcan_gain_control.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/experimental/microfrontend/lib/pcan_gain_control.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/experimental/microfrontend/lib</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/experimental/microfrontend/lib/pcan_gain_control_util.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/experimental/microfrontend/lib/pcan_gain_control_util.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/experimental/microfrontend/lib</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/experimental/microfrontend/lib/window.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/experimental/microfrontend/lib/window.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/experimental/microfrontend/lib</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/experimental/microfrontend/lib/window_util.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/experimental/microfrontend/lib/window_util.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/schema</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/schema/schema_generated.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/schema/schema_generated.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/schema</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/schema/schema_utils.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/schema/schema_utils.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/array.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/array.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/builtin_op_data.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/builtin_op_data.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/builtin_ops.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/builtin_ops.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/context_util.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/context_util.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/portable_type_to_tflitetype.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/portable_type_to_tflitetype.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/core/api</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/core/api/error_reporter.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/core/api/error_reporter.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/core/api</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/core/api/flatbuffer_conversions.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/core/api/flatbuffer_conversions.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/core/api</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/core/api/tensor_utils.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/core/api/tensor_utils.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/core</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/core/macros.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/core/macros.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/core/c</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/core/c/builtin_op_data.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/core/c/builtin_op_data.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/core/c</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/core/c/c_api_types.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/core/c/c_api_types.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/core/c</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/core/c/common.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/core/c/common.h</locationURI>
+    </link>
+    <link>
       <name>eiq/tensorflow-lite/tensorflow/lite/micro</name>
       <type>2</type>
       <locationURI>virtual:/virtual</locationURI>
@@ -1846,6 +2296,16 @@
       <name>eiq/tensorflow-lite/tensorflow/lite/micro/compatibility.h</name>
       <type>1</type>
       <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/micro/compatibility.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/compression.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/micro/compression.h</locationURI>
     </link>
     <link>
       <name>eiq/tensorflow-lite/tensorflow/lite/micro</name>
@@ -1876,6 +2336,16 @@
       <name>eiq/tensorflow-lite/tensorflow/lite/micro/flatbuffer_utils.h</name>
       <type>1</type>
       <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/micro/flatbuffer_utils.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/hexdump.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/micro/hexdump.h</locationURI>
     </link>
     <link>
       <name>eiq/tensorflow-lite/tensorflow/lite/micro</name>
@@ -2093,6 +2563,26 @@
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/span.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/micro/span.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/static_vector.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/micro/static_vector.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
       <name>eiq/tensorflow-lite/tensorflow/lite/micro/system_setup.h</name>
       <type>1</type>
       <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/micro/system_setup.h</locationURI>
@@ -2153,6 +2643,16 @@
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/batch_matmul.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/batch_matmul.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
       <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/circular_buffer.h</name>
       <type>1</type>
       <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/circular_buffer.h</locationURI>
@@ -2186,6 +2686,16 @@
       <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/conv_test.h</name>
       <type>1</type>
       <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/conv_test.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/decompress.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/decompress.h</locationURI>
     </link>
     <link>
       <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels</name>
@@ -2333,6 +2843,16 @@
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/maximum_minimum.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/maximum_minimum.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
       <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/micro_ops.h</name>
       <type>1</type>
       <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/micro_ops.h</locationURI>
@@ -2463,59 +2983,159 @@
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/transpose.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/transpose.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/transpose_conv.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/transpose_conv.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
       <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/unidirectional_sequence_lstm.h</name>
       <type>1</type>
       <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/unidirectional_sequence_lstm.h</locationURI>
     </link>
     <link>
-      <name>eiq/tensorflow-lite/tensorflow/lite/micro/arena_allocator</name>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa</name>
       <type>2</type>
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
-      <name>eiq/tensorflow-lite/tensorflow/lite/micro/arena_allocator/ibuffer_allocator.h</name>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/lstm_eval.h</name>
       <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/micro/arena_allocator/ibuffer_allocator.h</locationURI>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/lstm_eval.h</locationURI>
     </link>
     <link>
-      <name>eiq/tensorflow-lite/tensorflow/lite/micro/arena_allocator</name>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa</name>
       <type>2</type>
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
-      <name>eiq/tensorflow-lite/tensorflow/lite/micro/arena_allocator/non_persistent_arena_buffer_allocator.h</name>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/xtensa.h</name>
       <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/micro/arena_allocator/non_persistent_arena_buffer_allocator.h</locationURI>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/xtensa.h</locationURI>
     </link>
     <link>
-      <name>eiq/tensorflow-lite/tensorflow/lite/micro/arena_allocator</name>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa</name>
       <type>2</type>
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
-      <name>eiq/tensorflow-lite/tensorflow/lite/micro/arena_allocator/persistent_arena_buffer_allocator.h</name>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/xtensa_add.h</name>
       <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/micro/arena_allocator/persistent_arena_buffer_allocator.h</locationURI>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/xtensa_add.h</locationURI>
     </link>
     <link>
-      <name>eiq/tensorflow-lite/tensorflow/lite/micro/arena_allocator</name>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa</name>
       <type>2</type>
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
-      <name>eiq/tensorflow-lite/tensorflow/lite/micro/arena_allocator/recording_single_arena_buffer_allocator.h</name>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/xtensa_conv.h</name>
       <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/micro/arena_allocator/recording_single_arena_buffer_allocator.h</locationURI>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/xtensa_conv.h</locationURI>
     </link>
     <link>
-      <name>eiq/tensorflow-lite/tensorflow/lite/micro/arena_allocator</name>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa</name>
       <type>2</type>
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
-      <name>eiq/tensorflow-lite/tensorflow/lite/micro/arena_allocator/single_arena_buffer_allocator.h</name>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/xtensa_depthwise_conv.h</name>
       <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/micro/arena_allocator/single_arena_buffer_allocator.h</locationURI>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/xtensa_depthwise_conv.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/xtensa_fully_connected.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/xtensa_fully_connected.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/xtensa_pad.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/xtensa_pad.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/xtensa_pooling.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/xtensa_pooling.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/xtensa_reduce.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/xtensa_reduce.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/xtensa_reshape.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/xtensa_reshape.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/xtensa_softmax.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/xtensa_softmax.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/xtensa_svdf.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/xtensa_svdf.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/compression</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/compression/metadata_saved.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/micro/compression/metadata_saved.h</locationURI>
     </link>
     <link>
       <name>eiq/tensorflow-lite/tensorflow/lite/micro/memory_planner</name>
@@ -2568,6 +3188,56 @@
       <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/micro/memory_planner/non_persistent_buffer_planner_shim.h</locationURI>
     </link>
     <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/arena_allocator</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/arena_allocator/ibuffer_allocator.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/micro/arena_allocator/ibuffer_allocator.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/arena_allocator</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/arena_allocator/non_persistent_arena_buffer_allocator.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/micro/arena_allocator/non_persistent_arena_buffer_allocator.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/arena_allocator</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/arena_allocator/persistent_arena_buffer_allocator.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/micro/arena_allocator/persistent_arena_buffer_allocator.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/arena_allocator</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/arena_allocator/recording_single_arena_buffer_allocator.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/micro/arena_allocator/recording_single_arena_buffer_allocator.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/arena_allocator</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/arena_allocator/single_arena_buffer_allocator.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/micro/arena_allocator/single_arena_buffer_allocator.h</locationURI>
+    </link>
+    <link>
       <name>eiq/tensorflow-lite/tensorflow/lite/micro/tflite_bridge</name>
       <type>2</type>
       <locationURI>virtual:/virtual</locationURI>
@@ -2588,24 +3258,514 @@
       <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/micro/tflite_bridge/micro_error_reporter.h</locationURI>
     </link>
     <link>
-      <name>eiq/tensorflow-lite/tensorflow/lite/schema</name>
+      <name>eiq/tensorflow-lite/tensorflow/lite/c</name>
       <type>2</type>
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
-      <name>eiq/tensorflow-lite/tensorflow/lite/schema/schema_generated.h</name>
+      <name>eiq/tensorflow-lite/tensorflow/lite/c/builtin_op_data.h</name>
       <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/schema/schema_generated.h</locationURI>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/c/builtin_op_data.h</locationURI>
     </link>
     <link>
-      <name>eiq/tensorflow-lite/tensorflow/lite/schema</name>
+      <name>eiq/tensorflow-lite/tensorflow/lite/c</name>
       <type>2</type>
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
-      <name>eiq/tensorflow-lite/tensorflow/lite/schema/schema_utils.h</name>
+      <name>eiq/tensorflow-lite/tensorflow/lite/c/c_api_types.h</name>
       <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/schema/schema_utils.h</locationURI>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/c/c_api_types.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/c</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/c/common.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/c/common.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/compiler/mlir/lite/core/api</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/compiler/mlir/lite/core/api/error_reporter.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/compiler/mlir/lite/core/api/error_reporter.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/compiler/mlir/lite/core/c</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/compiler/mlir/lite/core/c/builtin_op_data.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/compiler/mlir/lite/core/c/builtin_op_data.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/compiler/mlir/lite/core/c</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/compiler/mlir/lite/core/c/tflite_types.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/compiler/mlir/lite/core/c/tflite_types.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/hifimini</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/hifimini/fixedpoint_utils.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/hifimini/fixedpoint_utils.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/signal/micro/kernels</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/signal/micro/kernels/delay_flexbuffers_generated_data.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/signal/micro/kernels/delay_flexbuffers_generated_data.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/signal/micro/kernels</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/signal/micro/kernels/energy_flexbuffers_generated_data.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/signal/micro/kernels/energy_flexbuffers_generated_data.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/signal/micro/kernels</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/signal/micro/kernels/fft_auto_scale_kernel.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/signal/micro/kernels/fft_auto_scale_kernel.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/signal/micro/kernels</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/signal/micro/kernels/fft_flexbuffers_generated_data.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/signal/micro/kernels/fft_flexbuffers_generated_data.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/signal/micro/kernels</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/signal/micro/kernels/filter_bank_flexbuffers_generated_data.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/signal/micro/kernels/filter_bank_flexbuffers_generated_data.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/signal/micro/kernels</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/signal/micro/kernels/filter_bank_log_flexbuffers_generated_data.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/signal/micro/kernels/filter_bank_log_flexbuffers_generated_data.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/signal/micro/kernels</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/signal/micro/kernels/filter_bank_spectral_subtraction_flexbuffers_generated_data.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/signal/micro/kernels/filter_bank_spectral_subtraction_flexbuffers_generated_data.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/signal/micro/kernels</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/signal/micro/kernels/filter_bank_square_root.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/signal/micro/kernels/filter_bank_square_root.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/signal/micro/kernels</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/signal/micro/kernels/framer_flexbuffers_generated_data.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/signal/micro/kernels/framer_flexbuffers_generated_data.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/signal/micro/kernels</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/signal/micro/kernels/irfft.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/signal/micro/kernels/irfft.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/signal/micro/kernels</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/signal/micro/kernels/overlap_add_flexbuffers_generated_data.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/signal/micro/kernels/overlap_add_flexbuffers_generated_data.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/signal/micro/kernels</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/signal/micro/kernels/pcan_flexbuffers_generated_data.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/signal/micro/kernels/pcan_flexbuffers_generated_data.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/signal/micro/kernels</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/signal/micro/kernels/rfft.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/signal/micro/kernels/rfft.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/signal/micro/kernels</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/signal/micro/kernels/stacker_flexbuffers_generated_data.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/signal/micro/kernels/stacker_flexbuffers_generated_data.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/signal/micro/kernels</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/signal/micro/kernels/window_flexbuffers_generated_data.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/signal/micro/kernels/window_flexbuffers_generated_data.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/signal/src</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/signal/src/circular_buffer.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/signal/src/circular_buffer.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/signal/src</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/signal/src/complex.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/signal/src/complex.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/signal/src</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/signal/src/energy.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/signal/src/energy.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/signal/src</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/signal/src/fft_auto_scale.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/signal/src/fft_auto_scale.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/signal/src</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/signal/src/filter_bank.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/signal/src/filter_bank.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/signal/src</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/signal/src/filter_bank_log.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/signal/src/filter_bank_log.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/signal/src</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/signal/src/filter_bank_spectral_subtraction.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/signal/src/filter_bank_spectral_subtraction.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/signal/src</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/signal/src/filter_bank_square_root.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/signal/src/filter_bank_square_root.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/signal/src</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/signal/src/irfft.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/signal/src/irfft.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/signal/src</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/signal/src/log.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/signal/src/log.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/signal/src</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/signal/src/max_abs.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/signal/src/max_abs.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/signal/src</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/signal/src/msb.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/signal/src/msb.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/signal/src</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/signal/src/overlap_add.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/signal/src/overlap_add.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/signal/src</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/signal/src/pcan_argc_fixed.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/signal/src/pcan_argc_fixed.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/signal/src</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/signal/src/rfft.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/signal/src/rfft.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/signal/src</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/signal/src/square_root.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/signal/src/square_root.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/signal/src</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/signal/src/window.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/signal/src/window.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/signal/src/kiss_fft_wrappers</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/signal/src/kiss_fft_wrappers/kiss_fft_common.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/signal/src/kiss_fft_wrappers/kiss_fft_common.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/signal/src/kiss_fft_wrappers</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/signal/src/kiss_fft_wrappers/kiss_fft_float.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/signal/src/kiss_fft_wrappers/kiss_fft_float.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/signal/src/kiss_fft_wrappers</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/signal/src/kiss_fft_wrappers/kiss_fft_int16.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/signal/src/kiss_fft_wrappers/kiss_fft_int16.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/signal/src/kiss_fft_wrappers</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/signal/src/kiss_fft_wrappers/kiss_fft_int32.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/signal/src/kiss_fft_wrappers/kiss_fft_int32.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/third_party/cmsis_nn/Include</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/third_party/cmsis_nn/Include/arm_nn_math_types.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/third_party/cmsis_nn/Include/arm_nn_math_types.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/third_party/cmsis_nn/Include</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/third_party/cmsis_nn/Include/arm_nn_tables.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/third_party/cmsis_nn/Include/arm_nn_tables.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/third_party/cmsis_nn/Include</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/third_party/cmsis_nn/Include/arm_nn_types.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/third_party/cmsis_nn/Include/arm_nn_types.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/third_party/cmsis_nn/Include</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/third_party/cmsis_nn/Include/arm_nnfunctions.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/third_party/cmsis_nn/Include/arm_nnfunctions.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/third_party/cmsis_nn/Include</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/third_party/cmsis_nn/Include/arm_nnsupportfunctions.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/third_party/cmsis_nn/Include/arm_nnsupportfunctions.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/third_party/cmsis_nn/Include/Internal</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/third_party/cmsis_nn/Include/Internal/arm_nn_compiler.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/third_party/cmsis_nn/Include/Internal/arm_nn_compiler.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/third_party/fft2d</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/third_party/fft2d/fft.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/third_party/fft2d/fft.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/third_party/fft2d</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/third_party/fft2d/fft2d.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/third_party/fft2d/fft2d.h</locationURI>
     </link>
     <link>
       <name>eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers</name>
@@ -2663,6 +3823,26 @@
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
+      <name>eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/code_generator.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/code_generator.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/code_generators.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/code_generators.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
       <name>eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/default_allocator.h</name>
       <type>1</type>
       <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/default_allocator.h</locationURI>
@@ -2676,6 +3856,16 @@
       <name>eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/detached_buffer.h</name>
       <type>1</type>
       <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/detached_buffer.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/file_manager.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/file_manager.h</locationURI>
     </link>
     <link>
       <name>eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers</name>
@@ -2703,9 +3893,99 @@
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
+      <name>eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/flatc.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/flatc.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/flex_flat_util.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/flex_flat_util.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
       <name>eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/flexbuffers.h</name>
       <type>1</type>
       <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/flexbuffers.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/grpc.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/grpc.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/hash.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/hash.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/idl.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/idl.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/minireflect.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/minireflect.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/reflection.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/reflection.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/reflection_generated.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/reflection_generated.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/registry.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/registry.h</locationURI>
     </link>
     <link>
       <name>eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers</name>
@@ -2723,9 +4003,9 @@
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
-      <name>eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/strings.h</name>
+      <name>eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/string.h</name>
       <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/strings.h</locationURI>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/string.h</locationURI>
     </link>
     <link>
       <name>eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers</name>
@@ -2788,6 +4068,26 @@
       <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/verifier.h</locationURI>
     </link>
     <link>
+      <name>eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/pch</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/pch/flatc_pch.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/pch/flatc_pch.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/pch</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/pch/pch.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/pch/pch.h</locationURI>
+    </link>
+    <link>
       <name>eiq/tensorflow-lite/third_party/gemmlowp/fixedpoint</name>
       <type>2</type>
       <locationURI>virtual:/virtual</locationURI>
@@ -2838,74 +4138,74 @@
       <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/third_party/ruy/ruy/profiler/instrumentation.h</locationURI>
     </link>
     <link>
-      <name>source/image</name>
+      <name>eiq/tensorflow-lite/third_party/kissfft</name>
       <type>2</type>
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
-      <name>source/image/image_load.c</name>
+      <name>eiq/tensorflow-lite/third_party/kissfft/_kiss_fft_guts.h</name>
       <type>1</type>
-      <locationURI>PARENT-1-PROJECT_LOC/source/image/image_load.c</locationURI>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/third_party/kissfft/_kiss_fft_guts.h</locationURI>
     </link>
     <link>
-      <name>board</name>
+      <name>eiq/tensorflow-lite/third_party/kissfft</name>
       <type>2</type>
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
-      <name>board/pin_mux.c</name>
+      <name>eiq/tensorflow-lite/third_party/kissfft/kiss_fft.h</name>
       <type>1</type>
-      <locationURI>PARENT-1-PROJECT_LOC/pin_mux.c</locationURI>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/third_party/kissfft/kiss_fft.h</locationURI>
     </link>
     <link>
-      <name>board</name>
+      <name>eiq/tensorflow-lite/third_party/kissfft/tools</name>
       <type>2</type>
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
-      <name>board/pin_mux.h</name>
+      <name>eiq/tensorflow-lite/third_party/kissfft/tools/kfc.h</name>
       <type>1</type>
-      <locationURI>PARENT-1-PROJECT_LOC/pin_mux.h</locationURI>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/third_party/kissfft/tools/kfc.h</locationURI>
     </link>
     <link>
-      <name>board</name>
+      <name>eiq/tensorflow-lite/third_party/kissfft/tools</name>
       <type>2</type>
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
-      <name>board/board_hifi4.c</name>
+      <name>eiq/tensorflow-lite/third_party/kissfft/tools/kiss_fftnd.h</name>
       <type>1</type>
-      <locationURI>PARENT-1-PROJECT_LOC/board_hifi4.c</locationURI>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/third_party/kissfft/tools/kiss_fftnd.h</locationURI>
     </link>
     <link>
-      <name>board</name>
+      <name>eiq/tensorflow-lite/third_party/kissfft/tools</name>
       <type>2</type>
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
-      <name>board/board_hifi4.h</name>
+      <name>eiq/tensorflow-lite/third_party/kissfft/tools/kiss_fftndr.h</name>
       <type>1</type>
-      <locationURI>PARENT-1-PROJECT_LOC/board_hifi4.h</locationURI>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/third_party/kissfft/tools/kiss_fftndr.h</locationURI>
     </link>
     <link>
-      <name>board</name>
+      <name>eiq/tensorflow-lite/third_party/kissfft/tools</name>
       <type>2</type>
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
-      <name>board/board_init.c</name>
+      <name>eiq/tensorflow-lite/third_party/kissfft/tools/kiss_fftr.h</name>
       <type>1</type>
-      <locationURI>PARENT-1-PROJECT_LOC/board_init.c</locationURI>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/third_party/kissfft/tools/kiss_fftr.h</locationURI>
     </link>
     <link>
-      <name>board</name>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro</name>
       <type>2</type>
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
-      <name>board/board_init.h</name>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/debug_log.cpp</name>
       <type>1</type>
-      <locationURI>PARENT-1-PROJECT_LOC/board_init.h</locationURI>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/micro/debug_log.cpp</locationURI>
     </link>
     <link>
       <name>source</name>
@@ -2913,19 +4213,9 @@
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
-      <name>source/timer.h</name>
+      <name>source/mcux_config.h</name>
       <type>1</type>
-      <locationURI>PARENT-1-PROJECT_LOC/source/timer.h</locationURI>
-    </link>
-    <link>
-      <name>source</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>source/timer_xtensa.c</name>
-      <type>1</type>
-      <locationURI>PARENT-1-PROJECT_LOC/source/timer_xtensa.c</locationURI>
+      <locationURI>PARENT-1-PROJECT_LOC/mcux_config.h</locationURI>
     </link>
   </linkedResources>
 </projectDescription>

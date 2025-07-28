@@ -37,7 +37,7 @@
  */
 #define NO_SYS 0
 
-#define CONFIG_NETWORK_HIGH_PERF 1
+//#define CONFIG_NETWORK_HIGH_PERF 1
 
 #define MAX_SOCKETS_TCP           8
 #define MAX_LISTENING_SOCKETS_TCP 4
@@ -182,7 +182,7 @@ void sys_mark_tcpip_thread(void);
  * a lot of data that needs to be copied, this should be set high.
  */
 #if (TCPIP_STACK_TX_HEAP_SIZE == 0)
-#define MEM_SIZE (TCP_MEM_SIZE + UDP_MEM_SIZE)
+#define MEM_SIZE (10 * 1024) //(TCP_MEM_SIZE + UDP_MEM_SIZE)
 #else
 #define MEM_SIZE (TCPIP_STACK_TX_HEAP_SIZE * 1024)
 #endif
@@ -197,7 +197,7 @@ void sys_mark_tcpip_thread(void);
    ---------- Internal Memory Pool Sizes ----------
    ------------------------------------------------
 */
-#define MEMP_USE_CUSTOM_POOLS 1
+#define MEMP_USE_CUSTOM_POOLS 0
 
 /**
  * MEMP_NUM_PBUF: the number of memp struct pbufs (used for PBUF_ROM and PBUF_REF).
@@ -254,7 +254,7 @@ void sys_mark_tcpip_thread(void);
 /**
  * PBUF_POOL_SIZE: the number of buffers in the pbuf pool.
  */
-#define PBUF_POOL_SIZE 40
+#define PBUF_POOL_SIZE 20
 
 /*
    ----------------------------------

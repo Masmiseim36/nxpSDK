@@ -32,13 +32,14 @@
     <definition extID="component.rt_gpio_adapter.MIMXRT685S"/>
     <definition extID="component.usart_adapter.MIMXRT685S"/>
     <definition extID="component.osa_template_config.MIMXRT685S"/>
-    <definition extID="component.osa_interface.MIMXRT685S"/>
     <definition extID="component.osa.MIMXRT685S"/>
     <definition extID="component.osa_free_rtos.MIMXRT685S"/>
     <definition extID="middleware.edgefast_wifi_nxp.MIMXRT685S"/>
-    <definition extID="driver.pca9420.MIMXRT685S"/>
     <definition extID="component.wifi_bt_module.tx_pwr_limits.MIMXRT685S"/>
     <definition extID="component.wifi_bt_module.config.MIMXRT685S"/>
+    <definition extID="component.wifi_bt_module.IW416.MIMXRT685S"/>
+    <definition extID="component.wifi_bt_module.board_murata_1xk_m2.MIMXRT685S"/>
+    <definition extID="driver.pca9420.MIMXRT685S"/>
     <definition extID="middleware.wifi.template.MIMXRT685S"/>
     <definition extID="middleware.wifi.osa_free_rtos.MIMXRT685S"/>
     <definition extID="middleware.wifi.osa.MIMXRT685S"/>
@@ -73,7 +74,7 @@
     <definition extID="com.crt.advproject.config.exe.debug"/>
     <definition extID="com.crt.advproject.config.exe.release"/>
   </externalDefinitions>
-  <example id="mimxrt685audevk_wifi_setup_cm33" name="wifi_setup_cm33" device_core="cm33_MIMXRT685S" dependency="platform.drivers.flash_config.mimxrt685audevk.MIMXRT685S CMSIS_Include_core_cm.MIMXRT685S device.MIMXRT685S_CMSIS.MIMXRT685S device.MIMXRT685S_system.MIMXRT685S device.MIMXRT685S_startup.MIMXRT685S platform.drivers.clock.MIMXRT685S platform.drivers.dsp.MIMXRT685S platform.drivers.i2s_bridge.MIMXRT685S platform.drivers.inputmux_connections.MIMXRT685S platform.drivers.power.MIMXRT685S platform.drivers.reset.MIMXRT685S platform.drivers.cache_cache64.MIMXRT685S platform.drivers.common.MIMXRT685S platform.drivers.flexcomm.MIMXRT685S platform.drivers.flexcomm_usart.MIMXRT685S platform.drivers.flexcomm_i2c.MIMXRT685S platform.drivers.flexspi.MIMXRT685S platform.drivers.lpc_gpio.MIMXRT685S platform.drivers.lpc_iopctl.MIMXRT685S platform.drivers.usdhc.MIMXRT685S platform.utilities.assert.MIMXRT685S platform.utilities.misc_utilities.MIMXRT685S component.lists.MIMXRT685S utility.str.MIMXRT685S utility.debug_console.MIMXRT685S component.serial_manager.MIMXRT685S component.serial_manager_uart.MIMXRT685S component.rt_gpio_adapter.MIMXRT685S component.usart_adapter.MIMXRT685S component.osa_template_config.MIMXRT685S component.osa_interface.MIMXRT685S component.osa.MIMXRT685S component.osa_free_rtos.MIMXRT685S middleware.edgefast_wifi_nxp.MIMXRT685S driver.pca9420.MIMXRT685S component.wifi_bt_module.tx_pwr_limits.MIMXRT685S component.wifi_bt_module.config.MIMXRT685S middleware.wifi.template.MIMXRT685S middleware.wifi.osa_free_rtos.MIMXRT685S middleware.wifi.osa.MIMXRT685S middleware.wifi.common_files.MIMXRT685S middleware.wifi.fwdnld.MIMXRT685S middleware.wifi.net.MIMXRT685S middleware.wifi.wifidriver.MIMXRT685S middleware.wifi.wifidriver.softap.MIMXRT685S middleware.wifi.MIMXRT685S middleware.wifi.sdio.MIMXRT685S middleware.wifi.mlan_sdio.MIMXRT685S middleware.wifi.fwdnld_intf_abs.MIMXRT685S middleware.lwip.MIMXRT685S middleware.lwip.sys_arch.dynamic.MIMXRT685S middleware.lwip.contrib.ping.MIMXRT685S middleware.sdmmc.common.MIMXRT685S middleware.sdmmc.osa.freertos.MIMXRT685S middleware.sdmmc.sdio.MIMXRT685S middleware.sdmmc.host.usdhc.MIMXRT685S middleware.sdmmc.host.usdhc.non_blocking.MIMXRT685S middleware.sdmmc.usdhc.template.MIMXRT685S middleware.freertos-kernel.MIMXRT685S middleware.freertos-kernel.heap_4.MIMXRT685S middleware.freertos-kernel.cm33_non_trustzone.MIMXRT685S middleware.freertos-kernel.extension.MIMXRT685S middleware.freertos-kernel.config.MIMXRT685S" category="wifi_examples">
+  <example id="mimxrt685audevk_wifi_setup_cm33" name="wifi_setup_cm33" device_core="cm33_MIMXRT685S" dependency="platform.drivers.flash_config.mimxrt685audevk.MIMXRT685S CMSIS_Include_core_cm.MIMXRT685S device.MIMXRT685S_CMSIS.MIMXRT685S device.MIMXRT685S_system.MIMXRT685S device.MIMXRT685S_startup.MIMXRT685S platform.drivers.clock.MIMXRT685S platform.drivers.dsp.MIMXRT685S platform.drivers.i2s_bridge.MIMXRT685S platform.drivers.inputmux_connections.MIMXRT685S platform.drivers.power.MIMXRT685S platform.drivers.reset.MIMXRT685S platform.drivers.cache_cache64.MIMXRT685S platform.drivers.common.MIMXRT685S platform.drivers.flexcomm.MIMXRT685S platform.drivers.flexcomm_usart.MIMXRT685S platform.drivers.flexcomm_i2c.MIMXRT685S platform.drivers.flexspi.MIMXRT685S platform.drivers.lpc_gpio.MIMXRT685S platform.drivers.lpc_iopctl.MIMXRT685S platform.drivers.usdhc.MIMXRT685S platform.utilities.assert.MIMXRT685S platform.utilities.misc_utilities.MIMXRT685S component.lists.MIMXRT685S utility.str.MIMXRT685S utility.debug_console.MIMXRT685S component.serial_manager.MIMXRT685S component.serial_manager_uart.MIMXRT685S component.rt_gpio_adapter.MIMXRT685S component.usart_adapter.MIMXRT685S component.osa_template_config.MIMXRT685S component.osa.MIMXRT685S component.osa_free_rtos.MIMXRT685S middleware.edgefast_wifi_nxp.MIMXRT685S component.wifi_bt_module.tx_pwr_limits.MIMXRT685S component.wifi_bt_module.config.MIMXRT685S component.wifi_bt_module.IW416.MIMXRT685S component.wifi_bt_module.board_murata_1xk_m2.MIMXRT685S driver.pca9420.MIMXRT685S middleware.wifi.template.MIMXRT685S middleware.wifi.osa_free_rtos.MIMXRT685S middleware.wifi.osa.MIMXRT685S middleware.wifi.common_files.MIMXRT685S middleware.wifi.fwdnld.MIMXRT685S middleware.wifi.net.MIMXRT685S middleware.wifi.wifidriver.MIMXRT685S middleware.wifi.wifidriver.softap.MIMXRT685S middleware.wifi.MIMXRT685S middleware.wifi.sdio.MIMXRT685S middleware.wifi.mlan_sdio.MIMXRT685S middleware.wifi.fwdnld_intf_abs.MIMXRT685S middleware.lwip.MIMXRT685S middleware.lwip.sys_arch.dynamic.MIMXRT685S middleware.lwip.contrib.ping.MIMXRT685S middleware.sdmmc.common.MIMXRT685S middleware.sdmmc.osa.freertos.MIMXRT685S middleware.sdmmc.sdio.MIMXRT685S middleware.sdmmc.host.usdhc.MIMXRT685S middleware.sdmmc.host.usdhc.non_blocking.MIMXRT685S middleware.sdmmc.usdhc.template.MIMXRT685S middleware.freertos-kernel.MIMXRT685S middleware.freertos-kernel.heap_4.MIMXRT685S middleware.freertos-kernel.cm33_non_trustzone.MIMXRT685S middleware.freertos-kernel.extension.MIMXRT685S middleware.freertos-kernel.config.MIMXRT685S" category="wifi_examples">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -93,8 +94,10 @@
           <value>PRINTF_ADVANCED_ENABLE=1</value>
           <value>SDK_DEBUGCONSOLE=1</value>
           <value>MCUX_META_BUILD</value>
+          <value>MIMXRT685S_cm33_SERIES</value>
           <value>OSA_USED</value>
           <value>SERIAL_PORT_TYPE_UART=1</value>
+          <value>WIFI_IW416_BOARD_MURATA_1XK_M2</value>
           <value>SDK_I2C_BASED_COMPONENT_USED=1</value>
           <value>CONFIG_NXP_WIFI_SOFTAP_SUPPORT=1</value>
           <value>SDIO_ENABLED=1</value>
@@ -222,9 +225,6 @@
       <files mask="FreeRTOSConfigBoard.h"/>
       <files mask="wifi_bt_config.h"/>
     </source>
-    <source path="." project_relative_path="source" type="c_include">
-      <files mask="app_config.h"/>
-    </source>
     <source path="." project_relative_path="source" type="src">
       <files mask="pin_mux.c"/>
     </source>
@@ -277,6 +277,12 @@
     </source>
     <source path="." project_relative_path="doc" type="doc">
       <files mask="wifi_examples_readme.md"/>
+    </source>
+    <source path="." project_relative_path="doc" type="doc">
+      <files mask="readme_modules.md"/>
+    </source>
+    <source path="." project_relative_path="doc" type="doc">
+      <files mask="examples_shared_readme.md"/>
     </source>
   </example>
 </ksdk:examples>

@@ -42,7 +42,7 @@
  ******************************************************************************/
 static void Tickless_task(void *pvParameters);
 static void SW_task(void *pvParameters);
-void pint_intr_callback(pint_pin_int_t pintr, uint32_t pmatch_status);
+void pint_intr_callback(pint_pin_int_t pintr, pint_status_t *status);
 SemaphoreHandle_t xSWSemaphore = NULL;
 /*******************************************************************************
  * Code
@@ -66,7 +66,8 @@ int main(void)
     /* Initialize PINT */
     PINT_Init(PINT);
     /* Setup Pin Interrupt 0 for falling edge */
-    PINT_PinInterruptConfig(PINT, kPINT_PinInt0, kPINT_PinIntEnableFallEdge, pint_intr_callback);
+    PINT_PinInterruptConfig(PINT, kPINT_PinInt0, kPINT_PinIntEnableFallEdge);
+    PINT_SetCallback(PINT, pint_intr_callback);
     NVIC_SetPriority(BOARD_SW_IRQ, SW_NVIC_PRIO);
     EnableIRQ(BOARD_SW_IRQ);
 
@@ -120,7 +121,7 @@ static void SW_task(void *pvParameters)
 /*!
  * @brief Call back for PINT Pin interrupt 0-7.
  */
-void pint_intr_callback(pint_pin_int_t pintr, uint32_t pmatch_status)
+void pint_intr_callback(pint_pin_int_t pintr, pint_status_t *status)
 {
     portBASE_TYPE xHigherPriorityTaskWoken = pdFALSE;
 

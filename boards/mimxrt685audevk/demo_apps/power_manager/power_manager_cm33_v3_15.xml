@@ -55,6 +55,7 @@
           <value>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</value>
           <value>SDK_DEBUGCONSOLE=1</value>
           <value>MCUX_META_BUILD</value>
+          <value>MIMXRT685S_cm33_SERIES</value>
           <value>SDK_I2C_BASED_COMPONENT_USED=1</value>
         </option>
         <option id="com.crt.advproject.gas.fpu" type="enum">
@@ -145,6 +146,12 @@
     <source path="mdk" project_relative_path="mimxrt685audevk" type="configuration" toolchain="mdk">
       <files mask="mimxrt685audevk_flash.ini"/>
     </source>
+    <source path="." project_relative_path="source" type="binary">
+      <files mask="power_manager.bin" hidden="true"/>
+    </source>
+    <source path="." project_relative_path="source" type="other">
+      <files mask="power_manager.mex"/>
+    </source>
     <source path="." project_relative_path="source" type="src">
       <files mask="power_manager.c"/>
     </source>
@@ -193,6 +200,9 @@
     </source>
     <source path="." project_relative_path="doc" type="doc">
       <files mask="example_board_readme.md"/>
+    </source>
+    <source path="." project_relative_path="doc" type="doc">
+      <files mask="examples_shared_readme.md"/>
     </source>
   </example>
 </ksdk:examples>

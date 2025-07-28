@@ -10,6 +10,7 @@ sent after the address can be received by itself.
 
 ## Supported Boards
 - [EVK-MIMXRT685](../../../../_boards/evkmimxrt685/driver_examples/usart/9bit_interrupt_transfer/example_board_readme.md)
+- [FRDM-MCXW23](../../../../_boards/frdmmcxw23/driver_examples/usart/9bit_interrupt_transfer/example_board_readme.md)
 - [LPCXpresso51U68](../../../../_boards/lpcxpresso51u68/driver_examples/usart/9bit_interrupt_transfer/example_board_readme.md)
 - [LPCXpresso54628](../../../../_boards/lpcxpresso54628/driver_examples/usart/9bit_interrupt_transfer/example_board_readme.md)
 - [LPCXpresso54S018](../../../../_boards/lpcxpresso54s018/driver_examples/usart/9bit_interrupt_transfer/example_board_readme.md)
@@ -19,3 +20,4 @@ sent after the address can be received by itself.
 - [LPCXpresso55S28](../../../../_boards/lpcxpresso55s28/driver_examples/usart/9bit_interrupt_transfer/example_board_readme.md)
 - [LPCXpresso55S69](../../../../_boards/lpcxpresso55s69/driver_examples/usart/9bit_interrupt_transfer/example_board_readme.md)
 - [MIMXRT685-AUD-EVK](../../../../_boards/mimxrt685audevk/driver_examples/usart/9bit_interrupt_transfer/example_board_readme.md)
+- [MCXW23-EVK](../../../../_boards/mcxw23evk/driver_examples/usart/9bit_interrupt_transfer/example_board_readme.md)

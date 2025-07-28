@@ -7,15 +7,15 @@ message("${CMAKE_CURRENT_LIST_FILE} component is included.")
           ${CMAKE_CURRENT_LIST_DIR}/mflash_file.c
         )
 
-        if(CONFIG_BOARD STREQUAL evkmimxrt685)
-    target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
-          ${CMAKE_CURRENT_LIST_DIR}/mimxrt685/mflash_drv.c
-        )
-    endif()
-
         if(CONFIG_BOARD STREQUAL mimxrt685audevk)
     target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
           ${CMAKE_CURRENT_LIST_DIR}/mimxrt685audevk/mflash_drv.c
+        )
+    endif()
+
+        if(CONFIG_BOARD STREQUAL evkmimxrt685)
+    target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
+          ${CMAKE_CURRENT_LIST_DIR}/mimxrt685/mflash_drv.c
         )
     endif()
 
@@ -24,15 +24,15 @@ message("${CMAKE_CURRENT_LIST_FILE} component is included.")
           ${CMAKE_CURRENT_LIST_DIR}/.
         )
 
-        if(CONFIG_BOARD STREQUAL evkmimxrt685)
-    target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
-          ${CMAKE_CURRENT_LIST_DIR}/mimxrt685
-        )
-    endif()
-
         if(CONFIG_BOARD STREQUAL mimxrt685audevk)
     target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
           ${CMAKE_CURRENT_LIST_DIR}/mimxrt685audevk
+        )
+    endif()
+
+        if(CONFIG_BOARD STREQUAL evkmimxrt685)
+    target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
+          ${CMAKE_CURRENT_LIST_DIR}/mimxrt685
         )
     endif()
 

@@ -332,7 +332,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../mcux_config.h -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
-              <Define>DEBUG, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, USE_RTOS=0, SDK_I2C_BASED_COMPONENT_USED=1, SD_ENABLED=1</Define>
+              <Define>DEBUG, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT685SFVKB_cm33, MIMXRT685S_cm33_SERIES, BOOT_HEADER_ENABLE=1, USE_RTOS=0, SDK_I2C_BASED_COMPONENT_USED=1, SD_ENABLED=1</Define>
               <Undefine/>
               <IncludePath>..;../../../flash_config;../../../../../CMSIS/Core/Include;../../../../../CMSIS/Core/Include/m-profile;../../../../../devices/MIMXRT685S;../../../../../devices/MIMXRT685S/periph;../../../../../devices/MIMXRT685S/drivers;../../../../../devices/MIMXRT685S/utilities/debug_console_lite;../../../../../components/lists;../../../../../devices/MIMXRT685S/utilities/str;../../../../../components/gpio;../../../../../components/uart;../../../../../components/osa;../../../../../components/pmic/pca9420;../../../../../middleware/fatfs/source;../../../../../middleware/fatfs/source/fsl_sd_disk;../../../../../middleware/sdmmc/common;../../../../../middleware/sdmmc/osa;../../../../../middleware/sdmmc/sd;../../../../../middleware/sdmmc/host/usdhc</IncludePath>
             </VariousControls>
@@ -350,7 +350,7 @@
             <uClangAs>1</uClangAs>
             <VariousControls>
               <MiscControls/>
-              <Define>MCUXPRESSO_SDK, CPU_MIMXRT685SFVKB_cm33</Define>
+              <Define>MCUXPRESSO_SDK, CPU_MIMXRT685SFVKB_cm33, MIMXRT685S_cm33_SERIES</Define>
               <Undefine/>
               <IncludePath>..;../../../flash_config;../../../../../CMSIS/Core/Include;../../../../../CMSIS/Core/Include/m-profile;../../../../../devices/MIMXRT685S;../../../../../devices/MIMXRT685S/periph;../../../../../devices/MIMXRT685S/drivers;../../../../../devices/MIMXRT685S/utilities/debug_console_lite;../../../../../components/lists;../../../../../devices/MIMXRT685S/utilities/str;../../../../../components/gpio;../../../../../components/uart;../../../../../components/osa;../../../../../components/pmic/pca9420;../../../../../middleware/fatfs/source;../../../../../middleware/fatfs/source/fsl_sd_disk;../../../../../middleware/sdmmc/common;../../../../../middleware/sdmmc/osa;../../../../../middleware/sdmmc/sd;../../../../../middleware/sdmmc/host/usdhc</IncludePath>
             </VariousControls>
@@ -617,6 +617,11 @@
               <FileName>PERI_DMIC.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT685S/periph/PERI_DMIC.h</FilePath>
+            </File>
+            <File>
+              <FileName>PERI_ESPI.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT685S/periph/PERI_ESPI.h</FilePath>
             </File>
             <File>
               <FileName>PERI_FLEXCOMM.h</FileName>
@@ -1064,11 +1069,6 @@
           <GroupName>component/osa</GroupName>
           <Files>
             <File>
-              <FileName>fsl_os_abstraction.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/osa/fsl_os_abstraction.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_os_abstraction_bm.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../components/osa/fsl_os_abstraction_bm.h</FilePath>
@@ -1077,6 +1077,11 @@
               <FileName>fsl_os_abstraction_bm.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../components/osa/fsl_os_abstraction_bm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/osa/fsl_os_abstraction.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1232,6 +1237,11 @@
               <FileName>example_board_readme.md</FileName>
               <FileType>5</FileType>
               <FilePath>../example_board_readme.md</FilePath>
+            </File>
+            <File>
+              <FileName>examples_shared_readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../examples_shared_readme.md</FilePath>
             </File>
           </Files>
         </Group>
@@ -1566,7 +1576,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../mcux_config.h -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
-              <Define>DEBUG, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, USE_RTOS=0, SDK_I2C_BASED_COMPONENT_USED=1, SD_ENABLED=1</Define>
+              <Define>DEBUG, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT685SFVKB_cm33, MIMXRT685S_cm33_SERIES, BOOT_HEADER_ENABLE=1, USE_RTOS=0, SDK_I2C_BASED_COMPONENT_USED=1, SD_ENABLED=1</Define>
               <Undefine/>
               <IncludePath>..;../../../flash_config;../../../../../CMSIS/Core/Include;../../../../../CMSIS/Core/Include/m-profile;../../../../../devices/MIMXRT685S;../../../../../devices/MIMXRT685S/periph;../../../../../devices/MIMXRT685S/drivers;../../../../../devices/MIMXRT685S/utilities/debug_console_lite;../../../../../components/lists;../../../../../devices/MIMXRT685S/utilities/str;../../../../../components/gpio;../../../../../components/uart;../../../../../components/osa;../../../../../components/pmic/pca9420;../../../../../middleware/fatfs/source;../../../../../middleware/fatfs/source/fsl_sd_disk;../../../../../middleware/sdmmc/common;../../../../../middleware/sdmmc/osa;../../../../../middleware/sdmmc/sd;../../../../../middleware/sdmmc/host/usdhc</IncludePath>
             </VariousControls>
@@ -1584,7 +1594,7 @@
             <uClangAs>1</uClangAs>
             <VariousControls>
               <MiscControls/>
-              <Define>MCUXPRESSO_SDK, CPU_MIMXRT685SFVKB_cm33</Define>
+              <Define>MCUXPRESSO_SDK, CPU_MIMXRT685SFVKB_cm33, MIMXRT685S_cm33_SERIES</Define>
               <Undefine/>
               <IncludePath>..;../../../flash_config;../../../../../CMSIS/Core/Include;../../../../../CMSIS/Core/Include/m-profile;../../../../../devices/MIMXRT685S;../../../../../devices/MIMXRT685S/periph;../../../../../devices/MIMXRT685S/drivers;../../../../../devices/MIMXRT685S/utilities/debug_console_lite;../../../../../components/lists;../../../../../devices/MIMXRT685S/utilities/str;../../../../../components/gpio;../../../../../components/uart;../../../../../components/osa;../../../../../components/pmic/pca9420;../../../../../middleware/fatfs/source;../../../../../middleware/fatfs/source/fsl_sd_disk;../../../../../middleware/sdmmc/common;../../../../../middleware/sdmmc/osa;../../../../../middleware/sdmmc/sd;../../../../../middleware/sdmmc/host/usdhc</IncludePath>
             </VariousControls>
@@ -1851,6 +1861,11 @@
               <FileName>PERI_DMIC.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT685S/periph/PERI_DMIC.h</FilePath>
+            </File>
+            <File>
+              <FileName>PERI_ESPI.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT685S/periph/PERI_ESPI.h</FilePath>
             </File>
             <File>
               <FileName>PERI_FLEXCOMM.h</FileName>
@@ -2298,11 +2313,6 @@
           <GroupName>component/osa</GroupName>
           <Files>
             <File>
-              <FileName>fsl_os_abstraction.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/osa/fsl_os_abstraction.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_os_abstraction_bm.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../components/osa/fsl_os_abstraction_bm.h</FilePath>
@@ -2311,6 +2321,11 @@
               <FileName>fsl_os_abstraction_bm.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../components/osa/fsl_os_abstraction_bm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/osa/fsl_os_abstraction.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2466,6 +2481,11 @@
               <FileName>example_board_readme.md</FileName>
               <FileType>5</FileType>
               <FilePath>../example_board_readme.md</FilePath>
+            </File>
+            <File>
+              <FileName>examples_shared_readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../examples_shared_readme.md</FilePath>
             </File>
           </Files>
         </Group>
@@ -2800,7 +2820,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../mcux_config.h -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
-              <Define>NDEBUG, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, USE_RTOS=0, SDK_I2C_BASED_COMPONENT_USED=1, SD_ENABLED=1</Define>
+              <Define>NDEBUG, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT685SFVKB_cm33, MIMXRT685S_cm33_SERIES, BOOT_HEADER_ENABLE=1, USE_RTOS=0, SDK_I2C_BASED_COMPONENT_USED=1, SD_ENABLED=1</Define>
               <Undefine/>
               <IncludePath>..;../../../flash_config;../../../../../CMSIS/Core/Include;../../../../../CMSIS/Core/Include/m-profile;../../../../../devices/MIMXRT685S;../../../../../devices/MIMXRT685S/periph;../../../../../devices/MIMXRT685S/drivers;../../../../../devices/MIMXRT685S/utilities/debug_console_lite;../../../../../components/lists;../../../../../devices/MIMXRT685S/utilities/str;../../../../../components/gpio;../../../../../components/uart;../../../../../components/osa;../../../../../components/pmic/pca9420;../../../../../middleware/fatfs/source;../../../../../middleware/fatfs/source/fsl_sd_disk;../../../../../middleware/sdmmc/common;../../../../../middleware/sdmmc/osa;../../../../../middleware/sdmmc/sd;../../../../../middleware/sdmmc/host/usdhc</IncludePath>
             </VariousControls>
@@ -2818,7 +2838,7 @@
             <uClangAs>1</uClangAs>
             <VariousControls>
               <MiscControls/>
-              <Define>MCUXPRESSO_SDK, CPU_MIMXRT685SFVKB_cm33</Define>
+              <Define>MCUXPRESSO_SDK, CPU_MIMXRT685SFVKB_cm33, MIMXRT685S_cm33_SERIES</Define>
               <Undefine/>
               <IncludePath>..;../../../flash_config;../../../../../CMSIS/Core/Include;../../../../../CMSIS/Core/Include/m-profile;../../../../../devices/MIMXRT685S;../../../../../devices/MIMXRT685S/periph;../../../../../devices/MIMXRT685S/drivers;../../../../../devices/MIMXRT685S/utilities/debug_console_lite;../../../../../components/lists;../../../../../devices/MIMXRT685S/utilities/str;../../../../../components/gpio;../../../../../components/uart;../../../../../components/osa;../../../../../components/pmic/pca9420;../../../../../middleware/fatfs/source;../../../../../middleware/fatfs/source/fsl_sd_disk;../../../../../middleware/sdmmc/common;../../../../../middleware/sdmmc/osa;../../../../../middleware/sdmmc/sd;../../../../../middleware/sdmmc/host/usdhc</IncludePath>
             </VariousControls>
@@ -3085,6 +3105,11 @@
               <FileName>PERI_DMIC.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT685S/periph/PERI_DMIC.h</FilePath>
+            </File>
+            <File>
+              <FileName>PERI_ESPI.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT685S/periph/PERI_ESPI.h</FilePath>
             </File>
             <File>
               <FileName>PERI_FLEXCOMM.h</FileName>
@@ -3532,11 +3557,6 @@
           <GroupName>component/osa</GroupName>
           <Files>
             <File>
-              <FileName>fsl_os_abstraction.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/osa/fsl_os_abstraction.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_os_abstraction_bm.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../components/osa/fsl_os_abstraction_bm.h</FilePath>
@@ -3545,6 +3565,11 @@
               <FileName>fsl_os_abstraction_bm.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../components/osa/fsl_os_abstraction_bm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/osa/fsl_os_abstraction.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3700,6 +3725,11 @@
               <FileName>example_board_readme.md</FileName>
               <FileType>5</FileType>
               <FilePath>../example_board_readme.md</FilePath>
+            </File>
+            <File>
+              <FileName>examples_shared_readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../examples_shared_readme.md</FilePath>
             </File>
           </Files>
         </Group>
@@ -4034,7 +4064,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../mcux_config.h -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
-              <Define>NDEBUG, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, USE_RTOS=0, SDK_I2C_BASED_COMPONENT_USED=1, SD_ENABLED=1</Define>
+              <Define>NDEBUG, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT685SFVKB_cm33, MIMXRT685S_cm33_SERIES, BOOT_HEADER_ENABLE=1, USE_RTOS=0, SDK_I2C_BASED_COMPONENT_USED=1, SD_ENABLED=1</Define>
               <Undefine/>
               <IncludePath>..;../../../flash_config;../../../../../CMSIS/Core/Include;../../../../../CMSIS/Core/Include/m-profile;../../../../../devices/MIMXRT685S;../../../../../devices/MIMXRT685S/periph;../../../../../devices/MIMXRT685S/drivers;../../../../../devices/MIMXRT685S/utilities/debug_console_lite;../../../../../components/lists;../../../../../devices/MIMXRT685S/utilities/str;../../../../../components/gpio;../../../../../components/uart;../../../../../components/osa;../../../../../components/pmic/pca9420;../../../../../middleware/fatfs/source;../../../../../middleware/fatfs/source/fsl_sd_disk;../../../../../middleware/sdmmc/common;../../../../../middleware/sdmmc/osa;../../../../../middleware/sdmmc/sd;../../../../../middleware/sdmmc/host/usdhc</IncludePath>
             </VariousControls>
@@ -4052,7 +4082,7 @@
             <uClangAs>1</uClangAs>
             <VariousControls>
               <MiscControls/>
-              <Define>MCUXPRESSO_SDK, CPU_MIMXRT685SFVKB_cm33</Define>
+              <Define>MCUXPRESSO_SDK, CPU_MIMXRT685SFVKB_cm33, MIMXRT685S_cm33_SERIES</Define>
               <Undefine/>
               <IncludePath>..;../../../flash_config;../../../../../CMSIS/Core/Include;../../../../../CMSIS/Core/Include/m-profile;../../../../../devices/MIMXRT685S;../../../../../devices/MIMXRT685S/periph;../../../../../devices/MIMXRT685S/drivers;../../../../../devices/MIMXRT685S/utilities/debug_console_lite;../../../../../components/lists;../../../../../devices/MIMXRT685S/utilities/str;../../../../../components/gpio;../../../../../components/uart;../../../../../components/osa;../../../../../components/pmic/pca9420;../../../../../middleware/fatfs/source;../../../../../middleware/fatfs/source/fsl_sd_disk;../../../../../middleware/sdmmc/common;../../../../../middleware/sdmmc/osa;../../../../../middleware/sdmmc/sd;../../../../../middleware/sdmmc/host/usdhc</IncludePath>
             </VariousControls>
@@ -4319,6 +4349,11 @@
               <FileName>PERI_DMIC.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT685S/periph/PERI_DMIC.h</FilePath>
+            </File>
+            <File>
+              <FileName>PERI_ESPI.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT685S/periph/PERI_ESPI.h</FilePath>
             </File>
             <File>
               <FileName>PERI_FLEXCOMM.h</FileName>
@@ -4766,11 +4801,6 @@
           <GroupName>component/osa</GroupName>
           <Files>
             <File>
-              <FileName>fsl_os_abstraction.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/osa/fsl_os_abstraction.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_os_abstraction_bm.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../components/osa/fsl_os_abstraction_bm.h</FilePath>
@@ -4779,6 +4809,11 @@
               <FileName>fsl_os_abstraction_bm.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../components/osa/fsl_os_abstraction_bm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/osa/fsl_os_abstraction.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -4934,6 +4969,11 @@
               <FileName>example_board_readme.md</FileName>
               <FileType>5</FileType>
               <FilePath>../example_board_readme.md</FilePath>
+            </File>
+            <File>
+              <FileName>examples_shared_readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../examples_shared_readme.md</FilePath>
             </File>
           </Files>
         </Group>

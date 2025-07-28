@@ -333,9 +333,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../mcux_config.h -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
-              <Define>DEBUG, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, MBEDTLS_CONFIG_FILE='\"mcux_mbedtls_config.h\"'</Define>
+              <Define>DEBUG, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT685SFVKB_cm33, MIMXRT685S_cm33_SERIES, BOOT_HEADER_ENABLE=1, PSA_CRYPTO_DRIVER_CASPER, PSA_CRYPTO_DRIVER_HASHCRYPT, MBEDTLS_CONFIG_FILE='\"mcux_mbedtls_config.h\"'</Define>
               <Undefine/>
-              <IncludePath>..;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT685S;../../../../../../devices/MIMXRT685S/periph;../../../../../../devices/MIMXRT685S/drivers;../../../../../../devices/MIMXRT685S/utilities/debug_console_lite;../../../../../../devices/MIMXRT685S/utilities/str;../../../../../../components/uart;../../../../../../middleware/mbedtls3x/port;../../../../../../middleware/mbedtls3x/port/hw_init;../../../../../../middleware/mbedtls3x/port/rng;../../../../../../middleware/mbedtls3x/include;../../../../../../middleware/mbedtls3x/library</IncludePath>
+              <IncludePath>..;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT685S;../../../../../../devices/MIMXRT685S/periph;../../../../../../devices/MIMXRT685S/drivers;../../../../../../devices/MIMXRT685S/utilities/debug_console_lite;../../../../../../devices/MIMXRT685S/utilities/str;../../../../../../components/rng;../../../../../../components/uart;../../../../../../components/psa_crypto_driver/osal;../../../../../../components/psa_crypto_driver/osal/baremetal;../../../../../../components/psa_crypto_driver/casper;../../../../../../components/psa_crypto_driver/casper/include;../../../../../../components/psa_crypto_driver/casper/common/include;../../../../../../components/psa_crypto_driver/hashcrypt;../../../../../../components/psa_crypto_driver/hashcrypt/include;../../../../../../middleware/mbedtls3x/include;../../../../../../middleware/mbedtls3x/library;../../../../../../middleware/mbedtls3x/port</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -351,9 +351,9 @@
             <ClangAsOpt>2</ClangAsOpt>
             <VariousControls>
               <MiscControls/>
-              <Define>MCUXPRESSO_SDK, CPU_MIMXRT685SFVKB_cm33</Define>
+              <Define>MCUXPRESSO_SDK, CPU_MIMXRT685SFVKB_cm33, MIMXRT685S_cm33_SERIES</Define>
               <Undefine/>
-              <IncludePath>..;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT685S;../../../../../../devices/MIMXRT685S/periph;../../../../../../devices/MIMXRT685S/drivers;../../../../../../devices/MIMXRT685S/utilities/debug_console_lite;../../../../../../devices/MIMXRT685S/utilities/str;../../../../../../components/uart;../../../../../../middleware/mbedtls3x/port;../../../../../../middleware/mbedtls3x/port/hw_init;../../../../../../middleware/mbedtls3x/port/rng;../../../../../../middleware/mbedtls3x/include;../../../../../../middleware/mbedtls3x/library</IncludePath>
+              <IncludePath>..;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT685S;../../../../../../devices/MIMXRT685S/periph;../../../../../../devices/MIMXRT685S/drivers;../../../../../../devices/MIMXRT685S/utilities/debug_console_lite;../../../../../../devices/MIMXRT685S/utilities/str;../../../../../../components/rng;../../../../../../components/uart;../../../../../../components/psa_crypto_driver/osal;../../../../../../components/psa_crypto_driver/osal/baremetal;../../../../../../components/psa_crypto_driver/casper;../../../../../../components/psa_crypto_driver/casper/include;../../../../../../components/psa_crypto_driver/casper/common/include;../../../../../../components/psa_crypto_driver/hashcrypt;../../../../../../components/psa_crypto_driver/hashcrypt/include;../../../../../../middleware/mbedtls3x/include;../../../../../../middleware/mbedtls3x/library;../../../../../../middleware/mbedtls3x/port</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -369,7 +369,7 @@
             <ScatterFile>MIMXRT685Sxxxx_cm33_ram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --predefine="-D__stack_size__=0x2000" --predefine="-D__heap_size__=0x8000" --entry=Reset_Handler --info=sizes,totals,unused,veneers</Misc>
+            <Misc>--remove --predefine=\"-D__stack_size__=0x4000\" --predefine=\"-D__heap_size__=0x8000\" --predefine="-D__stack_size__=0x2000" --predefine="-D__heap_size__=0x8000" --entry=Reset_Handler --info=sizes,totals,unused,veneers</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -593,6 +593,11 @@
               <FileName>PERI_DMIC.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT685S/periph/PERI_DMIC.h</FilePath>
+            </File>
+            <File>
+              <FileName>PERI_ESPI.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/periph/PERI_ESPI.h</FilePath>
             </File>
             <File>
               <FileName>PERI_FLEXCOMM.h</FileName>
@@ -855,6 +860,16 @@
               <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_cache.h</FilePath>
             </File>
             <File>
+              <FileName>fsl_casper.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_casper.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_casper.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_casper.c</FilePath>
+            </File>
+            <File>
               <FileName>fsl_common.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_common.h</FilePath>
@@ -903,6 +918,16 @@
               <FileName>fsl_flexspi.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_flexspi.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_hashcrypt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_hashcrypt.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_hashcrypt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_hashcrypt.c</FilePath>
             </File>
             <File>
               <FileName>fsl_gpio.h</FileName>
@@ -982,6 +1007,21 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>component/rng</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_adapter_rng.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/rng/fsl_adapter_rng.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_adapter_trng.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/rng/fsl_adapter_trng.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>component/uart</GroupName>
           <Files>
             <File>
@@ -997,57 +1037,202 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>mbedtls3x/port</GroupName>
+          <GroupName>component/psa_crypto_driver/osal</GroupName>
           <Files>
             <File>
-              <FileName>mcux_mbedtls_config.h</FileName>
+              <FileName>osal_mutex.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>mcux_mbedtls_accelerator_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_accelerator_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>mcux_mbedtls_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>mcux_mbedtls_accelerator_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_accelerator_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>mcux_psa_defines.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_psa_defines.h</FilePath>
+              <FilePath>../../../../../../components/psa_crypto_driver/osal/osal_mutex.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>mbedtls3x/port/hw_init</GroupName>
+          <GroupName>component/psa_crypto_driver/osal/baremetal</GroupName>
           <Files>
             <File>
-              <FileName>hw_init.c</FileName>
+              <FileName>osal_mutex.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/port/hw_init/hw_init.c</FilePath>
+              <FilePath>../../../../../../components/psa_crypto_driver/osal/baremetal/osal_mutex.c</FilePath>
             </File>
             <File>
-              <FileName>hw_init.h</FileName>
+              <FileName>osal_mutex_platform.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/port/hw_init/hw_init.h</FilePath>
+              <FilePath>../../../../../../components/psa_crypto_driver/osal/baremetal/osal_mutex_platform.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>mbedtls3x/port/rng</GroupName>
+          <GroupName>component/psa_crypto_driver/casper</GroupName>
           <Files>
             <File>
-              <FileName>psa_mcux_entropy.c</FileName>
+              <FileName>casper.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/psa_crypto_driver/casper/casper.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/psa_crypto_driver/casper/common/include</GroupName>
+          <Files>
+            <File>
+              <FileName>mcux_psa_common_key_management.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/psa_crypto_driver/casper/common/include/mcux_psa_common_key_management.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/psa_crypto_driver/casper/common/src</GroupName>
+          <Files>
+            <File>
+              <FileName>mcux_psa_common_key_management.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/port/rng/psa_mcux_entropy.c</FilePath>
+              <FilePath>../../../../../../components/psa_crypto_driver/casper/common/src/mcux_psa_common_key_management.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/psa_crypto_driver/casper/include</GroupName>
+          <Files>
+            <File>
+              <FileName>mcux_psa_casper_common_asymmetric_signature.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/psa_crypto_driver/casper/include/mcux_psa_casper_common_asymmetric_signature.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_psa_casper_common_init.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/psa_crypto_driver/casper/include/mcux_psa_casper_common_init.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_psa_casper_ecdsa_port.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/psa_crypto_driver/casper/include/mcux_psa_casper_ecdsa_port.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_psa_casper_ecp_port.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/psa_crypto_driver/casper/include/mcux_psa_casper_ecp_port.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_psa_casper_init.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/psa_crypto_driver/casper/include/mcux_psa_casper_init.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_psa_casper_key_generation_port.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/psa_crypto_driver/casper/include/mcux_psa_casper_key_generation_port.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/psa_crypto_driver/casper/src</GroupName>
+          <Files>
+            <File>
+              <FileName>mcux_psa_casper_common_asymmetric_signature.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/psa_crypto_driver/casper/src/mcux_psa_casper_common_asymmetric_signature.c</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_psa_casper_common_init.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/psa_crypto_driver/casper/src/mcux_psa_casper_common_init.c</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_psa_casper_ecdsa_port.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/psa_crypto_driver/casper/src/mcux_psa_casper_ecdsa_port.c</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_psa_casper_ecp_port.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/psa_crypto_driver/casper/src/mcux_psa_casper_ecp_port.c</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_psa_casper_init.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/psa_crypto_driver/casper/src/mcux_psa_casper_init.c</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_psa_casper_key_generation_port.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/psa_crypto_driver/casper/src/mcux_psa_casper_key_generation_port.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/psa_crypto_driver/hashcrypt</GroupName>
+          <Files>
+            <File>
+              <FileName>hashcrypt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/psa_crypto_driver/hashcrypt/hashcrypt.h</FilePath>
+            </File>
+            <File>
+              <FileName>hashcrypt_crypto_primitives.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/psa_crypto_driver/hashcrypt/hashcrypt_crypto_primitives.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/psa_crypto_driver/hashcrypt/include</GroupName>
+          <Files>
+            <File>
+              <FileName>mcux_psa_hashcrypt_common_cipher.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/psa_crypto_driver/hashcrypt/include/mcux_psa_hashcrypt_common_cipher.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_psa_hashcrypt_common_init.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/psa_crypto_driver/hashcrypt/include/mcux_psa_hashcrypt_common_init.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_psa_hashcrypt_entropy.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/psa_crypto_driver/hashcrypt/include/mcux_psa_hashcrypt_entropy.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_psa_hashcrypt_hash.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/psa_crypto_driver/hashcrypt/include/mcux_psa_hashcrypt_hash.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_psa_hashcrypt_init.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/psa_crypto_driver/hashcrypt/include/mcux_psa_hashcrypt_init.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/psa_crypto_driver/hashcrypt/src</GroupName>
+          <Files>
+            <File>
+              <FileName>mcux_psa_hashcrypt_common_cipher.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/psa_crypto_driver/hashcrypt/src/mcux_psa_hashcrypt_common_cipher.c</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_psa_hashcrypt_common_init.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/psa_crypto_driver/hashcrypt/src/mcux_psa_hashcrypt_common_init.c</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_psa_hashcrypt_entropy.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/psa_crypto_driver/hashcrypt/src/mcux_psa_hashcrypt_entropy.c</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_psa_hashcrypt_hash.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/psa_crypto_driver/hashcrypt/src/mcux_psa_hashcrypt_hash.c</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_psa_hashcrypt_init.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/psa_crypto_driver/hashcrypt/src/mcux_psa_hashcrypt_init.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1445,6 +1630,11 @@
               <FilePath>../../../../../../middleware/mbedtls3x/include/psa/crypto_adjust_auto_enabled.h</FilePath>
             </File>
             <File>
+              <FileName>crypto_adjust_config_dependencies.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/include/psa/crypto_adjust_config_dependencies.h</FilePath>
+            </File>
+            <File>
               <FileName>crypto_adjust_config_key_pair_types.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/mbedtls3x/include/psa/crypto_adjust_config_key_pair_types.h</FilePath>
@@ -1613,6 +1803,16 @@
               <FileName>bignum_core.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/mbedtls3x/library/bignum_core.c</FilePath>
+            </File>
+            <File>
+              <FileName>bignum_core_invasive.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/library/bignum_core_invasive.h</FilePath>
+            </File>
+            <File>
+              <FileName>bignum_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/library/bignum_internal.h</FilePath>
             </File>
             <File>
               <FileName>bignum_mod.c</FileName>
@@ -2377,6 +2577,51 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>mbedtls3x/port</GroupName>
+          <Files>
+            <File>
+              <FileName>mcux_mbedtls_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_mbedtls_accelerator_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_accelerator_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_mbedtls_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_mbedtls_accelerator_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_accelerator_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_psa_defines.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_psa_defines.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_mbedtls_psa_crypto_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_psa_crypto_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_mbedtls_accelerator_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_accelerator_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_psa_defines.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_psa_defines.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>doc</GroupName>
           <Files>
             <File>
@@ -2388,6 +2633,11 @@
               <FileName>example_board_readme.md</FileName>
               <FileType>5</FileType>
               <FilePath>../example_board_readme.md</FilePath>
+            </File>
+            <File>
+              <FileName>examples_shared_readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../examples_shared_readme.md</FilePath>
             </File>
           </Files>
         </Group>
@@ -2723,9 +2973,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../mcux_config.h -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
-              <Define>DEBUG, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, MBEDTLS_CONFIG_FILE='\"mcux_mbedtls_config.h\"'</Define>
+              <Define>DEBUG, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT685SFVKB_cm33, MIMXRT685S_cm33_SERIES, BOOT_HEADER_ENABLE=1, PSA_CRYPTO_DRIVER_CASPER, PSA_CRYPTO_DRIVER_HASHCRYPT, MBEDTLS_CONFIG_FILE='\"mcux_mbedtls_config.h\"'</Define>
               <Undefine/>
-              <IncludePath>..;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT685S;../../../../../../devices/MIMXRT685S/periph;../../../../../../devices/MIMXRT685S/drivers;../../../../../../devices/MIMXRT685S/utilities/debug_console_lite;../../../../../../devices/MIMXRT685S/utilities/str;../../../../../../components/uart;../../../../../../middleware/mbedtls3x/port;../../../../../../middleware/mbedtls3x/port/hw_init;../../../../../../middleware/mbedtls3x/port/rng;../../../../../../middleware/mbedtls3x/include;../../../../../../middleware/mbedtls3x/library</IncludePath>
+              <IncludePath>..;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT685S;../../../../../../devices/MIMXRT685S/periph;../../../../../../devices/MIMXRT685S/drivers;../../../../../../devices/MIMXRT685S/utilities/debug_console_lite;../../../../../../devices/MIMXRT685S/utilities/str;../../../../../../components/rng;../../../../../../components/uart;../../../../../../components/psa_crypto_driver/osal;../../../../../../components/psa_crypto_driver/osal/baremetal;../../../../../../components/psa_crypto_driver/casper;../../../../../../components/psa_crypto_driver/casper/include;../../../../../../components/psa_crypto_driver/casper/common/include;../../../../../../components/psa_crypto_driver/hashcrypt;../../../../../../components/psa_crypto_driver/hashcrypt/include;../../../../../../middleware/mbedtls3x/include;../../../../../../middleware/mbedtls3x/library;../../../../../../middleware/mbedtls3x/port</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2741,9 +2991,9 @@
             <ClangAsOpt>2</ClangAsOpt>
             <VariousControls>
               <MiscControls/>
-              <Define>MCUXPRESSO_SDK, CPU_MIMXRT685SFVKB_cm33</Define>
+              <Define>MCUXPRESSO_SDK, CPU_MIMXRT685SFVKB_cm33, MIMXRT685S_cm33_SERIES</Define>
               <Undefine/>
-              <IncludePath>..;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT685S;../../../../../../devices/MIMXRT685S/periph;../../../../../../devices/MIMXRT685S/drivers;../../../../../../devices/MIMXRT685S/utilities/debug_console_lite;../../../../../../devices/MIMXRT685S/utilities/str;../../../../../../components/uart;../../../../../../middleware/mbedtls3x/port;../../../../../../middleware/mbedtls3x/port/hw_init;../../../../../../middleware/mbedtls3x/port/rng;../../../../../../middleware/mbedtls3x/include;../../../../../../middleware/mbedtls3x/library</IncludePath>
+              <IncludePath>..;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT685S;../../../../../../devices/MIMXRT685S/periph;../../../../../../devices/MIMXRT685S/drivers;../../../../../../devices/MIMXRT685S/utilities/debug_console_lite;../../../../../../devices/MIMXRT685S/utilities/str;../../../../../../components/rng;../../../../../../components/uart;../../../../../../components/psa_crypto_driver/osal;../../../../../../components/psa_crypto_driver/osal/baremetal;../../../../../../components/psa_crypto_driver/casper;../../../../../../components/psa_crypto_driver/casper/include;../../../../../../components/psa_crypto_driver/casper/common/include;../../../../../../components/psa_crypto_driver/hashcrypt;../../../../../../components/psa_crypto_driver/hashcrypt/include;../../../../../../middleware/mbedtls3x/include;../../../../../../middleware/mbedtls3x/library;../../../../../../middleware/mbedtls3x/port</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -2759,7 +3009,7 @@
             <ScatterFile>MIMXRT685Sxxxx_cm33_flash.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --predefine="-D__stack_size__=0x2000" --predefine="-D__heap_size__=0x8000" --entry=Reset_Handler --info=sizes,totals,unused,veneers</Misc>
+            <Misc>--remove --predefine=\"-D__stack_size__=0x4000\" --predefine=\"-D__heap_size__=0x8000\" --predefine="-D__stack_size__=0x2000" --predefine="-D__heap_size__=0x8000" --entry=Reset_Handler --info=sizes,totals,unused,veneers</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -2983,6 +3233,11 @@
               <FileName>PERI_DMIC.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT685S/periph/PERI_DMIC.h</FilePath>
+            </File>
+            <File>
+              <FileName>PERI_ESPI.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/periph/PERI_ESPI.h</FilePath>
             </File>
             <File>
               <FileName>PERI_FLEXCOMM.h</FileName>
@@ -3245,6 +3500,16 @@
               <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_cache.h</FilePath>
             </File>
             <File>
+              <FileName>fsl_casper.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_casper.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_casper.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_casper.c</FilePath>
+            </File>
+            <File>
               <FileName>fsl_common.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_common.h</FilePath>
@@ -3293,6 +3558,16 @@
               <FileName>fsl_flexspi.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_flexspi.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_hashcrypt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_hashcrypt.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_hashcrypt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_hashcrypt.c</FilePath>
             </File>
             <File>
               <FileName>fsl_gpio.h</FileName>
@@ -3372,6 +3647,21 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>component/rng</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_adapter_rng.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/rng/fsl_adapter_rng.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_adapter_trng.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/rng/fsl_adapter_trng.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>component/uart</GroupName>
           <Files>
             <File>
@@ -3387,57 +3677,202 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>mbedtls3x/port</GroupName>
+          <GroupName>component/psa_crypto_driver/osal</GroupName>
           <Files>
             <File>
-              <FileName>mcux_mbedtls_config.h</FileName>
+              <FileName>osal_mutex.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>mcux_mbedtls_accelerator_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_accelerator_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>mcux_mbedtls_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>mcux_mbedtls_accelerator_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_accelerator_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>mcux_psa_defines.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_psa_defines.h</FilePath>
+              <FilePath>../../../../../../components/psa_crypto_driver/osal/osal_mutex.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>mbedtls3x/port/hw_init</GroupName>
+          <GroupName>component/psa_crypto_driver/osal/baremetal</GroupName>
           <Files>
             <File>
-              <FileName>hw_init.c</FileName>
+              <FileName>osal_mutex.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/port/hw_init/hw_init.c</FilePath>
+              <FilePath>../../../../../../components/psa_crypto_driver/osal/baremetal/osal_mutex.c</FilePath>
             </File>
             <File>
-              <FileName>hw_init.h</FileName>
+              <FileName>osal_mutex_platform.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/port/hw_init/hw_init.h</FilePath>
+              <FilePath>../../../../../../components/psa_crypto_driver/osal/baremetal/osal_mutex_platform.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>mbedtls3x/port/rng</GroupName>
+          <GroupName>component/psa_crypto_driver/casper</GroupName>
           <Files>
             <File>
-              <FileName>psa_mcux_entropy.c</FileName>
+              <FileName>casper.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/psa_crypto_driver/casper/casper.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/psa_crypto_driver/casper/common/include</GroupName>
+          <Files>
+            <File>
+              <FileName>mcux_psa_common_key_management.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/psa_crypto_driver/casper/common/include/mcux_psa_common_key_management.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/psa_crypto_driver/casper/common/src</GroupName>
+          <Files>
+            <File>
+              <FileName>mcux_psa_common_key_management.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/port/rng/psa_mcux_entropy.c</FilePath>
+              <FilePath>../../../../../../components/psa_crypto_driver/casper/common/src/mcux_psa_common_key_management.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/psa_crypto_driver/casper/include</GroupName>
+          <Files>
+            <File>
+              <FileName>mcux_psa_casper_common_asymmetric_signature.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/psa_crypto_driver/casper/include/mcux_psa_casper_common_asymmetric_signature.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_psa_casper_common_init.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/psa_crypto_driver/casper/include/mcux_psa_casper_common_init.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_psa_casper_ecdsa_port.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/psa_crypto_driver/casper/include/mcux_psa_casper_ecdsa_port.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_psa_casper_ecp_port.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/psa_crypto_driver/casper/include/mcux_psa_casper_ecp_port.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_psa_casper_init.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/psa_crypto_driver/casper/include/mcux_psa_casper_init.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_psa_casper_key_generation_port.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/psa_crypto_driver/casper/include/mcux_psa_casper_key_generation_port.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/psa_crypto_driver/casper/src</GroupName>
+          <Files>
+            <File>
+              <FileName>mcux_psa_casper_common_asymmetric_signature.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/psa_crypto_driver/casper/src/mcux_psa_casper_common_asymmetric_signature.c</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_psa_casper_common_init.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/psa_crypto_driver/casper/src/mcux_psa_casper_common_init.c</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_psa_casper_ecdsa_port.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/psa_crypto_driver/casper/src/mcux_psa_casper_ecdsa_port.c</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_psa_casper_ecp_port.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/psa_crypto_driver/casper/src/mcux_psa_casper_ecp_port.c</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_psa_casper_init.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/psa_crypto_driver/casper/src/mcux_psa_casper_init.c</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_psa_casper_key_generation_port.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/psa_crypto_driver/casper/src/mcux_psa_casper_key_generation_port.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/psa_crypto_driver/hashcrypt</GroupName>
+          <Files>
+            <File>
+              <FileName>hashcrypt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/psa_crypto_driver/hashcrypt/hashcrypt.h</FilePath>
+            </File>
+            <File>
+              <FileName>hashcrypt_crypto_primitives.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/psa_crypto_driver/hashcrypt/hashcrypt_crypto_primitives.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/psa_crypto_driver/hashcrypt/include</GroupName>
+          <Files>
+            <File>
+              <FileName>mcux_psa_hashcrypt_common_cipher.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/psa_crypto_driver/hashcrypt/include/mcux_psa_hashcrypt_common_cipher.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_psa_hashcrypt_common_init.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/psa_crypto_driver/hashcrypt/include/mcux_psa_hashcrypt_common_init.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_psa_hashcrypt_entropy.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/psa_crypto_driver/hashcrypt/include/mcux_psa_hashcrypt_entropy.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_psa_hashcrypt_hash.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/psa_crypto_driver/hashcrypt/include/mcux_psa_hashcrypt_hash.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_psa_hashcrypt_init.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/psa_crypto_driver/hashcrypt/include/mcux_psa_hashcrypt_init.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/psa_crypto_driver/hashcrypt/src</GroupName>
+          <Files>
+            <File>
+              <FileName>mcux_psa_hashcrypt_common_cipher.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/psa_crypto_driver/hashcrypt/src/mcux_psa_hashcrypt_common_cipher.c</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_psa_hashcrypt_common_init.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/psa_crypto_driver/hashcrypt/src/mcux_psa_hashcrypt_common_init.c</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_psa_hashcrypt_entropy.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/psa_crypto_driver/hashcrypt/src/mcux_psa_hashcrypt_entropy.c</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_psa_hashcrypt_hash.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/psa_crypto_driver/hashcrypt/src/mcux_psa_hashcrypt_hash.c</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_psa_hashcrypt_init.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/psa_crypto_driver/hashcrypt/src/mcux_psa_hashcrypt_init.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -3835,6 +4270,11 @@
               <FilePath>../../../../../../middleware/mbedtls3x/include/psa/crypto_adjust_auto_enabled.h</FilePath>
             </File>
             <File>
+              <FileName>crypto_adjust_config_dependencies.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/include/psa/crypto_adjust_config_dependencies.h</FilePath>
+            </File>
+            <File>
               <FileName>crypto_adjust_config_key_pair_types.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/mbedtls3x/include/psa/crypto_adjust_config_key_pair_types.h</FilePath>
@@ -4003,6 +4443,16 @@
               <FileName>bignum_core.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/mbedtls3x/library/bignum_core.c</FilePath>
+            </File>
+            <File>
+              <FileName>bignum_core_invasive.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/library/bignum_core_invasive.h</FilePath>
+            </File>
+            <File>
+              <FileName>bignum_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/library/bignum_internal.h</FilePath>
             </File>
             <File>
               <FileName>bignum_mod.c</FileName>
@@ -4767,6 +5217,51 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>mbedtls3x/port</GroupName>
+          <Files>
+            <File>
+              <FileName>mcux_mbedtls_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_mbedtls_accelerator_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_accelerator_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_mbedtls_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_mbedtls_accelerator_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_accelerator_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_psa_defines.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_psa_defines.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_mbedtls_psa_crypto_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_psa_crypto_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_mbedtls_accelerator_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_accelerator_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_psa_defines.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_psa_defines.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>doc</GroupName>
           <Files>
             <File>
@@ -4778,6 +5273,11 @@
               <FileName>example_board_readme.md</FileName>
               <FileType>5</FileType>
               <FilePath>../example_board_readme.md</FilePath>
+            </File>
+            <File>
+              <FileName>examples_shared_readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../examples_shared_readme.md</FilePath>
             </File>
           </Files>
         </Group>
@@ -5113,9 +5613,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../mcux_config.h -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
-              <Define>NDEBUG, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, MBEDTLS_CONFIG_FILE='\"mcux_mbedtls_config.h\"'</Define>
+              <Define>NDEBUG, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT685SFVKB_cm33, MIMXRT685S_cm33_SERIES, BOOT_HEADER_ENABLE=1, PSA_CRYPTO_DRIVER_CASPER, PSA_CRYPTO_DRIVER_HASHCRYPT, MBEDTLS_CONFIG_FILE='\"mcux_mbedtls_config.h\"'</Define>
               <Undefine/>
-              <IncludePath>..;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT685S;../../../../../../devices/MIMXRT685S/periph;../../../../../../devices/MIMXRT685S/drivers;../../../../../../devices/MIMXRT685S/utilities/debug_console_lite;../../../../../../devices/MIMXRT685S/utilities/str;../../../../../../components/uart;../../../../../../middleware/mbedtls3x/port;../../../../../../middleware/mbedtls3x/port/hw_init;../../../../../../middleware/mbedtls3x/port/rng;../../../../../../middleware/mbedtls3x/include;../../../../../../middleware/mbedtls3x/library</IncludePath>
+              <IncludePath>..;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT685S;../../../../../../devices/MIMXRT685S/periph;../../../../../../devices/MIMXRT685S/drivers;../../../../../../devices/MIMXRT685S/utilities/debug_console_lite;../../../../../../devices/MIMXRT685S/utilities/str;../../../../../../components/rng;../../../../../../components/uart;../../../../../../components/psa_crypto_driver/osal;../../../../../../components/psa_crypto_driver/osal/baremetal;../../../../../../components/psa_crypto_driver/casper;../../../../../../components/psa_crypto_driver/casper/include;../../../../../../components/psa_crypto_driver/casper/common/include;../../../../../../components/psa_crypto_driver/hashcrypt;../../../../../../components/psa_crypto_driver/hashcrypt/include;../../../../../../middleware/mbedtls3x/include;../../../../../../middleware/mbedtls3x/library;../../../../../../middleware/mbedtls3x/port</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -5131,9 +5631,9 @@
             <ClangAsOpt>2</ClangAsOpt>
             <VariousControls>
               <MiscControls/>
-              <Define>MCUXPRESSO_SDK, CPU_MIMXRT685SFVKB_cm33</Define>
+              <Define>MCUXPRESSO_SDK, CPU_MIMXRT685SFVKB_cm33, MIMXRT685S_cm33_SERIES</Define>
               <Undefine/>
-              <IncludePath>..;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT685S;../../../../../../devices/MIMXRT685S/periph;../../../../../../devices/MIMXRT685S/drivers;../../../../../../devices/MIMXRT685S/utilities/debug_console_lite;../../../../../../devices/MIMXRT685S/utilities/str;../../../../../../components/uart;../../../../../../middleware/mbedtls3x/port;../../../../../../middleware/mbedtls3x/port/hw_init;../../../../../../middleware/mbedtls3x/port/rng;../../../../../../middleware/mbedtls3x/include;../../../../../../middleware/mbedtls3x/library</IncludePath>
+              <IncludePath>..;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT685S;../../../../../../devices/MIMXRT685S/periph;../../../../../../devices/MIMXRT685S/drivers;../../../../../../devices/MIMXRT685S/utilities/debug_console_lite;../../../../../../devices/MIMXRT685S/utilities/str;../../../../../../components/rng;../../../../../../components/uart;../../../../../../components/psa_crypto_driver/osal;../../../../../../components/psa_crypto_driver/osal/baremetal;../../../../../../components/psa_crypto_driver/casper;../../../../../../components/psa_crypto_driver/casper/include;../../../../../../components/psa_crypto_driver/casper/common/include;../../../../../../components/psa_crypto_driver/hashcrypt;../../../../../../components/psa_crypto_driver/hashcrypt/include;../../../../../../middleware/mbedtls3x/include;../../../../../../middleware/mbedtls3x/library;../../../../../../middleware/mbedtls3x/port</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -5149,7 +5649,7 @@
             <ScatterFile>MIMXRT685Sxxxx_cm33_ram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --predefine="-D__stack_size__=0x2000" --predefine="-D__heap_size__=0x8000" --entry=Reset_Handler --info=sizes,totals,unused,veneers</Misc>
+            <Misc>--remove --predefine=\"-D__stack_size__=0x4000\" --predefine=\"-D__heap_size__=0x8000\" --predefine="-D__stack_size__=0x2000" --predefine="-D__heap_size__=0x8000" --entry=Reset_Handler --info=sizes,totals,unused,veneers</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -5373,6 +5873,11 @@
               <FileName>PERI_DMIC.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT685S/periph/PERI_DMIC.h</FilePath>
+            </File>
+            <File>
+              <FileName>PERI_ESPI.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/periph/PERI_ESPI.h</FilePath>
             </File>
             <File>
               <FileName>PERI_FLEXCOMM.h</FileName>
@@ -5635,6 +6140,16 @@
               <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_cache.h</FilePath>
             </File>
             <File>
+              <FileName>fsl_casper.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_casper.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_casper.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_casper.c</FilePath>
+            </File>
+            <File>
               <FileName>fsl_common.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_common.h</FilePath>
@@ -5683,6 +6198,16 @@
               <FileName>fsl_flexspi.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_flexspi.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_hashcrypt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_hashcrypt.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_hashcrypt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_hashcrypt.c</FilePath>
             </File>
             <File>
               <FileName>fsl_gpio.h</FileName>
@@ -5762,6 +6287,21 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>component/rng</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_adapter_rng.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/rng/fsl_adapter_rng.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_adapter_trng.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/rng/fsl_adapter_trng.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>component/uart</GroupName>
           <Files>
             <File>
@@ -5777,57 +6317,202 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>mbedtls3x/port</GroupName>
+          <GroupName>component/psa_crypto_driver/osal</GroupName>
           <Files>
             <File>
-              <FileName>mcux_mbedtls_config.h</FileName>
+              <FileName>osal_mutex.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>mcux_mbedtls_accelerator_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_accelerator_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>mcux_mbedtls_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>mcux_mbedtls_accelerator_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_accelerator_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>mcux_psa_defines.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_psa_defines.h</FilePath>
+              <FilePath>../../../../../../components/psa_crypto_driver/osal/osal_mutex.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>mbedtls3x/port/hw_init</GroupName>
+          <GroupName>component/psa_crypto_driver/osal/baremetal</GroupName>
           <Files>
             <File>
-              <FileName>hw_init.c</FileName>
+              <FileName>osal_mutex.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/port/hw_init/hw_init.c</FilePath>
+              <FilePath>../../../../../../components/psa_crypto_driver/osal/baremetal/osal_mutex.c</FilePath>
             </File>
             <File>
-              <FileName>hw_init.h</FileName>
+              <FileName>osal_mutex_platform.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/port/hw_init/hw_init.h</FilePath>
+              <FilePath>../../../../../../components/psa_crypto_driver/osal/baremetal/osal_mutex_platform.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>mbedtls3x/port/rng</GroupName>
+          <GroupName>component/psa_crypto_driver/casper</GroupName>
           <Files>
             <File>
-              <FileName>psa_mcux_entropy.c</FileName>
+              <FileName>casper.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/psa_crypto_driver/casper/casper.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/psa_crypto_driver/casper/common/include</GroupName>
+          <Files>
+            <File>
+              <FileName>mcux_psa_common_key_management.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/psa_crypto_driver/casper/common/include/mcux_psa_common_key_management.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/psa_crypto_driver/casper/common/src</GroupName>
+          <Files>
+            <File>
+              <FileName>mcux_psa_common_key_management.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/port/rng/psa_mcux_entropy.c</FilePath>
+              <FilePath>../../../../../../components/psa_crypto_driver/casper/common/src/mcux_psa_common_key_management.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/psa_crypto_driver/casper/include</GroupName>
+          <Files>
+            <File>
+              <FileName>mcux_psa_casper_common_asymmetric_signature.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/psa_crypto_driver/casper/include/mcux_psa_casper_common_asymmetric_signature.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_psa_casper_common_init.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/psa_crypto_driver/casper/include/mcux_psa_casper_common_init.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_psa_casper_ecdsa_port.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/psa_crypto_driver/casper/include/mcux_psa_casper_ecdsa_port.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_psa_casper_ecp_port.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/psa_crypto_driver/casper/include/mcux_psa_casper_ecp_port.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_psa_casper_init.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/psa_crypto_driver/casper/include/mcux_psa_casper_init.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_psa_casper_key_generation_port.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/psa_crypto_driver/casper/include/mcux_psa_casper_key_generation_port.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/psa_crypto_driver/casper/src</GroupName>
+          <Files>
+            <File>
+              <FileName>mcux_psa_casper_common_asymmetric_signature.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/psa_crypto_driver/casper/src/mcux_psa_casper_common_asymmetric_signature.c</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_psa_casper_common_init.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/psa_crypto_driver/casper/src/mcux_psa_casper_common_init.c</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_psa_casper_ecdsa_port.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/psa_crypto_driver/casper/src/mcux_psa_casper_ecdsa_port.c</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_psa_casper_ecp_port.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/psa_crypto_driver/casper/src/mcux_psa_casper_ecp_port.c</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_psa_casper_init.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/psa_crypto_driver/casper/src/mcux_psa_casper_init.c</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_psa_casper_key_generation_port.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/psa_crypto_driver/casper/src/mcux_psa_casper_key_generation_port.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/psa_crypto_driver/hashcrypt</GroupName>
+          <Files>
+            <File>
+              <FileName>hashcrypt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/psa_crypto_driver/hashcrypt/hashcrypt.h</FilePath>
+            </File>
+            <File>
+              <FileName>hashcrypt_crypto_primitives.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/psa_crypto_driver/hashcrypt/hashcrypt_crypto_primitives.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/psa_crypto_driver/hashcrypt/include</GroupName>
+          <Files>
+            <File>
+              <FileName>mcux_psa_hashcrypt_common_cipher.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/psa_crypto_driver/hashcrypt/include/mcux_psa_hashcrypt_common_cipher.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_psa_hashcrypt_common_init.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/psa_crypto_driver/hashcrypt/include/mcux_psa_hashcrypt_common_init.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_psa_hashcrypt_entropy.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/psa_crypto_driver/hashcrypt/include/mcux_psa_hashcrypt_entropy.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_psa_hashcrypt_hash.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/psa_crypto_driver/hashcrypt/include/mcux_psa_hashcrypt_hash.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_psa_hashcrypt_init.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/psa_crypto_driver/hashcrypt/include/mcux_psa_hashcrypt_init.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/psa_crypto_driver/hashcrypt/src</GroupName>
+          <Files>
+            <File>
+              <FileName>mcux_psa_hashcrypt_common_cipher.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/psa_crypto_driver/hashcrypt/src/mcux_psa_hashcrypt_common_cipher.c</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_psa_hashcrypt_common_init.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/psa_crypto_driver/hashcrypt/src/mcux_psa_hashcrypt_common_init.c</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_psa_hashcrypt_entropy.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/psa_crypto_driver/hashcrypt/src/mcux_psa_hashcrypt_entropy.c</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_psa_hashcrypt_hash.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/psa_crypto_driver/hashcrypt/src/mcux_psa_hashcrypt_hash.c</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_psa_hashcrypt_init.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/psa_crypto_driver/hashcrypt/src/mcux_psa_hashcrypt_init.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -6225,6 +6910,11 @@
               <FilePath>../../../../../../middleware/mbedtls3x/include/psa/crypto_adjust_auto_enabled.h</FilePath>
             </File>
             <File>
+              <FileName>crypto_adjust_config_dependencies.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/include/psa/crypto_adjust_config_dependencies.h</FilePath>
+            </File>
+            <File>
               <FileName>crypto_adjust_config_key_pair_types.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/mbedtls3x/include/psa/crypto_adjust_config_key_pair_types.h</FilePath>
@@ -6393,6 +7083,16 @@
               <FileName>bignum_core.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/mbedtls3x/library/bignum_core.c</FilePath>
+            </File>
+            <File>
+              <FileName>bignum_core_invasive.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/library/bignum_core_invasive.h</FilePath>
+            </File>
+            <File>
+              <FileName>bignum_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/library/bignum_internal.h</FilePath>
             </File>
             <File>
               <FileName>bignum_mod.c</FileName>
@@ -7157,6 +7857,51 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>mbedtls3x/port</GroupName>
+          <Files>
+            <File>
+              <FileName>mcux_mbedtls_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_mbedtls_accelerator_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_accelerator_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_mbedtls_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_mbedtls_accelerator_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_accelerator_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_psa_defines.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_psa_defines.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_mbedtls_psa_crypto_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_psa_crypto_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_mbedtls_accelerator_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_accelerator_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_psa_defines.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_psa_defines.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>doc</GroupName>
           <Files>
             <File>
@@ -7168,6 +7913,11 @@
               <FileName>example_board_readme.md</FileName>
               <FileType>5</FileType>
               <FilePath>../example_board_readme.md</FilePath>
+            </File>
+            <File>
+              <FileName>examples_shared_readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../examples_shared_readme.md</FilePath>
             </File>
           </Files>
         </Group>
@@ -7503,9 +8253,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../mcux_config.h -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
-              <Define>NDEBUG, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, MBEDTLS_CONFIG_FILE='\"mcux_mbedtls_config.h\"'</Define>
+              <Define>NDEBUG, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT685SFVKB_cm33, MIMXRT685S_cm33_SERIES, BOOT_HEADER_ENABLE=1, PSA_CRYPTO_DRIVER_CASPER, PSA_CRYPTO_DRIVER_HASHCRYPT, MBEDTLS_CONFIG_FILE='\"mcux_mbedtls_config.h\"'</Define>
               <Undefine/>
-              <IncludePath>..;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT685S;../../../../../../devices/MIMXRT685S/periph;../../../../../../devices/MIMXRT685S/drivers;../../../../../../devices/MIMXRT685S/utilities/debug_console_lite;../../../../../../devices/MIMXRT685S/utilities/str;../../../../../../components/uart;../../../../../../middleware/mbedtls3x/port;../../../../../../middleware/mbedtls3x/port/hw_init;../../../../../../middleware/mbedtls3x/port/rng;../../../../../../middleware/mbedtls3x/include;../../../../../../middleware/mbedtls3x/library</IncludePath>
+              <IncludePath>..;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT685S;../../../../../../devices/MIMXRT685S/periph;../../../../../../devices/MIMXRT685S/drivers;../../../../../../devices/MIMXRT685S/utilities/debug_console_lite;../../../../../../devices/MIMXRT685S/utilities/str;../../../../../../components/rng;../../../../../../components/uart;../../../../../../components/psa_crypto_driver/osal;../../../../../../components/psa_crypto_driver/osal/baremetal;../../../../../../components/psa_crypto_driver/casper;../../../../../../components/psa_crypto_driver/casper/include;../../../../../../components/psa_crypto_driver/casper/common/include;../../../../../../components/psa_crypto_driver/hashcrypt;../../../../../../components/psa_crypto_driver/hashcrypt/include;../../../../../../middleware/mbedtls3x/include;../../../../../../middleware/mbedtls3x/library;../../../../../../middleware/mbedtls3x/port</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -7521,9 +8271,9 @@
             <ClangAsOpt>2</ClangAsOpt>
             <VariousControls>
               <MiscControls/>
-              <Define>MCUXPRESSO_SDK, CPU_MIMXRT685SFVKB_cm33</Define>
+              <Define>MCUXPRESSO_SDK, CPU_MIMXRT685SFVKB_cm33, MIMXRT685S_cm33_SERIES</Define>
               <Undefine/>
-              <IncludePath>..;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT685S;../../../../../../devices/MIMXRT685S/periph;../../../../../../devices/MIMXRT685S/drivers;../../../../../../devices/MIMXRT685S/utilities/debug_console_lite;../../../../../../devices/MIMXRT685S/utilities/str;../../../../../../components/uart;../../../../../../middleware/mbedtls3x/port;../../../../../../middleware/mbedtls3x/port/hw_init;../../../../../../middleware/mbedtls3x/port/rng;../../../../../../middleware/mbedtls3x/include;../../../../../../middleware/mbedtls3x/library</IncludePath>
+              <IncludePath>..;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT685S;../../../../../../devices/MIMXRT685S/periph;../../../../../../devices/MIMXRT685S/drivers;../../../../../../devices/MIMXRT685S/utilities/debug_console_lite;../../../../../../devices/MIMXRT685S/utilities/str;../../../../../../components/rng;../../../../../../components/uart;../../../../../../components/psa_crypto_driver/osal;../../../../../../components/psa_crypto_driver/osal/baremetal;../../../../../../components/psa_crypto_driver/casper;../../../../../../components/psa_crypto_driver/casper/include;../../../../../../components/psa_crypto_driver/casper/common/include;../../../../../../components/psa_crypto_driver/hashcrypt;../../../../../../components/psa_crypto_driver/hashcrypt/include;../../../../../../middleware/mbedtls3x/include;../../../../../../middleware/mbedtls3x/library;../../../../../../middleware/mbedtls3x/port</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -7539,7 +8289,7 @@
             <ScatterFile>MIMXRT685Sxxxx_cm33_flash.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --predefine="-D__stack_size__=0x2000" --predefine="-D__heap_size__=0x8000" --entry=Reset_Handler --info=sizes,totals,unused,veneers</Misc>
+            <Misc>--remove --predefine=\"-D__stack_size__=0x4000\" --predefine=\"-D__heap_size__=0x8000\" --predefine="-D__stack_size__=0x2000" --predefine="-D__heap_size__=0x8000" --entry=Reset_Handler --info=sizes,totals,unused,veneers</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -7763,6 +8513,11 @@
               <FileName>PERI_DMIC.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT685S/periph/PERI_DMIC.h</FilePath>
+            </File>
+            <File>
+              <FileName>PERI_ESPI.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/periph/PERI_ESPI.h</FilePath>
             </File>
             <File>
               <FileName>PERI_FLEXCOMM.h</FileName>
@@ -8025,6 +8780,16 @@
               <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_cache.h</FilePath>
             </File>
             <File>
+              <FileName>fsl_casper.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_casper.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_casper.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_casper.c</FilePath>
+            </File>
+            <File>
               <FileName>fsl_common.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_common.h</FilePath>
@@ -8073,6 +8838,16 @@
               <FileName>fsl_flexspi.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_flexspi.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_hashcrypt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_hashcrypt.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_hashcrypt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_hashcrypt.c</FilePath>
             </File>
             <File>
               <FileName>fsl_gpio.h</FileName>
@@ -8152,6 +8927,21 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>component/rng</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_adapter_rng.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/rng/fsl_adapter_rng.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_adapter_trng.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/rng/fsl_adapter_trng.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>component/uart</GroupName>
           <Files>
             <File>
@@ -8167,57 +8957,202 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>mbedtls3x/port</GroupName>
+          <GroupName>component/psa_crypto_driver/osal</GroupName>
           <Files>
             <File>
-              <FileName>mcux_mbedtls_config.h</FileName>
+              <FileName>osal_mutex.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>mcux_mbedtls_accelerator_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_accelerator_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>mcux_mbedtls_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>mcux_mbedtls_accelerator_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_accelerator_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>mcux_psa_defines.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_psa_defines.h</FilePath>
+              <FilePath>../../../../../../components/psa_crypto_driver/osal/osal_mutex.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>mbedtls3x/port/hw_init</GroupName>
+          <GroupName>component/psa_crypto_driver/osal/baremetal</GroupName>
           <Files>
             <File>
-              <FileName>hw_init.c</FileName>
+              <FileName>osal_mutex.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/port/hw_init/hw_init.c</FilePath>
+              <FilePath>../../../../../../components/psa_crypto_driver/osal/baremetal/osal_mutex.c</FilePath>
             </File>
             <File>
-              <FileName>hw_init.h</FileName>
+              <FileName>osal_mutex_platform.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/port/hw_init/hw_init.h</FilePath>
+              <FilePath>../../../../../../components/psa_crypto_driver/osal/baremetal/osal_mutex_platform.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>mbedtls3x/port/rng</GroupName>
+          <GroupName>component/psa_crypto_driver/casper</GroupName>
           <Files>
             <File>
-              <FileName>psa_mcux_entropy.c</FileName>
+              <FileName>casper.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/psa_crypto_driver/casper/casper.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/psa_crypto_driver/casper/common/include</GroupName>
+          <Files>
+            <File>
+              <FileName>mcux_psa_common_key_management.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/psa_crypto_driver/casper/common/include/mcux_psa_common_key_management.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/psa_crypto_driver/casper/common/src</GroupName>
+          <Files>
+            <File>
+              <FileName>mcux_psa_common_key_management.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/port/rng/psa_mcux_entropy.c</FilePath>
+              <FilePath>../../../../../../components/psa_crypto_driver/casper/common/src/mcux_psa_common_key_management.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/psa_crypto_driver/casper/include</GroupName>
+          <Files>
+            <File>
+              <FileName>mcux_psa_casper_common_asymmetric_signature.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/psa_crypto_driver/casper/include/mcux_psa_casper_common_asymmetric_signature.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_psa_casper_common_init.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/psa_crypto_driver/casper/include/mcux_psa_casper_common_init.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_psa_casper_ecdsa_port.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/psa_crypto_driver/casper/include/mcux_psa_casper_ecdsa_port.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_psa_casper_ecp_port.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/psa_crypto_driver/casper/include/mcux_psa_casper_ecp_port.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_psa_casper_init.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/psa_crypto_driver/casper/include/mcux_psa_casper_init.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_psa_casper_key_generation_port.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/psa_crypto_driver/casper/include/mcux_psa_casper_key_generation_port.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/psa_crypto_driver/casper/src</GroupName>
+          <Files>
+            <File>
+              <FileName>mcux_psa_casper_common_asymmetric_signature.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/psa_crypto_driver/casper/src/mcux_psa_casper_common_asymmetric_signature.c</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_psa_casper_common_init.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/psa_crypto_driver/casper/src/mcux_psa_casper_common_init.c</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_psa_casper_ecdsa_port.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/psa_crypto_driver/casper/src/mcux_psa_casper_ecdsa_port.c</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_psa_casper_ecp_port.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/psa_crypto_driver/casper/src/mcux_psa_casper_ecp_port.c</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_psa_casper_init.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/psa_crypto_driver/casper/src/mcux_psa_casper_init.c</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_psa_casper_key_generation_port.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/psa_crypto_driver/casper/src/mcux_psa_casper_key_generation_port.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/psa_crypto_driver/hashcrypt</GroupName>
+          <Files>
+            <File>
+              <FileName>hashcrypt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/psa_crypto_driver/hashcrypt/hashcrypt.h</FilePath>
+            </File>
+            <File>
+              <FileName>hashcrypt_crypto_primitives.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/psa_crypto_driver/hashcrypt/hashcrypt_crypto_primitives.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/psa_crypto_driver/hashcrypt/include</GroupName>
+          <Files>
+            <File>
+              <FileName>mcux_psa_hashcrypt_common_cipher.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/psa_crypto_driver/hashcrypt/include/mcux_psa_hashcrypt_common_cipher.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_psa_hashcrypt_common_init.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/psa_crypto_driver/hashcrypt/include/mcux_psa_hashcrypt_common_init.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_psa_hashcrypt_entropy.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/psa_crypto_driver/hashcrypt/include/mcux_psa_hashcrypt_entropy.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_psa_hashcrypt_hash.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/psa_crypto_driver/hashcrypt/include/mcux_psa_hashcrypt_hash.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_psa_hashcrypt_init.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/psa_crypto_driver/hashcrypt/include/mcux_psa_hashcrypt_init.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/psa_crypto_driver/hashcrypt/src</GroupName>
+          <Files>
+            <File>
+              <FileName>mcux_psa_hashcrypt_common_cipher.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/psa_crypto_driver/hashcrypt/src/mcux_psa_hashcrypt_common_cipher.c</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_psa_hashcrypt_common_init.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/psa_crypto_driver/hashcrypt/src/mcux_psa_hashcrypt_common_init.c</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_psa_hashcrypt_entropy.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/psa_crypto_driver/hashcrypt/src/mcux_psa_hashcrypt_entropy.c</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_psa_hashcrypt_hash.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/psa_crypto_driver/hashcrypt/src/mcux_psa_hashcrypt_hash.c</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_psa_hashcrypt_init.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/psa_crypto_driver/hashcrypt/src/mcux_psa_hashcrypt_init.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -8615,6 +9550,11 @@
               <FilePath>../../../../../../middleware/mbedtls3x/include/psa/crypto_adjust_auto_enabled.h</FilePath>
             </File>
             <File>
+              <FileName>crypto_adjust_config_dependencies.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/include/psa/crypto_adjust_config_dependencies.h</FilePath>
+            </File>
+            <File>
               <FileName>crypto_adjust_config_key_pair_types.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/mbedtls3x/include/psa/crypto_adjust_config_key_pair_types.h</FilePath>
@@ -8783,6 +9723,16 @@
               <FileName>bignum_core.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/mbedtls3x/library/bignum_core.c</FilePath>
+            </File>
+            <File>
+              <FileName>bignum_core_invasive.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/library/bignum_core_invasive.h</FilePath>
+            </File>
+            <File>
+              <FileName>bignum_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/library/bignum_internal.h</FilePath>
             </File>
             <File>
               <FileName>bignum_mod.c</FileName>
@@ -9547,6 +10497,51 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>mbedtls3x/port</GroupName>
+          <Files>
+            <File>
+              <FileName>mcux_mbedtls_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_mbedtls_accelerator_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_accelerator_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_mbedtls_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_mbedtls_accelerator_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_accelerator_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_psa_defines.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_psa_defines.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_mbedtls_psa_crypto_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_psa_crypto_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_mbedtls_accelerator_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_accelerator_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_psa_defines.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_psa_defines.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>doc</GroupName>
           <Files>
             <File>
@@ -9558,6 +10553,11 @@
               <FileName>example_board_readme.md</FileName>
               <FileType>5</FileType>
               <FilePath>../example_board_readme.md</FilePath>
+            </File>
+            <File>
+              <FileName>examples_shared_readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../examples_shared_readme.md</FilePath>
             </File>
           </Files>
         </Group>

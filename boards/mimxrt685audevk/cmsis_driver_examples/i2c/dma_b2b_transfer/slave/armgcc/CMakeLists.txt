@@ -14,9 +14,6 @@ if(CMAKE_SCRIPT_MODE_FILE)
 endif()
 
 
-set(CMAKE_STATIC_LIBRARY_PREFIX)
-set(CMAKE_STATIC_LIBRARY_SUFFIX)
-
 set(CMAKE_EXECUTABLE_LIBRARY_PREFIX)
 set(CMAKE_EXECUTABLE_LIBRARY_SUFFIX)
 
@@ -31,7 +28,7 @@ project(cmsis_lpc_i2c_dma_b2b_transfer_slave_cm33)
 
 enable_language(ASM)
 
-set(MCUX_BUILD_TYPES debug flash_debug release flash_release)
+set(MCUX_BUILD_TYPES flash_debug flash_release)
 
 set(MCUX_SDK_PROJECT_NAME cmsis_lpc_i2c_dma_b2b_transfer_slave_cm33.elf)
 

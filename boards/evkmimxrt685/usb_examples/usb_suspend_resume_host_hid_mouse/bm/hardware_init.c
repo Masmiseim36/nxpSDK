@@ -81,7 +81,7 @@ static void BOARD_ConfigPMICModes(pca9420_modecfg_t *cfg, uint32_t num)
 /*!
  * @brief Call back for PINT Pin interrupt 0-7.
  */
-void pint_intr_callback(pint_pin_int_t pintr, uint32_t pmatch_status)
+void pint_intr_callback(pint_pin_int_t pintr, pint_status_t *status)
 {
     g_HostHidMouse.selfWakeup = 1U;
     /* Disable callbacks for PINT */
@@ -111,7 +111,8 @@ void APP_InitWakeupPin(void)
     PINT_Init(PINT);
 
     /* Setup Pin Interrupt 1 for falling edge */
-    PINT_PinInterruptConfig(PINT, kPINT_PinInt0, kPINT_PinIntEnableFallEdge, pint_intr_callback);
+    PINT_PinInterruptConfig(PINT, kPINT_PinInt0, kPINT_PinIntEnableFallEdge);
+    PINT_SetCallback(PINT, pint_intr_callback);
 
     /* Enable callbacks for PINT */
     PINT_EnableCallback(PINT);

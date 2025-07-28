@@ -1,10 +1,10 @@
 //*****************************************************************************
 // MIMXRT685S_cm33 startup code for use with MCUXpresso IDE
 //
-// Version : 101121
+// Version : 110225
 //*****************************************************************************
 //
-// Copyright 2016-2021 NXP
+// Copyright 2016-2025 NXP
 //
 // SPDX-License-Identifier: BSD-3-Clause
 //*****************************************************************************
@@ -107,7 +107,7 @@ WEAK void Reserved42_IRQHandler(void);
 WEAK void HYPERVISOR_IRQHandler(void);
 WEAK void SECUREVIOLATION_IRQHandler(void);
 WEAK void HWVAD0_IRQHandler(void);
-WEAK void Reserved46_IRQHandler(void);
+WEAK void ESPI_IRQHandler(void);
 WEAK void RNG_IRQHandler(void);
 WEAK void RTC_IRQHandler(void);
 WEAK void DSPWAKE_IRQHandler(void);
@@ -174,7 +174,7 @@ void Reserved42_DriverIRQHandler(void) ALIAS(IntDefaultHandler);
 void HYPERVISOR_DriverIRQHandler(void) ALIAS(IntDefaultHandler);
 void SECUREVIOLATION_DriverIRQHandler(void) ALIAS(IntDefaultHandler);
 void HWVAD0_DriverIRQHandler(void) ALIAS(IntDefaultHandler);
-void Reserved46_DriverIRQHandler(void) ALIAS(IntDefaultHandler);
+void ESPI_DriverIRQHandler(void) ALIAS(IntDefaultHandler);
 void RNG_DriverIRQHandler(void) ALIAS(IntDefaultHandler);
 void RTC_DriverIRQHandler(void) ALIAS(IntDefaultHandler);
 void DSPWAKE_DriverIRQHandler(void) ALIAS(IntDefaultHandler);
@@ -247,12 +247,12 @@ void (* const g_pfnVectors[])(void) = {
     // Core Level - CM33
     &_vStackTop,                       // The initial stack pointer
     ResetISR,                          // The reset handler
-    NMI_Handler,                       // The NMI handler
-    HardFault_Handler,                 // The hard fault handler
-    MemManage_Handler,                 // The MPU fault handler
-    BusFault_Handler,                  // The bus fault handler
-    UsageFault_Handler,                // The usage fault handler
-    SecureFault_Handler,               // The secure fault handler
+    NMI_Handler,                       // NMI Handler
+    HardFault_Handler,                 // Hard Fault Handler
+    MemManage_Handler,                 // MPU Fault Handler
+    BusFault_Handler,                  // Bus Fault Handler
+    UsageFault_Handler,                // Usage Fault Handler
+    SecureFault_Handler,               // Secure Fault Handler
 #if (defined(__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE & 0x2))
     (void (*)())0x180000,                // Image length
 #else
@@ -260,11 +260,11 @@ void (* const g_pfnVectors[])(void) = {
 #endif
     __imghdr_imagetype,                // Image type
     0,                                 // Reserved
-    SVC_Handler,                       // SVCall handler
-    DebugMon_Handler,                  // Debug monitor handler
-    (void (*)())g_pfnVectors,              // Image load address
-    PendSV_Handler,                    // The PendSV handler
-    SysTick_Handler,                   // The SysTick handler
+    SVC_Handler,                       // SVCall Handler
+    DebugMon_Handler,                  // Debug Monitor Handler
+    (void (*)())g_pfnVectors,          // Image load address
+    PendSV_Handler,                    // PendSV Handler
+    SysTick_Handler,                   // SysTick Handler
 
     // Chip Level - MIMXRT685S_cm33
     WDT0_IRQHandler,             // 16: Windowed watchdog timer 0 (CM33 watchdog)
@@ -297,7 +297,7 @@ void (* const g_pfnVectors[])(void) = {
     HYPERVISOR_IRQHandler,       // 43: Hypervisor
     SECUREVIOLATION_IRQHandler,  // 44: Secure violation
     HWVAD0_IRQHandler,           // 45: Hardware Voice Activity Detector
-    Reserved46_IRQHandler,       // 46: Reserved interrupt
+    ESPI_IRQHandler,             // 46: eSPI interface
     RNG_IRQHandler,              // 47: Random number Generator
     RTC_IRQHandler,              // 48: RTC alarm and wake-up
     DSPWAKE_IRQHandler,          // 49: Wake-up from DSP
@@ -623,8 +623,8 @@ WEAK void HWVAD0_IRQHandler(void)
 {   HWVAD0_DriverIRQHandler();
 }
 
-WEAK void Reserved46_IRQHandler(void)
-{   Reserved46_DriverIRQHandler();
+WEAK void ESPI_IRQHandler(void)
+{   ESPI_DriverIRQHandler();
 }
 
 WEAK void RNG_IRQHandler(void)

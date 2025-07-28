@@ -14,10 +14,12 @@
     <definition extID="platform.drivers.power.MIMXRT685S"/>
     <definition extID="platform.drivers.reset.MIMXRT685S"/>
     <definition extID="platform.drivers.cache_cache64.MIMXRT685S"/>
+    <definition extID="platform.drivers.casper.MIMXRT685S"/>
     <definition extID="platform.drivers.common.MIMXRT685S"/>
     <definition extID="platform.drivers.flexcomm.MIMXRT685S"/>
     <definition extID="platform.drivers.flexcomm_usart.MIMXRT685S"/>
     <definition extID="platform.drivers.flexspi.MIMXRT685S"/>
+    <definition extID="platform.drivers.hashcrypt.MIMXRT685S"/>
     <definition extID="platform.drivers.lpc_gpio.MIMXRT685S"/>
     <definition extID="platform.drivers.lpc_iopctl.MIMXRT685S"/>
     <definition extID="platform.drivers.trng.MIMXRT685S"/>
@@ -25,17 +27,22 @@
     <definition extID="platform.utilities.misc_utilities.MIMXRT685S"/>
     <definition extID="utility.str.MIMXRT685S"/>
     <definition extID="utility.debug_console_lite.MIMXRT685S"/>
+    <definition extID="component.rng_adapter_interface.MIMXRT685S"/>
+    <definition extID="component.trng_adapter.MIMXRT685S"/>
     <definition extID="component.usart_adapter.MIMXRT685S"/>
-    <definition extID="middleware.mbedtls3x.template.MIMXRT685S"/>
-    <definition extID="middleware.mbedtls3x.port.config.MIMXRT685S"/>
-    <definition extID="middleware.mbedtls3x.port.hw_init.MIMXRT685S"/>
-    <definition extID="middleware.mbedtls3x.port.rng.MIMXRT685S"/>
+    <definition extID="component.psa_crypto_driver.osal.MIMXRT685S"/>
+    <definition extID="component.psa_crypto_driver.osal.baremetal.MIMXRT685S"/>
+    <definition extID="component.psa_crypto_driver.casper.MIMXRT685S"/>
+    <definition extID="component.psa_crypto_driver.hashcrypt.MIMXRT685S"/>
     <definition extID="middleware.mbedtls3x.crypto.no_psa.MIMXRT685S"/>
     <definition extID="middleware.mbedtls3x.crypto.MIMXRT685S"/>
     <definition extID="middleware.mbedtls3x.x509.MIMXRT685S"/>
     <definition extID="middleware.mbedtls3x.ssl.no_psa.MIMXRT685S"/>
     <definition extID="middleware.mbedtls3x.ssl.MIMXRT685S"/>
     <definition extID="middleware.mbedtls3x.MIMXRT685S"/>
+    <definition extID="middleware.mbedtls3x.template.MIMXRT685S"/>
+    <definition extID="middleware.mbedtls3x.port.config.MIMXRT685S"/>
+    <definition extID="middleware.mbedtls3x.port.psa_crypto_config.MIMXRT685S"/>
     <definition extID="iar"/>
     <definition extID="mdk"/>
     <definition extID="armgcc"/>
@@ -44,7 +51,7 @@
     <definition extID="com.crt.advproject.config.exe.debug"/>
     <definition extID="com.crt.advproject.config.exe.release"/>
   </externalDefinitions>
-  <example id="mimxrt685audevk_psa_crypto_examples_cm33" name="psa_crypto_examples_cm33" device_core="cm33_MIMXRT685S" dependency="platform.drivers.flash_config.mimxrt685audevk.MIMXRT685S CMSIS_Include_core_cm.MIMXRT685S device.MIMXRT685S_CMSIS.MIMXRT685S device.MIMXRT685S_system.MIMXRT685S device.MIMXRT685S_startup.MIMXRT685S platform.drivers.clock.MIMXRT685S platform.drivers.dsp.MIMXRT685S platform.drivers.i2s_bridge.MIMXRT685S platform.drivers.inputmux_connections.MIMXRT685S platform.drivers.power.MIMXRT685S platform.drivers.reset.MIMXRT685S platform.drivers.cache_cache64.MIMXRT685S platform.drivers.common.MIMXRT685S platform.drivers.flexcomm.MIMXRT685S platform.drivers.flexcomm_usart.MIMXRT685S platform.drivers.flexspi.MIMXRT685S platform.drivers.lpc_gpio.MIMXRT685S platform.drivers.lpc_iopctl.MIMXRT685S platform.drivers.trng.MIMXRT685S platform.utilities.assert_lite.MIMXRT685S platform.utilities.misc_utilities.MIMXRT685S utility.str.MIMXRT685S utility.debug_console_lite.MIMXRT685S component.usart_adapter.MIMXRT685S middleware.mbedtls3x.template.MIMXRT685S middleware.mbedtls3x.port.config.MIMXRT685S middleware.mbedtls3x.port.hw_init.MIMXRT685S middleware.mbedtls3x.port.rng.MIMXRT685S middleware.mbedtls3x.crypto.no_psa.MIMXRT685S middleware.mbedtls3x.crypto.MIMXRT685S middleware.mbedtls3x.x509.MIMXRT685S middleware.mbedtls3x.ssl.no_psa.MIMXRT685S middleware.mbedtls3x.ssl.MIMXRT685S middleware.mbedtls3x.MIMXRT685S" category="mbedtls3x_examples">
+  <example id="mimxrt685audevk_psa_crypto_examples_cm33" name="psa_crypto_examples_cm33" device_core="cm33_MIMXRT685S" dependency="platform.drivers.flash_config.mimxrt685audevk.MIMXRT685S CMSIS_Include_core_cm.MIMXRT685S device.MIMXRT685S_CMSIS.MIMXRT685S device.MIMXRT685S_system.MIMXRT685S device.MIMXRT685S_startup.MIMXRT685S platform.drivers.clock.MIMXRT685S platform.drivers.dsp.MIMXRT685S platform.drivers.i2s_bridge.MIMXRT685S platform.drivers.inputmux_connections.MIMXRT685S platform.drivers.power.MIMXRT685S platform.drivers.reset.MIMXRT685S platform.drivers.cache_cache64.MIMXRT685S platform.drivers.casper.MIMXRT685S platform.drivers.common.MIMXRT685S platform.drivers.flexcomm.MIMXRT685S platform.drivers.flexcomm_usart.MIMXRT685S platform.drivers.flexspi.MIMXRT685S platform.drivers.hashcrypt.MIMXRT685S platform.drivers.lpc_gpio.MIMXRT685S platform.drivers.lpc_iopctl.MIMXRT685S platform.drivers.trng.MIMXRT685S platform.utilities.assert_lite.MIMXRT685S platform.utilities.misc_utilities.MIMXRT685S utility.str.MIMXRT685S utility.debug_console_lite.MIMXRT685S component.rng_adapter_interface.MIMXRT685S component.trng_adapter.MIMXRT685S component.usart_adapter.MIMXRT685S component.psa_crypto_driver.osal.MIMXRT685S component.psa_crypto_driver.osal.baremetal.MIMXRT685S component.psa_crypto_driver.casper.MIMXRT685S component.psa_crypto_driver.hashcrypt.MIMXRT685S middleware.mbedtls3x.crypto.no_psa.MIMXRT685S middleware.mbedtls3x.crypto.MIMXRT685S middleware.mbedtls3x.x509.MIMXRT685S middleware.mbedtls3x.ssl.no_psa.MIMXRT685S middleware.mbedtls3x.ssl.MIMXRT685S middleware.mbedtls3x.MIMXRT685S middleware.mbedtls3x.template.MIMXRT685S middleware.mbedtls3x.port.config.MIMXRT685S middleware.mbedtls3x.port.psa_crypto_config.MIMXRT685S" category="mbedtls3x_examples">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -62,6 +69,9 @@
           <value>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</value>
           <value>SDK_DEBUGCONSOLE=1</value>
           <value>MCUX_META_BUILD</value>
+          <value>MIMXRT685S_cm33_SERIES</value>
+          <value>PSA_CRYPTO_DRIVER_CASPER</value>
+          <value>PSA_CRYPTO_DRIVER_HASHCRYPT</value>
           <value>MBEDTLS_CONFIG_FILE='"mcux_mbedtls_config.h"'</value>
         </option>
         <option id="com.crt.advproject.link.fpu" type="enum">
@@ -92,7 +102,7 @@
           <value>com.crt.advproject.misc.dialect.gnu99</value>
         </option>
         <option id="gnu.c.compiler.option.misc.other" type="string">
-          <value>-mcpu=cortex-m33 -c -ffunction-sections -fdata-sections -fno-builtin</value>
+          <value>-mcpu=cortex-m33 -c -ffunction-sections -fdata-sections -fno-builtin -fomit-frame-pointer</value>
         </option>
         <option id="gnu.c.compiler.option.warnings.allwarn" type="boolean">
           <value>false</value>
@@ -194,6 +204,9 @@
     </source>
     <source path="." project_relative_path="doc" type="doc">
       <files mask="example_board_readme.md"/>
+    </source>
+    <source path="." project_relative_path="doc" type="doc">
+      <files mask="examples_shared_readme.md"/>
     </source>
   </example>
 </ksdk:examples>

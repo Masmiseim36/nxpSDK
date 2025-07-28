@@ -33,7 +33,7 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DSP_THREAD_STACK_SIZE (12 * 1024)
+#define DSP_THREAD_STACK_SIZE (20 * 1024)
 #define DSP_THREAD_PRIORITY   (XOS_MAX_PRIORITY - 3)
 
 #define AUDIO_BUFFER_SIZE (32 * 1024)

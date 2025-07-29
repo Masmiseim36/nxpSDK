@@ -59,7 +59,7 @@ status_t DC_FB_DSI_CMD_Init(const dc_fb_t *dc)
 
     dcHandle = (dc_fb_dsi_cmd_handle_t *)dc->prvData;
 
-    if (0U == dcHandle->initTimes++)
+    if (0U == dcHandle->initTimes)
     {
         panelHandle = (display_handle_t *)(dcHandle->panelHandle);
         dcConfig    = (const dc_fb_dsi_cmd_config_t *)(dc->config);
@@ -76,6 +76,8 @@ status_t DC_FB_DSI_CMD_Init(const dc_fb_t *dc)
 
         MIPI_DSI_SetMemoryDoneCallback(dsiDevice, DC_FB_DSI_CMD_FrameDoneCallback, dcHandle);
     }
+
+    dcHandle->initTimes++;
 
     return kStatus_Success;
 }
@@ -110,12 +112,14 @@ status_t DC_FB_DSI_CMD_EnableLayer(const dc_fb_t *dc, uint8_t layer)
 
     dcHandle = (dc_fb_dsi_cmd_handle_t *)dc->prvData;
 
-    if (0U == dcHandle->enabledLayerCount++)
+    if (0U == dcHandle->enabledLayerCount)
     {
         panelHandle = (display_handle_t *)(dcHandle->panelHandle);
 
         status = DISPLAY_Start(panelHandle);
     }
+
+    dcHandle->enabledLayerCount++;
 
     return status;
 }
@@ -168,7 +172,7 @@ status_t DC_FB_DSI_CMD_GetLayerDefaultConfig(const dc_fb_t *dc, uint8_t layer, d
     fbInfo->startY      = 0;
     fbInfo->width       = panelHandle->width;
     fbInfo->height      = panelHandle->height;
-    fbInfo->strideBytes = panelHandle->width * VIDEO_GetPixelSizeBits(panelHandle->pixelFormat) / 8U;
+    fbInfo->strideBytes = panelHandle->width * (uint16_t)VIDEO_GetPixelSizeBits(panelHandle->pixelFormat) / 8U;
     fbInfo->pixelFormat = panelHandle->pixelFormat;
 
     return kStatus_Success;
@@ -186,6 +190,11 @@ status_t DC_FB_DSI_CMD_SetFrameBuffer(const dc_fb_t *dc, uint8_t layer, void *fr
     mipi_dsi_device_t *dsiDevice     = dcHandle->dsiDevice;
     uint8_t byteperpixel             = VIDEO_GetPixelSizeBits(fbInfo->pixelFormat) / 8U;
     uint32_t minorLoopBytes          = (uint32_t)fbInfo->width * (uint32_t)byteperpixel;
+
+    if ((fbInfo->startY > (0xFFFFU - fbInfo->height)) || (fbInfo->startX > (0xFFFFU - fbInfo->width)))
+    {
+        return kStatus_Fail;
+    }
 
     /* The selected area is non-constant in memory and the display device does not support 2-D memory write,
        return kStatus_Fail directly. */

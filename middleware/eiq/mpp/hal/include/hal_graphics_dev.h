@@ -22,7 +22,7 @@
 
 /**
  * @brief hal graphics (gfx) device declaration. Graphics processing devices can be used to perform conversion from one
- * image format to another, resize images, and compose images on top of one another.
+ * image format to another, resize images and compose images on top of one another.
  * Examples of graphics devices include the PXP (pixel pipeline) found on many i.MXRT series MCUs.
  */
 

@@ -1,5 +1,5 @@
 /*
- * Copyright 2020-2024 NXP.
+ * Copyright 2020-2025 NXP.
  *
  *  SPDX-License-Identifier: Apache-2.0
  *
@@ -383,6 +383,11 @@ unsigned int elem_convert_setup(_elem_t *elem)
             MPP_LOGE ("Setup HAL graphics fails with ret=%d\n", ret);
             break;
         }
+        if (gfx->ops == NULL) {
+            MPP_LOGE ("Setup HAL graphics fails: gfx->ops is NULL \n");
+            ret = MPP_ERROR;
+            break;
+        }
 
         /* init HAL function */
         if (gfx->ops->init != NULL)
@@ -402,7 +407,7 @@ unsigned int elem_convert_setup(_elem_t *elem)
 
     if (ret != MPP_SUCCESS)
     {
-        if (elem->io.out_buf[0] != NULL)
+        if (elem != NULL && elem->io.out_buf[0] != NULL)
             hal_free(elem->io.out_buf[0]);
         if (gfx != NULL)
             hal_free(gfx);
@@ -415,19 +420,10 @@ unsigned int mpp_convert_update(_elem_t *elem, mpp_element_params_t *params)
 {
     int ret = MPP_SUCCESS;
     gfx_dev_t *gfx = NULL;
-
     do {
         /* sanity checks */
         if (params == NULL) {
-            MPP_LOGE("invalid input buffer - params (0x%x)\n", params);
-            ret = MPP_INVALID_PARAM;
-            break;
-        }
-
-        /* check forbidden parameter changes */
-        if (params->convert.pixel_format != elem->params.convert.pixel_format)
-        {
-            MPP_LOGE("Cannot update pixel format\n");
+            MPP_LOGE("Failed to perform conversion: params buffer is invalid\n");
             ret = MPP_INVALID_PARAM;
             break;
         }

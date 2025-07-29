@@ -1,5 +1,5 @@
 /*
- * Copyright 2020-2024 NXP
+ * Copyright 2020-2025 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -69,6 +69,7 @@ int32_t MOBILENETv1_ProcessOutput(const mpp_inference_cb_param_t *inf_out, void 
     if ( (mpp != NULL) && (elem != 0) && (rects != NULL) )
     {
         mpp_element_params_t params;
+        memset(&params, 0, sizeof(params));
         uint8_t label_size = sizeof(params.labels.rectangles[0].label);
         /* update the label in first rectangle */
         params.labels.detected_count = 1;

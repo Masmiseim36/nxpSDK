@@ -37,18 +37,19 @@
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
     <memory>
-      <memoryBlock id="SRAM1_MIMXRT798S" name="SRAM1" addr="00600000" size="00080000" type="RAM" access="RW"/>
-      <memoryBlock id="SRAM2_MIMXRT798S" name="SRAM2" addr="205C0000" size="00040000" type="RAM" access="RW"/>
+      <memoryBlock id="SRAM1_MIMXRT798S" name="SRAM1" addr="005A0000" size="0000D000" type="RAM" access="RW"/>
+      <memoryBlock id="SRAM2_MIMXRT798S" name="SRAM2" addr="205AD000" size="00003000" type="RAM" access="RW"/>
       <memoryBlock id="rpmsg_sh_mem_MIMXRT798S" name="rpmsg_sh_mem" addr="20200000" size="00002000" type="RAM" access="RW"/>
     </memory>
     <toolchainSettings>
       <toolchainSetting id_refs="com.nxp.mcuxpresso">
         <option id="gnu.c.compiler.option.preprocessor.def.symbols" type="stringList">
           <value>MCUXPRESSO_SDK</value>
-          <value>CPU_MIMXRT798SGFOA_cm33_core1</value>
+          <value>CPU_MIMXRT798SGFOB_cm33_core1</value>
           <value>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</value>
           <value>SDK_DEBUGCONSOLE=1</value>
           <value>MCUX_META_BUILD</value>
+          <value>MIMXRT798S_cm33_core1_SERIES</value>
           <value>SDK_I2C_BASED_COMPONENT_USED=1</value>
         </option>
         <option id="com.crt.advproject.link.gcc.multicore.slave" type="string">
@@ -133,6 +134,9 @@
     <source path="." project_relative_path="source" type="configuration" toolchain="mdk">
       <files mask="ramdebug.ini"/>
     </source>
+    <source path="." project_relative_path="source" type="other">
+      <files mask="power_mode_comp_only_secondary.mex"/>
+    </source>
     <source path="." project_relative_path="source" type="src">
       <files mask="clock_config.c"/>
       <files mask="power_mode_comp_only_core1.c"/>
@@ -180,6 +184,9 @@
     </source>
     <source path="." project_relative_path="doc" type="doc">
       <files mask="example_board_readme.md"/>
+    </source>
+    <source path="." project_relative_path="doc" type="doc">
+      <files mask="examples_shared_readme.md"/>
     </source>
   </example>
 </ksdk:examples>

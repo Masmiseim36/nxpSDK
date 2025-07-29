@@ -1,0 +1,3 @@
+	<#if memory.name=="modeldata">
+	*(.modeldata)
+	</#if>

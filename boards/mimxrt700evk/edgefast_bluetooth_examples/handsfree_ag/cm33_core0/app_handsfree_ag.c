@@ -36,21 +36,8 @@
 
 /* User may need to change it for real production */
 #define APP_CLASS_OF_DEVICE (0x200000U)
-struct bt_conn *default_conn;
-static uint8_t s_hfp_in_calling_status = 0xff;
-typedef struct app_hfp_ag_
-{
-    struct bt_hfp_ag *hfp_agHandle;
-    struct bt_conn *conn;
-    uint8_t peerKeyMissed;
-    uint8_t appl_acl_initiated;
-    uint8_t peer_bd_addr[6];
-    uint8_t selectCodec;
-} app_hfp_ag_t;
-static app_hfp_ag_t g_HfpAg;
-static TimerHandle_t s_xTimers    = 0;
-static TimerHandle_t s_xTwcTimers = 0;
-static struct k_work s_ataRespWork;
+app_hfp_ag_t g_HfpAgs[CONFIG_BT_HFP_AG_MAX_CONN];
+static app_hfp_ag_t *g_HfpAg;
 static struct bt_sdp_attribute hfp_ag_attrs[] = {
     BT_SDP_NEW_SERVICE,
     BT_SDP_LIST(
@@ -118,16 +105,109 @@ static struct bt_sdp_attribute hfp_ag_attrs[] = {
     BT_SDP_SUPPORTED_FEATURES(0x2100),
 };
 static struct bt_sdp_record hfp_ag_rec = BT_SDP_RECORD(hfp_ag_attrs);
-static void ag_connected(struct bt_hfp_ag *hfp_ag)
+
+/* app_ag_save_instance and app_ag_remove_instance are only called in the same hfp callback one by one,
+ * so don't need mutext to protect allocating/freeing g_HfpAgs.
+ */
+static app_hfp_ag_t *app_ag_save_instance(struct bt_hfp_ag *hfp_ag)
 {
-    printf("HFP AG Connected!\n");
-    g_HfpAg.hfp_agHandle = hfp_ag;
-    s_hfp_in_calling_status = 1;
-    g_HfpAg.selectCodec = 1;
+    for (uint8_t index = 0; index < APP_MAX_HFP_AG_CONN; index++)
+    {
+        if (g_HfpAgs[index].hfp_agHandle == hfp_ag)
+        {
+            return &g_HfpAgs[index];
+        }
+    }
+
+    for (uint8_t index = 0; index < APP_MAX_HFP_AG_CONN; index++)
+    {
+        if (g_HfpAgs[index].hfp_agHandle == NULL)
+        {
+            g_HfpAgs[index].hfp_agHandle = hfp_ag;
+            return &g_HfpAgs[index];
+        }
+    }
+
+    return NULL;
 }
+
+static void app_ag_remove_instance(struct bt_hfp_ag *hfp_ag)
+{
+    for (uint8_t index = 0; index < APP_MAX_HFP_AG_CONN; index++)
+    {
+        if (g_HfpAgs[index].hfp_agHandle == hfp_ag)
+        {
+            g_HfpAgs[index].hfp_agHandle = NULL;
+            break;
+        }
+    }
+}
+
+static app_hfp_ag_t *app_ag_get_instance(struct bt_hfp_ag *hfp_ag)
+{
+    for (uint8_t index = 0; index < APP_MAX_HFP_AG_CONN; index++)
+    {
+        if (g_HfpAgs[index].hfp_agHandle == hfp_ag)
+        {
+            return &g_HfpAgs[index];
+        }
+    }
+
+    return NULL;
+}
+
+static uint8_t app_ag_instance_index(struct bt_hfp_ag *hfp_ag)
+{
+    for (uint8_t index = 0; index < APP_MAX_HFP_AG_CONN; index++)
+    {
+        if (g_HfpAgs[index].hfp_agHandle == hfp_ag)
+        {
+            return index;
+        }
+    }
+
+    return 0;
+}
+
+static bool app_ag_check_idle_instance(void)
+{
+    for (uint8_t index = 0; index < APP_MAX_HFP_AG_CONN; index++)
+    {
+        if (g_HfpAgs[index].hfp_agHandle == NULL)
+        {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+static void ag_connected(struct bt_hfp_ag *hfp_ag, int err)
+{
+    app_hfp_ag_t *app_hfp_ag;
+
+    if (err)
+    {
+        return;
+    }
+
+    app_hfp_ag = app_ag_save_instance(hfp_ag);
+    if (app_hfp_ag == NULL)
+    {
+        PRINTF("Too many connections\n");
+        return;
+    }
+    printf("HFP AG (index:%d) Connected:%d!\n", app_ag_instance_index(hfp_ag), err);
+
+    app_hfp_ag->hfp_agHandle = hfp_ag;
+    app_hfp_ag->hfp_in_calling_status = 1;
+    app_hfp_ag->selectCodec = 1;
+}
+
 static void ag_disconnected(struct bt_hfp_ag *hfp_ag)
 {
-    printf("HFP AG Disconnected!\n");
+    printf("HFP AG (index:%d) Disconnected!\n", app_ag_instance_index(hfp_ag));
+    app_ag_remove_instance(hfp_ag);
     bt_hfp_ag_disconnect(hfp_ag);
 }
 
@@ -139,50 +219,65 @@ hfp_ag_get_config hfp_ag_config = {
     .bt_hfp_ag_inband          = 0,
     .bt_hfp_ag_codec_negotiate = 0,
     .bt_hfp_ag_dial            = 0,
+    .hf_indicators_slc_enable  = HF_INDICATOR_BATTERY_LEVEL/* | HF_INDICATOR_ENHANCED_DRIVER_SAFETY*/,
 };
+
 static void bt_work_ata_response(struct k_work *work)
 {
+    app_hfp_ag_t *app_hfp_ag = CONTAINER_OF(work, app_hfp_ag_t, ataRespWork);
+
     printf("HFP HP have accepted the call\n");
-    s_hfp_in_calling_status = 3;
-    bt_hfp_ag_send_callsetup_indicator(g_HfpAg.hfp_agHandle, 0);
-    bt_hfp_ag_send_call_indicator(g_HfpAg.hfp_agHandle, 1);
-    if (s_xTimers != 0)
+    app_hfp_ag->hfp_in_calling_status = 3;
+    bt_hfp_ag_send_callsetup_indicator(app_hfp_ag->hfp_agHandle, 0);
+    bt_hfp_ag_send_call_indicator(app_hfp_ag->hfp_agHandle, 1);
+    if (app_hfp_ag->xTimers != 0)
     {
-        xTimerStop(s_xTimers, 0);
-        xTimerDelete(s_xTimers, 0);
-        s_xTimers = 0;
+        xTimerStop(app_hfp_ag->xTimers, 0);
+        xTimerDelete(app_hfp_ag->xTimers, 0);
+        app_hfp_ag->xTimers = 0;
     }
-    bt_hfp_ag_call_status_pl(g_HfpAg.hfp_agHandle, hfp_ag_call_call_incoming);
+    bt_hfp_ag_call_status_pl(app_hfp_ag->hfp_agHandle, hfp_ag_call_call_incoming);
 }
+
 void dial(struct bt_hfp_ag *hfp_ag, char *number)
 {
     printf("HFP HP have a in coming call :%s\n", number);
-    if (s_hfp_in_calling_status == 1)
+    if (g_HfpAg->hfp_in_calling_status == 1)
     {
         PRINTF("Simulate a outcoming calling!!\r\n");
-        bt_hfp_ag_send_callsetup_indicator(g_HfpAg.hfp_agHandle, 1);
-        //     s_xTimers = xTimerCreate("RingTimer", (2000) + 10, pdTRUE, 0, vTimerRingCallback);
-        //   xTimerStart(s_xTimers, 0);
-        //   bt_hfp_ag_send_callring(g_HfpAg.hfp_agHandle);
-        s_hfp_in_calling_status = 2;
+        bt_hfp_ag_send_callsetup_indicator(hfp_ag, 1);
+        g_HfpAg->hfp_in_calling_status = 2;
     }
 }
+
 void ata_response(struct bt_hfp_ag *hfp_ag)
 {
-    k_work_submit(&s_ataRespWork);
+    app_hfp_ag_t *app_hfp_ag = app_ag_get_instance(hfp_ag);
+
+    if (app_hfp_ag != NULL)
+    {
+        k_work_submit(&app_hfp_ag->ataRespWork);
+    }
 }
 
 void chup_response(struct bt_hfp_ag *hfp_ag)
 {
-    printf("HFP HP have ended the call\n");
-    s_hfp_in_calling_status = 1;
-    bt_hfp_ag_call_status_pl(g_HfpAg.hfp_agHandle, hfp_ag_call_call_end);
-    bt_hfp_ag_send_call_indicator(g_HfpAg.hfp_agHandle, 0);
-    if (s_xTimers != 0)
+    app_hfp_ag_t *app_hfp_ag = app_ag_get_instance(hfp_ag);
+    
+    if (app_hfp_ag == NULL)
     {
-        xTimerStop(s_xTimers, 0);
-        xTimerDelete(s_xTimers, 0);
-        s_xTimers = 0;
+        return;
+    }
+
+    printf("HFP HP have ended the call\n");
+    app_hfp_ag->hfp_in_calling_status = 1;
+    bt_hfp_ag_call_status_pl(hfp_ag, hfp_ag_call_call_end);
+    bt_hfp_ag_send_call_indicator(hfp_ag, 0);
+    if (app_hfp_ag->xTimers != 0)
+    {
+        xTimerStop(app_hfp_ag->xTimers, 0);
+        xTimerDelete(app_hfp_ag->xTimers, 0);
+        app_hfp_ag->xTimers = 0;
     }
 }
 
@@ -197,6 +292,13 @@ static void codec_negotiate(struct bt_hfp_ag *hfp_ag, uint32_t value)
 
 static void chld(struct bt_hfp_ag *hfp_ag, uint8_t option, uint8_t index)
 {
+    app_hfp_ag_t *app_hfp_ag = app_ag_get_instance(hfp_ag);
+
+    if (app_hfp_ag == NULL)
+    {
+        return;
+    }
+
     printf("AT_CHLD mutlipcall option  index :%d %d\n", option, index);
     if (option == 0)
     {
@@ -222,17 +324,32 @@ static void chld(struct bt_hfp_ag *hfp_ag, uint8_t option, uint8_t index)
     {
         printf(" bt multipcall 4. Connect other calls and disconnect self from TWC\n");
     }
-    if (s_xTwcTimers != 0)
+    if (app_hfp_ag->xTwcTimers != 0)
     {
-        xTimerStop(s_xTwcTimers, 0);
-        xTimerDelete(s_xTwcTimers, 0);
-        s_xTwcTimers = 0;
+        xTimerStop(app_hfp_ag->xTwcTimers, 0);
+        xTimerDelete(app_hfp_ag->xTwcTimers, 0);
+        app_hfp_ag->xTwcTimers = 0;
     }
 }
 
 void get_config(struct bt_hfp_ag *hfp_ag, hfp_ag_get_config **config)
 {
     *config = &hfp_ag_config;
+}
+
+void hf_indicator(struct bt_hfp_ag *hfp_ag, uint16_t indicator, uint32_t value)
+{
+    if (indicator == HF_INDICATOR_BATTERY_LEVEL)
+    {
+        PRINTF("battery level: %d\r\n", value);
+    }
+    else if (indicator == HF_INDICATOR_ENHANCED_DRIVER_SAFETY)
+    {
+        PRINTF("enhanced driver safety: %d\r\n", value);
+    }
+    else
+    {
+    }
 }
 
 static struct bt_hfp_ag_cb ag_cb = {
@@ -245,19 +362,25 @@ static struct bt_hfp_ag_cb ag_cb = {
     .chld            = chld,
     .codec_negotiate = codec_negotiate,
     .get_config      = get_config,
+    .hf_indicator    = hf_indicator,
 };
 
 int app_hfp_ag_discover(struct bt_conn *conn, uint8_t channel)
 {
-    int status                   = 0;
-    hfp_ag_config.server_channel = channel;
-    if (default_conn == conn)
+    struct bt_hfp_ag *hfp_agHandle;
+    int status = 0;
+
+    if (!app_ag_check_idle_instance())
     {
-        status = bt_hfp_ag_connect(default_conn, &hfp_ag_config, &ag_cb, &g_HfpAg.hfp_agHandle);
-        if (0 != status)
-        {
-            PRINTF("fail to connect hfp_hf (err: %d)\r\n", status);
-        }
+        PRINTF("no idle instance\r\n");
+        return 0;
+    }
+
+    hfp_ag_config.server_channel = channel;
+    status = bt_hfp_ag_connect(conn, &hfp_ag_config, &ag_cb, &hfp_agHandle);
+    if (0 != status)
+    {
+        PRINTF("fail to connect hfp_hf (err: %d)\r\n", status);
     }
     return status;
 }
@@ -310,44 +433,49 @@ static void bt_ready(int err)
 
     bt_hfp_ag_init();
     bt_hfp_ag_register_cb(&ag_cb);
+    app_hfp_ag_select_conn(0);
     app_shell_init();
-    k_work_init(&s_ataRespWork, bt_work_ata_response);
+    for (uint8_t index = 0; index < CONFIG_BT_HFP_AG_MAX_CONN; index++)
+    {
+        k_work_init(&g_HfpAgs[index].ataRespWork, bt_work_ata_response);
+        g_HfpAgs[index].hfp_in_calling_status = 0xFF;
+    }
 }
 
 static void vTimerRingCallback(TimerHandle_t xTimer)
 {
-    bt_hfp_ag_send_callring(g_HfpAg.hfp_agHandle);
+    bt_hfp_ag_send_callring(g_HfpAg->hfp_agHandle);
 }
 
 static void vTimerTwcRingCallback(TimerHandle_t xTimer)
 {
-    bt_hfp_ag_send_callring(g_HfpAg.hfp_agHandle);
+    bt_hfp_ag_send_callring(g_HfpAg->hfp_agHandle);
 }
 int app_hfp_ag_start_incoming_call()
 {
-    if (s_hfp_in_calling_status == 1)
+    if (g_HfpAg->hfp_in_calling_status == 1)
     {
         PRINTF("Simulate a incoming call an incoming calling!!\r\n");
-        bt_hfp_ag_send_callsetup_indicator(g_HfpAg.hfp_agHandle, 1);
-        s_xTimers = xTimerCreate("RingTimer", (2000) + 10, pdTRUE, 0, vTimerRingCallback);
-        xTimerStart(s_xTimers, 0);
-        bt_hfp_ag_send_callring(g_HfpAg.hfp_agHandle);
-        s_hfp_in_calling_status = 2;
+        bt_hfp_ag_send_callsetup_indicator(g_HfpAg->hfp_agHandle, 1);
+        g_HfpAg->xTimers = xTimerCreate("RingTimer", (2000) + 10, pdTRUE, 0, vTimerRingCallback);
+        xTimerStart(g_HfpAg->xTimers, 0);
+        bt_hfp_ag_send_callring(g_HfpAg->hfp_agHandle);
+        g_HfpAg->hfp_in_calling_status = 2;
         return 0;
     }
     return -1;
 }
 int app_hfp_ag_start_twc_incoming_call(void)
 {
-    if (s_hfp_in_calling_status == 3)
+    if (g_HfpAg->hfp_in_calling_status == 3)
     {
         PRINTF("Simulate a mutiple call incoming call!!\r\n");
-        bt_hfp_ag_send_callsetup_indicator(g_HfpAg.hfp_agHandle, 1);
-        bt_hfp_ag_send_ccwa_indicator(g_HfpAg.hfp_agHandle, "1234567");
-        s_xTwcTimers = xTimerCreate("TwcRingTimer", (2000) + 10, pdTRUE, 0, vTimerTwcRingCallback);
-        xTimerStart(s_xTwcTimers, 0);
-        bt_hfp_ag_send_callring(g_HfpAg.hfp_agHandle);
-        s_hfp_in_calling_status = 4;
+        bt_hfp_ag_send_callsetup_indicator(g_HfpAg->hfp_agHandle, 1);
+        bt_hfp_ag_send_ccwa_indicator(g_HfpAg->hfp_agHandle, "1234567");
+        g_HfpAg->xTwcTimers = xTimerCreate("TwcRingTimer", (2000) + 10, pdTRUE, 0, vTimerTwcRingCallback);
+        xTimerStart(g_HfpAg->xTwcTimers, 0);
+        bt_hfp_ag_send_callring(g_HfpAg->hfp_agHandle);
+        g_HfpAg->hfp_in_calling_status = 4;
         return 0;
     }
     return -1;
@@ -355,61 +483,82 @@ int app_hfp_ag_start_twc_incoming_call(void)
 
 void app_hfp_ag_open_audio()
 {
-    bt_hfp_ag_open_audio(g_HfpAg.hfp_agHandle, g_HfpAg.selectCodec - 1);
+    bt_hfp_ag_open_audio(g_HfpAg->hfp_agHandle, g_HfpAg->selectCodec - 1);
 }
 void app_hfp_ag_close_audio()
 {
-    bt_hfp_ag_close_audio(g_HfpAg.hfp_agHandle);
+    bt_hfp_ag_close_audio(g_HfpAg->hfp_agHandle);
 }
 int app_hfp_ag_accept_incoming_call()
 {
-    if (s_hfp_in_calling_status == 2)
+    if (g_HfpAg->hfp_in_calling_status == 2)
     {
         printf("HFP AG have accepted the incoming call\n");
-        s_hfp_in_calling_status = 3;
-        bt_hfp_ag_send_callsetup_indicator(g_HfpAg.hfp_agHandle, 0);
-        bt_hfp_ag_send_call_indicator(g_HfpAg.hfp_agHandle, 1);
-        if (s_xTimers != 0)
+        g_HfpAg->hfp_in_calling_status = 3;
+        bt_hfp_ag_send_callsetup_indicator(g_HfpAg->hfp_agHandle, 0);
+        bt_hfp_ag_send_call_indicator(g_HfpAg->hfp_agHandle, 1);
+        if (g_HfpAg->xTimers != 0)
         {
-            xTimerStop(s_xTimers, 0);
-            xTimerDelete(s_xTimers, 0);
-            s_xTimers = 0;
+            xTimerStop(g_HfpAg->xTimers, 0);
+            xTimerDelete(g_HfpAg->xTimers, 0);
+            g_HfpAg->xTimers = 0;
         }
-        bt_hfp_ag_call_status_pl(g_HfpAg.hfp_agHandle, hfp_ag_call_call_incoming);
+        bt_hfp_ag_call_status_pl(g_HfpAg->hfp_agHandle, hfp_ag_call_call_incoming);
         return 0;
     }
     return -1;
 }
 int app_hfp_ag_stop_incoming_call()
 {
-    if (s_hfp_in_calling_status >= 2)
+    if (g_HfpAg->hfp_in_calling_status >= 2)
     {
-        bt_hfp_ag_call_status_pl(g_HfpAg.hfp_agHandle, hfp_ag_call_call_end);
-        if (s_xTimers != 0)
+        bt_hfp_ag_call_status_pl(g_HfpAg->hfp_agHandle, hfp_ag_call_call_end);
+        if (g_HfpAg->xTimers != 0)
         {
-            xTimerStop(s_xTimers, 0);
-            xTimerDelete(s_xTimers, 0);
-            s_xTimers = 0;
+            xTimerStop(g_HfpAg->xTimers, 0);
+            xTimerDelete(g_HfpAg->xTimers, 0);
+            g_HfpAg->xTimers = 0;
         }
-        bt_hfp_ag_send_call_indicator(g_HfpAg.hfp_agHandle, 0);
+        bt_hfp_ag_send_call_indicator(g_HfpAg->hfp_agHandle, 0);
         printf("HFP AG have ended the call\n");
-        s_hfp_in_calling_status = 1;
+        g_HfpAg->hfp_in_calling_status = 1;
         return 0;
     }
     return -1;
 }
 int app_hfp_ag_codec_select(uint8_t codec)
 {
-    g_HfpAg.selectCodec = codec;
-    return bt_hfp_ag_codec_selector(g_HfpAg.hfp_agHandle, codec);
+    g_HfpAg->selectCodec = codec;
+    return bt_hfp_ag_codec_selector(g_HfpAg->hfp_agHandle, codec);
 }
 void app_hfp_ag_set_phnum_tag(char *name)
 {
-    bt_hfp_ag_set_phnum_tag(g_HfpAg.hfp_agHandle, name);
+    bt_hfp_ag_set_phnum_tag(g_HfpAg->hfp_agHandle, name);
 }
 void app_hfp_ag_volume_update(hf_ag_volume_type_t type, int volume)
 {
-    bt_hfp_ag_set_volume_control(g_HfpAg.hfp_agHandle, type, volume);
+    bt_hfp_ag_set_volume_control(g_HfpAg->hfp_agHandle, type, volume);
+}
+
+int app_hfp_ag_set_hf_indicator(uint8_t indicator, uint8_t control)
+{
+    return bt_hfp_ag_set_hf_indicator(g_HfpAg->hfp_agHandle, indicator, control);
+}
+
+void app_hfp_ag_select_conn(uint8_t index)
+{
+    struct bt_conn *acl_conn;
+
+    acl_conn = bt_hfp_ag_get_conn(g_HfpAgs[index].hfp_agHandle);
+
+    if (acl_conn == NULL)
+    {
+        PRINTF("connection %d is invalid",index);
+    }
+    else
+    {
+        g_HfpAg = &g_HfpAgs[index];
+    }
 }
 
 void peripheral_hfp_ag_task(void *pvParameters)

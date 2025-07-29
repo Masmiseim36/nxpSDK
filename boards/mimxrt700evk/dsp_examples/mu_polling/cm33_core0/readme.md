@@ -9,6 +9,8 @@ In this example:
 2. DSP send message back to M33 core in polling mode.
 3. M33 core receive message sent from DSP in polling mode.
 
+This example cannot be imported into Config Tools because the xtensa toolchain is not supported.
+
 ## Supported Boards
 - [EVK9-MIMX8ULP](../../_boards/evk9mimx8ulp/dsp_examples/mu_polling/example_board_readme.md)
 - [EVK-MIMX8ULP](../../_boards/evkmimx8ulp/dsp_examples/mu_polling/example_board_readme.md)

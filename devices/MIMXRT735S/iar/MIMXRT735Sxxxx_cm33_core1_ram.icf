@@ -1,18 +1,18 @@
 /*
 ** ###################################################################
-**     Processors:          MIMXRT735SGAWAR_cm33_core1
-**                          MIMXRT735SGFOA_cm33_core1
+**     Processors:          MIMXRT735SGAWBR_cm33_core1
+**                          MIMXRT735SGFOB_cm33_core1
 **
 **     Compiler:            IAR ANSI C/C++ Compiler for ARM
 **     Reference manual:    iMXRT700RM Rev.2 DraftA, 05/2024
-**     Version:             rev. 2.0, 2024-05-28
-**     Build:               b240528
+**     Version:             rev. 3.0, 2025-06-06
+**     Build:               b250606
 **
 **     Abstract:
 **         Linker file for the IAR ANSI C/C++ Compiler for ARM
 **
 **     Copyright 2016 Freescale Semiconductor, Inc.
-**     Copyright 2016-2024 NXP
+**     Copyright 2016-2025 NXP
 **     SPDX-License-Identifier: BSD-3-Clause
 **
 **     http:                 www.nxp.com
@@ -53,9 +53,11 @@ define exported symbol __RAM_VECTOR_TABLE_SIZE = 0x0;
 if (isdefinedsymbol(__use_shmem__)) {
   define exported symbol rpmsg_sh_mem_start    = 0x20200000;
   define exported symbol rpmsg_sh_mem_end      = 0x20201FFF;
-} else if (isdefinedsymbol(__use_shmem_hifi1__)) {
-  define exported symbol rpmsg_sh_mem_start    = 0x20588000;
-  define exported symbol rpmsg_sh_mem_end      = 0x20589FFF;
+}
+
+if (isdefinedsymbol(__use_shmem_hifi1__)) {
+  define exported symbol rpmsg_sh_mem_hifi1_start    = 0x20588000;
+  define exported symbol rpmsg_sh_mem_hifi1_end      = 0x20589FFF;
 }
 
 define memory mem with size = 4G;
@@ -66,6 +68,9 @@ define region DATA_region             = mem:[from m_data_start to m_data_end - _
 define region CSTACK_region           = mem:[from m_data_end-__size_cstack__ + 1 to m_data_end];
 if (isdefinedsymbol(__use_shmem__)) {
   define region rpmsg_sh_mem_region   = mem:[from rpmsg_sh_mem_start to rpmsg_sh_mem_end];
+}
+if (isdefinedsymbol(__use_shmem__) || isdefinedsymbol(__use_shmem_hifi1__)) {
+  define region rpmsg_sh_mem_hifi1_region   = mem:[from rpmsg_sh_mem_hifi1_start to rpmsg_sh_mem_hifi1_end];
 }
 
 define block CSTACK    with alignment = 8, size = __size_cstack__   { };
@@ -90,4 +95,7 @@ place in DATA_region                        { last block HEAP };
 place in CSTACK_region                      { block CSTACK };
 if (isdefinedsymbol(__use_shmem__)) {
   place in rpmsg_sh_mem_region              { section rpmsg_sh_mem_section };
+}
+if (isdefinedsymbol(__use_shmem_hifi1__)) {
+  place in rpmsg_sh_mem_hifi1_region        { section rpmsg_sh_mem_section };
 }

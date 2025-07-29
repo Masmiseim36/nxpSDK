@@ -24,8 +24,10 @@ Prepare the Demo
 ===============
 Make sure JP65 1-2 are connected, and insert the SD card which has the pictures unziped in root folder in slot J47.
 The demo use MIPI RK055MHD091 panel by default, to use other panel,
-change the macro DEMO_PANEL in mcux_config.h. Which number represents which panel
-can be found in display_support.h.
+set the coresponding panel DEMO_PANEL_xxx(without '_SUPPORT') to y in prj.conf under board example folder before project generation.
+The supported panels can be found in examples\_boards\<board>\project_segments\display_support\Kconfig.prjseg.
+Or change the macro DEMO_PANEL in mcux_config.h of the project,
+which number represents which panel can be found in display_support.h
 
 1.  Connect a USB cable between the host PC and the MCU-LINK USB port on the target board.
 2.  Open a serial terminal with the following settings:

@@ -1,40 +1,40 @@
 /*
 ** ###################################################################
-**     Processors:          MIMXRT735SGAWAR_cm33_core0
-**                          MIMXRT735SGAWAR_cm33_core1
-**                          MIMXRT735SGAWAR_ezhv
-**                          MIMXRT735SGAWAR_hifi1
-**                          MIMXRT735SGFOA_cm33_core0
-**                          MIMXRT735SGFOA_cm33_core1
-**                          MIMXRT735SGFOA_ezhv
-**                          MIMXRT735SGFOA_hifi1
-**                          MIMXRT758SGAWAR_cm33_core0
-**                          MIMXRT758SGAWAR_cm33_core1
-**                          MIMXRT758SGAWAR_ezhv
-**                          MIMXRT758SGAWAR_hifi1
-**                          MIMXRT758SGFOA_cm33_core0
-**                          MIMXRT758SGFOA_cm33_core1
-**                          MIMXRT758SGFOA_ezhv
-**                          MIMXRT758SGFOA_hifi1
-**                          MIMXRT798SGAWAR_cm33_core0
-**                          MIMXRT798SGAWAR_cm33_core1
-**                          MIMXRT798SGAWAR_ezhv
-**                          MIMXRT798SGAWAR_hifi1
-**                          MIMXRT798SGAWAR_hifi4
-**                          MIMXRT798SGFOA_cm33_core0
-**                          MIMXRT798SGFOA_cm33_core1
-**                          MIMXRT798SGFOA_ezhv
-**                          MIMXRT798SGFOA_hifi1
-**                          MIMXRT798SGFOA_hifi4
+**     Processors:          MIMXRT735SGAWBR_cm33_core0
+**                          MIMXRT735SGAWBR_cm33_core1
+**                          MIMXRT735SGAWBR_ezhv
+**                          MIMXRT735SGAWBR_hifi1
+**                          MIMXRT735SGFOB_cm33_core0
+**                          MIMXRT735SGFOB_cm33_core1
+**                          MIMXRT735SGFOB_ezhv
+**                          MIMXRT735SGFOB_hifi1
+**                          MIMXRT758SGAWBR_cm33_core0
+**                          MIMXRT758SGAWBR_cm33_core1
+**                          MIMXRT758SGAWBR_ezhv
+**                          MIMXRT758SGAWBR_hifi1
+**                          MIMXRT758SGFOB_cm33_core0
+**                          MIMXRT758SGFOB_cm33_core1
+**                          MIMXRT758SGFOB_ezhv
+**                          MIMXRT758SGFOB_hifi1
+**                          MIMXRT798SGAWBR_cm33_core0
+**                          MIMXRT798SGAWBR_cm33_core1
+**                          MIMXRT798SGAWBR_ezhv
+**                          MIMXRT798SGAWBR_hifi1
+**                          MIMXRT798SGAWBR_hifi4
+**                          MIMXRT798SGFOB_cm33_core0
+**                          MIMXRT798SGFOB_cm33_core1
+**                          MIMXRT798SGFOB_ezhv
+**                          MIMXRT798SGFOB_hifi1
+**                          MIMXRT798SGFOB_hifi4
 **
-**     Version:             rev. 2.0, 2024-05-28
-**     Build:               b241121
+**     Version:             rev. 4.0, 2025-06-06
+**     Build:               b250606
 **
 **     Abstract:
 **         CMSIS Peripheral Access Layer for IOPCTL1
 **
 **     Copyright 1997-2016 Freescale Semiconductor, Inc.
-**     Copyright 2016-2024 NXP
+**     Copyright 2016-2025 NXP
 **     SPDX-License-Identifier: BSD-3-Clause
 **
 **     http:                 www.nxp.com
@@ -45,47 +45,52 @@
 **         Initial version.
 **     - rev. 2.0 (2024-05-28)
 **         Rev2 DraftA.
+**     - rev. 3.0 (2024-10-29)
+**         Change the device header file from single flat file to multiple files based on peripherals,
+**         each peripheral with dedicated header file located in periphN folder.
+**     - rev. 4.0 (2025-06-06)
+**         B0 initial version
 **
 ** ###################################################################
 */
 
 /*!
- * @file IOPCTL1.h
- * @version 2.0
- * @date 2024-05-28
+ * @file PERI_IOPCTL1.h
+ * @version 4.0
+ * @date 2025-06-06
  * @brief CMSIS Peripheral Access Layer for IOPCTL1
  *
  * CMSIS Peripheral Access Layer for IOPCTL1
  */
 
-#if !defined(IOPCTL1_H_)
-#define IOPCTL1_H_                               /**< Symbol preventing repeated inclusion */
+#if !defined(PERI_IOPCTL1_H_)
+#define PERI_IOPCTL1_H_                          /**< Symbol preventing repeated inclusion */
 
-#if (defined(CPU_MIMXRT735SGAWAR_cm33_core0) || defined(CPU_MIMXRT735SGFOA_cm33_core0))
+#if (defined(CPU_MIMXRT735SGAWBR_cm33_core0) || defined(CPU_MIMXRT735SGFOB_cm33_core0))
 #include "MIMXRT735S_cm33_core0_COMMON.h"
-#elif (defined(CPU_MIMXRT735SGAWAR_cm33_core1) || defined(CPU_MIMXRT735SGFOA_cm33_core1))
+#elif (defined(CPU_MIMXRT735SGAWBR_cm33_core1) || defined(CPU_MIMXRT735SGFOB_cm33_core1))
 #include "MIMXRT735S_cm33_core1_COMMON.h"
-#elif (defined(CPU_MIMXRT735SGAWAR_ezhv) || defined(CPU_MIMXRT735SGFOA_ezhv))
+#elif (defined(CPU_MIMXRT735SGAWBR_ezhv) || defined(CPU_MIMXRT735SGFOB_ezhv))
 #include "MIMXRT735S_ezhv_COMMON.h"
-#elif (defined(CPU_MIMXRT735SGAWAR_hifi1) || defined(CPU_MIMXRT735SGFOA_hifi1))
+#elif (defined(CPU_MIMXRT735SGAWBR_hifi1) || defined(CPU_MIMXRT735SGFOB_hifi1))
 #include "MIMXRT735S_hifi1_COMMON.h"
-#elif (defined(CPU_MIMXRT758SGAWAR_cm33_core0) || defined(CPU_MIMXRT758SGFOA_cm33_core0))
+#elif (defined(CPU_MIMXRT758SGAWBR_cm33_core0) || defined(CPU_MIMXRT758SGFOB_cm33_core0))
 #include "MIMXRT758S_cm33_core0_COMMON.h"
-#elif (defined(CPU_MIMXRT758SGAWAR_cm33_core1) || defined(CPU_MIMXRT758SGFOA_cm33_core1))
+#elif (defined(CPU_MIMXRT758SGAWBR_cm33_core1) || defined(CPU_MIMXRT758SGFOB_cm33_core1))
 #include "MIMXRT758S_cm33_core1_COMMON.h"
-#elif (defined(CPU_MIMXRT758SGAWAR_ezhv) || defined(CPU_MIMXRT758SGFOA_ezhv))
+#elif (defined(CPU_MIMXRT758SGAWBR_ezhv) || defined(CPU_MIMXRT758SGFOB_ezhv))
 #include "MIMXRT758S_ezhv_COMMON.h"
-#elif (defined(CPU_MIMXRT758SGAWAR_hifi1) || defined(CPU_MIMXRT758SGFOA_hifi1))
+#elif (defined(CPU_MIMXRT758SGAWBR_hifi1) || defined(CPU_MIMXRT758SGFOB_hifi1))
 #include "MIMXRT758S_hifi1_COMMON.h"
-#elif (defined(CPU_MIMXRT798SGAWAR_cm33_core0) || defined(CPU_MIMXRT798SGFOA_cm33_core0))
+#elif (defined(CPU_MIMXRT798SGAWBR_cm33_core0) || defined(CPU_MIMXRT798SGFOB_cm33_core0))
 #include "MIMXRT798S_cm33_core0_COMMON.h"
-#elif (defined(CPU_MIMXRT798SGAWAR_cm33_core1) || defined(CPU_MIMXRT798SGFOA_cm33_core1))
+#elif (defined(CPU_MIMXRT798SGAWBR_cm33_core1) || defined(CPU_MIMXRT798SGFOB_cm33_core1))
 #include "MIMXRT798S_cm33_core1_COMMON.h"
-#elif (defined(CPU_MIMXRT798SGAWAR_ezhv) || defined(CPU_MIMXRT798SGFOA_ezhv))
+#elif (defined(CPU_MIMXRT798SGAWBR_ezhv) || defined(CPU_MIMXRT798SGFOB_ezhv))
 #include "MIMXRT798S_ezhv_COMMON.h"
-#elif (defined(CPU_MIMXRT798SGAWAR_hifi1) || defined(CPU_MIMXRT798SGFOA_hifi1))
+#elif (defined(CPU_MIMXRT798SGAWBR_hifi1) || defined(CPU_MIMXRT798SGFOB_hifi1))
 #include "MIMXRT798S_hifi1_COMMON.h"
-#elif (defined(CPU_MIMXRT798SGAWAR_hifi4) || defined(CPU_MIMXRT798SGFOA_hifi4))
+#elif (defined(CPU_MIMXRT798SGAWBR_hifi4) || defined(CPU_MIMXRT798SGFOB_hifi4))
 #include "MIMXRT798S_hifi4_COMMON.h"
 #else
   #error "No valid CPU defined!"
@@ -200,14 +205,6 @@ typedef struct {
  */
 #define IOPCTL1_PIO_SLEWRATE(x)                  (((uint32_t)(((uint32_t)(x)) << IOPCTL1_PIO_SLEWRATE_SHIFT)) & IOPCTL1_PIO_SLEWRATE_MASK)
 
-#define IOPCTL1_PIO_FULLDRIVE_MASK               (0x100U)
-#define IOPCTL1_PIO_FULLDRIVE_SHIFT              (8U)
-/*! FULLDRIVE - Drive Selector
- *  0b0..Normal output drive
- *  0b1..Full output drive, twice the drive of normal mode.
- */
-#define IOPCTL1_PIO_FULLDRIVE(x)                 (((uint32_t)(((uint32_t)(x)) << IOPCTL1_PIO_FULLDRIVE_SHIFT)) & IOPCTL1_PIO_FULLDRIVE_MASK)
-
 #define IOPCTL1_PIO_AMENA_MASK                   (0x200U)
 #define IOPCTL1_PIO_AMENA_SHIFT                  (9U)
 /*! AMENA - Analog Mux Enable
@@ -231,6 +228,14 @@ typedef struct {
  *  0b1..Enables, input is function inverted
  */
 #define IOPCTL1_PIO_IIENA(x)                     (((uint32_t)(((uint32_t)(x)) << IOPCTL1_PIO_IIENA_SHIFT)) & IOPCTL1_PIO_IIENA_MASK)
+
+#define IOPCTL1_PIO_DRIVE_MASK                   (0x3000U)
+#define IOPCTL1_PIO_DRIVE_SHIFT                  (12U)
+/*! DRIVE - Drive Selector
+ *  0bx0..Normal output drive
+ *  0bx1..Full output drive, twice the drive of normal mode.
+ */
+#define IOPCTL1_PIO_DRIVE(x)                     (((uint32_t)(((uint32_t)(x)) << IOPCTL1_PIO_DRIVE_SHIFT)) & IOPCTL1_PIO_DRIVE_MASK)
 /*! @} */
 
 /* The count of IOPCTL1_PIO */
@@ -270,14 +275,6 @@ typedef struct {
  *  0b1..Enables, in slow mode.
  */
 #define IOPCTL1_PMIC_I2C_SDA_SLEWRATE(x)         (((uint32_t)(((uint32_t)(x)) << IOPCTL1_PMIC_I2C_SDA_SLEWRATE_SHIFT)) & IOPCTL1_PMIC_I2C_SDA_SLEWRATE_MASK)
-
-#define IOPCTL1_PMIC_I2C_SDA_FULLDRIVE_MASK      (0x100U)
-#define IOPCTL1_PMIC_I2C_SDA_FULLDRIVE_SHIFT     (8U)
-/*! FULLDRIVE - Drive Selector
- *  0b0..Normal output drive
- *  0b1..Full output drive, twice the drive of normal mode.
- */
-#define IOPCTL1_PMIC_I2C_SDA_FULLDRIVE(x)        (((uint32_t)(((uint32_t)(x)) << IOPCTL1_PMIC_I2C_SDA_FULLDRIVE_SHIFT)) & IOPCTL1_PMIC_I2C_SDA_FULLDRIVE_MASK)
 
 #define IOPCTL1_PMIC_I2C_SDA_AMENA_MASK          (0x200U)
 #define IOPCTL1_PMIC_I2C_SDA_AMENA_SHIFT         (9U)
@@ -338,14 +335,6 @@ typedef struct {
  *  0b1..Enables. Slow mode.
  */
 #define IOPCTL1_PMIC_I2C_SCL_SLEWRATE(x)         (((uint32_t)(((uint32_t)(x)) << IOPCTL1_PMIC_I2C_SCL_SLEWRATE_SHIFT)) & IOPCTL1_PMIC_I2C_SCL_SLEWRATE_MASK)
-
-#define IOPCTL1_PMIC_I2C_SCL_FULLDRIVE_MASK      (0x100U)
-#define IOPCTL1_PMIC_I2C_SCL_FULLDRIVE_SHIFT     (8U)
-/*! FULLDRIVE - Drive Selector
- *  0b0..Normal output drive
- *  0b1..Full output drive, twice the drive of normal mode.
- */
-#define IOPCTL1_PMIC_I2C_SCL_FULLDRIVE(x)        (((uint32_t)(((uint32_t)(x)) << IOPCTL1_PMIC_I2C_SCL_FULLDRIVE_SHIFT)) & IOPCTL1_PMIC_I2C_SCL_FULLDRIVE_MASK)
 
 #define IOPCTL1_PMIC_I2C_SCL_AMENA_MASK          (0x200U)
 #define IOPCTL1_PMIC_I2C_SCL_AMENA_SHIFT         (9U)
@@ -408,5 +397,5 @@ typedef struct {
  */ /* end of group Peripheral_access_layer */
 
 
-#endif  /* IOPCTL1_H_ */
+#endif  /* PERI_IOPCTL1_H_ */
 

@@ -1,5 +1,5 @@
 /*
- * Copyright 2020-2024 NXP.
+ * Copyright 2020-2025 NXP.
  *
  *  SPDX-License-Identifier: Apache-2.0
  *
@@ -251,7 +251,7 @@ void mpp_execute(_mpp_t *mpp)
 
     /* sink enqueue */
     MPP_LOGD_IF(rlmt_log_on, "Enqueue to sink @%p\n", elem);
-    if (elem->type == MPP_TYPE_SINK && elem->sink_enqueue) elem->sink_enqueue(mpp);
+    if (elem != NULL && elem->type == MPP_TYPE_SINK && elem->sink_enqueue) elem->sink_enqueue(mpp);
 
     released = hal_sema_give(mpp->status_sema);
     if (!released)

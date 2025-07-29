@@ -54,6 +54,9 @@ Files:
   model/output_postproc.cpp - model output processing
   video/* - camera and display handling
 
+This example cannot be imported into Config Tools because the xtensa toolchain is not supported.
+
+
 ## Running the demo
 The log below shows the output of the demo in the terminal window (compiled with ARM GCC):
 
@@ -89,4 +92,6 @@ Data for inference are ready
 ----------------------------------------
 
 ## Supported Boards
-- [MIMXRT700-EVK](../../_boards/mimxrt700evk/eiq_examples/tflm_label_image/example_board_readme.md)
+- [MIMXRT700-EVK]
+- [EVK-MIMXRT685]
+- [MIMXRT685-AUD-EVK]

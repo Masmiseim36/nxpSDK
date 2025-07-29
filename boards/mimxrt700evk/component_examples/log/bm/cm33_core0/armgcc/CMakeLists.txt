@@ -14,9 +14,6 @@ if(CMAKE_SCRIPT_MODE_FILE)
 endif()
 
 
-set(CMAKE_STATIC_LIBRARY_PREFIX)
-set(CMAKE_STATIC_LIBRARY_SUFFIX)
-
 set(CMAKE_EXECUTABLE_LIBRARY_PREFIX)
 set(CMAKE_EXECUTABLE_LIBRARY_SUFFIX)
 
@@ -31,7 +28,7 @@ project(log_bm_cm33_core0)
 
 enable_language(ASM)
 
-set(MCUX_BUILD_TYPES debug flash_debug release flash_release)
+set(MCUX_BUILD_TYPES flash_debug flash_release)
 
 set(MCUX_SDK_PROJECT_NAME log_bm_cm33_core0.elf)
 

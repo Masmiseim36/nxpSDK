@@ -38,17 +38,16 @@ if (isdefinedsymbol(__heap_size__)) {
 /* The SRAM region [0x0-0x7FFFF] is reserved for Non-cached shared memory between M33 and DSP. */
 
 
-define symbol m_interrupts_start               = 0x00000000;
-define symbol m_interrupts_end                 = 0x000002FF;
+define symbol m_interrupts_start               = 0x00080000;
+define symbol m_interrupts_end                 = 0x000802FF;
 
-define symbol m_text_start                     = 0x00000300;
-define symbol m_text_end                       = 0x0009FFFF;
+define symbol m_text_start                     = 0x00080300;
+define symbol m_text_end                       = 0x000FFFFF;
 
-define symbol m_data_start                     = 0x000A0000;
-define symbol m_data_end                       = 0x001FFFFF;
+define symbol m_data_start                     = 0x20100000;
+define symbol m_data_end                       = 0x2021FFFF;
 
-/*define symbol m_ncache_start                   = 0x20478000;*/
-define symbol m_ncache_start                   = 0x20200000;
+define symbol m_ncache_start                   = 0x20220000;
 define symbol m_ncache_end                     = 0x2077FFFF;
 
 

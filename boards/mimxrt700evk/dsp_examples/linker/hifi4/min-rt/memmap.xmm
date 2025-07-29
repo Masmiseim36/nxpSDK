@@ -55,9 +55,15 @@ BEGIN dsp_core
 END dsp_core
 
 BEGIN dram0
-0x24000000: dataRam : dram0 : 0x10000 : writable ;
- dram0_0 : C : 0x24000000 - 0x2400ffff : .dram0.rodata .ResetVector.literal .Level2InterruptVector.literal .Level3InterruptVector.literal .DebugExceptionVector.literal .NMIExceptionVector.literal .KernelExceptionVector.literal .UserExceptionVector.literal .DoubleExceptionVector.literal .iram0.literal .dram0.data NonCacheable .dram0.bss;
+0x24000000: dataRam : dram0 : 0x1000 : writable ;
+ dram0_0 : C : 0x24000000 - 0x24000fff : .dram0.rodata .ResetVector.literal .Level2InterruptVector.literal .Level3InterruptVector.literal .DebugExceptionVector.literal .NMIExceptionVector.literal .KernelExceptionVector.literal .UserExceptionVector.literal .DoubleExceptionVector.literal .iram0.literal .dram0.data .dram0.bss;
 END dram0
+
+BEGIN dsp_uncached
+0x24001000: dataRam : dsp_uncached : 0xf000 : uncached, writable ;
+ dsp_uncached : C : 0x24001000 - 0x2400ffff : NonCacheable.init NonCacheable;
+END dsp_uncached
+
 
 BEGIN iram0
 0x24020000: instRam : iram0 : 0x10000 : executable, writable ;

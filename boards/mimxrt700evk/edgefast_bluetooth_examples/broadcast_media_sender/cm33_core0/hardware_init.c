@@ -16,13 +16,16 @@
 #include "usb_phy.h"
 #include "usb_host.h"
 #include "fsl_xspi.h"
+#include "psa/crypto.h"
 #if (((defined(CONFIG_BT_SMP)) && (CONFIG_BT_SMP)))
 #include "fsl_cache.h"
 #endif /* CONFIG_BT_SMP */
 #include "fsl_adapter_gpio.h"
+
 /*${header:end}*/
 
 /*${macro:start}*/
+
 #if defined(__GIC_PRIO_BITS)
 #define USB_HOST_INTERRUPT_PRIORITY (25U)
 #elif defined(__NVIC_PRIO_BITS) && (__NVIC_PRIO_BITS >= 3)
@@ -35,6 +38,7 @@
 /*${variable:start}*/
 GPIO_HANDLE_DEFINE(sync_signal_pin_handle);
 static volatile uint32_t SyncSignal_Index = 0;
+
 /*${variable:end}*/
 
 /*${function:start}*/
@@ -89,10 +93,10 @@ void BOARD_InitHardware(void)
     BOARD_InitBootPins();
     BOARD_InitBootClocks();
     BOARD_InitDebugConsole();
-    
+    BOARD_InitAHBSC();
+
     BOARD_SyncSignal_Init();
 
-    BOARD_InitAHBSC();
     BOARD_Init_BT_UART();
 #if (((defined(CONFIG_BT_SMP)) && (CONFIG_BT_SMP)))
     GlikeyWriteEnable(GLIKEY3, 1U);                                    /* Enable SYSCON0_SEC_CLK_CTRL write */
@@ -100,6 +104,7 @@ void BOARD_InitHardware(void)
 
     CLOCK_AttachClk(kFRO1_DIV2_to_TRNG);                               /* Max 96MHZ with 1.0V nomral supply. */
     CLOCK_SetClkDiv(kCLOCK_DivTrngClk, 1U);
+    psa_crypto_init();
 #endif /* CONFIG_BT_SMP */
 }
 

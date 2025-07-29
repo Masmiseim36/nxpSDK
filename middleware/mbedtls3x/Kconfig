@@ -106,7 +106,6 @@ menu "Mbed TLS 3.x"
             select MCUX_COMPONENT_driver.usdhc
             select MCUX_COMPONENT_component.rgpio_adapter
             select MCUX_COMPONENT_middleware.sdmmc.host.usdhc
-            select MCUX_COMPONENT_middleware.sdmmc.host.usdhc.non_blocking
             select MCUX_COMPONENT_middleware.sdmmc.sd
             select MCUX_COMPONENT_middleware.fatfs.sd
             select MCUX_COMPONENT_middleware.fatfs

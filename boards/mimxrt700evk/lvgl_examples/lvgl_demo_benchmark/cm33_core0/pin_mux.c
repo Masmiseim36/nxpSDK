@@ -15,7 +15,7 @@
 !!GlobalInfo
 product: Pins v14.0
 processor: MIMXRT798S
-package_id: MIMXRT798SGFOA
+package_id: MIMXRT798SGFOB
 mcu_data: ksdk2_0
 processor_version: 0.0.0
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
@@ -45,10 +45,10 @@ void BOARD_InitBootPins(void)
 BOARD_InitMipiPanelPins:
 - options: {callFromInitBoot: 'false', coreID: cm33_core0, enableClock: 'true'}
 - pin_list:
-  - {pin_num: K6, peripheral: GPIO3, signal: 'IO, 4', pin_signal: PIO3_4}
-  - {pin_num: K7, peripheral: GPIO3, signal: 'IO, 5', pin_signal: PIO3_5, input_buffer: enable}
-  - {pin_num: T2, peripheral: GPIO1, signal: 'IO, 10', pin_signal: PIO1_10}
-  - {pin_num: P3, peripheral: GPIO1, signal: 'IO, 14', pin_signal: PIO1_14}
+  - {pin_num: K6, peripheral: GPIO3, signal: 'GPIO, 4', pin_signal: PIO3_4}
+  - {pin_num: K7, peripheral: GPIO3, signal: 'GPIO, 5', pin_signal: PIO3_5, input_buffer: enable}
+  - {pin_num: T2, peripheral: GPIO1, signal: 'GPIO, 10', pin_signal: PIO1_10}
+  - {pin_num: P3, peripheral: GPIO1, signal: 'GPIO, 14', pin_signal: PIO1_14}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 /* clang-format on */
@@ -218,19 +218,19 @@ void BOARD_InitUARTPins(void)
 BOARD_InitFlexIOPanelPins:
 - options: {callFromInitBoot: 'true', coreID: cm33_core0, enableClock: 'true'}
 - pin_list:
-  - {pin_num: H6, peripheral: FLEXIO, signal: 'D, 6', pin_signal: PIO2_6, slew_rate: slow, input_buffer: enable, pull_enable: enable}
-  - {pin_num: G6, peripheral: FLEXIO, signal: 'D, 7', pin_signal: PIO2_7, slew_rate: slow, input_buffer: enable, pull_enable: enable}
-  - {pin_num: G4, peripheral: FLEXIO, signal: 'D, 8', pin_signal: PIO2_8, slew_rate: slow, input_buffer: enable, pull_enable: enable}
-  - {pin_num: G5, peripheral: FLEXIO, signal: 'D, 9', pin_signal: PIO2_9, slew_rate: slow, input_buffer: enable, pull_enable: enable}
-  - {pin_num: F5, peripheral: FLEXIO, signal: 'D, 10', pin_signal: PIO2_10, slew_rate: slow, input_buffer: enable, pull_enable: enable}
-  - {pin_num: F3, peripheral: FLEXIO, signal: 'D, 11', pin_signal: PIO2_11, slew_rate: slow, input_buffer: enable, pull_enable: enable}
-  - {pin_num: E3, peripheral: FLEXIO, signal: 'D, 12', pin_signal: PIO2_12, slew_rate: slow, input_buffer: enable, pull_enable: enable}
-  - {pin_num: E4, peripheral: FLEXIO, signal: 'D, 13', pin_signal: PIO2_13, slew_rate: slow, input_buffer: enable, pull_enable: enable}
-  - {pin_num: H2, peripheral: GPIO2, signal: 'IO, 0', pin_signal: PIO2_0, direction: OUTPUT, gpio_direction: out}
-  - {pin_num: G2, peripheral: GPIO2, signal: 'IO, 1', pin_signal: PIO2_1, direction: OUTPUT, gpio_direction: out}
-  - {pin_num: D3, peripheral: GPIO2, signal: 'IO, 15', pin_signal: PIO2_15, direction: OUTPUT, gpio_direction: out}
-  - {pin_num: G1, peripheral: FLEXIO, signal: 'D, 3', pin_signal: PIO2_3, direction: OUTPUT}
-  - {pin_num: G3, peripheral: FLEXIO, signal: 'D, 4', pin_signal: PIO2_4, direction: OUTPUT, slew_rate: slow, input_buffer: enable, pull_select: up, pull_enable: enable}
+  - {pin_num: H6, peripheral: FLEXIO, signal: 'IO, 6', pin_signal: PIO2_6, slew_rate: slow, input_buffer: enable, pull_enable: enable}
+  - {pin_num: G6, peripheral: FLEXIO, signal: 'IO, 7', pin_signal: PIO2_7, slew_rate: slow, input_buffer: enable, pull_enable: enable}
+  - {pin_num: G4, peripheral: FLEXIO, signal: 'IO, 8', pin_signal: PIO2_8, slew_rate: slow, input_buffer: enable, pull_enable: enable}
+  - {pin_num: G5, peripheral: FLEXIO, signal: 'IO, 9', pin_signal: PIO2_9, slew_rate: slow, input_buffer: enable, pull_enable: enable}
+  - {pin_num: F5, peripheral: FLEXIO, signal: 'IO, 10', pin_signal: PIO2_10, slew_rate: slow, input_buffer: enable, pull_enable: enable}
+  - {pin_num: F3, peripheral: FLEXIO, signal: 'IO, 11', pin_signal: PIO2_11, slew_rate: slow, input_buffer: enable, pull_enable: enable}
+  - {pin_num: E3, peripheral: FLEXIO, signal: 'IO, 12', pin_signal: PIO2_12, slew_rate: slow, input_buffer: enable, pull_enable: enable}
+  - {pin_num: E4, peripheral: FLEXIO, signal: 'IO, 13', pin_signal: PIO2_13, slew_rate: slow, input_buffer: enable, pull_enable: enable}
+  - {pin_num: H2, peripheral: GPIO2, signal: 'GPIO, 0', pin_signal: PIO2_0, direction: OUTPUT, gpio_direction: out}
+  - {pin_num: G2, peripheral: GPIO2, signal: 'GPIO, 1', pin_signal: PIO2_1, direction: OUTPUT, gpio_direction: out}
+  - {pin_num: D3, peripheral: GPIO2, signal: 'GPIO, 15', pin_signal: PIO2_15, direction: OUTPUT, gpio_direction: out}
+  - {pin_num: G1, peripheral: FLEXIO, signal: 'IO, 3', pin_signal: PIO2_3, input_buffer: enable}
+  - {pin_num: G3, peripheral: FLEXIO, signal: 'IO, 4', pin_signal: PIO2_4, slew_rate: slow, input_buffer: enable, pull_select: up, pull_enable: enable}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 /* clang-format on */
@@ -546,12 +546,12 @@ BOARD_InitLcdDBIPanelPins:
   - {pin_num: F3, peripheral: LCDIF, signal: 'DBI_DATA, 5', pin_signal: PIO2_11, pull_select: up, pull_enable: enable}
   - {pin_num: E3, peripheral: LCDIF, signal: 'DBI_DATA, 6', pin_signal: PIO2_12, pull_select: up, pull_enable: enable}
   - {pin_num: E4, peripheral: LCDIF, signal: 'DBI_DATA, 7', pin_signal: PIO2_13, pull_select: up, pull_enable: enable}
-  - {pin_num: G1, peripheral: LCDIF, signal: DBI_RWDX, pin_signal: PIO2_3, direction: OUTPUT, slew_rate: slow, input_buffer: disable, pull_select: up, pull_enable: disable}
-  - {pin_num: G3, peripheral: LCDIF, signal: DBI_WRX, pin_signal: PIO2_4, direction: OUTPUT, slew_rate: standard, input_buffer: disable, pull_select: up,
+  - {pin_num: G1, peripheral: LCDIF, signal: RWDX, pin_signal: PIO2_3, direction: OUTPUT, slew_rate: slow, input_buffer: disable, pull_select: up, pull_enable: disable}
+  - {pin_num: G3, peripheral: LCDIF, signal: WRX, pin_signal: PIO2_4, direction: OUTPUT, slew_rate: standard, input_buffer: disable, pull_select: up,
     pull_enable: disable}
-  - {pin_num: H2, peripheral: LCDIF, signal: DBI_CSX_AB, pin_signal: PIO2_0, direction: OUTPUT, slew_rate: standard, input_buffer: disable, pull_select: up,
+  - {pin_num: H2, peripheral: LCDIF, signal: CSX, pin_signal: PIO2_0, direction: OUTPUT, slew_rate: standard, input_buffer: disable, pull_select: up,
     pull_enable: disable}
-  - {pin_num: G2, peripheral: LCDIF, signal: DBI_DCX_AB, pin_signal: PIO2_1, direction: OUTPUT, slew_rate: slow, input_buffer: disable, pull_select: up,
+  - {pin_num: G2, peripheral: LCDIF, signal: DSX, pin_signal: PIO2_1, direction: OUTPUT, slew_rate: slow, input_buffer: disable, pull_select: up,
     pull_enable: disable}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */

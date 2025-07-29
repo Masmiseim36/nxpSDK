@@ -76,12 +76,19 @@ static status_t ST7796S_WriteCommand(st7796s_handle_t *handle,
 #if MCUX_DBI_LEGACY
     ST7796S_ERROR_CHECK(handle->xferOps->writeCommand(handle->xferOpsData, command));
 
+#if (ST7796S_DATA_WITDH == 16)
     for (uint8_t i = 0; i < param_len; i++)
     {
         uint16_t param_data = params[i];
 
         ST7796S_ERROR_CHECK(handle->xferOps->writeData(handle->xferOpsData, &param_data, 2U));
     }
+#else
+    if (param_len > 0)
+    {
+        ST7796S_ERROR_CHECK(handle->xferOps->writeData(handle->xferOpsData, (void*)params, param_len));
+    }
+#endif
 
     return kStatus_Success;
 #else

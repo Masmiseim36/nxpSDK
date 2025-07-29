@@ -1,5 +1,5 @@
 /*
- * Copyright 2020-2024 NXP.
+ * Copyright 2020-2025 NXP.
  *
  *  SPDX-License-Identifier: Apache-2.0
  *
@@ -319,7 +319,9 @@ int mpp_api_init(mpp_api_params_t *params)
         hal_mutex_create(&stats_lock[grp]);
         if (!stats_lock[grp])
             return MPP_ERROR;
-        hal_sema_take(stats_lock[grp], 0);
+        ret = hal_sema_take(stats_lock[grp], 0);
+        if (true != ret)
+            return MPP_MUTEX_ERROR;
     }
 
     return MPP_SUCCESS;
@@ -811,6 +813,9 @@ int mpp_element_update(mpp_t mpp, mpp_elem_handle_t elem_h, mpp_element_params_t
             ret = MPP_INVALID_PARAM;
             break;
         }
+
+        /* Copy the pointer to stats to the new params structure */
+        if (params->stats == NULL) params->stats = elem->params.stats;
 
         /* set element id */
         switch (elem->proc_typ) {

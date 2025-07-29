@@ -235,7 +235,7 @@ static int do_cmd_model_run(NNServer* server){
             server->inference_count = atoi(val);
         } else if(strcmp("output", key) == 0) {
             char out_tensor_name[512];
-            int outind = 0;
+            size_t outind = 0;
             int index  = 0;
             while (outind < strlen(val)) {
                 char decoded = cmd_decode(&val[outind]);

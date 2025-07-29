@@ -58,10 +58,10 @@ int hal_display_setup(const char *name, display_dev_t *dev)
     return setup_display_dev(display_setup, ARRAY_SIZE(display_setup), name, dev);
 }
 
+int HAL_CameraDev_EzhV_Ov7670_setup(const char *name, camera_dev_t *dev);
 hal_camera_setup_t camera_setup[] =
 {
-    // No camera is supported for RT700 yet.
-    {"no_camera", NULL},
+    {"EzhV_Ov7670", HAL_CameraDev_EzhV_Ov7670_setup},
 };
 
 int setup_camera_dev(hal_camera_setup_t camera_setup[], int camera_nb,

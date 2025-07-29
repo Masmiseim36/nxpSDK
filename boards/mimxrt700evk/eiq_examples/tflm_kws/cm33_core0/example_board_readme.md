@@ -6,6 +6,8 @@ Hardware requirements
 
 Board settings
 ==============
+1. Example running at 325MHz which need PMIC power supply.
+2. PMIC is required to drive 1.1V on VDD2, then JP1 and JP3 on the RT700 EVK need to be shorted for proper operation
 
 Prepare the Demo
 ================

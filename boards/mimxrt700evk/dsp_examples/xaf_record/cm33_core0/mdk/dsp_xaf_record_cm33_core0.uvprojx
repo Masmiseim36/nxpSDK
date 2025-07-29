@@ -11,7 +11,7 @@
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
-          <Device>MIMXRT798SGFOA:cm33_core0</Device>
+          <Device>MIMXRT798SGFOB:cm33_core0</Device>
           <Vendor>NXP</Vendor>
           <PackID>NXP.MIMXRT798S_DFP.17.0.0</PackID>
           <PackURL>https://mcuxpresso.nxp.com/cmsis_pack/repo/</PackURL>
@@ -334,9 +334,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../mcux_config.h -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
-              <Define>DEBUG, XA_PCM_GAIN=1, XA_VIT_PRE_PROC=1, XA_RENDERER=1, XA_CAPTURER=1, VIT_MODELS_ALL=1, DSP_IMAGE_COPY_TO_RAM=1, BOARD_DMIC_NUM=1, BOARD_PCM_WIDTH=32, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT798SGFOA_cm33_core0, BOOT_HEADER_ENABLE=1, SERIAL_PORT_TYPE_UART=1, SDK_I2C_BASED_COMPONENT_USED=1, CODEC_MULTI_ADAPTERS=1, CODEC_WM8962_ENABLE, SDK_OS_FREE_RTOS</Define>
+              <Define>DEBUG, XA_PCM_GAIN=1, XA_VIT_PRE_PROC=1, XA_RENDERER=1, XA_CAPTURER=1, VIT_MODELS_ALL=1, DSP_IMAGE_COPY_TO_RAM=1, __USE_SHMEM, DSP_NCACHE, BOARD_DMIC_NUM=1, BOARD_PCM_WIDTH=32, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT798SGFOB_cm33_core0, MIMXRT798S_cm33_core0_SERIES, BOOT_HEADER_ENABLE=1, SERIAL_PORT_TYPE_UART=1, SDK_I2C_BASED_COMPONENT_USED=1, CODEC_MULTI_ADAPTERS=1, CODEC_WM8962_ENABLE, SDK_OS_FREE_RTOS</Define>
               <Undefine/>
-              <IncludePath>..;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT798S;../../../../../../devices/MIMXRT798S/periph;../../../../../../devices/MIMXRT798S/drivers;../../../../../../devices/MIMXRT798S/utilities;../../../../../../components/lists;../../../../../../devices/MIMXRT798S/utilities/str;../../../../../../devices/MIMXRT798S/utilities/debug_console;../../../../../../devices/MIMXRT798S/utilities/shell;../../../../../../components/serial_manager;../../../../../../components/codec/i2c;../../../../../../components/codec;../../../../../../components/codec/port;../../../../../../components/codec/port/wm8962;../../../../../../components/codec/wm8962;../../../../../../components/gpio;../../../../../../components/i2c;../../../../../../components/uart;../../../../../../middleware/multicore/rpmsg-lite/lib/include;../../../../../../middleware/multicore/rpmsg-lite/lib/include/environment/freertos;../../../../../../middleware/multicore/rpmsg-lite/lib/include/platform/imxrt700_m33;../../../../../../middleware/audio_voice/components/vit/HIFI4/Lib;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../../rtos/freertos/freertos-kernel/template</IncludePath>
+              <IncludePath>..;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT798S;../../../../../../devices/MIMXRT798S/periph;../../../../../../devices/MIMXRT798S/drivers;../../../../../../devices/MIMXRT798S/utilities/debug_console;../../../../../../components/lists;../../../../../../devices/MIMXRT798S/utilities/str;../../../../../../devices/MIMXRT798S/utilities/shell;../../../../../../components/serial_manager;../../../../../../components/codec/i2c;../../../../../../components/codec;../../../../../../components/codec/port;../../../../../../components/codec/port/wm8962;../../../../../../components/codec/wm8962;../../../../../../components/gpio;../../../../../../components/i2c;../../../../../../components/uart;../../../../../../middleware/multicore/rpmsg-lite/lib/include;../../../../../../middleware/multicore/rpmsg-lite/lib/include/environment/freertos;../../../../../../middleware/multicore/rpmsg-lite/lib/include/platform/imxrt700_m33;../../../../../../middleware/audio_voice/components/vit/HIFI4/Lib;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../../rtos/freertos/freertos-kernel/template</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -351,10 +351,10 @@
             <useXO>0</useXO>
             <ClangAsOpt>2</ClangAsOpt>
             <VariousControls>
-              <MiscControls/>
-              <Define>DSP_IMAGE_COPY_TO_RAM=1, MCUXPRESSO_SDK, CPU_MIMXRT798SGFOA_cm33_core0</Define>
+              <MiscControls>-include ../mcux_config.h</MiscControls>
+              <Define>DSP_IMAGE_COPY_TO_RAM=1, DSP_NCACHE, MCUXPRESSO_SDK, CPU_MIMXRT798SGFOB_cm33_core0, MIMXRT798S_cm33_core0_SERIES</Define>
               <Undefine/>
-              <IncludePath>..;../../hifi4/binary;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT798S;../../../../../../devices/MIMXRT798S/periph;../../../../../../devices/periph;../../../../../../devices/MIMXRT798S/drivers;../../../../../../devices/MIMXRT798S/utilities;../../../../../../components/lists;../../../../../../devices/MIMXRT798S/utilities/str;../../../../../../devices/MIMXRT798S/utilities/debug_console;../../../../../../devices/MIMXRT798S/utilities/shell;../../../../../../components/serial_manager;../../../../../../components/codec/i2c;../../../../../../components/codec;../../../../../../components/codec/port;../../../../../../components/codec/port/wm8962;../../../../../../components/codec/wm8962;../../../../../../components/gpio;../../../../../../components/i2c;../../../../../../components/uart;../../../../../../middleware/multicore/rpmsg-lite/lib/include;../../../../../../middleware/multicore/rpmsg-lite/lib/include/environment/freertos;../../../../../../middleware/multicore/rpmsg-lite/lib/include/platform/imxrt700_m33;../../../../../../middleware/audio_voice/components/vit/HIFI4/Lib;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../../rtos/freertos/freertos-kernel/template</IncludePath>
+              <IncludePath>..;../../hifi4/binary;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT798S;../../../../../../devices/MIMXRT798S/periph;../../../../../../devices/periph;../../../../../../devices/MIMXRT798S/drivers;../../../../../../devices/MIMXRT798S/utilities/debug_console;../../../../../../components/lists;../../../../../../devices/MIMXRT798S/utilities/str;../../../../../../devices/MIMXRT798S/utilities/shell;../../../../../../components/serial_manager;../../../../../../components/codec/i2c;../../../../../../components/codec;../../../../../../components/codec/port;../../../../../../components/codec/port/wm8962;../../../../../../components/codec/wm8962;../../../../../../components/gpio;../../../../../../components/i2c;../../../../../../components/uart;../../../../../../middleware/multicore/rpmsg-lite/lib/include;../../../../../../middleware/multicore/rpmsg-lite/lib/include/environment/freertos;../../../../../../middleware/multicore/rpmsg-lite/lib/include/platform/imxrt700_m33;../../../../../../middleware/audio_voice/components/vit/HIFI4/Lib;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../../rtos/freertos/freertos-kernel/template</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -370,7 +370,7 @@
             <ScatterFile>MIMXRT798Sxxxx_cm33_core0_flash.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler --info=sizes,totals,unused,veneers</Misc>
+            <Misc>--remove --predefine="-D__use_shmem__=1" --entry=Reset_Handler --info=sizes,totals,unused,veneers</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6329,6314</DisabledWarnings>
           </LDads>
@@ -471,6 +471,16 @@
               <FilePath>../mcux_config.h</FilePath>
             </File>
             <File>
+              <FileName>mcux_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../mcux_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../mcux_config.h</FilePath>
+            </File>
+            <File>
               <FileName>rpmsg_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../rpmsg_config.h</FilePath>
@@ -494,6 +504,11 @@
               <FileName>dsp_data_release.bin</FileName>
               <FileType>5</FileType>
               <FilePath>../../hifi4/binary/dsp_data_release.bin</FilePath>
+            </File>
+            <File>
+              <FileName>dsp_ncache_release.bin</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../hifi4/binary/dsp_ncache_release.bin</FilePath>
             </File>
           </Files>
         </Group>
@@ -1058,12 +1073,12 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>startup/arm</GroupName>
+          <GroupName>startup</GroupName>
           <Files>
             <File>
-              <FileName>startup_MIMXRT798S_cm33_core0.S</FileName>
-              <FileType>2</FileType>
-              <FilePath>../../../../../../devices/MIMXRT798S/arm/startup_MIMXRT798S_cm33_core0.S</FilePath>
+              <FileName>startup_MIMXRT798S_cm33_core0.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT798S/startup_MIMXRT798S_cm33_core0.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1089,6 +1104,16 @@
               <FileName>fsl_dsp.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT798S/drivers/fsl_dsp.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ezhv.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT798S/drivers/fsl_ezhv.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ezhv.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT798S/drivers/fsl_ezhv.h</FilePath>
             </File>
             <File>
               <FileName>fsl_iopctl.h</FileName>
@@ -1243,12 +1268,12 @@
             <File>
               <FileName>fsl_assert.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT798S/utilities/fsl_assert.h</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT798S/utilities/debug_console/fsl_assert.h</FilePath>
             </File>
             <File>
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT798S/utilities/fsl_assert.c</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT798S/utilities/debug_console/fsl_assert.c</FilePath>
             </File>
             <File>
               <FileName>fsl_memcpy.S</FileName>
@@ -1785,6 +1810,11 @@
               <FileType>5</FileType>
               <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/timers.h</FilePath>
             </File>
+            <File>
+              <FileName>freertos_tasks_c_additions.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/freertos_tasks_c_additions.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -1870,6 +1900,11 @@
               <FileType>5</FileType>
               <FilePath>../example_board_readme.md</FilePath>
             </File>
+            <File>
+              <FileName>examples_shared_readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../examples_shared_readme.md</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>
@@ -1882,7 +1917,7 @@
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
-          <Device>MIMXRT798SGFOA:cm33_core0</Device>
+          <Device>MIMXRT798SGFOB:cm33_core0</Device>
           <Vendor>NXP</Vendor>
           <PackID>NXP.MIMXRT798S_DFP.17.0.0</PackID>
           <PackURL>https://mcuxpresso.nxp.com/cmsis_pack/repo/</PackURL>
@@ -2205,9 +2240,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../mcux_config.h -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
-              <Define>NDEBUG, XA_PCM_GAIN=1, XA_VIT_PRE_PROC=1, XA_RENDERER=1, XA_CAPTURER=1, VIT_MODELS_ALL=1, DSP_IMAGE_COPY_TO_RAM=1, BOARD_DMIC_NUM=1, BOARD_PCM_WIDTH=32, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT798SGFOA_cm33_core0, BOOT_HEADER_ENABLE=1, SERIAL_PORT_TYPE_UART=1, SDK_I2C_BASED_COMPONENT_USED=1, CODEC_MULTI_ADAPTERS=1, CODEC_WM8962_ENABLE, SDK_OS_FREE_RTOS</Define>
+              <Define>NDEBUG, XA_PCM_GAIN=1, XA_VIT_PRE_PROC=1, XA_RENDERER=1, XA_CAPTURER=1, VIT_MODELS_ALL=1, DSP_IMAGE_COPY_TO_RAM=1, __USE_SHMEM, DSP_NCACHE, BOARD_DMIC_NUM=1, BOARD_PCM_WIDTH=32, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT798SGFOB_cm33_core0, MIMXRT798S_cm33_core0_SERIES, BOOT_HEADER_ENABLE=1, SERIAL_PORT_TYPE_UART=1, SDK_I2C_BASED_COMPONENT_USED=1, CODEC_MULTI_ADAPTERS=1, CODEC_WM8962_ENABLE, SDK_OS_FREE_RTOS</Define>
               <Undefine/>
-              <IncludePath>..;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT798S;../../../../../../devices/MIMXRT798S/periph;../../../../../../devices/MIMXRT798S/drivers;../../../../../../devices/MIMXRT798S/utilities;../../../../../../components/lists;../../../../../../devices/MIMXRT798S/utilities/str;../../../../../../devices/MIMXRT798S/utilities/debug_console;../../../../../../devices/MIMXRT798S/utilities/shell;../../../../../../components/serial_manager;../../../../../../components/codec/i2c;../../../../../../components/codec;../../../../../../components/codec/port;../../../../../../components/codec/port/wm8962;../../../../../../components/codec/wm8962;../../../../../../components/gpio;../../../../../../components/i2c;../../../../../../components/uart;../../../../../../middleware/multicore/rpmsg-lite/lib/include;../../../../../../middleware/multicore/rpmsg-lite/lib/include/environment/freertos;../../../../../../middleware/multicore/rpmsg-lite/lib/include/platform/imxrt700_m33;../../../../../../middleware/audio_voice/components/vit/HIFI4/Lib;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../../rtos/freertos/freertos-kernel/template</IncludePath>
+              <IncludePath>..;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT798S;../../../../../../devices/MIMXRT798S/periph;../../../../../../devices/MIMXRT798S/drivers;../../../../../../devices/MIMXRT798S/utilities/debug_console;../../../../../../components/lists;../../../../../../devices/MIMXRT798S/utilities/str;../../../../../../devices/MIMXRT798S/utilities/shell;../../../../../../components/serial_manager;../../../../../../components/codec/i2c;../../../../../../components/codec;../../../../../../components/codec/port;../../../../../../components/codec/port/wm8962;../../../../../../components/codec/wm8962;../../../../../../components/gpio;../../../../../../components/i2c;../../../../../../components/uart;../../../../../../middleware/multicore/rpmsg-lite/lib/include;../../../../../../middleware/multicore/rpmsg-lite/lib/include/environment/freertos;../../../../../../middleware/multicore/rpmsg-lite/lib/include/platform/imxrt700_m33;../../../../../../middleware/audio_voice/components/vit/HIFI4/Lib;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../../rtos/freertos/freertos-kernel/template</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2222,10 +2257,10 @@
             <useXO>0</useXO>
             <ClangAsOpt>2</ClangAsOpt>
             <VariousControls>
-              <MiscControls/>
-              <Define>DSP_IMAGE_COPY_TO_RAM=1, MCUXPRESSO_SDK, CPU_MIMXRT798SGFOA_cm33_core0</Define>
+              <MiscControls>-include ../mcux_config.h</MiscControls>
+              <Define>DSP_IMAGE_COPY_TO_RAM=1, DSP_NCACHE, MCUXPRESSO_SDK, CPU_MIMXRT798SGFOB_cm33_core0, MIMXRT798S_cm33_core0_SERIES</Define>
               <Undefine/>
-              <IncludePath>..;../../hifi4/binary;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT798S;../../../../../../devices/MIMXRT798S/periph;../../../../../../devices/periph;../../../../../../devices/MIMXRT798S/drivers;../../../../../../devices/MIMXRT798S/utilities;../../../../../../components/lists;../../../../../../devices/MIMXRT798S/utilities/str;../../../../../../devices/MIMXRT798S/utilities/debug_console;../../../../../../devices/MIMXRT798S/utilities/shell;../../../../../../components/serial_manager;../../../../../../components/codec/i2c;../../../../../../components/codec;../../../../../../components/codec/port;../../../../../../components/codec/port/wm8962;../../../../../../components/codec/wm8962;../../../../../../components/gpio;../../../../../../components/i2c;../../../../../../components/uart;../../../../../../middleware/multicore/rpmsg-lite/lib/include;../../../../../../middleware/multicore/rpmsg-lite/lib/include/environment/freertos;../../../../../../middleware/multicore/rpmsg-lite/lib/include/platform/imxrt700_m33;../../../../../../middleware/audio_voice/components/vit/HIFI4/Lib;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../../rtos/freertos/freertos-kernel/template</IncludePath>
+              <IncludePath>..;../../hifi4/binary;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT798S;../../../../../../devices/MIMXRT798S/periph;../../../../../../devices/periph;../../../../../../devices/MIMXRT798S/drivers;../../../../../../devices/MIMXRT798S/utilities/debug_console;../../../../../../components/lists;../../../../../../devices/MIMXRT798S/utilities/str;../../../../../../devices/MIMXRT798S/utilities/shell;../../../../../../components/serial_manager;../../../../../../components/codec/i2c;../../../../../../components/codec;../../../../../../components/codec/port;../../../../../../components/codec/port/wm8962;../../../../../../components/codec/wm8962;../../../../../../components/gpio;../../../../../../components/i2c;../../../../../../components/uart;../../../../../../middleware/multicore/rpmsg-lite/lib/include;../../../../../../middleware/multicore/rpmsg-lite/lib/include/environment/freertos;../../../../../../middleware/multicore/rpmsg-lite/lib/include/platform/imxrt700_m33;../../../../../../middleware/audio_voice/components/vit/HIFI4/Lib;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../../rtos/freertos/freertos-kernel/template</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -2241,7 +2276,7 @@
             <ScatterFile>MIMXRT798Sxxxx_cm33_core0_flash.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler --info=sizes,totals,unused,veneers</Misc>
+            <Misc>--remove --predefine="-D__use_shmem__=1" --entry=Reset_Handler --info=sizes,totals,unused,veneers</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6329,6314</DisabledWarnings>
           </LDads>
@@ -2342,6 +2377,16 @@
               <FilePath>../mcux_config.h</FilePath>
             </File>
             <File>
+              <FileName>mcux_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../mcux_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../mcux_config.h</FilePath>
+            </File>
+            <File>
               <FileName>rpmsg_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../rpmsg_config.h</FilePath>
@@ -2365,6 +2410,11 @@
               <FileName>dsp_data_release.bin</FileName>
               <FileType>5</FileType>
               <FilePath>../../hifi4/binary/dsp_data_release.bin</FilePath>
+            </File>
+            <File>
+              <FileName>dsp_ncache_release.bin</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../hifi4/binary/dsp_ncache_release.bin</FilePath>
             </File>
           </Files>
         </Group>
@@ -2929,12 +2979,12 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>startup/arm</GroupName>
+          <GroupName>startup</GroupName>
           <Files>
             <File>
-              <FileName>startup_MIMXRT798S_cm33_core0.S</FileName>
-              <FileType>2</FileType>
-              <FilePath>../../../../../../devices/MIMXRT798S/arm/startup_MIMXRT798S_cm33_core0.S</FilePath>
+              <FileName>startup_MIMXRT798S_cm33_core0.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT798S/startup_MIMXRT798S_cm33_core0.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2960,6 +3010,16 @@
               <FileName>fsl_dsp.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT798S/drivers/fsl_dsp.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ezhv.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT798S/drivers/fsl_ezhv.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ezhv.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT798S/drivers/fsl_ezhv.h</FilePath>
             </File>
             <File>
               <FileName>fsl_iopctl.h</FileName>
@@ -3114,12 +3174,12 @@
             <File>
               <FileName>fsl_assert.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT798S/utilities/fsl_assert.h</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT798S/utilities/debug_console/fsl_assert.h</FilePath>
             </File>
             <File>
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT798S/utilities/fsl_assert.c</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT798S/utilities/debug_console/fsl_assert.c</FilePath>
             </File>
             <File>
               <FileName>fsl_memcpy.S</FileName>
@@ -3656,6 +3716,11 @@
               <FileType>5</FileType>
               <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/timers.h</FilePath>
             </File>
+            <File>
+              <FileName>freertos_tasks_c_additions.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/freertos_tasks_c_additions.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -3740,6 +3805,11 @@
               <FileName>example_board_readme.md</FileName>
               <FileType>5</FileType>
               <FilePath>../example_board_readme.md</FilePath>
+            </File>
+            <File>
+              <FileName>examples_shared_readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../examples_shared_readme.md</FilePath>
             </File>
           </Files>
         </Group>

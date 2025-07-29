@@ -3563,6 +3563,26 @@
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
+      <name>source/mcux_config.h</name>
+      <type>1</type>
+      <locationURI>PARENT-1-PROJECT_LOC/mcux_config.h</locationURI>
+    </link>
+    <link>
+      <name>source</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>source/mcux_config.h</name>
+      <type>1</type>
+      <locationURI>PARENT-1-PROJECT_LOC/mcux_config.h</locationURI>
+    </link>
+    <link>
+      <name>source</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
       <name>source/rpmsg_config.h</name>
       <type>1</type>
       <locationURI>PARENT-1-PROJECT_LOC/rpmsg_config.h</locationURI>

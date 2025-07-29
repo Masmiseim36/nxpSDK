@@ -17,7 +17,7 @@
 !!GlobalInfo
 product: Pins v15.0
 processor: MIMXRT798S
-package_id: MIMXRT798SGFOA
+package_id: MIMXRT798SGFOB
 mcu_data: ksdk2_0
 processor_version: 0.0.0
 pin_labels:
@@ -125,8 +125,8 @@ void BOARD_InitPinsDEBUG_UART(void)
 BOARD_InitPinsM2:
 - options: {callFromInitBoot: 'true', coreID: cm33_core0, enableClock: 'true'}
 - pin_list:
-  - {pin_num: H7, peripheral: GPIO3, signal: 'IO, 7', pin_signal: PIO3_7, direction: OUTPUT, gpio_direction: out, gpio_init_state: 'false'}
-  - {pin_num: N14, peripheral: GPIO7, signal: 'IO, 23', pin_signal: PIO7_23, direction: OUTPUT, gpio_direction: out, gpio_init_state: 'false'}
+  - {pin_num: H7, peripheral: GPIO3, signal: 'GPIO, 7', pin_signal: PIO3_7, direction: OUTPUT, gpio_direction: out, gpio_init_state: 'false'}
+  - {pin_num: N14, peripheral: GPIO7, signal: 'GPIO, 23', pin_signal: PIO7_23, direction: OUTPUT, gpio_direction: out, gpio_init_state: 'false'}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 /* clang-format on */
@@ -214,12 +214,12 @@ void BOARD_InitPinsM2(void)
 BOARD_InitPinsM2_SDIO:
 - options: {callFromInitBoot: 'true', coreID: cm33_core0, enableClock: 'true'}
 - pin_list:
-  - {pin_num: L17, peripheral: USDHC1, signal: CLK, pin_signal: PIO7_17, SelectsTransmitterCurrentDrive: O_33, InputBufferEnable: enable, PullSelect: up, PullEnable: enable}
-  - {pin_num: L16, peripheral: USDHC1, signal: CMD, pin_signal: PIO7_18, SelectsTransmitterCurrentDrive: O_33, InputBufferEnable: enable, PullSelect: up, PullEnable: enable}
-  - {pin_num: M17, peripheral: USDHC1, signal: 'DATA, 0', pin_signal: PIO7_19, SelectsTransmitterCurrentDrive: O_33, InputBufferEnable: enable, PullSelect: up, PullEnable: enable}
-  - {pin_num: M18, peripheral: USDHC1, signal: 'DATA, 1', pin_signal: PIO7_20, SelectsTransmitterCurrentDrive: O_33, InputBufferEnable: enable, PullSelect: up, PullEnable: enable}
-  - {pin_num: K18, peripheral: USDHC1, signal: 'DATA, 2', pin_signal: PIO7_21, SelectsTransmitterCurrentDrive: O_33, InputBufferEnable: enable, PullSelect: up, PullEnable: enable}
-  - {pin_num: K17, peripheral: USDHC1, signal: 'DATA, 3', pin_signal: PIO7_22, SelectsTransmitterCurrentDrive: O_33, InputBufferEnable: enable, PullSelect: up, PullEnable: enable}
+  - {pin_num: L17, peripheral: USDHC1, signal: USDHC_CLK, pin_signal: PIO7_17, SelectsTransmitterCurrentDrive: O_33, InputBufferEnable: enable, PullSelect: up, PullEnable: enable}
+  - {pin_num: L16, peripheral: USDHC1, signal: USDHC_CMD, pin_signal: PIO7_18, SelectsTransmitterCurrentDrive: O_33, InputBufferEnable: enable, PullSelect: up, PullEnable: enable}
+  - {pin_num: M17, peripheral: USDHC1, signal: 'USDHC_DATA, 0', pin_signal: PIO7_19, SelectsTransmitterCurrentDrive: O_33, InputBufferEnable: enable, PullSelect: up, PullEnable: enable}
+  - {pin_num: M18, peripheral: USDHC1, signal: 'USDHC_DATA, 1', pin_signal: PIO7_20, SelectsTransmitterCurrentDrive: O_33, InputBufferEnable: enable, PullSelect: up, PullEnable: enable}
+  - {pin_num: K18, peripheral: USDHC1, signal: 'USDHC_DATA, 2', pin_signal: PIO7_21, SelectsTransmitterCurrentDrive: O_33, InputBufferEnable: enable, PullSelect: up, PullEnable: enable}
+  - {pin_num: K17, peripheral: USDHC1, signal: 'USDHC_DATA, 3', pin_signal: PIO7_22, SelectsTransmitterCurrentDrive: O_33, InputBufferEnable: enable, PullSelect: up, PullEnable: enable}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 /* clang-format on */
@@ -447,7 +447,7 @@ BOARD_InitPinsOctalFlash:
   - {pin_num: D14, peripheral: XSPI0, signal: 'DATA, 1', pin_signal: PIO6_4, InputBufferEnable: enable, PullSelect: down}
   - {pin_num: C15, peripheral: XSPI0, signal: 'DATA, 2', pin_signal: PIO6_5, InputBufferEnable: enable, PullSelect: down}
   - {pin_num: E13, peripheral: XSPI0, signal: 'DATA, 3', pin_signal: PIO6_6, InputBufferEnable: enable, PullSelect: down}
-  - {pin_num: D15, peripheral: XSPI0, signal: 'DQS, 0', pin_signal: PIO6_7, InputBufferEnable: enable, PullSelect: down}
+  - {pin_num: D15, peripheral: XSPI0, signal: DQS0, pin_signal: PIO6_7, InputBufferEnable: enable, PullSelect: down}
   - {pin_num: G13, peripheral: XSPI0, signal: 'DATA, 4', pin_signal: PIO6_8, InputBufferEnable: enable, PullSelect: down}
   - {pin_num: F15, peripheral: XSPI0, signal: 'DATA, 5', pin_signal: PIO6_9, InputBufferEnable: enable, PullSelect: down}
   - {pin_num: E14, peripheral: XSPI0, signal: 'DATA, 6', pin_signal: PIO6_10, InputBufferEnable: enable, PullSelect: down}
@@ -697,7 +697,7 @@ void BOARD_InitPinsOctalFlash(void)
 BOARD_InitPinsButton:
 - options: {callFromInitBoot: 'true', coreID: cm33_core0, enableClock: 'true'}
 - pin_list:
-  - {pin_num: L7, peripheral: GPIO0, signal: 'IO, 9', pin_signal: PIO0_9, InputBufferEnable: enable}
+  - {pin_num: L7, peripheral: GPIO0, signal: 'GPIO, 9', pin_signal: PIO0_9, InputBufferEnable: enable}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 /* clang-format on */

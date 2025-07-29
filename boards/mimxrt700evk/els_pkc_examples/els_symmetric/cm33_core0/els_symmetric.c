@@ -29,8 +29,8 @@
 int main(void)
 {
     char ch;
-    uint32_t pass = 0u;
-    uint32_t fail = 0u;
+    uint8_t pass = 0;
+    uint8_t fail = 0;
 
     /* Init board hardware. */
     BOARD_InitHardware();

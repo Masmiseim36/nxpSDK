@@ -77,13 +77,21 @@ struct image_trailer {
     uint8_t magic[BOOT_MAGIC_SZ];
 };
 
+struct image_max_size {
+	bool calculated;
+	uint32_t max_size;
+};
+
 /* you must have pre-allocated all the entries within this structure */
 fih_ret boot_go(struct boot_rsp *rsp);
 fih_ret boot_go_for_image_id(struct boot_rsp *rsp, uint32_t image_id);
 
-struct boot_loader_state;
 void boot_state_clear(struct boot_loader_state *state);
 fih_ret context_boot_go(struct boot_loader_state *state, struct boot_rsp *rsp);
+struct boot_loader_state *boot_get_loader_state(void);
+const struct image_max_size *boot_get_max_app_size(void);
+uint32_t boot_get_state_secondary_offset(struct boot_loader_state *state,
+                                         const struct flash_area *fap);
 
 #define SPLIT_GO_OK                 (0)
 #define SPLIT_GO_NON_MATCHING       (-1)

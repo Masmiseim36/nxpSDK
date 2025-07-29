@@ -11,7 +11,7 @@
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
-          <Device>MIMXRT798SGFOA:cm33_core0</Device>
+          <Device>MIMXRT798SGFOB:cm33_core0</Device>
           <Vendor>NXP</Vendor>
           <PackID>NXP.MIMXRT798S_DFP.17.0.0</PackID>
           <PackURL>https://mcuxpresso.nxp.com/cmsis_pack/repo/</PackURL>
@@ -334,9 +334,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../edgefast_bluetooth_app.h -include ../mcux_config.h -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
-              <Define>DEBUG, CFG_BLE, LPUART_RING_BUFFER_SIZE=1024U, PRINTF_ADVANCED_ENABLE=1, SDK_DEBUGCONSOLE_UART=1, SDK_OS_FREE_RTOS, USE_RTOS=1, APPL_USE_STANDARD_IO, CONFIG_ARM=1, DATA_SECTION_IS_CACHEABLE=1, EDGEFAST_BT_LITTLEFS_MFLASH, FSL_DRIVER_TRANSFER_DOUBLE_WEAK_IRQ=0, FSL_FEATURE_FLASH_PAGE_SIZE_BYTES=4096, FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, GATT_CLIENT, GATT_DB, HAL_UART_ADAPTER_FIFO=1, IOT_WIFI_ENABLE_SAVE_NETWORK=1, LFS_NO_ERROR=1, LFS_NO_INTRINSICS=1, USB_HOST_CONFIG_BUFFER_PROPERTY_CACHEABLE=1, gMemManagerLight=0, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT798SGFOA_cm33_core0, DEBUG_CONSOLE_TRANSFER_NON_BLOCKING=1, OSA_USED, BOOT_HEADER_ENABLE=1, SERIAL_PORT_TYPE_UART=1, TIMER_PORT_TYPE_MRT=1, MFLASH_FILE_BASEADDR=7340032, PSA_CRYPTO_DRIVER_ELS_PKC, CONFIG_NXP_WIFI_SOFTAP_SUPPORT=1, SO_REUSE=1, PRINTF_FLOAT_ENABLE=1, MBEDTLS_CONFIG_FILE='\"mcux_mbedtls_config.h\"', SDIO_ENABLED=1, LFS_THREADSAFE=1, LOG_ENABLE_ASYNC_MODE=1, LOG_MAX_ARGUMENT_COUNT=10, LOG_ENABLE_OVERWRITE=0</Define>
+              <Define>DEBUG, CFG_BLE, LPUART_RING_BUFFER_SIZE=1024U, PRINTF_ADVANCED_ENABLE=1, SDK_DEBUGCONSOLE_UART=1, SDK_OS_FREE_RTOS, USE_RTOS=1, APPL_USE_STANDARD_IO, CONFIG_ARM=1, DATA_SECTION_IS_CACHEABLE=1, EDGEFAST_BT_LITTLEFS_MFLASH, FSL_DRIVER_TRANSFER_DOUBLE_WEAK_IRQ=0, FSL_FEATURE_FLASH_PAGE_SIZE_BYTES=4096, FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, GATT_CLIENT, GATT_DB, HAL_UART_ADAPTER_FIFO=1, IOT_WIFI_ENABLE_SAVE_NETWORK=1, LFS_NO_ERROR=1, LFS_NO_INTRINSICS=1, USB_HOST_CONFIG_BUFFER_PROPERTY_CACHEABLE=1, gMemManagerLight=0, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT798SGFOB_cm33_core0, MIMXRT798S_cm33_core0_SERIES, DEBUG_CONSOLE_TRANSFER_NON_BLOCKING=1, OSA_USED, BOOT_HEADER_ENABLE=1, SERIAL_PORT_TYPE_UART=1, TIMER_PORT_TYPE_MRT=1, CONFIG_WIFI_BT_CMOBO_DNLD, CONFIG_WIFI_IND_DNLD=0, CONFIG_WIFI_IND_RESET=0, WIFI_IW612_BOARD_MURATA_2EL_M2, PSA_CRYPTO_DRIVER_ELS_PKC, MFLASH_FILE_BASEADDR=7340032, CONFIG_NXP_WIFI_SOFTAP_SUPPORT=1, PRINTF_FLOAT_ENABLE=1, SO_REUSE=1, MBEDTLS_CONFIG_FILE='\"mcux_mbedtls_config.h\"', SDIO_ENABLED=1, LFS_THREADSAFE=1, LOG_ENABLE_ASYNC_MODE=1, LOG_MAX_ARGUMENT_COUNT=10, LOG_ENABLE_OVERWRITE=1</Define>
               <Undefine/>
-              <IncludePath>..;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT798S;../../../../../../devices/MIMXRT798S/periph;../../../../../../devices/MIMXRT798S/drivers;../../../../../../devices/MIMXRT798S/utilities;../../../../../../components/lists;../../../../../../devices/MIMXRT798S/utilities/str;../../../../../../devices/MIMXRT798S/utilities/debug_console;../../../../../../components/log;../../../../../../components/serial_manager;../../../../../../components/button;../../../../../../components/common_task;../../../../../../components/gpio;../../../../../../components/timer;../../../../../../components/timer_manager;../../../../../../components/uart;../../../../../../components/flash/mflash;../../../../../../components/flash/mflash/mimxrt700;../../../../../../components/osa;../../../../../../components/els_pkc;../../../../../../components/els_pkc/src/comps/common/inc;../../../../../../components/els_pkc/src/comps/mcuxClAead/inc;../../../../../../components/els_pkc/src/comps/mcuxClAead/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClAeadModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClAeadModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClAes/inc;../../../../../../components/els_pkc/src/comps/mcuxClAes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClBuffer/inc;../../../../../../components/els_pkc/src/comps/mcuxClBuffer/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClCipher/inc;../../../../../../components/els_pkc/src/comps/mcuxClCipher/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClCipherModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClCipherModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClCore/inc;../../../../../../components/els_pkc/src/comps/mcuxClCrc/inc;../../../../../../components/els_pkc/src/comps/mcuxClCrc/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClEcc/inc;../../../../../../components/els_pkc/src/comps/mcuxClEcc/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClEls/inc;../../../../../../components/els_pkc/src/comps/mcuxClEls/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClGlikey/inc;../../../../../../components/els_pkc/src/comps/mcuxClGlikey/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClHash/inc;../../../../../../components/els_pkc/src/comps/mcuxClHash/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClHashModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClHashModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClHmac/inc;../../../../../../components/els_pkc/src/comps/mcuxClHmac/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClKey/inc;../../../../../../components/els_pkc/src/comps/mcuxClKey/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClMac/inc;../../../../../../components/els_pkc/src/comps/mcuxClMac/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClMacModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClMacModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClMath/inc;../../../../../../components/els_pkc/src/comps/mcuxClMath/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClMemory/inc;../../../../../../components/els_pkc/src/comps/mcuxClMemory/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxCsslMemory/inc;../../../../../../components/els_pkc/src/comps/mcuxCsslMemory/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaAeadModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaAeadModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaCipherModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaCipherModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaMacModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaMacModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaPkc/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaPkc/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaRandomModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaRandomModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSafo/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSm2/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSm2/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSm3/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSm3/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSm4/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSm4/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClPadding/inc;../../../../../../components/els_pkc/src/comps/mcuxClPadding/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClPkc/inc;../../../../../../components/els_pkc/src/comps/mcuxClPkc/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClPrng/inc;../../../../../../components/els_pkc/src/comps/mcuxClPrng/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClPsaDriver/inc;../../../../../../components/els_pkc/src/comps/mcuxClPsaDriver/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClRandom/inc;../../../../../../components/els_pkc/src/comps/mcuxClRandom/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClRandomModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClRandomModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClRsa/inc;../../../../../../components/els_pkc/src/comps/mcuxClRsa/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClSession/inc;../../../../../../components/els_pkc/src/comps/mcuxClSession/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClSignature/inc;../../../../../../components/els_pkc/src/comps/mcuxClSignature/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClTrng/inc;../../../../../../components/els_pkc/src/comps/mcuxClTrng/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxCsslCPreProcessor/inc;../../../../../../components/els_pkc/src/comps/mcuxCsslDataIntegrity/inc;../../../../../../components/els_pkc/src/comps/mcuxCsslFlowProtection/inc;../../../../../../components/els_pkc/src/comps/mcuxCsslParamIntegrity/inc;../../../../../../components/els_pkc/src/comps/mcuxCsslSecureCounter/inc;../../../../../../components/els_pkc/src/inc;../../../../../../components/els_pkc/src/compiler;../../../../../../components/els_pkc/src/platforms/mimxrt;../../../../../../components/els_pkc/src/platforms/mimxrt/inc;../../../../../../components/els_pkc/includes/platform/mimxrt;../../../../../../components/psa_crypto_driver/osal;../../../../../../components/psa_crypto_driver/osal/baremetal;../../../../../../components/psa_crypto_driver/els_pkc/oracle/platforms/mimxrt;../../../../../../components/psa_crypto_driver/els_pkc/oracle/inc;../../../../../../components/psa_crypto_driver/els_pkc/include/common;../../../../../../components/psa_crypto_driver/els_pkc/include/transparent;../../../../../../components/psa_crypto_driver/els_pkc/include/opaque;../../../../../../components/psa_crypto_driver/els_pkc;../../../../../../components/wifi_bt_module/AzureWave/tx_pwr_limits;../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits;../../../../../../components/wifi_bt_module/u-blox/tx_pwr_limits;../../../../../../components/wifi_bt_module/incl;../../../../../../middleware/wifi_nxp;../../../../../../middleware/wifi_nxp/incl;../../../../../../middleware/wifi_nxp/incl/port/osa;../../../../../../middleware/wifi_nxp/port/osa;../../../../../../middleware/wifi_nxp/incl/port;../../../../../../middleware/wifi_nxp/incl/wifidriver;../../../../../../middleware/wifi_nxp/wifi_bt_firmware;../../../../../../middleware/wifi_nxp/wifidriver;../../../../../../middleware/wifi_nxp/wifidriver/incl;../../../../../../middleware/wifi_nxp/wifi_bt_firmware/8801;../../../../../../middleware/wifi_nxp/wifi_bt_firmware/IW416;../../../../../../middleware/wifi_nxp/wifi_bt_firmware/8987;../../../../../../middleware/wifi_nxp/wifi_bt_firmware/nw61x;../../../../../../middleware/wifi_nxp/wifi_bt_firmware/iw610;../../../../../../middleware/wifi_nxp/firmware_dnld;../../../../../../middleware/wifi_nxp/sdio_nxp_abs;../../../../../../middleware/wifi_nxp/sdio_nxp_abs/incl;../../../../../../middleware/wifi_nxp/fwdnld_intf_abs;../../../../../../middleware/wifi_nxp/incl/port/net;../../../../../../middleware/wifi_nxp/incl/port/net/hooks;../../../../../../middleware/wifi_nxp/dhcpd;../../../../../../middleware/wifi_nxp/incl/wlcmgr;../../../../../../middleware/wifi_nxp/wifidriver/wpa_supp_if;../../../../../../middleware/wifi_nxp/wifidriver/wpa_supp_if/incl;../../../../../../middleware/wifi_nxp/certs;../../../../../../middleware/wifi_nxp/port/net;../../../../../../middleware/wifi_nxp/cli;../../../../../../middleware/wifi_nxp/nw_utils;../../../../../../middleware/wifi_nxp/nw_utils/telnet;../../../../../../middleware/usb/include;../../../../../../middleware/usb/host;../../../../../../middleware/usb/host/class;../../../../../../middleware/usb/phy;../../../../../../middleware/fatfs/source;../../../../../../middleware/fatfs/source/fsl_usb_disk;../../../../../../middleware/littlefs;../../../../../../middleware/lwip/port;../../../../../../middleware/lwip/src;../../../../../../middleware/lwip/src/include;../../../../../../middleware/lwip/src/include/lwip;../../../../../../middleware/lwip/port/sys_arch/dynamic;../../../../../../middleware/lwip/src/include/lwip/apps;../../../../../../middleware/mbedtls3x/port;../../../../../../middleware/mbedtls3x/include;../../../../../../middleware/mbedtls3x/library;../../../../../../middleware/sdmmc/common;../../../../../../middleware/sdmmc/osa;../../../../../../middleware/sdmmc/sdio;../../../../../../middleware/sdmmc/host/usdhc;../../../../../../middleware/wireless/ethermind/bluetooth/export/eOSAL;../../../../../../middleware/wireless/ethermind/bluetooth/export/include;../../../../../../middleware/wireless/ethermind/bluetooth/export/vendor;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/att;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/avctp;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/avdtp;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/bnep;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/dbase;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/hci_1.2;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/mcap;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/obex;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/rfcomm;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/sdp;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/sm;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/smp;../../../../../../middleware/wireless/ethermind/bluetooth/private/utils/aes_cmac;../../../../../../middleware/wireless/ethermind/bluetooth/private/utils/at_parser;../../../../../../middleware/wireless/ethermind/bluetooth/private/utils/object_parser;../../../../../../middleware/wireless/ethermind/bluetooth/private/utils/racp;../../../../../../middleware/wireless/ethermind/bluetooth/private/utils/storage;../../../../../../middleware/wireless/ethermind/bluetooth/private/utils/xml_parser;../../../../../../middleware/wireless/ethermind/port/pal/mcux/bluetooth;../../../../../../middleware/wireless/ethermind/port/pal/mcux/ethal;../../../../../../middleware/wireless/ethermind/port/pal/mcux/sbc;../../../../../../middleware/wireless/ethermind/port/osal/src/freertos;../../../../../../middleware/wireless/ethermind/port/pal/mcux;../../../../../../middleware/wireless/ethermind/bluetooth/private/utils/sbc;../../../../../../middleware/wireless/ethermind/bluetooth/export/extension;../../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/config;../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host;../../../../../../middleware/edgefast_bluetooth/include;../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/controller/configs/mbedtls;../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/crypto;../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/platform;../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind;../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/platform/configs;../../../../../../middleware/edgefast_bluetooth/source/porting;../../../../../../middleware/wireless/ethermind/port/pal/mcux/bluetooth/controller;../../../../../../middleware/edgefast_bluetooth/source/services;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../../rtos/freertos/freertos-kernel/template/ARM_CM33_3_priority_bits</IncludePath>
+              <IncludePath>..;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT798S;../../../../../../devices/MIMXRT798S/periph;../../../../../../devices/MIMXRT798S/drivers;../../../../../../devices/MIMXRT798S/utilities/debug_console;../../../../../../components/lists;../../../../../../devices/MIMXRT798S/utilities/str;../../../../../../components/log;../../../../../../components/serial_manager;../../../../../../components/button;../../../../../../components/common_task;../../../../../../components/gpio;../../../../../../components/timer;../../../../../../components/timer_manager;../../../../../../components/uart;../../../../../../components/osa;../../../../../../components/wifi_bt_module/AzureWave/tx_pwr_limits;../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits;../../../../../../components/wifi_bt_module/u-blox/tx_pwr_limits;../../../../../../components/wifi_bt_module/incl;../../../../../../components/els_pkc;../../../../../../components/els_pkc/src/comps/common/inc;../../../../../../components/els_pkc/src/comps/mcuxClAead/inc;../../../../../../components/els_pkc/src/comps/mcuxClAead/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClAeadModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClAeadModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClAes/inc;../../../../../../components/els_pkc/src/comps/mcuxClAes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClBuffer/inc;../../../../../../components/els_pkc/src/comps/mcuxClBuffer/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClCipher/inc;../../../../../../components/els_pkc/src/comps/mcuxClCipher/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClCipherModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClCipherModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClCore/inc;../../../../../../components/els_pkc/src/comps/mcuxClCrc/inc;../../../../../../components/els_pkc/src/comps/mcuxClCrc/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClEcc/inc;../../../../../../components/els_pkc/src/comps/mcuxClEcc/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClEls/inc;../../../../../../components/els_pkc/src/comps/mcuxClEls/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClGlikey/inc;../../../../../../components/els_pkc/src/comps/mcuxClGlikey/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClHash/inc;../../../../../../components/els_pkc/src/comps/mcuxClHash/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClHashModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClHashModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClHmac/inc;../../../../../../components/els_pkc/src/comps/mcuxClHmac/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClKey/inc;../../../../../../components/els_pkc/src/comps/mcuxClKey/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClMac/inc;../../../../../../components/els_pkc/src/comps/mcuxClMac/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClMacModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClMacModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClMath/inc;../../../../../../components/els_pkc/src/comps/mcuxClMath/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClMemory/inc;../../../../../../components/els_pkc/src/comps/mcuxClMemory/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxCsslMemory/inc;../../../../../../components/els_pkc/src/comps/mcuxCsslMemory/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaAeadModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaAeadModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaCipherModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaCipherModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaMacModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaMacModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaPkc/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaPkc/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaRandomModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaRandomModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSafo/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSm2/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSm2/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSm3/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSm3/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSm4/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSm4/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClPadding/inc;../../../../../../components/els_pkc/src/comps/mcuxClPadding/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClPkc/inc;../../../../../../components/els_pkc/src/comps/mcuxClPkc/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClPrng/inc;../../../../../../components/els_pkc/src/comps/mcuxClPrng/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClPsaDriver/inc;../../../../../../components/els_pkc/src/comps/mcuxClPsaDriver/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClRandom/inc;../../../../../../components/els_pkc/src/comps/mcuxClRandom/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClRandomModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClRandomModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClRsa/inc;../../../../../../components/els_pkc/src/comps/mcuxClRsa/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClSession/inc;../../../../../../components/els_pkc/src/comps/mcuxClSession/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClSignature/inc;../../../../../../components/els_pkc/src/comps/mcuxClSignature/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClTrng/inc;../../../../../../components/els_pkc/src/comps/mcuxClTrng/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxCsslCPreProcessor/inc;../../../../../../components/els_pkc/src/comps/mcuxCsslDataIntegrity/inc;../../../../../../components/els_pkc/src/comps/mcuxCsslFlowProtection/inc;../../../../../../components/els_pkc/src/comps/mcuxCsslParamIntegrity/inc;../../../../../../components/els_pkc/src/comps/mcuxCsslSecureCounter/inc;../../../../../../components/els_pkc/src/inc;../../../../../../components/els_pkc/src/compiler;../../../../../../components/els_pkc/src/platforms/mimxrt;../../../../../../components/els_pkc/src/platforms/mimxrt/inc;../../../../../../components/els_pkc/includes/platform/mimxrt;../../../../../../components/psa_crypto_driver/osal;../../../../../../components/psa_crypto_driver/osal/baremetal;../../../../../../components/psa_crypto_driver/els_pkc/oracle/platforms/mimxrt;../../../../../../components/psa_crypto_driver/els_pkc/oracle/inc;../../../../../../components/psa_crypto_driver/els_pkc/include/common;../../../../../../components/psa_crypto_driver/els_pkc/include/transparent;../../../../../../components/psa_crypto_driver/els_pkc/include/opaque;../../../../../../components/psa_crypto_driver/els_pkc;../../../../../../components/flash/mflash;../../../../../../components/flash/mflash/mimxrt700;../../../../../../middleware/wifi_nxp;../../../../../../middleware/wifi_nxp/incl;../../../../../../middleware/wifi_nxp/incl/port/osa;../../../../../../middleware/wifi_nxp/port/osa;../../../../../../middleware/wifi_nxp/incl/port;../../../../../../middleware/wifi_nxp/incl/wifidriver;../../../../../../middleware/wifi_nxp/wifi_bt_firmware;../../../../../../middleware/wifi_nxp/wifidriver;../../../../../../middleware/wifi_nxp/wifidriver/incl;../../../../../../middleware/wifi_nxp/wifi_bt_firmware/IW416;../../../../../../middleware/wifi_nxp/wifi_bt_firmware/8987;../../../../../../middleware/wifi_nxp/wifi_bt_firmware/nw61x;../../../../../../middleware/wifi_nxp/wifi_bt_firmware/iw610;../../../../../../middleware/wifi_nxp/firmware_dnld;../../../../../../middleware/wifi_nxp/sdio_nxp_abs;../../../../../../middleware/wifi_nxp/sdio_nxp_abs/incl;../../../../../../middleware/wifi_nxp/fwdnld_intf_abs;../../../../../../middleware/wifi_nxp/incl/port/net;../../../../../../middleware/wifi_nxp/incl/port/net/hooks;../../../../../../middleware/wifi_nxp/dhcpd;../../../../../../middleware/wifi_nxp/incl/wlcmgr;../../../../../../middleware/wifi_nxp/wifidriver/wpa_supp_if;../../../../../../middleware/wifi_nxp/wifidriver/wpa_supp_if/incl;../../../../../../middleware/wifi_nxp/certs;../../../../../../middleware/wifi_nxp/port/net;../../../../../../middleware/wifi_nxp/cli;../../../../../../middleware/wifi_nxp/nw_utils;../../../../../../middleware/usb/include;../../../../../../middleware/usb/host;../../../../../../middleware/usb/config/host/ehci;../../../../../../middleware/usb/host/class;../../../../../../middleware/usb/phy;../../../../../../middleware/fatfs/source;../../../../../../middleware/fatfs/source/fsl_usb_disk;../../../../../../middleware/littlefs;../../../../../../middleware/lwip/port;../../../../../../middleware/lwip/src/include;../../../../../../middleware/lwip/port/sys_arch/dynamic;../../../../../../middleware/mbedtls3x/include;../../../../../../middleware/mbedtls3x/library;../../../../../../middleware/mbedtls3x/port;../../../../../../middleware/sdmmc/common;../../../../../../middleware/sdmmc/osa;../../../../../../middleware/sdmmc/sdio;../../../../../../middleware/sdmmc/host/usdhc;../../../../../../middleware/wireless/ethermind/bluetooth/export/eOSAL;../../../../../../middleware/wireless/ethermind/bluetooth/export/include;../../../../../../middleware/wireless/ethermind/bluetooth/export/vendor;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/att;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/avctp;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/avdtp;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/bnep;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/dbase;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/hci_1.2;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/mcap;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/obex;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/rfcomm;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/sdp;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/sm;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/smp;../../../../../../middleware/wireless/ethermind/bluetooth/private/utils/aes_cmac;../../../../../../middleware/wireless/ethermind/bluetooth/private/utils/at_parser;../../../../../../middleware/wireless/ethermind/bluetooth/private/utils/object_parser;../../../../../../middleware/wireless/ethermind/bluetooth/private/utils/racp;../../../../../../middleware/wireless/ethermind/bluetooth/private/utils/storage;../../../../../../middleware/wireless/ethermind/bluetooth/private/utils/xml_parser;../../../../../../middleware/wireless/ethermind/port/pal/mcux/bluetooth;../../../../../../middleware/wireless/ethermind/port/pal/mcux/ethal;../../../../../../middleware/wireless/ethermind/port/pal/mcux/sbc;../../../../../../middleware/wireless/ethermind/port/osal/src/freertos;../../../../../../middleware/wireless/ethermind/port/pal/mcux;../../../../../../middleware/wireless/ethermind/bluetooth/private/utils/sbc;../../../../../../middleware/wireless/ethermind/bluetooth/export/extension;../../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/config;../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host;../../../../../../middleware/edgefast_bluetooth/include;../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/controller/configs/mbedtls;../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/crypto;../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/platform;../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind;../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/platform/configs;../../../../../../middleware/edgefast_bluetooth/source/porting;../../../../../../middleware/wireless/ethermind/port/pal/mcux/bluetooth/controller;../../../../../../middleware/edgefast_bluetooth/source/services;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../../rtos/freertos/freertos-kernel/template/ARM_CM33_3_priority_bits</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -351,10 +351,10 @@
             <useXO>0</useXO>
             <ClangAsOpt>2</ClangAsOpt>
             <VariousControls>
-              <MiscControls/>
-              <Define>MCUXPRESSO_SDK, CPU_MIMXRT798SGFOA_cm33_core0, DEBUG_CONSOLE_TRANSFER_NON_BLOCKING, OSA_USED</Define>
+              <MiscControls>-include ../mcux_config.h</MiscControls>
+              <Define>MCUXPRESSO_SDK, CPU_MIMXRT798SGFOB_cm33_core0, MIMXRT798S_cm33_core0_SERIES, DEBUG_CONSOLE_TRANSFER_NON_BLOCKING, OSA_USED</Define>
               <Undefine/>
-              <IncludePath>..;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT798S;../../../../../../devices/MIMXRT798S/periph;../../../../../../devices/periph;../../../../../../devices/MIMXRT798S/drivers;../../../../../../devices/MIMXRT798S/utilities;../../../../../../components/lists;../../../../../../devices/MIMXRT798S/utilities/str;../../../../../../devices/MIMXRT798S/utilities/debug_console;../../../../../../components/log;../../../../../../components/serial_manager;../../../../../../components/button;../../../../../../components/common_task;../../../../../../components/gpio;../../../../../../components/timer;../../../../../../components/timer_manager;../../../../../../components/uart;../../../../../../components/flash/mflash;../../../../../../components/flash/mflash/mimxrt700;../../../../../../components/osa;../../../../../../components/els_pkc;../../../../../../components/els_pkc/src/comps/common/inc;../../../../../../components/els_pkc/src/comps/mcuxClAead/inc;../../../../../../components/els_pkc/src/comps/mcuxClAead/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClAeadModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClAeadModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClAes/inc;../../../../../../components/els_pkc/src/comps/mcuxClAes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClBuffer/inc;../../../../../../components/els_pkc/src/comps/mcuxClBuffer/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClCipher/inc;../../../../../../components/els_pkc/src/comps/mcuxClCipher/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClCipherModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClCipherModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClCore/inc;../../../../../../components/els_pkc/src/comps/mcuxClCrc/inc;../../../../../../components/els_pkc/src/comps/mcuxClCrc/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClEcc/inc;../../../../../../components/els_pkc/src/comps/mcuxClEcc/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClEls/inc;../../../../../../components/els_pkc/src/comps/mcuxClEls/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClGlikey/inc;../../../../../../components/els_pkc/src/comps/mcuxClGlikey/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClHash/inc;../../../../../../components/els_pkc/src/comps/mcuxClHash/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClHashModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClHashModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClHmac/inc;../../../../../../components/els_pkc/src/comps/mcuxClHmac/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClKey/inc;../../../../../../components/els_pkc/src/comps/mcuxClKey/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClMac/inc;../../../../../../components/els_pkc/src/comps/mcuxClMac/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClMacModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClMacModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClMath/inc;../../../../../../components/els_pkc/src/comps/mcuxClMath/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClMemory/inc;../../../../../../components/els_pkc/src/comps/mcuxClMemory/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxCsslMemory/inc;../../../../../../components/els_pkc/src/comps/mcuxCsslMemory/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaAeadModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaAeadModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaCipherModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaCipherModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaMacModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaMacModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaPkc/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaPkc/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaRandomModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaRandomModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSafo/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSm2/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSm2/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSm3/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSm3/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSm4/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSm4/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClPadding/inc;../../../../../../components/els_pkc/src/comps/mcuxClPadding/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClPkc/inc;../../../../../../components/els_pkc/src/comps/mcuxClPkc/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClPrng/inc;../../../../../../components/els_pkc/src/comps/mcuxClPrng/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClPsaDriver/inc;../../../../../../components/els_pkc/src/comps/mcuxClPsaDriver/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClRandom/inc;../../../../../../components/els_pkc/src/comps/mcuxClRandom/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClRandomModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClRandomModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClRsa/inc;../../../../../../components/els_pkc/src/comps/mcuxClRsa/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClSession/inc;../../../../../../components/els_pkc/src/comps/mcuxClSession/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClSignature/inc;../../../../../../components/els_pkc/src/comps/mcuxClSignature/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClTrng/inc;../../../../../../components/els_pkc/src/comps/mcuxClTrng/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxCsslCPreProcessor/inc;../../../../../../components/els_pkc/src/comps/mcuxCsslDataIntegrity/inc;../../../../../../components/els_pkc/src/comps/mcuxCsslFlowProtection/inc;../../../../../../components/els_pkc/src/comps/mcuxCsslParamIntegrity/inc;../../../../../../components/els_pkc/src/comps/mcuxCsslSecureCounter/inc;../../../../../../components/els_pkc/src/inc;../../../../../../components/els_pkc/src/compiler;../../../../../../components/els_pkc/src/platforms/mimxrt;../../../../../../components/els_pkc/src/platforms/mimxrt/inc;../../../../../../components/els_pkc/includes/platform/mimxrt;../../../../../../components/psa_crypto_driver/osal;../../../../../../components/psa_crypto_driver/osal/baremetal;../../../../../../components/psa_crypto_driver/els_pkc/oracle/platforms/mimxrt;../../../../../../components/psa_crypto_driver/els_pkc/oracle/inc;../../../../../../components/psa_crypto_driver/els_pkc/include/common;../../../../../../components/psa_crypto_driver/els_pkc/include/transparent;../../../../../../components/psa_crypto_driver/els_pkc/include/opaque;../../../../../../components/psa_crypto_driver/els_pkc;../../../../../../components/wifi_bt_module/AzureWave/tx_pwr_limits;../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits;../../../../../../components/wifi_bt_module/u-blox/tx_pwr_limits;../../../../../../components/wifi_bt_module/incl;../../../../../../middleware/wifi_nxp;../../../../../../middleware/wifi_nxp/incl;../../../../../../middleware/wifi_nxp/incl/port/osa;../../../../../../middleware/wifi_nxp/port/osa;../../../../../../middleware/wifi_nxp/incl/port;../../../../../../middleware/wifi_nxp/incl/wifidriver;../../../../../../middleware/wifi_nxp/wifi_bt_firmware;../../../../../../middleware/wifi_nxp/wifidriver;../../../../../../middleware/wifi_nxp/wifidriver/incl;../../../../../../middleware/wifi_nxp/wifi_bt_firmware/8801;../../../../../../middleware/wifi_nxp/wifi_bt_firmware/IW416;../../../../../../middleware/wifi_nxp/wifi_bt_firmware/8987;../../../../../../middleware/wifi_nxp/wifi_bt_firmware/nw61x;../../../../../../middleware/wifi_nxp/wifi_bt_firmware/iw610;../../../../../../middleware/wifi_nxp/firmware_dnld;../../../../../../middleware/wifi_nxp/sdio_nxp_abs;../../../../../../middleware/wifi_nxp/sdio_nxp_abs/incl;../../../../../../middleware/wifi_nxp/fwdnld_intf_abs;../../../../../../middleware/wifi_nxp/incl/port/net;../../../../../../middleware/wifi_nxp/incl/port/net/hooks;../../../../../../middleware/wifi_nxp/dhcpd;../../../../../../middleware/wifi_nxp/incl/wlcmgr;../../../../../../middleware/wifi_nxp/wifidriver/wpa_supp_if;../../../../../../middleware/wifi_nxp/wifidriver/wpa_supp_if/incl;../../../../../../middleware/wifi_nxp/certs;../../../../../../middleware/wifi_nxp/port/net;../../../../../../middleware/wifi_nxp/cli;../../../../../../middleware/wifi_nxp/nw_utils;../../../../../../middleware/wifi_nxp/nw_utils/telnet;../../../../../../middleware/usb/include;../../../../../../middleware/usb/host;../../../../../../middleware/usb/host/class;../../../../../../middleware/usb/phy;../../../../../../middleware/fatfs/source;../../../../../../middleware/fatfs/source/fsl_usb_disk;../../../../../../middleware/littlefs;../../../../../../middleware/lwip/port;../../../../../../middleware/lwip/src;../../../../../../middleware/lwip/src/include;../../../../../../middleware/lwip/src/include/lwip;../../../../../../middleware/lwip/port/sys_arch/dynamic;../../../../../../middleware/lwip/src/include/lwip/apps;../../../../../../middleware/mbedtls3x/port;../../../../../../middleware/mbedtls3x/include;../../../../../../middleware/mbedtls3x/library;../../../../../../middleware/sdmmc/common;../../../../../../middleware/sdmmc/osa;../../../../../../middleware/sdmmc/sdio;../../../../../../middleware/sdmmc/host/usdhc;../../../../../../middleware/wireless/ethermind/bluetooth/export/eOSAL;../../../../../../middleware/wireless/ethermind/bluetooth/export/include;../../../../../../middleware/wireless/ethermind/bluetooth/export/vendor;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/att;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/avctp;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/avdtp;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/bnep;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/dbase;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/hci_1.2;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/mcap;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/obex;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/rfcomm;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/sdp;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/sm;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/smp;../../../../../../middleware/wireless/ethermind/bluetooth/private/utils/aes_cmac;../../../../../../middleware/wireless/ethermind/bluetooth/private/utils/at_parser;../../../../../../middleware/wireless/ethermind/bluetooth/private/utils/object_parser;../../../../../../middleware/wireless/ethermind/bluetooth/private/utils/racp;../../../../../../middleware/wireless/ethermind/bluetooth/private/utils/storage;../../../../../../middleware/wireless/ethermind/bluetooth/private/utils/xml_parser;../../../../../../middleware/wireless/ethermind/port/pal/mcux/bluetooth;../../../../../../middleware/wireless/ethermind/port/pal/mcux/ethal;../../../../../../middleware/wireless/ethermind/port/pal/mcux/sbc;../../../../../../middleware/wireless/ethermind/port/osal/src/freertos;../../../../../../middleware/wireless/ethermind/port/pal/mcux;../../../../../../middleware/wireless/ethermind/bluetooth/private/utils/sbc;../../../../../../middleware/wireless/ethermind/bluetooth/export/extension;../../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/config;../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host;../../../../../../middleware/edgefast_bluetooth/include;../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/controller/configs/mbedtls;../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/crypto;../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/platform;../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind;../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/platform/configs;../../../../../../middleware/edgefast_bluetooth/source/porting;../../../../../../middleware/wireless/ethermind/port/pal/mcux/bluetooth/controller;../../../../../../middleware/edgefast_bluetooth/source/services;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../../rtos/freertos/freertos-kernel/template/ARM_CM33_3_priority_bits</IncludePath>
+              <IncludePath>..;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT798S;../../../../../../devices/MIMXRT798S/periph;../../../../../../devices/periph;../../../../../../devices/MIMXRT798S/drivers;../../../../../../devices/MIMXRT798S/utilities/debug_console;../../../../../../components/lists;../../../../../../devices/MIMXRT798S/utilities/str;../../../../../../components/log;../../../../../../components/serial_manager;../../../../../../components/button;../../../../../../components/common_task;../../../../../../components/gpio;../../../../../../components/timer;../../../../../../components/timer_manager;../../../../../../components/uart;../../../../../../components/osa;../../../../../../components/wifi_bt_module/AzureWave/tx_pwr_limits;../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits;../../../../../../components/wifi_bt_module/u-blox/tx_pwr_limits;../../../../../../components/wifi_bt_module/incl;../../../../../../components/els_pkc;../../../../../../components/els_pkc/src/comps/common/inc;../../../../../../components/els_pkc/src/comps/mcuxClAead/inc;../../../../../../components/els_pkc/src/comps/mcuxClAead/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClAeadModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClAeadModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClAes/inc;../../../../../../components/els_pkc/src/comps/mcuxClAes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClBuffer/inc;../../../../../../components/els_pkc/src/comps/mcuxClBuffer/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClCipher/inc;../../../../../../components/els_pkc/src/comps/mcuxClCipher/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClCipherModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClCipherModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClCore/inc;../../../../../../components/els_pkc/src/comps/mcuxClCrc/inc;../../../../../../components/els_pkc/src/comps/mcuxClCrc/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClEcc/inc;../../../../../../components/els_pkc/src/comps/mcuxClEcc/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClEls/inc;../../../../../../components/els_pkc/src/comps/mcuxClEls/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClGlikey/inc;../../../../../../components/els_pkc/src/comps/mcuxClGlikey/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClHash/inc;../../../../../../components/els_pkc/src/comps/mcuxClHash/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClHashModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClHashModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClHmac/inc;../../../../../../components/els_pkc/src/comps/mcuxClHmac/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClKey/inc;../../../../../../components/els_pkc/src/comps/mcuxClKey/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClMac/inc;../../../../../../components/els_pkc/src/comps/mcuxClMac/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClMacModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClMacModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClMath/inc;../../../../../../components/els_pkc/src/comps/mcuxClMath/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClMemory/inc;../../../../../../components/els_pkc/src/comps/mcuxClMemory/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxCsslMemory/inc;../../../../../../components/els_pkc/src/comps/mcuxCsslMemory/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaAeadModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaAeadModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaCipherModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaCipherModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaMacModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaMacModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaPkc/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaPkc/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaRandomModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaRandomModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSafo/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSm2/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSm2/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSm3/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSm3/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSm4/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSm4/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClPadding/inc;../../../../../../components/els_pkc/src/comps/mcuxClPadding/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClPkc/inc;../../../../../../components/els_pkc/src/comps/mcuxClPkc/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClPrng/inc;../../../../../../components/els_pkc/src/comps/mcuxClPrng/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClPsaDriver/inc;../../../../../../components/els_pkc/src/comps/mcuxClPsaDriver/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClRandom/inc;../../../../../../components/els_pkc/src/comps/mcuxClRandom/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClRandomModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClRandomModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClRsa/inc;../../../../../../components/els_pkc/src/comps/mcuxClRsa/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClSession/inc;../../../../../../components/els_pkc/src/comps/mcuxClSession/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClSignature/inc;../../../../../../components/els_pkc/src/comps/mcuxClSignature/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClTrng/inc;../../../../../../components/els_pkc/src/comps/mcuxClTrng/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxCsslCPreProcessor/inc;../../../../../../components/els_pkc/src/comps/mcuxCsslDataIntegrity/inc;../../../../../../components/els_pkc/src/comps/mcuxCsslFlowProtection/inc;../../../../../../components/els_pkc/src/comps/mcuxCsslParamIntegrity/inc;../../../../../../components/els_pkc/src/comps/mcuxCsslSecureCounter/inc;../../../../../../components/els_pkc/src/inc;../../../../../../components/els_pkc/src/compiler;../../../../../../components/els_pkc/src/platforms/mimxrt;../../../../../../components/els_pkc/src/platforms/mimxrt/inc;../../../../../../components/els_pkc/includes/platform/mimxrt;../../../../../../components/psa_crypto_driver/osal;../../../../../../components/psa_crypto_driver/osal/baremetal;../../../../../../components/psa_crypto_driver/els_pkc/oracle/platforms/mimxrt;../../../../../../components/psa_crypto_driver/els_pkc/oracle/inc;../../../../../../components/psa_crypto_driver/els_pkc/include/common;../../../../../../components/psa_crypto_driver/els_pkc/include/transparent;../../../../../../components/psa_crypto_driver/els_pkc/include/opaque;../../../../../../components/psa_crypto_driver/els_pkc;../../../../../../components/flash/mflash;../../../../../../components/flash/mflash/mimxrt700;../../../../../../middleware/wifi_nxp;../../../../../../middleware/wifi_nxp/incl;../../../../../../middleware/wifi_nxp/incl/port/osa;../../../../../../middleware/wifi_nxp/port/osa;../../../../../../middleware/wifi_nxp/incl/port;../../../../../../middleware/wifi_nxp/incl/wifidriver;../../../../../../middleware/wifi_nxp/wifi_bt_firmware;../../../../../../middleware/wifi_nxp/wifidriver;../../../../../../middleware/wifi_nxp/wifidriver/incl;../../../../../../middleware/wifi_nxp/wifi_bt_firmware/IW416;../../../../../../middleware/wifi_nxp/wifi_bt_firmware/8987;../../../../../../middleware/wifi_nxp/wifi_bt_firmware/nw61x;../../../../../../middleware/wifi_nxp/wifi_bt_firmware/iw610;../../../../../../middleware/wifi_nxp/firmware_dnld;../../../../../../middleware/wifi_nxp/sdio_nxp_abs;../../../../../../middleware/wifi_nxp/sdio_nxp_abs/incl;../../../../../../middleware/wifi_nxp/fwdnld_intf_abs;../../../../../../middleware/wifi_nxp/incl/port/net;../../../../../../middleware/wifi_nxp/incl/port/net/hooks;../../../../../../middleware/wifi_nxp/dhcpd;../../../../../../middleware/wifi_nxp/incl/wlcmgr;../../../../../../middleware/wifi_nxp/wifidriver/wpa_supp_if;../../../../../../middleware/wifi_nxp/wifidriver/wpa_supp_if/incl;../../../../../../middleware/wifi_nxp/certs;../../../../../../middleware/wifi_nxp/port/net;../../../../../../middleware/wifi_nxp/cli;../../../../../../middleware/wifi_nxp/nw_utils;../../../../../../middleware/usb/include;../../../../../../middleware/usb/host;../../../../../../middleware/usb/config/host/ehci;../../../../../../middleware/usb/host/class;../../../../../../middleware/usb/phy;../../../../../../middleware/fatfs/source;../../../../../../middleware/fatfs/source/fsl_usb_disk;../../../../../../middleware/littlefs;../../../../../../middleware/lwip/port;../../../../../../middleware/lwip/src/include;../../../../../../middleware/lwip/port/sys_arch/dynamic;../../../../../../middleware/mbedtls3x/include;../../../../../../middleware/mbedtls3x/library;../../../../../../middleware/mbedtls3x/port;../../../../../../middleware/sdmmc/common;../../../../../../middleware/sdmmc/osa;../../../../../../middleware/sdmmc/sdio;../../../../../../middleware/sdmmc/host/usdhc;../../../../../../middleware/wireless/ethermind/bluetooth/export/eOSAL;../../../../../../middleware/wireless/ethermind/bluetooth/export/include;../../../../../../middleware/wireless/ethermind/bluetooth/export/vendor;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/att;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/avctp;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/avdtp;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/bnep;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/dbase;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/hci_1.2;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/mcap;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/obex;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/rfcomm;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/sdp;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/sm;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/smp;../../../../../../middleware/wireless/ethermind/bluetooth/private/utils/aes_cmac;../../../../../../middleware/wireless/ethermind/bluetooth/private/utils/at_parser;../../../../../../middleware/wireless/ethermind/bluetooth/private/utils/object_parser;../../../../../../middleware/wireless/ethermind/bluetooth/private/utils/racp;../../../../../../middleware/wireless/ethermind/bluetooth/private/utils/storage;../../../../../../middleware/wireless/ethermind/bluetooth/private/utils/xml_parser;../../../../../../middleware/wireless/ethermind/port/pal/mcux/bluetooth;../../../../../../middleware/wireless/ethermind/port/pal/mcux/ethal;../../../../../../middleware/wireless/ethermind/port/pal/mcux/sbc;../../../../../../middleware/wireless/ethermind/port/osal/src/freertos;../../../../../../middleware/wireless/ethermind/port/pal/mcux;../../../../../../middleware/wireless/ethermind/bluetooth/private/utils/sbc;../../../../../../middleware/wireless/ethermind/bluetooth/export/extension;../../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/config;../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host;../../../../../../middleware/edgefast_bluetooth/include;../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/controller/configs/mbedtls;../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/crypto;../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/platform;../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind;../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/platform/configs;../../../../../../middleware/edgefast_bluetooth/source/porting;../../../../../../middleware/wireless/ethermind/port/pal/mcux/bluetooth/controller;../../../../../../middleware/edgefast_bluetooth/source/services;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../../rtos/freertos/freertos-kernel/template/ARM_CM33_3_priority_bits</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -380,6 +380,11 @@
         <Group>
           <GroupName>source</GroupName>
           <Files>
+            <File>
+              <FileName>edgefast_bluetooth_app.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../edgefast_bluetooth_app.h</FilePath>
+            </File>
             <File>
               <FileName>edgefast_bluetooth_app.h</FileName>
               <FileType>5</FileType>
@@ -481,29 +486,14 @@
               <FilePath>../FreeRTOSConfig.h</FilePath>
             </File>
             <File>
-              <FileName>app_config.h</FileName>
+              <FileName>edgefast_bluetooth_audio_config.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../app_config.h</FilePath>
+              <FilePath>../edgefast_bluetooth_audio_config.h</FilePath>
             </File>
             <File>
-              <FileName>edgefast_bluetooth_audio_config_Gen.h</FileName>
+              <FileName>edgefast_bluetooth_config.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../edgefast_bluetooth_audio_config_Gen.h</FilePath>
-            </File>
-            <File>
-              <FileName>edgefast_bluetooth_config_Gen.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../edgefast_bluetooth_config_Gen.h</FilePath>
-            </File>
-            <File>
-              <FileName>edgefast_bluetooth_debug_config_Gen.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../edgefast_bluetooth_debug_config_Gen.h</FilePath>
-            </File>
-            <File>
-              <FileName>edgefast_bluetooth_extension_config_Gen.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../edgefast_bluetooth_extension_config_Gen.h</FilePath>
+              <FilePath>../edgefast_bluetooth_config.h</FilePath>
             </File>
             <File>
               <FileName>fsl_debug_console_conf.h</FileName>
@@ -514,6 +504,16 @@
               <FileName>fsl_os_abstraction_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../fsl_os_abstraction_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../mcux_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../mcux_config.h</FilePath>
             </File>
             <File>
               <FileName>mcux_config.h</FileName>
@@ -1068,12 +1068,12 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>startup/arm</GroupName>
+          <GroupName>startup</GroupName>
           <Files>
             <File>
-              <FileName>startup_MIMXRT798S_cm33_core0.S</FileName>
-              <FileType>2</FileType>
-              <FilePath>../../../../../../devices/MIMXRT798S/arm/startup_MIMXRT798S_cm33_core0.S</FilePath>
+              <FileName>startup_MIMXRT798S_cm33_core0.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT798S/startup_MIMXRT798S_cm33_core0.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1258,12 +1258,12 @@
             <File>
               <FileName>fsl_assert.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT798S/utilities/fsl_assert.h</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT798S/utilities/debug_console/fsl_assert.h</FilePath>
             </File>
             <File>
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT798S/utilities/fsl_assert.c</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT798S/utilities/debug_console/fsl_assert.c</FilePath>
             </File>
             <File>
               <FileName>fsl_memcpy.S</FileName>
@@ -1458,48 +1458,8 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>flash/mflash</GroupName>
-          <Files>
-            <File>
-              <FileName>mflash_common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/flash/mflash/mflash_common.h</FilePath>
-            </File>
-            <File>
-              <FileName>mflash_file.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/flash/mflash/mflash_file.c</FilePath>
-            </File>
-            <File>
-              <FileName>mflash_file.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/flash/mflash/mflash_file.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>flash/mflash/mimxrt700</GroupName>
-          <Files>
-            <File>
-              <FileName>mflash_drv.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/flash/mflash/mimxrt700/mflash_drv.c</FilePath>
-            </File>
-            <File>
-              <FileName>mflash_drv.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/flash/mflash/mimxrt700/mflash_drv.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>component/osa</GroupName>
           <Files>
-            <File>
-              <FileName>fsl_os_abstraction.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/osa/fsl_os_abstraction.h</FilePath>
-            </File>
             <File>
               <FileName>fsl_os_abstraction_free_rtos.h</FileName>
               <FileType>5</FileType>
@@ -1509,6 +1469,71 @@
               <FileName>fsl_os_abstraction_free_rtos.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../components/osa/fsl_os_abstraction_free_rtos.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/osa/fsl_os_abstraction.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/wifi_bt_module/AzureWave/tx_pwr_limits</GroupName>
+          <Files>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_WW.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/wifi_bt_module/AzureWave/tx_pwr_limits/wlan_txpwrlimit_cfg_WW.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_WW_rw610.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/wifi_bt_module/AzureWave/tx_pwr_limits/wlan_txpwrlimit_cfg_WW_rw610.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/wifi_bt_module/Murata/tx_pwr_limits</GroupName>
+          <Files>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_1XK_WW.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1XK_WW.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_1ZM_WW.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1ZM_WW.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_2EL_WW.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_2EL_WW.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_NH.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_NH.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/wifi_bt_module/u-blox/tx_pwr_limits</GroupName>
+          <Files>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_jody_w5_WW.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/wifi_bt_module/u-blox/tx_pwr_limits/wlan_txpwrlimit_cfg_jody_w5_WW.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/wifi_bt_module/incl</GroupName>
+          <Files>
+            <File>
+              <FileName>wifi_bt_module_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/wifi_bt_module/incl/wifi_bt_module_config.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -9726,9 +9751,9 @@
           <GroupName>component/els_pkc</GroupName>
           <Files>
             <File>
-              <FileName>LA_OPT_Online_Code_Hosting.htm</FileName>
+              <FileName>LICENSE.txt</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../components/els_pkc/LA_OPT_Online_Code_Hosting.htm</FilePath>
+              <FilePath>../../../../../../components/els_pkc/LICENSE.txt</FilePath>
             </File>
             <File>
               <FileName>softwareContentRegister.txt</FileName>
@@ -14263,67 +14288,37 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component/wifi_bt_module/AzureWave/tx_pwr_limits</GroupName>
+          <GroupName>flash/mflash</GroupName>
           <Files>
             <File>
-              <FileName>wlan_txpwrlimit_cfg_WW.h</FileName>
+              <FileName>mflash_common.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../components/wifi_bt_module/AzureWave/tx_pwr_limits/wlan_txpwrlimit_cfg_WW.h</FilePath>
+              <FilePath>../../../../../../components/flash/mflash/mflash_common.h</FilePath>
             </File>
             <File>
-              <FileName>wlan_txpwrlimit_cfg_WW_rw610.h</FileName>
+              <FileName>mflash_file.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/flash/mflash/mflash_file.c</FilePath>
+            </File>
+            <File>
+              <FileName>mflash_file.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../components/wifi_bt_module/AzureWave/tx_pwr_limits/wlan_txpwrlimit_cfg_WW_rw610.h</FilePath>
+              <FilePath>../../../../../../components/flash/mflash/mflash_file.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>component/wifi_bt_module/Murata/tx_pwr_limits</GroupName>
+          <GroupName>flash/mflash/mimxrt700</GroupName>
           <Files>
             <File>
-              <FileName>wlan_txpwrlimit_cfg_murata_1XK_WW.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1XK_WW.h</FilePath>
+              <FileName>mflash_drv.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/flash/mflash/mimxrt700/mflash_drv.c</FilePath>
             </File>
             <File>
-              <FileName>wlan_txpwrlimit_cfg_murata_1ZM_WW.h</FileName>
+              <FileName>mflash_drv.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1ZM_WW.h</FilePath>
-            </File>
-            <File>
-              <FileName>wlan_txpwrlimit_cfg_murata_2DS_WW.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_2DS_WW.h</FilePath>
-            </File>
-            <File>
-              <FileName>wlan_txpwrlimit_cfg_murata_2EL_WW.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_2EL_WW.h</FilePath>
-            </File>
-            <File>
-              <FileName>wlan_txpwrlimit_cfg_murata_NH_FCC.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_NH_FCC.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component/wifi_bt_module/u-blox/tx_pwr_limits</GroupName>
-          <Files>
-            <File>
-              <FileName>wlan_txpwrlimit_cfg_jody_w5_WW.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/wifi_bt_module/u-blox/tx_pwr_limits/wlan_txpwrlimit_cfg_jody_w5_WW.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component/wifi_bt_module/incl</GroupName>
-          <Files>
-            <File>
-              <FileName>wifi_bt_module_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/wifi_bt_module/incl/wifi_bt_module_config.h</FilePath>
+              <FilePath>../../../../../../components/flash/mflash/mimxrt700/mflash_drv.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -14461,9 +14456,9 @@
               <FilePath>../../../../../../middleware/wifi_nxp/incl/wifi_cal_data_rw61x_3ant_diversity.h</FilePath>
             </File>
             <File>
-              <FileName>wifi_cal_data_rw61x_override.h</FileName>
+              <FileName>wifi_cal_data_override.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/wifi_nxp/incl/wifi_cal_data_rw61x_override.h</FilePath>
+              <FilePath>../../../../../../middleware/wifi_nxp/incl/wifi_cal_data_override.h</FilePath>
             </File>
             <File>
               <FileName>WIFI_IW416_BOARD_AW_AM457_CAL_DATA_EXT.h</FileName>
@@ -14678,26 +14673,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>wifi/wifi_bt_firmware/8801</GroupName>
-          <Files>
-            <File>
-              <FileName>sd8801_wlan.bin.inc</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/wifi_nxp/wifi_bt_firmware/8801/sd8801_wlan.bin.inc</FilePath>
-            </File>
-            <File>
-              <FileName>sd8801_wlan.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/wifi_nxp/wifi_bt_firmware/8801/sd8801_wlan.h</FilePath>
-            </File>
-            <File>
-              <FileName>8801_cpu1.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/wifi_nxp/wifi_bt_firmware/8801/8801_cpu1.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>wifi/wifi_bt_firmware/IW416</GroupName>
           <Files>
             <File>
@@ -14851,14 +14826,24 @@
           <GroupName>wifi/wifi_bt_firmware/iw610</GroupName>
           <Files>
             <File>
-              <FileName>sduart_iw610.bin.se.inc</FileName>
+              <FileName>sduartspi_iw610.bin.se.inc</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/wifi_nxp/wifi_bt_firmware/iw610/sduart_iw610.bin.se.inc</FilePath>
+              <FilePath>../../../../../../middleware/wifi_nxp/wifi_bt_firmware/iw610/sduartspi_iw610.bin.se.inc</FilePath>
             </File>
             <File>
               <FileName>sd_iw610.bin.se.inc</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/wifi_nxp/wifi_bt_firmware/iw610/sd_iw610.bin.se.inc</FilePath>
+            </File>
+            <File>
+              <FileName>uartspi_iw610.bin.se.inc</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/wifi_nxp/wifi_bt_firmware/iw610/uartspi_iw610.bin.se.inc</FilePath>
+            </File>
+            <File>
+              <FileName>sduart_iw610.bin.se.inc</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/wifi_nxp/wifi_bt_firmware/iw610/sduart_iw610.bin.se.inc</FilePath>
             </File>
             <File>
               <FileName>uart_iw610_bt.bin.se.inc</FileName>
@@ -15516,29 +15501,9 @@
               <FilePath>../../../../../../middleware/wifi_nxp/nw_utils/iperf.c</FilePath>
             </File>
             <File>
-              <FileName>init_enet.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/wifi_nxp/nw_utils/init_enet.c</FilePath>
-            </File>
-            <File>
               <FileName>network_cfg.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/wifi_nxp/nw_utils/network_cfg.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>wifi/nw_utils/telnet</GroupName>
-          <Files>
-            <File>
-              <FileName>telnet_server.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/wifi_nxp/nw_utils/telnet/telnet_server.h</FilePath>
-            </File>
-            <File>
-              <FileName>telnet_server.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/wifi_nxp/nw_utils/telnet/telnet_server.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -16948,36 +16913,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>mbedtls3x/port</GroupName>
-          <Files>
-            <File>
-              <FileName>mcux_mbedtls_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>mcux_mbedtls_accelerator_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_accelerator_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>mcux_mbedtls_psa_crypto_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_psa_crypto_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>mcux_mbedtls_accelerator_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_accelerator_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>mcux_psa_defines.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_psa_defines.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>mbedtls3x/include/mbedtls</GroupName>
           <Files>
             <File>
@@ -17371,6 +17306,11 @@
               <FilePath>../../../../../../middleware/mbedtls3x/include/psa/crypto_adjust_auto_enabled.h</FilePath>
             </File>
             <File>
+              <FileName>crypto_adjust_config_dependencies.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/include/psa/crypto_adjust_config_dependencies.h</FilePath>
+            </File>
+            <File>
               <FileName>crypto_adjust_config_key_pair_types.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/mbedtls3x/include/psa/crypto_adjust_config_key_pair_types.h</FilePath>
@@ -17539,6 +17479,16 @@
               <FileName>bignum_core.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/mbedtls3x/library/bignum_core.c</FilePath>
+            </File>
+            <File>
+              <FileName>bignum_core_invasive.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/library/bignum_core_invasive.h</FilePath>
+            </File>
+            <File>
+              <FileName>bignum_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/library/bignum_internal.h</FilePath>
             </File>
             <File>
               <FileName>bignum_mod.c</FileName>
@@ -18303,6 +18253,36 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>mbedtls3x/port</GroupName>
+          <Files>
+            <File>
+              <FileName>mcux_mbedtls_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_mbedtls_accelerator_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_accelerator_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_mbedtls_psa_crypto_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_psa_crypto_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_mbedtls_accelerator_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_accelerator_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_psa_defines.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_psa_defines.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>sdmmc/common</GroupName>
           <Files>
             <File>
@@ -18381,14 +18361,9 @@
           <GroupName>edgefast/bluetooth</GroupName>
           <Files>
             <File>
-              <FileName>dummy.txt</FileName>
+              <FileName>readme.txt</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/edgefast_bluetooth/boards/template/dummy.txt</FilePath>
-            </File>
-            <File>
-              <FileName>dummy.txt</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/edgefast_bluetooth/boards/template/dummy.txt</FilePath>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/readme.txt</FilePath>
             </File>
           </Files>
         </Group>
@@ -19435,11 +19410,6 @@
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/config/db_gen.h</FilePath>
             </File>
-            <File>
-              <FileName>dummy.txt</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/config/dummy.txt</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
@@ -20223,16 +20193,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>bt_ble</GroupName>
-          <Files>
-            <File>
-              <FileName>dummy.txt</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/wireless/ethermind/port/pal/mcux/bluetooth/dummy.txt</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>bt_ble/port/pal/mcux/bluetooth/controller</GroupName>
           <Files>
             <File>
@@ -20256,11 +20216,6 @@
           <GroupName>edgefast/bluetooth/source/services</GroupName>
           <Files>
             <File>
-              <FileName>dis.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/services/dis.c</FilePath>
-            </File>
-            <File>
               <FileName>wu.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/edgefast_bluetooth/source/services/wu.c</FilePath>
@@ -20270,11 +20225,6 @@
         <Group>
           <GroupName>edgefast/bluetooth/include/bluetooth/services</GroupName>
           <Files>
-            <File>
-              <FileName>dis.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/edgefast_bluetooth/include/bluetooth/services/dis.h</FilePath>
-            </File>
             <File>
               <FileName>wu.h</FileName>
               <FileType>5</FileType>
@@ -20510,6 +20460,11 @@
               <FileType>5</FileType>
               <FilePath>../example_board_readme.md</FilePath>
             </File>
+            <File>
+              <FileName>examples_shared_readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../examples_shared_readme.md</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>
@@ -20522,7 +20477,7 @@
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
-          <Device>MIMXRT798SGFOA:cm33_core0</Device>
+          <Device>MIMXRT798SGFOB:cm33_core0</Device>
           <Vendor>NXP</Vendor>
           <PackID>NXP.MIMXRT798S_DFP.17.0.0</PackID>
           <PackURL>https://mcuxpresso.nxp.com/cmsis_pack/repo/</PackURL>
@@ -20845,9 +20800,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../edgefast_bluetooth_app.h -include ../mcux_config.h -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
-              <Define>NDEBUG, CFG_BLE, LPUART_RING_BUFFER_SIZE=1024U, PRINTF_ADVANCED_ENABLE=1, SDK_DEBUGCONSOLE_UART=1, SDK_OS_FREE_RTOS, USE_RTOS=1, APPL_USE_STANDARD_IO, CONFIG_ARM=1, DATA_SECTION_IS_CACHEABLE=1, EDGEFAST_BT_LITTLEFS_MFLASH, FSL_DRIVER_TRANSFER_DOUBLE_WEAK_IRQ=0, FSL_FEATURE_FLASH_PAGE_SIZE_BYTES=4096, FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, GATT_CLIENT, GATT_DB, HAL_UART_ADAPTER_FIFO=1, IOT_WIFI_ENABLE_SAVE_NETWORK=1, LFS_NO_ERROR=1, LFS_NO_INTRINSICS=1, USB_HOST_CONFIG_BUFFER_PROPERTY_CACHEABLE=1, gMemManagerLight=0, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT798SGFOA_cm33_core0, DEBUG_CONSOLE_TRANSFER_NON_BLOCKING=1, OSA_USED, BOOT_HEADER_ENABLE=1, SERIAL_PORT_TYPE_UART=1, TIMER_PORT_TYPE_MRT=1, MFLASH_FILE_BASEADDR=7340032, PSA_CRYPTO_DRIVER_ELS_PKC, CONFIG_NXP_WIFI_SOFTAP_SUPPORT=1, SO_REUSE=1, PRINTF_FLOAT_ENABLE=1, MBEDTLS_CONFIG_FILE='\"mcux_mbedtls_config.h\"', SDIO_ENABLED=1, LFS_THREADSAFE=1, LOG_ENABLE_ASYNC_MODE=1, LOG_MAX_ARGUMENT_COUNT=10, LOG_ENABLE_OVERWRITE=0</Define>
+              <Define>NDEBUG, CFG_BLE, LPUART_RING_BUFFER_SIZE=1024U, PRINTF_ADVANCED_ENABLE=1, SDK_DEBUGCONSOLE_UART=1, SDK_OS_FREE_RTOS, USE_RTOS=1, APPL_USE_STANDARD_IO, CONFIG_ARM=1, DATA_SECTION_IS_CACHEABLE=1, EDGEFAST_BT_LITTLEFS_MFLASH, FSL_DRIVER_TRANSFER_DOUBLE_WEAK_IRQ=0, FSL_FEATURE_FLASH_PAGE_SIZE_BYTES=4096, FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, GATT_CLIENT, GATT_DB, HAL_UART_ADAPTER_FIFO=1, IOT_WIFI_ENABLE_SAVE_NETWORK=1, LFS_NO_ERROR=1, LFS_NO_INTRINSICS=1, USB_HOST_CONFIG_BUFFER_PROPERTY_CACHEABLE=1, gMemManagerLight=0, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT798SGFOB_cm33_core0, MIMXRT798S_cm33_core0_SERIES, DEBUG_CONSOLE_TRANSFER_NON_BLOCKING=1, OSA_USED, BOOT_HEADER_ENABLE=1, SERIAL_PORT_TYPE_UART=1, TIMER_PORT_TYPE_MRT=1, CONFIG_WIFI_BT_CMOBO_DNLD, CONFIG_WIFI_IND_DNLD=0, CONFIG_WIFI_IND_RESET=0, WIFI_IW612_BOARD_MURATA_2EL_M2, PSA_CRYPTO_DRIVER_ELS_PKC, MFLASH_FILE_BASEADDR=7340032, CONFIG_NXP_WIFI_SOFTAP_SUPPORT=1, PRINTF_FLOAT_ENABLE=1, SO_REUSE=1, MBEDTLS_CONFIG_FILE='\"mcux_mbedtls_config.h\"', SDIO_ENABLED=1, LFS_THREADSAFE=1, LOG_ENABLE_ASYNC_MODE=1, LOG_MAX_ARGUMENT_COUNT=10, LOG_ENABLE_OVERWRITE=1</Define>
               <Undefine/>
-              <IncludePath>..;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT798S;../../../../../../devices/MIMXRT798S/periph;../../../../../../devices/MIMXRT798S/drivers;../../../../../../devices/MIMXRT798S/utilities;../../../../../../components/lists;../../../../../../devices/MIMXRT798S/utilities/str;../../../../../../devices/MIMXRT798S/utilities/debug_console;../../../../../../components/log;../../../../../../components/serial_manager;../../../../../../components/button;../../../../../../components/common_task;../../../../../../components/gpio;../../../../../../components/timer;../../../../../../components/timer_manager;../../../../../../components/uart;../../../../../../components/flash/mflash;../../../../../../components/flash/mflash/mimxrt700;../../../../../../components/osa;../../../../../../components/els_pkc;../../../../../../components/els_pkc/src/comps/common/inc;../../../../../../components/els_pkc/src/comps/mcuxClAead/inc;../../../../../../components/els_pkc/src/comps/mcuxClAead/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClAeadModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClAeadModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClAes/inc;../../../../../../components/els_pkc/src/comps/mcuxClAes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClBuffer/inc;../../../../../../components/els_pkc/src/comps/mcuxClBuffer/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClCipher/inc;../../../../../../components/els_pkc/src/comps/mcuxClCipher/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClCipherModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClCipherModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClCore/inc;../../../../../../components/els_pkc/src/comps/mcuxClCrc/inc;../../../../../../components/els_pkc/src/comps/mcuxClCrc/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClEcc/inc;../../../../../../components/els_pkc/src/comps/mcuxClEcc/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClEls/inc;../../../../../../components/els_pkc/src/comps/mcuxClEls/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClGlikey/inc;../../../../../../components/els_pkc/src/comps/mcuxClGlikey/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClHash/inc;../../../../../../components/els_pkc/src/comps/mcuxClHash/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClHashModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClHashModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClHmac/inc;../../../../../../components/els_pkc/src/comps/mcuxClHmac/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClKey/inc;../../../../../../components/els_pkc/src/comps/mcuxClKey/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClMac/inc;../../../../../../components/els_pkc/src/comps/mcuxClMac/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClMacModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClMacModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClMath/inc;../../../../../../components/els_pkc/src/comps/mcuxClMath/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClMemory/inc;../../../../../../components/els_pkc/src/comps/mcuxClMemory/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxCsslMemory/inc;../../../../../../components/els_pkc/src/comps/mcuxCsslMemory/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaAeadModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaAeadModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaCipherModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaCipherModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaMacModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaMacModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaPkc/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaPkc/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaRandomModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaRandomModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSafo/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSm2/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSm2/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSm3/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSm3/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSm4/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSm4/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClPadding/inc;../../../../../../components/els_pkc/src/comps/mcuxClPadding/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClPkc/inc;../../../../../../components/els_pkc/src/comps/mcuxClPkc/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClPrng/inc;../../../../../../components/els_pkc/src/comps/mcuxClPrng/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClPsaDriver/inc;../../../../../../components/els_pkc/src/comps/mcuxClPsaDriver/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClRandom/inc;../../../../../../components/els_pkc/src/comps/mcuxClRandom/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClRandomModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClRandomModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClRsa/inc;../../../../../../components/els_pkc/src/comps/mcuxClRsa/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClSession/inc;../../../../../../components/els_pkc/src/comps/mcuxClSession/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClSignature/inc;../../../../../../components/els_pkc/src/comps/mcuxClSignature/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClTrng/inc;../../../../../../components/els_pkc/src/comps/mcuxClTrng/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxCsslCPreProcessor/inc;../../../../../../components/els_pkc/src/comps/mcuxCsslDataIntegrity/inc;../../../../../../components/els_pkc/src/comps/mcuxCsslFlowProtection/inc;../../../../../../components/els_pkc/src/comps/mcuxCsslParamIntegrity/inc;../../../../../../components/els_pkc/src/comps/mcuxCsslSecureCounter/inc;../../../../../../components/els_pkc/src/inc;../../../../../../components/els_pkc/src/compiler;../../../../../../components/els_pkc/src/platforms/mimxrt;../../../../../../components/els_pkc/src/platforms/mimxrt/inc;../../../../../../components/els_pkc/includes/platform/mimxrt;../../../../../../components/psa_crypto_driver/osal;../../../../../../components/psa_crypto_driver/osal/baremetal;../../../../../../components/psa_crypto_driver/els_pkc/oracle/platforms/mimxrt;../../../../../../components/psa_crypto_driver/els_pkc/oracle/inc;../../../../../../components/psa_crypto_driver/els_pkc/include/common;../../../../../../components/psa_crypto_driver/els_pkc/include/transparent;../../../../../../components/psa_crypto_driver/els_pkc/include/opaque;../../../../../../components/psa_crypto_driver/els_pkc;../../../../../../components/wifi_bt_module/AzureWave/tx_pwr_limits;../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits;../../../../../../components/wifi_bt_module/u-blox/tx_pwr_limits;../../../../../../components/wifi_bt_module/incl;../../../../../../middleware/wifi_nxp;../../../../../../middleware/wifi_nxp/incl;../../../../../../middleware/wifi_nxp/incl/port/osa;../../../../../../middleware/wifi_nxp/port/osa;../../../../../../middleware/wifi_nxp/incl/port;../../../../../../middleware/wifi_nxp/incl/wifidriver;../../../../../../middleware/wifi_nxp/wifi_bt_firmware;../../../../../../middleware/wifi_nxp/wifidriver;../../../../../../middleware/wifi_nxp/wifidriver/incl;../../../../../../middleware/wifi_nxp/wifi_bt_firmware/8801;../../../../../../middleware/wifi_nxp/wifi_bt_firmware/IW416;../../../../../../middleware/wifi_nxp/wifi_bt_firmware/8987;../../../../../../middleware/wifi_nxp/wifi_bt_firmware/nw61x;../../../../../../middleware/wifi_nxp/wifi_bt_firmware/iw610;../../../../../../middleware/wifi_nxp/firmware_dnld;../../../../../../middleware/wifi_nxp/sdio_nxp_abs;../../../../../../middleware/wifi_nxp/sdio_nxp_abs/incl;../../../../../../middleware/wifi_nxp/fwdnld_intf_abs;../../../../../../middleware/wifi_nxp/incl/port/net;../../../../../../middleware/wifi_nxp/incl/port/net/hooks;../../../../../../middleware/wifi_nxp/dhcpd;../../../../../../middleware/wifi_nxp/incl/wlcmgr;../../../../../../middleware/wifi_nxp/wifidriver/wpa_supp_if;../../../../../../middleware/wifi_nxp/wifidriver/wpa_supp_if/incl;../../../../../../middleware/wifi_nxp/certs;../../../../../../middleware/wifi_nxp/port/net;../../../../../../middleware/wifi_nxp/cli;../../../../../../middleware/wifi_nxp/nw_utils;../../../../../../middleware/wifi_nxp/nw_utils/telnet;../../../../../../middleware/usb/include;../../../../../../middleware/usb/host;../../../../../../middleware/usb/host/class;../../../../../../middleware/usb/phy;../../../../../../middleware/fatfs/source;../../../../../../middleware/fatfs/source/fsl_usb_disk;../../../../../../middleware/littlefs;../../../../../../middleware/lwip/port;../../../../../../middleware/lwip/src;../../../../../../middleware/lwip/src/include;../../../../../../middleware/lwip/src/include/lwip;../../../../../../middleware/lwip/port/sys_arch/dynamic;../../../../../../middleware/lwip/src/include/lwip/apps;../../../../../../middleware/mbedtls3x/port;../../../../../../middleware/mbedtls3x/include;../../../../../../middleware/mbedtls3x/library;../../../../../../middleware/sdmmc/common;../../../../../../middleware/sdmmc/osa;../../../../../../middleware/sdmmc/sdio;../../../../../../middleware/sdmmc/host/usdhc;../../../../../../middleware/wireless/ethermind/bluetooth/export/eOSAL;../../../../../../middleware/wireless/ethermind/bluetooth/export/include;../../../../../../middleware/wireless/ethermind/bluetooth/export/vendor;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/att;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/avctp;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/avdtp;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/bnep;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/dbase;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/hci_1.2;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/mcap;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/obex;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/rfcomm;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/sdp;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/sm;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/smp;../../../../../../middleware/wireless/ethermind/bluetooth/private/utils/aes_cmac;../../../../../../middleware/wireless/ethermind/bluetooth/private/utils/at_parser;../../../../../../middleware/wireless/ethermind/bluetooth/private/utils/object_parser;../../../../../../middleware/wireless/ethermind/bluetooth/private/utils/racp;../../../../../../middleware/wireless/ethermind/bluetooth/private/utils/storage;../../../../../../middleware/wireless/ethermind/bluetooth/private/utils/xml_parser;../../../../../../middleware/wireless/ethermind/port/pal/mcux/bluetooth;../../../../../../middleware/wireless/ethermind/port/pal/mcux/ethal;../../../../../../middleware/wireless/ethermind/port/pal/mcux/sbc;../../../../../../middleware/wireless/ethermind/port/osal/src/freertos;../../../../../../middleware/wireless/ethermind/port/pal/mcux;../../../../../../middleware/wireless/ethermind/bluetooth/private/utils/sbc;../../../../../../middleware/wireless/ethermind/bluetooth/export/extension;../../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/config;../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host;../../../../../../middleware/edgefast_bluetooth/include;../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/controller/configs/mbedtls;../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/crypto;../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/platform;../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind;../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/platform/configs;../../../../../../middleware/edgefast_bluetooth/source/porting;../../../../../../middleware/wireless/ethermind/port/pal/mcux/bluetooth/controller;../../../../../../middleware/edgefast_bluetooth/source/services;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../../rtos/freertos/freertos-kernel/template/ARM_CM33_3_priority_bits</IncludePath>
+              <IncludePath>..;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT798S;../../../../../../devices/MIMXRT798S/periph;../../../../../../devices/MIMXRT798S/drivers;../../../../../../devices/MIMXRT798S/utilities/debug_console;../../../../../../components/lists;../../../../../../devices/MIMXRT798S/utilities/str;../../../../../../components/log;../../../../../../components/serial_manager;../../../../../../components/button;../../../../../../components/common_task;../../../../../../components/gpio;../../../../../../components/timer;../../../../../../components/timer_manager;../../../../../../components/uart;../../../../../../components/osa;../../../../../../components/wifi_bt_module/AzureWave/tx_pwr_limits;../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits;../../../../../../components/wifi_bt_module/u-blox/tx_pwr_limits;../../../../../../components/wifi_bt_module/incl;../../../../../../components/els_pkc;../../../../../../components/els_pkc/src/comps/common/inc;../../../../../../components/els_pkc/src/comps/mcuxClAead/inc;../../../../../../components/els_pkc/src/comps/mcuxClAead/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClAeadModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClAeadModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClAes/inc;../../../../../../components/els_pkc/src/comps/mcuxClAes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClBuffer/inc;../../../../../../components/els_pkc/src/comps/mcuxClBuffer/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClCipher/inc;../../../../../../components/els_pkc/src/comps/mcuxClCipher/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClCipherModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClCipherModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClCore/inc;../../../../../../components/els_pkc/src/comps/mcuxClCrc/inc;../../../../../../components/els_pkc/src/comps/mcuxClCrc/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClEcc/inc;../../../../../../components/els_pkc/src/comps/mcuxClEcc/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClEls/inc;../../../../../../components/els_pkc/src/comps/mcuxClEls/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClGlikey/inc;../../../../../../components/els_pkc/src/comps/mcuxClGlikey/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClHash/inc;../../../../../../components/els_pkc/src/comps/mcuxClHash/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClHashModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClHashModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClHmac/inc;../../../../../../components/els_pkc/src/comps/mcuxClHmac/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClKey/inc;../../../../../../components/els_pkc/src/comps/mcuxClKey/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClMac/inc;../../../../../../components/els_pkc/src/comps/mcuxClMac/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClMacModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClMacModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClMath/inc;../../../../../../components/els_pkc/src/comps/mcuxClMath/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClMemory/inc;../../../../../../components/els_pkc/src/comps/mcuxClMemory/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxCsslMemory/inc;../../../../../../components/els_pkc/src/comps/mcuxCsslMemory/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaAeadModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaAeadModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaCipherModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaCipherModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaMacModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaMacModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaPkc/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaPkc/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaRandomModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaRandomModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSafo/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSm2/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSm2/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSm3/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSm3/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSm4/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSm4/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClPadding/inc;../../../../../../components/els_pkc/src/comps/mcuxClPadding/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClPkc/inc;../../../../../../components/els_pkc/src/comps/mcuxClPkc/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClPrng/inc;../../../../../../components/els_pkc/src/comps/mcuxClPrng/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClPsaDriver/inc;../../../../../../components/els_pkc/src/comps/mcuxClPsaDriver/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClRandom/inc;../../../../../../components/els_pkc/src/comps/mcuxClRandom/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClRandomModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClRandomModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClRsa/inc;../../../../../../components/els_pkc/src/comps/mcuxClRsa/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClSession/inc;../../../../../../components/els_pkc/src/comps/mcuxClSession/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClSignature/inc;../../../../../../components/els_pkc/src/comps/mcuxClSignature/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClTrng/inc;../../../../../../components/els_pkc/src/comps/mcuxClTrng/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxCsslCPreProcessor/inc;../../../../../../components/els_pkc/src/comps/mcuxCsslDataIntegrity/inc;../../../../../../components/els_pkc/src/comps/mcuxCsslFlowProtection/inc;../../../../../../components/els_pkc/src/comps/mcuxCsslParamIntegrity/inc;../../../../../../components/els_pkc/src/comps/mcuxCsslSecureCounter/inc;../../../../../../components/els_pkc/src/inc;../../../../../../components/els_pkc/src/compiler;../../../../../../components/els_pkc/src/platforms/mimxrt;../../../../../../components/els_pkc/src/platforms/mimxrt/inc;../../../../../../components/els_pkc/includes/platform/mimxrt;../../../../../../components/psa_crypto_driver/osal;../../../../../../components/psa_crypto_driver/osal/baremetal;../../../../../../components/psa_crypto_driver/els_pkc/oracle/platforms/mimxrt;../../../../../../components/psa_crypto_driver/els_pkc/oracle/inc;../../../../../../components/psa_crypto_driver/els_pkc/include/common;../../../../../../components/psa_crypto_driver/els_pkc/include/transparent;../../../../../../components/psa_crypto_driver/els_pkc/include/opaque;../../../../../../components/psa_crypto_driver/els_pkc;../../../../../../components/flash/mflash;../../../../../../components/flash/mflash/mimxrt700;../../../../../../middleware/wifi_nxp;../../../../../../middleware/wifi_nxp/incl;../../../../../../middleware/wifi_nxp/incl/port/osa;../../../../../../middleware/wifi_nxp/port/osa;../../../../../../middleware/wifi_nxp/incl/port;../../../../../../middleware/wifi_nxp/incl/wifidriver;../../../../../../middleware/wifi_nxp/wifi_bt_firmware;../../../../../../middleware/wifi_nxp/wifidriver;../../../../../../middleware/wifi_nxp/wifidriver/incl;../../../../../../middleware/wifi_nxp/wifi_bt_firmware/IW416;../../../../../../middleware/wifi_nxp/wifi_bt_firmware/8987;../../../../../../middleware/wifi_nxp/wifi_bt_firmware/nw61x;../../../../../../middleware/wifi_nxp/wifi_bt_firmware/iw610;../../../../../../middleware/wifi_nxp/firmware_dnld;../../../../../../middleware/wifi_nxp/sdio_nxp_abs;../../../../../../middleware/wifi_nxp/sdio_nxp_abs/incl;../../../../../../middleware/wifi_nxp/fwdnld_intf_abs;../../../../../../middleware/wifi_nxp/incl/port/net;../../../../../../middleware/wifi_nxp/incl/port/net/hooks;../../../../../../middleware/wifi_nxp/dhcpd;../../../../../../middleware/wifi_nxp/incl/wlcmgr;../../../../../../middleware/wifi_nxp/wifidriver/wpa_supp_if;../../../../../../middleware/wifi_nxp/wifidriver/wpa_supp_if/incl;../../../../../../middleware/wifi_nxp/certs;../../../../../../middleware/wifi_nxp/port/net;../../../../../../middleware/wifi_nxp/cli;../../../../../../middleware/wifi_nxp/nw_utils;../../../../../../middleware/usb/include;../../../../../../middleware/usb/host;../../../../../../middleware/usb/config/host/ehci;../../../../../../middleware/usb/host/class;../../../../../../middleware/usb/phy;../../../../../../middleware/fatfs/source;../../../../../../middleware/fatfs/source/fsl_usb_disk;../../../../../../middleware/littlefs;../../../../../../middleware/lwip/port;../../../../../../middleware/lwip/src/include;../../../../../../middleware/lwip/port/sys_arch/dynamic;../../../../../../middleware/mbedtls3x/include;../../../../../../middleware/mbedtls3x/library;../../../../../../middleware/mbedtls3x/port;../../../../../../middleware/sdmmc/common;../../../../../../middleware/sdmmc/osa;../../../../../../middleware/sdmmc/sdio;../../../../../../middleware/sdmmc/host/usdhc;../../../../../../middleware/wireless/ethermind/bluetooth/export/eOSAL;../../../../../../middleware/wireless/ethermind/bluetooth/export/include;../../../../../../middleware/wireless/ethermind/bluetooth/export/vendor;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/att;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/avctp;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/avdtp;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/bnep;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/dbase;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/hci_1.2;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/mcap;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/obex;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/rfcomm;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/sdp;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/sm;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/smp;../../../../../../middleware/wireless/ethermind/bluetooth/private/utils/aes_cmac;../../../../../../middleware/wireless/ethermind/bluetooth/private/utils/at_parser;../../../../../../middleware/wireless/ethermind/bluetooth/private/utils/object_parser;../../../../../../middleware/wireless/ethermind/bluetooth/private/utils/racp;../../../../../../middleware/wireless/ethermind/bluetooth/private/utils/storage;../../../../../../middleware/wireless/ethermind/bluetooth/private/utils/xml_parser;../../../../../../middleware/wireless/ethermind/port/pal/mcux/bluetooth;../../../../../../middleware/wireless/ethermind/port/pal/mcux/ethal;../../../../../../middleware/wireless/ethermind/port/pal/mcux/sbc;../../../../../../middleware/wireless/ethermind/port/osal/src/freertos;../../../../../../middleware/wireless/ethermind/port/pal/mcux;../../../../../../middleware/wireless/ethermind/bluetooth/private/utils/sbc;../../../../../../middleware/wireless/ethermind/bluetooth/export/extension;../../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/config;../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host;../../../../../../middleware/edgefast_bluetooth/include;../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/controller/configs/mbedtls;../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/crypto;../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/platform;../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind;../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/platform/configs;../../../../../../middleware/edgefast_bluetooth/source/porting;../../../../../../middleware/wireless/ethermind/port/pal/mcux/bluetooth/controller;../../../../../../middleware/edgefast_bluetooth/source/services;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../../rtos/freertos/freertos-kernel/template/ARM_CM33_3_priority_bits</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -20862,10 +20817,10 @@
             <useXO>0</useXO>
             <ClangAsOpt>2</ClangAsOpt>
             <VariousControls>
-              <MiscControls/>
-              <Define>MCUXPRESSO_SDK, CPU_MIMXRT798SGFOA_cm33_core0, DEBUG_CONSOLE_TRANSFER_NON_BLOCKING, OSA_USED</Define>
+              <MiscControls>-include ../mcux_config.h</MiscControls>
+              <Define>MCUXPRESSO_SDK, CPU_MIMXRT798SGFOB_cm33_core0, MIMXRT798S_cm33_core0_SERIES, DEBUG_CONSOLE_TRANSFER_NON_BLOCKING, OSA_USED</Define>
               <Undefine/>
-              <IncludePath>..;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT798S;../../../../../../devices/MIMXRT798S/periph;../../../../../../devices/periph;../../../../../../devices/MIMXRT798S/drivers;../../../../../../devices/MIMXRT798S/utilities;../../../../../../components/lists;../../../../../../devices/MIMXRT798S/utilities/str;../../../../../../devices/MIMXRT798S/utilities/debug_console;../../../../../../components/log;../../../../../../components/serial_manager;../../../../../../components/button;../../../../../../components/common_task;../../../../../../components/gpio;../../../../../../components/timer;../../../../../../components/timer_manager;../../../../../../components/uart;../../../../../../components/flash/mflash;../../../../../../components/flash/mflash/mimxrt700;../../../../../../components/osa;../../../../../../components/els_pkc;../../../../../../components/els_pkc/src/comps/common/inc;../../../../../../components/els_pkc/src/comps/mcuxClAead/inc;../../../../../../components/els_pkc/src/comps/mcuxClAead/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClAeadModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClAeadModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClAes/inc;../../../../../../components/els_pkc/src/comps/mcuxClAes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClBuffer/inc;../../../../../../components/els_pkc/src/comps/mcuxClBuffer/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClCipher/inc;../../../../../../components/els_pkc/src/comps/mcuxClCipher/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClCipherModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClCipherModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClCore/inc;../../../../../../components/els_pkc/src/comps/mcuxClCrc/inc;../../../../../../components/els_pkc/src/comps/mcuxClCrc/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClEcc/inc;../../../../../../components/els_pkc/src/comps/mcuxClEcc/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClEls/inc;../../../../../../components/els_pkc/src/comps/mcuxClEls/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClGlikey/inc;../../../../../../components/els_pkc/src/comps/mcuxClGlikey/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClHash/inc;../../../../../../components/els_pkc/src/comps/mcuxClHash/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClHashModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClHashModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClHmac/inc;../../../../../../components/els_pkc/src/comps/mcuxClHmac/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClKey/inc;../../../../../../components/els_pkc/src/comps/mcuxClKey/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClMac/inc;../../../../../../components/els_pkc/src/comps/mcuxClMac/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClMacModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClMacModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClMath/inc;../../../../../../components/els_pkc/src/comps/mcuxClMath/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClMemory/inc;../../../../../../components/els_pkc/src/comps/mcuxClMemory/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxCsslMemory/inc;../../../../../../components/els_pkc/src/comps/mcuxCsslMemory/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaAeadModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaAeadModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaCipherModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaCipherModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaMacModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaMacModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaPkc/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaPkc/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaRandomModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaRandomModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSafo/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSm2/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSm2/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSm3/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSm3/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSm4/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSm4/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClPadding/inc;../../../../../../components/els_pkc/src/comps/mcuxClPadding/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClPkc/inc;../../../../../../components/els_pkc/src/comps/mcuxClPkc/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClPrng/inc;../../../../../../components/els_pkc/src/comps/mcuxClPrng/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClPsaDriver/inc;../../../../../../components/els_pkc/src/comps/mcuxClPsaDriver/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClRandom/inc;../../../../../../components/els_pkc/src/comps/mcuxClRandom/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClRandomModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClRandomModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClRsa/inc;../../../../../../components/els_pkc/src/comps/mcuxClRsa/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClSession/inc;../../../../../../components/els_pkc/src/comps/mcuxClSession/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClSignature/inc;../../../../../../components/els_pkc/src/comps/mcuxClSignature/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClTrng/inc;../../../../../../components/els_pkc/src/comps/mcuxClTrng/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxCsslCPreProcessor/inc;../../../../../../components/els_pkc/src/comps/mcuxCsslDataIntegrity/inc;../../../../../../components/els_pkc/src/comps/mcuxCsslFlowProtection/inc;../../../../../../components/els_pkc/src/comps/mcuxCsslParamIntegrity/inc;../../../../../../components/els_pkc/src/comps/mcuxCsslSecureCounter/inc;../../../../../../components/els_pkc/src/inc;../../../../../../components/els_pkc/src/compiler;../../../../../../components/els_pkc/src/platforms/mimxrt;../../../../../../components/els_pkc/src/platforms/mimxrt/inc;../../../../../../components/els_pkc/includes/platform/mimxrt;../../../../../../components/psa_crypto_driver/osal;../../../../../../components/psa_crypto_driver/osal/baremetal;../../../../../../components/psa_crypto_driver/els_pkc/oracle/platforms/mimxrt;../../../../../../components/psa_crypto_driver/els_pkc/oracle/inc;../../../../../../components/psa_crypto_driver/els_pkc/include/common;../../../../../../components/psa_crypto_driver/els_pkc/include/transparent;../../../../../../components/psa_crypto_driver/els_pkc/include/opaque;../../../../../../components/psa_crypto_driver/els_pkc;../../../../../../components/wifi_bt_module/AzureWave/tx_pwr_limits;../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits;../../../../../../components/wifi_bt_module/u-blox/tx_pwr_limits;../../../../../../components/wifi_bt_module/incl;../../../../../../middleware/wifi_nxp;../../../../../../middleware/wifi_nxp/incl;../../../../../../middleware/wifi_nxp/incl/port/osa;../../../../../../middleware/wifi_nxp/port/osa;../../../../../../middleware/wifi_nxp/incl/port;../../../../../../middleware/wifi_nxp/incl/wifidriver;../../../../../../middleware/wifi_nxp/wifi_bt_firmware;../../../../../../middleware/wifi_nxp/wifidriver;../../../../../../middleware/wifi_nxp/wifidriver/incl;../../../../../../middleware/wifi_nxp/wifi_bt_firmware/8801;../../../../../../middleware/wifi_nxp/wifi_bt_firmware/IW416;../../../../../../middleware/wifi_nxp/wifi_bt_firmware/8987;../../../../../../middleware/wifi_nxp/wifi_bt_firmware/nw61x;../../../../../../middleware/wifi_nxp/wifi_bt_firmware/iw610;../../../../../../middleware/wifi_nxp/firmware_dnld;../../../../../../middleware/wifi_nxp/sdio_nxp_abs;../../../../../../middleware/wifi_nxp/sdio_nxp_abs/incl;../../../../../../middleware/wifi_nxp/fwdnld_intf_abs;../../../../../../middleware/wifi_nxp/incl/port/net;../../../../../../middleware/wifi_nxp/incl/port/net/hooks;../../../../../../middleware/wifi_nxp/dhcpd;../../../../../../middleware/wifi_nxp/incl/wlcmgr;../../../../../../middleware/wifi_nxp/wifidriver/wpa_supp_if;../../../../../../middleware/wifi_nxp/wifidriver/wpa_supp_if/incl;../../../../../../middleware/wifi_nxp/certs;../../../../../../middleware/wifi_nxp/port/net;../../../../../../middleware/wifi_nxp/cli;../../../../../../middleware/wifi_nxp/nw_utils;../../../../../../middleware/wifi_nxp/nw_utils/telnet;../../../../../../middleware/usb/include;../../../../../../middleware/usb/host;../../../../../../middleware/usb/host/class;../../../../../../middleware/usb/phy;../../../../../../middleware/fatfs/source;../../../../../../middleware/fatfs/source/fsl_usb_disk;../../../../../../middleware/littlefs;../../../../../../middleware/lwip/port;../../../../../../middleware/lwip/src;../../../../../../middleware/lwip/src/include;../../../../../../middleware/lwip/src/include/lwip;../../../../../../middleware/lwip/port/sys_arch/dynamic;../../../../../../middleware/lwip/src/include/lwip/apps;../../../../../../middleware/mbedtls3x/port;../../../../../../middleware/mbedtls3x/include;../../../../../../middleware/mbedtls3x/library;../../../../../../middleware/sdmmc/common;../../../../../../middleware/sdmmc/osa;../../../../../../middleware/sdmmc/sdio;../../../../../../middleware/sdmmc/host/usdhc;../../../../../../middleware/wireless/ethermind/bluetooth/export/eOSAL;../../../../../../middleware/wireless/ethermind/bluetooth/export/include;../../../../../../middleware/wireless/ethermind/bluetooth/export/vendor;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/att;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/avctp;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/avdtp;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/bnep;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/dbase;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/hci_1.2;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/mcap;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/obex;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/rfcomm;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/sdp;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/sm;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/smp;../../../../../../middleware/wireless/ethermind/bluetooth/private/utils/aes_cmac;../../../../../../middleware/wireless/ethermind/bluetooth/private/utils/at_parser;../../../../../../middleware/wireless/ethermind/bluetooth/private/utils/object_parser;../../../../../../middleware/wireless/ethermind/bluetooth/private/utils/racp;../../../../../../middleware/wireless/ethermind/bluetooth/private/utils/storage;../../../../../../middleware/wireless/ethermind/bluetooth/private/utils/xml_parser;../../../../../../middleware/wireless/ethermind/port/pal/mcux/bluetooth;../../../../../../middleware/wireless/ethermind/port/pal/mcux/ethal;../../../../../../middleware/wireless/ethermind/port/pal/mcux/sbc;../../../../../../middleware/wireless/ethermind/port/osal/src/freertos;../../../../../../middleware/wireless/ethermind/port/pal/mcux;../../../../../../middleware/wireless/ethermind/bluetooth/private/utils/sbc;../../../../../../middleware/wireless/ethermind/bluetooth/export/extension;../../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/config;../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host;../../../../../../middleware/edgefast_bluetooth/include;../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/controller/configs/mbedtls;../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/crypto;../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/platform;../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind;../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/platform/configs;../../../../../../middleware/edgefast_bluetooth/source/porting;../../../../../../middleware/wireless/ethermind/port/pal/mcux/bluetooth/controller;../../../../../../middleware/edgefast_bluetooth/source/services;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../../rtos/freertos/freertos-kernel/template/ARM_CM33_3_priority_bits</IncludePath>
+              <IncludePath>..;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT798S;../../../../../../devices/MIMXRT798S/periph;../../../../../../devices/periph;../../../../../../devices/MIMXRT798S/drivers;../../../../../../devices/MIMXRT798S/utilities/debug_console;../../../../../../components/lists;../../../../../../devices/MIMXRT798S/utilities/str;../../../../../../components/log;../../../../../../components/serial_manager;../../../../../../components/button;../../../../../../components/common_task;../../../../../../components/gpio;../../../../../../components/timer;../../../../../../components/timer_manager;../../../../../../components/uart;../../../../../../components/osa;../../../../../../components/wifi_bt_module/AzureWave/tx_pwr_limits;../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits;../../../../../../components/wifi_bt_module/u-blox/tx_pwr_limits;../../../../../../components/wifi_bt_module/incl;../../../../../../components/els_pkc;../../../../../../components/els_pkc/src/comps/common/inc;../../../../../../components/els_pkc/src/comps/mcuxClAead/inc;../../../../../../components/els_pkc/src/comps/mcuxClAead/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClAeadModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClAeadModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClAes/inc;../../../../../../components/els_pkc/src/comps/mcuxClAes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClBuffer/inc;../../../../../../components/els_pkc/src/comps/mcuxClBuffer/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClCipher/inc;../../../../../../components/els_pkc/src/comps/mcuxClCipher/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClCipherModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClCipherModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClCore/inc;../../../../../../components/els_pkc/src/comps/mcuxClCrc/inc;../../../../../../components/els_pkc/src/comps/mcuxClCrc/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClEcc/inc;../../../../../../components/els_pkc/src/comps/mcuxClEcc/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClEls/inc;../../../../../../components/els_pkc/src/comps/mcuxClEls/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClGlikey/inc;../../../../../../components/els_pkc/src/comps/mcuxClGlikey/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClHash/inc;../../../../../../components/els_pkc/src/comps/mcuxClHash/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClHashModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClHashModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClHmac/inc;../../../../../../components/els_pkc/src/comps/mcuxClHmac/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClKey/inc;../../../../../../components/els_pkc/src/comps/mcuxClKey/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClMac/inc;../../../../../../components/els_pkc/src/comps/mcuxClMac/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClMacModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClMacModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClMath/inc;../../../../../../components/els_pkc/src/comps/mcuxClMath/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClMemory/inc;../../../../../../components/els_pkc/src/comps/mcuxClMemory/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxCsslMemory/inc;../../../../../../components/els_pkc/src/comps/mcuxCsslMemory/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaAeadModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaAeadModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaCipherModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaCipherModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaMacModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaMacModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaPkc/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaPkc/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaRandomModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaRandomModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSafo/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSm2/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSm2/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSm3/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSm3/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSm4/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSm4/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClPadding/inc;../../../../../../components/els_pkc/src/comps/mcuxClPadding/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClPkc/inc;../../../../../../components/els_pkc/src/comps/mcuxClPkc/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClPrng/inc;../../../../../../components/els_pkc/src/comps/mcuxClPrng/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClPsaDriver/inc;../../../../../../components/els_pkc/src/comps/mcuxClPsaDriver/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClRandom/inc;../../../../../../components/els_pkc/src/comps/mcuxClRandom/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClRandomModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClRandomModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClRsa/inc;../../../../../../components/els_pkc/src/comps/mcuxClRsa/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClSession/inc;../../../../../../components/els_pkc/src/comps/mcuxClSession/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClSignature/inc;../../../../../../components/els_pkc/src/comps/mcuxClSignature/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClTrng/inc;../../../../../../components/els_pkc/src/comps/mcuxClTrng/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxCsslCPreProcessor/inc;../../../../../../components/els_pkc/src/comps/mcuxCsslDataIntegrity/inc;../../../../../../components/els_pkc/src/comps/mcuxCsslFlowProtection/inc;../../../../../../components/els_pkc/src/comps/mcuxCsslParamIntegrity/inc;../../../../../../components/els_pkc/src/comps/mcuxCsslSecureCounter/inc;../../../../../../components/els_pkc/src/inc;../../../../../../components/els_pkc/src/compiler;../../../../../../components/els_pkc/src/platforms/mimxrt;../../../../../../components/els_pkc/src/platforms/mimxrt/inc;../../../../../../components/els_pkc/includes/platform/mimxrt;../../../../../../components/psa_crypto_driver/osal;../../../../../../components/psa_crypto_driver/osal/baremetal;../../../../../../components/psa_crypto_driver/els_pkc/oracle/platforms/mimxrt;../../../../../../components/psa_crypto_driver/els_pkc/oracle/inc;../../../../../../components/psa_crypto_driver/els_pkc/include/common;../../../../../../components/psa_crypto_driver/els_pkc/include/transparent;../../../../../../components/psa_crypto_driver/els_pkc/include/opaque;../../../../../../components/psa_crypto_driver/els_pkc;../../../../../../components/flash/mflash;../../../../../../components/flash/mflash/mimxrt700;../../../../../../middleware/wifi_nxp;../../../../../../middleware/wifi_nxp/incl;../../../../../../middleware/wifi_nxp/incl/port/osa;../../../../../../middleware/wifi_nxp/port/osa;../../../../../../middleware/wifi_nxp/incl/port;../../../../../../middleware/wifi_nxp/incl/wifidriver;../../../../../../middleware/wifi_nxp/wifi_bt_firmware;../../../../../../middleware/wifi_nxp/wifidriver;../../../../../../middleware/wifi_nxp/wifidriver/incl;../../../../../../middleware/wifi_nxp/wifi_bt_firmware/IW416;../../../../../../middleware/wifi_nxp/wifi_bt_firmware/8987;../../../../../../middleware/wifi_nxp/wifi_bt_firmware/nw61x;../../../../../../middleware/wifi_nxp/wifi_bt_firmware/iw610;../../../../../../middleware/wifi_nxp/firmware_dnld;../../../../../../middleware/wifi_nxp/sdio_nxp_abs;../../../../../../middleware/wifi_nxp/sdio_nxp_abs/incl;../../../../../../middleware/wifi_nxp/fwdnld_intf_abs;../../../../../../middleware/wifi_nxp/incl/port/net;../../../../../../middleware/wifi_nxp/incl/port/net/hooks;../../../../../../middleware/wifi_nxp/dhcpd;../../../../../../middleware/wifi_nxp/incl/wlcmgr;../../../../../../middleware/wifi_nxp/wifidriver/wpa_supp_if;../../../../../../middleware/wifi_nxp/wifidriver/wpa_supp_if/incl;../../../../../../middleware/wifi_nxp/certs;../../../../../../middleware/wifi_nxp/port/net;../../../../../../middleware/wifi_nxp/cli;../../../../../../middleware/wifi_nxp/nw_utils;../../../../../../middleware/usb/include;../../../../../../middleware/usb/host;../../../../../../middleware/usb/config/host/ehci;../../../../../../middleware/usb/host/class;../../../../../../middleware/usb/phy;../../../../../../middleware/fatfs/source;../../../../../../middleware/fatfs/source/fsl_usb_disk;../../../../../../middleware/littlefs;../../../../../../middleware/lwip/port;../../../../../../middleware/lwip/src/include;../../../../../../middleware/lwip/port/sys_arch/dynamic;../../../../../../middleware/mbedtls3x/include;../../../../../../middleware/mbedtls3x/library;../../../../../../middleware/mbedtls3x/port;../../../../../../middleware/sdmmc/common;../../../../../../middleware/sdmmc/osa;../../../../../../middleware/sdmmc/sdio;../../../../../../middleware/sdmmc/host/usdhc;../../../../../../middleware/wireless/ethermind/bluetooth/export/eOSAL;../../../../../../middleware/wireless/ethermind/bluetooth/export/include;../../../../../../middleware/wireless/ethermind/bluetooth/export/vendor;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/att;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/avctp;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/avdtp;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/bnep;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/dbase;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/hci_1.2;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/mcap;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/obex;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/rfcomm;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/sdp;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/sm;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/smp;../../../../../../middleware/wireless/ethermind/bluetooth/private/utils/aes_cmac;../../../../../../middleware/wireless/ethermind/bluetooth/private/utils/at_parser;../../../../../../middleware/wireless/ethermind/bluetooth/private/utils/object_parser;../../../../../../middleware/wireless/ethermind/bluetooth/private/utils/racp;../../../../../../middleware/wireless/ethermind/bluetooth/private/utils/storage;../../../../../../middleware/wireless/ethermind/bluetooth/private/utils/xml_parser;../../../../../../middleware/wireless/ethermind/port/pal/mcux/bluetooth;../../../../../../middleware/wireless/ethermind/port/pal/mcux/ethal;../../../../../../middleware/wireless/ethermind/port/pal/mcux/sbc;../../../../../../middleware/wireless/ethermind/port/osal/src/freertos;../../../../../../middleware/wireless/ethermind/port/pal/mcux;../../../../../../middleware/wireless/ethermind/bluetooth/private/utils/sbc;../../../../../../middleware/wireless/ethermind/bluetooth/export/extension;../../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/config;../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host;../../../../../../middleware/edgefast_bluetooth/include;../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/controller/configs/mbedtls;../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/crypto;../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/platform;../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind;../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/platform/configs;../../../../../../middleware/edgefast_bluetooth/source/porting;../../../../../../middleware/wireless/ethermind/port/pal/mcux/bluetooth/controller;../../../../../../middleware/edgefast_bluetooth/source/services;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../../rtos/freertos/freertos-kernel/template/ARM_CM33_3_priority_bits</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -20891,6 +20846,11 @@
         <Group>
           <GroupName>source</GroupName>
           <Files>
+            <File>
+              <FileName>edgefast_bluetooth_app.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../edgefast_bluetooth_app.h</FilePath>
+            </File>
             <File>
               <FileName>edgefast_bluetooth_app.h</FileName>
               <FileType>5</FileType>
@@ -20992,29 +20952,14 @@
               <FilePath>../FreeRTOSConfig.h</FilePath>
             </File>
             <File>
-              <FileName>app_config.h</FileName>
+              <FileName>edgefast_bluetooth_audio_config.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../app_config.h</FilePath>
+              <FilePath>../edgefast_bluetooth_audio_config.h</FilePath>
             </File>
             <File>
-              <FileName>edgefast_bluetooth_audio_config_Gen.h</FileName>
+              <FileName>edgefast_bluetooth_config.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../edgefast_bluetooth_audio_config_Gen.h</FilePath>
-            </File>
-            <File>
-              <FileName>edgefast_bluetooth_config_Gen.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../edgefast_bluetooth_config_Gen.h</FilePath>
-            </File>
-            <File>
-              <FileName>edgefast_bluetooth_debug_config_Gen.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../edgefast_bluetooth_debug_config_Gen.h</FilePath>
-            </File>
-            <File>
-              <FileName>edgefast_bluetooth_extension_config_Gen.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../edgefast_bluetooth_extension_config_Gen.h</FilePath>
+              <FilePath>../edgefast_bluetooth_config.h</FilePath>
             </File>
             <File>
               <FileName>fsl_debug_console_conf.h</FileName>
@@ -21025,6 +20970,16 @@
               <FileName>fsl_os_abstraction_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../fsl_os_abstraction_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../mcux_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../mcux_config.h</FilePath>
             </File>
             <File>
               <FileName>mcux_config.h</FileName>
@@ -21579,12 +21534,12 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>startup/arm</GroupName>
+          <GroupName>startup</GroupName>
           <Files>
             <File>
-              <FileName>startup_MIMXRT798S_cm33_core0.S</FileName>
-              <FileType>2</FileType>
-              <FilePath>../../../../../../devices/MIMXRT798S/arm/startup_MIMXRT798S_cm33_core0.S</FilePath>
+              <FileName>startup_MIMXRT798S_cm33_core0.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT798S/startup_MIMXRT798S_cm33_core0.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -21769,12 +21724,12 @@
             <File>
               <FileName>fsl_assert.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT798S/utilities/fsl_assert.h</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT798S/utilities/debug_console/fsl_assert.h</FilePath>
             </File>
             <File>
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT798S/utilities/fsl_assert.c</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT798S/utilities/debug_console/fsl_assert.c</FilePath>
             </File>
             <File>
               <FileName>fsl_memcpy.S</FileName>
@@ -21969,48 +21924,8 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>flash/mflash</GroupName>
-          <Files>
-            <File>
-              <FileName>mflash_common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/flash/mflash/mflash_common.h</FilePath>
-            </File>
-            <File>
-              <FileName>mflash_file.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/flash/mflash/mflash_file.c</FilePath>
-            </File>
-            <File>
-              <FileName>mflash_file.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/flash/mflash/mflash_file.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>flash/mflash/mimxrt700</GroupName>
-          <Files>
-            <File>
-              <FileName>mflash_drv.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/flash/mflash/mimxrt700/mflash_drv.c</FilePath>
-            </File>
-            <File>
-              <FileName>mflash_drv.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/flash/mflash/mimxrt700/mflash_drv.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>component/osa</GroupName>
           <Files>
-            <File>
-              <FileName>fsl_os_abstraction.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/osa/fsl_os_abstraction.h</FilePath>
-            </File>
             <File>
               <FileName>fsl_os_abstraction_free_rtos.h</FileName>
               <FileType>5</FileType>
@@ -22020,6 +21935,71 @@
               <FileName>fsl_os_abstraction_free_rtos.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../components/osa/fsl_os_abstraction_free_rtos.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/osa/fsl_os_abstraction.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/wifi_bt_module/AzureWave/tx_pwr_limits</GroupName>
+          <Files>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_WW.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/wifi_bt_module/AzureWave/tx_pwr_limits/wlan_txpwrlimit_cfg_WW.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_WW_rw610.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/wifi_bt_module/AzureWave/tx_pwr_limits/wlan_txpwrlimit_cfg_WW_rw610.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/wifi_bt_module/Murata/tx_pwr_limits</GroupName>
+          <Files>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_1XK_WW.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1XK_WW.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_1ZM_WW.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1ZM_WW.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_2EL_WW.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_2EL_WW.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_NH.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_NH.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/wifi_bt_module/u-blox/tx_pwr_limits</GroupName>
+          <Files>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_jody_w5_WW.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/wifi_bt_module/u-blox/tx_pwr_limits/wlan_txpwrlimit_cfg_jody_w5_WW.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/wifi_bt_module/incl</GroupName>
+          <Files>
+            <File>
+              <FileName>wifi_bt_module_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/wifi_bt_module/incl/wifi_bt_module_config.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -30237,9 +30217,9 @@
           <GroupName>component/els_pkc</GroupName>
           <Files>
             <File>
-              <FileName>LA_OPT_Online_Code_Hosting.htm</FileName>
+              <FileName>LICENSE.txt</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../components/els_pkc/LA_OPT_Online_Code_Hosting.htm</FilePath>
+              <FilePath>../../../../../../components/els_pkc/LICENSE.txt</FilePath>
             </File>
             <File>
               <FileName>softwareContentRegister.txt</FileName>
@@ -34774,67 +34754,37 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component/wifi_bt_module/AzureWave/tx_pwr_limits</GroupName>
+          <GroupName>flash/mflash</GroupName>
           <Files>
             <File>
-              <FileName>wlan_txpwrlimit_cfg_WW.h</FileName>
+              <FileName>mflash_common.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../components/wifi_bt_module/AzureWave/tx_pwr_limits/wlan_txpwrlimit_cfg_WW.h</FilePath>
+              <FilePath>../../../../../../components/flash/mflash/mflash_common.h</FilePath>
             </File>
             <File>
-              <FileName>wlan_txpwrlimit_cfg_WW_rw610.h</FileName>
+              <FileName>mflash_file.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/flash/mflash/mflash_file.c</FilePath>
+            </File>
+            <File>
+              <FileName>mflash_file.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../components/wifi_bt_module/AzureWave/tx_pwr_limits/wlan_txpwrlimit_cfg_WW_rw610.h</FilePath>
+              <FilePath>../../../../../../components/flash/mflash/mflash_file.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>component/wifi_bt_module/Murata/tx_pwr_limits</GroupName>
+          <GroupName>flash/mflash/mimxrt700</GroupName>
           <Files>
             <File>
-              <FileName>wlan_txpwrlimit_cfg_murata_1XK_WW.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1XK_WW.h</FilePath>
+              <FileName>mflash_drv.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/flash/mflash/mimxrt700/mflash_drv.c</FilePath>
             </File>
             <File>
-              <FileName>wlan_txpwrlimit_cfg_murata_1ZM_WW.h</FileName>
+              <FileName>mflash_drv.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1ZM_WW.h</FilePath>
-            </File>
-            <File>
-              <FileName>wlan_txpwrlimit_cfg_murata_2DS_WW.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_2DS_WW.h</FilePath>
-            </File>
-            <File>
-              <FileName>wlan_txpwrlimit_cfg_murata_2EL_WW.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_2EL_WW.h</FilePath>
-            </File>
-            <File>
-              <FileName>wlan_txpwrlimit_cfg_murata_NH_FCC.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_NH_FCC.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component/wifi_bt_module/u-blox/tx_pwr_limits</GroupName>
-          <Files>
-            <File>
-              <FileName>wlan_txpwrlimit_cfg_jody_w5_WW.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/wifi_bt_module/u-blox/tx_pwr_limits/wlan_txpwrlimit_cfg_jody_w5_WW.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component/wifi_bt_module/incl</GroupName>
-          <Files>
-            <File>
-              <FileName>wifi_bt_module_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/wifi_bt_module/incl/wifi_bt_module_config.h</FilePath>
+              <FilePath>../../../../../../components/flash/mflash/mimxrt700/mflash_drv.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -34972,9 +34922,9 @@
               <FilePath>../../../../../../middleware/wifi_nxp/incl/wifi_cal_data_rw61x_3ant_diversity.h</FilePath>
             </File>
             <File>
-              <FileName>wifi_cal_data_rw61x_override.h</FileName>
+              <FileName>wifi_cal_data_override.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/wifi_nxp/incl/wifi_cal_data_rw61x_override.h</FilePath>
+              <FilePath>../../../../../../middleware/wifi_nxp/incl/wifi_cal_data_override.h</FilePath>
             </File>
             <File>
               <FileName>WIFI_IW416_BOARD_AW_AM457_CAL_DATA_EXT.h</FileName>
@@ -35189,26 +35139,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>wifi/wifi_bt_firmware/8801</GroupName>
-          <Files>
-            <File>
-              <FileName>sd8801_wlan.bin.inc</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/wifi_nxp/wifi_bt_firmware/8801/sd8801_wlan.bin.inc</FilePath>
-            </File>
-            <File>
-              <FileName>sd8801_wlan.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/wifi_nxp/wifi_bt_firmware/8801/sd8801_wlan.h</FilePath>
-            </File>
-            <File>
-              <FileName>8801_cpu1.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/wifi_nxp/wifi_bt_firmware/8801/8801_cpu1.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>wifi/wifi_bt_firmware/IW416</GroupName>
           <Files>
             <File>
@@ -35362,14 +35292,24 @@
           <GroupName>wifi/wifi_bt_firmware/iw610</GroupName>
           <Files>
             <File>
-              <FileName>sduart_iw610.bin.se.inc</FileName>
+              <FileName>sduartspi_iw610.bin.se.inc</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/wifi_nxp/wifi_bt_firmware/iw610/sduart_iw610.bin.se.inc</FilePath>
+              <FilePath>../../../../../../middleware/wifi_nxp/wifi_bt_firmware/iw610/sduartspi_iw610.bin.se.inc</FilePath>
             </File>
             <File>
               <FileName>sd_iw610.bin.se.inc</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/wifi_nxp/wifi_bt_firmware/iw610/sd_iw610.bin.se.inc</FilePath>
+            </File>
+            <File>
+              <FileName>uartspi_iw610.bin.se.inc</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/wifi_nxp/wifi_bt_firmware/iw610/uartspi_iw610.bin.se.inc</FilePath>
+            </File>
+            <File>
+              <FileName>sduart_iw610.bin.se.inc</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/wifi_nxp/wifi_bt_firmware/iw610/sduart_iw610.bin.se.inc</FilePath>
             </File>
             <File>
               <FileName>uart_iw610_bt.bin.se.inc</FileName>
@@ -36027,29 +35967,9 @@
               <FilePath>../../../../../../middleware/wifi_nxp/nw_utils/iperf.c</FilePath>
             </File>
             <File>
-              <FileName>init_enet.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/wifi_nxp/nw_utils/init_enet.c</FilePath>
-            </File>
-            <File>
               <FileName>network_cfg.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/wifi_nxp/nw_utils/network_cfg.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>wifi/nw_utils/telnet</GroupName>
-          <Files>
-            <File>
-              <FileName>telnet_server.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/wifi_nxp/nw_utils/telnet/telnet_server.h</FilePath>
-            </File>
-            <File>
-              <FileName>telnet_server.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/wifi_nxp/nw_utils/telnet/telnet_server.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -37459,36 +37379,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>mbedtls3x/port</GroupName>
-          <Files>
-            <File>
-              <FileName>mcux_mbedtls_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>mcux_mbedtls_accelerator_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_accelerator_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>mcux_mbedtls_psa_crypto_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_psa_crypto_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>mcux_mbedtls_accelerator_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_accelerator_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>mcux_psa_defines.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_psa_defines.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>mbedtls3x/include/mbedtls</GroupName>
           <Files>
             <File>
@@ -37882,6 +37772,11 @@
               <FilePath>../../../../../../middleware/mbedtls3x/include/psa/crypto_adjust_auto_enabled.h</FilePath>
             </File>
             <File>
+              <FileName>crypto_adjust_config_dependencies.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/include/psa/crypto_adjust_config_dependencies.h</FilePath>
+            </File>
+            <File>
               <FileName>crypto_adjust_config_key_pair_types.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/mbedtls3x/include/psa/crypto_adjust_config_key_pair_types.h</FilePath>
@@ -38050,6 +37945,16 @@
               <FileName>bignum_core.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/mbedtls3x/library/bignum_core.c</FilePath>
+            </File>
+            <File>
+              <FileName>bignum_core_invasive.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/library/bignum_core_invasive.h</FilePath>
+            </File>
+            <File>
+              <FileName>bignum_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/library/bignum_internal.h</FilePath>
             </File>
             <File>
               <FileName>bignum_mod.c</FileName>
@@ -38814,6 +38719,36 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>mbedtls3x/port</GroupName>
+          <Files>
+            <File>
+              <FileName>mcux_mbedtls_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_mbedtls_accelerator_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_accelerator_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_mbedtls_psa_crypto_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_psa_crypto_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_mbedtls_accelerator_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_accelerator_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_psa_defines.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_psa_defines.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>sdmmc/common</GroupName>
           <Files>
             <File>
@@ -38892,14 +38827,9 @@
           <GroupName>edgefast/bluetooth</GroupName>
           <Files>
             <File>
-              <FileName>dummy.txt</FileName>
+              <FileName>readme.txt</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/edgefast_bluetooth/boards/template/dummy.txt</FilePath>
-            </File>
-            <File>
-              <FileName>dummy.txt</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/edgefast_bluetooth/boards/template/dummy.txt</FilePath>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/readme.txt</FilePath>
             </File>
           </Files>
         </Group>
@@ -39946,11 +39876,6 @@
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/config/db_gen.h</FilePath>
             </File>
-            <File>
-              <FileName>dummy.txt</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/config/dummy.txt</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
@@ -40734,16 +40659,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>bt_ble</GroupName>
-          <Files>
-            <File>
-              <FileName>dummy.txt</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/wireless/ethermind/port/pal/mcux/bluetooth/dummy.txt</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>bt_ble/port/pal/mcux/bluetooth/controller</GroupName>
           <Files>
             <File>
@@ -40767,11 +40682,6 @@
           <GroupName>edgefast/bluetooth/source/services</GroupName>
           <Files>
             <File>
-              <FileName>dis.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/services/dis.c</FilePath>
-            </File>
-            <File>
               <FileName>wu.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/edgefast_bluetooth/source/services/wu.c</FilePath>
@@ -40781,11 +40691,6 @@
         <Group>
           <GroupName>edgefast/bluetooth/include/bluetooth/services</GroupName>
           <Files>
-            <File>
-              <FileName>dis.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/edgefast_bluetooth/include/bluetooth/services/dis.h</FilePath>
-            </File>
             <File>
               <FileName>wu.h</FileName>
               <FileType>5</FileType>
@@ -41020,6 +40925,11 @@
               <FileName>example_board_readme.md</FileName>
               <FileType>5</FileType>
               <FilePath>../example_board_readme.md</FilePath>
+            </File>
+            <File>
+              <FileName>examples_shared_readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../examples_shared_readme.md</FilePath>
             </File>
           </Files>
         </Group>

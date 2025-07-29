@@ -11,6 +11,7 @@
 #include <stdint.h>
 
 #include "fsl_common.h"
+#include "kws_mfcc.hpp"
 
 /*!
  * @addtogroup audio
@@ -41,7 +42,7 @@ status_t AUDIO_GetSpectralSample(uint8_t* dstData, size_t size);
  * @param srcData address of source buffer for reading audio data
  * @param audioBlocksPerBuffer audio buffer size divided by the size of the audio block
  */
-void AUDIO_PreprocessSample(const int16_t* srcData, size_t audioBlocksPerBuffer);
+void AUDIO_PreprocessSample(const int16_t* srcData, size_t audioBlocksPerBuffer, KWS_MFCC* s_kws);
 
 /*!
  * @brief Gets audio sample name.

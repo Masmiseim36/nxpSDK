@@ -8,6 +8,7 @@ This example shows how to use SDK drivers to use the Pin interrupt & pattern mat
 - [EVK-MIMXRT685](../../../_boards/evkmimxrt685/driver_examples/pint/pattern_match/example_board_readme.md)
 - [FRDM-MCXN236](../../../_boards/frdmmcxn236/driver_examples/pint/pattern_match/example_board_readme.md)
 - [FRDM-MCXN947](../../../_boards/frdmmcxn947/driver_examples/pint/pattern_match/example_board_readme.md)
+- [FRDM-MCXW23](../../../_boards/frdmmcxw23/driver_examples/pint/pattern_match/example_board_readme.md)
 - [LPC845BREAKOUT](../../../_boards/lpc845breakout/driver_examples/pint/pattern_match/example_board_readme.md)
 - [LPCXpresso51U68](../../../_boards/lpcxpresso51u68/driver_examples/pint/pattern_match/example_board_readme.md)
 - [LPCXpresso54628](../../../_boards/lpcxpresso54628/driver_examples/pint/pattern_match/example_board_readme.md)
@@ -27,3 +28,4 @@ This example shows how to use SDK drivers to use the Pin interrupt & pattern mat
 - [MCX-N9XX-EVK](../../../_boards/mcxn9xxevk/driver_examples/pint/pattern_match/example_board_readme.md)
 - [MIMXRT685-AUD-EVK](../../../_boards/mimxrt685audevk/driver_examples/pint/pattern_match/example_board_readme.md)
 - [MIMXRT700-EVK](../../../_boards/mimxrt700evk/driver_examples/pint/pattern_match/example_board_readme.md)
+- [MCXW23-EVK](../../../_boards/mcxw23evk/driver_examples/pint/pattern_match/example_board_readme.md)

@@ -13,6 +13,7 @@
 #include "usb_device_descriptor.h"
 #include "audio_unified.h"
 
+
 /*******************************************************************************
  * Variables
  ******************************************************************************/
@@ -572,8 +573,13 @@ uint8_t g_UsbDeviceConfigurationDescriptor[] = {
     USB_DESCRIPTOR_TYPE_AUDIO_CS_INTERFACE,             /* CS_INTERFACE Descriptor Type   */
     USB_DESCRIPTOR_SUBTYPE_AUDIO_STREAMING_FORMAT_TYPE, /* FORMAT_TYPE descriptor subtype   */
     USB_AUDIO_FORMAT_TYPE_I, /* The format type AudioStreaming interfae using is FORMAT_TYPE_I (0x01)   */
+#ifdef MIMXRT798S_cm33_core0_SERIES
+    0x04U,                   /* The number of bytes occupied by one audio subslot. Can be 1, 2, 3 or 4.  */
+    0x20U,                   /* The number of effectively used bits from the available bits in an audio subslot   */
+#else
     0x02U,                   /* The number of bytes occupied by one audio subslot. Can be 1, 2, 3 or 4.  */
     0x10U,                   /* The number of effectively used bits from the available bits in an audio subslot   */
+#endif
 
     /* ENDPOINT Descriptor */
     USB_AUDIO_STREAMING_ENDP_DESC_SIZE,                 /* Descriptor size is 7 bytes  */

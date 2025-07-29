@@ -44,25 +44,25 @@
 #define m_boot_flash_conf_size         0x00004000
 #define m_boot_interrupts_start        0x28004000
 
-#define m_interrupts_start             0x00000000
+#define m_interrupts_start             0x00080000
 #define m_interrupts_size              0x00000300
 
-#define m_data_start                   0x000A0000
-#define m_data_size                    0x00160000
+#define m_data_start                   0x20100000
+#define m_data_size                    0x00120000
 
-#define m_text_start                   0x00000300
-#define m_text_size                    0x0009FD00
+#define m_text_start                   0x00080300
+#define m_text_size                    0x0007FC00
 
 #define m_core1_image_maximum_size     0x00080000
 
 #if (defined(__use_shmem__))
-  #define m_rpmsg_sh_mem_start         0x20200000
+  #define m_rpmsg_sh_mem_start         0x20220000
   #define m_rpmsg_sh_mem_size          0x00002000
-  #define m_ncache_start               0x20202000
-  #define m_ncache_size                0x0057E000
+  #define m_ncache_start               0x20222000
+  #define m_ncache_size                0x0055E000
 #else
-  #define m_ncache_start               0x20200000
-  #define m_ncache_size                0x00580000
+  #define m_ncache_start               0x20220000
+  #define m_ncache_size                0x00560000
 #endif
 LR_m_flash_conf m_boot_flash_conf_start m_boot_interrupts_start-m_boot_flash_conf_start {
   FLASH_CONFIG + 0 { ; load address = execution address

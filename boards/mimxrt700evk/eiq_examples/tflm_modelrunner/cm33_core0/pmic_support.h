@@ -1,6 +1,5 @@
 /*
- * Copyright 2023 NXP
- * All rights reserved.
+ * Copyright 2023-2025 NXP
  *
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -32,11 +31,9 @@
 #ifndef BOARD_PMIC_I2C_SEMA42_BASE
 #define BOARD_PMIC_I2C_SEMA42_BASE SEMA42_0
 #endif
-#if defined(MIMXRT798S_cm33_core0_SERIES) || defined(MIMXRT758S_cm33_core0_SERIES) || \
-    defined(MIMXRT735S_cm33_core0_SERIES)
+#if defined(PMC0)
 #define BOARD_PMIC_I2C_SEMA42_ID (0U)
-#elif defined(MIMXRT798S_cm33_core1_SERIES) || defined(MIMXRT758S_cm33_core1_SERIES) || \
-    defined(MIMXRT735S_cm33_core1_SERIES)
+#elif defined(PMC1)
 #define BOARD_PMIC_I2C_SEMA42_ID (5U)
 #else
 #error "Unsupported core!"
@@ -60,14 +57,26 @@ void BOARD_InitPmic(void);
 void BOARD_SetPmicVoltageBeforeDeepPowerDown(void);
 /*!
  *  @brief  Set PMIC for VDD1 voltage.
+ *  Note, disable LDO1 by POWER_SetVdd1SupplySrc(kVddSrc_PMIC) before changing PMIC supply. 
  *  @param  volt: the voltage in uV to be set.
  */
 void BOARD_SetPmicVdd1Voltage(uint32_t volt);
 /*!
  *  @brief  Set PMIC for VDD2 voltage.
+ *  Note, disable LDO2 by POWER_SetVdd2SupplySrc(kVddSrc_PMIC) before changing PMIC supply. 
  *  @param  volt: the voltage in uV to be set.
  */
 void BOARD_SetPmicVdd2Voltage(uint32_t volt);
+/*!
+ *  @brief  Get current VDD2 voltage.
+ *  @return  the voltage in uV.
+ */
+uint32_t BOARD_GetPmicVdd2Voltage(void);
+/*!
+ *  @brief  Get current VDD1 voltage.
+ *  @return  the voltage in uV.
+ */
+uint32_t BOARD_GetPmicVdd2Voltage(void);
 
 #if defined(PMC0)
 /*!

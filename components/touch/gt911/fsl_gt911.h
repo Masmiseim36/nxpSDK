@@ -41,7 +41,7 @@
 #define GT911_MAX_TOUCHES (10U)
 
 /*! @brief Error code definition. */
-enum _touch_status
+enum
 {
     kStatus_TOUCHPANEL_NotTouched = MAKE_STATUS(kStatusGroup_TOUCH_PANEL, 0), /*!< No touch happen. */
     kStatus_TOUCHPANEL_NotReady = MAKE_STATUS(kStatusGroup_TOUCH_PANEL, 1), /*!< Coordinate not ready, data invalid. */

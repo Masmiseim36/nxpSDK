@@ -395,6 +395,7 @@ int bt_pbap_pce_get_max_pkt_len(struct bt_pbap_pce *pbap_pce, uint16_t *max_pkt_
  * @param length    the length of body data.
  */
 #define bt_pbap_pce_get_body(buf, body, length) bt_obex_get_body(buf, body, length)
+
 #ifdef __cplusplus
 }
 #endif

@@ -11,6 +11,9 @@
 
 #include "unity_internals.h"
 
+#if __has_include("unity_module.h")
+#include "unity_module.h"
+#else
 enum _unity_module
 {
     k_unity_i2c                = 1,
@@ -191,7 +194,16 @@ enum _unity_module
     k_unity_dac14              = 176,
     k_unity_elemu              = 177,
     k_unity_security_subsystem = 178,
+    k_unity_rom_api            = 179,
+    k_unity_timer_manager      = 180,
+    k_unity_mcm                = 181,
+    k_unity_wkpu               = 182,
+    k_unity_stm                = 183,
+    k_unity_cmu_fm             = 184,
+    k_unity_cmu_fc             = 185,
+    k_unity_tspc               = 186,
 };
+#endif
 
 #define MAKE_UNITY_NUM(unity_module, caseID) (((uint32_t)(unity_module)*10000) + (uint32_t)(caseID))
 

@@ -14,9 +14,6 @@ if(CMAKE_SCRIPT_MODE_FILE)
 endif()
 
 
-set(CMAKE_STATIC_LIBRARY_PREFIX)
-set(CMAKE_STATIC_LIBRARY_SUFFIX)
-
 set(CMAKE_EXECUTABLE_LIBRARY_PREFIX)
 set(CMAKE_EXECUTABLE_LIBRARY_SUFFIX)
 
@@ -49,6 +46,7 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${SdkRootDirPath}/boards/mimxrt700evk/dsp_examples/xaf_playback/hifi4/binary/dsp_literal_release.bin"
 "${SdkRootDirPath}/boards/mimxrt700evk/dsp_examples/xaf_playback/hifi4/binary/dsp_text_release.bin"
 "${SdkRootDirPath}/boards/mimxrt700evk/dsp_examples/xaf_playback/hifi4/binary/dsp_data_release.bin"
+"${SdkRootDirPath}/boards/mimxrt700evk/dsp_examples/xaf_playback/hifi4/binary/dsp_ncache_release.bin"
 "${SdkRootDirPath}/boards/mimxrt700evk/dsp_examples/xaf_playback/hifi1/binary/dsp_vector_release.bin"
 "${SdkRootDirPath}/boards/mimxrt700evk/dsp_examples/xaf_playback/hifi1/binary/dsp_text_release.bin"
 "${SdkRootDirPath}/boards/mimxrt700evk/dsp_examples/xaf_playback/hifi1/binary/dsp_data_release.bin"

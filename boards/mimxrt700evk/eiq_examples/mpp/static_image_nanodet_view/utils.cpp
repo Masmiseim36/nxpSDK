@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2023 NXP
+ * Copyright 2022-2023, 2025 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -133,7 +133,15 @@ int32_t nms_insert_box(box_data boxes[], box_data curr_box, int32_t n_inserted, 
     // Compute area of the candidate box.
     curr_box.area = area(&curr_box);
 
-    for (int32_t i = 0; i <= n_inserted; i++) {
+    // When the list of boxes is empty, insert the box at index 0
+    if (n_inserted == 0) {
+        // Insert curr_box at index 0.
+        boxes[0] = curr_box;
+
+        return 1;
+    }
+
+    for (int32_t i = 0; i < n_inserted; i++) {
         if(boxes[i].score >= curr_box.score && iou(&boxes[i], &curr_box) >= nms_thr) {
             // curr_box suppressed by IoU threshold
             return n_inserted;
@@ -160,7 +168,7 @@ int32_t nms_insert_box(box_data boxes[], box_data curr_box, int32_t n_inserted, 
             }
 
             // Push all subsequent boxes by 1 to make room for curr_box.
-            for (int32_t j = n_inserted-1; j >= i; j--) {
+            for (int32_t j = n_inserted-2; j >= i; j--) {
                 swap_boxes(boxes, j, j+1);
             }
 

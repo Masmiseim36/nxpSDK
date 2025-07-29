@@ -17,11 +17,7 @@
         <option>
           <name>OG_32_64DeviceCoreSlave</name>
           <version>34</version>
-          <state>0</state>
-        </option>
-        <option>
-          <name>GOutputSo</name>
-          <state>0</state>
+          <state>39</state>
         </option>
         <option>
           <name>BrowseInfoPath</name>
@@ -49,7 +45,7 @@
         </option>
         <option>
           <name>Output description</name>
-          <state>No specifier a, A, no specifier n, no float nor long long, without multibyte support.</state>
+          <state>No specifier n, no float nor long long, no scan set, no assignment suppressing, without multibyte support.</state>
         </option>
         <option>
           <name>GOutputBinary</name>
@@ -198,7 +194,7 @@
         <option>
           <name>TrustZoneModes</name>
           <version>0</version>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>OGAarch64Abi</name>
@@ -219,6 +215,10 @@
         <option>
           <name>FPU64</name>
           <state>1</state>
+        </option>
+        <option>
+          <name>GOutputSo</name>
+          <state>0</state>
         </option>
       </data>
     </settings>
@@ -241,11 +241,14 @@
           <name>CCDefines</name>
           <state>DEBUG</state>
           <state>DSP_IMAGE_COPY_TO_RAM=1</state>
+          <state>EIQ_EXAMPLE_HSRUN_CLOCK</state>
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
-          <state>CPU_MIMXRT798SGFOA_cm33_core0</state>
+          <state>CPU_MIMXRT798SGFOB_cm33_core0</state>
+          <state>MIMXRT798S_cm33_core0_SERIES</state>
           <state>BOOT_HEADER_ENABLE=1</state>
+          <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -376,6 +379,7 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT798S/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT798S/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
+          <state>$PROJ_DIR$/../../../../../../components/pmic/pca9422</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -416,7 +420,7 @@
         </option>
         <option>
           <name>IccLang</name>
-          <state>0</state>
+          <state>2</state>
         </option>
         <option>
           <name>IccCDialect</name>
@@ -561,7 +565,8 @@
           <name>ADefines</name>
           <state>DSP_IMAGE_COPY_TO_RAM=1</state>
           <state>MCUXPRESSO_SDK</state>
-          <state>CPU_MIMXRT798SGFOA_cm33_core0</state>
+          <state>CPU_MIMXRT798SGFOB_cm33_core0</state>
+          <state>MIMXRT798S_cm33_core0_SERIES</state>
         </option>
         <option>
           <name>AList</name>
@@ -665,6 +670,7 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT798S/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT798S/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
+          <state>$PROJ_DIR$/../../../../../../components/pmic/pca9422</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -680,7 +686,7 @@
         </option>
         <option>
           <name>PreInclude</name>
-          <state/>
+          <state>$PROJ_DIR$/../mcux_config.h</state>
         </option>
       </data>
     </settings>
@@ -1151,10 +1157,6 @@
           <state>38</state>
         </option>
         <option>
-          <name>GOutputSo</name>
-          <state>0</state>
-        </option>
-        <option>
           <name>BrowseInfoPath</name>
           <state>Release\BrowseInfo</state>
         </option>
@@ -1180,7 +1182,7 @@
         </option>
         <option>
           <name>Output description</name>
-          <state>No specifier a, A, no specifier n, no float nor long long, without multibyte support.</state>
+          <state>No specifier n, no float nor long long, no scan set, no assignment suppressing, without multibyte support.</state>
         </option>
         <option>
           <name>GOutputBinary</name>
@@ -1210,7 +1212,7 @@
         </option>
         <option>
           <name>OGLastSavedByProductVersion</name>
-          <state>8.30.2.18207</state>
+          <state>7.60.1.11206</state>
         </option>
         <option>
           <name>OGChipSelectEditMenu</name>
@@ -1320,7 +1322,7 @@
         </option>
         <option>
           <name>DSPExtension</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>TrustZone</name>
@@ -1329,7 +1331,7 @@
         <option>
           <name>TrustZoneModes</name>
           <version>0</version>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>OGAarch64Abi</name>
@@ -1350,6 +1352,10 @@
         <option>
           <name>FPU64</name>
           <state>1</state>
+        </option>
+        <option>
+          <name>GOutputSo</name>
+          <state>0</state>
         </option>
       </data>
     </settings>
@@ -1372,11 +1378,14 @@
           <name>CCDefines</name>
           <state>NDEBUG</state>
           <state>DSP_IMAGE_COPY_TO_RAM=1</state>
+          <state>EIQ_EXAMPLE_HSRUN_CLOCK</state>
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
-          <state>CPU_MIMXRT798SGFOA_cm33_core0</state>
+          <state>CPU_MIMXRT798SGFOB_cm33_core0</state>
+          <state>MIMXRT798S_cm33_core0_SERIES</state>
           <state>BOOT_HEADER_ENABLE=1</state>
+          <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -1507,6 +1516,7 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT798S/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT798S/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
+          <state>$PROJ_DIR$/../../../../../../components/pmic/pca9422</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1547,7 +1557,7 @@
         </option>
         <option>
           <name>IccLang</name>
-          <state>0</state>
+          <state>2</state>
         </option>
         <option>
           <name>IccCDialect</name>
@@ -1692,7 +1702,8 @@
           <name>ADefines</name>
           <state>DSP_IMAGE_COPY_TO_RAM=1</state>
           <state>MCUXPRESSO_SDK</state>
-          <state>CPU_MIMXRT798SGFOA_cm33_core0</state>
+          <state>CPU_MIMXRT798SGFOB_cm33_core0</state>
+          <state>MIMXRT798S_cm33_core0_SERIES</state>
         </option>
         <option>
           <name>AList</name>
@@ -1796,6 +1807,7 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT798S/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT798S/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
+          <state>$PROJ_DIR$/../../../../../../components/pmic/pca9422</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -1811,7 +1823,7 @@
         </option>
         <option>
           <name>PreInclude</name>
-          <state/>
+          <state>$PROJ_DIR$/../mcux_config.h</state>
         </option>
       </data>
     </settings>
@@ -2275,10 +2287,22 @@
       <name>$PROJ_DIR$/../board_init.h</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../dsp_support.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../dsp_support.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../dsp_support.h</name>
+      <name>$PROJ_DIR$/../pmic_support.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../pmic_support.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../mcux_config.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../mcux_config.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../mcux_config.h</name>
@@ -2631,12 +2655,9 @@
   </group>
   <group>
     <name>startup</name>
-    <group>
-      <name>iar</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT798S/iar/startup_MIMXRT798S_cm33_core0.s</name>
-      </file>
-    </group>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT798S/startup_MIMXRT798S_cm33_core0.c</name>
+    </file>
   </group>
   <group>
     <name>drivers</name>
@@ -2710,6 +2731,12 @@
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT798S/drivers/fsl_lpuart.c</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT798S/drivers/fsl_lpi2c.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT798S/drivers/fsl_lpi2c.c</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT798S/drivers/fsl_xspi.c</name>
     </file>
     <file>
@@ -2753,6 +2780,18 @@
       <file>
         <name>$PROJ_DIR$/../../../../../../components/uart/fsl_adapter_lpuart.c</name>
       </file>
+    </group>
+    <group>
+      <name>pmic</name>
+      <group>
+        <name>pca9422</name>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../components/pmic/pca9422/fsl_pca9422.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../components/pmic/pca9422/fsl_pca9422.h</name>
+        </file>
+      </group>
     </group>
   </group>
   <group>

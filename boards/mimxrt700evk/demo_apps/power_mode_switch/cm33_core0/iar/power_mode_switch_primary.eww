@@ -19,11 +19,31 @@
         <project>power_mode_switch_primary</project>
         <configuration>flash_release</configuration>
       </member>
+      <member>
+        <project>power_mode_switch_secondary</project>
+        <configuration>debug</configuration>
+      </member>
+      <member>
+        <project>power_mode_switch_secondary</project>
+        <configuration>release</configuration>
+      </member>
+      <member>
+        <project>power_mode_switch_secondary</project>
+        <configuration>flash_debug</configuration>
+      </member>
+      <member>
+        <project>power_mode_switch_secondary</project>
+        <configuration>flash_release</configuration>
+      </member>
     </batchDefinition>
     <batchDefinition>
       <name>debug</name>
       <member>
         <project>power_mode_switch_primary</project>
+        <configuration>debug</configuration>
+      </member>
+      <member>
+        <project>power_mode_switch_secondary</project>
         <configuration>debug</configuration>
       </member>
     </batchDefinition>
@@ -33,6 +53,10 @@
         <project>power_mode_switch_primary</project>
         <configuration>release</configuration>
       </member>
+      <member>
+        <project>power_mode_switch_secondary</project>
+        <configuration>release</configuration>
+      </member>
     </batchDefinition>
     <batchDefinition>
       <name>flash_debug</name>
@@ -40,11 +64,19 @@
         <project>power_mode_switch_primary</project>
         <configuration>flash_debug</configuration>
       </member>
+      <member>
+        <project>power_mode_switch_secondary</project>
+        <configuration>flash_debug</configuration>
+      </member>
     </batchDefinition>
     <batchDefinition>
       <name>flash_release</name>
       <member>
         <project>power_mode_switch_primary</project>
+        <configuration>flash_release</configuration>
+      </member>
+      <member>
+        <project>power_mode_switch_secondary</project>
         <configuration>flash_release</configuration>
       </member>
     </batchDefinition>

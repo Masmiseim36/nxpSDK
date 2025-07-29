@@ -1,0 +1,710 @@
+<?xml version="1.0" encoding= "UTF-8" ?>
+<configuration name="MIMXRT798S" xsi:schemaLocation="http://mcuxpresso.nxp.com/XSD/mex_configuration_17 http://mcuxpresso.nxp.com/XSD/mex_configuration_17.xsd" uuid="5cc6a17f-1f86-48af-8c94-88138fd019fb" version="17" xmlns="http://mcuxpresso.nxp.com/XSD/mex_configuration_17" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+   <common>
+      <processor>MIMXRT798S</processor>
+      <package>MIMXRT798SGFOB</package>
+      <mcu_data>ksdk2_0</mcu_data>
+      <cores selected="cm33_core0">
+         <core name="Cortex-M33 (Core #0)" id="cm33_core0" description=""/>
+         <core name="Cortex-M33 (Core #1)" id="cm33_core1" description=""/>
+      </cores>
+      <description></description>
+   </common>
+   <preferences>
+      <validate_boot_init_only>true</validate_boot_init_only>
+      <generate_code_modified_registers_only>false</generate_code_modified_registers_only>
+      <custom_copyright>
+         <text>/*
+ * Copyright 2025 NXP
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
+ */
+
+</text>
+         <enabled>true</enabled>
+      </custom_copyright>
+      <update_include_paths>true</update_include_paths>
+      <generate_registers_defines>false</generate_registers_defines>
+   </preferences>
+   <tools>
+      <pins name="Pins" version="17.0" enabled="true" update_project_code="true">
+         <pins_profile>
+            <processor_version>0.2503.40</processor_version>
+         </pins_profile>
+         <functions_list>
+            <function name="BOARD_InitPins">
+               <description>Configures pin routing and optionally pin electrical features.</description>
+               <options>
+                  <callFromInitBoot>true</callFromInitBoot>
+                  <coreID>cm33_core0</coreID>
+                  <enableClock>true</enableClock>
+               </options>
+               <dependencies>
+                  <dependency resourceType="SWComponent" resourceId="platform.drivers.common" description="Pins initialization requires the COMMON Driver in the project." problem_level="2" source="Pins:BOARD_InitPins">
+                     <feature name="enabled" evaluation="equal" configuration="cm33_core0">
+                        <data>true</data>
+                     </feature>
+                  </dependency>
+                  <dependency resourceType="SWComponent" resourceId="platform.drivers.lpc_iopctl" description="Pins initialization requires the LPC_IOPCTL Driver in the project." problem_level="2" source="Pins:BOARD_InitPins">
+                     <feature name="enabled" evaluation="equal" configuration="cm33_core0">
+                        <data>true</data>
+                     </feature>
+                  </dependency>
+               </dependencies>
+               <pins>
+                  <pin peripheral="LP_FLEXCOMM0" signal="P0" pin_num="N4" pin_signal="PIO0_31/LP_FLEXCOMM0_P0/UTICK0_CAP2/SCT0_OUT8/CTIMER4_MAT0">
+                     <pin_features>
+                        <pin_feature name="input_buffer" value="enable"/>
+                     </pin_features>
+                  </pin>
+                  <pin peripheral="LP_FLEXCOMM0" signal="P1" pin_num="N5" pin_signal="PIO1_0/LP_FLEXCOMM0_P1/SCT0_OUT9/CTIMER4_MAT1"/>
+               </pins>
+            </function>
+         </functions_list>
+      </pins>
+      <clocks name="Clocks" version="15.0" enabled="true" update_project_code="true">
+         <clocks_profile>
+            <processor_version>0.2503.40</processor_version>
+         </clocks_profile>
+         <clock_configurations>
+            <clock_configuration name="BOARD_BootClockRUN" id_prefix="" prefix_user_defined="false">
+               <description></description>
+               <options/>
+               <dependencies>
+                  <dependency resourceType="PeripheralUnifiedSignal" resourceId="CLKCTL2.xtalin" description="&apos;XTALIN&apos; (Pins tool id: CLKCTL2.xtalin, Clocks tool id: CLKCTL2.XTALIN) needs to be routed" problem_level="1" source="Clocks:BOARD_BootClockRUN">
+                     <feature name="routed" evaluation="">
+                        <data>true</data>
+                     </feature>
+                  </dependency>
+                  <dependency resourceType="PeripheralUnifiedSignal" resourceId="CLKCTL2.xtalin" description="&apos;XTALIN&apos; (Pins tool id: CLKCTL2.xtalin, Clocks tool id: CLKCTL2.XTALIN) needs to have &apos;INPUT&apos; direction" problem_level="1" source="Clocks:BOARD_BootClockRUN">
+                     <feature name="direction" evaluation="">
+                        <data>INPUT</data>
+                     </feature>
+                  </dependency>
+                  <dependency resourceType="PeripheralUnifiedSignal" resourceId="CLKCTL2.xtalout" description="&apos;XTALOUT&apos; (Pins tool id: CLKCTL2.xtalout, Clocks tool id: CLKCTL2.XTALOUT) needs to be routed" problem_level="1" source="Clocks:BOARD_BootClockRUN">
+                     <feature name="routed" evaluation="">
+                        <data>true</data>
+                     </feature>
+                  </dependency>
+                  <dependency resourceType="PeripheralUnifiedSignal" resourceId="CLKCTL2.xtalout" description="&apos;XTALOUT&apos; (Pins tool id: CLKCTL2.xtalout, Clocks tool id: CLKCTL2.XTALOUT) needs to have &apos;OUTPUT&apos; direction" problem_level="1" source="Clocks:BOARD_BootClockRUN">
+                     <feature name="direction" evaluation="">
+                        <data>OUTPUT</data>
+                     </feature>
+                  </dependency>
+                  <dependency resourceType="SWComponent" resourceId="platform.drivers.common" description="Clocks initialization requires the COMMON Driver in the project." problem_level="2" source="Clocks:BOARD_BootClockRUN">
+                     <feature name="enabled" evaluation="equal" configuration="cm33_core1">
+                        <data>true</data>
+                     </feature>
+                  </dependency>
+                  <dependency resourceType="SWComponent" resourceId="platform.drivers.common" description="Clocks initialization requires the COMMON Driver in the project." problem_level="2" source="Clocks:BOARD_BootClockRUN">
+                     <feature name="enabled" evaluation="equal" configuration="cm33_core0">
+                        <data>true</data>
+                     </feature>
+                  </dependency>
+                  <dependency resourceType="SWComponent" resourceId="platform.drivers.power" description="Clocks initialization requires the POWER Driver in the project." problem_level="2" source="Clocks:BOARD_BootClockRUN">
+                     <feature name="enabled" evaluation="equal" configuration="cm33_core1">
+                        <data>true</data>
+                     </feature>
+                  </dependency>
+                  <dependency resourceType="SWComponent" resourceId="platform.drivers.power" description="Clocks initialization requires the POWER Driver in the project." problem_level="2" source="Clocks:BOARD_BootClockRUN">
+                     <feature name="enabled" evaluation="equal" configuration="cm33_core0">
+                        <data>true</data>
+                     </feature>
+                  </dependency>
+                  <dependency resourceType="SWComponent" resourceId="platform.drivers.clock" description="Clocks initialization requires the CLOCK Driver in the project." problem_level="2" source="Clocks:BOARD_BootClockRUN">
+                     <feature name="enabled" evaluation="equal" configuration="cm33_core1">
+                        <data>true</data>
+                     </feature>
+                  </dependency>
+                  <dependency resourceType="SWComponent" resourceId="platform.drivers.clock" description="Clocks initialization requires the CLOCK Driver in the project." problem_level="2" source="Clocks:BOARD_BootClockRUN">
+                     <feature name="enabled" evaluation="equal" configuration="cm33_core0">
+                        <data>true</data>
+                     </feature>
+                  </dependency>
+               </dependencies>
+               <clock_sources>
+                  <clock_source id="CLKCTL2.XTAL_OSC.outFreq" value="24 MHz" locked="false" enabled="true"/>
+                  <clock_source id="FRO0.FRO_TUNER.outFreq" value="250 MHz" locked="false" enabled="false"/>
+                  <clock_source id="FRO2.FRO_TRIM.outFreq" value="198 MHz" locked="false" enabled="false"/>
+                  <clock_source id="FRO2.FRO_TUNER.outFreq" value="198 MHz" locked="false" enabled="false"/>
+               </clock_sources>
+               <clock_outputs>
+                  <clock_output id="COMM2_CLKOUT.outFreq" value="25 MHz" locked="false" accuracy=""/>
+                  <clock_output id="COMMON_RAM_CLK.outFreq" value="250 MHz" locked="false" accuracy=""/>
+                  <clock_output id="COMMON_VDDN_CLK.outFreq" value="192 MHz" locked="false" accuracy=""/>
+                  <clock_output id="COMPUTE_MAIN_CLK.outFreq" value="250 MHz" locked="false" accuracy=""/>
+                  <clock_output id="MEDIA_MAIN_CLK.outFreq" value="250 MHz" locked="false" accuracy=""/>
+                  <clock_output id="MEDIA_VDDN_CLK.outFreq" value="250 MHz" locked="false" accuracy=""/>
+                  <clock_output id="SENSE_CLKOUT.outFreq" value="33 MHz" locked="false" accuracy=""/>
+                  <clock_output id="SENSE_MAIN_CLK.outFreq" value="198 MHz" locked="false" accuracy=""/>
+                  <clock_output id="SENSE_MAIN_CLK_1.outFreq" value="198 MHz" locked="false" accuracy=""/>
+                  <clock_output id="SENSE_RAM_CLK.outFreq" value="198 MHz" locked="false" accuracy=""/>
+                  <clock_output id="audio_pll_pfd1_vdd1_sense.outFreq" value="399.36 MHz" locked="false" accuracy=""/>
+                  <clock_output id="audio_pll_pfd1_vdd2_com.outFreq" value="399.36 MHz" locked="false" accuracy=""/>
+                  <clock_output id="audio_pll_pfd1_vdd2_comp.outFreq" value="399.36 MHz" locked="false" accuracy=""/>
+                  <clock_output id="audio_pll_pfd1_vdd2_dsp.outFreq" value="399.36 MHz" locked="false" accuracy=""/>
+                  <clock_output id="audio_pll_pfd1_vdd2_media.outFreq" value="399.36 MHz" locked="false" accuracy=""/>
+                  <clock_output id="audio_pll_pfd1_vddn_com.outFreq" value="399.36 MHz" locked="false" accuracy=""/>
+                  <clock_output id="audio_pll_pfd1_vddn_media.outFreq" value="399.36 MHz" locked="false" accuracy=""/>
+                  <clock_output id="audio_pll_pfd3_vdd1_sense.outFreq" value="368.64 MHz" locked="false" accuracy=""/>
+                  <clock_output id="audio_pll_pfd3_vdd2_com.outFreq" value="368.64 MHz" locked="false" accuracy=""/>
+                  <clock_output id="audio_pll_pfd3_vdd2_comp.outFreq" value="368.64 MHz" locked="false" accuracy=""/>
+                  <clock_output id="audio_pll_pfd3_vdd2_dsp.outFreq" value="368.64 MHz" locked="false" accuracy=""/>
+                  <clock_output id="audio_pll_pfd3_vdd2_media.outFreq" value="368.64 MHz" locked="false" accuracy=""/>
+                  <clock_output id="audio_pll_pfd3_vddn_com.outFreq" value="368.64 MHz" locked="false" accuracy=""/>
+                  <clock_output id="audio_pll_pfd3_vddn_media.outFreq" value="368.64 MHz" locked="false" accuracy=""/>
+                  <clock_output id="audio_pll_vco_vdd1_sense.outFreq" value="532.48 MHz" locked="false" accuracy=""/>
+                  <clock_output id="audio_pll_vco_vdd2_com.outFreq" value="532.48 MHz" locked="false" accuracy=""/>
+                  <clock_output id="audio_pll_vco_vdd2_comp.outFreq" value="532.48 MHz" locked="false" accuracy=""/>
+                  <clock_output id="audio_pll_vco_vdd2_dsp.outFreq" value="532.48 MHz" locked="false" accuracy=""/>
+                  <clock_output id="audio_pll_vco_vdd2_media.outFreq" value="532.48 MHz" locked="false" accuracy=""/>
+                  <clock_output id="audio_pll_vco_vddn_com.outFreq" value="532.48 MHz" locked="false" accuracy=""/>
+                  <clock_output id="audio_pll_vco_vddn_media.outFreq" value="532.48 MHz" locked="false" accuracy=""/>
+                  <clock_output id="baseclk_cmpt.outFreq" value="192 MHz" locked="false" accuracy=""/>
+                  <clock_output id="baseclk_com2.outFreq" value="192 MHz" locked="false" accuracy=""/>
+                  <clock_output id="baseclk_comn.outFreq" value="192 MHz" locked="false" accuracy=""/>
+                  <clock_output id="baseclk_dsp.outFreq" value="192 MHz" locked="false" accuracy=""/>
+                  <clock_output id="baseclk_md2.outFreq" value="192 MHz" locked="false" accuracy=""/>
+                  <clock_output id="baseclk_mdn.outFreq" value="192 MHz" locked="false" accuracy=""/>
+                  <clock_output id="baseclk_sense.outFreq" value="66 MHz" locked="false" accuracy=""/>
+                  <clock_output id="ckil_32k.outFreq" value="976.5625 Hz" locked="false" accuracy=""/>
+                  <clock_output id="fro0_div2.outFreq" value="125 MHz" locked="false" accuracy=""/>
+                  <clock_output id="fro0_div3.outFreq" value="250/3 MHz" locked="false" accuracy=""/>
+                  <clock_output id="fro0_div6.outFreq" value="125/3 MHz" locked="false" accuracy=""/>
+                  <clock_output id="fro0_div8.outFreq" value="31.25 MHz" locked="false" accuracy=""/>
+                  <clock_output id="fro0_max_vdd1_sense.outFreq" value="250 MHz" locked="false" accuracy=""/>
+                  <clock_output id="fro0_max_vdd2_com.outFreq" value="250 MHz" locked="false" accuracy=""/>
+                  <clock_output id="fro0_max_vdd2_comp.outFreq" value="250 MHz" locked="false" accuracy=""/>
+                  <clock_output id="fro0_max_vdd2_dsp.outFreq" value="250 MHz" locked="false" accuracy=""/>
+                  <clock_output id="fro0_max_vdd2_media.outFreq" value="250 MHz" locked="false" accuracy=""/>
+                  <clock_output id="fro0_max_vddn_com.outFreq" value="250 MHz" locked="false" accuracy=""/>
+                  <clock_output id="fro0_max_vddn_media.outFreq" value="250 MHz" locked="false" accuracy=""/>
+                  <clock_output id="fro0_tuner_divided_clk.outFreq" value="24 MHz" locked="false" accuracy=""/>
+                  <clock_output id="fro1_div2.outFreq" value="96 MHz" locked="false" accuracy=""/>
+                  <clock_output id="fro1_div3.outFreq" value="64 MHz" locked="false" accuracy=""/>
+                  <clock_output id="fro1_div6.outFreq" value="32 MHz" locked="false" accuracy=""/>
+                  <clock_output id="fro1_div8.outFreq" value="24 MHz" locked="false" accuracy=""/>
+                  <clock_output id="fro1_max.outFreq" value="192 MHz" locked="false" accuracy=""/>
+                  <clock_output id="fro2_div2.outFreq" value="99 MHz" locked="false" accuracy=""/>
+                  <clock_output id="fro2_div3.outFreq" value="66 MHz" locked="false" accuracy=""/>
+                  <clock_output id="fro2_div6.outFreq" value="33 MHz" locked="false" accuracy=""/>
+                  <clock_output id="fro2_div8.outFreq" value="24.75 MHz" locked="false" accuracy=""/>
+                  <clock_output id="fro2_max_vdd1_sense.outFreq" value="198 MHz" locked="false" accuracy=""/>
+                  <clock_output id="fro2_max_vdd2_com.outFreq" value="198 MHz" locked="false" accuracy=""/>
+                  <clock_output id="fro2_max_vdd2_comp.outFreq" value="198 MHz" locked="false" accuracy=""/>
+                  <clock_output id="fro2_max_vdd2_dsp.outFreq" value="198 MHz" locked="false" accuracy=""/>
+                  <clock_output id="fro2_max_vdd2_media.outFreq" value="198 MHz" locked="false" accuracy=""/>
+                  <clock_output id="fro2_max_vddn_com.outFreq" value="198 MHz" locked="false" accuracy=""/>
+                  <clock_output id="fro2_max_vddn_media.outFreq" value="198 MHz" locked="false" accuracy=""/>
+                  <clock_output id="fro2_tuner_divided_clk.outFreq" value="24 MHz" locked="false" accuracy=""/>
+                  <clock_output id="lposc_1m.outFreq" value="1 MHz" locked="false" accuracy=""/>
+                  <clock_output id="main_pll_pfd0_vdd1_sense.outFreq" value="9504/19 MHz" locked="false" accuracy=""/>
+                  <clock_output id="main_pll_pfd0_vdd2_com.outFreq" value="9504/19 MHz" locked="false" accuracy=""/>
+                  <clock_output id="main_pll_pfd0_vdd2_comp.outFreq" value="9504/19 MHz" locked="false" accuracy=""/>
+                  <clock_output id="main_pll_pfd0_vdd2_dsp.outFreq" value="9504/19 MHz" locked="false" accuracy=""/>
+                  <clock_output id="main_pll_pfd0_vdd2_media.outFreq" value="9504/19 MHz" locked="false" accuracy=""/>
+                  <clock_output id="main_pll_pfd0_vddn_com.outFreq" value="9504/19 MHz" locked="false" accuracy=""/>
+                  <clock_output id="main_pll_pfd0_vddn_media.outFreq" value="9504/19 MHz" locked="false" accuracy=""/>
+                  <clock_output id="main_pll_pfd1_vdd1_sense.outFreq" value="396 MHz" locked="false" accuracy=""/>
+                  <clock_output id="main_pll_pfd1_vdd2_com.outFreq" value="396 MHz" locked="false" accuracy=""/>
+                  <clock_output id="main_pll_pfd1_vdd2_comp.outFreq" value="396 MHz" locked="false" accuracy=""/>
+                  <clock_output id="main_pll_pfd1_vdd2_dsp.outFreq" value="396 MHz" locked="false" accuracy=""/>
+                  <clock_output id="main_pll_pfd1_vdd2_media.outFreq" value="396 MHz" locked="false" accuracy=""/>
+                  <clock_output id="main_pll_pfd1_vddn_com.outFreq" value="396 MHz" locked="false" accuracy=""/>
+                  <clock_output id="main_pll_pfd1_vddn_media.outFreq" value="396 MHz" locked="false" accuracy=""/>
+                  <clock_output id="main_pll_pfd2_vdd1_sense.outFreq" value="528 MHz" locked="false" accuracy=""/>
+                  <clock_output id="main_pll_pfd2_vdd2_com.outFreq" value="528 MHz" locked="false" accuracy=""/>
+                  <clock_output id="main_pll_pfd2_vdd2_comp.outFreq" value="528 MHz" locked="false" accuracy=""/>
+                  <clock_output id="main_pll_pfd2_vdd2_dsp.outFreq" value="528 MHz" locked="false" accuracy=""/>
+                  <clock_output id="main_pll_pfd2_vdd2_media.outFreq" value="528 MHz" locked="false" accuracy=""/>
+                  <clock_output id="main_pll_pfd2_vddn_com.outFreq" value="528 MHz" locked="false" accuracy=""/>
+                  <clock_output id="main_pll_pfd2_vddn_media.outFreq" value="528 MHz" locked="false" accuracy=""/>
+                  <clock_output id="main_pll_pfd3_vdd1_sense.outFreq" value="9504/19 MHz" locked="false" accuracy=""/>
+                  <clock_output id="main_pll_pfd3_vdd2_com.outFreq" value="9504/19 MHz" locked="false" accuracy=""/>
+                  <clock_output id="main_pll_pfd3_vdd2_comp.outFreq" value="9504/19 MHz" locked="false" accuracy=""/>
+                  <clock_output id="main_pll_pfd3_vdd2_dsp.outFreq" value="9504/19 MHz" locked="false" accuracy=""/>
+                  <clock_output id="main_pll_pfd3_vdd2_media.outFreq" value="9504/19 MHz" locked="false" accuracy=""/>
+                  <clock_output id="main_pll_pfd3_vddn_com.outFreq" value="9504/19 MHz" locked="false" accuracy=""/>
+                  <clock_output id="main_pll_pfd3_vddn_media.outFreq" value="9504/19 MHz" locked="false" accuracy=""/>
+                  <clock_output id="osc_clk.outFreq" value="24 MHz" locked="false" accuracy=""/>
+                  <clock_output id="osc_clk_eusb.outFreq" value="24 MHz" locked="false" accuracy=""/>
+                  <clock_output id="osc_clk_usb.outFreq" value="24 MHz" locked="false" accuracy=""/>
+                  <clock_output id="wake32k_clk.outFreq" value="976.5625 Hz" locked="false" accuracy=""/>
+               </clock_outputs>
+               <clock_settings>
+                  <setting id="AUDIO_VDD1_CLK_SEL_INIT_Config" value="custom" locked="false"/>
+                  <setting id="AUDIO_VDD2_CLK_SEL_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_COMM2_CLKOUT_INIT_Config" value="runtime" locked="false"/>
+                  <setting id="CLK_ROOT_COMPUTE_SYSTICK_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_COMPUTE_TPIU_CLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_CTIMER0_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_CTIMER1_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_CTIMER2_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_CTIMER3_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_CTIMER4_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_CTIMER5_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_CTIMER6_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_CTIMER7_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_DCPIXEL_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_DPHY_BIT_CLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_DPHY_RX_CLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_DSP_CLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_FLEXCOMM0_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_FLEXCOMM10_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_FLEXCOMM11_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_FLEXCOMM12_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_FLEXCOMM13_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_FLEXCOMM17_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_FLEXCOMM18_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_FLEXCOMM19_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_FLEXCOMM1_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_FLEXCOMM20_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_FLEXCOMM2_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_FLEXCOMM3_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_FLEXCOMM4_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_FLEXCOMM5_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_FLEXCOMM6_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_FLEXCOMM7_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_FLEXCOMM8_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_FLEXCOMM9_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_FLEXIO_CLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_GPU_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_I3C01_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_I3C01_PCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_I3C23_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_LPI2C_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_LPSPI14_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_LPSPI16_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_MICFIL_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_OSEVENT_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_SAI012_CLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_SAI3_CLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_SARADC_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_SCT_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_SDADC_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_SDIO0_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_SDIO1_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_SENSE_CLKOUT_CPU_Core_Config" value="cm33_core1" locked="false"/>
+                  <setting id="CLK_ROOT_SENSE_CLKOUT_INIT_Config" value="runtime" locked="false"/>
+                  <setting id="CLK_ROOT_SENSE_DSP_CLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_SENSE_MAIN_CLK_CPU_Core_Config" value="cm33_core1" locked="false"/>
+                  <setting id="CLK_ROOT_SENSE_RAM_CLK_CPU_Core_Config" value="cm33_core1" locked="false"/>
+                  <setting id="CLK_ROOT_SENSE_SYSTICK_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_USB_WAKE_CLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_UTICK0_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_UTICK1_CLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_WDT0_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_WDT1_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_WDT2_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_WDT3_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_XSPI0_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_XSPI1_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_XSPI2_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_eUSB_WAKE_CLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_osc_clk_eusb_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_osc_clk_usb_INIT_Config" value="custom" locked="false"/>
+                  <setting id="ClockPostInitConfig" value="BOARD_ClockPostConfig" locked="false"/>
+                  <setting id="ClockPreInitConfig" value="BOARD_ClockPreConfig" locked="false"/>
+                  <setting id="FCCLK0_CLK_SEL_INIT_Config" value="custom" locked="false"/>
+                  <setting id="FCCLK1_CLK_SEL_INIT_Config" value="custom" locked="false"/>
+                  <setting id="FCCLK2_CLK_SEL_INIT_Config" value="custom" locked="false"/>
+                  <setting id="FCCLK3_CLK_SEL_INIT_Config" value="custom" locked="false"/>
+                  <setting id="FRO0_mode" value="ClosedLoop" locked="false"/>
+                  <setting id="FRO1_INIT_Config" value="custom" locked="false"/>
+                  <setting id="FRO2_CPU_Core_Config" value="cm33_core1" locked="false"/>
+                  <setting id="FRO2_mode" value="OpenLoop" locked="false"/>
+                  <setting id="LOW_FREQ_CLK_SEL_INIT_Config" value="custom" locked="false"/>
+                  <setting id="OSC32KNP_INIT_Config" value="custom" locked="false"/>
+                  <setting id="RTC_SS_INIT_Config" value="custom" locked="false"/>
+                  <setting id="VDDN_COM_BASE_CLK_SEL_INIT_Config" value="runtime" locked="false"/>
+                  <setting id="WAKE32K_CLK_SEL_INIT_Config" value="custom" locked="false"/>
+                  <setting id="XTAL_OSC_CPU_Core_Config" value="both" locked="false"/>
+                  <setting id="CLKCTL0.CLOCK_ROOT_COMM2_CLKOUT.DIV.scale" value="10" locked="true"/>
+                  <setting id="CLKCTL0.CLOCK_ROOT_COMM2_CLKOUT.MUX.sel" value="FRO0.FRO_MAX_VDD2_COM_CLK" locked="false"/>
+                  <setting id="CLKCTL0.CLOCK_ROOT_COMMON_RAM_CLK.DIV.scale" value="1" locked="true"/>
+                  <setting id="CLKCTL0.CLOCK_ROOT_COMMON_RAM_CLK.MUX.sel" value="FRO0.FRO_MAX_VDD2_COM_CLK" locked="false"/>
+                  <setting id="CLKCTL0.CLOCK_ROOT_COMPUTE_MAIN_CLK.DIV.scale" value="1" locked="true"/>
+                  <setting id="CLKCTL0.CLOCK_ROOT_COMPUTE_MAIN_CLK.MUX.sel" value="FRO0.FRO_MAX_VDD2_COMP_CLK" locked="false"/>
+                  <setting id="CLKCTL0.CLOCK_ROOT_COMPUTE_SYSTICK_FCLK.DIV.scale" value="129" locked="false"/>
+                  <setting id="CLKCTL0.CLOCK_ROOT_I3C01_FCLK.DIV.scale" value="129" locked="false"/>
+                  <setting id="CLKCTL0.CMPTBASECLKSEL.sel" value="FRO1.FRO_MAX_CLK" locked="false"/>
+                  <setting id="CLKCTL0.DSPBASECLKSEL.sel" value="FRO1.FRO_MAX_CLK" locked="false"/>
+                  <setting id="CLKCTL0.VDD2COMBASECLKSEL.sel" value="FRO1.FRO_MAX_CLK" locked="false"/>
+                  <setting id="CLKCTL1.CLOCK_ROOT_I3C23_FCLK.DIV.scale" value="129" locked="false"/>
+                  <setting id="CLKCTL1.CLOCK_ROOT_SENSE_SYSTICK_FCLK.DIV.scale" value="129" locked="false"/>
+                  <setting id="CLKCTL1.SENSEBASECLKSEL.sel" value="FRO2.FRO_DIV3_CLK" locked="false"/>
+                  <setting id="CLKCTL2.AUDIOPLL0CLKSEL.sel" value="CLKCTL2.SYSOSCBYPASS" locked="false"/>
+                  <setting id="CLKCTL2.AUDIO_PLL0_PFD1_DIV.scale" value="24" locked="true"/>
+                  <setting id="CLKCTL2.AUDIO_PLL0_PFD1_MUL.scale" value="18" locked="true"/>
+                  <setting id="CLKCTL2.AUDIO_PLL0_PFD3_DIV.scale" value="26" locked="true"/>
+                  <setting id="CLKCTL2.AUDIO_PLL0_PFD3_MUL.scale" value="18" locked="true"/>
+                  <setting id="CLKCTL2.Audio_PLL0.denom" value="27000" locked="true"/>
+                  <setting id="CLKCTL2.Audio_PLL0.num" value="5040" locked="true"/>
+                  <setting id="CLKCTL2.CLOCK_ROOT_COMMON_VDDN_CLK.DIV.scale" value="1" locked="true"/>
+                  <setting id="CLKCTL2.COMNBASECLKSEL.sel" value="FRO1.FRO_MAX_CLK" locked="false"/>
+                  <setting id="CLKCTL2.MAINPLL0CLKSEL.sel" value="CLKCTL2.SYSOSCBYPASS" locked="false"/>
+                  <setting id="CLKCTL2.MAIN_PLL0_PFD0_DIV.scale" value="19" locked="true"/>
+                  <setting id="CLKCTL2.MAIN_PLL0_PFD0_MUL.scale" value="18" locked="true"/>
+                  <setting id="CLKCTL2.MAIN_PLL0_PFD1_DIV.scale" value="24" locked="true"/>
+                  <setting id="CLKCTL2.MAIN_PLL0_PFD1_MUL.scale" value="18" locked="true"/>
+                  <setting id="CLKCTL2.MAIN_PLL0_PFD2_DIV.scale" value="18" locked="true"/>
+                  <setting id="CLKCTL2.MAIN_PLL0_PFD2_MUL.scale" value="18" locked="true"/>
+                  <setting id="CLKCTL2.MAIN_PLL0_PFD3_DIV.scale" value="19" locked="true"/>
+                  <setting id="CLKCTL2.MAIN_PLL0_PFD3_MUL.scale" value="18" locked="true"/>
+                  <setting id="CLKCTL2.Main_PLL0.denom" value="1" locked="false"/>
+                  <setting id="CLKCTL2.Main_PLL0.num" value="0" locked="false"/>
+                  <setting id="CLKCTL2_SYSOSCCTL0_LP_ENABLE_CFG" value="low_power" locked="false"/>
+                  <setting id="CLKCTL3.CLOCK_ROOT_MICFIL_FCLK.DIV.scale" value="129" locked="false"/>
+                  <setting id="CLKCTL3.CLOCK_ROOT_SDADC_FCLK.DIV.scale" value="129" locked="false"/>
+                  <setting id="CLKCTL3.CLOCK_ROOT_SENSE_MAIN_CLK.DIV.scale" value="1" locked="true"/>
+                  <setting id="CLKCTL3.CLOCK_ROOT_SENSE_MAIN_CLK.MUX.sel" value="FRO2.FRO_MAX_VDD1_SENSE_CLK" locked="false"/>
+                  <setting id="CLKCTL3.CLOCK_ROOT_SENSE_RAM_CLK.DIV.scale" value="1" locked="true"/>
+                  <setting id="CLKCTL3.CLOCK_ROOT_SENSE_RAM_CLK.MUX.sel" value="FRO2.FRO_MAX_VDD1_SENSE_CLK" locked="false"/>
+                  <setting id="CLKCTL4.CLOCK_ROOT_MEDIA_MAIN_CLK.DIV.scale" value="1" locked="true"/>
+                  <setting id="CLKCTL4.CLOCK_ROOT_MEDIA_MAIN_CLK.MUX.sel" value="FRO0.FRO_MAX_VDD2_MEDIA_CLK" locked="false"/>
+                  <setting id="CLKCTL4.CLOCK_ROOT_MEDIA_VDDN_CLK.DIV.scale" value="1" locked="true"/>
+                  <setting id="CLKCTL4.CLOCK_ROOT_MEDIA_VDDN_CLK.MUX.sel" value="FRO0.FRO_MAX_VDDN_MEDIA_CLK" locked="false"/>
+                  <setting id="CLKCTL4.CLOCK_ROOT_eUSB_WAKE_CLK.MUX.sel" value="CLKCTL3.lposc_1m" locked="false"/>
+                  <setting id="CLKCTL4.MD2BASECLKSEL.sel" value="FRO1.FRO_MAX_CLK" locked="false"/>
+                  <setting id="CLKCTL4.MDNBASECLKSEL.sel" value="FRO1.FRO_MAX_CLK" locked="false"/>
+                  <setting id="CLKCTL4_FCCLK0_SEL_EN_CFG" value="Disabled" locked="false"/>
+                  <setting id="CLKCTL4_FCCLK1_SEL_EN_CFG" value="Disabled" locked="false"/>
+                  <setting id="CLKCTL4_FCCLK2_SEL_EN_CFG" value="Disabled" locked="false"/>
+                  <setting id="CLKCTL4_FCCLK3_SEL_EN_CFG" value="Disabled" locked="false"/>
+                  <setting id="CLKCTL4_LOWFREQCLKDIV_HALT_CFG" value="Enabled" locked="false"/>
+                  <setting id="CLOCK_ROOTCOMM2_CLKOUT_CONTROL_OFF_CFG" value="Enabled" locked="false"/>
+                  <setting id="CLOCK_ROOTSENSE_CLKOUT_CONTROL_OFF_CFG" value="Enabled" locked="false"/>
+                  <setting id="FRO0.FROMODESEL.sel" value="FRO0.FRO_TUNER" locked="false"/>
+                  <setting id="FRO0_COARSE_TRIM_Config" value="Disabled" locked="false"/>
+                  <setting id="FRO0_TRIM1_DELAY_US_Config" value="15" locked="false"/>
+                  <setting id="FRO0_TRIM_COUNT_RANGE_Config" value="100" locked="false"/>
+                  <setting id="FRO2_COARSE_TRIM_Config" value="Disabled" locked="false"/>
+                  <setting id="FRO2_TRIM1_DELAY_US_Config" value="15" locked="false"/>
+                  <setting id="FRO2_TRIM_COUNT_RANGE_Config" value="100" locked="false"/>
+               </clock_settings>
+               <called_from_default_init>true</called_from_default_init>
+            </clock_configuration>
+            <clock_configuration name="BOARD_BootClockHSRUN" id_prefix="" prefix_user_defined="false">
+               <description></description>
+               <options/>
+               <dependencies>
+                  <dependency resourceType="PeripheralUnifiedSignal" resourceId="CLKCTL2.xtalin" description="&apos;XTALIN&apos; (Pins tool id: CLKCTL2.xtalin, Clocks tool id: CLKCTL2.XTALIN) needs to be routed" problem_level="1" source="Clocks:BOARD_BootClockHSRUN">
+                     <feature name="routed" evaluation="">
+                        <data>true</data>
+                     </feature>
+                  </dependency>
+                  <dependency resourceType="PeripheralUnifiedSignal" resourceId="CLKCTL2.xtalin" description="&apos;XTALIN&apos; (Pins tool id: CLKCTL2.xtalin, Clocks tool id: CLKCTL2.XTALIN) needs to have &apos;INPUT&apos; direction" problem_level="1" source="Clocks:BOARD_BootClockHSRUN">
+                     <feature name="direction" evaluation="">
+                        <data>INPUT</data>
+                     </feature>
+                  </dependency>
+                  <dependency resourceType="PeripheralUnifiedSignal" resourceId="CLKCTL2.xtalout" description="&apos;XTALOUT&apos; (Pins tool id: CLKCTL2.xtalout, Clocks tool id: CLKCTL2.XTALOUT) needs to be routed" problem_level="1" source="Clocks:BOARD_BootClockHSRUN">
+                     <feature name="routed" evaluation="">
+                        <data>true</data>
+                     </feature>
+                  </dependency>
+                  <dependency resourceType="PeripheralUnifiedSignal" resourceId="CLKCTL2.xtalout" description="&apos;XTALOUT&apos; (Pins tool id: CLKCTL2.xtalout, Clocks tool id: CLKCTL2.XTALOUT) needs to have &apos;OUTPUT&apos; direction" problem_level="1" source="Clocks:BOARD_BootClockHSRUN">
+                     <feature name="direction" evaluation="">
+                        <data>OUTPUT</data>
+                     </feature>
+                  </dependency>
+                  <dependency resourceType="SWComponent" resourceId="platform.drivers.common" description="Clocks initialization requires the COMMON Driver in the project." problem_level="2" source="Clocks:BOARD_BootClockHSRUN">
+                     <feature name="enabled" evaluation="equal" configuration="cm33_core1">
+                        <data>true</data>
+                     </feature>
+                  </dependency>
+                  <dependency resourceType="SWComponent" resourceId="platform.drivers.common" description="Clocks initialization requires the COMMON Driver in the project." problem_level="2" source="Clocks:BOARD_BootClockHSRUN">
+                     <feature name="enabled" evaluation="equal" configuration="cm33_core0">
+                        <data>true</data>
+                     </feature>
+                  </dependency>
+                  <dependency resourceType="SWComponent" resourceId="platform.drivers.power" description="Clocks initialization requires the POWER Driver in the project." problem_level="2" source="Clocks:BOARD_BootClockHSRUN">
+                     <feature name="enabled" evaluation="equal" configuration="cm33_core1">
+                        <data>true</data>
+                     </feature>
+                  </dependency>
+                  <dependency resourceType="SWComponent" resourceId="platform.drivers.power" description="Clocks initialization requires the POWER Driver in the project." problem_level="2" source="Clocks:BOARD_BootClockHSRUN">
+                     <feature name="enabled" evaluation="equal" configuration="cm33_core0">
+                        <data>true</data>
+                     </feature>
+                  </dependency>
+                  <dependency resourceType="SWComponent" resourceId="platform.drivers.clock" description="Clocks initialization requires the CLOCK Driver in the project." problem_level="2" source="Clocks:BOARD_BootClockHSRUN">
+                     <feature name="enabled" evaluation="equal" configuration="cm33_core1">
+                        <data>true</data>
+                     </feature>
+                  </dependency>
+                  <dependency resourceType="SWComponent" resourceId="platform.drivers.clock" description="Clocks initialization requires the CLOCK Driver in the project." problem_level="2" source="Clocks:BOARD_BootClockHSRUN">
+                     <feature name="enabled" evaluation="equal" configuration="cm33_core0">
+                        <data>true</data>
+                     </feature>
+                  </dependency>
+               </dependencies>
+               <clock_sources>
+                  <clock_source id="CLKCTL2.XTAL_OSC.outFreq" value="24 MHz" locked="false" enabled="true"/>
+                  <clock_source id="FRO0.FRO_TUNER.outFreq" value="325 MHz" locked="false" enabled="false"/>
+                  <clock_source id="FRO2.FRO_TRIM.outFreq" value="250 MHz" locked="false" enabled="false"/>
+                  <clock_source id="FRO2.FRO_TUNER.outFreq" value="250 MHz" locked="false" enabled="false"/>
+               </clock_sources>
+               <clock_outputs>
+                  <clock_output id="COMM2_CLKOUT.outFreq" value="32.5 MHz" locked="false" accuracy=""/>
+                  <clock_output id="COMMON_RAM_CLK.outFreq" value="325 MHz" locked="false" accuracy=""/>
+                  <clock_output id="COMMON_VDDN_CLK.outFreq" value="192 MHz" locked="false" accuracy=""/>
+                  <clock_output id="COMPUTE_MAIN_CLK.outFreq" value="325 MHz" locked="false" accuracy=""/>
+                  <clock_output id="MEDIA_MAIN_CLK.outFreq" value="325 MHz" locked="false" accuracy=""/>
+                  <clock_output id="MEDIA_VDDN_CLK.outFreq" value="325 MHz" locked="false" accuracy=""/>
+                  <clock_output id="SENSE_MAIN_CLK_1.outFreq" value="250 MHz" locked="false" accuracy=""/>
+                  <clock_output id="SENSE_RAM_CLK.outFreq" value="250 MHz" locked="false" accuracy=""/>
+                  <clock_output id="XSPI2_FCLK.outFreq" value="96 MHz" locked="false" accuracy=""/>
+                  <clock_output id="XSPI2_FCLK_DIV2.outFreq" value="48 MHz" locked="false" accuracy=""/>
+                  <clock_output id="audio_pll_pfd1_vdd1_sense.outFreq" value="399.36 MHz" locked="false" accuracy=""/>
+                  <clock_output id="audio_pll_pfd1_vdd2_com.outFreq" value="399.36 MHz" locked="false" accuracy=""/>
+                  <clock_output id="audio_pll_pfd1_vdd2_comp.outFreq" value="399.36 MHz" locked="false" accuracy=""/>
+                  <clock_output id="audio_pll_pfd1_vdd2_dsp.outFreq" value="399.36 MHz" locked="false" accuracy=""/>
+                  <clock_output id="audio_pll_pfd1_vddn_com.outFreq" value="399.36 MHz" locked="false" accuracy=""/>
+                  <clock_output id="audio_pll_pfd1_vddn_media.outFreq" value="399.36 MHz" locked="false" accuracy=""/>
+                  <clock_output id="audio_pll_pfd3_vdd1_sense.outFreq" value="368.64 MHz" locked="false" accuracy=""/>
+                  <clock_output id="audio_pll_pfd3_vdd2_com.outFreq" value="368.64 MHz" locked="false" accuracy=""/>
+                  <clock_output id="audio_pll_pfd3_vdd2_comp.outFreq" value="368.64 MHz" locked="false" accuracy=""/>
+                  <clock_output id="audio_pll_pfd3_vdd2_dsp.outFreq" value="368.64 MHz" locked="false" accuracy=""/>
+                  <clock_output id="audio_pll_pfd3_vdd2_media.outFreq" value="368.64 MHz" locked="false" accuracy=""/>
+                  <clock_output id="audio_pll_pfd3_vddn_com.outFreq" value="368.64 MHz" locked="false" accuracy=""/>
+                  <clock_output id="audio_pll_pfd3_vddn_media.outFreq" value="368.64 MHz" locked="false" accuracy=""/>
+                  <clock_output id="audio_pll_vco_vdd1_sense.outFreq" value="532.48 MHz" locked="false" accuracy=""/>
+                  <clock_output id="audio_pll_vco_vdd2_com.outFreq" value="532.48 MHz" locked="false" accuracy=""/>
+                  <clock_output id="audio_pll_vco_vdd2_comp.outFreq" value="532.48 MHz" locked="false" accuracy=""/>
+                  <clock_output id="audio_pll_vco_vdd2_dsp.outFreq" value="532.48 MHz" locked="false" accuracy=""/>
+                  <clock_output id="audio_pll_vco_vdd2_media.outFreq" value="532.48 MHz" locked="false" accuracy=""/>
+                  <clock_output id="audio_pll_vco_vddn_com.outFreq" value="532.48 MHz" locked="false" accuracy=""/>
+                  <clock_output id="audio_pll_vco_vddn_media.outFreq" value="532.48 MHz" locked="false" accuracy=""/>
+                  <clock_output id="baseclk_cmpt.outFreq" value="192 MHz" locked="false" accuracy=""/>
+                  <clock_output id="baseclk_com2.outFreq" value="192 MHz" locked="false" accuracy=""/>
+                  <clock_output id="baseclk_comn.outFreq" value="192 MHz" locked="false" accuracy=""/>
+                  <clock_output id="baseclk_dsp.outFreq" value="192 MHz" locked="false" accuracy=""/>
+                  <clock_output id="baseclk_md2.outFreq" value="192 MHz" locked="false" accuracy=""/>
+                  <clock_output id="baseclk_mdn.outFreq" value="192 MHz" locked="false" accuracy=""/>
+                  <clock_output id="baseclk_sense.outFreq" value="64 MHz" locked="false" accuracy=""/>
+                  <clock_output id="ckil_32k.outFreq" value="976.5625 Hz" locked="false" accuracy=""/>
+                  <clock_output id="fro0_div2.outFreq" value="162.5 MHz" locked="false" accuracy=""/>
+                  <clock_output id="fro0_div3.outFreq" value="325/3 MHz" locked="false" accuracy=""/>
+                  <clock_output id="fro0_div6.outFreq" value="162.5/3 MHz" locked="false" accuracy=""/>
+                  <clock_output id="fro0_div8.outFreq" value="81.25/2 MHz" locked="false" accuracy=""/>
+                  <clock_output id="fro0_max_vdd1_sense.outFreq" value="325 MHz" locked="false" accuracy=""/>
+                  <clock_output id="fro0_max_vdd2_com.outFreq" value="325 MHz" locked="false" accuracy=""/>
+                  <clock_output id="fro0_max_vdd2_comp.outFreq" value="325 MHz" locked="false" accuracy=""/>
+                  <clock_output id="fro0_max_vdd2_dsp.outFreq" value="325 MHz" locked="false" accuracy=""/>
+                  <clock_output id="fro0_max_vdd2_media.outFreq" value="325 MHz" locked="false" accuracy=""/>
+                  <clock_output id="fro0_max_vddn_com.outFreq" value="325 MHz" locked="false" accuracy=""/>
+                  <clock_output id="fro0_max_vddn_media.outFreq" value="325 MHz" locked="false" accuracy=""/>
+                  <clock_output id="fro0_tuner_divided_clk.outFreq" value="24 MHz" locked="false" accuracy=""/>
+                  <clock_output id="fro1_div2.outFreq" value="96 MHz" locked="false" accuracy=""/>
+                  <clock_output id="fro1_div3.outFreq" value="64 MHz" locked="false" accuracy=""/>
+                  <clock_output id="fro1_div6.outFreq" value="32 MHz" locked="false" accuracy=""/>
+                  <clock_output id="fro1_div8.outFreq" value="24 MHz" locked="false" accuracy=""/>
+                  <clock_output id="fro1_max.outFreq" value="192 MHz" locked="false" accuracy=""/>
+                  <clock_output id="fro2_div2.outFreq" value="125 MHz" locked="false" accuracy=""/>
+                  <clock_output id="fro2_div3.outFreq" value="250/3 MHz" locked="false" accuracy=""/>
+                  <clock_output id="fro2_div6.outFreq" value="125/3 MHz" locked="false" accuracy=""/>
+                  <clock_output id="fro2_div8.outFreq" value="31.25 MHz" locked="false" accuracy=""/>
+                  <clock_output id="fro2_max_vdd1_sense.outFreq" value="250 MHz" locked="false" accuracy=""/>
+                  <clock_output id="fro2_max_vdd2_com.outFreq" value="250 MHz" locked="false" accuracy=""/>
+                  <clock_output id="fro2_max_vdd2_comp.outFreq" value="250 MHz" locked="false" accuracy=""/>
+                  <clock_output id="fro2_max_vdd2_dsp.outFreq" value="250 MHz" locked="false" accuracy=""/>
+                  <clock_output id="fro2_max_vdd2_media.outFreq" value="250 MHz" locked="false" accuracy=""/>
+                  <clock_output id="fro2_max_vddn_com.outFreq" value="250 MHz" locked="false" accuracy=""/>
+                  <clock_output id="fro2_max_vddn_media.outFreq" value="250 MHz" locked="false" accuracy=""/>
+                  <clock_output id="fro2_tuner_divided_clk.outFreq" value="24 MHz" locked="false" accuracy=""/>
+                  <clock_output id="lposc_1m.outFreq" value="1 MHz" locked="false" accuracy=""/>
+                  <clock_output id="main_pll_pfd0_vdd1_sense.outFreq" value="9504/19 MHz" locked="false" accuracy=""/>
+                  <clock_output id="main_pll_pfd0_vdd2_comp.outFreq" value="9504/19 MHz" locked="false" accuracy=""/>
+                  <clock_output id="main_pll_pfd0_vdd2_dsp.outFreq" value="9504/19 MHz" locked="false" accuracy=""/>
+                  <clock_output id="main_pll_pfd0_vdd2_media.outFreq" value="9504/19 MHz" locked="false" accuracy=""/>
+                  <clock_output id="main_pll_pfd0_vddn_com.outFreq" value="9504/19 MHz" locked="false" accuracy=""/>
+                  <clock_output id="main_pll_pfd0_vddn_media.outFreq" value="9504/19 MHz" locked="false" accuracy=""/>
+                  <clock_output id="main_pll_pfd1_vdd1_sense.outFreq" value="396 MHz" locked="false" accuracy=""/>
+                  <clock_output id="main_pll_pfd1_vdd2_com.outFreq" value="396 MHz" locked="false" accuracy=""/>
+                  <clock_output id="main_pll_pfd1_vdd2_comp.outFreq" value="396 MHz" locked="false" accuracy=""/>
+                  <clock_output id="main_pll_pfd1_vdd2_dsp.outFreq" value="396 MHz" locked="false" accuracy=""/>
+                  <clock_output id="main_pll_pfd1_vdd2_media.outFreq" value="396 MHz" locked="false" accuracy=""/>
+                  <clock_output id="main_pll_pfd1_vddn_com.outFreq" value="396 MHz" locked="false" accuracy=""/>
+                  <clock_output id="main_pll_pfd1_vddn_media.outFreq" value="396 MHz" locked="false" accuracy=""/>
+                  <clock_output id="main_pll_pfd2_vdd1_sense.outFreq" value="528 MHz" locked="false" accuracy=""/>
+                  <clock_output id="main_pll_pfd2_vdd2_com.outFreq" value="528 MHz" locked="false" accuracy=""/>
+                  <clock_output id="main_pll_pfd2_vdd2_comp.outFreq" value="528 MHz" locked="false" accuracy=""/>
+                  <clock_output id="main_pll_pfd2_vdd2_dsp.outFreq" value="528 MHz" locked="false" accuracy=""/>
+                  <clock_output id="main_pll_pfd2_vdd2_media.outFreq" value="528 MHz" locked="false" accuracy=""/>
+                  <clock_output id="main_pll_pfd2_vddn_com.outFreq" value="528 MHz" locked="false" accuracy=""/>
+                  <clock_output id="main_pll_pfd2_vddn_media.outFreq" value="528 MHz" locked="false" accuracy=""/>
+                  <clock_output id="main_pll_pfd3_vdd1_sense.outFreq" value="9504/19 MHz" locked="false" accuracy=""/>
+                  <clock_output id="main_pll_pfd3_vdd2_com.outFreq" value="9504/19 MHz" locked="false" accuracy=""/>
+                  <clock_output id="main_pll_pfd3_vdd2_comp.outFreq" value="9504/19 MHz" locked="false" accuracy=""/>
+                  <clock_output id="main_pll_pfd3_vdd2_dsp.outFreq" value="9504/19 MHz" locked="false" accuracy=""/>
+                  <clock_output id="main_pll_pfd3_vdd2_media.outFreq" value="9504/19 MHz" locked="false" accuracy=""/>
+                  <clock_output id="main_pll_pfd3_vddn_com.outFreq" value="9504/19 MHz" locked="false" accuracy=""/>
+                  <clock_output id="main_pll_pfd3_vddn_media.outFreq" value="9504/19 MHz" locked="false" accuracy=""/>
+                  <clock_output id="osc_clk.outFreq" value="24 MHz" locked="false" accuracy=""/>
+                  <clock_output id="osc_clk_eusb.outFreq" value="24 MHz" locked="false" accuracy=""/>
+                  <clock_output id="osc_clk_usb.outFreq" value="24 MHz" locked="false" accuracy=""/>
+                  <clock_output id="wake32k_clk.outFreq" value="976.5625 Hz" locked="false" accuracy=""/>
+               </clock_outputs>
+               <clock_settings>
+                  <setting id="AUDIO_VDD1_CLK_SEL_INIT_Config" value="custom" locked="false"/>
+                  <setting id="AUDIO_VDD2_CLK_SEL_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_COMM2_CLKOUT_INIT_Config" value="runtime" locked="false"/>
+                  <setting id="CLK_ROOT_COMPUTE_SYSTICK_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_COMPUTE_TPIU_CLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_CTIMER0_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_CTIMER1_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_CTIMER2_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_CTIMER3_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_CTIMER4_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_CTIMER5_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_CTIMER6_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_CTIMER7_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_DCPIXEL_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_DPHY_BIT_CLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_DPHY_RX_CLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_DSP_CLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_FLEXCOMM0_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_FLEXCOMM10_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_FLEXCOMM11_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_FLEXCOMM12_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_FLEXCOMM13_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_FLEXCOMM17_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_FLEXCOMM18_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_FLEXCOMM19_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_FLEXCOMM1_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_FLEXCOMM20_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_FLEXCOMM2_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_FLEXCOMM3_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_FLEXCOMM4_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_FLEXCOMM5_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_FLEXCOMM6_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_FLEXCOMM7_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_FLEXCOMM8_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_FLEXCOMM9_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_FLEXIO_CLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_GPU_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_I3C01_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_I3C01_PCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_I3C23_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_LPI2C_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_LPSPI14_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_LPSPI16_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_MICFIL_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_OSEVENT_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_SAI012_CLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_SAI3_CLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_SARADC_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_SCT_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_SDADC_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_SDIO0_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_SDIO1_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_SENSE_CLKOUT_INIT_Config" value="runtime" locked="false"/>
+                  <setting id="CLK_ROOT_SENSE_DSP_CLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_SENSE_MAIN_CLK_CPU_Core_Config" value="cm33_core1" locked="false"/>
+                  <setting id="CLK_ROOT_SENSE_RAM_CLK_CPU_Core_Config" value="cm33_core1" locked="false"/>
+                  <setting id="CLK_ROOT_SENSE_SYSTICK_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_USB_WAKE_CLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_UTICK0_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_UTICK1_CLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_WDT0_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_WDT1_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_WDT2_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_WDT3_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_XSPI0_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_XSPI1_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_XSPI2_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_eUSB_WAKE_CLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_osc_clk_eusb_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_osc_clk_usb_INIT_Config" value="custom" locked="false"/>
+                  <setting id="ClockPostInitConfig" value="BOARD_ClockHSRunPostConfig" locked="false"/>
+                  <setting id="ClockPreInitConfig" value="BOARD_ClockHSRunPreConfig" locked="false"/>
+                  <setting id="FCCLK0_CLK_SEL_INIT_Config" value="custom" locked="false"/>
+                  <setting id="FCCLK1_CLK_SEL_INIT_Config" value="custom" locked="false"/>
+                  <setting id="FCCLK2_CLK_SEL_INIT_Config" value="custom" locked="false"/>
+                  <setting id="FCCLK3_CLK_SEL_INIT_Config" value="custom" locked="false"/>
+                  <setting id="FRO0_mode" value="ClosedLoop" locked="false"/>
+                  <setting id="FRO1_INIT_Config" value="custom" locked="false"/>
+                  <setting id="FRO2_CPU_Core_Config" value="cm33_core1" locked="false"/>
+                  <setting id="FRO2_mode" value="OpenLoop" locked="false"/>
+                  <setting id="LOW_FREQ_CLK_SEL_INIT_Config" value="custom" locked="false"/>
+                  <setting id="OSC32KNP_INIT_Config" value="custom" locked="false"/>
+                  <setting id="RTC_SS_INIT_Config" value="custom" locked="false"/>
+                  <setting id="SENSEP_MAINCLK_SHUTOFF_CPU_Core_Config" value="cm33_core1" locked="false"/>
+                  <setting id="SENSEP_MAINCLK_SHUTOFF_Config" value="disabled" locked="false"/>
+                  <setting id="SENSEP_MAINCLK_SHUTOFF_INIT_Config" value="custom" locked="false"/>
+                  <setting id="WAKE32K_CLK_SEL_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLKCTL0.CLOCK_ROOT_COMM2_CLKOUT.DIV.scale" value="10" locked="true"/>
+                  <setting id="CLKCTL0.CLOCK_ROOT_COMM2_CLKOUT.MUX.sel" value="FRO0.FRO_MAX_VDD2_COM_CLK" locked="false"/>
+                  <setting id="CLKCTL0.CLOCK_ROOT_COMMON_RAM_CLK.DIV.scale" value="1" locked="true"/>
+                  <setting id="CLKCTL0.CLOCK_ROOT_COMMON_RAM_CLK.MUX.sel" value="FRO0.FRO_MAX_VDD2_COM_CLK" locked="false"/>
+                  <setting id="CLKCTL0.CLOCK_ROOT_COMPUTE_MAIN_CLK.DIV.scale" value="1" locked="true"/>
+                  <setting id="CLKCTL0.CLOCK_ROOT_COMPUTE_MAIN_CLK.MUX.sel" value="FRO0.FRO_MAX_VDD2_COMP_CLK" locked="false"/>
+                  <setting id="CLKCTL0.CMPTBASECLKSEL.sel" value="FRO1.FRO_MAX_CLK" locked="false"/>
+                  <setting id="CLKCTL0.DSPBASECLKSEL.sel" value="FRO1.FRO_MAX_CLK" locked="false"/>
+                  <setting id="CLKCTL0.VDD2COMBASECLKSEL.sel" value="FRO1.FRO_MAX_CLK" locked="false"/>
+                  <setting id="CLKCTL2.AUDIOPLL0CLKSEL.sel" value="CLKCTL2.SYSOSCBYPASS" locked="false"/>
+                  <setting id="CLKCTL2.AUDIO_PLL0_PFD1_DIV.scale" value="24" locked="true"/>
+                  <setting id="CLKCTL2.AUDIO_PLL0_PFD1_MUL.scale" value="18" locked="true"/>
+                  <setting id="CLKCTL2.AUDIO_PLL0_PFD3_DIV.scale" value="26" locked="true"/>
+                  <setting id="CLKCTL2.AUDIO_PLL0_PFD3_MUL.scale" value="18" locked="true"/>
+                  <setting id="CLKCTL2.Audio_PLL0.denom" value="27000" locked="false"/>
+                  <setting id="CLKCTL2.Audio_PLL0.num" value="5040" locked="false"/>
+                  <setting id="CLKCTL2.CLOCK_ROOT_COMMON_VDDN_CLK.DIV.scale" value="1" locked="true"/>
+                  <setting id="CLKCTL2.COMNBASECLKSEL.sel" value="FRO1.FRO_MAX_CLK" locked="false"/>
+                  <setting id="CLKCTL2.MAINPLL0CLKSEL.sel" value="CLKCTL2.SYSOSCBYPASS" locked="false"/>
+                  <setting id="CLKCTL2.MAIN_PLL0_PFD0_DIV.scale" value="19" locked="true"/>
+                  <setting id="CLKCTL2.MAIN_PLL0_PFD0_MUL.scale" value="18" locked="true"/>
+                  <setting id="CLKCTL2.MAIN_PLL0_PFD1_DIV.scale" value="24" locked="true"/>
+                  <setting id="CLKCTL2.MAIN_PLL0_PFD1_MUL.scale" value="18" locked="true"/>
+                  <setting id="CLKCTL2.MAIN_PLL0_PFD2_DIV.scale" value="18" locked="true"/>
+                  <setting id="CLKCTL2.MAIN_PLL0_PFD2_MUL.scale" value="18" locked="true"/>
+                  <setting id="CLKCTL2.MAIN_PLL0_PFD3_DIV.scale" value="19" locked="true"/>
+                  <setting id="CLKCTL2.MAIN_PLL0_PFD3_MUL.scale" value="18" locked="true"/>
+                  <setting id="CLKCTL2.Main_PLL0.denom" value="1" locked="false"/>
+                  <setting id="CLKCTL2.Main_PLL0.num" value="0" locked="false"/>
+                  <setting id="CLKCTL2_AUDIOPLL0PFDDOMAINEN_PFD1_OF_MD2_CFG" value="Disabled" locked="false"/>
+                  <setting id="CLKCTL2_MAINPLL0PFDDOMAINEN_PFD0_OF_VDD2_COM_CFG" value="Disabled" locked="false"/>
+                  <setting id="CLKCTL2_SYSOSCCTL0_LP_ENABLE_CFG" value="low_power" locked="false"/>
+                  <setting id="CLKCTL3.CLOCK_ROOT_SENSE_MAIN_CLK.DIV.scale" value="1" locked="true"/>
+                  <setting id="CLKCTL3.CLOCK_ROOT_SENSE_MAIN_CLK.MUX.sel" value="FRO2.FRO_MAX_VDD1_SENSE_CLK" locked="false"/>
+                  <setting id="CLKCTL3.CLOCK_ROOT_SENSE_RAM_CLK.DIV.scale" value="1" locked="true"/>
+                  <setting id="CLKCTL3.CLOCK_ROOT_SENSE_RAM_CLK.MUX.sel" value="FRO2.FRO_MAX_VDD1_SENSE_CLK" locked="false"/>
+                  <setting id="CLKCTL4.CLOCK_ROOT_MEDIA_MAIN_CLK.DIV.scale" value="1" locked="true"/>
+                  <setting id="CLKCTL4.CLOCK_ROOT_MEDIA_MAIN_CLK.MUX.sel" value="FRO0.FRO_MAX_VDD2_MEDIA_CLK" locked="false"/>
+                  <setting id="CLKCTL4.CLOCK_ROOT_MEDIA_VDDN_CLK.DIV.scale" value="1" locked="true"/>
+                  <setting id="CLKCTL4.CLOCK_ROOT_MEDIA_VDDN_CLK.MUX.sel" value="FRO0.FRO_MAX_VDDN_MEDIA_CLK" locked="false"/>
+                  <setting id="CLKCTL4.MD2BASECLKSEL.sel" value="FRO1.FRO_MAX_CLK" locked="false"/>
+                  <setting id="CLKCTL4.MDNBASECLKSEL.sel" value="FRO1.FRO_MAX_CLK" locked="false"/>
+                  <setting id="CLOCK_ROOTCOMM2_CLKOUT_CONTROL_OFF_CFG" value="Enabled" locked="false"/>
+                  <setting id="CLOCK_ROOTXSPI2_FCLK_CONTROL_OFF_CFG" value="Enabled" locked="false"/>
+                  <setting id="FRO0.FROMODESEL.sel" value="FRO0.FRO_TUNER" locked="false"/>
+                  <setting id="FRO0_COARSE_TRIM_Config" value="Disabled" locked="false"/>
+                  <setting id="FRO0_TRIM_COUNT_RANGE_Config" value="100" locked="false"/>
+                  <setting id="FRO2_COARSE_TRIM_Config" value="Disabled" locked="false"/>
+                  <setting id="FRO2_TRIM_COUNT_RANGE_Config" value="100" locked="false"/>
+               </clock_settings>
+               <called_from_default_init>false</called_from_default_init>
+            </clock_configuration>
+         </clock_configurations>
+      </clocks>
+      <dcdx name="DCDx" version="3.0" enabled="false" update_project_code="true">
+         <dcdx_profile>
+            <processor_version>N/A</processor_version>
+         </dcdx_profile>
+         <dcdx_configurations/>
+      </dcdx>
+      <periphs name="Peripherals" version="13.0" enabled="false" update_project_code="true">
+         <peripherals_profile>
+            <processor_version>N/A</processor_version>
+         </peripherals_profile>
+         <functional_groups/>
+         <components/>
+      </periphs>
+      <tee name="TEE" version="5.0" enabled="false" update_project_code="true">
+         <tee_profile>
+            <processor_version>N/A</processor_version>
+         </tee_profile>
+      </tee>
+   </tools>
+</configuration>

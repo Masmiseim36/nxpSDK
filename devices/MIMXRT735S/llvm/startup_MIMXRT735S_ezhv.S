@@ -24,24 +24,24 @@
     .section .vectors, "ax"
     .option norvc;
 
-    jal Reset_Handler                   /* 0: Reset Handler */
-    jal _SuperSoftInt_Handler           /* 1: supervisor software interrupt */
-    jal .                               /* 2: reserved */
-    jal _MachineSoftInt_Handler         /* 3: machine software interrupt */
-    jal .                               /* 4: reserved */
-    jal _SuperTimerInt_Handler          /* 5: supervisor timer interrupt */
-    jal .                               /* 6: reserved */
-    jal _MachineTimerInt_Handler        /* 7: machine timer interrupt */
-    jal .                               /* 8: reserved */
-    jal _SuperExtInt_Handler            /* 9: supervisior external interrupt */
-    jal .                               /*10: reserved */
-    jal _MachineExtInt_Handler          /*11: machine external interrupt */
-    jal .                               /*12: reserved */
-    jal .                               /*13: reserved */
-    jal .                               /*14: reserved */
-    jal .                               /*15: reserved */
-    jal _NMI_Handler                    /*16: non-mask interrupt NMI */
-    jal _ImpreciseExceptionInt_Handler  /*17: imprecise exception interrupt */
+    j Reset_Handler                   /* 0: Reset Handler */
+    j _SuperSoftInt_Handler           /* 1: supervisor software interrupt */
+    j .                               /* 2: reserved */
+    j _MachineSoftInt_Handler         /* 3: machine software interrupt */
+    j .                               /* 4: reserved */
+    j _SuperTimerInt_Handler          /* 5: supervisor timer interrupt */
+    j .                               /* 6: reserved */
+    j _MachineTimerInt_Handler        /* 7: machine timer interrupt */
+    j .                               /* 8: reserved */
+    j _SuperExtInt_Handler            /* 9: supervisior external interrupt */
+    j .                               /*10: reserved */
+    j _MachineExtInt_Handler          /*11: machine external interrupt */
+    j .                               /*12: reserved */
+    j .                               /*13: reserved */
+    j .                               /*14: reserved */
+    j .                               /*15: reserved */
+    j _NMI_Handler                    /*16: non-mask interrupt NMI */
+    j _ImpreciseExceptionInt_Handler  /*17: imprecise exception interrupt */
 
     .text
     .globl   Reset_Handler

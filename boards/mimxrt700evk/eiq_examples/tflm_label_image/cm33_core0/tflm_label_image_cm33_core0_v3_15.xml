@@ -51,7 +51,7 @@
       <toolchainSetting id_refs="com.nxp.mcuxpresso">
         <option id="gnu.c.compiler.option.preprocessor.def.symbols" type="stringList">
           <value>MCUXPRESSO_SDK</value>
-          <value>CPU_MIMXRT798SGFOA_cm33_core0</value>
+          <value>CPU_MIMXRT798SGFOB_cm33_core0</value>
           <value>BOOT_HEADER_ENABLE=1</value>
           <value>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</value>
           <value>SDK_DEBUGCONSOLE_UART</value>
@@ -60,8 +60,10 @@
           <value>__FPU_PRESENT=1</value>
           <value>SDK_DEBUGCONSOLE=1</value>
           <value>MCUX_META_BUILD</value>
+          <value>MIMXRT798S_cm33_core0_SERIES</value>
           <value>SDK_I2C_BASED_COMPONENT_USED=1</value>
           <value>TF_LITE_STATIC_MEMORY</value>
+          <value>KERNELS_OPTIMIZED_FOR_SPEED</value>
         </option>
         <option id="gnu.cpp.compiler.option.preprocessor.def" type="stringList">
           <value>MCUXPRESSO_SDK</value>
@@ -71,9 +73,11 @@
           <value>__FPU_PRESENT=1</value>
           <value>SDK_DEBUGCONSOLE=1</value>
           <value>MCUX_META_BUILD</value>
-          <value>CPU_MIMXRT798SGFOA_cm33_core0</value>
+          <value>CPU_MIMXRT798SGFOB_cm33_core0</value>
+          <value>MIMXRT798S_cm33_core0_SERIES</value>
           <value>BOOT_HEADER_ENABLE=1</value>
           <value>TF_LITE_STATIC_MEMORY</value>
+          <value>KERNELS_OPTIMIZED_FOR_SPEED</value>
         </option>
         <option id="com.crt.advproject.gas.fpu" type="enum">
           <value>com.crt.advproject.gas.fpu.fpv5sp.hard</value>
@@ -145,8 +149,9 @@
       <files mask="tflm_label_image_cm33_core0.eww"/>
     </source>
     <source path="mdk" project_relative_path="./" type="workspace" toolchain="mdk">
-      <files mask="tflm_label_image_cm33_core0.uvprojx"/>
       <files mask="tflm_label_image_cm33_core0.uvoptx"/>
+      <files mask="tflm_label_image_cm33_core0.uvprojx"/>
+      <files mask="JLinkSettings.ini"/>
       <files mask="tflm_label_image_cm33_core0.uvmpw"/>
     </source>
     <source path="armgcc" project_relative_path="./" type="workspace" toolchain="armgcc">
@@ -259,6 +264,9 @@
     </source>
     <source path="." project_relative_path="doc" type="doc">
       <files mask="example_board_readme.md"/>
+    </source>
+    <source path="." project_relative_path="doc" type="doc">
+      <files mask="examples_shared_readme.md"/>
     </source>
   </example>
 </ksdk:examples>

@@ -1,5 +1,5 @@
 /*
- * Copyright 2023-2024 NXP
+ * Copyright 2023-2025 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -10,14 +10,37 @@
 #include "fsl_mu.h"
 #include "board.h"
 
-/* Count of cores in the system */
-#define MCMGR_CORECOUNT 4
+/* At start make decision for what core mcmgr is build for at the compile time */
+#if (defined(MIMXRT735S_cm33_core0_SERIES) || defined(MIMXRT758S_cm33_core0_SERIES) || \
+     defined(MIMXRT798S_cm33_core0_SERIES))
+#define MCMGR_BUILD_FOR_CORE_0
+#elif (defined(MIMXRT735S_cm33_core1_SERIES) || defined(MIMXRT758S_cm33_core1_SERIES) || \
+       defined(MIMXRT798S_cm33_core1_SERIES))
+#define MCMGR_BUILD_FOR_CORE_1
+#elif (defined(MIMXRT735S_hifi4_SERIES) || defined(MIMXRT758S_hifi4_SERIES) || defined(MIMXRT798S_hifi4_SERIES))
+#define MCMGR_BUILD_FOR_CORE_2
+#elif (defined(MIMXRT735S_hifi1_SERIES) || defined(MIMXRT758S_hifi1_SERIES) || defined(MIMXRT798S_hifi1_SERIES))
+#define MCMGR_BUILD_FOR_CORE_3
+#else
+#error "Building for not supported platform!"
+#endif
 
-/* Count of memory regions in the system */
-#define MCMGR_MEMREGCOUNT 2
+#if (defined(MCMGR_BUILD_FOR_CORE_0) || defined(MCMGR_BUILD_FOR_CORE_1))
+#include "dsp_support.h"
+#endif
 
-/* MCMGR MU channel index - used for passing startupData */
-#define MCMGR_MU_CHANNEL 3
+#if (defined(MCMGR_BUILD_FOR_CORE_2) || defined(MCMGR_BUILD_FOR_CORE_3))
+#include <xtensa/xos.h>
+#include "fsl_inputmux.h"
+
+/* For DSP we need to register custom IRQ Handlers
+ * These handlers are defined in `mcmgr_mu_internal.c`.
+ */
+extern void MU4_B_IRQHandler(void *arg);
+extern void MU2_A_IRQHandler(void *arg);
+extern void MU3_B_IRQHandler(void *arg);
+extern void MU0_B_IRQHandler(void *arg);
+#endif
 
 /* MU TR/RR $MCMGR_MU_CHANNEL is managed by MCMGR */
 #define MU_RX_ISR_Handler(x)     MU_RX_ISR(x)
@@ -37,11 +60,24 @@ volatile mcmgr_core_context_t s_mcmgrCoresContext[MCMGR_CORECOUNT] = {
 static const mcmgr_core_info_t s_mcmgrCores[MCMGR_CORECOUNT] = {
     {.coreType = kMCMGR_CoreTypeCortexM33, .coreName = "CPU0"},
     {.coreType = kMCMGR_CoreTypeCortexM33, .coreName = "CPU1"},
-    {.coreType = kMCMGR_CoreTypeDSPHifi1, .coreName = "DSP Hifi1"},
-    {.coreType = kMCMGR_CoreTypeDSPHifi4, .coreName = "DSP Hifi4"}};
+    {.coreType = kMCMGR_CoreTypeDSPHifi4, .coreName = "DSP Hifi4"},
+    {.coreType = kMCMGR_CoreTypeDSPHifi1, .coreName = "DSP Hifi1"}};
 
 const mcmgr_system_info_t g_mcmgrSystem = {
     .coreCount = MCMGR_CORECOUNT, .memRegCount = MCMGR_MEMREGCOUNT, .cores = s_mcmgrCores};
+
+static void init_mu(MU_Type *base)
+{
+    MU_Init(base);
+
+    /* Clear all RX registers and status flags */
+    for (uint32_t idx = 0U; idx < MU_RR_COUNT; idx++)
+    {
+        (void)MU_ReceiveMsgNonBlocking(base, idx);
+    }
+    uint32_t flags = MU_GetStatusFlags(base);
+    MU_ClearStatusFlags(base, flags);
+}
 
 mcmgr_status_t mcmgr_early_init_internal(mcmgr_core_t coreNum)
 {
@@ -49,78 +85,91 @@ mcmgr_status_t mcmgr_early_init_internal(mcmgr_core_t coreNum)
        (within the startup sequence in SystemInitHook) to allow CoreUp event triggering.
        Avoid using uninitialized data here. */
 
-    uint32_t flags;
     mcmgr_status_t ret = kStatus_MCMGR_Success;
-    __attribute__((unused)) uint32_t data;
-#if (defined(MIMXRT735S_cm33_core0_SERIES) || defined(MIMXRT758S_cm33_core0_SERIES) || \
-     defined(MIMXRT798S_cm33_core0_SERIES))
+
+#if (defined(MCMGR_BUILD_FOR_CORE_0))
     if (coreNum == kMCMGR_Core0)
     {
         /* CPU0 to CPU1 communication case */
-        MU_Init(MU1_MUA);
-        /* Clear all RX registers and status flags */
-        for (uint32_t idx = 0U; idx < MU_RR_COUNT; idx++)
-        {
-            data = MU_ReceiveMsgNonBlocking(MU1_MUA, idx);
-        }
-        flags = MU_GetStatusFlags(MU1_MUA);
-        MU_ClearStatusFlags(MU1_MUA, flags);
+        init_mu(MU1_MUA);
 
         /* Trigger core up event here, core is starting! */
-        ret = MCMGR_TriggerEvent(kMCMGR_RemoteCoreUpEvent, 0);
-    }
-    else if (coreNum == kMCMGR_Core2)
-    {
+        ret = MCMGR_TriggerEvent(kMCMGR_Core1, kMCMGR_RemoteCoreUpEvent, 0);
+
         /* CPU0 to HiFi4 communication case */
-        MU_Init(MU4_MUA);
-        /* Clear all RX registers and status flags */
-        for (uint32_t idx = 0U; idx < MU_RR_COUNT; idx++)
-        {
-            data = MU_ReceiveMsgNonBlocking(MU4_MUA, idx);
-        }
-        flags = MU_GetStatusFlags(MU4_MUA);
-        MU_ClearStatusFlags(MU4_MUA, flags);
+        init_mu(MU4_MUA);
 
-        // TODO route event to hifi4
         /* Trigger core up event here, core is starting! */
-        ret = MCMGR_TriggerEvent(kMCMGR_RemoteCoreUpEvent, 0);
+        ret = MCMGR_TriggerEvent(kMCMGR_Core2, kMCMGR_RemoteCoreUpEvent, 0);
+
+        /* CPU0 to HiFi1 communication case */
+        init_mu(MU0_MUA);
+
+        /* Trigger core up event here, core is starting! */
+        ret = MCMGR_TriggerEvent(kMCMGR_Core3, kMCMGR_RemoteCoreUpEvent, 0);
     }
     else
     {
         ret = kStatus_MCMGR_Error;
     }
-#elif (defined(MIMXRT735S_cm33_core1_SERIES) || defined(MIMXRT758S_cm33_core1_SERIES) || \
-       defined(MIMXRT798S_cm33_core1_SERIES))
-    if (coreNum == kMCMGR_Core3)
+#elif (defined(MCMGR_BUILD_FOR_CORE_1))
+    if (coreNum == kMCMGR_Core1)
     {
         /* CPU1 to HiFi1 communication case */
-        MU_Init(MU3_MUA);
-        /* Clear all RX registers and status flags */
-        for (uint32_t idx = 0U; idx < MU_RR_COUNT; idx++)
-        {
-            data = MU_ReceiveMsgNonBlocking(MU3_MUA, idx);
-        }
-        flags = MU_GetStatusFlags(MU3_MUA);
-        MU_ClearStatusFlags(MU3_MUA, flags);
+        init_mu(MU3_MUA);
 
-        // TODO route event to hifi1
         /* Trigger core up event here, core is starting! */
-        ret = MCMGR_TriggerEvent(kMCMGR_RemoteCoreUpEvent, 0);
-    }
-    else if (coreNum == kMCMGR_Core1)
-    {
+        ret = MCMGR_TriggerEvent(kMCMGR_Core3, kMCMGR_RemoteCoreUpEvent, 0);
+
         /* CPU1 to CPU0 communication case */
-        MU_Init(MU1_MUB);
-        /* Clear all RX registers and status flags */
-        for (uint32_t idx = 0U; idx < MU_RR_COUNT; idx++)
-        {
-            data = MU_ReceiveMsgNonBlocking(MU1_MUB, idx);
-        }
-        flags = MU_GetStatusFlags(MU1_MUB);
-        MU_ClearStatusFlags(MU1_MUB, flags);
+        init_mu(MU1_MUB);
 
         /* Trigger core up event here, core is starting! */
-        ret = MCMGR_TriggerEvent(kMCMGR_RemoteCoreUpEvent, 0);
+        ret = MCMGR_TriggerEvent(kMCMGR_Core0, kMCMGR_RemoteCoreUpEvent, 0);
+
+        /* CPU1 to Hifi4 communication case */
+        init_mu(MU2_MUB);
+
+        /* Trigger core up event here, core is starting! */
+        ret = MCMGR_TriggerEvent(kMCMGR_Core2, kMCMGR_RemoteCoreUpEvent, 0);
+    }
+    else
+    {
+        ret = kStatus_MCMGR_Error;
+    }
+#elif (defined(MCMGR_BUILD_FOR_CORE_2))
+    if (coreNum == kMCMGR_Core2)
+    {
+        /* HiFi4 to CPU0 communication case */
+        init_mu(MU4_MUB);
+
+        /* Trigger core up event here, core is starting! */
+        ret = MCMGR_TriggerEvent(kMCMGR_Core0, kMCMGR_RemoteCoreUpEvent, 0);
+
+        /* HiFi4 to CPU1 communication case */
+        init_mu(MU2_MUA);
+
+        /* Trigger core up event here, core is starting! */
+        ret = MCMGR_TriggerEvent(kMCMGR_Core0, kMCMGR_RemoteCoreUpEvent, 0);
+    }
+    else
+    {
+        ret = kStatus_MCMGR_Error;
+    }
+#elif (defined(MCMGR_BUILD_FOR_CORE_3))
+    if (coreNum == kMCMGR_Core3)
+    {
+        /* HiFi1 to CPU0 communication case */
+        init_mu(MU0_MUB);
+
+        /* Trigger core up event here, core is starting! */
+        ret = MCMGR_TriggerEvent(kMCMGR_Core0, kMCMGR_RemoteCoreUpEvent, 0);
+
+        /* HiFi1 to CPU1 communication case */
+        init_mu(MU3_MUB);
+
+        /* Trigger core up event here, core is starting! */
+        ret = MCMGR_TriggerEvent(kMCMGR_Core1, kMCMGR_RemoteCoreUpEvent, 0);
     }
     else
     {
@@ -132,8 +181,7 @@ mcmgr_status_t mcmgr_early_init_internal(mcmgr_core_t coreNum)
 
 mcmgr_status_t mcmgr_late_init_internal(mcmgr_core_t coreNum)
 {
-#if (defined(MIMXRT735S_cm33_core0_SERIES) || defined(MIMXRT758S_cm33_core0_SERIES) || \
-     defined(MIMXRT798S_cm33_core0_SERIES))
+#if (defined(MCMGR_BUILD_FOR_CORE_0))
     if (coreNum == kMCMGR_Core0)
     {
         /* CPU0 to CPU1 communication case */
@@ -146,9 +194,7 @@ mcmgr_status_t mcmgr_late_init_internal(mcmgr_core_t coreNum)
         NVIC_SetPriority(MU1_A_IRQn, 2);
 
         NVIC_EnableIRQ(MU1_A_IRQn);
-    }
-    else if (coreNum == kMCMGR_Core2)
-    {
+
         /* CPU0 to HiFi4 communication case */
         MU_EnableInterrupts(MU4_MUA, (uint32_t)mcmgr_mu_channel_flag);
 
@@ -159,14 +205,24 @@ mcmgr_status_t mcmgr_late_init_internal(mcmgr_core_t coreNum)
         NVIC_SetPriority(MU4_A_IRQn, 2);
 
         NVIC_EnableIRQ(MU4_A_IRQn);
+
+        /* CPU0 to HiFi1 communication case */
+        MU_EnableInterrupts(MU0_MUA, (uint32_t)mcmgr_mu_channel_flag);
+
+#if (defined(FSL_FEATURE_MU_HAS_RESET_ASSERT_INT) && FSL_FEATURE_MU_HAS_RESET_ASSERT_INT)
+        MU_EnableInterrupts(MU0_MUA, (uint32_t)kMU_ResetAssertInterruptEnable);
+#endif
+
+        NVIC_SetPriority(MU0_A_IRQn, 2);
+
+        NVIC_EnableIRQ(MU0_A_IRQn);
     }
     else
     {
         return kStatus_MCMGR_Error;
     }
-#elif (defined(MIMXRT735S_cm33_core1_SERIES) || defined(MIMXRT758S_cm33_core1_SERIES) || \
-       defined(MIMXRT798S_cm33_core1_SERIES))
-    if (coreNum == kMCMGR_Core3)
+#elif (defined(MCMGR_BUILD_FOR_CORE_1))
+    if (coreNum == kMCMGR_Core1)
     {
         /* CPU1 to HiFi1 communication case */
         MU_EnableInterrupts(MU3_MUA, (uint32_t)mcmgr_mu_channel_flag);
@@ -178,9 +234,7 @@ mcmgr_status_t mcmgr_late_init_internal(mcmgr_core_t coreNum)
         NVIC_SetPriority(MU3_A_IRQn, 2);
 
         NVIC_EnableIRQ(MU3_A_IRQn);
-    }
-    else if (coreNum == kMCMGR_Core1)
-    {
+
         /* CPU1 to CPU0 communication case */
         MU_EnableInterrupts(MU1_MUB, (uint32_t)mcmgr_mu_channel_flag);
 
@@ -191,6 +245,86 @@ mcmgr_status_t mcmgr_late_init_internal(mcmgr_core_t coreNum)
         NVIC_SetPriority(MU1_B_IRQn, 2);
 
         NVIC_EnableIRQ(MU1_B_IRQn);
+
+        /* CPU1 to Hifi4 communication case */
+        MU_EnableInterrupts(MU2_MUB, (uint32_t)mcmgr_mu_channel_flag);
+
+#if (defined(FSL_FEATURE_MU_HAS_RESET_ASSERT_INT) && FSL_FEATURE_MU_HAS_RESET_ASSERT_INT)
+        MU_EnableInterrupts(MU2_MUB, (uint32_t)kMU_ResetAssertInterruptEnable);
+#endif
+
+        NVIC_SetPriority(MU2_B_IRQn, 2);
+
+        NVIC_EnableIRQ(MU2_B_IRQn);
+    }
+    else
+    {
+        return kStatus_MCMGR_Error;
+    }
+#elif (defined(MCMGR_BUILD_FOR_CORE_2))
+    if (coreNum == kMCMGR_Core2)
+    {
+        /* HiFi4 to CPU0 communication case */
+        INPUTMUX_Init(INPUTMUX0);
+        INPUTMUX_AttachSignal(INPUTMUX0, 1U, kINPUTMUX_Mu4BToDspInterrupt);
+
+        /* DSP interrupt only can be enable after XOS is started. */
+        xos_register_interrupt_handler(DSP_INT0_SEL1_IRQn, MU4_B_IRQHandler, ((void *)0));
+        xos_interrupt_enable(DSP_INT0_SEL1_IRQn);
+
+        MU_EnableInterrupts(MU4_MUB, (uint32_t)mcmgr_mu_channel_flag);
+
+#if (defined(FSL_FEATURE_MU_HAS_RESET_ASSERT_INT) && FSL_FEATURE_MU_HAS_RESET_ASSERT_INT)
+        MU_EnableInterrupts(MU4_MUB, (uint32_t)kMU_ResetAssertInterruptEnable);
+#endif
+        /* HiFi4 to CPU1 communication case */
+        INPUTMUX_Init(INPUTMUX0);
+        INPUTMUX_AttachSignal(INPUTMUX0, 2U, kINPUTMUX_Mu2AToDspInterrupt);
+
+        /* DSP interrupt only can be enable after XOS is started. */
+        xos_register_interrupt_handler(DSP_INT0_SEL2_IRQn, MU2_A_IRQHandler, ((void *)0));
+        xos_interrupt_enable(DSP_INT0_SEL2_IRQn);
+
+        MU_EnableInterrupts(MU2_MUA, (uint32_t)mcmgr_mu_channel_flag);
+
+#if (defined(FSL_FEATURE_MU_HAS_RESET_ASSERT_INT) && FSL_FEATURE_MU_HAS_RESET_ASSERT_INT)
+        MU_EnableInterrupts(MU2_MUA, (uint32_t)kMU_ResetAssertInterruptEnable);
+#endif
+    }
+    else
+    {
+        return kStatus_MCMGR_Error;
+    }
+#elif (defined(MCMGR_BUILD_FOR_CORE_3))
+    if (coreNum == kMCMGR_Core3)
+    {
+        /* HiFi1 to CPU0 communication case */
+        INPUTMUX_Init(INPUTMUX1);
+        INPUTMUX_AttachSignal(INPUTMUX1, 1U, kINPUTMUX_Mu0BToDspInterrupt);
+
+        /* DSP interrupt only can be enable after XOS is started. */
+        xos_register_interrupt_handler(DSP_INT0_SEL2_IRQn, MU0_B_IRQHandler, ((void *)0));
+        xos_interrupt_enable(DSP_INT0_SEL2_IRQn);
+
+        MU_EnableInterrupts(MU0_MUB, (uint32_t)mcmgr_mu_channel_flag);
+
+#if (defined(FSL_FEATURE_MU_HAS_RESET_ASSERT_INT) && FSL_FEATURE_MU_HAS_RESET_ASSERT_INT)
+        MU_EnableInterrupts(MU0_MUB, (uint32_t)kMU_ResetAssertInterruptEnable);
+#endif
+
+        /* HiFi1 to CPU1 communication case */
+        INPUTMUX_Init(INPUTMUX1);
+        INPUTMUX_AttachSignal(INPUTMUX1, 1U, kINPUTMUX_Mu3BToDspInterrupt);
+
+        /* DSP interrupt only can be enable after XOS is started. */
+        xos_register_interrupt_handler(DSP_INT0_SEL1_IRQn, MU3_B_IRQHandler, ((void *)0));
+        xos_interrupt_enable(DSP_INT0_SEL1_IRQn);
+
+        MU_EnableInterrupts(MU3_MUB, (uint32_t)mcmgr_mu_channel_flag);
+
+#if (defined(FSL_FEATURE_MU_HAS_RESET_ASSERT_INT) && FSL_FEATURE_MU_HAS_RESET_ASSERT_INT)
+        MU_EnableInterrupts(MU3_MUB, (uint32_t)kMU_ResetAssertInterruptEnable);
+#endif
     }
     else
     {
@@ -202,12 +336,11 @@ mcmgr_status_t mcmgr_late_init_internal(mcmgr_core_t coreNum)
 
 mcmgr_status_t mcmgr_start_core_internal(mcmgr_core_t coreNum, void *bootAddress)
 {
-    if (coreNum > kMCMGR_Core3)
+    if ((uint32_t)coreNum >= g_mcmgrSystem.coreCount)
     {
         return kStatus_MCMGR_Error;
     }
-#if (defined(MIMXRT735S_cm33_core0_SERIES) || defined(MIMXRT758S_cm33_core0_SERIES) || \
-     defined(MIMXRT798S_cm33_core0_SERIES))
+#if (defined(MCMGR_BUILD_FOR_CORE_0))
     if (coreNum == kMCMGR_Core1)
     {
         /* CPU0 to CPU1 communication case */
@@ -229,20 +362,20 @@ mcmgr_status_t mcmgr_start_core_internal(mcmgr_core_t coreNum, void *bootAddress
         /* Release cpu wait*/
         SYSCON3->CPU_STATUS &= ~SYSCON3_CPU_STATUS_CPU_WAIT_MASK;
     }
-    else if (coreNum == kMCMGR_Core3)
+    else if (coreNum == kMCMGR_Core2)
     {
         /* CPU0 to HiFi4 communication case */
-        SYSCON0->DSPSTALL = 0x0;
+        BOARD_DSP_Init();
     }
     else
     {
         return kStatus_MCMGR_Error;
     }
-#elif (defined(MIMXRT735S_cm33_core1_SERIES) || defined(MIMXRT758S_cm33_core1_SERIES) || \
-       defined(MIMXRT798S_cm33_core1_SERIES))
-    if (coreNum == kMCMGR_Core2)
+#elif (defined(MCMGR_BUILD_FOR_CORE_1))
+    if (coreNum == kMCMGR_Core3)
     {
         /* CPU1 to HiFi1 communication case */
+        BOARD_DSP_Init();
     }
     else if (coreNum == kMCMGR_Core0)
     {
@@ -260,10 +393,11 @@ mcmgr_status_t mcmgr_start_core_internal(mcmgr_core_t coreNum, void *bootAddress
 
 mcmgr_status_t mcmgr_get_startup_data_internal(mcmgr_core_t coreNum, uint32_t *startupData)
 {
-    if (coreNum != kMCMGR_Core1)
+    if ((uint32_t)coreNum >= g_mcmgrSystem.coreCount)
     {
         return kStatus_MCMGR_Error;
     }
+
     if (startupData == ((void *)0))
     {
         return kStatus_MCMGR_Error;
@@ -296,73 +430,107 @@ mcmgr_status_t mcmgr_get_core_property_internal(mcmgr_core_t coreNum,
 
 mcmgr_core_t mcmgr_get_current_core_internal(void)
 {
-#if (defined(MIMXRT735S_cm33_core0_SERIES) || defined(MIMXRT758S_cm33_core0_SERIES) || \
-     defined(MIMXRT798S_cm33_core0_SERIES))
+#if (defined(MCMGR_BUILD_FOR_CORE_0))
     return kMCMGR_Core0;
-#elif (defined(MIMXRT735S_cm33_core1_SERIES) || defined(MIMXRT758S_cm33_core1_SERIES) || \
-       defined(MIMXRT798S_cm33_core1_SERIES))
+#elif (defined(MCMGR_BUILD_FOR_CORE_1))
     return kMCMGR_Core1;
-#elif (defined(MIMXRT735S_hifi4_SERIES) || defined(MIMXRT758S_hifi4_SERIES) || defined(MIMXRT798S_hifi4_SERIES))
+#elif (defined(MCMGR_BUILD_FOR_CORE_2))
     return kMCMGR_Core2;
-#elif (defined(MIMXRT735S_hifi1_SERIES) || defined(MIMXRT758S_hifi1_SERIES) || defined(MIMXRT798S_hifi1_SERIES))
+#elif (defined(MCMGR_BUILD_FOR_CORE_3))
     return kMCMGR_Core3;
 #endif
 }
 
-mcmgr_status_t mcmgr_trigger_event_internal(uint32_t remoteData, bool forcedWrite)
+mcmgr_status_t mcmgr_trigger_event_internal(mcmgr_core_t coreNum, uint32_t remoteData, bool forcedWrite)
 {
-    // TODO add coreNum into fc param and thus allow triggering events to individual cores
+    MU_Type *mu = NULL;
+
+    mcmgr_core_t currentCore = MCMGR_GetCurrentCore();
+    if (currentCore == coreNum)
+    {
+        return kStatus_MCMGR_Error;
+    }
+
+    switch (coreNum) {
+    case kMCMGR_Core0:
+#if (defined(MCMGR_BUILD_FOR_CORE_0))
+        /* Not supported, core cannot trigger itself */
+        /* Keeping this empty intentionally as reference */
+        mu = NULL;
+#elif (defined(MCMGR_BUILD_FOR_CORE_1))
+        mu = MU1_MUB;
+#elif (defined(MCMGR_BUILD_FOR_CORE_2))
+        mu = MU4_MUB;
+#elif (defined(MCMGR_BUILD_FOR_CORE_3))
+        mu = MU0_MUB;
+#endif
+        break;
+
+    case kMCMGR_Core1:
+#if (defined(MCMGR_BUILD_FOR_CORE_0))
+        mu = MU1_MUA;
+#elif (defined(MCMGR_BUILD_FOR_CORE_1))
+        /* Not supported, core cannot trigger itself */
+        /* Keeping this empty intentionally as reference */
+        mu = NULL;
+#elif (defined(MCMGR_BUILD_FOR_CORE_2))
+        mu = MU2_MUA;
+#elif (defined(MCMGR_BUILD_FOR_CORE_3))
+        mu = MU3_MUB;
+#endif
+        break;
+
+    case kMCMGR_Core2:
+#if (defined(MCMGR_BUILD_FOR_CORE_0))
+        mu = MU4_MUA;
+#elif (defined(MCMGR_BUILD_FOR_CORE_1))
+        mu = MU2_MUB;
+#elif (defined(MCMGR_BUILD_FOR_CORE_2))
+        /* Not supported, core cannot trigger itself */
+        /* Keeping this empty intentionally as reference */
+        mu = NULL;
+#elif (defined(MCMGR_BUILD_FOR_CORE_3))
+        /* Not supported, core cannot trigger hifi4 */
+        mu = NULL;
+#endif
+        break;
+
+    case kMCMGR_Core3:
+#if (defined(MCMGR_BUILD_FOR_CORE_0))
+        mu = MU0_MUA;
+#elif (defined(MCMGR_BUILD_FOR_CORE_1))
+        mu = MU3_MUA;
+#elif (defined(MCMGR_BUILD_FOR_CORE_2))
+        /* Not supported, core cannot trigger hifi1 */
+        mu = NULL;
+#elif (defined(MCMGR_BUILD_FOR_CORE_3))
+        /* Not supported, core cannot trigger itself */
+        /* Keeping this empty intentionally as reference */
+        mu = NULL;
+#endif
+        break;
+
+    default:
+        return kStatus_MCMGR_Error;
+        break;
+    }
+
+    if (NULL == mu)
+    {
+        return kStatus_MCMGR_Error;
+    }
 
     /* When forcedWrite is false, execute the blocking call, i.e. wait until previously
        sent data is processed. Otherwise, run the non-blocking version of the MU send function. */
     if (false == forcedWrite)
     {
-        /* This is a blocking call */
-#if (defined(MIMXRT735S_cm33_core0_SERIES) || defined(MIMXRT758S_cm33_core0_SERIES) || \
-     defined(MIMXRT798S_cm33_core0_SERIES))
-        /* CPU0 to CPU1 communication case */
-#if defined(FSL_FEATURE_MU_SIDE_A)
-        MU_SendMsg(MU1_MUA, MCMGR_MU_CHANNEL, remoteData);
-        /* CPU0 to HiFi4 communication case */
-#elif defined(FSL_FEATURE_MU_SIDE_B)
-        MU_SendMsg(MU4_MUA, MCMGR_MU_CHANNEL, remoteData);
-#endif
-#elif (defined(MIMXRT735S_cm33_core1_SERIES) || defined(MIMXRT758S_cm33_core1_SERIES) || \
-       defined(MIMXRT798S_cm33_core1_SERIES))
-        /* CPU1 to HiFi1 communication case */
-#if !defined(__CORTEX_M)
-        MU_SendMsg(MU3_MUA, MCMGR_MU_CHANNEL, remoteData);
-        /* CPU1 to CPU0 communication case */
-// #elif defined(__CORTEX_M)
-#else
-        MU_SendMsg(MU1_MUB, MCMGR_MU_CHANNEL, remoteData);
-#endif
-#endif
+        MU_SendMsg(mu, MCMGR_MU_CHANNEL, remoteData);
     }
     else
     {
-        /* This is a non-blocking call */
-#if (defined(MIMXRT735S_cm33_core0_SERIES) || defined(MIMXRT758S_cm33_core0_SERIES) || \
-     defined(MIMXRT798S_cm33_core0_SERIES))
-        /* CPU0 to CPU1 communication case */
-#if defined(FSL_FEATURE_MU_SIDE_A)
-        /* CPU0 to HiFi4 communication case */
-        MU_SendMsgNonBlocking(MU1_MUA, MCMGR_MU_CHANNEL, remoteData);
-#elif defined(FSL_FEATURE_MU_SIDE_B)
-        MU_SendMsgNonBlocking(MU4_MUA, MCMGR_MU_CHANNEL, remoteData);
-#endif
-#elif (defined(MIMXRT735S_cm33_core1_SERIES) || defined(MIMXRT758S_cm33_core1_SERIES) || \
-       defined(MIMXRT798S_cm33_core1_SERIES))
-        /* CPU1 to HiFi1 communication case */
-#if !defined(__CORTEX_M)
-        MU_SendMsgNonBlocking(MU3_MUA, MCMGR_MU_CHANNEL, remoteData);
-        /* CPU1 to CPU0 communication case */
-// #elif defined(FSL_FEATURE_MU_SIDE_B)
-#else
-        MU_SendMsgNonBlocking(MU1_MUB, MCMGR_MU_CHANNEL, remoteData);
-#endif
-#endif
+        MU_SendMsgNonBlocking(mu, MCMGR_MU_CHANNEL, remoteData);
     }
+
     return kStatus_MCMGR_Success;
 }
 
@@ -371,7 +539,7 @@ mcmgr_status_t mcmgr_trigger_event_internal(uint32_t remoteData, bool forcedWrit
  *
  * This function is called when data from MU is received
  */
-void mcmgr_mu_channel_handler(void)
+void mcmgr_mu_channel_handler(MU_Type *base, mcmgr_core_t coreNum)
 {
     uint32_t data;
     uint16_t eventType;
@@ -380,43 +548,30 @@ void mcmgr_mu_channel_handler(void)
     /* Non-blocking version of the receive function needs to be called here to avoid
        deadlock in ISR. The RX register must contain the payload now because the RX flag/event
        has been identified before reaching this point (mcmgr_mu_channel_handler function). */
-#if (defined(MIMXRT735S_cm33_core0_SERIES) || defined(MIMXRT758S_cm33_core0_SERIES) || \
-     defined(MIMXRT798S_cm33_core0_SERIES))
-    /* CPU0 to CPU1 communication case */
-#if defined(FSL_FEATURE_MU_SIDE_A)
-    data = MU_ReceiveMsgNonBlocking(MU1_MUA, MCMGR_MU_CHANNEL);
-    /* CPU0 to HiFi4 communication case */
-#elif defined(FSL_FEATURE_MU_SIDE_B)
-    data = MU_ReceiveMsgNonBlocking(MU4_MUA, MCMGR_MU_CHANNEL);
-#endif
-#elif (defined(MIMXRT735S_cm33_core1_SERIES) || defined(MIMXRT758S_cm33_core1_SERIES) || \
-       defined(MIMXRT798S_cm33_core1_SERIES))
-    /* CPU1 to HiFi1 communication case */
-// #if defined(FSL_FEATURE_MU_SIDE_A)
-#if !defined(__CORTEX_M)
-    data = MU_ReceiveMsgNonBlocking(MU3_MUA, MCMGR_MU_CHANNEL);
-    /* CPU1 to CPU0 communication case */
-// #elif defined(FSL_FEATURE_MU_SIDE_B)
-#else
-    data = MU_ReceiveMsgNonBlocking(MU1_MUB, MCMGR_MU_CHANNEL);
-#endif
-#endif
+    data = MU_ReceiveMsgNonBlocking(base, MCMGR_MU_CHANNEL);
 
     /* To be MISRA compliant, return value needs to be checked even it could not never be 0 */
-    if (0U != data)
+    if (0U == data)
     {
-        eventType = (uint16_t)(data >> 16u);
-        eventData = (uint16_t)(data & 0x0000FFFFu);
+        return;
+    }
 
-        if (((mcmgr_event_type_t)eventType >= kMCMGR_RemoteCoreUpEvent) &&
-            ((mcmgr_event_type_t)eventType < kMCMGR_EventTableLength))
-        {
-            if (MCMGR_eventTable[(mcmgr_event_type_t)eventType].callback != ((void *)0))
-            {
-                MCMGR_eventTable[(mcmgr_event_type_t)eventType].callback(
-                    eventData, MCMGR_eventTable[(mcmgr_event_type_t)eventType].callbackData);
-            }
-        }
+    eventType = (uint16_t)(data >> 16u);
+    eventData = (uint16_t)(data & 0x0000FFFFu);
+
+    /* Handle invalid event type */
+    if (((mcmgr_event_type_t)eventType < kMCMGR_RemoteCoreUpEvent) &&
+        ((mcmgr_event_type_t)eventType >= kMCMGR_EventTableLength))
+    {
+        return;
+    }
+
+    if (MCMGR_eventTable[(mcmgr_event_type_t)eventType].callback != ((void *)0))
+    {
+        MCMGR_eventTable[(mcmgr_event_type_t)eventType].callback(
+            coreNum,
+            eventData,
+            MCMGR_eventTable[(mcmgr_event_type_t)eventType].callbackData);
     }
 }
 
@@ -424,8 +579,20 @@ void mcmgr_mu_channel_handler(void)
 /* This overrides the weak DefaultISR implementation from startup file */
 void DefaultISR(void)
 {
+    mcmgr_core_t target_core;
+    /* Select what core to trigger in case of exception */
+#if (defined(MCMGR_BUILD_FOR_CORE_0))
+    target_core = kMCMGR_Core1;
+#elif (defined(MCMGR_BUILD_FOR_CORE_1))
+    target_core = kMCMGR_Core0;
+#elif (defined(MCMGR_BUILD_FOR_CORE_2))
+    target_core = kMCMGR_Core0;
+#elif (defined(MCMGR_BUILD_FOR_CORE_3))
+    target_core = kMCMGR_Core0;
+#endif
+
     uint32_t exceptionNumber = __get_IPSR();
-    (void)MCMGR_TriggerEvent(kMCMGR_RemoteExceptionEvent, (uint16_t)exceptionNumber);
+    (void)MCMGR_TriggerEvent(target_core, kMCMGR_RemoteExceptionEvent, (uint16_t)exceptionNumber);
     for (;;)
     {
     } /* stop here */

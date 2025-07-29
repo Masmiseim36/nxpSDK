@@ -17,7 +17,7 @@
 !!GlobalInfo
 product: Pins v14.0
 processor: MIMXRT798S
-package_id: MIMXRT798SGFOA
+package_id: MIMXRT798SGFOB
 mcu_data: ksdk2_0
 processor_version: 0.0.0
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
@@ -43,7 +43,7 @@ void BOARD_InitBootPins(void)
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 BOARD_InitPins:
-- options: {callFromInitBoot: 'true', coreID: cm33, enableClock: 'true'}
+- options: {callFromInitBoot: 'true', coreID: cm33_core1, enableClock: 'true'}
 - pin_list:
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */

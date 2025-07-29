@@ -66,6 +66,5 @@ void SystemInitHook(void)
        triggering. The SystemInitHook() weak function overloading is used in this
        application. */
     (void)MCMGR_EarlyInit();
-    // MCMGR_TriggerEvent(kMCMGR_RemoteCoreUpEvent, 0);
 }
 /*${function:end}*/

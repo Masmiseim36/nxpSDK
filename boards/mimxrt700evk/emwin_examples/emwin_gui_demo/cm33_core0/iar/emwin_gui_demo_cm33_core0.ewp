@@ -240,17 +240,19 @@
         <option>
           <name>CCDefines</name>
           <state>DEBUG</state>
+          <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
+          <state>BOARD_ENABLE_PSRAM_CACHE=0</state>
+          <state>SSD1963_DATA_WITDH=8</state>
+          <state>FLEXIO_MCULCD_DATA_BUS_WIDTH=8</state>
+          <state>MCUX_DBI_LEGACY=0</state>
+          <state>DBI_USE_MIPI_PANEL=1</state>
+          <state>SDK_DEBUGCONSOLE_UART=1</state>
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
-          <state>BOARD_ENABLE_PSRAM_CACHE=0</state>
-          <state>SSD1963_DATA_WITDH=8</state>
-          <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
-          <state>FLEXIO_MCULCD_DATA_BUS_WIDTH=8</state>
-          <state>DBI_USE_MIPI_PANEL=1</state>
-          <state>CPU_MIMXRT798SGFOA_cm33_core0</state>
+          <state>CPU_MIMXRT798SGFOB_cm33_core0</state>
+          <state>MIMXRT798S_cm33_core0_SERIES</state>
           <state>BOOT_HEADER_ENABLE=1</state>
-          <state>MCUX_DBI_LEGACY=0</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -400,6 +402,9 @@
           <state>$PROJ_DIR$/../../../../../../components/video/display/co5300</state>
           <state>$PROJ_DIR$/../../../../../../components/video/display/rpi</state>
           <state>$PROJ_DIR$/../../../../../../components/touch/gt911</state>
+          <state>$PROJ_DIR$/../../../../../../components/touch/ft3267</state>
+          <state>$PROJ_DIR$/../../../../../../components/touch/ft5406_rt</state>
+          <state>$PROJ_DIR$/../../../../../../components/touch/tma525b</state>
           <state>$PROJ_DIR$/../../../../../../components/display/ssd1963</state>
         </option>
         <option>
@@ -585,7 +590,8 @@
         <option>
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
-          <state>CPU_MIMXRT798SGFOA_cm33_core0</state>
+          <state>CPU_MIMXRT798SGFOB_cm33_core0</state>
+          <state>MIMXRT798S_cm33_core0_SERIES</state>
         </option>
         <option>
           <name>AList</name>
@@ -705,6 +711,9 @@
           <state>$PROJ_DIR$/../../../../../../components/video/display/co5300</state>
           <state>$PROJ_DIR$/../../../../../../components/video/display/rpi</state>
           <state>$PROJ_DIR$/../../../../../../components/touch/gt911</state>
+          <state>$PROJ_DIR$/../../../../../../components/touch/ft3267</state>
+          <state>$PROJ_DIR$/../../../../../../components/touch/ft5406_rt</state>
+          <state>$PROJ_DIR$/../../../../../../components/touch/tma525b</state>
           <state>$PROJ_DIR$/../../../../../../components/display/ssd1963</state>
         </option>
         <option>
@@ -721,7 +730,7 @@
         </option>
         <option>
           <name>PreInclude</name>
-          <state/>
+          <state>$PROJ_DIR$/../mcux_config.h</state>
         </option>
       </data>
     </settings>
@@ -813,6 +822,7 @@
         </option>
         <option>
           <name>IlinkConfigDefines</name>
+          <state>__stack_size__=0x1000</state>
         </option>
         <option>
           <name>IlinkMapFile</name>
@@ -1409,17 +1419,19 @@
         <option>
           <name>CCDefines</name>
           <state>DEBUG</state>
+          <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
+          <state>BOARD_ENABLE_PSRAM_CACHE=0</state>
+          <state>SSD1963_DATA_WITDH=8</state>
+          <state>FLEXIO_MCULCD_DATA_BUS_WIDTH=8</state>
+          <state>MCUX_DBI_LEGACY=0</state>
+          <state>DBI_USE_MIPI_PANEL=1</state>
+          <state>SDK_DEBUGCONSOLE_UART=1</state>
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
-          <state>BOARD_ENABLE_PSRAM_CACHE=0</state>
-          <state>SSD1963_DATA_WITDH=8</state>
-          <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
-          <state>FLEXIO_MCULCD_DATA_BUS_WIDTH=8</state>
-          <state>DBI_USE_MIPI_PANEL=1</state>
-          <state>CPU_MIMXRT798SGFOA_cm33_core0</state>
+          <state>CPU_MIMXRT798SGFOB_cm33_core0</state>
+          <state>MIMXRT798S_cm33_core0_SERIES</state>
           <state>BOOT_HEADER_ENABLE=1</state>
-          <state>MCUX_DBI_LEGACY=0</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -1569,6 +1581,9 @@
           <state>$PROJ_DIR$/../../../../../../components/video/display/co5300</state>
           <state>$PROJ_DIR$/../../../../../../components/video/display/rpi</state>
           <state>$PROJ_DIR$/../../../../../../components/touch/gt911</state>
+          <state>$PROJ_DIR$/../../../../../../components/touch/ft3267</state>
+          <state>$PROJ_DIR$/../../../../../../components/touch/ft5406_rt</state>
+          <state>$PROJ_DIR$/../../../../../../components/touch/tma525b</state>
           <state>$PROJ_DIR$/../../../../../../components/display/ssd1963</state>
         </option>
         <option>
@@ -1754,7 +1769,8 @@
         <option>
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
-          <state>CPU_MIMXRT798SGFOA_cm33_core0</state>
+          <state>CPU_MIMXRT798SGFOB_cm33_core0</state>
+          <state>MIMXRT798S_cm33_core0_SERIES</state>
         </option>
         <option>
           <name>AList</name>
@@ -1874,6 +1890,9 @@
           <state>$PROJ_DIR$/../../../../../../components/video/display/co5300</state>
           <state>$PROJ_DIR$/../../../../../../components/video/display/rpi</state>
           <state>$PROJ_DIR$/../../../../../../components/touch/gt911</state>
+          <state>$PROJ_DIR$/../../../../../../components/touch/ft3267</state>
+          <state>$PROJ_DIR$/../../../../../../components/touch/ft5406_rt</state>
+          <state>$PROJ_DIR$/../../../../../../components/touch/tma525b</state>
           <state>$PROJ_DIR$/../../../../../../components/display/ssd1963</state>
         </option>
         <option>
@@ -1890,7 +1909,7 @@
         </option>
         <option>
           <name>PreInclude</name>
-          <state/>
+          <state>$PROJ_DIR$/../mcux_config.h</state>
         </option>
       </data>
     </settings>
@@ -1982,6 +2001,7 @@
         </option>
         <option>
           <name>IlinkConfigDefines</name>
+          <state>__stack_size__=0x1000</state>
         </option>
         <option>
           <name>IlinkMapFile</name>
@@ -2578,17 +2598,19 @@
         <option>
           <name>CCDefines</name>
           <state>NDEBUG</state>
+          <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
+          <state>BOARD_ENABLE_PSRAM_CACHE=0</state>
+          <state>SSD1963_DATA_WITDH=8</state>
+          <state>FLEXIO_MCULCD_DATA_BUS_WIDTH=8</state>
+          <state>MCUX_DBI_LEGACY=0</state>
+          <state>DBI_USE_MIPI_PANEL=1</state>
+          <state>SDK_DEBUGCONSOLE_UART=1</state>
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
-          <state>BOARD_ENABLE_PSRAM_CACHE=0</state>
-          <state>SSD1963_DATA_WITDH=8</state>
-          <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
-          <state>FLEXIO_MCULCD_DATA_BUS_WIDTH=8</state>
-          <state>DBI_USE_MIPI_PANEL=1</state>
-          <state>CPU_MIMXRT798SGFOA_cm33_core0</state>
+          <state>CPU_MIMXRT798SGFOB_cm33_core0</state>
+          <state>MIMXRT798S_cm33_core0_SERIES</state>
           <state>BOOT_HEADER_ENABLE=1</state>
-          <state>MCUX_DBI_LEGACY=0</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -2738,6 +2760,9 @@
           <state>$PROJ_DIR$/../../../../../../components/video/display/co5300</state>
           <state>$PROJ_DIR$/../../../../../../components/video/display/rpi</state>
           <state>$PROJ_DIR$/../../../../../../components/touch/gt911</state>
+          <state>$PROJ_DIR$/../../../../../../components/touch/ft3267</state>
+          <state>$PROJ_DIR$/../../../../../../components/touch/ft5406_rt</state>
+          <state>$PROJ_DIR$/../../../../../../components/touch/tma525b</state>
           <state>$PROJ_DIR$/../../../../../../components/display/ssd1963</state>
         </option>
         <option>
@@ -2923,7 +2948,8 @@
         <option>
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
-          <state>CPU_MIMXRT798SGFOA_cm33_core0</state>
+          <state>CPU_MIMXRT798SGFOB_cm33_core0</state>
+          <state>MIMXRT798S_cm33_core0_SERIES</state>
         </option>
         <option>
           <name>AList</name>
@@ -3043,6 +3069,9 @@
           <state>$PROJ_DIR$/../../../../../../components/video/display/co5300</state>
           <state>$PROJ_DIR$/../../../../../../components/video/display/rpi</state>
           <state>$PROJ_DIR$/../../../../../../components/touch/gt911</state>
+          <state>$PROJ_DIR$/../../../../../../components/touch/ft3267</state>
+          <state>$PROJ_DIR$/../../../../../../components/touch/ft5406_rt</state>
+          <state>$PROJ_DIR$/../../../../../../components/touch/tma525b</state>
           <state>$PROJ_DIR$/../../../../../../components/display/ssd1963</state>
         </option>
         <option>
@@ -3059,7 +3088,7 @@
         </option>
         <option>
           <name>PreInclude</name>
-          <state/>
+          <state>$PROJ_DIR$/../mcux_config.h</state>
         </option>
       </data>
     </settings>
@@ -3151,6 +3180,7 @@
         </option>
         <option>
           <name>IlinkConfigDefines</name>
+          <state>__stack_size__=0x1000</state>
         </option>
         <option>
           <name>IlinkMapFile</name>
@@ -3747,17 +3777,19 @@
         <option>
           <name>CCDefines</name>
           <state>NDEBUG</state>
+          <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
+          <state>BOARD_ENABLE_PSRAM_CACHE=0</state>
+          <state>SSD1963_DATA_WITDH=8</state>
+          <state>FLEXIO_MCULCD_DATA_BUS_WIDTH=8</state>
+          <state>MCUX_DBI_LEGACY=0</state>
+          <state>DBI_USE_MIPI_PANEL=1</state>
+          <state>SDK_DEBUGCONSOLE_UART=1</state>
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
-          <state>BOARD_ENABLE_PSRAM_CACHE=0</state>
-          <state>SSD1963_DATA_WITDH=8</state>
-          <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
-          <state>FLEXIO_MCULCD_DATA_BUS_WIDTH=8</state>
-          <state>DBI_USE_MIPI_PANEL=1</state>
-          <state>CPU_MIMXRT798SGFOA_cm33_core0</state>
+          <state>CPU_MIMXRT798SGFOB_cm33_core0</state>
+          <state>MIMXRT798S_cm33_core0_SERIES</state>
           <state>BOOT_HEADER_ENABLE=1</state>
-          <state>MCUX_DBI_LEGACY=0</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -3907,6 +3939,9 @@
           <state>$PROJ_DIR$/../../../../../../components/video/display/co5300</state>
           <state>$PROJ_DIR$/../../../../../../components/video/display/rpi</state>
           <state>$PROJ_DIR$/../../../../../../components/touch/gt911</state>
+          <state>$PROJ_DIR$/../../../../../../components/touch/ft3267</state>
+          <state>$PROJ_DIR$/../../../../../../components/touch/ft5406_rt</state>
+          <state>$PROJ_DIR$/../../../../../../components/touch/tma525b</state>
           <state>$PROJ_DIR$/../../../../../../components/display/ssd1963</state>
         </option>
         <option>
@@ -4092,7 +4127,8 @@
         <option>
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
-          <state>CPU_MIMXRT798SGFOA_cm33_core0</state>
+          <state>CPU_MIMXRT798SGFOB_cm33_core0</state>
+          <state>MIMXRT798S_cm33_core0_SERIES</state>
         </option>
         <option>
           <name>AList</name>
@@ -4212,6 +4248,9 @@
           <state>$PROJ_DIR$/../../../../../../components/video/display/co5300</state>
           <state>$PROJ_DIR$/../../../../../../components/video/display/rpi</state>
           <state>$PROJ_DIR$/../../../../../../components/touch/gt911</state>
+          <state>$PROJ_DIR$/../../../../../../components/touch/ft3267</state>
+          <state>$PROJ_DIR$/../../../../../../components/touch/ft5406_rt</state>
+          <state>$PROJ_DIR$/../../../../../../components/touch/tma525b</state>
           <state>$PROJ_DIR$/../../../../../../components/display/ssd1963</state>
         </option>
         <option>
@@ -4228,7 +4267,7 @@
         </option>
         <option>
           <name>PreInclude</name>
-          <state/>
+          <state>$PROJ_DIR$/../mcux_config.h</state>
         </option>
       </data>
     </settings>
@@ -4320,6 +4359,7 @@
         </option>
         <option>
           <name>IlinkConfigDefines</name>
+          <state>__stack_size__=0x1000</state>
         </option>
         <option>
           <name>IlinkMapFile</name>
@@ -4736,6 +4776,12 @@
     <file>
       <name>$PROJ_DIR$/../mcux_config.h</name>
     </file>
+    <file>
+      <name>$PROJ_DIR$/../mcux_config.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../mcux_config.h</name>
+    </file>
   </group>
   <group>
     <name>drivers</name>
@@ -4762,6 +4808,9 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT798S/drivers/fsl_edma_soc.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT798S/drivers/fsl_inputmux_connections.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT798S/drivers/fsl_iopctl.h</name>
@@ -4825,6 +4874,12 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT798S/drivers/fsl_gpio.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT798S/drivers/fsl_inputmux.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT798S/drivers/fsl_inputmux.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT798S/drivers/fsl_lcdif.h</name>
@@ -5018,15 +5073,6 @@
         <name>$PROJ_DIR$/../../../../../../middleware/emwin/emWin_header/GUIDRV_SSD1926_Private.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/emwin/emWin_header/GUIDRV_Template.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/emwin/emWin_header/GUIDRV_TemplateI.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/emwin/emWin_header/GUIDRV_TemplateI_Private.h</name>
-      </file>
-      <file>
         <name>$PROJ_DIR$/../../../../../../middleware/emwin/emWin_header/GUITDRV_ADS7846.h</name>
       </file>
       <file>
@@ -5052,9 +5098,6 @@
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../../middleware/emwin/emWin_header/GUI_GIF_Private.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/emwin/emWin_header/GUI_HOOK.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../../middleware/emwin/emWin_header/GUI_JPEG_Private.h</name>
@@ -5108,10 +5151,10 @@
         <name>$PROJ_DIR$/../../../../../../middleware/emwin/emWin_header/GUI_Version.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/emwin/emWin_header/GUI__BiDi2_Brackets_800.h</name>
+        <name>$PROJ_DIR$/../../../../../../middleware/emwin/emWin_header/GUI__BiDi_Brackets.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/emwin/emWin_header/GUI__BiDi2_Types_800.h</name>
+        <name>$PROJ_DIR$/../../../../../../middleware/emwin/emWin_header/GUI__BiDi_Types.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../../middleware/emwin/emWin_header/Global.h</name>
@@ -5328,6 +5371,9 @@
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../../middleware/emwin/emWin_header/WM_Intern.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/emwin/emWin_header/WM_Layout.h</name>
       </file>
     </group>
     <group>
@@ -5648,12 +5694,9 @@
   </group>
   <group>
     <name>startup</name>
-    <group>
-      <name>iar</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT798S/iar/startup_MIMXRT798S_cm33_core0.s</name>
-      </file>
-    </group>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT798S/startup_MIMXRT798S_cm33_core0.c</name>
+    </file>
   </group>
   <group>
     <name>utilities</name>
@@ -5794,6 +5837,24 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../components/touch/gt911/fsl_gt911.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../components/touch/ft3267/fsl_ft3267.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../components/touch/ft3267/fsl_ft3267.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../components/touch/ft5406_rt/fsl_ft5406_rt.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../components/touch/ft5406_rt/fsl_ft5406_rt.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../components/touch/tma525b/fsl_tma525b.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../components/touch/tma525b/fsl_tma525b.c</name>
     </file>
   </group>
   <group>

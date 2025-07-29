@@ -1,5 +1,5 @@
 /*
- * Copyright 2021-2023 NXP
+ * Copyright 2021-2023,2025 NXP
  * All rights reserved.
  *
  *
@@ -87,28 +87,29 @@ void BOARD_DSP_Init(void)
 #elif defined(__GNUC__)
 #if defined(MIMXRT798S_cm33_core0_SERIES)
     literal_image.srcAddr = DSP_IMAGE_LITERAL_START;
-    literal_image.size    = DSP_IMAGE_LITERAL_SIZE;
+    literal_image.size = (DSP_IMAGE_LITERAL_SIZE > 0) ? (uint32_t)DSP_IMAGE_LITERAL_SIZE : 0U;
 #endif
 #if defined(MIMXRT798S_cm33_core1_SERIES) || defined(MIMXRT758S_cm33_core1_SERIES) || \
     defined(MIMXRT735S_cm33_core1_SERIES)
     vector_image.srcAddr  = DSP_IMAGE_VECTOR_START;
-    vector_image.size     = DSP_IMAGE_VECTOR_SIZE;
+    vector_image.size     = (DSP_IMAGE_VECTOR_SIZE > 0) ? (uint32_t)DSP_IMAGE_VECTOR_SIZE : 0U;
 #endif
     text_image.srcAddr    = DSP_IMAGE_TEXT_START;
-    text_image.size       = DSP_IMAGE_TEXT_SIZE;
+    text_image.size = (DSP_IMAGE_TEXT_SIZE > 0) ? (uint32_t)DSP_IMAGE_TEXT_SIZE : 0U;
+
     data_image.srcAddr    = DSP_IMAGE_DATA_START;
-    data_image.size       = DSP_IMAGE_DATA_SIZE;
+    data_image.size = (DSP_IMAGE_DATA_SIZE > 0) ? (uint32_t)DSP_IMAGE_DATA_SIZE : 0U;
 #ifdef DSP_NCACHE
     ncache_image.srcAddr  = DSP_IMAGE_NCACHE_START;
-    ncache_image.size     = DSP_IMAGE_NCACHE_SIZE;
+    ncache_image.size = (DSP_IMAGE_NCACHE_SIZE > 0) ? (uint32_t)DSP_IMAGE_NCACHE_SIZE : 0U;
 #endif
 #endif
 #endif
 #if defined(MIMXRT798S_cm33_core0_SERIES)
     /* Initialize PMIC */
     /* BOARD_InitPmic(); */
-    PMC0->PDRUNCFG2 &= ~0x0003C000; /* power up dsp used SRAM. */
-    PMC0->PDRUNCFG3 &= ~0x0003C000;
+    PMC0->PDRUNCFG2 &= ~0x0003C000U; /* power up dsp used SRAM. */
+    PMC0->PDRUNCFG3 &= ~0x0003C000U;
     POWER_DisablePD(kPDRUNCFG_PD_VDD2_DSP);
     POWER_ApplyPD();
 

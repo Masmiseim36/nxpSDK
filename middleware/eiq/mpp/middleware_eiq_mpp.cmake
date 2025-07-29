@@ -33,7 +33,9 @@ message("${CMAKE_CURRENT_LIST_FILE} component is included.")
           ${CMAKE_CURRENT_LIST_DIR}/hal/hal_camera_ezh_ov7670.c
           ${CMAKE_CURRENT_LIST_DIR}/hal/hal_display_mculcd_ssd1963.c
           ${CMAKE_CURRENT_LIST_DIR}/hal/hal_display_mculcd_st7796s.c
+          ${CMAKE_CURRENT_LIST_DIR}/hal/hal_display_lvgl.c
           ${CMAKE_CURRENT_LIST_DIR}/hal/hal_graphics_vglite.c
+          ${CMAKE_CURRENT_LIST_DIR}/hal/hal_camera_ezhv_ov7670.c
         )
 
   

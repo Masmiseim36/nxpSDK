@@ -45,8 +45,8 @@
     </projects>
     <memory>
       <memoryBlock id="QSPI_FLASH_MIMXRT798S" name="QSPI_FLASH" addr="28000000" size="02000000" type="ExtFlash" access="RO"/>
-      <memoryBlock id="SRAM_MIMXRT798S" name="SRAM" addr="20080000" size="00180000" type="RAM" access="RW"/>
-      <memoryBlock id="CPU1_RAM_MIMXRT798S" name="CPU1_RAM" addr="00600000" size="00080000" type="RAM" access="RW"/>
+      <memoryBlock id="SRAM_MIMXRT798S" name="SRAM" addr="20080000" size="00040000" type="RAM" access="RW"/>
+      <memoryBlock id="CPU1_RAM_MIMXRT798S" name="CPU1_RAM" addr="005A0000" size="00010000" type="RAM" access="RW"/>
       <memoryBlock id="NCACHE_REGION_MIMXRT798S" name="NCACHE_REGION" addr="20202000" size="001FE000" type="RAM" access="RW"/>
       <memoryBlock id="rpmsg_sh_mem_MIMXRT798S" name="rpmsg_sh_mem" addr="20200000" size="00002000" type="RAM" access="RW"/>
     </memory>
@@ -54,11 +54,12 @@
       <toolchainSetting id_refs="com.nxp.mcuxpresso">
         <option id="gnu.c.compiler.option.preprocessor.def.symbols" type="stringList">
           <value>MCUXPRESSO_SDK</value>
-          <value>CPU_MIMXRT798SGFOA_cm33_core0</value>
+          <value>CPU_MIMXRT798SGFOB_cm33_core0</value>
           <value>BOOT_HEADER_ENABLE=1</value>
           <value>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</value>
           <value>SDK_DEBUGCONSOLE=1</value>
           <value>MCUX_META_BUILD</value>
+          <value>MIMXRT798S_cm33_core0_SERIES</value>
           <value>SDK_I2C_BASED_COMPONENT_USED=1</value>
         </option>
         <option id="com.crt.advproject.link.gcc.multicore.master" type="string">
@@ -159,6 +160,9 @@
     <source path="../../../../../devices/MIMXRT798S" project_relative_path="./" type="workspace" toolchain="armgcc">
       <files mask="all_lib_device.cmake"/>
     </source>
+    <source path="." project_relative_path="source" type="other">
+      <files mask="power_mode_comp_only_primary.mex"/>
+    </source>
     <source path="." project_relative_path="source" type="src">
       <files mask="clock_config.c"/>
       <files mask="power_mode_comp_only_core0.c"/>
@@ -217,6 +221,9 @@
     </source>
     <source path="." project_relative_path="doc" type="doc">
       <files mask="example_board_readme.md"/>
+    </source>
+    <source path="." project_relative_path="doc" type="doc">
+      <files mask="examples_shared_readme.md"/>
     </source>
   </example>
 </ksdk:examples>

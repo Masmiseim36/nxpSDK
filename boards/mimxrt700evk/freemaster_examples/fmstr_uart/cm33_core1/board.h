@@ -1,5 +1,5 @@
 /*
- * Copyright 2023-2024 NXP
+ * Copyright 2023-2025 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -192,6 +192,11 @@
 #define BOARD_CODEC_I2C_CLOCK_FREQ CLOCK_GetLPI2cClkFreq(2)
 #define BOARD_CODEC_I2C_INSTANCE   2
 
+#define BOARD_CODEC_I2C_SCL_PIN  12U
+#define BOARD_CODEC_I2C_SDA_PIN  11U
+#define BOARD_CODEC_I2C_SDA_GPIO GPIO1
+#define BOARD_CODEC_I2C_SCL_GPIO GPIO1
+
 #define BOARD_PMIC_I2C_BASEADDR   LPI2C15
 #define BOARD_PMIC_I2C_CLOCK_FREQ CLOCK_GetLPI2cClkFreq(15)
 
@@ -281,6 +286,34 @@ void BOARD_XspiClockSafeConfig(void);
 AT_QUICKACCESS_SECTION_CODE(void BOARD_SetXspiClock(XSPI_Type *base, uint32_t src, uint32_t divider));
 AT_QUICKACCESS_SECTION_CODE(void BOARD_DeinitXspi(XSPI_Type *base, CACHE64_CTRL_Type *cache));
 AT_QUICKACCESS_SECTION_CODE(void BOARD_InitXspi(XSPI_Type *base, CACHE64_CTRL_Type *cache));
+/*!
+ * @brief Set the onboard I2C2 Pins to GPIO.
+ */
+void BOARD_InitI2c2PinAsGpio(void);
+/*!
+ * @brief Restore the pin mux configuration for onboard I2C2 pins.
+ */
+void BOARD_RestoreI2c2PinMux(void);
+/*!
+ * @brief Recover onboard I2C2 bus.
+ */
+void BOARD_I2c2RecoverBus(void);
+/*!
+ * @brief Release onboard I2C bus. This macro is used to release the onboard I2C bus which may connected to sensors or
+ * codec. NOTE, the corresponding APIs called by this macro need to be defined.
+ */
+#define BOARD_I2C_ReleaseBus(n)        \
+    do                                 \
+    {                                  \
+        BOARD_InitI2c##n##PinAsGpio(); \
+        BOARD_I2c##n##RecoverBus();    \
+        BOARD_RestoreI2c##n##PinMux(); \
+    } while (0);
+
+/*!
+ * @brief Release Codec I2C bus. This macro is used to release the onboard codec I2C.
+ */
+#define BOARD_Codec_I2C_ReleaseBus() BOARD_I2C_ReleaseBus(2)
 #endif
 
 #if defined(SDK_I2C_BASED_COMPONENT_USED) && SDK_I2C_BASED_COMPONENT_USED

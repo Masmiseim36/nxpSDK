@@ -28,12 +28,12 @@
     <definition extID="component.serial_manager_usb_cdc.MIMXRT798S"/>
     <definition extID="component.lpuart_adapter.MIMXRT798S"/>
     <definition extID="component.osa_template_config.MIMXRT798S"/>
-    <definition extID="component.osa_interface.MIMXRT798S"/>
     <definition extID="component.osa.MIMXRT798S"/>
     <definition extID="component.osa_bm.MIMXRT798S"/>
     <definition extID="middleware.usb.common_header.MIMXRT798S"/>
     <definition extID="middleware.usb.device.common_header.MIMXRT798S"/>
     <definition extID="middleware.usb.device_controller_ehci.MIMXRT798S"/>
+    <definition extID="middleware.usb.device.ehci_config_header.MIMXRT798S"/>
     <definition extID="middleware.usb.device.controller.driver.MIMXRT798S"/>
     <definition extID="middleware.usb.device.stack.MIMXRT798S"/>
     <definition extID="middleware.usb.device.cdc.MIMXRT798S"/>
@@ -46,7 +46,7 @@
     <definition extID="com.crt.advproject.config.exe.debug"/>
     <definition extID="com.crt.advproject.config.exe.release"/>
   </externalDefinitions>
-  <example id="mimxrt700evk_hello_world_virtual_com_cm33_core0" name="hello_world_virtual_com_cm33_core0" device_core="cm33_core0_MIMXRT798S" dependency="platform.drivers.flash_config.mimxrt700evk.MIMXRT798S CMSIS_Include_core_cm.MIMXRT798S device.MIMXRT798S_CMSIS.MIMXRT798S device.MIMXRT798S_system.MIMXRT798S device.MIMXRT798S_startup.MIMXRT798S platform.drivers.clock.MIMXRT798S platform.drivers.lpc_iopctl.MIMXRT798S platform.drivers.power.MIMXRT798S platform.drivers.reset.MIMXRT798S platform.drivers.cache_xcache.MIMXRT798S platform.drivers.common.MIMXRT798S platform.drivers.glikey.MIMXRT798S platform.drivers.gpio.MIMXRT798S platform.drivers.lpflexcomm.MIMXRT798S platform.drivers.lpflexcomm_lpuart.MIMXRT798S platform.drivers.xspi.MIMXRT798S platform.utilities.assert.MIMXRT798S platform.utilities.misc_utilities.MIMXRT798S component.lists.MIMXRT798S utility.str.MIMXRT798S utility.debug_console.MIMXRT798S component.serial_manager.MIMXRT798S component.serial_manager_uart.MIMXRT798S component.serial_manager_usb_cdc.MIMXRT798S component.lpuart_adapter.MIMXRT798S component.osa_template_config.MIMXRT798S component.osa_interface.MIMXRT798S component.osa.MIMXRT798S component.osa_bm.MIMXRT798S middleware.usb.common_header.MIMXRT798S middleware.usb.device.common_header.MIMXRT798S middleware.usb.device_controller_ehci.MIMXRT798S middleware.usb.device.controller.driver.MIMXRT798S middleware.usb.device.stack.MIMXRT798S middleware.usb.device.cdc.MIMXRT798S middleware.usb.phy.MIMXRT798S" category="demo_apps">
+  <example id="mimxrt700evk_hello_world_virtual_com_cm33_core0" name="hello_world_virtual_com_cm33_core0" device_core="cm33_core0_MIMXRT798S" dependency="platform.drivers.flash_config.mimxrt700evk.MIMXRT798S CMSIS_Include_core_cm.MIMXRT798S device.MIMXRT798S_CMSIS.MIMXRT798S device.MIMXRT798S_system.MIMXRT798S device.MIMXRT798S_startup.MIMXRT798S platform.drivers.clock.MIMXRT798S platform.drivers.lpc_iopctl.MIMXRT798S platform.drivers.power.MIMXRT798S platform.drivers.reset.MIMXRT798S platform.drivers.cache_xcache.MIMXRT798S platform.drivers.common.MIMXRT798S platform.drivers.glikey.MIMXRT798S platform.drivers.gpio.MIMXRT798S platform.drivers.lpflexcomm.MIMXRT798S platform.drivers.lpflexcomm_lpuart.MIMXRT798S platform.drivers.xspi.MIMXRT798S platform.utilities.assert.MIMXRT798S platform.utilities.misc_utilities.MIMXRT798S component.lists.MIMXRT798S utility.str.MIMXRT798S utility.debug_console.MIMXRT798S component.serial_manager.MIMXRT798S component.serial_manager_uart.MIMXRT798S component.serial_manager_usb_cdc.MIMXRT798S component.lpuart_adapter.MIMXRT798S component.osa_template_config.MIMXRT798S component.osa.MIMXRT798S component.osa_bm.MIMXRT798S middleware.usb.common_header.MIMXRT798S middleware.usb.device.common_header.MIMXRT798S middleware.usb.device_controller_ehci.MIMXRT798S middleware.usb.device.ehci_config_header.MIMXRT798S middleware.usb.device.controller.driver.MIMXRT798S middleware.usb.device.stack.MIMXRT798S middleware.usb.device.cdc.MIMXRT798S middleware.usb.phy.MIMXRT798S" category="demo_apps">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -59,7 +59,7 @@
       <toolchainSetting id_refs="com.nxp.mcuxpresso">
         <option id="gnu.c.compiler.option.preprocessor.def.symbols" type="stringList">
           <value>MCUXPRESSO_SDK</value>
-          <value>CPU_MIMXRT798SGFOA_cm33_core0</value>
+          <value>CPU_MIMXRT798SGFOB_cm33_core0</value>
           <value>BOOT_HEADER_ENABLE=1</value>
           <value>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</value>
           <value>USB_DEVICE_CONFIG_BUFFER_PROPERTY_CACHEABLE=1</value>
@@ -72,6 +72,7 @@
           <value>USB_STACK_BM</value>
           <value>BOARD_USE_VIRTUALCOM=1</value>
           <value>MCUX_META_BUILD</value>
+          <value>MIMXRT798S_cm33_core0_SERIES</value>
           <value>DEBUG_CONSOLE_TRANSFER_NON_BLOCKING</value>
           <value>SERIAL_PORT_TYPE_UART=1</value>
           <value>USB_DEVICE_CONFIG_CDC_ACM=1</value>
@@ -163,6 +164,12 @@
     <source path="../../../../../devices/MIMXRT798S" project_relative_path="./" type="workspace" toolchain="armgcc">
       <files mask="all_lib_device.cmake"/>
     </source>
+    <source path="." project_relative_path="source" type="other">
+      <files mask="hello_world_virtual_com.mex"/>
+    </source>
+    <source path="." project_relative_path="source" type="binary">
+      <files mask="hello_world_virtual_com.bin" hidden="true"/>
+    </source>
     <source path="linker/mcux" project_relative_path="linkscripts" type="src" toolchain="mcuxpresso">
       <files mask="main_data.ldt"/>
       <files mask="main_bss.ldt"/>
@@ -219,6 +226,9 @@
     </source>
     <source path="." project_relative_path="doc" type="doc">
       <files mask="example_board_readme.md"/>
+    </source>
+    <source path="." project_relative_path="doc" type="doc">
+      <files mask="examples_shared_readme.md"/>
     </source>
   </example>
 </ksdk:examples>

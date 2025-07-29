@@ -17,6 +17,7 @@
     <definition extID="platform.drivers.gpio.MIMXRT798S"/>
     <definition extID="platform.drivers.lpflexcomm.MIMXRT798S"/>
     <definition extID="platform.drivers.lpflexcomm_lpuart.MIMXRT798S"/>
+    <definition extID="platform.drivers.mmu.MIMXRT798S"/>
     <definition extID="platform.drivers.xspi.MIMXRT798S"/>
     <definition extID="platform.utilities.assert.MIMXRT798S"/>
     <definition extID="platform.utilities.misc_utilities.MIMXRT798S"/>
@@ -34,14 +35,13 @@
     <definition extID="middleware.mcuboot.stack_heap_default_tinycrypt.MIMXRT798S"/>
     <definition extID="middleware.mcuboot.bootutil.flashapi_rt.MIMXRT798S"/>
     <definition extID="iar"/>
-    <definition extID="mdk"/>
     <definition extID="armgcc"/>
     <definition extID="mcuxpresso"/>
     <definition extID="com.nxp.mcuxpresso"/>
     <definition extID="com.crt.advproject.config.exe.debug"/>
     <definition extID="com.crt.advproject.config.exe.release"/>
   </externalDefinitions>
-  <example id="mimxrt700evk_mcuboot_opensource_cm33_core0" name="mcuboot_opensource_cm33_core0" device_core="cm33_core0_MIMXRT798S" dependency="platform.drivers.flash_config.mimxrt700evk.MIMXRT798S CMSIS_Include_core_cm.MIMXRT798S device.MIMXRT798S_CMSIS.MIMXRT798S device.MIMXRT798S_system.MIMXRT798S device.MIMXRT798S_startup.MIMXRT798S platform.drivers.clock.MIMXRT798S platform.drivers.lpc_iopctl.MIMXRT798S platform.drivers.power.MIMXRT798S platform.drivers.reset.MIMXRT798S platform.drivers.cache_xcache.MIMXRT798S platform.drivers.common.MIMXRT798S platform.drivers.glikey.MIMXRT798S platform.drivers.gpio.MIMXRT798S platform.drivers.lpflexcomm.MIMXRT798S platform.drivers.lpflexcomm_lpuart.MIMXRT798S platform.drivers.xspi.MIMXRT798S platform.utilities.assert.MIMXRT798S platform.utilities.misc_utilities.MIMXRT798S component.lists.MIMXRT798S utility.str.MIMXRT798S utility.debug_console.MIMXRT798S component.serial_manager.MIMXRT798S component.serial_manager_uart.MIMXRT798S component.lpuart_adapter.MIMXRT798S component.mflash_offchip.MIMXRT798S middleware.mcuboot.bootutil.MIMXRT798S middleware.mcuboot.tinycrypt.MIMXRT798S middleware.mcuboot.mbedtls-asn1.MIMXRT798S middleware.mcuboot.nxp_bootutil_port.MIMXRT798S middleware.mcuboot.stack_heap_default_tinycrypt.MIMXRT798S middleware.mcuboot.bootutil.flashapi_rt.MIMXRT798S" category="ota_examples">
+  <example id="mimxrt700evk_mcuboot_opensource_cm33_core0" name="mcuboot_opensource_cm33_core0" device_core="cm33_core0_MIMXRT798S" dependency="platform.drivers.flash_config.mimxrt700evk.MIMXRT798S CMSIS_Include_core_cm.MIMXRT798S device.MIMXRT798S_CMSIS.MIMXRT798S device.MIMXRT798S_system.MIMXRT798S device.MIMXRT798S_startup.MIMXRT798S platform.drivers.clock.MIMXRT798S platform.drivers.lpc_iopctl.MIMXRT798S platform.drivers.power.MIMXRT798S platform.drivers.reset.MIMXRT798S platform.drivers.cache_xcache.MIMXRT798S platform.drivers.common.MIMXRT798S platform.drivers.glikey.MIMXRT798S platform.drivers.gpio.MIMXRT798S platform.drivers.lpflexcomm.MIMXRT798S platform.drivers.lpflexcomm_lpuart.MIMXRT798S platform.drivers.mmu.MIMXRT798S platform.drivers.xspi.MIMXRT798S platform.utilities.assert.MIMXRT798S platform.utilities.misc_utilities.MIMXRT798S component.lists.MIMXRT798S utility.str.MIMXRT798S utility.debug_console.MIMXRT798S component.serial_manager.MIMXRT798S component.serial_manager_uart.MIMXRT798S component.lpuart_adapter.MIMXRT798S component.mflash_offchip.MIMXRT798S middleware.mcuboot.bootutil.MIMXRT798S middleware.mcuboot.tinycrypt.MIMXRT798S middleware.mcuboot.mbedtls-asn1.MIMXRT798S middleware.mcuboot.nxp_bootutil_port.MIMXRT798S middleware.mcuboot.stack_heap_default_tinycrypt.MIMXRT798S middleware.mcuboot.bootutil.flashapi_rt.MIMXRT798S" category="ota_examples">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -54,7 +54,7 @@
       <toolchainSetting id_refs="com.nxp.mcuxpresso">
         <option id="gnu.c.compiler.option.preprocessor.def.symbols" type="stringList">
           <value>MCUXPRESSO_SDK</value>
-          <value>CPU_MIMXRT798SGFOA_cm33_core0</value>
+          <value>CPU_MIMXRT798SGFOB_cm33_core0</value>
           <value>BOOT_HEADER_ENABLE=1</value>
           <value>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</value>
           <value>PRINTF_ADVANCED_ENABLE=1</value>
@@ -62,6 +62,7 @@
           <value>MBEDTLS_USER_CONFIG_FILE='"mbedtls_user_config.h"'</value>
           <value>SDK_DEBUGCONSOLE=1</value>
           <value>MCUX_META_BUILD</value>
+          <value>MIMXRT798S_cm33_core0_SERIES</value>
           <value>SERIAL_PORT_TYPE_UART=1</value>
           <value>MFLASH_FILE_BASEADDR=7340032</value>
         </option>
@@ -128,12 +129,6 @@
       <files mask="mcuboot_opensource_cm33_core0.ewp"/>
       <files mask="mcuboot_opensource_cm33_core0.eww"/>
     </source>
-    <source path="mdk" project_relative_path="./" type="workspace" toolchain="mdk">
-      <files mask="mcuboot_opensource_cm33_core0.uvoptx"/>
-      <files mask="mcuboot_opensource_cm33_core0.uvprojx"/>
-      <files mask="JLinkSettings.ini"/>
-      <files mask="mcuboot_opensource_cm33_core0.uvmpw"/>
-    </source>
     <source path="armgcc" project_relative_path="./" type="workspace" toolchain="armgcc">
       <files mask="build_all.bat"/>
       <files mask="build_all.sh"/>
@@ -142,13 +137,70 @@
       <files mask="CMakeLists.txt"/>
       <files mask="flags.cmake"/>
       <files mask="config.cmake"/>
-      <files mask="build_flash_debug.bat"/>
-      <files mask="build_flash_debug.sh"/>
       <files mask="build_flash_release.bat"/>
       <files mask="build_flash_release.sh"/>
+      <files mask="build_flash_debug.bat"/>
+      <files mask="build_flash_debug.sh"/>
     </source>
     <source path="../../../../../devices/MIMXRT798S" project_relative_path="./" type="workspace" toolchain="armgcc">
       <files mask="all_lib_device.cmake"/>
+    </source>
+    <source path="../.." project_relative_path="source" type="other" exclude="true">
+      <files mask="CHANGELOG.md" hidden="true"/>
+      <files mask="README.md" hidden="true"/>
+    </source>
+    <source path="../../_common/sb3_templates" project_relative_path="source" type="other" exclude="true">
+      <files mask="mcxn_sb3_cfg_primary_slot.yaml" hidden="true"/>
+      <files mask="rw612_sb3_cfg_primary_slot.yaml" hidden="true"/>
+      <files mask="rw612_sb3_cfg_secondary_slot.yaml" hidden="true"/>
+    </source>
+    <source path="../../_common/sb3_api" project_relative_path="source" type="other" exclude="true">
+      <files mask="sb3_api.h" hidden="true"/>
+      <files mask="sb3_api_mcxn10.c" hidden="true"/>
+      <files mask="sb3_api_rw61x.c" hidden="true"/>
+    </source>
+    <source path="../../_doc" project_relative_path="source" type="other" exclude="true">
+      <files mask="encrypted_xip_readme.md" hidden="true"/>
+      <files mask="encrypted_xip_npx_readme.md" hidden="true"/>
+      <files mask="flash_remap_readme.md" hidden="true"/>
+      <files mask="sb3_common_readme.md" hidden="true"/>
+      <files mask="sb3_mcxn_readme.md" hidden="true"/>
+      <files mask="sb3_rw61x_readme.md" hidden="true"/>
+    </source>
+    <source path="../../_doc/sb3_pics" project_relative_path="source" type="other" exclude="true">
+      <files mask="1_prov_keys.jpg" hidden="true"/>
+      <files mask="1_prov_mcuboot_mcxn.jpg" hidden="true"/>
+      <files mask="1_prov_mcuboot_rw61x.jpg.jpg" hidden="true"/>
+      <files mask="1_prov_rom_mcxn.jpg" hidden="true"/>
+      <files mask="1_prov_write_mcxn.jpg" hidden="true"/>
+      <files mask="1_prov_write_rw61x.jpg.jpg" hidden="true"/>
+      <files mask="2_ota_create_mcuboot_mcxn_1.jpg" hidden="true"/>
+      <files mask="2_ota_create_mcuboot_mcxn_2.jpg" hidden="true"/>
+      <files mask="2_ota_create_mcuboot_rw61x_1.jpg" hidden="true"/>
+      <files mask="2_ota_create_mcuboot_rw61x_2.jpg" hidden="true"/>
+      <files mask="2_ota_create_rom_rw61x.jpg" hidden="true"/>
+      <files mask="3_ota_mcuboot_mcxn_1.jpg" hidden="true"/>
+      <files mask="3_ota_mcuboot_mcxn_2.jpg" hidden="true"/>
+      <files mask="3_ota_mcuboot_rw61x_1.jpg" hidden="true"/>
+      <files mask="3_ota_mcuboot_rw61x_2.jpg" hidden="true"/>
+      <files mask="3_ota_rom_mcxn_1.jpg" hidden="true"/>
+      <files mask="3_ota_rom_mcxn_2.jpg" hidden="true"/>
+      <files mask="3_ota_rom_rw61x_1.jpg" hidden="true"/>
+      <files mask="3_ota_rom_rw61x_2.jpg" hidden="true"/>
+    </source>
+    <source path="../../_doc/encrypted_xip_pics" project_relative_path="source" type="other" exclude="true">
+      <files mask="bee_metadata.jpg" hidden="true"/>
+      <files mask="bee_rom_layout.jpg" hidden="true"/>
+      <files mask="device_fleet_graph.jpg" hidden="true"/>
+      <files mask="general_metadata.jpg" hidden="true"/>
+      <files mask="iped_metadata.jpg" hidden="true"/>
+      <files mask="keys_scheme.jpg" hidden="true"/>
+      <files mask="npx_example_1.jpg" hidden="true"/>
+      <files mask="npx_example_2.jpg" hidden="true"/>
+      <files mask="npx_example_3.jpg" hidden="true"/>
+      <files mask="npx_example_4.jpg" hidden="true"/>
+      <files mask="overwrite_only.jpg" hidden="true"/>
+      <files mask="overwrite_only_flow.jpg" hidden="true"/>
     </source>
     <source path="linkscripts" project_relative_path="linkscripts" type="src" toolchain="mcuxpresso">
       <files mask="main_text.ldt"/>
@@ -173,9 +225,6 @@
     </source>
     <source path="armgcc" project_relative_path="MIMXRT798S/armgcc" type="linker" toolchain="armgcc">
       <files mask="MIMXRT798Sxxxx_cm33_core0_flash.ld"/>
-    </source>
-    <source path="mdk" project_relative_path="MIMXRT798S/mdk" type="linker" toolchain="mdk">
-      <files mask="MIMXRT798Sxxxx_cm33_core0_flash.scf"/>
     </source>
     <source path="." project_relative_path="board" type="c_include">
       <files mask="board.h"/>
@@ -206,6 +255,9 @@
     </source>
     <source path="." project_relative_path="doc" type="doc">
       <files mask="example_board_readme.md"/>
+    </source>
+    <source path="." project_relative_path="doc" type="doc">
+      <files mask="examples_shared_readme.md"/>
     </source>
   </example>
 </ksdk:examples>

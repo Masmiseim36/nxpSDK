@@ -14,13 +14,13 @@
 /* Address of RAM, where the image for dsp should be copied */
 #define DSP_LITERAL_ADDRESS (uint32_t *)0x24000000
 #define DSP_BOOT_ADDRESS    (uint32_t *)0x24020000
-#define DSP_SRAM_ADDRESS    (uint32_t *)0x20400000
-//#define DSP_NCACHE_ADDRESS  (uint32_t *)0x20060000
+#define DSP_SRAM_ADDRESS    (uint32_t *)0x20300000
+#define DSP_NCACHE_ADDRESS  (uint32_t *)0x24001000
 
 /* Inter processor communication common RAM */
 #define RPMSG_LITE_LINK_ID    (RL_PLATFORM_IMXRT700_M33_0_HIFI4_LINK_ID)
 #define RPMSG_LITE_SHMEM_BASE (void *)0x20200000
-#define RPMSG_LITE_SHMEM_SIZE (64 * 1024)
+#define RPMSG_LITE_SHMEM_SIZE (8 * 1024)
 
 /* DSP-private uncached audio memory buffers */
 /* Each buffer is 32k in size in a separate SRAM partition */

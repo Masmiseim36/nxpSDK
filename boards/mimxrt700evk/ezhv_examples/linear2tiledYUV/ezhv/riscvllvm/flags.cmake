@@ -4,12 +4,14 @@ ENDIF()
 
 SET(CMAKE_ASM_FLAGS_DEBUG " \
     ${CMAKE_ASM_FLAGS_DEBUG} \
+    -include ${ProjDirPath}/../mcux_config.h \
     -DMCUXPRESSO_SDK \
     -mcpu=zv2116 \
     -mabi=ilp32 \
 ")
 SET(CMAKE_ASM_FLAGS_RELEASE " \
     ${CMAKE_ASM_FLAGS_RELEASE} \
+    -include ${ProjDirPath}/../mcux_config.h \
     -DMCUXPRESSO_SDK \
     -mcpu=zv2116 \
     -mabi=ilp32 \
@@ -20,7 +22,7 @@ SET(CMAKE_C_FLAGS_DEBUG " \
     -DEZHV_LINEAR_TO_TILE_EN=1 \
     -DMCUX_META_BUILD \
     -DMCUXPRESSO_SDK \
-    -DCPU_MIMXRT798SGFOA_ezhv \
+    -DCPU_MIMXRT798SGFOB_ezhv \
     -g \
     -O0 \
     -Wall \
@@ -41,7 +43,7 @@ SET(CMAKE_C_FLAGS_RELEASE " \
     -DEZHV_LINEAR_TO_TILE_EN=1 \
     -DMCUX_META_BUILD \
     -DMCUXPRESSO_SDK \
-    -DCPU_MIMXRT798SGFOA_ezhv \
+    -DCPU_MIMXRT798SGFOB_ezhv \
     -Os \
     -Wall \
     -MP \
@@ -57,6 +59,7 @@ SET(CMAKE_C_FLAGS_RELEASE " \
 ")
 SET(CMAKE_CXX_FLAGS_DEBUG " \
     ${CMAKE_CXX_FLAGS_DEBUG} \
+    -include ${ProjDirPath}/../mcux_config.h \
     -DMCUX_META_BUILD \
     -DMCUXPRESSO_SDK \
     -g \
@@ -76,6 +79,7 @@ SET(CMAKE_CXX_FLAGS_DEBUG " \
 ")
 SET(CMAKE_CXX_FLAGS_RELEASE " \
     ${CMAKE_CXX_FLAGS_RELEASE} \
+    -include ${ProjDirPath}/../mcux_config.h \
     -DMCUX_META_BUILD \
     -DMCUXPRESSO_SDK \
     -Os \

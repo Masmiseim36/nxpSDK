@@ -130,7 +130,7 @@ void I2C6_SignalEvent_t(uint32_t event);
 void I2C7_SignalEvent_t(uint32_t event);
 #endif
 
-#ifdef CPU_MIMXRT798SGFOA_cm33_core0
+#if defined(MIMXRT798S_cm33_core0_SERIES)
 #if defined(I2C8)
 /*! @brief The I2C7 device index. */
 #define I2C8_INDEX 8

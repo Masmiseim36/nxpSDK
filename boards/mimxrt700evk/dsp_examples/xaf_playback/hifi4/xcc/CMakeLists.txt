@@ -26,6 +26,8 @@ project(dsp_xaf_playback_hifi4)
 
 set(MCUX_SDK_PROJECT_NAME dsp_xaf_playback_hifi4)
 
+SET(CMAKE_ASM_FLAGS_DEBUG "${CMAKE_ASM_FLAGS_DEBUG} -include ${ProjDirPath}/../mcux_config.h")
+
 SET(CMAKE_ASM_FLAGS_DEBUG "${CMAKE_ASM_FLAGS_DEBUG} -DDEBUG")
 
 SET(CMAKE_ASM_FLAGS_DEBUG "${CMAKE_ASM_FLAGS_DEBUG} -DMCUXPRESSO_SDK")
@@ -35,6 +37,8 @@ SET(CMAKE_ASM_FLAGS_DEBUG "${CMAKE_ASM_FLAGS_DEBUG} -g")
 SET(CMAKE_ASM_FLAGS_DEBUG "${CMAKE_ASM_FLAGS_DEBUG} --xtensa-core=rt700_hifi4_RI23_11_nlib")
 
 SET(CMAKE_ASM_FLAGS_DEBUG "${CMAKE_ASM_FLAGS_DEBUG} --xtensa-system=${XTENSA_SYSTEM}")
+
+SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -include ${ProjDirPath}/../mcux_config.h")
 
 SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -DNDEBUG")
 
@@ -49,6 +53,8 @@ SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -include ${ProjDirPath}/../mcux_
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DDEBUG")
 
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DXF_DEBUG=1")
+
+SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DCONFIGURE_MEM_ALLOC")
 
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DXA_MP3_DECODER=1")
 
@@ -90,7 +96,7 @@ SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DMCUX_META_BUILD")
 
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DMCUXPRESSO_SDK")
 
-SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DCPU_MIMXRT798SGFOA_hifi4")
+SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DCPU_MIMXRT798SGFOB_hifi4")
 
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DSERIAL_PORT_TYPE_UART=1")
 
@@ -127,6 +133,8 @@ SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -INLINE:requested")
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -include ${ProjDirPath}/../mcux_config.h")
 
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DNDEBUG")
+
+SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DCONFIGURE_MEM_ALLOC")
 
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DXA_MP3_DECODER=1")
 
@@ -168,7 +176,7 @@ SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DMCUX_META_BUILD")
 
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DMCUXPRESSO_SDK")
 
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DCPU_MIMXRT798SGFOA_hifi4")
+SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DCPU_MIMXRT798SGFOB_hifi4")
 
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DSERIAL_PORT_TYPE_UART=1")
 
@@ -200,6 +208,8 @@ SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -mlongcalls")
 
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -INLINE:requested")
 
+SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -include ${ProjDirPath}/../mcux_config.h")
+
 SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DDEBUG")
 
 SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DSDK_DEBUGCONSOLE=1")
@@ -208,7 +218,7 @@ SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DMCUX_META_BUILD")
 
 SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DMCUXPRESSO_SDK")
 
-SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DCPU_MIMXRT798SGFOA_hifi4")
+SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DCPU_MIMXRT798SGFOB_hifi4")
 
 SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DSERIAL_PORT_TYPE_UART=1")
 
@@ -232,6 +242,8 @@ SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} --xtensa-core=rt700_hifi4_RI
 
 SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} --xtensa-system=${XTENSA_SYSTEM}")
 
+SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -include ${ProjDirPath}/../mcux_config.h")
+
 SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -DNDEBUG")
 
 SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -DSDK_DEBUGCONSOLE=1")
@@ -240,7 +252,7 @@ SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -DMCUX_META_BUILD")
 
 SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -DMCUXPRESSO_SDK")
 
-SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -DCPU_MIMXRT798SGFOA_hifi4")
+SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -DCPU_MIMXRT798SGFOB_hifi4")
 
 SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -DSERIAL_PORT_TYPE_UART=1")
 
@@ -302,31 +314,23 @@ include_directories(${ProjDirPath}/../../../../../../middleware/multicore/rpmsg-
 
 include_directories(${ProjDirPath}/../../../../../../middleware/multicore/rpmsg-lite/lib/include/platform/imxrt700_hifi4)
 
-include_directories(${ProjDirPath}/../../../../../../middleware/cadence/codecs/aacplus_dec/hifi4/include/aac_dec)
-
-include_directories(${ProjDirPath}/../../../../../../middleware/cadence/codecs/asrc_src_pp/hifi4/include/src_pp)
-
-include_directories(${ProjDirPath}/../../../../../../middleware/cadence/codecs/bsac/hifi4/include/aac_dec)
-
-include_directories(${ProjDirPath}/../../../../../../middleware/cadence/codecs/dabplus/hifi4/include/aac_dec)
-
-include_directories(${ProjDirPath}/../../../../../../middleware/cadence/codecs/drm/hifi4/include/drm_dec)
-
-include_directories(${ProjDirPath}/../../../../../../middleware/cadence/codecs/g711/hifi4/include/g711_codec)
-
-include_directories(${ProjDirPath}/../../../../../../middleware/cadence/codecs/g722/hifi4/include/g722_codec)
-
-include_directories(${ProjDirPath}/../../../../../../middleware/cadence/codecs/mp3_dec/hifi4/include/mp3_dec)
-
-include_directories(${ProjDirPath}/../../../../../../middleware/cadence/codecs/opus/hifi4/include/opus_codec)
-
-include_directories(${ProjDirPath}/../../../../../../middleware/cadence/codecs/opus/hifi4/include/ogg_lib)
+include_directories(${ProjDirPath}/../../../../../../middleware/cadence/codecs/include)
 
 include_directories(${ProjDirPath}/../../../../../../middleware/cadence/codecs/sbc_dec/hifi4/include/sbc_dec)
 
 include_directories(${ProjDirPath}/../../../../../../middleware/cadence/codecs/sbc_enc/hifi4/include/sbc_enc)
 
-include_directories(${ProjDirPath}/../../../../../../middleware/cadence/codecs/vorbis_dec/hifi4/include/vorbis_dec)
+include_directories(${ProjDirPath}/../../../../../../middleware/cadence/codecs/aacplus_dec/include/aac_dec)
+
+include_directories(${ProjDirPath}/../../../../../../middleware/cadence/codecs/asrc_src_pp/include/src_pp)
+
+include_directories(${ProjDirPath}/../../../../../../middleware/cadence/codecs/mp3_dec/include/mp3_dec)
+
+include_directories(${ProjDirPath}/../../../../../../middleware/cadence/codecs/opus/include/opus_codec)
+
+include_directories(${ProjDirPath}/../../../../../../middleware/cadence/codecs/opus/include/ogg_lib)
+
+include_directories(${ProjDirPath}/../../../../../../middleware/cadence/codecs/vorbis_dec/include/vorbis_dec)
 
 include_directories(${ProjDirPath}/../../../../../../middleware/cadence/multicore-xaf/xa_af_hostless/algo/hifi-dpf/include)
 
@@ -388,31 +392,23 @@ include_directories(${ProjDirPath}/../../../../../../middleware/multicore/rpmsg-
 
 include_directories(${ProjDirPath}/../../../../../../middleware/multicore/rpmsg-lite/lib/include/platform/imxrt700_hifi4)
 
-include_directories(${ProjDirPath}/../../../../../../middleware/cadence/codecs/aacplus_dec/hifi4/include/aac_dec)
-
-include_directories(${ProjDirPath}/../../../../../../middleware/cadence/codecs/asrc_src_pp/hifi4/include/src_pp)
-
-include_directories(${ProjDirPath}/../../../../../../middleware/cadence/codecs/bsac/hifi4/include/aac_dec)
-
-include_directories(${ProjDirPath}/../../../../../../middleware/cadence/codecs/dabplus/hifi4/include/aac_dec)
-
-include_directories(${ProjDirPath}/../../../../../../middleware/cadence/codecs/drm/hifi4/include/drm_dec)
-
-include_directories(${ProjDirPath}/../../../../../../middleware/cadence/codecs/g711/hifi4/include/g711_codec)
-
-include_directories(${ProjDirPath}/../../../../../../middleware/cadence/codecs/g722/hifi4/include/g722_codec)
-
-include_directories(${ProjDirPath}/../../../../../../middleware/cadence/codecs/mp3_dec/hifi4/include/mp3_dec)
-
-include_directories(${ProjDirPath}/../../../../../../middleware/cadence/codecs/opus/hifi4/include/opus_codec)
-
-include_directories(${ProjDirPath}/../../../../../../middleware/cadence/codecs/opus/hifi4/include/ogg_lib)
+include_directories(${ProjDirPath}/../../../../../../middleware/cadence/codecs/include)
 
 include_directories(${ProjDirPath}/../../../../../../middleware/cadence/codecs/sbc_dec/hifi4/include/sbc_dec)
 
 include_directories(${ProjDirPath}/../../../../../../middleware/cadence/codecs/sbc_enc/hifi4/include/sbc_enc)
 
-include_directories(${ProjDirPath}/../../../../../../middleware/cadence/codecs/vorbis_dec/hifi4/include/vorbis_dec)
+include_directories(${ProjDirPath}/../../../../../../middleware/cadence/codecs/aacplus_dec/include/aac_dec)
+
+include_directories(${ProjDirPath}/../../../../../../middleware/cadence/codecs/asrc_src_pp/include/src_pp)
+
+include_directories(${ProjDirPath}/../../../../../../middleware/cadence/codecs/mp3_dec/include/mp3_dec)
+
+include_directories(${ProjDirPath}/../../../../../../middleware/cadence/codecs/opus/include/opus_codec)
+
+include_directories(${ProjDirPath}/../../../../../../middleware/cadence/codecs/opus/include/ogg_lib)
+
+include_directories(${ProjDirPath}/../../../../../../middleware/cadence/codecs/vorbis_dec/include/vorbis_dec)
 
 include_directories(${ProjDirPath}/../../../../../../middleware/cadence/multicore-xaf/xa_af_hostless/algo/hifi-dpf/include)
 
@@ -472,31 +468,23 @@ include_directories(${ProjDirPath}/../../../../../../middleware/multicore/rpmsg-
 
 include_directories(${ProjDirPath}/../../../../../../middleware/multicore/rpmsg-lite/lib/include/platform/imxrt700_hifi4)
 
-include_directories(${ProjDirPath}/../../../../../../middleware/cadence/codecs/aacplus_dec/hifi4/include/aac_dec)
-
-include_directories(${ProjDirPath}/../../../../../../middleware/cadence/codecs/asrc_src_pp/hifi4/include/src_pp)
-
-include_directories(${ProjDirPath}/../../../../../../middleware/cadence/codecs/bsac/hifi4/include/aac_dec)
-
-include_directories(${ProjDirPath}/../../../../../../middleware/cadence/codecs/dabplus/hifi4/include/aac_dec)
-
-include_directories(${ProjDirPath}/../../../../../../middleware/cadence/codecs/drm/hifi4/include/drm_dec)
-
-include_directories(${ProjDirPath}/../../../../../../middleware/cadence/codecs/g711/hifi4/include/g711_codec)
-
-include_directories(${ProjDirPath}/../../../../../../middleware/cadence/codecs/g722/hifi4/include/g722_codec)
-
-include_directories(${ProjDirPath}/../../../../../../middleware/cadence/codecs/mp3_dec/hifi4/include/mp3_dec)
-
-include_directories(${ProjDirPath}/../../../../../../middleware/cadence/codecs/opus/hifi4/include/opus_codec)
-
-include_directories(${ProjDirPath}/../../../../../../middleware/cadence/codecs/opus/hifi4/include/ogg_lib)
+include_directories(${ProjDirPath}/../../../../../../middleware/cadence/codecs/include)
 
 include_directories(${ProjDirPath}/../../../../../../middleware/cadence/codecs/sbc_dec/hifi4/include/sbc_dec)
 
 include_directories(${ProjDirPath}/../../../../../../middleware/cadence/codecs/sbc_enc/hifi4/include/sbc_enc)
 
-include_directories(${ProjDirPath}/../../../../../../middleware/cadence/codecs/vorbis_dec/hifi4/include/vorbis_dec)
+include_directories(${ProjDirPath}/../../../../../../middleware/cadence/codecs/aacplus_dec/include/aac_dec)
+
+include_directories(${ProjDirPath}/../../../../../../middleware/cadence/codecs/asrc_src_pp/include/src_pp)
+
+include_directories(${ProjDirPath}/../../../../../../middleware/cadence/codecs/mp3_dec/include/mp3_dec)
+
+include_directories(${ProjDirPath}/../../../../../../middleware/cadence/codecs/opus/include/opus_codec)
+
+include_directories(${ProjDirPath}/../../../../../../middleware/cadence/codecs/opus/include/ogg_lib)
+
+include_directories(${ProjDirPath}/../../../../../../middleware/cadence/codecs/vorbis_dec/include/vorbis_dec)
 
 include_directories(${ProjDirPath}/../../../../../../middleware/cadence/multicore-xaf/xa_af_hostless/algo/hifi-dpf/include)
 
@@ -718,16 +706,14 @@ add_executable(dsp_xaf_playback_hifi4.elf
 "${ProjDirPath}/../../../../../../middleware/multicore/rpmsg-lite/lib/rpmsg_lite/porting/environment/rpmsg_env_xos.c"
 "${ProjDirPath}/../../../../../../middleware/multicore/rpmsg-lite/lib/include/platform/imxrt700_hifi4/rpmsg_platform.h"
 "${ProjDirPath}/../../../../../../middleware/multicore/rpmsg-lite/lib/rpmsg_lite/porting/platform/imxrt700_hifi4/rpmsg_platform.c"
-"${ProjDirPath}/../../../../../../middleware/cadence/codecs/lc3/hifi4/include/xa_error_handler.h"
-"${ProjDirPath}/../../../../../../middleware/cadence/codecs/lc3/hifi4/include/xa_error_standards.h"
-"${ProjDirPath}/../../../../../../middleware/cadence/codecs/lc3/hifi4/include/xa_type_def.h"
-"${ProjDirPath}/../../../../../../middleware/cadence/codecs/lc3/hifi4/include/lc3_codec/xa_lc3_codec_api.h"
-"${ProjDirPath}/../../../../../../middleware/cadence/codecs/mp3_enc/hifi4/include/xa_apicmd_standards.h"
-"${ProjDirPath}/../../../../../../middleware/cadence/codecs/mp3_enc/hifi4/include/xa_error_handler.h"
-"${ProjDirPath}/../../../../../../middleware/cadence/codecs/mp3_enc/hifi4/include/xa_error_standards.h"
-"${ProjDirPath}/../../../../../../middleware/cadence/codecs/mp3_enc/hifi4/include/xa_memory_standards.h"
-"${ProjDirPath}/../../../../../../middleware/cadence/codecs/mp3_enc/hifi4/include/xa_type_def.h"
-"${ProjDirPath}/../../../../../../middleware/cadence/codecs/mp3_enc/hifi4/include/mp3_enc/xa_mp3_enc_api.h"
+"${ProjDirPath}/../../../../../../middleware/cadence/codecs/include/xa_api_defs.h"
+"${ProjDirPath}/../../../../../../middleware/cadence/codecs/include/xa_apicmd_standards.h"
+"${ProjDirPath}/../../../../../../middleware/cadence/codecs/include/xa_error_handler.h"
+"${ProjDirPath}/../../../../../../middleware/cadence/codecs/include/xa_error_standards.h"
+"${ProjDirPath}/../../../../../../middleware/cadence/codecs/include/xa_memory_standards.h"
+"${ProjDirPath}/../../../../../../middleware/cadence/codecs/include/xa_type_def.h"
+"${ProjDirPath}/../../../../../../middleware/cadence/codecs/sbc_dec/hifi4/include/sbc_dec/xa_sbc_dec_api.h"
+"${ProjDirPath}/../../../../../../middleware/cadence/codecs/sbc_enc/hifi4/include/sbc_enc/xa_sbc_enc_api.h"
 "${ProjDirPath}/../../../../../../middleware/cadence/multicore-xaf/xa_af_hostless/algo/hifi-dpf/src/rbtree.c"
 "${ProjDirPath}/../../../../../../middleware/cadence/multicore-xaf/xa_af_hostless/algo/hifi-dpf/src/xa-class-audio-codec.c"
 "${ProjDirPath}/../../../../../../middleware/cadence/multicore-xaf/xa_af_hostless/algo/hifi-dpf/src/xa-class-base.c"
@@ -876,121 +862,49 @@ target_link_libraries(dsp_xaf_playback_hifi4.elf debug xos)
 target_link_libraries(dsp_xaf_playback_hifi4.elf optimized xos)
 
 
-target_link_libraries(dsp_xaf_playback_hifi4.elf debug ${ProjDirPath}/../../../../../../middleware/cadence/codecs/aacplus_dec/hifi4/lib/xa_aacplus_v2_loas_dec.a)
-
-
-target_link_libraries(dsp_xaf_playback_hifi4.elf debug ${ProjDirPath}/../../../../../../middleware/cadence/codecs/asrc_src_pp/hifi4/lib/xa_asrc_src_pp.a)
-
-
-target_link_libraries(dsp_xaf_playback_hifi4.elf debug ${ProjDirPath}/../../../../../../middleware/cadence/codecs/bsac/hifi4/lib/xa_bsac_dec.a)
-
-
-target_link_libraries(dsp_xaf_playback_hifi4.elf debug ${ProjDirPath}/../../../../../../middleware/cadence/codecs/dabplus/hifi4/lib/xa_dabplus_dec.a)
-
-
-target_link_libraries(dsp_xaf_playback_hifi4.elf debug ${ProjDirPath}/../../../../../../middleware/cadence/codecs/drm/hifi4/lib/xa_drm_dec.a)
-
-
-target_link_libraries(dsp_xaf_playback_hifi4.elf debug ${ProjDirPath}/../../../../../../middleware/cadence/codecs/g711/hifi4/lib/xa_g711_codec.a)
-
-
-target_link_libraries(dsp_xaf_playback_hifi4.elf debug ${ProjDirPath}/../../../../../../middleware/cadence/codecs/g722/hifi4/lib/xa_g722_codec.a)
-
-
-target_link_libraries(dsp_xaf_playback_hifi4.elf debug ${ProjDirPath}/../../../../../../middleware/cadence/codecs/mp3_dec/hifi4/lib/xa_mp3_dec.a)
-
-
-target_link_libraries(dsp_xaf_playback_hifi4.elf debug ${ProjDirPath}/../../../../../../middleware/cadence/codecs/opus/hifi4/lib/xa_opus_codec.a)
-
-
-target_link_libraries(dsp_xaf_playback_hifi4.elf debug ${ProjDirPath}/../../../../../../middleware/cadence/codecs/opus/hifi4/lib/xa_opus_dec.a)
-
-
-target_link_libraries(dsp_xaf_playback_hifi4.elf debug ${ProjDirPath}/../../../../../../middleware/cadence/codecs/opus/hifi4/lib/xa_opus_enc.a)
-
-
-target_link_libraries(dsp_xaf_playback_hifi4.elf debug ${ProjDirPath}/../../../../../../middleware/cadence/codecs/opus/hifi4/lib/silk/xa_opus_silk_codec.a)
-
-
-target_link_libraries(dsp_xaf_playback_hifi4.elf debug ${ProjDirPath}/../../../../../../middleware/cadence/codecs/opus/hifi4/lib/silk/xa_opus_silk_dec.a)
-
-
-target_link_libraries(dsp_xaf_playback_hifi4.elf debug ${ProjDirPath}/../../../../../../middleware/cadence/codecs/opus/hifi4/lib/silk/xa_opus_silk_enc.a)
-
-
-target_link_libraries(dsp_xaf_playback_hifi4.elf debug ${ProjDirPath}/../../../../../../middleware/cadence/codecs/opus/hifi4/lib/celt/xa_opus_celt_codec.a)
-
-
-target_link_libraries(dsp_xaf_playback_hifi4.elf debug ${ProjDirPath}/../../../../../../middleware/cadence/codecs/opus/hifi4/lib/celt/xa_opus_celt_dec.a)
-
-
-target_link_libraries(dsp_xaf_playback_hifi4.elf debug ${ProjDirPath}/../../../../../../middleware/cadence/codecs/opus/hifi4/lib/celt/xa_opus_celt_enc.a)
-
-
 target_link_libraries(dsp_xaf_playback_hifi4.elf debug ${ProjDirPath}/../../../../../../middleware/cadence/codecs/sbc_dec/hifi4/lib/xa_sbc_dec.a)
 
 
 target_link_libraries(dsp_xaf_playback_hifi4.elf debug ${ProjDirPath}/../../../../../../middleware/cadence/codecs/sbc_enc/hifi4/lib/xa_sbc_enc.a)
 
 
-target_link_libraries(dsp_xaf_playback_hifi4.elf debug ${ProjDirPath}/../../../../../../middleware/cadence/codecs/vorbis_dec/hifi4/lib/xa_vorbis_dec.a)
+target_link_libraries(dsp_xaf_playback_hifi4.elf debug ${ProjDirPath}/../../../../../../middleware/cadence/codecs/aacplus_dec/lib/RT700_HiFi4/xa_aacplus_v2_loas_dec.a)
 
 
-target_link_libraries(dsp_xaf_playback_hifi4.elf debug ${ProjDirPath}/../../../../../../middleware/cadence/codecs/lc3/hifi4/lib/xa_lc3_codec.a)
+target_link_libraries(dsp_xaf_playback_hifi4.elf debug ${ProjDirPath}/../../../../../../middleware/cadence/codecs/asrc_src_pp/lib/RT700_HiFi4/xa_asrc_src_pp.a)
 
 
-target_link_libraries(dsp_xaf_playback_hifi4.elf debug ${ProjDirPath}/../../../../../../middleware/cadence/codecs/mp3_enc/hifi4/lib/xa_mp3_enc.a)
+target_link_libraries(dsp_xaf_playback_hifi4.elf debug ${ProjDirPath}/../../../../../../middleware/cadence/codecs/mp3_dec/lib/RT700_HiFi4/xa_mp3_dec.a)
 
 
-target_link_libraries(dsp_xaf_playback_hifi4.elf optimized ${ProjDirPath}/../../../../../../middleware/cadence/codecs/aacplus_dec/hifi4/lib/xa_aacplus_v2_loas_dec.a)
+target_link_libraries(dsp_xaf_playback_hifi4.elf debug ${ProjDirPath}/../../../../../../middleware/cadence/codecs/opus/lib/RT700_HiFi4/xa_opus_codec.a)
 
 
-target_link_libraries(dsp_xaf_playback_hifi4.elf optimized ${ProjDirPath}/../../../../../../middleware/cadence/codecs/asrc_src_pp/hifi4/lib/xa_asrc_src_pp.a)
+target_link_libraries(dsp_xaf_playback_hifi4.elf debug ${ProjDirPath}/../../../../../../middleware/cadence/codecs/opus/lib/RT700_HiFi4/xa_opus_dec.a)
 
 
-target_link_libraries(dsp_xaf_playback_hifi4.elf optimized ${ProjDirPath}/../../../../../../middleware/cadence/codecs/bsac/hifi4/lib/xa_bsac_dec.a)
+target_link_libraries(dsp_xaf_playback_hifi4.elf debug ${ProjDirPath}/../../../../../../middleware/cadence/codecs/opus/lib/RT700_HiFi4/xa_opus_enc.a)
 
 
-target_link_libraries(dsp_xaf_playback_hifi4.elf optimized ${ProjDirPath}/../../../../../../middleware/cadence/codecs/dabplus/hifi4/lib/xa_dabplus_dec.a)
+target_link_libraries(dsp_xaf_playback_hifi4.elf debug ${ProjDirPath}/../../../../../../middleware/cadence/codecs/opus/lib/RT700_HiFi4/silk/xa_opus_silk_codec.a)
 
 
-target_link_libraries(dsp_xaf_playback_hifi4.elf optimized ${ProjDirPath}/../../../../../../middleware/cadence/codecs/drm/hifi4/lib/xa_drm_dec.a)
+target_link_libraries(dsp_xaf_playback_hifi4.elf debug ${ProjDirPath}/../../../../../../middleware/cadence/codecs/opus/lib/RT700_HiFi4/silk/xa_opus_silk_dec.a)
 
 
-target_link_libraries(dsp_xaf_playback_hifi4.elf optimized ${ProjDirPath}/../../../../../../middleware/cadence/codecs/g711/hifi4/lib/xa_g711_codec.a)
+target_link_libraries(dsp_xaf_playback_hifi4.elf debug ${ProjDirPath}/../../../../../../middleware/cadence/codecs/opus/lib/RT700_HiFi4/silk/xa_opus_silk_enc.a)
 
 
-target_link_libraries(dsp_xaf_playback_hifi4.elf optimized ${ProjDirPath}/../../../../../../middleware/cadence/codecs/g722/hifi4/lib/xa_g722_codec.a)
+target_link_libraries(dsp_xaf_playback_hifi4.elf debug ${ProjDirPath}/../../../../../../middleware/cadence/codecs/opus/lib/RT700_HiFi4/celt/xa_opus_celt_codec.a)
 
 
-target_link_libraries(dsp_xaf_playback_hifi4.elf optimized ${ProjDirPath}/../../../../../../middleware/cadence/codecs/mp3_dec/hifi4/lib/xa_mp3_dec.a)
+target_link_libraries(dsp_xaf_playback_hifi4.elf debug ${ProjDirPath}/../../../../../../middleware/cadence/codecs/opus/lib/RT700_HiFi4/celt/xa_opus_celt_dec.a)
 
 
-target_link_libraries(dsp_xaf_playback_hifi4.elf optimized ${ProjDirPath}/../../../../../../middleware/cadence/codecs/opus/hifi4/lib/xa_opus_codec.a)
+target_link_libraries(dsp_xaf_playback_hifi4.elf debug ${ProjDirPath}/../../../../../../middleware/cadence/codecs/opus/lib/RT700_HiFi4/celt/xa_opus_celt_enc.a)
 
 
-target_link_libraries(dsp_xaf_playback_hifi4.elf optimized ${ProjDirPath}/../../../../../../middleware/cadence/codecs/opus/hifi4/lib/xa_opus_dec.a)
-
-
-target_link_libraries(dsp_xaf_playback_hifi4.elf optimized ${ProjDirPath}/../../../../../../middleware/cadence/codecs/opus/hifi4/lib/xa_opus_enc.a)
-
-
-target_link_libraries(dsp_xaf_playback_hifi4.elf optimized ${ProjDirPath}/../../../../../../middleware/cadence/codecs/opus/hifi4/lib/silk/xa_opus_silk_codec.a)
-
-
-target_link_libraries(dsp_xaf_playback_hifi4.elf optimized ${ProjDirPath}/../../../../../../middleware/cadence/codecs/opus/hifi4/lib/silk/xa_opus_silk_dec.a)
-
-
-target_link_libraries(dsp_xaf_playback_hifi4.elf optimized ${ProjDirPath}/../../../../../../middleware/cadence/codecs/opus/hifi4/lib/silk/xa_opus_silk_enc.a)
-
-
-target_link_libraries(dsp_xaf_playback_hifi4.elf optimized ${ProjDirPath}/../../../../../../middleware/cadence/codecs/opus/hifi4/lib/celt/xa_opus_celt_codec.a)
-
-
-target_link_libraries(dsp_xaf_playback_hifi4.elf optimized ${ProjDirPath}/../../../../../../middleware/cadence/codecs/opus/hifi4/lib/celt/xa_opus_celt_dec.a)
-
-
-target_link_libraries(dsp_xaf_playback_hifi4.elf optimized ${ProjDirPath}/../../../../../../middleware/cadence/codecs/opus/hifi4/lib/celt/xa_opus_celt_enc.a)
+target_link_libraries(dsp_xaf_playback_hifi4.elf debug ${ProjDirPath}/../../../../../../middleware/cadence/codecs/vorbis_dec/lib/RT700_HiFi4/xa_vorbis_dec.a)
 
 
 target_link_libraries(dsp_xaf_playback_hifi4.elf optimized ${ProjDirPath}/../../../../../../middleware/cadence/codecs/sbc_dec/hifi4/lib/xa_sbc_dec.a)
@@ -999,13 +913,43 @@ target_link_libraries(dsp_xaf_playback_hifi4.elf optimized ${ProjDirPath}/../../
 target_link_libraries(dsp_xaf_playback_hifi4.elf optimized ${ProjDirPath}/../../../../../../middleware/cadence/codecs/sbc_enc/hifi4/lib/xa_sbc_enc.a)
 
 
-target_link_libraries(dsp_xaf_playback_hifi4.elf optimized ${ProjDirPath}/../../../../../../middleware/cadence/codecs/vorbis_dec/hifi4/lib/xa_vorbis_dec.a)
+target_link_libraries(dsp_xaf_playback_hifi4.elf optimized ${ProjDirPath}/../../../../../../middleware/cadence/codecs/aacplus_dec/lib/RT700_HiFi4/xa_aacplus_v2_loas_dec.a)
 
 
-target_link_libraries(dsp_xaf_playback_hifi4.elf optimized ${ProjDirPath}/../../../../../../middleware/cadence/codecs/lc3/hifi4/lib/xa_lc3_codec.a)
+target_link_libraries(dsp_xaf_playback_hifi4.elf optimized ${ProjDirPath}/../../../../../../middleware/cadence/codecs/asrc_src_pp/lib/RT700_HiFi4/xa_asrc_src_pp.a)
 
 
-target_link_libraries(dsp_xaf_playback_hifi4.elf optimized ${ProjDirPath}/../../../../../../middleware/cadence/codecs/mp3_enc/hifi4/lib/xa_mp3_enc.a)
+target_link_libraries(dsp_xaf_playback_hifi4.elf optimized ${ProjDirPath}/../../../../../../middleware/cadence/codecs/mp3_dec/lib/RT700_HiFi4/xa_mp3_dec.a)
+
+
+target_link_libraries(dsp_xaf_playback_hifi4.elf optimized ${ProjDirPath}/../../../../../../middleware/cadence/codecs/opus/lib/RT700_HiFi4/xa_opus_codec.a)
+
+
+target_link_libraries(dsp_xaf_playback_hifi4.elf optimized ${ProjDirPath}/../../../../../../middleware/cadence/codecs/opus/lib/RT700_HiFi4/xa_opus_dec.a)
+
+
+target_link_libraries(dsp_xaf_playback_hifi4.elf optimized ${ProjDirPath}/../../../../../../middleware/cadence/codecs/opus/lib/RT700_HiFi4/xa_opus_enc.a)
+
+
+target_link_libraries(dsp_xaf_playback_hifi4.elf optimized ${ProjDirPath}/../../../../../../middleware/cadence/codecs/opus/lib/RT700_HiFi4/silk/xa_opus_silk_codec.a)
+
+
+target_link_libraries(dsp_xaf_playback_hifi4.elf optimized ${ProjDirPath}/../../../../../../middleware/cadence/codecs/opus/lib/RT700_HiFi4/silk/xa_opus_silk_dec.a)
+
+
+target_link_libraries(dsp_xaf_playback_hifi4.elf optimized ${ProjDirPath}/../../../../../../middleware/cadence/codecs/opus/lib/RT700_HiFi4/silk/xa_opus_silk_enc.a)
+
+
+target_link_libraries(dsp_xaf_playback_hifi4.elf optimized ${ProjDirPath}/../../../../../../middleware/cadence/codecs/opus/lib/RT700_HiFi4/celt/xa_opus_celt_codec.a)
+
+
+target_link_libraries(dsp_xaf_playback_hifi4.elf optimized ${ProjDirPath}/../../../../../../middleware/cadence/codecs/opus/lib/RT700_HiFi4/celt/xa_opus_celt_dec.a)
+
+
+target_link_libraries(dsp_xaf_playback_hifi4.elf optimized ${ProjDirPath}/../../../../../../middleware/cadence/codecs/opus/lib/RT700_HiFi4/celt/xa_opus_celt_enc.a)
+
+
+target_link_libraries(dsp_xaf_playback_hifi4.elf optimized ${ProjDirPath}/../../../../../../middleware/cadence/codecs/vorbis_dec/lib/RT700_HiFi4/xa_vorbis_dec.a)
 
 TARGET_LINK_LIBRARIES(dsp_xaf_playback_hifi4.elf -Wl,--end-group)
 
@@ -1013,6 +957,7 @@ add_custom_command(TARGET dsp_xaf_playback_hifi4.elf POST_BUILD
 COMMAND ${CMAKE_OBJCOPY} --xtensa-params= -Obinary ${ProjDirPath}/${CMAKE_BUILD_TYPE}/${MCUX_SDK_PROJECT_NAME}.elf ${CMAKE_CURRENT_LIST_DIR}/../binary/dsp_literal_${CMAKE_BUILD_TYPE}.bin --xtensa-core=rt700_hifi4_RI23_11_nlib --xtensa-system=${XTENSA_SYSTEM} --only-section=.Level3InterruptVector.literal --only-section=.DebugExceptionVector.literal --only-section=.NMIExceptionVector.literal --only-section=.UserExceptionVector.literal
 COMMAND ${CMAKE_OBJCOPY} --xtensa-params= -Obinary ${ProjDirPath}/${CMAKE_BUILD_TYPE}/${MCUX_SDK_PROJECT_NAME}.elf ${CMAKE_CURRENT_LIST_DIR}/../binary/dsp_text_${CMAKE_BUILD_TYPE}.bin --xtensa-core=rt700_hifi4_RI23_11_nlib --xtensa-system=${XTENSA_SYSTEM} --only-section=.ResetVector.text --only-section=.WindowVectors.text --only-section=.Level2InterruptVector.text --only-section=.Level3InterruptVector.text --only-section=.DebugExceptionVector.text --only-section=.NMIExceptionVector.text --only-section=.KernelExceptionVector.text --only-section=.UserExceptionVector.text --only-section=.DoubleExceptionVector.text
 COMMAND ${CMAKE_OBJCOPY} --xtensa-params= -Obinary ${ProjDirPath}/${CMAKE_BUILD_TYPE}/${MCUX_SDK_PROJECT_NAME}.elf ${CMAKE_CURRENT_LIST_DIR}/../binary/dsp_data_${CMAKE_BUILD_TYPE}.bin --xtensa-core=rt700_hifi4_RI23_11_nlib --xtensa-system=${XTENSA_SYSTEM} --only-section=.clib.rodata --only-section=.rtos.rodata --only-section=.rodata --only-section=.text --only-section=.clib.data --only-section=.rtos.percpu.data --only-section=.data --only-section=.bss
+COMMAND ${CMAKE_OBJCOPY} --xtensa-params= -Obinary ${ProjDirPath}/${CMAKE_BUILD_TYPE}/${MCUX_SDK_PROJECT_NAME}.elf ${CMAKE_CURRENT_LIST_DIR}/../binary/dsp_ncache_${CMAKE_BUILD_TYPE}.bin --xtensa-core=rt700_hifi4_RI23_11_nlib --xtensa-system=${XTENSA_SYSTEM} --only-section=NonCacheable
 COMMAND ${CMAKE_OBJCOPY} --xtensa-params= -Obinary ${ProjDirPath}/${CMAKE_BUILD_TYPE}/${MCUX_SDK_PROJECT_NAME}.elf ${ProjDirPath}/${CMAKE_BUILD_TYPE}/${MCUX_SDK_PROJECT_NAME}.bin
 )
 

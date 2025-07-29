@@ -8,7 +8,7 @@
     <definition extID="device.MIMXRT798S_system.MIMXRT798S"/>
     <definition extID="device.MIMXRT798S_startup.MIMXRT798S"/>
     <definition extID="platform.drivers.clock.MIMXRT798S"/>
-    <definition extID="driver.edma_soc.MIMXRT798S"/>
+    <definition extID="platform.drivers.edma_soc.MIMXRT798S"/>
     <definition extID="platform.drivers.lpc_iopctl.MIMXRT798S"/>
     <definition extID="platform.drivers.soc_mipi_dsi.MIMXRT798S"/>
     <definition extID="platform.drivers.power.MIMXRT798S"/>
@@ -33,6 +33,7 @@
     <definition extID="utility.str.MIMXRT798S"/>
     <definition extID="utility.debug_console_lite.MIMXRT798S"/>
     <definition extID="component.lpuart_adapter.MIMXRT798S"/>
+    <definition extID="driver.pca9422.MIMXRT798S"/>
     <definition extID="driver.video-common.MIMXRT798S"/>
     <definition extID="driver.dc-fb-common.MIMXRT798S"/>
     <definition extID="driver.display-common.MIMXRT798S"/>
@@ -55,6 +56,7 @@
     <definition extID="middleware.freertos-kernel.MIMXRT798S"/>
     <definition extID="middleware.freertos-kernel.heap_4.MIMXRT798S"/>
     <definition extID="middleware.freertos-kernel.cm33_non_trustzone.MIMXRT798S"/>
+    <definition extID="middleware.freertos-kernel.extension.MIMXRT798S"/>
     <definition extID="middleware.freertos-kernel.config.MIMXRT798S"/>
     <definition extID="iar"/>
     <definition extID="mdk"/>
@@ -64,7 +66,7 @@
     <definition extID="com.crt.advproject.config.exe.debug"/>
     <definition extID="com.crt.advproject.config.exe.release"/>
   </externalDefinitions>
-  <example id="mimxrt700evk_tiled_freertos_cm33_core0" name="tiled_freertos_cm33_core0" device_core="cm33_core0_MIMXRT798S" dependency="platform.drivers.flash_config.mimxrt700evk.MIMXRT798S CMSIS_Include_core_cm.MIMXRT798S device.MIMXRT798S_CMSIS.MIMXRT798S device.MIMXRT798S_system.MIMXRT798S device.MIMXRT798S_startup.MIMXRT798S platform.drivers.clock.MIMXRT798S driver.edma_soc.MIMXRT798S platform.drivers.lpc_iopctl.MIMXRT798S platform.drivers.soc_mipi_dsi.MIMXRT798S platform.drivers.power.MIMXRT798S platform.drivers.reset.MIMXRT798S platform.drivers.cache_xcache.MIMXRT798S platform.drivers.common.MIMXRT798S platform.drivers.edma4.MIMXRT798S platform.drivers.flexio.MIMXRT798S platform.drivers.flexio_mculcd_edma.MIMXRT798S platform.drivers.flexio_mculcd.MIMXRT798S platform.drivers.glikey.MIMXRT798S platform.drivers.gpio.MIMXRT798S platform.drivers.lcdif.MIMXRT798S platform.drivers.lpflexcomm.MIMXRT798S platform.drivers.lpflexcomm_lpuart.MIMXRT798S platform.drivers.lpflexcomm_lpi2c.MIMXRT798S platform.drivers.lpflexcomm_lpi2c_edma.MIMXRT798S platform.drivers.mipi_dsi.MIMXRT798S platform.drivers.xspi.MIMXRT798S platform.utilities.assert_lite.MIMXRT798S platform.utilities.misc_utilities.MIMXRT798S utility.str.MIMXRT798S utility.debug_console_lite.MIMXRT798S component.lpuart_adapter.MIMXRT798S driver.video-common.MIMXRT798S driver.dc-fb-common.MIMXRT798S driver.display-common.MIMXRT798S driver.fbdev.MIMXRT798S driver.dbi.MIMXRT798S driver.dbi_flexio_edma.MIMXRT798S driver.dbi_lcdif.MIMXRT798S driver.dc-fb-dsi-cmd.MIMXRT798S driver.dc-fb-lcdif.MIMXRT798S driver.dc-fb-dbi.MIMXRT798S driver.display-mipi-dsi-cmd.MIMXRT798S driver.display-hx8394.MIMXRT798S driver.display-rm68191.MIMXRT798S driver.display-rm68200.MIMXRT798S driver.display-rm67162.MIMXRT798S driver.display-co5300.MIMXRT798S driver.display-rpi.MIMXRT798S driver.ssd1963.MIMXRT798S middleware.vglite.MIMXRT798S middleware.freertos-kernel.MIMXRT798S middleware.freertos-kernel.heap_4.MIMXRT798S middleware.freertos-kernel.cm33_non_trustzone.MIMXRT798S middleware.freertos-kernel.config.MIMXRT798S" category="vglite_examples">
+  <example id="mimxrt700evk_tiled_freertos_cm33_core0" name="tiled_freertos_cm33_core0" device_core="cm33_core0_MIMXRT798S" dependency="platform.drivers.flash_config.mimxrt700evk.MIMXRT798S CMSIS_Include_core_cm.MIMXRT798S device.MIMXRT798S_CMSIS.MIMXRT798S device.MIMXRT798S_system.MIMXRT798S device.MIMXRT798S_startup.MIMXRT798S platform.drivers.clock.MIMXRT798S platform.drivers.edma_soc.MIMXRT798S platform.drivers.lpc_iopctl.MIMXRT798S platform.drivers.soc_mipi_dsi.MIMXRT798S platform.drivers.power.MIMXRT798S platform.drivers.reset.MIMXRT798S platform.drivers.cache_xcache.MIMXRT798S platform.drivers.common.MIMXRT798S platform.drivers.edma4.MIMXRT798S platform.drivers.flexio.MIMXRT798S platform.drivers.flexio_mculcd_edma.MIMXRT798S platform.drivers.flexio_mculcd.MIMXRT798S platform.drivers.glikey.MIMXRT798S platform.drivers.gpio.MIMXRT798S platform.drivers.lcdif.MIMXRT798S platform.drivers.lpflexcomm.MIMXRT798S platform.drivers.lpflexcomm_lpuart.MIMXRT798S platform.drivers.lpflexcomm_lpi2c.MIMXRT798S platform.drivers.lpflexcomm_lpi2c_edma.MIMXRT798S platform.drivers.mipi_dsi.MIMXRT798S platform.drivers.xspi.MIMXRT798S platform.utilities.assert_lite.MIMXRT798S platform.utilities.misc_utilities.MIMXRT798S utility.str.MIMXRT798S utility.debug_console_lite.MIMXRT798S component.lpuart_adapter.MIMXRT798S driver.pca9422.MIMXRT798S driver.video-common.MIMXRT798S driver.dc-fb-common.MIMXRT798S driver.display-common.MIMXRT798S driver.fbdev.MIMXRT798S driver.dbi.MIMXRT798S driver.dbi_flexio_edma.MIMXRT798S driver.dbi_lcdif.MIMXRT798S driver.dc-fb-dsi-cmd.MIMXRT798S driver.dc-fb-lcdif.MIMXRT798S driver.dc-fb-dbi.MIMXRT798S driver.display-mipi-dsi-cmd.MIMXRT798S driver.display-hx8394.MIMXRT798S driver.display-rm68191.MIMXRT798S driver.display-rm68200.MIMXRT798S driver.display-rm67162.MIMXRT798S driver.display-co5300.MIMXRT798S driver.display-rpi.MIMXRT798S driver.ssd1963.MIMXRT798S middleware.vglite.MIMXRT798S middleware.freertos-kernel.MIMXRT798S middleware.freertos-kernel.heap_4.MIMXRT798S middleware.freertos-kernel.cm33_non_trustzone.MIMXRT798S middleware.freertos-kernel.extension.MIMXRT798S middleware.freertos-kernel.config.MIMXRT798S" category="vglite_examples">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -77,7 +79,7 @@
       <toolchainSetting id_refs="com.nxp.mcuxpresso">
         <option id="gnu.c.compiler.option.preprocessor.def.symbols" type="stringList">
           <value>MCUXPRESSO_SDK</value>
-          <value>CPU_MIMXRT798SGFOA_cm33_core0</value>
+          <value>CPU_MIMXRT798SGFOB_cm33_core0</value>
           <value>BOOT_HEADER_ENABLE=1</value>
           <value>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</value>
           <value>GCID_REV_CID=gc555/0x423_ECO</value>
@@ -89,6 +91,7 @@
           <value>SDK_DEBUGCONSOLE=1</value>
           <value>MCUX_META_BUILD</value>
           <value>BOARD_ENABLE_PSRAM_CACHE=0</value>
+          <value>MIMXRT798S_cm33_core0_SERIES</value>
           <value>SDK_OS_FREE_RTOS</value>
         </option>
         <option id="com.crt.advproject.gas.fpu" type="enum">
@@ -196,6 +199,7 @@
     </source>
     <source path="." project_relative_path="source" type="c_include">
       <files mask="FreeRTOSConfigBoard.h"/>
+      <files mask="pmic_support.h"/>
       <files mask="display_support.h"/>
     </source>
     <source path="iar" project_relative_path="MIMXRT798S/iar" type="linker" toolchain="iar">
@@ -229,6 +233,7 @@
       <files mask="app.h"/>
     </source>
     <source path="." project_relative_path="source" type="src">
+      <files mask="pmic_support.c"/>
       <files mask="display_support.c"/>
     </source>
     <source path="." project_relative_path="source" type="c_include" config="true">
@@ -242,6 +247,9 @@
     </source>
     <source path="." project_relative_path="doc" type="doc">
       <files mask="example_board_readme.md"/>
+    </source>
+    <source path="." project_relative_path="doc" type="doc">
+      <files mask="examples_shared_readme.md"/>
     </source>
   </example>
 </ksdk:examples>

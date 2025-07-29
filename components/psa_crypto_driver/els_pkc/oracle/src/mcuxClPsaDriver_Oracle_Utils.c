@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2023 NXP
+ * Copyright 2022-2023, 2025 NXP
  *
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -23,12 +23,14 @@
 #define PSA_CMD_TAG_KEY_TYPE            0x44U
 #define PSA_CMD_TAG_KEY_BITS            0x45U
 #define PSA_CMD_TAG_KEY_LIFETIME        0x46U
+#define PSA_CMD_TAG_KEY_LIFECYCLE       0x47U
 #define PSA_CMD_TAG_WRAPPING_KEY_ID     0x50U
 #define PSA_CMD_TAG_WRAPPING_ALGORITHM  0x51U
 #define PSA_CMD_TAG_IV                  0x52U
 #define PSA_CMD_TAG_SIGNATURE_KEY_ID    0x53U
 #define PSA_CMD_TAG_SIGNATURE_ALGORITHM 0x54U
 #define PSA_CMD_TAG_KEYIN_CMD           0x55U
+#define PSA_CMD_TAG_PROVISIONING_ID     0x56U
 #define PSA_CMD_TAG_SIGNATURE           0x5EU
 
 // Algorithms used in EL2GO blobs
@@ -265,6 +267,9 @@ static psa_status_t parse_psa_import_command(const uint8_t *data, size_t data_si
             case PSA_CMD_TAG_KEY_LIFETIME:
                 psa_set_key_lifetime(&psa_cmd->attributes, (psa_key_lifetime_t)get_uint32_val(cmd_ptr));
                 break;
+            case PSA_CMD_TAG_KEY_LIFECYCLE:
+                /* Nothing to do */
+                break;
             case PSA_CMD_TAG_WRAPPING_KEY_ID:
                 psa_cmd->wrapping_key_id = get_uint32_val(cmd_ptr);
                 break;
@@ -281,6 +286,9 @@ static psa_status_t parse_psa_import_command(const uint8_t *data, size_t data_si
             case PSA_CMD_TAG_SIGNATURE_ALGORITHM:
                 psa_cmd->signature_algorithm = get_uint32_val(cmd_ptr);
                 break;
+            case PSA_CMD_TAG_PROVISIONING_ID:
+                /* Nothing to do */
+                break;
             case PSA_CMD_TAG_KEYIN_CMD:
                 psa_cmd->keyincmd      = cmd_ptr;
                 psa_cmd->keyincmd_size = cmd_len;
@@ -290,7 +298,7 @@ static psa_status_t parse_psa_import_command(const uint8_t *data, size_t data_si
                 psa_cmd->signature_size = cmd_len;
                 break;
             default:
-                PSA_DRIVER_ERROR("Unknown tag: 0x%x", tag);
+                PSA_DRIVER_WARNING("Unknown tag: 0x%x", tag);
                 break;
         }
         cmd_ptr += cmd_len;
@@ -365,6 +373,52 @@ static psa_status_t get_slot_from_key_id(mbedtls_svc_key_id_t key_id, mcuxClEls_
 psa_status_t mcuxClPsaDriver_Oracle_Utils_GetSlotFromKeyId(mbedtls_svc_key_id_t key_id, mcuxClEls_KeyIndex_t *slot_id)
 {
     return get_slot_from_key_id(key_id, slot_id, false);
+}
+
+static psa_status_t get_recipe_from_key_id(mbedtls_svc_key_id_t source_key_id, key_recipe_t **target_recipe, bool all_keys)
+{
+    mbedtls_svc_key_id_t key_id;
+    key_recipe_step_t step;
+
+    for (size_t recipe_idx = 0U; recipe_idx < key_recipes_directory_size; recipe_idx++)
+    {
+        if (key_recipes_directory[recipe_idx] == NULL)
+          goto exit;
+        
+        for ( size_t recipe_steps = 0U; recipe_steps < key_recipes_directory[recipe_idx]->number_of_steps; recipe_steps++)
+        {
+            step.operation = key_recipes_directory[recipe_idx]->steps[recipe_steps].operation; 
+            switch (step.operation)
+            {
+                case OP_CKDF:
+                  key_id = key_recipes_directory[recipe_idx]->steps[recipe_steps].ckdf.target_key_id; 
+                  break;
+                case OP_KEYGEN:
+                  key_id = key_recipes_directory[recipe_idx]->steps[recipe_steps].keygen.target_key_id; 
+                  break;
+                case OP_KDELETE:
+                  key_id = key_recipes_directory[recipe_idx]->steps[recipe_steps].kdelete.target_key_id; 
+                  break;
+                default:
+                  PSA_DRIVER_ERROR("Unknown recipe operation: 0x%x", step.operation);
+                  goto exit;
+            }
+
+            if ( mbedtls_svc_key_id_equal(source_key_id, key_id) != 0)
+            {
+                *target_recipe = (key_recipe_t *)key_recipes_directory[recipe_idx];
+                return PSA_SUCCESS;
+            }    
+        }
+    }
+
+    exit:
+      return PSA_ERROR_DOES_NOT_EXIST;
+}
+
+psa_status_t mcuxClPsaDriver_Oracle_Utils_GetRecipeFromKeyId(mbedtls_svc_key_id_t key_id, key_recipe_t **recipe)
+{
+    return get_recipe_from_key_id(key_id, recipe, false);
 }
 
 psa_status_t mcuxClPsaDriver_Oracle_Utils_GetPublicKeyFromHandler(mbedtls_svc_key_id_t key_id,
@@ -559,10 +613,32 @@ exit:
     return psa_status;
 }
 
+psa_status_t mcuxClPsaDriver_Oracle_Utils_ExtractWrappingKeyDetails(uint8_t *psa_external_blob,
+                                                                    size_t psa_external_blob_size,
+                                                                    import_operation_data_t *import_op_data)
+{
+    psa_status_t psa_status = PSA_SUCCESS;
+
+    psa_cmd_t psa_cmd;
+    psa_status = parse_psa_import_command(psa_external_blob, psa_external_blob_size, &psa_cmd);
+    PSA_DRIVER_SUCCESS_OR_EXIT_MSG("Error while parsing import blob");
+
+    import_op_data->attributes = psa_cmd.attributes;
+    import_op_data->wrapping_key_id = psa_cmd.wrapping_key_id;
+    import_op_data->wrapping_algorithm = psa_cmd.wrapping_algorithm;
+    import_op_data->iv = psa_cmd.iv;
+    import_op_data->keyincmd = psa_cmd.keyincmd;
+    import_op_data->keyincmd_size = psa_cmd.keyincmd_size;
+
+    exit:
+      return psa_status;
+}
+
 psa_status_t mcuxClPsaDriver_Oracle_Utils_ExecuteElsDecryptCbc(uint8_t *psa_external_blob,
                                                                size_t psa_external_blob_size,
                                                                uint8_t **key_data,
                                                                size_t *key_size,
+                                                               import_operation_data_t *import_op_data,
                                                                mcuxClEls_KeyIndex_t enc_key_slot)
 {
     psa_status_t psa_status = PSA_SUCCESS;
@@ -570,19 +646,15 @@ psa_status_t mcuxClPsaDriver_Oracle_Utils_ExecuteElsDecryptCbc(uint8_t *psa_exte
     uint8_t *decrypted_key      = NULL;
     size_t decrypted_key_length = 0;
 
-    psa_cmd_t psa_cmd;
-    psa_status = parse_psa_import_command(psa_external_blob, psa_external_blob_size, &psa_cmd);
-    PSA_DRIVER_SUCCESS_OR_EXIT_MSG("Error while parsing import blob");
-
     // ISO7816-4 padding ensures ciphertext and plaintext having the same length
-    decrypted_key_length = psa_cmd.keyincmd_size;
+    decrypted_key_length = import_op_data->keyincmd_size;
     decrypted_key        = mbedtls_calloc(1, decrypted_key_length);
     PSA_DRIVER_ASSERT_OR_EXIT_STATUS_MSG(decrypted_key != NULL, PSA_ERROR_INSUFFICIENT_MEMORY,
                                          "Insufficient memory for decrypted key allocation");
 
     // decrypt blob with key on S50 slot
-    psa_status = mcuxClPsaDriver_Oracle_ElsUtils_Cipher_Decrypt(psa_cmd.keyincmd, psa_cmd.keyincmd_size, enc_key_slot,
-                                                                psa_cmd.iv, decrypted_key);
+    psa_status = mcuxClPsaDriver_Oracle_ElsUtils_Cipher_Decrypt(import_op_data->keyincmd, import_op_data->keyincmd_size, enc_key_slot,
+                                                                import_op_data->iv, decrypted_key);
     PSA_DRIVER_SUCCESS_OR_EXIT_MSG("Error,  Cipher command failed");
 
     psa_status = unpad_iso7816d4(decrypted_key, &decrypted_key_length);
@@ -605,6 +677,7 @@ exit:
 psa_status_t mcuxClPsaDriver_Oracle_Utils_ExecuteElsKeyIn(const psa_key_attributes_t *attributes,
                                                           uint8_t *psa_import_blob,
                                                           size_t psa_import_blob_size,
+                                                          import_operation_data_t *import_op_data,
                                                           mcuxClEls_KeyIndex_t wrap_key_slot,
                                                           mcuxClEls_KeyIndex_t *target_key_slot)
 {
@@ -631,22 +704,18 @@ psa_status_t mcuxClPsaDriver_Oracle_Utils_ExecuteElsKeyIn(const psa_key_attribut
     }
     else // EL2GO Blob
     {     
-        psa_cmd_t psa_cmd;
-        psa_status = parse_psa_import_command(psa_import_blob, psa_import_blob_size, &psa_cmd);
-        PSA_DRIVER_SUCCESS_OR_EXIT_MSG("Error while parsing import blob");
-
         PSA_DRIVER_ASSERT_OR_EXIT_STATUS_MSG(target_key_slot != NULL, PSA_ERROR_INVALID_ARGUMENT,
                                              "target_key_slot is NULL");
 
-        *target_key_slot = get_usable_key_slot(psa_get_key_bits(&psa_cmd.attributes));
+        *target_key_slot = get_usable_key_slot(psa_get_key_bits(&import_op_data->attributes));
         PSA_DRIVER_ASSERT_OR_EXIT_STATUS_MSG(*target_key_slot < MCUXCLELS_KEY_SLOTS, PSA_ERROR_BAD_STATE,
                                              "No usable keyslot found");
         
-        keyin_buf = psa_cmd.keyincmd;
-        keyin_buf_size = psa_cmd.keyincmd_size;
+        keyin_buf = import_op_data->keyincmd;
+        keyin_buf_size = import_op_data->keyincmd_size;
         
         /* Overwrite the keytype from EL2GO blob */
-        key_type = psa_get_key_type(&psa_cmd.attributes);
+        key_type = psa_get_key_type(&import_op_data->attributes);
     }
     
     psa_status =
@@ -694,11 +763,9 @@ exit:
 psa_status_t mcuxClPsaDriver_Oracle_Utils_ValidateBlobAttributes(const psa_key_attributes_t *attributes,
                                                                  const uint8_t *psa_import_blob,
                                                                  size_t psa_import_blob_size,
-                                                                 mcuxClEls_KeyIndex_t auth_key_slot)
+                                                                 auth_operation_data_t *auth_op_data)
 {
     psa_status_t psa_status = PSA_SUCCESS;
-
-    uint8_t *psa_import_blob_tbs = NULL;
 
     psa_cmd_t psa_cmd;
     psa_status = parse_psa_import_command(psa_import_blob, psa_import_blob_size, &psa_cmd);
@@ -749,14 +816,16 @@ psa_status_t mcuxClPsaDriver_Oracle_Utils_ValidateBlobAttributes(const psa_key_a
     psa_key_location_t location = PSA_KEY_LIFETIME_GET_LOCATION(psa_get_key_lifetime(attributes));
     if (MCUXCLPSADRIVER_IS_S50_BLOB_STORAGE(location))
     {
-        PSA_DRIVER_ASSERT_OR_EXIT_STATUS_MSG(NXP_DIE_EL2GOIMPORT_KEK_SK_ID == psa_cmd.wrapping_key_id,
+        PSA_DRIVER_ASSERT_OR_EXIT_STATUS_MSG( (NXP_DIE_EL2GOIMPORT_KEK_SK_ID == psa_cmd.wrapping_key_id)
+                                             || (NXP_DIE_KEK_SK_ID == psa_cmd.wrapping_key_id),
                                              PSA_ERROR_INVALID_ARGUMENT, "Unknown blob wrapping_key_id");
         PSA_DRIVER_ASSERT_OR_EXIT_STATUS_MSG(BLOB_WRAP_ALGORITHM_RFC3394 == psa_cmd.wrapping_algorithm,
                                              PSA_ERROR_INVALID_ARGUMENT, "Unknown blob wrapping_algorithm");
     }
     else if (MCUXCLPSADRIVER_IS_S50_ENC_STORAGE(location))
     {
-        PSA_DRIVER_ASSERT_OR_EXIT_STATUS_MSG(NXP_DIE_EL2GOIMPORTTFM_KEK_SK_ID == psa_cmd.wrapping_key_id,
+        PSA_DRIVER_ASSERT_OR_EXIT_STATUS_MSG( (NXP_DIE_EL2GOIMPORTTFM_KEK_SK_ID == psa_cmd.wrapping_key_id)
+                                             || (NXP_CUST_DIE_EL2GOIMPORTTFM_KEK_SK_ID == psa_cmd.wrapping_key_id),
                                              PSA_ERROR_INVALID_ARGUMENT, "Unknown blob wrapping_key_id");
         // We only support AES CBC wrapping via PSA
         PSA_DRIVER_ASSERT_OR_EXIT_STATUS_MSG(BLOB_WRAP_ALGORITHM_AES_CBC == psa_cmd.wrapping_algorithm,
@@ -768,7 +837,8 @@ psa_status_t mcuxClPsaDriver_Oracle_Utils_ValidateBlobAttributes(const psa_key_a
     }
 
     // Validate signature parameters
-    PSA_DRIVER_ASSERT_OR_EXIT_STATUS_MSG(NXP_DIE_EL2GOIMPORT_AUTH_SK_ID == psa_cmd.signature_key_id,
+    PSA_DRIVER_ASSERT_OR_EXIT_STATUS_MSG( (NXP_DIE_EL2GOIMPORT_AUTH_SK_ID == psa_cmd.signature_key_id)
+                                         || (NXP_CUST_DIE_EL2GOIMPORT_AUTH_SK_ID == psa_cmd.signature_key_id),
                                          PSA_ERROR_INVALID_ARGUMENT, "Unknown blob signature_key_id");
 
     PSA_DRIVER_ASSERT_OR_EXIT_STATUS_MSG(BLOB_SIGN_ALGORITHM_CMAC == psa_cmd.signature_algorithm,
@@ -776,7 +846,24 @@ psa_status_t mcuxClPsaDriver_Oracle_Utils_ValidateBlobAttributes(const psa_key_a
 
     PSA_DRIVER_ASSERT_OR_EXIT_STATUS_MSG(CMAC_BLOCK_SIZE == psa_cmd.signature_size, PSA_ERROR_INVALID_ARGUMENT,
                                          "Invalid blob CMAC size");
+    
+    auth_op_data->signature_key_id = psa_cmd.signature_key_id;
+    auth_op_data->signature_algorithm = psa_cmd.signature_algorithm;
+    auth_op_data->signature = psa_cmd.signature;
+    auth_op_data->signature_size = psa_cmd.signature_size;
 
+exit:
+    return psa_status;
+}
+
+psa_status_t mcuxClPsaDriver_Oracle_Utils_ValidateBlobSignature(const uint8_t *psa_import_blob,
+                                                                size_t psa_import_blob_size,
+                                                                const uint8_t *signature,
+                                                                mcuxClEls_KeyIndex_t auth_key_slot)
+{
+    psa_status_t psa_status = PSA_SUCCESS;
+
+    uint8_t *psa_import_blob_tbs = NULL;
     // We do allocate enough memory here to also fit the padding into the buffer. This is achieved implicitly because
     // the blob size used here still includes the CMAC. The CMAC, however is excluded from the data to be signed and
     // thus in the copied buffer replaced by the padding.
@@ -803,7 +890,7 @@ psa_status_t mcuxClPsaDriver_Oracle_Utils_ValidateBlobAttributes(const psa_key_a
 
     for (size_t i = 0; i < CMAC_BLOCK_SIZE; i++)
     {
-        if (psa_cmd.signature[i] != pCmac[i])
+        if (signature[i] != pCmac[i])
         {
             psa_status = PSA_ERROR_INVALID_SIGNATURE;
             PSA_DRIVER_SUCCESS_OR_EXIT_MSG("Error, Blob cmac value does not match calculated cmac value");

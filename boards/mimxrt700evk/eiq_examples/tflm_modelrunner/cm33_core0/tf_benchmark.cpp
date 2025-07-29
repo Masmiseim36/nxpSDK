@@ -83,10 +83,10 @@ int Model_Setup(NNServer* server) {
     const tflite::SubGraph* subgraph = (*subgraphs)[0];
     auto tensors = subgraph->tensors();
     const flatbuffers::Vector<flatbuffers::Offset<tflite::Operator>>* operators = subgraph->operators();
-    for (int i = 0; i < operators->size(); i++) {
+    for (size_t i = 0; i < operators->size(); i++) {
         const tflite::Operator* cur_operator = (*operators)[i];
         auto* outputs = cur_operator->outputs();
-        for (int j=0; j<outputs->size(); j++)
+        for (size_t j = 0; j<outputs->size(); j++)
         {
             int idx = (int)(*outputs)[j];
             const tflite::Tensor* tensor = (*tensors)[idx];
@@ -97,7 +97,7 @@ int Model_Setup(NNServer* server) {
     }
 
     server->input.inputs_size = subgraph->inputs()->size();
-    for (int i=0; i < server->input.inputs_size; i++){
+    for (int32_t i = 0; i < server->input.inputs_size; i++){
         int idx = (int)(*subgraph->inputs())[i];
         auto tensor = (*tensors)[idx];
         server->input.name[i] = (char*) tensor->name ()->c_str();
@@ -318,17 +318,17 @@ int Model_RunInference(NNServer* server) {
     input = interpreter->input(0);
     output = interpreter->output(0);
 
-    for (int i=0; i<interpreter->inputs_size(); i++){
+    for (size_t i = 0; i<interpreter->inputs_size(); i++){
         server->input.scale [i] = interpreter->input(i)->params.scale;
         server->input.zero_point [i] = interpreter->input(i)->params.zero_point;
     }
 
-    for (int i=0; i<interpreter->outputs_size(); i++){
+    for (size_t i=0; i<interpreter->outputs_size(); i++){
         server->output.scale [i] = interpreter->output(i)->params.scale;
         server->output.zero_point [i] = interpreter->output(i)->params.zero_point;
     }
 
-    for (int i=0; i<interpreter->inputs_size(); i++){
+    for (size_t i = 0; i<interpreter->inputs_size(); i++){
         if ( server->input.input_data [i] ){
             memcpy ( interpreter->input(i)->data.raw, server->input.input_data[i], interpreter->input(i)->bytes);
             free (server->input.input_data [i]);
@@ -365,7 +365,7 @@ int Model_RunInference(NNServer* server) {
  
         run_ns += server->run_ns;
 
-        for(int i=0; i<interpreter->outputs().size(); i++){
+        for(size_t i = 0; i<interpreter->outputs().size(); i++){
             server->output.data [i] = interpreter->output(i)->data.raw;
             server->output.bytes [i] = interpreter->output(i)->bytes;
             server->output.shape_data [i] = interpreter->output (i)->dims->data;

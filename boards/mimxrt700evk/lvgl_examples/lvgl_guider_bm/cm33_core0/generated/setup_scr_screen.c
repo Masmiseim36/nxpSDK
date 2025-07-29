@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 NXP
+ * Copyright 2024-2025 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -14,12 +14,15 @@
 void setup_scr_screen(lv_ui *ui)
 {
     ui->screen = lv_obj_create(NULL);
+    lv_obj_set_scrollbar_mode(ui->screen, LV_SCROLLBAR_MODE_OFF);
 
-    ui->btn = lv_btn_create(ui->screen);
-    lv_obj_align(ui->btn, LV_ALIGN_CENTER, 0, 0);
+    ui->rect = lv_obj_create(ui->screen);
+    lv_obj_align(ui->rect, LV_ALIGN_CENTER, 0, 0);
+    lv_obj_set_size(ui->rect, LV_PCT(40), LV_PCT(40));
 
-    ui->label = lv_label_create(ui->btn);
-    lv_label_set_text(ui->label, "Button");
+    ui->label = lv_label_create(ui->rect);
+    lv_label_set_text(ui->label, "Drag Me");
+    lv_obj_center(ui->label);
 
     lv_obj_update_layout(ui->screen);
 }

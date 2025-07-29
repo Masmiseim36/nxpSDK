@@ -11,7 +11,7 @@
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
-          <Device>MIMXRT798SGFOA:cm33_core0</Device>
+          <Device>MIMXRT798SGFOB:cm33_core0</Device>
           <Vendor>NXP</Vendor>
           <PackID>NXP.MIMXRT798S_DFP.17.0.0</PackID>
           <PackURL>https://mcuxpresso.nxp.com/cmsis_pack/repo/</PackURL>
@@ -334,9 +334,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../mcux_config.h -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
-              <Define>DEBUG, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, BOARD_ENABLE_PSRAM_CACHE=0, SSD1963_DATA_WITDH=8, SDK_I2C_BASED_COMPONENT_USED=1, FLEXIO_MCULCD_DATA_BUS_WIDTH=8, DBI_USE_MIPI_PANEL=1, CPU_MIMXRT798SGFOA_cm33_core0, BOOT_HEADER_ENABLE=1, MCUX_DBI_LEGACY=0</Define>
+              <Define>DEBUG, SDK_I2C_BASED_COMPONENT_USED=1, BOARD_ENABLE_PSRAM_CACHE=0, SSD1963_DATA_WITDH=8, FLEXIO_MCULCD_DATA_BUS_WIDTH=8, MCUX_DBI_LEGACY=0, DBI_USE_MIPI_PANEL=1, SDK_DEBUGCONSOLE_UART=1, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT798SGFOB_cm33_core0, MIMXRT798S_cm33_core0_SERIES, BOOT_HEADER_ENABLE=1</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../devices/MIMXRT798S/drivers;../../../../../../middleware/emwin/emWin_header;../../../../../../middleware/emwin/emWin_Config;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT798S;../../../../../../devices/MIMXRT798S/periph;../../../../../../devices/MIMXRT798S/utilities/debug_console_lite;../../../../../../devices/MIMXRT798S/utilities/str;../../../../../../components/uart;../../../../../../components/video;../../../../../../components/video/display/dc;../../../../../../components/video/display;../../../../../../components/video/display/dbi;../../../../../../components/video/display/dbi/flexio;../../../../../../components/video/display/dbi/lcdif;../../../../../../components/video/display/dc/dsi_cmd;../../../../../../components/video/display/dc/lcdif;../../../../../../components/video/display/dc/dbi;../../../../../../components/video/display/mipi_dsi_cmd;../../../../../../components/video/display/hx8394;../../../../../../components/video/display/rm68191;../../../../../../components/video/display/rm68200;../../../../../../components/video/display/rm67162;../../../../../../components/video/display/co5300;../../../../../../components/video/display/rpi;../../../../../../components/touch/gt911;../../../../../../components/display/ssd1963</IncludePath>
+              <IncludePath>..;../../../../../../devices/MIMXRT798S/drivers;../../../../../../middleware/emwin/emWin_header;../../../../../../middleware/emwin/emWin_Config;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT798S;../../../../../../devices/MIMXRT798S/periph;../../../../../../devices/MIMXRT798S/utilities/debug_console_lite;../../../../../../devices/MIMXRT798S/utilities/str;../../../../../../components/uart;../../../../../../components/video;../../../../../../components/video/display/dc;../../../../../../components/video/display;../../../../../../components/video/display/dbi;../../../../../../components/video/display/dbi/flexio;../../../../../../components/video/display/dbi/lcdif;../../../../../../components/video/display/dc/dsi_cmd;../../../../../../components/video/display/dc/lcdif;../../../../../../components/video/display/dc/dbi;../../../../../../components/video/display/mipi_dsi_cmd;../../../../../../components/video/display/hx8394;../../../../../../components/video/display/rm68191;../../../../../../components/video/display/rm68200;../../../../../../components/video/display/rm67162;../../../../../../components/video/display/co5300;../../../../../../components/video/display/rpi;../../../../../../components/touch/gt911;../../../../../../components/touch/ft3267;../../../../../../components/touch/ft5406_rt;../../../../../../components/touch/tma525b;../../../../../../components/display/ssd1963</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -351,10 +351,10 @@
             <useXO>0</useXO>
             <ClangAsOpt>2</ClangAsOpt>
             <VariousControls>
-              <MiscControls/>
-              <Define>MCUXPRESSO_SDK, CPU_MIMXRT798SGFOA_cm33_core0</Define>
+              <MiscControls>-include ../mcux_config.h</MiscControls>
+              <Define>MCUXPRESSO_SDK, CPU_MIMXRT798SGFOB_cm33_core0, MIMXRT798S_cm33_core0_SERIES</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../devices/MIMXRT798S/drivers;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT798S;../../../../../../devices/MIMXRT798S/periph;../../../../../../devices/periph;../../../../../../devices/MIMXRT798S/utilities/debug_console_lite;../../../../../../devices/MIMXRT798S/utilities/str;../../../../../../components/uart;../../../../../../components/video;../../../../../../components/video/display/dc;../../../../../../components/video/display;../../../../../../components/video/display/dbi;../../../../../../components/video/display/dbi/flexio;../../../../../../components/video/display/dbi/lcdif;../../../../../../components/video/display/dc/dsi_cmd;../../../../../../components/video/display/dc/lcdif;../../../../../../components/video/display/dc/dbi;../../../../../../components/video/display/mipi_dsi_cmd;../../../../../../components/video/display/hx8394;../../../../../../components/video/display/rm68191;../../../../../../components/video/display/rm68200;../../../../../../components/video/display/rm67162;../../../../../../components/video/display/co5300;../../../../../../components/video/display/rpi;../../../../../../components/touch/gt911;../../../../../../components/display/ssd1963</IncludePath>
+              <IncludePath>..;../../../../../../devices/MIMXRT798S/drivers;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT798S;../../../../../../devices/MIMXRT798S/periph;../../../../../../devices/periph;../../../../../../devices/MIMXRT798S/utilities/debug_console_lite;../../../../../../devices/MIMXRT798S/utilities/str;../../../../../../components/uart;../../../../../../components/video;../../../../../../components/video/display/dc;../../../../../../components/video/display;../../../../../../components/video/display/dbi;../../../../../../components/video/display/dbi/flexio;../../../../../../components/video/display/dbi/lcdif;../../../../../../components/video/display/dc/dsi_cmd;../../../../../../components/video/display/dc/lcdif;../../../../../../components/video/display/dc/dbi;../../../../../../components/video/display/mipi_dsi_cmd;../../../../../../components/video/display/hx8394;../../../../../../components/video/display/rm68191;../../../../../../components/video/display/rm68200;../../../../../../components/video/display/rm67162;../../../../../../components/video/display/co5300;../../../../../../components/video/display/rpi;../../../../../../components/touch/gt911;../../../../../../components/touch/ft3267;../../../../../../components/touch/ft5406_rt;../../../../../../components/touch/tma525b;../../../../../../components/display/ssd1963</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -370,7 +370,7 @@
             <ScatterFile>MIMXRT798Sxxxx_cm33_core0_ram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>../../../../../../middleware/emwin/emWin_library/Keil/emWin_M33.lib --remove --entry=Reset_Handler --info=sizes,totals,unused,veneers</Misc>
+            <Misc>../../../../../../middleware/emwin/emWin_library/Keil/emWin_M33.lib --remove --predefine="-D__stack_size__=0x1000" --entry=Reset_Handler --info=sizes,totals,unused,veneers</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6329,6314</DisabledWarnings>
           </LDads>
@@ -475,6 +475,16 @@
               <FileType>5</FileType>
               <FilePath>../mcux_config.h</FilePath>
             </File>
+            <File>
+              <FileName>mcux_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../mcux_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../mcux_config.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -519,6 +529,11 @@
               <FileName>fsl_edma_soc.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT798S/drivers/fsl_edma_soc.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_inputmux_connections.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT798S/drivers/fsl_inputmux_connections.h</FilePath>
             </File>
             <File>
               <FileName>fsl_iopctl.h</FileName>
@@ -624,6 +639,16 @@
               <FileName>fsl_gpio.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT798S/drivers/fsl_gpio.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_inputmux.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT798S/drivers/fsl_inputmux.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_inputmux.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT798S/drivers/fsl_inputmux.c</FilePath>
             </File>
             <File>
               <FileName>fsl_lcdif.h</FileName>
@@ -941,21 +966,6 @@
               <FilePath>../../../../../../middleware/emwin/emWin_header/GUIDRV_SSD1926_Private.h</FilePath>
             </File>
             <File>
-              <FileName>GUIDRV_Template.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/emwin/emWin_header/GUIDRV_Template.h</FilePath>
-            </File>
-            <File>
-              <FileName>GUIDRV_TemplateI.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/emwin/emWin_header/GUIDRV_TemplateI.h</FilePath>
-            </File>
-            <File>
-              <FileName>GUIDRV_TemplateI_Private.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/emwin/emWin_header/GUIDRV_TemplateI_Private.h</FilePath>
-            </File>
-            <File>
               <FileName>GUITDRV_ADS7846.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/emwin/emWin_header/GUITDRV_ADS7846.h</FilePath>
@@ -999,11 +1009,6 @@
               <FileName>GUI_GIF_Private.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/emwin/emWin_header/GUI_GIF_Private.h</FilePath>
-            </File>
-            <File>
-              <FileName>GUI_HOOK.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/emwin/emWin_header/GUI_HOOK.h</FilePath>
             </File>
             <File>
               <FileName>GUI_JPEG_Private.h</FileName>
@@ -1091,14 +1096,14 @@
               <FilePath>../../../../../../middleware/emwin/emWin_header/GUI_Version.h</FilePath>
             </File>
             <File>
-              <FileName>GUI__BiDi2_Brackets_800.h</FileName>
+              <FileName>GUI__BiDi_Brackets.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/emwin/emWin_header/GUI__BiDi2_Brackets_800.h</FilePath>
+              <FilePath>../../../../../../middleware/emwin/emWin_header/GUI__BiDi_Brackets.h</FilePath>
             </File>
             <File>
-              <FileName>GUI__BiDi2_Types_800.h</FileName>
+              <FileName>GUI__BiDi_Types.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/emwin/emWin_header/GUI__BiDi2_Types_800.h</FilePath>
+              <FilePath>../../../../../../middleware/emwin/emWin_header/GUI__BiDi_Types.h</FilePath>
             </File>
             <File>
               <FileName>Global.h</FileName>
@@ -1459,6 +1464,11 @@
               <FileName>WM_Intern.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/emwin/emWin_header/WM_Intern.h</FilePath>
+            </File>
+            <File>
+              <FileName>WM_Layout.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/emwin/emWin_header/WM_Layout.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1993,12 +2003,12 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>startup/arm</GroupName>
+          <GroupName>startup</GroupName>
           <Files>
             <File>
-              <FileName>startup_MIMXRT798S_cm33_core0.S</FileName>
-              <FileType>2</FileType>
-              <FilePath>../../../../../../devices/MIMXRT798S/arm/startup_MIMXRT798S_cm33_core0.S</FilePath>
+              <FileName>startup_MIMXRT798S_cm33_core0.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT798S/startup_MIMXRT798S_cm33_core0.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2235,6 +2245,36 @@
               <FileType>1</FileType>
               <FilePath>../../../../../../components/touch/gt911/fsl_gt911.c</FilePath>
             </File>
+            <File>
+              <FileName>fsl_ft3267.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/touch/ft3267/fsl_ft3267.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ft3267.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/touch/ft3267/fsl_ft3267.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ft5406_rt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/touch/ft5406_rt/fsl_ft5406_rt.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ft5406_rt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/touch/ft5406_rt/fsl_ft5406_rt.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_tma525b.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/touch/tma525b/fsl_tma525b.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_tma525b.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/touch/tma525b/fsl_tma525b.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -2272,7 +2312,7 @@
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
-          <Device>MIMXRT798SGFOA:cm33_core0</Device>
+          <Device>MIMXRT798SGFOB:cm33_core0</Device>
           <Vendor>NXP</Vendor>
           <PackID>NXP.MIMXRT798S_DFP.17.0.0</PackID>
           <PackURL>https://mcuxpresso.nxp.com/cmsis_pack/repo/</PackURL>
@@ -2595,9 +2635,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../mcux_config.h -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
-              <Define>DEBUG, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, BOARD_ENABLE_PSRAM_CACHE=0, SSD1963_DATA_WITDH=8, SDK_I2C_BASED_COMPONENT_USED=1, FLEXIO_MCULCD_DATA_BUS_WIDTH=8, DBI_USE_MIPI_PANEL=1, CPU_MIMXRT798SGFOA_cm33_core0, BOOT_HEADER_ENABLE=1, MCUX_DBI_LEGACY=0</Define>
+              <Define>DEBUG, SDK_I2C_BASED_COMPONENT_USED=1, BOARD_ENABLE_PSRAM_CACHE=0, SSD1963_DATA_WITDH=8, FLEXIO_MCULCD_DATA_BUS_WIDTH=8, MCUX_DBI_LEGACY=0, DBI_USE_MIPI_PANEL=1, SDK_DEBUGCONSOLE_UART=1, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT798SGFOB_cm33_core0, MIMXRT798S_cm33_core0_SERIES, BOOT_HEADER_ENABLE=1</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../devices/MIMXRT798S/drivers;../../../../../../middleware/emwin/emWin_header;../../../../../../middleware/emwin/emWin_Config;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT798S;../../../../../../devices/MIMXRT798S/periph;../../../../../../devices/MIMXRT798S/utilities/debug_console_lite;../../../../../../devices/MIMXRT798S/utilities/str;../../../../../../components/uart;../../../../../../components/video;../../../../../../components/video/display/dc;../../../../../../components/video/display;../../../../../../components/video/display/dbi;../../../../../../components/video/display/dbi/flexio;../../../../../../components/video/display/dbi/lcdif;../../../../../../components/video/display/dc/dsi_cmd;../../../../../../components/video/display/dc/lcdif;../../../../../../components/video/display/dc/dbi;../../../../../../components/video/display/mipi_dsi_cmd;../../../../../../components/video/display/hx8394;../../../../../../components/video/display/rm68191;../../../../../../components/video/display/rm68200;../../../../../../components/video/display/rm67162;../../../../../../components/video/display/co5300;../../../../../../components/video/display/rpi;../../../../../../components/touch/gt911;../../../../../../components/display/ssd1963</IncludePath>
+              <IncludePath>..;../../../../../../devices/MIMXRT798S/drivers;../../../../../../middleware/emwin/emWin_header;../../../../../../middleware/emwin/emWin_Config;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT798S;../../../../../../devices/MIMXRT798S/periph;../../../../../../devices/MIMXRT798S/utilities/debug_console_lite;../../../../../../devices/MIMXRT798S/utilities/str;../../../../../../components/uart;../../../../../../components/video;../../../../../../components/video/display/dc;../../../../../../components/video/display;../../../../../../components/video/display/dbi;../../../../../../components/video/display/dbi/flexio;../../../../../../components/video/display/dbi/lcdif;../../../../../../components/video/display/dc/dsi_cmd;../../../../../../components/video/display/dc/lcdif;../../../../../../components/video/display/dc/dbi;../../../../../../components/video/display/mipi_dsi_cmd;../../../../../../components/video/display/hx8394;../../../../../../components/video/display/rm68191;../../../../../../components/video/display/rm68200;../../../../../../components/video/display/rm67162;../../../../../../components/video/display/co5300;../../../../../../components/video/display/rpi;../../../../../../components/touch/gt911;../../../../../../components/touch/ft3267;../../../../../../components/touch/ft5406_rt;../../../../../../components/touch/tma525b;../../../../../../components/display/ssd1963</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2612,10 +2652,10 @@
             <useXO>0</useXO>
             <ClangAsOpt>2</ClangAsOpt>
             <VariousControls>
-              <MiscControls/>
-              <Define>MCUXPRESSO_SDK, CPU_MIMXRT798SGFOA_cm33_core0</Define>
+              <MiscControls>-include ../mcux_config.h</MiscControls>
+              <Define>MCUXPRESSO_SDK, CPU_MIMXRT798SGFOB_cm33_core0, MIMXRT798S_cm33_core0_SERIES</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../devices/MIMXRT798S/drivers;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT798S;../../../../../../devices/MIMXRT798S/periph;../../../../../../devices/periph;../../../../../../devices/MIMXRT798S/utilities/debug_console_lite;../../../../../../devices/MIMXRT798S/utilities/str;../../../../../../components/uart;../../../../../../components/video;../../../../../../components/video/display/dc;../../../../../../components/video/display;../../../../../../components/video/display/dbi;../../../../../../components/video/display/dbi/flexio;../../../../../../components/video/display/dbi/lcdif;../../../../../../components/video/display/dc/dsi_cmd;../../../../../../components/video/display/dc/lcdif;../../../../../../components/video/display/dc/dbi;../../../../../../components/video/display/mipi_dsi_cmd;../../../../../../components/video/display/hx8394;../../../../../../components/video/display/rm68191;../../../../../../components/video/display/rm68200;../../../../../../components/video/display/rm67162;../../../../../../components/video/display/co5300;../../../../../../components/video/display/rpi;../../../../../../components/touch/gt911;../../../../../../components/display/ssd1963</IncludePath>
+              <IncludePath>..;../../../../../../devices/MIMXRT798S/drivers;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT798S;../../../../../../devices/MIMXRT798S/periph;../../../../../../devices/periph;../../../../../../devices/MIMXRT798S/utilities/debug_console_lite;../../../../../../devices/MIMXRT798S/utilities/str;../../../../../../components/uart;../../../../../../components/video;../../../../../../components/video/display/dc;../../../../../../components/video/display;../../../../../../components/video/display/dbi;../../../../../../components/video/display/dbi/flexio;../../../../../../components/video/display/dbi/lcdif;../../../../../../components/video/display/dc/dsi_cmd;../../../../../../components/video/display/dc/lcdif;../../../../../../components/video/display/dc/dbi;../../../../../../components/video/display/mipi_dsi_cmd;../../../../../../components/video/display/hx8394;../../../../../../components/video/display/rm68191;../../../../../../components/video/display/rm68200;../../../../../../components/video/display/rm67162;../../../../../../components/video/display/co5300;../../../../../../components/video/display/rpi;../../../../../../components/touch/gt911;../../../../../../components/touch/ft3267;../../../../../../components/touch/ft5406_rt;../../../../../../components/touch/tma525b;../../../../../../components/display/ssd1963</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -2631,7 +2671,7 @@
             <ScatterFile>MIMXRT798Sxxxx_cm33_core0_flash.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>../../../../../../middleware/emwin/emWin_library/Keil/emWin_M33.lib --remove --entry=Reset_Handler --info=sizes,totals,unused,veneers</Misc>
+            <Misc>../../../../../../middleware/emwin/emWin_library/Keil/emWin_M33.lib --remove --predefine="-D__stack_size__=0x1000" --entry=Reset_Handler --info=sizes,totals,unused,veneers</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6329,6314</DisabledWarnings>
           </LDads>
@@ -2736,6 +2776,16 @@
               <FileType>5</FileType>
               <FilePath>../mcux_config.h</FilePath>
             </File>
+            <File>
+              <FileName>mcux_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../mcux_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../mcux_config.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -2780,6 +2830,11 @@
               <FileName>fsl_edma_soc.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT798S/drivers/fsl_edma_soc.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_inputmux_connections.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT798S/drivers/fsl_inputmux_connections.h</FilePath>
             </File>
             <File>
               <FileName>fsl_iopctl.h</FileName>
@@ -2885,6 +2940,16 @@
               <FileName>fsl_gpio.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT798S/drivers/fsl_gpio.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_inputmux.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT798S/drivers/fsl_inputmux.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_inputmux.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT798S/drivers/fsl_inputmux.c</FilePath>
             </File>
             <File>
               <FileName>fsl_lcdif.h</FileName>
@@ -3202,21 +3267,6 @@
               <FilePath>../../../../../../middleware/emwin/emWin_header/GUIDRV_SSD1926_Private.h</FilePath>
             </File>
             <File>
-              <FileName>GUIDRV_Template.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/emwin/emWin_header/GUIDRV_Template.h</FilePath>
-            </File>
-            <File>
-              <FileName>GUIDRV_TemplateI.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/emwin/emWin_header/GUIDRV_TemplateI.h</FilePath>
-            </File>
-            <File>
-              <FileName>GUIDRV_TemplateI_Private.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/emwin/emWin_header/GUIDRV_TemplateI_Private.h</FilePath>
-            </File>
-            <File>
               <FileName>GUITDRV_ADS7846.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/emwin/emWin_header/GUITDRV_ADS7846.h</FilePath>
@@ -3260,11 +3310,6 @@
               <FileName>GUI_GIF_Private.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/emwin/emWin_header/GUI_GIF_Private.h</FilePath>
-            </File>
-            <File>
-              <FileName>GUI_HOOK.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/emwin/emWin_header/GUI_HOOK.h</FilePath>
             </File>
             <File>
               <FileName>GUI_JPEG_Private.h</FileName>
@@ -3352,14 +3397,14 @@
               <FilePath>../../../../../../middleware/emwin/emWin_header/GUI_Version.h</FilePath>
             </File>
             <File>
-              <FileName>GUI__BiDi2_Brackets_800.h</FileName>
+              <FileName>GUI__BiDi_Brackets.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/emwin/emWin_header/GUI__BiDi2_Brackets_800.h</FilePath>
+              <FilePath>../../../../../../middleware/emwin/emWin_header/GUI__BiDi_Brackets.h</FilePath>
             </File>
             <File>
-              <FileName>GUI__BiDi2_Types_800.h</FileName>
+              <FileName>GUI__BiDi_Types.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/emwin/emWin_header/GUI__BiDi2_Types_800.h</FilePath>
+              <FilePath>../../../../../../middleware/emwin/emWin_header/GUI__BiDi_Types.h</FilePath>
             </File>
             <File>
               <FileName>Global.h</FileName>
@@ -3720,6 +3765,11 @@
               <FileName>WM_Intern.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/emwin/emWin_header/WM_Intern.h</FilePath>
+            </File>
+            <File>
+              <FileName>WM_Layout.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/emwin/emWin_header/WM_Layout.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -4254,12 +4304,12 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>startup/arm</GroupName>
+          <GroupName>startup</GroupName>
           <Files>
             <File>
-              <FileName>startup_MIMXRT798S_cm33_core0.S</FileName>
-              <FileType>2</FileType>
-              <FilePath>../../../../../../devices/MIMXRT798S/arm/startup_MIMXRT798S_cm33_core0.S</FilePath>
+              <FileName>startup_MIMXRT798S_cm33_core0.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT798S/startup_MIMXRT798S_cm33_core0.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -4496,6 +4546,36 @@
               <FileType>1</FileType>
               <FilePath>../../../../../../components/touch/gt911/fsl_gt911.c</FilePath>
             </File>
+            <File>
+              <FileName>fsl_ft3267.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/touch/ft3267/fsl_ft3267.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ft3267.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/touch/ft3267/fsl_ft3267.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ft5406_rt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/touch/ft5406_rt/fsl_ft5406_rt.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ft5406_rt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/touch/ft5406_rt/fsl_ft5406_rt.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_tma525b.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/touch/tma525b/fsl_tma525b.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_tma525b.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/touch/tma525b/fsl_tma525b.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -4533,7 +4613,7 @@
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
-          <Device>MIMXRT798SGFOA:cm33_core0</Device>
+          <Device>MIMXRT798SGFOB:cm33_core0</Device>
           <Vendor>NXP</Vendor>
           <PackID>NXP.MIMXRT798S_DFP.17.0.0</PackID>
           <PackURL>https://mcuxpresso.nxp.com/cmsis_pack/repo/</PackURL>
@@ -4856,9 +4936,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../mcux_config.h -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
-              <Define>NDEBUG, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, BOARD_ENABLE_PSRAM_CACHE=0, SSD1963_DATA_WITDH=8, SDK_I2C_BASED_COMPONENT_USED=1, FLEXIO_MCULCD_DATA_BUS_WIDTH=8, DBI_USE_MIPI_PANEL=1, CPU_MIMXRT798SGFOA_cm33_core0, BOOT_HEADER_ENABLE=1, MCUX_DBI_LEGACY=0</Define>
+              <Define>NDEBUG, SDK_I2C_BASED_COMPONENT_USED=1, BOARD_ENABLE_PSRAM_CACHE=0, SSD1963_DATA_WITDH=8, FLEXIO_MCULCD_DATA_BUS_WIDTH=8, MCUX_DBI_LEGACY=0, DBI_USE_MIPI_PANEL=1, SDK_DEBUGCONSOLE_UART=1, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT798SGFOB_cm33_core0, MIMXRT798S_cm33_core0_SERIES, BOOT_HEADER_ENABLE=1</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../devices/MIMXRT798S/drivers;../../../../../../middleware/emwin/emWin_header;../../../../../../middleware/emwin/emWin_Config;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT798S;../../../../../../devices/MIMXRT798S/periph;../../../../../../devices/MIMXRT798S/utilities/debug_console_lite;../../../../../../devices/MIMXRT798S/utilities/str;../../../../../../components/uart;../../../../../../components/video;../../../../../../components/video/display/dc;../../../../../../components/video/display;../../../../../../components/video/display/dbi;../../../../../../components/video/display/dbi/flexio;../../../../../../components/video/display/dbi/lcdif;../../../../../../components/video/display/dc/dsi_cmd;../../../../../../components/video/display/dc/lcdif;../../../../../../components/video/display/dc/dbi;../../../../../../components/video/display/mipi_dsi_cmd;../../../../../../components/video/display/hx8394;../../../../../../components/video/display/rm68191;../../../../../../components/video/display/rm68200;../../../../../../components/video/display/rm67162;../../../../../../components/video/display/co5300;../../../../../../components/video/display/rpi;../../../../../../components/touch/gt911;../../../../../../components/display/ssd1963</IncludePath>
+              <IncludePath>..;../../../../../../devices/MIMXRT798S/drivers;../../../../../../middleware/emwin/emWin_header;../../../../../../middleware/emwin/emWin_Config;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT798S;../../../../../../devices/MIMXRT798S/periph;../../../../../../devices/MIMXRT798S/utilities/debug_console_lite;../../../../../../devices/MIMXRT798S/utilities/str;../../../../../../components/uart;../../../../../../components/video;../../../../../../components/video/display/dc;../../../../../../components/video/display;../../../../../../components/video/display/dbi;../../../../../../components/video/display/dbi/flexio;../../../../../../components/video/display/dbi/lcdif;../../../../../../components/video/display/dc/dsi_cmd;../../../../../../components/video/display/dc/lcdif;../../../../../../components/video/display/dc/dbi;../../../../../../components/video/display/mipi_dsi_cmd;../../../../../../components/video/display/hx8394;../../../../../../components/video/display/rm68191;../../../../../../components/video/display/rm68200;../../../../../../components/video/display/rm67162;../../../../../../components/video/display/co5300;../../../../../../components/video/display/rpi;../../../../../../components/touch/gt911;../../../../../../components/touch/ft3267;../../../../../../components/touch/ft5406_rt;../../../../../../components/touch/tma525b;../../../../../../components/display/ssd1963</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -4873,10 +4953,10 @@
             <useXO>0</useXO>
             <ClangAsOpt>2</ClangAsOpt>
             <VariousControls>
-              <MiscControls/>
-              <Define>MCUXPRESSO_SDK, CPU_MIMXRT798SGFOA_cm33_core0</Define>
+              <MiscControls>-include ../mcux_config.h</MiscControls>
+              <Define>MCUXPRESSO_SDK, CPU_MIMXRT798SGFOB_cm33_core0, MIMXRT798S_cm33_core0_SERIES</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../devices/MIMXRT798S/drivers;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT798S;../../../../../../devices/MIMXRT798S/periph;../../../../../../devices/periph;../../../../../../devices/MIMXRT798S/utilities/debug_console_lite;../../../../../../devices/MIMXRT798S/utilities/str;../../../../../../components/uart;../../../../../../components/video;../../../../../../components/video/display/dc;../../../../../../components/video/display;../../../../../../components/video/display/dbi;../../../../../../components/video/display/dbi/flexio;../../../../../../components/video/display/dbi/lcdif;../../../../../../components/video/display/dc/dsi_cmd;../../../../../../components/video/display/dc/lcdif;../../../../../../components/video/display/dc/dbi;../../../../../../components/video/display/mipi_dsi_cmd;../../../../../../components/video/display/hx8394;../../../../../../components/video/display/rm68191;../../../../../../components/video/display/rm68200;../../../../../../components/video/display/rm67162;../../../../../../components/video/display/co5300;../../../../../../components/video/display/rpi;../../../../../../components/touch/gt911;../../../../../../components/display/ssd1963</IncludePath>
+              <IncludePath>..;../../../../../../devices/MIMXRT798S/drivers;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT798S;../../../../../../devices/MIMXRT798S/periph;../../../../../../devices/periph;../../../../../../devices/MIMXRT798S/utilities/debug_console_lite;../../../../../../devices/MIMXRT798S/utilities/str;../../../../../../components/uart;../../../../../../components/video;../../../../../../components/video/display/dc;../../../../../../components/video/display;../../../../../../components/video/display/dbi;../../../../../../components/video/display/dbi/flexio;../../../../../../components/video/display/dbi/lcdif;../../../../../../components/video/display/dc/dsi_cmd;../../../../../../components/video/display/dc/lcdif;../../../../../../components/video/display/dc/dbi;../../../../../../components/video/display/mipi_dsi_cmd;../../../../../../components/video/display/hx8394;../../../../../../components/video/display/rm68191;../../../../../../components/video/display/rm68200;../../../../../../components/video/display/rm67162;../../../../../../components/video/display/co5300;../../../../../../components/video/display/rpi;../../../../../../components/touch/gt911;../../../../../../components/touch/ft3267;../../../../../../components/touch/ft5406_rt;../../../../../../components/touch/tma525b;../../../../../../components/display/ssd1963</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -4892,7 +4972,7 @@
             <ScatterFile>MIMXRT798Sxxxx_cm33_core0_ram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>../../../../../../middleware/emwin/emWin_library/Keil/emWin_M33.lib --remove --entry=Reset_Handler --info=sizes,totals,unused,veneers</Misc>
+            <Misc>../../../../../../middleware/emwin/emWin_library/Keil/emWin_M33.lib --remove --predefine="-D__stack_size__=0x1000" --entry=Reset_Handler --info=sizes,totals,unused,veneers</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6329,6314</DisabledWarnings>
           </LDads>
@@ -4997,6 +5077,16 @@
               <FileType>5</FileType>
               <FilePath>../mcux_config.h</FilePath>
             </File>
+            <File>
+              <FileName>mcux_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../mcux_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../mcux_config.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -5041,6 +5131,11 @@
               <FileName>fsl_edma_soc.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT798S/drivers/fsl_edma_soc.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_inputmux_connections.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT798S/drivers/fsl_inputmux_connections.h</FilePath>
             </File>
             <File>
               <FileName>fsl_iopctl.h</FileName>
@@ -5146,6 +5241,16 @@
               <FileName>fsl_gpio.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT798S/drivers/fsl_gpio.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_inputmux.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT798S/drivers/fsl_inputmux.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_inputmux.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT798S/drivers/fsl_inputmux.c</FilePath>
             </File>
             <File>
               <FileName>fsl_lcdif.h</FileName>
@@ -5463,21 +5568,6 @@
               <FilePath>../../../../../../middleware/emwin/emWin_header/GUIDRV_SSD1926_Private.h</FilePath>
             </File>
             <File>
-              <FileName>GUIDRV_Template.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/emwin/emWin_header/GUIDRV_Template.h</FilePath>
-            </File>
-            <File>
-              <FileName>GUIDRV_TemplateI.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/emwin/emWin_header/GUIDRV_TemplateI.h</FilePath>
-            </File>
-            <File>
-              <FileName>GUIDRV_TemplateI_Private.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/emwin/emWin_header/GUIDRV_TemplateI_Private.h</FilePath>
-            </File>
-            <File>
               <FileName>GUITDRV_ADS7846.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/emwin/emWin_header/GUITDRV_ADS7846.h</FilePath>
@@ -5521,11 +5611,6 @@
               <FileName>GUI_GIF_Private.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/emwin/emWin_header/GUI_GIF_Private.h</FilePath>
-            </File>
-            <File>
-              <FileName>GUI_HOOK.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/emwin/emWin_header/GUI_HOOK.h</FilePath>
             </File>
             <File>
               <FileName>GUI_JPEG_Private.h</FileName>
@@ -5613,14 +5698,14 @@
               <FilePath>../../../../../../middleware/emwin/emWin_header/GUI_Version.h</FilePath>
             </File>
             <File>
-              <FileName>GUI__BiDi2_Brackets_800.h</FileName>
+              <FileName>GUI__BiDi_Brackets.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/emwin/emWin_header/GUI__BiDi2_Brackets_800.h</FilePath>
+              <FilePath>../../../../../../middleware/emwin/emWin_header/GUI__BiDi_Brackets.h</FilePath>
             </File>
             <File>
-              <FileName>GUI__BiDi2_Types_800.h</FileName>
+              <FileName>GUI__BiDi_Types.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/emwin/emWin_header/GUI__BiDi2_Types_800.h</FilePath>
+              <FilePath>../../../../../../middleware/emwin/emWin_header/GUI__BiDi_Types.h</FilePath>
             </File>
             <File>
               <FileName>Global.h</FileName>
@@ -5981,6 +6066,11 @@
               <FileName>WM_Intern.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/emwin/emWin_header/WM_Intern.h</FilePath>
+            </File>
+            <File>
+              <FileName>WM_Layout.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/emwin/emWin_header/WM_Layout.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -6515,12 +6605,12 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>startup/arm</GroupName>
+          <GroupName>startup</GroupName>
           <Files>
             <File>
-              <FileName>startup_MIMXRT798S_cm33_core0.S</FileName>
-              <FileType>2</FileType>
-              <FilePath>../../../../../../devices/MIMXRT798S/arm/startup_MIMXRT798S_cm33_core0.S</FilePath>
+              <FileName>startup_MIMXRT798S_cm33_core0.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT798S/startup_MIMXRT798S_cm33_core0.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -6757,6 +6847,36 @@
               <FileType>1</FileType>
               <FilePath>../../../../../../components/touch/gt911/fsl_gt911.c</FilePath>
             </File>
+            <File>
+              <FileName>fsl_ft3267.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/touch/ft3267/fsl_ft3267.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ft3267.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/touch/ft3267/fsl_ft3267.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ft5406_rt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/touch/ft5406_rt/fsl_ft5406_rt.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ft5406_rt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/touch/ft5406_rt/fsl_ft5406_rt.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_tma525b.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/touch/tma525b/fsl_tma525b.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_tma525b.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/touch/tma525b/fsl_tma525b.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -6794,7 +6914,7 @@
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
-          <Device>MIMXRT798SGFOA:cm33_core0</Device>
+          <Device>MIMXRT798SGFOB:cm33_core0</Device>
           <Vendor>NXP</Vendor>
           <PackID>NXP.MIMXRT798S_DFP.17.0.0</PackID>
           <PackURL>https://mcuxpresso.nxp.com/cmsis_pack/repo/</PackURL>
@@ -7117,9 +7237,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../mcux_config.h -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
-              <Define>NDEBUG, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, BOARD_ENABLE_PSRAM_CACHE=0, SSD1963_DATA_WITDH=8, SDK_I2C_BASED_COMPONENT_USED=1, FLEXIO_MCULCD_DATA_BUS_WIDTH=8, DBI_USE_MIPI_PANEL=1, CPU_MIMXRT798SGFOA_cm33_core0, BOOT_HEADER_ENABLE=1, MCUX_DBI_LEGACY=0</Define>
+              <Define>NDEBUG, SDK_I2C_BASED_COMPONENT_USED=1, BOARD_ENABLE_PSRAM_CACHE=0, SSD1963_DATA_WITDH=8, FLEXIO_MCULCD_DATA_BUS_WIDTH=8, MCUX_DBI_LEGACY=0, DBI_USE_MIPI_PANEL=1, SDK_DEBUGCONSOLE_UART=1, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT798SGFOB_cm33_core0, MIMXRT798S_cm33_core0_SERIES, BOOT_HEADER_ENABLE=1</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../devices/MIMXRT798S/drivers;../../../../../../middleware/emwin/emWin_header;../../../../../../middleware/emwin/emWin_Config;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT798S;../../../../../../devices/MIMXRT798S/periph;../../../../../../devices/MIMXRT798S/utilities/debug_console_lite;../../../../../../devices/MIMXRT798S/utilities/str;../../../../../../components/uart;../../../../../../components/video;../../../../../../components/video/display/dc;../../../../../../components/video/display;../../../../../../components/video/display/dbi;../../../../../../components/video/display/dbi/flexio;../../../../../../components/video/display/dbi/lcdif;../../../../../../components/video/display/dc/dsi_cmd;../../../../../../components/video/display/dc/lcdif;../../../../../../components/video/display/dc/dbi;../../../../../../components/video/display/mipi_dsi_cmd;../../../../../../components/video/display/hx8394;../../../../../../components/video/display/rm68191;../../../../../../components/video/display/rm68200;../../../../../../components/video/display/rm67162;../../../../../../components/video/display/co5300;../../../../../../components/video/display/rpi;../../../../../../components/touch/gt911;../../../../../../components/display/ssd1963</IncludePath>
+              <IncludePath>..;../../../../../../devices/MIMXRT798S/drivers;../../../../../../middleware/emwin/emWin_header;../../../../../../middleware/emwin/emWin_Config;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT798S;../../../../../../devices/MIMXRT798S/periph;../../../../../../devices/MIMXRT798S/utilities/debug_console_lite;../../../../../../devices/MIMXRT798S/utilities/str;../../../../../../components/uart;../../../../../../components/video;../../../../../../components/video/display/dc;../../../../../../components/video/display;../../../../../../components/video/display/dbi;../../../../../../components/video/display/dbi/flexio;../../../../../../components/video/display/dbi/lcdif;../../../../../../components/video/display/dc/dsi_cmd;../../../../../../components/video/display/dc/lcdif;../../../../../../components/video/display/dc/dbi;../../../../../../components/video/display/mipi_dsi_cmd;../../../../../../components/video/display/hx8394;../../../../../../components/video/display/rm68191;../../../../../../components/video/display/rm68200;../../../../../../components/video/display/rm67162;../../../../../../components/video/display/co5300;../../../../../../components/video/display/rpi;../../../../../../components/touch/gt911;../../../../../../components/touch/ft3267;../../../../../../components/touch/ft5406_rt;../../../../../../components/touch/tma525b;../../../../../../components/display/ssd1963</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -7134,10 +7254,10 @@
             <useXO>0</useXO>
             <ClangAsOpt>2</ClangAsOpt>
             <VariousControls>
-              <MiscControls/>
-              <Define>MCUXPRESSO_SDK, CPU_MIMXRT798SGFOA_cm33_core0</Define>
+              <MiscControls>-include ../mcux_config.h</MiscControls>
+              <Define>MCUXPRESSO_SDK, CPU_MIMXRT798SGFOB_cm33_core0, MIMXRT798S_cm33_core0_SERIES</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../devices/MIMXRT798S/drivers;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT798S;../../../../../../devices/MIMXRT798S/periph;../../../../../../devices/periph;../../../../../../devices/MIMXRT798S/utilities/debug_console_lite;../../../../../../devices/MIMXRT798S/utilities/str;../../../../../../components/uart;../../../../../../components/video;../../../../../../components/video/display/dc;../../../../../../components/video/display;../../../../../../components/video/display/dbi;../../../../../../components/video/display/dbi/flexio;../../../../../../components/video/display/dbi/lcdif;../../../../../../components/video/display/dc/dsi_cmd;../../../../../../components/video/display/dc/lcdif;../../../../../../components/video/display/dc/dbi;../../../../../../components/video/display/mipi_dsi_cmd;../../../../../../components/video/display/hx8394;../../../../../../components/video/display/rm68191;../../../../../../components/video/display/rm68200;../../../../../../components/video/display/rm67162;../../../../../../components/video/display/co5300;../../../../../../components/video/display/rpi;../../../../../../components/touch/gt911;../../../../../../components/display/ssd1963</IncludePath>
+              <IncludePath>..;../../../../../../devices/MIMXRT798S/drivers;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT798S;../../../../../../devices/MIMXRT798S/periph;../../../../../../devices/periph;../../../../../../devices/MIMXRT798S/utilities/debug_console_lite;../../../../../../devices/MIMXRT798S/utilities/str;../../../../../../components/uart;../../../../../../components/video;../../../../../../components/video/display/dc;../../../../../../components/video/display;../../../../../../components/video/display/dbi;../../../../../../components/video/display/dbi/flexio;../../../../../../components/video/display/dbi/lcdif;../../../../../../components/video/display/dc/dsi_cmd;../../../../../../components/video/display/dc/lcdif;../../../../../../components/video/display/dc/dbi;../../../../../../components/video/display/mipi_dsi_cmd;../../../../../../components/video/display/hx8394;../../../../../../components/video/display/rm68191;../../../../../../components/video/display/rm68200;../../../../../../components/video/display/rm67162;../../../../../../components/video/display/co5300;../../../../../../components/video/display/rpi;../../../../../../components/touch/gt911;../../../../../../components/touch/ft3267;../../../../../../components/touch/ft5406_rt;../../../../../../components/touch/tma525b;../../../../../../components/display/ssd1963</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -7153,7 +7273,7 @@
             <ScatterFile>MIMXRT798Sxxxx_cm33_core0_flash.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>../../../../../../middleware/emwin/emWin_library/Keil/emWin_M33.lib --remove --entry=Reset_Handler --info=sizes,totals,unused,veneers</Misc>
+            <Misc>../../../../../../middleware/emwin/emWin_library/Keil/emWin_M33.lib --remove --predefine="-D__stack_size__=0x1000" --entry=Reset_Handler --info=sizes,totals,unused,veneers</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6329,6314</DisabledWarnings>
           </LDads>
@@ -7258,6 +7378,16 @@
               <FileType>5</FileType>
               <FilePath>../mcux_config.h</FilePath>
             </File>
+            <File>
+              <FileName>mcux_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../mcux_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../mcux_config.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -7302,6 +7432,11 @@
               <FileName>fsl_edma_soc.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT798S/drivers/fsl_edma_soc.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_inputmux_connections.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT798S/drivers/fsl_inputmux_connections.h</FilePath>
             </File>
             <File>
               <FileName>fsl_iopctl.h</FileName>
@@ -7407,6 +7542,16 @@
               <FileName>fsl_gpio.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT798S/drivers/fsl_gpio.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_inputmux.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT798S/drivers/fsl_inputmux.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_inputmux.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT798S/drivers/fsl_inputmux.c</FilePath>
             </File>
             <File>
               <FileName>fsl_lcdif.h</FileName>
@@ -7724,21 +7869,6 @@
               <FilePath>../../../../../../middleware/emwin/emWin_header/GUIDRV_SSD1926_Private.h</FilePath>
             </File>
             <File>
-              <FileName>GUIDRV_Template.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/emwin/emWin_header/GUIDRV_Template.h</FilePath>
-            </File>
-            <File>
-              <FileName>GUIDRV_TemplateI.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/emwin/emWin_header/GUIDRV_TemplateI.h</FilePath>
-            </File>
-            <File>
-              <FileName>GUIDRV_TemplateI_Private.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/emwin/emWin_header/GUIDRV_TemplateI_Private.h</FilePath>
-            </File>
-            <File>
               <FileName>GUITDRV_ADS7846.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/emwin/emWin_header/GUITDRV_ADS7846.h</FilePath>
@@ -7782,11 +7912,6 @@
               <FileName>GUI_GIF_Private.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/emwin/emWin_header/GUI_GIF_Private.h</FilePath>
-            </File>
-            <File>
-              <FileName>GUI_HOOK.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/emwin/emWin_header/GUI_HOOK.h</FilePath>
             </File>
             <File>
               <FileName>GUI_JPEG_Private.h</FileName>
@@ -7874,14 +7999,14 @@
               <FilePath>../../../../../../middleware/emwin/emWin_header/GUI_Version.h</FilePath>
             </File>
             <File>
-              <FileName>GUI__BiDi2_Brackets_800.h</FileName>
+              <FileName>GUI__BiDi_Brackets.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/emwin/emWin_header/GUI__BiDi2_Brackets_800.h</FilePath>
+              <FilePath>../../../../../../middleware/emwin/emWin_header/GUI__BiDi_Brackets.h</FilePath>
             </File>
             <File>
-              <FileName>GUI__BiDi2_Types_800.h</FileName>
+              <FileName>GUI__BiDi_Types.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/emwin/emWin_header/GUI__BiDi2_Types_800.h</FilePath>
+              <FilePath>../../../../../../middleware/emwin/emWin_header/GUI__BiDi_Types.h</FilePath>
             </File>
             <File>
               <FileName>Global.h</FileName>
@@ -8242,6 +8367,11 @@
               <FileName>WM_Intern.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/emwin/emWin_header/WM_Intern.h</FilePath>
+            </File>
+            <File>
+              <FileName>WM_Layout.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/emwin/emWin_header/WM_Layout.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -8776,12 +8906,12 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>startup/arm</GroupName>
+          <GroupName>startup</GroupName>
           <Files>
             <File>
-              <FileName>startup_MIMXRT798S_cm33_core0.S</FileName>
-              <FileType>2</FileType>
-              <FilePath>../../../../../../devices/MIMXRT798S/arm/startup_MIMXRT798S_cm33_core0.S</FilePath>
+              <FileName>startup_MIMXRT798S_cm33_core0.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT798S/startup_MIMXRT798S_cm33_core0.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -9017,6 +9147,36 @@
               <FileName>fsl_gt911.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../components/touch/gt911/fsl_gt911.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ft3267.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/touch/ft3267/fsl_ft3267.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ft3267.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/touch/ft3267/fsl_ft3267.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ft5406_rt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/touch/ft5406_rt/fsl_ft5406_rt.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ft5406_rt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/touch/ft5406_rt/fsl_ft5406_rt.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_tma525b.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/touch/tma525b/fsl_tma525b.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_tma525b.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/touch/tma525b/fsl_tma525b.c</FilePath>
             </File>
           </Files>
         </Group>

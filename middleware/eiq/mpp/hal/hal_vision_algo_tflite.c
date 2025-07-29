@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2024 NXP.
+ * Copyright 2022-2025 NXP.
  * All rights reserved.
  *
  *  SPDX-License-Identifier: Apache-2.0
@@ -194,6 +194,11 @@ static hal_valgo_status_t HAL_VisionAlgoDev_TFLite_Deinit(vision_algo_dev_t *dev
     HAL_LOGD("++HAL_VisionAlgoDev_TFLite_Deinit\n");
 
     tflite_model_param_t *tflite_model_param = (tflite_model_param_t *)dev->priv_data;
+
+    if (tflite_model_param == NULL) {
+        HAL_LOGE("--HAL_VisionAlgoDev_TFLite_Deinit: dev->priv_data is NULL\n");
+        return kStatus_HAL_ValgoStop;
+    }
 
     MODEL_DeInit();
 

@@ -1,5 +1,5 @@
 /*--------------------------------------------------------------------------*/
-/* Copyright 2021-2023 NXP                                                  */
+/* Copyright 2021-2023, 2025 NXP                                            */
 /*                                                                          */
 /* NXP Proprietary. This software is owned or controlled by NXP and may     */
 /* only be used strictly in accordance with the applicable license terms.   */
@@ -78,7 +78,7 @@
 #define MCUXCLMATH_SECMODEXP_WRITEOFFSET(ofsY_ofsX,maskVal) MCUXCLPKC_PS1_SETXY_REG(ofsY_ofsX)
 #define MCUXCLMATH_SECMODEXP_SECUREOFFSETSELECT(expW0_, expW1_, ofsAs_, ofsYX_, rndW_, bIdx_, oMsH8_, oMsL8_, rnd64_0_, rnd64_1_, mask_)  \
 do{  \
-    uint32_t temp0, temp1;  /* local variable */  \
+    register uint32_t temp0, temp1;  /* local variable */  \
     (void) (rnd64_0_); /* unused variable, avoid compiler warning */                  \
     (void) (rnd64_1_); /* unused variable, avoid compiler warning */                  \
     (void) (mask_);    /* unused variable, avoid compiler warning */                  \

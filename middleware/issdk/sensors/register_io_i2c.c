@@ -135,9 +135,9 @@ void I2C7_SignalEvent_t(uint32_t event)
 }
 #endif
 
-#ifdef CPU_MIMXRT798SGFOA_cm33_core0
+#if defined(MIMXRT798S_cm33_core0_SERIES)
 #if defined(I2C8)
-/* The I2C7 Signal Event Handler function. */
+/* The I2C8 Signal Event Handler function. */
 void I2C8_SignalEvent_t(uint32_t event)
 {
     if (event != ARM_I2C_EVENT_TRANSFER_DONE)

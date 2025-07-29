@@ -1,5 +1,5 @@
 ;/*
-; * Copyright 2024 NXP
+; * Copyright 2024-2025 NXP
 ; *
 ; * All rights reserved.
 ; *
@@ -21,7 +21,7 @@ ezhv_image_end
         .section .ezhv_code, "ax" @progbits @preinit_array
         .global ezhv_image_start
         .type ezhv_image_start, %object
-        .align 4
+        .align 2
 ezhv_image_start:
         .incbin "ezhv_image.bin"
         .global ezhv_image_end
@@ -29,7 +29,7 @@ ezhv_image_start:
 ezhv_image_end:
         .global ezhv_image_size
         .type ezhv_image_size, %object
-        .align 4
+        .align 2
 ezhv_image_size:
         .int  ezhv_image_end - ezhv_image_start
         .end

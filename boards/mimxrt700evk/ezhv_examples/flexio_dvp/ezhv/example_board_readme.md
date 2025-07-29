@@ -14,7 +14,7 @@ Connect MIPI panel to J52.
 Prepare the Demo
 ===============
 The demo use MIPI RK055MHD091 panel by default, to use MIPI RK055AHD091 panel, change the macro
-DEMO_PANEL to DEMO_PANEL_RK055AHD091 in display_support.h. 
+DEMO_PANEL to 0 in mcux_config.h. 
 1.  Connect a micro USB cable between the PC host and the USB port on the board
 2.  Open a serial terminal with the following settings:
     - 115200 baud rate

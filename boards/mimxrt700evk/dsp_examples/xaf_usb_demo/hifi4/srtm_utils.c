@@ -70,6 +70,9 @@ uint32_t DSP_AudioReadRing(dsp_handle_t *dsp, char *data, uint32_t size)
 
     xos_mutex_lock(&dsp->audioMutex);
     bytes_read = ringbuf_read(dsp->audioBuffer, (uint8_t *)data, size);
+#ifdef FSL_FEATURE_SOC_XCACHE_COUNT
+    xthal_dcache_region_writeback(data, size);
+#endif
     xos_mutex_unlock(&dsp->audioMutex);
 
     if (bytes_read != size)
@@ -86,6 +89,9 @@ uint32_t DSP_AudioWriteRing(dsp_handle_t *dsp, char *data, uint32_t size)
     uint32_t written;
 
     xos_mutex_lock(&dsp->audioMutex);
+#ifdef FSL_FEATURE_SOC_XCACHE_COUNT
+    xthal_dcache_region_invalidate(data, size);
+#endif
     written = ringbuf_write(dsp->audioBuffer, (uint8_t *)data, size);
     xos_mutex_unlock(&dsp->audioMutex);
 
@@ -124,6 +130,9 @@ uint32_t DSP_AudioRead(dsp_handle_t *dsp, char *data, uint32_t size)
         read_size = dsp->buffer_in.size - dsp->buffer_in.index;
     }
 
+#ifdef FSL_FEATURE_SOC_XCACHE_COUNT
+    xthal_dcache_region_invalidate(&dsp->buffer_in.data[dsp->buffer_in.index], read_size);
+#endif
     memcpy(data, &dsp->buffer_in.data[dsp->buffer_in.index], read_size);
 
     dsp->buffer_in.index += read_size;
@@ -147,6 +156,9 @@ uint32_t DSP_AudioWrite(dsp_handle_t *dsp, char *data, uint32_t size)
     }
 
     memcpy(&dsp->buffer_out.data[dsp->buffer_out.index], data, write_size);
+#ifdef FSL_FEATURE_SOC_XCACHE_COUNT
+    xthal_dcache_region_writeback(&dsp->buffer_out.data[dsp->buffer_out.index], write_size);
+#endif
 
     dsp->buffer_out.index += write_size;
 

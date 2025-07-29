@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2023 NXP
+ * Copyright 2022-2023, 2025 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -22,9 +22,10 @@
 tflite::MicroOpResolver &MODEL_GetOpsResolver()
 {
 #ifdef APP_USE_NEUTRON64_MODEL
-    static tflite::MicroMutableOpResolver<3> s_microOpResolver;
+    static tflite::MicroMutableOpResolver<4> s_microOpResolver;
 
     s_microOpResolver.AddTranspose();
+    s_microOpResolver.AddAdd();
     s_microOpResolver.AddResizeBilinear();
     s_microOpResolver.AddCustom(tflite::GetString_NEUTRON_GRAPH(),
             tflite::Register_NEUTRON_GRAPH());

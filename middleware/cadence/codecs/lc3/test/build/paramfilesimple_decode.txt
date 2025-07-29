@@ -1,0 +1,12 @@
+@Start
+
+@Input_path ../test_inp/
+@Output_path ../test_out/
+
+rate_switching_dec_Castanets_16000_NA.bin Castanets_16000d.wav
+-bps 24 Female_Speech_German_48000_stereo_24bits_320000.bin Female_Speech_German_48000_stereo_24bits_320000.wav
+
+@Stop
+
+
+

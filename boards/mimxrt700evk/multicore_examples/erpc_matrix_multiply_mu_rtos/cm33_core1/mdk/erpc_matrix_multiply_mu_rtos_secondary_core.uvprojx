@@ -11,7 +11,7 @@
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
-          <Device>MIMXRT798SGFOA:cm33_core1</Device>
+          <Device>MIMXRT798SGFOB:cm33_core1</Device>
           <Vendor>NXP</Vendor>
           <PackID>NXP.MIMXRT798S_DFP.17.0.0</PackID>
           <PackURL>https://mcuxpresso.nxp.com/cmsis_pack/repo/</PackURL>
@@ -332,9 +332,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../mcux_config.h -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
-              <Define>DEBUG, __USE_SHMEM, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT798SGFOA_cm33_core1, MULTICORE_APP=1, SDK_OS_FREE_RTOS</Define>
+              <Define>DEBUG, __USE_SHMEM, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT798SGFOB_cm33_core1, MIMXRT798S_cm33_core1_SERIES, MULTICORE_APP=1, SDK_OS_FREE_RTOS</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT798S;../../../../../../devices/MIMXRT798S/periph;../../../../../../devices/MIMXRT798S/drivers;../../../../../../devices/MIMXRT798S/utilities/debug_console_lite;../../../../../../devices/MIMXRT798S/utilities/str;../../../../../../components/uart;../../../../../../middleware/multicore/mcmgr/src;../../../../../../middleware/multicore/erpc/erpc_c/infra;../../../../../../middleware/multicore/erpc/erpc_c/setup;../../../../../../middleware/multicore/erpc/erpc_c/port;../../../../../../middleware/multicore/erpc/erpc_c/transports;../../../../../../middleware/multicore/erpc/erpc_c/config;../../../../../../middleware/multicore/erpc/examples/MCUXPRESSO_SDK;../../../../../../middleware/multicore/erpc/examples/MCUXPRESSO_SDK/erpc_matrix_multiply/service;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../../rtos/freertos/freertos-kernel/template</IncludePath>
+              <IncludePath>..;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT798S;../../../../../../devices/MIMXRT798S/periph;../../../../../../devices/MIMXRT798S/drivers;../../../../../../devices/MIMXRT798S/utilities/debug_console_lite;../../../../../../devices/MIMXRT798S/utilities/str;../../../../../../components/uart;../../../../../../middleware/multicore/mcmgr/inc;../../../../../../middleware/multicore/mcmgr/inc/platform/imxrt700;../../../../../../middleware/multicore/erpc/erpc_c/infra;../../../../../../middleware/multicore/erpc/erpc_c/setup;../../../../../../middleware/multicore/erpc/erpc_c/port;../../../../../../middleware/multicore/erpc/erpc_c/transports;../../../../../../middleware/multicore/erpc/erpc_c/config;../../../../../../middleware/multicore/erpc/examples/MCUXPRESSO_SDK;../../../../../../middleware/multicore/erpc/examples/MCUXPRESSO_SDK/erpc_matrix_multiply/service;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../../rtos/freertos/freertos-kernel/template</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -349,10 +349,10 @@
             <useXO>0</useXO>
             <uClangAs>1</uClangAs>
             <VariousControls>
-              <MiscControls/>
-              <Define>MCUXPRESSO_SDK, CPU_MIMXRT798SGFOA_cm33_core1</Define>
+              <MiscControls>-include ../mcux_config.h</MiscControls>
+              <Define>MCUXPRESSO_SDK, CPU_MIMXRT798SGFOB_cm33_core1, MIMXRT798S_cm33_core1_SERIES</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT798S;../../../../../../devices/MIMXRT798S/periph;../../../../../../devices/periph;../../../../../../devices/MIMXRT798S/drivers;../../../../../../devices/MIMXRT798S/utilities/debug_console_lite;../../../../../../devices/MIMXRT798S/utilities/str;../../../../../../components/uart;../../../../../../middleware/multicore/mcmgr/src;../../../../../../middleware/multicore/erpc/erpc_c/infra;../../../../../../middleware/multicore/erpc/erpc_c/setup;../../../../../../middleware/multicore/erpc/erpc_c/port;../../../../../../middleware/multicore/erpc/erpc_c/transports;../../../../../../middleware/multicore/erpc/erpc_c/config;../../../../../../middleware/multicore/erpc/examples/MCUXPRESSO_SDK;../../../../../../middleware/multicore/erpc/examples/MCUXPRESSO_SDK/erpc_matrix_multiply/service;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../../rtos/freertos/freertos-kernel/template</IncludePath>
+              <IncludePath>..;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT798S;../../../../../../devices/MIMXRT798S/periph;../../../../../../devices/periph;../../../../../../devices/MIMXRT798S/drivers;../../../../../../devices/MIMXRT798S/utilities/debug_console_lite;../../../../../../devices/MIMXRT798S/utilities/str;../../../../../../components/uart;../../../../../../middleware/multicore/mcmgr/inc;../../../../../../middleware/multicore/mcmgr/inc/platform/imxrt700;../../../../../../middleware/multicore/erpc/erpc_c/infra;../../../../../../middleware/multicore/erpc/erpc_c/setup;../../../../../../middleware/multicore/erpc/erpc_c/port;../../../../../../middleware/multicore/erpc/erpc_c/transports;../../../../../../middleware/multicore/erpc/erpc_c/config;../../../../../../middleware/multicore/erpc/examples/MCUXPRESSO_SDK;../../../../../../middleware/multicore/erpc/examples/MCUXPRESSO_SDK/erpc_matrix_multiply/service;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../../rtos/freertos/freertos-kernel/template</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -379,9 +379,24 @@
           <GroupName>source</GroupName>
           <Files>
             <File>
+              <FileName>dsp_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../dsp_config.h</FilePath>
+            </File>
+            <File>
               <FileName>main.c</FileName>
               <FileType>1</FileType>
               <FilePath>../main.c</FilePath>
+            </File>
+            <File>
+              <FileName>dsp_support.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../dsp_support.c</FilePath>
+            </File>
+            <File>
+              <FileName>dsp_support.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../dsp_support.h</FilePath>
             </File>
             <File>
               <FileName>FreeRTOSConfig_Gen.h</FileName>
@@ -392,6 +407,16 @@
               <FileName>erpc_config_gen.h</FileName>
               <FileType>5</FileType>
               <FilePath>../erpc_config_gen.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../mcux_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../mcux_config.h</FilePath>
             </File>
             <File>
               <FileName>mcux_config.h</FileName>
@@ -946,12 +971,12 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>startup/arm</GroupName>
+          <GroupName>startup</GroupName>
           <Files>
             <File>
-              <FileName>startup_MIMXRT798S_cm33_core1.S</FileName>
-              <FileType>2</FileType>
-              <FilePath>../../../../../../devices/MIMXRT798S/arm/startup_MIMXRT798S_cm33_core1.S</FilePath>
+              <FileName>startup_MIMXRT798S_cm33_core1.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT798S/startup_MIMXRT798S_cm33_core1.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -967,6 +992,16 @@
               <FileName>fsl_clock.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT798S/drivers/fsl_clock.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_dsp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT798S/drivers/fsl_dsp.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_dsp.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT798S/drivers/fsl_dsp.h</FilePath>
             </File>
             <File>
               <FileName>fsl_iopctl.h</FileName>
@@ -1131,18 +1166,23 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>mcmgr/mcmgr/src</GroupName>
+          <GroupName>mcmgr/mcmgr/inc</GroupName>
           <Files>
             <File>
               <FileName>mcmgr.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/mcmgr/src/mcmgr.h</FilePath>
+              <FilePath>../../../../../../middleware/multicore/mcmgr/inc/mcmgr.h</FilePath>
             </File>
             <File>
               <FileName>mcmgr_internal_core_api.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/mcmgr/src/mcmgr_internal_core_api.h</FilePath>
+              <FilePath>../../../../../../middleware/multicore/mcmgr/inc/mcmgr_internal_core_api.h</FilePath>
             </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>mcmgr/mcmgr/src</GroupName>
+          <Files>
             <File>
               <FileName>mcmgr.c</FileName>
               <FileType>1</FileType>
@@ -1157,6 +1197,16 @@
               <FileName>mcmgr_mu_internal.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/multicore/mcmgr/src/mcmgr_mu_internal.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>mcmgr/mcmgr/inc/platform/imxrt700</GroupName>
+          <Files>
+            <File>
+              <FileName>mcmgr_platform.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/multicore/mcmgr/inc/platform/imxrt700/mcmgr_platform.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1593,6 +1643,11 @@
               <FileType>5</FileType>
               <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/timers.h</FilePath>
             </File>
+            <File>
+              <FileName>freertos_tasks_c_additions.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/freertos_tasks_c_additions.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -1678,6 +1733,11 @@
               <FileType>5</FileType>
               <FilePath>../example_board_readme.md</FilePath>
             </File>
+            <File>
+              <FileName>examples_shared_readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../examples_shared_readme.md</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>
@@ -1690,7 +1750,7 @@
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
-          <Device>MIMXRT798SGFOA:cm33_core1</Device>
+          <Device>MIMXRT798SGFOB:cm33_core1</Device>
           <Vendor>NXP</Vendor>
           <PackID>NXP.MIMXRT798S_DFP.17.0.0</PackID>
           <PackURL>https://mcuxpresso.nxp.com/cmsis_pack/repo/</PackURL>
@@ -2011,9 +2071,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../mcux_config.h -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
-              <Define>NDEBUG, __USE_SHMEM, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT798SGFOA_cm33_core1, MULTICORE_APP=1, SDK_OS_FREE_RTOS</Define>
+              <Define>NDEBUG, __USE_SHMEM, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT798SGFOB_cm33_core1, MIMXRT798S_cm33_core1_SERIES, MULTICORE_APP=1, SDK_OS_FREE_RTOS</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT798S;../../../../../../devices/MIMXRT798S/periph;../../../../../../devices/MIMXRT798S/drivers;../../../../../../devices/MIMXRT798S/utilities/debug_console_lite;../../../../../../devices/MIMXRT798S/utilities/str;../../../../../../components/uart;../../../../../../middleware/multicore/mcmgr/src;../../../../../../middleware/multicore/erpc/erpc_c/infra;../../../../../../middleware/multicore/erpc/erpc_c/setup;../../../../../../middleware/multicore/erpc/erpc_c/port;../../../../../../middleware/multicore/erpc/erpc_c/transports;../../../../../../middleware/multicore/erpc/erpc_c/config;../../../../../../middleware/multicore/erpc/examples/MCUXPRESSO_SDK;../../../../../../middleware/multicore/erpc/examples/MCUXPRESSO_SDK/erpc_matrix_multiply/service;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../../rtos/freertos/freertos-kernel/template</IncludePath>
+              <IncludePath>..;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT798S;../../../../../../devices/MIMXRT798S/periph;../../../../../../devices/MIMXRT798S/drivers;../../../../../../devices/MIMXRT798S/utilities/debug_console_lite;../../../../../../devices/MIMXRT798S/utilities/str;../../../../../../components/uart;../../../../../../middleware/multicore/mcmgr/inc;../../../../../../middleware/multicore/mcmgr/inc/platform/imxrt700;../../../../../../middleware/multicore/erpc/erpc_c/infra;../../../../../../middleware/multicore/erpc/erpc_c/setup;../../../../../../middleware/multicore/erpc/erpc_c/port;../../../../../../middleware/multicore/erpc/erpc_c/transports;../../../../../../middleware/multicore/erpc/erpc_c/config;../../../../../../middleware/multicore/erpc/examples/MCUXPRESSO_SDK;../../../../../../middleware/multicore/erpc/examples/MCUXPRESSO_SDK/erpc_matrix_multiply/service;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../../rtos/freertos/freertos-kernel/template</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2028,10 +2088,10 @@
             <useXO>0</useXO>
             <uClangAs>1</uClangAs>
             <VariousControls>
-              <MiscControls/>
-              <Define>MCUXPRESSO_SDK, CPU_MIMXRT798SGFOA_cm33_core1</Define>
+              <MiscControls>-include ../mcux_config.h</MiscControls>
+              <Define>MCUXPRESSO_SDK, CPU_MIMXRT798SGFOB_cm33_core1, MIMXRT798S_cm33_core1_SERIES</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT798S;../../../../../../devices/MIMXRT798S/periph;../../../../../../devices/periph;../../../../../../devices/MIMXRT798S/drivers;../../../../../../devices/MIMXRT798S/utilities/debug_console_lite;../../../../../../devices/MIMXRT798S/utilities/str;../../../../../../components/uart;../../../../../../middleware/multicore/mcmgr/src;../../../../../../middleware/multicore/erpc/erpc_c/infra;../../../../../../middleware/multicore/erpc/erpc_c/setup;../../../../../../middleware/multicore/erpc/erpc_c/port;../../../../../../middleware/multicore/erpc/erpc_c/transports;../../../../../../middleware/multicore/erpc/erpc_c/config;../../../../../../middleware/multicore/erpc/examples/MCUXPRESSO_SDK;../../../../../../middleware/multicore/erpc/examples/MCUXPRESSO_SDK/erpc_matrix_multiply/service;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../../rtos/freertos/freertos-kernel/template</IncludePath>
+              <IncludePath>..;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT798S;../../../../../../devices/MIMXRT798S/periph;../../../../../../devices/periph;../../../../../../devices/MIMXRT798S/drivers;../../../../../../devices/MIMXRT798S/utilities/debug_console_lite;../../../../../../devices/MIMXRT798S/utilities/str;../../../../../../components/uart;../../../../../../middleware/multicore/mcmgr/inc;../../../../../../middleware/multicore/mcmgr/inc/platform/imxrt700;../../../../../../middleware/multicore/erpc/erpc_c/infra;../../../../../../middleware/multicore/erpc/erpc_c/setup;../../../../../../middleware/multicore/erpc/erpc_c/port;../../../../../../middleware/multicore/erpc/erpc_c/transports;../../../../../../middleware/multicore/erpc/erpc_c/config;../../../../../../middleware/multicore/erpc/examples/MCUXPRESSO_SDK;../../../../../../middleware/multicore/erpc/examples/MCUXPRESSO_SDK/erpc_matrix_multiply/service;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../../rtos/freertos/freertos-kernel/template</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -2058,9 +2118,24 @@
           <GroupName>source</GroupName>
           <Files>
             <File>
+              <FileName>dsp_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../dsp_config.h</FilePath>
+            </File>
+            <File>
               <FileName>main.c</FileName>
               <FileType>1</FileType>
               <FilePath>../main.c</FilePath>
+            </File>
+            <File>
+              <FileName>dsp_support.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../dsp_support.c</FilePath>
+            </File>
+            <File>
+              <FileName>dsp_support.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../dsp_support.h</FilePath>
             </File>
             <File>
               <FileName>FreeRTOSConfig_Gen.h</FileName>
@@ -2071,6 +2146,16 @@
               <FileName>erpc_config_gen.h</FileName>
               <FileType>5</FileType>
               <FilePath>../erpc_config_gen.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../mcux_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../mcux_config.h</FilePath>
             </File>
             <File>
               <FileName>mcux_config.h</FileName>
@@ -2625,12 +2710,12 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>startup/arm</GroupName>
+          <GroupName>startup</GroupName>
           <Files>
             <File>
-              <FileName>startup_MIMXRT798S_cm33_core1.S</FileName>
-              <FileType>2</FileType>
-              <FilePath>../../../../../../devices/MIMXRT798S/arm/startup_MIMXRT798S_cm33_core1.S</FilePath>
+              <FileName>startup_MIMXRT798S_cm33_core1.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT798S/startup_MIMXRT798S_cm33_core1.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2646,6 +2731,16 @@
               <FileName>fsl_clock.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT798S/drivers/fsl_clock.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_dsp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT798S/drivers/fsl_dsp.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_dsp.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT798S/drivers/fsl_dsp.h</FilePath>
             </File>
             <File>
               <FileName>fsl_iopctl.h</FileName>
@@ -2810,18 +2905,23 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>mcmgr/mcmgr/src</GroupName>
+          <GroupName>mcmgr/mcmgr/inc</GroupName>
           <Files>
             <File>
               <FileName>mcmgr.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/mcmgr/src/mcmgr.h</FilePath>
+              <FilePath>../../../../../../middleware/multicore/mcmgr/inc/mcmgr.h</FilePath>
             </File>
             <File>
               <FileName>mcmgr_internal_core_api.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/mcmgr/src/mcmgr_internal_core_api.h</FilePath>
+              <FilePath>../../../../../../middleware/multicore/mcmgr/inc/mcmgr_internal_core_api.h</FilePath>
             </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>mcmgr/mcmgr/src</GroupName>
+          <Files>
             <File>
               <FileName>mcmgr.c</FileName>
               <FileType>1</FileType>
@@ -2836,6 +2936,16 @@
               <FileName>mcmgr_mu_internal.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/multicore/mcmgr/src/mcmgr_mu_internal.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>mcmgr/mcmgr/inc/platform/imxrt700</GroupName>
+          <Files>
+            <File>
+              <FileName>mcmgr_platform.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/multicore/mcmgr/inc/platform/imxrt700/mcmgr_platform.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3272,6 +3382,11 @@
               <FileType>5</FileType>
               <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/timers.h</FilePath>
             </File>
+            <File>
+              <FileName>freertos_tasks_c_additions.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/freertos_tasks_c_additions.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -3356,6 +3471,11 @@
               <FileName>example_board_readme.md</FileName>
               <FileType>5</FileType>
               <FilePath>../example_board_readme.md</FilePath>
+            </File>
+            <File>
+              <FileName>examples_shared_readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../examples_shared_readme.md</FilePath>
             </File>
           </Files>
         </Group>

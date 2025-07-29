@@ -10,10 +10,8 @@
  * Definitions
  ******************************************************************************/
 /*${macro:start}*/
-#define APP_FB_NUM 2
-#define APP_FB_USE_FIXED_ADDRESS 1
-#define APP_FB0_ADDR 0x20239000U
-#define APP_FB1_ADDR 0x204DC000U
+#define APP_RGB_ADDR 0x20239000U
+#define APP_YUV_ADDR 0x204DC000U
 /*${macro:end}*/
 
 /*******************************************************************************

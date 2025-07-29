@@ -3,6 +3,7 @@
  */
 
 /*
+ * Copyright 2025 NXP
  * Copyright (c) 2015-2016, Intel Corporation.
  *
  * SPDX-License-Identifier: Apache-2.0
@@ -15,6 +16,10 @@
 #include <stddef.h>
 
 #include <toolchain.h>
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 /** @brief Encode 16-bit value into array values in little-endian format.
  *
@@ -648,5 +653,9 @@ static inline void sys_mem_swap(void *buf, size_t length)
 		((uint8_t *)buf)[length - 1U - i] = tmp;
 	}
 }
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* ZEPHYR_INCLUDE_SYS_BYTEORDER_H_ */

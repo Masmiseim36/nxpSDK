@@ -1,6 +1,5 @@
 /*
- * Copyright 2023-2024 NXP
- * All rights reserved.
+ * Copyright 2023-2025 NXP
  *
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -139,6 +138,19 @@ void BOARD_SetPmicVdd2Voltage(uint32_t volt)
 #endif
 }
 
+uint32_t BOARD_GetPmicVdd2Voltage(void)
+{
+#if BOARD_PMIC_CONFIG_USE_SEMA4
+    BOARD_PmicCtrlSema4Lock();
+#endif
+    PCA9422_GetCurrentPowerMode(&pca9422Handle, &pca9422CurrMode);
+    PCA9422_ReadPowerModeConfigs(&pca9422Handle, pca9422CurrMode, &pca9422CurrModeCfg);
+#if BOARD_PMIC_CONFIG_USE_SEMA4
+    BOARD_PmicCtrlSema4Unlock();
+#endif
+    return pca9422CurrModeCfg.sw1OutVolt;
+}
+
 void BOARD_SetPmicVdd1Voltage(uint32_t volt)
 {
 #if BOARD_PMIC_CONFIG_USE_SEMA4
@@ -151,4 +163,17 @@ void BOARD_SetPmicVdd1Voltage(uint32_t volt)
 #if BOARD_PMIC_CONFIG_USE_SEMA4
     BOARD_PmicCtrlSema4Unlock();
 #endif
+}
+
+uint32_t BOARD_GetPmicVdd1Voltage(void)
+{
+#if BOARD_PMIC_CONFIG_USE_SEMA4
+    BOARD_PmicCtrlSema4Lock();
+#endif
+    PCA9422_GetCurrentPowerMode(&pca9422Handle, &pca9422CurrMode);
+    PCA9422_ReadPowerModeConfigs(&pca9422Handle, pca9422CurrMode, &pca9422CurrModeCfg);
+#if BOARD_PMIC_CONFIG_USE_SEMA4
+    BOARD_PmicCtrlSema4Unlock();
+#endif
+    return pca9422CurrModeCfg.sw3OutVolt;
 }

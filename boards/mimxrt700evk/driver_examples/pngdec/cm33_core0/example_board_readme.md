@@ -21,7 +21,7 @@ Connect the panel to J8. Then connect the panel's 5V pin to JP43-1, GND pin to J
 
 Prepare the Demo
 ===============
-The demo use SSD1963 panel by default, to use other panel,
+The demo use MIPI RK055MHD091 panel by default, to use other panel,
 change the macro DEMO_PANEL in mcux_config.h. Which number represents which panel
 can be found in display_support.h.
 

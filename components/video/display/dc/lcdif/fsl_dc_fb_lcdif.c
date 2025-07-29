@@ -134,7 +134,7 @@ status_t DC_FB_LCDIF_Init(const dc_fb_t *dc)
 
     dc_fb_lcdif_handle_t *dcHandle = dc->prvData;
 
-    if (0U == dcHandle->initTimes++)
+    if (0U == dcHandle->initTimes)
     {
         dcConfig = (const dc_fb_lcdif_config_t *)(dc->config);
 
@@ -163,6 +163,8 @@ status_t DC_FB_LCDIF_Init(const dc_fb_t *dc)
         LCDIF_SetFrameBufferBackground(dcHandle->lcdif, 0U, 0U);
 #endif
     }
+
+    dcHandle->initTimes++;
 
     return status;
 }
@@ -384,6 +386,11 @@ status_t DC_FB_LCDIF_GetLayerDefaultConfig(const dc_fb_t *dc, uint8_t layer, dc_
 
     dc_fb_lcdif_handle_t *dcHandle = (dc_fb_lcdif_handle_t *)(dc->prvData);
 
+    if ((dcHandle->width > (0xFFFFU / DC_FB_LCDIF_DEFAULT_BYTE_PER_PIXEL)))
+    {
+        return kStatus_InvalidArgument;
+    }
+
     fbInfo->startX      = 0;
     fbInfo->startY      = 0;
     fbInfo->width       = dcHandle->width;
@@ -410,7 +417,7 @@ status_t DC_FB_LCDIF_SetFrameBuffer(const dc_fb_t *dc, uint8_t layer, void *fram
             if (dcHandle->layers[layer].fbConfig.format == kLCDIF_PixelFormatYUV420Tiled)
             {
                 stride = dcHandle->lcdif->FRAMEBUFFERSTRIDE0 / 8U;
-                LCDIF_SetFrameBufferUVAddr(dcHandle->lcdif, 0, (uint32_t)(uint8_t *)frameBuffer + stride * dcHandle->layers[layer].fbConfig.height);
+                LCDIF_SetFrameBufferUVAddr(dcHandle->lcdif, 0, (uint32_t)(uint8_t *)frameBuffer + stride * (uint32_t)dcHandle->layers[layer].fbConfig.height);
             }
             break;
         case 1U:

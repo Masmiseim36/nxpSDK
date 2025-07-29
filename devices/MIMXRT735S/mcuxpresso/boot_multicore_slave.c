@@ -5,7 +5,7 @@
 //
 //*****************************************************************************
 //
-// Copyright 2024 NXP
+// Copyright 2024,2025 NXP
 // All rights reserved.
 //
 // SPDX-License-Identifier: BSD-3-Clause
@@ -22,13 +22,19 @@ void boot_multicore_slave(void)
 {
     /* CPU0 to CPU1 communication case */
     /*Glikey write enable, GLIKEY4*/
-    GlikeyWriteEnable(GLIKEY4, 1U);
+    (void)GLIKEY_SyncReset(GLIKEY4);
+
+    (void)GLIKEY_StartEnable(GLIKEY4, 1U);
+    (void)GLIKEY_ContinueEnable(GLIKEY4, GLIKEY_CODEWORD_STEP1);
+    (void)GLIKEY_ContinueEnable(GLIKEY4, GLIKEY_CODEWORD_STEP2);
+    (void)GLIKEY_ContinueEnable(GLIKEY4, GLIKEY_CODEWORD_STEP3);
+    (void)GLIKEY_ContinueEnable(GLIKEY4, GLIKEY_CODEWORD_STEP_EN);
 
     /* Boot source for Core 1 from RAM. */
     SYSCON3->CPU1_NSVTOR = ((uint32_t)(char *)((unsigned int *)&__core_m33slave_START__) >> 7U);
     SYSCON3->CPU1_SVTOR  = ((uint32_t)(char *)((unsigned int *)&__core_m33slave_START__) >> 7U);
     
-    GlikeyClearConfig(GLIKEY4);
+    (void)GLIKEY_SyncReset(GLIKEY4);
 
     /* Enable cpu1 clock. */
     CLOCK_EnableClock(kCLOCK_Cpu1);

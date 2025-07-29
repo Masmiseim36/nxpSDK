@@ -119,10 +119,8 @@ xspi_edma_handle_t xspiHandle;
 
 extern void XSPI_TX_DMA_ISR(void);
 extern void XSPI_RX_DMA_ISR(void);
-#if 0
 void cleanCache(void)
 {
-   PRINTF("%s\r\n", __func__);
    XCACHE_CleanCache(XCACHE0);
 }
 
@@ -131,7 +129,6 @@ void invalidateCache(void)
    XCACHE_CleanCache(XCACHE0);
    XCACHE_InvalidateCache(XCACHE0);
 }
-#endif
 void BOARD_Init()
 {
     edma_config_t userConfig;
@@ -141,6 +138,12 @@ void BOARD_Init()
     BOARD_InitPmicPins();
     BOARD_InitPmic();
     BOARD_SetPmicVdd2Voltage(1100000U); /* 1.1v for 325MHz clock. */
+    
+    // Disable LDO
+    POWER_SetVddnSupplySrc(kVddSrc_PMIC);
+    POWER_SetVdd1SupplySrc(kVddSrc_PMIC);
+    POWER_SetVdd2SupplySrc(kVddSrc_PMIC);
+    POWER_ApplyPD();
 
     BOARD_BootClockHSRUN();
     BOARD_InitDebugConsole();

@@ -16,7 +16,7 @@
 !!GlobalInfo
 product: Pins v16.0
 processor: MIMXRT798S
-package_id: MIMXRT798SGFOA
+package_id: MIMXRT798SGFOB
 mcu_data: ksdk2_0
 processor_version: 0.2412.10
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
@@ -46,7 +46,7 @@ BOARD_InitPins:
 - pin_list:
   - {pin_num: N5, peripheral: LP_FLEXCOMM0, signal: P1, pin_signal: PIO1_0/LP_FLEXCOMM0_P1/SCT0_OUT9/CTIMER4_MAT1}
   - {pin_num: N4, peripheral: LP_FLEXCOMM0, signal: P0, pin_signal: PIO0_31/LP_FLEXCOMM0_P0/UTICK0_CAP2/SCT0_OUT8/CTIMER4_MAT0, input_buffer: enable}
-  - {pin_num: T18, peripheral: PDM, signal: 'DATA, 0_1', pin_signal: PIO10_9/PDM_DATA01, input_buffer: enable}
+  - {pin_num: T18, peripheral: PDM, signal: 'DATA, 0', pin_signal: PIO10_9/PDM_DATA01, input_buffer: enable}
   - {pin_num: U18, peripheral: PDM, signal: CLK, pin_signal: PIO10_8/PDM_CLK}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */

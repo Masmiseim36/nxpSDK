@@ -51,7 +51,7 @@ int mpp_api_init(mpp_api_params_t *params);
  *
  * @param [in] params pipeline parameters
  * @param [out] ret return code (0 - success, non-zero - error)
- * @return handle to the pipeline if success, NULL if there is an error
+ * @return handle to the pipeline if success, NULL if there is an error.
  *
  */
 mpp_t mpp_create(mpp_params_t *params, int *ret);
@@ -188,7 +188,7 @@ int mpp_stop(mpp_t mpp);
 /**
  * Enable statistics collection
  *
- * This function enables statistics collection for a given group
+ * This function enables statistics collection for a given group.
  * Statistics collection is disabled by default after API initialization.
  * Calling this function when stats are enabled has no effect.
  *
@@ -201,7 +201,7 @@ void mpp_stats_enable(mpp_stats_grp_t grp);
 /**
  * Disable statistics collection
  *
- * This function disables statistics collection for a given group
+ * This function disables statistics collection for a given group.
  * Calling this function when stats are disabled has no effect.
  * This function is used to ensure stats are not updated while
  * application tasks use the stats structures.

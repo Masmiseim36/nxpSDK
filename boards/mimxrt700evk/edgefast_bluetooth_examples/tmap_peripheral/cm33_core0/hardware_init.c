@@ -16,6 +16,7 @@
 #include "usb_phy.h"
 #include "usb_host.h"
 #include "fsl_xspi.h"
+#include "psa/crypto.h"
 #if (((defined(CONFIG_BT_SMP)) && (CONFIG_BT_SMP)))
 #include "fsl_cache.h"
 #endif /* CONFIG_BT_SMP */
@@ -56,6 +57,7 @@ void BOARD_InitHardware(void)
 
     CLOCK_AttachClk(kFRO1_DIV2_to_TRNG);                               /* Max 96MHZ with 1.0V nomral supply. */
     CLOCK_SetClkDiv(kCLOCK_DivTrngClk, 1U);
+    psa_crypto_init();
 #endif /* CONFIG_BT_SMP */
 }
 

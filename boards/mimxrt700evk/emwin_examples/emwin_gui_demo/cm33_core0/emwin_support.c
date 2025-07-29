@@ -10,7 +10,17 @@
 #include "emwin_support.h"
 #include "GUIDRV_Lin.h"
 #include "board.h"
+#if (DEMO_PANEL == DEMO_PANEL_RM67162)
+#include "fsl_ft3267.h"
+#elif (DEMO_PANEL == DEMO_PANEL_CO5300)
+#include "fsl_tma525b.h"
+#elif (DEMO_PANEL == DEMO_PANEL_TFT_PROTO_5) || (DEMO_PANEL_RASPI_7INCH == DEMO_PANEL)
+#include "fsl_lpi2c.h"
+#include "fsl_ft5406_rt.h"
+#elif ((DEMO_PANEL_RK055AHD091 == DEMO_PANEL) || (DEMO_PANEL_RK055IQH091 == DEMO_PANEL) || \
+       (DEMO_PANEL_RK055MHD091 == DEMO_PANEL))
 #include "fsl_gt911.h"
+#endif
 #include "fsl_debug_console.h"
 
 /*
@@ -62,9 +72,13 @@ void APP_InitDisplay(void)
 
     g_dc.ops->getLayerDefaultConfig(&g_dc, 0, &fbInfo);
     fbInfo.pixelFormat = DEMO_BUFFER_PIXEL_FORMAT;
-    fbInfo.width       = DEMO_BUFFER_WIDTH;
-    fbInfo.height      = DEMO_BUFFER_HEIGHT;
+    fbInfo.width       = DEMO_PANEL_WIDTH;
+    fbInfo.height      = DEMO_PANEL_HEIGHT;
+#if (DEMO_PANEL == DEMO_PANEL_TFT_PROTO_5 || DEMO_PANEL == DEMO_PANEL_CO5300)
     fbInfo.strideBytes = DEMO_BUFFER_STRIDE_BYTE;
+#elif (DEMO_PANEL == DEMO_PANEL_RM67162)
+    fbInfo.strideBytes = DEMO_BUFFER_WIDTH * DEMO_BUFFER_BYTE_PER_PIXEL;
+#endif
     g_dc.ops->setLayerConfig(&g_dc, 0, &fbInfo);
 
     g_dc.ops->setCallback(&g_dc, 0, DEMO_BufferSwitchOffCallback, NULL);
@@ -73,7 +87,10 @@ void APP_InitDisplay(void)
 /*******************************************************************************
  * Implementation of communication with the touch controller
  ******************************************************************************/
-static void BOARD_PullTouchPanelResetPin(bool pullUp)
+#if ((DEMO_PANEL == DEMO_PANEL_RM67162) || (DEMO_PANEL_RK055AHD091 == DEMO_PANEL) || \
+     (DEMO_PANEL_RK055IQH091 == DEMO_PANEL) || (DEMO_PANEL_RK055MHD091 == DEMO_PANEL) || \
+     (DEMO_PANEL == DEMO_PANEL_CO5300))
+void BOARD_PullMIPIPanelTouchResetPin(bool pullUp)
 {
     if (pullUp)
     {
@@ -84,14 +101,43 @@ static void BOARD_PullTouchPanelResetPin(bool pullUp)
         GPIO_PinWrite(BOARD_MIPI_PANEL_TOUCH_RST_GPIO, BOARD_MIPI_PANEL_TOUCH_RST_PIN, 0);
     }
 }
+#endif
 
+#if (DEMO_PANEL == DEMO_PANEL_RM67162)
+static ft3267_handle_t s_touchHandle;
+static volatile bool s_touchEvent = false;
+
+static const ft3267_config_t s_touchConfig = {
+    .I2C_ReceiveFunc  = BOARD_MIPIPanelTouch_I2C_Receive,
+    .pullResetPinFunc = BOARD_PullMIPIPanelTouchResetPin,
+    .pullPowerPinFunc = NULL,
+    .timeDelayMsFunc  = VIDEO_DelayMs,
+};
+
+#elif (DEMO_PANEL == DEMO_PANEL_CO5300)
+static tma525b_handle_t s_touchHandle;
+static volatile bool s_touchEvent = false;
+
+static const tma525b_config_t s_touchConfig = {
+    .I2C_SendFunc  = BOARD_MIPIPanelTouch_I2C_Send,
+    .I2C_ReceiveFunc  = BOARD_MIPIPanelTouch_I2C_Receive,
+    .pullResetPinFunc = BOARD_PullMIPIPanelTouchResetPin,
+    .pullPowerPinFunc = NULL,
+    .timeDelayMsFunc  = VIDEO_DelayMs,
+};
+
+#elif ((DEMO_PANEL_RK055AHD091 == DEMO_PANEL) || (DEMO_PANEL_RK055IQH091 == DEMO_PANEL) || \
+       (DEMO_PANEL_RK055MHD091 == DEMO_PANEL))
 static void BOARD_ConfigMIPIPanelTouchIntPin(gt911_int_pin_mode_t mode);
-
+/* GT911 I2C address depends on the int pin state during initialization.
+ * On this board, the touch panel int pin is forced to input, so the I2C address
+ * could not be configured, driver select the one which works.
+ */
 static gt911_handle_t s_touchHandle;
 static const gt911_config_t s_touchConfig = {
     .I2C_SendFunc     = BOARD_MIPIPanelTouch_I2C_Send,
     .I2C_ReceiveFunc  = BOARD_MIPIPanelTouch_I2C_Receive,
-    .pullResetPinFunc = BOARD_PullTouchPanelResetPin,
+    .pullResetPinFunc = BOARD_PullMIPIPanelTouchResetPin,
     .intPinFunc       = BOARD_ConfigMIPIPanelTouchIntPin,
     .timeDelayMsFunc  = VIDEO_DelayMs,
     .touchPointNum    = 1,
@@ -100,6 +146,95 @@ static const gt911_config_t s_touchConfig = {
 };
 static int s_touchResolutionX;
 static int s_touchResolutionY;
+#endif
+
+
+
+#if (DEMO_PANEL == DEMO_PANEL_RM67162) || (DEMO_PANEL == DEMO_PANEL_CO5300)
+
+void BOARD_TouchIntHandler(void)
+{
+    s_touchEvent = true;
+}
+
+/*Initialize your touchpad*/
+static void DEMO_InitTouch(void)
+{
+    status_t status;
+
+    const gpio_pin_config_t resetPinConfig  = {.pinDirection = kGPIO_DigitalOutput, .outputLogic = 0};
+    const gpio_pin_config_t intPinConfig    = {.pinDirection = kGPIO_DigitalInput, .outputLogic = 0};
+    GPIO_PinInit(BOARD_MIPI_PANEL_TOUCH_RST_GPIO, BOARD_MIPI_PANEL_TOUCH_RST_PIN, &resetPinConfig);
+#if (DEMO_PANEL == DEMO_PANEL_RM67162)
+    status = FT3267_Init(&s_touchHandle, &s_touchConfig);
+#else
+    status = TMA525B_Init(&s_touchHandle, &s_touchConfig);
+#endif
+    if (kStatus_Success != status)
+    {
+        PRINTF("Touch IC initialization failed\r\n");
+        assert(false);
+    }
+
+    GPIO_SetPinInterruptConfig(BOARD_MIPI_PANEL_TOUCH_INT_GPIO, BOARD_MIPI_PANEL_TOUCH_INT_PIN, kGPIO_InterruptRisingEdge);
+
+    GPIO_SetPinInterruptChannel(BOARD_MIPI_PANEL_TOUCH_INT_GPIO, BOARD_MIPI_PANEL_TOUCH_INT_PIN, kGPIO_InterruptOutput0);
+    NVIC_SetPriority(BOARD_MIPI_TOUCH_INT_GPIO_IRQ, 1);
+    EnableIRQ(GPIO10_IRQn);
+    GPIO_PinInit(BOARD_MIPI_PANEL_TOUCH_INT_GPIO,  BOARD_MIPI_PANEL_TOUCH_INT_PIN, &intPinConfig);
+}
+
+/* Will be called by the library to read the touchpad */
+int BOARD_Touch_Poll(void)
+{
+    touch_event_t touch_event;
+    static int touch_x = 0;
+    static int touch_y = 0;
+    static int isTouched;
+    GUI_PID_STATE pid_state;
+
+    pid_state.Layer = 0;
+
+    if (s_touchEvent)
+    {
+#if (DEMO_PANEL == DEMO_PANEL_RM67162)
+        if (kStatus_Success == FT3267_GetSingleTouch(&s_touchHandle, &touch_event, &touch_x, &touch_y))
+#else
+        if (kStatus_Success == TMA525B_GetSingleTouch(&s_touchHandle, &touch_event, &touch_x, &touch_y))
+#endif
+        {
+            if (touch_event != kTouch_Reserved)
+            {
+                pid_state.x = LCD_WIDTH - touch_x;
+                pid_state.y = LCD_HEIGHT - touch_y;
+
+            }
+            if ((touch_event == kTouch_Contact) || (touch_event == kTouch_Down))
+            {
+                pid_state.Pressed = 1;
+                GUI_TOUCH_StoreStateEx(&pid_state);
+                isTouched = 1;
+            }
+            else if (isTouched && (touch_event == kTouch_Up))
+            {
+                isTouched         = 0;
+                pid_state.Pressed = 0;
+                GUI_TOUCH_StoreStateEx(&pid_state);
+            }
+        }
+        else
+        {
+            return 0;
+        }
+
+        s_touchEvent = false;
+    }
+
+    return 1;
+}
+
+#elif ((DEMO_PANEL_RK055AHD091 == DEMO_PANEL) || (DEMO_PANEL_RK055IQH091 == DEMO_PANEL) || \
+       (DEMO_PANEL_RK055MHD091 == DEMO_PANEL))
 
 static void BOARD_ConfigMIPIPanelTouchIntPin(gt911_int_pin_mode_t mode)
 {
@@ -122,7 +257,7 @@ static void BOARD_ConfigMIPIPanelTouchIntPin(gt911_int_pin_mode_t mode)
     }
 }
 
-static void BOARD_Touch_Init(void)
+static void DEMO_InitTouch(void)
 {
     status_t status;
 
@@ -141,7 +276,7 @@ static void BOARD_Touch_Init(void)
     GT911_GetResolution(&s_touchHandle, &s_touchResolutionX, &s_touchResolutionY);
 }
 
-void BOARD_Touch_Deinit(void)
+void DEMO_Touch_Deinit(void)
 {
     GT911_Deinit(&s_touchHandle);
 }
@@ -188,6 +323,80 @@ int BOARD_Touch_Poll(void)
     return ret;
 }
 
+#else
+
+static ft5406_rt_handle_t touch_handle;
+
+/*Initialize your touchpad*/
+static void DEMO_InitTouch(void)
+{
+    status_t status;
+    lpi2c_master_config_t masterConfig = {0};
+
+    /*
+     * masterConfig.debugEnable = false;
+     * masterConfig.ignoreAck = false;
+     * masterConfig.pinConfig = kLPI2C_2PinOpenDrain;
+     * masterConfig.baudRate_Hz = 100000U;
+     * masterConfig.busIdleTimeout_ns = 0;
+     * masterConfig.pinLowTimeout_ns = 0;
+     * masterConfig.sdaGlitchFilterWidth_ns = 0;
+     * masterConfig.sclGlitchFilterWidth_ns = 0;
+     */
+    LPI2C_MasterGetDefaultConfig(&masterConfig);
+
+    /* Change the default baudrate configuration */
+    masterConfig.baudRate_Hz = 100000U;
+
+    /* Initialize the I2C master peripheral */
+    LPI2C_MasterInit(BOARD_SSD1963_TOUCH_I2C_BASEADDR, &masterConfig, BOARD_SSD1963_TOUCH_I2C_CLOCK_FREQ);
+
+    /* Initialize touch panel controller */
+    status = FT5406_RT_Init(&touch_handle, BOARD_SSD1963_TOUCH_I2C_BASEADDR);
+    if (status != kStatus_Success)
+    {
+        PRINTF("Touch panel init failed\n");
+    }
+}
+
+/* Will be called by the library to read the touchpad */
+int BOARD_Touch_Poll(void)
+{
+    touch_event_t touch_event;
+    static int touch_x = 0;
+    static int touch_y = 0;
+    GUI_PID_STATE pid_state;
+    static int isTouched;
+    pid_state.Layer = 0;
+
+    if (kStatus_Success != FT5406_RT_GetSingleTouch(&touch_handle, &touch_event, &touch_x, &touch_y))
+    {
+        return 0;
+    }
+    else
+    {
+        if (touch_event != kTouch_Reserved)
+        {
+            pid_state.x       = touch_x;
+            pid_state.y       = touch_y;
+        }
+        if ((touch_event == kTouch_Contact) || (touch_event == kTouch_Down))
+        {
+            pid_state.Pressed = 1;
+            GUI_TOUCH_StoreStateEx(&pid_state);
+            isTouched = 1;
+        }
+        else if (isTouched && (touch_event == kTouch_Up))
+        {
+            isTouched         = 0;
+            pid_state.Pressed = 0;
+            GUI_TOUCH_StoreStateEx(&pid_state);
+        }
+    }
+    return 1;
+}
+#endif
+
 /*******************************************************************************
  * Application implemented functions required by emWin library
  ******************************************************************************/
@@ -204,7 +413,7 @@ void LCD_X_Config(void)
      * Initialize your display
      * -----------------------*/
     BOARD_PrepareDisplayController();
-    BOARD_Touch_Init();
+    DEMO_InitTouch();
 }
 
 int LCD_X_DisplayDriver(unsigned LayerIndex, unsigned Cmd, void *p)

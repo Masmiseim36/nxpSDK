@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2023 NXP
+ * Copyright 2019-2025 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -53,7 +53,8 @@ extern int audio_comp_buf_size;
 #define SBC_ENC_BITPOOL   31
 #define SBC_ENC_CHMODE    XA_SBC_ENC_CHMODE_DUAL
 
-#define TASK_STACK_SIZE (11 * 1024)
+#define TASK_STACK_SIZE (16 * 1024)
+#define DSP_THREAD_STACK_SIZE_ENC (16 * 1024)
 
 /*******************************************************************************
  * Commands processing
@@ -152,6 +153,7 @@ int srtm_encoder(dsp_handle_t *dsp, unsigned int *pCmdParams)
     audio_comp_buf_size = AUDIO_COMP_BUF_SIZE;
     device_config.mem_pool[XAF_MEM_ID_COMP].size = AUDIO_COMP_BUF_SIZE;
     device_config.mem_pool[XAF_MEM_ID_DEV].size = AUDIO_FRMWK_BUF_SIZE;
+    device_config.dsp_thread_stack_size = DSP_THREAD_STACK_SIZE_ENC;
     device_config.core = XF_CORE_ID;
     TST_CHK_API_ADEV_OPEN(p_adev, device_config, "[DSP Codec] Audio Device Open\r\n");
     DSP_PRINTF("[DSP Codec] Audio Device Ready\r\n");

@@ -39,11 +39,11 @@ Steps to configure the panels
 ===============
 The demo use MIPI RK055MHD091 panel by default.
 If Kconfig is used, select the panel in Kconfig "Panel Selection".
-To use SSD1963 DBI panel, change the macro DEMO_PANEL to 0 in mcux_config.h.
-To use MIPI RK055AHD091 panel, change the macro DEMO_PANEL to 1 in mcux_config.h.
-To use MIPI RK055IQH091 panel, change the macro DEMO_PANEL to 2 in mcux_config.h.
+To use SSD1963 DBI panel, change the macro DEMO_PANEL to 4 in mcux_config.h.
+To use MIPI RK055AHD091 panel, change the macro DEMO_PANEL to 0 in mcux_config.h.
+To use MIPI RK055IQH091 panel, change the macro DEMO_PANEL to 1 in mcux_config.h.
 To use RM67162 MIPI smart DBI panel, change the macro DEMO_PANEL to 3 in mcux_config.h.
-To use MIPI RK055MHD091 panel, change the macro DEMO_PANEL to 4 in mcux_config.h(default).
+To use MIPI RK055MHD091 panel, change the macro DEMO_PANEL to 2 in mcux_config.h(default).
 To use RaspberryPi, change the macro DEMO_PANEL to 5 in mcux_config.h.
 To use ZC143AC72MIPI DBI panel, change the macro DEMO_PANEL to 6 in mcux_config.h.
 

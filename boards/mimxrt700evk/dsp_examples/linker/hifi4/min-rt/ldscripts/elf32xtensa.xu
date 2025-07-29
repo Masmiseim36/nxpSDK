@@ -1,4 +1,4 @@
-/* This linker script generated from xt-genldscripts.tpp for LSP C:\repo\workspaceNG1\sdk-next\mcu-sdk-3.0\examples\mimxrt700evk\dsp_examples\xaf_playback\hifi4\linker\min-rt */
+/* This linker script generated from xt-genldscripts.tpp for LSP mimxrt700evk */
 /* Linker Script for ld -Ur */
 
 

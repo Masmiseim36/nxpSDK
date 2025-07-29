@@ -1,7 +1,6 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2020 NXP
- * All rights reserved.
+ * Copyright 2016-2020, 2025 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -62,6 +61,10 @@ int main(void)
     BOARD_InitHardware();
 
     PRINTF("SAI example started!\n\r");
+
+#if defined(BOARD_Codec_I2C_ReleaseBus)
+    BOARD_Codec_I2C_ReleaseBus();
+#endif
 
     /* SAI init */
     SAI_Init(DEMO_SAI);

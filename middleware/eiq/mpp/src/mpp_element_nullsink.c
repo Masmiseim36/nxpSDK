@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2024 NXP.
+ * Copyright 2022-2025 NXP.
  *
  *  SPDX-License-Identifier: Apache-2.0
  *
@@ -29,7 +29,9 @@ int mpp_nullsink_add(mpp_t mpp)
         return MPP_ERROR;
 
     _elem_t *elem;
-    mpp_create_elem(_mpp, &elem);
+    ret = mpp_create_elem(_mpp, &elem);
+    if (ret != MPP_SUCCESS)
+        return ret;
 
     elem->io.in_buf[0] = elem->prev->io.out_buf[0];
     elem->io.inplace = false;

@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2024 NXP.
+ * Copyright 2022-2025 NXP.
  * All rights reserved.
  *
  *  SPDX-License-Identifier: Apache-2.0
@@ -47,6 +47,11 @@ void vApplicationMallocFailedHook()
 {
     HAL_LOGE("Malloc failure detected.\n");
     while(true);
+}
+
+void __attribute__((weak)) vApplicationTickHook(void)
+{
+    /* void */
 }
 
 /**

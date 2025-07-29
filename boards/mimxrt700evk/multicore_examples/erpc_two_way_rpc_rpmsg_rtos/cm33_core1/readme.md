@@ -71,3 +71,4 @@ west build --sysbuild examples/multicore_examples/erpc_two_way_rpc_rpmsg_rtos/pr
 - [MCX-N9XX-EVK](../../_boards/mcxn9xxevk/multicore_examples/erpc_two_way_rpc_rpmsg_rtos/example_board_readme.md)
 - [MCX-W72-EVK](../../_boards/mcxw72evk/multicore_examples/erpc_two_way_rpc_rpmsg_rtos/example_board_readme.md)
 - [MIMXRT700-EVK](../../_boards/mimxrt700evk/multicore_examples/erpc_two_way_rpc_rpmsg_rtos/example_board_readme.md)
+- [MCXW72-LOC](../../_boards/mcxw72loc/multicore_examples/erpc_two_way_rpc_rpmsg_rtos/example_board_readme.md)

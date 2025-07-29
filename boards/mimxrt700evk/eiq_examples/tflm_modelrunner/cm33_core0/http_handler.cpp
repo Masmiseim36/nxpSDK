@@ -152,7 +152,7 @@ int http_parse_mime(NNServer* server, int sock, char* boundary,
     int end = 0;
     size_t offset = 0;
 
-    for(int i = 0; *content_length > 0;)
+    for(size_t i = 0; *content_length > 0;)
     {
         rret = recv(sock, buf, 1, 0);
         if(rret<=0){
@@ -256,7 +256,7 @@ int v1_handler_put(int                sock,
                    NNServer*          server){
     char* boundary=nullptr;
     int boundary_len=0;
-    for (int i = 0; i != n_headers; ++i) {
+    for (size_t i = 0; i != n_headers; ++i) {
         if (strncmp(headers[i].name, "Content-Length", (int)headers[i].name_len)==0){
             *content_length = atoi(headers[i].value);
         } else if (strncmp(headers[i].name, "Content-Type", (int)headers[i].name_len)==0){
@@ -339,7 +339,7 @@ int v1_handler_post(int                sock,
     int boundary_len=0;
     int ret;
 
-    for (int i = 0; i != n_headers; ++i) {
+    for (size_t i = 0; i != n_headers; ++i) {
         if (strncmp(headers[i].name, "Content-Length", (int)headers[i].name_len)==0){
             *content_length = atoi(headers[i].value);
         } else if (strncmp(headers[i].name, "Content-Type", (int)headers[i].name_len)==0){
@@ -426,7 +426,7 @@ int v1_handler_post(int                sock,
             server->inference_count = atoi(val);
         } else if(strcmp("output", key) == 0) {
             char out_tensor_name[512];
-            int outind = 0;
+            size_t outind = 0;
             int index  = 0;
             while (outind < strlen(val)) {
                 char decoded = url_decode(&val[outind]);
@@ -499,7 +499,7 @@ int handle_client(int sock, http_router* routes) {
     size_t rret;
     while (1) {
         rret = recv (sock, hdr, sizeof(headers), MSG_PEEK);
-        if (rret == -1)
+        if (rret <= 0)
             return -1;
         prevhdr_len = hdr_len;
         hdr_len += rret;

@@ -21,7 +21,7 @@ limitations under the License.
 void MODEL_GetTopN(const uint8_t* tensorData, int tensorSize, tensor_type_t tensorType,
                    size_t numResults, float threshold, result_t* topResults)
 {
-  for (int i = 0; i < numResults; i++) {
+  for (size_t i = 0; i < numResults; i++) {
     topResults[i] = {.score = 0.0f, .index = -1};
   }
 
@@ -52,7 +52,7 @@ void MODEL_GetTopN(const uint8_t* tensorData, int tensorSize, tensor_type_t tens
     }
 
     result_t pass = {.score = 0.0f, .index = -1};
-    for (int n = 0; n < numResults; n++) {
+    for (size_t n = 0; n < numResults; n++) {
       if (pass.index >= 0) {
         result_t swap = topResults[n];
         topResults[n] = pass;

@@ -64,9 +64,9 @@ void lv_draw_sw_line(lv_draw_task_t * t, const lv_draw_line_dsc_t * dsc)
     is_common = lv_area_intersect(&clip_line, &clip_line, &t->clip_area);
     if(!is_common) return;
 
-    LV_PROFILER_BEGIN;
-    if(dsc->p1.y == dsc->p2.y) draw_line_hor(t, dsc);
-    else if(dsc->p1.x == dsc->p2.x) draw_line_ver(t, dsc);
+    LV_PROFILER_DRAW_BEGIN;
+    if((int32_t)dsc->p1.y == (int32_t)dsc->p2.y) draw_line_hor(t, dsc);
+    else if((int32_t)dsc->p1.x == (int32_t)dsc->p2.x) draw_line_ver(t, dsc);
     else draw_line_skew(t, dsc);
 
     if(dsc->round_end || dsc->round_start) {
@@ -96,7 +96,7 @@ void lv_draw_sw_line(lv_draw_task_t * t, const lv_draw_line_dsc_t * dsc)
             lv_draw_sw_fill(t, &cir_dsc, &cir_area);
         }
     }
-    LV_PROFILER_END;
+    LV_PROFILER_DRAW_END;
 }
 
 /**********************

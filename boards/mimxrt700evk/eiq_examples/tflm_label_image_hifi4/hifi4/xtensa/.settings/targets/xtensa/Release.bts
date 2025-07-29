@@ -34,8 +34,9 @@
               <ListEntry key="SDK_DEBUGCONSOLE" value="1"/>
               <ListEntry key="MCUX_META_BUILD" value=""/>
               <ListEntry key="MCUXPRESSO_SDK" value=""/>
-              <ListEntry key="CPU_MIMXRT798SGFOA_hifi4" value=""/>
+              <ListEntry key="CPU_MIMXRT798SGFOB_hifi4" value=""/>
               <ListEntry key="TF_LITE_STATIC_MEMORY" value=""/>
+              <ListEntry key="KERNELS_OPTIMIZED_FOR_SPEED" value=""/>
             </value>
           </KeyValueListMapEntry>
         </KeyValueListMapOptions>
@@ -77,8 +78,10 @@
           <StringListMapEntry>
             <key>AssemblerAdditionalOptions</key>
             <value inheritance="append">
-              <ListEntry>--xtensa-core=rt700_hifi4_RI23_11_nlib&#13;
---xtensa-system=${XTENSA_SYSTEM}</ListEntry>
+              <ListEntry> -include ${xt_project_loc}/../mcux_config.h&#13;
+ --xtensa-core=rt700_hifi4_RI23_11_nlib&#13;
+--xtensa-system=${XTENSA_SYSTEM}&#13;
+</ListEntry>
             </value>
           </StringListMapEntry>
         </StringListMapOptions>
@@ -95,12 +98,16 @@
           <StringListMapEntry>
             <key>LinkerAdditionalOptions</key>
             <value inheritance="append">
-              <ListEntry>-Wl,--orphan-handling=place&#13;
---xtensa-core=rt700_hifi4_RI23_11_nlib&#13;
---xtensa-system=${XTENSA_SYSTEM}&#13;
--Wl,--start-group&#13;
+              <ListEntry> -Wl,--orphan-handling=place&#13;
+&#13;
+ --xtensa-core=rt700_hifi4_RI23_11_nlib&#13;
+&#13;
+ --xtensa-system=${XTENSA_SYSTEM}&#13;
+&#13;
+ -Wl,--start-group&#13;
 ${xt_project_loc}/../../../../../../middleware/eiq/tensorflow-lite/lib/hifi4/xcc/rt798s/libtflm.a&#13;
 -Wl,--end-group&#13;
+&#13;
 </ListEntry>
             </value>
           </StringListMapEntry>

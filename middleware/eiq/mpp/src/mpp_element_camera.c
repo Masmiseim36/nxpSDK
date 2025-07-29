@@ -1,5 +1,5 @@
 /*
- * Copyright 2020-2022,2024 NXP.
+ * Copyright 2020-2022,2024-2025 NXP.
  *
  *  SPDX-License-Identifier: Apache-2.0
  *
@@ -78,6 +78,10 @@ int mpp_camera_add(mpp_t mpp, const char* name, mpp_camera_params_t *params)
     ret = hal_camera_setup(name, &cam->dev);
     if (ret != MPP_SUCCESS)
         return ret;
+    if (cam->dev.ops == NULL) {
+        ret = MPP_ERROR;
+        return ret;
+    }
 
     /* init HAL function */
     ret = cam->dev.ops->init(&cam->dev, &cam->params, NULL, NULL);

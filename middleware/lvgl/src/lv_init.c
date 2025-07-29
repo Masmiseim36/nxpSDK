@@ -4,13 +4,12 @@
  */
 
 /**
- * Modified by NXP in 2024
+ * Modified by NXP in 2025
  */
 
 /*********************
  *      INCLUDES
  *********************/
-#include "others/sysmon/lv_sysmon_private.h"
 #include "misc/lv_timer_private.h"
 #include "misc/lv_profiler_builtin_private.h"
 #include "misc/lv_anim_private.h"
@@ -43,7 +42,16 @@
 #include "themes/simple/lv_theme_simple.h"
 #include "misc/lv_fs.h"
 #include "osal/lv_os_private.h"
+#include "others/sysmon/lv_sysmon_private.h"
+#include "others/xml/lv_xml.h"
 
+#if LV_USE_SVG
+    #include "libs/svg/lv_svg_decoder.h"
+#endif
+
+#if LV_USE_NEMA_GFX
+    #include "draw/nema_gfx/lv_draw_nema_gfx.h"
+#endif
 #if LV_USE_DRAW_VGLITE
     #include "draw/nxp/vglite/lv_draw_vglite.h"
 #endif
@@ -64,8 +72,20 @@
 #if LV_USE_DRAW_VG_LITE
     #include "draw/vg_lite/lv_draw_vg_lite.h"
 #endif
+#if LV_USE_DRAW_DMA2D
+    #include "draw/dma2d/lv_draw_dma2d.h"
+#endif
+#if LV_USE_DRAW_OPENGLES
+    #include "draw/opengles/lv_draw_opengles.h"
+#endif
 #if LV_USE_WINDOWS
     #include "drivers/windows/lv_windows_context.h"
+#endif
+#if LV_USE_UEFI
+    #include "drivers/uefi/lv_uefi_context.h"
+#endif
+#if LV_USE_EVDEV
+    #include "drivers/evdev/lv_evdev_private.h"
 #endif
 
 /*********************
@@ -197,10 +217,21 @@ void lv_init(void)
 
     lv_group_init();
 
+#if LV_USE_FREETYPE
+    /* Since the drawing unit needs to register the freetype event,
+     * initialize the freetype module first
+     */
+    lv_freetype_init(LV_FREETYPE_CACHE_FT_GLYPH_CNT);
+#endif
+
     lv_draw_init();
 
 #if LV_USE_DRAW_SW
     lv_draw_sw_init();
+#endif
+
+#if LV_USE_NEMA_GFX
+    lv_draw_nema_gfx_init();
 #endif
 
 #if LV_USE_DRAW_VGLITE
@@ -225,8 +256,20 @@ void lv_init(void)
     lv_draw_sdl_init();
 #endif
 
+#if LV_USE_DRAW_DMA2D
+    lv_draw_dma2d_init();
+#endif
+
+#if LV_USE_DRAW_OPENGLES
+    lv_draw_opengles_init();
+#endif
+
 #if LV_USE_WINDOWS
     lv_windows_platform_init();
+#endif
+
+#if LV_USE_UEFI
+    lv_uefi_platform_init();
 #endif
 
     lv_obj_style_init();
@@ -318,6 +361,15 @@ void lv_init(void)
     lv_fs_arduino_sd_init();
 #endif
 
+#if LV_USE_FS_UEFI
+    lv_fs_uefi_init();
+#endif
+
+    /*Use the earlier initialized position of FFmpeg decoder as a fallback decoder*/
+#if LV_USE_FFMPEG
+    lv_ffmpeg_init();
+#endif
+
 #if LV_USE_LODEPNG
     lv_lodepng_init();
 #endif
@@ -338,15 +390,12 @@ void lv_init(void)
     lv_bmp_init();
 #endif
 
-    /*Make FFMPEG last because the last converter will be checked first and
-     *it's superior to any other */
-#if LV_USE_FFMPEG
-    lv_ffmpeg_init();
+#if LV_USE_SVG
+    lv_svg_decoder_init();
 #endif
 
-#if LV_USE_FREETYPE
-    /*Init freetype library*/
-    lv_freetype_init(LV_FREETYPE_CACHE_FT_GLYPH_CNT);
+#if LV_USE_XML
+    lv_xml_init();
 #endif
 
     lv_initialized = true;
@@ -374,12 +423,12 @@ void lv_deinit(void)
 
     lv_cleanup_devices(LV_GLOBAL_DEFAULT());
 
-#if LV_USE_SPAN != 0
-    lv_span_stack_deinit();
+#if LV_USE_EVDEV
+    lv_evdev_deinit();
 #endif
 
-#if LV_USE_DRAW_SW
-    lv_draw_sw_deinit();
+#if LV_USE_SPAN != 0
+    lv_span_stack_deinit();
 #endif
 
 #if LV_USE_FREETYPE
@@ -404,6 +453,10 @@ void lv_deinit(void)
 
     lv_obj_style_deinit();
 
+#if LV_USE_UEFI
+    lv_uefi_platform_deinit();
+#endif
+
 #if LV_USE_PXP
 #if LV_USE_DRAW_PXP || LV_USE_ROTATE_PXP
     lv_draw_pxp_deinit();
@@ -420,6 +473,14 @@ void lv_deinit(void)
 
 #if LV_USE_DRAW_VG_LITE
     lv_draw_vg_lite_deinit();
+#endif
+
+#if LV_USE_DRAW_DMA2D
+    lv_draw_dma2d_deinit();
+#endif
+
+#if LV_USE_DRAW_OPENGLES
+    lv_draw_opengles_deinit();
 #endif
 
 #if LV_USE_DRAW_SW
@@ -454,6 +515,10 @@ void lv_deinit(void)
 
 #if LV_USE_LOG
     lv_log_register_print_cb(NULL);
+#endif
+
+#ifdef LV_GC_DEINIT
+    LV_GC_DEINIT();
 #endif
 
 }

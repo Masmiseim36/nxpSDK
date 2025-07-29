@@ -1,5 +1,5 @@
 /*
- * Copyright 2020-2024 NXP.
+ * Copyright 2020-2025 NXP.
  *
  *  SPDX-License-Identifier: Apache-2.0
  *
@@ -94,12 +94,13 @@ struct _display_dev_private_capability
     void **frameBuffers;        /*!< array of pointers to frame buffer */
     mpp_callback_t callback;    /*!< callback */
     void *user_data;            /*!< parameter for the callback */
+    void *handle;               /*!< Handle to the LVGL widget 'image' */
 };
 
 /** @brief Attributes of a display device. */
 struct _display_dev
 {
-    int id;                                /*!< unique id which is assigned by display manager during the registration */
+    int id;                                /*!< unique id which is assigned by the display manager during the registration */
     char name[HAL_DEVICE_NAME_MAX_LENGTH]; /*!< name of the device */
     const display_dev_operator_t *ops;     /*!< operations */
     display_dev_private_capability_t cap;  /*!< private capability */

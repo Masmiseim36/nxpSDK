@@ -1,15 +1,17 @@
 /*
- * Copyright 2024 NXP
+ * Copyright 2024-2025 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
+#include <xtensa/config/core.h>
+#include "app.h"
 #include "fsl_debug_console.h"
-
-#include "NatureDSP_Signal.h"
-#include "common.h"
 #include "pin_mux.h"
 #include "board.h"
+
+#include "NatureDSP_Signal.h"
+
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -26,8 +28,8 @@
 #define FIR_SAMPLE_SIZE 1024
 #define FIR_FILTER_SIZE 32
 
-static int32_t ALIGN(8) fft_in1[FFT_SIZE] = {0};
-static int32_t ALIGN(8) fft_out1[FFT_SIZE];
+static int32_t fft_in1[FFT_SIZE] = {0};
+static int32_t fft_out1[FFT_SIZE];
 
 /*******************************************************************************
  * Prototypes

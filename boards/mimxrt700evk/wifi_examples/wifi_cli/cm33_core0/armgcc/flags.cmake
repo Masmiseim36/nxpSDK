@@ -12,10 +12,12 @@ ENDIF()
 
 SET(CMAKE_ASM_FLAGS_FLASH_DEBUG " \
     ${CMAKE_ASM_FLAGS_FLASH_DEBUG} \
+    -include ${ProjDirPath}/../mcux_config.h \
     -D__STARTUP_INITIALIZE_NONCACHEDATA \
     -D__STARTUP_CLEAR_BSS \
     -DMCUXPRESSO_SDK \
-    -DCPU_MIMXRT798SGFOA_cm33_core0 \
+    -DCPU_MIMXRT798SGFOB_cm33_core0 \
+    -DMIMXRT798S_cm33_core0_SERIES \
     -DOSA_USED \
     -g \
     -mthumb \
@@ -24,10 +26,12 @@ SET(CMAKE_ASM_FLAGS_FLASH_DEBUG " \
 ")
 SET(CMAKE_ASM_FLAGS_FLASH_RELEASE " \
     ${CMAKE_ASM_FLAGS_FLASH_RELEASE} \
+    -include ${ProjDirPath}/../mcux_config.h \
     -D__STARTUP_INITIALIZE_NONCACHEDATA \
     -D__STARTUP_CLEAR_BSS \
     -DMCUXPRESSO_SDK \
-    -DCPU_MIMXRT798SGFOA_cm33_core0 \
+    -DCPU_MIMXRT798SGFOB_cm33_core0 \
+    -DMIMXRT798S_cm33_core0_SERIES \
     -DOSA_USED \
     -mthumb \
     -mcpu=cortex-m33 \
@@ -37,18 +41,22 @@ SET(CMAKE_C_FLAGS_FLASH_DEBUG " \
     ${CMAKE_C_FLAGS_FLASH_DEBUG} \
     -include ${ProjDirPath}/../mcux_config.h \
     -DDEBUG \
+    -D__STARTUP_INITIALIZE_NONCACHEDATA \
+    -D__STARTUP_CLEAR_BSS \
     -DUSE_RTOS=1 \
     -DPRINTF_ADVANCED_ENABLE=1 \
     -DFSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1 \
     -DMCUX_META_BUILD \
     -DMCUXPRESSO_SDK \
-    -DCPU_MIMXRT798SGFOA_cm33_core0 \
+    -DCPU_MIMXRT798SGFOB_cm33_core0 \
+    -DMIMXRT798S_cm33_core0_SERIES \
     -DOSA_USED \
     -DBOOT_HEADER_ENABLE=1 \
     -DSERIAL_PORT_TYPE_UART=1 \
+    -DWIFI_IW612_BOARD_MURATA_2EL_M2 \
     -DCONFIG_NXP_WIFI_SOFTAP_SUPPORT=1 \
-    -DSO_REUSE=1 \
     -DPRINTF_FLOAT_ENABLE=1 \
+    -DSO_REUSE=1 \
     -DSDIO_ENABLED=1 \
     -DSDK_OS_FREE_RTOS \
     -g \
@@ -69,18 +77,22 @@ SET(CMAKE_C_FLAGS_FLASH_RELEASE " \
     ${CMAKE_C_FLAGS_FLASH_RELEASE} \
     -include ${ProjDirPath}/../mcux_config.h \
     -DNDEBUG \
+    -D__STARTUP_INITIALIZE_NONCACHEDATA \
+    -D__STARTUP_CLEAR_BSS \
     -DUSE_RTOS=1 \
     -DPRINTF_ADVANCED_ENABLE=1 \
     -DFSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1 \
     -DMCUX_META_BUILD \
     -DMCUXPRESSO_SDK \
-    -DCPU_MIMXRT798SGFOA_cm33_core0 \
+    -DCPU_MIMXRT798SGFOB_cm33_core0 \
+    -DMIMXRT798S_cm33_core0_SERIES \
     -DOSA_USED \
     -DBOOT_HEADER_ENABLE=1 \
     -DSERIAL_PORT_TYPE_UART=1 \
+    -DWIFI_IW612_BOARD_MURATA_2EL_M2 \
     -DCONFIG_NXP_WIFI_SOFTAP_SUPPORT=1 \
-    -DSO_REUSE=1 \
     -DPRINTF_FLOAT_ENABLE=1 \
+    -DSO_REUSE=1 \
     -DSDIO_ENABLED=1 \
     -DSDK_OS_FREE_RTOS \
     -Os \
@@ -98,16 +110,20 @@ SET(CMAKE_C_FLAGS_FLASH_RELEASE " \
 ")
 SET(CMAKE_CXX_FLAGS_FLASH_DEBUG " \
     ${CMAKE_CXX_FLAGS_FLASH_DEBUG} \
+    -include ${ProjDirPath}/../mcux_config.h \
     -DDEBUG \
     -DMCUX_META_BUILD \
     -DMCUXPRESSO_SDK \
-    -DCPU_MIMXRT798SGFOA_cm33_core0 \
+    -DCPU_MIMXRT798SGFOB_cm33_core0 \
+    -DMIMXRT798S_cm33_core0_SERIES \
     -DOSA_USED \
     -DBOOT_HEADER_ENABLE=1 \
     -DSERIAL_PORT_TYPE_UART=1 \
     -DUSE_RTOS=1 \
-    -DSO_REUSE=1 \
+    -DWIFI_IW612_BOARD_MURATA_2EL_M2 \
     -DPRINTF_FLOAT_ENABLE=1 \
+    -DSO_REUSE=1 \
+    -DSDIO_ENABLED=1 \
     -DSDK_OS_FREE_RTOS \
     -g \
     -O0 \
@@ -126,16 +142,20 @@ SET(CMAKE_CXX_FLAGS_FLASH_DEBUG " \
 ")
 SET(CMAKE_CXX_FLAGS_FLASH_RELEASE " \
     ${CMAKE_CXX_FLAGS_FLASH_RELEASE} \
+    -include ${ProjDirPath}/../mcux_config.h \
     -DNDEBUG \
     -DMCUX_META_BUILD \
     -DMCUXPRESSO_SDK \
-    -DCPU_MIMXRT798SGFOA_cm33_core0 \
+    -DCPU_MIMXRT798SGFOB_cm33_core0 \
+    -DMIMXRT798S_cm33_core0_SERIES \
     -DOSA_USED \
     -DBOOT_HEADER_ENABLE=1 \
     -DSERIAL_PORT_TYPE_UART=1 \
     -DUSE_RTOS=1 \
-    -DSO_REUSE=1 \
+    -DWIFI_IW612_BOARD_MURATA_2EL_M2 \
     -DPRINTF_FLOAT_ENABLE=1 \
+    -DSO_REUSE=1 \
+    -DSDIO_ENABLED=1 \
     -DSDK_OS_FREE_RTOS \
     -Os \
     -Wall \
@@ -169,9 +189,6 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLASH_DEBUG " \
     -mapcs \
     -Wl,--gc-sections \
     -Wl,-static \
-    -Wl,-z \
-    -Wl,muldefs \
-    -Wl,-Map=output.map \
     -Wl,--print-memory-usage \
     -mcpu=cortex-m33 \
     ${FPU} \
@@ -195,9 +212,6 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLASH_RELEASE " \
     -mapcs \
     -Wl,--gc-sections \
     -Wl,-static \
-    -Wl,-z \
-    -Wl,muldefs \
-    -Wl,-Map=output.map \
     -Wl,--print-memory-usage \
     -mcpu=cortex-m33 \
     ${FPU} \

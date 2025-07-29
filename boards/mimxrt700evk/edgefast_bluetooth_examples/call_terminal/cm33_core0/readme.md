@@ -50,7 +50,9 @@ Security changed: A0:CD:F3:77:E3:E9 (public) level 2 (error 0)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 4 After the message "Discover complete (err 0)! TBS count 1, GTBS found? Yes" is printed on call_terminal side. All feature are ready.
 5.1. Start the call by local.
-Enter "call_outgoing 0 <XX>:<YY>" on the call_gateway side. The log is following,
+The commander is showing as "call_outgoing \<telephone bearer index\> \<callee_URI\>". The "\<telephone bearer index\>" is 0 for the application. The "\<callee_URI\>" is the callee URI. Enter "call_outgoing 0 \<XX\>:\<YY\>" on the call_gateway side, or enter "call_outgoing 0 \<XX\>:\<YY\>" on the call_terminal side.
+Such as the entered command line is "call_outgoing 0 tel:qq" on the call_gateway side, the "\<telephone bearer index\>" is 0, and the "\<callee_URI\>" is "tel:qq" here.
+The log is following,
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 List current state of current calls (err 0). TBS Index 255, call count 1, call state list,
 call index 1, state 1, flags 1.
@@ -89,7 +91,8 @@ Set default headphone volume 70
 Start: stream 202F6350
 Start: stream 202EFF80
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Or, enter "call_outgoing 0 <XX>:<YY>" on the call_terminal side, The log is following,
+Or, enter "call_outgoing 0 \<XX\>:\<YY\>" on the call_terminal side.
+The log is following,
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 outgoing call: callee uri tel:qq, TBS index 0
 Return code 0
@@ -144,7 +147,11 @@ Start: stream 202F6350
 Start: stream 202EFF80
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-5.2 Start a call by remote. Enter "remote_call_incoming 0 <AA>:<BB> <CC>:<DD> <EE>" on the call_gateway side.
+5.2 Start a call by remote.
+The commander is showing as "remote_call_incoming \<telephone bearer index\> \<callee_URI\> \<caller_URI\> \<caller_name\>".
+The "\<telephone bearer index\>" is 0 for the application. The "\<callee_URI\>" and "\<caller_URI\>" are the callee URI and caller URI. "\<caller_name\>" is caller name. Enter "remote_call_incoming 0 \<AA\>:\<BB\> \<CC\>:\<DD\> \<EE\>" on the call_gateway side.
+Such as the entered command line is "remote_call_incoming 0 tel:qq tel:qq qq", the "\<telephone bearer index\>" is 0. The "\<callee_URI\>" is "tel:qq". The "\<caller_URI\>" is "tel:qq". "\<caller_name\>" is "qq".
+After the command line has been entered by call_gateway, the log is following on call_terminal side,
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Read incoming call URI tel:qq (err 0). TBS Index 0.
 incoming call inst_index 0, call_index = 1, uri tel:qq
@@ -185,7 +192,7 @@ Start: stream 202EFF80
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-6.1 Reject/end the remote call, enter "call_term <call_index>" on the call_gateway side
+6.1 Reject/end the remote call, enter "call_term \<call_index\>" on the call_gateway side
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Call terminated(err 0). TBS Index 0, call index 1, reason 3.
 Speaker mute
@@ -215,7 +222,7 @@ Release: stream 202EFF80
 Release: stream 202F6350
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Or, enter "call_term 0 <call_index>" on the call_terminal side
+Or, enter "call_term 0 \<call_index\>" on the call_terminal side
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Terminate call: TBS index 0, call index 1
 Return code 0
@@ -252,7 +259,7 @@ Release: stream 202EFF80
 Release: stream 202F6350
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-6.2 Reject/end the call by remote. enter "remote_call_term <call_index>" on the call_gateway side
+6.2 Reject/end the call by remote. enter "remote_call_term \<call_index\>" on the call_gateway side
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Call terminated(err 0). TBS Index 0, call index 1, reason 2.
 Speaker mute
@@ -282,7 +289,7 @@ Release: stream 202EFF80
 Release: stream 202F6350
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-7.1 Accept the remote call. enter "call_accept <call_index>" on the call_gateway side
+7.1 Accept the remote call. enter "call_accept \<call_index\>" on the call_gateway side
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 List current state of current calls (err 0). TBS Index 255, call count 1, call state list,
 call index 1, state 3, flags 0.
@@ -319,7 +326,7 @@ Start: stream 202F6350
 Start: stream 202EFF80
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Or, enter "call_accept 0 <call_index>" on the call_terminal side
+Or, enter "call_accept 0 \<call_index\>" on the call_terminal side
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 accept call: TBS index , call index 1
 Return code 0
@@ -359,7 +366,7 @@ Start: stream 202F6350
 Start: stream 202EFF80
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-7.2 Accept the call by remote device. enter "remote_call_answer <call_index>" on the call_gateway side
+7.2 Accept the call by remote device. enter "remote_call_answer \<call_index\>" on the call_gateway side
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 List current state of current calls (err 0). TBS Index 255, call count 1, call state list,
 call index 1, state 3, flags 1.

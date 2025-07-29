@@ -143,9 +143,9 @@ static shell_status_t shellUsbSpeaker(shell_handle_t shellHandle, int32_t argc, 
             msg.param[1] = 2 * ((0U != g_composite.audioUnified.audioPlayTransferSize) ?
                                     g_composite.audioUnified.audioPlayTransferSize :
                                     HS_ISO_OUT_ENDP_PACKET_SIZE);
-            msg.param[2] = AUDIO_IN_FORMAT_CHANNELS;
-            msg.param[3] = AUDIO_IN_SAMPLING_RATE;
-            msg.param[4] = AUDIO_IN_FORMAT_BITS;
+            msg.param[2] = AUDIO_OUT_FORMAT_CHANNELS;
+            msg.param[3] = AUDIO_OUT_SAMPLING_RATE;
+            msg.param[4] = AUDIO_OUT_FORMAT_BITS;
 
             g_handleShellMessageCallback(&msg, g_handleShellMessageCallbackData);
         }

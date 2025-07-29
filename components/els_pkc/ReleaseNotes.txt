@@ -3,7 +3,6 @@ CLNS SDK (2.0.0) Release Notes
 - Release: SDK_V2.0.0 RT700 PRC
 - Version: SDK_V2.0.0
 - Date:    2024-10-18
-- Link to Nexus RepositoryManager: https://nl-nxrm.sw.nxp.com/service/rest/repository/browse/cccs-releases-raw/
 - Compiler: IAR ANSI C/C++ Compiler V8.40.1.212/W32 for ARM
 --- Test Target: 
 	RT700 A0 sample

@@ -47,8 +47,8 @@ wm8962_config_t wm8962Config = {
     .slaveAddress = WM8962_I2C_ADDR,
     .bus          = kWM8962_BusI2S,
     .format       = {.mclk_HZ    = 24576000U,
-                     .sampleRate = kWM8962_AudioSampleRate16KHz,
-                     .bitWidth   = kWM8962_AudioBitWidth32bit},
+                     .sampleRate = kWM8962_AudioSampleRate48KHz,
+                     .bitWidth   = kWM8962_AudioBitWidth16bit},
     .masterSlave  = false,
 };
 codec_config_t g_boardCodecConfig = {.codecDevType = kCODEC_WM8962, .codecDevConfig = &wm8962Config};

@@ -88,15 +88,15 @@
     <definition extID="component.psa_crypto_driver.els_pkc.transparent.MIMXRT798S"/>
     <definition extID="component.psa_crypto_driver.els_pkc.opaque.MIMXRT798S"/>
     <definition extID="component.psa_crypto_driver.els_pkc.MIMXRT798S"/>
-    <definition extID="middleware.mbedtls3x.template.MIMXRT798S"/>
-    <definition extID="middleware.mbedtls3x.port.config.MIMXRT798S"/>
-    <definition extID="middleware.mbedtls3x.port.psa_crypto_config.MIMXRT798S"/>
     <definition extID="middleware.mbedtls3x.crypto.no_psa.MIMXRT798S"/>
     <definition extID="middleware.mbedtls3x.crypto.MIMXRT798S"/>
     <definition extID="middleware.mbedtls3x.x509.MIMXRT798S"/>
     <definition extID="middleware.mbedtls3x.ssl.no_psa.MIMXRT798S"/>
     <definition extID="middleware.mbedtls3x.ssl.MIMXRT798S"/>
     <definition extID="middleware.mbedtls3x.MIMXRT798S"/>
+    <definition extID="middleware.mbedtls3x.template.MIMXRT798S"/>
+    <definition extID="middleware.mbedtls3x.port.config.MIMXRT798S"/>
+    <definition extID="middleware.mbedtls3x.port.psa_crypto_config.MIMXRT798S"/>
     <definition extID="iar"/>
     <definition extID="mdk"/>
     <definition extID="armgcc"/>
@@ -105,7 +105,7 @@
     <definition extID="com.crt.advproject.config.exe.debug"/>
     <definition extID="com.crt.advproject.config.exe.release"/>
   </externalDefinitions>
-  <example id="mimxrt700evk_psa_crypto_examples_cm33_core0" name="psa_crypto_examples_cm33_core0" device_core="cm33_core0_MIMXRT798S" dependency="platform.drivers.flash_config.mimxrt700evk.MIMXRT798S CMSIS_Include_core_cm.MIMXRT798S device.MIMXRT798S_CMSIS.MIMXRT798S device.MIMXRT798S_system.MIMXRT798S device.MIMXRT798S_startup.MIMXRT798S platform.drivers.clock.MIMXRT798S platform.drivers.lpc_iopctl.MIMXRT798S platform.drivers.power.MIMXRT798S platform.drivers.reset.MIMXRT798S platform.drivers.cache_xcache.MIMXRT798S platform.drivers.common.MIMXRT798S platform.drivers.glikey.MIMXRT798S platform.drivers.gpio.MIMXRT798S platform.drivers.lpflexcomm.MIMXRT798S platform.drivers.lpflexcomm_lpuart.MIMXRT798S platform.drivers.xspi.MIMXRT798S platform.utilities.assert_lite.MIMXRT798S platform.utilities.misc_utilities.MIMXRT798S utility.str.MIMXRT798S utility.debug_console_lite.MIMXRT798S component.lpuart_adapter.MIMXRT798S component.els_pkc.doc.mimxrt.MIMXRT798S component.els_pkc.static_lib.mimxrt.MIMXRT798S component.els_pkc.common.MIMXRT798S component.els_pkc.aead.MIMXRT798S component.els_pkc.aead_modes.MIMXRT798S component.els_pkc.aes.MIMXRT798S component.els_pkc.buffer.MIMXRT798S component.els_pkc.cipher.MIMXRT798S component.els_pkc.cipher_modes.MIMXRT798S component.els_pkc.core.MIMXRT798S component.els_pkc.crc.MIMXRT798S component.els_pkc.ecc.MIMXRT798S component.els_pkc.els_header_only.MIMXRT798S component.els_pkc.els_common.MIMXRT798S component.els_pkc.els.MIMXRT798S component.els_pkc.glikey.MIMXRT798S component.els_pkc.hash.MIMXRT798S component.els_pkc.hashmodes.MIMXRT798S component.els_pkc.hmac.MIMXRT798S component.els_pkc.key_derivation.MIMXRT798S component.els_pkc.key.MIMXRT798S component.els_pkc.mac.MIMXRT798S component.els_pkc.mac_modes.MIMXRT798S component.els_pkc.math.MIMXRT798S component.els_pkc.memory.MIMXRT798S component.els_pkc.oscca.MIMXRT798S component.els_pkc.oscca_aeadmodes.MIMXRT798S component.els_pkc.oscca_ciphermodes.MIMXRT798S component.els_pkc.oscca_macmodes.MIMXRT798S component.els_pkc.oscca_pkc.MIMXRT798S component.els_pkc.oscca_randommodes.MIMXRT798S component.els_pkc.oscca_safo.MIMXRT798S component.els_pkc.oscca_sm2.MIMXRT798S component.els_pkc.oscca_sm3.MIMXRT798S component.els_pkc.oscca_sm4.MIMXRT798S component.els_pkc.padding.MIMXRT798S component.els_pkc.pkc.MIMXRT798S component.els_pkc.prng.MIMXRT798S component.els_pkc.psa_driver.MIMXRT798S component.els_pkc.random.MIMXRT798S component.els_pkc.random_modes_hmacdrbg.MIMXRT798S component.els_pkc.random_modes.MIMXRT798S component.els_pkc.random_modes_ctr.MIMXRT798S component.els_pkc.rsa_oaep.MIMXRT798S component.els_pkc.rsa.MIMXRT798S component.els_pkc.session.MIMXRT798S component.els_pkc.signature.MIMXRT798S component.els_pkc.trng.MIMXRT798S component.els_pkc.trng.type_els.MIMXRT798S component.els_pkc.pre_processor.MIMXRT798S component.els_pkc.data_integrity.MIMXRT798S component.els_pkc.flow_protection.MIMXRT798S component.els_pkc.param_integrity.MIMXRT798S component.els_pkc.secure_counter.MIMXRT798S component.els_pkc.MIMXRT798S component.els_pkc.toolchain.MIMXRT798S component.els_pkc.platform.mimxrt.MIMXRT798S component.psa_crypto_driver.osal.MIMXRT798S component.psa_crypto_driver.osal.baremetal.MIMXRT798S component.psa_crypto_driver.els_pkc.oracle.mimxrt.MIMXRT798S component.psa_crypto_driver.els_pkc.oracle.MIMXRT798S component.psa_crypto_driver.els_pkc.common.MIMXRT798S component.psa_crypto_driver.els_pkc.transparent.MIMXRT798S component.psa_crypto_driver.els_pkc.opaque.MIMXRT798S component.psa_crypto_driver.els_pkc.MIMXRT798S middleware.mbedtls3x.template.MIMXRT798S middleware.mbedtls3x.port.config.MIMXRT798S middleware.mbedtls3x.port.psa_crypto_config.MIMXRT798S middleware.mbedtls3x.crypto.no_psa.MIMXRT798S middleware.mbedtls3x.crypto.MIMXRT798S middleware.mbedtls3x.x509.MIMXRT798S middleware.mbedtls3x.ssl.no_psa.MIMXRT798S middleware.mbedtls3x.ssl.MIMXRT798S middleware.mbedtls3x.MIMXRT798S" category="mbedtls3x_examples">
+  <example id="mimxrt700evk_psa_crypto_examples_cm33_core0" name="psa_crypto_examples_cm33_core0" device_core="cm33_core0_MIMXRT798S" dependency="platform.drivers.flash_config.mimxrt700evk.MIMXRT798S CMSIS_Include_core_cm.MIMXRT798S device.MIMXRT798S_CMSIS.MIMXRT798S device.MIMXRT798S_system.MIMXRT798S device.MIMXRT798S_startup.MIMXRT798S platform.drivers.clock.MIMXRT798S platform.drivers.lpc_iopctl.MIMXRT798S platform.drivers.power.MIMXRT798S platform.drivers.reset.MIMXRT798S platform.drivers.cache_xcache.MIMXRT798S platform.drivers.common.MIMXRT798S platform.drivers.glikey.MIMXRT798S platform.drivers.gpio.MIMXRT798S platform.drivers.lpflexcomm.MIMXRT798S platform.drivers.lpflexcomm_lpuart.MIMXRT798S platform.drivers.xspi.MIMXRT798S platform.utilities.assert_lite.MIMXRT798S platform.utilities.misc_utilities.MIMXRT798S utility.str.MIMXRT798S utility.debug_console_lite.MIMXRT798S component.lpuart_adapter.MIMXRT798S component.els_pkc.doc.mimxrt.MIMXRT798S component.els_pkc.static_lib.mimxrt.MIMXRT798S component.els_pkc.common.MIMXRT798S component.els_pkc.aead.MIMXRT798S component.els_pkc.aead_modes.MIMXRT798S component.els_pkc.aes.MIMXRT798S component.els_pkc.buffer.MIMXRT798S component.els_pkc.cipher.MIMXRT798S component.els_pkc.cipher_modes.MIMXRT798S component.els_pkc.core.MIMXRT798S component.els_pkc.crc.MIMXRT798S component.els_pkc.ecc.MIMXRT798S component.els_pkc.els_header_only.MIMXRT798S component.els_pkc.els_common.MIMXRT798S component.els_pkc.els.MIMXRT798S component.els_pkc.glikey.MIMXRT798S component.els_pkc.hash.MIMXRT798S component.els_pkc.hashmodes.MIMXRT798S component.els_pkc.hmac.MIMXRT798S component.els_pkc.key_derivation.MIMXRT798S component.els_pkc.key.MIMXRT798S component.els_pkc.mac.MIMXRT798S component.els_pkc.mac_modes.MIMXRT798S component.els_pkc.math.MIMXRT798S component.els_pkc.memory.MIMXRT798S component.els_pkc.oscca.MIMXRT798S component.els_pkc.oscca_aeadmodes.MIMXRT798S component.els_pkc.oscca_ciphermodes.MIMXRT798S component.els_pkc.oscca_macmodes.MIMXRT798S component.els_pkc.oscca_pkc.MIMXRT798S component.els_pkc.oscca_randommodes.MIMXRT798S component.els_pkc.oscca_safo.MIMXRT798S component.els_pkc.oscca_sm2.MIMXRT798S component.els_pkc.oscca_sm3.MIMXRT798S component.els_pkc.oscca_sm4.MIMXRT798S component.els_pkc.padding.MIMXRT798S component.els_pkc.pkc.MIMXRT798S component.els_pkc.prng.MIMXRT798S component.els_pkc.psa_driver.MIMXRT798S component.els_pkc.random.MIMXRT798S component.els_pkc.random_modes_hmacdrbg.MIMXRT798S component.els_pkc.random_modes.MIMXRT798S component.els_pkc.random_modes_ctr.MIMXRT798S component.els_pkc.rsa_oaep.MIMXRT798S component.els_pkc.rsa.MIMXRT798S component.els_pkc.session.MIMXRT798S component.els_pkc.signature.MIMXRT798S component.els_pkc.trng.MIMXRT798S component.els_pkc.trng.type_els.MIMXRT798S component.els_pkc.pre_processor.MIMXRT798S component.els_pkc.data_integrity.MIMXRT798S component.els_pkc.flow_protection.MIMXRT798S component.els_pkc.param_integrity.MIMXRT798S component.els_pkc.secure_counter.MIMXRT798S component.els_pkc.MIMXRT798S component.els_pkc.toolchain.MIMXRT798S component.els_pkc.platform.mimxrt.MIMXRT798S component.psa_crypto_driver.osal.MIMXRT798S component.psa_crypto_driver.osal.baremetal.MIMXRT798S component.psa_crypto_driver.els_pkc.oracle.mimxrt.MIMXRT798S component.psa_crypto_driver.els_pkc.oracle.MIMXRT798S component.psa_crypto_driver.els_pkc.common.MIMXRT798S component.psa_crypto_driver.els_pkc.transparent.MIMXRT798S component.psa_crypto_driver.els_pkc.opaque.MIMXRT798S component.psa_crypto_driver.els_pkc.MIMXRT798S middleware.mbedtls3x.crypto.no_psa.MIMXRT798S middleware.mbedtls3x.crypto.MIMXRT798S middleware.mbedtls3x.x509.MIMXRT798S middleware.mbedtls3x.ssl.no_psa.MIMXRT798S middleware.mbedtls3x.ssl.MIMXRT798S middleware.mbedtls3x.MIMXRT798S middleware.mbedtls3x.template.MIMXRT798S middleware.mbedtls3x.port.config.MIMXRT798S middleware.mbedtls3x.port.psa_crypto_config.MIMXRT798S" category="mbedtls3x_examples">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -118,13 +118,14 @@
       <toolchainSetting id_refs="com.nxp.mcuxpresso">
         <option id="gnu.c.compiler.option.preprocessor.def.symbols" type="stringList">
           <value>MCUXPRESSO_SDK</value>
-          <value>CPU_MIMXRT798SGFOA_cm33_core0</value>
+          <value>CPU_MIMXRT798SGFOB_cm33_core0</value>
           <value>BOOT_HEADER_ENABLE=1</value>
           <value>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</value>
-          <value>PSA_CRYPTO_DRIVER_ELS_PKC</value>
+          <value>MBEDTLS_CONFIG_FILE='"mcux_mbedtls_config.h"'</value>
           <value>SDK_DEBUGCONSOLE=1</value>
           <value>MCUX_META_BUILD</value>
-          <value>MBEDTLS_CONFIG_FILE='"mcux_mbedtls_config.h"'</value>
+          <value>MIMXRT798S_cm33_core0_SERIES</value>
+          <value>PSA_CRYPTO_DRIVER_ELS_PKC</value>
         </option>
         <option id="com.crt.advproject.link.fpu" type="enum">
           <value>com.crt.advproject.link.fpu.fpv5sp.hard</value>
@@ -158,7 +159,7 @@
           <value>com.crt.advproject.misc.dialect.gnu99</value>
         </option>
         <option id="gnu.c.compiler.option.misc.other" type="string">
-          <value>-mcpu=cortex-m33 -c -ffunction-sections -fdata-sections -fno-builtin</value>
+          <value>-mcpu=cortex-m33 -c -ffunction-sections -fdata-sections -fno-builtin -fomit-frame-pointer</value>
         </option>
         <option id="gnu.c.compiler.option.warnings.allwarn" type="boolean">
           <value>false</value>
@@ -261,6 +262,9 @@
     </source>
     <source path="." project_relative_path="doc" type="doc">
       <files mask="example_board_readme.md"/>
+    </source>
+    <source path="." project_relative_path="doc" type="doc">
+      <files mask="examples_shared_readme.md"/>
     </source>
   </example>
 </ksdk:examples>

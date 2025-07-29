@@ -4,23 +4,7 @@
 
 This project is used to work with LittleVGL GUI Guider. The GUI Guider generated
 code is placed in the folder "generated". The example generated code shows a
-button in the panel.
-
-## Known issue
-The CPU load remains at 100% even during low-intensity tests, confirming that FreeRTOS is not reporting the load correctly.
-
-For all tests that use FreeRTOS, the following macros must be defined, typically at the end of FreeRTOSConfig_Gen.h
-
-workaround code:
---------------------------------------------------------------------------
-#if defined(__ICCARM__)||defined(__CC_ARM)||defined(__GNUC__)
-extern void traceTaskSwitchedOut(void);
-extern void traceTaskSwitchedIn(void);
-#endif
-
-#define traceTASK_SWITCHED_IN()  traceTaskSwitchedIn()
-#define traceTASK_SWITCHED_OUT() traceTaskSwitchedOut()
---------------------------------------------------------------------------
+rectangle in the panel, drag it, then it will move in the screen.
 
 ## Supported Boards
 - [EVKB-IMXRT1050](../../_boards/evkbimxrt1050/lvgl_examples/lvgl_examples_readme.md)
@@ -38,7 +22,6 @@ extern void traceTaskSwitchedIn(void);
 - [EVK-MIMXRT685](../../_boards/evkmimxrt685/lvgl_examples/lvgl_examples_readme.md)
 - [FRDM-K22F](../../_boards/frdmk22f/lvgl_examples/lvgl_examples_readme.md)
 - [FRDM-MCXA156](../../_boards/frdmmcxa156/lvgl_examples/lvgl_examples_readme.md)
-- [FRDM-MCXA276](../../_boards/frdmmcxa276/lvgl_examples/lvgl_examples_readme.md)
 - [FRDM-MCXN236](../../_boards/frdmmcxn236/lvgl_examples/lvgl_examples_readme.md)
 - [FRDM-MCXN947](../../_boards/frdmmcxn947/lvgl_examples/lvgl_examples_readme.md)
 - [FRDM-RW612](../../_boards/frdmrw612/lvgl_examples/lvgl_examples_readme.md)

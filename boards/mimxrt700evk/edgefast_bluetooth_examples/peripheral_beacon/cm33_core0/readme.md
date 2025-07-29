@@ -2,8 +2,11 @@
 
 ## Overview
 Application demonstrating the BLE Peripheral role, This application implements types of beacon applications .
+
 Beacon: A simple application demonstrating the BLE Broadcaster role functionality by advertising Company Identifier, Beacon Identifier, UUID, A, B, C, RSSI.
+
 Eddystone : The Eddystone Configuration Service runs as a GATT service on the beacon while it is connectable and allows configuration of the advertised data, the broadcast power levels, and the advertising intervals.
+
 iBeacon: This simple application demonstrates the BLE Broadcaster role functionality by advertising an Apple iBeacon.
 
 ## Prepare the Demo
@@ -25,6 +28,7 @@ iBeacon: This simple application demonstrates the BLE Broadcaster role functiona
 
 ## Running the demo
 Form the app_bluetooth_config.h file we can select witch application is starting. Default Beacon (#define BEACON_APP 1) application is starting.
+
 To start the Eddystone set #define EDDYSTONE 1 and others to 0. To start the iBeacon set #define IBEACON_APP 1 and others to 0.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 If BEACON_APP is 1 (and IBEACON_APP and EDDYSTONE are set to 0) the Beacon application is started.
@@ -65,3 +69,4 @@ The Eddystone Configuration Service runs as a GATT service on the beacon while i
 - [MIMXRT685-AUD-EVK](../../_boards/mimxrt685audevk/edgefast_bluetooth_examples/peripheral_beacon/example_board_readme.md)
 - [MIMXRT700-EVK](../../_boards/mimxrt700evk/edgefast_bluetooth_examples/peripheral_beacon/example_board_readme.md)
 - [RD-RW612-BGA](../../_boards/rdrw612bga/edgefast_bluetooth_examples/peripheral_beacon/example_board_readme.md)
+- [FRDM-MCXN947](../../_boards/frdmmcxn947/edgefast_bluetooth_examples/peripheral_beacon/example_board_readme.md)

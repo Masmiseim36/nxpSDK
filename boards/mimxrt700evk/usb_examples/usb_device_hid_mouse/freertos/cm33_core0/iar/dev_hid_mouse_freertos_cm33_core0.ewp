@@ -242,10 +242,12 @@
           <state>DEBUG</state>
           <state>USB_STACK_FREERTOS</state>
           <state>USB_DEVICE_CONFIG_BUFFER_PROPERTY_CACHEABLE=1</state>
+          <state>EUSB_CONFIG_NATIVE_MODE=0</state>
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
-          <state>CPU_MIMXRT798SGFOA_cm33_core0</state>
+          <state>CPU_MIMXRT798SGFOB_cm33_core0</state>
+          <state>MIMXRT798S_cm33_core0_SERIES</state>
           <state>OSA_USED</state>
           <state>BOOT_HEADER_ENABLE=1</state>
           <state>USE_RTOS=1</state>
@@ -384,8 +386,10 @@
           <state>$PROJ_DIR$/../../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/device</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/usb/config/device/ehci</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/device/class</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/dcd</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/usb/config/dcd/hsdcd</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../../../rtos/freertos/freertos-kernel/include</state>
           <state>$PROJ_DIR$/../../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM33_NTZ/non_secure</state>
@@ -574,7 +578,8 @@
         <option>
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
-          <state>CPU_MIMXRT798SGFOA_cm33_core0</state>
+          <state>CPU_MIMXRT798SGFOB_cm33_core0</state>
+          <state>MIMXRT798S_cm33_core0_SERIES</state>
           <state>OSA_USED</state>
         </option>
         <option>
@@ -682,8 +687,10 @@
           <state>$PROJ_DIR$/../../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/device</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/usb/config/device/ehci</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/device/class</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/dcd</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/usb/config/dcd/hsdcd</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../../../rtos/freertos/freertos-kernel/include</state>
           <state>$PROJ_DIR$/../../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM33_NTZ/non_secure</state>
@@ -703,7 +710,7 @@
         </option>
         <option>
           <name>PreInclude</name>
-          <state/>
+          <state>$PROJ_DIR$/../mcux_config.h</state>
         </option>
       </data>
     </settings>
@@ -1393,10 +1400,12 @@
           <state>DEBUG</state>
           <state>USB_STACK_FREERTOS</state>
           <state>USB_DEVICE_CONFIG_BUFFER_PROPERTY_CACHEABLE=1</state>
+          <state>EUSB_CONFIG_NATIVE_MODE=0</state>
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
-          <state>CPU_MIMXRT798SGFOA_cm33_core0</state>
+          <state>CPU_MIMXRT798SGFOB_cm33_core0</state>
+          <state>MIMXRT798S_cm33_core0_SERIES</state>
           <state>OSA_USED</state>
           <state>BOOT_HEADER_ENABLE=1</state>
           <state>USE_RTOS=1</state>
@@ -1535,8 +1544,10 @@
           <state>$PROJ_DIR$/../../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/device</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/usb/config/device/ehci</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/device/class</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/dcd</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/usb/config/dcd/hsdcd</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../../../rtos/freertos/freertos-kernel/include</state>
           <state>$PROJ_DIR$/../../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM33_NTZ/non_secure</state>
@@ -1725,7 +1736,8 @@
         <option>
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
-          <state>CPU_MIMXRT798SGFOA_cm33_core0</state>
+          <state>CPU_MIMXRT798SGFOB_cm33_core0</state>
+          <state>MIMXRT798S_cm33_core0_SERIES</state>
           <state>OSA_USED</state>
         </option>
         <option>
@@ -1833,8 +1845,10 @@
           <state>$PROJ_DIR$/../../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/device</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/usb/config/device/ehci</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/device/class</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/dcd</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/usb/config/dcd/hsdcd</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../../../rtos/freertos/freertos-kernel/include</state>
           <state>$PROJ_DIR$/../../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM33_NTZ/non_secure</state>
@@ -1854,7 +1868,7 @@
         </option>
         <option>
           <name>PreInclude</name>
-          <state/>
+          <state>$PROJ_DIR$/../mcux_config.h</state>
         </option>
       </data>
     </settings>
@@ -2544,10 +2558,12 @@
           <state>NDEBUG</state>
           <state>USB_STACK_FREERTOS</state>
           <state>USB_DEVICE_CONFIG_BUFFER_PROPERTY_CACHEABLE=1</state>
+          <state>EUSB_CONFIG_NATIVE_MODE=0</state>
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
-          <state>CPU_MIMXRT798SGFOA_cm33_core0</state>
+          <state>CPU_MIMXRT798SGFOB_cm33_core0</state>
+          <state>MIMXRT798S_cm33_core0_SERIES</state>
           <state>OSA_USED</state>
           <state>BOOT_HEADER_ENABLE=1</state>
           <state>USE_RTOS=1</state>
@@ -2686,8 +2702,10 @@
           <state>$PROJ_DIR$/../../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/device</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/usb/config/device/ehci</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/device/class</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/dcd</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/usb/config/dcd/hsdcd</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../../../rtos/freertos/freertos-kernel/include</state>
           <state>$PROJ_DIR$/../../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM33_NTZ/non_secure</state>
@@ -2876,7 +2894,8 @@
         <option>
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
-          <state>CPU_MIMXRT798SGFOA_cm33_core0</state>
+          <state>CPU_MIMXRT798SGFOB_cm33_core0</state>
+          <state>MIMXRT798S_cm33_core0_SERIES</state>
           <state>OSA_USED</state>
         </option>
         <option>
@@ -2984,8 +3003,10 @@
           <state>$PROJ_DIR$/../../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/device</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/usb/config/device/ehci</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/device/class</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/dcd</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/usb/config/dcd/hsdcd</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../../../rtos/freertos/freertos-kernel/include</state>
           <state>$PROJ_DIR$/../../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM33_NTZ/non_secure</state>
@@ -3005,7 +3026,7 @@
         </option>
         <option>
           <name>PreInclude</name>
-          <state/>
+          <state>$PROJ_DIR$/../mcux_config.h</state>
         </option>
       </data>
     </settings>
@@ -3695,10 +3716,12 @@
           <state>NDEBUG</state>
           <state>USB_STACK_FREERTOS</state>
           <state>USB_DEVICE_CONFIG_BUFFER_PROPERTY_CACHEABLE=1</state>
+          <state>EUSB_CONFIG_NATIVE_MODE=0</state>
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
-          <state>CPU_MIMXRT798SGFOA_cm33_core0</state>
+          <state>CPU_MIMXRT798SGFOB_cm33_core0</state>
+          <state>MIMXRT798S_cm33_core0_SERIES</state>
           <state>OSA_USED</state>
           <state>BOOT_HEADER_ENABLE=1</state>
           <state>USE_RTOS=1</state>
@@ -3837,8 +3860,10 @@
           <state>$PROJ_DIR$/../../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/device</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/usb/config/device/ehci</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/device/class</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/dcd</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/usb/config/dcd/hsdcd</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../../../rtos/freertos/freertos-kernel/include</state>
           <state>$PROJ_DIR$/../../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM33_NTZ/non_secure</state>
@@ -4027,7 +4052,8 @@
         <option>
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
-          <state>CPU_MIMXRT798SGFOA_cm33_core0</state>
+          <state>CPU_MIMXRT798SGFOB_cm33_core0</state>
+          <state>MIMXRT798S_cm33_core0_SERIES</state>
           <state>OSA_USED</state>
         </option>
         <option>
@@ -4135,8 +4161,10 @@
           <state>$PROJ_DIR$/../../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/device</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/usb/config/device/ehci</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/device/class</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/dcd</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/usb/config/dcd/hsdcd</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../../../rtos/freertos/freertos-kernel/include</state>
           <state>$PROJ_DIR$/../../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM33_NTZ/non_secure</state>
@@ -4156,7 +4184,7 @@
         </option>
         <option>
           <name>PreInclude</name>
-          <state/>
+          <state>$PROJ_DIR$/../mcux_config.h</state>
         </option>
       </data>
     </settings>
@@ -4638,6 +4666,12 @@
       <name>$PROJ_DIR$/../mcux_config.h</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../mcux_config.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../mcux_config.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../usb_device_config.h</name>
     </file>
     <file>
@@ -4967,12 +5001,9 @@
   </group>
   <group>
     <name>startup</name>
-    <group>
-      <name>iar</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT798S/iar/startup_MIMXRT798S_cm33_core0.s</name>
-      </file>
-    </group>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT798S/startup_MIMXRT798S_cm33_core0.c</name>
+    </file>
   </group>
   <group>
     <name>drivers</name>
@@ -5096,13 +5127,13 @@
     <group>
       <name>osa</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../../../components/osa/fsl_os_abstraction.h</name>
-      </file>
-      <file>
         <name>$PROJ_DIR$/../../../../../../../components/osa/fsl_os_abstraction_free_rtos.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../../../components/osa/fsl_os_abstraction_free_rtos.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../components/osa/fsl_os_abstraction.h</name>
       </file>
     </group>
   </group>
@@ -5268,6 +5299,9 @@
         <file>
           <name>$PROJ_DIR$/../../../../../../../rtos/freertos/freertos-kernel/include/timers.h</name>
         </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../../rtos/freertos/freertos-kernel/include/freertos_tasks_c_additions.h</name>
+        </file>
       </group>
       <group>
         <name>portable</name>
@@ -5323,6 +5357,9 @@
     <name>doc</name>
     <file>
       <name>$PROJ_DIR$/../readme.md</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../examples_shared_readme.md</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../dcd_detection.jpg</name>

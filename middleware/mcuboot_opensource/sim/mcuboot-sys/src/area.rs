@@ -9,6 +9,7 @@
 use simflash::{Flash, SimFlash, Sector};
 use std::ptr;
 use std::collections::HashMap;
+use std::borrow::BorrowMut;
 
 /// Structure to build up the boot area table.
 #[derive(Debug, Default, Clone)]
@@ -124,8 +125,9 @@ impl AreaDesc {
         None
     }
 
-    pub fn get_c(&self) -> CAreaDesc {
-        let mut areas: CAreaDesc = Default::default();
+    pub fn get_c(&self) -> Box<CAreaDesc> {
+        let mut areas_box: Box<CAreaDesc> = Box::new(Default::default());
+        let areas: &mut CAreaDesc = areas_box.borrow_mut();
 
         assert_eq!(self.areas.len(), self.whole.len());
 
@@ -140,12 +142,19 @@ impl AreaDesc {
 
         areas.num_slots = self.areas.len() as u32;
 
-        areas
+        areas_box
     }
 
     /// Return an iterator over all `FlashArea`s present.
     pub fn iter_areas(&self) -> impl Iterator<Item = &FlashArea> {
         self.whole.iter()
+    }
+
+    /// Return the list of sectors of a given flash area.
+    pub fn get_area_sectors(&self, flash_id: FlashId) -> Option<&Vec<FlashArea>> {
+        self.areas.iter()
+            .filter(|area| !area.is_empty())
+            .find(|area| area[0].flash_id == flash_id)
     }
 }
 

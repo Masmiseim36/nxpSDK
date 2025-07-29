@@ -243,10 +243,12 @@
           <state>USB_STACK_BM</state>
           <state>USB_DEVICE_CONFIG_BUFFER_PROPERTY_CACHEABLE=1</state>
           <state>FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1</state>
+          <state>EUSB_CONFIG_NATIVE_MODE=0</state>
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
-          <state>CPU_MIMXRT798SGFOA_cm33_core0</state>
+          <state>CPU_MIMXRT798SGFOB_cm33_core0</state>
+          <state>MIMXRT798S_cm33_core0_SERIES</state>
           <state>DEBUG_CONSOLE_TRANSFER_NON_BLOCKING</state>
           <state>BOOT_HEADER_ENABLE=1</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
@@ -379,16 +381,16 @@
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT798S</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT798S/periph</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT798S/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT798S/utilities</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT798S/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT798S/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT798S/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../../components/gpio</state>
           <state>$PROJ_DIR$/../../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/device</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/usb/config/device/ehci</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/fatfs/source</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/fatfs/template</state>
@@ -581,7 +583,8 @@
         <option>
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
-          <state>CPU_MIMXRT798SGFOA_cm33_core0</state>
+          <state>CPU_MIMXRT798SGFOB_cm33_core0</state>
+          <state>MIMXRT798S_cm33_core0_SERIES</state>
           <state>DEBUG_CONSOLE_TRANSFER_NON_BLOCKING</state>
         </option>
         <option>
@@ -682,16 +685,16 @@
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT798S/periph</state>
           <state>$PROJ_DIR$/../../../../../../../devices/periph</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT798S/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT798S/utilities</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT798S/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT798S/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT798S/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../../components/gpio</state>
           <state>$PROJ_DIR$/../../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/device</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/usb/config/device/ehci</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/fatfs/source</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/fatfs/template</state>
@@ -715,7 +718,7 @@
         </option>
         <option>
           <name>PreInclude</name>
-          <state/>
+          <state>$PROJ_DIR$/../mcux_config.h</state>
         </option>
       </data>
     </settings>
@@ -1406,10 +1409,12 @@
           <state>USB_STACK_BM</state>
           <state>USB_DEVICE_CONFIG_BUFFER_PROPERTY_CACHEABLE=1</state>
           <state>FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1</state>
+          <state>EUSB_CONFIG_NATIVE_MODE=0</state>
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
-          <state>CPU_MIMXRT798SGFOA_cm33_core0</state>
+          <state>CPU_MIMXRT798SGFOB_cm33_core0</state>
+          <state>MIMXRT798S_cm33_core0_SERIES</state>
           <state>DEBUG_CONSOLE_TRANSFER_NON_BLOCKING</state>
           <state>BOOT_HEADER_ENABLE=1</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
@@ -1542,16 +1547,16 @@
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT798S</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT798S/periph</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT798S/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT798S/utilities</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT798S/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT798S/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT798S/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../../components/gpio</state>
           <state>$PROJ_DIR$/../../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/device</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/usb/config/device/ehci</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/fatfs/source</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/fatfs/template</state>
@@ -1744,7 +1749,8 @@
         <option>
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
-          <state>CPU_MIMXRT798SGFOA_cm33_core0</state>
+          <state>CPU_MIMXRT798SGFOB_cm33_core0</state>
+          <state>MIMXRT798S_cm33_core0_SERIES</state>
           <state>DEBUG_CONSOLE_TRANSFER_NON_BLOCKING</state>
         </option>
         <option>
@@ -1845,16 +1851,16 @@
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT798S/periph</state>
           <state>$PROJ_DIR$/../../../../../../../devices/periph</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT798S/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT798S/utilities</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT798S/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT798S/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT798S/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../../components/gpio</state>
           <state>$PROJ_DIR$/../../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/device</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/usb/config/device/ehci</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/fatfs/source</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/fatfs/template</state>
@@ -1878,7 +1884,7 @@
         </option>
         <option>
           <name>PreInclude</name>
-          <state/>
+          <state>$PROJ_DIR$/../mcux_config.h</state>
         </option>
       </data>
     </settings>
@@ -2569,10 +2575,12 @@
           <state>USB_STACK_BM</state>
           <state>USB_DEVICE_CONFIG_BUFFER_PROPERTY_CACHEABLE=1</state>
           <state>FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1</state>
+          <state>EUSB_CONFIG_NATIVE_MODE=0</state>
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
-          <state>CPU_MIMXRT798SGFOA_cm33_core0</state>
+          <state>CPU_MIMXRT798SGFOB_cm33_core0</state>
+          <state>MIMXRT798S_cm33_core0_SERIES</state>
           <state>DEBUG_CONSOLE_TRANSFER_NON_BLOCKING</state>
           <state>BOOT_HEADER_ENABLE=1</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
@@ -2705,16 +2713,16 @@
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT798S</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT798S/periph</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT798S/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT798S/utilities</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT798S/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT798S/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT798S/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../../components/gpio</state>
           <state>$PROJ_DIR$/../../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/device</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/usb/config/device/ehci</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/fatfs/source</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/fatfs/template</state>
@@ -2907,7 +2915,8 @@
         <option>
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
-          <state>CPU_MIMXRT798SGFOA_cm33_core0</state>
+          <state>CPU_MIMXRT798SGFOB_cm33_core0</state>
+          <state>MIMXRT798S_cm33_core0_SERIES</state>
           <state>DEBUG_CONSOLE_TRANSFER_NON_BLOCKING</state>
         </option>
         <option>
@@ -3008,16 +3017,16 @@
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT798S/periph</state>
           <state>$PROJ_DIR$/../../../../../../../devices/periph</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT798S/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT798S/utilities</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT798S/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT798S/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT798S/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../../components/gpio</state>
           <state>$PROJ_DIR$/../../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/device</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/usb/config/device/ehci</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/fatfs/source</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/fatfs/template</state>
@@ -3041,7 +3050,7 @@
         </option>
         <option>
           <name>PreInclude</name>
-          <state/>
+          <state>$PROJ_DIR$/../mcux_config.h</state>
         </option>
       </data>
     </settings>
@@ -3732,10 +3741,12 @@
           <state>USB_STACK_BM</state>
           <state>USB_DEVICE_CONFIG_BUFFER_PROPERTY_CACHEABLE=1</state>
           <state>FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1</state>
+          <state>EUSB_CONFIG_NATIVE_MODE=0</state>
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
-          <state>CPU_MIMXRT798SGFOA_cm33_core0</state>
+          <state>CPU_MIMXRT798SGFOB_cm33_core0</state>
+          <state>MIMXRT798S_cm33_core0_SERIES</state>
           <state>DEBUG_CONSOLE_TRANSFER_NON_BLOCKING</state>
           <state>BOOT_HEADER_ENABLE=1</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
@@ -3868,16 +3879,16 @@
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT798S</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT798S/periph</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT798S/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT798S/utilities</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT798S/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT798S/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT798S/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../../components/gpio</state>
           <state>$PROJ_DIR$/../../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/device</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/usb/config/device/ehci</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/fatfs/source</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/fatfs/template</state>
@@ -4070,7 +4081,8 @@
         <option>
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
-          <state>CPU_MIMXRT798SGFOA_cm33_core0</state>
+          <state>CPU_MIMXRT798SGFOB_cm33_core0</state>
+          <state>MIMXRT798S_cm33_core0_SERIES</state>
           <state>DEBUG_CONSOLE_TRANSFER_NON_BLOCKING</state>
         </option>
         <option>
@@ -4171,16 +4183,16 @@
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT798S/periph</state>
           <state>$PROJ_DIR$/../../../../../../../devices/periph</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT798S/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT798S/utilities</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT798S/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT798S/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT798S/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../../components/gpio</state>
           <state>$PROJ_DIR$/../../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/device</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/usb/config/device/ehci</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/fatfs/source</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/fatfs/template</state>
@@ -4204,7 +4216,7 @@
         </option>
         <option>
           <name>PreInclude</name>
-          <state/>
+          <state>$PROJ_DIR$/../mcux_config.h</state>
         </option>
       </data>
     </settings>
@@ -4740,6 +4752,12 @@
       <name>$PROJ_DIR$/../mcux_config.h</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../mcux_config.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../mcux_config.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../usb_device_config.h</name>
     </file>
   </group>
@@ -5066,12 +5084,9 @@
   </group>
   <group>
     <name>startup</name>
-    <group>
-      <name>iar</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT798S/iar/startup_MIMXRT798S_cm33_core0.s</name>
-      </file>
-    </group>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT798S/startup_MIMXRT798S_cm33_core0.c</name>
+    </file>
   </group>
   <group>
     <name>drivers</name>
@@ -5154,10 +5169,10 @@
   <group>
     <name>utilities</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT798S/utilities/fsl_assert.h</name>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT798S/utilities/debug_console/fsl_assert.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT798S/utilities/fsl_assert.c</name>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT798S/utilities/debug_console/fsl_assert.c</name>
     </file>
     <group>
       <name>str</name>
@@ -5228,13 +5243,13 @@
     <group>
       <name>osa</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../../../components/osa/fsl_os_abstraction.h</name>
-      </file>
-      <file>
         <name>$PROJ_DIR$/../../../../../../../components/osa/fsl_os_abstraction_bm.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../../../components/osa/fsl_os_abstraction_bm.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../components/osa/fsl_os_abstraction.h</name>
       </file>
     </group>
   </group>
@@ -5368,6 +5383,9 @@
     <name>doc</name>
     <file>
       <name>$PROJ_DIR$/../readme.md</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../examples_shared_readme.md</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../portable_device.jpg</name>

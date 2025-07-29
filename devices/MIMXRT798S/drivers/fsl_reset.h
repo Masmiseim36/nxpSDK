@@ -1,5 +1,5 @@
 /*
- * Copyright 2023-2024 NXP
+ * Copyright 2023-2025 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -182,7 +182,7 @@ typedef enum _RSTCTL_RSTn
     kUTICK1_RST_SHIFT_RSTn  = (RST_CTL1_PSCCTL0 << 8) | 21U,       /*!< UTICK1 reset control */
     kMU3_RST_SHIFT_RSTn     = (RST_CTL1_PSCCTL0 << 8) | 24U,       /*!< MU3 reset control */
     kSEMA423_RST_SHIFT_RSTn = (RST_CTL1_PSCCTL0 << 8) | 25U,       /*!< SEMA42_3 reset control */
-    kPVT1_RST_SHIFT_RSTn    = (RST_CTL1_PSCCTL0 << 8) | 28U,       /*!< PVT1 reset control */
+    kPVTS1_RST_SHIFT_RSTn    = (RST_CTL1_PSCCTL0 << 8) | 28U,      /*!< PVTS1 reset control */
 
     kIOPCTL2_RST_SHIFT_RSTn = (RST_CTL2_PSCCTL0 << 8) | 1U,        /*!< IOPCTL2 reset control */
 
@@ -515,11 +515,9 @@ static inline uint32_t RESET_GetDomainResetStatus(void)
  * can be used by ROM to reset the flash to default working mode.
  * @code
  *     FLASH_run_context_t run_ctx = {.U = 0 };
- *     // Set the current FLASH mode
  *     run_ctx.B.current_mode = kFlashInstMode_OPI_DDR;
- *     // Select the FLASH reset sequences
  *     run_ctx.B.restore_sequence = kRestoreSeqence_Send_6699_9966;
- *     RESET_SetFlashStateContext(run_ctx.U) // Update the context register
+ *     RESET_SetFlashStateContext(run_ctx.U);
  * @endcode
  *
  * @param context Flash state context defined by @ref FLASH_run_context_t.

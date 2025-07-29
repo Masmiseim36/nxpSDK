@@ -85,7 +85,7 @@ Incoming audio on stream 202C208C len 100
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Procedures to run
-1 this demo don't need any user input and will run automatically.
+- this demo don't need any user input and will run automatically.
 
 ## Supported Boards
 - [MIMXRT1170-EVKB](../../_boards/evkbmimxrt1170/edgefast_bluetooth_examples/tmap_peripheral/example_board_readme.md)

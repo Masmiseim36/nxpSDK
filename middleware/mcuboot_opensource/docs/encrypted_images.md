@@ -120,12 +120,14 @@ start the validation process, decrypting the blocks before check. A good
 image being determined, the upgrade consists in reading the blocks from
 the `secondary slot`, decrypting and writing to the `primary slot`.
 
-If swap is used for the upgrade process, the encryption happens when
-copying the sectors of the `secondary slot` to the scratch area.
-
-The `scratch` area is not encrypted, so it must reside in the internal
-flash of the MCU to avoid attacks that could interrupt the upgrade and
-dump the data.
+If swap using scratch is used for the upgrade process, the decryption happens
+when copying the content of the scratch area to the `primary slot`, which means
+the scratch area does not contain the image unencrypted. However, unless
+`MCUBOOT_SWAP_SAVE_ENCTLV` is enabled, the decryption keys are stored in
+plaintext in the scratch area. Therefore, `MCUBOOT_SWAP_SAVE_ENCTLV` must be
+enabled if the scratch area does not reside in the internal flash memory of the
+MCU, to avoid attacks that could interrupt the upgrade and read the plaintext
+decryption keys from external flash memory.
 
 Also when swap is used, the image in the `primary slot` is checked for
 presence of the `ENCRYPTED` flag and the key TLV. If those are present the
@@ -144,6 +146,14 @@ Also when swap method is employed, the sizes of both images are saved to
 the status area just before starting the upgrade process, because it
 would be very hard to determine this information when an interruption
 occurs and the information is spread across multiple areas.
+
+## [Factory-programing requirement](#factory-programing-requirement)
+
+It is important to have updates without any voids in encryption. 
+Therefore, from the very beginning, flags and TLV's must be set accordingly.
+Perform the first flashing with an image signed by imgtool with encryption settings
+intended for DFU.
+Append it with the `--clear` flag to keep the image unencrypted and ready for use.
 
 ## [Creating your keys with imgtool](#creating-your-keys-with-imgtool)
 

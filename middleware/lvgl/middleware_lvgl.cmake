@@ -4,7 +4,6 @@ include_guard(GLOBAL)
 message("${CMAKE_CURRENT_LIST_FILE} component is included.")
 
       target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
-          ${CMAKE_CURRENT_LIST_DIR}/src/lv_init.c
           ${CMAKE_CURRENT_LIST_DIR}/src/core/lv_group.c
           ${CMAKE_CURRENT_LIST_DIR}/src/core/lv_obj.c
           ${CMAKE_CURRENT_LIST_DIR}/src/core/lv_obj_class.c
@@ -19,7 +18,11 @@ message("${CMAKE_CURRENT_LIST_FILE} component is included.")
           ${CMAKE_CURRENT_LIST_DIR}/src/core/lv_obj_tree.c
           ${CMAKE_CURRENT_LIST_DIR}/src/core/lv_refr.c
           ${CMAKE_CURRENT_LIST_DIR}/src/display/lv_display.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/draw/dma2d/lv_draw_dma2d.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/draw/dma2d/lv_draw_dma2d_fill.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/draw/dma2d/lv_draw_dma2d_img.c
           ${CMAKE_CURRENT_LIST_DIR}/src/draw/lv_draw.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/draw/lv_draw_3d.c
           ${CMAKE_CURRENT_LIST_DIR}/src/draw/lv_draw_arc.c
           ${CMAKE_CURRENT_LIST_DIR}/src/draw/lv_draw_buf.c
           ${CMAKE_CURRENT_LIST_DIR}/src/draw/lv_draw_image.c
@@ -30,6 +33,24 @@ message("${CMAKE_CURRENT_LIST_FILE} component is included.")
           ${CMAKE_CURRENT_LIST_DIR}/src/draw/lv_draw_triangle.c
           ${CMAKE_CURRENT_LIST_DIR}/src/draw/lv_draw_vector.c
           ${CMAKE_CURRENT_LIST_DIR}/src/draw/lv_image_decoder.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/draw/nema_gfx/lv_draw_nema_gfx.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/draw/nema_gfx/lv_draw_nema_gfx_arc.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/draw/nema_gfx/lv_draw_nema_gfx_border.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/draw/nema_gfx/lv_draw_nema_gfx_fill.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/draw/nema_gfx/lv_draw_nema_gfx_img.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/draw/nema_gfx/lv_draw_nema_gfx_label.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/draw/nema_gfx/lv_draw_nema_gfx_layer.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/draw/nema_gfx/lv_draw_nema_gfx_line.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/draw/nema_gfx/lv_draw_nema_gfx_stm32_hal.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/draw/nema_gfx/lv_draw_nema_gfx_triangle.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/draw/nema_gfx/lv_draw_nema_gfx_utils.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/draw/nema_gfx/lv_nema_gfx_path.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/draw/nxp/g2d/lv_draw_buf_g2d.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/draw/nxp/g2d/lv_draw_g2d.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/draw/nxp/g2d/lv_draw_g2d_fill.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/draw/nxp/g2d/lv_draw_g2d_img.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/draw/nxp/g2d/lv_g2d_buf_map.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/draw/nxp/g2d/lv_g2d_utils.c
           ${CMAKE_CURRENT_LIST_DIR}/src/draw/nxp/pxp/lv_draw_buf_pxp.c
           ${CMAKE_CURRENT_LIST_DIR}/src/draw/nxp/pxp/lv_draw_pxp.c
           ${CMAKE_CURRENT_LIST_DIR}/src/draw/nxp/pxp/lv_draw_pxp_fill.c
@@ -52,20 +73,33 @@ message("${CMAKE_CURRENT_LIST_FILE} component is included.")
           ${CMAKE_CURRENT_LIST_DIR}/src/draw/nxp/vglite/lv_vglite_matrix.c
           ${CMAKE_CURRENT_LIST_DIR}/src/draw/nxp/vglite/lv_vglite_path.c
           ${CMAKE_CURRENT_LIST_DIR}/src/draw/nxp/vglite/lv_vglite_utils.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/draw/opengles/lv_draw_opengles.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/draw/renesas/dave2d/lv_draw_dave2d.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/draw/renesas/dave2d/lv_draw_dave2d_arc.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/draw/renesas/dave2d/lv_draw_dave2d_border.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/draw/renesas/dave2d/lv_draw_dave2d_fill.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/draw/renesas/dave2d/lv_draw_dave2d_image.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/draw/renesas/dave2d/lv_draw_dave2d_label.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/draw/renesas/dave2d/lv_draw_dave2d_line.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/draw/renesas/dave2d/lv_draw_dave2d_mask_rectangle.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/draw/renesas/dave2d/lv_draw_dave2d_triangle.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/draw/renesas/dave2d/lv_draw_dave2d_utils.c
           ${CMAKE_CURRENT_LIST_DIR}/src/draw/sdl/lv_draw_sdl.c
           ${CMAKE_CURRENT_LIST_DIR}/src/draw/sw/blend/lv_draw_sw_blend.c
           ${CMAKE_CURRENT_LIST_DIR}/src/draw/sw/blend/lv_draw_sw_blend_to_al88.c
           ${CMAKE_CURRENT_LIST_DIR}/src/draw/sw/blend/lv_draw_sw_blend_to_argb8888.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/draw/sw/blend/lv_draw_sw_blend_to_argb8888_premultiplied.c
           ${CMAKE_CURRENT_LIST_DIR}/src/draw/sw/blend/lv_draw_sw_blend_to_i1.c
           ${CMAKE_CURRENT_LIST_DIR}/src/draw/sw/blend/lv_draw_sw_blend_to_l8.c
           ${CMAKE_CURRENT_LIST_DIR}/src/draw/sw/blend/lv_draw_sw_blend_to_rgb565.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/draw/sw/blend/lv_draw_sw_blend_to_rgb565_swapped.c
           ${CMAKE_CURRENT_LIST_DIR}/src/draw/sw/blend/lv_draw_sw_blend_to_rgb888.c
           ${CMAKE_CURRENT_LIST_DIR}/src/draw/sw/lv_draw_sw.c
           ${CMAKE_CURRENT_LIST_DIR}/src/draw/sw/lv_draw_sw_arc.c
           ${CMAKE_CURRENT_LIST_DIR}/src/draw/sw/lv_draw_sw_border.c
           ${CMAKE_CURRENT_LIST_DIR}/src/draw/sw/lv_draw_sw_box_shadow.c
           ${CMAKE_CURRENT_LIST_DIR}/src/draw/sw/lv_draw_sw_fill.c
-          ${CMAKE_CURRENT_LIST_DIR}/src/draw/sw/lv_draw_sw_gradient.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/draw/sw/lv_draw_sw_grad.c
           ${CMAKE_CURRENT_LIST_DIR}/src/draw/sw/lv_draw_sw_img.c
           ${CMAKE_CURRENT_LIST_DIR}/src/draw/sw/lv_draw_sw_letter.c
           ${CMAKE_CURRENT_LIST_DIR}/src/draw/sw/lv_draw_sw_line.c
@@ -73,15 +107,43 @@ message("${CMAKE_CURRENT_LIST_FILE} component is included.")
           ${CMAKE_CURRENT_LIST_DIR}/src/draw/sw/lv_draw_sw_mask_rect.c
           ${CMAKE_CURRENT_LIST_DIR}/src/draw/sw/lv_draw_sw_transform.c
           ${CMAKE_CURRENT_LIST_DIR}/src/draw/sw/lv_draw_sw_triangle.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/draw/sw/lv_draw_sw_utils.c
           ${CMAKE_CURRENT_LIST_DIR}/src/draw/sw/lv_draw_sw_vector.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/draw/vg_lite/lv_draw_buf_vg_lite.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/draw/vg_lite/lv_draw_vg_lite.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/draw/vg_lite/lv_draw_vg_lite_arc.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/draw/vg_lite/lv_draw_vg_lite_border.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/draw/vg_lite/lv_draw_vg_lite_box_shadow.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/draw/vg_lite/lv_draw_vg_lite_fill.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/draw/vg_lite/lv_draw_vg_lite_img.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/draw/vg_lite/lv_draw_vg_lite_label.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/draw/vg_lite/lv_draw_vg_lite_layer.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/draw/vg_lite/lv_draw_vg_lite_line.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/draw/vg_lite/lv_draw_vg_lite_mask_rect.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/draw/vg_lite/lv_draw_vg_lite_triangle.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/draw/vg_lite/lv_draw_vg_lite_vector.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/draw/vg_lite/lv_vg_lite_decoder.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/draw/vg_lite/lv_vg_lite_grad.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/draw/vg_lite/lv_vg_lite_math.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/draw/vg_lite/lv_vg_lite_path.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/draw/vg_lite/lv_vg_lite_pending.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/draw/vg_lite/lv_vg_lite_stroke.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/draw/vg_lite/lv_vg_lite_utils.c
           ${CMAKE_CURRENT_LIST_DIR}/src/drivers/display/drm/lv_linux_drm.c
           ${CMAKE_CURRENT_LIST_DIR}/src/drivers/display/fb/lv_linux_fbdev.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/drivers/display/ft81x/lv_ft81x.c
           ${CMAKE_CURRENT_LIST_DIR}/src/drivers/display/ili9341/lv_ili9341.c
           ${CMAKE_CURRENT_LIST_DIR}/src/drivers/display/lcd/lv_lcd_generic_mipi.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/drivers/display/renesas_glcdc/lv_renesas_glcdc.c
           ${CMAKE_CURRENT_LIST_DIR}/src/drivers/display/st7735/lv_st7735.c
           ${CMAKE_CURRENT_LIST_DIR}/src/drivers/display/st7789/lv_st7789.c
           ${CMAKE_CURRENT_LIST_DIR}/src/drivers/display/st7796/lv_st7796.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/drivers/display/st_ltdc/lv_st_ltdc.c
           ${CMAKE_CURRENT_LIST_DIR}/src/drivers/evdev/lv_evdev.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/drivers/glfw/lv_glfw_window.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/drivers/glfw/lv_opengles_debug.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/drivers/glfw/lv_opengles_driver.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/drivers/glfw/lv_opengles_texture.c
           ${CMAKE_CURRENT_LIST_DIR}/src/drivers/libinput/lv_libinput.c
           ${CMAKE_CURRENT_LIST_DIR}/src/drivers/libinput/lv_xkb.c
           ${CMAKE_CURRENT_LIST_DIR}/src/drivers/nuttx/lv_nuttx_cache.c
@@ -92,22 +154,36 @@ message("${CMAKE_CURRENT_LIST_FILE} component is included.")
           ${CMAKE_CURRENT_LIST_DIR}/src/drivers/nuttx/lv_nuttx_libuv.c
           ${CMAKE_CURRENT_LIST_DIR}/src/drivers/nuttx/lv_nuttx_profiler.c
           ${CMAKE_CURRENT_LIST_DIR}/src/drivers/nuttx/lv_nuttx_touchscreen.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/drivers/qnx/lv_qnx.c
           ${CMAKE_CURRENT_LIST_DIR}/src/drivers/sdl/lv_sdl_keyboard.c
           ${CMAKE_CURRENT_LIST_DIR}/src/drivers/sdl/lv_sdl_mouse.c
           ${CMAKE_CURRENT_LIST_DIR}/src/drivers/sdl/lv_sdl_mousewheel.c
           ${CMAKE_CURRENT_LIST_DIR}/src/drivers/sdl/lv_sdl_window.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/drivers/uefi/lv_uefi_context.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/drivers/uefi/lv_uefi_display.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/drivers/uefi/lv_uefi_indev_keyboard.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/drivers/uefi/lv_uefi_indev_pointer.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/drivers/uefi/lv_uefi_indev_touch.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/drivers/uefi/lv_uefi_private.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/drivers/wayland/lv_wayland.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/drivers/wayland/lv_wayland_smm.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/drivers/wayland/lv_wl_cache.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/drivers/wayland/lv_wl_dmabuf.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/drivers/wayland/lv_wl_keyboard.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/drivers/wayland/lv_wl_pointer.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/drivers/wayland/lv_wl_pointer_axis.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/drivers/wayland/lv_wl_seat.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/drivers/wayland/lv_wl_shell.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/drivers/wayland/lv_wl_shm.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/drivers/wayland/lv_wl_touch.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/drivers/wayland/lv_wl_window.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/drivers/wayland/lv_wl_window_decorations.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/drivers/wayland/lv_wl_xdg_shell.c
           ${CMAKE_CURRENT_LIST_DIR}/src/drivers/windows/lv_windows_context.c
           ${CMAKE_CURRENT_LIST_DIR}/src/drivers/windows/lv_windows_display.c
           ${CMAKE_CURRENT_LIST_DIR}/src/drivers/windows/lv_windows_input.c
           ${CMAKE_CURRENT_LIST_DIR}/src/drivers/x11/lv_x11_display.c
           ${CMAKE_CURRENT_LIST_DIR}/src/drivers/x11/lv_x11_input.c
-          ${CMAKE_CURRENT_LIST_DIR}/src/drivers/glfw/lv_glfw_window.c
-          ${CMAKE_CURRENT_LIST_DIR}/src/drivers/glfw/lv_opengles_debug.c
-          ${CMAKE_CURRENT_LIST_DIR}/src/drivers/glfw/lv_opengles_driver.c
-          ${CMAKE_CURRENT_LIST_DIR}/src/drivers/glfw/lv_opengles_texture.c
-          ${CMAKE_CURRENT_LIST_DIR}/src/drivers/qnx/lv_qnx.c
-          ${CMAKE_CURRENT_LIST_DIR}/src/drivers/wayland/lv_wayland.c
-          ${CMAKE_CURRENT_LIST_DIR}/src/drivers/wayland/lv_wayland_smm.c
           ${CMAKE_CURRENT_LIST_DIR}/src/font/lv_binfont_loader.c
           ${CMAKE_CURRENT_LIST_DIR}/src/font/lv_font.c
           ${CMAKE_CURRENT_LIST_DIR}/src/font/lv_font_dejavu_16_persian_hebrew.c
@@ -115,6 +191,7 @@ message("${CMAKE_CURRENT_LIST_FILE} component is included.")
           ${CMAKE_CURRENT_LIST_DIR}/src/font/lv_font_montserrat_10.c
           ${CMAKE_CURRENT_LIST_DIR}/src/font/lv_font_montserrat_12.c
           ${CMAKE_CURRENT_LIST_DIR}/src/font/lv_font_montserrat_14.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/font/lv_font_montserrat_14_aligned.c
           ${CMAKE_CURRENT_LIST_DIR}/src/font/lv_font_montserrat_16.c
           ${CMAKE_CURRENT_LIST_DIR}/src/font/lv_font_montserrat_18.c
           ${CMAKE_CURRENT_LIST_DIR}/src/font/lv_font_montserrat_20.c
@@ -136,9 +213,12 @@ message("${CMAKE_CURRENT_LIST_FILE} component is included.")
           ${CMAKE_CURRENT_LIST_DIR}/src/font/lv_font_montserrat_8.c
           ${CMAKE_CURRENT_LIST_DIR}/src/font/lv_font_simsun_14_cjk.c
           ${CMAKE_CURRENT_LIST_DIR}/src/font/lv_font_simsun_16_cjk.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/font/lv_font_source_han_sans_sc_14_cjk.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/font/lv_font_source_han_sans_sc_16_cjk.c
           ${CMAKE_CURRENT_LIST_DIR}/src/font/lv_font_unscii_16.c
           ${CMAKE_CURRENT_LIST_DIR}/src/font/lv_font_unscii_8.c
           ${CMAKE_CURRENT_LIST_DIR}/src/indev/lv_indev.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/indev/lv_indev_gesture.c
           ${CMAKE_CURRENT_LIST_DIR}/src/indev/lv_indev_scroll.c
           ${CMAKE_CURRENT_LIST_DIR}/src/layouts/flex/lv_flex.c
           ${CMAKE_CURRENT_LIST_DIR}/src/layouts/grid/lv_grid.c
@@ -147,6 +227,11 @@ message("${CMAKE_CURRENT_LIST_FILE} component is included.")
           ${CMAKE_CURRENT_LIST_DIR}/src/libs/barcode/lv_barcode.c
           ${CMAKE_CURRENT_LIST_DIR}/src/libs/bin_decoder/lv_bin_decoder.c
           ${CMAKE_CURRENT_LIST_DIR}/src/libs/bmp/lv_bmp.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/libs/expat/xmlparse.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/libs/expat/xmlrole.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/libs/expat/xmltok.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/libs/expat/xmltok_impl.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/libs/expat/xmltok_ns.c
           ${CMAKE_CURRENT_LIST_DIR}/src/libs/ffmpeg/lv_ffmpeg.c
           ${CMAKE_CURRENT_LIST_DIR}/src/libs/freetype/lv_freetype.c
           ${CMAKE_CURRENT_LIST_DIR}/src/libs/freetype/lv_freetype_glyph.c
@@ -160,6 +245,7 @@ message("${CMAKE_CURRENT_LIST_FILE} component is included.")
           ${CMAKE_CURRENT_LIST_DIR}/src/libs/fsdrv/lv_fs_posix.c
           ${CMAKE_CURRENT_LIST_DIR}/src/libs/fsdrv/lv_fs_rawfs.c
           ${CMAKE_CURRENT_LIST_DIR}/src/libs/fsdrv/lv_fs_stdio.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/libs/fsdrv/lv_fs_uefi.c
           ${CMAKE_CURRENT_LIST_DIR}/src/libs/fsdrv/lv_fs_win32.c
           ${CMAKE_CURRENT_LIST_DIR}/src/libs/gif/gifdec.c
           ${CMAKE_CURRENT_LIST_DIR}/src/libs/gif/lv_gif.c
@@ -172,24 +258,34 @@ message("${CMAKE_CURRENT_LIST_FILE} component is included.")
           ${CMAKE_CURRENT_LIST_DIR}/src/libs/qrcode/qrcodegen.c
           ${CMAKE_CURRENT_LIST_DIR}/src/libs/rle/lv_rle.c
           ${CMAKE_CURRENT_LIST_DIR}/src/libs/rlottie/lv_rlottie.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/libs/svg/lv_svg.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/libs/svg/lv_svg_decoder.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/libs/svg/lv_svg_parser.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/libs/svg/lv_svg_render.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/libs/svg/lv_svg_token.c
           ${CMAKE_CURRENT_LIST_DIR}/src/libs/tiny_ttf/lv_tiny_ttf.c
           ${CMAKE_CURRENT_LIST_DIR}/src/libs/tjpgd/lv_tjpgd.c
           ${CMAKE_CURRENT_LIST_DIR}/src/libs/tjpgd/tjpgd.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/lv_init.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/misc/cache/class/lv_cache_lru_ll.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/misc/cache/class/lv_cache_lru_rb.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/misc/cache/instance/lv_image_cache.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/misc/cache/instance/lv_image_header_cache.c
           ${CMAKE_CURRENT_LIST_DIR}/src/misc/cache/lv_cache.c
           ${CMAKE_CURRENT_LIST_DIR}/src/misc/cache/lv_cache_entry.c
-          ${CMAKE_CURRENT_LIST_DIR}/src/misc/cache/lv_cache_lru_rb.c
-          ${CMAKE_CURRENT_LIST_DIR}/src/misc/cache/lv_image_cache.c
-          ${CMAKE_CURRENT_LIST_DIR}/src/misc/cache/lv_image_header_cache.c
           ${CMAKE_CURRENT_LIST_DIR}/src/misc/lv_anim.c
           ${CMAKE_CURRENT_LIST_DIR}/src/misc/lv_anim_timeline.c
           ${CMAKE_CURRENT_LIST_DIR}/src/misc/lv_area.c
           ${CMAKE_CURRENT_LIST_DIR}/src/misc/lv_array.c
           ${CMAKE_CURRENT_LIST_DIR}/src/misc/lv_async.c
           ${CMAKE_CURRENT_LIST_DIR}/src/misc/lv_bidi.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/misc/lv_circle_buf.c
           ${CMAKE_CURRENT_LIST_DIR}/src/misc/lv_color.c
           ${CMAKE_CURRENT_LIST_DIR}/src/misc/lv_color_op.c
           ${CMAKE_CURRENT_LIST_DIR}/src/misc/lv_event.c
           ${CMAKE_CURRENT_LIST_DIR}/src/misc/lv_fs.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/misc/lv_grad.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/misc/lv_iter.c
           ${CMAKE_CURRENT_LIST_DIR}/src/misc/lv_ll.c
           ${CMAKE_CURRENT_LIST_DIR}/src/misc/lv_log.c
           ${CMAKE_CURRENT_LIST_DIR}/src/misc/lv_lru.c
@@ -204,6 +300,7 @@ message("${CMAKE_CURRENT_LIST_FILE} component is included.")
           ${CMAKE_CURRENT_LIST_DIR}/src/misc/lv_text.c
           ${CMAKE_CURRENT_LIST_DIR}/src/misc/lv_text_ap.c
           ${CMAKE_CURRENT_LIST_DIR}/src/misc/lv_timer.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/misc/lv_tree.c
           ${CMAKE_CURRENT_LIST_DIR}/src/misc/lv_utils.c
           ${CMAKE_CURRENT_LIST_DIR}/src/osal/lv_cmsis_rtos2.c
           ${CMAKE_CURRENT_LIST_DIR}/src/osal/lv_freertos.c
@@ -213,8 +310,11 @@ message("${CMAKE_CURRENT_LIST_FILE} component is included.")
           ${CMAKE_CURRENT_LIST_DIR}/src/osal/lv_os_none.c
           ${CMAKE_CURRENT_LIST_DIR}/src/osal/lv_pthread.c
           ${CMAKE_CURRENT_LIST_DIR}/src/osal/lv_rtthread.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/osal/lv_sdl2.c
           ${CMAKE_CURRENT_LIST_DIR}/src/osal/lv_windows.c
           ${CMAKE_CURRENT_LIST_DIR}/src/others/file_explorer/lv_file_explorer.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/others/font_manager/lv_font_manager.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/others/font_manager/lv_font_manager_recycle.c
           ${CMAKE_CURRENT_LIST_DIR}/src/others/fragment/lv_fragment.c
           ${CMAKE_CURRENT_LIST_DIR}/src/others/fragment/lv_fragment_manager.c
           ${CMAKE_CURRENT_LIST_DIR}/src/others/gridnav/lv_gridnav.c
@@ -224,7 +324,41 @@ message("${CMAKE_CURRENT_LIST_FILE} component is included.")
           ${CMAKE_CURRENT_LIST_DIR}/src/others/observer/lv_observer.c
           ${CMAKE_CURRENT_LIST_DIR}/src/others/snapshot/lv_snapshot.c
           ${CMAKE_CURRENT_LIST_DIR}/src/others/sysmon/lv_sysmon.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/others/test/lv_test_display.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/others/test/lv_test_helpers.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/others/test/lv_test_indev.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/others/test/lv_test_indev_gesture.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/others/test/lv_test_screenshot_compare.c
           ${CMAKE_CURRENT_LIST_DIR}/src/others/vg_lite_tvg/vg_lite_matrix.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/others/xml/lv_xml.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/others/xml/lv_xml_base_types.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/others/xml/lv_xml_component.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/others/xml/lv_xml_parser.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/others/xml/lv_xml_style.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/others/xml/lv_xml_update.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/others/xml/lv_xml_utils.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/others/xml/lv_xml_widget.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/others/xml/parsers/lv_xml_arc_parser.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/others/xml/parsers/lv_xml_bar_parser.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/others/xml/parsers/lv_xml_button_parser.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/others/xml/parsers/lv_xml_buttonmatrix_parser.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/others/xml/parsers/lv_xml_calendar_parser.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/others/xml/parsers/lv_xml_canvas_parser.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/others/xml/parsers/lv_xml_chart_parser.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/others/xml/parsers/lv_xml_checkbox_parser.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/others/xml/parsers/lv_xml_dropdown_parser.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/others/xml/parsers/lv_xml_event_parser.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/others/xml/parsers/lv_xml_image_parser.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/others/xml/parsers/lv_xml_keyboard_parser.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/others/xml/parsers/lv_xml_label_parser.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/others/xml/parsers/lv_xml_obj_parser.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/others/xml/parsers/lv_xml_roller_parser.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/others/xml/parsers/lv_xml_scale_parser.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/others/xml/parsers/lv_xml_slider_parser.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/others/xml/parsers/lv_xml_spangroup_parser.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/others/xml/parsers/lv_xml_table_parser.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/others/xml/parsers/lv_xml_tabview_parser.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/others/xml/parsers/lv_xml_textarea_parser.c
           ${CMAKE_CURRENT_LIST_DIR}/src/stdlib/builtin/lv_mem_core_builtin.c
           ${CMAKE_CURRENT_LIST_DIR}/src/stdlib/builtin/lv_sprintf_builtin.c
           ${CMAKE_CURRENT_LIST_DIR}/src/stdlib/builtin/lv_string_builtin.c
@@ -237,11 +371,13 @@ message("${CMAKE_CURRENT_LIST_FILE} component is included.")
           ${CMAKE_CURRENT_LIST_DIR}/src/stdlib/rtthread/lv_mem_core_rtthread.c
           ${CMAKE_CURRENT_LIST_DIR}/src/stdlib/rtthread/lv_sprintf_rtthread.c
           ${CMAKE_CURRENT_LIST_DIR}/src/stdlib/rtthread/lv_string_rtthread.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/stdlib/uefi/lv_mem_core_uefi.c
           ${CMAKE_CURRENT_LIST_DIR}/src/themes/default/lv_theme_default.c
           ${CMAKE_CURRENT_LIST_DIR}/src/themes/lv_theme.c
           ${CMAKE_CURRENT_LIST_DIR}/src/themes/mono/lv_theme_mono.c
           ${CMAKE_CURRENT_LIST_DIR}/src/themes/simple/lv_theme_simple.c
           ${CMAKE_CURRENT_LIST_DIR}/src/tick/lv_tick.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/widgets/3dtexture/lv_3dtexture.c
           ${CMAKE_CURRENT_LIST_DIR}/src/widgets/animimage/lv_animimage.c
           ${CMAKE_CURRENT_LIST_DIR}/src/widgets/arc/lv_arc.c
           ${CMAKE_CURRENT_LIST_DIR}/src/widgets/bar/lv_bar.c
@@ -251,7 +387,6 @@ message("${CMAKE_CURRENT_LIST_FILE} component is included.")
           ${CMAKE_CURRENT_LIST_DIR}/src/widgets/calendar/lv_calendar_chinese.c
           ${CMAKE_CURRENT_LIST_DIR}/src/widgets/calendar/lv_calendar_header_arrow.c
           ${CMAKE_CURRENT_LIST_DIR}/src/widgets/calendar/lv_calendar_header_dropdown.c
-          ${CMAKE_CURRENT_LIST_DIR}/src/widgets/carousel/lv_carousel.c
           ${CMAKE_CURRENT_LIST_DIR}/src/widgets/canvas/lv_canvas.c
           ${CMAKE_CURRENT_LIST_DIR}/src/widgets/chart/lv_chart.c
           ${CMAKE_CURRENT_LIST_DIR}/src/widgets/checkbox/lv_checkbox.c
@@ -267,6 +402,16 @@ message("${CMAKE_CURRENT_LIST_FILE} component is included.")
           ${CMAKE_CURRENT_LIST_DIR}/src/widgets/menu/lv_menu.c
           ${CMAKE_CURRENT_LIST_DIR}/src/widgets/msgbox/lv_msgbox.c
           ${CMAKE_CURRENT_LIST_DIR}/src/widgets/objx_templ/lv_objx_templ.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/widgets/property/lv_animimage_properties.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/widgets/property/lv_dropdown_properties.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/widgets/property/lv_image_properties.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/widgets/property/lv_keyboard_properties.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/widgets/property/lv_label_properties.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/widgets/property/lv_obj_properties.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/widgets/property/lv_roller_properties.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/widgets/property/lv_slider_properties.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/widgets/property/lv_style_properties.c
+          ${CMAKE_CURRENT_LIST_DIR}/src/widgets/property/lv_textarea_properties.c
           ${CMAKE_CURRENT_LIST_DIR}/src/widgets/roller/lv_roller.c
           ${CMAKE_CURRENT_LIST_DIR}/src/widgets/scale/lv_scale.c
           ${CMAKE_CURRENT_LIST_DIR}/src/widgets/slider/lv_slider.c

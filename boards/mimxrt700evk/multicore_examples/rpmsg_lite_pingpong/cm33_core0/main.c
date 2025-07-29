@@ -1,7 +1,6 @@
 /*
  * Copyright (c) 2015-2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2024 NXP
- * All rights reserved.
+ * Copyright 2016-2025 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -65,7 +64,7 @@ static int32_t my_ept_read_cb(void *payload, uint32_t payload_len, uint32_t src,
     return RL_RELEASE;
 }
 
-static void RPMsgRemoteReadyEventHandler(uint16_t eventData, void *context)
+static void RPMsgRemoteReadyEventHandler(mcmgr_core_t coreNum, uint16_t eventData, void *context)
 {
     uint16_t *data = (uint16_t *)context;
 
@@ -77,12 +76,13 @@ static void RPMsgRemoteReadyEventHandler(uint16_t eventData, void *context)
  */
 int main(void)
 {
-    volatile int32_t has_received;
-    volatile uint16_t RPMsgRemoteReadyEventData = 0;
-    struct rpmsg_lite_ept_static_context my_ept_context;
-    struct rpmsg_lite_endpoint *my_ept;
-    struct rpmsg_lite_instance rpmsg_ctxt;
-    struct rpmsg_lite_instance *my_rpmsg;
+    volatile int32_t has_received                       = 0;
+    volatile uint16_t RPMsgRemoteReadyEventData         = 0;
+    struct rpmsg_lite_ept_static_context my_ept_context = {0};
+    struct rpmsg_lite_endpoint *my_ept                  = NULL;
+    struct rpmsg_lite_instance rpmsg_ctxt               = {0};
+    struct rpmsg_lite_instance *my_rpmsg                = NULL;
+    bool error_occurred                                 = false;
 
     /* Initialize standard SDK demo application pins */
     BOARD_InitHardware();
@@ -127,8 +127,20 @@ int main(void)
     };
 
     my_rpmsg = rpmsg_lite_master_init(rpmsg_lite_base, SH_MEM_TOTAL_SIZE, RPMSG_LITE_LINK_ID, RL_NO_FLAGS, &rpmsg_ctxt);
+    if (my_rpmsg == NULL)
+    {
+        (void)PRINTF("Failed to initialize rpmsg\r\n");
+        error_occurred = true;
+        goto cleanup;
+    }
 
     my_ept = rpmsg_lite_create_ept(my_rpmsg, LOCAL_EPT_ADDR, my_ept_read_cb, (void *)&has_received, &my_ept_context);
+    if (my_ept == NULL)
+    {
+        (void)PRINTF("Failed to create endpoint...\r\n");
+        error_occurred = true;
+        goto cleanup;
+    }
 
     has_received = 0;
 
@@ -151,12 +163,29 @@ int main(void)
         }
     }
 
-    (void)rpmsg_lite_destroy_ept(my_rpmsg, my_ept);
-    my_ept = ((void *)0);
-    (void)rpmsg_lite_deinit(my_rpmsg);
+cleanup:
+    if (my_ept != NULL)
+    {
+        (void)rpmsg_lite_destroy_ept(my_rpmsg, my_ept);
+        my_ept = NULL;
+    }
+
+    if (my_rpmsg != NULL)
+    {
+        (void)rpmsg_lite_deinit(my_rpmsg);
+        my_rpmsg = NULL;
+    }
 
     /* Print the ending banner */
-    (void)PRINTF("\r\nRPMsg demo ends\r\n");
+    if (error_occurred)
+    {
+        (void)PRINTF("\r\nRPMsg demo ends with Errors\r\n");
+    }
+    else
+    {
+        (void)PRINTF("\r\nRPMsg demo ends\r\n");
+    }
+
     for (;;)
     {
     }

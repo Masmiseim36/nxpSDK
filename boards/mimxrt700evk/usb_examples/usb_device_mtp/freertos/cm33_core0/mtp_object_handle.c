@@ -102,6 +102,10 @@ usb_status_t USB_DeviceMtpObjHandleRead(uint32_t objHandle, usb_mtp_obj_handle_t
 
     (void)xSemaphoreTakeRecursive(s_ObjHandleMutex, portMAX_DELAY);
 
+    if ((objHandle - 1U) < 0U)
+    {
+        return kStatus_USB_Error;
+    }
     result = f_lseek(&s_File, (objHandle - 1U) * sizeof(usb_mtp_obj_handle_t));
 
     if (result == FR_OK)
@@ -126,6 +130,10 @@ usb_status_t USB_DeviceMtpObjHandleWrite(uint32_t objHandle, usb_mtp_obj_handle_
 
     (void)xSemaphoreTakeRecursive(s_ObjHandleMutex, portMAX_DELAY);
 
+    if ((objHandle - 1U) < 0U)
+    {
+        return kStatus_USB_Error;
+    }
     result = f_lseek(&s_File, (objHandle - 1U) * sizeof(usb_mtp_obj_handle_t));
 
     if (result == FR_OK)

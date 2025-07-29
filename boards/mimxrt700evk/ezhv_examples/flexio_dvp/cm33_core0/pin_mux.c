@@ -15,7 +15,7 @@
 !!GlobalInfo
 product: Pins v16.0
 processor: MIMXRT798S
-package_id: MIMXRT798SGFOA
+package_id: MIMXRT798SGFOB
 mcu_data: ksdk2_0
 processor_version: 0.2412.20
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
@@ -46,10 +46,10 @@ void BOARD_InitBootPins(void)
 BOARD_InitMipiPanelPinsEvk:
 - options: {callFromInitBoot: 'false', coreID: cm33_core0, enableClock: 'true'}
 - pin_list:
-  - {pin_num: K6, peripheral: GPIO3, signal: 'IO, 4', pin_signal: PIO3_4/LPSPI14_PCS3/LP_FLEXCOMM0_P4/LP_FLEXCOMM3_P2}
-  - {pin_num: K7, peripheral: GPIO3, signal: 'IO, 5', pin_signal: PIO3_5/LPSPI14_PCS2/LP_FLEXCOMM0_P5/LP_FLEXCOMM3_P3/EZH_PIO21, input_buffer: enable}
-  - {pin_num: T2, peripheral: GPIO1, signal: 'IO, 10', pin_signal: PIO1_10/LP_FLEXCOMM1_P3/UTICK0_CAP3/CTIMER2_MAT1/SWD_TRACECLK/CLKOUT_VDD1}
-  - {pin_num: P3, peripheral: GPIO1, signal: 'IO, 14', pin_signal: PIO1_14/LP_FLEXCOMM2_P2/CTIMER3_MAT0/SWD_TRACEDATA3}
+  - {pin_num: K6, peripheral: GPIO3, signal: 'GPIO, 4', pin_signal: PIO3_4/LPSPI14_PCS3/LP_FLEXCOMM0_P4/LP_FLEXCOMM3_P2}
+  - {pin_num: K7, peripheral: GPIO3, signal: 'GPIO, 5', pin_signal: PIO3_5/LPSPI14_PCS2/LP_FLEXCOMM0_P5/LP_FLEXCOMM3_P3/EZH_PIO21, input_buffer: enable}
+  - {pin_num: T2, peripheral: GPIO1, signal: 'GPIO, 10', pin_signal: PIO1_10/LP_FLEXCOMM1_P3/UTICK0_CAP3/CTIMER2_MAT1/SWD_TRACECLK/CLKOUT_VDD1}
+  - {pin_num: P3, peripheral: GPIO1, signal: 'GPIO, 14', pin_signal: PIO1_14/LP_FLEXCOMM2_P2/CTIMER3_MAT0/SWD_TRACEDATA3}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 /* clang-format on */
@@ -152,21 +152,21 @@ void BOARD_InitUARTPins(void)
 BOARD_InitFlexIOPanelPins:
 - options: {callFromInitBoot: 'true', coreID: cm33_core0, enableClock: 'true'}
 - pin_list:
-  - {pin_num: H6, peripheral: FLEXIO, signal: 'D, 6', pin_signal: PIO2_6/LPSPI16_PCS3/FLEXIO_D6/LCD_DATA0/LCD_DBI_DATA0, slew_rate: slow, input_buffer: enable, pull_enable: enable}
-  - {pin_num: G6, peripheral: FLEXIO, signal: 'D, 7', pin_signal: PIO2_7/LPSPI16_PCS2/EZH_PIO7/FLEXIO_D7/LCD_D1/LCD_DBI_D1, slew_rate: slow, input_buffer: enable,
+  - {pin_num: H6, peripheral: FLEXIO, signal: 'IO, 6', pin_signal: PIO2_6/LPSPI16_PCS3/FLEXIO_D6/LCD_DATA0/LCD_DBI_DATA0, slew_rate: slow, input_buffer: enable, pull_enable: enable}
+  - {pin_num: G6, peripheral: FLEXIO, signal: 'IO, 7', pin_signal: PIO2_7/LPSPI16_PCS2/EZH_PIO7/FLEXIO_D7/LCD_D1/LCD_DBI_D1, slew_rate: slow, input_buffer: enable,
     pull_enable: enable}
-  - {pin_num: G4, peripheral: FLEXIO, signal: 'D, 8', pin_signal: PIO2_8/LPSPI16_PCS1/EZH_PIO8/FLEXIO_D8/LCD_D2/LCD_DBI_D2, slew_rate: slow, input_buffer: enable,
+  - {pin_num: G4, peripheral: FLEXIO, signal: 'IO, 8', pin_signal: PIO2_8/LPSPI16_PCS1/EZH_PIO8/FLEXIO_D8/LCD_D2/LCD_DBI_D2, slew_rate: slow, input_buffer: enable,
     pull_enable: enable}
-  - {pin_num: G5, peripheral: FLEXIO, signal: 'D, 9', pin_signal: PIO2_9/EZH_PIO9/FLEXIO_D9/LCD_D3/LCD_DBI_D3, slew_rate: slow, input_buffer: enable, pull_enable: enable}
-  - {pin_num: F5, peripheral: FLEXIO, signal: 'D, 10', pin_signal: PIO2_10/EZH_PIO10/FLEXIO_D10/LCD_D4/LCD_DBI_D4, slew_rate: slow, input_buffer: enable, pull_enable: enable}
-  - {pin_num: F3, peripheral: FLEXIO, signal: 'D, 11', pin_signal: PIO2_11/EZH_PIO11/FLEXIO_D11/LCD_D5/LCD_DBI_D5, slew_rate: slow, input_buffer: enable, pull_enable: enable}
-  - {pin_num: E3, peripheral: FLEXIO, signal: 'D, 12', pin_signal: PIO2_12/EZH_PIO12/FLEXIO_D12/LCD_D6/LCD_DBI_D6, slew_rate: slow, input_buffer: enable, pull_enable: enable}
-  - {pin_num: E4, peripheral: FLEXIO, signal: 'D, 13', pin_signal: PIO2_13/EZH_PIO13/FLEXIO_D13/LCD_D7/LCD_DBI_D7, slew_rate: slow, input_buffer: enable, pull_enable: enable}
-  - {pin_num: H2, peripheral: GPIO2, signal: 'IO, 0', pin_signal: PIO2_0/USB0_OVERCURRENTN/EZH_PIO0/FLEXIO_D0/LCD_DBI_CSX_AB, direction: OUTPUT}
-  - {pin_num: G2, peripheral: GPIO2, signal: 'IO, 1', pin_signal: PIO2_1/USB0_PORTPWRN/EZH_PIO1/FLEXIO_D1/LCD_DBI_DCX_AB, direction: OUTPUT}
-  - {pin_num: D3, peripheral: GPIO2, signal: 'IO, 15', pin_signal: PIO2_15/EZH_PIO15/FLEXIO_D15/CLKCTL0_LOW_FREQ_CLKOUT_N, direction: OUTPUT}
-  - {pin_num: G1, peripheral: FLEXIO, signal: 'D, 3', pin_signal: PIO2_3/LPSPI16_SCK/EZH_PIO3/FLEXIO_D3/LCD_DOTCLK/LCD_DBI_RWDX, direction: OUTPUT}
-  - {pin_num: G3, peripheral: FLEXIO, signal: 'D, 4', pin_signal: PIO2_4/LPSPI16_SIN/EZH_PIO4/FLEXIO_D4/LCD_HSYNC/LCD_DBI_WRX, direction: OUTPUT, slew_rate: slow,
+  - {pin_num: G5, peripheral: FLEXIO, signal: 'IO, 9', pin_signal: PIO2_9/EZH_PIO9/FLEXIO_D9/LCD_D3/LCD_DBI_D3, slew_rate: slow, input_buffer: enable, pull_enable: enable}
+  - {pin_num: F5, peripheral: FLEXIO, signal: 'IO, 10', pin_signal: PIO2_10/EZH_PIO10/FLEXIO_D10/LCD_D4/LCD_DBI_D4, slew_rate: slow, input_buffer: enable, pull_enable: enable}
+  - {pin_num: F3, peripheral: FLEXIO, signal: 'IO, 11', pin_signal: PIO2_11/EZH_PIO11/FLEXIO_D11/LCD_D5/LCD_DBI_D5, slew_rate: slow, input_buffer: enable, pull_enable: enable}
+  - {pin_num: E3, peripheral: FLEXIO, signal: 'IO, 12', pin_signal: PIO2_12/EZH_PIO12/FLEXIO_D12/LCD_D6/LCD_DBI_D6, slew_rate: slow, input_buffer: enable, pull_enable: enable}
+  - {pin_num: E4, peripheral: FLEXIO, signal: 'IO, 13', pin_signal: PIO2_13/EZH_PIO13/FLEXIO_D13/LCD_D7/LCD_DBI_D7, slew_rate: slow, input_buffer: enable, pull_enable: enable}
+  - {pin_num: H2, peripheral: GPIO2, signal: 'GPIO, 0', pin_signal: PIO2_0/USB0_OVERCURRENTN/EZH_PIO0/FLEXIO_D0/LCD_DBI_CSX_AB, direction: OUTPUT}
+  - {pin_num: G2, peripheral: GPIO2, signal: 'GPIO, 1', pin_signal: PIO2_1/USB0_PORTPWRN/EZH_PIO1/FLEXIO_D1/LCD_DBI_DCX_AB, direction: OUTPUT}
+  - {pin_num: D3, peripheral: GPIO2, signal: 'GPIO, 15', pin_signal: PIO2_15/EZH_PIO15/FLEXIO_D15/CLKCTL0_LOW_FREQ_CLKOUT_N, direction: OUTPUT}
+  - {pin_num: G1, peripheral: FLEXIO, signal: 'IO, 3', pin_signal: PIO2_3/LPSPI16_SCK/EZH_PIO3/FLEXIO_D3/LCD_DOTCLK/LCD_DBI_RWDX, input_buffer: enable}
+  - {pin_num: G3, peripheral: FLEXIO, signal: 'IO, 4', pin_signal: PIO2_4/LPSPI16_SIN/EZH_PIO4/FLEXIO_D4/LCD_HSYNC/LCD_DBI_WRX, input_buffer: enable, slew_rate: slow,
     input_buffer: enable, pull_select: up, pull_enable: enable}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
@@ -365,7 +365,7 @@ void BOARD_InitFlexIOPanelPins(void)
 BOARD_InitLcdDBIPanelPins:
 - options: {callFromInitBoot: 'false', coreID: cm33_core0, enableClock: 'true'}
 - pin_list:
-  - {pin_num: D3, peripheral: GPIO2, signal: 'IO, 15', pin_signal: PIO2_15/EZH_PIO15/FLEXIO_D15/CLKCTL0_LOW_FREQ_CLKOUT_N, direction: OUTPUT}
+  - {pin_num: D3, peripheral: GPIO2, signal: 'GPIO, 15', pin_signal: PIO2_15/EZH_PIO15/FLEXIO_D15/CLKCTL0_LOW_FREQ_CLKOUT_N, direction: OUTPUT}
   - {pin_num: H6, peripheral: LCDIF, signal: 'DBI_DATA, 0', pin_signal: PIO2_6/LPSPI16_PCS3/FLEXIO_D6/LCD_DATA0/LCD_DBI_DATA0, pull_select: up, pull_enable: enable}
   - {pin_num: G6, peripheral: LCDIF, signal: 'DBI_DATA, 1', pin_signal: PIO2_7/LPSPI16_PCS2/EZH_PIO7/FLEXIO_D7/LCD_D1/LCD_DBI_D1, pull_select: up, pull_enable: enable}
   - {pin_num: G4, peripheral: LCDIF, signal: 'DBI_DATA, 2', pin_signal: PIO2_8/LPSPI16_PCS1/EZH_PIO8/FLEXIO_D8/LCD_D2/LCD_DBI_D2, pull_select: up, pull_enable: enable}
@@ -374,13 +374,13 @@ BOARD_InitLcdDBIPanelPins:
   - {pin_num: F3, peripheral: LCDIF, signal: 'DBI_DATA, 5', pin_signal: PIO2_11/EZH_PIO11/FLEXIO_D11/LCD_D5/LCD_DBI_D5, pull_select: up, pull_enable: enable}
   - {pin_num: E3, peripheral: LCDIF, signal: 'DBI_DATA, 6', pin_signal: PIO2_12/EZH_PIO12/FLEXIO_D12/LCD_D6/LCD_DBI_D6, pull_select: up, pull_enable: enable}
   - {pin_num: E4, peripheral: LCDIF, signal: 'DBI_DATA, 7', pin_signal: PIO2_13/EZH_PIO13/FLEXIO_D13/LCD_D7/LCD_DBI_D7, pull_select: up, pull_enable: enable}
-  - {pin_num: G1, peripheral: LCDIF, signal: DBI_RWDX, pin_signal: PIO2_3/LPSPI16_SCK/EZH_PIO3/FLEXIO_D3/LCD_DOTCLK/LCD_DBI_RWDX, direction: OUTPUT, slew_rate: slow,
+  - {pin_num: G1, peripheral: LCDIF, signal: RWDX, pin_signal: PIO2_3/LPSPI16_SCK/EZH_PIO3/FLEXIO_D3/LCD_DOTCLK/LCD_DBI_RWDX, direction: OUTPUT, slew_rate: slow,
     input_buffer: disable, pull_select: up, pull_enable: disable}
-  - {pin_num: G3, peripheral: LCDIF, signal: DBI_WRX, pin_signal: PIO2_4/LPSPI16_SIN/EZH_PIO4/FLEXIO_D4/LCD_HSYNC/LCD_DBI_WRX, direction: OUTPUT, slew_rate: standard,
+  - {pin_num: G3, peripheral: LCDIF, signal: WRX, pin_signal: PIO2_4/LPSPI16_SIN/EZH_PIO4/FLEXIO_D4/LCD_HSYNC/LCD_DBI_WRX, direction: OUTPUT, slew_rate: standard,
     input_buffer: disable, pull_select: up, pull_enable: disable}
-  - {pin_num: H2, peripheral: LCDIF, signal: DBI_CSX_AB, pin_signal: PIO2_0/USB0_OVERCURRENTN/EZH_PIO0/FLEXIO_D0/LCD_DBI_CSX_AB, direction: OUTPUT, slew_rate: standard,
+  - {pin_num: H2, peripheral: LCDIF, signal: CSX, pin_signal: PIO2_0/USB0_OVERCURRENTN/EZH_PIO0/FLEXIO_D0/LCD_DBI_CSX_AB, direction: OUTPUT, slew_rate: standard,
     input_buffer: disable, pull_select: up, pull_enable: disable}
-  - {pin_num: G2, peripheral: LCDIF, signal: DBI_DCX_AB, pin_signal: PIO2_1/USB0_PORTPWRN/EZH_PIO1/FLEXIO_D1/LCD_DBI_DCX_AB, direction: OUTPUT, slew_rate: slow, input_buffer: disable,
+  - {pin_num: G2, peripheral: LCDIF, signal: DSX, pin_signal: PIO2_1/USB0_PORTPWRN/EZH_PIO1/FLEXIO_D1/LCD_DBI_DCX_AB, direction: OUTPUT, slew_rate: slow, input_buffer: disable,
     pull_select: up, pull_enable: disable}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */

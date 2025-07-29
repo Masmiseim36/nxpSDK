@@ -21,15 +21,26 @@
 
 #include "mcuboot_config/mcuboot_config.h"
 
-#if defined(MCUBOOT_SWAP_USING_SCRATCH) || defined(MCUBOOT_SWAP_USING_MOVE)
+#if defined(MCUBOOT_SWAP_USING_SCRATCH) || defined(MCUBOOT_SWAP_USING_MOVE) || defined(MCUBOOT_SWAP_USING_OFFSET)
 
 /**
  * Calculates the amount of space required to store the trailer, and erases
  * all sectors required for this storage in the given flash_area.
+ * The erase will only happen on devices that require erase as a preparation
+ * for write. To just remove swap status, the swap_scramble_trailer_sectors
+ * should be called.
  */
 int swap_erase_trailer_sectors(const struct boot_loader_state *state,
                                const struct flash_area *fap);
 
+/**
+ * Calculate the amount of space required to store the trailer and remove
+ * data from trailer. This is similar to swap_erase_trailer_sectors, but
+ * is intended to remove swap status not to prepare device with explicit
+ * erase requirements before write.
+ */
+int swap_scramble_trailer_sectors(const struct boot_loader_state *state,
+                                  const struct flash_area *fap);
 /**
  * Initialize the given flash_area with the metadata required to start a new
  * swap upgrade.
@@ -99,7 +110,20 @@ static inline size_t boot_scratch_area_size(const struct boot_loader_state *stat
 }
 #endif
 
-#endif /* defined(MCUBOOT_SWAP_USING_SCRATCH) || defined(MCUBOOT_SWAP_USING_MOVE) */
+#endif /* defined(MCUBOOT_SWAP_USING_SCRATCH) || defined(MCUBOOT_SWAP_USING_MOVE) || defined(MCUBOOT_SWAP_USING_OFFSET) */
+
+#if defined(MCUBOOT_SWAP_USING_MOVE) || defined(MCUBOOT_SWAP_USING_OFFSET)
+/**
+ * Check if device write block sizes are as expected, function should emit an error if there is
+ * a problem. If true is returned, the slots are marked as compatible, otherwise the slots are
+ * marked as incompatible.
+ *
+ * Requires MCUBOOT_SLOT0_EXPECTED_WRITE_SIZE be set to the write block size of image 0 primary
+ * slot and MCUBOOT_SLOT1_EXPECTED_WRITE_SIZE be set to the write block size of image 0 secondary
+ * slot.
+ */
+bool swap_write_block_size_check(struct boot_loader_state *state);
+#endif /* defined(MCUBOOT_SWAP_USING_MOVE) || defined(MCUBOOT_SWAP_USING_OFFSET) */
 
 /**
  * Returns the maximum size of an application that can be loaded to a slot.

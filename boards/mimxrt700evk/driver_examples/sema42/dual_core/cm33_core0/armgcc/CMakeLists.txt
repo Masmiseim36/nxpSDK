@@ -14,9 +14,6 @@ if(CMAKE_SCRIPT_MODE_FILE)
 endif()
 
 
-set(CMAKE_STATIC_LIBRARY_PREFIX)
-set(CMAKE_STATIC_LIBRARY_SUFFIX)
-
 set(CMAKE_EXECUTABLE_LIBRARY_PREFIX)
 set(CMAKE_EXECUTABLE_LIBRARY_SUFFIX)
 
@@ -31,7 +28,7 @@ project(sema42_dualcore_primary_core)
 
 enable_language(ASM)
 
-set(MCUX_BUILD_TYPES debug release flash_debug flash_release)
+set(MCUX_BUILD_TYPES flash_debug flash_release)
 
 set(MCUX_SDK_PROJECT_NAME sema42_dualcore_primary_core.elf)
 
@@ -63,17 +60,9 @@ target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
 )
 
 
-if(CMAKE_BUILD_TYPE STREQUAL debug)
-    target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../cm33_core1/armgcc/debug)
-endif(CMAKE_BUILD_TYPE STREQUAL debug)
-
 if(CMAKE_BUILD_TYPE STREQUAL flash_debug)
     target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../cm33_core1/armgcc/debug)
 endif(CMAKE_BUILD_TYPE STREQUAL flash_debug)
-
-if(CMAKE_BUILD_TYPE STREQUAL release)
-    target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../cm33_core1/armgcc/release)
-endif(CMAKE_BUILD_TYPE STREQUAL release)
 
 if(CMAKE_BUILD_TYPE STREQUAL flash_release)
     target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../cm33_core1/armgcc/release)

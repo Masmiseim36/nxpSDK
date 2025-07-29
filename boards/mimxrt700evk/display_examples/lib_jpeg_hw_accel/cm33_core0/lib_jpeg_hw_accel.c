@@ -30,8 +30,7 @@ JPEG_DECODER_Type g_jpegdec = {
  ******************************************************************************/
 #define APP_FB_BPP    3 /* LCD frame buffer byte per pixel, RGB888 format, 24-bit. */
 #define APP_FB_FORMAT kVIDEO_PixelFormatRGB888
-#define APP_RGB_ADDR  0x20239000U
-#define APP_YUV_ADDR  0x204DC000U
+
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
@@ -182,10 +181,10 @@ void APP_DisplayDecodedImage(void)
 {
     /* Step 10: Configure dispaly layer configuration. */
     fbInfo.pixelFormat = APP_FB_FORMAT;
-    fbInfo.width       = cinfo.output_width;
-    fbInfo.height      = cinfo.output_height;
-    fbInfo.startX      = (DEMO_PANEL_WIDTH - cinfo.output_width) / 2U;
-    fbInfo.startY      = (DEMO_PANEL_HEIGHT - cinfo.output_height) / 2U;
+    fbInfo.width       = (uint16_t)cinfo.output_width;
+    fbInfo.height      = (uint16_t)cinfo.output_height;
+    fbInfo.startX      = (DEMO_PANEL_WIDTH - (uint16_t)cinfo.output_width) / 2U;
+    fbInfo.startY      = (DEMO_PANEL_HEIGHT - (uint16_t)cinfo.output_height) / 2U;
     fbInfo.strideBytes = cinfo.output_width * APP_FB_BPP;
     if (kStatus_Success != g_dc.ops->setLayerConfig(&g_dc, 0, &fbInfo))
     {

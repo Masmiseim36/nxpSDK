@@ -14,9 +14,6 @@ if(CMAKE_SCRIPT_MODE_FILE)
 endif()
 
 
-set(CMAKE_STATIC_LIBRARY_PREFIX)
-set(CMAKE_STATIC_LIBRARY_SUFFIX)
-
 set(CMAKE_EXECUTABLE_LIBRARY_PREFIX)
 set(CMAKE_EXECUTABLE_LIBRARY_SUFFIX)
 
@@ -44,14 +41,12 @@ include(${ProjDirPath}/flags.cmake)
 include(${ProjDirPath}/config.cmake)
 
 add_executable(${MCUX_SDK_PROJECT_NAME} 
-"${ProjDirPath}/../app_config.h"
 "${ProjDirPath}/../aws_mbedtls_config.h"
 "${ProjDirPath}/../aws_clientcredential.h"
 "${ProjDirPath}/../aws_clientcredential_keys.h"
 "${ProjDirPath}/../core_mqtt_config.h"
 "${ProjDirPath}/../core_pkcs11_config.h"
 "${ProjDirPath}/../demo_config.h"
-"${ProjDirPath}/../freertos_tasks_c_additions.h"
 "${ProjDirPath}/../kvstore_config.h"
 "${ProjDirPath}/../shadow_config.h"
 "${ProjDirPath}/../wifi_config.h"

@@ -92,7 +92,7 @@
         </option>
         <option>
           <name>CExtraOptions</name>
-          <state>--macro_param _enableCore1=1</state>
+          <state>--macro_param _enableCore1=0</state>
         </option>
         <option>
           <name>CFpuProcessor</name>
@@ -104,11 +104,11 @@
         </option>
         <option>
           <name>OCDownloadSuppressDownload</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>OCDownloadVerifyAll</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>OCProductVersion</name>
@@ -1732,7 +1732,7 @@
         </option>
         <option>
           <name>CExtraOptions</name>
-          <state>--macro_param _enableCore1=1</state>
+          <state>--macro_param _enableCore1=0</state>
         </option>
         <option>
           <name>CFpuProcessor</name>
@@ -1744,11 +1744,11 @@
         </option>
         <option>
           <name>OCDownloadSuppressDownload</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>OCDownloadVerifyAll</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>OCProductVersion</name>

@@ -7,8 +7,7 @@
 
 /*
  * converted with:
- *  convert skigirl.jpg -resize 320x320 -background black -gravity center -extent 320x320 -depth 8 skigirl_COCO_320_320.rgba
- *  python3 ./tools/rgba2bgra.py -i skigirl_COCO_320_320.rgba -o skigirl_COCO_320_320.bgra -W 320 -H 320
+ *  python3 ./tools/image_operation.py -i skigirl.jpg -o  skigirl_COCO_320_320.bgra -C 4 --rsz_w 320 --rsz_h 320 --rsz_mode exact/pad --img_op conv_JPEG2FMT --pix_fmt bgra
  *  xxd -i skigirl_COCO_320_320.bgra > skigirl_COCO_320_320_bgra.h
  */
 

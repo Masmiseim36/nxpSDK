@@ -36,8 +36,14 @@
 extern "C" {
 #endif
 
-#ifndef __packed
-#define __packed __attribute__((__packed__))
+#if defined(STRUCT_PACKED)
+#undef STRUCT_PACKED
+#endif
+
+#if defined(__IAR_SYSTEMS_ICC__)
+#define STRUCT_PACKED __packed struct
+#else
+#define STRUCT_PACKED struct __attribute__((__packed__))
 #endif
 
 struct flash_area;
@@ -72,6 +78,13 @@ struct flash_area;
 #define IMAGE_F_ROM_FIXED                0x00000100
 
 /*
+ * Flags that indicate if the image data is compressed
+ */
+#define IMAGE_F_COMPRESSED_LZMA1         0x00000200
+#define IMAGE_F_COMPRESSED_LZMA2         0x00000400
+#define IMAGE_F_COMPRESSED_ARM_THUMB_FLT 0x00000800
+
+/*
  * ECSDA224 is with NIST P-224
  * ECSDA256 is with NIST P-256
  */
@@ -89,11 +102,15 @@ struct flash_area;
 #define IMAGE_TLV_PUBKEY            0x02   /* public key */
 #define IMAGE_TLV_SHA256            0x10   /* SHA256 of image hdr and body */
 #define IMAGE_TLV_SHA384            0x11   /* SHA384 of image hdr and body */
+#define IMAGE_TLV_SHA512            0x12   /* SHA512 of image hdr and body */
 #define IMAGE_TLV_RSA2048_PSS       0x20   /* RSA2048 of hash output */
 #define IMAGE_TLV_ECDSA224          0x21   /* ECDSA of hash output - Not supported anymore */
 #define IMAGE_TLV_ECDSA_SIG         0x22   /* ECDSA of hash output */
 #define IMAGE_TLV_RSA3072_PSS       0x23   /* RSA3072 of hash output */
 #define IMAGE_TLV_ED25519           0x24   /* ed25519 of hash output */
+#define IMAGE_TLV_SIG_PURE          0x25   /* Indicator that attached signature has been prepared
+                                            * over image rather than its digest.
+                                            */
 #define IMAGE_TLV_ENC_RSA2048       0x30   /* Key encrypted with RSA-OAEP-2048 */
 #define IMAGE_TLV_ENC_KW            0x31   /* Key encrypted with AES-KW 128 or 256*/
 #define IMAGE_TLV_ENC_EC256         0x32   /* Key encrypted with ECIES-EC256 */
@@ -101,6 +118,19 @@ struct flash_area;
 #define IMAGE_TLV_DEPENDENCY        0x40   /* Image depends on other image */
 #define IMAGE_TLV_SEC_CNT           0x50   /* security counter */
 #define IMAGE_TLV_BOOT_RECORD       0x60   /* measured boot record */
+/* The following flags relate to compressed images and are for the decompressed image data */
+#define IMAGE_TLV_DECOMP_SIZE       0x70   /* Decompressed image size excluding header/TLVs */
+#define IMAGE_TLV_DECOMP_SHA        0x71   /*
+                                            * Decompressed image shaX hash, this field must match
+                                            * the format and size of the raw slot (compressed)
+                                            * shaX hash
+                                            */
+#define IMAGE_TLV_DECOMP_SIGNATURE  0x72   /*
+                                            * Decompressed image signature, this field must match
+                                            * the format and size of the raw slot (compressed)
+                                            * signature
+                                            */
+#define IMAGE_TLV_COMP_DEC_SIZE     0x73   /* Compressed decrypted image size */
 					   /*
 					    * vendor reserved TLVs at xxA0-xxFF,
 					    * where xx denotes the upper byte
@@ -113,12 +143,12 @@ struct flash_area;
 					    */
 #define IMAGE_TLV_ANY               0xffff /* Used to iterate over all TLV */
 
-struct image_version {
+STRUCT_PACKED image_version {
     uint8_t iv_major;
     uint8_t iv_minor;
     uint16_t iv_revision;
     uint32_t iv_build_num;
-} __packed;
+};
 
 struct image_dependency {
     uint8_t image_id;                       /* Image index (from 0) */
@@ -131,7 +161,7 @@ struct image_dependency {
 };
 
 /** Image header.  All fields are in little endian byte order. */
-struct image_header {
+STRUCT_PACKED image_header {
     uint32_t ih_magic;
     uint32_t ih_load_addr;
     uint16_t ih_hdr_size;           /* Size of image header (bytes). */
@@ -140,19 +170,19 @@ struct image_header {
     uint32_t ih_flags;              /* IMAGE_F_[...]. */
     struct image_version ih_ver;
     uint32_t _pad1;
-} __packed;
+};
 
 /** Image TLV header.  All fields in little endian. */
-struct image_tlv_info {
+STRUCT_PACKED image_tlv_info {
     uint16_t it_magic;
     uint16_t it_tlv_tot;  /* size of TLV area (including tlv_info header) */
-} __packed;
+};
 
 /** Image trailer TLV format. All fields in little endian. */
-struct image_tlv {
+STRUCT_PACKED image_tlv {
     uint16_t it_type;   /* IMAGE_TLV_[...]. */
     uint16_t it_len;    /* Data length (not including TLV header). */
-} __packed;
+};
 
 #define ENCRYPTIONFLAGS (IMAGE_F_ENCRYPTED_AES128 | IMAGE_F_ENCRYPTED_AES256)
 #define IS_ENCRYPTED(hdr) (((hdr)->ih_flags & IMAGE_F_ENCRYPTED_AES128) \
@@ -165,16 +195,26 @@ struct image_tlv {
 #define MUST_DECRYPT(fap, idx, hdr) \
     (flash_area_get_id(fap) == FLASH_AREA_IMAGE_SECONDARY(idx) && IS_ENCRYPTED(hdr))
 #endif
-      
+
+#define COMPRESSIONFLAGS (IMAGE_F_COMPRESSED_LZMA1 | IMAGE_F_COMPRESSED_LZMA2 \
+                          | IMAGE_F_COMPRESSED_ARM_THUMB_FLT)
+#define IS_COMPRESSED(hdr) ((hdr)->ih_flags & COMPRESSIONFLAGS)
+#define MUST_DECOMPRESS(fap, idx, hdr) \
+    (flash_area_get_id(fap) == FLASH_AREA_IMAGE_SECONDARY(idx) && IS_COMPRESSED(hdr))
 _Static_assert(sizeof(struct image_header) == IMAGE_HEADER_SIZE,
                "struct image_header not required size");
 
 struct enc_key_data;
-fih_ret bootutil_img_validate(struct enc_key_data *enc_state, int image_index,
+struct boot_loader_state;
+fih_ret bootutil_img_validate(struct boot_loader_state *state,
                               struct image_header *hdr,
                               const struct flash_area *fap,
                               uint8_t *tmp_buf, uint32_t tmp_buf_sz,
-                              uint8_t *seed, int seed_len, uint8_t *out_hash);
+                              uint8_t *seed, int seed_len, uint8_t *out_hash
+#if defined(MCUBOOT_SWAP_USING_OFFSET) && defined(MCUBOOT_SERIAL_RECOVERY)
+                              , uint32_t start_off
+#endif
+);
 
 struct image_tlv_iter {
     const struct image_header *hdr;
@@ -184,6 +224,9 @@ struct image_tlv_iter {
     uint32_t prot_end;
     uint32_t tlv_off;
     uint32_t tlv_end;
+#if defined(MCUBOOT_SWAP_USING_OFFSET)
+    uint32_t start_off;
+#endif
 };
 
 int bootutil_tlv_iter_begin(struct image_tlv_iter *it,
@@ -194,9 +237,9 @@ int bootutil_tlv_iter_next(struct image_tlv_iter *it, uint32_t *off,
                            uint16_t *len, uint16_t *type);
 int bootutil_tlv_iter_is_prot(struct image_tlv_iter *it, uint32_t off);
 
-int32_t bootutil_get_img_security_cnt(struct image_header *hdr,
+int32_t bootutil_get_img_security_cnt(struct boot_loader_state *state, int slot,
                                       const struct flash_area *fap,
-                                      uint32_t *security_cnt);
+                                      uint32_t *img_security_cnt);
 
 #ifdef __cplusplus
 }

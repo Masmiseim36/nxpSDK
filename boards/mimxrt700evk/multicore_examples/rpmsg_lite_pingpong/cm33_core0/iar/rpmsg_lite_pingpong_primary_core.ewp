@@ -245,7 +245,8 @@
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
-          <state>CPU_MIMXRT798SGFOA_cm33_core0</state>
+          <state>CPU_MIMXRT798SGFOB_cm33_core0</state>
+          <state>MIMXRT798S_cm33_core0_SERIES</state>
           <state>BOOT_HEADER_ENABLE=1</state>
           <state>MULTICORE_APP=1</state>
         </option>
@@ -381,7 +382,8 @@
           <state>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg-lite/lib/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg-lite/lib/include/environment/bm</state>
           <state>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg-lite/lib/include/platform/imxrt700_m33</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/multicore/mcmgr/src</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/multicore/mcmgr/inc</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/multicore/mcmgr/inc/platform/imxrt700</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -566,7 +568,8 @@
         <option>
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
-          <state>CPU_MIMXRT798SGFOA_cm33_core0</state>
+          <state>CPU_MIMXRT798SGFOB_cm33_core0</state>
+          <state>MIMXRT798S_cm33_core0_SERIES</state>
         </option>
         <option>
           <name>AList</name>
@@ -672,7 +675,8 @@
           <state>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg-lite/lib/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg-lite/lib/include/environment/bm</state>
           <state>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg-lite/lib/include/platform/imxrt700_m33</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/multicore/mcmgr/src</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/multicore/mcmgr/inc</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/multicore/mcmgr/inc/platform/imxrt700</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -688,7 +692,7 @@
         </option>
         <option>
           <name>PreInclude</name>
-          <state/>
+          <state>$PROJ_DIR$/../mcux_config.h</state>
         </option>
       </data>
     </settings>
@@ -1386,7 +1390,8 @@
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
-          <state>CPU_MIMXRT798SGFOA_cm33_core0</state>
+          <state>CPU_MIMXRT798SGFOB_cm33_core0</state>
+          <state>MIMXRT798S_cm33_core0_SERIES</state>
           <state>BOOT_HEADER_ENABLE=1</state>
           <state>MULTICORE_APP=1</state>
         </option>
@@ -1522,7 +1527,8 @@
           <state>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg-lite/lib/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg-lite/lib/include/environment/bm</state>
           <state>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg-lite/lib/include/platform/imxrt700_m33</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/multicore/mcmgr/src</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/multicore/mcmgr/inc</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/multicore/mcmgr/inc/platform/imxrt700</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1707,7 +1713,8 @@
         <option>
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
-          <state>CPU_MIMXRT798SGFOA_cm33_core0</state>
+          <state>CPU_MIMXRT798SGFOB_cm33_core0</state>
+          <state>MIMXRT798S_cm33_core0_SERIES</state>
         </option>
         <option>
           <name>AList</name>
@@ -1813,7 +1820,8 @@
           <state>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg-lite/lib/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg-lite/lib/include/environment/bm</state>
           <state>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg-lite/lib/include/platform/imxrt700_m33</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/multicore/mcmgr/src</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/multicore/mcmgr/inc</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/multicore/mcmgr/inc/platform/imxrt700</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -1829,7 +1837,7 @@
         </option>
         <option>
           <name>PreInclude</name>
-          <state/>
+          <state>$PROJ_DIR$/../mcux_config.h</state>
         </option>
       </data>
     </settings>
@@ -2286,7 +2294,22 @@
   <group>
     <name>source</name>
     <file>
+      <name>$PROJ_DIR$/../dsp_config.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../main.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../dsp_support.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../dsp_support.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../mcux_config.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../mcux_config.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../mcux_config.h</name>
@@ -2630,12 +2653,9 @@
   </group>
   <group>
     <name>startup</name>
-    <group>
-      <name>iar</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT798S/iar/startup_MIMXRT798S_cm33_core0.s</name>
-      </file>
-    </group>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT798S/startup_MIMXRT798S_cm33_core0.c</name>
+    </file>
   </group>
   <group>
     <name>drivers</name>
@@ -2644,6 +2664,18 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT798S/drivers/fsl_clock.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT798S/drivers/fsl_dsp.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT798S/drivers/fsl_dsp.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT798S/drivers/fsl_ezhv.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT798S/drivers/fsl_ezhv.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT798S/drivers/fsl_iopctl.h</name>
@@ -2846,13 +2878,25 @@
     <group>
       <name>mcmgr</name>
       <group>
+        <name>inc</name>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/multicore/mcmgr/inc/mcmgr.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/multicore/mcmgr/inc/mcmgr_internal_core_api.h</name>
+        </file>
+        <group>
+          <name>platform</name>
+          <group>
+            <name>imxrt700</name>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/multicore/mcmgr/inc/platform/imxrt700/mcmgr_platform.h</name>
+            </file>
+          </group>
+        </group>
+      </group>
+      <group>
         <name>src</name>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/multicore/mcmgr/src/mcmgr.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/multicore/mcmgr/src/mcmgr_internal_core_api.h</name>
-        </file>
         <file>
           <name>$PROJ_DIR$/../../../../../../middleware/multicore/mcmgr/src/mcmgr.c</name>
         </file>
@@ -2872,6 +2916,9 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../example_board_readme.md</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../examples_shared_readme.md</name>
     </file>
   </group>
 </project>

@@ -28,6 +28,7 @@
       <toolchainSetting id_refs="com.nxp.mcuxpresso">
         <option id="gnu.c.compiler.option.preprocessor.def.symbols" type="stringList">
           <value>TF_LITE_STATIC_MEMORY</value>
+          <value>KERNELS_OPTIMIZED_FOR_SPEED</value>
         </option>
       </toolchainSetting>
     </toolchainSettings>

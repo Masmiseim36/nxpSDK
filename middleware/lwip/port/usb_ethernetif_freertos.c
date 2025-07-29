@@ -1,5 +1,5 @@
 /**
- * Copyright 2018,2020,2022,2024 NXP
+ * Copyright 2018,2020,2022,2024-2025 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -172,7 +172,11 @@ static void USB_HostCdcEcmDataInCallback(void *param, uint8_t *data, uint32_t da
         else
         {
             xEventGroupSetBits(ecmInstance->netifUsbStateEvent, CDC_ECM_STATE_XFER_DATA_IN);
-            usb_echo("CDC-ECM bulk in transfer error.\r\n");
+
+            if (dataLength)
+            {
+                usb_echo("CDC-ECM bulk in transfer error. Lost datalength: %d\r\n", dataLength);
+            }
         }
         return;
     }
@@ -217,7 +221,11 @@ static void USB_HostCdcEcmDataOutCallback(void *param, uint8_t *data, uint32_t d
         else
         {
             xEventGroupSetBits(ecmInstance->netifUsbDataOutEvent, CDC_ECM_STATE_XFER_DATA_OUT);
-            usb_echo("CDC-ECM bulk out transfer error.\r\n");
+
+            if (dataLength)
+            {
+                usb_echo("CDC-ECM bulk out transfer error. Lost datalength: %d\r\n", dataLength);
+            }
         }
         return;
     }
@@ -440,7 +448,7 @@ void USB_HostCdcEcmTask(void *param, uint32_t *task_event)
                 }
                 else
                 {
-                    ((struct netif *)(ecmInstance->netif))->mtu = ecmInstance->deviceMaxSegmentSize - 14;
+                    ((struct netif *)(ecmInstance->netif))->mtu = (u16_t)(ecmInstance->deviceMaxSegmentSize - 14);
                 }
                 xEventGroupSetBits(ecmInstance->netifUsbStateEvent, CDC_ECM_STATE_UPDATE);
             }
@@ -633,7 +641,7 @@ static void USB_HostCdcEcmUnicodeMacAddressStrToNum(const uint16_t *strBuf, uint
     USB_HostCdcEcmUnicodeStrToNum(strBuf, maclength * 2, macByte);
     for (uint32_t index = 0U; index < maclength; index++)
     {
-        macBuf[index] = (macByte[index * 2] << 4) | (macByte[index * 2 + 1]);
+        macBuf[index] = (uint8_t)(macByte[index * 2] << 4) | (macByte[index * 2 + 1]);
     }
 
     return;
@@ -671,12 +679,12 @@ static void USB_HostCdcRndisDataInCallback(void *param, uint8_t *data, uint32_t 
         if ((dataLength > 0) && (NULL != data))
         {
             rndis_packet_msg_struct_t *temp = (rndis_packet_msg_struct_t *)data;
-            pbuf                            = pbuf_alloc(PBUF_RAW, temp->dataLength, PBUF_POOL);
+            pbuf                            = pbuf_alloc(PBUF_RAW, (u16_t)temp->dataLength, PBUF_POOL);
             if (pbuf)
             {
                 temp->dataBuffer[temp->dataLength] = 0;
-                pbuf->tot_len                      = temp->dataLength;
-                pbuf->len                          = temp->dataLength;
+                pbuf->tot_len                      = (u16_t)temp->dataLength;
+                pbuf->len                          = (u16_t)temp->dataLength;
 
                 uint8_t *p = (uint8_t *)(&temp->dataOffset);
                 memcpy(pbuf->payload, (p + temp->dataOffset), temp->dataLength);
@@ -1393,7 +1401,7 @@ err_t USB_EthernetIfIgmpMacFilter(struct netif *netif, const ip4_addr_t *group, 
     static uint32_t usedFilters           = 0;
     static uint8_t multicastFilters[CDC_ECM_MAX_SUPPORT_MULTICAST_FILTERS][NETIF_MAX_HWADDR_LEN];
     uint8_t filter[CDC_ECM_MAX_SUPPORT_MULTICAST_FILTERS][NETIF_MAX_HWADDR_LEN];
-    int filterLen  = 0;
+    uint16_t filterLen  = 0;
     int filterFind = 0;
     uint8_t mac[NETIF_MAX_HWADDR_LEN];
     _multicastIp2MulticastMac(group, &mac);
@@ -1580,7 +1588,7 @@ err_t USB_EthernetIfOutPut(struct netif *netif, struct pbuf *p)
             return ERR_CONN;
         }
 
-        if (p->tot_len >= p->len)
+        if (p->tot_len >= p->len && p->tot_len > 0)
         {
             uint32_t total        = p->tot_len;
             uint32_t transferDone = 0U;
@@ -1592,15 +1600,27 @@ err_t USB_EthernetIfOutPut(struct netif *netif, struct pbuf *p)
                 return ERR_BUF;
             }
 
+            if (CDC_ECM_DATA_BUFFER_LEN < p->tot_len)
+            {
+                usb_echo("USB sending buffer is insuffient. Ethernet frame length: %d, USB buffer length: %d\r\n", p->tot_len, CDC_ECM_DATA_BUFFER_LEN);
+                return ERR_BUF;
+            }
+
+            u16_t cpylen = pbuf_copy_partial(p, ecmInstance->dataSendBuffer, p->tot_len, 0);
+            LWIP_ASSERT("pbuf_copy_partial error cpylen != p->tot_len", cpylen == p->tot_len);
+
             while (total)
             {
                 ecmInstance->dataState = USB_HostCdcEcmDataXfering;
-                buflen                 = total;
                 if (total > ecmInstance->deviceMaxSegmentSize)
                 {
                     buflen = ecmInstance->deviceMaxSegmentSize;
                 }
-                USB_HostCdcEcmDataSend(ecmInstance->classHandle, ((uint8_t *)p->payload + transferDone), buflen,
+                else
+                {
+                    buflen = total;
+                }
+                USB_HostCdcEcmDataSend(ecmInstance->classHandle, ecmInstance->dataSendBuffer + transferDone, buflen,
                                        ecmInstance->deviceMaxSegmentSize, USB_HostCdcEcmDataOutCallback, ecmInstance);
                 transferDone += buflen;
                 total -= buflen;

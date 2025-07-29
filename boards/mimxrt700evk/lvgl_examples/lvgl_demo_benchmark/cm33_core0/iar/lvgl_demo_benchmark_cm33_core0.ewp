@@ -252,7 +252,8 @@
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
-          <state>CPU_MIMXRT798SGFOA_cm33_core0</state>
+          <state>CPU_MIMXRT798SGFOB_cm33_core0</state>
+          <state>MIMXRT798S_cm33_core0_SERIES</state>
           <state>BOOT_HEADER_ENABLE=1</state>
           <state>LV_CONF_INCLUDE_SIMPLE=1</state>
           <state>SDK_OS_FREE_RTOS</state>
@@ -612,7 +613,8 @@
         <option>
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
-          <state>CPU_MIMXRT798SGFOA_cm33_core0</state>
+          <state>CPU_MIMXRT798SGFOB_cm33_core0</state>
+          <state>MIMXRT798S_cm33_core0_SERIES</state>
         </option>
         <option>
           <name>AList</name>
@@ -772,7 +774,7 @@
         </option>
         <option>
           <name>PreInclude</name>
-          <state/>
+          <state>$PROJ_DIR$/../mcux_config.h</state>
         </option>
       </data>
     </settings>
@@ -1472,7 +1474,8 @@
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
-          <state>CPU_MIMXRT798SGFOA_cm33_core0</state>
+          <state>CPU_MIMXRT798SGFOB_cm33_core0</state>
+          <state>MIMXRT798S_cm33_core0_SERIES</state>
           <state>BOOT_HEADER_ENABLE=1</state>
           <state>LV_CONF_INCLUDE_SIMPLE=1</state>
           <state>SDK_OS_FREE_RTOS</state>
@@ -1832,7 +1835,8 @@
         <option>
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
-          <state>CPU_MIMXRT798SGFOA_cm33_core0</state>
+          <state>CPU_MIMXRT798SGFOB_cm33_core0</state>
+          <state>MIMXRT798S_cm33_core0_SERIES</state>
         </option>
         <option>
           <name>AList</name>
@@ -1992,7 +1996,7 @@
         </option>
         <option>
           <name>PreInclude</name>
-          <state/>
+          <state>$PROJ_DIR$/../mcux_config.h</state>
         </option>
       </data>
     </settings>
@@ -2692,7 +2696,8 @@
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
-          <state>CPU_MIMXRT798SGFOA_cm33_core0</state>
+          <state>CPU_MIMXRT798SGFOB_cm33_core0</state>
+          <state>MIMXRT798S_cm33_core0_SERIES</state>
           <state>BOOT_HEADER_ENABLE=1</state>
           <state>LV_CONF_INCLUDE_SIMPLE=1</state>
           <state>SDK_OS_FREE_RTOS</state>
@@ -3052,7 +3057,8 @@
         <option>
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
-          <state>CPU_MIMXRT798SGFOA_cm33_core0</state>
+          <state>CPU_MIMXRT798SGFOB_cm33_core0</state>
+          <state>MIMXRT798S_cm33_core0_SERIES</state>
         </option>
         <option>
           <name>AList</name>
@@ -3212,7 +3218,7 @@
         </option>
         <option>
           <name>PreInclude</name>
-          <state/>
+          <state>$PROJ_DIR$/../mcux_config.h</state>
         </option>
       </data>
     </settings>
@@ -3912,7 +3918,8 @@
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
-          <state>CPU_MIMXRT798SGFOA_cm33_core0</state>
+          <state>CPU_MIMXRT798SGFOB_cm33_core0</state>
+          <state>MIMXRT798S_cm33_core0_SERIES</state>
           <state>BOOT_HEADER_ENABLE=1</state>
           <state>LV_CONF_INCLUDE_SIMPLE=1</state>
           <state>SDK_OS_FREE_RTOS</state>
@@ -4272,7 +4279,8 @@
         <option>
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
-          <state>CPU_MIMXRT798SGFOA_cm33_core0</state>
+          <state>CPU_MIMXRT798SGFOB_cm33_core0</state>
+          <state>MIMXRT798S_cm33_core0_SERIES</state>
         </option>
         <option>
           <name>AList</name>
@@ -4432,7 +4440,7 @@
         </option>
         <option>
           <name>PreInclude</name>
-          <state/>
+          <state>$PROJ_DIR$/../mcux_config.h</state>
         </option>
       </data>
     </settings>
@@ -4899,6 +4907,9 @@
       <name>$PROJ_DIR$/../lvgl_freertos.h</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../FreeRTOSConfig_frag.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../pin_mux.c</name>
     </file>
     <file>
@@ -4933,6 +4944,12 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../FreeRTOSConfig_Gen.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../mcux_config.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../mcux_config.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../mcux_config.h</name>
@@ -5261,12 +5278,9 @@
   </group>
   <group>
     <name>startup</name>
-    <group>
-      <name>iar</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT798S/iar/startup_MIMXRT798S_cm33_core0.s</name>
-      </file>
-    </group>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT798S/startup_MIMXRT798S_cm33_core0.c</name>
+    </file>
   </group>
   <group>
     <name>drivers</name>
@@ -5689,9 +5703,6 @@
     <name>lvgl</name>
     <group>
       <name>src</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/lv_init.c</name>
-      </file>
       <group>
         <name>core</name>
         <file>
@@ -5811,8 +5822,29 @@
       </group>
       <group>
         <name>draw</name>
+        <group>
+          <name>dma2d</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/draw/dma2d/lv_draw_dma2d.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/draw/dma2d/lv_draw_dma2d_fill.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/draw/dma2d/lv_draw_dma2d_img.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/draw/dma2d/lv_draw_dma2d.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/draw/dma2d/lv_draw_dma2d_private.h</name>
+          </file>
+        </group>
         <file>
           <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/draw/lv_draw.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/draw/lv_draw_3d.c</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/draw/lv_draw_arc.c</name>
@@ -5845,7 +5877,85 @@
           <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/draw/lv_image_decoder.c</name>
         </file>
         <group>
+          <name>nema_gfx</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/draw/nema_gfx/lv_draw_nema_gfx.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/draw/nema_gfx/lv_draw_nema_gfx_arc.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/draw/nema_gfx/lv_draw_nema_gfx_border.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/draw/nema_gfx/lv_draw_nema_gfx_fill.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/draw/nema_gfx/lv_draw_nema_gfx_img.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/draw/nema_gfx/lv_draw_nema_gfx_label.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/draw/nema_gfx/lv_draw_nema_gfx_layer.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/draw/nema_gfx/lv_draw_nema_gfx_line.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/draw/nema_gfx/lv_draw_nema_gfx_stm32_hal.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/draw/nema_gfx/lv_draw_nema_gfx_triangle.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/draw/nema_gfx/lv_draw_nema_gfx_utils.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/draw/nema_gfx/lv_nema_gfx_path.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/draw/nema_gfx/lv_draw_nema_gfx.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/draw/nema_gfx/lv_draw_nema_gfx_utils.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/draw/nema_gfx/lv_nema_gfx_path.h</name>
+          </file>
+        </group>
+        <group>
           <name>nxp</name>
+          <group>
+            <name>g2d</name>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/draw/nxp/g2d/lv_draw_buf_g2d.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/draw/nxp/g2d/lv_draw_g2d.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/draw/nxp/g2d/lv_draw_g2d_fill.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/draw/nxp/g2d/lv_draw_g2d_img.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/draw/nxp/g2d/lv_g2d_buf_map.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/draw/nxp/g2d/lv_g2d_utils.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/draw/nxp/g2d/lv_draw_g2d.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/draw/nxp/g2d/lv_g2d_buf_map.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/draw/nxp/g2d/lv_g2d_utils.h</name>
+            </file>
+          </group>
           <group>
             <name>pxp</name>
             <file>
@@ -5947,6 +6057,57 @@
           </group>
         </group>
         <group>
+          <name>opengles</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/draw/opengles/lv_draw_opengles.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/draw/opengles/lv_draw_opengles.h</name>
+          </file>
+        </group>
+        <group>
+          <name>renesas</name>
+          <group>
+            <name>dave2d</name>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/draw/renesas/dave2d/lv_draw_dave2d.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/draw/renesas/dave2d/lv_draw_dave2d_arc.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/draw/renesas/dave2d/lv_draw_dave2d_border.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/draw/renesas/dave2d/lv_draw_dave2d_fill.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/draw/renesas/dave2d/lv_draw_dave2d_image.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/draw/renesas/dave2d/lv_draw_dave2d_label.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/draw/renesas/dave2d/lv_draw_dave2d_line.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/draw/renesas/dave2d/lv_draw_dave2d_mask_rectangle.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/draw/renesas/dave2d/lv_draw_dave2d_triangle.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/draw/renesas/dave2d/lv_draw_dave2d_utils.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/draw/renesas/dave2d/lv_draw_dave2d.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/draw/renesas/dave2d/lv_draw_dave2d_utils.h</name>
+            </file>
+          </group>
+        </group>
+        <group>
           <name>sdl</name>
           <file>
             <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/draw/sdl/lv_draw_sdl.c</name>
@@ -5969,6 +6130,9 @@
               <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/draw/sw/blend/lv_draw_sw_blend_to_argb8888.c</name>
             </file>
             <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/draw/sw/blend/lv_draw_sw_blend_to_argb8888_premultiplied.c</name>
+            </file>
+            <file>
               <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/draw/sw/blend/lv_draw_sw_blend_to_i1.c</name>
             </file>
             <file>
@@ -5978,12 +6142,21 @@
               <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/draw/sw/blend/lv_draw_sw_blend_to_rgb565.c</name>
             </file>
             <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/draw/sw/blend/lv_draw_sw_blend_to_rgb565_swapped.c</name>
+            </file>
+            <file>
               <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/draw/sw/blend/lv_draw_sw_blend_to_rgb888.c</name>
             </file>
             <group>
               <name>arm2d</name>
               <file>
                 <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/draw/sw/blend/arm2d/lv_blend_arm2d.h</name>
+              </file>
+            </group>
+            <group>
+              <name>helium</name>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/draw/sw/blend/helium/lv_blend_helium.h</name>
               </file>
             </group>
             <file>
@@ -5999,6 +6172,9 @@
               <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/draw/sw/blend/lv_draw_sw_blend_to_argb8888.h</name>
             </file>
             <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/draw/sw/blend/lv_draw_sw_blend_to_argb8888_premultiplied.h</name>
+            </file>
+            <file>
               <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/draw/sw/blend/lv_draw_sw_blend_to_i1.h</name>
             </file>
             <file>
@@ -6006,6 +6182,9 @@
             </file>
             <file>
               <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/draw/sw/blend/lv_draw_sw_blend_to_rgb565.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/draw/sw/blend/lv_draw_sw_blend_to_rgb565_swapped.h</name>
             </file>
             <file>
               <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/draw/sw/blend/lv_draw_sw_blend_to_rgb888.h</name>
@@ -6033,7 +6212,7 @@
             <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/draw/sw/lv_draw_sw_fill.c</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/draw/sw/lv_draw_sw_gradient.c</name>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/draw/sw/lv_draw_sw_grad.c</name>
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/draw/sw/lv_draw_sw_img.c</name>
@@ -6057,6 +6236,9 @@
             <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/draw/sw/lv_draw_sw_triangle.c</name>
           </file>
           <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/draw/sw/lv_draw_sw_utils.c</name>
+          </file>
+          <file>
             <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/draw/sw/lv_draw_sw_vector.c</name>
           </file>
           <group>
@@ -6072,10 +6254,7 @@
             <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/draw/sw/lv_draw_sw.h</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/draw/sw/lv_draw_sw_gradient.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/draw/sw/lv_draw_sw_gradient_private.h</name>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/draw/sw/lv_draw_sw_grad.h</name>
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/draw/sw/lv_draw_sw_mask.h</name>
@@ -6086,9 +6265,105 @@
           <file>
             <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/draw/sw/lv_draw_sw_private.h</name>
           </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/draw/sw/lv_draw_sw_utils.h</name>
+          </file>
+        </group>
+        <group>
+          <name>vg_lite</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/draw/vg_lite/lv_draw_buf_vg_lite.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/draw/vg_lite/lv_draw_vg_lite.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/draw/vg_lite/lv_draw_vg_lite_arc.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/draw/vg_lite/lv_draw_vg_lite_border.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/draw/vg_lite/lv_draw_vg_lite_box_shadow.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/draw/vg_lite/lv_draw_vg_lite_fill.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/draw/vg_lite/lv_draw_vg_lite_img.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/draw/vg_lite/lv_draw_vg_lite_label.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/draw/vg_lite/lv_draw_vg_lite_layer.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/draw/vg_lite/lv_draw_vg_lite_line.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/draw/vg_lite/lv_draw_vg_lite_mask_rect.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/draw/vg_lite/lv_draw_vg_lite_triangle.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/draw/vg_lite/lv_draw_vg_lite_vector.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/draw/vg_lite/lv_vg_lite_decoder.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/draw/vg_lite/lv_vg_lite_grad.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/draw/vg_lite/lv_vg_lite_math.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/draw/vg_lite/lv_vg_lite_path.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/draw/vg_lite/lv_vg_lite_pending.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/draw/vg_lite/lv_vg_lite_stroke.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/draw/vg_lite/lv_vg_lite_utils.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/draw/vg_lite/lv_draw_vg_lite.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/draw/vg_lite/lv_draw_vg_lite_type.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/draw/vg_lite/lv_vg_lite_decoder.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/draw/vg_lite/lv_vg_lite_grad.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/draw/vg_lite/lv_vg_lite_math.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/draw/vg_lite/lv_vg_lite_path.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/draw/vg_lite/lv_vg_lite_pending.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/draw/vg_lite/lv_vg_lite_stroke.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/draw/vg_lite/lv_vg_lite_utils.h</name>
+          </file>
         </group>
         <file>
           <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/draw/lv_draw.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/draw/lv_draw_3d.h</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/draw/lv_draw_arc.h</name>
@@ -6174,6 +6449,18 @@
             </file>
           </group>
           <group>
+            <name>ft81x</name>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/drivers/display/ft81x/lv_ft81x.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/drivers/display/ft81x/lv_ft81x.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/drivers/display/ft81x/lv_ft81x_defines.h</name>
+            </file>
+          </group>
+          <group>
             <name>ili9341</name>
             <file>
               <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/drivers/display/ili9341/lv_ili9341.c</name>
@@ -6189,6 +6476,15 @@
             </file>
             <file>
               <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/drivers/display/lcd/lv_lcd_generic_mipi.h</name>
+            </file>
+          </group>
+          <group>
+            <name>renesas_glcdc</name>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/drivers/display/renesas_glcdc/lv_renesas_glcdc.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/drivers/display/renesas_glcdc/lv_renesas_glcdc.h</name>
             </file>
           </group>
           <group>
@@ -6219,6 +6515,15 @@
             </file>
           </group>
           <group>
+            <name>st_ltdc</name>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/drivers/display/st_ltdc/lv_st_ltdc.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/drivers/display/st_ltdc/lv_st_ltdc.h</name>
+            </file>
+          </group>
+          <group>
             <name>tft_espi</name>
             <file>
               <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/drivers/display/tft_espi/lv_tft_espi.h</name>
@@ -6232,6 +6537,39 @@
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/drivers/evdev/lv_evdev.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/drivers/evdev/lv_evdev_private.h</name>
+          </file>
+        </group>
+        <group>
+          <name>glfw</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/drivers/glfw/lv_glfw_window.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/drivers/glfw/lv_opengles_debug.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/drivers/glfw/lv_opengles_driver.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/drivers/glfw/lv_opengles_texture.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/drivers/glfw/lv_glfw_window.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/drivers/glfw/lv_glfw_window_private.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/drivers/glfw/lv_opengles_debug.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/drivers/glfw/lv_opengles_driver.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/drivers/glfw/lv_opengles_texture.h</name>
           </file>
         </group>
         <group>
@@ -6307,6 +6645,15 @@
           </file>
         </group>
         <group>
+          <name>qnx</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/drivers/qnx/lv_qnx.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/drivers/qnx/lv_qnx.h</name>
+          </file>
+        </group>
+        <group>
           <name>sdl</name>
           <file>
             <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/drivers/sdl/lv_sdl_keyboard.c</name>
@@ -6334,6 +6681,120 @@
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/drivers/sdl/lv_sdl_window.h</name>
+          </file>
+        </group>
+        <group>
+          <name>uefi</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/drivers/uefi/lv_uefi_context.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/drivers/uefi/lv_uefi_display.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/drivers/uefi/lv_uefi_indev_keyboard.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/drivers/uefi/lv_uefi_indev_pointer.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/drivers/uefi/lv_uefi_indev_touch.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/drivers/uefi/lv_uefi_private.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/drivers/uefi/lv_uefi.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/drivers/uefi/lv_uefi_context.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/drivers/uefi/lv_uefi_display.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/drivers/uefi/lv_uefi_edk2.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/drivers/uefi/lv_uefi_gnu_efi.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/drivers/uefi/lv_uefi_indev.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/drivers/uefi/lv_uefi_private.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/drivers/uefi/lv_uefi_std_wrapper.h</name>
+          </file>
+        </group>
+        <group>
+          <name>wayland</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/drivers/wayland/lv_wayland.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/drivers/wayland/lv_wayland_smm.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/drivers/wayland/lv_wl_cache.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/drivers/wayland/lv_wl_dmabuf.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/drivers/wayland/lv_wl_keyboard.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/drivers/wayland/lv_wl_pointer.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/drivers/wayland/lv_wl_pointer_axis.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/drivers/wayland/lv_wl_seat.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/drivers/wayland/lv_wl_shell.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/drivers/wayland/lv_wl_shm.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/drivers/wayland/lv_wl_touch.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/drivers/wayland/lv_wl_window.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/drivers/wayland/lv_wl_window_decorations.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/drivers/wayland/lv_wl_xdg_shell.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/drivers/wayland/lv_wayland.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/drivers/wayland/lv_wayland_private.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/drivers/wayland/lv_wayland_smm.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/drivers/wayland/lv_wl_keyboard.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/drivers/wayland/lv_wl_pointer.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/drivers/wayland/lv_wl_pointer_axis.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/drivers/wayland/lv_wl_touch.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/drivers/wayland/lv_wl_window.h</name>
           </file>
         </group>
         <group>
@@ -6372,60 +6833,6 @@
             <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/drivers/x11/lv_x11.h</name>
           </file>
         </group>
-        <group>
-          <name>glfw</name>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/drivers/glfw/lv_glfw_window.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/drivers/glfw/lv_opengles_debug.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/drivers/glfw/lv_opengles_driver.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/drivers/glfw/lv_opengles_texture.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/drivers/glfw/lv_glfw_window.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/drivers/glfw/lv_glfw_window_private.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/drivers/glfw/lv_opengles_debug.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/drivers/glfw/lv_opengles_driver.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/drivers/glfw/lv_opengles_texture.h</name>
-          </file>
-        </group>
-        <group>
-          <name>qnx</name>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/drivers/qnx/lv_qnx.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/drivers/qnx/lv_qnx.h</name>
-          </file>
-        </group>
-        <group>
-          <name>wayland</name>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/drivers/wayland/lv_wayland.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/drivers/wayland/lv_wayland_smm.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/drivers/wayland/lv_wayland.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/drivers/wayland/lv_wayland_smm.h</name>
-          </file>
-        </group>
         <file>
           <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/drivers/lv_drivers.h</name>
         </file>
@@ -6452,6 +6859,9 @@
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/font/lv_font_montserrat_14.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/font/lv_font_montserrat_14_aligned.c</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/font/lv_font_montserrat_16.c</name>
@@ -6517,6 +6927,12 @@
           <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/font/lv_font_simsun_16_cjk.c</name>
         </file>
         <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/font/lv_font_source_han_sans_sc_14_cjk.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/font/lv_font_source_han_sans_sc_16_cjk.c</name>
+        </file>
+        <file>
           <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/font/lv_font_unscii_16.c</name>
         </file>
         <file>
@@ -6544,10 +6960,19 @@
           <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/indev/lv_indev.c</name>
         </file>
         <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/indev/lv_indev_gesture.c</name>
+        </file>
+        <file>
           <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/indev/lv_indev_scroll.c</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/indev/lv_indev.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/indev/lv_indev_gesture.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/indev/lv_indev_gesture_private.h</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/indev/lv_indev_private.h</name>
@@ -6625,6 +7050,69 @@
           </file>
         </group>
         <group>
+          <name>expat</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/libs/expat/xmlparse.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/libs/expat/xmlrole.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/libs/expat/xmltok.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/libs/expat/xmltok_impl.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/libs/expat/xmltok_ns.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/libs/expat/ascii.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/libs/expat/asciitab.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/libs/expat/expat.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/libs/expat/expat_config.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/libs/expat/expat_external.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/libs/expat/iasciitab.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/libs/expat/internal.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/libs/expat/latin1tab.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/libs/expat/nametab.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/libs/expat/siphash.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/libs/expat/utf8tab.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/libs/expat/winconfig.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/libs/expat/xmlrole.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/libs/expat/xmltok.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/libs/expat/xmltok_impl.h</name>
+          </file>
+        </group>
+        <group>
           <name>ffmpeg</name>
           <file>
             <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/libs/ffmpeg/lv_ffmpeg.c</name>
@@ -6688,6 +7176,9 @@
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/libs/fsdrv/lv_fs_stdio.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/libs/fsdrv/lv_fs_uefi.c</name>
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/libs/fsdrv/lv_fs_win32.c</name>
@@ -6799,6 +7290,39 @@
           </file>
         </group>
         <group>
+          <name>svg</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/libs/svg/lv_svg.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/libs/svg/lv_svg_decoder.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/libs/svg/lv_svg_parser.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/libs/svg/lv_svg_render.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/libs/svg/lv_svg_token.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/libs/svg/lv_svg.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/libs/svg/lv_svg_decoder.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/libs/svg/lv_svg_parser.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/libs/svg/lv_svg_render.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/libs/svg/lv_svg_token.h</name>
+          </file>
+        </group>
+        <group>
           <name>tiny_ttf</name>
           <file>
             <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/libs/tiny_ttf/lv_tiny_ttf.c</name>
@@ -6836,6 +7360,132 @@
           <file>
             <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/libs/thorvg/config.h</name>
           </file>
+          <group>
+            <name>rapidjson</name>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/libs/thorvg/rapidjson/allocators.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/libs/thorvg/rapidjson/cursorstreamwrapper.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/libs/thorvg/rapidjson/document.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/libs/thorvg/rapidjson/encodedstream.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/libs/thorvg/rapidjson/encodings.h</name>
+            </file>
+            <group>
+              <name>error</name>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/libs/thorvg/rapidjson/error/en.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/libs/thorvg/rapidjson/error/error.h</name>
+              </file>
+            </group>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/libs/thorvg/rapidjson/filereadstream.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/libs/thorvg/rapidjson/filewritestream.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/libs/thorvg/rapidjson/fwd.h</name>
+            </file>
+            <group>
+              <name>internal</name>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/libs/thorvg/rapidjson/internal/biginteger.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/libs/thorvg/rapidjson/internal/clzll.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/libs/thorvg/rapidjson/internal/diyfp.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/libs/thorvg/rapidjson/internal/dtoa.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/libs/thorvg/rapidjson/internal/ieee754.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/libs/thorvg/rapidjson/internal/itoa.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/libs/thorvg/rapidjson/internal/meta.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/libs/thorvg/rapidjson/internal/pow10.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/libs/thorvg/rapidjson/internal/regex.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/libs/thorvg/rapidjson/internal/stack.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/libs/thorvg/rapidjson/internal/strfunc.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/libs/thorvg/rapidjson/internal/strtod.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/libs/thorvg/rapidjson/internal/swap.h</name>
+              </file>
+            </group>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/libs/thorvg/rapidjson/istreamwrapper.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/libs/thorvg/rapidjson/memorybuffer.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/libs/thorvg/rapidjson/memorystream.h</name>
+            </file>
+            <group>
+              <name>msinttypes</name>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/libs/thorvg/rapidjson/msinttypes/inttypes.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/libs/thorvg/rapidjson/msinttypes/stdint.h</name>
+              </file>
+            </group>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/libs/thorvg/rapidjson/ostreamwrapper.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/libs/thorvg/rapidjson/pointer.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/libs/thorvg/rapidjson/prettywriter.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/libs/thorvg/rapidjson/rapidjson.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/libs/thorvg/rapidjson/reader.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/libs/thorvg/rapidjson/schema.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/libs/thorvg/rapidjson/stream.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/libs/thorvg/rapidjson/stringbuffer.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/libs/thorvg/rapidjson/uri.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/libs/thorvg/rapidjson/writer.h</name>
+            </file>
+          </group>
           <file>
             <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/libs/thorvg/thorvg.h</name>
           </file>
@@ -6876,9 +7526,6 @@
             <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/libs/thorvg/tvgIteratorAccessor.h</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/libs/thorvg/tvgLines.h</name>
-          </file>
-          <file>
             <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/libs/thorvg/tvgLoadModule.h</name>
           </file>
           <file>
@@ -6889,6 +7536,9 @@
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/libs/thorvg/tvgLottieBuilder.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/libs/thorvg/tvgLottieCommon.h</name>
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/libs/thorvg/tvgLottieExpressions.h</name>
@@ -6903,6 +7553,9 @@
             <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/libs/thorvg/tvgLottieModel.h</name>
           </file>
           <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/libs/thorvg/tvgLottieModifier.h</name>
+          </file>
+          <file>
             <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/libs/thorvg/tvgLottieParser.h</name>
           </file>
           <file>
@@ -6910,6 +7563,9 @@
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/libs/thorvg/tvgLottieProperty.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/libs/thorvg/tvgLottieRenderPooler.h</name>
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/libs/thorvg/tvgMath.h</name>
@@ -6985,24 +7641,54 @@
           </file>
         </group>
       </group>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/lv_init.c</name>
+      </file>
       <group>
         <name>misc</name>
         <group>
           <name>cache</name>
+          <group>
+            <name>class</name>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/misc/cache/class/lv_cache_lru_ll.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/misc/cache/class/lv_cache_lru_rb.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/misc/cache/class/lv_cache_class.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/misc/cache/class/lv_cache_lru_ll.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/misc/cache/class/lv_cache_lru_rb.h</name>
+            </file>
+          </group>
+          <group>
+            <name>instance</name>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/misc/cache/instance/lv_image_cache.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/misc/cache/instance/lv_image_header_cache.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/misc/cache/instance/lv_cache_instance.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/misc/cache/instance/lv_image_cache.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/misc/cache/instance/lv_image_header_cache.h</name>
+            </file>
+          </group>
           <file>
             <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/misc/cache/lv_cache.c</name>
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/misc/cache/lv_cache_entry.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/misc/cache/lv_cache_lru_rb.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/misc/cache/lv_image_cache.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/misc/cache/lv_image_header_cache.c</name>
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/misc/cache/lv_cache.h</name>
@@ -7014,16 +7700,7 @@
             <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/misc/cache/lv_cache_entry_private.h</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/misc/cache/lv_cache_lru_rb.h</name>
-          </file>
-          <file>
             <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/misc/cache/lv_cache_private.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/misc/cache/lv_image_cache.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/misc/cache/lv_image_header_cache.h</name>
           </file>
         </group>
         <file>
@@ -7045,6 +7722,9 @@
           <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/misc/lv_bidi.c</name>
         </file>
         <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/misc/lv_circle_buf.c</name>
+        </file>
+        <file>
           <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/misc/lv_color.c</name>
         </file>
         <file>
@@ -7055,6 +7735,12 @@
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/misc/lv_fs.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/misc/lv_grad.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/misc/lv_iter.c</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/misc/lv_ll.c</name>
@@ -7099,6 +7785,9 @@
           <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/misc/lv_timer.c</name>
         </file>
         <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/misc/lv_tree.c</name>
+        </file>
+        <file>
           <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/misc/lv_utils.c</name>
         </file>
         <file>
@@ -7132,6 +7821,9 @@
           <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/misc/lv_bidi_private.h</name>
         </file>
         <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/misc/lv_circle_buf.h</name>
+        </file>
+        <file>
           <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/misc/lv_color.h</name>
         </file>
         <file>
@@ -7151,6 +7843,12 @@
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/misc/lv_fs_private.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/misc/lv_grad.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/misc/lv_iter.h</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/misc/lv_ll.h</name>
@@ -7213,6 +7911,9 @@
           <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/misc/lv_timer_private.h</name>
         </file>
         <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/misc/lv_tree.h</name>
+        </file>
+        <file>
           <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/misc/lv_types.h</name>
         </file>
         <file>
@@ -7226,6 +7927,9 @@
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/osal/lv_freertos.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/osal/lv_linux.c</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/osal/lv_mqx.c</name>
@@ -7243,6 +7947,9 @@
           <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/osal/lv_rtthread.c</name>
         </file>
         <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/osal/lv_sdl2.c</name>
+        </file>
+        <file>
           <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/osal/lv_windows.c</name>
         </file>
         <file>
@@ -7250,6 +7957,9 @@
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/osal/lv_freertos.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/osal/lv_linux_private.h</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/osal/lv_mqx.h</name>
@@ -7270,6 +7980,9 @@
           <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/osal/lv_rtthread.h</name>
         </file>
         <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/osal/lv_sdl2.h</name>
+        </file>
+        <file>
           <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/osal/lv_windows.h</name>
         </file>
       </group>
@@ -7285,6 +7998,21 @@
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/others/file_explorer/lv_file_explorer_private.h</name>
+          </file>
+        </group>
+        <group>
+          <name>font_manager</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/others/font_manager/lv_font_manager.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/others/font_manager/lv_font_manager_recycle.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/others/font_manager/lv_font_manager.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/others/font_manager/lv_font_manager_recycle.h</name>
           </file>
         </group>
         <group>
@@ -7378,12 +8106,237 @@
           </file>
         </group>
         <group>
+          <name>test</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/others/test/lv_test_display.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/others/test/lv_test_helpers.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/others/test/lv_test_indev.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/others/test/lv_test_indev_gesture.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/others/test/lv_test_screenshot_compare.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/others/test/lv_test.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/others/test/lv_test_display.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/others/test/lv_test_helpers.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/others/test/lv_test_indev.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/others/test/lv_test_indev_gesture.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/others/test/lv_test_private.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/others/test/lv_test_screenshot_compare.h</name>
+          </file>
+        </group>
+        <group>
           <name>vg_lite_tvg</name>
           <file>
             <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/others/vg_lite_tvg/vg_lite_matrix.c</name>
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/others/vg_lite_tvg/vg_lite.h</name>
+          </file>
+        </group>
+        <group>
+          <name>xml</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/others/xml/lv_xml.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/others/xml/lv_xml_base_types.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/others/xml/lv_xml_component.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/others/xml/lv_xml_parser.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/others/xml/lv_xml_style.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/others/xml/lv_xml_update.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/others/xml/lv_xml_utils.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/others/xml/lv_xml_widget.c</name>
+          </file>
+          <group>
+            <name>parsers</name>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/others/xml/parsers/lv_xml_arc_parser.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/others/xml/parsers/lv_xml_bar_parser.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/others/xml/parsers/lv_xml_button_parser.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/others/xml/parsers/lv_xml_buttonmatrix_parser.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/others/xml/parsers/lv_xml_calendar_parser.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/others/xml/parsers/lv_xml_canvas_parser.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/others/xml/parsers/lv_xml_chart_parser.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/others/xml/parsers/lv_xml_checkbox_parser.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/others/xml/parsers/lv_xml_dropdown_parser.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/others/xml/parsers/lv_xml_event_parser.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/others/xml/parsers/lv_xml_image_parser.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/others/xml/parsers/lv_xml_keyboard_parser.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/others/xml/parsers/lv_xml_label_parser.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/others/xml/parsers/lv_xml_obj_parser.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/others/xml/parsers/lv_xml_roller_parser.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/others/xml/parsers/lv_xml_scale_parser.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/others/xml/parsers/lv_xml_slider_parser.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/others/xml/parsers/lv_xml_spangroup_parser.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/others/xml/parsers/lv_xml_table_parser.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/others/xml/parsers/lv_xml_tabview_parser.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/others/xml/parsers/lv_xml_textarea_parser.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/others/xml/parsers/lv_xml_arc_parser.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/others/xml/parsers/lv_xml_bar_parser.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/others/xml/parsers/lv_xml_button_parser.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/others/xml/parsers/lv_xml_buttonmatrix_parser.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/others/xml/parsers/lv_xml_calendar_parser.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/others/xml/parsers/lv_xml_canvas_parser.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/others/xml/parsers/lv_xml_chart_parser.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/others/xml/parsers/lv_xml_checkbox_parser.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/others/xml/parsers/lv_xml_dropdown_parser.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/others/xml/parsers/lv_xml_event_parser.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/others/xml/parsers/lv_xml_image_parser.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/others/xml/parsers/lv_xml_keyboard_parser.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/others/xml/parsers/lv_xml_label_parser.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/others/xml/parsers/lv_xml_obj_parser.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/others/xml/parsers/lv_xml_roller_parser.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/others/xml/parsers/lv_xml_scale_parser.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/others/xml/parsers/lv_xml_slider_parser.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/others/xml/parsers/lv_xml_spangroup_parser.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/others/xml/parsers/lv_xml_table_parser.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/others/xml/parsers/lv_xml_tabview_parser.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/others/xml/parsers/lv_xml_textarea_parser.h</name>
+            </file>
+          </group>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/others/xml/lv_xml.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/others/xml/lv_xml_base_types.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/others/xml/lv_xml_component.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/others/xml/lv_xml_component_private.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/others/xml/lv_xml_parser.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/others/xml/lv_xml_private.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/others/xml/lv_xml_style.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/others/xml/lv_xml_update.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/others/xml/lv_xml_utils.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/others/xml/lv_xml_widget.h</name>
           </file>
         </group>
       </group>
@@ -7441,6 +8394,12 @@
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/stdlib/rtthread/lv_string_rtthread.c</name>
+          </file>
+        </group>
+        <group>
+          <name>uefi</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/stdlib/uefi/lv_mem_core_uefi.c</name>
           </file>
         </group>
         <file>
@@ -7509,6 +8468,18 @@
       </group>
       <group>
         <name>widgets</name>
+        <group>
+          <name>3dtexture</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/widgets/3dtexture/lv_3dtexture.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/widgets/3dtexture/lv_3dtexture.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/widgets/3dtexture/lv_3dtexture_private.h</name>
+          </file>
+        </group>
         <group>
           <name>animimage</name>
           <file>
@@ -7590,9 +8561,6 @@
             <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/widgets/calendar/lv_calendar_chinese.h</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/widgets/calendar/lv_calendar_chinese_private.h</name>
-          </file>
-          <file>
             <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/widgets/calendar/lv_calendar_header_arrow.h</name>
           </file>
           <file>
@@ -7600,18 +8568,6 @@
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/widgets/calendar/lv_calendar_private.h</name>
-          </file>
-        </group>
-        <group>
-          <name>carousel</name>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/widgets/carousel/lv_carousel.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/widgets/carousel/lv_carousel.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/widgets/carousel/lv_carousel_private.h</name>
           </file>
         </group>
         <group>
@@ -7786,6 +8742,45 @@
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/widgets/objx_templ/lv_objx_templ.h</name>
+          </file>
+        </group>
+        <group>
+          <name>property</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/widgets/property/lv_animimage_properties.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/widgets/property/lv_dropdown_properties.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/widgets/property/lv_image_properties.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/widgets/property/lv_keyboard_properties.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/widgets/property/lv_label_properties.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/widgets/property/lv_obj_properties.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/widgets/property/lv_roller_properties.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/widgets/property/lv_slider_properties.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/widgets/property/lv_style_properties.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/widgets/property/lv_textarea_properties.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/widgets/property/lv_obj_property_names.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/src/widgets/property/lv_style_properties.h</name>
           </file>
         </group>
         <group>
@@ -7964,6 +8959,9 @@
     <file>
       <name>$PROJ_DIR$/../../../../../../middleware/lvgl/lvgl.h</name>
     </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../middleware/lvgl/lvgl_private.h</name>
+    </file>
     <group>
       <name>demos</name>
       <file>
@@ -7972,15 +8970,6 @@
       <file>
         <name>$PROJ_DIR$/../../../../../../middleware/lvgl/demos/lv_demos.h</name>
       </file>
-      <group>
-        <name>transform</name>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/lvgl/demos/transform/lv_demo_transform.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/lvgl/demos/transform/lv_demo_transform.h</name>
-        </file>
-      </group>
       <group>
         <name>benchmark</name>
         <file>
@@ -7995,25 +8984,31 @@
             <name>$PROJ_DIR$/../../../../../../middleware/lvgl/demos/benchmark/assets/img_benchmark_avatar.c</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/demos/benchmark/assets/img_benchmark_cogwheel_alpha256.c</name>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/demos/benchmark/assets/img_benchmark_lvgl_logo_argb.c</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/demos/benchmark/assets/img_benchmark_cogwheel_argb.c</name>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/demos/benchmark/assets/img_benchmark_lvgl_logo_rgb.c</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/demos/benchmark/assets/img_benchmark_cogwheel_indexed16.c</name>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/demos/benchmark/assets/lv_font_benchmark_montserrat_12_aligned.c</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/demos/benchmark/assets/img_benchmark_cogwheel_rgb.c</name>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/demos/benchmark/assets/lv_font_benchmark_montserrat_14_aligned.c</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/demos/benchmark/assets/lv_font_benchmark_montserrat_12_compr_az.c.c</name>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/demos/benchmark/assets/lv_font_benchmark_montserrat_16_aligned.c</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/demos/benchmark/assets/lv_font_benchmark_montserrat_16_compr_az.c.c</name>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/demos/benchmark/assets/lv_font_benchmark_montserrat_18_aligned.c</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/demos/benchmark/assets/lv_font_benchmark_montserrat_28_compr_az.c.c</name>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/demos/benchmark/assets/lv_font_benchmark_montserrat_20_aligned.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/demos/benchmark/assets/lv_font_benchmark_montserrat_24_aligned.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lvgl/demos/benchmark/assets/lv_font_benchmark_montserrat_26_aligned.c</name>
           </file>
         </group>
       </group>
@@ -8130,6 +9125,9 @@
         <file>
           <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/timers.h</name>
         </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/freertos_tasks_c_additions.h</name>
+        </file>
       </group>
       <group>
         <name>portable</name>
@@ -8188,6 +9186,9 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../lvgl_examples_readme.md</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../examples_shared_readme.md</name>
     </file>
   </group>
 </project>

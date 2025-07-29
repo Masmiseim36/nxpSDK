@@ -1,5 +1,5 @@
 /*
- * Copyright 2023-2024 NXP
+ * Copyright 2023-2025 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -34,7 +34,9 @@
 /*******************************************************************************
  * Variables
  ******************************************************************************/
-
+#if defined(MIMXRT798S_cm33_core0_SERIES)
+static uint32_t i2c_iomux[2] = {0U};
+#endif
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
@@ -70,10 +72,14 @@ void BOARD_ClockPreConfig(void)
     CLOCK_AttachClk(kSENSE_BASE_to_SENSE_MAIN);
 }
 
+/*
+ * NOTE, the actual output of the LDO may not exactly same with the setting due to accuracy and internal circuite voltage drop.
+ * To make sure the minumum supply voltage meeting the rquirement of corresponding operation frequency, external supply is suggested.
+ */
 void BOARD_ClockHSRunPreConfig(void)
 {
     BOARD_ClockPreConfig();
-       
+
     /* Change power supply for LDO, if using external PMIC supply for VDD1/VDD2, need configure PMIC to change voltage supply. */
     power_regulator_voltage_t ldo = {
         .LDO.vsel0 = 700000U,  /* 700mv, 0.45 V + 12.5 mV * x */
@@ -83,13 +89,14 @@ void BOARD_ClockHSRunPreConfig(void)
     };
 
     power_lvd_voltage_t lvd = {
-        .VDD12.lvl0 = 600000U, /* 600mv */
-        .VDD12.lvl1 = 700000U, /* 700mv */
-        .VDD12.lvl2 = 800000U, /* 800mv */
+        .VDD12.lvl0 = 600000U,  /* 600mv */
+        .VDD12.lvl1 = 700000U,  /* 700mv */
+        .VDD12.lvl2 = 800000U,  /* 800mv */
         .VDD12.lvl3 = 1000000U, /* 1000mv */
     };
 
     POWER_ConfigRegulatorSetpoints(kRegulator_Vdd1LDO, &ldo, &lvd);
+    POWER_SetRunRegulatorMode(kRegulator_Vdd1LDO, kPower_LDOMode_Bypass); /* Change to bypass mode. */
 
     POWER_ApplyPD();
 }
@@ -121,10 +128,14 @@ void BOARD_ClockPreConfig(void)
     BOARD_XspiClockSafeConfig(); /*Change to common_base clock(Sourced by FRO1). */
 }
 
+/*
+ * NOTE, the actual output of the LDO may not exactly same with the setting due to accuracy and internal circuite voltage drop.
+ * To make sure the minumum supply voltage meeting the rquirement of corresponding operation frequency, external supply is suggested.
+ */
 void BOARD_ClockHSRunPreConfig(void)
 {
     BOARD_ClockPreConfig();
-       
+
     /* Change power supply for LDO, if using external PMIC supply for VDD1/VDD2, need configure PMIC to change voltage supply. */
     power_regulator_voltage_t ldo = {
         .LDO.vsel0 = 700000U,  /* 700mv, 0.45 V + 12.5 mV * x */
@@ -134,13 +145,14 @@ void BOARD_ClockHSRunPreConfig(void)
     };
 
     power_lvd_voltage_t lvd = {
-        .VDD12.lvl0 = 600000U, /* 600mv */
-        .VDD12.lvl1 = 700000U, /* 700mv */
-        .VDD12.lvl2 = 800000U, /* 800mv */
+        .VDD12.lvl0 = 600000U,  /* 600mv */
+        .VDD12.lvl1 = 700000U,  /* 700mv */
+        .VDD12.lvl2 = 800000U,  /* 800mv */
         .VDD12.lvl3 = 1000000U, /* 1000mv */
     };
 
     POWER_ConfigRegulatorSetpoints(kRegulator_Vdd2LDO, &ldo, &lvd);
+    POWER_SetRunRegulatorMode(kRegulator_Vdd2LDO, kPower_LDOMode_Bypass); /* Change to bypass mode. */
 
     POWER_ApplyPD();
 }
@@ -663,6 +675,78 @@ void BOARD_Init16bitsPsRam(XSPI_Type *base)
     /* Updated address mode for AHB access. */
     psRamDeviceConfig.addrMode = kXSPI_Device4ByteAddressable;
     XSPI_SetDeviceConfig(base, &psRamDeviceConfig);
+}
+
+inline static void i2c_release_bus_delay(void)
+{
+    SDK_DelayAtLeastUs(10U, SDK_DEVICE_MAXIMUM_CPU_CLOCK_FREQUENCY);
+}
+
+void BOARD_InitI2c2PinAsGpio(void)
+{
+    /* Reset IOPCTL0 module */
+    RESET_ClearPeripheralReset(kIOPCTL0_RST_SHIFT_RSTn);
+
+    /* PORT1 PIN11 is configured as PIO1_11 */
+    i2c_iomux[0]        = IOPCTL0->PIO[1][11];
+    IOPCTL0->PIO[1][11] = 0x440u; /* GPIO with inputbuffer and pseudo uutput drain enabled. */
+    /* PORT1 PIN12 is configured as PIO1_12 */
+    i2c_iomux[1]        = IOPCTL0->PIO[1][12];
+    IOPCTL0->PIO[1][12] = 0x400U; /* GPIO with pseudo uutput drain enabled. */
+}
+
+void BOARD_RestoreI2c2PinMux(void)
+{
+    IOPCTL0->PIO[1][11] = i2c_iomux[0];
+    IOPCTL0->PIO[1][12] = i2c_iomux[1];
+}
+
+void BOARD_I2c2RecoverBus(void)
+{
+    gpio_pin_config_t pin_config = {
+        kGPIO_DigitalOutput,
+        1U,
+    };
+
+    GPIO_PinInit(BOARD_CODEC_I2C_SCL_GPIO, BOARD_CODEC_I2C_SCL_PIN, &pin_config);
+    i2c_release_bus_delay();
+    
+    /* Configure SDA pin as input. */
+    pin_config.pinDirection = kGPIO_DigitalInput;
+    GPIO_PinInit(BOARD_CODEC_I2C_SDA_GPIO, BOARD_CODEC_I2C_SDA_PIN, &pin_config);
+
+    /* Send pulses on SCL until SDA is released and then send stop. */
+    while(true)
+    {
+        /* SCL pulse - low */
+        GPIO_PinWrite(BOARD_CODEC_I2C_SCL_GPIO, BOARD_CODEC_I2C_SCL_PIN, 0U);
+        i2c_release_bus_delay();
+
+        /* Check whether SDA line is released */
+        if (1U == GPIO_PinRead(BOARD_CODEC_I2C_SDA_GPIO, BOARD_CODEC_I2C_SDA_PIN))
+        {
+            /* SDA is released, hold it in low */
+            pin_config.pinDirection = kGPIO_DigitalOutput;
+            pin_config.outputLogic = 0U;
+            GPIO_PinInit(BOARD_CODEC_I2C_SDA_GPIO, BOARD_CODEC_I2C_SDA_PIN, &pin_config);
+
+            /* SCL pulse - high */
+            GPIO_PinWrite(BOARD_CODEC_I2C_SCL_GPIO, BOARD_CODEC_I2C_SCL_PIN, 1U);
+            i2c_release_bus_delay();
+
+            /* Set SDA to high from low - send stop */
+            GPIO_PinWrite(BOARD_CODEC_I2C_SDA_GPIO, BOARD_CODEC_I2C_SDA_PIN, 1U);
+            i2c_release_bus_delay();
+
+            break;
+        }
+        else
+        {
+            /* SCL pulse - high */
+            GPIO_PinWrite(BOARD_CODEC_I2C_SCL_GPIO, BOARD_CODEC_I2C_SCL_PIN, 1U);
+            i2c_release_bus_delay();
+        }
+    }
 }
 
 #endif /* MIMXRT798S_cm33_core0_SERIES */

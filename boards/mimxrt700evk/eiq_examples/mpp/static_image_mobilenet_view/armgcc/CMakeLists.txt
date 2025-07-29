@@ -14,9 +14,6 @@ if(CMAKE_SCRIPT_MODE_FILE)
 endif()
 
 
-set(CMAKE_STATIC_LIBRARY_PREFIX)
-set(CMAKE_STATIC_LIBRARY_SUFFIX)
-
 set(CMAKE_EXECUTABLE_LIBRARY_PREFIX)
 set(CMAKE_EXECUTABLE_LIBRARY_SUFFIX)
 
@@ -49,13 +46,11 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../stopwatch128_128_rgb.h"
 "${ProjDirPath}/../pin_mux.c"
 "${ProjDirPath}/../hardware_init.c"
-"${ProjDirPath}/../clock_config.c"
 "${ProjDirPath}/../utick_config.c"
 "${ProjDirPath}/../pin_mux.h"
 "${ProjDirPath}/../app.h"
 "${ProjDirPath}/../utick_config.h"
 "${ProjDirPath}/../FreeRTOSConfig.h"
-"${ProjDirPath}/../clock_config.h"
 "${ProjDirPath}/../hal_mimxrt700evk.c"
 "${ProjDirPath}/../get_top_n.cpp"
 "${ProjDirPath}/../utils.cpp"
@@ -67,15 +62,17 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../mobilenet_v1_glow_cm7.h"
 "${ProjDirPath}/../mobilenet_v1_weights_glow_cm7.h"
 "${ProjDirPath}/../mobilenetv1_labels.h"
+"${ProjDirPath}/../mobilenetv1_model_data_npu16_tflite.h"
+"${ProjDirPath}/../mobilenetv1_model_data_npu16_tflite_info.h"
+"${ProjDirPath}/../mobilenetv1_model_data_npu64_tflite.h"
+"${ProjDirPath}/../mobilenetv1_model_data_npu64_tflite_info.h"
 "${ProjDirPath}/../mobilenetv1_model_data_tflite.h"
 "${ProjDirPath}/../mobilenetv1_model_data_tflite_info.h"
-"${ProjDirPath}/../mobilenetv1_model_data_tflite_npu16.h"
-"${ProjDirPath}/../mobilenetv1_model_data_tflite_npu16_info.h"
-"${ProjDirPath}/../mobilenetv1_model_data_tflite_npu64.h"
-"${ProjDirPath}/../mobilenetv1_model_data_tflite_npu64_info.h"
 "${ProjDirPath}/../mobilenetv1_output_postproc.h"
 "${ProjDirPath}/../board.h"
 "${ProjDirPath}/../board.c"
+"${ProjDirPath}/../clock_config.h"
+"${ProjDirPath}/../clock_config.c"
 "${ProjDirPath}/../pmic_support.c"
 "${ProjDirPath}/../pmic_support.h"
 "${ProjDirPath}/../display_support.h"
@@ -89,6 +86,7 @@ target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
     ${ProjDirPath}/..
 )
 
+set_source_files_properties("${ProjDirPath}/../FreeRTOSConfig.h" PROPERTIES COMPONENT_CONFIG_FILE "middleware_freertos-kernel_config")
 
 include(${SdkRootDirPath}/devices/MIMXRT798S/all_lib_device.cmake)
 

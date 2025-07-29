@@ -11,7 +11,7 @@
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
-          <Device>MIMXRT798SGFOA:cm33_core0</Device>
+          <Device>MIMXRT798SGFOB:cm33_core0</Device>
           <Vendor>NXP</Vendor>
           <PackID>NXP.MIMXRT798S_DFP.17.0.0</PackID>
           <PackURL>https://mcuxpresso.nxp.com/cmsis_pack/repo/</PackURL>
@@ -334,9 +334,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../mcux_config.h -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
-              <Define>DEBUG, PRINTF_ADVANCED_ENABLE=1, USB_STACK_FREERTOS, USB_HOST_CONFIG_BUFFER_PROPERTY_CACHEABLE=1, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT798SGFOA_cm33_core0, OSA_USED, BOOT_HEADER_ENABLE=1, USE_RTOS=1, SDK_OS_FREE_RTOS</Define>
+              <Define>DEBUG, PRINTF_ADVANCED_ENABLE=1, USB_STACK_FREERTOS, USB_HOST_CONFIG_BUFFER_PROPERTY_CACHEABLE=1, EUSB_CONFIG_NATIVE_MODE=0, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT798SGFOB_cm33_core0, MIMXRT798S_cm33_core0_SERIES, OSA_USED, BOOT_HEADER_ENABLE=1, USE_RTOS=1, SDK_OS_FREE_RTOS</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../flash_config;../../../../../../../CMSIS/Core/Include;../../../../../../../CMSIS/Core/Include/m-profile;../../../../../../../devices/MIMXRT798S;../../../../../../../devices/MIMXRT798S/periph;../../../../../../../devices/MIMXRT798S/drivers;../../../../../../../devices/MIMXRT798S/utilities/debug_console_lite;../../../../../../../components/lists;../../../../../../../devices/MIMXRT798S/utilities/str;../../../../../../../components/uart;../../../../../../../components/osa;../../../../../../../middleware/usb/include;../../../../../../../middleware/usb/host;../../../../../../../middleware/usb/host/class;../../../../../../../middleware/usb/phy;../../../../../../../middleware/fatfs/source;../../../../../../../middleware/fatfs/template;../../../../../../../middleware/fatfs/source/fsl_usb_disk;../../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../../../rtos/freertos/freertos-kernel/template</IncludePath>
+              <IncludePath>..;../../../../../flash_config;../../../../../../../CMSIS/Core/Include;../../../../../../../CMSIS/Core/Include/m-profile;../../../../../../../devices/MIMXRT798S;../../../../../../../devices/MIMXRT798S/periph;../../../../../../../devices/MIMXRT798S/drivers;../../../../../../../devices/MIMXRT798S/utilities/debug_console_lite;../../../../../../../components/lists;../../../../../../../devices/MIMXRT798S/utilities/str;../../../../../../../components/uart;../../../../../../../components/osa;../../../../../../../middleware/usb/include;../../../../../../../middleware/usb/host;../../../../../../../middleware/usb/config/host/ehci;../../../../../../../middleware/usb/host/class;../../../../../../../middleware/usb/phy;../../../../../../../middleware/fatfs/source;../../../../../../../middleware/fatfs/template;../../../../../../../middleware/fatfs/source/fsl_usb_disk;../../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../../../rtos/freertos/freertos-kernel/template</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -351,10 +351,10 @@
             <useXO>0</useXO>
             <ClangAsOpt>2</ClangAsOpt>
             <VariousControls>
-              <MiscControls/>
-              <Define>MCUXPRESSO_SDK, CPU_MIMXRT798SGFOA_cm33_core0, OSA_USED</Define>
+              <MiscControls>-include ../mcux_config.h</MiscControls>
+              <Define>MCUXPRESSO_SDK, CPU_MIMXRT798SGFOB_cm33_core0, MIMXRT798S_cm33_core0_SERIES, OSA_USED</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../flash_config;../../../../../../../CMSIS/Core/Include;../../../../../../../CMSIS/Core/Include/m-profile;../../../../../../../devices/MIMXRT798S;../../../../../../../devices/MIMXRT798S/periph;../../../../../../../devices/periph;../../../../../../../devices/MIMXRT798S/drivers;../../../../../../../devices/MIMXRT798S/utilities/debug_console_lite;../../../../../../../components/lists;../../../../../../../devices/MIMXRT798S/utilities/str;../../../../../../../components/uart;../../../../../../../components/osa;../../../../../../../middleware/usb/include;../../../../../../../middleware/usb/host;../../../../../../../middleware/usb/host/class;../../../../../../../middleware/usb/phy;../../../../../../../middleware/fatfs/source;../../../../../../../middleware/fatfs/template;../../../../../../../middleware/fatfs/source/fsl_usb_disk;../../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../../../rtos/freertos/freertos-kernel/template</IncludePath>
+              <IncludePath>..;../../../../../flash_config;../../../../../../../CMSIS/Core/Include;../../../../../../../CMSIS/Core/Include/m-profile;../../../../../../../devices/MIMXRT798S;../../../../../../../devices/MIMXRT798S/periph;../../../../../../../devices/periph;../../../../../../../devices/MIMXRT798S/drivers;../../../../../../../devices/MIMXRT798S/utilities/debug_console_lite;../../../../../../../components/lists;../../../../../../../devices/MIMXRT798S/utilities/str;../../../../../../../components/uart;../../../../../../../components/osa;../../../../../../../middleware/usb/include;../../../../../../../middleware/usb/host;../../../../../../../middleware/usb/config/host/ehci;../../../../../../../middleware/usb/host/class;../../../../../../../middleware/usb/phy;../../../../../../../middleware/fatfs/source;../../../../../../../middleware/fatfs/template;../../../../../../../middleware/fatfs/source/fsl_usb_disk;../../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../../../rtos/freertos/freertos-kernel/template</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -429,6 +429,16 @@
               <FileName>fsl_os_abstraction_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../fsl_os_abstraction_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../mcux_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../mcux_config.h</FilePath>
             </File>
             <File>
               <FileName>mcux_config.h</FileName>
@@ -983,12 +993,12 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>startup/arm</GroupName>
+          <GroupName>startup</GroupName>
           <Files>
             <File>
-              <FileName>startup_MIMXRT798S_cm33_core0.S</FileName>
-              <FileType>2</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT798S/arm/startup_MIMXRT798S_cm33_core0.S</FilePath>
+              <FileName>startup_MIMXRT798S_cm33_core0.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT798S/startup_MIMXRT798S_cm33_core0.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1196,11 +1206,6 @@
           <GroupName>component/osa</GroupName>
           <Files>
             <File>
-              <FileName>fsl_os_abstraction.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../components/osa/fsl_os_abstraction.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_os_abstraction_free_rtos.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../components/osa/fsl_os_abstraction_free_rtos.h</FilePath>
@@ -1209,6 +1214,11 @@
               <FileName>fsl_os_abstraction_free_rtos.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../components/osa/fsl_os_abstraction_free_rtos.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../components/osa/fsl_os_abstraction.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1540,6 +1550,11 @@
               <FileType>5</FileType>
               <FilePath>../../../../../../../rtos/freertos/freertos-kernel/include/timers.h</FilePath>
             </File>
+            <File>
+              <FileName>freertos_tasks_c_additions.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../rtos/freertos/freertos-kernel/include/freertos_tasks_c_additions.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -1621,6 +1636,11 @@
               <FilePath>../readme.md</FilePath>
             </File>
             <File>
+              <FileName>examples_shared_readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../examples_shared_readme.md</FilePath>
+            </File>
+            <File>
               <FileName>host_msd_fatfs_output.jpg</FileName>
               <FileType>5</FileType>
               <FilePath>../host_msd_fatfs_output.jpg</FilePath>
@@ -1642,7 +1662,7 @@
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
-          <Device>MIMXRT798SGFOA:cm33_core0</Device>
+          <Device>MIMXRT798SGFOB:cm33_core0</Device>
           <Vendor>NXP</Vendor>
           <PackID>NXP.MIMXRT798S_DFP.17.0.0</PackID>
           <PackURL>https://mcuxpresso.nxp.com/cmsis_pack/repo/</PackURL>
@@ -1965,9 +1985,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../mcux_config.h -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
-              <Define>DEBUG, PRINTF_ADVANCED_ENABLE=1, USB_STACK_FREERTOS, USB_HOST_CONFIG_BUFFER_PROPERTY_CACHEABLE=1, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT798SGFOA_cm33_core0, OSA_USED, BOOT_HEADER_ENABLE=1, USE_RTOS=1, SDK_OS_FREE_RTOS</Define>
+              <Define>DEBUG, PRINTF_ADVANCED_ENABLE=1, USB_STACK_FREERTOS, USB_HOST_CONFIG_BUFFER_PROPERTY_CACHEABLE=1, EUSB_CONFIG_NATIVE_MODE=0, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT798SGFOB_cm33_core0, MIMXRT798S_cm33_core0_SERIES, OSA_USED, BOOT_HEADER_ENABLE=1, USE_RTOS=1, SDK_OS_FREE_RTOS</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../flash_config;../../../../../../../CMSIS/Core/Include;../../../../../../../CMSIS/Core/Include/m-profile;../../../../../../../devices/MIMXRT798S;../../../../../../../devices/MIMXRT798S/periph;../../../../../../../devices/MIMXRT798S/drivers;../../../../../../../devices/MIMXRT798S/utilities/debug_console_lite;../../../../../../../components/lists;../../../../../../../devices/MIMXRT798S/utilities/str;../../../../../../../components/uart;../../../../../../../components/osa;../../../../../../../middleware/usb/include;../../../../../../../middleware/usb/host;../../../../../../../middleware/usb/host/class;../../../../../../../middleware/usb/phy;../../../../../../../middleware/fatfs/source;../../../../../../../middleware/fatfs/template;../../../../../../../middleware/fatfs/source/fsl_usb_disk;../../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../../../rtos/freertos/freertos-kernel/template</IncludePath>
+              <IncludePath>..;../../../../../flash_config;../../../../../../../CMSIS/Core/Include;../../../../../../../CMSIS/Core/Include/m-profile;../../../../../../../devices/MIMXRT798S;../../../../../../../devices/MIMXRT798S/periph;../../../../../../../devices/MIMXRT798S/drivers;../../../../../../../devices/MIMXRT798S/utilities/debug_console_lite;../../../../../../../components/lists;../../../../../../../devices/MIMXRT798S/utilities/str;../../../../../../../components/uart;../../../../../../../components/osa;../../../../../../../middleware/usb/include;../../../../../../../middleware/usb/host;../../../../../../../middleware/usb/config/host/ehci;../../../../../../../middleware/usb/host/class;../../../../../../../middleware/usb/phy;../../../../../../../middleware/fatfs/source;../../../../../../../middleware/fatfs/template;../../../../../../../middleware/fatfs/source/fsl_usb_disk;../../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../../../rtos/freertos/freertos-kernel/template</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1982,10 +2002,10 @@
             <useXO>0</useXO>
             <ClangAsOpt>2</ClangAsOpt>
             <VariousControls>
-              <MiscControls/>
-              <Define>MCUXPRESSO_SDK, CPU_MIMXRT798SGFOA_cm33_core0, OSA_USED</Define>
+              <MiscControls>-include ../mcux_config.h</MiscControls>
+              <Define>MCUXPRESSO_SDK, CPU_MIMXRT798SGFOB_cm33_core0, MIMXRT798S_cm33_core0_SERIES, OSA_USED</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../flash_config;../../../../../../../CMSIS/Core/Include;../../../../../../../CMSIS/Core/Include/m-profile;../../../../../../../devices/MIMXRT798S;../../../../../../../devices/MIMXRT798S/periph;../../../../../../../devices/periph;../../../../../../../devices/MIMXRT798S/drivers;../../../../../../../devices/MIMXRT798S/utilities/debug_console_lite;../../../../../../../components/lists;../../../../../../../devices/MIMXRT798S/utilities/str;../../../../../../../components/uart;../../../../../../../components/osa;../../../../../../../middleware/usb/include;../../../../../../../middleware/usb/host;../../../../../../../middleware/usb/host/class;../../../../../../../middleware/usb/phy;../../../../../../../middleware/fatfs/source;../../../../../../../middleware/fatfs/template;../../../../../../../middleware/fatfs/source/fsl_usb_disk;../../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../../../rtos/freertos/freertos-kernel/template</IncludePath>
+              <IncludePath>..;../../../../../flash_config;../../../../../../../CMSIS/Core/Include;../../../../../../../CMSIS/Core/Include/m-profile;../../../../../../../devices/MIMXRT798S;../../../../../../../devices/MIMXRT798S/periph;../../../../../../../devices/periph;../../../../../../../devices/MIMXRT798S/drivers;../../../../../../../devices/MIMXRT798S/utilities/debug_console_lite;../../../../../../../components/lists;../../../../../../../devices/MIMXRT798S/utilities/str;../../../../../../../components/uart;../../../../../../../components/osa;../../../../../../../middleware/usb/include;../../../../../../../middleware/usb/host;../../../../../../../middleware/usb/config/host/ehci;../../../../../../../middleware/usb/host/class;../../../../../../../middleware/usb/phy;../../../../../../../middleware/fatfs/source;../../../../../../../middleware/fatfs/template;../../../../../../../middleware/fatfs/source/fsl_usb_disk;../../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../../../rtos/freertos/freertos-kernel/template</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -2060,6 +2080,16 @@
               <FileName>fsl_os_abstraction_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../fsl_os_abstraction_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../mcux_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../mcux_config.h</FilePath>
             </File>
             <File>
               <FileName>mcux_config.h</FileName>
@@ -2614,12 +2644,12 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>startup/arm</GroupName>
+          <GroupName>startup</GroupName>
           <Files>
             <File>
-              <FileName>startup_MIMXRT798S_cm33_core0.S</FileName>
-              <FileType>2</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT798S/arm/startup_MIMXRT798S_cm33_core0.S</FilePath>
+              <FileName>startup_MIMXRT798S_cm33_core0.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT798S/startup_MIMXRT798S_cm33_core0.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2827,11 +2857,6 @@
           <GroupName>component/osa</GroupName>
           <Files>
             <File>
-              <FileName>fsl_os_abstraction.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../components/osa/fsl_os_abstraction.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_os_abstraction_free_rtos.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../components/osa/fsl_os_abstraction_free_rtos.h</FilePath>
@@ -2840,6 +2865,11 @@
               <FileName>fsl_os_abstraction_free_rtos.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../components/osa/fsl_os_abstraction_free_rtos.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../components/osa/fsl_os_abstraction.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3171,6 +3201,11 @@
               <FileType>5</FileType>
               <FilePath>../../../../../../../rtos/freertos/freertos-kernel/include/timers.h</FilePath>
             </File>
+            <File>
+              <FileName>freertos_tasks_c_additions.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../rtos/freertos/freertos-kernel/include/freertos_tasks_c_additions.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -3252,6 +3287,11 @@
               <FilePath>../readme.md</FilePath>
             </File>
             <File>
+              <FileName>examples_shared_readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../examples_shared_readme.md</FilePath>
+            </File>
+            <File>
               <FileName>host_msd_fatfs_output.jpg</FileName>
               <FileType>5</FileType>
               <FilePath>../host_msd_fatfs_output.jpg</FilePath>
@@ -3273,7 +3313,7 @@
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
-          <Device>MIMXRT798SGFOA:cm33_core0</Device>
+          <Device>MIMXRT798SGFOB:cm33_core0</Device>
           <Vendor>NXP</Vendor>
           <PackID>NXP.MIMXRT798S_DFP.17.0.0</PackID>
           <PackURL>https://mcuxpresso.nxp.com/cmsis_pack/repo/</PackURL>
@@ -3596,9 +3636,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../mcux_config.h -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
-              <Define>NDEBUG, PRINTF_ADVANCED_ENABLE=1, USB_STACK_FREERTOS, USB_HOST_CONFIG_BUFFER_PROPERTY_CACHEABLE=1, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT798SGFOA_cm33_core0, OSA_USED, BOOT_HEADER_ENABLE=1, USE_RTOS=1, SDK_OS_FREE_RTOS</Define>
+              <Define>NDEBUG, PRINTF_ADVANCED_ENABLE=1, USB_STACK_FREERTOS, USB_HOST_CONFIG_BUFFER_PROPERTY_CACHEABLE=1, EUSB_CONFIG_NATIVE_MODE=0, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT798SGFOB_cm33_core0, MIMXRT798S_cm33_core0_SERIES, OSA_USED, BOOT_HEADER_ENABLE=1, USE_RTOS=1, SDK_OS_FREE_RTOS</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../flash_config;../../../../../../../CMSIS/Core/Include;../../../../../../../CMSIS/Core/Include/m-profile;../../../../../../../devices/MIMXRT798S;../../../../../../../devices/MIMXRT798S/periph;../../../../../../../devices/MIMXRT798S/drivers;../../../../../../../devices/MIMXRT798S/utilities/debug_console_lite;../../../../../../../components/lists;../../../../../../../devices/MIMXRT798S/utilities/str;../../../../../../../components/uart;../../../../../../../components/osa;../../../../../../../middleware/usb/include;../../../../../../../middleware/usb/host;../../../../../../../middleware/usb/host/class;../../../../../../../middleware/usb/phy;../../../../../../../middleware/fatfs/source;../../../../../../../middleware/fatfs/template;../../../../../../../middleware/fatfs/source/fsl_usb_disk;../../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../../../rtos/freertos/freertos-kernel/template</IncludePath>
+              <IncludePath>..;../../../../../flash_config;../../../../../../../CMSIS/Core/Include;../../../../../../../CMSIS/Core/Include/m-profile;../../../../../../../devices/MIMXRT798S;../../../../../../../devices/MIMXRT798S/periph;../../../../../../../devices/MIMXRT798S/drivers;../../../../../../../devices/MIMXRT798S/utilities/debug_console_lite;../../../../../../../components/lists;../../../../../../../devices/MIMXRT798S/utilities/str;../../../../../../../components/uart;../../../../../../../components/osa;../../../../../../../middleware/usb/include;../../../../../../../middleware/usb/host;../../../../../../../middleware/usb/config/host/ehci;../../../../../../../middleware/usb/host/class;../../../../../../../middleware/usb/phy;../../../../../../../middleware/fatfs/source;../../../../../../../middleware/fatfs/template;../../../../../../../middleware/fatfs/source/fsl_usb_disk;../../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../../../rtos/freertos/freertos-kernel/template</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -3613,10 +3653,10 @@
             <useXO>0</useXO>
             <ClangAsOpt>2</ClangAsOpt>
             <VariousControls>
-              <MiscControls/>
-              <Define>MCUXPRESSO_SDK, CPU_MIMXRT798SGFOA_cm33_core0, OSA_USED</Define>
+              <MiscControls>-include ../mcux_config.h</MiscControls>
+              <Define>MCUXPRESSO_SDK, CPU_MIMXRT798SGFOB_cm33_core0, MIMXRT798S_cm33_core0_SERIES, OSA_USED</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../flash_config;../../../../../../../CMSIS/Core/Include;../../../../../../../CMSIS/Core/Include/m-profile;../../../../../../../devices/MIMXRT798S;../../../../../../../devices/MIMXRT798S/periph;../../../../../../../devices/periph;../../../../../../../devices/MIMXRT798S/drivers;../../../../../../../devices/MIMXRT798S/utilities/debug_console_lite;../../../../../../../components/lists;../../../../../../../devices/MIMXRT798S/utilities/str;../../../../../../../components/uart;../../../../../../../components/osa;../../../../../../../middleware/usb/include;../../../../../../../middleware/usb/host;../../../../../../../middleware/usb/host/class;../../../../../../../middleware/usb/phy;../../../../../../../middleware/fatfs/source;../../../../../../../middleware/fatfs/template;../../../../../../../middleware/fatfs/source/fsl_usb_disk;../../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../../../rtos/freertos/freertos-kernel/template</IncludePath>
+              <IncludePath>..;../../../../../flash_config;../../../../../../../CMSIS/Core/Include;../../../../../../../CMSIS/Core/Include/m-profile;../../../../../../../devices/MIMXRT798S;../../../../../../../devices/MIMXRT798S/periph;../../../../../../../devices/periph;../../../../../../../devices/MIMXRT798S/drivers;../../../../../../../devices/MIMXRT798S/utilities/debug_console_lite;../../../../../../../components/lists;../../../../../../../devices/MIMXRT798S/utilities/str;../../../../../../../components/uart;../../../../../../../components/osa;../../../../../../../middleware/usb/include;../../../../../../../middleware/usb/host;../../../../../../../middleware/usb/config/host/ehci;../../../../../../../middleware/usb/host/class;../../../../../../../middleware/usb/phy;../../../../../../../middleware/fatfs/source;../../../../../../../middleware/fatfs/template;../../../../../../../middleware/fatfs/source/fsl_usb_disk;../../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../../../rtos/freertos/freertos-kernel/template</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -3691,6 +3731,16 @@
               <FileName>fsl_os_abstraction_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../fsl_os_abstraction_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../mcux_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../mcux_config.h</FilePath>
             </File>
             <File>
               <FileName>mcux_config.h</FileName>
@@ -4245,12 +4295,12 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>startup/arm</GroupName>
+          <GroupName>startup</GroupName>
           <Files>
             <File>
-              <FileName>startup_MIMXRT798S_cm33_core0.S</FileName>
-              <FileType>2</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT798S/arm/startup_MIMXRT798S_cm33_core0.S</FilePath>
+              <FileName>startup_MIMXRT798S_cm33_core0.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT798S/startup_MIMXRT798S_cm33_core0.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -4458,11 +4508,6 @@
           <GroupName>component/osa</GroupName>
           <Files>
             <File>
-              <FileName>fsl_os_abstraction.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../components/osa/fsl_os_abstraction.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_os_abstraction_free_rtos.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../components/osa/fsl_os_abstraction_free_rtos.h</FilePath>
@@ -4471,6 +4516,11 @@
               <FileName>fsl_os_abstraction_free_rtos.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../components/osa/fsl_os_abstraction_free_rtos.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../components/osa/fsl_os_abstraction.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -4802,6 +4852,11 @@
               <FileType>5</FileType>
               <FilePath>../../../../../../../rtos/freertos/freertos-kernel/include/timers.h</FilePath>
             </File>
+            <File>
+              <FileName>freertos_tasks_c_additions.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../rtos/freertos/freertos-kernel/include/freertos_tasks_c_additions.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -4883,6 +4938,11 @@
               <FilePath>../readme.md</FilePath>
             </File>
             <File>
+              <FileName>examples_shared_readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../examples_shared_readme.md</FilePath>
+            </File>
+            <File>
               <FileName>host_msd_fatfs_output.jpg</FileName>
               <FileType>5</FileType>
               <FilePath>../host_msd_fatfs_output.jpg</FilePath>
@@ -4904,7 +4964,7 @@
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
-          <Device>MIMXRT798SGFOA:cm33_core0</Device>
+          <Device>MIMXRT798SGFOB:cm33_core0</Device>
           <Vendor>NXP</Vendor>
           <PackID>NXP.MIMXRT798S_DFP.17.0.0</PackID>
           <PackURL>https://mcuxpresso.nxp.com/cmsis_pack/repo/</PackURL>
@@ -5227,9 +5287,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../mcux_config.h -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
-              <Define>NDEBUG, PRINTF_ADVANCED_ENABLE=1, USB_STACK_FREERTOS, USB_HOST_CONFIG_BUFFER_PROPERTY_CACHEABLE=1, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT798SGFOA_cm33_core0, OSA_USED, BOOT_HEADER_ENABLE=1, USE_RTOS=1, SDK_OS_FREE_RTOS</Define>
+              <Define>NDEBUG, PRINTF_ADVANCED_ENABLE=1, USB_STACK_FREERTOS, USB_HOST_CONFIG_BUFFER_PROPERTY_CACHEABLE=1, EUSB_CONFIG_NATIVE_MODE=0, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT798SGFOB_cm33_core0, MIMXRT798S_cm33_core0_SERIES, OSA_USED, BOOT_HEADER_ENABLE=1, USE_RTOS=1, SDK_OS_FREE_RTOS</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../flash_config;../../../../../../../CMSIS/Core/Include;../../../../../../../CMSIS/Core/Include/m-profile;../../../../../../../devices/MIMXRT798S;../../../../../../../devices/MIMXRT798S/periph;../../../../../../../devices/MIMXRT798S/drivers;../../../../../../../devices/MIMXRT798S/utilities/debug_console_lite;../../../../../../../components/lists;../../../../../../../devices/MIMXRT798S/utilities/str;../../../../../../../components/uart;../../../../../../../components/osa;../../../../../../../middleware/usb/include;../../../../../../../middleware/usb/host;../../../../../../../middleware/usb/host/class;../../../../../../../middleware/usb/phy;../../../../../../../middleware/fatfs/source;../../../../../../../middleware/fatfs/template;../../../../../../../middleware/fatfs/source/fsl_usb_disk;../../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../../../rtos/freertos/freertos-kernel/template</IncludePath>
+              <IncludePath>..;../../../../../flash_config;../../../../../../../CMSIS/Core/Include;../../../../../../../CMSIS/Core/Include/m-profile;../../../../../../../devices/MIMXRT798S;../../../../../../../devices/MIMXRT798S/periph;../../../../../../../devices/MIMXRT798S/drivers;../../../../../../../devices/MIMXRT798S/utilities/debug_console_lite;../../../../../../../components/lists;../../../../../../../devices/MIMXRT798S/utilities/str;../../../../../../../components/uart;../../../../../../../components/osa;../../../../../../../middleware/usb/include;../../../../../../../middleware/usb/host;../../../../../../../middleware/usb/config/host/ehci;../../../../../../../middleware/usb/host/class;../../../../../../../middleware/usb/phy;../../../../../../../middleware/fatfs/source;../../../../../../../middleware/fatfs/template;../../../../../../../middleware/fatfs/source/fsl_usb_disk;../../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../../../rtos/freertos/freertos-kernel/template</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -5244,10 +5304,10 @@
             <useXO>0</useXO>
             <ClangAsOpt>2</ClangAsOpt>
             <VariousControls>
-              <MiscControls/>
-              <Define>MCUXPRESSO_SDK, CPU_MIMXRT798SGFOA_cm33_core0, OSA_USED</Define>
+              <MiscControls>-include ../mcux_config.h</MiscControls>
+              <Define>MCUXPRESSO_SDK, CPU_MIMXRT798SGFOB_cm33_core0, MIMXRT798S_cm33_core0_SERIES, OSA_USED</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../flash_config;../../../../../../../CMSIS/Core/Include;../../../../../../../CMSIS/Core/Include/m-profile;../../../../../../../devices/MIMXRT798S;../../../../../../../devices/MIMXRT798S/periph;../../../../../../../devices/periph;../../../../../../../devices/MIMXRT798S/drivers;../../../../../../../devices/MIMXRT798S/utilities/debug_console_lite;../../../../../../../components/lists;../../../../../../../devices/MIMXRT798S/utilities/str;../../../../../../../components/uart;../../../../../../../components/osa;../../../../../../../middleware/usb/include;../../../../../../../middleware/usb/host;../../../../../../../middleware/usb/host/class;../../../../../../../middleware/usb/phy;../../../../../../../middleware/fatfs/source;../../../../../../../middleware/fatfs/template;../../../../../../../middleware/fatfs/source/fsl_usb_disk;../../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../../../rtos/freertos/freertos-kernel/template</IncludePath>
+              <IncludePath>..;../../../../../flash_config;../../../../../../../CMSIS/Core/Include;../../../../../../../CMSIS/Core/Include/m-profile;../../../../../../../devices/MIMXRT798S;../../../../../../../devices/MIMXRT798S/periph;../../../../../../../devices/periph;../../../../../../../devices/MIMXRT798S/drivers;../../../../../../../devices/MIMXRT798S/utilities/debug_console_lite;../../../../../../../components/lists;../../../../../../../devices/MIMXRT798S/utilities/str;../../../../../../../components/uart;../../../../../../../components/osa;../../../../../../../middleware/usb/include;../../../../../../../middleware/usb/host;../../../../../../../middleware/usb/config/host/ehci;../../../../../../../middleware/usb/host/class;../../../../../../../middleware/usb/phy;../../../../../../../middleware/fatfs/source;../../../../../../../middleware/fatfs/template;../../../../../../../middleware/fatfs/source/fsl_usb_disk;../../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../../../rtos/freertos/freertos-kernel/template</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -5322,6 +5382,16 @@
               <FileName>fsl_os_abstraction_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../fsl_os_abstraction_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../mcux_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../mcux_config.h</FilePath>
             </File>
             <File>
               <FileName>mcux_config.h</FileName>
@@ -5876,12 +5946,12 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>startup/arm</GroupName>
+          <GroupName>startup</GroupName>
           <Files>
             <File>
-              <FileName>startup_MIMXRT798S_cm33_core0.S</FileName>
-              <FileType>2</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT798S/arm/startup_MIMXRT798S_cm33_core0.S</FilePath>
+              <FileName>startup_MIMXRT798S_cm33_core0.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT798S/startup_MIMXRT798S_cm33_core0.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -6089,11 +6159,6 @@
           <GroupName>component/osa</GroupName>
           <Files>
             <File>
-              <FileName>fsl_os_abstraction.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../components/osa/fsl_os_abstraction.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_os_abstraction_free_rtos.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../components/osa/fsl_os_abstraction_free_rtos.h</FilePath>
@@ -6102,6 +6167,11 @@
               <FileName>fsl_os_abstraction_free_rtos.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../components/osa/fsl_os_abstraction_free_rtos.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../components/osa/fsl_os_abstraction.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -6433,6 +6503,11 @@
               <FileType>5</FileType>
               <FilePath>../../../../../../../rtos/freertos/freertos-kernel/include/timers.h</FilePath>
             </File>
+            <File>
+              <FileName>freertos_tasks_c_additions.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../rtos/freertos/freertos-kernel/include/freertos_tasks_c_additions.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -6512,6 +6587,11 @@
               <FileName>readme.md</FileName>
               <FileType>5</FileType>
               <FilePath>../readme.md</FilePath>
+            </File>
+            <File>
+              <FileName>examples_shared_readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../examples_shared_readme.md</FilePath>
             </File>
             <File>
               <FileName>host_msd_fatfs_output.jpg</FileName>

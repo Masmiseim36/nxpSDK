@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 NXP
+ * Copyright 2024-2025 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -84,7 +84,6 @@ typedef enum _resc_name
     kResc_VNCOM,      /*!< Power Switch and DSR for VDDN_COM */
     kResc_V2DSP,      /*!< Power Switch and DSR for VDD2_DSP */
     kResc_V2MIPI,     /*!< Power Switch for MIPI PHY */
-    kResc_DCDC_HP,    /*!< DCDC in high-power mode */
 
     kResc_PMC_TEMP,   /*!< PMC Temperature sensor */
     kResc_PMCREF_HP,  /*!< PMC Reference */
@@ -215,7 +214,6 @@ typedef struct _enabled_resources
 #define PM_RESC_VNCOM_ON    PM_ENCODE_RESC(PM_RESOURCE_FULL_ON, kResc_VNCOM)
 #define PM_RESC_V2DSP_ON    PM_ENCODE_RESC(PM_RESOURCE_FULL_ON, kResc_V2DSP)
 #define PM_RESC_V2MIPI_ON   PM_ENCODE_RESC(PM_RESOURCE_FULL_ON, kResc_V2MIPI)
-#define PM_RESC_DCDC_HP     PM_ENCODE_RESC(PM_RESOURCE_FULL_ON, kResc_DCDC_HP)
 #define PM_RESC_PMC_TEMP_ON PM_ENCODE_RESC(PM_RESOURCE_FULL_ON, kResc_PMC_TEMP)
 #define PM_RESC_PMCREF_HP   PM_ENCODE_RESC(PM_RESOURCE_FULL_ON, kResc_PMCREF_HP)
 #define PM_RESC_HVD1V8_ON   PM_ENCODE_RESC(PM_RESOURCE_FULL_ON, kResc_HVD1V8)

@@ -30,12 +30,13 @@
     <definition extID="component.gpio_adapter.MIMXRT798S"/>
     <definition extID="component.lpuart_adapter.MIMXRT798S"/>
     <definition extID="component.osa_template_config.MIMXRT798S"/>
-    <definition extID="component.osa_interface.MIMXRT798S"/>
     <definition extID="component.osa.MIMXRT798S"/>
     <definition extID="component.osa_free_rtos.MIMXRT798S"/>
     <definition extID="middleware.edgefast_wifi_nxp.MIMXRT798S"/>
     <definition extID="component.wifi_bt_module.tx_pwr_limits.MIMXRT798S"/>
     <definition extID="component.wifi_bt_module.config.MIMXRT798S"/>
+    <definition extID="component.wifi_bt_module.IW61X.MIMXRT798S"/>
+    <definition extID="component.wifi_bt_module.board_murata_2el_m2.MIMXRT798S"/>
     <definition extID="middleware.wifi.template.MIMXRT798S"/>
     <definition extID="middleware.wifi.osa_free_rtos.MIMXRT798S"/>
     <definition extID="middleware.wifi.osa.MIMXRT798S"/>
@@ -69,7 +70,7 @@
     <definition extID="com.crt.advproject.config.exe.debug"/>
     <definition extID="com.crt.advproject.config.exe.release"/>
   </externalDefinitions>
-  <example id="mimxrt700evk_wifi_ipv4_ipv6_echo_cm33_core0" name="wifi_ipv4_ipv6_echo_cm33_core0" device_core="cm33_core0_MIMXRT798S" dependency="platform.drivers.flash_config.mimxrt700evk.MIMXRT798S CMSIS_Include_core_cm.MIMXRT798S device.MIMXRT798S_CMSIS.MIMXRT798S device.MIMXRT798S_system.MIMXRT798S device.MIMXRT798S_startup.MIMXRT798S platform.drivers.clock.MIMXRT798S platform.drivers.lpc_iopctl.MIMXRT798S platform.drivers.power.MIMXRT798S platform.drivers.reset.MIMXRT798S platform.drivers.cache_xcache.MIMXRT798S platform.drivers.common.MIMXRT798S platform.drivers.glikey.MIMXRT798S platform.drivers.gpio.MIMXRT798S platform.drivers.lpflexcomm.MIMXRT798S platform.drivers.lpflexcomm_lpuart.MIMXRT798S platform.drivers.usdhc.MIMXRT798S platform.drivers.xspi.MIMXRT798S platform.utilities.assert.MIMXRT798S platform.utilities.misc_utilities.MIMXRT798S component.lists.MIMXRT798S utility.str.MIMXRT798S utility.debug_console.MIMXRT798S utility.shell.MIMXRT798S component.serial_manager.MIMXRT798S component.serial_manager_uart.MIMXRT798S component.gpio_adapter.MIMXRT798S component.lpuart_adapter.MIMXRT798S component.osa_template_config.MIMXRT798S component.osa_interface.MIMXRT798S component.osa.MIMXRT798S component.osa_free_rtos.MIMXRT798S middleware.edgefast_wifi_nxp.MIMXRT798S component.wifi_bt_module.tx_pwr_limits.MIMXRT798S component.wifi_bt_module.config.MIMXRT798S middleware.wifi.template.MIMXRT798S middleware.wifi.osa_free_rtos.MIMXRT798S middleware.wifi.osa.MIMXRT798S middleware.wifi.common_files.MIMXRT798S middleware.wifi.fwdnld.MIMXRT798S middleware.wifi.net.MIMXRT798S middleware.wifi.wifidriver.MIMXRT798S middleware.wifi.wifidriver.softap.MIMXRT798S middleware.wifi.MIMXRT798S middleware.wifi.sdio.MIMXRT798S middleware.wifi.mlan_sdio.MIMXRT798S middleware.wifi.fwdnld_intf_abs.MIMXRT798S middleware.lwip.MIMXRT798S middleware.lwip.sys_arch.dynamic.MIMXRT798S middleware.sdmmc.common.MIMXRT798S middleware.sdmmc.osa.freertos.MIMXRT798S middleware.sdmmc.sdio.MIMXRT798S middleware.sdmmc.host.usdhc.MIMXRT798S middleware.sdmmc.host.usdhc.non_blocking.MIMXRT798S middleware.sdmmc.usdhc.template.MIMXRT798S middleware.freertos-kernel.MIMXRT798S middleware.freertos-kernel.heap_4.MIMXRT798S middleware.freertos-kernel.cm33_non_trustzone.MIMXRT798S middleware.freertos-kernel.extension.MIMXRT798S middleware.freertos-kernel.config.MIMXRT798S" category="wifi_examples">
+  <example id="mimxrt700evk_wifi_ipv4_ipv6_echo_cm33_core0" name="wifi_ipv4_ipv6_echo_cm33_core0" device_core="cm33_core0_MIMXRT798S" dependency="platform.drivers.flash_config.mimxrt700evk.MIMXRT798S CMSIS_Include_core_cm.MIMXRT798S device.MIMXRT798S_CMSIS.MIMXRT798S device.MIMXRT798S_system.MIMXRT798S device.MIMXRT798S_startup.MIMXRT798S platform.drivers.clock.MIMXRT798S platform.drivers.lpc_iopctl.MIMXRT798S platform.drivers.power.MIMXRT798S platform.drivers.reset.MIMXRT798S platform.drivers.cache_xcache.MIMXRT798S platform.drivers.common.MIMXRT798S platform.drivers.glikey.MIMXRT798S platform.drivers.gpio.MIMXRT798S platform.drivers.lpflexcomm.MIMXRT798S platform.drivers.lpflexcomm_lpuart.MIMXRT798S platform.drivers.usdhc.MIMXRT798S platform.drivers.xspi.MIMXRT798S platform.utilities.assert.MIMXRT798S platform.utilities.misc_utilities.MIMXRT798S component.lists.MIMXRT798S utility.str.MIMXRT798S utility.debug_console.MIMXRT798S utility.shell.MIMXRT798S component.serial_manager.MIMXRT798S component.serial_manager_uart.MIMXRT798S component.gpio_adapter.MIMXRT798S component.lpuart_adapter.MIMXRT798S component.osa_template_config.MIMXRT798S component.osa.MIMXRT798S component.osa_free_rtos.MIMXRT798S middleware.edgefast_wifi_nxp.MIMXRT798S component.wifi_bt_module.tx_pwr_limits.MIMXRT798S component.wifi_bt_module.config.MIMXRT798S component.wifi_bt_module.IW61X.MIMXRT798S component.wifi_bt_module.board_murata_2el_m2.MIMXRT798S middleware.wifi.template.MIMXRT798S middleware.wifi.osa_free_rtos.MIMXRT798S middleware.wifi.osa.MIMXRT798S middleware.wifi.common_files.MIMXRT798S middleware.wifi.fwdnld.MIMXRT798S middleware.wifi.net.MIMXRT798S middleware.wifi.wifidriver.MIMXRT798S middleware.wifi.wifidriver.softap.MIMXRT798S middleware.wifi.MIMXRT798S middleware.wifi.sdio.MIMXRT798S middleware.wifi.mlan_sdio.MIMXRT798S middleware.wifi.fwdnld_intf_abs.MIMXRT798S middleware.lwip.MIMXRT798S middleware.lwip.sys_arch.dynamic.MIMXRT798S middleware.sdmmc.common.MIMXRT798S middleware.sdmmc.osa.freertos.MIMXRT798S middleware.sdmmc.sdio.MIMXRT798S middleware.sdmmc.host.usdhc.MIMXRT798S middleware.sdmmc.host.usdhc.non_blocking.MIMXRT798S middleware.sdmmc.usdhc.template.MIMXRT798S middleware.freertos-kernel.MIMXRT798S middleware.freertos-kernel.heap_4.MIMXRT798S middleware.freertos-kernel.cm33_non_trustzone.MIMXRT798S middleware.freertos-kernel.extension.MIMXRT798S middleware.freertos-kernel.config.MIMXRT798S" category="wifi_examples">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -82,17 +83,21 @@
       <toolchainSetting id_refs="com.nxp.mcuxpresso">
         <option id="gnu.c.compiler.option.preprocessor.def.symbols" type="stringList">
           <value>MCUXPRESSO_SDK</value>
-          <value>CPU_MIMXRT798SGFOA_cm33_core0</value>
+          <value>CPU_MIMXRT798SGFOB_cm33_core0</value>
           <value>BOOT_HEADER_ENABLE=1</value>
           <value>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</value>
           <value>USE_RTOS=1</value>
           <value>PRINTF_ADVANCED_ENABLE=1</value>
           <value>SHELL_BUFFER_SIZE=160U</value>
+          <value>SHELL_TASK_STACK_SIZE=3072</value>
           <value>FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1</value>
           <value>SDK_DEBUGCONSOLE=1</value>
           <value>MCUX_META_BUILD</value>
+          <value>MIMXRT798S_cm33_core0_SERIES</value>
+          <value>DEBUG_CONSOLE_TRANSFER_NON_BLOCKING</value>
           <value>OSA_USED</value>
           <value>SERIAL_PORT_TYPE_UART=1</value>
+          <value>WIFI_IW612_BOARD_MURATA_2EL_M2</value>
           <value>CONFIG_NXP_WIFI_SOFTAP_SUPPORT=1</value>
           <value>SDIO_ENABLED=1</value>
           <value>SDK_OS_FREE_RTOS</value>
@@ -223,9 +228,6 @@
       <files mask="FreeRTOSConfigBoard.h"/>
       <files mask="wifi_bt_config.h"/>
     </source>
-    <source path="." project_relative_path="source" type="c_include">
-      <files mask="app_config.h"/>
-    </source>
     <source path="." project_relative_path="source" type="src">
       <files mask="pin_mux.c"/>
     </source>
@@ -282,6 +284,12 @@
     </source>
     <source path="." project_relative_path="doc" type="doc">
       <files mask="wifi_examples_readme.md"/>
+    </source>
+    <source path="." project_relative_path="doc" type="doc">
+      <files mask="readme_modules.md"/>
+    </source>
+    <source path="." project_relative_path="doc" type="doc">
+      <files mask="examples_shared_readme.md"/>
     </source>
   </example>
 </ksdk:examples>

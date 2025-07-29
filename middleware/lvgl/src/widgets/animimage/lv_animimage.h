@@ -4,7 +4,7 @@
  */
 
 /**
- * Modified by NXP in 2024
+ * Modified by NXP in 2025
  */
 
 #ifndef LV_ANIMIMAGE_H
@@ -35,6 +35,16 @@ extern "C" {
  *      TYPEDEFS
  **********************/
 
+#if LV_USE_OBJ_PROPERTY
+enum {
+    LV_PROPERTY_ID2(ANIMIMAGE, SRC,         LV_PROPERTY_TYPE_POINTER,  LV_PROPERTY_TYPE_INT,  0),
+    LV_PROPERTY_ID(ANIMIMAGE, DURATION,     LV_PROPERTY_TYPE_INT,   1),
+    LV_PROPERTY_ID(ANIMIMAGE, REPEAT_COUNT, LV_PROPERTY_TYPE_INT,   2),
+    LV_PROPERTY_ID(ANIMIMAGE, SRC_COUNT,    LV_PROPERTY_TYPE_INT,   3),
+    LV_PROPERTY_ANIMIMAGE_END,
+};
+#endif
+
 LV_ATTRIBUTE_EXTERN_DATA extern const lv_obj_class_t lv_animimg_class;
 
 /** Image parts */
@@ -62,9 +72,16 @@ lv_obj_t * lv_animimg_create(lv_obj_t * parent);
  * @param obj       pointer to an animation image object
  * @param dsc       pointer to a series images
  * @param num       images' number
- * @param reverse   Set the flip playback of the image animation
  */
-void lv_animimg_set_src(lv_obj_t * obj, const void * dsc[], size_t num, bool reverse);
+void lv_animimg_set_src(lv_obj_t * obj, const void * dsc[], size_t num);
+
+/**
+ *  Set the images source for flip playback of animation image.
+ * @param obj       pointer to an animation image object
+ * @param dsc       pointer to a series images
+ * @param num       images' number
+ */
+void lv_animimg_set_src_reverse(lv_obj_t * obj, const void * dsc[], size_t num);
 
 /**
  * Startup the image animation.
@@ -87,7 +104,7 @@ void lv_animimg_set_duration(lv_obj_t * obj, uint32_t duration);
 
 /**
  * Set the image animation repeatedly play times.
- * @param img       pointer to an animation image object
+ * @param obj       pointer to an animation image object
  * @param count     the number of times to repeat the animation
  */
 void lv_animimg_set_repeat_count(lv_obj_t * obj, uint32_t count);
@@ -97,14 +114,14 @@ void lv_animimg_set_repeat_count(lv_obj_t * obj, uint32_t count);
  * @param obj   pointer to an animation image object
  * @param duration   the duration of the playback image animation in milliseconds. 0: disable playback
  */
-void lv_animimg_set_playback_time(lv_obj_t * obj, uint32_t duration);
+void lv_animimg_set_reverse_duration(lv_obj_t * obj, uint32_t duration);
 
 /**
  * Make the image animation to play back to when the forward direction is ready.
  * @param obj   pointer to an animation image object
  * @param duration   delay in milliseconds before starting the playback image animation.
  */
-void lv_animimg_set_playback_delay(lv_obj_t * obj, uint32_t duration);
+void lv_animimg_set_reverse_delay(lv_obj_t * obj, uint32_t duration);
 
 /**
  * Set a function call when the animation image really starts (considering `delay`)
@@ -127,7 +144,7 @@ void lv_animimg_set_completed_cb(lv_obj_t * obj, lv_anim_completed_cb_t complete
 /**
  * Get the image animation images source.
  * @param obj   pointer to an animation image object
- * @return      pointer that will point to a series images
+ * @return a     pointer that will point to a series images
  */
 const void ** lv_animimg_get_src(lv_obj_t * obj);
 
@@ -154,10 +171,10 @@ uint32_t lv_animimg_get_repeat_count(lv_obj_t * obj);
 
 /**
  * Get the image animation underlying animation.
- * @param img   pointer to an animation image object
+ * @param obj   pointer to an animation image object
  * @return      the animation reference
  */
-lv_anim_t * lv_animimg_get_anim(lv_obj_t * img);
+lv_anim_t * lv_animimg_get_anim(lv_obj_t * obj);
 
 #endif /*LV_USE_ANIMIMG*/
 

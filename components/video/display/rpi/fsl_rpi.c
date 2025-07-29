@@ -60,8 +60,11 @@ status_t RPI_Init(display_handle_t *handle, const display_config_t *config)
     }
     VIDEO_DelayMs(400);
 
-    /* Wait for power on done. */
-    while ((regVal & 0x1U) == 0U)
+    /* Wait for power on done. There are 2 kinds of panels, one the status 0x1 is set
+     * the other is 0x10, it cannot be told from version or ID, so wait for the 0x10
+     * or 0x01 to be set.
+     */
+    while ((regVal & 0x11U) == 0U)
     {
         if (resource->readStatus(RPI_PORTB_ADDR, &regVal) != kStatus_Success)
         {

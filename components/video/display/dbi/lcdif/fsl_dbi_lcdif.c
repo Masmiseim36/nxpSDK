@@ -183,20 +183,28 @@ void DBI_LCDIF_InitController(dbi_iface_t *dbiIface, dbi_lcdif_prv_data_t *prvDa
 
 status_t DBI_LCDIF_WriteCommandData(dbi_iface_t *dbiIface, uint32_t command, const void *data, uint32_t len_byte)
 {
-    uint8_t cmd                   = command;
+    uint8_t cmd                   = (uint8_t)command;
     uint8_t *pData                = (uint8_t *)data;
     dbi_lcdif_prv_data_t *prvData = (dbi_lcdif_prv_data_t *)dbiIface->prvData;
     LCDIF_Type *lcdif             = prvData->lcdif;
 
-    /* If the command is set address, calculate the selected area size, since LCDIF needs these info for configuration.
-     */
-    if (cmd == kMIPI_DBI_SetColumnAddress)
+    if ((((uint16_t)pData[2] << 8U) | (uint16_t)pData[3]) > (((uint16_t)pData[0] << 8U) | (uint16_t)pData[1]))
     {
-        prvData->width = (((uint16_t)pData[2] << 8U) | (uint16_t)pData[3]) - (((uint16_t)pData[0] << 8U) | (uint16_t)pData[1]) + 1U;
+        uint16_t value = (((uint16_t)pData[2] << 8U) | (uint16_t)pData[3]) - (((uint16_t)pData[0] << 8U) | (uint16_t)pData[1]) + 1U;
+        /* If the command is set address, calculate the selected area size, since LCDIF needs these info for configuration.
+         */
+        if (cmd == kMIPI_DBI_SetColumnAddress)
+        {
+            prvData->width = value;
+        }
+        else if (cmd == kMIPI_DBI_SetPageAddress)
+        {
+            prvData->height = value;
+        }
     }
-    else if (cmd == kMIPI_DBI_SetPageAddress)
+    else
     {
-        prvData->height = (((uint16_t)pData[2] << 8U) | (uint16_t)pData[3]) - (((uint16_t)pData[0] << 8U) | (uint16_t)pData[1]) + 1U;
+        return kStatus_Fail;
     }
 
     LCDIF_DbiSendCommand(lcdif, 0U, cmd);
@@ -273,7 +281,7 @@ static status_t DBI_LCDIF_GetPixelFormat(video_pixel_format_t input,
 static void DBI_LCDIF_WriteMemoryInternal(
     dbi_iface_t *dbiIface, uint32_t command, const void *data, uint32_t stride_byte, bool isInterleave)
 {
-    uint8_t cmd                   = command;
+    uint8_t cmd                   = (uint8_t)command;
     dbi_lcdif_prv_data_t *prvData = (dbi_lcdif_prv_data_t *)dbiIface->prvData;
     LCDIF_Type *lcdif             = prvData->lcdif;
     uint16_t height               = prvData->height;
@@ -285,7 +293,7 @@ static void DBI_LCDIF_WriteMemoryInternal(
     }
     else
     {
-        stride = prvData->width * prvData->bytePerPixel;
+        stride = (uint32_t)prvData->width * (uint32_t)prvData->bytePerPixel;
     }
 
     /* For RGB888 the stride shall be calculated as 4 bytes per pixel. */
@@ -304,7 +312,7 @@ static void DBI_LCDIF_WriteMemoryInternal(
 
     if (dsi != NULL)
     {
-        prvData->stride = stride;
+        prvData->stride = (uint16_t)stride;
 
         /* 1 pixel sent in 1 cycle. */
         if (prvData->dsiFormat == kDSI_DbiRGB565)
@@ -327,7 +335,7 @@ static void DBI_LCDIF_WriteMemoryInternal(
         {
             /* Calculate how may lines to send each time. Make sure each time the buffer address meets the align
              * requirement. */
-            height = MIPI_DSI_MAX_PAYLOAD_SIZE / prvData->width / payloadBytePerPixel;
+            height = MIPI_DSI_MAX_PAYLOAD_SIZE / prvData->width / (uint16_t)payloadBytePerPixel;
             while (((height * prvData->stride) & (LCDIF_FB_ALIGN - 1U)) != 0U)
             {
                 height--;
@@ -339,7 +347,7 @@ static void DBI_LCDIF_WriteMemoryInternal(
         }
 
         /* Set payload size. */
-        DSI_SetDbiPixelPayloadSize(dsi, (height * prvData->width * payloadBytePerPixel) >> 1U);
+        DSI_SetDbiPixelPayloadSize(dsi, (height * prvData->width * (uint16_t)payloadBytePerPixel) >> 1U);
     }
 
     /* Update height info. */

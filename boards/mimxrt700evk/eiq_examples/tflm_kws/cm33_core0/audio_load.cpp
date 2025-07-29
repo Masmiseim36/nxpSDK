@@ -12,21 +12,21 @@
 #include "kws_mfcc.hpp"
 
 int s_staticCount = 0;
-KWS_MFCC s_kws(NUM_FRAMES);
 
 status_t AUDIO_GetSpectralSample(uint8_t* dstData, size_t size)
 {
     s_staticCount++;
+    KWS_MFCC s_kws(NUM_FRAMES);
     /* Two static samples only */
     if (s_staticCount == 1)
     {
         PRINTF(EOL "Static data processing:" EOL);
-        AUDIO_PreprocessSample(off_sample_data, NUM_FRAMES);
+        AUDIO_PreprocessSample(off_sample_data, NUM_FRAMES, &s_kws);
         s_kws.store_features(dstData);
     }
     else if (s_staticCount == 2)
     {
-        AUDIO_PreprocessSample(right_sample_data, NUM_FRAMES);
+        AUDIO_PreprocessSample(right_sample_data, NUM_FRAMES, &s_kws);
         s_kws.store_features(dstData);
     }
     else
@@ -39,10 +39,10 @@ status_t AUDIO_GetSpectralSample(uint8_t* dstData, size_t size)
     return kStatus_Success;
 }
 
-void AUDIO_PreprocessSample(const int16_t* srcData, size_t audioBlocksPerBuffer)
+void AUDIO_PreprocessSample(const int16_t* srcData, size_t audioBlocksPerBuffer, KWS_MFCC* s_kws)
 {
-    s_kws.audio_buffer = srcData;
-    s_kws.extract_features();
+    s_kws->audio_buffer = srcData;
+    s_kws->extract_features();
 }
 
 const char* AUDIO_GetSampleName()

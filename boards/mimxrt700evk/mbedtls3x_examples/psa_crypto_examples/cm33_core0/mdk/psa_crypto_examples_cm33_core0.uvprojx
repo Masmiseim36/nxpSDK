@@ -11,7 +11,7 @@
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
-          <Device>MIMXRT798SGFOA:cm33_core0</Device>
+          <Device>MIMXRT798SGFOB:cm33_core0</Device>
           <Vendor>NXP</Vendor>
           <PackID>NXP.MIMXRT798S_DFP.17.0.0</PackID>
           <PackURL>https://mcuxpresso.nxp.com/cmsis_pack/repo/</PackURL>
@@ -334,9 +334,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../mcux_config.h -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
-              <Define>DEBUG, PSA_CRYPTO_DRIVER_ELS_PKC, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT798SGFOA_cm33_core0, BOOT_HEADER_ENABLE=1, MBEDTLS_CONFIG_FILE='\"mcux_mbedtls_config.h\"'</Define>
+              <Define>DEBUG, MBEDTLS_CONFIG_FILE='\"mcux_mbedtls_config.h\"', SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT798SGFOB_cm33_core0, MIMXRT798S_cm33_core0_SERIES, BOOT_HEADER_ENABLE=1, PSA_CRYPTO_DRIVER_ELS_PKC</Define>
               <Undefine/>
-              <IncludePath>..;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT798S;../../../../../../devices/MIMXRT798S/periph;../../../../../../devices/MIMXRT798S/drivers;../../../../../../devices/MIMXRT798S/utilities/debug_console_lite;../../../../../../devices/MIMXRT798S/utilities/str;../../../../../../components/uart;../../../../../../components/els_pkc;../../../../../../components/els_pkc/src/comps/common/inc;../../../../../../components/els_pkc/src/comps/mcuxClAead/inc;../../../../../../components/els_pkc/src/comps/mcuxClAead/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClAeadModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClAeadModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClAes/inc;../../../../../../components/els_pkc/src/comps/mcuxClAes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClBuffer/inc;../../../../../../components/els_pkc/src/comps/mcuxClBuffer/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClCipher/inc;../../../../../../components/els_pkc/src/comps/mcuxClCipher/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClCipherModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClCipherModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClCore/inc;../../../../../../components/els_pkc/src/comps/mcuxClCrc/inc;../../../../../../components/els_pkc/src/comps/mcuxClCrc/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClEcc/inc;../../../../../../components/els_pkc/src/comps/mcuxClEcc/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClEls/inc;../../../../../../components/els_pkc/src/comps/mcuxClEls/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClGlikey/inc;../../../../../../components/els_pkc/src/comps/mcuxClGlikey/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClHash/inc;../../../../../../components/els_pkc/src/comps/mcuxClHash/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClHashModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClHashModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClHmac/inc;../../../../../../components/els_pkc/src/comps/mcuxClHmac/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClKey/inc;../../../../../../components/els_pkc/src/comps/mcuxClKey/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClMac/inc;../../../../../../components/els_pkc/src/comps/mcuxClMac/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClMacModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClMacModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClMath/inc;../../../../../../components/els_pkc/src/comps/mcuxClMath/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClMemory/inc;../../../../../../components/els_pkc/src/comps/mcuxClMemory/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxCsslMemory/inc;../../../../../../components/els_pkc/src/comps/mcuxCsslMemory/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaAeadModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaAeadModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaCipherModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaCipherModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaMacModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaMacModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaPkc/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaPkc/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaRandomModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaRandomModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSafo/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSm2/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSm2/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSm3/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSm3/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSm4/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSm4/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClPadding/inc;../../../../../../components/els_pkc/src/comps/mcuxClPadding/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClPkc/inc;../../../../../../components/els_pkc/src/comps/mcuxClPkc/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClPrng/inc;../../../../../../components/els_pkc/src/comps/mcuxClPrng/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClPsaDriver/inc;../../../../../../components/els_pkc/src/comps/mcuxClPsaDriver/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClRandom/inc;../../../../../../components/els_pkc/src/comps/mcuxClRandom/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClRandomModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClRandomModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClRsa/inc;../../../../../../components/els_pkc/src/comps/mcuxClRsa/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClSession/inc;../../../../../../components/els_pkc/src/comps/mcuxClSession/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClSignature/inc;../../../../../../components/els_pkc/src/comps/mcuxClSignature/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClTrng/inc;../../../../../../components/els_pkc/src/comps/mcuxClTrng/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxCsslCPreProcessor/inc;../../../../../../components/els_pkc/src/comps/mcuxCsslDataIntegrity/inc;../../../../../../components/els_pkc/src/comps/mcuxCsslFlowProtection/inc;../../../../../../components/els_pkc/src/comps/mcuxCsslParamIntegrity/inc;../../../../../../components/els_pkc/src/comps/mcuxCsslSecureCounter/inc;../../../../../../components/els_pkc/src/inc;../../../../../../components/els_pkc/src/compiler;../../../../../../components/els_pkc/src/platforms/mimxrt;../../../../../../components/els_pkc/src/platforms/mimxrt/inc;../../../../../../components/els_pkc/includes/platform/mimxrt;../../../../../../components/psa_crypto_driver/osal;../../../../../../components/psa_crypto_driver/osal/baremetal;../../../../../../components/psa_crypto_driver/els_pkc/oracle/platforms/mimxrt;../../../../../../components/psa_crypto_driver/els_pkc/oracle/inc;../../../../../../components/psa_crypto_driver/els_pkc/include/common;../../../../../../components/psa_crypto_driver/els_pkc/include/transparent;../../../../../../components/psa_crypto_driver/els_pkc/include/opaque;../../../../../../components/psa_crypto_driver/els_pkc;../../../../../../middleware/mbedtls3x/port;../../../../../../middleware/mbedtls3x/include;../../../../../../middleware/mbedtls3x/library</IncludePath>
+              <IncludePath>..;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT798S;../../../../../../devices/MIMXRT798S/periph;../../../../../../devices/MIMXRT798S/drivers;../../../../../../devices/MIMXRT798S/utilities/debug_console_lite;../../../../../../devices/MIMXRT798S/utilities/str;../../../../../../components/uart;../../../../../../components/els_pkc;../../../../../../components/els_pkc/src/comps/common/inc;../../../../../../components/els_pkc/src/comps/mcuxClAead/inc;../../../../../../components/els_pkc/src/comps/mcuxClAead/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClAeadModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClAeadModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClAes/inc;../../../../../../components/els_pkc/src/comps/mcuxClAes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClBuffer/inc;../../../../../../components/els_pkc/src/comps/mcuxClBuffer/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClCipher/inc;../../../../../../components/els_pkc/src/comps/mcuxClCipher/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClCipherModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClCipherModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClCore/inc;../../../../../../components/els_pkc/src/comps/mcuxClCrc/inc;../../../../../../components/els_pkc/src/comps/mcuxClCrc/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClEcc/inc;../../../../../../components/els_pkc/src/comps/mcuxClEcc/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClEls/inc;../../../../../../components/els_pkc/src/comps/mcuxClEls/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClGlikey/inc;../../../../../../components/els_pkc/src/comps/mcuxClGlikey/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClHash/inc;../../../../../../components/els_pkc/src/comps/mcuxClHash/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClHashModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClHashModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClHmac/inc;../../../../../../components/els_pkc/src/comps/mcuxClHmac/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClKey/inc;../../../../../../components/els_pkc/src/comps/mcuxClKey/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClMac/inc;../../../../../../components/els_pkc/src/comps/mcuxClMac/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClMacModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClMacModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClMath/inc;../../../../../../components/els_pkc/src/comps/mcuxClMath/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClMemory/inc;../../../../../../components/els_pkc/src/comps/mcuxClMemory/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxCsslMemory/inc;../../../../../../components/els_pkc/src/comps/mcuxCsslMemory/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaAeadModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaAeadModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaCipherModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaCipherModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaMacModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaMacModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaPkc/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaPkc/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaRandomModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaRandomModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSafo/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSm2/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSm2/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSm3/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSm3/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSm4/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSm4/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClPadding/inc;../../../../../../components/els_pkc/src/comps/mcuxClPadding/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClPkc/inc;../../../../../../components/els_pkc/src/comps/mcuxClPkc/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClPrng/inc;../../../../../../components/els_pkc/src/comps/mcuxClPrng/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClPsaDriver/inc;../../../../../../components/els_pkc/src/comps/mcuxClPsaDriver/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClRandom/inc;../../../../../../components/els_pkc/src/comps/mcuxClRandom/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClRandomModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClRandomModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClRsa/inc;../../../../../../components/els_pkc/src/comps/mcuxClRsa/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClSession/inc;../../../../../../components/els_pkc/src/comps/mcuxClSession/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClSignature/inc;../../../../../../components/els_pkc/src/comps/mcuxClSignature/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClTrng/inc;../../../../../../components/els_pkc/src/comps/mcuxClTrng/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxCsslCPreProcessor/inc;../../../../../../components/els_pkc/src/comps/mcuxCsslDataIntegrity/inc;../../../../../../components/els_pkc/src/comps/mcuxCsslFlowProtection/inc;../../../../../../components/els_pkc/src/comps/mcuxCsslParamIntegrity/inc;../../../../../../components/els_pkc/src/comps/mcuxCsslSecureCounter/inc;../../../../../../components/els_pkc/src/inc;../../../../../../components/els_pkc/src/compiler;../../../../../../components/els_pkc/src/platforms/mimxrt;../../../../../../components/els_pkc/src/platforms/mimxrt/inc;../../../../../../components/els_pkc/includes/platform/mimxrt;../../../../../../components/psa_crypto_driver/osal;../../../../../../components/psa_crypto_driver/osal/baremetal;../../../../../../components/psa_crypto_driver/els_pkc/oracle/platforms/mimxrt;../../../../../../components/psa_crypto_driver/els_pkc/oracle/inc;../../../../../../components/psa_crypto_driver/els_pkc/include/common;../../../../../../components/psa_crypto_driver/els_pkc/include/transparent;../../../../../../components/psa_crypto_driver/els_pkc/include/opaque;../../../../../../components/psa_crypto_driver/els_pkc;../../../../../../middleware/mbedtls3x/include;../../../../../../middleware/mbedtls3x/library;../../../../../../middleware/mbedtls3x/port</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -351,10 +351,10 @@
             <useXO>0</useXO>
             <ClangAsOpt>2</ClangAsOpt>
             <VariousControls>
-              <MiscControls/>
-              <Define>MCUXPRESSO_SDK, CPU_MIMXRT798SGFOA_cm33_core0</Define>
+              <MiscControls>-include ../mcux_config.h</MiscControls>
+              <Define>MCUXPRESSO_SDK, CPU_MIMXRT798SGFOB_cm33_core0, MIMXRT798S_cm33_core0_SERIES</Define>
               <Undefine/>
-              <IncludePath>..;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT798S;../../../../../../devices/MIMXRT798S/periph;../../../../../../devices/periph;../../../../../../devices/MIMXRT798S/drivers;../../../../../../devices/MIMXRT798S/utilities/debug_console_lite;../../../../../../devices/MIMXRT798S/utilities/str;../../../../../../components/uart;../../../../../../components/els_pkc;../../../../../../components/els_pkc/src/comps/common/inc;../../../../../../components/els_pkc/src/comps/mcuxClAead/inc;../../../../../../components/els_pkc/src/comps/mcuxClAead/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClAeadModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClAeadModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClAes/inc;../../../../../../components/els_pkc/src/comps/mcuxClAes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClBuffer/inc;../../../../../../components/els_pkc/src/comps/mcuxClBuffer/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClCipher/inc;../../../../../../components/els_pkc/src/comps/mcuxClCipher/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClCipherModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClCipherModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClCore/inc;../../../../../../components/els_pkc/src/comps/mcuxClCrc/inc;../../../../../../components/els_pkc/src/comps/mcuxClCrc/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClEcc/inc;../../../../../../components/els_pkc/src/comps/mcuxClEcc/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClEls/inc;../../../../../../components/els_pkc/src/comps/mcuxClEls/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClGlikey/inc;../../../../../../components/els_pkc/src/comps/mcuxClGlikey/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClHash/inc;../../../../../../components/els_pkc/src/comps/mcuxClHash/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClHashModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClHashModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClHmac/inc;../../../../../../components/els_pkc/src/comps/mcuxClHmac/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClKey/inc;../../../../../../components/els_pkc/src/comps/mcuxClKey/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClMac/inc;../../../../../../components/els_pkc/src/comps/mcuxClMac/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClMacModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClMacModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClMath/inc;../../../../../../components/els_pkc/src/comps/mcuxClMath/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClMemory/inc;../../../../../../components/els_pkc/src/comps/mcuxClMemory/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxCsslMemory/inc;../../../../../../components/els_pkc/src/comps/mcuxCsslMemory/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaAeadModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaAeadModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaCipherModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaCipherModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaMacModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaMacModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaPkc/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaPkc/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaRandomModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaRandomModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSafo/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSm2/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSm2/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSm3/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSm3/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSm4/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSm4/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClPadding/inc;../../../../../../components/els_pkc/src/comps/mcuxClPadding/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClPkc/inc;../../../../../../components/els_pkc/src/comps/mcuxClPkc/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClPrng/inc;../../../../../../components/els_pkc/src/comps/mcuxClPrng/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClPsaDriver/inc;../../../../../../components/els_pkc/src/comps/mcuxClPsaDriver/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClRandom/inc;../../../../../../components/els_pkc/src/comps/mcuxClRandom/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClRandomModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClRandomModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClRsa/inc;../../../../../../components/els_pkc/src/comps/mcuxClRsa/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClSession/inc;../../../../../../components/els_pkc/src/comps/mcuxClSession/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClSignature/inc;../../../../../../components/els_pkc/src/comps/mcuxClSignature/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClTrng/inc;../../../../../../components/els_pkc/src/comps/mcuxClTrng/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxCsslCPreProcessor/inc;../../../../../../components/els_pkc/src/comps/mcuxCsslDataIntegrity/inc;../../../../../../components/els_pkc/src/comps/mcuxCsslFlowProtection/inc;../../../../../../components/els_pkc/src/comps/mcuxCsslParamIntegrity/inc;../../../../../../components/els_pkc/src/comps/mcuxCsslSecureCounter/inc;../../../../../../components/els_pkc/src/inc;../../../../../../components/els_pkc/src/compiler;../../../../../../components/els_pkc/src/platforms/mimxrt;../../../../../../components/els_pkc/src/platforms/mimxrt/inc;../../../../../../components/els_pkc/includes/platform/mimxrt;../../../../../../components/psa_crypto_driver/osal;../../../../../../components/psa_crypto_driver/osal/baremetal;../../../../../../components/psa_crypto_driver/els_pkc/oracle/platforms/mimxrt;../../../../../../components/psa_crypto_driver/els_pkc/oracle/inc;../../../../../../components/psa_crypto_driver/els_pkc/include/common;../../../../../../components/psa_crypto_driver/els_pkc/include/transparent;../../../../../../components/psa_crypto_driver/els_pkc/include/opaque;../../../../../../components/psa_crypto_driver/els_pkc;../../../../../../middleware/mbedtls3x/port;../../../../../../middleware/mbedtls3x/include;../../../../../../middleware/mbedtls3x/library</IncludePath>
+              <IncludePath>..;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT798S;../../../../../../devices/MIMXRT798S/periph;../../../../../../devices/periph;../../../../../../devices/MIMXRT798S/drivers;../../../../../../devices/MIMXRT798S/utilities/debug_console_lite;../../../../../../devices/MIMXRT798S/utilities/str;../../../../../../components/uart;../../../../../../components/els_pkc;../../../../../../components/els_pkc/src/comps/common/inc;../../../../../../components/els_pkc/src/comps/mcuxClAead/inc;../../../../../../components/els_pkc/src/comps/mcuxClAead/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClAeadModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClAeadModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClAes/inc;../../../../../../components/els_pkc/src/comps/mcuxClAes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClBuffer/inc;../../../../../../components/els_pkc/src/comps/mcuxClBuffer/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClCipher/inc;../../../../../../components/els_pkc/src/comps/mcuxClCipher/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClCipherModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClCipherModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClCore/inc;../../../../../../components/els_pkc/src/comps/mcuxClCrc/inc;../../../../../../components/els_pkc/src/comps/mcuxClCrc/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClEcc/inc;../../../../../../components/els_pkc/src/comps/mcuxClEcc/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClEls/inc;../../../../../../components/els_pkc/src/comps/mcuxClEls/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClGlikey/inc;../../../../../../components/els_pkc/src/comps/mcuxClGlikey/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClHash/inc;../../../../../../components/els_pkc/src/comps/mcuxClHash/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClHashModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClHashModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClHmac/inc;../../../../../../components/els_pkc/src/comps/mcuxClHmac/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClKey/inc;../../../../../../components/els_pkc/src/comps/mcuxClKey/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClMac/inc;../../../../../../components/els_pkc/src/comps/mcuxClMac/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClMacModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClMacModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClMath/inc;../../../../../../components/els_pkc/src/comps/mcuxClMath/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClMemory/inc;../../../../../../components/els_pkc/src/comps/mcuxClMemory/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxCsslMemory/inc;../../../../../../components/els_pkc/src/comps/mcuxCsslMemory/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaAeadModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaAeadModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaCipherModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaCipherModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaMacModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaMacModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaPkc/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaPkc/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaRandomModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaRandomModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSafo/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSm2/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSm2/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSm3/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSm3/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSm4/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSm4/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClPadding/inc;../../../../../../components/els_pkc/src/comps/mcuxClPadding/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClPkc/inc;../../../../../../components/els_pkc/src/comps/mcuxClPkc/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClPrng/inc;../../../../../../components/els_pkc/src/comps/mcuxClPrng/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClPsaDriver/inc;../../../../../../components/els_pkc/src/comps/mcuxClPsaDriver/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClRandom/inc;../../../../../../components/els_pkc/src/comps/mcuxClRandom/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClRandomModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClRandomModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClRsa/inc;../../../../../../components/els_pkc/src/comps/mcuxClRsa/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClSession/inc;../../../../../../components/els_pkc/src/comps/mcuxClSession/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClSignature/inc;../../../../../../components/els_pkc/src/comps/mcuxClSignature/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClTrng/inc;../../../../../../components/els_pkc/src/comps/mcuxClTrng/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxCsslCPreProcessor/inc;../../../../../../components/els_pkc/src/comps/mcuxCsslDataIntegrity/inc;../../../../../../components/els_pkc/src/comps/mcuxCsslFlowProtection/inc;../../../../../../components/els_pkc/src/comps/mcuxCsslParamIntegrity/inc;../../../../../../components/els_pkc/src/comps/mcuxCsslSecureCounter/inc;../../../../../../components/els_pkc/src/inc;../../../../../../components/els_pkc/src/compiler;../../../../../../components/els_pkc/src/platforms/mimxrt;../../../../../../components/els_pkc/src/platforms/mimxrt/inc;../../../../../../components/els_pkc/includes/platform/mimxrt;../../../../../../components/psa_crypto_driver/osal;../../../../../../components/psa_crypto_driver/osal/baremetal;../../../../../../components/psa_crypto_driver/els_pkc/oracle/platforms/mimxrt;../../../../../../components/psa_crypto_driver/els_pkc/oracle/inc;../../../../../../components/psa_crypto_driver/els_pkc/include/common;../../../../../../components/psa_crypto_driver/els_pkc/include/transparent;../../../../../../components/psa_crypto_driver/els_pkc/include/opaque;../../../../../../components/psa_crypto_driver/els_pkc;../../../../../../middleware/mbedtls3x/include;../../../../../../middleware/mbedtls3x/library;../../../../../../middleware/mbedtls3x/port</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -384,6 +384,16 @@
               <FileName>crypto_examples.c</FileName>
               <FileType>1</FileType>
               <FilePath>../crypto_examples.c</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../mcux_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../mcux_config.h</FilePath>
             </File>
             <File>
               <FileName>mcux_config.h</FileName>
@@ -953,12 +963,12 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>startup/arm</GroupName>
+          <GroupName>startup</GroupName>
           <Files>
             <File>
-              <FileName>startup_MIMXRT798S_cm33_core0.S</FileName>
-              <FileType>2</FileType>
-              <FilePath>../../../../../../devices/MIMXRT798S/arm/startup_MIMXRT798S_cm33_core0.S</FilePath>
+              <FileName>startup_MIMXRT798S_cm33_core0.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT798S/startup_MIMXRT798S_cm33_core0.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -9361,9 +9371,9 @@
           <GroupName>component/els_pkc</GroupName>
           <Files>
             <File>
-              <FileName>LA_OPT_Online_Code_Hosting.htm</FileName>
+              <FileName>LICENSE.txt</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../components/els_pkc/LA_OPT_Online_Code_Hosting.htm</FilePath>
+              <FilePath>../../../../../../components/els_pkc/LICENSE.txt</FilePath>
             </File>
             <File>
               <FileName>softwareContentRegister.txt</FileName>
@@ -13898,51 +13908,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>mbedtls3x/port</GroupName>
-          <Files>
-            <File>
-              <FileName>mcux_mbedtls_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>mcux_mbedtls_accelerator_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_accelerator_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>mcux_mbedtls_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>mcux_mbedtls_accelerator_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_accelerator_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>mcux_psa_defines.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_psa_defines.h</FilePath>
-            </File>
-            <File>
-              <FileName>mcux_mbedtls_psa_crypto_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_psa_crypto_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>mcux_mbedtls_accelerator_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_accelerator_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>mcux_psa_defines.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_psa_defines.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>mbedtls3x/include/mbedtls</GroupName>
           <Files>
             <File>
@@ -14336,6 +14301,11 @@
               <FilePath>../../../../../../middleware/mbedtls3x/include/psa/crypto_adjust_auto_enabled.h</FilePath>
             </File>
             <File>
+              <FileName>crypto_adjust_config_dependencies.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/include/psa/crypto_adjust_config_dependencies.h</FilePath>
+            </File>
+            <File>
               <FileName>crypto_adjust_config_key_pair_types.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/mbedtls3x/include/psa/crypto_adjust_config_key_pair_types.h</FilePath>
@@ -14504,6 +14474,16 @@
               <FileName>bignum_core.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/mbedtls3x/library/bignum_core.c</FilePath>
+            </File>
+            <File>
+              <FileName>bignum_core_invasive.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/library/bignum_core_invasive.h</FilePath>
+            </File>
+            <File>
+              <FileName>bignum_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/library/bignum_internal.h</FilePath>
             </File>
             <File>
               <FileName>bignum_mod.c</FileName>
@@ -15268,6 +15248,51 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>mbedtls3x/port</GroupName>
+          <Files>
+            <File>
+              <FileName>mcux_mbedtls_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_mbedtls_accelerator_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_accelerator_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_mbedtls_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_mbedtls_accelerator_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_accelerator_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_psa_defines.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_psa_defines.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_mbedtls_psa_crypto_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_psa_crypto_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_mbedtls_accelerator_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_accelerator_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_psa_defines.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_psa_defines.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>doc</GroupName>
           <Files>
             <File>
@@ -15279,6 +15304,11 @@
               <FileName>example_board_readme.md</FileName>
               <FileType>5</FileType>
               <FilePath>../example_board_readme.md</FilePath>
+            </File>
+            <File>
+              <FileName>examples_shared_readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../examples_shared_readme.md</FilePath>
             </File>
           </Files>
         </Group>
@@ -15292,7 +15322,7 @@
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
-          <Device>MIMXRT798SGFOA:cm33_core0</Device>
+          <Device>MIMXRT798SGFOB:cm33_core0</Device>
           <Vendor>NXP</Vendor>
           <PackID>NXP.MIMXRT798S_DFP.17.0.0</PackID>
           <PackURL>https://mcuxpresso.nxp.com/cmsis_pack/repo/</PackURL>
@@ -15615,9 +15645,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../mcux_config.h -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
-              <Define>DEBUG, PSA_CRYPTO_DRIVER_ELS_PKC, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT798SGFOA_cm33_core0, BOOT_HEADER_ENABLE=1, MBEDTLS_CONFIG_FILE='\"mcux_mbedtls_config.h\"'</Define>
+              <Define>DEBUG, MBEDTLS_CONFIG_FILE='\"mcux_mbedtls_config.h\"', SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT798SGFOB_cm33_core0, MIMXRT798S_cm33_core0_SERIES, BOOT_HEADER_ENABLE=1, PSA_CRYPTO_DRIVER_ELS_PKC</Define>
               <Undefine/>
-              <IncludePath>..;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT798S;../../../../../../devices/MIMXRT798S/periph;../../../../../../devices/MIMXRT798S/drivers;../../../../../../devices/MIMXRT798S/utilities/debug_console_lite;../../../../../../devices/MIMXRT798S/utilities/str;../../../../../../components/uart;../../../../../../components/els_pkc;../../../../../../components/els_pkc/src/comps/common/inc;../../../../../../components/els_pkc/src/comps/mcuxClAead/inc;../../../../../../components/els_pkc/src/comps/mcuxClAead/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClAeadModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClAeadModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClAes/inc;../../../../../../components/els_pkc/src/comps/mcuxClAes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClBuffer/inc;../../../../../../components/els_pkc/src/comps/mcuxClBuffer/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClCipher/inc;../../../../../../components/els_pkc/src/comps/mcuxClCipher/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClCipherModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClCipherModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClCore/inc;../../../../../../components/els_pkc/src/comps/mcuxClCrc/inc;../../../../../../components/els_pkc/src/comps/mcuxClCrc/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClEcc/inc;../../../../../../components/els_pkc/src/comps/mcuxClEcc/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClEls/inc;../../../../../../components/els_pkc/src/comps/mcuxClEls/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClGlikey/inc;../../../../../../components/els_pkc/src/comps/mcuxClGlikey/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClHash/inc;../../../../../../components/els_pkc/src/comps/mcuxClHash/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClHashModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClHashModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClHmac/inc;../../../../../../components/els_pkc/src/comps/mcuxClHmac/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClKey/inc;../../../../../../components/els_pkc/src/comps/mcuxClKey/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClMac/inc;../../../../../../components/els_pkc/src/comps/mcuxClMac/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClMacModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClMacModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClMath/inc;../../../../../../components/els_pkc/src/comps/mcuxClMath/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClMemory/inc;../../../../../../components/els_pkc/src/comps/mcuxClMemory/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxCsslMemory/inc;../../../../../../components/els_pkc/src/comps/mcuxCsslMemory/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaAeadModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaAeadModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaCipherModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaCipherModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaMacModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaMacModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaPkc/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaPkc/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaRandomModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaRandomModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSafo/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSm2/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSm2/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSm3/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSm3/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSm4/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSm4/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClPadding/inc;../../../../../../components/els_pkc/src/comps/mcuxClPadding/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClPkc/inc;../../../../../../components/els_pkc/src/comps/mcuxClPkc/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClPrng/inc;../../../../../../components/els_pkc/src/comps/mcuxClPrng/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClPsaDriver/inc;../../../../../../components/els_pkc/src/comps/mcuxClPsaDriver/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClRandom/inc;../../../../../../components/els_pkc/src/comps/mcuxClRandom/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClRandomModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClRandomModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClRsa/inc;../../../../../../components/els_pkc/src/comps/mcuxClRsa/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClSession/inc;../../../../../../components/els_pkc/src/comps/mcuxClSession/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClSignature/inc;../../../../../../components/els_pkc/src/comps/mcuxClSignature/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClTrng/inc;../../../../../../components/els_pkc/src/comps/mcuxClTrng/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxCsslCPreProcessor/inc;../../../../../../components/els_pkc/src/comps/mcuxCsslDataIntegrity/inc;../../../../../../components/els_pkc/src/comps/mcuxCsslFlowProtection/inc;../../../../../../components/els_pkc/src/comps/mcuxCsslParamIntegrity/inc;../../../../../../components/els_pkc/src/comps/mcuxCsslSecureCounter/inc;../../../../../../components/els_pkc/src/inc;../../../../../../components/els_pkc/src/compiler;../../../../../../components/els_pkc/src/platforms/mimxrt;../../../../../../components/els_pkc/src/platforms/mimxrt/inc;../../../../../../components/els_pkc/includes/platform/mimxrt;../../../../../../components/psa_crypto_driver/osal;../../../../../../components/psa_crypto_driver/osal/baremetal;../../../../../../components/psa_crypto_driver/els_pkc/oracle/platforms/mimxrt;../../../../../../components/psa_crypto_driver/els_pkc/oracle/inc;../../../../../../components/psa_crypto_driver/els_pkc/include/common;../../../../../../components/psa_crypto_driver/els_pkc/include/transparent;../../../../../../components/psa_crypto_driver/els_pkc/include/opaque;../../../../../../components/psa_crypto_driver/els_pkc;../../../../../../middleware/mbedtls3x/port;../../../../../../middleware/mbedtls3x/include;../../../../../../middleware/mbedtls3x/library</IncludePath>
+              <IncludePath>..;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT798S;../../../../../../devices/MIMXRT798S/periph;../../../../../../devices/MIMXRT798S/drivers;../../../../../../devices/MIMXRT798S/utilities/debug_console_lite;../../../../../../devices/MIMXRT798S/utilities/str;../../../../../../components/uart;../../../../../../components/els_pkc;../../../../../../components/els_pkc/src/comps/common/inc;../../../../../../components/els_pkc/src/comps/mcuxClAead/inc;../../../../../../components/els_pkc/src/comps/mcuxClAead/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClAeadModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClAeadModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClAes/inc;../../../../../../components/els_pkc/src/comps/mcuxClAes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClBuffer/inc;../../../../../../components/els_pkc/src/comps/mcuxClBuffer/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClCipher/inc;../../../../../../components/els_pkc/src/comps/mcuxClCipher/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClCipherModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClCipherModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClCore/inc;../../../../../../components/els_pkc/src/comps/mcuxClCrc/inc;../../../../../../components/els_pkc/src/comps/mcuxClCrc/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClEcc/inc;../../../../../../components/els_pkc/src/comps/mcuxClEcc/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClEls/inc;../../../../../../components/els_pkc/src/comps/mcuxClEls/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClGlikey/inc;../../../../../../components/els_pkc/src/comps/mcuxClGlikey/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClHash/inc;../../../../../../components/els_pkc/src/comps/mcuxClHash/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClHashModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClHashModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClHmac/inc;../../../../../../components/els_pkc/src/comps/mcuxClHmac/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClKey/inc;../../../../../../components/els_pkc/src/comps/mcuxClKey/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClMac/inc;../../../../../../components/els_pkc/src/comps/mcuxClMac/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClMacModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClMacModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClMath/inc;../../../../../../components/els_pkc/src/comps/mcuxClMath/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClMemory/inc;../../../../../../components/els_pkc/src/comps/mcuxClMemory/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxCsslMemory/inc;../../../../../../components/els_pkc/src/comps/mcuxCsslMemory/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaAeadModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaAeadModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaCipherModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaCipherModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaMacModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaMacModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaPkc/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaPkc/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaRandomModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaRandomModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSafo/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSm2/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSm2/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSm3/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSm3/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSm4/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSm4/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClPadding/inc;../../../../../../components/els_pkc/src/comps/mcuxClPadding/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClPkc/inc;../../../../../../components/els_pkc/src/comps/mcuxClPkc/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClPrng/inc;../../../../../../components/els_pkc/src/comps/mcuxClPrng/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClPsaDriver/inc;../../../../../../components/els_pkc/src/comps/mcuxClPsaDriver/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClRandom/inc;../../../../../../components/els_pkc/src/comps/mcuxClRandom/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClRandomModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClRandomModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClRsa/inc;../../../../../../components/els_pkc/src/comps/mcuxClRsa/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClSession/inc;../../../../../../components/els_pkc/src/comps/mcuxClSession/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClSignature/inc;../../../../../../components/els_pkc/src/comps/mcuxClSignature/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClTrng/inc;../../../../../../components/els_pkc/src/comps/mcuxClTrng/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxCsslCPreProcessor/inc;../../../../../../components/els_pkc/src/comps/mcuxCsslDataIntegrity/inc;../../../../../../components/els_pkc/src/comps/mcuxCsslFlowProtection/inc;../../../../../../components/els_pkc/src/comps/mcuxCsslParamIntegrity/inc;../../../../../../components/els_pkc/src/comps/mcuxCsslSecureCounter/inc;../../../../../../components/els_pkc/src/inc;../../../../../../components/els_pkc/src/compiler;../../../../../../components/els_pkc/src/platforms/mimxrt;../../../../../../components/els_pkc/src/platforms/mimxrt/inc;../../../../../../components/els_pkc/includes/platform/mimxrt;../../../../../../components/psa_crypto_driver/osal;../../../../../../components/psa_crypto_driver/osal/baremetal;../../../../../../components/psa_crypto_driver/els_pkc/oracle/platforms/mimxrt;../../../../../../components/psa_crypto_driver/els_pkc/oracle/inc;../../../../../../components/psa_crypto_driver/els_pkc/include/common;../../../../../../components/psa_crypto_driver/els_pkc/include/transparent;../../../../../../components/psa_crypto_driver/els_pkc/include/opaque;../../../../../../components/psa_crypto_driver/els_pkc;../../../../../../middleware/mbedtls3x/include;../../../../../../middleware/mbedtls3x/library;../../../../../../middleware/mbedtls3x/port</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -15632,10 +15662,10 @@
             <useXO>0</useXO>
             <ClangAsOpt>2</ClangAsOpt>
             <VariousControls>
-              <MiscControls/>
-              <Define>MCUXPRESSO_SDK, CPU_MIMXRT798SGFOA_cm33_core0</Define>
+              <MiscControls>-include ../mcux_config.h</MiscControls>
+              <Define>MCUXPRESSO_SDK, CPU_MIMXRT798SGFOB_cm33_core0, MIMXRT798S_cm33_core0_SERIES</Define>
               <Undefine/>
-              <IncludePath>..;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT798S;../../../../../../devices/MIMXRT798S/periph;../../../../../../devices/periph;../../../../../../devices/MIMXRT798S/drivers;../../../../../../devices/MIMXRT798S/utilities/debug_console_lite;../../../../../../devices/MIMXRT798S/utilities/str;../../../../../../components/uart;../../../../../../components/els_pkc;../../../../../../components/els_pkc/src/comps/common/inc;../../../../../../components/els_pkc/src/comps/mcuxClAead/inc;../../../../../../components/els_pkc/src/comps/mcuxClAead/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClAeadModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClAeadModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClAes/inc;../../../../../../components/els_pkc/src/comps/mcuxClAes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClBuffer/inc;../../../../../../components/els_pkc/src/comps/mcuxClBuffer/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClCipher/inc;../../../../../../components/els_pkc/src/comps/mcuxClCipher/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClCipherModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClCipherModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClCore/inc;../../../../../../components/els_pkc/src/comps/mcuxClCrc/inc;../../../../../../components/els_pkc/src/comps/mcuxClCrc/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClEcc/inc;../../../../../../components/els_pkc/src/comps/mcuxClEcc/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClEls/inc;../../../../../../components/els_pkc/src/comps/mcuxClEls/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClGlikey/inc;../../../../../../components/els_pkc/src/comps/mcuxClGlikey/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClHash/inc;../../../../../../components/els_pkc/src/comps/mcuxClHash/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClHashModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClHashModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClHmac/inc;../../../../../../components/els_pkc/src/comps/mcuxClHmac/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClKey/inc;../../../../../../components/els_pkc/src/comps/mcuxClKey/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClMac/inc;../../../../../../components/els_pkc/src/comps/mcuxClMac/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClMacModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClMacModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClMath/inc;../../../../../../components/els_pkc/src/comps/mcuxClMath/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClMemory/inc;../../../../../../components/els_pkc/src/comps/mcuxClMemory/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxCsslMemory/inc;../../../../../../components/els_pkc/src/comps/mcuxCsslMemory/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaAeadModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaAeadModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaCipherModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaCipherModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaMacModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaMacModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaPkc/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaPkc/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaRandomModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaRandomModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSafo/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSm2/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSm2/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSm3/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSm3/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSm4/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSm4/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClPadding/inc;../../../../../../components/els_pkc/src/comps/mcuxClPadding/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClPkc/inc;../../../../../../components/els_pkc/src/comps/mcuxClPkc/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClPrng/inc;../../../../../../components/els_pkc/src/comps/mcuxClPrng/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClPsaDriver/inc;../../../../../../components/els_pkc/src/comps/mcuxClPsaDriver/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClRandom/inc;../../../../../../components/els_pkc/src/comps/mcuxClRandom/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClRandomModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClRandomModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClRsa/inc;../../../../../../components/els_pkc/src/comps/mcuxClRsa/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClSession/inc;../../../../../../components/els_pkc/src/comps/mcuxClSession/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClSignature/inc;../../../../../../components/els_pkc/src/comps/mcuxClSignature/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClTrng/inc;../../../../../../components/els_pkc/src/comps/mcuxClTrng/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxCsslCPreProcessor/inc;../../../../../../components/els_pkc/src/comps/mcuxCsslDataIntegrity/inc;../../../../../../components/els_pkc/src/comps/mcuxCsslFlowProtection/inc;../../../../../../components/els_pkc/src/comps/mcuxCsslParamIntegrity/inc;../../../../../../components/els_pkc/src/comps/mcuxCsslSecureCounter/inc;../../../../../../components/els_pkc/src/inc;../../../../../../components/els_pkc/src/compiler;../../../../../../components/els_pkc/src/platforms/mimxrt;../../../../../../components/els_pkc/src/platforms/mimxrt/inc;../../../../../../components/els_pkc/includes/platform/mimxrt;../../../../../../components/psa_crypto_driver/osal;../../../../../../components/psa_crypto_driver/osal/baremetal;../../../../../../components/psa_crypto_driver/els_pkc/oracle/platforms/mimxrt;../../../../../../components/psa_crypto_driver/els_pkc/oracle/inc;../../../../../../components/psa_crypto_driver/els_pkc/include/common;../../../../../../components/psa_crypto_driver/els_pkc/include/transparent;../../../../../../components/psa_crypto_driver/els_pkc/include/opaque;../../../../../../components/psa_crypto_driver/els_pkc;../../../../../../middleware/mbedtls3x/port;../../../../../../middleware/mbedtls3x/include;../../../../../../middleware/mbedtls3x/library</IncludePath>
+              <IncludePath>..;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT798S;../../../../../../devices/MIMXRT798S/periph;../../../../../../devices/periph;../../../../../../devices/MIMXRT798S/drivers;../../../../../../devices/MIMXRT798S/utilities/debug_console_lite;../../../../../../devices/MIMXRT798S/utilities/str;../../../../../../components/uart;../../../../../../components/els_pkc;../../../../../../components/els_pkc/src/comps/common/inc;../../../../../../components/els_pkc/src/comps/mcuxClAead/inc;../../../../../../components/els_pkc/src/comps/mcuxClAead/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClAeadModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClAeadModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClAes/inc;../../../../../../components/els_pkc/src/comps/mcuxClAes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClBuffer/inc;../../../../../../components/els_pkc/src/comps/mcuxClBuffer/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClCipher/inc;../../../../../../components/els_pkc/src/comps/mcuxClCipher/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClCipherModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClCipherModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClCore/inc;../../../../../../components/els_pkc/src/comps/mcuxClCrc/inc;../../../../../../components/els_pkc/src/comps/mcuxClCrc/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClEcc/inc;../../../../../../components/els_pkc/src/comps/mcuxClEcc/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClEls/inc;../../../../../../components/els_pkc/src/comps/mcuxClEls/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClGlikey/inc;../../../../../../components/els_pkc/src/comps/mcuxClGlikey/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClHash/inc;../../../../../../components/els_pkc/src/comps/mcuxClHash/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClHashModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClHashModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClHmac/inc;../../../../../../components/els_pkc/src/comps/mcuxClHmac/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClKey/inc;../../../../../../components/els_pkc/src/comps/mcuxClKey/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClMac/inc;../../../../../../components/els_pkc/src/comps/mcuxClMac/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClMacModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClMacModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClMath/inc;../../../../../../components/els_pkc/src/comps/mcuxClMath/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClMemory/inc;../../../../../../components/els_pkc/src/comps/mcuxClMemory/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxCsslMemory/inc;../../../../../../components/els_pkc/src/comps/mcuxCsslMemory/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaAeadModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaAeadModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaCipherModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaCipherModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaMacModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaMacModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaPkc/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaPkc/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaRandomModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaRandomModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSafo/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSm2/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSm2/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSm3/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSm3/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSm4/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSm4/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClPadding/inc;../../../../../../components/els_pkc/src/comps/mcuxClPadding/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClPkc/inc;../../../../../../components/els_pkc/src/comps/mcuxClPkc/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClPrng/inc;../../../../../../components/els_pkc/src/comps/mcuxClPrng/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClPsaDriver/inc;../../../../../../components/els_pkc/src/comps/mcuxClPsaDriver/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClRandom/inc;../../../../../../components/els_pkc/src/comps/mcuxClRandom/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClRandomModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClRandomModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClRsa/inc;../../../../../../components/els_pkc/src/comps/mcuxClRsa/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClSession/inc;../../../../../../components/els_pkc/src/comps/mcuxClSession/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClSignature/inc;../../../../../../components/els_pkc/src/comps/mcuxClSignature/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClTrng/inc;../../../../../../components/els_pkc/src/comps/mcuxClTrng/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxCsslCPreProcessor/inc;../../../../../../components/els_pkc/src/comps/mcuxCsslDataIntegrity/inc;../../../../../../components/els_pkc/src/comps/mcuxCsslFlowProtection/inc;../../../../../../components/els_pkc/src/comps/mcuxCsslParamIntegrity/inc;../../../../../../components/els_pkc/src/comps/mcuxCsslSecureCounter/inc;../../../../../../components/els_pkc/src/inc;../../../../../../components/els_pkc/src/compiler;../../../../../../components/els_pkc/src/platforms/mimxrt;../../../../../../components/els_pkc/src/platforms/mimxrt/inc;../../../../../../components/els_pkc/includes/platform/mimxrt;../../../../../../components/psa_crypto_driver/osal;../../../../../../components/psa_crypto_driver/osal/baremetal;../../../../../../components/psa_crypto_driver/els_pkc/oracle/platforms/mimxrt;../../../../../../components/psa_crypto_driver/els_pkc/oracle/inc;../../../../../../components/psa_crypto_driver/els_pkc/include/common;../../../../../../components/psa_crypto_driver/els_pkc/include/transparent;../../../../../../components/psa_crypto_driver/els_pkc/include/opaque;../../../../../../components/psa_crypto_driver/els_pkc;../../../../../../middleware/mbedtls3x/include;../../../../../../middleware/mbedtls3x/library;../../../../../../middleware/mbedtls3x/port</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -15665,6 +15695,16 @@
               <FileName>crypto_examples.c</FileName>
               <FileType>1</FileType>
               <FilePath>../crypto_examples.c</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../mcux_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../mcux_config.h</FilePath>
             </File>
             <File>
               <FileName>mcux_config.h</FileName>
@@ -16234,12 +16274,12 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>startup/arm</GroupName>
+          <GroupName>startup</GroupName>
           <Files>
             <File>
-              <FileName>startup_MIMXRT798S_cm33_core0.S</FileName>
-              <FileType>2</FileType>
-              <FilePath>../../../../../../devices/MIMXRT798S/arm/startup_MIMXRT798S_cm33_core0.S</FilePath>
+              <FileName>startup_MIMXRT798S_cm33_core0.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT798S/startup_MIMXRT798S_cm33_core0.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -24642,9 +24682,9 @@
           <GroupName>component/els_pkc</GroupName>
           <Files>
             <File>
-              <FileName>LA_OPT_Online_Code_Hosting.htm</FileName>
+              <FileName>LICENSE.txt</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../components/els_pkc/LA_OPT_Online_Code_Hosting.htm</FilePath>
+              <FilePath>../../../../../../components/els_pkc/LICENSE.txt</FilePath>
             </File>
             <File>
               <FileName>softwareContentRegister.txt</FileName>
@@ -29179,51 +29219,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>mbedtls3x/port</GroupName>
-          <Files>
-            <File>
-              <FileName>mcux_mbedtls_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>mcux_mbedtls_accelerator_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_accelerator_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>mcux_mbedtls_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>mcux_mbedtls_accelerator_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_accelerator_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>mcux_psa_defines.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_psa_defines.h</FilePath>
-            </File>
-            <File>
-              <FileName>mcux_mbedtls_psa_crypto_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_psa_crypto_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>mcux_mbedtls_accelerator_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_accelerator_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>mcux_psa_defines.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_psa_defines.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>mbedtls3x/include/mbedtls</GroupName>
           <Files>
             <File>
@@ -29617,6 +29612,11 @@
               <FilePath>../../../../../../middleware/mbedtls3x/include/psa/crypto_adjust_auto_enabled.h</FilePath>
             </File>
             <File>
+              <FileName>crypto_adjust_config_dependencies.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/include/psa/crypto_adjust_config_dependencies.h</FilePath>
+            </File>
+            <File>
               <FileName>crypto_adjust_config_key_pair_types.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/mbedtls3x/include/psa/crypto_adjust_config_key_pair_types.h</FilePath>
@@ -29785,6 +29785,16 @@
               <FileName>bignum_core.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/mbedtls3x/library/bignum_core.c</FilePath>
+            </File>
+            <File>
+              <FileName>bignum_core_invasive.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/library/bignum_core_invasive.h</FilePath>
+            </File>
+            <File>
+              <FileName>bignum_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/library/bignum_internal.h</FilePath>
             </File>
             <File>
               <FileName>bignum_mod.c</FileName>
@@ -30549,6 +30559,51 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>mbedtls3x/port</GroupName>
+          <Files>
+            <File>
+              <FileName>mcux_mbedtls_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_mbedtls_accelerator_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_accelerator_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_mbedtls_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_mbedtls_accelerator_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_accelerator_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_psa_defines.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_psa_defines.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_mbedtls_psa_crypto_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_psa_crypto_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_mbedtls_accelerator_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_accelerator_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_psa_defines.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_psa_defines.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>doc</GroupName>
           <Files>
             <File>
@@ -30560,6 +30615,11 @@
               <FileName>example_board_readme.md</FileName>
               <FileType>5</FileType>
               <FilePath>../example_board_readme.md</FilePath>
+            </File>
+            <File>
+              <FileName>examples_shared_readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../examples_shared_readme.md</FilePath>
             </File>
           </Files>
         </Group>
@@ -30573,7 +30633,7 @@
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
-          <Device>MIMXRT798SGFOA:cm33_core0</Device>
+          <Device>MIMXRT798SGFOB:cm33_core0</Device>
           <Vendor>NXP</Vendor>
           <PackID>NXP.MIMXRT798S_DFP.17.0.0</PackID>
           <PackURL>https://mcuxpresso.nxp.com/cmsis_pack/repo/</PackURL>
@@ -30896,9 +30956,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../mcux_config.h -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
-              <Define>NDEBUG, PSA_CRYPTO_DRIVER_ELS_PKC, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT798SGFOA_cm33_core0, BOOT_HEADER_ENABLE=1, MBEDTLS_CONFIG_FILE='\"mcux_mbedtls_config.h\"'</Define>
+              <Define>NDEBUG, MBEDTLS_CONFIG_FILE='\"mcux_mbedtls_config.h\"', SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT798SGFOB_cm33_core0, MIMXRT798S_cm33_core0_SERIES, BOOT_HEADER_ENABLE=1, PSA_CRYPTO_DRIVER_ELS_PKC</Define>
               <Undefine/>
-              <IncludePath>..;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT798S;../../../../../../devices/MIMXRT798S/periph;../../../../../../devices/MIMXRT798S/drivers;../../../../../../devices/MIMXRT798S/utilities/debug_console_lite;../../../../../../devices/MIMXRT798S/utilities/str;../../../../../../components/uart;../../../../../../components/els_pkc;../../../../../../components/els_pkc/src/comps/common/inc;../../../../../../components/els_pkc/src/comps/mcuxClAead/inc;../../../../../../components/els_pkc/src/comps/mcuxClAead/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClAeadModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClAeadModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClAes/inc;../../../../../../components/els_pkc/src/comps/mcuxClAes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClBuffer/inc;../../../../../../components/els_pkc/src/comps/mcuxClBuffer/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClCipher/inc;../../../../../../components/els_pkc/src/comps/mcuxClCipher/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClCipherModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClCipherModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClCore/inc;../../../../../../components/els_pkc/src/comps/mcuxClCrc/inc;../../../../../../components/els_pkc/src/comps/mcuxClCrc/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClEcc/inc;../../../../../../components/els_pkc/src/comps/mcuxClEcc/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClEls/inc;../../../../../../components/els_pkc/src/comps/mcuxClEls/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClGlikey/inc;../../../../../../components/els_pkc/src/comps/mcuxClGlikey/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClHash/inc;../../../../../../components/els_pkc/src/comps/mcuxClHash/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClHashModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClHashModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClHmac/inc;../../../../../../components/els_pkc/src/comps/mcuxClHmac/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClKey/inc;../../../../../../components/els_pkc/src/comps/mcuxClKey/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClMac/inc;../../../../../../components/els_pkc/src/comps/mcuxClMac/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClMacModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClMacModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClMath/inc;../../../../../../components/els_pkc/src/comps/mcuxClMath/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClMemory/inc;../../../../../../components/els_pkc/src/comps/mcuxClMemory/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxCsslMemory/inc;../../../../../../components/els_pkc/src/comps/mcuxCsslMemory/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaAeadModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaAeadModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaCipherModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaCipherModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaMacModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaMacModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaPkc/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaPkc/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaRandomModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaRandomModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSafo/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSm2/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSm2/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSm3/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSm3/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSm4/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSm4/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClPadding/inc;../../../../../../components/els_pkc/src/comps/mcuxClPadding/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClPkc/inc;../../../../../../components/els_pkc/src/comps/mcuxClPkc/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClPrng/inc;../../../../../../components/els_pkc/src/comps/mcuxClPrng/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClPsaDriver/inc;../../../../../../components/els_pkc/src/comps/mcuxClPsaDriver/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClRandom/inc;../../../../../../components/els_pkc/src/comps/mcuxClRandom/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClRandomModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClRandomModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClRsa/inc;../../../../../../components/els_pkc/src/comps/mcuxClRsa/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClSession/inc;../../../../../../components/els_pkc/src/comps/mcuxClSession/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClSignature/inc;../../../../../../components/els_pkc/src/comps/mcuxClSignature/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClTrng/inc;../../../../../../components/els_pkc/src/comps/mcuxClTrng/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxCsslCPreProcessor/inc;../../../../../../components/els_pkc/src/comps/mcuxCsslDataIntegrity/inc;../../../../../../components/els_pkc/src/comps/mcuxCsslFlowProtection/inc;../../../../../../components/els_pkc/src/comps/mcuxCsslParamIntegrity/inc;../../../../../../components/els_pkc/src/comps/mcuxCsslSecureCounter/inc;../../../../../../components/els_pkc/src/inc;../../../../../../components/els_pkc/src/compiler;../../../../../../components/els_pkc/src/platforms/mimxrt;../../../../../../components/els_pkc/src/platforms/mimxrt/inc;../../../../../../components/els_pkc/includes/platform/mimxrt;../../../../../../components/psa_crypto_driver/osal;../../../../../../components/psa_crypto_driver/osal/baremetal;../../../../../../components/psa_crypto_driver/els_pkc/oracle/platforms/mimxrt;../../../../../../components/psa_crypto_driver/els_pkc/oracle/inc;../../../../../../components/psa_crypto_driver/els_pkc/include/common;../../../../../../components/psa_crypto_driver/els_pkc/include/transparent;../../../../../../components/psa_crypto_driver/els_pkc/include/opaque;../../../../../../components/psa_crypto_driver/els_pkc;../../../../../../middleware/mbedtls3x/port;../../../../../../middleware/mbedtls3x/include;../../../../../../middleware/mbedtls3x/library</IncludePath>
+              <IncludePath>..;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT798S;../../../../../../devices/MIMXRT798S/periph;../../../../../../devices/MIMXRT798S/drivers;../../../../../../devices/MIMXRT798S/utilities/debug_console_lite;../../../../../../devices/MIMXRT798S/utilities/str;../../../../../../components/uart;../../../../../../components/els_pkc;../../../../../../components/els_pkc/src/comps/common/inc;../../../../../../components/els_pkc/src/comps/mcuxClAead/inc;../../../../../../components/els_pkc/src/comps/mcuxClAead/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClAeadModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClAeadModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClAes/inc;../../../../../../components/els_pkc/src/comps/mcuxClAes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClBuffer/inc;../../../../../../components/els_pkc/src/comps/mcuxClBuffer/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClCipher/inc;../../../../../../components/els_pkc/src/comps/mcuxClCipher/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClCipherModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClCipherModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClCore/inc;../../../../../../components/els_pkc/src/comps/mcuxClCrc/inc;../../../../../../components/els_pkc/src/comps/mcuxClCrc/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClEcc/inc;../../../../../../components/els_pkc/src/comps/mcuxClEcc/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClEls/inc;../../../../../../components/els_pkc/src/comps/mcuxClEls/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClGlikey/inc;../../../../../../components/els_pkc/src/comps/mcuxClGlikey/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClHash/inc;../../../../../../components/els_pkc/src/comps/mcuxClHash/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClHashModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClHashModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClHmac/inc;../../../../../../components/els_pkc/src/comps/mcuxClHmac/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClKey/inc;../../../../../../components/els_pkc/src/comps/mcuxClKey/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClMac/inc;../../../../../../components/els_pkc/src/comps/mcuxClMac/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClMacModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClMacModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClMath/inc;../../../../../../components/els_pkc/src/comps/mcuxClMath/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClMemory/inc;../../../../../../components/els_pkc/src/comps/mcuxClMemory/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxCsslMemory/inc;../../../../../../components/els_pkc/src/comps/mcuxCsslMemory/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaAeadModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaAeadModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaCipherModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaCipherModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaMacModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaMacModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaPkc/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaPkc/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaRandomModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaRandomModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSafo/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSm2/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSm2/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSm3/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSm3/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSm4/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSm4/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClPadding/inc;../../../../../../components/els_pkc/src/comps/mcuxClPadding/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClPkc/inc;../../../../../../components/els_pkc/src/comps/mcuxClPkc/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClPrng/inc;../../../../../../components/els_pkc/src/comps/mcuxClPrng/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClPsaDriver/inc;../../../../../../components/els_pkc/src/comps/mcuxClPsaDriver/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClRandom/inc;../../../../../../components/els_pkc/src/comps/mcuxClRandom/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClRandomModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClRandomModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClRsa/inc;../../../../../../components/els_pkc/src/comps/mcuxClRsa/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClSession/inc;../../../../../../components/els_pkc/src/comps/mcuxClSession/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClSignature/inc;../../../../../../components/els_pkc/src/comps/mcuxClSignature/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClTrng/inc;../../../../../../components/els_pkc/src/comps/mcuxClTrng/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxCsslCPreProcessor/inc;../../../../../../components/els_pkc/src/comps/mcuxCsslDataIntegrity/inc;../../../../../../components/els_pkc/src/comps/mcuxCsslFlowProtection/inc;../../../../../../components/els_pkc/src/comps/mcuxCsslParamIntegrity/inc;../../../../../../components/els_pkc/src/comps/mcuxCsslSecureCounter/inc;../../../../../../components/els_pkc/src/inc;../../../../../../components/els_pkc/src/compiler;../../../../../../components/els_pkc/src/platforms/mimxrt;../../../../../../components/els_pkc/src/platforms/mimxrt/inc;../../../../../../components/els_pkc/includes/platform/mimxrt;../../../../../../components/psa_crypto_driver/osal;../../../../../../components/psa_crypto_driver/osal/baremetal;../../../../../../components/psa_crypto_driver/els_pkc/oracle/platforms/mimxrt;../../../../../../components/psa_crypto_driver/els_pkc/oracle/inc;../../../../../../components/psa_crypto_driver/els_pkc/include/common;../../../../../../components/psa_crypto_driver/els_pkc/include/transparent;../../../../../../components/psa_crypto_driver/els_pkc/include/opaque;../../../../../../components/psa_crypto_driver/els_pkc;../../../../../../middleware/mbedtls3x/include;../../../../../../middleware/mbedtls3x/library;../../../../../../middleware/mbedtls3x/port</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -30913,10 +30973,10 @@
             <useXO>0</useXO>
             <ClangAsOpt>2</ClangAsOpt>
             <VariousControls>
-              <MiscControls/>
-              <Define>MCUXPRESSO_SDK, CPU_MIMXRT798SGFOA_cm33_core0</Define>
+              <MiscControls>-include ../mcux_config.h</MiscControls>
+              <Define>MCUXPRESSO_SDK, CPU_MIMXRT798SGFOB_cm33_core0, MIMXRT798S_cm33_core0_SERIES</Define>
               <Undefine/>
-              <IncludePath>..;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT798S;../../../../../../devices/MIMXRT798S/periph;../../../../../../devices/periph;../../../../../../devices/MIMXRT798S/drivers;../../../../../../devices/MIMXRT798S/utilities/debug_console_lite;../../../../../../devices/MIMXRT798S/utilities/str;../../../../../../components/uart;../../../../../../components/els_pkc;../../../../../../components/els_pkc/src/comps/common/inc;../../../../../../components/els_pkc/src/comps/mcuxClAead/inc;../../../../../../components/els_pkc/src/comps/mcuxClAead/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClAeadModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClAeadModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClAes/inc;../../../../../../components/els_pkc/src/comps/mcuxClAes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClBuffer/inc;../../../../../../components/els_pkc/src/comps/mcuxClBuffer/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClCipher/inc;../../../../../../components/els_pkc/src/comps/mcuxClCipher/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClCipherModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClCipherModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClCore/inc;../../../../../../components/els_pkc/src/comps/mcuxClCrc/inc;../../../../../../components/els_pkc/src/comps/mcuxClCrc/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClEcc/inc;../../../../../../components/els_pkc/src/comps/mcuxClEcc/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClEls/inc;../../../../../../components/els_pkc/src/comps/mcuxClEls/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClGlikey/inc;../../../../../../components/els_pkc/src/comps/mcuxClGlikey/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClHash/inc;../../../../../../components/els_pkc/src/comps/mcuxClHash/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClHashModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClHashModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClHmac/inc;../../../../../../components/els_pkc/src/comps/mcuxClHmac/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClKey/inc;../../../../../../components/els_pkc/src/comps/mcuxClKey/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClMac/inc;../../../../../../components/els_pkc/src/comps/mcuxClMac/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClMacModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClMacModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClMath/inc;../../../../../../components/els_pkc/src/comps/mcuxClMath/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClMemory/inc;../../../../../../components/els_pkc/src/comps/mcuxClMemory/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxCsslMemory/inc;../../../../../../components/els_pkc/src/comps/mcuxCsslMemory/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaAeadModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaAeadModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaCipherModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaCipherModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaMacModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaMacModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaPkc/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaPkc/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaRandomModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaRandomModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSafo/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSm2/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSm2/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSm3/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSm3/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSm4/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSm4/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClPadding/inc;../../../../../../components/els_pkc/src/comps/mcuxClPadding/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClPkc/inc;../../../../../../components/els_pkc/src/comps/mcuxClPkc/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClPrng/inc;../../../../../../components/els_pkc/src/comps/mcuxClPrng/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClPsaDriver/inc;../../../../../../components/els_pkc/src/comps/mcuxClPsaDriver/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClRandom/inc;../../../../../../components/els_pkc/src/comps/mcuxClRandom/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClRandomModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClRandomModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClRsa/inc;../../../../../../components/els_pkc/src/comps/mcuxClRsa/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClSession/inc;../../../../../../components/els_pkc/src/comps/mcuxClSession/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClSignature/inc;../../../../../../components/els_pkc/src/comps/mcuxClSignature/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClTrng/inc;../../../../../../components/els_pkc/src/comps/mcuxClTrng/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxCsslCPreProcessor/inc;../../../../../../components/els_pkc/src/comps/mcuxCsslDataIntegrity/inc;../../../../../../components/els_pkc/src/comps/mcuxCsslFlowProtection/inc;../../../../../../components/els_pkc/src/comps/mcuxCsslParamIntegrity/inc;../../../../../../components/els_pkc/src/comps/mcuxCsslSecureCounter/inc;../../../../../../components/els_pkc/src/inc;../../../../../../components/els_pkc/src/compiler;../../../../../../components/els_pkc/src/platforms/mimxrt;../../../../../../components/els_pkc/src/platforms/mimxrt/inc;../../../../../../components/els_pkc/includes/platform/mimxrt;../../../../../../components/psa_crypto_driver/osal;../../../../../../components/psa_crypto_driver/osal/baremetal;../../../../../../components/psa_crypto_driver/els_pkc/oracle/platforms/mimxrt;../../../../../../components/psa_crypto_driver/els_pkc/oracle/inc;../../../../../../components/psa_crypto_driver/els_pkc/include/common;../../../../../../components/psa_crypto_driver/els_pkc/include/transparent;../../../../../../components/psa_crypto_driver/els_pkc/include/opaque;../../../../../../components/psa_crypto_driver/els_pkc;../../../../../../middleware/mbedtls3x/port;../../../../../../middleware/mbedtls3x/include;../../../../../../middleware/mbedtls3x/library</IncludePath>
+              <IncludePath>..;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT798S;../../../../../../devices/MIMXRT798S/periph;../../../../../../devices/periph;../../../../../../devices/MIMXRT798S/drivers;../../../../../../devices/MIMXRT798S/utilities/debug_console_lite;../../../../../../devices/MIMXRT798S/utilities/str;../../../../../../components/uart;../../../../../../components/els_pkc;../../../../../../components/els_pkc/src/comps/common/inc;../../../../../../components/els_pkc/src/comps/mcuxClAead/inc;../../../../../../components/els_pkc/src/comps/mcuxClAead/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClAeadModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClAeadModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClAes/inc;../../../../../../components/els_pkc/src/comps/mcuxClAes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClBuffer/inc;../../../../../../components/els_pkc/src/comps/mcuxClBuffer/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClCipher/inc;../../../../../../components/els_pkc/src/comps/mcuxClCipher/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClCipherModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClCipherModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClCore/inc;../../../../../../components/els_pkc/src/comps/mcuxClCrc/inc;../../../../../../components/els_pkc/src/comps/mcuxClCrc/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClEcc/inc;../../../../../../components/els_pkc/src/comps/mcuxClEcc/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClEls/inc;../../../../../../components/els_pkc/src/comps/mcuxClEls/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClGlikey/inc;../../../../../../components/els_pkc/src/comps/mcuxClGlikey/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClHash/inc;../../../../../../components/els_pkc/src/comps/mcuxClHash/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClHashModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClHashModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClHmac/inc;../../../../../../components/els_pkc/src/comps/mcuxClHmac/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClKey/inc;../../../../../../components/els_pkc/src/comps/mcuxClKey/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClMac/inc;../../../../../../components/els_pkc/src/comps/mcuxClMac/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClMacModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClMacModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClMath/inc;../../../../../../components/els_pkc/src/comps/mcuxClMath/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClMemory/inc;../../../../../../components/els_pkc/src/comps/mcuxClMemory/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxCsslMemory/inc;../../../../../../components/els_pkc/src/comps/mcuxCsslMemory/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaAeadModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaAeadModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaCipherModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaCipherModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaMacModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaMacModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaPkc/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaPkc/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaRandomModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaRandomModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSafo/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSm2/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSm2/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSm3/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSm3/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSm4/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSm4/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClPadding/inc;../../../../../../components/els_pkc/src/comps/mcuxClPadding/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClPkc/inc;../../../../../../components/els_pkc/src/comps/mcuxClPkc/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClPrng/inc;../../../../../../components/els_pkc/src/comps/mcuxClPrng/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClPsaDriver/inc;../../../../../../components/els_pkc/src/comps/mcuxClPsaDriver/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClRandom/inc;../../../../../../components/els_pkc/src/comps/mcuxClRandom/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClRandomModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClRandomModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClRsa/inc;../../../../../../components/els_pkc/src/comps/mcuxClRsa/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClSession/inc;../../../../../../components/els_pkc/src/comps/mcuxClSession/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClSignature/inc;../../../../../../components/els_pkc/src/comps/mcuxClSignature/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClTrng/inc;../../../../../../components/els_pkc/src/comps/mcuxClTrng/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxCsslCPreProcessor/inc;../../../../../../components/els_pkc/src/comps/mcuxCsslDataIntegrity/inc;../../../../../../components/els_pkc/src/comps/mcuxCsslFlowProtection/inc;../../../../../../components/els_pkc/src/comps/mcuxCsslParamIntegrity/inc;../../../../../../components/els_pkc/src/comps/mcuxCsslSecureCounter/inc;../../../../../../components/els_pkc/src/inc;../../../../../../components/els_pkc/src/compiler;../../../../../../components/els_pkc/src/platforms/mimxrt;../../../../../../components/els_pkc/src/platforms/mimxrt/inc;../../../../../../components/els_pkc/includes/platform/mimxrt;../../../../../../components/psa_crypto_driver/osal;../../../../../../components/psa_crypto_driver/osal/baremetal;../../../../../../components/psa_crypto_driver/els_pkc/oracle/platforms/mimxrt;../../../../../../components/psa_crypto_driver/els_pkc/oracle/inc;../../../../../../components/psa_crypto_driver/els_pkc/include/common;../../../../../../components/psa_crypto_driver/els_pkc/include/transparent;../../../../../../components/psa_crypto_driver/els_pkc/include/opaque;../../../../../../components/psa_crypto_driver/els_pkc;../../../../../../middleware/mbedtls3x/include;../../../../../../middleware/mbedtls3x/library;../../../../../../middleware/mbedtls3x/port</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -30946,6 +31006,16 @@
               <FileName>crypto_examples.c</FileName>
               <FileType>1</FileType>
               <FilePath>../crypto_examples.c</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../mcux_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../mcux_config.h</FilePath>
             </File>
             <File>
               <FileName>mcux_config.h</FileName>
@@ -31515,12 +31585,12 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>startup/arm</GroupName>
+          <GroupName>startup</GroupName>
           <Files>
             <File>
-              <FileName>startup_MIMXRT798S_cm33_core0.S</FileName>
-              <FileType>2</FileType>
-              <FilePath>../../../../../../devices/MIMXRT798S/arm/startup_MIMXRT798S_cm33_core0.S</FilePath>
+              <FileName>startup_MIMXRT798S_cm33_core0.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT798S/startup_MIMXRT798S_cm33_core0.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -39923,9 +39993,9 @@
           <GroupName>component/els_pkc</GroupName>
           <Files>
             <File>
-              <FileName>LA_OPT_Online_Code_Hosting.htm</FileName>
+              <FileName>LICENSE.txt</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../components/els_pkc/LA_OPT_Online_Code_Hosting.htm</FilePath>
+              <FilePath>../../../../../../components/els_pkc/LICENSE.txt</FilePath>
             </File>
             <File>
               <FileName>softwareContentRegister.txt</FileName>
@@ -44460,51 +44530,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>mbedtls3x/port</GroupName>
-          <Files>
-            <File>
-              <FileName>mcux_mbedtls_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>mcux_mbedtls_accelerator_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_accelerator_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>mcux_mbedtls_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>mcux_mbedtls_accelerator_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_accelerator_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>mcux_psa_defines.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_psa_defines.h</FilePath>
-            </File>
-            <File>
-              <FileName>mcux_mbedtls_psa_crypto_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_psa_crypto_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>mcux_mbedtls_accelerator_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_accelerator_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>mcux_psa_defines.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_psa_defines.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>mbedtls3x/include/mbedtls</GroupName>
           <Files>
             <File>
@@ -44898,6 +44923,11 @@
               <FilePath>../../../../../../middleware/mbedtls3x/include/psa/crypto_adjust_auto_enabled.h</FilePath>
             </File>
             <File>
+              <FileName>crypto_adjust_config_dependencies.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/include/psa/crypto_adjust_config_dependencies.h</FilePath>
+            </File>
+            <File>
               <FileName>crypto_adjust_config_key_pair_types.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/mbedtls3x/include/psa/crypto_adjust_config_key_pair_types.h</FilePath>
@@ -45066,6 +45096,16 @@
               <FileName>bignum_core.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/mbedtls3x/library/bignum_core.c</FilePath>
+            </File>
+            <File>
+              <FileName>bignum_core_invasive.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/library/bignum_core_invasive.h</FilePath>
+            </File>
+            <File>
+              <FileName>bignum_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/library/bignum_internal.h</FilePath>
             </File>
             <File>
               <FileName>bignum_mod.c</FileName>
@@ -45830,6 +45870,51 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>mbedtls3x/port</GroupName>
+          <Files>
+            <File>
+              <FileName>mcux_mbedtls_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_mbedtls_accelerator_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_accelerator_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_mbedtls_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_mbedtls_accelerator_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_accelerator_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_psa_defines.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_psa_defines.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_mbedtls_psa_crypto_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_psa_crypto_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_mbedtls_accelerator_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_accelerator_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_psa_defines.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_psa_defines.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>doc</GroupName>
           <Files>
             <File>
@@ -45841,6 +45926,11 @@
               <FileName>example_board_readme.md</FileName>
               <FileType>5</FileType>
               <FilePath>../example_board_readme.md</FilePath>
+            </File>
+            <File>
+              <FileName>examples_shared_readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../examples_shared_readme.md</FilePath>
             </File>
           </Files>
         </Group>
@@ -45854,7 +45944,7 @@
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
-          <Device>MIMXRT798SGFOA:cm33_core0</Device>
+          <Device>MIMXRT798SGFOB:cm33_core0</Device>
           <Vendor>NXP</Vendor>
           <PackID>NXP.MIMXRT798S_DFP.17.0.0</PackID>
           <PackURL>https://mcuxpresso.nxp.com/cmsis_pack/repo/</PackURL>
@@ -46177,9 +46267,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../mcux_config.h -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
-              <Define>NDEBUG, PSA_CRYPTO_DRIVER_ELS_PKC, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT798SGFOA_cm33_core0, BOOT_HEADER_ENABLE=1, MBEDTLS_CONFIG_FILE='\"mcux_mbedtls_config.h\"'</Define>
+              <Define>NDEBUG, MBEDTLS_CONFIG_FILE='\"mcux_mbedtls_config.h\"', SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT798SGFOB_cm33_core0, MIMXRT798S_cm33_core0_SERIES, BOOT_HEADER_ENABLE=1, PSA_CRYPTO_DRIVER_ELS_PKC</Define>
               <Undefine/>
-              <IncludePath>..;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT798S;../../../../../../devices/MIMXRT798S/periph;../../../../../../devices/MIMXRT798S/drivers;../../../../../../devices/MIMXRT798S/utilities/debug_console_lite;../../../../../../devices/MIMXRT798S/utilities/str;../../../../../../components/uart;../../../../../../components/els_pkc;../../../../../../components/els_pkc/src/comps/common/inc;../../../../../../components/els_pkc/src/comps/mcuxClAead/inc;../../../../../../components/els_pkc/src/comps/mcuxClAead/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClAeadModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClAeadModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClAes/inc;../../../../../../components/els_pkc/src/comps/mcuxClAes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClBuffer/inc;../../../../../../components/els_pkc/src/comps/mcuxClBuffer/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClCipher/inc;../../../../../../components/els_pkc/src/comps/mcuxClCipher/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClCipherModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClCipherModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClCore/inc;../../../../../../components/els_pkc/src/comps/mcuxClCrc/inc;../../../../../../components/els_pkc/src/comps/mcuxClCrc/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClEcc/inc;../../../../../../components/els_pkc/src/comps/mcuxClEcc/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClEls/inc;../../../../../../components/els_pkc/src/comps/mcuxClEls/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClGlikey/inc;../../../../../../components/els_pkc/src/comps/mcuxClGlikey/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClHash/inc;../../../../../../components/els_pkc/src/comps/mcuxClHash/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClHashModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClHashModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClHmac/inc;../../../../../../components/els_pkc/src/comps/mcuxClHmac/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClKey/inc;../../../../../../components/els_pkc/src/comps/mcuxClKey/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClMac/inc;../../../../../../components/els_pkc/src/comps/mcuxClMac/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClMacModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClMacModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClMath/inc;../../../../../../components/els_pkc/src/comps/mcuxClMath/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClMemory/inc;../../../../../../components/els_pkc/src/comps/mcuxClMemory/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxCsslMemory/inc;../../../../../../components/els_pkc/src/comps/mcuxCsslMemory/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaAeadModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaAeadModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaCipherModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaCipherModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaMacModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaMacModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaPkc/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaPkc/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaRandomModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaRandomModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSafo/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSm2/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSm2/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSm3/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSm3/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSm4/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSm4/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClPadding/inc;../../../../../../components/els_pkc/src/comps/mcuxClPadding/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClPkc/inc;../../../../../../components/els_pkc/src/comps/mcuxClPkc/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClPrng/inc;../../../../../../components/els_pkc/src/comps/mcuxClPrng/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClPsaDriver/inc;../../../../../../components/els_pkc/src/comps/mcuxClPsaDriver/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClRandom/inc;../../../../../../components/els_pkc/src/comps/mcuxClRandom/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClRandomModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClRandomModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClRsa/inc;../../../../../../components/els_pkc/src/comps/mcuxClRsa/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClSession/inc;../../../../../../components/els_pkc/src/comps/mcuxClSession/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClSignature/inc;../../../../../../components/els_pkc/src/comps/mcuxClSignature/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClTrng/inc;../../../../../../components/els_pkc/src/comps/mcuxClTrng/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxCsslCPreProcessor/inc;../../../../../../components/els_pkc/src/comps/mcuxCsslDataIntegrity/inc;../../../../../../components/els_pkc/src/comps/mcuxCsslFlowProtection/inc;../../../../../../components/els_pkc/src/comps/mcuxCsslParamIntegrity/inc;../../../../../../components/els_pkc/src/comps/mcuxCsslSecureCounter/inc;../../../../../../components/els_pkc/src/inc;../../../../../../components/els_pkc/src/compiler;../../../../../../components/els_pkc/src/platforms/mimxrt;../../../../../../components/els_pkc/src/platforms/mimxrt/inc;../../../../../../components/els_pkc/includes/platform/mimxrt;../../../../../../components/psa_crypto_driver/osal;../../../../../../components/psa_crypto_driver/osal/baremetal;../../../../../../components/psa_crypto_driver/els_pkc/oracle/platforms/mimxrt;../../../../../../components/psa_crypto_driver/els_pkc/oracle/inc;../../../../../../components/psa_crypto_driver/els_pkc/include/common;../../../../../../components/psa_crypto_driver/els_pkc/include/transparent;../../../../../../components/psa_crypto_driver/els_pkc/include/opaque;../../../../../../components/psa_crypto_driver/els_pkc;../../../../../../middleware/mbedtls3x/port;../../../../../../middleware/mbedtls3x/include;../../../../../../middleware/mbedtls3x/library</IncludePath>
+              <IncludePath>..;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT798S;../../../../../../devices/MIMXRT798S/periph;../../../../../../devices/MIMXRT798S/drivers;../../../../../../devices/MIMXRT798S/utilities/debug_console_lite;../../../../../../devices/MIMXRT798S/utilities/str;../../../../../../components/uart;../../../../../../components/els_pkc;../../../../../../components/els_pkc/src/comps/common/inc;../../../../../../components/els_pkc/src/comps/mcuxClAead/inc;../../../../../../components/els_pkc/src/comps/mcuxClAead/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClAeadModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClAeadModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClAes/inc;../../../../../../components/els_pkc/src/comps/mcuxClAes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClBuffer/inc;../../../../../../components/els_pkc/src/comps/mcuxClBuffer/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClCipher/inc;../../../../../../components/els_pkc/src/comps/mcuxClCipher/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClCipherModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClCipherModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClCore/inc;../../../../../../components/els_pkc/src/comps/mcuxClCrc/inc;../../../../../../components/els_pkc/src/comps/mcuxClCrc/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClEcc/inc;../../../../../../components/els_pkc/src/comps/mcuxClEcc/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClEls/inc;../../../../../../components/els_pkc/src/comps/mcuxClEls/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClGlikey/inc;../../../../../../components/els_pkc/src/comps/mcuxClGlikey/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClHash/inc;../../../../../../components/els_pkc/src/comps/mcuxClHash/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClHashModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClHashModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClHmac/inc;../../../../../../components/els_pkc/src/comps/mcuxClHmac/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClKey/inc;../../../../../../components/els_pkc/src/comps/mcuxClKey/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClMac/inc;../../../../../../components/els_pkc/src/comps/mcuxClMac/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClMacModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClMacModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClMath/inc;../../../../../../components/els_pkc/src/comps/mcuxClMath/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClMemory/inc;../../../../../../components/els_pkc/src/comps/mcuxClMemory/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxCsslMemory/inc;../../../../../../components/els_pkc/src/comps/mcuxCsslMemory/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaAeadModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaAeadModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaCipherModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaCipherModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaMacModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaMacModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaPkc/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaPkc/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaRandomModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaRandomModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSafo/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSm2/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSm2/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSm3/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSm3/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSm4/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSm4/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClPadding/inc;../../../../../../components/els_pkc/src/comps/mcuxClPadding/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClPkc/inc;../../../../../../components/els_pkc/src/comps/mcuxClPkc/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClPrng/inc;../../../../../../components/els_pkc/src/comps/mcuxClPrng/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClPsaDriver/inc;../../../../../../components/els_pkc/src/comps/mcuxClPsaDriver/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClRandom/inc;../../../../../../components/els_pkc/src/comps/mcuxClRandom/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClRandomModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClRandomModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClRsa/inc;../../../../../../components/els_pkc/src/comps/mcuxClRsa/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClSession/inc;../../../../../../components/els_pkc/src/comps/mcuxClSession/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClSignature/inc;../../../../../../components/els_pkc/src/comps/mcuxClSignature/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClTrng/inc;../../../../../../components/els_pkc/src/comps/mcuxClTrng/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxCsslCPreProcessor/inc;../../../../../../components/els_pkc/src/comps/mcuxCsslDataIntegrity/inc;../../../../../../components/els_pkc/src/comps/mcuxCsslFlowProtection/inc;../../../../../../components/els_pkc/src/comps/mcuxCsslParamIntegrity/inc;../../../../../../components/els_pkc/src/comps/mcuxCsslSecureCounter/inc;../../../../../../components/els_pkc/src/inc;../../../../../../components/els_pkc/src/compiler;../../../../../../components/els_pkc/src/platforms/mimxrt;../../../../../../components/els_pkc/src/platforms/mimxrt/inc;../../../../../../components/els_pkc/includes/platform/mimxrt;../../../../../../components/psa_crypto_driver/osal;../../../../../../components/psa_crypto_driver/osal/baremetal;../../../../../../components/psa_crypto_driver/els_pkc/oracle/platforms/mimxrt;../../../../../../components/psa_crypto_driver/els_pkc/oracle/inc;../../../../../../components/psa_crypto_driver/els_pkc/include/common;../../../../../../components/psa_crypto_driver/els_pkc/include/transparent;../../../../../../components/psa_crypto_driver/els_pkc/include/opaque;../../../../../../components/psa_crypto_driver/els_pkc;../../../../../../middleware/mbedtls3x/include;../../../../../../middleware/mbedtls3x/library;../../../../../../middleware/mbedtls3x/port</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -46194,10 +46284,10 @@
             <useXO>0</useXO>
             <ClangAsOpt>2</ClangAsOpt>
             <VariousControls>
-              <MiscControls/>
-              <Define>MCUXPRESSO_SDK, CPU_MIMXRT798SGFOA_cm33_core0</Define>
+              <MiscControls>-include ../mcux_config.h</MiscControls>
+              <Define>MCUXPRESSO_SDK, CPU_MIMXRT798SGFOB_cm33_core0, MIMXRT798S_cm33_core0_SERIES</Define>
               <Undefine/>
-              <IncludePath>..;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT798S;../../../../../../devices/MIMXRT798S/periph;../../../../../../devices/periph;../../../../../../devices/MIMXRT798S/drivers;../../../../../../devices/MIMXRT798S/utilities/debug_console_lite;../../../../../../devices/MIMXRT798S/utilities/str;../../../../../../components/uart;../../../../../../components/els_pkc;../../../../../../components/els_pkc/src/comps/common/inc;../../../../../../components/els_pkc/src/comps/mcuxClAead/inc;../../../../../../components/els_pkc/src/comps/mcuxClAead/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClAeadModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClAeadModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClAes/inc;../../../../../../components/els_pkc/src/comps/mcuxClAes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClBuffer/inc;../../../../../../components/els_pkc/src/comps/mcuxClBuffer/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClCipher/inc;../../../../../../components/els_pkc/src/comps/mcuxClCipher/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClCipherModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClCipherModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClCore/inc;../../../../../../components/els_pkc/src/comps/mcuxClCrc/inc;../../../../../../components/els_pkc/src/comps/mcuxClCrc/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClEcc/inc;../../../../../../components/els_pkc/src/comps/mcuxClEcc/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClEls/inc;../../../../../../components/els_pkc/src/comps/mcuxClEls/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClGlikey/inc;../../../../../../components/els_pkc/src/comps/mcuxClGlikey/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClHash/inc;../../../../../../components/els_pkc/src/comps/mcuxClHash/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClHashModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClHashModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClHmac/inc;../../../../../../components/els_pkc/src/comps/mcuxClHmac/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClKey/inc;../../../../../../components/els_pkc/src/comps/mcuxClKey/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClMac/inc;../../../../../../components/els_pkc/src/comps/mcuxClMac/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClMacModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClMacModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClMath/inc;../../../../../../components/els_pkc/src/comps/mcuxClMath/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClMemory/inc;../../../../../../components/els_pkc/src/comps/mcuxClMemory/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxCsslMemory/inc;../../../../../../components/els_pkc/src/comps/mcuxCsslMemory/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaAeadModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaAeadModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaCipherModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaCipherModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaMacModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaMacModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaPkc/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaPkc/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaRandomModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaRandomModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSafo/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSm2/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSm2/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSm3/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSm3/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSm4/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSm4/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClPadding/inc;../../../../../../components/els_pkc/src/comps/mcuxClPadding/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClPkc/inc;../../../../../../components/els_pkc/src/comps/mcuxClPkc/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClPrng/inc;../../../../../../components/els_pkc/src/comps/mcuxClPrng/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClPsaDriver/inc;../../../../../../components/els_pkc/src/comps/mcuxClPsaDriver/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClRandom/inc;../../../../../../components/els_pkc/src/comps/mcuxClRandom/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClRandomModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClRandomModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClRsa/inc;../../../../../../components/els_pkc/src/comps/mcuxClRsa/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClSession/inc;../../../../../../components/els_pkc/src/comps/mcuxClSession/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClSignature/inc;../../../../../../components/els_pkc/src/comps/mcuxClSignature/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClTrng/inc;../../../../../../components/els_pkc/src/comps/mcuxClTrng/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxCsslCPreProcessor/inc;../../../../../../components/els_pkc/src/comps/mcuxCsslDataIntegrity/inc;../../../../../../components/els_pkc/src/comps/mcuxCsslFlowProtection/inc;../../../../../../components/els_pkc/src/comps/mcuxCsslParamIntegrity/inc;../../../../../../components/els_pkc/src/comps/mcuxCsslSecureCounter/inc;../../../../../../components/els_pkc/src/inc;../../../../../../components/els_pkc/src/compiler;../../../../../../components/els_pkc/src/platforms/mimxrt;../../../../../../components/els_pkc/src/platforms/mimxrt/inc;../../../../../../components/els_pkc/includes/platform/mimxrt;../../../../../../components/psa_crypto_driver/osal;../../../../../../components/psa_crypto_driver/osal/baremetal;../../../../../../components/psa_crypto_driver/els_pkc/oracle/platforms/mimxrt;../../../../../../components/psa_crypto_driver/els_pkc/oracle/inc;../../../../../../components/psa_crypto_driver/els_pkc/include/common;../../../../../../components/psa_crypto_driver/els_pkc/include/transparent;../../../../../../components/psa_crypto_driver/els_pkc/include/opaque;../../../../../../components/psa_crypto_driver/els_pkc;../../../../../../middleware/mbedtls3x/port;../../../../../../middleware/mbedtls3x/include;../../../../../../middleware/mbedtls3x/library</IncludePath>
+              <IncludePath>..;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT798S;../../../../../../devices/MIMXRT798S/periph;../../../../../../devices/periph;../../../../../../devices/MIMXRT798S/drivers;../../../../../../devices/MIMXRT798S/utilities/debug_console_lite;../../../../../../devices/MIMXRT798S/utilities/str;../../../../../../components/uart;../../../../../../components/els_pkc;../../../../../../components/els_pkc/src/comps/common/inc;../../../../../../components/els_pkc/src/comps/mcuxClAead/inc;../../../../../../components/els_pkc/src/comps/mcuxClAead/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClAeadModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClAeadModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClAes/inc;../../../../../../components/els_pkc/src/comps/mcuxClAes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClBuffer/inc;../../../../../../components/els_pkc/src/comps/mcuxClBuffer/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClCipher/inc;../../../../../../components/els_pkc/src/comps/mcuxClCipher/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClCipherModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClCipherModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClCore/inc;../../../../../../components/els_pkc/src/comps/mcuxClCrc/inc;../../../../../../components/els_pkc/src/comps/mcuxClCrc/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClEcc/inc;../../../../../../components/els_pkc/src/comps/mcuxClEcc/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClEls/inc;../../../../../../components/els_pkc/src/comps/mcuxClEls/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClGlikey/inc;../../../../../../components/els_pkc/src/comps/mcuxClGlikey/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClHash/inc;../../../../../../components/els_pkc/src/comps/mcuxClHash/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClHashModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClHashModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClHmac/inc;../../../../../../components/els_pkc/src/comps/mcuxClHmac/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClKey/inc;../../../../../../components/els_pkc/src/comps/mcuxClKey/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClMac/inc;../../../../../../components/els_pkc/src/comps/mcuxClMac/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClMacModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClMacModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClMath/inc;../../../../../../components/els_pkc/src/comps/mcuxClMath/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClMemory/inc;../../../../../../components/els_pkc/src/comps/mcuxClMemory/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxCsslMemory/inc;../../../../../../components/els_pkc/src/comps/mcuxCsslMemory/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaAeadModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaAeadModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaCipherModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaCipherModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaMacModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaMacModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaPkc/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaPkc/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaRandomModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaRandomModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSafo/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSm2/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSm2/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSm3/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSm3/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSm4/inc;../../../../../../components/els_pkc/src/comps/mcuxClOsccaSm4/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClPadding/inc;../../../../../../components/els_pkc/src/comps/mcuxClPadding/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClPkc/inc;../../../../../../components/els_pkc/src/comps/mcuxClPkc/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClPrng/inc;../../../../../../components/els_pkc/src/comps/mcuxClPrng/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClPsaDriver/inc;../../../../../../components/els_pkc/src/comps/mcuxClPsaDriver/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClRandom/inc;../../../../../../components/els_pkc/src/comps/mcuxClRandom/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClRandomModes/inc;../../../../../../components/els_pkc/src/comps/mcuxClRandomModes/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClRsa/inc;../../../../../../components/els_pkc/src/comps/mcuxClRsa/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClSession/inc;../../../../../../components/els_pkc/src/comps/mcuxClSession/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClSignature/inc;../../../../../../components/els_pkc/src/comps/mcuxClSignature/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxClTrng/inc;../../../../../../components/els_pkc/src/comps/mcuxClTrng/inc/internal;../../../../../../components/els_pkc/src/comps/mcuxCsslCPreProcessor/inc;../../../../../../components/els_pkc/src/comps/mcuxCsslDataIntegrity/inc;../../../../../../components/els_pkc/src/comps/mcuxCsslFlowProtection/inc;../../../../../../components/els_pkc/src/comps/mcuxCsslParamIntegrity/inc;../../../../../../components/els_pkc/src/comps/mcuxCsslSecureCounter/inc;../../../../../../components/els_pkc/src/inc;../../../../../../components/els_pkc/src/compiler;../../../../../../components/els_pkc/src/platforms/mimxrt;../../../../../../components/els_pkc/src/platforms/mimxrt/inc;../../../../../../components/els_pkc/includes/platform/mimxrt;../../../../../../components/psa_crypto_driver/osal;../../../../../../components/psa_crypto_driver/osal/baremetal;../../../../../../components/psa_crypto_driver/els_pkc/oracle/platforms/mimxrt;../../../../../../components/psa_crypto_driver/els_pkc/oracle/inc;../../../../../../components/psa_crypto_driver/els_pkc/include/common;../../../../../../components/psa_crypto_driver/els_pkc/include/transparent;../../../../../../components/psa_crypto_driver/els_pkc/include/opaque;../../../../../../components/psa_crypto_driver/els_pkc;../../../../../../middleware/mbedtls3x/include;../../../../../../middleware/mbedtls3x/library;../../../../../../middleware/mbedtls3x/port</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -46227,6 +46317,16 @@
               <FileName>crypto_examples.c</FileName>
               <FileType>1</FileType>
               <FilePath>../crypto_examples.c</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../mcux_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../mcux_config.h</FilePath>
             </File>
             <File>
               <FileName>mcux_config.h</FileName>
@@ -46796,12 +46896,12 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>startup/arm</GroupName>
+          <GroupName>startup</GroupName>
           <Files>
             <File>
-              <FileName>startup_MIMXRT798S_cm33_core0.S</FileName>
-              <FileType>2</FileType>
-              <FilePath>../../../../../../devices/MIMXRT798S/arm/startup_MIMXRT798S_cm33_core0.S</FilePath>
+              <FileName>startup_MIMXRT798S_cm33_core0.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT798S/startup_MIMXRT798S_cm33_core0.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -55204,9 +55304,9 @@
           <GroupName>component/els_pkc</GroupName>
           <Files>
             <File>
-              <FileName>LA_OPT_Online_Code_Hosting.htm</FileName>
+              <FileName>LICENSE.txt</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../components/els_pkc/LA_OPT_Online_Code_Hosting.htm</FilePath>
+              <FilePath>../../../../../../components/els_pkc/LICENSE.txt</FilePath>
             </File>
             <File>
               <FileName>softwareContentRegister.txt</FileName>
@@ -59741,51 +59841,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>mbedtls3x/port</GroupName>
-          <Files>
-            <File>
-              <FileName>mcux_mbedtls_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>mcux_mbedtls_accelerator_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_accelerator_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>mcux_mbedtls_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>mcux_mbedtls_accelerator_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_accelerator_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>mcux_psa_defines.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_psa_defines.h</FilePath>
-            </File>
-            <File>
-              <FileName>mcux_mbedtls_psa_crypto_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_psa_crypto_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>mcux_mbedtls_accelerator_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_accelerator_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>mcux_psa_defines.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_psa_defines.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>mbedtls3x/include/mbedtls</GroupName>
           <Files>
             <File>
@@ -60179,6 +60234,11 @@
               <FilePath>../../../../../../middleware/mbedtls3x/include/psa/crypto_adjust_auto_enabled.h</FilePath>
             </File>
             <File>
+              <FileName>crypto_adjust_config_dependencies.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/include/psa/crypto_adjust_config_dependencies.h</FilePath>
+            </File>
+            <File>
               <FileName>crypto_adjust_config_key_pair_types.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/mbedtls3x/include/psa/crypto_adjust_config_key_pair_types.h</FilePath>
@@ -60347,6 +60407,16 @@
               <FileName>bignum_core.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/mbedtls3x/library/bignum_core.c</FilePath>
+            </File>
+            <File>
+              <FileName>bignum_core_invasive.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/library/bignum_core_invasive.h</FilePath>
+            </File>
+            <File>
+              <FileName>bignum_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/library/bignum_internal.h</FilePath>
             </File>
             <File>
               <FileName>bignum_mod.c</FileName>
@@ -61111,6 +61181,51 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>mbedtls3x/port</GroupName>
+          <Files>
+            <File>
+              <FileName>mcux_mbedtls_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_mbedtls_accelerator_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_accelerator_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_mbedtls_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_mbedtls_accelerator_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_accelerator_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_psa_defines.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_psa_defines.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_mbedtls_psa_crypto_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_psa_crypto_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_mbedtls_accelerator_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_accelerator_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_psa_defines.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_psa_defines.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>doc</GroupName>
           <Files>
             <File>
@@ -61122,6 +61237,11 @@
               <FileName>example_board_readme.md</FileName>
               <FileType>5</FileType>
               <FilePath>../example_board_readme.md</FilePath>
+            </File>
+            <File>
+              <FileName>examples_shared_readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../examples_shared_readme.md</FilePath>
             </File>
           </Files>
         </Group>

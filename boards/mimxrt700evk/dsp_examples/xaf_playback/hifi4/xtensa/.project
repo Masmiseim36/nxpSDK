@@ -1838,104 +1838,144 @@
       <locationURI>PARENT-6-PROJECT_LOC/middleware/multicore/rpmsg-lite/lib/rpmsg_lite/porting/platform/imxrt700_hifi4/rpmsg_platform.c</locationURI>
     </link>
     <link>
-      <name>codecs/lc3/hifi4/include</name>
+      <name>codecs/include</name>
       <type>2</type>
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
-      <name>codecs/lc3/hifi4/include/xa_error_handler.h</name>
+      <name>codecs/include/xa_api_defs.h</name>
       <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/cadence/codecs/lc3/hifi4/include/xa_error_handler.h</locationURI>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/cadence/codecs/include/xa_api_defs.h</locationURI>
     </link>
     <link>
-      <name>codecs/lc3/hifi4/include</name>
+      <name>codecs/include</name>
       <type>2</type>
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
-      <name>codecs/lc3/hifi4/include/xa_error_standards.h</name>
+      <name>codecs/include/xa_apicmd_standards.h</name>
       <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/cadence/codecs/lc3/hifi4/include/xa_error_standards.h</locationURI>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/cadence/codecs/include/xa_apicmd_standards.h</locationURI>
     </link>
     <link>
-      <name>codecs/lc3/hifi4/include</name>
+      <name>codecs/include</name>
       <type>2</type>
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
-      <name>codecs/lc3/hifi4/include/xa_type_def.h</name>
+      <name>codecs/include/xa_error_handler.h</name>
       <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/cadence/codecs/lc3/hifi4/include/xa_type_def.h</locationURI>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/cadence/codecs/include/xa_error_handler.h</locationURI>
     </link>
     <link>
-      <name>codecs/lc3/hifi4/include/lc3_codec</name>
+      <name>codecs/include</name>
       <type>2</type>
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
-      <name>codecs/lc3/hifi4/include/lc3_codec/xa_lc3_codec_api.h</name>
+      <name>codecs/include/xa_error_standards.h</name>
       <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/cadence/codecs/lc3/hifi4/include/lc3_codec/xa_lc3_codec_api.h</locationURI>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/cadence/codecs/include/xa_error_standards.h</locationURI>
     </link>
     <link>
-      <name>codecs/mp3_enc/hifi4/include</name>
+      <name>codecs/include</name>
       <type>2</type>
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
-      <name>codecs/mp3_enc/hifi4/include/xa_apicmd_standards.h</name>
+      <name>codecs/include/xa_memory_standards.h</name>
       <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/cadence/codecs/mp3_enc/hifi4/include/xa_apicmd_standards.h</locationURI>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/cadence/codecs/include/xa_memory_standards.h</locationURI>
     </link>
     <link>
-      <name>codecs/mp3_enc/hifi4/include</name>
+      <name>codecs/include</name>
       <type>2</type>
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
-      <name>codecs/mp3_enc/hifi4/include/xa_error_handler.h</name>
+      <name>codecs/include/xa_type_def.h</name>
       <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/cadence/codecs/mp3_enc/hifi4/include/xa_error_handler.h</locationURI>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/cadence/codecs/include/xa_type_def.h</locationURI>
     </link>
     <link>
-      <name>codecs/mp3_enc/hifi4/include</name>
+      <name>codecs/sbc_dec/hifi4/include/sbc_dec</name>
       <type>2</type>
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
-      <name>codecs/mp3_enc/hifi4/include/xa_error_standards.h</name>
+      <name>codecs/sbc_dec/hifi4/include/sbc_dec/xa_sbc_dec_api.h</name>
       <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/cadence/codecs/mp3_enc/hifi4/include/xa_error_standards.h</locationURI>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/cadence/codecs/sbc_dec/hifi4/include/sbc_dec/xa_sbc_dec_api.h</locationURI>
     </link>
     <link>
-      <name>codecs/mp3_enc/hifi4/include</name>
+      <name>codecs/include</name>
       <type>2</type>
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
-      <name>codecs/mp3_enc/hifi4/include/xa_memory_standards.h</name>
+      <name>codecs/include/xa_api_defs.h</name>
       <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/cadence/codecs/mp3_enc/hifi4/include/xa_memory_standards.h</locationURI>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/cadence/codecs/include/xa_api_defs.h</locationURI>
     </link>
     <link>
-      <name>codecs/mp3_enc/hifi4/include</name>
+      <name>codecs/include</name>
       <type>2</type>
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
-      <name>codecs/mp3_enc/hifi4/include/xa_type_def.h</name>
+      <name>codecs/include/xa_apicmd_standards.h</name>
       <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/cadence/codecs/mp3_enc/hifi4/include/xa_type_def.h</locationURI>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/cadence/codecs/include/xa_apicmd_standards.h</locationURI>
     </link>
     <link>
-      <name>codecs/mp3_enc/hifi4/include/mp3_enc</name>
+      <name>codecs/include</name>
       <type>2</type>
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
-      <name>codecs/mp3_enc/hifi4/include/mp3_enc/xa_mp3_enc_api.h</name>
+      <name>codecs/include/xa_error_handler.h</name>
       <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/cadence/codecs/mp3_enc/hifi4/include/mp3_enc/xa_mp3_enc_api.h</locationURI>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/cadence/codecs/include/xa_error_handler.h</locationURI>
+    </link>
+    <link>
+      <name>codecs/include</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>codecs/include/xa_error_standards.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/cadence/codecs/include/xa_error_standards.h</locationURI>
+    </link>
+    <link>
+      <name>codecs/include</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>codecs/include/xa_memory_standards.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/cadence/codecs/include/xa_memory_standards.h</locationURI>
+    </link>
+    <link>
+      <name>codecs/include</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>codecs/include/xa_type_def.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/cadence/codecs/include/xa_type_def.h</locationURI>
+    </link>
+    <link>
+      <name>codecs/sbc_enc/hifi4/include/sbc_enc</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>codecs/sbc_enc/hifi4/include/sbc_enc/xa_sbc_enc_api.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/cadence/codecs/sbc_enc/hifi4/include/sbc_enc/xa_sbc_enc_api.h</locationURI>
     </link>
     <link>
       <name>multicore-xaf/xa_af_hostless/algo/hifi-dpf/src</name>
@@ -3296,6 +3336,26 @@
       <name>multicore-xaf/xa_af_hostless/xf_shared/include/xf-shared.h</name>
       <type>1</type>
       <locationURI>PARENT-6-PROJECT_LOC/middleware/cadence/multicore-xaf/xa_af_hostless/xf_shared/include/xf-shared.h</locationURI>
+    </link>
+    <link>
+      <name>source</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>source/mcux_config.h</name>
+      <type>1</type>
+      <locationURI>PARENT-1-PROJECT_LOC/mcux_config.h</locationURI>
+    </link>
+    <link>
+      <name>source</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>source/mcux_config.h</name>
+      <type>1</type>
+      <locationURI>PARENT-1-PROJECT_LOC/mcux_config.h</locationURI>
     </link>
     <link>
       <name>source</name>

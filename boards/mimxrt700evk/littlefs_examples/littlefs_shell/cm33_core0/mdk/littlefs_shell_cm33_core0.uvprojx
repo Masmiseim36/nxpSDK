@@ -11,7 +11,7 @@
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
-          <Device>MIMXRT798SGFOA:cm33_core0</Device>
+          <Device>MIMXRT798SGFOB:cm33_core0</Device>
           <Vendor>NXP</Vendor>
           <PackID>NXP.MIMXRT798S_DFP.17.0.0</PackID>
           <PackURL>https://mcuxpresso.nxp.com/cmsis_pack/repo/</PackURL>
@@ -334,9 +334,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../mcux_config.h -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
-              <Define>DEBUG, LFS_NO_INTRINSICS=1, SDK_DEBUGCONSOLE_UART, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT798SGFOA_cm33_core0, BOOT_HEADER_ENABLE=1, SERIAL_PORT_TYPE_UART=1, MFLASH_FILE_BASEADDR=7340032</Define>
+              <Define>DEBUG, LFS_NO_INTRINSICS=1, SDK_DEBUGCONSOLE_UART, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT798SGFOB_cm33_core0, MIMXRT798S_cm33_core0_SERIES, BOOT_HEADER_ENABLE=1, SERIAL_PORT_TYPE_UART=1, MFLASH_FILE_BASEADDR=7340032</Define>
               <Undefine/>
-              <IncludePath>..;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT798S;../../../../../../devices/MIMXRT798S/periph;../../../../../../devices/MIMXRT798S/drivers;../../../../../../devices/MIMXRT798S/utilities;../../../../../../components/lists;../../../../../../devices/MIMXRT798S/utilities/str;../../../../../../devices/MIMXRT798S/utilities/debug_console;../../../../../../devices/MIMXRT798S/utilities/shell;../../../../../../components/serial_manager;../../../../../../components/uart;../../../../../../components/flash/mflash;../../../../../../components/flash/mflash/mimxrt700;../../../../../../middleware/littlefs</IncludePath>
+              <IncludePath>..;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT798S;../../../../../../devices/MIMXRT798S/periph;../../../../../../devices/MIMXRT798S/drivers;../../../../../../devices/MIMXRT798S/utilities/debug_console;../../../../../../components/lists;../../../../../../devices/MIMXRT798S/utilities/str;../../../../../../devices/MIMXRT798S/utilities/shell;../../../../../../components/serial_manager;../../../../../../components/uart;../../../../../../components/flash/mflash;../../../../../../components/flash/mflash/mimxrt700;../../../../../../middleware/littlefs;../../../../../../middleware/littlefs/mflash</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -351,10 +351,10 @@
             <useXO>0</useXO>
             <ClangAsOpt>2</ClangAsOpt>
             <VariousControls>
-              <MiscControls/>
-              <Define>MCUXPRESSO_SDK, CPU_MIMXRT798SGFOA_cm33_core0</Define>
+              <MiscControls>-include ../mcux_config.h</MiscControls>
+              <Define>MCUXPRESSO_SDK, CPU_MIMXRT798SGFOB_cm33_core0, MIMXRT798S_cm33_core0_SERIES</Define>
               <Undefine/>
-              <IncludePath>..;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT798S;../../../../../../devices/MIMXRT798S/periph;../../../../../../devices/periph;../../../../../../devices/MIMXRT798S/drivers;../../../../../../devices/MIMXRT798S/utilities;../../../../../../components/lists;../../../../../../devices/MIMXRT798S/utilities/str;../../../../../../devices/MIMXRT798S/utilities/debug_console;../../../../../../devices/MIMXRT798S/utilities/shell;../../../../../../components/serial_manager;../../../../../../components/uart;../../../../../../components/flash/mflash;../../../../../../components/flash/mflash/mimxrt700;../../../../../../middleware/littlefs</IncludePath>
+              <IncludePath>..;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT798S;../../../../../../devices/MIMXRT798S/periph;../../../../../../devices/periph;../../../../../../devices/MIMXRT798S/drivers;../../../../../../devices/MIMXRT798S/utilities/debug_console;../../../../../../components/lists;../../../../../../devices/MIMXRT798S/utilities/str;../../../../../../devices/MIMXRT798S/utilities/shell;../../../../../../components/serial_manager;../../../../../../components/uart;../../../../../../components/flash/mflash;../../../../../../components/flash/mflash/mimxrt700;../../../../../../middleware/littlefs;../../../../../../middleware/littlefs/mflash</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -386,16 +386,6 @@
               <FilePath>../littlefs_shell.c</FilePath>
             </File>
             <File>
-              <FileName>lfs_mflash.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../lfs_mflash.c</FilePath>
-            </File>
-            <File>
-              <FileName>lfs_mflash.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../lfs_mflash.h</FilePath>
-            </File>
-            <File>
               <FileName>peripherals.c</FileName>
               <FileType>1</FileType>
               <FilePath>../peripherals.c</FilePath>
@@ -409,6 +399,16 @@
               <FileName>fsl_debug_console_conf.h</FileName>
               <FileType>5</FileType>
               <FilePath>../fsl_debug_console_conf.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../mcux_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../mcux_config.h</FilePath>
             </File>
             <File>
               <FileName>mcux_config.h</FileName>
@@ -978,12 +978,12 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>startup/arm</GroupName>
+          <GroupName>startup</GroupName>
           <Files>
             <File>
-              <FileName>startup_MIMXRT798S_cm33_core0.S</FileName>
-              <FileType>2</FileType>
-              <FilePath>../../../../../../devices/MIMXRT798S/arm/startup_MIMXRT798S_cm33_core0.S</FilePath>
+              <FileName>startup_MIMXRT798S_cm33_core0.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT798S/startup_MIMXRT798S_cm33_core0.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1113,12 +1113,12 @@
             <File>
               <FileName>fsl_assert.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT798S/utilities/fsl_assert.h</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT798S/utilities/debug_console/fsl_assert.h</FilePath>
             </File>
             <File>
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT798S/utilities/fsl_assert.c</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT798S/utilities/debug_console/fsl_assert.c</FilePath>
             </File>
             <File>
               <FileName>fsl_memcpy.S</FileName>
@@ -1288,6 +1288,21 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>littlefs/mflash</GroupName>
+          <Files>
+            <File>
+              <FileName>lfs_mflash.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/littlefs/mflash/lfs_mflash.c</FilePath>
+            </File>
+            <File>
+              <FileName>lfs_mflash.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/littlefs/mflash/lfs_mflash.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>doc</GroupName>
           <Files>
             <File>
@@ -1299,6 +1314,11 @@
               <FileName>example_board_readme.md</FileName>
               <FileType>5</FileType>
               <FilePath>../example_board_readme.md</FilePath>
+            </File>
+            <File>
+              <FileName>examples_shared_readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../examples_shared_readme.md</FilePath>
             </File>
           </Files>
         </Group>
@@ -1312,7 +1332,7 @@
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
-          <Device>MIMXRT798SGFOA:cm33_core0</Device>
+          <Device>MIMXRT798SGFOB:cm33_core0</Device>
           <Vendor>NXP</Vendor>
           <PackID>NXP.MIMXRT798S_DFP.17.0.0</PackID>
           <PackURL>https://mcuxpresso.nxp.com/cmsis_pack/repo/</PackURL>
@@ -1635,9 +1655,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../mcux_config.h -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
-              <Define>DEBUG, LFS_NO_INTRINSICS=1, SDK_DEBUGCONSOLE_UART, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT798SGFOA_cm33_core0, BOOT_HEADER_ENABLE=1, SERIAL_PORT_TYPE_UART=1, MFLASH_FILE_BASEADDR=7340032</Define>
+              <Define>DEBUG, LFS_NO_INTRINSICS=1, SDK_DEBUGCONSOLE_UART, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT798SGFOB_cm33_core0, MIMXRT798S_cm33_core0_SERIES, BOOT_HEADER_ENABLE=1, SERIAL_PORT_TYPE_UART=1, MFLASH_FILE_BASEADDR=7340032</Define>
               <Undefine/>
-              <IncludePath>..;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT798S;../../../../../../devices/MIMXRT798S/periph;../../../../../../devices/MIMXRT798S/drivers;../../../../../../devices/MIMXRT798S/utilities;../../../../../../components/lists;../../../../../../devices/MIMXRT798S/utilities/str;../../../../../../devices/MIMXRT798S/utilities/debug_console;../../../../../../devices/MIMXRT798S/utilities/shell;../../../../../../components/serial_manager;../../../../../../components/uart;../../../../../../components/flash/mflash;../../../../../../components/flash/mflash/mimxrt700;../../../../../../middleware/littlefs</IncludePath>
+              <IncludePath>..;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT798S;../../../../../../devices/MIMXRT798S/periph;../../../../../../devices/MIMXRT798S/drivers;../../../../../../devices/MIMXRT798S/utilities/debug_console;../../../../../../components/lists;../../../../../../devices/MIMXRT798S/utilities/str;../../../../../../devices/MIMXRT798S/utilities/shell;../../../../../../components/serial_manager;../../../../../../components/uart;../../../../../../components/flash/mflash;../../../../../../components/flash/mflash/mimxrt700;../../../../../../middleware/littlefs;../../../../../../middleware/littlefs/mflash</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1652,10 +1672,10 @@
             <useXO>0</useXO>
             <ClangAsOpt>2</ClangAsOpt>
             <VariousControls>
-              <MiscControls/>
-              <Define>MCUXPRESSO_SDK, CPU_MIMXRT798SGFOA_cm33_core0</Define>
+              <MiscControls>-include ../mcux_config.h</MiscControls>
+              <Define>MCUXPRESSO_SDK, CPU_MIMXRT798SGFOB_cm33_core0, MIMXRT798S_cm33_core0_SERIES</Define>
               <Undefine/>
-              <IncludePath>..;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT798S;../../../../../../devices/MIMXRT798S/periph;../../../../../../devices/periph;../../../../../../devices/MIMXRT798S/drivers;../../../../../../devices/MIMXRT798S/utilities;../../../../../../components/lists;../../../../../../devices/MIMXRT798S/utilities/str;../../../../../../devices/MIMXRT798S/utilities/debug_console;../../../../../../devices/MIMXRT798S/utilities/shell;../../../../../../components/serial_manager;../../../../../../components/uart;../../../../../../components/flash/mflash;../../../../../../components/flash/mflash/mimxrt700;../../../../../../middleware/littlefs</IncludePath>
+              <IncludePath>..;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT798S;../../../../../../devices/MIMXRT798S/periph;../../../../../../devices/periph;../../../../../../devices/MIMXRT798S/drivers;../../../../../../devices/MIMXRT798S/utilities/debug_console;../../../../../../components/lists;../../../../../../devices/MIMXRT798S/utilities/str;../../../../../../devices/MIMXRT798S/utilities/shell;../../../../../../components/serial_manager;../../../../../../components/uart;../../../../../../components/flash/mflash;../../../../../../components/flash/mflash/mimxrt700;../../../../../../middleware/littlefs;../../../../../../middleware/littlefs/mflash</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -1687,16 +1707,6 @@
               <FilePath>../littlefs_shell.c</FilePath>
             </File>
             <File>
-              <FileName>lfs_mflash.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../lfs_mflash.c</FilePath>
-            </File>
-            <File>
-              <FileName>lfs_mflash.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../lfs_mflash.h</FilePath>
-            </File>
-            <File>
               <FileName>peripherals.c</FileName>
               <FileType>1</FileType>
               <FilePath>../peripherals.c</FilePath>
@@ -1710,6 +1720,16 @@
               <FileName>fsl_debug_console_conf.h</FileName>
               <FileType>5</FileType>
               <FilePath>../fsl_debug_console_conf.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../mcux_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../mcux_config.h</FilePath>
             </File>
             <File>
               <FileName>mcux_config.h</FileName>
@@ -2279,12 +2299,12 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>startup/arm</GroupName>
+          <GroupName>startup</GroupName>
           <Files>
             <File>
-              <FileName>startup_MIMXRT798S_cm33_core0.S</FileName>
-              <FileType>2</FileType>
-              <FilePath>../../../../../../devices/MIMXRT798S/arm/startup_MIMXRT798S_cm33_core0.S</FilePath>
+              <FileName>startup_MIMXRT798S_cm33_core0.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT798S/startup_MIMXRT798S_cm33_core0.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2414,12 +2434,12 @@
             <File>
               <FileName>fsl_assert.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT798S/utilities/fsl_assert.h</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT798S/utilities/debug_console/fsl_assert.h</FilePath>
             </File>
             <File>
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT798S/utilities/fsl_assert.c</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT798S/utilities/debug_console/fsl_assert.c</FilePath>
             </File>
             <File>
               <FileName>fsl_memcpy.S</FileName>
@@ -2589,6 +2609,21 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>littlefs/mflash</GroupName>
+          <Files>
+            <File>
+              <FileName>lfs_mflash.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/littlefs/mflash/lfs_mflash.c</FilePath>
+            </File>
+            <File>
+              <FileName>lfs_mflash.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/littlefs/mflash/lfs_mflash.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>doc</GroupName>
           <Files>
             <File>
@@ -2600,6 +2635,11 @@
               <FileName>example_board_readme.md</FileName>
               <FileType>5</FileType>
               <FilePath>../example_board_readme.md</FilePath>
+            </File>
+            <File>
+              <FileName>examples_shared_readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../examples_shared_readme.md</FilePath>
             </File>
           </Files>
         </Group>
@@ -2613,7 +2653,7 @@
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
-          <Device>MIMXRT798SGFOA:cm33_core0</Device>
+          <Device>MIMXRT798SGFOB:cm33_core0</Device>
           <Vendor>NXP</Vendor>
           <PackID>NXP.MIMXRT798S_DFP.17.0.0</PackID>
           <PackURL>https://mcuxpresso.nxp.com/cmsis_pack/repo/</PackURL>
@@ -2936,9 +2976,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../mcux_config.h -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
-              <Define>NDEBUG, LFS_NO_ASSERT, LFS_NO_INTRINSICS=1, SDK_DEBUGCONSOLE_UART, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT798SGFOA_cm33_core0, BOOT_HEADER_ENABLE=1, SERIAL_PORT_TYPE_UART=1, MFLASH_FILE_BASEADDR=7340032</Define>
+              <Define>NDEBUG, LFS_NO_ASSERT, LFS_NO_INTRINSICS=1, SDK_DEBUGCONSOLE_UART, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT798SGFOB_cm33_core0, MIMXRT798S_cm33_core0_SERIES, BOOT_HEADER_ENABLE=1, SERIAL_PORT_TYPE_UART=1, MFLASH_FILE_BASEADDR=7340032</Define>
               <Undefine/>
-              <IncludePath>..;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT798S;../../../../../../devices/MIMXRT798S/periph;../../../../../../devices/MIMXRT798S/drivers;../../../../../../devices/MIMXRT798S/utilities;../../../../../../components/lists;../../../../../../devices/MIMXRT798S/utilities/str;../../../../../../devices/MIMXRT798S/utilities/debug_console;../../../../../../devices/MIMXRT798S/utilities/shell;../../../../../../components/serial_manager;../../../../../../components/uart;../../../../../../components/flash/mflash;../../../../../../components/flash/mflash/mimxrt700;../../../../../../middleware/littlefs</IncludePath>
+              <IncludePath>..;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT798S;../../../../../../devices/MIMXRT798S/periph;../../../../../../devices/MIMXRT798S/drivers;../../../../../../devices/MIMXRT798S/utilities/debug_console;../../../../../../components/lists;../../../../../../devices/MIMXRT798S/utilities/str;../../../../../../devices/MIMXRT798S/utilities/shell;../../../../../../components/serial_manager;../../../../../../components/uart;../../../../../../components/flash/mflash;../../../../../../components/flash/mflash/mimxrt700;../../../../../../middleware/littlefs;../../../../../../middleware/littlefs/mflash</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2953,10 +2993,10 @@
             <useXO>0</useXO>
             <ClangAsOpt>2</ClangAsOpt>
             <VariousControls>
-              <MiscControls/>
-              <Define>MCUXPRESSO_SDK, CPU_MIMXRT798SGFOA_cm33_core0</Define>
+              <MiscControls>-include ../mcux_config.h</MiscControls>
+              <Define>MCUXPRESSO_SDK, CPU_MIMXRT798SGFOB_cm33_core0, MIMXRT798S_cm33_core0_SERIES</Define>
               <Undefine/>
-              <IncludePath>..;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT798S;../../../../../../devices/MIMXRT798S/periph;../../../../../../devices/periph;../../../../../../devices/MIMXRT798S/drivers;../../../../../../devices/MIMXRT798S/utilities;../../../../../../components/lists;../../../../../../devices/MIMXRT798S/utilities/str;../../../../../../devices/MIMXRT798S/utilities/debug_console;../../../../../../devices/MIMXRT798S/utilities/shell;../../../../../../components/serial_manager;../../../../../../components/uart;../../../../../../components/flash/mflash;../../../../../../components/flash/mflash/mimxrt700;../../../../../../middleware/littlefs</IncludePath>
+              <IncludePath>..;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT798S;../../../../../../devices/MIMXRT798S/periph;../../../../../../devices/periph;../../../../../../devices/MIMXRT798S/drivers;../../../../../../devices/MIMXRT798S/utilities/debug_console;../../../../../../components/lists;../../../../../../devices/MIMXRT798S/utilities/str;../../../../../../devices/MIMXRT798S/utilities/shell;../../../../../../components/serial_manager;../../../../../../components/uart;../../../../../../components/flash/mflash;../../../../../../components/flash/mflash/mimxrt700;../../../../../../middleware/littlefs;../../../../../../middleware/littlefs/mflash</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -2988,16 +3028,6 @@
               <FilePath>../littlefs_shell.c</FilePath>
             </File>
             <File>
-              <FileName>lfs_mflash.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../lfs_mflash.c</FilePath>
-            </File>
-            <File>
-              <FileName>lfs_mflash.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../lfs_mflash.h</FilePath>
-            </File>
-            <File>
               <FileName>peripherals.c</FileName>
               <FileType>1</FileType>
               <FilePath>../peripherals.c</FilePath>
@@ -3011,6 +3041,16 @@
               <FileName>fsl_debug_console_conf.h</FileName>
               <FileType>5</FileType>
               <FilePath>../fsl_debug_console_conf.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../mcux_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../mcux_config.h</FilePath>
             </File>
             <File>
               <FileName>mcux_config.h</FileName>
@@ -3580,12 +3620,12 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>startup/arm</GroupName>
+          <GroupName>startup</GroupName>
           <Files>
             <File>
-              <FileName>startup_MIMXRT798S_cm33_core0.S</FileName>
-              <FileType>2</FileType>
-              <FilePath>../../../../../../devices/MIMXRT798S/arm/startup_MIMXRT798S_cm33_core0.S</FilePath>
+              <FileName>startup_MIMXRT798S_cm33_core0.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT798S/startup_MIMXRT798S_cm33_core0.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -3715,12 +3755,12 @@
             <File>
               <FileName>fsl_assert.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT798S/utilities/fsl_assert.h</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT798S/utilities/debug_console/fsl_assert.h</FilePath>
             </File>
             <File>
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT798S/utilities/fsl_assert.c</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT798S/utilities/debug_console/fsl_assert.c</FilePath>
             </File>
             <File>
               <FileName>fsl_memcpy.S</FileName>
@@ -3890,6 +3930,21 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>littlefs/mflash</GroupName>
+          <Files>
+            <File>
+              <FileName>lfs_mflash.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/littlefs/mflash/lfs_mflash.c</FilePath>
+            </File>
+            <File>
+              <FileName>lfs_mflash.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/littlefs/mflash/lfs_mflash.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>doc</GroupName>
           <Files>
             <File>
@@ -3901,6 +3956,11 @@
               <FileName>example_board_readme.md</FileName>
               <FileType>5</FileType>
               <FilePath>../example_board_readme.md</FilePath>
+            </File>
+            <File>
+              <FileName>examples_shared_readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../examples_shared_readme.md</FilePath>
             </File>
           </Files>
         </Group>
@@ -3914,7 +3974,7 @@
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
-          <Device>MIMXRT798SGFOA:cm33_core0</Device>
+          <Device>MIMXRT798SGFOB:cm33_core0</Device>
           <Vendor>NXP</Vendor>
           <PackID>NXP.MIMXRT798S_DFP.17.0.0</PackID>
           <PackURL>https://mcuxpresso.nxp.com/cmsis_pack/repo/</PackURL>
@@ -4237,9 +4297,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../mcux_config.h -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
-              <Define>NDEBUG, LFS_NO_ASSERT, LFS_NO_INTRINSICS=1, SDK_DEBUGCONSOLE_UART, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT798SGFOA_cm33_core0, BOOT_HEADER_ENABLE=1, SERIAL_PORT_TYPE_UART=1, MFLASH_FILE_BASEADDR=7340032</Define>
+              <Define>NDEBUG, LFS_NO_ASSERT, LFS_NO_INTRINSICS=1, SDK_DEBUGCONSOLE_UART, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT798SGFOB_cm33_core0, MIMXRT798S_cm33_core0_SERIES, BOOT_HEADER_ENABLE=1, SERIAL_PORT_TYPE_UART=1, MFLASH_FILE_BASEADDR=7340032</Define>
               <Undefine/>
-              <IncludePath>..;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT798S;../../../../../../devices/MIMXRT798S/periph;../../../../../../devices/MIMXRT798S/drivers;../../../../../../devices/MIMXRT798S/utilities;../../../../../../components/lists;../../../../../../devices/MIMXRT798S/utilities/str;../../../../../../devices/MIMXRT798S/utilities/debug_console;../../../../../../devices/MIMXRT798S/utilities/shell;../../../../../../components/serial_manager;../../../../../../components/uart;../../../../../../components/flash/mflash;../../../../../../components/flash/mflash/mimxrt700;../../../../../../middleware/littlefs</IncludePath>
+              <IncludePath>..;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT798S;../../../../../../devices/MIMXRT798S/periph;../../../../../../devices/MIMXRT798S/drivers;../../../../../../devices/MIMXRT798S/utilities/debug_console;../../../../../../components/lists;../../../../../../devices/MIMXRT798S/utilities/str;../../../../../../devices/MIMXRT798S/utilities/shell;../../../../../../components/serial_manager;../../../../../../components/uart;../../../../../../components/flash/mflash;../../../../../../components/flash/mflash/mimxrt700;../../../../../../middleware/littlefs;../../../../../../middleware/littlefs/mflash</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -4254,10 +4314,10 @@
             <useXO>0</useXO>
             <ClangAsOpt>2</ClangAsOpt>
             <VariousControls>
-              <MiscControls/>
-              <Define>MCUXPRESSO_SDK, CPU_MIMXRT798SGFOA_cm33_core0</Define>
+              <MiscControls>-include ../mcux_config.h</MiscControls>
+              <Define>MCUXPRESSO_SDK, CPU_MIMXRT798SGFOB_cm33_core0, MIMXRT798S_cm33_core0_SERIES</Define>
               <Undefine/>
-              <IncludePath>..;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT798S;../../../../../../devices/MIMXRT798S/periph;../../../../../../devices/periph;../../../../../../devices/MIMXRT798S/drivers;../../../../../../devices/MIMXRT798S/utilities;../../../../../../components/lists;../../../../../../devices/MIMXRT798S/utilities/str;../../../../../../devices/MIMXRT798S/utilities/debug_console;../../../../../../devices/MIMXRT798S/utilities/shell;../../../../../../components/serial_manager;../../../../../../components/uart;../../../../../../components/flash/mflash;../../../../../../components/flash/mflash/mimxrt700;../../../../../../middleware/littlefs</IncludePath>
+              <IncludePath>..;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT798S;../../../../../../devices/MIMXRT798S/periph;../../../../../../devices/periph;../../../../../../devices/MIMXRT798S/drivers;../../../../../../devices/MIMXRT798S/utilities/debug_console;../../../../../../components/lists;../../../../../../devices/MIMXRT798S/utilities/str;../../../../../../devices/MIMXRT798S/utilities/shell;../../../../../../components/serial_manager;../../../../../../components/uart;../../../../../../components/flash/mflash;../../../../../../components/flash/mflash/mimxrt700;../../../../../../middleware/littlefs;../../../../../../middleware/littlefs/mflash</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -4289,16 +4349,6 @@
               <FilePath>../littlefs_shell.c</FilePath>
             </File>
             <File>
-              <FileName>lfs_mflash.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../lfs_mflash.c</FilePath>
-            </File>
-            <File>
-              <FileName>lfs_mflash.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../lfs_mflash.h</FilePath>
-            </File>
-            <File>
               <FileName>peripherals.c</FileName>
               <FileType>1</FileType>
               <FilePath>../peripherals.c</FilePath>
@@ -4312,6 +4362,16 @@
               <FileName>fsl_debug_console_conf.h</FileName>
               <FileType>5</FileType>
               <FilePath>../fsl_debug_console_conf.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../mcux_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../mcux_config.h</FilePath>
             </File>
             <File>
               <FileName>mcux_config.h</FileName>
@@ -4881,12 +4941,12 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>startup/arm</GroupName>
+          <GroupName>startup</GroupName>
           <Files>
             <File>
-              <FileName>startup_MIMXRT798S_cm33_core0.S</FileName>
-              <FileType>2</FileType>
-              <FilePath>../../../../../../devices/MIMXRT798S/arm/startup_MIMXRT798S_cm33_core0.S</FilePath>
+              <FileName>startup_MIMXRT798S_cm33_core0.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT798S/startup_MIMXRT798S_cm33_core0.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -5016,12 +5076,12 @@
             <File>
               <FileName>fsl_assert.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT798S/utilities/fsl_assert.h</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT798S/utilities/debug_console/fsl_assert.h</FilePath>
             </File>
             <File>
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT798S/utilities/fsl_assert.c</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT798S/utilities/debug_console/fsl_assert.c</FilePath>
             </File>
             <File>
               <FileName>fsl_memcpy.S</FileName>
@@ -5191,6 +5251,21 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>littlefs/mflash</GroupName>
+          <Files>
+            <File>
+              <FileName>lfs_mflash.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/littlefs/mflash/lfs_mflash.c</FilePath>
+            </File>
+            <File>
+              <FileName>lfs_mflash.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/littlefs/mflash/lfs_mflash.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>doc</GroupName>
           <Files>
             <File>
@@ -5202,6 +5277,11 @@
               <FileName>example_board_readme.md</FileName>
               <FileType>5</FileType>
               <FilePath>../example_board_readme.md</FilePath>
+            </File>
+            <File>
+              <FileName>examples_shared_readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../examples_shared_readme.md</FilePath>
             </File>
           </Files>
         </Group>

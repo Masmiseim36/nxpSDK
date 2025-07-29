@@ -7,18 +7,19 @@
       <TargetName>tflm_kws_cm33_core0 flash_debug</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
+      <pCCUsed>6120000::V6.12::.\ARMCLANG</pCCUsed>
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
-          <Device>MIMXRT798SGFOA:cm33_core0</Device>
+          <Device>MIMXRT798SGFOB:cm33_core0</Device>
           <Vendor>NXP</Vendor>
-          <PackID>NXP.MCXN947_DFP.16.0.0</PackID>
+          <PackID>NXP.MIMXRT798S_DFP.17.0.0</PackID>
           <PackURL>https://mcuxpresso.nxp.com/cmsis_pack/repo/</PackURL>
           <Cpu>CPUTYPE("Cortex-M33") FPU3(SFPU) TZ DSP</Cpu>
           <FlashUtilSpec/>
           <StartupFile/>
           <DeviceId>0</DeviceId>
-          <RegisterFile>$$Device:MCXN947VNL$fsl_device_registers.h</RegisterFile>
+          <RegisterFile>$$Device:MIMXRT798SGFOA$devices\MIMXRT798S\fsl_device_registers.h</RegisterFile>
           <MemoryEnv/>
           <Cmp/>
           <Asm/>
@@ -28,7 +29,7 @@
           <SLE66CMisc/>
           <SLE66AMisc/>
           <SLE66LinkerMisc/>
-          <SFDFile>$$Device:MCXN947VNL$MCXN947_cm33_core0.xml</SFDFile>
+          <SFDFile>$$Device:MIMXRT798SGFOA$devices\MIMXRT798S\MIMXRT798S_cm33_core0.xml</SFDFile>
           <bCustSvd>0</bCustSvd>
           <UseEnv>0</UseEnv>
           <BinPath/>
@@ -129,11 +130,11 @@
             <RunIndependent>0</RunIndependent>
             <UpdateFlashBeforeDebugging>1</UpdateFlashBeforeDebugging>
             <Capability>1</Capability>
-            <DriverSelection>-1</DriverSelection>
+            <DriverSelection>4101</DriverSelection>
           </Flash1>
           <bUseTDR>1</bUseTDR>
           <Flash2>BIN\UL2V8M.DLL</Flash2>
-          <Flash3/>
+          <Flash3>"" ()</Flash3>
           <Flash4/>
           <pFcarmOut/>
           <pFcarmGrp/>
@@ -201,12 +202,12 @@
             <Ro1Chk>0</Ro1Chk>
             <Ro2Chk>0</Ro2Chk>
             <Ro3Chk>0</Ro3Chk>
-            <Ir1Chk>0</Ir1Chk>
+            <Ir1Chk>1</Ir1Chk>
             <Ir2Chk>0</Ir2Chk>
             <Ra1Chk>0</Ra1Chk>
             <Ra2Chk>0</Ra2Chk>
             <Ra3Chk>0</Ra3Chk>
-            <Im1Chk>0</Im1Chk>
+            <Im1Chk>1</Im1Chk>
             <Im2Chk>0</Im2Chk>
             <OnChipMemories>
               <Ocm1>
@@ -241,8 +242,8 @@
               </Ocm6>
               <IRAM>
                 <Type>0</Type>
-                <StartAddress>0x10000000</StartAddress>
-                <Size>0x100000</Size>
+                <StartAddress>0x80000</StartAddress>
+                <Size>0x280000</Size>
               </IRAM>
               <IROM>
                 <Type>1</Type>
@@ -251,18 +252,18 @@
               </IROM>
               <XRAM>
                 <Type>1</Type>
-                <StartAddress>0x20000000</StartAddress>
-                <Size>0x68000</Size>
+                <StartAddress>0x20080000</StartAddress>
+                <Size>0x280000</Size>
               </XRAM>
               <OCR_RVCT1>
                 <Type>1</Type>
                 <StartAddress>0x0</StartAddress>
-                <Size>0x100000</Size>
+                <Size>0x0</Size>
               </OCR_RVCT1>
               <OCR_RVCT2>
                 <Type>1</Type>
-                <StartAddress>0x100000</StartAddress>
-                <Size>0x100000</Size>
+                <StartAddress>0x0</StartAddress>
+                <Size>0x0</Size>
               </OCR_RVCT2>
               <OCR_RVCT3>
                 <Type>1</Type>
@@ -281,28 +282,28 @@
               </OCR_RVCT5>
               <OCR_RVCT6>
                 <Type>0</Type>
-                <StartAddress>0x20000000</StartAddress>
-                <Size>0x68000</Size>
+                <StartAddress>0x20080000</StartAddress>
+                <Size>0x280000</Size>
               </OCR_RVCT6>
               <OCR_RVCT7>
                 <Type>0</Type>
-                <StartAddress>0x4000000</StartAddress>
-                <Size>0x18000</Size>
+                <StartAddress>0x30080000</StartAddress>
+                <Size>0x280000</Size>
               </OCR_RVCT7>
               <OCR_RVCT8>
                 <Type>0</Type>
-                <StartAddress>0x14000000</StartAddress>
-                <Size>0x18000</Size>
+                <StartAddress>0x680000</StartAddress>
+                <Size>0x100000</Size>
               </OCR_RVCT8>
               <OCR_RVCT9>
                 <Type>0</Type>
-                <StartAddress>0x10000000</StartAddress>
-                <Size>0x100000</Size>
+                <StartAddress>0x80000</StartAddress>
+                <Size>0x280000</Size>
               </OCR_RVCT9>
               <OCR_RVCT10>
                 <Type>0</Type>
-                <StartAddress>0x10100000</StartAddress>
-                <Size>0x100000</Size>
+                <StartAddress>0x10080000</StartAddress>
+                <Size>0x280000</Size>
               </OCR_RVCT10>
             </OnChipMemories>
             <RvctStartVector/>
@@ -333,7 +334,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../mcux_config.h -fno-common  -fdata-sections  -fno-builtin  -mthumb -fno-exceptions</MiscControls>
-              <Define>DEBUG, SDK_DEBUGCONSOLE_UART, ARM_MATH_CM33, TENSORARENA_NONCACHE=1, __FPU_PRESENT=1, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT798SGFOA_cm33_core0, BOOT_HEADER_ENABLE=1, DISABLEFLOAT16, SDK_I2C_BASED_COMPONENT_USED=1, TF_LITE_STATIC_MEMORY</Define>
+              <Define>DEBUG, SDK_DEBUGCONSOLE_UART, ARM_MATH_CM33, TENSORARENA_NONCACHE=1, __FPU_PRESENT=1, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT798SGFOB_cm33_core0, MIMXRT798S_cm33_core0_SERIES, BOOT_HEADER_ENABLE=1, DISABLEFLOAT16, SDK_I2C_BASED_COMPONENT_USED=1, TF_LITE_STATIC_MEMORY, KERNELS_OPTIMIZED_FOR_SPEED</Define>
               <Undefine/>
               <IncludePath>..;../../../../flash_config;../../../../../../CMSIS/DSP/Include;../../../../../../CMSIS/DSP/PrivateInclude;../../../../../../CMSIS/DSP/Source/DistanceFunctions;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT798S;../../../../../../devices/MIMXRT798S/periph;../../../../../../devices/MIMXRT798S/drivers;../../../../../../devices/MIMXRT798S/utilities/debug_console_lite;../../../../../../devices/MIMXRT798S/utilities/str;../../../../../../components/uart;../../../../../../components/pmic/pca9422;../../../../../../middleware/eiq/tensorflow-lite;../../../../../../middleware/eiq/tensorflow-lite/third_party/flatbuffers/include;../../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp;../../../../../../middleware/eiq/tensorflow-lite/third_party/kissfft;../../../../../../middleware/eiq/tensorflow-lite/third_party/ruy;../../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis_nn;../../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis_nn/Include;../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/neutron;../../../../../../middleware/eiq/tensorflow-lite/third_party/neutron/common/include;../../../../../../middleware/eiq/tensorflow-lite/third_party/neutron/driver/include</IncludePath>
             </VariousControls>
@@ -350,8 +351,8 @@
             <useXO>0</useXO>
             <ClangAsOpt>2</ClangAsOpt>
             <VariousControls>
-              <MiscControls/>
-              <Define>CPU_LPC55S69JBD100_cm33_core0, DEBUG, KEIL, MCUXPRESSO_SDK, CPU_MIMXRT798SGFOA_cm33_core0</Define>
+              <MiscControls>-include ../mcux_config.h</MiscControls>
+              <Define>MCUXPRESSO_SDK, CPU_MIMXRT798SGFOB_cm33_core0, MIMXRT798S_cm33_core0_SERIES</Define>
               <Undefine/>
               <IncludePath>..;../../../../flash_config;../../../../../../CMSIS/DSP/Include;../../../../../../CMSIS/DSP/PrivateInclude;../../../../../../CMSIS/DSP/Source/DistanceFunctions;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT798S;../../../../../../devices/MIMXRT798S/periph;../../../../../../devices/periph;../../../../../../devices/MIMXRT798S/drivers;../../../../../../devices/MIMXRT798S/utilities/debug_console_lite;../../../../../../devices/MIMXRT798S/utilities/str;../../../../../../components/uart;../../../../../../components/pmic/pca9422;../../../../../../middleware/eiq/tensorflow-lite;../../../../../../middleware/eiq/tensorflow-lite/third_party/flatbuffers/include;../../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp;../../../../../../middleware/eiq/tensorflow-lite/third_party/kissfft;../../../../../../middleware/eiq/tensorflow-lite/third_party/ruy;../../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis_nn;../../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis_nn/Include;../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/neutron;../../../../../../middleware/eiq/tensorflow-lite/third_party/neutron/common/include;../../../../../../middleware/eiq/tensorflow-lite/third_party/neutron/driver/include</IncludePath>
             </VariousControls>
@@ -513,6 +514,16 @@
               <FileName>pmic_support.h</FileName>
               <FileType>5</FileType>
               <FilePath>../pmic_support.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../mcux_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../mcux_config.h</FilePath>
             </File>
             <File>
               <FileName>mcux_config.h</FileName>
@@ -1577,12 +1588,12 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>startup/arm</GroupName>
+          <GroupName>startup</GroupName>
           <Files>
             <File>
-              <FileName>startup_MIMXRT798S_cm33_core0.S</FileName>
-              <FileType>2</FileType>
-              <FilePath>../../../../../../devices/MIMXRT798S/arm/startup_MIMXRT798S_cm33_core0.S</FilePath>
+              <FileName>startup_MIMXRT798S_cm33_core0.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT798S/startup_MIMXRT798S_cm33_core0.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2460,6 +2471,11 @@
               <FilePath>../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/compatibility.h</FilePath>
             </File>
             <File>
+              <FileName>compression.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/compression.h</FilePath>
+            </File>
+            <File>
               <FileName>debug_log.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/debug_log.h</FilePath>
@@ -2473,6 +2489,11 @@
               <FileName>flatbuffer_utils.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/flatbuffer_utils.h</FilePath>
+            </File>
+            <File>
+              <FileName>hexdump.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/hexdump.h</FilePath>
             </File>
             <File>
               <FileName>memory_helpers.h</FileName>
@@ -2580,6 +2601,16 @@
               <FilePath>../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/recording_micro_interpreter.h</FilePath>
             </File>
             <File>
+              <FileName>span.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/span.h</FilePath>
+            </File>
+            <File>
+              <FileName>static_vector.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/static_vector.h</FilePath>
+            </File>
+            <File>
               <FileName>system_setup.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/system_setup.h</FilePath>
@@ -2620,6 +2651,11 @@
               <FilePath>../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/add.h</FilePath>
             </File>
             <File>
+              <FileName>batch_matmul.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/batch_matmul.h</FilePath>
+            </File>
+            <File>
               <FileName>circular_buffer.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/circular_buffer.h</FilePath>
@@ -2638,6 +2674,11 @@
               <FileName>conv_test.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/conv_test.h</FilePath>
+            </File>
+            <File>
+              <FileName>decompress.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/decompress.h</FilePath>
             </File>
             <File>
               <FileName>depthwise_conv.h</FileName>
@@ -2710,6 +2751,11 @@
               <FilePath>../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/lstm_shared.h</FilePath>
             </File>
             <File>
+              <FileName>maximum_minimum.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/maximum_minimum.h</FilePath>
+            </File>
+            <File>
               <FileName>micro_ops.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/micro_ops.h</FilePath>
@@ -2773,6 +2819,11 @@
               <FileName>svdf.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/svdf.h</FilePath>
+            </File>
+            <File>
+              <FileName>transpose.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/transpose.h</FilePath>
             </File>
             <File>
               <FileName>transpose_conv.h</FileName>
@@ -2848,6 +2899,16 @@
               <FileName>xtensa_svdf.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/xtensa_svdf.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>eiq/tensorflow-lite/tensorflow/lite/micro/compression</GroupName>
+          <Files>
+            <File>
+              <FileName>metadata_saved.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/compression/metadata_saved.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2943,6 +3004,41 @@
               <FileName>common.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/c/common.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>eiq/tensorflow-lite/tensorflow/compiler/mlir/lite/core/api</GroupName>
+          <Files>
+            <File>
+              <FileName>error_reporter.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/eiq/tensorflow-lite/tensorflow/compiler/mlir/lite/core/api/error_reporter.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>eiq/tensorflow-lite/tensorflow/compiler/mlir/lite/core/c</GroupName>
+          <Files>
+            <File>
+              <FileName>builtin_op_data.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/eiq/tensorflow-lite/tensorflow/compiler/mlir/lite/core/c/builtin_op_data.h</FilePath>
+            </File>
+            <File>
+              <FileName>tflite_types.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/eiq/tensorflow-lite/tensorflow/compiler/mlir/lite/core/c/tflite_types.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/hifimini</GroupName>
+          <Files>
+            <File>
+              <FileName>fixedpoint_utils.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/hifimini/fixedpoint_utils.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3352,6 +3448,21 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/pch</GroupName>
+          <Files>
+            <File>
+              <FileName>flatc_pch.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/pch/flatc_pch.h</FilePath>
+            </File>
+            <File>
+              <FileName>pch.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/pch/pch.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>eiq/tensorflow-lite/third_party/gemmlowp/fixedpoint</GroupName>
           <Files>
             <File>
@@ -3489,6 +3600,11 @@
               <FileType>5</FileType>
               <FilePath>../example_board_readme.md</FilePath>
             </File>
+            <File>
+              <FileName>examples_shared_readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../examples_shared_readme.md</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>
@@ -3497,18 +3613,19 @@
       <TargetName>tflm_kws_cm33_core0 flash_release</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
+      <pCCUsed>6120000::V6.12::.\ARMCLANG</pCCUsed>
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
-          <Device>MIMXRT798SGFOA:cm33_core0</Device>
+          <Device>MIMXRT798SGFOB:cm33_core0</Device>
           <Vendor>NXP</Vendor>
-          <PackID>NXP.MCXN947_DFP.16.0.0</PackID>
+          <PackID>NXP.MIMXRT798S_DFP.17.0.0</PackID>
           <PackURL>https://mcuxpresso.nxp.com/cmsis_pack/repo/</PackURL>
           <Cpu>CPUTYPE("Cortex-M33") FPU3(SFPU) TZ DSP</Cpu>
           <FlashUtilSpec/>
           <StartupFile/>
           <DeviceId>0</DeviceId>
-          <RegisterFile>$$Device:MCXN947VNL$fsl_device_registers.h</RegisterFile>
+          <RegisterFile>$$Device:MIMXRT798SGFOA$devices\MIMXRT798S\fsl_device_registers.h</RegisterFile>
           <MemoryEnv/>
           <Cmp/>
           <Asm/>
@@ -3518,7 +3635,7 @@
           <SLE66CMisc/>
           <SLE66AMisc/>
           <SLE66LinkerMisc/>
-          <SFDFile>$$Device:MCXN947VNL$MCXN947_cm33_core0.xml</SFDFile>
+          <SFDFile>$$Device:MIMXRT798SGFOA$</SFDFile>
           <bCustSvd>0</bCustSvd>
           <UseEnv>0</UseEnv>
           <BinPath/>
@@ -3619,11 +3736,11 @@
             <RunIndependent>0</RunIndependent>
             <UpdateFlashBeforeDebugging>1</UpdateFlashBeforeDebugging>
             <Capability>1</Capability>
-            <DriverSelection>-1</DriverSelection>
+            <DriverSelection>4101</DriverSelection>
           </Flash1>
           <bUseTDR>1</bUseTDR>
           <Flash2>BIN\UL2V8M.DLL</Flash2>
-          <Flash3/>
+          <Flash3>"" ()</Flash3>
           <Flash4/>
           <pFcarmOut/>
           <pFcarmGrp/>
@@ -3691,12 +3808,12 @@
             <Ro1Chk>0</Ro1Chk>
             <Ro2Chk>0</Ro2Chk>
             <Ro3Chk>0</Ro3Chk>
-            <Ir1Chk>0</Ir1Chk>
+            <Ir1Chk>1</Ir1Chk>
             <Ir2Chk>0</Ir2Chk>
             <Ra1Chk>0</Ra1Chk>
             <Ra2Chk>0</Ra2Chk>
             <Ra3Chk>0</Ra3Chk>
-            <Im1Chk>0</Im1Chk>
+            <Im1Chk>1</Im1Chk>
             <Im2Chk>0</Im2Chk>
             <OnChipMemories>
               <Ocm1>
@@ -3731,8 +3848,8 @@
               </Ocm6>
               <IRAM>
                 <Type>0</Type>
-                <StartAddress>0x10000000</StartAddress>
-                <Size>0x100000</Size>
+                <StartAddress>0x80000</StartAddress>
+                <Size>0x280000</Size>
               </IRAM>
               <IROM>
                 <Type>1</Type>
@@ -3741,18 +3858,18 @@
               </IROM>
               <XRAM>
                 <Type>1</Type>
-                <StartAddress>0x20000000</StartAddress>
-                <Size>0x68000</Size>
+                <StartAddress>0x20080000</StartAddress>
+                <Size>0x280000</Size>
               </XRAM>
               <OCR_RVCT1>
                 <Type>1</Type>
                 <StartAddress>0x0</StartAddress>
-                <Size>0x100000</Size>
+                <Size>0x0</Size>
               </OCR_RVCT1>
               <OCR_RVCT2>
                 <Type>1</Type>
-                <StartAddress>0x100000</StartAddress>
-                <Size>0x100000</Size>
+                <StartAddress>0x0</StartAddress>
+                <Size>0x0</Size>
               </OCR_RVCT2>
               <OCR_RVCT3>
                 <Type>1</Type>
@@ -3771,28 +3888,28 @@
               </OCR_RVCT5>
               <OCR_RVCT6>
                 <Type>0</Type>
-                <StartAddress>0x20000000</StartAddress>
-                <Size>0x68000</Size>
+                <StartAddress>0x20080000</StartAddress>
+                <Size>0x280000</Size>
               </OCR_RVCT6>
               <OCR_RVCT7>
                 <Type>0</Type>
-                <StartAddress>0x4000000</StartAddress>
-                <Size>0x18000</Size>
+                <StartAddress>0x30080000</StartAddress>
+                <Size>0x280000</Size>
               </OCR_RVCT7>
               <OCR_RVCT8>
                 <Type>0</Type>
-                <StartAddress>0x14000000</StartAddress>
-                <Size>0x18000</Size>
+                <StartAddress>0x680000</StartAddress>
+                <Size>0x100000</Size>
               </OCR_RVCT8>
               <OCR_RVCT9>
                 <Type>0</Type>
-                <StartAddress>0x10000000</StartAddress>
-                <Size>0x100000</Size>
+                <StartAddress>0x80000</StartAddress>
+                <Size>0x280000</Size>
               </OCR_RVCT9>
               <OCR_RVCT10>
                 <Type>0</Type>
-                <StartAddress>0x10100000</StartAddress>
-                <Size>0x100000</Size>
+                <StartAddress>0x10080000</StartAddress>
+                <Size>0x280000</Size>
               </OCR_RVCT10>
             </OnChipMemories>
             <RvctStartVector/>
@@ -3823,7 +3940,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../mcux_config.h -fno-common  -fdata-sections  -fno-builtin  -mthumb -fno-exceptions</MiscControls>
-              <Define>NDEBUG, SDK_DEBUGCONSOLE_UART, ARM_MATH_CM33, TENSORARENA_NONCACHE=1, __FPU_PRESENT=1, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT798SGFOA_cm33_core0, BOOT_HEADER_ENABLE=1, DISABLEFLOAT16, SDK_I2C_BASED_COMPONENT_USED=1, TF_LITE_STATIC_MEMORY</Define>
+              <Define>NDEBUG, SDK_DEBUGCONSOLE_UART, ARM_MATH_CM33, TENSORARENA_NONCACHE=1, __FPU_PRESENT=1, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT798SGFOB_cm33_core0, MIMXRT798S_cm33_core0_SERIES, BOOT_HEADER_ENABLE=1, DISABLEFLOAT16, SDK_I2C_BASED_COMPONENT_USED=1, TF_LITE_STATIC_MEMORY, KERNELS_OPTIMIZED_FOR_SPEED</Define>
               <Undefine/>
               <IncludePath>..;../../../../flash_config;../../../../../../CMSIS/DSP/Include;../../../../../../CMSIS/DSP/PrivateInclude;../../../../../../CMSIS/DSP/Source/DistanceFunctions;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT798S;../../../../../../devices/MIMXRT798S/periph;../../../../../../devices/MIMXRT798S/drivers;../../../../../../devices/MIMXRT798S/utilities/debug_console_lite;../../../../../../devices/MIMXRT798S/utilities/str;../../../../../../components/uart;../../../../../../components/pmic/pca9422;../../../../../../middleware/eiq/tensorflow-lite;../../../../../../middleware/eiq/tensorflow-lite/third_party/flatbuffers/include;../../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp;../../../../../../middleware/eiq/tensorflow-lite/third_party/kissfft;../../../../../../middleware/eiq/tensorflow-lite/third_party/ruy;../../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis_nn;../../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis_nn/Include;../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/neutron;../../../../../../middleware/eiq/tensorflow-lite/third_party/neutron/common/include;../../../../../../middleware/eiq/tensorflow-lite/third_party/neutron/driver/include</IncludePath>
             </VariousControls>
@@ -3840,8 +3957,8 @@
             <useXO>0</useXO>
             <ClangAsOpt>2</ClangAsOpt>
             <VariousControls>
-              <MiscControls/>
-              <Define>CPU_LPC55S69JBD100_cm33_core0, NDEBUG, KEIL, MCUXPRESSO_SDK, CPU_MIMXRT798SGFOA_cm33_core0</Define>
+              <MiscControls>-include ../mcux_config.h</MiscControls>
+              <Define>MCUXPRESSO_SDK, CPU_MIMXRT798SGFOB_cm33_core0, MIMXRT798S_cm33_core0_SERIES</Define>
               <Undefine/>
               <IncludePath>..;../../../../flash_config;../../../../../../CMSIS/DSP/Include;../../../../../../CMSIS/DSP/PrivateInclude;../../../../../../CMSIS/DSP/Source/DistanceFunctions;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT798S;../../../../../../devices/MIMXRT798S/periph;../../../../../../devices/periph;../../../../../../devices/MIMXRT798S/drivers;../../../../../../devices/MIMXRT798S/utilities/debug_console_lite;../../../../../../devices/MIMXRT798S/utilities/str;../../../../../../components/uart;../../../../../../components/pmic/pca9422;../../../../../../middleware/eiq/tensorflow-lite;../../../../../../middleware/eiq/tensorflow-lite/third_party/flatbuffers/include;../../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp;../../../../../../middleware/eiq/tensorflow-lite/third_party/kissfft;../../../../../../middleware/eiq/tensorflow-lite/third_party/ruy;../../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis_nn;../../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis_nn/Include;../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/neutron;../../../../../../middleware/eiq/tensorflow-lite/third_party/neutron/common/include;../../../../../../middleware/eiq/tensorflow-lite/third_party/neutron/driver/include</IncludePath>
             </VariousControls>
@@ -4003,6 +4120,16 @@
               <FileName>pmic_support.h</FileName>
               <FileType>5</FileType>
               <FilePath>../pmic_support.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../mcux_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../mcux_config.h</FilePath>
             </File>
             <File>
               <FileName>mcux_config.h</FileName>
@@ -5067,12 +5194,12 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>startup/arm</GroupName>
+          <GroupName>startup</GroupName>
           <Files>
             <File>
-              <FileName>startup_MIMXRT798S_cm33_core0.S</FileName>
-              <FileType>2</FileType>
-              <FilePath>../../../../../../devices/MIMXRT798S/arm/startup_MIMXRT798S_cm33_core0.S</FilePath>
+              <FileName>startup_MIMXRT798S_cm33_core0.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT798S/startup_MIMXRT798S_cm33_core0.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -5950,6 +6077,11 @@
               <FilePath>../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/compatibility.h</FilePath>
             </File>
             <File>
+              <FileName>compression.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/compression.h</FilePath>
+            </File>
+            <File>
               <FileName>debug_log.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/debug_log.h</FilePath>
@@ -5963,6 +6095,11 @@
               <FileName>flatbuffer_utils.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/flatbuffer_utils.h</FilePath>
+            </File>
+            <File>
+              <FileName>hexdump.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/hexdump.h</FilePath>
             </File>
             <File>
               <FileName>memory_helpers.h</FileName>
@@ -6070,6 +6207,16 @@
               <FilePath>../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/recording_micro_interpreter.h</FilePath>
             </File>
             <File>
+              <FileName>span.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/span.h</FilePath>
+            </File>
+            <File>
+              <FileName>static_vector.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/static_vector.h</FilePath>
+            </File>
+            <File>
               <FileName>system_setup.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/system_setup.h</FilePath>
@@ -6110,6 +6257,11 @@
               <FilePath>../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/add.h</FilePath>
             </File>
             <File>
+              <FileName>batch_matmul.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/batch_matmul.h</FilePath>
+            </File>
+            <File>
               <FileName>circular_buffer.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/circular_buffer.h</FilePath>
@@ -6128,6 +6280,11 @@
               <FileName>conv_test.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/conv_test.h</FilePath>
+            </File>
+            <File>
+              <FileName>decompress.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/decompress.h</FilePath>
             </File>
             <File>
               <FileName>depthwise_conv.h</FileName>
@@ -6200,6 +6357,11 @@
               <FilePath>../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/lstm_shared.h</FilePath>
             </File>
             <File>
+              <FileName>maximum_minimum.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/maximum_minimum.h</FilePath>
+            </File>
+            <File>
               <FileName>micro_ops.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/micro_ops.h</FilePath>
@@ -6263,6 +6425,11 @@
               <FileName>svdf.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/svdf.h</FilePath>
+            </File>
+            <File>
+              <FileName>transpose.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/transpose.h</FilePath>
             </File>
             <File>
               <FileName>transpose_conv.h</FileName>
@@ -6338,6 +6505,16 @@
               <FileName>xtensa_svdf.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/xtensa_svdf.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>eiq/tensorflow-lite/tensorflow/lite/micro/compression</GroupName>
+          <Files>
+            <File>
+              <FileName>metadata_saved.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/compression/metadata_saved.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -6433,6 +6610,41 @@
               <FileName>common.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/c/common.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>eiq/tensorflow-lite/tensorflow/compiler/mlir/lite/core/api</GroupName>
+          <Files>
+            <File>
+              <FileName>error_reporter.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/eiq/tensorflow-lite/tensorflow/compiler/mlir/lite/core/api/error_reporter.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>eiq/tensorflow-lite/tensorflow/compiler/mlir/lite/core/c</GroupName>
+          <Files>
+            <File>
+              <FileName>builtin_op_data.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/eiq/tensorflow-lite/tensorflow/compiler/mlir/lite/core/c/builtin_op_data.h</FilePath>
+            </File>
+            <File>
+              <FileName>tflite_types.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/eiq/tensorflow-lite/tensorflow/compiler/mlir/lite/core/c/tflite_types.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/hifimini</GroupName>
+          <Files>
+            <File>
+              <FileName>fixedpoint_utils.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/hifimini/fixedpoint_utils.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -6842,6 +7054,21 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/pch</GroupName>
+          <Files>
+            <File>
+              <FileName>flatc_pch.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/pch/flatc_pch.h</FilePath>
+            </File>
+            <File>
+              <FileName>pch.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/pch/pch.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>eiq/tensorflow-lite/third_party/gemmlowp/fixedpoint</GroupName>
           <Files>
             <File>
@@ -6978,6 +7205,11 @@
               <FileName>example_board_readme.md</FileName>
               <FileType>5</FileType>
               <FilePath>../example_board_readme.md</FilePath>
+            </File>
+            <File>
+              <FileName>examples_shared_readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../examples_shared_readme.md</FilePath>
             </File>
           </Files>
         </Group>

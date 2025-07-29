@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 NXP.
+ * Copyright 2024-2025 NXP.
  * All rights reserved.
  *
  *  SPDX-License-Identifier: Apache-2.0
@@ -35,6 +35,10 @@
 /* VGLite includes */
 #include "vglite_support.h"
 #include "vg_lite.h"
+
+#ifndef HAL_GPU_CHIPID
+#error "HAL:VGLite: GPU chip ID should be defined."
+#endif
 
 /* different GPUs chip ids */
 #define HAL_GPU_GC355_CHIP_ID 0x355
@@ -131,6 +135,8 @@ static inline int hal_vglite_get_buffer_alignment(mpp_pixel_format_t type)
     case MPP_PIXEL_ARGB:
     case MPP_PIXEL_BGRA:
     case MPP_PIXEL_RGBA:
+    case MPP_PIXEL_BGRX:
+    case MPP_PIXEL_RGBX:
     case MPP_PIXEL_RGB:
     case MPP_PIXEL_BGR:
     case MPP_PIXEL_RGB565:
@@ -159,6 +165,8 @@ static inline int hal_vglite_get_aligned_stride(int width, mpp_pixel_format_t ty
     case MPP_PIXEL_ARGB:
     case MPP_PIXEL_BGRA:
     case MPP_PIXEL_RGBA:
+    case MPP_PIXEL_BGRX:
+    case MPP_PIXEL_RGBX:
         alignment = 64;
         break;
     case MPP_PIXEL_RGB:
@@ -171,6 +179,7 @@ static inline int hal_vglite_get_aligned_stride(int width, mpp_pixel_format_t ty
         break;
     case MPP_PIXEL_GRAY:
         alignment = 16;
+        break;
     default:
         HAL_LOGE("hal_vglite_get_aligned_stride() Color format %d is not supported\n", type);
         break;
@@ -245,12 +254,29 @@ static int hal_vglite_set_input_buff_format(vg_lite_buffer_t *input_buffer, gfx_
         input_buffer->format = VG_LITE_RGBA8888;
         break;
 
+    case MPP_PIXEL_BGRX:
+        input_buffer->format = VG_LITE_RGBX8888;
+        break;
+
     case MPP_PIXEL_RGBA:
         input_buffer->format = VG_LITE_BGRA8888;
         break;
 
+    case MPP_PIXEL_RGBX:
+        input_buffer->format = VG_LITE_BGRX8888;
+        break;
+
+    /* GRAY format is not supported on GC355 */
     case MPP_PIXEL_GRAY:
+#if (HAL_GPU_CHIPID == HAL_GPU_GC555_CHIP_ID)    /* GC555 */
         input_buffer->format = VG_LITE_L8;
+#elif (HAL_GPU_CHIPID == HAL_GPU_GC355_CHIP_ID) /* GC355 */
+        HAL_LOGE("GRAY format is not supported on GPU GC355\r\n");
+        error = -1;
+#else
+        HAL_LOGE("GPU GC%x not supported\r\n", HAL_GPU_CHIPID);
+        error = -1;
+#endif
         break;
 
     case MPP_PIXEL_RGB565:
@@ -378,7 +404,7 @@ static int hal_vglite_scale(vg_lite_buffer_t *input_buffer,
     vg_lite_float_t width_scaling_f = 1.0f, height_scaling_f = 1.0f;
 
     /* get scaling width/height factors */
-    if ((input_buffer->height != 0) || (input_buffer->width != 0))
+    if ((input_buffer->height != 0) && (input_buffer->width != 0))
     {
         width_scaling_f = (vg_lite_float_t)output_width / (vg_lite_float_t)input_buffer->width;
         height_scaling_f = (vg_lite_float_t)output_height / (vg_lite_float_t)input_buffer->height;
@@ -585,8 +611,17 @@ static int hal_vglite_set_output_buff_format(vg_lite_buffer_t *output_buffer, co
         output_buffer->format = VG_LITE_RGB565;
         break;
 
+    /* GRAY format is not supported on GC355 */
     case MPP_PIXEL_GRAY:
+#if (HAL_GPU_CHIPID == HAL_GPU_GC555_CHIP_ID)    /* GC555 */
         output_buffer->format = VG_LITE_L8;
+#elif (HAL_GPU_CHIPID == HAL_GPU_GC355_CHIP_ID) /* GC355 */
+        HAL_LOGE("GRAY format is not supported on GPU GC355\r\n");
+        return -1;
+#else
+        HAL_LOGE("GPU GC%x not supported\r\n", HAL_GPU_CHIPID);
+        return -1;
+#endif
         break;
 
     case MPP_PIXEL_YUYV:
@@ -699,7 +734,7 @@ int HAL_GfxDev_VGLite_Blit(const gfx_dev_t *dev, const gfx_surface_t *gfx_src,
     }
 
     input_buff_alignment = hal_vglite_get_buffer_alignment(gfx_src->format);
-    if (((unsigned int)(gfx_src->buf) % input_buff_alignment) != 0)
+    if ( (input_buff_alignment == 0) || (((unsigned int)(gfx_src->buf) % input_buff_alignment) != 0) )
     {
         HAL_LOGE("Input buffer at addr=0x%x is not %d bytes aligned\n", (unsigned int)gfx_src->buf, input_buff_alignment);
     }

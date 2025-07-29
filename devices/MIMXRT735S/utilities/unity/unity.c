@@ -1618,7 +1618,7 @@ int UnityEnd(void)
 #endif
 
 #if defined(GCOV_DO_COVERAGE) && defined(__GNUC__)
-    gcov_write(); /* write coverage files */
+    gcov_dump_data(); /* write coverage files */
 #endif
 
 #ifdef UNITY_DUMP_RESULT

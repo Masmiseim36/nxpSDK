@@ -1,6 +1,5 @@
 /*
- * Copyright 2024 NXP
- * All rights reserved.
+ * Copyright 2024-2025 NXP
  *
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -45,7 +44,7 @@
 #define APP_DEEPSLEEP_SLEEPCFG    (0U)                           /* SLEEPCON->SLEEPCFG */
 #define APP_DEEPSLEEP_PDSLEEPCFG0 (0U)                           /* PMC->PDSLEEPCFG0 */
 #define APP_DEEPSLEEP_PDSLEEPCFG1 (0U)                           /* PMC->PDSLEEPCFG1 */
-#define APP_DSR_PDSLEEPCFG0       (PMC_PDSLEEPCFG0_PMICMODE(2U)) /* PMC->PDSLEEPCFG0, override default PMIC mode. */
+#define APP_DSR_PDSLEEPCFG0       (0U)                           /* PMC->PDSLEEPCFG0 */
 #define APP_DEEPSLEEP_RAM_APD     0x3FFFFU /* PMC->PDSLEEPCFG2, all keep powered, the unused PT can be power off. */
 #define APP_DEEPSLEEP_RAM_PPD     (0U)     /* PMC->PDSLEEPCFG3 */
 #define APP_DEEPSLEEP_PDSLEEPCFG4 \
@@ -59,7 +58,7 @@
 #define APP_EXCLUDE_FROM_DSR                                                                     \
     (((const uint32_t[]){APP_DEEPSLEEP_SLEEPCFG, APP_DSR_PDSLEEPCFG0, 0U, APP_DEEPSLEEP_RAM_APD, \
                          APP_DEEPSLEEP_RAM_PPD, APP_DSR_PDSLEEPCFG4, APP_DEEPSLEEP_PDSLEEPCFG5}))
-#define APP_EXCLUDE_FROM_DEEP_POWERDOWN      (((const uint32_t[]){0, PMC_PDSLEEPCFG0_PMICMODE(3U), 0, 0, 0, 0, 0}))
+#define APP_EXCLUDE_FROM_DEEP_POWERDOWN      (((const uint32_t[]){0, 0, 0, 0, 0, 0, 0}))
 #define APP_EXCLUDE_FROM_FULL_DEEP_POWERDOWN (((const uint32_t[]){0, 0, 0, 0, 0, 0, 0}))
 /************************************************************************/
 /*${macro:end}*/

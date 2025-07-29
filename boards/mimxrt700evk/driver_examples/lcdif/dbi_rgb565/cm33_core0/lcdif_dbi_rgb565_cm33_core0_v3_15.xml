@@ -54,7 +54,7 @@
       <toolchainSetting id_refs="com.nxp.mcuxpresso">
         <option id="gnu.c.compiler.option.preprocessor.def.symbols" type="stringList">
           <value>MCUXPRESSO_SDK</value>
-          <value>CPU_MIMXRT798SGFOA_cm33_core0</value>
+          <value>CPU_MIMXRT798SGFOB_cm33_core0</value>
           <value>BOOT_HEADER_ENABLE=1</value>
           <value>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</value>
           <value>MCUX_DBI_LEGACY=1</value>
@@ -63,6 +63,7 @@
           <value>SSD1963_DATA_WITDH=8</value>
           <value>SDK_DEBUGCONSOLE=1</value>
           <value>MCUX_META_BUILD</value>
+          <value>MIMXRT798S_cm33_core0_SERIES</value>
         </option>
         <option id="com.crt.advproject.gas.fpu" type="enum">
           <value>com.crt.advproject.gas.fpu.fpv5sp.hard</value>
@@ -138,12 +139,8 @@
       <files mask="CMakeLists.txt"/>
       <files mask="flags.cmake"/>
       <files mask="config.cmake"/>
-      <files mask="build_debug.bat"/>
-      <files mask="build_debug.sh"/>
       <files mask="build_flash_debug.bat"/>
       <files mask="build_flash_debug.sh"/>
-      <files mask="build_release.bat"/>
-      <files mask="build_release.sh"/>
       <files mask="build_flash_release.bat"/>
       <files mask="build_flash_release.sh"/>
     </source>
@@ -180,15 +177,12 @@
       <files mask="board.c"/>
     </source>
     <source path="iar" project_relative_path="MIMXRT798S/iar" type="linker" toolchain="iar">
-      <files mask="MIMXRT798Sxxxx_cm33_core0_ram.icf"/>
       <files mask="MIMXRT798Sxxxx_cm33_core0_flash.icf"/>
     </source>
     <source path="armgcc" project_relative_path="MIMXRT798S/armgcc" type="linker" toolchain="armgcc">
-      <files mask="MIMXRT798Sxxxx_cm33_core0_ram.ld"/>
       <files mask="MIMXRT798Sxxxx_cm33_core0_flash.ld"/>
     </source>
     <source path="mdk" project_relative_path="MIMXRT798S/mdk" type="linker" toolchain="mdk">
-      <files mask="MIMXRT798Sxxxx_cm33_core0_ram.scf"/>
       <files mask="MIMXRT798Sxxxx_cm33_core0_flash.scf"/>
     </source>
     <source path="." project_relative_path="board" type="c_include">
@@ -205,6 +199,9 @@
     </source>
     <source path="." project_relative_path="doc" type="doc">
       <files mask="lcdif_examples_readme.md"/>
+    </source>
+    <source path="." project_relative_path="doc" type="doc">
+      <files mask="examples_shared_readme.md"/>
     </source>
   </example>
 </ksdk:examples>

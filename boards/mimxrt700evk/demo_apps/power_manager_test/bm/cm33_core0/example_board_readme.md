@@ -12,10 +12,13 @@ JP55(1-2) disconnected to ommit the impact of MCU-LINK during DPD and FDPD mode.
 The board supports multiple power supply options. 
 The code should be aligned with power supply on the board.
 
-1. Default power supply, VDDN with PMIC, VDD1 and VDD2 with PMC.
+1. VDDN supplied by internal DCDC, VDD1 and VDD2 by PMC LDOs.
+   Jumper setting - JP1(Open), JP2(1-2), JP3(Open), JP4(1-2)
+   Code setting(power_demo_config.h) - #define DEMO_POWER_SUPPLY_OPTION DEMO_POWER_SUPPLY_PMC
+2. VDDN supplied by PMIC, VDD1 and VDD2 by PMC.
    Jumper setting - JP1(Open), JP2(2-3), JP3(Open), JP4(1-2)
    Code setting(power_demo_config.h) - #define DEMO_POWER_SUPPLY_OPTION DEMO_POWER_SUPPLY_MIXED
-2. Use PMIC to supply all. 
+3. Default power supply. Use PMIC to supply all. 
    Jumper setting - JP1(1-2), JP2(2-3), JP3(1-2), JP4(1-2)
    Code setting(power_demo_config.h) - #define DEMO_POWER_SUPPLY_OPTION DEMO_POWER_SUPPLY_PMIC
 

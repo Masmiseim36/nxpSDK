@@ -14,9 +14,6 @@ if(CMAKE_SCRIPT_MODE_FILE)
 endif()
 
 
-set(CMAKE_STATIC_LIBRARY_PREFIX)
-set(CMAKE_STATIC_LIBRARY_SUFFIX)
-
 set(CMAKE_EXECUTABLE_LIBRARY_PREFIX)
 set(CMAKE_EXECUTABLE_LIBRARY_SUFFIX)
 
@@ -59,15 +56,12 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../pin_mux.c"
 "${ProjDirPath}/../pin_mux.h"
 "${ProjDirPath}/../FreeRTOSConfig.h"
-"${ProjDirPath}/../app_config.h"
 "${ProjDirPath}/../board.h"
 "${ProjDirPath}/../board.c"
 "${ProjDirPath}/../clock_config.h"
 "${ProjDirPath}/../clock_config.c"
-"${ProjDirPath}/../edgefast_bluetooth_audio_config_Gen.h"
-"${ProjDirPath}/../edgefast_bluetooth_config_Gen.h"
-"${ProjDirPath}/../edgefast_bluetooth_debug_config_Gen.h"
-"${ProjDirPath}/../edgefast_bluetooth_extension_config_Gen.h"
+"${ProjDirPath}/../edgefast_bluetooth_audio_config.h"
+"${ProjDirPath}/../edgefast_bluetooth_config.h"
 "${ProjDirPath}/../fsl_debug_console_conf.h"
 "${ProjDirPath}/../fsl_os_abstraction_config.h"
 "${ProjDirPath}/../mcux_config.h"
@@ -84,6 +78,7 @@ set_source_files_properties("${ProjDirPath}/../wifi_bt_config.c" PROPERTIES COMP
 set_source_files_properties("${ProjDirPath}/../wifi_bt_config.h" PROPERTIES COMPONENT_CONFIG_FILE "middleware_wifi_wifi_bt_config_template")
 set_source_files_properties("${ProjDirPath}/../FreeRTOSConfig.h" PROPERTIES COMPONENT_CONFIG_FILE "middleware_freertos-kernel_config")
 set_source_files_properties("${ProjDirPath}/../fsl_os_abstraction_config.h" PROPERTIES COMPONENT_CONFIG_FILE "component_osa_template_config")
+set_source_files_properties("${ProjDirPath}/../usb_host_config.h" PROPERTIES COMPONENT_CONFIG_FILE "middleware_usb_host_ehci_config_header")
 
 if(CMAKE_BUILD_TYPE STREQUAL flash_release)
      target_compile_definitions(${MCUX_SDK_PROJECT_NAME}  PRIVATE $<$<COMPILE_LANGUAGE:C>:MBEDTLS_CONFIG_FILE="mcux_mbedtls_config.h">)

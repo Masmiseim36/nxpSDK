@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2024 NXP.
+ * Copyright 2022-2025 NXP.
  *
  *  SPDX-License-Identifier: Apache-2.0
  *
@@ -85,6 +85,8 @@ static inline int get_bitpp(mpp_pixel_format_t type)
     case MPP_PIXEL_ARGB:
     case MPP_PIXEL_BGRA:
     case MPP_PIXEL_RGBA:
+    case MPP_PIXEL_BGRX:
+    case MPP_PIXEL_RGBX:
     case MPP_PIXEL_YUYV:
     case MPP_PIXEL_GRAY888X:
     case MPP_PIXEL_YUV1P444:

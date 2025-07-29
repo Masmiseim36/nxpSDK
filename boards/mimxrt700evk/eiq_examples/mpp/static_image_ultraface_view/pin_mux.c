@@ -1,5 +1,5 @@
 /*
- * Copyright 2023, 2024 NXP
+ * Copyright 2023-2025 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -16,7 +16,7 @@
 !!GlobalInfo
 product: Pins v14.0
 processor: MIMXRT798S
-package_id: MIMXRT798SGFOA
+package_id: MIMXRT798SGFOB
 mcu_data: ksdk2_0
 processor_version: 0.0.0
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
@@ -24,6 +24,7 @@ processor_version: 0.0.0
 /* clang-format on */
 
 #include "fsl_common.h"
+#include "fsl_gpio.h"
 #include "fsl_iopctl.h"
 #include "pin_mux.h"
 
@@ -38,6 +39,7 @@ void BOARD_InitBootPins(void)
     RESET_ClearPeripheralReset(kIOPCTL0_RST_SHIFT_RSTn);
 
     BOARD_InitUARTPins();
+    BOARD_InitCameraPins();
 }
 
 /* clang-format off */
@@ -46,10 +48,10 @@ void BOARD_InitBootPins(void)
 BOARD_InitMipiPanelPinsEvk:
 - options: {callFromInitBoot: 'false', coreID: cm33_core0, enableClock: 'true'}
 - pin_list:
-  - {pin_num: K6, peripheral: GPIO3, signal: 'IO, 4', pin_signal: PIO3_4}
-  - {pin_num: K7, peripheral: GPIO3, signal: 'IO, 5', pin_signal: PIO3_5, input_buffer: enable}
-  - {pin_num: T2, peripheral: GPIO1, signal: 'IO, 10', pin_signal: PIO1_10}
-  - {pin_num: P3, peripheral: GPIO1, signal: 'IO, 14', pin_signal: PIO1_14}
+  - {pin_num: K6, peripheral: GPIO3, signal: 'GPIO, 4', pin_signal: PIO3_4}
+  - {pin_num: K7, peripheral: GPIO3, signal: 'GPIO, 5', pin_signal: PIO3_5, input_buffer: enable}
+  - {pin_num: T2, peripheral: GPIO1, signal: 'GPIO, 10', pin_signal: PIO1_10}
+  - {pin_num: P3, peripheral: GPIO1, signal: 'GPIO, 14', pin_signal: PIO1_14}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 /* clang-format on */
@@ -220,42 +222,19 @@ void BOARD_InitUARTPins(void)
 BOARD_InitFlexIOPanelPins:
 - options: {callFromInitBoot: 'true', coreID: cm33_core0, enableClock: 'true'}
 - pin_list:
-  - {pin_num: H6, peripheral: FLEXIO, signal: 'D, 6', pin_signal: PIO2_6, input_buffer: enable}
-  - {pin_num: G6, peripheral: FLEXIO, signal: 'D, 7', pin_signal: PIO2_7, input_buffer: enable}
-  - {pin_num: G4, peripheral: FLEXIO, signal: 'D, 8', pin_signal: PIO2_8, input_buffer: enable}
-  - {pin_num: G5, peripheral: FLEXIO, signal: 'D, 9', pin_signal: PIO2_9, input_buffer: enable}
-  - {pin_num: F5, peripheral: FLEXIO, signal: 'D, 10', pin_signal: PIO2_10, input_buffer: enable}
-  - {pin_num: F3, peripheral: FLEXIO, signal: 'D, 11', pin_signal: PIO2_11, input_buffer: enable}
-  - {pin_num: E3, peripheral: FLEXIO, signal: 'D, 12', pin_signal: PIO2_12, input_buffer: enable}
-  - {pin_num: E4, peripheral: FLEXIO, signal: 'D, 13', pin_signal: PIO2_13, input_buffer: enable}
-  - {pin_num: H2, peripheral: GPIO2, signal: 'IO, 0', pin_signal: PIO2_0, direction: OUTPUT, gpio_direction: out}
-  - {pin_num: G2, peripheral: GPIO2, signal: 'IO, 1', pin_signal: PIO2_1, direction: OUTPUT, gpio_direction: out}
-  - {pin_num: D3, peripheral: GPIO2, signal: 'IO, 15', pin_signal: PIO2_15, direction: OUTPUT, gpio_direction: out}
-  - {pin_num: G1, peripheral: FLEXIO, signal: 'D, 3', pin_signal: PIO2_3, direction: OUTPUT}
-  - {pin_num: G3, peripheral: FLEXIO, signal: 'D, 4', pin_signal: PIO2_4, direction: OUTPUT, slew_rate: slow, input_buffer: enable, pull_select: up, pull_enable: enable}
- * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
- */
-/* clang-format on */
-
-/* clang-format off */
-/*
- * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
-BOARD_InitFlexIOPanelPins:
-- options: {callFromInitBoot: 'true', coreID: cm33_core0, enableClock: 'true'}
-- pin_list:
-  - {pin_num: H6, peripheral: FLEXIO, signal: 'D, 6', pin_signal: PIO2_6, slew_rate: slow, input_buffer: enable, pull_enable: enable}
-  - {pin_num: G6, peripheral: FLEXIO, signal: 'D, 7', pin_signal: PIO2_7, slew_rate: slow, input_buffer: enable, pull_enable: enable}
-  - {pin_num: G4, peripheral: FLEXIO, signal: 'D, 8', pin_signal: PIO2_8, slew_rate: slow, input_buffer: enable, pull_enable: enable}
-  - {pin_num: G5, peripheral: FLEXIO, signal: 'D, 9', pin_signal: PIO2_9, slew_rate: slow, input_buffer: enable, pull_enable: enable}
-  - {pin_num: F5, peripheral: FLEXIO, signal: 'D, 10', pin_signal: PIO2_10, slew_rate: slow, input_buffer: enable, pull_enable: enable}
-  - {pin_num: F3, peripheral: FLEXIO, signal: 'D, 11', pin_signal: PIO2_11, slew_rate: slow, input_buffer: enable, pull_enable: enable}
-  - {pin_num: E3, peripheral: FLEXIO, signal: 'D, 12', pin_signal: PIO2_12, slew_rate: slow, input_buffer: enable, pull_enable: enable}
-  - {pin_num: E4, peripheral: FLEXIO, signal: 'D, 13', pin_signal: PIO2_13, slew_rate: slow, input_buffer: enable, pull_enable: enable}
-  - {pin_num: H2, peripheral: GPIO2, signal: 'IO, 0', pin_signal: PIO2_0, direction: OUTPUT, gpio_direction: out}
-  - {pin_num: G2, peripheral: GPIO2, signal: 'IO, 1', pin_signal: PIO2_1, direction: OUTPUT, gpio_direction: out}
-  - {pin_num: D3, peripheral: GPIO2, signal: 'IO, 15', pin_signal: PIO2_15, direction: OUTPUT, gpio_direction: out}
-  - {pin_num: G1, peripheral: FLEXIO, signal: 'D, 3', pin_signal: PIO2_3, direction: OUTPUT}
-  - {pin_num: G3, peripheral: FLEXIO, signal: 'D, 4', pin_signal: PIO2_4, direction: OUTPUT, slew_rate: slow, input_buffer: enable, pull_select: up, pull_enable: enable}
+  - {pin_num: H6, peripheral: FLEXIO, signal: 'IO, 6', pin_signal: PIO2_6, slew_rate: slow, input_buffer: enable, pull_enable: enable}
+  - {pin_num: G6, peripheral: FLEXIO, signal: 'IO, 7', pin_signal: PIO2_7, slew_rate: slow, input_buffer: enable, pull_enable: enable}
+  - {pin_num: G4, peripheral: FLEXIO, signal: 'IO, 8', pin_signal: PIO2_8, slew_rate: slow, input_buffer: enable, pull_enable: enable}
+  - {pin_num: G5, peripheral: FLEXIO, signal: 'IO, 9', pin_signal: PIO2_9, slew_rate: slow, input_buffer: enable, pull_enable: enable}
+  - {pin_num: F5, peripheral: FLEXIO, signal: 'IO, 10', pin_signal: PIO2_10, slew_rate: slow, input_buffer: enable, pull_enable: enable}
+  - {pin_num: F3, peripheral: FLEXIO, signal: 'IO, 11', pin_signal: PIO2_11, slew_rate: slow, input_buffer: enable, pull_enable: enable}
+  - {pin_num: E3, peripheral: FLEXIO, signal: 'IO, 12', pin_signal: PIO2_12, slew_rate: slow, input_buffer: enable, pull_enable: enable}
+  - {pin_num: E4, peripheral: FLEXIO, signal: 'IO, 13', pin_signal: PIO2_13, slew_rate: slow, input_buffer: enable, pull_enable: enable}
+  - {pin_num: H2, peripheral: GPIO2, signal: 'GPIO, 0', pin_signal: PIO2_0, direction: OUTPUT, gpio_direction: out}
+  - {pin_num: G2, peripheral: GPIO2, signal: 'GPIO, 1', pin_signal: PIO2_1, direction: OUTPUT, gpio_direction: out}
+  - {pin_num: D3, peripheral: GPIO2, signal: 'GPIO, 15', pin_signal: PIO2_15, direction: OUTPUT, gpio_direction: out}
+  - {pin_num: G1, peripheral: FLEXIO, signal: 'IO, 3', pin_signal: PIO2_3, input_buffer: enable}
+  - {pin_num: G3, peripheral: FLEXIO, signal: 'IO, 4', pin_signal: PIO2_4, slew_rate: slow, input_buffer: enable, pull_select: up, pull_enable: enable}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 /* clang-format on */
@@ -563,7 +542,7 @@ void BOARD_InitFlexIOPanelPins(void)
 BOARD_InitLcdDBIPanelPins:
 - options: {callFromInitBoot: 'false', coreID: cm33_core0, enableClock: 'true'}
 - pin_list:
-  - {pin_num: D3, peripheral: GPIO2, signal: 'IO, 15', pin_signal: PIO2_15, direction: OUTPUT, gpio_direction: out}
+  - {pin_num: D3, peripheral: GPIO2, signal: 'GPIO, 15', pin_signal: PIO2_15, direction: OUTPUT, gpio_direction: out}
   - {pin_num: H6, peripheral: LCDIF, signal: 'DBI_DATA, 0', pin_signal: PIO2_6, slew_rate: slow, input_buffer: enable, pull_enable: enable}
   - {pin_num: G6, peripheral: LCDIF, signal: 'DBI_DATA, 1', pin_signal: PIO2_7, slew_rate: slow, input_buffer: enable, pull_enable: enable}
   - {pin_num: G4, peripheral: LCDIF, signal: 'DBI_DATA, 2', pin_signal: PIO2_8, slew_rate: slow, input_buffer: enable, pull_enable: enable}
@@ -572,12 +551,12 @@ BOARD_InitLcdDBIPanelPins:
   - {pin_num: F3, peripheral: LCDIF, signal: 'DBI_DATA, 5', pin_signal: PIO2_11, slew_rate: slow, input_buffer: enable, pull_enable: enable}
   - {pin_num: E3, peripheral: LCDIF, signal: 'DBI_DATA, 6', pin_signal: PIO2_12, slew_rate: slow, input_buffer: enable, pull_enable: enable}
   - {pin_num: E4, peripheral: LCDIF, signal: 'DBI_DATA, 7', pin_signal: PIO2_13, slew_rate: slow, input_buffer: enable, pull_enable: enable}
-  - {pin_num: G1, peripheral: LCDIF, signal: DBI_RWDX, pin_signal: PIO2_3, direction: OUTPUT, slew_rate: slow, input_buffer: disable, pull_select: up, pull_enable: disable}
-  - {pin_num: G3, peripheral: LCDIF, signal: DBI_WRX, pin_signal: PIO2_4, direction: OUTPUT, slew_rate: standard, input_buffer: disable, pull_select: up,
+  - {pin_num: G1, peripheral: LCDIF, signal: RWDX, pin_signal: PIO2_3, direction: OUTPUT, slew_rate: slow, input_buffer: disable, pull_select: up, pull_enable: disable}
+  - {pin_num: G3, peripheral: LCDIF, signal: WRX, pin_signal: PIO2_4, direction: OUTPUT, slew_rate: standard, input_buffer: disable, pull_select: up,
     pull_enable: disable}
-  - {pin_num: H2, peripheral: LCDIF, signal: DBI_CSX_AB, pin_signal: PIO2_0, direction: OUTPUT, slew_rate: standard, input_buffer: disable, pull_select: up,
+  - {pin_num: H2, peripheral: LCDIF, signal: CSX, pin_signal: PIO2_0, direction: OUTPUT, slew_rate: standard, input_buffer: disable, pull_select: up,
     pull_enable: disable}
-  - {pin_num: G2, peripheral: LCDIF, signal: DBI_DCX_AB, pin_signal: PIO2_1, direction: OUTPUT, slew_rate: slow, input_buffer: disable, pull_select: up,
+  - {pin_num: G2, peripheral: LCDIF, signal: DSX, pin_signal: PIO2_1, direction: OUTPUT, slew_rate: slow, input_buffer: disable, pull_select: up,
     pull_enable: disable}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
@@ -1391,6 +1370,200 @@ void BOARD_InitPsRamPins_Xspi2(void)
 
     IOPCTL_PinMuxSet(4U, 20U, port4_pin20_config);
 }
+
+/* clang-format off */
+/*
+ * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
+BOARD_InitPmicPins:
+- options: {callFromInitBoot: 'false', coreID: cm33_core0, enableClock: 'true'}
+- pin_list:
+  - {pin_num: U8, peripheral: LPI2C15, signal: SCL, pin_signal: PMIC_I2C_SCL, open_drain: enable, input_buffer: enable}
+  - {pin_num: U7, peripheral: LPI2C15, signal: SDA, pin_signal: PMIC_I2C_SDA, open_drain: enable, input_buffer: enable}
+ * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
+ */
+/* clang-format on */
+
+/* FUNCTION ************************************************************************************************************
+ *
+ * Function Name : BOARD_InitPmicPins
+ * Description   : Configures pin routing and optionally pin electrical features.
+ *
+ * END ****************************************************************************************************************/
+/* Function assigned for the Cortex-M33 (Core #0) */
+void BOARD_InitPmicPins(void)
+{
+    /* Reset IOPCTL1 module */
+    RESET_ClearPeripheralReset(kIOPCTL1_RST_SHIFT_RSTn);
+
+    IOPCTL1->PMIC_I2C_SCL = ((IOPCTL1->PMIC_I2C_SCL &
+                              /* Mask bits to zero which are setting */
+                              (~(IOPCTL1_PMIC_I2C_SCL_IBENA_MASK | IOPCTL1_PMIC_I2C_SCL_ODENA_MASK)))
+
+                             /* Input Buffer Enable: Enables */
+                             | IOPCTL1_PMIC_I2C_SCL_IBENA(PMIC_I2C_SCL_IBENA_IBENA_1)
+
+                             /* Open-drain Mode Enable: Enables for simulated open-drain output (high drive disabled) */
+                             | IOPCTL1_PMIC_I2C_SCL_ODENA(PMIC_I2C_SCL_ODENA_ODENA_1));
+
+    IOPCTL1->PMIC_I2C_SDA = ((IOPCTL1->PMIC_I2C_SDA &
+                              /* Mask bits to zero which are setting */
+                              (~(IOPCTL1_PMIC_I2C_SDA_IBENA_MASK | IOPCTL1_PMIC_I2C_SDA_ODENA_MASK)))
+
+                             /* Input Buffer Enable: Enables */
+                             | IOPCTL1_PMIC_I2C_SDA_IBENA(PMIC_I2C_SDA_IBENA_IBENA_1)
+
+                             /* Open-drain Mode Enable: Enables for simulated open-drain output (high drive disabled) */
+                             | IOPCTL1_PMIC_I2C_SDA_ODENA(PMIC_I2C_SDA_ODENA_ODENA_1));
+}
+/* clang-format off */
+/*
+ * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
+BOARD_InitCameraPins:
+- options: {callFromInitBoot: 'false', coreID: cm33_core0, enableClock: 'true'}
+- pin_list:
+  - {pin_num: H2, peripheral: GPIO2, signal: 'GPIO, 0', pin_signal: PIO2_0/USB0_OVERCURRENTN/EZH_PIO0/FLEXIO_D0/LCD_DBI_CSX_AB, direction: OUTPUT, input_buffer: disable}
+  - {pin_num: G2, peripheral: FLEXIO, signal: 'IO, 1', pin_signal: PIO2_1/USB0_PORTPWRN/EZH_PIO1/FLEXIO_D1/LCD_DBI_DCX_AB}
+  - {pin_num: H3, peripheral: FLEXIO, signal: 'IO, 2', pin_signal: PIO2_2/LPSPI16_SOUT/EZH_PIO2/FLEXIO_D2/LCD_ENABLE/LCD_DBI_DATA_OEN, input_buffer: enable}
+  - {pin_num: J6, peripheral: GPIO2, signal: 'GPIO, 5', pin_signal: PIO2_5/LPSPI16_PCS0/EZH_PIO5/FLEXIO_D5/LCD_VSYNC/LCD_DBI_E, direction: INPUT, input_buffer: enable}
+  - {pin_num: H6, peripheral: FLEXIO, signal: 'IO, 6', pin_signal: PIO2_6/LPSPI16_PCS3/FLEXIO_D6/LCD_DATA0/LCD_DBI_DATA0, input_buffer: enable}
+  - {pin_num: G6, peripheral: FLEXIO, signal: 'IO, 7', pin_signal: PIO2_7/LPSPI16_PCS2/EZH_PIO7/FLEXIO_D7/LCD_D1/LCD_DBI_D1, input_buffer: enable}
+  - {pin_num: G4, peripheral: FLEXIO, signal: 'IO, 8', pin_signal: PIO2_8/LPSPI16_PCS1/EZH_PIO8/FLEXIO_D8/LCD_D2/LCD_DBI_D2, input_buffer: enable}
+  - {pin_num: G5, peripheral: FLEXIO, signal: 'IO, 9', pin_signal: PIO2_9/EZH_PIO9/FLEXIO_D9/LCD_D3/LCD_DBI_D3, input_buffer: enable}
+  - {pin_num: F5, peripheral: FLEXIO, signal: 'IO, 10', pin_signal: PIO2_10/EZH_PIO10/FLEXIO_D10/LCD_D4/LCD_DBI_D4, input_buffer: enable}
+  - {pin_num: F3, peripheral: FLEXIO, signal: 'IO, 11', pin_signal: PIO2_11/EZH_PIO11/FLEXIO_D11/LCD_D5/LCD_DBI_D5, input_buffer: enable}
+  - {pin_num: E3, peripheral: FLEXIO, signal: 'IO, 12', pin_signal: PIO2_12/EZH_PIO12/FLEXIO_D12/LCD_D6/LCD_DBI_D6, input_buffer: enable}
+  - {pin_num: E4, peripheral: FLEXIO, signal: 'IO, 13', pin_signal: PIO2_13/EZH_PIO13/FLEXIO_D13/LCD_D7/LCD_DBI_D7, input_buffer: enable}
+  - {pin_num: D3, peripheral: FLEXIO, signal: 'IO, 15', pin_signal: PIO2_15/EZH_PIO15/FLEXIO_D15/CLKCTL0_LOW_FREQ_CLKOUT_N, input_buffer: enable}
+ * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
+ */
+/* clang-format on */
+
+/* FUNCTION ************************************************************************************************************
+ *
+ * Function Name : BOARD_InitCameraPins
+ * Description   : Configures pin routing and optionally pin electrical features.
+ *
+ * END ****************************************************************************************************************/
+/* Function assigned for the Cortex-M33 (Core #0) */
+void BOARD_InitCameraPins(void)
+{
+
+    /* Enables the clock for the GPIO2 module */
+    CLOCK_EnableClock(kCLOCK_Gpio2);
+
+    gpio_pin_config_t gpio2_pinJ6_config = {
+        .pinDirection = kGPIO_DigitalInput,
+        .outputLogic = 0U
+    };
+    /* Initialize GPIO functionality on pin PIO2_5 (pin J6)  */
+    GPIO_PinInit(GPIO2, 5U, &gpio2_pinJ6_config);
+    /* Reset IOPCTL0 module */
+    RESET_ClearPeripheralReset(kIOPCTL0_RST_SHIFT_RSTn);
+
+    const uint32_t port2_pin0_config = (/* Pin is configured as PIO2_0 */
+                                        IOPCTL_PIO_FUNC0 |
+                                        /* Disable pull-up / pull-down function */
+                                        IOPCTL_PIO_PUPD_DI |
+                                        /* Enable pull-down function */
+                                        IOPCTL_PIO_PULLDOWN_EN |
+                                        /* Disable input buffer function */
+                                        IOPCTL_PIO_INBUF_DI |
+                                        /* Normal mode */
+                                        IOPCTL_PIO_SLEW_RATE_NORMAL |
+                                        /* Analog mux is disabled */
+                                        IOPCTL_PIO_ANAMUX_DI |
+                                        /* Pseudo Output Drain is disabled */
+                                        IOPCTL_PIO_PSEDRAIN_DI |
+                                        /* Input function is not inverted */
+                                        IOPCTL_PIO_INV_DI);
+    /* PORT2 PIN0 (coords: H2) is configured as PIO2_0 => RESET, J53-17 */
+    IOPCTL_PinMuxSet(2U, 0U, port2_pin0_config);
+
+    const uint32_t port2_pin1_config = (/* Pin is configured as FLEXIO_D1 */
+                                        IOPCTL_PIO_FUNC5 |
+                                        /* Disable pull-up / pull-down function */
+                                        IOPCTL_PIO_PUPD_DI |
+                                        /* Enable pull-down function */
+                                        IOPCTL_PIO_PULLDOWN_EN |
+                                        /* Disable input buffer function */
+                                        IOPCTL_PIO_INBUF_DI |
+                                        /* Normal mode */
+                                        IOPCTL_PIO_SLEW_RATE_NORMAL |
+                                        /* Analog mux is disabled */
+                                        IOPCTL_PIO_ANAMUX_DI |
+                                        /* Pseudo Output Drain is disabled */
+                                        IOPCTL_PIO_PSEDRAIN_DI |
+                                        /* Input function is not inverted */
+                                        IOPCTL_PIO_INV_DI);
+    /* PORT2 PIN1 (coords: G2) is configured as FLEXIO_D1 => XCLK, J53-8 */
+    IOPCTL_PinMuxSet(2U, 1U, port2_pin1_config);
+
+    const uint32_t port2_pin5_config = (/* Pin is configured as PIO2_5 */
+                                        IOPCTL_PIO_FUNC0 |
+                                        /* Disable pull-up / pull-down function */
+                                        IOPCTL_PIO_PUPD_DI |
+                                        /* Enable pull-down function */
+                                        IOPCTL_PIO_PULLDOWN_EN |
+                                        /* Enables input buffer function */
+                                        IOPCTL_PIO_INBUF_EN |
+                                        /* Normal mode */
+                                        IOPCTL_PIO_SLEW_RATE_NORMAL |
+                                        /* Analog mux is disabled */
+                                        IOPCTL_PIO_ANAMUX_DI |
+                                        /* Pseudo Output Drain is disabled */
+                                        IOPCTL_PIO_PSEDRAIN_DI |
+                                        /* Input function is not inverted */
+                                        IOPCTL_PIO_INV_DI);
+    /* PORT2 PIN5 (coords: J6) is configured as PIO2_5 => VSYNC, J53-5 */
+    IOPCTL_PinMuxSet(2U, 5U, port2_pin5_config);
+
+    const uint32_t flexio_config = (/* Pin is configured as FLEXIO_D10 */
+                                         IOPCTL_PIO_FUNC5 |
+                                         /* Disable pull-up / pull-down function */
+                                         IOPCTL_PIO_PUPD_DI |
+                                         /* Enable pull-down function */
+                                         IOPCTL_PIO_PULLDOWN_EN |
+                                         /* Enables input buffer function */
+                                         IOPCTL_PIO_INBUF_EN |
+                                         /* Normal mode */
+                                         IOPCTL_PIO_SLEW_RATE_NORMAL |
+                                         /* Analog mux is disabled */
+                                         IOPCTL_PIO_ANAMUX_DI |
+                                         /* Pseudo Output Drain is disabled */
+                                         IOPCTL_PIO_PSEDRAIN_DI |
+                                         /* Input function is not inverted */
+                                         IOPCTL_PIO_INV_DI);
+    /* PORT2 PIN2 (coords: H3) is configured as FLEXIO_D2 => HREF, J53-6 */
+    IOPCTL_PinMuxSet(2U, 2U, flexio_config);
+
+    /* PORT2 PIN6 (coords: H6) is configured as FLEXIO_D6 => D0, J53-16 */
+    IOPCTL_PinMuxSet(2U, 6U, flexio_config);
+
+    /* PORT2 PIN7 (coords: G6) is configured as FLEXIO_D7 => D1, J53-15 */
+    IOPCTL_PinMuxSet(2U, 7U, flexio_config);
+
+    /* PORT2 PIN8 (coords: G4) is configured as FLEXIO_D8 => D2, J53-14 */
+    IOPCTL_PinMuxSet(2U, 8U, flexio_config);
+
+    /* PORT2 PIN9 (coords: G5) is configured as FLEXIO_D9 => D3, J53-13 */
+    IOPCTL_PinMuxSet(2U, 9U, flexio_config);
+
+    /* PORT2 PIN10 (coords: F5) is configured as FLEXIO_D10 => D4, J53-12 */
+    IOPCTL_PinMuxSet(2U, 10U, flexio_config);
+
+    /* PORT2 PIN11 (coords: F3) is configured as FLEXIO_D11 => D5, J53-11 */
+    IOPCTL_PinMuxSet(2U, 11U, flexio_config);
+
+    /* PORT2 PIN12 (coords: E3) is configured as FLEXIO_D12 => D6, J53-10 */
+    IOPCTL_PinMuxSet(2U, 12U, flexio_config);
+
+    /* PORT2 PIN13 (coords: E4) is configured as FLEXIO_D13 => D7, J53-09 */
+    IOPCTL_PinMuxSet(2U, 13U, flexio_config);
+
+    /* PORT2 PIN15 (coords: D3) is configured as FLEXIO_D15 => PCLK, J53-7 */
+    IOPCTL_PinMuxSet(2U, 15U, flexio_config);
+}
+
 /***********************************************************************************************************************
  * EOF
  **********************************************************************************************************************/

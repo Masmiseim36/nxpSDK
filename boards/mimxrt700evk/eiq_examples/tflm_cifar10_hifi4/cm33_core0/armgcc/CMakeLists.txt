@@ -14,9 +14,6 @@ if(CMAKE_SCRIPT_MODE_FILE)
 endif()
 
 
-set(CMAKE_STATIC_LIBRARY_PREFIX)
-set(CMAKE_STATIC_LIBRARY_SUFFIX)
-
 set(CMAKE_EXECUTABLE_LIBRARY_PREFIX)
 set(CMAKE_EXECUTABLE_LIBRARY_SUFFIX)
 
@@ -50,6 +47,8 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${SdkRootDirPath}/boards/mimxrt700evk/eiq_examples/tflm_cifar10_hifi4/hifi4/binary/dsp_literal_release.bin"
 "${SdkRootDirPath}/boards/mimxrt700evk/eiq_examples/tflm_cifar10_hifi4/hifi4/binary/dsp_text_release.bin"
 "${SdkRootDirPath}/boards/mimxrt700evk/eiq_examples/tflm_cifar10_hifi4/hifi4/binary/dsp_data_release.bin"
+"${ProjDirPath}/../dsp_support.h"
+"${ProjDirPath}/../dsp_support.c"
 "${ProjDirPath}/../board.h"
 "${ProjDirPath}/../board.c"
 "${ProjDirPath}/../clock_config.h"
@@ -58,9 +57,9 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../pin_mux.h"
 "${ProjDirPath}/../hardware_init.c"
 "${ProjDirPath}/../app.h"
-"${ProjDirPath}/../dsp_support.c"
-"${ProjDirPath}/../dsp_support.h"
 "${ProjDirPath}/../incbin_cm33_core0.S"
+"${ProjDirPath}/../pmic_support.c"
+"${ProjDirPath}/../pmic_support.h"
 "${ProjDirPath}/../mcux_config.h"
 )
 

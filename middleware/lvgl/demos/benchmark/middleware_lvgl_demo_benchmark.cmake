@@ -6,13 +6,15 @@ message("${CMAKE_CURRENT_LIST_FILE} component is included.")
       target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
           ${CMAKE_CURRENT_LIST_DIR}/lv_demo_benchmark.c
           ${CMAKE_CURRENT_LIST_DIR}/assets/img_benchmark_avatar.c
-          ${CMAKE_CURRENT_LIST_DIR}/assets/img_benchmark_cogwheel_alpha256.c
-          ${CMAKE_CURRENT_LIST_DIR}/assets/img_benchmark_cogwheel_argb.c
-          ${CMAKE_CURRENT_LIST_DIR}/assets/img_benchmark_cogwheel_indexed16.c
-          ${CMAKE_CURRENT_LIST_DIR}/assets/img_benchmark_cogwheel_rgb.c
-          ${CMAKE_CURRENT_LIST_DIR}/assets/lv_font_benchmark_montserrat_12_compr_az.c.c
-          ${CMAKE_CURRENT_LIST_DIR}/assets/lv_font_benchmark_montserrat_16_compr_az.c.c
-          ${CMAKE_CURRENT_LIST_DIR}/assets/lv_font_benchmark_montserrat_28_compr_az.c.c
+          ${CMAKE_CURRENT_LIST_DIR}/assets/img_benchmark_lvgl_logo_argb.c
+          ${CMAKE_CURRENT_LIST_DIR}/assets/img_benchmark_lvgl_logo_rgb.c
+          ${CMAKE_CURRENT_LIST_DIR}/assets/lv_font_benchmark_montserrat_12_aligned.c
+          ${CMAKE_CURRENT_LIST_DIR}/assets/lv_font_benchmark_montserrat_14_aligned.c
+          ${CMAKE_CURRENT_LIST_DIR}/assets/lv_font_benchmark_montserrat_16_aligned.c
+          ${CMAKE_CURRENT_LIST_DIR}/assets/lv_font_benchmark_montserrat_18_aligned.c
+          ${CMAKE_CURRENT_LIST_DIR}/assets/lv_font_benchmark_montserrat_20_aligned.c
+          ${CMAKE_CURRENT_LIST_DIR}/assets/lv_font_benchmark_montserrat_24_aligned.c
+          ${CMAKE_CURRENT_LIST_DIR}/assets/lv_font_benchmark_montserrat_26_aligned.c
         )
 
   

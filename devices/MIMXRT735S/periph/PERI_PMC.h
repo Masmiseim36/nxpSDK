@@ -1,40 +1,40 @@
 /*
 ** ###################################################################
-**     Processors:          MIMXRT735SGAWAR_cm33_core0
-**                          MIMXRT735SGAWAR_cm33_core1
-**                          MIMXRT735SGAWAR_ezhv
-**                          MIMXRT735SGAWAR_hifi1
-**                          MIMXRT735SGFOA_cm33_core0
-**                          MIMXRT735SGFOA_cm33_core1
-**                          MIMXRT735SGFOA_ezhv
-**                          MIMXRT735SGFOA_hifi1
-**                          MIMXRT758SGAWAR_cm33_core0
-**                          MIMXRT758SGAWAR_cm33_core1
-**                          MIMXRT758SGAWAR_ezhv
-**                          MIMXRT758SGAWAR_hifi1
-**                          MIMXRT758SGFOA_cm33_core0
-**                          MIMXRT758SGFOA_cm33_core1
-**                          MIMXRT758SGFOA_ezhv
-**                          MIMXRT758SGFOA_hifi1
-**                          MIMXRT798SGAWAR_cm33_core0
-**                          MIMXRT798SGAWAR_cm33_core1
-**                          MIMXRT798SGAWAR_ezhv
-**                          MIMXRT798SGAWAR_hifi1
-**                          MIMXRT798SGAWAR_hifi4
-**                          MIMXRT798SGFOA_cm33_core0
-**                          MIMXRT798SGFOA_cm33_core1
-**                          MIMXRT798SGFOA_ezhv
-**                          MIMXRT798SGFOA_hifi1
-**                          MIMXRT798SGFOA_hifi4
+**     Processors:          MIMXRT735SGAWBR_cm33_core0
+**                          MIMXRT735SGAWBR_cm33_core1
+**                          MIMXRT735SGAWBR_ezhv
+**                          MIMXRT735SGAWBR_hifi1
+**                          MIMXRT735SGFOB_cm33_core0
+**                          MIMXRT735SGFOB_cm33_core1
+**                          MIMXRT735SGFOB_ezhv
+**                          MIMXRT735SGFOB_hifi1
+**                          MIMXRT758SGAWBR_cm33_core0
+**                          MIMXRT758SGAWBR_cm33_core1
+**                          MIMXRT758SGAWBR_ezhv
+**                          MIMXRT758SGAWBR_hifi1
+**                          MIMXRT758SGFOB_cm33_core0
+**                          MIMXRT758SGFOB_cm33_core1
+**                          MIMXRT758SGFOB_ezhv
+**                          MIMXRT758SGFOB_hifi1
+**                          MIMXRT798SGAWBR_cm33_core0
+**                          MIMXRT798SGAWBR_cm33_core1
+**                          MIMXRT798SGAWBR_ezhv
+**                          MIMXRT798SGAWBR_hifi1
+**                          MIMXRT798SGAWBR_hifi4
+**                          MIMXRT798SGFOB_cm33_core0
+**                          MIMXRT798SGFOB_cm33_core1
+**                          MIMXRT798SGFOB_ezhv
+**                          MIMXRT798SGFOB_hifi1
+**                          MIMXRT798SGFOB_hifi4
 **
-**     Version:             rev. 2.0, 2024-05-28
-**     Build:               b241121
+**     Version:             rev. 4.0, 2025-06-06
+**     Build:               b250606
 **
 **     Abstract:
 **         CMSIS Peripheral Access Layer for PMC
 **
 **     Copyright 1997-2016 Freescale Semiconductor, Inc.
-**     Copyright 2016-2024 NXP
+**     Copyright 2016-2025 NXP
 **     SPDX-License-Identifier: BSD-3-Clause
 **
 **     http:                 www.nxp.com
@@ -45,47 +45,52 @@
 **         Initial version.
 **     - rev. 2.0 (2024-05-28)
 **         Rev2 DraftA.
+**     - rev. 3.0 (2024-10-29)
+**         Change the device header file from single flat file to multiple files based on peripherals,
+**         each peripheral with dedicated header file located in periphN folder.
+**     - rev. 4.0 (2025-06-06)
+**         B0 initial version
 **
 ** ###################################################################
 */
 
 /*!
- * @file PMC.h
- * @version 2.0
- * @date 2024-05-28
+ * @file PERI_PMC.h
+ * @version 4.0
+ * @date 2025-06-06
  * @brief CMSIS Peripheral Access Layer for PMC
  *
  * CMSIS Peripheral Access Layer for PMC
  */
 
-#if !defined(PMC_H_)
-#define PMC_H_                                   /**< Symbol preventing repeated inclusion */
+#if !defined(PERI_PMC_H_)
+#define PERI_PMC_H_                              /**< Symbol preventing repeated inclusion */
 
-#if (defined(CPU_MIMXRT735SGAWAR_cm33_core0) || defined(CPU_MIMXRT735SGFOA_cm33_core0))
+#if (defined(CPU_MIMXRT735SGAWBR_cm33_core0) || defined(CPU_MIMXRT735SGFOB_cm33_core0))
 #include "MIMXRT735S_cm33_core0_COMMON.h"
-#elif (defined(CPU_MIMXRT735SGAWAR_cm33_core1) || defined(CPU_MIMXRT735SGFOA_cm33_core1))
+#elif (defined(CPU_MIMXRT735SGAWBR_cm33_core1) || defined(CPU_MIMXRT735SGFOB_cm33_core1))
 #include "MIMXRT735S_cm33_core1_COMMON.h"
-#elif (defined(CPU_MIMXRT735SGAWAR_ezhv) || defined(CPU_MIMXRT735SGFOA_ezhv))
+#elif (defined(CPU_MIMXRT735SGAWBR_ezhv) || defined(CPU_MIMXRT735SGFOB_ezhv))
 #include "MIMXRT735S_ezhv_COMMON.h"
-#elif (defined(CPU_MIMXRT735SGAWAR_hifi1) || defined(CPU_MIMXRT735SGFOA_hifi1))
+#elif (defined(CPU_MIMXRT735SGAWBR_hifi1) || defined(CPU_MIMXRT735SGFOB_hifi1))
 #include "MIMXRT735S_hifi1_COMMON.h"
-#elif (defined(CPU_MIMXRT758SGAWAR_cm33_core0) || defined(CPU_MIMXRT758SGFOA_cm33_core0))
+#elif (defined(CPU_MIMXRT758SGAWBR_cm33_core0) || defined(CPU_MIMXRT758SGFOB_cm33_core0))
 #include "MIMXRT758S_cm33_core0_COMMON.h"
-#elif (defined(CPU_MIMXRT758SGAWAR_cm33_core1) || defined(CPU_MIMXRT758SGFOA_cm33_core1))
+#elif (defined(CPU_MIMXRT758SGAWBR_cm33_core1) || defined(CPU_MIMXRT758SGFOB_cm33_core1))
 #include "MIMXRT758S_cm33_core1_COMMON.h"
-#elif (defined(CPU_MIMXRT758SGAWAR_ezhv) || defined(CPU_MIMXRT758SGFOA_ezhv))
+#elif (defined(CPU_MIMXRT758SGAWBR_ezhv) || defined(CPU_MIMXRT758SGFOB_ezhv))
 #include "MIMXRT758S_ezhv_COMMON.h"
-#elif (defined(CPU_MIMXRT758SGAWAR_hifi1) || defined(CPU_MIMXRT758SGFOA_hifi1))
+#elif (defined(CPU_MIMXRT758SGAWBR_hifi1) || defined(CPU_MIMXRT758SGFOB_hifi1))
 #include "MIMXRT758S_hifi1_COMMON.h"
-#elif (defined(CPU_MIMXRT798SGAWAR_cm33_core0) || defined(CPU_MIMXRT798SGFOA_cm33_core0))
+#elif (defined(CPU_MIMXRT798SGAWBR_cm33_core0) || defined(CPU_MIMXRT798SGFOB_cm33_core0))
 #include "MIMXRT798S_cm33_core0_COMMON.h"
-#elif (defined(CPU_MIMXRT798SGAWAR_cm33_core1) || defined(CPU_MIMXRT798SGFOA_cm33_core1))
+#elif (defined(CPU_MIMXRT798SGAWBR_cm33_core1) || defined(CPU_MIMXRT798SGFOB_cm33_core1))
 #include "MIMXRT798S_cm33_core1_COMMON.h"
-#elif (defined(CPU_MIMXRT798SGAWAR_ezhv) || defined(CPU_MIMXRT798SGFOA_ezhv))
+#elif (defined(CPU_MIMXRT798SGAWBR_ezhv) || defined(CPU_MIMXRT798SGFOB_ezhv))
 #include "MIMXRT798S_ezhv_COMMON.h"
-#elif (defined(CPU_MIMXRT798SGAWAR_hifi1) || defined(CPU_MIMXRT798SGFOA_hifi1))
+#elif (defined(CPU_MIMXRT798SGAWBR_hifi1) || defined(CPU_MIMXRT798SGFOB_hifi1))
 #include "MIMXRT798S_hifi1_COMMON.h"
-#elif (defined(CPU_MIMXRT798SGAWAR_hifi4) || defined(CPU_MIMXRT798SGFOA_hifi4))
+#elif (defined(CPU_MIMXRT798SGAWBR_hifi4) || defined(CPU_MIMXRT798SGFOB_hifi4))
 #include "MIMXRT798S_hifi4_COMMON.h"
 #else
   #error "No valid CPU defined!"
@@ -1440,13 +1445,15 @@ typedef struct {
  */
 #define PMC_PDRUNCFG0_V2MIPI_PD(x)               (((uint32_t)(((uint32_t)(x)) << PMC_PDRUNCFG0_V2MIPI_PD_SHIFT)) & PMC_PDRUNCFG0_V2MIPI_PD_MASK)
 
-#define PMC_PDRUNCFG0_DCDC_LP_MASK               (0x1000U)
-#define PMC_PDRUNCFG0_DCDC_LP_SHIFT              (12U)
-/*! DCDC_LP - DCDC Low-Power Mode
- *  0b0..Enables DCDC in high-power mode
- *  0b1..Enables DCDC in low-power mode
+#define PMC_PDRUNCFG0_DCDC_MODE_MASK             (0x1800U)
+#define PMC_PDRUNCFG0_DCDC_MODE_SHIFT            (11U)
+/*! DCDC_MODE - DCDC Power Mode
+ *  0b00..Enables DCDC in high-power mode
+ *  0b01..Enables DCDC in low-power mode
+ *  0b10..Enables DCDC in ultra-low-power mode
+ *  0b11..Enables DCDC in ultra-low-power mode
  */
-#define PMC_PDRUNCFG0_DCDC_LP(x)                 (((uint32_t)(((uint32_t)(x)) << PMC_PDRUNCFG0_DCDC_LP_SHIFT)) & PMC_PDRUNCFG0_DCDC_LP_MASK)
+#define PMC_PDRUNCFG0_DCDC_MODE(x)               (((uint32_t)(((uint32_t)(x)) << PMC_PDRUNCFG0_DCDC_MODE_SHIFT)) & PMC_PDRUNCFG0_DCDC_MODE_MASK)
 
 #define PMC_PDRUNCFG0_DCDC_VSEL_MASK             (0x2000U)
 #define PMC_PDRUNCFG0_DCDC_VSEL_SHIFT            (13U)
@@ -2640,13 +2647,15 @@ typedef struct {
  */
 #define PMC_PDSLEEPCFG0_V2MIPI_PD(x)             (((uint32_t)(((uint32_t)(x)) << PMC_PDSLEEPCFG0_V2MIPI_PD_SHIFT)) & PMC_PDSLEEPCFG0_V2MIPI_PD_MASK)
 
-#define PMC_PDSLEEPCFG0_DCDC_LP_MASK             (0x1000U)
-#define PMC_PDSLEEPCFG0_DCDC_LP_SHIFT            (12U)
-/*! DCDC_LP - DCDC Low-Power Mode
- *  0b0..Enables DCDC in high-power mode
- *  0b1..Enables DCDC in low-power mode
+#define PMC_PDSLEEPCFG0_DCDC_MODE_MASK           (0x1800U)
+#define PMC_PDSLEEPCFG0_DCDC_MODE_SHIFT          (11U)
+/*! DCDC_MODE - DCDC Power Mode
+ *  0b00..Enables DCDC in high-power mode
+ *  0b01..Enables DCDC in low-power mode
+ *  0b10..Enables DCDC in ultra-low-power mode
+ *  0b11..Enables DCDC in ultra-low-power mode
  */
-#define PMC_PDSLEEPCFG0_DCDC_LP(x)               (((uint32_t)(((uint32_t)(x)) << PMC_PDSLEEPCFG0_DCDC_LP_SHIFT)) & PMC_PDSLEEPCFG0_DCDC_LP_MASK)
+#define PMC_PDSLEEPCFG0_DCDC_MODE(x)             (((uint32_t)(((uint32_t)(x)) << PMC_PDSLEEPCFG0_DCDC_MODE_SHIFT)) & PMC_PDSLEEPCFG0_DCDC_MODE_MASK)
 
 #define PMC_PDSLEEPCFG0_DCDC_VSEL_MASK           (0x2000U)
 #define PMC_PDSLEEPCFG0_DCDC_VSEL_SHIFT          (13U)
@@ -3848,13 +3857,15 @@ typedef struct {
  */
 #define PMC_PDCFGSTATUS0_V2MIPI_PD(x)            (((uint32_t)(((uint32_t)(x)) << PMC_PDCFGSTATUS0_V2MIPI_PD_SHIFT)) & PMC_PDCFGSTATUS0_V2MIPI_PD_MASK)
 
-#define PMC_PDCFGSTATUS0_DCDC_LP_MASK            (0x1000U)
-#define PMC_PDCFGSTATUS0_DCDC_LP_SHIFT           (12U)
-/*! DCDC_LP - DCDC Low-Power Mode
- *  0b0..DCDC in high-power mode
- *  0b1..DCDC in low-power mode
+#define PMC_PDCFGSTATUS0_DCDC_MODE_MASK          (0x1800U)
+#define PMC_PDCFGSTATUS0_DCDC_MODE_SHIFT         (11U)
+/*! DCDC_MODE - DCDC Power Mode
+ *  0b00..DCDC in high-power mode
+ *  0b01..DCDC in low-power mode
+ *  0b10..DCDC in ultra-low-power mode
+ *  0b11..DCDC in ultra-low-power mode
  */
-#define PMC_PDCFGSTATUS0_DCDC_LP(x)              (((uint32_t)(((uint32_t)(x)) << PMC_PDCFGSTATUS0_DCDC_LP_SHIFT)) & PMC_PDCFGSTATUS0_DCDC_LP_MASK)
+#define PMC_PDCFGSTATUS0_DCDC_MODE(x)            (((uint32_t)(((uint32_t)(x)) << PMC_PDCFGSTATUS0_DCDC_MODE_SHIFT)) & PMC_PDCFGSTATUS0_DCDC_MODE_MASK)
 
 #define PMC_PDCFGSTATUS0_DCDC_VSEL_MASK          (0x2000U)
 #define PMC_PDCFGSTATUS0_DCDC_VSEL_SHIFT         (13U)
@@ -5127,5 +5138,5 @@ typedef struct {
  */ /* end of group Peripheral_access_layer */
 
 
-#endif  /* PMC_H_ */
+#endif  /* PERI_PMC_H_ */
 

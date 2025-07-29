@@ -1,7 +1,6 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2023 NXP
- * All rights reserved.
+ * Copyright 2016-2025 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -55,11 +54,11 @@ static int32_t my_ept_read_cb(void *payload, uint32_t payload_len, uint32_t src,
  */
 int main(void)
 {
-    volatile int32_t has_received = 0;
-    struct rpmsg_lite_ept_static_context my_ept_context;
-    struct rpmsg_lite_endpoint *my_ept;
-    struct rpmsg_lite_instance rpmsg_ctxt;
-    struct rpmsg_lite_instance *my_rpmsg;
+    volatile int32_t has_received                       = 0;
+    struct rpmsg_lite_ept_static_context my_ept_context = {0};
+    struct rpmsg_lite_endpoint *my_ept                  = NULL;
+    struct rpmsg_lite_instance rpmsg_ctxt               = {0};
+    struct rpmsg_lite_instance *my_rpmsg                = NULL;
 
     /* Initialize standard SDK demo application pins */
     BOARD_InitHardware();
@@ -74,25 +73,38 @@ int main(void)
     /* Get the startup data */
     do
     {
-        status = MCMGR_GetStartupData(&startupData);
+        status = MCMGR_GetStartupData(kMCMGR_Core0, &startupData);
     } while (status != kStatus_MCMGR_Success);
 
-    my_rpmsg = rpmsg_lite_remote_init((void *)(char *)(platform_patova(startupData)), RPMSG_LITE_LINK_ID, RL_NO_FLAGS, &rpmsg_ctxt);
+    my_rpmsg = rpmsg_lite_remote_init((void *)(char *)(platform_patova(startupData)), RPMSG_LITE_LINK_ID, RL_NO_FLAGS,
+                                      &rpmsg_ctxt);
+    if (my_rpmsg == NULL)
+    {
+        goto cleanup;
+    }
 
     /* Signal the other core we are ready by triggering the event and passing the APP_RPMSG_READY_EVENT_DATA */
-    (void)MCMGR_TriggerEvent(kMCMGR_RemoteApplicationEvent, APP_RPMSG_READY_EVENT_DATA);
+    (void)MCMGR_TriggerEvent(kMCMGR_Core0, kMCMGR_RemoteApplicationEvent, APP_RPMSG_READY_EVENT_DATA);
 #else
     my_rpmsg = rpmsg_lite_remote_init((void *)RPMSG_LITE_SHMEM_BASE, RPMSG_LITE_LINK_ID, RL_NO_FLAGS, &rpmsg_ctxt);
+    if (my_rpmsg == NULL)
+    {
+        goto cleanup;
+    }
 #endif /* MCMGR_USED */
 
     rpmsg_lite_wait_for_link_up(my_rpmsg, RL_BLOCK);
 
     my_ept = rpmsg_lite_create_ept(my_rpmsg, LOCAL_EPT_ADDR, my_ept_read_cb, (void *)&has_received, &my_ept_context);
+    if (my_ept == NULL)
+    {
+        goto cleanup;
+    }
 
 #ifdef MCMGR_USED
     /* Signal the other core the endpoint has been created by triggering the event and passing the
      * APP_RPMSG_READY_EP_EVENT_DATA */
-    (void)MCMGR_TriggerEvent(kMCMGR_RemoteApplicationEvent, APP_RPMSG_EP_READY_EVENT_DATA);
+    (void)MCMGR_TriggerEvent(kMCMGR_Core0, kMCMGR_RemoteApplicationEvent, APP_RPMSG_EP_READY_EVENT_DATA);
 #endif
 
 #ifdef RPMSG_LITE_NS_USED
@@ -110,9 +122,19 @@ int main(void)
         }
     }
 
-    (void)rpmsg_lite_destroy_ept(my_rpmsg, my_ept);
-    my_ept = ((void *)0);
-    (void)rpmsg_lite_deinit(my_rpmsg);
+cleanup:
+    if (my_ept)
+    {
+        (void)rpmsg_lite_destroy_ept(my_rpmsg, my_ept);
+        my_ept = ((void *)0);
+    }
+
+    if (my_rpmsg)
+    {
+        (void)rpmsg_lite_deinit(my_rpmsg);
+        my_rpmsg = ((void *)0);
+    }
+
     msg.DATA = 0U;
 
     /* End of the example */

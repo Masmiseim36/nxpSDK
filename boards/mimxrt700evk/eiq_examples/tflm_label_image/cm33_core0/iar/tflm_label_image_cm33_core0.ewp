@@ -247,10 +247,12 @@
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
-          <state>CPU_MIMXRT798SGFOA_cm33_core0</state>
+          <state>CPU_MIMXRT798SGFOB_cm33_core0</state>
+          <state>MIMXRT798S_cm33_core0_SERIES</state>
           <state>BOOT_HEADER_ENABLE=1</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
           <state>TF_LITE_STATIC_MEMORY</state>
+          <state>KERNELS_OPTIMIZED_FOR_SPEED</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -331,7 +333,7 @@
         </option>
         <option>
           <name>IExtraOptions</name>
-          <state>--diag_suppress=Pe167  --diag_suppress=Pe260,Pe1031  --diag_suppress=Pa082,Pa050  --diag_suppress=Pa082,Pa050,Pe188,Pe069,Go003,Pa050,Pa082,Pa084,Pa093,Pe069,Pe111,Pe161,Pe174,Pe177,Pe186,Pe188,Pe550,Pe611,Pe997,Pe1444,Pe1675,Pe830 --diag_suppress=Pa082,Pa050  --diag_suppress=Pa082,Pa050,Pe188,Pe069,Go003,Pa050,Pa082,Pa084,Pa093,Pe069,Pe111,Pe161,Pe174,Pe177,Pe186,Pe188,Pe550,Pe611,Pe997,Pe1444,Pe1675,Pe830</state>
+          <state>--diag_suppress=Pe167  --diag_suppress=Pe260,Pe1031  --diag_suppress=Pa082,Pa050  --diag_suppress=Pa082,Pa050,Pe188,Pe069,Go003,Pa050,Pa082,Pa183,Pa084,Pa093,Pe069,Pe111,Pe161,Pe174,Pe177,Pe186,Pe188,Pe550,Pe611,Pe997,Pe1444,Pe1675,Pe830,Pe1097 --diag_suppress=Pa082,Pa050  --diag_suppress=Pa082,Pa050,Pe188,Pe069,Go003,Pa050,Pa082,Pa084,Pa093,Pe069,Pe111,Pe161,Pe174,Pe177,Pe186,Pe188,Pe550,Pe611,Pe997,Pe1444,Pe1675,Pe830</state>
         </option>
         <option>
           <name>CCLangConformance</name>
@@ -576,7 +578,8 @@
         <option>
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
-          <state>CPU_MIMXRT798SGFOA_cm33_core0</state>
+          <state>CPU_MIMXRT798SGFOB_cm33_core0</state>
+          <state>MIMXRT798S_cm33_core0_SERIES</state>
         </option>
         <option>
           <name>AList</name>
@@ -705,7 +708,7 @@
         </option>
         <option>
           <name>PreInclude</name>
-          <state/>
+          <state>$PROJ_DIR$/../mcux_config.h</state>
         </option>
       </data>
     </settings>
@@ -1404,10 +1407,12 @@
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
-          <state>CPU_MIMXRT798SGFOA_cm33_core0</state>
+          <state>CPU_MIMXRT798SGFOB_cm33_core0</state>
+          <state>MIMXRT798S_cm33_core0_SERIES</state>
           <state>BOOT_HEADER_ENABLE=1</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
           <state>TF_LITE_STATIC_MEMORY</state>
+          <state>KERNELS_OPTIMIZED_FOR_SPEED</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -1488,7 +1493,7 @@
         </option>
         <option>
           <name>IExtraOptions</name>
-          <state>--diag_suppress=Pe167  --diag_suppress=Pe260,Pe1031  --diag_suppress=Pa082,Pa050  --diag_suppress=Pa082,Pa050,Pe188,Pe069,Go003,Pa050,Pa082,Pa084,Pa093,Pe069,Pe111,Pe161,Pe174,Pe177,Pe186,Pe188,Pe550,Pe611,Pe997,Pe1444,Pe1675,Pe830 --diag_suppress=Pa082,Pa050  --diag_suppress=Pa082,Pa050,Pe188,Pe069,Go003,Pa050,Pa082,Pa084,Pa093,Pe069,Pe111,Pe161,Pe174,Pe177,Pe186,Pe188,Pe550,Pe611,Pe997,Pe1444,Pe1675,Pe830</state>
+          <state>--diag_suppress=Pe167  --diag_suppress=Pe260,Pe1031  --diag_suppress=Pa082,Pa050  --diag_suppress=Pa082,Pa050,Pe188,Pe069,Go003,Pa050,Pa082,Pa183,Pa084,Pa093,Pe069,Pe111,Pe161,Pe174,Pe177,Pe186,Pe188,Pe550,Pe611,Pe997,Pe1444,Pe1675,Pe830,Pe1097 --diag_suppress=Pa082,Pa050  --diag_suppress=Pa082,Pa050,Pe188,Pe069,Go003,Pa050,Pa082,Pa084,Pa093,Pe069,Pe111,Pe161,Pe174,Pe177,Pe186,Pe188,Pe550,Pe611,Pe997,Pe1444,Pe1675,Pe830</state>
         </option>
         <option>
           <name>CCLangConformance</name>
@@ -1733,7 +1738,8 @@
         <option>
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
-          <state>CPU_MIMXRT798SGFOA_cm33_core0</state>
+          <state>CPU_MIMXRT798SGFOB_cm33_core0</state>
+          <state>MIMXRT798S_cm33_core0_SERIES</state>
         </option>
         <option>
           <name>AList</name>
@@ -1862,7 +1868,7 @@
         </option>
         <option>
           <name>PreInclude</name>
-          <state/>
+          <state>$PROJ_DIR$/../mcux_config.h</state>
         </option>
       </data>
     </settings>
@@ -2392,6 +2398,12 @@
     <file>
       <name>$PROJ_DIR$/../mcux_config.h</name>
     </file>
+    <file>
+      <name>$PROJ_DIR$/../mcux_config.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../mcux_config.h</name>
+    </file>
   </group>
   <group>
     <name>board</name>
@@ -2728,12 +2740,9 @@
   </group>
   <group>
     <name>startup</name>
-    <group>
-      <name>iar</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT798S/iar/startup_MIMXRT798S_cm33_core0.s</name>
-      </file>
-    </group>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT798S/startup_MIMXRT798S_cm33_core0.c</name>
+    </file>
   </group>
   <group>
     <name>drivers</name>
@@ -2893,6 +2902,24 @@
                 <file>
                   <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/compiler/mlir/lite/schema/schema_utils.h</name>
                 </file>
+              </group>
+              <group>
+                <name>core</name>
+                <group>
+                  <name>api</name>
+                  <file>
+                    <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/compiler/mlir/lite/core/api/error_reporter.h</name>
+                  </file>
+                </group>
+                <group>
+                  <name>c</name>
+                  <file>
+                    <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/compiler/mlir/lite/core/c/builtin_op_data.h</name>
+                  </file>
+                  <file>
+                    <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/compiler/mlir/lite/core/c/tflite_types.h</name>
+                  </file>
+                </group>
               </group>
             </group>
           </group>
@@ -3286,6 +3313,9 @@
               <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/compatibility.h</name>
             </file>
             <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/compression.h</name>
+            </file>
+            <file>
               <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/debug_log.h</name>
             </file>
             <file>
@@ -3293,6 +3323,9 @@
             </file>
             <file>
               <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/flatbuffer_utils.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/hexdump.h</name>
             </file>
             <file>
               <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/memory_helpers.h</name>
@@ -3358,6 +3391,12 @@
               <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/recording_micro_interpreter.h</name>
             </file>
             <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/span.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/static_vector.h</name>
+            </file>
+            <file>
               <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/system_setup.h</name>
             </file>
             <file>
@@ -3378,6 +3417,9 @@
                 <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/add.h</name>
               </file>
               <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/batch_matmul.h</name>
+              </file>
+              <file>
                 <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/circular_buffer.h</name>
               </file>
               <file>
@@ -3388,6 +3430,9 @@
               </file>
               <file>
                 <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/conv_test.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/decompress.h</name>
               </file>
               <file>
                 <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/depthwise_conv.h</name>
@@ -3432,6 +3477,9 @@
                 <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/lstm_shared.h</name>
               </file>
               <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/maximum_minimum.h</name>
+              </file>
+              <file>
                 <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/micro_ops.h</name>
               </file>
               <file>
@@ -3469,6 +3517,9 @@
               </file>
               <file>
                 <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/svdf.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/transpose.h</name>
               </file>
               <file>
                 <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/transpose_conv.h</name>
@@ -3514,6 +3565,12 @@
                 <file>
                   <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/xtensa_svdf.h</name>
                 </file>
+                <group>
+                  <name>hifimini</name>
+                  <file>
+                    <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/hifimini/fixedpoint_utils.h</name>
+                  </file>
+                </group>
               </group>
               <group>
                 <name>neutron</name>
@@ -3524,6 +3581,12 @@
                   <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/neutron/neutron.h</name>
                 </file>
               </group>
+            </group>
+            <group>
+              <name>compression</name>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/compression/metadata_saved.h</name>
+              </file>
             </group>
             <group>
               <name>memory_planner</name>
@@ -3845,6 +3908,15 @@
               <file>
                 <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/verifier.h</name>
               </file>
+              <group>
+                <name>pch</name>
+                <file>
+                  <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/pch/flatc_pch.h</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/pch/pch.h</name>
+                </file>
+              </group>
             </group>
           </group>
         </group>
@@ -3948,6 +4020,9 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../example_board_readme.md</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../examples_shared_readme.md</name>
     </file>
   </group>
 </project>

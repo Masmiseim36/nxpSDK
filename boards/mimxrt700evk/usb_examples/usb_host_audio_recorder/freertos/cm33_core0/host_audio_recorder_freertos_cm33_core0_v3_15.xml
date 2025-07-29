@@ -29,12 +29,12 @@
     <definition extID="component.gpio_adapter.MIMXRT798S"/>
     <definition extID="component.lpuart_adapter.MIMXRT798S"/>
     <definition extID="component.osa_template_config.MIMXRT798S"/>
-    <definition extID="component.osa_interface.MIMXRT798S"/>
     <definition extID="component.osa.MIMXRT798S"/>
     <definition extID="component.osa_free_rtos.MIMXRT798S"/>
     <definition extID="middleware.usb.common_header.MIMXRT798S"/>
     <definition extID="middleware.usb.host.common_header.MIMXRT798S"/>
     <definition extID="middleware.usb.host_controller_ehci.MIMXRT798S"/>
+    <definition extID="middleware.usb.host.ehci_config_header.MIMXRT798S"/>
     <definition extID="middleware.usb.host.stack.MIMXRT798S"/>
     <definition extID="middleware.usb.host_audio.MIMXRT798S"/>
     <definition extID="middleware.usb.phy.MIMXRT798S"/>
@@ -50,6 +50,7 @@
     <definition extID="middleware.freertos-kernel.MIMXRT798S"/>
     <definition extID="middleware.freertos-kernel.heap_4.MIMXRT798S"/>
     <definition extID="middleware.freertos-kernel.cm33_non_trustzone.MIMXRT798S"/>
+    <definition extID="middleware.freertos-kernel.extension.MIMXRT798S"/>
     <definition extID="middleware.freertos-kernel.config.MIMXRT798S"/>
     <definition extID="iar"/>
     <definition extID="mdk"/>
@@ -59,7 +60,7 @@
     <definition extID="com.crt.advproject.config.exe.debug"/>
     <definition extID="com.crt.advproject.config.exe.release"/>
   </externalDefinitions>
-  <example id="mimxrt700evk_host_audio_recorder_freertos_cm33_core0" name="host_audio_recorder_freertos_cm33_core0" device_core="cm33_core0_MIMXRT798S" dependency="platform.drivers.flash_config.mimxrt700evk.MIMXRT798S CMSIS_Include_core_cm.MIMXRT798S device.MIMXRT798S_CMSIS.MIMXRT798S device.MIMXRT798S_system.MIMXRT798S device.MIMXRT798S_startup.MIMXRT798S platform.drivers.clock.MIMXRT798S platform.drivers.lpc_iopctl.MIMXRT798S platform.drivers.power.MIMXRT798S platform.drivers.reset.MIMXRT798S platform.drivers.cache_xcache.MIMXRT798S platform.drivers.common.MIMXRT798S platform.drivers.glikey.MIMXRT798S platform.drivers.gpio.MIMXRT798S platform.drivers.lpflexcomm.MIMXRT798S platform.drivers.lpflexcomm_lpuart.MIMXRT798S platform.drivers.usdhc.MIMXRT798S platform.drivers.xspi.MIMXRT798S platform.utilities.assert.MIMXRT798S platform.utilities.misc_utilities.MIMXRT798S component.lists.MIMXRT798S utility.str.MIMXRT798S utility.debug_console.MIMXRT798S component.serial_manager.MIMXRT798S component.serial_manager_uart.MIMXRT798S component.gpio_adapter.MIMXRT798S component.lpuart_adapter.MIMXRT798S component.osa_template_config.MIMXRT798S component.osa_interface.MIMXRT798S component.osa.MIMXRT798S component.osa_free_rtos.MIMXRT798S middleware.usb.common_header.MIMXRT798S middleware.usb.host.common_header.MIMXRT798S middleware.usb.host_controller_ehci.MIMXRT798S middleware.usb.host.stack.MIMXRT798S middleware.usb.host_audio.MIMXRT798S middleware.usb.phy.MIMXRT798S middleware.fatfs.MIMXRT798S middleware.fatfs.template_sd.MIMXRT798S middleware.fatfs.sd.MIMXRT798S middleware.sdmmc.common.MIMXRT798S middleware.sdmmc.osa.freertos.MIMXRT798S middleware.sdmmc.sd.MIMXRT798S middleware.sdmmc.host.usdhc.MIMXRT798S middleware.sdmmc.host.usdhc.polling.MIMXRT798S middleware.sdmmc.usdhc.template.MIMXRT798S middleware.freertos-kernel.MIMXRT798S middleware.freertos-kernel.heap_4.MIMXRT798S middleware.freertos-kernel.cm33_non_trustzone.MIMXRT798S middleware.freertos-kernel.config.MIMXRT798S" category="usb_examples">
+  <example id="mimxrt700evk_host_audio_recorder_freertos_cm33_core0" name="host_audio_recorder_freertos_cm33_core0" device_core="cm33_core0_MIMXRT798S" dependency="platform.drivers.flash_config.mimxrt700evk.MIMXRT798S CMSIS_Include_core_cm.MIMXRT798S device.MIMXRT798S_CMSIS.MIMXRT798S device.MIMXRT798S_system.MIMXRT798S device.MIMXRT798S_startup.MIMXRT798S platform.drivers.clock.MIMXRT798S platform.drivers.lpc_iopctl.MIMXRT798S platform.drivers.power.MIMXRT798S platform.drivers.reset.MIMXRT798S platform.drivers.cache_xcache.MIMXRT798S platform.drivers.common.MIMXRT798S platform.drivers.glikey.MIMXRT798S platform.drivers.gpio.MIMXRT798S platform.drivers.lpflexcomm.MIMXRT798S platform.drivers.lpflexcomm_lpuart.MIMXRT798S platform.drivers.usdhc.MIMXRT798S platform.drivers.xspi.MIMXRT798S platform.utilities.assert.MIMXRT798S platform.utilities.misc_utilities.MIMXRT798S component.lists.MIMXRT798S utility.str.MIMXRT798S utility.debug_console.MIMXRT798S component.serial_manager.MIMXRT798S component.serial_manager_uart.MIMXRT798S component.gpio_adapter.MIMXRT798S component.lpuart_adapter.MIMXRT798S component.osa_template_config.MIMXRT798S component.osa.MIMXRT798S component.osa_free_rtos.MIMXRT798S middleware.usb.common_header.MIMXRT798S middleware.usb.host.common_header.MIMXRT798S middleware.usb.host_controller_ehci.MIMXRT798S middleware.usb.host.ehci_config_header.MIMXRT798S middleware.usb.host.stack.MIMXRT798S middleware.usb.host_audio.MIMXRT798S middleware.usb.phy.MIMXRT798S middleware.fatfs.MIMXRT798S middleware.fatfs.template_sd.MIMXRT798S middleware.fatfs.sd.MIMXRT798S middleware.sdmmc.common.MIMXRT798S middleware.sdmmc.osa.freertos.MIMXRT798S middleware.sdmmc.sd.MIMXRT798S middleware.sdmmc.host.usdhc.MIMXRT798S middleware.sdmmc.host.usdhc.polling.MIMXRT798S middleware.sdmmc.usdhc.template.MIMXRT798S middleware.freertos-kernel.MIMXRT798S middleware.freertos-kernel.heap_4.MIMXRT798S middleware.freertos-kernel.cm33_non_trustzone.MIMXRT798S middleware.freertos-kernel.extension.MIMXRT798S middleware.freertos-kernel.config.MIMXRT798S" category="usb_examples">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -72,7 +73,7 @@
       <toolchainSetting id_refs="com.nxp.mcuxpresso">
         <option id="gnu.c.compiler.option.preprocessor.def.symbols" type="stringList">
           <value>MCUXPRESSO_SDK</value>
-          <value>CPU_MIMXRT798SGFOA_cm33_core0</value>
+          <value>CPU_MIMXRT798SGFOB_cm33_core0</value>
           <value>BOOT_HEADER_ENABLE=1</value>
           <value>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</value>
           <value>USB_AUDIO_RECORDER_SDCARD_BUFFER_LENGTH=3072</value>
@@ -80,8 +81,10 @@
           <value>USB_STACK_FREERTOS</value>
           <value>USB_HOST_CONFIG_BUFFER_PROPERTY_CACHEABLE=1</value>
           <value>FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1</value>
+          <value>EUSB_CONFIG_NATIVE_MODE=0</value>
           <value>SDK_DEBUGCONSOLE=1</value>
           <value>MCUX_META_BUILD</value>
+          <value>MIMXRT798S_cm33_core0_SERIES</value>
           <value>DEBUG_CONSOLE_TRANSFER_NON_BLOCKING</value>
           <value>SERIAL_PORT_TYPE_UART=1</value>
           <value>USE_RTOS=1</value>
@@ -230,10 +233,10 @@
       <files mask="FreeRTOSConfig_Gen.h"/>
       <files mask="ffconf_gen.h"/>
       <files mask="fsl_os_abstraction_config.h"/>
+      <files mask="usb_host_config.h"/>
     </source>
     <source path="." project_relative_path="source" type="c_include">
       <files mask="fsl_debug_console_conf.h"/>
-      <files mask="usb_host_config.h"/>
     </source>
     <source path="." project_relative_path="source" type="c_preinclude">
       <files mask="mcux_config.h"/>
@@ -246,6 +249,9 @@
       <files mask="open_uart.jpg"/>
       <files mask="PCM2WAV.jpg"/>
       <files mask="sdcard_insert.jpg"/>
+    </source>
+    <source path="." project_relative_path="doc" type="doc">
+      <files mask="examples_shared_readme.md"/>
     </source>
   </example>
 </ksdk:examples>

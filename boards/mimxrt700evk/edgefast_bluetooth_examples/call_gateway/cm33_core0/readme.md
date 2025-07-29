@@ -48,9 +48,10 @@ Scanning started
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Procedures to run
-1 input "help" to show command list,
-2 the scanning of the device is started automatically. It starts to scann the call_terminal device,
-3 After the conenction is estabilished, the log is following.
+1. input "help" to show command list,
+2. the scanning of the device is started automatically. It starts to scann the call_terminal device,
+3. After the conenction is estabilished, the log is following.
+
 Please note that if the Security is changed with error 0x02, it means the key is missing. Please clear bonding information by sending
 commander "unpair". And, retry again.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -81,10 +82,14 @@ conn 202DE3C0 snk ctx 519 src ctx 3
 conn 202DE3C0 dir 2 ep 202DAE38
 Discover sources complete: err 0
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-4 After the message "Discover complete (err 0)! TBS count 1, GTBS found? Yes" is printed on call_terminal side. All feature are ready.
-5.1. Start the call by local. Enter "call_outgoing 0 <XX>:<YY>" on the call_gateway side, or enter "call_outgoing 0 <XX>:<YY>" on the call_terminal side,
+4 After the message "Discover complete (err 0)! TBS count 1, GTBS found? Yes" is printed on call_terminal side. All features are ready.
+
+5.1. Start the call by local.
+The commander is showing as "call_outgoing \<telephone bearer index\> \<callee_URI\>". The "\<telephone bearer index\>" is 0 for the application. The "\<callee_URI\>" is the callee URI. Enter "call_outgoing 0 \<XX\>:\<YY\>" on the call_gateway side, or enter "call_outgoing 0 \<XX\>:\<YY\>" on the call_terminal side.
+Such as the entered command line is "call_outgoing 0 tel:qq", the "\<telephone bearer index\>" is 0, and the "\<callee_URI\>" is "tel:qq" here.
 The log is following,
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+call_outgoing 0 tel:qq
 Start a outgoing call, call index 1, callee tel:qq
 Audio Stream 202F0688 configured
 Audio Stream 202F0650 configured
@@ -97,7 +102,11 @@ Audio Stream 202F0650 enabled
 Audio Stream 202F0650 started
 Audio Stream 202F0688 started
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-5.2 Start a call by remote. Enter "remote_call_incoming 0 <AA>:<BB> <CC>:<DD> <EE>" on the call_gateway side.
+5.2 Start a call by remote.
+The commander is showing as "remote_call_incoming \<telephone bearer index\> \<callee_URI\> \<caller_URI\> \<caller_name\>".
+The "\<telephone bearer index\>" is 0 for the application. The "\<callee_URI\>" and "\<caller_URI\>" are the callee URI and caller URI. "\<caller_name\>" is caller name. Enter "remote_call_incoming 0 \<AA\>:\<BB\> \<CC\>:\<DD\> \<EE\>" on the call_gateway side.
+Such as the entered command line is "remote_call_incoming 0 tel:qq tel:qq qq", the "\<telephone bearer index\>" is 0. The "\<callee_URI\>" is "tel:qq". The "\<caller_URI\>" is "tel:qq". "\<caller_name\>" is "qq".
+The log is following,
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 remote_call_incoming 0 tel:qq tel:qq qq
 incoming call: callee uri tel:qq, caller uri tel:qq
@@ -114,7 +123,7 @@ Audio Stream 202F0688 started
 done, call index is 0
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-6.1 Reject/end the remote call, enter "call_term <call_index>" on the call_gateway side
+6.1 Reject/end the remote call, enter "call_term \<call_index\>" on the call_gateway side
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 terminate the call: call index 1
 Audio Stream 202F0688 disabled
@@ -128,7 +137,7 @@ Audio Stream 202F0688 released
 Audio Stream 202F0650 released
 Return code 0
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Or, enter "call_term 0 <call_index>" on the call_terminal side
+Or, enter "call_term 0 \<call_index\>" on the call_terminal side
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Terminate a call, call index 1, reason 6
 Audio Stream 202F0688 disabled
@@ -141,7 +150,7 @@ Audio Stream 202F0650 stopped with reason 0x13
 Audio Stream 202F0688 released
 Audio Stream 202F0650 released
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-6.2 Reject/end the call by remote. enter "remote_call_term <call_index>" on the call_gateway side
+6.2 Reject/end the call by remote. enter "remote_call_term \<call_index\>" on the call_gateway side
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Remove terminate the call: call index 1
 Audio Stream 202F0688 disabled
@@ -156,7 +165,7 @@ Audio Stream 202F0650 released
 Return code 0
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-7.1 Accept the remote call. enter "call_accept <call_index>" on the call_gateway side
+7.1 Accept the remote call. enter "call_accept \<call_index\>" on the call_gateway side
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 accept the call: call index 1
 Audio Stream 202F0688 disabled
@@ -174,7 +183,7 @@ Audio Stream 202F0650 started
 Audio Stream 202F0688 started
 Return code 0
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Or, enter "call_accept 0 <call_index>" on the call_terminal side
+Or, enter "call_accept 0 \<call_index\>" on the call_terminal side
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Audio Stream 202F0688 disabled
 Audio Stream 202F0688 QoS set
@@ -190,7 +199,7 @@ Audio Stream 202F0650 enabled
 Audio Stream 202F0650 started
 Audio Stream 202F0688 started
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-7.2 Accept the call by remote device. enter "remote_call_answer <call_index>" on the call_gateway side
+7.2 Accept the call by remote device. enter "remote_call_answer \<call_index\>" on the call_gateway side
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Remove answer the call: call index 1
 Audio Stream 202F0688 disabled

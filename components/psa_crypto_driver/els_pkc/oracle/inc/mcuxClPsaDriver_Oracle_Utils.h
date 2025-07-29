@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2023 NXP
+ * Copyright 2022-2023, 2025 NXP
  *
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -25,26 +25,38 @@
 #define STORAGE_TEMP_KEY  0x00U
 #define STORAGE_FINAL_KEY 0x01U
   
-#define NXP_DIE_EL2GOIMPORT_KEK_SK_ID    0x7FFF816EU
-#define NXP_DIE_EL2GOIMPORTTFM_KEK_SK_ID 0x7FFF816FU
-#define NXP_DIE_EL2GOIMPORT_AUTH_SK_ID   0x7FFF8170U
-#define NXP_DIE_KEK_SK_ID                0x7FFF8180U
+#define NXP_DIE_EL2GOIMPORT_KEK_SK_ID           0x7FFF816EU
+#define NXP_DIE_EL2GOIMPORTTFM_KEK_SK_ID        0x7FFF816FU
+#define NXP_DIE_EL2GOIMPORT_AUTH_SK_ID          0x7FFF8170U
+#define NXP_DIE_KEK_SK_ID                       0x7FFF8180U
+#define NXP_CUST_DIE_EL2GOIMPORTTFM_KEK_SK_ID   0x7FFF8184U
+#define NXP_CUST_DIE_EL2GOIMPORT_AUTH_SK_ID     0x7FFF8185U
 
 #define NXP_DIE_EL2GOPUBLIC_MK_SK_SLOT  0x06U
 #define NXP_DIE_EL2GOCONN_AUTH_PRK_ID   0x7FFF816CU
 #define NXP_DIE_EL2GOATTEST_AUTH_PRK_ID 0x7FFF8174U
 
 #if !defined(MBEDTLS_PSA_CRYPTO_KEY_ID_ENCODES_OWNER)
-#define MBEDTLS_NXP_DIE_KEK_SK_ID                NXP_DIE_KEK_SK_ID
-#define MBEDTLS_NXP_DIE_EL2GOIMPORT_KEK_SK_ID    NXP_DIE_EL2GOIMPORT_KEK_SK_ID
-#define MBEDTLS_NXP_DIE_EL2GOIMPORTTFM_KEK_SK_ID NXP_DIE_EL2GOIMPORTTFM_KEK_SK_ID
-#define MBEDTLS_NXP_DIE_EL2GOIMPORT_AUTH_SK_ID   NXP_DIE_EL2GOIMPORT_AUTH_SK_ID
-#define MBEDTLS_NXP_DIE_EL2GOCONN_AUTH_PRK_ID    NXP_DIE_EL2GOCONN_AUTH_PRK_ID
-#define MBEDTLS_NXP_DIE_EL2GOATTEST_AUTH_PRK_ID  NXP_DIE_EL2GOATTEST_AUTH_PRK_ID
+#define MBEDTLS_NXP_DIE_KEK_SK_ID                       NXP_DIE_KEK_SK_ID
+#define MBEDTLS_NXP_DIE_EL2GOIMPORT_KEK_SK_ID           NXP_DIE_EL2GOIMPORT_KEK_SK_ID
+#define MBEDTLS_NXP_DIE_EL2GOIMPORTTFM_KEK_SK_ID        NXP_DIE_EL2GOIMPORTTFM_KEK_SK_ID
+#define MBEDTLS_NXP_DIE_EL2GOIMPORT_AUTH_SK_ID          NXP_DIE_EL2GOIMPORT_AUTH_SK_ID
+#define MBEDTLS_NXP_DIE_EL2GOCONN_AUTH_PRK_ID           NXP_DIE_EL2GOCONN_AUTH_PRK_ID
+#define MBEDTLS_NXP_DIE_EL2GOATTEST_AUTH_PRK_ID         NXP_DIE_EL2GOATTEST_AUTH_PRK_ID
+#define MBEDTLS_NXP_CUST_DIE_EL2GOIMPORTTFM_KEK_SK_ID   NXP_CUST_DIE_EL2GOIMPORTTFM_KEK_SK_ID 
+#define MBEDTLS_NXP_CUST_DIE_EL2GOIMPORT_AUTH_SK_ID     NXP_CUST_DIE_EL2GOIMPORT_AUTH_SK_ID
 #else
 #define MBEDTLS_NXP_DIE_KEK_SK_ID                                                 \
     {                                                                             \
         .MBEDTLS_PRIVATE(owner) = 0, .MBEDTLS_PRIVATE(key_id) = NXP_DIE_KEK_SK_ID \
+    }
+#define MBEDTLS_NXP_CUST_DIE_EL2GOIMPORTTFM_KEK_SK_ID                                                  \
+    {                                                                                                  \
+        .MBEDTLS_PRIVATE(owner) = 0, .MBEDTLS_PRIVATE(key_id) = NXP_CUST_DIE_EL2GOIMPORTTFM_KEK_SK_ID  \
+    }
+#define MBEDTLS_NXP_CUST_DIE_EL2GOIMPORT_AUTH_SK_ID                                                  \
+    {                                                                                                \
+        .MBEDTLS_PRIVATE(owner) = 0, .MBEDTLS_PRIVATE(key_id) = NXP_CUST_DIE_EL2GOIMPORT_AUTH_SK_ID  \
     }
 #define MBEDTLS_NXP_DIE_EL2GOIMPORT_KEK_SK_ID                                                 \
     {                                                                                         \
@@ -69,8 +81,7 @@
 #endif
 
 static const mbedtls_svc_key_id_t die_kek_sk_id    = MBEDTLS_NXP_DIE_KEK_SK_ID;
-static const mbedtls_svc_key_id_t el2goimport_kek_sk_id    = MBEDTLS_NXP_DIE_EL2GOIMPORT_KEK_SK_ID;
-static const mbedtls_svc_key_id_t el2goimporttfm_kek_sk_id = MBEDTLS_NXP_DIE_EL2GOIMPORTTFM_KEK_SK_ID;
+
 typedef enum key_recipe_operation_t
 {
     OP_CKDF,
@@ -141,11 +152,27 @@ typedef struct _key_recipe_t
     key_recipe_step_t steps[];
 } key_recipe_t;
 
-extern const key_recipe_t recipe_el2goimport_kek_sk;
-extern const key_recipe_t recipe_el2goimporttfm_kek_sk;
-extern const key_recipe_t recipe_el2goimport_auth_sk;
-extern const key_recipe_t recipe_el2goconn_auth_prk;
-extern const key_recipe_t recipe_el2goattest_auth_prk;
+extern const key_recipe_t *key_recipes_directory[];
+
+extern size_t key_recipes_directory_size;
+
+typedef struct _auth_operation_data_t
+{
+    uint32_t signature_key_id;
+    uint32_t signature_algorithm;
+    const uint8_t *signature;
+    size_t signature_size;
+} auth_operation_data_t;
+
+typedef struct _import_operation_data_t
+{
+    psa_key_attributes_t attributes;
+    uint32_t wrapping_key_id;
+    uint32_t wrapping_algorithm;
+    const uint8_t *iv;
+    const uint8_t *keyincmd;
+    size_t keyincmd_size;
+} import_operation_data_t;
 
 typedef struct css_key_slot_handler_s
 {
@@ -168,7 +195,7 @@ static inline size_t mcuxClPsaDriver_Oracle_Utils_GetRecipeSize(const key_recipe
 }
 
 /**
- * @brief Gets the slot ID for the give key id
+ * @brief Gets the slot ID for the given key id
  *
  * @param[in] key_id the ID of the key from PSA view
  * @param[out] slot_id the ID of the key as stored in ELS
@@ -178,6 +205,29 @@ static inline size_t mcuxClPsaDriver_Oracle_Utils_GetRecipeSize(const key_recipe
  */
 psa_status_t mcuxClPsaDriver_Oracle_Utils_GetSlotFromKeyId(mbedtls_svc_key_id_t key_id, mcuxClEls_KeyIndex_t *slot_id);
 
+/**
+ * @brief Gets the key recipe for the given key id
+ *
+ * @param[in] key_id the ID of the key from PSA view
+ * @param[out] recipe key recipe for the input key_id
+ *
+ * @retval PSA_SUCCESS                 The operation was succesful
+ * @retval PSA_ERROR_DOES_NOT_EXIST    There is no recipe associated with key id
+ */
+psa_status_t mcuxClPsaDriver_Oracle_Utils_GetRecipeFromKeyId(mbedtls_svc_key_id_t key_id, key_recipe_t **recipe);
+
+/**
+ * @brief Extract wrapping operation related fields from a key
+ *
+ * @param[in] psa_external_blob buffer holding psa import command
+ * @param[in] psa_external_blob_size the length of the buffer
+ * @param[in, out] import_op_data Data that will be used to import the key
+ *
+ * @retval PSA_SUCCESS                 The operation was succesful
+ * @retval PSA_ERROR_DOES_NOT_EXIST    Parsing the key failed
+ */
+psa_status_t mcuxClPsaDriver_Oracle_Utils_ExtractWrappingKeyDetails(uint8_t *psa_external_blob, size_t psa_external_blob_size,
+                                                                    import_operation_data_t *import_op_data);
 /**
  * @brief Gets the public key associated with key id
  *
@@ -228,6 +278,7 @@ psa_status_t mcuxClPsaDriver_Oracle_Utils_RemoveKeyFromEls(mbedtls_svc_key_id_t 
  * @param[in] attributes provided key attributes
  * @param[in] psa_import_blob buffer holding psa import command
  * @param[in] psa_import_blob_size the length of the buffer
+ * @param[in] import_op_data Data that will be used to import the key
  * @param[in] wrap_key_slot The ELS key slot of the wrapping key
  * @param[out] target_key_slot The ELS key slot the target key is occupying
  *
@@ -237,6 +288,7 @@ psa_status_t mcuxClPsaDriver_Oracle_Utils_RemoveKeyFromEls(mbedtls_svc_key_id_t 
 psa_status_t mcuxClPsaDriver_Oracle_Utils_ExecuteElsKeyIn(const psa_key_attributes_t *attributes,
                                                           uint8_t *psa_import_blob,
                                                           size_t psa_import_blob_size,
+                                                          import_operation_data_t *import_op_data,
                                                           mcuxClEls_KeyIndex_t wrap_key_slot,
                                                           mcuxClEls_KeyIndex_t *target_key_slot);
 
@@ -247,7 +299,7 @@ psa_status_t mcuxClPsaDriver_Oracle_Utils_ExecuteElsKeyIn(const psa_key_attribut
  * @param[in] attributes provided key attributes
  * @param[in] psa_import_blob buffer holding psa import command
  * @param[in] psa_import_blob_size the length of the buffer
- * @param[in] auth_key_slot The ELS key slot of the auth key that will be used for CMAC
+ * @param[in, out] auth_op_data Data that will be used for the signature verification
  *
  * @retval PSA_SUCCESS                 The operation was successful
  * @retval PSA_ERROR_INVALID_ARGUMENT  Argument validation failed
@@ -255,8 +307,22 @@ psa_status_t mcuxClPsaDriver_Oracle_Utils_ExecuteElsKeyIn(const psa_key_attribut
 psa_status_t mcuxClPsaDriver_Oracle_Utils_ValidateBlobAttributes(const psa_key_attributes_t *attributes,
                                                                  const uint8_t *psa_import_blob,
                                                                  size_t psa_import_blob_size,
-                                                                 mcuxClEls_KeyIndex_t auth_key_slot);
-
+                                                                 auth_operation_data_t *auth_op_data);
+/**
+ * @brief Given a psa_import_blob and key ID, validates the CMAC signature of the psa_import_blob.
+ *
+ * @param[in] psa_import_blob buffer holding psa import command
+ * @param[in] psa_import_blob_size the length of the buffer
+ * @param[in] signature signature of the psa_import_blob
+ * @param[in] auth_key_slot The ELS key slot of the auth key that will be used for CMAC
+ *
+ * @retval PSA_SUCCESS                 The operation was successful
+ * @retval PSA_ERROR_INVALID_ARGUMENT  Argument validation failed
+ */
+psa_status_t mcuxClPsaDriver_Oracle_Utils_ValidateBlobSignature(const uint8_t *psa_import_blob,
+                                                                size_t psa_import_blob_size,
+                                                                const uint8_t *signature,
+                                                                mcuxClEls_KeyIndex_t auth_key_slot);
 /**
  * @brief Parses psa_import_external_blob and decrypts it.
  *
@@ -264,6 +330,7 @@ psa_status_t mcuxClPsaDriver_Oracle_Utils_ValidateBlobAttributes(const psa_key_a
  * @param[in] psa_external_blob_size the length of the buffer
  * @param[in] key_data the decrypted key buffer
  * @param[in] key_size the length of the key buffer
+ * @param[in] import_op_data Data that will be used to import the key
  * @param[in] enc_key_slot The ELS key slot of the enc key that will be used for decryption
  *
  * @retval PSA_SUCCESS                 The operation was successful
@@ -273,6 +340,7 @@ psa_status_t mcuxClPsaDriver_Oracle_Utils_ExecuteElsDecryptCbc(uint8_t *psa_exte
                                                                size_t psa_external_blob_size,
                                                                uint8_t **key_data,
                                                                size_t *key_size,
+                                                               import_operation_data_t *import_op_data,
                                                                mcuxClEls_KeyIndex_t enc_key_slot);
  
 

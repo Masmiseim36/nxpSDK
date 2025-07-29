@@ -1,0 +1,22 @@
+# Add set(CONFIG_USE_middleware_cadence_codecs_lc3_rt700_hifi1 true) in config.cmake to use this component
+
+include_guard(GLOBAL)
+message("${CMAKE_CURRENT_LIST_FILE} component is included.")
+
+      target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
+          ${CMAKE_CURRENT_LIST_DIR}/../include
+          ${CMAKE_CURRENT_LIST_DIR}/include/lc3_codec
+        )
+
+  
+      if((CONFIG_TOOLCHAIN STREQUAL xcc OR CONFIG_TOOLCHAIN STREQUAL xtensa))
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    -Wl,--start-group
+          ${CMAKE_CURRENT_LIST_DIR}/lib/RT700_HiFi1/xa_lc3_codec.a
+          ${CMAKE_CURRENT_LIST_DIR}/lib/RT700_HiFi1/xa_lc3_dec.a
+          ${CMAKE_CURRENT_LIST_DIR}/lib/RT700_HiFi1/xa_lc3_enc.a
+        -Wl,--end-group
+    )
+    endif()
+
+  

@@ -1,6 +1,6 @@
 /*!
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2019,2022 NXP
+ * Copyright 2016-2019,2022,2025 NXP
  *
  *
  * This is the source file for the OS Abstraction layer for MQXLite.
@@ -146,7 +146,7 @@ typedef struct _osa_state
     list_label_t taskList;
     task_handler_t curTaskHandler;
 #endif
-    volatile uint32_t interruptDisableCount;
+    volatile uint32_t disableIRQGlobalNesting;
     volatile uint32_t interruptRegPrimask;
     volatile uint32_t tickCounter;
 #if (defined(FSL_OSA_TASK_ENABLE) && (FSL_OSA_TASK_ENABLE > 0U))
@@ -301,11 +301,11 @@ void OSA_ExitCritical(uint32_t sr)
  *END**************************************************************************/
 void OSA_EnableIRQGlobal(void)
 {
-    if (s_osaState.interruptDisableCount > 0U)
+    if (s_osaState.disableIRQGlobalNesting > 0U)
     {
-        s_osaState.interruptDisableCount--;
+        s_osaState.disableIRQGlobalNesting--;
 
-        if (0U == s_osaState.interruptDisableCount)
+        if (0U == s_osaState.disableIRQGlobalNesting)
         {
             EnableGlobalIRQ(s_osaState.interruptRegPrimask);
         }
@@ -323,13 +323,13 @@ void OSA_EnableIRQGlobal(void)
 void OSA_DisableIRQGlobal(void)
 {
     /* call API to disable the global interrupt*/
-    if (0U == s_osaState.interruptDisableCount)
+    if (0U == s_osaState.disableIRQGlobalNesting)
     {
         s_osaState.interruptRegPrimask = DisableGlobalIRQ();
     }
 
     /* update counter*/
-    s_osaState.interruptDisableCount++;
+    s_osaState.disableIRQGlobalNesting++;
 }
 
 /*FUNCTION**********************************************************************
@@ -604,12 +604,15 @@ void OSA_TimeDelay(uint32_t millisec)
 #if (FSL_OSA_BM_TIMER_CONFIG != FSL_OSA_BM_TIMER_NONE)
     uint32_t currTime, timeStart;
 
-    timeStart = OSA_TimeGetMsec();
-
-    do
+    if (millisec > 0U)
     {
-        currTime = OSA_TimeGetMsec(); /* Get current time stamp */
-    } while (millisec >= OSA_TimeDiff(timeStart, currTime));
+        timeStart = OSA_TimeGetMsec();
+
+        do
+        {
+            currTime = OSA_TimeGetMsec(); /* Get current time stamp */
+        } while (millisec >= OSA_TimeDiff(timeStart, currTime));
+    }
 #endif
 }
 /*FUNCTION**********************************************************************
@@ -1477,9 +1480,9 @@ int main(void)
 void OSA_Init(void)
 {
     LIST_Init((&s_osaState.taskList), 0);
-    s_osaState.curTaskHandler        = NULL;
-    s_osaState.interruptDisableCount = 0U;
-    s_osaState.tickCounter           = 0U;
+    s_osaState.curTaskHandler          = NULL;
+    s_osaState.disableIRQGlobalNesting = 0U;
+    s_osaState.tickCounter             = 0U;
 }
 #endif
 

@@ -14,9 +14,6 @@ if(CMAKE_SCRIPT_MODE_FILE)
 endif()
 
 
-set(CMAKE_STATIC_LIBRARY_PREFIX)
-set(CMAKE_STATIC_LIBRARY_SUFFIX)
-
 set(CMAKE_EXECUTABLE_LIBRARY_PREFIX)
 set(CMAKE_EXECUTABLE_LIBRARY_SUFFIX)
 
@@ -67,6 +64,8 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../xspi_octal_flash_edma_ops.c"
 "${ProjDirPath}/../model_mobilenet_ops_npu.cpp"
 "${ProjDirPath}/../model_data.h"
+"${ProjDirPath}/../mobilenet_v1_1.0_224_int8_npu.tflite"
+"${ProjDirPath}/../model_data.S"
 "${ProjDirPath}/../board.h"
 "${ProjDirPath}/../board.c"
 "${ProjDirPath}/../clock_config.h"

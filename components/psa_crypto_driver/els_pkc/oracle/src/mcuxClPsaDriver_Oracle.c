@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2023 NXP
+ * Copyright 2022-2023, 2025 NXP
  *
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -29,7 +29,6 @@
 
 #include "mcuxClPsaDriver_Oracle_KeyRecipes.h"
 
-static const mbedtls_svc_key_id_t el2goimport_auth_sk_id   = MBEDTLS_NXP_DIE_EL2GOIMPORT_AUTH_SK_ID;
 
 /*  For now assumes that when location is PSA_KEY_LOCATION_S50_TEMP_STORAGE the slot is passed
     in key_buffer (stored in pKey->container.pData) otherwise that pointer is considered to contain
@@ -218,26 +217,39 @@ psa_status_t mcuxClPsaDriver_Oracle_LoadKey(mcuxClKey_Descriptor_t *pKey)
     else if (MCUXCLPSADRIVER_IS_S50_BLOB_STORAGE(location))
     {
         mcuxClEls_KeyIndex_t key_slot = 0;
+
         psa_status = mcuxClPsaDriver_Oracle_Utils_GetSlotFromKeyId(psa_get_key_id(attributes), &key_slot);
         if (psa_status == PSA_ERROR_DOES_NOT_EXIST)
         {
-            // derive the NXP_DIE_EL2GOIMPORT_KEK_SK key in the keyslot
+            key_recipe_t *recipe = NULL;
+            // derive the NXP_DIE_EL2GOIMPORT_KEK_SK or NXP_DIE_KEK_SK key in the keyslot
             mcuxClEls_KeyIndex_t el2goimport_kek_sk_slot = 0;
+            import_operation_data_t import_op_data;
+
+            psa_status = mcuxClPsaDriver_Oracle_Utils_ExtractWrappingKeyDetails(pKey->container.pData, pKey->container.length,
+                                                                                &import_op_data);
+            PSA_DRIVER_SUCCESS_OR_EXIT_MSG("Error in extracting wrapping key details");
+
+            mbedtls_svc_key_id_t key_id = mbedtls_svc_key_id_make(0u, import_op_data.wrapping_key_id);
+
+            psa_status = mcuxClPsaDriver_Oracle_Utils_GetRecipeFromKeyId(key_id, &recipe);
+            PSA_DRIVER_SUCCESS_OR_EXIT_MSG("Error in extracting KEK_SK recipe");
+
             psa_status =
-                mcuxClPsaDriver_Oracle_Utils_ExecuteKeyRecipe(el2goimport_kek_sk_id, // psa reference
-                                                              &recipe_el2goimport_kek_sk, &el2goimport_kek_sk_slot);
+                mcuxClPsaDriver_Oracle_Utils_ExecuteKeyRecipe(key_id, // psa reference
+                                                              recipe, &el2goimport_kek_sk_slot);
             PSA_DRIVER_SUCCESS_OR_EXIT_MSG("Error in dispatching the key command to ELS");
 
             // load blob on free S50 slot
             psa_status = mcuxClPsaDriver_Oracle_Utils_ExecuteElsKeyIn(attributes, // psa reference
                                                                       pKey->container.pData, pKey->container.length,
-                                                                      el2goimport_kek_sk_slot, &key_slot);
+                                                                      &import_op_data, el2goimport_kek_sk_slot, &key_slot);
 
             //  regardless of the status of the KEYIN, we need to free the keyslot of the wrap key
-            psa_status_t psa_status_remove_key = mcuxClPsaDriver_Oracle_Utils_RemoveKeyFromEls(el2goimport_kek_sk_id);
+            psa_status_t psa_status_remove_key = mcuxClPsaDriver_Oracle_Utils_RemoveKeyFromEls(key_id);
             if (PSA_SUCCESS != psa_status_remove_key)
             {
-                PSA_DRIVER_ERROR("Error,  EL2GOIMPORT_KEK_SK key removal failed");
+                PSA_DRIVER_ERROR("Error,  KEK_SK key removal failed");
             }
             PSA_DRIVER_SUCCESS_OR_EXIT_MSG("Error,  KeyIn command failed");
         }
@@ -251,21 +263,33 @@ psa_status_t mcuxClPsaDriver_Oracle_LoadKey(mcuxClKey_Descriptor_t *pKey)
         psa_status = mcuxClPsaDriver_Oracle_Utils_GetSlotFromKeyId(psa_get_key_id(attributes), &pKey->location.slot);
         if (psa_status == PSA_ERROR_DOES_NOT_EXIST)
         {
-            // derive the NXP_DIE_EL2GOIMPORTTFM_KEK_SK key in the keyslot
-            mcuxClEls_KeyIndex_t el2goimporttfm_kek_sk_slot;
-            psa_status = mcuxClPsaDriver_Oracle_Utils_ExecuteKeyRecipe(el2goimporttfm_kek_sk_id, // psa reference
-                                                                       &recipe_el2goimporttfm_kek_sk,
+            key_recipe_t *recipe = NULL;
+            // derive the NXP_DIE_EL2GOIMPORTTFM_KEK_SK or NXP_CUST_DIE_EL2GOIMPORTTFM_KEK_SK key in the keyslot
+            mcuxClEls_KeyIndex_t el2goimporttfm_kek_sk_slot = 0;
+            import_operation_data_t import_op_data;
+
+            psa_status = mcuxClPsaDriver_Oracle_Utils_ExtractWrappingKeyDetails(pKey->container.pData, pKey->container.length,
+                                                                                &import_op_data);
+            PSA_DRIVER_SUCCESS_OR_EXIT_MSG("Error in extracting wrapping key details");
+
+            mbedtls_svc_key_id_t key_id = mbedtls_svc_key_id_make(0u, import_op_data.wrapping_key_id);
+
+            psa_status = mcuxClPsaDriver_Oracle_Utils_GetRecipeFromKeyId(key_id, &recipe);
+            PSA_DRIVER_SUCCESS_OR_EXIT_MSG("Error in extracting EL2GOIMPORTTFM_KEK_SK recipe");
+
+            psa_status = mcuxClPsaDriver_Oracle_Utils_ExecuteKeyRecipe(key_id, // psa reference
+                                                                       recipe,
                                                                        &el2goimporttfm_kek_sk_slot);
             PSA_DRIVER_SUCCESS_OR_EXIT_MSG("Error in dispatching the key command to ELS");
 
             // parse blob and decrypt data on S50 slot
             psa_status = mcuxClPsaDriver_Oracle_Utils_ExecuteElsDecryptCbc(
                 pKey->container.pData, pKey->container.length, &decrypted_key, &decrypted_key_length,
-                el2goimporttfm_kek_sk_slot);
+                &import_op_data, el2goimporttfm_kek_sk_slot);
 
             //  regardless of the status of the decryption, we need to free the keyslot of the enc key
             psa_status_t psa_status_remove_key =
-                mcuxClPsaDriver_Oracle_Utils_RemoveKeyFromEls(el2goimporttfm_kek_sk_id);
+                mcuxClPsaDriver_Oracle_Utils_RemoveKeyFromEls(key_id);
             if (PSA_SUCCESS != psa_status_remove_key)
             {
                 PSA_DRIVER_ERROR("Error,  EL2GOIMPORTTFM_KEK_SK key removal failed");
@@ -287,7 +311,7 @@ psa_status_t mcuxClPsaDriver_Oracle_LoadKey(mcuxClKey_Descriptor_t *pKey)
         psa_status = mcuxClPsaDriver_Oracle_Utils_GetSlotFromKeyId(psa_get_key_id(attributes), &key_slot);
         if (psa_status == PSA_ERROR_DOES_NOT_EXIST)
         {
-            // derive the NXP_DIE_EL2GOIMPORT_KEK_SK key in the keyslot
+            // derive the NXP_DIE_KEK_SK key in the keyslot
             mcuxClEls_KeyIndex_t die_kek_sk_slot = 0;
             psa_status =
                 mcuxClPsaDriver_Oracle_Utils_ExecuteKeyRecipe(die_kek_sk_id, // psa reference
@@ -297,7 +321,7 @@ psa_status_t mcuxClPsaDriver_Oracle_LoadKey(mcuxClKey_Descriptor_t *pKey)
             // load blob on free S50 slot
             psa_status = mcuxClPsaDriver_Oracle_Utils_ExecuteElsKeyIn(attributes, // psa reference
                                                                       pKey->container.pData, pKey->container.length,
-                                                                      die_kek_sk_slot, &key_slot);
+                                                                      NULL, die_kek_sk_slot, &key_slot);
 
             //  regardless of the status of the KEYIN, we need to free the keyslot of the wrap key
             psa_status_t psa_status_remove_key = mcuxClPsaDriver_Oracle_Utils_RemoveKeyFromEls(die_kek_sk_id);
@@ -336,21 +360,37 @@ psa_status_t mcuxClPsaDriver_Oracle_ImportKey(
     uint8_t *key_buffer                    = pKey->container.pData;
 
     psa_key_location_t location = PSA_KEY_LIFETIME_GET_LOCATION(psa_get_key_lifetime(attributes));
+    mbedtls_svc_key_id_t key_id;
+    key_recipe_t *recipe = NULL;
+    auth_operation_data_t el2go_import_auth_data;
+
     if ((MCUXCLPSADRIVER_IS_S50_BLOB_STORAGE(location)) || (MCUXCLPSADRIVER_IS_S50_ENC_STORAGE(location)))
     {
         // derive the NXP_DIE_EL2GOIMPORT_AUTH_SK key in the keyslot
         mcuxClEls_KeyIndex_t el2goimport_auth_sk_slot;
-        psa_status =
-            mcuxClPsaDriver_Oracle_Utils_ExecuteKeyRecipe(el2goimport_auth_sk_id, // psa reference
-                                                          &recipe_el2goimport_auth_sk, &el2goimport_auth_sk_slot);
-        PSA_DRIVER_SUCCESS_OR_EXIT_MSG("Error in dispatching the key command to ELS");
 
         // validate blob attributes
         psa_status = mcuxClPsaDriver_Oracle_Utils_ValidateBlobAttributes(attributes, data, data_length,
-                                                                         el2goimport_auth_sk_slot);
+                                                                         &el2go_import_auth_data);
+        PSA_DRIVER_SUCCESS_OR_EXIT_MSG("Error in validating key attributes");
+
+        key_id = mbedtls_svc_key_id_make(0u, el2go_import_auth_data.signature_key_id);
+
+        psa_status = mcuxClPsaDriver_Oracle_Utils_GetRecipeFromKeyId(key_id, &recipe);
+        PSA_DRIVER_SUCCESS_OR_EXIT_MSG("Error in extracting EL2GOIMPORT_AUTH_SK recipe");
+
+        psa_status =
+            mcuxClPsaDriver_Oracle_Utils_ExecuteKeyRecipe(key_id, // psa reference
+                                                          recipe, &el2goimport_auth_sk_slot);
+        PSA_DRIVER_SUCCESS_OR_EXIT_MSG("Error in dispatching the key command to ELS");
+
+        psa_status =
+          mcuxClPsaDriver_Oracle_Utils_ValidateBlobSignature(data, data_length,
+                                                             el2go_import_auth_data.signature,
+                                                             el2goimport_auth_sk_slot);
 
         // regardless of the status of the blob validation, we need to free the keyslot of the auth key
-        psa_status_t psa_status_remove_key = mcuxClPsaDriver_Oracle_Utils_RemoveKeyFromEls(el2goimport_auth_sk_id);
+        psa_status_t psa_status_remove_key = mcuxClPsaDriver_Oracle_Utils_RemoveKeyFromEls(key_id);
         if (PSA_SUCCESS != psa_status_remove_key)
         {
             PSA_DRIVER_ERROR("Error,  EL2GOIMPORT_AUTH_SK key removal failed");

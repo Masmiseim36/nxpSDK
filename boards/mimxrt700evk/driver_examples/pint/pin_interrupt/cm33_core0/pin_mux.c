@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 NXP
+ * Copyright 2024-2025 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -13,11 +13,11 @@
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 !!GlobalInfo
-product: Pins v15.0
+product: Pins v17.0
 processor: MIMXRT798S
-package_id: MIMXRT798SGFOA
+package_id: MIMXRT798SGFOB
 mcu_data: ksdk2_0
-processor_version: 0.0.0
+processor_version: 0.2412.90
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 /* clang-format on */
@@ -80,7 +80,7 @@ void BOARD_InitPins(void)
     /* PORT0 PIN31 (coords: N4) is configured as LP_FLEXCOMM0_P0 */
     IOPCTL_PinMuxSet(0U, 31U, port0_pin31_config);
 
-    const uint32_t port0_pin9_config = (/* Pin is configured as GPIO0_GPIO9 */
+    const uint32_t port0_pin9_config = (/* Pin is configured as PIO0_9 */
                                         IOPCTL_PIO_FUNC0 |
                                         /* Enable pull-up / pull-down function */
                                         IOPCTL_PIO_PUPD_EN |
@@ -94,7 +94,7 @@ void BOARD_InitPins(void)
                                         IOPCTL_PIO_INV_DI |
                                         /* Selects transmitter current drive 100ohm */
                                         IOPCTL_PIO_DRIVE_100OHM);
-    /* PORT0 PIN9 (coords: L7) is configured as GPIO0_GPIO9 */
+    /* PORT0 PIN9 (coords: L7) is configured as PIO0_9 */
     IOPCTL_PinMuxSet(0U, 9U, port0_pin9_config);
 
     const uint32_t port1_pin0_config = (/* Pin is configured as LP_FLEXCOMM0_P1 */

@@ -25,7 +25,7 @@
 if (isdefinedsymbol(__stack_size__)) {
   define symbol __size_cstack__        = __stack_size__;
 } else {
-  define symbol __size_cstack__        = 0x0400;
+  define symbol __size_cstack__        = 0x1000;
 }
 
 if (isdefinedsymbol(__heap_size__)) {
@@ -58,8 +58,8 @@ define symbol m_data_end                       = 0x201FFFFF;
 
 if (isdefinedsymbol(__use_shmem__)) {
   define exported symbol rpmsg_sh_mem_start      = 0x20200000;
-  define exported symbol rpmsg_sh_mem_end        = 0x20201FFF;
-  define symbol m_ncache_start                   = 0x20202000;
+  define exported symbol rpmsg_sh_mem_end        = 0x2020ffff;
+  define symbol m_ncache_start                   = 0x20210000;
   define symbol m_ncache_end                     = 0x203FFFFF;
   define exported symbol __NCACHE_REGION_START   = rpmsg_sh_mem_start;
   define exported symbol __NCACHE_REGION_SIZE    = m_ncache_end - __NCACHE_REGION_START + 1;

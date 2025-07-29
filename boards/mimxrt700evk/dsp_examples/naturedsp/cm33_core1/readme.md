@@ -15,6 +15,8 @@ The debug configurations will build two separate applications that need to be
 loaded independently.  The ARM application will power and clock the DSP, so
 it must be loaded prior to loading the DSP application.
 
+This example cannot be imported into Config Tools because the xtensa toolchain is not supported.
+
 ## Supported Boards
 - [EVK-MIMXRT595](../../_boards/evkmimxrt595/dsp_examples/naturedsp/example_board_readme.md)
 - [EVK-MIMXRT685](../../_boards/evkmimxrt685/dsp_examples/naturedsp/example_board_readme.md)

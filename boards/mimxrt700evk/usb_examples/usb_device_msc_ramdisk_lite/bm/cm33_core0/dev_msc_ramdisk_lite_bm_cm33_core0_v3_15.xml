@@ -25,12 +25,12 @@
     <definition extID="utility.debug_console_lite.MIMXRT798S"/>
     <definition extID="component.lpuart_adapter.MIMXRT798S"/>
     <definition extID="component.osa_template_config.MIMXRT798S"/>
-    <definition extID="component.osa_interface.MIMXRT798S"/>
     <definition extID="component.osa.MIMXRT798S"/>
     <definition extID="component.osa_bm.MIMXRT798S"/>
     <definition extID="middleware.usb.common_header.MIMXRT798S"/>
     <definition extID="middleware.usb.device.common_header.MIMXRT798S"/>
     <definition extID="middleware.usb.device_controller_ehci.MIMXRT798S"/>
+    <definition extID="middleware.usb.device.ehci_config_header.MIMXRT798S"/>
     <definition extID="middleware.usb.device.controller.driver.MIMXRT798S"/>
     <definition extID="middleware.usb.phy.MIMXRT798S"/>
     <definition extID="iar"/>
@@ -41,7 +41,7 @@
     <definition extID="com.crt.advproject.config.exe.debug"/>
     <definition extID="com.crt.advproject.config.exe.release"/>
   </externalDefinitions>
-  <example id="mimxrt700evk_dev_msc_ramdisk_lite_bm_cm33_core0" name="dev_msc_ramdisk_lite_bm_cm33_core0" device_core="cm33_core0_MIMXRT798S" dependency="platform.drivers.flash_config.mimxrt700evk.MIMXRT798S CMSIS_Include_core_cm.MIMXRT798S device.MIMXRT798S_CMSIS.MIMXRT798S device.MIMXRT798S_system.MIMXRT798S device.MIMXRT798S_startup.MIMXRT798S platform.drivers.clock.MIMXRT798S platform.drivers.lpc_iopctl.MIMXRT798S platform.drivers.power.MIMXRT798S platform.drivers.reset.MIMXRT798S platform.drivers.cache_xcache.MIMXRT798S platform.drivers.common.MIMXRT798S platform.drivers.glikey.MIMXRT798S platform.drivers.gpio.MIMXRT798S platform.drivers.lpflexcomm.MIMXRT798S platform.drivers.lpflexcomm_lpuart.MIMXRT798S platform.drivers.xspi.MIMXRT798S platform.utilities.assert_lite.MIMXRT798S platform.utilities.misc_utilities.MIMXRT798S component.lists.MIMXRT798S utility.str.MIMXRT798S utility.debug_console_lite.MIMXRT798S component.lpuart_adapter.MIMXRT798S component.osa_template_config.MIMXRT798S component.osa_interface.MIMXRT798S component.osa.MIMXRT798S component.osa_bm.MIMXRT798S middleware.usb.common_header.MIMXRT798S middleware.usb.device.common_header.MIMXRT798S middleware.usb.device_controller_ehci.MIMXRT798S middleware.usb.device.controller.driver.MIMXRT798S middleware.usb.phy.MIMXRT798S" category="usb_examples">
+  <example id="mimxrt700evk_dev_msc_ramdisk_lite_bm_cm33_core0" name="dev_msc_ramdisk_lite_bm_cm33_core0" device_core="cm33_core0_MIMXRT798S" dependency="platform.drivers.flash_config.mimxrt700evk.MIMXRT798S CMSIS_Include_core_cm.MIMXRT798S device.MIMXRT798S_CMSIS.MIMXRT798S device.MIMXRT798S_system.MIMXRT798S device.MIMXRT798S_startup.MIMXRT798S platform.drivers.clock.MIMXRT798S platform.drivers.lpc_iopctl.MIMXRT798S platform.drivers.power.MIMXRT798S platform.drivers.reset.MIMXRT798S platform.drivers.cache_xcache.MIMXRT798S platform.drivers.common.MIMXRT798S platform.drivers.glikey.MIMXRT798S platform.drivers.gpio.MIMXRT798S platform.drivers.lpflexcomm.MIMXRT798S platform.drivers.lpflexcomm_lpuart.MIMXRT798S platform.drivers.xspi.MIMXRT798S platform.utilities.assert_lite.MIMXRT798S platform.utilities.misc_utilities.MIMXRT798S component.lists.MIMXRT798S utility.str.MIMXRT798S utility.debug_console_lite.MIMXRT798S component.lpuart_adapter.MIMXRT798S component.osa_template_config.MIMXRT798S component.osa.MIMXRT798S component.osa_bm.MIMXRT798S middleware.usb.common_header.MIMXRT798S middleware.usb.device.common_header.MIMXRT798S middleware.usb.device_controller_ehci.MIMXRT798S middleware.usb.device.ehci_config_header.MIMXRT798S middleware.usb.device.controller.driver.MIMXRT798S middleware.usb.phy.MIMXRT798S" category="usb_examples">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -54,13 +54,15 @@
       <toolchainSetting id_refs="com.nxp.mcuxpresso">
         <option id="gnu.c.compiler.option.preprocessor.def.symbols" type="stringList">
           <value>MCUXPRESSO_SDK</value>
-          <value>CPU_MIMXRT798SGFOA_cm33_core0</value>
+          <value>CPU_MIMXRT798SGFOB_cm33_core0</value>
           <value>BOOT_HEADER_ENABLE=1</value>
           <value>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</value>
           <value>USB_STACK_BM</value>
           <value>USB_DEVICE_CONFIG_BUFFER_PROPERTY_CACHEABLE=1</value>
+          <value>EUSB_CONFIG_NATIVE_MODE=0</value>
           <value>SDK_DEBUGCONSOLE=1</value>
           <value>MCUX_META_BUILD</value>
+          <value>MIMXRT798S_cm33_core0_SERIES</value>
           <value>OSA_USED</value>
           <value>USE_RTOS=0</value>
         </option>
@@ -207,12 +209,10 @@
     </source>
     <source path="." project_relative_path="source" type="c_include" config="true">
       <files mask="fsl_os_abstraction_config.h"/>
+      <files mask="usb_device_config.h"/>
     </source>
     <source path="." project_relative_path="source" type="c_preinclude">
       <files mask="mcux_config.h"/>
-    </source>
-    <source path="." project_relative_path="source" type="c_include">
-      <files mask="usb_device_config.h"/>
     </source>
     <source path="." project_relative_path="doc" type="doc">
       <files mask="readme.md"/>
@@ -222,6 +222,9 @@
       <files mask="freertos_optimization_timing.jpg"/>
       <files mask="freertos_timing.jpg"/>
       <files mask="IAR_setting.jpg"/>
+    </source>
+    <source path="." project_relative_path="doc" type="doc">
+      <files mask="examples_shared_readme.md"/>
     </source>
   </example>
 </ksdk:examples>

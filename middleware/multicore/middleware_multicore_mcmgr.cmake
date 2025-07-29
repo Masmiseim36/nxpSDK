@@ -9,7 +9,7 @@ message("${CMAKE_CURRENT_LIST_FILE} component is included.")
 
   
       target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
-          ${CMAKE_CURRENT_LIST_DIR}/mcmgr/src
+          ${CMAKE_CURRENT_LIST_DIR}/mcmgr/inc
         )
 
     if(CONFIG_USE_COMPONENT_CONFIGURATION)

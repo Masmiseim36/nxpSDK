@@ -29,8 +29,6 @@
  * Variables
  ******************************************************************************/
 /*${variable:start}*/
-extern int NonCacheable_start, NonCacheable_end;
-extern int NonCacheable_init_start, NonCacheable_init_end;
 AT_NONCACHEABLE_SECTION_ALIGN(edma_handle_t g_saiDmaHandle, 32);
 AT_NONCACHEABLE_SECTION_ALIGN(edma_handle_t g_pdmDmaHandle, 32);
 /*${variable:end}*/

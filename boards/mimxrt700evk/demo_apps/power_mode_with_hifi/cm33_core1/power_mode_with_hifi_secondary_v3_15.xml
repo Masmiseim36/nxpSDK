@@ -47,11 +47,13 @@
       <toolchainSetting id_refs="com.nxp.mcuxpresso">
         <option id="gnu.c.compiler.option.preprocessor.def.symbols" type="stringList">
           <value>MCUXPRESSO_SDK</value>
-          <value>CPU_MIMXRT798SGFOA_cm33_core1</value>
+          <value>CPU_MIMXRT798SGFOB_cm33_core1</value>
           <value>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</value>
           <value>BOARD_PMIC_CONFIG_USE_SEMA4=1</value>
+          <value>DSP_IMAGE_COPY_TO_RAM=1</value>
           <value>SDK_DEBUGCONSOLE=1</value>
           <value>MCUX_META_BUILD</value>
+          <value>MIMXRT798S_cm33_core1_SERIES</value>
           <value>SDK_I2C_BASED_COMPONENT_USED=1</value>
         </option>
         <option id="com.crt.advproject.link.gcc.multicore.slave" type="string">
@@ -136,6 +138,9 @@
     <source path="." project_relative_path="source" type="configuration" toolchain="mdk">
       <files mask="ramdebug.ini"/>
     </source>
+    <source path="." project_relative_path="source" type="other">
+      <files mask="power_mode_with_hifi_secondary.mex"/>
+    </source>
     <source path="." project_relative_path="source" type="src">
       <files mask="clock_config.c"/>
     </source>
@@ -144,12 +149,16 @@
     </source>
     <source path="." project_relative_path="source" type="c_include">
       <files mask="power_demo_config.h"/>
-      <files mask="dsp_support.h"/>
       <files mask="dsp_config.h"/>
     </source>
     <source path="." project_relative_path="source" type="src">
       <files mask="power_mode_with_hifi.c"/>
+    </source>
+    <source path="." project_relative_path="source" type="src">
       <files mask="dsp_support.c"/>
+    </source>
+    <source path="." project_relative_path="source" type="c_include">
+      <files mask="dsp_support.h"/>
     </source>
     <source path="." project_relative_path="source" type="binary">
       <files mask="dsp_data_debug.bin"/>
@@ -199,6 +208,9 @@
     </source>
     <source path="." project_relative_path="doc" type="doc">
       <files mask="example_board_readme.md"/>
+    </source>
+    <source path="." project_relative_path="doc" type="doc">
+      <files mask="examples_shared_readme.md"/>
     </source>
   </example>
 </ksdk:examples>

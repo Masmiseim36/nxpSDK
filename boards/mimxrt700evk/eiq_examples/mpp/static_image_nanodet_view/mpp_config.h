@@ -1,4 +1,4 @@
-/* Copyright 2024 NXP
+/* Copyright 2024-2025 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -51,7 +51,7 @@
  * Allocating tensor arena in non-cacheable memory may improve performance of
  * operators executed on NPU, but decreases performance on CPU.
  */
-#define HAL_TENSOR_ARENA_NCACHE               1
+#define HAL_TENSOR_ARENA_NCACHE               0
 
 /**
  * VGLite heap size for MIMXRT700 EVK.

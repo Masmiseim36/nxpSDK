@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 NXP
+ * Copyright 2024-2025 NXP
  * Copyright (c) 2016, Wind River Systems, Inc.
  *
  * SPDX-License-Identifier: Apache-2.0
@@ -22,6 +22,9 @@
 #include <sys/util.h>
 #include <sys/check.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 #define BT_ASSERT __ASSERT_NO_MSG
 #define BT_ASSERT_MSG __ASSERT
@@ -260,5 +263,9 @@ static ALWAYS_INLINE void irq_unlock(unsigned int key)
 	__DSB();
 	EnableGlobalIRQ(key);
 }
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* __EDGEFAST_BT_BLE_SYSTEM_H__ */

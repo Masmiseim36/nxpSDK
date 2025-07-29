@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2024 NXP.
+ * Copyright 2019-2025 NXP.
  * All rights reserved.
  *
  *  SPDX-License-Identifier: Apache-2.0
@@ -298,6 +298,7 @@ hal_camera_status_t HAL_CameraDev_MipiOv5640_Init(
         cameraConfig.pixelFormat   = kVIDEO_PixelFormatXYUV;
         cameraConfig.bytesPerPixel = 4;
         break;
+    case MPP_PIXEL_BGRX:
     case MPP_PIXEL_BGRA:
         cameraConfig.pixelFormat   = kVIDEO_PixelFormatXRGB8888;
         cameraConfig.bytesPerPixel = 4;
@@ -323,6 +324,7 @@ hal_camera_status_t HAL_CameraDev_MipiOv5640_Init(
         cameraConfig.pixelFormat   = kVIDEO_PixelFormatYUYV;
         cameraConfig.bytesPerPixel = 2;
         break;
+    case MPP_PIXEL_BGRX:
     case MPP_PIXEL_BGRA:
         cameraConfig.pixelFormat   = kVIDEO_PixelFormatRGB565;
         cameraConfig.bytesPerPixel = 2;

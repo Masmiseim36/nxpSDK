@@ -177,25 +177,12 @@ uint8_t g_UsbDeviceConfigurationDescriptor[] = {
 uint8_t USB_BOSDescriptor[] = {
     USB_DESCRIPTOR_LENGTH_BOS_DESCRIPTOR, /* Size of this descriptor */
     USB_DESCRIPTOR_TYPE_BOS,              /* Descriptor type: BOS*/
-    USB_SHORT_GET_LOW(USB_DESCRIPTOR_LENGTH_BOS_DESCRIPTOR + USB_DESCRIPTOR_LENGTH_SS_DEVICE_CAPABILITY +
-                      USB_DESCRIPTOR_LENGTH_DEVICE_EXTENDED_CAPABILITY), /*Length of this descriptor and all of its sub
+    USB_SHORT_GET_LOW(USB_DESCRIPTOR_LENGTH_BOS_DESCRIPTOR + USB_DESCRIPTOR_LENGTH_DEVICE_EXTENDED_CAPABILITY), /*Length of this descriptor and all of its sub
 descriptors.*/
-    USB_SHORT_GET_HIGH(USB_DESCRIPTOR_LENGTH_BOS_DESCRIPTOR + USB_DESCRIPTOR_LENGTH_SS_DEVICE_CAPABILITY +
-                       USB_DESCRIPTOR_LENGTH_DEVICE_EXTENDED_CAPABILITY), /*Length of this descriptor and all of its sub
+    USB_SHORT_GET_HIGH(USB_DESCRIPTOR_LENGTH_BOS_DESCRIPTOR + USB_DESCRIPTOR_LENGTH_DEVICE_EXTENDED_CAPABILITY), /*Length of this descriptor and all of its sub
 descriptors.*/
-    0x02, /* The number of separate device capability descriptors in the BOS. */
-    /* Device Capabilities, USB 2.0 Extension Descriptor */
-    USB_DESCRIPTOR_LENGTH_SS_DEVICE_CAPABILITY, /* Size of descriptor*/
-    USB_DESCRIPTOR_TYPE_DEVICE_CAPABILITY,      /* DEVICE CAPABILITY Descriptor type*/
-    0x03,                                       /* Capability type: SUPERSPEED_USB*/
-    0x00,                                       /* bmAttributes */
-    0x0F, /* wSpeedsSupported, Bitmap encoding of the speed supported by this device. */
-    0x00, /* wSpeedsSupported, Bitmap encoding of the speed supported by this device. */
-    0x02, /* The lowest speed at which all the functionality supported by
-             the device is available to the user. */
-    0x00, /* U1 Device Exit Latency. */
-    0x00, /* U2 Device Exit Latency*/
-    0x00, /* U2 Device Exit Latency */
+    0x01, /* The number of separate device capability descriptors in the BOS. */
+
     /* Device Capabilities, USB 2.0 Extension Descriptor */
     USB_DESCRIPTOR_LENGTH_DEVICE_EXTENDED_CAPABILITY, /* Size of this descriptor.*/
     USB_DESCRIPTOR_TYPE_DEVICE_CAPABILITY,            /* Descriptor type: DEVICE CAPABILITY Type. */

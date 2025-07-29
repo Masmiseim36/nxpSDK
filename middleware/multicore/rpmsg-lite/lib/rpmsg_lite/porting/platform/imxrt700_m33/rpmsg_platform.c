@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 NXP
+ * Copyright 2024-2025 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -14,6 +14,7 @@
 #if (defined(MIMXRT735S_cm33_core0_SERIES) || defined(MIMXRT758S_cm33_core0_SERIES) || \
      defined(MIMXRT798S_cm33_core0_SERIES))
 #include "fsl_cache.h"
+#include "fsl_ezhv.h"
 #endif
 
 #if defined(RL_USE_MCMGR_IPC_ISR_HANDLER) && (RL_USE_MCMGR_IPC_ISR_HANDLER == 1)
@@ -32,22 +33,25 @@
 #define APP_M33_0_HIFI4_MU_IRQn MU4_A_IRQn
 #define APP_M33_1_HIFI1_MU      MU3_MUA
 #define APP_M33_1_HIFI1_MU_IRQn MU3_A_IRQn
+#define APP_M33_0_EZHV_IRQn     EZHV_IRQn
 
 #define APP_MU_IRQ_PRIORITY (3U)
 static int32_t isr_counter0 = 0; /* RL_PLATFORM_IMXRT700_M33_0_M33_1_LINK_ID isr counter */
 static int32_t isr_counter1 = 0; /* RL_PLATFORM_IMXRT700_M33_0_HIFI4_LINK_ID isr counter */
 static int32_t isr_counter2 = 0; /* RL_PLATFORM_IMXRT700_M33_1_HIFI1_LINK_ID isr counter */
+static int32_t isr_counter3 = 0; /* RL_PLATFORM_IMXRT700_M33_0_EZHV_LINK_ID isr counter */
 
 static int32_t disable_counter0 = 0;
 static int32_t disable_counter1 = 0;
 static int32_t disable_counter2 = 0;
+static int32_t disable_counter3 = 0;
 static void *platform_lock;
 #if defined(RL_USE_STATIC_API) && (RL_USE_STATIC_API == 1)
 static LOCK_STATIC_CONTEXT platform_lock_static_ctxt;
 #endif
 
 #if defined(RL_USE_MCMGR_IPC_ISR_HANDLER) && (RL_USE_MCMGR_IPC_ISR_HANDLER == 1)
-static void mcmgr_event_handler(uint16_t vring_idx, void *context)
+static void mcmgr_event_handler(mcmgr_core_t coreNum, uint16_t vring_idx, void *context)
 {
     env_isr((uint32_t)vring_idx);
 }
@@ -84,6 +88,14 @@ void MU4_A_IRQHandler(void)
         MU_ClearStatusFlags(APP_M33_0_HIFI4_MU, (uint32_t)kMU_GenInt1Flag);
         env_isr((uint32_t)(0x01U | (RL_PLATFORM_IMXRT700_M33_0_HIFI4_COM_ID << 3U)));
     }
+}
+static void ezhv_callback0(void *param)
+{
+    env_isr(RL_PLATFORM_IMXRT700_M33_0_EZHV_COM_ID << 3U);
+}
+static void ezhv_callback1(void *param)
+{
+    env_isr((uint32_t)(0x01U | (RL_PLATFORM_IMXRT700_M33_0_EZHV_COM_ID << 3U)));
 }
 #elif (defined(MIMXRT735S_cm33_core1_SERIES) || defined(MIMXRT758S_cm33_core1_SERIES) || \
        defined(MIMXRT798S_cm33_core1_SERIES))
@@ -178,6 +190,18 @@ int32_t platform_init_interrupt(uint32_t vector_id, void *isr_data)
                 }
                 isr_counter2++;
                 break;
+            case RL_PLATFORM_IMXRT700_M33_0_EZHV_COM_ID:
+                RL_ASSERT(0 <= isr_counter3);
+                if (isr_counter3 < 2)
+                {
+#if (defined(MIMXRT735S_cm33_core0_SERIES) || defined(MIMXRT758S_cm33_core0_SERIES) || \
+     defined(MIMXRT798S_cm33_core0_SERIES))
+                    EZHV_EnableEzhv2ArmIntChan(kEZHV_EzhvToArmIntChan0);
+                    EZHV_EnableEzhv2ArmIntChan(kEZHV_EzhvToArmIntChan1);
+#endif
+                }
+                isr_counter3++;
+                break;
             default:
                 /* All the cases have been listed above, the default clause should not be reached. */
                 break;
@@ -237,6 +261,18 @@ int32_t platform_deinit_interrupt(uint32_t vector_id)
 #endif
                 }
                 break;
+            case RL_PLATFORM_IMXRT700_M33_0_EZHV_COM_ID:
+                RL_ASSERT(0 <= isr_counter3);
+                if (isr_counter3 < 2)
+                {
+#if (defined(MIMXRT735S_cm33_core0_SERIES) || defined(MIMXRT758S_cm33_core0_SERIES) || \
+     defined(MIMXRT798S_cm33_core0_SERIES))
+                    EZHV_DisableEzhv2ArmIntChan(kEZHV_EzhvToArmIntChan0);
+                    EZHV_DisableEzhv2ArmIntChan(kEZHV_EzhvToArmIntChan1);
+#endif
+                }
+                isr_counter3++;
+                break;
             default:
                 /* All the cases have been listed above, the default clause should not be reached. */
                 break;
@@ -259,7 +295,37 @@ void platform_notify(uint32_t vector_id)
 {
     env_lock_mutex(platform_lock);
 #if defined(RL_USE_MCMGR_IPC_ISR_HANDLER) && (RL_USE_MCMGR_IPC_ISR_HANDLER == 1)
-    (void)MCMGR_TriggerEventForce(kMCMGR_RemoteRPMsgEvent, (uint16_t)RL_GET_Q_ID(vector_id));
+    switch (RL_GET_COM_ID(vector_id))
+    {
+        case RL_PLATFORM_IMXRT700_M33_0_M33_1_COM_ID:
+#if (defined(MIMXRT735S_cm33_core0_SERIES) || defined(MIMXRT758S_cm33_core0_SERIES) || \
+     defined(MIMXRT798S_cm33_core0_SERIES))
+            (void)MCMGR_TriggerEventForce(kMCMGR_Core1, kMCMGR_RemoteRPMsgEvent, (uint16_t)(vector_id & 0xFFFFU));
+#elif (defined(MIMXRT735S_cm33_core1_SERIES) || defined(MIMXRT758S_cm33_core1_SERIES) || \
+       defined(MIMXRT798S_cm33_core1_SERIES))
+            (void)MCMGR_TriggerEventForce(kMCMGR_Core0, kMCMGR_RemoteRPMsgEvent, (uint16_t)(vector_id & 0xFFFFU));
+#endif
+            break;
+        case RL_PLATFORM_IMXRT700_M33_0_HIFI4_COM_ID:
+#if (defined(MIMXRT735S_cm33_core0_SERIES) || defined(MIMXRT758S_cm33_core0_SERIES) || \
+     defined(MIMXRT798S_cm33_core0_SERIES))
+            (void)MCMGR_TriggerEventForce(kMCMGR_Core2, kMCMGR_RemoteRPMsgEvent, (uint16_t)(vector_id & 0xFFFFU));
+#elif (defined(MIMXRT735S_hifi4_SERIES) || defined(MIMXRT758S_hifi4_SERIES) || defined(MIMXRT798S_hifi4_SERIES))
+            (void)MCMGR_TriggerEventForce(kMCMGR_Core0, kMCMGR_RemoteRPMsgEvent, (uint16_t)(vector_id & 0xFFFFU));
+#endif
+            break;
+        case RL_PLATFORM_IMXRT700_M33_1_HIFI1_COM_ID:
+#if (defined(MIMXRT735S_cm33_core1_SERIES) || defined(MIMXRT758S_cm33_core1_SERIES) || \
+     defined(MIMXRT798S_cm33_core1_SERIES))
+            (void)MCMGR_TriggerEventForce(kMCMGR_Core3, kMCMGR_RemoteRPMsgEvent, (uint16_t)(vector_id & 0xFFFFU));
+#elif (defined(MIMXRT735S_hifi1_SERIES) || defined(MIMXRT758S_hifi1_SERIES) || defined(MIMXRT798S_hifi1_SERIES))
+            (void)MCMGR_TriggerEventForce(kMCMGR_Core1, kMCMGR_RemoteRPMsgEvent, (uint16_t)(vector_id & 0xFFFFU));
+#endif
+            break;
+        default:
+            /* All the cases have been listed above, the default clause should not be reached. */
+            break;
+    }
 #else
     switch (RL_GET_COM_ID(vector_id))
     {
@@ -286,6 +352,19 @@ void platform_notify(uint32_t vector_id)
             (void)MU_TriggerInterrupts(APP_M33_1_HIFI1_MU, MU_GI_INTR(1UL << (RL_GET_Q_ID(vector_id))));
 #elif (defined(MIMXRT735S_hifi1_SERIES) || defined(MIMXRT758S_hifi1_SERIES) || defined(MIMXRT798S_hifi1_SERIES))
             //(void)MU_TriggerInterrupts(APP_M33_1_M33_0_MU, MU_GI_INTR(1UL << (RL_GET_Q_ID(vector_id))));
+#endif
+            break;
+        case RL_PLATFORM_IMXRT700_M33_0_EZHV_COM_ID:
+#if (defined(MIMXRT735S_cm33_core0_SERIES) || defined(MIMXRT758S_cm33_core0_SERIES) || \
+     defined(MIMXRT798S_cm33_core0_SERIES))
+            if(RL_GET_Q_ID(vector_id))
+            {
+                EZHV_EnableArm2EzhvInt(kEZHV_ARM2EZHV_MEI);
+            }
+            else
+            {
+                EZHV_EnableArm2EzhvInt(kEZHV_ARM2EZHV_MSI);
+            }
 #endif
             break;
         default:
@@ -385,12 +464,23 @@ int32_t platform_interrupt_enable(uint32_t vector_id)
 #endif
             }
             break;
+        case RL_PLATFORM_IMXRT700_M33_0_EZHV_COM_ID:
+            RL_ASSERT(0 < disable_counter3);
+            disable_counter3--;
+            if (disable_counter3 == 0)
+            {
+#if (defined(MIMXRT735S_cm33_core0_SERIES) || defined(MIMXRT758S_cm33_core0_SERIES) || \
+     defined(MIMXRT798S_cm33_core0_SERIES))
+                NVIC_EnableIRQ(APP_M33_0_EZHV_IRQn);
+#endif
+            }
+            break;
         default:
             /* All the cases have been listed above, the default clause should not be reached. */
             break;
     }
     platform_global_isr_enable();
-    return ((int32_t)vector_id);
+    return 0;
 }
 
 /**
@@ -446,12 +536,23 @@ int32_t platform_interrupt_disable(uint32_t vector_id)
             }
             disable_counter2++;
             break;
+        case RL_PLATFORM_IMXRT700_M33_0_EZHV_COM_ID:
+            RL_ASSERT(0 <= disable_counter3);
+            if (disable_counter3 == 0)
+            {
+#if (defined(MIMXRT735S_cm33_core0_SERIES) || defined(MIMXRT758S_cm33_core0_SERIES) || \
+     defined(MIMXRT798S_cm33_core0_SERIES))
+                NVIC_DisableIRQ(APP_M33_0_EZHV_IRQn);
+#endif
+            }
+            disable_counter3++;
+            break;
         default:
             /* All the cases have been listed above, the default clause should not be reached. */
             break;
     }
     platform_global_isr_enable();
-    return ((int32_t)vector_id);
+    return 0;
 }
 
 /**
@@ -562,6 +663,14 @@ int32_t platform_init(void)
 #if defined(RL_USE_MCMGR_IPC_ISR_HANDLER) && (RL_USE_MCMGR_IPC_ISR_HANDLER == 1)
     mcmgr_status_t retval = kStatus_MCMGR_Error;
     retval                = MCMGR_RegisterEvent(kMCMGR_RemoteRPMsgEvent, mcmgr_event_handler, ((void *)0));
+
+#if (defined(MIMXRT735S_cm33_core0_SERIES) || defined(MIMXRT758S_cm33_core0_SERIES) || \
+     defined(MIMXRT798S_cm33_core0_SERIES))
+    retval = MCMGR_RegisterEvent(kMCMGR_RemoteRPMsgEvent, mcmgr_event_handler, ((void *)0));
+#elif (defined(MIMXRT735S_cm33_core1_SERIES) || defined(MIMXRT758S_cm33_core1_SERIES) || \
+       defined(MIMXRT798S_cm33_core1_SERIES))
+
+#endif
     if (kStatus_MCMGR_Success != retval)
     {
         return -1;
@@ -577,6 +686,10 @@ int32_t platform_init(void)
     NVIC_SetPriority(APP_M33_0_HIFI4_MU_IRQn, APP_MU_IRQ_PRIORITY);
     NVIC_EnableIRQ(APP_M33_0_HIFI4_MU_IRQn);
 
+    EZHV_SetCallback(ezhv_callback0, 0, NULL);
+    EZHV_SetCallback(ezhv_callback1, 1, NULL);
+    NVIC_SetPriority(APP_M33_0_EZHV_IRQn, APP_MU_IRQ_PRIORITY);
+    NVIC_EnableIRQ(APP_M33_0_EZHV_IRQn);
 #elif (defined(MIMXRT735S_cm33_core1_SERIES) || defined(MIMXRT758S_cm33_core1_SERIES) || \
        defined(MIMXRT798S_cm33_core1_SERIES))
     MU_Init(APP_M33_1_M33_0_MU);

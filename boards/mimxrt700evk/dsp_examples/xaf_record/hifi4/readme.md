@@ -45,6 +45,8 @@ For more details see XAF documentation.
 
 For custom VIT model generation (defining own wake words and voice commands) please use https://vit.nxp.com/
 
+This example cannot be imported into Config Tools because the xtensa toolchain is not supported.
+
 ## Supported Boards
 - [EVK-MIMXRT595](../../_boards/evkmimxrt595/dsp_examples/xaf_record/example_board_readme.md)
 - [EVK-MIMXRT685](../../_boards/evkmimxrt685/dsp_examples/xaf_record/example_board_readme.md)

@@ -1,5 +1,5 @@
 /*
- * Copyright 2023-2024 NXP
+ * Copyright 2023-2025 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -19,6 +19,9 @@
 /*
  * Change log:
  *
+ *   1.1.0
+ *     - Support 8-bit data width.
+ *
  *   1.0.0
  *     - Initial version
  */
@@ -26,6 +29,14 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
+/*! @brief Data width between host and LCD controller, only supports 8 and 16. */
+#ifndef ST7796S_DATA_WITDH
+#define ST7796S_DATA_WITDH (16)
+#endif
+
+#if ((ST7796S_DATA_WITDH != 16) && (ST7796S_DATA_WITDH != 8))
+#error Current driver only support 8-bit and 16-bit data width
+#endif
 
 /*! @brief Panel driver preset. */
 typedef enum _st7796s_driver_preset

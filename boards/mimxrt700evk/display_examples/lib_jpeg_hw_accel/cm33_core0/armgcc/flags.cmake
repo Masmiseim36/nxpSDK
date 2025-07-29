@@ -12,10 +12,12 @@ ENDIF()
 
 SET(CMAKE_ASM_FLAGS_DEBUG " \
     ${CMAKE_ASM_FLAGS_DEBUG} \
+    -include ${ProjDirPath}/../mcux_config.h \
     -D__STARTUP_INITIALIZE_NONCACHEDATA \
     -D__STARTUP_CLEAR_BSS \
     -DMCUXPRESSO_SDK \
-    -DCPU_MIMXRT798SGFOA_cm33_core0 \
+    -DCPU_MIMXRT798SGFOB_cm33_core0 \
+    -DMIMXRT798S_cm33_core0_SERIES \
     -DOSA_USED \
     -g \
     -mthumb \
@@ -24,10 +26,12 @@ SET(CMAKE_ASM_FLAGS_DEBUG " \
 ")
 SET(CMAKE_ASM_FLAGS_FLASH_DEBUG " \
     ${CMAKE_ASM_FLAGS_FLASH_DEBUG} \
+    -include ${ProjDirPath}/../mcux_config.h \
     -D__STARTUP_INITIALIZE_NONCACHEDATA \
     -D__STARTUP_CLEAR_BSS \
     -DMCUXPRESSO_SDK \
-    -DCPU_MIMXRT798SGFOA_cm33_core0 \
+    -DCPU_MIMXRT798SGFOB_cm33_core0 \
+    -DMIMXRT798S_cm33_core0_SERIES \
     -DOSA_USED \
     -g \
     -mthumb \
@@ -36,10 +40,12 @@ SET(CMAKE_ASM_FLAGS_FLASH_DEBUG " \
 ")
 SET(CMAKE_ASM_FLAGS_RELEASE " \
     ${CMAKE_ASM_FLAGS_RELEASE} \
+    -include ${ProjDirPath}/../mcux_config.h \
     -D__STARTUP_INITIALIZE_NONCACHEDATA \
     -D__STARTUP_CLEAR_BSS \
     -DMCUXPRESSO_SDK \
-    -DCPU_MIMXRT798SGFOA_cm33_core0 \
+    -DCPU_MIMXRT798SGFOB_cm33_core0 \
+    -DMIMXRT798S_cm33_core0_SERIES \
     -DOSA_USED \
     -mthumb \
     -mcpu=cortex-m33 \
@@ -47,10 +53,12 @@ SET(CMAKE_ASM_FLAGS_RELEASE " \
 ")
 SET(CMAKE_ASM_FLAGS_FLASH_RELEASE " \
     ${CMAKE_ASM_FLAGS_FLASH_RELEASE} \
+    -include ${ProjDirPath}/../mcux_config.h \
     -D__STARTUP_INITIALIZE_NONCACHEDATA \
     -D__STARTUP_CLEAR_BSS \
     -DMCUXPRESSO_SDK \
-    -DCPU_MIMXRT798SGFOA_cm33_core0 \
+    -DCPU_MIMXRT798SGFOB_cm33_core0 \
+    -DMIMXRT798S_cm33_core0_SERIES \
     -DOSA_USED \
     -mthumb \
     -mcpu=cortex-m33 \
@@ -60,7 +68,8 @@ SET(CMAKE_C_FLAGS_DEBUG " \
     ${CMAKE_C_FLAGS_DEBUG} \
     -include ${ProjDirPath}/../mcux_config.h \
     -DDEBUG \
-    -DLIB_JPEG_USE_HW_ACCEL=1 \
+    -D__STARTUP_INITIALIZE_NONCACHEDATA \
+    -D__STARTUP_CLEAR_BSS \
     -DDEMO_RM67162_USE_RG565=0 \
     -DDEMO_SSD1963_USE_RG565=0 \
     -DFSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1 \
@@ -70,8 +79,8 @@ SET(CMAKE_C_FLAGS_DEBUG " \
     -DSSD1963_DATA_WITDH=8 \
     -DSDK_I2C_BASED_COMPONENT_USED=1 \
     -DFLEXIO_MCULCD_DATA_BUS_WIDTH=8 \
-    -DDBI_USE_MIPI_PANEL=1 \
-    -DCPU_MIMXRT798SGFOA_cm33_core0 \
+    -DCPU_MIMXRT798SGFOB_cm33_core0 \
+    -DMIMXRT798S_cm33_core0_SERIES \
     -DOSA_USED \
     -DBOOT_HEADER_ENABLE=1 \
     -DUSE_RTOS=0 \
@@ -95,7 +104,8 @@ SET(CMAKE_C_FLAGS_FLASH_DEBUG " \
     ${CMAKE_C_FLAGS_FLASH_DEBUG} \
     -include ${ProjDirPath}/../mcux_config.h \
     -DDEBUG \
-    -DLIB_JPEG_USE_HW_ACCEL=1 \
+    -D__STARTUP_INITIALIZE_NONCACHEDATA \
+    -D__STARTUP_CLEAR_BSS \
     -DDEMO_RM67162_USE_RG565=0 \
     -DDEMO_SSD1963_USE_RG565=0 \
     -DFSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1 \
@@ -105,8 +115,8 @@ SET(CMAKE_C_FLAGS_FLASH_DEBUG " \
     -DSSD1963_DATA_WITDH=8 \
     -DSDK_I2C_BASED_COMPONENT_USED=1 \
     -DFLEXIO_MCULCD_DATA_BUS_WIDTH=8 \
-    -DDBI_USE_MIPI_PANEL=1 \
-    -DCPU_MIMXRT798SGFOA_cm33_core0 \
+    -DCPU_MIMXRT798SGFOB_cm33_core0 \
+    -DMIMXRT798S_cm33_core0_SERIES \
     -DOSA_USED \
     -DBOOT_HEADER_ENABLE=1 \
     -DUSE_RTOS=0 \
@@ -130,7 +140,8 @@ SET(CMAKE_C_FLAGS_RELEASE " \
     ${CMAKE_C_FLAGS_RELEASE} \
     -include ${ProjDirPath}/../mcux_config.h \
     -DNDEBUG \
-    -DLIB_JPEG_USE_HW_ACCEL=1 \
+    -D__STARTUP_INITIALIZE_NONCACHEDATA \
+    -D__STARTUP_CLEAR_BSS \
     -DDEMO_RM67162_USE_RG565=0 \
     -DDEMO_SSD1963_USE_RG565=0 \
     -DFSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1 \
@@ -140,8 +151,8 @@ SET(CMAKE_C_FLAGS_RELEASE " \
     -DSSD1963_DATA_WITDH=8 \
     -DSDK_I2C_BASED_COMPONENT_USED=1 \
     -DFLEXIO_MCULCD_DATA_BUS_WIDTH=8 \
-    -DDBI_USE_MIPI_PANEL=1 \
-    -DCPU_MIMXRT798SGFOA_cm33_core0 \
+    -DCPU_MIMXRT798SGFOB_cm33_core0 \
+    -DMIMXRT798S_cm33_core0_SERIES \
     -DOSA_USED \
     -DBOOT_HEADER_ENABLE=1 \
     -DUSE_RTOS=0 \
@@ -164,7 +175,8 @@ SET(CMAKE_C_FLAGS_FLASH_RELEASE " \
     ${CMAKE_C_FLAGS_FLASH_RELEASE} \
     -include ${ProjDirPath}/../mcux_config.h \
     -DNDEBUG \
-    -DLIB_JPEG_USE_HW_ACCEL=1 \
+    -D__STARTUP_INITIALIZE_NONCACHEDATA \
+    -D__STARTUP_CLEAR_BSS \
     -DDEMO_RM67162_USE_RG565=0 \
     -DDEMO_SSD1963_USE_RG565=0 \
     -DFSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1 \
@@ -174,8 +186,8 @@ SET(CMAKE_C_FLAGS_FLASH_RELEASE " \
     -DSSD1963_DATA_WITDH=8 \
     -DSDK_I2C_BASED_COMPONENT_USED=1 \
     -DFLEXIO_MCULCD_DATA_BUS_WIDTH=8 \
-    -DDBI_USE_MIPI_PANEL=1 \
-    -DCPU_MIMXRT798SGFOA_cm33_core0 \
+    -DCPU_MIMXRT798SGFOB_cm33_core0 \
+    -DMIMXRT798S_cm33_core0_SERIES \
     -DOSA_USED \
     -DBOOT_HEADER_ENABLE=1 \
     -DUSE_RTOS=0 \
@@ -196,13 +208,16 @@ SET(CMAKE_C_FLAGS_FLASH_RELEASE " \
 ")
 SET(CMAKE_CXX_FLAGS_DEBUG " \
     ${CMAKE_CXX_FLAGS_DEBUG} \
+    -include ${ProjDirPath}/../mcux_config.h \
     -DDEBUG \
     -DMCUX_META_BUILD \
     -DMCUXPRESSO_SDK \
-    -DCPU_MIMXRT798SGFOA_cm33_core0 \
+    -DCPU_MIMXRT798SGFOB_cm33_core0 \
+    -DMIMXRT798S_cm33_core0_SERIES \
     -DOSA_USED \
     -DBOOT_HEADER_ENABLE=1 \
     -DUSE_RTOS=0 \
+    -DSD_ENABLED=1 \
     -g \
     -O0 \
     -Wall \
@@ -220,13 +235,16 @@ SET(CMAKE_CXX_FLAGS_DEBUG " \
 ")
 SET(CMAKE_CXX_FLAGS_FLASH_DEBUG " \
     ${CMAKE_CXX_FLAGS_FLASH_DEBUG} \
+    -include ${ProjDirPath}/../mcux_config.h \
     -DDEBUG \
     -DMCUX_META_BUILD \
     -DMCUXPRESSO_SDK \
-    -DCPU_MIMXRT798SGFOA_cm33_core0 \
+    -DCPU_MIMXRT798SGFOB_cm33_core0 \
+    -DMIMXRT798S_cm33_core0_SERIES \
     -DOSA_USED \
     -DBOOT_HEADER_ENABLE=1 \
     -DUSE_RTOS=0 \
+    -DSD_ENABLED=1 \
     -g \
     -O0 \
     -Wall \
@@ -244,13 +262,16 @@ SET(CMAKE_CXX_FLAGS_FLASH_DEBUG " \
 ")
 SET(CMAKE_CXX_FLAGS_RELEASE " \
     ${CMAKE_CXX_FLAGS_RELEASE} \
+    -include ${ProjDirPath}/../mcux_config.h \
     -DNDEBUG \
     -DMCUX_META_BUILD \
     -DMCUXPRESSO_SDK \
-    -DCPU_MIMXRT798SGFOA_cm33_core0 \
+    -DCPU_MIMXRT798SGFOB_cm33_core0 \
+    -DMIMXRT798S_cm33_core0_SERIES \
     -DOSA_USED \
     -DBOOT_HEADER_ENABLE=1 \
     -DUSE_RTOS=0 \
+    -DSD_ENABLED=1 \
     -Os \
     -Wall \
     -fno-common \
@@ -267,13 +288,16 @@ SET(CMAKE_CXX_FLAGS_RELEASE " \
 ")
 SET(CMAKE_CXX_FLAGS_FLASH_RELEASE " \
     ${CMAKE_CXX_FLAGS_FLASH_RELEASE} \
+    -include ${ProjDirPath}/../mcux_config.h \
     -DNDEBUG \
     -DMCUX_META_BUILD \
     -DMCUXPRESSO_SDK \
-    -DCPU_MIMXRT798SGFOA_cm33_core0 \
+    -DCPU_MIMXRT798SGFOB_cm33_core0 \
+    -DMIMXRT798S_cm33_core0_SERIES \
     -DOSA_USED \
     -DBOOT_HEADER_ENABLE=1 \
     -DUSE_RTOS=0 \
+    -DSD_ENABLED=1 \
     -Os \
     -Wall \
     -fno-common \
@@ -306,9 +330,6 @@ SET(CMAKE_EXE_LINKER_FLAGS_DEBUG " \
     -mapcs \
     -Wl,--gc-sections \
     -Wl,-static \
-    -Wl,-z \
-    -Wl,muldefs \
-    -Wl,-Map=output.map \
     -Wl,--print-memory-usage \
     -mcpu=cortex-m33 \
     ${FPU} \
@@ -333,9 +354,6 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLASH_DEBUG " \
     -mapcs \
     -Wl,--gc-sections \
     -Wl,-static \
-    -Wl,-z \
-    -Wl,muldefs \
-    -Wl,-Map=output.map \
     -Wl,--print-memory-usage \
     -mcpu=cortex-m33 \
     ${FPU} \
@@ -359,9 +377,6 @@ SET(CMAKE_EXE_LINKER_FLAGS_RELEASE " \
     -mapcs \
     -Wl,--gc-sections \
     -Wl,-static \
-    -Wl,-z \
-    -Wl,muldefs \
-    -Wl,-Map=output.map \
     -Wl,--print-memory-usage \
     -mcpu=cortex-m33 \
     ${FPU} \
@@ -385,9 +400,6 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLASH_RELEASE " \
     -mapcs \
     -Wl,--gc-sections \
     -Wl,-static \
-    -Wl,-z \
-    -Wl,muldefs \
-    -Wl,-Map=output.map \
     -Wl,--print-memory-usage \
     -mcpu=cortex-m33 \
     ${FPU} \

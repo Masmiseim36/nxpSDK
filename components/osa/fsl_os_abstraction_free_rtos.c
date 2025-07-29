@@ -1,6 +1,6 @@
 /*! *********************************************************************************
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2017, 2019 NXP
+ * Copyright 2016-2017, 2019, 2025 NXP
  *
  *
  * This is the source file for the OS Abstraction layer for freertos.
@@ -80,9 +80,10 @@ typedef struct _osa_state
     OSA_TASK_HANDLE_DEFINE(mainTaskHandle);
 #endif
 #endif
-    uint32_t basePriority;
-    int32_t basePriorityNesting;
-    uint32_t interruptDisableCount;
+    uint32_t interruptReg;
+    int32_t interruptDisableNesting;
+    uint32_t interruptRegPrimask;
+    uint32_t disableIRQGlobalNesting;
 } osa_state_t;
 
 /*! @brief Definition structure contains allocated memory information.*/
@@ -1181,14 +1182,14 @@ void OSA_InterruptEnable(void)
 {
     if (0U != __get_IPSR())
     {
-        if (1 == s_osaState.basePriorityNesting)
+        if (1 == s_osaState.interruptDisableNesting)
         {
-            portCLEAR_INTERRUPT_MASK_FROM_ISR(s_osaState.basePriority);
+            portCLEAR_INTERRUPT_MASK_FROM_ISR(s_osaState.interruptReg);
         }
 
-        if (s_osaState.basePriorityNesting > 0)
+        if (s_osaState.interruptDisableNesting > 0)
         {
-            s_osaState.basePriorityNesting--;
+            s_osaState.interruptDisableNesting--;
         }
     }
     else
@@ -1207,11 +1208,11 @@ void OSA_InterruptDisable(void)
 {
     if (0U != __get_IPSR())
     {
-        if (0 == s_osaState.basePriorityNesting)
+        if (0 == s_osaState.interruptDisableNesting)
         {
-            s_osaState.basePriority = portSET_INTERRUPT_MASK_FROM_ISR();
+            s_osaState.interruptReg = portSET_INTERRUPT_MASK_FROM_ISR();
         }
-        s_osaState.basePriorityNesting++;
+        s_osaState.interruptDisableNesting++;
     }
     else
     {
@@ -1227,13 +1228,13 @@ void OSA_InterruptDisable(void)
  *END**************************************************************************/
 void OSA_EnableIRQGlobal(void)
 {
-    if (s_osaState.interruptDisableCount > 0U)
+    if (s_osaState.disableIRQGlobalNesting > 0U)
     {
-        s_osaState.interruptDisableCount--;
+        s_osaState.disableIRQGlobalNesting--;
 
-        if (0U == s_osaState.interruptDisableCount)
+        if (0U == s_osaState.disableIRQGlobalNesting)
         {
-            __enable_irq();
+            EnableGlobalIRQ(s_osaState.interruptRegPrimask);
         }
         /* call core API to enable the global interrupt*/
     }
@@ -1248,10 +1249,13 @@ void OSA_EnableIRQGlobal(void)
 void OSA_DisableIRQGlobal(void)
 {
     /* call core API to disable the global interrupt*/
-    __disable_irq();
+    if (0 == s_osaState.disableIRQGlobalNesting)
+    {
+        s_osaState.interruptRegPrimask = DisableGlobalIRQ();
+    }
 
     /* update counter*/
-    s_osaState.interruptDisableCount++;
+    s_osaState.disableIRQGlobalNesting++;
 }
 
 /*FUNCTION**********************************************************************
@@ -1332,8 +1336,8 @@ int main(void)
 void OSA_Init(void)
 {
     LIST_Init((&s_osaState.taskList), 0);
-    s_osaState.basePriorityNesting   = 0;
-    s_osaState.interruptDisableCount = 0;
+    s_osaState.interruptDisableNesting = 0;
+    s_osaState.disableIRQGlobalNesting = 0;
 }
 #endif
 

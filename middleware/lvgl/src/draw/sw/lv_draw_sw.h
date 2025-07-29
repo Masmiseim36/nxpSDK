@@ -1,4 +1,4 @@
-﻿/**
+/**
  * @file lv_draw_sw.h
  *
  */
@@ -27,6 +27,8 @@ extern "C" {
 #include "../lv_draw_image.h"
 #include "../lv_draw_line.h"
 #include "../lv_draw_arc.h"
+#include "lv_draw_sw_utils.h"
+#include "blend/lv_draw_sw_blend.h"
 
 /*********************
  *      DEFINES
@@ -79,6 +81,8 @@ void lv_draw_sw_box_shadow(lv_draw_task_t * t, const lv_draw_box_shadow_dsc_t * 
  */
 void lv_draw_sw_image(lv_draw_task_t * t, const lv_draw_image_dsc_t * draw_dsc,
                       const lv_area_t * coords);
+
+void lv_draw_sw_letter(lv_draw_task_t * t, const lv_draw_letter_dsc_t * dsc, const lv_area_t * coords);
 
 /**
  * Draw a label with SW render.
@@ -148,41 +152,34 @@ void lv_draw_sw_transform(const lv_area_t * dest_area, const void * src_buf,
  * @param t             pointer to a draw task
  * @param dsc           the draw descriptor
  */
-void lv_draw_sw_vector(lv_draw_task_t * t, const lv_draw_vector_task_dsc_t * dsc);
+void lv_draw_sw_vector(lv_draw_task_t * t, lv_draw_vector_task_dsc_t * dsc);
 #endif
 
 /**
- * Swap the upper and lower byte of an RGB565 buffer.
- * Might be required if a 8bit parallel port or an SPI port send the bytes in the wrong order.
- * The bytes will be swapped in place.
- * @param buf           pointer to buffer
- * @param buf_size_px   number of pixels in the buffer
+ * Register a custom blend handler for a color format.
+ * Handler will be called when blending a color or an
+ * image to a buffer with the given color format.
+ * At most one handler can be registered for a color format.
+ * Subsequent registrations will overwrite the previous handler.
+ *
+ * @param handler pointer to a blend handler
+ * @return true if the handler was registered, false if the handler could not be registered
  */
-void lv_draw_sw_rgb565_swap(void * buf, uint32_t buf_size_px);
+bool lv_draw_sw_register_blend_handler(lv_draw_sw_custom_blend_handler_t * handler);
 
 /**
- * Invert a draw buffer in the I1 color format.
- * Conventionally, a bit is set to 1 during blending if the luminance is greater than 127.
- * Depending on the display controller used, you might want to have different behavior.
- * The inversion will be performed in place.
- * @param buf          pointer to the buffer to be inverted
- * @param buf_size     size of the buffer in bytes
+ * Unregister a custom blend handler for a color format.
+ * @param dest_cf color format
+ * @return true if a handler was unregistered, false if no handler was registered
  */
-void lv_draw_sw_i1_invert(void * buf, uint32_t buf_size);
+bool lv_draw_sw_unregister_blend_handler(lv_color_format_t dest_cf);
 
 /**
- * Rotate a buffer into another buffer
- * @param src           the source buffer
- * @param dest          the destination buffer
- * @param src_width     source width in pixels
- * @param src_height    source height in pixels
- * @param src_stride     source stride in bytes (number of bytes in a row)
- * @param dest_stride   destination stride in bytes (number of bytes in a row)
- * @param rotation      LV_DISPLAY_ROTATION_0/90/180/270
- * @param color_format  LV_COLOR_FORMAT_RGB565/RGB888/XRGB8888/ARGB8888
+ * Get the blend handler for a color format.
+ * @param dest_cf color format
+ * @return pointer to the blend handler or NULL if no handler is registered
  */
-void lv_draw_sw_rotate(const void * src, void * dest, int32_t src_width, int32_t src_height, int32_t src_stride,
-                       int32_t dest_stride, lv_display_rotation_t rotation, lv_color_format_t color_format);
+lv_draw_sw_blend_handler_t lv_draw_sw_get_blend_handler(lv_color_format_t dest_cf);
 
 /***********************
  * GLOBAL VARIABLES
@@ -191,8 +188,6 @@ void lv_draw_sw_rotate(const void * src, void * dest, int32_t src_width, int32_t
 /**********************
  *      MACROS
  **********************/
-
-#include "blend/lv_draw_sw_blend.h"
 
 #endif /*LV_USE_DRAW_SW*/
 

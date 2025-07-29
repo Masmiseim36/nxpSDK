@@ -22,26 +22,26 @@ Please open "IoT Toolbox", check the "Wireless UART" option, one device named "N
 After pair, data could be sent/receive in the toolbox.
 
 after reset, the log is shown below, which demostrates the supported commands:
-
+~~~
 help
 wlan-reset
 wlan-version
 wlan-mac
 ...
 dhcp-stat
-
+~~~
 Then user can bound the device to the phone or other central devices.
 
 To send commands to the wifi module, type the command in the "IoT Toolbox" command line.
 
 The commands supported by the demo are listed after user types "help" in the command line.
 For example, after user types "wlan-mac", the console will show the mac address below:
-
+~~~
 wlan-mac
 MAC address
 STA MAC Address:A0:CD:F3:77:E6:FE
 uAP MAC Address:A0:CD:F3:77:E6:FE
-
+~~~
 **Notes**
 When using wireless_uart demo work as central to test wifi_cli_over_ble_wu functions, some macros shall be defined in app_config.h of wireless_uart project to prevent data loss.
 1. #define CONFIG_BT_MSG_QUEUE_COUNT 64 or higher.
@@ -65,3 +65,4 @@ To avoid this issue, following steps shall be taken:
 - [MIMXRT685-AUD-EVK](../../_boards/mimxrt685audevk/edgefast_bluetooth_examples/wifi_cli_over_ble_wu/example_board_readme.md)
 - [MIMXRT700-EVK](../../_boards/mimxrt700evk/edgefast_bluetooth_examples/wifi_cli_over_ble_wu/example_board_readme.md)
 - [RD-RW612-BGA](../../_boards/rdrw612bga/edgefast_bluetooth_examples/wifi_cli_over_ble_wu/example_board_readme.md)
+- [FRDM-MCXN947](../../_boards/frdmmcxn947/edgefast_bluetooth_examples/wifi_cli_over_ble_wu/example_board_readme.md)

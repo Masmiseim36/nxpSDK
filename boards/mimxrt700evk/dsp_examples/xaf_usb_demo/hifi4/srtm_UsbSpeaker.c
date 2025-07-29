@@ -32,8 +32,8 @@
 extern int audio_frmwk_buf_size;
 extern int audio_comp_buf_size;
 
-#define PCM_GAIN_FRAME_SIZE (192)
-#define RENDERER_FRAME_SIZE (192)
+#define PCM_GAIN_FRAME_SIZE (512)
+#define RENDERER_FRAME_SIZE (4096)
 
 enum
 {
@@ -117,7 +117,7 @@ static int pcm_gain_setup(void *p_comp, xaf_format_t *format)
     param[6] = XA_PCM_GAIN_CONFIG_PARAM_FRAME_SIZE;
     param[7] = PCM_GAIN_FRAME_SIZE;
     param[8] = XA_PCM_GAIN_CONFIG_PARAM_GAIN_FACTOR;
-    param[9] = 10;
+    param[9] = 5;
 
     return xaf_comp_set_config(p_comp, 5, &param[0]);
 }

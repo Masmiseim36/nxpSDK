@@ -397,7 +397,7 @@ static void evk_pdm_edma_config(void *ptr)
     PDM_TransferCreateHandleEDMA(PDM, &capturer->s_pdmEdmaHandle[0], PDM_CallbackISR, capturer, &g_pdmDmaHandle);
     PDM_TransferInstallEDMATCDMemory(&capturer->s_pdmEdmaHandle[0], s_edmaTcd, 2);
     PDM_TransferSetChannelConfigEDMA(PDM, &capturer->s_pdmEdmaHandle[0], 0, &channelConfig);
-    if (PDM_SetSampleRateConfig(PDM, CLOCK_GetMicfilClkFreq(), PDM16KHZ) != kStatus_Success)
+    if (PDM_SetSampleRateConfig(PDM, CLOCK_GetMicfilClkFreq(), capturer->rate) != kStatus_Success)
     {
         return;
     }
@@ -655,8 +655,9 @@ static XA_ERRORCODE xa_capturer_set_config_param(XACapturer *d, WORD32 i_idx, pV
             /* ...get requested sampling rate */
             i_value = (UWORD32) * (WORD32 *)pv_value;
 
-            /* ...allow 16 kHz only */
-            XF_CHK_ERR(i_value == 16000, XA_CAPTURER_CONFIG_NONFATAL_RANGE);
+            /* ...allow different sample rates */
+            XF_CHK_ERR(i_value == 96000 || i_value == 48000 || i_value == 32000 || i_value == 24000 || i_value == 16000 || i_value == 8000,
+                XA_CAPTURER_CONFIG_NONFATAL_RANGE);
 
             /* ...apply setting */
             d->rate = (UWORD32)i_value;

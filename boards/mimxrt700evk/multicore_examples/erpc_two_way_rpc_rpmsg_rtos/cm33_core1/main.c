@@ -1,6 +1,5 @@
 /*
- * Copyright 2018-2020 NXP
- * All rights reserved.
+ * Copyright 2018-2020, 2025 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -53,7 +52,7 @@ static mcmgr_status_t mcmgrStatus;
 static void SignalReady(void)
 {
     /* Signal the other core we are ready by triggering the event and passing the APP_ERPC_READY_EVENT_DATA */
-    (void)MCMGR_TriggerEvent(kMCMGR_RemoteApplicationEvent, APP_ERPC_READY_EVENT_DATA);
+    (void)MCMGR_TriggerEvent(kMCMGR_Core0, kMCMGR_RemoteApplicationEvent, APP_ERPC_READY_EVENT_DATA);
 }
 
 #endif
@@ -203,7 +202,7 @@ int main(void)
     /* Get the startup data */
     do
     {
-        mcmgrStatus = MCMGR_GetStartupData(&startupData);
+        mcmgrStatus = MCMGR_GetStartupData(kMCMGR_Core0, &startupData);
     } while (mcmgrStatus != kStatus_MCMGR_Success);
 #endif
 

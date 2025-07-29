@@ -17,6 +17,7 @@
 #define DSP_LITERAL_ADDRESS (uint32_t *)0x24000000
 #define DSP_BOOT_ADDRESS    (uint32_t *)0x24020000
 #define DSP_SRAM_ADDRESS    (uint32_t *)0x20300000
+#define DSP_NCACHE_ADDRESS  (uint32_t *)0x24001000
 /* Address of HiFi1 RAM, where the dsp image should be copied */
 #define HIFI1_BOOT_ADDRESS (uint32_t *)0x580000
 #define HIFI1_TEXT_ADDRESS (uint32_t *)0x740000

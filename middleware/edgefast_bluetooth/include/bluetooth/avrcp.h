@@ -3,7 +3,7 @@
  */
 
 /*
- * Copyright (c) 2021 NXP
+ * Copyright (c) 2021,2025 NXP
  *
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -16,6 +16,10 @@
  * @ingroup bluetooth
  * @{
  */
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 /** AVRCP cover art PSM */
 #define BT_AVRCP_COVER_ART_PSM (0x1005)
@@ -1538,6 +1542,10 @@ int bt_avrcp_send_request(uint8_t handle, uint8_t wait, struct bt_avrcp_cover_ar
 int bt_avrcp_response_cover_art(uint8_t handle, uint8_t cmd, uint8_t response, void *rsp);
 #endif
 
+#endif
+
+#ifdef __cplusplus
+}
 #endif
 
 /**

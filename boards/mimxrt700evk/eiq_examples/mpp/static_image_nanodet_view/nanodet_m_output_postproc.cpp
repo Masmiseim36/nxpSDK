@@ -1,5 +1,5 @@
 /*
- * Copyright 2020-2024 NXP
+ * Copyright 2020-2025 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -185,6 +185,7 @@ int32_t NANODET_ProcessOutput(const mpp_inference_cb_param_t *inf_out, box_data*
         return -1;
     }
     center_prior centers[NANODET_MAX_POINTS];
+    memset(centers, 0, NANODET_MAX_POINTS*sizeof(center_prior));
 
     generate_center_priors(NANODET_HEIGHT, NANODET_WIDTH, NANODET_STRIDE, centers, NANODET_MAX_POINTS);
 

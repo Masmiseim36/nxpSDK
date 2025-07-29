@@ -6,7 +6,13 @@ Hardware requirements
 
 Board settings
 ============
-No special settings are required.
+In default, XSPI2 is used. No special board settings are required.
+The driver example and board schematic also support change to use XSPI1. Please refer to the following steps:
+1. In app.h file, change the following macro definition:  
+    `#define DEMO_USE_XSPI2 0`  
+    `#define DEMO_USE_XSPI1 1`
+2. Change default jumper of JP45 from 2-3 to 1-2.
+
 
 Prepare the Demo
 ===============

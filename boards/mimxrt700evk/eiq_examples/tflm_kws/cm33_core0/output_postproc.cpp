@@ -19,7 +19,7 @@ status_t MODEL_ProcessOutput(const uint8_t* data, const tensor_dims_t* dims,
     result_t topResults[NUM_RESULTS];
     static result_t lastTopResult = {.score = 0.0, .index = -1};
     static int lastPrintTime = 0;
-    static int counter = 1; /* Inference counter for first static inputs */
+    static int counter = 0; /* Inference counter for first static inputs */
     const int kUsInSecond = 1000000;
 
     /* Find the best label candidates. */
@@ -32,8 +32,9 @@ status_t MODEL_ProcessOutput(const uint8_t* data, const tensor_dims_t* dims,
     }
 
     int time = TIMER_GetTimeInUS();
-    if (counter <= 2 || (time - lastPrintTime) >= kUsInSecond)
+    if (counter <= 1 || (time - lastPrintTime) >= kUsInSecond)
     {
+        counter++;
         int index = lastTopResult.index;
         const char* label = index >= 0 ? labels[index] : "No word detected";
         int score = (int)(lastTopResult.score * 100);
@@ -45,7 +46,6 @@ status_t MODEL_ProcessOutput(const uint8_t* data, const tensor_dims_t* dims,
 
         lastPrintTime = time;
         lastTopResult = {.score = 0.0, .index = -1};
-        counter++;
     }
 
     return kStatus_Success;

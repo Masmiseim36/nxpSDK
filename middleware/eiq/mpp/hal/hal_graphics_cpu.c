@@ -1,5 +1,5 @@
 /*
- * Copyright 2023-2024 NXP.
+ * Copyright 2023-2025 NXP.
  * All rights reserved.
  *
  *  SPDX-License-Identifier: Apache-2.0
@@ -57,7 +57,7 @@ typedef uint32_t (*get_src_pos)(int x, int y, int pitch, int bpp, int offset,
 
 typedef uint8_t (*get_color_byte)(int x, int y, uint8_t *buf, int pitch, int bpp, int offset, get_src_pos f_get_src_pos, int width, int height);
 typedef void (*color_conv)(uint8_t pix_id, uint8_t *pixel, uint8_t *r, uint8_t *g, uint8_t *b);
-typedef void (*write_pixel)(void *pixel, uint8_t red, uint8_t green, uint8_t blue);
+typedef void (*write_pixel)(void *pixel, ...);
 typedef uint32_t (*get_dest_pos)(int x, int y, int pitch, int bpp, int pix_id);
 
 /* structure used for color conversion from
@@ -285,6 +285,12 @@ static inline uint32_t get_dest_pos422_y_reversed(int x, int y, int pitch, int b
 #define RGB565_GSHIFT 5
 #define RGB565_BSHIFT 0
 
+/* GRAY format */
+#define GRAY_RWEIGHT      299  // Red channel contribution(29.9%)
+#define GRAY_GWEIGHT      587  // Green channel contribution(58.7%)
+#define GRAY_BWEIGHT      114  // Blue channel contribution(58.7%)
+#define GRAY_WEIGHT_DIV   1000 // Weights normalization factor
+
 /*******************************************************************************
  * Implementation for function pointer write_pixel
  ******************************************************************************/
@@ -313,6 +319,15 @@ static inline void write_rgb565(void *pixel, uint8_t red, uint8_t green, uint8_t
                 ((green >> 2) & RGB565_GMASK) << RGB565_GSHIFT |
                 ((blue >> 3) & RGB565_BMASK) << RGB565_BSHIFT);
 }
+
+static inline void write_gray(void *pixel, uint8_t gray)
+{
+    uint8_t *dstpix = (uint8_t *)pixel;
+
+    /* write the GRAY value to the destination pixel location */
+    *dstpix = gray;
+}
+
 static int HAL_GfxDev_Cpu_RGB888ToRGB(gfx_surface_t *pSrc, gfx_surface_t *pDst,
                                       cpu_blit_dims_t *pBlit_dims)
 {
@@ -570,6 +585,155 @@ static int HAL_GfxDev_Cpu_YUVToRGB(gfx_surface_t *pSrc, gfx_surface_t *pDst,
     return 0;
 }
 
+static int HAL_GfxDev_Cpu_GRAYToRGB(gfx_surface_t *pSrc, gfx_surface_t *pDst,
+                                   cpu_blit_dims_t *pBlit_dims)
+{
+    uint8_t *srcbuf = pSrc->buf;
+    uint8_t *dstbuf = pDst->buf;
+    int src_pitch = pSrc->pitch;
+    int srcBPP = get_bitpp(pSrc->format)/8;
+    int dstBPP = get_bitpp(pDst->format)/8;
+    int dst_pitch = pDst->pitch;
+    int x, y;
+    void (*write_rgb)(void *pixel, uint8_t red, uint8_t green, uint8_t blue) = NULL;
+
+    HAL_LOGD("From format: [%d] To format: [%d].\n", pSrc->format, pDst->format);
+
+    switch (pDst->format) {
+    case MPP_PIXEL_RGB565:
+        write_rgb = &write_rgb565;
+        break;
+    case MPP_PIXEL_RGB:
+        write_rgb = &write_rgb888;
+        break;
+    case MPP_PIXEL_BGR:
+        write_rgb = &write_bgr888;
+        break;
+    default:
+        HAL_LOGE("Unsupported conversion from GRAY format to RGB format [%d]\n",
+                 pDst->format);
+        return -1;
+    }
+
+    /* Parse pixels from destination buffer to map
+     * with converted pixels in color from source buffer.
+     */
+    for(y = 0; y < pBlit_dims->dst_h; y++) {
+        for(x = 0; x < pBlit_dims->dst_w; x++) {
+            int i = (y * src_pitch) + (x * srcBPP);
+            write_rgb(&dstbuf[(y * dst_pitch) + (x * dstBPP)],
+                         srcbuf[i], srcbuf[i], srcbuf[i]);
+        }
+    }
+
+    return 0;
+}
+
+static int HAL_GfxDev_Cpu_RGB565ToGRAY(gfx_surface_t *pSrc, gfx_surface_t *pDst,
+                                   cpu_blit_dims_t *pBlit_dims)
+{
+    uint8_t *srcbuf = pSrc->buf;
+    uint8_t *dstbuf = pDst->buf;
+    int src_pitch = pSrc->pitch;
+    int srcBPP = get_bitpp(pSrc->format)/8;
+    int dstBPP = get_bitpp(pDst->format)/8;
+    int dst_pitch = pDst->pitch;
+    int x, y;
+    void (*write_gray)(void *pixel, uint8_t color) = NULL;
+
+    HAL_LOGD("From format: [%d] To format: [%d].\n", pSrc->format, pDst->format);
+
+    if (pDst->format != MPP_PIXEL_GRAY) {
+        HAL_LOGE("Destination format must be 8-bit GRAY.\n");
+        return -1;
+    }
+
+    /* Parse pixels from destination buffer to map
+     * with converted pixels in color from source buffer.
+     */
+    for(y = 0; y < pBlit_dims->dst_h; y++) {
+        for(x = 0; x < pBlit_dims->dst_w; x++) {
+            int i = (y * src_pitch) + (x * srcBPP);
+            uint8_t r8 = ((srcbuf[i] >> RGB565_RSHIFT) & RGB565_RMASK) << 3;
+            uint8_t g8 = ((srcbuf[i] >> RGB565_GSHIFT) & RGB565_GMASK) << 2;
+            uint8_t b8 = (srcbuf[i] & RGB565_BMASK) << 3;
+
+            /* convert to grayscale */
+            uint8_t gray = (r8 * GRAY_RWEIGHT + g8 * GRAY_GWEIGHT + b8 * GRAY_BWEIGHT) / GRAY_WEIGHT_DIV;
+
+            write_gray(&dstbuf[(y * dst_pitch) + (x * dstBPP)], gray);
+        }
+    }
+
+    return 0;
+}
+
+/*
+ * This function converts from YUV format to GRAY format.
+ *
+ * The YUV formats supported are:
+ * - VUYX444
+ * - UYVY422
+ * - VYUY422
+ */
+static int HAL_GfxDev_Cpu_YUVToGRAY(gfx_surface_t *pSrc, gfx_surface_t *pDst,
+                                   cpu_blit_dims_t *pBlit_dims)
+{
+    uint8_t *srcbuf = pSrc->buf;
+    uint8_t *dstbuf = pDst->buf;
+    int src_pitch = pSrc->pitch;
+    int srcBPP = get_bitpp(pSrc->format)/8;
+    int dstBPP = get_bitpp(pDst->format)/8;
+    int dst_pitch = pDst->pitch;
+    int x, y;
+    uint32_t *srcpix;
+    /* coefficient of y, u, v */
+    int c[RGB_PIXELS_MAX_IN_4B_YUV];
+    /* nb of RGB pixels in 4 bytes YUV */
+    int pixels;
+    const hal_gfx_cpu_yuv_ops *yuv_ops = NULL;
+
+    HAL_LOGD("From format: [%d] To format: [%d].\n", pSrc->format, pDst->format);
+
+    switch (pSrc->format) {
+    case MPP_PIXEL_YUV1P444:
+        pixels = RGB_PIXELS_IN_4B_YUV444;
+        yuv_ops = &s_GfxDevCpuOps_VUYX444;
+        break;
+    case MPP_PIXEL_UYVY1P422:
+        pixels = RGB_PIXELS_IN_4B_YUV422;
+        yuv_ops = &s_GfxDevCpuOps_UYVY422;
+        break;
+    case MPP_PIXEL_VYUY1P422:
+        pixels = RGB_PIXELS_IN_4B_YUV422;
+        yuv_ops = &s_GfxDevCpuOps_VYUY422;
+        break;
+    default:
+        HAL_LOGE("Unsupported YUV format [%d]\n", pSrc->format);
+        return -1;
+    }
+
+    if (pDst->format != MPP_PIXEL_GRAY) {
+        HAL_LOGE("Destination format must be 8-bit GRAY.\n");
+        return -1;
+    }
+    /* Parse pixels and for each one extract Y component and write it as GRAY value
+     * to destination buffer.
+     */
+    for(y = 0; y < pBlit_dims->dst_h; y++) {
+        for(x = 0; x < pBlit_dims->dst_w/pixels; x++) {
+            srcpix = (uint32_t *)(srcbuf + (y * src_pitch) + (x * srcBPP * pixels));
+            for(int pix_id = 0; pix_id < pixels; pix_id++) {
+                c[pix_id] = yuv_ops->c_from_yuv((uint8_t *)srcpix, pix_id);
+                write_gray(&dstbuf[(y*dst_pitch) + (x*pixels*dstBPP) + pix_id*dstBPP],
+                (uint8_t)c[pix_id]);
+            }
+        }
+    }
+
+    return 0;
+}
+
 /*
  * Image rotation using CPU backend:
  */
@@ -660,6 +824,11 @@ static inline uint8_t get_color_byte_from_rgb565(int x, int y, uint8_t *buf, int
             rgb565_to_rgb888[offset].shift_dst);
 }
 
+static inline uint8_t get_color_byte_from_gray(int x, int y, uint8_t *buf, int pitch, int bpp, int offset, get_src_pos f_get_src_pos, int width, int height)
+{
+    return buf[f_get_src_pos(x, y, pitch, bpp, offset, width, height)];
+}
+
 static inline uint8_t get_color_byte_from_rgb565_rot0(int x, int y, uint8_t *buf, int pitch, int offset, int width, int height)
 {
     uint16_t *rgb565 = (uint16_t *)buf;
@@ -739,6 +908,38 @@ static inline uint8_t scale_rgb565_rot0(int x, int y, uint8_t *buf, int pitch, i
     return ( (top * (SUBPIXINC - disty)) + (bot * disty) ) >> SUBPIXPOW;
 }
 
+/*
+ * Image scaling using CPU backend:
+ *
+ * Bi-linear scaler
+ * Uses sub-pixel increments.
+ * No float, no division.
+ **/
+static inline uint8_t scale_gray(int x, int y, uint8_t *buf, int pitch, int bpp, int offset, get_src_pos f_get_src_pos, int width, int height)
+{
+    uint8_t tl, tr, bl, br; /* 4 neighbors values in source */
+    /* Calculate the integer part of the x and y coordinates (pixel positions) */
+    int src_x = x >> SUBPIXPOW;
+    int src_y = y >> SUBPIXPOW;
+
+    /* Calculate the fractional part (the subpixel position) for both x and y */
+    int distx = x % SUBPIXINC;
+    int disty = y % SUBPIXINC;
+
+    /* get 4 neighbors at source pixel positions */
+    tl = get_color_byte_from_gray(src_x, src_y, buf, pitch, bpp, offset, f_get_src_pos, width, height);     // Top-left
+    tr = get_color_byte_from_gray(src_x+1, src_y, buf, pitch, bpp, offset, f_get_src_pos, width, height);   // Top-right
+    bl = get_color_byte_from_gray(src_x, src_y+1, buf, pitch, bpp, offset, f_get_src_pos, width, height);   // Bottom-left
+    br = get_color_byte_from_gray(src_x+1, src_y+1, buf, pitch, bpp, offset, f_get_src_pos, width, height); // Bottom-right
+
+    /* interpolate horizontally */
+    int top = ( (tl * (SUBPIXINC - distx)) + (tr * distx) ) >> SUBPIXPOW;
+    int bot = ( (bl * (SUBPIXINC - distx)) + (br * distx) ) >> SUBPIXPOW;
+
+    /* interpolate vertically */
+    return ( (top * (SUBPIXINC - disty)) + (bot * disty) ) >> SUBPIXPOW;
+}
+
 /*******************************************************************************
  * Implementation for function pointer color_conv
  ******************************************************************************/
@@ -805,7 +1006,7 @@ static int HAL_GfxDev_Cpu_Scale(gfx_surface_t *pSrc, gfx_surface_t *pDst,
     int x, y, sub_x, sub_y;   /* position in destination */
     uint8_t tl, tr, bl, br; /* 4 neighbors values in source */
     uint8_t (*get_color)(int x, int y, uint8_t *buf, int pitch, int bpp, int offset,  get_src_pos f_get_src_pos, int width, int height) = NULL;
-    void (*put_pixel)(void *pixel, uint8_t red, uint8_t green, uint8_t blue) = NULL;
+    write_pixel f_write_pixel = NULL;
 
     HAL_LOGD("Input window: width=[%d], height=[%d].\n", pBlit_dims->src_w, pBlit_dims->src_h);
     HAL_LOGD("Output window: width=[%d], height=[%d].\n", pBlit_dims->dst_w, pBlit_dims->dst_h);
@@ -816,12 +1017,18 @@ static int HAL_GfxDev_Cpu_Scale(gfx_surface_t *pSrc, gfx_surface_t *pDst,
     switch (pSrc->format) {
     case MPP_PIXEL_RGB:
     case MPP_PIXEL_YUV1P444:
+    case MPP_PIXEL_UYVY1P422:
+    case MPP_PIXEL_VYUY1P422:
         get_color = get_color_byte_from_rgb888;
-        put_pixel = write_rgb888;
+        f_write_pixel = (void (*)(void *, ...))write_rgb888;
         break;
     case MPP_PIXEL_RGB565:
         get_color = get_color_byte_from_rgb565;
-        put_pixel = write_rgb565;
+        f_write_pixel = (void (*)(void *, ...))write_rgb565;
+        break;
+    case MPP_PIXEL_GRAY:
+        get_color = get_color_byte_from_gray;
+        f_write_pixel = (void (*)(void *, ...))write_gray;
         break;
     default:
         HAL_LOGE("Unsupported src format [%d]\n", pSrc->format);
@@ -852,7 +1059,7 @@ static int HAL_GfxDev_Cpu_Scale(gfx_surface_t *pSrc, gfx_surface_t *pDst,
                 /* interpolate vertically */
                 val[comp_offset] = ( (top * (SUBPIXINC - disty)) + (bot * disty) ) >> SUBPIXPOW;
             }
-            put_pixel(&dstbuf[(y * dst_pitch) + (x * dstBPP)],
+            f_write_pixel(&dstbuf[(y * dst_pitch) + (x * dstBPP)],
                       val[0], val[1], val[2]);
         }
     }
@@ -872,27 +1079,47 @@ static int HAL_GfxDev_Cpu_ColorConvert(gfx_surface_t *pSrc, gfx_surface_t *pDst,
 
     if ((pDst->format != MPP_PIXEL_RGB565) &&
         (pDst->format != MPP_PIXEL_RGB) &&
-        (pDst->format != MPP_PIXEL_BGR))
-    {
+        (pDst->format != MPP_PIXEL_BGR) &&
+		(pDst->format != MPP_PIXEL_GRAY)) {
         HAL_LOGE("Unsupported color conversion to format [%d].\n", pDst->format);
         return -1;
     }
 
-    switch (pSrc->format) {
-    case MPP_PIXEL_RGB:
-        error = HAL_GfxDev_Cpu_RGB888ToRGB(pSrc, pDst, pBlit_dims);
-        break;
-    case MPP_PIXEL_RGB565:
-        error = HAL_GfxDev_Cpu_RGB565ToRGB(pSrc, pDst, pBlit_dims);
-        break;
-    case MPP_PIXEL_YUV1P444:
-    case MPP_PIXEL_UYVY1P422:
-    case MPP_PIXEL_VYUY1P422:
-        error = HAL_GfxDev_Cpu_YUVToRGB(pSrc, pDst, pBlit_dims);
-        break;
-    default:
-        HAL_LOGE("Unsupported color conversion from format [%d].\n", pSrc->format);
-        return -1;
+    if (pDst->format == MPP_PIXEL_GRAY) {
+        switch (pSrc->format) {
+           case MPP_PIXEL_YUV1P444:
+           case MPP_PIXEL_UYVY1P422:
+           case MPP_PIXEL_VYUY1P422:
+                error = HAL_GfxDev_Cpu_YUVToGRAY(pSrc, pDst, pBlit_dims);
+                break;
+           case MPP_PIXEL_RGB565:
+               error = HAL_GfxDev_Cpu_RGB565ToGRAY(pSrc, pDst, pBlit_dims);
+               break;
+           default:
+                HAL_LOGE("Unsupported color conversion to GRAY from format [%d].\n", pSrc->format);
+                return -1;
+        }
+    }
+    else {
+        switch (pSrc->format) {
+            case MPP_PIXEL_RGB:
+                error = HAL_GfxDev_Cpu_RGB888ToRGB(pSrc, pDst, pBlit_dims);
+                break;
+            case MPP_PIXEL_RGB565:
+                error = HAL_GfxDev_Cpu_RGB565ToRGB(pSrc, pDst, pBlit_dims);
+                break;
+            case MPP_PIXEL_YUV1P444:
+            case MPP_PIXEL_UYVY1P422:
+            case MPP_PIXEL_VYUY1P422:
+                error = HAL_GfxDev_Cpu_YUVToRGB(pSrc, pDst, pBlit_dims);
+                break;
+            case MPP_PIXEL_GRAY:
+                error = HAL_GfxDev_Cpu_GRAYToRGB(pSrc, pDst, pBlit_dims);
+                break;
+            default:
+                HAL_LOGE("Unsupported %d to %d color conversion.\n", pSrc->format, pDst->format);
+                return -1;
+        }
     }
 
     return error;
@@ -939,6 +1166,7 @@ int HAL_GfxDev_Cpu_Blit(
     {
         ret = HAL_GfxDev_any_OP(dev, pSrc, pDst, pRotate, flip);
     }
+
     return ret;
 }
 
@@ -1096,6 +1324,12 @@ static int HAL_GfxDev_any_OP(
         else
             f_get_color_byte = get_color_byte_from_rgb565;
         break;
+    case MPP_PIXEL_GRAY:
+        if (scaling)
+            f_get_color_byte = scale_gray;
+        else
+            f_get_color_byte = get_color_byte_from_gray;
+        break;
     default:
         HAL_LOGE("Unsupported src format [%d]\n", pSrc->format);
         return -1;
@@ -1103,13 +1337,16 @@ static int HAL_GfxDev_any_OP(
 
     switch (pDst->format) {
     case MPP_PIXEL_RGB:
-        f_write_pixel = write_rgb888;
+        f_write_pixel = (void (*)(void *, ...))write_rgb888;
         break;
     case MPP_PIXEL_BGR:
-        f_write_pixel = write_bgr888;
+        f_write_pixel = (void (*)(void *, ...))write_bgr888;
         break;
     case MPP_PIXEL_RGB565:
-        f_write_pixel = write_rgb565;
+        f_write_pixel = (void (*)(void *, ...))write_rgb565;
+        break;
+    case MPP_PIXEL_GRAY:
+        f_write_pixel = (void (*)(void *, ...))write_gray;
         break;
     default:
         HAL_LOGE("Unsupported dst format [%d]\n", pDst->format);

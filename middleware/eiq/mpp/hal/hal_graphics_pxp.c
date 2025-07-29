@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2024 NXP.
+ * Copyright 2019-2025 NXP.
  * All rights reserved.
  *
  *  SPDX-License-Identifier: Apache-2.0
@@ -233,6 +233,7 @@ static int set_input_buffer_format(pxp_ps_buffer_config_t *pPsBufferConfig, gfx_
     switch (pSrc->format)
     {
         case MPP_PIXEL_BGRA:
+        case MPP_PIXEL_BGRX:
         {
 #if (!(defined(FSL_FEATURE_PXP_HAS_NO_EXTEND_PIXEL_FORMAT) && FSL_FEATURE_PXP_HAS_NO_EXTEND_PIXEL_FORMAT)) || \
 		(!(defined(FSL_FEATURE_PXP_V3) && FSL_FEATURE_PXP_V3))
@@ -269,6 +270,12 @@ static int set_input_buffer_format(pxp_ps_buffer_config_t *pPsBufferConfig, gfx_
 #else
             pPsBufferConfig->pixelFormat = kPXP_PsPixelFormatRGB888;
 #endif
+        }
+        break;
+
+        case MPP_PIXEL_GRAY:
+        {
+            pPsBufferConfig->pixelFormat = kPXP_PsPixelFormatY8;
         }
         break;
 
@@ -467,6 +474,12 @@ static int set_output_buffer_format(pxp_output_buffer_config_t *pOutputBufferCon
         case MPP_PIXEL_VYUY1P422:
         {
             pOutputBufferConfig->pixelFormat = kPXP_OutputPixelFormatVYUY1P422;
+        }
+        break;
+
+        case MPP_PIXEL_GRAY:
+        {
+            pOutputBufferConfig->pixelFormat = kPXP_OutputPixelFormatY8;
         }
         break;
 

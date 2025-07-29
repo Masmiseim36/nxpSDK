@@ -80,9 +80,12 @@ static uint32_t SSD1963_GetPllDivider(uint8_t *multi, uint8_t *div, uint32_t src
 
 static void SSD1963_Delay(uint32_t loops)
 {
-    while (0U != (loops--))
+    if (loops != 0U)
     {
-        __NOP();
+        while (0U != (loops--))
+        {
+            __NOP();
+        }
     }
 }
 
@@ -163,6 +166,8 @@ status_t SSD1963_Init(ssd1963_handle_t *handle,
 {
     assert(handle);
     assert(config);
+    assert(config->panelHeight != 0U);
+    assert(config->panelWidth != 0U);
 
     uint8_t multi, div;
     uint32_t pllFreq_Hz;

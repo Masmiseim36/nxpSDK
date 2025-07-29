@@ -26,6 +26,10 @@
 #if defined(USB_DEVICE_AUDIO_USE_SYNC_MODE) && (USB_DEVICE_AUDIO_USE_SYNC_MODE > 0U)
 #include "fsl_ctimer.h"
 #endif
+/* If XCACHE is present */
+#if FSL_FEATURE_SOC_XCACHE_COUNT
+#include "fsl_cache.h"
+#endif /* FSL_FEATURE_SOC_XCACHE_COUNT */
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -61,7 +65,7 @@ extern void USB_AudioPllChange(void);
  * Variables
  ******************************************************************************/
 USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE)
-uint8_t *audioPlayDataBuff = (uint8_t *)AUDIO_SHARED_BUFFER_1;
+uint8_t *audioPlayDataBuff = NULL;
 #if defined(USB_DEVICE_AUDIO_USE_SYNC_MODE) && (USB_DEVICE_AUDIO_USE_SYNC_MODE > 0U)
 USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE)
 uint8_t audioPlayPacket[FS_ISO_OUT_ENDP_PACKET_SIZE] = {0};
@@ -70,13 +74,11 @@ USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE)
 uint8_t audioPlayPacket[(FS_ISO_OUT_ENDP_PACKET_SIZE + AUDIO_OUT_FORMAT_CHANNELS * AUDIO_OUT_FORMAT_SIZE)] = {0};
 #endif
 USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE)
-uint8_t *audioPlayDMATempBuff =
-    (uint8_t *)(AUDIO_SHARED_BUFFER_1 + (AUDIO_SHARED_BUFFER_1_SIZE - AUDIO_PLAY_BUFFER_SIZE_ONE_FRAME - 1));
+uint8_t *audioPlayDMATempBuff = NULL;
 USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE)
-uint8_t *audioRecDMATempBuff =
-    (uint8_t *)(AUDIO_SHARED_BUFFER_2 + (AUDIO_SHARED_BUFFER_2_SIZE - AUDIO_PLAY_BUFFER_SIZE_ONE_FRAME - 1));
+uint8_t *audioRecDMATempBuff = NULL;
 USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE)
-uint8_t *audioRecDataBuff = (uint8_t *)AUDIO_SHARED_BUFFER_2;
+uint8_t *audioRecDataBuff = NULL;
 #if defined(USB_DEVICE_AUDIO_USE_SYNC_MODE) && (USB_DEVICE_AUDIO_USE_SYNC_MODE > 0U)
 USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE)
 uint8_t audioRecPacket[(FS_ISO_IN_ENDP_PACKET_SIZE)] = {0};
@@ -585,6 +587,9 @@ void USB_AudioSpeakerPutBuffer(uint8_t *buffer, uint32_t size)
         {
             memcpy((void *)(&audioPlayDataBuff[g_deviceAudioComposite->audioUnified.tdWriteNumberPlay]),
                    (void *)(&buffer[0]), size);
+#if FSL_FEATURE_SOC_XCACHE_COUNT
+                XCACHE_CleanCacheByRange((uint32_t)&audioPlayDataBuff[g_deviceAudioComposite->audioUnified.tdWriteNumberPlay], size);
+#endif
             g_deviceAudioComposite->audioUnified.tdWriteNumberPlay += size;
         }
         else
@@ -593,10 +598,16 @@ void USB_AudioSpeakerPutBuffer(uint8_t *buffer, uint32_t size)
                                    g_deviceAudioComposite->audioUnified.tdWriteNumberPlay;
             memcpy((void *)(&audioPlayDataBuff[g_deviceAudioComposite->audioUnified.tdWriteNumberPlay]),
                    (void *)(&buffer[0]), firstLength);
+#if FSL_FEATURE_SOC_XCACHE_COUNT
+                XCACHE_CleanCacheByRange((uint32_t)&audioPlayDataBuff[g_deviceAudioComposite->audioUnified.tdWriteNumberPlay], firstLength);
+#endif
             buffer_length = size - firstLength; /* the remain data length */
             if ((buffer_length) > 0U)
             {
                 memcpy((void *)(&audioPlayDataBuff[0]), (void *)((uint8_t *)(&buffer[0]) + firstLength), buffer_length);
+#if FSL_FEATURE_SOC_XCACHE_COUNT
+                XCACHE_CleanCacheByRange((uint32_t)&audioPlayDataBuff[0], buffer_length);
+#endif
                 g_deviceAudioComposite->audioUnified.tdWriteNumberPlay = buffer_length;
             }
             else
@@ -827,6 +838,9 @@ usb_status_t USB_DeviceAudioCompositeCallback(class_handle_t handle, uint32_t ev
                     }
                     if (g_deviceAudioComposite->audioUnified.startRecHalfFull)
                     {
+#if FSL_FEATURE_SOC_XCACHE_COUNT
+                        XCACHE_InvalidateCacheByRange((uint32_t)&audioRecDataBuff[0], AUDIO_RECORDER_DATA_WHOLE_BUFFER_COUNT_NORMAL * FS_ISO_IN_ENDP_PACKET_SIZE);
+#endif
                         USB_AudioRecorderGetBuffer(audioRecPacket, epPacketSize);
                         error =
                             USB_DeviceAudioSend(g_deviceAudioComposite->audioUnified.audioRecorderHandle,
@@ -1290,6 +1304,10 @@ usb_status_t USB_DeviceAudioSpeakerSetInterface(class_handle_t handle, uint8_t i
  */
 usb_status_t USB_DeviceAudioCompositeInit(usb_device_composite_struct_t *device_composite)
 {
+    audioPlayDataBuff = (uint8_t *)AUDIO_SHARED_BUFFER_1;
+    audioPlayDMATempBuff = (uint8_t *)(AUDIO_SHARED_BUFFER_1 + (AUDIO_SHARED_BUFFER_1_SIZE - AUDIO_PLAY_BUFFER_SIZE_ONE_FRAME - 1));
+    audioRecDMATempBuff = (uint8_t *)(AUDIO_SHARED_BUFFER_2 + (AUDIO_SHARED_BUFFER_2_SIZE - AUDIO_PLAY_BUFFER_SIZE_ONE_FRAME - 1));
+    audioRecDataBuff = (uint8_t *)AUDIO_SHARED_BUFFER_2;
 #if defined(USB_DEVICE_AUDIO_USE_SYNC_MODE) && (USB_DEVICE_AUDIO_USE_SYNC_MODE > 0U)
     CTIMER_CaptureInit();
 #else

@@ -10,6 +10,7 @@
 
 #include "usb_audio_config.h"
 #include "usb_device_audio.h"
+
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -117,17 +118,17 @@ to initialize out and in sample rate respectively*/
 #define AUDIO_OUT_FORMAT_BITS     (16)
 #define AUDIO_OUT_FORMAT_SIZE     (0x02)
 #define AUDIO_IN_FORMAT_CHANNELS  (0x02U)
+#ifdef MIMXRT798S_cm33_core0_SERIES
+#define AUDIO_IN_FORMAT_BITS     (32)
+#define AUDIO_IN_FORMAT_SIZE     (0x04)
+#else
 #define AUDIO_IN_FORMAT_BITS      (16)
 #define AUDIO_IN_FORMAT_SIZE      (0x02)
+#endif
 /* transfer length during 1 ms */
 #define AUDIO_OUT_TRANSFER_LENGTH_ONE_FRAME \
     (AUDIO_OUT_SAMPLING_RATE_KHZ * AUDIO_OUT_FORMAT_CHANNELS * AUDIO_OUT_FORMAT_SIZE)
 
-#if (AUDIO_IN_FORMAT_BITS != AUDIO_OUT_FORMAT_BITS)
-/*defalut in sample rate and out sample rate are same, if the sample setting is different,please remove this error
- manually, then check the AUDIO_FORMAT_BITS .*/
-#error This application default configuration requires AUDIO_IN_FORMAT_BITS equal to AUDIO_OUT_FORMAT_BITS.
-#endif
 #define AUDIO_FORMAT_BITS (AUDIO_OUT_FORMAT_BITS)
 #if (AUDIO_IN_FORMAT_CHANNELS != AUDIO_OUT_FORMAT_CHANNELS)
 /*defalut in channel and out channel are same, if the channel setting is different,please remove this error manually,

@@ -1,5 +1,5 @@
 /*
- * Copyright 2023-2024 NXP
+ * Copyright 2023-2025 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -608,9 +608,9 @@ static uint32_t CLOCK_CalFroFreq(FRO_Type *base)
     {
         if ((base->TEXPCNT.RW & FRO_TEXPCNT_TEXPCNT_MASK) != 0u)
         {
-            freq = ((uint32_t)((uint64_t)(base->TEXPCNT.RW & FRO_TEXPCNT_TEXPCNT_MASK) *
-                               ((uint64_t)refFreq / (uint64_t)((base->CNFG1.RW & FRO_CNFG1_REFDIV_MASK) + 1UL)) /
-                               (uint64_t)((base->CNFG1.RW & FRO_CNFG1_RFCLKCNT_MASK) >> FRO_CNFG1_RFCLKCNT_SHIFT)));
+            freq = ((uint32_t)(((uint64_t)base->TEXPCNT.RW & FRO_TEXPCNT_TEXPCNT_MASK) *
+                               ((uint64_t)refFreq / (((uint64_t)base->CNFG1.RW & FRO_CNFG1_REFDIV_MASK) + 1ULL)) /
+                               (((uint64_t)base->CNFG1.RW & FRO_CNFG1_RFCLKCNT_MASK) >> FRO_CNFG1_RFCLKCNT_SHIFT)));
         }
         else
         {
@@ -1251,7 +1251,42 @@ uint32_t CLOCK_GetComputeAudioClkFreq(void)
 
 uint32_t CLOCK_GetSenseAudioClkFreq(void)
 {
-    return g_senseAudioClkFreq;
+    uint32_t freq   = 0U;
+    uint32_t clkSel = 0U;
+
+    if (SYSCON3->SILICONREV_ID == 0xA0000UL)
+    {
+        freq = g_senseAudioClkFreq;
+    }
+    else
+    {
+        clkSel = CLKCTL3->SENSEBASECLKSEL & CLKCTL3_SENSEBASECLKSEL_AUDIOCLKSEL_MASK;
+
+        /* Read again to avoid glitch. */
+        if (clkSel == (CLKCTL3->SENSEBASECLKSEL & CLKCTL3_SENSEBASECLKSEL_AUDIOCLKSEL_MASK))
+        {
+            switch (clkSel)
+            {
+                case CLKCTL3_SENSEBASECLKSEL_AUDIOCLKSEL(0U):
+                    freq = CLOCK_GetMclkInClkFreq();
+                    break;
+                case CLKCTL3_SENSEBASECLKSEL_AUDIOCLKSEL(1U):
+                    freq = CLOCK_GetXtalInClkFreq();
+                    break;
+                case CLKCTL3_SENSEBASECLKSEL_AUDIOCLKSEL(2U):
+                    freq = CLOCK_GetFroClkFreq(2U) / 8U;
+                    break;
+                case CLKCTL3_SENSEBASECLKSEL_AUDIOCLKSEL(3U):
+                    freq = CLOCK_GetAudioPfdFreq(kCLOCK_Pfd3);
+                    break;
+                default:
+                    freq = 0U;
+                    break;
+            }
+        }
+    }
+
+    return freq;
 }
 
 /* Get FCCLK Clk frequency */
@@ -1891,12 +1926,14 @@ uint32_t CLOCK_GetWakeClk32KFreq(void)
             break;
         case CLKCTL3_WAKE32KCLKSEL_SEL(1):
             freq = CLOCK_GetLpOscFreq();
+            freq /= 32U;
             break;
         default:
             freq = 0U;
             break;
     }
-    return freq / ((CLKCTL3->WAKE32KCLKDIV & CLKCTL3_WAKE32KCLKDIV_DIV_MASK) + 1U);
+
+    return freq;
 }
 
 uint32_t CLOCK_GetXspiClkFreq(uint32_t id)

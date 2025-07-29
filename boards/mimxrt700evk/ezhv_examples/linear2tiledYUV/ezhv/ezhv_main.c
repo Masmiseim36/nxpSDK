@@ -10,9 +10,7 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-/*! @brief shared space between primary core and ezhv, 
- *  default space size is 256Bytes.
- */
+/*! @brief shared space, default size 256 bytes */
 #define EZHV_SHARED_DATA_ADDR    0x2410FF00U
 
 typedef void (*ezhv_func_ptr)(uint32_t paraAddr);

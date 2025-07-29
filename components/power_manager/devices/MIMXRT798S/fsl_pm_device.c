@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 NXP
+ * Copyright 2024-2025 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -62,7 +62,6 @@ static status_t PM_DEV_ManageWakeupSource(pm_wakeup_source_t *ws, bool enable);
  *  | VNCOM           |    ON/OFF    |   ON/OFF   |      OFF      |      OFF        |       OFF            |
  *  | V2DSP           |    ON/OFF    |   ON/OFF   |      OFF      |      OFF        |       OFF            |
  *  | V2MIPI          |    ON/OFF    |   ON/OFF   |      OFF      |      OFF        |       OFF            |
- *  | DCDC_HP         |    HP/LP     |   HP/LP    |      OFF      |      OFF        |       OFF            |
  *  | PMC_TEMP        |    ON/OFF    |   ON/OFF   |      OFF      |      OFF        |       OFF            |
  *  | PMCREF_HP       |    HP/LP     |   HP/LP    |      OFF      |      OFF        |       OFF            |
  *  | HVD1V8          |    ON/OFF    |   ON/OFF   |      OFF      |      OFF        |       OFF            |
@@ -291,7 +290,6 @@ static const enabled_resources_t enResPeripherals[RESC_GROUP_PERIPHERALS_SIZE] =
     [kResc_VNCOM - RESC_GROUP_PERIPHERALS_START]   = {1U, PMC_PDSLEEPCFG0_VNCOM_DSR_MASK},
     [kResc_V2DSP - RESC_GROUP_PERIPHERALS_START]   = {1U, PMC_PDSLEEPCFG0_V2DSP_PD_MASK},
     [kResc_V2MIPI - RESC_GROUP_PERIPHERALS_START]  = {1U, PMC_PDSLEEPCFG0_V2MIPI_PD_MASK},
-    [kResc_DCDC_HP - RESC_GROUP_PERIPHERALS_START] = {1U, PMC_PDSLEEPCFG0_DCDC_LP_MASK},
 
     [kResc_PMC_TEMP - RESC_GROUP_PERIPHERALS_START]   = {2U, PMC_PDSLEEPCFG1_TEMP_PD_MASK},
     [kResc_PMCREF_HP - RESC_GROUP_PERIPHERALS_START]  = {2U, PMC_PDSLEEPCFG1_PMCREF_LP_MASK},

@@ -35,6 +35,7 @@
     <definition extID="middleware.freertos-kernel.MIMXRT798S"/>
     <definition extID="middleware.freertos-kernel.heap_4.MIMXRT798S"/>
     <definition extID="middleware.freertos-kernel.cm33_non_trustzone.MIMXRT798S"/>
+    <definition extID="middleware.freertos-kernel.extension.MIMXRT798S"/>
     <definition extID="middleware.freertos-kernel.config.MIMXRT798S"/>
     <definition extID="iar"/>
     <definition extID="mdk"/>
@@ -42,7 +43,7 @@
     <definition extID="mcuxpresso"/>
     <definition extID="com.nxp.mcuxpresso"/>
   </externalDefinitions>
-  <example id="mimxrt700evk_dsp_xaf_playback_cm33_core1" name="dsp_xaf_playback_cm33_core1" device_core="cm33_core1_MIMXRT798S" dependency="CMSIS_Include_core_cm.MIMXRT798S device.MIMXRT798S_CMSIS.MIMXRT798S device.MIMXRT798S_system.MIMXRT798S device.MIMXRT798S_startup.MIMXRT798S platform.drivers.clock.MIMXRT798S platform.drivers.dsp.MIMXRT798S platform.drivers.lpc_iopctl.MIMXRT798S platform.drivers.power.MIMXRT798S platform.drivers.reset.MIMXRT798S platform.drivers.common.MIMXRT798S platform.drivers.glikey.MIMXRT798S platform.drivers.gpio.MIMXRT798S platform.drivers.lpflexcomm.MIMXRT798S platform.drivers.lpflexcomm_lpuart.MIMXRT798S platform.drivers.mu1.MIMXRT798S platform.drivers.sema42.MIMXRT798S platform.utilities.assert.MIMXRT798S platform.utilities.misc_utilities.MIMXRT798S component.lists.MIMXRT798S utility.str.MIMXRT798S utility.debug_console.MIMXRT798S utility.shell.MIMXRT798S component.serial_manager.MIMXRT798S component.serial_manager_uart.MIMXRT798S component.lpuart_adapter.MIMXRT798S middleware.multicore.rpmsg-lite.MIMXRT798S middleware.multicore.rpmsg-lite.queue.MIMXRT798S middleware.multicore.rpmsg-lite.ns.MIMXRT798S middleware.multicore.rpmsg-lite.freertos.MIMXRT798S middleware.multicore.rpmsg-lite.imxrt700.MIMXRT798S middleware.freertos-kernel.MIMXRT798S middleware.freertos-kernel.heap_4.MIMXRT798S middleware.freertos-kernel.cm33_non_trustzone.MIMXRT798S middleware.freertos-kernel.config.MIMXRT798S" category="dsp_examples">
+  <example id="mimxrt700evk_dsp_xaf_playback_cm33_core1" name="dsp_xaf_playback_cm33_core1" device_core="cm33_core1_MIMXRT798S" dependency="CMSIS_Include_core_cm.MIMXRT798S device.MIMXRT798S_CMSIS.MIMXRT798S device.MIMXRT798S_system.MIMXRT798S device.MIMXRT798S_startup.MIMXRT798S platform.drivers.clock.MIMXRT798S platform.drivers.dsp.MIMXRT798S platform.drivers.lpc_iopctl.MIMXRT798S platform.drivers.power.MIMXRT798S platform.drivers.reset.MIMXRT798S platform.drivers.common.MIMXRT798S platform.drivers.glikey.MIMXRT798S platform.drivers.gpio.MIMXRT798S platform.drivers.lpflexcomm.MIMXRT798S platform.drivers.lpflexcomm_lpuart.MIMXRT798S platform.drivers.mu1.MIMXRT798S platform.drivers.sema42.MIMXRT798S platform.utilities.assert.MIMXRT798S platform.utilities.misc_utilities.MIMXRT798S component.lists.MIMXRT798S utility.str.MIMXRT798S utility.debug_console.MIMXRT798S utility.shell.MIMXRT798S component.serial_manager.MIMXRT798S component.serial_manager_uart.MIMXRT798S component.lpuart_adapter.MIMXRT798S middleware.multicore.rpmsg-lite.MIMXRT798S middleware.multicore.rpmsg-lite.queue.MIMXRT798S middleware.multicore.rpmsg-lite.ns.MIMXRT798S middleware.multicore.rpmsg-lite.freertos.MIMXRT798S middleware.multicore.rpmsg-lite.imxrt700.MIMXRT798S middleware.freertos-kernel.MIMXRT798S middleware.freertos-kernel.heap_4.MIMXRT798S middleware.freertos-kernel.cm33_non_trustzone.MIMXRT798S middleware.freertos-kernel.extension.MIMXRT798S middleware.freertos-kernel.config.MIMXRT798S" category="dsp_examples">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -55,13 +56,14 @@
       <toolchainSetting id_refs="com.nxp.mcuxpresso">
         <option id="gnu.c.compiler.option.preprocessor.def.symbols" type="stringList">
           <value>MCUXPRESSO_SDK</value>
-          <value>CPU_MIMXRT798SGFOA_cm33_core1</value>
+          <value>CPU_MIMXRT798SGFOB_cm33_core1</value>
           <value>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</value>
           <value>XA_SBC_DECODER=1</value>
           <value>XA_PCM_GAIN=1</value>
           <value>XA_SRC_PP_FX=1</value>
           <value>SDK_DEBUGCONSOLE=1</value>
           <value>MCUX_META_BUILD</value>
+          <value>MIMXRT798S_cm33_core1_SERIES</value>
           <value>SERIAL_PORT_TYPE_UART=1</value>
           <value>SDK_OS_FREE_RTOS</value>
         </option>
@@ -232,6 +234,9 @@
     </source>
     <source path="." project_relative_path="doc" type="doc">
       <files mask="example_board_readme.md"/>
+    </source>
+    <source path="." project_relative_path="doc" type="doc">
+      <files mask="examples_shared_readme.md"/>
     </source>
   </example>
 </ksdk:examples>

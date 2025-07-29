@@ -27,7 +27,7 @@
 #if (defined(__stack_size__))
   #define Stack_Size                   __stack_size__
 #else
-  #define Stack_Size                   0x0400
+  #define Stack_Size                   0x1000
 #endif
 
 #if (defined(__heap_size__))
@@ -66,9 +66,9 @@
 #define  m_boot_flash_conf_start       0x28000000
 
 #if (defined(__use_shmem__))
-  #define rpmsg_sh_mem_start           0x20200000
-  #define m_rpmsg_sh_mem_size          0x00002000
-  #define m_ncache_start               0x20202000
+  #define m_rpmsg_sh_mem_start         0x20200000
+  #define m_rpmsg_sh_mem_size          0x00010000
+  #define m_ncache_start               0x20210000
   #define m_ncache_size                0x001FD000
 #else
   #define m_ncache_start               0x20200000
@@ -182,14 +182,6 @@ LR_m_interrupts m_interrupts_start m_text_start+m_text_size-m_interrupts_start {
   }
 #endif
 
-#if (defined(__use_shmem__))
-  RPMSG_SH_MEM m_rpmsg_sh_mem_start UNINIT m_rpmsg_sh_mem_size { ; Shared memory used by RPMSG
-  * (rpmsg_sh_mem_section)
-  }
-  RPMSG_SH_MEM_unused +0 EMPTY m_rpmsg_sh_mem_size-ImageLength(RPMSG_SH_MEM) { ; Empty region added for MPU configuration
-  }
-#endif
-
   RW_m_usb_data +0 ALIGNALL 32 { ; USB RW data
     * (*CacheLineData.init)
     * (*CacheLineData)
@@ -205,4 +197,12 @@ LR_m_interrupts m_interrupts_start m_text_start+m_text_size-m_interrupts_start {
   RW_k_mem_slab +0 { ;
     * (._k_mem_slab*)
   }
+
+#if (defined(__use_shmem__))
+  RPMSG_SH_MEM m_rpmsg_sh_mem_start UNINIT m_rpmsg_sh_mem_size { ; Shared memory used by RPMSG
+  * (rpmsg_sh_mem_section)
+  }
+  RPMSG_SH_MEM_unused +0 EMPTY m_rpmsg_sh_mem_size-ImageLength(RPMSG_SH_MEM) { ; Empty region added for MPU configuration
+  }
+#endif
 }

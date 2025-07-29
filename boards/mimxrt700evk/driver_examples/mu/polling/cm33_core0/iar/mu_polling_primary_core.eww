@@ -5,33 +5,19 @@
       <name>all</name>
       <member>
         <project>mu_polling_primary_core</project>
-        <configuration>debug</configuration>
-      </member>
-      <member>
-        <project>mu_polling_primary_core</project>
-        <configuration>release</configuration>
-      </member>
-      <member>
-        <project>mu_polling_primary_core</project>
         <configuration>flash_debug</configuration>
       </member>
       <member>
         <project>mu_polling_primary_core</project>
         <configuration>flash_release</configuration>
       </member>
-    </batchDefinition>
-    <batchDefinition>
-      <name>debug</name>
       <member>
-        <project>mu_polling_primary_core</project>
-        <configuration>debug</configuration>
+        <project>mu_polling_secondary_core</project>
+        <configuration>flash_debug</configuration>
       </member>
-    </batchDefinition>
-    <batchDefinition>
-      <name>release</name>
       <member>
-        <project>mu_polling_primary_core</project>
-        <configuration>release</configuration>
+        <project>mu_polling_secondary_core</project>
+        <configuration>flash_release</configuration>
       </member>
     </batchDefinition>
     <batchDefinition>
@@ -40,11 +26,19 @@
         <project>mu_polling_primary_core</project>
         <configuration>flash_debug</configuration>
       </member>
+      <member>
+        <project>mu_polling_secondary_core</project>
+        <configuration>flash_debug</configuration>
+      </member>
     </batchDefinition>
     <batchDefinition>
       <name>flash_release</name>
       <member>
         <project>mu_polling_primary_core</project>
+        <configuration>flash_release</configuration>
+      </member>
+      <member>
+        <project>mu_polling_secondary_core</project>
         <configuration>flash_release</configuration>
       </member>
     </batchDefinition>

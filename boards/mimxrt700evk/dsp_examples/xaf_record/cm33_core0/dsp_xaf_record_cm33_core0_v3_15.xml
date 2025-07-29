@@ -9,6 +9,7 @@
     <definition extID="device.MIMXRT798S_startup.MIMXRT798S"/>
     <definition extID="platform.drivers.clock.MIMXRT798S"/>
     <definition extID="platform.drivers.dsp.MIMXRT798S"/>
+    <definition extID="platform.drivers.ezhv.MIMXRT798S"/>
     <definition extID="platform.drivers.lpc_iopctl.MIMXRT798S"/>
     <definition extID="platform.drivers.power.MIMXRT798S"/>
     <definition extID="platform.drivers.reset.MIMXRT798S"/>
@@ -49,6 +50,7 @@
     <definition extID="middleware.freertos-kernel.MIMXRT798S"/>
     <definition extID="middleware.freertos-kernel.heap_4.MIMXRT798S"/>
     <definition extID="middleware.freertos-kernel.cm33_non_trustzone.MIMXRT798S"/>
+    <definition extID="middleware.freertos-kernel.extension.MIMXRT798S"/>
     <definition extID="middleware.freertos-kernel.config.MIMXRT798S"/>
     <definition extID="iar"/>
     <definition extID="mdk"/>
@@ -58,7 +60,7 @@
     <definition extID="com.crt.advproject.config.exe.debug"/>
     <definition extID="com.crt.advproject.config.exe.release"/>
   </externalDefinitions>
-  <example id="mimxrt700evk_dsp_xaf_record_cm33_core0" name="dsp_xaf_record_cm33_core0" device_core="cm33_core0_MIMXRT798S" dependency="platform.drivers.flash_config.mimxrt700evk.MIMXRT798S CMSIS_Include_core_cm.MIMXRT798S device.MIMXRT798S_CMSIS.MIMXRT798S device.MIMXRT798S_system.MIMXRT798S device.MIMXRT798S_startup.MIMXRT798S platform.drivers.clock.MIMXRT798S platform.drivers.dsp.MIMXRT798S platform.drivers.lpc_iopctl.MIMXRT798S platform.drivers.power.MIMXRT798S platform.drivers.reset.MIMXRT798S platform.drivers.cache_xcache.MIMXRT798S platform.drivers.common.MIMXRT798S platform.drivers.glikey.MIMXRT798S platform.drivers.gpio.MIMXRT798S platform.drivers.lpflexcomm.MIMXRT798S platform.drivers.lpflexcomm_lpuart.MIMXRT798S platform.drivers.lpflexcomm_lpi2c.MIMXRT798S platform.drivers.mu1.MIMXRT798S platform.drivers.sai.MIMXRT798S platform.drivers.sema42.MIMXRT798S platform.drivers.xspi.MIMXRT798S platform.utilities.assert.MIMXRT798S platform.utilities.misc_utilities.MIMXRT798S component.lists.MIMXRT798S utility.str.MIMXRT798S utility.debug_console.MIMXRT798S utility.shell.MIMXRT798S component.serial_manager.MIMXRT798S component.serial_manager_uart.MIMXRT798S component.codec_i2c.MIMXRT798S driver.codec.MIMXRT798S component.codec_adapters.MIMXRT798S component.wm8962_adapter.MIMXRT798S driver.wm8962.MIMXRT798S component.gpio_adapter.MIMXRT798S component.i2c_adapter_interface.MIMXRT798S component.lpi2c_adapter.MIMXRT798S component.lpuart_adapter.MIMXRT798S middleware.multicore.rpmsg-lite.MIMXRT798S middleware.multicore.rpmsg-lite.queue.MIMXRT798S middleware.multicore.rpmsg-lite.ns.MIMXRT798S middleware.multicore.rpmsg-lite.freertos.MIMXRT798S middleware.multicore.rpmsg-lite.imxrt700.MIMXRT798S middleware.audio_voice.components.vit.hifi4_models.MIMXRT798S middleware.freertos-kernel.MIMXRT798S middleware.freertos-kernel.heap_4.MIMXRT798S middleware.freertos-kernel.cm33_non_trustzone.MIMXRT798S middleware.freertos-kernel.config.MIMXRT798S" category="dsp_examples">
+  <example id="mimxrt700evk_dsp_xaf_record_cm33_core0" name="dsp_xaf_record_cm33_core0" device_core="cm33_core0_MIMXRT798S" dependency="platform.drivers.flash_config.mimxrt700evk.MIMXRT798S CMSIS_Include_core_cm.MIMXRT798S device.MIMXRT798S_CMSIS.MIMXRT798S device.MIMXRT798S_system.MIMXRT798S device.MIMXRT798S_startup.MIMXRT798S platform.drivers.clock.MIMXRT798S platform.drivers.dsp.MIMXRT798S platform.drivers.ezhv.MIMXRT798S platform.drivers.lpc_iopctl.MIMXRT798S platform.drivers.power.MIMXRT798S platform.drivers.reset.MIMXRT798S platform.drivers.cache_xcache.MIMXRT798S platform.drivers.common.MIMXRT798S platform.drivers.glikey.MIMXRT798S platform.drivers.gpio.MIMXRT798S platform.drivers.lpflexcomm.MIMXRT798S platform.drivers.lpflexcomm_lpuart.MIMXRT798S platform.drivers.lpflexcomm_lpi2c.MIMXRT798S platform.drivers.mu1.MIMXRT798S platform.drivers.sai.MIMXRT798S platform.drivers.sema42.MIMXRT798S platform.drivers.xspi.MIMXRT798S platform.utilities.assert.MIMXRT798S platform.utilities.misc_utilities.MIMXRT798S component.lists.MIMXRT798S utility.str.MIMXRT798S utility.debug_console.MIMXRT798S utility.shell.MIMXRT798S component.serial_manager.MIMXRT798S component.serial_manager_uart.MIMXRT798S component.codec_i2c.MIMXRT798S driver.codec.MIMXRT798S component.codec_adapters.MIMXRT798S component.wm8962_adapter.MIMXRT798S driver.wm8962.MIMXRT798S component.gpio_adapter.MIMXRT798S component.i2c_adapter_interface.MIMXRT798S component.lpi2c_adapter.MIMXRT798S component.lpuart_adapter.MIMXRT798S middleware.multicore.rpmsg-lite.MIMXRT798S middleware.multicore.rpmsg-lite.queue.MIMXRT798S middleware.multicore.rpmsg-lite.ns.MIMXRT798S middleware.multicore.rpmsg-lite.freertos.MIMXRT798S middleware.multicore.rpmsg-lite.imxrt700.MIMXRT798S middleware.audio_voice.components.vit.hifi4_models.MIMXRT798S middleware.freertos-kernel.MIMXRT798S middleware.freertos-kernel.heap_4.MIMXRT798S middleware.freertos-kernel.cm33_non_trustzone.MIMXRT798S middleware.freertos-kernel.extension.MIMXRT798S middleware.freertos-kernel.config.MIMXRT798S" category="dsp_examples">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -71,7 +73,7 @@
       <toolchainSetting id_refs="com.nxp.mcuxpresso">
         <option id="gnu.c.compiler.option.preprocessor.def.symbols" type="stringList">
           <value>MCUXPRESSO_SDK</value>
-          <value>CPU_MIMXRT798SGFOA_cm33_core0</value>
+          <value>CPU_MIMXRT798SGFOB_cm33_core0</value>
           <value>BOOT_HEADER_ENABLE=1</value>
           <value>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</value>
           <value>XA_PCM_GAIN=1</value>
@@ -80,15 +82,35 @@
           <value>XA_CAPTURER=1</value>
           <value>VIT_MODELS_ALL=1</value>
           <value>DSP_IMAGE_COPY_TO_RAM=1</value>
+          <value>__USE_SHMEM</value>
+          <value>DSP_NCACHE</value>
           <value>BOARD_DMIC_NUM=1</value>
           <value>BOARD_PCM_WIDTH=32</value>
           <value>SDK_DEBUGCONSOLE=1</value>
           <value>MCUX_META_BUILD</value>
+          <value>MIMXRT798S_cm33_core0_SERIES</value>
           <value>SERIAL_PORT_TYPE_UART=1</value>
           <value>SDK_I2C_BASED_COMPONENT_USED=1</value>
           <value>CODEC_MULTI_ADAPTERS=1</value>
           <value>CODEC_WM8962_ENABLE</value>
           <value>SDK_OS_FREE_RTOS</value>
+        </option>
+        <option id="com.crt.advproject.link.fpu" type="enum">
+          <value>com.crt.advproject.link.fpu.fpv5sp.hard</value>
+        </option>
+        <option id="gnu.c.link.option.nostdlibs" type="boolean">
+          <value>true</value>
+        </option>
+        <option id="com.crt.advproject.link.memory.sections" type="stringList">
+          <value>isd=*(NonCacheable.init);region=NCACHE_REGION;type=.data</value>
+          <value>isd=*(NonCacheable);region=NCACHE_REGION;type=.bss</value>
+        </option>
+        <option id="gnu.c.link.option.other" type="stringList">
+          <value>--defsym=__use_shmem__=1</value>
+          <value>-no-warn-rwx-segments</value>
+        </option>
+        <option id="gnu.c.link.option.group" type="boolean">
+          <value>true</value>
         </option>
         <option id="com.crt.advproject.gas.fpu" type="enum">
           <value>com.crt.advproject.gas.fpu.fpv5sp.hard</value>
@@ -110,22 +132,6 @@
         </option>
         <option id="gnu.c.compiler.option.warnings.toerrors" type="boolean">
           <value>false</value>
-        </option>
-        <option id="com.crt.advproject.link.fpu" type="enum">
-          <value>com.crt.advproject.link.fpu.fpv5sp.hard</value>
-        </option>
-        <option id="gnu.c.link.option.nostdlibs" type="boolean">
-          <value>true</value>
-        </option>
-        <option id="com.crt.advproject.link.memory.sections" type="stringList">
-          <value>isd=*(NonCacheable.init);region=NCACHE_REGION;type=.data</value>
-          <value>isd=*(NonCacheable);region=NCACHE_REGION;type=.bss</value>
-        </option>
-        <option id="gnu.c.link.option.other" type="stringList">
-          <value>-no-warn-rwx-segments</value>
-        </option>
-        <option id="gnu.c.link.option.group" type="boolean">
-          <value>true</value>
         </option>
       </toolchainSetting>
     </toolchainSettings>
@@ -198,6 +204,7 @@
       <files mask="dsp_literal_release.bin"/>
       <files mask="dsp_text_release.bin"/>
       <files mask="dsp_data_release.bin"/>
+      <files mask="dsp_ncache_release.bin"/>
     </source>
     <source path="." project_relative_path="source" type="src">
       <files mask="cmd.c"/>
@@ -255,6 +262,9 @@
     </source>
     <source path="." project_relative_path="doc" type="doc">
       <files mask="example_board_readme.md"/>
+    </source>
+    <source path="." project_relative_path="doc" type="doc">
+      <files mask="examples_shared_readme.md"/>
     </source>
   </example>
 </ksdk:examples>

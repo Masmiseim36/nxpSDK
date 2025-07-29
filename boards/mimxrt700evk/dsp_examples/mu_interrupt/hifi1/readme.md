@@ -8,6 +8,8 @@ In this example:
 2. DSP send message back to M33 core in interrupt mode.
 3. M33 core receive message sent from DSP in interrupt mode.
 
+This example cannot be imported into Config Tools because the xtensa toolchain is not supported.
+
 ## Supported Boards
 - [EVK9-MIMX8ULP](../../_boards/evk9mimx8ulp/dsp_examples/mu_interrupt/example_board_readme.md)
 - [EVK-MIMX8ULP](../../_boards/evkmimx8ulp/dsp_examples/mu_interrupt/example_board_readme.md)

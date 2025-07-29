@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 NXP
+ * Copyright 2024-2025 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -36,82 +36,83 @@ typedef enum {
     kClockModule_AUDIO_VDD1_CLK_SEL,
     kClockModule_LPOSC_1M_CLK_SEL,
     kClockModule_WAKE32K_CLK_SEL,
+    kClockModule_CKIL_32K_CLK,
     kClockModule_VDD2_MEDIA_BASE_CLK_SEL,
     kClockModule_VDDN_MEDIA_BASE_CLK_SEL,
     kClockModule_LOW_FREQ_CLK_SEL,
-    kClockModule_COMPUTE_MAIN_CLK,
-    kClockModule_DSP_CLK,
-    kClockModule_COMMON_RAM_CLK,
-    kClockModule_COMPUTE_TPIU_CLK,
-    kClockModule_XSPI0_FCLK,
-    kClockModule_XSPI1_FCLK,
-    kClockModule_SCT_FCLK,
-    kClockModule_UTICK0_FCLK,
-    kClockModule_WDT0_FCLK,
-    kClockModule_WDT1_FCLK,
-    kClockModule_COMPUTE_SYSTICK_FCLK,
-    kClockModule_FLEXCOMM0_FCLK,
-    kClockModule_FLEXCOMM1_FCLK,
-    kClockModule_FLEXCOMM2_FCLK,
-    kClockModule_FLEXCOMM3_FCLK,
-    kClockModule_FLEXCOMM4_FCLK,
-    kClockModule_FLEXCOMM5_FCLK,
-    kClockModule_FLEXCOMM6_FCLK,
-    kClockModule_FLEXCOMM7_FCLK,
-    kClockModule_FLEXCOMM8_FCLK,
-    kClockModule_FLEXCOMM9_FCLK,
-    kClockModule_FLEXCOMM10_FCLK,
-    kClockModule_FLEXCOMM11_FCLK,
-    kClockModule_FLEXCOMM12_FCLK,
-    kClockModule_FLEXCOMM13_FCLK,
-    kClockModule_SAI012_CLK,
-    kClockModule_CTIMER0_FCLK,
-    kClockModule_CTIMER1_FCLK,
-    kClockModule_CTIMER2_FCLK,
-    kClockModule_CTIMER3_FCLK,
-    kClockModule_CTIMER4_FCLK,
-    kClockModule_I3C01_FCLK,
-    kClockModule_I3C01_PCLK,
-    kClockModule_COMM2_CLKOUT,
-    kClockModule_SENSE_DSP_CLK,
-    kClockModule_SAI3_CLK,
-    kClockModule_UTICK1_CLK,
-    kClockModule_WDT2_FCLK,
-    kClockModule_WDT3_FCLK,
-    kClockModule_SENSE_SYSTICK_FCLK,
-    kClockModule_CTIMER5_FCLK,
-    kClockModule_CTIMER6_FCLK,
-    kClockModule_CTIMER7_FCLK,
-    kClockModule_I3C23_FCLK,
-    kClockModule_FLEXCOMM17_FCLK,
-    kClockModule_FLEXCOMM18_FCLK,
-    kClockModule_FLEXCOMM19_FCLK,
-    kClockModule_FLEXCOMM20_FCLK,
-    kClockModule_COMMON_VDDN_CLK,
-    kClockModule_osc_clk_usb,
-    kClockModule_osc_clk_eusb,
-    kClockModule_SENSE_MAIN_CLK,
-    kClockModule_SENSE_RAM_CLK,
-    kClockModule_OSEVENT_FCLK,
-    kClockModule_SDADC_FCLK,
-    kClockModule_SARADC_FCLK,
-    kClockModule_MICFIL_FCLK,
-    kClockModule_LPI2C_FCLK,
-    kClockModule_SENSE_CLKOUT,
-    kClockModule_MEDIA_VDDN_CLK,
-    kClockModule_MEDIA_MAIN_CLK,
-    kClockModule_XSPI2_FCLK,
-    kClockModule_USB_WAKE_CLK,
-    kClockModule_eUSB_WAKE_CLK,
-    kClockModule_SDIO0_FCLK,
-    kClockModule_SDIO1_FCLK,
-    kClockModule_DPHY_BIT_CLK,
-    kClockModule_DPHY_RX_CLK,
-    kClockModule_GPU_FCLK,
-    kClockModule_LPSPI14_FCLK,
-    kClockModule_LPSPI16_FCLK,
-    kClockModule_FLEXIO_CLK,
-    kClockModule_DCPIXEL_FCLK,
+    kClockModule_CLK_ROOT_COMPUTE_MAIN_CLK,
+    kClockModule_CLK_ROOT_DSP_CLK,
+    kClockModule_CLK_ROOT_COMMON_RAM_CLK,
+    kClockModule_CLK_ROOT_COMPUTE_TPIU_CLK,
+    kClockModule_CLK_ROOT_XSPI0_FCLK,
+    kClockModule_CLK_ROOT_XSPI1_FCLK,
+    kClockModule_CLK_ROOT_SCT_FCLK,
+    kClockModule_CLK_ROOT_UTICK0_FCLK,
+    kClockModule_CLK_ROOT_WDT0_FCLK,
+    kClockModule_CLK_ROOT_WDT1_FCLK,
+    kClockModule_CLK_ROOT_COMPUTE_SYSTICK_FCLK,
+    kClockModule_CLK_ROOT_FLEXCOMM0_FCLK,
+    kClockModule_CLK_ROOT_FLEXCOMM1_FCLK,
+    kClockModule_CLK_ROOT_FLEXCOMM2_FCLK,
+    kClockModule_CLK_ROOT_FLEXCOMM3_FCLK,
+    kClockModule_CLK_ROOT_FLEXCOMM4_FCLK,
+    kClockModule_CLK_ROOT_FLEXCOMM5_FCLK,
+    kClockModule_CLK_ROOT_FLEXCOMM6_FCLK,
+    kClockModule_CLK_ROOT_FLEXCOMM7_FCLK,
+    kClockModule_CLK_ROOT_FLEXCOMM8_FCLK,
+    kClockModule_CLK_ROOT_FLEXCOMM9_FCLK,
+    kClockModule_CLK_ROOT_FLEXCOMM10_FCLK,
+    kClockModule_CLK_ROOT_FLEXCOMM11_FCLK,
+    kClockModule_CLK_ROOT_FLEXCOMM12_FCLK,
+    kClockModule_CLK_ROOT_FLEXCOMM13_FCLK,
+    kClockModule_CLK_ROOT_SAI012_CLK,
+    kClockModule_CLK_ROOT_CTIMER0_FCLK,
+    kClockModule_CLK_ROOT_CTIMER1_FCLK,
+    kClockModule_CLK_ROOT_CTIMER2_FCLK,
+    kClockModule_CLK_ROOT_CTIMER3_FCLK,
+    kClockModule_CLK_ROOT_CTIMER4_FCLK,
+    kClockModule_CLK_ROOT_I3C01_FCLK,
+    kClockModule_CLK_ROOT_I3C01_PCLK,
+    kClockModule_CLK_ROOT_COMM2_CLKOUT,
+    kClockModule_CLK_ROOT_SENSE_DSP_CLK,
+    kClockModule_CLK_ROOT_SAI3_CLK,
+    kClockModule_CLK_ROOT_UTICK1_CLK,
+    kClockModule_CLK_ROOT_WDT2_FCLK,
+    kClockModule_CLK_ROOT_WDT3_FCLK,
+    kClockModule_CLK_ROOT_SENSE_SYSTICK_FCLK,
+    kClockModule_CLK_ROOT_CTIMER5_FCLK,
+    kClockModule_CLK_ROOT_CTIMER6_FCLK,
+    kClockModule_CLK_ROOT_CTIMER7_FCLK,
+    kClockModule_CLK_ROOT_I3C23_FCLK,
+    kClockModule_CLK_ROOT_FLEXCOMM17_FCLK,
+    kClockModule_CLK_ROOT_FLEXCOMM18_FCLK,
+    kClockModule_CLK_ROOT_FLEXCOMM19_FCLK,
+    kClockModule_CLK_ROOT_FLEXCOMM20_FCLK,
+    kClockModule_CLK_ROOT_COMMON_VDDN_CLK,
+    kClockModule_CLK_ROOT_osc_clk_usb,
+    kClockModule_CLK_ROOT_osc_clk_eusb,
+    kClockModule_CLK_ROOT_SENSE_MAIN_CLK,
+    kClockModule_CLK_ROOT_SENSE_RAM_CLK,
+    kClockModule_CLK_ROOT_OSEVENT_FCLK,
+    kClockModule_CLK_ROOT_SDADC_FCLK,
+    kClockModule_CLK_ROOT_SARADC_FCLK,
+    kClockModule_CLK_ROOT_MICFIL_FCLK,
+    kClockModule_CLK_ROOT_LPI2C_FCLK,
+    kClockModule_CLK_ROOT_SENSE_CLKOUT,
+    kClockModule_CLK_ROOT_MEDIA_VDDN_CLK,
+    kClockModule_CLK_ROOT_MEDIA_MAIN_CLK,
+    kClockModule_CLK_ROOT_XSPI2_FCLK,
+    kClockModule_CLK_ROOT_USB_WAKE_CLK,
+    kClockModule_CLK_ROOT_eUSB_WAKE_CLK,
+    kClockModule_CLK_ROOT_SDIO0_FCLK,
+    kClockModule_CLK_ROOT_SDIO1_FCLK,
+    kClockModule_CLK_ROOT_DPHY_BIT_CLK,
+    kClockModule_CLK_ROOT_DPHY_RX_CLK,
+    kClockModule_CLK_ROOT_GPU_FCLK,
+    kClockModule_CLK_ROOT_LPSPI14_FCLK,
+    kClockModule_CLK_ROOT_LPSPI16_FCLK,
+    kClockModule_CLK_ROOT_FLEXIO_CLK,
+    kClockModule_CLK_ROOT_DCPIXEL_FCLK,
     kClockModule_MEDIA_MAINCLK_SHUTOFF,
     kClockModule_COMN_MAINCLK_SHUTOFF,
     kClockModule_SENSES_MAINCLK_SHUTOFF,
@@ -149,16 +150,16 @@ void BOARD_InitBootClocks(void);
 /*******************************************************************************
  * Definitions for BOARD_BootClockRUN configuration
  ******************************************************************************/
-#define BOARD_BOOTCLOCKRUN_CORE_CLOCK             100000000U  /*!< Core clock frequency: 100000000Hz */
+#define BOARD_BOOTCLOCKRUN_CORE_CLOCK             198000000U  /*!< Core clock frequency: 198000000Hz */
 
 
 /* Clock outputs (values are in Hz): */
-#define BOARD_BOOTCLOCKRUN_COMM2_CLKOUT               0UL            /* Clock consumers of COMM2_CLKOUT output : N/A */
-#define BOARD_BOOTCLOCKRUN_COMMON_RAM_CLK             250105263UL    /* Clock consumers of COMMON_RAM_CLK output : N/A */
-#define BOARD_BOOTCLOCKRUN_COMMON_VDDN_CLK            250105263UL    /* Clock consumers of COMMON_VDDN_CLK output : CLKCTL2, IOPCTL2, RSTCTL2, SYSCON2 */
-#define BOARD_BOOTCLOCKRUN_COMPUTE_MAIN_CLK           250105263UL    /* Clock consumers of COMPUTE_MAIN_CLK output : CDOG0, CDOG1, CDOG2, CLKCTL0, CMX_PERFMON0, CMX_PERFMON1, CRC, CTIMER0, CTIMER1, CTIMER2, CTIMER3, CTIMER4, DMA0, DMA1, FREQME, GDET0, GDET1, GLIKEY0, GPIO0, GPIO0_ALIAS, GPIO1, GPIO1_ALIAS, GPIO2, GPIO2_ALIAS, GPIO3, GPIO3_ALIAS, GPIO4, GPIO4_ALIAS, GPIO5, GPIO5_ALIAS, GPIO6, GPIO6_ALIAS, GPIO7, GPIO7_ALIAS, I3C0, I3C1, INPUTMUX0, IOPCTL0, LPI2C0, LPI2C1, LPI2C10, LPI2C11, LPI2C12, LPI2C13, LPI2C2, LPI2C3, LPI2C4, LPI2C5, LPI2C6, LPI2C7, LPI2C8, LPI2C9, LPSPI0, LPSPI1, LPSPI10, LPSPI11, LPSPI12, LPSPI13, LPSPI2, LPSPI3, LPSPI4, LPSPI5, LPSPI6, LPSPI7, LPSPI8, LPSPI9, LPUART0, LPUART1, LPUART10, LPUART11, LPUART12, LPUART13, LPUART2, LPUART3, LPUART4, LPUART5, LPUART6, LPUART7, LPUART8, LPUART9, LP_FLEXCOMM0, LP_FLEXCOMM1, LP_FLEXCOMM10, LP_FLEXCOMM11, LP_FLEXCOMM12, LP_FLEXCOMM13, LP_FLEXCOMM2, LP_FLEXCOMM3, LP_FLEXCOMM4, LP_FLEXCOMM5, LP_FLEXCOMM6, LP_FLEXCOMM7, LP_FLEXCOMM8, LP_FLEXCOMM9, MMU0, MMU1, MRT0, MU4_MUA, MU4_MUB, NPU, OCOTP, OSCCA, PINT0, PKC, RSTCTL0, SAI0, SAI1, SAI2, SCT0, SEMA42_4, SLEEPCON0, SYSCON0, UTICK0, WWDT0, WWDT1, XCACHE0, XCACHE1, XSPI0, XSPI1 */
-#define BOARD_BOOTCLOCKRUN_COMPUTE_SYSTICK_FCLK       0UL            /* Clock consumers of COMPUTE_SYSTICK_FCLK output : N/A */
-#define BOARD_BOOTCLOCKRUN_COMPUTE_TPIU_CLK           0UL            /* Clock consumers of COMPUTE_TPIU_CLK output : N/A */
+#define BOARD_BOOTCLOCKRUN_COMM2_CLKOUT               25000000UL     /* Clock consumers of COMM2_CLKOUT output : N/A */
+#define BOARD_BOOTCLOCKRUN_COMMON_RAM_CLK             250000000UL    /* Clock consumers of COMMON_RAM_CLK output : N/A */
+#define BOARD_BOOTCLOCKRUN_COMMON_VDDN_CLK            192000000UL    /* Clock consumers of COMMON_VDDN_CLK output : CLKCTL2, IOPCTL2, RSTCTL2, SYSCON2 */
+#define BOARD_BOOTCLOCKRUN_COMPUTE_MAIN_CLK           250000000UL    /* Clock consumers of COMPUTE_MAIN_CLK output : CDOG0, CDOG1, CDOG2, CLKCTL0, CMX_PERFMON0, CMX_PERFMON1, CRC, CTIMER0, CTIMER1, CTIMER2, CTIMER3, CTIMER4, DMA0, DMA1, FREQME, GDET0, GLIKEY0, GPIO0, GPIO0_ALIAS, GPIO1, GPIO1_ALIAS, GPIO2, GPIO2_ALIAS, GPIO3, GPIO3_ALIAS, GPIO4, GPIO4_ALIAS, GPIO5, GPIO5_ALIAS, GPIO6, GPIO6_ALIAS, GPIO7, GPIO7_ALIAS, I3C0, I3C1, INPUTMUX0, IOPCTL0, LPI2C0, LPI2C1, LPI2C10, LPI2C11, LPI2C12, LPI2C13, LPI2C2, LPI2C3, LPI2C4, LPI2C5, LPI2C6, LPI2C7, LPI2C8, LPI2C9, LPSPI0, LPSPI1, LPSPI10, LPSPI11, LPSPI12, LPSPI13, LPSPI2, LPSPI3, LPSPI4, LPSPI5, LPSPI6, LPSPI7, LPSPI8, LPSPI9, LPUART0, LPUART1, LPUART10, LPUART11, LPUART12, LPUART13, LPUART2, LPUART3, LPUART4, LPUART5, LPUART6, LPUART7, LPUART8, LPUART9, LP_FLEXCOMM0, LP_FLEXCOMM1, LP_FLEXCOMM10, LP_FLEXCOMM11, LP_FLEXCOMM12, LP_FLEXCOMM13, LP_FLEXCOMM2, LP_FLEXCOMM3, LP_FLEXCOMM4, LP_FLEXCOMM5, LP_FLEXCOMM6, LP_FLEXCOMM7, LP_FLEXCOMM8, LP_FLEXCOMM9, MMU0, MMU1, MRT0, MU4_MUA, MU4_MUB, NPU, OCOTP, PINT0, RSTCTL0, SAI0, SAI1, SAI2, SCT0, SEMA42_4, SLEEPCON0, SWD, SYSCON0, SysTick0, TRNG, UTICK0, WWDT0, WWDT1, XCACHE0, XCACHE1, XSPI0, XSPI1 */
+#define BOARD_BOOTCLOCKRUN_COMPUTE_SYSTICK_FCLK       0UL            /* Clock consumers of COMPUTE_SYSTICK_FCLK output : SysTick0 */
+#define BOARD_BOOTCLOCKRUN_COMPUTE_TPIU_CLK           0UL            /* Clock consumers of COMPUTE_TPIU_CLK output : SWD */
 #define BOARD_BOOTCLOCKRUN_CTIMER0_FCLK               0UL            /* Clock consumers of CTIMER0_FCLK output : CTIMER0 */
 #define BOARD_BOOTCLOCKRUN_CTIMER1_FCLK               0UL            /* Clock consumers of CTIMER1_FCLK output : CTIMER1 */
 #define BOARD_BOOTCLOCKRUN_CTIMER2_FCLK               0UL            /* Clock consumers of CTIMER2_FCLK output : CTIMER2 */
@@ -193,15 +194,17 @@ void BOARD_InitBootClocks(void);
 #define BOARD_BOOTCLOCKRUN_FLEXIO_CLK                 0UL            /* Clock consumers of FLEXIO_CLK output : FLEXIO */
 #define BOARD_BOOTCLOCKRUN_GPU_FCLK                   0UL            /* Clock consumers of GPU_FCLK output : VGPU */
 #define BOARD_BOOTCLOCKRUN_I3C01_FCLK                 0UL            /* Clock consumers of I3C01_FCLK output : I3C0, I3C1 */
-#define BOARD_BOOTCLOCKRUN_I3C01_PCLK                 0UL            /* Clock consumers of I3C01_PCLK output : N/A */
+#define BOARD_BOOTCLOCKRUN_I3C01_PCLK                 0UL            /* Clock consumers of I3C01_PCLK output : I3C0, I3C1 */
 #define BOARD_BOOTCLOCKRUN_I3C23_FCLK                 0UL            /* Clock consumers of I3C23_FCLK output : I3C2, I3C3 */
+#define BOARD_BOOTCLOCKRUN_LOFRQCLK                   0UL            /* Clock consumers of LOFRQCLK output : N/A */
 #define BOARD_BOOTCLOCKRUN_LOW_FREQ_CLKOUT            0UL            /* Clock consumers of LOW_FREQ_CLKOUT output : N/A */
 #define BOARD_BOOTCLOCKRUN_LPI2C_FCLK                 0UL            /* Clock consumers of LPI2C_FCLK output : LPI2C15 */
 #define BOARD_BOOTCLOCKRUN_LPSPI14_FCLK               0UL            /* Clock consumers of LPSPI14_FCLK output : LPSPI14 */
 #define BOARD_BOOTCLOCKRUN_LPSPI16_FCLK               0UL            /* Clock consumers of LPSPI16_FCLK output : LPSPI16 */
-#define BOARD_BOOTCLOCKRUN_MEDIA_MAIN_CLK             250105263UL    /* Clock consumers of MEDIA_MAIN_CLK output : CLKCTL4, FLEXIO, GLIKEY2, JPEGDEC, LCDIF, LPSPI14, LPSPI16, MIPI_DSI_HOST, MMU2, PNGDEC, RSTCTL4, SYSCON4, VGPU, XSPI2 */
-#define BOARD_BOOTCLOCKRUN_MEDIA_VDDN_CLK             250105263UL    /* Clock consumers of MEDIA_VDDN_CLK output : USB0, USB1, USBPHY, USDHC0, USDHC1 */
+#define BOARD_BOOTCLOCKRUN_MEDIA_MAIN_CLK             250000000UL    /* Clock consumers of MEDIA_MAIN_CLK output : CLKCTL4, FLEXIO, GLIKEY2, JPEGDEC, LCDIF, LPSPI14, LPSPI16, MIPI_DSI_HOST, MMU2, PNGDEC, RSTCTL4, SYSCON4, VGPU, XSPI2 */
+#define BOARD_BOOTCLOCKRUN_MEDIA_VDDN_CLK             250000000UL    /* Clock consumers of MEDIA_VDDN_CLK output : USB0, USB1, USBPHY, USDHC0, USDHC1 */
 #define BOARD_BOOTCLOCKRUN_MICFIL_FCLK                0UL            /* Clock consumers of MICFIL_FCLK output : PDM */
+#define BOARD_BOOTCLOCKRUN_OSC32K_OUT                 0UL            /* Clock consumers of OSC32K_OUT output : RTC0, RTC1 */
 #define BOARD_BOOTCLOCKRUN_OSEVENT_FCLK               0UL            /* Clock consumers of OSEVENT_FCLK output : OSTIMER_CPU0, OSTIMER_CPU1, OSTIMER_HIFI1, OSTIMER_HIFI4 */
 #define BOARD_BOOTCLOCKRUN_SAI012_CLK                 0UL            /* Clock consumers of SAI012_CLK output : SAI0, SAI1, SAI2 */
 #define BOARD_BOOTCLOCKRUN_SAI3_CLK                   0UL            /* Clock consumers of SAI3_CLK output : SAI3 */
@@ -210,12 +213,12 @@ void BOARD_InitBootClocks(void);
 #define BOARD_BOOTCLOCKRUN_SDADC_FCLK                 0UL            /* Clock consumers of SDADC_FCLK output : SDADC */
 #define BOARD_BOOTCLOCKRUN_SDIO0_FCLK                 0UL            /* Clock consumers of SDIO0_FCLK output : USDHC0 */
 #define BOARD_BOOTCLOCKRUN_SDIO1_FCLK                 0UL            /* Clock consumers of SDIO1_FCLK output : USDHC1 */
-#define BOARD_BOOTCLOCKRUN_SENSE_CLKOUT               0UL            /* Clock consumers of SENSE_CLKOUT output : N/A */
+#define BOARD_BOOTCLOCKRUN_SENSE_CLKOUT               33000000UL     /* Clock consumers of SENSE_CLKOUT output : N/A */
 #define BOARD_BOOTCLOCKRUN_SENSE_DSP_CLK              0UL            /* Clock consumers of SENSE_DSP_CLK output : N/A */
-#define BOARD_BOOTCLOCKRUN_SENSE_MAIN_CLK             100000000UL    /* Clock consumers of SENSE_MAIN_CLK output : ACMP0, ADC0, CDOG3, CDOG4, CLKCTL1, CLKCTL3, CTIMER5, CTIMER6, CTIMER7, DMA2, DMA3, GDET2, GDET3, GLIKEY1, GPIO10, GPIO10_ALIAS, GPIO8, GPIO8_ALIAS, GPIO9, GPIO9_ALIAS, I3C2, I3C3, INPUTMUX1, IOPCTL1, LPI2C15, LPI2C17, LPI2C18, LPI2C19, LPI2C20, LPSPI17, LPSPI18, LPSPI19, LPSPI20, LPUART17, LPUART18, LPUART19, LPUART20, LP_FLEXCOMM17, LP_FLEXCOMM18, LP_FLEXCOMM19, LP_FLEXCOMM20, MRT1, MU0_MUA, MU0_MUB, MU1_MUA, MU1_MUB, MU2_MUA, MU2_MUB, MU3_MUA, MU3_MUB, OSTIMER_CPU0, OSTIMER_CPU1, OSTIMER_HIFI1, OSTIMER_HIFI4, PDM, PINT1, RSTCTL1, RSTCTL3, SAI3, SDADC, SEMA42_0, SEMA42_3, SLEEPCON1, SYSCON1, SYSCON3, UTICK1, WWDT2, WWDT3 */
-#define BOARD_BOOTCLOCKRUN_SENSE_MAIN_CLK_1           100000000UL    /* Clock consumers of SENSE_MAIN_CLK_1 output : N/A */
-#define BOARD_BOOTCLOCKRUN_SENSE_RAM_CLK              100000000UL    /* Clock consumers of SENSE_RAM_CLK output : N/A */
-#define BOARD_BOOTCLOCKRUN_SENSE_SYSTICK_FCLK         0UL            /* Clock consumers of SENSE_SYSTICK_FCLK output : N/A */
+#define BOARD_BOOTCLOCKRUN_SENSE_MAIN_CLK             198000000UL    /* Clock consumers of SENSE_MAIN_CLK output : CDOG3, CDOG4, CLKCTL1, CTIMER5, CTIMER6, CTIMER7, DMA2, DMA3, GDET3, GLIKEY1, GPIO10, GPIO10_ALIAS, GPIO8, GPIO8_ALIAS, GPIO9, GPIO9_ALIAS, I3C2, I3C3, INPUTMUX1, LPI2C15, LPI2C17, LPI2C18, LPI2C19, LPI2C20, LPSPI17, LPSPI18, LPSPI19, LPSPI20, LPUART17, LPUART18, LPUART19, LPUART20, LP_FLEXCOMM17, LP_FLEXCOMM18, LP_FLEXCOMM19, LP_FLEXCOMM20, MRT1, MU3_MUA, MU3_MUB, PINT1, RSTCTL1, RTC0, RTC1, SAI3, SEMA42_0, SLEEPCON1, SYSCON1, SysTick1, UTICK1, WWDT2, WWDT3 */
+#define BOARD_BOOTCLOCKRUN_SENSE_MAIN_CLK_1           198000000UL    /* Clock consumers of SENSE_MAIN_CLK_1 output : ACMP0, ADC0, CLKCTL3, IOPCTL1, MU0_MUA, MU0_MUB, MU1_MUA, MU1_MUB, MU2_MUA, MU2_MUB, OSTIMER_CPU0, OSTIMER_CPU1, OSTIMER_HIFI1, OSTIMER_HIFI4, PDM, RSTCTL3, SDADC, SEMA42_3, SYSCON3 */
+#define BOARD_BOOTCLOCKRUN_SENSE_RAM_CLK              198000000UL    /* Clock consumers of SENSE_RAM_CLK output : N/A */
+#define BOARD_BOOTCLOCKRUN_SENSE_SYSTICK_FCLK         0UL            /* Clock consumers of SENSE_SYSTICK_FCLK output : SysTick1 */
 #define BOARD_BOOTCLOCKRUN_USB_WAKE_CLK               0UL            /* Clock consumers of USB_WAKE_CLK output : USB0, USBPHY */
 #define BOARD_BOOTCLOCKRUN_UTICK0_FCLK                0UL            /* Clock consumers of UTICK0_FCLK output : UTICK0 */
 #define BOARD_BOOTCLOCKRUN_UTICK1_CLK                 0UL            /* Clock consumers of UTICK1_CLK output : UTICK1 */
@@ -270,21 +273,22 @@ void BOARD_InitBootClocks(void);
 #define BOARD_BOOTCLOCKRUN_BASECLK_COM2               192000000UL    /* Clock consumers of baseclk_com2 output : N/A */
 #define BOARD_BOOTCLOCKRUN_BASECLK_COMN               192000000UL    /* Clock consumers of baseclk_comn output : N/A */
 #define BOARD_BOOTCLOCKRUN_BASECLK_DSP                192000000UL    /* Clock consumers of baseclk_dsp output : N/A */
-#define BOARD_BOOTCLOCKRUN_BASECLK_MD2                64000000UL     /* Clock consumers of baseclk_md2 output : N/A */
-#define BOARD_BOOTCLOCKRUN_BASECLK_MDN                64000000UL     /* Clock consumers of baseclk_mdn output : N/A */
-#define BOARD_BOOTCLOCKRUN_BASECLK_SENSE              100000000UL    /* Clock consumers of baseclk_sense output : N/A */
+#define BOARD_BOOTCLOCKRUN_BASECLK_MD2                192000000UL    /* Clock consumers of baseclk_md2 output : N/A */
+#define BOARD_BOOTCLOCKRUN_BASECLK_MDN                192000000UL    /* Clock consumers of baseclk_mdn output : N/A */
+#define BOARD_BOOTCLOCKRUN_BASECLK_SENSE              66000000UL     /* Clock consumers of baseclk_sense output : N/A */
+#define BOARD_BOOTCLOCKRUN_CKIL_32K                   976UL          /* Clock consumers of ckil_32k output : USDHC0, USDHC1 */
 #define BOARD_BOOTCLOCKRUN_EUSB_WAKE_CLK              0UL            /* Clock consumers of eUSB_WAKE_CLK output : USB1 */
-#define BOARD_BOOTCLOCKRUN_FRO0_DIV2                  150000000UL    /* Clock consumers of fro0_div2 output : N/A */
-#define BOARD_BOOTCLOCKRUN_FRO0_DIV3                  100000000UL    /* Clock consumers of fro0_div3 output : N/A */
-#define BOARD_BOOTCLOCKRUN_FRO0_DIV6                  50000000UL     /* Clock consumers of fro0_div6 output : N/A */
-#define BOARD_BOOTCLOCKRUN_FRO0_DIV8                  37500000UL     /* Clock consumers of fro0_div8 output : N/A */
-#define BOARD_BOOTCLOCKRUN_FRO0_MAX_VDD1_SENSE        300000000UL    /* Clock consumers of fro0_max_vdd1_sense output : N/A */
-#define BOARD_BOOTCLOCKRUN_FRO0_MAX_VDD2_COM          300000000UL    /* Clock consumers of fro0_max_vdd2_com output : N/A */
-#define BOARD_BOOTCLOCKRUN_FRO0_MAX_VDD2_COMP         300000000UL    /* Clock consumers of fro0_max_vdd2_comp output : N/A */
-#define BOARD_BOOTCLOCKRUN_FRO0_MAX_VDD2_DSP          300000000UL    /* Clock consumers of fro0_max_vdd2_dsp output : N/A */
-#define BOARD_BOOTCLOCKRUN_FRO0_MAX_VDD2_MEDIA        300000000UL    /* Clock consumers of fro0_max_vdd2_media output : N/A */
-#define BOARD_BOOTCLOCKRUN_FRO0_MAX_VDDN_COM          300000000UL    /* Clock consumers of fro0_max_vddn_com output : N/A */
-#define BOARD_BOOTCLOCKRUN_FRO0_MAX_VDDN_MEDIA        300000000UL    /* Clock consumers of fro0_max_vddn_media output : N/A */
+#define BOARD_BOOTCLOCKRUN_FRO0_DIV2                  125000000UL    /* Clock consumers of fro0_div2 output : N/A */
+#define BOARD_BOOTCLOCKRUN_FRO0_DIV3                  83333333UL     /* Clock consumers of fro0_div3 output : N/A */
+#define BOARD_BOOTCLOCKRUN_FRO0_DIV6                  41666666UL     /* Clock consumers of fro0_div6 output : N/A */
+#define BOARD_BOOTCLOCKRUN_FRO0_DIV8                  31250000UL     /* Clock consumers of fro0_div8 output : N/A */
+#define BOARD_BOOTCLOCKRUN_FRO0_MAX_VDD1_SENSE        250000000UL    /* Clock consumers of fro0_max_vdd1_sense output : N/A */
+#define BOARD_BOOTCLOCKRUN_FRO0_MAX_VDD2_COM          250000000UL    /* Clock consumers of fro0_max_vdd2_com output : N/A */
+#define BOARD_BOOTCLOCKRUN_FRO0_MAX_VDD2_COMP         250000000UL    /* Clock consumers of fro0_max_vdd2_comp output : N/A */
+#define BOARD_BOOTCLOCKRUN_FRO0_MAX_VDD2_DSP          250000000UL    /* Clock consumers of fro0_max_vdd2_dsp output : N/A */
+#define BOARD_BOOTCLOCKRUN_FRO0_MAX_VDD2_MEDIA        250000000UL    /* Clock consumers of fro0_max_vdd2_media output : N/A */
+#define BOARD_BOOTCLOCKRUN_FRO0_MAX_VDDN_COM          250000000UL    /* Clock consumers of fro0_max_vddn_com output : N/A */
+#define BOARD_BOOTCLOCKRUN_FRO0_MAX_VDDN_MEDIA        250000000UL    /* Clock consumers of fro0_max_vddn_media output : N/A */
 #define BOARD_BOOTCLOCKRUN_FRO0_TUNER_DIVIDED_CLK     24000000UL     /* Clock consumers of fro0_tuner_divided_clk output : N/A */
 #define BOARD_BOOTCLOCKRUN_FRO1_DIV2                  96000000UL     /* Clock consumers of fro1_div2 output : N/A */
 #define BOARD_BOOTCLOCKRUN_FRO1_DIV3                  64000000UL     /* Clock consumers of fro1_div3 output : N/A */
@@ -292,19 +296,19 @@ void BOARD_InitBootClocks(void);
 #define BOARD_BOOTCLOCKRUN_FRO1_DIV8                  24000000UL     /* Clock consumers of fro1_div8 output : N/A */
 #define BOARD_BOOTCLOCKRUN_FRO1_MAX                   192000000UL    /* Clock consumers of fro1_max output : N/A */
 #define BOARD_BOOTCLOCKRUN_FRO1_TUNER_DIVIDED_CLK     0UL            /* Clock consumers of fro1_tuner_divided_clk output : N/A */
-#define BOARD_BOOTCLOCKRUN_FRO2_DIV2                  150000000UL    /* Clock consumers of fro2_div2 output : N/A */
-#define BOARD_BOOTCLOCKRUN_FRO2_DIV3                  100000000UL    /* Clock consumers of fro2_div3 output : N/A */
-#define BOARD_BOOTCLOCKRUN_FRO2_DIV6                  50000000UL     /* Clock consumers of fro2_div6 output : N/A */
-#define BOARD_BOOTCLOCKRUN_FRO2_DIV8                  37500000UL     /* Clock consumers of fro2_div8 output : N/A */
-#define BOARD_BOOTCLOCKRUN_FRO2_MAX_VDD1_SENSE        300000000UL    /* Clock consumers of fro2_max_vdd1_sense output : N/A */
-#define BOARD_BOOTCLOCKRUN_FRO2_MAX_VDD2_COM          300000000UL    /* Clock consumers of fro2_max_vdd2_com output : N/A */
-#define BOARD_BOOTCLOCKRUN_FRO2_MAX_VDD2_COMP         300000000UL    /* Clock consumers of fro2_max_vdd2_comp output : N/A */
-#define BOARD_BOOTCLOCKRUN_FRO2_MAX_VDD2_DSP          300000000UL    /* Clock consumers of fro2_max_vdd2_dsp output : N/A */
-#define BOARD_BOOTCLOCKRUN_FRO2_MAX_VDD2_MEDIA        300000000UL    /* Clock consumers of fro2_max_vdd2_media output : N/A */
-#define BOARD_BOOTCLOCKRUN_FRO2_MAX_VDDN_COM          300000000UL    /* Clock consumers of fro2_max_vddn_com output : N/A */
-#define BOARD_BOOTCLOCKRUN_FRO2_MAX_VDDN_MEDIA        300000000UL    /* Clock consumers of fro2_max_vddn_media output : N/A */
+#define BOARD_BOOTCLOCKRUN_FRO2_DIV2                  99000000UL     /* Clock consumers of fro2_div2 output : N/A */
+#define BOARD_BOOTCLOCKRUN_FRO2_DIV3                  66000000UL     /* Clock consumers of fro2_div3 output : N/A */
+#define BOARD_BOOTCLOCKRUN_FRO2_DIV6                  33000000UL     /* Clock consumers of fro2_div6 output : N/A */
+#define BOARD_BOOTCLOCKRUN_FRO2_DIV8                  24750000UL     /* Clock consumers of fro2_div8 output : N/A */
+#define BOARD_BOOTCLOCKRUN_FRO2_MAX_VDD1_SENSE        198000000UL    /* Clock consumers of fro2_max_vdd1_sense output : N/A */
+#define BOARD_BOOTCLOCKRUN_FRO2_MAX_VDD2_COM          198000000UL    /* Clock consumers of fro2_max_vdd2_com output : N/A */
+#define BOARD_BOOTCLOCKRUN_FRO2_MAX_VDD2_COMP         198000000UL    /* Clock consumers of fro2_max_vdd2_comp output : N/A */
+#define BOARD_BOOTCLOCKRUN_FRO2_MAX_VDD2_DSP          198000000UL    /* Clock consumers of fro2_max_vdd2_dsp output : N/A */
+#define BOARD_BOOTCLOCKRUN_FRO2_MAX_VDD2_MEDIA        198000000UL    /* Clock consumers of fro2_max_vdd2_media output : N/A */
+#define BOARD_BOOTCLOCKRUN_FRO2_MAX_VDDN_COM          198000000UL    /* Clock consumers of fro2_max_vddn_com output : N/A */
+#define BOARD_BOOTCLOCKRUN_FRO2_MAX_VDDN_MEDIA        198000000UL    /* Clock consumers of fro2_max_vddn_media output : N/A */
 #define BOARD_BOOTCLOCKRUN_FRO2_TUNER_DIVIDED_CLK     24000000UL     /* Clock consumers of fro2_tuner_divided_clk output : N/A */
-#define BOARD_BOOTCLOCKRUN_LPOSC_1M                   1000000UL      /* Clock consumers of lposc_1m output : N/A */
+#define BOARD_BOOTCLOCKRUN_LPOSC_1M                   1000000UL      /* Clock consumers of lposc_1m output : RTC0, RTC1 */
 #define BOARD_BOOTCLOCKRUN_MAIN_PLL_PFD0_VDD1_SENSE   500210526UL    /* Clock consumers of main_pll_pfd0_vdd1_sense output : N/A */
 #define BOARD_BOOTCLOCKRUN_MAIN_PLL_PFD0_VDD2_COM     500210526UL    /* Clock consumers of main_pll_pfd0_vdd2_com output : N/A */
 #define BOARD_BOOTCLOCKRUN_MAIN_PLL_PFD0_VDD2_COMP    500210526UL    /* Clock consumers of main_pll_pfd0_vdd2_comp output : N/A */
@@ -334,9 +338,9 @@ void BOARD_InitBootClocks(void);
 #define BOARD_BOOTCLOCKRUN_MAIN_PLL_PFD3_VDDN_COM     500210526UL    /* Clock consumers of main_pll_pfd3_vddn_com output : N/A */
 #define BOARD_BOOTCLOCKRUN_MAIN_PLL_PFD3_VDDN_MEDIA   500210526UL    /* Clock consumers of main_pll_pfd3_vddn_media output : N/A */
 #define BOARD_BOOTCLOCKRUN_OSC_CLK                    24000000UL     /* Clock consumers of osc_clk output : N/A */
-#define BOARD_BOOTCLOCKRUN_OSC_CLK_EUSB               0UL            /* Clock consumers of osc_clk_eusb output : N/A */
-#define BOARD_BOOTCLOCKRUN_OSC_CLK_USB                0UL            /* Clock consumers of osc_clk_usb output : N/A */
-#define BOARD_BOOTCLOCKRUN_WAKE32K_CLK                0UL            /* Clock consumers of wake32k_clk output : N/A */
+#define BOARD_BOOTCLOCKRUN_OSC_CLK_EUSB               24000000UL     /* Clock consumers of osc_clk_eusb output : USB1 */
+#define BOARD_BOOTCLOCKRUN_OSC_CLK_USB                24000000UL     /* Clock consumers of osc_clk_usb output : USB0 */
+#define BOARD_BOOTCLOCKRUN_WAKE32K_CLK                976UL          /* Clock consumers of wake32k_clk output : N/A */
 
 /*! @brief Clock pre-initialization function.
  */

@@ -1,5 +1,5 @@
 /*
- * Copyright 2023-2024 NXP
+ * Copyright 2023-2025 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -17,6 +17,24 @@
 #define FSL_COMPONENT_ID "platform.drivers.inputmux_connections"
 #endif
 
+/*! @name Driver version */
+/*@{*/
+/*! @brief INPUTMUX_CONNECTION driver version 2.0.1. */
+#define FSL_INPUTMUX_CONNECTION_DRIVER_VERSION (MAKE_VERSION(2, 0, 1))
+/*@}*/
+
+/* Driver compatibility definitions. */
+#ifndef INPUTMUX_BASE_PTRS
+#if defined(INPUTMUX0) && defined(INPUTMUX1)
+#define INPUTMUX_BASE_PTRS { INPUTMUX0, INPUTMUX1 }
+#elif defined(INPUTMUX0)
+#define INPUTMUX_BASE_PTRS { INPUTMUX0 }
+#elif defined(INPUTMUX1)
+#define INPUTMUX_BASE_PTRS { INPUTMUX1 }
+#else
+#error "Unsupported core!"
+#endif /* INPUTMUX0 && INPUTMUX1 */
+#endif /* INPUTMUX_BASE_PTRS */
 /*!
  * @addtogroup inputmux_driver
  * @{
@@ -1093,7 +1111,7 @@ typedef enum _inputmux_connection_t
     kINPUTMUX_Ct7Mat3ToFlexcomm17        = 9U + (FLEXCOMM17_ITRIG_PMUX_ID << PMUX_SHIFT),
     kINPUTMUX_GpioInt1BMatchToFlexcomm17 = 12U + (FLEXCOMM17_ITRIG_PMUX_ID << PMUX_SHIFT),
     kINPUTMUX_Cmp0OutToFlexcomm17        = 13U + (FLEXCOMM17_ITRIG_PMUX_ID << PMUX_SHIFT),
-    kINPUTMUX_Rtc0IrqToFlexcomm17        = 14U + (FLEXCOMM17_ITRIG_PMUX_ID << PMUX_SHIFT),
+    kINPUTMUX_Rtc1IrqToFlexcomm17        = 14U + (FLEXCOMM17_ITRIG_PMUX_ID << PMUX_SHIFT),
 
     /* FLEXCOMM18 TRIG input mux */
     kINPUTMUX_CtInp0ToFlexcomm18         = 0U + (FLEXCOMM18_ITRIG_PMUX_ID << PMUX_SHIFT),
@@ -1105,7 +1123,7 @@ typedef enum _inputmux_connection_t
     kINPUTMUX_Ct7Mat3ToFlexcomm18        = 9U + (FLEXCOMM18_ITRIG_PMUX_ID << PMUX_SHIFT),
     kINPUTMUX_GpioInt1BMatchToFlexcomm18 = 12U + (FLEXCOMM18_ITRIG_PMUX_ID << PMUX_SHIFT),
     kINPUTMUX_Cmp0OutToFlexcomm18        = 13U + (FLEXCOMM18_ITRIG_PMUX_ID << PMUX_SHIFT),
-    kINPUTMUX_Rtc0IrqToFlexcomm18        = 14U + (FLEXCOMM18_ITRIG_PMUX_ID << PMUX_SHIFT),
+    kINPUTMUX_Rtc1IrqToFlexcomm18        = 14U + (FLEXCOMM18_ITRIG_PMUX_ID << PMUX_SHIFT),
 
     /* FLEXCOMM19 TRIG input mux */
     kINPUTMUX_CtInp0ToFlexcomm19         = 0U + (FLEXCOMM19_ITRIG_PMUX_ID << PMUX_SHIFT),
@@ -1117,7 +1135,7 @@ typedef enum _inputmux_connection_t
     kINPUTMUX_Ct7Mat3ToFlexcomm19        = 9U + (FLEXCOMM19_ITRIG_PMUX_ID << PMUX_SHIFT),
     kINPUTMUX_GpioInt1BMatchToFlexcomm19 = 12U + (FLEXCOMM19_ITRIG_PMUX_ID << PMUX_SHIFT),
     kINPUTMUX_Cmp0OutToFlexcomm19        = 13U + (FLEXCOMM19_ITRIG_PMUX_ID << PMUX_SHIFT),
-    kINPUTMUX_Rtc0IrqToFlexcomm19        = 14U + (FLEXCOMM19_ITRIG_PMUX_ID << PMUX_SHIFT),
+    kINPUTMUX_Rtc1IrqToFlexcomm19        = 14U + (FLEXCOMM19_ITRIG_PMUX_ID << PMUX_SHIFT),
 
     /* FLEXCOMM20 TRIG input mux */
     kINPUTMUX_CtInp0ToFlexcomm20         = 0U + (FLEXCOMM20_ITRIG_PMUX_ID << PMUX_SHIFT),
@@ -1129,7 +1147,7 @@ typedef enum _inputmux_connection_t
     kINPUTMUX_Ct7Mat3ToFlexcomm20        = 9U + (FLEXCOMM20_ITRIG_PMUX_ID << PMUX_SHIFT),
     kINPUTMUX_GpioInt1BMatchToFlexcomm20 = 12U + (FLEXCOMM20_ITRIG_PMUX_ID << PMUX_SHIFT),
     kINPUTMUX_Cmp0OutToFlexcomm20        = 13U + (FLEXCOMM20_ITRIG_PMUX_ID << PMUX_SHIFT),
-    kINPUTMUX_Rtc0IrqToFlexcomm20        = 14U + (FLEXCOMM20_ITRIG_PMUX_ID << PMUX_SHIFT),
+    kINPUTMUX_Rtc1IrqToFlexcomm20        = 14U + (FLEXCOMM20_ITRIG_PMUX_ID << PMUX_SHIFT),
 
     /* ADC0 TRIG input mux */
     kINPUTMUX_Gpio0Irq0ToAdc0      = 0U + (ADC0_TRIG_PMUX_ID << PMUX_SHIFT),

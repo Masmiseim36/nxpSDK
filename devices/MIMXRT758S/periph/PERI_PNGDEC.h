@@ -1,40 +1,40 @@
 /*
 ** ###################################################################
-**     Processors:          MIMXRT735SGAWAR_cm33_core0
-**                          MIMXRT735SGAWAR_cm33_core1
-**                          MIMXRT735SGAWAR_ezhv
-**                          MIMXRT735SGAWAR_hifi1
-**                          MIMXRT735SGFOA_cm33_core0
-**                          MIMXRT735SGFOA_cm33_core1
-**                          MIMXRT735SGFOA_ezhv
-**                          MIMXRT735SGFOA_hifi1
-**                          MIMXRT758SGAWAR_cm33_core0
-**                          MIMXRT758SGAWAR_cm33_core1
-**                          MIMXRT758SGAWAR_ezhv
-**                          MIMXRT758SGAWAR_hifi1
-**                          MIMXRT758SGFOA_cm33_core0
-**                          MIMXRT758SGFOA_cm33_core1
-**                          MIMXRT758SGFOA_ezhv
-**                          MIMXRT758SGFOA_hifi1
-**                          MIMXRT798SGAWAR_cm33_core0
-**                          MIMXRT798SGAWAR_cm33_core1
-**                          MIMXRT798SGAWAR_ezhv
-**                          MIMXRT798SGAWAR_hifi1
-**                          MIMXRT798SGAWAR_hifi4
-**                          MIMXRT798SGFOA_cm33_core0
-**                          MIMXRT798SGFOA_cm33_core1
-**                          MIMXRT798SGFOA_ezhv
-**                          MIMXRT798SGFOA_hifi1
-**                          MIMXRT798SGFOA_hifi4
+**     Processors:          MIMXRT735SGAWBR_cm33_core0
+**                          MIMXRT735SGAWBR_cm33_core1
+**                          MIMXRT735SGAWBR_ezhv
+**                          MIMXRT735SGAWBR_hifi1
+**                          MIMXRT735SGFOB_cm33_core0
+**                          MIMXRT735SGFOB_cm33_core1
+**                          MIMXRT735SGFOB_ezhv
+**                          MIMXRT735SGFOB_hifi1
+**                          MIMXRT758SGAWBR_cm33_core0
+**                          MIMXRT758SGAWBR_cm33_core1
+**                          MIMXRT758SGAWBR_ezhv
+**                          MIMXRT758SGAWBR_hifi1
+**                          MIMXRT758SGFOB_cm33_core0
+**                          MIMXRT758SGFOB_cm33_core1
+**                          MIMXRT758SGFOB_ezhv
+**                          MIMXRT758SGFOB_hifi1
+**                          MIMXRT798SGAWBR_cm33_core0
+**                          MIMXRT798SGAWBR_cm33_core1
+**                          MIMXRT798SGAWBR_ezhv
+**                          MIMXRT798SGAWBR_hifi1
+**                          MIMXRT798SGAWBR_hifi4
+**                          MIMXRT798SGFOB_cm33_core0
+**                          MIMXRT798SGFOB_cm33_core1
+**                          MIMXRT798SGFOB_ezhv
+**                          MIMXRT798SGFOB_hifi1
+**                          MIMXRT798SGFOB_hifi4
 **
-**     Version:             rev. 2.0, 2024-05-28
-**     Build:               b241121
+**     Version:             rev. 4.0, 2025-06-06
+**     Build:               b250606
 **
 **     Abstract:
 **         CMSIS Peripheral Access Layer for PNGDEC
 **
 **     Copyright 1997-2016 Freescale Semiconductor, Inc.
-**     Copyright 2016-2024 NXP
+**     Copyright 2016-2025 NXP
 **     SPDX-License-Identifier: BSD-3-Clause
 **
 **     http:                 www.nxp.com
@@ -45,47 +45,52 @@
 **         Initial version.
 **     - rev. 2.0 (2024-05-28)
 **         Rev2 DraftA.
+**     - rev. 3.0 (2024-10-29)
+**         Change the device header file from single flat file to multiple files based on peripherals,
+**         each peripheral with dedicated header file located in periphN folder.
+**     - rev. 4.0 (2025-06-06)
+**         B0 initial version
 **
 ** ###################################################################
 */
 
 /*!
- * @file PNGDEC.h
- * @version 2.0
- * @date 2024-05-28
+ * @file PERI_PNGDEC.h
+ * @version 4.0
+ * @date 2025-06-06
  * @brief CMSIS Peripheral Access Layer for PNGDEC
  *
  * CMSIS Peripheral Access Layer for PNGDEC
  */
 
-#if !defined(PNGDEC_H_)
-#define PNGDEC_H_                                /**< Symbol preventing repeated inclusion */
+#if !defined(PERI_PNGDEC_H_)
+#define PERI_PNGDEC_H_                           /**< Symbol preventing repeated inclusion */
 
-#if (defined(CPU_MIMXRT735SGAWAR_cm33_core0) || defined(CPU_MIMXRT735SGFOA_cm33_core0))
+#if (defined(CPU_MIMXRT735SGAWBR_cm33_core0) || defined(CPU_MIMXRT735SGFOB_cm33_core0))
 #include "MIMXRT735S_cm33_core0_COMMON.h"
-#elif (defined(CPU_MIMXRT735SGAWAR_cm33_core1) || defined(CPU_MIMXRT735SGFOA_cm33_core1))
+#elif (defined(CPU_MIMXRT735SGAWBR_cm33_core1) || defined(CPU_MIMXRT735SGFOB_cm33_core1))
 #include "MIMXRT735S_cm33_core1_COMMON.h"
-#elif (defined(CPU_MIMXRT735SGAWAR_ezhv) || defined(CPU_MIMXRT735SGFOA_ezhv))
+#elif (defined(CPU_MIMXRT735SGAWBR_ezhv) || defined(CPU_MIMXRT735SGFOB_ezhv))
 #include "MIMXRT735S_ezhv_COMMON.h"
-#elif (defined(CPU_MIMXRT735SGAWAR_hifi1) || defined(CPU_MIMXRT735SGFOA_hifi1))
+#elif (defined(CPU_MIMXRT735SGAWBR_hifi1) || defined(CPU_MIMXRT735SGFOB_hifi1))
 #include "MIMXRT735S_hifi1_COMMON.h"
-#elif (defined(CPU_MIMXRT758SGAWAR_cm33_core0) || defined(CPU_MIMXRT758SGFOA_cm33_core0))
+#elif (defined(CPU_MIMXRT758SGAWBR_cm33_core0) || defined(CPU_MIMXRT758SGFOB_cm33_core0))
 #include "MIMXRT758S_cm33_core0_COMMON.h"
-#elif (defined(CPU_MIMXRT758SGAWAR_cm33_core1) || defined(CPU_MIMXRT758SGFOA_cm33_core1))
+#elif (defined(CPU_MIMXRT758SGAWBR_cm33_core1) || defined(CPU_MIMXRT758SGFOB_cm33_core1))
 #include "MIMXRT758S_cm33_core1_COMMON.h"
-#elif (defined(CPU_MIMXRT758SGAWAR_ezhv) || defined(CPU_MIMXRT758SGFOA_ezhv))
+#elif (defined(CPU_MIMXRT758SGAWBR_ezhv) || defined(CPU_MIMXRT758SGFOB_ezhv))
 #include "MIMXRT758S_ezhv_COMMON.h"
-#elif (defined(CPU_MIMXRT758SGAWAR_hifi1) || defined(CPU_MIMXRT758SGFOA_hifi1))
+#elif (defined(CPU_MIMXRT758SGAWBR_hifi1) || defined(CPU_MIMXRT758SGFOB_hifi1))
 #include "MIMXRT758S_hifi1_COMMON.h"
-#elif (defined(CPU_MIMXRT798SGAWAR_cm33_core0) || defined(CPU_MIMXRT798SGFOA_cm33_core0))
+#elif (defined(CPU_MIMXRT798SGAWBR_cm33_core0) || defined(CPU_MIMXRT798SGFOB_cm33_core0))
 #include "MIMXRT798S_cm33_core0_COMMON.h"
-#elif (defined(CPU_MIMXRT798SGAWAR_cm33_core1) || defined(CPU_MIMXRT798SGFOA_cm33_core1))
+#elif (defined(CPU_MIMXRT798SGAWBR_cm33_core1) || defined(CPU_MIMXRT798SGFOB_cm33_core1))
 #include "MIMXRT798S_cm33_core1_COMMON.h"
-#elif (defined(CPU_MIMXRT798SGAWAR_ezhv) || defined(CPU_MIMXRT798SGFOA_ezhv))
+#elif (defined(CPU_MIMXRT798SGAWBR_ezhv) || defined(CPU_MIMXRT798SGFOB_ezhv))
 #include "MIMXRT798S_ezhv_COMMON.h"
-#elif (defined(CPU_MIMXRT798SGAWAR_hifi1) || defined(CPU_MIMXRT798SGFOA_hifi1))
+#elif (defined(CPU_MIMXRT798SGAWBR_hifi1) || defined(CPU_MIMXRT798SGFOB_hifi1))
 #include "MIMXRT798S_hifi1_COMMON.h"
-#elif (defined(CPU_MIMXRT798SGAWAR_hifi4) || defined(CPU_MIMXRT798SGFOA_hifi4))
+#elif (defined(CPU_MIMXRT798SGAWBR_hifi4) || defined(CPU_MIMXRT798SGFOB_hifi4))
 #include "MIMXRT798S_hifi4_COMMON.h"
 #else
   #error "No valid CPU defined!"
@@ -281,110 +286,110 @@ typedef struct {
 #define PNGDEC_DEC_INT_STS_ERR_ADLER_MASK        (0x1U)
 #define PNGDEC_DEC_INT_STS_ERR_ADLER_SHIFT       (0U)
 /*! ERR_ADLER - ADLER-32 Checksum Error
- *  0b0..No interrupt occurred.
  *  0b0..No effect
- *  0b1..Interrupt occurred.
+ *  0b0..No interrupt occurred.
  *  0b1..Clears status flag.
+ *  0b1..Interrupt occurred.
  */
 #define PNGDEC_DEC_INT_STS_ERR_ADLER(x)          (((uint32_t)(((uint32_t)(x)) << PNGDEC_DEC_INT_STS_ERR_ADLER_SHIFT)) & PNGDEC_DEC_INT_STS_ERR_ADLER_MASK)
 
 #define PNGDEC_DEC_INT_STS_ERR_CRC_MASK          (0x2U)
 #define PNGDEC_DEC_INT_STS_ERR_CRC_SHIFT         (1U)
 /*! ERR_CRC - CRC Error
- *  0b0..No interrupt occurred.
  *  0b0..No effect
- *  0b1..Interrupt occurred.
+ *  0b0..No interrupt occurred.
  *  0b1..Clears status flag.
+ *  0b1..Interrupt occurred.
  */
 #define PNGDEC_DEC_INT_STS_ERR_CRC(x)            (((uint32_t)(((uint32_t)(x)) << PNGDEC_DEC_INT_STS_ERR_CRC_SHIFT)) & PNGDEC_DEC_INT_STS_ERR_CRC_MASK)
 
 #define PNGDEC_DEC_INT_STS_ERR_PNG_HEADER_MASK   (0x4U)
 #define PNGDEC_DEC_INT_STS_ERR_PNG_HEADER_SHIFT  (2U)
 /*! ERR_PNG_HEADER - PNG Header Error
- *  0b0..No interrupt occurred.
  *  0b0..No effect
- *  0b1..Interrupt occurred.
+ *  0b0..No interrupt occurred.
  *  0b1..Clears status flag.
+ *  0b1..Interrupt occurred.
  */
 #define PNGDEC_DEC_INT_STS_ERR_PNG_HEADER(x)     (((uint32_t)(((uint32_t)(x)) << PNGDEC_DEC_INT_STS_ERR_PNG_HEADER_SHIFT)) & PNGDEC_DEC_INT_STS_ERR_PNG_HEADER_MASK)
 
 #define PNGDEC_DEC_INT_STS_ERR_BTYPE_MASK        (0x8U)
 #define PNGDEC_DEC_INT_STS_ERR_BTYPE_SHIFT       (3U)
 /*! ERR_BTYPE - B-type Error (Block Encoding Type Error in IDAT Chunk)
- *  0b0..No interrupt occurred.
  *  0b0..No effect
- *  0b1..Interrupt occurred.
+ *  0b0..No interrupt occurred.
  *  0b1..Clears status flag.
+ *  0b1..Interrupt occurred.
  */
 #define PNGDEC_DEC_INT_STS_ERR_BTYPE(x)          (((uint32_t)(((uint32_t)(x)) << PNGDEC_DEC_INT_STS_ERR_BTYPE_SHIFT)) & PNGDEC_DEC_INT_STS_ERR_BTYPE_MASK)
 
 #define PNGDEC_DEC_INT_STS_ERR_ZLIB_HEADER_MASK  (0x10U)
 #define PNGDEC_DEC_INT_STS_ERR_ZLIB_HEADER_SHIFT (4U)
 /*! ERR_ZLIB_HEADER - Zlib Header Error
- *  0b0..No interrupt occurred.
  *  0b0..No effect
- *  0b1..Interrupt occurred.
+ *  0b0..No interrupt occurred.
  *  0b1..Clears status flag.
+ *  0b1..Interrupt occurred.
  */
 #define PNGDEC_DEC_INT_STS_ERR_ZLIB_HEADER(x)    (((uint32_t)(((uint32_t)(x)) << PNGDEC_DEC_INT_STS_ERR_ZLIB_HEADER_SHIFT)) & PNGDEC_DEC_INT_STS_ERR_ZLIB_HEADER_MASK)
 
 #define PNGDEC_DEC_INT_STS_ERR_BITDEPTH_MASK     (0x20U)
 #define PNGDEC_DEC_INT_STS_ERR_BITDEPTH_SHIFT    (5U)
 /*! ERR_BITDEPTH - Bit Depth Error
- *  0b0..No interrupt occurred.
  *  0b0..No effect
- *  0b1..Interrupt occurred.
+ *  0b0..No interrupt occurred.
  *  0b1..Clears status flag.
+ *  0b1..Interrupt occurred.
  */
 #define PNGDEC_DEC_INT_STS_ERR_BITDEPTH(x)       (((uint32_t)(((uint32_t)(x)) << PNGDEC_DEC_INT_STS_ERR_BITDEPTH_SHIFT)) & PNGDEC_DEC_INT_STS_ERR_BITDEPTH_MASK)
 
 #define PNGDEC_DEC_INT_STS_ERR_INTERLACE_MASK    (0x40U)
 #define PNGDEC_DEC_INT_STS_ERR_INTERLACE_SHIFT   (6U)
 /*! ERR_INTERLACE - Interlace Error
- *  0b0..No interrupt occurred.
  *  0b0..No effect
- *  0b1..Interrupt occurred.
+ *  0b0..No interrupt occurred.
  *  0b1..Clears status flag.
+ *  0b1..Interrupt occurred.
  */
 #define PNGDEC_DEC_INT_STS_ERR_INTERLACE(x)      (((uint32_t)(((uint32_t)(x)) << PNGDEC_DEC_INT_STS_ERR_INTERLACE_SHIFT)) & PNGDEC_DEC_INT_STS_ERR_INTERLACE_MASK)
 
 #define PNGDEC_DEC_INT_STS_ERR_WIDTH_MASK        (0x80U)
 #define PNGDEC_DEC_INT_STS_ERR_WIDTH_SHIFT       (7U)
 /*! ERR_WIDTH - Width Error
- *  0b0..No interrupt occurred.
  *  0b0..No effect
- *  0b1..Interrupt occurred.
+ *  0b0..No interrupt occurred.
  *  0b1..Clears status flag.
+ *  0b1..Interrupt occurred.
  */
 #define PNGDEC_DEC_INT_STS_ERR_WIDTH(x)          (((uint32_t)(((uint32_t)(x)) << PNGDEC_DEC_INT_STS_ERR_WIDTH_SHIFT)) & PNGDEC_DEC_INT_STS_ERR_WIDTH_MASK)
 
 #define PNGDEC_DEC_INT_STS_ENC_DATA_DMA_DONE_MASK (0x100U)
 #define PNGDEC_DEC_INT_STS_ENC_DATA_DMA_DONE_SHIFT (8U)
 /*! ENC_DATA_DMA_DONE - Encoded Data and DMA Copy Done
- *  0b0..No interrupt occurred.
  *  0b0..No effect
- *  0b1..Interrupt occurred.
+ *  0b0..No interrupt occurred.
  *  0b1..Clears status flag.
+ *  0b1..Interrupt occurred.
  */
 #define PNGDEC_DEC_INT_STS_ENC_DATA_DMA_DONE(x)  (((uint32_t)(((uint32_t)(x)) << PNGDEC_DEC_INT_STS_ENC_DATA_DMA_DONE_SHIFT)) & PNGDEC_DEC_INT_STS_ENC_DATA_DMA_DONE_MASK)
 
 #define PNGDEC_DEC_INT_STS_DEC_PIXEL_DMA_DONE_MASK (0x200U)
 #define PNGDEC_DEC_INT_STS_DEC_PIXEL_DMA_DONE_SHIFT (9U)
 /*! DEC_PIXEL_DMA_DONE - Decode Pixel and DMA Copy Done
- *  0b0..No interrupt occurred.
  *  0b0..No effect
- *  0b1..Interrupt occurred.
+ *  0b0..No interrupt occurred.
  *  0b1..Clears status flag.
+ *  0b1..Interrupt occurred.
  */
 #define PNGDEC_DEC_INT_STS_DEC_PIXEL_DMA_DONE(x) (((uint32_t)(((uint32_t)(x)) << PNGDEC_DEC_INT_STS_DEC_PIXEL_DMA_DONE_SHIFT)) & PNGDEC_DEC_INT_STS_DEC_PIXEL_DMA_DONE_MASK)
 
 #define PNGDEC_DEC_INT_STS_DEC_ANC_DMA_DONE_MASK (0x400U)
 #define PNGDEC_DEC_INT_STS_DEC_ANC_DMA_DONE_SHIFT (10U)
 /*! DEC_ANC_DMA_DONE - Ancillary Decode and DMA Copy Done Flag
- *  0b0..No interrupt occurred.
  *  0b0..No effect
- *  0b1..Interrupt occurred.
+ *  0b0..No interrupt occurred.
  *  0b1..Clears status flag.
+ *  0b1..Interrupt occurred.
  */
 #define PNGDEC_DEC_INT_STS_DEC_ANC_DMA_DONE(x)   (((uint32_t)(((uint32_t)(x)) << PNGDEC_DEC_INT_STS_DEC_ANC_DMA_DONE_SHIFT)) & PNGDEC_DEC_INT_STS_DEC_ANC_DMA_DONE_MASK)
 /*! @} */
@@ -544,5 +549,5 @@ typedef struct {
  */ /* end of group Peripheral_access_layer */
 
 
-#endif  /* PNGDEC_H_ */
+#endif  /* PERI_PNGDEC_H_ */
 

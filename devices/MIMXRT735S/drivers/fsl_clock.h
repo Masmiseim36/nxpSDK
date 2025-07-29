@@ -1,5 +1,5 @@
 /*
- * Copyright 2023-2024 NXP
+ * Copyright 2023-2025 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -25,8 +25,8 @@
 
 /*! @name Driver version */
 /*@{*/
-/*! @brief CLOCK driver version 2.4.0 */
-#define FSL_CLOCK_DRIVER_VERSION (MAKE_VERSION(2, 4, 0))
+/*! @brief CLOCK driver version 2.4.2 */
+#define FSL_CLOCK_DRIVER_VERSION (MAKE_VERSION(2, 4, 2))
 /*@}*/
 
 #if defined(MIMXRT798S_hifi1_SERIES) || defined(MIMXRT798S_cm33_core1_SERIES) || \
@@ -113,9 +113,10 @@ extern volatile uint32_t g_mclkFreq;
 #if defined(FSL_CLOCK_DRIVER_COMPUTE) || defined(FSL_CLOCK_DRIVER_MEDIA)
 /*! @brief VDD1(Sense) audio_clk clock frequency.
  *
- *NOTE, The compute domain can't read the Sense VDD1 audio_clk selection. The compute domain need call
- *CLOCK_SetSenseAudioClkFreq() to tell the clock driver the frequncy of current VDD1 audio_clk, and then
- *CLOCK_GetSenseAudioClkFreq() can return the correct value.
+ * NOTE, For A0 silicon, the compute domain can't read the Sense VDD1 audio_clk selection. The compute domain need call
+ * CLOCK_SetSenseAudioClkFreq() to tell the clock driver the frequncy of current VDD1 audio_clk, and then
+ * CLOCK_GetSenseAudioClkFreq() can return the correct value. For later silicon version(from B0),
+ * the CLOCK_SetSenseAudioClkFreq is not needed.
  * @code
  * CLOCK_SetSenseAudioClkFreq(24000000);
  * @endcode
@@ -314,7 +315,20 @@ extern volatile uint32_t g_senseAudioClkFreq;
         kCLOCK_TrngRef \
     }
 
-#endif /* FSL_CLOCK_DRIVER_COMPUTE */
+#if defined(FSL_CLOCK_DRIVER_MEDIA)
+/*! @brief Clock ip name array for INPUTMUX. */
+#define INPUTMUX_CLOCKS                      \
+    {                                        \
+        kCLOCK_InputMux0, kCLOCK_InputMux1   \
+    }
+#else
+#define INPUTMUX_CLOCKS    \
+    {                      \
+        kCLOCK_InputMux0   \
+    }
+#endif /* FSL_CLOCK_DRIVER_MEDIA */
+
+#endif /* FSL_CLOCK_DRIVER_COMPUTE || FSL_CLOCK_DRIVER_MEDIA */
 
 #if defined(FSL_CLOCK_DRIVER_SENSE)
 #ifndef __XTENSA__
@@ -334,6 +348,12 @@ extern volatile uint32_t g_senseAudioClkFreq;
     {                            \
         kCLOCK_Dma2, kCLOCK_Dma3 \
     }
+
+/*! @brief Clock ip name array for INPUTMUX. */
+#define INPUTMUX_CLOCKS    \
+    {                      \
+        kCLOCK_InputMux1   \
+    }
 #endif /* FSL_CLOCK_DRIVER_SENSE */
 
 /*! @brief Clock ip name array for CRC. */
@@ -344,27 +364,27 @@ extern volatile uint32_t g_senseAudioClkFreq;
 
 #if defined(FSL_CLOCK_DRIVER_COMPUTE) || defined(FSL_CLOCK_DRIVER_MEDIA)
 /*! @brief Clock ip name array for GDET. */
-#define GDET_CLOCKS                                            \
-    {                                                          \
-        kCLOCK_Gdet0, kCLOCK_IpInvalid, kCLOCK_IpInvalid, kCLOCK_Gdet3 \
-    }
-
-/*! @brief Clock ip name array for GDET_REF. */
-#define GDET_REF_CLOCKS                                                    \
-    {                                                                      \
-        kCLOCK_Gdet0Ref, kCLOCK_IpInvalid, kCLOCK_IpInvalid, kCLOCK_Gdet3Ref \
-    }
-#endif
-#if defined(FSL_CLOCK_DRIVER_SENSE)
-/*! @brief Clock ip name array for GDET. */
 #define GDET_CLOCKS                                                    \
     {                                                                  \
-        kCLOCK_IpInvalid, kCLOCK_IpInvalid, kCLOCK_IpInvalid, kCLOCK_Gdet3 \
+        kCLOCK_Gdet0, kCLOCK_IpInvalid, kCLOCK_IpInvalid, kCLOCK_Gdet3 \
     }
 
 /*! @brief Clock ip name array for GDET_REF. */
 #define GDET_REF_CLOCKS                                                      \
     {                                                                        \
+        kCLOCK_Gdet0Ref, kCLOCK_IpInvalid, kCLOCK_IpInvalid, kCLOCK_Gdet3Ref \
+    }
+#endif
+#if defined(FSL_CLOCK_DRIVER_SENSE)
+/*! @brief Clock ip name array for GDET. */
+#define GDET_CLOCKS                                                        \
+    {                                                                      \
+        kCLOCK_IpInvalid, kCLOCK_IpInvalid, kCLOCK_IpInvalid, kCLOCK_Gdet3 \
+    }
+
+/*! @brief Clock ip name array for GDET_REF. */
+#define GDET_REF_CLOCKS                                                       \
+    {                                                                         \
         kCLOCK_IpInvalid, kCLOCK_IpInvalid, kCLOCK_IpInvalid, kCLOCK_Gdet3Ref \
     }
 #endif
@@ -597,6 +617,7 @@ typedef enum _clock_ip_name
     kCLOCK_Sema424        = CLK_GATE_DEFINE(CLK_CTL0_PSCCTL2, 30), /*!< Clock gate name: SEMA42_4*/
     kCLOCK_Mu4            = CLK_GATE_DEFINE(CLK_CTL0_PSCCTL2, 31), /*!< Clock gate name: MU4*/
     kCLOCK_Pint0          = CLK_GATE_DEFINE(CLK_CTL0_PSCCTL3, 5),  /*!< Clock gate name: PINT0*/
+    kCLOCK_Pvts0          = CLK_GATE_DEFINE(CLK_CTL0_PSCCTL3, 6),  /*!< Clock gate name: PVTS0*/
     kCLOCK_InputMux0      = CLK_GATE_DEFINE(CLK_CTL0_PSCCTL3, 10), /*!< Clock gate name: PMUX_CMPT_SPLITTER*/
     kCLOCK_Freqme0        = CLK_GATE_DEFINE(CLK_CTL0_PSCCTL3, 8),  /*!< Clock gate name: FREQME0*/
     kCLOCK_SafoSgi        = CLK_GATE_DEFINE(CLK_CTL0_PSCCTL3, 12), /*!< Clock gate name: SAFO_SGI*/
@@ -646,19 +667,19 @@ typedef enum _clock_ip_name
     kCLOCK_Gpio9        = CLK_GATE_DEFINE(CLK_CTL1_PSCCTL1, 14),   /*!< Clock gate name: GPIO9*/
     kCLOCK_Gpio10       = CLK_GATE_DEFINE(CLK_CTL1_PSCCTL1, 15),   /*!< Clock gate name: GPIO10*/
     kCLOCK_Pint1        = CLK_GATE_DEFINE(CLK_CTL1_PSCCTL1, 16),   /*!< Clock gate name: PINT1*/
+    kCLOCK_Ct32b5       = CLK_GATE_DEFINE(CLK_CTL1_PSCCTL1, 17),   /*!< Clock gate name: CTIMER5*/
+    kCLOCK_Ct32b6       = CLK_GATE_DEFINE(CLK_CTL1_PSCCTL1, 18),   /*!< Clock gate name: CTIMER6*/
+    kCLOCK_Ct32b7       = CLK_GATE_DEFINE(CLK_CTL1_PSCCTL1, 19),   /*!< Clock gate name: CTIMER7*/
+    kCLOCK_Mrt1         = CLK_GATE_DEFINE(CLK_CTL1_PSCCTL1, 20),   /*!< Clock gate name: Mrt1*/
+    kCLOCK_Utick1       = CLK_GATE_DEFINE(CLK_CTL1_PSCCTL1, 21),   /*!< Clock gate name: Utick1*/
+    kCLOCK_Cdog3        = CLK_GATE_DEFINE(CLK_CTL1_PSCCTL1, 22),   /*!< Clock gate name: CDOG3*/
+    kCLOCK_Cdog4        = CLK_GATE_DEFINE(CLK_CTL1_PSCCTL1, 23),   /*!< Clock gate name: CDOG4*/
+    kCLOCK_Mu3          = CLK_GATE_DEFINE(CLK_CTL1_PSCCTL1, 24),   /*!< Clock gate name: MU3*/
+    kCLOCK_Sema423      = CLK_GATE_DEFINE(CLK_CTL1_PSCCTL1, 25),   /*!< Clock gate name: SEMA42_3*/
+    kCLOCK_Wwdt2        = CLK_GATE_DEFINE(CLK_CTL1_PSCCTL1, 26),   /*!< Clock gate name: WWDT2*/
+    kCLOCK_Wwdt3        = CLK_GATE_DEFINE(CLK_CTL1_PSCCTL1, 27),   /*!< Clock gate name: WWDT3*/
+    kCLOCK_Pvts1        = CLK_GATE_DEFINE(CLK_CTL1_PSCCTL1, 28),   /*!< Clock gate name: PINT1*/
     kCLOCK_InputMux1    = CLK_GATE_DEFINE(CLK_CTL1_PSCCTL1, 30),   /*!< Clock gate name: PMUX_SNS_SPLITTER*/
-
-    kCLOCK_Ct32b5  = CLK_GATE_DEFINE(CLK_CTL1_PSCCTL1, 17),        /*!< Clock gate name: CTIMER5*/
-    kCLOCK_Ct32b6  = CLK_GATE_DEFINE(CLK_CTL1_PSCCTL1, 18),        /*!< Clock gate name: CTIMER6*/
-    kCLOCK_Ct32b7  = CLK_GATE_DEFINE(CLK_CTL1_PSCCTL1, 19),        /*!< Clock gate name: CTIMER7*/
-    kCLOCK_Mrt1    = CLK_GATE_DEFINE(CLK_CTL1_PSCCTL1, 20),        /*!< Clock gate name: Mrt1*/
-    kCLOCK_Utick1  = CLK_GATE_DEFINE(CLK_CTL1_PSCCTL1, 21),        /*!< Clock gate name: Utick1*/
-    kCLOCK_Cdog3   = CLK_GATE_DEFINE(CLK_CTL1_PSCCTL1, 22),        /*!< Clock gate name: CDOG3*/
-    kCLOCK_Cdog4   = CLK_GATE_DEFINE(CLK_CTL1_PSCCTL1, 23),        /*!< Clock gate name: CDOG4*/
-    kCLOCK_Mu3     = CLK_GATE_DEFINE(CLK_CTL1_PSCCTL1, 24),        /*!< Clock gate name: MU3*/
-    kCLOCK_Sema423 = CLK_GATE_DEFINE(CLK_CTL1_PSCCTL1, 25),        /*!< Clock gate name: SEMA42_3*/
-    kCLOCK_Wwdt2   = CLK_GATE_DEFINE(CLK_CTL1_PSCCTL1, 26),        /*!< Clock gate name: WWDT2*/
-    kCLOCK_Wwdt3   = CLK_GATE_DEFINE(CLK_CTL1_PSCCTL1, 27),        /*!< Clock gate name: WWDT3*/
 
     kCLOCK_Syscon2 = CLK_GATE_DEFINE(CLK_CTL2_PSCCTL0, 3),         /*!< Clock gate name: SYSCON_COMM */
     kCLOCK_Iopctl2 = CLK_GATE_DEFINE(CLK_CTL2_PSCCTL0, 4),         /*!< Clock gate name: IOMUXC_VDDN */
@@ -914,7 +935,6 @@ typedef enum _clock_name
 #define SARADCFCLKSEL_OFFSET      0x620
 #define SARADCFCLKDIV_OFFSET      0x624
 #define WAKE32KCLKSEL_OFFSET      0x750
-#define A32KHZWAKECLKDIV_OFFSET   0x754
 #define MICFIL0FCLKSEL_OFFSET     0x780
 #define MICFIL0FCLKDIV_OFFSET     0x784
 #define LPI2CFCLKSEL_OFFSET       0x788
@@ -1737,7 +1757,6 @@ typedef enum _clock_div_name
     kCLOCK_DivOstimerClk    = CLKCTL3_TUPLE_MUXA(OSEVENTFCLKDIV_OFFSET, 0),     /*!< OSTIMER Clk Divider. */
     kCLOCK_DivSdadcClk      = CLKCTL3_TUPLE_MUXA(SDADCFCLKDIV_OFFSET, 0),       /*!< SDADC Clk Divider. */
     kCLOCK_DivAdcClk        = CLKCTL3_TUPLE_MUXA(SARADCFCLKDIV_OFFSET, 0),      /*!< SARADC Clk Divider. */
-    kCLOCK_Div32KhzWakeClk  = CLKCTL3_TUPLE_MUXA(A32KHZWAKECLKDIV_OFFSET, 0),   /*!< 32KHZ Wakeup Clk Divider. */
     kCLOCK_DivMicfil0Clk    = CLKCTL3_TUPLE_MUXA(MICFIL0FCLKDIV_OFFSET, 0),     /*!< DMIC0 Clk Divider. */
     kCLOCK_DivLpi2c15Clk    = CLKCTL3_TUPLE_MUXA(LPI2CFCLKDIV_OFFSET, 0),       /*!< PMIC LPI2C Clk Divider. */
     kCLOCK_DivVdd1ClockOut  = CLKCTL3_TUPLE_MUXA(SENSE_CLKOUTCLKDIV_OFFSET, 0), /*!< CLKOUT_VDD1 Clk Divider. */
@@ -2039,6 +2058,11 @@ uint32_t CLOCK_GetTpiuClkFreq(void);
  */
 uint32_t CLOCK_GetTrngClkFreq(void);
 
+/*! @brief  Return Frequency of VDD2 ClockOut
+ *  @return Frequency of ClockOut
+ */
+uint32_t CLOCK_GetClockOutClkFreq(void);
+
 #else  /* Sense domain specific APIs */
 
 /*! @brief  Return Frequency of VDD1 audio clk
@@ -2292,6 +2316,7 @@ status_t CLOCK_InitMainPfd(clock_pfd_t pfd, uint8_t divider);
  */
 static inline void CLOCK_DeinitMainPfd(clock_pfd_t pfd)
 {
+    assert(pfd <= kCLOCK_Pfd3);
     CLKCTL2->MAINPLL0PFD |= ((uint32_t)CLKCTL2_AUDIOPLL0PFD_PFD0_CLKGATE_MASK << (8UL * (uint32_t)pfd));
 }
 
@@ -2326,8 +2351,9 @@ status_t CLOCK_InitAudioPfd(clock_pfd_t pfd, uint8_t divider);
 /*! brief Disable the audio PLL PFD.
  *  param pfd    : Which PFD clock to disable.
  */
-static inline void CLOCK_DeinitAudioPfd(uint32_t pfd)
+static inline void CLOCK_DeinitAudioPfd(clock_pfd_t pfd)
 {
+    assert(pfd <= kCLOCK_Pfd3);
     CLKCTL2->AUDIOPLL0PFD |= ((uint32_t)CLKCTL2_AUDIOPLL0PFD_PFD0_CLKGATE_MASK << (8UL * (uint32_t)pfd));
 }
 
@@ -2509,11 +2535,6 @@ uint32_t CLOCK_GetMicfilClkFreq(void);
  *  @return Frequency of Ctimer Clock
  */
 uint32_t CLOCK_GetCTimerClkFreq(uint32_t id);
-
-/*! @brief  Return Frequency of VDD2 ClockOut
- *  @return Frequency of ClockOut
- */
-uint32_t CLOCK_GetClockOutClkFreq(void);
 
 /*! @brief  Return Frequency of VDD1 Clock Out
  *  @return Frequency of ClockOut of sense domain

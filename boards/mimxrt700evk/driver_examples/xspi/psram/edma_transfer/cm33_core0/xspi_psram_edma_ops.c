@@ -1,5 +1,5 @@
 /*
- * Copyright 2023-2024 NXP
+ * Copyright 2023-2025 NXP
  * All rights reserved.
  *
  *
@@ -172,6 +172,7 @@ status_t xspi_hyper_ram_reset(XSPI_Type *base)
     flashXfer.seqIndex        = HYPERRAM_CMD_LUT_SEQ_IDX_RESET;
     flashXfer.targetGroup     = kXSPI_TargetGroup0;
     flashXfer.lockArbitration = false;
+    flashXfer.dataSize        = 4;
 
     status = XSPI_TransferBlocking(base, &flashXfer);
 

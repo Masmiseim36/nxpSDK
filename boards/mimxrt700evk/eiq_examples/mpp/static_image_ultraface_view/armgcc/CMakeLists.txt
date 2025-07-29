@@ -14,9 +14,6 @@ if(CMAKE_SCRIPT_MODE_FILE)
 endif()
 
 
-set(CMAKE_STATIC_LIBRARY_PREFIX)
-set(CMAKE_STATIC_LIBRARY_SUFFIX)
-
 set(CMAKE_EXECUTABLE_LIBRARY_PREFIX)
 set(CMAKE_EXECUTABLE_LIBRARY_SUFFIX)
 
@@ -49,13 +46,11 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../couple_COCO_128_128_rgb.h"
 "${ProjDirPath}/../pin_mux.c"
 "${ProjDirPath}/../hardware_init.c"
-"${ProjDirPath}/../clock_config.c"
 "${ProjDirPath}/../utick_config.c"
 "${ProjDirPath}/../pin_mux.h"
 "${ProjDirPath}/../app.h"
 "${ProjDirPath}/../utick_config.h"
 "${ProjDirPath}/../FreeRTOSConfig.h"
-"${ProjDirPath}/../clock_config.h"
 "${ProjDirPath}/../hal_mimxrt700evk.c"
 "${ProjDirPath}/../get_top_n.cpp"
 "${ProjDirPath}/../utils.cpp"
@@ -74,6 +69,8 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../ultraface_slim_ultraslim_tflite_info.h"
 "${ProjDirPath}/../board.h"
 "${ProjDirPath}/../board.c"
+"${ProjDirPath}/../clock_config.h"
+"${ProjDirPath}/../clock_config.c"
 "${ProjDirPath}/../pmic_support.c"
 "${ProjDirPath}/../pmic_support.h"
 "${ProjDirPath}/../display_support.h"

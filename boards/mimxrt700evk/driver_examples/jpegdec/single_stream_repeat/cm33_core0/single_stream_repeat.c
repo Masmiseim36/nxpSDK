@@ -25,11 +25,6 @@
 #define APP_FB_BPP    2
 #define APP_FB_FORMAT kVIDEO_PixelFormatRGB565
 
-#define APP_FB_WIDTH  0x1e0
-#define APP_FB_HEIGHT 0x110
-
-/* Total number of pictures to decode */
-#define APP_PIC_NUM 121
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/

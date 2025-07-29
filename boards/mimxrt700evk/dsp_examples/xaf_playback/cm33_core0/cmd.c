@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2024 NXP
+ * Copyright 2019-2025 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -305,6 +305,7 @@ static shell_status_t shellFile(shell_handle_t shellHandle, int32_t argc, char *
             {
                 /* Check file for supported audio extension */
                 dot = strrchr(fileInformation.fname, '.');
+#ifndef MULTICHANNEL
 #if XA_MP3_DECODER == 1
                 if (dot && strncmp(dot + 1, "mp3", 3) == 0)
                 {
@@ -328,11 +329,13 @@ static shell_status_t shellFile(shell_handle_t shellHandle, int32_t argc, char *
                     count++;
                 }
 #endif
+#else
                 if (dot && strncmp(dot + 1, "pcm", 3) == 0)
                 {
                     PRINTF("[CM33 CMD]  %s\r\n", fileInformation.fname);
                     count++;
                 }
+#endif
             }
         }
 
@@ -395,6 +398,7 @@ static shell_status_t shellFile(shell_handle_t shellHandle, int32_t argc, char *
         msg.param[2] = 0;
 
         dot = strrchr(filename, '.');
+#ifndef MULTICHANNEL
 #if XA_MP3_DECODER == 1
         if (dot && strncmp(dot + 1, "mp3", 3) == 0)
         {
@@ -416,7 +420,7 @@ static shell_status_t shellFile(shell_handle_t shellHandle, int32_t argc, char *
             count        = 1;
         }
 #endif
-#ifdef MULTICHANNEL
+#else
         if (dot && strncmp(dot + 1, "pcm", 3) == 0)
         {
             msg.param[3] = DSP_COMPONENT_NONE;
@@ -923,7 +927,9 @@ static void handleDSPMessageInner(app_handle_t *app, srtm_message *msg, bool *no
                     else
                     {
                         PRINTF("[CM33 CMD] DSP file playback start\r\n");
+#if (defined(CODEC_WM8904_ENABLE) || defined(CODEC_CS42448_ENABLE))
                         BOARD_MuteRightChannel(msg->param[0] == 1);
+#endif
                     }
 
                     /* Release shell to be able to set different commands */
@@ -970,7 +976,9 @@ static void handleDSPMessageInner(app_handle_t *app, srtm_message *msg, bool *no
                     PRINTF("[CM33 CMD] DSP file playback complete\r\n");
 
                     file_playing = false;
+#if (defined(CODEC_WM8904_ENABLE) || defined(CODEC_CS42448_ENABLE))
                     BOARD_MuteRightChannel(false);
+#endif
                     error = f_close(&app->fileObject);
                     if (error)
                     {
@@ -989,7 +997,9 @@ static void handleDSPMessageInner(app_handle_t *app, srtm_message *msg, bool *no
                     {
                         PRINTF("[CM33 CMD] DSP file stopped\r\n");
                         file_playing = false;
+#if (defined(CODEC_WM8904_ENABLE) || defined(CODEC_CS42448_ENABLE))
                         BOARD_MuteRightChannel(false);
+#endif
                         /* File has stopped playing */
                     }
                     *notify_shell = true;
@@ -1006,7 +1016,9 @@ static void handleDSPMessageInner(app_handle_t *app, srtm_message *msg, bool *no
                     {
                         PRINTF("[CM33 CMD] DSP file stopped, unsupported format.\r\n");
                         file_playing = false;
+#if (defined(CODEC_WM8904_ENABLE) || defined(CODEC_CS42448_ENABLE))
                         BOARD_MuteRightChannel(false);
+#endif
                         /* File has stopped playing */
                     }
                     *notify_shell = true;

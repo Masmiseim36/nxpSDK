@@ -21,10 +21,13 @@ void BOARD_InitHardware(void)
     BOARD_BootClockRUN();
 
     BOARD_InitDebugConsole();
-    
+
     BOARD_InitAHBSC();
-    
+
     XCACHE_DisableCache(XCACHE0);
     XCACHE_DisableCache(XCACHE1);
+
+    __DSB();
+    __ISB();
 }
 /*${function:end}*/

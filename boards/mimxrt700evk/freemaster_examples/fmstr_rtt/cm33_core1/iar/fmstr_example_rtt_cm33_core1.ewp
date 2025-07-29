@@ -243,7 +243,8 @@
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
-          <state>CPU_MIMXRT798SGFOA_cm33_core1</state>
+          <state>CPU_MIMXRT798SGFOB_cm33_core1</state>
+          <state>MIMXRT798S_cm33_core1_SERIES</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -372,8 +373,8 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT798S/drivers</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT798S/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT798S/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/rtt/RTT</state>
+          <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/common</state>
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/platforms/gen32le</state>
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can</state>
@@ -562,7 +563,8 @@
         <option>
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
-          <state>CPU_MIMXRT798SGFOA_cm33_core1</state>
+          <state>CPU_MIMXRT798SGFOB_cm33_core1</state>
+          <state>MIMXRT798S_cm33_core1_SERIES</state>
         </option>
         <option>
           <name>AList</name>
@@ -663,8 +665,8 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT798S/drivers</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT798S/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT798S/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/rtt/RTT</state>
+          <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/common</state>
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/platforms/gen32le</state>
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can</state>
@@ -684,7 +686,7 @@
         </option>
         <option>
           <name>PreInclude</name>
-          <state/>
+          <state>$PROJ_DIR$/../mcux_config.h</state>
         </option>
       </data>
     </settings>
@@ -1374,7 +1376,8 @@
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
-          <state>CPU_MIMXRT798SGFOA_cm33_core1</state>
+          <state>CPU_MIMXRT798SGFOB_cm33_core1</state>
+          <state>MIMXRT798S_cm33_core1_SERIES</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -1503,8 +1506,8 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT798S/drivers</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT798S/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT798S/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/rtt/RTT</state>
+          <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/common</state>
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/platforms/gen32le</state>
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can</state>
@@ -1693,7 +1696,8 @@
         <option>
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
-          <state>CPU_MIMXRT798SGFOA_cm33_core1</state>
+          <state>CPU_MIMXRT798SGFOB_cm33_core1</state>
+          <state>MIMXRT798S_cm33_core1_SERIES</state>
         </option>
         <option>
           <name>AList</name>
@@ -1794,8 +1798,8 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT798S/drivers</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT798S/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT798S/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/rtt/RTT</state>
+          <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/common</state>
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/platforms/gen32le</state>
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can</state>
@@ -1815,7 +1819,7 @@
         </option>
         <option>
           <name>PreInclude</name>
-          <state/>
+          <state>$PROJ_DIR$/../mcux_config.h</state>
         </option>
       </data>
     </settings>
@@ -2301,6 +2305,12 @@
     <file>
       <name>$PROJ_DIR$/../mcux_config.h</name>
     </file>
+    <file>
+      <name>$PROJ_DIR$/../mcux_config.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../mcux_config.h</name>
+    </file>
   </group>
   <group>
     <name>board</name>
@@ -2622,12 +2632,9 @@
   </group>
   <group>
     <name>startup</name>
-    <group>
-      <name>iar</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT798S/iar/startup_MIMXRT798S_cm33_core1.s</name>
-      </file>
-    </group>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT798S/startup_MIMXRT798S_cm33_core1.c</name>
+    </file>
   </group>
   <group>
     <name>drivers</name>
@@ -2717,18 +2724,6 @@
     </group>
   </group>
   <group>
-    <name>component</name>
-    <group>
-      <name>uart</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/uart/fsl_adapter_uart.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/uart/fsl_adapter_lpuart.c</name>
-      </file>
-    </group>
-  </group>
-  <group>
     <name>rtt</name>
     <group>
       <name>RTT</name>
@@ -2766,6 +2761,18 @@
     <file>
       <name>$PROJ_DIR$/../../../../../../components/rtt/README.txt</name>
     </file>
+  </group>
+  <group>
+    <name>component</name>
+    <group>
+      <name>uart</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/uart/fsl_adapter_uart.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/uart/fsl_adapter_lpuart.c</name>
+      </file>
+    </group>
   </group>
   <group>
     <name>freemaster</name>
@@ -2865,6 +2872,12 @@
               <name>$PROJ_DIR$/../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can/freemaster_flexcan.c</name>
             </file>
             <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can/freemaster_flexcanfd.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can/freemaster_flexcanfd.c</name>
+            </file>
+            <file>
               <name>$PROJ_DIR$/../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can/freemaster_flexcan.h</name>
             </file>
             <file>
@@ -2951,6 +2964,9 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../example_board_readme.md</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../examples_shared_readme.md</name>
     </file>
   </group>
 </project>

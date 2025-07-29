@@ -216,15 +216,15 @@
         </option>
         <option>
           <name>OCMulticoreWorkspace</name>
-          <state>$PROJ_DIR$/../../cm33_core1/iar/mu_polling_secondary_core.eww</state>
+          <state/>
         </option>
         <option>
           <name>OCMulticoreSlaveProject</name>
-          <state>mu_polling_secondary_core</state>
+          <state/>
         </option>
         <option>
           <name>OCMulticoreSlaveConfiguration</name>
-          <state>debug</state>
+          <state/>
         </option>
         <option>
           <name>OCDownloadExtraImage</name>
@@ -244,7 +244,7 @@
         </option>
         <option>
           <name>OCMulticoreAMPConfigType</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>OCMulticoreSessionFile</name>
@@ -3496,15 +3496,15 @@
         </option>
         <option>
           <name>OCMulticoreWorkspace</name>
-          <state>$PROJ_DIR$/../../cm33_core1/iar/mu_polling_secondary_core.eww</state>
+          <state/>
         </option>
         <option>
           <name>OCMulticoreSlaveProject</name>
-          <state>mu_polling_secondary_core</state>
+          <state/>
         </option>
         <option>
           <name>OCMulticoreSlaveConfiguration</name>
-          <state>release</state>
+          <state/>
         </option>
         <option>
           <name>OCDownloadExtraImage</name>
@@ -3524,7 +3524,7 @@
         </option>
         <option>
           <name>OCMulticoreAMPConfigType</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>OCMulticoreSessionFile</name>
@@ -3612,7 +3612,7 @@
         <option>
           <name>CMSISDAPResetList</name>
           <version>1</version>
-          <state>4</state>
+          <state>5</state>
         </option>
         <option>
           <name>CMSISDAPHWResetDuration</name>

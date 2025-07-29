@@ -9,6 +9,7 @@
     <definition extID="device.MIMXRT798S_startup.MIMXRT798S"/>
     <definition extID="platform.drivers.clock.MIMXRT798S"/>
     <definition extID="platform.drivers.dsp.MIMXRT798S"/>
+    <definition extID="platform.drivers.ezhv.MIMXRT798S"/>
     <definition extID="platform.drivers.lpc_iopctl.MIMXRT798S"/>
     <definition extID="platform.drivers.power.MIMXRT798S"/>
     <definition extID="platform.drivers.reset.MIMXRT798S"/>
@@ -42,12 +43,12 @@
     <definition extID="component.lpi2c_adapter.MIMXRT798S"/>
     <definition extID="component.lpuart_adapter.MIMXRT798S"/>
     <definition extID="component.osa_template_config.MIMXRT798S"/>
-    <definition extID="component.osa_interface.MIMXRT798S"/>
     <definition extID="component.osa.MIMXRT798S"/>
     <definition extID="component.osa_free_rtos.MIMXRT798S"/>
     <definition extID="middleware.usb.common_header.MIMXRT798S"/>
     <definition extID="middleware.usb.device.common_header.MIMXRT798S"/>
     <definition extID="middleware.usb.device_controller_ehci.MIMXRT798S"/>
+    <definition extID="middleware.usb.device.ehci_config_header.MIMXRT798S"/>
     <definition extID="middleware.usb.device.controller.driver.MIMXRT798S"/>
     <definition extID="middleware.usb.device.stack.MIMXRT798S"/>
     <definition extID="middleware.usb.device.audio.MIMXRT798S"/>
@@ -60,6 +61,7 @@
     <definition extID="middleware.freertos-kernel.MIMXRT798S"/>
     <definition extID="middleware.freertos-kernel.heap_4.MIMXRT798S"/>
     <definition extID="middleware.freertos-kernel.cm33_non_trustzone.MIMXRT798S"/>
+    <definition extID="middleware.freertos-kernel.extension.MIMXRT798S"/>
     <definition extID="middleware.freertos-kernel.config.MIMXRT798S"/>
     <definition extID="iar"/>
     <definition extID="mdk"/>
@@ -69,7 +71,7 @@
     <definition extID="com.crt.advproject.config.exe.debug"/>
     <definition extID="com.crt.advproject.config.exe.release"/>
   </externalDefinitions>
-  <example id="mimxrt700evk_dsp_xaf_usb_demo_cm33_core0" name="dsp_xaf_usb_demo_cm33_core0" device_core="cm33_core0_MIMXRT798S" dependency="platform.drivers.flash_config.mimxrt700evk.MIMXRT798S CMSIS_Include_core_cm.MIMXRT798S device.MIMXRT798S_CMSIS.MIMXRT798S device.MIMXRT798S_system.MIMXRT798S device.MIMXRT798S_startup.MIMXRT798S platform.drivers.clock.MIMXRT798S platform.drivers.dsp.MIMXRT798S platform.drivers.lpc_iopctl.MIMXRT798S platform.drivers.power.MIMXRT798S platform.drivers.reset.MIMXRT798S platform.drivers.cache_xcache.MIMXRT798S platform.drivers.common.MIMXRT798S platform.drivers.ctimer.MIMXRT798S platform.drivers.glikey.MIMXRT798S platform.drivers.gpio.MIMXRT798S platform.drivers.lpflexcomm.MIMXRT798S platform.drivers.lpflexcomm_lpuart.MIMXRT798S platform.drivers.lpflexcomm_lpi2c.MIMXRT798S platform.drivers.mu1.MIMXRT798S platform.drivers.sai.MIMXRT798S platform.drivers.sema42.MIMXRT798S platform.drivers.xspi.MIMXRT798S platform.utilities.assert.MIMXRT798S platform.utilities.misc_utilities.MIMXRT798S component.lists.MIMXRT798S utility.str.MIMXRT798S utility.debug_console.MIMXRT798S utility.shell.MIMXRT798S component.serial_manager.MIMXRT798S component.serial_manager_uart.MIMXRT798S component.codec_i2c.MIMXRT798S driver.codec.MIMXRT798S component.codec_adapters.MIMXRT798S component.wm8962_adapter.MIMXRT798S driver.wm8962.MIMXRT798S component.gpio_adapter.MIMXRT798S component.i2c_adapter_interface.MIMXRT798S component.lpi2c_adapter.MIMXRT798S component.lpuart_adapter.MIMXRT798S component.osa_template_config.MIMXRT798S component.osa_interface.MIMXRT798S component.osa.MIMXRT798S component.osa_free_rtos.MIMXRT798S middleware.usb.common_header.MIMXRT798S middleware.usb.device.common_header.MIMXRT798S middleware.usb.device_controller_ehci.MIMXRT798S middleware.usb.device.controller.driver.MIMXRT798S middleware.usb.device.stack.MIMXRT798S middleware.usb.device.audio.MIMXRT798S middleware.usb.phy.MIMXRT798S middleware.multicore.rpmsg-lite.MIMXRT798S middleware.multicore.rpmsg-lite.queue.MIMXRT798S middleware.multicore.rpmsg-lite.ns.MIMXRT798S middleware.multicore.rpmsg-lite.freertos.MIMXRT798S middleware.multicore.rpmsg-lite.imxrt700.MIMXRT798S middleware.freertos-kernel.MIMXRT798S middleware.freertos-kernel.heap_4.MIMXRT798S middleware.freertos-kernel.cm33_non_trustzone.MIMXRT798S middleware.freertos-kernel.config.MIMXRT798S" category="dsp_examples">
+  <example id="mimxrt700evk_dsp_xaf_usb_demo_cm33_core0" name="dsp_xaf_usb_demo_cm33_core0" device_core="cm33_core0_MIMXRT798S" dependency="platform.drivers.flash_config.mimxrt700evk.MIMXRT798S CMSIS_Include_core_cm.MIMXRT798S device.MIMXRT798S_CMSIS.MIMXRT798S device.MIMXRT798S_system.MIMXRT798S device.MIMXRT798S_startup.MIMXRT798S platform.drivers.clock.MIMXRT798S platform.drivers.dsp.MIMXRT798S platform.drivers.ezhv.MIMXRT798S platform.drivers.lpc_iopctl.MIMXRT798S platform.drivers.power.MIMXRT798S platform.drivers.reset.MIMXRT798S platform.drivers.cache_xcache.MIMXRT798S platform.drivers.common.MIMXRT798S platform.drivers.ctimer.MIMXRT798S platform.drivers.glikey.MIMXRT798S platform.drivers.gpio.MIMXRT798S platform.drivers.lpflexcomm.MIMXRT798S platform.drivers.lpflexcomm_lpuart.MIMXRT798S platform.drivers.lpflexcomm_lpi2c.MIMXRT798S platform.drivers.mu1.MIMXRT798S platform.drivers.sai.MIMXRT798S platform.drivers.sema42.MIMXRT798S platform.drivers.xspi.MIMXRT798S platform.utilities.assert.MIMXRT798S platform.utilities.misc_utilities.MIMXRT798S component.lists.MIMXRT798S utility.str.MIMXRT798S utility.debug_console.MIMXRT798S utility.shell.MIMXRT798S component.serial_manager.MIMXRT798S component.serial_manager_uart.MIMXRT798S component.codec_i2c.MIMXRT798S driver.codec.MIMXRT798S component.codec_adapters.MIMXRT798S component.wm8962_adapter.MIMXRT798S driver.wm8962.MIMXRT798S component.gpio_adapter.MIMXRT798S component.i2c_adapter_interface.MIMXRT798S component.lpi2c_adapter.MIMXRT798S component.lpuart_adapter.MIMXRT798S component.osa_template_config.MIMXRT798S component.osa.MIMXRT798S component.osa_free_rtos.MIMXRT798S middleware.usb.common_header.MIMXRT798S middleware.usb.device.common_header.MIMXRT798S middleware.usb.device_controller_ehci.MIMXRT798S middleware.usb.device.ehci_config_header.MIMXRT798S middleware.usb.device.controller.driver.MIMXRT798S middleware.usb.device.stack.MIMXRT798S middleware.usb.device.audio.MIMXRT798S middleware.usb.phy.MIMXRT798S middleware.multicore.rpmsg-lite.MIMXRT798S middleware.multicore.rpmsg-lite.queue.MIMXRT798S middleware.multicore.rpmsg-lite.ns.MIMXRT798S middleware.multicore.rpmsg-lite.freertos.MIMXRT798S middleware.multicore.rpmsg-lite.imxrt700.MIMXRT798S middleware.freertos-kernel.MIMXRT798S middleware.freertos-kernel.heap_4.MIMXRT798S middleware.freertos-kernel.cm33_non_trustzone.MIMXRT798S middleware.freertos-kernel.extension.MIMXRT798S middleware.freertos-kernel.config.MIMXRT798S" category="dsp_examples">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -82,7 +84,7 @@
       <toolchainSetting id_refs="com.nxp.mcuxpresso">
         <option id="gnu.c.compiler.option.preprocessor.def.symbols" type="stringList">
           <value>MCUXPRESSO_SDK</value>
-          <value>CPU_MIMXRT798SGFOA_cm33_core0</value>
+          <value>CPU_MIMXRT798SGFOB_cm33_core0</value>
           <value>BOOT_HEADER_ENABLE=1</value>
           <value>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</value>
           <value>XA_CAPTURER=1</value>
@@ -90,11 +92,15 @@
           <value>XA_RENDERER</value>
           <value>USB_STACK_FREERTOS</value>
           <value>DSP_IMAGE_COPY_TO_RAM=1</value>
+          <value>__USE_SHMEM</value>
+          <value>DSP_NCACHE</value>
           <value>USB_STACK_FREERTOS_HEAP_SIZE=16384</value>
           <value>USB_DEVICE_CONFIG_LPCIP3511HS=0</value>
           <value>USB_DEVICE_CONFIG_EHCI=1</value>
+          <value>USB_DEVICE_CONFIG_BUFFER_PROPERTY_CACHEABLE=1</value>
           <value>SDK_DEBUGCONSOLE=1</value>
           <value>MCUX_META_BUILD</value>
+          <value>MIMXRT798S_cm33_core0_SERIES</value>
           <value>OSA_USED</value>
           <value>SERIAL_PORT_TYPE_UART=1</value>
           <value>SDK_I2C_BASED_COMPONENT_USED=1</value>
@@ -102,6 +108,26 @@
           <value>CODEC_WM8962_ENABLE</value>
           <value>USE_RTOS=1</value>
           <value>SDK_OS_FREE_RTOS</value>
+        </option>
+        <option id="com.crt.advproject.link.fpu" type="enum">
+          <value>com.crt.advproject.link.fpu.fpv5sp.hard</value>
+        </option>
+        <option id="gnu.c.link.option.nostdlibs" type="boolean">
+          <value>true</value>
+        </option>
+        <option id="com.crt.advproject.link.memory.sections" type="stringList">
+          <value>isd=*(NonCacheable.init);region=NCACHE_REGION;type=.data</value>
+          <value>isd=*(NonCacheable);region=NCACHE_REGION;type=.bss</value>
+        </option>
+        <option id="com.crt.advproject.link.memory.heapAndStack" type="string">
+          <value>&amp;Heap:Default;Default;Default&amp;Stack:Default;Default;0x1000</value>
+        </option>
+        <option id="gnu.c.link.option.other" type="stringList">
+          <value>--defsym=__use_shmem__=1</value>
+          <value>-no-warn-rwx-segments</value>
+        </option>
+        <option id="gnu.c.link.option.group" type="boolean">
+          <value>true</value>
         </option>
         <option id="com.crt.advproject.gas.fpu" type="enum">
           <value>com.crt.advproject.gas.fpu.fpv5sp.hard</value>
@@ -123,22 +149,6 @@
         </option>
         <option id="gnu.c.compiler.option.warnings.toerrors" type="boolean">
           <value>false</value>
-        </option>
-        <option id="com.crt.advproject.link.fpu" type="enum">
-          <value>com.crt.advproject.link.fpu.fpv5sp.hard</value>
-        </option>
-        <option id="gnu.c.link.option.nostdlibs" type="boolean">
-          <value>true</value>
-        </option>
-        <option id="com.crt.advproject.link.memory.sections" type="stringList">
-          <value>isd=*(NonCacheable.init);region=NCACHE_REGION;type=.data</value>
-          <value>isd=*(NonCacheable);region=NCACHE_REGION;type=.bss</value>
-        </option>
-        <option id="gnu.c.link.option.other" type="stringList">
-          <value>-no-warn-rwx-segments</value>
-        </option>
-        <option id="gnu.c.link.option.group" type="boolean">
-          <value>true</value>
         </option>
       </toolchainSetting>
     </toolchainSettings>
@@ -186,6 +196,10 @@
     <source path="../../../../../devices/MIMXRT798S" project_relative_path="./" type="workspace" toolchain="armgcc">
       <files mask="all_lib_device.cmake"/>
     </source>
+    <source path="../linker/mcux" project_relative_path="linkscripts" type="src" toolchain="mcuxpresso">
+      <files mask="main_data.ldt"/>
+      <files mask="main_bss.ldt"/>
+    </source>
     <source path="." project_relative_path="source" type="src">
       <files mask="main.c"/>
       <files mask="cmd.c"/>
@@ -197,7 +211,6 @@
       <files mask="main.h"/>
       <files mask="cmd.h"/>
       <files mask="usb_device_descriptor.h"/>
-      <files mask="usb_device_config.h"/>
       <files mask="usb_audio_config.h"/>
       <files mask="composite.h"/>
       <files mask="audio_unified.h"/>
@@ -217,6 +230,9 @@
       <files mask="rpmsg_config.h"/>
       <files mask="dsp_support.h"/>
     </source>
+    <source path="." project_relative_path="source" type="c_include" config="true">
+      <files mask="usb_device_config.h"/>
+    </source>
     <source path="." project_relative_path="source" type="src">
       <files mask="dsp_support.c"/>
     </source>
@@ -224,6 +240,7 @@
       <files mask="dsp_literal_release.bin"/>
       <files mask="dsp_text_release.bin"/>
       <files mask="dsp_data_release.bin"/>
+      <files mask="dsp_ncache_release.bin"/>
     </source>
     <source path="." project_relative_path="source" type="asm_include" toolchain="mdk armgcc mcuxpresso">
       <files mask="incbin.S"/>
@@ -260,11 +277,11 @@
     <source path="." project_relative_path="source" type="c_include" config="true">
       <files mask="FreeRTOSConfig_Gen.h"/>
       <files mask="fsl_os_abstraction_config.h"/>
+      <files mask="usb_device_config.h"/>
     </source>
     <source path="." project_relative_path="source" type="c_include">
       <files mask="fsl_debug_console_conf.h"/>
       <files mask="rpmsg_config.h"/>
-      <files mask="usb_device_config.h"/>
     </source>
     <source path="." project_relative_path="source" type="c_preinclude">
       <files mask="mcux_config.h"/>
@@ -274,6 +291,9 @@
     </source>
     <source path="." project_relative_path="doc" type="doc">
       <files mask="example_board_readme.md"/>
+    </source>
+    <source path="." project_relative_path="doc" type="doc">
+      <files mask="examples_shared_readme.md"/>
     </source>
   </example>
 </ksdk:examples>

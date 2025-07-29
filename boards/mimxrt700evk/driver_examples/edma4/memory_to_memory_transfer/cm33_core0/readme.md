@@ -12,3 +12,4 @@ debugging and further development.
 - [MCIMX93-EVK](../../../_boards/mcimx93evk/driver_examples/edma4/memory_to_memory_transfer/example_board_readme.md)
 - [MCIMX93-QSB](../../../_boards/mcimx93qsb/driver_examples/edma4/memory_to_memory_transfer/example_board_readme.md)
 - [MIMXRT700-EVK](../../../_boards/mimxrt700evk/driver_examples/edma4/memory_to_memory_transfer/example_board_readme.md)
+- [FRDM-MCXE31B](../../../_boards/frdmmcxe31b/driver_examples/edma4/memory_to_memory_transfer/example_board_readme.md)

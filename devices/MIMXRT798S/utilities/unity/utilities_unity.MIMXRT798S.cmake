@@ -5,14 +5,7 @@ message("${CMAKE_CURRENT_LIST_FILE} component is included.")
 
       target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
           ${CMAKE_CURRENT_LIST_DIR}/unity.c
-          ${CMAKE_CURRENT_LIST_DIR}/gcov_support.c
         )
-
-        if(CONFIG_TOOLCHAIN STREQUAL mcux)
-    target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
-          ${CMAKE_CURRENT_LIST_DIR}/linkscripts/main_text.ldt
-        )
-    endif()
 
   
       target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
@@ -22,6 +15,9 @@ message("${CMAKE_CURRENT_LIST_FILE} component is included.")
     if(CONFIG_USE_COMPONENT_CONFIGURATION)
   message("===>Import configuration from ${CMAKE_CURRENT_LIST_FILE}")
 
+      target_compile_definitions(${MCUX_SDK_PROJECT_NAME} PUBLIC
+                  -DUNITY_CUSTOM_OUTPUT_CHAR
+              )
   
             if(CONFIG_TOOLCHAIN STREQUAL mcux)
       target_compile_options(${MCUX_SDK_PROJECT_NAME} PUBLIC

@@ -1,5 +1,5 @@
 /*
- * Copyright 2019, 2022-2024 NXP
+ * Copyright 2019, 2022-2025 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -15,27 +15,8 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#ifndef EXAMPLE_I2C_BAUDRATE
-#define EXAMPLE_I2C_BAUDRATE 400000
-#endif
-#ifndef EXAMPLE_I3C_OD_BAUDRATE
-#define EXAMPLE_I3C_OD_BAUDRATE 2000000
-#endif
-#ifndef EXAMPLE_I3C_PP_BAUDRATE
-#define EXAMPLE_I3C_PP_BAUDRATE 4000000
-#endif
-#ifndef I3C_MASTER_SLAVE_ADDR_7BIT
 #define I3C_MASTER_SLAVE_ADDR_7BIT 0x1EU
-#endif
-#ifndef I3C_DATA_LENGTH
 #define I3C_DATA_LENGTH 33U
-#endif
-#ifndef EXAMPLE_I3C_HDR_SUPPORT
-#define EXAMPLE_I3C_HDR_SUPPORT 1
-#endif
-#ifndef WAIT_TIME_US
-#define WAIT_TIME_US 10000
-#endif
 
 #define CCC_RSTDAA  0x06U
 #define CCC_SETDASA 0x87U

@@ -187,7 +187,7 @@ void DEMO_LCDIF_Init(void)
     lcdif_panel_config_t config;
     LCDIF_PanelGetDefaultConfig(&config);
 #if (USE_DBI_PANEL == MIPI_PANEL_CO5300)
-    config.endian = kLCDIF_WordSwap;
+    config.endian = kLCDIF_HalfWordSwap;
 #endif
     LCDIF_SetPanelConfig(DEMO_LCDIF, 0, &config);
 

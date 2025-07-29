@@ -240,13 +240,14 @@
         <option>
           <name>CCDefines</name>
           <state>DEBUG</state>
-          <state>PSA_CRYPTO_DRIVER_ELS_PKC</state>
+          <state>MBEDTLS_CONFIG_FILE="mcux_mbedtls_config.h"</state>
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
-          <state>CPU_MIMXRT798SGFOA_cm33_core0</state>
+          <state>CPU_MIMXRT798SGFOB_cm33_core0</state>
+          <state>MIMXRT798S_cm33_core0_SERIES</state>
           <state>BOOT_HEADER_ENABLE=1</state>
-          <state>MBEDTLS_CONFIG_FILE="mcux_mbedtls_config.h"</state>
+          <state>PSA_CRYPTO_DRIVER_ELS_PKC</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -473,9 +474,9 @@
           <state>$PROJ_DIR$/../../../../../../components/psa_crypto_driver/els_pkc/include/transparent</state>
           <state>$PROJ_DIR$/../../../../../../components/psa_crypto_driver/els_pkc/include/opaque</state>
           <state>$PROJ_DIR$/../../../../../../components/psa_crypto_driver/els_pkc</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port</state>
           <state>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/library</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -660,7 +661,8 @@
         <option>
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
-          <state>CPU_MIMXRT798SGFOA_cm33_core0</state>
+          <state>CPU_MIMXRT798SGFOB_cm33_core0</state>
+          <state>MIMXRT798S_cm33_core0_SERIES</state>
         </option>
         <option>
           <name>AList</name>
@@ -859,9 +861,9 @@
           <state>$PROJ_DIR$/../../../../../../components/psa_crypto_driver/els_pkc/include/transparent</state>
           <state>$PROJ_DIR$/../../../../../../components/psa_crypto_driver/els_pkc/include/opaque</state>
           <state>$PROJ_DIR$/../../../../../../components/psa_crypto_driver/els_pkc</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port</state>
           <state>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/library</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -877,7 +879,7 @@
         </option>
         <option>
           <name>PreInclude</name>
-          <state/>
+          <state>$PROJ_DIR$/../mcux_config.h</state>
         </option>
       </data>
     </settings>
@@ -1566,13 +1568,14 @@
         <option>
           <name>CCDefines</name>
           <state>DEBUG</state>
-          <state>PSA_CRYPTO_DRIVER_ELS_PKC</state>
+          <state>MBEDTLS_CONFIG_FILE="mcux_mbedtls_config.h"</state>
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
-          <state>CPU_MIMXRT798SGFOA_cm33_core0</state>
+          <state>CPU_MIMXRT798SGFOB_cm33_core0</state>
+          <state>MIMXRT798S_cm33_core0_SERIES</state>
           <state>BOOT_HEADER_ENABLE=1</state>
-          <state>MBEDTLS_CONFIG_FILE="mcux_mbedtls_config.h"</state>
+          <state>PSA_CRYPTO_DRIVER_ELS_PKC</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -1799,9 +1802,9 @@
           <state>$PROJ_DIR$/../../../../../../components/psa_crypto_driver/els_pkc/include/transparent</state>
           <state>$PROJ_DIR$/../../../../../../components/psa_crypto_driver/els_pkc/include/opaque</state>
           <state>$PROJ_DIR$/../../../../../../components/psa_crypto_driver/els_pkc</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port</state>
           <state>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/library</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1986,7 +1989,8 @@
         <option>
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
-          <state>CPU_MIMXRT798SGFOA_cm33_core0</state>
+          <state>CPU_MIMXRT798SGFOB_cm33_core0</state>
+          <state>MIMXRT798S_cm33_core0_SERIES</state>
         </option>
         <option>
           <name>AList</name>
@@ -2185,9 +2189,9 @@
           <state>$PROJ_DIR$/../../../../../../components/psa_crypto_driver/els_pkc/include/transparent</state>
           <state>$PROJ_DIR$/../../../../../../components/psa_crypto_driver/els_pkc/include/opaque</state>
           <state>$PROJ_DIR$/../../../../../../components/psa_crypto_driver/els_pkc</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port</state>
           <state>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/library</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -2203,7 +2207,7 @@
         </option>
         <option>
           <name>PreInclude</name>
-          <state/>
+          <state>$PROJ_DIR$/../mcux_config.h</state>
         </option>
       </data>
     </settings>
@@ -2892,13 +2896,14 @@
         <option>
           <name>CCDefines</name>
           <state>NDEBUG</state>
-          <state>PSA_CRYPTO_DRIVER_ELS_PKC</state>
+          <state>MBEDTLS_CONFIG_FILE="mcux_mbedtls_config.h"</state>
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
-          <state>CPU_MIMXRT798SGFOA_cm33_core0</state>
+          <state>CPU_MIMXRT798SGFOB_cm33_core0</state>
+          <state>MIMXRT798S_cm33_core0_SERIES</state>
           <state>BOOT_HEADER_ENABLE=1</state>
-          <state>MBEDTLS_CONFIG_FILE="mcux_mbedtls_config.h"</state>
+          <state>PSA_CRYPTO_DRIVER_ELS_PKC</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -3125,9 +3130,9 @@
           <state>$PROJ_DIR$/../../../../../../components/psa_crypto_driver/els_pkc/include/transparent</state>
           <state>$PROJ_DIR$/../../../../../../components/psa_crypto_driver/els_pkc/include/opaque</state>
           <state>$PROJ_DIR$/../../../../../../components/psa_crypto_driver/els_pkc</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port</state>
           <state>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/library</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -3312,7 +3317,8 @@
         <option>
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
-          <state>CPU_MIMXRT798SGFOA_cm33_core0</state>
+          <state>CPU_MIMXRT798SGFOB_cm33_core0</state>
+          <state>MIMXRT798S_cm33_core0_SERIES</state>
         </option>
         <option>
           <name>AList</name>
@@ -3511,9 +3517,9 @@
           <state>$PROJ_DIR$/../../../../../../components/psa_crypto_driver/els_pkc/include/transparent</state>
           <state>$PROJ_DIR$/../../../../../../components/psa_crypto_driver/els_pkc/include/opaque</state>
           <state>$PROJ_DIR$/../../../../../../components/psa_crypto_driver/els_pkc</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port</state>
           <state>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/library</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -3529,7 +3535,7 @@
         </option>
         <option>
           <name>PreInclude</name>
-          <state/>
+          <state>$PROJ_DIR$/../mcux_config.h</state>
         </option>
       </data>
     </settings>
@@ -4218,13 +4224,14 @@
         <option>
           <name>CCDefines</name>
           <state>NDEBUG</state>
-          <state>PSA_CRYPTO_DRIVER_ELS_PKC</state>
+          <state>MBEDTLS_CONFIG_FILE="mcux_mbedtls_config.h"</state>
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
-          <state>CPU_MIMXRT798SGFOA_cm33_core0</state>
+          <state>CPU_MIMXRT798SGFOB_cm33_core0</state>
+          <state>MIMXRT798S_cm33_core0_SERIES</state>
           <state>BOOT_HEADER_ENABLE=1</state>
-          <state>MBEDTLS_CONFIG_FILE="mcux_mbedtls_config.h"</state>
+          <state>PSA_CRYPTO_DRIVER_ELS_PKC</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -4451,9 +4458,9 @@
           <state>$PROJ_DIR$/../../../../../../components/psa_crypto_driver/els_pkc/include/transparent</state>
           <state>$PROJ_DIR$/../../../../../../components/psa_crypto_driver/els_pkc/include/opaque</state>
           <state>$PROJ_DIR$/../../../../../../components/psa_crypto_driver/els_pkc</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port</state>
           <state>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/library</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -4638,7 +4645,8 @@
         <option>
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
-          <state>CPU_MIMXRT798SGFOA_cm33_core0</state>
+          <state>CPU_MIMXRT798SGFOB_cm33_core0</state>
+          <state>MIMXRT798S_cm33_core0_SERIES</state>
         </option>
         <option>
           <name>AList</name>
@@ -4837,9 +4845,9 @@
           <state>$PROJ_DIR$/../../../../../../components/psa_crypto_driver/els_pkc/include/transparent</state>
           <state>$PROJ_DIR$/../../../../../../components/psa_crypto_driver/els_pkc/include/opaque</state>
           <state>$PROJ_DIR$/../../../../../../components/psa_crypto_driver/els_pkc</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port</state>
           <state>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/library</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -4855,7 +4863,7 @@
         </option>
         <option>
           <name>PreInclude</name>
-          <state/>
+          <state>$PROJ_DIR$/../mcux_config.h</state>
         </option>
       </data>
     </settings>
@@ -5313,6 +5321,12 @@
     <file>
       <name>$PROJ_DIR$/../mcux_config.h</name>
     </file>
+    <file>
+      <name>$PROJ_DIR$/../mcux_config.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../mcux_config.h</name>
+    </file>
   </group>
   <group>
     <name>board</name>
@@ -5649,12 +5663,9 @@
   </group>
   <group>
     <name>startup</name>
-    <group>
-      <name>iar</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT798S/iar/startup_MIMXRT798S_cm33_core0.s</name>
-      </file>
-    </group>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT798S/startup_MIMXRT798S_cm33_core0.c</name>
+    </file>
   </group>
   <group>
     <name>drivers</name>
@@ -10701,7 +10712,7 @@
         </group>
       </group>
       <file>
-        <name>$PROJ_DIR$/../../../../../../components/els_pkc/LA_OPT_Online_Code_Hosting.htm</name>
+        <name>$PROJ_DIR$/../../../../../../components/els_pkc/LICENSE.txt</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../../components/els_pkc/softwareContentRegister.txt</name>
@@ -13600,33 +13611,6 @@
   <group>
     <name>mbedtls3x</name>
     <group>
-      <name>port</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_config.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_accelerator_config.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_config.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_accelerator_config.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port/mcux_psa_defines.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_psa_crypto_config.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_accelerator_config.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port/mcux_psa_defines.h</name>
-      </file>
-    </group>
-    <group>
       <name>include</name>
       <group>
         <name>mbedtls</name>
@@ -13865,6 +13849,9 @@
           <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/include/psa/crypto_adjust_auto_enabled.h</name>
         </file>
         <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/include/psa/crypto_adjust_config_dependencies.h</name>
+        </file>
+        <file>
           <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/include/psa/crypto_adjust_config_key_pair_types.h</name>
         </file>
         <file>
@@ -13966,6 +13953,12 @@
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/library/bignum_core.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/library/bignum_core_invasive.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/library/bignum_internal.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/library/bignum_mod.c</name>
@@ -14424,6 +14417,33 @@
         <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/library/ssl_tls13_server.c</name>
       </file>
     </group>
+    <group>
+      <name>port</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_config.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_accelerator_config.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_config.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_accelerator_config.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port/mcux_psa_defines.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_psa_crypto_config.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_accelerator_config.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port/mcux_psa_defines.h</name>
+      </file>
+    </group>
   </group>
   <group>
     <name>doc</name>
@@ -14432,6 +14452,9 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../example_board_readme.md</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../examples_shared_readme.md</name>
     </file>
   </group>
 </project>

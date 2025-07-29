@@ -1,6 +1,5 @@
 /*
  * Copyright 2022-2024 NXP
- * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -16,11 +15,6 @@ extern "C" {
 #include <stdbool.h>
 
 #include "NeutronErrors.h"
-
-#ifdef EXTERNAL_MEM
-/* Fetch weight from Flash to SRAM */
-#define SCRATCH_WEIGHTS_SRAM_ADDR	0x20400000
-#endif
 
 /* Neutron Driver error category codes */
 typedef enum ERROR_CATEGORY_DRIVER {
@@ -143,7 +137,7 @@ NeutronError neutronDeinit();
 
 /// - Prepare Neutron execution for a model with custom firmware.
 /// - This function is only available for Neutron-S.
-NeutronError neutronCustomPrepare(int32_t *inputSize, int32_t numInputs, int32_t *outputSize, int32_t numOutputs,
+NeutronError neutronCustomPrepare(uint32_t *inputSize, int32_t numInputs, uint32_t *outputSize, int32_t numOutputs,
                                   const void *firmware, size_t firmwareSize, NeutronModelHandle *hdl);
 
 /// - Run Neutron custom firmware and get the results.
@@ -200,6 +194,17 @@ NeutronError neutronSetConfig(NeutronConfig *config);
 
 /// - Used to get NeutronContext size.
 size_t neutronGetModelContextSize();
+
+/// - Allocates size bytes and returns a pointer to the allocated memory.
+///   The returned pointer address will be a multiple of the alignment.
+///   Returns NULL on failure.
+/// - alignment: Set to 0 if unsure of alignment requirements.
+/// - This function is only available for Neutron-S in the Linux environment.
+void *neutronMemAlloc(size_t alignment, size_t size);
+
+/// - Frees the memory buffer pointed to by ptr.
+/// - This function is only available for Neutron-S in the Linux environment.
+void neutronMemFree(void *ptr);
 
 /// Other functions to control the state of driver/firmware.
 #ifdef __cplusplus

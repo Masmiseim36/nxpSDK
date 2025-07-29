@@ -346,6 +346,8 @@ static void fbdev_task(void *pvParameters)
     {
         buffer = FBDEV_GetFrameBuffer(&g_fbdev, 0);
 
+        assert(buffer != NULL);
+
         DEMO_FillFrameBuffer(buffer, g_fbInfo.bufInfo.height, g_fbInfo.bufInfo.width, g_fbInfo.bufInfo.strideBytes);
 
         FBDEV_SetFrameBuffer(&g_fbdev, buffer, 0);

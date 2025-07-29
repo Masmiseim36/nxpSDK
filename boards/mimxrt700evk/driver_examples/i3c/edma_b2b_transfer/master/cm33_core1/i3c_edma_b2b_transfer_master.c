@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2023 NXP
+ * Copyright 2022-2023, 2025 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -18,13 +18,11 @@
 #define CCC_RSTDAA  0x06U
 #define CCC_SETDASA 0x87U
 
-#ifndef I3C_MASTER_SLAVE_ADDR_7BIT
 #define I3C_MASTER_SLAVE_ADDR_7BIT 0x1EU
-#endif
+#define I3C_DATA_LENGTH 32U
 
-#ifndef I3C_DATA_LENGTH
-#define I3C_DATA_LENGTH 33U
-#endif
+/* Takes one-byte header which indicating data length. */
+#define I3C_PACKET_LENGTH (I3C_DATA_LENGTH + 1U)
 
 /*******************************************************************************
  * Prototypes
@@ -37,8 +35,8 @@ static void i3c_master_dma_callback(I3C_Type *base, i3c_master_edma_handle_t *ha
 /*******************************************************************************
  * Variables
  ******************************************************************************/
-AT_NONCACHEABLE_SECTION(uint8_t g_master_txBuff[I3C_DATA_LENGTH]);
-AT_NONCACHEABLE_SECTION(uint8_t g_master_rxBuff[I3C_DATA_LENGTH]);
+AT_NONCACHEABLE_SECTION(uint8_t g_master_txBuff[I3C_PACKET_LENGTH]);
+AT_NONCACHEABLE_SECTION(uint8_t g_master_rxBuff[I3C_PACKET_LENGTH]);
 uint8_t g_master_ibiBuff[10];
 i3c_master_edma_handle_t g_i3c_m_handle;
 edma_handle_t g_tx_edma_handle;
@@ -87,8 +85,7 @@ static void i3c_master_dma_callback(I3C_Type *base, i3c_master_edma_handle_t *ha
     {
         g_masterCompletionFlag = true;
     }
-
-    if (status == kStatus_I3C_IBIWon)
+    else if (status == kStatus_I3C_IBIWon)
     {
         g_ibiWonFlag = true;
     }
@@ -109,14 +106,14 @@ int main(void)
 
     /* I3C mode: Set up i3c master to work in I3C mode, send data to slave. */
     /* First data in txBuff is data length of the transmitting data. */
-    g_master_txBuff[0] = I3C_DATA_LENGTH - 1U;
-    for (uint32_t i = 1U; i < I3C_DATA_LENGTH; i++)
+    g_master_txBuff[0] = I3C_DATA_LENGTH;
+    for (uint32_t i = 1U; i < I3C_PACKET_LENGTH; i++)
     {
         g_master_txBuff[i] = i - 1;
     }
 
     PRINTF("\r\nMaster will send data :");
-    for (uint32_t i = 0U; i < I3C_DATA_LENGTH - 1U; i++)
+    for (uint32_t i = 0U; i < I3C_DATA_LENGTH; i++)
     {
         if (i % 8 == 0)
         {
@@ -161,6 +158,7 @@ int main(void)
     result                    = I3C_MasterTransferEDMA(EXAMPLE_MASTER, &g_i3c_m_handle, &masterXfer);
     if (kStatus_Success != result)
     {
+        PRINTF("\r\nRSTDAA starts with error %u.", result);
         return result;
     }
 
@@ -174,6 +172,7 @@ int main(void)
     result = g_completionStatus;
     if (result != kStatus_Success)
     {
+        PRINTF("\r\nReset DAA transfer with error %u.", result);
         return -1;
     }
     g_masterCompletionFlag = false;
@@ -191,6 +190,7 @@ int main(void)
     result                    = I3C_MasterTransferEDMA(EXAMPLE_MASTER, &g_i3c_m_handle, &masterXfer);
     if (kStatus_Success != result)
     {
+        PRINTF("\r\nSETDASA starts with error %u.", result);
         return result;
     }
 
@@ -201,9 +201,9 @@ int main(void)
     }
     g_ibiWonFlag = false;
 
-    result = g_completionStatus;
-    if (result != kStatus_Success)
+    if (g_completionStatus != kStatus_Success)
     {
+        PRINTF("\r\nSETDASA CCC transfer with error %u.", g_completionStatus);
         return -1;
     }
     g_masterCompletionFlag = false;
@@ -220,6 +220,7 @@ int main(void)
     result                    = I3C_MasterTransferEDMA(EXAMPLE_MASTER, &g_i3c_m_handle, &masterXfer);
     if (kStatus_Success != result)
     {
+        PRINTF("\r\nSet address starts with error %u.", result);
         return result;
     }
 
@@ -230,9 +231,9 @@ int main(void)
     }
     g_ibiWonFlag = false;
 
-    result = g_completionStatus;
-    if (result != kStatus_Success)
+    if (g_completionStatus != kStatus_Success)
     {
+        PRINTF("\r\nSet address transfer with error %u.", g_completionStatus);
         return -1;
     }
     g_masterCompletionFlag = false;
@@ -241,6 +242,7 @@ int main(void)
     result                 = I3C_MasterProcessDAA(EXAMPLE_MASTER, addressList, 8);
     if (result != kStatus_Success)
     {
+        PRINTF("\r\nENTDAA with error %u.", result);
         return -1;
     }
 
@@ -265,12 +267,15 @@ int main(void)
 
     PRINTF("\r\nI3C master dynamic address assignment done.\r\n");
 
+    i3c_register_ibi_addr_t ibiRecord = {.address = {slaveAddr}, .ibiHasPayload = true};
+    I3C_MasterRegisterIBI(EXAMPLE_MASTER, &ibiRecord);
+
     PRINTF("\r\nStart to do I3C master transfer in I3C SDR mode.\r\n");
     memset(&masterXfer, 0, sizeof(masterXfer));
 
     masterXfer.slaveAddress = slaveAddr;
     masterXfer.data         = g_master_txBuff;
-    masterXfer.dataSize     = I3C_DATA_LENGTH;
+    masterXfer.dataSize     = I3C_PACKET_LENGTH;
     masterXfer.direction    = kI3C_Write;
     masterXfer.busType      = kI3C_TypeI3CSdr;
     masterXfer.flags        = kI3C_TransferDefaultFlag;
@@ -278,6 +283,7 @@ int main(void)
     result                  = I3C_MasterTransferEDMA(EXAMPLE_MASTER, &g_i3c_m_handle, &masterXfer);
     if (kStatus_Success != result)
     {
+        PRINTF("\r\nSDR transmit starts with error %u.", result);
         return result;
     }
 
@@ -288,19 +294,14 @@ int main(void)
     }
     g_ibiWonFlag = false;
 
-    result = g_completionStatus;
-    if (result != kStatus_Success)
+    if (g_completionStatus != kStatus_Success)
     {
+        PRINTF("\r\nSDR transmit with error %u.", g_completionStatus);
         return -1;
     }
     g_masterCompletionFlag = false;
 
-    i3c_register_ibi_addr_t ibiRecord = {.address = {slaveAddr}, .ibiHasPayload = true};
-    I3C_MasterRegisterIBI(EXAMPLE_MASTER, &ibiRecord);
-
     PRINTF("\r\nI3C master wait for slave IBI event to notify the slave transmit size.");
-
-    /* Wait for IBI event. */
     while (!g_ibiWonFlag)
     {
         __NOP();
@@ -311,7 +312,7 @@ int main(void)
     PRINTF("\r\nI3C master received slave IBI event, data size %d, value 0x%x.\r\n", g_ibiUserBuffUsed,
            g_ibiUserBuff[0]);
 
-    memset(g_master_rxBuff, 0, I3C_DATA_LENGTH);
+    memset(g_master_rxBuff, 0, sizeof(g_master_rxBuff));
     masterXfer.slaveAddress = slaveAddr;
     masterXfer.data         = g_master_rxBuff;
     masterXfer.dataSize     = g_ibiUserBuff[0];
@@ -322,6 +323,7 @@ int main(void)
     result                  = I3C_MasterTransferEDMA(EXAMPLE_MASTER, &g_i3c_m_handle, &masterXfer);
     if (kStatus_Success != result)
     {
+        PRINTF("\r\nSDR receive starts with error %u.", result);
         return result;
     }
 
@@ -331,9 +333,9 @@ int main(void)
         __NOP();
     }
 
-    result = g_completionStatus;
-    if (result != kStatus_Success)
+    if (g_completionStatus != kStatus_Success)
     {
+        PRINTF("\r\nSDR receive with error %u.", g_completionStatus);
         return -1;
     }
     g_masterCompletionFlag = false;
@@ -342,12 +344,104 @@ int main(void)
     {
         if (g_master_rxBuff[i] != g_master_txBuff[i + 1])
         {
-            PRINTF("\r\nError occurred in the transfer! \r\n");
+            PRINTF("\r\nData mismatch. Error occurred in the transfer! \r\n");
             return -1;
         }
     }
 
     PRINTF("\r\nI3C master transfer successful in I3C SDR mode.\r\n");
+
+#if defined(EXAMPLE_I3C_HDR_SUPPORT) && (EXAMPLE_I3C_HDR_SUPPORT)
+    PRINTF("\r\nStart to do I3C master transfer in I3C HDR mode.\r\n");
+
+    /* Wait for IBI event. */
+    while (!g_ibiWonFlag)
+    {
+    }
+    g_ibiWonFlag = false;
+    g_completionStatus = kStatus_Success;
+
+    memset(&masterXfer, 0, sizeof(masterXfer));
+    masterXfer.slaveAddress = slaveAddr;
+    masterXfer.subaddress     = 0x0U; /* HDR-DDR command */
+    masterXfer.subaddressSize = 1U;
+    masterXfer.data         = g_master_txBuff;
+    masterXfer.dataSize     = I3C_PACKET_LENGTH;
+    masterXfer.direction    = kI3C_Write;
+    masterXfer.busType      = kI3C_TypeI3CDdr;
+    masterXfer.flags        = kI3C_TransferDefaultFlag;
+    masterXfer.ibiResponse  = kI3C_IbiRespAckMandatory;
+
+    result = I3C_MasterTransferEDMA(EXAMPLE_MASTER, &g_i3c_m_handle, &masterXfer);
+    if (kStatus_Success != result)
+    {
+        PRINTF("HDR-DDR transmit starts with error %u!\r\n", result);
+        return result;
+    }
+    while (!g_masterCompletionFlag)
+    {
+        if (g_completionStatus != kStatus_Success)
+        {
+            PRINTF("HDR-DDR transmit with error %u!\r\n", g_completionStatus);
+            return -1;
+        }
+    }
+    g_masterCompletionFlag = false;
+
+    /* Wait for IBI event. */
+    while (g_completionStatus != kStatus_I3C_IBIWon)
+    {
+    }
+    g_completionStatus = kStatus_Success;
+
+    memset(g_master_rxBuff, 0, sizeof(g_master_rxBuff));
+    masterXfer.slaveAddress = slaveAddr;
+    masterXfer.subaddress     = 0x80U; /* HDR-DDR command */
+    masterXfer.subaddressSize = 1U;
+    masterXfer.data         = g_master_rxBuff;
+    masterXfer.dataSize     = I3C_DATA_LENGTH;
+    masterXfer.direction    = kI3C_Read;
+    masterXfer.busType      = kI3C_TypeI3CDdr;
+    masterXfer.flags        = kI3C_TransferDefaultFlag;
+    masterXfer.ibiResponse  = kI3C_IbiRespAckMandatory;
+
+    result = I3C_MasterTransferEDMA(EXAMPLE_MASTER, &g_i3c_m_handle, &masterXfer);
+    if (kStatus_Success != result)
+    {
+        PRINTF("HDR-DDR receive starts with error %u!\r\n", g_completionStatus);
+        return result;
+    }
+    while ((!g_masterCompletionFlag) && (g_completionStatus == kStatus_Success))
+    {
+    }
+
+    if (g_completionStatus != kStatus_Success)
+    {
+        PRINTF("HDR-DDR receive transfer with error %u!\r\n", g_completionStatus);
+        return -1;
+    }
+    g_masterCompletionFlag = false;
+
+    PRINTF("Receive sent data from slave :\r\n");
+    for (uint32_t i = 0U; i < I3C_DATA_LENGTH; i++)
+    {
+        PRINTF("0x%2x  ", g_master_rxBuff[i]);
+        if (i % 8U == 7U)
+        {
+            PRINTF("\r\n");
+        }
+    }
+
+    for (uint32_t i = 0U; i < g_master_txBuff[0]; i++)
+    {
+        if (g_master_rxBuff[i] != g_master_txBuff[i + 1])
+        {
+            PRINTF("\r\nError occurred in the transfer!\r\n");
+            return -1;
+        }
+    }
+    PRINTF("\r\nI3C master transfer successful in I3C HDR mode.\r\n");
+#endif
 
     while (1)
     {

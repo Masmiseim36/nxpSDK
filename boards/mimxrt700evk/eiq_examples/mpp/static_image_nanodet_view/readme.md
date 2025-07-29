@@ -15,6 +15,7 @@ The model has 80 classes.
 ## Hardware requirements
 Refer to board.readme for hardware setup requirements.
 - [MIMXRT700-EVK](../../../_boards/mimxrt700evk/eiq_examples/mpp/board_readme.md)
+- [MIMXRT1170-EVKB](../../../_boards/evkbmimxrt1170/eiq_examples/mpp/board_readme.md)
 
 ## Use-case Description
 

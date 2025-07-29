@@ -40,8 +40,9 @@ void VIDEO_DelayMs(uint32_t ms)
 
     vTaskDelay(tick);
 #else
-    while (0U != (ms--))
+    while (0U != ms)
     {
+        ms--;
         SDK_DelayAtLeastUs(1000U, SystemCoreClock);
     }
 #endif
@@ -222,8 +223,9 @@ status_t VIDEO_MEMPOOL_Init(video_mempool_t *mempool, void *initMem, uint32_t si
 {
     (void)memset(mempool, 0, sizeof(video_mempool_t));
 
-    while (0U != (count--))
+    while (0U != count)
     {
+        count--;
         VIDEO_MEMPOOL_Put(mempool, initMem);
         initMem = &((uint8_t *)initMem)[size];
     }

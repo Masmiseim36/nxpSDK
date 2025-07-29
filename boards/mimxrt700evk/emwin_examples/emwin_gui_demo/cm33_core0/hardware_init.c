@@ -10,10 +10,11 @@
 #include "clock_config.h"
 #include "board.h"
 #include "display_support.h"
+#include "emwin_support.h"
 /*${header:end}*/
 
 /*${function:start}*/
-#if ((DEMO_PANEL_RM67162 == DEMO_PANEL)  && (!RM67162_USE_LCDIF))
+#if (DEMO_PANEL_RM67162 == DEMO_PANEL) || (DEMO_PANEL_CO5300 == DEMO_PANEL)
 
 void  BOARD_MIPI_TE_GPIO_IRQ_Handler(void)
 {
@@ -80,7 +81,8 @@ void BOARD_InitHardware(void)
 
 #if ((DEMO_PANEL_RK055AHD091 == DEMO_PANEL) || (DEMO_PANEL_RK055MHD091 == DEMO_PANEL) || \
      (DEMO_PANEL_RK055IQH091 == DEMO_PANEL) || (DEMO_PANEL_RM67162 == DEMO_PANEL) || \
-     (DEMO_PANEL_TFT_PROTO_5 == DEMO_PANEL) || (DEMO_PANEL_RASPI_7INCH == DEMO_PANEL))
+     (DEMO_PANEL_TFT_PROTO_5 == DEMO_PANEL) || (DEMO_PANEL_RASPI_7INCH == DEMO_PANEL) || \
+     (DEMO_PANEL_CO5300 == DEMO_PANEL))
     BOARD_MIPIPanelTouch_I2C_Init();
 #else
 #endif

@@ -22,6 +22,7 @@
 #include "usb_host_config.h"
 #include "usb_phy.h"
 #include "usb_host.h"
+#include "psa/crypto.h"
 #if (((defined(CONFIG_BT_SMP)) && (CONFIG_BT_SMP)))
 #include "fsl_cache.h"
 #endif /* CONFIG_BT_SMP */
@@ -181,6 +182,10 @@ void BOARD_Init_I2C(void)
 {
     /*Clock setting for LPI2C */
     CLOCK_AttachClk(kFCCLK0_to_FLEXCOMM2);
+
+#if defined(BOARD_Codec_I2C_ReleaseBus)
+    BOARD_Codec_I2C_ReleaseBus();
+#endif
 }
 
 void BOARD_Init_EDMA(void)
@@ -253,6 +258,7 @@ void  BOARD_InitHardware(void)
 
     CLOCK_AttachClk(kFRO1_DIV2_to_TRNG);                               /* Max 96MHZ with 1.0V nomral supply. */
     CLOCK_SetClkDiv(kCLOCK_DivTrngClk, 1U);
+    psa_crypto_init();
 #endif /* CONFIG_BT_SMP */
 }
 

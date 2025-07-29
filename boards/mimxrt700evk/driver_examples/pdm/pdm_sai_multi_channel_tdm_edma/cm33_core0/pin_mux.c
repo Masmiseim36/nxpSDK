@@ -16,7 +16,7 @@
 !!GlobalInfo
 product: Pins v16.0
 processor: MIMXRT798S
-package_id: MIMXRT798SGFOA
+package_id: MIMXRT798SGFOB
 mcu_data: ksdk2_0
 processor_version: 0.2412.10
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
@@ -56,12 +56,12 @@ BOARD_InitPins:
   - {pin_num: R1, peripheral: LP_FLEXCOMM2, signal: P1, pin_signal: PIO1_12/LP_FLEXCOMM2_P1/SCT0_GPIN3/SCT0_OUT9/CTIMER1_MAT1/SWD_TRACEDATA1, open_drain: enable,
     input_buffer: enable}
   - {pin_num: U18, peripheral: PDM, signal: CLK, pin_signal: PIO10_8/PDM_CLK, input_buffer: enable}
-  - {pin_num: T18, peripheral: PDM, signal: 'DATA, 0_1', pin_signal: PIO10_9/PDM_DATA01, input_buffer: enable}
+  - {pin_num: T18, peripheral: PDM, signal: 'DATA, 0', pin_signal: PIO10_9/PDM_DATA01, input_buffer: enable}
   - {pin_num: M2, peripheral: CLKCTL0, signal: MCLK, pin_signal: PIO0_21/LP_FLEXCOMM6_P0/SCT0_GPIN6/SCT0_OUT6/CTIMER_C_INP4/SAI1_TX_DATA/CLKCTL0_MCLK, input_buffer: enable}
   - {pin_num: J3, peripheral: SAI0, signal: RXD0, pin_signal: PIO0_2/LP_FLEXCOMM8_P4/SCT0_GPIN2/SCT0_OUT2/CTIMER0_MAT1/SAI0_RX_DATA/LP_FLEXCOMM9_P0, input_buffer: enable}
-  - {pin_num: P18, peripheral: PDM, signal: 'DATA, 2_3', pin_signal: PIO10_2/PDM_DATA23/ADC0_A1, input_buffer: enable}
-  - {pin_num: P17, peripheral: PDM, signal: 'DATA, 4_5', pin_signal: PIO10_3/PDM_DATA45/ADC0_B1, input_buffer: enable}
-  - {pin_num: R15, peripheral: PDM, signal: 'DATA, 6_7', pin_signal: PIO10_4/PDM_DATA67/ADC0_A2, input_buffer: enable}
+  - {pin_num: P18, peripheral: PDM, signal: 'DATA, 1', pin_signal: PIO10_2/PDM_DATA23/ADC0_A1, input_buffer: enable}
+  - {pin_num: P17, peripheral: PDM, signal: 'DATA, 2', pin_signal: PIO10_3/PDM_DATA45/ADC0_B1, input_buffer: enable}
+  - {pin_num: R15, peripheral: PDM, signal: 'DATA, 3', pin_signal: PIO10_4/PDM_DATA67/ADC0_A2, input_buffer: enable}
   - {pin_num: L6, peripheral: GPIO0, signal: 'GPIO, 10', pin_signal: PIO0_10/LP_FLEXCOMM5_P0/SCT0_GPIN4/SCT0_OUT4/CTIMER1_MAT0/CTIMER_C_INP0/SAI2_RX_DATA}
   - {pin_num: M8, peripheral: GPIO0, signal: 'GPIO, 19', pin_signal: PIO0_19/LP_FLEXCOMM6_P2/SCT0_GPIN2/SCT0_OUT2/CTIMER2_MAT2/SAI1_RX_SYNC}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********

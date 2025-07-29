@@ -1,7 +1,7 @@
 /**
 @page middleware_log Middleware Change Log
 @section mcuboot_opensource MCUBoot for MCUXpresso SDK
-  Current version is MCUBoot 2.1.0.
+  Current version is MCUBoot 2.2.0.
 
   - 2.0.0
 	- Changes to support booting an image with enabled HW encryption (Encrypted XIP)
@@ -9,5 +9,8 @@
     - Used original version of hmac.c in TinyCrypt to make it compatible with IAR
 
   - 2.1.0
+    - no changes
+
+  - 2.2.0
     - no changes for this version yet
 */

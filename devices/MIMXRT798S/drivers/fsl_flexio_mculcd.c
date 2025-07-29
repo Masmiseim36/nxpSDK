@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2023 NXP
+ * Copyright 2016-2023, 2025 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -59,8 +59,15 @@ status_t FLEXIO_MCULCD_Init(FLEXIO_MCULCD_Type *base, flexio_mculcd_config_t *co
     assert(NULL != config);
     status_t status;
 
-    flexio_config_t flexioConfig = {config->enable, config->enableInDoze, config->enableInDebug,
-                                    config->enableFastAccess};
+    flexio_config_t flexioConfig =
+    {
+        config->enable,
+#if !(defined(FSL_FEATURE_FLEXIO_HAS_DOZE_MODE_SUPPORT) && (FSL_FEATURE_FLEXIO_HAS_DOZE_MODE_SUPPORT == 0))
+        config->enableInDoze,
+#endif
+        config->enableInDebug,
+        config->enableFastAccess
+    };
 
     FLEXIO_Init(base->flexioBase, &flexioConfig);
 
@@ -68,8 +75,13 @@ status_t FLEXIO_MCULCD_Init(FLEXIO_MCULCD_Type *base, flexio_mculcd_config_t *co
 
     if (kStatus_Success == status)
     {
+#if FLEXIO_MCULCD_LEGACY_GPIO_FUNC
         base->setCSPin(true);
         base->setRSPin(true);
+#else
+        base->setCSPin(true, base->userData);
+        base->setRSPin(true, base->userData);
+#endif
     }
 
     return status;
@@ -107,7 +119,9 @@ void FLEXIO_MCULCD_GetDefaultConfig(flexio_mculcd_config_t *config)
     (void)memset(config, 0, sizeof(*config));
 
     config->enable           = true;
+#if !(defined(FSL_FEATURE_FLEXIO_HAS_DOZE_MODE_SUPPORT) && (FSL_FEATURE_FLEXIO_HAS_DOZE_MODE_SUPPORT == 0))
     config->enableInDoze     = false;
+#endif
     config->enableInDebug    = true;
     config->enableFastAccess = true;
     config->baudRate_Bps     = 96000000U;
@@ -497,6 +511,7 @@ void FLEXIO_MCULCD_ClearSingleBeatReadConfig(FLEXIO_MCULCD_Type *base)
  */
 void FLEXIO_MCULCD_SetMultiBeatsWriteConfig(FLEXIO_MCULCD_Type *base)
 {
+    assert(base->txShifterEndIndex > base->txShifterStartIndex);
     /*
      * This function will be called at the beginning of every data writing. For
      * performance consideration, it access the FlexIO registers directly, but not
@@ -613,6 +628,8 @@ void FLEXIO_MCULCD_ClearMultiBeatsWriteConfig(FLEXIO_MCULCD_Type *base)
  */
 void FLEXIO_MCULCD_SetMultiBeatsReadConfig(FLEXIO_MCULCD_Type *base)
 {
+    assert(base->rxShifterEndIndex > base->rxShifterStartIndex);
+
     /*
      * This function will be called at the beginning of every data reading. For
      * performance consideration, it access the FlexIO registers directly, but not
@@ -752,12 +769,20 @@ void FLEXIO_MCULCD_WriteCommandBlocking(FLEXIO_MCULCD_Type *base, uint32_t comma
     FLEXIO_Type *flexioBase = base->flexioBase;
 
     /* De-assert the RS pin. */
+#if FLEXIO_MCULCD_LEGACY_GPIO_FUNC
     base->setRSPin(false);
+#else
+    base->setRSPin(false, base->userData);
+#endif
 
     /* For 6800, de-assert the RDWR pin. */
     if (kFLEXIO_MCULCD_6800 == base->busType)
     {
+#if FLEXIO_MCULCD_LEGACY_GPIO_FUNC
         base->setRDWRPin(false);
+#else
+        base->setRDWRPin(false, base->userData);
+#endif
     }
 
     /* Configure the timer and TX shifter. */
@@ -775,11 +800,19 @@ void FLEXIO_MCULCD_WriteCommandBlocking(FLEXIO_MCULCD_Type *base, uint32_t comma
     FLEXIO_MCULCD_ClearSingleBeatWriteConfig(base);
 
     /* Assert the RS pin. */
+#if FLEXIO_MCULCD_LEGACY_GPIO_FUNC
     base->setRSPin(true);
+#else
+    base->setRSPin(true, base->userData);
+#endif
     /* For 6800, assert the RDWR pin. */
     if (kFLEXIO_MCULCD_6800 == base->busType)
     {
+#if FLEXIO_MCULCD_LEGACY_GPIO_FUNC
         base->setRDWRPin(true);
+#else
+        base->setRDWRPin(true, base->userData);
+#endif
     }
 }
 
@@ -805,11 +838,19 @@ void FLEXIO_MCULCD_WriteDataArrayBlocking(FLEXIO_MCULCD_Type *base, const void *
     FLEXIO_Type *flexioBase = base->flexioBase;
 
     /* Assert the RS pin. */
+#if FLEXIO_MCULCD_LEGACY_GPIO_FUNC
     base->setRSPin(true);
+#else
+    base->setRSPin(true, base->userData);
+#endif
     /* For 6800, de-assert the RDWR pin. */
     if (kFLEXIO_MCULCD_6800 == base->busType)
     {
+#if FLEXIO_MCULCD_LEGACY_GPIO_FUNC
         base->setRDWRPin(false);
+#else
+        base->setRDWRPin(false, base->userData);
+#endif
     }
 
     /* Configure the timer and TX shifter. */
@@ -877,11 +918,19 @@ void FLEXIO_MCULCD_ReadDataArrayBlocking(FLEXIO_MCULCD_Type *base, void *data, s
     FLEXIO_Type *flexioBase = base->flexioBase;
 
     /* Assert the RS pin. */
+#if FLEXIO_MCULCD_LEGACY_GPIO_FUNC
     base->setRSPin(true);
+#else
+    base->setRSPin(true, base->userData);
+#endif
     /* For 6800, de-assert the RDWR pin. */
     if (kFLEXIO_MCULCD_6800 == base->busType)
     {
+#if FLEXIO_MCULCD_LEGACY_GPIO_FUNC
         base->setRDWRPin(false);
+#else
+        base->setRDWRPin(false, base->userData);
+#endif
     }
 
     /* Enable the timer and RX shifter. */
@@ -953,11 +1002,19 @@ void FLEXIO_MCULCD_WriteSameValueBlocking(FLEXIO_MCULCD_Type *base, uint32_t sam
 #endif
 
     /* Assert the RS pin. */
+#if FLEXIO_MCULCD_LEGACY_GPIO_FUNC
     base->setRSPin(true);
+#else
+    base->setRSPin(true, base->userData);
+#endif
     /* For 6800, de-assert the RDWR pin. */
     if (kFLEXIO_MCULCD_6800 == base->busType)
     {
+#if FLEXIO_MCULCD_LEGACY_GPIO_FUNC
         base->setRDWRPin(false);
+#else
+        base->setRDWRPin(false, base->userData);
+#endif
     }
 
     /* Configure the timer and TX shifter. */
@@ -1133,7 +1190,11 @@ status_t FLEXIO_MCULCD_TransferNonBlocking(FLEXIO_MCULCD_Type *base,
             /* For 6800, assert the RDWR pin. */
             if (kFLEXIO_MCULCD_6800 == base->busType)
             {
+#if FLEXIO_MCULCD_LEGACY_GPIO_FUNC
                 base->setRDWRPin(true);
+#else
+                base->setRDWRPin(true, base->userData);
+#endif
             }
             FLEXIO_MCULCD_SetSingleBeatReadConfig(base);
             FLEXIO_MCULCD_EnableInterrupts(base, (uint32_t)kFLEXIO_MCULCD_RxFullInterruptEnable);
@@ -1143,7 +1204,11 @@ status_t FLEXIO_MCULCD_TransferNonBlocking(FLEXIO_MCULCD_Type *base,
             /* For 6800, de-assert the RDWR pin. */
             if (kFLEXIO_MCULCD_6800 == base->busType)
             {
+#if FLEXIO_MCULCD_LEGACY_GPIO_FUNC
                 base->setRDWRPin(false);
+#else
+                base->setRDWRPin(false, base->userData);
+#endif
             }
             FLEXIO_MCULCD_SetSingleBeatWriteConfig(base);
             FLEXIO_MCULCD_EnableInterrupts(base, (uint32_t)kFLEXIO_MCULCD_TxEmptyInterruptEnable);

@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 NXP
+ * Copyright 2023, 2025 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -22,12 +22,13 @@
 tflite::MicroOpResolver &MODEL_GetOpsResolver()
 {
 #if defined(APP_USE_NEUTRON16_MODEL)
-    static tflite::MicroMutableOpResolver<11> s_microOpResolver;
+    static tflite::MicroMutableOpResolver<12> s_microOpResolver;
     s_microOpResolver.AddCustom(tflite::GetString_NEUTRON_GRAPH(),
         tflite::Register_NEUTRON_GRAPH());
     s_microOpResolver.AddPad();
     s_microOpResolver.AddConcatenation();
     s_microOpResolver.AddAdd();
+    s_microOpResolver.AddRelu();
     s_microOpResolver.AddSub();
     s_microOpResolver.AddSlice();
     s_microOpResolver.AddSoftmax();
@@ -36,13 +37,14 @@ tflite::MicroOpResolver &MODEL_GetOpsResolver()
     s_microOpResolver.AddMul();
     s_microOpResolver.AddExp();
 #elif defined(APP_USE_NEUTRON64_MODEL)
-    static tflite::MicroMutableOpResolver<12> s_microOpResolver;
+    static tflite::MicroMutableOpResolver<13> s_microOpResolver;
     s_microOpResolver.AddCustom(tflite::GetString_NEUTRON_GRAPH(),
         tflite::Register_NEUTRON_GRAPH());
     s_microOpResolver.AddPad();
     s_microOpResolver.AddReshape();
     s_microOpResolver.AddConcatenation();
     s_microOpResolver.AddAdd();
+    s_microOpResolver.AddRelu();
     s_microOpResolver.AddSub();
     s_microOpResolver.AddSlice();
     s_microOpResolver.AddSoftmax();

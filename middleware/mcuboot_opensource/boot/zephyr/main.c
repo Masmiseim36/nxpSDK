@@ -41,6 +41,7 @@
 #include "bootutil/bootutil_log.h"
 #include "bootutil/image.h"
 #include "bootutil/bootutil.h"
+#include "bootutil/boot_hooks.h"
 #include "bootutil/fault_injection_hardening.h"
 #include "bootutil/mcuboot_status.h"
 #include "flash_map_backend/flash_map_backend.h"
@@ -49,7 +50,7 @@
 #ifdef CONFIG_SOC_FAMILY_ESPRESSIF_ESP32
 
 #include <bootloader_init.h>
-#include <esp_loader.h>
+#include <esp_image_loader.h>
 
 #define IMAGE_INDEX_0   0
 #define IMAGE_INDEX_1   1
@@ -146,37 +147,30 @@ struct arm_vector_table {
 
 static void do_boot(struct boot_rsp *rsp)
 {
-    struct arm_vector_table *vt;
+    /* vt is static as it shall not land on the stack,
+     * as this procedure modifies stack pointer before usage of *vt
+     */
+    static struct arm_vector_table *vt;
 
     /* The beginning of the image is the ARM vector table, containing
      * the initial stack pointer address and the reset vector
      * consecutively. Manually set the stack pointer and jump into the
      * reset vector
      */
-#ifdef CONFIG_BOOT_RAM_LOAD
+#ifdef MCUBOOT_RAM_LOAD
     /* Get ram address for image */
     vt = (struct arm_vector_table *)(rsp->br_hdr->ih_load_addr + rsp->br_hdr->ih_hdr_size);
 #else
+    uintptr_t flash_base;
     int rc;
-    const struct flash_area *fap;
-    static uint32_t dst[2];
 
     /* Jump to flash image */
-    rc = flash_area_open(rsp->br_flash_dev_id, &fap);
+    rc = flash_device_base(rsp->br_flash_dev_id, &flash_base);
     assert(rc == 0);
 
-    rc = flash_area_read(fap, rsp->br_hdr->ih_hdr_size, dst, sizeof(dst));
-    assert(rc == 0);
-#ifndef CONFIG_ASSERT
-    /* Enter a lock up as asserts are disabled */
-    if (rc != 0) {
-        while (1);
-    }
-#endif
-
-    flash_area_close(fap);
-
-    vt = (struct arm_vector_table *)dst;
+    vt = (struct arm_vector_table *)(flash_base +
+                                     rsp->br_image_off +
+                                     rsp->br_hdr->ih_hdr_size);
 #endif
 
     if (IS_ENABLED(CONFIG_SYSTEM_TIMER_HAS_DISABLE_SUPPORT)) {
@@ -198,7 +192,7 @@ static void do_boot(struct boot_rsp *rsp)
     sys_cache_data_disable();
 #endif
 
-#if CONFIG_CPU_HAS_ARM_MPU || CONFIG_CPU_HAS_NXP_MPU
+#if CONFIG_CPU_HAS_ARM_MPU || CONFIG_CPU_HAS_NXP_SYSMPU
     z_arm_clear_arm_mpu_config();
 #endif
 
@@ -236,7 +230,34 @@ static void do_boot(struct boot_rsp *rsp)
     __set_CONTROL(0x00); /* application will configures core on its own */
     __ISB();
 #endif
+#if CONFIG_MCUBOOT_CLEANUP_RAM
+    __asm__ volatile (
+        /* vt->reset -> r0 */
+        "   mov     r0, %0\n"
+        /* base to write -> r1 */
+        "   mov     r1, %1\n"
+        /* size to write -> r2 */
+        "   mov     r2, %2\n"
+        /* value to write -> r3 */
+        "   mov     r3, %3\n"
+        "clear:\n"
+        "   str     r3, [r1]\n"
+        "   add     r1, r1, #4\n"
+        "   sub     r2, r2, #4\n"
+        "   cbz     r2, out\n"
+        "   b       clear\n"
+        "out:\n"
+        "   dsb\n"
+        /* jump to reset vector of an app */
+        "   bx      r0\n"
+        :
+        : "r" (vt->reset), "i" (CONFIG_SRAM_BASE_ADDRESS),
+          "i" (CONFIG_SRAM_SIZE * 1024), "i" (0)
+        : "r0", "r1", "r2", "r3", "memory"
+    );
+#else
     ((void (*)(void))vt->reset)();
+#endif
 }
 
 #elif defined(CONFIG_XTENSA) || defined(CONFIG_RISCV)
@@ -277,7 +298,9 @@ done:
  */
 static void do_boot(struct boot_rsp *rsp)
 {
+#ifndef CONFIG_SOC_FAMILY_ESPRESSIF_ESP32
     void *start;
+#endif /* CONFIG_SOC_FAMILY_ESPRESSIF_ESP32 */
 
     BOOT_LOG_INF("br_image_off = 0x%x\n", rsp->br_image_off);
     BOOT_LOG_INF("ih_hdr_size = 0x%x\n", rsp->br_hdr->ih_hdr_size);
@@ -387,7 +410,8 @@ void zephyr_boot_log_stop(void)
         * !defined(CONFIG_LOG_PROCESS_THREAD) && !defined(ZEPHYR_LOG_MODE_MINIMAL)
         */
 
-#ifdef CONFIG_MCUBOOT_SERIAL
+#if defined(CONFIG_BOOT_SERIAL_ENTRANCE_GPIO) || defined(CONFIG_BOOT_SERIAL_PIN_RESET) \
+    || defined(CONFIG_BOOT_SERIAL_BOOT_MODE) || defined(CONFIG_BOOT_SERIAL_NO_APPLICATION)
 static void boot_serial_enter()
 {
     int rc;
@@ -495,7 +519,10 @@ int main(void)
 #endif
 #endif
 
-    FIH_CALL(boot_go, fih_rc, &rsp);
+    BOOT_HOOK_GO_CALL_FIH(boot_go_hook, FIH_BOOT_HOOK_REGULAR, fih_rc, &rsp);
+    if (FIH_EQ(fih_rc, FIH_BOOT_HOOK_REGULAR)) {
+        FIH_CALL(boot_go, fih_rc, &rsp);
+    }
 
 #ifdef CONFIG_BOOT_SERIAL_BOOT_MODE
     if (io_detect_boot_mode()) {
@@ -529,13 +556,30 @@ int main(void)
          * recovery mode
          */
         boot_serial_enter();
+#elif defined(CONFIG_BOOT_USB_DFU_NO_APPLICATION)
+        rc = usb_enable(NULL);
+        if (rc && rc != -EALREADY) {
+            BOOT_LOG_ERR("Cannot enable USB");
+        } else {
+            BOOT_LOG_INF("Waiting for USB DFU");
+            wait_for_usb_dfu(K_FOREVER);
+        }
 #endif
 
         FIH_PANIC;
     }
 
+#ifdef MCUBOOT_RAM_LOAD
+    BOOT_LOG_INF("Bootloader chainload address offset: 0x%x",
+                 rsp.br_hdr->ih_load_addr);
+#else
     BOOT_LOG_INF("Bootloader chainload address offset: 0x%x",
                  rsp.br_image_off);
+#endif
+
+    BOOT_LOG_INF("Image version: v%d.%d.%d", rsp.br_hdr->ih_ver.iv_major,
+                                                    rsp.br_hdr->ih_ver.iv_minor,
+                                                    rsp.br_hdr->ih_ver.iv_revision);
 
 #if defined(MCUBOOT_DIRECT_XIP)
     BOOT_LOG_INF("Jumping to the image slot");

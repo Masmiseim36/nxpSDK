@@ -171,12 +171,12 @@ static shell_status_t set_broadcast_code(shell_handle_t shellHandle, int32_t arg
 	char *format;
 	char *input;
 	uint8_t broadcast_code[BT_AUDIO_BROADCAST_CODE_SIZE];
-	
+
 	format = argv[1];
 	input = argv[2];
 
 	int len = strlen(input);
-	
+
 	if(0 == strcmp(format, "str"))
 	{
 		if(len <= BT_AUDIO_BROADCAST_CODE_SIZE)
@@ -221,6 +221,14 @@ static shell_status_t set_broadcast_code(shell_handle_t shellHandle, int32_t arg
 	return kStatus_SHELL_Success;
 }
 
+extern void set_bms_name(char *name);
+
+static shell_status_t set_name(shell_handle_t shellHandle, int32_t argc, char **argv)
+{
+	set_bms_name(argv[1]);
+	return kStatus_SHELL_Success;
+}
+
 SHELL_COMMAND_DEFINE(init,           "init left|right\r\n", sink_init,  1);
 SHELL_COMMAND_DEFINE(vol_set,        "vol_set [0-255]\r\n", vol_set,    1);
 SHELL_COMMAND_DEFINE(vol_up,         "vol_up\r\n",          vol_up,     0);
@@ -230,6 +238,7 @@ SHELL_COMMAND_DEFINE(vol_unmute,     "vol_unmute\r\n",      vol_unmute, 0);
 SHELL_COMMAND_DEFINE(play,           "play\r\n",            play,       0);
 SHELL_COMMAND_DEFINE(pause,          "pause\r\n",           pause,      0);
 SHELL_COMMAND_DEFINE(sync_info,      "sync_info\r\n",       sync_info,  0);
+SHELL_COMMAND_DEFINE(set_name,       "set_name <bms_name>\r\n", set_name, 1);
 SHELL_COMMAND_DEFINE(sync_test_mode, "sync_test_mode [0-2] - 0: disable; 1: 500hz sine; 2: 10ms 500hz sine + 20ms mute\r\n", sync_test_mode,  1);
 SHELL_COMMAND_DEFINE(set_broadcast_code, "set_broadcast_code [str,hex] [data]\r\n", set_broadcast_code, 2);
 
@@ -247,6 +256,7 @@ void le_audio_shell_init(void)
 	SHELL_RegisterCommand(s_shellHandle, SHELL_COMMAND(play));
 	SHELL_RegisterCommand(s_shellHandle, SHELL_COMMAND(pause));
 	SHELL_RegisterCommand(s_shellHandle, SHELL_COMMAND(sync_info));
+	SHELL_RegisterCommand(s_shellHandle, SHELL_COMMAND(set_name));
 	SHELL_RegisterCommand(s_shellHandle, SHELL_COMMAND(sync_test_mode));
 	SHELL_RegisterCommand(s_shellHandle, SHELL_COMMAND(set_broadcast_code));
 

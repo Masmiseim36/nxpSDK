@@ -11,7 +11,7 @@
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
-          <Device>MIMXRT798SGFOA:cm33_core0</Device>
+          <Device>MIMXRT798SGFOB:cm33_core0</Device>
           <Vendor>NXP</Vendor>
           <PackID>NXP.MIMXRT798S_DFP.17.0.0</PackID>
           <PackURL>https://mcuxpresso.nxp.com/cmsis_pack/repo/</PackURL>
@@ -334,7 +334,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../mcux_config.h -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
-              <Define>DEBUG, SDK_DEBUGCONSOLE_UART, LIB_JPEG_USE_HW_ACCEL=1, DEMO_RM67162_USE_RG565=0, DEMO_SSD1963_USE_RG565=0, FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, BOARD_ENABLE_PSRAM_CACHE=0, SSD1963_DATA_WITDH=8, SDK_I2C_BASED_COMPONENT_USED=1, FLEXIO_MCULCD_DATA_BUS_WIDTH=8, DBI_USE_MIPI_PANEL=1, CPU_MIMXRT798SGFOA_cm33_core0, OSA_USED, BOOT_HEADER_ENABLE=1, USE_RTOS=0, MCUX_DBI_LEGACY=0, SD_ENABLED=1</Define>
+              <Define>DEBUG, SDK_DEBUGCONSOLE_UART, DEMO_RM67162_USE_RG565=0, DEMO_SSD1963_USE_RG565=0, FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, BOARD_ENABLE_PSRAM_CACHE=0, SSD1963_DATA_WITDH=8, SDK_I2C_BASED_COMPONENT_USED=1, FLEXIO_MCULCD_DATA_BUS_WIDTH=8, CPU_MIMXRT798SGFOB_cm33_core0, MIMXRT798S_cm33_core0_SERIES, OSA_USED, BOOT_HEADER_ENABLE=1, USE_RTOS=0, MCUX_DBI_LEGACY=0, SD_ENABLED=1</Define>
               <Undefine/>
               <IncludePath>..;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT798S;../../../../../../devices/MIMXRT798S/periph;../../../../../../devices/MIMXRT798S/drivers;../../../../../../devices/MIMXRT798S/utilities/debug_console_lite;../../../../../../components/lists;../../../../../../devices/MIMXRT798S/utilities/str;../../../../../../components/gpio;../../../../../../components/uart;../../../../../../components/osa;../../../../../../components/video;../../../../../../components/video/display/dc;../../../../../../components/video/display;../../../../../../components/video/display/dbi;../../../../../../components/video/display/dbi/flexio;../../../../../../components/video/display/dbi/lcdif;../../../../../../components/video/display/dc/dsi_cmd;../../../../../../components/video/display/dc/lcdif;../../../../../../components/video/display/dc/dbi;../../../../../../components/video/display/mipi_dsi_cmd;../../../../../../components/video/display/hx8394;../../../../../../components/video/display/rm68191;../../../../../../components/video/display/rm68200;../../../../../../components/video/display/rm67162;../../../../../../components/video/display/co5300;../../../../../../components/video/display/rpi;../../../../../../components/display/ssd1963;../../../../../../middleware/fatfs/source;../../../../../../middleware/fatfs/template;../../../../../../middleware/fatfs/source/fsl_sd_disk;../../../../../../middleware/sdmmc/common;../../../../../../middleware/sdmmc/osa;../../../../../../middleware/sdmmc/sd;../../../../../../middleware/sdmmc/host/usdhc;../../../../../../middleware/libjpeg/inc</IncludePath>
             </VariousControls>
@@ -351,8 +351,8 @@
             <useXO>0</useXO>
             <ClangAsOpt>2</ClangAsOpt>
             <VariousControls>
-              <MiscControls/>
-              <Define>MCUXPRESSO_SDK, CPU_MIMXRT798SGFOA_cm33_core0, OSA_USED</Define>
+              <MiscControls>-include ../mcux_config.h</MiscControls>
+              <Define>MCUXPRESSO_SDK, CPU_MIMXRT798SGFOB_cm33_core0, MIMXRT798S_cm33_core0_SERIES, OSA_USED</Define>
               <Undefine/>
               <IncludePath>..;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT798S;../../../../../../devices/MIMXRT798S/periph;../../../../../../devices/periph;../../../../../../devices/MIMXRT798S/drivers;../../../../../../devices/MIMXRT798S/utilities/debug_console_lite;../../../../../../components/lists;../../../../../../devices/MIMXRT798S/utilities/str;../../../../../../components/gpio;../../../../../../components/uart;../../../../../../components/osa;../../../../../../components/video;../../../../../../components/video/display/dc;../../../../../../components/video/display;../../../../../../components/video/display/dbi;../../../../../../components/video/display/dbi/flexio;../../../../../../components/video/display/dbi/lcdif;../../../../../../components/video/display/dc/dsi_cmd;../../../../../../components/video/display/dc/lcdif;../../../../../../components/video/display/dc/dbi;../../../../../../components/video/display/mipi_dsi_cmd;../../../../../../components/video/display/hx8394;../../../../../../components/video/display/rm68191;../../../../../../components/video/display/rm68200;../../../../../../components/video/display/rm67162;../../../../../../components/video/display/co5300;../../../../../../components/video/display/rpi;../../../../../../components/display/ssd1963;../../../../../../middleware/fatfs/source;../../../../../../middleware/fatfs/template;../../../../../../middleware/fatfs/source/fsl_sd_disk;../../../../../../middleware/sdmmc/common;../../../../../../middleware/sdmmc/osa;../../../../../../middleware/sdmmc/sd;../../../../../../middleware/sdmmc/host/usdhc;../../../../../../middleware/libjpeg/inc</IncludePath>
             </VariousControls>
@@ -429,6 +429,16 @@
               <FileName>fsl_os_abstraction_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../fsl_os_abstraction_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../mcux_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../mcux_config.h</FilePath>
             </File>
             <File>
               <FileName>mcux_config.h</FileName>
@@ -998,12 +1008,12 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>startup/arm</GroupName>
+          <GroupName>startup</GroupName>
           <Files>
             <File>
-              <FileName>startup_MIMXRT798S_cm33_core0.S</FileName>
-              <FileType>2</FileType>
-              <FilePath>../../../../../../devices/MIMXRT798S/arm/startup_MIMXRT798S_cm33_core0.S</FilePath>
+              <FileName>startup_MIMXRT798S_cm33_core0.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT798S/startup_MIMXRT798S_cm33_core0.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1336,11 +1346,6 @@
           <GroupName>component/osa</GroupName>
           <Files>
             <File>
-              <FileName>fsl_os_abstraction.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/osa/fsl_os_abstraction.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_os_abstraction_bm.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../components/osa/fsl_os_abstraction_bm.h</FilePath>
@@ -1349,6 +1354,11 @@
               <FileName>fsl_os_abstraction_bm.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../components/osa/fsl_os_abstraction_bm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/osa/fsl_os_abstraction.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1965,6 +1975,11 @@
               <FileType>5</FileType>
               <FilePath>../example_board_readme.md</FilePath>
             </File>
+            <File>
+              <FileName>examples_shared_readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../examples_shared_readme.md</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>
@@ -1977,7 +1992,7 @@
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
-          <Device>MIMXRT798SGFOA:cm33_core0</Device>
+          <Device>MIMXRT798SGFOB:cm33_core0</Device>
           <Vendor>NXP</Vendor>
           <PackID>NXP.MIMXRT798S_DFP.17.0.0</PackID>
           <PackURL>https://mcuxpresso.nxp.com/cmsis_pack/repo/</PackURL>
@@ -2300,7 +2315,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../mcux_config.h -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
-              <Define>DEBUG, SDK_DEBUGCONSOLE_UART, LIB_JPEG_USE_HW_ACCEL=1, DEMO_RM67162_USE_RG565=0, DEMO_SSD1963_USE_RG565=0, FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, BOARD_ENABLE_PSRAM_CACHE=0, SSD1963_DATA_WITDH=8, SDK_I2C_BASED_COMPONENT_USED=1, FLEXIO_MCULCD_DATA_BUS_WIDTH=8, DBI_USE_MIPI_PANEL=1, CPU_MIMXRT798SGFOA_cm33_core0, OSA_USED, BOOT_HEADER_ENABLE=1, USE_RTOS=0, MCUX_DBI_LEGACY=0, SD_ENABLED=1</Define>
+              <Define>DEBUG, SDK_DEBUGCONSOLE_UART, DEMO_RM67162_USE_RG565=0, DEMO_SSD1963_USE_RG565=0, FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, BOARD_ENABLE_PSRAM_CACHE=0, SSD1963_DATA_WITDH=8, SDK_I2C_BASED_COMPONENT_USED=1, FLEXIO_MCULCD_DATA_BUS_WIDTH=8, CPU_MIMXRT798SGFOB_cm33_core0, MIMXRT798S_cm33_core0_SERIES, OSA_USED, BOOT_HEADER_ENABLE=1, USE_RTOS=0, MCUX_DBI_LEGACY=0, SD_ENABLED=1</Define>
               <Undefine/>
               <IncludePath>..;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT798S;../../../../../../devices/MIMXRT798S/periph;../../../../../../devices/MIMXRT798S/drivers;../../../../../../devices/MIMXRT798S/utilities/debug_console_lite;../../../../../../components/lists;../../../../../../devices/MIMXRT798S/utilities/str;../../../../../../components/gpio;../../../../../../components/uart;../../../../../../components/osa;../../../../../../components/video;../../../../../../components/video/display/dc;../../../../../../components/video/display;../../../../../../components/video/display/dbi;../../../../../../components/video/display/dbi/flexio;../../../../../../components/video/display/dbi/lcdif;../../../../../../components/video/display/dc/dsi_cmd;../../../../../../components/video/display/dc/lcdif;../../../../../../components/video/display/dc/dbi;../../../../../../components/video/display/mipi_dsi_cmd;../../../../../../components/video/display/hx8394;../../../../../../components/video/display/rm68191;../../../../../../components/video/display/rm68200;../../../../../../components/video/display/rm67162;../../../../../../components/video/display/co5300;../../../../../../components/video/display/rpi;../../../../../../components/display/ssd1963;../../../../../../middleware/fatfs/source;../../../../../../middleware/fatfs/template;../../../../../../middleware/fatfs/source/fsl_sd_disk;../../../../../../middleware/sdmmc/common;../../../../../../middleware/sdmmc/osa;../../../../../../middleware/sdmmc/sd;../../../../../../middleware/sdmmc/host/usdhc;../../../../../../middleware/libjpeg/inc</IncludePath>
             </VariousControls>
@@ -2317,8 +2332,8 @@
             <useXO>0</useXO>
             <ClangAsOpt>2</ClangAsOpt>
             <VariousControls>
-              <MiscControls/>
-              <Define>MCUXPRESSO_SDK, CPU_MIMXRT798SGFOA_cm33_core0, OSA_USED</Define>
+              <MiscControls>-include ../mcux_config.h</MiscControls>
+              <Define>MCUXPRESSO_SDK, CPU_MIMXRT798SGFOB_cm33_core0, MIMXRT798S_cm33_core0_SERIES, OSA_USED</Define>
               <Undefine/>
               <IncludePath>..;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT798S;../../../../../../devices/MIMXRT798S/periph;../../../../../../devices/periph;../../../../../../devices/MIMXRT798S/drivers;../../../../../../devices/MIMXRT798S/utilities/debug_console_lite;../../../../../../components/lists;../../../../../../devices/MIMXRT798S/utilities/str;../../../../../../components/gpio;../../../../../../components/uart;../../../../../../components/osa;../../../../../../components/video;../../../../../../components/video/display/dc;../../../../../../components/video/display;../../../../../../components/video/display/dbi;../../../../../../components/video/display/dbi/flexio;../../../../../../components/video/display/dbi/lcdif;../../../../../../components/video/display/dc/dsi_cmd;../../../../../../components/video/display/dc/lcdif;../../../../../../components/video/display/dc/dbi;../../../../../../components/video/display/mipi_dsi_cmd;../../../../../../components/video/display/hx8394;../../../../../../components/video/display/rm68191;../../../../../../components/video/display/rm68200;../../../../../../components/video/display/rm67162;../../../../../../components/video/display/co5300;../../../../../../components/video/display/rpi;../../../../../../components/display/ssd1963;../../../../../../middleware/fatfs/source;../../../../../../middleware/fatfs/template;../../../../../../middleware/fatfs/source/fsl_sd_disk;../../../../../../middleware/sdmmc/common;../../../../../../middleware/sdmmc/osa;../../../../../../middleware/sdmmc/sd;../../../../../../middleware/sdmmc/host/usdhc;../../../../../../middleware/libjpeg/inc</IncludePath>
             </VariousControls>
@@ -2395,6 +2410,16 @@
               <FileName>fsl_os_abstraction_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../fsl_os_abstraction_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../mcux_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../mcux_config.h</FilePath>
             </File>
             <File>
               <FileName>mcux_config.h</FileName>
@@ -2964,12 +2989,12 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>startup/arm</GroupName>
+          <GroupName>startup</GroupName>
           <Files>
             <File>
-              <FileName>startup_MIMXRT798S_cm33_core0.S</FileName>
-              <FileType>2</FileType>
-              <FilePath>../../../../../../devices/MIMXRT798S/arm/startup_MIMXRT798S_cm33_core0.S</FilePath>
+              <FileName>startup_MIMXRT798S_cm33_core0.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT798S/startup_MIMXRT798S_cm33_core0.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -3302,11 +3327,6 @@
           <GroupName>component/osa</GroupName>
           <Files>
             <File>
-              <FileName>fsl_os_abstraction.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/osa/fsl_os_abstraction.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_os_abstraction_bm.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../components/osa/fsl_os_abstraction_bm.h</FilePath>
@@ -3315,6 +3335,11 @@
               <FileName>fsl_os_abstraction_bm.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../components/osa/fsl_os_abstraction_bm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/osa/fsl_os_abstraction.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3931,6 +3956,11 @@
               <FileType>5</FileType>
               <FilePath>../example_board_readme.md</FilePath>
             </File>
+            <File>
+              <FileName>examples_shared_readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../examples_shared_readme.md</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>
@@ -3943,7 +3973,7 @@
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
-          <Device>MIMXRT798SGFOA:cm33_core0</Device>
+          <Device>MIMXRT798SGFOB:cm33_core0</Device>
           <Vendor>NXP</Vendor>
           <PackID>NXP.MIMXRT798S_DFP.17.0.0</PackID>
           <PackURL>https://mcuxpresso.nxp.com/cmsis_pack/repo/</PackURL>
@@ -4266,7 +4296,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../mcux_config.h -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
-              <Define>NDEBUG, SDK_DEBUGCONSOLE_UART, LIB_JPEG_USE_HW_ACCEL=1, DEMO_RM67162_USE_RG565=0, DEMO_SSD1963_USE_RG565=0, FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, BOARD_ENABLE_PSRAM_CACHE=0, SSD1963_DATA_WITDH=8, SDK_I2C_BASED_COMPONENT_USED=1, FLEXIO_MCULCD_DATA_BUS_WIDTH=8, DBI_USE_MIPI_PANEL=1, CPU_MIMXRT798SGFOA_cm33_core0, OSA_USED, BOOT_HEADER_ENABLE=1, USE_RTOS=0, MCUX_DBI_LEGACY=0, SD_ENABLED=1</Define>
+              <Define>NDEBUG, SDK_DEBUGCONSOLE_UART, DEMO_RM67162_USE_RG565=0, DEMO_SSD1963_USE_RG565=0, FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, BOARD_ENABLE_PSRAM_CACHE=0, SSD1963_DATA_WITDH=8, SDK_I2C_BASED_COMPONENT_USED=1, FLEXIO_MCULCD_DATA_BUS_WIDTH=8, CPU_MIMXRT798SGFOB_cm33_core0, MIMXRT798S_cm33_core0_SERIES, OSA_USED, BOOT_HEADER_ENABLE=1, USE_RTOS=0, MCUX_DBI_LEGACY=0, SD_ENABLED=1</Define>
               <Undefine/>
               <IncludePath>..;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT798S;../../../../../../devices/MIMXRT798S/periph;../../../../../../devices/MIMXRT798S/drivers;../../../../../../devices/MIMXRT798S/utilities/debug_console_lite;../../../../../../components/lists;../../../../../../devices/MIMXRT798S/utilities/str;../../../../../../components/gpio;../../../../../../components/uart;../../../../../../components/osa;../../../../../../components/video;../../../../../../components/video/display/dc;../../../../../../components/video/display;../../../../../../components/video/display/dbi;../../../../../../components/video/display/dbi/flexio;../../../../../../components/video/display/dbi/lcdif;../../../../../../components/video/display/dc/dsi_cmd;../../../../../../components/video/display/dc/lcdif;../../../../../../components/video/display/dc/dbi;../../../../../../components/video/display/mipi_dsi_cmd;../../../../../../components/video/display/hx8394;../../../../../../components/video/display/rm68191;../../../../../../components/video/display/rm68200;../../../../../../components/video/display/rm67162;../../../../../../components/video/display/co5300;../../../../../../components/video/display/rpi;../../../../../../components/display/ssd1963;../../../../../../middleware/fatfs/source;../../../../../../middleware/fatfs/template;../../../../../../middleware/fatfs/source/fsl_sd_disk;../../../../../../middleware/sdmmc/common;../../../../../../middleware/sdmmc/osa;../../../../../../middleware/sdmmc/sd;../../../../../../middleware/sdmmc/host/usdhc;../../../../../../middleware/libjpeg/inc</IncludePath>
             </VariousControls>
@@ -4283,8 +4313,8 @@
             <useXO>0</useXO>
             <ClangAsOpt>2</ClangAsOpt>
             <VariousControls>
-              <MiscControls/>
-              <Define>MCUXPRESSO_SDK, CPU_MIMXRT798SGFOA_cm33_core0, OSA_USED</Define>
+              <MiscControls>-include ../mcux_config.h</MiscControls>
+              <Define>MCUXPRESSO_SDK, CPU_MIMXRT798SGFOB_cm33_core0, MIMXRT798S_cm33_core0_SERIES, OSA_USED</Define>
               <Undefine/>
               <IncludePath>..;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT798S;../../../../../../devices/MIMXRT798S/periph;../../../../../../devices/periph;../../../../../../devices/MIMXRT798S/drivers;../../../../../../devices/MIMXRT798S/utilities/debug_console_lite;../../../../../../components/lists;../../../../../../devices/MIMXRT798S/utilities/str;../../../../../../components/gpio;../../../../../../components/uart;../../../../../../components/osa;../../../../../../components/video;../../../../../../components/video/display/dc;../../../../../../components/video/display;../../../../../../components/video/display/dbi;../../../../../../components/video/display/dbi/flexio;../../../../../../components/video/display/dbi/lcdif;../../../../../../components/video/display/dc/dsi_cmd;../../../../../../components/video/display/dc/lcdif;../../../../../../components/video/display/dc/dbi;../../../../../../components/video/display/mipi_dsi_cmd;../../../../../../components/video/display/hx8394;../../../../../../components/video/display/rm68191;../../../../../../components/video/display/rm68200;../../../../../../components/video/display/rm67162;../../../../../../components/video/display/co5300;../../../../../../components/video/display/rpi;../../../../../../components/display/ssd1963;../../../../../../middleware/fatfs/source;../../../../../../middleware/fatfs/template;../../../../../../middleware/fatfs/source/fsl_sd_disk;../../../../../../middleware/sdmmc/common;../../../../../../middleware/sdmmc/osa;../../../../../../middleware/sdmmc/sd;../../../../../../middleware/sdmmc/host/usdhc;../../../../../../middleware/libjpeg/inc</IncludePath>
             </VariousControls>
@@ -4361,6 +4391,16 @@
               <FileName>fsl_os_abstraction_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../fsl_os_abstraction_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../mcux_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../mcux_config.h</FilePath>
             </File>
             <File>
               <FileName>mcux_config.h</FileName>
@@ -4930,12 +4970,12 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>startup/arm</GroupName>
+          <GroupName>startup</GroupName>
           <Files>
             <File>
-              <FileName>startup_MIMXRT798S_cm33_core0.S</FileName>
-              <FileType>2</FileType>
-              <FilePath>../../../../../../devices/MIMXRT798S/arm/startup_MIMXRT798S_cm33_core0.S</FilePath>
+              <FileName>startup_MIMXRT798S_cm33_core0.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT798S/startup_MIMXRT798S_cm33_core0.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -5268,11 +5308,6 @@
           <GroupName>component/osa</GroupName>
           <Files>
             <File>
-              <FileName>fsl_os_abstraction.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/osa/fsl_os_abstraction.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_os_abstraction_bm.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../components/osa/fsl_os_abstraction_bm.h</FilePath>
@@ -5281,6 +5316,11 @@
               <FileName>fsl_os_abstraction_bm.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../components/osa/fsl_os_abstraction_bm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/osa/fsl_os_abstraction.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -5897,6 +5937,11 @@
               <FileType>5</FileType>
               <FilePath>../example_board_readme.md</FilePath>
             </File>
+            <File>
+              <FileName>examples_shared_readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../examples_shared_readme.md</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>
@@ -5909,7 +5954,7 @@
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
-          <Device>MIMXRT798SGFOA:cm33_core0</Device>
+          <Device>MIMXRT798SGFOB:cm33_core0</Device>
           <Vendor>NXP</Vendor>
           <PackID>NXP.MIMXRT798S_DFP.17.0.0</PackID>
           <PackURL>https://mcuxpresso.nxp.com/cmsis_pack/repo/</PackURL>
@@ -6232,7 +6277,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../mcux_config.h -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
-              <Define>NDEBUG, SDK_DEBUGCONSOLE_UART, LIB_JPEG_USE_HW_ACCEL=1, DEMO_RM67162_USE_RG565=0, DEMO_SSD1963_USE_RG565=0, FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, BOARD_ENABLE_PSRAM_CACHE=0, SSD1963_DATA_WITDH=8, SDK_I2C_BASED_COMPONENT_USED=1, FLEXIO_MCULCD_DATA_BUS_WIDTH=8, DBI_USE_MIPI_PANEL=1, CPU_MIMXRT798SGFOA_cm33_core0, OSA_USED, BOOT_HEADER_ENABLE=1, USE_RTOS=0, MCUX_DBI_LEGACY=0, SD_ENABLED=1</Define>
+              <Define>NDEBUG, SDK_DEBUGCONSOLE_UART, DEMO_RM67162_USE_RG565=0, DEMO_SSD1963_USE_RG565=0, FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, BOARD_ENABLE_PSRAM_CACHE=0, SSD1963_DATA_WITDH=8, SDK_I2C_BASED_COMPONENT_USED=1, FLEXIO_MCULCD_DATA_BUS_WIDTH=8, CPU_MIMXRT798SGFOB_cm33_core0, MIMXRT798S_cm33_core0_SERIES, OSA_USED, BOOT_HEADER_ENABLE=1, USE_RTOS=0, MCUX_DBI_LEGACY=0, SD_ENABLED=1</Define>
               <Undefine/>
               <IncludePath>..;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT798S;../../../../../../devices/MIMXRT798S/periph;../../../../../../devices/MIMXRT798S/drivers;../../../../../../devices/MIMXRT798S/utilities/debug_console_lite;../../../../../../components/lists;../../../../../../devices/MIMXRT798S/utilities/str;../../../../../../components/gpio;../../../../../../components/uart;../../../../../../components/osa;../../../../../../components/video;../../../../../../components/video/display/dc;../../../../../../components/video/display;../../../../../../components/video/display/dbi;../../../../../../components/video/display/dbi/flexio;../../../../../../components/video/display/dbi/lcdif;../../../../../../components/video/display/dc/dsi_cmd;../../../../../../components/video/display/dc/lcdif;../../../../../../components/video/display/dc/dbi;../../../../../../components/video/display/mipi_dsi_cmd;../../../../../../components/video/display/hx8394;../../../../../../components/video/display/rm68191;../../../../../../components/video/display/rm68200;../../../../../../components/video/display/rm67162;../../../../../../components/video/display/co5300;../../../../../../components/video/display/rpi;../../../../../../components/display/ssd1963;../../../../../../middleware/fatfs/source;../../../../../../middleware/fatfs/template;../../../../../../middleware/fatfs/source/fsl_sd_disk;../../../../../../middleware/sdmmc/common;../../../../../../middleware/sdmmc/osa;../../../../../../middleware/sdmmc/sd;../../../../../../middleware/sdmmc/host/usdhc;../../../../../../middleware/libjpeg/inc</IncludePath>
             </VariousControls>
@@ -6249,8 +6294,8 @@
             <useXO>0</useXO>
             <ClangAsOpt>2</ClangAsOpt>
             <VariousControls>
-              <MiscControls/>
-              <Define>MCUXPRESSO_SDK, CPU_MIMXRT798SGFOA_cm33_core0, OSA_USED</Define>
+              <MiscControls>-include ../mcux_config.h</MiscControls>
+              <Define>MCUXPRESSO_SDK, CPU_MIMXRT798SGFOB_cm33_core0, MIMXRT798S_cm33_core0_SERIES, OSA_USED</Define>
               <Undefine/>
               <IncludePath>..;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT798S;../../../../../../devices/MIMXRT798S/periph;../../../../../../devices/periph;../../../../../../devices/MIMXRT798S/drivers;../../../../../../devices/MIMXRT798S/utilities/debug_console_lite;../../../../../../components/lists;../../../../../../devices/MIMXRT798S/utilities/str;../../../../../../components/gpio;../../../../../../components/uart;../../../../../../components/osa;../../../../../../components/video;../../../../../../components/video/display/dc;../../../../../../components/video/display;../../../../../../components/video/display/dbi;../../../../../../components/video/display/dbi/flexio;../../../../../../components/video/display/dbi/lcdif;../../../../../../components/video/display/dc/dsi_cmd;../../../../../../components/video/display/dc/lcdif;../../../../../../components/video/display/dc/dbi;../../../../../../components/video/display/mipi_dsi_cmd;../../../../../../components/video/display/hx8394;../../../../../../components/video/display/rm68191;../../../../../../components/video/display/rm68200;../../../../../../components/video/display/rm67162;../../../../../../components/video/display/co5300;../../../../../../components/video/display/rpi;../../../../../../components/display/ssd1963;../../../../../../middleware/fatfs/source;../../../../../../middleware/fatfs/template;../../../../../../middleware/fatfs/source/fsl_sd_disk;../../../../../../middleware/sdmmc/common;../../../../../../middleware/sdmmc/osa;../../../../../../middleware/sdmmc/sd;../../../../../../middleware/sdmmc/host/usdhc;../../../../../../middleware/libjpeg/inc</IncludePath>
             </VariousControls>
@@ -6327,6 +6372,16 @@
               <FileName>fsl_os_abstraction_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../fsl_os_abstraction_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../mcux_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../mcux_config.h</FilePath>
             </File>
             <File>
               <FileName>mcux_config.h</FileName>
@@ -6896,12 +6951,12 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>startup/arm</GroupName>
+          <GroupName>startup</GroupName>
           <Files>
             <File>
-              <FileName>startup_MIMXRT798S_cm33_core0.S</FileName>
-              <FileType>2</FileType>
-              <FilePath>../../../../../../devices/MIMXRT798S/arm/startup_MIMXRT798S_cm33_core0.S</FilePath>
+              <FileName>startup_MIMXRT798S_cm33_core0.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT798S/startup_MIMXRT798S_cm33_core0.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -7234,11 +7289,6 @@
           <GroupName>component/osa</GroupName>
           <Files>
             <File>
-              <FileName>fsl_os_abstraction.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/osa/fsl_os_abstraction.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_os_abstraction_bm.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../components/osa/fsl_os_abstraction_bm.h</FilePath>
@@ -7247,6 +7297,11 @@
               <FileName>fsl_os_abstraction_bm.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../components/osa/fsl_os_abstraction_bm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/osa/fsl_os_abstraction.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -7862,6 +7917,11 @@
               <FileName>example_board_readme.md</FileName>
               <FileType>5</FileType>
               <FilePath>../example_board_readme.md</FilePath>
+            </File>
+            <File>
+              <FileName>examples_shared_readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../examples_shared_readme.md</FilePath>
             </File>
           </Files>
         </Group>

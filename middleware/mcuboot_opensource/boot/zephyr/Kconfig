@@ -20,14 +20,18 @@ config MCUBOOT
 config BOOT_USE_MBEDTLS
 	bool
 	# Hidden option
-	default n
 	help
 	  Use mbedTLS for crypto primitives.
+
+config BOOT_USE_PSA_CRYPTO
+	bool
+	# Hidden option
+	help
+	  Hidden option set if using PSA crypt for cryptography functionality
 
 config BOOT_USE_TINYCRYPT
 	bool
 	# Hidden option
-	default n
 	# When building for ECDSA, we use our own copy of mbedTLS, so the
 	# Zephyr one must not be enabled or the MBEDTLS_CONFIG_FILE macros
 	# will collide.
@@ -38,7 +42,6 @@ config BOOT_USE_TINYCRYPT
 config BOOT_USE_CC310
 	bool
 	# Hidden option
-	default n
 	# When building for ECDSA, we use our own copy of mbedTLS, so the
 	# Zephyr one must not be enabled or the MBEDTLS_CONFIG_FILE macros
 	# will collide.
@@ -47,39 +50,177 @@ config BOOT_USE_CC310
 
 config BOOT_USE_NRF_CC310_BL
 	bool
-	default n
 
 config NRFXLIB_CRYPTO
 	bool
-	default n
 
 config NRF_CC310_BL
 	bool
-	default n
+
+if BOOT_USE_MBEDTLS && MBEDTLS_BUILTIN
+
+config BOOT_AES_MBEDTLS_DEPENDENCIES
+	bool
+	select MBEDTLS_CIPHER_AES_ENABLED
+	select MBEDTLS_CIPHER_MODE_CTR_ENABLED
+
+endif
+
+if BOOT_USE_PSA_CRYPTO
+
+config BOOT_PSA_IMG_HASH_ALG_SHA256_DEPENDENCIES
+	bool
+	default y if BOOT_IMG_HASH_ALG_SHA256
+	select PSA_WANT_ALG_SHA_256
+	help
+	  Dependencies for hashing with SHA256
+
+config BOOT_ED25519_PSA_DEPENDENCIES
+	bool
+	select PSA_WANT_ALG_SHA_256
+	select PSA_WANT_ALG_SHA_512
+	select PSA_WANT_ALG_PURE_EDDSA
+	# Seems that upstream mbedTLS does not have TE
+	#select PSA_WANT_ECC_TWISTED_EDWARDS_255
+	select PSA_WANT_ECC_MONTGOMERY_255
+	select PSA_WANT_KEY_TYPE_ECC_KEY_PAIR_IMPORT
+	help
+	  Dependencies for ed25519 signature
+
+if BOOT_ENCRYPT_IMAGE
+
+config BOOT_X25519_PSA_DEPENDENCIES
+	bool
+	select PSA_WANT_ALG_ECDH
+	select PSA_WANT_ALG_HMAC
+	select PSA_WANT_ALG_HKDF
+	select PSA_WANT_ALG_CTR
+	select PSA_WANT_KEY_TYPE_ECC_KEY_PAIR_IMPORT
+	select PSA_WANT_KEY_TYPE_DERIVE
+	select PSA_WANT_KEY_TYPE_AES
+	select PSA_WANT_ECC_MONTGOMERY_255
+	help
+	  Dependencies for x25519 shared-random key encryption and AES
+	  encryption. The PSA_WANT_ALG_CTR and PSA_WANT_KEY_TYPE_AES
+	  enable Counter based block cipher and AES key, and algorithm support,
+	  to use with it; the others are used for shared key decryption
+	  and derivation.
+
+endif # BOOT_ENCRYPT_IMAGE
+
+if MBEDTLS_ENABLE_HEAP
+
+config MBEDTLS_HEAP_SIZE
+	default 2048 if BOOT_USE_PSA_CRYPTO
+	help
+	  The PSA internals need to be able to allocate memory for operation
+	  and it uses mbedTLS heap for that.
+
+endif # MBEDTLS_ENABLE_HEAP
+
+endif # BOOT_USE_PSA_CRYPTO
 
 menu "MCUBoot settings"
 
 config SINGLE_APPLICATION_SLOT
 	bool "Single slot bootloader"
-	default n
 	help
 	  Single image area is used for application which means that
 	  uploading a new application overwrites the one that previously
 	  occupied the area.
 
+config BOOT_IMG_HASH_ALG_SHA256_ALLOW
+	bool
+	help
+	  Hidden option set by configurations that allow SHA256
+
+config BOOT_IMG_HASH_ALG_SHA384_ALLOW
+	bool
+	help
+	  Hidden option set by configurations that allow SHA384
+
+config BOOT_IMG_HASH_ALG_SHA512_ALLOW
+	bool
+	help
+	  Hidden option set by configurations that allow SHA512
+
+config BOOT_IMG_HASH_DIRECTLY_ON_STORAGE
+	bool "Hash calculation functions access storage through address space"
+	depends on !BOOT_ENCRYPT_IMAGE
+	help
+	  When possible to map storage device, at least for read operations,
+	  to address space or RAM area, enabling this option allows hash
+	  calculation functions to directly access the storage through that address
+	  space or using its own DMA. This reduces flash read overhead done
+	  by MCUboot.
+	  Notes:
+	    - not supported when encrypted images are in use, because calculating
+	      SHA requires image to be decrypted first, which is done in RAM.
+	    - currently only supported on internal storage of devices; this
+	      option will not work with devices that use external storage for
+	      either of the image slots.
+
+choice BOOT_IMG_HASH_ALG
+	prompt "Selected image hash algorithm"
+	default BOOT_IMG_HASH_ALG_SHA256 if BOOT_IMG_HASH_ALG_SHA256_ALLOW
+	default BOOT_IMG_HASH_ALG_SHA384 if BOOT_IMG_HASH_ALG_SHA384_ALLOW
+	default BOOT_IMG_HASH_ALG_SHA512 if BOOT_IMG_HASH_ALG_SHA512_ALLOW
+	help
+	  Hash algorithm used for image verification. Selection
+	  here may be limited by other configurations, like for
+	  example selected cryptographic signature.
+
+config BOOT_IMG_HASH_ALG_SHA256
+	bool "SHA256"
+	depends on BOOT_IMG_HASH_ALG_SHA256_ALLOW
+	help
+	  SHA256 algorithm
+
+config BOOT_IMG_HASH_ALG_SHA384
+	bool "SHA384"
+	depends on BOOT_IMG_HASH_ALG_SHA384_ALLOW
+	help
+	  SHA384 algorithm
+
+config BOOT_IMG_HASH_ALG_SHA512
+	bool "SHA512"
+	depends on BOOT_IMG_HASH_ALG_SHA512_ALLOW
+	help
+	  SHA512 algorithm
+
+endchoice # BOOT_IMG_HASH_ALG
+
+config BOOT_SIGNATURE_TYPE_PURE_ALLOW
+	bool
+	help
+	  Hidden option set by configurations that allow Pure variant,
+	  for example ed25519. The pure variant means that image
+	  signature is calculated over entire image instead of hash
+	  of an image.
+
 choice BOOT_SIGNATURE_TYPE
 	prompt "Signature type"
+	default BOOT_SIGNATURE_TYPE_ED25519 if SOC_NRF54L15_CPUAPP
 	default BOOT_SIGNATURE_TYPE_RSA
 
 config BOOT_SIGNATURE_TYPE_NONE
 	bool "No signature; use only hash check"
 	select BOOT_USE_TINYCRYPT
+	select BOOT_IMG_HASH_ALG_SHA256_ALLOW
 
 config BOOT_SIGNATURE_TYPE_RSA
 	bool "RSA signatures"
 	select BOOT_USE_MBEDTLS
 	select MBEDTLS
+	select MBEDTLS_ASN1_PARSE_C if MBEDTLS_BUILTIN
+	select MBEDTLS_MD if MBEDTLS_BUILTIN
+	select MBEDTLS_RSA_C if MBEDTLS_BUILTIN
+	select MBEDTLS_PKCS1_V15 if MBEDTLS_BUILTIN
+	select MBEDTLS_PKCS1_V21 if MBEDTLS_BUILTIN
+	select MBEDTLS_KEY_EXCHANGE_RSA_ENABLED if MBEDTLS_BUILTIN
 	select BOOT_ENCRYPTION_SUPPORT
+	select BOOT_IMG_HASH_ALG_SHA256_ALLOW
+	select BOOT_AES_MBEDTLS_DEPENDENCIES if MBEDTLS_BUILTIN && BOOT_ENCRYPT_IMAGE
 
 if BOOT_SIGNATURE_TYPE_RSA
 config BOOT_SIGNATURE_TYPE_RSA_LEN
@@ -91,6 +232,7 @@ endif
 config BOOT_SIGNATURE_TYPE_ECDSA_P256
 	bool "Elliptic curve digital signatures with curve P-256"
 	select BOOT_ENCRYPTION_SUPPORT
+	select BOOT_IMG_HASH_ALG_SHA256_ALLOW
 
 if BOOT_SIGNATURE_TYPE_ECDSA_P256
 choice BOOT_ECDSA_IMPLEMENTATION
@@ -113,20 +255,72 @@ endif
 
 config BOOT_SIGNATURE_TYPE_ED25519
 	bool "Edwards curve digital signatures using ed25519"
-	select BOOT_ENCRYPTION_SUPPORT
+	select BOOT_ENCRYPTION_SUPPORT if !BOOT_SIGNATURE_TYPE_PURE
+	select BOOT_IMG_HASH_ALG_SHA256_ALLOW if !BOOT_SIGNATURE_TYPE_PURE
+	# The SHA is used only for key hashing, not for images.
+	select BOOT_SIGNATURE_TYPE_PURE_ALLOW
+	help
+	  This is ed25519 signature calculated over SHA512 of SHA256 of application
+	  image.
+	  To check signature over entire image directly, rather than hash,
+	  select BOOT_SIGNATURE_TYPE_PURE.
 
 if BOOT_SIGNATURE_TYPE_ED25519
+
+config BOOT_SIGNATURE_TYPE_PURE
+	bool "Use Pure signature of image"
+	depends on BOOT_SIGNATURE_TYPE_PURE_ALLOW
+	help
+	  The Pure signature is calculated directly over image rather than
+	  hash of an image, as the BOOT_SIGNATURE_TYPE_ED25519 does by
+	  default.
+	  Image to be verified needs to be accessible through memory address
+	  space that cryptography functions can access via pointers.
+
 choice BOOT_ED25519_IMPLEMENTATION
 	prompt "Ecdsa implementation"
 	default BOOT_ED25519_TINYCRYPT
+
 config BOOT_ED25519_TINYCRYPT
 	bool "Use tinycrypt"
 	select BOOT_USE_TINYCRYPT
+	select BOOT_IMG_HASH_ALG_SHA256_ALLOW
+	select BOOT_IMG_HASH_ALG_SHA512_ALLOW
+
 config BOOT_ED25519_MBEDTLS
 	bool "Use mbedTLS"
 	select BOOT_USE_MBEDTLS
+	select BOOT_IMG_HASH_ALG_SHA256_ALLOW
+	select BOOT_IMG_HASH_ALG_SHA512_ALLOW
 	select MBEDTLS
+	select MBEDTLS_SHA512
+	select MBEDTLS_ASN1_PARSE_C if MBEDTLS_BUILTIN && !BOOT_KEY_IMPORT_BYPASS_ASN
+	select BOOT_AES_MBEDTLS_DEPENDENCIES if MBEDTLS_BUILTIN && BOOT_ENCRYPT_IMAGE
+
+config BOOT_ED25519_PSA
+	bool "Use PSA crypto"
+	select MBEDTLS
+	select BOOT_USE_PSA_CRYPTO
+	select PSA_CRYPTO_CLIENT
+	select PSA_CRYPTO_C
+	select MBEDTLS_PSA_CRYPTO_C
+	select MBEDTLS_ASN1_PARSE_C if MBEDTLS_BUILTIN
+	select MBEDTLS_ENABLE_HEAP
+	select BOOT_IMG_HASH_ALG_SHA256_ALLOW
+	select BOOT_IMG_HASH_ALG_SHA512_ALLOW
+	select BOOT_ED25519_PSA_DEPENDENCIES
+	select BOOT_X25519_PSA_DEPENDENCIES if BOOT_ENCRYPT_IMAGE
+
 endchoice
+
+config BOOT_KEY_IMPORT_BYPASS_ASN
+	bool "Directly access key value without ASN.1 parsing"
+	help
+	  Originally, public keys compiled into MCUboot were
+	  stored in ASN.1 encoded format. Enabling this option
+	  bypasses the ASN.1 decoding and directly accesses the key
+	  in ASN.1 bitstream; this reduces MCUboot code by removing
+	  the ASN.1 processing.
 endif
 
 endchoice
@@ -164,12 +358,21 @@ config MCUBOOT_CLEANUP_ARM_CORE
 	  start-up code which can cause a module fault and potentially make the
 	  module irrecoverable.
 
+config MCUBOOT_CLEANUP_RAM
+	bool "Perform RAM cleanup"
+	depends on CPU_CORTEX_M4 || CPU_CORTEX_M33
+	help
+	  Sets contents of memory to 0 before jumping to application.
+
 config MBEDTLS_CFG_FILE
-	default "mcuboot-mbedtls-cfg.h"
+	# It might be awkward to define an Mbed TLS header file when TinyCrypt
+	# is used, but the fact is that Mbed TLS' ASN1 parse module is used
+	# also when TinyCrypt is used as crypto backend.
+	default "mcuboot-mbedtls-cfg.h" if BOOT_USE_TINYCRYPT
+	default "mcuboot-mbedtls-cfg.h" if BOOT_USE_MBEDTLS && !MBEDTLS_BUILTIN
 
 config BOOT_HW_KEY
 	bool "Use HW key for image verification"
-	default n
 	help
 	  Use HW key for image verification, otherwise the public key is embedded
 	  in MCUBoot. If enabled the public key is appended to the signed image
@@ -188,7 +391,6 @@ config BOOT_VALIDATE_SLOT0
 config BOOT_VALIDATE_SLOT0_ONCE
 	bool "Validate image in the primary slot just once after after upgrade"
 	depends on !BOOT_VALIDATE_SLOT0 && SINGLE_APPLICATION_SLOT
-	default n
 	help
 	  If y, the bootloader attempts to validate the signature of the
 	  primary slot only once after an upgrade of the main slot.
@@ -196,6 +398,13 @@ config BOOT_VALIDATE_SLOT0_ONCE
 	  method. This option is usefull for lowering the boot up time for
 	  low end devices with as a compromise lowering the security level.
 	  If unsure, leave at the default value.
+
+config BOOT_PREFER_SWAP_OFFSET
+	bool "Prefer the newer swap offset algorithm"
+	help
+	  If y, the BOOT_IMAGE_UPGRADE_MODE will default to using "offset" instead of "scratch".
+	  This is a separate bool config option, because Kconfig doesn't allow defaults to be
+	  overridden in choice options. Most devices should be using swap using offset mode.
 
 config BOOT_PREFER_SWAP_MOVE
 	bool "Prefer the newer swap move algorithm"
@@ -205,12 +414,14 @@ config BOOT_PREFER_SWAP_MOVE
 	  If y, the BOOT_IMAGE_UPGRADE_MODE will default to using
 	  "move" instead of "scratch".  This is a separate bool config
 	  option, because Kconfig doesn't allow defaults to be
-	  overridden in choice options.  Most devices should be using
-	  swap move.
+	  overridden in choice options. This mode has been superceded
+	  by swap using offset, but is kept to allow existing projects
+	  to make use of it.
 
 if !SINGLE_APPLICATION_SLOT
 choice BOOT_IMAGE_UPGRADE_MODE
 	prompt "Image upgrade modes"
+	default BOOT_SWAP_USING_OFFSET if BOOT_PREFER_SWAP_OFFSET
 	default BOOT_SWAP_USING_MOVE if BOOT_PREFER_SWAP_MOVE
 	default BOOT_SWAP_USING_SCRATCH
 
@@ -227,8 +438,19 @@ config BOOT_UPGRADE_ONLY
 	  of swapping them. This prevents the fallback recovery, but
 	  uses a much simpler code path.
 
+config BOOT_SWAP_USING_OFFSET
+	bool "Swap using offset mode without scratch partition"
+	help
+	  If y, the swap upgrade is done by each sector X+1 in the secondary slot moved index X in
+	  the primary slot, then the sector at X+1 in the primary is moved to index X in the
+	  secondary.
+	  This allows a swap upgrade without using a scratch partition, but is currently limited
+	  to all sectors in both slots being of the same size. This mode offers faster swap times
+	  with less flash endurance usage than swap using move, firmware updates must be placed at
+	  the second sector in the second slot instead of the first.
+
 config BOOT_SWAP_USING_MOVE
-	bool "Swap mode that can run without a scratch partition"
+	bool "Swap using move mode without scratch partition"
 	help
 	  If y, the swap upgrade is done in two steps, where first every
 	  sector of the primary slot is moved up one sector, then for
@@ -271,23 +493,9 @@ config BOOT_FIRMWARE_LOADER
 
 endchoice
 
-# Workaround for not being able to have commas in macro arguments
-DT_CHOSEN_Z_SRAM := zephyr,sram
-
-if BOOT_RAM_LOAD
-config BOOT_IMAGE_EXECUTABLE_RAM_START
-	hex "Boot image executable ram start"
-	default $(dt_chosen_reg_addr_hex,$(DT_CHOSEN_Z_SRAM))
-
-config BOOT_IMAGE_EXECUTABLE_RAM_SIZE
-	int "Boot image executable base size"
-	default $(dt_chosen_reg_size_int,$(DT_CHOSEN_Z_SRAM),0)
-endif
-
 config BOOT_DIRECT_XIP_REVERT
 	bool "Enable the revert mechanism in direct-xip mode"
 	depends on BOOT_DIRECT_XIP
-	default n
 	help
 	  If y, enables the revert mechanism in direct-xip similar to the one in
 	  swap mode. It requires the trailer magic to be added to the signed image.
@@ -298,7 +506,6 @@ config BOOT_DIRECT_XIP_REVERT
 
 config BOOT_BOOTSTRAP
 	bool "Bootstrap erased the primary slot from the secondary slot"
-	default n
 	help
 	  If y, enables bootstraping support. Bootstrapping allows an erased
 	  primary slot to be initialized from a valid image in the secondary slot.
@@ -306,7 +513,6 @@ config BOOT_BOOTSTRAP
 
 config BOOT_SWAP_SAVE_ENCTLV
 	bool "Save encrypted key TLVs instead of plaintext keys in swap metadata"
-	default n
 	depends on BOOT_ENCRYPT_IMAGE
 	help
 	  If y, instead of saving the encrypted image keys in plaintext in the
@@ -319,6 +525,38 @@ config BOOT_SWAP_SAVE_ENCTLV
 	  If unsure, leave at the default value.
 
 endif # !SINGLE_APPLICATION_SLOT
+
+config SINGLE_APPLICATION_SLOT_RAM_LOAD
+	bool "RAM load for single application slot"
+	help
+	  If y, the image is loaded to RAM and executed from there. For this reason,
+	  the image has to be linked to be executed from RAM. The address that the
+	  image is copied to is specified using the load-addr argument to the
+	  imgtool.py script which writes it to the image header.
+
+# Workaround for not being able to have commas in macro arguments
+DT_CHOSEN_Z_SRAM := zephyr,sram
+
+if BOOT_RAM_LOAD || SINGLE_APPLICATION_SLOT_RAM_LOAD
+config BOOT_IMAGE_EXECUTABLE_RAM_START
+	hex "Boot image executable ram start"
+	default $(dt_chosen_reg_addr_hex,$(DT_CHOSEN_Z_SRAM))
+
+config BOOT_IMAGE_EXECUTABLE_RAM_SIZE
+	int "Boot image executable base size"
+	default $(dt_chosen_reg_size_int,$(DT_CHOSEN_Z_SRAM),0)
+endif
+
+config FLASH_RUNTIME_SOURCES
+	bool "Images are read from flash partitions defined at runtime"
+	depends on SINGLE_APPLICATION_SLOT
+	help
+	  Instead of using information on the flash slots to decide which images
+	  to load/update, the application provides the information from which
+	  flash slot to load in runtime. This is useful when the application
+	  reads the state for hardware straps or other sources to decide which
+	  image to load. Usually, application will provide a boot_go_hook() to
+	  decide which image to load.
 
 config BOOT_ENCRYPTION_SUPPORT
 	bool
@@ -380,9 +618,21 @@ config BOOT_ENCRYPTION_KEY_FILE
 	  with the public key information will be written in a format expected by
 	  MCUboot.
 
+config BOOT_MAX_IMG_SECTORS_AUTO
+	bool "Calculate maximum sectors automatically"
+	default y
+	help
+	  If this option is enabled then the maximum number of supported sectors per image will
+	  be calculated automatically from the flash erase sizes and size of each partition for
+	  the first image.
+
+	  If this information is not available, or multiple images are used, then this option
+	  should be disabled and BOOT_MAX_IMG_SECTORS should be set instead
+
 config BOOT_MAX_IMG_SECTORS
 	int "Maximum number of sectors per image slot"
 	default 128
+	depends on !BOOT_MAX_IMG_SECTORS_AUTO
 	help
 	  This option controls the maximum number of sectors that each of
 	  the two image areas can contain. Smaller values reduce MCUboot's
@@ -391,7 +641,6 @@ config BOOT_MAX_IMG_SECTORS
 
 config BOOT_SHARE_BACKEND_AVAILABLE
 	bool
-	default n
 	help
 	  Hidden open which indicates if there is a sharing backend available.
 
@@ -400,7 +649,6 @@ DT_CHOSEN_BOOTLOADER_INFO := zephyr,bootloader-info
 
 config BOOT_SHARE_BACKEND_AVAILABLE
 	bool
-	default n
 	help
 	  Hidden open which indicates if there is a sharing backend available.
 
@@ -435,7 +683,6 @@ endchoice
 
 menuconfig BOOT_SHARE_DATA
 	bool "Save application specific data"
-	default n
 	depends on BOOT_SHARE_BACKEND_AVAILABLE
 	help
 	  This will allow data to be shared between MCUboot and an application,
@@ -447,7 +694,6 @@ menuconfig BOOT_SHARE_DATA
 
 config BOOT_SHARE_DATA_BOOTINFO
 	bool "Save boot information data"
-	default n
 	depends on BOOT_SHARE_DATA
 	help
 	  This will place information about the MCUboot configuration and
@@ -455,7 +701,6 @@ config BOOT_SHARE_DATA_BOOTINFO
 
 menuconfig MEASURED_BOOT
 	bool "Store the boot state/measurements in shared memory area"
-	default n
 	depends on BOOT_SHARE_BACKEND_AVAILABLE
 	help
 	  If enabled, the bootloader will store certain boot measurements such as
@@ -477,6 +722,9 @@ config MEASURED_BOOT_MAX_CBOR_SIZE
 
 choice BOOT_FAULT_INJECTION_HARDENING_PROFILE
 	prompt "Fault injection hardening profile"
+	default BOOT_FIH_PROFILE_HIGH if BOOT_FIH_PROFILE_DEFAULT_HIGH
+	default BOOT_FIH_PROFILE_MEDIUM if BOOT_FIH_PROFILE_DEFAULT_MEDIUM
+	default BOOT_FIH_PROFILE_LOW if BOOT_FIH_PROFILE_DEFAULT_LOW
 	default BOOT_FIH_PROFILE_OFF
 
 config BOOT_FIH_PROFILE_OFF
@@ -510,6 +758,32 @@ config BOOT_FIH_PROFILE_HIGH
 	  entropy source.
 
 endchoice
+
+config BOOT_USE_BENCH
+        bool "Enable benchmark code"
+        help
+          If y, adds support for simple benchmarking that can record
+          time intervals between two calls.  The time printed depends
+          on the particular Zephyr target, and is generally ticks of a
+          specific board-specific timer.
+
+module = MCUBOOT
+module-str = MCUBoot bootloader
+source "subsys/logging/Kconfig.template.log_config"
+
+config MCUBOOT_LOG_THREAD_STACK_SIZE
+	int "Stack size for the MCUBoot log processing thread"
+	depends on LOG && !LOG_IMMEDIATE
+	default 2048 if COVERAGE_GCOV
+	default 1024 if NO_OPTIMIZATIONS
+	default 1024 if XTENSA
+	default 4096 if (X86 && X86_64)
+	default 4096 if ARM64
+	default 768
+	help
+	  Set the internal stack size for MCUBoot log processing thread.
+
+menu "USB DFU"
 
 choice BOOT_USB_DFU
 	prompt "USB DFU"
@@ -561,46 +835,30 @@ config BOOT_USB_DFU_DETECT_DELAY
 
 endif # BOOT_USB_DFU_GPIO
 
-config BOOT_USE_BENCH
-        bool "Enable benchmark code"
-        default n
-        help
-          If y, adds support for simple benchmarking that can record
-          time intervals between two calls.  The time printed depends
-          on the particular Zephyr target, and is generally ticks of a
-          specific board-specific timer.
-
-module = MCUBOOT
-module-str = MCUBoot bootloader
-source "subsys/logging/Kconfig.template.log_config"
-
-config MCUBOOT_LOG_THREAD_STACK_SIZE
-	int "Stack size for the MCUBoot log processing thread"
-	depends on LOG && !LOG_IMMEDIATE
-	default 2048 if COVERAGE_GCOV
-	default 1024 if NO_OPTIMIZATIONS
-	default 1024 if XTENSA
-	default 4096 if (X86 && X86_64)
-	default 4096 if ARM64
-	default 768
+config BOOT_USB_DFU_NO_APPLICATION
+	bool "Stay in bootloader if no application"
+	depends on !BOOT_USB_DFU_NO
 	help
-	  Set the internal stack size for MCUBoot log processing thread.
+	  Allows for entering USB DFU recovery mode if there is no bootable
+	  application that the bootloader can jump to.
+
+endmenu
+
+rsource "Kconfig.serial_recovery"
 
 config MCUBOOT_INDICATION_LED
 	bool "Turns on LED indication when device is in DFU"
 	select GPIO
+	depends on MCUBOOT_SERIAL || !BOOT_USB_DFU_NO
 	help
 	  Device device activates the LED while in bootloader mode.
 	  mcuboot-led0 alias must be set in the device's .dts
 	  definitions for this to work.
 
-rsource "Kconfig.serial_recovery"
-
 rsource "Kconfig.firmware_loader"
 
 config BOOT_INTR_VEC_RELOC
 	bool "Relocate the interrupt vector to the application"
-	default n
 	depends on SW_VECTOR_RELAY || CPU_CORTEX_M_HAS_VTOR
 	help
 	  Relocate the interrupt vector to the application before it is started.
@@ -610,7 +868,7 @@ config BOOT_INTR_VEC_RELOC
 config UPDATEABLE_IMAGE_NUMBER
 	int "Number of updateable images"
 	default 1
-	range 1 1 if SINGLE_APPLICATION_SLOT
+	range 1 1 if SINGLE_APPLICATION_SLOT || SINGLE_APPLICATION_SLOT_RAM_LOAD
 	help
 	  Enables support of multi image update.
 
@@ -640,7 +898,7 @@ config MCUBOOT_DOWNGRADE_PREVENTION
 config MCUBOOT_DOWNGRADE_PREVENTION_SECURITY_COUNTER
 	bool "Use image security counter instead of version number"
 	depends on MCUBOOT_DOWNGRADE_PREVENTION
-	depends on (BOOT_SWAP_USING_MOVE || BOOT_SWAP_USING_SCRATCH)
+	depends on (BOOT_SWAP_USING_MOVE || BOOT_SWAP_USING_SCRATCH || BOOT_SWAP_USING_OFFSET)
 	help
        Security counter is used for version eligibility check instead of pure
        version.  When this option is set, any upgrade must have greater or
@@ -662,15 +920,21 @@ config BOOT_WATCHDOG_FEED
 	bool "Feed the watchdog while doing swap"
 	default y if WATCHDOG
 	default y if SOC_FAMILY_NORDIC_NRF
-	# for nRF nrfx based implementation is available
-	imply NRFX_WDT if SOC_FAMILY_NORDIC_NRF
-	imply NRFX_WDT0 if SOC_FAMILY_NORDIC_NRF
-	imply NRFX_WDT1 if SOC_FAMILY_NORDIC_NRF
-	imply NRFX_WDT30 if SOC_FAMILY_NORDIC_NRF
-	imply NRFX_WDT31 if SOC_FAMILY_NORDIC_NRF
+	imply BOOT_WATCHDOG_FEED_NRFX_WDT if SOC_FAMILY_NORDIC_NRF
 	help
 	  Enables implementation of MCUBOOT_WATCHDOG_FEED() macro which is
 	  used to feed watchdog while doing time consuming operations.
+
+config BOOT_WATCHDOG_FEED_NRFX_WDT
+	bool "Feed the watchdog using NRFX WDT directly"
+	depends on SOC_FAMILY_NORDIC_NRF
+	# for nRF nrfx based implementation is available
+	imply NRFX_WDT
+	imply NRFX_WDT0
+	imply NRFX_WDT1
+	imply NRFX_WDT30
+	imply NRFX_WDT31
+	imply NRFX_WDT010
 
 config BOOT_IMAGE_ACCESS_HOOKS
 	bool "Enable hooks for overriding MCUboot's native routines"
@@ -679,6 +943,20 @@ config BOOT_IMAGE_ACCESS_HOOKS
 	  MCUboot's routines required for access the image data and the image
 	  update. It is up to the project customization to add required source
 	  files to the build.
+
+config BOOT_GO_HOOKS
+	bool "Enable hooks for overriding MCUBOOT's boot_go routine"
+	help
+	  Allow to provide procedures for override or extend native
+	  MCUboot's boot_go routine. It is up to the project customization to
+	  add required source files to the build.
+
+config BOOT_FLASH_AREA_HOOKS
+	bool "Enable hooks for overriding MCUboot's flash area routines"
+	help
+	  Allow to provide procedures for override or extend native
+	  MCUboot's flash area routines. It is up to the project customization to
+	  add required source files to the build.
 
 config MCUBOOT_ACTION_HOOKS
 	bool "Enable hooks for responding to MCUboot status changes"
@@ -717,6 +995,86 @@ config MCUBOOT_BOOT_BANNER
 config BOOT_BANNER_STRING
         default "Using Zephyr OS build" if MCUBOOT_BOOT_BANNER
 
+config BOOT_DECOMPRESSION_SUPPORT
+	bool
+	help
+	  Hidden symbol which should be selected if a system provided decompression support.
+
+if BOOT_DECOMPRESSION_SUPPORT
+
+menuconfig BOOT_DECOMPRESSION
+	bool "Decompression"
+	help
+	  If enabled, will include support for compressed images being loaded to the secondary slot
+	  which then get decompressed into the primary slot. This mode allows the secondary slot to
+	  be smaller than primary slot which otherwise would not be allowed.
+
+if BOOT_DECOMPRESSION
+
+config BOOT_DECOMPRESSION_BUFFER_SIZE
+	int "Write buffer size"
+	range 16 16384
+	default 4096
+	help
+	  The size of a secondary buffer used for writing decompressed data to the storage device.
+
+endif # BOOT_DECOMPRESSION
+
+endif # BOOT_DECOMPRESSION_SUPPORT
+
+config MCUBOOT_STORAGE_WITHOUT_ERASE
+	bool "Support for devices without erase"
+	depends on FLASH_HAS_NO_EXPLICIT_ERASE
+	default y
+	help
+	  Not all devices require erase before write and, depending on driver,
+	  may emulate erase by write, as a way to scramble data rather then
+	  by hardware requirement. This unfortunately means that code that
+	  does erase before write, when not needed, will write device twice
+	  which not only reduces device life time but also doubles time
+	  of any write operation (one write for erase and one write for actual
+	  write).
+	  When this option is enabled, MCUboot will check for type of device
+	  and will avoid erase where not needed.
+
+config MCUBOOT_STORAGE_WITH_ERASE
+	bool "Support for devices with erase"
+	depends on FLASH_HAS_EXPLICIT_ERASE
+	default y
+	help
+	  Support for devices with erase
+
+config MCUBOOT_STORAGE_MINIMAL_SCRAMBLE
+	bool "Do minimal required work to remove data [EXPERIMENTAL]"
+	select EXPERIMENTAL
+	help
+	  In some cases MCUboot has to remove data, which usually means make
+	  it non-viable for MCUboot rather then completely destroyed.
+	  For example when MCUboot does not want to bother with broken image,
+	  in some slot, it will remove it.
+	  The same can be achieved with just removal of header and footer,
+	  leaving the rest of image untouched, as without header MCUboot will
+	  not be able to recognize image in slot as bootable.
+	  When this option is enabled, MCUboot will not attempt to erase
+	  entire slot or image, instead it will just remove enough of
+	  data from slot to not recognize it as image anymore.
+	  Depending on type of device this may be done by erase of minimal
+	  number of pages or overwrite of part of image.
+
+menu "Defaults"
+	# Items in this menu should not be manually set. These options are for modules/sysbuild to
+	# set as defaults to allow MCUboot's default configuration to be set, but still allow it
+	# to be overridden by users.
+
+config BOOT_FIH_PROFILE_DEFAULT_LOW
+	bool "Default to low fault inject hardening level"
+
+config BOOT_FIH_PROFILE_DEFAULT_MEDIUM
+	bool "Default to medium fault inject hardening level"
+
+config BOOT_FIH_PROFILE_DEFAULT_HIGH
+	bool "Default to high fault inject hardening level"
+
 endmenu
 
 config MCUBOOT_DEVICE_SETTINGS
@@ -733,8 +1091,9 @@ config MCUBOOT_DEVICE_SETTINGS
 config MCUBOOT_DEVICE_CPU_CORTEX_M0
 	# Hidden selector for Cortex-M0 settings
 	bool
-	default n
 	select SW_VECTOR_RELAY if !CPU_CORTEX_M0_HAS_VECTOR_TABLE_REMAP
+
+endmenu
 
 comment "Zephyr configuration options"
 
@@ -762,7 +1121,6 @@ config USB_DEVICE_PRODUCT
 # use MCUboot's own log configuration
 config MCUBOOT_BOOTUTIL_LIB_OWN_LOG
 	bool
-	default n
 
 config MCUBOOT_VERIFY_IMG_ADDRESS
 	bool "Verify reset address of image in secondary slot"

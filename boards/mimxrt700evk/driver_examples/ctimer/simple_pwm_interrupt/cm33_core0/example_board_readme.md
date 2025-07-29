@@ -26,5 +26,5 @@ The log below shows example output of the CTimer simple PWM demo using interrupt
 CTimer example to generate a PWM signal
 This example uses interrupts to update the PWM duty cycle
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Use Oscilloscope to measure and observe output signal from J20-8 for cm33_core0 or J5-1 for cm33_core1
+Use Oscilloscope to measure and observe output signal from J7-14 for cm33_core0 or J5-1 for cm33_core1
 to see the ctimer pwm signal.

@@ -1,5 +1,5 @@
 /*
- * Copyright 2020, 2024 NXP
+ * Copyright 2020, 2024-2025 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -12,7 +12,7 @@
 typedef struct
 {
     lv_obj_t *screen;
-    lv_obj_t *btn;
+    lv_obj_t *rect;
     lv_obj_t *label;
 } lv_ui;
 

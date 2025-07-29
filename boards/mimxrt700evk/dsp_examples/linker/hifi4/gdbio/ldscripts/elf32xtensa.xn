@@ -1,9 +1,10 @@
-/* This linker script generated from xt-genldscripts.tpp for LSP C:\repo\workspaceNG1\sdk-next\mcu-sdk-3.0\examples\mimxrt700evk\dsp_examples\xaf_playback\hifi4\linker\gdbio */
+/* This linker script generated from xt-genldscripts.tpp for LSP mimxrt700evk */
 /* Linker Script for ld -n */
 MEMORY
 {
   dsp_core_seg :                      	org = 0x20300000, len = 0x280000
-  dram0_0_seg :                       	org = 0x24000000, len = 0x10000
+  dram0_0_seg :                       	org = 0x24000000, len = 0x1000
+  dsp_uncached_seg :                  	org = 0x24001000, len = 0xF000
   iram0_0_seg :                       	org = 0x24020000, len = 0x400
   iram0_1_seg :                       	org = 0x24020400, len = 0x17C
   iram0_2_seg :                       	org = 0x2402057C, len = 0x20
@@ -21,6 +22,7 @@ PHDRS
   dsp_core_bss_phdr PT_LOAD;
   dram0_0_phdr PT_LOAD;
   dram0_0_bss_phdr PT_LOAD;
+  dsp_uncached_phdr PT_LOAD;
   iram0_0_phdr PT_LOAD;
   iram0_1_phdr PT_LOAD;
   iram0_2_phdr PT_LOAD;
@@ -41,7 +43,9 @@ ENTRY(_ResetVector)
 _memmap_mem_dsp_core_start = 0x20300000;
 _memmap_mem_dsp_core_end   = 0x20580000;
 _memmap_mem_dram0_start = 0x24000000;
-_memmap_mem_dram0_end   = 0x24010000;
+_memmap_mem_dram0_end   = 0x24001000;
+_memmap_mem_dsp_uncached_start = 0x24001000;
+_memmap_mem_dsp_uncached_end   = 0x24010000;
 _memmap_mem_iram0_start = 0x24020000;
 _memmap_mem_iram0_end   = 0x24030000;
 
@@ -49,7 +53,9 @@ _memmap_mem_iram0_end   = 0x24030000;
 _memmap_seg_dsp_core_start = 0x20300000;
 _memmap_seg_dsp_core_max   = 0x20580000;
 _memmap_seg_dram0_0_start = 0x24000000;
-_memmap_seg_dram0_0_max   = 0x24010000;
+_memmap_seg_dram0_0_max   = 0x24001000;
+_memmap_seg_dsp_uncached_start = 0x24001000;
+_memmap_seg_dsp_uncached_max   = 0x24010000;
 _memmap_seg_iram0_0_start = 0x24020000;
 _memmap_seg_iram0_0_max   = 0x24020400;
 _memmap_seg_iram0_1_start = 0x24020400;
@@ -186,14 +192,6 @@ SECTIONS
     _dram0_data_end = ABSOLUTE(.);
   } >dram0_0_seg :dram0_0_phdr
 
-  NonCacheable : ALIGN(4)
-  {
-    NonCacheable_start = ABSOLUTE(.);
-    *(NonCacheable)
-    . = ALIGN (4);
-    NonCacheable_end = ABSOLUTE(.);
-  } >dram0_0_seg :dram0_0_phdr
-
   .dram0.bss (NOLOAD) : ALIGN(8)
   {
     . = ALIGN (8);
@@ -205,6 +203,25 @@ SECTIONS
   } >dram0_0_seg :dram0_0_bss_phdr
 
   _memmap_mem_dram0_max = ABSOLUTE(.);
+
+  NonCacheable.init : ALIGN(4)
+  {
+    NonCacheable_init_start = ABSOLUTE(.);
+    *(NonCacheable.init)
+    . = ALIGN (4);
+    NonCacheable_init_end = ABSOLUTE(.);
+  } >dsp_uncached_seg :dsp_uncached_phdr
+
+  NonCacheable : ALIGN(4)
+  {
+    NonCacheable_start = ABSOLUTE(.);
+    *(NonCacheable)
+    . = ALIGN (4);
+    NonCacheable_end = ABSOLUTE(.);
+    _memmap_seg_dsp_uncached_end = ALIGN(0x8);
+  } >dsp_uncached_seg :dsp_uncached_phdr
+
+  _memmap_mem_dsp_uncached_max = ABSOLUTE(.);
 
   .ResetVector.text : ALIGN(4)
   {

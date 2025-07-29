@@ -218,7 +218,7 @@ static void vExampleTimerCallback(TimerHandle_t xTimer)
     /* The timer has expired.  Count the number of times this happens.  The
     timer that calls this function is an auto re-load timer, so it will
     execute periodically. */
-    ulCountOfTimerCallbackExecutions++;
+    (ulCountOfTimerCallbackExecutions < UINT32_MAX) ? ulCountOfTimerCallbackExecutions++ : (ulCountOfTimerCallbackExecutions = UINT32_MAX);
 }
 
 /*!
@@ -267,7 +267,7 @@ static void prvQueueReceiveTask(void *pvParameters)
         if (ulReceivedValue == 100UL)
         {
             /* Count the number of items that have been received correctly. */
-            ulCountOfItemsReceivedOnQueue++;
+            (ulCountOfItemsReceivedOnQueue < UINT32_MAX) ? ulCountOfItemsReceivedOnQueue++ : (ulCountOfItemsReceivedOnQueue = UINT32_MAX);
             PRINTF("Receive message counter: %d.\r\n", ulCountOfItemsReceivedOnQueue);
         }
     }
@@ -287,7 +287,7 @@ static void prvEventSemaphoreTask(void *pvParameters)
         }
 
         /* Count the number of times the semaphore is received. */
-        ulCountOfReceivedSemaphores++;
+        (ulCountOfReceivedSemaphores < UINT32_MAX) ? ulCountOfReceivedSemaphores++ : (ulCountOfReceivedSemaphores = UINT32_MAX);
 
         PRINTF("Event task is running.\r\n");
     }

@@ -1,0 +1,2442 @@
+<?xml version="1.0" encoding= "UTF-8" ?>
+<configuration name="MIMXRT798S" xsi:schemaLocation="http://mcuxpresso.nxp.com/XSD/mex_configuration_17 http://mcuxpresso.nxp.com/XSD/mex_configuration_17.xsd" uuid="c5f068e6-52d3-49c4-b25f-ad6f96b11f4a" version="17" xmlns="http://mcuxpresso.nxp.com/XSD/mex_configuration_17" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+   <common>
+      <processor>MIMXRT798S</processor>
+      <package>MIMXRT798SGFOB</package>
+      <mcu_data>ksdk2_0</mcu_data>
+      <cores selected="cm33_core0">
+         <core name="Cortex-M33 (Core #0)" id="cm33_core0" description=""/>
+         <core name="Cortex-M33 (Core #1)" id="cm33_core1" description=""/>
+      </cores>
+      <description></description>
+   </common>
+   <preferences>
+      <validate_boot_init_only>true</validate_boot_init_only>
+      <generate_code_modified_registers_only>false</generate_code_modified_registers_only>
+      <update_include_paths>true</update_include_paths>
+      <generate_registers_defines>false</generate_registers_defines>
+   </preferences>
+   <tools>
+      <pins name="Pins" version="17.0" enabled="true" update_project_code="true">
+         <pins_profile>
+            <processor_version>0.2503.110</processor_version>
+         </pins_profile>
+         <functions_list>
+            <function name="BOARD_InitPins">
+               <description>Configures pin routing and optionally pin electrical features.</description>
+               <options>
+                  <callFromInitBoot>true</callFromInitBoot>
+                  <coreID>cm33_core0</coreID>
+                  <enableClock>true</enableClock>
+               </options>
+               <dependencies>
+                  <dependency resourceType="SWComponent" resourceId="platform.drivers.common" description="Pins initialization requires the COMMON Driver in the project." problem_level="2" source="Pins:BOARD_InitPins">
+                     <feature name="enabled" evaluation="equal" configuration="cm33_core0">
+                        <data>true</data>
+                     </feature>
+                  </dependency>
+                  <dependency resourceType="SWComponent" resourceId="platform.drivers.lpc_iopctl" description="Pins initialization requires the LPC_IOPCTL Driver in the project." problem_level="2" source="Pins:BOARD_InitPins">
+                     <feature name="enabled" evaluation="equal" configuration="cm33_core0">
+                        <data>true</data>
+                     </feature>
+                  </dependency>
+               </dependencies>
+               <pins>
+                  <pin peripheral="LP_FLEXCOMM0" signal="P0" pin_num="N4" pin_signal="PIO0_31/LP_FLEXCOMM0_P0/UTICK0_CAP2/SCT0_OUT8/CTIMER4_MAT0">
+                     <pin_features>
+                        <pin_feature name="input_buffer" value="enable"/>
+                     </pin_features>
+                  </pin>
+                  <pin peripheral="LP_FLEXCOMM0" signal="P1" pin_num="N5" pin_signal="PIO1_0/LP_FLEXCOMM0_P1/SCT0_OUT9/CTIMER4_MAT1"/>
+                  <pin peripheral="GPIO0" signal="GPIO, 9" pin_num="L7" pin_signal="PIO0_9/LP_FLEXCOMM4_P6/SCT0_GPIN1/SCT0_OUT1/CTIMER0_MAT0/LP_FLEXCOMM1_P5">
+                     <pin_features>
+                        <pin_feature name="input_buffer" value="enable"/>
+                     </pin_features>
+                  </pin>
+                  <pin peripheral="GPIO7" signal="GPIO, 14" pin_num="P14" pin_signal="PIO7_14/SDHC1_DATA5/LP_FLEXCOMM7_P0"/>
+                  <pin peripheral="GPIO7" signal="GPIO, 15" pin_num="M14" pin_signal="PIO7_15/SDHC1_DATA6/LP_FLEXCOMM7_P1"/>
+                  <pin peripheral="GPIO7" signal="GPIO, 16" pin_num="M15" pin_signal="PIO7_16/SDHC1_DATA7/LP_FLEXCOMM7_P2"/>
+                  <pin peripheral="LPI2C15" signal="SCL" pin_num="U8" pin_signal="PMIC_I2C_SCL">
+                     <pin_features>
+                        <pin_feature name="open_drain" value="enable"/>
+                        <pin_feature name="slew_rate" value="standard"/>
+                        <pin_feature name="input_buffer" value="enable"/>
+                     </pin_features>
+                  </pin>
+                  <pin peripheral="LPI2C15" signal="SDA" pin_num="U7" pin_signal="PMIC_I2C_SDA">
+                     <pin_features>
+                        <pin_feature name="open_drain" value="enable"/>
+                        <pin_feature name="slew_rate" value="standard"/>
+                        <pin_feature name="input_buffer" value="enable"/>
+                     </pin_features>
+                  </pin>
+                  <pin peripheral="GPIO0" signal="GPIO, 17" pin_num="N6" pin_signal="PIO0_17/LP_FLEXCOMM6_P5/SCT0_GPIN0/SCT0_OUT0/CTIMER2_MAT0/SAI1_RX_BCLK"/>
+               </pins>
+            </function>
+         </functions_list>
+      </pins>
+      <clocks name="Clocks" version="15.0" enabled="true" update_project_code="true">
+         <clocks_profile>
+            <processor_version>0.2503.110</processor_version>
+         </clocks_profile>
+         <clock_configurations>
+            <clock_configuration name="BOARD_BootClockRUN" id_prefix="" prefix_user_defined="false">
+               <description></description>
+               <options/>
+               <dependencies>
+                  <dependency resourceType="PeripheralUnifiedSignal" resourceId="CLKCTL2.xtalin" description="&apos;XTALIN&apos; (Pins tool id: CLKCTL2.xtalin, Clocks tool id: CLKCTL2.XTALIN) needs to be routed" problem_level="1" source="Clocks:BOARD_BootClockRUN">
+                     <feature name="routed" evaluation="">
+                        <data>true</data>
+                     </feature>
+                  </dependency>
+                  <dependency resourceType="PeripheralUnifiedSignal" resourceId="CLKCTL2.xtalin" description="&apos;XTALIN&apos; (Pins tool id: CLKCTL2.xtalin, Clocks tool id: CLKCTL2.XTALIN) needs to have &apos;INPUT&apos; direction" problem_level="1" source="Clocks:BOARD_BootClockRUN">
+                     <feature name="direction" evaluation="">
+                        <data>INPUT</data>
+                     </feature>
+                  </dependency>
+                  <dependency resourceType="PeripheralUnifiedSignal" resourceId="CLKCTL2.xtalout" description="&apos;XTALOUT&apos; (Pins tool id: CLKCTL2.xtalout, Clocks tool id: CLKCTL2.XTALOUT) needs to be routed" problem_level="1" source="Clocks:BOARD_BootClockRUN">
+                     <feature name="routed" evaluation="">
+                        <data>true</data>
+                     </feature>
+                  </dependency>
+                  <dependency resourceType="PeripheralUnifiedSignal" resourceId="CLKCTL2.xtalout" description="&apos;XTALOUT&apos; (Pins tool id: CLKCTL2.xtalout, Clocks tool id: CLKCTL2.XTALOUT) needs to have &apos;OUTPUT&apos; direction" problem_level="1" source="Clocks:BOARD_BootClockRUN">
+                     <feature name="direction" evaluation="">
+                        <data>OUTPUT</data>
+                     </feature>
+                  </dependency>
+                  <dependency resourceType="SWComponent" resourceId="platform.drivers.common" description="Clocks initialization requires the COMMON Driver in the project." problem_level="2" source="Clocks:BOARD_BootClockRUN">
+                     <feature name="enabled" evaluation="equal" configuration="cm33_core1">
+                        <data>true</data>
+                     </feature>
+                  </dependency>
+                  <dependency resourceType="SWComponent" resourceId="platform.drivers.common" description="Clocks initialization requires the COMMON Driver in the project." problem_level="2" source="Clocks:BOARD_BootClockRUN">
+                     <feature name="enabled" evaluation="equal" configuration="cm33_core0">
+                        <data>true</data>
+                     </feature>
+                  </dependency>
+                  <dependency resourceType="SWComponent" resourceId="platform.drivers.power" description="Clocks initialization requires the POWER Driver in the project." problem_level="2" source="Clocks:BOARD_BootClockRUN">
+                     <feature name="enabled" evaluation="equal" configuration="cm33_core1">
+                        <data>true</data>
+                     </feature>
+                  </dependency>
+                  <dependency resourceType="SWComponent" resourceId="platform.drivers.power" description="Clocks initialization requires the POWER Driver in the project." problem_level="2" source="Clocks:BOARD_BootClockRUN">
+                     <feature name="enabled" evaluation="equal" configuration="cm33_core0">
+                        <data>true</data>
+                     </feature>
+                  </dependency>
+                  <dependency resourceType="SWComponent" resourceId="platform.drivers.clock" description="Clocks initialization requires the CLOCK Driver in the project." problem_level="2" source="Clocks:BOARD_BootClockRUN">
+                     <feature name="enabled" evaluation="equal" configuration="cm33_core1">
+                        <data>true</data>
+                     </feature>
+                  </dependency>
+                  <dependency resourceType="SWComponent" resourceId="platform.drivers.clock" description="Clocks initialization requires the CLOCK Driver in the project." problem_level="2" source="Clocks:BOARD_BootClockRUN">
+                     <feature name="enabled" evaluation="equal" configuration="cm33_core0">
+                        <data>true</data>
+                     </feature>
+                  </dependency>
+               </dependencies>
+               <clock_sources>
+                  <clock_source id="CLKCTL2.XTAL_OSC.outFreq" value="24 MHz" locked="false" enabled="true"/>
+                  <clock_source id="FRO0.FRO_TRIM.outFreq" value="192 MHz" locked="false" enabled="false"/>
+                  <clock_source id="FRO0.FRO_TUNER.outFreq" value="192 MHz" locked="false" enabled="false"/>
+                  <clock_source id="FRO2.FRO_TRIM.outFreq" value="192 MHz" locked="false" enabled="false"/>
+                  <clock_source id="FRO2.FRO_TUNER.outFreq" value="192 MHz" locked="false" enabled="false"/>
+               </clock_sources>
+               <clock_outputs>
+                  <clock_output id="COMMON_RAM_CLK.outFreq" value="1 MHz" locked="false" accuracy=""/>
+                  <clock_output id="COMMON_VDDN_CLK.outFreq" value="1 MHz" locked="false" accuracy=""/>
+                  <clock_output id="COMPUTE_MAIN_CLK.outFreq" value="192 MHz" locked="false" accuracy=""/>
+                  <clock_output id="MEDIA_MAIN_CLK.outFreq" value="1 MHz" locked="false" accuracy=""/>
+                  <clock_output id="MEDIA_VDDN_CLK.outFreq" value="1 MHz" locked="false" accuracy=""/>
+                  <clock_output id="SENSE_MAIN_CLK.outFreq" value="32 MHz" locked="false" accuracy=""/>
+                  <clock_output id="SENSE_MAIN_CLK_1.outFreq" value="32 MHz" locked="false" accuracy=""/>
+                  <clock_output id="SENSE_RAM_CLK.outFreq" value="32 MHz" locked="false" accuracy=""/>
+                  <clock_output id="XSPI0_FCLK.outFreq" value="500 kHz" locked="false" accuracy=""/>
+                  <clock_output id="XSPI0_FCLK_DIV2.outFreq" value="250 kHz" locked="false" accuracy=""/>
+                  <clock_output id="baseclk_cmpt.outFreq" value="1 MHz" locked="false" accuracy=""/>
+                  <clock_output id="baseclk_com2.outFreq" value="1 MHz" locked="false" accuracy=""/>
+                  <clock_output id="baseclk_comn.outFreq" value="1 MHz" locked="false" accuracy=""/>
+                  <clock_output id="baseclk_dsp.outFreq" value="1 MHz" locked="false" accuracy=""/>
+                  <clock_output id="baseclk_md2.outFreq" value="1 MHz" locked="false" accuracy=""/>
+                  <clock_output id="baseclk_mdn.outFreq" value="1 MHz" locked="false" accuracy=""/>
+                  <clock_output id="baseclk_sense.outFreq" value="64 MHz" locked="false" accuracy=""/>
+                  <clock_output id="ckil_32k.outFreq" value="976.5625 Hz" locked="false" accuracy=""/>
+                  <clock_output id="fro0_div3.outFreq" value="64 MHz" locked="false" accuracy=""/>
+                  <clock_output id="fro0_div6.outFreq" value="32 MHz" locked="false" accuracy=""/>
+                  <clock_output id="fro0_max_vdd2_comp.outFreq" value="192 MHz" locked="false" accuracy=""/>
+                  <clock_output id="fro0_max_vddn_com.outFreq" value="192 MHz" locked="false" accuracy=""/>
+                  <clock_output id="fro0_tuner_divided_clk.outFreq" value="24 MHz" locked="false" accuracy=""/>
+                  <clock_output id="fro1_div2.outFreq" value="96 MHz" locked="false" accuracy=""/>
+                  <clock_output id="fro1_div3.outFreq" value="64 MHz" locked="false" accuracy=""/>
+                  <clock_output id="fro1_div6.outFreq" value="32 MHz" locked="false" accuracy=""/>
+                  <clock_output id="fro1_div8.outFreq" value="24 MHz" locked="false" accuracy=""/>
+                  <clock_output id="fro1_max.outFreq" value="192 MHz" locked="false" accuracy=""/>
+                  <clock_output id="fro2_div3.outFreq" value="64 MHz" locked="false" accuracy=""/>
+                  <clock_output id="fro2_div6.outFreq" value="32 MHz" locked="false" accuracy=""/>
+                  <clock_output id="fro2_max_vdd1_sense.outFreq" value="192 MHz" locked="false" accuracy=""/>
+                  <clock_output id="fro2_tuner_divided_clk.outFreq" value="24 MHz" locked="false" accuracy=""/>
+                  <clock_output id="lposc_1m.outFreq" value="1 MHz" locked="false" accuracy=""/>
+                  <clock_output id="osc_clk.outFreq" value="24 MHz" locked="false" accuracy=""/>
+                  <clock_output id="osc_clk_eusb.outFreq" value="24 MHz" locked="false" accuracy=""/>
+                  <clock_output id="osc_clk_usb.outFreq" value="24 MHz" locked="false" accuracy=""/>
+                  <clock_output id="wake32k_clk.outFreq" value="976.5625 Hz" locked="false" accuracy=""/>
+               </clock_outputs>
+               <clock_settings>
+                  <setting id="AUDIO_PLL0_INIT_Config" value="custom" locked="false"/>
+                  <setting id="AUDIO_VDD1_CLK_SEL_INIT_Config" value="custom" locked="false"/>
+                  <setting id="AUDIO_VDD2_CLK_SEL_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CKIL_32K_CLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_COMM2_CLKOUT_INIT_Config" value="runtime" locked="false"/>
+                  <setting id="CLK_ROOT_COMMON_RAM_CLK_INIT_Config" value="runtime" locked="false"/>
+                  <setting id="CLK_ROOT_COMPUTE_MAIN_CLK_INIT_Config" value="runtime" locked="false"/>
+                  <setting id="CLK_ROOT_COMPUTE_SYSTICK_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_COMPUTE_TPIU_CLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_CTIMER0_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_CTIMER1_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_CTIMER2_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_CTIMER3_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_CTIMER4_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_CTIMER5_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_CTIMER6_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_CTIMER7_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_DCPIXEL_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_DPHY_BIT_CLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_DPHY_RX_CLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_DSP_CLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_FLEXCOMM0_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_FLEXCOMM10_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_FLEXCOMM11_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_FLEXCOMM12_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_FLEXCOMM13_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_FLEXCOMM17_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_FLEXCOMM18_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_FLEXCOMM19_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_FLEXCOMM1_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_FLEXCOMM20_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_FLEXCOMM2_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_FLEXCOMM3_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_FLEXCOMM4_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_FLEXCOMM5_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_FLEXCOMM6_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_FLEXCOMM7_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_FLEXCOMM8_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_FLEXCOMM9_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_FLEXIO_CLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_GPU_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_I3C01_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_I3C01_PCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_I3C23_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_LPI2C_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_LPSPI14_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_LPSPI16_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_MICFIL_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_OSEVENT_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_SAI012_CLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_SAI3_CLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_SARADC_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_SCT_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_SDADC_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_SDIO0_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_SDIO1_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_SENSE_CLKOUT_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_SENSE_DSP_CLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_SENSE_MAIN_CLK_CPU_Core_Config" value="cm33_core1" locked="false"/>
+                  <setting id="CLK_ROOT_SENSE_RAM_CLK_CPU_Core_Config" value="cm33_core1" locked="false"/>
+                  <setting id="CLK_ROOT_SENSE_RAM_CLK_INIT_Config" value="runtime" locked="false"/>
+                  <setting id="CLK_ROOT_SENSE_SYSTICK_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_USB_WAKE_CLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_UTICK0_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_UTICK1_CLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_WDT0_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_WDT1_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_WDT2_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_WDT3_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_XSPI0_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_XSPI1_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_XSPI2_FCLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_eUSB_WAKE_CLK_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_osc_clk_eusb_INIT_Config" value="custom" locked="false"/>
+                  <setting id="CLK_ROOT_osc_clk_usb_INIT_Config" value="custom" locked="false"/>
+                  <setting id="COMN_MAINCLK_SHUTOFF_INIT_Config" value="runtime" locked="false"/>
+                  <setting id="COMP_MAINCLK_SHUTOFF_INIT_Config" value="runtime" locked="false"/>
+                  <setting id="ClockPostInitConfig" value="BOARD_ClockLPPostConfig" locked="false"/>
+                  <setting id="ClockPreInitConfig" value="BOARD_ClockLPPreConfig" locked="false"/>
+                  <setting id="FCCLK0_CLK_SEL_INIT_Config" value="custom" locked="false"/>
+                  <setting id="FCCLK1_CLK_SEL_INIT_Config" value="custom" locked="false"/>
+                  <setting id="FCCLK2_CLK_SEL_INIT_Config" value="custom" locked="false"/>
+                  <setting id="FCCLK3_CLK_SEL_INIT_Config" value="custom" locked="false"/>
+                  <setting id="FRO0_INIT_Config" value="custom" locked="false"/>
+                  <setting id="FRO0_mode" value="ClosedLoop" locked="false"/>
+                  <setting id="FRO1_INIT_Config" value="custom" locked="false"/>
+                  <setting id="FRO2_CPU_Core_Config" value="cm33_core1" locked="false"/>
+                  <setting id="FRO2_mode" value="ClosedLoop" locked="false"/>
+                  <setting id="LOW_FREQ_CLK_SEL_INIT_Config" value="custom" locked="false"/>
+                  <setting id="LPOSC_1M_CLK_SEL_CPU_Core_Config" value="both" locked="false"/>
+                  <setting id="MAIN_PLL0_INIT_Config" value="custom" locked="false"/>
+                  <setting id="MEDIA_MAINCLK_SHUTOFF_INIT_Config" value="runtime" locked="false"/>
+                  <setting id="OSC32KNP_INIT_Config" value="custom" locked="false"/>
+                  <setting id="RTC_SS_INIT_Config" value="custom" locked="false"/>
+                  <setting id="SENSEP_MAINCLK_SHUTOFF_INIT_Config" value="custom" locked="false"/>
+                  <setting id="SENSES_MAINCLK_SHUTOFF_INIT_Config" value="runtime" locked="false"/>
+                  <setting id="WAKE32K_CLK_SEL_INIT_Config" value="custom" locked="false"/>
+                  <setting id="XTAL_OSC_CPU_Core_Config" value="both" locked="false"/>
+                  <setting id="XTAL_OSC_INIT_Config" value="runtime" locked="false"/>
+                  <setting id="Audio_PLL0_Power_Config" value="Disabled" locked="false"/>
+                  <setting id="CLKCTL0.CLOCK_ROOT_COMM2_CLKOUT.DIV.scale" value="10" locked="true"/>
+                  <setting id="CLKCTL0.CLOCK_ROOT_COMM2_CLKOUT.MUX.sel" value="FRO0.FRO_MAX_VDD2_COM_CLK" locked="false"/>
+                  <setting id="CLKCTL0.CLOCK_ROOT_COMMON_RAM_CLK.DIV.scale" value="1" locked="true"/>
+                  <setting id="CLKCTL0.CLOCK_ROOT_COMPUTE_MAIN_CLK.DIV.scale" value="1" locked="true"/>
+                  <setting id="CLKCTL0.CLOCK_ROOT_COMPUTE_MAIN_CLK.MUX.sel" value="FRO0.FRO_MAX_VDD2_COMP_CLK" locked="false"/>
+                  <setting id="CLKCTL0.CMPTBASECLKSEL.sel" value="CLKCTL3.lposc_1m" locked="false"/>
+                  <setting id="CLKCTL0.DSPBASECLKSEL.sel" value="CLKCTL3.lposc_1m" locked="false"/>
+                  <setting id="CLKCTL0.VDD2COMBASECLKSEL.sel" value="CLKCTL3.lposc_1m" locked="false"/>
+                  <setting id="CLKCTL1.AUDIOVDD1CLKSEL.sel" value="FRO2.FRO_DIV8_CLK" locked="false"/>
+                  <setting id="CLKCTL1.SENSEBASECLKSEL.sel" value="FRO2.FRO_DIV3_CLK" locked="false"/>
+                  <setting id="CLKCTL2.AUDIOPLL0CLKSEL.sel" value="CLKCTL2.SYSOSCBYPASS" locked="false"/>
+                  <setting id="CLKCTL2.AUDIO_PLL0_PFD3_DIV.scale" value="26" locked="true"/>
+                  <setting id="CLKCTL2.AUDIO_PLL0_PFD3_MUL.scale" value="18" locked="true"/>
+                  <setting id="CLKCTL2.Audio_PLL0.denom" value="27000" locked="false"/>
+                  <setting id="CLKCTL2.Audio_PLL0.num" value="5040" locked="false"/>
+                  <setting id="CLKCTL2.CLOCK_ROOT_COMMON_VDDN_CLK.DIV.scale" value="1" locked="true"/>
+                  <setting id="CLKCTL2.COMNBASECLKSEL.sel" value="CLKCTL3.lposc_1m" locked="false"/>
+                  <setting id="CLKCTL2.MAINPLL0CLKSEL.sel" value="CLKCTL2.SYSOSCBYPASS" locked="false"/>
+                  <setting id="CLKCTL2.MAIN_PLL0_PFD0_DIV.scale" value="19" locked="true"/>
+                  <setting id="CLKCTL2.MAIN_PLL0_PFD0_MUL.scale" value="18" locked="true"/>
+                  <setting id="CLKCTL2.Main_PLL0.denom" value="1" locked="false"/>
+                  <setting id="CLKCTL2.Main_PLL0.num" value="0" locked="false"/>
+                  <setting id="CLKCTL2_SYSOSCCTL0_LP_ENABLE_CFG" value="low_power" locked="false"/>
+                  <setting id="CLKCTL3.CLOCK_ROOT_SENSE_MAIN_CLK.DIV.scale" value="6" locked="true"/>
+                  <setting id="CLKCTL3.CLOCK_ROOT_SENSE_MAIN_CLK.MUX.sel" value="FRO2.FRO_MAX_VDD1_SENSE_CLK" locked="false"/>
+                  <setting id="CLKCTL4.CLOCK_ROOT_MEDIA_MAIN_CLK.DIV.scale" value="1" locked="true"/>
+                  <setting id="CLKCTL4.CLOCK_ROOT_MEDIA_VDDN_CLK.DIV.scale" value="1" locked="true"/>
+                  <setting id="CLKCTL4.MD2BASECLKSEL.sel" value="CLKCTL3.lposc_1m" locked="false"/>
+                  <setting id="CLKCTL4.MDNBASECLKSEL.sel" value="CLKCTL3.lposc_1m" locked="false"/>
+                  <setting id="CLKCTL4_FCCLK0_SEL_EN_CFG" value="Disabled" locked="false"/>
+                  <setting id="CLKCTL4_FCCLK1_SEL_EN_CFG" value="Disabled" locked="false"/>
+                  <setting id="CLKCTL4_FCCLK2_SEL_EN_CFG" value="Disabled" locked="false"/>
+                  <setting id="CLKCTL4_FCCLK3_SEL_EN_CFG" value="Disabled" locked="false"/>
+                  <setting id="CLOCK_ROOTCOMM2_CLKOUT_CONTROL_OFF_CFG" value="Enabled" locked="false"/>
+                  <setting id="CLOCK_ROOTXSPI0_FCLK_CONTROL_OFF_CFG" value="Enabled" locked="false"/>
+                  <setting id="FRO0.FROMODESEL.sel" value="FRO0.FRO_TUNER" locked="false"/>
+                  <setting id="FRO0MAXDOMAINEN_FROMAX_OF_MD2_CFG" value="Disabled" locked="false"/>
+                  <setting id="FRO0MAXDOMAINEN_FROMAX_OF_MDN_CFG" value="Disabled" locked="false"/>
+                  <setting id="FRO0MAXDOMAINEN_FROMAX_OF_SENSE_CFG" value="Disabled" locked="false"/>
+                  <setting id="FRO0MAXDOMAINEN_FROMAX_OF_VDD2_COM_CFG" value="Disabled" locked="false"/>
+                  <setting id="FRO0MAXDOMAINEN_FROMAX_OF_VDD2_DSP_CFG" value="Disabled" locked="false"/>
+                  <setting id="FRO0_CLKGATE_DIV2_CFG" value="Disabled" locked="false"/>
+                  <setting id="FRO0_CLKGATE_DIV8_CFG" value="Disabled" locked="false"/>
+                  <setting id="FRO0_COARSE_TRIM_Config" value="Disabled" locked="false"/>
+                  <setting id="FRO0_TRIM_COUNT_RANGE_Config" value="100" locked="false"/>
+                  <setting id="FRO2.FROMODESEL.sel" value="FRO2.FRO_TUNER" locked="false"/>
+                  <setting id="FRO2MAXDOMAINEN_FROMAX_OF_CMPT_CFG" value="Disabled" locked="false"/>
+                  <setting id="FRO2MAXDOMAINEN_FROMAX_OF_COMN_CFG" value="Disabled" locked="false"/>
+                  <setting id="FRO2MAXDOMAINEN_FROMAX_OF_MD2_CFG" value="Disabled" locked="false"/>
+                  <setting id="FRO2MAXDOMAINEN_FROMAX_OF_MDN_CFG" value="Disabled" locked="false"/>
+                  <setting id="FRO2MAXDOMAINEN_FROMAX_OF_VDD2_COM_CFG" value="Disabled" locked="false"/>
+                  <setting id="FRO2MAXDOMAINEN_FROMAX_OF_VDD2_DSP_CFG" value="Disabled" locked="false"/>
+                  <setting id="FRO2_CLKGATE_DIV2_CFG" value="Disabled" locked="false"/>
+                  <setting id="FRO2_CLKGATE_DIV8_CFG" value="Disabled" locked="false"/>
+                  <setting id="FRO2_COARSE_TRIM_Config" value="Disabled" locked="false"/>
+                  <setting id="FRO2_TRIM_COUNT_RANGE_Config" value="100" locked="false"/>
+                  <setting id="Main_PLL0_Power_Config" value="Disabled" locked="false"/>
+               </clock_settings>
+               <called_from_default_init>true</called_from_default_init>
+            </clock_configuration>
+         </clock_configurations>
+      </clocks>
+      <dcdx name="DCDx" version="3.0" enabled="false" update_project_code="true">
+         <dcdx_profile>
+            <processor_version>N/A</processor_version>
+         </dcdx_profile>
+         <dcdx_configurations/>
+      </dcdx>
+      <periphs name="Peripherals" version="15.0" enabled="true" update_project_code="true">
+         <peripherals_profile>
+            <processor_version>0.2503.110</processor_version>
+         </peripherals_profile>
+         <functional_groups>
+            <functional_group name="BOARD_InitPeripherals" uuid="ff293811-761b-4e74-bf0d-90ced63423a8" called_from_default_init="true" id_prefix="" core="cm33_core0">
+               <description></description>
+               <options/>
+               <dependencies/>
+               <instances>
+                  <instance name="NVIC0" uuid="ea21d5c5-5ad5-49e1-99d6-eda215a25503" type="nvic" type_id="nvic" mode="general" peripheral="NVIC0" enabled="true" comment="" custom_name_enabled="false" editing_lock="false">
+                     <config_set name="nvic">
+                        <array name="interrupt_table"/>
+                        <array name="interrupts"/>
+                     </config_set>
+                  </instance>
+               </instances>
+            </functional_group>
+         </functional_groups>
+         <components>
+            <component name="system" uuid="554d1b47-fc3a-4958-be4a-0c745012c2e5" type_id="system_54b53072540eeeb8f8e9343e71f28176">
+               <config_set_global name="global_system_definitions">
+                  <setting name="user_definitions" value=""/>
+                  <setting name="user_includes" value=""/>
+                  <setting name="global_init" value=""/>
+               </config_set_global>
+            </component>
+            <component name="generic_enet" uuid="2a81efff-a2e4-463b-a4a7-24c96f776933" type_id="generic_enet_74db5c914f0ddbe47d86af40cb77a619">
+               <config_set_global name="global_enet"/>
+            </component>
+            <component name="generic_uart" uuid="e323c01a-f3da-4566-9a19-283cbe95787a" type_id="generic_uart">
+               <config_set_global name="global_uart"/>
+            </component>
+            <component name="generic_can" uuid="b83878bb-9c70-4855-af2d-6909363d366f" type_id="generic_can">
+               <config_set_global name="global_can"/>
+            </component>
+            <component name="uart_cmsis_common" uuid="7cafcc23-4291-44b7-96f5-a47e1c513b4c" type_id="uart_cmsis_common_9cb8e302497aa696fdbb5a4fd622c2a8">
+               <config_set_global name="global_USART_CMSIS_common" quick_selection="default"/>
+            </component>
+            <component name="msg" uuid="565c476a-99f5-4759-a22d-cde17f8c1b8b" type_id="msg">
+               <config_set_global name="global_messages"/>
+            </component>
+            <component name="gpio_adapter_common" uuid="6396a30b-4713-48f2-9816-5663e5c9a900" type_id="gpio_adapter_common">
+               <config_set_global name="global_gpio_adapter_common" quick_selection="default"/>
+            </component>
+         </components>
+      </periphs>
+      <tee name="TEE" version="7.0" enabled="false" update_project_code="true">
+         <tee_profile>
+            <processor_version>0.0.0</processor_version>
+            <tool_options>
+               <option id="_output_type_" value="c_code"/>
+               <option id="_legacy_source_names_" value="yes"/>
+               <option id="_unaffected_strategy_" value="to_after_reset"/>
+               <option id="_glikey_write_enable_" value="yes"/>
+            </tool_options>
+         </tee_profile>
+         <functional_group name="BOARD_InitTrustZone" called_from_default_init="true" id_prefix="" prefix_user_defined="true">
+            <description></description>
+            <options/>
+            <root>
+               <ports>
+                  <port id="GPIO0">
+                     <pin_security id="0" security="s_priv"/>
+                     <pin_security id="1" security="s_priv"/>
+                     <pin_security id="10" security="s_priv"/>
+                     <pin_security id="11" security="s_priv"/>
+                     <pin_security id="12" security="s_priv"/>
+                     <pin_security id="13" security="s_priv"/>
+                     <pin_security id="14" security="s_priv"/>
+                     <pin_security id="15" security="s_priv"/>
+                     <pin_security id="16" security="s_priv"/>
+                     <pin_security id="17" security="s_priv"/>
+                     <pin_security id="18" security="s_priv"/>
+                     <pin_security id="19" security="s_priv"/>
+                     <pin_security id="2" security="s_priv"/>
+                     <pin_security id="20" security="s_priv"/>
+                     <pin_security id="21" security="s_priv"/>
+                     <pin_security id="22" security="s_priv"/>
+                     <pin_security id="3" security="s_priv"/>
+                     <pin_security id="31" security="s_priv"/>
+                     <pin_security id="4" security="s_priv"/>
+                     <pin_security id="5" security="s_priv"/>
+                     <pin_security id="6" security="s_priv"/>
+                     <pin_security id="7" security="s_priv"/>
+                     <pin_security id="9" security="s_priv"/>
+                     <pin_interrupt_security id="0" security="s_priv"/>
+                     <pin_interrupt_security id="1" security="s_priv"/>
+                  </port>
+                  <port id="GPIO1">
+                     <pin_security id="0" security="s_priv"/>
+                     <pin_security id="10" security="s_priv"/>
+                     <pin_security id="11" security="s_priv"/>
+                     <pin_security id="12" security="s_priv"/>
+                     <pin_security id="13" security="s_priv"/>
+                     <pin_security id="14" security="s_priv"/>
+                     <pin_security id="15" security="s_priv"/>
+                     <pin_security id="16" security="s_priv"/>
+                     <pin_security id="17" security="s_priv"/>
+                     <pin_security id="18" security="s_priv"/>
+                     <pin_security id="19" security="s_priv"/>
+                     <pin_security id="2" security="s_priv"/>
+                     <pin_security id="3" security="s_priv"/>
+                     <pin_security id="4" security="s_priv"/>
+                     <pin_security id="5" security="s_priv"/>
+                     <pin_security id="6" security="s_priv"/>
+                     <pin_security id="7" security="s_priv"/>
+                     <pin_security id="8" security="s_priv"/>
+                     <pin_security id="9" security="s_priv"/>
+                     <pin_interrupt_security id="0" security="s_priv"/>
+                  </port>
+                  <port id="GPIO10">
+                     <pin_security id="0" security="s_priv"/>
+                     <pin_security id="1" security="s_priv"/>
+                     <pin_security id="12" security="s_priv"/>
+                     <pin_security id="13" security="s_priv"/>
+                     <pin_security id="14" security="s_priv"/>
+                     <pin_security id="15" security="s_priv"/>
+                     <pin_security id="16" security="s_priv"/>
+                     <pin_security id="17" security="s_priv"/>
+                     <pin_security id="2" security="s_priv"/>
+                     <pin_security id="3" security="s_priv"/>
+                     <pin_security id="4" security="s_priv"/>
+                     <pin_security id="5" security="s_priv"/>
+                     <pin_security id="6" security="s_priv"/>
+                     <pin_security id="7" security="s_priv"/>
+                     <pin_security id="8" security="s_priv"/>
+                     <pin_security id="9" security="s_priv"/>
+                     <pin_interrupt_security id="0" security="s_priv"/>
+                     <pin_interrupt_security id="1" security="s_priv"/>
+                  </port>
+                  <port id="GPIO2">
+                     <pin_security id="0" security="s_priv"/>
+                     <pin_security id="1" security="s_priv"/>
+                     <pin_security id="10" security="s_priv"/>
+                     <pin_security id="11" security="s_priv"/>
+                     <pin_security id="12" security="s_priv"/>
+                     <pin_security id="13" security="s_priv"/>
+                     <pin_security id="14" security="s_priv"/>
+                     <pin_security id="15" security="s_priv"/>
+                     <pin_security id="2" security="s_priv"/>
+                     <pin_security id="3" security="s_priv"/>
+                     <pin_security id="4" security="s_priv"/>
+                     <pin_security id="5" security="s_priv"/>
+                     <pin_security id="6" security="s_priv"/>
+                     <pin_security id="7" security="s_priv"/>
+                     <pin_security id="8" security="s_priv"/>
+                     <pin_security id="9" security="s_priv"/>
+                     <pin_interrupt_security id="0" security="s_priv"/>
+                     <pin_interrupt_security id="1" security="s_priv"/>
+                  </port>
+                  <port id="GPIO3">
+                     <pin_security id="0" security="s_priv"/>
+                     <pin_security id="1" security="s_priv"/>
+                     <pin_security id="10" security="s_priv"/>
+                     <pin_security id="11" security="s_priv"/>
+                     <pin_security id="2" security="s_priv"/>
+                     <pin_security id="3" security="s_priv"/>
+                     <pin_security id="4" security="s_priv"/>
+                     <pin_security id="5" security="s_priv"/>
+                     <pin_security id="6" security="s_priv"/>
+                     <pin_security id="7" security="s_priv"/>
+                     <pin_security id="8" security="s_priv"/>
+                     <pin_security id="9" security="s_priv"/>
+                     <pin_interrupt_security id="0" security="s_priv"/>
+                     <pin_interrupt_security id="1" security="s_priv"/>
+                  </port>
+                  <port id="GPIO4">
+                     <pin_security id="0" security="s_priv"/>
+                     <pin_security id="1" security="s_priv"/>
+                     <pin_security id="10" security="s_priv"/>
+                     <pin_security id="11" security="s_priv"/>
+                     <pin_security id="12" security="s_priv"/>
+                     <pin_security id="13" security="s_priv"/>
+                     <pin_security id="14" security="s_priv"/>
+                     <pin_security id="15" security="s_priv"/>
+                     <pin_security id="16" security="s_priv"/>
+                     <pin_security id="17" security="s_priv"/>
+                     <pin_security id="18" security="s_priv"/>
+                     <pin_security id="19" security="s_priv"/>
+                     <pin_security id="2" security="s_priv"/>
+                     <pin_security id="20" security="s_priv"/>
+                     <pin_security id="3" security="s_priv"/>
+                     <pin_security id="4" security="s_priv"/>
+                     <pin_security id="5" security="s_priv"/>
+                     <pin_security id="6" security="s_priv"/>
+                     <pin_security id="7" security="s_priv"/>
+                     <pin_security id="8" security="s_priv"/>
+                     <pin_security id="9" security="s_priv"/>
+                     <pin_interrupt_security id="0" security="s_priv"/>
+                     <pin_interrupt_security id="1" security="s_priv"/>
+                  </port>
+                  <port id="GPIO5">
+                     <pin_security id="0" security="s_priv"/>
+                     <pin_security id="1" security="s_priv"/>
+                     <pin_security id="10" security="s_priv"/>
+                     <pin_security id="11" security="s_priv"/>
+                     <pin_security id="12" security="s_priv"/>
+                     <pin_security id="13" security="s_priv"/>
+                     <pin_security id="14" security="s_priv"/>
+                     <pin_security id="15" security="s_priv"/>
+                     <pin_security id="16" security="s_priv"/>
+                     <pin_security id="17" security="s_priv"/>
+                     <pin_security id="18" security="s_priv"/>
+                     <pin_security id="19" security="s_priv"/>
+                     <pin_security id="2" security="s_priv"/>
+                     <pin_security id="20" security="s_priv"/>
+                     <pin_security id="3" security="s_priv"/>
+                     <pin_security id="4" security="s_priv"/>
+                     <pin_security id="5" security="s_priv"/>
+                     <pin_security id="6" security="s_priv"/>
+                     <pin_security id="7" security="s_priv"/>
+                     <pin_security id="8" security="s_priv"/>
+                     <pin_security id="9" security="s_priv"/>
+                     <pin_interrupt_security id="0" security="s_priv"/>
+                     <pin_interrupt_security id="1" security="s_priv"/>
+                  </port>
+                  <port id="GPIO6">
+                     <pin_security id="0" security="s_priv"/>
+                     <pin_security id="1" security="s_priv"/>
+                     <pin_security id="10" security="s_priv"/>
+                     <pin_security id="11" security="s_priv"/>
+                     <pin_security id="12" security="s_priv"/>
+                     <pin_security id="2" security="s_priv"/>
+                     <pin_security id="3" security="s_priv"/>
+                     <pin_security id="4" security="s_priv"/>
+                     <pin_security id="5" security="s_priv"/>
+                     <pin_security id="6" security="s_priv"/>
+                     <pin_security id="7" security="s_priv"/>
+                     <pin_security id="8" security="s_priv"/>
+                     <pin_security id="9" security="s_priv"/>
+                     <pin_interrupt_security id="0" security="s_priv"/>
+                     <pin_interrupt_security id="1" security="s_priv"/>
+                  </port>
+                  <port id="GPIO7">
+                     <pin_security id="0" security="s_priv"/>
+                     <pin_security id="1" security="s_priv"/>
+                     <pin_security id="10" security="s_priv"/>
+                     <pin_security id="11" security="s_priv"/>
+                     <pin_security id="12" security="s_priv"/>
+                     <pin_security id="13" security="s_priv"/>
+                     <pin_security id="14" security="s_priv"/>
+                     <pin_security id="15" security="s_priv"/>
+                     <pin_security id="16" security="s_priv"/>
+                     <pin_security id="17" security="s_priv"/>
+                     <pin_security id="18" security="s_priv"/>
+                     <pin_security id="19" security="s_priv"/>
+                     <pin_security id="2" security="s_priv"/>
+                     <pin_security id="20" security="s_priv"/>
+                     <pin_security id="21" security="s_priv"/>
+                     <pin_security id="22" security="s_priv"/>
+                     <pin_security id="23" security="s_priv"/>
+                     <pin_security id="24" security="s_priv"/>
+                     <pin_security id="25" security="s_priv"/>
+                     <pin_security id="3" security="s_priv"/>
+                     <pin_security id="4" security="s_priv"/>
+                     <pin_security id="5" security="s_priv"/>
+                     <pin_security id="6" security="s_priv"/>
+                     <pin_security id="7" security="s_priv"/>
+                     <pin_security id="8" security="s_priv"/>
+                     <pin_security id="9" security="s_priv"/>
+                     <pin_interrupt_security id="0" security="s_priv"/>
+                     <pin_interrupt_security id="1" security="s_priv"/>
+                  </port>
+                  <port id="GPIO8">
+                     <pin_security id="0" security="s_priv"/>
+                     <pin_security id="1" security="s_priv"/>
+                     <pin_security id="10" security="s_priv"/>
+                     <pin_security id="11" security="s_priv"/>
+                     <pin_security id="12" security="s_priv"/>
+                     <pin_security id="13" security="s_priv"/>
+                     <pin_security id="14" security="s_priv"/>
+                     <pin_security id="15" security="s_priv"/>
+                     <pin_security id="16" security="s_priv"/>
+                     <pin_security id="17" security="s_priv"/>
+                     <pin_security id="18" security="s_priv"/>
+                     <pin_security id="19" security="s_priv"/>
+                     <pin_security id="2" security="s_priv"/>
+                     <pin_security id="20" security="s_priv"/>
+                     <pin_security id="21" security="s_priv"/>
+                     <pin_security id="22" security="s_priv"/>
+                     <pin_security id="23" security="s_priv"/>
+                     <pin_security id="24" security="s_priv"/>
+                     <pin_security id="25" security="s_priv"/>
+                     <pin_security id="26" security="s_priv"/>
+                     <pin_security id="27" security="s_priv"/>
+                     <pin_security id="28" security="s_priv"/>
+                     <pin_security id="3" security="s_priv"/>
+                     <pin_security id="30" security="s_priv"/>
+                     <pin_security id="31" security="s_priv"/>
+                     <pin_security id="4" security="s_priv"/>
+                     <pin_security id="5" security="s_priv"/>
+                     <pin_security id="6" security="s_priv"/>
+                     <pin_security id="7" security="s_priv"/>
+                     <pin_security id="8" security="s_priv"/>
+                     <pin_security id="9" security="s_priv"/>
+                     <pin_interrupt_security id="0" security="s_priv"/>
+                     <pin_interrupt_security id="1" security="s_priv"/>
+                  </port>
+               </ports>
+               <triggers>
+                  <triggers_output id="0">
+                     <triggers_input id="input_0" selected="false" writable="true"/>
+                     <triggers_input id="input_1" selected="false" writable="true"/>
+                     <triggers_input id="input_4" selected="false" writable="true"/>
+                     <triggers_input id="input_5" selected="false" writable="true"/>
+                     <triggers_input id="input_6" selected="false" writable="true"/>
+                     <triggers_input id="input_7" selected="false" writable="true"/>
+                     <triggers_input id="input_8" selected="false" writable="true"/>
+                     <triggers_input id="input_9" selected="false" writable="true"/>
+                     <triggers_input id="input_10" selected="false" writable="true"/>
+                     <triggers_input id="input_11" selected="false" writable="true"/>
+                     <triggers_input id="input_12" selected="false" writable="true"/>
+                     <triggers_input id="input_13" selected="false" writable="true"/>
+                     <triggers_input id="input_14" selected="false" writable="true"/>
+                     <triggers_input id="input_15" selected="false" writable="true"/>
+                     <triggers_input id="input_16" selected="false" writable="true"/>
+                     <triggers_input id="input_18" selected="false" writable="true"/>
+                     <triggers_input id="input_20" selected="false" writable="true"/>
+                     <triggers_input id="input_21" selected="false" writable="true"/>
+                     <triggers_input id="input_22" selected="false" writable="true"/>
+                     <triggers_input id="input_23" selected="false" writable="true"/>
+                     <triggers_input id="input_24" selected="false" writable="true"/>
+                     <triggers_input id="input_25" selected="false" writable="true"/>
+                     <triggers_input id="input_26" selected="false" writable="true"/>
+                     <triggers_input id="input_28" selected="false" writable="true"/>
+                     <triggers_input id="input_29" selected="false" writable="true"/>
+                     <triggers_input id="input_30" selected="false" writable="true"/>
+                     <triggers_input id="input_31" selected="false" writable="true"/>
+                     <triggers_input id="input_32" selected="false" writable="true"/>
+                     <triggers_input id="input_33" selected="false" writable="true"/>
+                     <triggers_input id="input_34" selected="false" writable="true"/>
+                     <triggers_input id="input_35" selected="false" writable="true"/>
+                     <triggers_input id="input_36" selected="false" writable="true"/>
+                     <triggers_input id="input_37" selected="false" writable="true"/>
+                     <triggers_input id="input_38" selected="false" writable="true"/>
+                     <triggers_input id="input_47" selected="false" writable="true"/>
+                  </triggers_output>
+                  <triggers_output id="1">
+                     <triggers_input id="input_0" selected="false" writable="true"/>
+                     <triggers_input id="input_1" selected="false" writable="true"/>
+                     <triggers_input id="input_4" selected="false" writable="true"/>
+                     <triggers_input id="input_5" selected="false" writable="true"/>
+                     <triggers_input id="input_6" selected="false" writable="true"/>
+                     <triggers_input id="input_7" selected="false" writable="true"/>
+                     <triggers_input id="input_8" selected="false" writable="true"/>
+                     <triggers_input id="input_9" selected="false" writable="true"/>
+                     <triggers_input id="input_10" selected="false" writable="true"/>
+                     <triggers_input id="input_11" selected="false" writable="true"/>
+                     <triggers_input id="input_12" selected="false" writable="true"/>
+                     <triggers_input id="input_13" selected="false" writable="true"/>
+                     <triggers_input id="input_14" selected="false" writable="true"/>
+                     <triggers_input id="input_15" selected="false" writable="true"/>
+                     <triggers_input id="input_16" selected="false" writable="true"/>
+                     <triggers_input id="input_18" selected="false" writable="true"/>
+                     <triggers_input id="input_20" selected="false" writable="true"/>
+                     <triggers_input id="input_21" selected="false" writable="true"/>
+                     <triggers_input id="input_22" selected="false" writable="true"/>
+                     <triggers_input id="input_23" selected="false" writable="true"/>
+                     <triggers_input id="input_24" selected="false" writable="true"/>
+                     <triggers_input id="input_25" selected="false" writable="true"/>
+                     <triggers_input id="input_26" selected="false" writable="true"/>
+                     <triggers_input id="input_28" selected="false" writable="true"/>
+                     <triggers_input id="input_29" selected="false" writable="true"/>
+                     <triggers_input id="input_30" selected="false" writable="true"/>
+                     <triggers_input id="input_31" selected="false" writable="true"/>
+                     <triggers_input id="input_32" selected="false" writable="true"/>
+                     <triggers_input id="input_33" selected="false" writable="true"/>
+                     <triggers_input id="input_34" selected="false" writable="true"/>
+                     <triggers_input id="input_35" selected="false" writable="true"/>
+                     <triggers_input id="input_36" selected="false" writable="true"/>
+                     <triggers_input id="input_37" selected="false" writable="true"/>
+                     <triggers_input id="input_38" selected="false" writable="true"/>
+                     <triggers_input id="input_47" selected="false" writable="true"/>
+                  </triggers_output>
+                  <triggers_output id="2">
+                     <triggers_input id="input_0" selected="false" writable="true"/>
+                     <triggers_input id="input_1" selected="false" writable="true"/>
+                     <triggers_input id="input_4" selected="false" writable="true"/>
+                     <triggers_input id="input_5" selected="false" writable="true"/>
+                     <triggers_input id="input_6" selected="false" writable="true"/>
+                     <triggers_input id="input_7" selected="false" writable="true"/>
+                     <triggers_input id="input_8" selected="false" writable="true"/>
+                     <triggers_input id="input_9" selected="false" writable="true"/>
+                     <triggers_input id="input_10" selected="false" writable="true"/>
+                     <triggers_input id="input_11" selected="false" writable="true"/>
+                     <triggers_input id="input_12" selected="false" writable="true"/>
+                     <triggers_input id="input_13" selected="false" writable="true"/>
+                     <triggers_input id="input_14" selected="false" writable="true"/>
+                     <triggers_input id="input_15" selected="false" writable="true"/>
+                     <triggers_input id="input_16" selected="false" writable="true"/>
+                     <triggers_input id="input_18" selected="false" writable="true"/>
+                     <triggers_input id="input_20" selected="false" writable="true"/>
+                     <triggers_input id="input_21" selected="false" writable="true"/>
+                     <triggers_input id="input_22" selected="false" writable="true"/>
+                     <triggers_input id="input_23" selected="false" writable="true"/>
+                     <triggers_input id="input_24" selected="false" writable="true"/>
+                     <triggers_input id="input_25" selected="false" writable="true"/>
+                     <triggers_input id="input_26" selected="false" writable="true"/>
+                     <triggers_input id="input_28" selected="false" writable="true"/>
+                     <triggers_input id="input_29" selected="false" writable="true"/>
+                     <triggers_input id="input_30" selected="false" writable="true"/>
+                     <triggers_input id="input_31" selected="false" writable="true"/>
+                     <triggers_input id="input_32" selected="false" writable="true"/>
+                     <triggers_input id="input_33" selected="false" writable="true"/>
+                     <triggers_input id="input_34" selected="false" writable="true"/>
+                     <triggers_input id="input_35" selected="false" writable="true"/>
+                     <triggers_input id="input_36" selected="false" writable="true"/>
+                     <triggers_input id="input_37" selected="false" writable="true"/>
+                     <triggers_input id="input_38" selected="false" writable="true"/>
+                     <triggers_input id="input_47" selected="false" writable="true"/>
+                  </triggers_output>
+                  <triggers_output id="3">
+                     <triggers_input id="input_0" selected="false" writable="true"/>
+                     <triggers_input id="input_1" selected="false" writable="true"/>
+                     <triggers_input id="input_4" selected="false" writable="true"/>
+                     <triggers_input id="input_5" selected="false" writable="true"/>
+                     <triggers_input id="input_6" selected="false" writable="true"/>
+                     <triggers_input id="input_7" selected="false" writable="true"/>
+                     <triggers_input id="input_8" selected="false" writable="true"/>
+                     <triggers_input id="input_9" selected="false" writable="true"/>
+                     <triggers_input id="input_10" selected="false" writable="true"/>
+                     <triggers_input id="input_11" selected="false" writable="true"/>
+                     <triggers_input id="input_12" selected="false" writable="true"/>
+                     <triggers_input id="input_13" selected="false" writable="true"/>
+                     <triggers_input id="input_14" selected="false" writable="true"/>
+                     <triggers_input id="input_15" selected="false" writable="true"/>
+                     <triggers_input id="input_16" selected="false" writable="true"/>
+                     <triggers_input id="input_18" selected="false" writable="true"/>
+                     <triggers_input id="input_20" selected="false" writable="true"/>
+                     <triggers_input id="input_21" selected="false" writable="true"/>
+                     <triggers_input id="input_22" selected="false" writable="true"/>
+                     <triggers_input id="input_23" selected="false" writable="true"/>
+                     <triggers_input id="input_24" selected="false" writable="true"/>
+                     <triggers_input id="input_25" selected="false" writable="true"/>
+                     <triggers_input id="input_26" selected="false" writable="true"/>
+                     <triggers_input id="input_28" selected="false" writable="true"/>
+                     <triggers_input id="input_29" selected="false" writable="true"/>
+                     <triggers_input id="input_30" selected="false" writable="true"/>
+                     <triggers_input id="input_31" selected="false" writable="true"/>
+                     <triggers_input id="input_32" selected="false" writable="true"/>
+                     <triggers_input id="input_33" selected="false" writable="true"/>
+                     <triggers_input id="input_34" selected="false" writable="true"/>
+                     <triggers_input id="input_35" selected="false" writable="true"/>
+                     <triggers_input id="input_36" selected="false" writable="true"/>
+                     <triggers_input id="input_37" selected="false" writable="true"/>
+                     <triggers_input id="input_38" selected="false" writable="true"/>
+                     <triggers_input id="input_47" selected="false" writable="true"/>
+                  </triggers_output>
+                  <triggers_output id="4">
+                     <triggers_input id="input_0" selected="false" writable="true"/>
+                     <triggers_input id="input_1" selected="false" writable="true"/>
+                     <triggers_input id="input_4" selected="false" writable="true"/>
+                     <triggers_input id="input_5" selected="false" writable="true"/>
+                     <triggers_input id="input_6" selected="false" writable="true"/>
+                     <triggers_input id="input_7" selected="false" writable="true"/>
+                     <triggers_input id="input_8" selected="false" writable="true"/>
+                     <triggers_input id="input_9" selected="false" writable="true"/>
+                     <triggers_input id="input_10" selected="false" writable="true"/>
+                     <triggers_input id="input_11" selected="false" writable="true"/>
+                     <triggers_input id="input_12" selected="false" writable="true"/>
+                     <triggers_input id="input_13" selected="false" writable="true"/>
+                     <triggers_input id="input_14" selected="false" writable="true"/>
+                     <triggers_input id="input_15" selected="false" writable="true"/>
+                     <triggers_input id="input_16" selected="false" writable="true"/>
+                     <triggers_input id="input_18" selected="false" writable="true"/>
+                     <triggers_input id="input_20" selected="false" writable="true"/>
+                     <triggers_input id="input_21" selected="false" writable="true"/>
+                     <triggers_input id="input_22" selected="false" writable="true"/>
+                     <triggers_input id="input_23" selected="false" writable="true"/>
+                     <triggers_input id="input_24" selected="false" writable="true"/>
+                     <triggers_input id="input_25" selected="false" writable="true"/>
+                     <triggers_input id="input_26" selected="false" writable="true"/>
+                     <triggers_input id="input_28" selected="false" writable="true"/>
+                     <triggers_input id="input_29" selected="false" writable="true"/>
+                     <triggers_input id="input_30" selected="false" writable="true"/>
+                     <triggers_input id="input_31" selected="false" writable="true"/>
+                     <triggers_input id="input_32" selected="false" writable="true"/>
+                     <triggers_input id="input_33" selected="false" writable="true"/>
+                     <triggers_input id="input_34" selected="false" writable="true"/>
+                     <triggers_input id="input_35" selected="false" writable="true"/>
+                     <triggers_input id="input_36" selected="false" writable="true"/>
+                     <triggers_input id="input_37" selected="false" writable="true"/>
+                     <triggers_input id="input_38" selected="false" writable="true"/>
+                     <triggers_input id="input_47" selected="false" writable="true"/>
+                  </triggers_output>
+                  <triggers_output id="5">
+                     <triggers_input id="input_0" selected="false" writable="true"/>
+                     <triggers_input id="input_1" selected="false" writable="true"/>
+                     <triggers_input id="input_4" selected="false" writable="true"/>
+                     <triggers_input id="input_5" selected="false" writable="true"/>
+                     <triggers_input id="input_6" selected="false" writable="true"/>
+                     <triggers_input id="input_7" selected="false" writable="true"/>
+                     <triggers_input id="input_8" selected="false" writable="true"/>
+                     <triggers_input id="input_9" selected="false" writable="true"/>
+                     <triggers_input id="input_10" selected="false" writable="true"/>
+                     <triggers_input id="input_11" selected="false" writable="true"/>
+                     <triggers_input id="input_12" selected="false" writable="true"/>
+                     <triggers_input id="input_13" selected="false" writable="true"/>
+                     <triggers_input id="input_14" selected="false" writable="true"/>
+                     <triggers_input id="input_15" selected="false" writable="true"/>
+                     <triggers_input id="input_16" selected="false" writable="true"/>
+                     <triggers_input id="input_18" selected="false" writable="true"/>
+                     <triggers_input id="input_20" selected="false" writable="true"/>
+                     <triggers_input id="input_21" selected="false" writable="true"/>
+                     <triggers_input id="input_22" selected="false" writable="true"/>
+                     <triggers_input id="input_23" selected="false" writable="true"/>
+                     <triggers_input id="input_24" selected="false" writable="true"/>
+                     <triggers_input id="input_25" selected="false" writable="true"/>
+                     <triggers_input id="input_26" selected="false" writable="true"/>
+                     <triggers_input id="input_28" selected="false" writable="true"/>
+                     <triggers_input id="input_29" selected="false" writable="true"/>
+                     <triggers_input id="input_30" selected="false" writable="true"/>
+                     <triggers_input id="input_31" selected="false" writable="true"/>
+                     <triggers_input id="input_32" selected="false" writable="true"/>
+                     <triggers_input id="input_33" selected="false" writable="true"/>
+                     <triggers_input id="input_34" selected="false" writable="true"/>
+                     <triggers_input id="input_35" selected="false" writable="true"/>
+                     <triggers_input id="input_36" selected="false" writable="true"/>
+                     <triggers_input id="input_37" selected="false" writable="true"/>
+                     <triggers_input id="input_38" selected="false" writable="true"/>
+                     <triggers_input id="input_47" selected="false" writable="true"/>
+                  </triggers_output>
+                  <triggers_output id="6">
+                     <triggers_input id="input_0" selected="false" writable="true"/>
+                     <triggers_input id="input_1" selected="false" writable="true"/>
+                     <triggers_input id="input_4" selected="false" writable="true"/>
+                     <triggers_input id="input_5" selected="false" writable="true"/>
+                     <triggers_input id="input_6" selected="false" writable="true"/>
+                     <triggers_input id="input_7" selected="false" writable="true"/>
+                     <triggers_input id="input_8" selected="false" writable="true"/>
+                     <triggers_input id="input_9" selected="false" writable="true"/>
+                     <triggers_input id="input_10" selected="false" writable="true"/>
+                     <triggers_input id="input_11" selected="false" writable="true"/>
+                     <triggers_input id="input_12" selected="false" writable="true"/>
+                     <triggers_input id="input_13" selected="false" writable="true"/>
+                     <triggers_input id="input_14" selected="false" writable="true"/>
+                     <triggers_input id="input_15" selected="false" writable="true"/>
+                     <triggers_input id="input_16" selected="false" writable="true"/>
+                     <triggers_input id="input_18" selected="false" writable="true"/>
+                     <triggers_input id="input_20" selected="false" writable="true"/>
+                     <triggers_input id="input_21" selected="false" writable="true"/>
+                     <triggers_input id="input_22" selected="false" writable="true"/>
+                     <triggers_input id="input_23" selected="false" writable="true"/>
+                     <triggers_input id="input_24" selected="false" writable="true"/>
+                     <triggers_input id="input_25" selected="false" writable="true"/>
+                     <triggers_input id="input_26" selected="false" writable="true"/>
+                     <triggers_input id="input_28" selected="false" writable="true"/>
+                     <triggers_input id="input_29" selected="false" writable="true"/>
+                     <triggers_input id="input_30" selected="false" writable="true"/>
+                     <triggers_input id="input_31" selected="false" writable="true"/>
+                     <triggers_input id="input_32" selected="false" writable="true"/>
+                     <triggers_input id="input_33" selected="false" writable="true"/>
+                     <triggers_input id="input_34" selected="false" writable="true"/>
+                     <triggers_input id="input_35" selected="false" writable="true"/>
+                     <triggers_input id="input_36" selected="false" writable="true"/>
+                     <triggers_input id="input_37" selected="false" writable="true"/>
+                     <triggers_input id="input_38" selected="false" writable="true"/>
+                     <triggers_input id="input_47" selected="false" writable="true"/>
+                  </triggers_output>
+                  <triggers_output id="7">
+                     <triggers_input id="input_0" selected="false" writable="true"/>
+                     <triggers_input id="input_1" selected="false" writable="true"/>
+                     <triggers_input id="input_4" selected="false" writable="true"/>
+                     <triggers_input id="input_5" selected="false" writable="true"/>
+                     <triggers_input id="input_6" selected="false" writable="true"/>
+                     <triggers_input id="input_7" selected="false" writable="true"/>
+                     <triggers_input id="input_8" selected="false" writable="true"/>
+                     <triggers_input id="input_9" selected="false" writable="true"/>
+                     <triggers_input id="input_10" selected="false" writable="true"/>
+                     <triggers_input id="input_11" selected="false" writable="true"/>
+                     <triggers_input id="input_12" selected="false" writable="true"/>
+                     <triggers_input id="input_13" selected="false" writable="true"/>
+                     <triggers_input id="input_14" selected="false" writable="true"/>
+                     <triggers_input id="input_15" selected="false" writable="true"/>
+                     <triggers_input id="input_16" selected="false" writable="true"/>
+                     <triggers_input id="input_18" selected="false" writable="true"/>
+                     <triggers_input id="input_20" selected="false" writable="true"/>
+                     <triggers_input id="input_21" selected="false" writable="true"/>
+                     <triggers_input id="input_22" selected="false" writable="true"/>
+                     <triggers_input id="input_23" selected="false" writable="true"/>
+                     <triggers_input id="input_24" selected="false" writable="true"/>
+                     <triggers_input id="input_25" selected="false" writable="true"/>
+                     <triggers_input id="input_26" selected="false" writable="true"/>
+                     <triggers_input id="input_28" selected="false" writable="true"/>
+                     <triggers_input id="input_29" selected="false" writable="true"/>
+                     <triggers_input id="input_30" selected="false" writable="true"/>
+                     <triggers_input id="input_31" selected="false" writable="true"/>
+                     <triggers_input id="input_32" selected="false" writable="true"/>
+                     <triggers_input id="input_33" selected="false" writable="true"/>
+                     <triggers_input id="input_34" selected="false" writable="true"/>
+                     <triggers_input id="input_35" selected="false" writable="true"/>
+                     <triggers_input id="input_36" selected="false" writable="true"/>
+                     <triggers_input id="input_37" selected="false" writable="true"/>
+                     <triggers_input id="input_38" selected="false" writable="true"/>
+                     <triggers_input id="input_47" selected="false" writable="true"/>
+                  </triggers_output>
+               </triggers>
+               <ahb id="0">
+                  <relative_region start="0" size="262144" security="ns_user" memory="BootROM"/>
+                  <relative_region start="0" size="32768" security="ns_user" memory="SRAM_P0_c"/>
+                  <relative_region start="0" size="32768" security="ns_user" memory="SRAM_P1_c"/>
+                  <relative_region start="0" size="32768" security="ns_user" memory="SRAM_P2_c"/>
+                  <relative_region start="0" size="32768" security="ns_user" memory="SRAM_P3_c"/>
+                  <relative_region start="0" size="65536" security="ns_user" memory="SRAM_P4_c"/>
+                  <relative_region start="0" size="65536" security="ns_user" memory="SRAM_P5_c"/>
+                  <relative_region start="0" size="131072" security="ns_user" memory="SRAM_P6_c"/>
+                  <relative_region start="0" size="131072" security="ns_user" memory="SRAM_P7_c"/>
+                  <relative_region start="0" size="262144" security="ns_user" memory="SRAM_P8_c"/>
+                  <relative_region start="0" size="262144" security="ns_user" memory="SRAM_P9_c"/>
+                  <relative_region start="0" size="524288" security="ns_user" memory="SRAM_P10_c"/>
+                  <relative_region start="0" size="524288" security="ns_user" memory="SRAM_P11_c"/>
+                  <relative_region start="0" size="1048576" security="ns_user" memory="SRAM_P12_c"/>
+                  <relative_region start="0" size="1048576" security="ns_user" memory="SRAM_P13_c"/>
+                  <relative_region start="0" size="524288" security="ns_user" memory="SRAM_P14_c"/>
+                  <relative_region start="0" size="524288" security="ns_user" memory="SRAM_P15_c"/>
+                  <relative_region start="0" size="262144" security="ns_user" memory="SRAM_P16_c"/>
+                  <relative_region start="0" size="262144" security="ns_user" memory="SRAM_P17_c"/>
+                  <relative_region start="0" size="32768" security="ns_user" memory="SRAM_P18_c"/>
+                  <relative_region start="0" size="32768" security="ns_user" memory="SRAM_P19_c"/>
+                  <relative_region start="0" size="32768" security="ns_user" memory="SRAM_P20_c"/>
+                  <relative_region start="0" size="32768" security="ns_user" memory="SRAM_P21_c"/>
+                  <relative_region start="0" size="65536" security="ns_user" memory="SRAM_P22_c"/>
+                  <relative_region start="0" size="65536" security="ns_user" memory="SRAM_P23_c"/>
+                  <relative_region start="0" size="131072" security="ns_user" memory="SRAM_P24_c"/>
+                  <relative_region start="0" size="131072" security="ns_user" memory="SRAM_P25_c"/>
+                  <relative_region start="0" size="524288" security="ns_user" memory="SRAM_P26_c"/>
+                  <relative_region start="0" size="524288" security="ns_user" memory="SRAM_P27_c"/>
+                  <relative_region start="0" size="262144" security="ns_user" memory="SRAM_P28_c"/>
+                  <relative_region start="0" size="262144" security="ns_user" memory="SRAM_P29_c"/>
+                  <relative_region start="0" size="32768" security="ns_user" memory="SRAM_P0_s"/>
+                  <relative_region start="0" size="32768" security="ns_user" memory="SRAM_P1_s"/>
+                  <relative_region start="0" size="32768" security="ns_user" memory="SRAM_P2_s"/>
+                  <relative_region start="0" size="32768" security="ns_user" memory="SRAM_P3_s"/>
+                  <relative_region start="0" size="65536" security="ns_user" memory="SRAM_P4_s"/>
+                  <relative_region start="0" size="65536" security="ns_user" memory="SRAM_P5_s"/>
+                  <relative_region start="0" size="131072" security="ns_user" memory="SRAM_P6_s"/>
+                  <relative_region start="0" size="131072" security="ns_user" memory="SRAM_P7_s"/>
+                  <relative_region start="0" size="262144" security="ns_user" memory="SRAM_P8_s"/>
+                  <relative_region start="0" size="262144" security="ns_user" memory="SRAM_P9_s"/>
+                  <relative_region start="0" size="524288" security="ns_user" memory="SRAM_P10_s"/>
+                  <relative_region start="0" size="524288" security="ns_user" memory="SRAM_P11_s"/>
+                  <relative_region start="0" size="1048576" security="ns_user" memory="SRAM_P12_s"/>
+                  <relative_region start="0" size="1048576" security="ns_user" memory="SRAM_P13_s"/>
+                  <relative_region start="0" size="524288" security="ns_user" memory="SRAM_P14_s"/>
+                  <relative_region start="0" size="524288" security="ns_user" memory="SRAM_P15_s"/>
+                  <relative_region start="0" size="262144" security="ns_user" memory="SRAM_P16_s"/>
+                  <relative_region start="0" size="262144" security="ns_user" memory="SRAM_P17_s"/>
+                  <relative_region start="0" size="32768" security="ns_user" memory="SRAM_P18_s"/>
+                  <relative_region start="0" size="32768" security="ns_user" memory="SRAM_P19_s"/>
+                  <relative_region start="0" size="32768" security="ns_user" memory="SRAM_P20_s"/>
+                  <relative_region start="0" size="32768" security="ns_user" memory="SRAM_P21_s"/>
+                  <relative_region start="0" size="65536" security="ns_user" memory="SRAM_P22_s"/>
+                  <relative_region start="0" size="65536" security="ns_user" memory="SRAM_P23_s"/>
+                  <relative_region start="0" size="131072" security="ns_user" memory="SRAM_P24_s"/>
+                  <relative_region start="0" size="131072" security="ns_user" memory="SRAM_P25_s"/>
+                  <relative_region start="0" size="524288" security="ns_user" memory="SRAM_P26_s"/>
+                  <relative_region start="0" size="524288" security="ns_user" memory="SRAM_P27_s"/>
+                  <relative_region start="0" size="262144" security="ns_user" memory="SRAM_P28_s"/>
+                  <relative_region start="0" size="262144" security="ns_user" memory="SRAM_P29_s"/>
+                  <relative_region start="0" size="32768" security="ns_user" memory="SRAM_P0_m"/>
+                  <relative_region start="0" size="32768" security="ns_user" memory="SRAM_P1_m"/>
+                  <relative_region start="0" size="32768" security="ns_user" memory="SRAM_P2_m"/>
+                  <relative_region start="0" size="32768" security="ns_user" memory="SRAM_P3_m"/>
+                  <relative_region start="0" size="65536" security="ns_user" memory="SRAM_P4_m"/>
+                  <relative_region start="0" size="65536" security="ns_user" memory="SRAM_P5_m"/>
+                  <relative_region start="0" size="131072" security="ns_user" memory="SRAM_P6_m"/>
+                  <relative_region start="0" size="131072" security="ns_user" memory="SRAM_P7_m"/>
+                  <relative_region start="0" size="262144" security="ns_user" memory="SRAM_P8_m"/>
+                  <relative_region start="0" size="262144" security="ns_user" memory="SRAM_P9_m"/>
+                  <relative_region start="0" size="524288" security="ns_user" memory="SRAM_P10_m"/>
+                  <relative_region start="0" size="524288" security="ns_user" memory="SRAM_P11_m"/>
+                  <relative_region start="0" size="1048576" security="ns_user" memory="SRAM_P12_m"/>
+                  <relative_region start="0" size="1048576" security="ns_user" memory="SRAM_P13_m"/>
+                  <relative_region start="0" size="524288" security="ns_user" memory="SRAM_P14_m"/>
+                  <relative_region start="0" size="524288" security="ns_user" memory="SRAM_P15_m"/>
+                  <relative_region start="0" size="262144" security="ns_user" memory="SRAM_P16_m"/>
+                  <relative_region start="0" size="262144" security="ns_user" memory="SRAM_P17_m"/>
+                  <relative_region start="0" size="32768" security="ns_user" memory="SRAM_P18_m"/>
+                  <relative_region start="0" size="32768" security="ns_user" memory="SRAM_P19_m"/>
+                  <relative_region start="0" size="32768" security="ns_user" memory="SRAM_P20_m"/>
+                  <relative_region start="0" size="32768" security="ns_user" memory="SRAM_P21_m"/>
+                  <relative_region start="0" size="65536" security="ns_user" memory="SRAM_P22_m"/>
+                  <relative_region start="0" size="65536" security="ns_user" memory="SRAM_P23_m"/>
+                  <relative_region start="0" size="131072" security="ns_user" memory="SRAM_P24_m"/>
+                  <relative_region start="0" size="131072" security="ns_user" memory="SRAM_P25_m"/>
+                  <relative_region start="0" size="524288" security="ns_user" memory="SRAM_P26_m"/>
+                  <relative_region start="0" size="524288" security="ns_user" memory="SRAM_P27_m"/>
+                  <relative_region start="0" size="262144" security="ns_user" memory="SRAM_P28_m"/>
+                  <relative_region start="0" size="262144" security="ns_user" memory="SRAM_P29_m"/>
+                  <relative_region start="0" size="65536" security="ns_user" memory="HIFI4_DTCM"/>
+                  <relative_region start="0" size="65536" security="ns_user" memory="HIFI4_ITCM"/>
+                  <relative_region start="0" size="65536" security="ns_user" memory="EZHV_TCM_c"/>
+                  <relative_region start="0" size="65536" security="ns_user" memory="EZHV_TCM_s"/>
+                  <relative_region start="0" size="65536" security="ns_user" memory="EZHV_TCM_m"/>
+                  <relative_region start="0" size="8192" security="ns_user" memory="PKC_SRAM"/>
+                  <relative_region start="0" size="134217728" security="ns_user" memory="XSPI0_c"/>
+                  <relative_region start="0" size="134217728" security="ns_user" memory="XSPI1_c"/>
+                  <relative_region start="0" size="268435456" security="ns_user" memory="XSPI2_c"/>
+                  <relative_region start="0" size="134217728" security="ns_user" memory="XSPI0_s"/>
+                  <relative_region start="0" size="134217728" security="ns_user" memory="XSPI1_s"/>
+                  <relative_region start="0" size="268435456" security="ns_user" memory="XSPI2_s"/>
+                  <relative_region start="0" size="134217728" security="ns_user" memory="XSPI0_m"/>
+                  <relative_region start="0" size="134217728" security="ns_user" memory="XSPI1_m"/>
+                  <relative_region start="0" size="268435456" security="ns_user" memory="XSPI2_m"/>
+                  <masters>
+                     <master id="DMA0" security="ns_user"/>
+                     <master id="DMA1" security="ns_user"/>
+                     <master id="ETR" security="ns_user"/>
+                     <master id="HIFI4" security="ns_user"/>
+                     <master id="MEDIA" security="ns_user"/>
+                     <master id="PKC" security="ns_user"/>
+                  </masters>
+                  <peripherals>
+                     <peripheral id="ACMP0" security="ns_user"/>
+                     <peripheral id="ADC0" security="ns_user"/>
+                     <peripheral id="AHBSC0" security="ns_user"/>
+                     <peripheral id="AHBSC0_ALIAS1" security="ns_user"/>
+                     <peripheral id="AHBSC0_ALIAS2" security="ns_user"/>
+                     <peripheral id="AHBSC0_ALIAS3" security="ns_user"/>
+                     <peripheral id="AHBSC3" security="ns_user"/>
+                     <peripheral id="AHBSC3_ALIAS1" security="ns_user"/>
+                     <peripheral id="AHBSC3_ALIAS2" security="ns_user"/>
+                     <peripheral id="AHBSC3_ALIAS3" security="ns_user"/>
+                     <peripheral id="CACHE64_CTRL0" security="ns_user"/>
+                     <peripheral id="CACHE64_CTRL1" security="ns_user"/>
+                     <peripheral id="CDOG0" security="ns_user"/>
+                     <peripheral id="CDOG1" security="ns_user"/>
+                     <peripheral id="CDOG2" security="ns_user"/>
+                     <peripheral id="CLKCTL0" security="ns_user"/>
+                     <peripheral id="CLKCTL2" security="ns_user"/>
+                     <peripheral id="CLKCTL3" security="ns_user"/>
+                     <peripheral id="CMX_PERFMON0" security="ns_user"/>
+                     <peripheral id="CMX_PERFMON1" security="ns_user"/>
+                     <peripheral id="CMX_PERFMON2" security="ns_user"/>
+                     <peripheral id="CMX_PERFMON3" security="ns_user"/>
+                     <peripheral id="CRC" security="ns_user"/>
+                     <peripheral id="CTIMER0" security="ns_user"/>
+                     <peripheral id="CTIMER1" security="ns_user"/>
+                     <peripheral id="CTIMER2" security="ns_user"/>
+                     <peripheral id="CTIMER4" security="ns_user"/>
+                     <peripheral id="DEBUG_MAILBOX" security="ns_user"/>
+                     <peripheral id="DMA0_MP" security="ns_user"/>
+                     <peripheral id="DMA0_TEE_ALIAS0" security="ns_user"/>
+                     <peripheral id="DMA0_TEE_ALIAS1" security="ns_user"/>
+                     <peripheral id="DMA0_TEE_ALIAS10" security="ns_user"/>
+                     <peripheral id="DMA0_TEE_ALIAS11" security="ns_user"/>
+                     <peripheral id="DMA0_TEE_ALIAS12" security="ns_user"/>
+                     <peripheral id="DMA0_TEE_ALIAS13" security="ns_user"/>
+                     <peripheral id="DMA0_TEE_ALIAS14" security="ns_user"/>
+                     <peripheral id="DMA0_TEE_ALIAS15" security="ns_user"/>
+                     <peripheral id="DMA0_TEE_ALIAS2" security="ns_user"/>
+                     <peripheral id="DMA0_TEE_ALIAS3" security="ns_user"/>
+                     <peripheral id="DMA0_TEE_ALIAS4" security="ns_user"/>
+                     <peripheral id="DMA0_TEE_ALIAS5" security="ns_user"/>
+                     <peripheral id="DMA0_TEE_ALIAS6" security="ns_user"/>
+                     <peripheral id="DMA0_TEE_ALIAS7" security="ns_user"/>
+                     <peripheral id="DMA0_TEE_ALIAS8" security="ns_user"/>
+                     <peripheral id="DMA0_TEE_ALIAS9" security="ns_user"/>
+                     <peripheral id="DMA1_MP" security="ns_user"/>
+                     <peripheral id="DMA1_TEE_ALIAS0" security="ns_user"/>
+                     <peripheral id="DMA1_TEE_ALIAS1" security="ns_user"/>
+                     <peripheral id="DMA1_TEE_ALIAS10" security="ns_user"/>
+                     <peripheral id="DMA1_TEE_ALIAS11" security="ns_user"/>
+                     <peripheral id="DMA1_TEE_ALIAS12" security="ns_user"/>
+                     <peripheral id="DMA1_TEE_ALIAS13" security="ns_user"/>
+                     <peripheral id="DMA1_TEE_ALIAS14" security="ns_user"/>
+                     <peripheral id="DMA1_TEE_ALIAS15" security="ns_user"/>
+                     <peripheral id="DMA1_TEE_ALIAS2" security="ns_user"/>
+                     <peripheral id="DMA1_TEE_ALIAS3" security="ns_user"/>
+                     <peripheral id="DMA1_TEE_ALIAS4" security="ns_user"/>
+                     <peripheral id="DMA1_TEE_ALIAS5" security="ns_user"/>
+                     <peripheral id="DMA1_TEE_ALIAS6" security="ns_user"/>
+                     <peripheral id="DMA1_TEE_ALIAS7" security="ns_user"/>
+                     <peripheral id="DMA1_TEE_ALIAS8" security="ns_user"/>
+                     <peripheral id="DMA1_TEE_ALIAS9" security="ns_user"/>
+                     <peripheral id="ELS" security="ns_user"/>
+                     <peripheral id="ELS_ALIAS1" security="ns_user"/>
+                     <peripheral id="ELS_ALIAS2" security="ns_user"/>
+                     <peripheral id="ELS_ALIAS3" security="ns_user"/>
+                     <peripheral id="FREQME" security="ns_user"/>
+                     <peripheral id="GDET0" security="ns_user"/>
+                     <peripheral id="GDET3" security="ns_user"/>
+                     <peripheral id="GPIO0" security="ns_user"/>
+                     <peripheral id="GPIO0_ALIAS" security="ns_user"/>
+                     <peripheral id="GPIO1" security="ns_user"/>
+                     <peripheral id="GPIO1_ALIAS" security="ns_user"/>
+                     <peripheral id="GPIO2" security="ns_user"/>
+                     <peripheral id="GPIO2_ALIAS" security="ns_user"/>
+                     <peripheral id="GPIO3" security="ns_user"/>
+                     <peripheral id="GPIO3_ALIAS" security="ns_user"/>
+                     <peripheral id="GPIO4" security="ns_user"/>
+                     <peripheral id="GPIO4_ALIAS" security="ns_user"/>
+                     <peripheral id="GPIO5" security="ns_user"/>
+                     <peripheral id="GPIO5_ALIAS" security="ns_user"/>
+                     <peripheral id="GPIO6" security="ns_user"/>
+                     <peripheral id="GPIO6_ALIAS" security="ns_user"/>
+                     <peripheral id="GPIO7" security="ns_user"/>
+                     <peripheral id="GPIO7_ALIAS" security="ns_user"/>
+                     <peripheral id="I3C0" security="ns_user"/>
+                     <peripheral id="I3C1" security="ns_user"/>
+                     <peripheral id="INPUTMUX0" security="ns_user"/>
+                     <peripheral id="IOPCTL0" security="ns_user"/>
+                     <peripheral id="IOPCTL1" security="ns_user"/>
+                     <peripheral id="ITRC" security="ns_user"/>
+                     <peripheral id="LPI2C15" security="ns_user"/>
+                     <peripheral id="LP_FLEXCOMM0" security="ns_user"/>
+                     <peripheral id="LP_FLEXCOMM1" security="ns_user"/>
+                     <peripheral id="LP_FLEXCOMM10" security="ns_user"/>
+                     <peripheral id="LP_FLEXCOMM11" security="ns_user"/>
+                     <peripheral id="LP_FLEXCOMM12" security="ns_user"/>
+                     <peripheral id="LP_FLEXCOMM13" security="ns_user"/>
+                     <peripheral id="LP_FLEXCOMM2" security="ns_user"/>
+                     <peripheral id="LP_FLEXCOMM3" security="ns_user"/>
+                     <peripheral id="LP_FLEXCOMM4" security="ns_user"/>
+                     <peripheral id="LP_FLEXCOMM5" security="ns_user"/>
+                     <peripheral id="LP_FLEXCOMM6" security="ns_user"/>
+                     <peripheral id="LP_FLEXCOMM7" security="ns_user"/>
+                     <peripheral id="LP_FLEXCOMM8" security="ns_user"/>
+                     <peripheral id="LP_FLEXCOMM9" security="ns_user"/>
+                     <peripheral id="MEDIA_AHB_PERIPHERAL" security="ns_user"/>
+                     <peripheral id="MEDIA_APB_PERIPHERAL" security="ns_user"/>
+                     <peripheral id="MMU0" security="ns_user"/>
+                     <peripheral id="MMU1" security="ns_user"/>
+                     <peripheral id="MRT0" security="ns_user"/>
+                     <peripheral id="MU0_MUA" security="ns_user"/>
+                     <peripheral id="MU1_MUA" security="ns_user"/>
+                     <peripheral id="MU2_MUA" security="ns_user"/>
+                     <peripheral id="MU4_MUA" security="ns_user"/>
+                     <peripheral id="MU4_MUB" security="ns_user"/>
+                     <peripheral id="NPU" security="ns_user"/>
+                     <peripheral id="OCOTP" security="ns_user"/>
+                     <peripheral id="OSC32KNP" security="ns_user"/>
+                     <peripheral id="OSCCA" security="ns_user"/>
+                     <peripheral id="OSTIMER_CPU0" security="ns_user"/>
+                     <peripheral id="OSTIMER_HIFI4" security="ns_user"/>
+                     <peripheral id="PBUS_DOMAIN" security="ns_user"/>
+                     <peripheral id="PINT0" security="ns_user"/>
+                     <peripheral id="PKC" security="ns_user"/>
+                     <peripheral id="PUF" security="ns_user"/>
+                     <peripheral id="PUF_ALIAS1" security="ns_user"/>
+                     <peripheral id="PUF_ALIAS2" security="ns_user"/>
+                     <peripheral id="PUF_ALIAS3" security="ns_user"/>
+                     <peripheral id="PVTS0" security="ns_user"/>
+                     <peripheral id="RSTCTL0" security="ns_user"/>
+                     <peripheral id="RSTCTL2" security="ns_user"/>
+                     <peripheral id="RSTCTL3" security="ns_user"/>
+                     <peripheral id="RTC0" security="ns_user"/>
+                     <peripheral id="RTC1" security="ns_user"/>
+                     <peripheral id="SAI0" security="ns_user"/>
+                     <peripheral id="SAI1" security="ns_user"/>
+                     <peripheral id="SAI2" security="ns_user"/>
+                     <peripheral id="SCT0" security="ns_user"/>
+                     <peripheral id="SEMA42_0" security="ns_user"/>
+                     <peripheral id="SEMA42_4" security="ns_user"/>
+                     <peripheral id="SLEEPCON0" security="ns_user"/>
+                     <peripheral id="SYSCON0" security="ns_user"/>
+                     <peripheral id="SYSCON2" security="ns_user"/>
+                     <peripheral id="SYSCON3" security="ns_user"/>
+                     <peripheral id="TRNG" security="ns_user"/>
+                     <peripheral id="UTICK0" security="ns_user"/>
+                     <peripheral id="WWDT0" security="ns_user"/>
+                     <peripheral id="WWDT1" security="ns_user"/>
+                     <peripheral id="XCACHE0" security="ns_user"/>
+                     <peripheral id="XCACHE1" security="ns_user"/>
+                     <peripheral id="XSPI0" security="ns_user"/>
+                     <peripheral id="XSPI1" security="ns_user"/>
+                  </peripherals>
+                  <interrupts>
+                     <security>
+                        <interrupt id="ACMP_IRQn" secure="Secure"/>
+                        <interrupt id="ADC_IRQn" secure="Secure"/>
+                        <interrupt id="CDOG0_IRQn" secure="Secure"/>
+                        <interrupt id="CDOG1_IRQn" secure="Secure"/>
+                        <interrupt id="CDOG2_IRQn" secure="Secure"/>
+                        <interrupt id="CPU0_IRQn" secure="Secure"/>
+                        <interrupt id="CTIMER0_IRQn" secure="Secure"/>
+                        <interrupt id="CTIMER1_IRQn" secure="Secure"/>
+                        <interrupt id="CTIMER2_IRQn" secure="Secure"/>
+                        <interrupt id="CTIMER3_IRQn" secure="Secure"/>
+                        <interrupt id="CTIMER4_IRQn" secure="Secure"/>
+                        <interrupt id="EDMA0_CH0_IRQn" secure="Secure"/>
+                        <interrupt id="EDMA0_CH10_IRQn" secure="Secure"/>
+                        <interrupt id="EDMA0_CH11_IRQn" secure="Secure"/>
+                        <interrupt id="EDMA0_CH12_IRQn" secure="Secure"/>
+                        <interrupt id="EDMA0_CH13_IRQn" secure="Secure"/>
+                        <interrupt id="EDMA0_CH14_IRQn" secure="Secure"/>
+                        <interrupt id="EDMA0_CH15_IRQn" secure="Secure"/>
+                        <interrupt id="EDMA0_CH1_IRQn" secure="Secure"/>
+                        <interrupt id="EDMA0_CH2_IRQn" secure="Secure"/>
+                        <interrupt id="EDMA0_CH3_IRQn" secure="Secure"/>
+                        <interrupt id="EDMA0_CH4_IRQn" secure="Secure"/>
+                        <interrupt id="EDMA0_CH5_IRQn" secure="Secure"/>
+                        <interrupt id="EDMA0_CH6_IRQn" secure="Secure"/>
+                        <interrupt id="EDMA0_CH7_IRQn" secure="Secure"/>
+                        <interrupt id="EDMA0_CH8_IRQn" secure="Secure"/>
+                        <interrupt id="EDMA0_CH9_IRQn" secure="Secure"/>
+                        <interrupt id="EDMA1_CH0_IRQn" secure="Secure"/>
+                        <interrupt id="EDMA1_CH10_IRQn" secure="Secure"/>
+                        <interrupt id="EDMA1_CH11_IRQn" secure="Secure"/>
+                        <interrupt id="EDMA1_CH12_IRQn" secure="Secure"/>
+                        <interrupt id="EDMA1_CH13_IRQn" secure="Secure"/>
+                        <interrupt id="EDMA1_CH14_IRQn" secure="Secure"/>
+                        <interrupt id="EDMA1_CH15_IRQn" secure="Secure"/>
+                        <interrupt id="EDMA1_CH1_IRQn" secure="Secure"/>
+                        <interrupt id="EDMA1_CH2_IRQn" secure="Secure"/>
+                        <interrupt id="EDMA1_CH3_IRQn" secure="Secure"/>
+                        <interrupt id="EDMA1_CH4_IRQn" secure="Secure"/>
+                        <interrupt id="EDMA1_CH5_IRQn" secure="Secure"/>
+                        <interrupt id="EDMA1_CH6_IRQn" secure="Secure"/>
+                        <interrupt id="EDMA1_CH7_IRQn" secure="Secure"/>
+                        <interrupt id="EDMA1_CH8_IRQn" secure="Secure"/>
+                        <interrupt id="EDMA1_CH9_IRQn" secure="Secure"/>
+                        <interrupt id="ELS_IRQn" secure="Secure"/>
+                        <interrupt id="EZHV_IRQn" secure="Secure"/>
+                        <interrupt id="FLEXIO_IRQn" secure="Secure"/>
+                        <interrupt id="FRO0_IRQn" secure="Secure"/>
+                        <interrupt id="FRO1_IRQn" secure="Secure"/>
+                        <interrupt id="FRO2_IRQn" secure="Secure"/>
+                        <interrupt id="Freqme_IRQn" secure="Secure"/>
+                        <interrupt id="GDET0_IRQn" secure="Secure"/>
+                        <interrupt id="GDET3_IRQn" secure="Secure"/>
+                        <interrupt id="GLIKEY0_IRQn" secure="Secure"/>
+                        <interrupt id="GLIKEY2_IRQn" secure="Secure"/>
+                        <interrupt id="GLIKEY3_IRQn" secure="Secure"/>
+                        <interrupt id="GLIKEY5_IRQn" secure="Secure"/>
+                        <interrupt id="GPIO00_IRQn" secure="Secure"/>
+                        <interrupt id="GPIO01_IRQn" secure="Secure"/>
+                        <interrupt id="GPIO10_IRQn" secure="Secure"/>
+                        <interrupt id="GPIO11_IRQn" secure="Secure"/>
+                        <interrupt id="GPIO20_IRQn" secure="Secure"/>
+                        <interrupt id="GPIO21_IRQn" secure="Secure"/>
+                        <interrupt id="GPIO30_IRQn" secure="Secure"/>
+                        <interrupt id="GPIO31_IRQn" secure="Secure"/>
+                        <interrupt id="GPIO40_IRQn" secure="Secure"/>
+                        <interrupt id="GPIO41_IRQn" secure="Secure"/>
+                        <interrupt id="GPIO50_IRQn" secure="Secure"/>
+                        <interrupt id="GPIO51_IRQn" secure="Secure"/>
+                        <interrupt id="GPIO60_IRQn" secure="Secure"/>
+                        <interrupt id="GPIO61_IRQn" secure="Secure"/>
+                        <interrupt id="GPIO70_IRQn" secure="Secure"/>
+                        <interrupt id="GPIO71_IRQn" secure="Secure"/>
+                        <interrupt id="HIFI4_IRQn" secure="Secure"/>
+                        <interrupt id="HYPERVISOR_IRQn" secure="Secure"/>
+                        <interrupt id="I3C0_IRQn" secure="Secure"/>
+                        <interrupt id="I3C1_IRQn" secure="Secure"/>
+                        <interrupt id="ITRC0_IRQn" secure="Secure"/>
+                        <interrupt id="JPEGDEC_IRQn" secure="Secure"/>
+                        <interrupt id="LCDIF_IRQn" secure="Secure"/>
+                        <interrupt id="LPI2C15_IRQn" secure="Secure"/>
+                        <interrupt id="LPSPI14_IRQn" secure="Secure"/>
+                        <interrupt id="LPSPI16_IRQn" secure="Secure"/>
+                        <interrupt id="LP_FLEXCOMM0_IRQn" secure="Secure"/>
+                        <interrupt id="LP_FLEXCOMM10_IRQn" secure="Secure"/>
+                        <interrupt id="LP_FLEXCOMM11_IRQn" secure="Secure"/>
+                        <interrupt id="LP_FLEXCOMM12_IRQn" secure="Secure"/>
+                        <interrupt id="LP_FLEXCOMM13_IRQn" secure="Secure"/>
+                        <interrupt id="LP_FLEXCOMM1_IRQn" secure="Secure"/>
+                        <interrupt id="LP_FLEXCOMM2_IRQn" secure="Secure"/>
+                        <interrupt id="LP_FLEXCOMM3_IRQn" secure="Secure"/>
+                        <interrupt id="LP_FLEXCOMM4_IRQn" secure="Secure"/>
+                        <interrupt id="LP_FLEXCOMM5_IRQn" secure="Secure"/>
+                        <interrupt id="LP_FLEXCOMM6_IRQn" secure="Secure"/>
+                        <interrupt id="LP_FLEXCOMM7_IRQn" secure="Secure"/>
+                        <interrupt id="LP_FLEXCOMM8_IRQn" secure="Secure"/>
+                        <interrupt id="LP_FLEXCOMM9_IRQn" secure="Secure"/>
+                        <interrupt id="MEDIA_HYPERVISOR_IRQn" secure="Secure"/>
+                        <interrupt id="MEDIA_SECURE_VIOLATION_IRQn" secure="Secure"/>
+                        <interrupt id="MIPI_IRQn" secure="Secure"/>
+                        <interrupt id="MMU0_IRQn" secure="Secure"/>
+                        <interrupt id="MMU1_IRQn" secure="Secure"/>
+                        <interrupt id="MMU2_IRQn" secure="Secure"/>
+                        <interrupt id="MRT0_IRQn" secure="Secure"/>
+                        <interrupt id="MU0_A_IRQn" secure="Secure"/>
+                        <interrupt id="MU1_A_IRQn" secure="Secure"/>
+                        <interrupt id="MU4_A_IRQn" secure="Secure"/>
+                        <interrupt id="NPU_IRQn" secure="Secure"/>
+                        <interrupt id="OCOTP_IRQn" secure="Secure"/>
+                        <interrupt id="OSCCA_IRQn" secure="Secure"/>
+                        <interrupt id="OS_EVENT_IRQn" secure="Secure"/>
+                        <interrupt id="PDM_EVENT_IRQn" secure="Secure"/>
+                        <interrupt id="PDM_HWVAD_EVENT_IRQn" secure="Secure"/>
+                        <interrupt id="PIN_INT0_IRQn" secure="Secure"/>
+                        <interrupt id="PIN_INT1_IRQn" secure="Secure"/>
+                        <interrupt id="PIN_INT2_IRQn" secure="Secure"/>
+                        <interrupt id="PIN_INT3_IRQn" secure="Secure"/>
+                        <interrupt id="PIN_INT4_IRQn" secure="Secure"/>
+                        <interrupt id="PIN_INT5_IRQn" secure="Secure"/>
+                        <interrupt id="PIN_INT6_IRQn" secure="Secure"/>
+                        <interrupt id="PIN_INT7_IRQn" secure="Secure"/>
+                        <interrupt id="PKC_IRQn" secure="Secure"/>
+                        <interrupt id="PMC_IRQn" secure="Secure"/>
+                        <interrupt id="PNGDEC_IRQn" secure="Secure"/>
+                        <interrupt id="PUF_IRQn" secure="Secure"/>
+                        <interrupt id="PVTS0_CPU0_IRQn" secure="Secure"/>
+                        <interrupt id="PVTS0_HIFI4_IRQn" secure="Secure"/>
+                        <interrupt id="RTC0_ALARM_IRQn" secure="Secure"/>
+                        <interrupt id="RTC0_IRQn" secure="Secure"/>
+                        <interrupt id="SAI0_IRQn" secure="Secure"/>
+                        <interrupt id="SAI1_IRQn" secure="Secure"/>
+                        <interrupt id="SAI2_IRQn" secure="Secure"/>
+                        <interrupt id="SCT0_IRQn" secure="Secure"/>
+                        <interrupt id="SDADC_IRQn" secure="Secure"/>
+                        <interrupt id="SECURE_VIOLATION_IRQn" secure="Secure"/>
+                        <interrupt id="SENSE_HYPERVISOR_IRQn" secure="Secure"/>
+                        <interrupt id="SENSE_SECURE_VIOLATION_IRQn" secure="Secure"/>
+                        <interrupt id="SLEEPCON0_IRQn" secure="Secure"/>
+                        <interrupt id="TEMPDET0_IRQn" secure="Secure"/>
+                        <interrupt id="TEMPDET1_IRQn" secure="Secure"/>
+                        <interrupt id="TRNG_IRQn" secure="Secure"/>
+                        <interrupt id="USB0_IRQn" secure="Secure"/>
+                        <interrupt id="USB1_IRQn" secure="Secure"/>
+                        <interrupt id="USBPHY0_IRQn" secure="Secure"/>
+                        <interrupt id="USDHC0_IRQn" secure="Secure"/>
+                        <interrupt id="USDHC1_IRQn" secure="Secure"/>
+                        <interrupt id="UTICK0_IRQn" secure="Secure"/>
+                        <interrupt id="VGPU_IRQn" secure="Secure"/>
+                        <interrupt id="WDT0_IRQn" secure="Secure"/>
+                        <interrupt id="WDT1_IRQn" secure="Secure"/>
+                        <interrupt id="XSPI0_IRQn" secure="Secure"/>
+                        <interrupt id="XSPI1_IRQn" secure="Secure"/>
+                        <interrupt id="XSPI2_IRQn" secure="Secure"/>
+                     </security>
+                  </interrupts>
+               </ahb>
+               <ahb id="1">
+                  <relative_region start="0" size="32768" security="ns_user" memory="SRAM_P0_c"/>
+                  <relative_region start="0" size="32768" security="ns_user" memory="SRAM_P1_c"/>
+                  <relative_region start="0" size="32768" security="ns_user" memory="SRAM_P2_c"/>
+                  <relative_region start="0" size="32768" security="ns_user" memory="SRAM_P3_c"/>
+                  <relative_region start="0" size="65536" security="ns_user" memory="SRAM_P4_c"/>
+                  <relative_region start="0" size="65536" security="ns_user" memory="SRAM_P5_c"/>
+                  <relative_region start="0" size="131072" security="ns_user" memory="SRAM_P6_c"/>
+                  <relative_region start="0" size="131072" security="ns_user" memory="SRAM_P7_c"/>
+                  <relative_region start="0" size="262144" security="ns_user" memory="SRAM_P8_c"/>
+                  <relative_region start="0" size="262144" security="ns_user" memory="SRAM_P9_c"/>
+                  <relative_region start="0" size="524288" security="ns_user" memory="SRAM_P10_c"/>
+                  <relative_region start="0" size="524288" security="ns_user" memory="SRAM_P11_c"/>
+                  <relative_region start="0" size="1048576" security="ns_user" memory="SRAM_P12_c"/>
+                  <relative_region start="0" size="1048576" security="ns_user" memory="SRAM_P13_c"/>
+                  <relative_region start="0" size="524288" security="ns_user" memory="SRAM_P14_c"/>
+                  <relative_region start="0" size="524288" security="ns_user" memory="SRAM_P15_c"/>
+                  <relative_region start="0" size="262144" security="ns_user" memory="SRAM_P16_c"/>
+                  <relative_region start="0" size="262144" security="ns_user" memory="SRAM_P17_c"/>
+                  <relative_region start="0" size="32768" security="ns_user" memory="SRAM_P18_c"/>
+                  <relative_region start="0" size="32768" security="ns_user" memory="SRAM_P19_c"/>
+                  <relative_region start="0" size="32768" security="ns_user" memory="SRAM_P20_c"/>
+                  <relative_region start="0" size="32768" security="ns_user" memory="SRAM_P21_c"/>
+                  <relative_region start="0" size="65536" security="ns_user" memory="SRAM_P22_c"/>
+                  <relative_region start="0" size="65536" security="ns_user" memory="SRAM_P23_c"/>
+                  <relative_region start="0" size="131072" security="ns_user" memory="SRAM_P24_c"/>
+                  <relative_region start="0" size="131072" security="ns_user" memory="SRAM_P25_c"/>
+                  <relative_region start="0" size="524288" security="ns_user" memory="SRAM_P26_c"/>
+                  <relative_region start="0" size="524288" security="ns_user" memory="SRAM_P27_c"/>
+                  <relative_region start="0" size="262144" security="ns_user" memory="SRAM_P28_c"/>
+                  <relative_region start="0" size="262144" security="ns_user" memory="SRAM_P29_c"/>
+                  <relative_region start="0" size="32768" security="ns_user" memory="SRAM_P0_s"/>
+                  <relative_region start="0" size="32768" security="ns_user" memory="SRAM_P1_s"/>
+                  <relative_region start="0" size="32768" security="ns_user" memory="SRAM_P2_s"/>
+                  <relative_region start="0" size="32768" security="ns_user" memory="SRAM_P3_s"/>
+                  <relative_region start="0" size="65536" security="ns_user" memory="SRAM_P4_s"/>
+                  <relative_region start="0" size="65536" security="ns_user" memory="SRAM_P5_s"/>
+                  <relative_region start="0" size="131072" security="ns_user" memory="SRAM_P6_s"/>
+                  <relative_region start="0" size="131072" security="ns_user" memory="SRAM_P7_s"/>
+                  <relative_region start="0" size="262144" security="ns_user" memory="SRAM_P8_s"/>
+                  <relative_region start="0" size="262144" security="ns_user" memory="SRAM_P9_s"/>
+                  <relative_region start="0" size="524288" security="ns_user" memory="SRAM_P10_s"/>
+                  <relative_region start="0" size="524288" security="ns_user" memory="SRAM_P11_s"/>
+                  <relative_region start="0" size="1048576" security="ns_user" memory="SRAM_P12_s"/>
+                  <relative_region start="0" size="1048576" security="ns_user" memory="SRAM_P13_s"/>
+                  <relative_region start="0" size="524288" security="ns_user" memory="SRAM_P14_s"/>
+                  <relative_region start="0" size="524288" security="ns_user" memory="SRAM_P15_s"/>
+                  <relative_region start="0" size="262144" security="ns_user" memory="SRAM_P16_s"/>
+                  <relative_region start="0" size="262144" security="ns_user" memory="SRAM_P17_s"/>
+                  <relative_region start="0" size="32768" security="ns_user" memory="SRAM_P18_s"/>
+                  <relative_region start="0" size="32768" security="ns_user" memory="SRAM_P19_s"/>
+                  <relative_region start="0" size="32768" security="ns_user" memory="SRAM_P20_s"/>
+                  <relative_region start="0" size="32768" security="ns_user" memory="SRAM_P21_s"/>
+                  <relative_region start="0" size="65536" security="ns_user" memory="SRAM_P22_s"/>
+                  <relative_region start="0" size="65536" security="ns_user" memory="SRAM_P23_s"/>
+                  <relative_region start="0" size="131072" security="ns_user" memory="SRAM_P24_s"/>
+                  <relative_region start="0" size="131072" security="ns_user" memory="SRAM_P25_s"/>
+                  <relative_region start="0" size="524288" security="ns_user" memory="SRAM_P26_s"/>
+                  <relative_region start="0" size="524288" security="ns_user" memory="SRAM_P27_s"/>
+                  <relative_region start="0" size="262144" security="ns_user" memory="SRAM_P28_s"/>
+                  <relative_region start="0" size="262144" security="ns_user" memory="SRAM_P29_s"/>
+                  <relative_region start="0" size="32768" security="ns_user" memory="SRAM_P0_m"/>
+                  <relative_region start="0" size="32768" security="ns_user" memory="SRAM_P1_m"/>
+                  <relative_region start="0" size="32768" security="ns_user" memory="SRAM_P2_m"/>
+                  <relative_region start="0" size="32768" security="ns_user" memory="SRAM_P3_m"/>
+                  <relative_region start="0" size="65536" security="ns_user" memory="SRAM_P4_m"/>
+                  <relative_region start="0" size="65536" security="ns_user" memory="SRAM_P5_m"/>
+                  <relative_region start="0" size="131072" security="ns_user" memory="SRAM_P6_m"/>
+                  <relative_region start="0" size="131072" security="ns_user" memory="SRAM_P7_m"/>
+                  <relative_region start="0" size="262144" security="ns_user" memory="SRAM_P8_m"/>
+                  <relative_region start="0" size="262144" security="ns_user" memory="SRAM_P9_m"/>
+                  <relative_region start="0" size="524288" security="ns_user" memory="SRAM_P10_m"/>
+                  <relative_region start="0" size="524288" security="ns_user" memory="SRAM_P11_m"/>
+                  <relative_region start="0" size="1048576" security="ns_user" memory="SRAM_P12_m"/>
+                  <relative_region start="0" size="1048576" security="ns_user" memory="SRAM_P13_m"/>
+                  <relative_region start="0" size="524288" security="ns_user" memory="SRAM_P14_m"/>
+                  <relative_region start="0" size="524288" security="ns_user" memory="SRAM_P15_m"/>
+                  <relative_region start="0" size="262144" security="ns_user" memory="SRAM_P16_m"/>
+                  <relative_region start="0" size="262144" security="ns_user" memory="SRAM_P17_m"/>
+                  <relative_region start="0" size="32768" security="ns_user" memory="SRAM_P18_m"/>
+                  <relative_region start="0" size="32768" security="ns_user" memory="SRAM_P19_m"/>
+                  <relative_region start="0" size="32768" security="ns_user" memory="SRAM_P20_m"/>
+                  <relative_region start="0" size="32768" security="ns_user" memory="SRAM_P21_m"/>
+                  <relative_region start="0" size="65536" security="ns_user" memory="SRAM_P22_m"/>
+                  <relative_region start="0" size="65536" security="ns_user" memory="SRAM_P23_m"/>
+                  <relative_region start="0" size="131072" security="ns_user" memory="SRAM_P24_m"/>
+                  <relative_region start="0" size="131072" security="ns_user" memory="SRAM_P25_m"/>
+                  <relative_region start="0" size="524288" security="ns_user" memory="SRAM_P26_m"/>
+                  <relative_region start="0" size="524288" security="ns_user" memory="SRAM_P27_m"/>
+                  <relative_region start="0" size="262144" security="ns_user" memory="SRAM_P28_m"/>
+                  <relative_region start="0" size="262144" security="ns_user" memory="SRAM_P29_m"/>
+                  <relative_region start="0" size="65536" security="ns_user" memory="EZHV_TCM_c"/>
+                  <relative_region start="0" size="65536" security="ns_user" memory="EZHV_TCM_s"/>
+                  <relative_region start="0" size="65536" security="ns_user" memory="EZHV_TCM_m"/>
+                  <relative_region start="0" size="268435456" security="ns_user" memory="XSPI2_c"/>
+                  <relative_region start="0" size="268435456" security="ns_user" memory="XSPI2_s"/>
+                  <relative_region start="0" size="268435456" security="ns_user" memory="XSPI2_m"/>
+                  <masters>
+                     <master id="DMA2" security="ns_user"/>
+                     <master id="DMA3" security="ns_user"/>
+                     <master id="HIFI1" security="ns_user"/>
+                     <master id="MEDIA" security="ns_user"/>
+                  </masters>
+                  <peripherals>
+                     <peripheral id="ACMP0" security="ns_user"/>
+                     <peripheral id="ADC0" security="ns_user"/>
+                     <peripheral id="AHBSC3" security="ns_user"/>
+                     <peripheral id="AHBSC3_ALIAS1" security="ns_user"/>
+                     <peripheral id="AHBSC3_ALIAS2" security="ns_user"/>
+                     <peripheral id="AHBSC3_ALIAS3" security="ns_user"/>
+                     <peripheral id="CDOG3" security="ns_user"/>
+                     <peripheral id="CDOG4" security="ns_user"/>
+                     <peripheral id="CLKCTL1" security="ns_user"/>
+                     <peripheral id="CLKCTL2" security="ns_user"/>
+                     <peripheral id="CLKCTL3" security="ns_user"/>
+                     <peripheral id="CTIMER5" security="ns_user"/>
+                     <peripheral id="CTIMER6" security="ns_user"/>
+                     <peripheral id="CTIMER7" security="ns_user"/>
+                     <peripheral id="DMA2_MP" security="ns_user"/>
+                     <peripheral id="DMA2_TEE_ALIAS0" security="ns_user"/>
+                     <peripheral id="DMA2_TEE_ALIAS1" security="ns_user"/>
+                     <peripheral id="DMA2_TEE_ALIAS2" security="ns_user"/>
+                     <peripheral id="DMA2_TEE_ALIAS3" security="ns_user"/>
+                     <peripheral id="DMA2_TEE_ALIAS4" security="ns_user"/>
+                     <peripheral id="DMA2_TEE_ALIAS5" security="ns_user"/>
+                     <peripheral id="DMA2_TEE_ALIAS6" security="ns_user"/>
+                     <peripheral id="DMA2_TEE_ALIAS7" security="ns_user"/>
+                     <peripheral id="DMA3_MP" security="ns_user"/>
+                     <peripheral id="DMA3_TEE_ALIAS0" security="ns_user"/>
+                     <peripheral id="DMA3_TEE_ALIAS1" security="ns_user"/>
+                     <peripheral id="DMA3_TEE_ALIAS2" security="ns_user"/>
+                     <peripheral id="DMA3_TEE_ALIAS3" security="ns_user"/>
+                     <peripheral id="DMA3_TEE_ALIAS4" security="ns_user"/>
+                     <peripheral id="DMA3_TEE_ALIAS5" security="ns_user"/>
+                     <peripheral id="DMA3_TEE_ALIAS6" security="ns_user"/>
+                     <peripheral id="DMA3_TEE_ALIAS7" security="ns_user"/>
+                     <peripheral id="GDET3" security="ns_user"/>
+                     <peripheral id="GPIO10" security="ns_user"/>
+                     <peripheral id="GPIO10_ALIAS" security="ns_user"/>
+                     <peripheral id="GPIO8" security="ns_user"/>
+                     <peripheral id="GPIO8_ALIAS" security="ns_user"/>
+                     <peripheral id="GPIO9" security="ns_user"/>
+                     <peripheral id="GPIO9_ALIAS" security="ns_user"/>
+                     <peripheral id="I3C2" security="ns_user"/>
+                     <peripheral id="I3C3" security="ns_user"/>
+                     <peripheral id="INPUTMUX1" security="ns_user"/>
+                     <peripheral id="IOPCTL1" security="ns_user"/>
+                     <peripheral id="LPI2C15" security="ns_user"/>
+                     <peripheral id="LP_FLEXCOMM17" security="ns_user"/>
+                     <peripheral id="LP_FLEXCOMM18" security="ns_user"/>
+                     <peripheral id="LP_FLEXCOMM19" security="ns_user"/>
+                     <peripheral id="LP_FLEXCOMM20" security="ns_user"/>
+                     <peripheral id="MEDIA_AHB_PERIPHERAL" security="ns_user"/>
+                     <peripheral id="MEDIA_APB_PERIPHERAL" security="ns_user"/>
+                     <peripheral id="MRT1" security="ns_user"/>
+                     <peripheral id="MU0_MUB" security="ns_user"/>
+                     <peripheral id="MU1_MUB" security="ns_user"/>
+                     <peripheral id="MU2_MUB" security="ns_user"/>
+                     <peripheral id="OSC32KNP" security="ns_user"/>
+                     <peripheral id="OSTIMER_CPU1" security="ns_user"/>
+                     <peripheral id="OSTIMER_HIFI1" security="ns_user"/>
+                     <peripheral id="PDM" security="ns_user"/>
+                     <peripheral id="PINT1" security="ns_user"/>
+                     <peripheral id="PMC1" security="ns_user"/>
+                     <peripheral id="PVTS1" security="ns_user"/>
+                     <peripheral id="RSTCTL1" security="ns_user"/>
+                     <peripheral id="RSTCTL2" security="ns_user"/>
+                     <peripheral id="RSTCTL3" security="ns_user"/>
+                     <peripheral id="RTC0" security="ns_user"/>
+                     <peripheral id="RTC1" security="ns_user"/>
+                     <peripheral id="SDADC" security="ns_user"/>
+                     <peripheral id="SEMA42_0" security="ns_user"/>
+                     <peripheral id="SLEEPCON1" security="ns_user"/>
+                     <peripheral id="SYSCON1" security="ns_user"/>
+                     <peripheral id="SYSCON2" security="ns_user"/>
+                     <peripheral id="SYSCON3" security="ns_user"/>
+                     <peripheral id="UTICK1" security="ns_user"/>
+                     <peripheral id="WWDT2" security="ns_user"/>
+                     <peripheral id="WWDT3" security="ns_user"/>
+                  </peripherals>
+                  <interrupts>
+                     <security>
+                        <interrupt id="ACMP_IRQn" secure="Secure"/>
+                        <interrupt id="ADC_IRQn" secure="Secure"/>
+                        <interrupt id="CDOG3_IRQn" secure="Secure"/>
+                        <interrupt id="CDOG4_IRQn" secure="Secure"/>
+                        <interrupt id="CPU1_IRQn" secure="Secure"/>
+                        <interrupt id="CTIMER5_IRQn" secure="Secure"/>
+                        <interrupt id="CTIMER6_IRQn" secure="Secure"/>
+                        <interrupt id="CTIMER7_IRQn" secure="Secure"/>
+                        <interrupt id="EDMA2_CH0_IRQn" secure="Secure"/>
+                        <interrupt id="EDMA2_CH1_IRQn" secure="Secure"/>
+                        <interrupt id="EDMA2_CH2_IRQn" secure="Secure"/>
+                        <interrupt id="EDMA2_CH3_IRQn" secure="Secure"/>
+                        <interrupt id="EDMA2_CH4_IRQn" secure="Secure"/>
+                        <interrupt id="EDMA2_CH5_IRQn" secure="Secure"/>
+                        <interrupt id="EDMA2_CH6_IRQn" secure="Secure"/>
+                        <interrupt id="EDMA2_CH7_IRQn" secure="Secure"/>
+                        <interrupt id="EDMA3_CH0_IRQn" secure="Secure"/>
+                        <interrupt id="EDMA3_CH1_IRQn" secure="Secure"/>
+                        <interrupt id="EDMA3_CH2_IRQn" secure="Secure"/>
+                        <interrupt id="EDMA3_CH3_IRQn" secure="Secure"/>
+                        <interrupt id="EDMA3_CH4_IRQn" secure="Secure"/>
+                        <interrupt id="EDMA3_CH5_IRQn" secure="Secure"/>
+                        <interrupt id="EDMA3_CH6_IRQn" secure="Secure"/>
+                        <interrupt id="EDMA3_CH7_IRQn" secure="Secure"/>
+                        <interrupt id="EZHV_IRQn" secure="Secure"/>
+                        <interrupt id="FLEXIO_IRQn" secure="Secure"/>
+                        <interrupt id="FRO2_IRQn" secure="Secure"/>
+                        <interrupt id="GDET3_IRQn" secure="Secure"/>
+                        <interrupt id="GLIKEY1_IRQn" secure="Secure"/>
+                        <interrupt id="GLIKEY4_IRQn" secure="Secure"/>
+                        <interrupt id="GPIO100_IRQn" secure="Secure"/>
+                        <interrupt id="GPIO101_IRQn" secure="Secure"/>
+                        <interrupt id="GPIO80_IRQn" secure="Secure"/>
+                        <interrupt id="GPIO81_IRQn" secure="Secure"/>
+                        <interrupt id="GPIO90_IRQn" secure="Secure"/>
+                        <interrupt id="GPIO91_IRQn" secure="Secure"/>
+                        <interrupt id="HIFI1_IRQn" secure="Secure"/>
+                        <interrupt id="HYPERVISOR_IRQn" secure="Secure"/>
+                        <interrupt id="I3C2_IRQn" secure="Secure"/>
+                        <interrupt id="I3C3_IRQn" secure="Secure"/>
+                        <interrupt id="JPEGDEC_IRQn" secure="Secure"/>
+                        <interrupt id="LCDIF_IRQn" secure="Secure"/>
+                        <interrupt id="LPI2C15_IRQn" secure="Secure"/>
+                        <interrupt id="LP_FLEXCOMM17_IRQn" secure="Secure"/>
+                        <interrupt id="LP_FLEXCOMM18_IRQn" secure="Secure"/>
+                        <interrupt id="LP_FLEXCOMM19_IRQn" secure="Secure"/>
+                        <interrupt id="LP_FLEXCOMM20_IRQn" secure="Secure"/>
+                        <interrupt id="MIPI_IRQn" secure="Secure"/>
+                        <interrupt id="MMU2_IRQn" secure="Secure"/>
+                        <interrupt id="MRT1_IRQn" secure="Secure"/>
+                        <interrupt id="MU1_B_IRQn" secure="Secure"/>
+                        <interrupt id="MU2_B_IRQn" secure="Secure"/>
+                        <interrupt id="MU3_A_IRQn" secure="Secure"/>
+                        <interrupt id="OS_EVENT_IRQn" secure="Secure"/>
+                        <interrupt id="PDM_EVENT_IRQn" secure="Secure"/>
+                        <interrupt id="PDM_HWVAD_EVENT_IRQn" secure="Secure"/>
+                        <interrupt id="PIN_INT0_IRQn" secure="Secure"/>
+                        <interrupt id="PIN_INT1_IRQn" secure="Secure"/>
+                        <interrupt id="PIN_INT2_IRQn" secure="Secure"/>
+                        <interrupt id="PIN_INT3_IRQn" secure="Secure"/>
+                        <interrupt id="PMC_IRQn" secure="Secure"/>
+                        <interrupt id="PNGDEC_IRQn" secure="Secure"/>
+                        <interrupt id="PVTS1_CPU1_IRQn" secure="Secure"/>
+                        <interrupt id="PVTS1_HIFI1_IRQn" secure="Secure"/>
+                        <interrupt id="RTC1_ALARM_IRQn" secure="Secure"/>
+                        <interrupt id="RTC1_IRQn" secure="Secure"/>
+                        <interrupt id="SAI3_IRQn" secure="Secure"/>
+                        <interrupt id="SDADC_IRQn" secure="Secure"/>
+                        <interrupt id="SECURE_VIOLATION_IRQn" secure="Secure"/>
+                        <interrupt id="SLEEPCON1_IRQn" secure="Secure"/>
+                        <interrupt id="TEMPDET0_IRQn" secure="Secure"/>
+                        <interrupt id="TEMPDET1_IRQn" secure="Secure"/>
+                        <interrupt id="USB0_IRQn" secure="Secure"/>
+                        <interrupt id="USB1_IRQn" secure="Secure"/>
+                        <interrupt id="USBPHY0_IRQn" secure="Secure"/>
+                        <interrupt id="USDHC0_IRQn" secure="Secure"/>
+                        <interrupt id="USDHC1_IRQn" secure="Secure"/>
+                        <interrupt id="UTICK1_IRQn" secure="Secure"/>
+                        <interrupt id="VGPU_IRQn" secure="Secure"/>
+                        <interrupt id="WDT2_IRQn" secure="Secure"/>
+                        <interrupt id="WDT3_IRQn" secure="Secure"/>
+                        <interrupt id="XSPI2_IRQn" secure="Secure"/>
+                     </security>
+                  </interrupts>
+               </ahb>
+               <ahb id="2">
+                  <relative_region start="0" size="32768" security="ns_user" memory="SRAM_P0_c"/>
+                  <relative_region start="0" size="32768" security="ns_user" memory="SRAM_P1_c"/>
+                  <relative_region start="0" size="32768" security="ns_user" memory="SRAM_P2_c"/>
+                  <relative_region start="0" size="32768" security="ns_user" memory="SRAM_P3_c"/>
+                  <relative_region start="0" size="65536" security="ns_user" memory="SRAM_P4_c"/>
+                  <relative_region start="0" size="65536" security="ns_user" memory="SRAM_P5_c"/>
+                  <relative_region start="0" size="131072" security="ns_user" memory="SRAM_P6_c"/>
+                  <relative_region start="0" size="131072" security="ns_user" memory="SRAM_P7_c"/>
+                  <relative_region start="0" size="262144" security="ns_user" memory="SRAM_P8_c"/>
+                  <relative_region start="0" size="262144" security="ns_user" memory="SRAM_P9_c"/>
+                  <relative_region start="0" size="524288" security="ns_user" memory="SRAM_P10_c"/>
+                  <relative_region start="0" size="524288" security="ns_user" memory="SRAM_P11_c"/>
+                  <relative_region start="0" size="1048576" security="ns_user" memory="SRAM_P12_c"/>
+                  <relative_region start="0" size="1048576" security="ns_user" memory="SRAM_P13_c"/>
+                  <relative_region start="0" size="524288" security="ns_user" memory="SRAM_P14_c"/>
+                  <relative_region start="0" size="524288" security="ns_user" memory="SRAM_P15_c"/>
+                  <relative_region start="0" size="262144" security="ns_user" memory="SRAM_P16_c"/>
+                  <relative_region start="0" size="262144" security="ns_user" memory="SRAM_P17_c"/>
+                  <relative_region start="0" size="32768" security="ns_user" memory="SRAM_P18_c"/>
+                  <relative_region start="0" size="32768" security="ns_user" memory="SRAM_P19_c"/>
+                  <relative_region start="0" size="32768" security="ns_user" memory="SRAM_P20_c"/>
+                  <relative_region start="0" size="32768" security="ns_user" memory="SRAM_P21_c"/>
+                  <relative_region start="0" size="65536" security="ns_user" memory="SRAM_P22_c"/>
+                  <relative_region start="0" size="65536" security="ns_user" memory="SRAM_P23_c"/>
+                  <relative_region start="0" size="131072" security="ns_user" memory="SRAM_P24_c"/>
+                  <relative_region start="0" size="131072" security="ns_user" memory="SRAM_P25_c"/>
+                  <relative_region start="0" size="524288" security="ns_user" memory="SRAM_P26_c"/>
+                  <relative_region start="0" size="524288" security="ns_user" memory="SRAM_P27_c"/>
+                  <relative_region start="0" size="262144" security="ns_user" memory="SRAM_P28_c"/>
+                  <relative_region start="0" size="262144" security="ns_user" memory="SRAM_P29_c"/>
+                  <relative_region start="0" size="32768" security="ns_user" memory="SRAM_P0_s"/>
+                  <relative_region start="0" size="32768" security="ns_user" memory="SRAM_P1_s"/>
+                  <relative_region start="0" size="32768" security="ns_user" memory="SRAM_P2_s"/>
+                  <relative_region start="0" size="32768" security="ns_user" memory="SRAM_P3_s"/>
+                  <relative_region start="0" size="65536" security="ns_user" memory="SRAM_P4_s"/>
+                  <relative_region start="0" size="65536" security="ns_user" memory="SRAM_P5_s"/>
+                  <relative_region start="0" size="131072" security="ns_user" memory="SRAM_P6_s"/>
+                  <relative_region start="0" size="131072" security="ns_user" memory="SRAM_P7_s"/>
+                  <relative_region start="0" size="262144" security="ns_user" memory="SRAM_P8_s"/>
+                  <relative_region start="0" size="262144" security="ns_user" memory="SRAM_P9_s"/>
+                  <relative_region start="0" size="524288" security="ns_user" memory="SRAM_P10_s"/>
+                  <relative_region start="0" size="524288" security="ns_user" memory="SRAM_P11_s"/>
+                  <relative_region start="0" size="1048576" security="ns_user" memory="SRAM_P12_s"/>
+                  <relative_region start="0" size="1048576" security="ns_user" memory="SRAM_P13_s"/>
+                  <relative_region start="0" size="524288" security="ns_user" memory="SRAM_P14_s"/>
+                  <relative_region start="0" size="524288" security="ns_user" memory="SRAM_P15_s"/>
+                  <relative_region start="0" size="262144" security="ns_user" memory="SRAM_P16_s"/>
+                  <relative_region start="0" size="262144" security="ns_user" memory="SRAM_P17_s"/>
+                  <relative_region start="0" size="32768" security="ns_user" memory="SRAM_P18_s"/>
+                  <relative_region start="0" size="32768" security="ns_user" memory="SRAM_P19_s"/>
+                  <relative_region start="0" size="32768" security="ns_user" memory="SRAM_P20_s"/>
+                  <relative_region start="0" size="32768" security="ns_user" memory="SRAM_P21_s"/>
+                  <relative_region start="0" size="65536" security="ns_user" memory="SRAM_P22_s"/>
+                  <relative_region start="0" size="65536" security="ns_user" memory="SRAM_P23_s"/>
+                  <relative_region start="0" size="131072" security="ns_user" memory="SRAM_P24_s"/>
+                  <relative_region start="0" size="131072" security="ns_user" memory="SRAM_P25_s"/>
+                  <relative_region start="0" size="524288" security="ns_user" memory="SRAM_P26_s"/>
+                  <relative_region start="0" size="524288" security="ns_user" memory="SRAM_P27_s"/>
+                  <relative_region start="0" size="262144" security="ns_user" memory="SRAM_P28_s"/>
+                  <relative_region start="0" size="262144" security="ns_user" memory="SRAM_P29_s"/>
+                  <relative_region start="0" size="32768" security="ns_user" memory="SRAM_P0_m"/>
+                  <relative_region start="0" size="32768" security="ns_user" memory="SRAM_P1_m"/>
+                  <relative_region start="0" size="32768" security="ns_user" memory="SRAM_P2_m"/>
+                  <relative_region start="0" size="32768" security="ns_user" memory="SRAM_P3_m"/>
+                  <relative_region start="0" size="65536" security="ns_user" memory="SRAM_P4_m"/>
+                  <relative_region start="0" size="65536" security="ns_user" memory="SRAM_P5_m"/>
+                  <relative_region start="0" size="131072" security="ns_user" memory="SRAM_P6_m"/>
+                  <relative_region start="0" size="131072" security="ns_user" memory="SRAM_P7_m"/>
+                  <relative_region start="0" size="262144" security="ns_user" memory="SRAM_P8_m"/>
+                  <relative_region start="0" size="262144" security="ns_user" memory="SRAM_P9_m"/>
+                  <relative_region start="0" size="524288" security="ns_user" memory="SRAM_P10_m"/>
+                  <relative_region start="0" size="524288" security="ns_user" memory="SRAM_P11_m"/>
+                  <relative_region start="0" size="1048576" security="ns_user" memory="SRAM_P12_m"/>
+                  <relative_region start="0" size="1048576" security="ns_user" memory="SRAM_P13_m"/>
+                  <relative_region start="0" size="524288" security="ns_user" memory="SRAM_P14_m"/>
+                  <relative_region start="0" size="524288" security="ns_user" memory="SRAM_P15_m"/>
+                  <relative_region start="0" size="262144" security="ns_user" memory="SRAM_P16_m"/>
+                  <relative_region start="0" size="262144" security="ns_user" memory="SRAM_P17_m"/>
+                  <relative_region start="0" size="32768" security="ns_user" memory="SRAM_P18_m"/>
+                  <relative_region start="0" size="32768" security="ns_user" memory="SRAM_P19_m"/>
+                  <relative_region start="0" size="32768" security="ns_user" memory="SRAM_P20_m"/>
+                  <relative_region start="0" size="32768" security="ns_user" memory="SRAM_P21_m"/>
+                  <relative_region start="0" size="65536" security="ns_user" memory="SRAM_P22_m"/>
+                  <relative_region start="0" size="65536" security="ns_user" memory="SRAM_P23_m"/>
+                  <relative_region start="0" size="131072" security="ns_user" memory="SRAM_P24_m"/>
+                  <relative_region start="0" size="131072" security="ns_user" memory="SRAM_P25_m"/>
+                  <relative_region start="0" size="524288" security="ns_user" memory="SRAM_P26_m"/>
+                  <relative_region start="0" size="524288" security="ns_user" memory="SRAM_P27_m"/>
+                  <relative_region start="0" size="262144" security="ns_user" memory="SRAM_P28_m"/>
+                  <relative_region start="0" size="262144" security="ns_user" memory="SRAM_P29_m"/>
+                  <relative_region start="0" size="65536" security="ns_user" memory="EZHV_TCM_c"/>
+                  <relative_region start="0" size="65536" security="ns_user" memory="EZHV_TCM_s"/>
+                  <relative_region start="0" size="65536" security="ns_user" memory="EZHV_TCM_m"/>
+                  <relative_region start="0" size="268435456" security="ns_user" memory="XSPI2_c"/>
+                  <relative_region start="0" size="268435456" security="ns_user" memory="XSPI2_s"/>
+                  <relative_region start="0" size="268435456" security="ns_user" memory="XSPI2_m"/>
+                  <masters>
+                     <master id="EZHV" security="ns_user"/>
+                     <master id="GPU" security="ns_user"/>
+                     <master id="JPEG" security="ns_user"/>
+                     <master id="LCDIF" security="ns_user"/>
+                     <master id="PNG" security="ns_user"/>
+                     <master id="SDHC0" security="ns_user"/>
+                     <master id="SDHC1" security="ns_user"/>
+                     <master id="USB0" security="ns_user"/>
+                     <master id="USB1" security="ns_user"/>
+                  </masters>
+                  <peripherals>
+                     <peripheral id="AHBSC4" security="ns_user"/>
+                     <peripheral id="AHBSC4_ALIAS1" security="ns_user"/>
+                     <peripheral id="AHBSC4_ALIAS2" security="ns_user"/>
+                     <peripheral id="AHBSC4_ALIAS3" security="ns_user"/>
+                     <peripheral id="CLKCTL4" security="ns_user"/>
+                     <peripheral id="FLEXIO" security="ns_user"/>
+                     <peripheral id="IOPCTL2" security="ns_user"/>
+                     <peripheral id="JPEGDEC" security="ns_user"/>
+                     <peripheral id="LCDIF" security="ns_user"/>
+                     <peripheral id="LPSPI14" security="ns_user"/>
+                     <peripheral id="LPSPI16" security="ns_user"/>
+                     <peripheral id="MIPI_DSI_HOST" security="ns_user"/>
+                     <peripheral id="MMU2" security="ns_user"/>
+                     <peripheral id="NIC_MEDIA1" security="ns_user"/>
+                     <peripheral id="PNGDEC" security="ns_user"/>
+                     <peripheral id="RSTCTL4" security="ns_user"/>
+                     <peripheral id="SYSCON4" security="ns_user"/>
+                     <peripheral id="USB0" security="ns_user"/>
+                     <peripheral id="USB1" security="ns_user"/>
+                     <peripheral id="USBPHY" security="ns_user"/>
+                     <peripheral id="USDHC0" security="ns_user"/>
+                     <peripheral id="USDHC1" security="ns_user"/>
+                     <peripheral id="VGPU" security="ns_user"/>
+                     <peripheral id="XSPI2" security="ns_user"/>
+                  </peripherals>
+               </ahb>
+            </root>
+            <saus>
+               <sau enabled="false" all_non_secure="false" generate_code_for_disabled_regions="false" core="cm33_core1">
+                  <region start="0" size="32" security="ns" enabled="false" index="0"/>
+                  <region start="0" size="32" security="ns" enabled="false" index="1"/>
+                  <region start="0" size="32" security="ns" enabled="false" index="2"/>
+                  <region start="0" size="32" security="ns" enabled="false" index="3"/>
+                  <region start="0" size="32" security="ns" enabled="false" index="4"/>
+                  <region start="0" size="32" security="ns" enabled="false" index="5"/>
+                  <region start="0" size="32" security="ns" enabled="false" index="6"/>
+                  <region start="0" size="32" security="ns" enabled="false" index="7"/>
+               </sau>
+               <sau enabled="false" all_non_secure="false" generate_code_for_disabled_regions="false" core="cm33_core0">
+                  <region start="0" size="32" security="ns" enabled="false" index="0"/>
+                  <region start="0" size="32" security="ns" enabled="false" index="1"/>
+                  <region start="0" size="32" security="ns" enabled="false" index="2"/>
+                  <region start="0" size="32" security="ns" enabled="false" index="3"/>
+                  <region start="0" size="32" security="ns" enabled="false" index="4"/>
+                  <region start="0" size="32" security="ns" enabled="false" index="5"/>
+                  <region start="0" size="32" security="ns" enabled="false" index="6"/>
+                  <region start="0" size="32" security="ns" enabled="false" index="7"/>
+               </sau>
+            </saus>
+            <global_options>
+               <option id="SCB0_AIRCR_PRIS" value="no"/>
+               <option id="SCB0_AIRCR_BFHFNMINS" value="no"/>
+               <option id="SCB0_AIRCR_SYSRESETREQS" value="no"/>
+               <option id="SCB0_SCR_SLEEPDEEPS" value="no"/>
+               <option id="SCB0_SHCSR_SECUREFAULTENA" value="no"/>
+               <option id="SCB0_CPACR_CP0" value="0"/>
+               <option id="SCB0_CPACR_CP1" value="0"/>
+               <option id="SCB0_CPACR_CP2" value="0"/>
+               <option id="SCB0_CPACR_CP3" value="0"/>
+               <option id="SCB0_CPACR_CP4" value="0"/>
+               <option id="SCB0_CPACR_CP5" value="0"/>
+               <option id="SCB0_CPACR_CP6" value="0"/>
+               <option id="SCB0_CPACR_CP7" value="0"/>
+               <option id="SCB0_CPACR_CP10" value="0"/>
+               <option id="SCB0_CPACR_CP11" value="0"/>
+               <option id="SCB0_NSACR_CP0" value="no"/>
+               <option id="SCB0_NSACR_CP1" value="no"/>
+               <option id="SCB0_NSACR_CP2" value="no"/>
+               <option id="SCB0_NSACR_CP3" value="no"/>
+               <option id="SCB0_NSACR_CP4" value="no"/>
+               <option id="SCB0_NSACR_CP5" value="no"/>
+               <option id="SCB0_NSACR_CP6" value="no"/>
+               <option id="SCB0_NSACR_CP7" value="no"/>
+               <option id="SCB0_NSACR_CP10" value="no"/>
+               <option id="SCB0_NSACR_CP11" value="no"/>
+               <option id="SCnSCB0_CPPWR_SU0" value="no"/>
+               <option id="SCnSCB0_CPPWR_SUS0" value="no"/>
+               <option id="SCnSCB0_CPPWR_SU1" value="no"/>
+               <option id="SCnSCB0_CPPWR_SUS1" value="no"/>
+               <option id="SCnSCB0_CPPWR_SU2" value="no"/>
+               <option id="SCnSCB0_CPPWR_SUS2" value="no"/>
+               <option id="SCnSCB0_CPPWR_SU3" value="no"/>
+               <option id="SCnSCB0_CPPWR_SUS3" value="no"/>
+               <option id="SCnSCB0_CPPWR_SU4" value="no"/>
+               <option id="SCnSCB0_CPPWR_SUS4" value="no"/>
+               <option id="SCnSCB0_CPPWR_SU5" value="no"/>
+               <option id="SCnSCB0_CPPWR_SUS5" value="no"/>
+               <option id="SCnSCB0_CPPWR_SU6" value="no"/>
+               <option id="SCnSCB0_CPPWR_SUS6" value="no"/>
+               <option id="SCnSCB0_CPPWR_SU7" value="no"/>
+               <option id="SCnSCB0_CPPWR_SUS7" value="no"/>
+               <option id="SCnSCB0_CPPWR_SU10" value="no"/>
+               <option id="SCnSCB0_CPPWR_SUS10" value="no"/>
+               <option id="SCnSCB0_CPPWR_SU11" value="no"/>
+               <option id="SCnSCB0_CPPWR_SUS11" value="no"/>
+               <option id="SCB1_AIRCR_PRIS" value="no"/>
+               <option id="SCB1_AIRCR_BFHFNMINS" value="no"/>
+               <option id="SCB1_AIRCR_SYSRESETREQS" value="no"/>
+               <option id="SCB1_SCR_SLEEPDEEPS" value="no"/>
+               <option id="SCB1_SHCSR_SECUREFAULTENA" value="no"/>
+               <option id="SCB1_CPACR_CP0" value="0"/>
+               <option id="SCB1_CPACR_CP1" value="0"/>
+               <option id="SCB1_CPACR_CP2" value="0"/>
+               <option id="SCB1_CPACR_CP3" value="0"/>
+               <option id="SCB1_CPACR_CP4" value="0"/>
+               <option id="SCB1_CPACR_CP5" value="0"/>
+               <option id="SCB1_CPACR_CP6" value="0"/>
+               <option id="SCB1_CPACR_CP7" value="0"/>
+               <option id="SCB1_CPACR_CP10" value="0"/>
+               <option id="SCB1_CPACR_CP11" value="0"/>
+               <option id="SCB1_NSACR_CP0" value="no"/>
+               <option id="SCB1_NSACR_CP1" value="no"/>
+               <option id="SCB1_NSACR_CP2" value="no"/>
+               <option id="SCB1_NSACR_CP3" value="no"/>
+               <option id="SCB1_NSACR_CP4" value="no"/>
+               <option id="SCB1_NSACR_CP5" value="no"/>
+               <option id="SCB1_NSACR_CP6" value="no"/>
+               <option id="SCB1_NSACR_CP7" value="no"/>
+               <option id="SCB1_NSACR_CP10" value="no"/>
+               <option id="SCB1_NSACR_CP11" value="no"/>
+               <option id="SCnSCB1_CPPWR_SU0" value="no"/>
+               <option id="SCnSCB1_CPPWR_SUS0" value="no"/>
+               <option id="SCnSCB1_CPPWR_SU1" value="no"/>
+               <option id="SCnSCB1_CPPWR_SUS1" value="no"/>
+               <option id="SCnSCB1_CPPWR_SU2" value="no"/>
+               <option id="SCnSCB1_CPPWR_SUS2" value="no"/>
+               <option id="SCnSCB1_CPPWR_SU3" value="no"/>
+               <option id="SCnSCB1_CPPWR_SUS3" value="no"/>
+               <option id="SCnSCB1_CPPWR_SU4" value="no"/>
+               <option id="SCnSCB1_CPPWR_SUS4" value="no"/>
+               <option id="SCnSCB1_CPPWR_SU5" value="no"/>
+               <option id="SCnSCB1_CPPWR_SUS5" value="no"/>
+               <option id="SCnSCB1_CPPWR_SU6" value="no"/>
+               <option id="SCnSCB1_CPPWR_SUS6" value="no"/>
+               <option id="SCnSCB1_CPPWR_SU7" value="no"/>
+               <option id="SCnSCB1_CPPWR_SUS7" value="no"/>
+               <option id="SCnSCB1_CPPWR_SU10" value="no"/>
+               <option id="SCnSCB1_CPPWR_SUS10" value="no"/>
+               <option id="SCnSCB1_CPPWR_SU11" value="no"/>
+               <option id="SCnSCB1_CPPWR_SUS11" value="no"/>
+               <option id="AHBSC0_COMPUTE_RAM_PARTITION_0_ACCESS_EN" value="yes"/>
+               <option id="AHBSC0_COMPUTE_RAM_PARTITION_1_ACCESS_EN" value="yes"/>
+               <option id="AHBSC0_COMPUTE_RAM_PARTITION_2_ACCESS_EN" value="yes"/>
+               <option id="AHBSC0_COMPUTE_RAM_PARTITION_3_ACCESS_EN" value="yes"/>
+               <option id="AHBSC0_COMPUTE_RAM_PARTITION_4_ACCESS_EN" value="no"/>
+               <option id="AHBSC0_COMPUTE_RAM_PARTITION_5_ACCESS_EN" value="no"/>
+               <option id="AHBSC0_COMPUTE_RAM_PARTITION_6_ACCESS_EN" value="no"/>
+               <option id="AHBSC0_COMPUTE_RAM_PARTITION_7_ACCESS_EN" value="no"/>
+               <option id="AHBSC0_COMPUTE_RAM_PARTITION_8_ACCESS_EN" value="no"/>
+               <option id="AHBSC0_COMPUTE_RAM_PARTITION_9_ACCESS_EN" value="no"/>
+               <option id="AHBSC0_COMPUTE_RAM_PARTITION_10_ACCESS_EN" value="no"/>
+               <option id="AHBSC0_COMPUTE_RAM_PARTITION_11_ACCESS_EN" value="no"/>
+               <option id="AHBSC0_COMPUTE_RAM_PARTITION_12_ACCESS_EN" value="no"/>
+               <option id="AHBSC0_COMPUTE_RAM_PARTITION_13_ACCESS_EN" value="no"/>
+               <option id="AHBSC0_COMPUTE_RAM_PARTITION_14_ACCESS_EN" value="no"/>
+               <option id="AHBSC0_COMPUTE_RAM_PARTITION_15_ACCESS_EN" value="no"/>
+               <option id="AHBSC0_COMPUTE_RAM_PARTITION_16_ACCESS_EN" value="no"/>
+               <option id="AHBSC0_COMPUTE_RAM_PARTITION_17_ACCESS_EN" value="no"/>
+               <option id="AHBSC0_SENSE_RAM_PARTITION_0_ACCESS_EN" value="no"/>
+               <option id="AHBSC0_SENSE_RAM_PARTITION_1_ACCESS_EN" value="no"/>
+               <option id="AHBSC0_SENSE_RAM_PARTITION_2_ACCESS_EN" value="no"/>
+               <option id="AHBSC0_SENSE_RAM_PARTITION_3_ACCESS_EN" value="no"/>
+               <option id="AHBSC0_SENSE_RAM_PARTITION_4_ACCESS_EN" value="no"/>
+               <option id="AHBSC0_SENSE_RAM_PARTITION_5_ACCESS_EN" value="no"/>
+               <option id="AHBSC0_SENSE_RAM_PARTITION_6_ACCESS_EN" value="no"/>
+               <option id="AHBSC0_SENSE_RAM_PARTITION_7_ACCESS_EN" value="no"/>
+               <option id="AHBSC0_SENSE_RAM_PARTITION_8_ACCESS_EN" value="no"/>
+               <option id="AHBSC0_SENSE_RAM_PARTITION_9_ACCESS_EN" value="no"/>
+               <option id="AHBSC0_SENSE_RAM_PARTITION_10_ACCESS_EN" value="no"/>
+               <option id="AHBSC0_SENSE_RAM_PARTITION_11_ACCESS_EN" value="no"/>
+               <option id="AHBSC0_SENSE_RAM_PARTITION_12_ACCESS_EN" value="no"/>
+               <option id="AHBSC0_SENSE_RAM_PARTITION_13_ACCESS_EN" value="no"/>
+               <option id="AHBSC0_SENSE_RAM_PARTITION_14_ACCESS_EN" value="no"/>
+               <option id="AHBSC0_SENSE_RAM_PARTITION_15_ACCESS_EN" value="no"/>
+               <option id="AHBSC0_SENSE_RAM_PARTITION_16_ACCESS_EN" value="no"/>
+               <option id="AHBSC0_SENSE_RAM_PARTITION_17_ACCESS_EN" value="no"/>
+               <option id="AHBSC0_MEDIA_RAM_PARTITION_0_ACCESS_EN" value="no"/>
+               <option id="AHBSC0_MEDIA_RAM_PARTITION_1_ACCESS_EN" value="no"/>
+               <option id="AHBSC0_MEDIA_RAM_PARTITION_2_ACCESS_EN" value="no"/>
+               <option id="AHBSC0_MEDIA_RAM_PARTITION_3_ACCESS_EN" value="no"/>
+               <option id="AHBSC0_MEDIA_RAM_PARTITION_4_ACCESS_EN" value="no"/>
+               <option id="AHBSC0_MEDIA_RAM_PARTITION_5_ACCESS_EN" value="no"/>
+               <option id="AHBSC0_MEDIA_RAM_PARTITION_6_ACCESS_EN" value="no"/>
+               <option id="AHBSC0_MEDIA_RAM_PARTITION_7_ACCESS_EN" value="no"/>
+               <option id="AHBSC0_MEDIA_RAM_PARTITION_8_ACCESS_EN" value="no"/>
+               <option id="AHBSC0_MEDIA_RAM_PARTITION_9_ACCESS_EN" value="no"/>
+               <option id="AHBSC0_MEDIA_RAM_PARTITION_10_ACCESS_EN" value="no"/>
+               <option id="AHBSC0_MEDIA_RAM_PARTITION_11_ACCESS_EN" value="no"/>
+               <option id="AHBSC0_MEDIA_RAM_PARTITION_12_ACCESS_EN" value="no"/>
+               <option id="AHBSC0_MEDIA_RAM_PARTITION_13_ACCESS_EN" value="no"/>
+               <option id="AHBSC0_MEDIA_RAM_PARTITION_14_ACCESS_EN" value="no"/>
+               <option id="AHBSC0_MEDIA_RAM_PARTITION_15_ACCESS_EN" value="no"/>
+               <option id="AHBSC0_MEDIA_RAM_PARTITION_16_ACCESS_EN" value="no"/>
+               <option id="AHBSC0_MEDIA_RAM_PARTITION_17_ACCESS_EN" value="no"/>
+               <option id="AHBSC0_NPU_RAM_PARTITION_0_ACCESS_EN" value="no"/>
+               <option id="AHBSC0_NPU_RAM_PARTITION_1_ACCESS_EN" value="no"/>
+               <option id="AHBSC0_NPU_RAM_PARTITION_2_ACCESS_EN" value="no"/>
+               <option id="AHBSC0_NPU_RAM_PARTITION_3_ACCESS_EN" value="no"/>
+               <option id="AHBSC0_NPU_RAM_PARTITION_4_ACCESS_EN" value="no"/>
+               <option id="AHBSC0_NPU_RAM_PARTITION_5_ACCESS_EN" value="no"/>
+               <option id="AHBSC0_NPU_RAM_PARTITION_6_ACCESS_EN" value="no"/>
+               <option id="AHBSC0_NPU_RAM_PARTITION_7_ACCESS_EN" value="no"/>
+               <option id="AHBSC0_NPU_RAM_PARTITION_8_ACCESS_EN" value="no"/>
+               <option id="AHBSC0_NPU_RAM_PARTITION_9_ACCESS_EN" value="no"/>
+               <option id="AHBSC0_NPU_RAM_PARTITION_10_ACCESS_EN" value="no"/>
+               <option id="AHBSC0_NPU_RAM_PARTITION_11_ACCESS_EN" value="no"/>
+               <option id="AHBSC0_NPU_RAM_PARTITION_12_ACCESS_EN" value="no"/>
+               <option id="AHBSC0_NPU_RAM_PARTITION_13_ACCESS_EN" value="no"/>
+               <option id="AHBSC0_NPU_RAM_PARTITION_14_ACCESS_EN" value="no"/>
+               <option id="AHBSC0_NPU_RAM_PARTITION_15_ACCESS_EN" value="no"/>
+               <option id="AHBSC0_NPU_RAM_PARTITION_16_ACCESS_EN" value="no"/>
+               <option id="AHBSC0_NPU_RAM_PARTITION_17_ACCESS_EN" value="no"/>
+               <option id="AHBSC0_HIFI4_RAM_PARTITION_0_ACCESS_EN" value="no"/>
+               <option id="AHBSC0_HIFI4_RAM_PARTITION_1_ACCESS_EN" value="no"/>
+               <option id="AHBSC0_HIFI4_RAM_PARTITION_2_ACCESS_EN" value="no"/>
+               <option id="AHBSC0_HIFI4_RAM_PARTITION_3_ACCESS_EN" value="no"/>
+               <option id="AHBSC0_HIFI4_RAM_PARTITION_4_ACCESS_EN" value="no"/>
+               <option id="AHBSC0_HIFI4_RAM_PARTITION_5_ACCESS_EN" value="no"/>
+               <option id="AHBSC0_HIFI4_RAM_PARTITION_6_ACCESS_EN" value="no"/>
+               <option id="AHBSC0_HIFI4_RAM_PARTITION_7_ACCESS_EN" value="no"/>
+               <option id="AHBSC0_HIFI4_RAM_PARTITION_8_ACCESS_EN" value="no"/>
+               <option id="AHBSC0_HIFI4_RAM_PARTITION_9_ACCESS_EN" value="no"/>
+               <option id="AHBSC0_HIFI4_RAM_PARTITION_10_ACCESS_EN" value="no"/>
+               <option id="AHBSC0_HIFI4_RAM_PARTITION_11_ACCESS_EN" value="no"/>
+               <option id="AHBSC0_HIFI4_RAM_PARTITION_12_ACCESS_EN" value="no"/>
+               <option id="AHBSC0_HIFI4_RAM_PARTITION_13_ACCESS_EN" value="no"/>
+               <option id="AHBSC0_HIFI4_RAM_PARTITION_14_ACCESS_EN" value="no"/>
+               <option id="AHBSC0_HIFI4_RAM_PARTITION_15_ACCESS_EN" value="no"/>
+               <option id="AHBSC0_HIFI4_RAM_PARTITION_16_ACCESS_EN" value="no"/>
+               <option id="AHBSC0_HIFI4_RAM_PARTITION_17_ACCESS_EN" value="no"/>
+               <option id="AHB_MISC_CTRL_REG_IDAU_ALL_NS" value="no"/>
+               <option id="AHB_MISC_CTRL_REG_DISABLE_MASTER_STRICT_MODE" value="yes"/>
+               <option id="AHB_MISC_CTRL_REG_DISABLE_VIOLATION_ABORT" value="no"/>
+               <option id="AHB_MISC_CTRL_REG_ENABLE_NS_PRIV_CHECK" value="yes"/>
+               <option id="AHB_MISC_CTRL_REG_ENABLE_S_PRIV_CHECK" value="yes"/>
+               <option id="AHB_MISC_CTRL_REG_ENABLE_SECURE_CHECKING" value="yes"/>
+               <option id="AHB_MISC_CTRL_REG_WRITE_LOCK" value="no"/>
+               <option id="CPU0_LOCK_NS_VTOR" value="no"/>
+               <option id="CPU0_LOCK_NS_MPU" value="no"/>
+               <option id="CPU0_LOCK_S_VTAIRCR" value="no"/>
+               <option id="CPU0_LOCK_S_MPU" value="no"/>
+               <option id="CPU0_LOCK_SAU" value="no"/>
+               <option id="GPIO0_ICNP" value="no"/>
+               <option id="GPIO0_PCNP" value="no"/>
+               <option id="GPIO0_ICNS" value="no"/>
+               <option id="GPIO0_PCNS" value="no"/>
+               <option id="GPIO1_ICNP" value="no"/>
+               <option id="GPIO1_PCNP" value="no"/>
+               <option id="GPIO1_ICNS" value="no"/>
+               <option id="GPIO1_PCNS" value="no"/>
+               <option id="GPIO2_ICNP" value="no"/>
+               <option id="GPIO2_PCNP" value="no"/>
+               <option id="GPIO2_ICNS" value="no"/>
+               <option id="GPIO2_PCNS" value="no"/>
+               <option id="GPIO3_ICNP" value="no"/>
+               <option id="GPIO3_PCNP" value="no"/>
+               <option id="GPIO3_ICNS" value="no"/>
+               <option id="GPIO3_PCNS" value="no"/>
+               <option id="GPIO4_ICNP" value="no"/>
+               <option id="GPIO4_PCNP" value="no"/>
+               <option id="GPIO4_ICNS" value="no"/>
+               <option id="GPIO4_PCNS" value="no"/>
+               <option id="GPIO5_ICNP" value="no"/>
+               <option id="GPIO5_PCNP" value="no"/>
+               <option id="GPIO5_ICNS" value="no"/>
+               <option id="GPIO5_PCNS" value="no"/>
+               <option id="GPIO6_ICNP" value="no"/>
+               <option id="GPIO6_PCNP" value="no"/>
+               <option id="GPIO6_ICNS" value="no"/>
+               <option id="GPIO6_PCNS" value="no"/>
+               <option id="GPIO7_ICNP" value="no"/>
+               <option id="GPIO7_PCNP" value="no"/>
+               <option id="GPIO7_ICNS" value="no"/>
+               <option id="GPIO7_PCNS" value="no"/>
+               <option id="AHBSC3_COMPUTE_RAM_PARTITION_0_ACCESS_EN" value="yes"/>
+               <option id="AHBSC3_COMPUTE_RAM_PARTITION_1_ACCESS_EN" value="yes"/>
+               <option id="AHBSC3_COMPUTE_RAM_PARTITION_2_ACCESS_EN" value="yes"/>
+               <option id="AHBSC3_COMPUTE_RAM_PARTITION_3_ACCESS_EN" value="yes"/>
+               <option id="AHBSC3_COMPUTE_RAM_PARTITION_4_ACCESS_EN" value="no"/>
+               <option id="AHBSC3_COMPUTE_RAM_PARTITION_5_ACCESS_EN" value="no"/>
+               <option id="AHBSC3_COMPUTE_RAM_PARTITION_6_ACCESS_EN" value="no"/>
+               <option id="AHBSC3_COMPUTE_RAM_PARTITION_7_ACCESS_EN" value="no"/>
+               <option id="AHBSC3_COMPUTE_RAM_PARTITION_8_ACCESS_EN" value="no"/>
+               <option id="AHBSC3_COMPUTE_RAM_PARTITION_9_ACCESS_EN" value="no"/>
+               <option id="AHBSC3_COMPUTE_RAM_PARTITION_10_ACCESS_EN" value="no"/>
+               <option id="AHBSC3_COMPUTE_RAM_PARTITION_11_ACCESS_EN" value="no"/>
+               <option id="AHBSC3_SENSE_RAM_PARTITION_0_ACCESS_EN" value="no"/>
+               <option id="AHBSC3_SENSE_RAM_PARTITION_1_ACCESS_EN" value="no"/>
+               <option id="AHBSC3_SENSE_RAM_PARTITION_2_ACCESS_EN" value="no"/>
+               <option id="AHBSC3_SENSE_RAM_PARTITION_3_ACCESS_EN" value="no"/>
+               <option id="AHBSC3_SENSE_RAM_PARTITION_4_ACCESS_EN" value="no"/>
+               <option id="AHBSC3_SENSE_RAM_PARTITION_5_ACCESS_EN" value="no"/>
+               <option id="AHBSC3_SENSE_RAM_PARTITION_6_ACCESS_EN" value="no"/>
+               <option id="AHBSC3_SENSE_RAM_PARTITION_7_ACCESS_EN" value="no"/>
+               <option id="AHBSC3_SENSE_RAM_PARTITION_8_ACCESS_EN" value="no"/>
+               <option id="AHBSC3_SENSE_RAM_PARTITION_9_ACCESS_EN" value="no"/>
+               <option id="AHBSC3_SENSE_RAM_PARTITION_10_ACCESS_EN" value="no"/>
+               <option id="AHBSC3_SENSE_RAM_PARTITION_11_ACCESS_EN" value="no"/>
+               <option id="AHBSC3_MEDIA_RAM_PARTITION_0_ACCESS_EN" value="no"/>
+               <option id="AHBSC3_MEDIA_RAM_PARTITION_1_ACCESS_EN" value="no"/>
+               <option id="AHBSC3_MEDIA_RAM_PARTITION_2_ACCESS_EN" value="no"/>
+               <option id="AHBSC3_MEDIA_RAM_PARTITION_3_ACCESS_EN" value="no"/>
+               <option id="AHBSC3_MEDIA_RAM_PARTITION_4_ACCESS_EN" value="no"/>
+               <option id="AHBSC3_MEDIA_RAM_PARTITION_5_ACCESS_EN" value="no"/>
+               <option id="AHBSC3_MEDIA_RAM_PARTITION_6_ACCESS_EN" value="no"/>
+               <option id="AHBSC3_MEDIA_RAM_PARTITION_7_ACCESS_EN" value="no"/>
+               <option id="AHBSC3_MEDIA_RAM_PARTITION_8_ACCESS_EN" value="no"/>
+               <option id="AHBSC3_MEDIA_RAM_PARTITION_9_ACCESS_EN" value="no"/>
+               <option id="AHBSC3_MEDIA_RAM_PARTITION_10_ACCESS_EN" value="no"/>
+               <option id="AHBSC3_MEDIA_RAM_PARTITION_11_ACCESS_EN" value="no"/>
+               <option id="AHBSC3_NPU_RAM_PARTITION_0_ACCESS_EN" value="no"/>
+               <option id="AHBSC3_NPU_RAM_PARTITION_1_ACCESS_EN" value="no"/>
+               <option id="AHBSC3_NPU_RAM_PARTITION_2_ACCESS_EN" value="no"/>
+               <option id="AHBSC3_NPU_RAM_PARTITION_3_ACCESS_EN" value="no"/>
+               <option id="AHBSC3_NPU_RAM_PARTITION_4_ACCESS_EN" value="no"/>
+               <option id="AHBSC3_NPU_RAM_PARTITION_5_ACCESS_EN" value="no"/>
+               <option id="AHBSC3_NPU_RAM_PARTITION_6_ACCESS_EN" value="no"/>
+               <option id="AHBSC3_NPU_RAM_PARTITION_7_ACCESS_EN" value="no"/>
+               <option id="AHBSC3_NPU_RAM_PARTITION_8_ACCESS_EN" value="no"/>
+               <option id="AHBSC3_NPU_RAM_PARTITION_9_ACCESS_EN" value="no"/>
+               <option id="AHBSC3_NPU_RAM_PARTITION_10_ACCESS_EN" value="no"/>
+               <option id="AHBSC3_NPU_RAM_PARTITION_11_ACCESS_EN" value="no"/>
+               <option id="AHBSC3_HIFI4_RAM_PARTITION_0_ACCESS_EN" value="no"/>
+               <option id="AHBSC3_HIFI4_RAM_PARTITION_1_ACCESS_EN" value="no"/>
+               <option id="AHBSC3_HIFI4_RAM_PARTITION_2_ACCESS_EN" value="no"/>
+               <option id="AHBSC3_HIFI4_RAM_PARTITION_3_ACCESS_EN" value="no"/>
+               <option id="AHBSC3_HIFI4_RAM_PARTITION_4_ACCESS_EN" value="no"/>
+               <option id="AHBSC3_HIFI4_RAM_PARTITION_5_ACCESS_EN" value="no"/>
+               <option id="AHBSC3_HIFI4_RAM_PARTITION_6_ACCESS_EN" value="no"/>
+               <option id="AHBSC3_HIFI4_RAM_PARTITION_7_ACCESS_EN" value="no"/>
+               <option id="AHBSC3_HIFI4_RAM_PARTITION_8_ACCESS_EN" value="no"/>
+               <option id="AHBSC3_HIFI4_RAM_PARTITION_9_ACCESS_EN" value="no"/>
+               <option id="AHBSC3_HIFI4_RAM_PARTITION_10_ACCESS_EN" value="no"/>
+               <option id="AHBSC3_HIFI4_RAM_PARTITION_11_ACCESS_EN" value="no"/>
+               <option id="AHBSC3_HIFI1_RAM_PARTITION_0_ACCESS_EN" value="no"/>
+               <option id="AHBSC3_HIFI1_RAM_PARTITION_1_ACCESS_EN" value="no"/>
+               <option id="AHBSC3_HIFI1_RAM_PARTITION_2_ACCESS_EN" value="no"/>
+               <option id="AHBSC3_HIFI1_RAM_PARTITION_3_ACCESS_EN" value="no"/>
+               <option id="AHBSC3_HIFI1_RAM_PARTITION_4_ACCESS_EN" value="no"/>
+               <option id="AHBSC3_HIFI1_RAM_PARTITION_5_ACCESS_EN" value="no"/>
+               <option id="AHBSC3_HIFI1_RAM_PARTITION_6_ACCESS_EN" value="no"/>
+               <option id="AHBSC3_HIFI1_RAM_PARTITION_7_ACCESS_EN" value="no"/>
+               <option id="AHBSC3_HIFI1_RAM_PARTITION_8_ACCESS_EN" value="no"/>
+               <option id="AHBSC3_HIFI1_RAM_PARTITION_9_ACCESS_EN" value="no"/>
+               <option id="AHBSC3_HIFI1_RAM_PARTITION_10_ACCESS_EN" value="no"/>
+               <option id="AHBSC3_HIFI1_RAM_PARTITION_11_ACCESS_EN" value="no"/>
+               <option id="AHBSC3_COMPUTE_APB_PERIPHERAL_ACCESS_EN_RSTCTL3" value="no"/>
+               <option id="AHBSC3_COMPUTE_APB_PERIPHERAL_ACCESS_EN_CLKCTL3" value="no"/>
+               <option id="AHBSC3_COMPUTE_APB_PERIPHERAL_ACCESS_EN_SYSCON3" value="no"/>
+               <option id="AHBSC3_COMPUTE_APB_PERIPHERAL_ACCESS_EN_OSC32KNP" value="no"/>
+               <option id="AHBSC3_COMPUTE_APB_PERIPHERAL_ACCESS_EN_IOPCTL1" value="no"/>
+               <option id="AHBSC3_COMPUTE_APB_PERIPHERAL_ACCESS_EN_CLKCTL2" value="no"/>
+               <option id="AHBSC3_COMPUTE_APB_PERIPHERAL_ACCESS_EN_SYSCON2" value="no"/>
+               <option id="AHBSC3_COMPUTE_APB_PERIPHERAL_ACCESS_EN_RSTCTL2" value="no"/>
+               <option id="AHBSC3_COMPUTE_APB_PERIPHERAL_ACCESS_EN_RTC0" value="no"/>
+               <option id="AHBSC3_COMPUTE_APB_PERIPHERAL_ACCESS_EN_RTC1" value="no"/>
+               <option id="AHBSC3_COMPUTE_APB_PERIPHERAL_ACCESS_EN_GDET3" value="no"/>
+               <option id="AHBSC3_SENSE_APB_PERIPHERAL_ACCESS_EN_RSTCTL3" value="no"/>
+               <option id="AHBSC3_SENSE_APB_PERIPHERAL_ACCESS_EN_CLKCTL3" value="no"/>
+               <option id="AHBSC3_SENSE_APB_PERIPHERAL_ACCESS_EN_SYSCON3" value="no"/>
+               <option id="AHBSC3_SENSE_APB_PERIPHERAL_ACCESS_EN_OSC32KNP" value="no"/>
+               <option id="AHBSC3_SENSE_APB_PERIPHERAL_ACCESS_EN_IOPCTL1" value="no"/>
+               <option id="AHBSC3_SENSE_APB_PERIPHERAL_ACCESS_EN_CLKCTL2" value="no"/>
+               <option id="AHBSC3_SENSE_APB_PERIPHERAL_ACCESS_EN_SYSCON2" value="no"/>
+               <option id="AHBSC3_SENSE_APB_PERIPHERAL_ACCESS_EN_RSTCTL2" value="no"/>
+               <option id="AHBSC3_SENSE_APB_PERIPHERAL_ACCESS_EN_RTC0" value="no"/>
+               <option id="AHBSC3_SENSE_APB_PERIPHERAL_ACCESS_EN_RTC1" value="no"/>
+               <option id="AHBSC3_SENSE_APB_PERIPHERAL_ACCESS_EN_GDET3" value="no"/>
+               <option id="AHBSC3_COMPUTE_AIPS_PERIPHERAL_ACCESS_EN_MU0_A" value="no"/>
+               <option id="AHBSC3_COMPUTE_AIPS_PERIPHERAL_ACCESS_EN_MU1_A" value="no"/>
+               <option id="AHBSC3_COMPUTE_AIPS_PERIPHERAL_ACCESS_EN_MU2_A" value="no"/>
+               <option id="AHBSC3_COMPUTE_AIPS_PERIPHERAL_ACCESS_EN_SEMA42" value="no"/>
+               <option id="AHBSC3_COMPUTE_AIPS_PERIPHERAL_ACCESS_EN_OSTIMER" value="no"/>
+               <option id="AHBSC3_COMPUTE_AIPS_PERIPHERAL_ACCESS_EN_OSTIMER_ALIAS1" value="no"/>
+               <option id="AHBSC3_COMPUTE_AIPS_PERIPHERAL_ACCESS_EN_ACMP0" value="no"/>
+               <option id="AHBSC3_COMPUTE_AIPS_PERIPHERAL_ACCESS_EN_ADC0" value="no"/>
+               <option id="AHBSC3_COMPUTE_AIPS_PERIPHERAL_ACCESS_EN_SDADC" value="no"/>
+               <option id="AHBSC3_COMPUTE_AIPS_PERIPHERAL_ACCESS_EN_MICFIL" value="no"/>
+               <option id="AHBSC3_COMPUTE_AIPS_PERIPHERAL_ACCESS_EN_PMC0" value="no"/>
+               <option id="AHBSC3_COMPUTE_AIPS_PERIPHERAL_ACCESS_EN_LPI2C15" value="no"/>
+               <option id="AHBSC3_SENSE_AIPS_PERIPHERAL_ACCESS_EN_MU0_B" value="no"/>
+               <option id="AHBSC3_SENSE_AIPS_PERIPHERAL_ACCESS_EN_MU1_B" value="no"/>
+               <option id="AHBSC3_SENSE_AIPS_PERIPHERAL_ACCESS_EN_MU2_B" value="no"/>
+               <option id="AHBSC3_SENSE_AIPS_PERIPHERAL_ACCESS_EN_SEMA42" value="no"/>
+               <option id="AHBSC3_SENSE_AIPS_PERIPHERAL_ACCESS_EN_OSTIMER_ALIAS2" value="no"/>
+               <option id="AHBSC3_SENSE_AIPS_PERIPHERAL_ACCESS_EN_OSTIMER_ALIAS3" value="no"/>
+               <option id="AHBSC3_SENSE_AIPS_PERIPHERAL_ACCESS_EN_ACMP0" value="no"/>
+               <option id="AHBSC3_SENSE_AIPS_PERIPHERAL_ACCESS_EN_ADC0" value="no"/>
+               <option id="AHBSC3_SENSE_AIPS_PERIPHERAL_ACCESS_EN_SDADC" value="no"/>
+               <option id="AHBSC3_SENSE_AIPS_PERIPHERAL_ACCESS_EN_MICFIL" value="no"/>
+               <option id="AHBSC3_SENSE_AIPS_PERIPHERAL_ACCESS_EN_PMC1" value="no"/>
+               <option id="AHBSC3_SENSE_AIPS_PERIPHERAL_ACCESS_EN_LPI2C15" value="no"/>
+               <option id="AHB_SENSE_MISC_CTRL_REG_IDAU_ALL_NS" value="no"/>
+               <option id="AHB_SENSE_MISC_CTRL_REG_DISABLE_MASTER_STRICT_MODE" value="yes"/>
+               <option id="AHB_SENSE_MISC_CTRL_REG_DISABLE_VIOLATION_ABORT" value="no"/>
+               <option id="AHB_SENSE_MISC_CTRL_REG_ENABLE_NS_PRIV_CHECK" value="yes"/>
+               <option id="AHB_SENSE_MISC_CTRL_REG_ENABLE_S_PRIV_CHECK" value="yes"/>
+               <option id="AHB_SENSE_MISC_CTRL_REG_ENABLE_SECURE_CHECKING" value="yes"/>
+               <option id="AHB_SENSE_MISC_CTRL_REG_WRITE_LOCK" value="no"/>
+               <option id="CPU1_LOCK_NS_VTOR" value="no"/>
+               <option id="CPU1_LOCK_NS_MPU" value="no"/>
+               <option id="CPU1_LOCK_S_VTAIRCR" value="no"/>
+               <option id="CPU1_LOCK_S_MPU" value="no"/>
+               <option id="CPU1_LOCK_SAU" value="no"/>
+               <option id="GPIO8_ICNP" value="no"/>
+               <option id="GPIO8_PCNP" value="no"/>
+               <option id="GPIO8_ICNS" value="no"/>
+               <option id="GPIO8_PCNS" value="no"/>
+               <option id="GPIO10_ICNP" value="no"/>
+               <option id="GPIO10_PCNP" value="no"/>
+               <option id="GPIO10_ICNS" value="no"/>
+               <option id="GPIO10_PCNS" value="no"/>
+               <option id="AHB_MEDIA_MISC_CTRL_REG_IDAU_ALL_NS" value="no"/>
+               <option id="AHB_MEDIA_MISC_CTRL_REG_DISABLE_MASTER_STRICT_MODE" value="yes"/>
+               <option id="AHB_MEDIA_MISC_CTRL_REG_DISABLE_VIOLATION_ABORT" value="no"/>
+               <option id="AHB_MEDIA_MISC_CTRL_REG_ENABLE_NS_PRIV_CHECK" value="yes"/>
+               <option id="AHB_MEDIA_MISC_CTRL_REG_ENABLE_S_PRIV_CHECK" value="yes"/>
+               <option id="AHB_MEDIA_MISC_CTRL_REG_ENABLE_SECURE_CHECKING" value="yes"/>
+               <option id="AHB_MEDIA_MISC_CTRL_REG_WRITE_LOCK" value="no"/>
+               <option id="_trigger_sources_" value="no"/>
+            </global_options>
+            <disabled_global_options_groups>
+               <group name="Enable Cortex-M33 (Core#0) Security"/>
+               <group name="Enable Cortex-M33 (Core#1) Security"/>
+               <group name="General Purpose Input/Output 0 Security Control"/>
+               <group name="General Purpose Input/Output 1 Security Control"/>
+               <group name="General Purpose Input/Output 2 Security Control"/>
+               <group name="General Purpose Input/Output 3 Security Control"/>
+               <group name="General Purpose Input/Output 4 Security Control"/>
+               <group name="General Purpose Input/Output 5 Security Control"/>
+               <group name="General Purpose Input/Output 6 Security Control"/>
+               <group name="General Purpose Input/Output 7 Security Control"/>
+               <group name="General Purpose Input/Output 8 Security Control"/>
+               <group name="General Purpose Input/Output 10 Security Control"/>
+            </disabled_global_options_groups>
+            <mpus>
+               <mpu enabled="false" priv_default_map="false" handler_enabled="false" id="s" generate_code_for_disabled_regions="false" masters="cm33_core0cb">
+                  <attributes>
+                     <group index="0" id="0" memory_type="device" device="nGnRE">
+                        <regions_properties>
+                           <region_properties id="inner" cacheable="false" write_back="false" read_allocation="false" write_allocation="false" transientness="false"/>
+                           <region_properties id="outer" cacheable="false" write_back="false" read_allocation="false" write_allocation="false" transientness="false"/>
+                        </regions_properties>
+                     </group>
+                     <group index="1" id="1" memory_type="device" device="nGnRE">
+                        <regions_properties>
+                           <region_properties id="inner" cacheable="false" write_back="false" read_allocation="false" write_allocation="false" transientness="false"/>
+                           <region_properties id="outer" cacheable="false" write_back="false" read_allocation="false" write_allocation="false" transientness="false"/>
+                        </regions_properties>
+                     </group>
+                     <group index="2" id="2" memory_type="device" device="nGnRE">
+                        <regions_properties>
+                           <region_properties id="inner" cacheable="false" write_back="false" read_allocation="false" write_allocation="false" transientness="false"/>
+                           <region_properties id="outer" cacheable="false" write_back="false" read_allocation="false" write_allocation="false" transientness="false"/>
+                        </regions_properties>
+                     </group>
+                     <group index="3" id="3" memory_type="device" device="nGnRE">
+                        <regions_properties>
+                           <region_properties id="inner" cacheable="false" write_back="false" read_allocation="false" write_allocation="false" transientness="false"/>
+                           <region_properties id="outer" cacheable="false" write_back="false" read_allocation="false" write_allocation="false" transientness="false"/>
+                        </regions_properties>
+                     </group>
+                     <group index="4" id="4" memory_type="device" device="nGnRE">
+                        <regions_properties>
+                           <region_properties id="inner" cacheable="false" write_back="false" read_allocation="false" write_allocation="false" transientness="false"/>
+                           <region_properties id="outer" cacheable="false" write_back="false" read_allocation="false" write_allocation="false" transientness="false"/>
+                        </regions_properties>
+                     </group>
+                     <group index="5" id="5" memory_type="device" device="nGnRE">
+                        <regions_properties>
+                           <region_properties id="inner" cacheable="false" write_back="false" read_allocation="false" write_allocation="false" transientness="false"/>
+                           <region_properties id="outer" cacheable="false" write_back="false" read_allocation="false" write_allocation="false" transientness="false"/>
+                        </regions_properties>
+                     </group>
+                     <group index="6" id="6" memory_type="device" device="nGnRE">
+                        <regions_properties>
+                           <region_properties id="inner" cacheable="false" write_back="false" read_allocation="false" write_allocation="false" transientness="false"/>
+                           <region_properties id="outer" cacheable="false" write_back="false" read_allocation="false" write_allocation="false" transientness="false"/>
+                        </regions_properties>
+                     </group>
+                     <group index="7" id="7" memory_type="device" device="nGnRE">
+                        <regions_properties>
+                           <region_properties id="inner" cacheable="false" write_back="false" read_allocation="false" write_allocation="false" transientness="false"/>
+                           <region_properties id="outer" cacheable="false" write_back="false" read_allocation="false" write_allocation="false" transientness="false"/>
+                        </regions_properties>
+                     </group>
+                  </attributes>
+                  <regions>
+                     <region start="0" size="32" security="priv" enabled="false" index="0" executable="false" read_only="false" shareability="non_shareable" attributes_index="0"/>
+                     <region start="0" size="32" security="priv" enabled="false" index="1" executable="false" read_only="false" shareability="non_shareable" attributes_index="0"/>
+                     <region start="0" size="32" security="priv" enabled="false" index="2" executable="false" read_only="false" shareability="non_shareable" attributes_index="0"/>
+                     <region start="0" size="32" security="priv" enabled="false" index="3" executable="false" read_only="false" shareability="non_shareable" attributes_index="0"/>
+                     <region start="0" size="32" security="priv" enabled="false" index="4" executable="false" read_only="false" shareability="non_shareable" attributes_index="0"/>
+                     <region start="0" size="32" security="priv" enabled="false" index="5" executable="false" read_only="false" shareability="non_shareable" attributes_index="0"/>
+                     <region start="0" size="32" security="priv" enabled="false" index="6" executable="false" read_only="false" shareability="non_shareable" attributes_index="0"/>
+                     <region start="0" size="32" security="priv" enabled="false" index="7" executable="false" read_only="false" shareability="non_shareable" attributes_index="0"/>
+                  </regions>
+               </mpu>
+               <mpu enabled="false" priv_default_map="false" handler_enabled="false" id="ns" generate_code_for_disabled_regions="false" masters="cm33_core0cb">
+                  <attributes>
+                     <group index="0" id="0" memory_type="device" device="nGnRE">
+                        <regions_properties>
+                           <region_properties id="inner" cacheable="false" write_back="false" read_allocation="false" write_allocation="false" transientness="false"/>
+                           <region_properties id="outer" cacheable="false" write_back="false" read_allocation="false" write_allocation="false" transientness="false"/>
+                        </regions_properties>
+                     </group>
+                     <group index="1" id="1" memory_type="device" device="nGnRE">
+                        <regions_properties>
+                           <region_properties id="inner" cacheable="false" write_back="false" read_allocation="false" write_allocation="false" transientness="false"/>
+                           <region_properties id="outer" cacheable="false" write_back="false" read_allocation="false" write_allocation="false" transientness="false"/>
+                        </regions_properties>
+                     </group>
+                     <group index="2" id="2" memory_type="device" device="nGnRE">
+                        <regions_properties>
+                           <region_properties id="inner" cacheable="false" write_back="false" read_allocation="false" write_allocation="false" transientness="false"/>
+                           <region_properties id="outer" cacheable="false" write_back="false" read_allocation="false" write_allocation="false" transientness="false"/>
+                        </regions_properties>
+                     </group>
+                     <group index="3" id="3" memory_type="device" device="nGnRE">
+                        <regions_properties>
+                           <region_properties id="inner" cacheable="false" write_back="false" read_allocation="false" write_allocation="false" transientness="false"/>
+                           <region_properties id="outer" cacheable="false" write_back="false" read_allocation="false" write_allocation="false" transientness="false"/>
+                        </regions_properties>
+                     </group>
+                     <group index="4" id="4" memory_type="device" device="nGnRE">
+                        <regions_properties>
+                           <region_properties id="inner" cacheable="false" write_back="false" read_allocation="false" write_allocation="false" transientness="false"/>
+                           <region_properties id="outer" cacheable="false" write_back="false" read_allocation="false" write_allocation="false" transientness="false"/>
+                        </regions_properties>
+                     </group>
+                     <group index="5" id="5" memory_type="device" device="nGnRE">
+                        <regions_properties>
+                           <region_properties id="inner" cacheable="false" write_back="false" read_allocation="false" write_allocation="false" transientness="false"/>
+                           <region_properties id="outer" cacheable="false" write_back="false" read_allocation="false" write_allocation="false" transientness="false"/>
+                        </regions_properties>
+                     </group>
+                     <group index="6" id="6" memory_type="device" device="nGnRE">
+                        <regions_properties>
+                           <region_properties id="inner" cacheable="false" write_back="false" read_allocation="false" write_allocation="false" transientness="false"/>
+                           <region_properties id="outer" cacheable="false" write_back="false" read_allocation="false" write_allocation="false" transientness="false"/>
+                        </regions_properties>
+                     </group>
+                     <group index="7" id="7" memory_type="device" device="nGnRE">
+                        <regions_properties>
+                           <region_properties id="inner" cacheable="false" write_back="false" read_allocation="false" write_allocation="false" transientness="false"/>
+                           <region_properties id="outer" cacheable="false" write_back="false" read_allocation="false" write_allocation="false" transientness="false"/>
+                        </regions_properties>
+                     </group>
+                  </attributes>
+                  <regions>
+                     <region start="0" size="32" security="priv" enabled="false" index="0" executable="false" read_only="false" shareability="non_shareable" attributes_index="0"/>
+                     <region start="0" size="32" security="priv" enabled="false" index="1" executable="false" read_only="false" shareability="non_shareable" attributes_index="0"/>
+                     <region start="0" size="32" security="priv" enabled="false" index="2" executable="false" read_only="false" shareability="non_shareable" attributes_index="0"/>
+                     <region start="0" size="32" security="priv" enabled="false" index="3" executable="false" read_only="false" shareability="non_shareable" attributes_index="0"/>
+                     <region start="0" size="32" security="priv" enabled="false" index="4" executable="false" read_only="false" shareability="non_shareable" attributes_index="0"/>
+                     <region start="0" size="32" security="priv" enabled="false" index="5" executable="false" read_only="false" shareability="non_shareable" attributes_index="0"/>
+                     <region start="0" size="32" security="priv" enabled="false" index="6" executable="false" read_only="false" shareability="non_shareable" attributes_index="0"/>
+                     <region start="0" size="32" security="priv" enabled="false" index="7" executable="false" read_only="false" shareability="non_shareable" attributes_index="0"/>
+                  </regions>
+               </mpu>
+               <mpu enabled="false" priv_default_map="false" handler_enabled="false" id="s" generate_code_for_disabled_regions="false" masters="cm33_core1cb">
+                  <attributes>
+                     <group index="0" id="0" memory_type="device" device="nGnRE">
+                        <regions_properties>
+                           <region_properties id="inner" cacheable="false" write_back="false" read_allocation="false" write_allocation="false" transientness="false"/>
+                           <region_properties id="outer" cacheable="false" write_back="false" read_allocation="false" write_allocation="false" transientness="false"/>
+                        </regions_properties>
+                     </group>
+                     <group index="1" id="1" memory_type="device" device="nGnRE">
+                        <regions_properties>
+                           <region_properties id="inner" cacheable="false" write_back="false" read_allocation="false" write_allocation="false" transientness="false"/>
+                           <region_properties id="outer" cacheable="false" write_back="false" read_allocation="false" write_allocation="false" transientness="false"/>
+                        </regions_properties>
+                     </group>
+                     <group index="2" id="2" memory_type="device" device="nGnRE">
+                        <regions_properties>
+                           <region_properties id="inner" cacheable="false" write_back="false" read_allocation="false" write_allocation="false" transientness="false"/>
+                           <region_properties id="outer" cacheable="false" write_back="false" read_allocation="false" write_allocation="false" transientness="false"/>
+                        </regions_properties>
+                     </group>
+                     <group index="3" id="3" memory_type="device" device="nGnRE">
+                        <regions_properties>
+                           <region_properties id="inner" cacheable="false" write_back="false" read_allocation="false" write_allocation="false" transientness="false"/>
+                           <region_properties id="outer" cacheable="false" write_back="false" read_allocation="false" write_allocation="false" transientness="false"/>
+                        </regions_properties>
+                     </group>
+                     <group index="4" id="4" memory_type="device" device="nGnRE">
+                        <regions_properties>
+                           <region_properties id="inner" cacheable="false" write_back="false" read_allocation="false" write_allocation="false" transientness="false"/>
+                           <region_properties id="outer" cacheable="false" write_back="false" read_allocation="false" write_allocation="false" transientness="false"/>
+                        </regions_properties>
+                     </group>
+                     <group index="5" id="5" memory_type="device" device="nGnRE">
+                        <regions_properties>
+                           <region_properties id="inner" cacheable="false" write_back="false" read_allocation="false" write_allocation="false" transientness="false"/>
+                           <region_properties id="outer" cacheable="false" write_back="false" read_allocation="false" write_allocation="false" transientness="false"/>
+                        </regions_properties>
+                     </group>
+                     <group index="6" id="6" memory_type="device" device="nGnRE">
+                        <regions_properties>
+                           <region_properties id="inner" cacheable="false" write_back="false" read_allocation="false" write_allocation="false" transientness="false"/>
+                           <region_properties id="outer" cacheable="false" write_back="false" read_allocation="false" write_allocation="false" transientness="false"/>
+                        </regions_properties>
+                     </group>
+                     <group index="7" id="7" memory_type="device" device="nGnRE">
+                        <regions_properties>
+                           <region_properties id="inner" cacheable="false" write_back="false" read_allocation="false" write_allocation="false" transientness="false"/>
+                           <region_properties id="outer" cacheable="false" write_back="false" read_allocation="false" write_allocation="false" transientness="false"/>
+                        </regions_properties>
+                     </group>
+                  </attributes>
+                  <regions>
+                     <region start="0" size="32" security="priv" enabled="false" index="0" executable="false" read_only="false" shareability="non_shareable" attributes_index="0"/>
+                     <region start="0" size="32" security="priv" enabled="false" index="1" executable="false" read_only="false" shareability="non_shareable" attributes_index="0"/>
+                     <region start="0" size="32" security="priv" enabled="false" index="2" executable="false" read_only="false" shareability="non_shareable" attributes_index="0"/>
+                     <region start="0" size="32" security="priv" enabled="false" index="3" executable="false" read_only="false" shareability="non_shareable" attributes_index="0"/>
+                     <region start="0" size="32" security="priv" enabled="false" index="4" executable="false" read_only="false" shareability="non_shareable" attributes_index="0"/>
+                     <region start="0" size="32" security="priv" enabled="false" index="5" executable="false" read_only="false" shareability="non_shareable" attributes_index="0"/>
+                     <region start="0" size="32" security="priv" enabled="false" index="6" executable="false" read_only="false" shareability="non_shareable" attributes_index="0"/>
+                     <region start="0" size="32" security="priv" enabled="false" index="7" executable="false" read_only="false" shareability="non_shareable" attributes_index="0"/>
+                  </regions>
+               </mpu>
+               <mpu enabled="false" priv_default_map="false" handler_enabled="false" id="ns" generate_code_for_disabled_regions="false" masters="cm33_core1cb">
+                  <attributes>
+                     <group index="0" id="0" memory_type="device" device="nGnRE">
+                        <regions_properties>
+                           <region_properties id="inner" cacheable="false" write_back="false" read_allocation="false" write_allocation="false" transientness="false"/>
+                           <region_properties id="outer" cacheable="false" write_back="false" read_allocation="false" write_allocation="false" transientness="false"/>
+                        </regions_properties>
+                     </group>
+                     <group index="1" id="1" memory_type="device" device="nGnRE">
+                        <regions_properties>
+                           <region_properties id="inner" cacheable="false" write_back="false" read_allocation="false" write_allocation="false" transientness="false"/>
+                           <region_properties id="outer" cacheable="false" write_back="false" read_allocation="false" write_allocation="false" transientness="false"/>
+                        </regions_properties>
+                     </group>
+                     <group index="2" id="2" memory_type="device" device="nGnRE">
+                        <regions_properties>
+                           <region_properties id="inner" cacheable="false" write_back="false" read_allocation="false" write_allocation="false" transientness="false"/>
+                           <region_properties id="outer" cacheable="false" write_back="false" read_allocation="false" write_allocation="false" transientness="false"/>
+                        </regions_properties>
+                     </group>
+                     <group index="3" id="3" memory_type="device" device="nGnRE">
+                        <regions_properties>
+                           <region_properties id="inner" cacheable="false" write_back="false" read_allocation="false" write_allocation="false" transientness="false"/>
+                           <region_properties id="outer" cacheable="false" write_back="false" read_allocation="false" write_allocation="false" transientness="false"/>
+                        </regions_properties>
+                     </group>
+                     <group index="4" id="4" memory_type="device" device="nGnRE">
+                        <regions_properties>
+                           <region_properties id="inner" cacheable="false" write_back="false" read_allocation="false" write_allocation="false" transientness="false"/>
+                           <region_properties id="outer" cacheable="false" write_back="false" read_allocation="false" write_allocation="false" transientness="false"/>
+                        </regions_properties>
+                     </group>
+                     <group index="5" id="5" memory_type="device" device="nGnRE">
+                        <regions_properties>
+                           <region_properties id="inner" cacheable="false" write_back="false" read_allocation="false" write_allocation="false" transientness="false"/>
+                           <region_properties id="outer" cacheable="false" write_back="false" read_allocation="false" write_allocation="false" transientness="false"/>
+                        </regions_properties>
+                     </group>
+                     <group index="6" id="6" memory_type="device" device="nGnRE">
+                        <regions_properties>
+                           <region_properties id="inner" cacheable="false" write_back="false" read_allocation="false" write_allocation="false" transientness="false"/>
+                           <region_properties id="outer" cacheable="false" write_back="false" read_allocation="false" write_allocation="false" transientness="false"/>
+                        </regions_properties>
+                     </group>
+                     <group index="7" id="7" memory_type="device" device="nGnRE">
+                        <regions_properties>
+                           <region_properties id="inner" cacheable="false" write_back="false" read_allocation="false" write_allocation="false" transientness="false"/>
+                           <region_properties id="outer" cacheable="false" write_back="false" read_allocation="false" write_allocation="false" transientness="false"/>
+                        </regions_properties>
+                     </group>
+                  </attributes>
+                  <regions>
+                     <region start="0" size="32" security="priv" enabled="false" index="0" executable="false" read_only="false" shareability="non_shareable" attributes_index="0"/>
+                     <region start="0" size="32" security="priv" enabled="false" index="1" executable="false" read_only="false" shareability="non_shareable" attributes_index="0"/>
+                     <region start="0" size="32" security="priv" enabled="false" index="2" executable="false" read_only="false" shareability="non_shareable" attributes_index="0"/>
+                     <region start="0" size="32" security="priv" enabled="false" index="3" executable="false" read_only="false" shareability="non_shareable" attributes_index="0"/>
+                     <region start="0" size="32" security="priv" enabled="false" index="4" executable="false" read_only="false" shareability="non_shareable" attributes_index="0"/>
+                     <region start="0" size="32" security="priv" enabled="false" index="5" executable="false" read_only="false" shareability="non_shareable" attributes_index="0"/>
+                     <region start="0" size="32" security="priv" enabled="false" index="6" executable="false" read_only="false" shareability="non_shareable" attributes_index="0"/>
+                     <region start="0" size="32" security="priv" enabled="false" index="7" executable="false" read_only="false" shareability="non_shareable" attributes_index="0"/>
+                  </regions>
+               </mpu>
+            </mpus>
+         </functional_group>
+      </tee>
+   </tools>
+</configuration>

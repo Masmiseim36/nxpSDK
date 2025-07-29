@@ -4,7 +4,7 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-
+#include "fsl_clock.h"
 #include "timer.h"
 
 #include <xtensa/xos.h>
@@ -15,7 +15,13 @@
 
 void TIMER_Init()
 {
-    xos_set_clock_freq(XOS_CLOCK_FREQ);
+#if (defined(MIMXRT798S_hifi4_SERIES))
+	xos_set_clock_freq(CLOCK_GetFreq(kCLOCK_Hifi4CpuClk));
+#elif  (defined(MIMXRT798S_hifi1_SERIES))
+	xos_set_clock_freq(CLOCK_GetFreq(kCLOCK_Hifi1CpuClk));
+#elif (defined(MIMXRT595S_dsp_SERIES) || defined(MIMXRT685S_dsp_SERIES))
+	xos_set_clock_freq(CLOCK_GetFreq(kCLOCK_DspCpuClk));
+#endif
     xos_start_system_timer(-1, 0);
 }
 

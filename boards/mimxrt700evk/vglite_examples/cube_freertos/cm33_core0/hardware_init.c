@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 NXP
+ * Copyright 2023, 2025 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -11,10 +11,11 @@
 #include "clock_config.h"
 #include "board.h"
 #include "display_support.h"
+#include "pmic_support.h"
 /*${header:end}*/
 
 /*${function:start}*/
-#if (DEMO_PANEL_RM67162 == DEMO_PANEL)
+#if (DEMO_PANEL_RM67162 == DEMO_PANEL || DEMO_PANEL_CO5300 == DEMO_PANEL)
 void BOARD_MIPI_TE_GPIO_IRQ_Handler(void)
 {
     uint32_t intStat;
@@ -37,6 +38,20 @@ void BOARD_InitHardware(void)
     BOARD_InitBootPins();
     BOARD_InitPsRamPins_Xspi2();
 
+    BOARD_InitPmicPins();
+    BOARD_InitPmic();
+    BOARD_SetPmicVdd2Voltage(1100000U); /* 1.1v for 325MHz clock. */
+
+    /* Disable LDO */
+    POWER_SetVddnSupplySrc(kVddSrc_PMIC);
+    POWER_SetVdd1SupplySrc(kVddSrc_PMIC);
+    POWER_SetVdd2SupplySrc(kVddSrc_PMIC);
+    POWER_ApplyPD();
+
+    BOARD_BootClockHSRUN();
+    BOARD_InitDebugConsole();
+    BOARD_Init16bitsPsRam(XSPI2);
+
 #if (DEMO_PANEL_TFT_PROTO_5 == DEMO_PANEL)
 #if (SSD1963_DRIVEN_BY == SSD1963_DRIVEN_BY_FLEXIO)
     BOARD_InitFlexIOPanelPins();
@@ -57,9 +72,5 @@ void BOARD_InitHardware(void)
     RESET_PeripheralReset(kGPIO1_RST_SHIFT_RSTn);
     RESET_PeripheralReset(kGPIO3_RST_SHIFT_RSTn);
 #endif
-
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
-    BOARD_Init16bitsPsRam(XSPI2);
 }
 /*${function:end}*/

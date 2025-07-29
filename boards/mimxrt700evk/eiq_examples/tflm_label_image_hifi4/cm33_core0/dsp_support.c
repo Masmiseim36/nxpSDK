@@ -113,8 +113,16 @@ void BOARD_DSP_Init(void)
     POWER_ApplyPD();
 
     /* Let's DSP run on PLL clock. */
+#if defined(EIQ_EXAMPLE_HSRUN_CLOCK)
+    /* Hifi4 DSP run with 325MHz (HSRUN_CLOCK) */
+    CLOCK_AttachClk(kFRO0_DIV1_to_DSP);
+    CLOCK_SetClkDiv(kCLOCK_DivDspClk, 1U);
+#else
+    /* Hifi4 DSP run with 250MHz */
     CLOCK_AttachClk(kMAIN_PLL_PFD0_to_DSP);
     CLOCK_SetClkDiv(kCLOCK_DivDspClk, 2U);
+
+#endif
 #else
     CLOCK_AttachClk(kSENSE_BASE_to_SENSE_DSP);
     CLOCK_EnableClock(kCLOCK_SenseAccessRamArbiter0);

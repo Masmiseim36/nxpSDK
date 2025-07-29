@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 NXP
+ * Copyright 2024-2025 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -11,11 +11,13 @@
  * Definitions
  ******************************************************************************/
 /* Define the power supply mode on the board.
+ *  - DEMO_POWER_SUPPLY_PMC, the VDDN is supplied by internal DCDC, VDD1 and VDD2 are supplied by internal LDOs.
  *  - DEMO_POWER_SUPPLY_MIXED, the VDDN is supplied by external PMIC. VDD1 and VDD2 are supplied by internal LDOs.
  *  - DEMO_POWER_SUPPLY_PMIC, the VDDN, VDD1 and VDD2 are supplied by PMIC.
  */
-#define DEMO_POWER_SUPPLY_OPTION DEMO_POWER_SUPPLY_MIXED
+#define DEMO_POWER_SUPPLY_OPTION DEMO_POWER_SUPPLY_PMIC
 
+#define DEMO_POWER_SUPPLY_PMC   1U
 #define DEMO_POWER_SUPPLY_PMIC  2U
 #define DEMO_POWER_SUPPLY_MIXED 3U
 

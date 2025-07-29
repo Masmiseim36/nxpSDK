@@ -16,6 +16,7 @@
 #include "usb_phy.h"
 #include "usb_host.h"
 #include "fsl_xspi.h"
+#include "psa/crypto.h"
 #if (((defined(CONFIG_BT_SMP)) && (CONFIG_BT_SMP)))
 #include "fsl_cache.h"
 #endif /* CONFIG_BT_SMP */
@@ -56,6 +57,7 @@ void BOARD_InitHardware(void)
 
     CLOCK_AttachClk(kFRO1_DIV2_to_TRNG);                               /* Max 96MHZ with 1.0V nomral supply. */
     CLOCK_SetClkDiv(kCLOCK_DivTrngClk, 1U);
+    psa_crypto_init();
 #endif /* CONFIG_BT_SMP */
 }
 
@@ -77,7 +79,7 @@ void BOARD_Init_BT_UART(void)
 }
 
 #if (defined(WIFI_88W8987_BOARD_MURATA_1ZM_M2) || defined(WIFI_IW416_BOARD_MURATA_1XK_M2)  || \
-      defined(WIFI_IW612_BOARD_MURATA_2EL_M2))      
+      defined(WIFI_IW612_BOARD_MURATA_2EL_M2) || defined(WIFI_IW610_BOARD_MURATA_2LL_M2))      
 int controller_hci_uart_get_configuration(controller_hci_uart_config_t *config)
 {
     if (NULL == config)

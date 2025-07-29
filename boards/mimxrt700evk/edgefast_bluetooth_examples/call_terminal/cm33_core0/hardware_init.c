@@ -6,6 +6,7 @@
  */
 
 /*${header:start}*/
+
 #include "pin_mux.h"
 #include "board.h"
 #include "clock_config.h"
@@ -22,10 +23,12 @@
 #include "usb_host_config.h"
 #include "usb_phy.h"
 #include "usb_host.h"
+#include "psa/crypto.h"
 #if (((defined(CONFIG_BT_SMP)) && (CONFIG_BT_SMP)))
 #include "fsl_cache.h"
 #endif /* CONFIG_BT_SMP */
 #include "fsl_ctimer.h"
+
 /*${header:end}*/
 
 /*${macro:start}*/
@@ -82,6 +85,7 @@ static uint64_t SyncTimer_Bclk_Value = 0;
 /*${macro:end}*/
 
 /*${variable:start}*/
+
 /* set boardCodecConfig */
 wm8962_config_t wm8962Config = {
     .i2cConfig = {.codecI2CInstance = BOARD_CODEC_I2C_INSTANCE, .codecI2CSourceClock = DEMO_I2C_CLK_FREQ},
@@ -405,7 +409,6 @@ static void ctimer_callback(uint32_t flags)
 }
 #endif /* WIFI_IW612_BOARD_MURATA_2EL_M2 */
 
-
 void  BOARD_InitHardware(void)
 {
     BOARD_Init_M2();
@@ -414,8 +417,8 @@ void  BOARD_InitHardware(void)
     BOARD_InitBootPins();
     BOARD_InitBootClocks();
     BOARD_InitDebugConsole();
+    BOARD_InitAHBSC();
 
-    //BOARD_InitAHBSC();
     BOARD_Init_BT_UART();
     BOARD_Init_I2C();
     BOARD_Init_EDMA();
@@ -425,6 +428,7 @@ void  BOARD_InitHardware(void)
 
     CLOCK_AttachClk(kFRO1_DIV2_to_TRNG);                               /* Max 96MHZ with 1.0V nomral supply. */
     CLOCK_SetClkDiv(kCLOCK_DivTrngClk, 1U);
+    psa_crypto_init();
 #endif /* CONFIG_BT_SMP */
 }
 

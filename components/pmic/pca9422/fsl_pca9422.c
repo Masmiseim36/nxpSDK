@@ -72,6 +72,19 @@ static uint64_t pca9422_ffs(uint64_t word)
     return (uint64_t)num;
 }
 
+static bool PCA9422_LockRegulatorOutputRegister(pca9422_handle_t *handle)
+{
+    uint8_t regVal = (uint8_t)kPCA9422_RegLockLockKey;
+    return PCA9422_WriteRegs(handle, PCA9422_REG_LOCK, &regVal, 1U);
+}
+
+static bool PCA9422_UnlockRegulatorOutputRegister(pca9422_handle_t *handle)
+{
+    uint8_t regVal = (uint8_t)kPCA9422_RegLockUnlockKey;
+    /* REG_LOCK - UNLOCK KEY */
+    return PCA9422_WriteRegs(handle, PCA9422_REG_LOCK, &regVal, 1U);
+}
+
 void PCA9422_GetChargerDefaultConfig(pca9422_charger_config_t *config)
 {
     assert(config);
@@ -182,7 +195,7 @@ void PCA9422_InitCharger(pca9422_handle_t *handle, const pca9422_charger_config_
     vinCntl[1] = (uint8_t)((uint8_t)config->aiclV | PCa9422_VIN_CNTL_1_AICL_EN);
     vinCntl[2] = (uint8_t)(config->icl);
     vinCntl[3] = (uint8_t)(PCA9422_VSYS_REG(config->vsysReg) << MASK2SHIFT(PCA9422_VIN_CNTL_3_VSYS_REG));
-    result       = PCA9422_WriteRegs(handle, PCA9422_VIN_CNTL_0, vinCntl, sizeof(vinCntl));
+    result     = PCA9422_WriteRegs(handle, PCA9422_VIN_CNTL_0, vinCntl, sizeof(vinCntl));
     if (!result)
     {
         assert(false);
@@ -1107,53 +1120,53 @@ void PCA9422_GetDefaultBuckConfig(pca9422_buck_config_t *buckCfg)
     buckCfg[1].fpwmEn       = kPCA9422_BxAutoPFMandPWM;
     buckCfg[1].enMode       = kPCA9422_EnmodeOnAll;
 #if defined(DEVICE_ID_PCA9422A)
-    buckCfg[1].dvsVout[0]   = 1000000U; /* 1.0V */
+    buckCfg[1].dvsVout[0] = 1000000U; /* 1.0V */
 #else
-    buckCfg[1].dvsVout[0]   = 1100000U; /* 1.1V */
+    buckCfg[1].dvsVout[0] = 1100000U; /* 1.1V */
 #endif
-    buckCfg[1].dvsVout[1]   = 1000000U; /* 1.0V */
-    buckCfg[1].dvsVout[2]   = 1000000U; /* 1.0V */
-    buckCfg[1].dvsVout[3]   = 1000000U; /* 1.0V */
-    buckCfg[1].dvsVout[4]   = 1000000U; /* 1.0V */
-    buckCfg[1].dvsVout[5]   = 1000000U; /* 1.0V */
-    buckCfg[1].dvsVout[6]   = 1000000U; /* 1.0V */
-    buckCfg[1].dvsVout[7]   = 1000000U; /* 1.0V */
-    buckCfg[1].stbyVout     = 1000000U; /* 1.0V */
+    buckCfg[1].dvsVout[1] = 1000000U; /* 1.0V */
+    buckCfg[1].dvsVout[2] = 1000000U; /* 1.0V */
+    buckCfg[1].dvsVout[3] = 1000000U; /* 1.0V */
+    buckCfg[1].dvsVout[4] = 1000000U; /* 1.0V */
+    buckCfg[1].dvsVout[5] = 1000000U; /* 1.0V */
+    buckCfg[1].dvsVout[6] = 1000000U; /* 1.0V */
+    buckCfg[1].dvsVout[7] = 1000000U; /* 1.0V */
+    buckCfg[1].stbyVout   = 1000000U; /* 1.0V */
 #if defined(DEVICE_ID_PCA9422A)
-    buckCfg[1].maxVout      = 1200000U;	/* 1.2V */
+    buckCfg[1].maxVout = 1200000U;    /* 1.2V */
 #else
-    buckCfg[1].maxVout      = 1400000U; /* 1.4V */
+    buckCfg[1].maxVout    = 1400000U; /* 1.4V */
 #endif
-    buckCfg[1].sleepVout    = 400000U;  /* 0.4V */
+    buckCfg[1].sleepVout = 400000U; /* 0.4V */
 
     /* BUCK3 default configuration */
     buckCfg[2].dvsUpStep    = 0U; /* 25mV */
     buckCfg[2].dvsDnStep    = 0U; /* 25mV */
-    buckCfg[2].dvsCtrl      = kPCA9422_DVS0thrI2CInActiveAndSleep;
+    buckCfg[2].dvsCtrl      = (uint8_t)kPCA9422_DVS0thrI2CInActiveAndSleep;
     buckCfg[2].rampSpeed    = kPCA9422_BxRamp_25mVp2us;
     buckCfg[2].lpMode       = kPCA9422_BxLPmodeNormal;
     buckCfg[2].activeDischg = kPCA9422_BxADEnabled;
     buckCfg[2].fpwmEn       = kPCA9422_BxAutoPFMandPWM;
     buckCfg[2].enMode       = kPCA9422_EnmodeOnAll;
 #if defined(DEVICE_ID_PCA9422A)
-    buckCfg[2].dvsVout[0]   = 1800000U; /* 1.8V */
+    buckCfg[2].dvsVout[0] = 1800000U; /* 1.8V */
 #else
-    buckCfg[2].dvsVout[0]   = 1000000U; /* 1.0V */
+    buckCfg[2].dvsVout[0] = 1000000U; /* 1.0V */
 #endif
-    buckCfg[2].dvsVout[1]   = 1000000U; /* 1.0V */
-    buckCfg[2].dvsVout[2]   = 1000000U; /* 1.0V */
-    buckCfg[2].dvsVout[3]   = 1000000U; /* 1.0V */
-    buckCfg[2].dvsVout[4]   = 1000000U; /* 1.0V */
-    buckCfg[2].dvsVout[5]   = 1000000U; /* 1.0V */
-    buckCfg[2].dvsVout[6]   = 1000000U; /* 1.0V */
-    buckCfg[2].dvsVout[7]   = 1000000U; /* 1.0V */
-    buckCfg[2].stbyVout     = 1000000U; /* 1.0V */
+    buckCfg[2].dvsVout[1] = 1000000U; /* 1.0V */
+    buckCfg[2].dvsVout[2] = 1000000U; /* 1.0V */
+    buckCfg[2].dvsVout[3] = 1000000U; /* 1.0V */
+    buckCfg[2].dvsVout[4] = 1000000U; /* 1.0V */
+    buckCfg[2].dvsVout[5] = 1000000U; /* 1.0V */
+    buckCfg[2].dvsVout[6] = 1000000U; /* 1.0V */
+    buckCfg[2].dvsVout[7] = 1000000U; /* 1.0V */
+    buckCfg[2].stbyVout   = 1000000U; /* 1.0V */
 #if defined(DEVICE_ID_PCA9422A)
-    buckCfg[2].maxVout      = 1975000U; /* 1.975V */
+    buckCfg[2].maxVout = 1975000U;    /* 1.975V */
 #else
-    buckCfg[2].maxVout      = 1200000U; /* 1.2V */
+    buckCfg[2].maxVout    = 1200000U; /* 1.2V */
 #endif
-    buckCfg[2].sleepVout    = 400000U;  /* 0.4V */
+    buckCfg[2].sleepVout = 400000U; /* 0.4V */
 }
 
 void PCA9422_GetDefaultLDO234Config(pca9422_ldo234_config_t *ldoCfg)
@@ -1209,9 +1222,9 @@ void PCA9422_GetDefaultBBConfig(pca9422_bb_config_t *bbCfg)
     bbCfg->lpMode     = kPCA9422_BBLPmodeNormal;
 
 #if defined(DEVICE_ID_PCA9422A)
-    bbCfg->vout      = 5000000U; /* 5.0V */
+    bbCfg->vout = 5000000U; /* 5.0V */
 #else
-    bbCfg->vout      = 1800000U; /* 1.8V */
+    bbCfg->vout           = 1800000U; /* 1.8V */
 #endif
     bbCfg->stdyVout  = 1800000U; /* 1.8V */
     bbCfg->maxVout   = 5000000U; /* 5.0V */
@@ -1266,7 +1279,7 @@ uint8_t PCA9422_GetDeviceID(pca9422_handle_t *handle)
 
     /* Read Device ID */
     regAddr = PCA9422_DEV_INFO;
-    result = PCA9422_ReadRegs(handle, regAddr, &regVal, 1U);
+    result  = PCA9422_ReadRegs(handle, regAddr, &regVal, 1U);
     if (result == false)
     {
         LOG_INFO("Error I2C data Read[0x%2X]\r\n", regAddr);
@@ -1299,92 +1312,62 @@ void PCA9422_InitRegulator(pca9422_handle_t *handle, const pca9422_regulator_con
     regVal  = 0xFFU;
     regAddr = PCA9422_INT1_MASK;
     result  = PCA9422_WriteRegs(handle, regAddr, &regVal, 1U);
-    if (result == false)
-    {
-        goto out;
-    }
+    assert(result);
     /* RESET_CTRL */
     regVal  = 0x00U;
     regAddr = PCA9422_RESET_CTRL;
     result  = PCA9422_WriteRegs(handle, regAddr, &regVal, 1U);
-    if (result == false)
-    {
-        goto out;
-    }
+    assert(result);
     /* PWR_SEQ_CTRL */
     regVal  = (uint8_t)config->onCfg | (uint8_t)config->modeSel | (uint8_t)config->modeI2C | 0x06U;
     regAddr = PCA9422_PWR_SEQ_CTRL;
     result  = PCA9422_WriteRegs(handle, regAddr, &regVal, 1U);
-    if (result == false)
-    {
-        goto out;
-    }
+    assert(result);
     /* SYS_CFG1 */
     regVal  = (uint8_t)config->standbyCtrl | (uint8_t)config->standbyCfg | (uint8_t)config->dvsCtrl2En;
     regAddr = PCA9422_SYS_CFG1;
     result  = PCA9422_WriteRegs(handle, regAddr, &regVal, 1U);
-    if (result == false)
-    {
-        goto out;
-    }
+    assert(result);
     /* SYS_CFG2 */
     regVal  = (uint8_t)kPCA9422_PowerSaveNormal | (uint8_t)kPCA9422_GPIOPullupLDO1 | (uint8_t)config->vsysUvlo;
     regAddr = PCA9422_SYS_CFG2;
     result  = PCA9422_WriteRegs(handle, regAddr, &regVal, 1U);
-    if (result == false)
-    {
-        goto out;
-    }
+    assert(result);
     /* BUCK123_DVS_CFG1 */
     regVal =
         (uint8_t)((config->buck[0].dvsUpStep << 7U) | (config->buck[0].dvsDnStep << 6U) |
                   (config->buck[1].dvsUpStep << 5U) | (config->buck[1].dvsDnStep << 4U) | (uint8_t)(config->smartMode));
     regAddr = PCA9422_BUCK123_DVS_CFG1;
     result  = PCA9422_WriteRegs(handle, regAddr, &regVal, 1U);
-    if (result == false)
-    {
-        goto out;
-    }
+    assert(result);
     /* BUCK123_DVS_CFG2 */
     regVal =
         (uint8_t)((config->buck[0].dvsCtrl << 6U) | (config->buck[1].dvsCtrl << 4U) | (config->buck[2].dvsCtrl << 2U) |
                   (config->buck[2].dvsUpStep << 1U) | (config->buck[2].dvsDnStep << 0U));
     regAddr = PCA9422_BUCK123_DVS_CFG2;
     result  = PCA9422_WriteRegs(handle, regAddr, &regVal, 1U);
-    if (result == false)
-    {
-        goto out;
-    }
+    assert(result);
     /* BUCK1CTRL */
     regVal = (uint8_t)(config->buck[0].rampSpeed) | (uint8_t)(config->buck[0].lpMode) |
              (uint8_t)(config->buck[0].activeDischg) | (uint8_t)(config->buck[0].fpwmEn) |
              (uint8_t)(config->buck[0].enMode);
     regAddr = PCA9422_BUCK1CTRL;
     result  = PCA9422_WriteRegs(handle, regAddr, &regVal, 1U);
-    if (result == false)
-    {
-        goto out;
-    }
+    assert(result);
     /* BUCK2CTRL */
     regVal = (uint8_t)(config->buck[1].rampSpeed) | (uint8_t)(config->buck[1].lpMode) |
              (uint8_t)(config->buck[1].activeDischg) | (uint8_t)(config->buck[1].fpwmEn) |
              (uint8_t)(config->buck[1].enMode);
     regAddr = PCA9422_BUCK2CTRL;
     result  = PCA9422_WriteRegs(handle, regAddr, &regVal, 1U);
-    if (result == false)
-    {
-        goto out;
-    }
+    assert(result);
     /* BUCK3CTRL */
     regVal = (uint8_t)(config->buck[2].rampSpeed) | (uint8_t)(config->buck[2].lpMode) |
              (uint8_t)(config->buck[2].activeDischg) | (uint8_t)(uint8_t)(config->buck[2].fpwmEn) |
              (uint8_t)(config->buck[2].enMode);
     regAddr = PCA9422_BUCK3CTRL;
     result  = PCA9422_WriteRegs(handle, regAddr, &regVal, 1U);
-    if (result == false)
-    {
-        goto out;
-    }
+    assert(result);
     /* BUCK1OUT_DVS */
     for (i = 0U; i < 8U; i++)
     {
@@ -1392,10 +1375,7 @@ void PCA9422_InitRegulator(pca9422_handle_t *handle, const pca9422_regulator_con
     }
     regAddr = PCA9422_BUCK1OUT_DVS0;
     result  = PCA9422_WriteRegs(handle, regAddr, bxDVS, 8U);
-    if (result == false)
-    {
-        goto out;
-    }
+    assert(result);
     /* BUCK2OUT_DVS */
     for (i = 0U; i < 8U; i++)
     {
@@ -1403,10 +1383,7 @@ void PCA9422_InitRegulator(pca9422_handle_t *handle, const pca9422_regulator_con
     }
     regAddr = PCA9422_BUCK2OUT_DVS0;
     result  = PCA9422_WriteRegs(handle, regAddr, bxDVS, 8U);
-    if (result == false)
-    {
-        goto out;
-    }
+    assert(result);
     /* BUCK3OUT_DVS */
     for (i = 0U; i < 8U; i++)
     {
@@ -1414,283 +1391,184 @@ void PCA9422_InitRegulator(pca9422_handle_t *handle, const pca9422_regulator_con
     }
     regAddr = PCA9422_BUCK3OUT_DVS0;
     result  = PCA9422_WriteRegs(handle, regAddr, bxDVS, 8U);
-    if (result == false)
-    {
-        goto out;
-    }
+    assert(result);
     /* REG_LOCK - UNLOCK KEY */
-    regVal  = (uint8_t)kPCA9422_RegLockUnlockKey;
-    regAddr = PCA9422_REG_LOCK;
-    result  = PCA9422_WriteRegs(handle, regAddr, &regVal, 1U);
-    if (result == false)
+    if (PCA9422_UnlockRegulatorOutputRegister(handle))
     {
-        goto out;
+        /* BUCK1OUT_STBY */
+        regVal  = (uint8_t)PCA9422_BUCK1_OUT_VAL(config->buck[0].stbyVout);
+        regAddr = PCA9422_BUCK1OUT_STBY;
+        result  = PCA9422_WriteRegs(handle, regAddr, &regVal, 1U);
+        assert(result);
+        /* PCA9422_BUCK1OUT_MAX_LIMIT */
+        regVal  = (uint8_t)PCA9422_BUCK1_OUT_VAL(config->buck[0].maxVout);
+        regAddr = PCA9422_BUCK1OUT_MAX_LIMIT;
+        result  = PCA9422_WriteRegs(handle, regAddr, &regVal, 1U);
+        assert(result);
+        /* BUCK1OUT_SLEEP */
+        regVal  = (uint8_t)PCA9422_BUCK1_OUT_VAL(config->buck[0].sleepVout);
+        regAddr = PCA9422_BUCK1OUT_SLEEP;
+        result  = PCA9422_WriteRegs(handle, regAddr, &regVal, 1U);
+        assert(result);
+        /* BUCK2OUT_STBY */
+        regVal  = (uint8_t)PCA9422_BUCK2_OUT_VAL(config->buck[1].stbyVout);
+        regAddr = PCA9422_BUCK2OUT_STBY;
+        result  = PCA9422_WriteRegs(handle, regAddr, &regVal, 1U);
+        assert(result);
+        /* BUCK2OUT_MAX_LIMIT */
+        regVal  = (uint8_t)PCA9422_BUCK2_OUT_VAL(config->buck[1].maxVout);
+        regAddr = PCA9422_BUCK2OUT_MAX_LIMIT;
+        result  = PCA9422_WriteRegs(handle, regAddr, &regVal, 1U);
+        assert(result);
+        /* BUCK2OUT_SLEEP */
+        regVal  = (uint8_t)PCA9422_BUCK2_OUT_VAL(config->buck[1].sleepVout);
+        regAddr = PCA9422_BUCK2OUT_SLEEP;
+        result  = PCA9422_WriteRegs(handle, regAddr, &regVal, 1U);
+        assert(result);
+        /* BUCK3OUT_STBY */
+        regVal  = (uint8_t)PCA9422_BUCK3_OUT_VAL(config->buck[2].stbyVout);
+        regAddr = PCA9422_BUCK3OUT_STBY;
+        result  = PCA9422_WriteRegs(handle, regAddr, &regVal, 1U);
+        assert(result);
+        /* BUCK3OUT_MAX_LIMIT */
+        regVal  = (uint8_t)PCA9422_BUCK3_OUT_VAL(config->buck[2].maxVout);
+        regAddr = PCA9422_BUCK3OUT_MAX_LIMIT;
+        result  = PCA9422_WriteRegs(handle, regAddr, &regVal, 1U);
+        assert(result);
+        /* BUCK3OUT_SLEEP */
+        regVal  = (uint8_t)PCA9422_BUCK3_OUT_VAL(config->buck[2].sleepVout);
+        regAddr = PCA9422_BUCK3OUT_SLEEP;
+        result  = PCA9422_WriteRegs(handle, regAddr, &regVal, 1U);
+        assert(result);
+        /* LDO2_CFG */
+        regVal = (uint8_t)config->ldo[0].cSel | (uint8_t)config->ldo[0].llSel | (uint8_t)config->ldo[0].lpMode |
+                 (uint8_t)config->ldo[0].enMode;
+        regAddr = PCA9422_LDO2_CFG;
+        result  = PCA9422_WriteRegs(handle, regAddr, &regVal, 1U);
+        assert(result);
+        /* LDO2_OUT */
+        regVal  = ((uint8_t)config->ldo[0].activeDischg << 7U) | (uint8_t)PCA9422_LDO23_OUT_VAL(config->ldo[0].vout);
+        regAddr = PCA9422_LDO2_OUT;
+        result  = PCA9422_WriteRegs(handle, regAddr, &regVal, 1U);
+        assert(result);
+        /* LDO2_OUT_STBY */
+        regVal  = (uint8_t)PCA9422_LDO23_OUT_VAL(config->ldo[0].stbyVout);
+        regAddr = PCA9422_LDO2_OUT_STBY;
+        result  = PCA9422_WriteRegs(handle, regAddr, &regVal, 1U);
+        assert(result);
+        /* LDO2_OUT_SLEEP */
+        regVal  = (uint8_t)PCA9422_LDO23_OUT_VAL(config->ldo[0].sleepVout);
+        regAddr = PCA9422_LDO2_OUT_SLEEP;
+        result  = PCA9422_WriteRegs(handle, regAddr, &regVal, 1U);
+        assert(result);
+        /* LDO3_CFG */
+        regVal = (uint8_t)config->ldo[1].cSel | (uint8_t)config->ldo[1].llSel | (uint8_t)config->ldo[1].lpMode |
+                 (uint8_t)config->ldo[1].enMode;
+        regAddr = PCA9422_LDO3_CFG;
+        result  = PCA9422_WriteRegs(handle, regAddr, &regVal, 1U);
+        assert(result);
+        /* LDO3_OUT */
+        regVal = (uint8_t)(((uint32_t)config->ldo[1].activeDischg << 7UL) | PCA9422_LDO23_OUT_VAL(config->ldo[1].vout));
+        regAddr = PCA9422_LDO3_OUT;
+        result  = PCA9422_WriteRegs(handle, regAddr, &regVal, 1U);
+        assert(result);
+        /* LDO3_OUT_STBY */
+        regVal  = (uint8_t)PCA9422_LDO23_OUT_VAL(config->ldo[1].stbyVout);
+        regAddr = PCA9422_LDO3_OUT_STBY;
+        result  = PCA9422_WriteRegs(handle, regAddr, &regVal, 1U);
+        assert(result);
+        /* LDO3_OUT_SLEEP */
+        regVal  = (uint8_t)PCA9422_LDO23_OUT_VAL(config->ldo[1].sleepVout);
+        regAddr = PCA9422_LDO3_OUT_SLEEP;
+        result  = PCA9422_WriteRegs(handle, regAddr, &regVal, 1U);
+        assert(result);
+        /* LDO23_CFG */
+        regVal  = ((uint8_t)(config->ldo[0].ldoMode) << 6U) | ((uint8_t)(config->ldo[1].ldoMode) << 7U);
+        regAddr = PCA9422_LDO23_CFG;
+        result  = PCA9422_WriteRegs(handle, regAddr, &regVal, 1U);
+        assert(result);
+        /* LDO4_CFG */
+        regVal  = ((uint8_t)config->ldo[2].activeDischg << 4U) | ((uint8_t)(config->ldo[2].enMode));
+        regAddr = PCA9422_LDO4_CFG;
+        result  = PCA9422_WriteRegs(handle, regAddr, &regVal, 1U);
+        assert(result);
+        /* LDO4_OUT */
+        regVal  = (uint8_t)PCA9422_LDO4_OUT_VAL(config->ldo[2].vout);
+        regAddr = PCA9422_LDO4_OUT;
+        result  = PCA9422_WriteRegs(handle, regAddr, &regVal, 1U);
+        assert(result);
+        /* LDO4_OUT_STBY */
+        regVal  = (uint8_t)PCA9422_LDO4_OUT_VAL(config->ldo[2].stbyVout);
+        regAddr = PCA9422_LDO4_OUT_STBY;
+        result  = PCA9422_WriteRegs(handle, regAddr, &regVal, 1U);
+        assert(result);
+        /* LDO4_OUT_SLEEP */
+        regVal  = (uint8_t)PCA9422_LDO4_OUT_VAL(config->ldo[2].sleepVout);
+        regAddr = PCA9422_LDO4_OUT_SLEEP;
+        result  = PCA9422_WriteRegs(handle, regAddr, &regVal, 1U);
+        assert(result);
+        /* LDO1_CFG1 */
+        regVal  = (uint8_t)(((uint32_t)config->ldo1.activeDischg << 7UL) | PCA9422_LDO1_OUT_VAL(config->ldo1.vout));
+        regAddr = PCA9422_LDO1_CFG1;
+        result  = PCA9422_WriteRegs(handle, regAddr, &regVal, 1U);
+        assert(result);
+        /* LDO1_CFG2 */
+        regVal  = (uint8_t)config->ldo1.enMode;
+        regAddr = PCA9422_LDO1_CFG2;
+        result  = PCA9422_WriteRegs(handle, regAddr, &regVal, 1U);
+        assert(result);
+        /* SW4_BB_CFG1 */
+        regVal = (uint8_t)config->buckBoost.fpwmEn | (uint8_t)config->buckBoost.ocCtrl |
+                 (uint8_t)config->buckBoost.softStdn | (uint8_t)config->buckBoost.passiveDis;
+        regAddr = PCA9422_SW4_BB_CFG1;
+        result  = PCA9422_WriteRegs(handle, regAddr, &regVal, 1U);
+        assert(result);
+        /* SW4_BB_CFG2 */
+        regVal = (uint8_t)config->buckBoost.enInRun | (uint8_t)config->buckBoost.bbMode |
+                 (uint8_t)config->buckBoost.enMode | (uint8_t)config->buckBoost.lpMode;
+        regAddr = PCA9422_SW4_BB_CFG2;
+        result  = PCA9422_WriteRegs(handle, regAddr, &regVal, 1U);
+        assert(result);
+        /* SW4_BB_CFG3 - BB_VOUT */
+        regVal  = (uint8_t)PCA9422_BB_OUT_VAL(config->buckBoost.vout);
+        regAddr = PCA9422_SW4_BB_CFG3;
+        result  = PCA9422_WriteRegs(handle, regAddr, &regVal, 1U);
+        assert(result);
+        /* SW4_BB_CFG4 - BB_VOUT_STBY */
+        regVal  = (uint8_t)PCA9422_BB_OUT_VAL(config->buckBoost.stdyVout);
+        regAddr = PCA9422_SW4_BB_CFG4;
+        result  = PCA9422_WriteRegs(handle, regAddr, &regVal, 1U);
+        assert(result);
+        /* SW4_BB_MAX_LIMIT */
+        regVal  = (uint8_t)PCA9422_BB_OUT_VAL(config->buckBoost.maxVout);
+        regAddr = PCA9422_SW4_BB_MAX_LIMIT;
+        result  = PCA9422_WriteRegs(handle, regAddr, &regVal, 1U);
+        assert(result);
+        /* SW4_BB_MIN_LIMIT */
+        regVal  = (uint8_t)PCA9422_BB_OUT_VAL(config->buckBoost.minVout);
+        regAddr = PCA9422_SW4_BB_MIN_LIMIT;
+        result  = PCA9422_WriteRegs(handle, regAddr, &regVal, 1U);
+        assert(result);
+        /* SW4_BB_VOUT_SLEEP */
+        regVal  = (uint8_t)PCA9422_BB_OUT_VAL(config->buckBoost.sleepVout);
+        regAddr = PCA9422_SW4_BB_VOUT_SLEEP;
+        result  = PCA9422_WriteRegs(handle, regAddr, &regVal, 1U);
+        assert(result);
+        /* REG_LOCK - LOCK KEY */
+        if (PCA9422_LockRegulatorOutputRegister(handle) == false)
+        {
+            assert(false);
+        }
     }
-    /* BUCK1OUT_STBY */
-    regVal  = (uint8_t)PCA9422_BUCK1_OUT_VAL(config->buck[0].stbyVout);
-    regAddr = PCA9422_BUCK1OUT_STBY;
-    result  = PCA9422_WriteRegs(handle, regAddr, &regVal, 1U);
-    if (result == false)
-    {
-        goto out;
+    else{
+        /* Log error info. */
+        LOG_INFO("Error I2C data write - Unlock Regulator Output Register\r\n");
     }
-    /* PCA9422_BUCK1OUT_MAX_LIMIT */
-    regVal  = (uint8_t)PCA9422_BUCK1_OUT_VAL(config->buck[0].maxVout);
-    regAddr = PCA9422_BUCK1OUT_MAX_LIMIT;
-    result  = PCA9422_WriteRegs(handle, regAddr, &regVal, 1U);
-    if (result == false)
-    {
-        goto out;
-    }
-    /* BUCK1OUT_SLEEP */
-    regVal  = (uint8_t)PCA9422_BUCK1_OUT_VAL(config->buck[0].sleepVout);
-    regAddr = PCA9422_BUCK1OUT_SLEEP;
-    result  = PCA9422_WriteRegs(handle, regAddr, &regVal, 1U);
-    if (result == false)
-    {
-        goto out;
-    }
-    /* BUCK2OUT_STBY */
-    regVal  = (uint8_t)PCA9422_BUCK2_OUT_VAL(config->buck[1].stbyVout);
-    regAddr = PCA9422_BUCK2OUT_STBY;
-    result  = PCA9422_WriteRegs(handle, regAddr, &regVal, 1U);
-    if (result == false)
-    {
-        goto out;
-    }
-    /* BUCK2OUT_MAX_LIMIT */
-    regVal  = (uint8_t)PCA9422_BUCK2_OUT_VAL(config->buck[1].maxVout);
-    regAddr = PCA9422_BUCK2OUT_MAX_LIMIT;
-    result  = PCA9422_WriteRegs(handle, regAddr, &regVal, 1U);
-    if (result == false)
-    {
-        goto out;
-    }
-    /* BUCK2OUT_SLEEP */
-    regVal  = (uint8_t)PCA9422_BUCK2_OUT_VAL(config->buck[1].sleepVout);
-    regAddr = PCA9422_BUCK2OUT_SLEEP;
-    result  = PCA9422_WriteRegs(handle, regAddr, &regVal, 1U);
-    if (result == false)
-    {
-        goto out;
-    }
-    /* BUCK3OUT_STBY */
-    regVal  = (uint8_t)PCA9422_BUCK3_OUT_VAL(config->buck[2].stbyVout);
-    regAddr = PCA9422_BUCK3OUT_STBY;
-    result  = PCA9422_WriteRegs(handle, regAddr, &regVal, 1U);
-    if (result == false)
-    {
-        goto out;
-    }
-    /* BUCK3OUT_MAX_LIMIT */
-    regVal  = (uint8_t)PCA9422_BUCK3_OUT_VAL(config->buck[2].maxVout);
-    regAddr = PCA9422_BUCK3OUT_MAX_LIMIT;
-    result  = PCA9422_WriteRegs(handle, regAddr, &regVal, 1U);
-    if (result == false)
-    {
-        goto out;
-    }
-    /* BUCK3OUT_SLEEP */
-    regVal  = (uint8_t)PCA9422_BUCK3_OUT_VAL(config->buck[2].sleepVout);
-    regAddr = PCA9422_BUCK3OUT_SLEEP;
-    result  = PCA9422_WriteRegs(handle, regAddr, &regVal, 1U);
-    if (result == false)
-    {
-        goto out;
-    }
-    /* LDO2_CFG */
-    regVal = (uint8_t)config->ldo[0].cSel | (uint8_t)config->ldo[0].llSel | (uint8_t)config->ldo[0].lpMode |
-             (uint8_t)config->ldo[0].enMode;
-    regAddr = PCA9422_LDO2_CFG;
-    result  = PCA9422_WriteRegs(handle, regAddr, &regVal, 1U);
-    if (result == false)
-    {
-        goto out;
-    }
-    /* LDO2_OUT */
-    regVal =((uint8_t)config->ldo[0].activeDischg << 7U) | (uint8_t)PCA9422_LDO23_OUT_VAL(config->ldo[0].vout);
-    regAddr = PCA9422_LDO2_OUT;
-    result  = PCA9422_WriteRegs(handle, regAddr, &regVal, 1U);
-    if (result == false)
-    {
-        goto out;
-    }
-    /* LDO2_OUT_STBY */
-    regVal  = (uint8_t)PCA9422_LDO23_OUT_VAL(config->ldo[0].stbyVout);
-    regAddr = PCA9422_LDO2_OUT_STBY;
-    result  = PCA9422_WriteRegs(handle, regAddr, &regVal, 1U);
-    if (result == false)
-    {
-        goto out;
-    }
-    /* LDO2_OUT_SLEEP */
-    regVal  = (uint8_t)PCA9422_LDO23_OUT_VAL(config->ldo[0].sleepVout);
-    regAddr = PCA9422_LDO2_OUT_SLEEP;
-    result  = PCA9422_WriteRegs(handle, regAddr, &regVal, 1U);
-    if (result == false)
-    {
-        goto out;
-    }
-    /* LDO3_CFG */
-    regVal = (uint8_t)config->ldo[1].cSel | (uint8_t)config->ldo[1].llSel | (uint8_t)config->ldo[1].lpMode |
-             (uint8_t)config->ldo[1].enMode;
-    regAddr = PCA9422_LDO3_CFG;
-    result  = PCA9422_WriteRegs(handle, regAddr, &regVal, 1U);
-    if (result == false)
-    {
-        goto out;
-    }
-    /* LDO3_OUT */
-    regVal  = (uint8_t)(((uint32_t)config->ldo[1].activeDischg << 7UL) | PCA9422_LDO23_OUT_VAL(config->ldo[1].vout));
-    regAddr = PCA9422_LDO3_OUT;
-    result  = PCA9422_WriteRegs(handle, regAddr, &regVal, 1U);
-    if (result == false)
-    {
-        goto out;
-    }
-    /* LDO3_OUT_STBY */
-    regVal  = (uint8_t)PCA9422_LDO23_OUT_VAL(config->ldo[1].stbyVout);
-    regAddr = PCA9422_LDO3_OUT_STBY;
-    result  = PCA9422_WriteRegs(handle, regAddr, &regVal, 1U);
-    if (result == false)
-    {
-        goto out;
-    }
-    /* LDO3_OUT_SLEEP */
-    regVal  = (uint8_t)PCA9422_LDO23_OUT_VAL(config->ldo[1].sleepVout);
-    regAddr = PCA9422_LDO3_OUT_SLEEP;
-    result  = PCA9422_WriteRegs(handle, regAddr, &regVal, 1U);
-    if (result == false)
-    {
-        goto out;
-    }
-    /* LDO23_CFG */
-    regVal  = ((uint8_t)(config->ldo[0].ldoMode) << 6U) | ((uint8_t)(config->ldo[1].ldoMode) << 7U);
-    regAddr = PCA9422_LDO23_CFG;
-    result  = PCA9422_WriteRegs(handle, regAddr, &regVal, 1U);
-    if (result == false)
-    {
-        goto out;
-    }
-    /* LDO4_CFG */
-    regVal  = ((uint8_t)config->ldo[2].activeDischg << 4U) | ((uint8_t)(config->ldo[2].enMode));
-    regAddr = PCA9422_LDO4_CFG;
-    result  = PCA9422_WriteRegs(handle, regAddr, &regVal, 1U);
-    if (result == false)
-    {
-        goto out;
-    }
-    /* LDO4_OUT */
-    regVal  = (uint8_t)PCA9422_LDO4_OUT_VAL(config->ldo[2].vout);
-    regAddr = PCA9422_LDO4_OUT;
-    result  = PCA9422_WriteRegs(handle, regAddr, &regVal, 1U);
-    if (result == false)
-    {
-        goto out;
-    }
-    /* LDO4_OUT_STBY */
-    regVal  = (uint8_t)PCA9422_LDO4_OUT_VAL(config->ldo[2].stbyVout);
-    regAddr = PCA9422_LDO4_OUT_STBY;
-    result  = PCA9422_WriteRegs(handle, regAddr, &regVal, 1U);
-    if (result == false)
-    {
-        goto out;
-    }
-    /* LDO4_OUT_SLEEP */
-    regVal  = (uint8_t)PCA9422_LDO4_OUT_VAL(config->ldo[2].sleepVout);
-    regAddr = PCA9422_LDO4_OUT_SLEEP;
-    result  = PCA9422_WriteRegs(handle, regAddr, &regVal, 1U);
-    if (result == false)
-    {
-        goto out;
-    }
-    /* LDO1_CFG1 */
-    regVal  = (uint8_t)(((uint32_t)config->ldo1.activeDischg << 7UL) | PCA9422_LDO1_OUT_VAL(config->ldo1.vout));
-    regAddr = PCA9422_LDO1_CFG1;
-    result  = PCA9422_WriteRegs(handle, regAddr, &regVal, 1U);
-    if (result == false)
-    {
-        goto out;
-    }
-    /* LDO1_CFG2 */
-    regVal  = (uint8_t)config->ldo1.enMode;
-    regAddr = PCA9422_LDO1_CFG2;
-    result  = PCA9422_WriteRegs(handle, regAddr, &regVal, 1U);
-    if (result == false)
-    {
-        goto out;
-    }
-    /* SW4_BB_CFG1 */
-    regVal = (uint8_t)config->buckBoost.fpwmEn | (uint8_t)config->buckBoost.ocCtrl |
-             (uint8_t)config->buckBoost.softStdn | (uint8_t)config->buckBoost.passiveDis;
-    regAddr = PCA9422_SW4_BB_CFG1;
-    result  = PCA9422_WriteRegs(handle, regAddr, &regVal, 1U);
-    if (result == false)
-    {
-        goto out;
-    }
-    /* SW4_BB_CFG2 */
-    regVal = (uint8_t)config->buckBoost.enInRun | (uint8_t)config->buckBoost.bbMode |
-             (uint8_t)config->buckBoost.enMode | (uint8_t)config->buckBoost.lpMode;
-    regAddr = PCA9422_SW4_BB_CFG2;
-    result  = PCA9422_WriteRegs(handle, regAddr, &regVal, 1U);
-    if (result == false)
-    {
-        goto out;
-    }
-    /* SW4_BB_CFG3 - BB_VOUT */
-    regVal  = (uint8_t)PCA9422_BB_OUT_VAL(config->buckBoost.vout);
-    regAddr = PCA9422_SW4_BB_CFG3;
-    result  = PCA9422_WriteRegs(handle, regAddr, &regVal, 1U);
-    if (result == false)
-    {
-        goto out;
-    }
-    /* SW4_BB_CFG4 - BB_VOUT_STBY */
-    regVal  = (uint8_t)PCA9422_BB_OUT_VAL(config->buckBoost.stdyVout);
-    regAddr = PCA9422_SW4_BB_CFG4;
-    result  = PCA9422_WriteRegs(handle, regAddr, &regVal, 1U);
-    if (result == false)
-    {
-        goto out;
-    }
-    /* SW4_BB_MAX_LIMIT */
-    regVal  = (uint8_t)PCA9422_BB_OUT_VAL(config->buckBoost.maxVout);
-    regAddr = PCA9422_SW4_BB_MAX_LIMIT;
-    result  = PCA9422_WriteRegs(handle, regAddr, &regVal, 1U);
-    if (result == false)
-    {
-        goto out;
-    }
-    /* SW4_BB_MIN_LIMIT */
-    regVal  = (uint8_t)PCA9422_BB_OUT_VAL(config->buckBoost.minVout);
-    regAddr = PCA9422_SW4_BB_MIN_LIMIT;
-    result  = PCA9422_WriteRegs(handle, regAddr, &regVal, 1U);
-    if (result == false)
-    {
-        goto out;
-    }
-    /* SW4_BB_VOUT_SLEEP */
-    regVal  = (uint8_t)PCA9422_BB_OUT_VAL(config->buckBoost.sleepVout);
-    regAddr = PCA9422_SW4_BB_VOUT_SLEEP;
-    result  = PCA9422_WriteRegs(handle, regAddr, &regVal, 1U);
-    if (result == false)
-    {
-        goto out;
-    }
-    /* REG_LOCK - LOCK KEY */
-    regVal  = (uint8_t)kPCA9422_RegLockLockKey;
-    regAddr = PCA9422_REG_LOCK;
-    result  = PCA9422_WriteRegs(handle, regAddr, &regVal, 1U);
-    if (result == false)
-    {
-        goto out;
-    }
-    return;
 
-out:
-    LOG_INFO("Error I2C data write[0x%2X]\r\n", regAddr);
-    return;
+    if (result == false)
+    {
+        LOG_INFO("Error I2C data write\r\n");
+    }
 }
 
 void PCA9422_GetDefaultPowerModeConfig(pca9422_modecfg_t *config)
@@ -2176,304 +2054,245 @@ void PCA9422_SetRegulatorLPMode(pca9422_handle_t *handle, pca9422_regulator_t re
     return;
 }
 
+/*!
+ * @brief Get the register address for BUCK1/2/3 output voltage setting.
+ *
+ * This function calculates and returns the register address for the specified BUCK regulator (SW1/SW2/SW3)
+ * and output voltage type (such as sleep, standby, DVS0~DVS7, max limit).
+ *
+ * @param idx    Index of the BUCK regulator (0: SW1, 1: SW2, 2: SW3).
+ * @param vout   Output voltage type (sleep, standby, DVSx, etc).
+ * @return Register address for the voltage setting, or 0xFFU if not supported.
+ */
+static uint8_t PCA9422_GetBUCK123RegAddr(uint8_t idx, pca9422_vout_t vout)
+{
+    uint8_t regAddr;
+    switch (vout)
+    {
+        case kPCA9422_RegSleepVout:
+            regAddr = PCA9422_BUCK1OUT_SLEEP + (idx * 12U);
+            break;
+        case kPCA9422_RegStandbyVout:
+            regAddr = PCA9422_BUCK1OUT_STBY + (idx * 12U);
+            break;
+        case kPCA9422_SWMaxVout:
+            regAddr = PCA9422_BUCK1OUT_MAX_LIMIT + (idx * 12U);
+            break;
+        case kPCA9422_SWDVS0Vout:
+            regAddr = PCA9422_BUCK1OUT_DVS0 + (idx * 12U);
+            break;
+        case kPCA9422_SWDVS1Vout:
+            regAddr = PCA9422_BUCK1OUT_DVS1 + (idx * 12U);
+            break;
+        case kPCA9422_SWDVS2Vout:
+            regAddr = PCA9422_BUCK1OUT_DVS2 + (idx * 12U);
+            break;
+        case kPCA9422_SWDVS3Vout:
+            regAddr = PCA9422_BUCK1OUT_DVS3 + (idx * 12U);
+            break;
+        case kPCA9422_SWDVS4Vout:
+            regAddr = PCA9422_BUCK1OUT_DVS4 + (idx * 12U);
+            break;
+        case kPCA9422_SWDVS5Vout:
+            regAddr = PCA9422_BUCK1OUT_DVS5 + (idx * 12U);
+            break;
+        case kPCA9422_SWDVS6Vout:
+            regAddr = PCA9422_BUCK1OUT_DVS6 + (idx * 12U);
+            break;
+        case kPCA9422_SWDVS7Vout:
+            regAddr = PCA9422_BUCK1OUT_DVS7 + (idx * 12U);
+            break;
+        default:
+            /* Not support */
+            regAddr = 0xFFU;
+            LOG_INFO("Error - SW%d doesn't support vout type(%d)\r\n", idx + 1U, vout);
+            break;
+    }
+    return regAddr;
+}
+
+static uint8_t PCA9422_GetSW4RegAddr(pca9422_vout_t vout)
+{
+    uint8_t regAddr;
+    /* Check VOUT type */
+    switch (vout)
+    {
+        case kPCA9422_RegVout:
+            regAddr = PCA9422_SW4_BB_CFG3;
+            break;
+        case kPCA9422_RegSleepVout:
+            regAddr = PCA9422_SW4_BB_VOUT_SLEEP;
+            break;
+        case kPCA9422_RegStandbyVout:
+            regAddr = PCA9422_SW4_BB_CFG4;
+            break;
+        case kPCA9422_SWMaxVout:
+            regAddr = PCA9422_SW4_BB_MAX_LIMIT;
+            break;
+        case kPCA9422_BBMinVout:
+            regAddr = PCA9422_SW4_BB_MIN_LIMIT;
+            break;
+        default:
+            /* Not support */
+            regAddr = 0xFFU;
+            LOG_INFO("Error - SW4 doesn't support vout type(%d)\r\n", vout);
+            break;
+    }
+    return regAddr;
+}
+
+static uint8_t PCA9422_GetLDO1RegAddr(pca9422_vout_t vout)
+{
+    uint8_t regAddr;
+    switch (vout)
+    {
+        case kPCA9422_RegVout:
+            regAddr = PCA9422_LDO1_CFG1;
+            break;
+        case kPCA9422_RegSleepVout:
+        case kPCA9422_RegStandbyVout:
+            /* Not support */
+            regAddr = 0xFFU;
+            LOG_INFO("LDO1 doesn't support sleep/standby vout type(%d)\r\n", vout);
+            break;
+        default:
+            /* Not support */
+            regAddr = 0xFFU;
+            LOG_INFO("Error - LDO1 doesn't support vout type(%d)\r\n", vout);
+            break;
+    }
+
+    return regAddr;
+}
+
+static uint8_t PCA9422_GetLDO23RegAddr(uint8_t idx, pca9422_vout_t vout)
+{
+    uint8_t regAddr;
+    switch (vout)
+    {
+        case kPCA9422_RegVout:
+            regAddr = PCA9422_LDO2_OUT + (idx * 3U);
+            break;
+        case kPCA9422_RegSleepVout:
+            regAddr = PCA9422_LDO2_OUT_SLEEP + idx;
+            break;
+        case kPCA9422_RegStandbyVout:
+            regAddr = PCA9422_LDO2_OUT_STBY + (idx * 3U);
+            break;
+        default:
+            /* Not support */
+            LOG_INFO("Error - LDO%d doesn't support vout type(%d)\r\n", idx + 2U, vout);
+            regAddr = 0xFFU;
+            break;
+    }
+    return regAddr;
+}
+
+static bool PCA9422_GetLDO4RegAddr(pca9422_vout_t vout)
+{
+    uint8_t regAddr;
+    switch (vout)
+    {
+        case kPCA9422_RegVout:
+            regAddr = PCA9422_LDO4_OUT;
+            break;
+        case kPCA9422_RegSleepVout:
+            regAddr = PCA9422_LDO4_OUT_SLEEP;
+            break;
+        case kPCA9422_RegStandbyVout:
+            regAddr = PCA9422_LDO4_OUT_STBY;
+            break;
+        default:
+            /* Not support */
+            LOG_INFO("Error - LDO4 doesn't support vout type(%d)\r\n", vout);
+            regAddr = 0xFFU;
+            break;
+    }
+    return regAddr;
+}
+
 void PCA9422_SetRegulatorVoltage(pca9422_handle_t *handle, pca9422_regulator_t reg, pca9422_vout_t vout, uint32_t volt)
 {
-    uint8_t regVal, regAddr, regMask;
+    uint8_t regVal = 0U, regAddr, regMask;
     bool result;
 
     /* REG_LOCK - UNLOCK KEY */
-    regVal  = (uint8_t)kPCA9422_RegLockUnlockKey;
-    regAddr = PCA9422_REG_LOCK;
-    result  = PCA9422_WriteRegs(handle, regAddr, &regVal, 1U);
-    if (result == false)
+    if (PCA9422_UnlockRegulatorOutputRegister(handle))
     {
-        goto out;
-    }
+        switch (reg)
+        {
+            case kPCA9422_RegulatorSwitch1:
+                regVal  = (uint8_t)PCA9422_BUCK1_OUT_VAL(volt);
+                regMask = PCA9422_BUCKXOUT_DVS0_BX_DVS0;
+                regAddr = PCA9422_GetBUCK123RegAddr(0U, vout);
+                break;
 
-    switch (reg)
-    {
-        case kPCA9422_RegulatorSwitch1:
-            regVal  = (uint8_t)PCA9422_BUCK1_OUT_VAL(volt);
-            regMask = PCA9422_BUCKXOUT_DVS0_BX_DVS0;
-            /* Check VOUT type */
-            switch (vout)
-            {
-                case kPCA9422_RegSleepVout:
-                    regAddr = PCA9422_BUCK1OUT_SLEEP;
-                    break;
-                case kPCA9422_RegStandbyVout:
-                    regAddr = PCA9422_BUCK1OUT_STBY;
-                    break;
-                case kPCA9422_SWMaxVout:
-                    regAddr = PCA9422_BUCK1OUT_MAX_LIMIT;
-                    break;
-                case kPCA9422_SWDVS0Vout:
-                    regAddr = PCA9422_BUCK1OUT_DVS0;
-                    break;
-                case kPCA9422_SWDVS1Vout:
-                    regAddr = PCA9422_BUCK1OUT_DVS1;
-                    break;
-                case kPCA9422_SWDVS2Vout:
-                    regAddr = PCA9422_BUCK1OUT_DVS2;
-                    break;
-                case kPCA9422_SWDVS3Vout:
-                    regAddr = PCA9422_BUCK1OUT_DVS3;
-                    break;
-                case kPCA9422_SWDVS4Vout:
-                    regAddr = PCA9422_BUCK1OUT_DVS4;
-                    break;
-                case kPCA9422_SWDVS5Vout:
-                    regAddr = PCA9422_BUCK1OUT_DVS5;
-                    break;
-                case kPCA9422_SWDVS6Vout:
-                    regAddr = PCA9422_BUCK1OUT_DVS6;
-                    break;
-                case kPCA9422_SWDVS7Vout:
-                    regAddr = PCA9422_BUCK1OUT_DVS7;
-                    break;
-                default:
-                    /* Not support */
-                    regAddr = 0xFFU;
-                    LOG_INFO("Error - SW1 doesn't support vout type(%d)\r\n", vout);
-                    break;
-            }
-            break;
+            case kPCA9422_RegulatorSwitch2:
+                regVal  = (uint8_t)PCA9422_BUCK2_OUT_VAL(volt);
+                regMask = PCA9422_BUCKXOUT_DVS0_BX_DVS0;
+                regAddr = PCA9422_GetBUCK123RegAddr(1U, vout);
+                break;
 
-        case kPCA9422_RegulatorSwitch2:
-            regVal  = (uint8_t)PCA9422_BUCK2_OUT_VAL(volt);
-            regMask = PCA9422_BUCKXOUT_DVS0_BX_DVS0;
-            /* Check VOUT type */
-            switch (vout)
-            {
-                case kPCA9422_RegSleepVout:
-                    regAddr = PCA9422_BUCK2OUT_SLEEP;
-                    break;
-                case kPCA9422_RegStandbyVout:
-                    regAddr = PCA9422_BUCK2OUT_STBY;
-                    break;
-                case kPCA9422_SWMaxVout:
-                    regAddr = PCA9422_BUCK2OUT_MAX_LIMIT;
-                    break;
-                case kPCA9422_SWDVS0Vout:
-                    regAddr = PCA9422_BUCK2OUT_DVS0;
-                    break;
-                case kPCA9422_SWDVS1Vout:
-                    regAddr = PCA9422_BUCK2OUT_DVS1;
-                    break;
-                case kPCA9422_SWDVS2Vout:
-                    regAddr = PCA9422_BUCK2OUT_DVS2;
-                    break;
-                case kPCA9422_SWDVS3Vout:
-                    regAddr = PCA9422_BUCK2OUT_DVS3;
-                    break;
-                case kPCA9422_SWDVS4Vout:
-                    regAddr = PCA9422_BUCK2OUT_DVS4;
-                    break;
-                case kPCA9422_SWDVS5Vout:
-                    regAddr = PCA9422_BUCK2OUT_DVS5;
-                    break;
-                case kPCA9422_SWDVS6Vout:
-                    regAddr = PCA9422_BUCK2OUT_DVS6;
-                    break;
-                case kPCA9422_SWDVS7Vout:
-                    regAddr = PCA9422_BUCK2OUT_DVS7;
-                    break;
-                default:
-                    /* Not support */
-                    regAddr = 0xFFU;
-                    LOG_INFO("Error - SW2 doesn't support vout type(%d)\r\n", vout);
-                    break;
-            }
-            break;
+            case kPCA9422_RegulatorSwitch3:
+                regVal  = (uint8_t)PCA9422_BUCK3_OUT_VAL(volt);
+                regMask = PCA9422_BUCKXOUT_DVS0_BX_DVS0;
+                regAddr = PCA9422_GetBUCK123RegAddr(2U, vout);
+                break;
+            case kPCA9422_RegulatorSwitch4:
+                regVal  = (uint8_t)PCA9422_BB_OUT_VAL(volt);
+                regMask = PCA9422_BUCKXOUT_DVS0_BX_DVS0;
+                regAddr = PCA9422_GetSW4RegAddr(vout);
+                break;
 
-        case kPCA9422_RegulatorSwitch3:
-            regVal  = (uint8_t)PCA9422_BUCK3_OUT_VAL(volt);
-            regMask = PCA9422_BUCKXOUT_DVS0_BX_DVS0;
-            /* Check VOUT type */
-            switch (vout)
-            {
-                case kPCA9422_RegSleepVout:
-                    regAddr = PCA9422_BUCK3OUT_SLEEP;
-                    break;
-                case kPCA9422_RegStandbyVout:
-                    regAddr = PCA9422_BUCK3OUT_STBY;
-                    break;
-                case kPCA9422_SWMaxVout:
-                    regAddr = PCA9422_BUCK3OUT_MAX_LIMIT;
-                    break;
-                case kPCA9422_SWDVS0Vout:
-                    regAddr = PCA9422_BUCK3OUT_DVS0;
-                    break;
-                case kPCA9422_SWDVS1Vout:
-                    regAddr = PCA9422_BUCK3OUT_DVS1;
-                    break;
-                case kPCA9422_SWDVS2Vout:
-                    regAddr = PCA9422_BUCK3OUT_DVS2;
-                    break;
-                case kPCA9422_SWDVS3Vout:
-                    regAddr = PCA9422_BUCK3OUT_DVS3;
-                    break;
-                case kPCA9422_SWDVS4Vout:
-                    regAddr = PCA9422_BUCK3OUT_DVS4;
-                    break;
-                case kPCA9422_SWDVS5Vout:
-                    regAddr = PCA9422_BUCK3OUT_DVS5;
-                    break;
-                case kPCA9422_SWDVS6Vout:
-                    regAddr = PCA9422_BUCK3OUT_DVS6;
-                    break;
-                case kPCA9422_SWDVS7Vout:
-                    regAddr = PCA9422_BUCK3OUT_DVS7;
-                    break;
-                default:
-                    /* Not support */
-                    regAddr = 0xFFU;
-                    LOG_INFO("Error - SW3 doesn't support vout type(%d)\r\n", vout);
-                    break;
-            }
-            break;
-        case kPCA9422_RegulatorSwitch4:
-            regVal  = (uint8_t)PCA9422_BB_OUT_VAL(volt);
-            regMask = (uint8_t)PCA9422_SW4_BB_CFG3_BB_VOUT;
-            /* Check VOUT type */
-            switch (vout)
-            {
-                case kPCA9422_RegVout:
-                    regAddr = PCA9422_SW4_BB_CFG3;
-                    break;
-                case kPCA9422_RegSleepVout:
-                    regAddr = PCA9422_SW4_BB_VOUT_SLEEP;
-                    break;
-                case kPCA9422_RegStandbyVout:
-                    regAddr = PCA9422_SW4_BB_CFG4;
-                    break;
-                case kPCA9422_SWMaxVout:
-                    regAddr = PCA9422_SW4_BB_MAX_LIMIT;
-                    break;
-                case kPCA9422_BBMinVout:
-                    regAddr = PCA9422_SW4_BB_MIN_LIMIT;
-                    break;
-                default:
-                    /* Not support */
-                    regAddr = 0xFFU;
-                    LOG_INFO("Error - SW4 doesn't support vout type(%d)\r\n", vout);
-                    break;
-            }
-            break;
+            case kPCA9422_RegulatorLdo1:
+                regVal  = (uint8_t)PCA9422_LDO1_OUT_VAL(volt);
+                regMask = PCA9422_LDO1_CFG1_L1_OUT;
+                regAddr = PCA9422_GetLDO1RegAddr(vout);
+                break;
 
-        case kPCA9422_RegulatorLdo1:
-            regVal  = (uint8_t)PCA9422_LDO1_OUT_VAL(volt);
-            regMask = PCA9422_LDO1_CFG1_L1_OUT;
-            switch (vout)
-            {
-                case kPCA9422_RegVout:
-                    regAddr = PCA9422_LDO1_CFG1;
-                    break;
-                case kPCA9422_RegSleepVout:
-                case kPCA9422_RegStandbyVout:
-                    /* Not support */
-                    regAddr = 0xFFU;
-                    LOG_INFO("LDO1 doesn't support sleep/standby vout type(%d)\r\n", vout);
-                    break;
-                default:
-                    /* Not support */
-                    regAddr = 0xFFU;
-                    LOG_INFO("Error - LDO1 doesn't support vout type(%d)\r\n", vout);
-                    break;
-            }
-            break;
+            case kPCA9422_RegulatorLdo2:
+                regVal  = (uint8_t)PCA9422_LDO23_OUT_VAL(volt);
+                regMask = PCA9422_LDO2_OUT_L2_OUT;
+                regAddr = PCA9422_GetLDO23RegAddr(0U, vout);
+                break;
 
-        case kPCA9422_RegulatorLdo2:
-            regVal  = (uint8_t)PCA9422_LDO23_OUT_VAL(volt);
-            regMask = PCA9422_LDO2_OUT_L2_OUT;
-            switch (vout)
-            {
-                case kPCA9422_RegVout:
-                    regAddr = PCA9422_LDO2_OUT;
-                    break;
-                case kPCA9422_RegSleepVout:
-                    regAddr = PCA9422_LDO2_OUT_SLEEP;
-                    break;
-                case kPCA9422_RegStandbyVout:
-                    regAddr = PCA9422_LDO2_OUT_STBY;
-                    break;
-                default:
-                    /* Not support */
-                    regAddr = 0xFFU;
-                    LOG_INFO("Error - LDO2 doesn't support vout type(%d)\r\n", vout);
-                    break;
-            }
-            break;
+            case kPCA9422_RegulatorLdo3:
+                regVal  = (uint8_t)PCA9422_LDO23_OUT_VAL(volt);
+                regMask = PCA9422_LDO3_OUT_L3_OUT;
+                regAddr = PCA9422_GetLDO23RegAddr(1U, vout);
+                break;
+            case kPCA9422_RegulatorLdo4:
+                regVal  = (uint8_t)PCA9422_LDO4_OUT_VAL(volt);
+                regMask = PCA9422_LDO4_OUT_L4_OUT;
+                regAddr = PCA9422_GetLDO4RegAddr(vout);
+                break;
+            default:
+                regAddr = 0xFFU;
+                LOG_INFO("Error Invalid regulator\r\n");
+                break;
+        }
 
-        case kPCA9422_RegulatorLdo3:
-            regVal  = (uint8_t)PCA9422_LDO23_OUT_VAL(volt);
-            regMask = PCA9422_LDO3_OUT_L3_OUT;
-            switch (vout)
+        if (regAddr != 0xFFU)
+        {
+            result = PCA9422_ModifyReg(handle, regAddr, regMask, regVal);
+            if (result == false)
             {
-                case kPCA9422_RegVout:
-                    regAddr = PCA9422_LDO3_OUT;
-                    break;
-                case kPCA9422_RegSleepVout:
-                    regAddr = PCA9422_LDO3_OUT_SLEEP;
-                    break;
-                case kPCA9422_RegStandbyVout:
-                    regAddr = PCA9422_LDO3_OUT_STBY;
-                    break;
-                default:
-                    /* Not support */
-                    regAddr = 0xFFU;
-                    LOG_INFO("Error - LDO3 doesn't support vout type(%d)\r\n", vout);
-                    break;
+                /* Log information. */
+                LOG_INFO("Error I2C data write[0x%2X]\r\n", regAddr);
             }
-            break;
-        case kPCA9422_RegulatorLdo4:
-            regVal  = (uint8_t)PCA9422_LDO4_OUT_VAL(volt);
-            regMask = PCA9422_LDO4_OUT_L4_OUT;
-            switch (vout)
-            {
-                case kPCA9422_RegVout:
-                    regAddr = PCA9422_LDO4_OUT;
-                    break;
-                case kPCA9422_RegSleepVout:
-                    regAddr = PCA9422_LDO4_OUT_SLEEP;
-                    break;
-                case kPCA9422_RegStandbyVout:
-                    regAddr = PCA9422_LDO4_OUT_STBY;
-                    break;
-                default:
-                    /* Not support */
-                    regAddr = 0xFFU;
-                    LOG_INFO("Error - LDO4 doesn't support vout type(%d)\r\n", vout);
-                    break;
-            }
-            break;
-        default:
-            regAddr = 0xFFU;
-            LOG_INFO("Error Invalid regulator\r\n");
-            break;
-    }
-
-    if (regAddr != 0xFFU)
-    {
-        result = PCA9422_ModifyReg(handle, regAddr, regMask, regVal);
+        }
+        result = PCA9422_LockRegulatorOutputRegister(handle);
         if (result == false)
         {
-            goto out;
-        }
-        /* REG_LOCK - UNLOCK KEY */
-        regVal  = (uint8_t)kPCA9422_RegLockUnlockKey;
-        regAddr = PCA9422_REG_LOCK;
-        result  = PCA9422_WriteRegs(handle, regAddr, &regVal, 1U);
-        if (result == false)
-        {
-            goto out;
+            /* Log information. */
+            LOG_INFO("Error - Lock regulator output register failed\r\n");
         }
     }
-    return;
-
-out:
-    LOG_INFO("Error I2C data write[0x%2X]\r\n", regAddr);
-    return;
+    else
+    {
+        /* Log information. */
+        LOG_INFO("Error - Unlock regulator output register failed\r\n");
+    }
 }
 
 void PCA9422_GetRegulatorVoltage(pca9422_handle_t *handle, pca9422_regulator_t reg, pca9422_vout_t vout, uint32_t *volt)
@@ -2482,10 +2301,7 @@ void PCA9422_GetRegulatorVoltage(pca9422_handle_t *handle, pca9422_regulator_t r
     bool result = true;
 
     /* REG_LOCK - UNLOCK KEY */
-    regVal  = (uint8_t)kPCA9422_RegLockUnlockKey;
-    regAddr = PCA9422_REG_LOCK;
-    result  = PCA9422_WriteRegs(handle, regAddr, &regVal, 1U);
-    if (result == false)
+    if (PCA9422_UnlockRegulatorOutputRegister(handle) == false)
     {
         goto out;
     }
@@ -2494,53 +2310,14 @@ void PCA9422_GetRegulatorVoltage(pca9422_handle_t *handle, pca9422_regulator_t r
     {
         case kPCA9422_RegulatorSwitch1:
             regMask = PCA9422_BUCKXOUT_DVS0_BX_DVS0;
-            /* Check VOUT type */
-            switch (vout)
-            {
-                case kPCA9422_RegSleepVout:
-                    regAddr = PCA9422_BUCK1OUT_SLEEP;
-                    break;
-                case kPCA9422_RegStandbyVout:
-                    regAddr = PCA9422_BUCK1OUT_STBY;
-                    break;
-                case kPCA9422_SWMaxVout:
-                    regAddr = PCA9422_BUCK1OUT_MAX_LIMIT;
-                    break;
-                case kPCA9422_SWDVS0Vout:
-                    regAddr = PCA9422_BUCK1OUT_DVS0;
-                    break;
-                case kPCA9422_SWDVS1Vout:
-                    regAddr = PCA9422_BUCK1OUT_DVS1;
-                    break;
-                case kPCA9422_SWDVS2Vout:
-                    regAddr = PCA9422_BUCK1OUT_DVS2;
-                    break;
-                case kPCA9422_SWDVS3Vout:
-                    regAddr = PCA9422_BUCK1OUT_DVS3;
-                    break;
-                case kPCA9422_SWDVS4Vout:
-                    regAddr = PCA9422_BUCK1OUT_DVS4;
-                    break;
-                case kPCA9422_SWDVS5Vout:
-                    regAddr = PCA9422_BUCK1OUT_DVS5;
-                    break;
-                case kPCA9422_SWDVS6Vout:
-                    regAddr = PCA9422_BUCK1OUT_DVS6;
-                    break;
-                case kPCA9422_SWDVS7Vout:
-                    regAddr = PCA9422_BUCK1OUT_DVS7;
-                    break;
-                default:
-                    /* Not support */
-                    regAddr = 0xFFU;
-                    LOG_INFO("Error - SW1 doesn't support vout type(%d)\r\n", vout);
-                    break;
-            }
+            regAddr = PCA9422_GetBUCK123RegAddr(0U, vout);
             if (regAddr != 0xFFU)
             {
                 result = PCA9422_ReadRegs(handle, regAddr, &regVal, 1U);
                 if (result == false)
+                {
                     goto out;
+                }
                 regVal = regVal & regMask;
                 *volt  = PCA9422_BUCK1_OUT_VOLT(regVal);
             }
@@ -2553,52 +2330,14 @@ void PCA9422_GetRegulatorVoltage(pca9422_handle_t *handle, pca9422_regulator_t r
         case kPCA9422_RegulatorSwitch2:
             regMask = PCA9422_BUCKXOUT_DVS0_BX_DVS0;
             /* Check VOUT type */
-            switch (vout)
-            {
-                case kPCA9422_RegSleepVout:
-                    regAddr = PCA9422_BUCK2OUT_SLEEP;
-                    break;
-                case kPCA9422_RegStandbyVout:
-                    regAddr = PCA9422_BUCK2OUT_STBY;
-                    break;
-                case kPCA9422_SWMaxVout:
-                    regAddr = PCA9422_BUCK2OUT_MAX_LIMIT;
-                    break;
-                case kPCA9422_SWDVS0Vout:
-                    regAddr = PCA9422_BUCK2OUT_DVS0;
-                    break;
-                case kPCA9422_SWDVS1Vout:
-                    regAddr = PCA9422_BUCK2OUT_DVS1;
-                    break;
-                case kPCA9422_SWDVS2Vout:
-                    regAddr = PCA9422_BUCK2OUT_DVS2;
-                    break;
-                case kPCA9422_SWDVS3Vout:
-                    regAddr = PCA9422_BUCK2OUT_DVS3;
-                    break;
-                case kPCA9422_SWDVS4Vout:
-                    regAddr = PCA9422_BUCK2OUT_DVS4;
-                    break;
-                case kPCA9422_SWDVS5Vout:
-                    regAddr = PCA9422_BUCK2OUT_DVS5;
-                    break;
-                case kPCA9422_SWDVS6Vout:
-                    regAddr = PCA9422_BUCK2OUT_DVS6;
-                    break;
-                case kPCA9422_SWDVS7Vout:
-                    regAddr = PCA9422_BUCK2OUT_DVS7;
-                    break;
-                default:
-                    /* Not support */
-                    regAddr = 0xFFU;
-                    LOG_INFO("Error - SW2 doesn't support vout type(%d)\r\n", vout);
-                    break;
-            }
+            regAddr = PCA9422_GetBUCK123RegAddr(1U, vout);
             if (regAddr != 0xFFU)
             {
                 result = PCA9422_ReadRegs(handle, regAddr, &regVal, 1U);
                 if (result == false)
+                {
                     goto out;
+                }
                 regVal = regVal & regMask;
                 *volt  = PCA9422_BUCK2_OUT_VOLT(regVal);
             }
@@ -2611,52 +2350,14 @@ void PCA9422_GetRegulatorVoltage(pca9422_handle_t *handle, pca9422_regulator_t r
         case kPCA9422_RegulatorSwitch3:
             regMask = PCA9422_BUCKXOUT_DVS0_BX_DVS0;
             /* Check VOUT type */
-            switch (vout)
-            {
-                case kPCA9422_RegSleepVout:
-                    regAddr = PCA9422_BUCK3OUT_SLEEP;
-                    break;
-                case kPCA9422_RegStandbyVout:
-                    regAddr = PCA9422_BUCK3OUT_STBY;
-                    break;
-                case kPCA9422_SWMaxVout:
-                    regAddr = PCA9422_BUCK3OUT_MAX_LIMIT;
-                    break;
-                case kPCA9422_SWDVS0Vout:
-                    regAddr = PCA9422_BUCK3OUT_DVS0;
-                    break;
-                case kPCA9422_SWDVS1Vout:
-                    regAddr = PCA9422_BUCK3OUT_DVS1;
-                    break;
-                case kPCA9422_SWDVS2Vout:
-                    regAddr = PCA9422_BUCK3OUT_DVS2;
-                    break;
-                case kPCA9422_SWDVS3Vout:
-                    regAddr = PCA9422_BUCK3OUT_DVS3;
-                    break;
-                case kPCA9422_SWDVS4Vout:
-                    regAddr = PCA9422_BUCK3OUT_DVS4;
-                    break;
-                case kPCA9422_SWDVS5Vout:
-                    regAddr = PCA9422_BUCK3OUT_DVS5;
-                    break;
-                case kPCA9422_SWDVS6Vout:
-                    regAddr = PCA9422_BUCK3OUT_DVS6;
-                    break;
-                case kPCA9422_SWDVS7Vout:
-                    regAddr = PCA9422_BUCK3OUT_DVS7;
-                    break;
-                default:
-                    /* Not support */
-                    regAddr = 0xFFU;
-                    LOG_INFO("Error - SW3 doesn't support vout type(%d)\r\n", vout);
-                    break;
-            }
+            regAddr = PCA9422_GetBUCK123RegAddr(2U, vout);
             if (regAddr != 0xFFU)
             {
                 result = PCA9422_ReadRegs(handle, regAddr, &regVal, 1U);
                 if (result == false)
+                {
                     goto out;
+                }
                 regVal = regVal & regMask;
                 *volt  = PCA9422_BUCK3_OUT_VOLT(regVal);
             }
@@ -2668,29 +2369,7 @@ void PCA9422_GetRegulatorVoltage(pca9422_handle_t *handle, pca9422_regulator_t r
         case kPCA9422_RegulatorSwitch4:
             regMask = (uint8_t)PCA9422_SW4_BB_CFG3_BB_VOUT;
             /* Check VOUT type */
-            switch (vout)
-            {
-                case kPCA9422_RegVout:
-                    regAddr = PCA9422_SW4_BB_CFG3;
-                    break;
-                case kPCA9422_RegSleepVout:
-                    regAddr = PCA9422_SW4_BB_VOUT_SLEEP;
-                    break;
-                case kPCA9422_RegStandbyVout:
-                    regAddr = PCA9422_SW4_BB_CFG4;
-                    break;
-                case kPCA9422_SWMaxVout:
-                    regAddr = PCA9422_SW4_BB_MAX_LIMIT;
-                    break;
-                case kPCA9422_BBMinVout:
-                    regAddr = PCA9422_SW4_BB_MIN_LIMIT;
-                    break;
-                default:
-                    /* Not support */
-                    regAddr = 0xFFU;
-                    LOG_INFO("Error - SW4 doesn't support vout type(%d)\r\n", vout);
-                    break;
-            }
+            regAddr = PCA9422_GetSW4RegAddr(vout);
             if (regAddr != 0xFFU)
             {
                 result = PCA9422_ReadRegs(handle, regAddr, &regVal, 1U);
@@ -2739,23 +2418,7 @@ void PCA9422_GetRegulatorVoltage(pca9422_handle_t *handle, pca9422_regulator_t r
 
         case kPCA9422_RegulatorLdo2:
             regMask = PCA9422_LDO2_OUT_L2_OUT;
-            switch (vout)
-            {
-                case kPCA9422_RegVout:
-                    regAddr = PCA9422_LDO2_OUT;
-                    break;
-                case kPCA9422_RegSleepVout:
-                    regAddr = PCA9422_LDO2_OUT_SLEEP;
-                    break;
-                case kPCA9422_RegStandbyVout:
-                    regAddr = PCA9422_LDO2_OUT_STBY;
-                    break;
-                default:
-                    /* Not support */
-                    regAddr = 0xFFU;
-                    LOG_INFO("Error - LDO2 doesn't support vout type(%d)\r\n", vout);
-                    break;
-            }
+            regAddr = PCA9422_GetLDO23RegAddr(0U, vout);
             if (regAddr != 0xFFU)
             {
                 result = PCA9422_ReadRegs(handle, regAddr, &regVal, 1U);
@@ -2774,23 +2437,7 @@ void PCA9422_GetRegulatorVoltage(pca9422_handle_t *handle, pca9422_regulator_t r
 
         case kPCA9422_RegulatorLdo3:
             regMask = PCA9422_LDO3_OUT_L3_OUT;
-            switch (vout)
-            {
-                case kPCA9422_RegVout:
-                    regAddr = PCA9422_LDO3_OUT;
-                    break;
-                case kPCA9422_RegSleepVout:
-                    regAddr = PCA9422_LDO3_OUT_SLEEP;
-                    break;
-                case kPCA9422_RegStandbyVout:
-                    regAddr = PCA9422_LDO3_OUT_STBY;
-                    break;
-                default:
-                    /* Not support */
-                    regAddr = 0xFFU;
-                    LOG_INFO("Error - LDO3 doesn't support vout type(%d)\r\n", vout);
-                    break;
-            }
+            regAddr = PCA9422_GetLDO23RegAddr(1U, vout);
             if (regAddr != 0xFFU)
             {
                 result = PCA9422_ReadRegs(handle, regAddr, &regVal, 1U);
@@ -2808,23 +2455,7 @@ void PCA9422_GetRegulatorVoltage(pca9422_handle_t *handle, pca9422_regulator_t r
             break;
         case kPCA9422_RegulatorLdo4:
             regMask = PCA9422_LDO4_OUT_L4_OUT;
-            switch (vout)
-            {
-                case kPCA9422_RegVout:
-                    regAddr = PCA9422_LDO4_OUT;
-                    break;
-                case kPCA9422_RegSleepVout:
-                    regAddr = PCA9422_LDO4_OUT_SLEEP;
-                    break;
-                case kPCA9422_RegStandbyVout:
-                    regAddr = PCA9422_LDO4_OUT_STBY;
-                    break;
-                default:
-                    /* Not support */
-                    regAddr = 0xFFU;
-                    LOG_INFO("Error - LDO4 doesn't support vout type(%d)\r\n", vout);
-                    break;
-            }
+            regAddr = PCA9422_GetLDO4RegAddr(vout);
             if (regAddr != 0xFFU)
             {
                 result = PCA9422_ReadRegs(handle, regAddr, &regVal, 1U);

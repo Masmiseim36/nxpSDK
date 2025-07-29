@@ -1,5 +1,5 @@
 /*
- * Copyright 2023-2024 NXP
+ * Copyright 2023-2025 NXP
  *
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -26,6 +26,21 @@
 /*${macro:end}*/
 
 /*${function:start}*/
+
+/* Before accessing shared resource, such as PMIC I2C, debug, PMC registers, the shared sense main clock should be enabled. */
+void BOARD_EnableSharedSenseMainClk(void)
+{
+    CLOCK_EnableClock(kCLOCK_Sleepcon0); /* make sure the sleepcon clock is enabled. */
+    POWER_DisablePD(kPDRUNCFG_PD_FRO2);
+    POWER_DisablePD(kPDRUNCFG_SHUT_SENSES_MAINCLK); /* Keep Sense shared parts clock on. */
+}
+
+void BOARD_DisableSharedSenseMainClk(void)
+{
+    POWER_EnablePD(kPDRUNCFG_PD_FRO2);
+    POWER_EnablePD(kPDRUNCFG_SHUT_SENSES_MAINCLK); /* Keep Sense shared parts clock on. */
+}
+
 void BOARD_ClockLPPreConfig(void)
 {
     POWER_DisablePD(kPDRUNCFG_PD_FRO1); /* Make sure FRO1 is enabled. */
@@ -67,9 +82,9 @@ void BOARD_ConfigPMICModes(pca9422_modecfg_t *cfg, pca9422_power_mode_t mode)
 
         /* PMIC_MODE[1:0] = 01b */
         case kPCA9422_SleepMode:
-            cfg[mode].sw1OutVolt  = 630000U;
-            cfg[mode].sw2OutVolt  = 1000000U;
-            cfg[mode].sw3OutVolt  = 630000U;
+            cfg[mode].sw1OutVolt  = 500000U;
+            cfg[mode].sw2OutVolt  = 600000U;
+            cfg[mode].sw3OutVolt  = 500000U;
             cfg[mode].sw4OutVolt  = 1800000U;
             cfg[mode].ldo1OutVolt = 1800000U;
             cfg[mode].ldo2OutVolt = 1800000U;
@@ -77,22 +92,12 @@ void BOARD_ConfigPMICModes(pca9422_modecfg_t *cfg, pca9422_power_mode_t mode)
             cfg[mode].ldo4OutVolt = 3300000U;
             break;
 
-            /* PMIC_MODE[1:0] = 10b */
-        case kPCA9422_StandbyMode:
-            cfg[mode].sw1OutVolt  = 630000U;
-            cfg[mode].sw2OutVolt  = 1000000U;
-            cfg[mode].sw3OutVolt  = 630000U;
-            cfg[mode].sw4OutVolt  = 1800000U;
-            cfg[mode].ldo1OutVolt = 1800000U;
-            cfg[mode].ldo2OutVolt = 1800000U;
-            cfg[mode].ldo3OutVolt = 1200000U;
-            cfg[mode].ldo4OutVolt = 3300000U;
-            break;
-            /* PMIC_MODE[1:0] = 11b */
-        case kPCA9422_DPStandbyMode:
-            cfg[mode].sw1OutVolt  = 630000U;
-            cfg[mode].sw2OutVolt  = 1000000U;
-            cfg[mode].sw3OutVolt  = 630000U;
+         /* Note: the StandbyMode and DPStandbyMode use same register for voltage configuration. */
+        case kPCA9422_StandbyMode: /* PMIC_MODE[1:0] = 10b */
+        case kPCA9422_DPStandbyMode: /* PMIC_MODE[1:0] = 11b */
+            cfg[mode].sw1OutVolt  = 500000U;
+            cfg[mode].sw2OutVolt  = 600000U;
+            cfg[mode].sw3OutVolt  = 500000U;
             cfg[mode].sw4OutVolt  = 1800000U;
             cfg[mode].ldo1OutVolt = 1800000U;
             cfg[mode].ldo2OutVolt = 1800000U;
@@ -113,15 +118,10 @@ void BOARD_ConfigPMICRegEnable(pca9422_handle_t *handle)
     /* Configure Regulator Enable */
     PCA9422_GetDefaultRegEnableConfig(&cfg);
 
-    /* All regulators enable in RUN state. */
-    cfg.sw2Enable = true;
-#if (DEMO_POWER_SUPPLY_OPTION == DEMO_POWER_SUPPLY_PMIC)
+    /* All regulators enable in RUN state. SW1 for VDD2, SW2 for VDDN, SW3 for VDD1 */
     cfg.sw1Enable = true;
+    cfg.sw2Enable = true;
     cfg.sw3Enable = true;
-#else /* VDD1, VDD2 are supplied by internal LDO. */
-    cfg.sw1Enable    = false;
-    cfg.sw3Enable    = false;
-#endif
     cfg.sw4Enable  = true;
     cfg.ldo1Enable = true;
     cfg.ldo2Enable = true;
@@ -144,7 +144,11 @@ void BOARD_ConfigPMICEnMode(pca9422_handle_t *handle)
     cfg.sw1OutEnMode = kPCA9422_EnmodeOnActive;
     cfg.sw3OutEnMode = kPCA9422_EnmodeOnActive;
 #endif
+#if (DEMO_POWER_SUPPLY_OPTION == DEMO_POWER_SUPPLY_PMC)
+    cfg.sw2OutEnMode  = kPCA9422_EnmodeOnActive; /* Use internal DCDC. */
+#else
     cfg.sw2OutEnMode  = kPCA9422_EnmodeOnActiveSleep;
+#endif
     cfg.sw4OutEnMode  = kPCA9422_EnmodeOnActiveSleepStandby;
     cfg.ldo1OutEnMode = kPCA9422_EnmodeOnAll;
     cfg.ldo2OutEnMode = kPCA9422_EnmodeOnActiveSleepStandby;
@@ -191,12 +195,9 @@ void BOARD_InitPowerConfig(void)
     pca9422_modecfg_t pca9422ModeCfg[12];
     uint32_t i;
     clock_osc32k_config_t config = {
-        .bypass = false, .monitorEnable = false, .lowPowerMode = false, .cap = kCLOCK_Osc32kCapPf0};
-    /* If OSC32K not enabled, enable OSC32K. */
-    if (CLOCK_GetOsc32KFreq() == 0U)
-    {
-        CLOCK_EnableOsc32K(&config);
-    }
+        .bypass = false, .monitorEnable = false, .lowPowerMode = true, .cap = kCLOCK_Osc32kCapPf16};
+    /* Configure OSC32K. */
+    CLOCK_EnableOsc32K(&config);
 
 #if defined(DEMO_POWER_USE_PLL) && (DEMO_POWER_USE_PLL == 0U)
     CLKCTL2->MAINPLL0PFDDOMAINEN  = 0;
@@ -218,6 +219,7 @@ void BOARD_InitPowerConfig(void)
     CLOCK_DisableClock(kCLOCK_Prince1);
     CLOCK_DisableClock(kCLOCK_Iopctl0);
     CLOCK_DisableClock(kCLOCK_Ocotp0);
+    CLOCK_DisableClock(kCLOCK_Cdog0); /* B0 default enabled. */
     CLOCK_DisableClock(kCLOCK_Glikey3);
     CLOCK_DisableClock(kCLOCK_Glikey4);
     CLOCK_DisableClock(kCLOCK_Glikey5);
@@ -255,9 +257,9 @@ void BOARD_InitPowerConfig(void)
     BOARD_SetPmicDVSPinStatus(0x1);
 
     /* Keep the used resources on. */
-    POWER_DisablePD(kPDRUNCFG_SHUT_SENSES_MAINCLK); /* Keep Sense shared parts clock on. */
-
+    BOARD_EnableSharedSenseMainClk();               /* Keep Sense shared parts clock on. */
     POWER_DisablePD(kPDRUNCFG_GATE_FRO0);           /* Just use PD bit to control FRO. */
+    POWER_DisablePD(kPDRUNCFG_GATE_FRO2);
     POWER_DisablePD(kPDRUNCFG_SHUT_RAM1_CLK);
     POWER_ApplyPD();
     POWER_DisableLPRequestMask(kPower_MaskAll); /* Let's compute control all the shared resources. */
@@ -281,6 +283,51 @@ static void BOARD_DisableCache(CACHE64_CTRL_Type *base)
         /* Now disable the cache. */
         base->CCR &= ~CACHE64_CTRL_CCR_ENCACHE_MASK;
     }
+}
+
+static inline void BOARD_ConfigSupplySetpoints(void)
+{
+    /* The LVD need correctly configured even using PMIC supply. */
+    status_t ret = kStatus_Success;
+    power_regulator_voltage_t dcdc = {
+                                        .DCDC.vsel1 = 1100000U,
+                                        .DCDC.vsel0 = 600000U,
+                                     };
+    power_lvd_voltage_t lvd = {
+      .VDDN.lvl1 = 900000U,
+      .VDDN.lvl0 = 500000U,
+    };
+
+    ret = POWER_ConfigRegulatorSetpoints(kRegulator_DCDC,  &dcdc, &lvd);
+    if (ret != kStatus_Success)
+    {
+        PRINTF("DCDC configuration failed %d\r\n", ret);
+    }
+
+    /* Set the four LDO setpoints per predefined CPU frequency, must in ascending order*/
+    uint32_t freqs[4] = {0};
+    freqs[0] = 0U; /* Used for DeepSleep mode */
+    freqs[1] = 32000000U;
+    freqs[2] = SystemCoreClock; /* Only setpoint 2 and 0 are used. */
+    freqs[3] = 325000000U;
+
+    uint32_t miniVolts[4] = {0U}; 
+    miniVolts[0] = 630000U; /* 0.63V for DeepSleep mode. */
+
+    ret = POWER_ConfigRegulatorSetpointsForFreq(kRegulator_Vdd2LDO, freqs, miniVolts, 0U, 4U);
+    if (kStatus_Success != ret)
+    {
+        PRINTF("LDO2 configuration failed %d\r\n", ret);
+    }
+
+    POWER_SelectRunSetpoint(kRegulator_Vdd2LDO, 2U);
+    POWER_SelectSleepSetpoint(kRegulator_Vdd2LDO, 0U);
+    POWER_SelectRunSetpoint(kRegulator_DCDC, 1U);
+    POWER_SelectSleepSetpoint(kRegulator_DCDC, 0U);
+    POWER_SelectRunSetpoint(kRegulator_Vdd1LDO, 1U);
+    POWER_SelectSleepSetpoint(kRegulator_Vdd1LDO, 0U);
+
+    POWER_ApplyPD();
 }
 
 void BOARD_PowerConfigAfterCPU1Booted(void)
@@ -325,13 +372,14 @@ void BOARD_PowerConfigAfterCPU1Booted(void)
     POWER_EnablePD(kPDRUNCFG_SHUT_MEDIA_MAINCLK);
     POWER_EnablePD(kPDRUNCFG_SHUT_RAM1_CLK);
 
-    POWER_EnablePD(kPDRUNCFG_LP_DCDC);
     POWER_EnablePD(kPDRUNCFG_APD_XSPI2);
     POWER_EnablePD(kPDRUNCFG_PPD_XSPI2);
     POWER_EnablePD(kPDRUNCFG_APD_DMA0_1_PKC_ETF);
     POWER_EnablePD(kPDRUNCFG_PPD_DMA0_1_PKC_ETF);
     POWER_EnablePD(kPDRUNCFG_APD_USB0_SRAM);
     POWER_EnablePD(kPDRUNCFG_PPD_USB0_SRAM);
+    POWER_EnablePD(kPDRUNCFG_APD_USB1_SRAM);
+    POWER_EnablePD(kPDRUNCFG_PPD_USB1_SRAM);
     POWER_EnablePD(kPDRUNCFG_APD_SDHC0_SRAM);
     POWER_EnablePD(kPDRUNCFG_PPD_SDHC0_SRAM);
     POWER_EnablePD(kPDRUNCFG_APD_SDHC1_SRAM);
@@ -347,7 +395,6 @@ void BOARD_PowerConfigAfterCPU1Booted(void)
 
     POWER_EnablePD(kPDRUNCFG_SHUT_SENSEP_MAINCLK); /* Let Sense control private parts clock. */
     POWER_EnablePD(kPDRUNCFG_PD_FRO1); /* Note: Sense boots using FRO1 and switchs to FRO2(Sense can't control FRO1). */
-    POWER_EnablePD(kPDRUNCFG_PD_FRO2);
 
     POWER_EnablePD(kPDRUNCFG_SHUT_RAM0_CLK);                        /* Sense access RAM arbiter0 clock. */
     POWER_EnablePD(kPDRUNCFG_SHUT_RAM1_CLK);                        /* Compute access RAM arbiter1 clock. */
@@ -358,44 +405,37 @@ void BOARD_PowerConfigAfterCPU1Booted(void)
     POWER_EnableSleepRBB(kPower_BodyBiasVddn | kPower_BodyBiasVdd2Sram | kPower_BodyBiasVdd2 | kPower_BodyBiasVdd1 |
                          kPower_BodyBiasVdd1Sram);
 
-    POWER_SelectRunSetpoint(kRegulator_Vdd1LDO, 0U);
-    POWER_SelectSleepSetpoint(kRegulator_Vdd1LDO, 0U);
+    BOARD_ConfigSupplySetpoints();
 
     POWER_ApplyPD();
 
-#if defined(DEMO_POWER_SUPPLY_OPTION) && (DEMO_POWER_SUPPLY_OPTION == DEMO_POWER_SUPPLY_MIXED)
-    /* VDDN use external PMIC supply, VDD1&VDD2 use internal LDO. */
-    POWER_SetVddnSupplySrc(kVddSrc_PMIC);
-    POWER_SetVdd1SupplySrc(kVddSrc_PMC);
-    POWER_SetVdd2SupplySrc(kVddSrc_PMC);
-
-    /* Set the four LDO setpoints per predefined CPU frequency, must in ascending order*/
-    uint32_t freqs[4] = {0};
-    freqs[0] = 0U; /* Used for DeepSleep mode */
-    freqs[1] = 32000000U;
-    freqs[2] = SystemCoreClock; /* Only setpoint 2 and 0 are used. */
-    freqs[3] = 325000000U;
-
-    uint32_t miniVolts[4] = {0U}; 
-    miniVolts[0] = 630000U; /* 0.63V for DeepSleep mode. */
-
-    POWER_ConfigRegulatorSetpointsForFreq(kRegulator_Vdd2LDO, freqs, miniVolts, 0U, 4U);
-    POWER_SelectRunSetpoint(kRegulator_Vdd2LDO, 2U);
-    POWER_SelectSleepSetpoint(kRegulator_Vdd2LDO, 0U);
-    POWER_ApplyPD();
-#elif defined(DEMO_POWER_SUPPLY_OPTION) && (DEMO_POWER_SUPPLY_OPTION == DEMO_POWER_SUPPLY_PMIC)
+#if defined(DEMO_POWER_SUPPLY_OPTION) && (DEMO_POWER_SUPPLY_OPTION == DEMO_POWER_SUPPLY_PMIC)
     /* PMIC is used. When using On-Chip regulator, need to be changed to kVddSrc_PMC. */
     POWER_SetVddnSupplySrc(kVddSrc_PMIC);
+    POWER_SetRunRegulatorMode(kRegulator_DCDC, kPower_DCDCMode_ULP);
+    POWER_SetSleepRegulatorMode(kRegulator_DCDC, kPower_DCDCMode_ULP);
     POWER_SetVdd1SupplySrc(kVddSrc_PMIC);
     POWER_SetVdd2SupplySrc(kVddSrc_PMIC);
     POWER_DisableRegulators(kPower_SCPC);
-
-    POWER_SelectRunSetpoint(kRegulator_Vdd2LDO, 0U);
-    POWER_SelectSleepSetpoint(kRegulator_Vdd2LDO, 0U);
     POWER_ApplyPD();
 
     BOARD_SetPmicVdd2Voltage(POWER_CalcVoltLevel(kRegulator_Vdd2LDO, SystemCoreClock, 0U));
     BOARD_SetPmicVdd1Voltage(POWER_CalcVoltLevel(kRegulator_Vdd1LDO, DEMO_SENSE_M33_CPU_CLOCK_FREQ, 0U)); /* CPU1 frequency 32MHZ. */
+#else
+#if (DEMO_POWER_SUPPLY_OPTION == DEMO_POWER_SUPPLY_PMC) /* VDDN use internal DCDC */ 
+    POWER_SetVddnSupplySrc(kVddSrc_PMC);
+    POWER_SetRunRegulatorMode(kRegulator_DCDC, kPower_DCDCMode_LP);
+    POWER_SetSleepRegulatorMode(kRegulator_DCDC, kPower_DCDCMode_ULP);
+
+    POWER_DisableSleepRegulators(kPower_DCDC_FDSR); /* DCDC power down in FDSR. */
+#else /* VDDN powered by external PMIC. */
+    POWER_SetVddnSupplySrc(kVddSrc_PMIC);
+    POWER_SetRunRegulatorMode(kRegulator_DCDC, kPower_DCDCMode_ULP);
+    POWER_SetSleepRegulatorMode(kRegulator_DCDC, kPower_DCDCMode_ULP);
+#endif
+    POWER_SetVdd1SupplySrc(kVddSrc_PMC);
+    POWER_SetVdd2SupplySrc(kVddSrc_PMC);
+    POWER_ApplyPD();
 #endif
 }
 
@@ -563,7 +603,7 @@ void BOARD_RunActiveTest(void)
 
     /* Note, the debug will not work anymore when the sense shared mainclk is disabled. */
     POWER_EnablePD(kPDRUNCFG_PD_LPOSC);
-    POWER_EnablePD(kPDRUNCFG_SHUT_SENSES_MAINCLK);
+    BOARD_DisableSharedSenseMainClk();
 
     CLOCK_DisableClock(kCLOCK_Sleepcon0);
 
@@ -578,7 +618,7 @@ void BOARD_RunActiveTest(void)
     CLOCK_EnableClock(kCLOCK_Sleepcon0);
 
     POWER_DisablePD(kPDRUNCFG_PD_LPOSC);
-    POWER_DisablePD(kPDRUNCFG_SHUT_SENSES_MAINCLK);
+    BOARD_EnableSharedSenseMainClk();
 
     BOARD_RestoreClocks();
     CLOCK_EnableClock(kCLOCK_Rtc);
@@ -627,12 +667,12 @@ void BOARD_EnterSleep(void)
     irqMask = DisableGlobalIRQ();
 
     POWER_EnablePD(kPDRUNCFG_PD_LPOSC);
-    POWER_EnablePD(kPDRUNCFG_SHUT_SENSES_MAINCLK);
+    BOARD_DisableSharedSenseMainClk();
 
     POWER_EnterSleep();
 
     POWER_DisablePD(kPDRUNCFG_PD_LPOSC);
-    POWER_DisablePD(kPDRUNCFG_SHUT_SENSES_MAINCLK);
+    BOARD_EnableSharedSenseMainClk();
     EnableGlobalIRQ(irqMask);
     __ISB();
 

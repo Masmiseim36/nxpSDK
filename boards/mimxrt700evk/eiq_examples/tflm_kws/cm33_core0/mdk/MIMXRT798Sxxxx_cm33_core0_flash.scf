@@ -146,9 +146,6 @@ LR_m_interrupts m_interrupts_start m_text_start+m_text_size-m_interrupts_start {
   RPMSG_SH_MEM_unused +0 EMPTY m_rpmsg_sh_mem_size-ImageLength(RPMSG_SH_MEM) { ; Empty region added for MPU configuration
   }
 #endif
-}
-
-LR_model m_model_start m_model_size {
   model_REGION m_model_start m_model_size {
     * (.modeldata)
   }

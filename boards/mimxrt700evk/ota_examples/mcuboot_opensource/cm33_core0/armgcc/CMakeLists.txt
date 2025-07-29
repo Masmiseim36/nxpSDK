@@ -14,9 +14,6 @@ if(CMAKE_SCRIPT_MODE_FILE)
 endif()
 
 
-set(CMAKE_STATIC_LIBRARY_PREFIX)
-set(CMAKE_STATIC_LIBRARY_SUFFIX)
-
 set(CMAKE_EXECUTABLE_LIBRARY_PREFIX)
 set(CMAKE_EXECUTABLE_LIBRARY_SUFFIX)
 
@@ -31,7 +28,7 @@ project(mcuboot_opensource_cm33_core0)
 
 enable_language(ASM)
 
-set(MCUX_BUILD_TYPES flash_debug flash_release)
+set(MCUX_BUILD_TYPES flash_release flash_debug)
 
 set(MCUX_SDK_PROJECT_NAME mcuboot_opensource_cm33_core0.elf)
 
@@ -64,11 +61,11 @@ target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
 )
 
 
-if(CMAKE_BUILD_TYPE STREQUAL flash_debug)
+if(CMAKE_BUILD_TYPE STREQUAL flash_release)
      target_compile_definitions(${MCUX_SDK_PROJECT_NAME}  PRIVATE $<$<COMPILE_LANGUAGE:C>:MBEDTLS_USER_CONFIG_FILE="mbedtls_user_config.h">)
 endif()
 
-if(CMAKE_BUILD_TYPE STREQUAL flash_release)
+if(CMAKE_BUILD_TYPE STREQUAL flash_debug)
      target_compile_definitions(${MCUX_SDK_PROJECT_NAME}  PRIVATE $<$<COMPILE_LANGUAGE:C>:MBEDTLS_USER_CONFIG_FILE="mbedtls_user_config.h">)
 endif()
 

@@ -246,12 +246,15 @@
           <state>XA_CAPTURER=1</state>
           <state>VIT_MODELS_ALL=1</state>
           <state>DSP_IMAGE_COPY_TO_RAM=1</state>
+          <state>__USE_SHMEM</state>
+          <state>DSP_NCACHE</state>
           <state>BOARD_DMIC_NUM=1</state>
           <state>BOARD_PCM_WIDTH=32</state>
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
-          <state>CPU_MIMXRT798SGFOA_cm33_core0</state>
+          <state>CPU_MIMXRT798SGFOB_cm33_core0</state>
+          <state>MIMXRT798S_cm33_core0_SERIES</state>
           <state>BOOT_HEADER_ENABLE=1</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
@@ -385,10 +388,9 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT798S</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT798S/periph</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT798S/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT798S/utilities</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT798S/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT798S/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT798S/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT798S/utilities/shell</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/i2c</state>
@@ -590,8 +592,10 @@
         <option>
           <name>ADefines</name>
           <state>DSP_IMAGE_COPY_TO_RAM=1</state>
+          <state>DSP_NCACHE</state>
           <state>MCUXPRESSO_SDK</state>
-          <state>CPU_MIMXRT798SGFOA_cm33_core0</state>
+          <state>CPU_MIMXRT798SGFOB_cm33_core0</state>
+          <state>MIMXRT798S_cm33_core0_SERIES</state>
         </option>
         <option>
           <name>AList</name>
@@ -692,10 +696,9 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT798S/periph</state>
           <state>$PROJ_DIR$/../../../../../../devices/periph</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT798S/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT798S/utilities</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT798S/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT798S/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT798S/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT798S/utilities/shell</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/i2c</state>
@@ -728,7 +731,7 @@
         </option>
         <option>
           <name>PreInclude</name>
-          <state/>
+          <state>$PROJ_DIR$/../mcux_config.h</state>
         </option>
       </data>
     </settings>
@@ -800,6 +803,7 @@
           <state>__dsp_literal_bin</state>
           <state>__dsp_text_bin</state>
           <state>__dsp_data_bin</state>
+          <state>__dsp_ncache_bin</state>
         </option>
         <option>
           <name>IlinkRawBinaryFile</name>
@@ -823,6 +827,7 @@
         </option>
         <option>
           <name>IlinkConfigDefines</name>
+          <state>__use_shmem__=1</state>
         </option>
         <option>
           <name>IlinkMapFile</name>
@@ -891,6 +896,7 @@
         <option>
           <name>IlinkExtraOptions</name>
           <state>--image_input=$PROJ_DIR$/../../../../../../boards/mimxrt700evk/dsp_examples/xaf_record/hifi4/binary/dsp_data_release.bin,__dsp_data_bin,__dsp_data_section,4</state>
+          <state>--image_input=$PROJ_DIR$/../../../../../../boards/mimxrt700evk/dsp_examples/xaf_record/hifi4/binary/dsp_ncache_release.bin,__dsp_ncache_bin,__dsp_ncache_section,4</state>
         </option>
         <option>
           <name>IlinkLowLevelInterfaceSlave</name>
@@ -1425,12 +1431,15 @@
           <state>XA_CAPTURER=1</state>
           <state>VIT_MODELS_ALL=1</state>
           <state>DSP_IMAGE_COPY_TO_RAM=1</state>
+          <state>__USE_SHMEM</state>
+          <state>DSP_NCACHE</state>
           <state>BOARD_DMIC_NUM=1</state>
           <state>BOARD_PCM_WIDTH=32</state>
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
-          <state>CPU_MIMXRT798SGFOA_cm33_core0</state>
+          <state>CPU_MIMXRT798SGFOB_cm33_core0</state>
+          <state>MIMXRT798S_cm33_core0_SERIES</state>
           <state>BOOT_HEADER_ENABLE=1</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
@@ -1564,10 +1573,9 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT798S</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT798S/periph</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT798S/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT798S/utilities</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT798S/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT798S/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT798S/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT798S/utilities/shell</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/i2c</state>
@@ -1769,8 +1777,10 @@
         <option>
           <name>ADefines</name>
           <state>DSP_IMAGE_COPY_TO_RAM=1</state>
+          <state>DSP_NCACHE</state>
           <state>MCUXPRESSO_SDK</state>
-          <state>CPU_MIMXRT798SGFOA_cm33_core0</state>
+          <state>CPU_MIMXRT798SGFOB_cm33_core0</state>
+          <state>MIMXRT798S_cm33_core0_SERIES</state>
         </option>
         <option>
           <name>AList</name>
@@ -1871,10 +1881,9 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT798S/periph</state>
           <state>$PROJ_DIR$/../../../../../../devices/periph</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT798S/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT798S/utilities</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT798S/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT798S/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT798S/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT798S/utilities/shell</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/i2c</state>
@@ -1907,7 +1916,7 @@
         </option>
         <option>
           <name>PreInclude</name>
-          <state/>
+          <state>$PROJ_DIR$/../mcux_config.h</state>
         </option>
       </data>
     </settings>
@@ -1979,6 +1988,7 @@
           <state>__dsp_literal_bin</state>
           <state>__dsp_text_bin</state>
           <state>__dsp_data_bin</state>
+          <state>__dsp_ncache_bin</state>
         </option>
         <option>
           <name>IlinkRawBinaryFile</name>
@@ -2002,6 +2012,7 @@
         </option>
         <option>
           <name>IlinkConfigDefines</name>
+          <state>__use_shmem__=1</state>
         </option>
         <option>
           <name>IlinkMapFile</name>
@@ -2070,6 +2081,7 @@
         <option>
           <name>IlinkExtraOptions</name>
           <state>--image_input=$PROJ_DIR$/../../../../../../boards/mimxrt700evk/dsp_examples/xaf_record/hifi4/binary/dsp_data_release.bin,__dsp_data_bin,__dsp_data_section,4</state>
+          <state>--image_input=$PROJ_DIR$/../../../../../../boards/mimxrt700evk/dsp_examples/xaf_record/hifi4/binary/dsp_ncache_release.bin,__dsp_ncache_bin,__dsp_ncache_section,4</state>
         </option>
         <option>
           <name>IlinkLowLevelInterfaceSlave</name>
@@ -2413,6 +2425,12 @@
       <name>$PROJ_DIR$/../mcux_config.h</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../mcux_config.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../mcux_config.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../rpmsg_config.h</name>
     </file>
   </group>
@@ -2426,6 +2444,9 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../hifi4/binary/dsp_data_release.bin</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../hifi4/binary/dsp_ncache_release.bin</name>
     </file>
   </group>
   <group>
@@ -2763,12 +2784,9 @@
   </group>
   <group>
     <name>startup</name>
-    <group>
-      <name>iar</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT798S/iar/startup_MIMXRT798S_cm33_core0.s</name>
-      </file>
-    </group>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT798S/startup_MIMXRT798S_cm33_core0.c</name>
+    </file>
   </group>
   <group>
     <name>drivers</name>
@@ -2783,6 +2801,12 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT798S/drivers/fsl_dsp.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT798S/drivers/fsl_ezhv.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT798S/drivers/fsl_ezhv.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT798S/drivers/fsl_iopctl.h</name>
@@ -2875,10 +2899,10 @@
   <group>
     <name>utilities</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT798S/utilities/fsl_assert.h</name>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT798S/utilities/debug_console/fsl_assert.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT798S/utilities/fsl_assert.c</name>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT798S/utilities/debug_console/fsl_assert.c</name>
     </file>
     <group>
       <name>str</name>
@@ -3229,6 +3253,9 @@
         <file>
           <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/timers.h</name>
         </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/freertos_tasks_c_additions.h</name>
+        </file>
       </group>
       <group>
         <name>portable</name>
@@ -3287,6 +3314,9 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../example_board_readme.md</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../examples_shared_readme.md</name>
     </file>
   </group>
 </project>

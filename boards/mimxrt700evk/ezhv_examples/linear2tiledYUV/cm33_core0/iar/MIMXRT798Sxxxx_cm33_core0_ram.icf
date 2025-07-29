@@ -38,11 +38,10 @@ if (isdefinedsymbol(__heap_size__)) {
 /* The SRAM region [0x014000-0x07FFFF] is reserved for Non-cached shared memory or application data. */
 /* The SRAM region [0x080000-0x77FFFF] is reserved for CPU0 application, last 5.5MB non-cacheable data for NPU/GPU/Display etc. */
 
-define symbol m_interrupts_start               = 0x00080000;
-define symbol m_interrupts_end                 = 0x000802FF;
-
-define symbol m_text_start                     = 0x00080300;
+define symbol m_text_start                     = 0x00080000;
 define symbol m_text_end                       = 0x0017FFFF;
+
+define symbol m_interrupts_start               = m_text_start;
 
 define symbol m_data_start                     = 0x20180000;
 define symbol m_data_end                       = 0x201FFFFF;
@@ -74,8 +73,7 @@ define exported symbol __RAM_VECTOR_TABLE_SIZE = 0x0;
 
 define memory mem with size = 4G;
 
-define region TEXT_region             = mem:[from m_interrupts_start to m_interrupts_end]
-                                      | mem:[from m_text_start to m_text_end];
+define region TEXT_region             = mem:[from m_text_start to m_text_end];
 define region DATA_region             = mem:[from m_data_start to m_data_end - __size_cstack__];
 define region CSTACK_region           = mem:[from m_data_end-__size_cstack__ + 1 to m_data_end];
 define region NCACHE_region           = mem:[from m_ncache_start to m_ncache_end];
@@ -85,12 +83,17 @@ if (isdefinedsymbol(__use_shmem__)) {
 
 define block CSTACK    with alignment = 8, size = __size_cstack__   { };
 define block HEAP      with alignment = 8, size = __size_heap__     { };
-define block RO        { readonly };
 define block RW        { readwrite };
 define block ZI        { zi };
 define block NCACHE_VAR    { section NonCacheable , section NonCacheable.init };
 define block CORE1_IMAGE_BLOCK  with alignment = 16, maximum size = m_core1_image_maximum_size  { section  __core1_image };
 define block EZHV_IMAGE_BLOCK  with alignment = 16, maximum size =m_ezhv_image_maximum_size   { section  __ezhv_image };
+
+define block RO with fixed order { readonly section .intvec, readonly, block CORE1_IMAGE_BLOCK , block EZHV_IMAGE_BLOCK};
+
+/* cache line size = 16 bytes */
+define block CACHE_LINE_DATA_ZI with alignment = 16, end alignment = 16 { section CacheLineData };
+define block CACHE_LINE_DATA_RW with alignment = 16, end alignment = 16 { section CacheLineData.init };
 
 initialize by copy { readwrite, section .textrw , section CodeQuickAccess, section DataQuickAccess };
 
@@ -101,13 +104,10 @@ if (isdefinedsymbol(__use_shmem__)) {
 
 keep{section .flash_conf };
 place at address mem: m_boot_flash_conf_start    { readonly section .flash_conf };
-place at address mem: m_interrupts_start    { readonly section .intvec };
-place in TEXT_region                        { block RO };
-place in TEXT_region                        { block CORE1_IMAGE_BLOCK };
-place in TEXT_region                        { block EZHV_IMAGE_BLOCK };
+place in TEXT_region                        { first block RO };
 place in DATA_region                        { section CodeQuickAccess, section DataQuickAccess };
-place in DATA_region                        { block RW };
-place in DATA_region                        { block ZI };
+place in DATA_region                        { block RW, block CACHE_LINE_DATA_RW };
+place in DATA_region                        { block ZI, block CACHE_LINE_DATA_ZI };
 if (isdefinedsymbol(__heap_noncacheable__)) {
   place in NCACHE_region                    { last block HEAP };
 }

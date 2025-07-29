@@ -68,7 +68,7 @@
               <ListEntry key="HIFI_ONLY_XAF" value=""/>
               <ListEntry key="MCUX_META_BUILD" value=""/>
               <ListEntry key="MCUXPRESSO_SDK" value=""/>
-              <ListEntry key="CPU_MIMXRT798SGFOA_hifi4" value=""/>
+              <ListEntry key="CPU_MIMXRT798SGFOB_hifi4" value=""/>
               <ListEntry key="SERIAL_PORT_TYPE_UART" value="1"/>
             </value>
           </KeyValueListMapEntry>
@@ -127,9 +127,11 @@
           <StringListMapEntry>
             <key>AssemblerAdditionalOptions</key>
             <value inheritance="append">
-              <ListEntry>-g&#13;
+              <ListEntry> -include ${xt_project_loc}/../mcux_config.h&#13;
+ -g&#13;
 --xtensa-core=rt700_hifi4_RI23_11_nlib&#13;
---xtensa-system=${XTENSA_SYSTEM}</ListEntry>
+--xtensa-system=${XTENSA_SYSTEM}&#13;
+</ListEntry>
             </value>
           </StringListMapEntry>
         </StringListMapOptions>
@@ -148,15 +150,20 @@
           <StringListMapEntry>
             <key>LinkerAdditionalOptions</key>
             <value inheritance="append">
-              <ListEntry>-Wl,--orphan-handling=place&#13;
--Wl,--sort-section=alignment&#13;
---xtensa-core=rt700_hifi4_RI23_11_nlib&#13;
---xtensa-system=${XTENSA_SYSTEM}&#13;
--Wl,--start-group&#13;
+              <ListEntry> -Wl,--orphan-handling=place&#13;
+&#13;
+ -Wl,--sort-section=alignment&#13;
+&#13;
+ --xtensa-core=rt700_hifi4_RI23_11_nlib&#13;
+&#13;
+ --xtensa-system=${XTENSA_SYSTEM}&#13;
+&#13;
+ -Wl,--start-group&#13;
 ${xt_project_loc}/../../../../../../middleware/audio_voice/components/vit/HIFI4/Lib/libVIT_HIFI4_v04_11_00.a&#13;
 ${xt_project_loc}/../../../../../../middleware/cadence/naturedsp/hifi4_rt700/libnaturedsp.a&#13;
 ${xt_project_loc}/../../../../../../middleware/cadence/nnlib/lib/rt700_hifi4/libxa_nnlib.a&#13;
 -Wl,--end-group&#13;
+&#13;
 </ListEntry>
             </value>
           </StringListMapEntry>

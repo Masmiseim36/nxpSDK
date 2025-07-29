@@ -23,6 +23,6 @@ void BOARD_Init(void)
 
     BOARD_InitBootPins();
     BOARD_InitDebugConsole();
-    PRINTF("Hello dsp from huan\r\n");
+    PRINTF("DSP Init Susccessfully\r\n");
 }
 /*${function:end}*/

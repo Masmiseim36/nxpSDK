@@ -6,8 +6,4 @@ message("${CMAKE_CURRENT_LIST_FILE} component is included.")
             add_config_file(${CMAKE_CURRENT_LIST_DIR}/RTE_Device.h ${CMAKE_CURRENT_LIST_DIR}/. device_RTE.MIMXRT798S)
     
   
-      target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
-          ${CMAKE_CURRENT_LIST_DIR}/.
-        )
 
-  

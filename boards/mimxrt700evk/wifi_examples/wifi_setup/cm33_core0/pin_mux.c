@@ -17,7 +17,7 @@
 !!GlobalInfo
 product: Pins v15.0
 processor: MIMXRT798S
-package_id: MIMXRT798SGFOA
+package_id: MIMXRT798SGFOB
 mcu_data: ksdk2_0
 processor_version: 0.0.0
 pin_labels:
@@ -108,12 +108,12 @@ void BOARD_InitPins(void)
 BOARD_InitPinsM2:
 - options: {callFromInitBoot: 'true', coreID: cm33_core0, enableClock: 'true'}
 - pin_list:
-  - {pin_num: L17, peripheral: USDHC1, signal: CLK, pin_signal: PIO7_17, selects_transmitter_current_drive: O_33, input_buffer: enable, pull_select: up, pull_enable: enable}
-  - {pin_num: L16, peripheral: USDHC1, signal: CMD, pin_signal: PIO7_18, selects_transmitter_current_drive: O_33, input_buffer: enable, pull_select: up, pull_enable: enable}
-  - {pin_num: M17, peripheral: USDHC1, signal: 'DATA, 0', pin_signal: PIO7_19, selects_transmitter_current_drive: O_33, input_buffer: enable, pull_select: up, pull_enable: enable}
-  - {pin_num: M18, peripheral: USDHC1, signal: 'DATA, 1', pin_signal: PIO7_20, selects_transmitter_current_drive: O_33, input_buffer: enable, pull_select: up, pull_enable: enable}
-  - {pin_num: K18, peripheral: USDHC1, signal: 'DATA, 2', pin_signal: PIO7_21, selects_transmitter_current_drive: O_33, input_buffer: enable, pull_select: up, pull_enable: enable}
-  - {pin_num: K17, peripheral: USDHC1, signal: 'DATA, 3', pin_signal: PIO7_22, selects_transmitter_current_drive: O_33, input_buffer: enable, pull_select: up, pull_enable: enable}
+  - {pin_num: L17, peripheral: USDHC1, signal: USDHC_CLK, pin_signal: PIO7_17, selects_transmitter_current_drive: O_33, input_buffer: enable, pull_select: up, pull_enable: enable}
+  - {pin_num: L16, peripheral: USDHC1, signal: USDHC_CMD, pin_signal: PIO7_18, selects_transmitter_current_drive: O_33, input_buffer: enable, pull_select: up, pull_enable: enable}
+  - {pin_num: M17, peripheral: USDHC1, signal: 'USDHC_DATA, 0', pin_signal: PIO7_19, selects_transmitter_current_drive: O_33, input_buffer: enable, pull_select: up, pull_enable: enable}
+  - {pin_num: M18, peripheral: USDHC1, signal: 'USDHC_DATA, 1', pin_signal: PIO7_20, selects_transmitter_current_drive: O_33, input_buffer: enable, pull_select: up, pull_enable: enable}
+  - {pin_num: K18, peripheral: USDHC1, signal: 'USDHC_DATA, 2', pin_signal: PIO7_21, selects_transmitter_current_drive: O_33, input_buffer: enable, pull_select: up, pull_enable: enable}
+  - {pin_num: K17, peripheral: USDHC1, signal: 'USDHC_DATA, 3', pin_signal: PIO7_22, selects_transmitter_current_drive: O_33, input_buffer: enable, pull_select: up, pull_enable: enable}
   - {pin_num: N14, peripheral: GPIO7, signal: 'GPIO, 23', pin_signal: PIO7_23, direction: OUTPUT, gpio_direction: out, gpio_init_state: 'false'}
   - {pin_num: H7, peripheral: GPIO3, signal: 'GPIO, 7', pin_signal: PIO3_7, direction: OUTPUT, gpio_direction: out, gpio_init_state: 'false'}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********

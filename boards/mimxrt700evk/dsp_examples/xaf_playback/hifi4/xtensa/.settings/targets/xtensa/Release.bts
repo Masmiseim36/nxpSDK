@@ -19,19 +19,15 @@
               <ListEntry>${xt_project_loc}/../../../../../../middleware/multicore/rpmsg-lite/lib/include</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../middleware/multicore/rpmsg-lite/lib/include/environment/xos</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../middleware/multicore/rpmsg-lite/lib/include/platform/imxrt700_hifi4</ListEntry>
-              <ListEntry>${xt_project_loc}/../../../../../../middleware/cadence/codecs/aacplus_dec/hifi4/include/aac_dec</ListEntry>
-              <ListEntry>${xt_project_loc}/../../../../../../middleware/cadence/codecs/asrc_src_pp/hifi4/include/src_pp</ListEntry>
-              <ListEntry>${xt_project_loc}/../../../../../../middleware/cadence/codecs/bsac/hifi4/include/aac_dec</ListEntry>
-              <ListEntry>${xt_project_loc}/../../../../../../middleware/cadence/codecs/dabplus/hifi4/include/aac_dec</ListEntry>
-              <ListEntry>${xt_project_loc}/../../../../../../middleware/cadence/codecs/drm/hifi4/include/drm_dec</ListEntry>
-              <ListEntry>${xt_project_loc}/../../../../../../middleware/cadence/codecs/g711/hifi4/include/g711_codec</ListEntry>
-              <ListEntry>${xt_project_loc}/../../../../../../middleware/cadence/codecs/g722/hifi4/include/g722_codec</ListEntry>
-              <ListEntry>${xt_project_loc}/../../../../../../middleware/cadence/codecs/mp3_dec/hifi4/include/mp3_dec</ListEntry>
-              <ListEntry>${xt_project_loc}/../../../../../../middleware/cadence/codecs/opus/hifi4/include/opus_codec</ListEntry>
-              <ListEntry>${xt_project_loc}/../../../../../../middleware/cadence/codecs/opus/hifi4/include/ogg_lib</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../middleware/cadence/codecs/include</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../middleware/cadence/codecs/sbc_dec/hifi4/include/sbc_dec</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../middleware/cadence/codecs/sbc_enc/hifi4/include/sbc_enc</ListEntry>
-              <ListEntry>${xt_project_loc}/../../../../../../middleware/cadence/codecs/vorbis_dec/hifi4/include/vorbis_dec</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../middleware/cadence/codecs/aacplus_dec/include/aac_dec</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../middleware/cadence/codecs/asrc_src_pp/include/src_pp</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../middleware/cadence/codecs/mp3_dec/include/mp3_dec</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../middleware/cadence/codecs/opus/include/opus_codec</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../middleware/cadence/codecs/opus/include/ogg_lib</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../middleware/cadence/codecs/vorbis_dec/include/vorbis_dec</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../middleware/cadence/multicore-xaf/xa_af_hostless/algo/hifi-dpf/include</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../middleware/cadence/multicore-xaf/xa_af_hostless/algo/hifi-dpf/include/audio</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../middleware/cadence/multicore-xaf/xa_af_hostless/algo/hifi-dpf/include/lib</ListEntry>
@@ -58,6 +54,7 @@
             <key>Defines</key>
             <value flag="-D">
               <ListEntry key="NDEBUG" value=""/>
+              <ListEntry key="CONFIGURE_MEM_ALLOC" value=""/>
               <ListEntry key="XA_MP3_DECODER" value="1"/>
               <ListEntry key="XA_AAC_DECODER" value="1"/>
               <ListEntry key="XA_VORBIS_DECODER" value="1"/>
@@ -78,7 +75,7 @@
               <ListEntry key="HIFI_ONLY_XAF" value=""/>
               <ListEntry key="MCUX_META_BUILD" value=""/>
               <ListEntry key="MCUXPRESSO_SDK" value=""/>
-              <ListEntry key="CPU_MIMXRT798SGFOA_hifi4" value=""/>
+              <ListEntry key="CPU_MIMXRT798SGFOB_hifi4" value=""/>
               <ListEntry key="SERIAL_PORT_TYPE_UART" value="1"/>
             </value>
           </KeyValueListMapEntry>
@@ -126,8 +123,10 @@
           <StringListMapEntry>
             <key>AssemblerAdditionalOptions</key>
             <value inheritance="append">
-              <ListEntry>--xtensa-core=rt700_hifi4_RI23_11_nlib&#13;
---xtensa-system=${XTENSA_SYSTEM}</ListEntry>
+              <ListEntry> -include ${xt_project_loc}/../mcux_config.h&#13;
+ --xtensa-core=rt700_hifi4_RI23_11_nlib&#13;
+--xtensa-system=${XTENSA_SYSTEM}&#13;
+</ListEntry>
             </value>
           </StringListMapEntry>
         </StringListMapOptions>
@@ -144,33 +143,30 @@
           <StringListMapEntry>
             <key>LinkerAdditionalOptions</key>
             <value inheritance="append">
-              <ListEntry>-Wl,--orphan-handling=place&#13;
---xtensa-core=rt700_hifi4_RI23_11_nlib&#13;
---xtensa-system=${XTENSA_SYSTEM}&#13;
--Wl,--start-group&#13;
-${xt_project_loc}/../../../../../../middleware/cadence/codecs/aacplus_dec/hifi4/lib/xa_aacplus_v2_loas_dec.a&#13;
-${xt_project_loc}/../../../../../../middleware/cadence/codecs/asrc_src_pp/hifi4/lib/xa_asrc_src_pp.a&#13;
-${xt_project_loc}/../../../../../../middleware/cadence/codecs/bsac/hifi4/lib/xa_bsac_dec.a&#13;
-${xt_project_loc}/../../../../../../middleware/cadence/codecs/dabplus/hifi4/lib/xa_dabplus_dec.a&#13;
-${xt_project_loc}/../../../../../../middleware/cadence/codecs/drm/hifi4/lib/xa_drm_dec.a&#13;
-${xt_project_loc}/../../../../../../middleware/cadence/codecs/g711/hifi4/lib/xa_g711_codec.a&#13;
-${xt_project_loc}/../../../../../../middleware/cadence/codecs/g722/hifi4/lib/xa_g722_codec.a&#13;
-${xt_project_loc}/../../../../../../middleware/cadence/codecs/mp3_dec/hifi4/lib/xa_mp3_dec.a&#13;
-${xt_project_loc}/../../../../../../middleware/cadence/codecs/opus/hifi4/lib/xa_opus_codec.a&#13;
-${xt_project_loc}/../../../../../../middleware/cadence/codecs/opus/hifi4/lib/xa_opus_dec.a&#13;
-${xt_project_loc}/../../../../../../middleware/cadence/codecs/opus/hifi4/lib/xa_opus_enc.a&#13;
-${xt_project_loc}/../../../../../../middleware/cadence/codecs/opus/hifi4/lib/silk/xa_opus_silk_codec.a&#13;
-${xt_project_loc}/../../../../../../middleware/cadence/codecs/opus/hifi4/lib/silk/xa_opus_silk_dec.a&#13;
-${xt_project_loc}/../../../../../../middleware/cadence/codecs/opus/hifi4/lib/silk/xa_opus_silk_enc.a&#13;
-${xt_project_loc}/../../../../../../middleware/cadence/codecs/opus/hifi4/lib/celt/xa_opus_celt_codec.a&#13;
-${xt_project_loc}/../../../../../../middleware/cadence/codecs/opus/hifi4/lib/celt/xa_opus_celt_dec.a&#13;
-${xt_project_loc}/../../../../../../middleware/cadence/codecs/opus/hifi4/lib/celt/xa_opus_celt_enc.a&#13;
+              <ListEntry> -Wl,--orphan-handling=place&#13;
+&#13;
+ --xtensa-core=rt700_hifi4_RI23_11_nlib&#13;
+&#13;
+ --xtensa-system=${XTENSA_SYSTEM}&#13;
+&#13;
+ -Wl,--start-group&#13;
 ${xt_project_loc}/../../../../../../middleware/cadence/codecs/sbc_dec/hifi4/lib/xa_sbc_dec.a&#13;
 ${xt_project_loc}/../../../../../../middleware/cadence/codecs/sbc_enc/hifi4/lib/xa_sbc_enc.a&#13;
-${xt_project_loc}/../../../../../../middleware/cadence/codecs/vorbis_dec/hifi4/lib/xa_vorbis_dec.a&#13;
-${xt_project_loc}/../../../../../../middleware/cadence/codecs/lc3/hifi4/lib/xa_lc3_codec.a&#13;
-${xt_project_loc}/../../../../../../middleware/cadence/codecs/mp3_enc/hifi4/lib/xa_mp3_enc.a&#13;
+${xt_project_loc}/../../../../../../middleware/cadence/codecs/aacplus_dec/lib/RT700_HiFi4/xa_aacplus_v2_loas_dec.a&#13;
+${xt_project_loc}/../../../../../../middleware/cadence/codecs/asrc_src_pp/lib/RT700_HiFi4/xa_asrc_src_pp.a&#13;
+${xt_project_loc}/../../../../../../middleware/cadence/codecs/mp3_dec/lib/RT700_HiFi4/xa_mp3_dec.a&#13;
+${xt_project_loc}/../../../../../../middleware/cadence/codecs/opus/lib/RT700_HiFi4/xa_opus_codec.a&#13;
+${xt_project_loc}/../../../../../../middleware/cadence/codecs/opus/lib/RT700_HiFi4/xa_opus_dec.a&#13;
+${xt_project_loc}/../../../../../../middleware/cadence/codecs/opus/lib/RT700_HiFi4/xa_opus_enc.a&#13;
+${xt_project_loc}/../../../../../../middleware/cadence/codecs/opus/lib/RT700_HiFi4/silk/xa_opus_silk_codec.a&#13;
+${xt_project_loc}/../../../../../../middleware/cadence/codecs/opus/lib/RT700_HiFi4/silk/xa_opus_silk_dec.a&#13;
+${xt_project_loc}/../../../../../../middleware/cadence/codecs/opus/lib/RT700_HiFi4/silk/xa_opus_silk_enc.a&#13;
+${xt_project_loc}/../../../../../../middleware/cadence/codecs/opus/lib/RT700_HiFi4/celt/xa_opus_celt_codec.a&#13;
+${xt_project_loc}/../../../../../../middleware/cadence/codecs/opus/lib/RT700_HiFi4/celt/xa_opus_celt_dec.a&#13;
+${xt_project_loc}/../../../../../../middleware/cadence/codecs/opus/lib/RT700_HiFi4/celt/xa_opus_celt_enc.a&#13;
+${xt_project_loc}/../../../../../../middleware/cadence/codecs/vorbis_dec/lib/RT700_HiFi4/xa_vorbis_dec.a&#13;
 -Wl,--end-group&#13;
+&#13;
 </ListEntry>
             </value>
           </StringListMapEntry>

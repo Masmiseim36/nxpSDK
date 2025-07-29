@@ -1,5 +1,5 @@
 /*
- * Copyright 2023-2024 NXP
+ * Copyright 2023-2025 NXP
  *
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -38,6 +38,32 @@ void BOARD_NotifyBoot(void)
 
     EnableDeepSleepIRQ(MU1_B_IRQn);
     MU_EnableInterrupts(APP_MU, kMU_Rx0FullInterruptEnable);
+}
+
+static inline void BOARD_ConfigSupplySetpoints(void)
+{
+    const power_regulator_voltage_t ldo = {
+        .LDO.vsel0 = 630000,  /* 630mv, 0.45 V + 12.5 mV * x */
+        .LDO.vsel1 = 700000,  /* 700mv*/
+        .LDO.vsel2 = 900000,  /* 900mv */
+        .LDO.vsel3 = 1000000, /* 1000mv */
+    };
+
+    const power_lvd_voltage_t lvd = {
+        .VDD12.lvl0 = 500000, /* 500mv */
+        .VDD12.lvl1 = 600000, /* 600mv */
+        .VDD12.lvl2 = 800000, /* 800mv */
+        .VDD12.lvl3 = 900000, /* 900mv */
+    };
+    POWER_ConfigRegulatorSetpoints(kRegulator_Vdd1LDO, &ldo, &lvd); 
+    
+    POWER_SelectRunSetpoint(kRegulator_Vdd1LDO, 1U);
+    POWER_SelectSleepSetpoint(kRegulator_Vdd1LDO, 0U);
+    POWER_SelectRunSetpoint(kRegulator_Vdd2LDO, 0U);
+    POWER_SelectSleepSetpoint(kRegulator_Vdd2LDO, 0U);
+    POWER_SelectRunSetpoint(kRegulator_DCDC, 1U);
+    POWER_SelectSleepSetpoint(kRegulator_DCDC, 0U);
+    POWER_ApplyPD();
 }
 
 void BOARD_InitPowerConfig(void)
@@ -94,25 +120,15 @@ void BOARD_InitPowerConfig(void)
 
     SYSCON3->SENSE_AUTOGATE_EN = 0x3U;
 
-    const power_regulator_voltage_t ldo = {
-        .LDO.vsel0 = 630000,  /* 630mv, 0.45 V + 12.5 mV * x */
-        .LDO.vsel1 = 700000,  /* 700mv*/
-        .LDO.vsel2 = 900000,  /* 900mv */
-        .LDO.vsel3 = 1000000, /* 1000mv */
-    };
+    BOARD_ConfigSupplySetpoints();
 
-    const power_lvd_voltage_t lvd = {
-        .VDD12.lvl0 = 500000, /* 500mv */
-        .VDD12.lvl1 = 600000, /* 600mv */
-        .VDD12.lvl2 = 800000, /* 800mv */
-        .VDD12.lvl3 = 900000, /* 900mv */
-    };
-    POWER_ConfigRegulatorSetpoints(kRegulator_Vdd1LDO, &ldo, &lvd);
-
-    POWER_SelectRunSetpoint(kRegulator_Vdd1LDO, 1U);
-    POWER_SelectSleepSetpoint(kRegulator_Vdd1LDO, 0U);
-    POWER_SelectRunSetpoint(kRegulator_Vdd2LDO, 0U);
-    POWER_SelectSleepSetpoint(kRegulator_Vdd2LDO, 0U);
+#if defined(DEMO_POWER_SUPPLY_OPTION) && (DEMO_POWER_SUPPLY_OPTION == DEMO_POWER_SUPPLY_PMC)
+    POWER_SetRunRegulatorMode(kRegulator_DCDC, kPower_DCDCMode_LP);
+    POWER_SetSleepRegulatorMode(kRegulator_DCDC, kPower_DCDCMode_ULP);
+#else
+    POWER_SetRunRegulatorMode(kRegulator_DCDC, kPower_DCDCMode_ULP);
+    POWER_SetSleepRegulatorMode(kRegulator_DCDC, kPower_DCDCMode_ULP);
+#endif
     POWER_ApplyPD();
 
     CLOCK_DisableClock(kCLOCK_Rtc);
@@ -145,16 +161,8 @@ void BOARD_EnterDeepSleep(const uint32_t exclude_from_pd[7])
 {
     POWER_EnableSleepRBB(kPower_BodyBiasVdd1 | kPower_BodyBiasVdd2 | kPower_BodyBiasVddn | kPower_BodyBiasVdd1Sram |
                          kPower_BodyBiasVdd2Sram);
-    /* Change to a lower frequency to safly decrease the VDD1 voltage when CPU1 enter low power mode but CPU0 active and
-     * requires sense shared main clock. */
-    CLOCK_AttachClk(kLPOSC_to_SENSE_BASE);
-    CLOCK_AttachClk(kSENSE_BASE_to_SENSE_MAIN);
-    CLOCK_EnableFroClkOutput(FRO2, kCLOCK_FroDiv6OutEn); /* Need Keep DIV6. */
 
     POWER_EnterDeepSleep(exclude_from_pd);
-    CLOCK_EnableFroClkOutput(FRO2, kCLOCK_FroDiv1OutEn | kCLOCK_FroDiv3OutEn | kCLOCK_FroDiv6OutEn);
-    CLOCK_AttachClk(kFRO2_DIV1_to_SENSE_MAIN);
-    CLOCK_AttachClk(kFRO2_DIV3_to_SENSE_BASE);
 }
 
 void BOARD_RequestDPD(const uint32_t exclude_from_pd[7])

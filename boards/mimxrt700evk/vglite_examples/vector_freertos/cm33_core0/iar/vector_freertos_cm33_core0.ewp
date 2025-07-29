@@ -250,7 +250,8 @@
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>BOARD_ENABLE_PSRAM_CACHE=0</state>
-          <state>CPU_MIMXRT798SGFOA_cm33_core0</state>
+          <state>CPU_MIMXRT798SGFOB_cm33_core0</state>
+          <state>MIMXRT798S_cm33_core0_SERIES</state>
           <state>BOOT_HEADER_ENABLE=1</state>
           <state>SDK_OS_FREE_RTOS</state>
         </option>
@@ -383,6 +384,7 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT798S/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT798S/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
+          <state>$PROJ_DIR$/../../../../../../components/pmic/pca9422</state>
           <state>$PROJ_DIR$/../../../../../../components/video</state>
           <state>$PROJ_DIR$/../../../../../../components/video/display/dc</state>
           <state>$PROJ_DIR$/../../../../../../components/video/display</state>
@@ -596,7 +598,8 @@
         <option>
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
-          <state>CPU_MIMXRT798SGFOA_cm33_core0</state>
+          <state>CPU_MIMXRT798SGFOB_cm33_core0</state>
+          <state>MIMXRT798S_cm33_core0_SERIES</state>
         </option>
         <option>
           <name>AList</name>
@@ -699,6 +702,7 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT798S/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT798S/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
+          <state>$PROJ_DIR$/../../../../../../components/pmic/pca9422</state>
           <state>$PROJ_DIR$/../../../../../../components/video</state>
           <state>$PROJ_DIR$/../../../../../../components/video/display/dc</state>
           <state>$PROJ_DIR$/../../../../../../components/video/display</state>
@@ -743,7 +747,7 @@
         </option>
         <option>
           <name>PreInclude</name>
-          <state/>
+          <state>$PROJ_DIR$/../mcux_config.h</state>
         </option>
       </data>
     </settings>
@@ -1441,7 +1445,8 @@
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>BOARD_ENABLE_PSRAM_CACHE=0</state>
-          <state>CPU_MIMXRT798SGFOA_cm33_core0</state>
+          <state>CPU_MIMXRT798SGFOB_cm33_core0</state>
+          <state>MIMXRT798S_cm33_core0_SERIES</state>
           <state>BOOT_HEADER_ENABLE=1</state>
           <state>SDK_OS_FREE_RTOS</state>
         </option>
@@ -1574,6 +1579,7 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT798S/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT798S/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
+          <state>$PROJ_DIR$/../../../../../../components/pmic/pca9422</state>
           <state>$PROJ_DIR$/../../../../../../components/video</state>
           <state>$PROJ_DIR$/../../../../../../components/video/display/dc</state>
           <state>$PROJ_DIR$/../../../../../../components/video/display</state>
@@ -1787,7 +1793,8 @@
         <option>
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
-          <state>CPU_MIMXRT798SGFOA_cm33_core0</state>
+          <state>CPU_MIMXRT798SGFOB_cm33_core0</state>
+          <state>MIMXRT798S_cm33_core0_SERIES</state>
         </option>
         <option>
           <name>AList</name>
@@ -1890,6 +1897,7 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT798S/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT798S/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
+          <state>$PROJ_DIR$/../../../../../../components/pmic/pca9422</state>
           <state>$PROJ_DIR$/../../../../../../components/video</state>
           <state>$PROJ_DIR$/../../../../../../components/video/display/dc</state>
           <state>$PROJ_DIR$/../../../../../../components/video/display</state>
@@ -1934,7 +1942,7 @@
         </option>
         <option>
           <name>PreInclude</name>
-          <state/>
+          <state>$PROJ_DIR$/../mcux_config.h</state>
         </option>
       </data>
     </settings>
@@ -2632,7 +2640,8 @@
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>BOARD_ENABLE_PSRAM_CACHE=0</state>
-          <state>CPU_MIMXRT798SGFOA_cm33_core0</state>
+          <state>CPU_MIMXRT798SGFOB_cm33_core0</state>
+          <state>MIMXRT798S_cm33_core0_SERIES</state>
           <state>BOOT_HEADER_ENABLE=1</state>
           <state>SDK_OS_FREE_RTOS</state>
         </option>
@@ -2765,6 +2774,7 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT798S/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT798S/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
+          <state>$PROJ_DIR$/../../../../../../components/pmic/pca9422</state>
           <state>$PROJ_DIR$/../../../../../../components/video</state>
           <state>$PROJ_DIR$/../../../../../../components/video/display/dc</state>
           <state>$PROJ_DIR$/../../../../../../components/video/display</state>
@@ -2978,7 +2988,8 @@
         <option>
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
-          <state>CPU_MIMXRT798SGFOA_cm33_core0</state>
+          <state>CPU_MIMXRT798SGFOB_cm33_core0</state>
+          <state>MIMXRT798S_cm33_core0_SERIES</state>
         </option>
         <option>
           <name>AList</name>
@@ -3081,6 +3092,7 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT798S/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT798S/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
+          <state>$PROJ_DIR$/../../../../../../components/pmic/pca9422</state>
           <state>$PROJ_DIR$/../../../../../../components/video</state>
           <state>$PROJ_DIR$/../../../../../../components/video/display/dc</state>
           <state>$PROJ_DIR$/../../../../../../components/video/display</state>
@@ -3125,7 +3137,7 @@
         </option>
         <option>
           <name>PreInclude</name>
-          <state/>
+          <state>$PROJ_DIR$/../mcux_config.h</state>
         </option>
       </data>
     </settings>
@@ -3823,7 +3835,8 @@
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>BOARD_ENABLE_PSRAM_CACHE=0</state>
-          <state>CPU_MIMXRT798SGFOA_cm33_core0</state>
+          <state>CPU_MIMXRT798SGFOB_cm33_core0</state>
+          <state>MIMXRT798S_cm33_core0_SERIES</state>
           <state>BOOT_HEADER_ENABLE=1</state>
           <state>SDK_OS_FREE_RTOS</state>
         </option>
@@ -3956,6 +3969,7 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT798S/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT798S/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
+          <state>$PROJ_DIR$/../../../../../../components/pmic/pca9422</state>
           <state>$PROJ_DIR$/../../../../../../components/video</state>
           <state>$PROJ_DIR$/../../../../../../components/video/display/dc</state>
           <state>$PROJ_DIR$/../../../../../../components/video/display</state>
@@ -4169,7 +4183,8 @@
         <option>
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
-          <state>CPU_MIMXRT798SGFOA_cm33_core0</state>
+          <state>CPU_MIMXRT798SGFOB_cm33_core0</state>
+          <state>MIMXRT798S_cm33_core0_SERIES</state>
         </option>
         <option>
           <name>AList</name>
@@ -4272,6 +4287,7 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT798S/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT798S/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
+          <state>$PROJ_DIR$/../../../../../../components/pmic/pca9422</state>
           <state>$PROJ_DIR$/../../../../../../components/video</state>
           <state>$PROJ_DIR$/../../../../../../components/video/display/dc</state>
           <state>$PROJ_DIR$/../../../../../../components/video/display</state>
@@ -4316,7 +4332,7 @@
         </option>
         <option>
           <name>PreInclude</name>
-          <state/>
+          <state>$PROJ_DIR$/../mcux_config.h</state>
         </option>
       </data>
     </settings>
@@ -4786,6 +4802,12 @@
       <name>$PROJ_DIR$/../FreeRTOSConfigBoard.h</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../pmic_support.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../pmic_support.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../display_support.h</name>
     </file>
     <file>
@@ -4799,6 +4821,12 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../FreeRTOSConfig_Gen.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../mcux_config.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../mcux_config.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../mcux_config.h</name>
@@ -5133,12 +5161,9 @@
   </group>
   <group>
     <name>startup</name>
-    <group>
-      <name>iar</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT798S/iar/startup_MIMXRT798S_cm33_core0.s</name>
-      </file>
-    </group>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT798S/startup_MIMXRT798S_cm33_core0.c</name>
+    </file>
   </group>
   <group>
     <name>drivers</name>
@@ -5309,6 +5334,18 @@
       <file>
         <name>$PROJ_DIR$/../../../../../../components/uart/fsl_adapter_lpuart.c</name>
       </file>
+    </group>
+    <group>
+      <name>pmic</name>
+      <group>
+        <name>pca9422</name>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../components/pmic/pca9422/fsl_pca9422.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../components/pmic/pca9422/fsl_pca9422.h</name>
+        </file>
+      </group>
     </group>
   </group>
   <group>
@@ -5614,6 +5651,9 @@
         <file>
           <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/timers.h</name>
         </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/freertos_tasks_c_additions.h</name>
+        </file>
       </group>
       <group>
         <name>portable</name>
@@ -5672,6 +5712,9 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../example_board_readme.md</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../examples_shared_readme.md</name>
     </file>
   </group>
 </project>

@@ -1,5 +1,5 @@
 /*
- * Copyright 2023-2024 NXP
+ * Copyright 2023-2025 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -255,6 +255,7 @@ int mpp_event_listener(mpp_t mpp, mpp_evt_t evt, void *evt_data, void *user_data
          if ( (app_priv->mp != NULL) && (app_priv->elem != 0))
          {
         	 mpp_element_params_t params;
+             memset(&params, 0, sizeof(params));
         	 /* detected_count contains at least the detection zone box */
         	 params.labels.detected_count = app_priv->detected_count + 1;
         	 params.labels.max_count = MAX_LABEL_RECTS;

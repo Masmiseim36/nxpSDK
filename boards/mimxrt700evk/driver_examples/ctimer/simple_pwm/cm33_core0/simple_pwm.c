@@ -1,7 +1,6 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2020 NXP
- * All rights reserved.
+ * Copyright 2016-2020, 2025 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -69,7 +68,7 @@ int main(void)
     CTIMER_Init(CTIMER, &config);
 
     /* Get the PWM period match value and pulse width match value of 20Khz PWM signal with 20% dutycycle */
-    CTIMER_GetPwmPeriodValue(20000, 20, timerClock);
+    CTIMER_GetPwmPeriodValue(20000, (uint8_t)DUTY_CYCLE, timerClock);
     CTIMER_SetupPwmPeriod(CTIMER, CTIMER_MAT_PWM_PERIOD_CHANNEL, CTIMER_MAT_OUT, g_pwmPeriod, g_pulsePeriod, false);
     CTIMER_StartTimer(CTIMER);
 

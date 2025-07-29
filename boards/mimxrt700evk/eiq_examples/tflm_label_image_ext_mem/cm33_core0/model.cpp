@@ -39,6 +39,7 @@ static uint8_t s_tensorArena[kTensorArenaSize] __ALIGNED(16) __attribute__((sect
 static uint8_t s_tensorArena[kTensorArenaSize] __ALIGNED(16);
 #endif
 
+static uint32_t s_tensorArenaSizeUsed = 0;
 status_t MODEL_Init(void)
 {
     // Map the model into a usable data structure. This doesn't involve any
@@ -69,6 +70,23 @@ status_t MODEL_Init(void)
         PRINTF("AllocateTensors() failed!\r\n");
         return kStatus_Fail;
     }
+
+    s_tensorArenaSizeUsed = s_interpreter->arena_used_bytes();
+#if (defined(CPU_MIMXRT798SGAWAR_hifi4) || defined(CPU_MIMXRT798SGFOA_hifi4))
+    PRINTF("Hifi4 DSP Frequency: %d MHz\r\n", CLOCK_GetFreq(kCLOCK_Hifi4CpuClk)/1000000);
+#elif  (defined(CPU_MIMXRT798SGAWAR_hifi1) || defined(CPU_MIMXRT798SGFOA_hifi1))
+    PRINTF("Hifi1 DSP Frequency: %d MHz\r\n", CLOCK_GetFreq(kCLOCK_Hifi1CpuClk)/1000000);
+#elif (defined(CPU_MIMXRT685SFAWBR_dsp) || defined(CPU_MIMXRT685SFFOB_dsp) || defined(CPU_MIMXRT685SFVKB_dsp) || defined(CPU_MIMXRT685SVFVKB_dsp) ||(defined(CPU_MIMXRT595SFAWC_dsp) || defined(CPU_MIMXRT595SFFOC_dsp)))
+
+    PRINTF("DSP Frequency: %d MHz\r\n", CLOCK_GetFreq(kCLOCK_DspCpuClk)/1000000);
+#else 
+    PRINTF("Core/NPU Frequency: %d MHz\r\n", CLOCK_GetFreq(kCLOCK_CoreSysClk)/1000000);
+#endif
+    PRINTF("TensorArena Addr: 0x%x - 0x%x\r\n", s_tensorArena, s_tensorArena + kTensorArenaSize);
+    PRINTF("TensorArena Size: Total 0x%x (%d B); Used 0x%x (%d B)\r\n" , kTensorArenaSize, kTensorArenaSize, s_tensorArenaSizeUsed, s_tensorArenaSizeUsed);
+    PRINTF("Model Addr: 0x%x - 0x%x\r\n" , model_data, model_data + sizeof(model_data));
+    PRINTF("Model Size: 0x%x (%d B)\r\n" , sizeof(model_data), sizeof(model_data));
+    PRINTF("Total Size Used: %d B (Model (%d B) + TensorArena (%d B))\r\n" , (sizeof(model_data) + s_tensorArenaSizeUsed), sizeof(model_data), s_tensorArenaSizeUsed);
 
     return kStatus_Success;
 }

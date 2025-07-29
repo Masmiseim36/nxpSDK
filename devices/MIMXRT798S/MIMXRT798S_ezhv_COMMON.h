@@ -1,17 +1,17 @@
 /*
 ** ###################################################################
-**     Processors:          MIMXRT798SGAWAR_ezhv
-**                          MIMXRT798SGFOA_ezhv
+**     Processors:          MIMXRT798SGAWBR_ezhv
+**                          MIMXRT798SGFOB_ezhv
 **
 **     Reference manual:    iMXRT700RM Rev.2 DraftA, 05/2024
-**     Version:             rev. 2.0, 2024-05-28
-**     Build:               b241121
+**     Version:             rev. 4.0, 2025-06-06
+**     Build:               b250606
 **
 **     Abstract:
 **         Peripheral Access Layer for MIMXRT798S_ezhv
 **
 **     Copyright 1997-2016 Freescale Semiconductor, Inc.
-**     Copyright 2016-2024 NXP
+**     Copyright 2016-2025 NXP
 **     SPDX-License-Identifier: BSD-3-Clause
 **
 **     http:                 www.nxp.com
@@ -22,14 +22,19 @@
 **         Initial version.
 **     - rev. 2.0 (2024-05-28)
 **         Rev2 DraftA.
+**     - rev. 3.0 (2024-10-29)
+**         Change the device header file from single flat file to multiple files based on peripherals,
+**         each peripheral with dedicated header file located in periphN folder.
+**     - rev. 4.0 (2025-06-06)
+**         B0 initial version
 **
 ** ###################################################################
 */
 
 /*!
  * @file MIMXRT798S_ezhv_COMMON.h
- * @version 2.0
- * @date 2024-05-28
+ * @version 4.0
+ * @date 2025-06-06
  * @brief Peripheral Access Layer for MIMXRT798S_ezhv
  *
  * Peripheral Access Layer for MIMXRT798S_ezhv
@@ -40,7 +45,7 @@
 
 /** Memory map major version (memory maps with equal major version number are
  * compatible) */
-#define MCU_MEM_MAP_VERSION 0x0200U
+#define MCU_MEM_MAP_VERSION 0x0400U
 /** Memory map minor version */
 #define MCU_MEM_MAP_VERSION_MINOR 0x0000U
 
@@ -98,7 +103,9 @@ typedef enum IRQn {
  */ /* end of group Cortex_Core_Configuration */
 
 
+#ifndef MIMXRT798S_ezhv_SERIES
 #define MIMXRT798S_ezhv_SERIES
+#endif
 /* CPU specific feature definitions */
 #include "MIMXRT798S_ezhv_features.h"
 

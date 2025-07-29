@@ -295,11 +295,12 @@ int main(void)
         DEMO_LOG("Board wake up from deep or full deep power down mode.\r\n");
         POWER_ClearEventFlags(PMC_FLAGS_DEEPPDF_MASK);
     }
-    POWER_ClearEventFlags(0xFFFFFFFF);
 
     while (1)
     {
         freq = CLOCK_GetCoreSysClkFreq();
+
+        POWER_ClearEventFlags(0xFFFFFFFF);
 
         DEMO_LOG("\r\n####################  Power Mode Demo - %s ####################\r\n", APP_CORE_NAME);
         DEMO_LOG("    Build Time: %s--%s \r\n", __DATE__, __TIME__);

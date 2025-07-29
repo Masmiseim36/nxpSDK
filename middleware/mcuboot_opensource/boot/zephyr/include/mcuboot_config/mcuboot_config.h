@@ -34,6 +34,10 @@
 #     error "One crypto library implementation allowed at a time."
 #endif
 
+#if defined(CONFIG_BOOT_KEY_IMPORT_BYPASS_ASN)
+#define MCUBOOT_KEY_IMPORT_BYPASS_ASN
+#endif
+
 #ifdef CONFIG_BOOT_USE_MBEDTLS
 #define MCUBOOT_USE_MBED_TLS
 #elif defined(CONFIG_BOOT_USE_TINYCRYPT)
@@ -43,6 +47,16 @@
 #ifdef CONFIG_BOOT_USE_NRF_CC310_BL
 #define MCUBOOT_USE_NRF_CC310_BL
 #endif
+#elif defined(CONFIG_BOOT_USE_PSA_CRYPTO)
+#define MCUBOOT_USE_PSA_CRYPTO
+#endif
+
+#ifdef CONFIG_BOOT_IMG_HASH_ALG_SHA512
+#define MCUBOOT_SHA512
+#endif
+
+#ifdef CONFIG_BOOT_IMG_HASH_ALG_SHA256
+#define MCUBOOT_SHA256
 #endif
 
 /* Zephyr, regardless of C library used, provides snprintf */
@@ -72,6 +86,10 @@
 
 #ifdef CONFIG_BOOT_SWAP_USING_MOVE
 #define MCUBOOT_SWAP_USING_MOVE 1
+#endif
+
+#ifdef CONFIG_BOOT_SWAP_USING_OFFSET
+#define MCUBOOT_SWAP_USING_OFFSET 1
 #endif
 
 #ifdef CONFIG_BOOT_DIRECT_XIP
@@ -108,6 +126,14 @@
 
 #endif /* CONFIG_SINGLE_APPLICATION_SLOT */
 
+#ifdef CONFIG_SINGLE_APPLICATION_SLOT_RAM_LOAD
+#define MCUBOOT_RAM_LOAD    1
+#define MCUBOOT_IMAGE_NUMBER    1
+#define MCUBOOT_SINGLE_APPLICATION_SLOT_RAM_LOAD    1
+#define IMAGE_EXECUTABLE_RAM_START CONFIG_BOOT_IMAGE_EXECUTABLE_RAM_START
+#define IMAGE_EXECUTABLE_RAM_SIZE CONFIG_BOOT_IMAGE_EXECUTABLE_RAM_SIZE
+#endif
+
 #ifdef CONFIG_LOG
 #define MCUBOOT_HAVE_LOGGING 1
 #endif
@@ -125,6 +151,21 @@
 #ifdef CONFIG_BOOT_ENCRYPT_X25519
 #define MCUBOOT_ENC_IMAGES
 #define MCUBOOT_ENCRYPT_X25519
+#endif
+
+#ifdef CONFIG_BOOT_DECOMPRESSION
+#define MCUBOOT_DECOMPRESS_IMAGES
+#endif
+
+/* Invoke hashing functions directly on storage device. This requires the device
+ * be able to map storage to address space or RAM.
+ */
+#ifdef CONFIG_BOOT_IMG_HASH_DIRECTLY_ON_STORAGE
+#define MCUBOOT_HASH_STORAGE_DIRECTLY
+#endif
+
+#ifdef CONFIG_BOOT_SIGNATURE_TYPE_PURE
+#define MCUBOOT_SIGN_PURE
 #endif
 
 #ifdef CONFIG_BOOT_BOOTSTRAP
@@ -205,6 +246,14 @@
 #define MCUBOOT_IMAGE_ACCESS_HOOKS
 #endif
 
+#ifdef CONFIG_BOOT_GO_HOOKS
+#define MCUBOOT_BOOT_GO_HOOKS
+#endif
+
+#ifdef CONFIG_BOOT_FLASH_AREA_HOOKS
+#define MCUBOOT_FLASH_AREA_HOOKS
+#endif
+
 #ifdef CONFIG_MCUBOOT_VERIFY_IMG_ADDRESS
 #define MCUBOOT_VERIFY_IMG_ADDRESS
 #endif
@@ -233,6 +282,10 @@
 #define MCUBOOT_SERIAL_IMG_GRP_IMAGE_STATE
 #endif
 
+#ifdef CONFIG_BOOT_SERIAL_IMG_GRP_SLOT_INFO
+#define MCUBOOT_SERIAL_IMG_GRP_SLOT_INFO
+#endif
+
 #ifdef CONFIG_MCUBOOT_SERIAL
 #define MCUBOOT_SERIAL_RECOVERY
 #endif
@@ -255,6 +308,29 @@
 #endif
 
 /*
+ * Devices that do not require erase prior to write or do not support
+ * erase should avoid emulation of erase by additional write.
+ * The emulation is also taking time which doubles required write time
+ * for such devices.
+ */
+#ifdef CONFIG_MCUBOOT_STORAGE_WITHOUT_ERASE
+#define MCUBOOT_SUPPORT_DEV_WITHOUT_ERASE
+#endif
+
+#ifdef CONFIG_MCUBOOT_STORAGE_WITH_ERASE
+#define MCUBOOT_SUPPORT_DEV_WITH_ERASE
+#endif
+
+/*
+ * MCUboot often calls erase on device just to remove data or make application
+ * image not recognizable. In such instances it may be faster to just remove
+ * portion of data to make image unrecognizable.
+ */
+#ifdef CONFIG_MCUBOOT_STORAGE_MINIMAL_SCRAMBLE
+#define MCUBOOT_MINIMAL_SCRAMBLE
+#endif
+
+/*
  * Enabling this option uses newer flash map APIs. This saves RAM and
  * avoids deprecated API usage.
  *
@@ -270,7 +346,11 @@
 #  endif
 #endif
 
-#ifdef CONFIG_BOOT_MAX_IMG_SECTORS
+#if defined(CONFIG_BOOT_MAX_IMG_SECTORS_AUTO) && defined(MIN_SECTOR_COUNT)
+
+#define MCUBOOT_MAX_IMG_SECTORS       MIN_SECTOR_COUNT
+
+#elif defined(CONFIG_BOOT_MAX_IMG_SECTORS)
 
 #define MCUBOOT_MAX_IMG_SECTORS       CONFIG_BOOT_MAX_IMG_SECTORS
 
@@ -287,12 +367,13 @@
 #endif
 
 #if defined(MCUBOOT_DATA_SHARING) && defined(ZEPHYR_VER_INCLUDE)
-#include <app_version.h>
+#include <zephyr/app_version.h>
 
 #define MCUBOOT_VERSION_AVAILABLE
 #define MCUBOOT_VERSION_MAJOR APP_VERSION_MAJOR
 #define MCUBOOT_VERSION_MINOR APP_VERSION_MINOR
 #define MCUBOOT_VERSION_PATCHLEVEL APP_PATCHLEVEL
+#define MCUBOOT_VERSION_TWEAK APP_TWEAK
 #endif
 
 /* Support 32-byte aligned flash sizes */
@@ -308,7 +389,7 @@
 #endif
 
 #if CONFIG_BOOT_WATCHDOG_FEED
-#if CONFIG_NRFX_WDT
+#if CONFIG_BOOT_WATCHDOG_FEED_NRFX_WDT
 #include <nrfx_wdt.h>
 
 #define FEED_WDT_INST(id)                                    \
@@ -341,11 +422,14 @@
 #elif defined(CONFIG_NRFX_WDT31)
 #define MCUBOOT_WATCHDOG_FEED() \
     FEED_WDT_INST(31);
+#elif defined(CONFIG_NRFX_WDT010)
+#define MCUBOOT_WATCHDOG_FEED() \
+    FEED_WDT_INST(010);
 #else
 #error "No NRFX WDT instances enabled"
 #endif
 
-#elif DT_NODE_HAS_STATUS(DT_ALIAS(watchdog0), okay) /* CONFIG_NRFX_WDT */
+#elif DT_NODE_HAS_STATUS(DT_ALIAS(watchdog0), okay) /* CONFIG_BOOT_WATCHDOG_FEED_NRFX_WDT */
 #include <zephyr/device.h>
 #include <zephyr/drivers/watchdog.h>
 

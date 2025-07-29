@@ -28,7 +28,7 @@
  * @brief hal camera device declaration. Camera devices can enqueue and dequeue frames as well as react to events from
  * input devices via the "inputNotify" function. Camera devices can use any number of interfaces, including MIPI and CSI
  * as long as the HAL driver implements the necessary functions found in camera_dev_operator_t.
- * Examples of camera devices include the Orbbec U1S 3D SLM camera module, and the OnSemi MT9M114 camera module.
+ * Examples of camera devices include the Orbbec U1S 3D SLM camera module and the OnSemi MT9M114 camera module.
  */
 
 #ifndef _HAL_CAMERA_DEV_H_

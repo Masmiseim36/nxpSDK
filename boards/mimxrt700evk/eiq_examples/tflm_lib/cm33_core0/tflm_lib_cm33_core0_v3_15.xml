@@ -21,14 +21,18 @@
       <toolchainSetting id_refs="com.nxp.mcuxpresso">
         <option id="gnu.c.compiler.option.preprocessor.def.symbols" type="stringList">
           <value>MCUXPRESSO_SDK</value>
-          <value>CPU_MIMXRT798SGFOA_cm33_core0</value>
+          <value>CPU_MIMXRT798SGFOB_cm33_core0</value>
+          <value>MIMXRT798S_cm33_core0_SERIES</value>
           <value>TF_LITE_STATIC_MEMORY</value>
+          <value>KERNELS_OPTIMIZED_FOR_SPEED</value>
           <value>CMSIS_NN</value>
         </option>
         <option id="gnu.cpp.compiler.option.preprocessor.def" type="stringList">
           <value>MCUXPRESSO_SDK</value>
-          <value>CPU_MIMXRT798SGFOA_cm33_core0</value>
+          <value>CPU_MIMXRT798SGFOB_cm33_core0</value>
+          <value>MIMXRT798S_cm33_core0_SERIES</value>
           <value>TF_LITE_STATIC_MEMORY</value>
+          <value>KERNELS_OPTIMIZED_FOR_SPEED</value>
           <value>CMSIS_NN</value>
         </option>
         <option id="gnu.cpp.link.option.nostdlibs" type="boolean">
@@ -111,6 +115,9 @@
     </source>
     <source path="." project_relative_path="doc" type="doc">
       <files mask="readme.md"/>
+    </source>
+    <source path="." project_relative_path="doc" type="doc">
+      <files mask="examples_shared_readme.md"/>
     </source>
   </example>
 </ksdk:examples>

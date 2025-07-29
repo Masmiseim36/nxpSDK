@@ -1,5 +1,5 @@
 /*
- * Copyright 2021-2024 NXP
+ * Copyright 2021-2025 NXP
  *
  *  SPDX-License-Identifier: Apache-2.0
  *
@@ -149,6 +149,8 @@ typedef enum {
     MPP_PIXEL_ARGB,         /*!< ARGB 32 bits */
 	MPP_PIXEL_BGRA,         /*!< BGRA 32 bits */
 	MPP_PIXEL_RGBA,         /*!< RGBA 32 bits */
+	MPP_PIXEL_BGRX,         /*!< BGRX 32 bits */
+	MPP_PIXEL_RGBX,         /*!< RGBX 32 bits */
     MPP_PIXEL_RGB,          /*!< RGB 24 bits */
     MPP_PIXEL_RGB565,       /*!< RGB 16 bits */
     MPP_PIXEL_BGR,          /*!< BGR 24 bits */
@@ -199,6 +201,7 @@ typedef struct {
     mpp_rotate_degree_t rotate; /*!< rotate degree */
     mpp_pixel_format_t format;  /*!< pixel format */
     bool stripe; /*!< stripe mode */
+    void *handle; /*!< pointer to an lvgl image widget */
 } mpp_display_params_t;
 
 /** Processing element ids */
@@ -279,10 +282,10 @@ typedef struct {
     uint16_t clear;         /*!< clear rectangle */
     uint16_t line_width;    /*!< rectangle line thickness */
     mpp_color_t line_color; /*!< rectangle line color */
-    uint16_t top;           /*!< rectangle top position */
-    uint16_t left;          /*!< rectangle left position */
-    uint16_t bottom;        /*!< rectangle bottom position */
-    uint16_t right;         /*!< rectangle right position */
+    int16_t top;            /*!< rectangle top position */
+    int16_t left;           /*!< rectangle left position */
+    int16_t bottom;         /*!< rectangle bottom position */
+    int16_t right;          /*!< rectangle right position */
     uint16_t tag;           /*!< labeled rectangle tag */
     uint16_t reserved;      /*!< pad for 32 bits alignment */
     bool stripe;            /*!< stripe mode */

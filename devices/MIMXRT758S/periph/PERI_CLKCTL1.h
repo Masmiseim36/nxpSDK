@@ -1,40 +1,40 @@
 /*
 ** ###################################################################
-**     Processors:          MIMXRT735SGAWAR_cm33_core0
-**                          MIMXRT735SGAWAR_cm33_core1
-**                          MIMXRT735SGAWAR_ezhv
-**                          MIMXRT735SGAWAR_hifi1
-**                          MIMXRT735SGFOA_cm33_core0
-**                          MIMXRT735SGFOA_cm33_core1
-**                          MIMXRT735SGFOA_ezhv
-**                          MIMXRT735SGFOA_hifi1
-**                          MIMXRT758SGAWAR_cm33_core0
-**                          MIMXRT758SGAWAR_cm33_core1
-**                          MIMXRT758SGAWAR_ezhv
-**                          MIMXRT758SGAWAR_hifi1
-**                          MIMXRT758SGFOA_cm33_core0
-**                          MIMXRT758SGFOA_cm33_core1
-**                          MIMXRT758SGFOA_ezhv
-**                          MIMXRT758SGFOA_hifi1
-**                          MIMXRT798SGAWAR_cm33_core0
-**                          MIMXRT798SGAWAR_cm33_core1
-**                          MIMXRT798SGAWAR_ezhv
-**                          MIMXRT798SGAWAR_hifi1
-**                          MIMXRT798SGAWAR_hifi4
-**                          MIMXRT798SGFOA_cm33_core0
-**                          MIMXRT798SGFOA_cm33_core1
-**                          MIMXRT798SGFOA_ezhv
-**                          MIMXRT798SGFOA_hifi1
-**                          MIMXRT798SGFOA_hifi4
+**     Processors:          MIMXRT735SGAWBR_cm33_core0
+**                          MIMXRT735SGAWBR_cm33_core1
+**                          MIMXRT735SGAWBR_ezhv
+**                          MIMXRT735SGAWBR_hifi1
+**                          MIMXRT735SGFOB_cm33_core0
+**                          MIMXRT735SGFOB_cm33_core1
+**                          MIMXRT735SGFOB_ezhv
+**                          MIMXRT735SGFOB_hifi1
+**                          MIMXRT758SGAWBR_cm33_core0
+**                          MIMXRT758SGAWBR_cm33_core1
+**                          MIMXRT758SGAWBR_ezhv
+**                          MIMXRT758SGAWBR_hifi1
+**                          MIMXRT758SGFOB_cm33_core0
+**                          MIMXRT758SGFOB_cm33_core1
+**                          MIMXRT758SGFOB_ezhv
+**                          MIMXRT758SGFOB_hifi1
+**                          MIMXRT798SGAWBR_cm33_core0
+**                          MIMXRT798SGAWBR_cm33_core1
+**                          MIMXRT798SGAWBR_ezhv
+**                          MIMXRT798SGAWBR_hifi1
+**                          MIMXRT798SGAWBR_hifi4
+**                          MIMXRT798SGFOB_cm33_core0
+**                          MIMXRT798SGFOB_cm33_core1
+**                          MIMXRT798SGFOB_ezhv
+**                          MIMXRT798SGFOB_hifi1
+**                          MIMXRT798SGFOB_hifi4
 **
-**     Version:             rev. 2.0, 2024-05-28
-**     Build:               b241121
+**     Version:             rev. 4.0, 2025-06-06
+**     Build:               b250609
 **
 **     Abstract:
 **         CMSIS Peripheral Access Layer for CLKCTL1
 **
 **     Copyright 1997-2016 Freescale Semiconductor, Inc.
-**     Copyright 2016-2024 NXP
+**     Copyright 2016-2025 NXP
 **     SPDX-License-Identifier: BSD-3-Clause
 **
 **     http:                 www.nxp.com
@@ -45,47 +45,52 @@
 **         Initial version.
 **     - rev. 2.0 (2024-05-28)
 **         Rev2 DraftA.
+**     - rev. 3.0 (2024-10-29)
+**         Change the device header file from single flat file to multiple files based on peripherals,
+**         each peripheral with dedicated header file located in periphN folder.
+**     - rev. 4.0 (2025-06-06)
+**         B0 initial version
 **
 ** ###################################################################
 */
 
 /*!
- * @file CLKCTL1.h
- * @version 2.0
- * @date 2024-05-28
+ * @file PERI_CLKCTL1.h
+ * @version 4.0
+ * @date 2025-06-06
  * @brief CMSIS Peripheral Access Layer for CLKCTL1
  *
  * CMSIS Peripheral Access Layer for CLKCTL1
  */
 
-#if !defined(CLKCTL1_H_)
-#define CLKCTL1_H_                               /**< Symbol preventing repeated inclusion */
+#if !defined(PERI_CLKCTL1_H_)
+#define PERI_CLKCTL1_H_                          /**< Symbol preventing repeated inclusion */
 
-#if (defined(CPU_MIMXRT735SGAWAR_cm33_core0) || defined(CPU_MIMXRT735SGFOA_cm33_core0))
+#if (defined(CPU_MIMXRT735SGAWBR_cm33_core0) || defined(CPU_MIMXRT735SGFOB_cm33_core0))
 #include "MIMXRT735S_cm33_core0_COMMON.h"
-#elif (defined(CPU_MIMXRT735SGAWAR_cm33_core1) || defined(CPU_MIMXRT735SGFOA_cm33_core1))
+#elif (defined(CPU_MIMXRT735SGAWBR_cm33_core1) || defined(CPU_MIMXRT735SGFOB_cm33_core1))
 #include "MIMXRT735S_cm33_core1_COMMON.h"
-#elif (defined(CPU_MIMXRT735SGAWAR_ezhv) || defined(CPU_MIMXRT735SGFOA_ezhv))
+#elif (defined(CPU_MIMXRT735SGAWBR_ezhv) || defined(CPU_MIMXRT735SGFOB_ezhv))
 #include "MIMXRT735S_ezhv_COMMON.h"
-#elif (defined(CPU_MIMXRT735SGAWAR_hifi1) || defined(CPU_MIMXRT735SGFOA_hifi1))
+#elif (defined(CPU_MIMXRT735SGAWBR_hifi1) || defined(CPU_MIMXRT735SGFOB_hifi1))
 #include "MIMXRT735S_hifi1_COMMON.h"
-#elif (defined(CPU_MIMXRT758SGAWAR_cm33_core0) || defined(CPU_MIMXRT758SGFOA_cm33_core0))
+#elif (defined(CPU_MIMXRT758SGAWBR_cm33_core0) || defined(CPU_MIMXRT758SGFOB_cm33_core0))
 #include "MIMXRT758S_cm33_core0_COMMON.h"
-#elif (defined(CPU_MIMXRT758SGAWAR_cm33_core1) || defined(CPU_MIMXRT758SGFOA_cm33_core1))
+#elif (defined(CPU_MIMXRT758SGAWBR_cm33_core1) || defined(CPU_MIMXRT758SGFOB_cm33_core1))
 #include "MIMXRT758S_cm33_core1_COMMON.h"
-#elif (defined(CPU_MIMXRT758SGAWAR_ezhv) || defined(CPU_MIMXRT758SGFOA_ezhv))
+#elif (defined(CPU_MIMXRT758SGAWBR_ezhv) || defined(CPU_MIMXRT758SGFOB_ezhv))
 #include "MIMXRT758S_ezhv_COMMON.h"
-#elif (defined(CPU_MIMXRT758SGAWAR_hifi1) || defined(CPU_MIMXRT758SGFOA_hifi1))
+#elif (defined(CPU_MIMXRT758SGAWBR_hifi1) || defined(CPU_MIMXRT758SGFOB_hifi1))
 #include "MIMXRT758S_hifi1_COMMON.h"
-#elif (defined(CPU_MIMXRT798SGAWAR_cm33_core0) || defined(CPU_MIMXRT798SGFOA_cm33_core0))
+#elif (defined(CPU_MIMXRT798SGAWBR_cm33_core0) || defined(CPU_MIMXRT798SGFOB_cm33_core0))
 #include "MIMXRT798S_cm33_core0_COMMON.h"
-#elif (defined(CPU_MIMXRT798SGAWAR_cm33_core1) || defined(CPU_MIMXRT798SGFOA_cm33_core1))
+#elif (defined(CPU_MIMXRT798SGAWBR_cm33_core1) || defined(CPU_MIMXRT798SGFOB_cm33_core1))
 #include "MIMXRT798S_cm33_core1_COMMON.h"
-#elif (defined(CPU_MIMXRT798SGAWAR_ezhv) || defined(CPU_MIMXRT798SGFOA_ezhv))
+#elif (defined(CPU_MIMXRT798SGAWBR_ezhv) || defined(CPU_MIMXRT798SGFOB_ezhv))
 #include "MIMXRT798S_ezhv_COMMON.h"
-#elif (defined(CPU_MIMXRT798SGAWAR_hifi1) || defined(CPU_MIMXRT798SGFOA_hifi1))
+#elif (defined(CPU_MIMXRT798SGAWBR_hifi1) || defined(CPU_MIMXRT798SGFOB_hifi1))
 #include "MIMXRT798S_hifi1_COMMON.h"
-#elif (defined(CPU_MIMXRT798SGAWAR_hifi4) || defined(CPU_MIMXRT798SGFOA_hifi4))
+#elif (defined(CPU_MIMXRT798SGAWBR_hifi4) || defined(CPU_MIMXRT798SGFOB_hifi4))
 #include "MIMXRT798S_hifi4_COMMON.h"
 #else
   #error "No valid CPU defined!"
@@ -423,6 +428,14 @@ typedef struct {
  */
 #define CLKCTL1_PSCCTL1_WWDT3(x)                 (((uint32_t)(((uint32_t)(x)) << CLKCTL1_PSCCTL1_WWDT3_SHIFT)) & CLKCTL1_PSCCTL1_WWDT3_MASK)
 
+#define CLKCTL1_PSCCTL1_PVTS1_MASK               (0x10000000U)
+#define CLKCTL1_PSCCTL1_PVTS1_SHIFT              (28U)
+/*! PVTS1 - PVTS1 Clock
+ *  0b0..Disable
+ *  0b1..Enable
+ */
+#define CLKCTL1_PSCCTL1_PVTS1(x)                 (((uint32_t)(((uint32_t)(x)) << CLKCTL1_PSCCTL1_PVTS1_SHIFT)) & CLKCTL1_PSCCTL1_PVTS1_MASK)
+
 #define CLKCTL1_PSCCTL1_INPUTMUX1_MASK           (0x40000000U)
 #define CLKCTL1_PSCCTL1_INPUTMUX1_SHIFT          (30U)
 /*! INPUTMUX1 - INPUTMUX1 Clock
@@ -663,6 +676,14 @@ typedef struct {
  */
 #define CLKCTL1_PSCCTL1_SET_WWDT3(x)             (((uint32_t)(((uint32_t)(x)) << CLKCTL1_PSCCTL1_SET_WWDT3_SHIFT)) & CLKCTL1_PSCCTL1_SET_WWDT3_MASK)
 
+#define CLKCTL1_PSCCTL1_SET_PVTS1_MASK           (0x10000000U)
+#define CLKCTL1_PSCCTL1_SET_PVTS1_SHIFT          (28U)
+/*! PVTS1 - PVTS1 Clock
+ *  0b0..No effect
+ *  0b1..Enable
+ */
+#define CLKCTL1_PSCCTL1_SET_PVTS1(x)             (((uint32_t)(((uint32_t)(x)) << CLKCTL1_PSCCTL1_SET_PVTS1_SHIFT)) & CLKCTL1_PSCCTL1_SET_PVTS1_MASK)
+
 #define CLKCTL1_PSCCTL1_SET_INPUTMUX1_MASK       (0x40000000U)
 #define CLKCTL1_PSCCTL1_SET_INPUTMUX1_SHIFT      (30U)
 /*! INPUTMUX1 - INPUTMUX1 Clock
@@ -902,6 +923,14 @@ typedef struct {
  *  0b1..Disable
  */
 #define CLKCTL1_PSCCTL1_CLR_WWDT3(x)             (((uint32_t)(((uint32_t)(x)) << CLKCTL1_PSCCTL1_CLR_WWDT3_SHIFT)) & CLKCTL1_PSCCTL1_CLR_WWDT3_MASK)
+
+#define CLKCTL1_PSCCTL1_CLR_PVTS1_MASK           (0x10000000U)
+#define CLKCTL1_PSCCTL1_CLR_PVTS1_SHIFT          (28U)
+/*! PVTS1 - PVTS1 Clock
+ *  0b0..No effect
+ *  0b1..Disable
+ */
+#define CLKCTL1_PSCCTL1_CLR_PVTS1(x)             (((uint32_t)(((uint32_t)(x)) << CLKCTL1_PSCCTL1_CLR_PVTS1_SHIFT)) & CLKCTL1_PSCCTL1_CLR_PVTS1_MASK)
 
 #define CLKCTL1_PSCCTL1_CLR_INPUTMUX1_MASK       (0x40000000U)
 #define CLKCTL1_PSCCTL1_CLR_INPUTMUX1_SHIFT      (30U)
@@ -1457,5 +1486,5 @@ typedef struct {
  */ /* end of group Peripheral_access_layer */
 
 
-#endif  /* CLKCTL1_H_ */
+#endif  /* PERI_CLKCTL1_H_ */
 

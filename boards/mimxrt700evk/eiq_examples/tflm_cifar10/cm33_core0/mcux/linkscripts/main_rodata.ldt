@@ -1,0 +1,4 @@
+*(EXCLUDE_FILE(*model.o) .rodata)
+*(EXCLUDE_FILE(*model.o) .rodata.*)
+*(EXCLUDE_FILE(*model.o) .constdata)
+*(EXCLUDE_FILE(*model.o) .constdata.*)

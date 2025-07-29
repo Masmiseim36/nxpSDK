@@ -27,7 +27,6 @@
     <definition extID="component.gpio_adapter.MIMXRT798S"/>
     <definition extID="component.lpuart_adapter.MIMXRT798S"/>
     <definition extID="component.osa_template_config.MIMXRT798S"/>
-    <definition extID="component.osa_interface.MIMXRT798S"/>
     <definition extID="component.osa.MIMXRT798S"/>
     <definition extID="component.osa_bm.MIMXRT798S"/>
     <definition extID="middleware.fatfs.MIMXRT798S"/>
@@ -47,7 +46,7 @@
     <definition extID="com.crt.advproject.config.exe.debug"/>
     <definition extID="com.crt.advproject.config.exe.release"/>
   </externalDefinitions>
-  <example id="mimxrt700evk_sdcard_fatfs_cm33_core0" name="sdcard_fatfs_cm33_core0" device_core="cm33_core0_MIMXRT798S" dependency="platform.drivers.flash_config.mimxrt700evk.MIMXRT798S CMSIS_Include_core_cm.MIMXRT798S device.MIMXRT798S_CMSIS.MIMXRT798S device.MIMXRT798S_system.MIMXRT798S device.MIMXRT798S_startup.MIMXRT798S platform.drivers.clock.MIMXRT798S platform.drivers.lpc_iopctl.MIMXRT798S platform.drivers.power.MIMXRT798S platform.drivers.reset.MIMXRT798S platform.drivers.cache_xcache.MIMXRT798S platform.drivers.common.MIMXRT798S platform.drivers.glikey.MIMXRT798S platform.drivers.gpio.MIMXRT798S platform.drivers.lpflexcomm.MIMXRT798S platform.drivers.lpflexcomm_lpuart.MIMXRT798S platform.drivers.usdhc.MIMXRT798S platform.drivers.xspi.MIMXRT798S platform.utilities.assert_lite.MIMXRT798S platform.utilities.misc_utilities.MIMXRT798S component.lists.MIMXRT798S utility.str.MIMXRT798S utility.debug_console_lite.MIMXRT798S component.gpio_adapter.MIMXRT798S component.lpuart_adapter.MIMXRT798S component.osa_template_config.MIMXRT798S component.osa_interface.MIMXRT798S component.osa.MIMXRT798S component.osa_bm.MIMXRT798S middleware.fatfs.MIMXRT798S middleware.fatfs.template_sd.MIMXRT798S middleware.fatfs.sd.MIMXRT798S middleware.sdmmc.common.MIMXRT798S middleware.sdmmc.osa.freertos.MIMXRT798S middleware.sdmmc.sd.MIMXRT798S middleware.sdmmc.host.usdhc.MIMXRT798S middleware.sdmmc.host.usdhc.non_blocking.MIMXRT798S middleware.sdmmc.usdhc.template.MIMXRT798S" category="sdmmc_examples/sdcard_fatfs">
+  <example id="mimxrt700evk_sdcard_fatfs_cm33_core0" name="sdcard_fatfs_cm33_core0" device_core="cm33_core0_MIMXRT798S" dependency="platform.drivers.flash_config.mimxrt700evk.MIMXRT798S CMSIS_Include_core_cm.MIMXRT798S device.MIMXRT798S_CMSIS.MIMXRT798S device.MIMXRT798S_system.MIMXRT798S device.MIMXRT798S_startup.MIMXRT798S platform.drivers.clock.MIMXRT798S platform.drivers.lpc_iopctl.MIMXRT798S platform.drivers.power.MIMXRT798S platform.drivers.reset.MIMXRT798S platform.drivers.cache_xcache.MIMXRT798S platform.drivers.common.MIMXRT798S platform.drivers.glikey.MIMXRT798S platform.drivers.gpio.MIMXRT798S platform.drivers.lpflexcomm.MIMXRT798S platform.drivers.lpflexcomm_lpuart.MIMXRT798S platform.drivers.usdhc.MIMXRT798S platform.drivers.xspi.MIMXRT798S platform.utilities.assert_lite.MIMXRT798S platform.utilities.misc_utilities.MIMXRT798S component.lists.MIMXRT798S utility.str.MIMXRT798S utility.debug_console_lite.MIMXRT798S component.gpio_adapter.MIMXRT798S component.lpuart_adapter.MIMXRT798S component.osa_template_config.MIMXRT798S component.osa.MIMXRT798S component.osa_bm.MIMXRT798S middleware.fatfs.MIMXRT798S middleware.fatfs.template_sd.MIMXRT798S middleware.fatfs.sd.MIMXRT798S middleware.sdmmc.common.MIMXRT798S middleware.sdmmc.osa.freertos.MIMXRT798S middleware.sdmmc.sd.MIMXRT798S middleware.sdmmc.host.usdhc.MIMXRT798S middleware.sdmmc.host.usdhc.non_blocking.MIMXRT798S middleware.sdmmc.usdhc.template.MIMXRT798S" category="sdmmc_examples/sdcard_fatfs">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -60,13 +59,14 @@
       <toolchainSetting id_refs="com.nxp.mcuxpresso">
         <option id="gnu.c.compiler.option.preprocessor.def.symbols" type="stringList">
           <value>MCUXPRESSO_SDK</value>
-          <value>CPU_MIMXRT798SGFOA_cm33_core0</value>
+          <value>CPU_MIMXRT798SGFOB_cm33_core0</value>
           <value>BOOT_HEADER_ENABLE=1</value>
           <value>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</value>
           <value>BOARD_SDMMC_NEED_MANUAL_TUNING</value>
           <value>FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1</value>
           <value>SDK_DEBUGCONSOLE=1</value>
           <value>MCUX_META_BUILD</value>
+          <value>MIMXRT798S_cm33_core0_SERIES</value>
           <value>USE_RTOS=0</value>
           <value>SD_ENABLED=1</value>
         </option>
@@ -219,6 +219,9 @@
     </source>
     <source path="." project_relative_path="doc" type="doc">
       <files mask="example_board_readme.md"/>
+    </source>
+    <source path="." project_relative_path="doc" type="doc">
+      <files mask="examples_shared_readme.md"/>
     </source>
   </example>
 </ksdk:examples>

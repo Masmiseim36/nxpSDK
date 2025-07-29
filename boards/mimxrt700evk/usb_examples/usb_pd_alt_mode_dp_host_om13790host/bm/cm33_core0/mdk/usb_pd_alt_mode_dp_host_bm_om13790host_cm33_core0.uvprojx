@@ -11,7 +11,7 @@
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
-          <Device>MIMXRT798SGFOA:cm33_core0</Device>
+          <Device>MIMXRT798SGFOB:cm33_core0</Device>
           <Vendor>NXP</Vendor>
           <PackID>NXP.MIMXRT798S_DFP.17.0.0</PackID>
           <PackURL>https://mcuxpresso.nxp.com/cmsis_pack/repo/</PackURL>
@@ -334,9 +334,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../mcux_config.h -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
-              <Define>DEBUG, I2C_RETRY_TIMES=40000, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT798SGFOA_cm33_core0, DEBUG_CONSOLE_TRANSFER_NON_BLOCKING, BOOT_HEADER_ENABLE=1, SERIAL_PORT_TYPE_UART=1, TIMER_PORT_TYPE_MRT=1, USE_RTOS=0</Define>
+              <Define>DEBUG, I2C_RETRY_TIMES=40000, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT798SGFOB_cm33_core0, MIMXRT798S_cm33_core0_SERIES, DEBUG_CONSOLE_TRANSFER_NON_BLOCKING, BOOT_HEADER_ENABLE=1, SERIAL_PORT_TYPE_UART=1, TIMER_PORT_TYPE_MRT=1, USE_RTOS=0</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../flash_config;../../../../../../../CMSIS/Core/Include;../../../../../../../CMSIS/Core/Include/m-profile;../../../../../../../devices/MIMXRT798S;../../../../../../../devices/MIMXRT798S/periph;../../../../../../../devices/MIMXRT798S/drivers;../../../../../../../devices/MIMXRT798S/utilities;../../../../../../../components/lists;../../../../../../../devices/MIMXRT798S/utilities/str;../../../../../../../devices/MIMXRT798S/utilities/debug_console;../../../../../../../components/serial_manager;../../../../../../../components/gpio;../../../../../../../components/timer;../../../../../../../components/i2c;../../../../../../../components/uart;../../../../../../../components/osa;../../../../../../../middleware/usb/include;../../../../../../../middleware/usb/pd;../../../../../../../middleware/usb/pd/ptn5110;../../../../../../../middleware/usb/pd/phy_interface;../../../../../../../middleware/usb/pd/alt_mode;../../../../../../../middleware/usb/phy</IncludePath>
+              <IncludePath>..;../../../../../flash_config;../../../../../../../CMSIS/Core/Include;../../../../../../../CMSIS/Core/Include/m-profile;../../../../../../../devices/MIMXRT798S;../../../../../../../devices/MIMXRT798S/periph;../../../../../../../devices/MIMXRT798S/drivers;../../../../../../../devices/MIMXRT798S/utilities/debug_console;../../../../../../../components/lists;../../../../../../../devices/MIMXRT798S/utilities/str;../../../../../../../components/serial_manager;../../../../../../../components/gpio;../../../../../../../components/timer;../../../../../../../components/i2c;../../../../../../../components/uart;../../../../../../../components/osa;../../../../../../../middleware/usb/include;../../../../../../../middleware/usb/pd;../../../../../../../middleware/usb/pd/ptn5110;../../../../../../../middleware/usb/pd/phy_interface;../../../../../../../middleware/usb/config/pd;../../../../../../../middleware/usb/pd/alt_mode;../../../../../../../middleware/usb/phy</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -351,10 +351,10 @@
             <useXO>0</useXO>
             <ClangAsOpt>2</ClangAsOpt>
             <VariousControls>
-              <MiscControls/>
-              <Define>MCUXPRESSO_SDK, CPU_MIMXRT798SGFOA_cm33_core0, DEBUG_CONSOLE_TRANSFER_NON_BLOCKING</Define>
+              <MiscControls>-include ../mcux_config.h</MiscControls>
+              <Define>MCUXPRESSO_SDK, CPU_MIMXRT798SGFOB_cm33_core0, MIMXRT798S_cm33_core0_SERIES, DEBUG_CONSOLE_TRANSFER_NON_BLOCKING</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../flash_config;../../../../../../../CMSIS/Core/Include;../../../../../../../CMSIS/Core/Include/m-profile;../../../../../../../devices/MIMXRT798S;../../../../../../../devices/MIMXRT798S/periph;../../../../../../../devices/periph;../../../../../../../devices/MIMXRT798S/drivers;../../../../../../../devices/MIMXRT798S/utilities;../../../../../../../components/lists;../../../../../../../devices/MIMXRT798S/utilities/str;../../../../../../../devices/MIMXRT798S/utilities/debug_console;../../../../../../../components/serial_manager;../../../../../../../components/gpio;../../../../../../../components/timer;../../../../../../../components/i2c;../../../../../../../components/uart;../../../../../../../components/osa;../../../../../../../middleware/usb/include;../../../../../../../middleware/usb/pd;../../../../../../../middleware/usb/pd/ptn5110;../../../../../../../middleware/usb/pd/phy_interface;../../../../../../../middleware/usb/pd/alt_mode;../../../../../../../middleware/usb/phy</IncludePath>
+              <IncludePath>..;../../../../../flash_config;../../../../../../../CMSIS/Core/Include;../../../../../../../CMSIS/Core/Include/m-profile;../../../../../../../devices/MIMXRT798S;../../../../../../../devices/MIMXRT798S/periph;../../../../../../../devices/periph;../../../../../../../devices/MIMXRT798S/drivers;../../../../../../../devices/MIMXRT798S/utilities/debug_console;../../../../../../../components/lists;../../../../../../../devices/MIMXRT798S/utilities/str;../../../../../../../components/serial_manager;../../../../../../../components/gpio;../../../../../../../components/timer;../../../../../../../components/i2c;../../../../../../../components/uart;../../../../../../../components/osa;../../../../../../../middleware/usb/include;../../../../../../../middleware/usb/pd;../../../../../../../middleware/usb/pd/ptn5110;../../../../../../../middleware/usb/pd/phy_interface;../../../../../../../middleware/usb/config/pd;../../../../../../../middleware/usb/pd/alt_mode;../../../../../../../middleware/usb/phy</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -399,11 +399,6 @@
               <FileName>pin_mux.h</FileName>
               <FileType>5</FileType>
               <FilePath>../pin_mux.h</FilePath>
-            </File>
-            <File>
-              <FileName>displayport_host.xml</FileName>
-              <FileType>5</FileType>
-              <FilePath>../displayport_host.xml</FilePath>
             </File>
             <File>
               <FileName>pd_board_config.h</FileName>
@@ -514,6 +509,16 @@
               <FileName>fsl_os_abstraction_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../fsl_os_abstraction_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../mcux_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../mcux_config.h</FilePath>
             </File>
             <File>
               <FileName>mcux_config.h</FileName>
@@ -1068,12 +1073,12 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>startup/arm</GroupName>
+          <GroupName>startup</GroupName>
           <Files>
             <File>
-              <FileName>startup_MIMXRT798S_cm33_core0.S</FileName>
-              <FileType>2</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT798S/arm/startup_MIMXRT798S_cm33_core0.S</FilePath>
+              <FileName>startup_MIMXRT798S_cm33_core0.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT798S/startup_MIMXRT798S_cm33_core0.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1248,12 +1253,12 @@
             <File>
               <FileName>fsl_assert.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT798S/utilities/fsl_assert.h</FilePath>
+              <FilePath>../../../../../../../devices/MIMXRT798S/utilities/debug_console/fsl_assert.h</FilePath>
             </File>
             <File>
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT798S/utilities/fsl_assert.c</FilePath>
+              <FilePath>../../../../../../../devices/MIMXRT798S/utilities/debug_console/fsl_assert.c</FilePath>
             </File>
             <File>
               <FileName>fsl_memcpy.S</FileName>
@@ -1401,11 +1406,6 @@
           <GroupName>component/osa</GroupName>
           <Files>
             <File>
-              <FileName>fsl_os_abstraction.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../components/osa/fsl_os_abstraction.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_os_abstraction_bm.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../components/osa/fsl_os_abstraction_bm.h</FilePath>
@@ -1414,6 +1414,11 @@
               <FileName>fsl_os_abstraction_bm.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../components/osa/fsl_os_abstraction_bm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../components/osa/fsl_os_abstraction.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1601,6 +1606,11 @@
               <FilePath>../readme.md</FilePath>
             </File>
             <File>
+              <FileName>examples_shared_readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../examples_shared_readme.md</FilePath>
+            </File>
+            <File>
               <FileName>ugreen_typec_hdmi.jpg</FileName>
               <FileType>5</FileType>
               <FilePath>../ugreen_typec_hdmi.jpg</FilePath>
@@ -1617,7 +1627,7 @@
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
-          <Device>MIMXRT798SGFOA:cm33_core0</Device>
+          <Device>MIMXRT798SGFOB:cm33_core0</Device>
           <Vendor>NXP</Vendor>
           <PackID>NXP.MIMXRT798S_DFP.17.0.0</PackID>
           <PackURL>https://mcuxpresso.nxp.com/cmsis_pack/repo/</PackURL>
@@ -1940,9 +1950,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../mcux_config.h -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
-              <Define>DEBUG, I2C_RETRY_TIMES=40000, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT798SGFOA_cm33_core0, DEBUG_CONSOLE_TRANSFER_NON_BLOCKING, BOOT_HEADER_ENABLE=1, SERIAL_PORT_TYPE_UART=1, TIMER_PORT_TYPE_MRT=1, USE_RTOS=0</Define>
+              <Define>DEBUG, I2C_RETRY_TIMES=40000, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT798SGFOB_cm33_core0, MIMXRT798S_cm33_core0_SERIES, DEBUG_CONSOLE_TRANSFER_NON_BLOCKING, BOOT_HEADER_ENABLE=1, SERIAL_PORT_TYPE_UART=1, TIMER_PORT_TYPE_MRT=1, USE_RTOS=0</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../flash_config;../../../../../../../CMSIS/Core/Include;../../../../../../../CMSIS/Core/Include/m-profile;../../../../../../../devices/MIMXRT798S;../../../../../../../devices/MIMXRT798S/periph;../../../../../../../devices/MIMXRT798S/drivers;../../../../../../../devices/MIMXRT798S/utilities;../../../../../../../components/lists;../../../../../../../devices/MIMXRT798S/utilities/str;../../../../../../../devices/MIMXRT798S/utilities/debug_console;../../../../../../../components/serial_manager;../../../../../../../components/gpio;../../../../../../../components/timer;../../../../../../../components/i2c;../../../../../../../components/uart;../../../../../../../components/osa;../../../../../../../middleware/usb/include;../../../../../../../middleware/usb/pd;../../../../../../../middleware/usb/pd/ptn5110;../../../../../../../middleware/usb/pd/phy_interface;../../../../../../../middleware/usb/pd/alt_mode;../../../../../../../middleware/usb/phy</IncludePath>
+              <IncludePath>..;../../../../../flash_config;../../../../../../../CMSIS/Core/Include;../../../../../../../CMSIS/Core/Include/m-profile;../../../../../../../devices/MIMXRT798S;../../../../../../../devices/MIMXRT798S/periph;../../../../../../../devices/MIMXRT798S/drivers;../../../../../../../devices/MIMXRT798S/utilities/debug_console;../../../../../../../components/lists;../../../../../../../devices/MIMXRT798S/utilities/str;../../../../../../../components/serial_manager;../../../../../../../components/gpio;../../../../../../../components/timer;../../../../../../../components/i2c;../../../../../../../components/uart;../../../../../../../components/osa;../../../../../../../middleware/usb/include;../../../../../../../middleware/usb/pd;../../../../../../../middleware/usb/pd/ptn5110;../../../../../../../middleware/usb/pd/phy_interface;../../../../../../../middleware/usb/config/pd;../../../../../../../middleware/usb/pd/alt_mode;../../../../../../../middleware/usb/phy</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1957,10 +1967,10 @@
             <useXO>0</useXO>
             <ClangAsOpt>2</ClangAsOpt>
             <VariousControls>
-              <MiscControls/>
-              <Define>MCUXPRESSO_SDK, CPU_MIMXRT798SGFOA_cm33_core0, DEBUG_CONSOLE_TRANSFER_NON_BLOCKING</Define>
+              <MiscControls>-include ../mcux_config.h</MiscControls>
+              <Define>MCUXPRESSO_SDK, CPU_MIMXRT798SGFOB_cm33_core0, MIMXRT798S_cm33_core0_SERIES, DEBUG_CONSOLE_TRANSFER_NON_BLOCKING</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../flash_config;../../../../../../../CMSIS/Core/Include;../../../../../../../CMSIS/Core/Include/m-profile;../../../../../../../devices/MIMXRT798S;../../../../../../../devices/MIMXRT798S/periph;../../../../../../../devices/periph;../../../../../../../devices/MIMXRT798S/drivers;../../../../../../../devices/MIMXRT798S/utilities;../../../../../../../components/lists;../../../../../../../devices/MIMXRT798S/utilities/str;../../../../../../../devices/MIMXRT798S/utilities/debug_console;../../../../../../../components/serial_manager;../../../../../../../components/gpio;../../../../../../../components/timer;../../../../../../../components/i2c;../../../../../../../components/uart;../../../../../../../components/osa;../../../../../../../middleware/usb/include;../../../../../../../middleware/usb/pd;../../../../../../../middleware/usb/pd/ptn5110;../../../../../../../middleware/usb/pd/phy_interface;../../../../../../../middleware/usb/pd/alt_mode;../../../../../../../middleware/usb/phy</IncludePath>
+              <IncludePath>..;../../../../../flash_config;../../../../../../../CMSIS/Core/Include;../../../../../../../CMSIS/Core/Include/m-profile;../../../../../../../devices/MIMXRT798S;../../../../../../../devices/MIMXRT798S/periph;../../../../../../../devices/periph;../../../../../../../devices/MIMXRT798S/drivers;../../../../../../../devices/MIMXRT798S/utilities/debug_console;../../../../../../../components/lists;../../../../../../../devices/MIMXRT798S/utilities/str;../../../../../../../components/serial_manager;../../../../../../../components/gpio;../../../../../../../components/timer;../../../../../../../components/i2c;../../../../../../../components/uart;../../../../../../../components/osa;../../../../../../../middleware/usb/include;../../../../../../../middleware/usb/pd;../../../../../../../middleware/usb/pd/ptn5110;../../../../../../../middleware/usb/pd/phy_interface;../../../../../../../middleware/usb/config/pd;../../../../../../../middleware/usb/pd/alt_mode;../../../../../../../middleware/usb/phy</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -2005,11 +2015,6 @@
               <FileName>pin_mux.h</FileName>
               <FileType>5</FileType>
               <FilePath>../pin_mux.h</FilePath>
-            </File>
-            <File>
-              <FileName>displayport_host.xml</FileName>
-              <FileType>5</FileType>
-              <FilePath>../displayport_host.xml</FilePath>
             </File>
             <File>
               <FileName>pd_board_config.h</FileName>
@@ -2120,6 +2125,16 @@
               <FileName>fsl_os_abstraction_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../fsl_os_abstraction_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../mcux_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../mcux_config.h</FilePath>
             </File>
             <File>
               <FileName>mcux_config.h</FileName>
@@ -2674,12 +2689,12 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>startup/arm</GroupName>
+          <GroupName>startup</GroupName>
           <Files>
             <File>
-              <FileName>startup_MIMXRT798S_cm33_core0.S</FileName>
-              <FileType>2</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT798S/arm/startup_MIMXRT798S_cm33_core0.S</FilePath>
+              <FileName>startup_MIMXRT798S_cm33_core0.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT798S/startup_MIMXRT798S_cm33_core0.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2854,12 +2869,12 @@
             <File>
               <FileName>fsl_assert.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT798S/utilities/fsl_assert.h</FilePath>
+              <FilePath>../../../../../../../devices/MIMXRT798S/utilities/debug_console/fsl_assert.h</FilePath>
             </File>
             <File>
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT798S/utilities/fsl_assert.c</FilePath>
+              <FilePath>../../../../../../../devices/MIMXRT798S/utilities/debug_console/fsl_assert.c</FilePath>
             </File>
             <File>
               <FileName>fsl_memcpy.S</FileName>
@@ -3007,11 +3022,6 @@
           <GroupName>component/osa</GroupName>
           <Files>
             <File>
-              <FileName>fsl_os_abstraction.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../components/osa/fsl_os_abstraction.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_os_abstraction_bm.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../components/osa/fsl_os_abstraction_bm.h</FilePath>
@@ -3020,6 +3030,11 @@
               <FileName>fsl_os_abstraction_bm.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../components/osa/fsl_os_abstraction_bm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../components/osa/fsl_os_abstraction.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3207,6 +3222,11 @@
               <FilePath>../readme.md</FilePath>
             </File>
             <File>
+              <FileName>examples_shared_readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../examples_shared_readme.md</FilePath>
+            </File>
+            <File>
               <FileName>ugreen_typec_hdmi.jpg</FileName>
               <FileType>5</FileType>
               <FilePath>../ugreen_typec_hdmi.jpg</FilePath>
@@ -3223,7 +3243,7 @@
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
-          <Device>MIMXRT798SGFOA:cm33_core0</Device>
+          <Device>MIMXRT798SGFOB:cm33_core0</Device>
           <Vendor>NXP</Vendor>
           <PackID>NXP.MIMXRT798S_DFP.17.0.0</PackID>
           <PackURL>https://mcuxpresso.nxp.com/cmsis_pack/repo/</PackURL>
@@ -3546,9 +3566,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../mcux_config.h -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
-              <Define>NDEBUG, I2C_RETRY_TIMES=40000, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT798SGFOA_cm33_core0, DEBUG_CONSOLE_TRANSFER_NON_BLOCKING, BOOT_HEADER_ENABLE=1, SERIAL_PORT_TYPE_UART=1, TIMER_PORT_TYPE_MRT=1, USE_RTOS=0</Define>
+              <Define>NDEBUG, I2C_RETRY_TIMES=40000, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT798SGFOB_cm33_core0, MIMXRT798S_cm33_core0_SERIES, DEBUG_CONSOLE_TRANSFER_NON_BLOCKING, BOOT_HEADER_ENABLE=1, SERIAL_PORT_TYPE_UART=1, TIMER_PORT_TYPE_MRT=1, USE_RTOS=0</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../flash_config;../../../../../../../CMSIS/Core/Include;../../../../../../../CMSIS/Core/Include/m-profile;../../../../../../../devices/MIMXRT798S;../../../../../../../devices/MIMXRT798S/periph;../../../../../../../devices/MIMXRT798S/drivers;../../../../../../../devices/MIMXRT798S/utilities;../../../../../../../components/lists;../../../../../../../devices/MIMXRT798S/utilities/str;../../../../../../../devices/MIMXRT798S/utilities/debug_console;../../../../../../../components/serial_manager;../../../../../../../components/gpio;../../../../../../../components/timer;../../../../../../../components/i2c;../../../../../../../components/uart;../../../../../../../components/osa;../../../../../../../middleware/usb/include;../../../../../../../middleware/usb/pd;../../../../../../../middleware/usb/pd/ptn5110;../../../../../../../middleware/usb/pd/phy_interface;../../../../../../../middleware/usb/pd/alt_mode;../../../../../../../middleware/usb/phy</IncludePath>
+              <IncludePath>..;../../../../../flash_config;../../../../../../../CMSIS/Core/Include;../../../../../../../CMSIS/Core/Include/m-profile;../../../../../../../devices/MIMXRT798S;../../../../../../../devices/MIMXRT798S/periph;../../../../../../../devices/MIMXRT798S/drivers;../../../../../../../devices/MIMXRT798S/utilities/debug_console;../../../../../../../components/lists;../../../../../../../devices/MIMXRT798S/utilities/str;../../../../../../../components/serial_manager;../../../../../../../components/gpio;../../../../../../../components/timer;../../../../../../../components/i2c;../../../../../../../components/uart;../../../../../../../components/osa;../../../../../../../middleware/usb/include;../../../../../../../middleware/usb/pd;../../../../../../../middleware/usb/pd/ptn5110;../../../../../../../middleware/usb/pd/phy_interface;../../../../../../../middleware/usb/config/pd;../../../../../../../middleware/usb/pd/alt_mode;../../../../../../../middleware/usb/phy</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -3563,10 +3583,10 @@
             <useXO>0</useXO>
             <ClangAsOpt>2</ClangAsOpt>
             <VariousControls>
-              <MiscControls/>
-              <Define>MCUXPRESSO_SDK, CPU_MIMXRT798SGFOA_cm33_core0, DEBUG_CONSOLE_TRANSFER_NON_BLOCKING</Define>
+              <MiscControls>-include ../mcux_config.h</MiscControls>
+              <Define>MCUXPRESSO_SDK, CPU_MIMXRT798SGFOB_cm33_core0, MIMXRT798S_cm33_core0_SERIES, DEBUG_CONSOLE_TRANSFER_NON_BLOCKING</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../flash_config;../../../../../../../CMSIS/Core/Include;../../../../../../../CMSIS/Core/Include/m-profile;../../../../../../../devices/MIMXRT798S;../../../../../../../devices/MIMXRT798S/periph;../../../../../../../devices/periph;../../../../../../../devices/MIMXRT798S/drivers;../../../../../../../devices/MIMXRT798S/utilities;../../../../../../../components/lists;../../../../../../../devices/MIMXRT798S/utilities/str;../../../../../../../devices/MIMXRT798S/utilities/debug_console;../../../../../../../components/serial_manager;../../../../../../../components/gpio;../../../../../../../components/timer;../../../../../../../components/i2c;../../../../../../../components/uart;../../../../../../../components/osa;../../../../../../../middleware/usb/include;../../../../../../../middleware/usb/pd;../../../../../../../middleware/usb/pd/ptn5110;../../../../../../../middleware/usb/pd/phy_interface;../../../../../../../middleware/usb/pd/alt_mode;../../../../../../../middleware/usb/phy</IncludePath>
+              <IncludePath>..;../../../../../flash_config;../../../../../../../CMSIS/Core/Include;../../../../../../../CMSIS/Core/Include/m-profile;../../../../../../../devices/MIMXRT798S;../../../../../../../devices/MIMXRT798S/periph;../../../../../../../devices/periph;../../../../../../../devices/MIMXRT798S/drivers;../../../../../../../devices/MIMXRT798S/utilities/debug_console;../../../../../../../components/lists;../../../../../../../devices/MIMXRT798S/utilities/str;../../../../../../../components/serial_manager;../../../../../../../components/gpio;../../../../../../../components/timer;../../../../../../../components/i2c;../../../../../../../components/uart;../../../../../../../components/osa;../../../../../../../middleware/usb/include;../../../../../../../middleware/usb/pd;../../../../../../../middleware/usb/pd/ptn5110;../../../../../../../middleware/usb/pd/phy_interface;../../../../../../../middleware/usb/config/pd;../../../../../../../middleware/usb/pd/alt_mode;../../../../../../../middleware/usb/phy</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -3611,11 +3631,6 @@
               <FileName>pin_mux.h</FileName>
               <FileType>5</FileType>
               <FilePath>../pin_mux.h</FilePath>
-            </File>
-            <File>
-              <FileName>displayport_host.xml</FileName>
-              <FileType>5</FileType>
-              <FilePath>../displayport_host.xml</FilePath>
             </File>
             <File>
               <FileName>pd_board_config.h</FileName>
@@ -3726,6 +3741,16 @@
               <FileName>fsl_os_abstraction_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../fsl_os_abstraction_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../mcux_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../mcux_config.h</FilePath>
             </File>
             <File>
               <FileName>mcux_config.h</FileName>
@@ -4280,12 +4305,12 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>startup/arm</GroupName>
+          <GroupName>startup</GroupName>
           <Files>
             <File>
-              <FileName>startup_MIMXRT798S_cm33_core0.S</FileName>
-              <FileType>2</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT798S/arm/startup_MIMXRT798S_cm33_core0.S</FilePath>
+              <FileName>startup_MIMXRT798S_cm33_core0.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT798S/startup_MIMXRT798S_cm33_core0.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -4460,12 +4485,12 @@
             <File>
               <FileName>fsl_assert.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT798S/utilities/fsl_assert.h</FilePath>
+              <FilePath>../../../../../../../devices/MIMXRT798S/utilities/debug_console/fsl_assert.h</FilePath>
             </File>
             <File>
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT798S/utilities/fsl_assert.c</FilePath>
+              <FilePath>../../../../../../../devices/MIMXRT798S/utilities/debug_console/fsl_assert.c</FilePath>
             </File>
             <File>
               <FileName>fsl_memcpy.S</FileName>
@@ -4613,11 +4638,6 @@
           <GroupName>component/osa</GroupName>
           <Files>
             <File>
-              <FileName>fsl_os_abstraction.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../components/osa/fsl_os_abstraction.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_os_abstraction_bm.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../components/osa/fsl_os_abstraction_bm.h</FilePath>
@@ -4626,6 +4646,11 @@
               <FileName>fsl_os_abstraction_bm.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../components/osa/fsl_os_abstraction_bm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../components/osa/fsl_os_abstraction.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -4813,6 +4838,11 @@
               <FilePath>../readme.md</FilePath>
             </File>
             <File>
+              <FileName>examples_shared_readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../examples_shared_readme.md</FilePath>
+            </File>
+            <File>
               <FileName>ugreen_typec_hdmi.jpg</FileName>
               <FileType>5</FileType>
               <FilePath>../ugreen_typec_hdmi.jpg</FilePath>
@@ -4829,7 +4859,7 @@
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
-          <Device>MIMXRT798SGFOA:cm33_core0</Device>
+          <Device>MIMXRT798SGFOB:cm33_core0</Device>
           <Vendor>NXP</Vendor>
           <PackID>NXP.MIMXRT798S_DFP.17.0.0</PackID>
           <PackURL>https://mcuxpresso.nxp.com/cmsis_pack/repo/</PackURL>
@@ -5152,9 +5182,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../mcux_config.h -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
-              <Define>NDEBUG, I2C_RETRY_TIMES=40000, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT798SGFOA_cm33_core0, DEBUG_CONSOLE_TRANSFER_NON_BLOCKING, BOOT_HEADER_ENABLE=1, SERIAL_PORT_TYPE_UART=1, TIMER_PORT_TYPE_MRT=1, USE_RTOS=0</Define>
+              <Define>NDEBUG, I2C_RETRY_TIMES=40000, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT798SGFOB_cm33_core0, MIMXRT798S_cm33_core0_SERIES, DEBUG_CONSOLE_TRANSFER_NON_BLOCKING, BOOT_HEADER_ENABLE=1, SERIAL_PORT_TYPE_UART=1, TIMER_PORT_TYPE_MRT=1, USE_RTOS=0</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../flash_config;../../../../../../../CMSIS/Core/Include;../../../../../../../CMSIS/Core/Include/m-profile;../../../../../../../devices/MIMXRT798S;../../../../../../../devices/MIMXRT798S/periph;../../../../../../../devices/MIMXRT798S/drivers;../../../../../../../devices/MIMXRT798S/utilities;../../../../../../../components/lists;../../../../../../../devices/MIMXRT798S/utilities/str;../../../../../../../devices/MIMXRT798S/utilities/debug_console;../../../../../../../components/serial_manager;../../../../../../../components/gpio;../../../../../../../components/timer;../../../../../../../components/i2c;../../../../../../../components/uart;../../../../../../../components/osa;../../../../../../../middleware/usb/include;../../../../../../../middleware/usb/pd;../../../../../../../middleware/usb/pd/ptn5110;../../../../../../../middleware/usb/pd/phy_interface;../../../../../../../middleware/usb/pd/alt_mode;../../../../../../../middleware/usb/phy</IncludePath>
+              <IncludePath>..;../../../../../flash_config;../../../../../../../CMSIS/Core/Include;../../../../../../../CMSIS/Core/Include/m-profile;../../../../../../../devices/MIMXRT798S;../../../../../../../devices/MIMXRT798S/periph;../../../../../../../devices/MIMXRT798S/drivers;../../../../../../../devices/MIMXRT798S/utilities/debug_console;../../../../../../../components/lists;../../../../../../../devices/MIMXRT798S/utilities/str;../../../../../../../components/serial_manager;../../../../../../../components/gpio;../../../../../../../components/timer;../../../../../../../components/i2c;../../../../../../../components/uart;../../../../../../../components/osa;../../../../../../../middleware/usb/include;../../../../../../../middleware/usb/pd;../../../../../../../middleware/usb/pd/ptn5110;../../../../../../../middleware/usb/pd/phy_interface;../../../../../../../middleware/usb/config/pd;../../../../../../../middleware/usb/pd/alt_mode;../../../../../../../middleware/usb/phy</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -5169,10 +5199,10 @@
             <useXO>0</useXO>
             <ClangAsOpt>2</ClangAsOpt>
             <VariousControls>
-              <MiscControls/>
-              <Define>MCUXPRESSO_SDK, CPU_MIMXRT798SGFOA_cm33_core0, DEBUG_CONSOLE_TRANSFER_NON_BLOCKING</Define>
+              <MiscControls>-include ../mcux_config.h</MiscControls>
+              <Define>MCUXPRESSO_SDK, CPU_MIMXRT798SGFOB_cm33_core0, MIMXRT798S_cm33_core0_SERIES, DEBUG_CONSOLE_TRANSFER_NON_BLOCKING</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../flash_config;../../../../../../../CMSIS/Core/Include;../../../../../../../CMSIS/Core/Include/m-profile;../../../../../../../devices/MIMXRT798S;../../../../../../../devices/MIMXRT798S/periph;../../../../../../../devices/periph;../../../../../../../devices/MIMXRT798S/drivers;../../../../../../../devices/MIMXRT798S/utilities;../../../../../../../components/lists;../../../../../../../devices/MIMXRT798S/utilities/str;../../../../../../../devices/MIMXRT798S/utilities/debug_console;../../../../../../../components/serial_manager;../../../../../../../components/gpio;../../../../../../../components/timer;../../../../../../../components/i2c;../../../../../../../components/uart;../../../../../../../components/osa;../../../../../../../middleware/usb/include;../../../../../../../middleware/usb/pd;../../../../../../../middleware/usb/pd/ptn5110;../../../../../../../middleware/usb/pd/phy_interface;../../../../../../../middleware/usb/pd/alt_mode;../../../../../../../middleware/usb/phy</IncludePath>
+              <IncludePath>..;../../../../../flash_config;../../../../../../../CMSIS/Core/Include;../../../../../../../CMSIS/Core/Include/m-profile;../../../../../../../devices/MIMXRT798S;../../../../../../../devices/MIMXRT798S/periph;../../../../../../../devices/periph;../../../../../../../devices/MIMXRT798S/drivers;../../../../../../../devices/MIMXRT798S/utilities/debug_console;../../../../../../../components/lists;../../../../../../../devices/MIMXRT798S/utilities/str;../../../../../../../components/serial_manager;../../../../../../../components/gpio;../../../../../../../components/timer;../../../../../../../components/i2c;../../../../../../../components/uart;../../../../../../../components/osa;../../../../../../../middleware/usb/include;../../../../../../../middleware/usb/pd;../../../../../../../middleware/usb/pd/ptn5110;../../../../../../../middleware/usb/pd/phy_interface;../../../../../../../middleware/usb/config/pd;../../../../../../../middleware/usb/pd/alt_mode;../../../../../../../middleware/usb/phy</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -5217,11 +5247,6 @@
               <FileName>pin_mux.h</FileName>
               <FileType>5</FileType>
               <FilePath>../pin_mux.h</FilePath>
-            </File>
-            <File>
-              <FileName>displayport_host.xml</FileName>
-              <FileType>5</FileType>
-              <FilePath>../displayport_host.xml</FilePath>
             </File>
             <File>
               <FileName>pd_board_config.h</FileName>
@@ -5332,6 +5357,16 @@
               <FileName>fsl_os_abstraction_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../fsl_os_abstraction_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../mcux_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../mcux_config.h</FilePath>
             </File>
             <File>
               <FileName>mcux_config.h</FileName>
@@ -5886,12 +5921,12 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>startup/arm</GroupName>
+          <GroupName>startup</GroupName>
           <Files>
             <File>
-              <FileName>startup_MIMXRT798S_cm33_core0.S</FileName>
-              <FileType>2</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT798S/arm/startup_MIMXRT798S_cm33_core0.S</FilePath>
+              <FileName>startup_MIMXRT798S_cm33_core0.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT798S/startup_MIMXRT798S_cm33_core0.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -6066,12 +6101,12 @@
             <File>
               <FileName>fsl_assert.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT798S/utilities/fsl_assert.h</FilePath>
+              <FilePath>../../../../../../../devices/MIMXRT798S/utilities/debug_console/fsl_assert.h</FilePath>
             </File>
             <File>
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT798S/utilities/fsl_assert.c</FilePath>
+              <FilePath>../../../../../../../devices/MIMXRT798S/utilities/debug_console/fsl_assert.c</FilePath>
             </File>
             <File>
               <FileName>fsl_memcpy.S</FileName>
@@ -6219,11 +6254,6 @@
           <GroupName>component/osa</GroupName>
           <Files>
             <File>
-              <FileName>fsl_os_abstraction.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../components/osa/fsl_os_abstraction.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_os_abstraction_bm.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../components/osa/fsl_os_abstraction_bm.h</FilePath>
@@ -6232,6 +6262,11 @@
               <FileName>fsl_os_abstraction_bm.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../components/osa/fsl_os_abstraction_bm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../components/osa/fsl_os_abstraction.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -6417,6 +6452,11 @@
               <FileName>readme.md</FileName>
               <FileType>5</FileType>
               <FilePath>../readme.md</FilePath>
+            </File>
+            <File>
+              <FileName>examples_shared_readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../examples_shared_readme.md</FilePath>
             </File>
             <File>
               <FileName>ugreen_typec_hdmi.jpg</FileName>

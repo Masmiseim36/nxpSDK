@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 NXP
+ * Copyright 2024-2025 NXP
  * Copyright (c) 2016, Wind River Systems, Inc.
  *
  * SPDX-License-Identifier: Apache-2.0
@@ -9,6 +9,10 @@
 #define __EDGEFAST_BT_BLE_SEM_H__
 
 #include <system_c.h>
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 struct k_sem {
 	SemaphoreHandle_t sem;\
@@ -148,5 +152,9 @@ __syscall unsigned int k_sem_count_get(struct k_sem *sem);
 			 ((count_limit) <= K_SEM_MAX_LIMIT));
 
 /** @} */
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* __EDGEFAST_BT_BLE_SEM_H__ */

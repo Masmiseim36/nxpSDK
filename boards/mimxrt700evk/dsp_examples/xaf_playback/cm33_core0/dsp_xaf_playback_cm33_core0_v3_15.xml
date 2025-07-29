@@ -10,6 +10,7 @@
     <definition extID="device.MIMXRT798S_startup.MIMXRT798S"/>
     <definition extID="platform.drivers.clock.MIMXRT798S"/>
     <definition extID="platform.drivers.dsp.MIMXRT798S"/>
+    <definition extID="platform.drivers.ezhv.MIMXRT798S"/>
     <definition extID="platform.drivers.lpc_iopctl.MIMXRT798S"/>
     <definition extID="platform.drivers.power.MIMXRT798S"/>
     <definition extID="platform.drivers.reset.MIMXRT798S"/>
@@ -44,7 +45,6 @@
     <definition extID="component.lpi2c_adapter.MIMXRT798S"/>
     <definition extID="component.lpuart_adapter.MIMXRT798S"/>
     <definition extID="component.osa_template_config.MIMXRT798S"/>
-    <definition extID="component.osa_interface.MIMXRT798S"/>
     <definition extID="component.osa.MIMXRT798S"/>
     <definition extID="component.osa_free_rtos.MIMXRT798S"/>
     <definition extID="middleware.fatfs.MIMXRT798S"/>
@@ -64,6 +64,7 @@
     <definition extID="middleware.freertos-kernel.MIMXRT798S"/>
     <definition extID="middleware.freertos-kernel.heap_4.MIMXRT798S"/>
     <definition extID="middleware.freertos-kernel.cm33_non_trustzone.MIMXRT798S"/>
+    <definition extID="middleware.freertos-kernel.extension.MIMXRT798S"/>
     <definition extID="middleware.freertos-kernel.config.MIMXRT798S"/>
     <definition extID="iar"/>
     <definition extID="mdk"/>
@@ -73,7 +74,7 @@
     <definition extID="com.crt.advproject.config.exe.debug"/>
     <definition extID="com.crt.advproject.config.exe.release"/>
   </externalDefinitions>
-  <example id="mimxrt700evk_dsp_xaf_playback_cm33_core0" name="dsp_xaf_playback_cm33_core0" device_core="cm33_core0_MIMXRT798S" dependency="platform.drivers.flash_config.mimxrt700evk.MIMXRT798S CMSIS_Include_core_cm.MIMXRT798S device.MIMXRT798S_CMSIS.MIMXRT798S device.MIMXRT798S_system.MIMXRT798S device.MIMXRT798S_startup.MIMXRT798S platform.drivers.clock.MIMXRT798S platform.drivers.dsp.MIMXRT798S platform.drivers.lpc_iopctl.MIMXRT798S platform.drivers.power.MIMXRT798S platform.drivers.reset.MIMXRT798S platform.drivers.cache_xcache.MIMXRT798S platform.drivers.common.MIMXRT798S platform.drivers.glikey.MIMXRT798S platform.drivers.gpio.MIMXRT798S platform.drivers.lpflexcomm.MIMXRT798S platform.drivers.lpflexcomm_lpuart.MIMXRT798S platform.drivers.lpflexcomm_lpi2c.MIMXRT798S platform.drivers.mu1.MIMXRT798S platform.drivers.sai.MIMXRT798S platform.drivers.sema42.MIMXRT798S platform.drivers.usdhc.MIMXRT798S platform.drivers.xspi.MIMXRT798S platform.utilities.assert.MIMXRT798S platform.utilities.misc_utilities.MIMXRT798S utility.incbin.MIMXRT798S component.lists.MIMXRT798S utility.str.MIMXRT798S utility.debug_console.MIMXRT798S utility.shell.MIMXRT798S component.serial_manager.MIMXRT798S component.serial_manager_uart.MIMXRT798S component.codec_i2c.MIMXRT798S driver.codec.MIMXRT798S component.codec_adapters.MIMXRT798S component.wm8962_adapter.MIMXRT798S driver.wm8962.MIMXRT798S component.gpio_adapter.MIMXRT798S component.i2c_adapter_interface.MIMXRT798S component.lpi2c_adapter.MIMXRT798S component.lpuart_adapter.MIMXRT798S component.osa_template_config.MIMXRT798S component.osa_interface.MIMXRT798S component.osa.MIMXRT798S component.osa_free_rtos.MIMXRT798S middleware.fatfs.MIMXRT798S middleware.fatfs.template_sd.MIMXRT798S middleware.fatfs.sd.MIMXRT798S middleware.multicore.rpmsg-lite.MIMXRT798S middleware.multicore.rpmsg-lite.queue.MIMXRT798S middleware.multicore.rpmsg-lite.ns.MIMXRT798S middleware.multicore.rpmsg-lite.freertos.MIMXRT798S middleware.multicore.rpmsg-lite.imxrt700.MIMXRT798S middleware.sdmmc.common.MIMXRT798S middleware.sdmmc.osa.freertos.MIMXRT798S middleware.sdmmc.sd.MIMXRT798S middleware.sdmmc.host.usdhc.MIMXRT798S middleware.sdmmc.host.usdhc.non_blocking.MIMXRT798S middleware.sdmmc.usdhc.template.MIMXRT798S middleware.freertos-kernel.MIMXRT798S middleware.freertos-kernel.heap_4.MIMXRT798S middleware.freertos-kernel.cm33_non_trustzone.MIMXRT798S middleware.freertos-kernel.config.MIMXRT798S" linked_projects="mimxrt700evk_dsp_xaf_playback_cm33_core1" category="dsp_examples">
+  <example id="mimxrt700evk_dsp_xaf_playback_cm33_core0" name="dsp_xaf_playback_cm33_core0" device_core="cm33_core0_MIMXRT798S" dependency="platform.drivers.flash_config.mimxrt700evk.MIMXRT798S CMSIS_Include_core_cm.MIMXRT798S device.MIMXRT798S_CMSIS.MIMXRT798S device.MIMXRT798S_system.MIMXRT798S device.MIMXRT798S_startup.MIMXRT798S platform.drivers.clock.MIMXRT798S platform.drivers.dsp.MIMXRT798S platform.drivers.ezhv.MIMXRT798S platform.drivers.lpc_iopctl.MIMXRT798S platform.drivers.power.MIMXRT798S platform.drivers.reset.MIMXRT798S platform.drivers.cache_xcache.MIMXRT798S platform.drivers.common.MIMXRT798S platform.drivers.glikey.MIMXRT798S platform.drivers.gpio.MIMXRT798S platform.drivers.lpflexcomm.MIMXRT798S platform.drivers.lpflexcomm_lpuart.MIMXRT798S platform.drivers.lpflexcomm_lpi2c.MIMXRT798S platform.drivers.mu1.MIMXRT798S platform.drivers.sai.MIMXRT798S platform.drivers.sema42.MIMXRT798S platform.drivers.usdhc.MIMXRT798S platform.drivers.xspi.MIMXRT798S platform.utilities.assert.MIMXRT798S platform.utilities.misc_utilities.MIMXRT798S utility.incbin.MIMXRT798S component.lists.MIMXRT798S utility.str.MIMXRT798S utility.debug_console.MIMXRT798S utility.shell.MIMXRT798S component.serial_manager.MIMXRT798S component.serial_manager_uart.MIMXRT798S component.codec_i2c.MIMXRT798S driver.codec.MIMXRT798S component.codec_adapters.MIMXRT798S component.wm8962_adapter.MIMXRT798S driver.wm8962.MIMXRT798S component.gpio_adapter.MIMXRT798S component.i2c_adapter_interface.MIMXRT798S component.lpi2c_adapter.MIMXRT798S component.lpuart_adapter.MIMXRT798S component.osa_template_config.MIMXRT798S component.osa.MIMXRT798S component.osa_free_rtos.MIMXRT798S middleware.fatfs.MIMXRT798S middleware.fatfs.template_sd.MIMXRT798S middleware.fatfs.sd.MIMXRT798S middleware.multicore.rpmsg-lite.MIMXRT798S middleware.multicore.rpmsg-lite.queue.MIMXRT798S middleware.multicore.rpmsg-lite.ns.MIMXRT798S middleware.multicore.rpmsg-lite.freertos.MIMXRT798S middleware.multicore.rpmsg-lite.imxrt700.MIMXRT798S middleware.sdmmc.common.MIMXRT798S middleware.sdmmc.osa.freertos.MIMXRT798S middleware.sdmmc.sd.MIMXRT798S middleware.sdmmc.host.usdhc.MIMXRT798S middleware.sdmmc.host.usdhc.non_blocking.MIMXRT798S middleware.sdmmc.usdhc.template.MIMXRT798S middleware.freertos-kernel.MIMXRT798S middleware.freertos-kernel.heap_4.MIMXRT798S middleware.freertos-kernel.cm33_non_trustzone.MIMXRT798S middleware.freertos-kernel.extension.MIMXRT798S middleware.freertos-kernel.config.MIMXRT798S" linked_projects="mimxrt700evk_dsp_xaf_playback_cm33_core1" category="dsp_examples">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -88,7 +89,7 @@
       <toolchainSetting id_refs="com.nxp.mcuxpresso">
         <option id="gnu.c.compiler.option.preprocessor.def.symbols" type="stringList">
           <value>MCUXPRESSO_SDK</value>
-          <value>CPU_MIMXRT798SGFOA_cm33_core0</value>
+          <value>CPU_MIMXRT798SGFOB_cm33_core0</value>
           <value>BOOT_HEADER_ENABLE=1</value>
           <value>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</value>
           <value>XA_MP3_DECODER=1</value>
@@ -103,10 +104,12 @@
           <value>XA_RENDERER=1</value>
           <value>DSP_IMAGE_COPY_TO_RAM=1</value>
           <value>__USE_SHMEM</value>
+          <value>DSP_NCACHE</value>
           <value>BOARD_SDMMC_NEED_MANUAL_TUNING</value>
           <value>FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1</value>
           <value>SDK_DEBUGCONSOLE=1</value>
           <value>MCUX_META_BUILD</value>
+          <value>MIMXRT798S_cm33_core0_SERIES</value>
           <value>OSA_USED</value>
           <value>SERIAL_PORT_TYPE_UART=1</value>
           <value>SDK_I2C_BASED_COMPONENT_USED=1</value>
@@ -219,6 +222,7 @@
       <files mask="dsp_literal_release.bin"/>
       <files mask="dsp_text_release.bin"/>
       <files mask="dsp_data_release.bin"/>
+      <files mask="dsp_ncache_release.bin"/>
     </source>
     <source path="../hifi1/binary" project_relative_path="dsp_binary/hifi1/binary" type="binary">
       <files mask="dsp_vector_release.bin"/>
@@ -322,6 +326,9 @@
     </source>
     <source path="." project_relative_path="doc" type="doc">
       <files mask="example_board_readme.md"/>
+    </source>
+    <source path="." project_relative_path="doc" type="doc">
+      <files mask="examples_shared_readme.md"/>
     </source>
   </example>
 </ksdk:examples>

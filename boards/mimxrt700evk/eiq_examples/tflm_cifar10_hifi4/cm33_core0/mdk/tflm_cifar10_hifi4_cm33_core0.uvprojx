@@ -11,7 +11,7 @@
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
-          <Device>MIMXRT798SGFOA:cm33_core0</Device>
+          <Device>MIMXRT798SGFOB:cm33_core0</Device>
           <Vendor>NXP</Vendor>
           <PackID>NXP.MIMXRT798S_DFP.17.0.0</PackID>
           <PackURL>https://mcuxpresso.nxp.com/cmsis_pack/repo/</PackURL>
@@ -333,10 +333,10 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>-include ../mcux_config.h -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
-              <Define>DEBUG, DSP_IMAGE_COPY_TO_RAM=1, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT798SGFOA_cm33_core0, BOOT_HEADER_ENABLE=1</Define>
+              <MiscControls>-include ../mcux_config.h -fno-common  -fdata-sections  -fno-builtin  -mthumb -fno-exceptions</MiscControls>
+              <Define>DEBUG, DSP_IMAGE_COPY_TO_RAM=1, EIQ_EXAMPLE_HSRUN_CLOCK, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT798SGFOB_cm33_core0, MIMXRT798S_cm33_core0_SERIES, BOOT_HEADER_ENABLE=1, SDK_I2C_BASED_COMPONENT_USED=1</Define>
               <Undefine/>
-              <IncludePath>..;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT798S;../../../../../../devices/MIMXRT798S/periph;../../../../../../devices/MIMXRT798S/drivers;../../../../../../devices/MIMXRT798S/utilities/debug_console_lite;../../../../../../devices/MIMXRT798S/utilities/str;../../../../../../components/uart</IncludePath>
+              <IncludePath>..;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT798S;../../../../../../devices/MIMXRT798S/periph;../../../../../../devices/MIMXRT798S/drivers;../../../../../../devices/MIMXRT798S/utilities/debug_console_lite;../../../../../../devices/MIMXRT798S/utilities/str;../../../../../../components/uart;../../../../../../components/pmic/pca9422</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -351,10 +351,10 @@
             <useXO>0</useXO>
             <ClangAsOpt>2</ClangAsOpt>
             <VariousControls>
-              <MiscControls/>
-              <Define>DSP_IMAGE_COPY_TO_RAM=1, MCUXPRESSO_SDK, CPU_MIMXRT798SGFOA_cm33_core0</Define>
+              <MiscControls>-include ../mcux_config.h</MiscControls>
+              <Define>DSP_IMAGE_COPY_TO_RAM=1, MCUXPRESSO_SDK, CPU_MIMXRT798SGFOB_cm33_core0, MIMXRT798S_cm33_core0_SERIES</Define>
               <Undefine/>
-              <IncludePath>..;../../hifi4/binary;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT798S;../../../../../../devices/MIMXRT798S/periph;../../../../../../devices/periph;../../../../../../devices/MIMXRT798S/drivers;../../../../../../devices/MIMXRT798S/utilities/debug_console_lite;../../../../../../devices/MIMXRT798S/utilities/str;../../../../../../components/uart</IncludePath>
+              <IncludePath>..;../../hifi4/binary;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT798S;../../../../../../devices/MIMXRT798S/periph;../../../../../../devices/periph;../../../../../../devices/MIMXRT798S/drivers;../../../../../../devices/MIMXRT798S/utilities/debug_console_lite;../../../../../../devices/MIMXRT798S/utilities/str;../../../../../../components/uart;../../../../../../components/pmic/pca9422</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -396,19 +396,39 @@
               <FilePath>../board_init.h</FilePath>
             </File>
             <File>
-              <FileName>dsp_support.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../dsp_support.c</FilePath>
-            </File>
-            <File>
               <FileName>dsp_support.h</FileName>
               <FileType>5</FileType>
               <FilePath>../dsp_support.h</FilePath>
             </File>
             <File>
+              <FileName>dsp_support.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../dsp_support.c</FilePath>
+            </File>
+            <File>
               <FileName>incbin_cm33_core0.S</FileName>
               <FileType>2</FileType>
               <FilePath>../incbin_cm33_core0.S</FilePath>
+            </File>
+            <File>
+              <FileName>pmic_support.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../pmic_support.c</FilePath>
+            </File>
+            <File>
+              <FileName>pmic_support.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../pmic_support.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../mcux_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../mcux_config.h</FilePath>
             </File>
             <File>
               <FileName>mcux_config.h</FileName>
@@ -998,12 +1018,12 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>startup/arm</GroupName>
+          <GroupName>startup</GroupName>
           <Files>
             <File>
-              <FileName>startup_MIMXRT798S_cm33_core0.S</FileName>
-              <FileType>2</FileType>
-              <FilePath>../../../../../../devices/MIMXRT798S/arm/startup_MIMXRT798S_cm33_core0.S</FilePath>
+              <FileName>startup_MIMXRT798S_cm33_core0.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT798S/startup_MIMXRT798S_cm33_core0.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1126,6 +1146,16 @@
               <FilePath>../../../../../../devices/MIMXRT798S/drivers/fsl_lpuart.c</FilePath>
             </File>
             <File>
+              <FileName>fsl_lpi2c.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT798S/drivers/fsl_lpi2c.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_lpi2c.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT798S/drivers/fsl_lpi2c.c</FilePath>
+            </File>
+            <File>
               <FileName>fsl_xspi.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT798S/drivers/fsl_xspi.c</FilePath>
@@ -1203,6 +1233,21 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>component/pmic/pca9422</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_pca9422.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/pmic/pca9422/fsl_pca9422.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_pca9422.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/pmic/pca9422/fsl_pca9422.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>doc</GroupName>
           <Files>
             <File>
@@ -1222,7 +1267,7 @@
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
-          <Device>MIMXRT798SGFOA:cm33_core0</Device>
+          <Device>MIMXRT798SGFOB:cm33_core0</Device>
           <Vendor>NXP</Vendor>
           <PackID>NXP.MIMXRT798S_DFP.17.0.0</PackID>
           <PackURL>https://mcuxpresso.nxp.com/cmsis_pack/repo/</PackURL>
@@ -1544,10 +1589,10 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>-include ../mcux_config.h -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
-              <Define>NDEBUG, DSP_IMAGE_COPY_TO_RAM=1, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT798SGFOA_cm33_core0, BOOT_HEADER_ENABLE=1</Define>
+              <MiscControls>-include ../mcux_config.h -fno-common  -fdata-sections  -fno-builtin  -mthumb -fno-exceptions</MiscControls>
+              <Define>NDEBUG, DSP_IMAGE_COPY_TO_RAM=1, EIQ_EXAMPLE_HSRUN_CLOCK, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT798SGFOB_cm33_core0, MIMXRT798S_cm33_core0_SERIES, BOOT_HEADER_ENABLE=1, SDK_I2C_BASED_COMPONENT_USED=1</Define>
               <Undefine/>
-              <IncludePath>..;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT798S;../../../../../../devices/MIMXRT798S/periph;../../../../../../devices/MIMXRT798S/drivers;../../../../../../devices/MIMXRT798S/utilities/debug_console_lite;../../../../../../devices/MIMXRT798S/utilities/str;../../../../../../components/uart</IncludePath>
+              <IncludePath>..;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT798S;../../../../../../devices/MIMXRT798S/periph;../../../../../../devices/MIMXRT798S/drivers;../../../../../../devices/MIMXRT798S/utilities/debug_console_lite;../../../../../../devices/MIMXRT798S/utilities/str;../../../../../../components/uart;../../../../../../components/pmic/pca9422</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1562,10 +1607,10 @@
             <useXO>0</useXO>
             <ClangAsOpt>2</ClangAsOpt>
             <VariousControls>
-              <MiscControls/>
-              <Define>DSP_IMAGE_COPY_TO_RAM=1, MCUXPRESSO_SDK, CPU_MIMXRT798SGFOA_cm33_core0</Define>
+              <MiscControls>-include ../mcux_config.h</MiscControls>
+              <Define>DSP_IMAGE_COPY_TO_RAM=1, MCUXPRESSO_SDK, CPU_MIMXRT798SGFOB_cm33_core0, MIMXRT798S_cm33_core0_SERIES</Define>
               <Undefine/>
-              <IncludePath>..;../../hifi4/binary;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT798S;../../../../../../devices/MIMXRT798S/periph;../../../../../../devices/periph;../../../../../../devices/MIMXRT798S/drivers;../../../../../../devices/MIMXRT798S/utilities/debug_console_lite;../../../../../../devices/MIMXRT798S/utilities/str;../../../../../../components/uart</IncludePath>
+              <IncludePath>..;../../hifi4/binary;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT798S;../../../../../../devices/MIMXRT798S/periph;../../../../../../devices/periph;../../../../../../devices/MIMXRT798S/drivers;../../../../../../devices/MIMXRT798S/utilities/debug_console_lite;../../../../../../devices/MIMXRT798S/utilities/str;../../../../../../components/uart;../../../../../../components/pmic/pca9422</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -1607,19 +1652,39 @@
               <FilePath>../board_init.h</FilePath>
             </File>
             <File>
-              <FileName>dsp_support.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../dsp_support.c</FilePath>
-            </File>
-            <File>
               <FileName>dsp_support.h</FileName>
               <FileType>5</FileType>
               <FilePath>../dsp_support.h</FilePath>
             </File>
             <File>
+              <FileName>dsp_support.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../dsp_support.c</FilePath>
+            </File>
+            <File>
               <FileName>incbin_cm33_core0.S</FileName>
               <FileType>2</FileType>
               <FilePath>../incbin_cm33_core0.S</FilePath>
+            </File>
+            <File>
+              <FileName>pmic_support.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../pmic_support.c</FilePath>
+            </File>
+            <File>
+              <FileName>pmic_support.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../pmic_support.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../mcux_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../mcux_config.h</FilePath>
             </File>
             <File>
               <FileName>mcux_config.h</FileName>
@@ -2209,12 +2274,12 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>startup/arm</GroupName>
+          <GroupName>startup</GroupName>
           <Files>
             <File>
-              <FileName>startup_MIMXRT798S_cm33_core0.S</FileName>
-              <FileType>2</FileType>
-              <FilePath>../../../../../../devices/MIMXRT798S/arm/startup_MIMXRT798S_cm33_core0.S</FilePath>
+              <FileName>startup_MIMXRT798S_cm33_core0.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT798S/startup_MIMXRT798S_cm33_core0.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2337,6 +2402,16 @@
               <FilePath>../../../../../../devices/MIMXRT798S/drivers/fsl_lpuart.c</FilePath>
             </File>
             <File>
+              <FileName>fsl_lpi2c.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT798S/drivers/fsl_lpi2c.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_lpi2c.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT798S/drivers/fsl_lpi2c.c</FilePath>
+            </File>
+            <File>
               <FileName>fsl_xspi.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT798S/drivers/fsl_xspi.c</FilePath>
@@ -2410,6 +2485,21 @@
               <FileName>fsl_adapter_lpuart.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../components/uart/fsl_adapter_lpuart.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/pmic/pca9422</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_pca9422.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/pmic/pca9422/fsl_pca9422.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_pca9422.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/pmic/pca9422/fsl_pca9422.h</FilePath>
             </File>
           </Files>
         </Group>

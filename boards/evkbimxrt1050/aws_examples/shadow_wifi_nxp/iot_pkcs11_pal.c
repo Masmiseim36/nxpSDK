@@ -166,7 +166,7 @@ CK_OBJECT_HANDLE PKCS11_PAL_SaveObject( CK_ATTRIBUTE_PTR pxLabel,
     if( xHandle != eInvalidHandle )
     {
         /* Check if the file exists. */
-        uint8_t * pFile = NULL;
+        const uint8_t * pFile = NULL;
         uint32_t xFileLength = 0;
         if( kStatus_Success == mflash_file_mmap( pcFileName, &pFile, &xFileLength ) )
         {
@@ -209,7 +209,7 @@ CK_OBJECT_HANDLE PKCS11_PAL_FindObject( CK_BYTE_PTR pxLabel,
 {
     CK_OBJECT_HANDLE xHandle = eInvalidHandle;
     char * pcFileName = NULL;
-    uint8_t * pFile = NULL;
+    const uint8_t * pFile = NULL;
     uint32_t xFileLength = 0;
 
     /* Translate from the PKCS#11 label to local storage file name. */
@@ -284,7 +284,7 @@ CK_RV PKCS11_PAL_GetObjectValue( CK_OBJECT_HANDLE xHandle,
         ulReturn = CKR_KEY_HANDLE_INVALID;
     }
 
-    if( kStatus_Success != mflash_file_mmap( pcFileName, ppucData, pulDataSize ) )
+    if( kStatus_Success != mflash_file_mmap( pcFileName, ( const uint8_t ** ) ppucData, pulDataSize ) )
     {
         ulReturn = CKR_FUNCTION_FAILED;
     }

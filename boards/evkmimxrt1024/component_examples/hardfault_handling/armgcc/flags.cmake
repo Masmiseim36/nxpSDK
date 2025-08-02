@@ -16,6 +16,7 @@ SET(CMAKE_ASM_FLAGS_DEBUG " \
     -D__STARTUP_CLEAR_BSS \
     -DMCUXPRESSO_SDK \
     -DCPU_MIMXRT1024DAG5A \
+    -DMIMXRT1024_SERIES \
     -g \
     -mthumb \
     -mcpu=cortex-m7 \
@@ -27,6 +28,7 @@ SET(CMAKE_ASM_FLAGS_RELEASE " \
     -D__STARTUP_CLEAR_BSS \
     -DMCUXPRESSO_SDK \
     -DCPU_MIMXRT1024DAG5A \
+    -DMIMXRT1024_SERIES \
     -mthumb \
     -mcpu=cortex-m7 \
     ${FPU} \
@@ -35,6 +37,7 @@ SET(CMAKE_C_FLAGS_DEBUG " \
     ${CMAKE_C_FLAGS_DEBUG} \
     -include ${ProjDirPath}/../mcux_config.h \
     -DDEBUG \
+    -D__STARTUP_CLEAR_BSS \
     -DPRINTF_FLOAT_ENABLE=0 \
     -DSCANF_FLOAT_ENABLE=0 \
     -DPRINTF_ADVANCED_ENABLE=0 \
@@ -43,6 +46,7 @@ SET(CMAKE_C_FLAGS_DEBUG " \
     -DMCUX_META_BUILD \
     -DMCUXPRESSO_SDK \
     -DCPU_MIMXRT1024DAG5A \
+    -DMIMXRT1024_SERIES \
     -DSERIAL_PORT_TYPE_UART=1 \
     -g \
     -O0 \
@@ -62,6 +66,7 @@ SET(CMAKE_C_FLAGS_RELEASE " \
     ${CMAKE_C_FLAGS_RELEASE} \
     -include ${ProjDirPath}/../mcux_config.h \
     -DNDEBUG \
+    -D__STARTUP_CLEAR_BSS \
     -DPRINTF_FLOAT_ENABLE=0 \
     -DSCANF_FLOAT_ENABLE=0 \
     -DPRINTF_ADVANCED_ENABLE=0 \
@@ -70,6 +75,7 @@ SET(CMAKE_C_FLAGS_RELEASE " \
     -DMCUX_META_BUILD \
     -DMCUXPRESSO_SDK \
     -DCPU_MIMXRT1024DAG5A \
+    -DMIMXRT1024_SERIES \
     -DSERIAL_PORT_TYPE_UART=1 \
     -Os \
     -Wall \
@@ -90,6 +96,7 @@ SET(CMAKE_CXX_FLAGS_DEBUG " \
     -DMCUX_META_BUILD \
     -DMCUXPRESSO_SDK \
     -DCPU_MIMXRT1024DAG5A \
+    -DMIMXRT1024_SERIES \
     -DSERIAL_PORT_TYPE_UART=1 \
     -g \
     -O0 \
@@ -112,6 +119,7 @@ SET(CMAKE_CXX_FLAGS_RELEASE " \
     -DMCUX_META_BUILD \
     -DMCUXPRESSO_SDK \
     -DCPU_MIMXRT1024DAG5A \
+    -DMIMXRT1024_SERIES \
     -DSERIAL_PORT_TYPE_UART=1 \
     -Os \
     -Wall \
@@ -141,9 +149,6 @@ SET(CMAKE_EXE_LINKER_FLAGS_DEBUG " \
     -mapcs \
     -Wl,--gc-sections \
     -Wl,-static \
-    -Wl,-z \
-    -Wl,muldefs \
-    -Wl,-Map=output.map \
     -Wl,--print-memory-usage \
     -mcpu=cortex-m7 \
     ${FPU} \
@@ -163,9 +168,6 @@ SET(CMAKE_EXE_LINKER_FLAGS_RELEASE " \
     -mapcs \
     -Wl,--gc-sections \
     -Wl,-static \
-    -Wl,-z \
-    -Wl,muldefs \
-    -Wl,-Map=output.map \
     -Wl,--print-memory-usage \
     -mcpu=cortex-m7 \
     ${FPU} \

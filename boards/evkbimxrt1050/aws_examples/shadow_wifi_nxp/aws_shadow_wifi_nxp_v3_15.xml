@@ -36,14 +36,15 @@
     <definition extID="component.serial_manager_uart.MIMXRT1052"/>
     <definition extID="component.igpio_adapter.MIMXRT1052"/>
     <definition extID="component.lpuart_adapter.MIMXRT1052"/>
-    <definition extID="component.mflash_offchip.MIMXRT1052"/>
     <definition extID="component.osa_template_config.MIMXRT1052"/>
-    <definition extID="component.osa_interface.MIMXRT1052"/>
     <definition extID="component.osa.MIMXRT1052"/>
     <definition extID="component.osa_free_rtos.MIMXRT1052"/>
     <definition extID="middleware.edgefast_wifi_nxp.MIMXRT1052"/>
     <definition extID="component.wifi_bt_module.tx_pwr_limits.MIMXRT1052"/>
     <definition extID="component.wifi_bt_module.config.MIMXRT1052"/>
+    <definition extID="component.wifi_bt_module.IW416.MIMXRT1052"/>
+    <definition extID="component.wifi_bt_module.board_murata_1xk_usd.MIMXRT1052"/>
+    <definition extID="component.mflash_offchip.MIMXRT1052"/>
     <definition extID="middleware.wifi.template.MIMXRT1052"/>
     <definition extID="middleware.wifi.osa_free_rtos.MIMXRT1052"/>
     <definition extID="middleware.wifi.osa.MIMXRT1052"/>
@@ -72,6 +73,7 @@
     <definition extID="middleware.aws_iot.device_shadow.MIMXRT1052"/>
     <definition extID="middleware.freertos-kernel.MIMXRT1052"/>
     <definition extID="middleware.freertos-kernel.heap_4.MIMXRT1052"/>
+    <definition extID="middleware.freertos-kernel.extension.MIMXRT1052"/>
     <definition extID="middleware.freertos-kernel.config.MIMXRT1052"/>
     <definition extID="middleware.freertos.backoffalgorithm.MIMXRT1052"/>
     <definition extID="middleware.freertos.corejson.MIMXRT1052"/>
@@ -90,7 +92,7 @@
     <definition extID="com.nxp.mcuxpresso.core.debug.support.segger.debug"/>
     <definition extID="com.nxp.mcuxpresso.core.debug.support.segger.release"/>
   </externalDefinitions>
-  <example id="evkbimxrt1050_aws_shadow_wifi_nxp" name="aws_shadow_wifi_nxp" device_core="core0_MIMXRT1052xxxxB" dependency="platform.drivers.xip_board.evkbimxrt1050.MIMXRT1052 platform.drivers.clock.MIMXRT1052 platform.drivers.iomuxc.MIMXRT1052 CMSIS_Include_core_cm.MIMXRT1052 device.MIMXRT1052_CMSIS.MIMXRT1052 device.MIMXRT1052_system.MIMXRT1052 device.MIMXRT1052_startup.MIMXRT1052 platform.drivers.xip_device.MIMXRT1052 platform.drivers.cache_armv7_m7.MIMXRT1052 platform.drivers.common.MIMXRT1052 platform.drivers.dcdc_1.MIMXRT1052 platform.drivers.dcp.MIMXRT1052 platform.drivers.flexspi.MIMXRT1052 platform.drivers.gpc_1.MIMXRT1052 platform.drivers.igpio.MIMXRT1052 platform.drivers.lpuart.MIMXRT1052 platform.drivers.pmu.MIMXRT1052 platform.drivers.src.MIMXRT1052 platform.drivers.trng.MIMXRT1052 platform.drivers.usdhc.MIMXRT1052 middleware.iot_reference.kvstore.MIMXRT1052 middleware.iot_reference.logging.MIMXRT1052 middleware.iot_reference.mqtt_agent.MIMXRT1052 middleware.iot_reference.mqtt_agent_interface.MIMXRT1052 middleware.iot_reference.transport_mbedtls.MIMXRT1052 platform.utilities.assert.MIMXRT1052 platform.utilities.misc_utilities.MIMXRT1052 component.lists.MIMXRT1052 utility.str.MIMXRT1052 utility.debug_console.MIMXRT1052 component.serial_manager.MIMXRT1052 component.serial_manager_uart.MIMXRT1052 component.igpio_adapter.MIMXRT1052 component.lpuart_adapter.MIMXRT1052 component.mflash_offchip.MIMXRT1052 component.osa_template_config.MIMXRT1052 component.osa_interface.MIMXRT1052 component.osa.MIMXRT1052 component.osa_free_rtos.MIMXRT1052 middleware.edgefast_wifi_nxp.MIMXRT1052 component.wifi_bt_module.tx_pwr_limits.MIMXRT1052 component.wifi_bt_module.config.MIMXRT1052 middleware.wifi.template.MIMXRT1052 middleware.wifi.osa_free_rtos.MIMXRT1052 middleware.wifi.osa.MIMXRT1052 middleware.wifi.common_files.MIMXRT1052 middleware.wifi.fwdnld.MIMXRT1052 middleware.wifi.net.MIMXRT1052 middleware.wifi.wifidriver.MIMXRT1052 middleware.wifi.wifidriver.softap.MIMXRT1052 middleware.wifi.MIMXRT1052 middleware.wifi.sdio.MIMXRT1052 middleware.wifi.mlan_sdio.MIMXRT1052 middleware.wifi.fwdnld_intf_abs.MIMXRT1052 middleware.mbedtls.port.ksdk_option.MIMXRT1052 middleware.mbedtls.MIMXRT1052 middleware.mbedtls.port.ksdk.MIMXRT1052 middleware.lwip.MIMXRT1052 middleware.lwip.sys_arch.dynamic.MIMXRT1052 middleware.sdmmc.common.MIMXRT1052 middleware.sdmmc.osa.freertos.MIMXRT1052 middleware.sdmmc.sdio.MIMXRT1052 middleware.sdmmc.host.usdhc.MIMXRT1052 middleware.sdmmc.host.usdhc.non_blocking.MIMXRT1052 middleware.sdmmc.usdhc.template.MIMXRT1052 middleware.pkcs11.MIMXRT1052 middleware.aws_iot.device_shadow.template.MIMXRT1052 middleware.aws_iot.device_shadow.MIMXRT1052 middleware.freertos-kernel.MIMXRT1052 middleware.freertos-kernel.heap_4.MIMXRT1052 middleware.freertos-kernel.config.MIMXRT1052 middleware.freertos.backoffalgorithm.MIMXRT1052 middleware.freertos.corejson.MIMXRT1052 middleware.freertos.coremqtt.MIMXRT1052 middleware.freertos.coremqtt-agent.MIMXRT1052 middleware.freertos.corepkcs11.MIMXRT1052 middleware.freertos.corepkcs11.mbedtls.MIMXRT1052 middleware.freertos.corepkcs11.mbedtls_utils.MIMXRT1052" category="aws_examples">
+  <example id="evkbimxrt1050_aws_shadow_wifi_nxp" name="aws_shadow_wifi_nxp" device_core="core0_MIMXRT1052xxxxB" dependency="platform.drivers.xip_board.evkbimxrt1050.MIMXRT1052 platform.drivers.clock.MIMXRT1052 platform.drivers.iomuxc.MIMXRT1052 CMSIS_Include_core_cm.MIMXRT1052 device.MIMXRT1052_CMSIS.MIMXRT1052 device.MIMXRT1052_system.MIMXRT1052 device.MIMXRT1052_startup.MIMXRT1052 platform.drivers.xip_device.MIMXRT1052 platform.drivers.cache_armv7_m7.MIMXRT1052 platform.drivers.common.MIMXRT1052 platform.drivers.dcdc_1.MIMXRT1052 platform.drivers.dcp.MIMXRT1052 platform.drivers.flexspi.MIMXRT1052 platform.drivers.gpc_1.MIMXRT1052 platform.drivers.igpio.MIMXRT1052 platform.drivers.lpuart.MIMXRT1052 platform.drivers.pmu.MIMXRT1052 platform.drivers.src.MIMXRT1052 platform.drivers.trng.MIMXRT1052 platform.drivers.usdhc.MIMXRT1052 middleware.iot_reference.kvstore.MIMXRT1052 middleware.iot_reference.logging.MIMXRT1052 middleware.iot_reference.mqtt_agent.MIMXRT1052 middleware.iot_reference.mqtt_agent_interface.MIMXRT1052 middleware.iot_reference.transport_mbedtls.MIMXRT1052 platform.utilities.assert.MIMXRT1052 platform.utilities.misc_utilities.MIMXRT1052 component.lists.MIMXRT1052 utility.str.MIMXRT1052 utility.debug_console.MIMXRT1052 component.serial_manager.MIMXRT1052 component.serial_manager_uart.MIMXRT1052 component.igpio_adapter.MIMXRT1052 component.lpuart_adapter.MIMXRT1052 component.osa_template_config.MIMXRT1052 component.osa.MIMXRT1052 component.osa_free_rtos.MIMXRT1052 middleware.edgefast_wifi_nxp.MIMXRT1052 component.wifi_bt_module.tx_pwr_limits.MIMXRT1052 component.wifi_bt_module.config.MIMXRT1052 component.wifi_bt_module.IW416.MIMXRT1052 component.wifi_bt_module.board_murata_1xk_usd.MIMXRT1052 component.mflash_offchip.MIMXRT1052 middleware.wifi.template.MIMXRT1052 middleware.wifi.osa_free_rtos.MIMXRT1052 middleware.wifi.osa.MIMXRT1052 middleware.wifi.common_files.MIMXRT1052 middleware.wifi.fwdnld.MIMXRT1052 middleware.wifi.net.MIMXRT1052 middleware.wifi.wifidriver.MIMXRT1052 middleware.wifi.wifidriver.softap.MIMXRT1052 middleware.wifi.MIMXRT1052 middleware.wifi.sdio.MIMXRT1052 middleware.wifi.mlan_sdio.MIMXRT1052 middleware.wifi.fwdnld_intf_abs.MIMXRT1052 middleware.mbedtls.port.ksdk_option.MIMXRT1052 middleware.mbedtls.MIMXRT1052 middleware.mbedtls.port.ksdk.MIMXRT1052 middleware.lwip.MIMXRT1052 middleware.lwip.sys_arch.dynamic.MIMXRT1052 middleware.sdmmc.common.MIMXRT1052 middleware.sdmmc.osa.freertos.MIMXRT1052 middleware.sdmmc.sdio.MIMXRT1052 middleware.sdmmc.host.usdhc.MIMXRT1052 middleware.sdmmc.host.usdhc.non_blocking.MIMXRT1052 middleware.sdmmc.usdhc.template.MIMXRT1052 middleware.pkcs11.MIMXRT1052 middleware.aws_iot.device_shadow.template.MIMXRT1052 middleware.aws_iot.device_shadow.MIMXRT1052 middleware.freertos-kernel.MIMXRT1052 middleware.freertos-kernel.heap_4.MIMXRT1052 middleware.freertos-kernel.extension.MIMXRT1052 middleware.freertos-kernel.config.MIMXRT1052 middleware.freertos.backoffalgorithm.MIMXRT1052 middleware.freertos.corejson.MIMXRT1052 middleware.freertos.coremqtt.MIMXRT1052 middleware.freertos.coremqtt-agent.MIMXRT1052 middleware.freertos.corepkcs11.MIMXRT1052 middleware.freertos.corepkcs11.mbedtls.MIMXRT1052 middleware.freertos.corepkcs11.mbedtls_utils.MIMXRT1052" category="aws_examples">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -114,9 +116,11 @@
           <value>SDK_DEBUGCONSOLE=1</value>
           <value>MCUX_META_BUILD</value>
           <value>CPU_MIMXRT1052DVL6B</value>
+          <value>MIMXRT1052_SERIES</value>
           <value>DEBUG_CONSOLE_TRANSFER_NON_BLOCKING</value>
           <value>OSA_USED</value>
           <value>SERIAL_PORT_TYPE_UART=1</value>
+          <value>WIFI_IW416_BOARD_MURATA_1XK_USD</value>
           <value>MFLASH_FILE_BASEADDR=64487424</value>
           <value>CONFIG_NXP_WIFI_SOFTAP_SUPPORT=1</value>
           <value>SDIO_ENABLED=1</value>
@@ -248,9 +252,6 @@
       <files mask="main_text.ldt"/>
     </source>
     <source path="." project_relative_path="source" type="c_include">
-      <files mask="app_config.h"/>
-    </source>
-    <source path="." project_relative_path="source" type="c_include">
       <files mask="aws_mbedtls_config.h"/>
     </source>
     <source path="." project_relative_path="source" type="c_include">
@@ -259,7 +260,6 @@
       <files mask="core_mqtt_config.h"/>
       <files mask="core_pkcs11_config.h"/>
       <files mask="demo_config.h"/>
-      <files mask="freertos_tasks_c_additions.h"/>
       <files mask="kvstore_config.h"/>
       <files mask="shadow_config.h"/>
     </source>
@@ -341,6 +341,12 @@
     </source>
     <source path="." project_relative_path="doc" type="doc">
       <files mask="example_board_readme.md"/>
+    </source>
+    <source path="." project_relative_path="doc" type="doc">
+      <files mask="examples_shared_readme.md"/>
+    </source>
+    <source path="." project_relative_path="doc" type="doc">
+      <files mask="readme_modules.md"/>
     </source>
   </example>
 </ksdk:examples>

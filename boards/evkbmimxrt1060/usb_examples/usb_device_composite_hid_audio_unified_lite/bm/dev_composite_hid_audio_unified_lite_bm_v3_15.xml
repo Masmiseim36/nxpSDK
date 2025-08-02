@@ -36,14 +36,14 @@
     <definition extID="component.i2c_adapter_interface.MIMXRT1062"/>
     <definition extID="component.lpi2c_adapter.MIMXRT1062"/>
     <definition extID="component.lpuart_adapter.MIMXRT1062"/>
+    <definition extID="component.audio_sai_edma_adapter.MIMXRT1062"/>
     <definition extID="component.osa_template_config.MIMXRT1062"/>
-    <definition extID="component.osa_interface.MIMXRT1062"/>
     <definition extID="component.osa.MIMXRT1062"/>
     <definition extID="component.osa_bm.MIMXRT1062"/>
-    <definition extID="component.audio_sai_edma_adapter.MIMXRT1062"/>
     <definition extID="middleware.usb.common_header.MIMXRT1062"/>
     <definition extID="middleware.usb.device.common_header.MIMXRT1062"/>
     <definition extID="middleware.usb.device_controller_ehci.MIMXRT1062"/>
+    <definition extID="middleware.usb.device.ehci_config_header.MIMXRT1062"/>
     <definition extID="middleware.usb.device.controller.driver.MIMXRT1062"/>
     <definition extID="middleware.usb.phy.MIMXRT1062"/>
     <definition extID="iar"/>
@@ -56,7 +56,7 @@
     <definition extID="com.nxp.mcuxpresso.core.debug.support.segger.debug"/>
     <definition extID="com.nxp.mcuxpresso.core.debug.support.segger.release"/>
   </externalDefinitions>
-  <example id="evkbmimxrt1060_dev_composite_hid_audio_unified_lite_bm" name="dev_composite_hid_audio_unified_lite_bm" device_core="core0_MIMXRT1062xxxxB" dependency="platform.drivers.xip_board.evkbmimxrt1060.MIMXRT1062 platform.drivers.clock.MIMXRT1062 platform.drivers.iomuxc.MIMXRT1062 CMSIS_Include_core_cm.MIMXRT1062 device.MIMXRT1062_CMSIS.MIMXRT1062 device.MIMXRT1062_system.MIMXRT1062 device.MIMXRT1062_startup.MIMXRT1062 platform.drivers.xip_device.MIMXRT1062 platform.drivers.cache_armv7_m7.MIMXRT1062 platform.drivers.common.MIMXRT1062 platform.drivers.dcdc_1.MIMXRT1062 platform.drivers.dmamux.MIMXRT1062 platform.drivers.edma.MIMXRT1062 platform.drivers.gpc_1.MIMXRT1062 platform.drivers.igpio.MIMXRT1062 platform.drivers.lpi2c.MIMXRT1062 platform.drivers.lpuart.MIMXRT1062 platform.drivers.pmu.MIMXRT1062 platform.drivers.sai_edma.MIMXRT1062 platform.drivers.sai.MIMXRT1062 platform.drivers.src.MIMXRT1062 platform.utilities.assert_lite.MIMXRT1062 platform.utilities.misc_utilities.MIMXRT1062 component.lists.MIMXRT1062 utility.str.MIMXRT1062 utility.debug_console_lite.MIMXRT1062 component.codec_i2c.MIMXRT1062 driver.codec.MIMXRT1062 component.codec_adapters.MIMXRT1062 component.wm8960_adapter.MIMXRT1062 driver.wm8960.MIMXRT1062 component.i2c_adapter_interface.MIMXRT1062 component.lpi2c_adapter.MIMXRT1062 component.lpuart_adapter.MIMXRT1062 component.osa_template_config.MIMXRT1062 component.osa_interface.MIMXRT1062 component.osa.MIMXRT1062 component.osa_bm.MIMXRT1062 component.audio_sai_edma_adapter.MIMXRT1062 middleware.usb.common_header.MIMXRT1062 middleware.usb.device.common_header.MIMXRT1062 middleware.usb.device_controller_ehci.MIMXRT1062 middleware.usb.device.controller.driver.MIMXRT1062 middleware.usb.phy.MIMXRT1062" category="usb_examples">
+  <example id="evkbmimxrt1060_dev_composite_hid_audio_unified_lite_bm" name="dev_composite_hid_audio_unified_lite_bm" device_core="core0_MIMXRT1062xxxxB" dependency="platform.drivers.xip_board.evkbmimxrt1060.MIMXRT1062 platform.drivers.clock.MIMXRT1062 platform.drivers.iomuxc.MIMXRT1062 CMSIS_Include_core_cm.MIMXRT1062 device.MIMXRT1062_CMSIS.MIMXRT1062 device.MIMXRT1062_system.MIMXRT1062 device.MIMXRT1062_startup.MIMXRT1062 platform.drivers.xip_device.MIMXRT1062 platform.drivers.cache_armv7_m7.MIMXRT1062 platform.drivers.common.MIMXRT1062 platform.drivers.dcdc_1.MIMXRT1062 platform.drivers.dmamux.MIMXRT1062 platform.drivers.edma.MIMXRT1062 platform.drivers.gpc_1.MIMXRT1062 platform.drivers.igpio.MIMXRT1062 platform.drivers.lpi2c.MIMXRT1062 platform.drivers.lpuart.MIMXRT1062 platform.drivers.pmu.MIMXRT1062 platform.drivers.sai_edma.MIMXRT1062 platform.drivers.sai.MIMXRT1062 platform.drivers.src.MIMXRT1062 platform.utilities.assert_lite.MIMXRT1062 platform.utilities.misc_utilities.MIMXRT1062 component.lists.MIMXRT1062 utility.str.MIMXRT1062 utility.debug_console_lite.MIMXRT1062 component.codec_i2c.MIMXRT1062 driver.codec.MIMXRT1062 component.codec_adapters.MIMXRT1062 component.wm8960_adapter.MIMXRT1062 driver.wm8960.MIMXRT1062 component.i2c_adapter_interface.MIMXRT1062 component.lpi2c_adapter.MIMXRT1062 component.lpuart_adapter.MIMXRT1062 component.audio_sai_edma_adapter.MIMXRT1062 component.osa_template_config.MIMXRT1062 component.osa.MIMXRT1062 component.osa_bm.MIMXRT1062 middleware.usb.common_header.MIMXRT1062 middleware.usb.device.common_header.MIMXRT1062 middleware.usb.device_controller_ehci.MIMXRT1062 middleware.usb.device.ehci_config_header.MIMXRT1062 middleware.usb.device.controller.driver.MIMXRT1062 middleware.usb.phy.MIMXRT1062" category="usb_examples">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -79,6 +79,7 @@
           <value>SDK_DEBUGCONSOLE=1</value>
           <value>MCUX_META_BUILD</value>
           <value>CPU_MIMXRT1062DVL6B</value>
+          <value>MIMXRT1062_SERIES</value>
           <value>OSA_USED</value>
           <value>SDK_I2C_BASED_COMPONENT_USED=1</value>
           <value>CODEC_MULTI_ADAPTERS=1</value>
@@ -256,12 +257,10 @@
     </source>
     <source path="." project_relative_path="source" type="c_include" config="true">
       <files mask="fsl_os_abstraction_config.h"/>
+      <files mask="usb_device_config.h"/>
     </source>
     <source path="." project_relative_path="source" type="c_preinclude">
       <files mask="mcux_config.h"/>
-    </source>
-    <source path="." project_relative_path="source" type="c_include">
-      <files mask="usb_device_config.h"/>
     </source>
     <source path="." project_relative_path="doc" type="doc">
       <files mask="readme.md"/>
@@ -278,6 +277,9 @@
       <files mask="usb_device_composite_hid_audio_unified_speaker_default.jpg"/>
       <files mask="usb_device_composite_hid_audio_unified_speaker_property.jpg"/>
       <files mask="usb_device_composite_hid_audio_unified_start_log.jpg"/>
+    </source>
+    <source path="." project_relative_path="doc" type="doc">
+      <files mask="examples_shared_readme.md"/>
     </source>
   </example>
 </ksdk:examples>

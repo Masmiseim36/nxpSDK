@@ -2,7 +2,7 @@
  *  Copyright 2024 NXP
  *
  *  SPDX-License-Identifier: BSD-3-Clause
- * 
+ *
  */
 
 /*!\file hr.h
@@ -33,7 +33,7 @@ extern "C" {
 /** HRC get characteristic configuration changed event ID */
 #define HRC_EVENT_GET_CCC                       0x05
 /** HRC write characteristic response event ID */
-#define HRS_EVENT_WRITE_CHRA_RSP                0x01
+#define HRS_EVENT_WRITE_CHAR_RSP                0x01
 
 
 /** Heart Rate Service UUID value */
@@ -53,15 +53,15 @@ extern "C" {
 /*******************************************************************************
  * API
  ******************************************************************************/
-/** 
+/**
  * Start Central HRC Service
- * 
+ *
  */
 void central_hrc_start(void);
 
 /**
  * Init HRC Service
- * 
+ *
  */
 void hrc_init(void);
 
@@ -76,33 +76,33 @@ void central_notify(uint8_t *data);
 
 /**
  * Init HRS Service
- * 
+ *
  */
 void hrs_init(void);
 
 /**
  * Count binary semaphore to wait for HRS write characteristic response event
- * 
+ *
  * \param[in] flag flag to wait
- * 
+ *
  * \return void.
- * 
+ *
  */
 void peripheral_hrs_event_put(osa_event_flags_t flag);
 
 /**
  * Start Peripheral HRS Service
- * 
+ *
  */
 void peripheral_hrs_start(void);
 
 /**
- * Indicate HRS characteristic value change event 
- * 
+ * Indicate HRS characteristic value change event
+ *
  * \param[in] value hrs value
- * 
+ *
  * \return void
- * 
+ *
  */
 void peripheral_hrs_indicate(uint8_t value);
 

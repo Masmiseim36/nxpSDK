@@ -11,11 +11,9 @@
 //! \brief   Fast ARM assembler implementation of boot fill command.
 //!
 ////////////////////////////////////////////////////////////////////////////////
-#include "ar_asm_macros.h"
 
-            _CODE_SECTION(.text)
-            
-            _THUMB
+            SECTION CODE:CODE(2)
+            THUMB
             
             
 
@@ -34,7 +32,7 @@
 //
 // Registers USED:  r0 - r7
 
-            _EXPORT(pattern_fill)
+            PUBLIC pattern_fill
             
 pattern_fill
 
@@ -150,7 +148,7 @@ done        ldmfd  sp!, {r4-r7}
             bx     lr
 
 
-            _END
+            END
 
 // eof ldr_fill.arm
 //! @}

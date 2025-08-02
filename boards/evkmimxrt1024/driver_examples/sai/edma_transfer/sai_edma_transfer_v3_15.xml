@@ -66,6 +66,7 @@
           <value>SDK_DEBUGCONSOLE=1</value>
           <value>MCUX_META_BUILD</value>
           <value>CPU_MIMXRT1024DAG5A</value>
+          <value>MIMXRT1024_SERIES</value>
           <value>SDK_I2C_BASED_COMPONENT_USED=1</value>
           <value>CODEC_MULTI_ADAPTERS=1</value>
           <value>CODEC_WM8960_ENABLE</value>
@@ -211,6 +212,9 @@
     </source>
     <source path="." project_relative_path="doc" type="doc">
       <files mask="example_board_readme.md"/>
+    </source>
+    <source path="." project_relative_path="doc" type="doc">
+      <files mask="examples_shared_readme.md"/>
     </source>
   </example>
 </ksdk:examples>

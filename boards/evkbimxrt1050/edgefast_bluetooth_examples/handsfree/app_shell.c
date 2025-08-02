@@ -59,6 +59,7 @@ SHELL_COMMAND_DEFINE(bt,
                      "    voicetag      Get Voice-tag Phone Number (BINP).\r\n"
                      "    multipcall    multiple call option.\r\n"
                      "    triggercodec  trigger codec connection.\r\n"
+                     "    clcc          Query list of current calls.\r\n"
                      "    getIndicatorStatus Get peer's indicators' status.\r\n",
                      shellBt,
                      SHELL_IGNORE_PARAMETER_COUNT);
@@ -218,6 +219,10 @@ static shell_status_t shellBt(shell_handle_t shellHandle, int32_t argc, char **a
     else if (strcmp(argv[1], "triggercodec") == 0)
     {
         hfp_trigger_codec_connection();
+    }
+    else if (strcmp(argv[1], "clcc") == 0)
+    {
+        hfp_hf_query_list_current_calls();
     }
     else if (strcmp(argv[1], "getIndicatorStatus") == 0)
     {

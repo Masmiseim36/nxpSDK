@@ -30,25 +30,27 @@
     <definition extID="platform.utilities.assert_lite.MIMXRT1024"/>
     <definition extID="platform.utilities.misc_utilities.MIMXRT1024"/>
     <definition extID="utility.str.MIMXRT1024"/>
+    <definition extID="component.silicon_id.MIMXRT1024"/>
+    <definition extID="component.silicon_id_imxrt10xx.MIMXRT1024"/>
     <definition extID="utility.debug_console_lite.MIMXRT1024"/>
     <definition extID="component.igpio_adapter.MIMXRT1024"/>
     <definition extID="component.lpuart_adapter.MIMXRT1024"/>
-    <definition extID="component.mflash_offchip.MIMXRT1024"/>
     <definition extID="component.eth_phy_common.MIMXRT1024"/>
     <definition extID="component.phyksz8081.MIMXRT1024"/>
-    <definition extID="component.silicon_id.MIMXRT1024"/>
-    <definition extID="component.silicon_id_imxrt10xx.MIMXRT1024"/>
+    <definition extID="component.mflash_offchip.MIMXRT1024"/>
     <definition extID="middleware.mbedtls.port.ksdk_option.MIMXRT1024"/>
     <definition extID="middleware.mbedtls.MIMXRT1024"/>
     <definition extID="middleware.mbedtls.port.ksdk.MIMXRT1024"/>
     <definition extID="middleware.lwip.MIMXRT1024"/>
     <definition extID="middleware.lwip.sys_arch.dynamic.MIMXRT1024"/>
     <definition extID="middleware.lwip.kinetis_ethernetif.MIMXRT1024"/>
+    <definition extID="middleware.lwip.kinetis_ethernetif.non_generated_lwipopts.MIMXRT1024"/>
     <definition extID="middleware.pkcs11.MIMXRT1024"/>
     <definition extID="middleware.aws_iot.device_shadow.template.MIMXRT1024"/>
     <definition extID="middleware.aws_iot.device_shadow.MIMXRT1024"/>
     <definition extID="middleware.freertos-kernel.MIMXRT1024"/>
     <definition extID="middleware.freertos-kernel.heap_4.MIMXRT1024"/>
+    <definition extID="middleware.freertos-kernel.extension.MIMXRT1024"/>
     <definition extID="middleware.freertos-kernel.config.MIMXRT1024"/>
     <definition extID="middleware.freertos.backoffalgorithm.MIMXRT1024"/>
     <definition extID="middleware.freertos.corejson.MIMXRT1024"/>
@@ -67,7 +69,7 @@
     <definition extID="com.nxp.mcuxpresso.core.debug.support.segger.debug"/>
     <definition extID="com.nxp.mcuxpresso.core.debug.support.segger.release"/>
   </externalDefinitions>
-  <example id="evkmimxrt1024_aws_shadow_enet" name="aws_shadow_enet" device_core="core0_MIMXRT1024xxxxx" dependency="platform.drivers.xip_board.evkmimxrt1024.MIMXRT1024 platform.drivers.clock.MIMXRT1024 platform.drivers.iomuxc.MIMXRT1024 CMSIS_Include_core_cm.MIMXRT1024 device.MIMXRT1024_CMSIS.MIMXRT1024 device.MIMXRT1024_system.MIMXRT1024 device.MIMXRT1024_startup.MIMXRT1024 platform.drivers.xip_device.MIMXRT1024 platform.drivers.cache_armv7_m7.MIMXRT1024 platform.drivers.common.MIMXRT1024 platform.drivers.dcdc_1.MIMXRT1024 platform.drivers.dcp.MIMXRT1024 platform.drivers.enet.MIMXRT1024 platform.drivers.flexspi.MIMXRT1024 platform.drivers.gpc_1.MIMXRT1024 platform.drivers.igpio.MIMXRT1024 platform.drivers.lpuart.MIMXRT1024 platform.drivers.pmu.MIMXRT1024 platform.drivers.src.MIMXRT1024 platform.drivers.trng.MIMXRT1024 middleware.iot_reference.kvstore.MIMXRT1024 middleware.iot_reference.logging.MIMXRT1024 middleware.iot_reference.mqtt_agent.MIMXRT1024 middleware.iot_reference.mqtt_agent_interface.MIMXRT1024 middleware.iot_reference.transport_mbedtls.MIMXRT1024 platform.utilities.assert_lite.MIMXRT1024 platform.utilities.misc_utilities.MIMXRT1024 utility.str.MIMXRT1024 utility.debug_console_lite.MIMXRT1024 component.igpio_adapter.MIMXRT1024 component.lpuart_adapter.MIMXRT1024 component.mflash_offchip.MIMXRT1024 component.eth_phy_common.MIMXRT1024 component.phyksz8081.MIMXRT1024 component.silicon_id.MIMXRT1024 component.silicon_id_imxrt10xx.MIMXRT1024 middleware.mbedtls.port.ksdk_option.MIMXRT1024 middleware.mbedtls.MIMXRT1024 middleware.mbedtls.port.ksdk.MIMXRT1024 middleware.lwip.MIMXRT1024 middleware.lwip.sys_arch.dynamic.MIMXRT1024 middleware.lwip.kinetis_ethernetif.MIMXRT1024 middleware.pkcs11.MIMXRT1024 middleware.aws_iot.device_shadow.template.MIMXRT1024 middleware.aws_iot.device_shadow.MIMXRT1024 middleware.freertos-kernel.MIMXRT1024 middleware.freertos-kernel.heap_4.MIMXRT1024 middleware.freertos-kernel.config.MIMXRT1024 middleware.freertos.backoffalgorithm.MIMXRT1024 middleware.freertos.corejson.MIMXRT1024 middleware.freertos.coremqtt.MIMXRT1024 middleware.freertos.coremqtt-agent.MIMXRT1024 middleware.freertos.corepkcs11.MIMXRT1024 middleware.freertos.corepkcs11.mbedtls.MIMXRT1024 middleware.freertos.corepkcs11.mbedtls_utils.MIMXRT1024" category="aws_examples">
+  <example id="evkmimxrt1024_aws_shadow_enet" name="aws_shadow_enet" device_core="core0_MIMXRT1024xxxxx" dependency="platform.drivers.xip_board.evkmimxrt1024.MIMXRT1024 platform.drivers.clock.MIMXRT1024 platform.drivers.iomuxc.MIMXRT1024 CMSIS_Include_core_cm.MIMXRT1024 device.MIMXRT1024_CMSIS.MIMXRT1024 device.MIMXRT1024_system.MIMXRT1024 device.MIMXRT1024_startup.MIMXRT1024 platform.drivers.xip_device.MIMXRT1024 platform.drivers.cache_armv7_m7.MIMXRT1024 platform.drivers.common.MIMXRT1024 platform.drivers.dcdc_1.MIMXRT1024 platform.drivers.dcp.MIMXRT1024 platform.drivers.enet.MIMXRT1024 platform.drivers.flexspi.MIMXRT1024 platform.drivers.gpc_1.MIMXRT1024 platform.drivers.igpio.MIMXRT1024 platform.drivers.lpuart.MIMXRT1024 platform.drivers.pmu.MIMXRT1024 platform.drivers.src.MIMXRT1024 platform.drivers.trng.MIMXRT1024 middleware.iot_reference.kvstore.MIMXRT1024 middleware.iot_reference.logging.MIMXRT1024 middleware.iot_reference.mqtt_agent.MIMXRT1024 middleware.iot_reference.mqtt_agent_interface.MIMXRT1024 middleware.iot_reference.transport_mbedtls.MIMXRT1024 platform.utilities.assert_lite.MIMXRT1024 platform.utilities.misc_utilities.MIMXRT1024 utility.str.MIMXRT1024 component.silicon_id.MIMXRT1024 component.silicon_id_imxrt10xx.MIMXRT1024 utility.debug_console_lite.MIMXRT1024 component.igpio_adapter.MIMXRT1024 component.lpuart_adapter.MIMXRT1024 component.eth_phy_common.MIMXRT1024 component.phyksz8081.MIMXRT1024 component.mflash_offchip.MIMXRT1024 middleware.mbedtls.port.ksdk_option.MIMXRT1024 middleware.mbedtls.MIMXRT1024 middleware.mbedtls.port.ksdk.MIMXRT1024 middleware.lwip.MIMXRT1024 middleware.lwip.sys_arch.dynamic.MIMXRT1024 middleware.lwip.kinetis_ethernetif.MIMXRT1024 middleware.lwip.kinetis_ethernetif.non_generated_lwipopts.MIMXRT1024 middleware.pkcs11.MIMXRT1024 middleware.aws_iot.device_shadow.template.MIMXRT1024 middleware.aws_iot.device_shadow.MIMXRT1024 middleware.freertos-kernel.MIMXRT1024 middleware.freertos-kernel.heap_4.MIMXRT1024 middleware.freertos-kernel.extension.MIMXRT1024 middleware.freertos-kernel.config.MIMXRT1024 middleware.freertos.backoffalgorithm.MIMXRT1024 middleware.freertos.corejson.MIMXRT1024 middleware.freertos.coremqtt.MIMXRT1024 middleware.freertos.coremqtt-agent.MIMXRT1024 middleware.freertos.corepkcs11.MIMXRT1024 middleware.freertos.corepkcs11.mbedtls.MIMXRT1024 middleware.freertos.corepkcs11.mbedtls_utils.MIMXRT1024" category="aws_examples">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -119,6 +121,7 @@
           <value>SDK_DEBUGCONSOLE=1</value>
           <value>MCUX_META_BUILD</value>
           <value>CPU_MIMXRT1024DAG5A</value>
+          <value>MIMXRT1024_SERIES</value>
           <value>MFLASH_FILE_BASEADDR=1572864</value>
           <value>LWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1</value>
           <value>LWIP_SUPPORT_CUSTOM_PBUF=1</value>
@@ -255,7 +258,6 @@
       <files mask="core_mqtt_config.h"/>
       <files mask="core_pkcs11_config.h"/>
       <files mask="demo_config.h"/>
-      <files mask="freertos_tasks_c_additions.h"/>
       <files mask="kvstore_config.h"/>
       <files mask="shadow_config.h"/>
     </source>
@@ -310,6 +312,9 @@
     </source>
     <source path="." project_relative_path="doc" type="doc">
       <files mask="example_board_readme.md"/>
+    </source>
+    <source path="." project_relative_path="doc" type="doc">
+      <files mask="examples_shared_readme.md"/>
     </source>
   </example>
 </ksdk:examples>

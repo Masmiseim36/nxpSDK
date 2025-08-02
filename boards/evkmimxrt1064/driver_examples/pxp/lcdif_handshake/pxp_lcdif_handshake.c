@@ -27,7 +27,7 @@
 #define APP_PS_LRC_X ((APP_IMG_WIDTH / 2) + (APP_PS_SIZE / 2) - 1U)
 #define APP_PS_LRC_Y ((APP_IMG_HEIGHT / 2) + (APP_PS_SIZE / 2) - 1U)
 
-#if (defined(USE_RGB565) && USE_RGB565)
+#if (USE_RGB565)
 
 typedef uint16_t pixel_t;
 #define APP_BPP            2U /* Use 16-bit RGB565 format. */

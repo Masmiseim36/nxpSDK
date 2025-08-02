@@ -331,7 +331,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../mcux_config.h -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
-              <Define>DEBUG, XIP_BOOT_HEADER_ENABLE=1, XIP_EXTERNAL_FLASH=1, FREESCALE_KSDK_BM, MBEDTLS_CONFIG_FILE='\"ksdk_mbedtls_config.h\"', SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1011DAE5A</Define>
+              <Define>DEBUG, XIP_BOOT_HEADER_ENABLE=1, XIP_EXTERNAL_FLASH=1, FREESCALE_KSDK_BM, MBEDTLS_CONFIG_FILE='\"ksdk_mbedtls_config.h\"', SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1011DAE5A, MIMXRT1011_SERIES</Define>
               <Undefine/>
               <IncludePath>..;../../../xip;../../../../../devices/MIMXRT1011/drivers;../../../../../CMSIS/Core/Include;../../../../../CMSIS/Core/Include/m-profile;../../../../../devices/MIMXRT1011;../../../../../devices/MIMXRT1011/periph;../../../../../devices/MIMXRT1011/xip;../../../../../devices/MIMXRT1011/utilities/debug_console_lite;../../../../../devices/MIMXRT1011/utilities/str;../../../../../components/uart;../../../../../middleware/mbedtls/include;../../../../../middleware/mbedtls/library;../../../../../middleware/mbedtls/port/ksdk</IncludePath>
             </VariousControls>
@@ -349,7 +349,7 @@
             <uClangAs>1</uClangAs>
             <VariousControls>
               <MiscControls/>
-              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1011DAE5A</Define>
+              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1011DAE5A, MIMXRT1011_SERIES</Define>
               <Undefine/>
               <IncludePath>..;../../../xip;../../../../../devices/MIMXRT1011/drivers;../../../../../CMSIS/Core/Include;../../../../../CMSIS/Core/Include/m-profile;../../../../../devices/MIMXRT1011;../../../../../devices/MIMXRT1011/periph;../../../../../devices/MIMXRT1011/xip;../../../../../devices/MIMXRT1011/utilities/debug_console_lite;../../../../../devices/MIMXRT1011/utilities/str;../../../../../components/uart;../../../../../middleware/mbedtls/include;../../../../../middleware/mbedtls/library;../../../../../middleware/mbedtls/port/ksdk</IncludePath>
             </VariousControls>
@@ -2176,6 +2176,11 @@
               <FileName>example_board_readme.md</FileName>
               <FileType>5</FileType>
               <FilePath>../example_board_readme.md</FilePath>
+            </File>
+            <File>
+              <FileName>examples_shared_readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../examples_shared_readme.md</FilePath>
             </File>
           </Files>
         </Group>
@@ -2509,7 +2514,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../mcux_config.h -Oz  -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
-              <Define>NDEBUG, XIP_BOOT_HEADER_ENABLE=1, XIP_EXTERNAL_FLASH=1, FREESCALE_KSDK_BM, MBEDTLS_CONFIG_FILE='\"ksdk_mbedtls_config.h\"', SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1011DAE5A</Define>
+              <Define>NDEBUG, XIP_BOOT_HEADER_ENABLE=1, XIP_EXTERNAL_FLASH=1, FREESCALE_KSDK_BM, MBEDTLS_CONFIG_FILE='\"ksdk_mbedtls_config.h\"', SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1011DAE5A, MIMXRT1011_SERIES</Define>
               <Undefine/>
               <IncludePath>..;../../../xip;../../../../../devices/MIMXRT1011/drivers;../../../../../CMSIS/Core/Include;../../../../../CMSIS/Core/Include/m-profile;../../../../../devices/MIMXRT1011;../../../../../devices/MIMXRT1011/periph;../../../../../devices/MIMXRT1011/xip;../../../../../devices/MIMXRT1011/utilities/debug_console_lite;../../../../../devices/MIMXRT1011/utilities/str;../../../../../components/uart;../../../../../middleware/mbedtls/include;../../../../../middleware/mbedtls/library;../../../../../middleware/mbedtls/port/ksdk</IncludePath>
             </VariousControls>
@@ -2527,7 +2532,7 @@
             <uClangAs>1</uClangAs>
             <VariousControls>
               <MiscControls/>
-              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1011DAE5A</Define>
+              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1011DAE5A, MIMXRT1011_SERIES</Define>
               <Undefine/>
               <IncludePath>..;../../../xip;../../../../../devices/MIMXRT1011/drivers;../../../../../CMSIS/Core/Include;../../../../../CMSIS/Core/Include/m-profile;../../../../../devices/MIMXRT1011;../../../../../devices/MIMXRT1011/periph;../../../../../devices/MIMXRT1011/xip;../../../../../devices/MIMXRT1011/utilities/debug_console_lite;../../../../../devices/MIMXRT1011/utilities/str;../../../../../components/uart;../../../../../middleware/mbedtls/include;../../../../../middleware/mbedtls/library;../../../../../middleware/mbedtls/port/ksdk</IncludePath>
             </VariousControls>
@@ -4354,6 +4359,11 @@
               <FileName>example_board_readme.md</FileName>
               <FileType>5</FileType>
               <FilePath>../example_board_readme.md</FilePath>
+            </File>
+            <File>
+              <FileName>examples_shared_readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../examples_shared_readme.md</FilePath>
             </File>
           </Files>
         </Group>

@@ -78,7 +78,6 @@ Or the device can remote wake-up the host by delivering the resume signal when t
 - LPCXpresso55S69
 - EVK-MIMXRT1064
 - MIMXRT685-AUD-EVK
-- FRDM-MCXA276
 - [LPCXpresso54S018](../../_boards/lpcxpresso54s018/usb_examples/usb_suspend_resume_device_hid_mouse/example_board_readme.md)
 - [LPCXpresso55S16](../../_boards/lpcxpresso55s16/usb_examples/usb_suspend_resume_device_hid_mouse/example_board_readme.md)
 - [LPCXpresso54S018M](../../_boards/lpcxpresso54s018m/usb_examples/usb_suspend_resume_device_hid_mouse/example_board_readme.md)
@@ -106,3 +105,4 @@ Or the device can remote wake-up the host by delivering the resume signal when t
 - FRDM-K32L3A6
 - EVK-MIMXRT1015
 - FRDM-MCXN236
+- [FRDM-RW612](../../_boards/frdmrw612/usb_examples/usb_suspend_resume_device_hid_mouse/example_board_readme.md)

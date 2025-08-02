@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 NXP
+ * Copyright 2020, 2025 NXP
  * All rights reserved.
  *
  *
@@ -486,6 +486,8 @@ void LPM_EnterSuspend(void)
     /* Connect internal the load resistor */
     DCDC->REG1 |= DCDC_REG1_REG_RLOAD_SW_MASK;
 
+    __DSB();
+    __ISB();
     /* Turn off FlexRAM0 */
     GPC->CNTR |= GPC_CNTR_PDRAM0_PGE_MASK;
     /* Turn off FlexRAM1 */

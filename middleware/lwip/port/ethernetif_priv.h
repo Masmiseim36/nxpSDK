@@ -1,5 +1,5 @@
 /*
- * Copyright 2019,2022-2023 NXP
+ * Copyright 2019,2022-2023,2025 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -37,6 +37,23 @@ void ethernetif_plat_init(struct netif *netif,
 
 void ethernetif_phy_init(struct ethernetif *ethernetif, const ethernetif_config_t *ethernetifConfig);
 
+/**
+ * Function to map ENET instance index to its base address
+ *
+ * IMPORTANT: This function doesn't directly map to array indexes in ENET_BASE_PTRS!
+ * It counts only non-NULL entries when determining which hardware instance to use.
+ *
+ * Examples:
+ * - When ENET_BASE_PTRS = [ENET, (ENET_Type *)0u, ENET2]:
+ *   - enetIdx 0 => ENET
+ *   - enetIdx 1 => ENET2
+ * - When ENET_BASE_PTRS = [ENET, ENET_1G]:
+ *   - enetIdx 0 => ENET
+ *   - enetIdx 1 => ENET_1G
+ *
+ * @param enetIdx The index of the ENET instance (counts only non-NULL entries)
+ * @return Base address of the ENET instance, or NULL if not found
+ */
 void *ethernetif_get_enet_base(const uint8_t enetIdx);
 
 /**
@@ -73,6 +90,23 @@ void ethernetif_on_link_up(struct netif *netif_, phy_speed_t speed, phy_duplex_t
 void ethernetif_on_link_down(struct netif *netif_);
 
 #if defined(FSL_FEATURE_SOC_ENET_QOS_COUNT) && (FSL_FEATURE_SOC_ENET_QOS_COUNT > 0)
+/**
+ * Function to map ENET_QOS instance index to its base address
+ *
+ * IMPORTANT: This function doesn't directly map to array indexes in ENET_QOS_BASE_PTRS!
+ * It counts only non-NULL entries when determining which hardware instance to use.
+ *
+ * Examples:
+ * - When ENET_QOS_BASE_PTRS = [ENET_QOS, (ENET_Type *)0u, ENET_QOS2]:
+ *   - enetIdx 0 => ENET_QOS
+ *   - enetIdx 1 => ENET_QOS2
+ * - When ENET_BASE_PTRS = [ENET_QOS, ENET_QOS2]:
+ *   - enetIdx 0 => ENET_QOS
+ *   - enetIdx 1 => ENET_QOS2
+ *
+ * @param enetIdx The index of the ENET_QOS instance (counts only non-NULL entries)
+ * @return Base address of the ENET_QOS instance, or NULL if not found
+ */
 void *ethernetif_get_enet_qos_base(const uint8_t enetIdx);
 #endif
 

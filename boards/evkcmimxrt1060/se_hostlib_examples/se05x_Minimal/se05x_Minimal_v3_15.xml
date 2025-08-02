@@ -81,6 +81,7 @@
           <value>SDK_DEBUGCONSOLE=1</value>
           <value>MCUX_META_BUILD</value>
           <value>CPU_MIMXRT1062DVL6B</value>
+          <value>MIMXRT1062_SERIES</value>
           <value>SERIAL_PORT_TYPE_UART=1</value>
           <value>T1oI2C</value>
           <value>T1oI2C_UM11225</value>

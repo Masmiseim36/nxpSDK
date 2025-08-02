@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2022 NXP.
+ * Copyright 2018-2022, 2025 NXP.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -36,7 +36,7 @@
 typedef struct _AudioSrcBufferQueue_T
 {
 #if AUDIO_SRC_BUFFER_NUM >= 4
-    int8_t buffer_idx[AUDIO_SRC_BUFFER_NUM];
+    int8_t buffer_idx[AUDIO_SRC_BUFFER_NUM + 1];
 #else
     int8_t buffer_idx[5]; // More than SAI_XFER_QUEUE_SIZE or I2S_NUM_BUFFERS
 #endif

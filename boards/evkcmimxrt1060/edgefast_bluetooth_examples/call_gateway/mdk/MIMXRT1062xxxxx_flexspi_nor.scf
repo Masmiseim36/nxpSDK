@@ -174,9 +174,7 @@ LR_m_text m_interrupts_start m_text_start+m_text_size-m_interrupts_start {   ; l
   RW_m_ram_text m_qacode_start m_qacode_size { ;
     * (CodeQuickAccess)
   }
-  RW_m_data3 m_data_start m_data2_size { ;
-    * (DataQuickAccess)
-  }
+ 
   RW_m_ncache m_data_start EMPTY 0 { ; RW data
   }
   RW_m_ncache_unused +0 EMPTY 0 { ; Empty region added for MPU configuration
@@ -184,7 +182,10 @@ LR_m_text m_interrupts_start m_text_start+m_text_size-m_interrupts_start {   ; l
   RW_m_data2 +0 m_data_size-Stack_Size-Heap_Size-ImageLength(RW_m_ncache)-ImageLength(RW_m_ncache_unused) {
     * (NonCacheable.init)
     * (*NonCacheable)
-  }
+    * (DataQuickAccess)
+}
+  RW_m_data3 +0 m_data_size-Stack_Size-Heap_Size-ImageLength(RW_m_ncache)-ImageLength(RW_m_ncache_unused)-ImageLength(RW_m_data2) { ;  
+}
   RW_net_buf_pool +0 { ;
     * (._net_buf_pool*)
   }

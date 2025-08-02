@@ -4,8 +4,8 @@
 Application demonstrating how to use the unicast media receiver feature.
 
 There should be three boards: 1 UMS + 1 UMR(left) + 1 UMR(right).
-UMS: unicast stereo audio stream, left channel on first CIS and right channel on another CIS.
-UMR: receive one of CIS channel and render it.
+- UMS: unicast stereo audio stream, left channel on first CIS and right channel on another CIS.
+- UMR: receive one of CIS channel and render it.
 
 ## Prepare the Demo
 
@@ -82,21 +82,21 @@ Stream 20306D38 started
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Procedures to run
-1 input "help" to show command list
-2 input "init left" or "init right" to start sink role and start to advertise, audio will start playing after connect and configure finished.
-3 input "pause" to stop playing.
-4 input "play" to start playing.
-5 input "vol_up", "vol_down", "vol_set" to set volume.
-6 input "vol_mute", "vol_unmute" to set mute.
+1. input "help" to show command list
+2. input "init left" or "init right" to start sink role and start to advertise, audio will start playing after connect and configure finished.
+3. input "pause" to stop playing.
+4. input "play" to start playing.
+5. input "vol_up", "vol_down", "vol_set" to set volume.
+6. input "vol_mute", "vol_unmute" to set mute.
 
 Other cmds could be used:
-1 "sync_info" used to get iso_interval/sync_delay/pd/ts, and this cmd should be used after the audio stream start.
-2 "sync_test_mode" used to set the test mode, and this cmd should be used before init.
-3 "set_sirk" used to set sirk, and this cmd should be used before init.
+1. "sync_info" used to get iso_interval/sync_delay/pd/ts, and this cmd should be used after the audio stream start.
+2. "sync_test_mode" used to set the test mode, and this cmd should be used before init.
+3. "set_sirk" used to set sirk, and this cmd should be used before init.
 
 Note:
-1 "exit" command is a shell internal command, only used to exit shell module and could not used to exit demo.
-2 There is a delay in synchronizing volume/mute status between receivers. Setting a smaller connection interval can reduce the delay, but may introduce other timing issues.
+1. "exit" command is a shell internal command, only used to exit shell module and could not used to exit demo.
+2. There is a delay in synchronizing volume/mute status between receivers. Setting a smaller connection interval can reduce the delay, but may introduce other timing issues.
 
 ## Supported Boards
 - [MIMXRT1170-EVKB](../../_boards/evkbmimxrt1170/edgefast_bluetooth_examples/unicast_media_receiver/example_board_readme.md)

@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2024 NXP
+ * Copyright 2018-2025 NXP
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -159,12 +159,12 @@ bool iot_agent_keystore_sss_se05x_handle_request(pb_istream_t *istream,
 		sss_se05x_session_t *pSession = (sss_se05x_session_t *)&(keystore_context->boot_context->session);
         smStatus_t sm_comm_status;
 
-#if IOT_AGENT_TIME_MEASUREMENT_ENABLE
+#if defined(IOT_AGENT_TIME_MEASUREMENT_ENABLE) && (IOT_AGENT_TIME_MEASUREMENT_ENABLE == 1)
         iot_agent_time_context_t apdu_time = { 0 };
         iot_agent_time_init_measurement(&apdu_time);
 #endif
 		sm_comm_status = DoAPDUTxRx(&(pSession->s_ctx), read_buffer.buf, read_buffer.len, write_buffer.buf, &len);
-#if IOT_AGENT_TIME_MEASUREMENT_ENABLE
+#if defined(IOT_AGENT_TIME_MEASUREMENT_ENABLE) && (IOT_AGENT_TIME_MEASUREMENT_ENABLE == 1)
         iot_agent_time_conclude_measurement(&apdu_time);
 		long measured_time = iot_agent_time_get_measurement(&apdu_time);
 		iot_agent_time_free_measurement_ctx(&apdu_time);

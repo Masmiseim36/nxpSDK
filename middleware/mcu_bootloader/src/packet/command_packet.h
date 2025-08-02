@@ -1,6 +1,5 @@
 /*
  * Copyright (c) 2013-2015 Freescale Semiconductor, Inc.
- * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -237,7 +236,13 @@ typedef struct FlashSecurityDisablePacket
 typedef struct ProgramOncePacket
 {
     command_packet_t commandPacket;       //!< header
+#if BL_FEATURE_OCOTP_REDLOCK
+    uint16_t index;                       //!< Parameter 0: index of pragram once field
+    uint8_t padding;                      //!< Padding byte, reserved for future use
+    uint8_t lockFlag;                     //!< Lock flag
+#else
     uint32_t index;                       //!< Parameter 0: index of pragram once field
+#endif
     uint32_t byteCount;                   //!< Parameter 1: number of bytes
     uint32_t data[kMaxProgramOnceValues]; //!< Parameter 2: data to be programmed
 } flash_program_once_packet_t;

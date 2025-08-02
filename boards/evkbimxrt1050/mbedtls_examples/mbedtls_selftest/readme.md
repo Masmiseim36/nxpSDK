@@ -252,6 +252,7 @@ Using following implementations:
 - [FRDM-MCXN236](../../_boards/frdmmcxn236/mbedtls_examples/mbedtls_selftest/example_board_readme.md)
 - [FRDM-MCXN947](../../_boards/frdmmcxn947/mbedtls_examples/mbedtls_selftest/example_board_readme.md)
 - [FRDM-MCXW71](../../_boards/frdmmcxw71/mbedtls_examples/mbedtls_selftest/example_board_readme.md)
+- [MCX-W71-EVK](../../_boards/mcxw71evk/mbedtls_examples/mbedtls_selftest/example_board_readme.md)
 - [FRDM-RW612](../../_boards/frdmrw612/mbedtls_examples/mbedtls_selftest/example_board_readme.md)
 - [K32W148-EVK](../../_boards/k32w148evk/mbedtls_examples/mbedtls_selftest/example_board_readme.md)
 - [KW45B41Z-EVK](../../_boards/kw45b41zevk/mbedtls_examples/mbedtls_selftest/example_board_readme.md)

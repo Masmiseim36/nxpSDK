@@ -1,5 +1,5 @@
 /*
- * Copyright 2023,2025 NXP
+ * Copyright 2023 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -17,11 +17,6 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 #if defined(APP_LOWPOWER_ENABLED) && (APP_LOWPOWER_ENABLED > 0)
 #define WEAK_FUNC
 #else
@@ -90,9 +85,4 @@ WEAK_FUNC uint8_t controller_enter_low_power(void);
  * return Zero on success.
  */
 WEAK_FUNC uint8_t controller_exit_low_power(void);
-
-#ifdef __cplusplus
-}
-#endif
-
 #endif /* _CONTROLLER_LOW_POWER_H__ */

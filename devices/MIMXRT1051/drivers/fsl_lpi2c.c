@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2022 NXP
+ * Copyright 2016-2022, 2024-2025 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -99,7 +99,11 @@ static void LPI2C_InitTransferStateMachine(lpi2c_master_handle_t *handle);
 
 static status_t LPI2C_SlaveCheckAndClearError(LPI2C_Type *base, uint32_t flags);
 
+#if !(defined(FSL_FEATURE_I2C_HAS_NO_IRQ) && FSL_FEATURE_I2C_HAS_NO_IRQ)
+#if !(defined(FSL_FEATURE_LPI2C_HAS_ROLE_SPLIT_IRQ) && FSL_FEATURE_LPI2C_HAS_ROLE_SPLIT_IRQ)
 static void LPI2C_CommonIRQHandler(LPI2C_Type *base, uint32_t instance);
+#endif
+#endif
 
 /*!
  * @brief introduce function LPI2C_TransferStateMachineSendCommandState.
@@ -172,9 +176,23 @@ static void LPI2C_TransferStateMachineWaitState(LPI2C_Type *base,
 /*! @brief Array to map LPI2C instance number to base pointer. */
 static LPI2C_Type *const kLpi2cBases[] = LPI2C_BASE_PTRS;
 
-/*! @brief Array to map LPI2C instance number to IRQ number, used internally for LPI2C master interrupt and EDMA
+#ifdef LPI2C_IRQS
+/*! @brief Array to map LPI2C instance number to IRQ number, used internally for LPI2C master/slave interrupt and EDMA
 transactional APIs. */
 IRQn_Type const kLpi2cIrqs[] = LPI2C_IRQS;
+#endif
+
+#ifdef LPI2C_MASTER_IRQS
+/*! @brief Array to map LPI2C instance number to IRQ number, used internally for LPI2C master interrupt and EDMA
+transactional APIs. */
+IRQn_Type const kLpi2cMasterIrqs[] = LPI2C_MASTER_IRQS;
+#endif
+
+#ifdef LPI2C_SLAVE_IRQS
+/*! @brief Array to map LPI2C instance number to IRQ number, used internally for LPI2C slave interrupt and EDMA
+transactional APIs. */
+IRQn_Type const kLpi2cSlaveIrqs[] = LPI2C_SLAVE_IRQS;
+#endif
 
 #if !(defined(FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL) && FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL)
 /*! @brief Array to map LPI2C instance number to clock gate enum. */
@@ -224,7 +242,7 @@ uint32_t LPI2C_GetInstance(LPI2C_Type *base)
     uint32_t instance;
     for (instance = 0U; instance < ARRAY_SIZE(kLpi2cBases); ++instance)
     {
-        if (kLpi2cBases[instance] == base)
+        if (MSDK_REG_SECURE_ADDR(kLpi2cBases[instance]) == MSDK_REG_SECURE_ADDR(base))
         {
             break;
         }
@@ -532,7 +550,7 @@ void LPI2C_MasterInit(LPI2C_Type *base, const lpi2c_master_config_t *masterConfi
     }
     if (0U != masterConfig->sclGlitchFilterWidth_ns)
     {
-        /* Calculate SDL filter width. The width is equal to FILTSCL cycles of functional clock.
+        /* Calculate SCL filter width. The width is equal to FILTSCL cycles of functional clock.
            And set FILTSCL to 0 disables the fileter, so the min value is 1. */
         cycles = LPI2C_GetCyclesForWidth(sourceClock_Hz, masterConfig->sclGlitchFilterWidth_ns, 1U,
                                          (LPI2C_MCFGR2_FILTSCL_MASK >> LPI2C_MCFGR2_FILTSCL_SHIFT), 0U);
@@ -1181,16 +1199,22 @@ void LPI2C_MasterTransferCreateHandle(LPI2C_Type *base,
     /* Clear internal IRQ enables and enable NVIC IRQ. */
     LPI2C_MasterDisableInterrupts(base, (uint32_t)kLPI2C_MasterIrqFlags);
 
+#ifdef LPI2C_IRQS
     /* Enable NVIC IRQ, this only enables the IRQ directly connected to the NVIC.
      In some cases the LPI2C IRQ is configured through INTMUX, user needs to enable
      INTMUX IRQ in application code. */
     (void)EnableIRQ(kLpi2cIrqs[instance]);
+#endif
+#ifdef LPI2C_MASTER_IRQS
+    (void)EnableIRQ(kLpi2cMasterIrqs[instance]);
+#endif
 }
 
 static void LPI2C_TransferStateMachineSendCommand(LPI2C_Type *base,
                                                   lpi2c_master_handle_t *handle,
                                                   lpi2c_state_machine_param_t *stateParams)
 {
+    assert(handle->remainingBytes > 0U);
     assert(stateParams != NULL);
     uint16_t sendval;
 
@@ -1202,7 +1226,8 @@ static void LPI2C_TransferStateMachineSendCommand(LPI2C_Type *base,
     }
 
     /* Issue command. buf is a uint8_t* pointing at the uint16 command array. */
-    sendval    = ((uint16_t)handle->buf[0]) | (((uint16_t)handle->buf[1]) << 8U);
+    sendval  = (uint16_t)handle->buf[0];
+    sendval |= (((uint16_t)handle->buf[1]) << 8U);
     base->MTDR = sendval;
     handle->buf++;
     handle->buf++;
@@ -1262,6 +1287,7 @@ static void LPI2C_TransferStateMachineReadCommand(LPI2C_Type *base,
                                                   lpi2c_master_handle_t *handle,
                                                   lpi2c_state_machine_param_t *stateParams)
 {
+    assert(handle->transfer.dataSize >= 1U);
     assert(stateParams != NULL);
 
     /* Make sure there is room in the tx fifo for the read command. */
@@ -1823,8 +1849,8 @@ void LPI2C_SlaveGetDefaultConfig(lpi2c_slave_config_t *slaveConfig)
  */
 void LPI2C_SlaveInit(LPI2C_Type *base, const lpi2c_slave_config_t *slaveConfig, uint32_t sourceClock_Hz)
 {
-    uint32_t tmpReg;
-    uint32_t tmpCycle;
+    uint32_t tmpReg = 0U;
+    uint32_t tmpCycle = 0U;
 
 #if !(defined(FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL) && FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL)
 
@@ -1856,18 +1882,30 @@ void LPI2C_SlaveInit(LPI2C_Type *base, const lpi2c_slave_config_t *slaveConfig, 
         LPI2C_SCFGR1_RXSTALL(slaveConfig->sclStall.enableRx) |
         LPI2C_SCFGR1_ADRSTALL(slaveConfig->sclStall.enableAddress);
 
-    /* Calculate SDA filter width. The width is equal to FILTSDA+3 cycles of functional clock.
-       And set FILTSDA to 0 disables the fileter, so the min value is 4. */
-    tmpReg = LPI2C_SCFGR2_FILTSDA(
-        LPI2C_GetCyclesForWidth(sourceClock_Hz, slaveConfig->sdaGlitchFilterWidth_ns, 4U,
-                                (LPI2C_SCFGR2_FILTSDA_MASK >> LPI2C_SCFGR2_FILTSDA_SHIFT) + 3U, 0U) -
-        3U);
+    if (slaveConfig->sdaGlitchFilterWidth_ns > 0U)
+    {
+        /* Calculate SDA filter width. The width is equal to FILTSDA+3 cycles of functional clock.
+           And set FILTSDA to 0 disables the fileter, so the min value is 4. */
+        tmpReg = LPI2C_SCFGR2_FILTSDA(
+            LPI2C_GetCyclesForWidth(sourceClock_Hz, slaveConfig->sdaGlitchFilterWidth_ns, 4U,
+                                    (LPI2C_SCFGR2_FILTSDA_MASK >> LPI2C_SCFGR2_FILTSDA_SHIFT) + 3U, 0U) -
+            3U);
+    }
+    else
+    {
+    }
 
-    /* Calculate SDL filter width. The width is equal to FILTSCL+3 cycles of functional clock.
-       And set FILTSCL to 0 disables the fileter, so the min value is 4. */
-    tmpCycle = LPI2C_GetCyclesForWidth(sourceClock_Hz, slaveConfig->sclGlitchFilterWidth_ns, 4U,
-                                       (LPI2C_SCFGR2_FILTSCL_MASK >> LPI2C_SCFGR2_FILTSCL_SHIFT) + 3U, 0U);
-    tmpReg |= LPI2C_SCFGR2_FILTSCL(tmpCycle - 3U);
+    if (slaveConfig->sclGlitchFilterWidth_ns > 0U)
+    {
+        /* Calculate SCL filter width. The width is equal to FILTSCL+3 cycles of functional clock.
+           And set FILTSCL to 0 disables the fileter, so the min value is 4. */
+        tmpCycle = LPI2C_GetCyclesForWidth(sourceClock_Hz, slaveConfig->sclGlitchFilterWidth_ns, 4U,
+                                           (LPI2C_SCFGR2_FILTSCL_MASK >> LPI2C_SCFGR2_FILTSCL_SHIFT) + 3U, 0U);
+        tmpReg |= LPI2C_SCFGR2_FILTSCL(tmpCycle - 3U);
+    }
+    else
+    {
+    }
 
     /* Calculate data valid time. The time is equal to FILTSCL+DATAVD+3 cycles of functional clock.
        So the min value is FILTSCL+3. */
@@ -2184,7 +2222,12 @@ void LPI2C_SlaveTransferCreateHandle(LPI2C_Type *base,
 
     /* Clear internal IRQ enables and enable NVIC IRQ. */
     LPI2C_SlaveDisableInterrupts(base, (uint32_t)kLPI2C_SlaveIrqFlags);
+#ifdef LPI2C_IRQS
     (void)EnableIRQ(kLpi2cIrqs[instance]);
+#endif
+#ifdef LPI2C_SLAVE_IRQS
+    (void)EnableIRQ(kLpi2cSlaveIrqs[instance]);
+#endif
 
     /* Nack by default. */
     base->STAR = LPI2C_STAR_TXNACK_MASK;
@@ -2487,6 +2530,7 @@ void LPI2C_SlaveTransferHandleIRQ(LPI2C_Type *base, lpi2c_slave_handle_t *handle
 }
 
 #if !(defined(FSL_FEATURE_I2C_HAS_NO_IRQ) && FSL_FEATURE_I2C_HAS_NO_IRQ)
+#if !(defined(FSL_FEATURE_LPI2C_HAS_ROLE_SPLIT_IRQ) && FSL_FEATURE_LPI2C_HAS_ROLE_SPLIT_IRQ)
 /*!
  * @brief Shared IRQ handler that can call both master and slave ISRs.
  *
@@ -2514,24 +2558,67 @@ static void LPI2C_CommonIRQHandler(LPI2C_Type *base, uint32_t instance)
     }
     SDK_ISR_EXIT_BARRIER;
 }
+
+void LPI2C_DriverIRQHandler(uint32_t instance)
+{
+    if (instance < ARRAY_SIZE(kLpi2cBases))
+    {
+        LPI2C_CommonIRQHandler(kLpi2cBases[instance], instance);
+    }
+    else
+    {
+        SDK_ISR_EXIT_BARRIER;
+    }
+}
+#endif
 #endif
 
 #if defined(LPI2C0)
 /* Implementation of LPI2C0 handler named in startup code. */
+#if defined(FSL_FEATURE_LPI2C_HAS_ROLE_SPLIT_IRQ) && FSL_FEATURE_LPI2C_HAS_ROLE_SPLIT_IRQ
+void LPI2C0_Master_IRQHandler(void);
+void LPI2C0_Master_IRQHandler(void)
+{
+    s_lpi2cMasterIsr(LPI2C0, s_lpi2cMasterHandle[0]);
+    SDK_ISR_EXIT_BARRIER;
+}
+void LPI2C0_Slave_IRQHandler(void);
+void LPI2C0_Slave_IRQHandler(void)
+{
+    s_lpi2cSlaveIsr(LPI2C0, s_lpi2cSlaveHandle[0]);
+    SDK_ISR_EXIT_BARRIER;
+}
+#else
 void LPI2C0_DriverIRQHandler(void);
 void LPI2C0_DriverIRQHandler(void)
 {
     LPI2C_CommonIRQHandler(LPI2C0, 0U);
 }
 #endif
+#endif
 
 #if defined(LPI2C1)
 /* Implementation of LPI2C1 handler named in startup code. */
+#if defined(FSL_FEATURE_LPI2C_HAS_ROLE_SPLIT_IRQ) && FSL_FEATURE_LPI2C_HAS_ROLE_SPLIT_IRQ
+void LPI2C1_Master_IRQHandler(void);
+void LPI2C1_Master_IRQHandler(void)
+{
+    s_lpi2cMasterIsr(LPI2C1, s_lpi2cMasterHandle[1]);
+    SDK_ISR_EXIT_BARRIER;
+}
+void LPI2C1_Slave_IRQHandler(void);
+void LPI2C1_Slave_IRQHandler(void)
+{
+    s_lpi2cSlaveIsr(LPI2C1, s_lpi2cSlaveHandle[1]);
+    SDK_ISR_EXIT_BARRIER;
+}
+#else
 void LPI2C1_DriverIRQHandler(void);
 void LPI2C1_DriverIRQHandler(void)
 {
     LPI2C_CommonIRQHandler(LPI2C1, 1U);
 }
+#endif
 #endif
 
 #if defined(LPI2C2)
@@ -2711,5 +2798,14 @@ void ADMA_I2C4_INT_DriverIRQHandler(void);
 void ADMA_I2C4_INT_DriverIRQHandler(void)
 {
     LPI2C_CommonIRQHandler(ADMA__LPI2C4, LPI2C_GetInstance(ADMA__LPI2C4));
+}
+#endif
+
+#if defined(AON__LPI2C0)
+/* Implementation of LPI2C0_AON handler named in startup code. */
+void LPI2C0_AON_DriverIRQHandler(void);
+void LPI2C0_AON_DriverIRQHandler(void)
+{
+    LPI2C_CommonIRQHandler(AON__LPI2C0, LPI2C_GetInstance(AON__LPI2C0));
 }
 #endif

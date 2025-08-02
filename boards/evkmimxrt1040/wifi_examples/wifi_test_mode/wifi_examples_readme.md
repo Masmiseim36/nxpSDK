@@ -7,3 +7,8 @@ Hardware requirements
 
 Board settings
 ==============
+
+
+Wi-Fi
+=====
+[readme_modules.md](../readme_modules.md)

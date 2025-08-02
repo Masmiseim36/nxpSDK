@@ -328,9 +328,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../mcux_config.h -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
-              <Define>DEBUG, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1052DVL6B, OSA_USED, SERIAL_PORT_TYPE_UART=1, USE_RTOS=0</Define>
+              <Define>DEBUG, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1052DVL6B, MIMXRT1052_SERIES, OSA_USED, SERIAL_PORT_TYPE_UART=1, USE_RTOS=0</Define>
               <Undefine/>
-              <IncludePath>..;../../../../xip;../../../../../../devices/MIMXRT1052/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1052;../../../../../../devices/MIMXRT1052/periph;../../../../../../devices/MIMXRT1052/xip;../../../../../../devices/MIMXRT1052/utilities;../../../../../../components/lists;../../../../../../devices/MIMXRT1052/utilities/str;../../../../../../devices/MIMXRT1052/utilities/debug_console;../../../../../../components/serial_manager;../../../../../../components/uart;../../../../../../components/osa;../../../../../../middleware/usb/include;../../../../../../middleware/usb/host;../../../../../../middleware/usb/host/class;../../../../../../middleware/usb/phy;../../../../../../middleware/lwip/port;../../../../../../middleware/lwip/src;../../../../../../middleware/lwip/src/include;../../../../../../middleware/lwip/src/include/lwip;../../../../../../middleware/lwip/port/sys_arch/dynamic;../../../../../../middleware/lwip/contrib/apps/ping</IncludePath>
+              <IncludePath>..;../../../../xip;../../../../../../devices/MIMXRT1052/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1052;../../../../../../devices/MIMXRT1052/periph;../../../../../../devices/MIMXRT1052/xip;../../../../../../devices/MIMXRT1052/utilities/debug_console;../../../../../../components/lists;../../../../../../devices/MIMXRT1052/utilities/str;../../../../../../components/serial_manager;../../../../../../components/uart;../../../../../../components/osa;../../../../../../middleware/usb/include;../../../../../../middleware/usb/host;../../../../../../middleware/usb/config/host/ehci;../../../../../../middleware/usb/host/class;../../../../../../middleware/usb/phy;../../../../../../middleware/lwip/port;../../../../../../middleware/lwip/src/include;../../../../../../middleware/lwip/port/sys_arch/dynamic;../../../../../../middleware/lwip/contrib/apps/ping</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -346,9 +346,9 @@
             <uClangAs>1</uClangAs>
             <VariousControls>
               <MiscControls/>
-              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1052DVL6B, OSA_USED</Define>
+              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1052DVL6B, MIMXRT1052_SERIES, OSA_USED</Define>
               <Undefine/>
-              <IncludePath>..;../../../../xip;../../../../../../devices/MIMXRT1052/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1052;../../../../../../devices/MIMXRT1052/periph;../../../../../../devices/MIMXRT1052/xip;../../../../../../devices/MIMXRT1052/utilities;../../../../../../components/lists;../../../../../../devices/MIMXRT1052/utilities/str;../../../../../../devices/MIMXRT1052/utilities/debug_console;../../../../../../components/serial_manager;../../../../../../components/uart;../../../../../../components/osa;../../../../../../middleware/usb/include;../../../../../../middleware/usb/host;../../../../../../middleware/usb/host/class;../../../../../../middleware/usb/phy;../../../../../../middleware/lwip/port;../../../../../../middleware/lwip/src;../../../../../../middleware/lwip/src/include;../../../../../../middleware/lwip/src/include/lwip;../../../../../../middleware/lwip/port/sys_arch/dynamic;../../../../../../middleware/lwip/contrib/apps/ping</IncludePath>
+              <IncludePath>..;../../../../xip;../../../../../../devices/MIMXRT1052/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1052;../../../../../../devices/MIMXRT1052/periph;../../../../../../devices/MIMXRT1052/xip;../../../../../../devices/MIMXRT1052/utilities/debug_console;../../../../../../components/lists;../../../../../../devices/MIMXRT1052/utilities/str;../../../../../../components/serial_manager;../../../../../../components/uart;../../../../../../components/osa;../../../../../../middleware/usb/include;../../../../../../middleware/usb/host;../../../../../../middleware/usb/config/host/ehci;../../../../../../middleware/usb/host/class;../../../../../../middleware/usb/phy;../../../../../../middleware/lwip/port;../../../../../../middleware/lwip/src/include;../../../../../../middleware/lwip/port/sys_arch/dynamic;../../../../../../middleware/lwip/contrib/apps/ping</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -394,6 +394,11 @@
               <FileName>fsl_os_abstraction_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../fsl_os_abstraction_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>lwipopts_gen.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../lwipopts_gen.h</FilePath>
             </File>
             <File>
               <FileName>mcux_config.h</FileName>
@@ -998,12 +1003,12 @@
             <File>
               <FileName>fsl_assert.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1052/utilities/fsl_assert.h</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT1052/utilities/debug_console/fsl_assert.h</FilePath>
             </File>
             <File>
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1052/utilities/fsl_assert.c</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT1052/utilities/debug_console/fsl_assert.c</FilePath>
             </File>
             <File>
               <FileName>fsl_memcpy.S</FileName>
@@ -1106,11 +1111,6 @@
           <GroupName>component/osa</GroupName>
           <Files>
             <File>
-              <FileName>fsl_os_abstraction.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/osa/fsl_os_abstraction.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_os_abstraction_bm.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../components/osa/fsl_os_abstraction_bm.h</FilePath>
@@ -1119,6 +1119,11 @@
               <FileName>fsl_os_abstraction_bm.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../components/osa/fsl_os_abstraction_bm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/osa/fsl_os_abstraction.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2479,6 +2484,11 @@
               <FileName>example_board_readme.md</FileName>
               <FileType>5</FileType>
               <FilePath>../example_board_readme.md</FilePath>
+            </File>
+            <File>
+              <FileName>examples_shared_readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../examples_shared_readme.md</FilePath>
             </File>
           </Files>
         </Group>
@@ -2809,9 +2819,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../mcux_config.h -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
-              <Define>USB_HOST_CONFIG_BUFFER_PROPERTY_CACHEABLE=1, DEBUG, USE_SDRAM=1, SKIP_SYSCLK_INIT=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1052DVL6B, OSA_USED, SERIAL_PORT_TYPE_UART=1, USE_RTOS=0</Define>
+              <Define>USB_HOST_CONFIG_BUFFER_PROPERTY_CACHEABLE=1, DEBUG, USE_SDRAM=1, SKIP_SYSCLK_INIT=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1052DVL6B, MIMXRT1052_SERIES, OSA_USED, SERIAL_PORT_TYPE_UART=1, USE_RTOS=0</Define>
               <Undefine/>
-              <IncludePath>..;../../../../xip;../../../../../../devices/MIMXRT1052/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1052;../../../../../../devices/MIMXRT1052/periph;../../../../../../devices/MIMXRT1052/xip;../../../../../../devices/MIMXRT1052/utilities;../../../../../../components/lists;../../../../../../devices/MIMXRT1052/utilities/str;../../../../../../devices/MIMXRT1052/utilities/debug_console;../../../../../../components/serial_manager;../../../../../../components/uart;../../../../../../components/osa;../../../../../../middleware/usb/include;../../../../../../middleware/usb/host;../../../../../../middleware/usb/host/class;../../../../../../middleware/usb/phy;../../../../../../middleware/lwip/port;../../../../../../middleware/lwip/src;../../../../../../middleware/lwip/src/include;../../../../../../middleware/lwip/src/include/lwip;../../../../../../middleware/lwip/port/sys_arch/dynamic;../../../../../../middleware/lwip/contrib/apps/ping</IncludePath>
+              <IncludePath>..;../../../../xip;../../../../../../devices/MIMXRT1052/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1052;../../../../../../devices/MIMXRT1052/periph;../../../../../../devices/MIMXRT1052/xip;../../../../../../devices/MIMXRT1052/utilities/debug_console;../../../../../../components/lists;../../../../../../devices/MIMXRT1052/utilities/str;../../../../../../components/serial_manager;../../../../../../components/uart;../../../../../../components/osa;../../../../../../middleware/usb/include;../../../../../../middleware/usb/host;../../../../../../middleware/usb/config/host/ehci;../../../../../../middleware/usb/host/class;../../../../../../middleware/usb/phy;../../../../../../middleware/lwip/port;../../../../../../middleware/lwip/src/include;../../../../../../middleware/lwip/port/sys_arch/dynamic;../../../../../../middleware/lwip/contrib/apps/ping</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2827,9 +2837,9 @@
             <uClangAs>1</uClangAs>
             <VariousControls>
               <MiscControls/>
-              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1052DVL6B, OSA_USED</Define>
+              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1052DVL6B, MIMXRT1052_SERIES, OSA_USED</Define>
               <Undefine/>
-              <IncludePath>..;../../../../xip;../../../../../../devices/MIMXRT1052/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1052;../../../../../../devices/MIMXRT1052/periph;../../../../../../devices/MIMXRT1052/xip;../../../../../../devices/MIMXRT1052/utilities;../../../../../../components/lists;../../../../../../devices/MIMXRT1052/utilities/str;../../../../../../devices/MIMXRT1052/utilities/debug_console;../../../../../../components/serial_manager;../../../../../../components/uart;../../../../../../components/osa;../../../../../../middleware/usb/include;../../../../../../middleware/usb/host;../../../../../../middleware/usb/host/class;../../../../../../middleware/usb/phy;../../../../../../middleware/lwip/port;../../../../../../middleware/lwip/src;../../../../../../middleware/lwip/src/include;../../../../../../middleware/lwip/src/include/lwip;../../../../../../middleware/lwip/port/sys_arch/dynamic;../../../../../../middleware/lwip/contrib/apps/ping</IncludePath>
+              <IncludePath>..;../../../../xip;../../../../../../devices/MIMXRT1052/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1052;../../../../../../devices/MIMXRT1052/periph;../../../../../../devices/MIMXRT1052/xip;../../../../../../devices/MIMXRT1052/utilities/debug_console;../../../../../../components/lists;../../../../../../devices/MIMXRT1052/utilities/str;../../../../../../components/serial_manager;../../../../../../components/uart;../../../../../../components/osa;../../../../../../middleware/usb/include;../../../../../../middleware/usb/host;../../../../../../middleware/usb/config/host/ehci;../../../../../../middleware/usb/host/class;../../../../../../middleware/usb/phy;../../../../../../middleware/lwip/port;../../../../../../middleware/lwip/src/include;../../../../../../middleware/lwip/port/sys_arch/dynamic;../../../../../../middleware/lwip/contrib/apps/ping</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -2875,6 +2885,11 @@
               <FileName>fsl_os_abstraction_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../fsl_os_abstraction_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>lwipopts_gen.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../lwipopts_gen.h</FilePath>
             </File>
             <File>
               <FileName>mcux_config.h</FileName>
@@ -3479,12 +3494,12 @@
             <File>
               <FileName>fsl_assert.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1052/utilities/fsl_assert.h</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT1052/utilities/debug_console/fsl_assert.h</FilePath>
             </File>
             <File>
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1052/utilities/fsl_assert.c</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT1052/utilities/debug_console/fsl_assert.c</FilePath>
             </File>
             <File>
               <FileName>fsl_memcpy.S</FileName>
@@ -3587,11 +3602,6 @@
           <GroupName>component/osa</GroupName>
           <Files>
             <File>
-              <FileName>fsl_os_abstraction.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/osa/fsl_os_abstraction.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_os_abstraction_bm.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../components/osa/fsl_os_abstraction_bm.h</FilePath>
@@ -3600,6 +3610,11 @@
               <FileName>fsl_os_abstraction_bm.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../components/osa/fsl_os_abstraction_bm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/osa/fsl_os_abstraction.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -4960,6 +4975,11 @@
               <FileName>example_board_readme.md</FileName>
               <FileType>5</FileType>
               <FilePath>../example_board_readme.md</FilePath>
+            </File>
+            <File>
+              <FileName>examples_shared_readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../examples_shared_readme.md</FilePath>
             </File>
           </Files>
         </Group>
@@ -5290,9 +5310,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../mcux_config.h -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
-              <Define>DEBUG, XIP_BOOT_HEADER_ENABLE=1, XIP_EXTERNAL_FLASH=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1052DVL6B, OSA_USED, SERIAL_PORT_TYPE_UART=1, USE_RTOS=0</Define>
+              <Define>DEBUG, XIP_BOOT_HEADER_ENABLE=1, XIP_EXTERNAL_FLASH=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1052DVL6B, MIMXRT1052_SERIES, OSA_USED, SERIAL_PORT_TYPE_UART=1, USE_RTOS=0</Define>
               <Undefine/>
-              <IncludePath>..;../../../../xip;../../../../../../devices/MIMXRT1052/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1052;../../../../../../devices/MIMXRT1052/periph;../../../../../../devices/MIMXRT1052/xip;../../../../../../devices/MIMXRT1052/utilities;../../../../../../components/lists;../../../../../../devices/MIMXRT1052/utilities/str;../../../../../../devices/MIMXRT1052/utilities/debug_console;../../../../../../components/serial_manager;../../../../../../components/uart;../../../../../../components/osa;../../../../../../middleware/usb/include;../../../../../../middleware/usb/host;../../../../../../middleware/usb/host/class;../../../../../../middleware/usb/phy;../../../../../../middleware/lwip/port;../../../../../../middleware/lwip/src;../../../../../../middleware/lwip/src/include;../../../../../../middleware/lwip/src/include/lwip;../../../../../../middleware/lwip/port/sys_arch/dynamic;../../../../../../middleware/lwip/contrib/apps/ping</IncludePath>
+              <IncludePath>..;../../../../xip;../../../../../../devices/MIMXRT1052/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1052;../../../../../../devices/MIMXRT1052/periph;../../../../../../devices/MIMXRT1052/xip;../../../../../../devices/MIMXRT1052/utilities/debug_console;../../../../../../components/lists;../../../../../../devices/MIMXRT1052/utilities/str;../../../../../../components/serial_manager;../../../../../../components/uart;../../../../../../components/osa;../../../../../../middleware/usb/include;../../../../../../middleware/usb/host;../../../../../../middleware/usb/config/host/ehci;../../../../../../middleware/usb/host/class;../../../../../../middleware/usb/phy;../../../../../../middleware/lwip/port;../../../../../../middleware/lwip/src/include;../../../../../../middleware/lwip/port/sys_arch/dynamic;../../../../../../middleware/lwip/contrib/apps/ping</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -5308,9 +5328,9 @@
             <uClangAs>1</uClangAs>
             <VariousControls>
               <MiscControls/>
-              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1052DVL6B, OSA_USED</Define>
+              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1052DVL6B, MIMXRT1052_SERIES, OSA_USED</Define>
               <Undefine/>
-              <IncludePath>..;../../../../xip;../../../../../../devices/MIMXRT1052/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1052;../../../../../../devices/MIMXRT1052/periph;../../../../../../devices/MIMXRT1052/xip;../../../../../../devices/MIMXRT1052/utilities;../../../../../../components/lists;../../../../../../devices/MIMXRT1052/utilities/str;../../../../../../devices/MIMXRT1052/utilities/debug_console;../../../../../../components/serial_manager;../../../../../../components/uart;../../../../../../components/osa;../../../../../../middleware/usb/include;../../../../../../middleware/usb/host;../../../../../../middleware/usb/host/class;../../../../../../middleware/usb/phy;../../../../../../middleware/lwip/port;../../../../../../middleware/lwip/src;../../../../../../middleware/lwip/src/include;../../../../../../middleware/lwip/src/include/lwip;../../../../../../middleware/lwip/port/sys_arch/dynamic;../../../../../../middleware/lwip/contrib/apps/ping</IncludePath>
+              <IncludePath>..;../../../../xip;../../../../../../devices/MIMXRT1052/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1052;../../../../../../devices/MIMXRT1052/periph;../../../../../../devices/MIMXRT1052/xip;../../../../../../devices/MIMXRT1052/utilities/debug_console;../../../../../../components/lists;../../../../../../devices/MIMXRT1052/utilities/str;../../../../../../components/serial_manager;../../../../../../components/uart;../../../../../../components/osa;../../../../../../middleware/usb/include;../../../../../../middleware/usb/host;../../../../../../middleware/usb/config/host/ehci;../../../../../../middleware/usb/host/class;../../../../../../middleware/usb/phy;../../../../../../middleware/lwip/port;../../../../../../middleware/lwip/src/include;../../../../../../middleware/lwip/port/sys_arch/dynamic;../../../../../../middleware/lwip/contrib/apps/ping</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -5356,6 +5376,11 @@
               <FileName>fsl_os_abstraction_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../fsl_os_abstraction_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>lwipopts_gen.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../lwipopts_gen.h</FilePath>
             </File>
             <File>
               <FileName>mcux_config.h</FileName>
@@ -5960,12 +5985,12 @@
             <File>
               <FileName>fsl_assert.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1052/utilities/fsl_assert.h</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT1052/utilities/debug_console/fsl_assert.h</FilePath>
             </File>
             <File>
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1052/utilities/fsl_assert.c</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT1052/utilities/debug_console/fsl_assert.c</FilePath>
             </File>
             <File>
               <FileName>fsl_memcpy.S</FileName>
@@ -6068,11 +6093,6 @@
           <GroupName>component/osa</GroupName>
           <Files>
             <File>
-              <FileName>fsl_os_abstraction.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/osa/fsl_os_abstraction.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_os_abstraction_bm.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../components/osa/fsl_os_abstraction_bm.h</FilePath>
@@ -6081,6 +6101,11 @@
               <FileName>fsl_os_abstraction_bm.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../components/osa/fsl_os_abstraction_bm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/osa/fsl_os_abstraction.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -7441,6 +7466,11 @@
               <FileName>example_board_readme.md</FileName>
               <FileType>5</FileType>
               <FilePath>../example_board_readme.md</FilePath>
+            </File>
+            <File>
+              <FileName>examples_shared_readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../examples_shared_readme.md</FilePath>
             </File>
           </Files>
         </Group>
@@ -7771,9 +7801,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../mcux_config.h -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
-              <Define>NDEBUG, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1052DVL6B, OSA_USED, SERIAL_PORT_TYPE_UART=1, USE_RTOS=0</Define>
+              <Define>NDEBUG, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1052DVL6B, MIMXRT1052_SERIES, OSA_USED, SERIAL_PORT_TYPE_UART=1, USE_RTOS=0</Define>
               <Undefine/>
-              <IncludePath>..;../../../../xip;../../../../../../devices/MIMXRT1052/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1052;../../../../../../devices/MIMXRT1052/periph;../../../../../../devices/MIMXRT1052/xip;../../../../../../devices/MIMXRT1052/utilities;../../../../../../components/lists;../../../../../../devices/MIMXRT1052/utilities/str;../../../../../../devices/MIMXRT1052/utilities/debug_console;../../../../../../components/serial_manager;../../../../../../components/uart;../../../../../../components/osa;../../../../../../middleware/usb/include;../../../../../../middleware/usb/host;../../../../../../middleware/usb/host/class;../../../../../../middleware/usb/phy;../../../../../../middleware/lwip/port;../../../../../../middleware/lwip/src;../../../../../../middleware/lwip/src/include;../../../../../../middleware/lwip/src/include/lwip;../../../../../../middleware/lwip/port/sys_arch/dynamic;../../../../../../middleware/lwip/contrib/apps/ping</IncludePath>
+              <IncludePath>..;../../../../xip;../../../../../../devices/MIMXRT1052/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1052;../../../../../../devices/MIMXRT1052/periph;../../../../../../devices/MIMXRT1052/xip;../../../../../../devices/MIMXRT1052/utilities/debug_console;../../../../../../components/lists;../../../../../../devices/MIMXRT1052/utilities/str;../../../../../../components/serial_manager;../../../../../../components/uart;../../../../../../components/osa;../../../../../../middleware/usb/include;../../../../../../middleware/usb/host;../../../../../../middleware/usb/config/host/ehci;../../../../../../middleware/usb/host/class;../../../../../../middleware/usb/phy;../../../../../../middleware/lwip/port;../../../../../../middleware/lwip/src/include;../../../../../../middleware/lwip/port/sys_arch/dynamic;../../../../../../middleware/lwip/contrib/apps/ping</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -7789,9 +7819,9 @@
             <uClangAs>1</uClangAs>
             <VariousControls>
               <MiscControls/>
-              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1052DVL6B, OSA_USED</Define>
+              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1052DVL6B, MIMXRT1052_SERIES, OSA_USED</Define>
               <Undefine/>
-              <IncludePath>..;../../../../xip;../../../../../../devices/MIMXRT1052/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1052;../../../../../../devices/MIMXRT1052/periph;../../../../../../devices/MIMXRT1052/xip;../../../../../../devices/MIMXRT1052/utilities;../../../../../../components/lists;../../../../../../devices/MIMXRT1052/utilities/str;../../../../../../devices/MIMXRT1052/utilities/debug_console;../../../../../../components/serial_manager;../../../../../../components/uart;../../../../../../components/osa;../../../../../../middleware/usb/include;../../../../../../middleware/usb/host;../../../../../../middleware/usb/host/class;../../../../../../middleware/usb/phy;../../../../../../middleware/lwip/port;../../../../../../middleware/lwip/src;../../../../../../middleware/lwip/src/include;../../../../../../middleware/lwip/src/include/lwip;../../../../../../middleware/lwip/port/sys_arch/dynamic;../../../../../../middleware/lwip/contrib/apps/ping</IncludePath>
+              <IncludePath>..;../../../../xip;../../../../../../devices/MIMXRT1052/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1052;../../../../../../devices/MIMXRT1052/periph;../../../../../../devices/MIMXRT1052/xip;../../../../../../devices/MIMXRT1052/utilities/debug_console;../../../../../../components/lists;../../../../../../devices/MIMXRT1052/utilities/str;../../../../../../components/serial_manager;../../../../../../components/uart;../../../../../../components/osa;../../../../../../middleware/usb/include;../../../../../../middleware/usb/host;../../../../../../middleware/usb/config/host/ehci;../../../../../../middleware/usb/host/class;../../../../../../middleware/usb/phy;../../../../../../middleware/lwip/port;../../../../../../middleware/lwip/src/include;../../../../../../middleware/lwip/port/sys_arch/dynamic;../../../../../../middleware/lwip/contrib/apps/ping</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -7837,6 +7867,11 @@
               <FileName>fsl_os_abstraction_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../fsl_os_abstraction_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>lwipopts_gen.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../lwipopts_gen.h</FilePath>
             </File>
             <File>
               <FileName>mcux_config.h</FileName>
@@ -8441,12 +8476,12 @@
             <File>
               <FileName>fsl_assert.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1052/utilities/fsl_assert.h</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT1052/utilities/debug_console/fsl_assert.h</FilePath>
             </File>
             <File>
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1052/utilities/fsl_assert.c</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT1052/utilities/debug_console/fsl_assert.c</FilePath>
             </File>
             <File>
               <FileName>fsl_memcpy.S</FileName>
@@ -8549,11 +8584,6 @@
           <GroupName>component/osa</GroupName>
           <Files>
             <File>
-              <FileName>fsl_os_abstraction.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/osa/fsl_os_abstraction.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_os_abstraction_bm.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../components/osa/fsl_os_abstraction_bm.h</FilePath>
@@ -8562,6 +8592,11 @@
               <FileName>fsl_os_abstraction_bm.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../components/osa/fsl_os_abstraction_bm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/osa/fsl_os_abstraction.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -9922,6 +9957,11 @@
               <FileName>example_board_readme.md</FileName>
               <FileType>5</FileType>
               <FilePath>../example_board_readme.md</FilePath>
+            </File>
+            <File>
+              <FileName>examples_shared_readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../examples_shared_readme.md</FilePath>
             </File>
           </Files>
         </Group>
@@ -10252,9 +10292,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../mcux_config.h -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
-              <Define>USB_HOST_CONFIG_BUFFER_PROPERTY_CACHEABLE=1, NDEBUG, USE_SDRAM=1, SKIP_SYSCLK_INIT=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1052DVL6B, OSA_USED, SERIAL_PORT_TYPE_UART=1, USE_RTOS=0</Define>
+              <Define>USB_HOST_CONFIG_BUFFER_PROPERTY_CACHEABLE=1, NDEBUG, USE_SDRAM=1, SKIP_SYSCLK_INIT=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1052DVL6B, MIMXRT1052_SERIES, OSA_USED, SERIAL_PORT_TYPE_UART=1, USE_RTOS=0</Define>
               <Undefine/>
-              <IncludePath>..;../../../../xip;../../../../../../devices/MIMXRT1052/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1052;../../../../../../devices/MIMXRT1052/periph;../../../../../../devices/MIMXRT1052/xip;../../../../../../devices/MIMXRT1052/utilities;../../../../../../components/lists;../../../../../../devices/MIMXRT1052/utilities/str;../../../../../../devices/MIMXRT1052/utilities/debug_console;../../../../../../components/serial_manager;../../../../../../components/uart;../../../../../../components/osa;../../../../../../middleware/usb/include;../../../../../../middleware/usb/host;../../../../../../middleware/usb/host/class;../../../../../../middleware/usb/phy;../../../../../../middleware/lwip/port;../../../../../../middleware/lwip/src;../../../../../../middleware/lwip/src/include;../../../../../../middleware/lwip/src/include/lwip;../../../../../../middleware/lwip/port/sys_arch/dynamic;../../../../../../middleware/lwip/contrib/apps/ping</IncludePath>
+              <IncludePath>..;../../../../xip;../../../../../../devices/MIMXRT1052/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1052;../../../../../../devices/MIMXRT1052/periph;../../../../../../devices/MIMXRT1052/xip;../../../../../../devices/MIMXRT1052/utilities/debug_console;../../../../../../components/lists;../../../../../../devices/MIMXRT1052/utilities/str;../../../../../../components/serial_manager;../../../../../../components/uart;../../../../../../components/osa;../../../../../../middleware/usb/include;../../../../../../middleware/usb/host;../../../../../../middleware/usb/config/host/ehci;../../../../../../middleware/usb/host/class;../../../../../../middleware/usb/phy;../../../../../../middleware/lwip/port;../../../../../../middleware/lwip/src/include;../../../../../../middleware/lwip/port/sys_arch/dynamic;../../../../../../middleware/lwip/contrib/apps/ping</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -10270,9 +10310,9 @@
             <uClangAs>1</uClangAs>
             <VariousControls>
               <MiscControls/>
-              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1052DVL6B, OSA_USED</Define>
+              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1052DVL6B, MIMXRT1052_SERIES, OSA_USED</Define>
               <Undefine/>
-              <IncludePath>..;../../../../xip;../../../../../../devices/MIMXRT1052/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1052;../../../../../../devices/MIMXRT1052/periph;../../../../../../devices/MIMXRT1052/xip;../../../../../../devices/MIMXRT1052/utilities;../../../../../../components/lists;../../../../../../devices/MIMXRT1052/utilities/str;../../../../../../devices/MIMXRT1052/utilities/debug_console;../../../../../../components/serial_manager;../../../../../../components/uart;../../../../../../components/osa;../../../../../../middleware/usb/include;../../../../../../middleware/usb/host;../../../../../../middleware/usb/host/class;../../../../../../middleware/usb/phy;../../../../../../middleware/lwip/port;../../../../../../middleware/lwip/src;../../../../../../middleware/lwip/src/include;../../../../../../middleware/lwip/src/include/lwip;../../../../../../middleware/lwip/port/sys_arch/dynamic;../../../../../../middleware/lwip/contrib/apps/ping</IncludePath>
+              <IncludePath>..;../../../../xip;../../../../../../devices/MIMXRT1052/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1052;../../../../../../devices/MIMXRT1052/periph;../../../../../../devices/MIMXRT1052/xip;../../../../../../devices/MIMXRT1052/utilities/debug_console;../../../../../../components/lists;../../../../../../devices/MIMXRT1052/utilities/str;../../../../../../components/serial_manager;../../../../../../components/uart;../../../../../../components/osa;../../../../../../middleware/usb/include;../../../../../../middleware/usb/host;../../../../../../middleware/usb/config/host/ehci;../../../../../../middleware/usb/host/class;../../../../../../middleware/usb/phy;../../../../../../middleware/lwip/port;../../../../../../middleware/lwip/src/include;../../../../../../middleware/lwip/port/sys_arch/dynamic;../../../../../../middleware/lwip/contrib/apps/ping</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -10318,6 +10358,11 @@
               <FileName>fsl_os_abstraction_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../fsl_os_abstraction_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>lwipopts_gen.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../lwipopts_gen.h</FilePath>
             </File>
             <File>
               <FileName>mcux_config.h</FileName>
@@ -10922,12 +10967,12 @@
             <File>
               <FileName>fsl_assert.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1052/utilities/fsl_assert.h</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT1052/utilities/debug_console/fsl_assert.h</FilePath>
             </File>
             <File>
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1052/utilities/fsl_assert.c</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT1052/utilities/debug_console/fsl_assert.c</FilePath>
             </File>
             <File>
               <FileName>fsl_memcpy.S</FileName>
@@ -11030,11 +11075,6 @@
           <GroupName>component/osa</GroupName>
           <Files>
             <File>
-              <FileName>fsl_os_abstraction.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/osa/fsl_os_abstraction.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_os_abstraction_bm.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../components/osa/fsl_os_abstraction_bm.h</FilePath>
@@ -11043,6 +11083,11 @@
               <FileName>fsl_os_abstraction_bm.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../components/osa/fsl_os_abstraction_bm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/osa/fsl_os_abstraction.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -12403,6 +12448,11 @@
               <FileName>example_board_readme.md</FileName>
               <FileType>5</FileType>
               <FilePath>../example_board_readme.md</FilePath>
+            </File>
+            <File>
+              <FileName>examples_shared_readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../examples_shared_readme.md</FilePath>
             </File>
           </Files>
         </Group>
@@ -12733,9 +12783,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../mcux_config.h -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
-              <Define>NDEBUG, XIP_BOOT_HEADER_ENABLE=1, XIP_EXTERNAL_FLASH=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1052DVL6B, OSA_USED, SERIAL_PORT_TYPE_UART=1, USE_RTOS=0</Define>
+              <Define>NDEBUG, XIP_BOOT_HEADER_ENABLE=1, XIP_EXTERNAL_FLASH=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1052DVL6B, MIMXRT1052_SERIES, OSA_USED, SERIAL_PORT_TYPE_UART=1, USE_RTOS=0</Define>
               <Undefine/>
-              <IncludePath>..;../../../../xip;../../../../../../devices/MIMXRT1052/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1052;../../../../../../devices/MIMXRT1052/periph;../../../../../../devices/MIMXRT1052/xip;../../../../../../devices/MIMXRT1052/utilities;../../../../../../components/lists;../../../../../../devices/MIMXRT1052/utilities/str;../../../../../../devices/MIMXRT1052/utilities/debug_console;../../../../../../components/serial_manager;../../../../../../components/uart;../../../../../../components/osa;../../../../../../middleware/usb/include;../../../../../../middleware/usb/host;../../../../../../middleware/usb/host/class;../../../../../../middleware/usb/phy;../../../../../../middleware/lwip/port;../../../../../../middleware/lwip/src;../../../../../../middleware/lwip/src/include;../../../../../../middleware/lwip/src/include/lwip;../../../../../../middleware/lwip/port/sys_arch/dynamic;../../../../../../middleware/lwip/contrib/apps/ping</IncludePath>
+              <IncludePath>..;../../../../xip;../../../../../../devices/MIMXRT1052/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1052;../../../../../../devices/MIMXRT1052/periph;../../../../../../devices/MIMXRT1052/xip;../../../../../../devices/MIMXRT1052/utilities/debug_console;../../../../../../components/lists;../../../../../../devices/MIMXRT1052/utilities/str;../../../../../../components/serial_manager;../../../../../../components/uart;../../../../../../components/osa;../../../../../../middleware/usb/include;../../../../../../middleware/usb/host;../../../../../../middleware/usb/config/host/ehci;../../../../../../middleware/usb/host/class;../../../../../../middleware/usb/phy;../../../../../../middleware/lwip/port;../../../../../../middleware/lwip/src/include;../../../../../../middleware/lwip/port/sys_arch/dynamic;../../../../../../middleware/lwip/contrib/apps/ping</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -12751,9 +12801,9 @@
             <uClangAs>1</uClangAs>
             <VariousControls>
               <MiscControls/>
-              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1052DVL6B, OSA_USED</Define>
+              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1052DVL6B, MIMXRT1052_SERIES, OSA_USED</Define>
               <Undefine/>
-              <IncludePath>..;../../../../xip;../../../../../../devices/MIMXRT1052/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1052;../../../../../../devices/MIMXRT1052/periph;../../../../../../devices/MIMXRT1052/xip;../../../../../../devices/MIMXRT1052/utilities;../../../../../../components/lists;../../../../../../devices/MIMXRT1052/utilities/str;../../../../../../devices/MIMXRT1052/utilities/debug_console;../../../../../../components/serial_manager;../../../../../../components/uart;../../../../../../components/osa;../../../../../../middleware/usb/include;../../../../../../middleware/usb/host;../../../../../../middleware/usb/host/class;../../../../../../middleware/usb/phy;../../../../../../middleware/lwip/port;../../../../../../middleware/lwip/src;../../../../../../middleware/lwip/src/include;../../../../../../middleware/lwip/src/include/lwip;../../../../../../middleware/lwip/port/sys_arch/dynamic;../../../../../../middleware/lwip/contrib/apps/ping</IncludePath>
+              <IncludePath>..;../../../../xip;../../../../../../devices/MIMXRT1052/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1052;../../../../../../devices/MIMXRT1052/periph;../../../../../../devices/MIMXRT1052/xip;../../../../../../devices/MIMXRT1052/utilities/debug_console;../../../../../../components/lists;../../../../../../devices/MIMXRT1052/utilities/str;../../../../../../components/serial_manager;../../../../../../components/uart;../../../../../../components/osa;../../../../../../middleware/usb/include;../../../../../../middleware/usb/host;../../../../../../middleware/usb/config/host/ehci;../../../../../../middleware/usb/host/class;../../../../../../middleware/usb/phy;../../../../../../middleware/lwip/port;../../../../../../middleware/lwip/src/include;../../../../../../middleware/lwip/port/sys_arch/dynamic;../../../../../../middleware/lwip/contrib/apps/ping</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -12799,6 +12849,11 @@
               <FileName>fsl_os_abstraction_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../fsl_os_abstraction_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>lwipopts_gen.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../lwipopts_gen.h</FilePath>
             </File>
             <File>
               <FileName>mcux_config.h</FileName>
@@ -13403,12 +13458,12 @@
             <File>
               <FileName>fsl_assert.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1052/utilities/fsl_assert.h</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT1052/utilities/debug_console/fsl_assert.h</FilePath>
             </File>
             <File>
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1052/utilities/fsl_assert.c</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT1052/utilities/debug_console/fsl_assert.c</FilePath>
             </File>
             <File>
               <FileName>fsl_memcpy.S</FileName>
@@ -13511,11 +13566,6 @@
           <GroupName>component/osa</GroupName>
           <Files>
             <File>
-              <FileName>fsl_os_abstraction.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/osa/fsl_os_abstraction.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_os_abstraction_bm.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../components/osa/fsl_os_abstraction_bm.h</FilePath>
@@ -13524,6 +13574,11 @@
               <FileName>fsl_os_abstraction_bm.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../components/osa/fsl_os_abstraction_bm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/osa/fsl_os_abstraction.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -14884,6 +14939,11 @@
               <FileName>example_board_readme.md</FileName>
               <FileType>5</FileType>
               <FilePath>../example_board_readme.md</FilePath>
+            </File>
+            <File>
+              <FileName>examples_shared_readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../examples_shared_readme.md</FilePath>
             </File>
           </Files>
         </Group>

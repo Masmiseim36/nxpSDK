@@ -1,5 +1,5 @@
 /*
- * Copyright 2024-2025 NXP
+ * Copyright 2024 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -8,10 +8,6 @@
 #ifndef _CONTROLLER_LOW_POWER_CONFIG_H__
 #define _CONTROLLER_LOW_POWER_CONFIG_H__
  
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 /* External Wakeup schemems - 6 wire 
    --------------------------       --------------------------
    |          Host          |       |       Controller       |
@@ -35,10 +31,6 @@ extern "C" {
 #elif defined(WIFI_IW612_BOARD_MURATA_2EL_M2)
 #define BT_C2H_GPIO           (19U)
 #define BT_H2C_GPIO           (18U)
-#endif
-
-#ifdef __cplusplus
-}
 #endif
 
 #endif /* _CONTROLLER_LOW_POWER_CONFIG_H__ */

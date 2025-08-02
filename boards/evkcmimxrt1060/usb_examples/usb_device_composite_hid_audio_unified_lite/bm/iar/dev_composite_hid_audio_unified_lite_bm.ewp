@@ -79,7 +79,7 @@
         </option>
         <option>
           <name>OGChipSelectEditMenu</name>
-          <state>MIMXRT1062xxx6A	NXP MIMXRT1062xxx6A</state>
+          <state>MIMXRT1062xxx6B	NXP MIMXRT1062xxx6B</state>
         </option>
         <option>
           <name>GenLowLevelInterface</name>
@@ -125,7 +125,7 @@
         </option>
         <option>
           <name>GFPUDeviceSlave</name>
-          <state>MIMXRT1062xxx6A	NXP MIMXRT1062xxx6A</state>
+          <state>MIMXRT1062xxx6B	NXP MIMXRT1062xxx6B</state>
         </option>
         <option>
           <name>FPU2</name>
@@ -246,6 +246,7 @@
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1062DVL6B</state>
+          <state>MIMXRT1062_SERIES</state>
           <state>OSA_USED</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
           <state>CODEC_MULTI_ADAPTERS=1</state>
@@ -389,10 +390,11 @@
           <state>$PROJ_DIR$/../../../../../../components/codec/wm8962</state>
           <state>$PROJ_DIR$/../../../../../../components/i2c</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
-          <state>$PROJ_DIR$/../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../components/audio</state>
+          <state>$PROJ_DIR$/../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/device</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/usb/config/device/ehci</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
         </option>
         <option>
@@ -579,6 +581,7 @@
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1062DVL6B</state>
+          <state>MIMXRT1062_SERIES</state>
           <state>OSA_USED</state>
         </option>
         <option>
@@ -689,10 +692,11 @@
           <state>$PROJ_DIR$/../../../../../../components/codec/wm8962</state>
           <state>$PROJ_DIR$/../../../../../../components/i2c</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
-          <state>$PROJ_DIR$/../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../components/audio</state>
+          <state>$PROJ_DIR$/../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/device</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/usb/config/device/ehci</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
         </option>
         <option>
@@ -1237,7 +1241,7 @@
         </option>
         <option>
           <name>OGChipSelectEditMenu</name>
-          <state>MIMXRT1062xxx6A	NXP MIMXRT1062xxx6A</state>
+          <state>MIMXRT1062xxx6B	NXP MIMXRT1062xxx6B</state>
         </option>
         <option>
           <name>GenLowLevelInterface</name>
@@ -1283,7 +1287,7 @@
         </option>
         <option>
           <name>GFPUDeviceSlave</name>
-          <state>MIMXRT1062xxx6A	NXP MIMXRT1062xxx6A</state>
+          <state>MIMXRT1062xxx6B	NXP MIMXRT1062xxx6B</state>
         </option>
         <option>
           <name>FPU2</name>
@@ -1407,6 +1411,7 @@
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1062DVL6B</state>
+          <state>MIMXRT1062_SERIES</state>
           <state>OSA_USED</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
           <state>CODEC_MULTI_ADAPTERS=1</state>
@@ -1550,10 +1555,11 @@
           <state>$PROJ_DIR$/../../../../../../components/codec/wm8962</state>
           <state>$PROJ_DIR$/../../../../../../components/i2c</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
-          <state>$PROJ_DIR$/../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../components/audio</state>
+          <state>$PROJ_DIR$/../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/device</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/usb/config/device/ehci</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
         </option>
         <option>
@@ -1740,6 +1746,7 @@
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1062DVL6B</state>
+          <state>MIMXRT1062_SERIES</state>
           <state>OSA_USED</state>
         </option>
         <option>
@@ -1850,10 +1857,11 @@
           <state>$PROJ_DIR$/../../../../../../components/codec/wm8962</state>
           <state>$PROJ_DIR$/../../../../../../components/i2c</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
-          <state>$PROJ_DIR$/../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../components/audio</state>
+          <state>$PROJ_DIR$/../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/device</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/usb/config/device/ehci</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
         </option>
         <option>
@@ -2398,7 +2406,7 @@
         </option>
         <option>
           <name>OGChipSelectEditMenu</name>
-          <state>MIMXRT1062xxx6A	NXP MIMXRT1062xxx6A</state>
+          <state>MIMXRT1062xxx6B	NXP MIMXRT1062xxx6B</state>
         </option>
         <option>
           <name>GenLowLevelInterface</name>
@@ -2444,7 +2452,7 @@
         </option>
         <option>
           <name>GFPUDeviceSlave</name>
-          <state>MIMXRT1062xxx6A	NXP MIMXRT1062xxx6A</state>
+          <state>MIMXRT1062xxx6B	NXP MIMXRT1062xxx6B</state>
         </option>
         <option>
           <name>FPU2</name>
@@ -2567,6 +2575,7 @@
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1062DVL6B</state>
+          <state>MIMXRT1062_SERIES</state>
           <state>OSA_USED</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
           <state>CODEC_MULTI_ADAPTERS=1</state>
@@ -2710,10 +2719,11 @@
           <state>$PROJ_DIR$/../../../../../../components/codec/wm8962</state>
           <state>$PROJ_DIR$/../../../../../../components/i2c</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
-          <state>$PROJ_DIR$/../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../components/audio</state>
+          <state>$PROJ_DIR$/../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/device</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/usb/config/device/ehci</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
         </option>
         <option>
@@ -2900,6 +2910,7 @@
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1062DVL6B</state>
+          <state>MIMXRT1062_SERIES</state>
           <state>OSA_USED</state>
         </option>
         <option>
@@ -3010,10 +3021,11 @@
           <state>$PROJ_DIR$/../../../../../../components/codec/wm8962</state>
           <state>$PROJ_DIR$/../../../../../../components/i2c</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
-          <state>$PROJ_DIR$/../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../components/audio</state>
+          <state>$PROJ_DIR$/../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/device</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/usb/config/device/ehci</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
         </option>
         <option>
@@ -3558,7 +3570,7 @@
         </option>
         <option>
           <name>OGChipSelectEditMenu</name>
-          <state>MIMXRT1062xxx6A	NXP MIMXRT1062xxx6A</state>
+          <state>MIMXRT1062xxx6B	NXP MIMXRT1062xxx6B</state>
         </option>
         <option>
           <name>GenLowLevelInterface</name>
@@ -3604,7 +3616,7 @@
         </option>
         <option>
           <name>GFPUDeviceSlave</name>
-          <state>MIMXRT1062xxx6A	NXP MIMXRT1062xxx6A</state>
+          <state>MIMXRT1062xxx6B	NXP MIMXRT1062xxx6B</state>
         </option>
         <option>
           <name>FPU2</name>
@@ -3725,6 +3737,7 @@
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1062DVL6B</state>
+          <state>MIMXRT1062_SERIES</state>
           <state>OSA_USED</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
           <state>CODEC_MULTI_ADAPTERS=1</state>
@@ -3868,10 +3881,11 @@
           <state>$PROJ_DIR$/../../../../../../components/codec/wm8962</state>
           <state>$PROJ_DIR$/../../../../../../components/i2c</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
-          <state>$PROJ_DIR$/../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../components/audio</state>
+          <state>$PROJ_DIR$/../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/device</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/usb/config/device/ehci</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
         </option>
         <option>
@@ -4058,6 +4072,7 @@
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1062DVL6B</state>
+          <state>MIMXRT1062_SERIES</state>
           <state>OSA_USED</state>
         </option>
         <option>
@@ -4168,10 +4183,11 @@
           <state>$PROJ_DIR$/../../../../../../components/codec/wm8962</state>
           <state>$PROJ_DIR$/../../../../../../components/i2c</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
-          <state>$PROJ_DIR$/../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../components/audio</state>
+          <state>$PROJ_DIR$/../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/device</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/usb/config/device/ehci</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
         </option>
         <option>
@@ -4716,7 +4732,7 @@
         </option>
         <option>
           <name>OGChipSelectEditMenu</name>
-          <state>MIMXRT1062xxx6A	NXP MIMXRT1062xxx6A</state>
+          <state>MIMXRT1062xxx6B	NXP MIMXRT1062xxx6B</state>
         </option>
         <option>
           <name>GenLowLevelInterface</name>
@@ -4762,7 +4778,7 @@
         </option>
         <option>
           <name>GFPUDeviceSlave</name>
-          <state>MIMXRT1062xxx6A	NXP MIMXRT1062xxx6A</state>
+          <state>MIMXRT1062xxx6B	NXP MIMXRT1062xxx6B</state>
         </option>
         <option>
           <name>FPU2</name>
@@ -4886,6 +4902,7 @@
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1062DVL6B</state>
+          <state>MIMXRT1062_SERIES</state>
           <state>OSA_USED</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
           <state>CODEC_MULTI_ADAPTERS=1</state>
@@ -5029,10 +5046,11 @@
           <state>$PROJ_DIR$/../../../../../../components/codec/wm8962</state>
           <state>$PROJ_DIR$/../../../../../../components/i2c</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
-          <state>$PROJ_DIR$/../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../components/audio</state>
+          <state>$PROJ_DIR$/../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/device</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/usb/config/device/ehci</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
         </option>
         <option>
@@ -5219,6 +5237,7 @@
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1062DVL6B</state>
+          <state>MIMXRT1062_SERIES</state>
           <state>OSA_USED</state>
         </option>
         <option>
@@ -5329,10 +5348,11 @@
           <state>$PROJ_DIR$/../../../../../../components/codec/wm8962</state>
           <state>$PROJ_DIR$/../../../../../../components/i2c</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
-          <state>$PROJ_DIR$/../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../components/audio</state>
+          <state>$PROJ_DIR$/../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/device</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/usb/config/device/ehci</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
         </option>
         <option>
@@ -5877,7 +5897,7 @@
         </option>
         <option>
           <name>OGChipSelectEditMenu</name>
-          <state>MIMXRT1062xxx6A	NXP MIMXRT1062xxx6A</state>
+          <state>MIMXRT1062xxx6B	NXP MIMXRT1062xxx6B</state>
         </option>
         <option>
           <name>GenLowLevelInterface</name>
@@ -5923,7 +5943,7 @@
         </option>
         <option>
           <name>GFPUDeviceSlave</name>
-          <state>MIMXRT1062xxx6A	NXP MIMXRT1062xxx6A</state>
+          <state>MIMXRT1062xxx6B	NXP MIMXRT1062xxx6B</state>
         </option>
         <option>
           <name>FPU2</name>
@@ -6046,6 +6066,7 @@
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1062DVL6B</state>
+          <state>MIMXRT1062_SERIES</state>
           <state>OSA_USED</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
           <state>CODEC_MULTI_ADAPTERS=1</state>
@@ -6189,10 +6210,11 @@
           <state>$PROJ_DIR$/../../../../../../components/codec/wm8962</state>
           <state>$PROJ_DIR$/../../../../../../components/i2c</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
-          <state>$PROJ_DIR$/../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../components/audio</state>
+          <state>$PROJ_DIR$/../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/device</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/usb/config/device/ehci</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
         </option>
         <option>
@@ -6379,6 +6401,7 @@
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1062DVL6B</state>
+          <state>MIMXRT1062_SERIES</state>
           <state>OSA_USED</state>
         </option>
         <option>
@@ -6489,10 +6512,11 @@
           <state>$PROJ_DIR$/../../../../../../components/codec/wm8962</state>
           <state>$PROJ_DIR$/../../../../../../components/i2c</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
-          <state>$PROJ_DIR$/../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../components/audio</state>
+          <state>$PROJ_DIR$/../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/device</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/usb/config/device/ehci</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
         </option>
         <option>
@@ -7454,24 +7478,24 @@
       </file>
     </group>
     <group>
-      <name>osa</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction_bm.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction_bm.c</name>
-      </file>
-    </group>
-    <group>
       <name>audio</name>
       <file>
         <name>$PROJ_DIR$/../../../../../../components/audio/fsl_adapter_audio.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../../components/audio/fsl_adapter_sai.c</name>
+      </file>
+    </group>
+    <group>
+      <name>osa</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction_bm.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction_bm.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction.h</name>
       </file>
     </group>
   </group>
@@ -7560,6 +7584,9 @@
     <name>doc</name>
     <file>
       <name>$PROJ_DIR$/../readme.md</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../examples_shared_readme.md</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../usb_device_audio_recorder_signal_enhancement.jpg</name>

@@ -79,7 +79,7 @@
         </option>
         <option>
           <name>OGChipSelectEditMenu</name>
-          <state>MIMXRT1062xxx6A	NXP MIMXRT1062xxx6A</state>
+          <state>MIMXRT1062xxx6B	NXP MIMXRT1062xxx6B</state>
         </option>
         <option>
           <name>GenLowLevelInterface</name>
@@ -125,7 +125,7 @@
         </option>
         <option>
           <name>GFPUDeviceSlave</name>
-          <state>MIMXRT1062xxx6A	NXP MIMXRT1062xxx6A</state>
+          <state>MIMXRT1062xxx6B	NXP MIMXRT1062xxx6B</state>
         </option>
         <option>
           <name>FPU2</name>
@@ -251,6 +251,7 @@
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1062DVL6B</state>
+          <state>MIMXRT1062_SERIES</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
           <state>LV_CONF_INCLUDE_SIMPLE=1</state>
         </option>
@@ -578,6 +579,7 @@
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1062DVL6B</state>
+          <state>MIMXRT1062_SERIES</state>
         </option>
         <option>
           <name>AList</name>
@@ -796,7 +798,7 @@
         </option>
         <option>
           <name>IlinkConfigDefines</name>
-          <state>__stack_size__=0x1000</state>
+          <state>__stack_size__=0x1800</state>
         </option>
         <option>
           <name>IlinkMapFile</name>
@@ -1231,7 +1233,7 @@
         </option>
         <option>
           <name>OGChipSelectEditMenu</name>
-          <state>MIMXRT1062xxx6A	NXP MIMXRT1062xxx6A</state>
+          <state>MIMXRT1062xxx6B	NXP MIMXRT1062xxx6B</state>
         </option>
         <option>
           <name>GenLowLevelInterface</name>
@@ -1277,7 +1279,7 @@
         </option>
         <option>
           <name>GFPUDeviceSlave</name>
-          <state>MIMXRT1062xxx6A	NXP MIMXRT1062xxx6A</state>
+          <state>MIMXRT1062xxx6B	NXP MIMXRT1062xxx6B</state>
         </option>
         <option>
           <name>FPU2</name>
@@ -1403,6 +1405,7 @@
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1062DVL6B</state>
+          <state>MIMXRT1062_SERIES</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
           <state>LV_CONF_INCLUDE_SIMPLE=1</state>
         </option>
@@ -1730,6 +1733,7 @@
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1062DVL6B</state>
+          <state>MIMXRT1062_SERIES</state>
         </option>
         <option>
           <name>AList</name>
@@ -1948,7 +1952,7 @@
         </option>
         <option>
           <name>IlinkConfigDefines</name>
-          <state>__stack_size__=0x1000</state>
+          <state>__stack_size__=0x1800</state>
         </option>
         <option>
           <name>IlinkMapFile</name>
@@ -4304,6 +4308,9 @@
           <name>$PROJ_DIR$/../../../../../middleware/lvgl/src/osal/lv_freertos.c</name>
         </file>
         <file>
+          <name>$PROJ_DIR$/../../../../../middleware/lvgl/src/osal/lv_linux.c</name>
+        </file>
+        <file>
           <name>$PROJ_DIR$/../../../../../middleware/lvgl/src/osal/lv_mqx.c</name>
         </file>
         <file>
@@ -4326,6 +4333,9 @@
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../middleware/lvgl/src/osal/lv_freertos.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/lvgl/src/osal/lv_linux_private.h</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../middleware/lvgl/src/osal/lv_mqx.h</name>
@@ -5081,6 +5091,9 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../lvgl_examples_readme.md</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../examples_shared_readme.md</name>
     </file>
   </group>
 </project>

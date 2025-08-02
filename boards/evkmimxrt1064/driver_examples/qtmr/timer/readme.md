@@ -7,7 +7,7 @@ The quad-timer module provides four timer channels with a variety of controls af
 and multi-channel features. 
 It sets up the QTMR hardware block to trigger an interrupt every 50 millisecond.
 When chaining the first channel and the second channel, Timer interrupt occur every 10 second.
-When the QTMR interrupt is triggered a message a printed on the UART terminal.
+When the QTMR interrupt is triggered a message is printed on the UART terminal.
 In lots of RT10x devices, overflow flag and related interrupt cannot be generated successfully in upward 
 count mode (ERRATA050194), the workaround is to use compare interrupt instead of overflow interrupt 
 by setting compare value to 0xFFFF, the compare interrupt has the same timing effect as overflow interrupt 
@@ -26,3 +26,4 @@ interrupt occurs every 65.5 seconds.
 - [EVK-MIMXRT1064](../../../_boards/evkmimxrt1064/driver_examples/qtmr/timer/example_board_readme.md)
 - [MIMXRT1160-EVK](../../../_boards/evkmimxrt1160/driver_examples/qtmr/timer/example_board_readme.md)
 - [MIMXRT1180-EVK](../../../_boards/evkmimxrt1180/driver_examples/qtmr/timer/example_board_readme.md)
+- [FRDM-MCXL255](../../../_boards/frdmmcxl255/driver_examples/qtmr/timer/example_board_readme.md)

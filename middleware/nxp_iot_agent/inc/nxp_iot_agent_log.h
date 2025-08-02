@@ -1,5 +1,5 @@
 /* 
- * Copyright 2018-2021,2023-2024 NXP
+ * Copyright 2018-2021,2023-2025 NXP
  *
  * SPDX-License-Identifier: Apache-2.0
  * 
@@ -42,7 +42,7 @@ extern "C" {
     printf("DEBUG:   %s L#%d ", __func__, __LINE__); \
     printf(__VA_ARGS__);                             \
     printf("\n");                                    \
-  } while(0)
+  } while(false)
 # else  /* ifdef ENABLE_IOT_AGENT_DEBUG */
 #  define IOT_AGENT_DEBUG(...)
 # endif /* ifdef ENABLE_IOT_AGENT_DEBUG */
@@ -56,28 +56,28 @@ extern "C" {
 #  define IOT_AGENT_FUNC_ENTRY                              \
   do {                                                      \
     printf("FUNC_ENTRY:   %s L#%d \n", __func__, __LINE__); \
-  } while(0)
+  } while(false)
 #  define IOT_AGENT_FUNC_EXIT                               \
   do {                                                      \
     printf("FUNC_EXIT:   %s L#%d \n", __func__, __LINE__);  \
-  } while(0)
+  } while(false)
 #  define IOT_AGENT_FUNC_EXIT_RC(x)                                            \
   do {                                                                         \
     printf("FUNC_EXIT:   %s L#%d return code : %d \n", __func__, __LINE__, x); \
     return x;                                                                  \
-  } while(0)
+  } while(false)
 #  define IOT_AGENT_TRACE(...)                       \
   do {                                               \
     printf("TRACE:   %s L#%d ", __func__, __LINE__); \
     printf(__VA_ARGS__);                             \
     printf("\n");                                    \
-  } while(0)
+  } while(false)
 
 # else  /* ifdef ENABLE_IOT_AGENT_TRACE */
 #  define IOT_AGENT_FUNC_ENTRY
 
 #  define IOT_AGENT_FUNC_EXIT
-#  define IOT_AGENT_FUNC_EXIT_SUCCESS(x) do { return x; } while(0)
+#  define IOT_AGENT_FUNC_EXIT_SUCCESS(x) do { return x; } while(false)
 #  define IOT_AGENT_TRACE(...)
 # endif /* ifdef ENABLE_IOT_AGENT_TRACE */
 

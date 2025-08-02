@@ -19,8 +19,10 @@
 #define configGPT_CLOCK_HZ                                                                  \
     (CLOCK_GetPllFreq(kCLOCK_SystemPll1Ctrl) / (CLOCK_GetRootPreDivider(kCLOCK_RootGpt1)) / \
      (CLOCK_GetRootPostDivider(kCLOCK_RootGpt1)) / 20)
-#elif defined(MIMXRT1181_cm33_SERIES) || defined(MIMXRT1182_cm33_SERIES) || defined(MIMXRT1187_cm33_SERIES) || \
-    defined(MIMXRT1187_cm7_SERIES) || defined(MIMXRT1189_cm33_SERIES) || defined(MIMXRT1189_cm7_SERIES)
+#elif defined(MIMXRT1181_cm33_SERIES) || defined(MIMXRT1182_cm33_SERIES) || \
+      defined(MIMXRT1186_cm33_SERIES) || defined(MIMXRT1186_cm7_SERIES) || \
+      defined(MIMXRT1187_cm33_SERIES) || defined(MIMXRT1187_cm7_SERIES) || \
+      defined(MIMXRT1189_cm33_SERIES) || defined(MIMXRT1189_cm7_SERIES)
 #define configGPT_CLOCK_HZ (CLOCK_GetRootClockFreq(kCLOCK_Root_Gpt1))
 #else
 #define configGPT_CLOCK_HZ (CLOCK_GetFreq(kCLOCK_IpgClk) / 2)

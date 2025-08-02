@@ -65,6 +65,7 @@
           <value>SDK_DEBUGCONSOLE=1</value>
           <value>MCUX_META_BUILD</value>
           <value>CPU_MIMXRT1064DVL6A</value>
+          <value>MIMXRT1064_SERIES</value>
           <value>SDK_I2C_BASED_COMPONENT_USED=1</value>
         </option>
         <option id="com.crt.advproject.link.memory.sections" type="stringList">

@@ -15,11 +15,8 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_EDMA_CHANNEL_0 0
-
-#define BUFFER_LENGTH      8 * 2
 #define HALF_BUFFER_LENGTH (BUFFER_LENGTH / 2)
-#define TCD_QUEUE_SIZE     1U
+#define DEMO_EDMA_CHANNEL_0 0
 
 /*******************************************************************************
  * Prototypes

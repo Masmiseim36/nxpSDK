@@ -38,24 +38,24 @@ static void peripheral_hts_task(void *pvParameters);
 static OSA_TASK_DEFINE(peripheral_hts_task, NCP_BLE_SERVICE_PRIO, 1, 1024, 0);
 static OSA_EVENT_HANDLE_DEFINE(hts_events);
 
-// ble-set-value command paramters
+// ble-set-value command parameters
 NCP_SET_VALUE_CMD hts_value;
-bool hts_cccd_written = false;
+bool hts_ccc_written = false;
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
-extern void write_charateristic_command_local(NCP_SET_VALUE_CMD *param);
+extern void write_characteristic_command_local(NCP_SET_VALUE_CMD *param);
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
 static struct host_gatt_attr hts_profile [] = {
-    /* HTS Promary Serivce Declaration */
+    /* HTS Primary Service Declaration */
     GATT_PRIMARY_SERVICE(UUID_HTS),
-    /* HTS Measurement Charatristic Declaration */
+    /* HTS Measurement Characteristic Declaration */
     GATT_CHARACTERISTIC(UUID_HTS_MEASUREMENT, BT_GATT_CHRC_INDICATE, BT_GATT_PERM_NONE),
     /* Client Characteristic Configuration of HTS MeasurementDeclaration */
-    GATT_CCC(BT_GATT_PERM_READ | BT_GATT_PERM_WRITE), 
+    GATT_CCC(BT_GATT_PERM_READ | BT_GATT_PERM_WRITE),
 };
 /*******************************************************************************
  * Code
@@ -78,16 +78,16 @@ void peripheral_hts_start(void)
     {
         is_started = true;
         hts_init();
-        printf("HTS profile at host side starting...\n");
+        PRINTF("HTS profile at host side starting...\n");
         return;
     }
-    printf("HTS profile at host side already started\n");
+    PRINTF("HTS profile at host side already started\n");
     return;
 }
 
 void peripheral_hts_indicate(uint8_t value)
 {
-    hts_cccd_written = (value == BT_GATT_CCC_INDICATE) ? true : false;
+    hts_ccc_written = (value == BT_GATT_CCC_INDICATE) ? true : false;
 }
 
 static void peripheral_hts_task(void *pvParameters)
@@ -110,7 +110,7 @@ static void peripheral_hts_task(void *pvParameters)
 
     /*Wait for command response semaphore.*/
     mcu_get_command_resp_sem();
-    printf("Send 'ble-host-svc-add prim 1809 chrc 2a1c 20 00 ccc 2902 03 start' to add HTS profile to ncp device side\n");
+    PRINTF("Send 'ble-host-svc-add prim 1809 chrc 2a1c 20 00 ccc 2902 03 start' to add HTS profile to ncp device side\n");
 
     do
     {
@@ -180,9 +180,9 @@ static void peripheral_hts_task(void *pvParameters)
 
     while(1)
     {
-        if(hts_cccd_written)
+        if(hts_ccc_written)
         {
-            printf("temperature is %ldC\n", temperature);
+            PRINTF("temperature is %ldC\n", temperature);
             temp_measurement.flags = hts_unit_celsius_c;
             temp_measurement.flags += hts_include_temp_type;
             temp_measurement.type = temp_type;
@@ -195,7 +195,7 @@ static void peripheral_hts_task(void *pvParameters)
             memcpy(&hts_value.value, (uint8_t *)&temp_measurement, sizeof(temp_measurement));
 
             //send Set value command
-            write_charateristic_command_local(&hts_value);
+            write_characteristic_command_local(&hts_value);
             ncp_host_send_tlv_command();
 
             temperature++;
@@ -208,7 +208,7 @@ static void peripheral_hts_task(void *pvParameters)
             {
                 temp_type = hts_no_temp_type;
             }
-            peripheral_hts_event_get(HTS_EVENT_WRITE_CHRA_RSP);
+            peripheral_hts_event_get(HTS_EVENT_WRITE_CHAR_RSP);
         }
         OSA_TimeDelay(1000);
     }
@@ -219,4 +219,4 @@ void hts_init(void)
     (void)OSA_EventCreate(hts_events, 1U);
     (void)OSA_TaskCreate((osa_task_handle_t)hts_service_thread, OSA_TASK(peripheral_hts_task), (osa_task_param_t)NULL);
 }
-#endif
+#endif /* CONFIG_NCP_HTS */

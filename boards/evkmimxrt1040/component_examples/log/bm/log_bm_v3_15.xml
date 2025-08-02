@@ -29,12 +29,11 @@
     <definition extID="utility.shell.MIMXRT1042"/>
     <definition extID="component.serial_manager.MIMXRT1042"/>
     <definition extID="component.serial_manager_uart.MIMXRT1042"/>
-    <definition extID="component.panic.MIMXRT1042"/>
     <definition extID="component.lpuart_adapter.MIMXRT1042"/>
     <definition extID="component.osa_template_config.MIMXRT1042"/>
-    <definition extID="component.osa_interface.MIMXRT1042"/>
     <definition extID="component.osa.MIMXRT1042"/>
     <definition extID="component.osa_bm.MIMXRT1042"/>
+    <definition extID="component.panic.MIMXRT1042"/>
     <definition extID="iar"/>
     <definition extID="mdk"/>
     <definition extID="armgcc"/>
@@ -43,7 +42,7 @@
     <definition extID="com.crt.advproject.config.exe.debug"/>
     <definition extID="com.crt.advproject.config.exe.release"/>
   </externalDefinitions>
-  <example id="evkmimxrt1040_log_bm" name="log_bm" device_core="core0_MIMXRT1042xxxxB" dependency="platform.drivers.xip_board.evkmimxrt1040.MIMXRT1042 platform.drivers.clock.MIMXRT1042 platform.drivers.iomuxc.MIMXRT1042 CMSIS_Include_core_cm.MIMXRT1042 device.MIMXRT1042_CMSIS.MIMXRT1042 device.MIMXRT1042_system.MIMXRT1042 device.MIMXRT1042_startup.MIMXRT1042 platform.drivers.xip_device.MIMXRT1042 platform.drivers.cache_armv7_m7.MIMXRT1042 platform.drivers.common.MIMXRT1042 platform.drivers.dcdc_1.MIMXRT1042 platform.drivers.gpc_1.MIMXRT1042 platform.drivers.igpio.MIMXRT1042 platform.drivers.lpuart.MIMXRT1042 platform.drivers.pmu.MIMXRT1042 platform.drivers.src.MIMXRT1042 platform.utilities.assert.MIMXRT1042 platform.utilities.misc_utilities.MIMXRT1042 component.lists.MIMXRT1042 utility.str.MIMXRT1042 utility.debug_console.MIMXRT1042 component.log.MIMXRT1042 component.log.backend.debug_console.MIMXRT1042 component.log.backend.ringbuffer.MIMXRT1042 utility.shell.MIMXRT1042 component.serial_manager.MIMXRT1042 component.serial_manager_uart.MIMXRT1042 component.panic.MIMXRT1042 component.lpuart_adapter.MIMXRT1042 component.osa_template_config.MIMXRT1042 component.osa_interface.MIMXRT1042 component.osa.MIMXRT1042 component.osa_bm.MIMXRT1042" category="component_examples">
+  <example id="evkmimxrt1040_log_bm" name="log_bm" device_core="core0_MIMXRT1042xxxxB" dependency="platform.drivers.xip_board.evkmimxrt1040.MIMXRT1042 platform.drivers.clock.MIMXRT1042 platform.drivers.iomuxc.MIMXRT1042 CMSIS_Include_core_cm.MIMXRT1042 device.MIMXRT1042_CMSIS.MIMXRT1042 device.MIMXRT1042_system.MIMXRT1042 device.MIMXRT1042_startup.MIMXRT1042 platform.drivers.xip_device.MIMXRT1042 platform.drivers.cache_armv7_m7.MIMXRT1042 platform.drivers.common.MIMXRT1042 platform.drivers.dcdc_1.MIMXRT1042 platform.drivers.gpc_1.MIMXRT1042 platform.drivers.igpio.MIMXRT1042 platform.drivers.lpuart.MIMXRT1042 platform.drivers.pmu.MIMXRT1042 platform.drivers.src.MIMXRT1042 platform.utilities.assert.MIMXRT1042 platform.utilities.misc_utilities.MIMXRT1042 component.lists.MIMXRT1042 utility.str.MIMXRT1042 utility.debug_console.MIMXRT1042 component.log.MIMXRT1042 component.log.backend.debug_console.MIMXRT1042 component.log.backend.ringbuffer.MIMXRT1042 utility.shell.MIMXRT1042 component.serial_manager.MIMXRT1042 component.serial_manager_uart.MIMXRT1042 component.lpuart_adapter.MIMXRT1042 component.osa_template_config.MIMXRT1042 component.osa.MIMXRT1042 component.osa_bm.MIMXRT1042 component.panic.MIMXRT1042" category="component_examples">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -64,6 +63,7 @@
           <value>SDK_DEBUGCONSOLE=1</value>
           <value>MCUX_META_BUILD</value>
           <value>CPU_MIMXRT1042XJM5B</value>
+          <value>MIMXRT1042_SERIES</value>
           <value>SERIAL_PORT_TYPE_UART=1</value>
           <value>USE_RTOS=0</value>
         </option>
@@ -144,30 +144,22 @@
       <files mask="CMakeLists.txt"/>
       <files mask="flags.cmake"/>
       <files mask="config.cmake"/>
-      <files mask="build_sdram_debug.bat"/>
-      <files mask="build_sdram_debug.sh"/>
-      <files mask="build_sdram_release.bat"/>
-      <files mask="build_sdram_release.sh"/>
       <files mask="build_flexspi_nor_debug.bat"/>
       <files mask="build_flexspi_nor_debug.sh"/>
       <files mask="build_flexspi_nor_release.bat"/>
       <files mask="build_flexspi_nor_release.sh"/>
-      <files mask="build_debug.bat"/>
-      <files mask="build_debug.sh"/>
-      <files mask="build_release.bat"/>
-      <files mask="build_release.sh"/>
     </source>
     <source path="../../../../../devices/MIMXRT1042" project_relative_path="./" type="workspace" toolchain="armgcc">
       <files mask="all_lib_device.cmake"/>
     </source>
     <source path="." project_relative_path="source" type="other" toolchain="iar">
       <files mask="evkmimxrt1040.mac"/>
-      <files mask="evkmimxrt1040_sdram_init.mac"/>
     </source>
     <source path="." project_relative_path="source" type="configuration" toolchain="mdk">
       <files mask="evkmimxrt1040_flexspi_nor.ini"/>
-      <files mask="evkmimxrt1040_ram.ini"/>
-      <files mask="evkmimxrt1040_sdram_init.ini"/>
+    </source>
+    <source path="." project_relative_path="source" type="other">
+      <files mask="log.mex"/>
     </source>
     <source path="." project_relative_path="source" type="src">
       <files mask="log_main.c"/>
@@ -179,19 +171,13 @@
       <files mask="board.c"/>
     </source>
     <source path="iar" project_relative_path="source" type="linker" toolchain="iar">
-      <files mask="MIMXRT1042xxxxx_ram.icf"/>
       <files mask="MIMXRT1042xxxxx_flexspi_nor.icf"/>
-      <files mask="MIMXRT1042xxxxx_sdram.icf"/>
-    </source>
-    <source path="armgcc" project_relative_path="source" type="linker" toolchain="armgcc">
-      <files mask="MIMXRT1042xxxxx_ram.ld"/>
-      <files mask="MIMXRT1042xxxxx_flexspi_nor.ld"/>
-      <files mask="MIMXRT1042xxxxx_sdram.ld"/>
     </source>
     <source path="mdk" project_relative_path="source" type="linker" toolchain="mdk">
-      <files mask="MIMXRT1042xxxxx_ram.scf"/>
       <files mask="MIMXRT1042xxxxx_flexspi_nor.scf"/>
-      <files mask="MIMXRT1042xxxxx_sdram.scf"/>
+    </source>
+    <source path="armgcc" project_relative_path="source" type="linker" toolchain="armgcc">
+      <files mask="MIMXRT1042xxxxx_flexspi_nor.ld"/>
     </source>
     <source path="." project_relative_path="source" type="c_include">
       <files mask="clock_config.h"/>
@@ -221,6 +207,9 @@
     </source>
     <source path="." project_relative_path="source" type="doc">
       <files mask="example_board_readme.md"/>
+    </source>
+    <source path="." project_relative_path="source" type="doc">
+      <files mask="examples_shared_readme.md"/>
     </source>
   </example>
 </ksdk:examples>

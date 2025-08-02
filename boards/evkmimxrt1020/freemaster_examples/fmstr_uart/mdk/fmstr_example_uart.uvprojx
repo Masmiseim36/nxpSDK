@@ -328,7 +328,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../mcux_config.h -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
-              <Define>DEBUG, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1021DAG5A</Define>
+              <Define>DEBUG, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1021DAG5A, MIMXRT1021_SERIES</Define>
               <Undefine/>
               <IncludePath>..;../../../xip;../../../../../devices/MIMXRT1021/drivers;../../../../../CMSIS/Core/Include;../../../../../CMSIS/Core/Include/m-profile;../../../../../devices/MIMXRT1021;../../../../../devices/MIMXRT1021/periph;../../../../../devices/MIMXRT1021/xip;../../../../../devices/MIMXRT1021/utilities/debug_console_lite;../../../../../devices/MIMXRT1021/utilities/str;../../../../../components/uart;../../../../../middleware/freemaster/src/common;../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial</IncludePath>
             </VariousControls>
@@ -346,7 +346,7 @@
             <uClangAs>1</uClangAs>
             <VariousControls>
               <MiscControls/>
-              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1021DAG5A</Define>
+              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1021DAG5A, MIMXRT1021_SERIES</Define>
               <Undefine/>
               <IncludePath>..;../../../xip;../../../../../devices/MIMXRT1021/drivers;../../../../../CMSIS/Core/Include;../../../../../CMSIS/Core/Include/m-profile;../../../../../devices/MIMXRT1021;../../../../../devices/MIMXRT1021/periph;../../../../../devices/MIMXRT1021/xip;../../../../../devices/MIMXRT1021/utilities/debug_console_lite;../../../../../devices/MIMXRT1021/utilities/str;../../../../../components/uart;../../../../../middleware/freemaster/src/common;../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial</IncludePath>
             </VariousControls>
@@ -1191,6 +1191,16 @@
               <FilePath>../../../../../middleware/freemaster/src/drivers/mcuxsdk/can/freemaster_flexcan.c</FilePath>
             </File>
             <File>
+              <FileName>freemaster_flexcanfd.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/freemaster/src/drivers/mcuxsdk/can/freemaster_flexcanfd.h</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_flexcanfd.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/freemaster/src/drivers/mcuxsdk/can/freemaster_flexcanfd.c</FilePath>
+            </File>
+            <File>
               <FileName>freemaster_flexcan.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/freemaster/src/drivers/mcuxsdk/can/freemaster_flexcan.h</FilePath>
@@ -1329,6 +1339,11 @@
               <FileName>example_board_readme.md</FileName>
               <FileType>5</FileType>
               <FilePath>../example_board_readme.md</FilePath>
+            </File>
+            <File>
+              <FileName>examples_shared_readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../examples_shared_readme.md</FilePath>
             </File>
           </Files>
         </Group>
@@ -1659,7 +1674,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../mcux_config.h -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
-              <Define>DEBUG, USE_SDRAM=1, SKIP_SYSCLK_INIT=1, DATA_SECTION_IS_CACHEABLE=1, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1021DAG5A</Define>
+              <Define>DEBUG, USE_SDRAM=1, SKIP_SYSCLK_INIT=1, DATA_SECTION_IS_CACHEABLE=1, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1021DAG5A, MIMXRT1021_SERIES</Define>
               <Undefine/>
               <IncludePath>..;../../../xip;../../../../../devices/MIMXRT1021/drivers;../../../../../CMSIS/Core/Include;../../../../../CMSIS/Core/Include/m-profile;../../../../../devices/MIMXRT1021;../../../../../devices/MIMXRT1021/periph;../../../../../devices/MIMXRT1021/xip;../../../../../devices/MIMXRT1021/utilities/debug_console_lite;../../../../../devices/MIMXRT1021/utilities/str;../../../../../components/uart;../../../../../middleware/freemaster/src/common;../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial</IncludePath>
             </VariousControls>
@@ -1677,7 +1692,7 @@
             <uClangAs>1</uClangAs>
             <VariousControls>
               <MiscControls/>
-              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1021DAG5A</Define>
+              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1021DAG5A, MIMXRT1021_SERIES</Define>
               <Undefine/>
               <IncludePath>..;../../../xip;../../../../../devices/MIMXRT1021/drivers;../../../../../CMSIS/Core/Include;../../../../../CMSIS/Core/Include/m-profile;../../../../../devices/MIMXRT1021;../../../../../devices/MIMXRT1021/periph;../../../../../devices/MIMXRT1021/xip;../../../../../devices/MIMXRT1021/utilities/debug_console_lite;../../../../../devices/MIMXRT1021/utilities/str;../../../../../components/uart;../../../../../middleware/freemaster/src/common;../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial</IncludePath>
             </VariousControls>
@@ -2522,6 +2537,16 @@
               <FilePath>../../../../../middleware/freemaster/src/drivers/mcuxsdk/can/freemaster_flexcan.c</FilePath>
             </File>
             <File>
+              <FileName>freemaster_flexcanfd.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/freemaster/src/drivers/mcuxsdk/can/freemaster_flexcanfd.h</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_flexcanfd.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/freemaster/src/drivers/mcuxsdk/can/freemaster_flexcanfd.c</FilePath>
+            </File>
+            <File>
               <FileName>freemaster_flexcan.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/freemaster/src/drivers/mcuxsdk/can/freemaster_flexcan.h</FilePath>
@@ -2660,6 +2685,11 @@
               <FileName>example_board_readme.md</FileName>
               <FileType>5</FileType>
               <FilePath>../example_board_readme.md</FilePath>
+            </File>
+            <File>
+              <FileName>examples_shared_readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../examples_shared_readme.md</FilePath>
             </File>
           </Files>
         </Group>
@@ -2990,7 +3020,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../mcux_config.h -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
-              <Define>DEBUG, USE_SDRAM=1, SKIP_SYSCLK_INIT=1, DATA_SECTION_IS_CACHEABLE=1, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1021DAG5A</Define>
+              <Define>DEBUG, USE_SDRAM=1, SKIP_SYSCLK_INIT=1, DATA_SECTION_IS_CACHEABLE=1, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1021DAG5A, MIMXRT1021_SERIES</Define>
               <Undefine/>
               <IncludePath>..;../../../xip;../../../../../devices/MIMXRT1021/drivers;../../../../../CMSIS/Core/Include;../../../../../CMSIS/Core/Include/m-profile;../../../../../devices/MIMXRT1021;../../../../../devices/MIMXRT1021/periph;../../../../../devices/MIMXRT1021/xip;../../../../../devices/MIMXRT1021/utilities/debug_console_lite;../../../../../devices/MIMXRT1021/utilities/str;../../../../../components/uart;../../../../../middleware/freemaster/src/common;../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial</IncludePath>
             </VariousControls>
@@ -3008,7 +3038,7 @@
             <uClangAs>1</uClangAs>
             <VariousControls>
               <MiscControls/>
-              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1021DAG5A</Define>
+              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1021DAG5A, MIMXRT1021_SERIES</Define>
               <Undefine/>
               <IncludePath>..;../../../xip;../../../../../devices/MIMXRT1021/drivers;../../../../../CMSIS/Core/Include;../../../../../CMSIS/Core/Include/m-profile;../../../../../devices/MIMXRT1021;../../../../../devices/MIMXRT1021/periph;../../../../../devices/MIMXRT1021/xip;../../../../../devices/MIMXRT1021/utilities/debug_console_lite;../../../../../devices/MIMXRT1021/utilities/str;../../../../../components/uart;../../../../../middleware/freemaster/src/common;../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial</IncludePath>
             </VariousControls>
@@ -3853,6 +3883,16 @@
               <FilePath>../../../../../middleware/freemaster/src/drivers/mcuxsdk/can/freemaster_flexcan.c</FilePath>
             </File>
             <File>
+              <FileName>freemaster_flexcanfd.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/freemaster/src/drivers/mcuxsdk/can/freemaster_flexcanfd.h</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_flexcanfd.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/freemaster/src/drivers/mcuxsdk/can/freemaster_flexcanfd.c</FilePath>
+            </File>
+            <File>
               <FileName>freemaster_flexcan.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/freemaster/src/drivers/mcuxsdk/can/freemaster_flexcan.h</FilePath>
@@ -3991,6 +4031,11 @@
               <FileName>example_board_readme.md</FileName>
               <FileType>5</FileType>
               <FilePath>../example_board_readme.md</FilePath>
+            </File>
+            <File>
+              <FileName>examples_shared_readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../examples_shared_readme.md</FilePath>
             </File>
           </Files>
         </Group>
@@ -4321,7 +4366,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../mcux_config.h -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
-              <Define>DEBUG, XIP_BOOT_HEADER_ENABLE=1, XIP_BOOT_HEADER_DCD_ENABLE=1, XIP_EXTERNAL_FLASH=1, USE_SDRAM=1, SKIP_SYSCLK_INIT=1, DATA_SECTION_IS_CACHEABLE=1, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1021DAG5A</Define>
+              <Define>DEBUG, XIP_BOOT_HEADER_ENABLE=1, XIP_BOOT_HEADER_DCD_ENABLE=1, XIP_EXTERNAL_FLASH=1, USE_SDRAM=1, SKIP_SYSCLK_INIT=1, DATA_SECTION_IS_CACHEABLE=1, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1021DAG5A, MIMXRT1021_SERIES</Define>
               <Undefine/>
               <IncludePath>..;../../../xip;../../../../../devices/MIMXRT1021/drivers;../../../../../CMSIS/Core/Include;../../../../../CMSIS/Core/Include/m-profile;../../../../../devices/MIMXRT1021;../../../../../devices/MIMXRT1021/periph;../../../../../devices/MIMXRT1021/xip;../../../../../devices/MIMXRT1021/utilities/debug_console_lite;../../../../../devices/MIMXRT1021/utilities/str;../../../../../components/uart;../../../../../middleware/freemaster/src/common;../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial</IncludePath>
             </VariousControls>
@@ -4339,7 +4384,7 @@
             <uClangAs>1</uClangAs>
             <VariousControls>
               <MiscControls/>
-              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1021DAG5A</Define>
+              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1021DAG5A, MIMXRT1021_SERIES</Define>
               <Undefine/>
               <IncludePath>..;../../../xip;../../../../../devices/MIMXRT1021/drivers;../../../../../CMSIS/Core/Include;../../../../../CMSIS/Core/Include/m-profile;../../../../../devices/MIMXRT1021;../../../../../devices/MIMXRT1021/periph;../../../../../devices/MIMXRT1021/xip;../../../../../devices/MIMXRT1021/utilities/debug_console_lite;../../../../../devices/MIMXRT1021/utilities/str;../../../../../components/uart;../../../../../middleware/freemaster/src/common;../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial</IncludePath>
             </VariousControls>
@@ -5184,6 +5229,16 @@
               <FilePath>../../../../../middleware/freemaster/src/drivers/mcuxsdk/can/freemaster_flexcan.c</FilePath>
             </File>
             <File>
+              <FileName>freemaster_flexcanfd.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/freemaster/src/drivers/mcuxsdk/can/freemaster_flexcanfd.h</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_flexcanfd.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/freemaster/src/drivers/mcuxsdk/can/freemaster_flexcanfd.c</FilePath>
+            </File>
+            <File>
               <FileName>freemaster_flexcan.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/freemaster/src/drivers/mcuxsdk/can/freemaster_flexcan.h</FilePath>
@@ -5322,6 +5377,11 @@
               <FileName>example_board_readme.md</FileName>
               <FileType>5</FileType>
               <FilePath>../example_board_readme.md</FilePath>
+            </File>
+            <File>
+              <FileName>examples_shared_readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../examples_shared_readme.md</FilePath>
             </File>
           </Files>
         </Group>
@@ -5652,7 +5712,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../mcux_config.h -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
-              <Define>DEBUG, XIP_BOOT_HEADER_ENABLE=1, XIP_EXTERNAL_FLASH=1, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1021DAG5A</Define>
+              <Define>DEBUG, XIP_BOOT_HEADER_ENABLE=1, XIP_EXTERNAL_FLASH=1, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1021DAG5A, MIMXRT1021_SERIES</Define>
               <Undefine/>
               <IncludePath>..;../../../xip;../../../../../devices/MIMXRT1021/drivers;../../../../../CMSIS/Core/Include;../../../../../CMSIS/Core/Include/m-profile;../../../../../devices/MIMXRT1021;../../../../../devices/MIMXRT1021/periph;../../../../../devices/MIMXRT1021/xip;../../../../../devices/MIMXRT1021/utilities/debug_console_lite;../../../../../devices/MIMXRT1021/utilities/str;../../../../../components/uart;../../../../../middleware/freemaster/src/common;../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial</IncludePath>
             </VariousControls>
@@ -5670,7 +5730,7 @@
             <uClangAs>1</uClangAs>
             <VariousControls>
               <MiscControls/>
-              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1021DAG5A</Define>
+              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1021DAG5A, MIMXRT1021_SERIES</Define>
               <Undefine/>
               <IncludePath>..;../../../xip;../../../../../devices/MIMXRT1021/drivers;../../../../../CMSIS/Core/Include;../../../../../CMSIS/Core/Include/m-profile;../../../../../devices/MIMXRT1021;../../../../../devices/MIMXRT1021/periph;../../../../../devices/MIMXRT1021/xip;../../../../../devices/MIMXRT1021/utilities/debug_console_lite;../../../../../devices/MIMXRT1021/utilities/str;../../../../../components/uart;../../../../../middleware/freemaster/src/common;../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial</IncludePath>
             </VariousControls>
@@ -6515,6 +6575,16 @@
               <FilePath>../../../../../middleware/freemaster/src/drivers/mcuxsdk/can/freemaster_flexcan.c</FilePath>
             </File>
             <File>
+              <FileName>freemaster_flexcanfd.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/freemaster/src/drivers/mcuxsdk/can/freemaster_flexcanfd.h</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_flexcanfd.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/freemaster/src/drivers/mcuxsdk/can/freemaster_flexcanfd.c</FilePath>
+            </File>
+            <File>
               <FileName>freemaster_flexcan.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/freemaster/src/drivers/mcuxsdk/can/freemaster_flexcan.h</FilePath>
@@ -6653,6 +6723,11 @@
               <FileName>example_board_readme.md</FileName>
               <FileType>5</FileType>
               <FilePath>../example_board_readme.md</FilePath>
+            </File>
+            <File>
+              <FileName>examples_shared_readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../examples_shared_readme.md</FilePath>
             </File>
           </Files>
         </Group>
@@ -6983,7 +7058,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../mcux_config.h -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
-              <Define>NDEBUG, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1021DAG5A</Define>
+              <Define>NDEBUG, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1021DAG5A, MIMXRT1021_SERIES</Define>
               <Undefine/>
               <IncludePath>..;../../../xip;../../../../../devices/MIMXRT1021/drivers;../../../../../CMSIS/Core/Include;../../../../../CMSIS/Core/Include/m-profile;../../../../../devices/MIMXRT1021;../../../../../devices/MIMXRT1021/periph;../../../../../devices/MIMXRT1021/xip;../../../../../devices/MIMXRT1021/utilities/debug_console_lite;../../../../../devices/MIMXRT1021/utilities/str;../../../../../components/uart;../../../../../middleware/freemaster/src/common;../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial</IncludePath>
             </VariousControls>
@@ -7001,7 +7076,7 @@
             <uClangAs>1</uClangAs>
             <VariousControls>
               <MiscControls/>
-              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1021DAG5A</Define>
+              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1021DAG5A, MIMXRT1021_SERIES</Define>
               <Undefine/>
               <IncludePath>..;../../../xip;../../../../../devices/MIMXRT1021/drivers;../../../../../CMSIS/Core/Include;../../../../../CMSIS/Core/Include/m-profile;../../../../../devices/MIMXRT1021;../../../../../devices/MIMXRT1021/periph;../../../../../devices/MIMXRT1021/xip;../../../../../devices/MIMXRT1021/utilities/debug_console_lite;../../../../../devices/MIMXRT1021/utilities/str;../../../../../components/uart;../../../../../middleware/freemaster/src/common;../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial</IncludePath>
             </VariousControls>
@@ -7846,6 +7921,16 @@
               <FilePath>../../../../../middleware/freemaster/src/drivers/mcuxsdk/can/freemaster_flexcan.c</FilePath>
             </File>
             <File>
+              <FileName>freemaster_flexcanfd.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/freemaster/src/drivers/mcuxsdk/can/freemaster_flexcanfd.h</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_flexcanfd.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/freemaster/src/drivers/mcuxsdk/can/freemaster_flexcanfd.c</FilePath>
+            </File>
+            <File>
               <FileName>freemaster_flexcan.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/freemaster/src/drivers/mcuxsdk/can/freemaster_flexcan.h</FilePath>
@@ -7984,6 +8069,11 @@
               <FileName>example_board_readme.md</FileName>
               <FileType>5</FileType>
               <FilePath>../example_board_readme.md</FilePath>
+            </File>
+            <File>
+              <FileName>examples_shared_readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../examples_shared_readme.md</FilePath>
             </File>
           </Files>
         </Group>
@@ -8314,7 +8404,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../mcux_config.h -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
-              <Define>NDEBUG, USE_SDRAM=1, SKIP_SYSCLK_INIT=1, DATA_SECTION_IS_CACHEABLE=1, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1021DAG5A</Define>
+              <Define>NDEBUG, USE_SDRAM=1, SKIP_SYSCLK_INIT=1, DATA_SECTION_IS_CACHEABLE=1, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1021DAG5A, MIMXRT1021_SERIES</Define>
               <Undefine/>
               <IncludePath>..;../../../xip;../../../../../devices/MIMXRT1021/drivers;../../../../../CMSIS/Core/Include;../../../../../CMSIS/Core/Include/m-profile;../../../../../devices/MIMXRT1021;../../../../../devices/MIMXRT1021/periph;../../../../../devices/MIMXRT1021/xip;../../../../../devices/MIMXRT1021/utilities/debug_console_lite;../../../../../devices/MIMXRT1021/utilities/str;../../../../../components/uart;../../../../../middleware/freemaster/src/common;../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial</IncludePath>
             </VariousControls>
@@ -8332,7 +8422,7 @@
             <uClangAs>1</uClangAs>
             <VariousControls>
               <MiscControls/>
-              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1021DAG5A</Define>
+              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1021DAG5A, MIMXRT1021_SERIES</Define>
               <Undefine/>
               <IncludePath>..;../../../xip;../../../../../devices/MIMXRT1021/drivers;../../../../../CMSIS/Core/Include;../../../../../CMSIS/Core/Include/m-profile;../../../../../devices/MIMXRT1021;../../../../../devices/MIMXRT1021/periph;../../../../../devices/MIMXRT1021/xip;../../../../../devices/MIMXRT1021/utilities/debug_console_lite;../../../../../devices/MIMXRT1021/utilities/str;../../../../../components/uart;../../../../../middleware/freemaster/src/common;../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial</IncludePath>
             </VariousControls>
@@ -9177,6 +9267,16 @@
               <FilePath>../../../../../middleware/freemaster/src/drivers/mcuxsdk/can/freemaster_flexcan.c</FilePath>
             </File>
             <File>
+              <FileName>freemaster_flexcanfd.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/freemaster/src/drivers/mcuxsdk/can/freemaster_flexcanfd.h</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_flexcanfd.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/freemaster/src/drivers/mcuxsdk/can/freemaster_flexcanfd.c</FilePath>
+            </File>
+            <File>
               <FileName>freemaster_flexcan.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/freemaster/src/drivers/mcuxsdk/can/freemaster_flexcan.h</FilePath>
@@ -9315,6 +9415,11 @@
               <FileName>example_board_readme.md</FileName>
               <FileType>5</FileType>
               <FilePath>../example_board_readme.md</FilePath>
+            </File>
+            <File>
+              <FileName>examples_shared_readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../examples_shared_readme.md</FilePath>
             </File>
           </Files>
         </Group>
@@ -9645,7 +9750,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../mcux_config.h -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
-              <Define>NDEBUG, USE_SDRAM=1, SKIP_SYSCLK_INIT=1, DATA_SECTION_IS_CACHEABLE=1, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1021DAG5A</Define>
+              <Define>NDEBUG, USE_SDRAM=1, SKIP_SYSCLK_INIT=1, DATA_SECTION_IS_CACHEABLE=1, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1021DAG5A, MIMXRT1021_SERIES</Define>
               <Undefine/>
               <IncludePath>..;../../../xip;../../../../../devices/MIMXRT1021/drivers;../../../../../CMSIS/Core/Include;../../../../../CMSIS/Core/Include/m-profile;../../../../../devices/MIMXRT1021;../../../../../devices/MIMXRT1021/periph;../../../../../devices/MIMXRT1021/xip;../../../../../devices/MIMXRT1021/utilities/debug_console_lite;../../../../../devices/MIMXRT1021/utilities/str;../../../../../components/uart;../../../../../middleware/freemaster/src/common;../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial</IncludePath>
             </VariousControls>
@@ -9663,7 +9768,7 @@
             <uClangAs>1</uClangAs>
             <VariousControls>
               <MiscControls/>
-              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1021DAG5A</Define>
+              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1021DAG5A, MIMXRT1021_SERIES</Define>
               <Undefine/>
               <IncludePath>..;../../../xip;../../../../../devices/MIMXRT1021/drivers;../../../../../CMSIS/Core/Include;../../../../../CMSIS/Core/Include/m-profile;../../../../../devices/MIMXRT1021;../../../../../devices/MIMXRT1021/periph;../../../../../devices/MIMXRT1021/xip;../../../../../devices/MIMXRT1021/utilities/debug_console_lite;../../../../../devices/MIMXRT1021/utilities/str;../../../../../components/uart;../../../../../middleware/freemaster/src/common;../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial</IncludePath>
             </VariousControls>
@@ -10508,6 +10613,16 @@
               <FilePath>../../../../../middleware/freemaster/src/drivers/mcuxsdk/can/freemaster_flexcan.c</FilePath>
             </File>
             <File>
+              <FileName>freemaster_flexcanfd.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/freemaster/src/drivers/mcuxsdk/can/freemaster_flexcanfd.h</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_flexcanfd.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/freemaster/src/drivers/mcuxsdk/can/freemaster_flexcanfd.c</FilePath>
+            </File>
+            <File>
               <FileName>freemaster_flexcan.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/freemaster/src/drivers/mcuxsdk/can/freemaster_flexcan.h</FilePath>
@@ -10646,6 +10761,11 @@
               <FileName>example_board_readme.md</FileName>
               <FileType>5</FileType>
               <FilePath>../example_board_readme.md</FilePath>
+            </File>
+            <File>
+              <FileName>examples_shared_readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../examples_shared_readme.md</FilePath>
             </File>
           </Files>
         </Group>
@@ -10976,7 +11096,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../mcux_config.h -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
-              <Define>NDEBUG, XIP_BOOT_HEADER_ENABLE=1, XIP_BOOT_HEADER_DCD_ENABLE=1, XIP_EXTERNAL_FLASH=1, USE_SDRAM=1, SKIP_SYSCLK_INIT=1, DATA_SECTION_IS_CACHEABLE=1, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1021DAG5A</Define>
+              <Define>NDEBUG, XIP_BOOT_HEADER_ENABLE=1, XIP_BOOT_HEADER_DCD_ENABLE=1, XIP_EXTERNAL_FLASH=1, USE_SDRAM=1, SKIP_SYSCLK_INIT=1, DATA_SECTION_IS_CACHEABLE=1, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1021DAG5A, MIMXRT1021_SERIES</Define>
               <Undefine/>
               <IncludePath>..;../../../xip;../../../../../devices/MIMXRT1021/drivers;../../../../../CMSIS/Core/Include;../../../../../CMSIS/Core/Include/m-profile;../../../../../devices/MIMXRT1021;../../../../../devices/MIMXRT1021/periph;../../../../../devices/MIMXRT1021/xip;../../../../../devices/MIMXRT1021/utilities/debug_console_lite;../../../../../devices/MIMXRT1021/utilities/str;../../../../../components/uart;../../../../../middleware/freemaster/src/common;../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial</IncludePath>
             </VariousControls>
@@ -10994,7 +11114,7 @@
             <uClangAs>1</uClangAs>
             <VariousControls>
               <MiscControls/>
-              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1021DAG5A</Define>
+              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1021DAG5A, MIMXRT1021_SERIES</Define>
               <Undefine/>
               <IncludePath>..;../../../xip;../../../../../devices/MIMXRT1021/drivers;../../../../../CMSIS/Core/Include;../../../../../CMSIS/Core/Include/m-profile;../../../../../devices/MIMXRT1021;../../../../../devices/MIMXRT1021/periph;../../../../../devices/MIMXRT1021/xip;../../../../../devices/MIMXRT1021/utilities/debug_console_lite;../../../../../devices/MIMXRT1021/utilities/str;../../../../../components/uart;../../../../../middleware/freemaster/src/common;../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial</IncludePath>
             </VariousControls>
@@ -11839,6 +11959,16 @@
               <FilePath>../../../../../middleware/freemaster/src/drivers/mcuxsdk/can/freemaster_flexcan.c</FilePath>
             </File>
             <File>
+              <FileName>freemaster_flexcanfd.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/freemaster/src/drivers/mcuxsdk/can/freemaster_flexcanfd.h</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_flexcanfd.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/freemaster/src/drivers/mcuxsdk/can/freemaster_flexcanfd.c</FilePath>
+            </File>
+            <File>
               <FileName>freemaster_flexcan.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/freemaster/src/drivers/mcuxsdk/can/freemaster_flexcan.h</FilePath>
@@ -11977,6 +12107,11 @@
               <FileName>example_board_readme.md</FileName>
               <FileType>5</FileType>
               <FilePath>../example_board_readme.md</FilePath>
+            </File>
+            <File>
+              <FileName>examples_shared_readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../examples_shared_readme.md</FilePath>
             </File>
           </Files>
         </Group>
@@ -12307,7 +12442,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../mcux_config.h -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
-              <Define>NDEBUG, XIP_BOOT_HEADER_ENABLE=1, XIP_EXTERNAL_FLASH=1, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1021DAG5A</Define>
+              <Define>NDEBUG, XIP_BOOT_HEADER_ENABLE=1, XIP_EXTERNAL_FLASH=1, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1021DAG5A, MIMXRT1021_SERIES</Define>
               <Undefine/>
               <IncludePath>..;../../../xip;../../../../../devices/MIMXRT1021/drivers;../../../../../CMSIS/Core/Include;../../../../../CMSIS/Core/Include/m-profile;../../../../../devices/MIMXRT1021;../../../../../devices/MIMXRT1021/periph;../../../../../devices/MIMXRT1021/xip;../../../../../devices/MIMXRT1021/utilities/debug_console_lite;../../../../../devices/MIMXRT1021/utilities/str;../../../../../components/uart;../../../../../middleware/freemaster/src/common;../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial</IncludePath>
             </VariousControls>
@@ -12325,7 +12460,7 @@
             <uClangAs>1</uClangAs>
             <VariousControls>
               <MiscControls/>
-              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1021DAG5A</Define>
+              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1021DAG5A, MIMXRT1021_SERIES</Define>
               <Undefine/>
               <IncludePath>..;../../../xip;../../../../../devices/MIMXRT1021/drivers;../../../../../CMSIS/Core/Include;../../../../../CMSIS/Core/Include/m-profile;../../../../../devices/MIMXRT1021;../../../../../devices/MIMXRT1021/periph;../../../../../devices/MIMXRT1021/xip;../../../../../devices/MIMXRT1021/utilities/debug_console_lite;../../../../../devices/MIMXRT1021/utilities/str;../../../../../components/uart;../../../../../middleware/freemaster/src/common;../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial</IncludePath>
             </VariousControls>
@@ -13170,6 +13305,16 @@
               <FilePath>../../../../../middleware/freemaster/src/drivers/mcuxsdk/can/freemaster_flexcan.c</FilePath>
             </File>
             <File>
+              <FileName>freemaster_flexcanfd.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/freemaster/src/drivers/mcuxsdk/can/freemaster_flexcanfd.h</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_flexcanfd.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/freemaster/src/drivers/mcuxsdk/can/freemaster_flexcanfd.c</FilePath>
+            </File>
+            <File>
               <FileName>freemaster_flexcan.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/freemaster/src/drivers/mcuxsdk/can/freemaster_flexcan.h</FilePath>
@@ -13308,6 +13453,11 @@
               <FileName>example_board_readme.md</FileName>
               <FileType>5</FileType>
               <FilePath>../example_board_readme.md</FilePath>
+            </File>
+            <File>
+              <FileName>examples_shared_readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../examples_shared_readme.md</FilePath>
             </File>
           </Files>
         </Group>

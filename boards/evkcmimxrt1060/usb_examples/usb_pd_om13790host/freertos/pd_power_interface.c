@@ -49,7 +49,7 @@ void PD_PowerGetVbusVoltage(uint32_t *partnerSourceCaps, pd_rdo_t rdo, pd_vbus_p
 {
     pd_source_pdo_t pdo;
 
-    if (partnerSourceCaps == NULL)
+    if ((partnerSourceCaps == NULL) || (rdo.bitFields.objectPosition < 1U))
     {
         return;
     }

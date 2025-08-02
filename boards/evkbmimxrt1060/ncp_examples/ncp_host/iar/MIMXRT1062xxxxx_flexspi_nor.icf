@@ -41,7 +41,7 @@ define symbol m_data_start             = m_interrupts_ram_start + __ram_vector_t
 define symbol m_data_end               = 0x2001FFFF;
 
 define symbol m_data2_start            = 0x20200000;
-define symbol m_data2_end              = 0x202BFFFF;
+define symbol m_data2_end              = 0x2027FFFF;
 
 define symbol m_qacode_start           = 0x00000000;
 define symbol m_qacode_end             = 0x0001FFFF;
@@ -65,7 +65,7 @@ if (isdefinedsymbol(__heap_size__)) {
 }
 
 define exported symbol __NCACHE_REGION_START   = m_data2_start;
-define exported symbol __NCACHE_REGION_SIZE    = 0x0;
+define exported symbol __NCACHE_REGION_SIZE    = 0x00080000;
 
 define exported symbol __VECTOR_TABLE          = m_interrupts_start;
 define exported symbol __VECTOR_RAM            = isdefinedsymbol(__ram_vector_table__) ? m_interrupts_ram_start : m_interrupts_start;
@@ -132,7 +132,7 @@ keep{ section .boot_hdr.conf, section .boot_hdr.ivt, section .boot_hdr.boot_data
 
 place in TEXT_region                        { readonly };
 place in DATA_region                        { block RW };
-place in DATA_region                        { block ZI };
+place in DATA2_region                       { block ZI };
 place in DATA_region                        { last block HEAP };
 place in DATA_region                        { block NCACHE_VAR };
 place in CSTACK_region                      { block CSTACK };

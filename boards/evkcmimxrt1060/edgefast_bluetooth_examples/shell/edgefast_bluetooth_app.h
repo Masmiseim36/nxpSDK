@@ -1,40 +1,49 @@
 /*
- *  Copyright 2023 - 2024 NXP
+ *  Copyright 2023 - 2025 NXP
  *  All rights reserved.
  *
  *  SPDX-License-Identifier: BSD-3-Clause
  */
 
-#include "edgefast_bluetooth_config_Gen.h"
-#include "edgefast_bluetooth_audio_config_Gen.h"
-#include "edgefast_bluetooth_debug_config_Gen.h"
-#include "edgefast_bluetooth_extension_config_Gen.h"
-
-/* Controller config
- * Supported controller list,
- * WIFI_IW416_BOARD_MURATA_1XK_M2
- * WIFI_88W8987_BOARD_MURATA_1ZM_M2
- * WIFI_IW612_BOARD_MURATA_2EL_M2
- *
- * If Embedded Artists Type 1XK(EAR00385 M2 only) used, define macro WIFI_IW416_BOARD_MURATA_1XK_M2 in following.
- * If Embedded Artists Type 1ZM(EAR00364 M2 only) used, define macro WIFI_88W8987_BOARD_MURATA_1ZM_M2 in following.
- * If Murata Type 2EL module(Rev-A1 M2 only) used , define macro WIFI_IW612_BOARD_MURATA_2EL_M2 in following.
- */
-
-/* @TEST_ANCHOR */
-#define WIFI_IW612_BOARD_MURATA_2EL_M2
-/* @END_TEST_ANCHOR */
-/*#define WIFI_IW416_BOARD_MURATA_1XK_M2*/
-/*#define WIFI_88W8987_BOARD_MURATA_1ZM_M2*/
-/*#define WIFI_IW612_BOARD_MURATA_2EL_M2*/
+#include "edgefast_bluetooth_config.h"
+#include "edgefast_bluetooth_audio_config.h"
 
 #if (defined(WIFI_IW416_BOARD_MURATA_1XK_M2) || defined(WIFI_88W8987_BOARD_MURATA_1ZM_M2) || \
-     defined(WIFI_IW612_BOARD_MURATA_2EL_M2))
+     defined(WIFI_IW612_BOARD_MURATA_2EL_M2) || defined(WIFI_IW610_BOARD_MURATA_2LL_M2))
 #include "wifi_bt_module_config.h"
 #include "wifi_config.h"
 #else
 #error The transceiver module is unsupported
 #endif
+
+#ifdef WIFI_IW610_BOARD_MURATA_2LL_M2
+#undef CONFIG_BT_CLASSIC
+#undef CONFIG_BT_IND_RESET
+#undef CONFIG_BT_IND_RESET_OOB
+#endif /* #ifdef WIFI_IW610_BOARD_MURATA_2LL_M2 */
+
+#ifndef CONFIG_BT_CLASSIC
+#undef CONFIG_BT_A2DP
+#undef CONFIG_BT_A2DP_CP_SERVICE
+#undef CONFIG_BT_A2DP_DR_SERVICE
+#undef CONFIG_BT_A2DP_SINK
+#undef CONFIG_BT_A2DP_SOURCE
+#undef CONFIG_BT_AVRCP
+#undef CONFIG_BT_AVRCP_BROWSING
+#undef CONFIG_BT_AVRCP_COVER_ART
+#undef CONFIG_BT_AVRCP_COVER_ART_INITIATOR
+#undef CONFIG_BT_AVRCP_COVER_ART_RESPONDER
+#undef CONFIG_BT_AVRCP_CT
+#undef CONFIG_BT_AVRCP_TG
+#undef CONFIG_BT_HFP_HF
+#undef CONFIG_BT_MAP
+#undef CONFIG_BT_MAP_MCE
+#undef CONFIG_BT_MAP_MSE
+#undef CONFIG_BT_PBAP
+#undef CONFIG_BT_PBAP_PCE
+#undef CONFIG_BT_PBAP_PSE
+#undef CONFIG_BT_RFCOMM
+#endif /* #ifndef CONFIG_BT_CLASSIC */
 
 /* To enable the BT IND Reset. */
 /* If ID Reset is enabled, use BT UART to download controller firmware. */

@@ -1,5 +1,5 @@
 /* 
- * Copyright 2018-2024 NXP
+ * Copyright 2018-2025 NXP
  * 
  * SPDX-License-Identifier: Apache-2.0
  * 
@@ -159,6 +159,7 @@ iot_agent_status_t iot_agent_datastore_plain_read(
 		ASSERT_OR_EXIT_MSG(read_buffer_size >= offset, "Overflow in addition calculation.");
 		*len = read_buffer_size - offset;
 	}
+	ASSERT_OR_EXIT_MSG(*len <= INT32_MAX, "Overflow in the length.");
 	memcpy(dst, read_buffer + offset, *len);
 exit:
 	return agent_status;

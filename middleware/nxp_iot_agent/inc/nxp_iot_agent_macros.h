@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2021,2024 NXP
+ * Copyright 2018-2021,2024-2025 NXP
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -31,14 +31,14 @@ extern "C" {
 // which must be defined in the function scope.
 
 #define EXIT_STATUS_MSG(STATUS, ...)       \
-	agent_status = STATUS;                 \
+	agent_status = (STATUS);                 \
 	IOT_AGENT_ERROR(__VA_ARGS__);          \
 	goto exit;
 
 #define ASSERT_OR_EXIT_STATUS_MSG(CONDITION, STATUS, ...) \
 if (!(CONDITION))                                     \
 {                                                     \
-	agent_status = STATUS;                 \
+	agent_status = (STATUS);                 \
 	IOT_AGENT_ERROR(__VA_ARGS__);                     \
 	goto exit;                                     \
 }
@@ -46,7 +46,7 @@ if (!(CONDITION))                                     \
 #define ASSERT_OR_EXIT_STATUS_SILENT(CONDITION, STATUS) \
 if (!(CONDITION))                                     \
 {                                                     \
-	agent_status = STATUS;                 \
+	agent_status = (STATUS);                 \
 	goto exit;                                     \
 }
 

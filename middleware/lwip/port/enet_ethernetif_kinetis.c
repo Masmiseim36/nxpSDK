@@ -32,7 +32,7 @@
 
 /*
  * Copyright (c) 2013-2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2024 NXP
+ * Copyright 2016-2025 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -808,8 +808,13 @@ err_t ethernetif_linkoutput(struct netif *netif, struct pbuf *p)
 }
 
 /**
- * Should be called at the beginning of the program to set up the
- * first network interface. It calls the function ethernetif_init() to do the
+ * Should be called by lwIP at the beginning of the program to set up the
+ * FIRST available network interface.
+ *
+ * NOTE: This doesn't necessarily map to ENET_BASE_PTRS[0] on all platforms!
+ * It initializes the first non-NULL entry in ENET_BASE_PTRS.
+ *
+ * It calls the function ethernetif_init() to do the
  * actual setup of the hardware.
  *
  * This function should be passed as a parameter to netif_add().
@@ -841,8 +846,14 @@ err_t ethernetif0_init(struct netif *netif)
 
 #if defined(FSL_FEATURE_SOC_ENET_COUNT) && (FSL_FEATURE_SOC_ENET_COUNT > 1)
 /**
- * Should be called at the beginning of the program to set up the
- * second network interface. It calls the function ethernetif_init() to do the
+ * Should be called by lwIP at the beginning of the program to set up the
+ * SECOND available network interface.
+ *
+ * NOTE: This doesn't necessarily map to ENET_BASE_PTRS[1] on all platforms!
+ * For example, if ENET_BASE_PTRS is [ENET0, NULL, ENET2], this maps to ENET2,
+ * as NULL item is not counted.
+ *
+ * It calls the function ethernetif_init() to do the
  * actual setup of the hardware.
  *
  * This function should be passed as a parameter to netif_add().

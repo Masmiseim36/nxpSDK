@@ -1,5 +1,5 @@
 /*
- * Copyright 2020-2022,2024 NXP
+ * Copyright 2020-2022,2024-2025 NXP
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -11,7 +11,7 @@
 #include <nxp_iot_agent.h>
 #include <nxp_iot_agent_config.h>
 
-#if NXP_IOT_AGENT_HAVE_SSS
+#if defined(NXP_IOT_AGENT_HAVE_SSS) && (NXP_IOT_AGENT_HAVE_SSS == 1)
 
 #include <ex_sss_boot.h>
 
@@ -55,6 +55,6 @@ iot_agent_status_t iot_agent_claimcode_inject(ex_sss_boot_ctx_t *pCtx, char *cla
 *@}
 */ /* end of edgelock2go_agent_claimcode_inject */
 
-#endif // NXP_IOT_AGENT_HAVE_SSS
+#endif // #if defined(NXP_IOT_AGENT_HAVE_SSS) && (NXP_IOT_AGENT_HAVE_SSS == 1)
 
 #endif // #ifndef _IOT_AGENT_CLAIMCODE_INJECT_H_

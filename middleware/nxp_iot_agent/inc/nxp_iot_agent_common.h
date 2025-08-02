@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2024 NXP
+ * Copyright 2018-2025 NXP
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -11,28 +11,32 @@
 extern "C" {
 #endif
 
-#if (NXP_IOT_AGENT_HAVE_HOSTCRYPTO_OPENSSL & NXP_IOT_AGENT_HAVE_HOSTCRYPTO_MBEDTLS)
+#if ((defined(NXP_IOT_AGENT_HAVE_HOSTCRYPTO_OPENSSL) && (NXP_IOT_AGENT_HAVE_HOSTCRYPTO_OPENSSL == 1)) & \
+    (defined(NXP_IOT_AGENT_HAVE_HOSTCRYPTO_MBEDTLS) && (NXP_IOT_AGENT_HAVE_HOSTCRYPTO_MBEDTLS == 1)))
 #        error "Only one between NXP_IOT_AGENT_HAVE_HOSTCRYPTO_OPENSSL and NXP_IOT_AGENT_HAVE_HOSTCRYPTO_MBEDTLS can be set to 1"
 #endif
 
-#if ((NXP_IOT_AGENT_HAVE_HOSTCRYPTO_OPENSSL | NXP_IOT_AGENT_HAVE_HOSTCRYPTO_MBEDTLS) == 0)
+#if !((defined(NXP_IOT_AGENT_HAVE_HOSTCRYPTO_OPENSSL) && (NXP_IOT_AGENT_HAVE_HOSTCRYPTO_OPENSSL == 1)) | \
+    (defined(NXP_IOT_AGENT_HAVE_HOSTCRYPTO_MBEDTLS) && (NXP_IOT_AGENT_HAVE_HOSTCRYPTO_MBEDTLS == 1)))
 // if the crypto is not choosen externally fall back to mbedtls
 #undef NXP_IOT_AGENT_HAVE_HOSTCRYPTO_MBEDTLS
 #define NXP_IOT_AGENT_HAVE_HOSTCRYPTO_MBEDTLS 1
 #endif
 
-#if NXP_IOT_AGENT_HAVE_HOSTCRYPTO_MBEDTLS
+#if defined(NXP_IOT_AGENT_HAVE_HOSTCRYPTO_MBEDTLS) && (NXP_IOT_AGENT_HAVE_HOSTCRYPTO_MBEDTLS == 1)
 
-#if (NXP_IOT_AGENT_HAVE_SSS & NXP_IOT_AGENT_HAVE_PSA)
+#if ((defined(NXP_IOT_AGENT_HAVE_SSS) && (NXP_IOT_AGENT_HAVE_SSS == 1)) & \
+    (defined(NXP_IOT_AGENT_HAVE_PSA) && (NXP_IOT_AGENT_HAVE_PSA == 1)))
 #        error "Only one between NXP_IOT_AGENT_HAVE_SSS and NXP_IOT_AGENT_HAVE_PSA can be set to 1"
 #endif
-#if ((NXP_IOT_AGENT_HAVE_SSS | NXP_IOT_AGENT_HAVE_PSA) == 0)
+#if !((defined(NXP_IOT_AGENT_HAVE_SSS) && (NXP_IOT_AGENT_HAVE_SSS == 1)) | \
+    (defined(NXP_IOT_AGENT_HAVE_PSA) && (NXP_IOT_AGENT_HAVE_PSA == 1)))
 // if the crypto is not choosen externally fall back to PSA
 #undef NXP_IOT_AGENT_HAVE_PSA
 #define NXP_IOT_AGENT_HAVE_PSA 1
 #endif
 
-#if NXP_IOT_AGENT_HAVE_PSA
+#if defined(NXP_IOT_AGENT_HAVE_PSA) && (NXP_IOT_AGENT_HAVE_PSA == 1)
 
 // following defines decide if PSA implementation is handled via TF-M or SMW
 #ifndef NXP_IOT_AGENT_HAVE_PSA_IMPL_TFM
@@ -47,25 +51,29 @@ extern "C" {
 #define NXP_IOT_AGENT_HAVE_PSA_IMPL_SIMUL 0
 #endif
 
-#if (NXP_IOT_AGENT_HAVE_PSA_IMPL_TFM & NXP_IOT_AGENT_HAVE_PSA_IMPL_SMW & NXP_IOT_AGENT_HAVE_PSA_IMPL_SIMUL)
+#if ((defined(NXP_IOT_AGENT_HAVE_PSA_IMPL_TFM) && (NXP_IOT_AGENT_HAVE_PSA_IMPL_TFM == 1)) & \
+    (defined(NXP_IOT_AGENT_HAVE_PSA_IMPL_SMW) && (NXP_IOT_AGENT_HAVE_PSA_IMPL_SMW == 1)) & \
+    (defined(NXP_IOT_AGENT_HAVE_PSA_IMPL_SIMUL) && (NXP_IOT_AGENT_HAVE_PSA_IMPL_SIMUL == 1)))
 #        error "Only one between NXP_IOT_AGENT_HAVE_PSA_IMPL_TFM and NXP_IOT_AGENT_HAVE_PSA_IMPL_SMW can be set to 1"
 #endif
 
-#if ((NXP_IOT_AGENT_HAVE_PSA_IMPL_TFM | NXP_IOT_AGENT_HAVE_PSA_IMPL_SMW | NXP_IOT_AGENT_HAVE_PSA_IMPL_SIMUL) == 0)
+#if !((defined(NXP_IOT_AGENT_HAVE_PSA_IMPL_TFM) && (NXP_IOT_AGENT_HAVE_PSA_IMPL_TFM == 1)) | \
+    (defined(NXP_IOT_AGENT_HAVE_PSA_IMPL_SMW) && (NXP_IOT_AGENT_HAVE_PSA_IMPL_SMW == 1)) | \
+    (defined(NXP_IOT_AGENT_HAVE_PSA_IMPL_SIMUL) && (NXP_IOT_AGENT_HAVE_PSA_IMPL_SIMUL == 1)))
 // If the build system enables none of the PSA implementations, fall back to
 // the software-simulator implementation.
 #undef NXP_IOT_AGENT_HAVE_PSA_IMPL_SIMUL
 #define NXP_IOT_AGENT_HAVE_PSA_IMPL_SIMUL 1
 #endif
 
-#endif // NXP_IOT_AGENT_HAVE_PSA
+#endif //#if defined(NXP_IOT_AGENT_HAVE_PSA) && (NXP_IOT_AGENT_HAVE_PSA == 1)
 #endif // NXP_IOT_AGENT_HAVE_HOSTCRYPTO_MBEDTLS
 
 #if AX_EMBEDDED
 
  // A freescale cpu
 
-#if NXP_IOT_AGENT_HAVE_SSS
+#if defined(NXP_IOT_AGENT_HAVE_SSS) && (NXP_IOT_AGENT_HAVE_SSS == 1)
 #include <fsl_sss_types.h>
 #define COMPILE_TIME_ASSERT(condition) SSCP_BUILD_ASSURE(condition,compile_time_assert_failed)
 #else

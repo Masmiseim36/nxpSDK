@@ -29,6 +29,8 @@
 #include "board.h"
 
 #include "fsl_debug_console.h"
+#include <osa.h>
+#include "wlan.h"
 
 GPIO_HANDLE_DEFINE(s_WakeupGpioHandle);
 GPIO_HANDLE_DEFINE(h_WakeupGpioHandle);
@@ -62,6 +64,7 @@ static void (*wlan_host_sleep_post_cfg)(void);
 static lpm_power_mode_t s_targetPowerMode;
 static lpm_power_mode_t s_curRunMode = LPM_PowerModeOverRun;
 static SemaphoreHandle_t s_wakeupSig;
+extern bool wlan_is_manual;
 
 /*******************************************************************************
  * Code
@@ -249,10 +252,17 @@ static void PowerModeSwitch(lpm_power_mode_t mode)
 
 void mcu_suspend()
 {
+    if (!wlan_is_manual)
+    {
+        PRINTF("Error: Maunal mode is not selected!\r\n");
+        return;
+    }
+
     if (wlan_host_sleep_pre_cfg)
     {
         wlan_host_sleep_pre_cfg();
     }
+
     PowerModeSwitch(LPM_PowerModeSysIdle);
     if (wlan_host_sleep_post_cfg)
     {
@@ -296,7 +306,7 @@ int hostsleep_init(void (*wlan_hs_pre_cfg)(void), void (*wlan_hs_post_cfg)(void)
         APP_HOST_WAKEUP_GPIO_PIN,
     };
 
-#ifdef WIFI_IW612_BOARD_MURATA_2EL_M2
+#if defined(WIFI_IW612_BOARD_MURATA_2EL_M2) || defined(WIFI_IW610_BOARD_MURATA_2LL_M2)
     IOMUXC_SetPinMux(IOMUXC_GPIO_AD_B0_00_GPIO1_IO00, 0U);
 #elif defined(WIFI_88W8987_BOARD_MURATA_1ZM_M2) || defined(WIFI_IW416_BOARD_MURATA_1XK_M2)
     IOMUXC_SetPinMux(IOMUXC_GPIO_AD_B1_10_GPIO1_IO26, 0U);

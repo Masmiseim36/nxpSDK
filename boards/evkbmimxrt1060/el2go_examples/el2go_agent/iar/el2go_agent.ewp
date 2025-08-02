@@ -79,7 +79,7 @@
         </option>
         <option>
           <name>OGChipSelectEditMenu</name>
-          <state>MIMXRT1062xxx6A	NXP MIMXRT1062xxx6A</state>
+          <state>MIMXRT1062xxx6B	NXP MIMXRT1062xxx6B</state>
         </option>
         <option>
           <name>GenLowLevelInterface</name>
@@ -125,7 +125,7 @@
         </option>
         <option>
           <name>GFPUDeviceSlave</name>
-          <state>MIMXRT1062xxx6A	NXP MIMXRT1062xxx6A</state>
+          <state>MIMXRT1062xxx6B	NXP MIMXRT1062xxx6B</state>
         </option>
         <option>
           <name>FPU2</name>
@@ -255,6 +255,7 @@
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1062DVL6B</state>
+          <state>MIMXRT1062_SERIES</state>
           <state>LWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1</state>
           <state>LWIP_SUPPORT_CUSTOM_PBUF=1</state>
           <state>CHECKSUM_GEN_UDP=1</state>
@@ -419,9 +420,7 @@
           <state>$PROJ_DIR$/../../../../../middleware/mbedtls/library</state>
           <state>$PROJ_DIR$/../../../../../middleware/mbedtls/port/ksdk</state>
           <state>$PROJ_DIR$/../../../../../middleware/lwip/port</state>
-          <state>$PROJ_DIR$/../../../../../middleware/lwip/src</state>
           <state>$PROJ_DIR$/../../../../../middleware/lwip/src/include</state>
-          <state>$PROJ_DIR$/../../../../../middleware/lwip/src/include/lwip</state>
           <state>$PROJ_DIR$/../../../../../middleware/lwip/port/sys_arch/dynamic</state>
           <state>$PROJ_DIR$/../../../../../middleware/pkcs11</state>
           <state>$PROJ_DIR$/../../../../../middleware/nxp_iot_agent/ex/inc</state>
@@ -647,6 +646,7 @@
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1062DVL6B</state>
+          <state>MIMXRT1062_SERIES</state>
         </option>
         <option>
           <name>AList</name>
@@ -758,9 +758,7 @@
           <state>$PROJ_DIR$/../../../../../middleware/mbedtls/library</state>
           <state>$PROJ_DIR$/../../../../../middleware/mbedtls/port/ksdk</state>
           <state>$PROJ_DIR$/../../../../../middleware/lwip/port</state>
-          <state>$PROJ_DIR$/../../../../../middleware/lwip/src</state>
           <state>$PROJ_DIR$/../../../../../middleware/lwip/src/include</state>
-          <state>$PROJ_DIR$/../../../../../middleware/lwip/src/include/lwip</state>
           <state>$PROJ_DIR$/../../../../../middleware/lwip/port/sys_arch/dynamic</state>
           <state>$PROJ_DIR$/../../../../../middleware/pkcs11</state>
           <state>$PROJ_DIR$/../../../../../middleware/nxp_iot_agent/ex/inc</state>
@@ -1344,7 +1342,7 @@
         </option>
         <option>
           <name>OGChipSelectEditMenu</name>
-          <state>MIMXRT1062xxx6A	NXP MIMXRT1062xxx6A</state>
+          <state>MIMXRT1062xxx6B	NXP MIMXRT1062xxx6B</state>
         </option>
         <option>
           <name>GenLowLevelInterface</name>
@@ -1390,7 +1388,7 @@
         </option>
         <option>
           <name>GFPUDeviceSlave</name>
-          <state>MIMXRT1062xxx6A	NXP MIMXRT1062xxx6A</state>
+          <state>MIMXRT1062xxx6B	NXP MIMXRT1062xxx6B</state>
         </option>
         <option>
           <name>FPU2</name>
@@ -1520,6 +1518,7 @@
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1062DVL6B</state>
+          <state>MIMXRT1062_SERIES</state>
           <state>LWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1</state>
           <state>LWIP_SUPPORT_CUSTOM_PBUF=1</state>
           <state>CHECKSUM_GEN_UDP=1</state>
@@ -1684,9 +1683,7 @@
           <state>$PROJ_DIR$/../../../../../middleware/mbedtls/library</state>
           <state>$PROJ_DIR$/../../../../../middleware/mbedtls/port/ksdk</state>
           <state>$PROJ_DIR$/../../../../../middleware/lwip/port</state>
-          <state>$PROJ_DIR$/../../../../../middleware/lwip/src</state>
           <state>$PROJ_DIR$/../../../../../middleware/lwip/src/include</state>
-          <state>$PROJ_DIR$/../../../../../middleware/lwip/src/include/lwip</state>
           <state>$PROJ_DIR$/../../../../../middleware/lwip/port/sys_arch/dynamic</state>
           <state>$PROJ_DIR$/../../../../../middleware/pkcs11</state>
           <state>$PROJ_DIR$/../../../../../middleware/nxp_iot_agent/ex/inc</state>
@@ -1912,6 +1909,7 @@
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1062DVL6B</state>
+          <state>MIMXRT1062_SERIES</state>
         </option>
         <option>
           <name>AList</name>
@@ -2023,9 +2021,7 @@
           <state>$PROJ_DIR$/../../../../../middleware/mbedtls/library</state>
           <state>$PROJ_DIR$/../../../../../middleware/mbedtls/port/ksdk</state>
           <state>$PROJ_DIR$/../../../../../middleware/lwip/port</state>
-          <state>$PROJ_DIR$/../../../../../middleware/lwip/src</state>
           <state>$PROJ_DIR$/../../../../../middleware/lwip/src/include</state>
-          <state>$PROJ_DIR$/../../../../../middleware/lwip/src/include/lwip</state>
           <state>$PROJ_DIR$/../../../../../middleware/lwip/port/sys_arch/dynamic</state>
           <state>$PROJ_DIR$/../../../../../middleware/pkcs11</state>
           <state>$PROJ_DIR$/../../../../../middleware/nxp_iot_agent/ex/inc</state>

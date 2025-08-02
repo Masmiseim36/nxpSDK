@@ -604,7 +604,7 @@ PNG_STATIC int PNGParseInfo(PNGIMAGE *pPage)
         } // switch
     }
 #if defined(USE_PNGDEC_DRIVER) && USE_PNGDEC_DRIVER
-    if (pPage->iWidth > 1024U)
+    if (pPage->iWidth > 1024)
     {
         pPage->iError = PNG_WIDTH_TOO_BIG;
         return pPage->iError;

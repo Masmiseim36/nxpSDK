@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2020 NXP
+ * Copyright 2016-2020, 2024-2025 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -70,7 +70,7 @@ uint32_t FLEXIO_GetInstance(FLEXIO_Type *base)
     /* Find the instance index from base address mappings. */
     for (instance = 0; instance < ARRAY_SIZE(s_flexioBases); instance++)
     {
-        if (s_flexioBases[instance] == base)
+        if (MSDK_REG_SECURE_ADDR(s_flexioBases[instance]) == MSDK_REG_SECURE_ADDR(base))
         {
             break;
         }
@@ -114,13 +114,19 @@ void FLEXIO_Init(FLEXIO_Type *base, const flexio_config_t *userConfig)
     FLEXIO_Reset(base);
 
     ctrlReg = base->CTRL;
+#if !(defined(FSL_FEATURE_FLEXIO_HAS_DOZE_MODE_SUPPORT) && (FSL_FEATURE_FLEXIO_HAS_DOZE_MODE_SUPPORT == 0))
     ctrlReg &= ~(FLEXIO_CTRL_DOZEN_MASK | FLEXIO_CTRL_DBGE_MASK | FLEXIO_CTRL_FASTACC_MASK | FLEXIO_CTRL_FLEXEN_MASK);
-    ctrlReg |= (FLEXIO_CTRL_DBGE(userConfig->enableInDebug) | FLEXIO_CTRL_FASTACC(userConfig->enableFastAccess) |
-                FLEXIO_CTRL_FLEXEN(userConfig->enableFlexio));
-    if (!userConfig->enableInDoze)
+#else
+    ctrlReg &= ~(FLEXIO_CTRL_DBGE_MASK | FLEXIO_CTRL_FASTACC_MASK | FLEXIO_CTRL_FLEXEN_MASK);
+#endif
+    ctrlReg |= (FLEXIO_CTRL_DBGE(userConfig->enableInDebug ? 1U : 0U) | FLEXIO_CTRL_FASTACC(userConfig->enableFastAccess ? 1U : 0U) |
+                FLEXIO_CTRL_FLEXEN(userConfig->enableFlexio ? 1U : 0U));
+#if !(defined(FSL_FEATURE_FLEXIO_HAS_DOZE_MODE_SUPPORT) && (FSL_FEATURE_FLEXIO_HAS_DOZE_MODE_SUPPORT == 0))
+    if (!userConfig->enableInDoze ? 1U : 0U)
     {
         ctrlReg |= FLEXIO_CTRL_DOZEN_MASK;
     }
+#endif
 
     base->CTRL = ctrlReg;
 }
@@ -160,7 +166,9 @@ void FLEXIO_GetDefaultConfig(flexio_config_t *userConfig)
     (void)memset(userConfig, 0, sizeof(*userConfig));
 
     userConfig->enableFlexio     = true;
+#if !(defined(FSL_FEATURE_FLEXIO_HAS_DOZE_MODE_SUPPORT) && (FSL_FEATURE_FLEXIO_HAS_DOZE_MODE_SUPPORT == 0))
     userConfig->enableInDoze     = false;
+#endif
     userConfig->enableInDebug    = true;
     userConfig->enableFastAccess = false;
 }
@@ -442,7 +450,9 @@ static void FLEXIO_CommonIRQHandler(void)
 void FLEXIO_SetPinConfig(FLEXIO_Type *base, uint32_t pin, flexio_gpio_config_t *config)
 {
     assert(NULL != config);
+#if defined(FLEXIO_IRQS)
     IRQn_Type flexio_irqs[] = FLEXIO_IRQS;
+#endif
 
     if (config->pinDirection == kFLEXIO_DigitalInput)
     {
@@ -450,17 +460,19 @@ void FLEXIO_SetPinConfig(FLEXIO_Type *base, uint32_t pin, flexio_gpio_config_t *
         if (0U != (config->inputConfig & (uint8_t)kFLEXIO_InputInterruptEnable))
         {
             base->PINIEN = 1UL << pin;
+#if defined(FLEXIO_IRQS)
             /* Clear pending NVIC IRQ before enable NVIC IRQ. */
             NVIC_ClearPendingIRQ(flexio_irqs[FLEXIO_GetInstance(base)]);
             /* Enable interrupt in NVIC. */
             (void)EnableIRQ(flexio_irqs[FLEXIO_GetInstance(base)]);
+#endif
         }
-        
+
         if (0U != (config->inputConfig & (uint8_t)kFLEXIO_FlagRisingEdgeEnable))
         {
             base->PINREN = 1UL << pin;
         }
-        
+
         if (0U != (config->inputConfig & (uint8_t)kFLEXIO_FlagFallingEdgeEnable))
         {
             base->PINFEN = 1UL << pin;

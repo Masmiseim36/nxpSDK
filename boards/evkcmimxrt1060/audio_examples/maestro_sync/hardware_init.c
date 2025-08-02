@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 NXP
+ * Copyright 2023,2025 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -136,12 +136,12 @@ int BOARD_CODEC_Init(void)
 {
     if (CODEC_Init(&codecHandle, &boardCodecConfig) != kStatus_Success)
     {
-        assert(false);
+        return -1;
     }
     if (CODEC_SetVolume(&codecHandle, kCODEC_PlayChannelHeadphoneLeft | kCODEC_PlayChannelHeadphoneRight,
                         DEMO_VOLUME) != kStatus_Success)
     {
-        assert(false);
+        return -1;
     }
     return 0;
 }
@@ -208,9 +208,9 @@ void BOARD_InitHardware(void)
     BOARD_EnableSaiMclkOutput(true);
 
     DMAMUX_Init(DEMO_DMAMUX);
-    DMAMUX_SetSource(DEMO_DMAMUX, DEMO_TX_CHANNEL, (uint8_t)DEMO_SAI_TX_SOURCE);
+    DMAMUX_SetSource(DEMO_DMAMUX, DEMO_TX_CHANNEL, DEMO_SAI_TX_SOURCE);
     DMAMUX_EnableChannel(DEMO_DMAMUX, DEMO_TX_CHANNEL);
-    DMAMUX_SetSource(DEMO_DMAMUX, DEMO_RX_CHANNEL, (uint8_t)DEMO_SAI_RX_SOURCE);
+    DMAMUX_SetSource(DEMO_DMAMUX, DEMO_RX_CHANNEL, DEMO_SAI_RX_SOURCE);
     DMAMUX_EnableChannel(DEMO_DMAMUX, DEMO_RX_CHANNEL);
 
     /* SEMC */

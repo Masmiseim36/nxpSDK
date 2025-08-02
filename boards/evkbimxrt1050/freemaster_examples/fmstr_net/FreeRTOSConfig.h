@@ -94,6 +94,13 @@
 #define configTIMER_QUEUE_LENGTH                10
 #define configTIMER_TASK_STACK_DEPTH            (configMINIMAL_STACK_SIZE * 2)
 
+#if (defined(CPU_MCXE247VLL) || defined(CPU_MCXE247VLQ))
+/* Priority related definitions. */
+#define configPRIO_BITS 4
+#define configLIBRARY_MAX_SYSCALL_INTERRUPT_PRIORITY 2
+#define configMAX_SYSCALL_INTERRUPT_PRIORITY (configLIBRARY_MAX_SYSCALL_INTERRUPT_PRIORITY << (8 - configPRIO_BITS))
+#endif
+
 /* Define to trap errors during development. */
 #define configASSERT(x) if((x) == 0) {taskDISABLE_INTERRUPTS(); for (;;);}
 

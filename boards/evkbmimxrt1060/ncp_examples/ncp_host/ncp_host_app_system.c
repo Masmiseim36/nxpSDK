@@ -10,9 +10,11 @@
 #include "ncp_host_command.h"
 #include "ncp_cmd_common.h"
 #include "ncp_cmd_system.h"
+#include "ncp_tlv_adapter.h"
 
 #define SYSTEM_NCP_TASK_PRIO   1
-#define SYSTEM_NCP_STACK_SIZE   512
+#define SYSTEM_NCP_STACK_SIZE   1024
+
 static OSA_TASK_HANDLE_DEFINE(system_ncp_task_handle);
 void system_ncp_task(void *pvParameters);
 static OSA_TASK_DEFINE(system_ncp_task, SYSTEM_NCP_TASK_PRIO, 1, SYSTEM_NCP_STACK_SIZE, 0);

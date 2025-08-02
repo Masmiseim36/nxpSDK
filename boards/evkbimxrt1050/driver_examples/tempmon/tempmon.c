@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2021, 2024 NXP
+ * Copyright 2018-2021, 2024-2025 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -44,6 +44,9 @@ int main(void)
 {
     tempmon_config_t config;
     uint32_t coreFrequency;
+    int32_t maxHot = 0U;
+
+    maxHot = (int32_t)(uint32_t)((OCOTP->ANA1 & TEMPMON_HOTTEMPMASK) >> TEMPMON_HOTTEMPSHIFT);
 
     /* Board pin, clock, debug console init */
     BOARD_InitHardware();
@@ -55,6 +58,19 @@ int main(void)
     config.frequency     = 0x03U;
     config.highAlarmTemp = DEMO_HIGH_ALARM_TEMP;
     config.lowAlarmTemp  = DEMO_LOW_ALARM_TEMP;
+    
+    /* Set the panic alarm temperature to the maximum temperature which the SoC can operate.
+     * Different SoC has different qualified temperature level based on AEC-Q100 standard by default,
+     * such as Consumer(0 to +95 degrees celsius), Industrial(-40 to +105 degrees celsius),
+     * Automotive(-40 to +125 degrees celsius). Users need to correctly set the panic, high and low
+     * alarm temperature within the allowable range according to SoC characteristics and application requirements.
+     *
+     * The panic threshold (panicAlarmTemp) is a special programmable threshold in that if the temperature
+     * increases above this value and the temperature-panic-reset interrupt is enabled in the System Reset Controller,
+     * the hardware will assume that software no longer has control over the thermal situation and will initiate a reset
+     * of the chip. 
+     */
+    config.panicAlarmTemp = (int16_t)maxHot;
 
     TEMPMON_Init(DEMO_TEMP_MONITOR, &config);
     TEMPMON_StartMeasure(DEMO_TEMP_MONITOR);

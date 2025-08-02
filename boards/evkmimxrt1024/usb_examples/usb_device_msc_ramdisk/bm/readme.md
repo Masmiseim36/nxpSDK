@@ -89,7 +89,6 @@ Otherwise, Mac OS shows "not enough space for allocate" and can't format the dis
 - LPCXpresso55S69
 - EVK-MIMXRT1064
 - MIMXRT685-AUD-EVK
-- FRDM-MCXA276
 - LPCXpresso51U68
 - LPCXpresso54S018
 - [LPCXpresso55S16](../../_boards/lpcxpresso55s16/usb_examples/usb_device_msc_ramdisk/example_board_readme.md)

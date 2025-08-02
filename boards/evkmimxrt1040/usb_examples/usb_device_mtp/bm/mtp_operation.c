@@ -352,6 +352,11 @@ static usb_status_t USB_DeviceBuildPath(usb_mtp_struct_t *mtp, uint32_t storageI
     uint32_t forwardOffset;
     uint32_t i;
     backwardOffset = USB_DeviceGetRootPath(mtp, storageID, path);
+    if (backwardOffset < 2U)
+    {
+        usb_echo("wrong root path length\r\n");
+        return kStatus_USB_Error;
+    }
     backwardOffset -= 2U; /* remove null-terminated */
     forwardOffset = MTP_PATH_MAX_LEN;
 
@@ -367,6 +372,10 @@ static usb_status_t USB_DeviceBuildPath(usb_mtp_struct_t *mtp, uint32_t storageI
         }
 
         nameLen = USB_DeviceUnicodeStringLength(objHandleStruct.name);
+        if ((forwardOffset - nameLen) < 2U)
+        {
+            return kStatus_USB_Error;
+        }
         forwardOffset -= nameLen;
         forwardOffset -= 2U;
 
@@ -1396,6 +1405,11 @@ void USB_DeviceCmdGetObjHandles(void *param)
         {
             offset = 0U;
 
+            if ((dataInfo->curPos - USB_DEVICE_MTP_MINIMUM_CONTAINER_LENGTH - 4U) < 0U)
+            {
+                dataInfo->code = MTP_RESPONSE_INVALID_DATASET;
+                return;
+            }
             /* the number of object handle has been sent. */
             objHandleCount = (dataInfo->curPos - USB_DEVICE_MTP_MINIMUM_CONTAINER_LENGTH - 4U) / 4U;
 
@@ -1887,7 +1901,11 @@ void USB_DeviceCmdGetObj(void *param)
         offset = ((g_mtp.transferTotalSize - dataInfo->curPos) > USB_DEVICE_MTP_TRANSFER_BUFF_SIZE) ?
                      USB_DEVICE_MTP_TRANSFER_BUFF_SIZE :
                      (g_mtp.transferTotalSize - dataInfo->curPos);
-
+        if ((dataInfo->curPos - USB_DEVICE_MTP_MINIMUM_CONTAINER_LENGTH) < 0U)
+        {
+            dataInfo->code = MTP_RESPONSE_INVALID_DATASET;
+            return;
+        }
         result = USB_DeviceMtpLseek(g_mtp.file, dataInfo->curPos - USB_DEVICE_MTP_MINIMUM_CONTAINER_LENGTH);
         result = USB_DeviceMtpRead(g_mtp.file, readBuf, offset, &sizeRead);
 
@@ -2174,6 +2192,11 @@ void USB_DeviceCmdSendObj(void *param)
             }
             else
             {
+                if ((dataInfo->curPos - USB_DEVICE_MTP_MINIMUM_CONTAINER_LENGTH) < 0U)
+                {
+                    dataInfo->code = MTP_RESPONSE_INVALID_DATASET;
+                    return;
+                }
                 /* both first and last packet */
                 size = dataInfo->curPos - USB_DEVICE_MTP_MINIMUM_CONTAINER_LENGTH;
             }
@@ -2603,7 +2626,10 @@ void USB_DeviceCmdSetObjPropVal(void *param)
                 size >>= 1U;
                 while (renameBuffer[size] != '/')
                 {
-                    size--;
+                    if (size > 0U)
+                    {
+                        size--;
+                    }
                 };
 #if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
                 /* j indicates the offset */

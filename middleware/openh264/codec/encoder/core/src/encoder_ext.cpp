@@ -374,12 +374,12 @@ int32_t ParamValidation (SLogContext* pLogCtx, SWelsSvcCodingParam* pCfg) {
                  pCfg->bEnableFrameSkip);
     if ((pCfg->iMaxQp <= 0) || (pCfg->iMinQp <= 0)) {
       if (pCfg->iUsageType == SCREEN_CONTENT_REAL_TIME) {
-        WelsLog (pLogCtx, WELS_LOG_WARNING, "Change QP Range from(%d,%d) to (%d,%d)", pCfg->iMinQp, pCfg->iMaxQp, MIN_SCREEN_QP,
+        WelsLog (pLogCtx, WELS_LOG_INFO, "Change QP Range from(%d,%d) to (%d,%d)", pCfg->iMinQp, pCfg->iMaxQp, MIN_SCREEN_QP,
                  MAX_SCREEN_QP);
         pCfg->iMinQp = MIN_SCREEN_QP;
         pCfg->iMaxQp = MAX_SCREEN_QP;
       } else {
-        WelsLog (pLogCtx, WELS_LOG_WARNING, "Change QP Range from(%d,%d) to (%d,%d)", pCfg->iMinQp, pCfg->iMaxQp,
+        WelsLog (pLogCtx, WELS_LOG_INFO, "Change QP Range from(%d,%d) to (%d,%d)", pCfg->iMinQp, pCfg->iMaxQp,
                  GOM_MIN_QP_MODE, MAX_LOW_BR_QP);
         pCfg->iMinQp = GOM_MIN_QP_MODE;
         pCfg->iMaxQp = MAX_LOW_BR_QP;
@@ -2186,7 +2186,7 @@ void StatOverallEncodingExt (sWelsEncCtx* pCtx) {
 
   }
 }
-#endif
+#endif //#if defined(STAT_OUTPUT)
 
 
 int32_t GetMultipleThreadIdc (SLogContext* pLogCtx, SWelsSvcCodingParam* pCodingParam, int16_t& iSliceNum,
@@ -2329,7 +2329,7 @@ int32_t WelsInitEncoderExt (sWelsEncCtx** ppCtx, SWelsSvcCodingParam* pCodingPar
     WelsUninitEncoderExt (&pCtx);
     return iRet;
   }
-  memcpy (pCtx->pSvcParam, pCodingParam, sizeof (SWelsSvcCodingParam)); // confirmed_safe_unsafe_usage
+  memcpy ((void*) pCtx->pSvcParam, pCodingParam, sizeof (SWelsSvcCodingParam)); // confirmed_safe_unsafe_usage
 
   pCtx->pFuncList = (SWelsFuncPtrList*)pCtx->pMemAlign->WelsMallocz (sizeof (SWelsFuncPtrList), "SWelsFuncPtrList");
   if (NULL == pCtx->pFuncList) {
@@ -3445,9 +3445,7 @@ int32_t WelsEncoderEncodeExt (sWelsEncCtx* pCtx, SFrameBSInfo* pFbi, const SSour
   SLayerBSInfo* pLayerBsInfo            = &pFbi->sLayerInfo[0];
   SWelsSvcCodingParam* pSvcParam        = pCtx->pSvcParam;
   SSpatialPicIndex* pSpatialIndexMap = &pCtx->sSpatialIndexMap[0];
-#if defined(ENABLE_FRAME_DUMP) || defined(ENABLE_PSNR_CALC)
   SPicture* fsnr                = NULL;
-#endif//ENABLE_FRAME_DUMP || ENABLE_PSNR_CALC
   SPicture* pEncPic             = NULL; // to be decided later
 #if defined(MT_DEBUG)
   int32_t iDidList[MAX_DEPENDENCY_LAYER] = {0};
@@ -3469,9 +3467,7 @@ int32_t WelsEncoderEncodeExt (sWelsEncCtx* pCtx, SFrameBSInfo* pFbi, const SSour
   int32_t iCurTid                = 0;
   bool bAvcBased                = false;
   SLogContext* pLogCtx = & (pCtx->sLogCtx);
-#if defined(ENABLE_PSNR_CALC)
   float fSnrY = .0f, fSnrU = .0f, fSnrV = .0f;
-#endif//ENABLE_PSNR_CALC
 
 #if defined(_DEBUG)
   int32_t i = 0, j = 0, k = 0;
@@ -3616,15 +3612,15 @@ int32_t WelsEncoderEncodeExt (sWelsEncCtx* pCtx, SFrameBSInfo* pFbi, const SSour
       eNalRefIdc = NRI_PRI_LOWEST;
     else if (1 + iCurTid == iDecompositionStages)
       eNalRefIdc = NRI_PRI_LOW;
+    else if (2 + iCurTid == iDecompositionStages)
+      eNalRefIdc = NRI_PRI_HIGH;
     else // more details for other temporal layers?
       eNalRefIdc = NRI_PRI_HIGHEST;
     pCtx->eNalType = eNalType;
     pCtx->eNalPriority = eNalRefIdc;
 
     pCtx->pDecPic               = pCtx->ppRefPicListExt[iCurDid]->pNextBuffer;
-#if defined(ENABLE_FRAME_DUMP) || defined(ENABLE_PSNR_CALC)
     fsnr                        = pCtx->pDecPic;
-#endif//#if defined(ENABLE_FRAME_DUMP) || defined(ENABLE_PSNR_CALC)
     pCtx->pDecPic->iPictureType = pCtx->eSliceType;
     pCtx->pDecPic->iFramePoc    = pParamInternal->iPOC;
 
@@ -3919,26 +3915,30 @@ int32_t WelsEncoderEncodeExt (sWelsEncCtx* pCtx, SFrameBSInfo* pFbi, const SSour
     }
 #endif//ENABLE_FRAME_DUMP
 
-#if defined(ENABLE_PSNR_CALC)
-    fSnrY = WelsCalcPsnr (fsnr->pData[0],
-                          fsnr->iLineSize[0],
-                          pEncPic->pData[0],
-                          pEncPic->iLineSize[0],
-                          iCurWidth,
-                          iCurHeight);
-    fSnrU = WelsCalcPsnr (fsnr->pData[1],
-                          fsnr->iLineSize[1],
-                          pEncPic->pData[1],
-                          pEncPic->iLineSize[1],
-                          (iCurWidth >> 1),
-                          (iCurHeight >> 1));
-    fSnrV = WelsCalcPsnr (fsnr->pData[2],
-                          fsnr->iLineSize[2],
-                          pEncPic->pData[2],
-                          pEncPic->iLineSize[2],
-                          (iCurWidth >> 1),
-                          (iCurHeight >> 1));
-#endif//ENABLE_PSNR_CALC
+    if (fsnr && (pSvcParam->bPsnrY || pSrcPic->bPsnrY)) {
+      fSnrY = WelsCalcPsnr (fsnr->pData[0],
+                            fsnr->iLineSize[0],
+                            pEncPic->pData[0],
+                            pEncPic->iLineSize[0],
+                            iCurWidth,
+                            iCurHeight);
+    }
+    if (fsnr && (pSvcParam->bPsnrU || pSrcPic->bPsnrU)) {
+      fSnrU = WelsCalcPsnr (fsnr->pData[1],
+                            fsnr->iLineSize[1],
+                            pEncPic->pData[1],
+                            pEncPic->iLineSize[1],
+                            (iCurWidth >> 1),
+                            (iCurHeight >> 1));
+    }
+    if (fsnr && (pSvcParam->bPsnrV || pSrcPic->bPsnrV)) {
+      fSnrV = WelsCalcPsnr (fsnr->pData[2],
+                            fsnr->iLineSize[2],
+                            pEncPic->pData[2],
+                            pEncPic->iLineSize[2],
+                            (iCurWidth >> 1),
+                            (iCurHeight >> 1));
+    }
 
 #if defined(LAYER_INFO_OUTPUT)
     fprintf (stderr, "%2s %5d: %-5d %2s   T%1d D%1d Q%-2d  QP%3d   Y%2.2f  U%2.2f  V%2.2f  %8d bits\n",
@@ -3956,15 +3956,32 @@ int32_t WelsEncoderEncodeExt (sWelsEncCtx* pCtx, SFrameBSInfo* pFbi, const SSour
              (iLayerSize << 3));
 #endif//LAYER_INFO_OUTPUT
 
+    pLayerBsInfo->rPsnr[0] = 0;
+    pLayerBsInfo->rPsnr[1] = 0;
+    pLayerBsInfo->rPsnr[2] = 0;
+    if (pSrcPic->bPsnrY) {
+      pLayerBsInfo->rPsnr[0] = fSnrY;
+    }
+    if (pSrcPic->bPsnrU) {
+      pLayerBsInfo->rPsnr[1] = fSnrU;
+    }
+    if (pSrcPic->bPsnrV) {
+      pLayerBsInfo->rPsnr[2] = fSnrV;
+    }
+
 #if defined(STAT_OUTPUT)
 
-#if defined(ENABLE_PSNR_CALC)
     {
-      pCtx->sStatData[iCurDid][0].sQualityStat.rYPsnr[pCtx->eSliceType] += fSnrY;
-      pCtx->sStatData[iCurDid][0].sQualityStat.rUPsnr[pCtx->eSliceType] += fSnrU;
-      pCtx->sStatData[iCurDid][0].sQualityStat.rVPsnr[pCtx->eSliceType] += fSnrV;
+      if (pSvcParam->bPsnrY) {
+        pCtx->sStatData[iCurDid][0].sQualityStat.rYPsnr[pCtx->eSliceType] += fSnrY;
+      }
+      if (pSvcParam->bPsnrU) {
+        pCtx->sStatData[iCurDid][0].sQualityStat.rUPsnr[pCtx->eSliceType] += fSnrU;
+      }
+      if (pSvcParam->bPsnrV) {
+        pCtx->sStatData[iCurDid][0].sQualityStat.rVPsnr[pCtx->eSliceType] += fSnrV;
+      }
     }
-#endif//ENABLE_PSNR_CALC
 
 #if defined(MB_TYPES_CHECK) //091025, frame output
     if (pCtx->eSliceType == P_SLICE) {
@@ -4454,7 +4471,7 @@ int32_t WelsEncoderApplyLTR (SLogContext* pLogCtx, sWelsEncCtx** ppCtx, SLTRConf
   SWelsSvcCodingParam sConfig;
   int32_t iNumRefFrame = 1;
   int32_t iRet = 0;
-  memcpy (&sConfig, (*ppCtx)->pSvcParam, sizeof (SWelsSvcCodingParam));
+  memcpy ((void*) &sConfig, (*ppCtx)->pSvcParam, sizeof (SWelsSvcCodingParam));
   sConfig.bEnableLongTermReference = pLTRValue->bEnableLongTermReference;
   sConfig.iLTRRefNum = pLTRValue->iLTRRefNum;
   int32_t uiGopSize = 1 << (sConfig.iTemporalLayerNum - 1);

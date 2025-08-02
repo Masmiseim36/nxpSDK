@@ -1,5 +1,5 @@
 /*
- * Copyright 2024-2025 NXP
+ * Copyright 2024 NXP
  * Copyright (c) 2016, Wind River Systems, Inc.
  *
  * SPDX-License-Identifier: Apache-2.0
@@ -32,10 +32,6 @@ extern struct k_work_q k_sys_work_q;
  * @ingroup kernel_apis
  * @{
  */
-
-#ifdef __cplusplus
-extern "C" {
-#endif
 
 /** @brief The signature for a work item handler function.
  *
@@ -824,10 +820,6 @@ static inline k_tid_t k_work_queue_thread_get(struct k_work_q *queue)
 {
 	return &queue->thread;
 }
-
-#ifdef __cplusplus
-}
-#endif
 
 /** @} */
 

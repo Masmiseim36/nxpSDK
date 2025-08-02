@@ -1,7 +1,6 @@
 /*
  * Copyright (c) 2013-2015 Freescale Semiconductor, Inc.
  * Copyright 2016-2020 NXP
- * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -1385,7 +1384,11 @@ void handle_flash_program_once(uint8_t *packet, uint32_t length)
         command->byteCount);
 #endif // !BL_DEVICE_IS_LPC_SERIES
 #elif BL_FEATURE_OCOTP_MODULE
+#if BL_FEATURE_OCOTP_REDLOCK
+    status = ocotp_program_once(OCOTP, command->index, &command->data[0], command->byteCount, command->lockFlag);
+#else
     status = ocotp_program_once(OCOTP, command->index, &command->data[0], command->byteCount);
+#endif
     if (status == kStatus_Success)
     {
         uint32_t programData = command->data[0];

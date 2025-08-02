@@ -40,13 +40,14 @@
     <definition extID="component.pit_adapter.MIMXRT1052"/>
     <definition extID="component.timer_manager.MIMXRT1052"/>
     <definition extID="component.lpuart_adapter.MIMXRT1052"/>
-    <definition extID="component.mflash_offchip.MIMXRT1052"/>
     <definition extID="component.osa_template_config.MIMXRT1052"/>
-    <definition extID="component.osa_interface.MIMXRT1052"/>
     <definition extID="component.osa.MIMXRT1052"/>
     <definition extID="component.osa_free_rtos.MIMXRT1052"/>
     <definition extID="component.wifi_bt_module.tx_pwr_limits.MIMXRT1052"/>
     <definition extID="component.wifi_bt_module.config.MIMXRT1052"/>
+    <definition extID="component.wifi_bt_module.IW61X.MIMXRT1052"/>
+    <definition extID="component.wifi_bt_module.board_murata_2el_usd.MIMXRT1052"/>
+    <definition extID="component.mflash_offchip.MIMXRT1052"/>
     <definition extID="middleware.wifi.wifi_bt_config.template.MIMXRT1052"/>
     <definition extID="middleware.wifi.template.MIMXRT1052"/>
     <definition extID="middleware.wifi.osa_free_rtos.MIMXRT1052"/>
@@ -61,6 +62,7 @@
     <definition extID="middleware.usb.common_header.MIMXRT1052"/>
     <definition extID="middleware.usb.host.common_header.MIMXRT1052"/>
     <definition extID="middleware.usb.host_controller_ehci.MIMXRT1052"/>
+    <definition extID="middleware.usb.host.ehci_config_header.MIMXRT1052"/>
     <definition extID="middleware.usb.host.stack.MIMXRT1052"/>
     <definition extID="middleware.usb.host_msd.MIMXRT1052"/>
     <definition extID="middleware.usb.phy.MIMXRT1052"/>
@@ -92,7 +94,6 @@
     <definition extID="middleware.edgefast_bluetooth.porting.net.MIMXRT1052"/>
     <definition extID="middleware.edgefast_bluetooth.porting.list.MIMXRT1052"/>
     <definition extID="middleware.edgefast_bluetooth.porting.atomic.MIMXRT1052"/>
-    <definition extID="middleware.edgefast_bluetooth.common.ethermind.hci.MIMXRT1052"/>
     <definition extID="middleware.edgefast_bluetooth.common.ethermind.hci_uart.MIMXRT1052"/>
     <definition extID="middleware.edgefast_bluetooth.wifi_nxp.controller.base.MIMXRT1052"/>
     <definition extID="middleware.edgefast_bluetooth.k32w061.controller.MIMXRT1052"/>
@@ -113,7 +114,7 @@
     <definition extID="com.nxp.mcuxpresso.core.debug.support.segger.debug"/>
     <definition extID="com.nxp.mcuxpresso.core.debug.support.segger.release"/>
   </externalDefinitions>
-  <example id="evkbimxrt1050_wireless_uart" name="wireless_uart" device_core="core0_MIMXRT1052xxxxB" dependency="platform.drivers.xip_board.evkbimxrt1050.MIMXRT1052 platform.drivers.clock.MIMXRT1052 platform.drivers.iomuxc.MIMXRT1052 CMSIS_Include_core_cm.MIMXRT1052 device.MIMXRT1052_CMSIS.MIMXRT1052 device.MIMXRT1052_system.MIMXRT1052 device.MIMXRT1052_startup.MIMXRT1052 platform.drivers.xip_device.MIMXRT1052 platform.drivers.cache_armv7_m7.MIMXRT1052 platform.drivers.common.MIMXRT1052 platform.drivers.dcdc_1.MIMXRT1052 platform.drivers.dcp.MIMXRT1052 platform.drivers.dmamux.MIMXRT1052 platform.drivers.edma.MIMXRT1052 platform.drivers.flexspi.MIMXRT1052 platform.drivers.gpc_1.MIMXRT1052 platform.drivers.igpio.MIMXRT1052 platform.drivers.lpuart_edma.MIMXRT1052 platform.drivers.lpuart.MIMXRT1052 platform.drivers.pit.MIMXRT1052 platform.drivers.pmu.MIMXRT1052 platform.drivers.src.MIMXRT1052 platform.drivers.trng.MIMXRT1052 platform.drivers.usdhc.MIMXRT1052 platform.utilities.assert.MIMXRT1052 platform.utilities.misc_utilities.MIMXRT1052 component.lists.MIMXRT1052 utility.str.MIMXRT1052 utility.debug_console.MIMXRT1052 component.log.MIMXRT1052 component.serial_manager.MIMXRT1052 component.serial_manager_uart.MIMXRT1052 component.button.MIMXRT1052 component.common_task.MIMXRT1052 component.igpio_adapter.MIMXRT1052 component.pit_adapter.MIMXRT1052 component.timer_manager.MIMXRT1052 component.lpuart_adapter.MIMXRT1052 component.mflash_offchip.MIMXRT1052 component.osa_template_config.MIMXRT1052 component.osa_interface.MIMXRT1052 component.osa.MIMXRT1052 component.osa_free_rtos.MIMXRT1052 component.wifi_bt_module.tx_pwr_limits.MIMXRT1052 component.wifi_bt_module.config.MIMXRT1052 middleware.wifi.wifi_bt_config.template.MIMXRT1052 middleware.wifi.template.MIMXRT1052 middleware.wifi.osa_free_rtos.MIMXRT1052 middleware.wifi.osa.MIMXRT1052 middleware.wifi.common_files.MIMXRT1052 middleware.wifi.fwdnld.MIMXRT1052 middleware.wifi.mlan_sdio.MIMXRT1052 middleware.wifi.fwdnld_intf_abs.MIMXRT1052 middleware.mbedtls.port.ksdk_option.MIMXRT1052 middleware.mbedtls.MIMXRT1052 middleware.mbedtls.port.ksdk.MIMXRT1052 middleware.usb.common_header.MIMXRT1052 middleware.usb.host.common_header.MIMXRT1052 middleware.usb.host_controller_ehci.MIMXRT1052 middleware.usb.host.stack.MIMXRT1052 middleware.usb.host_msd.MIMXRT1052 middleware.usb.phy.MIMXRT1052 middleware.fatfs.MIMXRT1052 middleware.fatfs.usb.MIMXRT1052 middleware.littlefs.MIMXRT1052 middleware.sdmmc.common.MIMXRT1052 middleware.sdmmc.osa.freertos.MIMXRT1052 middleware.sdmmc.sdio.MIMXRT1052 middleware.sdmmc.host.usdhc.MIMXRT1052 middleware.sdmmc.host.usdhc.polling.MIMXRT1052 middleware.sdmmc.usdhc.template.MIMXRT1052 middleware.edgefast_bluetooth.pal.MIMXRT1052 middleware.edgefast_bluetooth.common.ethermind.MIMXRT1052 middleware.edgefast_bluetooth.extension.common.ethermind.MIMXRT1052 middleware.edgefast_bluetooth.config.ethermind.MIMXRT1052 middleware.edgefast_bluetooth.ble.ethermind.MIMXRT1052 middleware.edgefast_bluetooth.ble.ethermind.lib.MIMXRT1052 middleware.edgefast_bluetooth.template.MIMXRT1052 middleware.edgefast_bluetooth.pal.crypto.ethermind.MIMXRT1052 middleware.edgefast_bluetooth.pal.platform.ethermind.MIMXRT1052 middleware.edgefast_bluetooth.pal.host_msd_fatfs.ethermind.MIMXRT1052 middleware.edgefast_bluetooth.pal.db_gen.ethermind.MIMXRT1052 middleware.edgefast_bluetooth.pal.host_msd_fatfs.ethermind.config.MIMXRT1052 middleware.edgefast_bluetooth.porting.MIMXRT1052 middleware.edgefast_bluetooth.porting_DEPEND_ANYOF_OPTION_1.MIMXRT1052 middleware.edgefast_bluetooth.porting.work_queue.MIMXRT1052 middleware.edgefast_bluetooth.porting.toolchain.MIMXRT1052 middleware.edgefast_bluetooth.porting.net.MIMXRT1052 middleware.edgefast_bluetooth.porting.list.MIMXRT1052 middleware.edgefast_bluetooth.porting.atomic.MIMXRT1052 middleware.edgefast_bluetooth.common.ethermind.hci.MIMXRT1052 middleware.edgefast_bluetooth.common.ethermind.hci_uart.MIMXRT1052 middleware.edgefast_bluetooth.wifi_nxp.controller.base.MIMXRT1052 middleware.edgefast_bluetooth.k32w061.controller.MIMXRT1052 middleware.edgefast_bluetooth.wifi_nxp.controller.lwip.config.MIMXRT1052 middleware.edgefast_bluetooth.wifi_nxp.controller.wifi.config.MIMXRT1052 middleware.edgefast_bluetooth.profile.dis.MIMXRT1052 middleware.edgefast_bluetooth.profile.wu.MIMXRT1052 middleware.freertos-kernel.MIMXRT1052 middleware.freertos-kernel.heap_4.MIMXRT1052 middleware.freertos-kernel.config.MIMXRT1052" category="edgefast_bluetooth_examples">
+  <example id="evkbimxrt1050_wireless_uart" name="wireless_uart" device_core="core0_MIMXRT1052xxxxB" dependency="platform.drivers.xip_board.evkbimxrt1050.MIMXRT1052 platform.drivers.clock.MIMXRT1052 platform.drivers.iomuxc.MIMXRT1052 CMSIS_Include_core_cm.MIMXRT1052 device.MIMXRT1052_CMSIS.MIMXRT1052 device.MIMXRT1052_system.MIMXRT1052 device.MIMXRT1052_startup.MIMXRT1052 platform.drivers.xip_device.MIMXRT1052 platform.drivers.cache_armv7_m7.MIMXRT1052 platform.drivers.common.MIMXRT1052 platform.drivers.dcdc_1.MIMXRT1052 platform.drivers.dcp.MIMXRT1052 platform.drivers.dmamux.MIMXRT1052 platform.drivers.edma.MIMXRT1052 platform.drivers.flexspi.MIMXRT1052 platform.drivers.gpc_1.MIMXRT1052 platform.drivers.igpio.MIMXRT1052 platform.drivers.lpuart_edma.MIMXRT1052 platform.drivers.lpuart.MIMXRT1052 platform.drivers.pit.MIMXRT1052 platform.drivers.pmu.MIMXRT1052 platform.drivers.src.MIMXRT1052 platform.drivers.trng.MIMXRT1052 platform.drivers.usdhc.MIMXRT1052 platform.utilities.assert.MIMXRT1052 platform.utilities.misc_utilities.MIMXRT1052 component.lists.MIMXRT1052 utility.str.MIMXRT1052 utility.debug_console.MIMXRT1052 component.log.MIMXRT1052 component.serial_manager.MIMXRT1052 component.serial_manager_uart.MIMXRT1052 component.button.MIMXRT1052 component.common_task.MIMXRT1052 component.igpio_adapter.MIMXRT1052 component.pit_adapter.MIMXRT1052 component.timer_manager.MIMXRT1052 component.lpuart_adapter.MIMXRT1052 component.osa_template_config.MIMXRT1052 component.osa.MIMXRT1052 component.osa_free_rtos.MIMXRT1052 component.wifi_bt_module.tx_pwr_limits.MIMXRT1052 component.wifi_bt_module.config.MIMXRT1052 component.wifi_bt_module.IW61X.MIMXRT1052 component.wifi_bt_module.board_murata_2el_usd.MIMXRT1052 component.mflash_offchip.MIMXRT1052 middleware.wifi.wifi_bt_config.template.MIMXRT1052 middleware.wifi.template.MIMXRT1052 middleware.wifi.osa_free_rtos.MIMXRT1052 middleware.wifi.osa.MIMXRT1052 middleware.wifi.common_files.MIMXRT1052 middleware.wifi.fwdnld.MIMXRT1052 middleware.wifi.mlan_sdio.MIMXRT1052 middleware.wifi.fwdnld_intf_abs.MIMXRT1052 middleware.mbedtls.port.ksdk_option.MIMXRT1052 middleware.mbedtls.MIMXRT1052 middleware.mbedtls.port.ksdk.MIMXRT1052 middleware.usb.common_header.MIMXRT1052 middleware.usb.host.common_header.MIMXRT1052 middleware.usb.host_controller_ehci.MIMXRT1052 middleware.usb.host.ehci_config_header.MIMXRT1052 middleware.usb.host.stack.MIMXRT1052 middleware.usb.host_msd.MIMXRT1052 middleware.usb.phy.MIMXRT1052 middleware.fatfs.MIMXRT1052 middleware.fatfs.usb.MIMXRT1052 middleware.littlefs.MIMXRT1052 middleware.sdmmc.common.MIMXRT1052 middleware.sdmmc.osa.freertos.MIMXRT1052 middleware.sdmmc.sdio.MIMXRT1052 middleware.sdmmc.host.usdhc.MIMXRT1052 middleware.sdmmc.host.usdhc.polling.MIMXRT1052 middleware.sdmmc.usdhc.template.MIMXRT1052 middleware.edgefast_bluetooth.pal.MIMXRT1052 middleware.edgefast_bluetooth.common.ethermind.MIMXRT1052 middleware.edgefast_bluetooth.extension.common.ethermind.MIMXRT1052 middleware.edgefast_bluetooth.config.ethermind.MIMXRT1052 middleware.edgefast_bluetooth.ble.ethermind.MIMXRT1052 middleware.edgefast_bluetooth.ble.ethermind.lib.MIMXRT1052 middleware.edgefast_bluetooth.template.MIMXRT1052 middleware.edgefast_bluetooth.pal.crypto.ethermind.MIMXRT1052 middleware.edgefast_bluetooth.pal.platform.ethermind.MIMXRT1052 middleware.edgefast_bluetooth.pal.host_msd_fatfs.ethermind.MIMXRT1052 middleware.edgefast_bluetooth.pal.db_gen.ethermind.MIMXRT1052 middleware.edgefast_bluetooth.pal.host_msd_fatfs.ethermind.config.MIMXRT1052 middleware.edgefast_bluetooth.porting.MIMXRT1052 middleware.edgefast_bluetooth.porting_DEPEND_ANYOF_OPTION_1.MIMXRT1052 middleware.edgefast_bluetooth.porting.work_queue.MIMXRT1052 middleware.edgefast_bluetooth.porting.toolchain.MIMXRT1052 middleware.edgefast_bluetooth.porting.net.MIMXRT1052 middleware.edgefast_bluetooth.porting.list.MIMXRT1052 middleware.edgefast_bluetooth.porting.atomic.MIMXRT1052 middleware.edgefast_bluetooth.common.ethermind.hci_uart.MIMXRT1052 middleware.edgefast_bluetooth.wifi_nxp.controller.base.MIMXRT1052 middleware.edgefast_bluetooth.k32w061.controller.MIMXRT1052 middleware.edgefast_bluetooth.wifi_nxp.controller.lwip.config.MIMXRT1052 middleware.edgefast_bluetooth.wifi_nxp.controller.wifi.config.MIMXRT1052 middleware.edgefast_bluetooth.profile.dis.MIMXRT1052 middleware.edgefast_bluetooth.profile.wu.MIMXRT1052 middleware.freertos-kernel.MIMXRT1052 middleware.freertos-kernel.heap_4.MIMXRT1052 middleware.freertos-kernel.config.MIMXRT1052" category="edgefast_bluetooth_examples">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -180,15 +181,17 @@
           <value>SDK_DEBUGCONSOLE=1</value>
           <value>MCUX_META_BUILD</value>
           <value>CPU_MIMXRT1052DVL6B</value>
+          <value>MIMXRT1052_SERIES</value>
           <value>DEBUG_CONSOLE_TRANSFER_NON_BLOCKING=1</value>
           <value>OSA_USED</value>
           <value>SERIAL_PORT_TYPE_UART=1</value>
           <value>TIMER_PORT_TYPE_PIT=1</value>
+          <value>WIFI_IW612_BOARD_MURATA_2EL_USD</value>
           <value>MFLASH_FILE_BASEADDR=64487424</value>
           <value>LFS_THREADSAFE=1</value>
           <value>LOG_ENABLE_ASYNC_MODE=1</value>
           <value>LOG_MAX_ARGUMENT_COUNT=10</value>
-          <value>LOG_ENABLE_OVERWRITE=0</value>
+          <value>LOG_ENABLE_OVERWRITE=1</value>
           <value>CONFIG_ARM=1</value>
         </option>
         <option id="com.crt.advproject.gas.hdrlib" type="enum">
@@ -334,9 +337,6 @@
     <source path="." project_relative_path="source" type="c_include">
       <files mask="pin_mux.h"/>
     </source>
-    <source path="." project_relative_path="source" type="c_include">
-      <files mask="app_config.h"/>
-    </source>
     <source path="." project_relative_path="source" type="c_include" config="true">
       <files mask="mbedtls_config_client.h"/>
     </source>
@@ -362,15 +362,13 @@
       <files mask="clock_config.c"/>
     </source>
     <source path="." project_relative_path="source" type="c_include">
-      <files mask="edgefast_bluetooth_audio_config_Gen.h"/>
-      <files mask="edgefast_bluetooth_config_Gen.h"/>
-      <files mask="edgefast_bluetooth_debug_config_Gen.h"/>
-      <files mask="edgefast_bluetooth_extension_config_Gen.h"/>
+      <files mask="edgefast_bluetooth_audio_config.h"/>
+      <files mask="edgefast_bluetooth_config.h"/>
       <files mask="fsl_debug_console_conf.h"/>
-      <files mask="usb_host_config.h"/>
     </source>
     <source path="." project_relative_path="source" type="c_include" config="true">
       <files mask="fsl_os_abstraction_config.h"/>
+      <files mask="usb_host_config.h"/>
     </source>
     <source path="." project_relative_path="source" type="c_preinclude">
       <files mask="mcux_config.h"/>
@@ -380,6 +378,9 @@
     </source>
     <source path="." project_relative_path="doc" type="doc">
       <files mask="example_board_readme.md"/>
+    </source>
+    <source path="." project_relative_path="doc" type="doc">
+      <files mask="examples_shared_readme.md"/>
     </source>
   </example>
 </ksdk:examples>

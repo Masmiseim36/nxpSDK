@@ -40,11 +40,11 @@
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
     <memory>
-      <memoryBlock id="BOARD_FLASH_evkcmimxrt1060" name="BOARD_FLASH" addr="60000000" size="00800000" type="ExtFlash" access="RO"/>
+      <memoryBlock id="BOARD_FLASH_evkcmimxrt1060" name="BOARD_FLASH" addr="60000000" size="01000000" type="ExtFlash" access="RO"/>
+      <memoryBlock id="BOARD_SDRAM_evkcmimxrt1060" name="BOARD_SDRAM" addr="80000000" size="01E00000" type="RAM" access="RW"/>
       <memoryBlock id="SRAM_DTC_evkcmimxrt1060" name="SRAM_DTC" addr="20000000" size="00020000" type="RAM" access="RW"/>
       <memoryBlock id="SRAM_ITC_evkcmimxrt1060" name="SRAM_ITC" addr="00000000" size="00020000" type="RAM" access="RW"/>
       <memoryBlock id="SRAM_OC_evkcmimxrt1060" name="SRAM_OC" addr="20200000" size="000C0000" type="RAM" access="RW"/>
-      <memoryBlock id="BOARD_SDRAM_evkcmimxrt1060" name="BOARD_SDRAM" addr="80000000" size="01E00000" type="RAM" access="RW"/>
       <memoryBlock id="NCACHE_REGION_evkcmimxrt1060" name="NCACHE_REGION" addr="81E00000" size="00200000" type="RAM" access="RW"/>
     </memory>
     <toolchainSettings>
@@ -53,9 +53,13 @@
           <value>MCUXPRESSO_SDK</value>
           <value>XIP_BOOT_HEADER_ENABLE=1</value>
           <value>XIP_EXTERNAL_FLASH=1</value>
+          <value>XIP_BOOT_HEADER_DCD_ENABLE=1</value>
+          <value>SKIP_SYSCLK_INIT</value>
+          <value>DATA_SECTION_IS_CACHEABLE=1</value>
           <value>SDK_DEBUGCONSOLE=1</value>
           <value>MCUX_META_BUILD</value>
           <value>CPU_MIMXRT1062DVL6B</value>
+          <value>MIMXRT1062_SERIES</value>
         </option>
         <option id="com.crt.advproject.gcc.fpu" type="enum">
           <value>com.crt.advproject.gcc.fpu.fpv5dp.hard</value>
@@ -78,8 +82,8 @@
         <option id="com.crt.advproject.link.memory.sections" type="stringList">
           <value>isd=*(CodeQuickAccess);region=SRAM_ITC;type=.data</value>
           <value>isd=*(DataQuickAccess);region=SRAM_DTC;type=.data</value>
-          <value>isd=*(NonCacheable.init);region=SRAM_DTC;type=.data</value>
-          <value>isd=*(NonCacheable);region=SRAM_DTC;type=.bss</value>
+          <value>isd=*(NonCacheable.init);region=NCACHE_REGION;type=.data</value>
+          <value>isd=*(NonCacheable);region=NCACHE_REGION;type=.bss</value>
         </option>
         <option id="com.crt.advproject.link.fpu" type="enum">
           <value>com.crt.advproject.link.fpu.fpv5dp.hard</value>
@@ -88,7 +92,7 @@
           <value>true</value>
         </option>
         <option id="com.crt.advproject.link.memory.heapAndStack" type="string">
-          <value>&amp;Heap:Default;Default;0x1000&amp;Stack:SRAM_DTC;End;0x1000</value>
+          <value>&amp;Heap:Default;Default;0x1000&amp;Stack:Default;Default;Default</value>
         </option>
         <option id="gnu.c.link.option.other" type="stringList">
           <value>-no-warn-rwx-segments</value>
@@ -212,6 +216,9 @@
     </source>
     <source path="." project_relative_path="doc" type="doc">
       <files mask="example_board_readme.md"/>
+    </source>
+    <source path="." project_relative_path="doc" type="doc">
+      <files mask="examples_shared_readme.md"/>
     </source>
   </example>
 </ksdk:examples>

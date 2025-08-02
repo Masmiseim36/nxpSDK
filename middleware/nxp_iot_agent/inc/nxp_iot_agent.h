@@ -1,5 +1,5 @@
 /* 
- * Copyright 2018-2024 NXP
+ * Copyright 2018-2025 NXP
  *
  * SPDX-License-Identifier: Apache-2.0
  * 
@@ -104,6 +104,9 @@ iot_agent_status_t iot_agent_register_datastore(
  * Note that the ownership for the datastore is not transferred.
  * The caller is responsible that the datastore is freed at the 
  * appropriate time.
+ *
+ * @param[in] ctx: Context for the iot_agent.
+ * @param[in] datastore Datastore to be set.
  */
 iot_agent_status_t iot_agent_set_edgelock2go_datastore(iot_agent_context_t* ctx,
 	iot_agent_datastore_t* datastore);
@@ -334,6 +337,9 @@ void iot_agent_print_status_report(const nxp_iot_UpdateStatusReport* status_repo
 
 /** @brief Get the index of a datastore based on its identifier.
  *
+ * @param[in] ctx: The context of the agent.
+ * @param[in] id: The datastore ID.
+ * @param[out] index: The output index.
  * @retval IOT_STATUS_SUCCESS: A datastore with the \p id was found 
  *   in the agent's context and its index is returned in \p index.
  */
@@ -345,6 +351,9 @@ iot_agent_status_t iot_agent_get_datastore_index_by_id(
 
 /** @brief Get a reference to a datastore based on its identifier.
  *
+ * @param[in] ctx: The context of the agent.
+ * @param[in] id: The datastore ID.
+ * @param[out] datastore: The output datastore.
  * @retval IOT_STATUS_SUCCESS: A datastore with the \p id was found 
  *   in the agent's context and a pointer to it is returned in \p datastore.
  */
@@ -355,7 +364,10 @@ iot_agent_status_t iot_agent_get_datastore_by_id(
 
 
 /** @brief Get the index of a keystore based in its identifier.
- *
+ * 
+ * @param[in] ctx: The context of the agent.
+ * @param[in] id: The keystore ID.
+ * @param[out] index: The output index.
  * @retval IOT_STATUS_SUCCESS: A keystore with the \p id was found 
  *   in the agent's context and its index is returned in \p index.
  */
@@ -367,6 +379,9 @@ iot_agent_status_t iot_agent_get_keystore_index_by_id(
 
 /** @brief Get a reference to a keystore based on its identifier.
  *
+ * @param[in] ctx: The context of the agent.
+ * @param[in] id: The datastore ID.
+ * @param[out] keystore: The output keystore.
  * @retval IOT_STATUS_SUCCESS: A keystore with the \p id was found 
  *   in the agent's context and a pointer to it is returned in \p keystore.
  */

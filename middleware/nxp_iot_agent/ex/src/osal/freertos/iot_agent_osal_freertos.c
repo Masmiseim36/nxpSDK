@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 NXP
+ * Copyright 2024-2025 NXP
  *
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -18,7 +18,7 @@
 #include "nxp_iot_agent_macros.h"
 #include "nxp_iot_agent_time.h"
 
-#if NXP_IOT_AGENT_HAVE_SSS
+#if defined(NXP_IOT_AGENT_HAVE_SSS) && (NXP_IOT_AGENT_HAVE_SSS == 1)
 #include <nxLog_App.h>
 #endif
 
@@ -32,13 +32,13 @@
 #endif
 
 // The TFM implementation comes with the NXP SDK which includes the app.h
-#if NXP_IOT_AGENT_HAVE_PSA_IMPL_TFM && !defined(__ZEPHYR__)
+#if (defined(NXP_IOT_AGENT_HAVE_PSA_IMPL_TFM) && (NXP_IOT_AGENT_HAVE_PSA_IMPL_TFM == 1)) && !defined(__ZEPHYR__)
 #include "app.h"
 #endif
 
 #define EX_SSS_BOOT_RTOS_STACK_SIZE (1024*8)
 
-#if NXP_IOT_AGENT_HAVE_PSA_IMPL_TFM
+#if defined(NXP_IOT_AGENT_HAVE_PSA_IMPL_TFM) && (NXP_IOT_AGENT_HAVE_PSA_IMPL_TFM == 1)
 #ifdef NXP_IOT_AGENT_ENABLE_LITE
 extern void config_mbedtls_threading_alt(void);
 #else
@@ -59,7 +59,7 @@ static agent_start_task_args_t agent_start_args;
 
 void iot_agent_freertos_bm(void)
 {
-#if NXP_IOT_AGENT_HAVE_SSS
+#if defined(NXP_IOT_AGENT_HAVE_SSS) && (NXP_IOT_AGENT_HAVE_SSS == 1)
 	ex_sss_main_ksdk_bm();
 #else
 	BOARD_InitHardware();
@@ -68,7 +68,7 @@ void iot_agent_freertos_bm(void)
 
 void iot_agent_freertos_boot_rtos_task(void)
 {
-#if NXP_IOT_AGENT_HAVE_SSS
+#if defined(NXP_IOT_AGENT_HAVE_SSS) && (NXP_IOT_AGENT_HAVE_SSS == 1)
     ex_sss_main_ksdk_boot_rtos_task();
 #endif
 }
@@ -100,14 +100,14 @@ static void agent_start_task_in_loop(void *args) {
 
 	iot_agent_status_t agent_status = IOT_AGENT_SUCCESS;
 
-#if IOT_AGENT_TIME_MEASUREMENT_ENABLE
+#if defined(IOT_AGENT_TIME_MEASUREMENT_ENABLE) && (IOT_AGENT_TIME_MEASUREMENT_ENABLE == 1)
 	iot_agent_time_context_t iot_agent_demo_boot_time = { 0 };
 	iot_agent_time_init_measurement(&iot_agent_demo_boot_time);
 #endif
 
 	iot_agent_freertos_boot_rtos_task();
 
-#if NXP_IOT_AGENT_HAVE_PSA_IMPL_TFM
+#if defined(NXP_IOT_AGENT_HAVE_PSA_IMPL_TFM) && (NXP_IOT_AGENT_HAVE_PSA_IMPL_TFM == 1)
 #ifdef NXP_IOT_AGENT_ENABLE_LITE
 	config_mbedtls_threading_alt();
 #else
@@ -121,7 +121,7 @@ static void agent_start_task_in_loop(void *args) {
 
 	const TickType_t xDelay = 2U * 1000U / portTICK_PERIOD_MS;
 
-#if IOT_AGENT_TIME_MEASUREMENT_ENABLE
+#if defined(IOT_AGENT_TIME_MEASUREMENT_ENABLE) && (IOT_AGENT_TIME_MEASUREMENT_ENABLE == 1)
 	iot_agent_time_conclude_measurement(&iot_agent_demo_boot_time);
 	IOT_AGENT_INFO("Performance timing: DEVICE_INIT_TIME : %lums", iot_agent_time_get_measurement(&iot_agent_demo_boot_time));
 	 iot_agent_time_free_measurement_ctx(&iot_agent_demo_boot_time);
@@ -168,7 +168,7 @@ iot_agent_status_t iot_agent_osal_start_task(agent_start_task_t agent_start_task
 		(tskIDLE_PRIORITY),
 		NULL) != pdPASS) {
 		IOT_AGENT_INFO("Task creation failed!.\r\n");
-		while (1);
+		while (true);
 	}
 
 	/* Run RTOS */

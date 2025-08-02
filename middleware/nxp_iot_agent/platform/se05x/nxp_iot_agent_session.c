@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2022,2024 NXP
+ * Copyright 2018-2022,2024-2025 NXP
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -72,8 +72,11 @@ iot_agent_status_t iot_agent_session_init(int argc, const char *argv[], ex_sss_b
         SSS_SUCCESS_OR_EXIT_MSG("ex_sss_key_store_and_object_init failed with 0x%04x", sss_status);
     }
 
-    ex_sss_boot_open_host_session(pCtx);
-    SSS_SUCCESS_OR_EXIT_MSG("ex_sss_boot_open_host_session failed with 0x%04x", sss_status);
+    sss_status = ex_sss_boot_open_host_session(pCtx);
+	if (kStatus_SSS_Success != sss_status) {
+		IOT_AGENT_TRACE("ex_sss_boot_open_host_session return a failure: this can occur when the host session was open \
+in the ex_sss_boot_open which is needed for SCP03 Authentication");
+	}
     agent_status = IOT_AGENT_SUCCESS;
 
 exit:

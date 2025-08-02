@@ -17,6 +17,7 @@ SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_DEBUG " \
     -D__STARTUP_CLEAR_BSS \
     -DMCUXPRESSO_SDK \
     -DCPU_MIMXRT1011DAE5A \
+    -DMIMXRT1011_SERIES \
     -g \
     -mthumb \
     -mcpu=cortex-m7 \
@@ -29,6 +30,7 @@ SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_RELEASE " \
     -D__STARTUP_CLEAR_BSS \
     -DMCUXPRESSO_SDK \
     -DCPU_MIMXRT1011DAE5A \
+    -DMIMXRT1011_SERIES \
     -mthumb \
     -mcpu=cortex-m7 \
     ${FPU} \
@@ -39,9 +41,11 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG " \
     -DDEBUG \
     -DXIP_BOOT_HEADER_ENABLE=1 \
     -DXIP_EXTERNAL_FLASH=1 \
+    -D__STARTUP_CLEAR_BSS \
     -DMCUX_META_BUILD \
     -DMCUXPRESSO_SDK \
     -DCPU_MIMXRT1011DAE5A \
+    -DMIMXRT1011_SERIES \
     -DSERIAL_PORT_TYPE_UART=1 \
     -DUSE_RTOS=0 \
     -g \
@@ -64,9 +68,11 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE " \
     -DNDEBUG \
     -DXIP_BOOT_HEADER_ENABLE=1 \
     -DXIP_EXTERNAL_FLASH=1 \
+    -D__STARTUP_CLEAR_BSS \
     -DMCUX_META_BUILD \
     -DMCUXPRESSO_SDK \
     -DCPU_MIMXRT1011DAE5A \
+    -DMIMXRT1011_SERIES \
     -DSERIAL_PORT_TYPE_UART=1 \
     -DUSE_RTOS=0 \
     -Os \
@@ -89,6 +95,7 @@ SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG " \
     -DMCUX_META_BUILD \
     -DMCUXPRESSO_SDK \
     -DCPU_MIMXRT1011DAE5A \
+    -DMIMXRT1011_SERIES \
     -DSERIAL_PORT_TYPE_UART=1 \
     -DUSE_RTOS=0 \
     -g \
@@ -113,6 +120,7 @@ SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE " \
     -DMCUX_META_BUILD \
     -DMCUXPRESSO_SDK \
     -DCPU_MIMXRT1011DAE5A \
+    -DMIMXRT1011_SERIES \
     -DSERIAL_PORT_TYPE_UART=1 \
     -DUSE_RTOS=0 \
     -Os \
@@ -143,9 +151,6 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_DEBUG " \
     -mapcs \
     -Wl,--gc-sections \
     -Wl,-static \
-    -Wl,-z \
-    -Wl,muldefs \
-    -Wl,-Map=output.map \
     -Wl,--print-memory-usage \
     -mcpu=cortex-m7 \
     ${FPU} \
@@ -165,9 +170,6 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE " \
     -mapcs \
     -Wl,--gc-sections \
     -Wl,-static \
-    -Wl,-z \
-    -Wl,muldefs \
-    -Wl,-Map=output.map \
     -Wl,--print-memory-usage \
     -mcpu=cortex-m7 \
     ${FPU} \

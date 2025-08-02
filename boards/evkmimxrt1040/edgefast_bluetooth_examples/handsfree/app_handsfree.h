@@ -30,5 +30,5 @@ void hfp_enable_clip( uint8_t enable);
 void hfp_multiparty_call_option(uint8_t option);
 void hfp_trigger_codec_connection(void);
 int app_hfp_hf_discover(struct bt_conn *conn, uint8_t channel);
-
+void hfp_hf_query_list_current_calls(void);
 #endif /* __APPL_PERIPHERAL_HFP_HF_MAIN_H__ */

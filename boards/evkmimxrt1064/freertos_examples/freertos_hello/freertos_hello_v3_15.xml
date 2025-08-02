@@ -25,6 +25,7 @@
     <definition extID="component.lpuart_adapter.MIMXRT1064"/>
     <definition extID="middleware.freertos-kernel.MIMXRT1064"/>
     <definition extID="middleware.freertos-kernel.heap_4.MIMXRT1064"/>
+    <definition extID="middleware.freertos-kernel.extension.MIMXRT1064"/>
     <definition extID="middleware.freertos-kernel.config.MIMXRT1064"/>
     <definition extID="iar"/>
     <definition extID="mdk"/>
@@ -34,7 +35,7 @@
     <definition extID="com.crt.advproject.config.exe.debug"/>
     <definition extID="com.crt.advproject.config.exe.release"/>
   </externalDefinitions>
-  <example id="evkmimxrt1064_freertos_hello" name="freertos_hello" device_core="core0_MIMXRT1064xxxxA" dependency="platform.drivers.xip_board.evkmimxrt1064.MIMXRT1064 platform.drivers.clock.MIMXRT1064 platform.drivers.iomuxc.MIMXRT1064 CMSIS_Include_core_cm.MIMXRT1064 device.MIMXRT1064_CMSIS.MIMXRT1064 device.MIMXRT1064_system.MIMXRT1064 device.MIMXRT1064_startup.MIMXRT1064 platform.drivers.xip_device.MIMXRT1064 platform.drivers.cache_armv7_m7.MIMXRT1064 platform.drivers.common.MIMXRT1064 platform.drivers.dcdc_1.MIMXRT1064 platform.drivers.gpc_1.MIMXRT1064 platform.drivers.igpio.MIMXRT1064 platform.drivers.lpuart.MIMXRT1064 platform.drivers.pmu.MIMXRT1064 platform.drivers.src.MIMXRT1064 platform.utilities.assert_lite.MIMXRT1064 platform.utilities.misc_utilities.MIMXRT1064 utility.str.MIMXRT1064 utility.debug_console_lite.MIMXRT1064 component.lpuart_adapter.MIMXRT1064 middleware.freertos-kernel.MIMXRT1064 middleware.freertos-kernel.heap_4.MIMXRT1064 middleware.freertos-kernel.config.MIMXRT1064" category="freertos_examples">
+  <example id="evkmimxrt1064_freertos_hello" name="freertos_hello" device_core="core0_MIMXRT1064xxxxA" dependency="platform.drivers.xip_board.evkmimxrt1064.MIMXRT1064 platform.drivers.clock.MIMXRT1064 platform.drivers.iomuxc.MIMXRT1064 CMSIS_Include_core_cm.MIMXRT1064 device.MIMXRT1064_CMSIS.MIMXRT1064 device.MIMXRT1064_system.MIMXRT1064 device.MIMXRT1064_startup.MIMXRT1064 platform.drivers.xip_device.MIMXRT1064 platform.drivers.cache_armv7_m7.MIMXRT1064 platform.drivers.common.MIMXRT1064 platform.drivers.dcdc_1.MIMXRT1064 platform.drivers.gpc_1.MIMXRT1064 platform.drivers.igpio.MIMXRT1064 platform.drivers.lpuart.MIMXRT1064 platform.drivers.pmu.MIMXRT1064 platform.drivers.src.MIMXRT1064 platform.utilities.assert_lite.MIMXRT1064 platform.utilities.misc_utilities.MIMXRT1064 utility.str.MIMXRT1064 utility.debug_console_lite.MIMXRT1064 component.lpuart_adapter.MIMXRT1064 middleware.freertos-kernel.MIMXRT1064 middleware.freertos-kernel.heap_4.MIMXRT1064 middleware.freertos-kernel.extension.MIMXRT1064 middleware.freertos-kernel.config.MIMXRT1064" category="freertos_examples">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -55,6 +56,7 @@
           <value>SDK_DEBUGCONSOLE=1</value>
           <value>MCUX_META_BUILD</value>
           <value>CPU_MIMXRT1064DVL6A</value>
+          <value>MIMXRT1064_SERIES</value>
           <value>SDK_OS_FREE_RTOS</value>
         </option>
         <option id="com.crt.advproject.link.memory.sections" type="stringList">
@@ -209,6 +211,9 @@
     </source>
     <source path="." project_relative_path="doc" type="doc">
       <files mask="example_board_readme.md"/>
+    </source>
+    <source path="." project_relative_path="doc" type="doc">
+      <files mask="examples_shared_readme.md"/>
     </source>
   </example>
 </ksdk:examples>

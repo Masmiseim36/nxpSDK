@@ -130,7 +130,6 @@ Step 7. Now the CDC driver should be installed successfully.
 - LPCXpresso55S69
 - EVK-MIMXRT1064
 - MIMXRT685-AUD-EVK
-- FRDM-MCXA276
 - LPCXpresso51U68
 - LPCXpresso54S018
 - [LPCXpresso55S16](../../_boards/lpcxpresso55s16/usb_examples/usb_device_composite_cdc_msc/example_board_readme.md)

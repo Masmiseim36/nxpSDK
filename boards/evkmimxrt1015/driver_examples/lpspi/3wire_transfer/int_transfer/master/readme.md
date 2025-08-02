@@ -17,3 +17,4 @@ This example uses the transactional API in LPSPI driver.
 - [FRDM-KE15Z](../../../../../_boards/frdmke15z/driver_examples/lpspi/3wire_transfer/int_transfer/master/example_board_readme.md)
 - [FRDM-KE17Z](../../../../../_boards/frdmke17z/driver_examples/lpspi/3wire_transfer/int_transfer/master/example_board_readme.md)
 - [FRDM-KE17Z512](../../../../../_boards/frdmke17z512/driver_examples/lpspi/3wire_transfer/int_transfer/master/example_board_readme.md)
+- [FRDM-MCXE247](../../../../../_boards/frdmmcxe247/driver_examples/lpspi/3wire_transfer/int_transfer/master/example_board_readme.md)

@@ -69,8 +69,8 @@ int main(void)
  */
 static void init_freemaster_can(void)
 {
-    flexcan_config_t flexcanConfig;
-    flexcan_timing_config_t timing_config;
+    flexcan_config_t flexcanConfig = { 0 };
+    flexcan_timing_config_t timing_config = { 0 };
     uint32_t canSrcClock = CLOCK_GetPllFreq(kCLOCK_PllUsb1) / 8 / 3;
 
     /* Init FlexCAN module. */

@@ -354,19 +354,15 @@ static void _FMSTR_SendResponse(FMSTR_BPTR pResponse, FMSTR_SIZE nLength, FMSTR_
 static FMSTR_BOOL _FMSTR_TxCan(void)
 {
     FMSTR_U8 ch;
-    FMSTR_SIZE8 i, len, maxLen;
+    FMSTR_SIZE8 i, len = fmstr_nTxTodo, maxLen;
 
-    /* Sanity check the transmission context */
-    if (fmstr_wFlags.flg.bTxActive == 0U || fmstr_nTxTodo == 0U || fmstr_nTxTodo > sizeof(fmstr_pCommBuffer))
+    if (fmstr_wFlags.flg.bTxActive == 0U || fmstr_nTxTodo == 0U)
     {
         return FMSTR_FALSE;
     }
-    
-    /* Number of bytes to be transmitted now. */
-    len = fmstr_nTxTodo;
 
    /* Get max possible single-frame length (ctl byte and payload) */
-    maxLen = _FMSTR_GetMaxCANFrameLen((FMSTR_SIZE8)(len+1U));
+    maxLen = _FMSTR_GetMaxCANFrameLen(len+1);
     /* Do not count the ctl byte now, it will be added later */
     maxLen--;
 
@@ -394,7 +390,7 @@ static FMSTR_BOOL _FMSTR_TxCan(void)
 
     /* For CAN-FD lengths >7 leave the LEN bits in the control byte zero to
        indicate that the real length shall be obtained from physical DLC value */
-    if (len <= 7U)
+    if (len <= 7)
     {
         fmstr_uTxCtlByte |= (FMSTR_U8)len;
     }
@@ -514,14 +510,14 @@ static FMSTR_BOOL _FMSTR_RxCan(FMSTR_SIZE8 rxLen)
     len = (FMSTR_SIZE8)(ctl & FMSTR_CANCTL_LEN_MASK);
 
     /* zero length means to get it from the physiscal layer */
-    if(len == 0U && rxLen > 0U)
+    if(len == 0 && rxLen > 0)
     {
         /* note: the rxLen may be up to 64 for CAN-FD. */
-        len = (FMSTR_SIZE8)(rxLen-1U);
+        len = rxLen - 1;
     }
 
     /* sanity check of the real received frame length */
-    if (len == 0U || len >= rxLen)
+    if (len == 0 || len >= rxLen)
     {
         /* invalid frame length, re-start receiving */
         fmstr_nRxErr = FMSTR_STC_CANMSGERR;

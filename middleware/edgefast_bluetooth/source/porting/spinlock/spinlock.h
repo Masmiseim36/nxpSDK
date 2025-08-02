@@ -1,5 +1,5 @@
 /*
- * Copyright 2023,2025 NXP
+ * Copyright 2023 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -9,10 +9,6 @@
 #define __EDGEFAST_BT_BLE_SPINLOCK_H__
 
 #include <system_c.h>
-
-#ifdef __cplusplus
-extern "C" {
-#endif
 
 struct k_spinlock
 {
@@ -42,9 +38,5 @@ static ALWAYS_INLINE void k_spin_unlock(struct k_spinlock *l,
     __DSB();
 	EnableGlobalIRQ(key.key);
 }
-
-#ifdef __cplusplus
-}
-#endif
 
 #endif /* __EDGEFAST_BT_BLE_SPINLOCK_H__ */

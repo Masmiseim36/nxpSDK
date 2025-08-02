@@ -82,7 +82,7 @@ NOTE. the mentioned "command complete event" can be found in HCI log, U-DISK sho
 
 Here is the log of rf_test_mode application:
 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 >> help
 
 @bt> help
@@ -115,7 +115,9 @@ bt.init
 Settings Loaded
 
 >>
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 To start the transmitter test packets for Bluetooth Classic:
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 @bt> bt_test.tx_test 01 01 01 01 0D 03 0F 00 00 00 00 00 00 04
 
 rx_on_start default set to=80
@@ -147,11 +149,11 @@ num_pkt= 0 0 0 0
 tx_pwr= 4
 
 @bt> API returned success...
-
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Observe the DM1 packets in over the air logs. 
 
 To stop the transmitter test packets for Bluetooth Classic:
-
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 @bt>  bt_test.tx_test FF 01 01 01 0D 03 0F 00 00 00 00 00 00 04
 
 rx_on_start default set to=80
@@ -187,17 +189,19 @@ tx_pwr= 4
 
 API returned success...
 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Observe that DM1 packets are now stopped transmitting in over the air logs. 
 
 To perform HCI reset 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 @bt> bt_test.reset
 API returned success...
 >>
 >>
-
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 To start the receiving test packets for Bluetooth Classic:
 
-
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 @bt> bt_test.rx_test 01 01 01 03 10 00 00 00 0F 00 20 4E F6 EC 1F 26 00
 test_scenario= 1
 
@@ -226,9 +230,9 @@ ec
 report_err_pkt= 0
 
 @bt> API returned success...
-
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 To stop receiving test packets for Bluetooth Classic:
-
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 @bt> bt_test.rx_test FF 01 01 03 10 00 00 00 0F 00 20 4E F6 EC 1F 26 00
 
 test_scenario= ff
@@ -259,11 +263,11 @@ ec
 report_err_pkt= 0
 
 API returned success...
-
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Observe the packet count in vendor-specific command complete event.  
 
 To start the transmitter test packets for Bluetooth LE:
-
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 @bt> le_test.tx_test 01 FF 00 01
 
 tx_channel= 1
@@ -275,15 +279,17 @@ pkt_payload= 0
 phy= 1
 
 @bt> API returned success...
-
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Observe the transmitter test packets in over the air logs.
 
 To stop the transmitter test packets for Bluetooth LE:
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 @bt> le_test.end_test
 API returned success...
 >>
-
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 To start the receiving test packets for Bluetooth LE:
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 @bt> le_test.rx_test 01 01 00
 rx_channel= 1
 
@@ -296,11 +302,13 @@ modulation_index= 0
 le_test.end_test
 API returned success...
 >>
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Observe the packet count in command complete event. 
 
 
 ## Running a2dp
 The commands are as follow:
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 +---"a2dp": a2dp Bluetooth A2DP shell commands
     +---"register_sink_ep": register_sink_ep <select codec.
 			1:SBC
@@ -327,25 +335,27 @@ The commands are as follow:
     +---"start": start "start the default selected ep"
     +---"stop": stop "stop the default selected ep"
     +---"send_media": send_media <second> "send media data to the default selected ep"
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Test flow:
-1 Create ACL connection between two devices (A and B).
-2 In device B, input "a2dp.register_sink_ep x" to initialize sink endpoint.
-3 In device A, input "a2dp.register_source_ep x" to initialize source endpoint.
-4 In device A, input "a2dp.connect" to create a2dp connection with the default ACL connection.
-5 In device A, input "a2dp.configure" to configure the a2dp connection.
-6 In device A, input "a2dp.start" to start the a2dp media.
-7 In device A, input "a2dp.send_media x" to send media data for x seconds.
-8 For other commands:
-   8.1 "a2dp.disconnect" is used to disconnect the a2dp.
-   8.2 "a2dp.discover_peer_eps" is used to discover peer device's endpoints.
-   8.3 "a2dp.get_registered_eps" is used to get the local registered endpoints.
-   8.4 "a2dp.set_default_ep" is used to set the default selected endpoint.
-   8.5 "a2dp.deconfigure" de-configure the endpoint, then it can be configured again.
-   8.6 "a2dp.stop" stops media.
-   8.7 "a2dp.send_delay_report" send delay report.
+1. Create ACL connection between two devices (A and B).
+2. In device B, input "a2dp.register_sink_ep x" to initialize sink endpoint.
+3. In device A, input "a2dp.register_source_ep x" to initialize source endpoint.
+4. In device A, input "a2dp.connect" to create a2dp connection with the default ACL connection.
+5. In device A, input "a2dp.configure" to configure the a2dp connection.
+6. In device A, input "a2dp.start" to start the a2dp media.
+7. In device A, input "a2dp.send_media x" to send media data for x seconds.
+8. For other commands:
+   1. "a2dp.disconnect" is used to disconnect the a2dp.
+   2. "a2dp.discover_peer_eps" is used to discover peer device's endpoints.
+   3. "a2dp.get_registered_eps" is used to get the local registered endpoints.
+   4. "a2dp.set_default_ep" is used to set the default selected endpoint.
+   5. "a2dp.deconfigure" de-configure the endpoint, then it can be configured again.
+   6. "a2dp.stop" stops media.
+   7. "a2dp.send_delay_report" send delay report.
 
 ## Running avrcp
 The commands are as follow:
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 +---"avrcp": avrcp Bluetooth AVRCP shell commands
     +---"init_ct": init_ct [none]
     +---"init_tg": init_tg [none]
@@ -386,36 +396,38 @@ The commands are as follow:
     +---"ca_init_r": ca_init_r "Init cover art responder"
     +---"ca_connect": ca_connect "create cover art connection"
     +---"ca_test": ca_test "cover art test all cases"
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Test flow:
-1 Create ACL connection between two devices (A and B).
-2 In device B, input "avrcp.init_tg" to initialize Target.
-3 In device A, input "avrcp.init_ct" to initialize Controller.
-4 In device B, input "avrcp.ca_init_r" to initialize Cover Art responder.
-5 In device A, input "avrcp.ca_init_i" to initialize Cover Art Initiator.
-6 In device A, input "avrcp.ctl_connect" to create AVRCP Control connection.
-7 In device A, input "avrcp.brow_connect" to create AVRCP Browsing connection.
-8 In device A, input "avrcp.ct_test_all" to test all the cases.
-9 In device A, input "avrcp.ct_reg_ntf" to register notification.
-10 In device A, input "avrcp.ca_connect" to create AVRCP Cover Art connection.
-11 In device B, input "avrcp.tg_notify" to notify.
-12 In device A, input "avrcp.ca_test" to test all the cover art commands.
-13 For other commands:
-   13.1 In device A, input "avrcp.ct_list_all_cases" to list all the test cases.
-   13.2 In device A, input "avrcp.ct_test_case x" to test one selected case.
+1. Create ACL connection between two devices (A and B).
+2. In device B, input "avrcp.init_tg" to initialize Target.
+3. In device A, input "avrcp.init_ct" to initialize Controller.
+4. In device B, input "avrcp.ca_init_r" to initialize Cover Art responder.
+5. In device A, input "avrcp.ca_init_i" to initialize Cover Art Initiator.
+6. In device A, input "avrcp.ctl_connect" to create AVRCP Control connection.
+7. In device A, input "avrcp.brow_connect" to create AVRCP Browsing connection.
+8. In device A, input "avrcp.ct_test_all" to test all the cases.
+9. In device A, input "avrcp.ct_reg_ntf" to register notification.
+10. In device A, input "avrcp.ca_connect" to create AVRCP Cover Art connection.
+11. In device B, input "avrcp.tg_notify" to notify.
+12. In device A, input "avrcp.ca_test" to test all the cover art commands.
+13. For other commands:
+    1. In device A, input "avrcp.ct_list_all_cases" to list all the test cases.
+    2. In device A, input "avrcp.ct_test_case x" to test one selected case.
 
 ## Running BR/EDR L2CAP
 Test L2CAP basic mode
-1 Create ACL connection between two devices (A and B).
-2 In device A and B, input "br.l2cap-register <psm>" to register one psm (for example: br.l2cap-register 1001).
-3 In device A, input "br.l2cap-connect <psm>" to create l2cap connection (for example: br.l2cap-connect 1001).
-4 In device A, input "br.l2cap-send x" to send data.
-5 In device A, input "br.l2cap-disconnect" to disconnect the l2cap connection.
+1. Create ACL connection between two devices (A and B).
+2. In device A and B, input "br.l2cap-register <psm>" to register one psm (for example: br.l2cap-register 1001).
+3. In device A, input "br.l2cap-connect <psm>" to create l2cap connection (for example: br.l2cap-connect 1001).
+4. In device A, input "br.l2cap-send x" to send data.
+5. In device A, input "br.l2cap-disconnect" to disconnect the l2cap connection.
+
 Teset L2CAP Retransmission and Streaming Mode
-1 Create ACL connection between two devices (A and B).
-2 In device A and B, input "br.l2cap-register-mode <psm>" to register one psm (for example: br.l2cap-register-mode 1001).
-3 In device A, input "br.l2cap-connect <psm>" to create l2cap connection (for example: br.l2cap-connect 1001).
-4 In device A, input "br.l2cap-send x" to send data.
-5 In device A, input "br.l2cap-disconnect" to disconnect the l2cap connection.
+1. Create ACL connection between two devices (A and B).
+2. In device A and B, input "br.l2cap-register-mode <psm>" to register one psm (for example: br.l2cap-register-mode 1001).
+3. In device A, input "br.l2cap-connect <psm>" to create l2cap connection (for example: br.l2cap-connect 1001).
+4. In device A, input "br.l2cap-send x" to send data.
+5. In device A, input "br.l2cap-disconnect" to disconnect the l2cap connection.
 
 Here is a example of BLE pairing and bonding,
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -503,8 +515,6 @@ GATT central role side,
    such as "gatt.subscribe f e ind".
 6. If the indication is indicated, read DB hash, press "gatt.read <handle> [offset]" or "gatt.read-uuid <UUID> [start handle] [end handle]", 
    such as "gatt.read 13", or "gatt.read-uuid 2b2a".
-
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -628,13 +638,12 @@ RFCOMM Client Side,
 4. After rfcomm connection is created, input "rfcomm.send <count of sending>" to send data
 5. After rfcomm connection is created, input "rfcomm.disconnect" to disconnect with peer device
 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
 ## Running BR/EDR PBAP
 Note: Only 1 PBAP connection is supported in shell project.
-shell project supports PCE and PSE.
 
+shell project supports PCE and PSE.
 The commands are as follow:
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 +---"pbap": pbap Bluetooth pbap shell commands
     +---"pce": pce [none]
         +---"register": register [none]
@@ -678,6 +687,7 @@ The commands are as follow:
     +---"pse": pse [none]
         +---"register": register [none]
         +---"disconnect": disconnect [none]
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Here is an example of run PCE, and PSE is a mobile phone or a board running a PSE application.
 
@@ -760,6 +770,7 @@ Note: Only 1 MAP MAS and MNS connection is supported in shell project.
 shell project supports MCE and MSE.
 
 The commands are as follow:
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 +---"map": map Bluetooth MAP shell commands
     +---"mce": mce [none]
         +---"register": register [none]
@@ -860,6 +871,7 @@ The commands are as follow:
         +---"send_event": send_event 
                input application parameters(mandatory).
                1: -mii : [MASInstanceID (0 - 255)].
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Here is an example of run MCE, and MSE is a mobile phone or a board running a MSE application.
 
@@ -971,6 +983,172 @@ Note:
 2. This example acting as MSE doesn't support all application parameters and only supports to parse/send the part of application parameters from/to MCE.
 3. This example acting as MSE is based on FatFs RAM disk. There is a limited memory to store the incoming message from MCE.
 
+## HCI command concurrency test
+Before run shell project, please set the following macros and rebuild shell project:
+- CONFIG_BT_HCI_TEST = 1
+- DEBUG_CONSOLE_TX_RELIABLE_ENABLE = 1
+1. Initialize the Host, press "bt.init",
+2. Press "bt.hci_test" to run hci command concurrency test, bellow message will not be printed:
+   HCI command concurrency test start.
+   High_task READ_SUPPORTED_COMMANDS Start
+   low_task READ_LOCAL_FEATURES Start
+   High_task READ_SUPPORTED_COMMANDS Done
+   High_task READ_LOCAL_FEATURES Start
+   ......
+3. Make sure all commands are successfully transmitted to the controller
+   without any of them being lost or overwritten.
+
+## Running ATT msg is processed before the ATT is initialized test case.
+Before run shell project, please set the following macros and rebuild shell project:
+- CONFIG_BT_ATT_TEST = 1
+1. Initialize the Host, press "bt.init",
+2. Advertising, press "bt.advertise on",
+3. After the connection is established, bellow message will not be printed:
+   @bt> ATT request received
+   Connected: F4:60:E2:88:6D:5B (public)
+   ATT request start process......
+4. There is an "ATT request received" message before the "Connected" message and an
+   "ATT request start process" message after it, also make sure there is no disconnection happening.
+
+## BR+BLE testes
+Notes: The nRF Connect APP can be used to create BLE connection for the follow BLE connection.
+
+- BLE is derived from br/edr (tested with Phone)
+  - use the "prj-br-ble-conns.conf" config file to build the shell demo and run.
+  - bt.init
+  - bt.clear all
+  - a2dp.register_sink_ep 1
+  - br.pscan on
+  - br.iscan on
+  - bt.advertise on
+  - Scan and connect to the br/edr from Phone, verify that the paring is triggered.
+  - connect to the ble from Phone, and verify that the BLE doesn't trigger pairing and security success.
+  - clear the keys in the Phone
+  - Scan and connect to the br/edr from Phone again, verify that the paring is triggered.
+  - connect to the ble from Phone, and verify that the BLE doesn't trigger pairing and security success.
+  - Power down DUT and power up again, and do the same shell cmds initialization.
+  - input bt.bond to check whether the bond information exist.
+  - Scan and connect to the br/edr from Phone again, verify that the paring is not triggered.
+  - connect to the ble from Phone, and verify that the BLE doesn't trigger pairing and security success.
+  - execute `bt.clear all` on one side.
+  - connect to the ble from Phone, and verify that the BLE security fail with "key miss".
+- BLE is derived from br/edr (board to board)
+  - use the "prj-br-ble-conns.conf" config file to build the shell demo and run.
+    - bt.init
+    - bt.clear all
+    - bt.auth status
+    - a2dp.register_sink_ep 1
+    - br.pscan on
+    - br.iscan on
+    - bt.advertise on
+  - execute the follow shell cmds on the board A.
+    - bt.init
+    - bt.clear all
+    - bt.auth status
+    - a2dp.register_source_ep 1
+  - Scan and connect to the br/edr from A to B, execute `a2dp.connect` on A, verify that the paring is triggered.
+  - connect to the ble from A to B, and verify that the BLE doesn't trigger pairing and security success.
+  - clear the keys in the A
+  - Scan and connect to the br/edr from Phone from A to B again, verify that the paring is triggered.
+  - connect to the ble from A to B, execute `bt.security 2` on A, verify that the BLE doesn't trigger pairing and security success.
+  - Power down DUT and power up again, and do the same shell cmds initialization.
+  - input bt.bond to check whether the bond information exist.
+  - Scan and connect to the br/edr from A to B again, verify that the paring is not triggered.
+  - connect to the ble from A to B, execute `bt.security 2` on A, verify that the BLE doesn't trigger pairing and security success.
+  - execute `bt.clear all` on one side.
+  - connect to the ble from A to B, execute `bt.security 2` on A, verify that the BLE security fail with "key miss".
+- BR is derived from BLE  (tested with Phone)
+  - use the "prj-br-ble-conns.conf" config file to build the shell demo and run.
+  - bt.init
+  - bt.clear all
+  - a2dp.register_sink_ep 1
+  - br.pscan on
+  - br.iscan on
+  - bt.advertise on
+  - connect to the ble from Phone, and pair.
+  - Connect br/edr from Phone.
+  - Connect br/edr from DUT: If the Phone side can't find the br/edr device to click to connect, input br.discovery on to find the Phone, then br.connect xx:xx:xx:xx:xx:xx to connect with the Phone, then a2dp.connect to connect a2dp.
+  - verify that the br/edr doesn't trigger pairing and security success.
+  - clear the keys in the Phone
+  - connect to the ble from Phone, and pair again.
+  - Connect br/edr from Phone: Scan and connect to the br/edr from Phone again,
+  - Connect br/edr from DUT: If the Phone side can't find the br/edr device to click to connect, input br.discovery on to find the Phone, then br.connect xx:xx:xx:xx:xx:xx to connect with the Phone, then a2dp.connect to connect a2dp.
+  - verify that the br/edr doesn't trigger pairing and security success again.
+  - Power down DUT and power up again, and do the same shell cmds initialization.
+  - input bt.bond to check whether the bond information exist.
+  - connect to the ble from Phone, and pair again, verify that the paring is not triggered.
+  - Connect br/edr from Phone: Scan and connect to the br/edr from Phone again,
+  - Connect br/edr from DUT: If the Phone side can't find the br/edr device to click to connect, input br.discovery on to find the Phone, then br.connect xx:xx:xx:xx:xx:xx to connect with the Phone, then a2dp.connect to connect a2dp.
+  - bt.clear all
+  - connect to the ble from Phone, and verify that the BLE security fail.
+- BR is derived from BLE  (board to board)
+  - use the "prj-br-ble-conns.conf" config file to build the shell demo and run.
+  - use the "prj-br-ble-conns.conf" config file to build the shell demo and run.
+    - bt.init
+    - bt.clear all
+    - bt.auth status
+    - a2dp.register_sink_ep 1
+    - br.pscan on
+    - br.iscan on
+    - bt.advertise on
+  - execute the follow shell cmds on the board A.
+    - bt.init
+    - bt.clear all
+    - bt.auth status
+    - a2dp.register_source_ep 1
+  - connect to the ble from A to B, and pair (bt.security 2).
+  - Connect br/edr from A to B.
+  - execute `a2dp.connect` on A to connect a2dp.
+  - verify that the br/edr doesn't trigger pairing and security success.
+  - clear the keys in the A.
+  - connect to the ble from Phone, and pair again (bt.security 2).
+  - Connect br/edr from A to B.
+  - execute `a2dp.connect` on A to connect a2dp.
+  - verify that the br/edr doesn't trigger pairing and security success again.
+  - Power down DUT and power up again, and do the same shell cmds initialization.
+  - input bt.bond to check whether the bond information exist.
+  - connect to the ble from A to B, and  again, verify that the paring is not triggered.
+  - Connect br/edr from Phone.
+  - execute `a2dp.connect` on A to connect a2dp.
+  - bt.clear all
+  - connect to the ble from A to B, execute `bt.security 2` on A, verify that the BLE security fail with "key miss".
+
+## bt_unpair test
+- use the "prj-br-ble-conns.conf" config file to build the shell demo and run.
+- create br connection, ble connection or both of them and pair.
+- execute `bt.clear all` on both side.
+- create br connection, ble connection or both of them gain, check the pairing is triggered again.
+- execute `bt.clear all` on both side.
+- power down and power up DUT.
+- create br connection, ble connection or both of them gain, check the pairing is triggered again.
+- execute `bt.clear all` on one side.
+- create br connection, ble connection or both of them gain, check the pairing is triggered again or the "key miss" error is printed.
+
+## swith role test
+- use the "prj-br-ble-conns.conf" config file to build the shell demo and run.
+- execute the follow shell cmds on the board B.
+  - bt.init
+  - bt.clear all
+  - bt.auth status
+  - a2dp.register_sink_ep 1
+  - bt.pscan on
+  - bt.iscan on
+  - bt.advertise on
+- execute the follow shell cmds on the board A.
+  - bt.init
+  - bt.clear all
+  - bt.auth status
+  - a2dp.register_source_ep 1
+- create br connection from board A to board B.
+- execute `br.get-role` on A to confirm the role is Central now.
+- execute `br.switch-role 1` on A, swith role as Peripheral.
+- execute `br.get-role` on A to confirm the role is Peripheral now.
+- execute `a2dp.connect` on A or B.
+- verify the pairing success, and the ble ltk is derived too here.
+- connect ble connection from A to B.
+- execute `bt.security 2` on A.
+- If the ble pairing triggered, it fails. Otherwise it success.
+
 ## Supported Boards
 - [EVKB-IMXRT1050](../../_boards/evkbimxrt1050/edgefast_bluetooth_examples/shell/example_board_readme.md)
 - [MIMXRT1170-EVKB](../../_boards/evkbmimxrt1170/edgefast_bluetooth_examples/shell/example_board_readme.md)
@@ -985,3 +1163,4 @@ Note:
 - [MIMXRT685-AUD-EVK](../../_boards/mimxrt685audevk/edgefast_bluetooth_examples/shell/example_board_readme.md)
 - [MIMXRT700-EVK](../../_boards/mimxrt700evk/edgefast_bluetooth_examples/shell/example_board_readme.md)
 - [RD-RW612-BGA](../../_boards/rdrw612bga/edgefast_bluetooth_examples/shell/example_board_readme.md)
+- [FRDM-MCXN947](../../_boards/frdmmcxn947/edgefast_bluetooth_examples/shell/example_board_readme.md)

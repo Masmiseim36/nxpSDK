@@ -1654,6 +1654,17 @@ usb_status_t USB_DeviceAudioProcessTerminalRequest(uint32_t audioCommand,
                 /* no action */
             }
             break;
+        case USB_DEVICE_AUDIO_TE_GET_CUR_CONNECTOR_CONTROL:
+            if (USB_AUDIO_RECORDER_CONTROL_INPUT_TERMINAL_ID == entityOrEndpoint)
+            {
+                /* set proper value for recorderConnectorStatus based on the practical usage scenario */
+                g_deviceComposite->audioUnified.recorderConnectorStatus.bNrChannels          = AUDIO_IN_FORMAT_CHANNELS;
+                g_deviceComposite->audioUnified.recorderConnectorStatus.bmChannelConfig      = 0x03U;
+                g_deviceComposite->audioUnified.recorderConnectorStatus.iChannelNames        = 0x0U;
+                *buffer = (uint8_t *)&g_deviceComposite->audioUnified.recorderConnectorStatus;
+                *length = sizeof(g_deviceComposite->audioUnified.recorderConnectorStatus);
+            }
+            break;
 #else
         case USB_DEVICE_AUDIO_EP_GET_CUR_SAMPLING_FREQ_CONTROL:
             *buffer = g_deviceComposite->audioUnified.curSamplingFrequency;
@@ -2457,6 +2468,11 @@ usb_status_t USB_DeviceAudioUnifiedInit(usb_device_composite_struct_t *deviceCom
     g_deviceComposite->audioUnified.volumeControlRange.wMIN          = 0x8001U;
     g_deviceComposite->audioUnified.volumeControlRange.wMAX          = 0x7FFFU;
     g_deviceComposite->audioUnified.volumeControlRange.wRES          = 1U;
+
+    /* set proper value for recorderConnectorStatus based on the practical usage scenario */
+    g_deviceComposite->audioUnified.recorderConnectorStatus.bNrChannels         = 0U;
+    g_deviceComposite->audioUnified.recorderConnectorStatus.bmChannelConfig     = 0U;
+    g_deviceComposite->audioUnified.recorderConnectorStatus.iChannelNames       = 0U;
 #endif
     g_deviceComposite->audioUnified.tdReadNumberPlay              = 0;
     g_deviceComposite->audioUnified.tdWriteNumberPlay             = 0;

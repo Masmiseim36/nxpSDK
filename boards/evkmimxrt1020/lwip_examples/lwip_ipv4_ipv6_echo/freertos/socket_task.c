@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2023 NXP
+ * Copyright 2022-2023, 2025 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -26,6 +26,7 @@ typedef struct
 
 volatile int run;
 static example_sockinfo_t s_sockinfo;
+static shell_handle_t s_shellHandle;
 
 static int ip_port_str_to_sockaddr(const char *ip_str,
                                    const char *port_str,
@@ -40,12 +41,12 @@ static int ip_port_str_to_sockaddr(const char *ip_str,
     port = atoi(port_str);
     if (port > 0xffff)
     {
-        PRINTF("Port '%s' is not lower than 65536\r\n", port_str);
+        SHELL_Printf(s_shellHandle, "Port '%s' is not lower than 65536\r\n", port_str);
         return -1;
     }
     if (port <= 0)
     {
-        PRINTF("Port '%s' is not greater than 0\r\n", port_str);
+        SHELL_Printf(s_shellHandle, "Port '%s' is not greater than 0\r\n", port_str);
         return -1;
     }
 
@@ -73,7 +74,7 @@ static int ip_port_str_to_sockaddr(const char *ip_str,
 
         if (ret != 1)
         {
-            PRINTF("'%s' is not valid IPv4 nor IPv6 address.\r\n", ip_str);
+            SHELL_Printf(s_shellHandle, "'%s' is not valid IPv4 nor IPv6 address.\r\n", ip_str);
             return -1;
         }
 
@@ -100,7 +101,7 @@ static int set_receive_timeout(int sck)
     int err = lwip_setsockopt(sck, SOL_SOCKET, SO_RCVTIMEO, &timeout, sizeof(timeout));
     if (err)
     {
-        PRINTF("Setting socket receive timeout failed (%d).\r\n", err);
+        SHELL_Printf(s_shellHandle, "Setting socket receive timeout failed (%d).\r\n", err);
     }
 
     return err;
@@ -114,7 +115,7 @@ static void echo_udp(int sck)
     struct sockaddr_storage sender_addr;
     socklen_t sender_addr_len = sizeof(sender_addr);
 
-    PRINTF("Use end command to return...");
+    SHELL_Printf(s_shellHandle, "Use end command to return...");
     shell_task_set_mode("ECHO_UDP>> ");
 
     err = set_receive_timeout(sck);
@@ -130,7 +131,7 @@ static void echo_udp(int sck)
         if (bytes > 0)
         {
             sendto(sck, &buf, bytes, 0, (struct sockaddr *)&sender_addr, sender_addr_len);
-            PRINTF("Datagram carrying %dB sent back.\r\n", bytes);
+            SHELL_Printf(s_shellHandle, "Datagram carrying %dB sent back.\r\n", bytes);
         }
         else if (!run)
         {
@@ -143,7 +144,7 @@ static void echo_udp(int sck)
         }
         else
         {
-            PRINTF("Socket terminated. (errno=%d).\r\n", errno);
+            SHELL_Printf(s_shellHandle, "Socket terminated. (errno=%d).\r\n", errno);
             return;
         }
     }
@@ -154,8 +155,8 @@ static void echo_loop_tcp(int sck)
     int err;
     uint8_t buf[1500];
 
-    PRINTF("\r\nEchoing data. Use end command to return...");
-    PRINTF("\r\n");
+    SHELL_Printf(s_shellHandle, "\r\nEchoing data. Use end command to return...");
+    SHELL_Printf(s_shellHandle, "\r\n");
 
     err = set_receive_timeout(sck);
     if (err)
@@ -171,11 +172,11 @@ static void echo_loop_tcp(int sck)
             bytes = write(sck, &buf, bytes);
             if (bytes >= 0)
             {
-                PRINTF("%dB sent back.\r\n", bytes);
+                SHELL_Printf(s_shellHandle, "%dB sent back.\r\n", bytes);
             }
             else
             {
-                PRINTF("write() failed (errno=%d)\r\n", errno);
+                SHELL_Printf(s_shellHandle, "write() failed (errno=%d)\r\n", errno);
             }
         }
         else if (!run)
@@ -189,7 +190,7 @@ static void echo_loop_tcp(int sck)
         }
         else
         {
-            PRINTF("Connection terminated. (errno=%d).\r\n", errno);
+            SHELL_Printf(s_shellHandle, "Connection terminated. (errno=%d).\r\n", errno);
             return;
         }
     }
@@ -215,7 +216,7 @@ static void tcp_connect_thread(void *arg)
 
     int err;
 
-    PRINTF("Connecting...\r\n");
+    SHELL_Printf(s_shellHandle, "Connecting...\r\n");
     if (sockinfo->af == AF_INET)
     {
         err = connect(sockinfo->sck, (struct sockaddr *)&sockinfo->ipv4, sizeof(sockinfo->ipv4));
@@ -226,11 +227,11 @@ static void tcp_connect_thread(void *arg)
     }
     if (err)
     {
-        PRINTF("Connecting failed. errno=%d\r\n", errno);
+        SHELL_Printf(s_shellHandle, "Connecting failed. errno=%d\r\n", errno);
     }
     else
     {
-        PRINTF("Connected.\r\n");
+        SHELL_Printf(s_shellHandle, "Connected.\r\n");
         shell_task_set_mode("ECHO_TCP_CLIENT>> ");
         echo_loop_tcp(sockinfo->sck);
     }
@@ -263,11 +264,11 @@ static void tcp_listen_thread(void *arg)
     }
     if (ret < 0)
     {
-        PRINTF("bind() failed (errno=%d)\r\n", errno);
+        SHELL_Printf(s_shellHandle, "bind() failed (errno=%d)\r\n", errno);
     }
     else
     {
-        PRINTF("Waiting for incoming connection.  Use end command to return...");
+        SHELL_Printf(s_shellHandle, "Waiting for incoming connection.  Use end command to return...");
         shell_task_set_mode("ECHO_TCP_SERVER>> ");
         listen(sockinfo->sck, 0); // zero to use the smallest connection backlog possible (see tcp_backlog_set)
         fcntl(sockinfo->sck, F_SETFL, O_NONBLOCK);
@@ -290,7 +291,7 @@ static void tcp_listen_thread(void *arg)
             }
             else
             {
-                PRINTF("\r\nAccepted connection\r\n");
+                SHELL_Printf(s_shellHandle, "\r\nAccepted connection\r\n");
 
                 // Create thread that serves this connection
                 sys_thread_t thread =
@@ -299,7 +300,7 @@ static void tcp_listen_thread(void *arg)
 
                 if (thread == NULL)
                 {
-                    PRINTF("Can not create TCP connection server thread\r\n");
+                    SHELL_Printf(s_shellHandle, "Can not create TCP connection server thread\r\n");
                     close(sockinfo->sck_accepted[accepted_sck_cnt]);
                     sockinfo->sck_accepted[accepted_sck_cnt] = -1;
                 }
@@ -331,21 +332,28 @@ static void udp_thread(void *arg)
     }
     if (ret < 0)
     {
-        PRINTF("bind() failed (errno=%d)\r\n", errno);
+        SHELL_Printf(s_shellHandle, "bind() failed (errno=%d)\r\n", errno);
     }
     else
     {
-        PRINTF("Waiting for datagrams\r\n");
+        SHELL_Printf(s_shellHandle, "Waiting for datagrams\r\n");
         echo_udp(sockinfo->sck);
     }
 
     finish_thread(sockinfo->sck);
 }
 
+void socket_task_set_shell(shell_handle_t shell_handle)
+{
+    s_shellHandle = shell_handle;
+}
+
 int socket_task_init(int is_tcp, const char *ip_str, const char *port_str)
 {
     example_sockinfo_t *sockinfo = &s_sockinfo;
     void (*thread_func_ptr)(void *);
+
+    assert(s_shellHandle != NULL);
 
     const int is_server = (ip_str == NULL);
     sockinfo->is_server = is_server;
@@ -358,11 +366,11 @@ int socket_task_init(int is_tcp, const char *ip_str, const char *port_str)
 
     sockinfo->sck_type = (is_tcp) ? SOCK_STREAM : SOCK_DGRAM;
 
-    PRINTF("Creating new socket.\r\n");
+    SHELL_Printf(s_shellHandle, "Creating new socket.\r\n");
     sockinfo->sck = socket(sockinfo->af, sockinfo->sck_type, 0);
     if (sockinfo->sck < 0)
     {
-        PRINTF("Socket creation failed. (%d)\r\n", sockinfo->sck);
+        SHELL_Printf(s_shellHandle, "Socket creation failed. (%d)\r\n", sockinfo->sck);
         return -1;
     }
 
@@ -388,7 +396,7 @@ int socket_task_init(int is_tcp, const char *ip_str, const char *port_str)
 
     if (thread == NULL)
     {
-        PRINTF("Can not create socket thread\r\n");
+        SHELL_Printf(s_shellHandle, "Can not create socket thread\r\n");
         close(sockinfo->sck);
         sockinfo->sck = -1;
     }
@@ -398,20 +406,25 @@ int socket_task_init(int is_tcp, const char *ip_str, const char *port_str)
 
 void socket_task_terminate(void)
 {
+    assert(s_shellHandle != NULL);
+
     run = 0;
-    PRINTF("\r\nAll socket tasks terminated\r\n");
+    SHELL_Printf(s_shellHandle, "\r\nAll socket tasks terminated\r\n");
 }
 
 void socket_task_print_ips(void)
 {
     struct netif *netif_;
+
+    assert(s_shellHandle != NULL);
+
     NETIF_FOREACH(netif_)
     {
-        PRINTF("************************************************\r\n");
-        PRINTF(" Interface name   : %s%d\r\n", netif_->name, netif_->num);
-        PRINTF(" IPv4 Address     : %s\r\n", ip4addr_ntoa(netif_ip4_addr(netif_)));
-        PRINTF(" IPv4 Subnet mask : %s\r\n", ip4addr_ntoa(netif_ip4_netmask(netif_)));
-        PRINTF(" IPv4 Gateway     : %s\r\n", ip4addr_ntoa(netif_ip4_gw(netif_)));
+        SHELL_Printf(s_shellHandle, "************************************************\r\n");
+        SHELL_Printf(s_shellHandle, " Interface name   : %s%d\r\n", netif_->name, netif_->num);
+        SHELL_Printf(s_shellHandle, " IPv4 Address     : %s\r\n", ip4addr_ntoa(netif_ip4_addr(netif_)));
+        SHELL_Printf(s_shellHandle, " IPv4 Subnet mask : %s\r\n", ip4addr_ntoa(netif_ip4_netmask(netif_)));
+        SHELL_Printf(s_shellHandle, " IPv4 Gateway     : %s\r\n", ip4addr_ntoa(netif_ip4_gw(netif_)));
         for (int i = 0; i < LWIP_IPV6_NUM_ADDRESSES; i++)
         {
             const char *str_ip = "-";
@@ -419,8 +432,8 @@ void socket_task_print_ips(void)
             {
                 str_ip = ip6addr_ntoa(netif_ip6_addr(netif_, i));
             }
-            PRINTF(" IPv6 Address%d    : %s\r\n", i, str_ip);
+            SHELL_Printf(s_shellHandle, " IPv6 Address%d    : %s\r\n", i, str_ip);
         }
-        PRINTF("************************************************\r\n");
+        SHELL_Printf(s_shellHandle, "************************************************\r\n");
     }
 }

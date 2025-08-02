@@ -131,10 +131,6 @@
       <files mask="CMakeLists.txt"/>
       <files mask="flags.cmake"/>
       <files mask="config.cmake"/>
-      <files mask="build_sdram_debug.bat"/>
-      <files mask="build_sdram_debug.sh"/>
-      <files mask="build_sdram_release.bat"/>
-      <files mask="build_sdram_release.sh"/>
       <files mask="build_debug.bat"/>
       <files mask="build_debug.sh"/>
       <files mask="build_release.bat"/>
@@ -145,11 +141,9 @@
     </source>
     <source path="." project_relative_path="source" type="other" toolchain="iar">
       <files mask="evkcmimxrt1060.mac"/>
-      <files mask="evkcmimxrt1060_sdram_init.mac"/>
     </source>
     <source path="." project_relative_path="source" type="configuration" toolchain="mdk">
       <files mask="evkcmimxrt1060_ram.ini"/>
-      <files mask="evkcmimxrt1060_sdram_init.ini"/>
     </source>
     <source path="." project_relative_path="source" type="src">
       <files mask="flexspi_hyper_flash_polling_transfer.c"/>
@@ -157,15 +151,12 @@
     </source>
     <source path="iar" project_relative_path="MIMXRT1062/iar" type="linker" toolchain="iar">
       <files mask="MIMXRT1062xxxxx_ram.icf"/>
-      <files mask="MIMXRT1062xxxxx_sdram.icf"/>
     </source>
     <source path="armgcc" project_relative_path="MIMXRT1062/armgcc" type="linker" toolchain="armgcc">
       <files mask="MIMXRT1062xxxxx_ram.ld"/>
-      <files mask="MIMXRT1062xxxxx_sdram.ld"/>
     </source>
     <source path="mdk" project_relative_path="MIMXRT1062/mdk" type="linker" toolchain="mdk">
       <files mask="MIMXRT1062xxxxx_ram.scf"/>
-      <files mask="MIMXRT1062xxxxx_sdram.scf"/>
     </source>
     <source path="." project_relative_path="board" type="c_include">
       <files mask="board.h"/>
@@ -195,6 +186,9 @@
     </source>
     <source path="." project_relative_path="doc" type="doc">
       <files mask="example_board_readme.md"/>
+    </source>
+    <source path="." project_relative_path="doc" type="doc">
+      <files mask="examples_shared_readme.md"/>
     </source>
   </example>
 </ksdk:examples>

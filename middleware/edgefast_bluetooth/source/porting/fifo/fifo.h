@@ -1,5 +1,5 @@
 /*
- * Copyright 2024-2025 NXP
+ * Copyright 2024 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -9,10 +9,6 @@
 #define __EDGEFAST_BT_BLE_FIFO_H__
 
 #include <system_c.h>
-
-#ifdef __cplusplus
-extern "C" {
-#endif
 
 struct k_fifo {
 	struct k_queue _queue;
@@ -252,9 +248,5 @@ struct k_fifo {
 		Z_FIFO_INITIALIZER(name)
 
 /** @} */
-
-#ifdef __cplusplus
-}
-#endif
 
 #endif /* __EDGEFAST_BT_BLE_FIFO_H__ */

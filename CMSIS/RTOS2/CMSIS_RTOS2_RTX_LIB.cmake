@@ -36,7 +36,7 @@ message("${CMAKE_CURRENT_LIST_FILE} component is included.")
     )
     endif()
 
-        if(CONFIG_TOOLCHAIN STREQUAL iar AND CONFIG_CORE STREQUAL cm7f)
+        if(CONFIG_TOOLCHAIN STREQUAL iar AND (CONFIG_CORE STREQUAL cm4f OR CONFIG_CORE STREQUAL cm7f))
     target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE
     -Wl,--start-group
           ${CMAKE_CURRENT_LIST_DIR}/RTX/Library/IAR/RTX_V7MF.a
@@ -52,7 +52,7 @@ message("${CMAKE_CURRENT_LIST_FILE} component is included.")
     )
     endif()
 
-        if((CONFIG_TOOLCHAIN STREQUAL armgcc OR CONFIG_TOOLCHAIN STREQUAL mcux) AND CONFIG_CORE STREQUAL cm7f)
+        if((CONFIG_TOOLCHAIN STREQUAL armgcc OR CONFIG_TOOLCHAIN STREQUAL mcux) AND (CONFIG_CORE STREQUAL cm4f OR CONFIG_CORE STREQUAL cm7f))
     target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE
     -Wl,--start-group
           ${CMAKE_CURRENT_LIST_DIR}/RTX/Library/GCC/libRTX_V7MF.a
@@ -68,7 +68,7 @@ message("${CMAKE_CURRENT_LIST_FILE} component is included.")
     )
     endif()
 
-        if(CONFIG_TOOLCHAIN STREQUAL mdk AND CONFIG_CORE STREQUAL cm7f)
+        if(CONFIG_TOOLCHAIN STREQUAL mdk AND (CONFIG_CORE STREQUAL cm4f OR CONFIG_CORE STREQUAL cm7f))
     target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE
     -Wl,--start-group
           ${CMAKE_CURRENT_LIST_DIR}/RTX/Library/ARM/RTX_V7MF.lib

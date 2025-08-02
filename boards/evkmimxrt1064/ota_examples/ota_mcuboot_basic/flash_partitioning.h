@@ -19,8 +19,21 @@ The memory is allocated as follows:
 */
 
 #define BOOT_FLASH_BASE                 0x70000000
+
+#if defined(CONFIG_BOOT_CUSTOM_DEVICE_SETUP)
+/* Layout setup from Kconfig */
+
+#define BOOT_FLASH_ACT_APP              CONFIG_BOOT_FLASH_ACT_APP_ADDRESS
+#define BOOT_FLASH_CAND_APP             CONFIG_BOOT_FLASH_CAND_APP_ADDRESS
+
+#if CONFIG_ENCRYPT_XIP_ENABLE
+#define BOOT_FLASH_EXEC_APP             CONFIG_BOOT_FLASH_EXEC_APP_ADDRESS
+#define BOOT_FLASH_ENC_META             CONFIG_BOOT_FLASH_ENC_META_ADDRESS
+#endif
   
-#if !defined(CONFIG_ENCRYPT_XIP_EXT_ENABLE)
+/* Default layout setup */
+
+#elif !defined(CONFIG_ENCRYPT_XIP_EXT_ENABLE)
 /* Overwrite-only, swap or direct-xip mode with flash remapping */
 
 #define BOOT_FLASH_ACT_APP              0x70040000

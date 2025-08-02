@@ -1,5 +1,5 @@
 /* 
- * Copyright 2024 NXP
+ * Copyright 2024-2025 NXP
  *
  * SPDX-License-Identifier: Apache-2.0
  * 
@@ -9,24 +9,26 @@
 
 #include <nxp_iot_agent_common.h>
 #include <nxp_iot_agent_status.h>
+#include <nxp_iot_agent_keystore.h>
 #include <pb.h>
 #include <pb_encode.h>
 #include <pb_decode.h>
 
-#if NXP_IOT_AGENT_HAVE_SSS
+#if defined(NXP_IOT_AGENT_HAVE_SSS) && (NXP_IOT_AGENT_HAVE_SSS == 1)
 #include <fsl_sss_api.h>
 #endif
 
-#if NXP_IOT_AGENT_HAVE_HOSTCRYPTO_OPENSSL
+#if defined(NXP_IOT_AGENT_HAVE_HOSTCRYPTO_OPENSSL) && (NXP_IOT_AGENT_HAVE_HOSTCRYPTO_OPENSSL == 1)
 #include <openssl/ossl_typ.h>
 #include <openssl/engine.h>
+#include <network_openssl.h>
 #endif
 
 pb_ostream_t ostream_from_socket(void* network_context);
 pb_istream_t istream_from_socket(void* network_context);
 
 
-#if NXP_IOT_AGENT_HAVE_SSS
+#if defined(NXP_IOT_AGENT_HAVE_SSS) && (NXP_IOT_AGENT_HAVE_SSS == 1)
 /**@ brief Start of the range of keys to use for keys of cloud services provisioned by EdgeLock 2GO. */
 #define EDGELOCK2GO_MANAGED_SERVICE_KEY_MIN	0x80000000U
 
@@ -53,7 +55,7 @@ pb_istream_t istream_from_socket(void* network_context);
 #define EDGELOCK2GO_ATTESTATION_KEY_ECC         0xF0000012U
 #define EDGELOCK2GO_ATTESTATION_KEY_RSA         0xF0000010U
 
-#elif NXP_IOT_AGENT_HAVE_PSA
+#elif defined(NXP_IOT_AGENT_HAVE_PSA) && (NXP_IOT_AGENT_HAVE_PSA == 1)
 
 // TODO: Agree on all of these ids!
 
@@ -66,7 +68,7 @@ pb_istream_t istream_from_socket(void* network_context);
 /**
  * @brief The keyid on the PSA API to use for connecting to the EdgeLock 2GO cloud service.
  */
-#if NXP_IOT_AGENT_HAVE_PSA_IMPL_SIMUL || defined(NXP_IOT_AGENT_ENABLE_LITE)
+#if (defined(NXP_IOT_AGENT_HAVE_PSA_IMPL_SIMUL) && (NXP_IOT_AGENT_HAVE_PSA_IMPL_SIMUL == 1)) || defined(NXP_IOT_AGENT_ENABLE_LITE)
 #define EDGELOCK2GO_KEYID_ECC              0x3fff0201U
 #else
 #define EDGELOCK2GO_KEYID_ECC              0x7FFF816CU
@@ -107,29 +109,42 @@ pb_istream_t istream_from_socket(void* network_context);
 #endif
 
 
-#if NXP_IOT_AGENT_HAVE_HOSTCRYPTO_OPENSSL
+#if defined(NXP_IOT_AGENT_HAVE_HOSTCRYPTO_OPENSSL) && (NXP_IOT_AGENT_HAVE_HOSTCRYPTO_OPENSSL == 1)
 
-/*! @brief Create an EC_KEY key reference.
- *
- * @param[in]     keyStore Key store context
- * @param[in]     keyObject Reference to a key and it's properties. This must contain a valid key handle!
- * @param[in]     nid  NID of the OID of the curve name
- * @param[out]    out: Resulting key reference object
+/*! @brief Create an EC key reference.
+* The function is used when OpenSSL crypto is selected to generate the Open SSL key reference using the key
+* stored in the keystore. The key reference provided as outuput depends on the used OpenSSL varsion
+* - Version < 3.x.x: EVP_PKEY
+* - Version >= 3.x.x: OSSL_PARAM
+* This is due to the fact that creation of the EVP_PKEY in the OpeanSSL 3.x.x requires OpenSSL to have a
+* session open with Se05x; to avoid continuous opening/closing of session the EVP_PKEY will not be created
+* in this function which requires a session between EL2GO Agent and the Se05x
 
- * @retval IOT_AGENT_SUCCESS upon success
- * @retval IOT_AGENT_ERROR_MEMORY upon allocation of memory failure
- * @retval IOT_AGENT_ERROR_CRYPTO_ENGINE_FAILED upon crypto operation failure
- * @retval IOT_AGENT_FAILURE upon failure
- */
+* @param[in]     keyStore Key store context
+* @param[in]     keyObject Reference to a key and it's properties. This must contain a valid key handle!
+* @param[in]    nid  NID of the OID of the curve name
+* @param[out]   gen_key_ref Resulting key reference object
 
+* @retval IOT_AGENT_SUCCESS upon success
+* @retval IOT_AGENT_ERROR_MEMORY upon allocation of memory failure
+* @retval IOT_AGENT_ERROR_CRYPTO_ENGINE_FAILED upon crypto operation failure
+* @retval IOT_AGENT_FAILURE upon failure
+*/
 iot_agent_status_t iot_agent_utils_gen_key_ref_ecc(sss_key_store_t *keyStore, sss_object_t *keyObject,
-	int nid, EVP_PKEY* pkey);
+	int nid, iot_agent_keystore_key_ref_t* gen_key_ref);
 
-/*! @brief Create an RSA_KEY key reference.
+/*! @brief Create an RSA key reference.
+* The function is used when OpenSSL crypto is selected to generate the Open SSL key reference using the key
+* stored in the keystore. The key reference provided as outuput depends on the used OpenSSL varsion
+* - Version < 3.x.x: EVP_PKEY
+* - Version >= 3.x.x: OSSL_PARAM
+* This is due to the fact that creation of the EVP_PKEY in the OpeanSSL 3.x.x requires OpenSSL to have a
+* session open with Se05x; to avoid continuous opening/closing of session the EVP_PKEY will not be created
+* in this function which requires a session between EL2GO Agent and the Se05xx
 *
 * @param[in]     keyStore Key store context
 * @param[in]     keyObject Reference to a key and it's properties. This must contain a valid key handle!
-* @param[out]    out Resulting key reference object
+* @param[out]    gen_key_ref Resulting key reference object
 
 * @retval IOT_AGENT_SUCCESS upon success
 * @retval IOT_AGENT_ERROR_MEMORY upon allocation of memory failure
@@ -137,38 +152,9 @@ iot_agent_status_t iot_agent_utils_gen_key_ref_ecc(sss_key_store_t *keyStore, ss
 * @retval IOT_AGENT_FAILURE upon failure
 */
 iot_agent_status_t iot_agent_utils_gen_key_ref_rsa(sss_key_store_t *keyStore, sss_object_t *keyObject,
-	EVP_PKEY* pkey);
+	iot_agent_keystore_key_ref_t* gen_key_ref);
 
-/*! @brief Create a key reference.
-*
-* @param[in]     keyStore Key store context
-* @param[in]     keyObject Reference to a key and it's properties
-* @param[out]    out Resulting key reference object
-
-* @retval IOT_AGENT_SUCCESS upon success
-* @retval IOT_AGENT_ERROR_MEMORY upon allocation of memory failure
-* @retval IOT_AGENT_ERROR_CRYPTO_ENGINE_FAILED upon crypto operation failure
-* @retval IOT_AGENT_FAILURE upon failure
-*/
-iot_agent_status_t iot_agent_utils_gen_key_ref(sss_key_store_t *keyStore, sss_object_t *keyObject, const uint32_t keyid, EVP_PKEY* pkey);
-
-/*! @brief Create a PEM file containing a key reference.
-*
-* @param[in] keyStore Key store context
-* @param[in] keyObject Reference to a key and it's properties
-* @param[in] keyId Key id of key object
-* @param[in] filename Name of the PEM file to be created
-
-* @retval IOT_AGENT_SUCCESS upon success
-* @retval IOT_AGENT_ERROR_MEMORY upon allocation of memory failure
-* @retval IOT_AGENT_ERROR_FILE_SYSTEM upon failure while creating or writing key file
-* @retval IOT_AGENT_FAILURE upon failure
-*/
-iot_agent_status_t iot_agent_utils_write_key_ref_pem(sss_key_store_t *keyStore,
-	sss_object_t *keyObject, const uint32_t keyid, const char* filename);
-
-#endif // NXP_IOT_AGENT_HAVE_HOSTCRYPTO_OPENSSL
-
+#endif
 
 #ifdef NXP_IOT_AGENT_ENABLE_LITE
 /**

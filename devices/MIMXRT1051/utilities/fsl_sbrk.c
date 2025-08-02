@@ -1,7 +1,6 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2019, 2022, 2024 NXP
- * All rights reserved.
+ * Copyright 2016-2019, 2022, 2024-2025 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -36,7 +35,7 @@ void * _sbrk(ptrdiff_t incr)
 
     prev_heap_end = heap_end;
 
-    if ((uintptr_t)heap_end + (uintptr_t)incr > (uintptr_t)(&heap_limit))
+    if ((&heap_limit) - heap_end < incr)
     {
         errno = ENOMEM;
 

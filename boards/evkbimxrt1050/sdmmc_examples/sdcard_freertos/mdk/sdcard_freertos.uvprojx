@@ -328,7 +328,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../mcux_config.h -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
-              <Define>DEBUG, FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, DEBUG_CONSOLE_TRANSFER_NON_BLOCKING, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1052DVL6B, OSA_USED, USE_RTOS=1, SD_ENABLED=1, SDK_OS_FREE_RTOS</Define>
+              <Define>DEBUG, FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, DEBUG_CONSOLE_TRANSFER_NON_BLOCKING, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1052DVL6B, MIMXRT1052_SERIES, OSA_USED, USE_RTOS=1, SD_ENABLED=1, SDK_OS_FREE_RTOS</Define>
               <Undefine/>
               <IncludePath>..;../../../xip;../../../../../devices/MIMXRT1052/drivers;../../../../../CMSIS/Core/Include;../../../../../CMSIS/Core/Include/m-profile;../../../../../devices/MIMXRT1052;../../../../../devices/MIMXRT1052/periph;../../../../../devices/MIMXRT1052/xip;../../../../../devices/MIMXRT1052/utilities/debug_console_lite;../../../../../components/lists;../../../../../devices/MIMXRT1052/utilities/str;../../../../../components/gpio;../../../../../components/uart;../../../../../components/osa;../../../../../middleware/sdmmc/common;../../../../../middleware/sdmmc/osa;../../../../../middleware/sdmmc/sd;../../../../../middleware/sdmmc/host/usdhc;../../../../../rtos/freertos/freertos-kernel/include;../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../rtos/freertos/freertos-kernel/template</IncludePath>
             </VariousControls>
@@ -346,7 +346,7 @@
             <uClangAs>1</uClangAs>
             <VariousControls>
               <MiscControls/>
-              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1052DVL6B, OSA_USED</Define>
+              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1052DVL6B, MIMXRT1052_SERIES, OSA_USED</Define>
               <Undefine/>
               <IncludePath>..;../../../xip;../../../../../devices/MIMXRT1052/drivers;../../../../../CMSIS/Core/Include;../../../../../CMSIS/Core/Include/m-profile;../../../../../devices/MIMXRT1052;../../../../../devices/MIMXRT1052/periph;../../../../../devices/MIMXRT1052/xip;../../../../../devices/MIMXRT1052/utilities/debug_console_lite;../../../../../components/lists;../../../../../devices/MIMXRT1052/utilities/str;../../../../../components/gpio;../../../../../components/uart;../../../../../components/osa;../../../../../middleware/sdmmc/common;../../../../../middleware/sdmmc/osa;../../../../../middleware/sdmmc/sd;../../../../../middleware/sdmmc/host/usdhc;../../../../../rtos/freertos/freertos-kernel/include;../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../rtos/freertos/freertos-kernel/template</IncludePath>
             </VariousControls>
@@ -1106,11 +1106,6 @@
           <GroupName>component/osa</GroupName>
           <Files>
             <File>
-              <FileName>fsl_os_abstraction.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/osa/fsl_os_abstraction.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_os_abstraction_free_rtos.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../components/osa/fsl_os_abstraction_free_rtos.h</FilePath>
@@ -1119,6 +1114,11 @@
               <FileName>fsl_os_abstraction_free_rtos.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../components/osa/fsl_os_abstraction_free_rtos.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/osa/fsl_os_abstraction.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1409,6 +1409,11 @@
               <FileName>example_board_readme.md</FileName>
               <FileType>5</FileType>
               <FilePath>../example_board_readme.md</FilePath>
+            </File>
+            <File>
+              <FileName>examples_shared_readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../examples_shared_readme.md</FilePath>
             </File>
           </Files>
         </Group>
@@ -1739,7 +1744,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../mcux_config.h -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
-              <Define>DEBUG, USE_SDRAM=1, SKIP_SYSCLK_INIT=1, DATA_SECTION_IS_CACHEABLE=1, FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, DEBUG_CONSOLE_TRANSFER_NON_BLOCKING, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1052DVL6B, OSA_USED, USE_RTOS=1, SD_ENABLED=1, SDK_OS_FREE_RTOS</Define>
+              <Define>DEBUG, USE_SDRAM=1, SKIP_SYSCLK_INIT=1, DATA_SECTION_IS_CACHEABLE=1, FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, DEBUG_CONSOLE_TRANSFER_NON_BLOCKING, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1052DVL6B, MIMXRT1052_SERIES, OSA_USED, USE_RTOS=1, SD_ENABLED=1, SDK_OS_FREE_RTOS</Define>
               <Undefine/>
               <IncludePath>..;../../../xip;../../../../../devices/MIMXRT1052/drivers;../../../../../CMSIS/Core/Include;../../../../../CMSIS/Core/Include/m-profile;../../../../../devices/MIMXRT1052;../../../../../devices/MIMXRT1052/periph;../../../../../devices/MIMXRT1052/xip;../../../../../devices/MIMXRT1052/utilities/debug_console_lite;../../../../../components/lists;../../../../../devices/MIMXRT1052/utilities/str;../../../../../components/gpio;../../../../../components/uart;../../../../../components/osa;../../../../../middleware/sdmmc/common;../../../../../middleware/sdmmc/osa;../../../../../middleware/sdmmc/sd;../../../../../middleware/sdmmc/host/usdhc;../../../../../rtos/freertos/freertos-kernel/include;../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../rtos/freertos/freertos-kernel/template</IncludePath>
             </VariousControls>
@@ -1757,7 +1762,7 @@
             <uClangAs>1</uClangAs>
             <VariousControls>
               <MiscControls/>
-              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1052DVL6B, OSA_USED</Define>
+              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1052DVL6B, MIMXRT1052_SERIES, OSA_USED</Define>
               <Undefine/>
               <IncludePath>..;../../../xip;../../../../../devices/MIMXRT1052/drivers;../../../../../CMSIS/Core/Include;../../../../../CMSIS/Core/Include/m-profile;../../../../../devices/MIMXRT1052;../../../../../devices/MIMXRT1052/periph;../../../../../devices/MIMXRT1052/xip;../../../../../devices/MIMXRT1052/utilities/debug_console_lite;../../../../../components/lists;../../../../../devices/MIMXRT1052/utilities/str;../../../../../components/gpio;../../../../../components/uart;../../../../../components/osa;../../../../../middleware/sdmmc/common;../../../../../middleware/sdmmc/osa;../../../../../middleware/sdmmc/sd;../../../../../middleware/sdmmc/host/usdhc;../../../../../rtos/freertos/freertos-kernel/include;../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../rtos/freertos/freertos-kernel/template</IncludePath>
             </VariousControls>
@@ -2517,11 +2522,6 @@
           <GroupName>component/osa</GroupName>
           <Files>
             <File>
-              <FileName>fsl_os_abstraction.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/osa/fsl_os_abstraction.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_os_abstraction_free_rtos.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../components/osa/fsl_os_abstraction_free_rtos.h</FilePath>
@@ -2530,6 +2530,11 @@
               <FileName>fsl_os_abstraction_free_rtos.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../components/osa/fsl_os_abstraction_free_rtos.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/osa/fsl_os_abstraction.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2820,6 +2825,11 @@
               <FileName>example_board_readme.md</FileName>
               <FileType>5</FileType>
               <FilePath>../example_board_readme.md</FilePath>
+            </File>
+            <File>
+              <FileName>examples_shared_readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../examples_shared_readme.md</FilePath>
             </File>
           </Files>
         </Group>
@@ -3150,7 +3160,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../mcux_config.h -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
-              <Define>DEBUG, XIP_BOOT_HEADER_ENABLE=1, XIP_EXTERNAL_FLASH=1, FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, DEBUG_CONSOLE_TRANSFER_NON_BLOCKING, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1052DVL6B, OSA_USED, USE_RTOS=1, SD_ENABLED=1, SDK_OS_FREE_RTOS</Define>
+              <Define>DEBUG, XIP_BOOT_HEADER_ENABLE=1, XIP_EXTERNAL_FLASH=1, FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, DEBUG_CONSOLE_TRANSFER_NON_BLOCKING, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1052DVL6B, MIMXRT1052_SERIES, OSA_USED, USE_RTOS=1, SD_ENABLED=1, SDK_OS_FREE_RTOS</Define>
               <Undefine/>
               <IncludePath>..;../../../xip;../../../../../devices/MIMXRT1052/drivers;../../../../../CMSIS/Core/Include;../../../../../CMSIS/Core/Include/m-profile;../../../../../devices/MIMXRT1052;../../../../../devices/MIMXRT1052/periph;../../../../../devices/MIMXRT1052/xip;../../../../../devices/MIMXRT1052/utilities/debug_console_lite;../../../../../components/lists;../../../../../devices/MIMXRT1052/utilities/str;../../../../../components/gpio;../../../../../components/uart;../../../../../components/osa;../../../../../middleware/sdmmc/common;../../../../../middleware/sdmmc/osa;../../../../../middleware/sdmmc/sd;../../../../../middleware/sdmmc/host/usdhc;../../../../../rtos/freertos/freertos-kernel/include;../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../rtos/freertos/freertos-kernel/template</IncludePath>
             </VariousControls>
@@ -3168,7 +3178,7 @@
             <uClangAs>1</uClangAs>
             <VariousControls>
               <MiscControls/>
-              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1052DVL6B, OSA_USED</Define>
+              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1052DVL6B, MIMXRT1052_SERIES, OSA_USED</Define>
               <Undefine/>
               <IncludePath>..;../../../xip;../../../../../devices/MIMXRT1052/drivers;../../../../../CMSIS/Core/Include;../../../../../CMSIS/Core/Include/m-profile;../../../../../devices/MIMXRT1052;../../../../../devices/MIMXRT1052/periph;../../../../../devices/MIMXRT1052/xip;../../../../../devices/MIMXRT1052/utilities/debug_console_lite;../../../../../components/lists;../../../../../devices/MIMXRT1052/utilities/str;../../../../../components/gpio;../../../../../components/uart;../../../../../components/osa;../../../../../middleware/sdmmc/common;../../../../../middleware/sdmmc/osa;../../../../../middleware/sdmmc/sd;../../../../../middleware/sdmmc/host/usdhc;../../../../../rtos/freertos/freertos-kernel/include;../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../rtos/freertos/freertos-kernel/template</IncludePath>
             </VariousControls>
@@ -3928,11 +3938,6 @@
           <GroupName>component/osa</GroupName>
           <Files>
             <File>
-              <FileName>fsl_os_abstraction.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/osa/fsl_os_abstraction.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_os_abstraction_free_rtos.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../components/osa/fsl_os_abstraction_free_rtos.h</FilePath>
@@ -3941,6 +3946,11 @@
               <FileName>fsl_os_abstraction_free_rtos.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../components/osa/fsl_os_abstraction_free_rtos.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/osa/fsl_os_abstraction.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -4231,6 +4241,11 @@
               <FileName>example_board_readme.md</FileName>
               <FileType>5</FileType>
               <FilePath>../example_board_readme.md</FilePath>
+            </File>
+            <File>
+              <FileName>examples_shared_readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../examples_shared_readme.md</FilePath>
             </File>
           </Files>
         </Group>
@@ -4561,7 +4576,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../mcux_config.h -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
-              <Define>NDEBUG, FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, DEBUG_CONSOLE_TRANSFER_NON_BLOCKING, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1052DVL6B, OSA_USED, USE_RTOS=1, SD_ENABLED=1, SDK_OS_FREE_RTOS</Define>
+              <Define>NDEBUG, FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, DEBUG_CONSOLE_TRANSFER_NON_BLOCKING, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1052DVL6B, MIMXRT1052_SERIES, OSA_USED, USE_RTOS=1, SD_ENABLED=1, SDK_OS_FREE_RTOS</Define>
               <Undefine/>
               <IncludePath>..;../../../xip;../../../../../devices/MIMXRT1052/drivers;../../../../../CMSIS/Core/Include;../../../../../CMSIS/Core/Include/m-profile;../../../../../devices/MIMXRT1052;../../../../../devices/MIMXRT1052/periph;../../../../../devices/MIMXRT1052/xip;../../../../../devices/MIMXRT1052/utilities/debug_console_lite;../../../../../components/lists;../../../../../devices/MIMXRT1052/utilities/str;../../../../../components/gpio;../../../../../components/uart;../../../../../components/osa;../../../../../middleware/sdmmc/common;../../../../../middleware/sdmmc/osa;../../../../../middleware/sdmmc/sd;../../../../../middleware/sdmmc/host/usdhc;../../../../../rtos/freertos/freertos-kernel/include;../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../rtos/freertos/freertos-kernel/template</IncludePath>
             </VariousControls>
@@ -4579,7 +4594,7 @@
             <uClangAs>1</uClangAs>
             <VariousControls>
               <MiscControls/>
-              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1052DVL6B, OSA_USED</Define>
+              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1052DVL6B, MIMXRT1052_SERIES, OSA_USED</Define>
               <Undefine/>
               <IncludePath>..;../../../xip;../../../../../devices/MIMXRT1052/drivers;../../../../../CMSIS/Core/Include;../../../../../CMSIS/Core/Include/m-profile;../../../../../devices/MIMXRT1052;../../../../../devices/MIMXRT1052/periph;../../../../../devices/MIMXRT1052/xip;../../../../../devices/MIMXRT1052/utilities/debug_console_lite;../../../../../components/lists;../../../../../devices/MIMXRT1052/utilities/str;../../../../../components/gpio;../../../../../components/uart;../../../../../components/osa;../../../../../middleware/sdmmc/common;../../../../../middleware/sdmmc/osa;../../../../../middleware/sdmmc/sd;../../../../../middleware/sdmmc/host/usdhc;../../../../../rtos/freertos/freertos-kernel/include;../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../rtos/freertos/freertos-kernel/template</IncludePath>
             </VariousControls>
@@ -5339,11 +5354,6 @@
           <GroupName>component/osa</GroupName>
           <Files>
             <File>
-              <FileName>fsl_os_abstraction.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/osa/fsl_os_abstraction.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_os_abstraction_free_rtos.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../components/osa/fsl_os_abstraction_free_rtos.h</FilePath>
@@ -5352,6 +5362,11 @@
               <FileName>fsl_os_abstraction_free_rtos.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../components/osa/fsl_os_abstraction_free_rtos.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/osa/fsl_os_abstraction.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -5642,6 +5657,11 @@
               <FileName>example_board_readme.md</FileName>
               <FileType>5</FileType>
               <FilePath>../example_board_readme.md</FilePath>
+            </File>
+            <File>
+              <FileName>examples_shared_readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../examples_shared_readme.md</FilePath>
             </File>
           </Files>
         </Group>
@@ -5972,7 +5992,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../mcux_config.h -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
-              <Define>NDEBUG, USE_SDRAM=1, SKIP_SYSCLK_INIT=1, DATA_SECTION_IS_CACHEABLE=1, FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, DEBUG_CONSOLE_TRANSFER_NON_BLOCKING, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1052DVL6B, OSA_USED, USE_RTOS=1, SD_ENABLED=1, SDK_OS_FREE_RTOS</Define>
+              <Define>NDEBUG, USE_SDRAM=1, SKIP_SYSCLK_INIT=1, DATA_SECTION_IS_CACHEABLE=1, FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, DEBUG_CONSOLE_TRANSFER_NON_BLOCKING, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1052DVL6B, MIMXRT1052_SERIES, OSA_USED, USE_RTOS=1, SD_ENABLED=1, SDK_OS_FREE_RTOS</Define>
               <Undefine/>
               <IncludePath>..;../../../xip;../../../../../devices/MIMXRT1052/drivers;../../../../../CMSIS/Core/Include;../../../../../CMSIS/Core/Include/m-profile;../../../../../devices/MIMXRT1052;../../../../../devices/MIMXRT1052/periph;../../../../../devices/MIMXRT1052/xip;../../../../../devices/MIMXRT1052/utilities/debug_console_lite;../../../../../components/lists;../../../../../devices/MIMXRT1052/utilities/str;../../../../../components/gpio;../../../../../components/uart;../../../../../components/osa;../../../../../middleware/sdmmc/common;../../../../../middleware/sdmmc/osa;../../../../../middleware/sdmmc/sd;../../../../../middleware/sdmmc/host/usdhc;../../../../../rtos/freertos/freertos-kernel/include;../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../rtos/freertos/freertos-kernel/template</IncludePath>
             </VariousControls>
@@ -5990,7 +6010,7 @@
             <uClangAs>1</uClangAs>
             <VariousControls>
               <MiscControls/>
-              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1052DVL6B, OSA_USED</Define>
+              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1052DVL6B, MIMXRT1052_SERIES, OSA_USED</Define>
               <Undefine/>
               <IncludePath>..;../../../xip;../../../../../devices/MIMXRT1052/drivers;../../../../../CMSIS/Core/Include;../../../../../CMSIS/Core/Include/m-profile;../../../../../devices/MIMXRT1052;../../../../../devices/MIMXRT1052/periph;../../../../../devices/MIMXRT1052/xip;../../../../../devices/MIMXRT1052/utilities/debug_console_lite;../../../../../components/lists;../../../../../devices/MIMXRT1052/utilities/str;../../../../../components/gpio;../../../../../components/uart;../../../../../components/osa;../../../../../middleware/sdmmc/common;../../../../../middleware/sdmmc/osa;../../../../../middleware/sdmmc/sd;../../../../../middleware/sdmmc/host/usdhc;../../../../../rtos/freertos/freertos-kernel/include;../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../rtos/freertos/freertos-kernel/template</IncludePath>
             </VariousControls>
@@ -6750,11 +6770,6 @@
           <GroupName>component/osa</GroupName>
           <Files>
             <File>
-              <FileName>fsl_os_abstraction.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/osa/fsl_os_abstraction.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_os_abstraction_free_rtos.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../components/osa/fsl_os_abstraction_free_rtos.h</FilePath>
@@ -6763,6 +6778,11 @@
               <FileName>fsl_os_abstraction_free_rtos.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../components/osa/fsl_os_abstraction_free_rtos.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/osa/fsl_os_abstraction.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -7053,6 +7073,11 @@
               <FileName>example_board_readme.md</FileName>
               <FileType>5</FileType>
               <FilePath>../example_board_readme.md</FilePath>
+            </File>
+            <File>
+              <FileName>examples_shared_readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../examples_shared_readme.md</FilePath>
             </File>
           </Files>
         </Group>
@@ -7383,7 +7408,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../mcux_config.h -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
-              <Define>NDEBUG, XIP_BOOT_HEADER_ENABLE=1, XIP_EXTERNAL_FLASH=1, FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, DEBUG_CONSOLE_TRANSFER_NON_BLOCKING, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1052DVL6B, OSA_USED, USE_RTOS=1, SD_ENABLED=1, SDK_OS_FREE_RTOS</Define>
+              <Define>NDEBUG, XIP_BOOT_HEADER_ENABLE=1, XIP_EXTERNAL_FLASH=1, FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, DEBUG_CONSOLE_TRANSFER_NON_BLOCKING, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1052DVL6B, MIMXRT1052_SERIES, OSA_USED, USE_RTOS=1, SD_ENABLED=1, SDK_OS_FREE_RTOS</Define>
               <Undefine/>
               <IncludePath>..;../../../xip;../../../../../devices/MIMXRT1052/drivers;../../../../../CMSIS/Core/Include;../../../../../CMSIS/Core/Include/m-profile;../../../../../devices/MIMXRT1052;../../../../../devices/MIMXRT1052/periph;../../../../../devices/MIMXRT1052/xip;../../../../../devices/MIMXRT1052/utilities/debug_console_lite;../../../../../components/lists;../../../../../devices/MIMXRT1052/utilities/str;../../../../../components/gpio;../../../../../components/uart;../../../../../components/osa;../../../../../middleware/sdmmc/common;../../../../../middleware/sdmmc/osa;../../../../../middleware/sdmmc/sd;../../../../../middleware/sdmmc/host/usdhc;../../../../../rtos/freertos/freertos-kernel/include;../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../rtos/freertos/freertos-kernel/template</IncludePath>
             </VariousControls>
@@ -7401,7 +7426,7 @@
             <uClangAs>1</uClangAs>
             <VariousControls>
               <MiscControls/>
-              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1052DVL6B, OSA_USED</Define>
+              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1052DVL6B, MIMXRT1052_SERIES, OSA_USED</Define>
               <Undefine/>
               <IncludePath>..;../../../xip;../../../../../devices/MIMXRT1052/drivers;../../../../../CMSIS/Core/Include;../../../../../CMSIS/Core/Include/m-profile;../../../../../devices/MIMXRT1052;../../../../../devices/MIMXRT1052/periph;../../../../../devices/MIMXRT1052/xip;../../../../../devices/MIMXRT1052/utilities/debug_console_lite;../../../../../components/lists;../../../../../devices/MIMXRT1052/utilities/str;../../../../../components/gpio;../../../../../components/uart;../../../../../components/osa;../../../../../middleware/sdmmc/common;../../../../../middleware/sdmmc/osa;../../../../../middleware/sdmmc/sd;../../../../../middleware/sdmmc/host/usdhc;../../../../../rtos/freertos/freertos-kernel/include;../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../rtos/freertos/freertos-kernel/template</IncludePath>
             </VariousControls>
@@ -8161,11 +8186,6 @@
           <GroupName>component/osa</GroupName>
           <Files>
             <File>
-              <FileName>fsl_os_abstraction.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/osa/fsl_os_abstraction.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_os_abstraction_free_rtos.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../components/osa/fsl_os_abstraction_free_rtos.h</FilePath>
@@ -8174,6 +8194,11 @@
               <FileName>fsl_os_abstraction_free_rtos.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../components/osa/fsl_os_abstraction_free_rtos.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/osa/fsl_os_abstraction.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -8464,6 +8489,11 @@
               <FileName>example_board_readme.md</FileName>
               <FileType>5</FileType>
               <FilePath>../example_board_readme.md</FilePath>
+            </File>
+            <File>
+              <FileName>examples_shared_readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../examples_shared_readme.md</FilePath>
             </File>
           </Files>
         </Group>

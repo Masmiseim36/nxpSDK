@@ -59,6 +59,7 @@
           <value>SDK_DEBUGCONSOLE=1</value>
           <value>MCUX_META_BUILD</value>
           <value>CPU_MIMXRT1052DVL6B</value>
+          <value>MIMXRT1052_SERIES</value>
           <value>SERIAL_PORT_TYPE_SWO=1</value>
         </option>
         <option id="com.crt.advproject.link.memory.sections" type="stringList">
@@ -184,6 +185,12 @@
       <files mask="evkbimxrt1050_sdram_init.ini"/>
       <files mask="evkbimxrt1050_sdram_txt_init.ini"/>
     </source>
+    <source path="." project_relative_path="source" type="other">
+      <files mask="hello_world_swo.mex"/>
+    </source>
+    <source path="." project_relative_path="source" type="binary">
+      <files mask="hello_world_swo.bin" hidden="true"/>
+    </source>
     <source path="." project_relative_path="source" type="src">
       <files mask="hello_world_swo.c"/>
     </source>
@@ -245,6 +252,9 @@
     </source>
     <source path="." project_relative_path="doc" type="doc">
       <files mask="example_board_readme.md"/>
+    </source>
+    <source path="." project_relative_path="doc" type="doc">
+      <files mask="examples_shared_readme.md"/>
     </source>
   </example>
 </ksdk:examples>

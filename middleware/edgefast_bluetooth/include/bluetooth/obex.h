@@ -12,10 +12,6 @@
 #ifndef ZEPHYR_INCLUDE_BLUETOOTH_OBEX_H_
 #define ZEPHYR_INCLUDE_BLUETOOTH_OBEX_H_
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 /* GOEP version */
 #define BT_GOEP_VERSION_1_1 (0x0101U)
 #define BT_GOEP_VERSION_2_0 (0x0200U)
@@ -276,9 +272,5 @@ static inline void bt_obex_app_param_parse(struct net_buf *buf,
         hdr_value  += data.data_len;
     }
 }
-
-#ifdef __cplusplus
-}
-#endif
 
 #endif /* ZEPHYR_INCLUDE_BLUETOOTH_OBEX_H_ */

@@ -79,7 +79,7 @@
         </option>
         <option>
           <name>OGChipSelectEditMenu</name>
-          <state>MIMXRT1062xxx6A	NXP MIMXRT1062xxx6A</state>
+          <state>MIMXRT1062xxx6B	NXP MIMXRT1062xxx6B</state>
         </option>
         <option>
           <name>GenLowLevelInterface</name>
@@ -125,7 +125,7 @@
         </option>
         <option>
           <name>GFPUDeviceSlave</name>
-          <state>MIMXRT1062xxx6A	NXP MIMXRT1062xxx6A</state>
+          <state>MIMXRT1062xxx6B	NXP MIMXRT1062xxx6B</state>
         </option>
         <option>
           <name>FPU2</name>
@@ -248,11 +248,13 @@
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1062DVL6B</state>
+          <state>MIMXRT1062_SERIES</state>
           <state>OSA_USED</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
+          <state>WIFI_IW612_BOARD_MURATA_2EL_M2</state>
           <state>CONFIG_NXP_WIFI_SOFTAP_SUPPORT=1</state>
-          <state>SO_REUSE=1</state>
           <state>PRINTF_FLOAT_ENABLE=1</state>
+          <state>SO_REUSE=1</state>
           <state>SDIO_ENABLED=1</state>
           <state>SDK_OS_FREE_RTOS</state>
         </option>
@@ -383,10 +385,9 @@
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/periph</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/xip</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../components/gpio</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
@@ -417,20 +418,17 @@
           <state>$PROJ_DIR$/../../../../../middleware/wifi_nxp/incl/port/net/hooks</state>
           <state>$PROJ_DIR$/../../../../../middleware/wifi_nxp/cli</state>
           <state>$PROJ_DIR$/../../../../../middleware/wifi_nxp/nw_utils</state>
-          <state>$PROJ_DIR$/../../../../../middleware/wifi_nxp/nw_utils/telnet</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/host</state>
+          <state>$PROJ_DIR$/../../../../../middleware/usb/config/host/ehci</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/host/class</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../middleware/fatfs/source</state>
           <state>$PROJ_DIR$/../../../../../middleware/fatfs/template</state>
           <state>$PROJ_DIR$/../../../../../middleware/fatfs/source/fsl_usb_disk</state>
           <state>$PROJ_DIR$/../../../../../middleware/lwip/port</state>
-          <state>$PROJ_DIR$/../../../../../middleware/lwip/src</state>
           <state>$PROJ_DIR$/../../../../../middleware/lwip/src/include</state>
-          <state>$PROJ_DIR$/../../../../../middleware/lwip/src/include/lwip</state>
           <state>$PROJ_DIR$/../../../../../middleware/lwip/port/sys_arch/dynamic</state>
-          <state>$PROJ_DIR$/../../../../../middleware/lwip/src/include/lwip/apps</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/common</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/osa</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/sdio</state>
@@ -623,6 +621,7 @@
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1062DVL6B</state>
+          <state>MIMXRT1062_SERIES</state>
           <state>OSA_USED</state>
         </option>
         <option>
@@ -723,10 +722,9 @@
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/periph</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/xip</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../components/gpio</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
@@ -757,20 +755,17 @@
           <state>$PROJ_DIR$/../../../../../middleware/wifi_nxp/incl/port/net/hooks</state>
           <state>$PROJ_DIR$/../../../../../middleware/wifi_nxp/cli</state>
           <state>$PROJ_DIR$/../../../../../middleware/wifi_nxp/nw_utils</state>
-          <state>$PROJ_DIR$/../../../../../middleware/wifi_nxp/nw_utils/telnet</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/host</state>
+          <state>$PROJ_DIR$/../../../../../middleware/usb/config/host/ehci</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/host/class</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../middleware/fatfs/source</state>
           <state>$PROJ_DIR$/../../../../../middleware/fatfs/template</state>
           <state>$PROJ_DIR$/../../../../../middleware/fatfs/source/fsl_usb_disk</state>
           <state>$PROJ_DIR$/../../../../../middleware/lwip/port</state>
-          <state>$PROJ_DIR$/../../../../../middleware/lwip/src</state>
           <state>$PROJ_DIR$/../../../../../middleware/lwip/src/include</state>
-          <state>$PROJ_DIR$/../../../../../middleware/lwip/src/include/lwip</state>
           <state>$PROJ_DIR$/../../../../../middleware/lwip/port/sys_arch/dynamic</state>
-          <state>$PROJ_DIR$/../../../../../middleware/lwip/src/include/lwip/apps</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/common</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/osa</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/sdio</state>
@@ -1321,7 +1316,7 @@
         </option>
         <option>
           <name>OGChipSelectEditMenu</name>
-          <state>MIMXRT1062xxx6A	NXP MIMXRT1062xxx6A</state>
+          <state>MIMXRT1062xxx6B	NXP MIMXRT1062xxx6B</state>
         </option>
         <option>
           <name>GenLowLevelInterface</name>
@@ -1367,7 +1362,7 @@
         </option>
         <option>
           <name>GFPUDeviceSlave</name>
-          <state>MIMXRT1062xxx6A	NXP MIMXRT1062xxx6A</state>
+          <state>MIMXRT1062xxx6B	NXP MIMXRT1062xxx6B</state>
         </option>
         <option>
           <name>FPU2</name>
@@ -1490,11 +1485,13 @@
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1062DVL6B</state>
+          <state>MIMXRT1062_SERIES</state>
           <state>OSA_USED</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
+          <state>WIFI_IW612_BOARD_MURATA_2EL_M2</state>
           <state>CONFIG_NXP_WIFI_SOFTAP_SUPPORT=1</state>
-          <state>SO_REUSE=1</state>
           <state>PRINTF_FLOAT_ENABLE=1</state>
+          <state>SO_REUSE=1</state>
           <state>SDIO_ENABLED=1</state>
           <state>SDK_OS_FREE_RTOS</state>
         </option>
@@ -1625,10 +1622,9 @@
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/periph</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/xip</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../components/gpio</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
@@ -1659,20 +1655,17 @@
           <state>$PROJ_DIR$/../../../../../middleware/wifi_nxp/incl/port/net/hooks</state>
           <state>$PROJ_DIR$/../../../../../middleware/wifi_nxp/cli</state>
           <state>$PROJ_DIR$/../../../../../middleware/wifi_nxp/nw_utils</state>
-          <state>$PROJ_DIR$/../../../../../middleware/wifi_nxp/nw_utils/telnet</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/host</state>
+          <state>$PROJ_DIR$/../../../../../middleware/usb/config/host/ehci</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/host/class</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../middleware/fatfs/source</state>
           <state>$PROJ_DIR$/../../../../../middleware/fatfs/template</state>
           <state>$PROJ_DIR$/../../../../../middleware/fatfs/source/fsl_usb_disk</state>
           <state>$PROJ_DIR$/../../../../../middleware/lwip/port</state>
-          <state>$PROJ_DIR$/../../../../../middleware/lwip/src</state>
           <state>$PROJ_DIR$/../../../../../middleware/lwip/src/include</state>
-          <state>$PROJ_DIR$/../../../../../middleware/lwip/src/include/lwip</state>
           <state>$PROJ_DIR$/../../../../../middleware/lwip/port/sys_arch/dynamic</state>
-          <state>$PROJ_DIR$/../../../../../middleware/lwip/src/include/lwip/apps</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/common</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/osa</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/sdio</state>
@@ -1865,6 +1858,7 @@
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1062DVL6B</state>
+          <state>MIMXRT1062_SERIES</state>
           <state>OSA_USED</state>
         </option>
         <option>
@@ -1965,10 +1959,9 @@
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/periph</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/xip</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../components/gpio</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
@@ -1999,20 +1992,17 @@
           <state>$PROJ_DIR$/../../../../../middleware/wifi_nxp/incl/port/net/hooks</state>
           <state>$PROJ_DIR$/../../../../../middleware/wifi_nxp/cli</state>
           <state>$PROJ_DIR$/../../../../../middleware/wifi_nxp/nw_utils</state>
-          <state>$PROJ_DIR$/../../../../../middleware/wifi_nxp/nw_utils/telnet</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/host</state>
+          <state>$PROJ_DIR$/../../../../../middleware/usb/config/host/ehci</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/host/class</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../middleware/fatfs/source</state>
           <state>$PROJ_DIR$/../../../../../middleware/fatfs/template</state>
           <state>$PROJ_DIR$/../../../../../middleware/fatfs/source/fsl_usb_disk</state>
           <state>$PROJ_DIR$/../../../../../middleware/lwip/port</state>
-          <state>$PROJ_DIR$/../../../../../middleware/lwip/src</state>
           <state>$PROJ_DIR$/../../../../../middleware/lwip/src/include</state>
-          <state>$PROJ_DIR$/../../../../../middleware/lwip/src/include/lwip</state>
           <state>$PROJ_DIR$/../../../../../middleware/lwip/port/sys_arch/dynamic</state>
-          <state>$PROJ_DIR$/../../../../../middleware/lwip/src/include/lwip/apps</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/common</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/osa</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/sdio</state>
@@ -2500,9 +2490,6 @@
       <name>$PROJ_DIR$/../mfg_wlan_bt_fw.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../sd8801_mfg_wlan.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../sduart8987_mfg_wlan_bt.h</name>
     </file>
     <file>
@@ -2513,6 +2500,15 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../uart_nw61x_mfg_se.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../sduartspi_iw610_mfg_se.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../uartspi_iw610_mfg_se.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../sd_iw610_mfg_se.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../FreeRTOSConfig.h</name>
@@ -2537,9 +2533,6 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../wifi_bt_config.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../app_config.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../FreeRTOSConfigBoard.h</name>
@@ -2950,10 +2943,10 @@
   <group>
     <name>utilities</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/fsl_assert.h</name>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/debug_console/fsl_assert.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/fsl_assert.c</name>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/debug_console/fsl_assert.c</name>
     </file>
     <group>
       <name>str</name>
@@ -3024,13 +3017,13 @@
     <group>
       <name>osa</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../components/osa/fsl_os_abstraction.h</name>
-      </file>
-      <file>
         <name>$PROJ_DIR$/../../../../../components/osa/fsl_os_abstraction_free_rtos.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../components/osa/fsl_os_abstraction_free_rtos.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/osa/fsl_os_abstraction.h</name>
       </file>
     </group>
     <group>
@@ -3058,13 +3051,10 @@
             <name>$PROJ_DIR$/../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1ZM_WW.h</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_2DS_WW.h</name>
-          </file>
-          <file>
             <name>$PROJ_DIR$/../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_2EL_WW.h</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_NH_FCC.h</name>
+            <name>$PROJ_DIR$/../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_NH.h</name>
           </file>
         </group>
       </group>
@@ -3210,7 +3200,7 @@
         <name>$PROJ_DIR$/../../../../../middleware/wifi_nxp/incl/wifi_cal_data_rw61x_3ant_diversity.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/wifi_nxp/incl/wifi_cal_data_rw61x_override.h</name>
+        <name>$PROJ_DIR$/../../../../../middleware/wifi_nxp/incl/wifi_cal_data_override.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/wifi_nxp/incl/WIFI_IW416_BOARD_AW_AM457_CAL_DATA_EXT.h</name>
@@ -3630,20 +3620,8 @@
         <name>$PROJ_DIR$/../../../../../middleware/wifi_nxp/nw_utils/iperf.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/wifi_nxp/nw_utils/init_enet.c</name>
-      </file>
-      <file>
         <name>$PROJ_DIR$/../../../../../middleware/wifi_nxp/nw_utils/network_cfg.h</name>
       </file>
-      <group>
-        <name>telnet</name>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/wifi_nxp/nw_utils/telnet/telnet_server.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/wifi_nxp/nw_utils/telnet/telnet_server.c</name>
-        </file>
-      </group>
     </group>
   </group>
   <group>
@@ -4691,6 +4669,12 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../wifi_examples_readme.md</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../readme_modules.md</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../examples_shared_readme.md</name>
     </file>
   </group>
 </project>

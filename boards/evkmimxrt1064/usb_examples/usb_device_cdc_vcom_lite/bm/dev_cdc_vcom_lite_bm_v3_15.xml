@@ -25,12 +25,12 @@
     <definition extID="utility.debug_console_lite.MIMXRT1064"/>
     <definition extID="component.lpuart_adapter.MIMXRT1064"/>
     <definition extID="component.osa_template_config.MIMXRT1064"/>
-    <definition extID="component.osa_interface.MIMXRT1064"/>
     <definition extID="component.osa.MIMXRT1064"/>
     <definition extID="component.osa_bm.MIMXRT1064"/>
     <definition extID="middleware.usb.common_header.MIMXRT1064"/>
     <definition extID="middleware.usb.device.common_header.MIMXRT1064"/>
     <definition extID="middleware.usb.device_controller_ehci.MIMXRT1064"/>
+    <definition extID="middleware.usb.device.ehci_config_header.MIMXRT1064"/>
     <definition extID="middleware.usb.device.controller.driver.MIMXRT1064"/>
     <definition extID="middleware.usb.phy.MIMXRT1064"/>
     <definition extID="iar"/>
@@ -41,7 +41,7 @@
     <definition extID="com.crt.advproject.config.exe.debug"/>
     <definition extID="com.crt.advproject.config.exe.release"/>
   </externalDefinitions>
-  <example id="evkmimxrt1064_dev_cdc_vcom_lite_bm" name="dev_cdc_vcom_lite_bm" device_core="core0_MIMXRT1064xxxxA" dependency="platform.drivers.xip_board.evkmimxrt1064.MIMXRT1064 platform.drivers.clock.MIMXRT1064 platform.drivers.iomuxc.MIMXRT1064 CMSIS_Include_core_cm.MIMXRT1064 device.MIMXRT1064_CMSIS.MIMXRT1064 device.MIMXRT1064_system.MIMXRT1064 device.MIMXRT1064_startup.MIMXRT1064 platform.drivers.xip_device.MIMXRT1064 platform.drivers.cache_armv7_m7.MIMXRT1064 platform.drivers.common.MIMXRT1064 platform.drivers.dcdc_1.MIMXRT1064 platform.drivers.gpc_1.MIMXRT1064 platform.drivers.igpio.MIMXRT1064 platform.drivers.lpuart.MIMXRT1064 platform.drivers.pmu.MIMXRT1064 platform.drivers.src.MIMXRT1064 platform.utilities.assert_lite.MIMXRT1064 platform.utilities.misc_utilities.MIMXRT1064 component.lists.MIMXRT1064 utility.str.MIMXRT1064 utility.debug_console_lite.MIMXRT1064 component.lpuart_adapter.MIMXRT1064 component.osa_template_config.MIMXRT1064 component.osa_interface.MIMXRT1064 component.osa.MIMXRT1064 component.osa_bm.MIMXRT1064 middleware.usb.common_header.MIMXRT1064 middleware.usb.device.common_header.MIMXRT1064 middleware.usb.device_controller_ehci.MIMXRT1064 middleware.usb.device.controller.driver.MIMXRT1064 middleware.usb.phy.MIMXRT1064" category="usb_examples">
+  <example id="evkmimxrt1064_dev_cdc_vcom_lite_bm" name="dev_cdc_vcom_lite_bm" device_core="core0_MIMXRT1064xxxxA" dependency="platform.drivers.xip_board.evkmimxrt1064.MIMXRT1064 platform.drivers.clock.MIMXRT1064 platform.drivers.iomuxc.MIMXRT1064 CMSIS_Include_core_cm.MIMXRT1064 device.MIMXRT1064_CMSIS.MIMXRT1064 device.MIMXRT1064_system.MIMXRT1064 device.MIMXRT1064_startup.MIMXRT1064 platform.drivers.xip_device.MIMXRT1064 platform.drivers.cache_armv7_m7.MIMXRT1064 platform.drivers.common.MIMXRT1064 platform.drivers.dcdc_1.MIMXRT1064 platform.drivers.gpc_1.MIMXRT1064 platform.drivers.igpio.MIMXRT1064 platform.drivers.lpuart.MIMXRT1064 platform.drivers.pmu.MIMXRT1064 platform.drivers.src.MIMXRT1064 platform.utilities.assert_lite.MIMXRT1064 platform.utilities.misc_utilities.MIMXRT1064 component.lists.MIMXRT1064 utility.str.MIMXRT1064 utility.debug_console_lite.MIMXRT1064 component.lpuart_adapter.MIMXRT1064 component.osa_template_config.MIMXRT1064 component.osa.MIMXRT1064 component.osa_bm.MIMXRT1064 middleware.usb.common_header.MIMXRT1064 middleware.usb.device.common_header.MIMXRT1064 middleware.usb.device_controller_ehci.MIMXRT1064 middleware.usb.device.ehci_config_header.MIMXRT1064 middleware.usb.device.controller.driver.MIMXRT1064 middleware.usb.phy.MIMXRT1064" category="usb_examples">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -63,6 +63,7 @@
           <value>SDK_DEBUGCONSOLE=1</value>
           <value>MCUX_META_BUILD</value>
           <value>CPU_MIMXRT1064DVL6A</value>
+          <value>MIMXRT1064_SERIES</value>
           <value>OSA_USED</value>
           <value>USE_RTOS=0</value>
         </option>
@@ -226,12 +227,10 @@
     </source>
     <source path="." project_relative_path="source" type="c_include" config="true">
       <files mask="fsl_os_abstraction_config.h"/>
+      <files mask="usb_device_config.h"/>
     </source>
     <source path="." project_relative_path="source" type="c_preinclude">
       <files mask="mcux_config.h"/>
-    </source>
-    <source path="." project_relative_path="source" type="c_include">
-      <files mask="usb_device_config.h"/>
     </source>
     <source path="." project_relative_path="doc" type="doc">
       <files mask="readme.md"/>
@@ -244,6 +243,9 @@
       <files mask="cdc_driver_install_06.jpg"/>
       <files mask="run_vcom.jpg"/>
       <files mask="run_vcom_keepalive.jpg"/>
+    </source>
+    <source path="." project_relative_path="doc" type="doc">
+      <files mask="examples_shared_readme.md"/>
     </source>
   </example>
 </ksdk:examples>

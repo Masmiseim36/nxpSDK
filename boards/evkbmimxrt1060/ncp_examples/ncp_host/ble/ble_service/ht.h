@@ -2,7 +2,7 @@
  *  Copyright 2024 NXP
  *
  *  SPDX-License-Identifier: BSD-3-Clause
- * 
+ *
  */
 
 /*!\file ht.h
@@ -33,7 +33,7 @@ extern "C" {
 /** HTC get characteristic configuration changed event ID */
 #define HTC_EVENT_GET_CCC                       0x05
 /** HTC write characteristic response event ID */
-#define HTS_EVENT_WRITE_CHRA_RSP                0x01
+#define HTS_EVENT_WRITE_CHAR_RSP                0x01
 
 /** GATT Primary Service UUID */
 #define UUID_GATT_PRIMARY                       0x2800
@@ -120,13 +120,13 @@ enum
  ******************************************************************************/
 /**
  * Start central HTC (Health Thermometer) service
- * 
+ *
  */
 void central_htc_start(void);
 
 /**
  * Init HTC Service
- * 
+ *
  */
 void htc_init(void);
 
@@ -141,33 +141,33 @@ void central_notify(uint8_t *data);
 
 /**
  * Init HTS Service
- * 
+ *
  */
 void hts_init(void);
 
 /**
  * Count binary semaphore to wait for HTS write characteristic response event
- * 
+ *
  * \param[in] flag flag to wait
- * 
+ *
  * \return void
- * 
+ *
  */
 void peripheral_hts_event_put(osa_event_flags_t flag);
 
 /**
  * Start Peripheral HTS Service
- * 
+ *
  */
 void peripheral_hts_start(void);
 
 /**
- * Indicate HTS characteristic value change event 
- * 
+ * Indicate HTS characteristic value change event
+ *
  * \param[in] value hts value
- * 
+ *
  * \return void
- * 
+ *
  */
 void peripheral_hts_indicate(uint8_t value);
 

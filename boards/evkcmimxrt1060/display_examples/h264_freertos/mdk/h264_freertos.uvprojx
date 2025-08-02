@@ -333,9 +333,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../mcux_config.h -fno-common  -fdata-sections  -fno-builtin  -mthumb -fno-exceptions</MiscControls>
-              <Define>DEBUG, XIP_BOOT_HEADER_ENABLE=1, XIP_BOOT_HEADER_DCD_ENABLE=1, XIP_EXTERNAL_FLASH=1, USE_SDRAM=1, SKIP_SYSCLK_INIT=1, DATA_SECTION_IS_CACHEABLE=1, FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1062DVL6B, OSA_USED, USE_RTOS=1, SD_ENABLED=1, __NXP_MSDK__, SDK_OS_FREE_RTOS</Define>
+              <Define>DEBUG, XIP_BOOT_HEADER_ENABLE=1, XIP_BOOT_HEADER_DCD_ENABLE=1, XIP_EXTERNAL_FLASH=1, USE_SDRAM=1, SKIP_SYSCLK_INIT=1, DATA_SECTION_IS_CACHEABLE=1, FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1062DVL6B, MIMXRT1062_SERIES, OSA_USED, USE_RTOS=1, SD_ENABLED=1, __NXP_MSDK__, SDK_OS_FREE_RTOS</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../middleware/openh264/example/h264_freertos;../../../../../middleware/openh264/example/h264_freertos/freertos_libraries/abstractions/posix/include;../../../../../middleware/openh264/example/h264_freertos/freertos_libraries/abstractions/posix/include/FreeRTOS_POSIX/sys;../../../../../middleware/openh264/example/h264_freertos/freertos_libraries/freertos_plus/standard/freertos_plus_posix/include;../../../../../middleware/openh264/example/h264_freertos/freertos_libraries/c_sdk/standard/common/include/private;../../../xip;../../../../../devices/MIMXRT1062/drivers;../../../../../CMSIS/Core/Include;../../../../../CMSIS/Core/Include/m-profile;../../../../../devices/MIMXRT1062;../../../../../devices/MIMXRT1062/periph;../../../../../devices/MIMXRT1062/xip;../../../../../devices/MIMXRT1062/utilities/debug_console_lite;../../../../../components/lists;../../../../../devices/MIMXRT1062/utilities/str;../../../../../components/gpio;../../../../../components/uart;../../../../../components/osa;../../../../../components/video;../../../../../components/video/display/dc;../../../../../components/video/display;../../../../../components/video/display/fbdev;../../../../../components/video/display/dc/elcdif;../../../../../middleware/fatfs/source;../../../../../middleware/fatfs/template;../../../../../middleware/fatfs/source/fsl_sd_disk;../../../../../middleware/sdmmc/common;../../../../../middleware/sdmmc/osa;../../../../../middleware/sdmmc/sd;../../../../../middleware/sdmmc/host/usdhc;../../../../../middleware/openh264/codec/api/svc;../../../../../middleware/openh264/codec/common/inc;../../../../../middleware/openh264/codec/decoder/core/inc;../../../../../middleware/openh264/codec/decoder/plus/inc;../../../../../rtos/freertos/freertos-kernel/include;../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F</IncludePath>
+              <IncludePath>..;../../../../../middleware/openh264/example/h264_freertos;../../../../../middleware/openh264/example/h264_freertos/freertos_libraries/abstractions/posix/include;../../../../../middleware/openh264/example/h264_freertos/freertos_libraries/abstractions/posix/include/FreeRTOS_POSIX/sys;../../../../../middleware/openh264/example/h264_freertos/freertos_libraries/freertos_plus/standard/freertos_plus_posix/include;../../../../../middleware/openh264/example/h264_freertos/freertos_libraries/c_sdk/standard/common/include/private;../../../xip;../../../../../devices/MIMXRT1062/drivers;../../../../../CMSIS/Core/Include;../../../../../CMSIS/Core/Include/m-profile;../../../../../devices/MIMXRT1062;../../../../../devices/MIMXRT1062/periph;../../../../../devices/MIMXRT1062/xip;../../../../../devices/MIMXRT1062/utilities/debug_console_lite;../../../../../components/lists;../../../../../devices/MIMXRT1062/utilities/str;../../../../../components/gpio;../../../../../components/uart;../../../../../components/osa;../../../../../components/video;../../../../../components/video/display/dc;../../../../../components/video/display;../../../../../components/video/display/fbdev;../../../../../components/video/display/dc/elcdif;../../../../../middleware/fatfs/source;../../../../../middleware/fatfs/template;../../../../../middleware/fatfs/source/fsl_sd_disk;../../../../../middleware/sdmmc/common;../../../../../middleware/sdmmc/osa;../../../../../middleware/sdmmc/sd;../../../../../middleware/sdmmc/host/usdhc;../../../../../middleware/openh264/codec/api/wels;../../../../../middleware/openh264/codec/common/inc;../../../../../middleware/openh264/codec/decoder/core/inc;../../../../../middleware/openh264/codec/decoder/plus/inc;../../../../../rtos/freertos/freertos-kernel/include;../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -351,9 +351,9 @@
             <ClangAsOpt>2</ClangAsOpt>
             <VariousControls>
               <MiscControls/>
-              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1062DVL6B, OSA_USED</Define>
+              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1062DVL6B, MIMXRT1062_SERIES, OSA_USED</Define>
               <Undefine/>
-              <IncludePath>..;../../../xip;../../../../../devices/MIMXRT1062/drivers;../../../../../CMSIS/Core/Include;../../../../../CMSIS/Core/Include/m-profile;../../../../../devices/MIMXRT1062;../../../../../devices/MIMXRT1062/periph;../../../../../devices/MIMXRT1062/xip;../../../../../devices/MIMXRT1062/utilities/debug_console_lite;../../../../../components/lists;../../../../../devices/MIMXRT1062/utilities/str;../../../../../components/gpio;../../../../../components/uart;../../../../../components/osa;../../../../../components/video;../../../../../components/video/display/dc;../../../../../components/video/display;../../../../../components/video/display/fbdev;../../../../../components/video/display/dc/elcdif;../../../../../middleware/fatfs/source;../../../../../middleware/fatfs/template;../../../../../middleware/fatfs/source/fsl_sd_disk;../../../../../middleware/sdmmc/common;../../../../../middleware/sdmmc/osa;../../../../../middleware/sdmmc/sd;../../../../../middleware/sdmmc/host/usdhc;../../../../../middleware/openh264/codec/api/svc;../../../../../middleware/openh264/codec/common/inc;../../../../../middleware/openh264/codec/decoder/core/inc;../../../../../middleware/openh264/codec/decoder/plus/inc;../../../../../rtos/freertos/freertos-kernel/include;../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F</IncludePath>
+              <IncludePath>..;../../../xip;../../../../../devices/MIMXRT1062/drivers;../../../../../CMSIS/Core/Include;../../../../../CMSIS/Core/Include/m-profile;../../../../../devices/MIMXRT1062;../../../../../devices/MIMXRT1062/periph;../../../../../devices/MIMXRT1062/xip;../../../../../devices/MIMXRT1062/utilities/debug_console_lite;../../../../../components/lists;../../../../../devices/MIMXRT1062/utilities/str;../../../../../components/gpio;../../../../../components/uart;../../../../../components/osa;../../../../../components/video;../../../../../components/video/display/dc;../../../../../components/video/display;../../../../../components/video/display/fbdev;../../../../../components/video/display/dc/elcdif;../../../../../middleware/fatfs/source;../../../../../middleware/fatfs/template;../../../../../middleware/fatfs/source/fsl_sd_disk;../../../../../middleware/sdmmc/common;../../../../../middleware/sdmmc/osa;../../../../../middleware/sdmmc/sd;../../../../../middleware/sdmmc/host/usdhc;../../../../../middleware/openh264/codec/api/wels;../../../../../middleware/openh264/codec/common/inc;../../../../../middleware/openh264/codec/decoder/core/inc;../../../../../middleware/openh264/codec/decoder/plus/inc;../../../../../rtos/freertos/freertos-kernel/include;../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -1345,11 +1345,6 @@
           <GroupName>component/osa</GroupName>
           <Files>
             <File>
-              <FileName>fsl_os_abstraction.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/osa/fsl_os_abstraction.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_os_abstraction_free_rtos.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../components/osa/fsl_os_abstraction_free_rtos.h</FilePath>
@@ -1358,6 +1353,11 @@
               <FileName>fsl_os_abstraction_free_rtos.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../components/osa/fsl_os_abstraction_free_rtos.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/osa/fsl_os_abstraction.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1542,27 +1542,27 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>openh264/codec/api/svc</GroupName>
+          <GroupName>openh264/codec/api/wels</GroupName>
           <Files>
             <File>
               <FileName>codec_api.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/openh264/codec/api/svc/codec_api.h</FilePath>
+              <FilePath>../../../../../middleware/openh264/codec/api/wels/codec_api.h</FilePath>
             </File>
             <File>
               <FileName>codec_app_def.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/openh264/codec/api/svc/codec_app_def.h</FilePath>
+              <FilePath>../../../../../middleware/openh264/codec/api/wels/codec_app_def.h</FilePath>
             </File>
             <File>
               <FileName>codec_def.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/openh264/codec/api/svc/codec_def.h</FilePath>
+              <FilePath>../../../../../middleware/openh264/codec/api/wels/codec_def.h</FilePath>
             </File>
             <File>
               <FileName>codec_ver.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/openh264/codec/api/svc/codec_ver.h</FilePath>
+              <FilePath>../../../../../middleware/openh264/codec/api/wels/codec_ver.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1615,6 +1615,11 @@
               <FilePath>../../../../../middleware/openh264/codec/common/inc/intra_pred_common.h</FilePath>
             </File>
             <File>
+              <FileName>loongson_intrinsics.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/openh264/codec/common/inc/loongson_intrinsics.h</FilePath>
+            </File>
+            <File>
               <FileName>ls_defines.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/openh264/codec/common/inc/ls_defines.h</FilePath>
@@ -1638,6 +1643,11 @@
               <FileName>memory_align.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/openh264/codec/common/inc/memory_align.h</FilePath>
+            </File>
+            <File>
+              <FileName>msa_macros.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/openh264/codec/common/inc/msa_macros.h</FilePath>
             </File>
             <File>
               <FileName>sad_common.h</FileName>
@@ -2095,11 +2105,6 @@
               <FilePath>../../../../../middleware/openh264/LICENSE</FilePath>
             </File>
             <File>
-              <FileName>CONTRIBUTORS</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/openh264/CONTRIBUTORS</FilePath>
-            </File>
-            <File>
               <FileName>CODING_STYLE</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/openh264/CODING_STYLE</FilePath>
@@ -2323,6 +2328,11 @@
               <FileName>example_board_readme.md</FileName>
               <FileType>5</FileType>
               <FilePath>../example_board_readme.md</FilePath>
+            </File>
+            <File>
+              <FileName>examples_shared_readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../examples_shared_readme.md</FilePath>
             </File>
           </Files>
         </Group>
@@ -2658,9 +2668,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../mcux_config.h -fno-common  -fdata-sections  -fno-builtin  -mthumb -fno-exceptions</MiscControls>
-              <Define>NDEBUG, XIP_BOOT_HEADER_ENABLE=1, XIP_BOOT_HEADER_DCD_ENABLE=1, XIP_EXTERNAL_FLASH=1, USE_SDRAM=1, SKIP_SYSCLK_INIT=1, DATA_SECTION_IS_CACHEABLE=1, FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1062DVL6B, OSA_USED, USE_RTOS=1, SD_ENABLED=1, __NXP_MSDK__, SDK_OS_FREE_RTOS</Define>
+              <Define>NDEBUG, XIP_BOOT_HEADER_ENABLE=1, XIP_BOOT_HEADER_DCD_ENABLE=1, XIP_EXTERNAL_FLASH=1, USE_SDRAM=1, SKIP_SYSCLK_INIT=1, DATA_SECTION_IS_CACHEABLE=1, FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1062DVL6B, MIMXRT1062_SERIES, OSA_USED, USE_RTOS=1, SD_ENABLED=1, __NXP_MSDK__, SDK_OS_FREE_RTOS</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../middleware/openh264/example/h264_freertos;../../../../../middleware/openh264/example/h264_freertos/freertos_libraries/abstractions/posix/include;../../../../../middleware/openh264/example/h264_freertos/freertos_libraries/abstractions/posix/include/FreeRTOS_POSIX/sys;../../../../../middleware/openh264/example/h264_freertos/freertos_libraries/freertos_plus/standard/freertos_plus_posix/include;../../../../../middleware/openh264/example/h264_freertos/freertos_libraries/c_sdk/standard/common/include/private;../../../xip;../../../../../devices/MIMXRT1062/drivers;../../../../../CMSIS/Core/Include;../../../../../CMSIS/Core/Include/m-profile;../../../../../devices/MIMXRT1062;../../../../../devices/MIMXRT1062/periph;../../../../../devices/MIMXRT1062/xip;../../../../../devices/MIMXRT1062/utilities/debug_console_lite;../../../../../components/lists;../../../../../devices/MIMXRT1062/utilities/str;../../../../../components/gpio;../../../../../components/uart;../../../../../components/osa;../../../../../components/video;../../../../../components/video/display/dc;../../../../../components/video/display;../../../../../components/video/display/fbdev;../../../../../components/video/display/dc/elcdif;../../../../../middleware/fatfs/source;../../../../../middleware/fatfs/template;../../../../../middleware/fatfs/source/fsl_sd_disk;../../../../../middleware/sdmmc/common;../../../../../middleware/sdmmc/osa;../../../../../middleware/sdmmc/sd;../../../../../middleware/sdmmc/host/usdhc;../../../../../middleware/openh264/codec/api/svc;../../../../../middleware/openh264/codec/common/inc;../../../../../middleware/openh264/codec/decoder/core/inc;../../../../../middleware/openh264/codec/decoder/plus/inc;../../../../../rtos/freertos/freertos-kernel/include;../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F</IncludePath>
+              <IncludePath>..;../../../../../middleware/openh264/example/h264_freertos;../../../../../middleware/openh264/example/h264_freertos/freertos_libraries/abstractions/posix/include;../../../../../middleware/openh264/example/h264_freertos/freertos_libraries/abstractions/posix/include/FreeRTOS_POSIX/sys;../../../../../middleware/openh264/example/h264_freertos/freertos_libraries/freertos_plus/standard/freertos_plus_posix/include;../../../../../middleware/openh264/example/h264_freertos/freertos_libraries/c_sdk/standard/common/include/private;../../../xip;../../../../../devices/MIMXRT1062/drivers;../../../../../CMSIS/Core/Include;../../../../../CMSIS/Core/Include/m-profile;../../../../../devices/MIMXRT1062;../../../../../devices/MIMXRT1062/periph;../../../../../devices/MIMXRT1062/xip;../../../../../devices/MIMXRT1062/utilities/debug_console_lite;../../../../../components/lists;../../../../../devices/MIMXRT1062/utilities/str;../../../../../components/gpio;../../../../../components/uart;../../../../../components/osa;../../../../../components/video;../../../../../components/video/display/dc;../../../../../components/video/display;../../../../../components/video/display/fbdev;../../../../../components/video/display/dc/elcdif;../../../../../middleware/fatfs/source;../../../../../middleware/fatfs/template;../../../../../middleware/fatfs/source/fsl_sd_disk;../../../../../middleware/sdmmc/common;../../../../../middleware/sdmmc/osa;../../../../../middleware/sdmmc/sd;../../../../../middleware/sdmmc/host/usdhc;../../../../../middleware/openh264/codec/api/wels;../../../../../middleware/openh264/codec/common/inc;../../../../../middleware/openh264/codec/decoder/core/inc;../../../../../middleware/openh264/codec/decoder/plus/inc;../../../../../rtos/freertos/freertos-kernel/include;../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2676,9 +2686,9 @@
             <ClangAsOpt>2</ClangAsOpt>
             <VariousControls>
               <MiscControls/>
-              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1062DVL6B, OSA_USED</Define>
+              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1062DVL6B, MIMXRT1062_SERIES, OSA_USED</Define>
               <Undefine/>
-              <IncludePath>..;../../../xip;../../../../../devices/MIMXRT1062/drivers;../../../../../CMSIS/Core/Include;../../../../../CMSIS/Core/Include/m-profile;../../../../../devices/MIMXRT1062;../../../../../devices/MIMXRT1062/periph;../../../../../devices/MIMXRT1062/xip;../../../../../devices/MIMXRT1062/utilities/debug_console_lite;../../../../../components/lists;../../../../../devices/MIMXRT1062/utilities/str;../../../../../components/gpio;../../../../../components/uart;../../../../../components/osa;../../../../../components/video;../../../../../components/video/display/dc;../../../../../components/video/display;../../../../../components/video/display/fbdev;../../../../../components/video/display/dc/elcdif;../../../../../middleware/fatfs/source;../../../../../middleware/fatfs/template;../../../../../middleware/fatfs/source/fsl_sd_disk;../../../../../middleware/sdmmc/common;../../../../../middleware/sdmmc/osa;../../../../../middleware/sdmmc/sd;../../../../../middleware/sdmmc/host/usdhc;../../../../../middleware/openh264/codec/api/svc;../../../../../middleware/openh264/codec/common/inc;../../../../../middleware/openh264/codec/decoder/core/inc;../../../../../middleware/openh264/codec/decoder/plus/inc;../../../../../rtos/freertos/freertos-kernel/include;../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F</IncludePath>
+              <IncludePath>..;../../../xip;../../../../../devices/MIMXRT1062/drivers;../../../../../CMSIS/Core/Include;../../../../../CMSIS/Core/Include/m-profile;../../../../../devices/MIMXRT1062;../../../../../devices/MIMXRT1062/periph;../../../../../devices/MIMXRT1062/xip;../../../../../devices/MIMXRT1062/utilities/debug_console_lite;../../../../../components/lists;../../../../../devices/MIMXRT1062/utilities/str;../../../../../components/gpio;../../../../../components/uart;../../../../../components/osa;../../../../../components/video;../../../../../components/video/display/dc;../../../../../components/video/display;../../../../../components/video/display/fbdev;../../../../../components/video/display/dc/elcdif;../../../../../middleware/fatfs/source;../../../../../middleware/fatfs/template;../../../../../middleware/fatfs/source/fsl_sd_disk;../../../../../middleware/sdmmc/common;../../../../../middleware/sdmmc/osa;../../../../../middleware/sdmmc/sd;../../../../../middleware/sdmmc/host/usdhc;../../../../../middleware/openh264/codec/api/wels;../../../../../middleware/openh264/codec/common/inc;../../../../../middleware/openh264/codec/decoder/core/inc;../../../../../middleware/openh264/codec/decoder/plus/inc;../../../../../rtos/freertos/freertos-kernel/include;../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -3670,11 +3680,6 @@
           <GroupName>component/osa</GroupName>
           <Files>
             <File>
-              <FileName>fsl_os_abstraction.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/osa/fsl_os_abstraction.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_os_abstraction_free_rtos.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../components/osa/fsl_os_abstraction_free_rtos.h</FilePath>
@@ -3683,6 +3688,11 @@
               <FileName>fsl_os_abstraction_free_rtos.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../components/osa/fsl_os_abstraction_free_rtos.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/osa/fsl_os_abstraction.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3867,27 +3877,27 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>openh264/codec/api/svc</GroupName>
+          <GroupName>openh264/codec/api/wels</GroupName>
           <Files>
             <File>
               <FileName>codec_api.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/openh264/codec/api/svc/codec_api.h</FilePath>
+              <FilePath>../../../../../middleware/openh264/codec/api/wels/codec_api.h</FilePath>
             </File>
             <File>
               <FileName>codec_app_def.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/openh264/codec/api/svc/codec_app_def.h</FilePath>
+              <FilePath>../../../../../middleware/openh264/codec/api/wels/codec_app_def.h</FilePath>
             </File>
             <File>
               <FileName>codec_def.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/openh264/codec/api/svc/codec_def.h</FilePath>
+              <FilePath>../../../../../middleware/openh264/codec/api/wels/codec_def.h</FilePath>
             </File>
             <File>
               <FileName>codec_ver.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/openh264/codec/api/svc/codec_ver.h</FilePath>
+              <FilePath>../../../../../middleware/openh264/codec/api/wels/codec_ver.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3940,6 +3950,11 @@
               <FilePath>../../../../../middleware/openh264/codec/common/inc/intra_pred_common.h</FilePath>
             </File>
             <File>
+              <FileName>loongson_intrinsics.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/openh264/codec/common/inc/loongson_intrinsics.h</FilePath>
+            </File>
+            <File>
               <FileName>ls_defines.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/openh264/codec/common/inc/ls_defines.h</FilePath>
@@ -3963,6 +3978,11 @@
               <FileName>memory_align.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/openh264/codec/common/inc/memory_align.h</FilePath>
+            </File>
+            <File>
+              <FileName>msa_macros.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/openh264/codec/common/inc/msa_macros.h</FilePath>
             </File>
             <File>
               <FileName>sad_common.h</FileName>
@@ -4420,11 +4440,6 @@
               <FilePath>../../../../../middleware/openh264/LICENSE</FilePath>
             </File>
             <File>
-              <FileName>CONTRIBUTORS</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/openh264/CONTRIBUTORS</FilePath>
-            </File>
-            <File>
               <FileName>CODING_STYLE</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/openh264/CODING_STYLE</FilePath>
@@ -4648,6 +4663,11 @@
               <FileName>example_board_readme.md</FileName>
               <FileType>5</FileType>
               <FilePath>../example_board_readme.md</FilePath>
+            </File>
+            <File>
+              <FileName>examples_shared_readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../examples_shared_readme.md</FilePath>
             </File>
           </Files>
         </Group>

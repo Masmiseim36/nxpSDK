@@ -1,7 +1,6 @@
 /*
  * Copyright (c) 2015 Freescale Semiconductor, Inc.
  * Copyright 2016-2020 NXP
- * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -31,7 +30,7 @@ enum
     (((uint32_t)kFlexSpiNorProgramConfigBlock_Tag << 28) | kFlexSpiNorProgramConfigBlock_Tag)
 
 #define MAGIC_NUMBER_FLEXSPI_NOR_PRECFG \
-    (0xcf9 | (kSerialNorCfgOption_Tag << 8) & (kSerialNorCfgOption_Tag << 8))
+    (0xcf9 | ((kSerialNorCfgOption_Tag << 8) & (kSerialNorCfgOption_Tag << 8)))
 
 typedef enum _flexspi_nor_property
 {

@@ -38,22 +38,22 @@ static void peripheral_bas_task(void *pvParameters);
 static OSA_TASK_DEFINE(peripheral_bas_task, NCP_BLE_SERVICE_PRIO, 1, 1024, 0);
 static OSA_EVENT_HANDLE_DEFINE(bas_events);
 
-// ble-set-value command paramters
+// ble-set-value command parameters
 static uint8_t battery_level = 100U;
 NCP_SET_VALUE_CMD bas_value;
-bool bas_cccd_written = false;
+bool bas_ccc_written = false;
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
-extern void write_charateristic_command_local(NCP_SET_VALUE_CMD *param);
+extern void write_characteristic_command_local(NCP_SET_VALUE_CMD *param);
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
 static struct host_gatt_attr bas_profile [] = {
-    /* BAS Primary Serivce Declaration */
+    /* BAS Primary Service Declaration */
     GATT_PRIMARY_SERVICE(UUID_BAS),
-    /* BAS Level Charatristic Declaration */
+    /* BAS Level Characteristic Declaration */
     GATT_CHARACTERISTIC(UUID_BAS_BATTERY_LEVEL, BT_GATT_CHRC_NOTIFY, BT_GATT_PERM_NONE),
     /* Client Characteristic Configuration of BAS battery level */
     GATT_CCC(BT_GATT_PERM_READ | BT_GATT_PERM_WRITE),
@@ -79,16 +79,16 @@ void peripheral_bas_start(void)
     {
         is_started = true;
         bas_init();
-        printf("BAS profile at host side starting...\n");
+        PRINTF("BAS profile at host side starting...\n");
         return;
     }
-    printf("BAS profile at host side already started\n");
+    PRINTF("BAS profile at host side already started\n");
     return;
 }
 
 void peripheral_bas_indicate(uint8_t value)
 {
-    bas_cccd_written = (value == BT_GATT_CCC_NOTIFY) ? true : false;
+    bas_ccc_written = (value == BT_GATT_CCC_NOTIFY) ? true : false;
 }
 
 static void peripheral_bas_task(void *pvParameters)
@@ -107,7 +107,7 @@ static void peripheral_bas_task(void *pvParameters)
 
     /*Wait for command response semaphore.*/
     mcu_get_command_resp_sem();
-    printf("Send 'ble-host-svc-add prim 180f chrc 2a19 10 00 ccc 2902 03 start' to add BAS profile to ncp device side\n");
+    PRINTF("Send 'ble-host-svc-add prim 180f chrc 2a19 10 00 ccc 2902 03 start' to add BAS profile to ncp device side\n");
 
     do
     {
@@ -177,7 +177,7 @@ static void peripheral_bas_task(void *pvParameters)
 
     while(1)
     {
-        if(bas_cccd_written)
+        if(bas_ccc_written)
         {
             /* battery level simulation */
             battery_level--;
@@ -192,9 +192,9 @@ static void peripheral_bas_task(void *pvParameters)
             memcpy(&bas_value.value, &battery_level, 1);
 
             //send Set value command
-            write_charateristic_command_local(&bas_value);
+            write_characteristic_command_local(&bas_value);
             ncp_host_send_tlv_command();
-            peripheral_bas_event_get(BAS_EVENT_WRITE_CHRA_RSP);
+            peripheral_bas_event_get(BAS_EVENT_WRITE_CHAR_RSP);
         }
         OSA_TimeDelay(1000);
     }
@@ -205,4 +205,4 @@ void bas_init(void)
     (void)OSA_EventCreate(bas_events, 1U);
     (void)OSA_TaskCreate((osa_task_handle_t)bas_service_thread, OSA_TASK(peripheral_bas_task), (osa_task_param_t)NULL);
 }
-#endif
+#endif /* CONFIG_NCP_BAS */

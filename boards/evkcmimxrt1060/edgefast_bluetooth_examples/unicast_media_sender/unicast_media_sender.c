@@ -1,5 +1,5 @@
 /*
- * Copyright 2023-2024 NXP
+ * Copyright 2023-2025 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -53,18 +53,6 @@ static uint8_t wav_file_buff[MAX_AUDIO_CHANNEL_COUNT * MAX_AUDIO_BUFF_SIZE];
 /* LC3 encoder variables. */
 #include "lc3_codec.h"
 lc3_encoder_t encoder[MAX_AUDIO_CHANNEL_COUNT];
-
-#if defined(CONFIG_BT_A2DP_SINK) && (CONFIG_BT_A2DP_SINK > 0)
-#include "sys/ring_buffer.h"
-RING_BUF_DECLARE(a2dp_to_ums_audio_buf, 10 * 480 * 4);
-int a2dp_sink_audio_frame_size = 0;
-extern void app_audio_streamer_task_signal(void);
-static int ring_buff_read_out_bytes = 0;
-
-int a2dp_audio_sample_rate = 0;
-int a2dp_audio_channels = 0;
-int a2dp_audio_bits = 0;
-#endif
 
 static uint8_t audio_buff[MAX_AUDIO_CHANNEL_COUNT][MAX_AUDIO_BUFF_SIZE];
 static uint8_t sdu_buff[MAX_AUDIO_CHANNEL_COUNT][LC3_FRAME_SIZE_MAX];
@@ -243,30 +231,6 @@ static int audio_stream_encode(bool mute)
 	int bits;
 
 	/* read one frame samples. */
-#if defined(CONFIG_BT_A2DP_SINK) && (CONFIG_BT_A2DP_SINK > 0)
-	if(!mute)
-	{
-		int ret = ring_buf_get(&a2dp_to_ums_audio_buf, wav_file_buff, lc3_codec_info.samples_per_frame * 4);
-
-		if (ret != lc3_codec_info.samples_per_frame * 4)
-		{
-			int clear_bytes = lc3_codec_info.samples_per_frame * 4 - ret;
-			memset(wav_file_buff + ret, 0, clear_bytes);
-		}
-
-		ring_buff_read_out_bytes += ret;
-
-		if(a2dp_sink_audio_frame_size > 0)
-		{
-			for (; ring_buff_read_out_bytes >= a2dp_sink_audio_frame_size; ring_buff_read_out_bytes -= a2dp_sink_audio_frame_size)
-			{
-				app_audio_streamer_task_signal();
-			}
-		}
-	}
-
-	bits = 16;
-#else
 	if(!mute)
 	{
 		int res;
@@ -293,7 +257,6 @@ static int audio_stream_encode(bool mute)
 	}
 
 	bits = wav_file.bits;
-#endif
 
 	if(mute)
 	{
@@ -535,22 +498,18 @@ int select_lc3_preset(char *preset_name)
 
 	for(int i = 0; i < ARRAY_SIZE(lc3_unicast_presets); i++)
 	{
-		const struct bt_audio_codec_cfg *codec_cfg = &lc3_unicast_presets[i].preset.codec_cfg;
-
 		if(0 == strcmp(lc3_unicast_presets[i].name, preset_name))
 		{
-			int sample_rate = bt_audio_codec_cfg_freq_to_freq_hz((enum bt_audio_codec_cfg_freq)bt_audio_codec_cfg_get_freq(codec_cfg));
-#if defined(CONFIG_BT_A2DP_SINK) && (CONFIG_BT_A2DP_SINK > 0)
-			if(sample_rate != a2dp_audio_sample_rate)
-#else
+			const struct bt_bap_lc3_preset *preset = &lc3_unicast_presets[i].preset;
+			int sample_rate = bt_audio_codec_cfg_freq_to_freq_hz((enum bt_audio_codec_cfg_freq)bt_audio_codec_cfg_get_freq(&preset->codec_cfg));
 			if(sample_rate != wav_file.sample_rate)
-#endif
 			{
 				PRINTF("preset sample rate %d not align with wav %d\n", sample_rate, wav_file.sample_rate);
 				return -1;
 			}
 			find = true;
-			memcpy(&lc3_preset, &lc3_unicast_presets[i].preset, sizeof(lc3_preset));
+			memcpy(&lc3_preset, preset, sizeof(lc3_preset));
+			break;
 		}
 	}
 
@@ -560,15 +519,6 @@ int select_lc3_preset(char *preset_name)
 	}
 
 	print_lc3_preset(preset_name, &lc3_preset);
-
-#if defined(CONFIG_BT_A2DP_SINK) && (CONFIG_BT_A2DP_SINK > 0)
-	if((a2dp_audio_sample_rate == 44100) || (a2dp_audio_sample_rate == 48000))
-	{
-		lc3_preset.qos.rtn = 1;
-	}
-
-	print_lc3_preset("a2dp_bridge_limit_rtn=1", &lc3_preset);
-#endif
 
 	(void)OSA_SemaphorePost(sem_lc3_preset);
 
@@ -1040,14 +990,11 @@ static int init(void)
 	(void)OSA_SemaphoreCreate(sem_stream_started, 0);
 	(void)OSA_SemaphoreCreate(sem_stream_connected, 0);
 
-#if defined(CONFIG_BT_A2DP_SINK) && (CONFIG_BT_A2DP_SINK > 0)
-#else
 	int err = bt_enable(NULL);
 	if (err != 0) {
 		PRINTF("Bluetooth enable failed (err %d)\n", err);
 		return err;
 	}
-#endif
 
 	bt_conn_cb_register(&conn_callbacks);
 
@@ -1678,8 +1625,6 @@ void unicast_media_sender_task(void *param)
 		while(1);
 	}
 
-#if defined(CONFIG_BT_A2DP_SINK) && (CONFIG_BT_A2DP_SINK > 0)
-#else
 	/* Host msd init. */
 #if (defined(BT_BLE_PLATFORM_INIT_ESCAPE) && (BT_BLE_PLATFORM_INIT_ESCAPE > 0))
 	USB_HostMsdFatfsInit();
@@ -1690,21 +1635,16 @@ void unicast_media_sender_task(void *param)
 	/* Open wav file */
 	PRINTF("\nPlease open the wav file you want use \"wav_open <path>\" command.\n");
 	OSA_SemaphoreWait(sem_wav_opened, osaWaitForever_c);
-#endif
+
 	/* Select LC3 preset */
-#if defined(CONFIG_BT_A2DP_SINK) && (CONFIG_BT_A2DP_SINK > 0)
-	print_all_preset(a2dp_audio_sample_rate);
-#else
 	print_all_preset(wav_file.sample_rate);
-#endif
+
 	PRINTF("\nPlease select lc3 preset use \"lc3_preset <name>\" command.\n");
 	OSA_SemaphoreWait(sem_lc3_preset, osaWaitForever_c);
+
 	/* Config audio parameters. */
-#if defined(CONFIG_BT_A2DP_SINK) && (CONFIG_BT_A2DP_SINK > 0)
-	config_audio_parameters(a2dp_audio_sample_rate, a2dp_audio_channels, a2dp_audio_bits);
-#else
 	config_audio_parameters(wav_file.sample_rate, wav_file.channels, wav_file.bits);
-#endif
+
 	/* overlay rtn & pd if set */
 	if(new_rtn >= 0)
 	{
@@ -1914,10 +1854,7 @@ void unicast_media_sender_task(void *param)
 		PRINTF("Group deleted\n");
 	}
 
-#if defined(CONFIG_BT_A2DP_SINK) && (CONFIG_BT_A2DP_SINK > 0)
-#else
 	close_wav_file();
-#endif
 
 	while(1);
 }

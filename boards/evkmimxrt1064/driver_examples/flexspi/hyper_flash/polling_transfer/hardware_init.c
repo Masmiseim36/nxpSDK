@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 NXP
+ * Copyright 2018, 2025 NXP
  * All rights reserved.
  *
  *
@@ -34,7 +34,7 @@ flexspi_device_config_t deviceconfig = {
     .AHBWriteWaitInterval = 20,
 };
 
-const uint32_t customLUT[CUSTOM_LUT_LENGTH] = {
+AT_NONCACHEABLE_SECTION_INIT(uint32_t customLUT[CUSTOM_LUT_LENGTH]) = {
     /* Read Data */
     [4 * HYPERFLASH_CMD_LUT_SEQ_IDX_READDATA] =
         FLEXSPI_LUT_SEQ(kFLEXSPI_Command_DDR, kFLEXSPI_8PAD, 0xA0, kFLEXSPI_Command_RADDR_DDR, kFLEXSPI_8PAD, 0x18),

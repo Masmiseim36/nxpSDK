@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 NXP
+ * Copyright 2024-2025 NXP
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -24,7 +24,7 @@
 if (PSA_SUCCESS != psa_status)       \
 {                                            \
 	IOT_AGENT_ERROR(__VA_ARGS__);            \
-	agent_status = STATUS;        \
+	agent_status = (STATUS);        \
 	goto exit;                            \
 }
 

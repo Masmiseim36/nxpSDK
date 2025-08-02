@@ -36,7 +36,7 @@
     <definition extID="com.nxp.mcuxpresso.core.debug.support.segger.debug"/>
     <definition extID="com.nxp.mcuxpresso.core.debug.support.segger.release"/>
   </externalDefinitions>
-  <example id="evkmimxrt1020_fmstr_example_can" name="fmstr_example_can" device_core="core0_MIMXRT1021xxxxx" dependency="platform.drivers.xip_board.evkmimxrt1020.MIMXRT1021 platform.drivers.clock.MIMXRT1021 platform.drivers.iomuxc.MIMXRT1021 CMSIS_Include_core_cm.MIMXRT1021 device.MIMXRT1021_CMSIS.MIMXRT1021 device.MIMXRT1021_system.MIMXRT1021 device.MIMXRT1021_startup.MIMXRT1021 platform.drivers.xip_device.MIMXRT1021 platform.drivers.cache_armv7_m7.MIMXRT1021 platform.drivers.common.MIMXRT1021 platform.drivers.dcdc_1.MIMXRT1021 platform.drivers.flexcan.MIMXRT1021 platform.drivers.gpc_1.MIMXRT1021 platform.drivers.igpio.MIMXRT1021 platform.drivers.lpuart.MIMXRT1021 platform.drivers.pmu.MIMXRT1021 platform.drivers.src.MIMXRT1021 platform.utilities.assert_lite.MIMXRT1021 platform.utilities.misc_utilities.MIMXRT1021 utility.str.MIMXRT1021 utility.debug_console_lite.MIMXRT1021 component.lpuart_adapter.MIMXRT1021 middleware.fmstr.MIMXRT1021 middleware.fmstr.platform_gen32le.MIMXRT1021" category="FreeMASTER_examples">
+  <example id="evkmimxrt1020_fmstr_example_can" name="fmstr_example_can" device_core="core0_MIMXRT1021xxxxx" dependency="platform.drivers.xip_board.evkmimxrt1020.MIMXRT1021 platform.drivers.clock.MIMXRT1021 platform.drivers.iomuxc.MIMXRT1021 CMSIS_Include_core_cm.MIMXRT1021 device.MIMXRT1021_CMSIS.MIMXRT1021 device.MIMXRT1021_system.MIMXRT1021 device.MIMXRT1021_startup.MIMXRT1021 platform.drivers.xip_device.MIMXRT1021 platform.drivers.cache_armv7_m7.MIMXRT1021 platform.drivers.common.MIMXRT1021 platform.drivers.dcdc_1.MIMXRT1021 platform.drivers.flexcan.MIMXRT1021 platform.drivers.gpc_1.MIMXRT1021 platform.drivers.igpio.MIMXRT1021 platform.drivers.lpuart.MIMXRT1021 platform.drivers.pmu.MIMXRT1021 platform.drivers.src.MIMXRT1021 platform.utilities.assert_lite.MIMXRT1021 platform.utilities.misc_utilities.MIMXRT1021 utility.str.MIMXRT1021 utility.debug_console_lite.MIMXRT1021 component.lpuart_adapter.MIMXRT1021 middleware.fmstr.MIMXRT1021 middleware.fmstr.platform_gen32le.MIMXRT1021" category="freemaster_examples">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -57,6 +57,7 @@
           <value>SDK_DEBUGCONSOLE=1</value>
           <value>MCUX_META_BUILD</value>
           <value>CPU_MIMXRT1021DAG5A</value>
+          <value>MIMXRT1021_SERIES</value>
         </option>
         <option id="com.crt.advproject.link.memory.sections" type="stringList">
           <value>isd=*(CodeQuickAccess);region=SRAM_ITC;type=.data</value>
@@ -230,6 +231,9 @@
     </source>
     <source path="." project_relative_path="doc" type="doc">
       <files mask="example_board_readme.md"/>
+    </source>
+    <source path="." project_relative_path="doc" type="doc">
+      <files mask="examples_shared_readme.md"/>
     </source>
   </example>
 </ksdk:examples>

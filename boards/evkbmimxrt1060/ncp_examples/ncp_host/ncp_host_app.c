@@ -590,6 +590,8 @@ int ncp_host_send_tlv_command()
                     OSA_MutexUnlock((osa_mutex_handle_t)ncp_device_status_mutex);
 #if CONFIG_NCP_UART
                     /* Send the magic pattern to wakeup the NCP device */
+                    /*  OVERRUN | Coverity Event overrun-buffer-val */
+                    // coverity[overrun-buffer-val:SUPPRESS]
                     ncp_tlv_send(&magic_pattern, sizeof(magic_pattern));
                     /* Block here to wait for NCP device complete the PM2 exit process */
                     OSA_SemaphoreWait((osa_semaphore_handle_t)gpio_wakelock, osaWaitForever_c);

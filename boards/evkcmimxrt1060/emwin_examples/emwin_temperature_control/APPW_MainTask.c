@@ -3,14 +3,14 @@
 *        Solutions for real time microcontroller applications        *
 **********************************************************************
 *                                                                    *
-*        (c) 1996 - 2020  SEGGER Microcontroller GmbH                *
+*        (c) 1996 - 2025  SEGGER Microcontroller GmbH                *
 *                                                                    *
 *        Internet: www.segger.com    Support:  support@segger.com    *
 *                                                                    *
 **********************************************************************
 ----------------------------------------------------------------------
 File        : APPW_MainTask.c
-Purpose     : APPWIZARD application entry point
+Purpose     : AppWizard application entry point
 ---------------------------END-OF-HEADER------------------------------
 */
 

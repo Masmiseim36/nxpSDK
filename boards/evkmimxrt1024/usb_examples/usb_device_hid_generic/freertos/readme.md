@@ -171,7 +171,6 @@ For example, data "12 34 56 78 90 ab cd ef" is sent to the device. The message "
 - EVK-MIMXRT1064
 - FRDM-MCXA153
 - MIMXRT685-AUD-EVK
-- FRDM-MCXA276
 - LPCXpresso51U68
 - LPCXpresso54S018
 - [LPCXpresso55S16](../../_boards/lpcxpresso55s16/usb_examples/usb_device_hid_generic/example_board_readme.md)

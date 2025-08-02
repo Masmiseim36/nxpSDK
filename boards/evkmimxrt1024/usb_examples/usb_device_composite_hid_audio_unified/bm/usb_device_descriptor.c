@@ -443,8 +443,8 @@ uint8_t g_UsbDeviceConfigurationDescriptor[] = {
     AUDIO_IN_FORMAT_CHANNELS,   /* This Terminal's output audio channel cluster has 16 logical output channels   */
     0x03U, 0x00U, 0x00U, 0x00U, /* Describes the spatial location of the logical channels:: Mono, no spatial location */
     0x00U,                      /* Index of a string descriptor, describing the name of the first logical channel.  */
-    0x00U, 0x00U,               /* bmControls D1..0: Copy Protect Control is not present
-                                   D3..2: Connector Control is not present
+    0x0CU, 0x00U,               /* bmControls D1..0: Copy Protect Control is not present
+                                   D3..2: Connector Control is present
                                    D5..4: Overload Control is not present
                                    D7..6: Cluster Control is not present
                                    D9..8: Underflow Control is not present

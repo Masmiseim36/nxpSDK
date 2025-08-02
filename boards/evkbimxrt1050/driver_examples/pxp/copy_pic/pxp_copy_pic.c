@@ -13,17 +13,6 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define INPUT_BUF_WIDTH   128
-#define INPUT_BUF_HEIGHT  64
-#define OUTPUT_BUF_WIDTH  64
-#define OUTPUT_BUF_HEIGHT 32
-#define COPY_WIDTH        16
-#define COPY_HEIGHT       8
-#define SRC_OFFSET_X      0
-#define SRC_OFFSET_Y      0
-#define DEST_OFFSET_X     10
-#define DEST_OFFSET_Y     20
-
 #define APP_ASSERT(cond)     \
     if (true != (cond))      \
     {                        \

@@ -328,7 +328,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../mcux_config.h -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
-              <Define>DEBUG, XIP_BOOT_HEADER_ENABLE=1, XIP_EXTERNAL_FLASH=1, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1024DAG5A, SDK_I2C_BASED_COMPONENT_USED=1, CODEC_MULTI_ADAPTERS=1, CODEC_WM8960_ENABLE</Define>
+              <Define>DEBUG, XIP_BOOT_HEADER_ENABLE=1, XIP_EXTERNAL_FLASH=1, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1024DAG5A, MIMXRT1024_SERIES, SDK_I2C_BASED_COMPONENT_USED=1, CODEC_MULTI_ADAPTERS=1, CODEC_WM8960_ENABLE</Define>
               <Undefine/>
               <IncludePath>..;../../../../xip;../../../../../../devices/MIMXRT1024/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1024;../../../../../../devices/MIMXRT1024/periph;../../../../../../devices/MIMXRT1024/xip;../../../../../../devices/MIMXRT1024/utilities/debug_console_lite;../../../../../../devices/MIMXRT1024/utilities/str;../../../../../../components/codec/i2c;../../../../../../components/codec;../../../../../../components/codec/port;../../../../../../components/codec/port/wm8960;../../../../../../components/codec/wm8960;../../../../../../components/i2c;../../../../../../components/uart</IncludePath>
             </VariousControls>
@@ -346,7 +346,7 @@
             <uClangAs>1</uClangAs>
             <VariousControls>
               <MiscControls/>
-              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1024DAG5A</Define>
+              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1024DAG5A, MIMXRT1024_SERIES</Define>
               <Undefine/>
               <IncludePath>..;../../../../xip;../../../../../../devices/MIMXRT1024/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1024;../../../../../../devices/MIMXRT1024/periph;../../../../../../devices/MIMXRT1024/xip;../../../../../../devices/MIMXRT1024/utilities/debug_console_lite;../../../../../../devices/MIMXRT1024/utilities/str;../../../../../../components/codec/i2c;../../../../../../components/codec;../../../../../../components/codec/port;../../../../../../components/codec/port/wm8960;../../../../../../components/codec/wm8960;../../../../../../components/i2c;../../../../../../components/uart</IncludePath>
             </VariousControls>
@@ -1159,6 +1159,11 @@
               <FileName>example_board_readme.md</FileName>
               <FileType>5</FileType>
               <FilePath>../example_board_readme.md</FilePath>
+            </File>
+            <File>
+              <FileName>examples_shared_readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../examples_shared_readme.md</FilePath>
             </File>
           </Files>
         </Group>
@@ -1489,7 +1494,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../mcux_config.h -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
-              <Define>NDEBUG, XIP_BOOT_HEADER_ENABLE=1, XIP_EXTERNAL_FLASH=1, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1024DAG5A, SDK_I2C_BASED_COMPONENT_USED=1, CODEC_MULTI_ADAPTERS=1, CODEC_WM8960_ENABLE</Define>
+              <Define>NDEBUG, XIP_BOOT_HEADER_ENABLE=1, XIP_EXTERNAL_FLASH=1, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1024DAG5A, MIMXRT1024_SERIES, SDK_I2C_BASED_COMPONENT_USED=1, CODEC_MULTI_ADAPTERS=1, CODEC_WM8960_ENABLE</Define>
               <Undefine/>
               <IncludePath>..;../../../../xip;../../../../../../devices/MIMXRT1024/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1024;../../../../../../devices/MIMXRT1024/periph;../../../../../../devices/MIMXRT1024/xip;../../../../../../devices/MIMXRT1024/utilities/debug_console_lite;../../../../../../devices/MIMXRT1024/utilities/str;../../../../../../components/codec/i2c;../../../../../../components/codec;../../../../../../components/codec/port;../../../../../../components/codec/port/wm8960;../../../../../../components/codec/wm8960;../../../../../../components/i2c;../../../../../../components/uart</IncludePath>
             </VariousControls>
@@ -1507,7 +1512,7 @@
             <uClangAs>1</uClangAs>
             <VariousControls>
               <MiscControls/>
-              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1024DAG5A</Define>
+              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1024DAG5A, MIMXRT1024_SERIES</Define>
               <Undefine/>
               <IncludePath>..;../../../../xip;../../../../../../devices/MIMXRT1024/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1024;../../../../../../devices/MIMXRT1024/periph;../../../../../../devices/MIMXRT1024/xip;../../../../../../devices/MIMXRT1024/utilities/debug_console_lite;../../../../../../devices/MIMXRT1024/utilities/str;../../../../../../components/codec/i2c;../../../../../../components/codec;../../../../../../components/codec/port;../../../../../../components/codec/port/wm8960;../../../../../../components/codec/wm8960;../../../../../../components/i2c;../../../../../../components/uart</IncludePath>
             </VariousControls>
@@ -2320,6 +2325,11 @@
               <FileName>example_board_readme.md</FileName>
               <FileType>5</FileType>
               <FilePath>../example_board_readme.md</FilePath>
+            </File>
+            <File>
+              <FileName>examples_shared_readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../examples_shared_readme.md</FilePath>
             </File>
           </Files>
         </Group>

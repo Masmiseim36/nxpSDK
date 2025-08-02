@@ -1,5 +1,5 @@
 /*
- * Copyright 2023,2025 NXP
+ * Copyright 2023 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -14,10 +14,6 @@
  *******************************************************************/
 #ifndef _SR_CVT_FRM_H_
 #define _SR_CVT_FRM_H_
-
-#ifdef __cplusplus
-extern "C" {
-#endif
 
 #define MAX_FLT_TAPS		168
 #define MAX_FRM_SIZE		523
@@ -72,9 +68,5 @@ void initUpCvtFrm(SrCvtFrm_t *sfCvt, SrCvtFrmCfg_t *cfg, double freqOffset);
 void initDownCvtFrm(SrCvtFrm_t *sfCvt, SrCvtFrmCfg_t *cfg, double freqOffset);
 int upCvtFrm(SrCvtFrm_t *sfCvt, short *smplsIn, short *smplsOut);
 int downCvtFrm(SrCvtFrm_t *sfCvt, short *smplsIn, short *smplsOut);
-
-#ifdef __cplusplus
-}
-#endif
 
 #endif //_SR_CVT_FRM_H_

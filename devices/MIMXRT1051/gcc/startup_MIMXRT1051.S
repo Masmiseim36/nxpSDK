@@ -2,13 +2,13 @@
 /*  @file:    startup_MIMXRT1051.s                                           */
 /*  @purpose: CMSIS Cortex-M7 Core Device Startup File                       */
 /*            MIMXRT1051                                                     */
-/*  @version: 1.4                                                            */
-/*  @date:    2021-8-10                                                      */
-/*  @build:   b231019                                                        */
+/*  @version: 2.0                                                            */
+/*  @date:    2024-10-29                                                     */
+/*  @build:   b250520                                                        */
 /* ------------------------------------------------------------------------- */
 /*                                                                           */
 /* Copyright 1997-2016 Freescale Semiconductor, Inc.                         */
-/* Copyright 2016-2023 NXP                                                   */
+/* Copyright 2016-2025 NXP                                                   */
 /* SPDX-License-Identifier: BSD-3-Clause                                     */
 /*****************************************************************************/
 /* Version: GCC for ARM Embedded Processors                                  */

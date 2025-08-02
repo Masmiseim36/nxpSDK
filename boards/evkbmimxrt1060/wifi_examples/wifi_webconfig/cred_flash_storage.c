@@ -100,7 +100,7 @@ uint32_t save_wifi_credentials(char *filename, char *ssid, char *passphrase, cha
 
 uint32_t get_saved_wifi_credentials(char *filename, char *ssid, char *passphrase, char *security)
 {
-    uint8_t *credentials_buf;
+    const uint8_t *credentials_buf;
     uint32_t data_len = 0;
     status_t status;
     ssid[0]       = '\0';

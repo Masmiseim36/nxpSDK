@@ -3,7 +3,9 @@ Hardware requirements
 - Mini/micro USB cable
 - Network cable RJ45 standard
 - EVKB-IMXRT1050 board
-- One BECKHOFF EK1100 EtherCAT Coupler
+- BECKHOFF EK1100 EtherCAT Coupler *1
+- BECKHOFF EL2008 *1
+- BECKHOFF EL1018 *1
 - Personal Computer
 
 Board settings

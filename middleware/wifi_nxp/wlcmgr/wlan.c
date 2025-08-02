@@ -5386,7 +5386,7 @@ static void wpa_supplicant_msg_cb(const char *buf, size_t len)
     wlcm_d("%s: %s", __func__, buf);
 
 #if CONFIG_WPA_SUPP_P2P
-    if (strstr(buf, "P2P-"))
+    if (strstr(buf, "P2P-SERV"))
         PRINTF("%s\r\n", buf);
 #endif
 
@@ -7044,7 +7044,7 @@ static enum cm_sta_state handle_message(struct wifi_message *msg)
     {	
         netif = net_get_wfd_interface();
     }
-#endif
+#endif    
     switch (msg->event)
     {
         case CM_STA_USER_REQUEST_CONNECT:

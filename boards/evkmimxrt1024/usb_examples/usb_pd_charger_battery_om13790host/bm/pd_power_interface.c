@@ -55,6 +55,10 @@ void PD_PowerGetVbusVoltage(uint32_t *partnerSourceCaps, pd_rdo_t rdo, pd_vbus_p
     }
 
     vbusPower->requestValue = rdo.bitFields.operateValue;
+    if (rdo.bitFields.objectPosition < 1U)
+    {
+        return;
+    }
     pdo.PDOValue            = partnerSourceCaps[rdo.bitFields.objectPosition - 1U];
     switch (pdo.commonPDO.pdoType)
     {

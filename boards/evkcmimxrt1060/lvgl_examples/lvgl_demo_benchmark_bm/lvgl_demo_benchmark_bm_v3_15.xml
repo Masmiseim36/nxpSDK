@@ -70,6 +70,7 @@
           <value>SDK_DEBUGCONSOLE=1</value>
           <value>MCUX_META_BUILD</value>
           <value>CPU_MIMXRT1062DVL6B</value>
+          <value>MIMXRT1062_SERIES</value>
           <value>SDK_I2C_BASED_COMPONENT_USED=1</value>
           <value>LV_CONF_INCLUDE_SIMPLE=1</value>
         </option>
@@ -244,6 +245,9 @@
     </source>
     <source path="." project_relative_path="doc" type="doc">
       <files mask="lvgl_examples_readme.md"/>
+    </source>
+    <source path="." project_relative_path="doc" type="doc">
+      <files mask="examples_shared_readme.md"/>
     </source>
   </example>
 </ksdk:examples>

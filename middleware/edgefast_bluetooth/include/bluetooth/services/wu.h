@@ -1,5 +1,5 @@
 /*
- * Copyright 2019,2025 NXP
+ * Copyright 2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -11,10 +11,6 @@
 
 #ifndef __WIRELESS_UART_H__
 #define __WIRELESS_UART_H__
-
-#ifdef __cplusplus
-extern "C" {
-#endif
 
 typedef int (*bt_gatt_wu_read_response_t)(void *param, uint8_t* buffer, ssize_t length);
 typedef int (*bt_gatt_wu_read_request_t)(struct bt_conn *conn, bt_gatt_wu_read_response_t response, void *param);
@@ -38,9 +34,5 @@ void bt_gatt_wu_init(char* name, char* serial_no, bt_gatt_wu_config_t* config);
 void bt_gatt_wu_notify(struct bt_conn *conn);
 void bt_gatt_wu_connected(struct bt_conn *conn);
 void bt_gatt_wu_disconnected(struct bt_conn *conn);
-
-#ifdef __cplusplus
-}
-#endif
 
 #endif

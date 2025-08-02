@@ -57,8 +57,11 @@
  * Definitions
  ******************************************************************************/
 #define SERIAL_PORT_NVIC_PRIO 5
-
-#if !defined(RW610_SERIES) && !defined(RW612_SERIES)
+#if defined(MCXN947_cm33_core0_SERIES)
+#define DEMO_LPUART          LPUART4
+#define DEMO_LPUART_CLK_FREQ BOARD_DEBUG_UART_CLK_FREQ
+#define DEMO_LPUART_IRQn     LP_FLEXCOMM4_IRQn
+#elif !defined(RW610_SERIES) && !defined(RW612_SERIES)
 #define DEMO_LPUART          LPUART1
 #define DEMO_LPUART_CLK_FREQ BOARD_DebugConsoleSrcFreq()
 #define DEMO_LPUART_IRQn     LPUART1_IRQn
@@ -215,7 +218,7 @@ lpuart_rtos_handle_t handle_bt;
 struct _lpuart_handle t_handle_bt;
 
 lpuart_rtos_config_t lpuart_config_bt = {
-#ifdef WIFI_BT_USE_M2_INTERFACE
+#if defined(WIFI_BT_USE_M2_INTERFACE) && !defined(WIFI_IW610_BOARD_MURATA_2LL_M2)
     .baudrate    = 115200,/* Tested for FC 2EL M2 */
 #else
     .baudrate    = 3000000,
@@ -337,7 +340,9 @@ static void uart_init_crc32(uart_cb *uartcb)
     for (i = 0; i < 256; ++i)
     {
         for (c = i << 24, j = 8; j > 0; --j)
+        {
             c = c & 0x80000000 ? (c << 1) ^ CRC32_POLY : (c << 1);
+        }
         uartcb->crc32_table[i] = c;
     }
 }
@@ -347,9 +352,11 @@ static uint32_t uart_get_crc32(uart_cb *uart, int len, unsigned char *buf)
     unsigned int *crc32_table = uart->crc32_table;
     unsigned char *p;
     unsigned int crc;
-    crc = 0xffffffff;
+    crc = 0xffffffffU;
     for (p = buf; len > 0; ++p, --len)
-        crc = (crc << 8) ^ (crc32_table[(crc >> 24) ^ *p]);
+    {
+        crc = (crc << 8U) ^ (crc32_table[(crc >> 24U) ^ *p]);
+    }
     return ~crc;
 }
 
@@ -409,9 +416,9 @@ static int send_response_to_uart(uart_cb *uart, uint8_t *resp, int type, uint32_
 
     /* write response to uart */
 #if defined(RW610_SERIES) || defined(RW612_SERIES)
-    USART_RTOS_Send(&handle, rx_buf, payloadlen + sizeof(cmd_header) + sizeof(uart_header) + 4);
+    (void)USART_RTOS_Send(&handle, rx_buf, payloadlen + sizeof(cmd_header) + sizeof(uart_header) + 4);
 #else
-    LPUART_RTOS_Send(&handle, rx_buf, payloadlen + sizeof(cmd_header) + sizeof(uart_header) + 4);
+    (void)LPUART_RTOS_Send(&handle, rx_buf, payloadlen + sizeof(cmd_header) + sizeof(uart_header) + 4);
 #endif
 
     memset(rx_buf, 0, BUF_LEN);
@@ -435,9 +442,9 @@ int check_command_complete(uint8_t *buf)
     uarthdr = (uart_header *)buf;
 
     /* out of sync */
-    if (uarthdr->pattern != 0x5555)
+    if (uarthdr->pattern != (short)0x5555)
     {
-        PRINTF("Pattern mismatch\r\n");
+        (void)PRINTF("Pattern mismatch\r\n");
         return -WM_FAIL;
     }
     /* check crc */
@@ -475,7 +482,9 @@ int check_command_complete(uint8_t *buf)
 hal_imumc_status_t wifi_send_imu_raw_data(uint8_t *data, uint32_t length)
 {
     if (data == NULL || length == 0)
+    {
         return kStatus_HAL_ImumcError;
+    }
 
     if (kStatus_HAL_ImumcSuccess != (HAL_ImuSendCommand(kIMU_LinkCpu1Cpu3, data, length)))
     {
@@ -522,7 +531,7 @@ int bt_raw_packet_send(uint8_t *buf, int m_len)
 
     memcpy(&last_cmd_hdr, cmd_hd, sizeof(cmd_header));
 
-    LPUART_RTOS_Send(&handle_bt, local_outbuf, payloadlen);
+    (void)LPUART_RTOS_Send(&handle_bt, local_outbuf, payloadlen);
 
     memset(local_outbuf, 0, BUF_LEN);
 
@@ -569,7 +578,7 @@ int process_input_cmd(uint8_t *buf, int m_len)
     uint8_t *s, *d;
     cmd_header *cmd_hd = (cmd_header *)(buf + sizeof(uarthdr));
 
-    if (cmd_hd->type == TYPE_WLAN)
+    if (cmd_hd->type == (short)TYPE_WLAN)
     {
         memset(local_outbuf, 0, BUF_LEN);
 
@@ -590,7 +599,9 @@ int process_input_cmd(uint8_t *buf, int m_len)
         for (i = 0; i < uarthdr->length - sizeof(cmd_header); i++)
         {
             if (s < buf + UART_BUF_SIZE)
+            {
                 *d++ = *s++;
+            }
             else
             {
                 s    = buf;
@@ -603,7 +614,9 @@ int process_input_cmd(uint8_t *buf, int m_len)
         for (i = 0; i < sizeof(cmd_header); i++)
         {
             if (s < buf + UART_BUF_SIZE)
+            {
                 *d++ = *s++;
+            }
             else
             {
                 s    = buf;
@@ -630,6 +643,10 @@ int process_input_cmd(uint8_t *buf, int m_len)
 #elif defined(MIMXRT1176_cm7_SERIES)
         ret = zigbee_raw_packet_send(buf, m_len);
 #endif
+    }
+    else
+    {
+        ;
     }
 
     return ret;
@@ -711,7 +728,7 @@ void send_bt_response_to_uart(uart_cb *uart_bt, int msg_len)
     rx_buf[index + 3] = (bridge_chksum & 0xff000000) >> 24;
 
     /* write response to uart */
-    LPUART_RTOS_Send(&handle, rx_buf, payloadlen + sizeof(cmd_header) + sizeof(uart_header) + 4);
+    (void)LPUART_RTOS_Send(&handle, rx_buf, payloadlen + sizeof(cmd_header) + sizeof(uart_header) + 4);
     memset(rx_buf, 0, BUF_LEN);
 }
 
@@ -749,7 +766,7 @@ void send_zigbee_response_to_uart(uint8_t *rxData, uint32_t payloadlen)
     rx_buf[index + 3] = (bridge_chksum & 0xff000000) >> 24;
 
     /* write response to uart */
-    LPUART_RTOS_Send(&handle, rx_buf, payloadlen + sizeof(cmd_header) + sizeof(uart_header) + 4);
+    (void)LPUART_RTOS_Send(&handle, rx_buf, payloadlen + sizeof(cmd_header) + sizeof(uart_header) + 4);
     memset(rx_buf, 0, BUF_LEN);
 }
 #endif
@@ -770,7 +787,7 @@ hal_imumc_status_t read_wlan_resp(IMU_Msg_t *pImuMsg, uint32_t len)
 
     uart_cb *uart = &uartcb;
 
-    send_response_to_uart(uart, (uint8_t *)(pImuMsg->PayloadPtr[0]), 1, len);
+    (void)send_response_to_uart(uart, (uint8_t *)(pImuMsg->PayloadPtr[0]), 1, len);
 
     return kStatus_HAL_ImumcSuccess;
 }
@@ -785,14 +802,16 @@ hal_imumc_return_status_t read_imumc_resp(void *param, uint8_t *packet, uint32_t
     return kStatus_HAL_RL_RELEASE;
 }
 #else
-void read_wlan_resp()
+void read_wlan_resp(void)
 {
     // uart_cb *uart = &uartcb;
     t_u8 *packet;
     t_u32 pkt_type;
     int rv = wifi_raw_packet_recv(&packet, &pkt_type);
     if (rv != WM_SUCCESS)
-        PRINTF("Receive response failed\r\n");
+    {
+        (void)PRINTF("Receive response failed\r\n");
+    }
     else
     {
         //        if (pkt_type == MLAN_TYPE_CMD)
@@ -844,7 +863,7 @@ void read_bt_resp()
 }
 
 #if defined(MIMXRT1176_cm7_SERIES)
-void read_zigbee_resp()
+void read_zigbee_resp(void)
 {
     handle_spi.txData   = NULL;
     handle_spi.rxData   = local_outbuf;
@@ -862,7 +881,7 @@ void read_zigbee_resp()
 #endif
 
 #if defined(RW610_SERIES) || defined(RW612_SERIES)
-static hal_imumc_status_t imu_wifi_config()
+static hal_imumc_status_t imu_wifi_config(void)
 {
     hal_imumc_status_t state = kStatus_HAL_ImumcSuccess;
 
@@ -897,7 +916,7 @@ static hal_imumc_status_t imumc_config(uint32_t linkId)
 }
 #endif
 
-static hal_imumc_status_t imumc_init()
+static hal_imumc_status_t imumc_init(void)
 {
 #if (defined(CONFIG_SUPPORT_BLE) && (CONFIG_SUPPORT_BLE == 1)) || \
     (defined(CONFIG_SUPPORT_15D4) && (CONFIG_SUPPORT_15D4 == 1))
@@ -922,54 +941,54 @@ static hal_imumc_status_t imumc_init()
 #define RW610_PACKAGE_TYPE_CSP 1
 #define RW610_PACKAGE_TYPE_BGA 2
 
-void wifi_cau_temperature_enable()
+void wifi_cau_temperature_enable(void)
 {
     uint32_t val;
 
     val = WIFI_REG32(WLAN_CAU_ENABLE_ADDR);
-    val &= ~(0xC);
-    val |= (2 << 2);
+    val &= ~(0xCU);
+    val |= (2U << 2U);
     WIFI_WRITE_REG32(WLAN_CAU_ENABLE_ADDR, val);
 }
 
-void wifi_pmip_v33_enable()
+void wifi_pmip_v33_enable(void)
 {
     uint32_t val;
 
     val = WIFI_REG32(WLAN_PMIP_TSEN_ADDR);
-    val &= ~(0xE);
-    val |= (5 << 1);
+    val &= ~(0xEU);
+    val |= (5U << 1U);
     WIFI_WRITE_REG32(WLAN_PMIP_TSEN_ADDR, val);
 
     val = WIFI_REG32(WLAN_V33_VSEN_ADDR);
-    val &= ~(0xE);
-    val |= (5 << 1);
+    val &= ~(0xEU);
+    val |= (5U << 1U);
     WIFI_WRITE_REG32(WLAN_V33_VSEN_ADDR, val);
 
     val = WIFI_REG32(WLAN_ADC_CTRL_ADDR);
-    val |= 1 << 0;
+    val |= 1U << 0U;
     WIFI_WRITE_REG32(WLAN_ADC_CTRL_ADDR, val);
 
     val = WIFI_REG32(WLAN_ADC_CTRL_ADDR);
-    val &= ~(1 << 0);
+    val &= ~(1U << 0U);
     WIFI_WRITE_REG32(WLAN_ADC_CTRL_ADDR, val);
 }
 
 static uint32_t wifi_get_board_type()
 {
     status_t status;
-    static uint32_t wifi_rw610_package_type = 0xFFFFFFFF;
+    static uint32_t wifi_rw610_package_type = 0xFFFFFFFFU;
 
-    if (0xFFFFFFFF == wifi_rw610_package_type)
+    if (0xFFFFFFFFU == wifi_rw610_package_type)
     {
-        OCOTP_OtpInit();
+        (void)OCOTP_OtpInit();
         status = OCOTP_ReadPackage(&wifi_rw610_package_type);
         if (status != kStatus_Success)
         {
             /*If status error, use BGA as default type*/
             wifi_rw610_package_type = RW610_PACKAGE_TYPE_BGA;
         }
-        OCOTP_OtpDeinit();
+        (void)OCOTP_OtpDeinit();
     }
 
     return wifi_rw610_package_type;
@@ -1001,7 +1020,7 @@ int32_t wifi_get_temperature(void)
             break;
 
         default:
-            PRINTF("Unknown board type, use BGA temperature \r\n");
+            (void)PRINTF("Unknown board type, use BGA temperature \r\n");
             val = (((((int32_t)(temp_Cau_Raw_Reading)) * 480561) - 220707400) / 1000000);
             break;
     }
@@ -1044,6 +1063,7 @@ static void main_task(osa_task_param_t arg)
 #ifdef CONFIG_BT_IND_DNLD
     void *intf = NULL;
     /* BTonly firmware download over UART */
+    BOARD_WIFI_BT_Enable(false);
     BOARD_WIFI_BT_Enable(true);
     intf = (void *)uart_init_interface();
     assert(intf != NULL);
@@ -1069,49 +1089,11 @@ static void main_task(osa_task_param_t arg)
                 result = -WIFI_ERROR_FW_NOT_READY;
                 break;
         }
-        PRINTF("sd_wifi_init failed, result:%d\r\n", result);
+        (void)PRINTF("sd_wifi_init failed, result:%d\r\n", result);
     }
 
     assert(WM_SUCCESS == result);
 #endif /* CONFIG_BT_IND_DNLD */
-#endif
-
-#if defined(RW610_SERIES) || defined(RW612_SERIES)
-    NVIC_SetPriority(BOARD_UART_IRQ, 5);
-    usart_config.srcclk = BOARD_DEBUG_UART_CLK_FREQ;
-    usart_config.base   = BOARD_DEBUG_UART;
-
-    if (kStatus_Success != USART_RTOS_Init(&handle, &t_handle, &usart_config))
-    {
-        vTaskSuspend(NULL);
-    }
-#else
-    NVIC_SetPriority(LPUART1_IRQn, 5);
-#if defined(MIMXRT1176_cm7_SERIES)
-    NVIC_SetPriority(LPUART2_IRQn, HAL_UART_ISR_PRIORITY);
-#else
-    NVIC_SetPriority(LPUART3_IRQn, HAL_UART_ISR_PRIORITY);
-#endif
-
-    lpuart_config.srcclk = DEMO_LPUART_CLK_FREQ;
-    lpuart_config.base   = DEMO_LPUART;
-
-    if (kStatus_Success != LPUART_RTOS_Init(&handle, &t_handle, &lpuart_config))
-    {
-        vTaskSuspend(NULL);
-    }
-
-    lpuart_config_bt.srcclk = BOARD_BT_UART_CLK_FREQ;
-#if defined(MIMXRT1176_cm7_SERIES)
-    lpuart_config_bt.base   = LPUART2;
-#else
-    lpuart_config_bt.base = LPUART3;
-#endif
-
-    if (kStatus_Success != LPUART_RTOS_Init(&handle_bt, &t_handle_bt, &lpuart_config_bt))
-    {
-        vTaskSuspend(NULL);
-    }
 #endif
 
 #if defined(MIMXRT1176_cm7_SERIES)
@@ -1149,18 +1131,18 @@ static void main_task(osa_task_param_t arg)
 #endif
 
     /* Initialize WIFI Driver */
-    imu_wifi_config();
+    (void)imu_wifi_config();
 
 #if (CONFIG_SUPPORT_15D4 == 1) || (CONFIG_SUPPORT_BLE == 1)
     /* Initialize imumc */
-    imumc_init();
+    (void)imumc_init();
 #endif
     /* Initialize CAU temperature timer */
     g_wifi_cau_temperature_timer =
         xTimerCreate("CAU Timer", 5000 / portTICK_PERIOD_MS, pdTRUE, NULL, wifi_cau_temperature_timer_cb);
     if (g_wifi_cau_temperature_timer == NULL)
     {
-        PRINTF("Failed to create CAU temperature timer\r\n");
+        (void)PRINTF("Failed to create CAU temperature timer\r\n");
         while (1)
         {
         }
@@ -1169,10 +1151,54 @@ static void main_task(osa_task_param_t arg)
     result = xTimerStart(g_wifi_cau_temperature_timer, 5000 / portTICK_PERIOD_MS);
     if (result != pdPASS)
     {
-        PRINTF("Failed to start CAU temperature timer\r\n");
+        (void)PRINTF("Failed to start CAU temperature timer\r\n");
         while (1)
         {
         }
+    }
+#endif
+#if defined(RW610_SERIES) || defined(RW612_SERIES)
+    NVIC_SetPriority(BOARD_UART_IRQ, 5);
+    usart_config.srcclk = BOARD_DEBUG_UART_CLK_FREQ;
+    usart_config.base   = BOARD_DEBUG_UART;
+
+    if (kStatus_Success != USART_RTOS_Init(&handle, &t_handle, &usart_config))
+    {
+        (void)vTaskSuspend(NULL);
+    }
+#else
+#if defined(MCXN947_cm33_core0_SERIES)
+    (void)NVIC_SetPriority(LP_FLEXCOMM4_IRQn, 5);
+#else
+    (void)NVIC_SetPriority(LPUART1_IRQn, 5);
+#endif
+#if defined(MIMXRT1176_cm7_SERIES)
+    (void)NVIC_SetPriority(LPUART2_IRQn, HAL_UART_ISR_PRIORITY);
+#elif defined(MCXN947_cm33_core0_SERIES)
+    (void)NVIC_SetPriority(LP_FLEXCOMM2_IRQn, HAL_UART_ISR_PRIORITY);
+#else
+    (void)NVIC_SetPriority(LPUART3_IRQn, HAL_UART_ISR_PRIORITY);
+
+#endif
+
+    lpuart_config.srcclk = DEMO_LPUART_CLK_FREQ;
+    lpuart_config.base   = DEMO_LPUART;
+
+    if (kStatus_Success != LPUART_RTOS_Init(&handle, &t_handle, &lpuart_config))
+    {
+        (void)vTaskSuspend(NULL);
+    }
+
+    lpuart_config_bt.srcclk = BOARD_BT_UART_CLK_FREQ;
+#if defined(MIMXRT1176_cm7_SERIES) || defined(MCXN947_cm33_core0_SERIES)
+    lpuart_config_bt.base   = LPUART2;
+#else
+    lpuart_config_bt.base = LPUART3;
+#endif
+
+    if (kStatus_Success != LPUART_RTOS_Init(&handle_bt, &t_handle_bt, &lpuart_config_bt))
+    {
+        (void)vTaskSuspend(NULL);
     }
 #endif
     size_t uart_rx_len = 0;
@@ -1189,9 +1215,9 @@ static void main_task(osa_task_param_t arg)
 #if defined(RW610_SERIES) || defined(RW612_SERIES)
             USART_RTOS_Receive(&handle, uart->uart_buf + len, LABTOOL_PATTERN_HDR_LEN, &uart_rx_len);
 #else
-            LPUART_RTOS_Receive(&handle, uart->uart_buf + len, LABTOOL_PATTERN_HDR_LEN, &uart_rx_len);
+            (void)LPUART_RTOS_Receive(&handle, uart->uart_buf + len, LABTOOL_PATTERN_HDR_LEN, &uart_rx_len);
 #endif
-            len += uart_rx_len;
+            len += (int)uart_rx_len;
         }
 
         /* Length of the packet is indicated by byte[2] & byte[3] of
@@ -1206,7 +1232,7 @@ static void main_task(osa_task_param_t arg)
             USART_RTOS_Receive(&handle, uart->uart_buf + LABTOOL_PATTERN_HDR_LEN + len, msg_len + CHECKSUM_LEN - len,
                                &uart_rx_len);
 #else
-            LPUART_RTOS_Receive(&handle, uart->uart_buf + LABTOOL_PATTERN_HDR_LEN + len, msg_len + CHECKSUM_LEN - len,
+            (void)LPUART_RTOS_Receive(&handle, uart->uart_buf + LABTOOL_PATTERN_HDR_LEN + len, msg_len + CHECKSUM_LEN - len,
                                 &uart_rx_len);
 #endif
             len += uart_rx_len;
@@ -1225,13 +1251,15 @@ static void main_task(osa_task_param_t arg)
 #else
             if (ret == RET_TYPE_WLAN)
             {
-                vTaskDelay(pdMS_TO_TICKS(60));
+                (void)vTaskDelay(pdMS_TO_TICKS(60));
                 int rv = wlan_send_hostcmd(local_outbuf, BUF_LEN, host_resp_buf, BUF_LEN, &reqd_resp_len);
                 if (rv != WM_SUCCESS)
-                    PRINTF("Receive response failed\r\n");
+                {
+                    (void)PRINTF("Receive response failed\r\n");
+                }
                 else
                 {
-                    send_response_to_uart(uart, host_resp_buf, RET_TYPE_WLAN, reqd_resp_len);
+                    (void)send_response_to_uart(uart, host_resp_buf, RET_TYPE_WLAN, reqd_resp_len);
                 }
             }
             else if (ret == RET_TYPE_BT)
@@ -1243,7 +1271,11 @@ static void main_task(osa_task_param_t arg)
             {
                 read_zigbee_resp();
             }
-#endif
+#endif       
+            else
+            {
+                ;
+            }
 #endif
         }
         else
@@ -1261,7 +1293,7 @@ int main(void)
     osa_status_t status = KOSA_StatusSuccess;
     (void)status;
 
-    OSA_Init();
+    (void)OSA_Init();
 
 #if defined(MIMXRT1176_cm7_SERIES)
     BOARD_ConfigMPU();
@@ -1278,7 +1310,7 @@ int main(void)
 
     status = OSA_TaskCreate((osa_task_handle_t)main_task_Handle, OSA_TASK(main_task), NULL);
 
-    OSA_Start();
+    (void)OSA_Start();
 
     return 0;
 }

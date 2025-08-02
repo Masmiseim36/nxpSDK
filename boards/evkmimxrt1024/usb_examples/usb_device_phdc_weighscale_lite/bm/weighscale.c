@@ -422,6 +422,10 @@ static void APP_WeightScaleSendData(void *handle, weightscale_measurement_struct
     {
         /* update the scan report number */
         scanReportNumber++;
+        if (scanReportNumber >= UINT16_MAX)
+        {
+            scanReportNumber = 0U;
+        }
     }
 }
 

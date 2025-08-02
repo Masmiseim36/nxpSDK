@@ -54,19 +54,18 @@ void PD_PowerBoardControlInit(uint8_t port,
                               hal_gpio_handle_t powerGpioHandle,
                               hal_gpio_handle_t gpioExtPowerDetectHandle)
 {
-    pd_power_control_instance_t *powerControl = &s_PowerControlInstances[port - 1U];
+    pd_power_control_instance_t *powerControl = NULL;
+    if ((port == 0U) || (port > PD_CONFIG_MAX_PORT))
+    {
+        return;
+    }
+    powerControl = &s_PowerControlInstances[port - 1U];
     powerControl->sourceVbusVoltage           = 0U;
     powerControl->pdHandle                    = pdHandle;
     powerControl->powerGpioHandle             = powerGpioHandle;
 #if defined(PD_CONFIG_EXTERNAL_POWER_DETECTION_SUPPORT) && (PD_CONFIG_EXTERNAL_POWER_DETECTION_SUPPORT)
     powerControl->gpioExtPowerDetectHandle = gpioExtPowerDetectHandle;
 #endif
-
-    if ((port == 0U) || (port > PD_CONFIG_MAX_PORT))
-    {
-        return;
-    }
-
     {
         uint32_t getInfo = 0U;
         PD_Control(pdHandle, PD_CONTROL_GET_TYPEC_CURRENT_VALUE, &getInfo);
@@ -91,12 +90,13 @@ void PD_PowerBoardControlInit(uint8_t port,
 
 void PD_PowerBoardControlDeinit(uint8_t port)
 {
-    pd_power_control_instance_t *powerControl = &s_PowerControlInstances[port - 1U];
+    pd_power_control_instance_t *powerControl = NULL;
 
     if ((port == 0U) || (port > PD_CONFIG_MAX_PORT))
     {
         return;
     }
+    powerControl = &s_PowerControlInstances[port - 1U];	
     powerControl->sourceVbusVoltage = 0U;
     powerControl->pdHandle          = NULL;
 }
@@ -104,13 +104,13 @@ void PD_PowerBoardControlDeinit(uint8_t port)
 pd_status_t PD_PowerBoardReset(uint8_t port)
 {
     pd_ptn5110_ctrl_pin_t phyPowerPinCtrl;
-    pd_power_control_instance_t *powerControl = &s_PowerControlInstances[port - 1U];
+    pd_power_control_instance_t *powerControl = NULL;
 
     if ((port == 0U) || (port > PD_CONFIG_MAX_PORT))
     {
         return kStatus_PD_Error;
     }
-
+    powerControl = &s_PowerControlInstances[port - 1U];
     powerControl->sourceVbusVoltage = 0u;
     phyPowerPinCtrl.enSRC           = 0U;
     phyPowerPinCtrl.enSNK1          = 0U;
@@ -130,13 +130,13 @@ pd_status_t PD_PowerBoardSourceEnableVbusPower(uint8_t port, pd_vbus_power_t vbu
 {
     pd_ptn5110_ctrl_pin_t phyPowerPinCtrl;
     uint32_t voltage;
-    pd_power_control_instance_t *powerControl = &s_PowerControlInstances[port - 1U];
+    pd_power_control_instance_t *powerControl = NULL;
 
     if ((port == 0U) || (port > PD_CONFIG_MAX_PORT))
     {
         return kStatus_PD_Error;
     }
-
+    powerControl = &s_PowerControlInstances[port - 1U];
     phyPowerPinCtrl.enSNK1 = 0;
 #if (defined BOARD_PD_EXTERNAL_POWER_SUPPORT) && (BOARD_PD_EXTERNAL_POWER_SUPPORT)
     if (vbusPower.minVoltage > VSAFE5V_IN_50MV)
@@ -211,13 +211,13 @@ pd_status_t PD_PowerBoardSinkEnableVbusPower(uint8_t port, pd_vbus_power_t vbusP
 #if defined(PD_CONFIG_EXTERNAL_POWER_DETECTION_SUPPORT) && (PD_CONFIG_EXTERNAL_POWER_DETECTION_SUPPORT)
     uint8_t externalPowerState;
 #endif
-    pd_power_control_instance_t *powerControl = &s_PowerControlInstances[port - 1U];
+    pd_power_control_instance_t *powerControl = NULL;
 
     if ((port == 0U) || (port > PD_CONFIG_MAX_PORT))
     {
         return kStatus_PD_Error;
     }
-
+    powerControl = &s_PowerControlInstances[port - 1U];
     phyPowerPinCtrl.enSRC  = 0U;
     phyPowerPinCtrl.enSNK1 = 1U;
     PD_Control(powerControl->pdHandle, PD_CONTROL_PHY_POWER_PIN, &phyPowerPinCtrl);
@@ -243,12 +243,13 @@ pd_status_t PD_PowerBoardSinkEnableVbusPower(uint8_t port, pd_vbus_power_t vbusP
 pd_status_t PD_PowerBoardControlVconn(uint8_t port, uint8_t on)
 {
     uint8_t controlVal;
-    pd_power_control_instance_t *powerControl = &s_PowerControlInstances[port - 1U];
+    pd_power_control_instance_t *powerControl = NULL;
 
     if ((port == 0U) || (port > PD_CONFIG_MAX_PORT))
     {
         return kStatus_PD_Error;
     }
+    powerControl = &s_PowerControlInstances[port - 1U];	
     controlVal = ((0U != on) ? 1U : 0U);
     PD_Control(powerControl->pdHandle, PD_CONTROL_VCONN, &controlVal);
     return kStatus_PD_Success;

@@ -17,6 +17,7 @@
 /*****************************************************************************************************/
 /*                                         LPUART APIs                                               */
 /*****************************************************************************************************/
+#if !defined(BL_TARGET_RAM)
 status_t LPUART_WriteBlocking(LPUART_Type *base, const uint8_t *data, size_t length)
 {
     void (*const _LPUART_WriteBlocking)(LPUART_Type *, const uint8_t *, size_t) =
@@ -72,7 +73,7 @@ uint32_t LPUART_GetStatusFlags(LPUART_Type *base)
     uint32_t (*const _LPUART_GetStatusFlags)(LPUART_Type *) = (uint32_t(*)(LPUART_Type *))0x00208e21;
     return _LPUART_GetStatusFlags(base);
 }
-
+#endif
 /*****************************************************************************************************/
 /*                                        FlexSPI APIs                                               */
 /*****************************************************************************************************/

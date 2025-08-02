@@ -101,7 +101,7 @@ void WelsSliceHeaderExtInit (sWelsEncCtx* pEncCtx, SDqLayer* pCurLayer, SSlice* 
   if (P_SLICE == pEncCtx->eSliceType) {
     pCurSliceHeader->uiNumRefIdxL0Active = 1;
     if (pCurSliceHeader->uiRefCount > 0 &&
-        pCurSliceHeader->uiRefCount < pCurLayer->sLayerInfo.pSpsP->iNumRefFrames) {
+        pCurSliceHeader->uiRefCount <= pCurLayer->sLayerInfo.pSpsP->iNumRefFrames) {
       pCurSliceHeader->bNumRefIdxActiveOverrideFlag = true;
       pCurSliceHeader->uiNumRefIdxL0Active = pCurSliceHeader->uiRefCount;
     }
@@ -290,7 +290,14 @@ void WelsSliceHeaderWrite (sWelsEncCtx* pCtx, SBitStringAux* pBs, SDqLayer* pCur
     BsWriteUE (pBs, pSliceHeader->uiIdrPicId);
   }
 
-  BsWriteBits (pBs, pSps->iLog2MaxPocLsb, pSliceHeader->iPicOrderCntLsb);
+  if (pSps->uiPocType == 0) {
+    BsWriteBits (pBs, pSps->iLog2MaxPocLsb, pSliceHeader->iPicOrderCntLsb);
+  } else if (pSps->uiPocType == 1) {
+    // TODO: implement.
+    assert (0);
+  } else {
+    // no-op for uiPocType == 2.
+  }
 
   if (P_SLICE == pSliceHeader->eSliceType) {
     BsWriteOneBit (pBs, pSliceHeader->bNumRefIdxActiveOverrideFlag);
@@ -359,7 +366,14 @@ void WelsSliceHeaderExtWrite (sWelsEncCtx* pCtx, SBitStringAux* pBs, SDqLayer* p
     BsWriteUE (pBs, pSliceHeader->uiIdrPicId);
   }
 
-  BsWriteBits (pBs, pSps->iLog2MaxPocLsb, pSliceHeader->iPicOrderCntLsb);
+  if (pSps->uiPocType == 0) {
+    BsWriteBits (pBs, pSps->iLog2MaxPocLsb, pSliceHeader->iPicOrderCntLsb);
+  } else if (pSps->uiPocType == 1) {
+    // TODO: implement.
+    assert (0);
+  } else {
+    // no-op for uiPocType == 2.
+  }
 //  {
   if (P_SLICE == pSliceHeader->eSliceType) {
     BsWriteOneBit (pBs, pSliceHeader->bNumRefIdxActiveOverrideFlag);

@@ -1,4 +1,4 @@
-/* Copyright 2020-2022,2024 NXP
+/* Copyright 2020-2022,2024-2025 NXP
  *
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -9,7 +9,7 @@
 #include <nxp_iot_agent_status.h>
 #include <nxp_iot_agent_common.h>
 
-#if NXP_IOT_AGENT_HAVE_SSS
+#if defined(NXP_IOT_AGENT_HAVE_SSS) && (NXP_IOT_AGENT_HAVE_SSS == 1)
 
 #include <nxp_iot_agent_macros_sss.h>
 #include <se05x_APDU.h>
@@ -141,4 +141,4 @@ exit:
     return agent_status;
 }
 
-#endif // NXP_IOT_AGENT_HAVE_SSS
+#endif //#if defined(NXP_IOT_AGENT_HAVE_SSS) && (NXP_IOT_AGENT_HAVE_SSS == 1)

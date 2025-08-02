@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 NXP
+ * Copyright 2022, 2025 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -8,6 +8,8 @@
 #ifndef SHELL_TASK_H_
 #define SHELL_TASK_H_
 
-void shell_task_init(void *additional_commands, int additional_stack_size);
+#include "fsl_shell.h"
+
+void shell_task_init(shell_command_t **additional_commands);
 
 #endif /* SHELL_TASK_H_ */

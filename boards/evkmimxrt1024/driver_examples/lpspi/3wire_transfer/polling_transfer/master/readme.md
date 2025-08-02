@@ -16,3 +16,4 @@ The file 'lpspi_3wire_polling_transfer_master.c' includes the LPSPI master code.
 - [FRDM-KE15Z](../../../../../_boards/frdmke15z/driver_examples/lpspi/3wire_transfer/polling_transfer/master/example_board_readme.md)
 - [FRDM-KE17Z](../../../../../_boards/frdmke17z/driver_examples/lpspi/3wire_transfer/polling_transfer/master/example_board_readme.md)
 - [FRDM-KE17Z512](../../../../../_boards/frdmke17z512/driver_examples/lpspi/3wire_transfer/polling_transfer/master/example_board_readme.md)
+- [FRDM-MCXE247](../../../../../_boards/frdmmcxe247/driver_examples/lpspi/3wire_transfer/polling_transfer/master/example_board_readme.md)

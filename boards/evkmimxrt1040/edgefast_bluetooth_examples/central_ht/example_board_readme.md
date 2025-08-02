@@ -8,6 +8,7 @@ Hardware requirements
   - AzureWave AW-CM510MA.M2
   - Embedded Artists 1XK M.2 Module (EAR00385)
   - Embedded Artists 1ZM M.2 Module (EAR00364)
+  - Embedded Artists 2LL M.2 Module (EAR00500)
 
 
 Board settings
@@ -17,7 +18,7 @@ If you want use the AzureWave WIFI_IW416_BOARD_AW_AM510MA, please change the mac
 If you want use the AzureWave WIFI_88W8987_BOARD_AW_CM358MA, please change the macro to WIFI_88W8987_BOARD_AW_CM358MA.
 If you want to use Embedded Artists Type 1XK module (EAR00385), please change the macro to WIFI_IW416_BOARD_MURATA_1XK_M2.
 If you want to use Embedded Artists Type 1ZM module (EAR00364), please change the macro to WIFI_88W8987_BOARD_MURATA_1ZM_M2.
-
+If you want to use Embedded Artists 2LL M.2 Module(EAR00500), please change the macro to WIFI_IW610_BOARD_MURATA_2LL_M2.
 
 Jumper settings for RT1040 (enables external 5V supply):
 =======================================================
@@ -31,7 +32,7 @@ Murata Solution Board settings
 Embedded Artists M.2 module resource page: https://www.embeddedartists.com/m2
 Embedded Artists 1XK module datasheet: https://www.embeddedartists.com/doc/ds/1XK_M2_Datasheet.pdf
 Embedded Artists 1ZM module datasheet: https://www.embeddedartists.com/doc/ds/1ZM_M2_Datasheet.pdf
-
+Embedded Artists 2LL module datasheet: https://www.embeddedartists.com/wp-content/uploads/2024/12/2LL_M2_Datasheet.pdf
 
 AzureWave Solution Board settings
 =================================

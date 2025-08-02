@@ -1,4 +1,4 @@
-/* Copyright 2019-2024 NXP
+/* Copyright 2019-2025 NXP
  *
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -9,7 +9,7 @@
 #include <nxp_iot_agent.h>
 #include <iot_agent_mqtt_freertos.h>
 
-#if NXP_IOT_AGENT_HAVE_SSS
+#if defined(NXP_IOT_AGENT_HAVE_SSS) && (NXP_IOT_AGENT_HAVE_SSS == 1)
 #include <fsl_sss_api.h>
 #include <nxp_iot_agent_keystore_sss_se05x.h>
 #include <nxp_iot_agent_macros_sss.h>
@@ -35,7 +35,7 @@
 
 #include <mbedtls/pk.h>
 
-#if NXP_IOT_AGENT_HAVE_SSS
+#if defined(NXP_IOT_AGENT_HAVE_SSS) && (NXP_IOT_AGENT_HAVE_SSS == 1)
 #include "sss_mbedtls.h"
 #include "ex_sss_boot.h"
 #include "sm_types.h"
@@ -49,8 +49,13 @@ static iot_agent_status_t write_cert_to_keystore(iot_agent_keystore_t* keystore,
 
 static iot_agent_status_t pubSub(iot_agent_context_t* iot_agent_context,
 		const nxp_iot_ServiceDescriptor* service_descriptor);
-extern ex_sss_cloud_ctx_t *pex_sss_demo_tls_ctx;
+
+#ifdef NXP_IOT_AGENT_MQTT_DEFINE_CONTEXT
+static ex_sss_boot_ctx_t gex_sss_demo_boot_ctx;
+ex_sss_boot_ctx_t *pex_sss_demo_boot_ctx = &gex_sss_demo_boot_ctx;
+#else
 extern ex_sss_boot_ctx_t *pex_sss_demo_boot_ctx;
+#endif //NXP_IOT_AGENT_MQTT_DEFINE_CONTEXT
 #endif
 
 static iot_agent_status_t awsPubMqttMessage(const nxp_iot_ServiceDescriptor* service_descriptor);
@@ -112,11 +117,11 @@ typedef struct MqttAgent_Context {
 uint32_t key_id = 0U;
 uint32_t cert_id = 0U;
 
-#if (NXP_IOT_AGENT_HAVE_PSA == 0)
+#if !(defined(NXP_IOT_AGENT_HAVE_PSA) && (NXP_IOT_AGENT_HAVE_PSA == 1))
 static void iot_agent_convert_id_to_label(char* label, size_t label_size, uint32_t id);
-#endif // (NXP_IOT_AGENT_HAVE_PSA == 0)
+#endif //#if !(defined(NXP_IOT_AGENT_HAVE_PSA) && (NXP_IOT_AGENT_HAVE_PSA == 1))
 #endif // NXP_IOT_AGENT_USE_MBEDTLS_TRANSPORT_FOR_MQTT
-#if NXP_IOT_AGENT_HAVE_SSS
+#if defined(NXP_IOT_AGENT_HAVE_SSS) && (NXP_IOT_AGENT_HAVE_SSS == 1)
 // doc: trigger MQTT connection freertos - start
 iot_agent_status_t iot_agent_verify_mqtt_connection_for_service(iot_agent_context_t* iot_agent_context,
         const nxp_iot_ServiceDescriptor* service_descriptor)
@@ -178,7 +183,7 @@ static iot_agent_status_t pubSubCosOverRtp(iot_agent_context_t* iot_agent_contex
 
 
 #ifdef NXP_IOT_AGENT_USE_MBEDTLS_TRANSPORT_FOR_MQTT
-#if NXP_IOT_AGENT_HAVE_SSS
+#if defined(NXP_IOT_AGENT_HAVE_SSS) && (NXP_IOT_AGENT_HAVE_SSS == 1)
 	iot_agent_keystore_t* keystore = NULL;
 	uint32_t keystore_id = service_descriptor->client_key_sss_ref.endpoint_id;
 	agent_status = iot_agent_get_keystore_by_id(iot_agent_context, keystore_id, &keystore);
@@ -199,13 +204,13 @@ static iot_agent_status_t pubSubCosOverRtp(iot_agent_context_t* iot_agent_contex
 
     mbedtls_pk_context pk;
 	mbedtls_pk_init(&pk);
-#if NXP_IOT_AGENT_HAVE_SSS
+#if defined(NXP_IOT_AGENT_HAVE_SSS) && (NXP_IOT_AGENT_HAVE_SSS == 1)
 	agent_status = associateKeyPair(&pk, keystore, key_id);
 	AGENT_SUCCESS_OR_EXIT();
 
 	pex_sss_demo_boot_ctx->client_cert_index = cert_id;
 #endif
-#if NXP_IOT_AGENT_HAVE_PSA
+#if defined(NXP_IOT_AGENT_HAVE_PSA) && (NXP_IOT_AGENT_HAVE_PSA == 1)
 	psa_iot_tls_context.keyId = key_id;
 	psa_iot_tls_context.certId = cert_id;
 #endif
@@ -245,7 +250,7 @@ exit:
 
 #endif
 
-#if NXP_IOT_AGENT_HAVE_SSS
+#if defined(NXP_IOT_AGENT_HAVE_SSS) && (NXP_IOT_AGENT_HAVE_SSS == 1)
 
 iot_agent_status_t pubSub(iot_agent_context_t* iot_agent_context,
         const nxp_iot_ServiceDescriptor* service_descriptor)
@@ -295,8 +300,6 @@ iot_agent_status_t write_cert_to_keystore(iot_agent_keystore_t* keystore,
 	sss_object_t service_cert = { 0 };
 	sss_key_store_t* sss_keystore = NULL;
 
-	pex_sss_demo_tls_ctx->client_cert_index = cert_id;
-
 	agent_status = iot_agent_keystore_sss_se05x_get_sss_key_store(keystore->context, &sss_keystore);
 	AGENT_SUCCESS_OR_EXIT_MSG("iot_agent_keystore_sss_se05x_get_sss_key_store failed: 0x%08x", agent_status);
 
@@ -333,8 +336,6 @@ iot_agent_status_t associateKeyPair(mbedtls_pk_context *pk, sss_object_t* servic
 	sss_status_t sss_status = kStatus_SSS_Success;
 	sss_key_store_t* sss_keystore = NULL;
 	int ret;
-
-    pex_sss_demo_tls_ctx->client_keyPair_index = key_id;
 
     agent_status = iot_agent_keystore_sss_se05x_get_sss_key_store(keystore->context, &sss_keystore);
 	AGENT_SUCCESS_OR_EXIT_MSG("iot_agent_keystore_sss_se05x_get_sss_key_store failed: 0x%08x", agent_status);
@@ -444,7 +445,7 @@ static iot_agent_status_t iot_agent_demo_mqtt_connect(MqttAgent_Context_t* pMqtt
     TlsTransportStatus_t xNetworkStatus = TLS_TRANSPORT_CONNECT_FAILURE;
     NetworkCredentials_t xNetworkCredentials = { 0 };
     const char * pcAlpnProtocols[] = { NULL, NULL };
-#if NXP_IOT_AGENT_HAVE_PSA == 0
+#if !(defined(NXP_IOT_AGENT_HAVE_PSA) && (NXP_IOT_AGENT_HAVE_PSA == 1))
 	char certLabel[20] = {'\0'};
     char keyLabel[20] = {'\0'};
 #endif
@@ -471,7 +472,7 @@ static iot_agent_status_t iot_agent_demo_mqtt_connect(MqttAgent_Context_t* pMqtt
     xNetworkCredentials.pRootCa = ( unsigned char * )pMqttAgentContext->pRootCa;
     xNetworkCredentials.rootCaSize = pMqttAgentContext->rootCaSize;
 	xNetworkCredentials.disableSni = pdFALSE;
-#if NXP_IOT_AGENT_HAVE_PSA
+#if defined(NXP_IOT_AGENT_HAVE_PSA) && (NXP_IOT_AGENT_HAVE_PSA == 1)
 	xNetworkCredentials.certId = cert_id;
 	xNetworkCredentials.keyId = key_id;
 #else
@@ -614,6 +615,7 @@ static iot_agent_status_t iot_agent_demo_mqtt_subscribe(MqttAgent_Context_t* pMq
     MQTTStatus_t mqttStatus = MQTTSuccess;
     MQTTSubscribeInfo_t xMQTTSubscription;
     uint16_t packetId = 0U;
+    size_t topicFilterLength = 0U;
 
     ASSERT_OR_EXIT_MSG(pMqttAgentContext != NULL, "MQTT context pointer is null");
     ASSERT_OR_EXIT_MSG(pMqttAgentContext->pMqttContext != NULL, "Error in the MQTT Context parameters");
@@ -621,7 +623,9 @@ static iot_agent_status_t iot_agent_demo_mqtt_subscribe(MqttAgent_Context_t* pMq
 
     xMQTTSubscription.qos = MQTTQoS0;
     xMQTTSubscription.pTopicFilter = pMqttAgentContext->pMqttSubscribeTopicFilter;
-    xMQTTSubscription.topicFilterLength = strlen(pMqttAgentContext->pMqttSubscribeTopicFilter);
+    topicFilterLength = strlen(pMqttAgentContext->pMqttSubscribeTopicFilter);
+    ASSERT_OR_EXIT_MSG(topicFilterLength <= UINT16_MAX, "topicFilterLength out of the allowed range");
+    xMQTTSubscription.topicFilterLength = topicFilterLength;
 	packetId = MQTT_GetPacketId(pMqttAgentContext->pMqttContext);
 
     mqttStatus = MQTT_Subscribe(pMqttAgentContext->pMqttContext,
@@ -701,6 +705,7 @@ static iot_agent_status_t awsPubMqttMessage(const nxp_iot_ServiceDescriptor* ser
     mqttAgentContext.pTransportInterface = &transportInterface;
     mqttAgentContext.prvUserCallback = mqttUserCallback;
     mqttAgentContext.pHostName = service_descriptor->hostname;
+    ASSERT_OR_EXIT_MSG(service_descriptor->port <= UINT16_MAX, "The port is out of the allowed range");
     mqttAgentContext.port = service_descriptor->port;
     mqttAgentContext.pClientId = service_descriptor->client_id;
     mqttAgentContext.pUserName = NULL;
@@ -817,6 +822,7 @@ static iot_agent_status_t customPubMqttMessage(const nxp_iot_ServiceDescriptor* 
     mqttAgentContext.pTransportInterface = &transportInterface;
     mqttAgentContext.prvUserCallback = mqttUserCallback;
     mqttAgentContext.pHostName = service_descriptor->hostname;
+    ASSERT_OR_EXIT_MSG(service_descriptor->port <= UINT16_MAX, "The port is out of the allowed range");
     mqttAgentContext.port = service_descriptor->port;
     mqttAgentContext.pRootCa = tlsVERISIGN_ROOT_CERT_WATSON_PEM;
     mqttAgentContext.rootCaSize = tlsVERISIGN_ROOT_CERT_WATSON_LENGTH;
@@ -936,7 +942,7 @@ typedef struct azure_connection_info
 	char username[256];
 } azure_connection_info_t;
 
-static azure_registration_info_t* pAzureRegInfo;
+azure_registration_info_t reg_info = { 0 };
 
 #ifdef NXP_IOT_AGENT_USE_COREJSON
 static iot_agent_status_t get_value_from_tag(char *js, size_t js_size, const char * key, size_t key_size, char * value, size_t max_value_size) {
@@ -998,15 +1004,14 @@ static void azureRegistrationCallback( MQTTContext_t * pxMqttContext,
 		get_value_from_tag(payload, "operationId", opid);
 		get_value_from_tag(payload, "status", status);
 #endif
-		azure_registration_info_t* reg_info = pAzureRegInfo;
 
 		if(strcmp(status, "assigning") == 0)
 		{
 			IOT_AGENT_INFO("Device State is now ASSIGNING");
-			strcpy(reg_info->operationId, AZURE_MQTT_PUBLISH_MSG_OPID_AZURE);
-			strcat(reg_info->operationId, opid);
+			strcpy(reg_info.operationId, AZURE_MQTT_PUBLISH_MSG_OPID_AZURE);
+			strcat(reg_info.operationId, opid);
 
-			reg_info->state = ASSIGNING;
+			reg_info.state = ASSIGNING;
 		}
 		else if(strcmp(status, "assigned") == 0)
 		{
@@ -1016,16 +1021,16 @@ static void azureRegistrationCallback( MQTTContext_t * pxMqttContext,
 
 			memset(registrationState, '\0', payloadLength);
 			get_value_from_tag(payload, payloadLength, "registrationState", strlen("registrationState"), registrationState, payloadLength);
-			get_value_from_tag(registrationState, strlen(registrationState), "registrationId", strlen("registrationId"), reg_info->registrationId, sizeof(reg_info->registrationId));
-			get_value_from_tag(registrationState, strlen(registrationState), "assignedHub", strlen("assignedHub"), reg_info->assignedHub, sizeof(reg_info->assignedHub));
-			get_value_from_tag(registrationState, strlen(registrationState), "deviceId", strlen("deviceId"), reg_info->deviceId, sizeof(reg_info->deviceId));
+			get_value_from_tag(registrationState, strlen(registrationState), "registrationId", strlen("registrationId"), reg_info.registrationId, sizeof(reg_info.registrationId));
+			get_value_from_tag(registrationState, strlen(registrationState), "assignedHub", strlen("assignedHub"), reg_info.assignedHub, sizeof(reg_info.assignedHub));
+			get_value_from_tag(registrationState, strlen(registrationState), "deviceId", strlen("deviceId"), reg_info.deviceId, sizeof(reg_info.deviceId));
 			vPortFree(registrationState);
 #else
-			get_value_from_tag(payload, "registrationId", reg_info->registrationId);
-			get_value_from_tag(payload, "assignedHub", reg_info->assignedHub);
-			get_value_from_tag(payload, "deviceId", reg_info->deviceId);
+			get_value_from_tag(payload, "registrationId", reg_info.registrationId);
+			get_value_from_tag(payload, "assignedHub", reg_info.assignedHub);
+			get_value_from_tag(payload, "deviceId", reg_info.deviceId);
 #endif
-			reg_info->state = ASSIGNED;
+			reg_info.state = ASSIGNED;
 		}
 
 		vPortFree(payload);
@@ -1098,7 +1103,7 @@ static bool formatConnectionOptions(azure_connection_info_t* conn_info, char* hu
 	return true;
 }
 
-static iot_agent_status_t azureRegister(const nxp_iot_ServiceDescriptor* service_descriptor, azure_registration_info_t* reg_info)
+static iot_agent_status_t azureRegister(const nxp_iot_ServiceDescriptor* service_descriptor)
 {
     iot_agent_status_t agent_status = IOT_AGENT_FAILURE;
     uint8_t sharedBuffer[AGENT_NETWORK_BUFFER_SIZE];
@@ -1113,10 +1118,7 @@ static iot_agent_status_t azureRegister(const nxp_iot_ServiceDescriptor* service
     size_t retryCount = 0U;
     size_t maxWaiting = 0U;
 
-    formatRegistrationUsername(reg_info, service_descriptor->azure_id_scope, service_descriptor->azure_registration_id);
-
-    // store reg info in a global pointer, this will be used in the callback function to set some states
-    pAzureRegInfo = reg_info;
+    formatRegistrationUsername(&reg_info, service_descriptor->azure_id_scope, service_descriptor->azure_registration_id);
 
     agent_status = iot_agent_demo_mqtt_init(&mqttAgentContext);
     AGENT_SUCCESS_OR_EXIT_MSG("Error in MQTT Agent Context initialization");
@@ -1140,7 +1142,7 @@ static iot_agent_status_t azureRegister(const nxp_iot_ServiceDescriptor* service
     mqttAgentContext.pRootCa = AZURE_SERVER_ROOT_CERTIFICATE_PEM;
     mqttAgentContext.rootCaSize = AZURE_SERVER_ROOT_CERTIFICATE_PEM_LENGTH;
     mqttAgentContext.pClientId = service_descriptor->azure_registration_id;
-    mqttAgentContext.pUserName = reg_info->username;
+    mqttAgentContext.pUserName = reg_info.username;
 
 	while (retryCount < 5U) {
 		IOT_AGENT_INFO("\nMQTT attempting to register Azure Service '%s' (the operation migth take around 1 minute)...", service_descriptor->azure_registration_id);
@@ -1160,7 +1162,7 @@ static iot_agent_status_t azureRegister(const nxp_iot_ServiceDescriptor* service
 	agent_status = iot_agent_demo_mqtt_subscribe(&mqttAgentContext);
 	AGENT_SUCCESS_OR_EXIT_MSG("Error in MQTT subscription");
 
-    reg_info->state = NOT_ASSIGNED;
+    reg_info.state = NOT_ASSIGNED;
 
 	mqttAgentContext.pMqttPublishTopic = AZURE_MQTT_REGISTRATION_MSG_TOPIC;
 	mqttAgentContext.pMqttPublishPayload = NULL;
@@ -1168,7 +1170,7 @@ static iot_agent_status_t azureRegister(const nxp_iot_ServiceDescriptor* service
 	agent_status = iot_agent_demo_mqtt_publish(&mqttAgentContext);
 	AGENT_SUCCESS_OR_EXIT_MSG("Error in MQTT publish");
 
-    while (reg_info->state != ASSIGNING && maxWaiting < 20U)
+    while (reg_info.state != ASSIGNING && maxWaiting < 20U)
     {
     	agent_status = iot_agent_demo_mqtt_wait_packet(&mqttAgentContext);
     	AGENT_SUCCESS_OR_EXIT_MSG("Error in MQTT packet waiting");
@@ -1178,11 +1180,11 @@ static iot_agent_status_t azureRegister(const nxp_iot_ServiceDescriptor* service
 	}
 
 
-	mqttAgentContext.pMqttPublishTopic = reg_info->operationId;
+	mqttAgentContext.pMqttPublishTopic = reg_info.operationId;
 	mqttAgentContext.pMqttPublishPayload = NULL;
 	maxWaiting = 0U;
 
-    while (reg_info->state != ASSIGNED && maxWaiting < 20U)
+    while (reg_info.state != ASSIGNED && maxWaiting < 20U)
     {
         vTaskDelay(pdMS_TO_TICKS(mqttexamplePUBLISH_WAIT_INTERVAL_MS));
 
@@ -1193,7 +1195,7 @@ static iot_agent_status_t azureRegister(const nxp_iot_ServiceDescriptor* service
     	AGENT_SUCCESS_OR_EXIT_MSG("Error in MQTT packet waiting");
     	maxWaiting++;
 	}
-    if(reg_info->state == ASSIGNED)
+    if(reg_info.state == ASSIGNED)
     {
     	IOT_AGENT_INFO("State is ASSIGNED");
     }
@@ -1204,7 +1206,7 @@ exit:
 
 }
 
-static iot_agent_status_t azurePubSub(const nxp_iot_ServiceDescriptor* service_descriptor, azure_registration_info_t* reg_info)
+static iot_agent_status_t azurePubSub(const nxp_iot_ServiceDescriptor* service_descriptor)
 {
 	iot_agent_status_t agent_status = IOT_AGENT_SUCCESS;
 	uint8_t sharedBuffer[AGENT_NETWORK_BUFFER_SIZE];
@@ -1222,7 +1224,7 @@ static iot_agent_status_t azurePubSub(const nxp_iot_ServiceDescriptor* service_d
     MqttAgent_Context_t mqttAgentContext = { 0 };
     size_t retryCount = 0U;
 
-    formatConnectionOptions(&conn_info, reg_info->assignedHub, reg_info->deviceId);
+    formatConnectionOptions(&conn_info, reg_info.assignedHub, reg_info.deviceId);
 
     agent_status = iot_agent_demo_mqtt_init(&mqttAgentContext);
     AGENT_SUCCESS_OR_EXIT_MSG("Error in MQTT Agent Context initialization");
@@ -1243,15 +1245,15 @@ static iot_agent_status_t azurePubSub(const nxp_iot_ServiceDescriptor* service_d
     mqttAgentContext.pNetworkBuffer = &networkBuffer;
     mqttAgentContext.pTransportInterface = &transportInterface;
     mqttAgentContext.prvUserCallback = mqttUserCallback;
-    mqttAgentContext.pHostName = reg_info->assignedHub;
+    mqttAgentContext.pHostName = reg_info.assignedHub;
     mqttAgentContext.port = AZURE_MQTT_REGISTER_PORT;
     mqttAgentContext.pRootCa = AZURE_SERVER_ROOT_CERTIFICATE_PEM;
     mqttAgentContext.rootCaSize = AZURE_SERVER_ROOT_CERTIFICATE_PEM_LENGTH;
-    mqttAgentContext.pClientId = reg_info->deviceId;
+    mqttAgentContext.pClientId = reg_info.deviceId;
     mqttAgentContext.pUserName = conn_info.username;
 
 	while (retryCount < 5U) {
-		IOT_AGENT_INFO("Attempt %d for connecting to Azure service '%s'...", retryCount, reg_info->deviceId);
+		IOT_AGENT_INFO("Attempt %d for connecting to Azure service '%s'...", retryCount, reg_info.deviceId);
 		agent_status = iot_agent_demo_mqtt_connect(&mqttAgentContext);
 		if (agent_status == IOT_AGENT_SUCCESS) {
 			break;
@@ -1292,15 +1294,14 @@ exit:
 
 static iot_agent_status_t azurePubMqttMessage(const nxp_iot_ServiceDescriptor* service_descriptor)
 {
-	azure_registration_info_t reg_info = { 0 };
 	iot_agent_status_t status;
-	status = azureRegister(service_descriptor, &reg_info);
+	status = azureRegister(service_descriptor);
 	if(status != IOT_AGENT_SUCCESS)
 	{
 		return status;
 	}
 
-	status = azurePubSub(service_descriptor, &reg_info);
+	status = azurePubSub(service_descriptor);
 	if(status != IOT_AGENT_SUCCESS)
 	{
 		return status;
@@ -1310,11 +1311,11 @@ static iot_agent_status_t azurePubMqttMessage(const nxp_iot_ServiceDescriptor* s
 }
 
 #ifdef NXP_IOT_AGENT_USE_MBEDTLS_TRANSPORT_FOR_MQTT
-#if (NXP_IOT_AGENT_HAVE_PSA == 0)
+#if !(defined(NXP_IOT_AGENT_HAVE_PSA) && (NXP_IOT_AGENT_HAVE_PSA == 1))
 static void iot_agent_convert_id_to_label(char* label, size_t label_size, uint32_t id) {
     memset(label, 0, label_size);
     snprintf(label, label_size, "sss:%08lx", id);
 }
 #endif // NXP_IOT_AGENT_USE_MBEDTLS_TRANSPORT_FOR_MQTT
-#endif // (NXP_IOT_AGENT_HAVE_PSA == 0)
+#endif //#if !(defined(NXP_IOT_AGENT_HAVE_PSA) && (NXP_IOT_AGENT_HAVE_PSA == 1))
 #endif //NXP_IOT_AGENT_ENABLE_LITE

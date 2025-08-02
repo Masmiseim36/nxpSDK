@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015-2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2021, 2023 NXP
+ * Copyright 2016-2021,2023,2024 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -20,6 +20,11 @@ uint32_t InstallIRQHandler(IRQn_Type irq, uint32_t irqHandler)
 #ifdef __VECTOR_TABLE
 #undef __VECTOR_TABLE
 #endif
+
+    if (((int32_t)irq + 16) < 0)
+    {
+        return MSDK_INVALID_IRQ_HANDLER;
+    }
 
 /* Addresses for VECTOR_TABLE and VECTOR_RAM come from the linker file */
 #if defined(__CC_ARM) || defined(__ARMCC_VERSION)
@@ -255,3 +260,110 @@ void SDK_DelayAtLeastUs(uint32_t delayTime_us, uint32_t coreClock_Hz)
 #endif /* defined(SDK_DELAY_USE_DWT) && defined(DWT) */
     }
 }
+
+#if defined(FSL_FEATURE_MEASURE_CRITICAL_SECTION) && FSL_FEATURE_MEASURE_CRITICAL_SECTION
+/* Use shall define their own IDs, FSL_FEATURE_CRITICAL_SECTION_MAX_ID and FSL_FEATURE_CRITICAL_SECTION_INVALID_ID
+   for the critical sections if want to use the critical section measurement.
+ */
+#ifndef FSL_FEATURE_CRITICAL_SECTION_MAX_ID
+#define FSL_FEATURE_CRITICAL_SECTION_MAX_ID 0xFFU
+#endif
+
+#ifndef FSL_FEATURE_CRITICAL_SECTION_INVALID_ID
+#define FSL_FEATURE_CRITICAL_SECTION_INVALID_ID 0U
+#endif
+
+typedef struct
+{
+    uint32_t id; /*!< The id of the critical section, defined by user. */
+    uint32_t startTime; /*!< The timestamp for the start of the critical section. */
+    uint32_t dur_max[FSL_FEATURE_CRITICAL_SECTION_MAX_ID]; /*!< The maximum duration of the section's previous executions. */
+    uint32_t execution_times[FSL_FEATURE_CRITICAL_SECTION_MAX_ID]; /*!< How many times the section is executed. */
+    getTimestamp_t getTimestamp; /*!< Function to get the current time stamp. */
+} critical_section_measurement_t;
+
+static critical_section_measurement_t s_critical_section_measurement_context;
+
+/*!
+ * brief Initialize the context of the critical section measurement and assign
+ * the function to get the current timestamp.
+ *
+ * param func The function to get the current timestamp.
+ */
+void InitCriticalSectionMeasurementContext(getTimestamp_t func)
+{
+    assert(func != NULL);
+
+    (void)memset(&s_critical_section_measurement_context, 0, sizeof(critical_section_measurement_t));
+
+    s_critical_section_measurement_context.getTimestamp = func;
+}
+
+/*!
+ * brief Disable the global IRQ with critical section ID
+ *
+ * Extended function of DisableGlobalIRQ. Apart from the standard operation, also check
+ * the id of the protected critical section and mark the begining for timer.
+ * User is required to provided the primask register for the EnableGlobalIRQEx.
+ *
+ * param id The id for critical section.
+ * return Current primask value.
+ */
+uint32_t DisableGlobalIRQEx(uint32_t id)
+{
+    uint32_t primask = DisableGlobalIRQ();
+    if (primask != 0U)
+    {
+#ifdef FSL_FEATURE_MEASURE_CRITICAL_SECTION_DEBUG
+        /* Check for the critical section id. */
+        assert(id != FSL_FEATURE_CRITICAL_SECTION_INVALID_ID);
+        assert(id < FSL_FEATURE_CRITICAL_SECTION_MAX_ID);
+        assert(s_critical_section_measurement_context.id == FSL_FEATURE_CRITICAL_SECTION_INVALID_ID);
+#endif
+        if (s_critical_section_measurement_context.getTimestamp != NULL)
+        {
+            s_critical_section_measurement_context.id = id;
+            s_critical_section_measurement_context.startTime = s_critical_section_measurement_context.getTimestamp();
+        }
+    }
+    return primask;
+}
+
+/*!
+ * brief Enable the global IRQ and calculate the execution time of critical section
+ *
+ * Extended function of EnableGlobalIRQ. Apart from the standard operation, also
+ * marks the exit of the critical section and calculate the execution time for the section.
+ * User is required to use the DisableGlobalIRQEx and EnableGlobalIRQEx in pair.
+ *
+ * param primask value of primask register to be restored. The primask value is supposed to be provided by the
+ * DisableGlobalIRQEx().
+ */
+void EnableGlobalIRQEx(uint32_t primask)
+{
+    if (primask != 0U)
+    {
+#ifdef FSL_FEATURE_MEASURE_CRITICAL_SECTION_DEBUG
+        /* Check for the critical section id. */
+        assert(s_critical_section_measurement_context.id != FSL_FEATURE_CRITICAL_SECTION_INVALID_ID);
+        assert(s_critical_section_measurement_context.id < FSL_FEATURE_CRITICAL_SECTION_MAX_ID);
+#endif
+        if (s_critical_section_measurement_context.getTimestamp != NULL)
+        {
+            /* Calculate the critical section duration. */
+            uint32_t dur = s_critical_section_measurement_context.getTimestamp() - s_critical_section_measurement_context.startTime;
+            if (dur > s_critical_section_measurement_context.dur_max[s_critical_section_measurement_context.id])
+            {
+                s_critical_section_measurement_context.dur_max[s_critical_section_measurement_context.id] = dur;
+            }
+            s_critical_section_measurement_context.execution_times[s_critical_section_measurement_context.id]++;
+        }
+#ifdef FSL_FEATURE_MEASURE_CRITICAL_SECTION_DEBUG
+        /* Exit the critical section, set the id to invalid. In this case when entering critical
+           section again DisableGlobalIRQEx has to be called first to avoid assertion. */
+        s_critical_section_measurement_context.id = FSL_FEATURE_CRITICAL_SECTION_INVALID_ID;
+#endif
+    }
+    EnableGlobalIRQ(primask);
+}
+#endif /* FSL_FEATURE_MEASURE_CRITICAL_SECTION */

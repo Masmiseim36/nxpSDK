@@ -1,144 +1,107 @@
 /*
- * Copyright 2022-2024 NXP
- * All rights reserved.
+ * Copyright 2025 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-#ifndef __BLE_AUDIO_CONFIG_H__
-#define __BLE_AUDIO_CONFIG_H__
+#ifndef _EDGEFAST_BLUETOOTH_AUDIO_CONFIG_H_
+#define _EDGEFAST_BLUETOOTH_AUDIO_CONFIG_H_
 
-/*!
- * @brief Bluetooth Audio Configuration
- * @defgroup bt_audio_config Bluetooth Audio Configuration
- * @{
- */
-
-#if (defined(CONFIG_BT_AUDIO) && (CONFIG_BT_AUDIO > 0))
-
-/* This hidden option is enabled when any of the profiles/services
- * enables support for receiving of audio data.
- */
-#ifndef CONFIG_BT_AUDIO_RX
-#define CONFIG_BT_AUDIO_RX 0
-#endif
-
-/* This hidden option is enabled when any of the profiles/services
- * enables support for transmitting of audio data.
- */
-#ifndef CONFIG_BT_AUDIO_TX
-#define CONFIG_BT_AUDIO_TX 0
-#endif
-
-/* This option sets the time in 1.25 ms units before the stack will
- * retry to send notification that failed due to lack of TX buffers
- * available.
- * 
- * Delay for notification sending retried attempt in 1.25 ms units
- * 
- * range 6 ~ 3200
- */
-#ifndef CONFIG_BT_AUDIO_NOTIFY_RETRY_DELAY
+#define CONFIG_BT_AUDIO 1
+#define CONFIG_BT_AUDIO_RX 1
+// #define CONFIG_BT_AUDIO_TX 0
 #define CONFIG_BT_AUDIO_NOTIFY_RETRY_DELAY 20
-#endif
+// #define CONFIG_BT_CCID 0
+#define CONFIG_BT_BAP_UNICAST 1
+#define CONFIG_BT_BAP_UNICAST_SERVER 1
+// #define CONFIG_BT_BAP_UNICAST_CLIENT 0
+#define CONFIG_BT_AUDIO_CODEC_CFG_MAX_DATA_SIZE 19
+#define CONFIG_BT_AUDIO_CODEC_CFG_MAX_METADATA_SIZE 4
+#define CONFIG_BT_BAP_BASS_MAX_SUBGROUPS 1
+#define CONFIG_BT_AUDIO_CODEC_CAP_MAX_DATA_SIZE 19
+#define CONFIG_BT_AUDIO_CODEC_CAP_MAX_METADATA_SIZE 4
+// #define CONFIG_BT_BAP_BROADCAST_SOURCE 0
+// #define CONFIG_BT_BAP_SCAN_DELEGATOR 0
+// #define CONFIG_BT_BAP_BROADCAST_ASSISTANT 0
+#define CONFIG_BT_BAP_STREAM 1
+#define CONFIG_BT_PAC_SNK 1
+// #define CONFIG_BT_PAC_SNK_NOTIFIABLE 0
+#define CONFIG_BT_PAC_SNK_LOC 1
+// #define CONFIG_BT_PAC_SNK_LOC_WRITEABLE 0
+// #define CONFIG_BT_PAC_SNK_LOC_NOTIFIABLE 0
+// #define CONFIG_BT_PAC_SRC 0
+#define CONFIG_BT_PACS 1
+// #define CONFIG_BT_PACS_SUPPORTED_CONTEXT_NOTIFIABLE 0
+#define CONFIG_BT_ASCS 1
+#define CONFIG_BT_ASCS_ASE_SNK_COUNT 1
+#define CONFIG_BT_ASCS_ASE_SRC_COUNT 0
+#define CONFIG_BT_ASCS_ASE_SNK 1
+#define CONFIG_BT_ASCS_MAX_ACTIVE_ASES 1
+#define CONFIG_BT_ASCS_ISO_DISCONNECT_DELAY 500
+#define CONFIG_BT_ASCS_ASE_BUF_TIMEOUT 50
+#define CONFIG_BT_VOCS_MAX_INSTANCE_COUNT 0
+#define CONFIG_BT_VOCS_CLIENT_MAX_INSTANCE_COUNT 0
+#define CONFIG_BT_AICS_MAX_INSTANCE_COUNT 0
+#define CONFIG_BT_AICS_CLIENT_MAX_INSTANCE_COUNT 0
+#define CONFIG_BT_VCP_VOL_REND 1
+#define CONFIG_BT_VCP_VOL_REND_VOCS_INSTANCE_COUNT 0
+#define CONFIG_BT_VCP_VOL_REND_AICS_INSTANCE_COUNT 0
+// #define CONFIG_BT_VCP_VOL_REND_VOL_FLAGS_NOTIFIABLE 0
+// #define CONFIG_BT_VCP_VOL_CTLR 0
+// #define CONFIG_BT_MICP_MIC_DEV 0
+// #define CONFIG_BT_MICP_MIC_CTLR 0
+#define CONFIG_BT_CSIP_SET_MEMBER 1
+// #define CONFIG_BT_CSIP_SET_MEMBER_TEST_SAMPLE_DATA 0
+#define CONFIG_BT_CSIP_SET_MEMBER_ENC_SIRK_SUPPORT 1
+#define CONFIG_BT_CSIP_SET_MEMBER_MAX_INSTANCE_COUNT 1
+// #define CONFIG_BT_CSIP_SET_MEMBER_NOTIFIABLE 0
+// #define CONFIG_BT_CSIP_SET_COORDINATOR 0
+// #define CONFIG_BT_TBS 0
+// #define CONFIG_BT_TBS_CLIENT_GTBS 0
+// #define CONFIG_BT_TBS_CLIENT_TBS 0
+#define CONFIG_BT_MCC 1
+#define CONFIG_BT_MCC_MEDIA_PLAYER_NAME_MAX 20
+#define CONFIG_BT_MCC_ICON_URL_MAX 40
+#define CONFIG_BT_MCC_TRACK_TITLE_MAX 40
+#define CONFIG_BT_MCC_SEGMENT_NAME_MAX 25
+// #define CONFIG_BT_MCC_SHELL 0
+// #define CONFIG_BT_MCC_MINIMAL 0
+#define CONFIG_BT_MCC_READ_MEDIA_PLAYER_ICON_URL 1
+#define CONFIG_BT_MCC_READ_TRACK_TITLE 1
+#define CONFIG_BT_MCC_READ_TRACK_TITLE_ENABLE_SUBSCRIPTION 1
+#define CONFIG_BT_MCC_READ_TRACK_DURATION 1
+#define CONFIG_BT_MCC_READ_TRACK_POSITION 1
+#define CONFIG_BT_MCC_SET_TRACK_POSITION 1
+#define CONFIG_BT_MCC_READ_PLAYBACK_SPEED 1
+#define CONFIG_BT_MCC_SET_PLAYBACK_SPEED 1
+#define CONFIG_BT_MCC_READ_SEEKING_SPEED 1
+#define CONFIG_BT_MCC_READ_PLAYING_ORDER 1
+#define CONFIG_BT_MCC_SET_PLAYING_ORDER 1
+#define CONFIG_BT_MCC_READ_PLAYING_ORDER_SUPPORTED 1
+#define CONFIG_BT_MCC_READ_MEDIA_STATE 1
+#define CONFIG_BT_MCC_SET_MEDIA_CONTROL_POINT 1
+#define CONFIG_BT_MCC_READ_MEDIA_CONTROL_POINT_OPCODES_SUPPORTED 1
+#define CONFIG_BT_MCC_READ_CONTENT_CONTROL_ID 1
+// #define CONFIG_BT_HAS 0
+// #define CONFIG_BT_HAS_CLIENT 0
+// #define CONFIG_BT_MPL 0
+// #define CONFIG_MCTL 0
+// #define CONFIG_BT_CAP_ACCEPTOR 0
+// #define CONFIG_BT_CAP_COMMANDER 0
+// #define CONFIG_BT_PBP 0
+#define LE_AUDIO_SYNC_ENABLE 1
+// #define CONFIG_BT_AUDIO_CAPABILITY 0
+#define CONFIG_BT_AUDIO_BROADCAST_SRC_SUBGROUP_COUNT 0
+// #define CONFIG_BT_AUDIO_BROADCAST_SOURCE 0
+// #define CONFIG_BT_AUDIO_BROADCAST_SINK 0
+#define CONFIG_BT_AUDIO_BROADCAST_SRC_STREAM_COUNT 0
+// #define CONFIG_UTF8 0
+#define LE_CONN_COUNT 0
+#define CONFIG_BT_AUDIO_BROADCAST_SNK_STREAM_COUNT 0
+#define CONFIG_BT_PACS_SNK_CONTEXT 0x0007
+#define CONFIG_BT_PACS_SRC_CONTEXT 0x0007
+// #define CONFIG_TMAP_PERIPHERAL_SINGLE 0
+// #define CONFIG_BT_OTS 0
+// #define CONFIG_BT_OTS_CLIENT 0
 
-/* This hidden option is enabled when any of the content control
- * features are enabled.
- */
-#ifndef CONFIG_BT_CCID
-#define CONFIG_BT_CCID 0
-#endif
-
-
-#if (defined(CONFIG_BT_BAP_UNICAST) && (CONFIG_BT_BAP_UNICAST > 0)) || \
-    (defined(CONFIG_BT_BAP_UNICAST_SERVER) && (CONFIG_BT_BAP_UNICAST_SERVER > 0)) || \
-    (defined(CONFIG_BT_BAP_UNICAST_CLIENT) && (CONFIG_BT_BAP_UNICAST_CLIENT > 0)) || \
-    (defined(CONFIG_BT_BAP_BROADCAST_SOURCE) && (CONFIG_BT_BAP_BROADCAST_SOURCE > 0)) || \
-    (defined(CONFIG_BT_BAP_BROADCAST_SINK) && (CONFIG_BT_BAP_BROADCAST_SINK > 0)) || \
-    (defined(CONFIG_BT_BAP_SCAN_DELEGATOR) && (CONFIG_BT_BAP_SCAN_DELEGATOR > 0)) || \
-    (defined(CONFIG_BT_BAP_BROADCAST_ASSISTANT) && (CONFIG_BT_BAP_BROADCAST_ASSISTANT > 0))
-#include "config_bap.h"
-#endif
-
-#if (defined(CONFIG_BT_VOCS) && (CONFIG_BT_VOCS > 0)) || \
-    (defined(CONFIG_BT_VOCS_MAX_INSTANCE_COUNT) && (CONFIG_BT_VOCS_MAX_INSTANCE_COUNT > 0)) || \
-    (defined(CONFIG_BT_VOCS_CLIENT) && (CONFIG_BT_VOCS_CLIENT > 0)) || \
-    (defined(CONFIG_BT_VOCS_CLIENT_MAX_INSTANCE_COUNT) && (CONFIG_BT_VOCS_CLIENT_MAX_INSTANCE_COUNT > 0))
-#include "config_vocs.h"
-#endif
-
-#if (defined(CONFIG_BT_AICS) && (CONFIG_BT_AICS > 0)) || \
-    (defined(CONFIG_BT_AICS_MAX_INSTANCE_COUNT) && (CONFIG_BT_AICS_MAX_INSTANCE_COUNT > 0)) || \
-    (defined(CONFIG_BT_AICS_CLIENT) && (CONFIG_BT_AICS_CLIENT > 0)) || \
-    (defined(CONFIG_BT_AICS_CLIENT_MAX_INSTANCE_COUNT) && (CONFIG_BT_AICS_CLIENT_MAX_INSTANCE_COUNT > 0))
-#include "config_aics.h"
-#endif
-
-#if (defined(CONFIG_BT_VCP_VOL_REND) && (CONFIG_BT_VCP_VOL_REND > 0)) || \
-    (defined(CONFIG_BT_VCP_VOL_CTLR) && (CONFIG_BT_VCP_VOL_CTLR > 0))
-#include "config_vcp.h"
-#endif
-
-#if (defined(CONFIG_BT_MICP_MIC_DEV) && (CONFIG_BT_MICP_MIC_DEV > 0)) || \
-    (defined(CONFIG_BT_MICP_MIC_CTLR) && (CONFIG_BT_MICP_MIC_CTLR > 0))
-#include "config_micp.h"
-#endif
-
-#if (defined(CONFIG_BT_CSIP_SET_MEMBER) && (CONFIG_BT_CSIP_SET_MEMBER > 0)) || \
-    (defined(CONFIG_BT_CSIP_SET_COORDINATOR) && (CONFIG_BT_CSIP_SET_COORDINATOR > 0))
-#include "config_csip.h"
-#endif
-
-#if (defined(CONFIG_BT_TBS) && (CONFIG_BT_TBS > 0)) || \
-    (defined(CONFIG_BT_TBS_CLIENT_GTBS) && (CONFIG_BT_TBS_CLIENT_GTBS > 0)) || \
-    (defined(CONFIG_BT_TBS_CLIENT_TBS) && (CONFIG_BT_TBS_CLIENT_TBS > 0))
-#include "config_tbs.h"
-#endif
-
-#if (defined(CONFIG_BT_MCS) && (CONFIG_BT_MCS > 0)) || \
-    (defined(CONFIG_BT_MCC) && (CONFIG_BT_MCC > 0)) || \
-    (defined(CONFIG_BT_MCC_OTS) && (CONFIG_BT_MCC_OTS > 0))
-#include "config_mcs.h"
-#endif
-
-#if (defined(CONFIG_BT_HAS) && (CONFIG_BT_HAS > 0)) || \
-    (defined(CONFIG_BT_HAS_CLIENT) && (CONFIG_BT_HAS_CLIENT > 0))
-#include "config_has.h"
-#endif
-
-#if (defined(CONFIG_BT_MPL) && (CONFIG_BT_MPL > 0))
-#include "config_mpl.h"
-#endif
-
-#if (defined(CONFIG_MCTL) && (CONFIG_MCTL > 0))
-#include "config_mctl.h"
-#endif
-
-#if (defined(CONFIG_BT_OTS) && (CONFIG_BT_OTS > 0)) || \
-    (defined(CONFIG_BT_OTS_CLIENT) && (CONFIG_BT_OTS_CLIENT > 0))
-#include "config_ots.h"
-#endif
-
-#if (defined(CONFIG_BT_CAP_ACCEPTOR) && (CONFIG_BT_CAP_ACCEPTOR > 0)) || \
-    (defined(CONFIG_BT_CAP_INITIATOR) && (CONFIG_BT_CAP_INITIATOR > 0)) || \
-    (defined(CONFIG_BT_CAP_COMMANDER) && (CONFIG_BT_CAP_COMMANDER > 0))
-#include "config_cap.h"
-#endif
-
-#if (defined(CONFIG_BT_TMAP) && (CONFIG_BT_TMAP > 0))
-#include "config_tmap.h"
-#endif
-
-#if (defined(CONFIG_BT_GMAP) && (CONFIG_BT_GMAP > 0))
-#include "config_gmap.h"
-#endif
-
-#if (defined(CONFIG_BT_PBP) && (CONFIG_BT_PBP > 0))
-#include "config_pbp.h"
-#endif
-
-#endif /* CONFIG_BT_AUDIO */
-
-/*! @}*/
-
-#endif /* __BLE_AUDIO_CONFIG_H__ */
+#endif /* _EDGEFAST_BLUETOOTH_AUDIO_CONFIG_H_ */

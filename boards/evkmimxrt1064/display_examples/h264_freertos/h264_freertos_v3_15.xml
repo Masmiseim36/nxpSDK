@@ -29,7 +29,6 @@
     <definition extID="component.igpio_adapter.MIMXRT1064"/>
     <definition extID="component.lpuart_adapter.MIMXRT1064"/>
     <definition extID="component.osa_template_config.MIMXRT1064"/>
-    <definition extID="component.osa_interface.MIMXRT1064"/>
     <definition extID="component.osa.MIMXRT1064"/>
     <definition extID="component.osa_free_rtos.MIMXRT1064"/>
     <definition extID="driver.video-common.MIMXRT1064"/>
@@ -62,7 +61,7 @@
     <definition extID="com.crt.advproject.config.exe.debug"/>
     <definition extID="com.crt.advproject.config.exe.release"/>
   </externalDefinitions>
-  <example id="evkmimxrt1064_h264_freertos" name="h264_freertos" device_core="core0_MIMXRT1064xxxxA" dependency="platform.drivers.xip_board.evkmimxrt1064.MIMXRT1064 platform.drivers.clock.MIMXRT1064 platform.drivers.iomuxc.MIMXRT1064 CMSIS_Include_core_cm.MIMXRT1064 device.MIMXRT1064_CMSIS.MIMXRT1064 device.MIMXRT1064_system.MIMXRT1064 device.MIMXRT1064_startup.MIMXRT1064 platform.drivers.xip_device.MIMXRT1064 platform.drivers.cache_armv7_m7.MIMXRT1064 platform.drivers.common.MIMXRT1064 platform.drivers.dcdc_1.MIMXRT1064 platform.drivers.elcdif.MIMXRT1064 platform.drivers.gpc_1.MIMXRT1064 platform.drivers.igpio.MIMXRT1064 platform.drivers.lpuart.MIMXRT1064 platform.drivers.pmu.MIMXRT1064 platform.drivers.pxp.MIMXRT1064 platform.drivers.src.MIMXRT1064 platform.drivers.usdhc.MIMXRT1064 platform.utilities.assert_lite.MIMXRT1064 platform.utilities.misc_utilities.MIMXRT1064 component.lists.MIMXRT1064 utility.str.MIMXRT1064 utility.debug_console_lite.MIMXRT1064 component.igpio_adapter.MIMXRT1064 component.lpuart_adapter.MIMXRT1064 component.osa_template_config.MIMXRT1064 component.osa_interface.MIMXRT1064 component.osa.MIMXRT1064 component.osa_free_rtos.MIMXRT1064 driver.video-common.MIMXRT1064 driver.dc-fb-common.MIMXRT1064 driver.display-common.MIMXRT1064 driver.fbdev.MIMXRT1064 driver.dc-fb-elcdif.MIMXRT1064 middleware.fatfs.MIMXRT1064 middleware.fatfs.template_sd.MIMXRT1064 middleware.fatfs.sd.MIMXRT1064 middleware.sdmmc.common.MIMXRT1064 middleware.sdmmc.osa.freertos.MIMXRT1064 middleware.sdmmc.sd.MIMXRT1064 middleware.sdmmc.host.usdhc.MIMXRT1064 middleware.sdmmc.host.usdhc.non_blocking.MIMXRT1064 middleware.sdmmc.usdhc.template.MIMXRT1064 middleware.openh264.api.MIMXRT1064 middleware.openh264.common.MIMXRT1064 middleware.openh264.decoder.MIMXRT1064 middleware.openh264.unused_files.MIMXRT1064 middleware.freertos-kernel.MIMXRT1064 middleware.freertos-kernel.heap_4.MIMXRT1064 middleware.freertos-kernel.extension.MIMXRT1064 middleware.freertos-kernel.config.MIMXRT1064" category="display_examples">
+  <example id="evkmimxrt1064_h264_freertos" name="h264_freertos" device_core="core0_MIMXRT1064xxxxA" dependency="platform.drivers.xip_board.evkmimxrt1064.MIMXRT1064 platform.drivers.clock.MIMXRT1064 platform.drivers.iomuxc.MIMXRT1064 CMSIS_Include_core_cm.MIMXRT1064 device.MIMXRT1064_CMSIS.MIMXRT1064 device.MIMXRT1064_system.MIMXRT1064 device.MIMXRT1064_startup.MIMXRT1064 platform.drivers.xip_device.MIMXRT1064 platform.drivers.cache_armv7_m7.MIMXRT1064 platform.drivers.common.MIMXRT1064 platform.drivers.dcdc_1.MIMXRT1064 platform.drivers.elcdif.MIMXRT1064 platform.drivers.gpc_1.MIMXRT1064 platform.drivers.igpio.MIMXRT1064 platform.drivers.lpuart.MIMXRT1064 platform.drivers.pmu.MIMXRT1064 platform.drivers.pxp.MIMXRT1064 platform.drivers.src.MIMXRT1064 platform.drivers.usdhc.MIMXRT1064 platform.utilities.assert_lite.MIMXRT1064 platform.utilities.misc_utilities.MIMXRT1064 component.lists.MIMXRT1064 utility.str.MIMXRT1064 utility.debug_console_lite.MIMXRT1064 component.igpio_adapter.MIMXRT1064 component.lpuart_adapter.MIMXRT1064 component.osa_template_config.MIMXRT1064 component.osa.MIMXRT1064 component.osa_free_rtos.MIMXRT1064 driver.video-common.MIMXRT1064 driver.dc-fb-common.MIMXRT1064 driver.display-common.MIMXRT1064 driver.fbdev.MIMXRT1064 driver.dc-fb-elcdif.MIMXRT1064 middleware.fatfs.MIMXRT1064 middleware.fatfs.template_sd.MIMXRT1064 middleware.fatfs.sd.MIMXRT1064 middleware.sdmmc.common.MIMXRT1064 middleware.sdmmc.osa.freertos.MIMXRT1064 middleware.sdmmc.sd.MIMXRT1064 middleware.sdmmc.host.usdhc.MIMXRT1064 middleware.sdmmc.host.usdhc.non_blocking.MIMXRT1064 middleware.sdmmc.usdhc.template.MIMXRT1064 middleware.openh264.api.MIMXRT1064 middleware.openh264.common.MIMXRT1064 middleware.openh264.decoder.MIMXRT1064 middleware.openh264.unused_files.MIMXRT1064 middleware.freertos-kernel.MIMXRT1064 middleware.freertos-kernel.heap_4.MIMXRT1064 middleware.freertos-kernel.extension.MIMXRT1064 middleware.freertos-kernel.config.MIMXRT1064" category="display_examples">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.ccnature"/>
     </projects>
@@ -108,6 +107,7 @@
           <value>SDK_DEBUGCONSOLE=1</value>
           <value>MCUX_META_BUILD</value>
           <value>CPU_MIMXRT1064DVL6A</value>
+          <value>MIMXRT1064_SERIES</value>
           <value>OSA_USED</value>
           <value>USE_RTOS=1</value>
           <value>SD_ENABLED=1</value>
@@ -120,6 +120,7 @@
           <value>SDK_DEBUGCONSOLE=1</value>
           <value>MCUX_META_BUILD</value>
           <value>CPU_MIMXRT1064DVL6A</value>
+          <value>MIMXRT1064_SERIES</value>
           <value>OSA_USED</value>
           <value>USE_RTOS=1</value>
           <value>__NXP_MSDK__</value>
@@ -347,6 +348,9 @@
     </source>
     <source path="." project_relative_path="doc" type="doc">
       <files mask="example_board_readme.md"/>
+    </source>
+    <source path="." project_relative_path="doc" type="doc">
+      <files mask="examples_shared_readme.md"/>
     </source>
   </example>
 </ksdk:examples>

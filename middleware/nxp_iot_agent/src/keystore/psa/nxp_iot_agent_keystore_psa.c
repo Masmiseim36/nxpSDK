@@ -1,5 +1,5 @@
 /*
- * Copyright 2021-2024 NXP
+ * Copyright 2021-2025 NXP
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -28,10 +28,12 @@
 #define IOT_AGENT_KEYSTORE_PSA_VERSION (((IOT_AGENT_KEYSTORE_PSA_VERSION_MAJOR * 256U) \
 		+ IOT_AGENT_KEYSTORE_PSA_VERSION_MINOR) * 256U + IOT_AGENT_KEYSTORE_PSA_VERSION_PATCH)
 
-#if (NXP_IOT_AGENT_HAVE_PSA & NXP_IOT_AGENT_HAVE_PSA_IMPL_SIMUL)
+#if defined(NXP_IOT_AGENT_HAVE_PSA) && (NXP_IOT_AGENT_HAVE_PSA == 1)
+#if defined(NXP_IOT_AGENT_HAVE_PSA_IMPL_SIMUL) && (NXP_IOT_AGENT_HAVE_PSA_IMPL_SIMUL == 1)
 #include <psa_crypto_wrapper.h>
 #define psa_import_key psa_import_key_wrap
-#endif //(NXP_IOT_AGENT_HAVE_PSA & NXP_IOT_AGENT_HAVE_PSA_IMPL_SIMUL)
+#endif //#if defined(NXP_IOT_AGENT_HAVE_PSA_IMPL_SIMUL) && (NXP_IOT_AGENT_HAVE_PSA_IMPL_SIMUL == 1)
+#endif //#if defined(NXP_IOT_AGENT_HAVE_PSA) && (NXP_IOT_AGENT_HAVE_PSA == 1)
 
  /**
   * @brief Macro used to avoid compiler warnings for unused variables/function arguments.
@@ -140,7 +142,7 @@ bool iot_agent_keystore_psa_get_endpoint_info(
 }
 
 #define HAS_FIELD_OR_EXIT(MESSAGE_HAS_FIELD)                  \
-    if (! MESSAGE_HAS_FIELD) {                                \
+    if (!(MESSAGE_HAS_FIELD)) {                                \
         IOT_AGENT_ERROR("missing field " #MESSAGE_HAS_FIELD); \
         result = false;                                       \
         goto exit;                                            \

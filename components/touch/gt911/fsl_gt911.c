@@ -133,10 +133,7 @@ status_t GT911_Init(gt911_handle_t *handle, const gt911_config_t *config)
     {
         if (kGT911_I2cAddrMode1 == config->i2cAddrMode)
         {
-            if (NULL != config->intPinFunc)
-            {
-                config->intPinFunc(kGT911_IntPinPullUp);
-            }
+            config->intPinFunc(kGT911_IntPinPullUp);
             handle->i2cAddr = GT911_I2C_ADDRESS1;
         }
         else
@@ -147,26 +144,17 @@ status_t GT911_Init(gt911_handle_t *handle, const gt911_config_t *config)
         /* >= 100us */
         handle->timeDelayMsFunc(1);
 
-        if (NULL != config->pullResetPinFunc)
-        {
-            config->pullResetPinFunc(true);
-        }
+        config->pullResetPinFunc(true);
 
         /* >= 5ms */
         handle->timeDelayMsFunc(5);
 
-        if (NULL != config->intPinFunc)
-        {
-            config->intPinFunc(kGT911_IntPinPullDown);
-        }
+        config->intPinFunc(kGT911_IntPinPullDown);
 
         /* >= 50ms */
         handle->timeDelayMsFunc(50);
 
-        if (NULL != config->intPinFunc)
-        {
-            config->intPinFunc(kGT911_IntPinInput);
-        }
+        config->intPinFunc(kGT911_IntPinInput);
 
         status = handle->I2C_ReceiveFunc(handle->i2cAddr, GT911_REG_ID, GT911_REG_ADDR_SIZE, (uint8_t *)&deviceID, 4);
         if (kStatus_Success != status)

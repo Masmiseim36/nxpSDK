@@ -1,5 +1,8 @@
-PNGdec
+MCUXpresso SDK : PNGdec
 ------
+
+This repository is a fork of PNGdec(https://github.com/bitbank2/PNGdec/tree/1.0.1). Modifications have been made to adapt to NXP MCUXpresso SDK, with the macro "USE_PNGDEC_DRIVER". It is part of the MCUXpresso SDK overall delivery which is composed of several sub-repositories/projects. Navigate to the top/parent repository mcuxsdk-manifests(https://github.com/nxp-mcuxpresso/mcuxsdk-manifests) for the complete delivery of MCUXpresso SDK.
+
 Copyright (c) 2021 BitBank Software, Inc.<br>
 Written by Larry Bank<br>
 bitbank@pobox.com<br>

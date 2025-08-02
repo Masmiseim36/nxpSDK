@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 NXP
+ * Copyright 2025 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -10,9 +10,15 @@
 #define CONFIG_FLASH_BASE_ADDRESS 0x70000000
 #define DEBUG_CONSOLE_SYNCHRONIZATION_MODE 0
 // #define SERIAL_MANAGER_NON_BLOCKING_MODE 0
-// #define CONFIG_DBI_USE_MIPI_PANEL 0
+// #define CONFIG_STREAM_FLASH 0
 // #define CONFIG_MBEDTLS_USER_CONFIG_ENABLE 0
+#define LWIP_OPT_H_CODE_LINE_1 void sys_check_core_locking(void);
+#define LWIP_OPT_H_CODE_LINE_2 
+#define LWIP_DEFINE_LWIP_RAND_IN_CC_H 1
+// #define LIB_JPEG_USE_HW_ACCEL 0
+// #define USE_PNGDEC_DRIVER 0
 #define CONFIG_LV_ATTRIBUTE_MEM_ALIGN 
 #define CONFIG_LV_ATTRIBUTE_LARGE_CONST 
+// #define CONFIG_BOOT_CUSTOM_DEVICE_SETUP 0
 
 #endif /* _MCUX_CONFIG_H_ */

@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2024 NXP
+ * Copyright 2019-2025 NXP
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -9,7 +9,7 @@
 
 #include "nxp_iot_agent_common.h"
 
-#if NXP_IOT_AGENT_HAVE_SSS
+#if defined(NXP_IOT_AGENT_HAVE_SSS) && (NXP_IOT_AGENT_HAVE_SSS == 1)
 #include <sm_types.h>
 #endif
 
@@ -89,8 +89,9 @@ extern "C" {
  */
 #define IOT_AGENT_NONSE_TESTS_ENABLE 0
 
-#if ((AX_EMBEDDED && defined(USE_RTOS) && USE_RTOS == 1) || (NXP_IOT_AGENT_HAVE_HOSTCRYPTO_OPENSSL)) && \
-    (IOT_AGENT_MQTT_ENABLE == 1)
+#if ((AX_EMBEDDED && defined(USE_RTOS) && USE_RTOS == 1) || \
+    (defined(NXP_IOT_AGENT_HAVE_HOSTCRYPTO_OPENSSL) && (NXP_IOT_AGENT_HAVE_HOSTCRYPTO_OPENSSL == 1))) && \
+    (defined(IOT_AGENT_MQTT_ENABLE) && (IOT_AGENT_MQTT_ENABLE == 1))
 
 // doc: MQTT required modification - start
 

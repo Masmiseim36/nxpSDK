@@ -68,7 +68,7 @@
         </option>
         <option>
           <name>MacFile</name>
-          <state>$PROJ_DIR$/evkmimxrt1040.mac</state>
+          <state>$PROJ_DIR$/../evkmimxrt1040.mac</state>
         </option>
         <option>
           <name>MemOverride</name>
@@ -92,7 +92,7 @@
         </option>
         <option>
           <name>CExtraOptions</name>
-          <state/>
+          <state>--jlink_script_file=$PROJ_DIR$/../evkmimxrt1040.jlinkscript</state>
         </option>
         <option>
           <name>CFpuProcessor</name>
@@ -1708,7 +1708,7 @@
         </option>
         <option>
           <name>MacFile</name>
-          <state>$PROJ_DIR$/evkmimxrt1040_sdram_init.mac</state>
+          <state>$PROJ_DIR$/../evkmimxrt1040_sdram_init.mac</state>
         </option>
         <option>
           <name>MemOverride</name>
@@ -1732,7 +1732,7 @@
         </option>
         <option>
           <name>CExtraOptions</name>
-          <state/>
+          <state>--jlink_script_file=$PROJ_DIR$/../evkmimxrt1040_sdram_init.jlinkscript</state>
         </option>
         <option>
           <name>CFpuProcessor</name>
@@ -3344,11 +3344,11 @@
         </option>
         <option>
           <name>MacOverride</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>MacFile</name>
-          <state/>
+          <state>$PROJ_DIR$/../evkmimxrt1040.mac</state>
         </option>
         <option>
           <name>MemOverride</name>
@@ -3372,7 +3372,7 @@
         </option>
         <option>
           <name>CExtraOptions</name>
-          <state/>
+          <state>--jlink_script_file=$PROJ_DIR$/../evkmimxrt1040.jlinkscript</state>
         </option>
         <option>
           <name>CFpuProcessor</name>
@@ -4988,7 +4988,7 @@
         </option>
         <option>
           <name>MacFile</name>
-          <state>$PROJ_DIR$/evkmimxrt1040.mac</state>
+          <state>$PROJ_DIR$/../evkmimxrt1040.mac</state>
         </option>
         <option>
           <name>MemOverride</name>
@@ -5012,7 +5012,7 @@
         </option>
         <option>
           <name>CExtraOptions</name>
-          <state/>
+          <state>--jlink_script_file=$PROJ_DIR$/../evkmimxrt1040.jlinkscript</state>
         </option>
         <option>
           <name>CFpuProcessor</name>
@@ -6628,7 +6628,7 @@
         </option>
         <option>
           <name>MacFile</name>
-          <state>$PROJ_DIR$/evkmimxrt1040_sdram_init.mac</state>
+          <state>$PROJ_DIR$/../evkmimxrt1040_sdram_init.mac</state>
         </option>
         <option>
           <name>MemOverride</name>
@@ -6652,7 +6652,7 @@
         </option>
         <option>
           <name>CExtraOptions</name>
-          <state/>
+          <state>--jlink_script_file=$PROJ_DIR$/../evkmimxrt1040_sdram_init.jlinkscript</state>
         </option>
         <option>
           <name>CFpuProcessor</name>
@@ -8264,11 +8264,11 @@
         </option>
         <option>
           <name>MacOverride</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>MacFile</name>
-          <state/>
+          <state>$PROJ_DIR$/../evkmimxrt1040.mac</state>
         </option>
         <option>
           <name>MemOverride</name>
@@ -8292,7 +8292,7 @@
         </option>
         <option>
           <name>CExtraOptions</name>
-          <state/>
+          <state>--jlink_script_file=$PROJ_DIR$/../evkmimxrt1040.jlinkscript</state>
         </option>
         <option>
           <name>CFpuProcessor</name>

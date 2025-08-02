@@ -12,15 +12,21 @@ ENDIF()
 
 SET(CMAKE_ASM_FLAGS_RELEASE " \
     ${CMAKE_ASM_FLAGS_RELEASE} \
-    -DNDEBUG \
     -D__STARTUP_CLEAR_BSS \
-    -mcpu=cortex-m7 \
+    -DCPU_MIMXRT1015DAF5A \
+    -DMIMXRT1015_SERIES \
+    -DOSA_USED \
+    -DDEBUG \
+    -DNDEBUG \
     -mthumb \
+    -mcpu=cortex-m7 \
     ${FPU} \
 ")
 SET(CMAKE_C_FLAGS_RELEASE " \
     ${CMAKE_C_FLAGS_RELEASE} \
+    -include ${ProjDirPath}/../mcux_config.h \
     -DNDEBUG \
+    -D__STARTUP_CLEAR_BSS \
     -DCPU_MIMXRT1015DAF5A \
     -DCPU_IS_ARM_CORTEX_M7=1 \
     -DBL_TARGET_RAM \
@@ -28,65 +34,75 @@ SET(CMAKE_C_FLAGS_RELEASE " \
     -DUSB_STACK_BM \
     -DFLEXSPI_ENABLE_OCTAL_FLASH_SUPPORT=0 \
     -DFLEXSPI_ENABLE_NO_CMD_MODE_SUPPORT=0 \
-    -DSDK_OS_BAREMETAL \
-    -g \
-    -Os \
-    -mcpu=cortex-m7 \
-    -mthumb \
-    -MMD \
-    -MP \
+    -DPINT_USE_SIMPLE_CALLBACK=1 \
+    -DMIMXRT1015_SERIES \
+    -DOSA_USED \
+    -DDEBUG \
+    -DUSE_RTOS=0 \
+    -Wall \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
-    -ffreestanding \
     -fno-builtin \
+    -mthumb \
     -mapcs \
     -std=gnu99 \
+    -mcpu=cortex-m7 \
+    -ffreestanding \
+    -g \
+    -O0 \
+    -Os \
+    -Wno-unused-variable \
+    -Wno-unused-function \
+    -Wno-maybe-uninitialized \
+    -Wno-missing-braces \
+    -MMD \
+    -MP \
     ${FPU} \
     ${DEBUG_CONSOLE_CONFIG} \
 ")
 SET(CMAKE_CXX_FLAGS_RELEASE " \
     ${CMAKE_CXX_FLAGS_RELEASE} \
     -DNDEBUG \
-    -g \
-    -Os \
-    -mcpu=cortex-m7 \
-    -mthumb \
-    -MMD \
-    -MP \
+    -DCPU_MIMXRT1015DAF5A \
+    -DMIMXRT1015_SERIES \
+    -DOSA_USED \
+    -DDEBUG \
+    -DUSE_RTOS=0 \
+    -Wall \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
-    -ffreestanding \
     -fno-builtin \
+    -mthumb \
     -mapcs \
     -fno-rtti \
     -fno-exceptions \
+    -mcpu=cortex-m7 \
+    -ffreestanding \
+    -g \
+    -O0 \
+    -Os \
+    -MMD \
+    -MP \
     ${FPU} \
     ${DEBUG_CONSOLE_CONFIG} \
 ")
 SET(CMAKE_EXE_LINKER_FLAGS_RELEASE " \
     ${CMAKE_EXE_LINKER_FLAGS_RELEASE} \
-    -g \
-    -mcpu=cortex-m7 \
+    -Xlinker \
+    -Map=output.map \
     -Wall \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
-    -ffreestanding \
     -fno-builtin \
     -mthumb \
     -mapcs \
-    -Xlinker \
-    --gc-sections \
-    -Xlinker \
-    -static \
-    -Xlinker \
-    -z \
-    -Xlinker \
-    muldefs \
-    -Xlinker \
-    -Map=output.map \
+    -Wl,--gc-sections \
+    -Wl,-static \
+    -Wl,--print-memory-usage \
+    -mcpu=cortex-m7 \
     ${FPU} \
     ${SPECS} \
     -T\"${ProjDirPath}/MIMXRT1015_ram_flashloader.ld\" -static \

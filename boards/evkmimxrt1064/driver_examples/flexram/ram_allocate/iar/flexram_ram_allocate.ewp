@@ -248,6 +248,7 @@
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1064DVL6A</state>
+          <state>MIMXRT1064_SERIES</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -564,6 +565,7 @@
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1064DVL6A</state>
+          <state>MIMXRT1064_SERIES</state>
         </option>
         <option>
           <name>AList</name>
@@ -1376,6 +1378,7 @@
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1064DVL6A</state>
+          <state>MIMXRT1064_SERIES</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -1692,6 +1695,7 @@
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1064DVL6A</state>
+          <state>MIMXRT1064_SERIES</state>
         </option>
         <option>
           <name>AList</name>
@@ -1932,7 +1936,7 @@
         </option>
         <option>
           <name>IlinkIcfFile</name>
-          <state>$PROJ_DIR$/MIMXRT1064xxxxx_flexspi_nor.icf</state>
+          <state>$PROJ_DIR$/MIMXRT1064xxxxx_flexspi_nor_sdram.icf</state>
         </option>
         <option>
           <name>IlinkIcfFileSlave</name>
@@ -2504,6 +2508,7 @@
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1064DVL6A</state>
+          <state>MIMXRT1064_SERIES</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -2821,6 +2826,7 @@
           <state>NDEBUG</state>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1064DVL6A</state>
+          <state>MIMXRT1064_SERIES</state>
         </option>
         <option>
           <name>AList</name>
@@ -3633,6 +3639,7 @@
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1064DVL6A</state>
+          <state>MIMXRT1064_SERIES</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -3949,6 +3956,7 @@
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1064DVL6A</state>
+          <state>MIMXRT1064_SERIES</state>
         </option>
         <option>
           <name>AList</name>
@@ -4189,7 +4197,7 @@
         </option>
         <option>
           <name>IlinkIcfFile</name>
-          <state>$PROJ_DIR$/MIMXRT1064xxxxx_flexspi_nor.icf</state>
+          <state>$PROJ_DIR$/MIMXRT1064xxxxx_flexspi_nor_sdram.icf</state>
         </option>
         <option>
           <name>IlinkIcfFileSlave</name>
@@ -4932,6 +4940,9 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../example_board_readme.md</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../examples_shared_readme.md</name>
     </file>
   </group>
 </project>

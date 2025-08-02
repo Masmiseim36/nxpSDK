@@ -1444,16 +1444,6 @@ int bt_hfp_ag_disconnect(struct bt_hfp_ag *hfp_ag)
     return 0;
 }
 
-struct bt_conn *bt_hfp_ag_get_conn(struct bt_hfp_ag *hfp_ag)
-{
-    if (hfp_ag == NULL || hfp_ag->acl_conn == NULL)
-    {
-        return NULL;
-    }
-
-    return bt_conn_ref(hfp_ag->acl_conn);
-}
-
 int bt_hfp_ag_get_cind_setting(struct bt_hfp_ag *hfp_ag, hfp_ag_cind_t *cind_setting)
 {
     if ( (!hfp_ag) || (!cind_setting))

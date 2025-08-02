@@ -3,7 +3,7 @@
 *        Solutions for real time microcontroller applications        *
 **********************************************************************
 *                                                                    *
-*        (c) 1996 - 2020  SEGGER Microcontroller GmbH                *
+*        (c) 1996 - 2025  SEGGER Microcontroller GmbH                *
 *                                                                    *
 *        Internet: www.segger.com    Support:  support@segger.com    *
 *                                                                    *
@@ -17,18 +17,21 @@ Purpose     : Generated file do NOT edit!
 #include "AppWizard.h"
 #include "Resource.h"
 
+#ifdef WIN32
+  #include "GUIDRV_Win32R.h"
+#endif
+
 /*********************************************************************
 *
 *       Defines
 *
 **********************************************************************
 */
-#define XSIZE_PHYS 480
-#define YSIZE_PHYS 272
+#define XSIZE_PHYS       480
+#define YSIZE_PHYS       272
 #define COLOR_CONVERSION GUICC_M8888I
-#define DISPLAY_DRIVER GUIDRV_WIN32
-#define NUM_BUFFERS   2
-#define _aVarList NULL
+#define DISPLAY_DRIVER   GUIDRV_WIN32R
+#define NUM_BUFFERS      2
 
 /*********************************************************************
 *

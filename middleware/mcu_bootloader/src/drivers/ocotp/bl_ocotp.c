@@ -1,7 +1,6 @@
 /*
  * Copyright (c) 2015 Freescale Semiconductor, Inc.
  * Copyright 2016-2021 NXP
- * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -85,7 +84,11 @@ status_t ocotp_init(OCOTP_Type *base)
 }
 
 // See fsl_ocotp.h for documentation on this function.
+#if BL_FEATURE_OCOTP_REDLOCK
+status_t ocotp_program_once(OCOTP_Type *base, uint32_t index, uint32_t *src, uint32_t lengthInBytes, bool lock)
+#else
 status_t ocotp_program_once(OCOTP_Type *base, uint32_t index, uint32_t *src, uint32_t lengthInBytes)
+#endif
 {
     assert(base);
     assert(src);
@@ -137,10 +140,14 @@ status_t ocotp_program_once(OCOTP_Type *base, uint32_t index, uint32_t *src, uin
 #ifdef K32H844P_SERIES
     base->CTRL.CLR = OCOTP_CTRL_WR_UNLOCK_MASK | OCOTP_CTRL_ADDR_MASK;
     base->CTRL.SET = OCOTP_CTRL_ADDR(index) | OCOTP_CTRL_WR_UNLOCK(OCOTP_PROGRAM_UNLOCK_KEY);
+#elif BL_FEATURE_OCOTP_REDLOCK
+    base->CTRL_CLR = OCOTP_CTRL_WR_UNLOCK_MASK | OCOTP_CTRL_ADDR_MASK | OCOTP_CTRL_WORDLOCK_MASK;
+    base->CTRL_SET = OCOTP_CTRL_ADDR(index) | OCOTP_CTRL_WR_UNLOCK(OCOTP_PROGRAM_UNLOCK_KEY) | OCOTP_CTRL_WORDLOCK(lock);
 #else
     base->CTRL_CLR = OCOTP_CTRL_WR_UNLOCK_MASK | OCOTP_CTRL_ADDR_MASK;
     base->CTRL_SET = OCOTP_CTRL_ADDR(index) | OCOTP_CTRL_WR_UNLOCK(OCOTP_PROGRAM_UNLOCK_KEY);
 #endif
+
     // Write the data.
     base->DATA = *src;
 

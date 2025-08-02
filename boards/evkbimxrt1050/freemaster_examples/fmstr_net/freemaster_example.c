@@ -590,8 +590,8 @@ void FMSTR_Example_Init_Ex(FMSTR_BOOL callFmstrInit)
 
     if (hpipe)
     {
-        FMSTR_PipeWrite(hpipe, (FMSTR_ADDR)sz_pipe1_hello, FMSTR_StrLen(sz_pipe1_hello), 0);
-        FMSTR_PipeWrite(hpipe, (FMSTR_ADDR)sz_pipe_other, FMSTR_StrLen(sz_pipe_other), 0);
+        FMSTR_PipeWrite(hpipe, (FMSTR_ADDR)sz_pipe1_hello, (FMSTR_PIPE_SIZE)FMSTR_StrLen(sz_pipe1_hello), 0);
+        FMSTR_PipeWrite(hpipe, (FMSTR_ADDR)sz_pipe_other, (FMSTR_PIPE_SIZE)FMSTR_StrLen(sz_pipe_other), 0);
     }
 
     /* Second pipe at port 2 */
@@ -600,8 +600,8 @@ void FMSTR_Example_Init_Ex(FMSTR_BOOL callFmstrInit)
 
     if (hpipe)
     {
-        FMSTR_PipeWrite(hpipe, (FMSTR_ADDR)sz_pipe2_hello, FMSTR_StrLen(sz_pipe2_hello), 0);
-        FMSTR_PipeWrite(hpipe, (FMSTR_ADDR)sz_pipe_other, FMSTR_StrLen(sz_pipe_other), 0);
+        FMSTR_PipeWrite(hpipe, (FMSTR_ADDR)sz_pipe2_hello, (FMSTR_PIPE_SIZE)FMSTR_StrLen(sz_pipe2_hello), 0);
+        FMSTR_PipeWrite(hpipe, (FMSTR_ADDR)sz_pipe_other, (FMSTR_PIPE_SIZE)FMSTR_StrLen(sz_pipe_other), 0);
     }
 
     /* Third pipe is a binary one at port 33 */

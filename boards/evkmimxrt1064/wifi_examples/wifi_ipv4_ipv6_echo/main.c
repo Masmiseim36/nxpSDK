@@ -2,7 +2,7 @@
  *
  *  @brief main file
  *
- *  Copyright 2022-2023 NXP
+ *  Copyright 2022-2023, 2025 NXP
  *  All rights reserved.
  *
  *  SPDX-License-Identifier: BSD-3-Clause
@@ -27,7 +27,6 @@
 
 #define main_task_PRIORITY          1
 #define main_task_STACK_DEPTH       800
-#define SHELL_ADDITIONAL_STACK_SIZE 256
 #define DEMO_WIFI_LABEL             "MyWifi"
 
 /*******************************************************************************
@@ -126,19 +125,17 @@ void task_main(void *param)
 
     PRINTF("Initialize CLI\r\n");
     printSeparator();
-    shell_task_init(wifi_commands, SHELL_ADDITIONAL_STACK_SIZE);
+    shell_task_init(wifi_commands);
 
     vTaskDelete(NULL);
 }
 
 static shell_status_t cmd_connect(void *shellHandle, int32_t argc, char **argv)
 {
-    (void)shellHandle;
-
     wpl_ret_t err;
     if (wlan_connected == true)
     {
-        PRINTF("Leave network before connecting to a new one!\r\n");
+        SHELL_Printf(shellHandle, "Leave network before connecting to a new one!\r\n");
         return kStatus_SHELL_Success;
     }
 
@@ -149,23 +146,23 @@ static shell_status_t cmd_connect(void *shellHandle, int32_t argc, char **argv)
 
     if (err != WPLRET_SUCCESS)
     {
-        PRINTF("Failed to add network profile!\r\n");
+        SHELL_Printf(shellHandle, "Failed to add network profile!\r\n");
         return kStatus_SHELL_Success;
     }
 
-    PRINTF("Joining: %s\r\n", argv[1]);
+    SHELL_Printf(shellHandle, "Joining: %s\r\n", argv[1]);
     err = WPL_Join(DEMO_WIFI_LABEL);
     if (err != WPLRET_SUCCESS)
     {
-        PRINTF("Failed to join network!\r\n");
+        SHELL_Printf(shellHandle, "Failed to join network!\r\n");
         if (WPL_RemoveNetwork(DEMO_WIFI_LABEL) != WPLRET_SUCCESS)
         {
-            PRINTF("Failed to remove network!\r\n");
+            SHELL_Printf(shellHandle, "Failed to remove network!\r\n");
         }
         return kStatus_SHELL_Success;
     }
 
-    PRINTF("Network joined\r\n");
+    SHELL_Printf(shellHandle, "Network joined\r\n");
     wlan_connected = true;
     return kStatus_SHELL_Success;
 }
@@ -174,43 +171,52 @@ static shell_status_t cmd_disconnect(void *shellHandle, int32_t argc, char **arg
 {
     if (wlan_connected == false)
     {
-        PRINTF("No network connected!\r\n");
+        SHELL_Printf(shellHandle, "No network connected!\r\n");
         return kStatus_SHELL_Success;
     }
 
     if (WPL_Leave() != WPLRET_SUCCESS)
     {
-        PRINTF("Failed to leave the network!\r\n");
+        SHELL_Printf(shellHandle, "Failed to leave the network!\r\n");
         return kStatus_SHELL_Success;
     }
 
     if (WPL_RemoveNetwork(DEMO_WIFI_LABEL) != WPLRET_SUCCESS)
     {
-        PRINTF("Failed to remove network profile!\r\n");
+        SHELL_Printf(shellHandle, "Failed to remove network profile!\r\n");
         return kStatus_SHELL_Success;
     }
 
-    PRINTF("Disconnected from network\r\n");
+    SHELL_Printf(shellHandle, "Disconnected from network\r\n");
     wlan_connected = false;
     return kStatus_SHELL_Success;
 }
 
 static shell_status_t cmd_scan(void *shellHandle, int32_t argc, char **argv)
 {
-    (void)shellHandle;
     (void)argc;
     char *scanData = NULL;
 
-    PRINTF("\r\nInitiating scan...\r\n");
+    SHELL_Printf(shellHandle, "\r\nInitiating scan...\r\n");
     scanData = WPL_Scan();
     if (scanData == NULL)
     {
-        PRINTF("Error while scanning!\r\n");
+        SHELL_Printf(shellHandle, "Error while scanning!\r\n");
     }
     else
     {
         vPortFree(scanData);
     }
+
+#if (defined(SDK_DEBUGCONSOLE) && (SDK_DEBUGCONSOLE == DEBUGCONSOLE_REDIRECT_TO_SDK))
+    /*
+     * Scanning prints the found networks to the console.
+     * Wait for debug console output to be printed before returning from
+     * the command, otherwise shell prompt could be printed in
+     * the middle of the output of the network scan.
+     */
+    (void)DbgConsole_Flush();
+#endif
 
     return kStatus_SHELL_Success;
 }

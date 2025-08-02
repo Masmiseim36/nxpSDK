@@ -245,6 +245,7 @@
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1042XJM5B</state>
+          <state>MIMXRT1042_SERIES</state>
           <state>USE_RTOS=0</state>
           <state>SD_ENABLED=1</state>
         </option>
@@ -572,6 +573,7 @@
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1042XJM5B</state>
+          <state>MIMXRT1042_SERIES</state>
         </option>
         <option>
           <name>AList</name>
@@ -1395,6 +1397,7 @@
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1042XJM5B</state>
+          <state>MIMXRT1042_SERIES</state>
           <state>USE_RTOS=0</state>
           <state>SD_ENABLED=1</state>
         </option>
@@ -1722,6 +1725,7 @@
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1042XJM5B</state>
+          <state>MIMXRT1042_SERIES</state>
         </option>
         <option>
           <name>AList</name>
@@ -2544,6 +2548,7 @@
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1042XJM5B</state>
+          <state>MIMXRT1042_SERIES</state>
           <state>USE_RTOS=0</state>
           <state>SD_ENABLED=1</state>
         </option>
@@ -2871,6 +2876,7 @@
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1042XJM5B</state>
+          <state>MIMXRT1042_SERIES</state>
         </option>
         <option>
           <name>AList</name>
@@ -3691,6 +3697,7 @@
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1042XJM5B</state>
+          <state>MIMXRT1042_SERIES</state>
           <state>USE_RTOS=0</state>
           <state>SD_ENABLED=1</state>
         </option>
@@ -4018,6 +4025,7 @@
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1042XJM5B</state>
+          <state>MIMXRT1042_SERIES</state>
         </option>
         <option>
           <name>AList</name>
@@ -4841,6 +4849,7 @@
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1042XJM5B</state>
+          <state>MIMXRT1042_SERIES</state>
           <state>USE_RTOS=0</state>
           <state>SD_ENABLED=1</state>
         </option>
@@ -5168,6 +5177,7 @@
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1042XJM5B</state>
+          <state>MIMXRT1042_SERIES</state>
         </option>
         <option>
           <name>AList</name>
@@ -5990,6 +6000,7 @@
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1042XJM5B</state>
+          <state>MIMXRT1042_SERIES</state>
           <state>USE_RTOS=0</state>
           <state>SD_ENABLED=1</state>
         </option>
@@ -6317,6 +6328,7 @@
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1042XJM5B</state>
+          <state>MIMXRT1042_SERIES</state>
         </option>
         <option>
           <name>AList</name>
@@ -7321,13 +7333,13 @@
     <group>
       <name>osa</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../components/osa/fsl_os_abstraction.h</name>
-      </file>
-      <file>
         <name>$PROJ_DIR$/../../../../../components/osa/fsl_os_abstraction_bm.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../components/osa/fsl_os_abstraction_bm.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/osa/fsl_os_abstraction.h</name>
       </file>
     </group>
   </group>
@@ -7422,6 +7434,9 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../example_board_readme.md</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../examples_shared_readme.md</name>
     </file>
   </group>
 </project>

@@ -14,9 +14,6 @@ if(CMAKE_SCRIPT_MODE_FILE)
 endif()
 
 
-set(CMAKE_STATIC_LIBRARY_PREFIX)
-set(CMAKE_STATIC_LIBRARY_SUFFIX)
-
 set(CMAKE_EXECUTABLE_LIBRARY_PREFIX)
 set(CMAKE_EXECUTABLE_LIBRARY_SUFFIX)
 
@@ -48,7 +45,6 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../lwipopts.h"
 "${ProjDirPath}/../lwippools.h"
 "${ProjDirPath}/../mfg_wlan_bt_fw.h"
-"${ProjDirPath}/../sd8801_mfg_wlan.h"
 "${ProjDirPath}/../sduart8987_mfg_wlan_bt.h"
 "${ProjDirPath}/../sduartIW416_mfg_wlan_bt.h"
 "${ProjDirPath}/../sduart_nw61x_mfg_se.h"
@@ -60,7 +56,6 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../sdmmc_config.h"
 "${ProjDirPath}/../wifi_bt_config.c"
 "${ProjDirPath}/../wifi_bt_config.h"
-"${ProjDirPath}/../app_config.h"
 "${ProjDirPath}/../FreeRTOSConfigBoard.h"
 "${ProjDirPath}/../board.h"
 "${ProjDirPath}/../board.c"

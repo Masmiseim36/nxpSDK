@@ -1,0 +1,15 @@
+﻿°C
+Bedroom
+Living Room
+On
+Off
+Auto
+Temperature Control
+Fan
+Temperature
+Room:
+Fan:
+Temp.:
+Kitchen
+Family Room
+Dining Room

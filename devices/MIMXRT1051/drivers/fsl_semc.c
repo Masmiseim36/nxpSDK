@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2023 NXP
+ * Copyright 2017-2023, 2025 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -168,7 +168,7 @@ static uint32_t SEMC_GetInstance(SEMC_Type *base)
     /* Find the instance index from base address mappings. */
     for (instance = 0UL; instance < ARRAY_SIZE(s_semcBases); instance++)
     {
-        if (s_semcBases[instance] == base)
+        if (MSDK_REG_SECURE_ADDR(s_semcBases[instance]) == MSDK_REG_SECURE_ADDR(base))
         {
             break;
         }
@@ -268,15 +268,15 @@ static status_t SEMC_IsIPCommandDone(SEMC_Type *base)
     {
     };
 
-    /* Clear status bit */
-    base->INTR |= SEMC_INTR_IPCMDDONE_MASK;
-
     /* Check error status */
     if ((base->INTR & (uint32_t)SEMC_INTR_IPCMDERR_MASK) != 0x00U)
     {
-        base->INTR |= SEMC_INTR_IPCMDERR_MASK;
+        base->INTR = SEMC_INTR_IPCMDERR_MASK;
         status = kStatus_SEMC_IpCommandExecutionError;
     }
+
+    /* Clear status bit */
+    base->INTR = SEMC_INTR_IPCMDDONE_MASK;
 
     return status;
 }
@@ -1208,7 +1208,7 @@ status_t SEMC_SendIPCommand(
     status_t result;
 
     /* Clear status bit */
-    base->INTR |= SEMC_INTR_IPCMDDONE_MASK;
+    base->INTR = SEMC_INTR_IPCMDDONE_MASK;
     /* Set address. */
     base->IPCR0 = address;
 

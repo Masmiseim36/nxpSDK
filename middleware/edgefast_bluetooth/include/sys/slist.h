@@ -1,5 +1,5 @@
 /*
- * Copyright 2021,2025 NXP
+ * Copyright 2021 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -9,10 +9,6 @@
 #define _BT_LIST_H_
 
 #include "stdbool.h"
-
-#ifdef __cplusplus
-extern "C" {
-#endif
 
 typedef struct bt_list_node
 {
@@ -123,10 +119,6 @@ typedef bt_list_node_t sys_snode_t;
 #define sys_slist_get_not_empty     bt_list_get_not_empty
 #define sys_slist_remove            bt_list_remove
 #define sys_slist_insert            bt_list_insert
-
-#ifdef __cplusplus
-}
-#endif
 
 #endif /* _BT_LIST_H_ */
 

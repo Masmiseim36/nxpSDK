@@ -113,7 +113,7 @@ typedef struct _usb_device_khci_state_struct
 {
     usb_device_struct_t *deviceHandle; /*!< Device handle used to identify the device object belongs to */
 #if defined(__DSC__) || defined(__CW__)
-    void *bdt; /*!< BDT buffer address */
+    uint8_t *bdt; /*!< BDT buffer address */
 #else
     uint32_t *bdt; /*!< BDT buffer address */
 #endif

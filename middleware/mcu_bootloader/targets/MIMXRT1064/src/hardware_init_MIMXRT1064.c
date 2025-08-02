@@ -172,7 +172,7 @@ void flexspi_iomux_config(uint32_t instance, flexspi_mem_config_t *config)
                 IOMUXC->SW_MUX_CTL_PAD[SW_MUX_CTL_PAD_FLEXSPIA_DATA3_IDX] = FLEXSPIA_MUX_VAL;
                 IOMUXC->SW_PAD_CTL_PAD[SW_PAD_CTL_PAD_FLEXSPIA_DATA3_IDX] = dataPadCtlValue;
 
-                if ((config->sflashPadType == kSerialFlash_8Pads))
+                if (config->sflashPadType == kSerialFlash_8Pads)
                 {
                     // FLEXSPIA_DATA4 / FLEXSPIB_DATA0
                     IOMUXC->SW_MUX_CTL_PAD[SW_MUX_CTL_PAD_FLEXSPIB_DATA0_IDX] = FLEXSPIA_MUX_VAL;

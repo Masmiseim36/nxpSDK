@@ -18,6 +18,7 @@ SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG " \
     -D__STARTUP_CLEAR_BSS \
     -DMCUXPRESSO_SDK \
     -DCPU_MIMXRT1024DAG5A \
+    -DMIMXRT1024_SERIES \
     -DOSA_USED \
     -g \
     -mthumb \
@@ -32,6 +33,7 @@ SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE " \
     -D__STARTUP_CLEAR_BSS \
     -DMCUXPRESSO_SDK \
     -DCPU_MIMXRT1024DAG5A \
+    -DMIMXRT1024_SERIES \
     -DOSA_USED \
     -mthumb \
     -mcpu=cortex-m7 \
@@ -46,10 +48,12 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG " \
     -DXIP_EXTERNAL_FLASH=1 \
     -DUSE_SDRAM=1 \
     -DSKIP_SYSCLK_INIT=1 \
+    -D__STARTUP_CLEAR_BSS \
     -DUSB_STACK_BM \
     -DMCUX_META_BUILD \
     -DMCUXPRESSO_SDK \
     -DCPU_MIMXRT1024DAG5A \
+    -DMIMXRT1024_SERIES \
     -DOSA_USED \
     -DSERIAL_PORT_TYPE_UART=1 \
     -DUSE_RTOS=0 \
@@ -76,10 +80,12 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE " \
     -DXIP_EXTERNAL_FLASH=1 \
     -DUSE_SDRAM=1 \
     -DSKIP_SYSCLK_INIT=1 \
+    -D__STARTUP_CLEAR_BSS \
     -DUSB_STACK_BM \
     -DMCUX_META_BUILD \
     -DMCUXPRESSO_SDK \
     -DCPU_MIMXRT1024DAG5A \
+    -DMIMXRT1024_SERIES \
     -DOSA_USED \
     -DSERIAL_PORT_TYPE_UART=1 \
     -DUSE_RTOS=0 \
@@ -104,6 +110,7 @@ SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG " \
     -DMCUX_META_BUILD \
     -DMCUXPRESSO_SDK \
     -DCPU_MIMXRT1024DAG5A \
+    -DMIMXRT1024_SERIES \
     -DOSA_USED \
     -DSERIAL_PORT_TYPE_UART=1 \
     -DUSE_RTOS=0 \
@@ -130,6 +137,7 @@ SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE " \
     -DMCUX_META_BUILD \
     -DMCUXPRESSO_SDK \
     -DCPU_MIMXRT1024DAG5A \
+    -DMIMXRT1024_SERIES \
     -DOSA_USED \
     -DSERIAL_PORT_TYPE_UART=1 \
     -DUSE_RTOS=0 \
@@ -165,9 +173,6 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG " \
     -mapcs \
     -Wl,--gc-sections \
     -Wl,-static \
-    -Wl,-z \
-    -Wl,muldefs \
-    -Wl,-Map=output.map \
     -Wl,--print-memory-usage \
     -mcpu=cortex-m7 \
     ${FPU} \
@@ -191,9 +196,6 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE " \
     -mapcs \
     -Wl,--gc-sections \
     -Wl,-static \
-    -Wl,-z \
-    -Wl,muldefs \
-    -Wl,-Map=output.map \
     -Wl,--print-memory-usage \
     -mcpu=cortex-m7 \
     ${FPU} \

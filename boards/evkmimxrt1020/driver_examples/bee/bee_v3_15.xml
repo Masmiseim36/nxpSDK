@@ -29,8 +29,6 @@
     <definition extID="armgcc"/>
     <definition extID="mcuxpresso"/>
     <definition extID="com.nxp.mcuxpresso"/>
-    <definition extID="com.crt.advproject.config.exe.debug"/>
-    <definition extID="com.crt.advproject.config.exe.release"/>
     <definition extID="com.nxp.mcuxpresso.core.debug.support.segger.debug"/>
     <definition extID="com.nxp.mcuxpresso.core.debug.support.segger.release"/>
   </externalDefinitions>
@@ -39,7 +37,6 @@
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
     <memory>
-      <memoryBlock id="BOARD_FLASH_evkmimxrt1020" name="BOARD_FLASH" addr="60000000" size="00800000" type="ExtFlash" access="RO"/>
       <memoryBlock id="SRAM_DTC_evkmimxrt1020" name="SRAM_DTC" addr="20000000" size="00010000" type="RAM" access="RW"/>
       <memoryBlock id="SRAM_ITC_evkmimxrt1020" name="SRAM_ITC" addr="00000000" size="00010000" type="RAM" access="RW"/>
       <memoryBlock id="SRAM_OC_evkmimxrt1020" name="SRAM_OC" addr="20200000" size="00020000" type="RAM" access="RW"/>
@@ -55,6 +52,7 @@
           <value>SDK_DEBUGCONSOLE=1</value>
           <value>MCUX_META_BUILD</value>
           <value>CPU_MIMXRT1021DAG5A</value>
+          <value>MIMXRT1021_SERIES</value>
         </option>
         <option id="com.crt.advproject.link.memory.sections" type="stringList">
           <value>isd=*(CodeQuickAccess);region=SRAM_ITC;type=.data</value>
@@ -101,15 +99,6 @@
       </toolchainSetting>
     </toolchainSettings>
     <debug_configurations>
-      <debug_configuration id_refs="com.crt.advproject.config.exe.debug com.crt.advproject.config.exe.release">
-        <drivers>
-          <driver id_refs="BOARD_FLASH_evkmimxrt1020">
-            <driverBinary path="../../../../devices/MIMXRT1021/mcuxpresso" project_relative_path="binary" type="binary">
-              <files mask="MIMXRT1020-EVK_IS25LP064.cfx"/>
-            </driverBinary>
-          </driver>
-        </drivers>
-      </debug_configuration>
       <debug_configuration id_refs="com.nxp.mcuxpresso.core.debug.support.segger.debug com.nxp.mcuxpresso.core.debug.support.segger.release">
         <scripts>
           <script type="segger_script">
@@ -143,10 +132,6 @@
       <files mask="CMakeLists.txt"/>
       <files mask="flags.cmake"/>
       <files mask="config.cmake"/>
-      <files mask="build_sdram_debug.bat"/>
-      <files mask="build_sdram_debug.sh"/>
-      <files mask="build_sdram_release.bat"/>
-      <files mask="build_sdram_release.sh"/>
       <files mask="build_debug.bat"/>
       <files mask="build_debug.sh"/>
       <files mask="build_release.bat"/>
@@ -155,12 +140,8 @@
     <source path="../../../../devices/MIMXRT1021" project_relative_path="./" type="workspace" toolchain="armgcc">
       <files mask="all_lib_device.cmake"/>
     </source>
-    <source path="." project_relative_path="source" type="other" toolchain="iar">
-      <files mask="evkmimxrt1020_sdram_init.mac"/>
-    </source>
     <source path="." project_relative_path="source" type="configuration" toolchain="mdk">
       <files mask="evkmimxrt1020_ram.ini"/>
-      <files mask="evkmimxrt1020_sdram_init.ini"/>
     </source>
     <source path="." project_relative_path="source" type="src">
       <files mask="bee.c"/>
@@ -173,15 +154,12 @@
     </source>
     <source path="iar" project_relative_path="MIMXRT1021/iar" type="linker" toolchain="iar">
       <files mask="MIMXRT1021xxxxx_ram.icf"/>
-      <files mask="MIMXRT1021xxxxx_sdram.icf"/>
     </source>
     <source path="armgcc" project_relative_path="MIMXRT1021/armgcc" type="linker" toolchain="armgcc">
       <files mask="MIMXRT1021xxxxx_ram.ld"/>
-      <files mask="MIMXRT1021xxxxx_sdram.ld"/>
     </source>
     <source path="mdk" project_relative_path="MIMXRT1021/mdk" type="linker" toolchain="mdk">
       <files mask="MIMXRT1021xxxxx_ram.scf"/>
-      <files mask="MIMXRT1021xxxxx_sdram.scf"/>
     </source>
     <source path="." project_relative_path="board" type="c_include">
       <files mask="clock_config.h"/>
@@ -205,6 +183,9 @@
     </source>
     <source path="." project_relative_path="doc" type="doc">
       <files mask="example_board_readme.md"/>
+    </source>
+    <source path="." project_relative_path="doc" type="doc">
+      <files mask="examples_shared_readme.md"/>
     </source>
   </example>
 </ksdk:examples>

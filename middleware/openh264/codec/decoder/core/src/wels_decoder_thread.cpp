@@ -327,4 +327,3 @@ void SemDestroy (SWelsDecSemphore* s) {
 }
 
 #endif /* !_WIN32 */
-

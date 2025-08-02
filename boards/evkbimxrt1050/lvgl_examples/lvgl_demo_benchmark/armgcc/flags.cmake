@@ -18,6 +18,7 @@ SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG " \
     -D__STARTUP_CLEAR_BSS \
     -DMCUXPRESSO_SDK \
     -DCPU_MIMXRT1052DVL6B \
+    -DMIMXRT1052_SERIES \
     -g \
     -mthumb \
     -mcpu=cortex-m7 \
@@ -31,6 +32,7 @@ SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE " \
     -D__STARTUP_CLEAR_BSS \
     -DMCUXPRESSO_SDK \
     -DCPU_MIMXRT1052DVL6B \
+    -DMIMXRT1052_SERIES \
     -mthumb \
     -mcpu=cortex-m7 \
     ${FPU} \
@@ -45,10 +47,12 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG " \
     -DUSE_SDRAM=1 \
     -DSKIP_SYSCLK_INIT=1 \
     -DDATA_SECTION_IS_CACHEABLE=1 \
+    -D__STARTUP_CLEAR_BSS \
     -DFSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1 \
     -DMCUX_META_BUILD \
     -DMCUXPRESSO_SDK \
     -DCPU_MIMXRT1052DVL6B \
+    -DMIMXRT1052_SERIES \
     -DSDK_I2C_BASED_COMPONENT_USED=1 \
     -DLV_CONF_INCLUDE_SIMPLE=1 \
     -DSDK_OS_FREE_RTOS \
@@ -77,10 +81,12 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE " \
     -DUSE_SDRAM=1 \
     -DSKIP_SYSCLK_INIT=1 \
     -DDATA_SECTION_IS_CACHEABLE=1 \
+    -D__STARTUP_CLEAR_BSS \
     -DFSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1 \
     -DMCUX_META_BUILD \
     -DMCUXPRESSO_SDK \
     -DCPU_MIMXRT1052DVL6B \
+    -DMIMXRT1052_SERIES \
     -DSDK_I2C_BASED_COMPONENT_USED=1 \
     -DLV_CONF_INCLUDE_SIMPLE=1 \
     -DSDK_OS_FREE_RTOS \
@@ -106,6 +112,7 @@ SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG " \
     -DMCUX_META_BUILD \
     -DMCUXPRESSO_SDK \
     -DCPU_MIMXRT1052DVL6B \
+    -DMIMXRT1052_SERIES \
     -DLV_CONF_INCLUDE_SIMPLE=1 \
     -DSDK_OS_FREE_RTOS \
     -g \
@@ -132,6 +139,7 @@ SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE " \
     -DMCUX_META_BUILD \
     -DMCUXPRESSO_SDK \
     -DCPU_MIMXRT1052DVL6B \
+    -DMIMXRT1052_SERIES \
     -DLV_CONF_INCLUDE_SIMPLE=1 \
     -DSDK_OS_FREE_RTOS \
     -Os \
@@ -163,9 +171,6 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG " \
     -mapcs \
     -Wl,--gc-sections \
     -Wl,-static \
-    -Wl,-z \
-    -Wl,muldefs \
-    -Wl,-Map=output.map \
     -Wl,--print-memory-usage \
     -mcpu=cortex-m7 \
     ${FPU} \
@@ -185,9 +190,6 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE " \
     -mapcs \
     -Wl,--gc-sections \
     -Wl,-static \
-    -Wl,-z \
-    -Wl,muldefs \
-    -Wl,-Map=output.map \
     -Wl,--print-memory-usage \
     -mcpu=cortex-m7 \
     ${FPU} \

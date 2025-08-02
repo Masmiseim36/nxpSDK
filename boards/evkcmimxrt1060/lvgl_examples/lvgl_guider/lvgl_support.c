@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2021, 2023 NXP
+ * Copyright 2019-2021, 2025 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -25,9 +25,21 @@
 #endif
 #include "fsl_debug_console.h"
 
+#if LV_USE_PXP
+#if LV_USE_ROTATE_PXP
+#include "src/draw/nxp/pxp/lv_draw_pxp.h"
+#include "src/display/lv_display_private.h"
+#endif
+#endif
+
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
+#define DEMO_FB_STRIDE(x) ((x * LCD_FB_BYTE_PER_PIXEL + DEMO_FB_ALIGN - 1) & ~(DEMO_FB_ALIGN - 1))
+/* Rotate panel or not. */
+#ifndef DEMO_USE_ROTATE
+#define DEMO_USE_ROTATE 0
+#endif
 
 /* Macros for the touch touch controller. */
 #define TOUCH_I2C LPI2C1
@@ -109,7 +121,17 @@
 #define DEMO_FB_ALIGN LV_ATTRIBUTE_MEM_ALIGN_SIZE
 #endif
 
-#define DEMO_FB_SIZE (((LCD_WIDTH * LCD_HEIGHT * LCD_FB_BYTE_PER_PIXEL) + DEMO_FB_ALIGN - 1) & ~(DEMO_FB_ALIGN - 1))
+/* Make the frame buffer cacheline size aligned. */
+
+#if DEMO_USE_ROTATE
+#define ROTATED_FB_WIDTH  LCD_HEIGHT
+#define ROTATED_FB_HEIGHT LCD_WIDTH
+#else
+#define ROTATED_FB_WIDTH  LCD_WIDTH
+#define ROTATED_FB_HEIGHT LCD_HEIGHT
+#endif
+
+#define DEMO_FB_SIZE DEMO_FB_STRIDE(ROTATED_FB_WIDTH) * ROTATED_FB_HEIGHT
 
 /*******************************************************************************
  * Prototypes
@@ -167,6 +189,14 @@ static ft5406_rt_handle_t touchHandle;
 #endif
 
 SDK_ALIGN(static uint8_t s_frameBuffer[2][DEMO_FB_SIZE], DEMO_FB_ALIGN);
+#if DEMO_USE_ROTATE
+/*
+ * When rotate is used, LVGL stack draws in one buffer (s_lvglBuffer), and LCD
+ * driver uses two buffers (s_frameBuffer) to remove tearing effect.
+ */
+static void *volatile s_inactiveFrameBuffer;
+SDK_ALIGN(static uint8_t s_lvglBuffer[1][DEMO_FB_SIZE], DEMO_FB_ALIGN);
+#endif
 
 /*******************************************************************************
  * Code
@@ -181,9 +211,18 @@ void lv_port_disp_init(void)
      * -----------------------*/
     DEMO_InitLcd();
 
-    disp_drv = lv_display_create(LCD_WIDTH, LCD_HEIGHT);
+    disp_drv = lv_display_create(ROTATED_FB_WIDTH, ROTATED_FB_HEIGHT);
+#if DEMO_USE_ROTATE
+    memset(s_lvglBuffer, 0, sizeof(s_lvglBuffer));
+    lv_display_set_buffers_with_stride(disp_drv, (void *)s_lvglBuffer[0], NULL, DEMO_FB_SIZE, DEMO_FB_STRIDE(ROTATED_FB_WIDTH), LV_DISPLAY_RENDER_MODE_FULL);
+#else
+    lv_display_set_buffers_with_stride(disp_drv, (void *)s_frameBuffer[0], (void *)s_frameBuffer[1], DEMO_FB_SIZE, DEMO_FB_STRIDE(ROTATED_FB_WIDTH), LV_DISPLAY_RENDER_MODE_FULL);
+#endif
 
-    lv_display_set_buffers(disp_drv, s_frameBuffer[0], s_frameBuffer[1], DEMO_FB_SIZE, LV_DISPLAY_RENDER_MODE_FULL);
+#if DEMO_USE_ROTATE
+    /* s_frameBuffer[1] is first shown in the panel, s_frameBuffer[0] is inactive. */
+    s_inactiveFrameBuffer = (void *)s_frameBuffer[0];
+#endif
     lv_display_set_flush_cb(disp_drv, DEMO_FlushDisplay);
 }
 
@@ -269,7 +308,10 @@ static void DEMO_SetLcdColorPalette(void)
 
     for (uint32_t i = 0; i < 256U; i++)
     {
-        palette[i] = (i << 16U) | (i << 8U) | (i << 0U);
+        /* Map the 8-bit pixel to RGB565, because the panel is connected to
+         *  eLCDIF's DATA0 - DATA15
+         */
+        palette[i] = (((i >> 3U)) << 11) | (((i >>2U)) << 5) | (((i >> 3)) << 0U);
     }
 
     ELCDIF_UpdateLut(LCDIF, kELCDIF_Lut0, 0, palette, 256);
@@ -338,10 +380,47 @@ void DEMO_CleanInvalidateCacheByAddr(void * addr, int32_t dsize)
 
 static void DEMO_FlushDisplay(lv_display_t *disp_drv, const lv_area_t *area, uint8_t *color_p)
 {
+
+#if DEMO_USE_ROTATE
+    void *inactiveFrameBuffer = s_inactiveFrameBuffer;
+    DCACHE_CleanInvalidateByRange((uint32_t)inactiveFrameBuffer, DEMO_FB_SIZE);
+
+    ELCDIF_SetNextBufferAddr(LCDIF, (uint32_t)inactiveFrameBuffer);
+#if LV_USE_ROTATE_PXP /* Use PXP to rotate the panel. */
+    lv_draw_pxp_rotate(color_p, inactiveFrameBuffer,
+                       ROTATED_FB_WIDTH, ROTATED_FB_HEIGHT,
+                       DEMO_FB_STRIDE(ROTATED_FB_WIDTH),
+                       DEMO_FB_STRIDE(ROTATED_FB_HEIGHT),
+                       LV_DISPLAY_ROTATION_90,
+#if (LV_COLOR_DEPTH == 32)
+                        LV_COLOR_FORMAT_XRGB8888
+#elif (LV_COLOR_DEPTH == 16)
+                        LV_COLOR_FORMAT_RGB565
+#else
+                        LV_COLOR_FORMAT_RAW
+#endif
+                        );
+#else /* Use CPU to rotate the panel. */
+    lv_draw_sw_rotate(color_p, inactiveFrameBuffer,
+                       ROTATED_FB_WIDTH, ROTATED_FB_HEIGHT,
+                       DEMO_FB_STRIDE(ROTATED_FB_WIDTH),
+                       DEMO_FB_STRIDE(ROTATED_FB_HEIGHT),
+                       LV_DISPLAY_ROTATION_90,
+#if (LV_COLOR_DEPTH == 32)
+                        LV_COLOR_FORMAT_XRGB8888
+#elif (LV_COLOR_DEPTH == 16)
+                        LV_COLOR_FORMAT_RGB565
+#else
+                        LV_COLOR_FORMAT_RAW
+#endif
+                        );
+#endif
+#else
+
     DCACHE_CleanInvalidateByRange((uint32_t)color_p, DEMO_FB_SIZE);
 
     ELCDIF_SetNextBufferAddr(LCDIF, (uint32_t)color_p);
-
+#endif /* DEMO_USE_ROTATE */
     s_framePending = true;
 
 #if defined(SDK_OS_FREE_RTOS)
@@ -365,6 +444,7 @@ static void DEMO_FlushDisplay(lv_display_t *disp_drv, const lv_area_t *area, uin
      * Inform the graphics library that you are ready with the flushing*/
     lv_disp_flush_ready(disp_drv);
 #endif
+
 }
 
 void lv_port_indev_init(void)
@@ -453,10 +533,14 @@ static void DEMO_ReadTouch(lv_indev_t *drv, lv_indev_data_t *data)
     {
         data->state = LV_INDEV_STATE_REL;
     }
-
+#if DEMO_USE_ROTATE
+    data->point.x = LCD_HEIGHT - (touch_y * LCD_HEIGHT / s_touchResolutionY);
+    data->point.y = touch_x * LCD_WIDTH / s_touchResolutionX;
+#else
     /*Set the last pressed coordinates*/
     data->point.x = touch_x * LCD_WIDTH / s_touchResolutionX;
     data->point.y = touch_y * LCD_HEIGHT / s_touchResolutionY;
+#endif
 }
 #else
 /*Initialize your touchpad*/
@@ -515,7 +599,12 @@ static void DEMO_ReadTouch(lv_indev_t *drv, lv_indev_data_t *data)
     }
 
     /*Set the last pressed coordinates*/
+#if DEMO_USE_ROTATE
+    data->point.x = LCD_HEIGHT - touch_x;
+    data->point.y = touch_y;
+#else
     data->point.x = touch_y;
     data->point.y = touch_x;
+#endif
 }
 #endif

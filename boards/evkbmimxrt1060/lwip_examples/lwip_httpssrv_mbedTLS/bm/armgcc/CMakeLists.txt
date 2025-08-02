@@ -14,9 +14,6 @@ if(CMAKE_SCRIPT_MODE_FILE)
 endif()
 
 
-set(CMAKE_STATIC_LIBRARY_PREFIX)
-set(CMAKE_STATIC_LIBRARY_SUFFIX)
-
 set(CMAKE_EXECUTABLE_LIBRARY_PREFIX)
 set(CMAKE_EXECUTABLE_LIBRARY_SUFFIX)
 
@@ -44,10 +41,7 @@ include(${ProjDirPath}/flags.cmake)
 include(${ProjDirPath}/config.cmake)
 
 add_executable(${MCUX_SDK_PROJECT_NAME} 
-"${ProjDirPath}/../httpd_mbedtls.c"
-"${ProjDirPath}/../httpd_mbedtls.h"
 "${ProjDirPath}/../lwip_httpssrv_mbedTLS_bm.c"
-"${ProjDirPath}/../lwipopts.h"
 "${ProjDirPath}/../board.h"
 "${ProjDirPath}/../board.c"
 "${ProjDirPath}/../clock_config.h"
@@ -56,7 +50,9 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../pin_mux.h"
 "${ProjDirPath}/../hardware_init.c"
 "${ProjDirPath}/../app.h"
+"${ProjDirPath}/../lwipopts.h"
 "${ProjDirPath}/../fsl_debug_console_conf.h"
+"${ProjDirPath}/../lwipopts_gen.h"
 "${ProjDirPath}/../mcux_config.h"
 )
 

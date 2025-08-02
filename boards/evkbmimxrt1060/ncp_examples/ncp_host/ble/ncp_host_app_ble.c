@@ -69,7 +69,7 @@ static int ble_ncp_handle_cmd_input(uint8_t *cmd)
 {
     uint32_t msg_type = 0;
     int ret;
-    
+
     msg_type = GET_MSG_TYPE(((NCP_HOST_COMMAND *)cmd)->cmd);
     if (msg_type == NCP_MSG_TYPE_EVENT)
     {
@@ -81,7 +81,7 @@ static int ble_ncp_handle_cmd_input(uint8_t *cmd)
     {
         ret = ble_process_response(cmd);
         if (ret == NCP_STATUS_ERROR)
-            PRINTF("Failed to parse ncp tlv reponse\r\n");
+            PRINTF("Failed to parse ncp tlv response\r\n");
 
         mcu_last_resp_rcvd = ((NCP_HOST_COMMAND *)cmd)->cmd;
         mcu_last_seqno_rcvd = ((NCP_HOST_COMMAND *)cmd)->seqnum;
@@ -95,18 +95,18 @@ static int ble_ncp_handle_cmd_input(uint8_t *cmd)
 
     if (msg_type == NCP_MSG_TYPE_RESP)
     {
-        /*If failed to receive response or successed to parse tlv reponse, release mcu command response semaphore to
-         * allow processing new string commands. If reponse can't match to command, don't release command reponse
+        /*If failed to receive response or succeed to parse tlv response, release mcu command response semaphore to
+         * allow processing new string commands. If response can't match to command, don't release command response
          * semaphore until receive response which id is same as command id.*/
         if (mcu_last_resp_rcvd == 0 || mcu_last_resp_rcvd == (mcu_last_cmd_sent | NCP_MSG_TYPE_RESP ))
             mcu_put_command_resp_sem();
         /* service run will automatically start adv/scan, so bypass this procedure response to release the semaphore */
-        else if((mcu_last_cmd_sent == NCP_CMD_BLE_GATT_REGISTER_SERVICE) && 
-            ((mcu_last_resp_rcvd == NCP_RSP_BLE_GAP_START_ADV) || (mcu_last_resp_rcvd == NCP_RSP_BLE_GAP_START_SCAN)) ) 
+        else if((mcu_last_cmd_sent == NCP_CMD_BLE_GATT_REGISTER_SERVICE) &&
+            ((mcu_last_resp_rcvd == NCP_RSP_BLE_GAP_START_ADV) || (mcu_last_resp_rcvd == NCP_RSP_BLE_GAP_START_SCAN)) )
         {
             mcu_put_command_resp_sem();
         }else {
-            PRINTF("Receive %d command response and wait for %d comamnd response.\r\n", mcu_last_resp_rcvd, mcu_last_cmd_sent);
+            PRINTF("Receive %d command response and wait for %d command response.\r\n", mcu_last_resp_rcvd, mcu_last_cmd_sent);
         }
     }
     return ret;
@@ -143,7 +143,7 @@ static int ncp_ble_svc_init(void)
 #if CONFIG_NCP_HRC
     hrc_init();
 #endif
-    return NCP_STATUS_SUCCESS;    
+    return NCP_STATUS_SUCCESS;
 }
 
 int ncp_ble_app_init(void)
@@ -160,9 +160,9 @@ int ncp_ble_app_init(void)
     ncp_tlv_install_handler(NCP_GET_CLASS(NCP_CMD_BLE), (void *)ble_ncp_callback);
 
     (void)OSA_TaskCreate((osa_task_handle_t)ble_ncp_task_handle, OSA_TASK(ble_ncp_task), NULL);
- 
+
     ncp_ble_svc_init();
-    
+
     return ret;
 }
-#endif
+#endif /* CONFIG_NCP_BLE */

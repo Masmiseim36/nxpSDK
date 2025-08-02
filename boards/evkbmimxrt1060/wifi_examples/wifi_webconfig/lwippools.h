@@ -13,9 +13,8 @@
 
 #ifdef MEMP_USE_CUSTOM_POOLS
 /*
- * We explicitly move certain large LwIP memory pools to the custom defined
- * .wlan_data section in (flash) memory to avoid memory overflow in the
- * m_data section (RAM).
+ * Place large LwIP memory pools to .wlan_data section to
+ * avoid memory overflow of region with bss/zi section.
  */
 extern unsigned char __attribute__((section(".wlan_data"))) memp_memory_PBUF_POOL_base[];
 extern unsigned char __attribute__((section(".wlan_data"))) memp_memory_TCP_PCB_POOL_base[];

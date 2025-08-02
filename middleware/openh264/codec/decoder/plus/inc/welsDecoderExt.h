@@ -138,6 +138,7 @@ class CWelsDecoder : public ISVCDecoder {
   SVlcTable               m_sVlcTable;
   SWelsLastDecPicInfo     m_sLastDecPicInfo;
   SDecoderStatistics      m_sDecoderStatistics;// For real time debugging
+  int32_t                 m_iStreamSeqNum;
 
  private:
   int32_t InitDecoder (const SDecodingParam* pParam);
@@ -152,7 +153,8 @@ class CWelsDecoder : public ISVCDecoder {
   int ThreadDecodeFrameInternal (const unsigned char* kpSrc, const int kiSrcLen, unsigned char** ppDst,
                                  SBufferInfo* pDstInfo);
   void BufferingReadyPicture (PWelsDecoderContext pCtx, unsigned char** ppDst, SBufferInfo* pDstInfo);
-  void ReleaseBufferedReadyPicture (PWelsDecoderContext pCtx, unsigned char** ppDst, SBufferInfo* pDstInfo);
+  void ReleaseBufferedReadyPictureReorder (PWelsDecoderContext pCtx, unsigned char** ppDst, SBufferInfo* pDstInfo, bool isFlush = false);
+  void ReleaseBufferedReadyPictureNoReorder (PWelsDecoderContext pCtx, unsigned char** ppDst, SBufferInfo* pDstInfo);
 
   void OpenDecoderThreads();
   void CloseDecoderThreads();

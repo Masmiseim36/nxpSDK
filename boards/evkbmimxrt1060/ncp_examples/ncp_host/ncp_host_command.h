@@ -11,7 +11,7 @@
 
 #define MCU_CLI_STRING_SIZE          500
 #define NCP_HOST_MAX_COMMANDS        500
-#define NCP_HOST_INPUT_UART_BUF_SIZE 32
+#define NCP_HOST_INPUT_UART_BUF_SIZE 80
 #define NCP_HOST_INPUT_UART_SIZE     1
 
 #define NCP_HOST_COMMAND_LEN             4096 // The max number bytes which UART can receive.

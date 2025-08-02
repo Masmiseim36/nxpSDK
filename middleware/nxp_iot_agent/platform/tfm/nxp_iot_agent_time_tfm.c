@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 NXP
+ * Copyright 2024-2025 NXP
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -96,7 +96,7 @@ iot_agent_status_t iot_agent_log_performance_timing(void)
 	IOT_AGENT_INFO("\tPerformance timing: TLS_PREP_TIME : %ldms", iot_agent_time.prepare_tls_time);
 	IOT_AGENT_INFO("\tPerformance timing: NETWORK_CONNECT_TIME : %ldms", iot_agent_time.network_connect_time);
 	IOT_AGENT_INFO("\tPerformance timing: PROCESS_PROVISION_TIME : %ldms", iot_agent_time.process_provision_time);
-#if NXP_IOT_AGENT_REQUEST_CRL_FROM_EDGELOCK_2GO
+#if defined(NXP_IOT_AGENT_REQUEST_CRL_FROM_EDGELOCK_2GO) && (NXP_IOT_AGENT_REQUEST_CRL_FROM_EDGELOCK_2GO == 1)
 	printf("\tCRL_TIME : [%ldms] and ", iot_agent_time.crl_time);
 #endif
 	printf("COMMAND_TXRX_TIME : [%ldms] included in PROCESS_PROVISION_TIME\n", iot_agent_time.apdu_time);

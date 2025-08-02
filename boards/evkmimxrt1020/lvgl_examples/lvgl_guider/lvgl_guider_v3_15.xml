@@ -40,6 +40,7 @@
     <definition extID="middleware.lvgl.template.MIMXRT1021"/>
     <definition extID="middleware.freertos-kernel.MIMXRT1021"/>
     <definition extID="middleware.freertos-kernel.heap_4.MIMXRT1021"/>
+    <definition extID="middleware.freertos-kernel.extension.MIMXRT1021"/>
     <definition extID="middleware.freertos-kernel.config.MIMXRT1021"/>
     <definition extID="iar"/>
     <definition extID="mdk"/>
@@ -51,7 +52,7 @@
     <definition extID="com.nxp.mcuxpresso.core.debug.support.segger.debug"/>
     <definition extID="com.nxp.mcuxpresso.core.debug.support.segger.release"/>
   </externalDefinitions>
-  <example id="evkmimxrt1020_lvgl_guider" name="lvgl_guider" device_core="core0_MIMXRT1021xxxxx" dependency="platform.drivers.xip_board.evkmimxrt1020.MIMXRT1021 platform.drivers.clock.MIMXRT1021 platform.drivers.iomuxc.MIMXRT1021 CMSIS_Include_core_cm.MIMXRT1021 CMSIS_Driver_Include.I2C.MIMXRT1021 CMSIS_Driver_Include.SPI.MIMXRT1021 device.MIMXRT1021_CMSIS.MIMXRT1021 device.MIMXRT1021_system.MIMXRT1021 device.MIMXRT1021_startup.MIMXRT1021 device.RTE.MIMXRT1021 platform.drivers.xip_device.MIMXRT1021 platform.drivers.cache_armv7_m7.MIMXRT1021 platform.drivers.common.MIMXRT1021 platform.drivers.dcdc_1.MIMXRT1021 platform.drivers.dmamux.MIMXRT1021 platform.drivers.edma.MIMXRT1021 platform.drivers.gpc_1.MIMXRT1021 platform.drivers.igpio.MIMXRT1021 platform.drivers.lpi2c_edma.MIMXRT1021 platform.drivers.lpi2c.MIMXRT1021 platform.drivers.lpspi_edma.MIMXRT1021 platform.drivers.lpspi.MIMXRT1021 platform.drivers.lpuart.MIMXRT1021 platform.drivers.pmu.MIMXRT1021 platform.drivers.src.MIMXRT1021 platform.drivers.lpi2c_cmsis.MIMXRT1021 platform.drivers.lpspi_cmsis.MIMXRT1021 platform.utilities.assert_lite.MIMXRT1021 platform.utilities.misc_utilities.MIMXRT1021 utility.str.MIMXRT1021 utility.debug_console_lite.MIMXRT1021 component.lpuart_adapter.MIMXRT1021 driver.ft6x06.MIMXRT1021 driver.ili9341.MIMXRT1021 middleware.lvgl.MIMXRT1021 middleware.lvgl.template.MIMXRT1021 middleware.freertos-kernel.MIMXRT1021 middleware.freertos-kernel.heap_4.MIMXRT1021 middleware.freertos-kernel.config.MIMXRT1021" category="lvgl_examples">
+  <example id="evkmimxrt1020_lvgl_guider" name="lvgl_guider" device_core="core0_MIMXRT1021xxxxx" dependency="platform.drivers.xip_board.evkmimxrt1020.MIMXRT1021 platform.drivers.clock.MIMXRT1021 platform.drivers.iomuxc.MIMXRT1021 CMSIS_Include_core_cm.MIMXRT1021 CMSIS_Driver_Include.I2C.MIMXRT1021 CMSIS_Driver_Include.SPI.MIMXRT1021 device.MIMXRT1021_CMSIS.MIMXRT1021 device.MIMXRT1021_system.MIMXRT1021 device.MIMXRT1021_startup.MIMXRT1021 device.RTE.MIMXRT1021 platform.drivers.xip_device.MIMXRT1021 platform.drivers.cache_armv7_m7.MIMXRT1021 platform.drivers.common.MIMXRT1021 platform.drivers.dcdc_1.MIMXRT1021 platform.drivers.dmamux.MIMXRT1021 platform.drivers.edma.MIMXRT1021 platform.drivers.gpc_1.MIMXRT1021 platform.drivers.igpio.MIMXRT1021 platform.drivers.lpi2c_edma.MIMXRT1021 platform.drivers.lpi2c.MIMXRT1021 platform.drivers.lpspi_edma.MIMXRT1021 platform.drivers.lpspi.MIMXRT1021 platform.drivers.lpuart.MIMXRT1021 platform.drivers.pmu.MIMXRT1021 platform.drivers.src.MIMXRT1021 platform.drivers.lpi2c_cmsis.MIMXRT1021 platform.drivers.lpspi_cmsis.MIMXRT1021 platform.utilities.assert_lite.MIMXRT1021 platform.utilities.misc_utilities.MIMXRT1021 utility.str.MIMXRT1021 utility.debug_console_lite.MIMXRT1021 component.lpuart_adapter.MIMXRT1021 driver.ft6x06.MIMXRT1021 driver.ili9341.MIMXRT1021 middleware.lvgl.MIMXRT1021 middleware.lvgl.template.MIMXRT1021 middleware.freertos-kernel.MIMXRT1021 middleware.freertos-kernel.heap_4.MIMXRT1021 middleware.freertos-kernel.extension.MIMXRT1021 middleware.freertos-kernel.config.MIMXRT1021" category="lvgl_examples">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.ccnature"/>
     </projects>
@@ -70,6 +71,7 @@
           <value>SDK_DEBUGCONSOLE=1</value>
           <value>MCUX_META_BUILD</value>
           <value>CPU_MIMXRT1021DAG5A</value>
+          <value>MIMXRT1021_SERIES</value>
           <value>LV_CONF_INCLUDE_SIMPLE=1</value>
           <value>SDK_OS_FREE_RTOS</value>
         </option>
@@ -79,6 +81,7 @@
           <value>SDK_DEBUGCONSOLE=1</value>
           <value>MCUX_META_BUILD</value>
           <value>CPU_MIMXRT1021DAG5A</value>
+          <value>MIMXRT1021_SERIES</value>
           <value>LV_CONF_INCLUDE_SIMPLE=1</value>
           <value>SDK_OS_FREE_RTOS</value>
         </option>
@@ -178,9 +181,9 @@
     </debug_configurations>
     <include_paths>
       <include_path path="." project_relative_path="source" type="c_include"/>
-      <include_path path="generated" project_relative_path="source" type="c_include"/>
-      <include_path path="custom" project_relative_path="source" type="c_include"/>
-      <include_path path="generated/guider_customer_fonts" project_relative_path="source" type="c_include"/>
+      <include_path path="generated" project_relative_path="generated" type="c_include"/>
+      <include_path path="custom" project_relative_path="custom" type="c_include"/>
+      <include_path path="generated/guider_customer_fonts" project_relative_path="generated/guider_customer_fonts" type="c_include"/>
       <include_path path="." project_relative_path="board" type="c_include"/>
       <include_path path="." project_relative_path="source" type="asm_include"/>
     </include_paths>
@@ -216,24 +219,24 @@
     <source path="." project_relative_path="source" type="src">
       <files mask="lvgl_guider.c"/>
     </source>
-    <source path="generated/guider_customer_fonts" project_relative_path="source" type="c_include">
+    <source path="generated/guider_customer_fonts" project_relative_path="generated/guider_customer_fonts" type="c_include">
       <files mask="guider_customer_fonts.h"/>
     </source>
-    <source path="generated" project_relative_path="source" type="src">
+    <source path="generated" project_relative_path="generated" type="src">
       <files mask="gui_guider.c"/>
       <files mask="events_init.c"/>
       <files mask="setup_scr_screen.c"/>
       <files mask="widgets_init.c"/>
     </source>
-    <source path="generated" project_relative_path="source" type="c_include">
+    <source path="generated" project_relative_path="generated" type="c_include">
       <files mask="gui_guider.h"/>
       <files mask="events_init.h"/>
       <files mask="widgets_init.h"/>
     </source>
-    <source path="custom" project_relative_path="source" type="src">
+    <source path="custom" project_relative_path="custom" type="src">
       <files mask="custom.c"/>
     </source>
-    <source path="custom" project_relative_path="source" type="c_include">
+    <source path="custom" project_relative_path="custom" type="c_include">
       <files mask="custom.h"/>
     </source>
     <source path="." project_relative_path="source" type="c_include">
@@ -246,6 +249,7 @@
     <source path="." project_relative_path="source" type="c_include">
       <files mask="lvgl_demo_utils.h"/>
       <files mask="lvgl_freertos.h"/>
+      <files mask="FreeRTOSConfig_frag.h"/>
     </source>
     <source path="." project_relative_path="source" type="src">
       <files mask="pin_mux.c"/>
@@ -302,6 +306,9 @@
     </source>
     <source path="." project_relative_path="doc" type="doc">
       <files mask="lvgl_examples_readme.md"/>
+    </source>
+    <source path="." project_relative_path="doc" type="doc">
+      <files mask="examples_shared_readme.md"/>
     </source>
   </example>
 </ksdk:examples>

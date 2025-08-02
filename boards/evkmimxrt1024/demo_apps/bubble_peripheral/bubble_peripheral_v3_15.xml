@@ -59,6 +59,7 @@
           <value>SDK_DEBUGCONSOLE=1</value>
           <value>MCUX_META_BUILD</value>
           <value>CPU_MIMXRT1024DAG5A</value>
+          <value>MIMXRT1024_SERIES</value>
         </option>
         <option id="com.crt.advproject.link.memory.sections" type="stringList">
           <value>isd=*(CodeQuickAccess);region=SRAM_ITC;type=.data</value>
@@ -170,6 +171,12 @@
       <files mask="evkmimxrt1024_ram.ini"/>
       <files mask="evkmimxrt1024_sdram_init.ini"/>
     </source>
+    <source path="." project_relative_path="source" type="other">
+      <files mask="bubble_peripheral.mex"/>
+    </source>
+    <source path="." project_relative_path="source" type="binary">
+      <files mask="bubble_peripheral.bin" hidden="true"/>
+    </source>
     <source path="." project_relative_path="source" type="src">
       <files mask="bubble.c"/>
       <files mask="peripherals.c"/>
@@ -220,6 +227,9 @@
     </source>
     <source path="." project_relative_path="doc" type="doc">
       <files mask="example_board_readme.md"/>
+    </source>
+    <source path="." project_relative_path="doc" type="doc">
+      <files mask="examples_shared_readme.md"/>
     </source>
   </example>
 </ksdk:examples>

@@ -25,7 +25,7 @@ Murata Solution Board settings
 ==============================
 Embedded Artists 2EL module datasheet: https://www.embeddedartists.com/doc/ds/2EL_M2_Datasheet.pdf
 
-The hardware should be reworked according to the hardware rework guide for evkcmimxrt1060 and Murata 1ZM M.2 Adapter in document Hardware Rework Guide for EdgeFast BT PAL.
+The hardware rework for MIMXRT1060-EVKC and Murata 2EL M.2 Module should refer to Hardware Rework Guide for MIMXRT1060-EVKC and Murata 2EL M.2 Module in document Hardware Rework Guide for EdgeFast BT PAL.
 
 Note:
 To ensure that the LITTLEFS flash region has been cleaned,

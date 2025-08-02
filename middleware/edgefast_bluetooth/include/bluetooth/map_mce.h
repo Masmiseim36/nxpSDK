@@ -22,10 +22,6 @@
 #include <bluetooth/obex.h>
 #include <bluetooth/map_types.h>
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 /**
  * @brief Reserve length for GetFolderListing.
  *
@@ -902,9 +898,5 @@ int bt_map_mce_mns_get_max_pkt_len(struct bt_map_mce_mns *mce_mns, uint16_t *max
  * @return 0 in case of success or negative value in case of error.
  */
 #define bt_map_mce_get_body(buf, body, length) bt_obex_get_body(buf, body, length)
-
-#ifdef __cplusplus
-}
-#endif
 
 #endif /* ZEPHYR_INCLUDE_BLUETOOTH_MAP_MCE_H_ */

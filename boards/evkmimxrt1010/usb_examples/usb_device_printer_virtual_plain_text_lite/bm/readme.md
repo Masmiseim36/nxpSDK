@@ -101,7 +101,6 @@ The demo does not parse the data and outputs it to the debug console directly.
 - EVK-MIMXRT1064
 - FRDM-MCXA153
 - MIMXRT685-AUD-EVK
-- FRDM-MCXA276
 - LPCXpresso51U68
 - LPCXpresso54S018
 - LPCXpresso55S16

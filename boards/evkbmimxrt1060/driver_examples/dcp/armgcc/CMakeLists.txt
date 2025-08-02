@@ -14,9 +14,6 @@ if(CMAKE_SCRIPT_MODE_FILE)
 endif()
 
 
-set(CMAKE_STATIC_LIBRARY_PREFIX)
-set(CMAKE_STATIC_LIBRARY_SUFFIX)
-
 set(CMAKE_EXECUTABLE_LIBRARY_PREFIX)
 set(CMAKE_EXECUTABLE_LIBRARY_SUFFIX)
 
@@ -31,7 +28,7 @@ project(dcp)
 
 enable_language(ASM)
 
-set(MCUX_BUILD_TYPES flexspi_nor_release sdram_debug sdram_release flexspi_nor_debug debug release)
+set(MCUX_BUILD_TYPES flexspi_nor_release flexspi_nor_debug)
 
 set(MCUX_SDK_PROJECT_NAME dcp.elf)
 

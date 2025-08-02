@@ -329,9 +329,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../mcux_config.h -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
-              <Define>DEBUG, USB_STACK_FREERTOS, HAL_AUDIO_ISR_PRIORITY=0, USING_SAI, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1042XJM5B, OSA_USED, SDK_I2C_BASED_COMPONENT_USED=1, CODEC_MULTI_ADAPTERS=1, CODEC_WM8960_ENABLE, USE_RTOS=1, SDK_OS_FREE_RTOS</Define>
+              <Define>DEBUG, USB_STACK_FREERTOS, HAL_AUDIO_ISR_PRIORITY=0, USING_SAI, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1042XJM5B, MIMXRT1042_SERIES, OSA_USED, SDK_I2C_BASED_COMPONENT_USED=1, CODEC_MULTI_ADAPTERS=1, CODEC_WM8960_ENABLE, USE_RTOS=1, SDK_OS_FREE_RTOS</Define>
               <Undefine/>
-              <IncludePath>..;../../../../xip;../../../../../../devices/MIMXRT1042/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1042;../../../../../../devices/MIMXRT1042/periph;../../../../../../devices/MIMXRT1042/xip;../../../../../../devices/MIMXRT1042/utilities/debug_console_lite;../../../../../../components/lists;../../../../../../devices/MIMXRT1042/utilities/str;../../../../../../components/codec/i2c;../../../../../../components/codec;../../../../../../components/codec/port;../../../../../../components/codec/port/wm8960;../../../../../../components/codec/wm8960;../../../../../../components/i2c;../../../../../../components/uart;../../../../../../components/osa;../../../../../../components/audio;../../../../../../middleware/usb/include;../../../../../../middleware/usb/device;../../../../../../middleware/usb/device/class;../../../../../../middleware/usb/phy;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../../rtos/freertos/freertos-kernel/template</IncludePath>
+              <IncludePath>..;../../../../xip;../../../../../../devices/MIMXRT1042/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1042;../../../../../../devices/MIMXRT1042/periph;../../../../../../devices/MIMXRT1042/xip;../../../../../../devices/MIMXRT1042/utilities/debug_console_lite;../../../../../../components/lists;../../../../../../devices/MIMXRT1042/utilities/str;../../../../../../components/codec/i2c;../../../../../../components/codec;../../../../../../components/codec/port;../../../../../../components/codec/port/wm8960;../../../../../../components/codec/wm8960;../../../../../../components/i2c;../../../../../../components/uart;../../../../../../components/audio;../../../../../../components/osa;../../../../../../middleware/usb/include;../../../../../../middleware/usb/device;../../../../../../middleware/usb/config/device/ehci;../../../../../../middleware/usb/device/class;../../../../../../middleware/usb/phy;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../../rtos/freertos/freertos-kernel/template</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -347,9 +347,9 @@
             <uClangAs>1</uClangAs>
             <VariousControls>
               <MiscControls/>
-              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1042XJM5B, OSA_USED</Define>
+              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1042XJM5B, MIMXRT1042_SERIES, OSA_USED</Define>
               <Undefine/>
-              <IncludePath>..;../../../../xip;../../../../../../devices/MIMXRT1042/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1042;../../../../../../devices/MIMXRT1042/periph;../../../../../../devices/MIMXRT1042/xip;../../../../../../devices/MIMXRT1042/utilities/debug_console_lite;../../../../../../components/lists;../../../../../../devices/MIMXRT1042/utilities/str;../../../../../../components/codec/i2c;../../../../../../components/codec;../../../../../../components/codec/port;../../../../../../components/codec/port/wm8960;../../../../../../components/codec/wm8960;../../../../../../components/i2c;../../../../../../components/uart;../../../../../../components/osa;../../../../../../components/audio;../../../../../../middleware/usb/include;../../../../../../middleware/usb/device;../../../../../../middleware/usb/device/class;../../../../../../middleware/usb/phy;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../../rtos/freertos/freertos-kernel/template</IncludePath>
+              <IncludePath>..;../../../../xip;../../../../../../devices/MIMXRT1042/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1042;../../../../../../devices/MIMXRT1042/periph;../../../../../../devices/MIMXRT1042/xip;../../../../../../devices/MIMXRT1042/utilities/debug_console_lite;../../../../../../components/lists;../../../../../../devices/MIMXRT1042/utilities/str;../../../../../../components/codec/i2c;../../../../../../components/codec;../../../../../../components/codec/port;../../../../../../components/codec/port/wm8960;../../../../../../components/codec/wm8960;../../../../../../components/i2c;../../../../../../components/uart;../../../../../../components/audio;../../../../../../components/osa;../../../../../../middleware/usb/include;../../../../../../middleware/usb/device;../../../../../../middleware/usb/config/device/ehci;../../../../../../middleware/usb/device/class;../../../../../../middleware/usb/phy;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../../rtos/freertos/freertos-kernel/template</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -1198,26 +1198,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component/osa</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_os_abstraction.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/osa/fsl_os_abstraction.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_os_abstraction_free_rtos.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/osa/fsl_os_abstraction_free_rtos.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_os_abstraction_free_rtos.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/osa/fsl_os_abstraction_free_rtos.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>component/audio</GroupName>
           <Files>
             <File>
@@ -1229,6 +1209,26 @@
               <FileName>fsl_adapter_sai.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../components/audio/fsl_adapter_sai.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/osa</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_os_abstraction_free_rtos.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/osa/fsl_os_abstraction_free_rtos.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction_free_rtos.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/osa/fsl_os_abstraction_free_rtos.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/osa/fsl_os_abstraction.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1475,6 +1475,11 @@
               <FileType>5</FileType>
               <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/timers.h</FilePath>
             </File>
+            <File>
+              <FileName>freertos_tasks_c_additions.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/freertos_tasks_c_additions.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -1534,6 +1539,11 @@
               <FileName>readme.md</FileName>
               <FileType>5</FileType>
               <FilePath>../readme.md</FilePath>
+            </File>
+            <File>
+              <FileName>examples_shared_readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../examples_shared_readme.md</FilePath>
             </File>
             <File>
               <FileName>usb_device_audio_speaker_change_level.jpg</FileName>
@@ -1900,9 +1910,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../mcux_config.h -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
-              <Define>USB_DEVICE_CONFIG_BUFFER_PROPERTY_CACHEABLE=1, DEBUG, USE_SDRAM=1, SKIP_SYSCLK_INIT=1, USB_STACK_FREERTOS, HAL_AUDIO_ISR_PRIORITY=0, USING_SAI, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1042XJM5B, OSA_USED, SDK_I2C_BASED_COMPONENT_USED=1, CODEC_MULTI_ADAPTERS=1, CODEC_WM8960_ENABLE, USE_RTOS=1, SDK_OS_FREE_RTOS</Define>
+              <Define>USB_DEVICE_CONFIG_BUFFER_PROPERTY_CACHEABLE=1, DEBUG, USE_SDRAM=1, SKIP_SYSCLK_INIT=1, USB_STACK_FREERTOS, HAL_AUDIO_ISR_PRIORITY=0, USING_SAI, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1042XJM5B, MIMXRT1042_SERIES, OSA_USED, SDK_I2C_BASED_COMPONENT_USED=1, CODEC_MULTI_ADAPTERS=1, CODEC_WM8960_ENABLE, USE_RTOS=1, SDK_OS_FREE_RTOS</Define>
               <Undefine/>
-              <IncludePath>..;../../../../xip;../../../../../../devices/MIMXRT1042/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1042;../../../../../../devices/MIMXRT1042/periph;../../../../../../devices/MIMXRT1042/xip;../../../../../../devices/MIMXRT1042/utilities/debug_console_lite;../../../../../../components/lists;../../../../../../devices/MIMXRT1042/utilities/str;../../../../../../components/codec/i2c;../../../../../../components/codec;../../../../../../components/codec/port;../../../../../../components/codec/port/wm8960;../../../../../../components/codec/wm8960;../../../../../../components/i2c;../../../../../../components/uart;../../../../../../components/osa;../../../../../../components/audio;../../../../../../middleware/usb/include;../../../../../../middleware/usb/device;../../../../../../middleware/usb/device/class;../../../../../../middleware/usb/phy;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../../rtos/freertos/freertos-kernel/template</IncludePath>
+              <IncludePath>..;../../../../xip;../../../../../../devices/MIMXRT1042/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1042;../../../../../../devices/MIMXRT1042/periph;../../../../../../devices/MIMXRT1042/xip;../../../../../../devices/MIMXRT1042/utilities/debug_console_lite;../../../../../../components/lists;../../../../../../devices/MIMXRT1042/utilities/str;../../../../../../components/codec/i2c;../../../../../../components/codec;../../../../../../components/codec/port;../../../../../../components/codec/port/wm8960;../../../../../../components/codec/wm8960;../../../../../../components/i2c;../../../../../../components/uart;../../../../../../components/audio;../../../../../../components/osa;../../../../../../middleware/usb/include;../../../../../../middleware/usb/device;../../../../../../middleware/usb/config/device/ehci;../../../../../../middleware/usb/device/class;../../../../../../middleware/usb/phy;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../../rtos/freertos/freertos-kernel/template</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1918,9 +1928,9 @@
             <uClangAs>1</uClangAs>
             <VariousControls>
               <MiscControls/>
-              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1042XJM5B, OSA_USED</Define>
+              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1042XJM5B, MIMXRT1042_SERIES, OSA_USED</Define>
               <Undefine/>
-              <IncludePath>..;../../../../xip;../../../../../../devices/MIMXRT1042/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1042;../../../../../../devices/MIMXRT1042/periph;../../../../../../devices/MIMXRT1042/xip;../../../../../../devices/MIMXRT1042/utilities/debug_console_lite;../../../../../../components/lists;../../../../../../devices/MIMXRT1042/utilities/str;../../../../../../components/codec/i2c;../../../../../../components/codec;../../../../../../components/codec/port;../../../../../../components/codec/port/wm8960;../../../../../../components/codec/wm8960;../../../../../../components/i2c;../../../../../../components/uart;../../../../../../components/osa;../../../../../../components/audio;../../../../../../middleware/usb/include;../../../../../../middleware/usb/device;../../../../../../middleware/usb/device/class;../../../../../../middleware/usb/phy;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../../rtos/freertos/freertos-kernel/template</IncludePath>
+              <IncludePath>..;../../../../xip;../../../../../../devices/MIMXRT1042/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1042;../../../../../../devices/MIMXRT1042/periph;../../../../../../devices/MIMXRT1042/xip;../../../../../../devices/MIMXRT1042/utilities/debug_console_lite;../../../../../../components/lists;../../../../../../devices/MIMXRT1042/utilities/str;../../../../../../components/codec/i2c;../../../../../../components/codec;../../../../../../components/codec/port;../../../../../../components/codec/port/wm8960;../../../../../../components/codec/wm8960;../../../../../../components/i2c;../../../../../../components/uart;../../../../../../components/audio;../../../../../../components/osa;../../../../../../middleware/usb/include;../../../../../../middleware/usb/device;../../../../../../middleware/usb/config/device/ehci;../../../../../../middleware/usb/device/class;../../../../../../middleware/usb/phy;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../../rtos/freertos/freertos-kernel/template</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -2769,26 +2779,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component/osa</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_os_abstraction.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/osa/fsl_os_abstraction.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_os_abstraction_free_rtos.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/osa/fsl_os_abstraction_free_rtos.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_os_abstraction_free_rtos.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/osa/fsl_os_abstraction_free_rtos.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>component/audio</GroupName>
           <Files>
             <File>
@@ -2800,6 +2790,26 @@
               <FileName>fsl_adapter_sai.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../components/audio/fsl_adapter_sai.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/osa</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_os_abstraction_free_rtos.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/osa/fsl_os_abstraction_free_rtos.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction_free_rtos.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/osa/fsl_os_abstraction_free_rtos.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/osa/fsl_os_abstraction.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3046,6 +3056,11 @@
               <FileType>5</FileType>
               <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/timers.h</FilePath>
             </File>
+            <File>
+              <FileName>freertos_tasks_c_additions.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/freertos_tasks_c_additions.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -3105,6 +3120,11 @@
               <FileName>readme.md</FileName>
               <FileType>5</FileType>
               <FilePath>../readme.md</FilePath>
+            </File>
+            <File>
+              <FileName>examples_shared_readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../examples_shared_readme.md</FilePath>
             </File>
             <File>
               <FileName>usb_device_audio_speaker_change_level.jpg</FileName>
@@ -3471,9 +3491,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../mcux_config.h -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
-              <Define>DEBUG, XIP_BOOT_HEADER_ENABLE=1, XIP_EXTERNAL_FLASH=1, USB_STACK_FREERTOS, HAL_AUDIO_ISR_PRIORITY=0, USING_SAI, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1042XJM5B, OSA_USED, SDK_I2C_BASED_COMPONENT_USED=1, CODEC_MULTI_ADAPTERS=1, CODEC_WM8960_ENABLE, USE_RTOS=1, SDK_OS_FREE_RTOS</Define>
+              <Define>DEBUG, XIP_BOOT_HEADER_ENABLE=1, XIP_EXTERNAL_FLASH=1, USB_STACK_FREERTOS, HAL_AUDIO_ISR_PRIORITY=0, USING_SAI, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1042XJM5B, MIMXRT1042_SERIES, OSA_USED, SDK_I2C_BASED_COMPONENT_USED=1, CODEC_MULTI_ADAPTERS=1, CODEC_WM8960_ENABLE, USE_RTOS=1, SDK_OS_FREE_RTOS</Define>
               <Undefine/>
-              <IncludePath>..;../../../../xip;../../../../../../devices/MIMXRT1042/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1042;../../../../../../devices/MIMXRT1042/periph;../../../../../../devices/MIMXRT1042/xip;../../../../../../devices/MIMXRT1042/utilities/debug_console_lite;../../../../../../components/lists;../../../../../../devices/MIMXRT1042/utilities/str;../../../../../../components/codec/i2c;../../../../../../components/codec;../../../../../../components/codec/port;../../../../../../components/codec/port/wm8960;../../../../../../components/codec/wm8960;../../../../../../components/i2c;../../../../../../components/uart;../../../../../../components/osa;../../../../../../components/audio;../../../../../../middleware/usb/include;../../../../../../middleware/usb/device;../../../../../../middleware/usb/device/class;../../../../../../middleware/usb/phy;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../../rtos/freertos/freertos-kernel/template</IncludePath>
+              <IncludePath>..;../../../../xip;../../../../../../devices/MIMXRT1042/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1042;../../../../../../devices/MIMXRT1042/periph;../../../../../../devices/MIMXRT1042/xip;../../../../../../devices/MIMXRT1042/utilities/debug_console_lite;../../../../../../components/lists;../../../../../../devices/MIMXRT1042/utilities/str;../../../../../../components/codec/i2c;../../../../../../components/codec;../../../../../../components/codec/port;../../../../../../components/codec/port/wm8960;../../../../../../components/codec/wm8960;../../../../../../components/i2c;../../../../../../components/uart;../../../../../../components/audio;../../../../../../components/osa;../../../../../../middleware/usb/include;../../../../../../middleware/usb/device;../../../../../../middleware/usb/config/device/ehci;../../../../../../middleware/usb/device/class;../../../../../../middleware/usb/phy;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../../rtos/freertos/freertos-kernel/template</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -3489,9 +3509,9 @@
             <uClangAs>1</uClangAs>
             <VariousControls>
               <MiscControls/>
-              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1042XJM5B, OSA_USED</Define>
+              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1042XJM5B, MIMXRT1042_SERIES, OSA_USED</Define>
               <Undefine/>
-              <IncludePath>..;../../../../xip;../../../../../../devices/MIMXRT1042/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1042;../../../../../../devices/MIMXRT1042/periph;../../../../../../devices/MIMXRT1042/xip;../../../../../../devices/MIMXRT1042/utilities/debug_console_lite;../../../../../../components/lists;../../../../../../devices/MIMXRT1042/utilities/str;../../../../../../components/codec/i2c;../../../../../../components/codec;../../../../../../components/codec/port;../../../../../../components/codec/port/wm8960;../../../../../../components/codec/wm8960;../../../../../../components/i2c;../../../../../../components/uart;../../../../../../components/osa;../../../../../../components/audio;../../../../../../middleware/usb/include;../../../../../../middleware/usb/device;../../../../../../middleware/usb/device/class;../../../../../../middleware/usb/phy;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../../rtos/freertos/freertos-kernel/template</IncludePath>
+              <IncludePath>..;../../../../xip;../../../../../../devices/MIMXRT1042/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1042;../../../../../../devices/MIMXRT1042/periph;../../../../../../devices/MIMXRT1042/xip;../../../../../../devices/MIMXRT1042/utilities/debug_console_lite;../../../../../../components/lists;../../../../../../devices/MIMXRT1042/utilities/str;../../../../../../components/codec/i2c;../../../../../../components/codec;../../../../../../components/codec/port;../../../../../../components/codec/port/wm8960;../../../../../../components/codec/wm8960;../../../../../../components/i2c;../../../../../../components/uart;../../../../../../components/audio;../../../../../../components/osa;../../../../../../middleware/usb/include;../../../../../../middleware/usb/device;../../../../../../middleware/usb/config/device/ehci;../../../../../../middleware/usb/device/class;../../../../../../middleware/usb/phy;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../../rtos/freertos/freertos-kernel/template</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -4340,26 +4360,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component/osa</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_os_abstraction.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/osa/fsl_os_abstraction.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_os_abstraction_free_rtos.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/osa/fsl_os_abstraction_free_rtos.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_os_abstraction_free_rtos.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/osa/fsl_os_abstraction_free_rtos.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>component/audio</GroupName>
           <Files>
             <File>
@@ -4371,6 +4371,26 @@
               <FileName>fsl_adapter_sai.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../components/audio/fsl_adapter_sai.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/osa</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_os_abstraction_free_rtos.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/osa/fsl_os_abstraction_free_rtos.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction_free_rtos.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/osa/fsl_os_abstraction_free_rtos.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/osa/fsl_os_abstraction.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -4617,6 +4637,11 @@
               <FileType>5</FileType>
               <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/timers.h</FilePath>
             </File>
+            <File>
+              <FileName>freertos_tasks_c_additions.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/freertos_tasks_c_additions.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -4676,6 +4701,11 @@
               <FileName>readme.md</FileName>
               <FileType>5</FileType>
               <FilePath>../readme.md</FilePath>
+            </File>
+            <File>
+              <FileName>examples_shared_readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../examples_shared_readme.md</FilePath>
             </File>
             <File>
               <FileName>usb_device_audio_speaker_change_level.jpg</FileName>
@@ -5042,9 +5072,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../mcux_config.h -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
-              <Define>NDEBUG, USB_STACK_FREERTOS, HAL_AUDIO_ISR_PRIORITY=0, USING_SAI, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1042XJM5B, OSA_USED, SDK_I2C_BASED_COMPONENT_USED=1, CODEC_MULTI_ADAPTERS=1, CODEC_WM8960_ENABLE, USE_RTOS=1, SDK_OS_FREE_RTOS</Define>
+              <Define>NDEBUG, USB_STACK_FREERTOS, HAL_AUDIO_ISR_PRIORITY=0, USING_SAI, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1042XJM5B, MIMXRT1042_SERIES, OSA_USED, SDK_I2C_BASED_COMPONENT_USED=1, CODEC_MULTI_ADAPTERS=1, CODEC_WM8960_ENABLE, USE_RTOS=1, SDK_OS_FREE_RTOS</Define>
               <Undefine/>
-              <IncludePath>..;../../../../xip;../../../../../../devices/MIMXRT1042/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1042;../../../../../../devices/MIMXRT1042/periph;../../../../../../devices/MIMXRT1042/xip;../../../../../../devices/MIMXRT1042/utilities/debug_console_lite;../../../../../../components/lists;../../../../../../devices/MIMXRT1042/utilities/str;../../../../../../components/codec/i2c;../../../../../../components/codec;../../../../../../components/codec/port;../../../../../../components/codec/port/wm8960;../../../../../../components/codec/wm8960;../../../../../../components/i2c;../../../../../../components/uart;../../../../../../components/osa;../../../../../../components/audio;../../../../../../middleware/usb/include;../../../../../../middleware/usb/device;../../../../../../middleware/usb/device/class;../../../../../../middleware/usb/phy;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../../rtos/freertos/freertos-kernel/template</IncludePath>
+              <IncludePath>..;../../../../xip;../../../../../../devices/MIMXRT1042/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1042;../../../../../../devices/MIMXRT1042/periph;../../../../../../devices/MIMXRT1042/xip;../../../../../../devices/MIMXRT1042/utilities/debug_console_lite;../../../../../../components/lists;../../../../../../devices/MIMXRT1042/utilities/str;../../../../../../components/codec/i2c;../../../../../../components/codec;../../../../../../components/codec/port;../../../../../../components/codec/port/wm8960;../../../../../../components/codec/wm8960;../../../../../../components/i2c;../../../../../../components/uart;../../../../../../components/audio;../../../../../../components/osa;../../../../../../middleware/usb/include;../../../../../../middleware/usb/device;../../../../../../middleware/usb/config/device/ehci;../../../../../../middleware/usb/device/class;../../../../../../middleware/usb/phy;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../../rtos/freertos/freertos-kernel/template</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -5060,9 +5090,9 @@
             <uClangAs>1</uClangAs>
             <VariousControls>
               <MiscControls/>
-              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1042XJM5B, OSA_USED</Define>
+              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1042XJM5B, MIMXRT1042_SERIES, OSA_USED</Define>
               <Undefine/>
-              <IncludePath>..;../../../../xip;../../../../../../devices/MIMXRT1042/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1042;../../../../../../devices/MIMXRT1042/periph;../../../../../../devices/MIMXRT1042/xip;../../../../../../devices/MIMXRT1042/utilities/debug_console_lite;../../../../../../components/lists;../../../../../../devices/MIMXRT1042/utilities/str;../../../../../../components/codec/i2c;../../../../../../components/codec;../../../../../../components/codec/port;../../../../../../components/codec/port/wm8960;../../../../../../components/codec/wm8960;../../../../../../components/i2c;../../../../../../components/uart;../../../../../../components/osa;../../../../../../components/audio;../../../../../../middleware/usb/include;../../../../../../middleware/usb/device;../../../../../../middleware/usb/device/class;../../../../../../middleware/usb/phy;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../../rtos/freertos/freertos-kernel/template</IncludePath>
+              <IncludePath>..;../../../../xip;../../../../../../devices/MIMXRT1042/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1042;../../../../../../devices/MIMXRT1042/periph;../../../../../../devices/MIMXRT1042/xip;../../../../../../devices/MIMXRT1042/utilities/debug_console_lite;../../../../../../components/lists;../../../../../../devices/MIMXRT1042/utilities/str;../../../../../../components/codec/i2c;../../../../../../components/codec;../../../../../../components/codec/port;../../../../../../components/codec/port/wm8960;../../../../../../components/codec/wm8960;../../../../../../components/i2c;../../../../../../components/uart;../../../../../../components/audio;../../../../../../components/osa;../../../../../../middleware/usb/include;../../../../../../middleware/usb/device;../../../../../../middleware/usb/config/device/ehci;../../../../../../middleware/usb/device/class;../../../../../../middleware/usb/phy;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../../rtos/freertos/freertos-kernel/template</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -5911,26 +5941,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component/osa</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_os_abstraction.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/osa/fsl_os_abstraction.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_os_abstraction_free_rtos.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/osa/fsl_os_abstraction_free_rtos.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_os_abstraction_free_rtos.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/osa/fsl_os_abstraction_free_rtos.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>component/audio</GroupName>
           <Files>
             <File>
@@ -5942,6 +5952,26 @@
               <FileName>fsl_adapter_sai.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../components/audio/fsl_adapter_sai.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/osa</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_os_abstraction_free_rtos.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/osa/fsl_os_abstraction_free_rtos.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction_free_rtos.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/osa/fsl_os_abstraction_free_rtos.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/osa/fsl_os_abstraction.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -6188,6 +6218,11 @@
               <FileType>5</FileType>
               <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/timers.h</FilePath>
             </File>
+            <File>
+              <FileName>freertos_tasks_c_additions.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/freertos_tasks_c_additions.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -6247,6 +6282,11 @@
               <FileName>readme.md</FileName>
               <FileType>5</FileType>
               <FilePath>../readme.md</FilePath>
+            </File>
+            <File>
+              <FileName>examples_shared_readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../examples_shared_readme.md</FilePath>
             </File>
             <File>
               <FileName>usb_device_audio_speaker_change_level.jpg</FileName>
@@ -6613,9 +6653,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../mcux_config.h -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
-              <Define>USB_DEVICE_CONFIG_BUFFER_PROPERTY_CACHEABLE=1, NDEBUG, USE_SDRAM=1, SKIP_SYSCLK_INIT=1, USB_STACK_FREERTOS, HAL_AUDIO_ISR_PRIORITY=0, USING_SAI, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1042XJM5B, OSA_USED, SDK_I2C_BASED_COMPONENT_USED=1, CODEC_MULTI_ADAPTERS=1, CODEC_WM8960_ENABLE, USE_RTOS=1, SDK_OS_FREE_RTOS</Define>
+              <Define>USB_DEVICE_CONFIG_BUFFER_PROPERTY_CACHEABLE=1, NDEBUG, USE_SDRAM=1, SKIP_SYSCLK_INIT=1, USB_STACK_FREERTOS, HAL_AUDIO_ISR_PRIORITY=0, USING_SAI, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1042XJM5B, MIMXRT1042_SERIES, OSA_USED, SDK_I2C_BASED_COMPONENT_USED=1, CODEC_MULTI_ADAPTERS=1, CODEC_WM8960_ENABLE, USE_RTOS=1, SDK_OS_FREE_RTOS</Define>
               <Undefine/>
-              <IncludePath>..;../../../../xip;../../../../../../devices/MIMXRT1042/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1042;../../../../../../devices/MIMXRT1042/periph;../../../../../../devices/MIMXRT1042/xip;../../../../../../devices/MIMXRT1042/utilities/debug_console_lite;../../../../../../components/lists;../../../../../../devices/MIMXRT1042/utilities/str;../../../../../../components/codec/i2c;../../../../../../components/codec;../../../../../../components/codec/port;../../../../../../components/codec/port/wm8960;../../../../../../components/codec/wm8960;../../../../../../components/i2c;../../../../../../components/uart;../../../../../../components/osa;../../../../../../components/audio;../../../../../../middleware/usb/include;../../../../../../middleware/usb/device;../../../../../../middleware/usb/device/class;../../../../../../middleware/usb/phy;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../../rtos/freertos/freertos-kernel/template</IncludePath>
+              <IncludePath>..;../../../../xip;../../../../../../devices/MIMXRT1042/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1042;../../../../../../devices/MIMXRT1042/periph;../../../../../../devices/MIMXRT1042/xip;../../../../../../devices/MIMXRT1042/utilities/debug_console_lite;../../../../../../components/lists;../../../../../../devices/MIMXRT1042/utilities/str;../../../../../../components/codec/i2c;../../../../../../components/codec;../../../../../../components/codec/port;../../../../../../components/codec/port/wm8960;../../../../../../components/codec/wm8960;../../../../../../components/i2c;../../../../../../components/uart;../../../../../../components/audio;../../../../../../components/osa;../../../../../../middleware/usb/include;../../../../../../middleware/usb/device;../../../../../../middleware/usb/config/device/ehci;../../../../../../middleware/usb/device/class;../../../../../../middleware/usb/phy;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../../rtos/freertos/freertos-kernel/template</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -6631,9 +6671,9 @@
             <uClangAs>1</uClangAs>
             <VariousControls>
               <MiscControls/>
-              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1042XJM5B, OSA_USED</Define>
+              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1042XJM5B, MIMXRT1042_SERIES, OSA_USED</Define>
               <Undefine/>
-              <IncludePath>..;../../../../xip;../../../../../../devices/MIMXRT1042/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1042;../../../../../../devices/MIMXRT1042/periph;../../../../../../devices/MIMXRT1042/xip;../../../../../../devices/MIMXRT1042/utilities/debug_console_lite;../../../../../../components/lists;../../../../../../devices/MIMXRT1042/utilities/str;../../../../../../components/codec/i2c;../../../../../../components/codec;../../../../../../components/codec/port;../../../../../../components/codec/port/wm8960;../../../../../../components/codec/wm8960;../../../../../../components/i2c;../../../../../../components/uart;../../../../../../components/osa;../../../../../../components/audio;../../../../../../middleware/usb/include;../../../../../../middleware/usb/device;../../../../../../middleware/usb/device/class;../../../../../../middleware/usb/phy;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../../rtos/freertos/freertos-kernel/template</IncludePath>
+              <IncludePath>..;../../../../xip;../../../../../../devices/MIMXRT1042/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1042;../../../../../../devices/MIMXRT1042/periph;../../../../../../devices/MIMXRT1042/xip;../../../../../../devices/MIMXRT1042/utilities/debug_console_lite;../../../../../../components/lists;../../../../../../devices/MIMXRT1042/utilities/str;../../../../../../components/codec/i2c;../../../../../../components/codec;../../../../../../components/codec/port;../../../../../../components/codec/port/wm8960;../../../../../../components/codec/wm8960;../../../../../../components/i2c;../../../../../../components/uart;../../../../../../components/audio;../../../../../../components/osa;../../../../../../middleware/usb/include;../../../../../../middleware/usb/device;../../../../../../middleware/usb/config/device/ehci;../../../../../../middleware/usb/device/class;../../../../../../middleware/usb/phy;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../../rtos/freertos/freertos-kernel/template</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -7482,26 +7522,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component/osa</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_os_abstraction.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/osa/fsl_os_abstraction.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_os_abstraction_free_rtos.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/osa/fsl_os_abstraction_free_rtos.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_os_abstraction_free_rtos.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/osa/fsl_os_abstraction_free_rtos.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>component/audio</GroupName>
           <Files>
             <File>
@@ -7513,6 +7533,26 @@
               <FileName>fsl_adapter_sai.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../components/audio/fsl_adapter_sai.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/osa</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_os_abstraction_free_rtos.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/osa/fsl_os_abstraction_free_rtos.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction_free_rtos.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/osa/fsl_os_abstraction_free_rtos.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/osa/fsl_os_abstraction.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -7759,6 +7799,11 @@
               <FileType>5</FileType>
               <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/timers.h</FilePath>
             </File>
+            <File>
+              <FileName>freertos_tasks_c_additions.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/freertos_tasks_c_additions.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -7818,6 +7863,11 @@
               <FileName>readme.md</FileName>
               <FileType>5</FileType>
               <FilePath>../readme.md</FilePath>
+            </File>
+            <File>
+              <FileName>examples_shared_readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../examples_shared_readme.md</FilePath>
             </File>
             <File>
               <FileName>usb_device_audio_speaker_change_level.jpg</FileName>
@@ -8184,9 +8234,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../mcux_config.h -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
-              <Define>NDEBUG, XIP_BOOT_HEADER_ENABLE=1, XIP_EXTERNAL_FLASH=1, USB_STACK_FREERTOS, HAL_AUDIO_ISR_PRIORITY=0, USING_SAI, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1042XJM5B, OSA_USED, SDK_I2C_BASED_COMPONENT_USED=1, CODEC_MULTI_ADAPTERS=1, CODEC_WM8960_ENABLE, USE_RTOS=1, SDK_OS_FREE_RTOS</Define>
+              <Define>NDEBUG, XIP_BOOT_HEADER_ENABLE=1, XIP_EXTERNAL_FLASH=1, USB_STACK_FREERTOS, HAL_AUDIO_ISR_PRIORITY=0, USING_SAI, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1042XJM5B, MIMXRT1042_SERIES, OSA_USED, SDK_I2C_BASED_COMPONENT_USED=1, CODEC_MULTI_ADAPTERS=1, CODEC_WM8960_ENABLE, USE_RTOS=1, SDK_OS_FREE_RTOS</Define>
               <Undefine/>
-              <IncludePath>..;../../../../xip;../../../../../../devices/MIMXRT1042/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1042;../../../../../../devices/MIMXRT1042/periph;../../../../../../devices/MIMXRT1042/xip;../../../../../../devices/MIMXRT1042/utilities/debug_console_lite;../../../../../../components/lists;../../../../../../devices/MIMXRT1042/utilities/str;../../../../../../components/codec/i2c;../../../../../../components/codec;../../../../../../components/codec/port;../../../../../../components/codec/port/wm8960;../../../../../../components/codec/wm8960;../../../../../../components/i2c;../../../../../../components/uart;../../../../../../components/osa;../../../../../../components/audio;../../../../../../middleware/usb/include;../../../../../../middleware/usb/device;../../../../../../middleware/usb/device/class;../../../../../../middleware/usb/phy;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../../rtos/freertos/freertos-kernel/template</IncludePath>
+              <IncludePath>..;../../../../xip;../../../../../../devices/MIMXRT1042/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1042;../../../../../../devices/MIMXRT1042/periph;../../../../../../devices/MIMXRT1042/xip;../../../../../../devices/MIMXRT1042/utilities/debug_console_lite;../../../../../../components/lists;../../../../../../devices/MIMXRT1042/utilities/str;../../../../../../components/codec/i2c;../../../../../../components/codec;../../../../../../components/codec/port;../../../../../../components/codec/port/wm8960;../../../../../../components/codec/wm8960;../../../../../../components/i2c;../../../../../../components/uart;../../../../../../components/audio;../../../../../../components/osa;../../../../../../middleware/usb/include;../../../../../../middleware/usb/device;../../../../../../middleware/usb/config/device/ehci;../../../../../../middleware/usb/device/class;../../../../../../middleware/usb/phy;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../../rtos/freertos/freertos-kernel/template</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -8202,9 +8252,9 @@
             <uClangAs>1</uClangAs>
             <VariousControls>
               <MiscControls/>
-              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1042XJM5B, OSA_USED</Define>
+              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1042XJM5B, MIMXRT1042_SERIES, OSA_USED</Define>
               <Undefine/>
-              <IncludePath>..;../../../../xip;../../../../../../devices/MIMXRT1042/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1042;../../../../../../devices/MIMXRT1042/periph;../../../../../../devices/MIMXRT1042/xip;../../../../../../devices/MIMXRT1042/utilities/debug_console_lite;../../../../../../components/lists;../../../../../../devices/MIMXRT1042/utilities/str;../../../../../../components/codec/i2c;../../../../../../components/codec;../../../../../../components/codec/port;../../../../../../components/codec/port/wm8960;../../../../../../components/codec/wm8960;../../../../../../components/i2c;../../../../../../components/uart;../../../../../../components/osa;../../../../../../components/audio;../../../../../../middleware/usb/include;../../../../../../middleware/usb/device;../../../../../../middleware/usb/device/class;../../../../../../middleware/usb/phy;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../../rtos/freertos/freertos-kernel/template</IncludePath>
+              <IncludePath>..;../../../../xip;../../../../../../devices/MIMXRT1042/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1042;../../../../../../devices/MIMXRT1042/periph;../../../../../../devices/MIMXRT1042/xip;../../../../../../devices/MIMXRT1042/utilities/debug_console_lite;../../../../../../components/lists;../../../../../../devices/MIMXRT1042/utilities/str;../../../../../../components/codec/i2c;../../../../../../components/codec;../../../../../../components/codec/port;../../../../../../components/codec/port/wm8960;../../../../../../components/codec/wm8960;../../../../../../components/i2c;../../../../../../components/uart;../../../../../../components/audio;../../../../../../components/osa;../../../../../../middleware/usb/include;../../../../../../middleware/usb/device;../../../../../../middleware/usb/config/device/ehci;../../../../../../middleware/usb/device/class;../../../../../../middleware/usb/phy;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../../rtos/freertos/freertos-kernel/template</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -9053,26 +9103,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component/osa</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_os_abstraction.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/osa/fsl_os_abstraction.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_os_abstraction_free_rtos.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/osa/fsl_os_abstraction_free_rtos.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_os_abstraction_free_rtos.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/osa/fsl_os_abstraction_free_rtos.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>component/audio</GroupName>
           <Files>
             <File>
@@ -9084,6 +9114,26 @@
               <FileName>fsl_adapter_sai.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../components/audio/fsl_adapter_sai.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/osa</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_os_abstraction_free_rtos.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/osa/fsl_os_abstraction_free_rtos.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction_free_rtos.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/osa/fsl_os_abstraction_free_rtos.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/osa/fsl_os_abstraction.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -9330,6 +9380,11 @@
               <FileType>5</FileType>
               <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/timers.h</FilePath>
             </File>
+            <File>
+              <FileName>freertos_tasks_c_additions.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/freertos_tasks_c_additions.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -9389,6 +9444,11 @@
               <FileName>readme.md</FileName>
               <FileType>5</FileType>
               <FilePath>../readme.md</FilePath>
+            </File>
+            <File>
+              <FileName>examples_shared_readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../examples_shared_readme.md</FilePath>
             </File>
             <File>
               <FileName>usb_device_audio_speaker_change_level.jpg</FileName>

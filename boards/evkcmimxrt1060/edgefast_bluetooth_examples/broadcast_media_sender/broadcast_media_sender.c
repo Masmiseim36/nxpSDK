@@ -485,18 +485,18 @@ int select_lc3_preset(char *preset_name)
 
 	for(int i = 0; i < ARRAY_SIZE(lc3_broadcast_presets); i++)
 	{
-		const struct bt_audio_codec_cfg *codec_cfg = &lc3_broadcast_presets[i].preset.codec_cfg;
-
 		if(0 == strcmp(lc3_broadcast_presets[i].name, preset_name))
 		{
-			int sample_rate = bt_audio_codec_cfg_freq_to_freq_hz((enum bt_audio_codec_cfg_freq)bt_audio_codec_cfg_get_freq(codec_cfg));
+			const struct bt_bap_lc3_preset *preset = &lc3_broadcast_presets[i].preset;
+			int sample_rate = bt_audio_codec_cfg_freq_to_freq_hz((enum bt_audio_codec_cfg_freq)bt_audio_codec_cfg_get_freq(&preset->codec_cfg));
 			if(sample_rate != wav_file.sample_rate)
 			{
 				PRINTF("preset sample rate %d not align with wav %d\n", sample_rate, wav_file.sample_rate);
 				return -1;
 			}
 			find = true;
-			memcpy(&lc3_preset, codec_cfg, sizeof(lc3_preset));
+			memcpy(&lc3_preset, preset, sizeof(lc3_preset));
+			break;
 		}
 	}
 

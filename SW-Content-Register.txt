@@ -38,6 +38,87 @@ RangeHTTPServer            Name: RangeHTTPServer
                            Url: https://github.com/danvk/RangeHTTPServer     
                            Origin: https://github.com/danvk/RangeHTTPServer  
 
+SDK_Peripheral_Driver      Name: SDK Peripheral Driver                       
+                           Version: 2.x.x                                    
+                           Outgoing License: BSD-3-Clause                    
+                           License File: ./COPYING-BSD-3                     
+                           Format: source code                               
+                           Description: Peripheral drivers are designed for  
+                           the most common use cases identified for the      
+                           underlying hardware block.                        
+                           Location: devices/<device>/drivers                
+                           Origin: NXP (BSD-3-Clause)                        
+
+SDK_Device                 Name: SDK SoC files                               
+                           Version: NA                                       
+                           Outgoing License: BSD-3-Clause                    
+                           License File: ./COPYING-BSD-3                     
+                           Format: source code, linker files                 
+                           Description: Device system files, template files, 
+                           IDE related startup and linker files.             
+                           Location: devices/<device>/                       
+                           Origin: NXP (BSD-3-Clause)                        
+
+SDK_Components             Name: SDK components and board peripheral drivers 
+                           Version: NA                                       
+                           Outgoing License: BSD-3-Clause                    
+                           License File: ./COPYING-BSD-3                     
+                           Format: source code                               
+                           Description: SDK components and board peripheral  
+                           drivers, for example, flash and codec drivers.    
+                           Location: components/                             
+                           Origin: NXP (BSD-3-Clause), ITE (BSD-3-Clause)    
+
+CMSIS_NN                   Name: CMSIS_NN                                    
+                           Version: 6.0.0                                    
+                           Outgoing License: Apache License 2.0              
+                           License File: CMSIS/NN/LICENSE                    
+                           Format: source code                               
+                           Description: A collection of efficient neural     
+                           network kernels developed to maximize the         
+                           performance and minimize the memory footprint of  
+                           neural networks on Arm Cortex-M processors.       
+                           Location: CMSIS/NN                                
+                           Origin: ARM (Apache-2.0) -                        
+                           https://github.com/ARM-software/CMSIS-NN/releases/
+                           tag/v6.0.0                                        
+
+CMSIS                      Name: CMSIS                                       
+                           Version: 6.1.0                                    
+                           Outgoing License: Apache License 2.0              
+                           License File: CMSIS/LICENSE.txt                   
+                           Format: source code                               
+                           Description: Vendor-independent hardware          
+                           abstraction layer for microcontrollers that are   
+                           based on Arm Cortex processors, distributed by    
+                           ARM. cores                                        
+                           Location: CMSIS/                                  
+                           Origin: ARM (Apache-2.0) -                        
+                           https://github.com/ARM-software/CMSIS_6/releases/t
+                           ag/v6.1.0                                         
+
+CMSIS_DSP                  Name: CMSIS_DSP                                   
+                           Version: 1.16.2                                   
+                           Outgoing License: Apache License 2.0              
+                           License File: CMSIS/DSP/LICENSE                   
+                           Format: source code                               
+                           Description: It provides optimized compute kernels
+                           for Cortex-M and for Cortex-A.                    
+                           Location: CMSIS/DSP                               
+                           Origin: ARM (Apache-2.0) -                        
+                           https://github.com/ARM-software/CMSIS-DSP/releases
+                           /tag/v1.16.2 ARM (MIT)                            
+
+mcu-boot                   Name: Bootloader Source                           
+                           Version: 2.7.0                                    
+                           Outgoing License: BSD-3-Clause                    
+                           License File: ./COPYING-BSD-3                     
+                           Format: source code                               
+                           Description: Software for Bootloaders,            
+                           Flashloaders and host tools                       
+                           Location: middleware/mcu_bootloader               
+                           Origin: NXP (BSD-3-Clause)                        
+
 FWK                        Name: Connectivity Framework                      
                            Version: 7.0.2                                    
                            Outgoing License: BSD-3-Clause                    
@@ -151,7 +232,7 @@ cmsis_drivers              Name: SDK CMSIS Peripheral Drivers
 se_hostlib                 Name: se_hostlib                                  
                            Version: 2.12.0                                   
                            Outgoing License: Plug & Trust Middleware License 
-                           License File: middleware/se_hostlib/EULA.pdf      
+                           License File: middleware/se_hostlib/LICENSE.txt   
                            Format: source code                               
                            Description: Secure element host library          
                            Location: middleware/se_hostlib                   
@@ -170,52 +251,6 @@ openvg                     Name: mcux-openvg
                            Khronos Group Inc. (Apache and MIT) -             
                            http://www.khronos.org/ Amazon (MIT) -            
                            https://github.com/FreeRTOS/FreeRTOS-Kernel       
-
-psatest                    Name: PSA Test Suite                              
-                           Version: 1.4                                      
-                           Outgoing License: Apache-2.0                      
-                           License File:                                     
-                           middleware/tfm/psa-arch-tests/LICENSE.md          
-                           Format: source code                               
-                           Description: Arm Platform Security Architecture   
-                           Test Suite                                        
-                           Location: middleware/tfm/psa-arch-tests           
-                           Origin: ARM(Apache-2.0) -                         
-                           https://github.com/ARM-software/psa-arch-tests    
-
-tfm_t_cose                 Name: tfm_t_cose                                  
-                           Version: 2.1.1                                    
-                           Outgoing License: BSD-3-Clause                    
-                           License File:                                     
-                           middleware/tfm/tf-m/lib/ext/t_cose/LICENSE        
-                           Format: source code                               
-                           Description: t_cose is a partial implementation of
-                           the COSE standard (RFC 8152)                      
-                           Location: middleware/tfm/tf-m/lib/ext/t_cose      
-                           Origin: Laurence Lundblade (BSD-3-Clause)         
-
-mbedtls3x                  Name: Mbed TLS                                    
-                           Version: 3.6.3                                    
-                           Outgoing License: Apache-2.0                      
-                           License File: middleware/mbedtls3x/LICENSE        
-                           Format: source code                               
-                           Description: Cryptographic and SSL/TLS Library    
-                           Location: middleware/mbedtls3x                    
-                           Origin: ARM(Apache-2.0) -                         
-                           https://github.com/Mbed-TLS/mbedtls/releases/tag/v
-                           3.6.3                                             
-
-soem                       Name: Simple Open EtherCAT Master Library (SOEM)  
-                           Version: 1.4.0                                    
-                           Outgoing License: GPL-2.0 with a special exception
-                           License File: middleware/soem/LICENSE             
-                           Format: source code                               
-                           Description: An opensource EtherCAT master stack  
-                           which is used to write custom EtherCAT Master     
-                           applications.                                     
-                           Location: middleware/soem                         
-                           Origin: RT-Labs                                   
-                           Url: https://github.com/OpenEtherCATsociety/soem  
 
 wpa_supplicant             Name: wpa_supplicant-rtos                         
                            Version: 2.11.0                                   
@@ -240,51 +275,6 @@ wifi                       Name: NXP Wi-Fi driver
                            Location: middleware/wifi_nxp                     
                            Origin: NXP (BSD-3-Clause)                        
 
-voice_seeker_hifi4         Name: VoiceSeeker (no AEC)                        
-                           Version: 0.6.9                                    
-                           Outgoing License: LA_OPT_NXP_Software_License v62 
-                           May 2025 - Additional distribution license        
-                           granted, license in Section 2.3 applies           
-                           License File: ./LA_OPT_NXP_Software_License.txt   
-                           Format: Precompiled libraries, header files,      
-                           example application                               
-                           Description: VoiceSeeker is a multi-microphone    
-                           voice control audio front-end signal processing   
-                           solution. Acoustic Echo Cancellation (AEC) is not 
-                           enabled in this free version.                     
-                           Location:                                         
-                           middleware/audio_voice/components/voice_seeker/RT6
-                           85_HiFi4                                          
-                           Origin: NXP (Proprietary) Cadence Design Systems  
-                           (Proprietary)                                     
-                           Url:                                              
-                           https://www.nxp.com/design/software/embedded-softw
-                           are/voiceseeker-audio-front-end:VOICESEEKER       
-
-vit                        Name: VIT_v4.10.0                                 
-                           Version: 4.10.0                                   
-                           Outgoing License: LA_OPT_NXP_Software_License v62 
-                           May 2025 - Additional distribution license        
-                           granted, license in Section 2.3 applies           
-                           License File: ./LA_OPT_NXP_Software_License.txt   
-                           Format: Precompiled libraries, header files,      
-                           example application                               
-                           Description: Voice Intelligent Technology library 
-                           Location: middleware/audio_voice/components/vit   
-                           Origin: NXP (Proprietary)                         
-
-vglite                     Name: vglite                                      
-                           Version: 4.0.90                                   
-                           Outgoing License: MIT                             
-                           License File: middleware/vglite/driver/LICENSE.txt
-                           Format: source code                               
-                           Description: VeriSilicon's platform independent   
-                           VGLite Graphics library                           
-                           Location: middleware/vglite/driver                
-                           Origin: VeriSilicon (MIT), NXP (MIT)              
-                           Url: http://www.verisilicon.com/,                 
-                           https://github.com/nxp-mcuxpresso/gpu-vglite      
-
 usb                        Name: USB                                         
                            Version: 2.12.0                                   
                            Outgoing License: BSD-3-Clause                    
@@ -305,6 +295,18 @@ tinycbor                   Name: TinyCBOR
                            Location: middleware/tinycbor                     
                            Origin: Intel Corporation (MIT)                   
                            Url: https://github.com/intel/TinyCBOR            
+
+soem                       Name: Simple Open EtherCAT Master Library (SOEM)  
+                           Version: 1.4.0                                    
+                           Outgoing License: GPL-2.0 with a special exception
+                           License File: middleware/soem/LICENSE             
+                           Format: source code                               
+                           Description: An opensource EtherCAT master stack  
+                           which is used to write custom EtherCAT Master     
+                           applications.                                     
+                           Location: middleware/soem                         
+                           Origin: RT-Labs                                   
+                           Url: https://github.com/OpenEtherCATsociety/soem  
 
 tfm                        Name: tfm                                         
                            Version: 2.1.1                                    
@@ -373,7 +375,7 @@ pkcs11                     Name: OASIS TC pkcs11
                            Url: https://github.com/amazon-freertos/pkcs11    
 
 openh264                   Name: OpenH264                                    
-                           Version: 2.1.1                                    
+                           Version: 2.6.0                                    
                            Outgoing License: BSD-2-Clause                    
                            License File: middleware/openh264/LICENSE         
                            Format: source code                               
@@ -569,6 +571,40 @@ mbedtls-asn1               Name: MbedTLS
                            https://github.com/mcu-tools/mcuboot/tree/main/ext
                            /mbedtls-asn1                                     
 
+psatest                    Name: PSA Test Suite                              
+                           Version: 1.4                                      
+                           Outgoing License: Apache-2.0                      
+                           License File:                                     
+                           middleware/tfm/psa-arch-tests/LICENSE.md          
+                           Format: source code                               
+                           Description: Arm Platform Security Architecture   
+                           Test Suite                                        
+                           Location: middleware/tfm/psa-arch-tests           
+                           Origin: ARM(Apache-2.0) -                         
+                           https://github.com/ARM-software/psa-arch-tests    
+
+tfm_t_cose                 Name: tfm_t_cose                                  
+                           Version: 2.1.1                                    
+                           Outgoing License: BSD-3-Clause                    
+                           License File:                                     
+                           middleware/tfm/tf-m/lib/ext/t_cose/LICENSE        
+                           Format: source code                               
+                           Description: t_cose is a partial implementation of
+                           the COSE standard (RFC 8152)                      
+                           Location: middleware/tfm/tf-m/lib/ext/t_cose      
+                           Origin: Laurence Lundblade (BSD-3-Clause)         
+
+mbedtls3x                  Name: Mbed TLS                                    
+                           Version: 3.6.3                                    
+                           Outgoing License: Apache-2.0                      
+                           License File: middleware/mbedtls3x/LICENSE        
+                           Format: source code                               
+                           Description: Cryptographic and SSL/TLS Library    
+                           Location: middleware/mbedtls3x                    
+                           Origin: ARM(Apache-2.0) -                         
+                           https://github.com/Mbed-TLS/mbedtls/releases/tag/v
+                           3.6.3                                             
+
 mbedtls                    Name: Mbed TLS                                    
                            Version: 2.28.10                                  
                            Outgoing License: Apache-2.0                      
@@ -582,8 +618,8 @@ mbedtls                    Name: Mbed TLS
 
 voice_seeker_cm7           Name: VoiceSeeker (no AEC)                        
                            Version: 0.6.9                                    
-                           Outgoing License: LA_OPT_NXP_Software_License v57 
-                           July 2024 - Additional distribution license       
+                           Outgoing License: LA_OPT_NXP_Software_License v62 
+                           May 2025 - Additional distribution license        
                            granted, license in Section 2.3 applies           
                            License File: ./LA_OPT_NXP_Software_License.txt   
                            Format: Precompiled libraries, header files,      
@@ -600,6 +636,64 @@ voice_seeker_cm7           Name: VoiceSeeker (no AEC)
                            https://www.nxp.com/design/software/embedded-softw
                            are/voiceseeker-audio-front-end:VOICESEEKER       
                            https://github.com/ARM-software/CMSIS_5           
+
+voice_seeker_hifi4         Name: VoiceSeeker (no AEC)                        
+                           Version: 0.6.9                                    
+                           Outgoing License: LA_OPT_NXP_Software_License v62 
+                           May 2025 - Additional distribution license        
+                           granted, license in Section 2.3 applies           
+                           License File: ./LA_OPT_NXP_Software_License.txt   
+                           Format: Precompiled libraries, header files,      
+                           example application                               
+                           Description: VoiceSeeker is a multi-microphone    
+                           voice control audio front-end signal processing   
+                           solution. Acoustic Echo Cancellation (AEC) is not 
+                           enabled in this free version.                     
+                           Location:                                         
+                           middleware/audio_voice/components/voice_seeker/RT6
+                           85_HiFi4                                          
+                           Origin: NXP (Proprietary) Cadence Design Systems  
+                           (Proprietary)                                     
+                           Url:                                              
+                           https://www.nxp.com/design/software/embedded-softw
+                           are/voiceseeker-audio-front-end:VOICESEEKER       
+
+vit                        Name: VIT_v4.10.0                                 
+                           Version: 4.10.0                                   
+                           Outgoing License: LA_OPT_NXP_Software_License v62 
+                           May 2025 - Additional distribution license        
+                           granted, license in Section 2.3 applies           
+                           License File: ./LA_OPT_NXP_Software_License.txt   
+                           Format: Precompiled libraries, header files,      
+                           example application                               
+                           Description: Voice Intelligent Technology library 
+                           Location: middleware/audio_voice/components/vit   
+                           Origin: NXP (Proprietary)                         
+
+audio_components           Name: Audio Voice Components                      
+                           Version: 1.0.0                                    
+                           Outgoing License: LA_OPT_Online_Code_Hosting      
+                           License File:                                     
+                           middleware/audio_voice/components/LICENSE.txt     
+                           Format: Source code & header files, libraries     
+                           Description: Audio Voice Components               
+                           Location: middleware/audio_voice/components       
+                           Origin: NXP (Proprietary), Flac (BSD 3-clause),   
+                           Ogg (BSD 3-clause), Opus (BSD 3-clause), Opusfile 
+                           (BSD 3-clause)                                    
+                           Url: https://github.com/xiph/flac                 
+
+vglite                     Name: vglite                                      
+                           Version: 4.0.90                                   
+                           Outgoing License: MIT                             
+                           License File: middleware/vglite/driver/LICENSE.txt
+                           Format: source code                               
+                           Description: VeriSilicon's platform independent   
+                           VGLite Graphics library                           
+                           Location: middleware/vglite/driver                
+                           Origin: VeriSilicon (MIT), NXP (MIT)              
+                           Url: http://www.verisilicon.com/,                 
+                           https://github.com/nxp-mcuxpresso/gpu-vglite      
 
 audio_voice_components     Name: Audio Voice Components                      
                            Version: 1.0.0                                    
@@ -619,11 +713,9 @@ audio_voice_components     Name: Audio Voice Components
                            https://github.com/xiph/opusfile                  
 
 maestro                    Name: Maestro Audio Framework                     
-                           Version: 1.7.0                                    
-                           Outgoing License: LA_OPT_NXP_Software_License v57 
-                           July 2024 - Additional distribution license       
-                           granted, license in Section 2.3 applies           
-                           License File: ./LA_OPT_NXP_Software_License.txt   
+                           Version: 2.0.0                                    
+                           Outgoing License: BSD-3-Clause                    
+                           License File: ./COPYING-BSD-3                     
                            Format: Source                                    
                            Description: Maestro MCU Audio Framework          
                            Location: middleware/audio_voice/maestro          
@@ -1230,77 +1322,6 @@ wifi_tx_pwr_limits         Name: Wi-Fi module Tx power limits
                            (BSD-3-Clause)                                    
                            Outgoing License: BSD-3-Clause                    
                            License File: ./COPYING-BSD-3                     
-
-SDK_Peripheral_Driver      Name: SDK Peripheral Driver                       
-                           Version: 2.x.x                                    
-                           Outgoing License: BSD-3-Clause                    
-                           License File: ./COPYING-BSD-3                     
-                           Format: source code                               
-                           Description: Peripheral drivers are designed for  
-                           the most common use cases identified for the      
-                           underlying hardware block.                        
-                           Location: devices/<device>/drivers                
-                           Origin: NXP (BSD-3-Clause)                        
-
-SDK_Device                 Name: SDK SoC files                               
-                           Version: NA                                       
-                           Outgoing License: BSD-3-Clause                    
-                           License File: ./COPYING-BSD-3                     
-                           Format: source code, linker files                 
-                           Description: Device system files, template files, 
-                           IDE related startup and linker files.             
-                           Location: devices/<device>/                       
-                           Origin: NXP (BSD-3-Clause)                        
-
-SDK_Components             Name: SDK components and board peripheral drivers 
-                           Version: NA                                       
-                           Outgoing License: BSD-3-Clause                    
-                           License File: ./COPYING-BSD-3                     
-                           Format: source code                               
-                           Description: SDK components and board peripheral  
-                           drivers, for example, flash and codec drivers.    
-                           Location: components/                             
-                           Origin: NXP (BSD-3-Clause), ITE (BSD-3-Clause)    
-
-CMSIS_NN                   Name: CMSIS_NN                                    
-                           Version: 6.0.0                                    
-                           Outgoing License: Apache License 2.0              
-                           License File: CMSIS/NN/LICENSE                    
-                           Format: source code                               
-                           Description: A collection of efficient neural     
-                           network kernels developed to maximize the         
-                           performance and minimize the memory footprint of  
-                           neural networks on Arm Cortex-M processors.       
-                           Location: CMSIS/NN                                
-                           Origin: ARM (Apache-2.0) -                        
-                           https://github.com/ARM-software/CMSIS-NN/releases/
-                           tag/v6.0.0                                        
-
-CMSIS                      Name: CMSIS                                       
-                           Version: 6.1.0                                    
-                           Outgoing License: Apache License 2.0              
-                           License File: CMSIS/LICENSE.txt                   
-                           Format: source code                               
-                           Description: Vendor-independent hardware          
-                           abstraction layer for microcontrollers that are   
-                           based on Arm Cortex processors, distributed by    
-                           ARM. cores                                        
-                           Location: CMSIS/                                  
-                           Origin: ARM (Apache-2.0) -                        
-                           https://github.com/ARM-software/CMSIS_6/releases/t
-                           ag/v6.1.0                                         
-
-CMSIS_DSP                  Name: CMSIS_DSP                                   
-                           Version: 1.16.2                                   
-                           Outgoing License: Apache License 2.0              
-                           License File: CMSIS/DSP/LICENSE                   
-                           Format: source code                               
-                           Description: It provides optimized compute kernels
-                           for Cortex-M and for Cortex-A.                    
-                           Location: CMSIS/DSP                               
-                           Origin: ARM (Apache-2.0) -                        
-                           https://github.com/ARM-software/CMSIS-DSP/releases
-                           /tag/v1.16.2 ARM (MIT)                            
 
 unity                      Name: Unity                                       
                            Version: 2.1.0                                    

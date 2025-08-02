@@ -91,10 +91,10 @@ If the server is public on internet, the online service such as https://www.ssll
 can be used to get the information like supported ciphersuites, certification paths and protocol details.
 
 The output of mbedTLS debug messages to the console can be enabled by the following:
-    - define MBEDTLS_DEBUG_C macro in mbedTLS configuration file or on a project level,
-    - redefine MBEDTLS_DEBUG_THRESHOLD macro to a value between 0 (no output) to 4 (verbose output),
-    - optinally define MBEDTLS_SSL_DEBUG_ALL macro in mbedTLS configuration file or on a project level,
-    - and rebuild the project.
+  - define MBEDTLS_DEBUG_C macro in mbedTLS configuration file or on a project level,
+  - redefine MBEDTLS_DEBUG_THRESHOLD macro to a value between 0 (no output) to 4 (verbose output),
+  - optinally define MBEDTLS_SSL_DEBUG_ALL macro in mbedTLS configuration file or on a project level,
+  - and rebuild the project.
 
 ## Prepare the Demo
 1.  Connect a USB cable between the PC host and the OpenSDA(or USB to Serial) USB port on the target board.

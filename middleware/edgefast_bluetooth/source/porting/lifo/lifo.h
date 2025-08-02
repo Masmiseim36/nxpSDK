@@ -1,5 +1,5 @@
 /*
- * Copyright 2023,2025 NXP
+ * Copyright 2023 NXP
  * Copyright (c) 2016, Wind River Systems, Inc.
  *
  * SPDX-License-Identifier: Apache-2.0
@@ -9,10 +9,6 @@
 #define __EDGEFAST_BT_BLE_LIFO_H__
 
 #include <system_c.h>
-
-#ifdef __cplusplus
-extern "C" {
-#endif
 
 struct k_lifo {
 	struct k_queue _queue;
@@ -138,9 +134,5 @@ struct k_lifo {
 		Z_LIFO_INITIALIZER(name)
 
 /** @} */
-
-#ifdef __cplusplus
-}
-#endif
 
 #endif /* __EDGEFAST_BT_BLE_LIFO_H__ */

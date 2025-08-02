@@ -14,9 +14,6 @@ if(CMAKE_SCRIPT_MODE_FILE)
 endif()
 
 
-set(CMAKE_STATIC_LIBRARY_PREFIX)
-set(CMAKE_STATIC_LIBRARY_SUFFIX)
-
 set(CMAKE_EXECUTABLE_LIBRARY_PREFIX)
 set(CMAKE_EXECUTABLE_LIBRARY_SUFFIX)
 
@@ -57,6 +54,8 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../ncp_host_command_wifi.h"
 "${ProjDirPath}/../ncp_host_command_wifi.c"
 "${ProjDirPath}/../ncp_host_utils_wifi.h"
+"${ProjDirPath}/../ncp_wifi_api.h"
+"${ProjDirPath}/../ncp_wifi_api.c"
 "${ProjDirPath}/../ble/ncp_host_app_ble.c"
 "${ProjDirPath}/../ble/ncp_host_command_ble.h"
 "${ProjDirPath}/../ble/ncp_host_command_ble.c"
@@ -74,6 +73,9 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../otopcode.c"
 "${ProjDirPath}/../otopcode.h"
 "${ProjDirPath}/../otopcode_private.h"
+"${ProjDirPath}/../mbedtls_host.c"
+"${ProjDirPath}/../mbedtls_host.h"
+"${ProjDirPath}/../key_cert.h"
 "${ProjDirPath}/../ncp_cmd_common.h"
 "${ProjDirPath}/../ncp_intf_usb_host_cdc.c"
 "${ProjDirPath}/../ncp_intf_usb_host_cdc.h"
@@ -86,8 +88,10 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../ncp_intf_sdio_host.h"
 "${ProjDirPath}/../ncp_intf_spi_master.c"
 "${ProjDirPath}/../ncp_intf_spi_master.h"
-"${ProjDirPath}/../crc.c"
-"${ProjDirPath}/../crc.h"
+"${ProjDirPath}/../ncp_crc.c"
+"${ProjDirPath}/../ncp_crc.h"
+"${ProjDirPath}/../mbedtls_common.c"
+"${ProjDirPath}/../mbedtls_common.h"
 "${ProjDirPath}/../ncp_tlv_adapter.c"
 "${ProjDirPath}/../ncp_tlv_adapter.h"
 "${ProjDirPath}/../ncp_adapter.h"
@@ -99,6 +103,8 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../ncp_intf_pm.h"
 "${ProjDirPath}/../ncp_intf_uart.c"
 "${ProjDirPath}/../ncp_intf_uart.h"
+"${ProjDirPath}/../ncp_cmd_node.c"
+"${ProjDirPath}/../ncp_cmd_node.h"
 "${ProjDirPath}/../FreeRTOSConfigBoard.h"
 "${ProjDirPath}/../sdmmc_config.c"
 "${ProjDirPath}/../sdmmc_config.h"
@@ -124,10 +130,27 @@ target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
 )
 
 set_source_files_properties("${ProjDirPath}/../FreeRTOSConfig.h" PROPERTIES COMPONENT_CONFIG_FILE "middleware_freertos-kernel_config")
+set_source_files_properties("${ProjDirPath}/../usb_host_config.h" PROPERTIES COMPONENT_CONFIG_FILE "middleware_usb_host_ehci_config_header")
 set_source_files_properties("${ProjDirPath}/../sdmmc_config.c" PROPERTIES COMPONENT_CONFIG_FILE "middleware_sdmmc_usdhc_template")
 set_source_files_properties("${ProjDirPath}/../sdmmc_config.h" PROPERTIES COMPONENT_CONFIG_FILE "middleware_sdmmc_usdhc_template")
 set_source_files_properties("${ProjDirPath}/../FreeRTOSConfig_Gen.h" PROPERTIES COMPONENT_CONFIG_FILE "middleware_freertos-kernel_config")
 set_source_files_properties("${ProjDirPath}/../fsl_os_abstraction_config.h" PROPERTIES COMPONENT_CONFIG_FILE "component_osa_template_config")
+
+if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
+     target_compile_definitions(${MCUX_SDK_PROJECT_NAME}  PRIVATE $<$<COMPILE_LANGUAGE:C>:MBEDTLS_CONFIG_FILE="ksdk_mbedtls_config.h">)
+endif()
+
+if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
+     target_compile_definitions(${MCUX_SDK_PROJECT_NAME}  PRIVATE $<$<COMPILE_LANGUAGE:C>:MBEDTLS_CONFIG_FILE="ksdk_mbedtls_config.h">)
+endif()
+
+if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
+     target_compile_definitions(${MCUX_SDK_PROJECT_NAME}  PRIVATE $<$<COMPILE_LANGUAGE:CXX>:MBEDTLS_CONFIG_FILE="ksdk_mbedtls_config.h">)
+endif()
+
+if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
+     target_compile_definitions(${MCUX_SDK_PROJECT_NAME}  PRIVATE $<$<COMPILE_LANGUAGE:CXX>:MBEDTLS_CONFIG_FILE="ksdk_mbedtls_config.h">)
+endif()
 
 include(${SdkRootDirPath}/devices/MIMXRT1062/all_lib_device.cmake)
 

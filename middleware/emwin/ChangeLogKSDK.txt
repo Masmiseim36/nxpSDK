@@ -2,9 +2,7 @@
 @page middleware_log Middleware Change Log
 
 @section emwin emWin library
-  The currently supported version is 6.50_rev1
-  - v6.50_rev1
-    - added cm33_nodsp_nofpu libraries for Cortex M33 without DSP extension without FPU
+  The currently supported version is 6.50
   - v6.50
     - upgraded to v6.50
   - v6.46
@@ -14,7 +12,7 @@
   - v6.34c
     - upgraded to v6.34c
   - v6.28_rev1
-    - add cm33_nodsp_fpu libraries for Cortex M33 without DSP extension with SP FPU
+    - add cm33_nodsp_fpu libraries for Cortec M33 without DSP extension with SP FPU
   - v6.28
     - upgraded to v6.28
   - v6.24_rev2

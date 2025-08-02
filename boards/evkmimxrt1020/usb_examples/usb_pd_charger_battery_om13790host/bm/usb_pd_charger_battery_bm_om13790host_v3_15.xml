@@ -34,12 +34,12 @@
     <definition extID="component.lpi2c_adapter.MIMXRT1021"/>
     <definition extID="component.lpuart_adapter.MIMXRT1021"/>
     <definition extID="component.osa_template_config.MIMXRT1021"/>
-    <definition extID="component.osa_interface.MIMXRT1021"/>
     <definition extID="component.osa.MIMXRT1021"/>
     <definition extID="component.osa_bm.MIMXRT1021"/>
     <definition extID="middleware.usb.common_header.MIMXRT1021"/>
     <definition extID="middleware.usb.pd.phy.ptn5110.MIMXRT1021"/>
     <definition extID="middleware.usb.pd.MIMXRT1021"/>
+    <definition extID="middleware.usb_pd.config_header.MIMXRT1021"/>
     <definition extID="middleware.usb.phy.MIMXRT1021"/>
     <definition extID="iar"/>
     <definition extID="mdk"/>
@@ -51,7 +51,7 @@
     <definition extID="com.nxp.mcuxpresso.core.debug.support.segger.debug"/>
     <definition extID="com.nxp.mcuxpresso.core.debug.support.segger.release"/>
   </externalDefinitions>
-  <example id="evkmimxrt1020_usb_pd_charger_battery_bm_om13790host" name="usb_pd_charger_battery_bm_om13790host" device_core="core0_MIMXRT1021xxxxx" dependency="platform.drivers.xip_board.evkmimxrt1020.MIMXRT1021 platform.drivers.clock.MIMXRT1021 platform.drivers.iomuxc.MIMXRT1021 CMSIS_Include_core_cm.MIMXRT1021 device.MIMXRT1021_CMSIS.MIMXRT1021 device.MIMXRT1021_system.MIMXRT1021 device.MIMXRT1021_startup.MIMXRT1021 platform.drivers.xip_device.MIMXRT1021 platform.drivers.cache_armv7_m7.MIMXRT1021 platform.drivers.common.MIMXRT1021 platform.drivers.dcdc_1.MIMXRT1021 platform.drivers.dmamux.MIMXRT1021 platform.drivers.edma.MIMXRT1021 platform.drivers.gpc_1.MIMXRT1021 platform.drivers.gpt.MIMXRT1021 platform.drivers.igpio.MIMXRT1021 platform.drivers.lpi2c_edma.MIMXRT1021 platform.drivers.lpi2c.MIMXRT1021 platform.drivers.lpuart.MIMXRT1021 platform.drivers.pmu.MIMXRT1021 platform.drivers.src.MIMXRT1021 platform.utilities.assert_lite.MIMXRT1021 platform.utilities.misc_utilities.MIMXRT1021 component.lists.MIMXRT1021 utility.str.MIMXRT1021 utility.debug_console_lite.MIMXRT1021 component.igpio_adapter.MIMXRT1021 component.gpt_adapter.MIMXRT1021 component.i2c_adapter_interface.MIMXRT1021 component.lpi2c_adapter.MIMXRT1021 component.lpuart_adapter.MIMXRT1021 component.osa_template_config.MIMXRT1021 component.osa_interface.MIMXRT1021 component.osa.MIMXRT1021 component.osa_bm.MIMXRT1021 middleware.usb.common_header.MIMXRT1021 middleware.usb.pd.phy.ptn5110.MIMXRT1021 middleware.usb.pd.MIMXRT1021 middleware.usb.phy.MIMXRT1021" category="usb_examples">
+  <example id="evkmimxrt1020_usb_pd_charger_battery_bm_om13790host" name="usb_pd_charger_battery_bm_om13790host" device_core="core0_MIMXRT1021xxxxx" dependency="platform.drivers.xip_board.evkmimxrt1020.MIMXRT1021 platform.drivers.clock.MIMXRT1021 platform.drivers.iomuxc.MIMXRT1021 CMSIS_Include_core_cm.MIMXRT1021 device.MIMXRT1021_CMSIS.MIMXRT1021 device.MIMXRT1021_system.MIMXRT1021 device.MIMXRT1021_startup.MIMXRT1021 platform.drivers.xip_device.MIMXRT1021 platform.drivers.cache_armv7_m7.MIMXRT1021 platform.drivers.common.MIMXRT1021 platform.drivers.dcdc_1.MIMXRT1021 platform.drivers.dmamux.MIMXRT1021 platform.drivers.edma.MIMXRT1021 platform.drivers.gpc_1.MIMXRT1021 platform.drivers.gpt.MIMXRT1021 platform.drivers.igpio.MIMXRT1021 platform.drivers.lpi2c_edma.MIMXRT1021 platform.drivers.lpi2c.MIMXRT1021 platform.drivers.lpuart.MIMXRT1021 platform.drivers.pmu.MIMXRT1021 platform.drivers.src.MIMXRT1021 platform.utilities.assert_lite.MIMXRT1021 platform.utilities.misc_utilities.MIMXRT1021 component.lists.MIMXRT1021 utility.str.MIMXRT1021 utility.debug_console_lite.MIMXRT1021 component.igpio_adapter.MIMXRT1021 component.gpt_adapter.MIMXRT1021 component.i2c_adapter_interface.MIMXRT1021 component.lpi2c_adapter.MIMXRT1021 component.lpuart_adapter.MIMXRT1021 component.osa_template_config.MIMXRT1021 component.osa.MIMXRT1021 component.osa_bm.MIMXRT1021 middleware.usb.common_header.MIMXRT1021 middleware.usb.pd.phy.ptn5110.MIMXRT1021 middleware.usb.pd.MIMXRT1021 middleware.usb_pd.config_header.MIMXRT1021 middleware.usb.phy.MIMXRT1021" category="usb_examples">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -74,6 +74,7 @@
           <value>SDK_DEBUGCONSOLE=1</value>
           <value>MCUX_META_BUILD</value>
           <value>CPU_MIMXRT1021DAG5A</value>
+          <value>MIMXRT1021_SERIES</value>
           <value>OSA_USED</value>
           <value>TIMER_PORT_TYPE_GPT=1</value>
           <value>USE_RTOS=0</value>
@@ -185,7 +186,7 @@
       <files mask="evkmimxrt1020_ram.ini"/>
       <files mask="evkmimxrt1020_sdram_init.ini"/>
     </source>
-    <source path="." project_relative_path="evkmimxrt1020_om13790host/usb_examples/usb_pd_charger_battery/bm" type="binary">
+    <source path="." project_relative_path="evkmimxrt1020_om13790host/usb_examples/usb_pd_charger_battery_om13790host/bm" type="binary">
       <files mask="usb_pd_charger_battery_bm.bin" hidden="true"/>
     </source>
     <source path="." project_relative_path="source" type="src">
@@ -240,15 +241,16 @@
     </source>
     <source path="." project_relative_path="source" type="c_include" config="true">
       <files mask="fsl_os_abstraction_config.h"/>
+      <files mask="usb_pd_config.h"/>
     </source>
     <source path="." project_relative_path="source" type="c_preinclude">
       <files mask="mcux_config.h"/>
     </source>
-    <source path="." project_relative_path="source" type="c_include">
-      <files mask="usb_pd_config.h"/>
-    </source>
     <source path="." project_relative_path="doc" type="doc">
       <files mask="readme.md"/>
+    </source>
+    <source path="." project_relative_path="doc" type="doc">
+      <files mask="examples_shared_readme.md"/>
     </source>
   </example>
 </ksdk:examples>

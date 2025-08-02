@@ -244,9 +244,11 @@
           <state>USB_STACK_FREERTOS</state>
           <state>PRINTF_ADVANCED_ENABLE=1</state>
           <state>SDK_DEBUGCONSOLE=1</state>
+          <state>MYY=12</state>
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1042XJM5B</state>
+          <state>MIMXRT1042_SERIES</state>
           <state>OSA_USED</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>SDK_OS_FREE_RTOS</state>
@@ -378,21 +380,19 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/periph</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/xip</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/utilities</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/host</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/usb/config/host/ehci</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/host/class</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../../middleware/lwip/port</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/lwip/src</state>
           <state>$PROJ_DIR$/../../../../../../middleware/lwip/src/include</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/lwip</state>
           <state>$PROJ_DIR$/../../../../../../middleware/lwip/port/sys_arch/dynamic</state>
           <state>$PROJ_DIR$/../../../../../../middleware/lwip/contrib/apps/ping</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include</state>
@@ -583,6 +583,7 @@
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1042XJM5B</state>
+          <state>MIMXRT1042_SERIES</state>
           <state>OSA_USED</state>
         </option>
         <option>
@@ -683,21 +684,19 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/periph</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/xip</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/utilities</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/host</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/usb/config/host/ehci</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/host/class</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../../middleware/lwip/port</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/lwip/src</state>
           <state>$PROJ_DIR$/../../../../../../middleware/lwip/src/include</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/lwip</state>
           <state>$PROJ_DIR$/../../../../../../middleware/lwip/port/sys_arch/dynamic</state>
           <state>$PROJ_DIR$/../../../../../../middleware/lwip/contrib/apps/ping</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include</state>
@@ -1414,9 +1413,11 @@
           <state>USB_STACK_FREERTOS</state>
           <state>PRINTF_ADVANCED_ENABLE=1</state>
           <state>SDK_DEBUGCONSOLE=1</state>
+          <state>MYY=12</state>
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1042XJM5B</state>
+          <state>MIMXRT1042_SERIES</state>
           <state>OSA_USED</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>SDK_OS_FREE_RTOS</state>
@@ -1548,21 +1549,19 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/periph</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/xip</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/utilities</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/host</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/usb/config/host/ehci</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/host/class</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../../middleware/lwip/port</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/lwip/src</state>
           <state>$PROJ_DIR$/../../../../../../middleware/lwip/src/include</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/lwip</state>
           <state>$PROJ_DIR$/../../../../../../middleware/lwip/port/sys_arch/dynamic</state>
           <state>$PROJ_DIR$/../../../../../../middleware/lwip/contrib/apps/ping</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include</state>
@@ -1753,6 +1752,7 @@
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1042XJM5B</state>
+          <state>MIMXRT1042_SERIES</state>
           <state>OSA_USED</state>
         </option>
         <option>
@@ -1853,21 +1853,19 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/periph</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/xip</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/utilities</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/host</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/usb/config/host/ehci</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/host/class</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../../middleware/lwip/port</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/lwip/src</state>
           <state>$PROJ_DIR$/../../../../../../middleware/lwip/src/include</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/lwip</state>
           <state>$PROJ_DIR$/../../../../../../middleware/lwip/port/sys_arch/dynamic</state>
           <state>$PROJ_DIR$/../../../../../../middleware/lwip/contrib/apps/ping</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include</state>
@@ -2583,9 +2581,11 @@
           <state>USB_STACK_FREERTOS</state>
           <state>PRINTF_ADVANCED_ENABLE=1</state>
           <state>SDK_DEBUGCONSOLE=1</state>
+          <state>MYY=12</state>
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1042XJM5B</state>
+          <state>MIMXRT1042_SERIES</state>
           <state>OSA_USED</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>SDK_OS_FREE_RTOS</state>
@@ -2717,21 +2717,19 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/periph</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/xip</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/utilities</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/host</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/usb/config/host/ehci</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/host/class</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../../middleware/lwip/port</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/lwip/src</state>
           <state>$PROJ_DIR$/../../../../../../middleware/lwip/src/include</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/lwip</state>
           <state>$PROJ_DIR$/../../../../../../middleware/lwip/port/sys_arch/dynamic</state>
           <state>$PROJ_DIR$/../../../../../../middleware/lwip/contrib/apps/ping</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include</state>
@@ -2922,6 +2920,7 @@
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1042XJM5B</state>
+          <state>MIMXRT1042_SERIES</state>
           <state>OSA_USED</state>
         </option>
         <option>
@@ -3022,21 +3021,19 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/periph</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/xip</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/utilities</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/host</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/usb/config/host/ehci</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/host/class</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../../middleware/lwip/port</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/lwip/src</state>
           <state>$PROJ_DIR$/../../../../../../middleware/lwip/src/include</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/lwip</state>
           <state>$PROJ_DIR$/../../../../../../middleware/lwip/port/sys_arch/dynamic</state>
           <state>$PROJ_DIR$/../../../../../../middleware/lwip/contrib/apps/ping</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include</state>
@@ -3750,9 +3747,11 @@
           <state>USB_STACK_FREERTOS</state>
           <state>PRINTF_ADVANCED_ENABLE=1</state>
           <state>SDK_DEBUGCONSOLE=1</state>
+          <state>MYY=12</state>
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1042XJM5B</state>
+          <state>MIMXRT1042_SERIES</state>
           <state>OSA_USED</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>SDK_OS_FREE_RTOS</state>
@@ -3884,21 +3883,19 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/periph</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/xip</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/utilities</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/host</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/usb/config/host/ehci</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/host/class</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../../middleware/lwip/port</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/lwip/src</state>
           <state>$PROJ_DIR$/../../../../../../middleware/lwip/src/include</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/lwip</state>
           <state>$PROJ_DIR$/../../../../../../middleware/lwip/port/sys_arch/dynamic</state>
           <state>$PROJ_DIR$/../../../../../../middleware/lwip/contrib/apps/ping</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include</state>
@@ -4089,6 +4086,7 @@
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1042XJM5B</state>
+          <state>MIMXRT1042_SERIES</state>
           <state>OSA_USED</state>
         </option>
         <option>
@@ -4189,21 +4187,19 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/periph</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/xip</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/utilities</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/host</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/usb/config/host/ehci</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/host/class</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../../middleware/lwip/port</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/lwip/src</state>
           <state>$PROJ_DIR$/../../../../../../middleware/lwip/src/include</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/lwip</state>
           <state>$PROJ_DIR$/../../../../../../middleware/lwip/port/sys_arch/dynamic</state>
           <state>$PROJ_DIR$/../../../../../../middleware/lwip/contrib/apps/ping</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include</state>
@@ -4920,9 +4916,11 @@
           <state>USB_STACK_FREERTOS</state>
           <state>PRINTF_ADVANCED_ENABLE=1</state>
           <state>SDK_DEBUGCONSOLE=1</state>
+          <state>MYY=12</state>
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1042XJM5B</state>
+          <state>MIMXRT1042_SERIES</state>
           <state>OSA_USED</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>SDK_OS_FREE_RTOS</state>
@@ -5054,21 +5052,19 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/periph</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/xip</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/utilities</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/host</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/usb/config/host/ehci</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/host/class</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../../middleware/lwip/port</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/lwip/src</state>
           <state>$PROJ_DIR$/../../../../../../middleware/lwip/src/include</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/lwip</state>
           <state>$PROJ_DIR$/../../../../../../middleware/lwip/port/sys_arch/dynamic</state>
           <state>$PROJ_DIR$/../../../../../../middleware/lwip/contrib/apps/ping</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include</state>
@@ -5259,6 +5255,7 @@
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1042XJM5B</state>
+          <state>MIMXRT1042_SERIES</state>
           <state>OSA_USED</state>
         </option>
         <option>
@@ -5359,21 +5356,19 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/periph</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/xip</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/utilities</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/host</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/usb/config/host/ehci</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/host/class</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../../middleware/lwip/port</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/lwip/src</state>
           <state>$PROJ_DIR$/../../../../../../middleware/lwip/src/include</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/lwip</state>
           <state>$PROJ_DIR$/../../../../../../middleware/lwip/port/sys_arch/dynamic</state>
           <state>$PROJ_DIR$/../../../../../../middleware/lwip/contrib/apps/ping</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include</state>
@@ -6089,9 +6084,11 @@
           <state>USB_STACK_FREERTOS</state>
           <state>PRINTF_ADVANCED_ENABLE=1</state>
           <state>SDK_DEBUGCONSOLE=1</state>
+          <state>MYY=12</state>
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1042XJM5B</state>
+          <state>MIMXRT1042_SERIES</state>
           <state>OSA_USED</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>SDK_OS_FREE_RTOS</state>
@@ -6223,21 +6220,19 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/periph</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/xip</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/utilities</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/host</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/usb/config/host/ehci</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/host/class</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../../middleware/lwip/port</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/lwip/src</state>
           <state>$PROJ_DIR$/../../../../../../middleware/lwip/src/include</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/lwip</state>
           <state>$PROJ_DIR$/../../../../../../middleware/lwip/port/sys_arch/dynamic</state>
           <state>$PROJ_DIR$/../../../../../../middleware/lwip/contrib/apps/ping</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include</state>
@@ -6428,6 +6423,7 @@
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1042XJM5B</state>
+          <state>MIMXRT1042_SERIES</state>
           <state>OSA_USED</state>
         </option>
         <option>
@@ -6528,21 +6524,19 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/periph</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/xip</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/utilities</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/host</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/usb/config/host/ehci</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/host/class</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../../middleware/lwip/port</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/lwip/src</state>
           <state>$PROJ_DIR$/../../../../../../middleware/lwip/src/include</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/lwip</state>
           <state>$PROJ_DIR$/../../../../../../middleware/lwip/port/sys_arch/dynamic</state>
           <state>$PROJ_DIR$/../../../../../../middleware/lwip/contrib/apps/ping</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include</state>
@@ -7019,19 +7013,22 @@
       <name>$PROJ_DIR$/../lwip_dhcp_usb_freertos.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../lwipopts.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../FreeRTOSConfig.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../FreeRTOSConfigBoard.h</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../lwipopts.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../fsl_debug_console_conf.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../fsl_os_abstraction_config.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../lwipopts_gen.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../mcux_config.h</name>
@@ -7382,10 +7379,10 @@
   <group>
     <name>utilities</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/utilities/fsl_assert.h</name>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/utilities/debug_console/fsl_assert.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/utilities/fsl_assert.c</name>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/utilities/debug_console/fsl_assert.c</name>
     </file>
     <group>
       <name>str</name>
@@ -7447,13 +7444,13 @@
     <group>
       <name>osa</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction.h</name>
-      </file>
-      <file>
         <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction_free_rtos.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction_free_rtos.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction.h</name>
       </file>
     </group>
   </group>
@@ -8427,6 +8424,9 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../example_board_readme.md</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../examples_shared_readme.md</name>
     </file>
   </group>
 </project>

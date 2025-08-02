@@ -776,6 +776,7 @@ int32_t ParseInterBMotionInfoCabac (PWelsDecoderContext pCtx, PWelsNeighAvail pN
           if (pCtx->pParam->eEcActiveIdc != ERROR_CON_DISABLE) {
             iRef[listIdx] = 0;
             pCtx->iErrorCode |= dsBitstreamError;
+            RETURN_ERR_IF_NULL(pCtx->sRefPic.pRefList[listIdx][iRef[listIdx]]);
           } else {
             return GENERATE_ERROR_NO (ERR_LEVEL_MB_DATA, ERR_INFO_INVALID_REF_INDEX);
           }
@@ -813,6 +814,7 @@ int32_t ParseInterBMotionInfoCabac (PWelsDecoderContext pCtx, PWelsNeighAvail pN
             if (pCtx->pParam->eEcActiveIdc != ERROR_CON_DISABLE) {
               ref_idx = 0;
               pCtx->iErrorCode |= dsBitstreamError;
+              RETURN_ERR_IF_NULL(pCtx->sRefPic.pRefList[listIdx][ref_idx]);
             } else {
               return GENERATE_ERROR_NO (ERR_LEVEL_MB_DATA, ERR_INFO_INVALID_REF_INDEX);
             }
@@ -857,6 +859,7 @@ int32_t ParseInterBMotionInfoCabac (PWelsDecoderContext pCtx, PWelsNeighAvail pN
             if (pCtx->pParam->eEcActiveIdc != ERROR_CON_DISABLE) {
               ref_idx = 0;
               pCtx->iErrorCode |= dsBitstreamError;
+              RETURN_ERR_IF_NULL(pCtx->sRefPic.pRefList[listIdx][ref_idx]);
             } else {
               return GENERATE_ERROR_NO (ERR_LEVEL_MB_DATA, ERR_INFO_INVALID_REF_INDEX);
             }
@@ -991,6 +994,7 @@ int32_t ParseInterBMotionInfoCabac (PWelsDecoderContext pCtx, PWelsNeighAvail pN
               if (pCtx->pParam->eEcActiveIdc != ERROR_CON_DISABLE) {
                 iref = 0;
                 pCtx->iErrorCode |= dsBitstreamError;
+                RETURN_ERR_IF_NULL(pCtx->sRefPic.pRefList[listIdx][iref]);
               } else {
                 return GENERATE_ERROR_NO (ERR_LEVEL_MB_DATA, ERR_INFO_INVALID_REF_INDEX);
               }

@@ -25,9 +25,6 @@
 #  # description: Used to include slave core binary into master core binary.
 #  set(CONFIG_USE_utility_incbin true)
 
-#  # description: Utility debug_console Template Config
-#  set(CONFIG_USE_utility_debug_console_template_config true)
-
 #  # description: common Driver
 #  set(CONFIG_USE_driver_common true)
 
@@ -55,8 +52,8 @@
 #  # description: RTT template configuration
 #  set(CONFIG_USE_driver_rtt_template true)
 
-#  # description: Component software_rng_adapter
-#  set(CONFIG_USE_component_software_rng_adapter true)
+#  # description: Component rnga_adapter
+#  set(CONFIG_USE_component_rnga_adapter true)
 
 #  # description: Component reset_adapter
 #  set(CONFIG_USE_component_reset_adapter true)
@@ -144,6 +141,9 @@
 
 #  # description: Utility debug_console
 #  set(CONFIG_USE_utility_debug_console true)
+
+#  # description: Utility debug_console Template Config
+#  set(CONFIG_USE_utility_debug_console_template_config true)
 
 #  # description: Utility assert
 #  set(CONFIG_USE_utility_assert true)
@@ -271,12 +271,6 @@
 #  # description: FLEXIO SPI EDMA Driver
 #  set(CONFIG_USE_driver_flexio_spi_edma true)
 
-#  # description: FLEXIO MCULCD Driver
-#  set(CONFIG_USE_driver_flexio_mculcd true)
-
-#  # description: FLEXIO MCULCD EDMA Driver
-#  set(CONFIG_USE_driver_flexio_mculcd_edma true)
-
 #  # description: FLEXIO I2S Driver
 #  set(CONFIG_USE_driver_flexio_i2s true)
 
@@ -288,12 +282,6 @@
 
 #  # description: FLEXIO Driver
 #  set(CONFIG_USE_driver_flexio true)
-
-#  # description: FLEXIO Driver
-#  set(CONFIG_USE_driver_flexio_camera true)
-
-#  # description: FLEXIO CAMERA EDMA Driver
-#  set(CONFIG_USE_driver_flexio_camera_edma true)
 
 #  # description: EWM Driver
 #  set(CONFIG_USE_driver_ewm true)
@@ -355,14 +343,8 @@
 #  # description: Driver camera-receiver-common
 #  set(CONFIG_USE_driver_camera-receiver-common true)
 
-#  # description: Driver camera-receiver-flexio
-#  set(CONFIG_USE_driver_camera-receiver-flexio true)
-
 #  # description: Driver dbi
 #  set(CONFIG_USE_driver_dbi true)
-
-#  # description: Driver dbi_flexio_edma
-#  set(CONFIG_USE_driver_dbi_flexio_edma true)
 
 #  # description: Driver dc-fb-common
 #  set(CONFIG_USE_driver_dc-fb-common true)
@@ -463,6 +445,9 @@
 #  # description: Driver mma8652fc
 #  set(CONFIG_USE_driver_mma8652fc true)
 
+#  # description: Driver nmh1000
+#  set(CONFIG_USE_driver_nmh1000 true)
+
 #  # description: Driver p3t1755
 #  set(CONFIG_USE_driver_p3t1755 true)
 
@@ -471,6 +456,12 @@
 
 #  # description: SEGGER Real Time Transfer(RTT)
 #  set(CONFIG_USE_driver_rtt true)
+
+#  # description: Component rng_adapter_interface
+#  set(CONFIG_USE_component_rng_adapter_interface true)
+
+#  # description: Component software_rng_adapter
+#  set(CONFIG_USE_component_software_rng_adapter true)
 
 #  # description: Component trng_adapter
 #  set(CONFIG_USE_component_trng_adapter true)
@@ -519,6 +510,18 @@
 
 #  # description: Component i2c_adapter_interface
 #  set(CONFIG_USE_component_i2c_adapter_interface true)
+
+#  # description: Component i2c_mux_pca954x
+#  set(CONFIG_USE_component_i2c_mux_pca954x true)
+
+#  # description: Component enable_pca9544
+#  set(CONFIG_USE_component_enable_pca9544 true)
+
+#  # description: Component enable_pca9548
+#  set(CONFIG_USE_component_enable_pca9548 true)
+
+#  # description: Component at_least_one_i2c_mux_device_enabled
+#  set(CONFIG_USE_component_at_least_one_i2c_mux_device_enabled true)
 
 #  # description: Component igpio_adapter
 #  set(CONFIG_USE_component_igpio_adapter true)
@@ -675,6 +678,76 @@
 #  # description: CMSIS-RTOS2 RTX5 for Cortex-M, SC000, C300 and Armv8-M (Library)
 #  set(CONFIG_USE_CMSIS_RTOS2_RTX_LIB true)
 
+#set.middleware.mcu-boot
+#  # description: CMSIS cm7 headers
+#  set(CONFIG_USE_middleware_mcu-boot_CMSIS_cm7_headers true)
+
+#  # description: MCUBOOT microseconds sysclk
+#  set(CONFIG_USE_middleware_mcu-boot_drv_microseconds true)
+
+#  # description: MCUBOOT microseconds pit
+#  set(CONFIG_USE_middleware_mcu-boot_drv_microseconds_pit true)
+
+#  # description: MCUBOOT microseconds lpit
+#  set(CONFIG_USE_middleware_mcu-boot_drv_microseconds_lpit true)
+
+#  # description: Bootloader common sources
+#  set(CONFIG_USE_middleware_mcu-boot_bootsources true)
+
+#  # description: Bootloader startup sources
+#  set(CONFIG_USE_middleware_mcu-boot_src_startup true)
+
+#  # description: sdphost files
+#  set(CONFIG_USE_middleware_mcu-boot_sdphost true)
+
+#  # description: Bootloader usb device controller driver
+#  set(CONFIG_USE_middleware_mcu-boot_usb_device_controller_driver true)
+
+#  # description: Bootloader bm usb sources
+#  set(CONFIG_USE_middleware_mcu-boot_src_bm_usb_hid true)
+
+#  # description: MCUBOOT ocotp driver
+#  set(CONFIG_USE_middleware_mcu-boot_drv_ocotp true)
+
+#  # description: MCUBOOT flexspi nand driver
+#  set(CONFIG_USE_middleware_mcu-boot_drv_flexspi_nand true)
+
+#  # description: MCUBOOT spi nand memory interface
+#  set(CONFIG_USE_middleware_mcu-boot_mem_spi_nand true)
+
+#  # description: MCUBOOT edgelock driver
+#  set(CONFIG_USE_middleware_mcu-boot_drv_edgelock true)
+
+#  # description: MIMXRT1011 drivers
+#  set(CONFIG_USE_middleware_mcu-boot_MIMXRT1011_drivers true)
+
+#  # description: MCUBOOT MIMXRT1011 startup sources
+#  set(CONFIG_USE_middleware_mcu-boot_MIMXRT1011_startup true)
+
+#  # description: MCUBOOT MIMXRT1011 sources
+#  set(CONFIG_USE_middleware_mcu-boot_MIMXRT1011_sources true)
+
+#  # description: Middleware mcu-boot usb phy
+#  set(CONFIG_USE_middleware_mcu-boot_usb_phy true)
+
+#  # description: Middleware mcu-boot usb device common_header
+#  set(CONFIG_USE_middleware_mcu-boot_usb_device_common_header true)
+
+#  # description: Middleware mcu-boot usb device hid
+#  set(CONFIG_USE_middleware_mcu-boot_usb_device_hid true)
+
+#  # description: Middleware mcu-boot usb device stack
+#  set(CONFIG_USE_middleware_mcu-boot_usb_device_stack true)
+
+#  # description: Middleware mcu-boot usb device khci
+#  set(CONFIG_USE_middleware_mcu-boot_usb_device_khci true)
+
+#  # description: Middleware mcu-boot usb device msd
+#  set(CONFIG_USE_middleware_mcu-boot_usb_device_msd true)
+
+#  # description: Middleware mcu-boot usb common_header
+#  set(CONFIG_USE_middleware_mcu-boot_usb_common_header true)
+
 #set.middleware.tinycbor
 #  # description: Concise Binary Object Representation (CBOR) Library
 #  set(CONFIG_USE_middleware_tinycbor true)
@@ -682,6 +755,58 @@
 #set.middleware.pkcs11
 #  # description: Public Key Cryptography Standard #11 defines generic cryptographic token interface.
 #  set(CONFIG_USE_middleware_pkcs11 true)
+
+#set.middleware.mbedtls3x
+#  # description: mbedTLS Template with config files.
+#  set(CONFIG_USE_middleware_mbedtls3x_template true)
+
+#  # description: mbedTLS port library common files for MCUX
+#  set(CONFIG_USE_middleware_mbedtls3x_port_config true)
+
+#  # description: mbedTLS port library common files for MCUX
+#  set(CONFIG_USE_middleware_mbedtls3x_port_only_accelerator_config true)
+
+#  # description: mbedTLS port library common files for MCUX
+#  set(CONFIG_USE_middleware_mbedtls3x_port_psa_crypto_config true)
+
+#  # description: mbedTLS port library for hw initialization of trng
+#  set(CONFIG_USE_middleware_mbedtls3x_port_hw_init true)
+
+#  # description: mbedTLS port library for only_entropy sources
+#  set(CONFIG_USE_middleware_mbedtls3x_port_only_entropy true)
+
+#  # description: mbedTLS test suite
+#  set(CONFIG_USE_middleware_mbedtls3x_tests true)
+
+#  # description: mbedTLS crypto library without PSA
+#  set(CONFIG_USE_middleware_mbedtls3x_crypto_no_psa true)
+
+#  # description: mbedTLS X.509 library
+#  set(CONFIG_USE_middleware_mbedtls3x_x509 true)
+
+#  # description: mbedTLS 3rdparty p256-m
+#  set(CONFIG_USE_middleware_mbedtls3x_p256m true)
+
+#  # description: PSA ITS simulator over stdio files.
+#  set(CONFIG_USE_middleware_mbedtls3x_crypto_storage_default true)
+
+#  # description: PSA ITS simulator over objects in RAM.
+#  set(CONFIG_USE_middleware_mbedtls3x_crypto_storage_ram true)
+
+#  # description: mbedTLS crypto library
+#  set(CONFIG_USE_middleware_mbedtls3x_crypto true)
+
+#  # description: mbedTLS SSL library without PSA
+#  set(CONFIG_USE_middleware_mbedtls3x_ssl_no_psa true)
+
+#  # description: mbedTLS SSL library
+#  set(CONFIG_USE_middleware_mbedtls3x_ssl true)
+
+#  # description: mbedTLS library v3.x without PSA
+#  set(CONFIG_USE_middleware_mbedtls3x_no_psa true)
+
+#  # description: mbedTLS library v3.x
+#  set(CONFIG_USE_middleware_mbedtls3x true)
 
 #set.middleware.mbedtls
 #  # description: mbedTLS test suite
@@ -775,6 +900,52 @@
 #  # description: emWin library
 #  set(CONFIG_USE_middleware_emwin true)
 
+#set.component.psa_crypto_driver
+#  # description: Common files of PSA crypto driver for ele_s200
+#  set(CONFIG_USE_component_psa_crypto_driver_ele_s200_common true)
+
+#  # description: Transparent part of PSA crypto driver for ele_s200
+#  set(CONFIG_USE_component_psa_crypto_driver_ele_s200_transparent true)
+
+#  # description: Opaque part of PSA crypto driver for ele_s200
+#  set(CONFIG_USE_component_psa_crypto_driver_ele_s200_opaque true)
+
+#  # description: Common files of PSA crypto driver for els_pkc
+#  set(CONFIG_USE_component_psa_crypto_driver_els_pkc_common true)
+
+#  # description: Opaque part of PSA crypto driver for els_pkc
+#  set(CONFIG_USE_component_psa_crypto_driver_els_pkc_opaque true)
+
+#  # description: RW61x Oracle of PSA crypto driver for els_pkc
+#  set(CONFIG_USE_component_psa_crypto_driver_els_pkc_oracle_rw61x true)
+
+#  # description: MIMXRT Oracle of PSA crypto driver for els_pkc
+#  set(CONFIG_USE_component_psa_crypto_driver_els_pkc_oracle_mimxrt true)
+
+#  # description: MCXN Oracle of PSA crypto driver for els_pkc
+#  set(CONFIG_USE_component_psa_crypto_driver_els_pkc_oracle_mcxn true)
+
+#  # description: Transparent part of PSA crypto driver for els_pkc
+#  set(CONFIG_USE_component_psa_crypto_driver_els_pkc_transparent true)
+
+#  # description: Threading Alt implementation for mbedtls layer via PSA crypto driver
+#  set(CONFIG_USE_component_psa_crypto_driver_mbedtls_thread_alt true)
+
+#  # description: OS Abstraction Layer for PSA crypto driver
+#  set(CONFIG_USE_component_psa_crypto_driver_osal true)
+
+#  # description: psa_crypto_driver_trng usage compile option
+#  set(CONFIG_USE_component_psa_crypto_driver_use_trng_compile_option true)
+
+#  # description: PSA crypto driver for DCP
+#  set(CONFIG_USE_component_psa_crypto_driver_dcp true)
+
+#  # description: OS Abstraction Layer for PSA crypto driver on bare metal
+#  set(CONFIG_USE_component_psa_crypto_driver_osal_baremetal true)
+
+#  # description: OS Abstraction Layer for PSA crypto driver on FreeRTOS
+#  set(CONFIG_USE_component_psa_crypto_driver_osal_frtos true)
+
 #set.component.osa
 #  # description: Component osa template config
 #  set(CONFIG_USE_component_osa_template_config true)
@@ -788,9 +959,6 @@
 #  # description: Component osa_free_rtos
 #  set(CONFIG_USE_component_osa_free_rtos true)
 
-#  # description: Component osa interface
-#  set(CONFIG_USE_component_osa_interface true)
-
 #  # description: Component common_task
 #  set(CONFIG_USE_component_common_task true)
 
@@ -800,6 +968,12 @@
 
 #  # description: FreeRTOS NXP extension
 #  set(CONFIG_USE_middleware_freertos-kernel_extension true)
+
+#  # description: FreeRTOS NXP Newlib Reentrant
+#  set(CONFIG_USE_middleware_freertos-kernel_use_newlib_reentrant true)
+
+#  # description: FreeRTOS NXP Picolibc TLS
+#  set(CONFIG_USE_middleware_freertos-kernel_use_picolibc_tls true)
 
 #  # description: FreeRTOS heap 1
 #  set(CONFIG_USE_middleware_freertos-kernel_heap_1 true)
@@ -835,6 +1009,9 @@
 #  # description: Middleware usb_pd phy ptn5110
 #  set(CONFIG_USE_middleware_usb_pd_phy_ptn5110 true)
 
+#  # description: USB Type-C PD Stack
+#  set(CONFIG_USE_middleware_usb_pd_config_header true)
+
 #  # description: Middleware usb_pd compliance_test_report
 #  set(CONFIG_USE_middleware_usb_pd_compliance_test_report true)
 
@@ -847,6 +1024,9 @@
 
 #  # description: Middleware usb device ehci
 #  set(CONFIG_USE_middleware_usb_device_ehci true)
+
+#  # description: USB device ehci config header
+#  set(CONFIG_USE_middleware_usb_device_ehci_config_header true)
 
 #  # description: Middleware usb device controller driver
 #  set(CONFIG_USE_middleware_usb_device_controller_driver true)
@@ -896,11 +1076,17 @@
 #  # description: Middleware usb PHYDCD (Select manually if needed)
 #  set(CONFIG_USE_middleware_usb_phydcd true)
 
+#  # description: USB device phydcd config header
+#  set(CONFIG_USE_middleware_usb_phydcd_config_header true)
+
 #  # description: Middleware usb host common_header
 #  set(CONFIG_USE_middleware_usb_host_common_header true)
 
 #  # description: Middleware usb host ehci
 #  set(CONFIG_USE_middleware_usb_host_ehci true)
+
+#  # description: USB host ehci config header
+#  set(CONFIG_USE_middleware_usb_host_ehci_config_header true)
 
 #  # description: Middleware usb host stack
 #  set(CONFIG_USE_middleware_usb_host_stack true)
@@ -955,13 +1141,6 @@
 #  # description: FreeMASTER driver code for S12Z platform.
 #  set(CONFIG_USE_middleware_fmstr_platform_s12z true)
 
-#set.component.serial_mwm
-#  # description: Host driver middleware and API's for connecting to MW320 Wi-Fi co-processor with on-board TCP/IP stack
-#  set(CONFIG_USE_component_serial_mwm true)
-
-#  # description: LPUART port layer for Serial MWM
-#  set(CONFIG_USE_component_serial_mwm_lpuart true)
-
 list(APPEND CMAKE_MODULE_PATH
   ${CMAKE_CURRENT_LIST_DIR}/.
   ${CMAKE_CURRENT_LIST_DIR}/../../CMSIS/Core/Include
@@ -1000,6 +1179,7 @@ list(APPEND CMAKE_MODULE_PATH
   ${CMAKE_CURRENT_LIST_DIR}/../../components/flash/mflash
   ${CMAKE_CURRENT_LIST_DIR}/../../components/gpio
   ${CMAKE_CURRENT_LIST_DIR}/../../components/i2c
+  ${CMAKE_CURRENT_LIST_DIR}/../../components/i2c/muxes
   ${CMAKE_CURRENT_LIST_DIR}/../../components/led
   ${CMAKE_CURRENT_LIST_DIR}/../../components/lists
   ${CMAKE_CURRENT_LIST_DIR}/../../components/log
@@ -1010,6 +1190,7 @@ list(APPEND CMAKE_MODULE_PATH
   ${CMAKE_CURRENT_LIST_DIR}/../../components/pmic/pf1550
   ${CMAKE_CURRENT_LIST_DIR}/../../components/pmic/pf3000
   ${CMAKE_CURRENT_LIST_DIR}/../../components/pmic/pf5020
+  ${CMAKE_CURRENT_LIST_DIR}/../../components/psa_crypto_driver
   ${CMAKE_CURRENT_LIST_DIR}/../../components/reset
   ${CMAKE_CURRENT_LIST_DIR}/../../components/rng
   ${CMAKE_CURRENT_LIST_DIR}/../../components/rtt
@@ -1022,10 +1203,10 @@ list(APPEND CMAKE_MODULE_PATH
   ${CMAKE_CURRENT_LIST_DIR}/../../components/sensor/max30101
   ${CMAKE_CURRENT_LIST_DIR}/../../components/sensor/mma8451q
   ${CMAKE_CURRENT_LIST_DIR}/../../components/sensor/mma8652fc
+  ${CMAKE_CURRENT_LIST_DIR}/../../components/sensor/nmh1000
   ${CMAKE_CURRENT_LIST_DIR}/../../components/sensor/p3t1755
   ${CMAKE_CURRENT_LIST_DIR}/../../components/sensor/tsl2561
   ${CMAKE_CURRENT_LIST_DIR}/../../components/serial_manager
-  ${CMAKE_CURRENT_LIST_DIR}/../../components/serial_mwm
   ${CMAKE_CURRENT_LIST_DIR}/../../components/spi
   ${CMAKE_CURRENT_LIST_DIR}/../../components/timer
   ${CMAKE_CURRENT_LIST_DIR}/../../components/timer_manager
@@ -1048,11 +1229,9 @@ list(APPEND CMAKE_MODULE_PATH
   ${CMAKE_CURRENT_LIST_DIR}/../../components/video/camera/device/ov7725
   ${CMAKE_CURRENT_LIST_DIR}/../../components/video/camera/device/sccb
   ${CMAKE_CURRENT_LIST_DIR}/../../components/video/camera/receiver
-  ${CMAKE_CURRENT_LIST_DIR}/../../components/video/camera/receiver/flexio
   ${CMAKE_CURRENT_LIST_DIR}/../../components/video/display
   ${CMAKE_CURRENT_LIST_DIR}/../../components/video/display/adv7535
   ${CMAKE_CURRENT_LIST_DIR}/../../components/video/display/dbi
-  ${CMAKE_CURRENT_LIST_DIR}/../../components/video/display/dbi/flexio
   ${CMAKE_CURRENT_LIST_DIR}/../../components/video/display/dc
   ${CMAKE_CURRENT_LIST_DIR}/../../components/video/display/dc/dbi
   ${CMAKE_CURRENT_LIST_DIR}/../../components/video/display/dc/ssd1963
@@ -1078,6 +1257,8 @@ list(APPEND CMAKE_MODULE_PATH
   ${CMAKE_CURRENT_LIST_DIR}/../../middleware/lvgl/demos/transform
   ${CMAKE_CURRENT_LIST_DIR}/../../middleware/lvgl/demos/widgets
   ${CMAKE_CURRENT_LIST_DIR}/../../middleware/mbedtls
+  ${CMAKE_CURRENT_LIST_DIR}/../../middleware/mbedtls3x
+  ${CMAKE_CURRENT_LIST_DIR}/../../middleware/mcu_bootloader
   ${CMAKE_CURRENT_LIST_DIR}/../../middleware/pkcs11
   ${CMAKE_CURRENT_LIST_DIR}/../../middleware/tinycbor
   ${CMAKE_CURRENT_LIST_DIR}/../../middleware/usb
@@ -1087,6 +1268,7 @@ list(APPEND CMAKE_MODULE_PATH
   ${CMAKE_CURRENT_LIST_DIR}/project_template
   ${CMAKE_CURRENT_LIST_DIR}/template
   ${CMAKE_CURRENT_LIST_DIR}/utilities
+  ${CMAKE_CURRENT_LIST_DIR}/utilities/debug_console
   ${CMAKE_CURRENT_LIST_DIR}/utilities/debug_console_lite
   ${CMAKE_CURRENT_LIST_DIR}/utilities/incbin
   ${CMAKE_CURRENT_LIST_DIR}/utilities/shell
@@ -1119,6 +1301,7 @@ include_if_use(CMSIS_RTOS2_RTX_LIB)
 include_if_use(board_boot_header)
 include_if_use(board_project_template)
 include_if_use(component_ak4497_adapter.MIMXRT1011)
+include_if_use(component_at_least_one_i2c_mux_device_enabled.MIMXRT1011)
 include_if_use(component_audio_sai_edma_adapter.MIMXRT1011)
 include_if_use(component_button.MIMXRT1011)
 include_if_use(component_codec_adapters.MIMXRT1011)
@@ -1127,12 +1310,15 @@ include_if_use(component_common_task)
 include_if_use(component_cs42448_adapter.MIMXRT1011)
 include_if_use(component_cs42888_adapter.MIMXRT1011)
 include_if_use(component_da7212_adapter.MIMXRT1011)
+include_if_use(component_enable_pca9544.MIMXRT1011)
+include_if_use(component_enable_pca9548.MIMXRT1011)
 include_if_use(component_exception_handling_cm7.MIMXRT1011)
 include_if_use(component_flash_nand_flexspi.MIMXRT1011)
 include_if_use(component_flash_nor_flexspi.MIMXRT1011)
 include_if_use(component_flash_nor_lpspi.MIMXRT1011)
 include_if_use(component_gpt_adapter.MIMXRT1011)
 include_if_use(component_i2c_adapter_interface.MIMXRT1011)
+include_if_use(component_i2c_mux_pca954x.MIMXRT1011)
 include_if_use(component_igpio_adapter.MIMXRT1011)
 include_if_use(component_led.MIMXRT1011)
 include_if_use(component_lists.MIMXRT1011)
@@ -1153,21 +1339,35 @@ include_if_use(component_mflash_onchip.MIMXRT1011)
 include_if_use(component_osa)
 include_if_use(component_osa_bm)
 include_if_use(component_osa_free_rtos)
-include_if_use(component_osa_interface)
 include_if_use(component_osa_template_config)
 include_if_use(component_panic.MIMXRT1011)
 include_if_use(component_pcm186x_adapter.MIMXRT1011)
 include_if_use(component_pcm512x_adapter.MIMXRT1011)
 include_if_use(component_pit_adapter.MIMXRT1011)
+include_if_use(component_psa_crypto_driver_dcp)
+include_if_use(component_psa_crypto_driver_ele_s200_common)
+include_if_use(component_psa_crypto_driver_ele_s200_opaque)
+include_if_use(component_psa_crypto_driver_ele_s200_transparent)
+include_if_use(component_psa_crypto_driver_els_pkc_common)
+include_if_use(component_psa_crypto_driver_els_pkc_opaque)
+include_if_use(component_psa_crypto_driver_els_pkc_oracle_mcxn)
+include_if_use(component_psa_crypto_driver_els_pkc_oracle_mimxrt)
+include_if_use(component_psa_crypto_driver_els_pkc_oracle_rw61x)
+include_if_use(component_psa_crypto_driver_els_pkc_transparent)
+include_if_use(component_psa_crypto_driver_mbedtls_thread_alt)
+include_if_use(component_psa_crypto_driver_osal)
+include_if_use(component_psa_crypto_driver_osal_baremetal)
+include_if_use(component_psa_crypto_driver_osal_frtos)
+include_if_use(component_psa_crypto_driver_use_trng_compile_option)
 include_if_use(component_reset_adapter.MIMXRT1011)
+include_if_use(component_rng_adapter_interface.MIMXRT1011)
+include_if_use(component_rnga_adapter.MIMXRT1011)
 include_if_use(component_serial_manager.MIMXRT1011)
 include_if_use(component_serial_manager_spi.MIMXRT1011)
 include_if_use(component_serial_manager_swo.MIMXRT1011)
 include_if_use(component_serial_manager_uart.MIMXRT1011)
 include_if_use(component_serial_manager_usb_cdc.MIMXRT1011)
 include_if_use(component_serial_manager_virtual.MIMXRT1011)
-include_if_use(component_serial_mwm)
-include_if_use(component_serial_mwm_lpuart)
 include_if_use(component_sgtl_adapter.MIMXRT1011)
 include_if_use(component_software_crc_adapter.MIMXRT1011)
 include_if_use(component_software_rng_adapter.MIMXRT1011)
@@ -1201,7 +1401,6 @@ include_if_use(driver_camera-device-ov7670.MIMXRT1011)
 include_if_use(driver_camera-device-ov7725.MIMXRT1011)
 include_if_use(driver_camera-device-sccb.MIMXRT1011)
 include_if_use(driver_camera-receiver-common.MIMXRT1011)
-include_if_use(driver_camera-receiver-flexio.MIMXRT1011)
 include_if_use(driver_clock.MIMXRT1011)
 include_if_use(driver_cmsis_lpi2c.MIMXRT1011)
 include_if_use(driver_cmsis_lpspi.MIMXRT1011)
@@ -1211,7 +1410,6 @@ include_if_use(driver_common.MIMXRT1011)
 include_if_use(driver_cs42448.MIMXRT1011)
 include_if_use(driver_cs42888.MIMXRT1011)
 include_if_use(driver_dbi.MIMXRT1011)
-include_if_use(driver_dbi_flexio_edma.MIMXRT1011)
 include_if_use(driver_dc-fb-common.MIMXRT1011)
 include_if_use(driver_dc-fb-dbi.MIMXRT1011)
 include_if_use(driver_dc-fb-ssd1963.MIMXRT1011)
@@ -1229,13 +1427,9 @@ include_if_use(driver_ektf2k.MIMXRT1011)
 include_if_use(driver_ewm.MIMXRT1011)
 include_if_use(driver_fbdev.MIMXRT1011)
 include_if_use(driver_flexio.MIMXRT1011)
-include_if_use(driver_flexio_camera.MIMXRT1011)
-include_if_use(driver_flexio_camera_edma.MIMXRT1011)
 include_if_use(driver_flexio_i2c_master.MIMXRT1011)
 include_if_use(driver_flexio_i2s.MIMXRT1011)
 include_if_use(driver_flexio_i2s_edma.MIMXRT1011)
-include_if_use(driver_flexio_mculcd.MIMXRT1011)
-include_if_use(driver_flexio_mculcd_edma.MIMXRT1011)
 include_if_use(driver_flexio_spi.MIMXRT1011)
 include_if_use(driver_flexio_spi_edma.MIMXRT1011)
 include_if_use(driver_flexio_uart.MIMXRT1011)
@@ -1275,6 +1469,7 @@ include_if_use(driver_mma8451q.MIMXRT1011)
 include_if_use(driver_mma8652fc.MIMXRT1011)
 include_if_use(driver_mx25r_flash.MIMXRT1011)
 include_if_use(driver_nic301.MIMXRT1011)
+include_if_use(driver_nmh1000.MIMXRT1011)
 include_if_use(driver_ocotp.MIMXRT1011)
 include_if_use(driver_otfad.MIMXRT1011)
 include_if_use(driver_p3t1755.MIMXRT1011)
@@ -1342,6 +1537,8 @@ include_if_use(middleware_freertos-kernel_heap_4)
 include_if_use(middleware_freertos-kernel_heap_5)
 include_if_use(middleware_freertos-kernel_mpu_wrappers)
 include_if_use(middleware_freertos-kernel_mpu_wrappers_v2)
+include_if_use(middleware_freertos-kernel_use_newlib_reentrant)
+include_if_use(middleware_freertos-kernel_use_picolibc_tls)
 include_if_use(middleware_libjpeg)
 include_if_use(middleware_libjpeg_template)
 include_if_use(middleware_llhttp)
@@ -1358,9 +1555,49 @@ include_if_use(middleware_lvgl_demo_transform)
 include_if_use(middleware_lvgl_demo_widgets)
 include_if_use(middleware_lvgl_template)
 include_if_use(middleware_mbedtls)
+include_if_use(middleware_mbedtls3x)
+include_if_use(middleware_mbedtls3x_crypto)
+include_if_use(middleware_mbedtls3x_crypto_no_psa)
+include_if_use(middleware_mbedtls3x_crypto_storage_default)
+include_if_use(middleware_mbedtls3x_crypto_storage_ram)
+include_if_use(middleware_mbedtls3x_no_psa)
+include_if_use(middleware_mbedtls3x_p256m)
+include_if_use(middleware_mbedtls3x_port_config)
+include_if_use(middleware_mbedtls3x_port_hw_init)
+include_if_use(middleware_mbedtls3x_port_only_accelerator_config)
+include_if_use(middleware_mbedtls3x_port_only_entropy)
+include_if_use(middleware_mbedtls3x_port_psa_crypto_config)
+include_if_use(middleware_mbedtls3x_ssl)
+include_if_use(middleware_mbedtls3x_ssl_no_psa)
+include_if_use(middleware_mbedtls3x_template)
+include_if_use(middleware_mbedtls3x_tests)
+include_if_use(middleware_mbedtls3x_x509)
 include_if_use(middleware_mbedtls_3rdparty)
 include_if_use(middleware_mbedtls_port_ksdk)
 include_if_use(middleware_mbedtls_tests)
+include_if_use(middleware_mcu-boot_CMSIS_cm7_headers)
+include_if_use(middleware_mcu-boot_MIMXRT1011_drivers)
+include_if_use(middleware_mcu-boot_MIMXRT1011_sources)
+include_if_use(middleware_mcu-boot_MIMXRT1011_startup)
+include_if_use(middleware_mcu-boot_bootsources)
+include_if_use(middleware_mcu-boot_drv_edgelock)
+include_if_use(middleware_mcu-boot_drv_flexspi_nand)
+include_if_use(middleware_mcu-boot_drv_microseconds)
+include_if_use(middleware_mcu-boot_drv_microseconds_lpit)
+include_if_use(middleware_mcu-boot_drv_microseconds_pit)
+include_if_use(middleware_mcu-boot_drv_ocotp)
+include_if_use(middleware_mcu-boot_mem_spi_nand)
+include_if_use(middleware_mcu-boot_sdphost)
+include_if_use(middleware_mcu-boot_src_bm_usb_hid)
+include_if_use(middleware_mcu-boot_src_startup)
+include_if_use(middleware_mcu-boot_usb_common_header)
+include_if_use(middleware_mcu-boot_usb_device_common_header)
+include_if_use(middleware_mcu-boot_usb_device_controller_driver)
+include_if_use(middleware_mcu-boot_usb_device_hid)
+include_if_use(middleware_mcu-boot_usb_device_khci)
+include_if_use(middleware_mcu-boot_usb_device_msd)
+include_if_use(middleware_mcu-boot_usb_device_stack)
+include_if_use(middleware_mcu-boot_usb_phy)
 include_if_use(middleware_pkcs11)
 include_if_use(middleware_tinycbor)
 include_if_use(middleware_usb_common_header)
@@ -1373,6 +1610,7 @@ include_if_use(middleware_usb_device_common_header)
 include_if_use(middleware_usb_device_controller_driver)
 include_if_use(middleware_usb_device_dfu)
 include_if_use(middleware_usb_device_ehci)
+include_if_use(middleware_usb_device_ehci_config_header)
 include_if_use(middleware_usb_device_hid)
 include_if_use(middleware_usb_device_msd)
 include_if_use(middleware_usb_device_mtp)
@@ -1386,6 +1624,7 @@ include_if_use(middleware_usb_host_cdc_ecm)
 include_if_use(middleware_usb_host_cdc_rndis)
 include_if_use(middleware_usb_host_common_header)
 include_if_use(middleware_usb_host_ehci)
+include_if_use(middleware_usb_host_ehci_config_header)
 include_if_use(middleware_usb_host_hid)
 include_if_use(middleware_usb_host_msd)
 include_if_use(middleware_usb_host_phdc)
@@ -1395,9 +1634,11 @@ include_if_use(middleware_usb_host_video)
 include_if_use(middleware_usb_pd)
 include_if_use(middleware_usb_pd_altmode)
 include_if_use(middleware_usb_pd_compliance_test_report)
+include_if_use(middleware_usb_pd_config_header)
 include_if_use(middleware_usb_pd_phy_ptn5110)
 include_if_use(middleware_usb_phy)
 include_if_use(middleware_usb_phydcd)
+include_if_use(middleware_usb_phydcd_config_header)
 include_if_use(utilities_misc_utilities.MIMXRT1011)
 include_if_use(utility_assert.MIMXRT1011)
 include_if_use(utility_assert_lite.MIMXRT1011)

@@ -266,6 +266,11 @@
 #define MEMP_NUM_NETBUF 16
 #endif
 
+/** Specify the idle timeout (in seconds) after that the test fails */
+#ifndef LWIPERF_MAX_IDLE_SEC
+#define LWIPERF_MAX_IDLE_SEC    50U
+#endif
+
 /**
  * MEMP_NUM_NETCONN: the number of struct netconns.
  * (only needed if you use the sequential API, like api_lib.c)
@@ -522,7 +527,12 @@ u32_t lwip_rand(void);
 
 #ifndef LWIP_HOOK_FILENAME
 #define LWIP_HOOK_FILENAME "lwiphooks.h"
+#endif
+
+#if CONFIG_CLOUD_KEEP_ALIVE
 #define LWIP_HOOK_TCP_OUT_ADD_TCPOPTS(p, hdr, pcb, opts) lwip_hook_tcp_out_add_tcpopts(p, hdr, pcb, opts)
 #endif
+
+#define LWIP_HOOK_IP4_ROUTE_SRC(src, dest) lwip_hook_ip4_route_src(src, dest)
 
 #endif /* __LWIPOPTS_H__ */

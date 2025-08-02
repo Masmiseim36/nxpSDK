@@ -14,9 +14,6 @@ if(CMAKE_SCRIPT_MODE_FILE)
 endif()
 
 
-set(CMAKE_STATIC_LIBRARY_PREFIX)
-set(CMAKE_STATIC_LIBRARY_SUFFIX)
-
 set(CMAKE_EXECUTABLE_LIBRARY_PREFIX)
 set(CMAKE_EXECUTABLE_LIBRARY_SUFFIX)
 
@@ -50,7 +47,6 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../socket_task.c"
 "${ProjDirPath}/../socket_task.h"
 "${ProjDirPath}/../lwip_ipv4_ipv6_echo_freertos.c"
-"${ProjDirPath}/../lwipopts.h"
 "${ProjDirPath}/../board.h"
 "${ProjDirPath}/../board.c"
 "${ProjDirPath}/../clock_config.h"
@@ -59,8 +55,11 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../pin_mux.h"
 "${ProjDirPath}/../hardware_init.c"
 "${ProjDirPath}/../app.h"
+"${ProjDirPath}/../lwipopts.h"
 "${ProjDirPath}/../FreeRTOSConfig_Gen.h"
 "${ProjDirPath}/../fsl_debug_console_conf.h"
+"${ProjDirPath}/../fsl_os_abstraction_config.h"
+"${ProjDirPath}/../lwipopts_gen.h"
 "${ProjDirPath}/../mcux_config.h"
 )
 
@@ -69,6 +68,7 @@ target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
 )
 
 set_source_files_properties("${ProjDirPath}/../FreeRTOSConfig_Gen.h" PROPERTIES COMPONENT_CONFIG_FILE "middleware_freertos-kernel_config")
+set_source_files_properties("${ProjDirPath}/../fsl_os_abstraction_config.h" PROPERTIES COMPONENT_CONFIG_FILE "component_osa_template_config")
 
 include(${SdkRootDirPath}/devices/MIMXRT1024/all_lib_device.cmake)
 

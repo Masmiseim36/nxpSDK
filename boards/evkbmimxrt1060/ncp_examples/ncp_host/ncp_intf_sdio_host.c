@@ -39,6 +39,14 @@
 #define NCP_SDIO_DEVICE_STATUS_PRE_SLEEP 2
 #define NCP_SDIO_DEVICE_STATUS_SLEEP     3
 
+#define NCP_SDIO_DEVICE_PM0           (0U)
+#define NCP_SDIO_DEVICE_PM1           (1U)
+#define NCP_SDIO_DEVICE_PM2           (2U)
+#define NCP_SDIO_DEVICE_PM3           (3U)
+
+#define SDIO_SLEEP_HS_DONE 1U
+#define SDIO_RESET_DONE 2U
+
 /*! @brief SD power reset */
 #define BOARD_SDMMC_SD_POWER_RESET_GPIO_BASE GPIO1
 //#define BOARD_SDMMC_SD_POWER_RESET_GPIO_PORT 1
@@ -284,6 +292,8 @@ typedef struct _sdhost_ctrl
 } sdhost_ctrl_t;
 
 static sdhost_ctrl_t sdhost_ctrl;
+static bool cmd_sent = false;
+static bool data_sent = false;
 
 static uint32_t txportno;
 
@@ -625,6 +635,7 @@ void sdio_host_save_recv_data(uint8_t *recv_data, uint32_t packet_len)
     //memcpy((uint8_t *)&mcu_response_buff[0], recv_data, packet_len);
     sdio_rx_len += packet_len;
 
+    ncp_adap_d("[%s] packet_len=%u sdio_rx_len=%u NCP_CMD_HEADER_LEN=%u", __func__, packet_len, sdio_rx_len, NCP_CMD_HEADER_LEN);
     if (sdio_rx_len >= NCP_CMD_HEADER_LEN)
     {
         sdio_transfer_len =
@@ -637,6 +648,7 @@ void sdio_host_save_recv_data(uint8_t *recv_data, uint32_t packet_len)
          NCP_SDIO_STATS_INC(err);
     }
 
+    ncp_adap_d("[%s] sdio_transfer_len=%u", __func__, sdio_transfer_len);
     if ((sdio_rx_len >= sdio_transfer_len) && (sdio_transfer_len >= NCP_CMD_HEADER_LEN))
     {
         ncp_adap_d("recv data len: %d ", sdio_transfer_len);
@@ -780,6 +792,7 @@ ncp_status_t sdhost_process_int_status(void)
     sdhost_interrupt();
 
     uint8_t sdio_ireg = g_sdio_ireg;
+    ncp_adap_d("%s: g_sdio_ireg=0x%x", __FUNCTION__, g_sdio_ireg);
     g_sdio_ireg       = 0;
 
     if (!sdio_ireg)
@@ -788,13 +801,16 @@ ncp_status_t sdhost_process_int_status(void)
     }
 
     /* check the command port */
-    /*if ((sdio_ireg & DN_LD_CMD_PORT_HOST_INT_STATUS) != 0U)
+    if ((sdio_ireg & DN_LD_CMD_PORT_HOST_INT_STATUS) != 0U)
     {
-        ncp_adap_d("cmd sent");
-    }*/
+        ncp_adap_d("DN_LD_CMD_PORT_HOST_INT_STATUS");
+        //ncp_adap_d("cmd sent");
+        cmd_sent = false;
+    }
 
     if ((sdio_ireg & UP_LD_CMD_PORT_HOST_INT_STATUS) != 0U)
     {
+        ncp_adap_d("UP_LD_CMD_PORT_HOST_INT_STATUS");
         /* read the len of control packet */
         rx_len = ((uint32_t)sdhost_ctrl.mp_regs[cmd_rd_len_1]) << 8;
         rx_len |= (uint32_t)sdhost_ctrl.mp_regs[cmd_rd_len_0];
@@ -820,15 +836,18 @@ ncp_status_t sdhost_process_int_status(void)
      */
     if ((sdio_ireg & DN_LD_HOST_INT_STATUS) != 0U)
     {
+        ncp_adap_d("DN_LD_HOST_INT_STATUS");
         sdhost_ctrl.mp_wr_bitmap = (uint32_t)sdhost_ctrl.mp_regs[WR_BITMAP_L];
         sdhost_ctrl.mp_wr_bitmap |= ((uint32_t)sdhost_ctrl.mp_regs[WR_BITMAP_U]) << 8;
         sdhost_ctrl.mp_wr_bitmap |= ((uint32_t)sdhost_ctrl.mp_regs[WR_BITMAP_1L]) << 16;
         sdhost_ctrl.mp_wr_bitmap |= ((uint32_t)sdhost_ctrl.mp_regs[WR_BITMAP_1U]) << 24;
         //ncp_adap_d("data sent");
+        data_sent = false;
     }
 
     if ((sdio_ireg & UP_LD_HOST_INT_STATUS) != 0U)
     {
+        ncp_adap_d("UP_LD_HOST_INT_STATUS");
         /* This means there is data to be read */
         handle_sdio_packet_read();
     }
@@ -929,6 +948,29 @@ static void BOARD_SD_Enable(bool enable)
     }
 }
 
+static bool sdio_set_host_reset_done(uint32_t retry_cnt)
+{
+    uint32_t resp = 0;
+    bool ret = false;
+
+    do {
+        /* Set Scratch Reg 0xFD to 2, let device know reset done */
+        ret = sdio_drv_creg_write(0xFD, 1, SDIO_RESET_DONE, &resp);
+        if (ret != true)
+        {
+            ncp_adap_d("%s: SDIO Write 0xFD to %u FAIL", __FUNCTION__, SDIO_RESET_DONE);
+            OSA_TimeDelay(1000);
+        }
+        retry_cnt--;
+    } while ((ret != true) && retry_cnt > 0);
+    if (ret != true)
+    {
+        ncp_adap_e("%s: SDIO Write 0xFD to %u ERR", __FUNCTION__, SDIO_SLEEP_HS_DONE);
+        return false;
+    }
+    return true;
+}
+
 static void sdio_controller_init(void)
 {
     (void)memset(&g_sdio_card, 0, sizeof(sdio_card_t));
@@ -951,6 +993,7 @@ static ncp_status_t sdio_card_init(void)
         ncp_adap_e("Failed to init sdio host");
         return NCP_STATUS_ERROR;
     }
+    ncp_adap_d("%s: SDIO_HostInit success", __FUNCTION__);
 
     /* Switch to 1.8V */
     if ((g_sdio_card.usrParam.ioVoltage != NULL) && (g_sdio_card.usrParam.ioVoltage->type == kSD_IOVoltageCtrlByGpio))
@@ -976,8 +1019,25 @@ static ncp_status_t sdio_card_init(void)
     ret = SDIO_CardInit(&g_sdio_card);
     if (ret != kStatus_Success)
     {
+        ncp_adap_e("%s: SDIO_CardInit fail ret=0x%x", __FUNCTION__, ret);
         return NCP_STATUS_ERROR;
     }
+    ncp_adap_d("%s: SDIO_CardInit success", __FUNCTION__);
+
+    if (sdio_set_host_reset_done(10) != true)
+    {
+        ncp_adap_e("%s: sdio_set_host_reset_done fail ret=%d", __FUNCTION__);
+        return NCP_STATUS_ERROR;
+    }
+    ncp_adap_d("%s: sdio_set_host_reset_done success", __FUNCTION__);
+
+    if (sdio_card_ready_wait(1000) != true)
+    {
+        ncp_adap_e("%s: SDIO slave not ready", __FUNCTION__);
+        return NCP_STATUS_ERROR;
+    }
+    ncp_adap_d("%s: SDIO slave ready", __FUNCTION__);
+    OSA_TimeDelay(100);
 
     uint32_t resp;
 
@@ -1084,8 +1144,11 @@ static ncp_status_t ncp_sdhost_CardInit(void)
         ncp_adap_e("Failed to init sdio host driver");
         return NCP_STATUS_ERROR;
     }
+    ncp_adap_d("sdio_hostInit done");
 
     ret = sdio_ioport_init();
+    ncp_adap_d("sdio_ioport_init done");
+
     if (ret == NCP_STATUS_SUCCESS)
     {
         if (sdio_card_ready_wait(1000) != true)
@@ -1100,6 +1163,7 @@ static ncp_status_t ncp_sdhost_CardInit(void)
     }
 
     ret = sdio_post_init();
+    ncp_adap_d("sdio_post_init done");
 
     return NCP_STATUS_SUCCESS;
 }
@@ -1124,19 +1188,43 @@ void sdhost_rescan_set_event(osa_event_flags_t flagsToWait)
 
 void sdhost_rescan_task(void *argv)
 {
+    uint32_t resp = 0;
+    uint8_t pm_state = 0;
+    int ret = 0;
+
     for (;;)
     {
         (void)sdhost_rescan_wait_event(SDHOST_RESCAN_START);
 
+        OSA_TimeDelay(100);
+        /* Read PM mode from device */
+        ret = sdio_drv_creg_read(0xFC, 1, &resp);
+        pm_state = resp & 0xffU;
+
+        ncp_adap_d("%s: sdio_drv_creg_read ret=%d resp=%u pm_state=%u", __FUNCTION__, ret, resp, pm_state);
+        if ((ret == true) && ((pm_state == NCP_SDIO_DEVICE_PM1) || (pm_state == NCP_SDIO_DEVICE_PM2)))
+        {
+            /* If read success and device in PM1/PM2 then do nothing */
+            ncp_adap_d("%s: do thing continue", __FUNCTION__);
+            continue;
+        }
+
+retry:
+        OSA_TimeDelay(100);
         if (NCP_STATUS_SUCCESS != ncp_sdhost_CardDeinit())
         {
             ncp_adap_e("Failed to deinit sdio host");
         }
+        ncp_adap_d("%s: ncp_sdhost_CardDeinit done", __FUNCTION__);
 
+        OSA_TimeDelay(100);
         if (NCP_STATUS_SUCCESS != ncp_sdhost_CardInit())
         {
             ncp_adap_e("Failed to re-enumerate sdio card");
+            OSA_TimeDelay(1000);
+            goto retry;
         }
+        ncp_adap_d("%s: ncp_sdhost_CardInit done", __FUNCTION__);
     } /* for ;; */
 }
 
@@ -1271,6 +1359,7 @@ ncp_status_t ncp_sdhost_send_data(uint8_t *buf, uint32_t length)
         ncp_adap_e("failed to get txrx_mutex");
         return NCP_STATUS_ERROR;
     }
+    data_sent = true;
     (void)memset(sdh_outbuf, 0, SDIO_CMD_OUTBUF_LEN);
     sdioheader->pkttype = SDIO_TYPE_DATA;
     sdioheader->size    = length + SDIO_HEADER_LEN;
@@ -1321,6 +1410,8 @@ ncp_status_t ncp_sdhost_send_cmd(uint8_t *buf, uint32_t length)
         ncp_adap_e("failed to get txrx_mutex");
         return NCP_STATUS_ERROR;
     }
+    cmd_sent = true;
+
     (void)memset(sdh_outbuf, 0, SDIO_CMD_OUTBUF_LEN);
     sdioheader->pkttype = SDIO_TYPE_CMD;
     sdioheader->size    = length + SDIO_HEADER_LEN;
@@ -1376,12 +1467,37 @@ int ncp_sdhost_send(uint8_t *tlv_buf, size_t tlv_sz, tlv_send_callback_t cb)
 
     NCP_SDIO_STATS_INC(tx);
 
+    if (cb)
+        cb((void *)res);
+
     return NCP_STATUS_SUCCESS;
 }
 
 static int ncp_sdhost_pm_enter(int32_t pm_state)
 {
-    /* TODO: NCP sdhost pm */
+    bool ret = false;
+    uint32_t resp = 0;
+
+    ncp_adap_d("%s: pm_state=%d cmd_sent=%u data_sent=%u", __FUNCTION__, pm_state, cmd_sent, data_sent);
+    if (pm_state != NCP_PM_STATE_PM3)
+        return NCP_STATUS_SUCCESS;
+
+    while (cmd_sent) {
+        OSA_TimeDelay(1);
+    }
+    while (data_sent) {
+        OSA_TimeDelay(1);
+    }
+    OSA_TimeDelay(1);
+    /* Set Scratch Reg 0xFD to 1, let device know SLEEP HS done */
+    ret = sdio_drv_creg_write(0xFD, 1, SDIO_SLEEP_HS_DONE, &resp);
+    ncp_adap_d("%s: sdio_drv_creg_write 0xFD to %u ret=%d", __FUNCTION__, SDIO_SLEEP_HS_DONE, ret);
+    if (ret == false)
+    {
+        ncp_adap_e("%s: SDIO Write 0xFD to %u ERR", __FUNCTION__, SDIO_SLEEP_HS_DONE);
+        return NCP_STATUS_ERROR;
+    }
+
     return NCP_STATUS_SUCCESS;
 }
 

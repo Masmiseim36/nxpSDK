@@ -251,6 +251,7 @@
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1052DVL6B</state>
+          <state>MIMXRT1052_SERIES</state>
           <state>LWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1</state>
           <state>LWIP_SUPPORT_CUSTOM_PBUF=1</state>
           <state>CHECKSUM_GEN_UDP=1</state>
@@ -392,16 +393,14 @@
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/xip</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/utilities/str</state>
+          <state>$PROJ_DIR$/../../../../../components/silicon_id</state>
+          <state>$PROJ_DIR$/../../../../../components/silicon_id/socs</state>
           <state>$PROJ_DIR$/../../../../../components/gpio</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/phy</state>
           <state>$PROJ_DIR$/../../../../../components/phy/device/phyksz8081</state>
-          <state>$PROJ_DIR$/../../../../../components/silicon_id</state>
-          <state>$PROJ_DIR$/../../../../../components/silicon_id/socs</state>
           <state>$PROJ_DIR$/../../../../../middleware/lwip/port</state>
-          <state>$PROJ_DIR$/../../../../../middleware/lwip/src</state>
           <state>$PROJ_DIR$/../../../../../middleware/lwip/src/include</state>
-          <state>$PROJ_DIR$/../../../../../middleware/lwip/src/include/lwip</state>
           <state>$PROJ_DIR$/../../../../../middleware/lwip/port/sys_arch/dynamic</state>
           <state>$PROJ_DIR$/../../../../../middleware/freemaster/src/common</state>
           <state>$PROJ_DIR$/../../../../../middleware/freemaster/src/platforms/gen32le</state>
@@ -595,6 +594,7 @@
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1052DVL6B</state>
+          <state>MIMXRT1052_SERIES</state>
         </option>
         <option>
           <name>AList</name>
@@ -696,16 +696,14 @@
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/xip</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/utilities/str</state>
+          <state>$PROJ_DIR$/../../../../../components/silicon_id</state>
+          <state>$PROJ_DIR$/../../../../../components/silicon_id/socs</state>
           <state>$PROJ_DIR$/../../../../../components/gpio</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/phy</state>
           <state>$PROJ_DIR$/../../../../../components/phy/device/phyksz8081</state>
-          <state>$PROJ_DIR$/../../../../../components/silicon_id</state>
-          <state>$PROJ_DIR$/../../../../../components/silicon_id/socs</state>
           <state>$PROJ_DIR$/../../../../../middleware/lwip/port</state>
-          <state>$PROJ_DIR$/../../../../../middleware/lwip/src</state>
           <state>$PROJ_DIR$/../../../../../middleware/lwip/src/include</state>
-          <state>$PROJ_DIR$/../../../../../middleware/lwip/src/include/lwip</state>
           <state>$PROJ_DIR$/../../../../../middleware/lwip/port/sys_arch/dynamic</state>
           <state>$PROJ_DIR$/../../../../../middleware/freemaster/src/common</state>
           <state>$PROJ_DIR$/../../../../../middleware/freemaster/src/platforms/gen32le</state>
@@ -1429,6 +1427,7 @@
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1052DVL6B</state>
+          <state>MIMXRT1052_SERIES</state>
           <state>LWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1</state>
           <state>LWIP_SUPPORT_CUSTOM_PBUF=1</state>
           <state>CHECKSUM_GEN_UDP=1</state>
@@ -1570,16 +1569,14 @@
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/xip</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/utilities/str</state>
+          <state>$PROJ_DIR$/../../../../../components/silicon_id</state>
+          <state>$PROJ_DIR$/../../../../../components/silicon_id/socs</state>
           <state>$PROJ_DIR$/../../../../../components/gpio</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/phy</state>
           <state>$PROJ_DIR$/../../../../../components/phy/device/phyksz8081</state>
-          <state>$PROJ_DIR$/../../../../../components/silicon_id</state>
-          <state>$PROJ_DIR$/../../../../../components/silicon_id/socs</state>
           <state>$PROJ_DIR$/../../../../../middleware/lwip/port</state>
-          <state>$PROJ_DIR$/../../../../../middleware/lwip/src</state>
           <state>$PROJ_DIR$/../../../../../middleware/lwip/src/include</state>
-          <state>$PROJ_DIR$/../../../../../middleware/lwip/src/include/lwip</state>
           <state>$PROJ_DIR$/../../../../../middleware/lwip/port/sys_arch/dynamic</state>
           <state>$PROJ_DIR$/../../../../../middleware/freemaster/src/common</state>
           <state>$PROJ_DIR$/../../../../../middleware/freemaster/src/platforms/gen32le</state>
@@ -1773,6 +1770,7 @@
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1052DVL6B</state>
+          <state>MIMXRT1052_SERIES</state>
         </option>
         <option>
           <name>AList</name>
@@ -1874,16 +1872,14 @@
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/xip</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/utilities/str</state>
+          <state>$PROJ_DIR$/../../../../../components/silicon_id</state>
+          <state>$PROJ_DIR$/../../../../../components/silicon_id/socs</state>
           <state>$PROJ_DIR$/../../../../../components/gpio</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/phy</state>
           <state>$PROJ_DIR$/../../../../../components/phy/device/phyksz8081</state>
-          <state>$PROJ_DIR$/../../../../../components/silicon_id</state>
-          <state>$PROJ_DIR$/../../../../../components/silicon_id/socs</state>
           <state>$PROJ_DIR$/../../../../../middleware/lwip/port</state>
-          <state>$PROJ_DIR$/../../../../../middleware/lwip/src</state>
           <state>$PROJ_DIR$/../../../../../middleware/lwip/src/include</state>
-          <state>$PROJ_DIR$/../../../../../middleware/lwip/src/include/lwip</state>
           <state>$PROJ_DIR$/../../../../../middleware/lwip/port/sys_arch/dynamic</state>
           <state>$PROJ_DIR$/../../../../../middleware/freemaster/src/common</state>
           <state>$PROJ_DIR$/../../../../../middleware/freemaster/src/platforms/gen32le</state>
@@ -2795,6 +2791,21 @@
   <group>
     <name>component</name>
     <group>
+      <name>silicon_id</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/silicon_id/fsl_silicon_id.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/silicon_id/fsl_silicon_id.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/silicon_id/socs/rt10xx/fsl_silicon_id_soc.c</name>
+      </file>
+    </group>
+    <file>
+      <name>$PROJ_DIR$/../../../../../components/silicon_id/socs/fsl_silicon_id_soc.h</name>
+    </file>
+    <group>
       <name>gpio</name>
       <file>
         <name>$PROJ_DIR$/../../../../../components/gpio/fsl_adapter_gpio.h</name>
@@ -2824,21 +2835,6 @@
         <name>$PROJ_DIR$/../../../../../components/phy/device/phyksz8081/fsl_phyksz8081.h</name>
       </file>
     </group>
-    <group>
-      <name>silicon_id</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../components/silicon_id/fsl_silicon_id.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../components/silicon_id/fsl_silicon_id.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../components/silicon_id/socs/rt10xx/fsl_silicon_id_soc.c</name>
-      </file>
-    </group>
-    <file>
-      <name>$PROJ_DIR$/../../../../../components/silicon_id/socs/fsl_silicon_id_soc.h</name>
-    </file>
   </group>
   <group>
     <name>lwip</name>
@@ -3691,6 +3687,12 @@
               <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/drivers/mcuxsdk/can/freemaster_flexcan.c</name>
             </file>
             <file>
+              <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/drivers/mcuxsdk/can/freemaster_flexcanfd.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/drivers/mcuxsdk/can/freemaster_flexcanfd.c</name>
+            </file>
+            <file>
               <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/drivers/mcuxsdk/can/freemaster_flexcan.h</name>
             </file>
             <file>
@@ -3909,6 +3911,9 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../example_board_readme.md</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../examples_shared_readme.md</name>
     </file>
   </group>
 </project>

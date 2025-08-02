@@ -51,6 +51,8 @@ static uint8_t audio_i2s_buff[PCM_AUDIO_BUFF_SIZE];
 static bool audio_codec_initialized = false;
 static bool audio_sync_initialized = false;
 
+static volatile char bms_name[33];
+
 /* LC3 decoder variables. */
 #include "lc3_codec.h"
 static lc3_decoder_t decoder;
@@ -620,6 +622,13 @@ static bool scan_check_broadcast_id(struct bt_data *data, void *user_data)
 	return false;
 }
 
+void set_bms_name(char *name)
+{
+	memset((char *)bms_name, 0, sizeof(bms_name));
+	memcpy((char *)bms_name, name, MIN(strlen(name), (sizeof(bms_name) - 1)));
+	PRINTF("Change BMS device name to %s\r\n", bms_name);
+}
+
 static bool scan_check_and_sync_broadcast(struct bt_data *data, void *user_data)
 {
 	bool *found = user_data;
@@ -629,7 +638,7 @@ static bool scan_check_and_sync_broadcast(struct bt_data *data, void *user_data)
 	{
 		memset(device_name, 0, sizeof(device_name));
 		memcpy(device_name, data->data, data->data_len);
-		if(0 == strcmp(device_name, "broadcast_media_sender"))
+		if(0 == strcmp(device_name, (char *)bms_name))
 		{
 			PRINTF("\n[device name]:%s\n", device_name);
 			PRINTF("connect...\n");
@@ -724,6 +733,8 @@ static int init(void)
 	}
 
 	printk("Bluetooth initialized\n");
+
+	set_bms_name("broadcast_media_sender");
 
 	bt_bap_scan_delegator_init();
 	bt_bap_broadcast_sink_init();
@@ -897,7 +908,7 @@ void broadcast_media_receiver_task(void *param)
 			continue;
 		}
 
-		printk("Scanning for broadcast sources\n");
+		printk("Scanning for broadcast sources, BMS name: %s\n", bms_name);
 		err = bt_le_scan_start(BT_LE_SCAN_ACTIVE, NULL);
 		if ((err != 0) && (err != -EALREADY)) {
 			printk("Unable to start scan for broadcast sources: %d\n",

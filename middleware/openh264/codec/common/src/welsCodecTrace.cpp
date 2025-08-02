@@ -104,4 +104,3 @@ void welsCodecTrace::SetTraceCallback (WelsTraceCallback func) {
 void welsCodecTrace::SetTraceCallbackContext (void* ctx) {
   m_pTraceCtx = ctx;
 }
-

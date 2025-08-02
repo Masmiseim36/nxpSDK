@@ -79,7 +79,7 @@
         </option>
         <option>
           <name>OGChipSelectEditMenu</name>
-          <state>MIMXRT1062xxx6A	NXP MIMXRT1062xxx6A</state>
+          <state>MIMXRT1062xxx6B	NXP MIMXRT1062xxx6B</state>
         </option>
         <option>
           <name>GenLowLevelInterface</name>
@@ -125,7 +125,7 @@
         </option>
         <option>
           <name>GFPUDeviceSlave</name>
-          <state>MIMXRT1062xxx6A	NXP MIMXRT1062xxx6A</state>
+          <state>MIMXRT1062xxx6B	NXP MIMXRT1062xxx6B</state>
         </option>
         <option>
           <name>FPU2</name>
@@ -250,6 +250,7 @@
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1062DVL6B</state>
+          <state>MIMXRT1062_SERIES</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
         </option>
         <option>
@@ -573,6 +574,7 @@
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1062DVL6B</state>
+          <state>MIMXRT1062_SERIES</state>
         </option>
         <option>
           <name>AList</name>
@@ -1221,7 +1223,7 @@
         </option>
         <option>
           <name>OGChipSelectEditMenu</name>
-          <state>MIMXRT1062xxx6A	NXP MIMXRT1062xxx6A</state>
+          <state>MIMXRT1062xxx6B	NXP MIMXRT1062xxx6B</state>
         </option>
         <option>
           <name>GenLowLevelInterface</name>
@@ -1267,7 +1269,7 @@
         </option>
         <option>
           <name>GFPUDeviceSlave</name>
-          <state>MIMXRT1062xxx6A	NXP MIMXRT1062xxx6A</state>
+          <state>MIMXRT1062xxx6B	NXP MIMXRT1062xxx6B</state>
         </option>
         <option>
           <name>FPU2</name>
@@ -1392,6 +1394,7 @@
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1062DVL6B</state>
+          <state>MIMXRT1062_SERIES</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
         </option>
         <option>
@@ -1715,6 +1718,7 @@
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1062DVL6B</state>
+          <state>MIMXRT1062_SERIES</state>
         </option>
         <option>
           <name>AList</name>
@@ -2635,15 +2639,6 @@
         <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/GUIDRV_SSD1926_Private.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/GUIDRV_Template.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/GUIDRV_TemplateI.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/GUIDRV_TemplateI_Private.h</name>
-      </file>
-      <file>
         <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/GUITDRV_ADS7846.h</name>
       </file>
       <file>
@@ -2669,9 +2664,6 @@
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/GUI_GIF_Private.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/GUI_HOOK.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/GUI_JPEG_Private.h</name>
@@ -2725,10 +2717,10 @@
         <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/GUI_Version.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/GUI__BiDi2_Brackets_800.h</name>
+        <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/GUI__BiDi_Brackets.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/GUI__BiDi2_Types_800.h</name>
+        <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/GUI__BiDi_Types.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/Global.h</name>
@@ -2945,6 +2937,9 @@
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/WM_Intern.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/WM_Layout.h</name>
       </file>
     </group>
     <group>

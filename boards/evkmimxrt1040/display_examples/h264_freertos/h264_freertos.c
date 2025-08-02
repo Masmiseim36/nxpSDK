@@ -26,9 +26,6 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_FILE_BUF_SIZE  (32U * 1024U)
-#define DEMO_FILE_BUF_COUNT (3U)
-
 /* Structure to transfer file content between file_read_task and h264_decode_task. */
 typedef struct
 {

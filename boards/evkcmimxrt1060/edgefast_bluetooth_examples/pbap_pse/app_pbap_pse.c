@@ -447,6 +447,7 @@ static void app_pull_phonebook_cb(struct bt_pbap_pse *pbap_pse,
         if ((char *)BT_str_str(name, "telecom") == NULL)
         {
             memcpy(g_PbapPse.name, g_PbapPse.currentpath, strlen(g_PbapPse.currentpath));
+            g_PbapPse.name[strlen(g_PbapPse.currentpath)] = '\0';
             strcat(g_PbapPse.name, name);
         }
         else
@@ -606,6 +607,11 @@ static void app_set_phonebook_path_cb(struct bt_pbap_pse *pbap_pse, char *name)
                     if (endwith(g_PbapPse.currentpath, "root") || endwith(g_PbapPse.currentpath, "SIM1"))
                     {
                         strcat(g_PbapPse.currentpath, "/");
+                        if(strlen(g_PbapPse.currentpath) + strlen(path_name) > CURRENT_PATH_MAX_LEN)
+                        {
+                            result = BT_PBAP_NOT_FOUND_RSP;
+                            break;
+                        }
                         strcat(g_PbapPse.currentpath, path_name);
                         result = BT_PBAP_SUCCESS_RSP;
                         break;

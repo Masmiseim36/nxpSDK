@@ -14,9 +14,6 @@ if(CMAKE_SCRIPT_MODE_FILE)
 endif()
 
 
-set(CMAKE_STATIC_LIBRARY_PREFIX)
-set(CMAKE_STATIC_LIBRARY_SUFFIX)
-
 set(CMAKE_EXECUTABLE_LIBRARY_PREFIX)
 set(CMAKE_EXECUTABLE_LIBRARY_SUFFIX)
 
@@ -55,18 +52,28 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../pin_mux.h"
 "${ProjDirPath}/../hardware_init.c"
 "${ProjDirPath}/../app.h"
+"${ProjDirPath}/../AppWizard/TemperatureControl.AppWizard"
 "${ProjDirPath}/../AppWizard/Resource/Font/NettoOT_24_Normal_EXT_AA4.c"
 "${ProjDirPath}/../AppWizard/Resource/Font/Roboto_16_Normal_EXT_AA4.c"
 "${ProjDirPath}/../AppWizard/Resource/Font/Roboto_24_Normal_EXT_AA4.c"
+"${ProjDirPath}/../AppWizard/Resource/Font/NettoOT_24_Normal_EXT_AA4.xbf"
+"${ProjDirPath}/../AppWizard/Resource/Font/Roboto_16_Normal_EXT_AA4.xbf"
+"${ProjDirPath}/../AppWizard/Resource/Font/Roboto_24_Normal_EXT_AA4.xbf"
 "${ProjDirPath}/../AppWizard/Resource/Image/ButtonRoundPressed_48x21.c"
 "${ProjDirPath}/../AppWizard/Resource/Image/ButtonRound_48x21.c"
 "${ProjDirPath}/../AppWizard/Resource/Image/GreenGlowMarker_16x9.c"
 "${ProjDirPath}/../AppWizard/Resource/Image/KNOB_106x106.c"
 "${ProjDirPath}/../AppWizard/Resource/Image/SeggerLogo_80x40.c"
 "${ProjDirPath}/../AppWizard/Resource/Image/TemperatureControl_3_480x272.c"
+"${ProjDirPath}/../AppWizard/Resource/Image/ButtonRoundPressed_48x21.png"
+"${ProjDirPath}/../AppWizard/Resource/Image/ButtonRound_48x21.png"
+"${ProjDirPath}/../AppWizard/Resource/Image/GreenGlowMarker_16x9.png"
+"${ProjDirPath}/../AppWizard/Resource/Image/KNOB_106x106.png"
+"${ProjDirPath}/../AppWizard/Resource/Image/SeggerLogo_80x40.png"
+"${ProjDirPath}/../AppWizard/Resource/Image/TemperatureControl_3_480x272.bmp"
 "${ProjDirPath}/../AppWizard/Resource/Text/APPW_Language_0.c"
-"${ProjDirPath}/../AppWizard/Resource/Text/APPW_Pattern.c"
 "${ProjDirPath}/../APPW_MainTask.c"
+"${ProjDirPath}/../AppWizard/Source/CustomCode/Application.c"
 "${ProjDirPath}/../AppWizard/Source/CustomCode/ID_SCREEN_TEMP_CTRL_Slots.c"
 "${ProjDirPath}/../AppWizard/Source/CustomCode/Application.h"
 "${ProjDirPath}/../AppWizard/Source/Generated/APPWConf.c"

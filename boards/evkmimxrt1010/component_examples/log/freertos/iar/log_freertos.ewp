@@ -246,6 +246,7 @@
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1011DAE5A</state>
+          <state>MIMXRT1011_SERIES</state>
           <state>OSA_USED</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>USE_RTOS=1</state>
@@ -378,16 +379,15 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1011</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1011/periph</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1011/xip</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1011/utilities</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1011/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1011/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1011/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/log</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1011/utilities/shell</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../../components/panic</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/osa</state>
+          <state>$PROJ_DIR$/../../../../../../components/panic</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM4F</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/template</state>
@@ -576,6 +576,7 @@
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1011DAE5A</state>
+          <state>MIMXRT1011_SERIES</state>
           <state>OSA_USED</state>
         </option>
         <option>
@@ -676,16 +677,15 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1011</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1011/periph</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1011/xip</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1011/utilities</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1011/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1011/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1011/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/log</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1011/utilities/shell</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../../components/panic</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/osa</state>
+          <state>$PROJ_DIR$/../../../../../../components/panic</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM4F</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/template</state>
@@ -1397,6 +1397,7 @@
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1011DAE5A</state>
+          <state>MIMXRT1011_SERIES</state>
           <state>OSA_USED</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>USE_RTOS=1</state>
@@ -1529,16 +1530,15 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1011</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1011/periph</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1011/xip</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1011/utilities</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1011/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1011/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1011/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/log</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1011/utilities/shell</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../../components/panic</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/osa</state>
+          <state>$PROJ_DIR$/../../../../../../components/panic</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM4F</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/template</state>
@@ -1727,6 +1727,7 @@
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1011DAE5A</state>
+          <state>MIMXRT1011_SERIES</state>
           <state>OSA_USED</state>
         </option>
         <option>
@@ -1827,16 +1828,15 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1011</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1011/periph</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1011/xip</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1011/utilities</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1011/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1011/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1011/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/log</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1011/utilities/shell</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../../components/panic</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/osa</state>
+          <state>$PROJ_DIR$/../../../../../../components/panic</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM4F</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/template</state>
@@ -2350,6 +2350,9 @@
     <file>
       <name>$PROJ_DIR$/../example_board_readme.md</name>
     </file>
+    <file>
+      <name>$PROJ_DIR$/../examples_shared_readme.md</name>
+    </file>
   </group>
   <group>
     <name>xip</name>
@@ -2633,10 +2636,10 @@
   <group>
     <name>utilities</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1011/utilities/fsl_assert.h</name>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1011/utilities/debug_console/fsl_assert.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1011/utilities/fsl_assert.c</name>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1011/utilities/debug_console/fsl_assert.c</name>
     </file>
     <group>
       <name>str</name>
@@ -2717,15 +2720,6 @@
       </file>
     </group>
     <group>
-      <name>panic</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/panic/fsl_component_panic.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/panic/fsl_component_panic.c</name>
-      </file>
-    </group>
-    <group>
       <name>uart</name>
       <file>
         <name>$PROJ_DIR$/../../../../../../components/uart/fsl_adapter_uart.h</name>
@@ -2737,13 +2731,22 @@
     <group>
       <name>osa</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction.h</name>
-      </file>
-      <file>
         <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction_free_rtos.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction_free_rtos.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction.h</name>
+      </file>
+    </group>
+    <group>
+      <name>panic</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/panic/fsl_component_panic.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/panic/fsl_component_panic.c</name>
       </file>
     </group>
   </group>
@@ -2833,6 +2836,9 @@
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/timers.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/freertos_tasks_c_additions.h</name>
         </file>
       </group>
       <group>

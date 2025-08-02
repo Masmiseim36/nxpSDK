@@ -17,6 +17,12 @@
 #define MLAN_MAX_VER_STR_LEN         128
 /** MAC address length. */
 #define MLAN_MAC_ADDR_LENGTH         6
+
+#ifdef CONFIG_IPV6
+/** The maximum number of IPV6 addresses that will be stored */
+#define MAX_IPV6_ADDRESSES 3
+#endif
+
 /** Maximum length of network name. */
 #define WLAN_NETWORK_NAME_MAX_LENGTH 32
 /** Maximum length of identity string . */
@@ -25,12 +31,49 @@
 #define PASSWORD_MAX_LENGTH          128
 /** Maximum number of STAs are connected to the UAP. */
 #define MAX_NUM_CLIENTS              16
+/** Maximum number of STAs can be saved in the scan table. */
+#define NCP_MAX_AP_ENTRIES           10
 
 #define MAX_MONIT_MAC_FILTER_NUM     3
 /** Maximum CSI filter count */
 #define CSI_FILTER_MAX               16
 /** Size of iperf end token. */
 #define NCP_IPERF_END_TOKEN_SIZE 11
+
+/** This data structure represents an IPv4 address */
+NCP_TLV_PACK_START struct ipv4_config
+{
+    /** Set to \ref ADDR_TYPE_DHCP to use DHCP to obtain the IP address or
+     *  \ref ADDR_TYPE_STATIC to use a static IP. In case of static IP
+     *  address ip, gw, netmask and dns members must be specified.  When
+     *  using DHCP, the ip, gw, netmask and dns are overwritten by the
+     *  values obtained from the DHCP server. They should be zeroed out if
+     *  not used. */
+    unsigned addr_type;
+    /** The system's IP address in network order. */
+    unsigned address;
+    /** The system's default gateway in network order. */
+    unsigned gw;
+    /** The system's subnet mask in network order. */
+    unsigned netmask;
+    /** The system's primary dns server in network order. */
+    unsigned dns1;
+    /** The system's secondary dns server in network order. */
+    unsigned dns2;
+} NCP_TLV_PACK_END;
+
+#ifdef CONFIG_IPV6
+/** This data structure represents an IPv6 address */
+NCP_TLV_PACK_START struct  ipv6_config
+{
+    /** The system's IPv6 address in network order. */
+    unsigned address[4];
+    /** The address type: linklocal, site-local or global. */
+    unsigned char addr_type;
+    /** The state of IPv6 address (Tentative, Preferred, etc). */
+    unsigned char addr_state;
+} NCP_TLV_PACK_END;
+#endif
 
 /** This structure is used for station configuration. */
 typedef struct _wifi_sta_info_t
@@ -520,6 +563,20 @@ enum wlan_connection_state
      * is in progress. */
     WLAN_ASSOCIATING,
 };
+
+#if CONFIG_NCP_WPA_SUPP_CRYPTO_ENTERPRISE
+#if CONFIG_NCP_EAP_TLS
+/** EAP TLS Cipher types*/
+enum eap_tls_cipher_type
+{
+    EAP_TLS_NONE,
+    /** EAP TLS with ECDH & ECDSA with p384 */
+    EAP_TLS_ECC_P384,
+    /** EAP TLS with ECDH & RSA with > 3K */
+    EAP_TLS_RSA_3K,
+};
+#endif
+#endif
 
 /** 
 * Get NCP host TLV command buffer.
@@ -2119,37 +2176,29 @@ int wlan_set_11axcfg_command(int argc, char **argv);
 int wlan_process_11axcfg_response(uint8_t *res);
 
 /**
- * This API is used to modify and set Wi-Fi BTWT (broadcast target awake time) config.
- *
- * \note Implemented as global variable arrays with default config.
- *       This API can get and change one parameter and
- *       it will be restored until reboot.
- *       Then this config data can be sent to Wi-Fi.
- *       Refer to \ref NCP_CMD_BTWT_CFG_INFO for config parameter usage and length.
+ * This API is used to get and set Wi-Fi BTWT (broadcast target awake time) config.
  *
  * \param[in] argc    Argument count, the number of strings pointed to by argv, \n
  *                    argc should be at least 2.
  * \param[in] argv    Argument vector, \n
- *                    argv[0]: wlan-set-btwt-cfg \n
- *                    argv[1]: action in string (Required)
- *                             help: show helper
- *                             dump: dump parameter data currently restored
- *                             set: set one parameter
- *                             done: configure current data to Wi-Fi \n
- *                    argv[2]: parameter name (Required when action is "set") \n
- *                    argv[3]: parameter value in hexadecimal,
- *                             have more argvs when value is more than one byte,
- *                             like a byte array or uint16_t, uint32_t,
- *                             uint16_t and uint32_t is ordered in little-endian
- *                             (Required when action is "set") \n
+ *                    argv[0]: wlan-bcast-twt \n
+ *                    argv[1]: get/set (Required) \n
+ *                    argv[2]: Reserved for now, 0 (Required when action is "set") \n
+ *                    argv[3]: Reserved for now, 0 \n
+ *                    argv[4]: Reserved for now, 0 \n
+ *                    argv[5]: TWT Session number, range [2 - 5] \n
+ *                    argv[6]: Session 0 id, 0 \n
+ *                    argv[7]: Session 0 mantissa \n
+ *                    argv[8]: Session 0 exponent \n
+ *                    argv[9]: Session 0 nominal wake \n
+ *                    argv[10]: Session 1 id, 1 \n
  *                    ... \n
- *                    argv[x]: parameter value in hexadecimal,
- *                             uint16_t and uint32_t is ordered in little-endian
+ *                    argv[25]: Session 4 nominal wake, if there are 5 sessions \n
  *
  * \return WM_SUCCESS if success.
  * \return -WM_FAIL if failure.
  */
-int wlan_set_btwt_command(int argc, char **argv);
+int wlan_bcast_twt_command(int argc, char **argv);
 
 /**
  * This API is used to process BTWT command response.
@@ -2432,6 +2481,31 @@ int wlan_roaming_command(int argc, char **argv);
  * \return WM_SUCCESS.
  */
 int wlan_process_roaming_response(uint8_t *res);
+
+/**
+ * This API is used to enable/disable the Opportunistic Key Caching (OKC).
+ *
+ * \param[in] argc    Argument count, the number of strings pointed to by argv, \n
+ *                    argc should be 2.
+ * \param[in] argv    Argument vector, \n
+ *                    argv[0]: wlan-info \n
+ *                    argv[1]: enable/disable OKC \n
+ *                             0 -- Disable OKC (default) \n
+ *                             1 -- Enable OKC
+ *
+ * \return TRUE if success.
+ * \return FALSE if failure.
+ */
+int wlan_set_okc_command(int argc, char **argv);
+
+/**
+ * This API is used to process the response for the OKC command.
+ *
+ * \param[in] res    A pointer to \ref MCU_NCPCmd_DS_COMMAND response.
+ *
+ * \return WM_SUCCESS.
+ */
+int wlan_process_okc_response(uint8_t *res);
 
 /**
  * This API is used to set/delete the MEF (memory efficient filtering) entries configuration.

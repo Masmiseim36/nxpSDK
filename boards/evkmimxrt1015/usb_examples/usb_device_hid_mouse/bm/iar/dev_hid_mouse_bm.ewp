@@ -245,6 +245,7 @@
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1015DAF5A</state>
+          <state>MIMXRT1015_SERIES</state>
           <state>OSA_USED</state>
           <state>TIMER_PORT_TYPE_PIT=1</state>
           <state>USE_RTOS=0</state>
@@ -384,8 +385,10 @@
           <state>$PROJ_DIR$/../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/device</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/usb/config/device/ehci</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/device/class</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/dcd</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/usb/config/dcd/phydcd</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
         </option>
         <option>
@@ -572,6 +575,7 @@
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1015DAF5A</state>
+          <state>MIMXRT1015_SERIES</state>
           <state>OSA_USED</state>
         </option>
         <option>
@@ -680,8 +684,10 @@
           <state>$PROJ_DIR$/../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/device</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/usb/config/device/ehci</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/device/class</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/dcd</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/usb/config/dcd/phydcd</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
         </option>
         <option>
@@ -1395,6 +1401,7 @@
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1015DAF5A</state>
+          <state>MIMXRT1015_SERIES</state>
           <state>OSA_USED</state>
           <state>TIMER_PORT_TYPE_PIT=1</state>
           <state>USE_RTOS=0</state>
@@ -1534,8 +1541,10 @@
           <state>$PROJ_DIR$/../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/device</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/usb/config/device/ehci</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/device/class</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/dcd</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/usb/config/dcd/phydcd</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
         </option>
         <option>
@@ -1722,6 +1731,7 @@
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1015DAF5A</state>
+          <state>MIMXRT1015_SERIES</state>
           <state>OSA_USED</state>
         </option>
         <option>
@@ -1830,8 +1840,10 @@
           <state>$PROJ_DIR$/../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/device</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/usb/config/device/ehci</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/device/class</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/dcd</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/usb/config/dcd/phydcd</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
         </option>
         <option>
@@ -2542,6 +2554,7 @@
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1015DAF5A</state>
+          <state>MIMXRT1015_SERIES</state>
           <state>OSA_USED</state>
           <state>TIMER_PORT_TYPE_PIT=1</state>
           <state>USE_RTOS=0</state>
@@ -2681,8 +2694,10 @@
           <state>$PROJ_DIR$/../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/device</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/usb/config/device/ehci</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/device/class</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/dcd</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/usb/config/dcd/phydcd</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
         </option>
         <option>
@@ -2869,6 +2884,7 @@
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1015DAF5A</state>
+          <state>MIMXRT1015_SERIES</state>
           <state>OSA_USED</state>
         </option>
         <option>
@@ -2977,8 +2993,10 @@
           <state>$PROJ_DIR$/../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/device</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/usb/config/device/ehci</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/device/class</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/dcd</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/usb/config/dcd/phydcd</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
         </option>
         <option>
@@ -3692,6 +3710,7 @@
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1015DAF5A</state>
+          <state>MIMXRT1015_SERIES</state>
           <state>OSA_USED</state>
           <state>TIMER_PORT_TYPE_PIT=1</state>
           <state>USE_RTOS=0</state>
@@ -3831,8 +3850,10 @@
           <state>$PROJ_DIR$/../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/device</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/usb/config/device/ehci</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/device/class</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/dcd</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/usb/config/dcd/phydcd</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
         </option>
         <option>
@@ -4019,6 +4040,7 @@
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1015DAF5A</state>
+          <state>MIMXRT1015_SERIES</state>
           <state>OSA_USED</state>
         </option>
         <option>
@@ -4127,8 +4149,10 @@
           <state>$PROJ_DIR$/../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/device</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/usb/config/device/ehci</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/device/class</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/dcd</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/usb/config/dcd/phydcd</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
         </option>
         <option>
@@ -4999,13 +5023,13 @@
     <group>
       <name>osa</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction.h</name>
-      </file>
-      <file>
         <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction_bm.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction_bm.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction.h</name>
       </file>
     </group>
   </group>
@@ -5088,6 +5112,9 @@
     <name>doc</name>
     <file>
       <name>$PROJ_DIR$/../readme.md</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../examples_shared_readme.md</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../dcd_detection.jpg</name>

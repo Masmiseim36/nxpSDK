@@ -29,14 +29,15 @@
     <definition extID="component.serial_manager_uart.MIMXRT1064"/>
     <definition extID="component.igpio_adapter.MIMXRT1064"/>
     <definition extID="component.lpuart_adapter.MIMXRT1064"/>
-    <definition extID="component.mflash_offchip.MIMXRT1064"/>
     <definition extID="component.osa_template_config.MIMXRT1064"/>
-    <definition extID="component.osa_interface.MIMXRT1064"/>
     <definition extID="component.osa.MIMXRT1064"/>
     <definition extID="component.osa_free_rtos.MIMXRT1064"/>
     <definition extID="middleware.edgefast_wifi_nxp.MIMXRT1064"/>
     <definition extID="component.wifi_bt_module.tx_pwr_limits.MIMXRT1064"/>
     <definition extID="component.wifi_bt_module.config.MIMXRT1064"/>
+    <definition extID="component.wifi_bt_module.IW416.MIMXRT1064"/>
+    <definition extID="component.wifi_bt_module.board_murata_1xk_usd.MIMXRT1064"/>
+    <definition extID="component.mflash_offchip.MIMXRT1064"/>
     <definition extID="middleware.wifi.template.MIMXRT1064"/>
     <definition extID="middleware.wifi.osa_free_rtos.MIMXRT1064"/>
     <definition extID="middleware.wifi.osa.MIMXRT1064"/>
@@ -70,16 +71,15 @@
     <definition extID="com.crt.advproject.config.exe.debug"/>
     <definition extID="com.crt.advproject.config.exe.release"/>
   </externalDefinitions>
-  <example id="evkmimxrt1064_wifi_webconfig" name="wifi_webconfig" device_core="core0_MIMXRT1064xxxxA" dependency="platform.drivers.xip_board.evkmimxrt1064.MIMXRT1064 platform.drivers.clock.MIMXRT1064 platform.drivers.iomuxc.MIMXRT1064 CMSIS_Include_core_cm.MIMXRT1064 device.MIMXRT1064_CMSIS.MIMXRT1064 device.MIMXRT1064_system.MIMXRT1064 device.MIMXRT1064_startup.MIMXRT1064 platform.drivers.xip_device.MIMXRT1064 platform.drivers.cache_armv7_m7.MIMXRT1064 platform.drivers.common.MIMXRT1064 platform.drivers.dcdc_1.MIMXRT1064 platform.drivers.flexspi.MIMXRT1064 platform.drivers.gpc_1.MIMXRT1064 platform.drivers.igpio.MIMXRT1064 platform.drivers.lpuart.MIMXRT1064 platform.drivers.pmu.MIMXRT1064 platform.drivers.src.MIMXRT1064 platform.drivers.usdhc.MIMXRT1064 platform.utilities.assert.MIMXRT1064 platform.utilities.misc_utilities.MIMXRT1064 component.lists.MIMXRT1064 utility.str.MIMXRT1064 utility.debug_console.MIMXRT1064 component.serial_manager.MIMXRT1064 component.serial_manager_uart.MIMXRT1064 component.igpio_adapter.MIMXRT1064 component.lpuart_adapter.MIMXRT1064 component.mflash_offchip.MIMXRT1064 component.osa_template_config.MIMXRT1064 component.osa_interface.MIMXRT1064 component.osa.MIMXRT1064 component.osa_free_rtos.MIMXRT1064 middleware.edgefast_wifi_nxp.MIMXRT1064 component.wifi_bt_module.tx_pwr_limits.MIMXRT1064 component.wifi_bt_module.config.MIMXRT1064 middleware.wifi.template.MIMXRT1064 middleware.wifi.osa_free_rtos.MIMXRT1064 middleware.wifi.osa.MIMXRT1064 middleware.wifi.common_files.MIMXRT1064 middleware.wifi.fwdnld.MIMXRT1064 middleware.wifi.net.MIMXRT1064 middleware.wifi.wifidriver.MIMXRT1064 middleware.wifi.wifidriver.softap.MIMXRT1064 middleware.wifi.MIMXRT1064 middleware.wifi.sdio.MIMXRT1064 middleware.wifi.mlan_sdio.MIMXRT1064 middleware.wifi.fwdnld_intf_abs.MIMXRT1064 middleware.lwip.MIMXRT1064 middleware.lwip.sys_arch.dynamic.MIMXRT1064 middleware.lwip.apps.httpsrv.MIMXRT1064 middleware.sdmmc.common.MIMXRT1064 middleware.sdmmc.osa.freertos.MIMXRT1064 middleware.sdmmc.sdio.MIMXRT1064 middleware.sdmmc.host.usdhc.MIMXRT1064 middleware.sdmmc.host.usdhc.non_blocking.MIMXRT1064 middleware.sdmmc.usdhc.template.MIMXRT1064 middleware.freertos-kernel.MIMXRT1064 middleware.freertos-kernel.heap_3.MIMXRT1064 middleware.freertos-kernel.extension.MIMXRT1064 middleware.freertos-kernel.config.MIMXRT1064" category="wifi_examples">
+  <example id="evkmimxrt1064_wifi_webconfig" name="wifi_webconfig" device_core="core0_MIMXRT1064xxxxA" dependency="platform.drivers.xip_board.evkmimxrt1064.MIMXRT1064 platform.drivers.clock.MIMXRT1064 platform.drivers.iomuxc.MIMXRT1064 CMSIS_Include_core_cm.MIMXRT1064 device.MIMXRT1064_CMSIS.MIMXRT1064 device.MIMXRT1064_system.MIMXRT1064 device.MIMXRT1064_startup.MIMXRT1064 platform.drivers.xip_device.MIMXRT1064 platform.drivers.cache_armv7_m7.MIMXRT1064 platform.drivers.common.MIMXRT1064 platform.drivers.dcdc_1.MIMXRT1064 platform.drivers.flexspi.MIMXRT1064 platform.drivers.gpc_1.MIMXRT1064 platform.drivers.igpio.MIMXRT1064 platform.drivers.lpuart.MIMXRT1064 platform.drivers.pmu.MIMXRT1064 platform.drivers.src.MIMXRT1064 platform.drivers.usdhc.MIMXRT1064 platform.utilities.assert.MIMXRT1064 platform.utilities.misc_utilities.MIMXRT1064 component.lists.MIMXRT1064 utility.str.MIMXRT1064 utility.debug_console.MIMXRT1064 component.serial_manager.MIMXRT1064 component.serial_manager_uart.MIMXRT1064 component.igpio_adapter.MIMXRT1064 component.lpuart_adapter.MIMXRT1064 component.osa_template_config.MIMXRT1064 component.osa.MIMXRT1064 component.osa_free_rtos.MIMXRT1064 middleware.edgefast_wifi_nxp.MIMXRT1064 component.wifi_bt_module.tx_pwr_limits.MIMXRT1064 component.wifi_bt_module.config.MIMXRT1064 component.wifi_bt_module.IW416.MIMXRT1064 component.wifi_bt_module.board_murata_1xk_usd.MIMXRT1064 component.mflash_offchip.MIMXRT1064 middleware.wifi.template.MIMXRT1064 middleware.wifi.osa_free_rtos.MIMXRT1064 middleware.wifi.osa.MIMXRT1064 middleware.wifi.common_files.MIMXRT1064 middleware.wifi.fwdnld.MIMXRT1064 middleware.wifi.net.MIMXRT1064 middleware.wifi.wifidriver.MIMXRT1064 middleware.wifi.wifidriver.softap.MIMXRT1064 middleware.wifi.MIMXRT1064 middleware.wifi.sdio.MIMXRT1064 middleware.wifi.mlan_sdio.MIMXRT1064 middleware.wifi.fwdnld_intf_abs.MIMXRT1064 middleware.lwip.MIMXRT1064 middleware.lwip.sys_arch.dynamic.MIMXRT1064 middleware.lwip.apps.httpsrv.MIMXRT1064 middleware.sdmmc.common.MIMXRT1064 middleware.sdmmc.osa.freertos.MIMXRT1064 middleware.sdmmc.sdio.MIMXRT1064 middleware.sdmmc.host.usdhc.MIMXRT1064 middleware.sdmmc.host.usdhc.non_blocking.MIMXRT1064 middleware.sdmmc.usdhc.template.MIMXRT1064 middleware.freertos-kernel.MIMXRT1064 middleware.freertos-kernel.heap_3.MIMXRT1064 middleware.freertos-kernel.extension.MIMXRT1064 middleware.freertos-kernel.config.MIMXRT1064" category="wifi_examples">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
     <memory>
-      <memoryBlock id="PROGRAM_FLASH_MIMXRT1064xxxxA" name="PROGRAM_FLASH" addr="70000000" size="00180000" type="Flash" access="RO"/>
-      <memoryBlock id="MFLASH_MIMXRT1064xxxxA" name="MFLASH" addr="70180000" size="00280000" type="Flash" access="RO"/>
-      <memoryBlock id="SRAM_OC_MIMXRT1064xxxxA" name="SRAM_OC" addr="20200000" size="000C0000" type="RAM" access="RW"/>
-      <memoryBlock id="SRAM_DTC_MIMXRT1064xxxxA" name="SRAM_DTC" addr="20000000" size="00020000" type="RAM" access="RW"/>
-      <memoryBlock id="SRAM_ITC_MIMXRT1064xxxxA" name="SRAM_ITC" addr="00000000" size="00020000" type="RAM" access="RW"/>
+      <memoryBlock id="PROGRAM_FLASH_evkmimxrt1064" name="PROGRAM_FLASH" addr="70000000" size="00380000" type="Flash" access="RO"/>
+      <memoryBlock id="SRAM_OC_evkmimxrt1064" name="SRAM_OC" addr="20200000" size="000C0000" type="RAM" access="RW"/>
+      <memoryBlock id="SRAM_DTC_evkmimxrt1064" name="SRAM_DTC" addr="20000000" size="00020000" type="RAM" access="RW"/>
+      <memoryBlock id="SRAM_ITC_evkmimxrt1064" name="SRAM_ITC" addr="00000000" size="00020000" type="RAM" access="RW"/>
       <memoryBlock id="BOARD_SDRAM_evkmimxrt1064" name="BOARD_SDRAM" addr="80000000" size="01E00000" type="RAM" access="RW"/>
       <memoryBlock id="NCACHE_REGION_evkmimxrt1064" name="NCACHE_REGION" addr="81E00000" size="00200000" type="RAM" access="RW"/>
     </memory>
@@ -99,8 +99,10 @@
           <value>SDK_DEBUGCONSOLE=1</value>
           <value>MCUX_META_BUILD</value>
           <value>CPU_MIMXRT1064DVL6A</value>
+          <value>MIMXRT1064_SERIES</value>
           <value>OSA_USED</value>
           <value>SERIAL_PORT_TYPE_UART=1</value>
+          <value>WIFI_IW416_BOARD_MURATA_1XK_USD</value>
           <value>MFLASH_FILE_BASEADDR=3670016</value>
           <value>CONFIG_NXP_WIFI_SOFTAP_SUPPORT=1</value>
           <value>SDIO_ENABLED=1</value>
@@ -168,7 +170,7 @@
     <debug_configurations>
       <debug_configuration id_refs="com.crt.advproject.config.exe.debug com.crt.advproject.config.exe.release">
         <drivers>
-          <driver id_refs="PROGRAM_FLASH_MIMXRT1064xxxxA">
+          <driver id_refs="PROGRAM_FLASH_evkmimxrt1064">
             <driverBinary path="../../../../devices/MIMXRT1064/mcuxpresso" project_relative_path="binary" type="binary">
               <files mask="MIMXRT1064.cfx"/>
             </driverBinary>
@@ -214,8 +216,8 @@
       <files mask="evkmimxrt1064_flexspi_nor.ini"/>
     </source>
     <source path="linkscripts" project_relative_path="linkscripts" type="src" toolchain="mcuxpresso">
-      <files mask="bss.ldt"/>
       <files mask="data.ldt"/>
+      <files mask="main_rodata.ldt"/>
       <files mask="main_text.ldt"/>
     </source>
     <source path="." project_relative_path="source" type="src">
@@ -242,9 +244,6 @@
     <source path="." project_relative_path="source" type="c_include">
       <files mask="FreeRTOSConfigBoard.h"/>
       <files mask="wifi_bt_config.h"/>
-    </source>
-    <source path="." project_relative_path="source" type="c_include">
-      <files mask="app_config.h"/>
     </source>
     <source path="." project_relative_path="source" type="src">
       <files mask="pin_mux.c"/>
@@ -298,6 +297,12 @@
     </source>
     <source path="." project_relative_path="doc" type="doc">
       <files mask="wifi_examples_readme.md"/>
+    </source>
+    <source path="." project_relative_path="doc" type="doc">
+      <files mask="readme_modules.md"/>
+    </source>
+    <source path="." project_relative_path="doc" type="doc">
+      <files mask="examples_shared_readme.md"/>
     </source>
   </example>
 </ksdk:examples>

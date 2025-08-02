@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2021, 2023-2024 NXP
+ * Copyright 2018-2021, 2023-2025 NXP
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -142,7 +142,7 @@ int network_connect(void* opaque_ctx)
 	}
 
 	{
-#if NXP_IOT_AGENT_HAVE_PSA_IMPL_TFM
+#if defined(NXP_IOT_AGENT_HAVE_PSA_IMPL_TFM) && (NXP_IOT_AGENT_HAVE_PSA_IMPL_TFM == 1)
 		static int allowed_ciphersuites_sha_256[] = {
 			MBEDTLS_TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256,
 			MBEDTLS_TLS_ECDH_ECDSA_WITH_AES_128_CBC_SHA256,
@@ -168,7 +168,7 @@ int network_connect(void* opaque_ctx)
 		};
 		switch (mbedtls_pk_get_bitlen(&network_context->pkey))
 		{
-#if NXP_IOT_AGENT_HAVE_PSA_IMPL_TFM
+#if defined(NXP_IOT_AGENT_HAVE_PSA_IMPL_TFM) && (NXP_IOT_AGENT_HAVE_PSA_IMPL_TFM == 1)
 			case 256U:
 				mbedtls_ssl_conf_ciphersuites(&network_context->conf, allowed_ciphersuites_sha_256);
 				break;
@@ -181,7 +181,7 @@ int network_connect(void* opaque_ctx)
 		}
 	}
 
-#if NXP_IOT_AGENT_VERIFY_EDGELOCK_2GO_SERVER_CERTIFICATE
+#if defined(NXP_IOT_AGENT_VERIFY_EDGELOCK_2GO_SERVER_CERTIFICATE) && (NXP_IOT_AGENT_VERIFY_EDGELOCK_2GO_SERVER_CERTIFICATE == 1)
 	mbedtls_ssl_conf_authmode(&(network_context->conf), MBEDTLS_SSL_VERIFY_REQUIRED);
 	mbedtls_ssl_conf_ca_chain(&(network_context->conf), &network_config->ca_chain, NULL);
 #else

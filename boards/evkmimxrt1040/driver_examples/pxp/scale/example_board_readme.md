@@ -19,11 +19,10 @@ Prepare the Demo
     - One stop bit
     - No flow control
 3.  Build the project, the project uses RK043FN66HS-CT6 by default, to use other panels,
-    change
-    #define DEMO_PANEL DEMO_PANEL_RK043FN66HS
-    to
-    #define DEMO_PANEL DEMO_PANEL_RK043FN02H
-    in emwin_support.h
+set the coresponding panel to y in prj.conf under board example folder before project generation.
+The supported panels can be found in examples\_boards\<board>\project_segments\display_support\Kconfig.prjseg.
+Or change the macro DEMO_PANEL in mcux_config.h of the project,
+which number represents which panel can be found in display_support.h
 4.  Download the program to the target board.
 5.  Either press the reset button on your board or launch the debugger in your IDE to begin running the demo.
 

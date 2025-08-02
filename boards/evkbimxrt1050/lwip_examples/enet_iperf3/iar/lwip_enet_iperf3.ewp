@@ -249,24 +249,13 @@
           <state>SCANF_ADVANCED_ENABLE=1</state>
           <state>DEBUG_CONSOLE_ENABLE_ECHO=1</state>
           <state>USE_RTOS=1</state>
-          <state>LWIP_NETIF_API=1</state>
           <state>HIGH_SPEED_SDIO_CLOCK</state>
           <state>FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1</state>
           <state>FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE</state>
-          <state>ENET_RXBUFF_NUM=25</state>
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1052DVL6B</state>
-          <state>LWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1</state>
-          <state>LWIP_SUPPORT_CUSTOM_PBUF=1</state>
-          <state>CHECKSUM_GEN_UDP=1</state>
-          <state>CHECKSUM_GEN_TCP=1</state>
-          <state>CHECKSUM_GEN_ICMP=1</state>
-          <state>CHECKSUM_GEN_ICMP6=1</state>
-          <state>CHECKSUM_CHECK_UDP=1</state>
-          <state>CHECKSUM_CHECK_TCP=1</state>
-          <state>CHECKSUM_CHECK_ICMP=1</state>
-          <state>CHECKSUM_CHECK_ICMP6=1</state>
+          <state>MIMXRT1052_SERIES</state>
           <state>SDK_OS_FREE_RTOS</state>
         </option>
         <option>
@@ -403,9 +392,7 @@
           <state>$PROJ_DIR$/../../../../../components/phy</state>
           <state>$PROJ_DIR$/../../../../../components/phy/device/phyksz8081</state>
           <state>$PROJ_DIR$/../../../../../middleware/lwip/port</state>
-          <state>$PROJ_DIR$/../../../../../middleware/lwip/src</state>
           <state>$PROJ_DIR$/../../../../../middleware/lwip/src/include</state>
-          <state>$PROJ_DIR$/../../../../../middleware/lwip/src/include/lwip</state>
           <state>$PROJ_DIR$/../../../../../middleware/lwip/port/sys_arch/dynamic</state>
           <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include</state>
           <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM4F</state>
@@ -595,6 +582,7 @@
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1052DVL6B</state>
+          <state>MIMXRT1052_SERIES</state>
         </option>
         <option>
           <name>AList</name>
@@ -701,9 +689,7 @@
           <state>$PROJ_DIR$/../../../../../components/phy</state>
           <state>$PROJ_DIR$/../../../../../components/phy/device/phyksz8081</state>
           <state>$PROJ_DIR$/../../../../../middleware/lwip/port</state>
-          <state>$PROJ_DIR$/../../../../../middleware/lwip/src</state>
           <state>$PROJ_DIR$/../../../../../middleware/lwip/src/include</state>
-          <state>$PROJ_DIR$/../../../../../middleware/lwip/src/include/lwip</state>
           <state>$PROJ_DIR$/../../../../../middleware/lwip/port/sys_arch/dynamic</state>
           <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include</state>
           <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM4F</state>
@@ -1421,24 +1407,13 @@
           <state>SCANF_ADVANCED_ENABLE=1</state>
           <state>DEBUG_CONSOLE_ENABLE_ECHO=1</state>
           <state>USE_RTOS=1</state>
-          <state>LWIP_NETIF_API=1</state>
           <state>HIGH_SPEED_SDIO_CLOCK</state>
           <state>FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1</state>
           <state>FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE</state>
-          <state>ENET_RXBUFF_NUM=25</state>
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1052DVL6B</state>
-          <state>LWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1</state>
-          <state>LWIP_SUPPORT_CUSTOM_PBUF=1</state>
-          <state>CHECKSUM_GEN_UDP=1</state>
-          <state>CHECKSUM_GEN_TCP=1</state>
-          <state>CHECKSUM_GEN_ICMP=1</state>
-          <state>CHECKSUM_GEN_ICMP6=1</state>
-          <state>CHECKSUM_CHECK_UDP=1</state>
-          <state>CHECKSUM_CHECK_TCP=1</state>
-          <state>CHECKSUM_CHECK_ICMP=1</state>
-          <state>CHECKSUM_CHECK_ICMP6=1</state>
+          <state>MIMXRT1052_SERIES</state>
           <state>SDK_OS_FREE_RTOS</state>
         </option>
         <option>
@@ -1575,9 +1550,7 @@
           <state>$PROJ_DIR$/../../../../../components/phy</state>
           <state>$PROJ_DIR$/../../../../../components/phy/device/phyksz8081</state>
           <state>$PROJ_DIR$/../../../../../middleware/lwip/port</state>
-          <state>$PROJ_DIR$/../../../../../middleware/lwip/src</state>
           <state>$PROJ_DIR$/../../../../../middleware/lwip/src/include</state>
-          <state>$PROJ_DIR$/../../../../../middleware/lwip/src/include/lwip</state>
           <state>$PROJ_DIR$/../../../../../middleware/lwip/port/sys_arch/dynamic</state>
           <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include</state>
           <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM4F</state>
@@ -1767,6 +1740,7 @@
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1052DVL6B</state>
+          <state>MIMXRT1052_SERIES</state>
         </option>
         <option>
           <name>AList</name>
@@ -1873,9 +1847,7 @@
           <state>$PROJ_DIR$/../../../../../components/phy</state>
           <state>$PROJ_DIR$/../../../../../components/phy/device/phyksz8081</state>
           <state>$PROJ_DIR$/../../../../../middleware/lwip/port</state>
-          <state>$PROJ_DIR$/../../../../../middleware/lwip/src</state>
           <state>$PROJ_DIR$/../../../../../middleware/lwip/src/include</state>
-          <state>$PROJ_DIR$/../../../../../middleware/lwip/src/include/lwip</state>
           <state>$PROJ_DIR$/../../../../../middleware/lwip/port/sys_arch/dynamic</state>
           <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include</state>
           <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM4F</state>
@@ -2351,16 +2323,19 @@
       <name>$PROJ_DIR$/../main.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../lwipopts.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../iperf_lwip.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../iperf_api.h</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../lwipopts.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../FreeRTOSConfig_Gen.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../lwipopts_gen.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../mcux_config.h</name>
@@ -3672,6 +3647,9 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../example_board_readme.md</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../examples_shared_readme.md</name>
     </file>
   </group>
 </project>

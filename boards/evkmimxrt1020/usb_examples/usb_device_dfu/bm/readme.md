@@ -172,7 +172,6 @@ install_path:\\msys64\\home\\~your user name\\build\\bin
 - MIMXRT1170-EVKB
 - EVK-MIMXRT1064
 - MIMXRT685-AUD-EVK
-- FRDM-MCXA276
 - MIMXRT1060-EVKB
 - MIMXRT1040-EVK
 - FRDM-MCXN947

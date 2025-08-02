@@ -38,29 +38,29 @@ static void peripheral_hrs_task(void *pvParameters);
 static OSA_TASK_DEFINE(peripheral_hrs_task, NCP_BLE_SERVICE_PRIO, 1, 1024, 0);
 static OSA_EVENT_HANDLE_DEFINE(hrs_events);
 
-static uint8_t heartrate = 90U;
+static uint8_t heart_rate = 90U;
 static uint8_t hrm[2];
-// ble-set-value command paramters
+// ble-set-value command parameters
 NCP_SET_VALUE_CMD hrs_value;
-bool hrs_cccd_written = false;
+bool hrs_ccc_written = false;
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
-extern void write_charateristic_command_local(NCP_SET_VALUE_CMD *param);
+extern void write_characteristic_command_local(NCP_SET_VALUE_CMD *param);
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
 static struct host_gatt_attr hrs_profile [] = {
-    /* HRS Promary Serivce Declaration */
+    /* HRS Primary Service Declaration */
     GATT_PRIMARY_SERVICE(UUID_HRS),
-    /* HRS Measurement Charatristic Declaration */
+    /* HRS Measurement Characteristic Declaration */
     GATT_CHARACTERISTIC(UUID_HRS_MEASUREMENT, BT_GATT_CHRC_NOTIFY, BT_GATT_PERM_NONE),
     /* Client Characteristic Configuration of HRS MeasurementDeclaration */
-    GATT_CCC(BT_GATT_PERM_READ | BT_GATT_PERM_WRITE), 
-    /* HRS Body Charatristic Declaration */
+    GATT_CCC(BT_GATT_PERM_READ | BT_GATT_PERM_WRITE),
+    /* HRS Body Characteristic Declaration */
     GATT_CHARACTERISTIC(UUID_HRS_BODY_SENSOR, BT_GATT_CHRC_INDICATE, BT_GATT_PERM_READ),
-    /* HRS Control Charatristic Declaration */
+    /* HRS Control Characteristic Declaration */
     GATT_CHARACTERISTIC(UUID_HRS_CONTROL_POINT, BT_GATT_CHRC_INDICATE, BT_GATT_PERM_NONE),
 };
 /*******************************************************************************
@@ -84,16 +84,16 @@ void peripheral_hrs_start(void)
     {
         is_started = true;
         hrs_init();
-        printf("HRS profile at host side starting...\n");
+        PRINTF("HRS profile at host side starting...\n");
         return;
     }
-    printf("HRS profile at host side already started\n");
+    PRINTF("HRS profile at host side already started\n");
     return;
 }
 
 void peripheral_hrs_indicate(uint8_t value)
 {
-    hrs_cccd_written = (value == BT_GATT_CCC_NOTIFY) ? true : false;
+    hrs_ccc_written = (value == BT_GATT_CCC_NOTIFY) ? true : false;
 }
 
 static void peripheral_hrs_task(void *pvParameters)
@@ -111,7 +111,7 @@ static void peripheral_hrs_task(void *pvParameters)
 
     /*Wait for command response semaphore.*/
     mcu_get_command_resp_sem();
-    printf("Send 'ble-host-svc-add prim 180d chrc 2a37 10 00 ccc 2902 03 chrc 2a38 20 01 chrc 2a39 20 00 start' to add HRS profile to ncp device side\n");
+    PRINTF("Send 'ble-host-svc-add prim 180d chrc 2a37 10 00 ccc 2902 03 chrc 2a38 20 01 chrc 2a39 20 00 start' to add HRS profile to ncp device side\n");
 
     do
     {
@@ -181,15 +181,15 @@ static void peripheral_hrs_task(void *pvParameters)
 
     while(1)
     {
-        if(hrs_cccd_written)
+        if(hrs_ccc_written)
         {
-            /* Heartrate measurements simulation */
-            heartrate++;
-            if (heartrate == 160U) {
-                heartrate = 90U;
+            /* Heart rate measurements simulation */
+            heart_rate++;
+            if (heart_rate == 160U) {
+                heart_rate = 90U;
             }
             hrm[0] = 0x06; /* uint8, sensor contact */
-            hrm[1] = heartrate;
+            hrm[1] = heart_rate;
 
             hrs_value.uuid_length = 2;
             hrs_value.uuid[0] = (UUID_HRS_MEASUREMENT >> 0) & 0xFF;
@@ -198,9 +198,9 @@ static void peripheral_hrs_task(void *pvParameters)
             memcpy(&hrs_value.value, hrm, 2);
 
             //send Set value command
-            write_charateristic_command_local(&hrs_value);
+            write_characteristic_command_local(&hrs_value);
             ncp_host_send_tlv_command();
-            peripheral_hrs_event_get(HRS_EVENT_WRITE_CHRA_RSP);
+            peripheral_hrs_event_get(HRS_EVENT_WRITE_CHAR_RSP);
         }
 
 
@@ -213,4 +213,4 @@ void hrs_init(void)
     (void)OSA_EventCreate(hrs_events, 1U);
     (void)OSA_TaskCreate((osa_task_handle_t)hrs_service_thread, OSA_TASK(peripheral_hrs_task), (osa_task_param_t)NULL);
 }
-#endif
+#endif /* CONFIG_NCP_HRS */

@@ -253,6 +253,7 @@
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1015DAF5A</state>
+          <state>MIMXRT1015_SERIES</state>
           <state>DEBUG_CONSOLE_TRANSFER_NON_BLOCKING</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>USB_DEVICE_CONFIG_CDC_ACM=1</state>
@@ -385,16 +386,16 @@
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/periph</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/xip</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/utilities</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager/usb_cdc_adapter</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/device</state>
+          <state>$PROJ_DIR$/../../../../../middleware/usb/config/device/ehci</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/device/class</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/phy</state>
         </option>
@@ -582,6 +583,7 @@
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1015DAF5A</state>
+          <state>MIMXRT1015_SERIES</state>
           <state>DEBUG_CONSOLE_TRANSFER_NON_BLOCKING</state>
         </option>
         <option>
@@ -682,16 +684,16 @@
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/periph</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/xip</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/utilities</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager/usb_cdc_adapter</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/device</state>
+          <state>$PROJ_DIR$/../../../../../middleware/usb/config/device/ehci</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/device/class</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/phy</state>
         </option>
@@ -1410,6 +1412,7 @@
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1015DAF5A</state>
+          <state>MIMXRT1015_SERIES</state>
           <state>DEBUG_CONSOLE_TRANSFER_NON_BLOCKING</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>USB_DEVICE_CONFIG_CDC_ACM=1</state>
@@ -1542,16 +1545,16 @@
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/periph</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/xip</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/utilities</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager/usb_cdc_adapter</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/device</state>
+          <state>$PROJ_DIR$/../../../../../middleware/usb/config/device/ehci</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/device/class</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/phy</state>
         </option>
@@ -1739,6 +1742,7 @@
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1015DAF5A</state>
+          <state>MIMXRT1015_SERIES</state>
           <state>DEBUG_CONSOLE_TRANSFER_NON_BLOCKING</state>
         </option>
         <option>
@@ -1839,16 +1843,16 @@
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/periph</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/xip</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/utilities</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager/usb_cdc_adapter</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/device</state>
+          <state>$PROJ_DIR$/../../../../../middleware/usb/config/device/ehci</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/device/class</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/phy</state>
         </option>
@@ -2565,6 +2569,7 @@
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1015DAF5A</state>
+          <state>MIMXRT1015_SERIES</state>
           <state>DEBUG_CONSOLE_TRANSFER_NON_BLOCKING</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>USB_DEVICE_CONFIG_CDC_ACM=1</state>
@@ -2697,16 +2702,16 @@
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/periph</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/xip</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/utilities</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager/usb_cdc_adapter</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/device</state>
+          <state>$PROJ_DIR$/../../../../../middleware/usb/config/device/ehci</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/device/class</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/phy</state>
         </option>
@@ -2894,6 +2899,7 @@
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1015DAF5A</state>
+          <state>MIMXRT1015_SERIES</state>
           <state>DEBUG_CONSOLE_TRANSFER_NON_BLOCKING</state>
         </option>
         <option>
@@ -2994,16 +3000,16 @@
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/periph</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/xip</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/utilities</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager/usb_cdc_adapter</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/device</state>
+          <state>$PROJ_DIR$/../../../../../middleware/usb/config/device/ehci</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/device/class</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/phy</state>
         </option>
@@ -3722,6 +3728,7 @@
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1015DAF5A</state>
+          <state>MIMXRT1015_SERIES</state>
           <state>DEBUG_CONSOLE_TRANSFER_NON_BLOCKING</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>USB_DEVICE_CONFIG_CDC_ACM=1</state>
@@ -3854,16 +3861,16 @@
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/periph</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/xip</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/utilities</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager/usb_cdc_adapter</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/device</state>
+          <state>$PROJ_DIR$/../../../../../middleware/usb/config/device/ehci</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/device/class</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/phy</state>
         </option>
@@ -4051,6 +4058,7 @@
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1015DAF5A</state>
+          <state>MIMXRT1015_SERIES</state>
           <state>DEBUG_CONSOLE_TRANSFER_NON_BLOCKING</state>
         </option>
         <option>
@@ -4151,16 +4159,16 @@
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/periph</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/xip</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/utilities</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager/usb_cdc_adapter</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/device</state>
+          <state>$PROJ_DIR$/../../../../../middleware/usb/config/device/ehci</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/device/class</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/phy</state>
         </option>
@@ -4634,6 +4642,18 @@
     <file>
       <name>$PROJ_DIR$/../usb_device_board_config.h</name>
     </file>
+    <group>
+      <name>config</name>
+      <group>
+        <name>device</name>
+        <group>
+          <name>ehci</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/usb/config/device/ehci/usb_device_config.h</name>
+          </file>
+        </group>
+      </group>
+    </group>
     <file>
       <name>$PROJ_DIR$/../fsl_debug_console_conf.h</name>
     </file>
@@ -4956,10 +4976,10 @@
   <group>
     <name>utilities</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1015/utilities/fsl_assert.h</name>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1015/utilities/debug_console/fsl_assert.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1015/utilities/fsl_assert.c</name>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1015/utilities/debug_console/fsl_assert.c</name>
     </file>
     <group>
       <name>str</name>
@@ -5039,13 +5059,13 @@
     <group>
       <name>osa</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../components/osa/fsl_os_abstraction.h</name>
-      </file>
-      <file>
         <name>$PROJ_DIR$/../../../../../components/osa/fsl_os_abstraction_bm.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../components/osa/fsl_os_abstraction_bm.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/osa/fsl_os_abstraction.h</name>
       </file>
     </group>
   </group>
@@ -5119,6 +5139,9 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../example_board_readme.md</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../examples_shared_readme.md</name>
     </file>
   </group>
 </project>

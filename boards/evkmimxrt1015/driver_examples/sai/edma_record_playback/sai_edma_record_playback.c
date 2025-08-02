@@ -18,7 +18,7 @@
 #define BUFFER_SIZE   (1024U)
 #define BUFFER_NUMBER (4U)
 #ifndef DEMO_CODEC_VOLUME
-#define DEMO_CODEC_VOLUME 100U
+#define DEMO_CODEC_VOLUME 80U
 #endif
 /*******************************************************************************
  * Prototypes

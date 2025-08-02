@@ -1,5 +1,5 @@
 /*
- * Copyright  2017-2019 NXP
+ * Copyright  2017-2025 NXP
  * All rights reserved.
  *
  *
@@ -50,7 +50,7 @@ typedef uint32_t pixel_t;
 #define APP_GREEN 0x0000FF00U
 #define APP_BLUE  0x000000FFU
 #if (!(defined(FSL_FEATURE_PXP_HAS_NO_EXTEND_PIXEL_FORMAT) && FSL_FEATURE_PXP_HAS_NO_EXTEND_PIXEL_FORMAT)) && \
-    (!(defined(FSL_FEATURE_PXP_V3) && FSL_FEATURE_PXP_V3))
+    (!(defined(FSL_FEATURE_PXP_V3) && FSL_FEATURE_PXP_V3)) && (!(defined(FSL_FEATURE_PXP_V4) && FSL_FEATURE_PXP_V4))
 #define APP_PXP_PS_FORMAT kPXP_PsPixelFormatARGB8888
 #else
 #define APP_PXP_PS_FORMAT kPXP_PsPixelFormatRGB888
@@ -167,7 +167,7 @@ static void APP_InitPxp(void)
         .pitchBytes  = APP_PS_SIZE * APP_BPP,
     };
 
-#if defined(FSL_FEATURE_PXP_V3) && FSL_FEATURE_PXP_V3
+#if (defined(FSL_FEATURE_PXP_V3) && FSL_FEATURE_PXP_V3) || (defined(FSL_FEATURE_PXP_V4) && FSL_FEATURE_PXP_V4)
     PXP_SetProcessSurfaceBackGroundColor(APP_PXP, 0U, 0U);
 #else
     PXP_SetProcessSurfaceBackGroundColor(APP_PXP, 0U);
@@ -175,6 +175,9 @@ static void APP_InitPxp(void)
 
     PXP_SetProcessSurfaceBufferConfig(APP_PXP, &psBufferConfig);
     PXP_SetProcessSurfacePosition(APP_PXP, APP_PS_ULC_X, APP_PS_ULC_Y, APP_PS_LRC_X, APP_PS_LRC_Y);
+#if defined(FSL_FEATURE_PXP_V4) && FSL_FEATURE_PXP_V4
+    PXP_SetProcessSurfaceBufferSize(APP_PXP, APP_PS_SIZE - 1, APP_PS_SIZE - 1);
+#endif /* FSL_FEATURE_PXP_V4 */
 
     /* Disable AS. */
     PXP_SetAlphaSurfacePosition(APP_PXP, 0xFFFFU, 0xFFFFU, 0U, 0U);
@@ -194,9 +197,9 @@ static void APP_InitPxp(void)
 
     /* Route the path mux to enable rotation engine. */
 #if PXP_USE_PATH
-#if defined(FSL_FEATURE_PXP_V3) && FSL_FEATURE_PXP_V3
+#if (defined(FSL_FEATURE_PXP_V3) && FSL_FEATURE_PXP_V3) || (defined(FSL_FEATURE_PXP_V4) && FSL_FEATURE_PXP_V4)
     PXP_SetPath(APP_PXP, kPXP_Mux0SelectProcessSurfaceEngine);
-#endif /* FSL_FEATURE_PXP_V3 */
+#endif /* FSL_FEATURE_PXP_V3 || FSL_FEATURE_PXP_V4 */
     PXP_SetPath(APP_PXP, kPXP_Mux3SelectRotation1Engine);
 #endif
 }

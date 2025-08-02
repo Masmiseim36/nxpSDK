@@ -33,6 +33,30 @@ message("${CMAKE_CURRENT_LIST_FILE} component is included.")
     )
     endif()
 
+        if((CONFIG_TOOLCHAIN STREQUAL armgcc OR CONFIG_TOOLCHAIN STREQUAL mcux) AND CONFIG_CORE STREQUAL cm4f)
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    -Wl,--start-group
+          ${CMAKE_CURRENT_LIST_DIR}/emWin_library/ARMGCC/libemWin_M4F.a
+        -Wl,--end-group
+    )
+    endif()
+
+        if(CONFIG_TOOLCHAIN STREQUAL iar AND CONFIG_CORE STREQUAL cm4f)
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    -Wl,--start-group
+          ${CMAKE_CURRENT_LIST_DIR}/emWin_library/IAR/emWin_M4F.a
+        -Wl,--end-group
+    )
+    endif()
+
+        if(CONFIG_TOOLCHAIN STREQUAL mdk AND CONFIG_CORE STREQUAL cm4f)
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    -Wl,--start-group
+          ${CMAKE_CURRENT_LIST_DIR}/emWin_library/Keil/emWin_M4F.lib
+        -Wl,--end-group
+    )
+    endif()
+
         if((CONFIG_TOOLCHAIN STREQUAL armgcc OR CONFIG_TOOLCHAIN STREQUAL mcux) AND CONFIG_CORE STREQUAL cm7f)
     target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE
     -Wl,--start-group

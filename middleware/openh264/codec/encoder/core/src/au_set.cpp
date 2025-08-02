@@ -134,7 +134,7 @@ static int32_t WelsCheckNumRefSetting (SLogContext* pLogCtx, SWelsSvcCodingParam
 
 int32_t WelsCheckRefFrameLimitationNumRefFirst (SLogContext* pLogCtx, SWelsSvcCodingParam* pParam) {
 
-  if (WelsCheckNumRefSetting (pLogCtx, pParam, true)) {
+  if (WelsCheckNumRefSetting (pLogCtx, pParam, false)) {
     // we take num-ref as the honored setting but it conflicts with temporal and LTR
     return ENC_RETURN_UNSUPPORTED_PARA;
   }
@@ -295,8 +295,15 @@ int32_t WelsWriteSpsSyntax (SWelsSPS* pSps, SBitStringAux* pBitStringAux, int32_
   }
 
   BsWriteUE (pLocalBitStringAux, pSps->uiLog2MaxFrameNum - 4);  // log2_max_frame_num_minus4
-  BsWriteUE (pLocalBitStringAux, 0/*pSps->uiPocType*/);         // pic_order_cnt_type
-  BsWriteUE (pLocalBitStringAux, pSps->iLog2MaxPocLsb - 4);     // log2_max_pic_order_cnt_lsb_minus4
+  BsWriteUE (pLocalBitStringAux, pSps->uiPocType);              // pic_order_cnt_type
+  if (pSps->uiPocType == 0) {
+    BsWriteUE (pLocalBitStringAux, pSps->iLog2MaxPocLsb - 4);   // log2_max_pic_order_cnt_lsb_minus4
+  } else if (pSps->uiPocType == 1) {
+    // TODO: implement
+    assert (0);
+  } else {
+    // no-op for uiPocType 2.
+  }
 
   BsWriteUE (pLocalBitStringAux, pSps->iNumRefFrames);          // max_num_ref_frames
   BsWriteOneBit (pLocalBitStringAux, pSps->bGapsInFrameNumValueAllowedFlag); //gaps_in_frame_numvalue_allowed_flag
@@ -304,7 +311,11 @@ int32_t WelsWriteSpsSyntax (SWelsSPS* pSps, SBitStringAux* pBitStringAux, int32_
   BsWriteUE (pLocalBitStringAux, pSps->iMbHeight - 1);          // pic_height_in_map_units_minus1
   BsWriteOneBit (pLocalBitStringAux, true/*pSps->bFrameMbsOnlyFlag*/);  // bFrameMbsOnlyFlag
 
-  BsWriteOneBit (pLocalBitStringAux, 0/*pSps->bDirect8x8InferenceFlag*/);       // direct_8x8_inference_flag
+  uint8_t d8x8 = 0;
+  if (pSps->iLevelIdc >= 30)
+    d8x8 = 1;
+  BsWriteOneBit (pLocalBitStringAux, d8x8/*pSps->bDirect8x8InferenceFlag*/);       // direct_8x8_inference_flag
+
   BsWriteOneBit (pLocalBitStringAux, pSps->bFrameCroppingFlag); // bFrameCroppingFlag
   if (pSps->bFrameCroppingFlag) {
     BsWriteUE (pLocalBitStringAux, pSps->sFrameCrop.iCropLeft);         // frame_crop_left_offset
@@ -489,6 +500,7 @@ int32_t WelsInitSps (SWelsSPS* pSps, SSpatialLayerConfig* pLayerParam, SSpatialL
 
   //max value of both iFrameNum and POC are 2^16-1, in our encoder, iPOC=2*iFrameNum, so max of iFrameNum should be 2^15-1.--
   pSps->uiLog2MaxFrameNum = 15;//16;
+  pSps->uiPocType = 2;
   pSps->iLog2MaxPocLsb = 1 + pSps->uiLog2MaxFrameNum;
 
   pSps->iNumRefFrames = kiNumRefFrame;        /* min pRef size when fifo pRef operation*/

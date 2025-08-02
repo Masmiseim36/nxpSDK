@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 NXP
+ * Copyright 2022, 2025 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -11,6 +11,7 @@
 #include "fsl_shell.h"
 #include "lwip/sockets.h"
 
+void socket_task_set_shell(shell_handle_t shell_handle);
 int socket_task_init(int is_tcp, const char *ip_str, const char *port_str);
 void socket_task_terminate(void);
 void socket_task_print_ips(void);

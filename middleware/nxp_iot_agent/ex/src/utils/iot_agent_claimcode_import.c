@@ -1,4 +1,4 @@
-/* Copyright 2023-2024 NXP
+/* Copyright 2023-2025 NXP
  *
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -7,7 +7,7 @@
 #include "nxp_iot_agent_status.h"
 #include "iot_agent_claimcode_import.h"
 
-#if NXP_IOT_AGENT_HAVE_PSA_IMPL_TFM
+#if defined(NXP_IOT_AGENT_HAVE_PSA_IMPL_TFM) && (NXP_IOT_AGENT_HAVE_PSA_IMPL_TFM == 1)
 #include "nxp_iot_agent_macros.h"
 #include <nxp_iot_agent_macros_psa.h>
 #include "nxp_iot_agent_utils.h"
@@ -59,4 +59,4 @@ exit:
     return agent_status;
 }
 
-#endif // NXP_IOT_AGENT_HAVE_PSA_IMPL_TFM
+#endif //#if defined(NXP_IOT_AGENT_HAVE_PSA_IMPL_TFM) && (NXP_IOT_AGENT_HAVE_PSA_IMPL_TFM == 1)

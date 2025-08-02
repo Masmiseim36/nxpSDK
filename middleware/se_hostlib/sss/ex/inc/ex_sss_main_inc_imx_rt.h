@@ -30,19 +30,19 @@
 #include "ksdk_mbedtls.h"
 #endif
 
-#if defined(CPU_MIMXRT1062DVL6A) || defined(CPU_MIMXRT1062DVL6B)
+#if defined(MIMXRT1062_SERIES) || defined (MIMXRT1061_SERIES)
 #include "fsl_dcp.h"
 #include "fsl_trng.h"
 #endif
 #include "fsl_iomuxc.h"
 
-#if defined(CPU_MIMXRT1062DVL6A) || defined(CPU_MIMXRT1062DVL6B)
+#if defined(MIMXRT1062_SERIES) || defined (MIMXRT1061_SERIES)
 #define TRNG0 TRNG
 /* Clock divider for master lpi2c clock source */
 #define LPI2C_CLOCK_SOURCE_DIVIDER (5U)
 #endif
 
-#if defined(CPU_MIMXRT1176DVMAA_cm7)
+#if defined(MIMXRT1176_cm7_SERIES) || defined(MIMXRT1175_cm7_SERIES) || defined (MIMXRT1173_cm7_SERIES) || defined (MIMXRT1172_SERIES) || defined (MIMXRT1171_SERIES)
 void IOMUXC_SelectENETClock(void)
 {
 #ifdef EXAMPLE_USE_100M_ENET_PORT
@@ -52,14 +52,14 @@ void IOMUXC_SelectENETClock(void)
                                                                  bit0:GPR_ENET_TX_CLK_SEL(internal or OSC) */
 #endif
 }
-#endif // CPU_MIMXRT1176DVMAA_cm7
+#endif // MIMXRT1176_cm7_SERIES
 
 void BOARD_InitModuleClock(void)
 {
-#if defined(CPU_MIMXRT1062DVL6A) || defined(CPU_MIMXRT1062DVL6B)
+#if defined(MIMXRT1062_SERIES) || defined (MIMXRT1061_SERIES)
     const clock_enet_pll_config_t config = {.enableClkOutput = true, .enableClkOutput25M = false, .loopDivider = 1};
     CLOCK_InitEnetPll(&config);
-#elif defined(CPU_MIMXRT1176DVMAA_cm7)
+#elif defined(MIMXRT1176_cm7_SERIES) || defined(MIMXRT1175_cm7_SERIES) || defined (MIMXRT1173_cm7_SERIES) || defined (MIMXRT1172_SERIES) || defined (MIMXRT1171_SERIES)
     const clock_sys_pll1_config_t sysPll1Config = {
         .pllDiv2En = true,
     };
@@ -78,7 +78,7 @@ void BOARD_InitModuleClock(void)
     rootCfg.mux = 7;
     rootCfg.div = 2;
     CLOCK_SetRootClock(kCLOCK_Root_Bus, &rootCfg); /* Generate 198M bus clock. */
-#endif // CPU_MIMXRT1062DVL6A || CPU_MIMXRT1062DVL6B
+#endif // MIMXRT1062_SERIES
 }
 
 void ex_sss_main_ksdk_bm()
@@ -87,17 +87,17 @@ void ex_sss_main_ksdk_bm()
     _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
     _CrtSetReportMode(_CRT_ERROR, _CRTDBG_MODE_DEBUG);
 #endif
-#if defined(CPU_MIMXRT1062DVL6A) || defined(CPU_MIMXRT1062DVL6B)
+#if defined(MIMXRT1062_SERIES) || defined (MIMXRT1061_SERIES)
     dcp_config_t dcpConfig;
     trng_config_t trngConfig;
-#endif // CPU_MIMXRT1062DVL6A || CPU_MIMXRT1062DVL6B
+#endif // MIMXRT1062_SERIES
 
     BOARD_ConfigMPU();
     BOARD_InitBootPins();
     BOARD_BootClockRUN();
     BOARD_InitDebugConsole();
     BOARD_InitModuleClock();
-#if defined(CPU_MIMXRT1176DVMAA_cm7)
+#if defined(MIMXRT1176_cm7_SERIES) || defined(MIMXRT1175_cm7_SERIES) || defined (MIMXRT1173_cm7_SERIES) || defined (MIMXRT1172_SERIES) || defined (MIMXRT1171_SERIES)
     IOMUXC_SelectENETClock();
     gpio_pin_config_t gpio_config = {kGPIO_DigitalOutput, 0, kGPIO_NoIntmode};
 
@@ -125,12 +125,12 @@ void ex_sss_main_ksdk_bm()
     EnableIRQ(ENET_1G_MAC0_Tx_Rx_2_IRQn);
 #endif // EXAMPLE_USE_100M_ENET_PORT
 
-#endif // CPU_MIMXRT1176DVMAA_cm7
+#endif // MIMXRT1176_cm7_SERIES
 
     /* Data cache must be temporarily disabled to be able to use sdram */
     SCB_DisableDCache();
 
-#if defined(CPU_MIMXRT1062DVL6A) || defined(CPU_MIMXRT1062DVL6B)
+#if defined(MIMXRT1062_SERIES) || defined (MIMXRT1061_SERIES)
 
     CLOCK_SetDiv(kCLOCK_Lpi2cDiv, LPI2C_CLOCK_SOURCE_DIVIDER);
 
@@ -146,7 +146,7 @@ void ex_sss_main_ksdk_bm()
 
     /* Initialize TRNG */
     TRNG_Init(TRNG0, &trngConfig);
-#endif // CPU_MIMXRT1062DVL6A || CPU_MIMXRT1062DVL6B
+#endif // MIMXRT1062_SERIES
 
     axReset_HostConfigure();
     axReset_PowerUp();
@@ -163,7 +163,7 @@ void ex_sss_main_ksdk_bm()
 
 void ex_sss_main_ksdk_boot_rtos_task()
 {
-#if defined(CPU_MIMXRT1062DVL6A) || defined(CPU_MIMXRT1062DVL6B)
+#if defined(MIMXRT1062_SERIES) || defined (MIMXRT1061_SERIES)
 #if defined(MBEDTLS) && (SSS_HAVE_MBEDTLS_2_X)
     CRYPTO_InitHardware();
 #endif /* defined(MBEDTLS) */
@@ -176,7 +176,7 @@ void ex_sss_main_ksdk_boot_rtos_task()
     GPIO_WritePinOutput(GPIO1, 9, 0);
     sm_sleep(2);
     GPIO_WritePinOutput(GPIO1, 9, 1);
-#endif // CPU_MIMXRT1062DVL6A || CPU_MIMXRT1062DVL6B
+#endif // MIMXRT1062_SERIES
 }
 
 void ex_sss_main_ksdk_success()

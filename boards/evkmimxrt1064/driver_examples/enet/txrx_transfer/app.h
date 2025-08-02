@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2023 NXP
+ * Copyright 2018-2023, 2025 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -20,7 +20,6 @@ extern phy_ksz8081_resource_t g_phy_resource;
 #define EXAMPLE_PHY_OPS               &phyksz8081_ops
 #define EXAMPLE_PHY_RESOURCE          &g_phy_resource
 #define EXAMPLE_CLOCK_FREQ            CLOCK_GetFreq(kCLOCK_IpgClk)
-#define EXAMPLE_PHY_LINK_INTR_SUPPORT (1U)
 /*${macro:end}*/
 
 /*******************************************************************************

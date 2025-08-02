@@ -17,6 +17,7 @@ SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_DEBUG " \
     -D__STARTUP_CLEAR_BSS \
     -DMCUXPRESSO_SDK \
     -DCPU_MIMXRT1062DVL6B \
+    -DMIMXRT1062_SERIES \
     -DOSA_USED \
     -g \
     -mthumb \
@@ -30,6 +31,7 @@ SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_RELEASE " \
     -D__STARTUP_CLEAR_BSS \
     -DMCUXPRESSO_SDK \
     -DCPU_MIMXRT1062DVL6B \
+    -DMIMXRT1062_SERIES \
     -DOSA_USED \
     -mthumb \
     -mcpu=cortex-m7 \
@@ -42,6 +44,7 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG " \
     -DDEBUG \
     -DXIP_BOOT_HEADER_ENABLE=1 \
     -DXIP_EXTERNAL_FLASH=1 \
+    -D__STARTUP_CLEAR_BSS \
     -DUSE_RTOS=1 \
     -DOSA_USED \
     -DUSB_HOST_CONFIG_LOW_POWER_MODE=1 \
@@ -49,8 +52,10 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG " \
     -DMCUX_META_BUILD \
     -DMCUXPRESSO_SDK \
     -DCPU_MIMXRT1062DVL6B \
+    -DMIMXRT1062_SERIES \
     -DSERIAL_PORT_TYPE_UART=1 \
     -DTIMER_PORT_TYPE_PIT=1 \
+    -DWIFI_BOARD_RW610 \
     -DSDIO_ENABLED=1 \
     -DSDK_OS_FREE_RTOS \
     -g \
@@ -64,6 +69,8 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG " \
     -mapcs \
     -std=gnu99 \
     -mcpu=cortex-m7 \
+    -fomit-frame-pointer \
+    -Wno-unused-function \
     ${FPU} \
     ${DEBUG_CONSOLE_CONFIG} \
 ")
@@ -74,6 +81,7 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE " \
     -DNDEBUG \
     -DXIP_BOOT_HEADER_ENABLE=1 \
     -DXIP_EXTERNAL_FLASH=1 \
+    -D__STARTUP_CLEAR_BSS \
     -DUSE_RTOS=1 \
     -DOSA_USED \
     -DUSB_HOST_CONFIG_LOW_POWER_MODE=1 \
@@ -81,8 +89,10 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE " \
     -DMCUX_META_BUILD \
     -DMCUXPRESSO_SDK \
     -DCPU_MIMXRT1062DVL6B \
+    -DMIMXRT1062_SERIES \
     -DSERIAL_PORT_TYPE_UART=1 \
     -DTIMER_PORT_TYPE_PIT=1 \
+    -DWIFI_BOARD_RW610 \
     -DSDIO_ENABLED=1 \
     -DSDK_OS_FREE_RTOS \
     -Os \
@@ -95,6 +105,8 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE " \
     -mapcs \
     -std=gnu99 \
     -mcpu=cortex-m7 \
+    -fomit-frame-pointer \
+    -Wno-unused-function \
     ${FPU} \
     ${DEBUG_CONSOLE_CONFIG} \
 ")
@@ -105,10 +117,12 @@ SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG " \
     -DMCUX_META_BUILD \
     -DMCUXPRESSO_SDK \
     -DCPU_MIMXRT1062DVL6B \
+    -DMIMXRT1062_SERIES \
     -DOSA_USED \
     -DSERIAL_PORT_TYPE_UART=1 \
     -DTIMER_PORT_TYPE_PIT=1 \
     -DUSE_RTOS=1 \
+    -DWIFI_BOARD_RW610 \
     -DSDK_OS_FREE_RTOS \
     -g \
     -O0 \
@@ -132,10 +146,12 @@ SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE " \
     -DMCUX_META_BUILD \
     -DMCUXPRESSO_SDK \
     -DCPU_MIMXRT1062DVL6B \
+    -DMIMXRT1062_SERIES \
     -DOSA_USED \
     -DSERIAL_PORT_TYPE_UART=1 \
     -DTIMER_PORT_TYPE_PIT=1 \
     -DUSE_RTOS=1 \
+    -DWIFI_BOARD_RW610 \
     -DSDK_OS_FREE_RTOS \
     -Os \
     -Wall \
@@ -169,9 +185,6 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_DEBUG " \
     -mapcs \
     -Wl,--gc-sections \
     -Wl,-static \
-    -Wl,-z \
-    -Wl,muldefs \
-    -Wl,-Map=output.map \
     -Wl,--print-memory-usage \
     -mcpu=cortex-m7 \
     ${FPU} \
@@ -195,9 +208,6 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE " \
     -mapcs \
     -Wl,--gc-sections \
     -Wl,-static \
-    -Wl,-z \
-    -Wl,muldefs \
-    -Wl,-Map=output.map \
     -Wl,--print-memory-usage \
     -mcpu=cortex-m7 \
     ${FPU} \

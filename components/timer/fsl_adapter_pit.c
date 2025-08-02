@@ -206,3 +206,16 @@ void HAL_TimerEnterLowpower(hal_timer_handle_t halTimerHandle)
 {
     assert(halTimerHandle);
 }
+
+hal_timer_time_t HAL_TimerGetCurrentTicks(hal_timer_handle_t halTimerHandle)
+{
+    /* NOT IMPLEMENTED */
+    assert(false);
+    return 0;
+}
+
+void HAL_TimerUpdateMatchValueInTicks(hal_timer_handle_t halTimerHandle, hal_timer_time_t matchValue)
+{
+    /* NOT IMPLEMENTED */
+    assert(false); 
+}

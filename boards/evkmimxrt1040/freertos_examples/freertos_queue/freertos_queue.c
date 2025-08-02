@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2025 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -84,7 +84,7 @@ static void write_task_1(void *pvParameters)
     uint32_t i = 0;
     for (i = 0; i < 5; i++)
     {
-        sprintf(log, "Task1 Message %d", (int)i);
+        (void)sprintf(log, "Task1 Message %d", (int)i);
         log_add(log);
         taskYIELD();
     }
@@ -100,7 +100,7 @@ static void write_task_2(void *pvParameters)
     uint32_t i = 0;
     for (i = 0; i < 5; i++)
     {
-        sprintf(log, "Task2 Message %d", (int)i);
+        (void)sprintf(log, "Task2 Message %d", (int)i);
         log_add(log);
         taskYIELD();
     }
@@ -151,6 +151,6 @@ static void log_task(void *pvParameters)
             PRINTF("Failed to receive queue.\r\n");
         }
         PRINTF("Log %d: %s\r\n", counter, log);
-        counter++;
+        (counter < UINT32_MAX) ? counter++ : (counter = UINT32_MAX);
     }
 }

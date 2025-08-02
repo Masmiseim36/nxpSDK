@@ -21,7 +21,7 @@ extern "C" {
 * Definitions
 ******************************************************************************/
 /** BAS write characteristic response event ID */
-#define BAS_EVENT_WRITE_CHRA_RSP 0x01
+#define BAS_EVENT_WRITE_CHAR_RSP 0x01
 
 /** Battery Service UUID value */
 #define UUID_BAS                 0x180f
@@ -40,33 +40,33 @@ extern "C" {
  ******************************************************************************/
 /**
  * Init BAS Service
- * 
+ *
  */
 void bas_init(void);
 
 /**
  * Count binary semaphore to wait for BAS write characteristic response event
- * 
+ *
  * \param[in] flag flag to wait
- * 
+ *
  * \return void
- * 
+ *
  */
 void peripheral_bas_event_put(osa_event_flags_t flag);
 
 /**
  * Start peripheral BAS Service
- * 
+ *
  */
 void peripheral_bas_start(void);
 
 /**
  * Indicate BAS characteristic value change event 
- * 
+ *
  * \param[in] value bas value
- * 
+ *
  * \return void
- * 
+ *
  */
 void peripheral_bas_indicate(uint8_t value);
 

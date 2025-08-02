@@ -328,9 +328,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../mcux_config.h -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
-              <Define>DEBUG, XIP_BOOT_HEADER_ENABLE=1, XIP_BOOT_HEADER_DCD_ENABLE=1, XIP_EXTERNAL_FLASH=1, USE_SDRAM=1, SKIP_SYSCLK_INIT=1, DATA_SECTION_IS_CACHEABLE=1, USE_RTOS=1, MBEDTLS_CONFIG_FILE='\"aws_mbedtls_config.h\"', DEBUG_CONSOLE_TRANSFER_NON_BLOCKING, SERIAL_MANAGER_NON_BLOCKING_MODE, DISABLE_LOGGING, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1021DAG5A, MFLASH_FILE_BASEADDR=5767168, LWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1, LWIP_SUPPORT_CUSTOM_PBUF=1, CHECKSUM_GEN_UDP=1, CHECKSUM_GEN_TCP=1, CHECKSUM_GEN_ICMP=1, CHECKSUM_GEN_ICMP6=1, CHECKSUM_CHECK_UDP=1, CHECKSUM_CHECK_TCP=1, CHECKSUM_CHECK_ICMP=1, CHECKSUM_CHECK_ICMP6=1, SDK_OS_FREE_RTOS, MQTT_AGENT_DO_NOT_USE_CUSTOM_CONFIG, MBEDTLS_THREADING_ALT, MBEDTLS_THREADING_C</Define>
+              <Define>DEBUG, XIP_BOOT_HEADER_ENABLE=1, XIP_BOOT_HEADER_DCD_ENABLE=1, XIP_EXTERNAL_FLASH=1, USE_SDRAM=1, SKIP_SYSCLK_INIT=1, DATA_SECTION_IS_CACHEABLE=1, USE_RTOS=1, MBEDTLS_CONFIG_FILE='\"aws_mbedtls_config.h\"', DEBUG_CONSOLE_TRANSFER_NON_BLOCKING, SERIAL_MANAGER_NON_BLOCKING_MODE, DISABLE_LOGGING, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1021DAG5A, MIMXRT1021_SERIES, MFLASH_FILE_BASEADDR=5767168, LWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1, LWIP_SUPPORT_CUSTOM_PBUF=1, CHECKSUM_GEN_UDP=1, CHECKSUM_GEN_TCP=1, CHECKSUM_GEN_ICMP=1, CHECKSUM_GEN_ICMP6=1, CHECKSUM_CHECK_UDP=1, CHECKSUM_CHECK_TCP=1, CHECKSUM_CHECK_ICMP=1, CHECKSUM_CHECK_ICMP6=1, SDK_OS_FREE_RTOS, MQTT_AGENT_DO_NOT_USE_CUSTOM_CONFIG, MBEDTLS_THREADING_ALT, MBEDTLS_THREADING_C</Define>
               <Undefine/>
-              <IncludePath>..;../../../xip;../../../../../devices/MIMXRT1021/drivers;../../../../../CMSIS/Core/Include;../../../../../CMSIS/Core/Include/m-profile;../../../../../devices/MIMXRT1021;../../../../../devices/MIMXRT1021/periph;../../../../../devices/MIMXRT1021/xip;../../../../../components/aws_iot/kvstore;../../../../../components/aws_iot/logging;../../../../../components/aws_iot/mqtt_agent;../../../../../components/aws_iot/mqtt-agent-interface/include;../../../../../components/aws_iot/using_mbedtls_pkcs11;../../../../../devices/MIMXRT1021/utilities/debug_console_lite;../../../../../devices/MIMXRT1021/utilities/str;../../../../../components/gpio;../../../../../components/uart;../../../../../components/flash/mflash;../../../../../components/flash/mflash/mimxrt1021;../../../../../components/phy;../../../../../components/phy/device/phyksz8081;../../../../../components/silicon_id;../../../../../components/silicon_id/socs;../../../../../middleware/mbedtls/include;../../../../../middleware/mbedtls/library;../../../../../middleware/mbedtls/port/ksdk;../../../../../middleware/lwip/port;../../../../../middleware/lwip/src;../../../../../middleware/lwip/src/include;../../../../../middleware/lwip/src/include/lwip;../../../../../middleware/lwip/port/sys_arch/dynamic;../../../../../middleware/pkcs11;../../../../../middleware/aws_iot/device-shadow/template;../../../../../middleware/aws_iot/device-shadow/source/include;../../../../../rtos/freertos/freertos-kernel/include;../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../rtos/freertos/freertos-kernel/template;../../../../../rtos/freertos/backoffalgorithm/source/include;../../../../../rtos/freertos/corejson/source/include;../../../../../rtos/freertos/coremqtt/source/include;../../../../../rtos/freertos/coremqtt/source/interface;../../../../../rtos/freertos/coremqtt-agent/source/include;../../../../../rtos/freertos/corepkcs11/source/include;../../../../../rtos/freertos/corepkcs11/source/dependency/3rdparty/mbedtls_utils</IncludePath>
+              <IncludePath>..;../../../xip;../../../../../devices/MIMXRT1021/drivers;../../../../../CMSIS/Core/Include;../../../../../CMSIS/Core/Include/m-profile;../../../../../devices/MIMXRT1021;../../../../../devices/MIMXRT1021/periph;../../../../../devices/MIMXRT1021/xip;../../../../../components/aws_iot/kvstore;../../../../../components/aws_iot/logging;../../../../../components/aws_iot/mqtt_agent;../../../../../components/aws_iot/mqtt-agent-interface/include;../../../../../components/aws_iot/using_mbedtls_pkcs11;../../../../../devices/MIMXRT1021/utilities/debug_console_lite;../../../../../devices/MIMXRT1021/utilities/str;../../../../../components/silicon_id;../../../../../components/silicon_id/socs;../../../../../components/gpio;../../../../../components/uart;../../../../../components/phy;../../../../../components/phy/device/phyksz8081;../../../../../components/flash/mflash;../../../../../components/flash/mflash/mimxrt1021;../../../../../middleware/mbedtls/include;../../../../../middleware/mbedtls/library;../../../../../middleware/mbedtls/port/ksdk;../../../../../middleware/lwip/port;../../../../../middleware/lwip/src/include;../../../../../middleware/lwip/port/sys_arch/dynamic;../../../../../middleware/pkcs11;../../../../../middleware/aws_iot/device-shadow/template;../../../../../middleware/aws_iot/device-shadow/source/include;../../../../../rtos/freertos/freertos-kernel/include;../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../rtos/freertos/freertos-kernel/template;../../../../../rtos/freertos/backoffalgorithm/source/include;../../../../../rtos/freertos/corejson/source/include;../../../../../rtos/freertos/coremqtt/source/include;../../../../../rtos/freertos/coremqtt/source/interface;../../../../../rtos/freertos/coremqtt-agent/source/include;../../../../../rtos/freertos/corepkcs11/source/include;../../../../../rtos/freertos/corepkcs11/source/dependency/3rdparty/mbedtls_utils</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -346,9 +346,9 @@
             <uClangAs>1</uClangAs>
             <VariousControls>
               <MiscControls/>
-              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1021DAG5A</Define>
+              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1021DAG5A, MIMXRT1021_SERIES</Define>
               <Undefine/>
-              <IncludePath>..;../../../xip;../../../../../devices/MIMXRT1021/drivers;../../../../../CMSIS/Core/Include;../../../../../CMSIS/Core/Include/m-profile;../../../../../devices/MIMXRT1021;../../../../../devices/MIMXRT1021/periph;../../../../../devices/MIMXRT1021/xip;../../../../../components/aws_iot/kvstore;../../../../../components/aws_iot/logging;../../../../../components/aws_iot/mqtt_agent;../../../../../components/aws_iot/mqtt-agent-interface/include;../../../../../components/aws_iot/using_mbedtls_pkcs11;../../../../../devices/MIMXRT1021/utilities/debug_console_lite;../../../../../devices/MIMXRT1021/utilities/str;../../../../../components/gpio;../../../../../components/uart;../../../../../components/flash/mflash;../../../../../components/flash/mflash/mimxrt1021;../../../../../components/phy;../../../../../components/phy/device/phyksz8081;../../../../../components/silicon_id;../../../../../components/silicon_id/socs;../../../../../middleware/mbedtls/include;../../../../../middleware/mbedtls/library;../../../../../middleware/mbedtls/port/ksdk;../../../../../middleware/lwip/port;../../../../../middleware/lwip/src;../../../../../middleware/lwip/src/include;../../../../../middleware/lwip/src/include/lwip;../../../../../middleware/lwip/port/sys_arch/dynamic;../../../../../middleware/pkcs11;../../../../../middleware/aws_iot/device-shadow/template;../../../../../middleware/aws_iot/device-shadow/source/include;../../../../../rtos/freertos/freertos-kernel/include;../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../rtos/freertos/freertos-kernel/template;../../../../../rtos/freertos/backoffalgorithm/source/include;../../../../../rtos/freertos/corejson/source/include;../../../../../rtos/freertos/coremqtt/source/include;../../../../../rtos/freertos/coremqtt/source/interface;../../../../../rtos/freertos/coremqtt-agent/source/include;../../../../../rtos/freertos/corepkcs11/source/include;../../../../../rtos/freertos/corepkcs11/source/dependency/3rdparty/mbedtls_utils</IncludePath>
+              <IncludePath>..;../../../xip;../../../../../devices/MIMXRT1021/drivers;../../../../../CMSIS/Core/Include;../../../../../CMSIS/Core/Include/m-profile;../../../../../devices/MIMXRT1021;../../../../../devices/MIMXRT1021/periph;../../../../../devices/MIMXRT1021/xip;../../../../../components/aws_iot/kvstore;../../../../../components/aws_iot/logging;../../../../../components/aws_iot/mqtt_agent;../../../../../components/aws_iot/mqtt-agent-interface/include;../../../../../components/aws_iot/using_mbedtls_pkcs11;../../../../../devices/MIMXRT1021/utilities/debug_console_lite;../../../../../devices/MIMXRT1021/utilities/str;../../../../../components/silicon_id;../../../../../components/silicon_id/socs;../../../../../components/gpio;../../../../../components/uart;../../../../../components/phy;../../../../../components/phy/device/phyksz8081;../../../../../components/flash/mflash;../../../../../components/flash/mflash/mimxrt1021;../../../../../middleware/mbedtls/include;../../../../../middleware/mbedtls/library;../../../../../middleware/mbedtls/port/ksdk;../../../../../middleware/lwip/port;../../../../../middleware/lwip/src/include;../../../../../middleware/lwip/port/sys_arch/dynamic;../../../../../middleware/pkcs11;../../../../../middleware/aws_iot/device-shadow/template;../../../../../middleware/aws_iot/device-shadow/source/include;../../../../../rtos/freertos/freertos-kernel/include;../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../rtos/freertos/freertos-kernel/template;../../../../../rtos/freertos/backoffalgorithm/source/include;../../../../../rtos/freertos/corejson/source/include;../../../../../rtos/freertos/coremqtt/source/include;../../../../../rtos/freertos/coremqtt/source/interface;../../../../../rtos/freertos/coremqtt-agent/source/include;../../../../../rtos/freertos/corepkcs11/source/include;../../../../../rtos/freertos/corepkcs11/source/dependency/3rdparty/mbedtls_utils</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -424,11 +424,6 @@
               <FileName>demo_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../demo_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>freertos_tasks_c_additions.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../freertos_tasks_c_additions.h</FilePath>
             </File>
             <File>
               <FileName>kvstore_config.h</FileName>
@@ -1198,6 +1193,36 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>component/silicon_id</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_silicon_id.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_silicon_id.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_silicon_id_soc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/silicon_id/socs/rt10xx/fsl_silicon_id_soc.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_silicon_id_soc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/silicon_id/socs/fsl_silicon_id_soc.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>utilities/debug_console_lite</GroupName>
           <Files>
             <File>
@@ -1243,6 +1268,26 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>component/phy</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_phy.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/phy/fsl_phy.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_phyksz8081.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/phy/device/phyksz8081/fsl_phyksz8081.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_phyksz8081.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/phy/device/phyksz8081/fsl_phyksz8081.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>flash/mflash</GroupName>
           <Files>
             <File>
@@ -1274,56 +1319,6 @@
               <FileName>mflash_drv.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../components/flash/mflash/mimxrt1021/mflash_drv.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component/phy</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_phy.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/phy/fsl_phy.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_phyksz8081.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/phy/device/phyksz8081/fsl_phyksz8081.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_phyksz8081.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/phy/device/phyksz8081/fsl_phyksz8081.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component/silicon_id</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_silicon_id.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_silicon_id.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_silicon_id_soc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/silicon_id/socs/rt10xx/fsl_silicon_id_soc.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_silicon_id_soc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/silicon_id/socs/fsl_silicon_id_soc.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3940,6 +3935,11 @@
               <FileType>5</FileType>
               <FilePath>../../../../../rtos/freertos/freertos-kernel/include/timers.h</FilePath>
             </File>
+            <File>
+              <FileName>freertos_tasks_c_additions.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/freertos_tasks_c_additions.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -4214,6 +4214,11 @@
               <FileName>example_board_readme.md</FileName>
               <FileType>5</FileType>
               <FilePath>../example_board_readme.md</FilePath>
+            </File>
+            <File>
+              <FileName>examples_shared_readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../examples_shared_readme.md</FilePath>
             </File>
           </Files>
         </Group>
@@ -4544,9 +4549,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../mcux_config.h -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
-              <Define>NDEBUG, XIP_BOOT_HEADER_ENABLE=1, XIP_BOOT_HEADER_DCD_ENABLE=1, XIP_EXTERNAL_FLASH=1, USE_SDRAM=1, SKIP_SYSCLK_INIT=1, DATA_SECTION_IS_CACHEABLE=1, USE_RTOS=1, MBEDTLS_CONFIG_FILE='\"aws_mbedtls_config.h\"', DEBUG_CONSOLE_TRANSFER_NON_BLOCKING, SERIAL_MANAGER_NON_BLOCKING_MODE, DISABLE_LOGGING, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1021DAG5A, MFLASH_FILE_BASEADDR=5767168, LWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1, LWIP_SUPPORT_CUSTOM_PBUF=1, CHECKSUM_GEN_UDP=1, CHECKSUM_GEN_TCP=1, CHECKSUM_GEN_ICMP=1, CHECKSUM_GEN_ICMP6=1, CHECKSUM_CHECK_UDP=1, CHECKSUM_CHECK_TCP=1, CHECKSUM_CHECK_ICMP=1, CHECKSUM_CHECK_ICMP6=1, SDK_OS_FREE_RTOS, MQTT_AGENT_DO_NOT_USE_CUSTOM_CONFIG, MBEDTLS_THREADING_ALT, MBEDTLS_THREADING_C</Define>
+              <Define>NDEBUG, XIP_BOOT_HEADER_ENABLE=1, XIP_BOOT_HEADER_DCD_ENABLE=1, XIP_EXTERNAL_FLASH=1, USE_SDRAM=1, SKIP_SYSCLK_INIT=1, DATA_SECTION_IS_CACHEABLE=1, USE_RTOS=1, MBEDTLS_CONFIG_FILE='\"aws_mbedtls_config.h\"', DEBUG_CONSOLE_TRANSFER_NON_BLOCKING, SERIAL_MANAGER_NON_BLOCKING_MODE, DISABLE_LOGGING, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1021DAG5A, MIMXRT1021_SERIES, MFLASH_FILE_BASEADDR=5767168, LWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1, LWIP_SUPPORT_CUSTOM_PBUF=1, CHECKSUM_GEN_UDP=1, CHECKSUM_GEN_TCP=1, CHECKSUM_GEN_ICMP=1, CHECKSUM_GEN_ICMP6=1, CHECKSUM_CHECK_UDP=1, CHECKSUM_CHECK_TCP=1, CHECKSUM_CHECK_ICMP=1, CHECKSUM_CHECK_ICMP6=1, SDK_OS_FREE_RTOS, MQTT_AGENT_DO_NOT_USE_CUSTOM_CONFIG, MBEDTLS_THREADING_ALT, MBEDTLS_THREADING_C</Define>
               <Undefine/>
-              <IncludePath>..;../../../xip;../../../../../devices/MIMXRT1021/drivers;../../../../../CMSIS/Core/Include;../../../../../CMSIS/Core/Include/m-profile;../../../../../devices/MIMXRT1021;../../../../../devices/MIMXRT1021/periph;../../../../../devices/MIMXRT1021/xip;../../../../../components/aws_iot/kvstore;../../../../../components/aws_iot/logging;../../../../../components/aws_iot/mqtt_agent;../../../../../components/aws_iot/mqtt-agent-interface/include;../../../../../components/aws_iot/using_mbedtls_pkcs11;../../../../../devices/MIMXRT1021/utilities/debug_console_lite;../../../../../devices/MIMXRT1021/utilities/str;../../../../../components/gpio;../../../../../components/uart;../../../../../components/flash/mflash;../../../../../components/flash/mflash/mimxrt1021;../../../../../components/phy;../../../../../components/phy/device/phyksz8081;../../../../../components/silicon_id;../../../../../components/silicon_id/socs;../../../../../middleware/mbedtls/include;../../../../../middleware/mbedtls/library;../../../../../middleware/mbedtls/port/ksdk;../../../../../middleware/lwip/port;../../../../../middleware/lwip/src;../../../../../middleware/lwip/src/include;../../../../../middleware/lwip/src/include/lwip;../../../../../middleware/lwip/port/sys_arch/dynamic;../../../../../middleware/pkcs11;../../../../../middleware/aws_iot/device-shadow/template;../../../../../middleware/aws_iot/device-shadow/source/include;../../../../../rtos/freertos/freertos-kernel/include;../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../rtos/freertos/freertos-kernel/template;../../../../../rtos/freertos/backoffalgorithm/source/include;../../../../../rtos/freertos/corejson/source/include;../../../../../rtos/freertos/coremqtt/source/include;../../../../../rtos/freertos/coremqtt/source/interface;../../../../../rtos/freertos/coremqtt-agent/source/include;../../../../../rtos/freertos/corepkcs11/source/include;../../../../../rtos/freertos/corepkcs11/source/dependency/3rdparty/mbedtls_utils</IncludePath>
+              <IncludePath>..;../../../xip;../../../../../devices/MIMXRT1021/drivers;../../../../../CMSIS/Core/Include;../../../../../CMSIS/Core/Include/m-profile;../../../../../devices/MIMXRT1021;../../../../../devices/MIMXRT1021/periph;../../../../../devices/MIMXRT1021/xip;../../../../../components/aws_iot/kvstore;../../../../../components/aws_iot/logging;../../../../../components/aws_iot/mqtt_agent;../../../../../components/aws_iot/mqtt-agent-interface/include;../../../../../components/aws_iot/using_mbedtls_pkcs11;../../../../../devices/MIMXRT1021/utilities/debug_console_lite;../../../../../devices/MIMXRT1021/utilities/str;../../../../../components/silicon_id;../../../../../components/silicon_id/socs;../../../../../components/gpio;../../../../../components/uart;../../../../../components/phy;../../../../../components/phy/device/phyksz8081;../../../../../components/flash/mflash;../../../../../components/flash/mflash/mimxrt1021;../../../../../middleware/mbedtls/include;../../../../../middleware/mbedtls/library;../../../../../middleware/mbedtls/port/ksdk;../../../../../middleware/lwip/port;../../../../../middleware/lwip/src/include;../../../../../middleware/lwip/port/sys_arch/dynamic;../../../../../middleware/pkcs11;../../../../../middleware/aws_iot/device-shadow/template;../../../../../middleware/aws_iot/device-shadow/source/include;../../../../../rtos/freertos/freertos-kernel/include;../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../rtos/freertos/freertos-kernel/template;../../../../../rtos/freertos/backoffalgorithm/source/include;../../../../../rtos/freertos/corejson/source/include;../../../../../rtos/freertos/coremqtt/source/include;../../../../../rtos/freertos/coremqtt/source/interface;../../../../../rtos/freertos/coremqtt-agent/source/include;../../../../../rtos/freertos/corepkcs11/source/include;../../../../../rtos/freertos/corepkcs11/source/dependency/3rdparty/mbedtls_utils</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -4562,9 +4567,9 @@
             <uClangAs>1</uClangAs>
             <VariousControls>
               <MiscControls/>
-              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1021DAG5A</Define>
+              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1021DAG5A, MIMXRT1021_SERIES</Define>
               <Undefine/>
-              <IncludePath>..;../../../xip;../../../../../devices/MIMXRT1021/drivers;../../../../../CMSIS/Core/Include;../../../../../CMSIS/Core/Include/m-profile;../../../../../devices/MIMXRT1021;../../../../../devices/MIMXRT1021/periph;../../../../../devices/MIMXRT1021/xip;../../../../../components/aws_iot/kvstore;../../../../../components/aws_iot/logging;../../../../../components/aws_iot/mqtt_agent;../../../../../components/aws_iot/mqtt-agent-interface/include;../../../../../components/aws_iot/using_mbedtls_pkcs11;../../../../../devices/MIMXRT1021/utilities/debug_console_lite;../../../../../devices/MIMXRT1021/utilities/str;../../../../../components/gpio;../../../../../components/uart;../../../../../components/flash/mflash;../../../../../components/flash/mflash/mimxrt1021;../../../../../components/phy;../../../../../components/phy/device/phyksz8081;../../../../../components/silicon_id;../../../../../components/silicon_id/socs;../../../../../middleware/mbedtls/include;../../../../../middleware/mbedtls/library;../../../../../middleware/mbedtls/port/ksdk;../../../../../middleware/lwip/port;../../../../../middleware/lwip/src;../../../../../middleware/lwip/src/include;../../../../../middleware/lwip/src/include/lwip;../../../../../middleware/lwip/port/sys_arch/dynamic;../../../../../middleware/pkcs11;../../../../../middleware/aws_iot/device-shadow/template;../../../../../middleware/aws_iot/device-shadow/source/include;../../../../../rtos/freertos/freertos-kernel/include;../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../rtos/freertos/freertos-kernel/template;../../../../../rtos/freertos/backoffalgorithm/source/include;../../../../../rtos/freertos/corejson/source/include;../../../../../rtos/freertos/coremqtt/source/include;../../../../../rtos/freertos/coremqtt/source/interface;../../../../../rtos/freertos/coremqtt-agent/source/include;../../../../../rtos/freertos/corepkcs11/source/include;../../../../../rtos/freertos/corepkcs11/source/dependency/3rdparty/mbedtls_utils</IncludePath>
+              <IncludePath>..;../../../xip;../../../../../devices/MIMXRT1021/drivers;../../../../../CMSIS/Core/Include;../../../../../CMSIS/Core/Include/m-profile;../../../../../devices/MIMXRT1021;../../../../../devices/MIMXRT1021/periph;../../../../../devices/MIMXRT1021/xip;../../../../../components/aws_iot/kvstore;../../../../../components/aws_iot/logging;../../../../../components/aws_iot/mqtt_agent;../../../../../components/aws_iot/mqtt-agent-interface/include;../../../../../components/aws_iot/using_mbedtls_pkcs11;../../../../../devices/MIMXRT1021/utilities/debug_console_lite;../../../../../devices/MIMXRT1021/utilities/str;../../../../../components/silicon_id;../../../../../components/silicon_id/socs;../../../../../components/gpio;../../../../../components/uart;../../../../../components/phy;../../../../../components/phy/device/phyksz8081;../../../../../components/flash/mflash;../../../../../components/flash/mflash/mimxrt1021;../../../../../middleware/mbedtls/include;../../../../../middleware/mbedtls/library;../../../../../middleware/mbedtls/port/ksdk;../../../../../middleware/lwip/port;../../../../../middleware/lwip/src/include;../../../../../middleware/lwip/port/sys_arch/dynamic;../../../../../middleware/pkcs11;../../../../../middleware/aws_iot/device-shadow/template;../../../../../middleware/aws_iot/device-shadow/source/include;../../../../../rtos/freertos/freertos-kernel/include;../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../rtos/freertos/freertos-kernel/template;../../../../../rtos/freertos/backoffalgorithm/source/include;../../../../../rtos/freertos/corejson/source/include;../../../../../rtos/freertos/coremqtt/source/include;../../../../../rtos/freertos/coremqtt/source/interface;../../../../../rtos/freertos/coremqtt-agent/source/include;../../../../../rtos/freertos/corepkcs11/source/include;../../../../../rtos/freertos/corepkcs11/source/dependency/3rdparty/mbedtls_utils</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -4640,11 +4645,6 @@
               <FileName>demo_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../demo_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>freertos_tasks_c_additions.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../freertos_tasks_c_additions.h</FilePath>
             </File>
             <File>
               <FileName>kvstore_config.h</FileName>
@@ -5414,6 +5414,36 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>component/silicon_id</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_silicon_id.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_silicon_id.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_silicon_id_soc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/silicon_id/socs/rt10xx/fsl_silicon_id_soc.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_silicon_id_soc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/silicon_id/socs/fsl_silicon_id_soc.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>utilities/debug_console_lite</GroupName>
           <Files>
             <File>
@@ -5459,6 +5489,26 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>component/phy</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_phy.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/phy/fsl_phy.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_phyksz8081.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/phy/device/phyksz8081/fsl_phyksz8081.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_phyksz8081.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/phy/device/phyksz8081/fsl_phyksz8081.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>flash/mflash</GroupName>
           <Files>
             <File>
@@ -5490,56 +5540,6 @@
               <FileName>mflash_drv.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../components/flash/mflash/mimxrt1021/mflash_drv.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component/phy</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_phy.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/phy/fsl_phy.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_phyksz8081.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/phy/device/phyksz8081/fsl_phyksz8081.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_phyksz8081.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/phy/device/phyksz8081/fsl_phyksz8081.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component/silicon_id</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_silicon_id.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_silicon_id.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_silicon_id_soc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/silicon_id/socs/rt10xx/fsl_silicon_id_soc.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_silicon_id_soc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/silicon_id/socs/fsl_silicon_id_soc.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -8156,6 +8156,11 @@
               <FileType>5</FileType>
               <FilePath>../../../../../rtos/freertos/freertos-kernel/include/timers.h</FilePath>
             </File>
+            <File>
+              <FileName>freertos_tasks_c_additions.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/freertos_tasks_c_additions.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -8430,6 +8435,11 @@
               <FileName>example_board_readme.md</FileName>
               <FileType>5</FileType>
               <FilePath>../example_board_readme.md</FilePath>
+            </File>
+            <File>
+              <FileName>examples_shared_readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../examples_shared_readme.md</FilePath>
             </File>
           </Files>
         </Group>

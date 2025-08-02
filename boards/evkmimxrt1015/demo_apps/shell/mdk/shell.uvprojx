@@ -331,9 +331,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../mcux_config.h -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
-              <Define>DEBUG, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1015DAF5A, SERIAL_PORT_TYPE_UART=1</Define>
+              <Define>DEBUG, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1015DAF5A, MIMXRT1015_SERIES, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>..;../../../xip;../../../../../devices/MIMXRT1015/drivers;../../../../../CMSIS/Core/Include;../../../../../CMSIS/Core/Include/m-profile;../../../../../devices/MIMXRT1015;../../../../../devices/MIMXRT1015/periph;../../../../../devices/MIMXRT1015/xip;../../../../../devices/MIMXRT1015/utilities;../../../../../components/lists;../../../../../devices/MIMXRT1015/utilities/str;../../../../../devices/MIMXRT1015/utilities/debug_console;../../../../../devices/MIMXRT1015/utilities/shell;../../../../../components/serial_manager;../../../../../components/uart</IncludePath>
+              <IncludePath>..;../../../xip;../../../../../devices/MIMXRT1015/drivers;../../../../../CMSIS/Core/Include;../../../../../CMSIS/Core/Include/m-profile;../../../../../devices/MIMXRT1015;../../../../../devices/MIMXRT1015/periph;../../../../../devices/MIMXRT1015/xip;../../../../../devices/MIMXRT1015/utilities/debug_console;../../../../../components/lists;../../../../../devices/MIMXRT1015/utilities/str;../../../../../devices/MIMXRT1015/utilities/shell;../../../../../components/serial_manager;../../../../../components/uart</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -349,9 +349,9 @@
             <uClangAs>1</uClangAs>
             <VariousControls>
               <MiscControls/>
-              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1015DAF5A</Define>
+              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1015DAF5A, MIMXRT1015_SERIES</Define>
               <Undefine/>
-              <IncludePath>..;../../../xip;../../../../../devices/MIMXRT1015/drivers;../../../../../CMSIS/Core/Include;../../../../../CMSIS/Core/Include/m-profile;../../../../../devices/MIMXRT1015;../../../../../devices/MIMXRT1015/periph;../../../../../devices/MIMXRT1015/xip;../../../../../devices/MIMXRT1015/utilities;../../../../../components/lists;../../../../../devices/MIMXRT1015/utilities/str;../../../../../devices/MIMXRT1015/utilities/debug_console;../../../../../devices/MIMXRT1015/utilities/shell;../../../../../components/serial_manager;../../../../../components/uart</IncludePath>
+              <IncludePath>..;../../../xip;../../../../../devices/MIMXRT1015/drivers;../../../../../CMSIS/Core/Include;../../../../../CMSIS/Core/Include/m-profile;../../../../../devices/MIMXRT1015;../../../../../devices/MIMXRT1015/periph;../../../../../devices/MIMXRT1015/xip;../../../../../devices/MIMXRT1015/utilities/debug_console;../../../../../components/lists;../../../../../devices/MIMXRT1015/utilities/str;../../../../../devices/MIMXRT1015/utilities/shell;../../../../../components/serial_manager;../../../../../components/uart</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -925,12 +925,12 @@
             <File>
               <FileName>fsl_assert.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1015/utilities/fsl_assert.h</FilePath>
+              <FilePath>../../../../../devices/MIMXRT1015/utilities/debug_console/fsl_assert.h</FilePath>
             </File>
             <File>
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1015/utilities/fsl_assert.c</FilePath>
+              <FilePath>../../../../../devices/MIMXRT1015/utilities/debug_console/fsl_assert.c</FilePath>
             </File>
             <File>
               <FileName>fsl_memcpy.S</FileName>
@@ -1051,6 +1051,11 @@
               <FileName>example_board_readme.md</FileName>
               <FileType>5</FileType>
               <FilePath>../example_board_readme.md</FilePath>
+            </File>
+            <File>
+              <FileName>examples_shared_readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../examples_shared_readme.md</FilePath>
             </File>
           </Files>
         </Group>
@@ -1384,9 +1389,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../mcux_config.h -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
-              <Define>DEBUG, XIP_BOOT_HEADER_ENABLE=1, XIP_EXTERNAL_FLASH=1, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1015DAF5A, SERIAL_PORT_TYPE_UART=1</Define>
+              <Define>DEBUG, XIP_BOOT_HEADER_ENABLE=1, XIP_EXTERNAL_FLASH=1, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1015DAF5A, MIMXRT1015_SERIES, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>..;../../../xip;../../../../../devices/MIMXRT1015/drivers;../../../../../CMSIS/Core/Include;../../../../../CMSIS/Core/Include/m-profile;../../../../../devices/MIMXRT1015;../../../../../devices/MIMXRT1015/periph;../../../../../devices/MIMXRT1015/xip;../../../../../devices/MIMXRT1015/utilities;../../../../../components/lists;../../../../../devices/MIMXRT1015/utilities/str;../../../../../devices/MIMXRT1015/utilities/debug_console;../../../../../devices/MIMXRT1015/utilities/shell;../../../../../components/serial_manager;../../../../../components/uart</IncludePath>
+              <IncludePath>..;../../../xip;../../../../../devices/MIMXRT1015/drivers;../../../../../CMSIS/Core/Include;../../../../../CMSIS/Core/Include/m-profile;../../../../../devices/MIMXRT1015;../../../../../devices/MIMXRT1015/periph;../../../../../devices/MIMXRT1015/xip;../../../../../devices/MIMXRT1015/utilities/debug_console;../../../../../components/lists;../../../../../devices/MIMXRT1015/utilities/str;../../../../../devices/MIMXRT1015/utilities/shell;../../../../../components/serial_manager;../../../../../components/uart</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1402,9 +1407,9 @@
             <uClangAs>1</uClangAs>
             <VariousControls>
               <MiscControls/>
-              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1015DAF5A</Define>
+              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1015DAF5A, MIMXRT1015_SERIES</Define>
               <Undefine/>
-              <IncludePath>..;../../../xip;../../../../../devices/MIMXRT1015/drivers;../../../../../CMSIS/Core/Include;../../../../../CMSIS/Core/Include/m-profile;../../../../../devices/MIMXRT1015;../../../../../devices/MIMXRT1015/periph;../../../../../devices/MIMXRT1015/xip;../../../../../devices/MIMXRT1015/utilities;../../../../../components/lists;../../../../../devices/MIMXRT1015/utilities/str;../../../../../devices/MIMXRT1015/utilities/debug_console;../../../../../devices/MIMXRT1015/utilities/shell;../../../../../components/serial_manager;../../../../../components/uart</IncludePath>
+              <IncludePath>..;../../../xip;../../../../../devices/MIMXRT1015/drivers;../../../../../CMSIS/Core/Include;../../../../../CMSIS/Core/Include/m-profile;../../../../../devices/MIMXRT1015;../../../../../devices/MIMXRT1015/periph;../../../../../devices/MIMXRT1015/xip;../../../../../devices/MIMXRT1015/utilities/debug_console;../../../../../components/lists;../../../../../devices/MIMXRT1015/utilities/str;../../../../../devices/MIMXRT1015/utilities/shell;../../../../../components/serial_manager;../../../../../components/uart</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -1978,12 +1983,12 @@
             <File>
               <FileName>fsl_assert.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1015/utilities/fsl_assert.h</FilePath>
+              <FilePath>../../../../../devices/MIMXRT1015/utilities/debug_console/fsl_assert.h</FilePath>
             </File>
             <File>
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1015/utilities/fsl_assert.c</FilePath>
+              <FilePath>../../../../../devices/MIMXRT1015/utilities/debug_console/fsl_assert.c</FilePath>
             </File>
             <File>
               <FileName>fsl_memcpy.S</FileName>
@@ -2104,6 +2109,11 @@
               <FileName>example_board_readme.md</FileName>
               <FileType>5</FileType>
               <FilePath>../example_board_readme.md</FilePath>
+            </File>
+            <File>
+              <FileName>examples_shared_readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../examples_shared_readme.md</FilePath>
             </File>
           </Files>
         </Group>
@@ -2437,9 +2447,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../mcux_config.h -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
-              <Define>NDEBUG, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1015DAF5A, SERIAL_PORT_TYPE_UART=1</Define>
+              <Define>NDEBUG, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1015DAF5A, MIMXRT1015_SERIES, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>..;../../../xip;../../../../../devices/MIMXRT1015/drivers;../../../../../CMSIS/Core/Include;../../../../../CMSIS/Core/Include/m-profile;../../../../../devices/MIMXRT1015;../../../../../devices/MIMXRT1015/periph;../../../../../devices/MIMXRT1015/xip;../../../../../devices/MIMXRT1015/utilities;../../../../../components/lists;../../../../../devices/MIMXRT1015/utilities/str;../../../../../devices/MIMXRT1015/utilities/debug_console;../../../../../devices/MIMXRT1015/utilities/shell;../../../../../components/serial_manager;../../../../../components/uart</IncludePath>
+              <IncludePath>..;../../../xip;../../../../../devices/MIMXRT1015/drivers;../../../../../CMSIS/Core/Include;../../../../../CMSIS/Core/Include/m-profile;../../../../../devices/MIMXRT1015;../../../../../devices/MIMXRT1015/periph;../../../../../devices/MIMXRT1015/xip;../../../../../devices/MIMXRT1015/utilities/debug_console;../../../../../components/lists;../../../../../devices/MIMXRT1015/utilities/str;../../../../../devices/MIMXRT1015/utilities/shell;../../../../../components/serial_manager;../../../../../components/uart</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2455,9 +2465,9 @@
             <uClangAs>1</uClangAs>
             <VariousControls>
               <MiscControls/>
-              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1015DAF5A</Define>
+              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1015DAF5A, MIMXRT1015_SERIES</Define>
               <Undefine/>
-              <IncludePath>..;../../../xip;../../../../../devices/MIMXRT1015/drivers;../../../../../CMSIS/Core/Include;../../../../../CMSIS/Core/Include/m-profile;../../../../../devices/MIMXRT1015;../../../../../devices/MIMXRT1015/periph;../../../../../devices/MIMXRT1015/xip;../../../../../devices/MIMXRT1015/utilities;../../../../../components/lists;../../../../../devices/MIMXRT1015/utilities/str;../../../../../devices/MIMXRT1015/utilities/debug_console;../../../../../devices/MIMXRT1015/utilities/shell;../../../../../components/serial_manager;../../../../../components/uart</IncludePath>
+              <IncludePath>..;../../../xip;../../../../../devices/MIMXRT1015/drivers;../../../../../CMSIS/Core/Include;../../../../../CMSIS/Core/Include/m-profile;../../../../../devices/MIMXRT1015;../../../../../devices/MIMXRT1015/periph;../../../../../devices/MIMXRT1015/xip;../../../../../devices/MIMXRT1015/utilities/debug_console;../../../../../components/lists;../../../../../devices/MIMXRT1015/utilities/str;../../../../../devices/MIMXRT1015/utilities/shell;../../../../../components/serial_manager;../../../../../components/uart</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -3031,12 +3041,12 @@
             <File>
               <FileName>fsl_assert.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1015/utilities/fsl_assert.h</FilePath>
+              <FilePath>../../../../../devices/MIMXRT1015/utilities/debug_console/fsl_assert.h</FilePath>
             </File>
             <File>
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1015/utilities/fsl_assert.c</FilePath>
+              <FilePath>../../../../../devices/MIMXRT1015/utilities/debug_console/fsl_assert.c</FilePath>
             </File>
             <File>
               <FileName>fsl_memcpy.S</FileName>
@@ -3157,6 +3167,11 @@
               <FileName>example_board_readme.md</FileName>
               <FileType>5</FileType>
               <FilePath>../example_board_readme.md</FilePath>
+            </File>
+            <File>
+              <FileName>examples_shared_readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../examples_shared_readme.md</FilePath>
             </File>
           </Files>
         </Group>
@@ -3490,9 +3505,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../mcux_config.h -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
-              <Define>NDEBUG, XIP_BOOT_HEADER_ENABLE=1, XIP_EXTERNAL_FLASH=1, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1015DAF5A, SERIAL_PORT_TYPE_UART=1</Define>
+              <Define>NDEBUG, XIP_BOOT_HEADER_ENABLE=1, XIP_EXTERNAL_FLASH=1, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1015DAF5A, MIMXRT1015_SERIES, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>..;../../../xip;../../../../../devices/MIMXRT1015/drivers;../../../../../CMSIS/Core/Include;../../../../../CMSIS/Core/Include/m-profile;../../../../../devices/MIMXRT1015;../../../../../devices/MIMXRT1015/periph;../../../../../devices/MIMXRT1015/xip;../../../../../devices/MIMXRT1015/utilities;../../../../../components/lists;../../../../../devices/MIMXRT1015/utilities/str;../../../../../devices/MIMXRT1015/utilities/debug_console;../../../../../devices/MIMXRT1015/utilities/shell;../../../../../components/serial_manager;../../../../../components/uart</IncludePath>
+              <IncludePath>..;../../../xip;../../../../../devices/MIMXRT1015/drivers;../../../../../CMSIS/Core/Include;../../../../../CMSIS/Core/Include/m-profile;../../../../../devices/MIMXRT1015;../../../../../devices/MIMXRT1015/periph;../../../../../devices/MIMXRT1015/xip;../../../../../devices/MIMXRT1015/utilities/debug_console;../../../../../components/lists;../../../../../devices/MIMXRT1015/utilities/str;../../../../../devices/MIMXRT1015/utilities/shell;../../../../../components/serial_manager;../../../../../components/uart</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -3508,9 +3523,9 @@
             <uClangAs>1</uClangAs>
             <VariousControls>
               <MiscControls/>
-              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1015DAF5A</Define>
+              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1015DAF5A, MIMXRT1015_SERIES</Define>
               <Undefine/>
-              <IncludePath>..;../../../xip;../../../../../devices/MIMXRT1015/drivers;../../../../../CMSIS/Core/Include;../../../../../CMSIS/Core/Include/m-profile;../../../../../devices/MIMXRT1015;../../../../../devices/MIMXRT1015/periph;../../../../../devices/MIMXRT1015/xip;../../../../../devices/MIMXRT1015/utilities;../../../../../components/lists;../../../../../devices/MIMXRT1015/utilities/str;../../../../../devices/MIMXRT1015/utilities/debug_console;../../../../../devices/MIMXRT1015/utilities/shell;../../../../../components/serial_manager;../../../../../components/uart</IncludePath>
+              <IncludePath>..;../../../xip;../../../../../devices/MIMXRT1015/drivers;../../../../../CMSIS/Core/Include;../../../../../CMSIS/Core/Include/m-profile;../../../../../devices/MIMXRT1015;../../../../../devices/MIMXRT1015/periph;../../../../../devices/MIMXRT1015/xip;../../../../../devices/MIMXRT1015/utilities/debug_console;../../../../../components/lists;../../../../../devices/MIMXRT1015/utilities/str;../../../../../devices/MIMXRT1015/utilities/shell;../../../../../components/serial_manager;../../../../../components/uart</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -4084,12 +4099,12 @@
             <File>
               <FileName>fsl_assert.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1015/utilities/fsl_assert.h</FilePath>
+              <FilePath>../../../../../devices/MIMXRT1015/utilities/debug_console/fsl_assert.h</FilePath>
             </File>
             <File>
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1015/utilities/fsl_assert.c</FilePath>
+              <FilePath>../../../../../devices/MIMXRT1015/utilities/debug_console/fsl_assert.c</FilePath>
             </File>
             <File>
               <FileName>fsl_memcpy.S</FileName>
@@ -4210,6 +4225,11 @@
               <FileName>example_board_readme.md</FileName>
               <FileType>5</FileType>
               <FilePath>../example_board_readme.md</FilePath>
+            </File>
+            <File>
+              <FileName>examples_shared_readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../examples_shared_readme.md</FilePath>
             </File>
           </Files>
         </Group>

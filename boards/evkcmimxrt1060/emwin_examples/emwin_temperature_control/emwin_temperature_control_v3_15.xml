@@ -68,6 +68,7 @@
           <value>SDK_DEBUGCONSOLE=1</value>
           <value>MCUX_META_BUILD</value>
           <value>CPU_MIMXRT1062DVL6B</value>
+          <value>MIMXRT1062_SERIES</value>
           <value>SDK_I2C_BASED_COMPONENT_USED=1</value>
         </option>
         <option id="com.crt.advproject.link.memory.sections" type="stringList">
@@ -193,10 +194,18 @@
       <files mask="pin_mux.h"/>
       <files mask="app.h"/>
     </source>
+    <source path="AppWizard" project_relative_path="AppWizard" type="other">
+      <files mask="TemperatureControl.AppWizard"/>
+    </source>
     <source path="AppWizard/Resource/Font" project_relative_path="AppWizard/Resource/Font" type="src">
       <files mask="NettoOT_24_Normal_EXT_AA4.c"/>
       <files mask="Roboto_16_Normal_EXT_AA4.c"/>
       <files mask="Roboto_24_Normal_EXT_AA4.c"/>
+    </source>
+    <source path="AppWizard/Resource/Font" project_relative_path="AppWizard/Resource/Font" type="other">
+      <files mask="NettoOT_24_Normal_EXT_AA4.xbf"/>
+      <files mask="Roboto_16_Normal_EXT_AA4.xbf"/>
+      <files mask="Roboto_24_Normal_EXT_AA4.xbf"/>
     </source>
     <source path="AppWizard/Resource/Image" project_relative_path="AppWizard/Resource/Image" type="src">
       <files mask="ButtonRoundPressed_48x21.c"/>
@@ -206,14 +215,25 @@
       <files mask="SeggerLogo_80x40.c"/>
       <files mask="TemperatureControl_3_480x272.c"/>
     </source>
+    <source path="AppWizard/Resource/Image" project_relative_path="AppWizard/Resource/Image" type="image">
+      <files mask="ButtonRoundPressed_48x21.png"/>
+      <files mask="ButtonRound_48x21.png"/>
+      <files mask="GreenGlowMarker_16x9.png"/>
+      <files mask="KNOB_106x106.png"/>
+      <files mask="SeggerLogo_80x40.png"/>
+      <files mask="TemperatureControl_3_480x272.bmp"/>
+    </source>
     <source path="AppWizard/Resource/Text" project_relative_path="AppWizard/Resource/Text" type="src">
       <files mask="APPW_Language_0.c"/>
-      <files mask="APPW_Pattern.c"/>
+    </source>
+    <source path="." project_relative_path="source" type="doc">
+      <files mask="APPW_Language_0.txt"/>
     </source>
     <source path="." project_relative_path="source" type="src">
       <files mask="APPW_MainTask.c"/>
     </source>
     <source path="AppWizard/Source/CustomCode" project_relative_path="AppWizard/Source/CustomCode" type="src">
+      <files mask="Application.c"/>
       <files mask="ID_SCREEN_TEMP_CTRL_Slots.c"/>
     </source>
     <source path="AppWizard/Source/CustomCode" project_relative_path="AppWizard/Source/CustomCode" type="c_include">

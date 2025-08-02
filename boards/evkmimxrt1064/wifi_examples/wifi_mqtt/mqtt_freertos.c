@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2022 NXP
+ * Copyright 2016-2022, 2025 NXP
  * All rights reserved.
  *
  *
@@ -28,7 +28,7 @@
 
 /*! @brief MQTT server host name or IP address. */
 #ifndef EXAMPLE_MQTT_SERVER_HOST
-#define EXAMPLE_MQTT_SERVER_HOST "broker.hivemq.com"
+#define EXAMPLE_MQTT_SERVER_HOST "test.mosquitto.org"
 #endif
 
 /*! @brief MQTT server port number. */
@@ -53,6 +53,7 @@
  ******************************************************************************/
 
 static void connect_to_mqtt(void *ctx);
+static void disconnect_from_mqtt(void *ctx);
 
 /*******************************************************************************
  * Variables
@@ -231,6 +232,18 @@ static void connect_to_mqtt(void *ctx)
 }
 
 /*!
+ * @brief Disconnects from MQTT broker. To be called on tcpip_thread.
+ */
+static void disconnect_from_mqtt(void *ctx)
+{
+    LWIP_UNUSED_ARG(ctx);
+
+    mqtt_disconnect(mqtt_client);
+    connected = false;
+    PRINTF("Disconnected from MQTT broker.\r\n");
+}
+
+/*!
  * @brief Called when publish request finishes.
  */
 static void mqtt_message_published_cb(void *arg, err_t err)
@@ -320,6 +333,13 @@ static void app_thread(void *arg)
         }
 
         sys_msleep(1000U);
+    }
+
+    /* Disconnect from MQTT broker from tcpip_thread */
+    err = tcpip_callback(disconnect_from_mqtt, NULL);
+    if (err != ERR_OK)
+    {
+        PRINTF("Failed to invoke disconnect from broker on the tcpip_thread: %d.\r\n", err);
     }
 
     vTaskDelete(NULL);

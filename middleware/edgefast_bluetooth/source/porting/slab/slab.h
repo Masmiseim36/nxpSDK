@@ -1,5 +1,5 @@
 /*
- * Copyright 2024-2025 NXP
+ * Copyright 2024 NXP
  * Copyright (c) 2016, Wind River Systems, Inc.
  *
  * SPDX-License-Identifier: Apache-2.0
@@ -56,10 +56,6 @@ struct k_mem_slab {
  * @ingroup kernel_apis
  * @{
  */
-
-#ifdef __cplusplus
-extern "C" {
-#endif
 
 /**
  * @brief Statically define and initialize a memory slab in a public (non-static) scope.
@@ -250,10 +246,6 @@ int k_mem_slab_runtime_stats_get(struct k_mem_slab *slab, struct sys_memory_stat
  * @retval -EINVAL Memory slab is NULL
  */
 int k_mem_slab_runtime_stats_reset_max(struct k_mem_slab *slab);
-
-#ifdef __cplusplus
-}
-#endif
 
 /** @} */
 /** @} */

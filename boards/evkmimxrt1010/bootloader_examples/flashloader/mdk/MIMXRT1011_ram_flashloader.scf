@@ -24,14 +24,14 @@
 ** ###################################################################
 */
 
-#define m_interrupts_start             0x20205a00
+#define m_interrupts_start             0x20205000
 #define m_interrupts_size              0x00000200
 
-#define m_text_start                   0x20205c00
-#define m_text_size                    0x00007c00
+#define m_text_start                   0x20205200
+#define m_text_size                    0x00008600
 
 #define m_data_start                   0x20000000
-#define m_data_size                    0x00005800
+#define m_data_size                    0x00005000
 
 /* Sizes */
 #if (defined(__stack_size__))

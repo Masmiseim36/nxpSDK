@@ -44,18 +44,20 @@ SHELL_COMMAND_DEFINE(bt,
                      "  USAGE: bt [discover|connect|disconnect|delete]\r\n"
                      "    discover             start to find BT devices\r\n"
                      "    connect              connect to the device that is found, for example: bt connect n (from 1)\r\n"
-                     "    openaudio            open audio connection without calls\r\n"
-                     "    closeaudio           close audio connection without calls\r\n"
-                     "    sincall              start an incoming call\r\n"
-                     "    aincall              accept the call.\r\n"
-                     "    eincall              end an call.\r\n"
-                     "    set_tag              set phone num tag, for example: bt set_tag 123456789\r\n"
-                     "    select_codec         codec select for codec Negotiation, for example: bt select_codec 2, it will select the codec 2 as codec.\r\n"
-                     "    set_mic_volume       update mic Volume, for example: bt set_mic_volume 14\r\n"
-                     "    set_speaker_volume   update Speaker Volume, for example: bt set_speaker_volume 14\r\n"
-                     "    stwcincall           start multiple an incoming call\r\n"
-                     "    disconnect           disconnect current connection\r\n"
-                     "    delete               delete all devices. Ensure to disconnect the HCI link connection with the peer "
+                     "    select_ag <0|1>      select the ag conn to process, <0|1> is the ag conn index\r\n"
+                     "    openaudio            open audio connection without calls on the selected ag conn\r\n"
+                     "    closeaudio           close audio connection without calls on the selected ag conn\r\n"
+                     "    sincall              start an incoming call on the selected ag conn\r\n"
+                     "    aincall              accept the call on the selected ag conn.\r\n"
+                     "    eincall              end an call on the selected ag conn.\r\n"
+                     "    set_tag              set phone num tag on the selected ag conn, for example: bt set_tag 123456789\r\n"
+                     "    select_codec         codec select for codec Negotiation on the selected ag conn, for example: bt select_codec 2, it will select the codec 2 as codec.\r\n"
+                     "    set_mic_volume       update mic Volume on the selected ag conn, for example: bt set_mic_volume 14\r\n"
+                     "    set_speaker_volume   update Speaker Volume on the selected ag conn, for example: bt set_speaker_volume 14\r\n"
+                     "    stwcincall           start multiple an incoming call on the selected ag conn\r\n"
+                     "    disconnect <index>   disconnect the acl connection, <index> is the acl conn's index (bt_conn_index's return value)\r\n"
+                     "    delete               delete all devices. Ensure to disconnect the HCI link connection with the peer\r\n"
+                     "    set_hf_ind <1|2> <enable|disable>      enable/disable the hf indicator on the selected ag conn. 1 - enhanced driver safety; 2 - battery level"
                      "device before attempting to delete the bonding information.\r\n",
                      shellBt,
                      SHELL_IGNORE_PARAMETER_COUNT);
@@ -94,6 +96,38 @@ static uint32_t hfp_get_value_from_str(char *ch)
       }
       return value;
 }
+
+static int app_get_selected_index(char *ch, uint8_t *index)
+{
+    uint8_t selectIndex = 0;
+
+    for (selectIndex = 0; selectIndex < strlen(ch); ++selectIndex)
+    {
+        if ((ch[selectIndex] < '0') || (ch[selectIndex] > '9'))
+        {
+            PRINTF("the parameter is wrong\r\n");
+            return -EINVAL;
+        }
+    }
+
+    switch (strlen(ch))
+    {
+        case 1:
+            selectIndex = ch[0] - '0';
+            break;
+        case 2:
+            selectIndex = (ch[0] - '0') * 10 + (ch[1] - '0');
+            break;
+        default:
+            PRINTF("the parameter is wrong\r\n");
+            return -EINVAL;
+    }
+
+    *index = selectIndex;
+
+    return 0;
+}
+
 static shell_status_t shellBt(shell_handle_t shellHandle, int32_t argc, char **argv)
 {
     uint8_t *addr;
@@ -110,7 +144,6 @@ static shell_status_t shellBt(shell_handle_t shellHandle, int32_t argc, char **a
     else if (strcmp(argv[1], "connect") == 0)
     {
         uint8_t selectIndex = 0;
-        char *ch            = argv[2];
 
         if (argc < 2)
         {
@@ -118,38 +151,68 @@ static shell_status_t shellBt(shell_handle_t shellHandle, int32_t argc, char **a
             return kStatus_SHELL_Error;
         }
 
-        for (selectIndex = 0; selectIndex < strlen(ch); ++selectIndex)
+        if (app_get_selected_index((char*)argv[2], &selectIndex))
         {
-            if ((ch[selectIndex] < '0') || (ch[selectIndex] > '9'))
-            {
-                PRINTF("the parameter is wrong\r\n");
-                return kStatus_SHELL_Error;
-            }
-        }
-
-        switch (strlen(ch))
-        {
-            case 1:
-                selectIndex = ch[0] - '0';
-                break;
-            case 2:
-                selectIndex = (ch[0] - '0') * 10 + (ch[1] - '0');
-                break;
-            default:
-                PRINTF("the parameter is wrong\r\n");
-                break;
+            return kStatus_SHELL_Error;
         }
 
         if (selectIndex == 0U)
         {
             PRINTF("the parameter is wrong\r\n");
+            return kStatus_SHELL_Error;
         }
         addr = app_get_addr(selectIndex - 1);
         app_connect(addr);
     }
     else if (strcmp(argv[1], "disconnect") == 0)
     {
-        app_disconnect();
+        uint8_t index = 0U;
+
+        if (argc < 2)
+        {
+            PRINTF("the parameter count is wrong\r\n");
+            return kStatus_SHELL_Error;
+        }
+
+        if (app_get_selected_index((char*)argv[2], &index))
+        {
+            return kStatus_SHELL_Error;
+        }
+
+        if (index >= CONFIG_BT_MAX_CONN)
+        {
+            PRINTF("the parameter is wrong\r\n");
+            return kStatus_SHELL_Error;
+        }
+
+        app_disconnect(index);
+    }
+    else if (strcmp(argv[1], "select_ag") == 0)
+    {
+        char *index_str;
+        uint8_t index = 0U;
+
+        if (argc < 2)
+        {
+            PRINTF("the parameter count is wrong\r\n");
+            return kStatus_SHELL_Error;
+        }
+
+        index_str = argv[2];
+
+        if ((index_str[0] == '1') || (index_str[0] == '2'))
+        {
+            index = index_str[0] - '0';
+        }
+
+        if ((index != 1U) && (index != 2U))
+        {
+            PRINTF("the parameter is wrong\r\n");
+            return kStatus_SHELL_Error;
+        }
+
+        app_hfp_ag_select_conn(index - 1U);
+        PRINTF("success\r\n");
     }
     else if (strcmp(argv[1], "openaudio") == 0)
     {
@@ -240,6 +303,51 @@ static shell_status_t shellBt(shell_handle_t shellHandle, int32_t argc, char **a
         else
         {
             PRINTF("success\r\n");
+        }
+    }
+    else if (strcmp(argv[1], "set_hf_ind") == 0)
+    {
+        char *indicator_str;
+        char *control_str;
+        uint8_t indicator = 0xFFU;
+        uint8_t control = 0xFFU;
+
+        if (argc < 3)
+        {
+            PRINTF("the parameter count is wrong\r\n");
+        }
+
+        indicator_str = argv[2];
+        control_str = argv[3];
+
+        if ((indicator_str[0] == '1') || (indicator_str[0] == '2'))
+        {
+            indicator = indicator_str[0] - '0';
+        }
+
+        if (strcmp(control_str, "enable") == 0)
+        {
+            control = 1U;
+        }
+        else if (strcmp(control_str, "disable") == 0)
+        {
+            control = 0U;
+        }
+        else
+        {
+        }
+
+        if ((indicator != 0xFFU) && (control != 0xFFU))
+        {
+            int err = app_hfp_ag_set_hf_indicator(indicator, control);
+            if (err)
+            {
+                PRINTF("fail to send cmd:%d\r\n", err);
+            }
+        }
+        else
+        {
+            PRINTF("wrong parameter\r\n");
         }
     }
     else

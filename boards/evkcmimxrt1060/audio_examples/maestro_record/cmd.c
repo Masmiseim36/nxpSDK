@@ -78,7 +78,7 @@ SHELL_COMMAND_DEFINE(record_mic,
                      " The number defines length of recording in seconds.\r\n"
 #ifdef VIT_PROC
                      " Please see the project defined symbols for the languages supported.\r\n"
-                     " Then specify one of: en/cn/de/es/fr/it/ja/ko/tr as the language parameter.\r\n"
+                     " Then specify one of: en/cn/de/es/fr/it/ja/ko/pt/tr as the language parameter.\r\n"
                      " For voice recognition say supported WakeWord and in 3s frame supported command.\r\n"
                      " Please note that this VIT demo is near-field and uses 1 on-board microphone.\r\n"
 #endif

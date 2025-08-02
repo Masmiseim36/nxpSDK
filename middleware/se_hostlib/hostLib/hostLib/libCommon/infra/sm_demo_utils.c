@@ -68,13 +68,13 @@
 
 #if defined(LPC_ENET)
 /* ENET clock frequency. */
-#if defined(CPU_MIMXRT1176DVMAA_cm7)
+#if defined(MIMXRT1176_cm7_SERIES) || defined(MIMXRT1175_cm7_SERIES) || defined (MIMXRT1173_cm7_SERIES) || defined (MIMXRT1172_SERIES) || defined (MIMXRT1171_SERIES)
 #define EXAMPLE_CLOCK_FREQ CLOCK_GetRootClockFreq(kCLOCK_Root_Bus)
-#elif defined(CPU_MIMXRT1062DVL6A) || defined (CPU_MIMXRT1062DVL6B)
+#elif defined(MIMXRT1062_SERIES) || defined (MIMXRT1061_SERIES)
 #define EXAMPLE_CLOCK_FREQ CLOCK_GetFreq(kCLOCK_IpgClk)
 #else
 #define EXAMPLE_CLOCK_FREQ CLOCK_GetFreq(kCLOCK_CoreSysClk)
-#endif // CPU_MIMXRT1176DVMAA_cm7
+#endif // MIMXRT1176_cm7_SERIES
 /* MDIO operations. */
 #define EXAMPLE_MDIO_OPS enet_ops
 

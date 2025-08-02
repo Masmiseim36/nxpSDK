@@ -1,5 +1,5 @@
 /* 
- * Copyright 2019-2021,2024 NXP
+ * Copyright 2019-2021,2024-2025 NXP
  *
  * SPDX-License-Identifier: Apache-2.0
  * 
@@ -23,7 +23,7 @@ extern "C" {
  * @addtogroup edgelock2go_agent_mqtt
  * @{
  */
-#if NXP_IOT_AGENT_HAVE_SSS
+#if defined(NXP_IOT_AGENT_HAVE_SSS) && (NXP_IOT_AGENT_HAVE_SSS == 1)
 iot_agent_status_t iot_agent_verify_mqtt_connection_for_service(iot_agent_context_t* iot_agent_context, const nxp_iot_ServiceDescriptor* service_descriptor);
 
 iot_agent_status_t iot_agent_verify_mqtt_connection(iot_agent_context_t* iot_agent_context);

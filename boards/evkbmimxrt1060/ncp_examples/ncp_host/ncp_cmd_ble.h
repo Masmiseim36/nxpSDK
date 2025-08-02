@@ -31,8 +31,10 @@
 #define NCP_CMD_BLE_POWERMGMT    0x00400000
 /** NCP Bluetooth LE subclass type for vendor command */
 #define NCP_CMD_BLE_VENDOR       0x00500000
+/** NCP Bluetooth LE subclass type for matter command */
+#define NCP_CMD_BLE_MATTER       0x00600000
 /** NCP Bluetooth LE subclass type for other command */
-#define NCP_CMD_BLE_OTHER        0x00600000
+#define NCP_CMD_BLE_OTHER        0x00700000
 /** NCP Bluetooth LE subclass type for event */
 #define NCP_CMD_BLE_EVENT        0x00f00000
 
@@ -193,6 +195,48 @@
 #define NCP_CMD_BLE_VENDOR_CFG_MULTI_ADV     (NCP_CMD_BLE | NCP_CMD_BLE_VENDOR | NCP_MSG_TYPE_CMD | 0x00000005)
 /** Bluetooth LE Vendor config multi-advertising command response ID */
 #define NCP_RSP_BLE_VENDOR_CFG_MULTI_ADV     (NCP_CMD_BLE | NCP_CMD_BLE_VENDOR | NCP_MSG_TYPE_RESP | 0x00000005)
+
+/** Bluetooth LE Matter get device name command ID */
+#define NCP_CMD_BLE_MATTER_GET_DEVICE_NAME   (NCP_CMD_BLE | NCP_CMD_BLE_MATTER | NCP_MSG_TYPE_CMD | 0x00000001)
+/** Bluetooth LE Matter get device name command response ID */
+#define NCP_RSP_BLE_MATTER_GET_DEVICE_NAME   (NCP_CMD_BLE | NCP_CMD_BLE_MATTER | NCP_MSG_TYPE_RESP | 0x00000001)
+/** Bluetooth LE Matter get connection index command ID */
+#define NCP_CMD_BLE_MATTER_GET_CONN_INDEX    (NCP_CMD_BLE | NCP_CMD_BLE_MATTER | NCP_MSG_TYPE_CMD | 0x00000002)
+/** Bluetooth LE Matter get connection index command response ID */
+#define NCP_RSP_BLE_MATTER_GET_CONN_INDEX    (NCP_CMD_BLE | NCP_CMD_BLE_MATTER | NCP_MSG_TYPE_RESP | 0x00000002)
+/** Bluetooth LE Matter connection reference command ID */
+#define NCP_CMD_BLE_MATTER_CONN_REF          (NCP_CMD_BLE | NCP_CMD_BLE_MATTER | NCP_MSG_TYPE_CMD | 0x00000003)
+/** Bluetooth LE Matter connection reference command response ID */
+#define NCP_RSP_BLE_MATTER_CONN_REF          (NCP_CMD_BLE | NCP_CMD_BLE_MATTER | NCP_MSG_TYPE_RESP | 0x00000003)
+/** Bluetooth LE Matter connection unreference command ID */
+#define NCP_CMD_BLE_MATTER_CONN_UNREF        (NCP_CMD_BLE | NCP_CMD_BLE_MATTER | NCP_MSG_TYPE_CMD | 0x00000004)
+/** Bluetooth LE Matter connection unreference command response ID */
+#define NCP_RSP_BLE_MATTER_CONN_UNREF        (NCP_CMD_BLE | NCP_CMD_BLE_MATTER | NCP_MSG_TYPE_RESP | 0x00000004)
+/** Bluetooth LE Matter get mtu size command ID */
+#define NCP_CMD_BLE_MATTER_GET_MTU           (NCP_CMD_BLE | NCP_CMD_BLE_MATTER | NCP_MSG_TYPE_CMD | 0x00000005)
+/** Bluetooth LE Matter get mtu size command response ID */
+#define NCP_RSP_BLE_MATTER_GET_MTU           (NCP_CMD_BLE | NCP_CMD_BLE_MATTER | NCP_MSG_TYPE_RESP | 0x00000005)
+/** Bluetooth LE Matter disconnect command ID */
+#define NCP_CMD_BLE_MATTER_DISCONN           (NCP_CMD_BLE | NCP_CMD_BLE_MATTER | NCP_MSG_TYPE_CMD | 0x00000006)
+/** Bluetooth LE Matter disconnect command response ID */
+#define NCP_RSP_BLE_MATTER_DICONN            (NCP_CMD_BLE | NCP_CMD_BLE_MATTER | NCP_MSG_TYPE_RESP | 0x00000006)
+/** Bluetooth LE Matter send indication command ID */
+#define NCP_CMD_BLE_MATTER_INDICATE          (NCP_CMD_BLE | NCP_CMD_BLE_MATTER | NCP_MSG_TYPE_CMD | 0x00000007)
+/** Bluetooth LE Matter send indication command response ID */
+#define NCP_RSP_BLE_MATTER_INDICATE          (NCP_CMD_BLE | NCP_CMD_BLE_MATTER | NCP_MSG_TYPE_RESP | 0x00000007)
+/** Bluetooth LE Matter unregister service command ID */
+#define NCP_CMD_BLE_MATTER_UNREGISTER        (NCP_CMD_BLE | NCP_CMD_BLE_MATTER | NCP_MSG_TYPE_CMD | 0x00000008)
+/** Bluetooth LE Matter unregister service command response ID */
+#define NCP_RSP_BLE_MATTER_UNREGISTER        (NCP_CMD_BLE | NCP_CMD_BLE_MATTER | NCP_MSG_TYPE_RESP | 0x00000008)
+
+/** Bluetooth LE Matter service receive rx write event */
+#define NCP_EVENT_BLE_MATTER_RX_WRITE        (NCP_CMD_BLE | NCP_CMD_BLE_MATTER | NCP_MSG_TYPE_EVENT | 0x00000001)
+/** Bluetooth LE Matter service ccc config event */
+#define NCP_EVENT_BLE_MATTER_CCC_CFG         (NCP_CMD_BLE | NCP_CMD_BLE_MATTER | NCP_MSG_TYPE_EVENT | 0x00000002)
+/** Bluetooth LE Matter ervice indicatie confirm event */
+#define NCP_EVENT_BLE_MATTER_IND_CONFIRM     (NCP_CMD_BLE | NCP_CMD_BLE_MATTER | NCP_MSG_TYPE_EVENT | 0x00000003)
+/** Bluetooth LE Matter service C3 read event */
+#define NCP_EVENT_BLE_MATTER_C3_READ         (NCP_CMD_BLE | NCP_CMD_BLE_MATTER | NCP_MSG_TYPE_EVENT | 0x00000004)
 
 /** Bluetooth LE device ready event */
 #define NCP_EVENT_IUT_READY                  (NCP_CMD_BLE | NCP_CMD_BLE_EVENT | NCP_MSG_TYPE_EVENT | CORE_EV_IUT_READY)
@@ -719,6 +763,8 @@ typedef NCP_TLV_PACK_START struct gap_device_found_ev {
 #define GAP_EV_DEVICE_CONNECTED   0x82
 /** This structure contains the value of the Bluetooth LE connection complete event which indicates a new connection has been created. */
 typedef NCP_TLV_PACK_START struct gap_device_connected_ev {
+    /** connection id */
+    uint8_t conn_id;
     /** Bluetooth LE address type \n
       0: public \n
       1: random
@@ -742,6 +788,8 @@ typedef NCP_TLV_PACK_START struct gap_device_connected_ev {
 #define GAP_EV_DEVICE_DISCONNECTED  0x83
 /** This structure contains the value of the Bluetooth LE disconnection complete event which indicates a connection is terminated. */
 typedef NCP_TLV_PACK_START struct gap_device_disconnected_ev {
+    /** connection id */
+    uint8_t conn_id;
     /** Bluetooth LE address type \n
       0: public \n
       1: random
@@ -749,6 +797,8 @@ typedef NCP_TLV_PACK_START struct gap_device_disconnected_ev {
     uint8_t address_type;
     /** Bluetooth LE address */
     uint8_t address[NCP_BLE_ADDR_LENGTH];
+    /** disconnect reason */
+    uint8_t reason;
 } NCP_TLV_PACK_END gap_device_disconnected_ev_t;
 
 /** NCP Bluetooth LE passkey display event ID */
@@ -2185,6 +2235,84 @@ typedef NCP_TLV_PACK_START struct _NCP_CMD_SET_NAME
     uint8_t name[33];
 } NCP_TLV_PACK_END NCP_CMD_SET_NAME;
 
+/** This structure is used for NCP Bluetooth LE get connection index. */
+typedef NCP_TLV_PACK_START struct _NCP_CMD_GET_CONN_INDEX
+{
+    /** connection id */
+    uint16_t conn_id;
+} NCP_TLV_PACK_END NCP_CMD_GET_CONN_INDEX;
+
+/** This structure is used for NCP Bluetooth LE connection reference. */
+typedef NCP_TLV_PACK_START struct _NCP_CMD_CONN_REF
+{
+    /** connection id */
+    uint16_t conn_id;
+} NCP_TLV_PACK_END NCP_CMD_CONN_REF;
+
+/** This structure is used for NCP Bluetooth LE connection unreference. */
+typedef NCP_TLV_PACK_START struct _NCP_CMD_CONN_UNREF
+{
+    /** connection id */
+    uint16_t conn_id;
+} NCP_TLV_PACK_END NCP_CMD_CONN_UNREF;
+
+/** This structure is used for NCP Bluetooth LE get mtu size. */
+typedef NCP_TLV_PACK_START struct _NCP_CMD_GET_MTU
+{
+    /** connection id */
+    uint16_t conn_id;
+} NCP_TLV_PACK_END NCP_CMD_GET_MTU;
+
+/** This structure is used for NCP Bluetooth LE disconnection. */
+typedef NCP_TLV_PACK_START struct _NCP_CMD_DISCONN
+{
+    /** connection id */
+    uint16_t conn_id;
+    /** disconnect reason */
+    uint8_t reason;
+} NCP_TLV_PACK_END NCP_CMD_DISCONN;
+
+/** This structure is used for NCP Bluetooth LE matter service send indicate. */
+typedef NCP_TLV_PACK_START struct _NCP_CMD_MATTER_INDICATE
+{
+    /** connection id */
+    uint16_t conn_id;
+    /** indicate data length */
+    uint16_t len;
+    /** indicate data */
+    uint8_t data[256];
+} NCP_TLV_PACK_END NCP_CMD_MATTER_INDICATE;
+
+/** This structure is used for NCP Bluetooth LE matter service recieve rx write. */
+typedef NCP_TLV_PACK_START struct _NCP_MATTER_RX_WRITE_RP {
+    /** connection id */
+    uint16_t conn_id;
+    /** characteristics write offset */
+    uint16_t offset;
+    /** characteristics write flags */
+    uint8_t flags;
+    /** characteristics write data length */
+    uint8_t len;
+    /** characteristics write data */
+    uint8_t data[256];
+} NCP_TLV_PACK_END NCP_MATTER_RX_WRITE_RP, NCP_MATTER_RX_WRITE_EV;
+
+/** This structure is used for NCP Bluetooth LE matter service ccc configuration. */
+typedef NCP_TLV_PACK_START struct _NCP_MATTER_CCC_CFG_RP {
+    /** connection id */
+    uint16_t conn_id;
+    /** client configuration changed value */
+    uint16_t value;
+} NCP_TLV_PACK_END NCP_MATTER_CCC_CFG_RP, NCP_MATTER_CCC_CFG_EV;
+
+/** This structure is used for NCP Bluetooth LE matter service indicate confirm. */
+typedef NCP_TLV_PACK_START struct _NCP_MATTER_IND_CONFIRM_RP {
+    /** connection id */
+    uint16_t conn_id;
+    /** indicate confirm state */
+    uint8_t err;
+} NCP_TLV_PACK_END NCP_MATTER_IND_CONFIRM_RP, NCP_MATTER_IND_CONFIRM_EV;
+
 /** This structure is used for NCP Bluetooth LE set power mode. */
 typedef NCP_TLV_PACK_START struct _NCP_CMD_SET_POWER_MODE
 {
@@ -2507,6 +2635,8 @@ typedef NCP_TLV_PACK_START struct _NCP_DEVICE_ADV_REPORT_EV {
 
 /** This structure contains the value of the Bluetooth LE connection complete event which indicates a new connection has been created. */
 typedef NCP_TLV_PACK_START struct _NCP_DEVICE_CONNECTED_EV {
+    /** connection id */
+    uint8_t conn_id;
     /** Bluetooth LE address type \n
       0: public \n
       1: random
@@ -2528,6 +2658,8 @@ typedef NCP_TLV_PACK_START struct _NCP_DEVICE_CONNECTED_EV {
 
 /** This structure contains the value of the Bluetooth LE disconnection complete event which indicates a connection is terminated. */
 typedef NCP_TLV_PACK_START struct _NCP_DEVICE_DISCONNECTED_EV {
+    /** connection id */
+    uint8_t conn_id;
     /** Bluetooth LE address type \n
       0: public \n
       1: random
@@ -2535,6 +2667,8 @@ typedef NCP_TLV_PACK_START struct _NCP_DEVICE_DISCONNECTED_EV {
     uint8_t address_type;
     /** Bluetooth LE address */
     uint8_t address[NCP_BLE_ADDR_LENGTH];
+    /** disconnect reason */
+    uint8_t reason;
 } NCP_TLV_PACK_END NCP_DEVICE_DISCONNECTED_EV;
 
 /** This structure contains the value of the Bluetooth LE user passkey notification event which is used to provide a passkey for the
@@ -2713,6 +2847,16 @@ typedef NCP_TLV_PACK_START struct _NCPCmd_DS_COMMAND_BLE
         NCP_GATT_READ_CMD gatt_read_char;
         /** NCP Bluetooth LE set device name */
         NCP_CMD_SET_NAME set_dev_name;
+        /** NCP Bluetooth LE get connection index */
+        NCP_CMD_GET_CONN_INDEX get_conn_index;
+        /** NCP Bluetooth LE connection reference */
+        NCP_CMD_CONN_REF conn_ref;
+        /** NCP Bluetooth LE connection unreference */
+        NCP_CMD_CONN_UNREF conn_unref;
+        /** NCP Bluetooth LE get MTU size */
+        NCP_CMD_GET_MTU get_mtu;
+        /** NCP Bluetooth LE disconnect */
+        NCP_CMD_DISCONN disconn;
         /** NCP Bluetooth LE gatt add host service */
         NCP_CMD_SERVICE_ADD host_svc_add;
         /** NCP Bluetooth LE start service at host side */

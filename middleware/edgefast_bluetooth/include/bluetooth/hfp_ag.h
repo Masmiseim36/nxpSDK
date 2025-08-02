@@ -406,16 +406,6 @@ int bt_hfp_ag_connect(struct bt_conn *conn,
  */
 int bt_hfp_ag_disconnect(struct bt_hfp_ag *hfp_ag);
 
-/** @brief Obtain the ACL connection corresponding to hfp_ag.
- *
- *  @param hfp_ag The HFP_AG instance.
- *
- *  @return Connection object associated with the HFP_AG context. The caller gets a new
- *  reference to the connection object which must be released with bt_conn_unref()
- *  once done using the object.
- */
-struct bt_conn *bt_hfp_ag_get_conn(struct bt_hfp_ag *hfp_ag);
-
 /** @brief hfp ag discover
  *
  *  This function is to be called after the conn parameter is obtained by

@@ -30,6 +30,10 @@
 #define NCP_CMD_SYSTEM_CONFIG_GET  (NCP_CMD_SYSTEM | NCP_CMD_SYSTEM_CONFIG | NCP_MSG_TYPE_CMD | 0x00000002) /* get-device-cfg */
 /** Wi-Fi system get configuration command response ID */
 #define NCP_RSP_SYSTEM_CONFIG_GET  (NCP_CMD_SYSTEM | NCP_CMD_SYSTEM_CONFIG | NCP_MSG_TYPE_RESP | 0x00000002)
+/** system configuration encrypted communication command ID */
+#define NCP_CMD_SYSTEM_CONFIG_ENCRYPT (NCP_CMD_SYSTEM | NCP_CMD_SYSTEM_CONFIG | NCP_MSG_TYPE_CMD | 0x00000003) /* ncp_encrypt */
+/** system configuration encrypted communication command response ID */
+#define NCP_RSP_SYSTEM_CONFIG_ENCRYPT (NCP_CMD_SYSTEM | NCP_CMD_SYSTEM_CONFIG | NCP_MSG_TYPE_RESP | 0x00000003) 
 /** Wi-Fi system power manager wakeup configuration command ID */
 #define NCP_CMD_SYSTEM_POWERMGMT_WAKE_CFG (NCP_CMD_SYSTEM | NCP_CMD_SYSTEM_POWERMGMT | NCP_MSG_TYPE_CMD | 0x00000001) /* ncp-wake-cfg */
 /** Wi-Fi system power manager wakeup configuration command response ID */
@@ -53,6 +57,10 @@
 #define NCP_EVENT_MCU_SLEEP_EXIT  (NCP_CMD_SYSTEM | NCP_CMD_SYSTEM_ASYNC_EVENT | NCP_MSG_TYPE_EVENT | 0x00000002)
 /* NCP system CRC check error event ID */
 #define NCP_EVENT_CRC_CHECK_ERROR  (NCP_CMD_SYSTEM | NCP_CMD_SYSTEM_ASYNC_EVENT | NCP_MSG_TYPE_EVENT | 0x0000000f)
+/** NCP host device encrypted communication event ID */
+#define NCP_EVENT_SYSTEM_ENCRYPT       (NCP_CMD_SYSTEM | NCP_CMD_SYSTEM_CONFIG | NCP_MSG_TYPE_EVENT | 0x00000003)
+/** NCP host device encrypted communication stop event ID */
+#define NCP_EVENT_SYSTEM_ENCRYPT_STOP  (NCP_CMD_SYSTEM | NCP_CMD_SYSTEM_CONFIG | NCP_MSG_TYPE_EVENT | 0x00000004)
 
 /** Wi-Fi system test loopback command ID */
 #define NCP_CMD_SYSTEM_TEST_LOOPBACK  (NCP_CMD_SYSTEM | NCP_CMD_SYSTEM_TEST | NCP_MSG_TYPE_CMD | 0x00000001) /* test-loopback */
@@ -64,6 +72,13 @@
 #define MODULE_NAME_MAX_LEN 16
 #define VAR_NAME_MAX_LEN  32
 #define CONFIG_VALUE_MAX_LEN 256
+
+#if CONFIG_NCP_USE_ENCRYPT
+#define NCP_CMD_ENCRYPT_ACTION_INIT                 0
+#define NCP_CMD_ENCRYPT_ACTION_DATA                 1
+#define NCP_CMD_ENCRYPT_ACTION_VERIFY               2
+#define NCP_CMD_ENCRYPT_ACTION_STOP                 3
+#endif
 
 /** NCP system configuration */
 typedef NCP_TLV_PACK_START struct _NCP_CMD_SYSTEM_CFG
@@ -121,6 +136,21 @@ typedef NCP_TLV_PACK_START struct _NCP_CMD_POWERMGMT_WAKEUP_HOST
     uint8_t enable;
 } NCP_TLV_PACK_END NCP_CMD_POWERMGMT_WAKEUP_HOST;
 
+/** NCP host device encrypted communication . */
+typedef NCP_TLV_PACK_START struct _NCP_CMD_ENCRYPT
+{   
+    /** 
+    0: trigger encrypted communication flow
+    1: send handshake data to NCP device
+    2: verify the encryption communication
+    */
+    uint8_t action;
+    /**
+    checksum of keys and IVs when action is 2
+    */
+    uint32_t arg;
+} NCP_TLV_PACK_END NCP_CMD_ENCRYPT;
+
 /** NCP system command */
 typedef NCP_TLV_PACK_START struct _NCPCmd_DS_SYS_COMMAND
 {
@@ -137,6 +167,8 @@ typedef NCP_TLV_PACK_START struct _NCPCmd_DS_SYS_COMMAND
         NCP_CMD_POWERMGMT_MCU_SLEEP mcu_sleep_config;
         /** Control for NCP device wakeup NCP host. */
         NCP_CMD_POWERMGMT_WAKEUP_HOST host_wakeup_ctrl;
+        /** NCP host and device encrypted communication. */
+        NCP_CMD_ENCRYPT encrypt;
     } params;
 } NCP_TLV_PACK_END NCPCmd_DS_SYS_COMMAND, MCU_NCPCmd_DS_SYS_COMMAND;
 

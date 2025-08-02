@@ -8,6 +8,14 @@
 #ifndef SBL_CONFIG_H__
 #define SBL_CONFIG_H__
 
+/* Board specific register for flash remap functionality */
+#define FLASH_REMAP_OFFSET_REG 0x400AC080 /* RT1060 flash remap offset register */
+
+/*******************************************************************/
+/* Use default configuration if setup from Kconfig is not provided */
+/*******************************************************************/
+#ifndef CONFIG_BOOT_CUSTOM_DEVICE_SETUP
+
 /* MCUBoot Flash Config */
 
 #define CONFIG_MCUBOOT_MAX_IMG_SECTORS 800
@@ -21,8 +29,6 @@
  */
 #define CONFIG_MCUBOOT_FLASH_REMAP_ENABLE
 
-/* Board specific register for flash remap functionality */
-#define FLASH_REMAP_OFFSET_REG 0x400AC080 /* RT1060 flash remap offset register */
 
 /* Encrypted XIP support config */
 
@@ -40,11 +46,12 @@
 
 /* Crypto Config */
 
-#define COMPONENT_MCUBOOT_SECURE
 #define CONFIG_BOOT_SIGNATURE
 #define CONFIG_BOOT_SIGNATURE_TYPE_RSA
 #define CONFIG_BOOT_SIGNATURE_TYPE_RSA_LEN 2048
 #define COMPONENT_MBEDTLS
 #define CONFIG_BOOT_BOOTSTRAP
+
+#endif /* CONFIG_BOOT_CUSTOM_DEVICE_SETUP */
 
 #endif

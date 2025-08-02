@@ -248,6 +248,7 @@
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1064DVL6A</state>
+          <state>MIMXRT1064_SERIES</state>
           <state>SERIAL_PORT_TYPE_SWO=1</state>
         </option>
         <option>
@@ -377,10 +378,9 @@
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/periph</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/xip</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
         </option>
         <option>
@@ -567,6 +567,7 @@
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1064DVL6A</state>
+          <state>MIMXRT1064_SERIES</state>
         </option>
         <option>
           <name>AList</name>
@@ -666,10 +667,9 @@
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/periph</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/xip</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
         </option>
         <option>
@@ -1381,6 +1381,7 @@
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1064DVL6A</state>
+          <state>MIMXRT1064_SERIES</state>
           <state>SERIAL_PORT_TYPE_SWO=1</state>
         </option>
         <option>
@@ -1510,10 +1511,9 @@
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/periph</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/xip</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
         </option>
         <option>
@@ -1700,6 +1700,7 @@
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1064DVL6A</state>
+          <state>MIMXRT1064_SERIES</state>
         </option>
         <option>
           <name>AList</name>
@@ -1799,10 +1800,9 @@
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/periph</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/xip</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
         </option>
         <option>
@@ -2517,6 +2517,7 @@
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1064DVL6A</state>
+          <state>MIMXRT1064_SERIES</state>
           <state>SERIAL_PORT_TYPE_SWO=1</state>
         </option>
         <option>
@@ -2646,10 +2647,9 @@
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/periph</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/xip</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
         </option>
         <option>
@@ -2836,6 +2836,7 @@
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1064DVL6A</state>
+          <state>MIMXRT1064_SERIES</state>
         </option>
         <option>
           <name>AList</name>
@@ -2935,10 +2936,9 @@
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/periph</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/xip</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
         </option>
         <option>
@@ -3653,6 +3653,7 @@
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1064DVL6A</state>
+          <state>MIMXRT1064_SERIES</state>
           <state>SERIAL_PORT_TYPE_SWO=1</state>
         </option>
         <option>
@@ -3782,10 +3783,9 @@
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/periph</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/xip</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
         </option>
         <option>
@@ -3972,6 +3972,7 @@
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1064DVL6A</state>
+          <state>MIMXRT1064_SERIES</state>
         </option>
         <option>
           <name>AList</name>
@@ -4071,10 +4072,9 @@
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/periph</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/xip</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
         </option>
         <option>
@@ -4788,6 +4788,7 @@
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1064DVL6A</state>
+          <state>MIMXRT1064_SERIES</state>
           <state>SERIAL_PORT_TYPE_SWO=1</state>
         </option>
         <option>
@@ -4917,10 +4918,9 @@
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/periph</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/xip</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
         </option>
         <option>
@@ -5107,6 +5107,7 @@
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1064DVL6A</state>
+          <state>MIMXRT1064_SERIES</state>
         </option>
         <option>
           <name>AList</name>
@@ -5206,10 +5207,9 @@
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/periph</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/xip</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
         </option>
         <option>
@@ -5921,6 +5921,7 @@
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1064DVL6A</state>
+          <state>MIMXRT1064_SERIES</state>
           <state>SERIAL_PORT_TYPE_SWO=1</state>
         </option>
         <option>
@@ -6050,10 +6051,9 @@
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/periph</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/xip</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
         </option>
         <option>
@@ -6240,6 +6240,7 @@
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1064DVL6A</state>
+          <state>MIMXRT1064_SERIES</state>
         </option>
         <option>
           <name>AList</name>
@@ -6339,10 +6340,9 @@
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/periph</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/xip</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
         </option>
         <option>
@@ -7054,6 +7054,7 @@
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1064DVL6A</state>
+          <state>MIMXRT1064_SERIES</state>
           <state>SERIAL_PORT_TYPE_SWO=1</state>
         </option>
         <option>
@@ -7183,10 +7184,9 @@
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/periph</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/xip</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
         </option>
         <option>
@@ -7373,6 +7373,7 @@
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1064DVL6A</state>
+          <state>MIMXRT1064_SERIES</state>
         </option>
         <option>
           <name>AList</name>
@@ -7472,10 +7473,9 @@
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/periph</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/xip</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
         </option>
         <option>
@@ -8190,6 +8190,7 @@
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1064DVL6A</state>
+          <state>MIMXRT1064_SERIES</state>
           <state>SERIAL_PORT_TYPE_SWO=1</state>
         </option>
         <option>
@@ -8319,10 +8320,9 @@
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/periph</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/xip</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
         </option>
         <option>
@@ -8509,6 +8509,7 @@
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1064DVL6A</state>
+          <state>MIMXRT1064_SERIES</state>
         </option>
         <option>
           <name>AList</name>
@@ -8608,10 +8609,9 @@
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/periph</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/xip</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
         </option>
         <option>
@@ -9326,6 +9326,7 @@
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1064DVL6A</state>
+          <state>MIMXRT1064_SERIES</state>
           <state>SERIAL_PORT_TYPE_SWO=1</state>
         </option>
         <option>
@@ -9455,10 +9456,9 @@
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/periph</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/xip</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
         </option>
         <option>
@@ -9645,6 +9645,7 @@
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1064DVL6A</state>
+          <state>MIMXRT1064_SERIES</state>
         </option>
         <option>
           <name>AList</name>
@@ -9744,10 +9745,9 @@
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/periph</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/xip</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
         </option>
         <option>
@@ -10461,6 +10461,7 @@
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1064DVL6A</state>
+          <state>MIMXRT1064_SERIES</state>
           <state>SERIAL_PORT_TYPE_SWO=1</state>
         </option>
         <option>
@@ -10590,10 +10591,9 @@
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/periph</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/xip</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
         </option>
         <option>
@@ -10780,6 +10780,7 @@
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1064DVL6A</state>
+          <state>MIMXRT1064_SERIES</state>
         </option>
         <option>
           <name>AList</name>
@@ -10879,10 +10880,9 @@
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/periph</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/xip</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
         </option>
         <option>
@@ -11707,10 +11707,10 @@
   <group>
     <name>utilities</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/fsl_assert.h</name>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/debug_console/fsl_assert.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/fsl_assert.c</name>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/debug_console/fsl_assert.c</name>
     </file>
     <group>
       <name>str</name>
@@ -11768,6 +11768,9 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../example_board_readme.md</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../examples_shared_readme.md</name>
     </file>
   </group>
 </project>

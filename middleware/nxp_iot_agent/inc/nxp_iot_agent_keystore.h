@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2021,2024 NXP
+ * Copyright 2018-2021,2024-2025 NXP
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -59,6 +59,13 @@ typedef struct iot_agent_keystore_t
 	void* context;
 } iot_agent_keystore_t;
 
+/**
+ * @brief A structure used to abstract key reference between different OpenSSL versions.
+ */
+typedef struct iot_agent_keystore_key_ref_t
+{
+	void* key_ref;
+}iot_agent_keystore_key_ref_t;
 
 /** @brief Initialize an Agent keystore.
  *

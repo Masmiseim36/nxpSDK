@@ -25,12 +25,12 @@
     <definition extID="utility.debug_console_lite.MIMXRT1021"/>
     <definition extID="component.lpuart_adapter.MIMXRT1021"/>
     <definition extID="component.osa_template_config.MIMXRT1021"/>
-    <definition extID="component.osa_interface.MIMXRT1021"/>
     <definition extID="component.osa.MIMXRT1021"/>
     <definition extID="component.osa_bm.MIMXRT1021"/>
     <definition extID="middleware.usb.common_header.MIMXRT1021"/>
     <definition extID="middleware.usb.device.common_header.MIMXRT1021"/>
     <definition extID="middleware.usb.device_controller_ehci.MIMXRT1021"/>
+    <definition extID="middleware.usb.device.ehci_config_header.MIMXRT1021"/>
     <definition extID="middleware.usb.device.controller.driver.MIMXRT1021"/>
     <definition extID="middleware.usb.phy.MIMXRT1021"/>
     <definition extID="iar"/>
@@ -43,7 +43,7 @@
     <definition extID="com.nxp.mcuxpresso.core.debug.support.segger.debug"/>
     <definition extID="com.nxp.mcuxpresso.core.debug.support.segger.release"/>
   </externalDefinitions>
-  <example id="evkmimxrt1020_dev_phdc_weighscale_lite_bm" name="dev_phdc_weighscale_lite_bm" device_core="core0_MIMXRT1021xxxxx" dependency="platform.drivers.xip_board.evkmimxrt1020.MIMXRT1021 platform.drivers.clock.MIMXRT1021 platform.drivers.iomuxc.MIMXRT1021 CMSIS_Include_core_cm.MIMXRT1021 device.MIMXRT1021_CMSIS.MIMXRT1021 device.MIMXRT1021_system.MIMXRT1021 device.MIMXRT1021_startup.MIMXRT1021 platform.drivers.xip_device.MIMXRT1021 platform.drivers.cache_armv7_m7.MIMXRT1021 platform.drivers.common.MIMXRT1021 platform.drivers.dcdc_1.MIMXRT1021 platform.drivers.gpc_1.MIMXRT1021 platform.drivers.igpio.MIMXRT1021 platform.drivers.lpuart.MIMXRT1021 platform.drivers.pmu.MIMXRT1021 platform.drivers.src.MIMXRT1021 platform.utilities.assert_lite.MIMXRT1021 platform.utilities.misc_utilities.MIMXRT1021 component.lists.MIMXRT1021 utility.str.MIMXRT1021 utility.debug_console_lite.MIMXRT1021 component.lpuart_adapter.MIMXRT1021 component.osa_template_config.MIMXRT1021 component.osa_interface.MIMXRT1021 component.osa.MIMXRT1021 component.osa_bm.MIMXRT1021 middleware.usb.common_header.MIMXRT1021 middleware.usb.device.common_header.MIMXRT1021 middleware.usb.device_controller_ehci.MIMXRT1021 middleware.usb.device.controller.driver.MIMXRT1021 middleware.usb.phy.MIMXRT1021" category="usb_examples">
+  <example id="evkmimxrt1020_dev_phdc_weighscale_lite_bm" name="dev_phdc_weighscale_lite_bm" device_core="core0_MIMXRT1021xxxxx" dependency="platform.drivers.xip_board.evkmimxrt1020.MIMXRT1021 platform.drivers.clock.MIMXRT1021 platform.drivers.iomuxc.MIMXRT1021 CMSIS_Include_core_cm.MIMXRT1021 device.MIMXRT1021_CMSIS.MIMXRT1021 device.MIMXRT1021_system.MIMXRT1021 device.MIMXRT1021_startup.MIMXRT1021 platform.drivers.xip_device.MIMXRT1021 platform.drivers.cache_armv7_m7.MIMXRT1021 platform.drivers.common.MIMXRT1021 platform.drivers.dcdc_1.MIMXRT1021 platform.drivers.gpc_1.MIMXRT1021 platform.drivers.igpio.MIMXRT1021 platform.drivers.lpuart.MIMXRT1021 platform.drivers.pmu.MIMXRT1021 platform.drivers.src.MIMXRT1021 platform.utilities.assert_lite.MIMXRT1021 platform.utilities.misc_utilities.MIMXRT1021 component.lists.MIMXRT1021 utility.str.MIMXRT1021 utility.debug_console_lite.MIMXRT1021 component.lpuart_adapter.MIMXRT1021 component.osa_template_config.MIMXRT1021 component.osa.MIMXRT1021 component.osa_bm.MIMXRT1021 middleware.usb.common_header.MIMXRT1021 middleware.usb.device.common_header.MIMXRT1021 middleware.usb.device_controller_ehci.MIMXRT1021 middleware.usb.device.ehci_config_header.MIMXRT1021 middleware.usb.device.controller.driver.MIMXRT1021 middleware.usb.phy.MIMXRT1021" category="usb_examples">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -65,6 +65,7 @@
           <value>SDK_DEBUGCONSOLE=1</value>
           <value>MCUX_META_BUILD</value>
           <value>CPU_MIMXRT1021DAG5A</value>
+          <value>MIMXRT1021_SERIES</value>
           <value>OSA_USED</value>
           <value>USE_RTOS=0</value>
         </option>
@@ -237,16 +238,17 @@
     </source>
     <source path="." project_relative_path="source" type="c_include" config="true">
       <files mask="fsl_os_abstraction_config.h"/>
+      <files mask="usb_device_config.h"/>
     </source>
     <source path="." project_relative_path="source" type="c_preinclude">
       <files mask="mcux_config.h"/>
     </source>
-    <source path="." project_relative_path="source" type="c_include">
-      <files mask="usb_device_config.h"/>
-    </source>
     <source path="." project_relative_path="doc" type="doc">
       <files mask="readme.md"/>
       <files mask="healthlink_operation.jpg"/>
+    </source>
+    <source path="." project_relative_path="doc" type="doc">
+      <files mask="examples_shared_readme.md"/>
     </source>
   </example>
 </ksdk:examples>

@@ -32,9 +32,9 @@ BR/EDR set connectable and discoverable done
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Procedures to run
-1 Open Android phone, and connect the "a2dp sink" device in bluetooth setting window.
-2 Play music in the phone
-3 The music can be heared in the audio port of the board.
+1. Open Android phone, and connect the "a2dp sink" device in bluetooth setting window.
+2. Play music in the phone
+3. The music can be heared in the audio port of the board.
 
 ## Supported Boards
 - [EVKB-IMXRT1050](../../_boards/evkbimxrt1050/edgefast_bluetooth_examples/a2dp_sink/example_board_readme.md)

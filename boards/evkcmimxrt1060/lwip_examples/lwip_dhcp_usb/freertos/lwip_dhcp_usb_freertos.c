@@ -64,6 +64,7 @@ uint32_t dhcpReady;
 uint8_t pingReady;
 /*set when app get the URL's ip addrss*/
 uint8_t dnsReady;
+uint8_t dnsErrCnt;
 ip4_addr_t currentaddr;
 uint8_t website[40] = {
     'w', 'w', 'w', '.', 'n', 'x', 'p', '.', 'c', 'o', 'm',
@@ -148,6 +149,7 @@ static void print_dhcp_state(void *arg)
                 PRINTF(" IPv4 Subnet mask : %s\r\n", ipaddr_ntoa(&netif->netmask));
                 PRINTF(" IPv4 Gateway     : %s\r\n\r\n", ipaddr_ntoa(&netif->gw));
                 dhcpReady = 1;
+                dnsErrCnt = 0;
             }
         }
         if (dhcpReady)
@@ -155,11 +157,14 @@ static void print_dhcp_state(void *arg)
             dhcpReady = 0;
             struct netconn *netconn;
             netconn = netconn_new(NETCONN_TCP);
-            netconn_set_recvtimeout(netconn, 3000);
+            if (netconn != NULL)
+            {
+                netconn_set_recvtimeout(netconn, 3000);
+            }
 
-            err_t err;
-            err = netconn_gethostbyname((char *)&website[0], &currentaddr);
-            if (err != ERR_OK)
+            while (netconn_gethostbyname((char *)&website[0], &currentaddr) != ERR_OK && dnsErrCnt++ < 10)
+                ;
+            if (dnsErrCnt >= 10)
             {
                 dnsReady = 0;
                 PRINTF("error in get host name\r\n");

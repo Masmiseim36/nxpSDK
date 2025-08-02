@@ -72,22 +72,24 @@ The assigned unique local or global unique addresses could be typed into the web
 
 ## Modifying content of static web pages
 To modify content available through the web server you must complete following steps:
-  1. Modify, add or delete files in folder "boards\<board_name>\lwip_examples\lwip_httpssrv_mbedTLS_freertos\webpage".
-  2. Run the script file "middleware\lwip\src\apps\httpsrv\mkfs\mkfs.pl <directory name>" to generate new "httpsrv_fs_data.c".
+  1. Modify, add or delete files in folder "boards/<board_name>/lwip_examples/lwip_httpssrv_mbedTLS_freertos/webpage".
+  2. Run the script file "middleware/lwip/src/apps/httpsrv/mkfs/mkfs.pl \<directory name\>" to generate new "httpsrv_fs_data.c".
      Make sure to execute it from a folder where the file "httpsrv_fs_data.c" is. For example:
-        C:\sdk\boards\<board_name>\lwip_examples\lwip_httpssrv_mbedTLS_freertos> C:\sdk\middleware\lwip\src\apps\httpsrv\mkfs\mkfs.pl webpage
-		Processing file webpage/auth.html
-		Processing file webpage/cgi.html
-		Processing file webpage/favicon.ico
-		Processing file webpage/help.html
-		Processing file webpage/httpsrv.css
-		Processing file webpage/index.html
-		Processing file webpage/NXP_logo.png
-		Processing file webpage/poll.html
-		Processing file webpage/request.js
-		Processing file webpage/ssi.shtml
-		Processing file webpage/welcome.html
-		Done.
+
+         C:\sdk\boards\<board_name>\lwip_examples\lwip_httpssrv_mbedTLS_freertos> C:\sdk\middleware\lwip\src\apps\httpsrv\mkfs\mkfs.pl webpage
+		 Processing file webpage/auth.html
+		 Processing file webpage/cgi.html
+		 Processing file webpage/favicon.ico
+		 Processing file webpage/help.html
+		 Processing file webpage/httpsrv.css
+		 Processing file webpage/index.html
+		 Processing file webpage/NXP_logo.png
+		 Processing file webpage/poll.html
+		 Processing file webpage/request.js
+		 Processing file webpage/ssi.shtml
+		 Processing file webpage/welcome.html
+		 Done.
+
   3. Make sure the "httpsrv_fs_data.c" file has been overwritten with the newly generated content.
   4. Re-compile the HTTP server application example and download it to your board.
 

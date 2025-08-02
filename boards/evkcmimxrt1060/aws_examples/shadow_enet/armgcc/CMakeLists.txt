@@ -14,9 +14,6 @@ if(CMAKE_SCRIPT_MODE_FILE)
 endif()
 
 
-set(CMAKE_STATIC_LIBRARY_PREFIX)
-set(CMAKE_STATIC_LIBRARY_SUFFIX)
-
 set(CMAKE_EXECUTABLE_LIBRARY_PREFIX)
 set(CMAKE_EXECUTABLE_LIBRARY_SUFFIX)
 
@@ -54,7 +51,6 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../core_mqtt_config.h"
 "${ProjDirPath}/../core_pkcs11_config.h"
 "${ProjDirPath}/../demo_config.h"
-"${ProjDirPath}/../freertos_tasks_c_additions.h"
 "${ProjDirPath}/../kvstore_config.h"
 "${ProjDirPath}/../shadow_config.h"
 "${ProjDirPath}/../aws_dev_mode_key_provisioning.h"

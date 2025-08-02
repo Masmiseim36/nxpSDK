@@ -72,11 +72,7 @@
 #define configSUPPORT_DYNAMIC_ALLOCATION 1
 
 #if CONFIG_FREERTOS_LOW_MEMORY_FOOTPRINT
-#ifdef RW610
 #define configTOTAL_HEAP_SIZE            ((size_t)(60 * 1024))
-#else
-#define configTOTAL_HEAP_SIZE            ((size_t)(70 * 1024))
-#endif /* RW610 */
 #else
 #define configTOTAL_HEAP_SIZE            ((size_t)(70 * 1024))
 #endif /* CONFIG_FREERTOS_LOW_MEMORY_FOOTPRINT */

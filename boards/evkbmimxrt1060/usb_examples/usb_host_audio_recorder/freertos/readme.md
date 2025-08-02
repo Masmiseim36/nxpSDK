@@ -15,6 +15,7 @@ The Host Audio example supports the audio microphone device.
 - USB A to micro AB cable
 - Hardware (Tower module/base board, and so on) for a specific device
 - Personal Computer
+- Consider the performance requirement, please run this case by high speed.
 
 
 ### Software requirements

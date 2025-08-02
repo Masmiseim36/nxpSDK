@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2024 NXP
+ * Copyright 2018-2025 NXP
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -28,25 +28,25 @@
 #if defined(LPC_ENET)
 #include "fsl_enet.h"
 #ifdef EXAMPLE_USE_100M_ENET_PORT
-#if defined(CPU_MCXN547VDF_cm33_core0) || defined(CPU_MCXN947VDF_cm33_core0)
+#if defined(MCXN547_cm33_core0_SERIES) || defined(MCXN947_cm33_core0_SERIES)
 #include "fsl_phylan8741.h"
 #else
 #include "fsl_phyksz8081.h"
-#endif // CPU_MCXN547VDF_cm33_core0 || CPU_MCXN947VDF_cm33_core0
+#endif // MCXN547_cm33_core0_SERIES || MCXN947_cm33_core0_SERIES
 #else
 #include "fsl_phyrtl8211f.h"
 #endif // EXAMPLE_USE_100M_ENET_PORT
 
 /* ENET clock frequency. */
-#if defined(CPU_MIMXRT1176DVMAA_cm7)
+#if defined(MIMXRT1176_cm7_SERIES)
 #define EXAMPLE_CLOCK_FREQ CLOCK_GetRootClockFreq(kCLOCK_Root_Bus)
-#elif defined(CPU_MIMXRT1062DVL6A) || defined (CPU_MIMXRT1062DVL6B)
+#elif defined(MIMXRT1062_SERIES)
 #define EXAMPLE_CLOCK_FREQ CLOCK_GetFreq(kCLOCK_IpgClk)
-#elif defined(CPU_MCXN547VDF_cm33_core0) || defined(CPU_MCXN947VDF_cm33_core0)
+#elif defined(MCXN547_cm33_core0_SERIES) || defined(MCXN947_cm33_core0_SERIES)
 #define EXAMPLE_CLOCK_FREQ (50000000U)
 #else
 #define EXAMPLE_CLOCK_FREQ CLOCK_GetFreq(kCLOCK_CoreSysClk)
-#endif // CPU_MIMXRT1176DVMAA_cm7
+#endif // MIMXRT1176_cm7_SERIES
 
 /* MDIO operations. */
 #define EXAMPLE_MDIO_OPS enet_ops
@@ -54,7 +54,7 @@
 #ifdef EXAMPLE_USE_100M_ENET_PORT
 /* Address of PHY interface. */
 #define EXAMPLE_PHY_ADDRESS BOARD_ENET0_PHY_ADDRESS
-#if defined(CPU_MCXN547VDF_cm33_core0) || defined(CPU_MCXN947VDF_cm33_core0)
+#if defined(MCXN547_cm33_core0_SERIES) || defined(MCXN947_cm33_core0_SERIES)
 phy_lan8741_resource_t g_phy_resource_agent;
 /* PHY operations. */
 #define EXAMPLE_PHY_OPS &phylan8741_ops
@@ -68,7 +68,7 @@ phy_ksz8081_resource_t g_phy_resource_agent;
 /* ENET instance select. */
 #define EXAMPLE_NETIF_INIT_FN ethernetif0_init
 #define EXAMPLE_ENET ENET
-#endif // CPU_MCXN547VDF_cm33_core0 || CPU_MCXN947VDF_cm33_core0
+#endif // MCXN547_cm33_core0_SERIES || MCXN947_cm33_core0_SERIES
 #else
 /* Address of PHY interface. */
 #define EXAMPLE_PHY_ADDRESS BOARD_ENET1_PHY_ADDRESS
@@ -124,7 +124,7 @@ static struct netif fsl_netif0;
 static void MDIO_Init(void)
 {
     (void)CLOCK_EnableClock(s_enetClock[ENET_GetInstance(EXAMPLE_ENET)]);
-#if defined(CPU_MCXN547VDF_cm33_core0) || defined(CPU_MCXN947VDF_cm33_core0)
+#if defined(MCXN547_cm33_core0_SERIES) || defined(MCXN947_cm33_core0_SERIES)
     ENET_SetSMI(EXAMPLE_ENET, CLOCK_GetCoreSysClkFreq());
 #else
     ENET_SetSMI(EXAMPLE_ENET, EXAMPLE_CLOCK_FREQ, false);

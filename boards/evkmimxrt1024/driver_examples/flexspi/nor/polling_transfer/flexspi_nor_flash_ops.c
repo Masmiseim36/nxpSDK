@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2022 NXP
+ * Copyright 2016-2022, 2025 NXP
  * All rights reserved.
  *
  *
@@ -387,40 +387,67 @@ status_t flexspi_nor_flash_read(FLEXSPI_Type *base, uint32_t dstAddr, const uint
     return status;
 }
 
+/*!
+ * @brief Write data to flash, the size of buffer is not limited.
+ * 
+ * @param base Flexspi base address.
+ * @param dstAddr Flash address to write
+ * @param src Pointer to source data buffer.
+ * @param length Length of buffer size.
+ *
+ * @return Status of operation.
+ */
 status_t flexspi_nor_flash_program(FLEXSPI_Type *base, uint32_t dstAddr, const uint32_t *src, uint32_t length)
 {
     status_t status;
     flexspi_transfer_t flashXfer;
+    uint32_t tmpAddr = dstAddr;
+    int32_t remainingSize = (int32_t)length;
+    uint32_t transferSize = 0UL;
+    uint32_t srdAddr = (uint32_t)src;
 
 #if defined(CACHE_MAINTAIN) && CACHE_MAINTAIN
     flexspi_cache_status_t cacheStatus;
     flexspi_nor_disable_cache(&cacheStatus);
 #endif
 
-    /* Write enable */
-    status = flexspi_nor_write_enable(base, dstAddr);
-
-    if (status != kStatus_Success)
+    while(remainingSize > 0)
     {
-        return status;
+        transferSize = (remainingSize >= FLASH_PAGE_SIZE) ? FLASH_PAGE_SIZE : remainingSize;
+        /* Write enable */
+        status = flexspi_nor_write_enable(base, tmpAddr);
+
+        if (status != kStatus_Success)
+        {
+            return status;
+        }
+
+        /* Prepare page program command */
+        flashXfer.deviceAddress = tmpAddr;
+        flashXfer.port          = FLASH_PORT;
+        flashXfer.cmdType       = kFLEXSPI_Write;
+        flashXfer.SeqNumber     = 1;
+        flashXfer.seqIndex      = NOR_CMD_LUT_SEQ_IDX_PAGEPROGRAM_QUAD;
+        flashXfer.data          = (uint32_t *)srdAddr;
+        flashXfer.dataSize      = transferSize;
+        status                  = FLEXSPI_TransferBlocking(base, &flashXfer);
+
+        if (status != kStatus_Success)
+        {
+            return status;
+        }
+
+        status = flexspi_nor_wait_bus_busy(base);
+
+        if (status != kStatus_Success)
+        {
+            return status;
+        }
+
+        remainingSize -= transferSize;
+        tmpAddr += transferSize;
+        srdAddr += transferSize;
     }
-
-    /* Prepare page program command */
-    flashXfer.deviceAddress = dstAddr;
-    flashXfer.port          = FLASH_PORT;
-    flashXfer.cmdType       = kFLEXSPI_Write;
-    flashXfer.SeqNumber     = 1;
-    flashXfer.seqIndex      = NOR_CMD_LUT_SEQ_IDX_PAGEPROGRAM_QUAD;
-    flashXfer.data          = (uint32_t *)src;
-    flashXfer.dataSize      = length;
-    status                  = FLEXSPI_TransferBlocking(base, &flashXfer);
-
-    if (status != kStatus_Success)
-    {
-        return status;
-    }
-
-    status = flexspi_nor_wait_bus_busy(base);
 
     /* Do software reset or clear AHB buffer directly. */
 #if defined(FSL_FEATURE_SOC_OTFAD_COUNT) && defined(FLEXSPI_AHBCR_CLRAHBRXBUF_MASK) && \
@@ -438,6 +465,15 @@ status_t flexspi_nor_flash_program(FLEXSPI_Type *base, uint32_t dstAddr, const u
     return status;
 }
 
+/*!
+ * @brief Do whole page program to flash.
+ * 
+ * @param base Flexspi Base address.
+ * @param dstAddr Flash address to write
+ * @param src Pointer to source data buffer.
+ *
+ * @return Status of operation.
+ */
 status_t flexspi_nor_flash_page_program(FLEXSPI_Type *base, uint32_t dstAddr, const uint32_t *src)
 {
     status_t status;

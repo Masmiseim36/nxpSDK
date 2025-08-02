@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2021,2024 NXP
+ * Copyright 2018-2021,2024-2025 NXP
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -17,14 +17,14 @@ extern "C" {
 #define NETWORK_STATUS_FAIL -1
 
 #define NETWORK_EXIT_STATUS_MSG(STATUS, ...)                      \
-	network_status = STATUS;                                      \
+	network_status = (STATUS);                                      \
 	IOT_AGENT_ERROR(__VA_ARGS__);                                 \
 	goto exit;                                                    \
 
 #define NETWORK_ASSERT_OR_EXIT_STATUS_MSG(CONDITION, STATUS, ...) \
 if (!(CONDITION))                                                 \
 {                                                                 \
-	network_status = STATUS;                                      \
+	network_status = (STATUS);                                      \
 	IOT_AGENT_ERROR(__VA_ARGS__);                                 \
 	goto exit;                                                    \
 }

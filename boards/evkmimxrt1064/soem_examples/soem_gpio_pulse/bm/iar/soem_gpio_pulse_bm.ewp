@@ -249,6 +249,7 @@
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1064DVL6A</state>
+          <state>MIMXRT1064_SERIES</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -379,11 +380,11 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/xip</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/utilities/str</state>
+          <state>$PROJ_DIR$/../../../../../../components/silicon_id</state>
+          <state>$PROJ_DIR$/../../../../../../components/silicon_id/socs</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/phy</state>
           <state>$PROJ_DIR$/../../../../../../components/phy/device/phyksz8081</state>
-          <state>$PROJ_DIR$/../../../../../../components/silicon_id</state>
-          <state>$PROJ_DIR$/../../../../../../components/silicon_id/socs</state>
           <state>$PROJ_DIR$/../../../../../../middleware/soem/oshw/mcux-sdk</state>
           <state>$PROJ_DIR$/../../../../../../middleware/soem/oshw/mcux-sdk/enet</state>
           <state>$PROJ_DIR$/../../../../../../middleware/soem/soem</state>
@@ -574,6 +575,7 @@
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1064DVL6A</state>
+          <state>MIMXRT1064_SERIES</state>
         </option>
         <option>
           <name>AList</name>
@@ -675,11 +677,11 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/xip</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/utilities/str</state>
+          <state>$PROJ_DIR$/../../../../../../components/silicon_id</state>
+          <state>$PROJ_DIR$/../../../../../../components/silicon_id/socs</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/phy</state>
           <state>$PROJ_DIR$/../../../../../../components/phy/device/phyksz8081</state>
-          <state>$PROJ_DIR$/../../../../../../components/silicon_id</state>
-          <state>$PROJ_DIR$/../../../../../../components/silicon_id/socs</state>
           <state>$PROJ_DIR$/../../../../../../middleware/soem/oshw/mcux-sdk</state>
           <state>$PROJ_DIR$/../../../../../../middleware/soem/oshw/mcux-sdk/enet</state>
           <state>$PROJ_DIR$/../../../../../../middleware/soem/soem</state>
@@ -1401,6 +1403,7 @@
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1064DVL6A</state>
+          <state>MIMXRT1064_SERIES</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -1531,11 +1534,11 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/xip</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/utilities/str</state>
+          <state>$PROJ_DIR$/../../../../../../components/silicon_id</state>
+          <state>$PROJ_DIR$/../../../../../../components/silicon_id/socs</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/phy</state>
           <state>$PROJ_DIR$/../../../../../../components/phy/device/phyksz8081</state>
-          <state>$PROJ_DIR$/../../../../../../components/silicon_id</state>
-          <state>$PROJ_DIR$/../../../../../../components/silicon_id/socs</state>
           <state>$PROJ_DIR$/../../../../../../middleware/soem/oshw/mcux-sdk</state>
           <state>$PROJ_DIR$/../../../../../../middleware/soem/oshw/mcux-sdk/enet</state>
           <state>$PROJ_DIR$/../../../../../../middleware/soem/soem</state>
@@ -1726,6 +1729,7 @@
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1064DVL6A</state>
+          <state>MIMXRT1064_SERIES</state>
         </option>
         <option>
           <name>AList</name>
@@ -1827,11 +1831,11 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/xip</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/utilities/str</state>
+          <state>$PROJ_DIR$/../../../../../../components/silicon_id</state>
+          <state>$PROJ_DIR$/../../../../../../components/silicon_id/socs</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/phy</state>
           <state>$PROJ_DIR$/../../../../../../components/phy/device/phyksz8081</state>
-          <state>$PROJ_DIR$/../../../../../../components/silicon_id</state>
-          <state>$PROJ_DIR$/../../../../../../components/silicon_id/socs</state>
           <state>$PROJ_DIR$/../../../../../../middleware/soem/oshw/mcux-sdk</state>
           <state>$PROJ_DIR$/../../../../../../middleware/soem/oshw/mcux-sdk/enet</state>
           <state>$PROJ_DIR$/../../../../../../middleware/soem/soem</state>
@@ -2554,6 +2558,7 @@
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1064DVL6A</state>
+          <state>MIMXRT1064_SERIES</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -2684,11 +2689,11 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/xip</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/utilities/str</state>
+          <state>$PROJ_DIR$/../../../../../../components/silicon_id</state>
+          <state>$PROJ_DIR$/../../../../../../components/silicon_id/socs</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/phy</state>
           <state>$PROJ_DIR$/../../../../../../components/phy/device/phyksz8081</state>
-          <state>$PROJ_DIR$/../../../../../../components/silicon_id</state>
-          <state>$PROJ_DIR$/../../../../../../components/silicon_id/socs</state>
           <state>$PROJ_DIR$/../../../../../../middleware/soem/oshw/mcux-sdk</state>
           <state>$PROJ_DIR$/../../../../../../middleware/soem/oshw/mcux-sdk/enet</state>
           <state>$PROJ_DIR$/../../../../../../middleware/soem/soem</state>
@@ -2879,6 +2884,7 @@
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1064DVL6A</state>
+          <state>MIMXRT1064_SERIES</state>
         </option>
         <option>
           <name>AList</name>
@@ -2980,11 +2986,11 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/xip</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/utilities/str</state>
+          <state>$PROJ_DIR$/../../../../../../components/silicon_id</state>
+          <state>$PROJ_DIR$/../../../../../../components/silicon_id/socs</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/phy</state>
           <state>$PROJ_DIR$/../../../../../../components/phy/device/phyksz8081</state>
-          <state>$PROJ_DIR$/../../../../../../components/silicon_id</state>
-          <state>$PROJ_DIR$/../../../../../../components/silicon_id/socs</state>
           <state>$PROJ_DIR$/../../../../../../middleware/soem/oshw/mcux-sdk</state>
           <state>$PROJ_DIR$/../../../../../../middleware/soem/oshw/mcux-sdk/enet</state>
           <state>$PROJ_DIR$/../../../../../../middleware/soem/soem</state>
@@ -3703,6 +3709,7 @@
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1064DVL6A</state>
+          <state>MIMXRT1064_SERIES</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -3833,11 +3840,11 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/xip</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/utilities/str</state>
+          <state>$PROJ_DIR$/../../../../../../components/silicon_id</state>
+          <state>$PROJ_DIR$/../../../../../../components/silicon_id/socs</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/phy</state>
           <state>$PROJ_DIR$/../../../../../../components/phy/device/phyksz8081</state>
-          <state>$PROJ_DIR$/../../../../../../components/silicon_id</state>
-          <state>$PROJ_DIR$/../../../../../../components/silicon_id/socs</state>
           <state>$PROJ_DIR$/../../../../../../middleware/soem/oshw/mcux-sdk</state>
           <state>$PROJ_DIR$/../../../../../../middleware/soem/oshw/mcux-sdk/enet</state>
           <state>$PROJ_DIR$/../../../../../../middleware/soem/soem</state>
@@ -4028,6 +4035,7 @@
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1064DVL6A</state>
+          <state>MIMXRT1064_SERIES</state>
         </option>
         <option>
           <name>AList</name>
@@ -4129,11 +4137,11 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/xip</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/utilities/str</state>
+          <state>$PROJ_DIR$/../../../../../../components/silicon_id</state>
+          <state>$PROJ_DIR$/../../../../../../components/silicon_id/socs</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/phy</state>
           <state>$PROJ_DIR$/../../../../../../components/phy/device/phyksz8081</state>
-          <state>$PROJ_DIR$/../../../../../../components/silicon_id</state>
-          <state>$PROJ_DIR$/../../../../../../components/silicon_id/socs</state>
           <state>$PROJ_DIR$/../../../../../../middleware/soem/oshw/mcux-sdk</state>
           <state>$PROJ_DIR$/../../../../../../middleware/soem/oshw/mcux-sdk/enet</state>
           <state>$PROJ_DIR$/../../../../../../middleware/soem/soem</state>
@@ -4852,6 +4860,7 @@
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1064DVL6A</state>
+          <state>MIMXRT1064_SERIES</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -4982,11 +4991,11 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/xip</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/utilities/str</state>
+          <state>$PROJ_DIR$/../../../../../../components/silicon_id</state>
+          <state>$PROJ_DIR$/../../../../../../components/silicon_id/socs</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/phy</state>
           <state>$PROJ_DIR$/../../../../../../components/phy/device/phyksz8081</state>
-          <state>$PROJ_DIR$/../../../../../../components/silicon_id</state>
-          <state>$PROJ_DIR$/../../../../../../components/silicon_id/socs</state>
           <state>$PROJ_DIR$/../../../../../../middleware/soem/oshw/mcux-sdk</state>
           <state>$PROJ_DIR$/../../../../../../middleware/soem/oshw/mcux-sdk/enet</state>
           <state>$PROJ_DIR$/../../../../../../middleware/soem/soem</state>
@@ -5177,6 +5186,7 @@
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1064DVL6A</state>
+          <state>MIMXRT1064_SERIES</state>
         </option>
         <option>
           <name>AList</name>
@@ -5278,11 +5288,11 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/xip</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/utilities/str</state>
+          <state>$PROJ_DIR$/../../../../../../components/silicon_id</state>
+          <state>$PROJ_DIR$/../../../../../../components/silicon_id/socs</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/phy</state>
           <state>$PROJ_DIR$/../../../../../../components/phy/device/phyksz8081</state>
-          <state>$PROJ_DIR$/../../../../../../components/silicon_id</state>
-          <state>$PROJ_DIR$/../../../../../../components/silicon_id/socs</state>
           <state>$PROJ_DIR$/../../../../../../middleware/soem/oshw/mcux-sdk</state>
           <state>$PROJ_DIR$/../../../../../../middleware/soem/oshw/mcux-sdk/enet</state>
           <state>$PROJ_DIR$/../../../../../../middleware/soem/soem</state>
@@ -6004,6 +6014,7 @@
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1064DVL6A</state>
+          <state>MIMXRT1064_SERIES</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -6134,11 +6145,11 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/xip</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/utilities/str</state>
+          <state>$PROJ_DIR$/../../../../../../components/silicon_id</state>
+          <state>$PROJ_DIR$/../../../../../../components/silicon_id/socs</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/phy</state>
           <state>$PROJ_DIR$/../../../../../../components/phy/device/phyksz8081</state>
-          <state>$PROJ_DIR$/../../../../../../components/silicon_id</state>
-          <state>$PROJ_DIR$/../../../../../../components/silicon_id/socs</state>
           <state>$PROJ_DIR$/../../../../../../middleware/soem/oshw/mcux-sdk</state>
           <state>$PROJ_DIR$/../../../../../../middleware/soem/oshw/mcux-sdk/enet</state>
           <state>$PROJ_DIR$/../../../../../../middleware/soem/soem</state>
@@ -6329,6 +6340,7 @@
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1064DVL6A</state>
+          <state>MIMXRT1064_SERIES</state>
         </option>
         <option>
           <name>AList</name>
@@ -6430,11 +6442,11 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/xip</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/utilities/str</state>
+          <state>$PROJ_DIR$/../../../../../../components/silicon_id</state>
+          <state>$PROJ_DIR$/../../../../../../components/silicon_id/socs</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/phy</state>
           <state>$PROJ_DIR$/../../../../../../components/phy/device/phyksz8081</state>
-          <state>$PROJ_DIR$/../../../../../../components/silicon_id</state>
-          <state>$PROJ_DIR$/../../../../../../components/silicon_id/socs</state>
           <state>$PROJ_DIR$/../../../../../../middleware/soem/oshw/mcux-sdk</state>
           <state>$PROJ_DIR$/../../../../../../middleware/soem/oshw/mcux-sdk/enet</state>
           <state>$PROJ_DIR$/../../../../../../middleware/soem/soem</state>
@@ -7157,6 +7169,7 @@
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1064DVL6A</state>
+          <state>MIMXRT1064_SERIES</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -7287,11 +7300,11 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/xip</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/utilities/str</state>
+          <state>$PROJ_DIR$/../../../../../../components/silicon_id</state>
+          <state>$PROJ_DIR$/../../../../../../components/silicon_id/socs</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/phy</state>
           <state>$PROJ_DIR$/../../../../../../components/phy/device/phyksz8081</state>
-          <state>$PROJ_DIR$/../../../../../../components/silicon_id</state>
-          <state>$PROJ_DIR$/../../../../../../components/silicon_id/socs</state>
           <state>$PROJ_DIR$/../../../../../../middleware/soem/oshw/mcux-sdk</state>
           <state>$PROJ_DIR$/../../../../../../middleware/soem/oshw/mcux-sdk/enet</state>
           <state>$PROJ_DIR$/../../../../../../middleware/soem/soem</state>
@@ -7482,6 +7495,7 @@
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1064DVL6A</state>
+          <state>MIMXRT1064_SERIES</state>
         </option>
         <option>
           <name>AList</name>
@@ -7583,11 +7597,11 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/xip</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/utilities/str</state>
+          <state>$PROJ_DIR$/../../../../../../components/silicon_id</state>
+          <state>$PROJ_DIR$/../../../../../../components/silicon_id/socs</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/phy</state>
           <state>$PROJ_DIR$/../../../../../../components/phy/device/phyksz8081</state>
-          <state>$PROJ_DIR$/../../../../../../components/silicon_id</state>
-          <state>$PROJ_DIR$/../../../../../../components/silicon_id/socs</state>
           <state>$PROJ_DIR$/../../../../../../middleware/soem/oshw/mcux-sdk</state>
           <state>$PROJ_DIR$/../../../../../../middleware/soem/oshw/mcux-sdk/enet</state>
           <state>$PROJ_DIR$/../../../../../../middleware/soem/soem</state>
@@ -8306,6 +8320,7 @@
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1064DVL6A</state>
+          <state>MIMXRT1064_SERIES</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -8436,11 +8451,11 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/xip</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/utilities/str</state>
+          <state>$PROJ_DIR$/../../../../../../components/silicon_id</state>
+          <state>$PROJ_DIR$/../../../../../../components/silicon_id/socs</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/phy</state>
           <state>$PROJ_DIR$/../../../../../../components/phy/device/phyksz8081</state>
-          <state>$PROJ_DIR$/../../../../../../components/silicon_id</state>
-          <state>$PROJ_DIR$/../../../../../../components/silicon_id/socs</state>
           <state>$PROJ_DIR$/../../../../../../middleware/soem/oshw/mcux-sdk</state>
           <state>$PROJ_DIR$/../../../../../../middleware/soem/oshw/mcux-sdk/enet</state>
           <state>$PROJ_DIR$/../../../../../../middleware/soem/soem</state>
@@ -8631,6 +8646,7 @@
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1064DVL6A</state>
+          <state>MIMXRT1064_SERIES</state>
         </option>
         <option>
           <name>AList</name>
@@ -8732,11 +8748,11 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/xip</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/utilities/str</state>
+          <state>$PROJ_DIR$/../../../../../../components/silicon_id</state>
+          <state>$PROJ_DIR$/../../../../../../components/silicon_id/socs</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/phy</state>
           <state>$PROJ_DIR$/../../../../../../components/phy/device/phyksz8081</state>
-          <state>$PROJ_DIR$/../../../../../../components/silicon_id</state>
-          <state>$PROJ_DIR$/../../../../../../components/silicon_id/socs</state>
           <state>$PROJ_DIR$/../../../../../../middleware/soem/oshw/mcux-sdk</state>
           <state>$PROJ_DIR$/../../../../../../middleware/soem/oshw/mcux-sdk/enet</state>
           <state>$PROJ_DIR$/../../../../../../middleware/soem/soem</state>
@@ -9609,6 +9625,21 @@
   <group>
     <name>component</name>
     <group>
+      <name>silicon_id</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/silicon_id/fsl_silicon_id.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/silicon_id/fsl_silicon_id.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/silicon_id/socs/rt10xx/fsl_silicon_id_soc.c</name>
+      </file>
+    </group>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../components/silicon_id/socs/fsl_silicon_id_soc.h</name>
+    </file>
+    <group>
       <name>uart</name>
       <file>
         <name>$PROJ_DIR$/../../../../../../components/uart/fsl_adapter_uart.h</name>
@@ -9629,21 +9660,6 @@
         <name>$PROJ_DIR$/../../../../../../components/phy/device/phyksz8081/fsl_phyksz8081.h</name>
       </file>
     </group>
-    <group>
-      <name>silicon_id</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/silicon_id/fsl_silicon_id.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/silicon_id/fsl_silicon_id.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/silicon_id/socs/rt10xx/fsl_silicon_id_soc.c</name>
-      </file>
-    </group>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../components/silicon_id/socs/fsl_silicon_id_soc.h</name>
-    </file>
   </group>
   <group>
     <name>soem</name>
@@ -9772,6 +9788,9 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../example_board_readme.md</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../examples_shared_readme.md</name>
     </file>
   </group>
 </project>

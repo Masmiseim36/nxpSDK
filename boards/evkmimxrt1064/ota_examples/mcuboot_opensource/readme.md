@@ -1,12 +1,21 @@
-# mcuboot_opensource
+# MCUboot opensource
 
-Overview
-========
+- [Overview](#overview)
+- [Flash memory layout](#flash-memory-layout)
+- [Signing the application image](#signing-the-application-image)
+- [Using MCUXpresso Secure Provisioning Tool for MCUBoot image signing](#using-mcuxpresso-secure-provisioning-tool-for-mcuboot-image-signing)
+- [Prepare the Demo](#prepare-the-demo)
+- [Running the demo](#running-the-demo)
+- [Advanced topics](#advanced-topics)
+- [Supported Boards](#supported-boards)
+
+## Overview
+
 The mcuboot_opensource is a second stage bootloader based on MCUBoot project. It is primarily meant to be used together with OTA (over-the-air) update examples
 to demonstrate functionality of application self-upgrade.
 
-Flash memory layout
--------------------
+## Flash memory layout
+
 Flash memory is divided into multiple regions to allocate space for bootloader, main application
 and application update:
 
@@ -23,53 +32,8 @@ The rest of the memory may be used by the application for arbitrary purposes.
 Important notice: should you need to change the partitioning please make sure to update also the header file used by the OTA application!
 If the partitioning information used by the bootloader and the application is not in sync, it may lead to malfunction of boot/OTA process or to upredictable behavior.
 
-Flash remapping functionality
------------------------------
-The default upgrade mechanism in MCUBoot is the SWAP algorithm. There are several NXP processors which support flash remapping functionality that can be used to speed up the OTA update process and minimize the flash wear. Flash remapping feature is used for zero-copy image swapping without the need of any data moving operations. This results in the fastest update operation possible. There are several platforms that support this mechanism. Mostly based on their external memory FlexSPI controller (eg. RT1060, RW612...). Platforms like MCX N9 also implement this mechanism for their internal flash memory.
+## Signing the application image
 
-The boards with such processors have example projects configured to use this feature. This is achieved by using MCUboot's DIRECT-XIP mechanism and by activating flash remapping when needed - image is still built to run from primary slot. Keep in mind that DIRECT-XIP mode loads image with the highest version (no rollback support).
-
-**IMPORTANT NOTE:**
-Signed application images directly programmed into flash memory by a programmer require additional "--pad --confirm" parameter for imgtool. This parameter adds additional trailer to the signed image and is required by bootloader direct-xip process (see MCUBoot documentation for more information). Signed images used in OTA process do not require "-pad" parameter.
-
-List of boards with projects supporting flash remapping function:
-- MIMXRT1040-EVK
-- MIMXRT1060-EVK
-- MIMXRT1060-EVKB
-- MIMXRT1060-EVKC
-- MIMXRT1064-EVK
-- MIMXRT1160-EVK
-- MIMXRT1170-EVK
-- MIMXRT1170-EVKB
-- RD-RW612-BGA
-- RD-RW612-QFN
-- FRDM-RW612
-- EVK-MIMXRT595
-- EVK-MIMXRT685
-- MIMXRT685-AUD-EVK
-- MCX-N9XX-EVK
-- MCX-N5XX-EVK
-- FRDM-MCXN947
-
-Encrypted XIP support
-----------------------
-For more information please see `mcuboot_encrypted_xip.md` (in mcuboot_opensource/ext/nxp_encrypted_xip)
-
-This extension of MCUboot functionality can be evaluated by enabling define `CONFIG_ENCRYPT_XIP_EXT_ENABLE` in sblconfig.h
-
-List of boards with projects supporting encrypted XIP:
-- MIMXRT1020-EVK  (BEE)
-- MIMXRT1040-EVK  (BEE)
-- IMXRT1050-EVKB  (BEE)
-- MIMXRT1060-EVK  (BEE)
-- MIMXRT1060-EVKB (BEE)
-- MIMXRT1060-EVKC (BEE)
-- MIMXRT1064-EVK  (BEE)
-- RDRW612BGA      (IPED)
-- FRDMRW612       (IPED)
-
-Signing the application image
------------------------------
 MCUBoot expects signed application image in specific format to be present in the primary partition.
 The very same image format is also used for OTA updates.
 
@@ -105,13 +69,13 @@ However, some of them may depend on the application or board setup and thus may 
 See the MCUBoot documentation for the meaning of the parameters and align them with your project setup if necessary.
 https://docs.mcuboot.com/imgtool.html
 
-Using MCUXpresso Secure Provisioning Tool for MCUBoot image signing
--------------------------------------------------------------------
+## Using MCUXpresso Secure Provisioning Tool for MCUBoot image signing
+
 MCUXpresso Secure Provisioning Tool from verion 9 supports automation for MCUBoot image signing. Using this tool
 it's possible to setup the device for entire boot chain in a few steps.
 
-Prepare the Demo
-===============
+## Prepare the Demo
+
 1.  Connect a USB cable between the PC host and the OpenSDA(or USB to Serial) USB port on the target board.
 2.  Open a serial terminal on PC for OpenSDA serial(or USB to Serial) device with these settings:
     - 115200 baud rate
@@ -123,8 +87,8 @@ Prepare the Demo
 3.  Build project and program it to the target board.
 4.  Either press the reset button on your board or launch the debugger in your IDE to begin running the demo.
 
-Running the demo
-===============
+## Running the demo
+
 When the demo runs successfully, the terminal will display the following:
 
     hello sbl.
@@ -141,26 +105,35 @@ Further messages printed to the terminal depend on the content of the FLASH memo
         
 At this point the bootloader is in place, resident in the FLASH memory. You may stop debuger, switch to an OTA example and follow the relevant readme located in example's directory.
 
+## Advanced topics
+
+[Flash remapping functionality](../_docs/flash_remap_readme.md)
+
+[Encrypted XIP support](../_docs/encrypted_xip_readme.md)
+
+[OTA update by using SB3 file](../_docs/sb3_readme.md)
 
 ## Supported Boards
-- [EVKB-IMXRT1050](../../_boards/evkbimxrt1050/ota_examples/mcuboot_opensource/example_board_readme.md)
-- [MIMXRT1060-EVKB](../../_boards/evkbmimxrt1060/ota_examples/mcuboot_opensource/example_board_readme.md)
-- [MIMXRT1170-EVKB](../../_boards/evkbmimxrt1170/ota_examples/mcuboot_opensource/example_board_readme.md)
-- [MIMXRT1060-EVKC](../../_boards/evkcmimxrt1060/ota_examples/mcuboot_opensource/example_board_readme.md)
+
+- [LPCXpresso55S69](../../_boards/lpcxpresso55s69/ota_examples/mcuboot_opensource/example_board_readme.md)
 - [EVK-MIMXRT1020](../../_boards/evkmimxrt1020/ota_examples/mcuboot_opensource/example_board_readme.md)
 - [MIMXRT1040-EVK](../../_boards/evkmimxrt1040/ota_examples/mcuboot_opensource/example_board_readme.md)
+- [EVKB-IMXRT1050](../../_boards/evkbimxrt1050/ota_examples/mcuboot_opensource/example_board_readme.md)
+- [MIMXRT1060-EVKB](../../_boards/evkbmimxrt1060/ota_examples/mcuboot_opensource/example_board_readme.md)
+- [MIMXRT1060-EVKC](../../_boards/evkcmimxrt1060/ota_examples/mcuboot_opensource/example_board_readme.md)
 - [EVK-MIMXRT1064](../../_boards/evkmimxrt1064/ota_examples/mcuboot_opensource/example_board_readme.md)
 - [MIMXRT1160-EVK](../../_boards/evkmimxrt1160/ota_examples/mcuboot_opensource/example_board_readme.md)
+- [MIMXRT1170-EVKB](../../_boards/evkbmimxrt1170/ota_examples/mcuboot_opensource/example_board_readme.md)
 - [MIMXRT1180-EVK](../../_boards/evkmimxrt1180/ota_examples/mcuboot_opensource/example_board_readme.md)
 - [EVK-MIMXRT595](../../_boards/evkmimxrt595/ota_examples/mcuboot_opensource/example_board_readme.md)
 - [EVK-MIMXRT685](../../_boards/evkmimxrt685/ota_examples/mcuboot_opensource/example_board_readme.md)
-- [FRDM-MCXA153](../../_boards/frdmmcxa153/ota_examples/mcuboot_opensource/example_board_readme.md)
-- [FRDM-MCXA156](../../_boards/frdmmcxa156/ota_examples/mcuboot_opensource/example_board_readme.md)
-- [FRDM-MCXN947](../../_boards/frdmmcxn947/ota_examples/mcuboot_opensource/example_board_readme.md)
-- [FRDM-RW612](../../_boards/frdmrw612/ota_examples/mcuboot_opensource/example_board_readme.md)
-- [LPCXpresso55S69](../../_boards/lpcxpresso55s69/ota_examples/mcuboot_opensource/example_board_readme.md)
-- [MCX-N5XX-EVK](../../_boards/mcxn5xxevk/ota_examples/mcuboot_opensource/example_board_readme.md)
-- [MCX-N9XX-EVK](../../_boards/mcxn9xxevk/ota_examples/mcuboot_opensource/example_board_readme.md)
 - [MIMXRT685-AUD-EVK](../../_boards/mimxrt685audevk/ota_examples/mcuboot_opensource/example_board_readme.md)
 - [MIMXRT700-EVK](../../_boards/mimxrt700evk/ota_examples/mcuboot_opensource/example_board_readme.md)
 - [RD-RW612-BGA](../../_boards/rdrw612bga/ota_examples/mcuboot_opensource/example_board_readme.md)
+- [FRDM-RW612](../../_boards/frdmrw612/ota_examples/mcuboot_opensource/example_board_readme.md)
+- [FRDM-MCXN947](../../_boards/frdmmcxn947/ota_examples/mcuboot_opensource/example_board_readme.md)
+- [MCX-N5XX-EVK](../../_boards/mcxn5xxevk/ota_examples/mcuboot_opensource/example_board_readme.md)
+- [MCX-N9XX-EVK](../../_boards/mcxn9xxevk/ota_examples/mcuboot_opensource/example_board_readme.md)
+- [FRDM-MCXA153](../../_boards/frdmmcxa153/ota_examples/mcuboot_opensource/example_board_readme.md)
+- [FRDM-MCXA156](../../_boards/frdmmcxa156/ota_examples/mcuboot_opensource/example_board_readme.md)
+- [FRDM-MCXA346](../../_boards/frdmmcxa346/ota_examples/mcuboot_opensource/example_board_readme.md)

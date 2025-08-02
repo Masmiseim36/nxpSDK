@@ -44,7 +44,6 @@
     <definition extID="component.lpi2c_adapter.MIMXRT1062"/>
     <definition extID="component.lpuart_adapter.MIMXRT1062"/>
     <definition extID="component.osa_template_config.MIMXRT1062"/>
-    <definition extID="component.osa_interface.MIMXRT1062"/>
     <definition extID="component.osa.MIMXRT1062"/>
     <definition extID="component.osa_free_rtos.MIMXRT1062"/>
     <definition extID="middleware.fatfs.MIMXRT1062"/>
@@ -82,6 +81,7 @@
     <definition extID="middleware.sdmmc.usdhc.template.MIMXRT1062"/>
     <definition extID="middleware.freertos-kernel.MIMXRT1062"/>
     <definition extID="middleware.freertos-kernel.heap_4.MIMXRT1062"/>
+    <definition extID="middleware.freertos-kernel.extension.MIMXRT1062"/>
     <definition extID="middleware.freertos-kernel.config.MIMXRT1062"/>
     <definition extID="iar"/>
     <definition extID="armgcc"/>
@@ -92,7 +92,7 @@
     <definition extID="com.nxp.mcuxpresso.core.debug.support.segger.debug"/>
     <definition extID="com.nxp.mcuxpresso.core.debug.support.segger.release"/>
   </externalDefinitions>
-  <example id="evkcmimxrt1060_maestro_playback" name="maestro_playback" device_core="core0_MIMXRT1062xxxxB" dependency="platform.drivers.xip_board.evkcmimxrt1060.MIMXRT1062 platform.drivers.clock.MIMXRT1062 platform.drivers.iomuxc.MIMXRT1062 CMSIS_Include_core_cm.MIMXRT1062 device.MIMXRT1062_CMSIS.MIMXRT1062 device.MIMXRT1062_system.MIMXRT1062 device.MIMXRT1062_startup.MIMXRT1062 platform.drivers.xip_device.MIMXRT1062 platform.drivers.cache_armv7_m7.MIMXRT1062 platform.drivers.common.MIMXRT1062 platform.drivers.dcdc_1.MIMXRT1062 platform.drivers.dmamux.MIMXRT1062 platform.drivers.edma.MIMXRT1062 platform.drivers.gpc_1.MIMXRT1062 platform.drivers.igpio.MIMXRT1062 platform.drivers.lpi2c.MIMXRT1062 platform.drivers.lpuart.MIMXRT1062 platform.drivers.pmu.MIMXRT1062 platform.drivers.sai_edma.MIMXRT1062 platform.drivers.sai.MIMXRT1062 platform.drivers.src.MIMXRT1062 platform.drivers.usdhc.MIMXRT1062 platform.utilities.assert.MIMXRT1062 platform.utilities.misc_utilities.MIMXRT1062 component.lists.MIMXRT1062 utility.str.MIMXRT1062 utility.debug_console.MIMXRT1062 utility.shell.MIMXRT1062 component.serial_manager.MIMXRT1062 component.serial_manager_uart.MIMXRT1062 component.codec_i2c.MIMXRT1062 driver.codec.MIMXRT1062 component.codec_adapters.MIMXRT1062 component.wm8962_adapter.MIMXRT1062 component.cs42448_adapter.MIMXRT1062 driver.cs42448.MIMXRT1062 driver.wm8962.MIMXRT1062 component.igpio_adapter.MIMXRT1062 component.i2c_adapter_interface.MIMXRT1062 component.lpi2c_adapter.MIMXRT1062 component.lpuart_adapter.MIMXRT1062 component.osa_template_config.MIMXRT1062 component.osa_interface.MIMXRT1062 component.osa.MIMXRT1062 component.osa_free_rtos.MIMXRT1062 middleware.fatfs.MIMXRT1062 middleware.fatfs.template_sd.MIMXRT1062 middleware.fatfs.sd.MIMXRT1062 middleware.audio_voice.maestro.MIMXRT1062 middleware.audio_voice.maestro.element.audio_proc.enable.MIMXRT1062 middleware.audio_voice.maestro.element.audio_proc.ssrc.enable.MIMXRT1062 middleware.audio_voice.maestro.element.audio_sink.enable.MIMXRT1062 middleware.audio_voice.maestro.element.file_src.enable.MIMXRT1062 middleware.audio_voice.maestro.element.mem_sink.enable.MIMXRT1062 middleware.audio_voice.maestro.element.mem_src.enable.MIMXRT1062 middleware.audio_voice.maestro.element.decoder.enable.MIMXRT1062 middleware.audio_voice.maestro.element.decoder.mp3.enable.MIMXRT1062 middleware.audio_voice.maestro.element.decoder.wav.enable.MIMXRT1062 middleware.audio_voice.maestro.element.decoder.flac.enable.MIMXRT1062 middleware.audio_voice.maestro.element.decoder.aac.enable.MIMXRT1062 middleware.audio_voice.maestro.element.decoder.opus_ogg.enable.MIMXRT1062 middleware.audio_voice.maestro.cci.enable.MIMXRT1062 middleware.audio_voice.maestro.cei.enable.MIMXRT1062 middleware.audio_voice.maestro.file_utils.enable.MIMXRT1062 middleware.audio_voice.components.decoders.aac.MIMXRT1062 middleware.audio_voice.components.decoders.flac.MIMXRT1062 middleware.audio_voice.components.decoders.mp3.MIMXRT1062 middleware.audio_voice.components.decoders.wav.MIMXRT1062 middleware.audio_voice.components.ogg.MIMXRT1062 middleware.audio_voice.components.opus.MIMXRT1062 middleware.audio_voice.components.opusfile.MIMXRT1062 middleware.audio_voice.components.ssrc.MIMXRT1062 middleware.sdmmc.common.MIMXRT1062 middleware.sdmmc.osa.freertos.MIMXRT1062 middleware.sdmmc.sd.MIMXRT1062 middleware.sdmmc.host.usdhc.MIMXRT1062 middleware.sdmmc.host.usdhc.non_blocking.MIMXRT1062 middleware.sdmmc.usdhc.template.MIMXRT1062 middleware.freertos-kernel.MIMXRT1062 middleware.freertos-kernel.heap_4.MIMXRT1062 middleware.freertos-kernel.config.MIMXRT1062" category="audio_examples">
+  <example id="evkcmimxrt1060_maestro_playback" name="maestro_playback" device_core="core0_MIMXRT1062xxxxB" dependency="platform.drivers.xip_board.evkcmimxrt1060.MIMXRT1062 platform.drivers.clock.MIMXRT1062 platform.drivers.iomuxc.MIMXRT1062 CMSIS_Include_core_cm.MIMXRT1062 device.MIMXRT1062_CMSIS.MIMXRT1062 device.MIMXRT1062_system.MIMXRT1062 device.MIMXRT1062_startup.MIMXRT1062 platform.drivers.xip_device.MIMXRT1062 platform.drivers.cache_armv7_m7.MIMXRT1062 platform.drivers.common.MIMXRT1062 platform.drivers.dcdc_1.MIMXRT1062 platform.drivers.dmamux.MIMXRT1062 platform.drivers.edma.MIMXRT1062 platform.drivers.gpc_1.MIMXRT1062 platform.drivers.igpio.MIMXRT1062 platform.drivers.lpi2c.MIMXRT1062 platform.drivers.lpuart.MIMXRT1062 platform.drivers.pmu.MIMXRT1062 platform.drivers.sai_edma.MIMXRT1062 platform.drivers.sai.MIMXRT1062 platform.drivers.src.MIMXRT1062 platform.drivers.usdhc.MIMXRT1062 platform.utilities.assert.MIMXRT1062 platform.utilities.misc_utilities.MIMXRT1062 component.lists.MIMXRT1062 utility.str.MIMXRT1062 utility.debug_console.MIMXRT1062 utility.shell.MIMXRT1062 component.serial_manager.MIMXRT1062 component.serial_manager_uart.MIMXRT1062 component.codec_i2c.MIMXRT1062 driver.codec.MIMXRT1062 component.codec_adapters.MIMXRT1062 component.wm8962_adapter.MIMXRT1062 component.cs42448_adapter.MIMXRT1062 driver.cs42448.MIMXRT1062 driver.wm8962.MIMXRT1062 component.igpio_adapter.MIMXRT1062 component.i2c_adapter_interface.MIMXRT1062 component.lpi2c_adapter.MIMXRT1062 component.lpuart_adapter.MIMXRT1062 component.osa_template_config.MIMXRT1062 component.osa.MIMXRT1062 component.osa_free_rtos.MIMXRT1062 middleware.fatfs.MIMXRT1062 middleware.fatfs.template_sd.MIMXRT1062 middleware.fatfs.sd.MIMXRT1062 middleware.audio_voice.maestro.MIMXRT1062 middleware.audio_voice.maestro.element.audio_proc.enable.MIMXRT1062 middleware.audio_voice.maestro.element.audio_proc.ssrc.enable.MIMXRT1062 middleware.audio_voice.maestro.element.audio_sink.enable.MIMXRT1062 middleware.audio_voice.maestro.element.file_src.enable.MIMXRT1062 middleware.audio_voice.maestro.element.mem_sink.enable.MIMXRT1062 middleware.audio_voice.maestro.element.mem_src.enable.MIMXRT1062 middleware.audio_voice.maestro.element.decoder.enable.MIMXRT1062 middleware.audio_voice.maestro.element.decoder.mp3.enable.MIMXRT1062 middleware.audio_voice.maestro.element.decoder.wav.enable.MIMXRT1062 middleware.audio_voice.maestro.element.decoder.flac.enable.MIMXRT1062 middleware.audio_voice.maestro.element.decoder.aac.enable.MIMXRT1062 middleware.audio_voice.maestro.element.decoder.opus_ogg.enable.MIMXRT1062 middleware.audio_voice.maestro.cci.enable.MIMXRT1062 middleware.audio_voice.maestro.cei.enable.MIMXRT1062 middleware.audio_voice.maestro.file_utils.enable.MIMXRT1062 middleware.audio_voice.components.decoders.aac.MIMXRT1062 middleware.audio_voice.components.decoders.flac.MIMXRT1062 middleware.audio_voice.components.decoders.mp3.MIMXRT1062 middleware.audio_voice.components.decoders.wav.MIMXRT1062 middleware.audio_voice.components.ogg.MIMXRT1062 middleware.audio_voice.components.opus.MIMXRT1062 middleware.audio_voice.components.opusfile.MIMXRT1062 middleware.audio_voice.components.ssrc.MIMXRT1062 middleware.sdmmc.common.MIMXRT1062 middleware.sdmmc.osa.freertos.MIMXRT1062 middleware.sdmmc.sd.MIMXRT1062 middleware.sdmmc.host.usdhc.MIMXRT1062 middleware.sdmmc.host.usdhc.non_blocking.MIMXRT1062 middleware.sdmmc.usdhc.template.MIMXRT1062 middleware.freertos-kernel.MIMXRT1062 middleware.freertos-kernel.heap_4.MIMXRT1062 middleware.freertos-kernel.extension.MIMXRT1062 middleware.freertos-kernel.config.MIMXRT1062" category="audio_examples">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -121,6 +121,7 @@
           <value>SDK_DEBUGCONSOLE=1</value>
           <value>MCUX_META_BUILD</value>
           <value>CPU_MIMXRT1062DVL6B</value>
+          <value>MIMXRT1062_SERIES</value>
           <value>SERIAL_PORT_TYPE_UART=1</value>
           <value>SDK_I2C_BASED_COMPONENT_USED=1</value>
           <value>CODEC_MULTI_ADAPTERS=1</value>
@@ -245,7 +246,6 @@
     </source>
     <source path="." project_relative_path="source" type="c_include">
       <files mask="app_definitions.h"/>
-      <files mask="app.h"/>
     </source>
     <source path="." project_relative_path="source" type="src" config="true">
       <files mask="sdmmc_config.c"/>
@@ -314,10 +314,10 @@
       <files mask="mcux_config.h"/>
     </source>
     <source path="." project_relative_path="doc" type="doc">
-      <files mask="readme.md"/>
+      <files mask="example_board_readme.md"/>
     </source>
     <source path="." project_relative_path="doc" type="doc">
-      <files mask="example_board_readme.md"/>
+      <files mask="examples_shared_readme.md"/>
     </source>
   </example>
 </ksdk:examples>

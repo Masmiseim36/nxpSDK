@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2023 NXP
+ * Copyright 2018-2023, 2025 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -13,7 +13,7 @@
 
 /*${variable:start}*/
 phy_ksz8081_resource_t g_phy_resource;
-#if (defined(EXAMPLE_PHY_LINK_INTR_SUPPORT) && (EXAMPLE_PHY_LINK_INTR_SUPPORT))
+#if (defined(APP_PHY_LINK_INTR_SUPPORT) && (APP_PHY_LINK_INTR_SUPPORT))
 extern void PHY_LinkStatusChange(void);
 #endif
 /*${variable:end}*/
@@ -60,7 +60,7 @@ void BOARD_InitHardware(void)
     /* Hardware reset PHY. */
     BOARD_ENET_PHY_RESET;
 
-#if (defined(EXAMPLE_PHY_LINK_INTR_SUPPORT) && (EXAMPLE_PHY_LINK_INTR_SUPPORT))
+#if (defined(APP_PHY_LINK_INTR_SUPPORT) && (APP_PHY_LINK_INTR_SUPPORT))
     IRQ_ClearPendingIRQ(GPIO1_Combined_0_15_IRQn);
     EnableIRQ(GPIO1_Combined_0_15_IRQn);
 #endif
@@ -70,7 +70,7 @@ void BOARD_InitHardware(void)
     g_phy_resource.write = MDIO_Write;
 }
 
-#if (defined(EXAMPLE_PHY_LINK_INTR_SUPPORT) && (EXAMPLE_PHY_LINK_INTR_SUPPORT))
+#if (defined(APP_PHY_LINK_INTR_SUPPORT) && (APP_PHY_LINK_INTR_SUPPORT))
 void GPIO_EnableLinkIntr(void)
 {
     GPIO_EnableInterrupts(GPIO1, BOARD_INITENETPINS_PHY_INTR_GPIO_PIN_MASK);

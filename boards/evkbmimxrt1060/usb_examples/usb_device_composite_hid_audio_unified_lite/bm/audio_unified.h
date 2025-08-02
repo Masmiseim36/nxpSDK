@@ -81,6 +81,7 @@ typedef struct _usb_audio_composite_struct
     usb_device_control_range_layout3_struct_t speakerFreqControlRange;
     usb_device_control_range_layout3_struct_t recorderFreqControlRange;
     usb_device_control_range_layout2_struct_t volumeControlRange;
+    usb_device_connector_control_struct_t recorderConnectorStatus;
 #endif
     uint8_t currentConfiguration;
     uint8_t currentInterfaceAlternateSetting[USB_AUDIO_COMPOSITE_INTERFACE_COUNT];

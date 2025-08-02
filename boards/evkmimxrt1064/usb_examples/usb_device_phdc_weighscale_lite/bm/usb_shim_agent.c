@@ -205,6 +205,11 @@ usb_status_t USB_ShimAgentSendComplete(void *handle, uint32_t event, void *param
     AGENT_Callback(handle, SHIM_AGENT_EVENT_SENT_COMPLETE, (uint8_t *)message->buffer, message->length);
     /* de-queue the queue */
     sentData->buyer += 1U;
+    if (sentData->buyer >= UINT32_MAX)
+    {
+        sentData->buyer  = 0U;
+        sentData->seller = 0U;
+    }
     if (sentData->buyer != sentData->seller)
     {
         /* Set bit map for the corresponding endpoint*/
@@ -292,12 +297,17 @@ usb_status_t USB_ShimAgentSendData(void *handle, uint8_t qos, uint8_t *appBuffer
         /* Set bit map for the corresponding endpoint*/
         g_shimAgent.endpointsHaveData |= (uint16_t)(1U << dataToSend->epNumber);
         /* Add data to send to sending queue */
-        if ((uint8_t)(dataToSend->seller - dataToSend->buyer) < (uint8_t)(SHIM_AGENT_MAX_QUEUE_NUMBER))
+        if ((dataToSend->seller >= dataToSend->buyer) && ((uint8_t)(dataToSend->seller - dataToSend->buyer) < (uint8_t)(SHIM_AGENT_MAX_QUEUE_NUMBER)))
         {
             dataToSend->sendData[dataToSend->seller % SHIM_AGENT_MAX_QUEUE_NUMBER].transferSize = size;
             dataToSend->sendData[dataToSend->seller % SHIM_AGENT_MAX_QUEUE_NUMBER].buffer       = appBuffer;
             /* increase queue number by 1 */
             dataToSend->seller += 1U;
+            if (dataToSend->seller >= UINT32_MAX)
+            {
+                dataToSend->seller = 0U;
+                dataToSend->buyer  = 0U;
+            }
             /* send the first entry of queue */
             if (1U == (uint32_t)(dataToSend->seller - dataToSend->buyer))
             {

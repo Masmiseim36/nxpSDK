@@ -6,7 +6,7 @@
 
 /*
  * Copyright (c) 2017 Intel Corporation
- * Copyright 2021-2025 NXP
+ * Copyright 2021-2024 NXP
  *
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -18,10 +18,6 @@
 #include "fsl_common.h"
 #include "fsl_debug_console.h"
 #include "fsl_shell.h"
-
-#ifdef __cplusplus
-extern "C" {
-#endif
 
 /* Get the log argument count MACRO set. The max argument count is 16 for application. */
 #define _SHELL_CMD_ARGUMENT_COUNT(									\
@@ -2188,9 +2184,4 @@ ssize_t csis_ad_data_add(struct bt_data *data, const size_t data_size, const boo
 bool is_substring(const char *substr, const char *str);
 
 void auth_pincode_entry(struct bt_conn *conn, bool highsec);
-
-#ifdef __cplusplus
-}
-#endif
-
 #endif /* __BT_H */

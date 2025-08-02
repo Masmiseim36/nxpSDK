@@ -20,7 +20,7 @@ message("${CMAKE_CURRENT_LIST_FILE} component is included.")
           ${CMAKE_CURRENT_LIST_DIR}/RTX/Config/RTX_Config.c
         )
 
-        if((CONFIG_CORE STREQUAL cm0p OR CONFIG_CORE STREQUAL cm7f OR CONFIG_CORE STREQUAL cm33))
+        if((CONFIG_CORE STREQUAL cm0p OR CONFIG_CORE STREQUAL cm4f OR CONFIG_CORE STREQUAL cm7f OR CONFIG_CORE STREQUAL cm33))
     target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
           ${CMAKE_CURRENT_LIST_DIR}/Source/os_systick.c
         )
@@ -32,7 +32,7 @@ message("${CMAKE_CURRENT_LIST_FILE} component is included.")
         )
     endif()
 
-        if((CONFIG_TOOLCHAIN STREQUAL mdk OR CONFIG_TOOLCHAIN STREQUAL armgcc OR CONFIG_TOOLCHAIN STREQUAL mcux) AND CONFIG_CORE STREQUAL cm7f)
+        if((CONFIG_TOOLCHAIN STREQUAL mdk OR CONFIG_TOOLCHAIN STREQUAL armgcc OR CONFIG_TOOLCHAIN STREQUAL mcux) AND (CONFIG_CORE STREQUAL cm4f OR CONFIG_CORE STREQUAL cm7f))
     target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
           ${CMAKE_CURRENT_LIST_DIR}/RTX/Source/GCC/irq_armv7m.S
         )
@@ -50,7 +50,7 @@ message("${CMAKE_CURRENT_LIST_FILE} component is included.")
         )
     endif()
 
-        if(CONFIG_TOOLCHAIN STREQUAL iar AND CONFIG_CORE STREQUAL cm7f)
+        if(CONFIG_TOOLCHAIN STREQUAL iar AND (CONFIG_CORE STREQUAL cm4f OR CONFIG_CORE STREQUAL cm7f))
     target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
           ${CMAKE_CURRENT_LIST_DIR}/RTX/Source/IAR/irq_armv7m.s
         )

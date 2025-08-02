@@ -8,7 +8,6 @@
 #ifndef _WIFI_CONFIG_H_
 #define _WIFI_CONFIG_H_
 
-#include "app_config.h"
 #ifndef RW610
 #include "wifi_bt_module_config.h"
 #endif

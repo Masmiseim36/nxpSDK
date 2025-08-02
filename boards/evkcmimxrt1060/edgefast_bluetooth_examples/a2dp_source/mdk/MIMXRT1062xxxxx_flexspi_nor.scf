@@ -148,8 +148,7 @@ LR_m_text m_interrupts_start m_text_start+m_text_size-m_interrupts_start {   ; l
     fsl_adapter_flexspi_nor_flash.o (+RO +RW +ZI)
     fsl_flexspi.o (+RO +RW +ZI)
     mflash_drv.o (+RO +RW +ZI)
-    * (DataQuickAccess)
-  }
+}
     RW_m_usb_data +0 ALIGNALL 32 { ; USB RW data
     * (*CacheLineData.init)
     * (*CacheLineData)
@@ -168,13 +167,14 @@ LR_m_text m_interrupts_start m_text_start+m_text_size-m_interrupts_start {   ; l
   }
   RW_m_ncache_unused +0 EMPTY 0 { ; Empty region added for MPU configuration
   }
-  RW_m_data3 m_data_start m_data2_size { ;
-    * (DataQuickAccess)
-  }
+ 
   RW_m_data2 +0 m_data_size-Stack_Size-Heap_Size-ImageLength(RW_m_ncache)-ImageLength(RW_m_ncache_unused) {
     * (NonCacheable.init)
     * (*NonCacheable)
-  }
+    * (DataQuickAccess)
+}
+  RW_m_data3 +0 m_data_size-Stack_Size-Heap_Size-ImageLength(RW_m_ncache)-ImageLength(RW_m_ncache_unused)-ImageLength(RW_m_data2) { ;  
+}
   RW_net_buf_pool +0 { ;
     * (._net_buf_pool*)
   }

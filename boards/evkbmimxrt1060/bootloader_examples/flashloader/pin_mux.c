@@ -13,12 +13,12 @@
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 !!GlobalInfo
-product: Pins v7.0
-processor: MIMXRT1062xxxxA
-package_id: MIMXRT1062DVL6A
+product: Pins v17.0
+processor: MIMXRT1062xxxxB
+package_id: MIMXRT1062DVL6B
 mcu_data: ksdk2_0
-processor_version: 7.0.1
-board: MIMXRT1060-EVK
+processor_version: 0.2506.10
+board: MIMXRT1060-EVKB
 pin_labels:
 - {pin_num: K14, pin_signal: GPIO_AD_B0_12, label: UART1_TXD, identifier: UART1_TXD;TX}
 - {pin_num: L14, pin_signal: GPIO_AD_B0_13, label: UART1_RXD, identifier: UART1_RXD;RX_GPIO;RX}

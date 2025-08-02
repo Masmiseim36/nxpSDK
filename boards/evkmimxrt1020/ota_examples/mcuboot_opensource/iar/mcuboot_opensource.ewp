@@ -251,6 +251,7 @@
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1021DAG5A</state>
+          <state>MIMXRT1021_SERIES</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>MFLASH_FILE_BASEADDR=5767168</state>
           <state>MBEDTLS_CONFIG_FILE="ksdk_mbedtls_config.h"</state>
@@ -382,10 +383,9 @@
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1021</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1021/periph</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1021/xip</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1021/utilities</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1021/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1021/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1021/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/flash/mflash</state>
@@ -395,7 +395,7 @@
           <state>$PROJ_DIR$/../../../../../middleware/mbedtls/port/ksdk</state>
           <state>$PROJ_DIR$/../../../../../middleware/mcuboot_opensource/boot/bootutil/src</state>
           <state>$PROJ_DIR$/../../../../../middleware/mcuboot_opensource/boot/bootutil/include</state>
-          <state>$PROJ_DIR$/../../../../../middleware/mcuboot_opensource/ext/nxp_encrypted_xip/include</state>
+          <state>$PROJ_DIR$/../../../../../middleware/mcuboot_opensource/boot/nxp_mcux_sdk/encrypted_xip/include</state>
           <state>$PROJ_DIR$/../../../../../middleware/mcuboot_opensource/boot/nxp_mcux_sdk/flashapi</state>
           <state>$PROJ_DIR$/../../../../../middleware/mcuboot_opensource/boot/nxp_mcux_sdk/keys</state>
           <state>$PROJ_DIR$/../../../../../middleware/mcuboot_opensource/boot/nxp_mcux_sdk/include</state>
@@ -586,6 +586,7 @@
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1021DAG5A</state>
+          <state>MIMXRT1021_SERIES</state>
         </option>
         <option>
           <name>AList</name>
@@ -685,10 +686,9 @@
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1021</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1021/periph</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1021/xip</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1021/utilities</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1021/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1021/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1021/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/flash/mflash</state>
@@ -698,7 +698,7 @@
           <state>$PROJ_DIR$/../../../../../middleware/mbedtls/port/ksdk</state>
           <state>$PROJ_DIR$/../../../../../middleware/mcuboot_opensource/boot/bootutil/src</state>
           <state>$PROJ_DIR$/../../../../../middleware/mcuboot_opensource/boot/bootutil/include</state>
-          <state>$PROJ_DIR$/../../../../../middleware/mcuboot_opensource/ext/nxp_encrypted_xip/include</state>
+          <state>$PROJ_DIR$/../../../../../middleware/mcuboot_opensource/boot/nxp_mcux_sdk/encrypted_xip/include</state>
           <state>$PROJ_DIR$/../../../../../middleware/mcuboot_opensource/boot/nxp_mcux_sdk/flashapi</state>
           <state>$PROJ_DIR$/../../../../../middleware/mcuboot_opensource/boot/nxp_mcux_sdk/keys</state>
           <state>$PROJ_DIR$/../../../../../middleware/mcuboot_opensource/boot/nxp_mcux_sdk/include</state>
@@ -1419,6 +1419,7 @@
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1021DAG5A</state>
+          <state>MIMXRT1021_SERIES</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>MFLASH_FILE_BASEADDR=5767168</state>
           <state>MBEDTLS_CONFIG_FILE="ksdk_mbedtls_config.h"</state>
@@ -1550,10 +1551,9 @@
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1021</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1021/periph</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1021/xip</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1021/utilities</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1021/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1021/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1021/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/flash/mflash</state>
@@ -1563,7 +1563,7 @@
           <state>$PROJ_DIR$/../../../../../middleware/mbedtls/port/ksdk</state>
           <state>$PROJ_DIR$/../../../../../middleware/mcuboot_opensource/boot/bootutil/src</state>
           <state>$PROJ_DIR$/../../../../../middleware/mcuboot_opensource/boot/bootutil/include</state>
-          <state>$PROJ_DIR$/../../../../../middleware/mcuboot_opensource/ext/nxp_encrypted_xip/include</state>
+          <state>$PROJ_DIR$/../../../../../middleware/mcuboot_opensource/boot/nxp_mcux_sdk/encrypted_xip/include</state>
           <state>$PROJ_DIR$/../../../../../middleware/mcuboot_opensource/boot/nxp_mcux_sdk/flashapi</state>
           <state>$PROJ_DIR$/../../../../../middleware/mcuboot_opensource/boot/nxp_mcux_sdk/keys</state>
           <state>$PROJ_DIR$/../../../../../middleware/mcuboot_opensource/boot/nxp_mcux_sdk/include</state>
@@ -1754,6 +1754,7 @@
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1021DAG5A</state>
+          <state>MIMXRT1021_SERIES</state>
         </option>
         <option>
           <name>AList</name>
@@ -1853,10 +1854,9 @@
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1021</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1021/periph</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1021/xip</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1021/utilities</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1021/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1021/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1021/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/flash/mflash</state>
@@ -1866,7 +1866,7 @@
           <state>$PROJ_DIR$/../../../../../middleware/mbedtls/port/ksdk</state>
           <state>$PROJ_DIR$/../../../../../middleware/mcuboot_opensource/boot/bootutil/src</state>
           <state>$PROJ_DIR$/../../../../../middleware/mcuboot_opensource/boot/bootutil/include</state>
-          <state>$PROJ_DIR$/../../../../../middleware/mcuboot_opensource/ext/nxp_encrypted_xip/include</state>
+          <state>$PROJ_DIR$/../../../../../middleware/mcuboot_opensource/boot/nxp_mcux_sdk/encrypted_xip/include</state>
           <state>$PROJ_DIR$/../../../../../middleware/mcuboot_opensource/boot/nxp_mcux_sdk/flashapi</state>
           <state>$PROJ_DIR$/../../../../../middleware/mcuboot_opensource/boot/nxp_mcux_sdk/keys</state>
           <state>$PROJ_DIR$/../../../../../middleware/mcuboot_opensource/boot/nxp_mcux_sdk/include</state>
@@ -2715,10 +2715,10 @@
   <group>
     <name>utilities</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1021/utilities/fsl_assert.h</name>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1021/utilities/debug_console/fsl_assert.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1021/utilities/fsl_assert.c</name>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1021/utilities/debug_console/fsl_assert.c</name>
     </file>
     <group>
       <name>str</name>
@@ -3737,34 +3737,34 @@
     <group>
       <name>include</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/mcuboot_opensource/ext/nxp_encrypted_xip/include/encrypted_xip_mcuboot_support.h</name>
+        <name>$PROJ_DIR$/../../../../../middleware/mcuboot_opensource/boot/nxp_mcux_sdk/encrypted_xip/include/encrypted_xip_mcuboot_support.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/mcuboot_opensource/ext/nxp_encrypted_xip/include/encrypted_xip.h</name>
+        <name>$PROJ_DIR$/../../../../../middleware/mcuboot_opensource/boot/nxp_mcux_sdk/encrypted_xip/include/encrypted_xip.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/mcuboot_opensource/ext/nxp_encrypted_xip/include/encrypted_xip_platform.h</name>
+        <name>$PROJ_DIR$/../../../../../middleware/mcuboot_opensource/boot/nxp_mcux_sdk/encrypted_xip/include/encrypted_xip_platform.h</name>
       </file>
     </group>
     <group>
       <name>src</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/mcuboot_opensource/ext/nxp_encrypted_xip/src/encrypted_xip_mcuboot_support.c</name>
+        <name>$PROJ_DIR$/../../../../../middleware/mcuboot_opensource/boot/nxp_mcux_sdk/encrypted_xip/src/encrypted_xip_mcuboot_support.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/mcuboot_opensource/ext/nxp_encrypted_xip/src/encrypted_xip.c</name>
+        <name>$PROJ_DIR$/../../../../../middleware/mcuboot_opensource/boot/nxp_mcux_sdk/encrypted_xip/src/encrypted_xip.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/mcuboot_opensource/ext/nxp_encrypted_xip/src/encrypted_xip_platform_bee.c</name>
+        <name>$PROJ_DIR$/../../../../../middleware/mcuboot_opensource/boot/nxp_mcux_sdk/encrypted_xip/src/encrypted_xip_platform_bee.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/mcuboot_opensource/ext/nxp_encrypted_xip/src/encrypted_xip_platform_iped.c</name>
+        <name>$PROJ_DIR$/../../../../../middleware/mcuboot_opensource/boot/nxp_mcux_sdk/encrypted_xip/src/encrypted_xip_platform_iped.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/mcuboot_opensource/ext/nxp_encrypted_xip/src/encrypted_xip_platform_npx.c</name>
+        <name>$PROJ_DIR$/../../../../../middleware/mcuboot_opensource/boot/nxp_mcux_sdk/encrypted_xip/src/encrypted_xip_platform_npx.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/mcuboot_opensource/ext/nxp_encrypted_xip/src/encrypted_xip_platform_otfad.c</name>
+        <name>$PROJ_DIR$/../../../../../middleware/mcuboot_opensource/boot/nxp_mcux_sdk/encrypted_xip/src/encrypted_xip_platform_otfad.c</name>
       </file>
     </group>
   </group>
@@ -3775,6 +3775,9 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../example_board_readme.md</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../examples_shared_readme.md</name>
     </file>
   </group>
 </project>

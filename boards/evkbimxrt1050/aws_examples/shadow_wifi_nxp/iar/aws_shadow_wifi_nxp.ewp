@@ -250,9 +250,11 @@
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1052DVL6B</state>
+          <state>MIMXRT1052_SERIES</state>
           <state>DEBUG_CONSOLE_TRANSFER_NON_BLOCKING</state>
           <state>OSA_USED</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
+          <state>WIFI_IW416_BOARD_MURATA_1XK_USD</state>
           <state>MFLASH_FILE_BASEADDR=64487424</state>
           <state>CONFIG_NXP_WIFI_SOFTAP_SUPPORT=1</state>
           <state>SDIO_ENABLED=1</state>
@@ -393,21 +395,20 @@
           <state>$PROJ_DIR$/../../../../../components/aws_iot/mqtt_agent</state>
           <state>$PROJ_DIR$/../../../../../components/aws_iot/mqtt-agent-interface/include</state>
           <state>$PROJ_DIR$/../../../../../components/aws_iot/using_mbedtls_pkcs11</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/utilities</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../components/gpio</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
-          <state>$PROJ_DIR$/../../../../../components/flash/mflash</state>
-          <state>$PROJ_DIR$/../../../../../components/flash/mflash/mimxrt1052</state>
           <state>$PROJ_DIR$/../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../components/edgefast_wifi/include</state>
           <state>$PROJ_DIR$/../../../../../components/wifi_bt_module/AzureWave/tx_pwr_limits</state>
           <state>$PROJ_DIR$/../../../../../components/wifi_bt_module/Murata/tx_pwr_limits</state>
           <state>$PROJ_DIR$/../../../../../components/wifi_bt_module/u-blox/tx_pwr_limits</state>
           <state>$PROJ_DIR$/../../../../../components/wifi_bt_module/incl</state>
+          <state>$PROJ_DIR$/../../../../../components/flash/mflash</state>
+          <state>$PROJ_DIR$/../../../../../components/flash/mflash/mimxrt1052</state>
           <state>$PROJ_DIR$/../../../../../middleware/wifi_nxp</state>
           <state>$PROJ_DIR$/../../../../../middleware/wifi_nxp/incl</state>
           <state>$PROJ_DIR$/../../../../../middleware/wifi_nxp/incl/port/osa</state>
@@ -417,7 +418,6 @@
           <state>$PROJ_DIR$/../../../../../middleware/wifi_nxp/wifi_bt_firmware</state>
           <state>$PROJ_DIR$/../../../../../middleware/wifi_nxp/wifidriver</state>
           <state>$PROJ_DIR$/../../../../../middleware/wifi_nxp/wifidriver/incl</state>
-          <state>$PROJ_DIR$/../../../../../middleware/wifi_nxp/wifi_bt_firmware/8801</state>
           <state>$PROJ_DIR$/../../../../../middleware/wifi_nxp/wifi_bt_firmware/IW416</state>
           <state>$PROJ_DIR$/../../../../../middleware/wifi_nxp/wifi_bt_firmware/8987</state>
           <state>$PROJ_DIR$/../../../../../middleware/wifi_nxp/wifi_bt_firmware/nw61x</state>
@@ -437,9 +437,7 @@
           <state>$PROJ_DIR$/../../../../../middleware/mbedtls/library</state>
           <state>$PROJ_DIR$/../../../../../middleware/mbedtls/port/ksdk</state>
           <state>$PROJ_DIR$/../../../../../middleware/lwip/port</state>
-          <state>$PROJ_DIR$/../../../../../middleware/lwip/src</state>
           <state>$PROJ_DIR$/../../../../../middleware/lwip/src/include</state>
-          <state>$PROJ_DIR$/../../../../../middleware/lwip/src/include/lwip</state>
           <state>$PROJ_DIR$/../../../../../middleware/lwip/port/sys_arch/dynamic</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/common</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/osa</state>
@@ -643,6 +641,7 @@
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1052DVL6B</state>
+          <state>MIMXRT1052_SERIES</state>
           <state>DEBUG_CONSOLE_TRANSFER_NON_BLOCKING</state>
           <state>OSA_USED</state>
         </option>
@@ -749,21 +748,20 @@
           <state>$PROJ_DIR$/../../../../../components/aws_iot/mqtt_agent</state>
           <state>$PROJ_DIR$/../../../../../components/aws_iot/mqtt-agent-interface/include</state>
           <state>$PROJ_DIR$/../../../../../components/aws_iot/using_mbedtls_pkcs11</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/utilities</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../components/gpio</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
-          <state>$PROJ_DIR$/../../../../../components/flash/mflash</state>
-          <state>$PROJ_DIR$/../../../../../components/flash/mflash/mimxrt1052</state>
           <state>$PROJ_DIR$/../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../components/edgefast_wifi/include</state>
           <state>$PROJ_DIR$/../../../../../components/wifi_bt_module/AzureWave/tx_pwr_limits</state>
           <state>$PROJ_DIR$/../../../../../components/wifi_bt_module/Murata/tx_pwr_limits</state>
           <state>$PROJ_DIR$/../../../../../components/wifi_bt_module/u-blox/tx_pwr_limits</state>
           <state>$PROJ_DIR$/../../../../../components/wifi_bt_module/incl</state>
+          <state>$PROJ_DIR$/../../../../../components/flash/mflash</state>
+          <state>$PROJ_DIR$/../../../../../components/flash/mflash/mimxrt1052</state>
           <state>$PROJ_DIR$/../../../../../middleware/wifi_nxp</state>
           <state>$PROJ_DIR$/../../../../../middleware/wifi_nxp/incl</state>
           <state>$PROJ_DIR$/../../../../../middleware/wifi_nxp/incl/port/osa</state>
@@ -773,7 +771,6 @@
           <state>$PROJ_DIR$/../../../../../middleware/wifi_nxp/wifi_bt_firmware</state>
           <state>$PROJ_DIR$/../../../../../middleware/wifi_nxp/wifidriver</state>
           <state>$PROJ_DIR$/../../../../../middleware/wifi_nxp/wifidriver/incl</state>
-          <state>$PROJ_DIR$/../../../../../middleware/wifi_nxp/wifi_bt_firmware/8801</state>
           <state>$PROJ_DIR$/../../../../../middleware/wifi_nxp/wifi_bt_firmware/IW416</state>
           <state>$PROJ_DIR$/../../../../../middleware/wifi_nxp/wifi_bt_firmware/8987</state>
           <state>$PROJ_DIR$/../../../../../middleware/wifi_nxp/wifi_bt_firmware/nw61x</state>
@@ -793,9 +790,7 @@
           <state>$PROJ_DIR$/../../../../../middleware/mbedtls/library</state>
           <state>$PROJ_DIR$/../../../../../middleware/mbedtls/port/ksdk</state>
           <state>$PROJ_DIR$/../../../../../middleware/lwip/port</state>
-          <state>$PROJ_DIR$/../../../../../middleware/lwip/src</state>
           <state>$PROJ_DIR$/../../../../../middleware/lwip/src/include</state>
-          <state>$PROJ_DIR$/../../../../../middleware/lwip/src/include/lwip</state>
           <state>$PROJ_DIR$/../../../../../middleware/lwip/port/sys_arch/dynamic</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/common</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/osa</state>
@@ -1526,9 +1521,11 @@
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1052DVL6B</state>
+          <state>MIMXRT1052_SERIES</state>
           <state>DEBUG_CONSOLE_TRANSFER_NON_BLOCKING</state>
           <state>OSA_USED</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
+          <state>WIFI_IW416_BOARD_MURATA_1XK_USD</state>
           <state>MFLASH_FILE_BASEADDR=64487424</state>
           <state>CONFIG_NXP_WIFI_SOFTAP_SUPPORT=1</state>
           <state>SDIO_ENABLED=1</state>
@@ -1669,21 +1666,20 @@
           <state>$PROJ_DIR$/../../../../../components/aws_iot/mqtt_agent</state>
           <state>$PROJ_DIR$/../../../../../components/aws_iot/mqtt-agent-interface/include</state>
           <state>$PROJ_DIR$/../../../../../components/aws_iot/using_mbedtls_pkcs11</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/utilities</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../components/gpio</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
-          <state>$PROJ_DIR$/../../../../../components/flash/mflash</state>
-          <state>$PROJ_DIR$/../../../../../components/flash/mflash/mimxrt1052</state>
           <state>$PROJ_DIR$/../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../components/edgefast_wifi/include</state>
           <state>$PROJ_DIR$/../../../../../components/wifi_bt_module/AzureWave/tx_pwr_limits</state>
           <state>$PROJ_DIR$/../../../../../components/wifi_bt_module/Murata/tx_pwr_limits</state>
           <state>$PROJ_DIR$/../../../../../components/wifi_bt_module/u-blox/tx_pwr_limits</state>
           <state>$PROJ_DIR$/../../../../../components/wifi_bt_module/incl</state>
+          <state>$PROJ_DIR$/../../../../../components/flash/mflash</state>
+          <state>$PROJ_DIR$/../../../../../components/flash/mflash/mimxrt1052</state>
           <state>$PROJ_DIR$/../../../../../middleware/wifi_nxp</state>
           <state>$PROJ_DIR$/../../../../../middleware/wifi_nxp/incl</state>
           <state>$PROJ_DIR$/../../../../../middleware/wifi_nxp/incl/port/osa</state>
@@ -1693,7 +1689,6 @@
           <state>$PROJ_DIR$/../../../../../middleware/wifi_nxp/wifi_bt_firmware</state>
           <state>$PROJ_DIR$/../../../../../middleware/wifi_nxp/wifidriver</state>
           <state>$PROJ_DIR$/../../../../../middleware/wifi_nxp/wifidriver/incl</state>
-          <state>$PROJ_DIR$/../../../../../middleware/wifi_nxp/wifi_bt_firmware/8801</state>
           <state>$PROJ_DIR$/../../../../../middleware/wifi_nxp/wifi_bt_firmware/IW416</state>
           <state>$PROJ_DIR$/../../../../../middleware/wifi_nxp/wifi_bt_firmware/8987</state>
           <state>$PROJ_DIR$/../../../../../middleware/wifi_nxp/wifi_bt_firmware/nw61x</state>
@@ -1713,9 +1708,7 @@
           <state>$PROJ_DIR$/../../../../../middleware/mbedtls/library</state>
           <state>$PROJ_DIR$/../../../../../middleware/mbedtls/port/ksdk</state>
           <state>$PROJ_DIR$/../../../../../middleware/lwip/port</state>
-          <state>$PROJ_DIR$/../../../../../middleware/lwip/src</state>
           <state>$PROJ_DIR$/../../../../../middleware/lwip/src/include</state>
-          <state>$PROJ_DIR$/../../../../../middleware/lwip/src/include/lwip</state>
           <state>$PROJ_DIR$/../../../../../middleware/lwip/port/sys_arch/dynamic</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/common</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/osa</state>
@@ -1919,6 +1912,7 @@
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1052DVL6B</state>
+          <state>MIMXRT1052_SERIES</state>
           <state>DEBUG_CONSOLE_TRANSFER_NON_BLOCKING</state>
           <state>OSA_USED</state>
         </option>
@@ -2025,21 +2019,20 @@
           <state>$PROJ_DIR$/../../../../../components/aws_iot/mqtt_agent</state>
           <state>$PROJ_DIR$/../../../../../components/aws_iot/mqtt-agent-interface/include</state>
           <state>$PROJ_DIR$/../../../../../components/aws_iot/using_mbedtls_pkcs11</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/utilities</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../components/gpio</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
-          <state>$PROJ_DIR$/../../../../../components/flash/mflash</state>
-          <state>$PROJ_DIR$/../../../../../components/flash/mflash/mimxrt1052</state>
           <state>$PROJ_DIR$/../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../components/edgefast_wifi/include</state>
           <state>$PROJ_DIR$/../../../../../components/wifi_bt_module/AzureWave/tx_pwr_limits</state>
           <state>$PROJ_DIR$/../../../../../components/wifi_bt_module/Murata/tx_pwr_limits</state>
           <state>$PROJ_DIR$/../../../../../components/wifi_bt_module/u-blox/tx_pwr_limits</state>
           <state>$PROJ_DIR$/../../../../../components/wifi_bt_module/incl</state>
+          <state>$PROJ_DIR$/../../../../../components/flash/mflash</state>
+          <state>$PROJ_DIR$/../../../../../components/flash/mflash/mimxrt1052</state>
           <state>$PROJ_DIR$/../../../../../middleware/wifi_nxp</state>
           <state>$PROJ_DIR$/../../../../../middleware/wifi_nxp/incl</state>
           <state>$PROJ_DIR$/../../../../../middleware/wifi_nxp/incl/port/osa</state>
@@ -2049,7 +2042,6 @@
           <state>$PROJ_DIR$/../../../../../middleware/wifi_nxp/wifi_bt_firmware</state>
           <state>$PROJ_DIR$/../../../../../middleware/wifi_nxp/wifidriver</state>
           <state>$PROJ_DIR$/../../../../../middleware/wifi_nxp/wifidriver/incl</state>
-          <state>$PROJ_DIR$/../../../../../middleware/wifi_nxp/wifi_bt_firmware/8801</state>
           <state>$PROJ_DIR$/../../../../../middleware/wifi_nxp/wifi_bt_firmware/IW416</state>
           <state>$PROJ_DIR$/../../../../../middleware/wifi_nxp/wifi_bt_firmware/8987</state>
           <state>$PROJ_DIR$/../../../../../middleware/wifi_nxp/wifi_bt_firmware/nw61x</state>
@@ -2069,9 +2061,7 @@
           <state>$PROJ_DIR$/../../../../../middleware/mbedtls/library</state>
           <state>$PROJ_DIR$/../../../../../middleware/mbedtls/port/ksdk</state>
           <state>$PROJ_DIR$/../../../../../middleware/lwip/port</state>
-          <state>$PROJ_DIR$/../../../../../middleware/lwip/src</state>
           <state>$PROJ_DIR$/../../../../../middleware/lwip/src/include</state>
-          <state>$PROJ_DIR$/../../../../../middleware/lwip/src/include/lwip</state>
           <state>$PROJ_DIR$/../../../../../middleware/lwip/port/sys_arch/dynamic</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/common</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/osa</state>
@@ -2556,9 +2546,6 @@
   <group>
     <name>source</name>
     <file>
-      <name>$PROJ_DIR$/../app_config.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../aws_mbedtls_config.h</name>
     </file>
     <file>
@@ -2575,9 +2562,6 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../demo_config.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../freertos_tasks_c_additions.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../kvstore_config.h</name>
@@ -3096,10 +3080,10 @@
   <group>
     <name>utilities</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1052/utilities/fsl_assert.h</name>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1052/utilities/debug_console/fsl_assert.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1052/utilities/fsl_assert.c</name>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1052/utilities/debug_console/fsl_assert.c</name>
     </file>
     <group>
       <name>str</name>
@@ -3170,13 +3154,13 @@
     <group>
       <name>osa</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../components/osa/fsl_os_abstraction.h</name>
-      </file>
-      <file>
         <name>$PROJ_DIR$/../../../../../components/osa/fsl_os_abstraction_free_rtos.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../components/osa/fsl_os_abstraction_free_rtos.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/osa/fsl_os_abstraction.h</name>
       </file>
     </group>
     <group>
@@ -3204,13 +3188,10 @@
             <name>$PROJ_DIR$/../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1ZM_WW.h</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_2DS_WW.h</name>
-          </file>
-          <file>
             <name>$PROJ_DIR$/../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_2EL_WW.h</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_NH_FCC.h</name>
+            <name>$PROJ_DIR$/../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_NH.h</name>
           </file>
         </group>
       </group>
@@ -3229,6 +3210,21 @@
           <name>$PROJ_DIR$/../../../../../components/wifi_bt_module/incl/wifi_bt_module_config.h</name>
         </file>
       </group>
+    </group>
+  </group>
+  <group>
+    <name>edgefast_wifi</name>
+    <group>
+      <name>include</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/edgefast_wifi/include/wpl.h</name>
+      </file>
+    </group>
+    <group>
+      <name>source</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/edgefast_wifi/source/wpl_nxp.c</name>
+      </file>
     </group>
   </group>
   <group>
@@ -3253,21 +3249,6 @@
           <name>$PROJ_DIR$/../../../../../components/flash/mflash/mimxrt1052/mflash_drv.h</name>
         </file>
       </group>
-    </group>
-  </group>
-  <group>
-    <name>edgefast_wifi</name>
-    <group>
-      <name>include</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../components/edgefast_wifi/include/wpl.h</name>
-      </file>
-    </group>
-    <group>
-      <name>source</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../components/edgefast_wifi/source/wpl_nxp.c</name>
-      </file>
     </group>
   </group>
   <group>
@@ -3392,7 +3373,7 @@
         <name>$PROJ_DIR$/../../../../../middleware/wifi_nxp/incl/wifi_cal_data_rw61x_3ant_diversity.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/wifi_nxp/incl/wifi_cal_data_rw61x_override.h</name>
+        <name>$PROJ_DIR$/../../../../../middleware/wifi_nxp/incl/wifi_cal_data_override.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/wifi_nxp/incl/WIFI_IW416_BOARD_AW_AM457_CAL_DATA_EXT.h</name>
@@ -3653,18 +3634,6 @@
         <name>$PROJ_DIR$/../../../../../middleware/wifi_nxp/wifi_bt_firmware/wlan_bt_fw.h</name>
       </file>
       <group>
-        <name>8801</name>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/wifi_nxp/wifi_bt_firmware/8801/sd8801_wlan.bin.inc</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/wifi_nxp/wifi_bt_firmware/8801/sd8801_wlan.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/wifi_nxp/wifi_bt_firmware/8801/8801_cpu1.c</name>
-        </file>
-      </group>
-      <group>
         <name>IW416</name>
         <file>
           <name>$PROJ_DIR$/../../../../../middleware/wifi_nxp/wifi_bt_firmware/IW416/sduartIW416_wlan_bt.bin.inc</name>
@@ -3757,10 +3726,16 @@
       <group>
         <name>iw610</name>
         <file>
-          <name>$PROJ_DIR$/../../../../../middleware/wifi_nxp/wifi_bt_firmware/iw610/sduart_iw610.bin.se.inc</name>
+          <name>$PROJ_DIR$/../../../../../middleware/wifi_nxp/wifi_bt_firmware/iw610/sduartspi_iw610.bin.se.inc</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../middleware/wifi_nxp/wifi_bt_firmware/iw610/sd_iw610.bin.se.inc</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/wifi_nxp/wifi_bt_firmware/iw610/uartspi_iw610.bin.se.inc</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/wifi_nxp/wifi_bt_firmware/iw610/sduart_iw610.bin.se.inc</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../middleware/wifi_nxp/wifi_bt_firmware/iw610/uart_iw610_bt.bin.se.inc</name>
@@ -5484,6 +5459,9 @@
         <file>
           <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/timers.h</name>
         </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/freertos_tasks_c_additions.h</name>
+        </file>
       </group>
       <group>
         <name>portable</name>
@@ -5680,6 +5658,12 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../example_board_readme.md</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../examples_shared_readme.md</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../readme_modules.md</name>
     </file>
   </group>
 </project>

@@ -328,7 +328,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../mcux_config.h -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
-              <Define>DEBUG, PRINTF_FLOAT_ENABLE=1, PRINTF_ADVANCED_ENABLE=1, SDK_I2C_BASED_COMPONENT_USED=1, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1021DAG5A</Define>
+              <Define>DEBUG, PRINTF_FLOAT_ENABLE=1, PRINTF_ADVANCED_ENABLE=1, SDK_I2C_BASED_COMPONENT_USED=1, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1021DAG5A, MIMXRT1021_SERIES</Define>
               <Undefine/>
               <IncludePath>..;../../../xip;../../../../../devices/MIMXRT1021/drivers;../../../../../CMSIS/Core/Include;../../../../../CMSIS/Core/Include/m-profile;../../../../../devices/MIMXRT1021;../../../../../devices/MIMXRT1021/periph;../../../../../devices/MIMXRT1021/xip;../../../../../devices/MIMXRT1021/utilities/debug_console_lite;../../../../../devices/MIMXRT1021/utilities/str;../../../../../components/uart;../../../../../components/sensor/fxos8700cq</IncludePath>
             </VariousControls>
@@ -346,7 +346,7 @@
             <uClangAs>1</uClangAs>
             <VariousControls>
               <MiscControls/>
-              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1021DAG5A</Define>
+              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1021DAG5A, MIMXRT1021_SERIES</Define>
               <Undefine/>
               <IncludePath>..;../../../xip;../../../../../devices/MIMXRT1021/drivers;../../../../../CMSIS/Core/Include;../../../../../CMSIS/Core/Include/m-profile;../../../../../devices/MIMXRT1021;../../../../../devices/MIMXRT1021/periph;../../../../../devices/MIMXRT1021/xip;../../../../../devices/MIMXRT1021/utilities/debug_console_lite;../../../../../devices/MIMXRT1021/utilities/str;../../../../../components/uart;../../../../../components/sensor/fxos8700cq</IncludePath>
             </VariousControls>
@@ -1049,6 +1049,11 @@
               <FileName>example_board_readme.md</FileName>
               <FileType>5</FileType>
               <FilePath>../example_board_readme.md</FilePath>
+            </File>
+            <File>
+              <FileName>examples_shared_readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../examples_shared_readme.md</FilePath>
             </File>
           </Files>
         </Group>
@@ -1379,7 +1384,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../mcux_config.h -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
-              <Define>DEBUG, USE_SDRAM=1, SKIP_SYSCLK_INIT=1, DATA_SECTION_IS_CACHEABLE=1, PRINTF_FLOAT_ENABLE=1, PRINTF_ADVANCED_ENABLE=1, SDK_I2C_BASED_COMPONENT_USED=1, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1021DAG5A</Define>
+              <Define>DEBUG, USE_SDRAM=1, SKIP_SYSCLK_INIT=1, DATA_SECTION_IS_CACHEABLE=1, PRINTF_FLOAT_ENABLE=1, PRINTF_ADVANCED_ENABLE=1, SDK_I2C_BASED_COMPONENT_USED=1, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1021DAG5A, MIMXRT1021_SERIES</Define>
               <Undefine/>
               <IncludePath>..;../../../xip;../../../../../devices/MIMXRT1021/drivers;../../../../../CMSIS/Core/Include;../../../../../CMSIS/Core/Include/m-profile;../../../../../devices/MIMXRT1021;../../../../../devices/MIMXRT1021/periph;../../../../../devices/MIMXRT1021/xip;../../../../../devices/MIMXRT1021/utilities/debug_console_lite;../../../../../devices/MIMXRT1021/utilities/str;../../../../../components/uart;../../../../../components/sensor/fxos8700cq</IncludePath>
             </VariousControls>
@@ -1397,7 +1402,7 @@
             <uClangAs>1</uClangAs>
             <VariousControls>
               <MiscControls/>
-              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1021DAG5A</Define>
+              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1021DAG5A, MIMXRT1021_SERIES</Define>
               <Undefine/>
               <IncludePath>..;../../../xip;../../../../../devices/MIMXRT1021/drivers;../../../../../CMSIS/Core/Include;../../../../../CMSIS/Core/Include/m-profile;../../../../../devices/MIMXRT1021;../../../../../devices/MIMXRT1021/periph;../../../../../devices/MIMXRT1021/xip;../../../../../devices/MIMXRT1021/utilities/debug_console_lite;../../../../../devices/MIMXRT1021/utilities/str;../../../../../components/uart;../../../../../components/sensor/fxos8700cq</IncludePath>
             </VariousControls>
@@ -2101,6 +2106,11 @@
               <FileType>5</FileType>
               <FilePath>../example_board_readme.md</FilePath>
             </File>
+            <File>
+              <FileName>examples_shared_readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../examples_shared_readme.md</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>
@@ -2430,7 +2440,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../mcux_config.h -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
-              <Define>DEBUG, XIP_BOOT_HEADER_ENABLE=1, XIP_EXTERNAL_FLASH=1, PRINTF_FLOAT_ENABLE=1, PRINTF_ADVANCED_ENABLE=1, SDK_I2C_BASED_COMPONENT_USED=1, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1021DAG5A</Define>
+              <Define>DEBUG, XIP_BOOT_HEADER_ENABLE=1, XIP_EXTERNAL_FLASH=1, PRINTF_FLOAT_ENABLE=1, PRINTF_ADVANCED_ENABLE=1, SDK_I2C_BASED_COMPONENT_USED=1, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1021DAG5A, MIMXRT1021_SERIES</Define>
               <Undefine/>
               <IncludePath>..;../../../xip;../../../../../devices/MIMXRT1021/drivers;../../../../../CMSIS/Core/Include;../../../../../CMSIS/Core/Include/m-profile;../../../../../devices/MIMXRT1021;../../../../../devices/MIMXRT1021/periph;../../../../../devices/MIMXRT1021/xip;../../../../../devices/MIMXRT1021/utilities/debug_console_lite;../../../../../devices/MIMXRT1021/utilities/str;../../../../../components/uart;../../../../../components/sensor/fxos8700cq</IncludePath>
             </VariousControls>
@@ -2448,7 +2458,7 @@
             <uClangAs>1</uClangAs>
             <VariousControls>
               <MiscControls/>
-              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1021DAG5A</Define>
+              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1021DAG5A, MIMXRT1021_SERIES</Define>
               <Undefine/>
               <IncludePath>..;../../../xip;../../../../../devices/MIMXRT1021/drivers;../../../../../CMSIS/Core/Include;../../../../../CMSIS/Core/Include/m-profile;../../../../../devices/MIMXRT1021;../../../../../devices/MIMXRT1021/periph;../../../../../devices/MIMXRT1021/xip;../../../../../devices/MIMXRT1021/utilities/debug_console_lite;../../../../../devices/MIMXRT1021/utilities/str;../../../../../components/uart;../../../../../components/sensor/fxos8700cq</IncludePath>
             </VariousControls>
@@ -3152,6 +3162,11 @@
               <FileType>5</FileType>
               <FilePath>../example_board_readme.md</FilePath>
             </File>
+            <File>
+              <FileName>examples_shared_readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../examples_shared_readme.md</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>
@@ -3481,7 +3496,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../mcux_config.h -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
-              <Define>NDEBUG, PRINTF_FLOAT_ENABLE=1, PRINTF_ADVANCED_ENABLE=1, SDK_I2C_BASED_COMPONENT_USED=1, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1021DAG5A</Define>
+              <Define>NDEBUG, PRINTF_FLOAT_ENABLE=1, PRINTF_ADVANCED_ENABLE=1, SDK_I2C_BASED_COMPONENT_USED=1, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1021DAG5A, MIMXRT1021_SERIES</Define>
               <Undefine/>
               <IncludePath>..;../../../xip;../../../../../devices/MIMXRT1021/drivers;../../../../../CMSIS/Core/Include;../../../../../CMSIS/Core/Include/m-profile;../../../../../devices/MIMXRT1021;../../../../../devices/MIMXRT1021/periph;../../../../../devices/MIMXRT1021/xip;../../../../../devices/MIMXRT1021/utilities/debug_console_lite;../../../../../devices/MIMXRT1021/utilities/str;../../../../../components/uart;../../../../../components/sensor/fxos8700cq</IncludePath>
             </VariousControls>
@@ -3499,7 +3514,7 @@
             <uClangAs>1</uClangAs>
             <VariousControls>
               <MiscControls/>
-              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1021DAG5A</Define>
+              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1021DAG5A, MIMXRT1021_SERIES</Define>
               <Undefine/>
               <IncludePath>..;../../../xip;../../../../../devices/MIMXRT1021/drivers;../../../../../CMSIS/Core/Include;../../../../../CMSIS/Core/Include/m-profile;../../../../../devices/MIMXRT1021;../../../../../devices/MIMXRT1021/periph;../../../../../devices/MIMXRT1021/xip;../../../../../devices/MIMXRT1021/utilities/debug_console_lite;../../../../../devices/MIMXRT1021/utilities/str;../../../../../components/uart;../../../../../components/sensor/fxos8700cq</IncludePath>
             </VariousControls>
@@ -4203,6 +4218,11 @@
               <FileType>5</FileType>
               <FilePath>../example_board_readme.md</FilePath>
             </File>
+            <File>
+              <FileName>examples_shared_readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../examples_shared_readme.md</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>
@@ -4532,7 +4552,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../mcux_config.h -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
-              <Define>NDEBUG, USE_SDRAM=1, SKIP_SYSCLK_INIT=1, DATA_SECTION_IS_CACHEABLE=1, PRINTF_FLOAT_ENABLE=1, PRINTF_ADVANCED_ENABLE=1, SDK_I2C_BASED_COMPONENT_USED=1, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1021DAG5A</Define>
+              <Define>NDEBUG, USE_SDRAM=1, SKIP_SYSCLK_INIT=1, DATA_SECTION_IS_CACHEABLE=1, PRINTF_FLOAT_ENABLE=1, PRINTF_ADVANCED_ENABLE=1, SDK_I2C_BASED_COMPONENT_USED=1, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1021DAG5A, MIMXRT1021_SERIES</Define>
               <Undefine/>
               <IncludePath>..;../../../xip;../../../../../devices/MIMXRT1021/drivers;../../../../../CMSIS/Core/Include;../../../../../CMSIS/Core/Include/m-profile;../../../../../devices/MIMXRT1021;../../../../../devices/MIMXRT1021/periph;../../../../../devices/MIMXRT1021/xip;../../../../../devices/MIMXRT1021/utilities/debug_console_lite;../../../../../devices/MIMXRT1021/utilities/str;../../../../../components/uart;../../../../../components/sensor/fxos8700cq</IncludePath>
             </VariousControls>
@@ -4550,7 +4570,7 @@
             <uClangAs>1</uClangAs>
             <VariousControls>
               <MiscControls/>
-              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1021DAG5A</Define>
+              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1021DAG5A, MIMXRT1021_SERIES</Define>
               <Undefine/>
               <IncludePath>..;../../../xip;../../../../../devices/MIMXRT1021/drivers;../../../../../CMSIS/Core/Include;../../../../../CMSIS/Core/Include/m-profile;../../../../../devices/MIMXRT1021;../../../../../devices/MIMXRT1021/periph;../../../../../devices/MIMXRT1021/xip;../../../../../devices/MIMXRT1021/utilities/debug_console_lite;../../../../../devices/MIMXRT1021/utilities/str;../../../../../components/uart;../../../../../components/sensor/fxos8700cq</IncludePath>
             </VariousControls>
@@ -5254,6 +5274,11 @@
               <FileType>5</FileType>
               <FilePath>../example_board_readme.md</FilePath>
             </File>
+            <File>
+              <FileName>examples_shared_readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../examples_shared_readme.md</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>
@@ -5583,7 +5608,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../mcux_config.h -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
-              <Define>NDEBUG, XIP_BOOT_HEADER_ENABLE=1, XIP_EXTERNAL_FLASH=1, PRINTF_FLOAT_ENABLE=1, PRINTF_ADVANCED_ENABLE=1, SDK_I2C_BASED_COMPONENT_USED=1, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1021DAG5A</Define>
+              <Define>NDEBUG, XIP_BOOT_HEADER_ENABLE=1, XIP_EXTERNAL_FLASH=1, PRINTF_FLOAT_ENABLE=1, PRINTF_ADVANCED_ENABLE=1, SDK_I2C_BASED_COMPONENT_USED=1, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1021DAG5A, MIMXRT1021_SERIES</Define>
               <Undefine/>
               <IncludePath>..;../../../xip;../../../../../devices/MIMXRT1021/drivers;../../../../../CMSIS/Core/Include;../../../../../CMSIS/Core/Include/m-profile;../../../../../devices/MIMXRT1021;../../../../../devices/MIMXRT1021/periph;../../../../../devices/MIMXRT1021/xip;../../../../../devices/MIMXRT1021/utilities/debug_console_lite;../../../../../devices/MIMXRT1021/utilities/str;../../../../../components/uart;../../../../../components/sensor/fxos8700cq</IncludePath>
             </VariousControls>
@@ -5601,7 +5626,7 @@
             <uClangAs>1</uClangAs>
             <VariousControls>
               <MiscControls/>
-              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1021DAG5A</Define>
+              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1021DAG5A, MIMXRT1021_SERIES</Define>
               <Undefine/>
               <IncludePath>..;../../../xip;../../../../../devices/MIMXRT1021/drivers;../../../../../CMSIS/Core/Include;../../../../../CMSIS/Core/Include/m-profile;../../../../../devices/MIMXRT1021;../../../../../devices/MIMXRT1021/periph;../../../../../devices/MIMXRT1021/xip;../../../../../devices/MIMXRT1021/utilities/debug_console_lite;../../../../../devices/MIMXRT1021/utilities/str;../../../../../components/uart;../../../../../components/sensor/fxos8700cq</IncludePath>
             </VariousControls>
@@ -6304,6 +6329,11 @@
               <FileName>example_board_readme.md</FileName>
               <FileType>5</FileType>
               <FilePath>../example_board_readme.md</FilePath>
+            </File>
+            <File>
+              <FileName>examples_shared_readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../examples_shared_readme.md</FilePath>
             </File>
           </Files>
         </Group>

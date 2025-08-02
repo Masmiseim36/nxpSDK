@@ -43,7 +43,7 @@
 #if defined(LPC_55x)
 #include "fsl_power.h"
 #endif
-#if defined(CPU_MIMXRT1062DVL6A) || defined (CPU_MIMXRT1062DVL6B)
+#if defined(MIMXRT1062_SERIES) || defined (MIMXRT1061_SERIES)
 #include "fsl_dcp.h"
 #include "fsl_trng.h"
 #endif
@@ -122,7 +122,7 @@ static uint8_t s_countryCode[COMM_FEATURE_DATA_SIZE] = {
 USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE)
 static usb_cdc_acm_info_t s_usbCdcAcmInfo;
 /* Data buffer for receiving and sending*/
-#if defined(CPU_MIMXRT1062DVL6A) || defined (CPU_MIMXRT1062DVL6B)
+#if defined(MIMXRT1062_SERIES) || defined (MIMXRT1061_SERIES)
 USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) static uint8_t s_currRecvBuf[DATA_BUFF_SIZE];
 //USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) static uint8_t s_currSendBuf[DATA_BUFF_SIZE];
 #else
@@ -156,7 +156,7 @@ static volatile uint8_t s_comOpen            = 0;
 /*******************************************************************************
 * Code
 ******************************************************************************/
-#if defined(CPU_MIMXRT1062DVL6A) || defined (CPU_MIMXRT1062DVL6B)
+#if defined(MIMXRT1062_SERIES) || defined (MIMXRT1061_SERIES)
 /* The function sets the cacheable memory to shareable, this suggestion is referred from chapter 2.2.1 Memory regions, types and attributes in Cortex-M7 Devices, Generic User Guide */
 void BOARD_ConfigUSBMPU()
 {
@@ -246,7 +246,7 @@ void USB_DeviceClockInit(void)
         BOARD_USB_PHY_TXCAL45DP,
         BOARD_USB_PHY_TXCAL45DM,
     };
-#if defined(CPU_MIMXRT1176DVMAA_cm7)
+#if defined(MIMXRT1176_cm7_SERIES) || defined(MIMXRT1175_cm7_SERIES) || defined (MIMXRT1173_cm7_SERIES) || defined (MIMXRT1172_SERIES) || defined (MIMXRT1171_SERIES)
     uint32_t usbClockFreq = 24000000;
 #else
     uint32_t usbClockFreq = 48000000;
@@ -643,7 +643,7 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
         if (s_cdcVcom.attach) {
             uint8_t interface        = (uint8_t)((*temp16 & 0xFF00U) >> 0x08U);
             uint8_t alternateSetting = (uint8_t)(*temp16 & 0x00FFU);
-#if defined(CPU_MIMXRT1176DVMAA_cm7)
+#if defined(MIMXRT1176_cm7_SERIES) || defined(MIMXRT1175_cm7_SERIES) || defined (MIMXRT1173_cm7_SERIES) || defined (MIMXRT1172_SERIES) || defined (MIMXRT1171_SERIES)
             if (interface == USB_CDC_VCOM_COMM_INTERFACE_INDEX) {
                 if (alternateSetting < USB_CDC_VCOM_COMM_INTERFACE_ALTERNATE_COUNT) {
                     s_cdcVcom.currentInterfaceAlternateSetting[interface] = alternateSetting;
@@ -822,7 +822,7 @@ void main(void)
     LED_RED_INIT(1);
 #endif
 
-#if defined(CPU_MIMXRT1062DVL6A) || defined (CPU_MIMXRT1062DVL6B)
+#if defined(MIMXRT1062_SERIES) || defined (MIMXRT1061_SERIES)
 #define LPI2C_CLOCK_SOURCE_DIVIDER (5U)
     dcp_config_t dcpConfig;
     trng_config_t trngConfig;
@@ -943,7 +943,7 @@ void main(void)
     axReset_HostConfigure();
     axReset_PowerUp();
 #endif
-#if defined(CPU_MIMXRT1176DVMAA_cm7)
+#if defined(MIMXRT1176_cm7_SERIES) || defined(MIMXRT1175_cm7_SERIES) || defined (MIMXRT1173_cm7_SERIES) || defined (MIMXRT1172_SERIES) || defined (MIMXRT1171_SERIES)
     BOARD_ConfigMPU();
     BOARD_InitBootPins();
     BOARD_BootClockRUN();
@@ -952,7 +952,7 @@ void main(void)
     axReset_HostConfigure();
     axReset_PowerUp();
 
-#endif // CPU_MIMXRT1176DVMAA_cm7
+#endif //  MIMXRT1176_cm7_SERIES
     sm_initSleep();
     APPInit();
 

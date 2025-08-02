@@ -246,6 +246,7 @@
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1011DAE5A</state>
+          <state>MIMXRT1011_SERIES</state>
           <state>LV_CONF_INCLUDE_SIMPLE=1</state>
         </option>
         <option>
@@ -573,6 +574,7 @@
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1011DAE5A</state>
+          <state>MIMXRT1011_SERIES</state>
         </option>
         <option>
           <name>AList</name>
@@ -789,7 +791,7 @@
         </option>
         <option>
           <name>IlinkConfigDefines</name>
-          <state>__stack_size__=0x1000</state>
+          <state>__stack_size__=0x1800</state>
         </option>
         <option>
           <name>IlinkMapFile</name>
@@ -1391,6 +1393,7 @@
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1011DAE5A</state>
+          <state>MIMXRT1011_SERIES</state>
           <state>LV_CONF_INCLUDE_SIMPLE=1</state>
         </option>
         <option>
@@ -1718,6 +1721,7 @@
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1011DAE5A</state>
+          <state>MIMXRT1011_SERIES</state>
         </option>
         <option>
           <name>AList</name>
@@ -1934,7 +1938,7 @@
         </option>
         <option>
           <name>IlinkConfigDefines</name>
-          <state>__stack_size__=0x1000</state>
+          <state>__stack_size__=0x1800</state>
         </option>
         <option>
           <name>IlinkMapFile</name>
@@ -2297,36 +2301,6 @@
       <name>$PROJ_DIR$/../lvgl_guider_bm.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../generated/guider_customer_fonts/guider_customer_fonts.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../generated/gui_guider.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../generated/gui_guider.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../generated/events_init.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../generated/events_init.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../generated/setup_scr_screen.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../generated/widgets_init.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../generated/widgets_init.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../custom/custom.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../custom/custom.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../lv_conf_ext.h</name>
     </file>
     <file>
@@ -2364,6 +2338,45 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../mcux_config.h</name>
+    </file>
+  </group>
+  <group>
+    <name>generated</name>
+    <group>
+      <name>guider_customer_fonts</name>
+      <file>
+        <name>$PROJ_DIR$/../generated/guider_customer_fonts/guider_customer_fonts.h</name>
+      </file>
+    </group>
+    <file>
+      <name>$PROJ_DIR$/../generated/gui_guider.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../generated/gui_guider.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../generated/events_init.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../generated/events_init.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../generated/setup_scr_screen.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../generated/widgets_init.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../generated/widgets_init.h</name>
+    </file>
+  </group>
+  <group>
+    <name>custom</name>
+    <file>
+      <name>$PROJ_DIR$/../custom/custom.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../custom/custom.h</name>
     </file>
   </group>
   <group>
@@ -4326,6 +4339,9 @@
           <name>$PROJ_DIR$/../../../../../middleware/lvgl/src/osal/lv_freertos.c</name>
         </file>
         <file>
+          <name>$PROJ_DIR$/../../../../../middleware/lvgl/src/osal/lv_linux.c</name>
+        </file>
+        <file>
           <name>$PROJ_DIR$/../../../../../middleware/lvgl/src/osal/lv_mqx.c</name>
         </file>
         <file>
@@ -4348,6 +4364,9 @@
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../middleware/lvgl/src/osal/lv_freertos.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/lvgl/src/osal/lv_linux_private.h</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../middleware/lvgl/src/osal/lv_mqx.h</name>
@@ -5070,6 +5089,9 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../lvgl_examples_readme.md</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../examples_shared_readme.md</name>
     </file>
   </group>
 </project>

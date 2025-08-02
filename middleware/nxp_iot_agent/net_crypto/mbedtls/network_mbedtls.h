@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2021, 2023-2024 NXP
+ * Copyright 2018-2021, 2023-2025 NXP
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -13,7 +13,7 @@
 #include <ws2tcpip.h>
 #endif
 
-#ifdef NXP_IOT_AGENT_HAVE_PSA_IMPL_SMW
+#if defined(NXP_IOT_AGENT_HAVE_PSA_IMPL_SMW) && (NXP_IOT_AGENT_HAVE_PSA_IMPL_SMW == 1) 
 #include <psa/crypto_types.h>
 typedef psa_key_id_t mbedtls_svc_key_id_t;
 #endif

@@ -1,6 +1,5 @@
 /*
  * Copyright (c) 2013-2014 Freescale Semiconductor, Inc.
- * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */

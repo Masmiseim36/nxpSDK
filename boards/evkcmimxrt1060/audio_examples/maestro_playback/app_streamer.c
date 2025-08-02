@@ -1,5 +1,5 @@
 /*
- * Copyright 2020-2024 NXP
+ * Copyright 2020-2025 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -327,7 +327,7 @@ app_error_code_t play()
     //     get_debug_state();
     streamer_pcm_init();
 #ifdef MULTICHANNEL_EXAMPLE
-    if (STREAMER_PCM_Create((char *)get_app_data()->input, DEMO_VOLUME) == kStatus_Success)
+    if (STREAMER_PCM_Create((char *)get_app_data()->input, (int)get_app_data()->volume) == kStatus_Success)
 #else
     if (STREAMER_file_Create((char *)get_app_data()->input, (int)get_app_data()->volume) == kStatus_Success)
 #endif
@@ -375,15 +375,13 @@ app_error_code_t set_volume()
         ELEMENT_PROPERTY_T prop;
         prop.prop = PROP_SPEAKER_SET_VOLUME;
         prop.val  = get_app_data()->volume;
-        if (streamer_set_property(streamer, 0, prop, true) == 0)
+        if (streamer_set_property(streamer, 0, prop, true) != 0)
         {
-            PRINTF("[CMD] Volume has been set to %d.\r\n", get_app_data()->volume);
-            return kAppCodeOk;
+            return kAppCodeError;
         }
-        return kAppCodeError;
     }
-
-    PRINTF("[CMD] Volume has not been set. Play a track first.\r\n");
+    
+    PRINTF("[CMD] Volume has been set to %d.\r\n", get_app_data()->volume);
     return kAppCodeOk;
 }
 

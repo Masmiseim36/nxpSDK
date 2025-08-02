@@ -27,12 +27,12 @@
     <definition extID="component.igpio_adapter.MIMXRT1024"/>
     <definition extID="component.lpuart_adapter.MIMXRT1024"/>
     <definition extID="component.osa_template_config.MIMXRT1024"/>
-    <definition extID="component.osa_interface.MIMXRT1024"/>
     <definition extID="component.osa.MIMXRT1024"/>
     <definition extID="component.osa_free_rtos.MIMXRT1024"/>
     <definition extID="middleware.usb.common_header.MIMXRT1024"/>
     <definition extID="middleware.usb.device.common_header.MIMXRT1024"/>
     <definition extID="middleware.usb.device_controller_ehci.MIMXRT1024"/>
+    <definition extID="middleware.usb.device.ehci_config_header.MIMXRT1024"/>
     <definition extID="middleware.usb.device.controller.driver.MIMXRT1024"/>
     <definition extID="middleware.usb.device.stack.MIMXRT1024"/>
     <definition extID="middleware.usb.device.msd.MIMXRT1024"/>
@@ -45,6 +45,7 @@
     <definition extID="middleware.sdmmc.usdhc.template.MIMXRT1024"/>
     <definition extID="middleware.freertos-kernel.MIMXRT1024"/>
     <definition extID="middleware.freertos-kernel.heap_4.MIMXRT1024"/>
+    <definition extID="middleware.freertos-kernel.extension.MIMXRT1024"/>
     <definition extID="middleware.freertos-kernel.config.MIMXRT1024"/>
     <definition extID="iar"/>
     <definition extID="mdk"/>
@@ -56,7 +57,7 @@
     <definition extID="com.nxp.mcuxpresso.core.debug.support.segger.debug"/>
     <definition extID="com.nxp.mcuxpresso.core.debug.support.segger.release"/>
   </externalDefinitions>
-  <example id="evkmimxrt1024_dev_msc_disk_freertos" name="dev_msc_disk_freertos" device_core="core0_MIMXRT1024xxxxx" dependency="platform.drivers.xip_board.evkmimxrt1024.MIMXRT1024 platform.drivers.clock.MIMXRT1024 platform.drivers.iomuxc.MIMXRT1024 CMSIS_Include_core_cm.MIMXRT1024 device.MIMXRT1024_CMSIS.MIMXRT1024 device.MIMXRT1024_system.MIMXRT1024 device.MIMXRT1024_startup.MIMXRT1024 platform.drivers.xip_device.MIMXRT1024 platform.drivers.cache_armv7_m7.MIMXRT1024 platform.drivers.common.MIMXRT1024 platform.drivers.dcdc_1.MIMXRT1024 platform.drivers.gpc_1.MIMXRT1024 platform.drivers.igpio.MIMXRT1024 platform.drivers.lpuart.MIMXRT1024 platform.drivers.pmu.MIMXRT1024 platform.drivers.src.MIMXRT1024 platform.drivers.usdhc.MIMXRT1024 platform.utilities.assert_lite.MIMXRT1024 platform.utilities.misc_utilities.MIMXRT1024 component.lists.MIMXRT1024 utility.str.MIMXRT1024 utility.debug_console_lite.MIMXRT1024 component.igpio_adapter.MIMXRT1024 component.lpuart_adapter.MIMXRT1024 component.osa_template_config.MIMXRT1024 component.osa_interface.MIMXRT1024 component.osa.MIMXRT1024 component.osa_free_rtos.MIMXRT1024 middleware.usb.common_header.MIMXRT1024 middleware.usb.device.common_header.MIMXRT1024 middleware.usb.device_controller_ehci.MIMXRT1024 middleware.usb.device.controller.driver.MIMXRT1024 middleware.usb.device.stack.MIMXRT1024 middleware.usb.device.msd.MIMXRT1024 middleware.usb.phy.MIMXRT1024 middleware.sdmmc.common.MIMXRT1024 middleware.sdmmc.osa.freertos.MIMXRT1024 middleware.sdmmc.sd.MIMXRT1024 middleware.sdmmc.host.usdhc.MIMXRT1024 middleware.sdmmc.host.usdhc.polling.MIMXRT1024 middleware.sdmmc.usdhc.template.MIMXRT1024 middleware.freertos-kernel.MIMXRT1024 middleware.freertos-kernel.heap_4.MIMXRT1024 middleware.freertos-kernel.config.MIMXRT1024" category="usb_examples">
+  <example id="evkmimxrt1024_dev_msc_disk_freertos" name="dev_msc_disk_freertos" device_core="core0_MIMXRT1024xxxxx" dependency="platform.drivers.xip_board.evkmimxrt1024.MIMXRT1024 platform.drivers.clock.MIMXRT1024 platform.drivers.iomuxc.MIMXRT1024 CMSIS_Include_core_cm.MIMXRT1024 device.MIMXRT1024_CMSIS.MIMXRT1024 device.MIMXRT1024_system.MIMXRT1024 device.MIMXRT1024_startup.MIMXRT1024 platform.drivers.xip_device.MIMXRT1024 platform.drivers.cache_armv7_m7.MIMXRT1024 platform.drivers.common.MIMXRT1024 platform.drivers.dcdc_1.MIMXRT1024 platform.drivers.gpc_1.MIMXRT1024 platform.drivers.igpio.MIMXRT1024 platform.drivers.lpuart.MIMXRT1024 platform.drivers.pmu.MIMXRT1024 platform.drivers.src.MIMXRT1024 platform.drivers.usdhc.MIMXRT1024 platform.utilities.assert_lite.MIMXRT1024 platform.utilities.misc_utilities.MIMXRT1024 component.lists.MIMXRT1024 utility.str.MIMXRT1024 utility.debug_console_lite.MIMXRT1024 component.igpio_adapter.MIMXRT1024 component.lpuart_adapter.MIMXRT1024 component.osa_template_config.MIMXRT1024 component.osa.MIMXRT1024 component.osa_free_rtos.MIMXRT1024 middleware.usb.common_header.MIMXRT1024 middleware.usb.device.common_header.MIMXRT1024 middleware.usb.device_controller_ehci.MIMXRT1024 middleware.usb.device.ehci_config_header.MIMXRT1024 middleware.usb.device.controller.driver.MIMXRT1024 middleware.usb.device.stack.MIMXRT1024 middleware.usb.device.msd.MIMXRT1024 middleware.usb.phy.MIMXRT1024 middleware.sdmmc.common.MIMXRT1024 middleware.sdmmc.osa.freertos.MIMXRT1024 middleware.sdmmc.sd.MIMXRT1024 middleware.sdmmc.host.usdhc.MIMXRT1024 middleware.sdmmc.host.usdhc.polling.MIMXRT1024 middleware.sdmmc.usdhc.template.MIMXRT1024 middleware.freertos-kernel.MIMXRT1024 middleware.freertos-kernel.heap_4.MIMXRT1024 middleware.freertos-kernel.extension.MIMXRT1024 middleware.freertos-kernel.config.MIMXRT1024" category="usb_examples">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -78,6 +79,7 @@
           <value>SDK_DEBUGCONSOLE=1</value>
           <value>MCUX_META_BUILD</value>
           <value>CPU_MIMXRT1024DAG5A</value>
+          <value>MIMXRT1024_SERIES</value>
           <value>OSA_USED</value>
           <value>USE_RTOS=1</value>
           <value>SD_ENABLED=1</value>
@@ -248,12 +250,10 @@
     <source path="." project_relative_path="source" type="c_include" config="true">
       <files mask="FreeRTOSConfig_Gen.h"/>
       <files mask="fsl_os_abstraction_config.h"/>
+      <files mask="usb_device_config.h"/>
     </source>
     <source path="." project_relative_path="source" type="c_preinclude">
       <files mask="mcux_config.h"/>
-    </source>
-    <source path="." project_relative_path="source" type="c_include">
-      <files mask="usb_device_config.h"/>
     </source>
     <source path="." project_relative_path="doc" type="doc">
       <files mask="readme.md"/>
@@ -263,6 +263,9 @@
       <files mask="IAR_setting.jpg"/>
       <files mask="sdcard_scan.jpg"/>
       <files mask="sd_card.jpg"/>
+    </source>
+    <source path="." project_relative_path="doc" type="doc">
+      <files mask="examples_shared_readme.md"/>
     </source>
   </example>
 </ksdk:examples>

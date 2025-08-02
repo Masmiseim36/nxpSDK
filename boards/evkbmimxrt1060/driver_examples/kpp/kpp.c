@@ -13,6 +13,10 @@
  * Definitions
  ******************************************************************************/
 #define EXAMPLE_KPP_KEYPRESS_LONG_NUM (0xFFF)
+   
+#ifndef EXAMPLE_KPP_SYS_CLK_FREQ
+#define EXAMPLE_KPP_SYS_CLK_FREQ CLOCK_GetFreq(kCLOCK_CpuClk)
+#endif
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
@@ -35,7 +39,7 @@ void KPP_IRQHandler(void)
         /* Disable interrupts. */
         KPP_DisableInterrupts(EXAMPLE_KPP, kKPP_keyDepressInterrupt);
         /* Scanning. */
-        KPP_keyPressScanning(EXAMPLE_KPP, &read_keys[0], CLOCK_GetFreq(kCLOCK_CpuClk));
+        KPP_keyPressScanning(EXAMPLE_KPP, &read_keys[0], EXAMPLE_KPP_SYS_CLK_FREQ);
         /* Clear status. */
         KPP_ClearStatusFlag(EXAMPLE_KPP, kKPP_keyDepressInterrupt);
         KPP_SetSynchronizeChain(EXAMPLE_KPP, kKPP_ClearKeyDepressSyncChain);

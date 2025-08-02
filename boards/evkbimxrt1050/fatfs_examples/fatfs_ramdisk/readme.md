@@ -10,6 +10,7 @@ After the board is flashed the program will format disk, create file on disk, wr
 Each step will be indicated on terminal.
 
 Example output:
+
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Ramdisk example.
 Format ram disk.
@@ -20,5 +21,7 @@ Text in file.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ## Supported Boards
+
 - [EVKB-IMXRT1050](../../_boards/evkbimxrt1050/fatfs_examples/fatfs_ramdisk/example_board_readme.md)
 - [LPCXpresso54S018M](../../_boards/lpcxpresso54s018m/fatfs_examples/fatfs_ramdisk/example_board_readme.md)
+- [FRDM-MCXA346](../../_boards/frdmmcxa346/fatfs_examples/fatfs_ramdisk/example_board_readme.md)

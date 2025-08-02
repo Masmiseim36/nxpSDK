@@ -30,6 +30,7 @@
     <definition extID="component.lpuart_adapter.MIMXRT1064"/>
     <definition extID="component.mflash_offchip.MIMXRT1064"/>
     <definition extID="middleware.littlefs.MIMXRT1064"/>
+    <definition extID="middleware.littlefs_mflash.MIMXRT1064"/>
     <definition extID="iar"/>
     <definition extID="mdk"/>
     <definition extID="armgcc"/>
@@ -38,7 +39,7 @@
     <definition extID="com.crt.advproject.config.exe.debug"/>
     <definition extID="com.crt.advproject.config.exe.release"/>
   </externalDefinitions>
-  <example id="evkmimxrt1064_littlefs_shell" name="littlefs_shell" device_core="core0_MIMXRT1064xxxxA" dependency="platform.drivers.xip_board.evkmimxrt1064.MIMXRT1064 platform.drivers.clock.MIMXRT1064 platform.drivers.iomuxc.MIMXRT1064 CMSIS_Include_core_cm.MIMXRT1064 device.MIMXRT1064_CMSIS.MIMXRT1064 device.MIMXRT1064_system.MIMXRT1064 device.MIMXRT1064_startup.MIMXRT1064 platform.drivers.xip_device.MIMXRT1064 platform.drivers.cache_armv7_m7.MIMXRT1064 platform.drivers.common.MIMXRT1064 platform.drivers.dcdc_1.MIMXRT1064 platform.drivers.flexspi.MIMXRT1064 platform.drivers.gpc_1.MIMXRT1064 platform.drivers.igpio.MIMXRT1064 platform.drivers.lpuart.MIMXRT1064 platform.drivers.pmu.MIMXRT1064 platform.drivers.src.MIMXRT1064 platform.utilities.assert.MIMXRT1064 platform.utilities.misc_utilities.MIMXRT1064 component.lists.MIMXRT1064 utility.str.MIMXRT1064 utility.debug_console.MIMXRT1064 utility.shell.MIMXRT1064 component.serial_manager.MIMXRT1064 component.serial_manager_uart.MIMXRT1064 component.lpuart_adapter.MIMXRT1064 component.mflash_offchip.MIMXRT1064 middleware.littlefs.MIMXRT1064" category="littlefs_examples">
+  <example id="evkmimxrt1064_littlefs_shell" name="littlefs_shell" device_core="core0_MIMXRT1064xxxxA" dependency="platform.drivers.xip_board.evkmimxrt1064.MIMXRT1064 platform.drivers.clock.MIMXRT1064 platform.drivers.iomuxc.MIMXRT1064 CMSIS_Include_core_cm.MIMXRT1064 device.MIMXRT1064_CMSIS.MIMXRT1064 device.MIMXRT1064_system.MIMXRT1064 device.MIMXRT1064_startup.MIMXRT1064 platform.drivers.xip_device.MIMXRT1064 platform.drivers.cache_armv7_m7.MIMXRT1064 platform.drivers.common.MIMXRT1064 platform.drivers.dcdc_1.MIMXRT1064 platform.drivers.flexspi.MIMXRT1064 platform.drivers.gpc_1.MIMXRT1064 platform.drivers.igpio.MIMXRT1064 platform.drivers.lpuart.MIMXRT1064 platform.drivers.pmu.MIMXRT1064 platform.drivers.src.MIMXRT1064 platform.utilities.assert.MIMXRT1064 platform.utilities.misc_utilities.MIMXRT1064 component.lists.MIMXRT1064 utility.str.MIMXRT1064 utility.debug_console.MIMXRT1064 utility.shell.MIMXRT1064 component.serial_manager.MIMXRT1064 component.serial_manager_uart.MIMXRT1064 component.lpuart_adapter.MIMXRT1064 component.mflash_offchip.MIMXRT1064 middleware.littlefs.MIMXRT1064 middleware.littlefs_mflash.MIMXRT1064" category="littlefs_examples">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -60,6 +61,7 @@
           <value>SDK_DEBUGCONSOLE_UART</value>
           <value>MCUX_META_BUILD</value>
           <value>CPU_MIMXRT1064DVL6A</value>
+          <value>MIMXRT1064_SERIES</value>
           <value>SERIAL_PORT_TYPE_UART=1</value>
           <value>MFLASH_FILE_BASEADDR=3670016</value>
           <value>LFS_NO_ASSERT</value>
@@ -120,8 +122,8 @@
       </debug_configuration>
     </debug_configurations>
     <include_paths>
-      <include_path path="." project_relative_path="source" type="c_include"/>
       <include_path path="." project_relative_path="board" type="c_include"/>
+      <include_path path="." project_relative_path="source" type="c_include"/>
       <include_path path="." project_relative_path="source" type="asm_include"/>
     </include_paths>
     <source path="iar" project_relative_path="./" type="workspace" toolchain="iar">
@@ -164,12 +166,6 @@
     </source>
     <source path="." project_relative_path="source" type="src">
       <files mask="littlefs_shell.c"/>
-    </source>
-    <source path="." project_relative_path="source" type="src">
-      <files mask="lfs_mflash.c"/>
-    </source>
-    <source path="." project_relative_path="source" type="c_include">
-      <files mask="lfs_mflash.h"/>
     </source>
     <source path="." project_relative_path="source" type="src">
       <files mask="peripherals.c"/>
@@ -220,6 +216,9 @@
     </source>
     <source path="." project_relative_path="doc" type="doc">
       <files mask="example_board_readme.md"/>
+    </source>
+    <source path="." project_relative_path="doc" type="doc">
+      <files mask="examples_shared_readme.md"/>
     </source>
   </example>
 </ksdk:examples>

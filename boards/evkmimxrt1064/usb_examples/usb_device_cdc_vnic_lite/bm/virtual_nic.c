@@ -385,6 +385,10 @@ usb_status_t USB_DeviceVnicTransmit(void)
                 usbTxLen       = length + RNDIS_USB_OVERHEAD_SIZE;
                 usbTxPart_1Len = 0;
                 g_cdcVnic.nicTrafficInfo.enetRxUsb2hostSent++;
+                if (g_cdcVnic.nicTrafficInfo.enetRxUsb2hostSent >= UINT32_MAX)
+                {
+                    g_cdcVnic.nicTrafficInfo.enetRxUsb2hostSent = 0U;
+                }
                 g_cdcVnic.nicTrafficInfo.usbTxNicData        = nicData;
                 g_cdcVnic.nicTrafficInfo.usbTxRndisPkgLength = usbTxLen;
 
@@ -490,6 +494,10 @@ usb_status_t USB_DeviceVnicTransmit(void)
             {
                 VNIC_EnetRxBufFree(enetPbuf);
                 g_cdcVnic.nicTrafficInfo.enetRxUsb2host++;
+                if (g_cdcVnic.nicTrafficInfo.enetRxUsb2host >= UINT32_MAX)
+                {
+                    g_cdcVnic.nicTrafficInfo.enetRxUsb2host = 0U;
+                }
                 USB_DeviceVnicTransmitSetState(TX_IDLE);
             }
         }
@@ -501,6 +509,10 @@ usb_status_t USB_DeviceVnicTransmit(void)
             enetPbuf = &(g_cdcVnic.nicTrafficInfo.usbTxEnetPcb);
             VNIC_EnetRxBufFree(enetPbuf);
             g_cdcVnic.nicTrafficInfo.enetRxUsb2host++;
+            if (g_cdcVnic.nicTrafficInfo.enetRxUsb2host >= UINT32_MAX)
+            {
+                g_cdcVnic.nicTrafficInfo.enetRxUsb2host = 0U;
+            }
             USB_DeviceVnicTransmitSetState(TX_IDLE);
         }
         break;
@@ -588,6 +600,11 @@ usb_status_t USB_DeviceVnicReceive(void)
             {
                 /* Send the ethernet packet */
                 USB_DeviceVnicReceiveSetState(RX_USB2ENET_PROCESS);
+                if (messageLen < RNDIS_USB_OVERHEAD_SIZE)
+                {
+                    usb_echo("wrong message length\n");
+                    break;
+                }
                 error = VNIC_EnetSend((uint8_t *)(rndisPktMsgData + RNDIS_USB_OVERHEAD_SIZE),
                                       messageLen - RNDIS_USB_OVERHEAD_SIZE);
 
@@ -617,6 +634,11 @@ usb_status_t USB_DeviceVnicReceive(void)
 
             /* Send the ethernet packet */
             USB_DeviceVnicReceiveSetState(RX_USB2ENET_PROCESS);
+            if (messageLen < RNDIS_USB_OVERHEAD_SIZE)
+            {
+                usb_echo("wrong message length\n");
+                break;
+            }
             error = VNIC_EnetSend((uint8_t *)(rndisPktMsgData + RNDIS_USB_OVERHEAD_SIZE),
                                   messageLen - RNDIS_USB_OVERHEAD_SIZE);
 

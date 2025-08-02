@@ -17,6 +17,7 @@ SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_DEBUG " \
     -D__STARTUP_CLEAR_BSS \
     -DMCUXPRESSO_SDK \
     -DCPU_MIMXRT1011DAE5A \
+    -DMIMXRT1011_SERIES \
     -g \
     -mthumb \
     -mcpu=cortex-m7 \
@@ -29,6 +30,7 @@ SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_RELEASE " \
     -D__STARTUP_CLEAR_BSS \
     -DMCUXPRESSO_SDK \
     -DCPU_MIMXRT1011DAE5A \
+    -DMIMXRT1011_SERIES \
     -mthumb \
     -mcpu=cortex-m7 \
     ${FPU} \
@@ -41,10 +43,12 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG " \
     -DXIP_EXTERNAL_FLASH=1 \
     -DARM_MATH_CM7 \
     -DARM_MATH_CM4 \
+    -D__STARTUP_CLEAR_BSS \
     -DPRINTF_FLOAT_ENABLE=1 \
     -DMCUX_META_BUILD \
     -DMCUXPRESSO_SDK \
     -DCPU_MIMXRT1011DAE5A \
+    -DMIMXRT1011_SERIES \
     -DDISABLEFLOAT16 \
     -DSDK_I2C_BASED_COMPONENT_USED=1 \
     -DCODEC_MULTI_ADAPTERS=1 \
@@ -72,10 +76,12 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE " \
     -DXIP_EXTERNAL_FLASH=1 \
     -DARM_MATH_CM7 \
     -DARM_MATH_CM4 \
+    -D__STARTUP_CLEAR_BSS \
     -DPRINTF_FLOAT_ENABLE=1 \
     -DMCUX_META_BUILD \
     -DMCUXPRESSO_SDK \
     -DCPU_MIMXRT1011DAE5A \
+    -DMIMXRT1011_SERIES \
     -DDISABLEFLOAT16 \
     -DSDK_I2C_BASED_COMPONENT_USED=1 \
     -DCODEC_MULTI_ADAPTERS=1 \
@@ -101,6 +107,7 @@ SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG " \
     -DMCUX_META_BUILD \
     -DMCUXPRESSO_SDK \
     -DCPU_MIMXRT1011DAE5A \
+    -DMIMXRT1011_SERIES \
     -g \
     -O0 \
     -Wall \
@@ -123,6 +130,7 @@ SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE " \
     -DMCUX_META_BUILD \
     -DMCUXPRESSO_SDK \
     -DCPU_MIMXRT1011DAE5A \
+    -DMIMXRT1011_SERIES \
     -Os \
     -Wall \
     -fno-common \
@@ -152,9 +160,6 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_DEBUG " \
     -mapcs \
     -Wl,--gc-sections \
     -Wl,-static \
-    -Wl,-z \
-    -Wl,muldefs \
-    -Wl,-Map=output.map \
     -Wl,--print-memory-usage \
     -mcpu=cortex-m7 \
     ${FPU} \
@@ -175,9 +180,6 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE " \
     -mapcs \
     -Wl,--gc-sections \
     -Wl,-static \
-    -Wl,-z \
-    -Wl,muldefs \
-    -Wl,-Map=output.map \
     -Wl,--print-memory-usage \
     -mcpu=cortex-m7 \
     ${FPU} \

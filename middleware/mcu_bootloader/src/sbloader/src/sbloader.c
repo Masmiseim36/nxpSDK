@@ -1,7 +1,6 @@
 /*
  * Copyright (c) 2013-2015 Freescale Semiconductor, Inc.
  * Copyright 2016-2018 NXP
- * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -671,7 +670,17 @@ status_t ldr_DoProgramCmd(ldr_Context_t *context)
     {
         return kStatus_InvalidArgument;
     }
-    return ocotp_program_once(OCOTP, index, data, byteCount);
+
+#if BL_FEATURE_OCOTP_REDLOCK
+    bool needLock = (index & (0xFFu << 24u)) ? true : false;
+    index = (index & 0xffffu);
+    status = ocotp_program_once(OCOTP, index, data, byteCount, needLock);
+#else
+    status = ocotp_program_once(OCOTP, index, data, byteCount);
+#endif
+
+    return status;
+
 #else
 
     return kStatusRomLdrUnknownCommand;

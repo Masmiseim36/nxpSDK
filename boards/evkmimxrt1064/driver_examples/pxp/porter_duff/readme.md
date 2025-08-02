@@ -17,3 +17,4 @@ mode result is shown 2 seconds, then switch to the other mode.
 - [MIMXRT1040-EVK](../../../_boards/evkmimxrt1040/driver_examples/pxp/porter_duff/example_board_readme.md)
 - [EVK-MIMXRT1064](../../../_boards/evkmimxrt1064/driver_examples/pxp/porter_duff/example_board_readme.md)
 - [MIMXRT1160-EVK](../../../_boards/evkmimxrt1160/driver_examples/pxp/porter_duff/example_board_readme.md)
+- [IMX943-EVK](../../../_boards/imx943evk/driver_examples/pxp/porter_duff/example_board_readme.md)

@@ -14,9 +14,6 @@ if(CMAKE_SCRIPT_MODE_FILE)
 endif()
 
 
-set(CMAKE_STATIC_LIBRARY_PREFIX)
-set(CMAKE_STATIC_LIBRARY_SUFFIX)
-
 set(CMAKE_EXECUTABLE_LIBRARY_PREFIX)
 set(CMAKE_EXECUTABLE_LIBRARY_SUFFIX)
 
@@ -53,7 +50,6 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../app_mbedtls_socket.c"
 "${ProjDirPath}/../app_https_client_task.h"
 "${ProjDirPath}/../app_https_client_task.c"
-"${ProjDirPath}/../lwipopts.h"
 "${ProjDirPath}/../core_http_config.h"
 "${ProjDirPath}/../board.h"
 "${ProjDirPath}/../board.c"
@@ -63,8 +59,10 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../pin_mux.h"
 "${ProjDirPath}/../hardware_init.c"
 "${ProjDirPath}/../app.h"
+"${ProjDirPath}/../lwipopts.h"
 "${ProjDirPath}/../FreeRTOSConfig_Gen.h"
 "${ProjDirPath}/../fsl_debug_console_conf.h"
+"${ProjDirPath}/../lwipopts_gen.h"
 "${ProjDirPath}/../mcux_config.h"
 )
 

@@ -38,7 +38,7 @@
 #endif // !defined(NORDIC_MCU)
 #endif
 
-#if defined (CPU_MIMXRT1062DVL6A) || defined (CPU_MIMXRT1062DVL6B)
+#if defined (MIMXRT1062_SERIES) || defined (MIMXRT1061_SERIES)
 #include "fsl_trng.h"
 #include "fsl_dcp.h"
 #endif
@@ -67,11 +67,11 @@
 #define TARGET_PLATFORM "FRDM-KW41Z"
 #elif defined(FRDM_K82F)
 #define TARGET_PLATFORM "FRDM-K82F"
-#elif defined(CPU_MIMXRT1062DVL6A) || defined (CPU_MIMXRT1062DVL6B)
+#elif defined (MIMXRT1062_SERIES) || defined (MIMXRT1061_SERIES)
 #define TARGET_PLATFORM "i.MX RT 1060"
 #endif
 
-#if defined (CPU_MIMXRT1062DVL6A) || defined (CPU_MIMXRT1062DVL6B)
+#if defined (MIMXRT1062_SERIES) || defined (MIMXRT1061_SERIES)
 #define TRNG0 TRNG
 #endif
 
@@ -115,7 +115,7 @@ int app_boot_Init()
     BOARD_BootClockRUN();
     BOARD_InitDebugConsole();
 
-#if defined(CPU_MIMXRT1062DVL6A) || defined (CPU_MIMXRT1062DVL6B)
+#if defined (MIMXRT1062_SERIES) || defined (MIMXRT1061_SERIES)
     dcp_config_t dcpConfig;
     trng_config_t trngConfig;
     /* Data cache must be temporarily disabled to be able to use sdram */
@@ -133,7 +133,7 @@ int app_boot_Init()
 
     /* Initialize TRNG */
     TRNG_Init(TRNG0, &trngConfig);
-#endif // CPU_MIMXRT1062DVL6A || CPU_MIMXRT1062DVL6B
+#endif // MIMXRT1062_SERIES || MIMXRT1062_SERIES
 #endif // IMX_RT
 
 #if defined(CPU_LPC54018)

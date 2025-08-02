@@ -50,13 +50,11 @@ status_t DC_FB_DBI_Init(const dc_fb_t *dc)
 
     dc_fb_dbi_handle_t *dcDbiHandle = (dc_fb_dbi_handle_t *)dc->prvData;
 
-    if (0U == dcDbiHandle->initTimes)
+    if (0U == dcDbiHandle->initTimes++)
     {
         /* Initialize the panel. */
         DBI_IFACE_SetMemoryDoneCallback(&(dcDbiHandle->dbiIface), DC_FB_DBI_FrameDoneCallback, dcDbiHandle);
     }
-
-    dcDbiHandle->initTimes++;
 
     return status;
 }
@@ -122,7 +120,7 @@ status_t DC_FB_DBI_GetLayerDefaultConfig(const dc_fb_t *dc, uint8_t layer, dc_fb
     fbInfo->startY      = 0;
     fbInfo->width       = dcDbiHandle->width;
     fbInfo->height      = dcDbiHandle->height;
-    fbInfo->strideBytes = dcDbiHandle->width * (uint16_t)VIDEO_GetPixelSizeBits(dcDbiHandle->pixelFormat) / 8U;
+    fbInfo->strideBytes = dcDbiHandle->width * VIDEO_GetPixelSizeBits(dcDbiHandle->pixelFormat) / 8U;
     fbInfo->pixelFormat = dcDbiHandle->pixelFormat;
 
     return kStatus_Success;
@@ -150,12 +148,12 @@ status_t DC_FB_DBI_SetFrameBuffer(const dc_fb_t *dc, uint8_t layer, void *frameB
         if (bytesPerLine < fbInfo->strideBytes)
         {
             status = DBI_IFACE_WriteMemory2D(&(dcDbiHandle->dbiIface), (const uint8_t *)frameBuffer,
-                                             (uint32_t)fbInfo->strideBytes * (uint32_t)fbInfo->height, (uint32_t)fbInfo->strideBytes);
+                                             fbInfo->strideBytes * fbInfo->height, fbInfo->strideBytes);
         }
         else if (bytesPerLine == fbInfo->strideBytes)
         {
             status = DBI_IFACE_WriteMemory(&(dcDbiHandle->dbiIface), (const uint8_t *)frameBuffer,
-                                           (uint32_t)fbInfo->strideBytes * (uint32_t)fbInfo->height);
+                                           fbInfo->strideBytes * fbInfo->height);
         }
         else
         {
@@ -183,7 +181,7 @@ void DC_FB_DBI_TE_IRQHandler(const dc_fb_t *dc)
 {
     dc_fb_dbi_handle_t *dcDbiHandle = (dc_fb_dbi_handle_t *)dc->prvData;
     dc_fb_info_t *fbInfo            = &dcDbiHandle->fbInfo;
-    uint32_t bytesPerLine           = (uint32_t)fbInfo->width * (uint32_t)VIDEO_GetPixelSizeBits(fbInfo->pixelFormat) / 8UL;
+    uint32_t bytesPerLine           = fbInfo->width * VIDEO_GetPixelSizeBits(fbInfo->pixelFormat) / 8U;
 
     if (dcDbiHandle->fbWaitTE)
     {
@@ -191,13 +189,13 @@ void DC_FB_DBI_TE_IRQHandler(const dc_fb_t *dc)
         {
             dcDbiHandle->fbWaitTE = false;
             DBI_IFACE_WriteMemory2D(&(dcDbiHandle->dbiIface), (const uint8_t *)dcDbiHandle->frameBuffer,
-                                    (uint32_t)fbInfo->strideBytes * (uint32_t)fbInfo->height, (uint32_t)fbInfo->strideBytes);
+                                    fbInfo->strideBytes * fbInfo->height, fbInfo->strideBytes);
         }
         else if (bytesPerLine == fbInfo->strideBytes)
         {
             dcDbiHandle->fbWaitTE = false;
             DBI_IFACE_WriteMemory(&(dcDbiHandle->dbiIface), (const uint8_t *)dcDbiHandle->frameBuffer,
-                                  (uint32_t)fbInfo->strideBytes * (uint32_t)fbInfo->height);
+                                  fbInfo->strideBytes * fbInfo->height);
         }
         else
         {

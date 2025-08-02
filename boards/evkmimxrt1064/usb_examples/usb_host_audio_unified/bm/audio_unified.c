@@ -562,7 +562,10 @@ static void USB_HostAudioAppCalculateTransferSampleCount(void)
     uint32_t speed = 0U;
 
     sendFreq = g_speakerSampleFreq;
-
+    if (g_speakerIsoEndpDescPtr->bInterval < 1U)
+    {
+        return;
+    }
     interval = 1U << (g_speakerIsoEndpDescPtr->bInterval - 1U);
     (void)USB_HostHelperGetPeripheralInformation(g_audio.deviceHandle, (uint32_t)kUSB_HostGetDeviceSpeed, &speed);
     if (speed == USB_SPEED_HIGH)

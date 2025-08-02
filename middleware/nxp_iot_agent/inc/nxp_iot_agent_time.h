@@ -1,5 +1,5 @@
 /*
- * Copyright 2020-2021,2024 NXP
+ * Copyright 2020-2021,2024-2025 NXP
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -21,7 +21,7 @@ typedef struct iot_agent_time_t
 	long init_time;        /*Initialization of iot_agent with session*/
 	long prepare_tls_time; /*Time for reading device credentials for TLS connection*/
 	long network_connect_time;  /*Time for successful network connection to EL2GO*/
-#if NXP_IOT_AGENT_REQUEST_CRL_FROM_EDGELOCK_2GO
+#if defined(NXP_IOT_AGENT_REQUEST_CRL_FROM_EDGELOCK_2GO) && (NXP_IOT_AGENT_REQUEST_CRL_FROM_EDGELOCK_2GO == 1)
 	long crl_time;         /* Time for CRL verification*/
 #endif
     long apdu_time;        /*Apdu exchange time with SE after connecting to EL2GO */

@@ -32,7 +32,6 @@
     <definition extID="middleware.mcuboot.tinycrypt.MIMXRT1042"/>
     <definition extID="middleware.mcuboot.nxp_app_support.MIMXRT1042"/>
     <definition extID="iar"/>
-    <definition extID="mdk"/>
     <definition extID="armgcc"/>
     <definition extID="mcuxpresso"/>
     <definition extID="com.nxp.mcuxpresso"/>
@@ -63,6 +62,7 @@
           <value>SDK_DEBUGCONSOLE=1</value>
           <value>MCUX_META_BUILD</value>
           <value>CPU_MIMXRT1042XJM5B</value>
+          <value>MIMXRT1042_SERIES</value>
           <value>SERIAL_PORT_TYPE_UART=1</value>
           <value>MFLASH_FILE_BASEADDR=7340032</value>
         </option>
@@ -131,11 +131,6 @@
       <files mask="ota_mcuboot_basic.ewd"/>
       <files mask="ota_mcuboot_basic.eww"/>
     </source>
-    <source path="mdk" project_relative_path="./" type="workspace" toolchain="mdk">
-      <files mask="ota_mcuboot_basic.uvprojx"/>
-      <files mask="ota_mcuboot_basic.uvoptx"/>
-      <files mask="ota_mcuboot_basic.uvmpw"/>
-    </source>
     <source path="armgcc" project_relative_path="./" type="workspace" toolchain="armgcc">
       <files mask="build_all.bat"/>
       <files mask="build_all.sh"/>
@@ -154,9 +149,6 @@
     </source>
     <source path="." project_relative_path="source" type="other" toolchain="iar">
       <files mask="evkmimxrt1040.mac"/>
-    </source>
-    <source path="." project_relative_path="source" type="configuration" toolchain="mdk">
-      <files mask="evkmimxrt1040_flexspi_nor_mcubootable.ini"/>
     </source>
     <source path="linker/mcux_linkscripts" project_relative_path="linkscripts" type="src" toolchain="mcuxpresso">
       <files mask="bss.ldt"/>
@@ -187,9 +179,6 @@
     </source>
     <source path="iar" project_relative_path="MIMXRT1042/iar" type="linker" toolchain="iar">
       <files mask="MIMXRT1042xxxxx_flexspi_nor.icf"/>
-    </source>
-    <source path="mdk" project_relative_path="MIMXRT1042/mdk" type="linker" toolchain="mdk">
-      <files mask="MIMXRT1042xxxxx_flexspi_nor.scf"/>
     </source>
     <source path="armgcc" project_relative_path="MIMXRT1042/armgcc" type="linker" toolchain="armgcc">
       <files mask="MIMXRT1042xxxxx_flexspi_nor.ld"/>
@@ -225,6 +214,9 @@
     </source>
     <source path="." project_relative_path="doc" type="doc">
       <files mask="example_board_readme.md"/>
+    </source>
+    <source path="." project_relative_path="doc" type="doc">
+      <files mask="examples_shared_readme.md"/>
     </source>
   </example>
 </ksdk:examples>

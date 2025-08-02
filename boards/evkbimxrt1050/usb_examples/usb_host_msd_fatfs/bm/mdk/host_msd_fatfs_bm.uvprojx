@@ -328,9 +328,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../mcux_config.h -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
-              <Define>DEBUG, PRINTF_ADVANCED_ENABLE=1, USB_STACK_BM, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1052DVL6B, OSA_USED, USE_RTOS=0</Define>
+              <Define>DEBUG, PRINTF_ADVANCED_ENABLE=1, USB_STACK_BM, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1052DVL6B, MIMXRT1052_SERIES, OSA_USED, USE_RTOS=0</Define>
               <Undefine/>
-              <IncludePath>..;../../../../xip;../../../../../../devices/MIMXRT1052/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1052;../../../../../../devices/MIMXRT1052/periph;../../../../../../devices/MIMXRT1052/xip;../../../../../../devices/MIMXRT1052/utilities/debug_console_lite;../../../../../../components/lists;../../../../../../devices/MIMXRT1052/utilities/str;../../../../../../components/uart;../../../../../../components/osa;../../../../../../middleware/usb/include;../../../../../../middleware/usb/host;../../../../../../middleware/usb/host/class;../../../../../../middleware/usb/phy;../../../../../../middleware/fatfs/source;../../../../../../middleware/fatfs/template;../../../../../../middleware/fatfs/source/fsl_usb_disk</IncludePath>
+              <IncludePath>..;../../../../xip;../../../../../../devices/MIMXRT1052/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1052;../../../../../../devices/MIMXRT1052/periph;../../../../../../devices/MIMXRT1052/xip;../../../../../../devices/MIMXRT1052/utilities/debug_console_lite;../../../../../../components/lists;../../../../../../devices/MIMXRT1052/utilities/str;../../../../../../components/uart;../../../../../../components/osa;../../../../../../middleware/usb/include;../../../../../../middleware/usb/host;../../../../../../middleware/usb/config/host/ehci;../../../../../../middleware/usb/host/class;../../../../../../middleware/usb/phy;../../../../../../middleware/fatfs/source;../../../../../../middleware/fatfs/template;../../../../../../middleware/fatfs/source/fsl_usb_disk</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -346,9 +346,9 @@
             <uClangAs>1</uClangAs>
             <VariousControls>
               <MiscControls/>
-              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1052DVL6B, OSA_USED</Define>
+              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1052DVL6B, MIMXRT1052_SERIES, OSA_USED</Define>
               <Undefine/>
-              <IncludePath>..;../../../../xip;../../../../../../devices/MIMXRT1052/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1052;../../../../../../devices/MIMXRT1052/periph;../../../../../../devices/MIMXRT1052/xip;../../../../../../devices/MIMXRT1052/utilities/debug_console_lite;../../../../../../components/lists;../../../../../../devices/MIMXRT1052/utilities/str;../../../../../../components/uart;../../../../../../components/osa;../../../../../../middleware/usb/include;../../../../../../middleware/usb/host;../../../../../../middleware/usb/host/class;../../../../../../middleware/usb/phy;../../../../../../middleware/fatfs/source;../../../../../../middleware/fatfs/template;../../../../../../middleware/fatfs/source/fsl_usb_disk</IncludePath>
+              <IncludePath>..;../../../../xip;../../../../../../devices/MIMXRT1052/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1052;../../../../../../devices/MIMXRT1052/periph;../../../../../../devices/MIMXRT1052/xip;../../../../../../devices/MIMXRT1052/utilities/debug_console_lite;../../../../../../components/lists;../../../../../../devices/MIMXRT1052/utilities/str;../../../../../../components/uart;../../../../../../components/osa;../../../../../../middleware/usb/include;../../../../../../middleware/usb/host;../../../../../../middleware/usb/config/host/ehci;../../../../../../middleware/usb/host/class;../../../../../../middleware/usb/phy;../../../../../../middleware/fatfs/source;../../../../../../middleware/fatfs/template;../../../../../../middleware/fatfs/source/fsl_usb_disk</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -1081,11 +1081,6 @@
           <GroupName>component/osa</GroupName>
           <Files>
             <File>
-              <FileName>fsl_os_abstraction.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/osa/fsl_os_abstraction.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_os_abstraction_bm.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../components/osa/fsl_os_abstraction_bm.h</FilePath>
@@ -1094,6 +1089,11 @@
               <FileName>fsl_os_abstraction_bm.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../components/osa/fsl_os_abstraction_bm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/osa/fsl_os_abstraction.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1289,6 +1289,11 @@
               <FileName>readme.md</FileName>
               <FileType>5</FileType>
               <FilePath>../readme.md</FilePath>
+            </File>
+            <File>
+              <FileName>examples_shared_readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../examples_shared_readme.md</FilePath>
             </File>
             <File>
               <FileName>host_msd_fatfs_output.jpg</FileName>
@@ -1629,9 +1634,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../mcux_config.h -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
-              <Define>USB_HOST_CONFIG_BUFFER_PROPERTY_CACHEABLE=1, DEBUG, USE_SDRAM=1, SKIP_SYSCLK_INIT=1, PRINTF_ADVANCED_ENABLE=1, USB_STACK_BM, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1052DVL6B, OSA_USED, USE_RTOS=0</Define>
+              <Define>USB_HOST_CONFIG_BUFFER_PROPERTY_CACHEABLE=1, DEBUG, USE_SDRAM=1, SKIP_SYSCLK_INIT=1, PRINTF_ADVANCED_ENABLE=1, USB_STACK_BM, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1052DVL6B, MIMXRT1052_SERIES, OSA_USED, USE_RTOS=0</Define>
               <Undefine/>
-              <IncludePath>..;../../../../xip;../../../../../../devices/MIMXRT1052/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1052;../../../../../../devices/MIMXRT1052/periph;../../../../../../devices/MIMXRT1052/xip;../../../../../../devices/MIMXRT1052/utilities/debug_console_lite;../../../../../../components/lists;../../../../../../devices/MIMXRT1052/utilities/str;../../../../../../components/uart;../../../../../../components/osa;../../../../../../middleware/usb/include;../../../../../../middleware/usb/host;../../../../../../middleware/usb/host/class;../../../../../../middleware/usb/phy;../../../../../../middleware/fatfs/source;../../../../../../middleware/fatfs/template;../../../../../../middleware/fatfs/source/fsl_usb_disk</IncludePath>
+              <IncludePath>..;../../../../xip;../../../../../../devices/MIMXRT1052/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1052;../../../../../../devices/MIMXRT1052/periph;../../../../../../devices/MIMXRT1052/xip;../../../../../../devices/MIMXRT1052/utilities/debug_console_lite;../../../../../../components/lists;../../../../../../devices/MIMXRT1052/utilities/str;../../../../../../components/uart;../../../../../../components/osa;../../../../../../middleware/usb/include;../../../../../../middleware/usb/host;../../../../../../middleware/usb/config/host/ehci;../../../../../../middleware/usb/host/class;../../../../../../middleware/usb/phy;../../../../../../middleware/fatfs/source;../../../../../../middleware/fatfs/template;../../../../../../middleware/fatfs/source/fsl_usb_disk</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1647,9 +1652,9 @@
             <uClangAs>1</uClangAs>
             <VariousControls>
               <MiscControls/>
-              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1052DVL6B, OSA_USED</Define>
+              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1052DVL6B, MIMXRT1052_SERIES, OSA_USED</Define>
               <Undefine/>
-              <IncludePath>..;../../../../xip;../../../../../../devices/MIMXRT1052/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1052;../../../../../../devices/MIMXRT1052/periph;../../../../../../devices/MIMXRT1052/xip;../../../../../../devices/MIMXRT1052/utilities/debug_console_lite;../../../../../../components/lists;../../../../../../devices/MIMXRT1052/utilities/str;../../../../../../components/uart;../../../../../../components/osa;../../../../../../middleware/usb/include;../../../../../../middleware/usb/host;../../../../../../middleware/usb/host/class;../../../../../../middleware/usb/phy;../../../../../../middleware/fatfs/source;../../../../../../middleware/fatfs/template;../../../../../../middleware/fatfs/source/fsl_usb_disk</IncludePath>
+              <IncludePath>..;../../../../xip;../../../../../../devices/MIMXRT1052/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1052;../../../../../../devices/MIMXRT1052/periph;../../../../../../devices/MIMXRT1052/xip;../../../../../../devices/MIMXRT1052/utilities/debug_console_lite;../../../../../../components/lists;../../../../../../devices/MIMXRT1052/utilities/str;../../../../../../components/uart;../../../../../../components/osa;../../../../../../middleware/usb/include;../../../../../../middleware/usb/host;../../../../../../middleware/usb/config/host/ehci;../../../../../../middleware/usb/host/class;../../../../../../middleware/usb/phy;../../../../../../middleware/fatfs/source;../../../../../../middleware/fatfs/template;../../../../../../middleware/fatfs/source/fsl_usb_disk</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -2382,11 +2387,6 @@
           <GroupName>component/osa</GroupName>
           <Files>
             <File>
-              <FileName>fsl_os_abstraction.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/osa/fsl_os_abstraction.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_os_abstraction_bm.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../components/osa/fsl_os_abstraction_bm.h</FilePath>
@@ -2395,6 +2395,11 @@
               <FileName>fsl_os_abstraction_bm.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../components/osa/fsl_os_abstraction_bm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/osa/fsl_os_abstraction.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2590,6 +2595,11 @@
               <FileName>readme.md</FileName>
               <FileType>5</FileType>
               <FilePath>../readme.md</FilePath>
+            </File>
+            <File>
+              <FileName>examples_shared_readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../examples_shared_readme.md</FilePath>
             </File>
             <File>
               <FileName>host_msd_fatfs_output.jpg</FileName>
@@ -2930,9 +2940,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../mcux_config.h -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
-              <Define>DEBUG, XIP_BOOT_HEADER_ENABLE=1, XIP_EXTERNAL_FLASH=1, PRINTF_ADVANCED_ENABLE=1, USB_STACK_BM, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1052DVL6B, OSA_USED, USE_RTOS=0</Define>
+              <Define>DEBUG, XIP_BOOT_HEADER_ENABLE=1, XIP_EXTERNAL_FLASH=1, PRINTF_ADVANCED_ENABLE=1, USB_STACK_BM, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1052DVL6B, MIMXRT1052_SERIES, OSA_USED, USE_RTOS=0</Define>
               <Undefine/>
-              <IncludePath>..;../../../../xip;../../../../../../devices/MIMXRT1052/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1052;../../../../../../devices/MIMXRT1052/periph;../../../../../../devices/MIMXRT1052/xip;../../../../../../devices/MIMXRT1052/utilities/debug_console_lite;../../../../../../components/lists;../../../../../../devices/MIMXRT1052/utilities/str;../../../../../../components/uart;../../../../../../components/osa;../../../../../../middleware/usb/include;../../../../../../middleware/usb/host;../../../../../../middleware/usb/host/class;../../../../../../middleware/usb/phy;../../../../../../middleware/fatfs/source;../../../../../../middleware/fatfs/template;../../../../../../middleware/fatfs/source/fsl_usb_disk</IncludePath>
+              <IncludePath>..;../../../../xip;../../../../../../devices/MIMXRT1052/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1052;../../../../../../devices/MIMXRT1052/periph;../../../../../../devices/MIMXRT1052/xip;../../../../../../devices/MIMXRT1052/utilities/debug_console_lite;../../../../../../components/lists;../../../../../../devices/MIMXRT1052/utilities/str;../../../../../../components/uart;../../../../../../components/osa;../../../../../../middleware/usb/include;../../../../../../middleware/usb/host;../../../../../../middleware/usb/config/host/ehci;../../../../../../middleware/usb/host/class;../../../../../../middleware/usb/phy;../../../../../../middleware/fatfs/source;../../../../../../middleware/fatfs/template;../../../../../../middleware/fatfs/source/fsl_usb_disk</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2948,9 +2958,9 @@
             <uClangAs>1</uClangAs>
             <VariousControls>
               <MiscControls/>
-              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1052DVL6B, OSA_USED</Define>
+              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1052DVL6B, MIMXRT1052_SERIES, OSA_USED</Define>
               <Undefine/>
-              <IncludePath>..;../../../../xip;../../../../../../devices/MIMXRT1052/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1052;../../../../../../devices/MIMXRT1052/periph;../../../../../../devices/MIMXRT1052/xip;../../../../../../devices/MIMXRT1052/utilities/debug_console_lite;../../../../../../components/lists;../../../../../../devices/MIMXRT1052/utilities/str;../../../../../../components/uart;../../../../../../components/osa;../../../../../../middleware/usb/include;../../../../../../middleware/usb/host;../../../../../../middleware/usb/host/class;../../../../../../middleware/usb/phy;../../../../../../middleware/fatfs/source;../../../../../../middleware/fatfs/template;../../../../../../middleware/fatfs/source/fsl_usb_disk</IncludePath>
+              <IncludePath>..;../../../../xip;../../../../../../devices/MIMXRT1052/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1052;../../../../../../devices/MIMXRT1052/periph;../../../../../../devices/MIMXRT1052/xip;../../../../../../devices/MIMXRT1052/utilities/debug_console_lite;../../../../../../components/lists;../../../../../../devices/MIMXRT1052/utilities/str;../../../../../../components/uart;../../../../../../components/osa;../../../../../../middleware/usb/include;../../../../../../middleware/usb/host;../../../../../../middleware/usb/config/host/ehci;../../../../../../middleware/usb/host/class;../../../../../../middleware/usb/phy;../../../../../../middleware/fatfs/source;../../../../../../middleware/fatfs/template;../../../../../../middleware/fatfs/source/fsl_usb_disk</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -3683,11 +3693,6 @@
           <GroupName>component/osa</GroupName>
           <Files>
             <File>
-              <FileName>fsl_os_abstraction.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/osa/fsl_os_abstraction.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_os_abstraction_bm.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../components/osa/fsl_os_abstraction_bm.h</FilePath>
@@ -3696,6 +3701,11 @@
               <FileName>fsl_os_abstraction_bm.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../components/osa/fsl_os_abstraction_bm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/osa/fsl_os_abstraction.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3891,6 +3901,11 @@
               <FileName>readme.md</FileName>
               <FileType>5</FileType>
               <FilePath>../readme.md</FilePath>
+            </File>
+            <File>
+              <FileName>examples_shared_readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../examples_shared_readme.md</FilePath>
             </File>
             <File>
               <FileName>host_msd_fatfs_output.jpg</FileName>
@@ -4231,9 +4246,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../mcux_config.h -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
-              <Define>NDEBUG, PRINTF_ADVANCED_ENABLE=1, USB_STACK_BM, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1052DVL6B, OSA_USED, USE_RTOS=0</Define>
+              <Define>NDEBUG, PRINTF_ADVANCED_ENABLE=1, USB_STACK_BM, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1052DVL6B, MIMXRT1052_SERIES, OSA_USED, USE_RTOS=0</Define>
               <Undefine/>
-              <IncludePath>..;../../../../xip;../../../../../../devices/MIMXRT1052/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1052;../../../../../../devices/MIMXRT1052/periph;../../../../../../devices/MIMXRT1052/xip;../../../../../../devices/MIMXRT1052/utilities/debug_console_lite;../../../../../../components/lists;../../../../../../devices/MIMXRT1052/utilities/str;../../../../../../components/uart;../../../../../../components/osa;../../../../../../middleware/usb/include;../../../../../../middleware/usb/host;../../../../../../middleware/usb/host/class;../../../../../../middleware/usb/phy;../../../../../../middleware/fatfs/source;../../../../../../middleware/fatfs/template;../../../../../../middleware/fatfs/source/fsl_usb_disk</IncludePath>
+              <IncludePath>..;../../../../xip;../../../../../../devices/MIMXRT1052/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1052;../../../../../../devices/MIMXRT1052/periph;../../../../../../devices/MIMXRT1052/xip;../../../../../../devices/MIMXRT1052/utilities/debug_console_lite;../../../../../../components/lists;../../../../../../devices/MIMXRT1052/utilities/str;../../../../../../components/uart;../../../../../../components/osa;../../../../../../middleware/usb/include;../../../../../../middleware/usb/host;../../../../../../middleware/usb/config/host/ehci;../../../../../../middleware/usb/host/class;../../../../../../middleware/usb/phy;../../../../../../middleware/fatfs/source;../../../../../../middleware/fatfs/template;../../../../../../middleware/fatfs/source/fsl_usb_disk</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -4249,9 +4264,9 @@
             <uClangAs>1</uClangAs>
             <VariousControls>
               <MiscControls/>
-              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1052DVL6B, OSA_USED</Define>
+              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1052DVL6B, MIMXRT1052_SERIES, OSA_USED</Define>
               <Undefine/>
-              <IncludePath>..;../../../../xip;../../../../../../devices/MIMXRT1052/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1052;../../../../../../devices/MIMXRT1052/periph;../../../../../../devices/MIMXRT1052/xip;../../../../../../devices/MIMXRT1052/utilities/debug_console_lite;../../../../../../components/lists;../../../../../../devices/MIMXRT1052/utilities/str;../../../../../../components/uart;../../../../../../components/osa;../../../../../../middleware/usb/include;../../../../../../middleware/usb/host;../../../../../../middleware/usb/host/class;../../../../../../middleware/usb/phy;../../../../../../middleware/fatfs/source;../../../../../../middleware/fatfs/template;../../../../../../middleware/fatfs/source/fsl_usb_disk</IncludePath>
+              <IncludePath>..;../../../../xip;../../../../../../devices/MIMXRT1052/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1052;../../../../../../devices/MIMXRT1052/periph;../../../../../../devices/MIMXRT1052/xip;../../../../../../devices/MIMXRT1052/utilities/debug_console_lite;../../../../../../components/lists;../../../../../../devices/MIMXRT1052/utilities/str;../../../../../../components/uart;../../../../../../components/osa;../../../../../../middleware/usb/include;../../../../../../middleware/usb/host;../../../../../../middleware/usb/config/host/ehci;../../../../../../middleware/usb/host/class;../../../../../../middleware/usb/phy;../../../../../../middleware/fatfs/source;../../../../../../middleware/fatfs/template;../../../../../../middleware/fatfs/source/fsl_usb_disk</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -4984,11 +4999,6 @@
           <GroupName>component/osa</GroupName>
           <Files>
             <File>
-              <FileName>fsl_os_abstraction.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/osa/fsl_os_abstraction.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_os_abstraction_bm.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../components/osa/fsl_os_abstraction_bm.h</FilePath>
@@ -4997,6 +5007,11 @@
               <FileName>fsl_os_abstraction_bm.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../components/osa/fsl_os_abstraction_bm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/osa/fsl_os_abstraction.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -5192,6 +5207,11 @@
               <FileName>readme.md</FileName>
               <FileType>5</FileType>
               <FilePath>../readme.md</FilePath>
+            </File>
+            <File>
+              <FileName>examples_shared_readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../examples_shared_readme.md</FilePath>
             </File>
             <File>
               <FileName>host_msd_fatfs_output.jpg</FileName>
@@ -5532,9 +5552,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../mcux_config.h -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
-              <Define>USB_HOST_CONFIG_BUFFER_PROPERTY_CACHEABLE=1, NDEBUG, USE_SDRAM=1, SKIP_SYSCLK_INIT=1, PRINTF_ADVANCED_ENABLE=1, USB_STACK_BM, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1052DVL6B, OSA_USED, USE_RTOS=0</Define>
+              <Define>USB_HOST_CONFIG_BUFFER_PROPERTY_CACHEABLE=1, NDEBUG, USE_SDRAM=1, SKIP_SYSCLK_INIT=1, PRINTF_ADVANCED_ENABLE=1, USB_STACK_BM, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1052DVL6B, MIMXRT1052_SERIES, OSA_USED, USE_RTOS=0</Define>
               <Undefine/>
-              <IncludePath>..;../../../../xip;../../../../../../devices/MIMXRT1052/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1052;../../../../../../devices/MIMXRT1052/periph;../../../../../../devices/MIMXRT1052/xip;../../../../../../devices/MIMXRT1052/utilities/debug_console_lite;../../../../../../components/lists;../../../../../../devices/MIMXRT1052/utilities/str;../../../../../../components/uart;../../../../../../components/osa;../../../../../../middleware/usb/include;../../../../../../middleware/usb/host;../../../../../../middleware/usb/host/class;../../../../../../middleware/usb/phy;../../../../../../middleware/fatfs/source;../../../../../../middleware/fatfs/template;../../../../../../middleware/fatfs/source/fsl_usb_disk</IncludePath>
+              <IncludePath>..;../../../../xip;../../../../../../devices/MIMXRT1052/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1052;../../../../../../devices/MIMXRT1052/periph;../../../../../../devices/MIMXRT1052/xip;../../../../../../devices/MIMXRT1052/utilities/debug_console_lite;../../../../../../components/lists;../../../../../../devices/MIMXRT1052/utilities/str;../../../../../../components/uart;../../../../../../components/osa;../../../../../../middleware/usb/include;../../../../../../middleware/usb/host;../../../../../../middleware/usb/config/host/ehci;../../../../../../middleware/usb/host/class;../../../../../../middleware/usb/phy;../../../../../../middleware/fatfs/source;../../../../../../middleware/fatfs/template;../../../../../../middleware/fatfs/source/fsl_usb_disk</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -5550,9 +5570,9 @@
             <uClangAs>1</uClangAs>
             <VariousControls>
               <MiscControls/>
-              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1052DVL6B, OSA_USED</Define>
+              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1052DVL6B, MIMXRT1052_SERIES, OSA_USED</Define>
               <Undefine/>
-              <IncludePath>..;../../../../xip;../../../../../../devices/MIMXRT1052/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1052;../../../../../../devices/MIMXRT1052/periph;../../../../../../devices/MIMXRT1052/xip;../../../../../../devices/MIMXRT1052/utilities/debug_console_lite;../../../../../../components/lists;../../../../../../devices/MIMXRT1052/utilities/str;../../../../../../components/uart;../../../../../../components/osa;../../../../../../middleware/usb/include;../../../../../../middleware/usb/host;../../../../../../middleware/usb/host/class;../../../../../../middleware/usb/phy;../../../../../../middleware/fatfs/source;../../../../../../middleware/fatfs/template;../../../../../../middleware/fatfs/source/fsl_usb_disk</IncludePath>
+              <IncludePath>..;../../../../xip;../../../../../../devices/MIMXRT1052/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1052;../../../../../../devices/MIMXRT1052/periph;../../../../../../devices/MIMXRT1052/xip;../../../../../../devices/MIMXRT1052/utilities/debug_console_lite;../../../../../../components/lists;../../../../../../devices/MIMXRT1052/utilities/str;../../../../../../components/uart;../../../../../../components/osa;../../../../../../middleware/usb/include;../../../../../../middleware/usb/host;../../../../../../middleware/usb/config/host/ehci;../../../../../../middleware/usb/host/class;../../../../../../middleware/usb/phy;../../../../../../middleware/fatfs/source;../../../../../../middleware/fatfs/template;../../../../../../middleware/fatfs/source/fsl_usb_disk</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -6285,11 +6305,6 @@
           <GroupName>component/osa</GroupName>
           <Files>
             <File>
-              <FileName>fsl_os_abstraction.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/osa/fsl_os_abstraction.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_os_abstraction_bm.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../components/osa/fsl_os_abstraction_bm.h</FilePath>
@@ -6298,6 +6313,11 @@
               <FileName>fsl_os_abstraction_bm.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../components/osa/fsl_os_abstraction_bm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/osa/fsl_os_abstraction.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -6493,6 +6513,11 @@
               <FileName>readme.md</FileName>
               <FileType>5</FileType>
               <FilePath>../readme.md</FilePath>
+            </File>
+            <File>
+              <FileName>examples_shared_readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../examples_shared_readme.md</FilePath>
             </File>
             <File>
               <FileName>host_msd_fatfs_output.jpg</FileName>
@@ -6833,9 +6858,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../mcux_config.h -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
-              <Define>NDEBUG, XIP_BOOT_HEADER_ENABLE=1, XIP_EXTERNAL_FLASH=1, PRINTF_ADVANCED_ENABLE=1, USB_STACK_BM, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1052DVL6B, OSA_USED, USE_RTOS=0</Define>
+              <Define>NDEBUG, XIP_BOOT_HEADER_ENABLE=1, XIP_EXTERNAL_FLASH=1, PRINTF_ADVANCED_ENABLE=1, USB_STACK_BM, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1052DVL6B, MIMXRT1052_SERIES, OSA_USED, USE_RTOS=0</Define>
               <Undefine/>
-              <IncludePath>..;../../../../xip;../../../../../../devices/MIMXRT1052/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1052;../../../../../../devices/MIMXRT1052/periph;../../../../../../devices/MIMXRT1052/xip;../../../../../../devices/MIMXRT1052/utilities/debug_console_lite;../../../../../../components/lists;../../../../../../devices/MIMXRT1052/utilities/str;../../../../../../components/uart;../../../../../../components/osa;../../../../../../middleware/usb/include;../../../../../../middleware/usb/host;../../../../../../middleware/usb/host/class;../../../../../../middleware/usb/phy;../../../../../../middleware/fatfs/source;../../../../../../middleware/fatfs/template;../../../../../../middleware/fatfs/source/fsl_usb_disk</IncludePath>
+              <IncludePath>..;../../../../xip;../../../../../../devices/MIMXRT1052/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1052;../../../../../../devices/MIMXRT1052/periph;../../../../../../devices/MIMXRT1052/xip;../../../../../../devices/MIMXRT1052/utilities/debug_console_lite;../../../../../../components/lists;../../../../../../devices/MIMXRT1052/utilities/str;../../../../../../components/uart;../../../../../../components/osa;../../../../../../middleware/usb/include;../../../../../../middleware/usb/host;../../../../../../middleware/usb/config/host/ehci;../../../../../../middleware/usb/host/class;../../../../../../middleware/usb/phy;../../../../../../middleware/fatfs/source;../../../../../../middleware/fatfs/template;../../../../../../middleware/fatfs/source/fsl_usb_disk</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -6851,9 +6876,9 @@
             <uClangAs>1</uClangAs>
             <VariousControls>
               <MiscControls/>
-              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1052DVL6B, OSA_USED</Define>
+              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1052DVL6B, MIMXRT1052_SERIES, OSA_USED</Define>
               <Undefine/>
-              <IncludePath>..;../../../../xip;../../../../../../devices/MIMXRT1052/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1052;../../../../../../devices/MIMXRT1052/periph;../../../../../../devices/MIMXRT1052/xip;../../../../../../devices/MIMXRT1052/utilities/debug_console_lite;../../../../../../components/lists;../../../../../../devices/MIMXRT1052/utilities/str;../../../../../../components/uart;../../../../../../components/osa;../../../../../../middleware/usb/include;../../../../../../middleware/usb/host;../../../../../../middleware/usb/host/class;../../../../../../middleware/usb/phy;../../../../../../middleware/fatfs/source;../../../../../../middleware/fatfs/template;../../../../../../middleware/fatfs/source/fsl_usb_disk</IncludePath>
+              <IncludePath>..;../../../../xip;../../../../../../devices/MIMXRT1052/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1052;../../../../../../devices/MIMXRT1052/periph;../../../../../../devices/MIMXRT1052/xip;../../../../../../devices/MIMXRT1052/utilities/debug_console_lite;../../../../../../components/lists;../../../../../../devices/MIMXRT1052/utilities/str;../../../../../../components/uart;../../../../../../components/osa;../../../../../../middleware/usb/include;../../../../../../middleware/usb/host;../../../../../../middleware/usb/config/host/ehci;../../../../../../middleware/usb/host/class;../../../../../../middleware/usb/phy;../../../../../../middleware/fatfs/source;../../../../../../middleware/fatfs/template;../../../../../../middleware/fatfs/source/fsl_usb_disk</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -7586,11 +7611,6 @@
           <GroupName>component/osa</GroupName>
           <Files>
             <File>
-              <FileName>fsl_os_abstraction.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/osa/fsl_os_abstraction.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_os_abstraction_bm.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../components/osa/fsl_os_abstraction_bm.h</FilePath>
@@ -7599,6 +7619,11 @@
               <FileName>fsl_os_abstraction_bm.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../components/osa/fsl_os_abstraction_bm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/osa/fsl_os_abstraction.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -7794,6 +7819,11 @@
               <FileName>readme.md</FileName>
               <FileType>5</FileType>
               <FilePath>../readme.md</FilePath>
+            </File>
+            <File>
+              <FileName>examples_shared_readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../examples_shared_readme.md</FilePath>
             </File>
             <File>
               <FileName>host_msd_fatfs_output.jpg</FileName>

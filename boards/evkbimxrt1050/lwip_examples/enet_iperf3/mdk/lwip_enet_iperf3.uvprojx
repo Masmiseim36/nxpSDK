@@ -328,9 +328,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../mcux_config.h -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
-              <Define>DEBUG, XIP_BOOT_HEADER_ENABLE=1, XIP_EXTERNAL_FLASH=1, IPERF3_ENET=1, SDK_DEBUGCONSOLE=1, SDK_DEBUGCONSOLE_UART=1, PRINTF_ADVANCED_ENABLE=1, SCANF_ADVANCED_ENABLE=1, DEBUG_CONSOLE_ENABLE_ECHO=1, USE_RTOS=1, LWIP_NETIF_API=1, HIGH_SPEED_SDIO_CLOCK, FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, ENET_RXBUFF_NUM=25, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1052DVL6B, LWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1, LWIP_SUPPORT_CUSTOM_PBUF=1, CHECKSUM_GEN_UDP=1, CHECKSUM_GEN_TCP=1, CHECKSUM_GEN_ICMP=1, CHECKSUM_GEN_ICMP6=1, CHECKSUM_CHECK_UDP=1, CHECKSUM_CHECK_TCP=1, CHECKSUM_CHECK_ICMP=1, CHECKSUM_CHECK_ICMP6=1, SDK_OS_FREE_RTOS</Define>
+              <Define>DEBUG, XIP_BOOT_HEADER_ENABLE=1, XIP_EXTERNAL_FLASH=1, IPERF3_ENET=1, SDK_DEBUGCONSOLE=1, SDK_DEBUGCONSOLE_UART=1, PRINTF_ADVANCED_ENABLE=1, SCANF_ADVANCED_ENABLE=1, DEBUG_CONSOLE_ENABLE_ECHO=1, USE_RTOS=1, HIGH_SPEED_SDIO_CLOCK, FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1052DVL6B, MIMXRT1052_SERIES, SDK_OS_FREE_RTOS</Define>
               <Undefine/>
-              <IncludePath>..;../../../xip;../../../../../devices/MIMXRT1052/drivers;../../../../../CMSIS/Core/Include;../../../../../CMSIS/Core/Include/m-profile;../../../../../devices/MIMXRT1052;../../../../../devices/MIMXRT1052/periph;../../../../../devices/MIMXRT1052/xip;../../../../../devices/MIMXRT1052/utilities/debug_console_lite;../../../../../devices/MIMXRT1052/utilities/str;../../../../../components/gpio;../../../../../components/uart;../../../../../components/phy;../../../../../components/phy/device/phyksz8081;../../../../../middleware/lwip/port;../../../../../middleware/lwip/src;../../../../../middleware/lwip/src/include;../../../../../middleware/lwip/src/include/lwip;../../../../../middleware/lwip/port/sys_arch/dynamic;../../../../../rtos/freertos/freertos-kernel/include;../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../rtos/freertos/freertos-kernel/template</IncludePath>
+              <IncludePath>..;../../../xip;../../../../../devices/MIMXRT1052/drivers;../../../../../CMSIS/Core/Include;../../../../../CMSIS/Core/Include/m-profile;../../../../../devices/MIMXRT1052;../../../../../devices/MIMXRT1052/periph;../../../../../devices/MIMXRT1052/xip;../../../../../devices/MIMXRT1052/utilities/debug_console_lite;../../../../../devices/MIMXRT1052/utilities/str;../../../../../components/gpio;../../../../../components/uart;../../../../../components/phy;../../../../../components/phy/device/phyksz8081;../../../../../middleware/lwip/port;../../../../../middleware/lwip/src/include;../../../../../middleware/lwip/port/sys_arch/dynamic;../../../../../rtos/freertos/freertos-kernel/include;../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../rtos/freertos/freertos-kernel/template</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -346,9 +346,9 @@
             <uClangAs>1</uClangAs>
             <VariousControls>
               <MiscControls/>
-              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1052DVL6B</Define>
+              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1052DVL6B, MIMXRT1052_SERIES</Define>
               <Undefine/>
-              <IncludePath>..;../../../xip;../../../../../devices/MIMXRT1052/drivers;../../../../../CMSIS/Core/Include;../../../../../CMSIS/Core/Include/m-profile;../../../../../devices/MIMXRT1052;../../../../../devices/MIMXRT1052/periph;../../../../../devices/MIMXRT1052/xip;../../../../../devices/MIMXRT1052/utilities/debug_console_lite;../../../../../devices/MIMXRT1052/utilities/str;../../../../../components/gpio;../../../../../components/uart;../../../../../components/phy;../../../../../components/phy/device/phyksz8081;../../../../../middleware/lwip/port;../../../../../middleware/lwip/src;../../../../../middleware/lwip/src/include;../../../../../middleware/lwip/src/include/lwip;../../../../../middleware/lwip/port/sys_arch/dynamic;../../../../../rtos/freertos/freertos-kernel/include;../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../rtos/freertos/freertos-kernel/template</IncludePath>
+              <IncludePath>..;../../../xip;../../../../../devices/MIMXRT1052/drivers;../../../../../CMSIS/Core/Include;../../../../../CMSIS/Core/Include/m-profile;../../../../../devices/MIMXRT1052;../../../../../devices/MIMXRT1052/periph;../../../../../devices/MIMXRT1052/xip;../../../../../devices/MIMXRT1052/utilities/debug_console_lite;../../../../../devices/MIMXRT1052/utilities/str;../../../../../components/gpio;../../../../../components/uart;../../../../../components/phy;../../../../../components/phy/device/phyksz8081;../../../../../middleware/lwip/port;../../../../../middleware/lwip/src/include;../../../../../middleware/lwip/port/sys_arch/dynamic;../../../../../rtos/freertos/freertos-kernel/include;../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../rtos/freertos/freertos-kernel/template</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -381,11 +381,6 @@
               <FilePath>../main.c</FilePath>
             </File>
             <File>
-              <FileName>lwipopts.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../lwipopts.h</FilePath>
-            </File>
-            <File>
               <FileName>iperf_lwip.c</FileName>
               <FileType>1</FileType>
               <FilePath>../iperf_lwip.c</FilePath>
@@ -396,9 +391,19 @@
               <FilePath>../iperf_api.h</FilePath>
             </File>
             <File>
+              <FileName>lwipopts.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../lwipopts.h</FilePath>
+            </File>
+            <File>
               <FileName>FreeRTOSConfig_Gen.h</FileName>
               <FileType>5</FileType>
               <FilePath>../FreeRTOSConfig_Gen.h</FilePath>
+            </File>
+            <File>
+              <FileName>lwipopts_gen.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../lwipopts_gen.h</FilePath>
             </File>
             <File>
               <FileName>mcux_config.h</FileName>
@@ -2544,6 +2549,11 @@
               <FileName>example_board_readme.md</FileName>
               <FileType>5</FileType>
               <FilePath>../example_board_readme.md</FilePath>
+            </File>
+            <File>
+              <FileName>examples_shared_readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../examples_shared_readme.md</FilePath>
             </File>
           </Files>
         </Group>
@@ -2874,9 +2884,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../mcux_config.h -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
-              <Define>NDEBUG, XIP_BOOT_HEADER_ENABLE=1, XIP_EXTERNAL_FLASH=1, IPERF3_ENET=1, SDK_DEBUGCONSOLE=1, SDK_DEBUGCONSOLE_UART=1, PRINTF_ADVANCED_ENABLE=1, SCANF_ADVANCED_ENABLE=1, DEBUG_CONSOLE_ENABLE_ECHO=1, USE_RTOS=1, LWIP_NETIF_API=1, HIGH_SPEED_SDIO_CLOCK, FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, ENET_RXBUFF_NUM=25, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1052DVL6B, LWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1, LWIP_SUPPORT_CUSTOM_PBUF=1, CHECKSUM_GEN_UDP=1, CHECKSUM_GEN_TCP=1, CHECKSUM_GEN_ICMP=1, CHECKSUM_GEN_ICMP6=1, CHECKSUM_CHECK_UDP=1, CHECKSUM_CHECK_TCP=1, CHECKSUM_CHECK_ICMP=1, CHECKSUM_CHECK_ICMP6=1, SDK_OS_FREE_RTOS</Define>
+              <Define>NDEBUG, XIP_BOOT_HEADER_ENABLE=1, XIP_EXTERNAL_FLASH=1, IPERF3_ENET=1, SDK_DEBUGCONSOLE=1, SDK_DEBUGCONSOLE_UART=1, PRINTF_ADVANCED_ENABLE=1, SCANF_ADVANCED_ENABLE=1, DEBUG_CONSOLE_ENABLE_ECHO=1, USE_RTOS=1, HIGH_SPEED_SDIO_CLOCK, FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1052DVL6B, MIMXRT1052_SERIES, SDK_OS_FREE_RTOS</Define>
               <Undefine/>
-              <IncludePath>..;../../../xip;../../../../../devices/MIMXRT1052/drivers;../../../../../CMSIS/Core/Include;../../../../../CMSIS/Core/Include/m-profile;../../../../../devices/MIMXRT1052;../../../../../devices/MIMXRT1052/periph;../../../../../devices/MIMXRT1052/xip;../../../../../devices/MIMXRT1052/utilities/debug_console_lite;../../../../../devices/MIMXRT1052/utilities/str;../../../../../components/gpio;../../../../../components/uart;../../../../../components/phy;../../../../../components/phy/device/phyksz8081;../../../../../middleware/lwip/port;../../../../../middleware/lwip/src;../../../../../middleware/lwip/src/include;../../../../../middleware/lwip/src/include/lwip;../../../../../middleware/lwip/port/sys_arch/dynamic;../../../../../rtos/freertos/freertos-kernel/include;../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../rtos/freertos/freertos-kernel/template</IncludePath>
+              <IncludePath>..;../../../xip;../../../../../devices/MIMXRT1052/drivers;../../../../../CMSIS/Core/Include;../../../../../CMSIS/Core/Include/m-profile;../../../../../devices/MIMXRT1052;../../../../../devices/MIMXRT1052/periph;../../../../../devices/MIMXRT1052/xip;../../../../../devices/MIMXRT1052/utilities/debug_console_lite;../../../../../devices/MIMXRT1052/utilities/str;../../../../../components/gpio;../../../../../components/uart;../../../../../components/phy;../../../../../components/phy/device/phyksz8081;../../../../../middleware/lwip/port;../../../../../middleware/lwip/src/include;../../../../../middleware/lwip/port/sys_arch/dynamic;../../../../../rtos/freertos/freertos-kernel/include;../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../rtos/freertos/freertos-kernel/template</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2892,9 +2902,9 @@
             <uClangAs>1</uClangAs>
             <VariousControls>
               <MiscControls/>
-              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1052DVL6B</Define>
+              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1052DVL6B, MIMXRT1052_SERIES</Define>
               <Undefine/>
-              <IncludePath>..;../../../xip;../../../../../devices/MIMXRT1052/drivers;../../../../../CMSIS/Core/Include;../../../../../CMSIS/Core/Include/m-profile;../../../../../devices/MIMXRT1052;../../../../../devices/MIMXRT1052/periph;../../../../../devices/MIMXRT1052/xip;../../../../../devices/MIMXRT1052/utilities/debug_console_lite;../../../../../devices/MIMXRT1052/utilities/str;../../../../../components/gpio;../../../../../components/uart;../../../../../components/phy;../../../../../components/phy/device/phyksz8081;../../../../../middleware/lwip/port;../../../../../middleware/lwip/src;../../../../../middleware/lwip/src/include;../../../../../middleware/lwip/src/include/lwip;../../../../../middleware/lwip/port/sys_arch/dynamic;../../../../../rtos/freertos/freertos-kernel/include;../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../rtos/freertos/freertos-kernel/template</IncludePath>
+              <IncludePath>..;../../../xip;../../../../../devices/MIMXRT1052/drivers;../../../../../CMSIS/Core/Include;../../../../../CMSIS/Core/Include/m-profile;../../../../../devices/MIMXRT1052;../../../../../devices/MIMXRT1052/periph;../../../../../devices/MIMXRT1052/xip;../../../../../devices/MIMXRT1052/utilities/debug_console_lite;../../../../../devices/MIMXRT1052/utilities/str;../../../../../components/gpio;../../../../../components/uart;../../../../../components/phy;../../../../../components/phy/device/phyksz8081;../../../../../middleware/lwip/port;../../../../../middleware/lwip/src/include;../../../../../middleware/lwip/port/sys_arch/dynamic;../../../../../rtos/freertos/freertos-kernel/include;../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../rtos/freertos/freertos-kernel/template</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -2927,11 +2937,6 @@
               <FilePath>../main.c</FilePath>
             </File>
             <File>
-              <FileName>lwipopts.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../lwipopts.h</FilePath>
-            </File>
-            <File>
               <FileName>iperf_lwip.c</FileName>
               <FileType>1</FileType>
               <FilePath>../iperf_lwip.c</FilePath>
@@ -2942,9 +2947,19 @@
               <FilePath>../iperf_api.h</FilePath>
             </File>
             <File>
+              <FileName>lwipopts.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../lwipopts.h</FilePath>
+            </File>
+            <File>
               <FileName>FreeRTOSConfig_Gen.h</FileName>
               <FileType>5</FileType>
               <FilePath>../FreeRTOSConfig_Gen.h</FilePath>
+            </File>
+            <File>
+              <FileName>lwipopts_gen.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../lwipopts_gen.h</FilePath>
             </File>
             <File>
               <FileName>mcux_config.h</FileName>
@@ -5090,6 +5105,11 @@
               <FileName>example_board_readme.md</FileName>
               <FileType>5</FileType>
               <FilePath>../example_board_readme.md</FilePath>
+            </File>
+            <File>
+              <FileName>examples_shared_readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../examples_shared_readme.md</FilePath>
             </File>
           </Files>
         </Group>

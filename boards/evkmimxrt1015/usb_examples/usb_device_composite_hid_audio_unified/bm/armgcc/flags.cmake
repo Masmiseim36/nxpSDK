@@ -17,6 +17,7 @@ SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_RELEASE " \
     -D__STARTUP_CLEAR_BSS \
     -DMCUXPRESSO_SDK \
     -DCPU_MIMXRT1015DAF5A \
+    -DMIMXRT1015_SERIES \
     -DOSA_USED \
     -mthumb \
     -mcpu=cortex-m7 \
@@ -29,6 +30,7 @@ SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_DEBUG " \
     -D__STARTUP_CLEAR_BSS \
     -DMCUXPRESSO_SDK \
     -DCPU_MIMXRT1015DAF5A \
+    -DMIMXRT1015_SERIES \
     -DOSA_USED \
     -g \
     -mthumb \
@@ -42,12 +44,14 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE " \
     -DNDEBUG \
     -DXIP_BOOT_HEADER_ENABLE=1 \
     -DXIP_EXTERNAL_FLASH=1 \
+    -D__STARTUP_CLEAR_BSS \
     -DHAL_AUDIO_ISR_PRIORITY=0 \
     -DUSB_STACK_BM \
     -DUSB_DEVICE_AUDIO_SPEAKER_DEDICATED_INTERVAL=1 \
     -DMCUX_META_BUILD \
     -DMCUXPRESSO_SDK \
     -DCPU_MIMXRT1015DAF5A \
+    -DMIMXRT1015_SERIES \
     -DOSA_USED \
     -DSDK_I2C_BASED_COMPONENT_USED=1 \
     -DCODEC_MULTI_ADAPTERS=1 \
@@ -74,12 +78,14 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG " \
     -DDEBUG \
     -DXIP_BOOT_HEADER_ENABLE=1 \
     -DXIP_EXTERNAL_FLASH=1 \
+    -D__STARTUP_CLEAR_BSS \
     -DHAL_AUDIO_ISR_PRIORITY=0 \
     -DUSB_STACK_BM \
     -DUSB_DEVICE_AUDIO_SPEAKER_DEDICATED_INTERVAL=1 \
     -DMCUX_META_BUILD \
     -DMCUXPRESSO_SDK \
     -DCPU_MIMXRT1015DAF5A \
+    -DMIMXRT1015_SERIES \
     -DOSA_USED \
     -DSDK_I2C_BASED_COMPONENT_USED=1 \
     -DCODEC_MULTI_ADAPTERS=1 \
@@ -106,6 +112,7 @@ SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE " \
     -DMCUX_META_BUILD \
     -DMCUXPRESSO_SDK \
     -DCPU_MIMXRT1015DAF5A \
+    -DMIMXRT1015_SERIES \
     -DOSA_USED \
     -DUSE_RTOS=0 \
     -Os \
@@ -129,6 +136,7 @@ SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG " \
     -DMCUX_META_BUILD \
     -DMCUXPRESSO_SDK \
     -DCPU_MIMXRT1015DAF5A \
+    -DMIMXRT1015_SERIES \
     -DOSA_USED \
     -DUSE_RTOS=0 \
     -g \
@@ -163,9 +171,6 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE " \
     -mapcs \
     -Wl,--gc-sections \
     -Wl,-static \
-    -Wl,-z \
-    -Wl,muldefs \
-    -Wl,-Map=output.map \
     -Wl,--print-memory-usage \
     -mcpu=cortex-m7 \
     ${FPU} \
@@ -190,9 +195,6 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_DEBUG " \
     -mapcs \
     -Wl,--gc-sections \
     -Wl,-static \
-    -Wl,-z \
-    -Wl,muldefs \
-    -Wl,-Map=output.map \
     -Wl,--print-memory-usage \
     -mcpu=cortex-m7 \
     ${FPU} \

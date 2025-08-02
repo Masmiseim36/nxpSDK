@@ -1,7 +1,7 @@
 /*
  * Copyright (c) 2013-2016 ARM Limited. All rights reserved.
  * Copyright (c) 2016, Freescale Semiconductor, Inc. Not a Contribution.
- * Copyright 2016-2017,2020,2021,2024 NXP. Not a Contribution.
+ * Copyright 2016-2017,2020,2021,2024-2025 NXP. Not a Contribution.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -196,29 +196,29 @@
 
 #endif /* (FSL_FEATURE_SOC_LPUART_COUNT == 1) && FSL_FEATURE_SOC_UART_COUNT */
 
-#if ((defined(RTE_USART0) && RTE_USART0 && defined(LPUART0)) ||    \
-     (defined(RTE_USART1) && RTE_USART1 && defined(LPUART1)) ||    \
-     (defined(RTE_USART2) && RTE_USART2 && defined(LPUART2)) ||    \
-     (defined(RTE_USART3) && RTE_USART3 && defined(LPUART3)) ||    \
-     (defined(RTE_USART4) && RTE_USART4 && defined(LPUART4)) ||    \
-     (defined(RTE_USART5) && RTE_USART5 && defined(LPUART5)) ||    \
-     (defined(RTE_USART6) && RTE_USART6 && defined(LPUART6)) ||    \
-     (defined(RTE_USART7) && RTE_USART7 && defined(LPUART7)) ||    \
-     (defined(RTE_USART8) && RTE_USART8 && defined(LPUART8)) ||    \
-     (defined(RTE_USART9) && RTE_USART9 && defined(LPUART9)) ||    \
-     (defined(RTE_USART10) && RTE_USART10 && defined(LPUART10)) || \
-     (defined(RTE_USART11) && RTE_USART11 && defined(LPUART11)) || \
-     (defined(RTE_USART12) && RTE_USART12 && defined(LPUART12)) || \
-     (defined(RTE_USART13) && RTE_USART13 && defined(LPUART13)) || \
-     (defined(RTE_USART14) && RTE_USART14 && defined(LPUART14)) || \
-     (defined(RTE_USART15) && RTE_USART15 && defined(LPUART15)) || \
-     (defined(RTE_USART16) && RTE_USART16 && defined(LPUART16)) || \
-     (defined(RTE_USART17) && RTE_USART17 && defined(LPUART17)) || \
-     (defined(RTE_USART18) && RTE_USART18 && defined(LPUART18)) || \
-     (defined(RTE_USART19) && RTE_USART19 && defined(LPUART19)) || \
-     (defined(RTE_USART20) && RTE_USART10 && defined(LPUART20)))
+#if ((defined(RTE_USART0) && RTE_USART0 && (defined(LPUART0) || defined(LPUART_0))) ||    \
+     (defined(RTE_USART1) && RTE_USART1 && (defined(LPUART1) || defined(LPUART_1))) ||    \
+     (defined(RTE_USART2) && RTE_USART2 && (defined(LPUART2) || defined(LPUART_2))) ||    \
+     (defined(RTE_USART3) && RTE_USART3 && (defined(LPUART3) || defined(LPUART_3))) ||    \
+     (defined(RTE_USART4) && RTE_USART4 && (defined(LPUART4) || defined(LPUART_4))) ||    \
+     (defined(RTE_USART5) && RTE_USART5 && (defined(LPUART5) || defined(LPUART_5))) ||    \
+     (defined(RTE_USART6) && RTE_USART6 && (defined(LPUART6) || defined(LPUART_6))) ||    \
+     (defined(RTE_USART7) && RTE_USART7 && (defined(LPUART7) || defined(LPUART_7))) ||    \
+     (defined(RTE_USART8) && RTE_USART8 && (defined(LPUART8) || defined(LPUART_8))) ||    \
+     (defined(RTE_USART9) && RTE_USART9 && (defined(LPUART9) || defined(LPUART_9))) ||    \
+     (defined(RTE_USART10) && RTE_USART10 && (defined(LPUART10) || defined(LPUART_10))) || \
+     (defined(RTE_USART11) && RTE_USART11 && (defined(LPUART11) || defined(LPUART_11))) || \
+     (defined(RTE_USART12) && RTE_USART12 && (defined(LPUART12) || defined(LPUART_12))) || \
+     (defined(RTE_USART13) && RTE_USART13 && (defined(LPUART13) || defined(LPUART_13))) || \
+     (defined(RTE_USART14) && RTE_USART14 && (defined(LPUART14) || defined(LPUART_14))) || \
+     (defined(RTE_USART15) && RTE_USART15 && (defined(LPUART15) || defined(LPUART_15))) || \
+     (defined(RTE_USART16) && RTE_USART16 && (defined(LPUART16) || defined(LPUART_16))) || \
+     (defined(RTE_USART17) && RTE_USART17 && (defined(LPUART17) || defined(LPUART_17))) || \
+     (defined(RTE_USART18) && RTE_USART18 && (defined(LPUART18) || defined(LPUART_18))) || \
+     (defined(RTE_USART19) && RTE_USART19 && (defined(LPUART19) || defined(LPUART_19))) || \
+     (defined(RTE_USART20) && RTE_USART10 && (defined(LPUART20) || defined(LPUART_20))))
 
-#define ARM_LPUART_DRV_VERSION ARM_DRIVER_VERSION_MAJOR_MINOR((2), (6))
+#define ARM_LPUART_DRV_VERSION ARM_DRIVER_VERSION_MAJOR_MINOR((2), (7))
 
 /*
  * ARMCC does not support split the data section automatically, so the driver
@@ -506,27 +506,27 @@ static ARM_USART_MODEM_STATUS LPUARTx_GetModemStatus(void)
 
 #endif
 
-#if ((defined(RTE_USART0_DMA_EN) && RTE_USART0_DMA_EN && defined(LPUART0)) ||    \
-     (defined(RTE_USART1_DMA_EN) && RTE_USART1_DMA_EN && defined(LPUART1)) ||    \
-     (defined(RTE_USART2_DMA_EN) && RTE_USART2_DMA_EN && defined(LPUART2)) ||    \
-     (defined(RTE_USART3_DMA_EN) && RTE_USART3_DMA_EN && defined(LPUART3)) ||    \
-     (defined(RTE_USART4_DMA_EN) && RTE_USART4_DMA_EN && defined(LPUART4)) ||    \
-     (defined(RTE_USART5_DMA_EN) && RTE_USART5_DMA_EN && defined(LPUART5)) ||    \
-     (defined(RTE_USART6_DMA_EN) && RTE_USART6_DMA_EN && defined(LPUART6)) ||    \
-     (defined(RTE_USART7_DMA_EN) && RTE_USART7_DMA_EN && defined(LPUART7)) ||    \
-     (defined(RTE_USART8_DMA_EN) && RTE_USART8_DMA_EN && defined(LPUART8)) ||    \
-     (defined(RTE_USART9_DMA_EN) && RTE_USART9_DMA_EN && defined(LPUART9)) ||    \
-     (defined(RTE_USART10_DMA_EN) && RTE_USART10_DMA_EN && defined(LPUART10)) || \
-     (defined(RTE_USART11_DMA_EN) && RTE_USART11_DMA_EN && defined(LPUART11)) || \
-     (defined(RTE_USART12_DMA_EN) && RTE_USART12_DMA_EN && defined(LPUART12)) || \
-     (defined(RTE_USART13_DMA_EN) && RTE_USART13_DMA_EN && defined(LPUART13)) || \
-     (defined(RTE_USART14_DMA_EN) && RTE_USART14_DMA_EN && defined(LPUART14)) || \
-     (defined(RTE_USART15_DMA_EN) && RTE_USART15_DMA_EN && defined(LPUART15)) || \
-     (defined(RTE_USART16_DMA_EN) && RTE_USART16_DMA_EN && defined(LPUART16)) || \
-     (defined(RTE_USART17_DMA_EN) && RTE_USART17_DMA_EN && defined(LPUART17)) || \
-     (defined(RTE_USART18_DMA_EN) && RTE_USART18_DMA_EN && defined(LPUART18)) || \
-     (defined(RTE_USART19_DMA_EN) && RTE_USART19_DMA_EN && defined(LPUART19)) || \
-     (defined(RTE_USART20_DMA_EN) && RTE_USART20_DMA_EN && defined(LPUART20)))
+#if ((defined(RTE_USART0_DMA_EN) && RTE_USART0_DMA_EN && (defined(LPUART0) || defined(LPUART_0))) ||    \
+     (defined(RTE_USART1_DMA_EN) && RTE_USART1_DMA_EN && (defined(LPUART1) || defined(LPUART_1))) ||    \
+     (defined(RTE_USART2_DMA_EN) && RTE_USART2_DMA_EN && (defined(LPUART2) || defined(LPUART_2))) ||    \
+     (defined(RTE_USART3_DMA_EN) && RTE_USART3_DMA_EN && (defined(LPUART3) || defined(LPUART_3))) ||    \
+     (defined(RTE_USART4_DMA_EN) && RTE_USART4_DMA_EN && (defined(LPUART4) || defined(LPUART_4))) ||    \
+     (defined(RTE_USART5_DMA_EN) && RTE_USART5_DMA_EN && (defined(LPUART5) || defined(LPUART_5))) ||    \
+     (defined(RTE_USART6_DMA_EN) && RTE_USART6_DMA_EN && (defined(LPUART6) || defined(LPUART_6))) ||    \
+     (defined(RTE_USART7_DMA_EN) && RTE_USART7_DMA_EN && (defined(LPUART7) || defined(LPUART_7))) ||    \
+     (defined(RTE_USART8_DMA_EN) && RTE_USART8_DMA_EN && (defined(LPUART8) || defined(LPUART_8))) ||    \
+     (defined(RTE_USART9_DMA_EN) && RTE_USART9_DMA_EN && (defined(LPUART9) || defined(LPUART_9))) ||    \
+     (defined(RTE_USART10_DMA_EN) && RTE_USART10_DMA_EN && (defined(LPUART10) || defined(LPUART_10))) || \
+     (defined(RTE_USART11_DMA_EN) && RTE_USART11_DMA_EN && (defined(LPUART11) || defined(LPUART_11))) || \
+     (defined(RTE_USART12_DMA_EN) && RTE_USART12_DMA_EN && (defined(LPUART12) || defined(LPUART_12))) || \
+     (defined(RTE_USART13_DMA_EN) && RTE_USART13_DMA_EN && (defined(LPUART13) || defined(LPUART_13))) || \
+     (defined(RTE_USART14_DMA_EN) && RTE_USART14_DMA_EN && (defined(LPUART14) || defined(LPUART_14))) || \
+     (defined(RTE_USART15_DMA_EN) && RTE_USART15_DMA_EN && (defined(LPUART15) || defined(LPUART_15))) || \
+     (defined(RTE_USART16_DMA_EN) && RTE_USART16_DMA_EN && (defined(LPUART16) || defined(LPUART_16))) || \
+     (defined(RTE_USART17_DMA_EN) && RTE_USART17_DMA_EN && (defined(LPUART17) || defined(LPUART_17))) || \
+     (defined(RTE_USART18_DMA_EN) && RTE_USART18_DMA_EN && (defined(LPUART18) || defined(LPUART_18))) || \
+     (defined(RTE_USART19_DMA_EN) && RTE_USART19_DMA_EN && (defined(LPUART19) || defined(LPUART_19))) || \
+     (defined(RTE_USART20_DMA_EN) && RTE_USART20_DMA_EN && (defined(LPUART20) || defined(LPUART_20))))
 
 #if (defined(FSL_FEATURE_SOC_DMA_COUNT) && FSL_FEATURE_SOC_DMA_COUNT)
 static void KSDK_LPUART_DmaCallback(LPUART_Type *base, lpuart_dma_handle_t *handle, status_t status, void *userData)
@@ -1085,47 +1085,47 @@ static ARM_USART_STATUS LPUART_EdmaGetStatus(cmsis_lpuart_edma_driver_state_t *l
 #endif
 
 #if (((defined(RTE_USART0) && RTE_USART0 && !(defined(RTE_USART0_DMA_EN) && RTE_USART0_DMA_EN)) &&     \
-      defined(LPUART0)) ||                                                                             \
+      (defined(LPUART0) || defined(LPUART_0))) ||                                                                             \
      ((defined(RTE_USART1) && RTE_USART1 && !(defined(RTE_USART1_DMA_EN) && RTE_USART1_DMA_EN)) &&     \
-      defined(LPUART1)) ||                                                                             \
+      (defined(LPUART1) || defined(LPUART_1))) ||                                                                             \
      ((defined(RTE_USART2) && RTE_USART2 && !(defined(RTE_USART2_DMA_EN) && RTE_USART2_DMA_EN)) &&     \
-      defined(LPUART2)) ||                                                                             \
+      (defined(LPUART2) || defined(LPUART_2))) ||                                                                             \
      ((defined(RTE_USART3) && RTE_USART3 && !(defined(RTE_USART3_DMA_EN) && RTE_USART3_DMA_EN)) &&     \
-      defined(LPUART3)) ||                                                                             \
+      (defined(LPUART3) || defined(LPUART_3))) ||                                                                             \
      ((defined(RTE_USART4) && RTE_USART4 && !(defined(RTE_USART4_DMA_EN) && RTE_USART4_DMA_EN)) &&     \
-      defined(LPUART4)) ||                                                                             \
+      (defined(LPUART4) || defined(LPUART_4))) ||                                                                             \
      ((defined(RTE_USART5) && RTE_USART5 && !(defined(RTE_USART5_DMA_EN) && RTE_USART5_DMA_EN)) &&     \
-      defined(LPUART5)) ||                                                                             \
+      (defined(LPUART5) || defined(LPUART_5))) ||                                                                             \
      ((defined(RTE_USART6) && RTE_USART6 && !(defined(RTE_USART6_DMA_EN) && RTE_USART6_DMA_EN)) &&     \
-      defined(LPUART6)) ||                                                                             \
+      (defined(LPUART6) || defined(LPUART_6))) ||                                                                             \
      ((defined(RTE_USART7) && RTE_USART7 && !(defined(RTE_USART7_DMA_EN) && RTE_USART7_DMA_EN)) &&     \
-      defined(LPUART7)) ||                                                                             \
+      (defined(LPUART7) || defined(LPUART_7))) ||                                                                             \
      ((defined(RTE_USART8) && RTE_USART8 && !(defined(RTE_USART8_DMA_EN) && RTE_USART8_DMA_EN)) &&     \
-      defined(LPUART8)) ||                                                                             \
+      (defined(LPUART8) || defined(LPUART_8))) ||                                                                             \
      ((defined(RTE_USART9) && RTE_USART9 && !(defined(RTE_USART9_DMA_EN) && RTE_USART9_DMA_EN)) &&     \
-      defined(LPUART9)) ||                                                                             \
+      (defined(LPUART9) || defined(LPUART_9))) ||                                                                             \
      ((defined(RTE_USART10) && RTE_USART10 && !(defined(RTE_USART10_DMA_EN) && RTE_USART10_DMA_EN)) && \
-      defined(LPUART10)) ||                                                                            \
+      (defined(LPUART10) || defined(LPUART_10))) ||                                                                            \
      ((defined(RTE_USART11) && RTE_USART11 && !(defined(RTE_USART11_DMA_EN) && RTE_USART11_DMA_EN)) && \
-      defined(LPUART11)) ||                                                                            \
+      (defined(LPUART11) || defined(LPUART_11))) ||                                                                            \
      ((defined(RTE_USART12) && RTE_USART12 && !(defined(RTE_USART12_DMA_EN) && RTE_USART12_DMA_EN)) && \
-      defined(LPUART12)) ||                                                                            \
+      (defined(LPUART12) || defined(LPUART_12))) ||                                                                            \
      ((defined(RTE_USART13) && RTE_USART13 && !(defined(RTE_USART13_DMA_EN) && RTE_USART13_DMA_EN)) && \
-      defined(LPUART13)) ||                                                                            \
+      (defined(LPUART13) || defined(LPUART_13))) ||                                                                            \
      ((defined(RTE_USART14) && RTE_USART14 && !(defined(RTE_USART14_DMA_EN) && RTE_USART14_DMA_EN)) && \
-      defined(LPUART14)) ||                                                                            \
+      (defined(LPUART14) || defined(LPUART_14))) ||                                                                            \
      ((defined(RTE_USART15) && RTE_USART15 && !(defined(RTE_USART15_DMA_EN) && RTE_USART15_DMA_EN)) && \
-      defined(LPUART15)) ||                                                                            \
+      (defined(LPUART15) || defined(LPUART_15))) ||                                                                            \
      ((defined(RTE_USART16) && RTE_USART16 && !(defined(RTE_USART16_DMA_EN) && RTE_USART16_DMA_EN)) && \
-      defined(LPUART16)) ||                                                                            \
+      (defined(LPUART16) || defined(LPUART_16))) ||                                                                            \
      ((defined(RTE_USART17) && RTE_USART17 && !(defined(RTE_USART17_DMA_EN) && RTE_USART17_DMA_EN)) && \
-      defined(LPUART17)) ||                                                                            \
+      (defined(LPUART17) || defined(LPUART_17))) ||                                                                            \
      ((defined(RTE_USART18) && RTE_USART18 && !(defined(RTE_USART18_DMA_EN) && RTE_USART18_DMA_EN)) && \
-      defined(LPUART18)) ||                                                                            \
+      (defined(LPUART18) || defined(LPUART_18))) ||                                                                            \
      ((defined(RTE_USART19) && RTE_USART19 && !(defined(RTE_USART19_DMA_EN) && RTE_USART19_DMA_EN)) && \
-      defined(LPUART19)) ||                                                                            \
+      (defined(LPUART19) || defined(LPUART_19))) ||                                                                            \
      ((defined(RTE_USART20) && RTE_USART20 && !(defined(RTE_USART20_DMA_EN) && RTE_USART20_DMA_EN)) && \
-      defined(LPUART20)))
+      (defined(LPUART20) || defined(LPUART_20))))
 
 static void KSDK_LPUART_NonBlockingCallback(LPUART_Type *base, lpuart_handle_t *handle, status_t status, void *userData)
 {
@@ -1379,13 +1379,17 @@ static ARM_USART_STATUS LPUART_NonBlockingGetStatus(cmsis_lpuart_non_blocking_dr
 
 #endif
 
-#if defined(LPUART0) && defined(RTE_USART0) && RTE_USART0
+#if (defined(LPUART0) || defined(LPUART_0)) && defined(RTE_USART0) && RTE_USART0
 
 /* User needs to provide the implementation for LPUART0_GetFreq/InitPins/DeinitPins
 in the application for enabling according instance. */
 extern uint32_t LPUART0_GetFreq(void);
 
+#if defined(LPUART0)
 static cmsis_lpuart_resource_t LPUART0_Resource = {LPUART0, LPUART0_GetFreq};
+#elif defined(LPUART_0)
+static cmsis_lpuart_resource_t LPUART0_Resource = {LPUART_0, LPUART0_GetFreq};
+#endif
 
 #if defined(RTE_USART0_DMA_EN) && RTE_USART0_DMA_EN
 
@@ -1701,13 +1705,17 @@ ARM_DRIVER_USART Driver_USART0 = {
 
 #endif /* LPUART0 */
 
-#if defined(LPUART1) && defined(RTE_USART1) && RTE_USART1
+#if (defined(LPUART1) || defined(LPUART_1)) && defined(RTE_USART1) && RTE_USART1
 
 /* User needs to provide the implementation for LPUART1_GetFreq/InitPins/DeinitPins
 in the application for enabling according instance. */
 extern uint32_t LPUART1_GetFreq(void);
 
+#if defined(LPUART1)
 static cmsis_lpuart_resource_t LPUART1_Resource = {LPUART1, LPUART1_GetFreq};
+#elif defined(LPUART_1)
+static cmsis_lpuart_resource_t LPUART1_Resource = {LPUART_1, LPUART1_GetFreq};
+#endif
 
 #if defined(RTE_USART1_DMA_EN) && RTE_USART1_DMA_EN
 
@@ -2012,13 +2020,17 @@ ARM_DRIVER_USART Driver_USART1 = {LPUARTx_GetVersion,      LPUARTx_GetCapabiliti
 
 #endif /* LPUART1 */
 
-#if defined(LPUART2) && defined(RTE_USART2) && RTE_USART2
+#if (defined(LPUART2) || defined(LPUART_2)) && defined(RTE_USART2) && RTE_USART2
 
 /* User needs to provide the implementation for LPUART2_GetFreq/InitPins/DeinitPins
 in the application for enabling according instance. */
 extern uint32_t LPUART2_GetFreq(void);
 
+#if defined(LPUART2)
 static cmsis_lpuart_resource_t LPUART2_Resource = {LPUART2, LPUART2_GetFreq};
+#elif defined(LPUART_2)
+static cmsis_lpuart_resource_t LPUART2_Resource = {LPUART_2, LPUART2_GetFreq};
+#endif
 
 #if defined(RTE_USART2_DMA_EN) && RTE_USART2_DMA_EN
 
@@ -2323,13 +2335,17 @@ ARM_DRIVER_USART Driver_USART2 = {LPUARTx_GetVersion,      LPUARTx_GetCapabiliti
 
 #endif /* LPUART2 */
 
-#if defined(LPUART3) && defined(RTE_USART3) && RTE_USART3
+#if (defined(LPUART3) || defined(LPUART_3)) && defined(RTE_USART3) && RTE_USART3
 
 /* User needs to provide the implementation for LPUART3_GetFreq/InitPins/DeinitPins
 in the application for enabling according instance. */
 extern uint32_t LPUART3_GetFreq(void);
 
+#if defined(LPUART3)
 static cmsis_lpuart_resource_t LPUART3_Resource = {LPUART3, LPUART3_GetFreq};
+#elif defined(LPUART_3)
+static cmsis_lpuart_resource_t LPUART3_Resource = {LPUART_3, LPUART3_GetFreq};
+#endif
 
 #if defined(RTE_USART3_DMA_EN) && RTE_USART3_DMA_EN
 
@@ -2634,13 +2650,17 @@ ARM_DRIVER_USART Driver_USART3 = {LPUARTx_GetVersion,      LPUARTx_GetCapabiliti
 
 #endif /* LPUART3 */
 
-#if defined(LPUART4) && defined(RTE_USART4) && RTE_USART4
+#if (defined(LPUART4) || defined(LPUART_4)) && defined(RTE_USART4) && RTE_USART4
 
 /* User needs to provide the implementation for LPUART4_GetFreq/InitPins/DeinitPins
 in the application for enabling according instance. */
 extern uint32_t LPUART4_GetFreq(void);
 
+#if defined(LPUART4)
 static cmsis_lpuart_resource_t LPUART4_Resource = {LPUART4, LPUART4_GetFreq};
+#elif defined(LPUART_4)
+static cmsis_lpuart_resource_t LPUART4_Resource = {LPUART_4, LPUART4_GetFreq};
+#endif
 
 #if defined(RTE_USART4_DMA_EN) && RTE_USART4_DMA_EN
 
@@ -2945,13 +2965,17 @@ ARM_DRIVER_USART Driver_USART4 = {LPUARTx_GetVersion,      LPUARTx_GetCapabiliti
 
 #endif /* LPUART4 */
 
-#if defined(LPUART5) && defined(RTE_USART5) && RTE_USART5
+#if (defined(LPUART5) || defined(LPUART_5)) && defined(RTE_USART5) && RTE_USART5
 
 /* User needs to provide the implementation for LPUART5_GetFreq/InitPins/DeinitPins
 in the application for enabling according instance. */
 extern uint32_t LPUART5_GetFreq(void);
 
+#if defined(LPUART5)
 static cmsis_lpuart_resource_t LPUART5_Resource = {LPUART5, LPUART5_GetFreq};
+#elif defined(LPUART_5)
+static cmsis_lpuart_resource_t LPUART5_Resource = {LPUART_5, LPUART5_GetFreq};
+#endif
 
 #if defined(RTE_USART5_DMA_EN) && RTE_USART5_DMA_EN
 
@@ -3258,13 +3282,17 @@ ARM_DRIVER_USART Driver_USART5 = {LPUARTx_GetVersion,      LPUARTx_GetCapabiliti
 
 #endif /* LPUART5 */
 
-#if defined(LPUART6) && defined(RTE_USART6) && RTE_USART6
+#if (defined(LPUART6) || defined(LPUART_6)) && defined(RTE_USART6) && RTE_USART6
 
 /* User needs to provide the implementation for LPUART6_GetFreq/InitPins/DeinitPins
 in the application for enabling according instance. */
 extern uint32_t LPUART6_GetFreq(void);
 
+#if defined(LPUART6)
 static cmsis_lpuart_resource_t LPUART6_Resource = {LPUART6, LPUART6_GetFreq};
+#elif defined(LPUART_6)
+static cmsis_lpuart_resource_t LPUART6_Resource = {LPUART_6, LPUART6_GetFreq};
+#endif
 
 #if defined(RTE_USART6_DMA_EN) && RTE_USART6_DMA_EN
 
@@ -3571,13 +3599,17 @@ ARM_DRIVER_USART Driver_USART6 = {LPUARTx_GetVersion,      LPUARTx_GetCapabiliti
 
 #endif /* LPUART6 */
 
-#if defined(LPUART7) && defined(RTE_USART7) && RTE_USART7
+#if (defined(LPUART7) || defined(LPUART_7)) && defined(RTE_USART7) && RTE_USART7
 
 /* User needs to provide the implementation for LPUART7_GetFreq/InitPins/DeinitPins
 in the application for enabling according instance. */
 extern uint32_t LPUART7_GetFreq(void);
 
+#if defined(LPUART7)
 static cmsis_lpuart_resource_t LPUART7_Resource = {LPUART7, LPUART7_GetFreq};
+#elif defined(LPUART_7)
+static cmsis_lpuart_resource_t LPUART7_Resource = {LPUART_7, LPUART7_GetFreq};
+#endif
 
 #if defined(RTE_USART7_DMA_EN) && RTE_USART7_DMA_EN
 
@@ -3884,13 +3916,17 @@ ARM_DRIVER_USART Driver_USART7 = {LPUARTx_GetVersion,      LPUARTx_GetCapabiliti
 
 #endif /* LPUART7 */
 
-#if defined(LPUART8) && defined(RTE_USART8) && RTE_USART8
+#if (defined(LPUART8) || defined(LPUART_8)) && defined(RTE_USART8) && RTE_USART8
 
 /* User needs to provide the implementation for LPUART8_GetFreq/InitPins/DeinitPins
 in the application for enabling according instance. */
 extern uint32_t LPUART8_GetFreq(void);
 
+#if defined(LPUART8)
 static cmsis_lpuart_resource_t LPUART8_Resource = {LPUART8, LPUART8_GetFreq};
+#elif defined(LPUART_8)
+static cmsis_lpuart_resource_t LPUART8_Resource = {LPUART_8, LPUART8_GetFreq};
+#endif
 
 #if defined(RTE_USART8_DMA_EN) && RTE_USART8_DMA_EN
 
@@ -4197,13 +4233,17 @@ ARM_DRIVER_USART Driver_USART8 = {LPUARTx_GetVersion,      LPUARTx_GetCapabiliti
 
 #endif /* LPUART8 */
 
-#if defined(LPUART9) && defined(RTE_USART9) && RTE_USART9
+#if (defined(LPUART9) || defined(LPUART_9)) && defined(RTE_USART9) && RTE_USART9
 
 /* User needs to provide the implementation for LPUART9_GetFreq/InitPins/DeinitPins
 in the application for enabling according instance. */
 extern uint32_t LPUART9_GetFreq(void);
 
+#if defined(LPUART9)
 static cmsis_lpuart_resource_t LPUART9_Resource = {LPUART9, LPUART9_GetFreq};
+#elif defined(LPUART_9)
+static cmsis_lpuart_resource_t LPUART9_Resource = {LPUART_9, LPUART9_GetFreq};
+#endif
 
 #if defined(RTE_USART9_DMA_EN) && RTE_USART9_DMA_EN
 
@@ -4510,13 +4550,17 @@ ARM_DRIVER_USART Driver_USART9 = {LPUARTx_GetVersion,      LPUARTx_GetCapabiliti
 
 #endif /* LPUART9 */
 
-#if defined(LPUART10) && defined(RTE_USART10) && RTE_USART10
+#if (defined(LPUART10) || defined(LPUART_10)) && defined(RTE_USART10) && RTE_USART10
 
 /* User needs to provide the implementation for LPUART10_GetFreq/InitPins/DeinitPins
 in the application for enabling according instance. */
 extern uint32_t LPUART10_GetFreq(void);
 
+#if defined(LPUART10)
 static cmsis_lpuart_resource_t LPUART10_Resource = {LPUART10, LPUART10_GetFreq};
+#elif defined(LPUART_10)
+static cmsis_lpuart_resource_t LPUART10_Resource = {LPUART_10, LPUART10_GetFreq};
+#endif
 
 #if defined(RTE_USART10_DMA_EN) && RTE_USART10_DMA_EN
 
@@ -4823,13 +4867,17 @@ ARM_DRIVER_USART Driver_USART10 = {LPUARTx_GetVersion,      LPUARTx_GetCapabilit
 
 #endif /* LPUART10 */
 
-#if defined(LPUART11) && defined(RTE_USART11) && RTE_USART11
+#if (defined(LPUART11) || defined(LPUART_11)) && defined(RTE_USART11) && RTE_USART11
 
 /* User needs to provide the implementation for LPUART11_GetFreq/InitPins/DeinitPins
 in the application for enabling according instance. */
 extern uint32_t LPUART11_GetFreq(void);
 
+#if defined(LPUART11)
 static cmsis_lpuart_resource_t LPUART11_Resource = {LPUART11, LPUART11_GetFreq};
+#elif defined(LPUART_11)
+static cmsis_lpuart_resource_t LPUART11_Resource = {LPUART_11, LPUART11_GetFreq};
+#endif
 
 #if defined(RTE_USART11_DMA_EN) && RTE_USART11_DMA_EN
 
@@ -5136,13 +5184,17 @@ ARM_DRIVER_USART Driver_USART11 = {LPUARTx_GetVersion,      LPUARTx_GetCapabilit
 
 #endif /* LPUART11 */
 
-#if defined(LPUART12) && defined(RTE_USART12) && RTE_USART12
+#if (defined(LPUART12) || defined(LPUART_12)) && defined(RTE_USART12) && RTE_USART12
 
 /* User needs to provide the implementation for LPUART12_GetFreq/InitPins/DeinitPins
 in the application for enabling according instance. */
 extern uint32_t LPUART12_GetFreq(void);
 
+#if defined(LPUART12)
 static cmsis_lpuart_resource_t LPUART12_Resource = {LPUART12, LPUART12_GetFreq};
+#elif defined(LPUART_12)
+static cmsis_lpuart_resource_t LPUART12_Resource = {LPUART_12, LPUART12_GetFreq};
+#endif
 
 #if defined(RTE_USART12_DMA_EN) && RTE_USART12_DMA_EN
 
@@ -5449,13 +5501,17 @@ ARM_DRIVER_USART Driver_USART12 = {LPUARTx_GetVersion,      LPUARTx_GetCapabilit
 
 #endif /* LPUART12 */
 
-#if defined(LPUART13) && defined(RTE_USART13) && RTE_USART13
+#if (defined(LPUART13) || defined(LPUART_13)) && defined(RTE_USART13) && RTE_USART13
 
 /* User needs to provide the implementation for LPUART13_GetFreq/InitPins/DeinitPins
 in the application for enabling according instance. */
 extern uint32_t LPUART13_GetFreq(void);
 
+#if defined(LPUART13)
 static cmsis_lpuart_resource_t LPUART13_Resource = {LPUART13, LPUART13_GetFreq};
+#elif defined(LPUART_13)
+static cmsis_lpuart_resource_t LPUART13_Resource = {LPUART_13, LPUART13_GetFreq};
+#endif
 
 #if defined(RTE_USART13_DMA_EN) && RTE_USART13_DMA_EN
 
@@ -5762,13 +5818,17 @@ ARM_DRIVER_USART Driver_USART13 = {LPUARTx_GetVersion,      LPUARTx_GetCapabilit
 
 #endif /* LPUART13 */
 
-#if defined(LPUART14) && defined(RTE_USART14) && RTE_USART14
+#if (defined(LPUART14) || defined(LPUART_14)) && defined(RTE_USART14) && RTE_USART14
 
 /* User needs to provide the implementation for LPUART14_GetFreq/InitPins/DeinitPins
 in the application for enabling according instance. */
 extern uint32_t LPUART14_GetFreq(void);
 
+#if defined(LPUART14)
 static cmsis_lpuart_resource_t LPUART14_Resource = {LPUART14, LPUART14_GetFreq};
+#elif defined(LPUART_14)
+static cmsis_lpuart_resource_t LPUART14_Resource = {LPUART_14, LPUART14_GetFreq};
+#endif
 
 #if defined(RTE_USART14_DMA_EN) && RTE_USART14_DMA_EN
 
@@ -6075,13 +6135,17 @@ ARM_DRIVER_USART Driver_USART14 = {LPUARTx_GetVersion,      LPUARTx_GetCapabilit
 
 #endif /* LPUART14 */
 
-#if defined(LPUART15) && defined(RTE_USART15) && RTE_USART15
+#if (defined(LPUART15) || defined(LPUART_15)) && defined(RTE_USART15) && RTE_USART15
 
 /* User needs to provide the implementation for LPUART15_GetFreq/InitPins/DeinitPins
 in the application for enabling according instance. */
 extern uint32_t LPUART15_GetFreq(void);
 
+#if defined(LPUART15)
 static cmsis_lpuart_resource_t LPUART15_Resource = {LPUART15, LPUART15_GetFreq};
+#elif defined(LPUART_15)
+static cmsis_lpuart_resource_t LPUART15_Resource = {LPUART_15, LPUART15_GetFreq};
+#endif
 
 #if defined(RTE_USART15_DMA_EN) && RTE_USART15_DMA_EN
 
@@ -6388,13 +6452,17 @@ ARM_DRIVER_USART Driver_USART15 = {LPUARTx_GetVersion,      LPUARTx_GetCapabilit
 
 #endif /* LPUART15 */
 
-#if defined(LPUART16) && defined(RTE_USART16) && RTE_USART16
+#if (defined(LPUART16) || defined(LPUART_16)) && defined(RTE_USART16) && RTE_USART16
 
 /* User needs to provide the implementation for LPUART16_GetFreq/InitPins/DeinitPins
 in the application for enabling according instance. */
 extern uint32_t LPUART16_GetFreq(void);
 
+#if defined(LPUART16)
 static cmsis_lpuart_resource_t LPUART16_Resource = {LPUART16, LPUART16_GetFreq};
+#elif defined(LPUART_16)
+static cmsis_lpuart_resource_t LPUART16_Resource = {LPUART_16, LPUART16_GetFreq};
+#endif
 
 #if defined(RTE_USART16_DMA_EN) && RTE_USART16_DMA_EN
 
@@ -6701,13 +6769,17 @@ ARM_DRIVER_USART Driver_USART16 = {LPUARTx_GetVersion,      LPUARTx_GetCapabilit
 
 #endif /* LPUART16 */
 
-#if defined(LPUART17) && defined(RTE_USART17) && RTE_USART17
+#if (defined(LPUART17) || defined(LPUART_17)) && defined(RTE_USART17) && RTE_USART17
 
 /* User needs to provide the implementation for LPUART17_GetFreq/InitPins/DeinitPins
 in the application for enabling according instance. */
 extern uint32_t LPUART17_GetFreq(void);
 
+#if defined(LPUART17)
 static cmsis_lpuart_resource_t LPUART17_Resource = {LPUART17, LPUART17_GetFreq};
+#elif defined(LPUART_17)
+static cmsis_lpuart_resource_t LPUART17_Resource = {LPUART_17, LPUART17_GetFreq};
+#endif
 
 #if defined(RTE_USART17_DMA_EN) && RTE_USART17_DMA_EN
 
@@ -7014,13 +7086,17 @@ ARM_DRIVER_USART Driver_USART17 = {LPUARTx_GetVersion,      LPUARTx_GetCapabilit
 
 #endif /* LPUART17 */
 
-#if defined(LPUART18) && defined(RTE_USART18) && RTE_USART18
+#if (defined(LPUART18) || defined(LPUART_18)) && defined(RTE_USART18) && RTE_USART18
 
 /* User needs to provide the implementation for LPUART18_GetFreq/InitPins/DeinitPins
 in the application for enabling according instance. */
 extern uint32_t LPUART18_GetFreq(void);
 
+#if defined(LPUART18)
 static cmsis_lpuart_resource_t LPUART18_Resource = {LPUART18, LPUART18_GetFreq};
+#elif defined(LPUART_18)
+static cmsis_lpuart_resource_t LPUART18_Resource = {LPUART_18, LPUART18_GetFreq};
+#endif
 
 #if defined(RTE_USART18_DMA_EN) && RTE_USART18_DMA_EN
 
@@ -7327,13 +7403,17 @@ ARM_DRIVER_USART Driver_USART18 = {LPUARTx_GetVersion,      LPUARTx_GetCapabilit
 
 #endif /* LPUART18 */
 
-#if defined(LPUART19) && defined(RTE_USART19) && RTE_USART19
+#if (defined(LPUART19) || defined(LPUART_19)) && defined(RTE_USART19) && RTE_USART19
 
 /* User needs to provide the implementation for LPUART19_GetFreq/InitPins/DeinitPins
 in the application for enabling according instance. */
 extern uint32_t LPUART19_GetFreq(void);
 
+#if defined(LPUART19)
 static cmsis_lpuart_resource_t LPUART19_Resource = {LPUART19, LPUART19_GetFreq};
+#elif defined(LPUART_19)
+static cmsis_lpuart_resource_t LPUART19_Resource = {LPUART_19, LPUART19_GetFreq};
+#endif
 
 #if defined(RTE_USART19_DMA_EN) && RTE_USART19_DMA_EN
 
@@ -7640,13 +7720,17 @@ ARM_DRIVER_USART Driver_USART19 = {LPUARTx_GetVersion,      LPUARTx_GetCapabilit
 
 #endif /* LPUART19 */
 
-#if defined(LPUART20) && defined(RTE_USART20) && RTE_USART20
+#if (defined(LPUART20) || defined(LPUART_20)) && defined(RTE_USART20) && RTE_USART20
 
 /* User needs to provide the implementation for LPUART20_GetFreq/InitPins/DeinitPins
 in the application for enabling according instance. */
 extern uint32_t LPUART20_GetFreq(void);
 
+#if defined(LPUART20)
 static cmsis_lpuart_resource_t LPUART20_Resource = {LPUART20, LPUART20_GetFreq};
+#elif defined(LPUART_20)
+static cmsis_lpuart_resource_t LPUART20_Resource = {LPUART_20, LPUART20_GetFreq};
+#endif
 
 #if defined(RTE_USART20_DMA_EN) && RTE_USART20_DMA_EN
 

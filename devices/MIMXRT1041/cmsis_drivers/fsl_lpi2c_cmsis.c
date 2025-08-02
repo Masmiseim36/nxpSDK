@@ -1,7 +1,7 @@
 /*
  * Copyright (c) 2013-2016 ARM Limited. All rights reserved.
  * Copyright (c) 2016, Freescale Semiconductor, Inc. Not a Contribution.
- * Copyright 2016-2017,2020,2024 NXP. Not a Contribution.
+ * Copyright 2016-2017,2020,2024-2025 NXP. Not a Contribution.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -20,19 +20,19 @@
 
 #include "fsl_lpi2c_cmsis.h"
 
-#if ((defined(RTE_I2C0) && RTE_I2C0 && defined(LPI2C0)) || (defined(RTE_I2C1) && RTE_I2C1 && defined(LPI2C1)) ||       \
-     (defined(RTE_I2C2) && RTE_I2C2 && defined(LPI2C2)) || (defined(RTE_I2C3) && RTE_I2C3 && defined(LPI2C3)) ||       \
-     (defined(RTE_I2C4) && RTE_I2C4 && defined(LPI2C4)) || (defined(RTE_I2C5) && RTE_I2C5 && defined(LPI2C5)) ||       \
-     (defined(RTE_I2C6) && RTE_I2C6 && defined(LPI2C6)) || (defined(RTE_I2C7) && RTE_I2C7 && defined(LPI2C7)) ||       \
-     (defined(RTE_I2C8) && RTE_I2C8 && defined(LPI2C8)) || (defined(RTE_I2C9) && RTE_I2C9 && defined(LPI2C9)) ||       \
-     (defined(RTE_I2C10) && RTE_I2C10 && defined(LPI2C10)) || (defined(RTE_I2C11) && RTE_I2C11 && defined(LPI2C11)) || \
-     (defined(RTE_I2C12) && RTE_I2C12 && defined(LPI2C12)) || (defined(RTE_I2C13) && RTE_I2C13 && defined(LPI2C13)) || \
-     (defined(RTE_I2C14) && RTE_I2C14 && defined(LPI2C14)) || (defined(RTE_I2C15) && RTE_I2C15 && defined(LPI2C15)) || \
-     (defined(RTE_I2C16) && RTE_I2C16 && defined(LPI2C16)) || (defined(RTE_I2C17) && RTE_I2C17 && defined(LPI2C17)) || \
-     (defined(RTE_I2C18) && RTE_I2C18 && defined(LPI2C18)) || (defined(RTE_I2C19) && RTE_I2C19 && defined(LPI2C19)) || \
-     (defined(RTE_I2C20) && RTE_I2C20 && defined(LPI2C20)))
+#if ((defined(RTE_I2C0) && RTE_I2C0 && (defined(LPI2C0) || defined(LPI2C_0))) || (defined(RTE_I2C1) && RTE_I2C1 && (defined(LPI2C1) || defined(LPI2C_1))) ||       \
+     (defined(RTE_I2C2) && RTE_I2C2 && (defined(LPI2C2) || defined(LPI2C_2))) || (defined(RTE_I2C3) && RTE_I2C3 && (defined(LPI2C3) || defined(LPI2C_3))) ||       \
+     (defined(RTE_I2C4) && RTE_I2C4 && (defined(LPI2C4) || defined(LPI2C_4))) || (defined(RTE_I2C5) && RTE_I2C5 && (defined(LPI2C5) || defined(LPI2C_5))) ||       \
+     (defined(RTE_I2C6) && RTE_I2C6 && (defined(LPI2C6) || defined(LPI2C_6))) || (defined(RTE_I2C7) && RTE_I2C7 && (defined(LPI2C7) || defined(LPI2C_7))) ||       \
+     (defined(RTE_I2C8) && RTE_I2C8 && (defined(LPI2C8) || defined(LPI2C_8))) || (defined(RTE_I2C9) && RTE_I2C9 && (defined(LPI2C9) || defined(LPI2C_9))) ||       \
+     (defined(RTE_I2C10) && RTE_I2C10 && (defined(LPI2C10) || defined(LPI2C_10))) || (defined(RTE_I2C11) && RTE_I2C11 && (defined(LPI2C11) || defined(LPI2C_11))) || \
+     (defined(RTE_I2C12) && RTE_I2C12 && (defined(LPI2C12) || defined(LPI2C_12))) || (defined(RTE_I2C13) && RTE_I2C13 && (defined(LPI2C13) || defined(LPI2C_13))) || \
+     (defined(RTE_I2C14) && RTE_I2C14 && (defined(LPI2C14) || defined(LPI2C_14))) || (defined(RTE_I2C15) && RTE_I2C15 && (defined(LPI2C15) || defined(LPI2C_15))) || \
+     (defined(RTE_I2C16) && RTE_I2C16 && (defined(LPI2C16) || defined(LPI2C_16))) || (defined(RTE_I2C17) && RTE_I2C17 && (defined(LPI2C17) || defined(LPI2C_17))) || \
+     (defined(RTE_I2C18) && RTE_I2C18 && (defined(LPI2C18) || defined(LPI2C_18))) || (defined(RTE_I2C19) && RTE_I2C19 && (defined(LPI2C19) || defined(LPI2C_19))) || \
+     (defined(RTE_I2C20) && RTE_I2C20 && (defined(LPI2C20) || defined(LPI2C_20))))
 
-#define ARM_LPI2C_DRV_VERSION ARM_DRIVER_VERSION_MAJOR_MINOR((2), (5))
+#define ARM_LPI2C_DRV_VERSION ARM_DRIVER_VERSION_MAJOR_MINOR((2), (6))
 
 /*
  * ARMCC does not support split the data section automatically, so the driver
@@ -939,12 +939,16 @@ static ARM_I2C_STATUS LPI2C_InterruptGetStatus(cmsis_lpi2c_interrupt_driver_stat
 
 #endif
 
-#if defined(LPI2C0) && defined(RTE_I2C0) && RTE_I2C0
+#if (defined(LPI2C0) || defined(LPI2C_0)) && defined(RTE_I2C0) && RTE_I2C0
 /* User needs to provide the implementation for LPI2C0_GetFreq/InitPins/DeinitPins
 in the application for enabling according instance. */
 extern uint32_t LPI2C0_GetFreq(void);
 
+#if defined(LPI2C0)
 static cmsis_lpi2c_resource_t LPI2C0_Resource = {LPI2C0, LPI2C0_GetFreq};
+#elif defined(LPI2C_0)
+static cmsis_lpi2c_resource_t LPI2C0_Resource = {LPI2C_0, LPI2C0_GetFreq};
+#endif
 
 #if defined(RTE_I2C0_DMA_EN) && RTE_I2C0_DMA_EN
 
@@ -1126,12 +1130,16 @@ ARM_DRIVER_I2C Driver_I2C0 = {LPI2Cx_GetVersion,
 
 #endif /* LPI2C0 */
 
-#if defined(LPI2C1) && defined(RTE_I2C1) && RTE_I2C1
+#if (defined(LPI2C1) || defined(LPI2C_1)) && defined(RTE_I2C1) && RTE_I2C1
 /* User needs to provide the implementation for LPI2C1_GetFreq/InitPins/DeinitPins
 in the application for enabling according instance. */
 extern uint32_t LPI2C1_GetFreq(void);
 
+#if defined(LPI2C1)
 static cmsis_lpi2c_resource_t LPI2C1_Resource = {LPI2C1, LPI2C1_GetFreq};
+#elif defined(LPI2C_1)
+static cmsis_lpi2c_resource_t LPI2C1_Resource = {LPI2C_1, LPI2C1_GetFreq};
+#endif
 
 #if defined(RTE_I2C1_DMA_EN) && RTE_I2C1_DMA_EN
 
@@ -1313,12 +1321,16 @@ ARM_DRIVER_I2C Driver_I2C1 = {LPI2Cx_GetVersion,
 
 #endif /* LPI2C1 */
 
-#if defined(LPI2C2) && defined(RTE_I2C2) && RTE_I2C2
+#if (defined(LPI2C2) || defined(LPI2C_2)) && defined(RTE_I2C2) && RTE_I2C2
 /* User needs to provide the implementation for LPI2C2_GetFreq/InitPins/DeinitPins
 in the application for enabling according instance. */
 extern uint32_t LPI2C2_GetFreq(void);
 
+#if defined(LPI2C2)
 static cmsis_lpi2c_resource_t LPI2C2_Resource = {LPI2C2, LPI2C2_GetFreq};
+#elif defined(LPI2C_2)
+static cmsis_lpi2c_resource_t LPI2C2_Resource = {LPI2C_2, LPI2C2_GetFreq};
+#endif
 
 #if defined(RTE_I2C2_DMA_EN) && RTE_I2C2_DMA_EN
 
@@ -1500,12 +1512,16 @@ ARM_DRIVER_I2C Driver_I2C2 = {LPI2Cx_GetVersion,
 
 #endif /* LPI2C2 */
 
-#if defined(LPI2C3) && defined(RTE_I2C3) && RTE_I2C3
+#if (defined(LPI2C3) || defined(LPI2C_3)) && defined(RTE_I2C3) && RTE_I2C3
 /* User needs to provide the implementation for LPI2C3_GetFreq/InitPins/DeinitPins
 in the application for enabling according instance. */
 extern uint32_t LPI2C3_GetFreq(void);
 
+#if defined(LPI2C3)
 static cmsis_lpi2c_resource_t LPI2C3_Resource = {LPI2C3, LPI2C3_GetFreq};
+#elif defined(LPI2C_3)
+static cmsis_lpi2c_resource_t LPI2C3_Resource = {LPI2C_3, LPI2C3_GetFreq};
+#endif
 
 #if defined(RTE_I2C3_DMA_EN) && RTE_I2C3_DMA_EN
 
@@ -1687,12 +1703,16 @@ ARM_DRIVER_I2C Driver_I2C3 = {LPI2Cx_GetVersion,
 
 #endif /* LPI2C3 */
 
-#if defined(LPI2C4) && defined(RTE_I2C4) && RTE_I2C4
+#if (defined(LPI2C4) || defined(LPI2C_4)) && defined(RTE_I2C4) && RTE_I2C4
 /* User needs to provide the implementation for LPI2C4_GetFreq/InitPins/DeinitPins
 in the application for enabling according instance. */
 extern uint32_t LPI2C4_GetFreq(void);
 
+#if defined(LPI2C4)
 static cmsis_lpi2c_resource_t LPI2C4_Resource = {LPI2C4, LPI2C4_GetFreq};
+#elif defined(LPI2C_4)
+static cmsis_lpi2c_resource_t LPI2C4_Resource = {LPI2C_4, LPI2C4_GetFreq};
+#endif
 
 #if defined(RTE_I2C4_DMA_EN) && RTE_I2C4_DMA_EN
 
@@ -1874,12 +1894,16 @@ ARM_DRIVER_I2C Driver_I2C4 = {LPI2Cx_GetVersion,
 
 #endif /* LPI2C4 */
 
-#if defined(LPI2C5) && defined(RTE_I2C5) && RTE_I2C5
+#if (defined(LPI2C5) || defined(LPI2C_5)) && defined(RTE_I2C5) && RTE_I2C5
 /* User needs to provide the implementation for LPI2C5_GetFreq/InitPins/DeinitPins
 in the application for enabling according instance. */
 extern uint32_t LPI2C5_GetFreq(void);
 
+#if defined(LPI2C5)
 static cmsis_lpi2c_resource_t LPI2C5_Resource = {LPI2C5, LPI2C5_GetFreq};
+#elif defined(LPI2C_5)
+static cmsis_lpi2c_resource_t LPI2C5_Resource = {LPI2C_5, LPI2C5_GetFreq};
+#endif
 
 #if defined(RTE_I2C5_DMA_EN) && RTE_I2C5_DMA_EN
 
@@ -2061,12 +2085,16 @@ ARM_DRIVER_I2C Driver_I2C5 = {LPI2Cx_GetVersion,
 
 #endif /* LPI2C5 */
 
-#if defined(LPI2C6) && defined(RTE_I2C6) && RTE_I2C6
+#if (defined(LPI2C6) || defined(LPI2C_6)) && defined(RTE_I2C6) && RTE_I2C6
 /* User needs to provide the implementation for LPI2C6_GetFreq/InitPins/DeinitPins
 in the application for enabling according instance. */
 extern uint32_t LPI2C6_GetFreq(void);
 
+#if defined(LPI2C6)
 static cmsis_lpi2c_resource_t LPI2C6_Resource = {LPI2C6, LPI2C6_GetFreq};
+#elif defined(LPI2C_6)
+static cmsis_lpi2c_resource_t LPI2C6_Resource = {LPI2C_6, LPI2C6_GetFreq};
+#endif
 
 #if defined(RTE_I2C6_DMA_EN) && RTE_I2C6_DMA_EN
 
@@ -2248,12 +2276,16 @@ ARM_DRIVER_I2C Driver_I2C6 = {LPI2Cx_GetVersion,
 
 #endif /* LPI2C6 */
 
-#if defined(LPI2C7) && defined(RTE_I2C7) && RTE_I2C7
+#if (defined(LPI2C7) || defined(LPI2C_7)) && defined(RTE_I2C7) && RTE_I2C7
 /* User needs to provide the implementation for LPI2C7_GetFreq/InitPins/DeinitPins
 in the application for enabling according instance. */
 extern uint32_t LPI2C7_GetFreq(void);
 
+#if defined(LPI2C7)
 static cmsis_lpi2c_resource_t LPI2C7_Resource = {LPI2C7, LPI2C7_GetFreq};
+#elif defined(LPI2C_7)
+static cmsis_lpi2c_resource_t LPI2C7_Resource = {LPI2C_7, LPI2C7_GetFreq};
+#endif
 
 #if defined(RTE_I2C7_DMA_EN) && RTE_I2C7_DMA_EN
 
@@ -2435,12 +2467,16 @@ ARM_DRIVER_I2C Driver_I2C7 = {LPI2Cx_GetVersion,
 
 #endif /* LPI2C7 */
 
-#if defined(LPI2C8) && defined(RTE_I2C8) && RTE_I2C8
+#if (defined(LPI2C8) || defined(LPI2C_8)) && defined(RTE_I2C8) && RTE_I2C8
 /* User needs to provide the implementation for LPI2C8_GetFreq/InitPins/DeinitPins
 in the application for enabling according instance. */
 extern uint32_t LPI2C8_GetFreq(void);
 
+#if defined(LPI2C8)
 static cmsis_lpi2c_resource_t LPI2C8_Resource = {LPI2C8, LPI2C8_GetFreq};
+#elif defined(LPI2C_8)
+static cmsis_lpi2c_resource_t LPI2C8_Resource = {LPI2C_8, LPI2C8_GetFreq};
+#endif
 
 #if defined(RTE_I2C8_DMA_EN) && RTE_I2C8_DMA_EN
 
@@ -2622,12 +2658,16 @@ ARM_DRIVER_I2C Driver_I2C8 = {LPI2Cx_GetVersion,
 
 #endif /* LPI2C8 */
 
-#if defined(LPI2C9) && defined(RTE_I2C9) && RTE_I2C9
+#if (defined(LPI2C9) || defined(LPI2C_9)) && defined(RTE_I2C9) && RTE_I2C9
 /* User needs to provide the implementation for LPI2C9_GetFreq/InitPins/DeinitPins
 in the application for enabling according instance. */
 extern uint32_t LPI2C9_GetFreq(void);
 
+#if defined(LPI2C9)
 static cmsis_lpi2c_resource_t LPI2C9_Resource = {LPI2C9, LPI2C9_GetFreq};
+#elif defined(LPI2C_9)
+static cmsis_lpi2c_resource_t LPI2C9_Resource = {LPI2C_9, LPI2C9_GetFreq};
+#endif
 
 #if defined(RTE_I2C9_DMA_EN) && RTE_I2C9_DMA_EN
 
@@ -2809,12 +2849,16 @@ ARM_DRIVER_I2C Driver_I2C9 = {LPI2Cx_GetVersion,
 
 #endif /* LPI2C9 */
 
-#if defined(LPI2C10) && defined(RTE_I2C10) && RTE_I2C10
+#if (defined(LPI2C10) || defined(LPI2C_10)) && defined(RTE_I2C10) && RTE_I2C10
 /* User needs to provide the implementation for LPI2C10_GetFreq/InitPins/DeinitPins
 in the application for enabling according instance. */
 extern uint32_t LPI2C10_GetFreq(void);
 
+#if defined(LPI2C10)
 static cmsis_lpi2c_resource_t LPI2C10_Resource = {LPI2C10, LPI2C10_GetFreq};
+#elif defined(LPI2C_10)
+static cmsis_lpi2c_resource_t LPI2C10_Resource = {LPI2C_10, LPI2C10_GetFreq};
+#endif
 
 #if defined(RTE_I2C10_DMA_EN) && RTE_I2C10_DMA_EN
 
@@ -2996,12 +3040,16 @@ ARM_DRIVER_I2C Driver_I2C10 = {LPI2Cx_GetVersion,
 
 #endif /* LPI2C10 */
 
-#if defined(LPI2C11) && defined(RTE_I2C11) && RTE_I2C11
+#if (defined(LPI2C11) || defined(LPI2C_11)) && defined(RTE_I2C11) && RTE_I2C11
 /* User needs to provide the implementation for LPI2C11_GetFreq/InitPins/DeinitPins
 in the application for enabling according instance. */
 extern uint32_t LPI2C11_GetFreq(void);
 
+#if defined(LPI2C11)
 static cmsis_lpi2c_resource_t LPI2C11_Resource = {LPI2C11, LPI2C11_GetFreq};
+#elif defined(LPI2C_11)
+static cmsis_lpi2c_resource_t LPI2C11_Resource = {LPI2C_11, LPI2C11_GetFreq};
+#endif
 
 #if defined(RTE_I2C11_DMA_EN) && RTE_I2C11_DMA_EN
 
@@ -3183,12 +3231,16 @@ ARM_DRIVER_I2C Driver_I2C11 = {LPI2Cx_GetVersion,
 
 #endif /* LPI2C11 */
 
-#if defined(LPI2C12) && defined(RTE_I2C12) && RTE_I2C12
+#if (defined(LPI2C12) || defined(LPI2C_12)) && defined(RTE_I2C12) && RTE_I2C12
 /* User needs to provide the implementation for LPI2C12_GetFreq/InitPins/DeinitPins
 in the application for enabling according instance. */
 extern uint32_t LPI2C12_GetFreq(void);
 
+#if defined(LPI2C12)
 static cmsis_lpi2c_resource_t LPI2C12_Resource = {LPI2C12, LPI2C12_GetFreq};
+#elif defined(LPI2C_12)
+static cmsis_lpi2c_resource_t LPI2C12_Resource = {LPI2C_12, LPI2C12_GetFreq};
+#endif
 
 #if defined(RTE_I2C12_DMA_EN) && RTE_I2C12_DMA_EN
 
@@ -3370,12 +3422,16 @@ ARM_DRIVER_I2C Driver_I2C12 = {LPI2Cx_GetVersion,
 
 #endif /* LPI2C12 */
 
-#if defined(LPI2C13) && defined(RTE_I2C13) && RTE_I2C13
+#if (defined(LPI2C13) || defined(LPI2C_13)) && defined(RTE_I2C13) && RTE_I2C13
 /* User needs to provide the implementation for LPI2C13_GetFreq/InitPins/DeinitPins
 in the application for enabling according instance. */
 extern uint32_t LPI2C13_GetFreq(void);
 
+#if defined(LPI2C13)
 static cmsis_lpi2c_resource_t LPI2C13_Resource = {LPI2C13, LPI2C13_GetFreq};
+#elif defined(LPI2C_13)
+static cmsis_lpi2c_resource_t LPI2C13_Resource = {LPI2C_13, LPI2C13_GetFreq};
+#endif
 
 #if defined(RTE_I2C13_DMA_EN) && RTE_I2C13_DMA_EN
 
@@ -3557,12 +3613,16 @@ ARM_DRIVER_I2C Driver_I2C13 = {LPI2Cx_GetVersion,
 
 #endif /* LPI2C13 */
 
-#if defined(LPI2C14) && defined(RTE_I2C14) && RTE_I2C14
+#if (defined(LPI2C14) || defined(LPI2C_14)) && defined(RTE_I2C14) && RTE_I2C14
 /* User needs to provide the implementation for LPI2C14_GetFreq/InitPins/DeinitPins
 in the application for enabling according instance. */
 extern uint32_t LPI2C14_GetFreq(void);
 
+#if defined(LPI2C14)
 static cmsis_lpi2c_resource_t LPI2C14_Resource = {LPI2C14, LPI2C14_GetFreq};
+#elif defined(LPI2C_14)
+static cmsis_lpi2c_resource_t LPI2C14_Resource = {LPI2C_14, LPI2C14_GetFreq};
+#endif
 
 #if defined(RTE_I2C14_DMA_EN) && RTE_I2C14_DMA_EN
 
@@ -3744,12 +3804,16 @@ ARM_DRIVER_I2C Driver_I2C14 = {LPI2Cx_GetVersion,
 
 #endif /* LPI2C14 */
 
-#if defined(LPI2C15) && defined(RTE_I2C15) && RTE_I2C15
+#if (defined(LPI2C15) || defined(LPI2C_15)) && defined(RTE_I2C15) && RTE_I2C15
 /* User needs to provide the implementation for LPI2C15_GetFreq/InitPins/DeinitPins
 in the application for enabling according instance. */
 extern uint32_t LPI2C15_GetFreq(void);
 
+#if defined(LPI2C15)
 static cmsis_lpi2c_resource_t LPI2C15_Resource = {LPI2C15, LPI2C15_GetFreq};
+#elif defined(LPI2C_15)
+static cmsis_lpi2c_resource_t LPI2C15_Resource = {LPI2C_15, LPI2C15_GetFreq};
+#endif
 
 #if defined(RTE_I2C15_DMA_EN) && RTE_I2C15_DMA_EN
 
@@ -3931,12 +3995,16 @@ ARM_DRIVER_I2C Driver_I2C15 = {LPI2Cx_GetVersion,
 
 #endif /* LPI2C15 */
 
-#if defined(LPI2C16) && defined(RTE_I2C16) && RTE_I2C16
+#if (defined(LPI2C16) || defined(LPI2C_16)) && defined(RTE_I2C16) && RTE_I2C16
 /* User needs to provide the implementation for LPI2C16_GetFreq/InitPins/DeinitPins
 in the application for enabling according instance. */
 extern uint32_t LPI2C16_GetFreq(void);
 
+#if defined(LPI2C16)
 static cmsis_lpi2c_resource_t LPI2C16_Resource = {LPI2C16, LPI2C16_GetFreq};
+#elif defined(LPI2C_16)
+static cmsis_lpi2c_resource_t LPI2C16_Resource = {LPI2C_16, LPI2C16_GetFreq};
+#endif
 
 #if defined(RTE_I2C16_DMA_EN) && RTE_I2C16_DMA_EN
 
@@ -4118,12 +4186,16 @@ ARM_DRIVER_I2C Driver_I2C16 = {LPI2Cx_GetVersion,
 
 #endif /* LPI2C16 */
 
-#if defined(LPI2C17) && defined(RTE_I2C17) && RTE_I2C17
+#if (defined(LPI2C17) || defined(LPI2C_17)) && defined(RTE_I2C17) && RTE_I2C17
 /* User needs to provide the implementation for LPI2C17_GetFreq/InitPins/DeinitPins
 in the application for enabling according instance. */
 extern uint32_t LPI2C17_GetFreq(void);
 
+#if defined(LPI2C17)
 static cmsis_lpi2c_resource_t LPI2C17_Resource = {LPI2C17, LPI2C17_GetFreq};
+#elif defined(LPI2C_17)
+static cmsis_lpi2c_resource_t LPI2C17_Resource = {LPI2C_17, LPI2C17_GetFreq};
+#endif
 
 #if defined(RTE_I2C17_DMA_EN) && RTE_I2C17_DMA_EN
 
@@ -4305,12 +4377,16 @@ ARM_DRIVER_I2C Driver_I2C17 = {LPI2Cx_GetVersion,
 
 #endif /* LPI2C17 */
 
-#if defined(LPI2C18) && defined(RTE_I2C18) && RTE_I2C18
+#if (defined(LPI2C18) || defined(LPI2C_18)) && defined(RTE_I2C18) && RTE_I2C18
 /* User needs to provide the implementation for LPI2C18_GetFreq/InitPins/DeinitPins
 in the application for enabling according instance. */
 extern uint32_t LPI2C18_GetFreq(void);
 
+#if defined(LPI2C18)
 static cmsis_lpi2c_resource_t LPI2C18_Resource = {LPI2C18, LPI2C18_GetFreq};
+#elif defined(LPI2C_18)
+static cmsis_lpi2c_resource_t LPI2C18_Resource = {LPI2C_18, LPI2C18_GetFreq};
+#endif
 
 #if defined(RTE_I2C18_DMA_EN) && RTE_I2C18_DMA_EN
 
@@ -4492,12 +4568,16 @@ ARM_DRIVER_I2C Driver_I2C18 = {LPI2Cx_GetVersion,
 
 #endif /* LPI2C18 */
 
-#if defined(LPI2C19) && defined(RTE_I2C19) && RTE_I2C19
+#if (defined(LPI2C19) || defined(LPI2C_19)) && defined(RTE_I2C19) && RTE_I2C19
 /* User needs to provide the implementation for LPI2C19_GetFreq/InitPins/DeinitPins
 in the application for enabling according instance. */
 extern uint32_t LPI2C19_GetFreq(void);
 
+#if defined(LPI2C19)
 static cmsis_lpi2c_resource_t LPI2C19_Resource = {LPI2C19, LPI2C19_GetFreq};
+#elif defined(LPI2C_19)
+static cmsis_lpi2c_resource_t LPI2C19_Resource = {LPI2C_19, LPI2C19_GetFreq};
+#endif
 
 #if defined(RTE_I2C19_DMA_EN) && RTE_I2C19_DMA_EN
 
@@ -4679,12 +4759,16 @@ ARM_DRIVER_I2C Driver_I2C19 = {LPI2Cx_GetVersion,
 
 #endif /* LPI2C19 */
 
-#if defined(LPI2C20) && defined(RTE_I2C20) && RTE_I2C20
+#if (defined(LPI2C20) || defined(LPI2C_20)) && defined(RTE_I2C20) && RTE_I2C20
 /* User needs to provide the implementation for LPI2C20_GetFreq/InitPins/DeinitPins
 in the application for enabling according instance. */
 extern uint32_t LPI2C20_GetFreq(void);
 
+#if defined(LPI2C20)
 static cmsis_lpi2c_resource_t LPI2C20_Resource = {LPI2C20, LPI2C20_GetFreq};
+#elif defined(LPI2C_20)
+static cmsis_lpi2c_resource_t LPI2C20_Resource = {LPI2C_20, LPI2C20_GetFreq};
+#endif
 
 #if defined(RTE_I2C20_DMA_EN) && RTE_I2C20_DMA_EN
 

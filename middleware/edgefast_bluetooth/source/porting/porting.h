@@ -1,5 +1,5 @@
 /*
- * Copyright 2021, 2024, 2025 NXP
+ * Copyright 2021, 2024 NXP
  * Copyright (c) 2016, Wind River Systems, Inc.
  *
  * SPDX-License-Identifier: Apache-2.0
@@ -22,10 +22,6 @@
 #include <bluetooth/hci.h>
 
 #include "bt_ble_settings.h"
-
-#ifdef __cplusplus
-extern "C" {
-#endif
 
 #if ((defined(FSL_FEATURE_L2CACHE_LINESIZE_BYTE)) && (defined(FSL_FEATURE_L1DCACHE_LINESIZE_BYTE)))
 #define EDGEFAST_BT_CACHE_LINESIZE MAX(FSL_FEATURE_L2CACHE_LINESIZE_BYTE, FSL_FEATURE_L1DCACHE_LINESIZE_BYTE)
@@ -102,9 +98,5 @@ static inline atomic_ptr_val_t atomic_ptr_clear(atomic_ptr_t *target)
 {
 	return atomic_ptr_set(target, NULL);
 }
-
-#ifdef __cplusplus
-}
-#endif
 
 #endif /* __EDGEFAST_BT_BLE_PORTING_H__ */

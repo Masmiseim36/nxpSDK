@@ -77,7 +77,7 @@
 #define configTOTAL_HEAP_SIZE            ((size_t)(180 * 1024))
 #endif /* RW610 */
 #else
-#define configTOTAL_HEAP_SIZE            ((size_t)(180 * 1024))
+#define configTOTAL_HEAP_SIZE            ((size_t)(181 * 1024))
 #endif /* CONFIG_FREERTOS_LOW_MEMORY_FOOTPRINT */
 #define configAPPLICATION_ALLOCATED_HEAP 0
 

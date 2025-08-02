@@ -3,7 +3,7 @@
 *        Solutions for real time microcontroller applications        *
 **********************************************************************
 *                                                                    *
-*        (c) 1996 - 2024  SEGGER Microcontroller GmbH                *
+*        (c) 1996 - 2025  SEGGER Microcontroller GmbH                *
 *                                                                    *
 *        Internet: www.segger.com    Support:  support@segger.com    *
 *                                                                    *
@@ -679,8 +679,8 @@ static APPW_CREATE_ITEM _aCreate[] = {
   },
   { WM_OBJECT_BUTTON_Create,
     ID_BUTTON_DR, ID_SCREEN_TEMP_CTRL,
-    { { { DISPOSE_MODE_REL_PARENT, 2, 0, 0 },
-        { DISPOSE_MODE_REL_PARENT, 228, 0, 0 },
+    { { { DISPOSE_MODE_REL_PARENT, 4, 0, 0 },
+        { DISPOSE_MODE_REL_PARENT, 229, 0, 0 },
         { DISPOSE_MODE_NULL, 0, 0, 0 },
         { DISPOSE_MODE_NULL, 0, 0, 0 },
       },
@@ -954,6 +954,7 @@ static GUI_CONST_STORAGE APPW_SETUP_ITEM _aSetup[] = {
                                                          ARG_V(0) } },
   { ID_TEXT_TEMP_DR_B,     APPW_SET_PROP_RANGE,        { ARG_V(2),
                                                          ARG_V(30) } },
+  { ID_BUTTON_BR,          APPW_SET_PROP_TOGGLE,       { ARG_V(0) } },
   { ID_ROTARY_LR,          APPW_SET_PROP_SBITMAPS,     { ARG_VP(0, acKNOB_106x106),
                                                          ARG_VP(0, acGreenGlowMarker_16x9), } },
   { ID_ROTARY_LR,          APPW_SET_PROP_POS,          { ARG_V(42) } },
@@ -1242,10 +1243,6 @@ static GUI_CONST_STORAGE APPW_SETUP_ITEM _aSetup[] = {
 *       _aAction
 */
 static GUI_CONST_STORAGE APPW_ACTION_ITEM _aAction[] = {
-  { ID_SCREEN_TEMP_CTRL,   APPW_NOTIFICATION_INITDIALOG,     ID_WINDOW_BR_CTRLS,    APPW_JOB_SETVIS,         ID_SCREEN_TEMP_CTRL__APPW_NOTIFICATION_INITDIALOG__ID_WINDOW_BR_CTRLS__APPW_JOB_SETVIS,
-    { ARG_V(APPW_SET_ON),
-    }, 0, NULL
-  },
   { ID_SCREEN_TEMP_CTRL,   APPW_NOTIFICATION_INITDIALOG,     ID_WINDOW_LR_CTRLS,    APPW_JOB_SETVIS,         ID_SCREEN_TEMP_CTRL__APPW_NOTIFICATION_INITDIALOG__ID_WINDOW_LR_CTRLS__APPW_JOB_SETVIS,
     { ARG_V(APPW_SET_OFF),
     }, 0, NULL
@@ -1262,7 +1259,7 @@ static GUI_CONST_STORAGE APPW_ACTION_ITEM _aAction[] = {
     { ARG_V(APPW_SET_OFF),
     }, 0, NULL
   },
-  { ID_SCREEN_TEMP_CTRL,   APPW_NOTIFICATION_INITDIALOG,     ID_BOX_BR_BUTTON_HL,   APPW_JOB_SETVIS,         ID_SCREEN_TEMP_CTRL__APPW_NOTIFICATION_INITDIALOG__ID_BOX_BR_BUTTON_HL__APPW_JOB_SETVIS,
+  { ID_SCREEN_TEMP_CTRL,   APPW_NOTIFICATION_INITDIALOG,     ID_WINDOW_BR_CTRLS,    APPW_JOB_SETVIS,         ID_SCREEN_TEMP_CTRL__APPW_NOTIFICATION_INITDIALOG__ID_WINDOW_BR_CTRLS__APPW_JOB_SETVIS,
     { ARG_V(APPW_SET_ON),
     }, 0, NULL
   },
@@ -1282,8 +1279,8 @@ static GUI_CONST_STORAGE APPW_ACTION_ITEM _aAction[] = {
     { ARG_V(APPW_SET_OFF),
     }, 0, NULL
   },
-  { ID_SCREEN_TEMP_CTRL,   APPW_NOTIFICATION_INITDIALOG,     ID_TEXT_TEMP_BR,       APPW_JOB_SETVALUE,       ID_SCREEN_TEMP_CTRL__APPW_NOTIFICATION_INITDIALOG__ID_TEXT_DEGR_C__APPW_JOB_SETVALUE,
-    { ARG_V(15),
+  { ID_SCREEN_TEMP_CTRL,   APPW_NOTIFICATION_INITDIALOG,     ID_BOX_BR_BUTTON_HL,   APPW_JOB_SETVIS,         ID_SCREEN_TEMP_CTRL__APPW_NOTIFICATION_INITDIALOG__ID_BOX_BR_BUTTON_HL__APPW_JOB_SETVIS,
+    { ARG_V(APPW_SET_ON),
     }, 0, NULL
   },
   { ID_SCREEN_TEMP_CTRL,   APPW_NOTIFICATION_INITDIALOG,     ID_TEXT_TEMP_LR,       APPW_JOB_SETVALUE,       ID_SCREEN_TEMP_CTRL__APPW_NOTIFICATION_INITDIALOG__ID_TEXT_TEMP_BR__APPW_JOB_SETVALUE,
@@ -1299,6 +1296,10 @@ static GUI_CONST_STORAGE APPW_ACTION_ITEM _aAction[] = {
     }, 0, NULL
   },
   { ID_SCREEN_TEMP_CTRL,   APPW_NOTIFICATION_INITDIALOG,     ID_TEXT_TEMP_DR,       APPW_JOB_SETVALUE,       ID_SCREEN_TEMP_CTRL__APPW_NOTIFICATION_INITDIALOG__ID_TEXT_TEMP_FR__APPW_JOB_SETVALUE,
+    { ARG_V(15),
+    }, 0, NULL
+  },
+  { ID_SCREEN_TEMP_CTRL,   APPW_NOTIFICATION_INITDIALOG,     ID_TEXT_TEMP_BR,       APPW_JOB_SETVALUE,       ID_SCREEN_TEMP_CTRL__APPW_NOTIFICATION_INITDIALOG__ID_TEXT_DEGR_C__APPW_JOB_SETVALUE,
     { ARG_V(15),
     }, 0, NULL
   },

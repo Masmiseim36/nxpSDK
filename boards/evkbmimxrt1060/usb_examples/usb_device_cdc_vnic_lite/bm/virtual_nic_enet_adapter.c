@@ -129,7 +129,10 @@ static inline void *VNIC_EnetDequeueRxBuffer(void **queue)
     }
     if (NULL != buffer)
     {
-        s_dataRxBufferFreeCnt--;
+        if (s_dataRxBufferFreeCnt > 0U)
+        {
+            s_dataRxBufferFreeCnt--;
+        }
     }
     USB_DEVICE_VNIC_EXIT_CRITICAL();
     return buffer;
@@ -206,7 +209,10 @@ static inline void *VNIC_EnetDequeueTxBuffer(void **queue)
     }
     if (NULL != buffer)
     {
-        s_dataTxBufferFreeCnt--;
+        if (s_dataTxBufferFreeCnt > 0U)
+        {
+            s_dataTxBufferFreeCnt--;
+        }
     }
     USB_DEVICE_VNIC_EXIT_CRITICAL();
     return buffer;
@@ -255,6 +261,10 @@ void VNIC_EnetCallback(pbuf_t *pbuffer)
     else
     {
         g_cdcVnic.nicTrafficInfo.enetRxEnet2usb++;
+        if (g_cdcVnic.nicTrafficInfo.enetRxEnet2usb >= UINT32_MAX)
+        {
+            g_cdcVnic.nicTrafficInfo.enetRxEnet2usb = 0U;
+        }
     }
     return;
 }
@@ -276,6 +286,10 @@ usb_status_t VNIC_EnetTxDone(void)
         packetBuffer.length  = cdcAcmTransfer.length;
 
         g_cdcVnic.nicTrafficInfo.enetTxUsb2enetSent++;
+        if (g_cdcVnic.nicTrafficInfo.enetTxUsb2enetSent >= UINT32_MAX)
+        {
+            g_cdcVnic.nicTrafficInfo.enetTxUsb2enetSent = 0U;
+        }
         VNIC_EnetTxBufFree(&packetBuffer);
     }
 
@@ -337,6 +351,10 @@ usb_status_t VNIC_EnetSend(uint8_t *buf, uint32_t len)
     {
         sts = kStatus_USB_Busy;
         g_cdcVnic.nicTrafficInfo.enetTxHost2usbDiscard++;
+        if (g_cdcVnic.nicTrafficInfo.enetTxHost2usbDiscard >= UINT32_MAX)
+        {
+            g_cdcVnic.nicTrafficInfo.enetTxHost2usbDiscard = 0U;
+        }
         usb_echo("VNIC_EnetTxBufAlloc failed\n");
         return sts;
     }
@@ -355,6 +373,10 @@ usb_status_t VNIC_EnetSend(uint8_t *buf, uint32_t len)
         if (ENET_OK != error)
         {
             g_cdcVnic.nicTrafficInfo.enetTxUsb2enetFail++;
+            if (g_cdcVnic.nicTrafficInfo.enetTxUsb2enetFail >= UINT32_MAX)
+            {
+                g_cdcVnic.nicTrafficInfo.enetTxUsb2enetFail = 0U;
+            }
             VNIC_EnetTxBufFree(&packetBuffer);
             sts = kStatus_USB_Error;
             usb_echo("VNIC_EnetSend failed\n");
@@ -371,6 +393,10 @@ usb_status_t VNIC_EnetSend(uint8_t *buf, uint32_t len)
                 return sts;
             }
             g_cdcVnic.nicTrafficInfo.enetTxUsb2enet++;
+            if (g_cdcVnic.nicTrafficInfo.enetTxUsb2enet >= UINT32_MAX)
+            {
+                g_cdcVnic.nicTrafficInfo.enetTxUsb2enet = 0U;
+            }
         }
     }
 
@@ -416,6 +442,10 @@ usb_status_t VNIC_EnetClearEnetQueue(void)
             enetPbuf.length  = cdcAcmTransfer.length;
             VNIC_EnetRxBufFree(&enetPbuf);
             g_cdcVnic.nicTrafficInfo.enetRxUsb2hostCleared++;
+            if (g_cdcVnic.nicTrafficInfo.enetRxUsb2hostCleared >= UINT32_MAX)
+            {
+                g_cdcVnic.nicTrafficInfo.enetRxUsb2hostCleared = 0U;
+            }
         }
     }
     /* Clear Tx queue */
@@ -429,6 +459,10 @@ usb_status_t VNIC_EnetClearEnetQueue(void)
             enetPbuf.length  = cdcAcmTransfer.length;
             VNIC_EnetTxBufFree(&enetPbuf);
             g_cdcVnic.nicTrafficInfo.enetTxUsb2hostCleared++;
+            if (g_cdcVnic.nicTrafficInfo.enetTxUsb2hostCleared >= UINT32_MAX)
+            {
+                g_cdcVnic.nicTrafficInfo.enetTxUsb2hostCleared = 0U;
+            }
         }
     }
     return error;

@@ -28,6 +28,8 @@
 #include "board.h"
 
 #include "fsl_debug_console.h"
+#include <osa.h>
+#include "wlan.h"
 
 GPIO_HANDLE_DEFINE(s_WakeupGpioHandle);
 
@@ -60,7 +62,7 @@ static void (*wlan_host_sleep_post_cfg)(void);
 static lpm_power_mode_t s_targetPowerMode;
 static lpm_power_mode_t s_curRunMode = LPM_PowerModeOverRun;
 static SemaphoreHandle_t s_wakeupSig;
-
+extern bool wlan_is_manual;
 /*******************************************************************************
  * Code
  ******************************************************************************/
@@ -226,6 +228,12 @@ static void PowerModeSwitch(lpm_power_mode_t mode)
 
 void mcu_suspend()
 {
+    if (!wlan_is_manual)
+    {
+        PRINTF("Error: Maunal mode is not selected!\r\n");
+        return;
+    }
+
     if (wlan_host_sleep_pre_cfg)
     {
         wlan_host_sleep_pre_cfg();

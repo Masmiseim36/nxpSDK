@@ -28,7 +28,7 @@ The project uses RK043FN66HS-CT6 panel by default, to use other panels:
 
 If Kconfig is used, select the panel in Kconfig "Panel Selection".
 
-If package is used, modify the mcux_config.h, change DEMO_PANEL to 0 use RK043FN02H-CT.
+If package is used, modify the mcux_config.h, change LVGL_PANEL to 0 use RK043FN02H-CT.
 
 
 Steps to configure the pixel format
@@ -44,11 +44,15 @@ When package is used
 ----------------
 Modify the mcux_config.h change `CONFIG_LV_COLOR_DEPTH` to 32, 16, 8.
 
+#define CONFIG_LV_COLOR_DEPTH 8
+#define CONFIG_LV_COLOR_DEPTH_8 1
+
 Note:
 1. PXP doesn't support 8-bit, unselect `LV_USE_PXP`
 in Kconfig, or modify mcux_config.h like:
 ```
 #define CONFIG_LV_USE_PXP 0
+#define CONFIG_LV_ATTRIBUTE_MEM_ALIGN_SIZE 1
 ```
 
 Running the demo

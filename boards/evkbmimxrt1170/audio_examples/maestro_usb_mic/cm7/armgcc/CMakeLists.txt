@@ -14,9 +14,6 @@ if(CMAKE_SCRIPT_MODE_FILE)
 endif()
 
 
-set(CMAKE_STATIC_LIBRARY_PREFIX)
-set(CMAKE_STATIC_LIBRARY_SUFFIX)
-
 set(CMAKE_EXECUTABLE_LIBRARY_PREFIX)
 set(CMAKE_EXECUTABLE_LIBRARY_SUFFIX)
 
@@ -47,7 +44,6 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../FreeRTOSConfigBoard.h"
 "${ProjDirPath}/../startup_armgcc.c"
 "${ProjDirPath}/../app_definitions.h"
-"${ProjDirPath}/../app.h"
 "${ProjDirPath}/../app_streamer.c"
 "${ProjDirPath}/../audio_microphone.c"
 "${ProjDirPath}/../cmd.c"
@@ -67,6 +63,7 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../pin_mux.c"
 "${ProjDirPath}/../pin_mux.h"
 "${ProjDirPath}/../hardware_init.c"
+"${ProjDirPath}/../app.h"
 "${ProjDirPath}/../FreeRTOSConfig_Gen.h"
 "${ProjDirPath}/../fsl_debug_console_conf.h"
 "${ProjDirPath}/../fsl_os_abstraction_config.h"
@@ -80,6 +77,7 @@ target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
 
 set_source_files_properties("${ProjDirPath}/../FreeRTOSConfig_Gen.h" PROPERTIES COMPONENT_CONFIG_FILE "middleware_freertos-kernel_config")
 set_source_files_properties("${ProjDirPath}/../fsl_os_abstraction_config.h" PROPERTIES COMPONENT_CONFIG_FILE "component_osa_template_config")
+set_source_files_properties("${ProjDirPath}/../usb_device_config.h" PROPERTIES COMPONENT_CONFIG_FILE "middleware_usb_device_ehci_config_header")
 
 include(${SdkRootDirPath}/devices/MIMXRT1176/all_lib_device.cmake)
 

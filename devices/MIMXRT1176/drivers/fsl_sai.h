@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2022 NXP
+ * Copyright 2016-2022, 2025 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -22,7 +22,7 @@
 
 /*! @name Driver version */
 /*! @{ */
-#define FSL_SAI_DRIVER_VERSION (MAKE_VERSION(2, 4, 4)) /*!< Version 2.4.4 */
+#define FSL_SAI_DRIVER_VERSION (MAKE_VERSION(2, 4, 7)) /*!< Version 2.4.7 */
 /*! @} */
 
 /*! @brief _sai_status_t, SAI return status.*/
@@ -352,7 +352,9 @@ typedef struct _sai_fifo
 /*! @brief sai bit clock configurations */
 typedef struct _sai_bit_clock
 {
+#if defined(FSL_FEATURE_SAI_HAS_BIT_CLOCK_SWAP) && FSL_FEATURE_SAI_HAS_BIT_CLOCK_SWAP
     bool bclkSrcSwap;    /*!< bit clock source swap */
+#endif
     bool bclkInputDelay; /*!< bit clock actually used by the transmitter is delayed by the pad output delay,
                            this has effect of decreasing the data input setup time, but increasing the data output valid
                            time .*/
@@ -1427,6 +1429,22 @@ void SAI_TransferTxHandleIRQ(I2S_Type *base, sai_handle_t *handle);
  * @param handle Pointer to the sai_handle_t structure.
  */
 void SAI_TransferRxHandleIRQ(I2S_Type *base, sai_handle_t *handle);
+
+/*! @} */
+
+/*!
+ * @name Common IRQ Handler
+ * @{
+ */
+
+/*!
+ * @brief SAI driver IRQ handler common entry.
+ *
+ * This function provides the common IRQ request entry for SAI.
+ *
+ * @param instance SAI instance.
+ */
+void SAI_DriverIRQHandler(uint32_t instance);
 
 /*! @} */
 

@@ -4827,14 +4827,14 @@ static int cmd_bt_hci_test(const struct shell *sh, size_t argc, char *argv[])
 	const char *reset_type;
 
         shell_info(sh, "HCI command concurrency test start.");
-        if (xTaskCreate(shell_hci_test_low_task, "shell_hci_test_low_task", configMINIMAL_STACK_SIZE * 8, NULL,
+        if (xTaskCreate(shell_hci_test_low_task, "shell_hci_test_low_task", configMINIMAL_STACK_SIZE * 4, NULL,
                 	tskIDLE_PRIORITY + 1, NULL) != pdPASS)
         {
                 shell_error(sh, "shell_hci_test_low_task create failed!\r\n");
                 return -1;
         }
 
-        if (xTaskCreate(shell_hci_test_high_task, "shell_hci_test_high_task", configMINIMAL_STACK_SIZE * 8, NULL,
+        if (xTaskCreate(shell_hci_test_high_task, "shell_hci_test_high_task", configMINIMAL_STACK_SIZE * 4, NULL,
                         configMAX_PRIORITIES - 1, NULL) != pdPASS)
         {
                 shell_error(sh, "shell_hci_test_high_task create failed!\r\n");

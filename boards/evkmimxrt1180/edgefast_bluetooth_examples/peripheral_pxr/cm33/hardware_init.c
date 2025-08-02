@@ -51,7 +51,7 @@ void DMA4_CH58_CH59_LPUART10_IRQHandler(void)
     LPUART10_IRQHandler();
 }
 
-static void SEI_EAR_TRDC_EDMA4_ResetPermissions()
+static void TRDC_EDMA4_ResetPermissions()
 {
     uint8_t i, j;
     /* Set the master domain access configuration for eDMA4 */
@@ -165,7 +165,7 @@ void BOARD_SetDMA4Permission(void)
         result = MU_RT_S3MUA->RR[1];
     } while (result != 0xD6);
 
-    SEI_EAR_TRDC_EDMA4_ResetPermissions();
+    TRDC_EDMA4_ResetPermissions();
 }
 
 void BOARD_InitHardware(void)
@@ -182,7 +182,7 @@ void BOARD_InitHardware(void)
 }
 
 #if (defined(WIFI_88W8987_BOARD_MURATA_1ZM_M2) || defined(WIFI_IW416_BOARD_MURATA_1XK_M2) || \
-     defined(WIFI_IW612_BOARD_MURATA_2EL_M2))
+     defined(WIFI_IW612_BOARD_MURATA_2EL_M2) || defined(WIFI_IW610_BOARD_MURATA_2LL_M2))
 int controller_hci_uart_get_configuration(controller_hci_uart_config_t *config)
 {
     if (NULL == config)

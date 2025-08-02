@@ -1,0 +1,160 @@
+__param enable_core = 0;
+__param halt_master = 0;
+
+SystemReset()
+    //@RESET_DRIVER=cmsisdap,ijet
+    //@reset_index=4
+    //@reset_default=false
+{
+    __var r, w;
+    __var core_reset_request_bit_mask;
+    __var mem_0, mem_1, mem_2;
+    __var rom_trap_addr;
+    
+    if (!(__driverType("ijet") || __driverType("cmsisdap")))
+    {
+        return; // Only supported drivers.
+    }
+
+    core_reset_request_bit_mask = 0x400;  /* for CM7 core */
+
+    /* Halt the CPU and wait sometime for possible peripheral operation finish */
+    __probeCmd("/noerror dap.w 0xE000EDF0 0xA05F0003 2"); /* _DCB_DHCSR_ADDR */
+    __delay(10);
+
+    r = __probeCmd("dap.r 0xE000EDF0 2");  /* _DCB_DHCSR_ADDR */
+    if ((r & 0x02) == 0)
+    {
+        __message "ERR: CM7 core can't be halted!";
+    }
+
+    /* check and enable core request system reset */
+    r = __probeCmd("dap.r 0x54460018 2");  // _SRC_SRMASK_ADDR
+    if ( (r & core_reset_request_bit_mask) != 0 )
+    {
+        if ( (r & (core_reset_request_bit_mask<<16)) == 0 )
+        {
+            w = r & (~core_reset_request_bit_mask);
+            r = __probeCmd("dap.r 0x44460004 2"); /* _SRC_AUTHEN_CTRL_ADDR */
+            if ( (r & 0x80) == 0 )
+            {
+                __message "Enable system reset via CM7 core reset";
+                __probeCmd("/noerror dap.w 0x44460018", w, 2);  /* _SRC_SRMASK_ADDR */
+            }
+            else
+            {
+                __message "ERR: Core reset request is masked and all mask are locked!";
+            }
+        }
+        else
+        {
+            __message "ERR: Core reset request is masked and locked!";
+        }
+    }
+
+    /* Clear the reset status to avoid ROM clean the core TCM after reset */
+    r = __probeCmd("dap.r 0x54460050 2");  /* _SRC_SRSR_ADDR */
+    __probeCmd("dap.w 0x54460050", r, 2);  /* _SRC_SRSR_ADDR */
+    
+    /* CM7_KickOff will use the first 3 words(32bits) of CM7 ITCM, save and restore them later */
+    mem_0 = __probeCmd("dap.r 0 2");
+    mem_1 = __probeCmd("dap.r 4 2");
+    mem_2 = __probeCmd("dap.r 8 2");
+
+    r = __probeCmd("dap.r 0x5751804C 2"); /* _SI_VER_ADDR */
+    r = r & 0xF;
+    
+    if ( r == 1 )
+    {
+        rom_trap_addr = 0x100025D4;
+    }
+    else if ( r == 2 )
+    {
+        rom_trap_addr = 0x100025D4;
+    }
+    else
+    {
+        rom_trap_addr = 0x10002932;
+    }
+
+    __message "Set CM33 watch point";
+    __probeCmd("/noerror dap.w 0xE000EDF0 0xA05F0003 3"); /* _DCB_DHCSR_ADDR, Enable Debug and halt CM33 core */
+
+    __probeCmd("/noerror dap.w 0xE000EDFC 0x01000000 3");  /* _DCB_DEMCR_ADDR */
+    __probeCmd("/noerror dap.w 0xE0001020", rom_trap_addr, 3);  /* _DWT_COMP0_ADDR */
+    __probeCmd("/noerror dap.w 0xE0001028 0x00000412 3");  /* _DWT_FUNC0_ADDR */
+
+    __message "Execute SYSRESETREQ via AIRCR";
+    __probeCmd("/noerror dap.w 0xE000ED0C 0x05FA0004 2"); /* _SCB_AIRCR_ADDR */
+    __delay(200);
+    
+    r = __probeCmd("dap.r 0xE0001028 3"); /* _DWT_FUNC0_ADDR */
+    if ((r & 0x01000000) == 0)
+    {
+        __message "ERR: CM33 core is not trapped after reset!";
+    }
+    else
+    {
+        __message "CM33 core is trapped, 0x", r:%x;
+    }
+    
+    _enableM7Core(0);
+    
+    // Halt CM7 core
+    __probeCmd("/noerror dap.w 0xE000EDF0 0xA05F0003 2"); /* _DCB_DHCSR_ADDR */
+
+    __message "clear CM33 watch points";
+    __probeCmd("/noerror dap.w 0xE0001020", 0x0, 3);  /* _DWT_COMP0_ADDR */
+    __probeCmd("/noerror dap.w 0xE0001028", 0x0, 3);  /* _DWT_FUNC0_ADDR */
+
+    r = __probeCmd("dap.r 0xE000EDF0 2");  /* _DCB_DHCSR_ADDR */
+    if ((r & 0x02) == 0)
+    {
+        __message "ERR: CM7 core can not be halted!";
+    }
+    else
+    {
+        __message "restore CM7 ITCM";
+        __probeCmd("/noerror dap.w 0", mem_0, 2);
+        __probeCmd("/noerror dap.w 4", mem_1, 2);
+        __probeCmd("/noerror dap.w 8", mem_2, 2);
+    }
+}
+
+_ExecDeviceCoreConnect()
+{
+    __var reg;
+    if (!(__driverType("ijet") || __driverType("cmsisdap")))
+    {
+        return; // Only supported drivers.
+    }
+
+    //  _connect();
+
+    if(enable_core)
+    {
+        reg = __readMemory32(0x54460044,"AP0_Memory");  //SRC->SBMR2
+        reg = (reg >> 24) & 0x3F;
+
+        __message "Boot mode = 0x", reg:%x;
+
+        if((reg == 8) || (reg == 9)) // serial download mode, or fuse boot mode
+        {
+            _haltM33Core();
+        }
+        else
+        {
+            __message "Flash run mode, leave CM33 core run state as it was...";
+        }
+        _enableM7Core(1);
+    }
+
+    if(halt_master)
+    {
+
+    }
+}
+
+_ExecDevicePreload()
+{
+}

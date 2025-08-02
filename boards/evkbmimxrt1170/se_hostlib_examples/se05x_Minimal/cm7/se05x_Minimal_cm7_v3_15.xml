@@ -83,7 +83,8 @@
           <value>PRINTF_ADVANCED_ENABLE=1</value>
           <value>SDK_DEBUGCONSOLE=1</value>
           <value>MCUX_META_BUILD</value>
-          <value>CPU_MIMXRT1176DVMAA_cm7</value>
+          <value>CPU_MIMXRT1176DVMAB_cm7</value>
+          <value>MIMXRT1176_cm7_SERIES</value>
           <value>CRYPTO_USE_DRIVER_CAAM</value>
           <value>CACHE_MODE_WRITE_THROUGH=1</value>
           <value>SERIAL_PORT_TYPE_UART=1</value>

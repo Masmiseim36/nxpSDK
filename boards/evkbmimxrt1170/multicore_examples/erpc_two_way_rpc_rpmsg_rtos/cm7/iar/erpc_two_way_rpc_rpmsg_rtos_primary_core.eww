@@ -11,6 +11,14 @@
         <project>erpc_two_way_rpc_rpmsg_rtos_primary_core</project>
         <configuration>flexspi_nor_release</configuration>
       </member>
+      <member>
+        <project>erpc_two_way_rpc_rpmsg_rtos_secondary_core</project>
+        <configuration>flexspi_nor_debug</configuration>
+      </member>
+      <member>
+        <project>erpc_two_way_rpc_rpmsg_rtos_secondary_core</project>
+        <configuration>flexspi_nor_release</configuration>
+      </member>
     </batchDefinition>
     <batchDefinition>
       <name>flexspi_nor_debug</name>
@@ -18,11 +26,19 @@
         <project>erpc_two_way_rpc_rpmsg_rtos_primary_core</project>
         <configuration>flexspi_nor_debug</configuration>
       </member>
+      <member>
+        <project>erpc_two_way_rpc_rpmsg_rtos_secondary_core</project>
+        <configuration>flexspi_nor_debug</configuration>
+      </member>
     </batchDefinition>
     <batchDefinition>
       <name>flexspi_nor_release</name>
       <member>
         <project>erpc_two_way_rpc_rpmsg_rtos_primary_core</project>
+        <configuration>flexspi_nor_release</configuration>
+      </member>
+      <member>
+        <project>erpc_two_way_rpc_rpmsg_rtos_secondary_core</project>
         <configuration>flexspi_nor_release</configuration>
       </member>
     </batchDefinition>

@@ -1,5 +1,5 @@
 /*
- * Copyright 2021-2023 NXP
+ * Copyright 2021-2023,2025 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -38,7 +38,6 @@ typedef struct _pcm_rtos_t
     OSA_SEMAPHORE_HANDLE_DEFINE(semaphoreRX);
     OSA_SEMAPHORE_HANDLE_DEFINE(semaphoreTX);
 
-    uint8_t isFirstRx;
     uint8_t isFirstTx;
 
     bool dummy_tx_enable;

@@ -38,11 +38,18 @@ Use the Stop and then the Start button to get it running again.
 .
 .
 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Note:
-The "Copy Secondary core image to address..." log message is not displayed on the terminal window when MCUXpresso IDE is used.
-In case of MCUXpresso IDE the secondary core image is copied to the target memory during startup automatically.
+Secondary core cannot be stopped!
 
-Note:
-MIMXRT1180-EVK GPIO_AON_04 pin is shared between SW8 button and headphone HP_DET_B pin. Once a headphone is inserted into
-J101 Audio Jack connector the SW8 button functionality is affected. Please remove the headphone in this case.
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+> **_NOTE: #1_**:
+> The MIMXRT1180-EVK board does not support stopping of secondary code.
+> After pressing the button prints that secondary core cannot be stopped.
+> Only way to start the secondary core again is POR.
+
+> **_NOTE: #2_**:
+> The "Copy Secondary core image to address..." log message is not displayed on the terminal window when MCUXpresso IDE is used.
+> In case of MCUXpresso IDE the secondary core image is copied to the target memory during startup automatically.
+
+> **_NOTE: #3_**:
+> MIMXRT1180-EVK GPIO_AON_04 pin is shared between SW8 button and headphone HP_DET_B pin. Once a headphone is inserted into
+> J101 Audio Jack connector the SW8 button functionality is affected. Please remove the headphone in this case.

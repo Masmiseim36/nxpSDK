@@ -1,14 +1,23 @@
 /*
- * Copyright 2016-2022 NXP
- * All rights reserved.
+ * Copyright 2022-2024 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-#ifndef _FSL_ECAT_H_
-#define _FSL_ECAT_H_
+#ifndef FSL_ECAT_H_
+#define FSL_ECAT_H_
 
 #include "fsl_common.h"
+
+/*******************************************************************************
+ * Definitions
+ ******************************************************************************/
+
+/*! @name Driver version */
+/*! @{ */
+/*! @brief eCAT driver version */
+#define FSL_ECAT_DRIVER_VERSION (MAKE_VERSION(2, 0, 0)) /*!< Version 2.0.0. */
+/*! @} */
 
 /*! @brief Returns the first 16Bit of the AL Event register (0x220).*/
 #define ECAT_GetALEventRegister(ecat)   (uint16_t)((ecat)->AL_EVENT_REQUEST)
@@ -50,4 +59,4 @@ status_t ECAT_EscMdioRead(ECAT_Type *ecat, uint8_t phy_addr, uint8_t reg_addr, u
  */
 status_t ECAT_EscMdioWrite(ECAT_Type *ecat, uint8_t phy_addr, uint8_t reg_addr, uint16_t data);
 
-#endif /* _FSL_ECAT_H_ */
+#endif /* FSL_ECAT_H_ */

@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2020 NXP
+ * Copyright 2017-2020,2025 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -14,9 +14,6 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-
-#define SEMC_EXAMPLE_DATALEN    (0x1000U)
-#define SEMC_EXAMPLE_WRITETIMES (1000U)
 
 /*******************************************************************************
  * Prototypes

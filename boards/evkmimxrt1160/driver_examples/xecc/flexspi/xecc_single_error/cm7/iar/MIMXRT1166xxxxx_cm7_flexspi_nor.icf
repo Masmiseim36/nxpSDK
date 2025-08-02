@@ -110,6 +110,7 @@ initialize by copy {
   object flexspi_nor_flash_ops.o,
   object fsl_flexspi.o,
   object fsl_xecc.o,
+  object flexspi_xecc_ops.o,
   section .textrw,
   section CodeQuickAccess
 };

@@ -32,7 +32,7 @@ static int parameter_parser(char **str, char *parameter_name, int32_t *parameter
 	char *s = *str;
 	if (strncmp(parameter_name, s, len) == 0) {
 		s += len;
-		n = sscanf(s, "=%d", parameter);
+		n = sscanf(s, "=%ld", parameter);
 		if (n != 1) {
 			printf("The parameter \"%s\" can not be assigned\r\n", parameter_name);
 			return -1;
@@ -242,7 +242,7 @@ static int Tp_arrays_parser(struct axis_t *axis, char *tp_str, uint32_t period_n
 	origin_pos = bias;
 	while (1) {
 		skip_blank(p);
-		n = sscanf(p, "(%d:%d)", &value, &time);
+		n = sscanf(p, "(%ld:%ld)", &value, &time);
 		if (n != 2)
 			return -5;
 		next_pos = bias + value;
@@ -259,7 +259,7 @@ static int Tp_arrays_parser(struct axis_t *axis, char *tp_str, uint32_t period_n
 		p++;
 	}
 	if (status->is_cyclic) {
-		n = sscanf(tp_arrays, "(%d:%d)", &value, &time);
+		n = sscanf(tp_arrays, "(%ld:%ld)", &value, &time);
 		if (n != 2)
 			return -5;
 		next_pos = bias + value;

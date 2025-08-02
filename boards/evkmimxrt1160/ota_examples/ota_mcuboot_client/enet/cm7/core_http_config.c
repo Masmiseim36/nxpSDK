@@ -51,7 +51,6 @@ int32_t coreHttp_send(NetworkContext_t *pNetworkContext, const void *pBuffer, si
     else if (cnt < 0)
     {
         LogError(("coreHttp_send: ssl_send FAILED with %d\n", cnt));
-        return cnt;
     }
 
     return cnt;

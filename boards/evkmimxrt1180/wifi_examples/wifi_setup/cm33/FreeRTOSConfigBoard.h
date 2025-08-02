@@ -33,7 +33,8 @@
     extern uint32_t SystemCoreClock;
 #endif
 
-#if (defined(CPU_MIMXRT1181CVP2B) || defined(CPU_MIMXRT1182CVP2B) || defined(CPU_MIMXRT1187CVM8B_cm33) || defined(CPU_MIMXRT1189CVM8B_cm33)) 
+#if defined(MIMXRT1181_SERIES) || defined(MIMXRT1182_SERIES) || defined(MIMXRT1186_cm33_SERIES) || defined(MIMXRT1187_cm33_SERIES) || defined(MIMXRT1189_cm33_SERIES)
+
 #ifndef configENABLE_FPU
   #define configENABLE_FPU                        1
 #endif

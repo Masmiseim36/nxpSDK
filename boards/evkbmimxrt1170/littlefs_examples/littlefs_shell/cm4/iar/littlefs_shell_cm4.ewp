@@ -244,7 +244,8 @@
           <state>SDK_DEBUGCONSOLE_UART</state>
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
-          <state>CPU_MIMXRT1176DVMAA_cm4</state>
+          <state>CPU_MIMXRT1176DVMAB_cm4</state>
+          <state>MIMXRT1176_cm4_SERIES</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>MFLASH_FILE_BASEADDR=14221312</state>
         </option>
@@ -374,16 +375,16 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/cm4</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/shell</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/flash/mflash</state>
           <state>$PROJ_DIR$/../../../../../../components/flash/mflash/mimxrt1170evkb</state>
           <state>$PROJ_DIR$/../../../../../../middleware/littlefs</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/littlefs/mflash</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -568,7 +569,8 @@
         <option>
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
-          <state>CPU_MIMXRT1176DVMAA_cm4</state>
+          <state>CPU_MIMXRT1176DVMAB_cm4</state>
+          <state>MIMXRT1176_cm4_SERIES</state>
         </option>
         <option>
           <name>AList</name>
@@ -667,16 +669,16 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/cm4</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/shell</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/flash/mflash</state>
           <state>$PROJ_DIR$/../../../../../../components/flash/mflash/mimxrt1170evkb</state>
           <state>$PROJ_DIR$/../../../../../../middleware/littlefs</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/littlefs/mflash</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -1388,7 +1390,8 @@
           <state>SDK_DEBUGCONSOLE_UART</state>
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
-          <state>CPU_MIMXRT1176DVMAA_cm4</state>
+          <state>CPU_MIMXRT1176DVMAB_cm4</state>
+          <state>MIMXRT1176_cm4_SERIES</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>MFLASH_FILE_BASEADDR=14221312</state>
         </option>
@@ -1518,16 +1521,16 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/cm4</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/shell</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/flash/mflash</state>
           <state>$PROJ_DIR$/../../../../../../components/flash/mflash/mimxrt1170evkb</state>
           <state>$PROJ_DIR$/../../../../../../middleware/littlefs</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/littlefs/mflash</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1712,7 +1715,8 @@
         <option>
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
-          <state>CPU_MIMXRT1176DVMAA_cm4</state>
+          <state>CPU_MIMXRT1176DVMAB_cm4</state>
+          <state>MIMXRT1176_cm4_SERIES</state>
         </option>
         <option>
           <name>AList</name>
@@ -1811,16 +1815,16 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/cm4</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/shell</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/flash/mflash</state>
           <state>$PROJ_DIR$/../../../../../../components/flash/mflash/mimxrt1170evkb</state>
           <state>$PROJ_DIR$/../../../../../../middleware/littlefs</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/littlefs/mflash</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -2530,7 +2534,8 @@
           <state>SDK_DEBUGCONSOLE_UART</state>
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
-          <state>CPU_MIMXRT1176DVMAA_cm4</state>
+          <state>CPU_MIMXRT1176DVMAB_cm4</state>
+          <state>MIMXRT1176_cm4_SERIES</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>MFLASH_FILE_BASEADDR=14221312</state>
         </option>
@@ -2660,16 +2665,16 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/cm4</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/shell</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/flash/mflash</state>
           <state>$PROJ_DIR$/../../../../../../components/flash/mflash/mimxrt1170evkb</state>
           <state>$PROJ_DIR$/../../../../../../middleware/littlefs</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/littlefs/mflash</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -2854,7 +2859,8 @@
         <option>
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
-          <state>CPU_MIMXRT1176DVMAA_cm4</state>
+          <state>CPU_MIMXRT1176DVMAB_cm4</state>
+          <state>MIMXRT1176_cm4_SERIES</state>
         </option>
         <option>
           <name>AList</name>
@@ -2953,16 +2959,16 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/cm4</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/shell</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/flash/mflash</state>
           <state>$PROJ_DIR$/../../../../../../components/flash/mflash/mimxrt1170evkb</state>
           <state>$PROJ_DIR$/../../../../../../middleware/littlefs</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/littlefs/mflash</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -3675,7 +3681,8 @@
           <state>SDK_DEBUGCONSOLE_UART</state>
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
-          <state>CPU_MIMXRT1176DVMAA_cm4</state>
+          <state>CPU_MIMXRT1176DVMAB_cm4</state>
+          <state>MIMXRT1176_cm4_SERIES</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>MFLASH_FILE_BASEADDR=14221312</state>
         </option>
@@ -3805,16 +3812,16 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/cm4</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/shell</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/flash/mflash</state>
           <state>$PROJ_DIR$/../../../../../../components/flash/mflash/mimxrt1170evkb</state>
           <state>$PROJ_DIR$/../../../../../../middleware/littlefs</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/littlefs/mflash</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -3999,7 +4006,8 @@
         <option>
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
-          <state>CPU_MIMXRT1176DVMAA_cm4</state>
+          <state>CPU_MIMXRT1176DVMAB_cm4</state>
+          <state>MIMXRT1176_cm4_SERIES</state>
         </option>
         <option>
           <name>AList</name>
@@ -4098,16 +4106,16 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/cm4</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/shell</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/flash/mflash</state>
           <state>$PROJ_DIR$/../../../../../../components/flash/mflash/mimxrt1170evkb</state>
           <state>$PROJ_DIR$/../../../../../../middleware/littlefs</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/littlefs/mflash</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -4577,12 +4585,6 @@
     <name>source</name>
     <file>
       <name>$PROJ_DIR$/../littlefs_shell.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../lfs_mflash.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../lfs_mflash.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../peripherals.c</name>
@@ -5083,10 +5085,10 @@
   <group>
     <name>utilities</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/fsl_assert.h</name>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/debug_console/fsl_assert.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/fsl_assert.c</name>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/debug_console/fsl_assert.c</name>
     </file>
     <group>
       <name>str</name>
@@ -5190,6 +5192,15 @@
     <file>
       <name>$PROJ_DIR$/../../../../../../middleware/littlefs/lfs_util.h</name>
     </file>
+    <group>
+      <name>mflash</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/littlefs/mflash/lfs_mflash.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/littlefs/mflash/lfs_mflash.h</name>
+      </file>
+    </group>
   </group>
   <group>
     <name>doc</name>
@@ -5198,6 +5209,9 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../example_board_readme.md</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../examples_shared_readme.md</name>
     </file>
   </group>
 </project>

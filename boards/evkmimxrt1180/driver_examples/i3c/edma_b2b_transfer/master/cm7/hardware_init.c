@@ -9,31 +9,11 @@
 #include "board.h"
 #include "fsl_edma.h"
 #include "fsl_trdc.h"
-#include "fsl_ele_base_api.h"
 /*${header:end}*/
 
 /*${macro:start}*/
 /* When CM33 set TRDC, CM7 must NOT require TRDC ownership from ELE */
 #define CM33_SET_TRDC 0U
-
-#define ELE_TRDC_AON_ID    0x74
-#define ELE_TRDC_WAKEUP_ID 0x78
-#define ELE_CORE_CM33_ID   0x1
-#define ELE_CORE_CM7_ID    0x2
-
-/*
- * Set ELE_STICK_FAILED_STS to 0 when ELE status check is not required,
- * which is useful when debug reset, where the core has already get the
- * TRDC ownership at first time and ELE is not able to release TRDC
- * ownership again for the following TRDC ownership request.
- */
-#define ELE_STICK_FAILED_STS 1
-
-#if ELE_STICK_FAILED_STS
-#define ELE_IS_FAILED(x) (x != kStatus_Success)
-#else
-#define ELE_IS_FAILED(x) false
-#endif
 /*${macro:end}*/
 
 /*${variable:start}*/
@@ -41,7 +21,7 @@
 
 /*${function:start}*/
 #if !(defined(CM33_SET_TRDC) && (CM33_SET_TRDC > 0U))
-static void SEI_EAR_TRDC_EDMA4_ResetPermissions()
+static void TRDC_EDMA4_ResetPermissions()
 {
     uint8_t i, j;
     /* Set the master domain access configuration for eDMA4 */
@@ -95,28 +75,9 @@ static void SEI_EAR_TRDC_EDMA4_ResetPermissions()
 
 void BOARD_SetDMA4Permission(void)
 {
-    status_t sts;
+    BOARD_RequestTRDC(true, true, false);
 
-    /* Get ELE FW status */
-    do
-    {
-        uint32_t ele_fw_sts;
-        sts = ELE_BaseAPI_GetFwStatus(MU_RT_S3MUA, &ele_fw_sts);
-    } while (sts != kStatus_Success);
-
-    /* Release TRDC A to CM33 core */
-    do
-    {
-        sts = ELE_BaseAPI_ReleaseRDC(MU_RT_S3MUA, ELE_TRDC_AON_ID, ELE_CORE_CM7_ID);
-    } while (ELE_IS_FAILED(sts));
-
-    /* Release TRDC W to CM33 core */
-    do
-    {
-        sts = ELE_BaseAPI_ReleaseRDC(MU_RT_S3MUA, ELE_TRDC_WAKEUP_ID, ELE_CORE_CM7_ID);
-    } while (ELE_IS_FAILED(sts));
-
-    SEI_EAR_TRDC_EDMA4_ResetPermissions();
+    TRDC_EDMA4_ResetPermissions();
 }
 #endif /* !(defined(CM33_SET_TRDC) && (CM33_SET_TRDC > 0U)) */
 

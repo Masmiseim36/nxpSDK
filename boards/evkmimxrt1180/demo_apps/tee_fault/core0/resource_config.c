@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 NXP
+ * Copyright 2024-2025 NXP
  * All rights reserved.
  *
  *
@@ -15,15 +15,16 @@
 /* clang-format off */
 /* TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 !!GlobalInfo
-product: TEE v5.0
+product: TEE v9.0
 processor: MIMXRT1189xxxxx
 package_id: MIMXRT1189CVM8B
 mcu_data: ksdk2_0
-processor_version: 0.14.12
+processor_version: 0.2506.20
 board: MIMXRT1180-EVK
 toolOptions:
   _legacy_source_names_: 'no'
   _resilient_code_reg_writes_: 'no'
+  _release_ele_: 'yes'
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS **********/
 /* clang-format on */
 
@@ -32,6 +33,7 @@ toolOptions:
  * Included files
  **********************************************************************************************************************/
 #include "fsl_common.h"
+#include "fsl_mu.h"
 #include "resource_config.h"
 
 /* clang-format off */
@@ -45,62 +47,6 @@ functional_group:
 - root:
   - trdc:
     - id: '0'
-    - ports:
-      - RGPIO1: {pin_security: {id: '0', security: s_priv}, pin_security: {id: '1', security: s_priv}, pin_security: {id: '10', security: s_priv}, pin_security: {
-          id: '11', security: s_priv}, pin_security: {id: '12', security: s_priv}, pin_security: {id: '13', security: s_priv}, pin_security: {id: '14', security: s_priv},
-        pin_security: {id: '15', security: s_priv}, pin_security: {id: '16', security: s_priv}, pin_security: {id: '17', security: s_priv}, pin_security: {id: '18',
-          security: s_priv}, pin_security: {id: '19', security: s_priv}, pin_security: {id: '2', security: s_priv}, pin_security: {id: '20', security: s_priv}, pin_security: {
-          id: '21', security: s_priv}, pin_security: {id: '22', security: s_priv}, pin_security: {id: '23', security: s_priv}, pin_security: {id: '24', security: s_priv},
-        pin_security: {id: '25', security: s_priv}, pin_security: {id: '26', security: s_priv}, pin_security: {id: '27', security: s_priv}, pin_security: {id: '3',
-          security: s_priv}, pin_security: {id: '4', security: s_priv}, pin_security: {id: '5', security: s_priv}, pin_security: {id: '6', security: s_priv}, pin_security: {
-          id: '7', security: s_priv}, pin_security: {id: '8', security: s_priv}, pin_security: {id: '9', security: s_priv}, pin_interrupt_security: {id: '0', security: s_priv},
-        pin_interrupt_security: {id: '1', security: s_priv}}
-      - RGPIO2: {pin_security: {id: '0', security: s_priv}, pin_security: {id: '1', security: s_priv}, pin_security: {id: '10', security: s_priv}, pin_security: {
-          id: '11', security: s_priv}, pin_security: {id: '12', security: s_priv}, pin_security: {id: '13', security: s_priv}, pin_security: {id: '14', security: s_priv},
-        pin_security: {id: '15', security: s_priv}, pin_security: {id: '16', security: s_priv}, pin_security: {id: '17', security: s_priv}, pin_security: {id: '18',
-          security: s_priv}, pin_security: {id: '19', security: s_priv}, pin_security: {id: '2', security: s_priv}, pin_security: {id: '20', security: s_priv}, pin_security: {
-          id: '21', security: s_priv}, pin_security: {id: '22', security: s_priv}, pin_security: {id: '23', security: s_priv}, pin_security: {id: '24', security: s_priv},
-        pin_security: {id: '25', security: s_priv}, pin_security: {id: '26', security: s_priv}, pin_security: {id: '27', security: s_priv}, pin_security: {id: '28',
-          security: s_priv}, pin_security: {id: '29', security: s_priv}, pin_security: {id: '3', security: s_priv}, pin_security: {id: '30', security: s_priv}, pin_security: {
-          id: '31', security: s_priv}, pin_security: {id: '4', security: s_priv}, pin_security: {id: '5', security: s_priv}, pin_security: {id: '6', security: s_priv},
-        pin_security: {id: '7', security: s_priv}, pin_security: {id: '8', security: s_priv}, pin_security: {id: '9', security: s_priv}, pin_interrupt_security: {
-          id: '0', security: s_priv}, pin_interrupt_security: {id: '1', security: s_priv}}
-      - RGPIO3: {pin_security: {id: '0', security: s_priv}, pin_security: {id: '1', security: s_priv}, pin_security: {id: '10', security: s_priv}, pin_security: {
-          id: '11', security: s_priv}, pin_security: {id: '12', security: s_priv}, pin_security: {id: '13', security: s_priv}, pin_security: {id: '14', security: s_priv},
-        pin_security: {id: '15', security: s_priv}, pin_security: {id: '16', security: s_priv}, pin_security: {id: '17', security: s_priv}, pin_security: {id: '18',
-          security: s_priv}, pin_security: {id: '19', security: s_priv}, pin_security: {id: '2', security: s_priv}, pin_security: {id: '20', security: s_priv}, pin_security: {
-          id: '21', security: s_priv}, pin_security: {id: '22', security: s_priv}, pin_security: {id: '23', security: s_priv}, pin_security: {id: '24', security: s_priv},
-        pin_security: {id: '25', security: s_priv}, pin_security: {id: '26', security: s_priv}, pin_security: {id: '27', security: s_priv}, pin_security: {id: '28',
-          security: s_priv}, pin_security: {id: '29', security: s_priv}, pin_security: {id: '3', security: s_priv}, pin_security: {id: '30', security: s_priv}, pin_security: {
-          id: '4', security: s_priv}, pin_security: {id: '5', security: s_priv}, pin_security: {id: '6', security: s_priv}, pin_security: {id: '7', security: s_priv},
-        pin_security: {id: '8', security: s_priv}, pin_security: {id: '9', security: s_priv}, pin_interrupt_security: {id: '0', security: s_priv}, pin_interrupt_security: {
-          id: '1', security: s_priv}}
-      - RGPIO4: {pin_security: {id: '0', security: s_priv}, pin_security: {id: '1', security: s_priv}, pin_security: {id: '10', security: s_priv}, pin_security: {
-          id: '11', security: s_priv}, pin_security: {id: '12', security: s_priv}, pin_security: {id: '13', security: s_priv}, pin_security: {id: '14', security: s_priv},
-        pin_security: {id: '15', security: s_priv}, pin_security: {id: '16', security: s_priv}, pin_security: {id: '17', security: s_priv}, pin_security: {id: '18',
-          security: s_priv}, pin_security: {id: '19', security: s_priv}, pin_security: {id: '2', security: s_priv}, pin_security: {id: '20', security: s_priv}, pin_security: {
-          id: '21', security: s_priv}, pin_security: {id: '22', security: s_priv}, pin_security: {id: '23', security: s_priv}, pin_security: {id: '24', security: s_priv},
-        pin_security: {id: '25', security: s_priv}, pin_security: {id: '26', security: s_priv}, pin_security: {id: '27', security: s_priv}, pin_security: {id: '28',
-          security: s_priv}, pin_security: {id: '29', security: s_priv}, pin_security: {id: '3', security: s_priv}, pin_security: {id: '30', security: s_priv}, pin_security: {
-          id: '31', security: s_priv}, pin_security: {id: '4', security: s_priv}, pin_security: {id: '5', security: s_priv}, pin_security: {id: '6', security: s_priv},
-        pin_security: {id: '7', security: s_priv}, pin_security: {id: '8', security: s_priv}, pin_security: {id: '9', security: s_priv}, pin_interrupt_security: {
-          id: '0', security: s_priv}, pin_interrupt_security: {id: '1', security: s_priv}}
-      - RGPIO5: {pin_security: {id: '0', security: s_priv}, pin_security: {id: '1', security: s_priv}, pin_security: {id: '10', security: s_priv}, pin_security: {
-          id: '11', security: s_priv}, pin_security: {id: '12', security: s_priv}, pin_security: {id: '13', security: s_priv}, pin_security: {id: '14', security: s_priv},
-        pin_security: {id: '15', security: s_priv}, pin_security: {id: '16', security: s_priv}, pin_security: {id: '17', security: s_priv}, pin_security: {id: '18',
-          security: s_priv}, pin_security: {id: '19', security: s_priv}, pin_security: {id: '2', security: s_priv}, pin_security: {id: '20', security: s_priv}, pin_security: {
-          id: '21', security: s_priv}, pin_security: {id: '3', security: s_priv}, pin_security: {id: '4', security: s_priv}, pin_security: {id: '5', security: s_priv},
-        pin_security: {id: '6', security: s_priv}, pin_security: {id: '7', security: s_priv}, pin_security: {id: '8', security: s_priv}, pin_security: {id: '9', security: s_priv},
-        pin_interrupt_security: {id: '0', security: s_priv}, pin_interrupt_security: {id: '1', security: s_priv}}
-      - RGPIO6: {pin_security: {id: '0', security: s_priv}, pin_security: {id: '1', security: s_priv}, pin_security: {id: '10', security: s_priv}, pin_security: {
-          id: '11', security: s_priv}, pin_security: {id: '12', security: s_priv}, pin_security: {id: '13', security: s_priv}, pin_security: {id: '14', security: s_priv},
-        pin_security: {id: '15', security: s_priv}, pin_security: {id: '16', security: s_priv}, pin_security: {id: '17', security: s_priv}, pin_security: {id: '18',
-          security: s_priv}, pin_security: {id: '19', security: s_priv}, pin_security: {id: '2', security: s_priv}, pin_security: {id: '20', security: s_priv}, pin_security: {
-          id: '21', security: s_priv}, pin_security: {id: '22', security: s_priv}, pin_security: {id: '23', security: s_priv}, pin_security: {id: '24', security: s_priv},
-        pin_security: {id: '25', security: s_priv}, pin_security: {id: '26', security: s_priv}, pin_security: {id: '27', security: s_priv}, pin_security: {id: '3',
-          security: s_priv}, pin_security: {id: '4', security: s_priv}, pin_security: {id: '5', security: s_priv}, pin_security: {id: '6', security: s_priv}, pin_security: {
-          id: '7', security: s_priv}, pin_security: {id: '8', security: s_priv}, pin_security: {id: '9', security: s_priv}, pin_interrupt_security: {id: '0', security: s_priv},
-        pin_interrupt_security: {id: '1', security: s_priv}}
     - masters: [{id: cm33, domain_assignments: [{enabled: 'true', locked: 'false', domain_id: '2', secure: s, domain_input: mda}, {enabled: 'false', locked: 'false',
             domain_id: '0', secure: s, domain_input: mda}, {enabled: 'false', locked: 'false', domain_id: '0', secure: s, domain_input: mda}]}, {id: edma1, domain_assignments: [
           {enabled: 'true', locked: 'true', domain_id: '7', secure: ns, privileged: bypass, domain_bypass: 'false'}]}]
@@ -151,158 +97,261 @@ functional_group:
               {security: s, template: ALL}]}, {id: BBNSM, domains: [{security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s,
                 template: ALL}, {security: s, template: ALL}, {security: ns, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s,
                 template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s,
-                template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}]}, {id: ROM, domains: [{security: s, template: ALL}, {security: s, template: ALL},
-              {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: ns, template: ALL}, {security: s, template: ALL},
-              {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
-              {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}]}, {id: CP_CM33_IMX9RTC__CM33_TCM_MCM,
-            domains: [{security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
-              {security: ns, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
-              {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
-              {security: s, template: ALL}]}, {id: BLK_CTRL_BBSMMIX, domains: [{security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
-              {security: s, template: ALL}, {security: s, template: ALL}, {security: ns, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
-              {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
-              {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}]}, {id: XCACHE_PC, domains: [{security: s, template: ALL},
+                template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}]}, {id: CP_CM33_IMX9RTC__CM33_TCM_MCM, domains: [{security: s, template: ALL},
               {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: ns, template: ALL},
               {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
               {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}]},
-          {id: M33_PSF1, domains: [{security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s,
-                template: ALL}, {security: ns, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s,
-                template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s,
-                template: ALL}, {security: s, template: ALL}]}, {id: M33_PCF1, domains: [{security: s, template: ALL}, {security: s, template: ALL}, {security: s,
-                template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: ns, template: ALL}, {security: s, template: ALL}, {security: s,
-                template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s,
-                template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}]}, {id: IOMUXC_AON, domains: [{security: s,
-                template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: ns,
-                template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s,
-                template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s,
-                template: ALL}]}, {id: SAI1, domains: [{security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
+          {id: BLK_CTRL_BBSMMIX, domains: [{security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
               {security: s, template: ALL}, {security: ns, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
               {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
-              {security: s, template: ALL}, {security: s, template: ALL}]}, {id: CAN1, domains: [{security: s, template: ALL}, {security: s, template: ALL}, {security: s,
-                template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: ns, template: ALL}, {security: s, template: ALL}, {security: s,
+              {security: s, template: ALL}, {security: s, template: ALL}]}, {id: XCACHE_PC, domains: [{security: s, template: ALL}, {security: s, template: ALL},
+              {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: ns, template: ALL}, {security: s, template: ALL},
+              {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
+              {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}]}, {id: M33_PSF1, domains: [
+              {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
+              {security: ns, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
+              {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
+              {security: s, template: ALL}]}, {id: M33_PCF1, domains: [{security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {
+                security: s, template: ALL}, {security: s, template: ALL}, {security: ns, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
+              {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
+              {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}]}, {id: IOMUXC_AON, domains: [{security: s, template: ALL},
+              {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: ns, template: ALL},
+              {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
+              {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}]},
+          {id: SAI1, domains: [{security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s,
+                template: ALL}, {security: ns, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s,
                 template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s,
-                template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}]}, {id: LPUART2, domains: [{security: s,
-                template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: ns,
+                template: ALL}, {security: s, template: ALL}]}, {id: CAN1, domains: [{security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
+              {security: s, template: ALL}, {security: s, template: ALL}, {security: ns, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
+              {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
+              {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}]}, {id: LPUART2, domains: [{security: s, template: ALL}, {
+                security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: ns, template: ALL},
+              {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
+              {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}]},
+          {id: LPUART1, domains: [{security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s,
+                template: ALL}, {security: ns, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s,
                 template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s,
+                template: ALL}, {security: s, template: ALL}]}, {id: LPSPI2, domains: [{security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
+              {security: s, template: ALL}, {security: s, template: ALL}, {security: ns, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
+              {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
+              {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}]}, {id: LPSPI1, domains: [{security: s, template: ALL}, {security: s,
+                template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: ns, template: ALL}, {security: s,
                 template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s,
-                template: ALL}]}, {id: LPUART1, domains: [{security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s,
+                template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}]}, {id: LPI2C2,
+            domains: [{security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
+              {security: ns, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
+              {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
+              {security: s, template: ALL}]}, {id: LPI2C1, domains: [{security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s,
                 template: ALL}, {security: s, template: ALL}, {security: ns, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s,
                 template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s,
-                template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}]}, {id: LPSPI2, domains: [{security: s, template: ALL}, {security: s, template: ALL},
+                template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}]}, {id: I3C1, domains: [{security: s, template: ALL}, {security: s, template: ALL},
               {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: ns, template: ALL}, {security: s, template: ALL},
               {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
-              {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}]}, {id: LPSPI1, domains: [{security: s,
+              {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}]}, {id: TPM2, domains: [{security: s,
                 template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: ns,
                 template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s,
                 template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s,
-                template: ALL}]}, {id: LPI2C2, domains: [{security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
+                template: ALL}]}, {id: TPM1, domains: [{security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
               {security: s, template: ALL}, {security: ns, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
               {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
-              {security: s, template: ALL}, {security: s, template: ALL}]}, {id: LPI2C1, domains: [{security: s, template: ALL}, {security: s, template: ALL}, {security: s,
+              {security: s, template: ALL}, {security: s, template: ALL}]}, {id: LPTMR1, domains: [{security: s, template: ALL}, {security: s, template: ALL}, {security: s,
                 template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: ns, template: ALL}, {security: s, template: ALL}, {security: s,
                 template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s,
-                template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}]}, {id: I3C1, domains: [{security: s, template: ALL},
+                template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}]}, {id: LPIT1, domains: [{security: s, template: ALL},
               {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: ns, template: ALL},
               {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
               {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}]},
-          {id: TPM2, domains: [{security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s,
+          {id: RTWDOG2, domains: [{security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s,
                 template: ALL}, {security: ns, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s,
                 template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s,
-                template: ALL}, {security: s, template: ALL}]}, {id: TPM1, domains: [{security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
-              {security: s, template: ALL}, {security: s, template: ALL}, {security: ns, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
-              {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
-              {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}]}, {id: LPTMR1, domains: [{security: s, template: ALL}, {security: s,
-                template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: ns, template: ALL}, {security: s,
-                template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s,
-                template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}]}, {id: LPIT1,
-            domains: [{security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
-              {security: ns, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
-              {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
-              {security: s, template: ALL}]}, {id: RTWDOG2, domains: [{security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {
-                security: s, template: ALL}, {security: s, template: ALL}, {security: ns, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
-              {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
-              {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}]}, {id: RTWDOG1, domains: [{security: s, template: ALL}, {
-                security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: ns, template: ALL},
-              {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
-              {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}]},
-          {id: TSTMR1_TSTMRA, domains: [{security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {
-                security: s, template: ALL}, {security: ns, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
-              {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
-              {security: s, template: ALL}, {security: s, template: ALL}]}, {id: SYS_CTR_READ, domains: [{security: s, template: ALL}, {security: s, template: ALL},
-              {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: ns, template: ALL}, {security: s, template: ALL},
-              {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
-              {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}]}, {id: SYS_CTR_COMPARE, domains: [
-              {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
-              {security: ns, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
-              {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
-              {security: s, template: ALL}]}, {id: SYS_CTR_CONTROL, domains: [{security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
-              {security: s, template: ALL}, {security: s, template: ALL}, {security: ns, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
-              {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
-              {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}]}, {id: TRDC1, domains: [{security: s, template: ALL}, {security: s,
-                template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: ns, template: ALL}, {security: s,
-                template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s,
-                template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}]}, {id: SEMA1,
-            domains: [{security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
-              {security: ns, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
-              {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
-              {security: s, template: ALL}]}, {id: MU1_MUB, domains: [{security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {
-                security: s, template: ALL}, {security: s, template: ALL}, {security: ns, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
-              {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
-              {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}]}, {id: MU1_MUA, domains: [{security: s, template: ALL}, {
-                security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: ns, template: ALL},
-              {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
-              {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}]},
-          {id: BLK_CTRL_NS_AONMIX, domains: [{security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
-              {security: s, template: ALL}, {security: ns, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
-              {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
-              {security: s, template: ALL}, {security: s, template: ALL}]}, {id: DMA3, domains: [{security: s, template: ALL}, {security: s, template: ALL}, {security: s,
+                template: ALL}, {security: s, template: ALL}]}, {id: RTWDOG1, domains: [{security: s, template: ALL}, {security: s, template: ALL}, {security: s,
                 template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: ns, template: ALL}, {security: s, template: ALL}, {security: s,
                 template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s,
-                template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}]}, {id: BASIC_TROUT1, base_region: {start: '0x00000000',
-              size: '0x00010000'}, domains: [{security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
-              {security: s, template: ALL}, {security: ns, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
-              {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
-              {security: s, template: ALL}, {security: s, template: ALL}]}, {id: TCU4, base_region: {start: '0x00000000', size: '0x00010000'}, domains: [{security: s,
+                template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}]}, {id: TSTMR1_TSTMRA, domains: [{security: s,
                 template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: ns,
                 template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s,
                 template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s,
-                template: ALL}]}, {id: TCU3, base_region: {start: '0x00000000', size: '0x00010000'}, domains: [{security: s, template: ALL}, {security: s, template: ALL},
-              {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: ns, template: ALL}, {security: s, template: ALL},
+                template: ALL}]}, {id: SYS_CTR_READ, domains: [{security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s,
+                template: ALL}, {security: s, template: ALL}, {security: ns, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s,
+                template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s,
+                template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}]}, {id: SYS_CTR_COMPARE, domains: [{security: s, template: ALL}, {security: s,
+                template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: ns, template: ALL}, {security: s,
+                template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s,
+                template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}]}, {id: SYS_CTR_CONTROL,
+            domains: [{security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
+              {security: ns, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
               {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
-              {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}]}, {id: TCU2, base_region: {
+              {security: s, template: ALL}]}, {id: SEMA1, domains: [{security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s,
+                template: ALL}, {security: s, template: ALL}, {security: ns, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s,
+                template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s,
+                template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}]}, {id: MU1_MUB, domains: [{security: s, template: ALL}, {security: s,
+                template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: ns, template: ALL}, {security: s,
+                template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s,
+                template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}]}, {id: MU1_MUA,
+            domains: [{security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
+              {security: ns, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
+              {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
+              {security: s, template: ALL}]}, {id: BLK_CTRL_NS_AONMIX, domains: [{security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
+              {security: s, template: ALL}, {security: s, template: ALL}, {security: ns, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
+              {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
+              {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}]}, {id: ROM, domains: [{security: s, template: ALL}, {security: s,
+                template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: ns, template: ALL}, {security: s,
+                template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s,
+                template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}]}, {id: BASIC_TROUT1,
+            domains: [{security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}]}, {id: TCU4, domains: [{security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {
+                security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}]}, {id: TCU3, domains: [{security: ns, template: ALL}, {
+                security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}]},
+          {id: TCU2, domains: [{security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns,
+                template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns,
+                template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns,
+                template: ALL}, {security: ns, template: ALL}]}, {id: TCU1, domains: [{security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns,
+                template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns,
+                template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns,
+                template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}]}, {id: MTR_DCA1, domains: [{security: ns,
+                template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns,
+                template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns,
+                template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns,
+                template: ALL}]}, {id: MTR_MSTR1, domains: [{security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns,
+                template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns,
+                template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns,
+                template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}]}, {id: IPC1, domains: [{security: ns, template: ALL}, {security: ns,
+                template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns,
+                template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns,
+                template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}]}, {id: TRDC_MC1,
+            domains: [{security: ns, template: ALL}, {security: ns, template: ALL}, {security: s, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}]}, {id: TRDC1_ALIAS, domains: [{security: ns, template: ALL}, {security: ns, template: ALL}, {security: s, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}]}, {id: DMA3_TEE_ALIAS0, domains: [{security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}]},
+          {id: DMA3_TEE_ALIAS1, domains: [{security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}]}, {id: DMA3_TEE_ALIAS2, domains: [{security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}]}, {id: DMA3_TEE_ALIAS3,
+            domains: [{security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}]}, {id: DMA3_TEE_ALIAS4, domains: [{security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}]}, {id: DMA3_TEE_ALIAS5, domains: [{security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}]},
+          {id: DMA3_TEE_ALIAS6, domains: [{security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}]}, {id: DMA3_TEE_ALIAS7, domains: [{security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}]}, {id: DMA3_TEE_ALIAS8,
+            domains: [{security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}]}, {id: DMA3_TEE_ALIAS9, domains: [{security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}]}, {id: DMA3_TEE_ALIAS10, domains: [{security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}]},
+          {id: DMA3_TEE_ALIAS11, domains: [{security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}]}, {id: DMA3_TEE_ALIAS12, domains: [{security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}]}, {id: DMA3_TEE_ALIAS13,
+            domains: [{security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}]}, {id: DMA3_TEE_ALIAS14, domains: [{security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}]}, {id: DMA3_TEE_ALIAS15, domains: [{security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}]},
+          {id: DMA3_TEE_ALIAS16, domains: [{security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}]}, {id: DMA3_TEE_ALIAS17, domains: [{security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}]}, {id: DMA3_TEE_ALIAS18,
+            domains: [{security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}]}, {id: DMA3_TEE_ALIAS19, domains: [{security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}]}, {id: DMA3_TEE_ALIAS20, domains: [{security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}]},
+          {id: DMA3_TEE_ALIAS21, domains: [{security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}]}, {id: DMA3_TEE_ALIAS22, domains: [{security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}]}, {id: DMA3_TEE_ALIAS23,
+            domains: [{security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}]}, {id: DMA3_TEE_ALIAS24, domains: [{security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}]}, {id: DMA3_TEE_ALIAS25, domains: [{security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}]},
+          {id: DMA3_TEE_ALIAS26, domains: [{security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}]}, {id: DMA3_TEE_ALIAS27, domains: [{security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}]}, {id: DMA3_TEE_ALIAS28,
+            domains: [{security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}]}, {id: DMA3_TEE_ALIAS29, domains: [{security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}]}, {id: DMA3_TEE_ALIAS30, domains: [{security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}]},
+          {id: DMA3_TEE_ALIAS31, domains: [{security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}]}, {id: DMA3_MP, domains: [{security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}]}, {id: GPIO1, base_region: {
               start: '0x00000000', size: '0x00010000'}, domains: [{security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s,
                 template: ALL}, {security: s, template: ALL}, {security: ns, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s,
                 template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s,
-                template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}]}, {id: TCU1, base_region: {start: '0x00000000', size: '0x00010000'}, domains: [
-              {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
-              {security: ns, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
-              {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
-              {security: s, template: ALL}]}, {id: MTR_DCA1, base_region: {start: '0x00000000', size: '0x00010000'}, domains: [{security: s, template: ALL}, {security: s,
-                template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: ns, template: ALL}, {security: s,
-                template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s,
-                template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}]}, {id: MTR_MSTR1,
-            base_region: {start: '0x00000000', size: '0x00010000'}, domains: [{security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
-              {security: s, template: ALL}, {security: s, template: ALL}, {security: ns, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
-              {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
-              {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}]}, {id: IPC1, base_region: {start: '0x00000000', size: '0x00010000'},
+                template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}]}, {id: EdgeLock, base_region: {start: '0x00000000', size: '0x00080000'},
             domains: [{security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
               {security: ns, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
               {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
-              {security: s, template: ALL}]}, {id: TRDC-MC1, base_region: {start: '0x00000000', size: '0x00010000'}, domains: [{security: s, template: ALL}, {security: s,
-                template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: ns, template: ALL}, {security: s,
-                template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s,
-                template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}]}, {id: DMA3-CHx,
-            base_region: {start: '0x00000000', size: '0x00070000'}, domains: [{security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
-              {security: s, template: ALL}, {security: s, template: ALL}, {security: ns, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
-              {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
-              {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}]}, {id: GPIO1, base_region: {start: '0x00000000', size: '0x00010000'},
-            domains: [{security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
-              {security: ns, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
-              {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
-              {security: s, template: ALL}]}, {id: EdgeLock, base_region: {start: '0x00000000', size: '0x00080000'}, domains: [{security: s, template: ALL}, {security: s,
-                template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: ns, template: ALL}, {security: s,
-                template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s,
-                template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}]}]
+              {security: s, template: ALL}]}]
       - mbc:
         - checker_id: 'MBC_A1'
         - using_global_templates: 'true'
@@ -499,62 +548,6 @@ functional_group:
               size: '0x04000000'}]]
   - trdc:
     - id: '1'
-    - ports:
-      - RGPIO1: {pin_security: {id: '0', security: s_priv}, pin_security: {id: '1', security: s_priv}, pin_security: {id: '10', security: s_priv}, pin_security: {
-          id: '11', security: s_priv}, pin_security: {id: '12', security: s_priv}, pin_security: {id: '13', security: s_priv}, pin_security: {id: '14', security: s_priv},
-        pin_security: {id: '15', security: s_priv}, pin_security: {id: '16', security: s_priv}, pin_security: {id: '17', security: s_priv}, pin_security: {id: '18',
-          security: s_priv}, pin_security: {id: '19', security: s_priv}, pin_security: {id: '2', security: s_priv}, pin_security: {id: '20', security: s_priv}, pin_security: {
-          id: '21', security: s_priv}, pin_security: {id: '22', security: s_priv}, pin_security: {id: '23', security: s_priv}, pin_security: {id: '24', security: s_priv},
-        pin_security: {id: '25', security: s_priv}, pin_security: {id: '26', security: s_priv}, pin_security: {id: '27', security: s_priv}, pin_security: {id: '3',
-          security: s_priv}, pin_security: {id: '4', security: s_priv}, pin_security: {id: '5', security: s_priv}, pin_security: {id: '6', security: s_priv}, pin_security: {
-          id: '7', security: s_priv}, pin_security: {id: '8', security: s_priv}, pin_security: {id: '9', security: s_priv}, pin_interrupt_security: {id: '0', security: s_priv},
-        pin_interrupt_security: {id: '1', security: s_priv}}
-      - RGPIO2: {pin_security: {id: '0', security: s_priv}, pin_security: {id: '1', security: s_priv}, pin_security: {id: '10', security: s_priv}, pin_security: {
-          id: '11', security: s_priv}, pin_security: {id: '12', security: s_priv}, pin_security: {id: '13', security: s_priv}, pin_security: {id: '14', security: s_priv},
-        pin_security: {id: '15', security: s_priv}, pin_security: {id: '16', security: s_priv}, pin_security: {id: '17', security: s_priv}, pin_security: {id: '18',
-          security: s_priv}, pin_security: {id: '19', security: s_priv}, pin_security: {id: '2', security: s_priv}, pin_security: {id: '20', security: s_priv}, pin_security: {
-          id: '21', security: s_priv}, pin_security: {id: '22', security: s_priv}, pin_security: {id: '23', security: s_priv}, pin_security: {id: '24', security: s_priv},
-        pin_security: {id: '25', security: s_priv}, pin_security: {id: '26', security: s_priv}, pin_security: {id: '27', security: s_priv}, pin_security: {id: '28',
-          security: s_priv}, pin_security: {id: '29', security: s_priv}, pin_security: {id: '3', security: s_priv}, pin_security: {id: '30', security: s_priv}, pin_security: {
-          id: '31', security: s_priv}, pin_security: {id: '4', security: s_priv}, pin_security: {id: '5', security: s_priv}, pin_security: {id: '6', security: s_priv},
-        pin_security: {id: '7', security: s_priv}, pin_security: {id: '8', security: s_priv}, pin_security: {id: '9', security: s_priv}, pin_interrupt_security: {
-          id: '0', security: s_priv}, pin_interrupt_security: {id: '1', security: s_priv}}
-      - RGPIO3: {pin_security: {id: '0', security: s_priv}, pin_security: {id: '1', security: s_priv}, pin_security: {id: '10', security: s_priv}, pin_security: {
-          id: '11', security: s_priv}, pin_security: {id: '12', security: s_priv}, pin_security: {id: '13', security: s_priv}, pin_security: {id: '14', security: s_priv},
-        pin_security: {id: '15', security: s_priv}, pin_security: {id: '16', security: s_priv}, pin_security: {id: '17', security: s_priv}, pin_security: {id: '18',
-          security: s_priv}, pin_security: {id: '19', security: s_priv}, pin_security: {id: '2', security: s_priv}, pin_security: {id: '20', security: s_priv}, pin_security: {
-          id: '21', security: s_priv}, pin_security: {id: '22', security: s_priv}, pin_security: {id: '23', security: s_priv}, pin_security: {id: '24', security: s_priv},
-        pin_security: {id: '25', security: s_priv}, pin_security: {id: '26', security: s_priv}, pin_security: {id: '27', security: s_priv}, pin_security: {id: '28',
-          security: s_priv}, pin_security: {id: '29', security: s_priv}, pin_security: {id: '3', security: s_priv}, pin_security: {id: '30', security: s_priv}, pin_security: {
-          id: '4', security: s_priv}, pin_security: {id: '5', security: s_priv}, pin_security: {id: '6', security: s_priv}, pin_security: {id: '7', security: s_priv},
-        pin_security: {id: '8', security: s_priv}, pin_security: {id: '9', security: s_priv}, pin_interrupt_security: {id: '0', security: s_priv}, pin_interrupt_security: {
-          id: '1', security: s_priv}}
-      - RGPIO4: {pin_security: {id: '0', security: s_priv}, pin_security: {id: '1', security: s_priv}, pin_security: {id: '10', security: s_priv}, pin_security: {
-          id: '11', security: s_priv}, pin_security: {id: '12', security: s_priv}, pin_security: {id: '13', security: s_priv}, pin_security: {id: '14', security: s_priv},
-        pin_security: {id: '15', security: s_priv}, pin_security: {id: '16', security: s_priv}, pin_security: {id: '17', security: s_priv}, pin_security: {id: '18',
-          security: s_priv}, pin_security: {id: '19', security: s_priv}, pin_security: {id: '2', security: s_priv}, pin_security: {id: '20', security: s_priv}, pin_security: {
-          id: '21', security: s_priv}, pin_security: {id: '22', security: s_priv}, pin_security: {id: '23', security: s_priv}, pin_security: {id: '24', security: s_priv},
-        pin_security: {id: '25', security: s_priv}, pin_security: {id: '26', security: s_priv}, pin_security: {id: '27', security: s_priv}, pin_security: {id: '28',
-          security: s_priv}, pin_security: {id: '29', security: s_priv}, pin_security: {id: '3', security: s_priv}, pin_security: {id: '30', security: s_priv}, pin_security: {
-          id: '31', security: s_priv}, pin_security: {id: '4', security: s_priv}, pin_security: {id: '5', security: s_priv}, pin_security: {id: '6', security: s_priv},
-        pin_security: {id: '7', security: s_priv}, pin_security: {id: '8', security: s_priv}, pin_security: {id: '9', security: s_priv}, pin_interrupt_security: {
-          id: '0', security: s_priv}, pin_interrupt_security: {id: '1', security: s_priv}}
-      - RGPIO5: {pin_security: {id: '0', security: s_priv}, pin_security: {id: '1', security: s_priv}, pin_security: {id: '10', security: s_priv}, pin_security: {
-          id: '11', security: s_priv}, pin_security: {id: '12', security: s_priv}, pin_security: {id: '13', security: s_priv}, pin_security: {id: '14', security: s_priv},
-        pin_security: {id: '15', security: s_priv}, pin_security: {id: '16', security: s_priv}, pin_security: {id: '17', security: s_priv}, pin_security: {id: '18',
-          security: s_priv}, pin_security: {id: '19', security: s_priv}, pin_security: {id: '2', security: s_priv}, pin_security: {id: '20', security: s_priv}, pin_security: {
-          id: '21', security: s_priv}, pin_security: {id: '3', security: s_priv}, pin_security: {id: '4', security: s_priv}, pin_security: {id: '5', security: s_priv},
-        pin_security: {id: '6', security: s_priv}, pin_security: {id: '7', security: s_priv}, pin_security: {id: '8', security: s_priv}, pin_security: {id: '9', security: s_priv},
-        pin_interrupt_security: {id: '0', security: s_priv}, pin_interrupt_security: {id: '1', security: s_priv}}
-      - RGPIO6: {pin_security: {id: '0', security: s_priv}, pin_security: {id: '1', security: s_priv}, pin_security: {id: '10', security: s_priv}, pin_security: {
-          id: '11', security: s_priv}, pin_security: {id: '12', security: s_priv}, pin_security: {id: '13', security: s_priv}, pin_security: {id: '14', security: s_priv},
-        pin_security: {id: '15', security: s_priv}, pin_security: {id: '16', security: s_priv}, pin_security: {id: '17', security: s_priv}, pin_security: {id: '18',
-          security: s_priv}, pin_security: {id: '19', security: s_priv}, pin_security: {id: '2', security: s_priv}, pin_security: {id: '20', security: s_priv}, pin_security: {
-          id: '21', security: s_priv}, pin_security: {id: '22', security: s_priv}, pin_security: {id: '23', security: s_priv}, pin_security: {id: '24', security: s_priv},
-        pin_security: {id: '25', security: s_priv}, pin_security: {id: '26', security: s_priv}, pin_security: {id: '27', security: s_priv}, pin_security: {id: '3',
-          security: s_priv}, pin_security: {id: '4', security: s_priv}, pin_security: {id: '5', security: s_priv}, pin_security: {id: '6', security: s_priv}, pin_security: {
-          id: '7', security: s_priv}, pin_security: {id: '8', security: s_priv}, pin_security: {id: '9', security: s_priv}, pin_interrupt_security: {id: '0', security: s_priv},
-        pin_interrupt_security: {id: '1', security: s_priv}}
     - masters: [{id: cm7_ahb, domain_assignments: [{enabled: 'true', locked: 'true', domain_id: '4', secure: s, domain_input: mda}, {enabled: 'false', locked: 'false',
             domain_id: '0', secure: ns, domain_input: mda}]}, {id: cm7_axi, domain_assignments: [{enabled: 'true', locked: 'true', domain_id: '4', secure: s, domain_input: mda},
           {enabled: 'false', locked: 'false', domain_id: '0', secure: ns, domain_input: mda}, {enabled: 'false', locked: 'false', domain_id: '0', secure: ns, domain_input: mda}]},
@@ -728,141 +721,354 @@ functional_group:
           {id: TSTMR2_TSTMRA, domains: [{security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {
                 security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
               {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
-              {security: s, template: ALL}, {security: s, template: ALL}]}, {id: TRDC2, domains: [{security: s, template: ALL}, {security: s, template: ALL}, {security: s,
+              {security: s, template: ALL}, {security: s, template: ALL}]}, {id: SEMA2, domains: [{security: s, template: ALL}, {security: s, template: ALL}, {security: s,
                 template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s,
                 template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s,
-                template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}]}, {id: SEMA2, domains: [{security: s, template: ALL},
-              {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
-              {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
-              {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}]},
-          {id: MU2_MUB, domains: [{security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s,
-                template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s,
-                template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s,
-                template: ALL}, {security: s, template: ALL}]}, {id: MU2_MUA, domains: [{security: s, template: ALL}, {security: s, template: ALL}, {security: s,
-                template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s,
-                template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s,
-                template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}]}, {id: BLK_CTRL_WAKEUPMIX, domains: [{security: s,
+                template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}]}, {id: MU2_MUB, domains: [{security: s,
                 template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s,
                 template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s,
                 template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s,
-                template: ALL}]}, {id: DMA4, domains: [{security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
-              {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
-              {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
-              {security: s, template: ALL}, {security: s, template: ALL}]}, {id: BASIC_TROUT2, base_region: {start: '0x00000000', size: '0x00010000'}, domains: [
-              {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
-              {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
-              {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
-              {security: s, template: ALL}]}, {id: TCU5, base_region: {start: '0x00000000', size: '0x00010000'}, domains: [{security: s, template: ALL}, {security: s,
+                template: ALL}]}, {id: MU2_MUA, domains: [{security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s,
                 template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s,
                 template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s,
-                template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}]}, {id: MTR_DCA2,
-            base_region: {start: '0x00000000', size: '0x00010000'}, domains: [{security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
-              {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
-              {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
-              {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}]}, {id: TRDC-MC2, base_region: {start: '0x00000000', size: '0x00010000'},
+                template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}]}, {id: BLK_CTRL_WAKEUPMIX, domains: [{security: s, template: ALL}, {security: s,
+                template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s,
+                template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s,
+                template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}]}, {id: BASIC_TROUT2,
+            domains: [{security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}]}, {id: TCU5, domains: [{security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {
+                security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}]}, {id: MTR_DCA2, domains: [{security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}]},
+          {id: TRDC_MC2, domains: [{security: ns, template: ALL}, {security: ns, template: ALL}, {security: s, template: ALL}, {security: ns, template: ALL}, {security: ns,
+                template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns,
+                template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns,
+                template: ALL}, {security: ns, template: ALL}]}, {id: TRDC2_ALIAS, domains: [{security: ns, template: ALL}, {security: ns, template: ALL}, {security: s,
+                template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns,
+                template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns,
+                template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}]}, {id: DMA4_TEE_ALIAS0, domains: [{security: ns,
+                template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns,
+                template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns,
+                template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns,
+                template: ALL}]}, {id: DMA4_TEE_ALIAS1, domains: [{security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns,
+                template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns,
+                template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns,
+                template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}]}, {id: DMA4_TEE_ALIAS2, domains: [{security: ns, template: ALL}, {security: ns,
+                template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns,
+                template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns,
+                template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}]}, {id: DMA4_TEE_ALIAS3,
+            domains: [{security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}]}, {id: DMA4_TEE_ALIAS4, domains: [{security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}]}, {id: DMA4_TEE_ALIAS5, domains: [{security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}]},
+          {id: DMA4_TEE_ALIAS6, domains: [{security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}]}, {id: DMA4_TEE_ALIAS7, domains: [{security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}]}, {id: DMA4_TEE_ALIAS8,
+            domains: [{security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}]}, {id: DMA4_TEE_ALIAS9, domains: [{security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}]}, {id: DMA4_TEE_ALIAS10, domains: [{security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}]},
+          {id: DMA4_TEE_ALIAS11, domains: [{security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}]}, {id: DMA4_TEE_ALIAS12, domains: [{security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}]}, {id: DMA4_TEE_ALIAS13,
+            domains: [{security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}]}, {id: DMA4_TEE_ALIAS14, domains: [{security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}]}, {id: DMA4_TEE_ALIAS15, domains: [{security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}]},
+          {id: DMA4_TEE_ALIAS16, domains: [{security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}]}, {id: DMA4_TEE_ALIAS17, domains: [{security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}]}, {id: DMA4_TEE_ALIAS18,
+            domains: [{security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}]}, {id: DMA4_TEE_ALIAS19, domains: [{security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}]}, {id: DMA4_TEE_ALIAS20, domains: [{security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}]},
+          {id: DMA4_TEE_ALIAS21, domains: [{security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}]}, {id: DMA4_TEE_ALIAS22, domains: [{security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}]}, {id: DMA4_TEE_ALIAS23,
+            domains: [{security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}]}, {id: DMA4_TEE_ALIAS24, domains: [{security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}]}, {id: DMA4_TEE_ALIAS25, domains: [{security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}]},
+          {id: DMA4_TEE_ALIAS26, domains: [{security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}]}, {id: DMA4_TEE_ALIAS27, domains: [{security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}]}, {id: DMA4_TEE_ALIAS28,
+            domains: [{security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}]}, {id: DMA4_TEE_ALIAS29, domains: [{security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}]}, {id: DMA4_TEE_ALIAS30, domains: [{security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}]},
+          {id: DMA4_TEE_ALIAS31, domains: [{security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}]}, {id: DMA4_TEE_ALIAS32, domains: [{security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}]}, {id: DMA4_TEE_ALIAS33,
+            domains: [{security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}]}, {id: DMA4_TEE_ALIAS34, domains: [{security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}]}, {id: DMA4_TEE_ALIAS35, domains: [{security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}]},
+          {id: DMA4_TEE_ALIAS36, domains: [{security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}]}, {id: DMA4_TEE_ALIAS37, domains: [{security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}]}, {id: DMA4_TEE_ALIAS38,
+            domains: [{security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}]}, {id: DMA4_TEE_ALIAS39, domains: [{security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}]}, {id: DMA4_TEE_ALIAS40, domains: [{security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}]},
+          {id: DMA4_TEE_ALIAS41, domains: [{security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}]}, {id: DMA4_TEE_ALIAS42, domains: [{security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}]}, {id: DMA4_TEE_ALIAS43,
+            domains: [{security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}]}, {id: DMA4_TEE_ALIAS44, domains: [{security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}]}, {id: DMA4_TEE_ALIAS45, domains: [{security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}]},
+          {id: DMA4_TEE_ALIAS46, domains: [{security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}]}, {id: DMA4_TEE_ALIAS47, domains: [{security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}]}, {id: DMA4_TEE_ALIAS48,
+            domains: [{security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}]}, {id: DMA4_TEE_ALIAS49, domains: [{security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}]}, {id: DMA4_TEE_ALIAS50, domains: [{security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}]},
+          {id: DMA4_TEE_ALIAS51, domains: [{security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}]}, {id: DMA4_TEE_ALIAS52, domains: [{security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}]}, {id: DMA4_TEE_ALIAS53,
+            domains: [{security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}]}, {id: DMA4_TEE_ALIAS54, domains: [{security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}]}, {id: DMA4_TEE_ALIAS55, domains: [{security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}]},
+          {id: DMA4_TEE_ALIAS56, domains: [{security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}]}, {id: DMA4_TEE_ALIAS57, domains: [{security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}]}, {id: DMA4_TEE_ALIAS58,
+            domains: [{security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}]}, {id: DMA4_TEE_ALIAS59, domains: [{security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}]}, {id: DMA4_TEE_ALIAS60, domains: [{security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}]},
+          {id: DMA4_TEE_ALIAS61, domains: [{security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}]}, {id: DMA4_TEE_ALIAS62, domains: [{security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}]}, {id: DMA4_TEE_ALIAS63,
+            domains: [{security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}]}, {id: DMA4_MP, domains: [{security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}]}, {id: GPIO2, base_region: {start: '0x00000000', size: '0x00010000'},
             domains: [{security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
               {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
               {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
-              {security: s, template: ALL}]}, {id: DMA4-CHx, base_region: {start: '0x00000000', size: '0x00070000'}, domains: [{security: s, template: ALL}, {security: s,
+              {security: s, template: ALL}]}, {id: GPIO3, base_region: {start: '0x00000000', size: '0x00010000'}, domains: [{security: s, template: ALL}, {security: s,
                 template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s,
                 template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s,
-                template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}]}, {id: GPIO2,
+                template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}]}, {id: GPIO4,
             base_region: {start: '0x00000000', size: '0x00010000'}, domains: [{security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
               {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
               {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
-              {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}]}, {id: GPIO3, base_region: {start: '0x00000000', size: '0x00010000'},
+              {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}]}, {id: GPIO5, base_region: {start: '0x00000000', size: '0x00010000'},
             domains: [{security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
               {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
               {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
-              {security: s, template: ALL}]}, {id: GPIO4, base_region: {start: '0x00000000', size: '0x00010000'}, domains: [{security: s, template: ALL}, {security: s,
+              {security: s, template: ALL}]}, {id: GPIO6, base_region: {start: '0x00000000', size: '0x00010000'}, domains: [{security: s, template: ALL}, {security: s,
                 template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s,
                 template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s,
-                template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}]}, {id: GPIO5,
-            base_region: {start: '0x00000000', size: '0x00010000'}, domains: [{security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
+                template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}]}, {id: DebugDAP,
+            base_region: {start: '0x00000000', size: '0x01100000'}, domains: [{security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
               {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
               {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
-              {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}]}, {id: GPIO6, base_region: {start: '0x00000000', size: '0x00010000'},
-            domains: [{security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
-              {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
-              {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
-              {security: s, template: ALL}]}, {id: DebugDAP, base_region: {start: '0x00000000', size: '0x01100000'}, domains: [{security: s, template: ALL}, {security: s,
-                template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s,
-                template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s,
-                template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}]}]
+              {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}]}]
       - mbc:
         - checker_id: 'MBC_W1'
-        - using_global_templates: 'true'
-        - slaves: [{id: SFA, domains: [{security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {
-                security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
-              {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
-              {security: s, template: ALL}, {security: s, template: ALL}]}, {id: GPT2, domains: [{security: s, template: ALL}, {security: s, template: ALL}, {security: s,
+        - using_global_templates: 'false'
+        - slaves: [{id: PROCESS_MONITOR, domains: [{security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}]}, {id: GPT2, domains: [{security: s, template: ALL}, {security: s, template: ALL}, {security: s,
                 template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s,
                 template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s,
-                template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}]}, {id: APC_IEE, domains: [{security: s,
+                template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}]}, {id: IEE, domains: [{security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}]},
+          {id: VREF, domains: [{security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s,
                 template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s,
                 template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s,
-                template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s,
-                template: ALL}]}, {id: VREF, domains: [{security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
-              {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
-              {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
-              {security: s, template: ALL}, {security: s, template: ALL}]}, {id: DAC, domains: [{security: s, template: ALL}, {security: s, template: ALL}, {security: s,
-                template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s,
-                template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s,
-                template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}]}, {id: ADC2, domains: [{security: s, template: ALL},
+                template: ALL}, {security: s, template: ALL}]}, {id: DAC, domains: [{security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
               {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
               {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
-              {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}]},
-          {id: CMP4, domains: [{security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s,
+              {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}]}, {id: ADC2, domains: [{security: s, template: ALL}, {security: s,
                 template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s,
                 template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s,
-                template: ALL}, {security: s, template: ALL}]}, {id: CMP3, domains: [{security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
-              {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
-              {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
-              {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}]}, {id: CMP2, domains: [{security: s, template: ALL}, {security: s,
-                template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s,
-                template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s,
-                template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}]}, {id: CMP1,
+                template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}]}, {id: CMP4,
             domains: [{security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
               {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
               {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
-              {security: s, template: ALL}]}, {id: LPUART8, domains: [{security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {
-                security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
-              {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
-              {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}]}, {id: LPUART11, domains: [{security: s, template: ALL}, {
-                security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
-              {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
-              {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}]},
-          {id: LPUART10, domains: [{security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s,
+              {security: s, template: ALL}]}, {id: CMP3, domains: [{security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s,
                 template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s,
                 template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s,
-                template: ALL}, {security: s, template: ALL}]}, {id: LPUART9, domains: [{security: s, template: ALL}, {security: s, template: ALL}, {security: s,
-                template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s,
-                template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s,
-                template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}]}, {id: LPSPI6, domains: [{security: s, template: ALL},
+                template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}]}, {id: CMP2, domains: [{security: s, template: ALL}, {security: s, template: ALL},
               {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
               {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
-              {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}]},
-          {id: LPSPI5, domains: [{security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s,
+              {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}]}, {id: CMP1, domains: [{security: s,
                 template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s,
                 template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s,
-                template: ALL}, {security: s, template: ALL}]}, {id: LPI2C6, domains: [{security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
-              {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
-              {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
-              {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}]}, {id: LPI2C5, domains: [{security: s, template: ALL}, {security: s,
+                template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s,
+                template: ALL}]}, {id: LPUART8, domains: [{security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s,
                 template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s,
                 template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s,
-                template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}]}, {id: LPTMR3,
+                template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}]}, {id: LPUART11, domains: [{security: s, template: ALL}, {security: s,
+                template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s,
+                template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s,
+                template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}]}, {id: LPUART10,
             domains: [{security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
               {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
               {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
-              {security: s, template: ALL}]}, {id: LPIT3, domains: [{security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s,
+              {security: s, template: ALL}]}, {id: LPUART9, domains: [{security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {
+                security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
+              {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
+              {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}]}, {id: LPSPI6, domains: [{security: s, template: ALL}, {security: s,
                 template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s,
                 template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s,
-                template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}]}, {id: USBPHY2, domains: [{security: s, template: ALL}, {security: s,
-                template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s,
-                template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s,
-                template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}]}, {id: USBPHY1,
+                template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}]}, {id: LPSPI5,
             domains: [{security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
+              {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
+              {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
+              {security: s, template: ALL}]}, {id: LPI2C6, domains: [{security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s,
+                template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s,
+                template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s,
+                template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}]}, {id: LPI2C5, domains: [{security: s, template: ALL}, {security: s, template: ALL},
+              {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
+              {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
+              {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}]}, {id: LPTMR3, domains: [{security: s,
+                template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s,
+                template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s,
+                template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s,
+                template: ALL}]}, {id: LPIT3, domains: [{security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
+              {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
+              {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
+              {security: s, template: ALL}, {security: s, template: ALL}]}, {id: USBPHY2, domains: [{security: s, template: ALL}, {security: s, template: ALL}, {
+                security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
+              {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
+              {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}]}, {id: USBPHY1, domains: [{
+                security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
               {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
               {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
               {security: s, template: ALL}]}, {id: USB_OTG2, domains: [{security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {
@@ -951,55 +1157,86 @@ functional_group:
               {security: s, template: ALL}, {security: s, template: ALL}]}, {id: USDHC1, domains: [{security: s, template: ALL}, {security: s, template: ALL}, {security: s,
                 template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s,
                 template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s,
-                template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}]}, {id: TRDC3, domains: [{security: s, template: ALL},
+                template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}]}, {id: SFA, domains: [{security: s, template: ALL},
               {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
               {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
               {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}]},
-          {id: PROCESS_MONITOR, base_region: {start: '0x00000000', size: '0x00010000'}, domains: [{security: s, template: ALL}, {security: s, template: ALL}, {security: s,
-                template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s,
-                template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s,
-                template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}]}, {id: TCU6, base_region: {start: '0x00000000',
-              size: '0x00010000'}, domains: [{security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
+          {id: TCU6, domains: [{security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns,
+                template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns,
+                template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns,
+                template: ALL}, {security: ns, template: ALL}]}, {id: USB_PL301, domains: [{security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns,
+                template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns,
+                template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns,
+                template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}]}, {id: MTR_DCA4, domains: [{security: ns,
+                template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns,
+                template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns,
+                template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns,
+                template: ALL}]}, {id: BASIC_TROUT3, domains: [{security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns,
+                template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns,
+                template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns,
+                template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}]}, {id: MTR_DCA3, domains: [{security: ns, template: ALL}, {security: ns,
+                template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns,
+                template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns,
+                template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}]}, {id: GPV_MEGA2,
+            domains: [{security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}]}, {id: GPV_MEGA1, domains: [{security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}]}, {id: TRDC_MC3, domains: [{security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: s, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}]},
+          {id: TRDC3_ALIAS, domains: [{security: ns, template: ALL}, {security: ns, template: ALL}, {security: s, template: ALL}, {security: ns, template: ALL}, {
+                security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL}, {security: ns, template: ALL},
+              {security: ns, template: ALL}, {security: ns, template: ALL}]}, {id: BLK_CTRL_MEGA, domains: [{security: s, template: ALL}, {security: s, template: ALL},
               {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
               {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
-              {security: s, template: ALL}, {security: s, template: ALL}]}, {id: USB_PL301, base_region: {start: '0x00000000', size: '0x00010000'}, domains: [{security: s,
-                template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s,
-                template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s,
-                template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s,
-                template: ALL}]}, {id: MTR_DCA4, base_region: {start: '0x00000000', size: '0x00010000'}, domains: [{security: s, template: ALL}, {security: s, template: ALL},
-              {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
-              {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
-              {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}]}, {id: BASIC_TROUT3, base_region: {
+              {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}]}, {id: EdgeLock_ISP_AP, base_region: {
               start: '0x00000000', size: '0x00010000'}, domains: [{security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s,
                 template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s,
                 template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s,
-                template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}]}, {id: MTR_DCA3, base_region: {start: '0x00000000', size: '0x00010000'},
+                template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}]}, {id: NIC_MAIN_GPV, base_region: {start: '0x00000000', size: '0x00100000'},
             domains: [{security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
               {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
               {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
-              {security: s, template: ALL}]}, {id: GPV_MEGA2, base_region: {start: '0x00000000', size: '0x00010000'}, domains: [{security: s, template: ALL}, {security: s,
-                template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s,
-                template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s,
-                template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}]}, {id: GPV_MEGA1,
-            base_region: {start: '0x00000000', size: '0x00010000'}, domains: [{security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
-              {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
-              {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
-              {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}]}, {id: TRDC-MC3, base_region: {start: '0x00000000', size: '0x00010000'},
-            domains: [{security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
-              {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
-              {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
-              {security: s, template: ALL}]}, {id: BLK_CTRL_MEGA, base_region: {start: '0x00000000', size: '0x00010000'}, domains: [{security: s, template: ALL},
-              {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
-              {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
-              {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}]},
-          {id: EdgeLock_ISP_AP, base_region: {start: '0x00000000', size: '0x00010000'}, domains: [{security: s, template: ALL}, {security: s, template: ALL}, {security: s,
-                template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s,
-                template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s,
-                template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}]}, {id: NIC_MAIN_GPV, base_region: {start: '0x00000000',
-              size: '0x00100000'}, domains: [{security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
-              {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
-              {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL}, {security: s, template: ALL},
-              {security: s, template: ALL}, {security: s, template: ALL}]}]
+              {security: s, template: ALL}]}]
+        - access_templates:
+          - template:
+            - id: 'ALL'
+            - name: 'all'
+            - accesses: {ns_user: '111', ns_priv: '111', s_user: '111', s_priv: '111'}
+          - template:
+            - id: 'RWX_s_ns'
+            - name: 'RWX for S and NS'
+            - locked: 'false'
+            - accesses: {ns_user: '111', ns_priv: '111', s_user: '111', s_priv: '111'}
+          - template:
+            - id: 'NO_ACCESS1'
+            - locked: 'false'
+            - accesses: {ns_user: '000', ns_priv: '000', s_user: '000', s_priv: '000'}
+          - template:
+            - id: 'NO_ACCESS2'
+            - locked: 'false'
+            - accesses: {ns_user: '000', ns_priv: '000', s_user: '000', s_priv: '000'}
+          - template:
+            - id: 'NO_ACCESS3'
+            - locked: 'false'
+            - accesses: {ns_user: '000', ns_priv: '000', s_user: '000', s_priv: '000'}
+          - template:
+            - id: 'NO_ACCESS4'
+            - locked: 'false'
+            - accesses: {ns_user: '000', ns_priv: '000', s_user: '000', s_priv: '000'}
+          - template:
+            - id: 'NO_ACCESS5'
+            - locked: 'false'
+            - accesses: {ns_user: '000', ns_priv: '000', s_user: '000', s_priv: '000'}
+          - template:
+            - id: 'NO_ACCESS6'
+            - locked: 'false'
+            - accesses: {ns_user: '111', ns_priv: '111', s_user: '111', s_priv: '111'}
     - mrcs:
       - mrc:
         - checker_id: 'MRC_W1'
@@ -1218,92 +1455,7 @@ functional_group:
               size: '0x00400000'}, {index: '3', enabled: 'false', security: s, template: NO_ACCESS1, start: '0x00000000', size: '0x00400000'}, {index: '4', enabled: 'false',
               security: s, template: NO_ACCESS1, start: '0x00000000', size: '0x00400000'}, {index: '5', enabled: 'false', security: s, template: NO_ACCESS1, start: '0x00000000',
               size: '0x00400000'}, {index: '6', enabled: 'false', security: s, template: NO_ACCESS1, start: '0x00000000', size: '0x00400000'}, {index: '7', enabled: 'false',
-              security: s, template: NO_ACCESS1, start: '0x00000000', size: '0x00400000'}], [{index: '0', enabled: 'false', security: ns, template: NO_ACCESS1, start: '0x20000000',
-              size: '0x00040000'}, {index: '1', enabled: 'false', security: ns, template: NO_ACCESS1, start: '0x20000000', size: '0x00040000'}, {index: '2', enabled: 'false',
-              security: ns, template: NO_ACCESS1, start: '0x20000000', size: '0x00040000'}, {index: '3', enabled: 'false', security: ns, template: NO_ACCESS1, start: '0x20000000',
-              size: '0x00040000'}, {index: '4', enabled: 'false', security: ns, template: NO_ACCESS1, start: '0x20000000', size: '0x00040000'}, {index: '5', enabled: 'false',
-              security: ns, template: NO_ACCESS1, start: '0x20000000', size: '0x00040000'}, {index: '6', enabled: 'false', security: ns, template: NO_ACCESS1, start: '0x20000000',
-              size: '0x00040000'}, {index: '7', enabled: 'false', security: ns, template: NO_ACCESS1, start: '0x20000000', size: '0x00040000'}], [{index: '0', enabled: 'false',
-              security: ns, template: NO_ACCESS1, start: '0x20000000', size: '0x00040000'}, {index: '1', enabled: 'false', security: ns, template: NO_ACCESS1, start: '0x20000000',
-              size: '0x00040000'}, {index: '2', enabled: 'false', security: ns, template: NO_ACCESS1, start: '0x20000000', size: '0x00040000'}, {index: '3', enabled: 'false',
-              security: ns, template: NO_ACCESS1, start: '0x20000000', size: '0x00040000'}, {index: '4', enabled: 'false', security: ns, template: NO_ACCESS1, start: '0x20000000',
-              size: '0x00040000'}, {index: '5', enabled: 'false', security: ns, template: NO_ACCESS1, start: '0x20000000', size: '0x00040000'}, {index: '6', enabled: 'false',
-              security: ns, template: NO_ACCESS1, start: '0x20000000', size: '0x00040000'}, {index: '7', enabled: 'false', security: ns, template: NO_ACCESS1, start: '0x20000000',
-              size: '0x00040000'}], [{index: '0', enabled: 'false', security: ns, template: NO_ACCESS1, start: '0x20000000', size: '0x00040000'}, {index: '1', enabled: 'false',
-              security: ns, template: NO_ACCESS1, start: '0x20000000', size: '0x00040000'}, {index: '2', enabled: 'false', security: ns, template: NO_ACCESS1, start: '0x20000000',
-              size: '0x00040000'}, {index: '3', enabled: 'false', security: ns, template: NO_ACCESS1, start: '0x20000000', size: '0x00040000'}, {index: '4', enabled: 'false',
-              security: ns, template: NO_ACCESS1, start: '0x20000000', size: '0x00040000'}, {index: '5', enabled: 'false', security: ns, template: NO_ACCESS1, start: '0x20000000',
-              size: '0x00040000'}, {index: '6', enabled: 'false', security: ns, template: NO_ACCESS1, start: '0x20000000', size: '0x00040000'}, {index: '7', enabled: 'false',
-              security: ns, template: NO_ACCESS1, start: '0x20000000', size: '0x00040000'}], [{index: '0', enabled: 'false', security: ns, template: NO_ACCESS1, start: '0x20000000',
-              size: '0x00040000'}, {index: '1', enabled: 'false', security: ns, template: NO_ACCESS1, start: '0x20000000', size: '0x00040000'}, {index: '2', enabled: 'false',
-              security: ns, template: NO_ACCESS1, start: '0x20000000', size: '0x00040000'}, {index: '3', enabled: 'false', security: ns, template: NO_ACCESS1, start: '0x20000000',
-              size: '0x00040000'}, {index: '4', enabled: 'false', security: ns, template: NO_ACCESS1, start: '0x20000000', size: '0x00040000'}, {index: '5', enabled: 'false',
-              security: ns, template: NO_ACCESS1, start: '0x20000000', size: '0x00040000'}, {index: '6', enabled: 'false', security: ns, template: NO_ACCESS1, start: '0x20000000',
-              size: '0x00040000'}, {index: '7', enabled: 'false', security: ns, template: NO_ACCESS1, start: '0x20000000', size: '0x00040000'}], [{index: '0', enabled: 'false',
-              security: ns, template: NO_ACCESS1, start: '0x20000000', size: '0x00040000'}, {index: '1', enabled: 'false', security: ns, template: NO_ACCESS1, start: '0x20000000',
-              size: '0x00040000'}, {index: '2', enabled: 'false', security: ns, template: NO_ACCESS1, start: '0x20000000', size: '0x00040000'}, {index: '3', enabled: 'false',
-              security: ns, template: NO_ACCESS1, start: '0x20000000', size: '0x00040000'}, {index: '4', enabled: 'false', security: ns, template: NO_ACCESS1, start: '0x20000000',
-              size: '0x00040000'}, {index: '5', enabled: 'false', security: ns, template: NO_ACCESS1, start: '0x20000000', size: '0x00040000'}, {index: '6', enabled: 'false',
-              security: ns, template: NO_ACCESS1, start: '0x20000000', size: '0x00040000'}, {index: '7', enabled: 'false', security: ns, template: NO_ACCESS1, start: '0x20000000',
-              size: '0x00040000'}], [{index: '0', enabled: 'false', security: ns, template: NO_ACCESS1, start: '0x20000000', size: '0x00040000'}, {index: '1', enabled: 'false',
-              security: ns, template: NO_ACCESS1, start: '0x20000000', size: '0x00040000'}, {index: '2', enabled: 'false', security: ns, template: NO_ACCESS1, start: '0x20000000',
-              size: '0x00040000'}, {index: '3', enabled: 'false', security: ns, template: NO_ACCESS1, start: '0x20000000', size: '0x00040000'}, {index: '4', enabled: 'false',
-              security: ns, template: NO_ACCESS1, start: '0x20000000', size: '0x00040000'}, {index: '5', enabled: 'false', security: ns, template: NO_ACCESS1, start: '0x20000000',
-              size: '0x00040000'}, {index: '6', enabled: 'false', security: ns, template: NO_ACCESS1, start: '0x20000000', size: '0x00040000'}, {index: '7', enabled: 'false',
-              security: ns, template: NO_ACCESS1, start: '0x20000000', size: '0x00040000'}], [{index: '0', enabled: 'false', security: ns, template: NO_ACCESS1, start: '0x20000000',
-              size: '0x00040000'}, {index: '1', enabled: 'false', security: ns, template: NO_ACCESS1, start: '0x20000000', size: '0x00040000'}, {index: '2', enabled: 'false',
-              security: ns, template: NO_ACCESS1, start: '0x20000000', size: '0x00040000'}, {index: '3', enabled: 'false', security: ns, template: NO_ACCESS1, start: '0x20000000',
-              size: '0x00040000'}, {index: '4', enabled: 'false', security: ns, template: NO_ACCESS1, start: '0x20000000', size: '0x00040000'}, {index: '5', enabled: 'false',
-              security: ns, template: NO_ACCESS1, start: '0x20000000', size: '0x00040000'}, {index: '6', enabled: 'false', security: ns, template: NO_ACCESS1, start: '0x20000000',
-              size: '0x00040000'}, {index: '7', enabled: 'false', security: ns, template: NO_ACCESS1, start: '0x20000000', size: '0x00040000'}], [{index: '0', enabled: 'false',
-              security: ns, template: NO_ACCESS1, start: '0x20000000', size: '0x00040000'}, {index: '1', enabled: 'false', security: ns, template: NO_ACCESS1, start: '0x20000000',
-              size: '0x00040000'}, {index: '2', enabled: 'false', security: ns, template: NO_ACCESS1, start: '0x20000000', size: '0x00040000'}, {index: '3', enabled: 'false',
-              security: ns, template: NO_ACCESS1, start: '0x20000000', size: '0x00040000'}, {index: '4', enabled: 'false', security: ns, template: NO_ACCESS1, start: '0x20000000',
-              size: '0x00040000'}, {index: '5', enabled: 'false', security: ns, template: NO_ACCESS1, start: '0x20000000', size: '0x00040000'}, {index: '6', enabled: 'false',
-              security: ns, template: NO_ACCESS1, start: '0x20000000', size: '0x00040000'}, {index: '7', enabled: 'false', security: ns, template: NO_ACCESS1, start: '0x20000000',
-              size: '0x00040000'}], [{index: '0', enabled: 'false', security: ns, template: NO_ACCESS1, start: '0x20000000', size: '0x00040000'}, {index: '1', enabled: 'false',
-              security: ns, template: NO_ACCESS1, start: '0x20000000', size: '0x00040000'}, {index: '2', enabled: 'false', security: ns, template: NO_ACCESS1, start: '0x20000000',
-              size: '0x00040000'}, {index: '3', enabled: 'false', security: ns, template: NO_ACCESS1, start: '0x20000000', size: '0x00040000'}, {index: '4', enabled: 'false',
-              security: ns, template: NO_ACCESS1, start: '0x20000000', size: '0x00040000'}, {index: '5', enabled: 'false', security: ns, template: NO_ACCESS1, start: '0x20000000',
-              size: '0x00040000'}, {index: '6', enabled: 'false', security: ns, template: NO_ACCESS1, start: '0x20000000', size: '0x00040000'}, {index: '7', enabled: 'false',
-              security: ns, template: NO_ACCESS1, start: '0x20000000', size: '0x00040000'}], [{index: '0', enabled: 'false', security: ns, template: NO_ACCESS1, start: '0x20000000',
-              size: '0x00040000'}, {index: '1', enabled: 'false', security: ns, template: NO_ACCESS1, start: '0x20000000', size: '0x00040000'}, {index: '2', enabled: 'false',
-              security: ns, template: NO_ACCESS1, start: '0x20000000', size: '0x00040000'}, {index: '3', enabled: 'false', security: ns, template: NO_ACCESS1, start: '0x20000000',
-              size: '0x00040000'}, {index: '4', enabled: 'false', security: ns, template: NO_ACCESS1, start: '0x20000000', size: '0x00040000'}, {index: '5', enabled: 'false',
-              security: ns, template: NO_ACCESS1, start: '0x20000000', size: '0x00040000'}, {index: '6', enabled: 'false', security: ns, template: NO_ACCESS1, start: '0x20000000',
-              size: '0x00040000'}, {index: '7', enabled: 'false', security: ns, template: NO_ACCESS1, start: '0x20000000', size: '0x00040000'}], [{index: '0', enabled: 'false',
-              security: ns, template: NO_ACCESS1, start: '0x20000000', size: '0x00040000'}, {index: '1', enabled: 'false', security: ns, template: NO_ACCESS1, start: '0x20000000',
-              size: '0x00040000'}, {index: '2', enabled: 'false', security: ns, template: NO_ACCESS1, start: '0x20000000', size: '0x00040000'}, {index: '3', enabled: 'false',
-              security: ns, template: NO_ACCESS1, start: '0x20000000', size: '0x00040000'}, {index: '4', enabled: 'false', security: ns, template: NO_ACCESS1, start: '0x20000000',
-              size: '0x00040000'}, {index: '5', enabled: 'false', security: ns, template: NO_ACCESS1, start: '0x20000000', size: '0x00040000'}, {index: '6', enabled: 'false',
-              security: ns, template: NO_ACCESS1, start: '0x20000000', size: '0x00040000'}, {index: '7', enabled: 'false', security: ns, template: NO_ACCESS1, start: '0x20000000',
-              size: '0x00040000'}], [{index: '0', enabled: 'false', security: ns, template: NO_ACCESS1, start: '0x20000000', size: '0x00040000'}, {index: '1', enabled: 'false',
-              security: ns, template: NO_ACCESS1, start: '0x20000000', size: '0x00040000'}, {index: '2', enabled: 'false', security: ns, template: NO_ACCESS1, start: '0x20000000',
-              size: '0x00040000'}, {index: '3', enabled: 'false', security: ns, template: NO_ACCESS1, start: '0x20000000', size: '0x00040000'}, {index: '4', enabled: 'false',
-              security: ns, template: NO_ACCESS1, start: '0x20000000', size: '0x00040000'}, {index: '5', enabled: 'false', security: ns, template: NO_ACCESS1, start: '0x20000000',
-              size: '0x00040000'}, {index: '6', enabled: 'false', security: ns, template: NO_ACCESS1, start: '0x20000000', size: '0x00040000'}, {index: '7', enabled: 'false',
-              security: ns, template: NO_ACCESS1, start: '0x20000000', size: '0x00040000'}], [{index: '0', enabled: 'false', security: ns, template: NO_ACCESS1, start: '0x20000000',
-              size: '0x00040000'}, {index: '1', enabled: 'false', security: ns, template: NO_ACCESS1, start: '0x20000000', size: '0x00040000'}, {index: '2', enabled: 'false',
-              security: ns, template: NO_ACCESS1, start: '0x20000000', size: '0x00040000'}, {index: '3', enabled: 'false', security: ns, template: NO_ACCESS1, start: '0x20000000',
-              size: '0x00040000'}, {index: '4', enabled: 'false', security: ns, template: NO_ACCESS1, start: '0x20000000', size: '0x00040000'}, {index: '5', enabled: 'false',
-              security: ns, template: NO_ACCESS1, start: '0x20000000', size: '0x00040000'}, {index: '6', enabled: 'false', security: ns, template: NO_ACCESS1, start: '0x20000000',
-              size: '0x00040000'}, {index: '7', enabled: 'false', security: ns, template: NO_ACCESS1, start: '0x20000000', size: '0x00040000'}], [{index: '0', enabled: 'false',
-              security: ns, template: NO_ACCESS1, start: '0x20000000', size: '0x00040000'}, {index: '1', enabled: 'false', security: ns, template: NO_ACCESS1, start: '0x20000000',
-              size: '0x00040000'}, {index: '2', enabled: 'false', security: ns, template: NO_ACCESS1, start: '0x20000000', size: '0x00040000'}, {index: '3', enabled: 'false',
-              security: ns, template: NO_ACCESS1, start: '0x20000000', size: '0x00040000'}, {index: '4', enabled: 'false', security: ns, template: NO_ACCESS1, start: '0x20000000',
-              size: '0x00040000'}, {index: '5', enabled: 'false', security: ns, template: NO_ACCESS1, start: '0x20000000', size: '0x00040000'}, {index: '6', enabled: 'false',
-              security: ns, template: NO_ACCESS1, start: '0x20000000', size: '0x00040000'}, {index: '7', enabled: 'false', security: ns, template: NO_ACCESS1, start: '0x20000000',
-              size: '0x00040000'}], [{index: '0', enabled: 'false', security: ns, template: NO_ACCESS1, start: '0x20000000', size: '0x00040000'}, {index: '1', enabled: 'false',
-              security: ns, template: NO_ACCESS1, start: '0x20000000', size: '0x00040000'}, {index: '2', enabled: 'false', security: ns, template: NO_ACCESS1, start: '0x20000000',
-              size: '0x00040000'}, {index: '3', enabled: 'false', security: ns, template: NO_ACCESS1, start: '0x20000000', size: '0x00040000'}, {index: '4', enabled: 'false',
-              security: ns, template: NO_ACCESS1, start: '0x20000000', size: '0x00040000'}, {index: '5', enabled: 'false', security: ns, template: NO_ACCESS1, start: '0x20000000',
-              size: '0x00040000'}, {index: '6', enabled: 'false', security: ns, template: NO_ACCESS1, start: '0x20000000', size: '0x00040000'}, {index: '7', enabled: 'false',
-              security: ns, template: NO_ACCESS1, start: '0x20000000', size: '0x00040000'}], [{index: '0', enabled: 'false', security: ns, template: NO_ACCESS1, start: '0x20000000',
-              size: '0x00040000'}, {index: '1', enabled: 'false', security: ns, template: NO_ACCESS1, start: '0x20000000', size: '0x00040000'}, {index: '2', enabled: 'false',
-              security: ns, template: NO_ACCESS1, start: '0x20000000', size: '0x00040000'}, {index: '3', enabled: 'false', security: ns, template: NO_ACCESS1, start: '0x20000000',
-              size: '0x00040000'}, {index: '4', enabled: 'false', security: ns, template: NO_ACCESS1, start: '0x20000000', size: '0x00040000'}, {index: '5', enabled: 'false',
-              security: ns, template: NO_ACCESS1, start: '0x20000000', size: '0x00040000'}, {index: '6', enabled: 'false', security: ns, template: NO_ACCESS1, start: '0x20000000',
-              size: '0x00040000'}, {index: '7', enabled: 'false', security: ns, template: NO_ACCESS1, start: '0x20000000', size: '0x00040000'}]]
+              security: s, template: NO_ACCESS1, start: '0x00000000', size: '0x00400000'}]]
       - mrc:
         - checker_id: 'MRC_W3'
         - using_global_templates: 'true'
@@ -1350,7 +1502,7 @@ functional_group:
               size: '0x00080000'}, {index: '12', enabled: 'false', security: s, template: NO_ACCESS1, start: '0x20480000', size: '0x00080000'}, {index: '13', enabled: 'false',
               security: s, template: NO_ACCESS1, start: '0x20480000', size: '0x00080000'}, {index: '14', enabled: 'false', security: s, template: NO_ACCESS1, start: '0x20480000',
               size: '0x00080000'}, {index: '15', enabled: 'false', security: s, template: NO_ACCESS1, start: '0x20480000', size: '0x00080000'}], [{index: '0', enabled: 'false',
-              security: s, template: NO_ACCESS1, start: '0x20480000', size: '0x00080000'}, {index: '1', enabled: 'false', security: s, template: NO_ACCESS1, start: '0x20480000',
+              security: ns, template: NO_ACCESS6, start: '0x20480000', size: '0x00004000'}, {index: '1', enabled: 'false', security: s, template: NO_ACCESS1, start: '0x20480000',
               size: '0x00080000'}, {index: '2', enabled: 'false', security: s, template: NO_ACCESS1, start: '0x20480000', size: '0x00080000'}, {index: '3', enabled: 'false',
               security: s, template: NO_ACCESS1, start: '0x20480000', size: '0x00080000'}, {index: '4', enabled: 'false', security: s, template: NO_ACCESS1, start: '0x20480000',
               size: '0x00080000'}, {index: '5', enabled: 'false', security: s, template: NO_ACCESS1, start: '0x20480000', size: '0x00080000'}, {index: '6', enabled: 'false',
@@ -1359,8 +1511,8 @@ functional_group:
               security: s, template: NO_ACCESS1, start: '0x20480000', size: '0x00080000'}, {index: '10', enabled: 'false', security: s, template: NO_ACCESS1, start: '0x20480000',
               size: '0x00080000'}, {index: '11', enabled: 'false', security: s, template: NO_ACCESS1, start: '0x20480000', size: '0x00080000'}, {index: '12', enabled: 'false',
               security: s, template: NO_ACCESS1, start: '0x20480000', size: '0x00080000'}, {index: '13', enabled: 'false', security: s, template: NO_ACCESS1, start: '0x20480000',
-              size: '0x00080000'}, {index: '14', enabled: 'false', security: s, template: NO_ACCESS1, start: '0x20480000', size: '0x00080000'}, {index: '15', enabled: 'false',
-              security: s, template: NO_ACCESS1, start: '0x20480000', size: '0x00080000'}], [{index: '0', enabled: 'false', security: s, template: NO_ACCESS1, start: '0x20480000',
+              size: '0x00080000'}, {index: '14', enabled: 'false', security: s, template: NO_ACCESS1, start: '0x20480000', size: '0x00080000'}, {index: '15', enabled: 'true',
+              security: ns, template: NO_ACCESS6, start: '0x20480000', size: '0x00004000'}], [{index: '0', enabled: 'false', security: s, template: NO_ACCESS1, start: '0x20480000',
               size: '0x00080000'}, {index: '1', enabled: 'false', security: s, template: NO_ACCESS1, start: '0x20480000', size: '0x00080000'}, {index: '2', enabled: 'false',
               security: s, template: NO_ACCESS1, start: '0x20480000', size: '0x00080000'}, {index: '3', enabled: 'false', security: s, template: NO_ACCESS1, start: '0x20480000',
               size: '0x00080000'}, {index: '4', enabled: 'false', security: s, template: NO_ACCESS1, start: '0x20480000', size: '0x00080000'}, {index: '5', enabled: 'false',
@@ -2002,62 +2154,6 @@ functional_group:
               size: '0x10000000'}, {index: '15', enabled: 'false', security: s, template: NO_ACCESS1, start: '0x60000000', size: '0x10000000'}]]
   - trdc:
     - id: '2'
-    - ports:
-      - RGPIO1: {pin_security: {id: '0', security: s_priv}, pin_security: {id: '1', security: s_priv}, pin_security: {id: '10', security: s_priv}, pin_security: {
-          id: '11', security: s_priv}, pin_security: {id: '12', security: s_priv}, pin_security: {id: '13', security: s_priv}, pin_security: {id: '14', security: s_priv},
-        pin_security: {id: '15', security: s_priv}, pin_security: {id: '16', security: s_priv}, pin_security: {id: '17', security: s_priv}, pin_security: {id: '18',
-          security: s_priv}, pin_security: {id: '19', security: s_priv}, pin_security: {id: '2', security: s_priv}, pin_security: {id: '20', security: s_priv}, pin_security: {
-          id: '21', security: s_priv}, pin_security: {id: '22', security: s_priv}, pin_security: {id: '23', security: s_priv}, pin_security: {id: '24', security: s_priv},
-        pin_security: {id: '25', security: s_priv}, pin_security: {id: '26', security: s_priv}, pin_security: {id: '27', security: s_priv}, pin_security: {id: '3',
-          security: s_priv}, pin_security: {id: '4', security: s_priv}, pin_security: {id: '5', security: s_priv}, pin_security: {id: '6', security: s_priv}, pin_security: {
-          id: '7', security: s_priv}, pin_security: {id: '8', security: s_priv}, pin_security: {id: '9', security: s_priv}, pin_interrupt_security: {id: '0', security: s_priv},
-        pin_interrupt_security: {id: '1', security: s_priv}}
-      - RGPIO2: {pin_security: {id: '0', security: s_priv}, pin_security: {id: '1', security: s_priv}, pin_security: {id: '10', security: s_priv}, pin_security: {
-          id: '11', security: s_priv}, pin_security: {id: '12', security: s_priv}, pin_security: {id: '13', security: s_priv}, pin_security: {id: '14', security: s_priv},
-        pin_security: {id: '15', security: s_priv}, pin_security: {id: '16', security: s_priv}, pin_security: {id: '17', security: s_priv}, pin_security: {id: '18',
-          security: s_priv}, pin_security: {id: '19', security: s_priv}, pin_security: {id: '2', security: s_priv}, pin_security: {id: '20', security: s_priv}, pin_security: {
-          id: '21', security: s_priv}, pin_security: {id: '22', security: s_priv}, pin_security: {id: '23', security: s_priv}, pin_security: {id: '24', security: s_priv},
-        pin_security: {id: '25', security: s_priv}, pin_security: {id: '26', security: s_priv}, pin_security: {id: '27', security: s_priv}, pin_security: {id: '28',
-          security: s_priv}, pin_security: {id: '29', security: s_priv}, pin_security: {id: '3', security: s_priv}, pin_security: {id: '30', security: s_priv}, pin_security: {
-          id: '31', security: s_priv}, pin_security: {id: '4', security: s_priv}, pin_security: {id: '5', security: s_priv}, pin_security: {id: '6', security: s_priv},
-        pin_security: {id: '7', security: s_priv}, pin_security: {id: '8', security: s_priv}, pin_security: {id: '9', security: s_priv}, pin_interrupt_security: {
-          id: '0', security: s_priv}, pin_interrupt_security: {id: '1', security: s_priv}}
-      - RGPIO3: {pin_security: {id: '0', security: s_priv}, pin_security: {id: '1', security: s_priv}, pin_security: {id: '10', security: s_priv}, pin_security: {
-          id: '11', security: s_priv}, pin_security: {id: '12', security: s_priv}, pin_security: {id: '13', security: s_priv}, pin_security: {id: '14', security: s_priv},
-        pin_security: {id: '15', security: s_priv}, pin_security: {id: '16', security: s_priv}, pin_security: {id: '17', security: s_priv}, pin_security: {id: '18',
-          security: s_priv}, pin_security: {id: '19', security: s_priv}, pin_security: {id: '2', security: s_priv}, pin_security: {id: '20', security: s_priv}, pin_security: {
-          id: '21', security: s_priv}, pin_security: {id: '22', security: s_priv}, pin_security: {id: '23', security: s_priv}, pin_security: {id: '24', security: s_priv},
-        pin_security: {id: '25', security: s_priv}, pin_security: {id: '26', security: s_priv}, pin_security: {id: '27', security: s_priv}, pin_security: {id: '28',
-          security: s_priv}, pin_security: {id: '29', security: s_priv}, pin_security: {id: '3', security: s_priv}, pin_security: {id: '30', security: s_priv}, pin_security: {
-          id: '4', security: s_priv}, pin_security: {id: '5', security: s_priv}, pin_security: {id: '6', security: s_priv}, pin_security: {id: '7', security: s_priv},
-        pin_security: {id: '8', security: s_priv}, pin_security: {id: '9', security: s_priv}, pin_interrupt_security: {id: '0', security: s_priv}, pin_interrupt_security: {
-          id: '1', security: s_priv}}
-      - RGPIO4: {pin_security: {id: '0', security: s_priv}, pin_security: {id: '1', security: s_priv}, pin_security: {id: '10', security: s_priv}, pin_security: {
-          id: '11', security: s_priv}, pin_security: {id: '12', security: s_priv}, pin_security: {id: '13', security: s_priv}, pin_security: {id: '14', security: s_priv},
-        pin_security: {id: '15', security: s_priv}, pin_security: {id: '16', security: s_priv}, pin_security: {id: '17', security: s_priv}, pin_security: {id: '18',
-          security: s_priv}, pin_security: {id: '19', security: s_priv}, pin_security: {id: '2', security: s_priv}, pin_security: {id: '20', security: s_priv}, pin_security: {
-          id: '21', security: s_priv}, pin_security: {id: '22', security: s_priv}, pin_security: {id: '23', security: s_priv}, pin_security: {id: '24', security: s_priv},
-        pin_security: {id: '25', security: s_priv}, pin_security: {id: '26', security: s_priv}, pin_security: {id: '27', security: s_priv}, pin_security: {id: '28',
-          security: s_priv}, pin_security: {id: '29', security: s_priv}, pin_security: {id: '3', security: s_priv}, pin_security: {id: '30', security: s_priv}, pin_security: {
-          id: '31', security: s_priv}, pin_security: {id: '4', security: s_priv}, pin_security: {id: '5', security: s_priv}, pin_security: {id: '6', security: s_priv},
-        pin_security: {id: '7', security: s_priv}, pin_security: {id: '8', security: s_priv}, pin_security: {id: '9', security: s_priv}, pin_interrupt_security: {
-          id: '0', security: s_priv}, pin_interrupt_security: {id: '1', security: s_priv}}
-      - RGPIO5: {pin_security: {id: '0', security: s_priv}, pin_security: {id: '1', security: s_priv}, pin_security: {id: '10', security: s_priv}, pin_security: {
-          id: '11', security: s_priv}, pin_security: {id: '12', security: s_priv}, pin_security: {id: '13', security: s_priv}, pin_security: {id: '14', security: s_priv},
-        pin_security: {id: '15', security: s_priv}, pin_security: {id: '16', security: s_priv}, pin_security: {id: '17', security: s_priv}, pin_security: {id: '18',
-          security: s_priv}, pin_security: {id: '19', security: s_priv}, pin_security: {id: '2', security: s_priv}, pin_security: {id: '20', security: s_priv}, pin_security: {
-          id: '21', security: s_priv}, pin_security: {id: '3', security: s_priv}, pin_security: {id: '4', security: s_priv}, pin_security: {id: '5', security: s_priv},
-        pin_security: {id: '6', security: s_priv}, pin_security: {id: '7', security: s_priv}, pin_security: {id: '8', security: s_priv}, pin_security: {id: '9', security: s_priv},
-        pin_interrupt_security: {id: '0', security: s_priv}, pin_interrupt_security: {id: '1', security: s_priv}}
-      - RGPIO6: {pin_security: {id: '0', security: s_priv}, pin_security: {id: '1', security: s_priv}, pin_security: {id: '10', security: s_priv}, pin_security: {
-          id: '11', security: s_priv}, pin_security: {id: '12', security: s_priv}, pin_security: {id: '13', security: s_priv}, pin_security: {id: '14', security: s_priv},
-        pin_security: {id: '15', security: s_priv}, pin_security: {id: '16', security: s_priv}, pin_security: {id: '17', security: s_priv}, pin_security: {id: '18',
-          security: s_priv}, pin_security: {id: '19', security: s_priv}, pin_security: {id: '2', security: s_priv}, pin_security: {id: '20', security: s_priv}, pin_security: {
-          id: '21', security: s_priv}, pin_security: {id: '22', security: s_priv}, pin_security: {id: '23', security: s_priv}, pin_security: {id: '24', security: s_priv},
-        pin_security: {id: '25', security: s_priv}, pin_security: {id: '26', security: s_priv}, pin_security: {id: '27', security: s_priv}, pin_security: {id: '3',
-          security: s_priv}, pin_security: {id: '4', security: s_priv}, pin_security: {id: '5', security: s_priv}, pin_security: {id: '6', security: s_priv}, pin_security: {
-          id: '7', security: s_priv}, pin_security: {id: '8', security: s_priv}, pin_security: {id: '9', security: s_priv}, pin_interrupt_security: {id: '0', security: s_priv},
-        pin_interrupt_security: {id: '1', security: s_priv}}
     - masters: [{id: usdhc1, domain_assignments: [{enabled: 'false', locked: 'false', domain_id: '0', secure: ns, privileged: user, domain_bypass: 'false'}]}, {
         id: usdhc2, domain_assignments: [{enabled: 'false', locked: 'false', domain_id: '0', secure: ns, privileged: user, domain_bypass: 'false'}]}, {id: usb, domain_assignments: [
           {enabled: 'false', locked: 'false', domain_id: '0', secure: ns, privileged: user, domain_bypass: 'false'}]}, {id: flexspi_flr, domain_assignments: [{enabled: 'false',
@@ -2065,70 +2161,71 @@ functional_group:
     - mbcs: []
     - mrcs: []
   - ports:
-    - RGPIO1: {pin_security: {id: '0', security: s_priv}, pin_security: {id: '1', security: s_priv}, pin_security: {id: '10', security: s_priv}, pin_security: {
-        id: '11', security: s_priv}, pin_security: {id: '12', security: s_priv}, pin_security: {id: '13', security: s_priv}, pin_security: {id: '14', security: s_priv},
-      pin_security: {id: '15', security: s_priv}, pin_security: {id: '16', security: s_priv}, pin_security: {id: '17', security: s_priv}, pin_security: {id: '18',
-        security: s_priv}, pin_security: {id: '19', security: s_priv}, pin_security: {id: '2', security: s_priv}, pin_security: {id: '20', security: s_priv}, pin_security: {
-        id: '21', security: s_priv}, pin_security: {id: '22', security: s_priv}, pin_security: {id: '23', security: s_priv}, pin_security: {id: '24', security: s_priv},
-      pin_security: {id: '25', security: s_priv}, pin_security: {id: '26', security: s_priv}, pin_security: {id: '27', security: s_priv}, pin_security: {id: '3',
-        security: s_priv}, pin_security: {id: '4', security: s_priv}, pin_security: {id: '5', security: s_priv}, pin_security: {id: '6', security: s_priv}, pin_security: {
-        id: '7', security: s_priv}, pin_security: {id: '8', security: s_priv}, pin_security: {id: '9', security: s_priv}, pin_interrupt_security: {id: '0', security: s_priv},
-      pin_interrupt_security: {id: '1', security: s_priv}}
-    - RGPIO2: {pin_security: {id: '0', security: s_priv}, pin_security: {id: '1', security: s_priv}, pin_security: {id: '10', security: s_priv}, pin_security: {
-        id: '11', security: s_priv}, pin_security: {id: '12', security: s_priv}, pin_security: {id: '13', security: s_priv}, pin_security: {id: '14', security: s_priv},
-      pin_security: {id: '15', security: s_priv}, pin_security: {id: '16', security: s_priv}, pin_security: {id: '17', security: s_priv}, pin_security: {id: '18',
-        security: s_priv}, pin_security: {id: '19', security: s_priv}, pin_security: {id: '2', security: s_priv}, pin_security: {id: '20', security: s_priv}, pin_security: {
-        id: '21', security: s_priv}, pin_security: {id: '22', security: s_priv}, pin_security: {id: '23', security: s_priv}, pin_security: {id: '24', security: s_priv},
-      pin_security: {id: '25', security: s_priv}, pin_security: {id: '26', security: s_priv}, pin_security: {id: '27', security: s_priv}, pin_security: {id: '28',
-        security: s_priv}, pin_security: {id: '29', security: s_priv}, pin_security: {id: '3', security: s_priv}, pin_security: {id: '30', security: s_priv}, pin_security: {
-        id: '31', security: s_priv}, pin_security: {id: '4', security: s_priv}, pin_security: {id: '5', security: s_priv}, pin_security: {id: '6', security: s_priv},
-      pin_security: {id: '7', security: s_priv}, pin_security: {id: '8', security: s_priv}, pin_security: {id: '9', security: s_priv}, pin_interrupt_security: {id: '0',
-        security: s_priv}, pin_interrupt_security: {id: '1', security: s_priv}}
-    - RGPIO3: {pin_security: {id: '0', security: s_priv}, pin_security: {id: '1', security: s_priv}, pin_security: {id: '10', security: s_priv}, pin_security: {
-        id: '11', security: s_priv}, pin_security: {id: '12', security: s_priv}, pin_security: {id: '13', security: s_priv}, pin_security: {id: '14', security: s_priv},
-      pin_security: {id: '15', security: s_priv}, pin_security: {id: '16', security: s_priv}, pin_security: {id: '17', security: s_priv}, pin_security: {id: '18',
-        security: s_priv}, pin_security: {id: '19', security: s_priv}, pin_security: {id: '2', security: s_priv}, pin_security: {id: '20', security: s_priv}, pin_security: {
-        id: '21', security: s_priv}, pin_security: {id: '22', security: s_priv}, pin_security: {id: '23', security: s_priv}, pin_security: {id: '24', security: s_priv},
-      pin_security: {id: '25', security: s_priv}, pin_security: {id: '26', security: s_priv}, pin_security: {id: '27', security: s_priv}, pin_security: {id: '28',
-        security: s_priv}, pin_security: {id: '29', security: s_priv}, pin_security: {id: '3', security: s_priv}, pin_security: {id: '30', security: s_priv}, pin_security: {
-        id: '4', security: s_priv}, pin_security: {id: '5', security: s_priv}, pin_security: {id: '6', security: s_priv}, pin_security: {id: '7', security: s_priv},
-      pin_security: {id: '8', security: s_priv}, pin_security: {id: '9', security: s_priv}, pin_interrupt_security: {id: '0', security: s_priv}, pin_interrupt_security: {
-        id: '1', security: s_priv}}
-    - RGPIO4: {pin_security: {id: '0', security: s_priv}, pin_security: {id: '1', security: s_priv}, pin_security: {id: '10', security: s_priv}, pin_security: {
-        id: '11', security: s_priv}, pin_security: {id: '12', security: s_priv}, pin_security: {id: '13', security: s_priv}, pin_security: {id: '14', security: s_priv},
-      pin_security: {id: '15', security: s_priv}, pin_security: {id: '16', security: s_priv}, pin_security: {id: '17', security: s_priv}, pin_security: {id: '18',
-        security: s_priv}, pin_security: {id: '19', security: s_priv}, pin_security: {id: '2', security: s_priv}, pin_security: {id: '20', security: s_priv}, pin_security: {
-        id: '21', security: s_priv}, pin_security: {id: '22', security: s_priv}, pin_security: {id: '23', security: s_priv}, pin_security: {id: '24', security: s_priv},
-      pin_security: {id: '25', security: s_priv}, pin_security: {id: '26', security: s_priv}, pin_security: {id: '27', security: s_priv}, pin_security: {id: '28',
-        security: s_priv}, pin_security: {id: '29', security: s_priv}, pin_security: {id: '3', security: s_priv}, pin_security: {id: '30', security: s_priv}, pin_security: {
-        id: '31', security: s_priv}, pin_security: {id: '4', security: s_priv}, pin_security: {id: '5', security: s_priv}, pin_security: {id: '6', security: s_priv},
-      pin_security: {id: '7', security: s_priv}, pin_security: {id: '8', security: s_priv}, pin_security: {id: '9', security: s_priv}, pin_interrupt_security: {id: '0',
-        security: s_priv}, pin_interrupt_security: {id: '1', security: s_priv}}
-    - RGPIO5: {pin_security: {id: '0', security: s_priv}, pin_security: {id: '1', security: s_priv}, pin_security: {id: '10', security: s_priv}, pin_security: {
-        id: '11', security: s_priv}, pin_security: {id: '12', security: s_priv}, pin_security: {id: '13', security: s_priv}, pin_security: {id: '14', security: s_priv},
-      pin_security: {id: '15', security: s_priv}, pin_security: {id: '16', security: s_priv}, pin_security: {id: '17', security: s_priv}, pin_security: {id: '18',
-        security: s_priv}, pin_security: {id: '19', security: s_priv}, pin_security: {id: '2', security: s_priv}, pin_security: {id: '20', security: s_priv}, pin_security: {
-        id: '21', security: s_priv}, pin_security: {id: '3', security: s_priv}, pin_security: {id: '4', security: s_priv}, pin_security: {id: '5', security: s_priv},
-      pin_security: {id: '6', security: s_priv}, pin_security: {id: '7', security: s_priv}, pin_security: {id: '8', security: s_priv}, pin_security: {id: '9', security: s_priv},
-      pin_interrupt_security: {id: '0', security: s_priv}, pin_interrupt_security: {id: '1', security: s_priv}}
-    - RGPIO6: {pin_security: {id: '0', security: s_priv}, pin_security: {id: '1', security: s_priv}, pin_security: {id: '10', security: s_priv}, pin_security: {
-        id: '11', security: s_priv}, pin_security: {id: '12', security: s_priv}, pin_security: {id: '13', security: s_priv}, pin_security: {id: '14', security: s_priv},
-      pin_security: {id: '15', security: s_priv}, pin_security: {id: '16', security: s_priv}, pin_security: {id: '17', security: s_priv}, pin_security: {id: '18',
-        security: s_priv}, pin_security: {id: '19', security: s_priv}, pin_security: {id: '2', security: s_priv}, pin_security: {id: '20', security: s_priv}, pin_security: {
-        id: '21', security: s_priv}, pin_security: {id: '22', security: s_priv}, pin_security: {id: '23', security: s_priv}, pin_security: {id: '24', security: s_priv},
-      pin_security: {id: '25', security: s_priv}, pin_security: {id: '26', security: s_priv}, pin_security: {id: '27', security: s_priv}, pin_security: {id: '3',
-        security: s_priv}, pin_security: {id: '4', security: s_priv}, pin_security: {id: '5', security: s_priv}, pin_security: {id: '6', security: s_priv}, pin_security: {
-        id: '7', security: s_priv}, pin_security: {id: '8', security: s_priv}, pin_security: {id: '9', security: s_priv}, pin_interrupt_security: {id: '0', security: s_priv},
-      pin_interrupt_security: {id: '1', security: s_priv}}
-- sau:
-  - enabled: 'false'
-  - all_non_secure: 'false'
-  - generate_code_for_disabled_regions: 'false'
-  - regions: [{index: '0', enabled: 'false', security: ns, start: '0x00000000', size: '0x10000000'}, {index: '1', enabled: 'false', security: ns, start: '0x20000000',
-      size: '0xC0000000'}, {index: '2', enabled: 'false', security: ns, start: '0x00000000', size: '0x00000020'}, {index: '3', enabled: 'false', security: ns, start: '0x00000000',
-      size: '0x00000020'}, {index: '4', enabled: 'false', security: ns, start: '0x00000000', size: '0x00000020'}, {index: '5', enabled: 'false', security: ns, start: '0x00000000',
-      size: '0x00000020'}, {index: '6', enabled: 'false', security: ns, start: '0x00000000', size: '0x00000020'}, {index: '7', enabled: 'false', security: ns, start: '0x00000000',
-      size: '0x00000020'}]
+    - RGPIO1: {pin_security: {id: '00', security: s_priv}, pin_security: {id: '01', security: s_priv}, pin_security: {id: '02', security: s_priv}, pin_security: {
+        id: '03', security: s_priv}, pin_security: {id: '04', security: s_priv}, pin_security: {id: '05', security: s_priv}, pin_security: {id: '06', security: s_priv},
+      pin_security: {id: '07', security: s_priv}, pin_security: {id: '08', security: s_priv}, pin_security: {id: '09', security: s_priv}, pin_security: {id: '10',
+        security: s_priv}, pin_security: {id: '11', security: s_priv}, pin_security: {id: '12', security: s_priv}, pin_security: {id: '13', security: s_priv}, pin_security: {
+        id: '14', security: s_priv}, pin_security: {id: '15', security: s_priv}, pin_security: {id: '16', security: s_priv}, pin_security: {id: '17', security: s_priv},
+      pin_security: {id: '18', security: s_priv}, pin_security: {id: '19', security: s_priv}, pin_security: {id: '20', security: s_priv}, pin_security: {id: '21',
+        security: s_priv}, pin_security: {id: '22', security: s_priv}, pin_security: {id: '23', security: s_priv}, pin_security: {id: '24', security: s_priv}, pin_security: {
+        id: '25', security: s_priv}, pin_security: {id: '26', security: s_priv}, pin_security: {id: '27', security: s_priv}, pin_interrupt_security: {id: '00', security: s_priv},
+      pin_interrupt_security: {id: '01', security: s_priv}}
+    - RGPIO2: {pin_security: {id: '00', security: s_priv}, pin_security: {id: '01', security: s_priv}, pin_security: {id: '02', security: s_priv}, pin_security: {
+        id: '03', security: s_priv}, pin_security: {id: '04', security: s_priv}, pin_security: {id: '05', security: s_priv}, pin_security: {id: '06', security: s_priv},
+      pin_security: {id: '07', security: s_priv}, pin_security: {id: '08', security: s_priv}, pin_security: {id: '09', security: s_priv}, pin_security: {id: '10',
+        security: s_priv}, pin_security: {id: '11', security: s_priv}, pin_security: {id: '12', security: s_priv}, pin_security: {id: '13', security: s_priv}, pin_security: {
+        id: '14', security: s_priv}, pin_security: {id: '15', security: s_priv}, pin_security: {id: '16', security: s_priv}, pin_security: {id: '17', security: s_priv},
+      pin_security: {id: '18', security: s_priv}, pin_security: {id: '19', security: s_priv}, pin_security: {id: '20', security: s_priv}, pin_security: {id: '21',
+        security: s_priv}, pin_security: {id: '22', security: s_priv}, pin_security: {id: '23', security: s_priv}, pin_security: {id: '24', security: s_priv}, pin_security: {
+        id: '25', security: s_priv}, pin_security: {id: '26', security: s_priv}, pin_security: {id: '27', security: s_priv}, pin_security: {id: '28', security: s_priv},
+      pin_security: {id: '29', security: s_priv}, pin_security: {id: '30', security: s_priv}, pin_security: {id: '31', security: s_priv}, pin_interrupt_security: {
+        id: '00', security: s_priv}, pin_interrupt_security: {id: '01', security: s_priv}}
+    - RGPIO3: {pin_security: {id: '00', security: s_priv}, pin_security: {id: '01', security: s_priv}, pin_security: {id: '02', security: s_priv}, pin_security: {
+        id: '03', security: s_priv}, pin_security: {id: '04', security: s_priv}, pin_security: {id: '05', security: s_priv}, pin_security: {id: '06', security: s_priv},
+      pin_security: {id: '07', security: s_priv}, pin_security: {id: '08', security: s_priv}, pin_security: {id: '09', security: s_priv}, pin_security: {id: '10',
+        security: s_priv}, pin_security: {id: '11', security: s_priv}, pin_security: {id: '12', security: s_priv}, pin_security: {id: '13', security: s_priv}, pin_security: {
+        id: '14', security: s_priv}, pin_security: {id: '15', security: s_priv}, pin_security: {id: '16', security: s_priv}, pin_security: {id: '17', security: s_priv},
+      pin_security: {id: '18', security: s_priv}, pin_security: {id: '19', security: s_priv}, pin_security: {id: '20', security: s_priv}, pin_security: {id: '21',
+        security: s_priv}, pin_security: {id: '22', security: s_priv}, pin_security: {id: '23', security: s_priv}, pin_security: {id: '24', security: s_priv}, pin_security: {
+        id: '25', security: s_priv}, pin_security: {id: '26', security: s_priv}, pin_security: {id: '27', security: s_priv}, pin_security: {id: '28', security: s_priv},
+      pin_security: {id: '29', security: s_priv}, pin_security: {id: '30', security: s_priv}, pin_interrupt_security: {id: '00', security: s_priv}, pin_interrupt_security: {
+        id: '01', security: s_priv}}
+    - RGPIO4: {pin_security: {id: '00', security: s_priv}, pin_security: {id: '01', security: s_priv}, pin_security: {id: '02', security: s_priv}, pin_security: {
+        id: '03', security: s_priv}, pin_security: {id: '04', security: s_priv}, pin_security: {id: '05', security: s_priv}, pin_security: {id: '06', security: s_priv},
+      pin_security: {id: '07', security: s_priv}, pin_security: {id: '08', security: s_priv}, pin_security: {id: '09', security: s_priv}, pin_security: {id: '10',
+        security: s_priv}, pin_security: {id: '11', security: s_priv}, pin_security: {id: '12', security: s_priv}, pin_security: {id: '13', security: s_priv}, pin_security: {
+        id: '14', security: s_priv}, pin_security: {id: '15', security: s_priv}, pin_security: {id: '16', security: s_priv}, pin_security: {id: '17', security: s_priv},
+      pin_security: {id: '18', security: s_priv}, pin_security: {id: '19', security: s_priv}, pin_security: {id: '20', security: s_priv}, pin_security: {id: '21',
+        security: s_priv}, pin_security: {id: '22', security: s_priv}, pin_security: {id: '23', security: s_priv}, pin_security: {id: '24', security: s_priv}, pin_security: {
+        id: '25', security: s_priv}, pin_security: {id: '26', security: s_priv}, pin_security: {id: '27', security: s_priv}, pin_security: {id: '28', security: s_priv},
+      pin_security: {id: '29', security: s_priv}, pin_security: {id: '30', security: s_priv}, pin_security: {id: '31', security: s_priv}, pin_interrupt_security: {
+        id: '00', security: s_priv}, pin_interrupt_security: {id: '01', security: s_priv}}
+    - RGPIO5: {pin_security: {id: '00', security: s_priv}, pin_security: {id: '01', security: s_priv}, pin_security: {id: '02', security: s_priv}, pin_security: {
+        id: '03', security: s_priv}, pin_security: {id: '04', security: s_priv}, pin_security: {id: '05', security: s_priv}, pin_security: {id: '06', security: s_priv},
+      pin_security: {id: '07', security: s_priv}, pin_security: {id: '08', security: s_priv}, pin_security: {id: '09', security: s_priv}, pin_security: {id: '10',
+        security: s_priv}, pin_security: {id: '11', security: s_priv}, pin_security: {id: '12', security: s_priv}, pin_security: {id: '13', security: s_priv}, pin_security: {
+        id: '14', security: s_priv}, pin_security: {id: '15', security: s_priv}, pin_security: {id: '16', security: s_priv}, pin_security: {id: '17', security: s_priv},
+      pin_security: {id: '18', security: s_priv}, pin_security: {id: '19', security: s_priv}, pin_security: {id: '20', security: s_priv}, pin_security: {id: '21',
+        security: s_priv}, pin_interrupt_security: {id: '00', security: s_priv}, pin_interrupt_security: {id: '01', security: s_priv}}
+    - RGPIO6: {pin_security: {id: '00', security: s_priv}, pin_security: {id: '01', security: s_priv}, pin_security: {id: '02', security: s_priv}, pin_security: {
+        id: '03', security: s_priv}, pin_security: {id: '04', security: s_priv}, pin_security: {id: '05', security: s_priv}, pin_security: {id: '06', security: s_priv},
+      pin_security: {id: '07', security: s_priv}, pin_security: {id: '08', security: s_priv}, pin_security: {id: '09', security: s_priv}, pin_security: {id: '10',
+        security: s_priv}, pin_security: {id: '11', security: s_priv}, pin_security: {id: '12', security: s_priv}, pin_security: {id: '13', security: s_priv}, pin_security: {
+        id: '14', security: s_priv}, pin_security: {id: '15', security: s_priv}, pin_security: {id: '16', security: s_priv}, pin_security: {id: '17', security: s_priv},
+      pin_security: {id: '18', security: s_priv}, pin_security: {id: '19', security: s_priv}, pin_security: {id: '20', security: s_priv}, pin_security: {id: '21',
+        security: s_priv}, pin_security: {id: '22', security: s_priv}, pin_security: {id: '23', security: s_priv}, pin_security: {id: '24', security: s_priv}, pin_security: {
+        id: '25', security: s_priv}, pin_security: {id: '26', security: s_priv}, pin_security: {id: '27', security: s_priv}, pin_interrupt_security: {id: '00', security: s_priv},
+      pin_interrupt_security: {id: '01', security: s_priv}}
+- saus:
+  - sau:
+    - enabled: 'false'
+    - all_non_secure: 'false'
+    - generate_code_for_disabled_regions: 'false'
+    - regions: [{index: '0', enabled: 'false', security: ns, start: '0x00000000', size: '0x10000000'}, {index: '1', enabled: 'false', security: ns, start: '0x20000000',
+        size: '0xC0000000'}, {index: '2', enabled: 'false', security: ns, start: '0x00000000', size: '0x00000020'}, {index: '3', enabled: 'false', security: ns, start: '0x00000000',
+        size: '0x00000020'}, {index: '4', enabled: 'false', security: ns, start: '0x00000000', size: '0x00000020'}, {index: '5', enabled: 'false', security: ns, start: '0x00000000',
+        size: '0x00000020'}, {index: '6', enabled: 'false', security: ns, start: '0x00000000', size: '0x00000020'}, {index: '7', enabled: 'false', security: ns, start: '0x00000000',
+        size: '0x00000020'}]
 - global_options:
   - no:
     - id: [AIRCR_PRIS, AIRCR_BFHFNMINS, AIRCR_SYSRESETREQS, SCR_SLEEPDEEPS, SHCSR_SECUREFAULTENA, NSACR_CP2, NSACR_CP3, NSACR_CP4, NSACR_CP5, NSACR_CP6, NSACR_CP7,
@@ -2168,24 +2265,7 @@ functional_group:
             write_allocation: 'false', transientness: 'false'}, {id: outer, cacheable: 'false', write_back: 'false', read_allocation: 'false', write_allocation: 'false',
             transientness: 'false'}]}, {index: '7', id: '7', memory_type: device, device: nGnRE, regions_properties: [{id: inner, cacheable: 'false', write_back: 'false',
             read_allocation: 'false', write_allocation: 'false', transientness: 'false'}, {id: outer, cacheable: 'false', write_back: 'false', read_allocation: 'false',
-            write_allocation: 'false', transientness: 'false'}]}, {index: '8', id: '8', memory_type: device, device: nGnRE, regions_properties: [{id: inner, cacheable: 'false',
-            write_back: 'false', read_allocation: 'false', write_allocation: 'false', transientness: 'false'}, {id: outer, cacheable: 'false', write_back: 'false',
-            read_allocation: 'false', write_allocation: 'false', transientness: 'false'}]}, {index: '9', id: '9', memory_type: device, device: nGnRE, regions_properties: [
-          {id: inner, cacheable: 'false', write_back: 'false', read_allocation: 'false', write_allocation: 'false', transientness: 'false'}, {id: outer, cacheable: 'false',
-            write_back: 'false', read_allocation: 'false', write_allocation: 'false', transientness: 'false'}]}, {index: '10', id: '10', memory_type: device, device: nGnRE,
-        regions_properties: [{id: inner, cacheable: 'false', write_back: 'false', read_allocation: 'false', write_allocation: 'false', transientness: 'false'}, {
-            id: outer, cacheable: 'false', write_back: 'false', read_allocation: 'false', write_allocation: 'false', transientness: 'false'}]}, {index: '11', id: '11',
-        memory_type: device, device: nGnRE, regions_properties: [{id: inner, cacheable: 'false', write_back: 'false', read_allocation: 'false', write_allocation: 'false',
-            transientness: 'false'}, {id: outer, cacheable: 'false', write_back: 'false', read_allocation: 'false', write_allocation: 'false', transientness: 'false'}]},
-      {index: '12', id: '12', memory_type: device, device: nGnRE, regions_properties: [{id: inner, cacheable: 'false', write_back: 'false', read_allocation: 'false',
-            write_allocation: 'false', transientness: 'false'}, {id: outer, cacheable: 'false', write_back: 'false', read_allocation: 'false', write_allocation: 'false',
-            transientness: 'false'}]}, {index: '13', id: '13', memory_type: device, device: nGnRE, regions_properties: [{id: inner, cacheable: 'false', write_back: 'false',
-            read_allocation: 'false', write_allocation: 'false', transientness: 'false'}, {id: outer, cacheable: 'false', write_back: 'false', read_allocation: 'false',
-            write_allocation: 'false', transientness: 'false'}]}, {index: '14', id: '14', memory_type: device, device: nGnRE, regions_properties: [{id: inner, cacheable: 'false',
-            write_back: 'false', read_allocation: 'false', write_allocation: 'false', transientness: 'false'}, {id: outer, cacheable: 'false', write_back: 'false',
-            read_allocation: 'false', write_allocation: 'false', transientness: 'false'}]}, {index: '15', id: '15', memory_type: device, device: nGnRE, regions_properties: [
-          {id: inner, cacheable: 'false', write_back: 'false', read_allocation: 'false', write_allocation: 'false', transientness: 'false'}, {id: outer, cacheable: 'false',
-            write_back: 'false', read_allocation: 'false', write_allocation: 'false', transientness: 'false'}]}]
+            write_allocation: 'false', transientness: 'false'}]}]
     - regions: [{executable: 'false', read_only: 'false', shareability: non_shareable, attributes_index: '0', index: '0', enabled: 'false', security: user, start: '0x04000000',
         size: '0x00800000'}, {executable: 'false', read_only: 'false', shareability: non_shareable, attributes_index: '1', index: '1', enabled: 'false', security: user,
         start: '0x0FFE0000', size: '0x00020000'}, {executable: 'true', read_only: 'false', shareability: non_shareable, attributes_index: '2', index: '2', enabled: 'false',
@@ -2228,24 +2308,7 @@ functional_group:
             write_allocation: 'false', transientness: 'false'}, {id: outer, cacheable: 'false', write_back: 'false', read_allocation: 'false', write_allocation: 'false',
             transientness: 'false'}]}, {index: '7', id: '7', memory_type: device, device: nGnRE, regions_properties: [{id: inner, cacheable: 'false', write_back: 'false',
             read_allocation: 'false', write_allocation: 'false', transientness: 'false'}, {id: outer, cacheable: 'false', write_back: 'false', read_allocation: 'false',
-            write_allocation: 'false', transientness: 'false'}]}, {index: '8', id: '8', memory_type: device, device: nGnRE, regions_properties: [{id: inner, cacheable: 'false',
-            write_back: 'false', read_allocation: 'false', write_allocation: 'false', transientness: 'false'}, {id: outer, cacheable: 'false', write_back: 'false',
-            read_allocation: 'false', write_allocation: 'false', transientness: 'false'}]}, {index: '9', id: '9', memory_type: device, device: nGnRE, regions_properties: [
-          {id: inner, cacheable: 'false', write_back: 'false', read_allocation: 'false', write_allocation: 'false', transientness: 'false'}, {id: outer, cacheable: 'false',
-            write_back: 'false', read_allocation: 'false', write_allocation: 'false', transientness: 'false'}]}, {index: '10', id: '10', memory_type: device, device: nGnRE,
-        regions_properties: [{id: inner, cacheable: 'false', write_back: 'false', read_allocation: 'false', write_allocation: 'false', transientness: 'false'}, {
-            id: outer, cacheable: 'false', write_back: 'false', read_allocation: 'false', write_allocation: 'false', transientness: 'false'}]}, {index: '11', id: '11',
-        memory_type: device, device: nGnRE, regions_properties: [{id: inner, cacheable: 'false', write_back: 'false', read_allocation: 'false', write_allocation: 'false',
-            transientness: 'false'}, {id: outer, cacheable: 'false', write_back: 'false', read_allocation: 'false', write_allocation: 'false', transientness: 'false'}]},
-      {index: '12', id: '12', memory_type: device, device: nGnRE, regions_properties: [{id: inner, cacheable: 'false', write_back: 'false', read_allocation: 'false',
-            write_allocation: 'false', transientness: 'false'}, {id: outer, cacheable: 'false', write_back: 'false', read_allocation: 'false', write_allocation: 'false',
-            transientness: 'false'}]}, {index: '13', id: '13', memory_type: device, device: nGnRE, regions_properties: [{id: inner, cacheable: 'false', write_back: 'false',
-            read_allocation: 'false', write_allocation: 'false', transientness: 'false'}, {id: outer, cacheable: 'false', write_back: 'false', read_allocation: 'false',
-            write_allocation: 'false', transientness: 'false'}]}, {index: '14', id: '14', memory_type: device, device: nGnRE, regions_properties: [{id: inner, cacheable: 'false',
-            write_back: 'false', read_allocation: 'false', write_allocation: 'false', transientness: 'false'}, {id: outer, cacheable: 'false', write_back: 'false',
-            read_allocation: 'false', write_allocation: 'false', transientness: 'false'}]}, {index: '15', id: '15', memory_type: device, device: nGnRE, regions_properties: [
-          {id: inner, cacheable: 'false', write_back: 'false', read_allocation: 'false', write_allocation: 'false', transientness: 'false'}, {id: outer, cacheable: 'false',
-            write_back: 'false', read_allocation: 'false', write_allocation: 'false', transientness: 'false'}]}]
+            write_allocation: 'false', transientness: 'false'}]}]
     - regions: [{executable: 'false', read_only: 'false', shareability: non_shareable, attributes_index: '0', index: '0', enabled: 'false', security: priv, start: '0x00000000',
         size: '0x00000020'}, {executable: 'false', read_only: 'false', shareability: non_shareable, attributes_index: '0', index: '1', enabled: 'false', security: priv,
         start: '0x00000000', size: '0x00000020'}, {executable: 'false', read_only: 'false', shareability: non_shareable, attributes_index: '0', index: '2', enabled: 'false',
@@ -2334,6 +2397,7 @@ functional_group:
  **********************************************************************************************************************/
 void BOARD_InitTEE()
 {
+    /* TRDC initialization */
     BOARD_InitTRDC();
 }
 
@@ -2346,86 +2410,14 @@ void BOARD_InitTRDC()
 
     
     /* Security level configuration of checker MBC_A0 */
-    TRDC1->MBC_INDEX[0].MBC_DOM0_MEM0_BLK_CFG_W[10] = 0;
-    TRDC1->MBC_INDEX[0].MBC_DOM1_MEM0_BLK_CFG_W[10] = 0;
-    TRDC1->MBC_INDEX[0].MBC_DOM2_MEM0_BLK_CFG_W[10] = 0;
-    TRDC1->MBC_INDEX[0].MBC_DOM3_MEM0_BLK_CFG_W[10] = 0;
-    TRDC1->MBC_INDEX[0].MBC_DOM4_MEM0_BLK_CFG_W[10] = 0;
-    TRDC1->MBC_INDEX[0].MBC_DOM5_MEM0_BLK_CFG_W[10] = 0x80000888U;
-    TRDC1->MBC_INDEX[0].MBC_DOM6_MEM0_BLK_CFG_W[10] = 0;
-    TRDC1->MBC_INDEX[0].MBC_DOM7_MEM0_BLK_CFG_W[10] = 0;
-    TRDC1->MBC_INDEX[0].MBC_DOM8_MEM0_BLK_CFG_W[10] = 0;
-    TRDC1->MBC_INDEX[0].MBC_DOM9_MEM0_BLK_CFG_W[10] = 0;
-    TRDC1->MBC_INDEX[0].MBC_DOM10_MEM0_BLK_CFG_W[10] = 0;
-    TRDC1->MBC_INDEX[0].MBC_DOM11_MEM0_BLK_CFG_W[10] = 0;
-    TRDC1->MBC_INDEX[0].MBC_DOM12_MEM0_BLK_CFG_W[10] = 0;
-    TRDC1->MBC_INDEX[0].MBC_DOM13_MEM0_BLK_CFG_W[10] = 0;
-    TRDC1->MBC_INDEX[0].MBC_DOM14_MEM0_BLK_CFG_W[10] = 0;
-    TRDC1->MBC_INDEX[0].MBC_DOM15_MEM0_BLK_CFG_W[10] = 0;
-    TRDC1->MBC_INDEX[0].MBC_DOM0_MEM0_BLK_CFG_W[9] = 0;
-    TRDC1->MBC_INDEX[0].MBC_DOM1_MEM0_BLK_CFG_W[9] = 0;
-    TRDC1->MBC_INDEX[0].MBC_DOM2_MEM0_BLK_CFG_W[9] = 0;
-    TRDC1->MBC_INDEX[0].MBC_DOM3_MEM0_BLK_CFG_W[9] = 0;
-    TRDC1->MBC_INDEX[0].MBC_DOM4_MEM0_BLK_CFG_W[9] = 0;
-    TRDC1->MBC_INDEX[0].MBC_DOM5_MEM0_BLK_CFG_W[9] = 0x88888888U;
-    TRDC1->MBC_INDEX[0].MBC_DOM6_MEM0_BLK_CFG_W[9] = 0;
-    TRDC1->MBC_INDEX[0].MBC_DOM7_MEM0_BLK_CFG_W[9] = 0;
-    TRDC1->MBC_INDEX[0].MBC_DOM8_MEM0_BLK_CFG_W[9] = 0;
-    TRDC1->MBC_INDEX[0].MBC_DOM9_MEM0_BLK_CFG_W[9] = 0;
-    TRDC1->MBC_INDEX[0].MBC_DOM10_MEM0_BLK_CFG_W[9] = 0;
-    TRDC1->MBC_INDEX[0].MBC_DOM11_MEM0_BLK_CFG_W[9] = 0;
-    TRDC1->MBC_INDEX[0].MBC_DOM12_MEM0_BLK_CFG_W[9] = 0;
-    TRDC1->MBC_INDEX[0].MBC_DOM13_MEM0_BLK_CFG_W[9] = 0;
-    TRDC1->MBC_INDEX[0].MBC_DOM14_MEM0_BLK_CFG_W[9] = 0;
-    TRDC1->MBC_INDEX[0].MBC_DOM15_MEM0_BLK_CFG_W[9] = 0;
-    TRDC1->MBC_INDEX[0].MBC_DOM0_MEM0_BLK_CFG_W[7] = 0;
-    TRDC1->MBC_INDEX[0].MBC_DOM1_MEM0_BLK_CFG_W[7] = 0;
-    TRDC1->MBC_INDEX[0].MBC_DOM2_MEM0_BLK_CFG_W[7] = 0;
-    TRDC1->MBC_INDEX[0].MBC_DOM3_MEM0_BLK_CFG_W[7] = 0;
-    TRDC1->MBC_INDEX[0].MBC_DOM4_MEM0_BLK_CFG_W[7] = 0;
-    TRDC1->MBC_INDEX[0].MBC_DOM5_MEM0_BLK_CFG_W[7] = 0x88888888U;
-    TRDC1->MBC_INDEX[0].MBC_DOM6_MEM0_BLK_CFG_W[7] = 0;
-    TRDC1->MBC_INDEX[0].MBC_DOM7_MEM0_BLK_CFG_W[7] = 0;
-    TRDC1->MBC_INDEX[0].MBC_DOM8_MEM0_BLK_CFG_W[7] = 0;
-    TRDC1->MBC_INDEX[0].MBC_DOM9_MEM0_BLK_CFG_W[7] = 0;
-    TRDC1->MBC_INDEX[0].MBC_DOM10_MEM0_BLK_CFG_W[7] = 0;
-    TRDC1->MBC_INDEX[0].MBC_DOM11_MEM0_BLK_CFG_W[7] = 0;
-    TRDC1->MBC_INDEX[0].MBC_DOM12_MEM0_BLK_CFG_W[7] = 0;
-    TRDC1->MBC_INDEX[0].MBC_DOM13_MEM0_BLK_CFG_W[7] = 0;
-    TRDC1->MBC_INDEX[0].MBC_DOM14_MEM0_BLK_CFG_W[7] = 0;
-    TRDC1->MBC_INDEX[0].MBC_DOM15_MEM0_BLK_CFG_W[7] = 0;
-    TRDC1->MBC_INDEX[0].MBC_DOM0_MEM0_BLK_CFG_W[5] = 0;
-    TRDC1->MBC_INDEX[0].MBC_DOM1_MEM0_BLK_CFG_W[5] = 0;
-    TRDC1->MBC_INDEX[0].MBC_DOM2_MEM0_BLK_CFG_W[5] = 0;
-    TRDC1->MBC_INDEX[0].MBC_DOM3_MEM0_BLK_CFG_W[5] = 0;
-    TRDC1->MBC_INDEX[0].MBC_DOM4_MEM0_BLK_CFG_W[5] = 0;
-    TRDC1->MBC_INDEX[0].MBC_DOM5_MEM0_BLK_CFG_W[5] = 0x88888888U;
-    TRDC1->MBC_INDEX[0].MBC_DOM6_MEM0_BLK_CFG_W[5] = 0;
-    TRDC1->MBC_INDEX[0].MBC_DOM7_MEM0_BLK_CFG_W[5] = 0;
-    TRDC1->MBC_INDEX[0].MBC_DOM8_MEM0_BLK_CFG_W[5] = 0;
-    TRDC1->MBC_INDEX[0].MBC_DOM9_MEM0_BLK_CFG_W[5] = 0;
-    TRDC1->MBC_INDEX[0].MBC_DOM10_MEM0_BLK_CFG_W[5] = 0;
-    TRDC1->MBC_INDEX[0].MBC_DOM11_MEM0_BLK_CFG_W[5] = 0;
-    TRDC1->MBC_INDEX[0].MBC_DOM12_MEM0_BLK_CFG_W[5] = 0;
-    TRDC1->MBC_INDEX[0].MBC_DOM13_MEM0_BLK_CFG_W[5] = 0;
-    TRDC1->MBC_INDEX[0].MBC_DOM14_MEM0_BLK_CFG_W[5] = 0;
-    TRDC1->MBC_INDEX[0].MBC_DOM15_MEM0_BLK_CFG_W[5] = 0;
-    TRDC1->MBC_INDEX[0].MBC_DOM0_MEM0_BLK_CFG_W[0] = 0;
-    TRDC1->MBC_INDEX[0].MBC_DOM1_MEM0_BLK_CFG_W[0] = 0;
-    TRDC1->MBC_INDEX[0].MBC_DOM2_MEM0_BLK_CFG_W[0] = 0;
-    TRDC1->MBC_INDEX[0].MBC_DOM3_MEM0_BLK_CFG_W[0] = 0;
-    TRDC1->MBC_INDEX[0].MBC_DOM4_MEM0_BLK_CFG_W[0] = 0;
-    TRDC1->MBC_INDEX[0].MBC_DOM5_MEM0_BLK_CFG_W[0] = 0x88888888U;
-    TRDC1->MBC_INDEX[0].MBC_DOM6_MEM0_BLK_CFG_W[0] = 0;
-    TRDC1->MBC_INDEX[0].MBC_DOM7_MEM0_BLK_CFG_W[0] = 0;
-    TRDC1->MBC_INDEX[0].MBC_DOM8_MEM0_BLK_CFG_W[0] = 0;
-    TRDC1->MBC_INDEX[0].MBC_DOM9_MEM0_BLK_CFG_W[0] = 0;
-    TRDC1->MBC_INDEX[0].MBC_DOM10_MEM0_BLK_CFG_W[0] = 0;
-    TRDC1->MBC_INDEX[0].MBC_DOM11_MEM0_BLK_CFG_W[0] = 0;
-    TRDC1->MBC_INDEX[0].MBC_DOM12_MEM0_BLK_CFG_W[0] = 0;
-    TRDC1->MBC_INDEX[0].MBC_DOM13_MEM0_BLK_CFG_W[0] = 0;
-    TRDC1->MBC_INDEX[0].MBC_DOM14_MEM0_BLK_CFG_W[0] = 0;
-    TRDC1->MBC_INDEX[0].MBC_DOM15_MEM0_BLK_CFG_W[0] = 0;
+    TRDC1->MBC_INDEX[0].MBC_MEMN_GLBAC[0] = 0x00007777U;
+    TRDC1->MBC_INDEX[0].MBC_MEMN_GLBAC[1] = 0x00007777U;
+    TRDC1->MBC_INDEX[0].MBC_MEMN_GLBAC[2] = 0;
+    TRDC1->MBC_INDEX[0].MBC_MEMN_GLBAC[3] = 0;
+    TRDC1->MBC_INDEX[0].MBC_MEMN_GLBAC[4] = 0;
+    TRDC1->MBC_INDEX[0].MBC_MEMN_GLBAC[5] = 0;
+    TRDC1->MBC_INDEX[0].MBC_MEMN_GLBAC[6] = 0;
+    TRDC1->MBC_INDEX[0].MBC_MEMN_GLBAC[7] = 0;
     TRDC1->MBC_INDEX[0].MBC_DOM0_MEM2_BLK_CFG_W[0] = 0;
     TRDC1->MBC_INDEX[0].MBC_DOM1_MEM2_BLK_CFG_W[0] = 0;
     TRDC1->MBC_INDEX[0].MBC_DOM2_MEM2_BLK_CFG_W[0] = 0;
@@ -2490,6 +2482,38 @@ void BOARD_InitTRDC()
     TRDC1->MBC_INDEX[0].MBC_DOM13_MEM0_BLK_CFG_W[11] = 0;
     TRDC1->MBC_INDEX[0].MBC_DOM14_MEM0_BLK_CFG_W[11] = 0;
     TRDC1->MBC_INDEX[0].MBC_DOM15_MEM0_BLK_CFG_W[11] = 0;
+    TRDC1->MBC_INDEX[0].MBC_DOM0_MEM0_BLK_CFG_W[10] = 0x00000008U;
+    TRDC1->MBC_INDEX[0].MBC_DOM1_MEM0_BLK_CFG_W[10] = 0x00000008U;
+    TRDC1->MBC_INDEX[0].MBC_DOM2_MEM0_BLK_CFG_W[10] = 0x00000008U;
+    TRDC1->MBC_INDEX[0].MBC_DOM3_MEM0_BLK_CFG_W[10] = 0x00000008U;
+    TRDC1->MBC_INDEX[0].MBC_DOM4_MEM0_BLK_CFG_W[10] = 0x00000008U;
+    TRDC1->MBC_INDEX[0].MBC_DOM5_MEM0_BLK_CFG_W[10] = 0x80000888U;
+    TRDC1->MBC_INDEX[0].MBC_DOM6_MEM0_BLK_CFG_W[10] = 0x00000008U;
+    TRDC1->MBC_INDEX[0].MBC_DOM7_MEM0_BLK_CFG_W[10] = 0x00000008U;
+    TRDC1->MBC_INDEX[0].MBC_DOM8_MEM0_BLK_CFG_W[10] = 0x00000008U;
+    TRDC1->MBC_INDEX[0].MBC_DOM9_MEM0_BLK_CFG_W[10] = 0x00000008U;
+    TRDC1->MBC_INDEX[0].MBC_DOM10_MEM0_BLK_CFG_W[10] = 0x00000008U;
+    TRDC1->MBC_INDEX[0].MBC_DOM11_MEM0_BLK_CFG_W[10] = 0x00000008U;
+    TRDC1->MBC_INDEX[0].MBC_DOM12_MEM0_BLK_CFG_W[10] = 0x00000008U;
+    TRDC1->MBC_INDEX[0].MBC_DOM13_MEM0_BLK_CFG_W[10] = 0x00000008U;
+    TRDC1->MBC_INDEX[0].MBC_DOM14_MEM0_BLK_CFG_W[10] = 0x00000008U;
+    TRDC1->MBC_INDEX[0].MBC_DOM15_MEM0_BLK_CFG_W[10] = 0x00000008U;
+    TRDC1->MBC_INDEX[0].MBC_DOM0_MEM0_BLK_CFG_W[9] = 0x08888880U;
+    TRDC1->MBC_INDEX[0].MBC_DOM1_MEM0_BLK_CFG_W[9] = 0x08888880U;
+    TRDC1->MBC_INDEX[0].MBC_DOM2_MEM0_BLK_CFG_W[9] = 0x08888880U;
+    TRDC1->MBC_INDEX[0].MBC_DOM3_MEM0_BLK_CFG_W[9] = 0x08888880U;
+    TRDC1->MBC_INDEX[0].MBC_DOM4_MEM0_BLK_CFG_W[9] = 0x08888880U;
+    TRDC1->MBC_INDEX[0].MBC_DOM5_MEM0_BLK_CFG_W[9] = 0x88888888U;
+    TRDC1->MBC_INDEX[0].MBC_DOM6_MEM0_BLK_CFG_W[9] = 0x08888880U;
+    TRDC1->MBC_INDEX[0].MBC_DOM7_MEM0_BLK_CFG_W[9] = 0x08888880U;
+    TRDC1->MBC_INDEX[0].MBC_DOM8_MEM0_BLK_CFG_W[9] = 0x08888880U;
+    TRDC1->MBC_INDEX[0].MBC_DOM9_MEM0_BLK_CFG_W[9] = 0x08888880U;
+    TRDC1->MBC_INDEX[0].MBC_DOM10_MEM0_BLK_CFG_W[9] = 0x08888880U;
+    TRDC1->MBC_INDEX[0].MBC_DOM11_MEM0_BLK_CFG_W[9] = 0x08888880U;
+    TRDC1->MBC_INDEX[0].MBC_DOM12_MEM0_BLK_CFG_W[9] = 0x08888880U;
+    TRDC1->MBC_INDEX[0].MBC_DOM13_MEM0_BLK_CFG_W[9] = 0x08888880U;
+    TRDC1->MBC_INDEX[0].MBC_DOM14_MEM0_BLK_CFG_W[9] = 0x08888880U;
+    TRDC1->MBC_INDEX[0].MBC_DOM15_MEM0_BLK_CFG_W[9] = 0x08888880U;
     TRDC1->MBC_INDEX[0].MBC_DOM0_MEM0_BLK_CFG_W[8] = 0;
     TRDC1->MBC_INDEX[0].MBC_DOM1_MEM0_BLK_CFG_W[8] = 0;
     TRDC1->MBC_INDEX[0].MBC_DOM2_MEM0_BLK_CFG_W[8] = 0;
@@ -2506,6 +2530,22 @@ void BOARD_InitTRDC()
     TRDC1->MBC_INDEX[0].MBC_DOM13_MEM0_BLK_CFG_W[8] = 0;
     TRDC1->MBC_INDEX[0].MBC_DOM14_MEM0_BLK_CFG_W[8] = 0;
     TRDC1->MBC_INDEX[0].MBC_DOM15_MEM0_BLK_CFG_W[8] = 0;
+    TRDC1->MBC_INDEX[0].MBC_DOM0_MEM0_BLK_CFG_W[7] = 0x00800000U;
+    TRDC1->MBC_INDEX[0].MBC_DOM1_MEM0_BLK_CFG_W[7] = 0x00800000U;
+    TRDC1->MBC_INDEX[0].MBC_DOM2_MEM0_BLK_CFG_W[7] = 0x00800000U;
+    TRDC1->MBC_INDEX[0].MBC_DOM3_MEM0_BLK_CFG_W[7] = 0x00800000U;
+    TRDC1->MBC_INDEX[0].MBC_DOM4_MEM0_BLK_CFG_W[7] = 0x00800000U;
+    TRDC1->MBC_INDEX[0].MBC_DOM5_MEM0_BLK_CFG_W[7] = 0x88888888U;
+    TRDC1->MBC_INDEX[0].MBC_DOM6_MEM0_BLK_CFG_W[7] = 0x00800000U;
+    TRDC1->MBC_INDEX[0].MBC_DOM7_MEM0_BLK_CFG_W[7] = 0x00800000U;
+    TRDC1->MBC_INDEX[0].MBC_DOM8_MEM0_BLK_CFG_W[7] = 0x00800000U;
+    TRDC1->MBC_INDEX[0].MBC_DOM9_MEM0_BLK_CFG_W[7] = 0x00800000U;
+    TRDC1->MBC_INDEX[0].MBC_DOM10_MEM0_BLK_CFG_W[7] = 0x00800000U;
+    TRDC1->MBC_INDEX[0].MBC_DOM11_MEM0_BLK_CFG_W[7] = 0x00800000U;
+    TRDC1->MBC_INDEX[0].MBC_DOM12_MEM0_BLK_CFG_W[7] = 0x00800000U;
+    TRDC1->MBC_INDEX[0].MBC_DOM13_MEM0_BLK_CFG_W[7] = 0x00800000U;
+    TRDC1->MBC_INDEX[0].MBC_DOM14_MEM0_BLK_CFG_W[7] = 0x00800000U;
+    TRDC1->MBC_INDEX[0].MBC_DOM15_MEM0_BLK_CFG_W[7] = 0x00800000U;
     TRDC1->MBC_INDEX[0].MBC_DOM0_MEM0_BLK_CFG_W[6] = 0;
     TRDC1->MBC_INDEX[0].MBC_DOM1_MEM0_BLK_CFG_W[6] = 0;
     TRDC1->MBC_INDEX[0].MBC_DOM2_MEM0_BLK_CFG_W[6] = 0;
@@ -2522,34 +2562,114 @@ void BOARD_InitTRDC()
     TRDC1->MBC_INDEX[0].MBC_DOM13_MEM0_BLK_CFG_W[6] = 0;
     TRDC1->MBC_INDEX[0].MBC_DOM14_MEM0_BLK_CFG_W[6] = 0;
     TRDC1->MBC_INDEX[0].MBC_DOM15_MEM0_BLK_CFG_W[6] = 0;
-    TRDC1->MBC_INDEX[0].MBC_DOM0_MEM0_BLK_CFG_W[4] = 0;
-    TRDC1->MBC_INDEX[0].MBC_DOM1_MEM0_BLK_CFG_W[4] = 0;
-    TRDC1->MBC_INDEX[0].MBC_DOM2_MEM0_BLK_CFG_W[4] = 0;
-    TRDC1->MBC_INDEX[0].MBC_DOM3_MEM0_BLK_CFG_W[4] = 0;
-    TRDC1->MBC_INDEX[0].MBC_DOM4_MEM0_BLK_CFG_W[4] = 0;
-    TRDC1->MBC_INDEX[0].MBC_DOM5_MEM0_BLK_CFG_W[4] = 0x88008880U;
-    TRDC1->MBC_INDEX[0].MBC_DOM6_MEM0_BLK_CFG_W[4] = 0;
-    TRDC1->MBC_INDEX[0].MBC_DOM7_MEM0_BLK_CFG_W[4] = 0;
-    TRDC1->MBC_INDEX[0].MBC_DOM8_MEM0_BLK_CFG_W[4] = 0;
-    TRDC1->MBC_INDEX[0].MBC_DOM9_MEM0_BLK_CFG_W[4] = 0;
-    TRDC1->MBC_INDEX[0].MBC_DOM10_MEM0_BLK_CFG_W[4] = 0;
-    TRDC1->MBC_INDEX[0].MBC_DOM11_MEM0_BLK_CFG_W[4] = 0;
-    TRDC1->MBC_INDEX[0].MBC_DOM12_MEM0_BLK_CFG_W[4] = 0;
-    TRDC1->MBC_INDEX[0].MBC_DOM13_MEM0_BLK_CFG_W[4] = 0;
-    TRDC1->MBC_INDEX[0].MBC_DOM14_MEM0_BLK_CFG_W[4] = 0;
-    TRDC1->MBC_INDEX[0].MBC_DOM15_MEM0_BLK_CFG_W[4] = 0;
-    TRDC1->MBC_INDEX[0].MBC_MEMN_GLBAC[0] = 0x00007777U;
-    TRDC1->MBC_INDEX[0].MBC_MEMN_GLBAC[1] = 0x00007777U;
-    TRDC1->MBC_INDEX[0].MBC_MEMN_GLBAC[2] = 0;
-    TRDC1->MBC_INDEX[0].MBC_MEMN_GLBAC[3] = 0;
-    TRDC1->MBC_INDEX[0].MBC_MEMN_GLBAC[4] = 0;
-    TRDC1->MBC_INDEX[0].MBC_MEMN_GLBAC[5] = 0;
-    TRDC1->MBC_INDEX[0].MBC_MEMN_GLBAC[6] = 0;
-    TRDC1->MBC_INDEX[0].MBC_MEMN_GLBAC[7] = 0;
+    TRDC1->MBC_INDEX[0].MBC_DOM0_MEM0_BLK_CFG_W[5] = 0x00000008U;
+    TRDC1->MBC_INDEX[0].MBC_DOM1_MEM0_BLK_CFG_W[5] = 0x00000008U;
+    TRDC1->MBC_INDEX[0].MBC_DOM2_MEM0_BLK_CFG_W[5] = 0;
+    TRDC1->MBC_INDEX[0].MBC_DOM3_MEM0_BLK_CFG_W[5] = 0x00000008U;
+    TRDC1->MBC_INDEX[0].MBC_DOM4_MEM0_BLK_CFG_W[5] = 0x00000008U;
+    TRDC1->MBC_INDEX[0].MBC_DOM5_MEM0_BLK_CFG_W[5] = 0x88888888U;
+    TRDC1->MBC_INDEX[0].MBC_DOM6_MEM0_BLK_CFG_W[5] = 0x00000008U;
+    TRDC1->MBC_INDEX[0].MBC_DOM7_MEM0_BLK_CFG_W[5] = 0x00000008U;
+    TRDC1->MBC_INDEX[0].MBC_DOM8_MEM0_BLK_CFG_W[5] = 0x00000008U;
+    TRDC1->MBC_INDEX[0].MBC_DOM9_MEM0_BLK_CFG_W[5] = 0x00000008U;
+    TRDC1->MBC_INDEX[0].MBC_DOM10_MEM0_BLK_CFG_W[5] = 0x00000008U;
+    TRDC1->MBC_INDEX[0].MBC_DOM11_MEM0_BLK_CFG_W[5] = 0x00000008U;
+    TRDC1->MBC_INDEX[0].MBC_DOM12_MEM0_BLK_CFG_W[5] = 0x00000008U;
+    TRDC1->MBC_INDEX[0].MBC_DOM13_MEM0_BLK_CFG_W[5] = 0x00000008U;
+    TRDC1->MBC_INDEX[0].MBC_DOM14_MEM0_BLK_CFG_W[5] = 0x00000008U;
+    TRDC1->MBC_INDEX[0].MBC_DOM15_MEM0_BLK_CFG_W[5] = 0x00000008U;
+    TRDC1->MBC_INDEX[0].MBC_DOM0_MEM0_BLK_CFG_W[4] = 0x80000008U;
+    TRDC1->MBC_INDEX[0].MBC_DOM1_MEM0_BLK_CFG_W[4] = 0x80000008U;
+    TRDC1->MBC_INDEX[0].MBC_DOM2_MEM0_BLK_CFG_W[4] = 0x00000008U;
+    TRDC1->MBC_INDEX[0].MBC_DOM3_MEM0_BLK_CFG_W[4] = 0x80000008U;
+    TRDC1->MBC_INDEX[0].MBC_DOM4_MEM0_BLK_CFG_W[4] = 0x80000008U;
+    TRDC1->MBC_INDEX[0].MBC_DOM5_MEM0_BLK_CFG_W[4] = 0x88008888U;
+    TRDC1->MBC_INDEX[0].MBC_DOM6_MEM0_BLK_CFG_W[4] = 0x80000008U;
+    TRDC1->MBC_INDEX[0].MBC_DOM7_MEM0_BLK_CFG_W[4] = 0x80000008U;
+    TRDC1->MBC_INDEX[0].MBC_DOM8_MEM0_BLK_CFG_W[4] = 0x80000008U;
+    TRDC1->MBC_INDEX[0].MBC_DOM9_MEM0_BLK_CFG_W[4] = 0x80000008U;
+    TRDC1->MBC_INDEX[0].MBC_DOM10_MEM0_BLK_CFG_W[4] = 0x80000008U;
+    TRDC1->MBC_INDEX[0].MBC_DOM11_MEM0_BLK_CFG_W[4] = 0x80000008U;
+    TRDC1->MBC_INDEX[0].MBC_DOM12_MEM0_BLK_CFG_W[4] = 0x80000008U;
+    TRDC1->MBC_INDEX[0].MBC_DOM13_MEM0_BLK_CFG_W[4] = 0x80000008U;
+    TRDC1->MBC_INDEX[0].MBC_DOM14_MEM0_BLK_CFG_W[4] = 0x80000008U;
+    TRDC1->MBC_INDEX[0].MBC_DOM15_MEM0_BLK_CFG_W[4] = 0x80000008U;
+    TRDC1->MBC_INDEX[0].MBC_DOM0_MEM0_BLK_CFG_W[0] = 0x88888888U;
+    TRDC1->MBC_INDEX[0].MBC_DOM1_MEM0_BLK_CFG_W[0] = 0x88888888U;
+    TRDC1->MBC_INDEX[0].MBC_DOM2_MEM0_BLK_CFG_W[0] = 0x88888888U;
+    TRDC1->MBC_INDEX[0].MBC_DOM3_MEM0_BLK_CFG_W[0] = 0x88888888U;
+    TRDC1->MBC_INDEX[0].MBC_DOM4_MEM0_BLK_CFG_W[0] = 0x88888888U;
+    TRDC1->MBC_INDEX[0].MBC_DOM5_MEM0_BLK_CFG_W[0] = 0x88888888U;
+    TRDC1->MBC_INDEX[0].MBC_DOM6_MEM0_BLK_CFG_W[0] = 0x88888888U;
+    TRDC1->MBC_INDEX[0].MBC_DOM7_MEM0_BLK_CFG_W[0] = 0x88888888U;
+    TRDC1->MBC_INDEX[0].MBC_DOM8_MEM0_BLK_CFG_W[0] = 0x88888888U;
+    TRDC1->MBC_INDEX[0].MBC_DOM9_MEM0_BLK_CFG_W[0] = 0x88888888U;
+    TRDC1->MBC_INDEX[0].MBC_DOM10_MEM0_BLK_CFG_W[0] = 0x88888888U;
+    TRDC1->MBC_INDEX[0].MBC_DOM11_MEM0_BLK_CFG_W[0] = 0x88888888U;
+    TRDC1->MBC_INDEX[0].MBC_DOM12_MEM0_BLK_CFG_W[0] = 0x88888888U;
+    TRDC1->MBC_INDEX[0].MBC_DOM13_MEM0_BLK_CFG_W[0] = 0x88888888U;
+    TRDC1->MBC_INDEX[0].MBC_DOM14_MEM0_BLK_CFG_W[0] = 0x88888888U;
+    TRDC1->MBC_INDEX[0].MBC_DOM15_MEM0_BLK_CFG_W[0] = 0x88888888U;
+    TRDC1->MBC_INDEX[0].MBC_DOM0_MEM0_BLK_CFG_W[1] = 0x88888888U;
+    TRDC1->MBC_INDEX[0].MBC_DOM1_MEM0_BLK_CFG_W[1] = 0x88888888U;
+    TRDC1->MBC_INDEX[0].MBC_DOM2_MEM0_BLK_CFG_W[1] = 0x88888888U;
+    TRDC1->MBC_INDEX[0].MBC_DOM3_MEM0_BLK_CFG_W[1] = 0x88888888U;
+    TRDC1->MBC_INDEX[0].MBC_DOM4_MEM0_BLK_CFG_W[1] = 0x88888888U;
+    TRDC1->MBC_INDEX[0].MBC_DOM5_MEM0_BLK_CFG_W[1] = 0x88888888U;
+    TRDC1->MBC_INDEX[0].MBC_DOM6_MEM0_BLK_CFG_W[1] = 0x88888888U;
+    TRDC1->MBC_INDEX[0].MBC_DOM7_MEM0_BLK_CFG_W[1] = 0x88888888U;
+    TRDC1->MBC_INDEX[0].MBC_DOM8_MEM0_BLK_CFG_W[1] = 0x88888888U;
+    TRDC1->MBC_INDEX[0].MBC_DOM9_MEM0_BLK_CFG_W[1] = 0x88888888U;
+    TRDC1->MBC_INDEX[0].MBC_DOM10_MEM0_BLK_CFG_W[1] = 0x88888888U;
+    TRDC1->MBC_INDEX[0].MBC_DOM11_MEM0_BLK_CFG_W[1] = 0x88888888U;
+    TRDC1->MBC_INDEX[0].MBC_DOM12_MEM0_BLK_CFG_W[1] = 0x88888888U;
+    TRDC1->MBC_INDEX[0].MBC_DOM13_MEM0_BLK_CFG_W[1] = 0x88888888U;
+    TRDC1->MBC_INDEX[0].MBC_DOM14_MEM0_BLK_CFG_W[1] = 0x88888888U;
+    TRDC1->MBC_INDEX[0].MBC_DOM15_MEM0_BLK_CFG_W[1] = 0x88888888U;
+    TRDC1->MBC_INDEX[0].MBC_DOM0_MEM0_BLK_CFG_W[2] = 0x88888888U;
+    TRDC1->MBC_INDEX[0].MBC_DOM1_MEM0_BLK_CFG_W[2] = 0x88888888U;
+    TRDC1->MBC_INDEX[0].MBC_DOM2_MEM0_BLK_CFG_W[2] = 0x88888888U;
+    TRDC1->MBC_INDEX[0].MBC_DOM3_MEM0_BLK_CFG_W[2] = 0x88888888U;
+    TRDC1->MBC_INDEX[0].MBC_DOM4_MEM0_BLK_CFG_W[2] = 0x88888888U;
+    TRDC1->MBC_INDEX[0].MBC_DOM5_MEM0_BLK_CFG_W[2] = 0x88888888U;
+    TRDC1->MBC_INDEX[0].MBC_DOM6_MEM0_BLK_CFG_W[2] = 0x88888888U;
+    TRDC1->MBC_INDEX[0].MBC_DOM7_MEM0_BLK_CFG_W[2] = 0x88888888U;
+    TRDC1->MBC_INDEX[0].MBC_DOM8_MEM0_BLK_CFG_W[2] = 0x88888888U;
+    TRDC1->MBC_INDEX[0].MBC_DOM9_MEM0_BLK_CFG_W[2] = 0x88888888U;
+    TRDC1->MBC_INDEX[0].MBC_DOM10_MEM0_BLK_CFG_W[2] = 0x88888888U;
+    TRDC1->MBC_INDEX[0].MBC_DOM11_MEM0_BLK_CFG_W[2] = 0x88888888U;
+    TRDC1->MBC_INDEX[0].MBC_DOM12_MEM0_BLK_CFG_W[2] = 0x88888888U;
+    TRDC1->MBC_INDEX[0].MBC_DOM13_MEM0_BLK_CFG_W[2] = 0x88888888U;
+    TRDC1->MBC_INDEX[0].MBC_DOM14_MEM0_BLK_CFG_W[2] = 0x88888888U;
+    TRDC1->MBC_INDEX[0].MBC_DOM15_MEM0_BLK_CFG_W[2] = 0x88888888U;
+    TRDC1->MBC_INDEX[0].MBC_DOM0_MEM0_BLK_CFG_W[3] = 0x88888888U;
+    TRDC1->MBC_INDEX[0].MBC_DOM1_MEM0_BLK_CFG_W[3] = 0x88888888U;
+    TRDC1->MBC_INDEX[0].MBC_DOM2_MEM0_BLK_CFG_W[3] = 0x88888888U;
+    TRDC1->MBC_INDEX[0].MBC_DOM3_MEM0_BLK_CFG_W[3] = 0x88888888U;
+    TRDC1->MBC_INDEX[0].MBC_DOM4_MEM0_BLK_CFG_W[3] = 0x88888888U;
+    TRDC1->MBC_INDEX[0].MBC_DOM5_MEM0_BLK_CFG_W[3] = 0x88888888U;
+    TRDC1->MBC_INDEX[0].MBC_DOM6_MEM0_BLK_CFG_W[3] = 0x88888888U;
+    TRDC1->MBC_INDEX[0].MBC_DOM7_MEM0_BLK_CFG_W[3] = 0x88888888U;
+    TRDC1->MBC_INDEX[0].MBC_DOM8_MEM0_BLK_CFG_W[3] = 0x88888888U;
+    TRDC1->MBC_INDEX[0].MBC_DOM9_MEM0_BLK_CFG_W[3] = 0x88888888U;
+    TRDC1->MBC_INDEX[0].MBC_DOM10_MEM0_BLK_CFG_W[3] = 0x88888888U;
+    TRDC1->MBC_INDEX[0].MBC_DOM11_MEM0_BLK_CFG_W[3] = 0x88888888U;
+    TRDC1->MBC_INDEX[0].MBC_DOM12_MEM0_BLK_CFG_W[3] = 0x88888888U;
+    TRDC1->MBC_INDEX[0].MBC_DOM13_MEM0_BLK_CFG_W[3] = 0x88888888U;
+    TRDC1->MBC_INDEX[0].MBC_DOM14_MEM0_BLK_CFG_W[3] = 0x88888888U;
+    TRDC1->MBC_INDEX[0].MBC_DOM15_MEM0_BLK_CFG_W[3] = 0x88888888U;
     
 
     
     /* Security level configuration of checker MBC_A1 */
+    TRDC1->MBC_INDEX[1].MBC_MEMN_GLBAC[0] = 0x00007777U;
+    TRDC1->MBC_INDEX[1].MBC_MEMN_GLBAC[1] = 0x00007777U;
+    TRDC1->MBC_INDEX[1].MBC_MEMN_GLBAC[2] = 0;
+    TRDC1->MBC_INDEX[1].MBC_MEMN_GLBAC[3] = 0;
+    TRDC1->MBC_INDEX[1].MBC_MEMN_GLBAC[4] = 0;
+    TRDC1->MBC_INDEX[1].MBC_MEMN_GLBAC[5] = 0;
+    TRDC1->MBC_INDEX[1].MBC_MEMN_GLBAC[6] = 0;
+    TRDC1->MBC_INDEX[1].MBC_MEMN_GLBAC[7] = 0;
     TRDC1->MBC_INDEX[1].MBC_DOM0_MEM0_BLK_CFG_W[0] = 0;
     TRDC1->MBC_INDEX[1].MBC_DOM1_MEM0_BLK_CFG_W[0] = 0;
     TRDC1->MBC_INDEX[1].MBC_DOM2_MEM0_BLK_CFG_W[0] = 0;
@@ -2678,14 +2798,6 @@ void BOARD_InitTRDC()
     TRDC1->MBC_INDEX[1].MBC_DOM13_MEM1_BLK_CFG_W[3] = 0;
     TRDC1->MBC_INDEX[1].MBC_DOM14_MEM1_BLK_CFG_W[3] = 0;
     TRDC1->MBC_INDEX[1].MBC_DOM15_MEM1_BLK_CFG_W[3] = 0;
-    TRDC1->MBC_INDEX[1].MBC_MEMN_GLBAC[0] = 0x00007777U;
-    TRDC1->MBC_INDEX[1].MBC_MEMN_GLBAC[1] = 0x00007777U;
-    TRDC1->MBC_INDEX[1].MBC_MEMN_GLBAC[2] = 0;
-    TRDC1->MBC_INDEX[1].MBC_MEMN_GLBAC[3] = 0;
-    TRDC1->MBC_INDEX[1].MBC_MEMN_GLBAC[4] = 0;
-    TRDC1->MBC_INDEX[1].MBC_MEMN_GLBAC[5] = 0;
-    TRDC1->MBC_INDEX[1].MBC_MEMN_GLBAC[6] = 0;
-    TRDC1->MBC_INDEX[1].MBC_MEMN_GLBAC[7] = 0;
     
 
     
@@ -2722,54 +2834,14 @@ void BOARD_InitTRDC()
 
     
     /* Security level configuration of checker MBC_W0 */
-    TRDC2->MBC_INDEX[0].MBC_DOM0_MEM0_BLK_CFG_W[12] = 0;
-    TRDC2->MBC_INDEX[0].MBC_DOM1_MEM0_BLK_CFG_W[12] = 0;
-    TRDC2->MBC_INDEX[0].MBC_DOM2_MEM0_BLK_CFG_W[12] = 0;
-    TRDC2->MBC_INDEX[0].MBC_DOM3_MEM0_BLK_CFG_W[12] = 0;
-    TRDC2->MBC_INDEX[0].MBC_DOM4_MEM0_BLK_CFG_W[12] = 0;
-    TRDC2->MBC_INDEX[0].MBC_DOM5_MEM0_BLK_CFG_W[12] = 0;
-    TRDC2->MBC_INDEX[0].MBC_DOM6_MEM0_BLK_CFG_W[12] = 0;
-    TRDC2->MBC_INDEX[0].MBC_DOM7_MEM0_BLK_CFG_W[12] = 0;
-    TRDC2->MBC_INDEX[0].MBC_DOM8_MEM0_BLK_CFG_W[12] = 0;
-    TRDC2->MBC_INDEX[0].MBC_DOM9_MEM0_BLK_CFG_W[12] = 0;
-    TRDC2->MBC_INDEX[0].MBC_DOM10_MEM0_BLK_CFG_W[12] = 0;
-    TRDC2->MBC_INDEX[0].MBC_DOM11_MEM0_BLK_CFG_W[12] = 0;
-    TRDC2->MBC_INDEX[0].MBC_DOM12_MEM0_BLK_CFG_W[12] = 0;
-    TRDC2->MBC_INDEX[0].MBC_DOM13_MEM0_BLK_CFG_W[12] = 0;
-    TRDC2->MBC_INDEX[0].MBC_DOM14_MEM0_BLK_CFG_W[12] = 0;
-    TRDC2->MBC_INDEX[0].MBC_DOM15_MEM0_BLK_CFG_W[12] = 0;
-    TRDC2->MBC_INDEX[0].MBC_DOM0_MEM0_BLK_CFG_W[8] = 0;
-    TRDC2->MBC_INDEX[0].MBC_DOM1_MEM0_BLK_CFG_W[8] = 0;
-    TRDC2->MBC_INDEX[0].MBC_DOM2_MEM0_BLK_CFG_W[8] = 0;
-    TRDC2->MBC_INDEX[0].MBC_DOM3_MEM0_BLK_CFG_W[8] = 0;
-    TRDC2->MBC_INDEX[0].MBC_DOM4_MEM0_BLK_CFG_W[8] = 0;
-    TRDC2->MBC_INDEX[0].MBC_DOM5_MEM0_BLK_CFG_W[8] = 0;
-    TRDC2->MBC_INDEX[0].MBC_DOM6_MEM0_BLK_CFG_W[8] = 0;
-    TRDC2->MBC_INDEX[0].MBC_DOM7_MEM0_BLK_CFG_W[8] = 0;
-    TRDC2->MBC_INDEX[0].MBC_DOM8_MEM0_BLK_CFG_W[8] = 0;
-    TRDC2->MBC_INDEX[0].MBC_DOM9_MEM0_BLK_CFG_W[8] = 0;
-    TRDC2->MBC_INDEX[0].MBC_DOM10_MEM0_BLK_CFG_W[8] = 0;
-    TRDC2->MBC_INDEX[0].MBC_DOM11_MEM0_BLK_CFG_W[8] = 0;
-    TRDC2->MBC_INDEX[0].MBC_DOM12_MEM0_BLK_CFG_W[8] = 0;
-    TRDC2->MBC_INDEX[0].MBC_DOM13_MEM0_BLK_CFG_W[8] = 0;
-    TRDC2->MBC_INDEX[0].MBC_DOM14_MEM0_BLK_CFG_W[8] = 0;
-    TRDC2->MBC_INDEX[0].MBC_DOM15_MEM0_BLK_CFG_W[8] = 0;
-    TRDC2->MBC_INDEX[0].MBC_DOM0_MEM0_BLK_CFG_W[0] = 0;
-    TRDC2->MBC_INDEX[0].MBC_DOM1_MEM0_BLK_CFG_W[0] = 0;
-    TRDC2->MBC_INDEX[0].MBC_DOM2_MEM0_BLK_CFG_W[0] = 0;
-    TRDC2->MBC_INDEX[0].MBC_DOM3_MEM0_BLK_CFG_W[0] = 0;
-    TRDC2->MBC_INDEX[0].MBC_DOM4_MEM0_BLK_CFG_W[0] = 0;
-    TRDC2->MBC_INDEX[0].MBC_DOM5_MEM0_BLK_CFG_W[0] = 0;
-    TRDC2->MBC_INDEX[0].MBC_DOM6_MEM0_BLK_CFG_W[0] = 0;
-    TRDC2->MBC_INDEX[0].MBC_DOM7_MEM0_BLK_CFG_W[0] = 0;
-    TRDC2->MBC_INDEX[0].MBC_DOM8_MEM0_BLK_CFG_W[0] = 0;
-    TRDC2->MBC_INDEX[0].MBC_DOM9_MEM0_BLK_CFG_W[0] = 0;
-    TRDC2->MBC_INDEX[0].MBC_DOM10_MEM0_BLK_CFG_W[0] = 0;
-    TRDC2->MBC_INDEX[0].MBC_DOM11_MEM0_BLK_CFG_W[0] = 0;
-    TRDC2->MBC_INDEX[0].MBC_DOM12_MEM0_BLK_CFG_W[0] = 0;
-    TRDC2->MBC_INDEX[0].MBC_DOM13_MEM0_BLK_CFG_W[0] = 0;
-    TRDC2->MBC_INDEX[0].MBC_DOM14_MEM0_BLK_CFG_W[0] = 0;
-    TRDC2->MBC_INDEX[0].MBC_DOM15_MEM0_BLK_CFG_W[0] = 0;
+    TRDC2->MBC_INDEX[0].MBC_MEMN_GLBAC[0] = 0x00007777U;
+    TRDC2->MBC_INDEX[0].MBC_MEMN_GLBAC[1] = 0x00007777U;
+    TRDC2->MBC_INDEX[0].MBC_MEMN_GLBAC[2] = 0;
+    TRDC2->MBC_INDEX[0].MBC_MEMN_GLBAC[3] = 0;
+    TRDC2->MBC_INDEX[0].MBC_MEMN_GLBAC[4] = 0;
+    TRDC2->MBC_INDEX[0].MBC_MEMN_GLBAC[5] = 0;
+    TRDC2->MBC_INDEX[0].MBC_MEMN_GLBAC[6] = 0;
+    TRDC2->MBC_INDEX[0].MBC_MEMN_GLBAC[7] = 0;
     TRDC2->MBC_INDEX[0].MBC_DOM0_MEM1_BLK_CFG_W[0] = 0;
     TRDC2->MBC_INDEX[0].MBC_DOM1_MEM1_BLK_CFG_W[0] = 0;
     TRDC2->MBC_INDEX[0].MBC_DOM2_MEM1_BLK_CFG_W[0] = 0;
@@ -2898,6 +2970,22 @@ void BOARD_InitTRDC()
     TRDC2->MBC_INDEX[0].MBC_DOM13_MEM0_BLK_CFG_W[13] = 0;
     TRDC2->MBC_INDEX[0].MBC_DOM14_MEM0_BLK_CFG_W[13] = 0;
     TRDC2->MBC_INDEX[0].MBC_DOM15_MEM0_BLK_CFG_W[13] = 0;
+    TRDC2->MBC_INDEX[0].MBC_DOM0_MEM0_BLK_CFG_W[12] = 0x00008880U;
+    TRDC2->MBC_INDEX[0].MBC_DOM1_MEM0_BLK_CFG_W[12] = 0x00008880U;
+    TRDC2->MBC_INDEX[0].MBC_DOM2_MEM0_BLK_CFG_W[12] = 0x00008880U;
+    TRDC2->MBC_INDEX[0].MBC_DOM3_MEM0_BLK_CFG_W[12] = 0x00008880U;
+    TRDC2->MBC_INDEX[0].MBC_DOM4_MEM0_BLK_CFG_W[12] = 0x00008880U;
+    TRDC2->MBC_INDEX[0].MBC_DOM5_MEM0_BLK_CFG_W[12] = 0x00008880U;
+    TRDC2->MBC_INDEX[0].MBC_DOM6_MEM0_BLK_CFG_W[12] = 0x00008880U;
+    TRDC2->MBC_INDEX[0].MBC_DOM7_MEM0_BLK_CFG_W[12] = 0x00008880U;
+    TRDC2->MBC_INDEX[0].MBC_DOM8_MEM0_BLK_CFG_W[12] = 0x00008880U;
+    TRDC2->MBC_INDEX[0].MBC_DOM9_MEM0_BLK_CFG_W[12] = 0x00008880U;
+    TRDC2->MBC_INDEX[0].MBC_DOM10_MEM0_BLK_CFG_W[12] = 0x00008880U;
+    TRDC2->MBC_INDEX[0].MBC_DOM11_MEM0_BLK_CFG_W[12] = 0x00008880U;
+    TRDC2->MBC_INDEX[0].MBC_DOM12_MEM0_BLK_CFG_W[12] = 0x00008880U;
+    TRDC2->MBC_INDEX[0].MBC_DOM13_MEM0_BLK_CFG_W[12] = 0x00008880U;
+    TRDC2->MBC_INDEX[0].MBC_DOM14_MEM0_BLK_CFG_W[12] = 0x00008880U;
+    TRDC2->MBC_INDEX[0].MBC_DOM15_MEM0_BLK_CFG_W[12] = 0x00008880U;
     TRDC2->MBC_INDEX[0].MBC_DOM0_MEM0_BLK_CFG_W[11] = 0;
     TRDC2->MBC_INDEX[0].MBC_DOM1_MEM0_BLK_CFG_W[11] = 0;
     TRDC2->MBC_INDEX[0].MBC_DOM2_MEM0_BLK_CFG_W[11] = 0;
@@ -2946,82 +3034,162 @@ void BOARD_InitTRDC()
     TRDC2->MBC_INDEX[0].MBC_DOM13_MEM0_BLK_CFG_W[9] = 0;
     TRDC2->MBC_INDEX[0].MBC_DOM14_MEM0_BLK_CFG_W[9] = 0;
     TRDC2->MBC_INDEX[0].MBC_DOM15_MEM0_BLK_CFG_W[9] = 0;
-    TRDC2->MBC_INDEX[0].MBC_MEMN_GLBAC[0] = 0x00007777U;
-    TRDC2->MBC_INDEX[0].MBC_MEMN_GLBAC[1] = 0x00007777U;
-    TRDC2->MBC_INDEX[0].MBC_MEMN_GLBAC[2] = 0;
-    TRDC2->MBC_INDEX[0].MBC_MEMN_GLBAC[3] = 0;
-    TRDC2->MBC_INDEX[0].MBC_MEMN_GLBAC[4] = 0;
-    TRDC2->MBC_INDEX[0].MBC_MEMN_GLBAC[5] = 0;
-    TRDC2->MBC_INDEX[0].MBC_MEMN_GLBAC[6] = 0;
-    TRDC2->MBC_INDEX[0].MBC_MEMN_GLBAC[7] = 0;
+    TRDC2->MBC_INDEX[0].MBC_DOM0_MEM0_BLK_CFG_W[8] = 0x88000008U;
+    TRDC2->MBC_INDEX[0].MBC_DOM1_MEM0_BLK_CFG_W[8] = 0x88000008U;
+    TRDC2->MBC_INDEX[0].MBC_DOM2_MEM0_BLK_CFG_W[8] = 0x00000008U;
+    TRDC2->MBC_INDEX[0].MBC_DOM3_MEM0_BLK_CFG_W[8] = 0x88000008U;
+    TRDC2->MBC_INDEX[0].MBC_DOM4_MEM0_BLK_CFG_W[8] = 0x88000008U;
+    TRDC2->MBC_INDEX[0].MBC_DOM5_MEM0_BLK_CFG_W[8] = 0x88000008U;
+    TRDC2->MBC_INDEX[0].MBC_DOM6_MEM0_BLK_CFG_W[8] = 0x88000008U;
+    TRDC2->MBC_INDEX[0].MBC_DOM7_MEM0_BLK_CFG_W[8] = 0x88000008U;
+    TRDC2->MBC_INDEX[0].MBC_DOM8_MEM0_BLK_CFG_W[8] = 0x88000008U;
+    TRDC2->MBC_INDEX[0].MBC_DOM9_MEM0_BLK_CFG_W[8] = 0x88000008U;
+    TRDC2->MBC_INDEX[0].MBC_DOM10_MEM0_BLK_CFG_W[8] = 0x88000008U;
+    TRDC2->MBC_INDEX[0].MBC_DOM11_MEM0_BLK_CFG_W[8] = 0x88000008U;
+    TRDC2->MBC_INDEX[0].MBC_DOM12_MEM0_BLK_CFG_W[8] = 0x88000008U;
+    TRDC2->MBC_INDEX[0].MBC_DOM13_MEM0_BLK_CFG_W[8] = 0x88000008U;
+    TRDC2->MBC_INDEX[0].MBC_DOM14_MEM0_BLK_CFG_W[8] = 0x88000008U;
+    TRDC2->MBC_INDEX[0].MBC_DOM15_MEM0_BLK_CFG_W[8] = 0x88000008U;
+    TRDC2->MBC_INDEX[0].MBC_DOM0_MEM0_BLK_CFG_W[0] = 0x88888888U;
+    TRDC2->MBC_INDEX[0].MBC_DOM1_MEM0_BLK_CFG_W[0] = 0x88888888U;
+    TRDC2->MBC_INDEX[0].MBC_DOM2_MEM0_BLK_CFG_W[0] = 0x88888888U;
+    TRDC2->MBC_INDEX[0].MBC_DOM3_MEM0_BLK_CFG_W[0] = 0x88888888U;
+    TRDC2->MBC_INDEX[0].MBC_DOM4_MEM0_BLK_CFG_W[0] = 0x88888888U;
+    TRDC2->MBC_INDEX[0].MBC_DOM5_MEM0_BLK_CFG_W[0] = 0x88888888U;
+    TRDC2->MBC_INDEX[0].MBC_DOM6_MEM0_BLK_CFG_W[0] = 0x88888888U;
+    TRDC2->MBC_INDEX[0].MBC_DOM7_MEM0_BLK_CFG_W[0] = 0x88888888U;
+    TRDC2->MBC_INDEX[0].MBC_DOM8_MEM0_BLK_CFG_W[0] = 0x88888888U;
+    TRDC2->MBC_INDEX[0].MBC_DOM9_MEM0_BLK_CFG_W[0] = 0x88888888U;
+    TRDC2->MBC_INDEX[0].MBC_DOM10_MEM0_BLK_CFG_W[0] = 0x88888888U;
+    TRDC2->MBC_INDEX[0].MBC_DOM11_MEM0_BLK_CFG_W[0] = 0x88888888U;
+    TRDC2->MBC_INDEX[0].MBC_DOM12_MEM0_BLK_CFG_W[0] = 0x88888888U;
+    TRDC2->MBC_INDEX[0].MBC_DOM13_MEM0_BLK_CFG_W[0] = 0x88888888U;
+    TRDC2->MBC_INDEX[0].MBC_DOM14_MEM0_BLK_CFG_W[0] = 0x88888888U;
+    TRDC2->MBC_INDEX[0].MBC_DOM15_MEM0_BLK_CFG_W[0] = 0x88888888U;
+    TRDC2->MBC_INDEX[0].MBC_DOM0_MEM0_BLK_CFG_W[1] = 0x88888888U;
+    TRDC2->MBC_INDEX[0].MBC_DOM1_MEM0_BLK_CFG_W[1] = 0x88888888U;
+    TRDC2->MBC_INDEX[0].MBC_DOM2_MEM0_BLK_CFG_W[1] = 0x88888888U;
+    TRDC2->MBC_INDEX[0].MBC_DOM3_MEM0_BLK_CFG_W[1] = 0x88888888U;
+    TRDC2->MBC_INDEX[0].MBC_DOM4_MEM0_BLK_CFG_W[1] = 0x88888888U;
+    TRDC2->MBC_INDEX[0].MBC_DOM5_MEM0_BLK_CFG_W[1] = 0x88888888U;
+    TRDC2->MBC_INDEX[0].MBC_DOM6_MEM0_BLK_CFG_W[1] = 0x88888888U;
+    TRDC2->MBC_INDEX[0].MBC_DOM7_MEM0_BLK_CFG_W[1] = 0x88888888U;
+    TRDC2->MBC_INDEX[0].MBC_DOM8_MEM0_BLK_CFG_W[1] = 0x88888888U;
+    TRDC2->MBC_INDEX[0].MBC_DOM9_MEM0_BLK_CFG_W[1] = 0x88888888U;
+    TRDC2->MBC_INDEX[0].MBC_DOM10_MEM0_BLK_CFG_W[1] = 0x88888888U;
+    TRDC2->MBC_INDEX[0].MBC_DOM11_MEM0_BLK_CFG_W[1] = 0x88888888U;
+    TRDC2->MBC_INDEX[0].MBC_DOM12_MEM0_BLK_CFG_W[1] = 0x88888888U;
+    TRDC2->MBC_INDEX[0].MBC_DOM13_MEM0_BLK_CFG_W[1] = 0x88888888U;
+    TRDC2->MBC_INDEX[0].MBC_DOM14_MEM0_BLK_CFG_W[1] = 0x88888888U;
+    TRDC2->MBC_INDEX[0].MBC_DOM15_MEM0_BLK_CFG_W[1] = 0x88888888U;
+    TRDC2->MBC_INDEX[0].MBC_DOM0_MEM0_BLK_CFG_W[2] = 0x88888888U;
+    TRDC2->MBC_INDEX[0].MBC_DOM1_MEM0_BLK_CFG_W[2] = 0x88888888U;
+    TRDC2->MBC_INDEX[0].MBC_DOM2_MEM0_BLK_CFG_W[2] = 0x88888888U;
+    TRDC2->MBC_INDEX[0].MBC_DOM3_MEM0_BLK_CFG_W[2] = 0x88888888U;
+    TRDC2->MBC_INDEX[0].MBC_DOM4_MEM0_BLK_CFG_W[2] = 0x88888888U;
+    TRDC2->MBC_INDEX[0].MBC_DOM5_MEM0_BLK_CFG_W[2] = 0x88888888U;
+    TRDC2->MBC_INDEX[0].MBC_DOM6_MEM0_BLK_CFG_W[2] = 0x88888888U;
+    TRDC2->MBC_INDEX[0].MBC_DOM7_MEM0_BLK_CFG_W[2] = 0x88888888U;
+    TRDC2->MBC_INDEX[0].MBC_DOM8_MEM0_BLK_CFG_W[2] = 0x88888888U;
+    TRDC2->MBC_INDEX[0].MBC_DOM9_MEM0_BLK_CFG_W[2] = 0x88888888U;
+    TRDC2->MBC_INDEX[0].MBC_DOM10_MEM0_BLK_CFG_W[2] = 0x88888888U;
+    TRDC2->MBC_INDEX[0].MBC_DOM11_MEM0_BLK_CFG_W[2] = 0x88888888U;
+    TRDC2->MBC_INDEX[0].MBC_DOM12_MEM0_BLK_CFG_W[2] = 0x88888888U;
+    TRDC2->MBC_INDEX[0].MBC_DOM13_MEM0_BLK_CFG_W[2] = 0x88888888U;
+    TRDC2->MBC_INDEX[0].MBC_DOM14_MEM0_BLK_CFG_W[2] = 0x88888888U;
+    TRDC2->MBC_INDEX[0].MBC_DOM15_MEM0_BLK_CFG_W[2] = 0x88888888U;
+    TRDC2->MBC_INDEX[0].MBC_DOM0_MEM0_BLK_CFG_W[3] = 0x88888888U;
+    TRDC2->MBC_INDEX[0].MBC_DOM1_MEM0_BLK_CFG_W[3] = 0x88888888U;
+    TRDC2->MBC_INDEX[0].MBC_DOM2_MEM0_BLK_CFG_W[3] = 0x88888888U;
+    TRDC2->MBC_INDEX[0].MBC_DOM3_MEM0_BLK_CFG_W[3] = 0x88888888U;
+    TRDC2->MBC_INDEX[0].MBC_DOM4_MEM0_BLK_CFG_W[3] = 0x88888888U;
+    TRDC2->MBC_INDEX[0].MBC_DOM5_MEM0_BLK_CFG_W[3] = 0x88888888U;
+    TRDC2->MBC_INDEX[0].MBC_DOM6_MEM0_BLK_CFG_W[3] = 0x88888888U;
+    TRDC2->MBC_INDEX[0].MBC_DOM7_MEM0_BLK_CFG_W[3] = 0x88888888U;
+    TRDC2->MBC_INDEX[0].MBC_DOM8_MEM0_BLK_CFG_W[3] = 0x88888888U;
+    TRDC2->MBC_INDEX[0].MBC_DOM9_MEM0_BLK_CFG_W[3] = 0x88888888U;
+    TRDC2->MBC_INDEX[0].MBC_DOM10_MEM0_BLK_CFG_W[3] = 0x88888888U;
+    TRDC2->MBC_INDEX[0].MBC_DOM11_MEM0_BLK_CFG_W[3] = 0x88888888U;
+    TRDC2->MBC_INDEX[0].MBC_DOM12_MEM0_BLK_CFG_W[3] = 0x88888888U;
+    TRDC2->MBC_INDEX[0].MBC_DOM13_MEM0_BLK_CFG_W[3] = 0x88888888U;
+    TRDC2->MBC_INDEX[0].MBC_DOM14_MEM0_BLK_CFG_W[3] = 0x88888888U;
+    TRDC2->MBC_INDEX[0].MBC_DOM15_MEM0_BLK_CFG_W[3] = 0x88888888U;
+    TRDC2->MBC_INDEX[0].MBC_DOM0_MEM0_BLK_CFG_W[4] = 0x88888888U;
+    TRDC2->MBC_INDEX[0].MBC_DOM1_MEM0_BLK_CFG_W[4] = 0x88888888U;
+    TRDC2->MBC_INDEX[0].MBC_DOM2_MEM0_BLK_CFG_W[4] = 0x88888888U;
+    TRDC2->MBC_INDEX[0].MBC_DOM3_MEM0_BLK_CFG_W[4] = 0x88888888U;
+    TRDC2->MBC_INDEX[0].MBC_DOM4_MEM0_BLK_CFG_W[4] = 0x88888888U;
+    TRDC2->MBC_INDEX[0].MBC_DOM5_MEM0_BLK_CFG_W[4] = 0x88888888U;
+    TRDC2->MBC_INDEX[0].MBC_DOM6_MEM0_BLK_CFG_W[4] = 0x88888888U;
+    TRDC2->MBC_INDEX[0].MBC_DOM7_MEM0_BLK_CFG_W[4] = 0x88888888U;
+    TRDC2->MBC_INDEX[0].MBC_DOM8_MEM0_BLK_CFG_W[4] = 0x88888888U;
+    TRDC2->MBC_INDEX[0].MBC_DOM9_MEM0_BLK_CFG_W[4] = 0x88888888U;
+    TRDC2->MBC_INDEX[0].MBC_DOM10_MEM0_BLK_CFG_W[4] = 0x88888888U;
+    TRDC2->MBC_INDEX[0].MBC_DOM11_MEM0_BLK_CFG_W[4] = 0x88888888U;
+    TRDC2->MBC_INDEX[0].MBC_DOM12_MEM0_BLK_CFG_W[4] = 0x88888888U;
+    TRDC2->MBC_INDEX[0].MBC_DOM13_MEM0_BLK_CFG_W[4] = 0x88888888U;
+    TRDC2->MBC_INDEX[0].MBC_DOM14_MEM0_BLK_CFG_W[4] = 0x88888888U;
+    TRDC2->MBC_INDEX[0].MBC_DOM15_MEM0_BLK_CFG_W[4] = 0x88888888U;
+    TRDC2->MBC_INDEX[0].MBC_DOM0_MEM0_BLK_CFG_W[5] = 0x88888888U;
+    TRDC2->MBC_INDEX[0].MBC_DOM1_MEM0_BLK_CFG_W[5] = 0x88888888U;
+    TRDC2->MBC_INDEX[0].MBC_DOM2_MEM0_BLK_CFG_W[5] = 0x88888888U;
+    TRDC2->MBC_INDEX[0].MBC_DOM3_MEM0_BLK_CFG_W[5] = 0x88888888U;
+    TRDC2->MBC_INDEX[0].MBC_DOM4_MEM0_BLK_CFG_W[5] = 0x88888888U;
+    TRDC2->MBC_INDEX[0].MBC_DOM5_MEM0_BLK_CFG_W[5] = 0x88888888U;
+    TRDC2->MBC_INDEX[0].MBC_DOM6_MEM0_BLK_CFG_W[5] = 0x88888888U;
+    TRDC2->MBC_INDEX[0].MBC_DOM7_MEM0_BLK_CFG_W[5] = 0x88888888U;
+    TRDC2->MBC_INDEX[0].MBC_DOM8_MEM0_BLK_CFG_W[5] = 0x88888888U;
+    TRDC2->MBC_INDEX[0].MBC_DOM9_MEM0_BLK_CFG_W[5] = 0x88888888U;
+    TRDC2->MBC_INDEX[0].MBC_DOM10_MEM0_BLK_CFG_W[5] = 0x88888888U;
+    TRDC2->MBC_INDEX[0].MBC_DOM11_MEM0_BLK_CFG_W[5] = 0x88888888U;
+    TRDC2->MBC_INDEX[0].MBC_DOM12_MEM0_BLK_CFG_W[5] = 0x88888888U;
+    TRDC2->MBC_INDEX[0].MBC_DOM13_MEM0_BLK_CFG_W[5] = 0x88888888U;
+    TRDC2->MBC_INDEX[0].MBC_DOM14_MEM0_BLK_CFG_W[5] = 0x88888888U;
+    TRDC2->MBC_INDEX[0].MBC_DOM15_MEM0_BLK_CFG_W[5] = 0x88888888U;
+    TRDC2->MBC_INDEX[0].MBC_DOM0_MEM0_BLK_CFG_W[6] = 0x88888888U;
+    TRDC2->MBC_INDEX[0].MBC_DOM1_MEM0_BLK_CFG_W[6] = 0x88888888U;
+    TRDC2->MBC_INDEX[0].MBC_DOM2_MEM0_BLK_CFG_W[6] = 0x88888888U;
+    TRDC2->MBC_INDEX[0].MBC_DOM3_MEM0_BLK_CFG_W[6] = 0x88888888U;
+    TRDC2->MBC_INDEX[0].MBC_DOM4_MEM0_BLK_CFG_W[6] = 0x88888888U;
+    TRDC2->MBC_INDEX[0].MBC_DOM5_MEM0_BLK_CFG_W[6] = 0x88888888U;
+    TRDC2->MBC_INDEX[0].MBC_DOM6_MEM0_BLK_CFG_W[6] = 0x88888888U;
+    TRDC2->MBC_INDEX[0].MBC_DOM7_MEM0_BLK_CFG_W[6] = 0x88888888U;
+    TRDC2->MBC_INDEX[0].MBC_DOM8_MEM0_BLK_CFG_W[6] = 0x88888888U;
+    TRDC2->MBC_INDEX[0].MBC_DOM9_MEM0_BLK_CFG_W[6] = 0x88888888U;
+    TRDC2->MBC_INDEX[0].MBC_DOM10_MEM0_BLK_CFG_W[6] = 0x88888888U;
+    TRDC2->MBC_INDEX[0].MBC_DOM11_MEM0_BLK_CFG_W[6] = 0x88888888U;
+    TRDC2->MBC_INDEX[0].MBC_DOM12_MEM0_BLK_CFG_W[6] = 0x88888888U;
+    TRDC2->MBC_INDEX[0].MBC_DOM13_MEM0_BLK_CFG_W[6] = 0x88888888U;
+    TRDC2->MBC_INDEX[0].MBC_DOM14_MEM0_BLK_CFG_W[6] = 0x88888888U;
+    TRDC2->MBC_INDEX[0].MBC_DOM15_MEM0_BLK_CFG_W[6] = 0x88888888U;
+    TRDC2->MBC_INDEX[0].MBC_DOM0_MEM0_BLK_CFG_W[7] = 0x88888888U;
+    TRDC2->MBC_INDEX[0].MBC_DOM1_MEM0_BLK_CFG_W[7] = 0x88888888U;
+    TRDC2->MBC_INDEX[0].MBC_DOM2_MEM0_BLK_CFG_W[7] = 0x88888888U;
+    TRDC2->MBC_INDEX[0].MBC_DOM3_MEM0_BLK_CFG_W[7] = 0x88888888U;
+    TRDC2->MBC_INDEX[0].MBC_DOM4_MEM0_BLK_CFG_W[7] = 0x88888888U;
+    TRDC2->MBC_INDEX[0].MBC_DOM5_MEM0_BLK_CFG_W[7] = 0x88888888U;
+    TRDC2->MBC_INDEX[0].MBC_DOM6_MEM0_BLK_CFG_W[7] = 0x88888888U;
+    TRDC2->MBC_INDEX[0].MBC_DOM7_MEM0_BLK_CFG_W[7] = 0x88888888U;
+    TRDC2->MBC_INDEX[0].MBC_DOM8_MEM0_BLK_CFG_W[7] = 0x88888888U;
+    TRDC2->MBC_INDEX[0].MBC_DOM9_MEM0_BLK_CFG_W[7] = 0x88888888U;
+    TRDC2->MBC_INDEX[0].MBC_DOM10_MEM0_BLK_CFG_W[7] = 0x88888888U;
+    TRDC2->MBC_INDEX[0].MBC_DOM11_MEM0_BLK_CFG_W[7] = 0x88888888U;
+    TRDC2->MBC_INDEX[0].MBC_DOM12_MEM0_BLK_CFG_W[7] = 0x88888888U;
+    TRDC2->MBC_INDEX[0].MBC_DOM13_MEM0_BLK_CFG_W[7] = 0x88888888U;
+    TRDC2->MBC_INDEX[0].MBC_DOM14_MEM0_BLK_CFG_W[7] = 0x88888888U;
+    TRDC2->MBC_INDEX[0].MBC_DOM15_MEM0_BLK_CFG_W[7] = 0x88888888U;
     
 
     
     /* Security level configuration of checker MBC_W1 */
-    TRDC2->MBC_INDEX[1].MBC_DOM0_MEM0_BLK_CFG_W[15] = 0;
-    TRDC2->MBC_INDEX[1].MBC_DOM1_MEM0_BLK_CFG_W[15] = 0;
-    TRDC2->MBC_INDEX[1].MBC_DOM2_MEM0_BLK_CFG_W[15] = 0;
-    TRDC2->MBC_INDEX[1].MBC_DOM3_MEM0_BLK_CFG_W[15] = 0;
-    TRDC2->MBC_INDEX[1].MBC_DOM4_MEM0_BLK_CFG_W[15] = 0;
-    TRDC2->MBC_INDEX[1].MBC_DOM5_MEM0_BLK_CFG_W[15] = 0;
-    TRDC2->MBC_INDEX[1].MBC_DOM6_MEM0_BLK_CFG_W[15] = 0;
-    TRDC2->MBC_INDEX[1].MBC_DOM7_MEM0_BLK_CFG_W[15] = 0;
-    TRDC2->MBC_INDEX[1].MBC_DOM8_MEM0_BLK_CFG_W[15] = 0;
-    TRDC2->MBC_INDEX[1].MBC_DOM9_MEM0_BLK_CFG_W[15] = 0;
-    TRDC2->MBC_INDEX[1].MBC_DOM10_MEM0_BLK_CFG_W[15] = 0;
-    TRDC2->MBC_INDEX[1].MBC_DOM11_MEM0_BLK_CFG_W[15] = 0;
-    TRDC2->MBC_INDEX[1].MBC_DOM12_MEM0_BLK_CFG_W[15] = 0;
-    TRDC2->MBC_INDEX[1].MBC_DOM13_MEM0_BLK_CFG_W[15] = 0;
-    TRDC2->MBC_INDEX[1].MBC_DOM14_MEM0_BLK_CFG_W[15] = 0;
-    TRDC2->MBC_INDEX[1].MBC_DOM15_MEM0_BLK_CFG_W[15] = 0;
-    TRDC2->MBC_INDEX[1].MBC_DOM0_MEM0_BLK_CFG_W[8] = 0;
-    TRDC2->MBC_INDEX[1].MBC_DOM1_MEM0_BLK_CFG_W[8] = 0;
-    TRDC2->MBC_INDEX[1].MBC_DOM2_MEM0_BLK_CFG_W[8] = 0;
-    TRDC2->MBC_INDEX[1].MBC_DOM3_MEM0_BLK_CFG_W[8] = 0;
-    TRDC2->MBC_INDEX[1].MBC_DOM4_MEM0_BLK_CFG_W[8] = 0;
-    TRDC2->MBC_INDEX[1].MBC_DOM5_MEM0_BLK_CFG_W[8] = 0;
-    TRDC2->MBC_INDEX[1].MBC_DOM6_MEM0_BLK_CFG_W[8] = 0;
-    TRDC2->MBC_INDEX[1].MBC_DOM7_MEM0_BLK_CFG_W[8] = 0;
-    TRDC2->MBC_INDEX[1].MBC_DOM8_MEM0_BLK_CFG_W[8] = 0;
-    TRDC2->MBC_INDEX[1].MBC_DOM9_MEM0_BLK_CFG_W[8] = 0;
-    TRDC2->MBC_INDEX[1].MBC_DOM10_MEM0_BLK_CFG_W[8] = 0;
-    TRDC2->MBC_INDEX[1].MBC_DOM11_MEM0_BLK_CFG_W[8] = 0;
-    TRDC2->MBC_INDEX[1].MBC_DOM12_MEM0_BLK_CFG_W[8] = 0;
-    TRDC2->MBC_INDEX[1].MBC_DOM13_MEM0_BLK_CFG_W[8] = 0;
-    TRDC2->MBC_INDEX[1].MBC_DOM14_MEM0_BLK_CFG_W[8] = 0;
-    TRDC2->MBC_INDEX[1].MBC_DOM15_MEM0_BLK_CFG_W[8] = 0;
-    TRDC2->MBC_INDEX[1].MBC_DOM0_MEM0_BLK_CFG_W[1] = 0;
-    TRDC2->MBC_INDEX[1].MBC_DOM1_MEM0_BLK_CFG_W[1] = 0;
-    TRDC2->MBC_INDEX[1].MBC_DOM2_MEM0_BLK_CFG_W[1] = 0;
-    TRDC2->MBC_INDEX[1].MBC_DOM3_MEM0_BLK_CFG_W[1] = 0;
-    TRDC2->MBC_INDEX[1].MBC_DOM4_MEM0_BLK_CFG_W[1] = 0;
-    TRDC2->MBC_INDEX[1].MBC_DOM5_MEM0_BLK_CFG_W[1] = 0;
-    TRDC2->MBC_INDEX[1].MBC_DOM6_MEM0_BLK_CFG_W[1] = 0;
-    TRDC2->MBC_INDEX[1].MBC_DOM7_MEM0_BLK_CFG_W[1] = 0;
-    TRDC2->MBC_INDEX[1].MBC_DOM8_MEM0_BLK_CFG_W[1] = 0;
-    TRDC2->MBC_INDEX[1].MBC_DOM9_MEM0_BLK_CFG_W[1] = 0;
-    TRDC2->MBC_INDEX[1].MBC_DOM10_MEM0_BLK_CFG_W[1] = 0;
-    TRDC2->MBC_INDEX[1].MBC_DOM11_MEM0_BLK_CFG_W[1] = 0;
-    TRDC2->MBC_INDEX[1].MBC_DOM12_MEM0_BLK_CFG_W[1] = 0;
-    TRDC2->MBC_INDEX[1].MBC_DOM13_MEM0_BLK_CFG_W[1] = 0;
-    TRDC2->MBC_INDEX[1].MBC_DOM14_MEM0_BLK_CFG_W[1] = 0;
-    TRDC2->MBC_INDEX[1].MBC_DOM15_MEM0_BLK_CFG_W[1] = 0;
-    TRDC2->MBC_INDEX[1].MBC_DOM0_MEM0_BLK_CFG_W[0] = 0;
-    TRDC2->MBC_INDEX[1].MBC_DOM1_MEM0_BLK_CFG_W[0] = 0;
-    TRDC2->MBC_INDEX[1].MBC_DOM2_MEM0_BLK_CFG_W[0] = 0;
-    TRDC2->MBC_INDEX[1].MBC_DOM3_MEM0_BLK_CFG_W[0] = 0;
-    TRDC2->MBC_INDEX[1].MBC_DOM4_MEM0_BLK_CFG_W[0] = 0;
-    TRDC2->MBC_INDEX[1].MBC_DOM5_MEM0_BLK_CFG_W[0] = 0;
-    TRDC2->MBC_INDEX[1].MBC_DOM6_MEM0_BLK_CFG_W[0] = 0;
-    TRDC2->MBC_INDEX[1].MBC_DOM7_MEM0_BLK_CFG_W[0] = 0;
-    TRDC2->MBC_INDEX[1].MBC_DOM8_MEM0_BLK_CFG_W[0] = 0;
-    TRDC2->MBC_INDEX[1].MBC_DOM9_MEM0_BLK_CFG_W[0] = 0;
-    TRDC2->MBC_INDEX[1].MBC_DOM10_MEM0_BLK_CFG_W[0] = 0;
-    TRDC2->MBC_INDEX[1].MBC_DOM11_MEM0_BLK_CFG_W[0] = 0;
-    TRDC2->MBC_INDEX[1].MBC_DOM12_MEM0_BLK_CFG_W[0] = 0;
-    TRDC2->MBC_INDEX[1].MBC_DOM13_MEM0_BLK_CFG_W[0] = 0;
-    TRDC2->MBC_INDEX[1].MBC_DOM14_MEM0_BLK_CFG_W[0] = 0;
-    TRDC2->MBC_INDEX[1].MBC_DOM15_MEM0_BLK_CFG_W[0] = 0;
+    TRDC2->MBC_INDEX[1].MBC_MEMN_GLBAC[0] = 0x00007777U;
+    TRDC2->MBC_INDEX[1].MBC_MEMN_GLBAC[1] = 0x00007777U;
+    TRDC2->MBC_INDEX[1].MBC_MEMN_GLBAC[2] = 0;
+    TRDC2->MBC_INDEX[1].MBC_MEMN_GLBAC[3] = 0;
+    TRDC2->MBC_INDEX[1].MBC_MEMN_GLBAC[4] = 0;
+    TRDC2->MBC_INDEX[1].MBC_MEMN_GLBAC[5] = 0;
+    TRDC2->MBC_INDEX[1].MBC_MEMN_GLBAC[6] = 0;
+    TRDC2->MBC_INDEX[1].MBC_MEMN_GLBAC[7] = 0x00007777U;
     TRDC2->MBC_INDEX[1].MBC_DOM0_MEM1_BLK_CFG_W[0] = 0;
     TRDC2->MBC_INDEX[1].MBC_DOM1_MEM1_BLK_CFG_W[0] = 0;
     TRDC2->MBC_INDEX[1].MBC_DOM2_MEM1_BLK_CFG_W[0] = 0;
@@ -3054,6 +3222,22 @@ void BOARD_InitTRDC()
     TRDC2->MBC_INDEX[1].MBC_DOM13_MEM2_BLK_CFG_W[0] = 0;
     TRDC2->MBC_INDEX[1].MBC_DOM14_MEM2_BLK_CFG_W[0] = 0;
     TRDC2->MBC_INDEX[1].MBC_DOM15_MEM2_BLK_CFG_W[0] = 0;
+    TRDC2->MBC_INDEX[1].MBC_DOM0_MEM0_BLK_CFG_W[15] = 0x00808000U;
+    TRDC2->MBC_INDEX[1].MBC_DOM1_MEM0_BLK_CFG_W[15] = 0x00808000U;
+    TRDC2->MBC_INDEX[1].MBC_DOM2_MEM0_BLK_CFG_W[15] = 0x00808000U;
+    TRDC2->MBC_INDEX[1].MBC_DOM3_MEM0_BLK_CFG_W[15] = 0x00808000U;
+    TRDC2->MBC_INDEX[1].MBC_DOM4_MEM0_BLK_CFG_W[15] = 0x00808000U;
+    TRDC2->MBC_INDEX[1].MBC_DOM5_MEM0_BLK_CFG_W[15] = 0x00808000U;
+    TRDC2->MBC_INDEX[1].MBC_DOM6_MEM0_BLK_CFG_W[15] = 0x00808000U;
+    TRDC2->MBC_INDEX[1].MBC_DOM7_MEM0_BLK_CFG_W[15] = 0x00808000U;
+    TRDC2->MBC_INDEX[1].MBC_DOM8_MEM0_BLK_CFG_W[15] = 0x00808000U;
+    TRDC2->MBC_INDEX[1].MBC_DOM9_MEM0_BLK_CFG_W[15] = 0x00808000U;
+    TRDC2->MBC_INDEX[1].MBC_DOM10_MEM0_BLK_CFG_W[15] = 0x00808000U;
+    TRDC2->MBC_INDEX[1].MBC_DOM11_MEM0_BLK_CFG_W[15] = 0x00808000U;
+    TRDC2->MBC_INDEX[1].MBC_DOM12_MEM0_BLK_CFG_W[15] = 0x00808000U;
+    TRDC2->MBC_INDEX[1].MBC_DOM13_MEM0_BLK_CFG_W[15] = 0x00808000U;
+    TRDC2->MBC_INDEX[1].MBC_DOM14_MEM0_BLK_CFG_W[15] = 0x00808000U;
+    TRDC2->MBC_INDEX[1].MBC_DOM15_MEM0_BLK_CFG_W[15] = 0x00808000U;
     TRDC2->MBC_INDEX[1].MBC_DOM0_MEM0_BLK_CFG_W[13] = 0;
     TRDC2->MBC_INDEX[1].MBC_DOM1_MEM0_BLK_CFG_W[13] = 0;
     TRDC2->MBC_INDEX[1].MBC_DOM2_MEM0_BLK_CFG_W[13] = 0;
@@ -3070,22 +3254,22 @@ void BOARD_InitTRDC()
     TRDC2->MBC_INDEX[1].MBC_DOM13_MEM0_BLK_CFG_W[13] = 0;
     TRDC2->MBC_INDEX[1].MBC_DOM14_MEM0_BLK_CFG_W[13] = 0;
     TRDC2->MBC_INDEX[1].MBC_DOM15_MEM0_BLK_CFG_W[13] = 0;
-    TRDC2->MBC_INDEX[1].MBC_DOM0_MEM0_BLK_CFG_W[12] = 0;
-    TRDC2->MBC_INDEX[1].MBC_DOM1_MEM0_BLK_CFG_W[12] = 0;
-    TRDC2->MBC_INDEX[1].MBC_DOM2_MEM0_BLK_CFG_W[12] = 0;
-    TRDC2->MBC_INDEX[1].MBC_DOM3_MEM0_BLK_CFG_W[12] = 0;
-    TRDC2->MBC_INDEX[1].MBC_DOM4_MEM0_BLK_CFG_W[12] = 0;
-    TRDC2->MBC_INDEX[1].MBC_DOM5_MEM0_BLK_CFG_W[12] = 0;
-    TRDC2->MBC_INDEX[1].MBC_DOM6_MEM0_BLK_CFG_W[12] = 0;
-    TRDC2->MBC_INDEX[1].MBC_DOM7_MEM0_BLK_CFG_W[12] = 0;
-    TRDC2->MBC_INDEX[1].MBC_DOM8_MEM0_BLK_CFG_W[12] = 0;
-    TRDC2->MBC_INDEX[1].MBC_DOM9_MEM0_BLK_CFG_W[12] = 0;
-    TRDC2->MBC_INDEX[1].MBC_DOM10_MEM0_BLK_CFG_W[12] = 0;
-    TRDC2->MBC_INDEX[1].MBC_DOM11_MEM0_BLK_CFG_W[12] = 0;
-    TRDC2->MBC_INDEX[1].MBC_DOM12_MEM0_BLK_CFG_W[12] = 0;
-    TRDC2->MBC_INDEX[1].MBC_DOM13_MEM0_BLK_CFG_W[12] = 0;
-    TRDC2->MBC_INDEX[1].MBC_DOM14_MEM0_BLK_CFG_W[12] = 0;
-    TRDC2->MBC_INDEX[1].MBC_DOM15_MEM0_BLK_CFG_W[12] = 0;
+    TRDC2->MBC_INDEX[1].MBC_DOM0_MEM0_BLK_CFG_W[12] = 0x00080000U;
+    TRDC2->MBC_INDEX[1].MBC_DOM1_MEM0_BLK_CFG_W[12] = 0x00080000U;
+    TRDC2->MBC_INDEX[1].MBC_DOM2_MEM0_BLK_CFG_W[12] = 0x00080000U;
+    TRDC2->MBC_INDEX[1].MBC_DOM3_MEM0_BLK_CFG_W[12] = 0x00080000U;
+    TRDC2->MBC_INDEX[1].MBC_DOM4_MEM0_BLK_CFG_W[12] = 0x00080000U;
+    TRDC2->MBC_INDEX[1].MBC_DOM5_MEM0_BLK_CFG_W[12] = 0x00080000U;
+    TRDC2->MBC_INDEX[1].MBC_DOM6_MEM0_BLK_CFG_W[12] = 0x00080000U;
+    TRDC2->MBC_INDEX[1].MBC_DOM7_MEM0_BLK_CFG_W[12] = 0x00080000U;
+    TRDC2->MBC_INDEX[1].MBC_DOM8_MEM0_BLK_CFG_W[12] = 0x00080000U;
+    TRDC2->MBC_INDEX[1].MBC_DOM9_MEM0_BLK_CFG_W[12] = 0x00080000U;
+    TRDC2->MBC_INDEX[1].MBC_DOM10_MEM0_BLK_CFG_W[12] = 0x00080000U;
+    TRDC2->MBC_INDEX[1].MBC_DOM11_MEM0_BLK_CFG_W[12] = 0x00080000U;
+    TRDC2->MBC_INDEX[1].MBC_DOM12_MEM0_BLK_CFG_W[12] = 0x00080000U;
+    TRDC2->MBC_INDEX[1].MBC_DOM13_MEM0_BLK_CFG_W[12] = 0x00080000U;
+    TRDC2->MBC_INDEX[1].MBC_DOM14_MEM0_BLK_CFG_W[12] = 0x00080000U;
+    TRDC2->MBC_INDEX[1].MBC_DOM15_MEM0_BLK_CFG_W[12] = 0x00080000U;
     TRDC2->MBC_INDEX[1].MBC_DOM0_MEM0_BLK_CFG_W[11] = 0;
     TRDC2->MBC_INDEX[1].MBC_DOM1_MEM0_BLK_CFG_W[11] = 0;
     TRDC2->MBC_INDEX[1].MBC_DOM2_MEM0_BLK_CFG_W[11] = 0;
@@ -3134,6 +3318,22 @@ void BOARD_InitTRDC()
     TRDC2->MBC_INDEX[1].MBC_DOM13_MEM0_BLK_CFG_W[9] = 0;
     TRDC2->MBC_INDEX[1].MBC_DOM14_MEM0_BLK_CFG_W[9] = 0;
     TRDC2->MBC_INDEX[1].MBC_DOM15_MEM0_BLK_CFG_W[9] = 0;
+    TRDC2->MBC_INDEX[1].MBC_DOM0_MEM0_BLK_CFG_W[8] = 0x80000000U;
+    TRDC2->MBC_INDEX[1].MBC_DOM1_MEM0_BLK_CFG_W[8] = 0x80000000U;
+    TRDC2->MBC_INDEX[1].MBC_DOM2_MEM0_BLK_CFG_W[8] = 0x80000000U;
+    TRDC2->MBC_INDEX[1].MBC_DOM3_MEM0_BLK_CFG_W[8] = 0x80000000U;
+    TRDC2->MBC_INDEX[1].MBC_DOM4_MEM0_BLK_CFG_W[8] = 0x80000000U;
+    TRDC2->MBC_INDEX[1].MBC_DOM5_MEM0_BLK_CFG_W[8] = 0x80000000U;
+    TRDC2->MBC_INDEX[1].MBC_DOM6_MEM0_BLK_CFG_W[8] = 0x80000000U;
+    TRDC2->MBC_INDEX[1].MBC_DOM7_MEM0_BLK_CFG_W[8] = 0x80000000U;
+    TRDC2->MBC_INDEX[1].MBC_DOM8_MEM0_BLK_CFG_W[8] = 0x80000000U;
+    TRDC2->MBC_INDEX[1].MBC_DOM9_MEM0_BLK_CFG_W[8] = 0x80000000U;
+    TRDC2->MBC_INDEX[1].MBC_DOM10_MEM0_BLK_CFG_W[8] = 0x80000000U;
+    TRDC2->MBC_INDEX[1].MBC_DOM11_MEM0_BLK_CFG_W[8] = 0x80000000U;
+    TRDC2->MBC_INDEX[1].MBC_DOM12_MEM0_BLK_CFG_W[8] = 0x80000000U;
+    TRDC2->MBC_INDEX[1].MBC_DOM13_MEM0_BLK_CFG_W[8] = 0x80000000U;
+    TRDC2->MBC_INDEX[1].MBC_DOM14_MEM0_BLK_CFG_W[8] = 0x80000000U;
+    TRDC2->MBC_INDEX[1].MBC_DOM15_MEM0_BLK_CFG_W[8] = 0x80000000U;
     TRDC2->MBC_INDEX[1].MBC_DOM0_MEM0_BLK_CFG_W[7] = 0;
     TRDC2->MBC_INDEX[1].MBC_DOM1_MEM0_BLK_CFG_W[7] = 0;
     TRDC2->MBC_INDEX[1].MBC_DOM2_MEM0_BLK_CFG_W[7] = 0;
@@ -3214,14 +3414,38 @@ void BOARD_InitTRDC()
     TRDC2->MBC_INDEX[1].MBC_DOM13_MEM0_BLK_CFG_W[2] = 0;
     TRDC2->MBC_INDEX[1].MBC_DOM14_MEM0_BLK_CFG_W[2] = 0;
     TRDC2->MBC_INDEX[1].MBC_DOM15_MEM0_BLK_CFG_W[2] = 0;
-    TRDC2->MBC_INDEX[1].MBC_MEMN_GLBAC[0] = 0x00007777U;
-    TRDC2->MBC_INDEX[1].MBC_MEMN_GLBAC[1] = 0x00007777U;
-    TRDC2->MBC_INDEX[1].MBC_MEMN_GLBAC[2] = 0;
-    TRDC2->MBC_INDEX[1].MBC_MEMN_GLBAC[3] = 0;
-    TRDC2->MBC_INDEX[1].MBC_MEMN_GLBAC[4] = 0;
-    TRDC2->MBC_INDEX[1].MBC_MEMN_GLBAC[5] = 0;
-    TRDC2->MBC_INDEX[1].MBC_MEMN_GLBAC[6] = 0;
-    TRDC2->MBC_INDEX[1].MBC_MEMN_GLBAC[7] = 0;
+    TRDC2->MBC_INDEX[1].MBC_DOM0_MEM0_BLK_CFG_W[1] = 0x00000088U;
+    TRDC2->MBC_INDEX[1].MBC_DOM1_MEM0_BLK_CFG_W[1] = 0x00000088U;
+    TRDC2->MBC_INDEX[1].MBC_DOM2_MEM0_BLK_CFG_W[1] = 0x00000088U;
+    TRDC2->MBC_INDEX[1].MBC_DOM3_MEM0_BLK_CFG_W[1] = 0x00000088U;
+    TRDC2->MBC_INDEX[1].MBC_DOM4_MEM0_BLK_CFG_W[1] = 0x00000088U;
+    TRDC2->MBC_INDEX[1].MBC_DOM5_MEM0_BLK_CFG_W[1] = 0x00000088U;
+    TRDC2->MBC_INDEX[1].MBC_DOM6_MEM0_BLK_CFG_W[1] = 0x00000088U;
+    TRDC2->MBC_INDEX[1].MBC_DOM7_MEM0_BLK_CFG_W[1] = 0x00000088U;
+    TRDC2->MBC_INDEX[1].MBC_DOM8_MEM0_BLK_CFG_W[1] = 0x00000088U;
+    TRDC2->MBC_INDEX[1].MBC_DOM9_MEM0_BLK_CFG_W[1] = 0x00000088U;
+    TRDC2->MBC_INDEX[1].MBC_DOM10_MEM0_BLK_CFG_W[1] = 0x00000088U;
+    TRDC2->MBC_INDEX[1].MBC_DOM11_MEM0_BLK_CFG_W[1] = 0x00000088U;
+    TRDC2->MBC_INDEX[1].MBC_DOM12_MEM0_BLK_CFG_W[1] = 0x00000088U;
+    TRDC2->MBC_INDEX[1].MBC_DOM13_MEM0_BLK_CFG_W[1] = 0x00000088U;
+    TRDC2->MBC_INDEX[1].MBC_DOM14_MEM0_BLK_CFG_W[1] = 0x00000088U;
+    TRDC2->MBC_INDEX[1].MBC_DOM15_MEM0_BLK_CFG_W[1] = 0x00000088U;
+    TRDC2->MBC_INDEX[1].MBC_DOM0_MEM0_BLK_CFG_W[0] = 0x80088880U;
+    TRDC2->MBC_INDEX[1].MBC_DOM1_MEM0_BLK_CFG_W[0] = 0x80088880U;
+    TRDC2->MBC_INDEX[1].MBC_DOM2_MEM0_BLK_CFG_W[0] = 0x80088000U;
+    TRDC2->MBC_INDEX[1].MBC_DOM3_MEM0_BLK_CFG_W[0] = 0x80088880U;
+    TRDC2->MBC_INDEX[1].MBC_DOM4_MEM0_BLK_CFG_W[0] = 0x80088880U;
+    TRDC2->MBC_INDEX[1].MBC_DOM5_MEM0_BLK_CFG_W[0] = 0x80088880U;
+    TRDC2->MBC_INDEX[1].MBC_DOM6_MEM0_BLK_CFG_W[0] = 0x80088880U;
+    TRDC2->MBC_INDEX[1].MBC_DOM7_MEM0_BLK_CFG_W[0] = 0x80088880U;
+    TRDC2->MBC_INDEX[1].MBC_DOM8_MEM0_BLK_CFG_W[0] = 0x80088880U;
+    TRDC2->MBC_INDEX[1].MBC_DOM9_MEM0_BLK_CFG_W[0] = 0x80088880U;
+    TRDC2->MBC_INDEX[1].MBC_DOM10_MEM0_BLK_CFG_W[0] = 0x80088880U;
+    TRDC2->MBC_INDEX[1].MBC_DOM11_MEM0_BLK_CFG_W[0] = 0x80088880U;
+    TRDC2->MBC_INDEX[1].MBC_DOM12_MEM0_BLK_CFG_W[0] = 0x80088880U;
+    TRDC2->MBC_INDEX[1].MBC_DOM13_MEM0_BLK_CFG_W[0] = 0x80088880U;
+    TRDC2->MBC_INDEX[1].MBC_DOM14_MEM0_BLK_CFG_W[0] = 0x80088880U;
+    TRDC2->MBC_INDEX[1].MBC_DOM15_MEM0_BLK_CFG_W[0] = 0x80088880U;
     
 
     
@@ -3258,6 +3482,8 @@ void BOARD_InitTRDC()
     TRDC2->MRC_INDEX[3].MRC_GLBAC[5] = 0;
     TRDC2->MRC_INDEX[3].MRC_GLBAC[6] = 0;
     TRDC2->MRC_INDEX[3].MRC_GLBAC[7] = 0;
+    TRDC2->MRC_INDEX[3].MRC_DOM4_RGD_W[15][1] = 0x20480011U;
+    TRDC2->MRC_INDEX[3].MRC_DOM4_RGD_W[15][0] = 0x20480007U;
     
 
     
@@ -3324,7 +3550,56 @@ void BOARD_InitTRDC()
     
 
     
+    /*--------------------------------------------------------------------
+     - Pins: Access protection on IO pins and GPIO port IRQ/DMA requests
+     -------------------------------------------------------------------*/
+    /* Possible values for security control:
+     * *-----------=----------=---------------------=---------------------*
+     * | Bit-field |  Config  |   Security access   |  Privilege access   |
+     * |   value   |  state   | control (PCNS/ICNS) | control (PCNP/ICNP) |
+     * *-----------+----------+---------------------+---------------------*
+     * |    0b00   |  S-Priv  |        Secure       |      Privilege      |
+     * |    0b01   |  S-User  |        Secure       |    Non-Privilege    |
+     * |    0b10   |  NS-Priv |      Non-Secure     |      Privilege      |
+     * |    0b11   |  NS-User |      Non-Secure     |    Non-Privilege    |
+     * *-----------=----------=---------------------=---------------------*
+     * NOTE:
+     * Pin Control Non-Secure (PCNS) & Non-Privilege (PCNP) configurable for every IO pin,
+     * Interrupt Control Non-Secure (ICNS) & Non-Privilege (ICNP) for requests 0 a 1 only. */
+    RGPIO1->PCNS = 0;
+    RGPIO2->PCNS = 0;
+    RGPIO3->PCNS = 0;
+    RGPIO4->PCNS = 0;
+    RGPIO5->PCNS = 0;
+    RGPIO6->PCNS = 0;
+    RGPIO1->PCNP = 0;
+    RGPIO2->PCNP = 0;
+    RGPIO3->PCNP = 0;
+    RGPIO4->PCNP = 0;
+    RGPIO5->PCNP = 0;
+    RGPIO6->PCNP = 0;
+    RGPIO1->ICNS = 0;
+    RGPIO2->ICNS = 0;
+    RGPIO3->ICNS = 0;
+    RGPIO4->ICNS = 0;
+    RGPIO5->ICNS = 0;
+    RGPIO6->ICNS = 0;
+    RGPIO1->ICNP = 0;
+    RGPIO2->ICNP = 0;
+    RGPIO3->ICNP = 0;
+    RGPIO4->ICNP = 0;
+    RGPIO5->ICNP = 0;
+    RGPIO6->ICNP = 0;
+    
+
+    
     /* Global Options */
+    SCB->AIRCR = (SCB->AIRCR & 0x00009FF7U) | 0x05FA0000U;
+    SCB->SCR &= 0xFFFFFFF7U;
+    SCB->SHCSR &= 0xFFF7FFFFU;
+    SCB->CPACR = 0;
+    SCB->NSACR = 0x00000C03U;
+    SCnSCB->CPPWR = 0;
     RGPIO1->LOCK = 0;
     RGPIO2->LOCK = 0;
     RGPIO3->LOCK = 0;
@@ -3340,12 +3615,88 @@ void BOARD_InitTRDC()
     
 }
 
+/***********************************************************************************************************************
+ * BOARD_ReleaseTRDC function
+ **********************************************************************************************************************/
+void BOARD_ReleaseTRDC() {
+    uint32_t result;
+
+    /*
+     * Check ELE FW status
+     */
+    do {
+        /*Wait TR empty*/
+        while ((MU_APPS_S3MUA->TSR & MU_TSR_TE0_MASK) == 0)
+            ;
+        /* Send Get FW Status command(0xc5), message size 0x01 */
+        MU_APPS_S3MUA->TR[0] = 0x17c50106;
+        /*Wait RR Full*/
+        while ((MU_APPS_S3MUA->RSR & MU_RSR_RF0_MASK) == 0)
+            ;
+        (void)MU_APPS_S3MUA->RR[0];
+        /*Wait RR Full*/
+        while ((MU_APPS_S3MUA->RSR & MU_RSR_RF1_MASK) == 0)
+            ;
+        /* Get response code, only proceed when result is 0xD6 which is S400_SUCCESS_IND. */
+        result = MU_APPS_S3MUA->RR[1];
+        /*Wait RR Full*/
+        while ((MU_APPS_S3MUA->RSR & MU_RSR_RF2_MASK) == 0)
+            ;
+        (void)MU_APPS_S3MUA->RR[2];
+    } while (result != 0xD6);
+
+    /*
+     * Send Release TRDC command
+     */
+    do {
+        /*Wait TR empty*/
+        while ((MU_APPS_S3MUA->TSR & MU_TSR_TE0_MASK) == 0)
+            ;
+        /* Send release RDC command(0xc4), message size 2 */
+        MU_APPS_S3MUA->TR[0] = 0x17c40206;
+        /*Wait TR empty*/
+        while ((MU_APPS_S3MUA->TSR & MU_TSR_TE1_MASK) == 0)
+            ;
+        /* Release TRDC A(TRDC1, 0x74) to the RTD core(cm33, 0x1) */
+        MU_APPS_S3MUA->TR[1] = 0x7401;
+        /*Wait RR Full*/
+        while ((MU_APPS_S3MUA->RSR & MU_RSR_RF0_MASK) == 0)
+            ;
+        (void)MU_APPS_S3MUA->RR[0];
+        /*Wait RR Full*/
+        while ((MU_APPS_S3MUA->RSR & MU_RSR_RF1_MASK) == 0)
+            ;
+        result = MU_APPS_S3MUA->RR[1];
+    } while (result != 0xD6);
+    do {
+        /*Wait TR empty*/
+        while ((MU_APPS_S3MUA->TSR & MU_TSR_TE0_MASK) == 0)
+            ;
+        /* Send release RDC command(0xc4), message size 2 */
+        MU_APPS_S3MUA->TR[0] = 0x17c40206;
+        /*Wait TR empty*/
+        while ((MU_APPS_S3MUA->TSR & MU_TSR_TE1_MASK) == 0)
+            ;
+        /* Release TRDC W(TRDC2, 0x78) to the RTD core(cm33, 0x1) */
+        MU_APPS_S3MUA->TR[1] = 0x7801;
+        /*Wait RR Full*/
+        while ((MU_APPS_S3MUA->RSR & MU_RSR_RF0_MASK) == 0)
+            ;
+        (void)MU_APPS_S3MUA->RR[0];
+        /*Wait RR Full*/
+        while ((MU_APPS_S3MUA->RSR & MU_RSR_RF1_MASK) == 0)
+            ;
+        result = MU_APPS_S3MUA->RR[1];
+    } while (result != 0xD6);
+}
 
 /***********************************************************************************************************************
  * BOARD_InitBootTEE function
  **********************************************************************************************************************/
 void BOARD_InitBootTEE()
 {
+    BOARD_ReleaseTRDC();
     BOARD_InitTEE();
 }
+
 

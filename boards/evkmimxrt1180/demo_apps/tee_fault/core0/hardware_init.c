@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 NXP
+ * Copyright 2023-2025 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -79,138 +79,6 @@ void DEMO_SwitchToUntrustedDomain(void)
     APP_SetPid(EXAMPLE_NONSECURE_PID);
 }
 
-static void release_trdc(void)
-{
-    uint32_t result;
-    /*
-     * Check ELE FW status
-     */
-    do
-    {
-        /*Wait TR empty*/
-        while ((MU_APPS_S3MUA->TSR & MU_TSR_TE0_MASK) == 0)
-            ;
-        /* Send Get FW Status command(0xc5), message size 0x01 */
-        MU_APPS_S3MUA->TR[0] = 0x17c50106;
-        /*Wait RR Full*/
-        while ((MU_APPS_S3MUA->RSR & MU_RSR_RF0_MASK) == 0)
-            ;
-        (void)MU_APPS_S3MUA->RR[0];
-        /*Wait RR Full*/
-        while ((MU_APPS_S3MUA->RSR & MU_RSR_RF1_MASK) == 0)
-            ;
-        /* Get response code, only proceed when result is 0xD6 which is S400_SUCCESS_IND. */
-        result = MU_APPS_S3MUA->RR[1];
-        /*Wait RR Full*/
-        while ((MU_APPS_S3MUA->RSR & MU_RSR_RF2_MASK) == 0)
-            ;
-        (void)MU_APPS_S3MUA->RR[2];
-    } while (result != 0xD6);
-
-    /*
-     * Send Release TRDC command
-     */
-    do
-    {
-        /*Wait TR empty*/
-        while ((MU_APPS_S3MUA->TSR & MU_TSR_TE0_MASK) == 0)
-            ;
-        /* Send release RDC command(0xc4), message size 2 */
-        MU_APPS_S3MUA->TR[0] = 0x17c40206;
-        /*Wait TR empty*/
-        while ((MU_APPS_S3MUA->TSR & MU_TSR_TE1_MASK) == 0)
-            ;
-        /* Release TRDC A(TRDC1, 0x74) to the RTD core(cm33, 0x1) */
-        MU_APPS_S3MUA->TR[1] = 0x7401;
-        /*Wait RR Full*/
-        while ((MU_APPS_S3MUA->RSR & MU_RSR_RF0_MASK) == 0)
-            ;
-        (void)MU_APPS_S3MUA->RR[0];
-        /*Wait RR Full*/
-        while ((MU_APPS_S3MUA->RSR & MU_RSR_RF1_MASK) == 0)
-            ;
-        result = MU_APPS_S3MUA->RR[1];
-    } while (result != 0xD6);
-    do
-    {
-        /*Wait TR empty*/
-        while ((MU_APPS_S3MUA->TSR & MU_TSR_TE0_MASK) == 0)
-            ;
-        /* Send release RDC command(0xc4), message size 2 */
-        MU_APPS_S3MUA->TR[0] = 0x17c40206;
-        /*Wait TR empty*/
-        while ((MU_APPS_S3MUA->TSR & MU_TSR_TE1_MASK) == 0)
-            ;
-        /* Release TRDC W(TRDC2, 0x78) to the RTD core(cm33, 0x1) */
-        MU_APPS_S3MUA->TR[1] = 0x7801;
-        /*Wait RR Full*/
-        while ((MU_APPS_S3MUA->RSR & MU_RSR_RF0_MASK) == 0)
-            ;
-        (void)MU_APPS_S3MUA->RR[0];
-        /*Wait RR Full*/
-        while ((MU_APPS_S3MUA->RSR & MU_RSR_RF1_MASK) == 0)
-            ;
-        result = MU_APPS_S3MUA->RR[1];
-    } while (result != 0xD6);
-}
-
-static void APP_SetTrdcGlobalConfig(void)
-{
-    uint32_t i, j;
-
-    /* 1. Get the hardware configuration of the EXAMPLE_TRDC_INSTANCE module. */
-    trdc_hardware_config_t hwConfig;
-    TRDC_GetHardwareConfig(TRDC1, &hwConfig);
-
-    /* 2. Set control policies for MRC and MBC access control configuration registers. */
-    trdc_memory_access_control_config_t memAccessConfig;
-    (void)memset(&memAccessConfig, 0, sizeof(memAccessConfig));
-
-    /* 3. Enable all read/write/execute access for MRC/MBC access control. */
-    memAccessConfig.nonsecureUsrX  = 1U;
-    memAccessConfig.nonsecureUsrW  = 1U;
-    memAccessConfig.nonsecureUsrR  = 1U;
-    memAccessConfig.nonsecurePrivX = 1U;
-    memAccessConfig.nonsecurePrivW = 1U;
-    memAccessConfig.nonsecurePrivR = 1U;
-    memAccessConfig.secureUsrX     = 1U;
-    memAccessConfig.secureUsrW     = 1U;
-    memAccessConfig.secureUsrR     = 1U;
-    memAccessConfig.securePrivX    = 1U;
-    memAccessConfig.securePrivW    = 1U;
-    memAccessConfig.securePrivR    = 1U;
-
-    for (j = 0U; j < 8U; j++)
-    {
-        for (i = 0U; i < hwConfig.mrcNumber; i++)
-        {
-            TRDC_MrcSetMemoryAccessConfig(TRDC1, &memAccessConfig, i, j);
-        }
-
-        for (i = 0U; i < hwConfig.mbcNumber; i++)
-        {
-            TRDC_MbcSetMemoryAccessConfig(TRDC1, &memAccessConfig, i, j);
-        }
-    }
-
-    /* 4. Enable all read/write/execute access for MRC/MBC access control for the instance used in secondary core. */
-    trdc_hardware_config_t hwConfig1;
-    TRDC_GetHardwareConfig(TRDC2, &hwConfig1);
-
-    for (j = 0U; j < 8U; j++)
-    {
-        for (i = 0U; i < hwConfig1.mrcNumber; i++)
-        {
-            TRDC_MrcSetMemoryAccessConfig(TRDC2, &memAccessConfig, i, j);
-        }
-
-        for (i = 0U; i < hwConfig1.mbcNumber; i++)
-        {
-            TRDC_MbcSetMemoryAccessConfig(TRDC2, &memAccessConfig, i, j);
-        }
-    }
-}
-
 static void APP_SetTrdcDacConfigSecureDomain(void)
 {
     /* Configure the access control for CM33(master 1 for TRDC1) for EXAMPLE_TRDC_SECURE_DOMAIN. */
@@ -263,9 +131,7 @@ void BOARD_InitHardware(void)
     BOARD_InitBootPins();
     BOARD_InitBootClocks();
 
-    release_trdc();
-    APP_SetTrdcGlobalConfig();
-    BOARD_InitTEE();
+    BOARD_InitBootTEE();
 
     APP_SetPid(EXAMPLE_SECURE_PID);
     APP_SetTrdcDacConfigSecureDomain();

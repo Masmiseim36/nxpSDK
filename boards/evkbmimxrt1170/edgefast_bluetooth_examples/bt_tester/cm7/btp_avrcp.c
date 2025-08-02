@@ -122,6 +122,8 @@ static struct bt_avrcp_element_attr playing_element_attributes[] = {
 #define MEDIA_ITEM_UID_LENGTH 8
 static uint16_t UIDCounter;
 static uint8_t MediaItemUID[MEDIA_ITEM_UID_LENGTH];
+static uint8_t cover_art_handle[32u];
+static uint16_t cover_art_handle_len;
 
 void avrcp_control_connected(struct bt_conn *conn, int err)
 {
@@ -326,7 +328,6 @@ void avrcp_target_rsp_notify_cmd_interim(
             break;
         }
 
-#ifdef AVRCP_1_4
         case BT_AVRCP_EVENT_NOW_PLAYING_CONTENT_CHANGED:
             register_player_event(event_id, msg->header.tl);
             break;
@@ -351,7 +352,6 @@ void avrcp_target_rsp_notify_cmd_interim(
             register_player_event(event_id, msg->header.tl);
             break;
 
-#endif /* AVRCP_1_4 */
         default:
             break;
     }
@@ -713,7 +713,15 @@ static void avrcp_target_handle_vendor_dependent_msg(struct bt_conn *conn, struc
         }
         case BT_AVRCP_PDU_ID_SET_ABSOLUTE_VOLUME:
         {
-            data[0] = vendor_msg->parameter;
+            if (vendor_msg->parameter_len != sizeof(vendor_msg->parameter))
+            {
+                response_type = BT_AVRCP_RESPONSE_TYPE_REJECTED;
+                data[0] = BT_AVRCP_METADATA_ERROR_PARAMETER_NOT_FOUND;
+            }
+            else
+            {
+                data[0] = vendor_msg->parameter & BT_AVRCP_VOLUME_MAXIMUM;
+            }
             rsp_param = &data[0];
             rsp_len   = 1;
             break;
@@ -821,6 +829,25 @@ void avrcp_control_rsp_received(struct bt_conn *conn, struct bt_avrcp_control_ms
 			  	uint8_t absolute_volume = (msg->vendor.event_rsp.absolute_volume & BT_AVRCP_VOLUME_MAXIMUM) * 100 / BT_AVRCP_VOLUME_MAXIMUM;
 				tester_event(BTP_SERVICE_ID_AVRCP, BTP_AVRCP_EVENT_VOLUME_CHANGED, &absolute_volume, 1);
 			}
+			else if ((msg->header.ctype_response == BT_AVRCP_RESPONSE_TYPE_STABLE) && (msg->vendor.pdu_id == BT_AVRCP_PDU_ID_GET_ELEMENT_ATTRIBUTE)) {
+                /* Get Element Attribute */
+                struct bt_avrcp_player_get_element_attr_rsp *rsp = &msg->vendor.element_attr_rsp;
+
+                if (rsp->num_of_attr > 0U) {
+                    /* Attribute value */
+                    if (rsp->attrs[0].attr_id == BT_AVRCP_MEDIA_ATTR_ID_DEFAULT_COVER_ART) {
+                        cover_art_handle_len = rsp->attrs[0].string_len >= sizeof(cover_art_handle) ?
+                                                sizeof(cover_art_handle) - 1U : rsp->attrs[0].string_len;
+                        memcpy(cover_art_handle, rsp->attrs[0].string, cover_art_handle_len);
+                        cover_art_handle[cover_art_handle_len++] = '\0';
+                    }
+
+                }
+            }
+            else
+            {
+                /* no action */
+            }
             break;
         default:
             break;
@@ -831,8 +858,11 @@ void avrcp_control_rsp_received(struct bt_conn *conn, struct bt_avrcp_control_ms
 
 void avrcp_vendor_dependent_continue_rsp(struct bt_conn *conn, struct bt_avrcp_vendor_header *header, struct net_buf *buf)
 {
-	/* To do */
-	return;
+    if ((header->packet_type != BT_AVRCP_PACKET_TYPE_SINGLE) &&
+        (header->packet_type != BT_AVRCP_PACKET_TYPE_END))
+    {
+        bt_avrcp_send_vendor_dependent(conn, BT_AVRCP_PDU_ID_REQUEST_CONTINUING_RESPONSE, &header->pdu_id);
+    }
 }
 #endif
 
@@ -1091,7 +1121,7 @@ void avrcp_browsing_received(struct bt_conn *conn, struct bt_avrcp_browsing_cmd 
 #if (defined(CONFIG_BT_AVRCP_CT) && ((CONFIG_BT_AVRCP_CT) > 0U))
 void avrcp_browsing_rsp_received(struct bt_conn *conn, struct bt_avrcp_browsing_rsp *rsp, int err)
 {
-    if (err) {
+    if (err || !rsp) {
         return;
     }
 
@@ -1100,14 +1130,29 @@ void avrcp_browsing_rsp_received(struct bt_conn *conn, struct bt_avrcp_browsing_
 		case BT_AVRCP_PDU_ID_GET_FOLDER_ITEMS:
         {
 			for (uint8_t index = 0U; index < rsp->folder_items.num_of_items; index++) {
-				if (rsp->folder_items.items[index].item_type == 0x03) {
+				if (rsp->folder_items.items[index].item_type == BT_AVRCP_ITEM_TYPER_MEDIA) {
 					/* Media Element Item */
+					struct bt_avrcp_media_item *media_item = &rsp->folder_items.items[index].media_item;
+
 					UIDCounter = rsp->folder_items.uid_counter;
 					memcpy(MediaItemUID, rsp->folder_items.items[index].media_item.media_uid, MEDIA_ITEM_UID_LENGTH);
-				} else if ((rsp->folder_items.items[index].item_type == 0x02) && (rsp->folder_items.items[index].folder_item.playable)) {
+
+                    for (uint8_t j = 0; j < media_item->num_of_attr; j++)
+                    {
+                        /* Attribute value */
+                        if (media_item->attrs[j].attr_id == BT_AVRCP_MEDIA_ATTR_ID_DEFAULT_COVER_ART)
+                        {
+                            cover_art_handle_len = media_item->attrs[j].value_len >= sizeof(cover_art_handle) ? 
+                                                    sizeof(cover_art_handle) - 1U : media_item->attrs[j].value_len;
+                            memcpy(cover_art_handle, media_item->attrs[j].value_str, cover_art_handle_len);
+                            cover_art_handle[cover_art_handle_len++] = '\0';
+                        }
+                    }
+				} else if ((rsp->folder_items.items[index].item_type == BT_AVRCP_ITEM_TYPER_FOLDER) && (rsp->folder_items.items[index].folder_item.playable)) {
 					/* Folder Item */
 					UIDCounter = rsp->folder_items.uid_counter;
 					memcpy(MediaItemUID, rsp->folder_items.items[index].folder_item.folder_uid, MEDIA_ITEM_UID_LENGTH);
+					break;
 				} else {
 					/* misra */
 				}
@@ -1121,8 +1166,29 @@ void avrcp_browsing_rsp_received(struct bt_conn *conn, struct bt_avrcp_browsing_
             break;
         }
 
-        case BT_AVRCP_PDU_ID_CHANGE_PATH:
         case BT_AVRCP_PDU_ID_GET_ITEM_ATTRIBUTES:
+        {
+            if (rsp->get_item_attrs.status != BT_AVRCP_METADATA_ERROR_OPERATION_SUCCESSFUL)
+            {
+                break;
+            }
+
+            for (uint8_t index = 0U; index < rsp->get_item_attrs.num_of_attr; index++) {
+                /* Attribute value */
+                uint16_t value_len = rsp->get_item_attrs.attrs[index].value_len;
+                uint8_t *value_str = rsp->get_item_attrs.attrs[index].value_str;
+                
+                if (rsp->get_item_attrs.attrs[index].attr_id == BT_AVRCP_MEDIA_ATTR_ID_DEFAULT_COVER_ART)
+                {
+                    cover_art_handle_len = value_len >= sizeof(cover_art_handle) ? sizeof(cover_art_handle) - 1U : value_len;
+                    memcpy(cover_art_handle, value_str, cover_art_handle_len);
+                    cover_art_handle[cover_art_handle_len++] = '\0';
+                }
+            }
+            break;
+        }
+
+        case BT_AVRCP_PDU_ID_CHANGE_PATH:
 		case BT_AVRCP_PDU_ID_SEARCH:
 		case BT_AVRCP_PDU_ID_GET_TOTAL_NUM_ITEMS:
         {
@@ -1230,14 +1296,15 @@ static uint8_t avrcp_send_vendor_dependent(const void *cmd, uint16_t cmd_len,
 	struct bt_conn *conn;
 	uint8_t param;
 	uint16_t palyer_id;
-	struct bt_avrcp_player_app_setting_attr_ids attr_id_param;
-	struct bt_avrcp_get_player_app_setting_value_text value_text;
-	struct bt_avrcp_player_app_attr_values attr_values;
-	struct bt_avrcp_inform_displayable_char_set char_set;
-	struct bt_avrcp_get_element_attrs element_attrs;
-	struct bt_avrcp_register_ntfy register_ntfy;
-	struct bt_avrcp_play_item play_item;
-	struct bt_avrcp_add_to_now_playing add_2_now_playing;
+    uint8_t buf[64];
+	struct bt_avrcp_player_app_setting_attr_ids *attr_id_param = (struct bt_avrcp_player_app_setting_attr_ids *)&buf[0];
+	struct bt_avrcp_get_player_app_setting_value_text *value_text = (struct bt_avrcp_get_player_app_setting_value_text *)&buf[0];
+	struct bt_avrcp_player_app_attr_values *attr_values = (struct bt_avrcp_player_app_attr_values *)&buf[0];
+	struct bt_avrcp_inform_displayable_char_set *char_set = (struct bt_avrcp_inform_displayable_char_set *)&buf[0];
+	struct bt_avrcp_get_element_attrs *element_attrs = (struct bt_avrcp_get_element_attrs *)&buf[0];
+	struct bt_avrcp_register_ntfy *register_ntfy = (struct bt_avrcp_register_ntfy *)&buf[0];
+	struct bt_avrcp_play_item *play_item = (struct bt_avrcp_play_item *)&buf[0];
+	struct bt_avrcp_add_to_now_playing *add_2_now_playing = (struct bt_avrcp_add_to_now_playing *)&buf[0];
   	  
 	conn = bt_conn_lookup_addr_br(&cp->address.a);
   
@@ -1252,8 +1319,13 @@ static uint8_t avrcp_send_vendor_dependent(const void *cmd, uint16_t cmd_len,
 			case BT_AVRCP_PDU_ID_INFORM_BATTERY_STATUS:
 			case BT_AVRCP_PDU_ID_REQUEST_CONTINUING_RESPONSE:
 			case BT_AVRCP_PDU_ID_ABORT_CONTINUING_RESPONSE:
+				param = 1;
+
+				status = bt_avrcp_send_vendor_dependent(conn, cp->pdu_id, &param);
+				break;
+
 			case BT_AVRCP_PDU_ID_SET_ABSOLUTE_VOLUME:
-				param = 0x01;
+				param = cp->param[0];
 					
 				status = bt_avrcp_send_vendor_dependent(conn, cp->pdu_id, &param);
 				break;
@@ -1265,40 +1337,48 @@ static uint8_t avrcp_send_vendor_dependent(const void *cmd, uint16_t cmd_len,
 
 			case BT_AVRCP_PDU_ID_GET_CUR_PLAYER_APP_SETTING_VAL:
 			case BT_AVRCP_PDU_ID_GET_PLAYER_APP_SETTING_ATTR_TXT:
-				attr_id_param.num_of_attr = 1;
-				attr_id_param.attr_ids[0] = 0x01;	
+				attr_id_param->num_of_attr = 1;
+				attr_id_param->attr_ids[0] = 0x01;	
 					
-				status = bt_avrcp_send_vendor_dependent(conn, cp->pdu_id, &attr_id_param);
+				status = bt_avrcp_send_vendor_dependent(conn, cp->pdu_id, attr_id_param);
 				break;				
 			  
 			case BT_AVRCP_PDU_ID_GET_PLAYER_APP_SETTING_VAL_TXT:
-				value_text.attr_id = 0x01;
-				value_text.num_of_value = 0x01;
-				value_text.value_ids[0] = 0x01;
+				value_text->attr_id = 0x01;
+				value_text->num_of_value = 0x01;
+				value_text->value_ids[0] = 0x01;
 
-				status = bt_avrcp_send_vendor_dependent(conn, cp->pdu_id, &value_text);
+				status = bt_avrcp_send_vendor_dependent(conn, cp->pdu_id, value_text);
 				break;
 			  
 			case BT_AVRCP_PDU_ID_SET_PLAYER_APP_SETTING_VAL:
-				attr_values.num_of_attr = 0x01;
-				attr_values.attr_vals[0].attr_id = 0x01;
-				attr_values.attr_vals[0].value_id = 0x01;
+				attr_values->num_of_attr = 0x01;
+				attr_values->attr_vals[0].attr_id = 0x01;
+				attr_values->attr_vals[0].value_id = 0x01;
 
-				status = bt_avrcp_send_vendor_dependent(conn, cp->pdu_id, &attr_values);
+				status = bt_avrcp_send_vendor_dependent(conn, cp->pdu_id, attr_values);
 				break;
 			  
 			case BT_AVRCP_PDU_ID_INFORM_DISPLAYABLE_CHAR_SET:
-				char_set.num_of_char = 0x01;
-				char_set.char_sets[0] = 0x01;
+				char_set->num_of_char = 0x01;
+				char_set->char_sets[0] = 0x01;
 
-				status = bt_avrcp_send_vendor_dependent(conn, cp->pdu_id, &char_set);
+				status = bt_avrcp_send_vendor_dependent(conn, cp->pdu_id, char_set);
 				break;
 			  
 			case BT_AVRCP_PDU_ID_GET_ELEMENT_ATTRIBUTE:
-				memset(&element_attrs.identifier[0], 0, 8);
-				element_attrs.num_of_attr = 0x00;		/* return all attribute */
+				memset(&element_attrs->identifier[0], 0, 8);
+                if (cmd_len > sizeof(*cp))
+                {
+                    element_attrs->num_of_attr = 1;
+                    element_attrs->attr_ids[0] = cp->param[0];
+                }
+                else
+                {
+                    element_attrs->num_of_attr = 0x00;		/* return all attribute */
+                }
 
-				status = bt_avrcp_send_vendor_dependent(conn, cp->pdu_id, &element_attrs);
+				status = bt_avrcp_send_vendor_dependent(conn, cp->pdu_id, element_attrs);
 				break;
 			  
 			case BT_AVRCP_PDU_ID_SET_ADDRESSED_PLAYER:
@@ -1308,26 +1388,26 @@ static uint8_t avrcp_send_vendor_dependent(const void *cmd, uint16_t cmd_len,
 				break;
 				  
 			case BT_AVRCP_PDU_ID_REGISTER_NOTIFICATION:
-				register_ntfy.event_id = cp->param[0];
-				register_ntfy.playback_interval = 0x00;
+				register_ntfy->event_id = cp->param[0];
+				register_ntfy->playback_interval = 0x00;
 
-				status = bt_avrcp_send_vendor_dependent(conn, cp->pdu_id, &register_ntfy);
+				status = bt_avrcp_send_vendor_dependent(conn, cp->pdu_id, register_ntfy);
 				break;
 			  
 			case BT_AVRCP_PDU_ID_PLAY_ITEMS:
-				play_item.scope = cp->param[0];
-				memcpy(&play_item.uid[0], MediaItemUID, MEDIA_ITEM_UID_LENGTH);
-				play_item.uid_counter = UIDCounter;
+				play_item->scope = cp->param[0];
+				memcpy(&play_item->uid[0], MediaItemUID, MEDIA_ITEM_UID_LENGTH);
+				play_item->uid_counter = UIDCounter;
 
-				status = bt_avrcp_send_vendor_dependent(conn, cp->pdu_id, &play_item);
+				status = bt_avrcp_send_vendor_dependent(conn, cp->pdu_id, play_item);
 				break;
 
 			case BT_AVRCP_PDU_ID_ADD_TO_NOW_PLAYING:
-				add_2_now_playing.scope = cp->param[0];
-				memcpy(&add_2_now_playing.uid[0], MediaItemUID, MEDIA_ITEM_UID_LENGTH);
-				add_2_now_playing.uid_counter = UIDCounter;
+				add_2_now_playing->scope = cp->param[0];
+				memcpy(&add_2_now_playing->uid[0], MediaItemUID, MEDIA_ITEM_UID_LENGTH);
+				add_2_now_playing->uid_counter = UIDCounter;
 
-				status = bt_avrcp_send_vendor_dependent(conn, cp->pdu_id, &add_2_now_playing);
+				status = bt_avrcp_send_vendor_dependent(conn, cp->pdu_id, add_2_now_playing);
 				break;
 						
 			default:
@@ -1355,53 +1435,6 @@ static uint8_t avrcp_set_browsed_player(const void *cmd, uint16_t cmd_len,
 	}
 	
 	return status;
-}
-
-static uint8_t bt_avrcp_sdp_user(struct bt_conn *conn, struct bt_sdp_client_result *result)
-{
-    int status;
-    uint8_t *handle = NULL;
-    struct bt_avrcp_cover_art_connect param;
-    uint16_t l2cappsm     = 0;
-    if ((result) && (result->resp_buf))
-    {
-        bt_sdp_get_addl_proto_param(result->resp_buf, BT_SDP_PROTO_L2CAP, 0x01, &l2cappsm);
-        if(l2cappsm > 0)
-        {
-            status = bt_avrcp_cover_art_start_initiator(handle);
-            if (status == 0)
-            {
-                param.l2cap_rpsm = l2cappsm;
-                param.max_recv_size = 512;
-                status = bt_avrcp_cover_art_connect(*handle, conn, &param);
-            }
-            return BT_SDP_DISCOVER_UUID_STOP;
-        }
-    }
-    return BT_SDP_DISCOVER_UUID_STOP;
-}
-
-static struct bt_sdp_discover_params discov_avrcp = {
-    .uuid = BT_UUID_DECLARE_16(BT_SDP_AV_REMOTE_TARGET_SVCLASS),
-    .func = bt_avrcp_sdp_user,
-    .pool = &sdp_client_pool,
-};
-
-static uint8_t avrcp_cover_art_initiator(const void *cmd, uint16_t cmd_len,
-		       void *rsp, uint16_t *rsp_len)
-{
-    const struct btp_avrcp_cover_art_initiator_cmd *cp = cmd;
-	struct bt_conn *conn;
-	int status;
-
-	conn = bt_conn_lookup_addr_br(&cp->address.a);
-
-	if (!conn) {
-		status = BTP_STATUS_FAILED;
-	} else {
-        status = bt_sdp_discover(conn, &discov_avrcp);
-    }
-    return status;
 }
 
 static uint8_t avrcp_get_folder_items(const void *cmd, uint16_t cmd_len,
@@ -1583,6 +1616,302 @@ static uint8_t avrcp_handle_register_notification(const void *cmd, uint16_t cmd_
 }
 #endif /* CONFIG_BT_AVRCP_TG > 0 */
 
+#if (defined(CONFIG_BT_AVRCP_COVER_ART) && ((CONFIG_BT_AVRCP_COVER_ART) > 0U))
+#if (defined(CONFIG_BT_AVRCP_COVER_ART_INITIATOR) && ((CONFIG_BT_AVRCP_COVER_ART_INITIATOR) > 0U))
+static uint8_t default_cover_handle;
+static char image_property[256U];
+
+static void avrcp_cover_art_connected(uint8_t handle, struct bt_conn *conn, int err)
+{
+}
+
+static void avrcp_cover_art_disconnected(uint8_t handle, int err)
+{
+}
+
+void avrcp_cover_art_rsp_received(uint8_t handle, struct bt_avrcp_cover_art_rsp *rsp, int err)
+{
+    uint8_t send_request = 0;
+
+    switch (rsp->cmd)
+    {
+        case BT_AVRCP_COVER_ART_CONNECT:
+        {
+            break;
+        }
+        case BT_AVRCP_COVER_ART_GET_PROP:
+        {
+            if (image_property[0] == '\0')
+            {
+                uint16_t len = rsp->get_prop.length >= sizeof(image_property) ?
+                                sizeof(image_property) - 1U : rsp->get_prop.length;
+
+                memcpy(image_property, rsp->get_prop.data, len);
+                image_property[len] = '\0';
+            }
+
+            if (rsp->response == BT_AVRCP_CA_CONTINUE_RSP)
+            {
+                send_request = 1;
+            }
+            break;
+        }
+
+        case BT_AVRCP_COVER_ART_GET_IMAGE:
+        {
+            if (rsp->response == BT_AVRCP_CA_CONTINUE_RSP)
+            {
+                send_request = 1;
+            }
+            break;
+        }
+
+        case BT_AVRCP_COVER_ART_GET_THUMB:
+        {
+            if (rsp->response == BT_AVRCP_CA_CONTINUE_RSP)
+            {
+                send_request = 1;
+            }
+            break;
+        }
+
+        case BT_AVRCP_COVER_ART_ABORT:
+            break;
+
+        default:
+            break;
+    }
+
+    if (send_request == 1)
+    {
+        bt_avrcp_send_request(handle, 0, rsp);
+    }
+}
+
+static uint8_t bt_avrcp_sdp_user(struct bt_conn *conn, struct bt_sdp_client_result *result)
+{
+    int status;
+    struct bt_avrcp_cover_art_connect param;
+    uint16_t l2cappsm     = 0;
+    if ((result) && (result->resp_buf))
+    {
+        bt_sdp_get_addl_proto_param(result->resp_buf, BT_SDP_PROTO_L2CAP, 0x01, &l2cappsm);
+        if(l2cappsm > 0)
+        {
+            struct bt_avrcp_cover_art_cb cb = {avrcp_cover_art_connected, avrcp_cover_art_disconnected,
+#if (defined(CONFIG_BT_AVRCP_COVER_ART_RESPONDER) && ((CONFIG_BT_AVRCP_COVER_ART_RESPONDER) > 0U))
+                                                NULL,
+#endif /* CONFIG_BT_AVRCP_COVER_ART_RESPONDER */
+                                                avrcp_cover_art_rsp_received};
+            bt_avrcp_register_cover_art_cb(&cb);
+
+            status = bt_avrcp_cover_art_start_initiator(&default_cover_handle);
+            if (status == 0)
+            {
+                param.l2cap_rpsm = l2cappsm;
+                param.max_recv_size = 512;
+                status = bt_avrcp_cover_art_connect(default_cover_handle, conn, &param);
+            }
+            return BT_SDP_DISCOVER_UUID_STOP;
+        }
+    }
+    return BT_SDP_DISCOVER_UUID_STOP;
+}
+
+static struct bt_sdp_discover_params discov_avrcp = {
+    .uuid = BT_UUID_DECLARE_16(BT_SDP_AV_REMOTE_TARGET_SVCLASS),
+    .func = bt_avrcp_sdp_user,
+    .pool = &sdp_client_pool,
+};
+
+static uint8_t avrcp_cover_art_start_initiator(const void *cmd, uint16_t cmd_len,
+		       void *rsp, uint16_t *rsp_len)
+{
+    const struct btp_avrcp_cover_art_start_initiator_cmd *cp = cmd;
+	struct bt_conn *conn;
+	int status;
+
+	conn = bt_conn_lookup_addr_br(&cp->address.a);
+
+	if (!conn) {
+		status = BTP_STATUS_FAILED;
+	} else {
+        status = bt_sdp_discover(conn, &discov_avrcp);
+    }
+    return status;
+}
+
+static int avrcp_create_image_descripor(uint8_t desc_type, char *desc, uint32_t desc_len)
+{
+    int err = 0;
+    char head[] = "<image-descriptor version=\"1.0\" >\r\n	<image ";
+    char tail[] = "</image-descriptor>";
+    char delim[] = "\r\n";
+    bool found = false;
+    char *token;
+
+    if (desc_type == IMAGE_DESCRIPTOR_TYPE_NONE) {
+        return 0;
+    }
+
+    token = strtok(image_property, delim);
+    if (token == NULL) {
+        return -EIO;
+    }
+
+    strncpy(desc, head, desc_len);
+
+    while ((token != NULL) && (!found)) {
+        switch (desc_type) {
+            case IMAGE_DESCRIPTOR_TYPE_NATIVE:
+                token = strstr(token, "native");
+                if (token == NULL) {
+                    break;
+                }
+                token = strstr(token, "encoding");
+                if (token == NULL) {
+                    break;
+                }
+                strncat(desc, token, desc_len);
+                found = true;
+                break;
+
+            case IMAGE_DESCRIPTOR_TYPE_VARIANT:
+                /* imaging thumbnail pixel size is 200*200 in AVRCP */
+                if(strstr(token, "200*200") != NULL) {
+                    break;
+                }
+                token = strstr(token, "variant");
+                if (token == NULL) {
+                    break;
+                }
+                token = strstr(token, "encoding");
+                if (token == NULL) {
+                    break;
+                }
+                strncat(desc, token, desc_len);
+                found = true;
+                break;
+
+            case IMAGE_DESCRIPTOR_TYPE_THUMBNAIL:
+                /* imaging thumbnail pixel size is 200*200 in AVRCP */
+                if(strstr(token, "200*200") == NULL) {
+                    break;
+                }
+                token = strstr(token, "variant");
+                if (token == NULL) {
+                    break;
+                }
+                token = strstr(token, "encoding");
+                if (token == NULL) {
+                    break;
+                }
+                strncat(desc, token, desc_len);
+                found = true;
+                break;
+
+            default:
+                return -EIO;
+        }
+
+        if (found) {
+            strncat(desc, delim, desc_len);
+        }
+        token = strtok(NULL, delim);
+    }
+
+    strncat(desc, tail, desc_len);
+
+    return err;
+}
+
+static uint8_t avrcp_cover_art_get_image(const void *cmd, uint16_t cmd_len,
+		       void *rsp, uint16_t *rsp_len)
+{
+    const struct btp_avrcp_cover_art_get_image_cmd *cp = cmd;
+    struct bt_conn *conn;
+	struct bt_avrcp_get_image param;
+	int status;
+    char desc[128u];
+
+	conn = bt_conn_lookup_addr_br(&cp->address.a);
+
+	if (!conn) {
+		status = BTP_STATUS_FAILED;
+	} else {
+        desc[0] = '\0';
+        if (avrcp_create_image_descripor(cp->desc_type, &desc[0], sizeof(desc)) != 0) {
+            status = BTP_STATUS_FAILED;
+        } else {
+            param.image_descriptor_data     = (uint8_t *)&desc[0];
+            param.image_descriptor_data_len = strlen(desc);
+            param.image_handle     = cover_art_handle;
+            param.image_handle_len = cover_art_handle_len;
+            param.wait = 0;
+            if (bt_avrcp_get_image(default_cover_handle, &param) != 0) {
+                status = BTP_STATUS_FAILED;
+            } else {
+                status = BTP_STATUS_SUCCESS;
+            }
+        }
+    }
+    return status;
+}
+
+static uint8_t avrcp_cover_art_get_image_property(const void *cmd, uint16_t cmd_len,
+		       void *rsp, uint16_t *rsp_len)
+{
+    const struct btp_avrcp_cover_art_get_image_cmd *cp = cmd;
+    struct bt_conn *conn;
+	struct bt_avrcp_get_image_property param;
+	int status;
+
+	conn = bt_conn_lookup_addr_br(&cp->address.a);
+
+	if (!conn) {
+		status = BTP_STATUS_FAILED;
+	} else {
+        image_property[0] = '\0';
+        param.image_handle     = cover_art_handle;
+        param.image_handle_len = cover_art_handle_len;
+        param.wait = 0;
+        if (bt_avrcp_get_image_property(default_cover_handle, &param) != 0) {
+            status = BTP_STATUS_FAILED;
+        } else {
+            status = BTP_STATUS_SUCCESS;
+        }
+    }
+    return status;
+}
+
+static uint8_t avrcp_cover_art_get_linked_thumbnail(const void *cmd, uint16_t cmd_len,
+		       void *rsp, uint16_t *rsp_len)
+{
+    const struct btp_avrcp_cover_art_get_image_cmd *cp = cmd;
+    struct bt_conn *conn;
+	struct bt_avrcp_get_linked_thumbnail param;
+	int status;
+
+	conn = bt_conn_lookup_addr_br(&cp->address.a);
+
+	if (!conn) {
+		status = BTP_STATUS_FAILED;
+	} else {
+        param.image_handle     = cover_art_handle;
+        param.image_handle_len = cover_art_handle_len;
+        param.wait = 0;
+        if (bt_avrcp_get_linked_thumbnail(default_cover_handle, &param) != 0) {
+            status = BTP_STATUS_FAILED;
+        } else {
+            status = BTP_STATUS_SUCCESS;
+        }
+    }
+    return status;
+}
+
+#endif /* CONFIG_BT_AVRCP_COVER_ART_INITIATOR */
+#endif /* CONFIG_BT_AVRCP_COVER_ART */
+
 static const struct btp_handler handlers[] = {
  	{
 		.opcode = BTP_AVRCP_CONTROL_CONNECT,
@@ -1655,11 +1984,6 @@ static const struct btp_handler handlers[] = {
 		.expect_len = sizeof(struct btp_avrcp_send_subunit_info_cmd),
 		.func = avrcp_send_subunit_info,
 	},
-    {
-        .opcode = BTP_COVER_ART_START_INITIATOR,
-        .expect_len = sizeof(struct btp_avrcp_cover_art_initiator_cmd),
-        .func = avrcp_cover_art_initiator,
-    },
 #endif /* CONFIG_BT_AVRCP_CT > 0 */
 #if (defined(CONFIG_BT_AVRCP_TG) && ((CONFIG_BT_AVRCP_TG) > 0U))
  	{
@@ -1668,6 +1992,30 @@ static const struct btp_handler handlers[] = {
 		.func = avrcp_handle_register_notification,
 	},
 #endif /* CONFIG_BT_AVRCP_TG > 0 */
+#if (defined(CONFIG_BT_AVRCP_COVER_ART) && ((CONFIG_BT_AVRCP_COVER_ART) > 0U))
+#if (defined(CONFIG_BT_AVRCP_COVER_ART_INITIATOR) && ((CONFIG_BT_AVRCP_COVER_ART_INITIATOR) > 0U))
+    {
+        .opcode = BTP_AVRCP_COVER_ART_START_INITIATOR,
+        .expect_len = sizeof(struct btp_avrcp_cover_art_start_initiator_cmd),
+        .func = avrcp_cover_art_start_initiator,
+    },
+    {
+        .opcode = BTP_AVRCP_COVER_ART_GET_IMAGE,
+        .expect_len = sizeof(struct btp_avrcp_cover_art_get_image_cmd),
+        .func = avrcp_cover_art_get_image,
+    },
+    {
+        .opcode = BTP_AVRCP_COVER_ART_GET_IMAGE_PROPERTY,
+        .expect_len = sizeof(struct btp_avrcp_cover_art_get_image_property_cmd),
+        .func = avrcp_cover_art_get_image_property,
+    },
+    {
+        .opcode = BTP_AVRCP_COVER_ART_GET_LINKED_THUMBNAIL,
+        .expect_len = sizeof(struct btp_avrcp_cover_art_get_linked_thumbnail_cmd),
+        .func = avrcp_cover_art_get_linked_thumbnail,
+    },
+#endif /* CONFIG_BT_AVRCP_COVER_ART_INITIATOR */
+#endif /* CONFIG_BT_AVRCP_COVER_ART */
 };
 
 #if defined(CONFIG_BT_AVRCP_CT) && (CONFIG_BT_AVRCP_CT > 0)
@@ -1676,8 +2024,12 @@ static struct bt_sdp_attribute avrcp_ct_attrs[] = {
     BT_SDP_NEW_SERVICE,
     BT_SDP_LIST( //09
         BT_SDP_ATTR_SVCLASS_ID_LIST, //00 01
-        BT_SDP_TYPE_SIZE_VAR(BT_SDP_SEQ8, 3), //35 03
+        BT_SDP_TYPE_SIZE_VAR(BT_SDP_SEQ8, 6), //35 06
         BT_SDP_DATA_ELEM_LIST(
+        {
+            BT_SDP_TYPE_SIZE(BT_SDP_UUID16), //19
+            BT_SDP_ARRAY_16(BT_SDP_AV_REMOTE_SVCLASS) //11 0E
+        },
         {
             BT_SDP_TYPE_SIZE(BT_SDP_UUID16), //19
             BT_SDP_ARRAY_16(BT_SDP_AV_REMOTE_CONTROLLER_SVCLASS) //11 0F
@@ -1730,6 +2082,43 @@ static struct bt_sdp_attribute avrcp_ct_attrs[] = {
             {
                 BT_SDP_TYPE_SIZE(BT_SDP_UINT16), //09
                 BT_SDP_ARRAY_16(0x0106U) //01 06
+            },
+            )
+        },
+        )
+    ),
+    BT_SDP_LIST(//09
+        BT_SDP_ATTR_ADD_PROTO_DESC_LIST, //00 0d
+        BT_SDP_TYPE_SIZE_VAR(BT_SDP_SEQ8, 0x12), //35 12
+        BT_SDP_DATA_ELEM_LIST(
+        {
+            BT_SDP_TYPE_SIZE_VAR(BT_SDP_SEQ8, 0x10), //35 10
+            BT_SDP_DATA_ELEM_LIST(
+            {
+                BT_SDP_TYPE_SIZE_VAR(BT_SDP_SEQ8, 6), //35 06
+                BT_SDP_DATA_ELEM_LIST(
+                {
+                    BT_SDP_TYPE_SIZE(BT_SDP_UUID16), //19
+                    BT_SDP_ARRAY_16(BT_SDP_PROTO_L2CAP) //01 00
+                },
+                {
+                    BT_SDP_TYPE_SIZE(BT_SDP_UINT16), //09
+                    BT_SDP_ARRAY_16(0x001bU) // 00 1b
+                },
+                )
+            },
+            {
+                BT_SDP_TYPE_SIZE_VAR(BT_SDP_SEQ8, 6), //35 06
+                BT_SDP_DATA_ELEM_LIST(
+                {
+                    BT_SDP_TYPE_SIZE(BT_SDP_UUID16), //19
+                    BT_SDP_ARRAY_16(BT_UUID_AVCTP_VAL) //00 17
+                },
+                {
+                    BT_SDP_TYPE_SIZE(BT_SDP_UINT16), //09
+                    BT_SDP_ARRAY_16(0x0104U) // 01 04
+                },
+                )
             },
             )
         },

@@ -1,6 +1,5 @@
 /*
- * Copyright 2022 NXP
- * All rights reserved.
+ * Copyright 2022, 2025 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -32,7 +31,7 @@ static volatile bool isMsgReceived = false;
 /*******************************************************************************
  * Code
  ******************************************************************************/
-static void RemoteApplicationEventHandler(uint16_t eventData, void *context)
+static void RemoteApplicationEventHandler(mcmgr_core_t coreNum, uint16_t eventData, void *context)
 {
     g_msgRecv     = eventData;
     isMsgReceived = true;
@@ -43,7 +42,7 @@ void APP_WAKEUP_BUTTON_IRQ_HANDLER(void)
 {
     /* Clear GPIO stop request. */
     GPIO_ClearStopRequest();
-	
+
     if ((1U << APP_WAKEUP_BUTTON_GPIO_PIN) &
         RGPIO_GetPinsInterruptFlags(APP_WAKEUP_BUTTON_GPIO, kRGPIO_InterruptOutput0))
     {
@@ -235,7 +234,7 @@ int main(void)
     /* Get the startup data */
     do
     {
-        status = MCMGR_GetStartupData(&startupData);
+        status = MCMGR_GetStartupData(kMCMGR_Core0, &startupData);
     } while (status != kStatus_MCMGR_Success);
 
     /* Make a noticable delay after the reset */

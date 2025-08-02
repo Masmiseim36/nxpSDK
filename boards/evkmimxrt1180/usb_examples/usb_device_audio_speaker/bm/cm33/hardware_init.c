@@ -116,7 +116,7 @@ extern uint32_t USB_AudioSpeakerBufferSpaceUsed(void);
 extern void USB_DeviceCalculateFeedback(void);
 /*${variable:end}*/
 /*${function:start}*/
-void SEI_EAR_TRDC_EDMA3_ResetPermissions()
+void TRDC_EDMA3_ResetPermissions()
 {
     uint8_t i, j;
     /* Set the master domain access configuration for eDMA3 */
@@ -244,7 +244,7 @@ void BOARD_InitHardware(void)
     /*
      * TRDC and Related Settings
      */
-    SEI_EAR_TRDC_EDMA3_ResetPermissions();
+    TRDC_EDMA3_ResetPermissions();
 
     /*Clock setting for LPI2C*/
     CLOCK_SetRootClockMux(kCLOCK_Root_Lpi2c0102, 0);

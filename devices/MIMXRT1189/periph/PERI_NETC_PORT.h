@@ -1,28 +1,46 @@
 /*
 ** ###################################################################
 **     Processors:          MIMXRT1181CVP2B
+**                          MIMXRT1181CVP2C
 **                          MIMXRT1181XVP2B
+**                          MIMXRT1181XVP2C
 **                          MIMXRT1182CVP2B
+**                          MIMXRT1182CVP2C
 **                          MIMXRT1182XVP2B
+**                          MIMXRT1182XVP2C
+**                          MIMXRT1186CVJ8C_cm33
+**                          MIMXRT1186CVJ8C_cm7
+**                          MIMXRT1186XVJ8C_cm33
+**                          MIMXRT1186XVJ8C_cm7
 **                          MIMXRT1187AVM8B_cm33
 **                          MIMXRT1187AVM8B_cm7
+**                          MIMXRT1187AVM8C_cm33
+**                          MIMXRT1187AVM8C_cm7
 **                          MIMXRT1187CVM8B_cm33
 **                          MIMXRT1187CVM8B_cm7
+**                          MIMXRT1187CVM8C_cm33
+**                          MIMXRT1187CVM8C_cm7
 **                          MIMXRT1187XVM8B_cm33
 **                          MIMXRT1187XVM8B_cm7
+**                          MIMXRT1187XVM8C_cm33
+**                          MIMXRT1187XVM8C_cm7
 **                          MIMXRT1189CVM8B_cm33
 **                          MIMXRT1189CVM8B_cm7
+**                          MIMXRT1189CVM8C_cm33
+**                          MIMXRT1189CVM8C_cm7
 **                          MIMXRT1189XVM8B_cm33
 **                          MIMXRT1189XVM8B_cm7
+**                          MIMXRT1189XVM8C_cm33
+**                          MIMXRT1189XVM8C_cm7
 **
-**     Version:             rev. 2.0, 2024-01-18
-**     Build:               b240705
+**     Version:             rev. 3.0, 2024-10-29
+**     Build:               b250611
 **
 **     Abstract:
 **         CMSIS Peripheral Access Layer for NETC_PORT
 **
 **     Copyright 1997-2016 Freescale Semiconductor, Inc.
-**     Copyright 2016-2024 NXP
+**     Copyright 2016-2025 NXP
 **     SPDX-License-Identifier: BSD-3-Clause
 **
 **     http:                 www.nxp.com
@@ -33,33 +51,40 @@
 **         Initial version.
 **     - rev. 2.0 (2024-01-18)
 **         Header RFP.
+**     - rev. 3.0 (2024-10-29)
+**         Change the device header file from single flat file to multiple files based on peripherals,
+**         each peripheral with dedicated header file located in periphN folder.
 **
 ** ###################################################################
 */
 
 /*!
- * @file NETC_PORT.h
- * @version 2.0
- * @date 2024-01-18
+ * @file PERI_NETC_PORT.h
+ * @version 3.0
+ * @date 2024-10-29
  * @brief CMSIS Peripheral Access Layer for NETC_PORT
  *
  * CMSIS Peripheral Access Layer for NETC_PORT
  */
 
-#if !defined(NETC_PORT_H_)
-#define NETC_PORT_H_                             /**< Symbol preventing repeated inclusion */
+#if !defined(PERI_NETC_PORT_H_)
+#define PERI_NETC_PORT_H_                        /**< Symbol preventing repeated inclusion */
 
-#if (defined(CPU_MIMXRT1181CVP2B) || defined(CPU_MIMXRT1181XVP2B))
+#if (defined(CPU_MIMXRT1181CVP2B) || defined(CPU_MIMXRT1181CVP2C) || defined(CPU_MIMXRT1181XVP2B) || defined(CPU_MIMXRT1181XVP2C))
 #include "MIMXRT1181_COMMON.h"
-#elif (defined(CPU_MIMXRT1182CVP2B) || defined(CPU_MIMXRT1182XVP2B))
+#elif (defined(CPU_MIMXRT1182CVP2B) || defined(CPU_MIMXRT1182CVP2C) || defined(CPU_MIMXRT1182XVP2B) || defined(CPU_MIMXRT1182XVP2C))
 #include "MIMXRT1182_COMMON.h"
-#elif (defined(CPU_MIMXRT1187AVM8B_cm33) || defined(CPU_MIMXRT1187CVM8B_cm33) || defined(CPU_MIMXRT1187XVM8B_cm33))
+#elif (defined(CPU_MIMXRT1186CVJ8C_cm33) || defined(CPU_MIMXRT1186XVJ8C_cm33))
+#include "MIMXRT1186_cm33_COMMON.h"
+#elif (defined(CPU_MIMXRT1186CVJ8C_cm7) || defined(CPU_MIMXRT1186XVJ8C_cm7))
+#include "MIMXRT1186_cm7_COMMON.h"
+#elif (defined(CPU_MIMXRT1187AVM8B_cm33) || defined(CPU_MIMXRT1187AVM8C_cm33) || defined(CPU_MIMXRT1187CVM8B_cm33) || defined(CPU_MIMXRT1187CVM8C_cm33) || defined(CPU_MIMXRT1187XVM8B_cm33) || defined(CPU_MIMXRT1187XVM8C_cm33))
 #include "MIMXRT1187_cm33_COMMON.h"
-#elif (defined(CPU_MIMXRT1187AVM8B_cm7) || defined(CPU_MIMXRT1187CVM8B_cm7) || defined(CPU_MIMXRT1187XVM8B_cm7))
+#elif (defined(CPU_MIMXRT1187AVM8B_cm7) || defined(CPU_MIMXRT1187AVM8C_cm7) || defined(CPU_MIMXRT1187CVM8B_cm7) || defined(CPU_MIMXRT1187CVM8C_cm7) || defined(CPU_MIMXRT1187XVM8B_cm7) || defined(CPU_MIMXRT1187XVM8C_cm7))
 #include "MIMXRT1187_cm7_COMMON.h"
-#elif (defined(CPU_MIMXRT1189CVM8B_cm33) || defined(CPU_MIMXRT1189XVM8B_cm33))
+#elif (defined(CPU_MIMXRT1189CVM8B_cm33) || defined(CPU_MIMXRT1189CVM8C_cm33) || defined(CPU_MIMXRT1189XVM8B_cm33) || defined(CPU_MIMXRT1189XVM8C_cm33))
 #include "MIMXRT1189_cm33_COMMON.h"
-#elif (defined(CPU_MIMXRT1189CVM8B_cm7) || defined(CPU_MIMXRT1189XVM8B_cm7))
+#elif (defined(CPU_MIMXRT1189CVM8B_cm7) || defined(CPU_MIMXRT1189CVM8C_cm7) || defined(CPU_MIMXRT1189XVM8B_cm7) || defined(CPU_MIMXRT1189XVM8C_cm7))
 #include "MIMXRT1189_cm7_COMMON.h"
 #else
   #error "No valid CPU defined!"
@@ -531,7 +556,7 @@ typedef struct {
 
 #define NETC_PORT_PRXSDUOR_MACSEC_BCO_MASK       (0x1F00U)
 #define NETC_PORT_PRXSDUOR_MACSEC_BCO_SHIFT      (8U)
-/*! MACSEC_BCO - MACSec byte count overhead */
+/*! MACSEC_BCO - MACsec byte count overhead */
 #define NETC_PORT_PRXSDUOR_MACSEC_BCO(x)         (((uint32_t)(((uint32_t)(x)) << NETC_PORT_PRXSDUOR_MACSEC_BCO_SHIFT)) & NETC_PORT_PRXSDUOR_MACSEC_BCO_MASK)
 /*! @} */
 
@@ -545,7 +570,7 @@ typedef struct {
 
 #define NETC_PORT_PTXSDUOR_MACSEC_BCO_MASK       (0x1F00U)
 #define NETC_PORT_PTXSDUOR_MACSEC_BCO_SHIFT      (8U)
-/*! MACSEC_BCO - MACSec byte count overhead */
+/*! MACSEC_BCO - MACsec byte count overhead */
 #define NETC_PORT_PTXSDUOR_MACSEC_BCO(x)         (((uint32_t)(((uint32_t)(x)) << NETC_PORT_PTXSDUOR_MACSEC_BCO_SHIFT)) & NETC_PORT_PTXSDUOR_MACSEC_BCO_MASK)
 /*! @} */
 
@@ -912,14 +937,27 @@ typedef struct {
 
 #define NETC_PORT_PTCTMSDUR_MAXSDU_MASK          (0xFFFFU)
 #define NETC_PORT_PTCTMSDUR_MAXSDU_SHIFT         (0U)
+/*! MAXSDU - Tx Maximum Service Data Unit Size */
 #define NETC_PORT_PTCTMSDUR_MAXSDU(x)            (((uint32_t)(((uint32_t)(x)) << NETC_PORT_PTCTMSDUR_MAXSDU_SHIFT)) & NETC_PORT_PTCTMSDUR_MAXSDU_MASK)
 
 #define NETC_PORT_PTCTMSDUR_SDU_TYPE_MASK        (0x30000U)
 #define NETC_PORT_PTCTMSDUR_SDU_TYPE_SHIFT       (16U)
+/*! SDU_TYPE - SDU type
+ *  0b00..PPDU (Physical Layer PDU). Includes preamble, IPG, SFD along with MPDU. The overhead (number of bytes)
+ *        to be added to the actual length of each frame, to reflect the PPDU (Physical Layer PDU) frame length, is
+ *        specified in the register PTXSDUOR.
+ *  0b01..MPDU (MAC PDU). Includes MAC Header, MSDU and FCS. The frame length can be adjusted if a link has MACsec
+ *        enabled (such as MACsec enabled in a PHY). The MACsec overhead is specified in register PTXSDUOR.
+ *  0b10..MSDU (MAC SDU); MPDU minus 12B MAC Header and 4B FCS. The frame length is adjusted by subtracting 16 bytes from it.
+ */
 #define NETC_PORT_PTCTMSDUR_SDU_TYPE(x)          (((uint32_t)(((uint32_t)(x)) << NETC_PORT_PTCTMSDUR_SDU_TYPE_SHIFT)) & NETC_PORT_PTCTMSDUR_SDU_TYPE_MASK)
 
 #define NETC_PORT_PTCTMSDUR_SF_MAXSDU_DIS_MASK   (0x1000000U)
 #define NETC_PORT_PTCTMSDUR_SF_MAXSDU_DIS_SHIFT  (24U)
+/*! SF_MAXSDU_DIS
+ *  0b0..Enabled
+ *  0b1..Disabled
+ */
 #define NETC_PORT_PTCTMSDUR_SF_MAXSDU_DIS(x)     (((uint32_t)(((uint32_t)(x)) << NETC_PORT_PTCTMSDUR_SF_MAXSDU_DIS_SHIFT)) & NETC_PORT_PTCTMSDUR_SF_MAXSDU_DIS_MASK)
 /*! @} */
 
@@ -1044,8 +1082,8 @@ typedef struct {
 #define NETC_PORT_PPCPDEIMR_DRME_MASK            (0x100000U)
 #define NETC_PORT_PPCPDEIMR_DRME_SHIFT           (20U)
 /*! DRME
- *  0b0..Preserve the DR value in the outer VLAN.
- *  0b1..Update DR value in the outer VLAN based on DEnDEI field.
+ *  0b0..Preserve the DEI value in the outer VLAN.
+ *  0b1..Update DEI value in the outer VLAN based on DRnDEI field.
  */
 #define NETC_PORT_PPCPDEIMR_DRME(x)              (((uint32_t)(((uint32_t)(x)) << NETC_PORT_PPCPDEIMR_DRME_SHIFT)) & NETC_PORT_PPCPDEIMR_DRME_MASK)
 /*! @} */
@@ -1482,5 +1520,5 @@ typedef struct {
  */ /* end of group Peripheral_access_layer */
 
 
-#endif  /* NETC_PORT_H_ */
+#endif  /* PERI_NETC_PORT_H_ */
 

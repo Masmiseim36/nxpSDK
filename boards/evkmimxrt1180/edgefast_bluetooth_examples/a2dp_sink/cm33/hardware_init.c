@@ -185,7 +185,7 @@ void DMA4_CH58_CH59_LPUART10_IRQHandler(void)
     LPUART10_IRQHandler();
 }
 
-void SEI_EAR_TRDC_EDMA3_ResetPermissions()
+void TRDC_EDMA3_ResetPermissions()
 {
     uint8_t i, j;
     /* Set the master domain access configuration for eDMA3 */
@@ -237,7 +237,7 @@ void SEI_EAR_TRDC_EDMA3_ResetPermissions()
     }
 }
 
-static void SEI_EAR_TRDC_EDMA4_ResetPermissions()
+static void TRDC_EDMA4_ResetPermissions()
 {
     uint8_t i, j;
     /* Set the master domain access configuration for eDMA4 */
@@ -389,8 +389,8 @@ void BOARD_SetSAIDMAPermission(void)
     /*
      * TRDC and Related Settings
      */
-    SEI_EAR_TRDC_EDMA3_ResetPermissions();
-    SEI_EAR_TRDC_EDMA4_ResetPermissions();
+    TRDC_EDMA3_ResetPermissions();
+    TRDC_EDMA4_ResetPermissions();
 
     /*Clock setting for LPI2C*/
     CLOCK_SetRootClockMux(kCLOCK_Root_Lpi2c0102, 0);

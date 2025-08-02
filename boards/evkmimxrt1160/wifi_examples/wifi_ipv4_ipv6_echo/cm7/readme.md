@@ -5,11 +5,12 @@ The wifi_ipv4_ipv6_echo application demonstrates a TCP and UDP echo on the lwIP 
 The demo can use both TCP or UDP protocol over IPv4 or IPv6 and acts as an echo server. The application sends back
 the packets received from the PC, which can be used to test whether a TCP or UDP connection is available.
 
-Before building the example application select Wi-Fi module macro in the app_config.h. 
-(see `#define WIFI_<SoC Name>_BOARD_<Module Name>`).
+Before building the example application select Wi-Fi module:
+- build from repository - select Wi-Fi module in Kconfig GUI
+- build from zip package - change project macro related to Wi-Fi module `WIFI_<SoC Name>_BOARD_<Module Name>`, macro can be found in components\wifi_bt_module\incl\wifi_bt_module_config.h
 
 For more information about Wi-Fi module connection see:
-- readme_modules.txt
+- readme_modules.md (select supported board bellow)
 - [Getting started guide](https://www.nxp.com/document/guide/getting-started-with-nxp-wi-fi-modules-using-i-mx-rt-platform:GS-WIFI-MODULES-IMXRT-PLATFORM)
 
 ## A few notes about IPv6
@@ -40,7 +41,7 @@ It is necessary to have installed tools capable of sending and receiving data ov
     - No parity
     - One stop bit
     - No flow control
-3.  Connect the WiFi module to the SD card slot.
+3.  Connect the Wi-Fi module. Refer to readme_modules.md and the [Supported boards](#supported-boards) section.
 4.  Download the program to the target board.
 5.  Either press the reset button on your board or launch the debugger in your IDE to begin running the demo.
 
@@ -180,5 +181,6 @@ It is necessary to have installed tools capable of sending and receiving data ov
 - [FRDM-RW612](../../_boards/frdmrw612/wifi_examples/common/wifi_examples_readme.md)
 - [MCX-N5XX-EVK](../../_boards/mcxn5xxevk/wifi_examples/common/wifi_examples_readme.md)
 - [MCX-N9XX-EVK](../../_boards/mcxn9xxevk/wifi_examples/common/wifi_examples_readme.md)
+- [FRDM-MCXN947](../../_boards/frdmmcxn947/wifi_examples/common/wifi_examples_readme.md)
 - [MIMXRT700-EVK](../../_boards/mimxrt700evk/wifi_examples/common/wifi_examples_readme.md)
 - [RD-RW612-BGA](../../_boards/rdrw612bga/wifi_examples/common/wifi_examples_readme.md)

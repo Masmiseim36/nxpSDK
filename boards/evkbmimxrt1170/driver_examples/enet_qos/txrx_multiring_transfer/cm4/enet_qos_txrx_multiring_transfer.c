@@ -1,5 +1,5 @@
 /*
- * Copyright 2020-2023 NXP
+ * Copyright 2020-2025 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -41,9 +41,6 @@
 #define ENET_QOS_AVTPDU_IEC61883_6AUDIOTYPE   0x10U /*! @brief AVTPDU IEC61883-6 audio&music type. */
 #define ENET_QOS_AVTPDU_IEC61883_8DVDTYPE     0x00U /*! @brief AVTPDU IEC61883-8 DV type. */
 #define ENET_QOS_HTONS(n)                     __REV16(n)
-#ifndef APP_ENET_QOS_BUFF_ALIGNMENT
-#define APP_ENET_QOS_BUFF_ALIGNMENT ENET_QOS_BUFF_ALIGNMENT
-#endif
 
 #if defined(FSL_ETH_ENABLE_CACHE_CONTROL)
 #ifndef FSL_FEATURE_L2CACHE_LINESIZE_BYTE
@@ -62,33 +59,7 @@
 #define EXAMPLE_CACHE_LINE_SIZE 1 /*!< No need to align cache line size */
 #endif                            /* FSL_ETH_ENABLE_CACHE_CONTROL */
 
-#ifndef PHY_LINKUP_TIMEOUT_COUNT
-#define PHY_LINKUP_TIMEOUT_COUNT (800000U)
-#endif
-#ifndef PHY_AUTONEGO_TIMEOUT_COUNT
-#define PHY_AUTONEGO_TIMEOUT_COUNT (800000U)
-#endif
-#ifndef PHY_STABILITY_DELAY_US
-#define PHY_STABILITY_DELAY_US (500000U)
-#endif
-
 /* @TEST_ANCHOR */
-
-#ifndef MAC_ADDRESS
-#define MAC_ADDRESS                        \
-    {                                      \
-        0x54, 0x27, 0x8d, 0x00, 0x00, 0x00 \
-    }
-#else
-#define USER_DEFINED_MAC_ADDRESS
-#endif
-
-#ifndef MAC_ADDRESS2
-#define MAC_ADDRESS2                       \
-    {                                      \
-        0xd3, 0xbe, 0xd9, 0x45, 0x22, 0x60 \
-    }
-#endif
 
 /*******************************************************************************
  * Prototypes
@@ -112,8 +83,12 @@ static enet_qos_handle_t g_handle = {0};
 static phy_handle_t phyHandle;
 
 /* The MAC address for ENET device. */
-uint8_t g_macAddr[6]  = MAC_ADDRESS;
-uint8_t g_macAddr2[6] = MAC_ADDRESS2;
+#if APP_USER_DEFINED_MAC_ADDRESS
+uint8_t g_macAddr[6] = APP_MAC_ADDRESS;
+#else
+uint8_t g_macAddr[6];
+#endif
+uint8_t g_macAddr2[6] = APP_MAC_ADDRESS2;
 uint8_t g_frame[ENET_QOS_TXQUEUE_USE][ENET_QOS_FRAME_LENGTH];
 volatile uint32_t g_rxIndex  = 0;
 volatile uint32_t g_rxIndex1 = 0;
@@ -378,7 +353,7 @@ int main(void)
 
         /* Wait link up */
         PRINTF("Wait for PHY link up...\r\n");
-        count = PHY_LINKUP_TIMEOUT_COUNT;
+        count = APP_PHY_LINKUP_TIMEOUT_COUNT;
         do
         {
             PHY_GetLinkStatus(&phyHandle, &link);
@@ -397,7 +372,7 @@ int main(void)
         {
             PRINTF("Wait for PHY link up...\r\n");
             /* Wait for auto-negotiation success and link up */
-            count = PHY_AUTONEGO_TIMEOUT_COUNT;
+            count = APP_PHY_AUTONEGO_TIMEOUT_COUNT;
             do
             {
                 PHY_GetAutoNegotiationStatus(&phyHandle, &autonego);
@@ -416,7 +391,7 @@ int main(void)
 #endif
 
     /* Wait a moment for PHY status to be stable. */
-    SDK_DelayAtLeastUs(PHY_STABILITY_DELAY_US, SDK_DEVICE_MAXIMUM_CPU_CLOCK_FREQUENCY);
+    SDK_DelayAtLeastUs(APP_PHY_STABILITY_DELAY_US, SDK_DEVICE_MAXIMUM_CPU_CLOCK_FREQUENCY);
 
     PHY_GetLinkSpeedDuplex(&phyHandle, &speed, &duplex);
 
@@ -440,7 +415,7 @@ int main(void)
     }
     config.miiDuplex = (enet_qos_mii_duplex_t)duplex;
 
-#ifndef USER_DEFINED_MAC_ADDRESS
+#if !APP_USER_DEFINED_MAC_ADDRESS
     /* Set special address for each chip. */
     SILICONID_ConvertToMacAddr(&g_macAddr);
 #endif

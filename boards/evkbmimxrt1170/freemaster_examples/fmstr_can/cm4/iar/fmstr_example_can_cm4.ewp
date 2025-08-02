@@ -243,7 +243,8 @@
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
-          <state>CPU_MIMXRT1176DVMAA_cm4</state>
+          <state>CPU_MIMXRT1176DVMAB_cm4</state>
+          <state>MIMXRT1176_cm4_SERIES</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -562,7 +563,8 @@
         <option>
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
-          <state>CPU_MIMXRT1176DVMAA_cm4</state>
+          <state>CPU_MIMXRT1176DVMAB_cm4</state>
+          <state>MIMXRT1176_cm4_SERIES</state>
         </option>
         <option>
           <name>AList</name>
@@ -1376,7 +1378,8 @@
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
-          <state>CPU_MIMXRT1176DVMAA_cm4</state>
+          <state>CPU_MIMXRT1176DVMAB_cm4</state>
+          <state>MIMXRT1176_cm4_SERIES</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -1695,7 +1698,8 @@
         <option>
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
-          <state>CPU_MIMXRT1176DVMAA_cm4</state>
+          <state>CPU_MIMXRT1176DVMAB_cm4</state>
+          <state>MIMXRT1176_cm4_SERIES</state>
         </option>
         <option>
           <name>AList</name>
@@ -2507,7 +2511,8 @@
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
-          <state>CPU_MIMXRT1176DVMAA_cm4</state>
+          <state>CPU_MIMXRT1176DVMAB_cm4</state>
+          <state>MIMXRT1176_cm4_SERIES</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -2826,7 +2831,8 @@
         <option>
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
-          <state>CPU_MIMXRT1176DVMAA_cm4</state>
+          <state>CPU_MIMXRT1176DVMAB_cm4</state>
+          <state>MIMXRT1176_cm4_SERIES</state>
         </option>
         <option>
           <name>AList</name>
@@ -3638,7 +3644,8 @@
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
-          <state>CPU_MIMXRT1176DVMAA_cm4</state>
+          <state>CPU_MIMXRT1176DVMAB_cm4</state>
+          <state>MIMXRT1176_cm4_SERIES</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -3957,7 +3964,8 @@
         <option>
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
-          <state>CPU_MIMXRT1176DVMAA_cm4</state>
+          <state>CPU_MIMXRT1176DVMAB_cm4</state>
+          <state>MIMXRT1176_cm4_SERIES</state>
         </option>
         <option>
           <name>AList</name>
@@ -4771,7 +4779,8 @@
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
-          <state>CPU_MIMXRT1176DVMAA_cm4</state>
+          <state>CPU_MIMXRT1176DVMAB_cm4</state>
+          <state>MIMXRT1176_cm4_SERIES</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -5090,7 +5099,8 @@
         <option>
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
-          <state>CPU_MIMXRT1176DVMAA_cm4</state>
+          <state>CPU_MIMXRT1176DVMAB_cm4</state>
+          <state>MIMXRT1176_cm4_SERIES</state>
         </option>
         <option>
           <name>AList</name>
@@ -5902,7 +5912,8 @@
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
-          <state>CPU_MIMXRT1176DVMAA_cm4</state>
+          <state>CPU_MIMXRT1176DVMAB_cm4</state>
+          <state>MIMXRT1176_cm4_SERIES</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -6221,7 +6232,8 @@
         <option>
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
-          <state>CPU_MIMXRT1176DVMAA_cm4</state>
+          <state>CPU_MIMXRT1176DVMAB_cm4</state>
+          <state>MIMXRT1176_cm4_SERIES</state>
         </option>
         <option>
           <name>AList</name>
@@ -7441,6 +7453,12 @@
               <name>$PROJ_DIR$/../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can/freemaster_flexcan.c</name>
             </file>
             <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can/freemaster_flexcanfd.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can/freemaster_flexcanfd.c</name>
+            </file>
+            <file>
               <name>$PROJ_DIR$/../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can/freemaster_flexcan.h</name>
             </file>
             <file>
@@ -7527,6 +7545,9 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../example_board_readme.md</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../examples_shared_readme.md</name>
     </file>
   </group>
 </project>

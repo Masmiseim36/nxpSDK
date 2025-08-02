@@ -167,7 +167,7 @@
    ------------------------------------
 */
 
-#define MEM_ALIGNMENT 4
+#define MEM_ALIGNMENT 32
 
 /* Value of TCP_SND_BUF_COUNT denotes the number of buffers and is set by
  * CONFIG option available in the SDK
@@ -289,6 +289,11 @@
 #define MEMP_NUM_NETBUF 16
 #endif
 
+/** Specify the idle timeout (in seconds) after that the test fails */
+#ifndef LWIPERF_MAX_IDLE_SEC
+#define LWIPERF_MAX_IDLE_SEC    50U
+#endif
+
 /**
  * MEMP_NUM_NETCONN: the number of struct netconns.
  * (only needed if you use the sequential API, like api_lib.c)
@@ -304,6 +309,8 @@
  */
 #if CONFIG_LWIP_LOW_MEM_FOOTPRINT
 #define PBUF_POOL_SIZE 20
+#elif FSL_USDHC_ENABLE_SCATTER_GATHER_TRANSFER
+#define PBUF_POOL_SIZE 48
 #else
 #define PBUF_POOL_SIZE 40
 #endif
@@ -332,6 +339,13 @@
 /**
 #define PBUF_LINK_ENCAPSULATION_HLEN 26
 */
+#elif FSL_USDHC_ENABLE_SCATTER_GATHER_TRANSFER
+/**
+ * PBUF_LINK_ENCAPSULATION_HLEN: interface header + sizeof(TxPD)
+ */
+#define PBUF_LINK_ENCAPSULATION_HLEN 26
+
+#define PBUF_POOL_BUFSIZE 4096
 #else
 #define PBUF_POOL_BUFSIZE 1580
 #endif

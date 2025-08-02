@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2023 NXP
+ * Copyright 2022-2023, 2025 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -9,22 +9,14 @@
 #include "shell_task_mode.h"
 
 #include "lwip/sys.h"
-#include "fsl_debug_console.h"
 
 #include "fsl_component_serial_manager.h"
-#include "fsl_shell.h"
 
 #include "socket_task.h"
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-
-/*! @brief Stack size of the temporary lwIP initialization thread. */
-#define INIT_THREAD_STACKSIZE 1024
-
-/*! @brief Priority of the temporary lwIP initialization thread. */
-#define INIT_THREAD_PRIO DEFAULT_THREAD_PRIO
 
 /*******************************************************************************
  * Prototypes
@@ -91,12 +83,12 @@ static void call_socket_task_init(int is_tcp, const char *ip_str, const char *po
         if (ret < 0)
         {
             shell_task_set_mode(SHELL_MODE_DEFAULT);
-            PRINTF("\r\n");
+            SHELL_Printf(s_shellHandle, "\r\n");
         }
     }
     else
     {
-        PRINTF("Busy.\r\n");
+        SHELL_Printf(s_shellHandle, "Busy.\r\n");
     }
 }
 
@@ -147,19 +139,24 @@ static shell_status_t print_ip_cfg(shell_handle_t shellHandle, int32_t argc, cha
 
     socket_task_print_ips();
 
-    // PRINTF("\r\nheap=%U\r\n", xPortGetMinimumEverFreeHeapSize());
+    // SHELL_Printf(s_shellHandle, "\r\nheap=%U\r\n", xPortGetMinimumEverFreeHeapSize());
 
     return kStatus_SHELL_Success;
 }
 
-static void shell_task(void *arg)
+void shell_task_init(shell_command_t **additional_commands)
 {
-    shell_command_t **additional_commands = (shell_command_t **)arg;
+#if !(defined(SHELL_NON_BLOCKING_MODE) && (SHELL_NON_BLOCKING_MODE > 0U))
+#error "Blocking shell is not supported, it does not let run IDLE task and the stacks of self-deleted tasks are not deallocated."
+#endif
 
     /* Init SHELL */
     s_shellHandle = &s_shellHandleBuffer[0];
-
+    
+    /* Shell task is created in SHELL_Init if shell is non-blocking */
     SHELL_Init(s_shellHandle, g_serialHandle, SHELL_MODE_DEFAULT);
+
+    socket_task_set_shell(s_shellHandle);
 
     SHELL_RegisterCommand(s_shellHandle, SHELL_COMMAND(echo_tcp_client));
     SHELL_RegisterCommand(s_shellHandle, SHELL_COMMAND(echo_tcp_server));
@@ -167,25 +164,10 @@ static void shell_task(void *arg)
     SHELL_RegisterCommand(s_shellHandle, SHELL_COMMAND(end));
     SHELL_RegisterCommand(s_shellHandle, SHELL_COMMAND(print_ip_cfg));
 
-    if (additional_commands)
+    if (additional_commands != NULL)
     {
         for (; *additional_commands; (void)*additional_commands++)
             SHELL_RegisterCommand(s_shellHandle, *additional_commands);
-    }
-
-    while (1)
-    {
-        SHELL_Task(s_shellHandle);
-    }
-}
-
-void shell_task_init(void *additional_commands, int additional_stack_size)
-{
-    const int stack_size = 512 + additional_stack_size;
-
-    if (sys_thread_new("shell", shell_task, additional_commands, stack_size, INIT_THREAD_PRIO) == NULL)
-    {
-        LWIP_ASSERT("shell_task_init(): Task creation failed.", 0);
     }
 }
 

@@ -14,9 +14,6 @@ if(CMAKE_SCRIPT_MODE_FILE)
 endif()
 
 
-set(CMAKE_STATIC_LIBRARY_PREFIX)
-set(CMAKE_STATIC_LIBRARY_SUFFIX)
-
 set(CMAKE_EXECUTABLE_LIBRARY_PREFIX)
 set(CMAKE_EXECUTABLE_LIBRARY_SUFFIX)
 
@@ -45,7 +42,6 @@ include(${ProjDirPath}/config.cmake)
 
 add_executable(${MCUX_SDK_PROJECT_NAME} 
 "${ProjDirPath}/../soem_gpio_pulse.c"
-"${ProjDirPath}/../FreeRTOSConfig.h"
 "${ProjDirPath}/../FreeRTOSConfigBoard.h"
 "${ProjDirPath}/../board.h"
 "${ProjDirPath}/../board.c"
@@ -63,7 +59,6 @@ target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
     ${ProjDirPath}/..
 )
 
-set_source_files_properties("${ProjDirPath}/../FreeRTOSConfig.h" PROPERTIES COMPONENT_CONFIG_FILE "middleware_freertos-kernel_config")
 set_source_files_properties("${ProjDirPath}/../FreeRTOSConfig_Gen.h" PROPERTIES COMPONENT_CONFIG_FILE "middleware_freertos-kernel_config")
 
 include(${SdkRootDirPath}/devices/MIMXRT1189/all_lib_device.cmake)

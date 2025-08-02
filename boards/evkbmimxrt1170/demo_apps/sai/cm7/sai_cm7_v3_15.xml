@@ -44,7 +44,6 @@
     <definition extID="component.lpi2c_adapter.MIMXRT1176"/>
     <definition extID="component.lpuart_adapter.MIMXRT1176"/>
     <definition extID="component.osa_template_config.MIMXRT1176"/>
-    <definition extID="component.osa_interface.MIMXRT1176"/>
     <definition extID="component.osa.MIMXRT1176"/>
     <definition extID="component.osa_bm.MIMXRT1176"/>
     <definition extID="middleware.fatfs.MIMXRT1176"/>
@@ -64,7 +63,7 @@
     <definition extID="com.crt.advproject.config.exe.debug"/>
     <definition extID="com.crt.advproject.config.exe.release"/>
   </externalDefinitions>
-  <example id="evkbmimxrt1170_sai_cm7" name="sai_cm7" device_core="cm7_MIMXRT1176xxxxx" dependency="platform.drivers.xip_board.evkbmimxrt1170.MIMXRT1176 platform.drivers.xip_device.MIMXRT1176 platform.drivers.clock.MIMXRT1176 platform.drivers.iomuxc.MIMXRT1176 platform.drivers.anatop_ai.MIMXRT1176 platform.drivers.memory.MIMXRT1176 platform.drivers.dcdc_soc.MIMXRT1176 platform.drivers.gpc_3.MIMXRT1176 platform.drivers.pgmc.MIMXRT1176 platform.drivers.pmu_1.MIMXRT1176 platform.drivers.soc_src.MIMXRT1176 CMSIS_DSP_Source.MIMXRT1176 CMSIS_Include_core_cm.MIMXRT1176 device.MIMXRT1176_CMSIS.MIMXRT1176 device.MIMXRT1176_system.MIMXRT1176 device.MIMXRT1176_startup.MIMXRT1176 platform.drivers.cache_armv7_m7.MIMXRT1176 platform.drivers.common.MIMXRT1176 platform.drivers.dmamux.MIMXRT1176 platform.drivers.edma.MIMXRT1176 platform.drivers.igpio.MIMXRT1176 platform.drivers.lpi2c.MIMXRT1176 platform.drivers.lpuart.MIMXRT1176 platform.drivers.mu.MIMXRT1176 platform.drivers.sai_edma.MIMXRT1176 platform.drivers.sai.MIMXRT1176 platform.drivers.usdhc.MIMXRT1176 platform.utilities.assert_lite.MIMXRT1176 platform.utilities.misc_utilities.MIMXRT1176 component.lists.MIMXRT1176 utility.str.MIMXRT1176 utility.debug_console_lite.MIMXRT1176 component.codec_i2c.MIMXRT1176 driver.codec.MIMXRT1176 component.codec_adapters.MIMXRT1176 component.wm8962_adapter.MIMXRT1176 driver.wm8962.MIMXRT1176 component.igpio_adapter.MIMXRT1176 component.i2c_adapter_interface.MIMXRT1176 component.lpi2c_adapter.MIMXRT1176 component.lpuart_adapter.MIMXRT1176 component.osa_template_config.MIMXRT1176 component.osa_interface.MIMXRT1176 component.osa.MIMXRT1176 component.osa_bm.MIMXRT1176 middleware.fatfs.MIMXRT1176 middleware.fatfs.template_sd.MIMXRT1176 middleware.fatfs.sd.MIMXRT1176 middleware.sdmmc.common.MIMXRT1176 middleware.sdmmc.osa.freertos.MIMXRT1176 middleware.sdmmc.sd.MIMXRT1176 middleware.sdmmc.host.usdhc.MIMXRT1176 middleware.sdmmc.host.usdhc.non_blocking.MIMXRT1176 middleware.sdmmc.usdhc.template.MIMXRT1176" category="demo_apps">
+  <example id="evkbmimxrt1170_sai_cm7" name="sai_cm7" device_core="cm7_MIMXRT1176xxxxx" dependency="platform.drivers.xip_board.evkbmimxrt1170.MIMXRT1176 platform.drivers.xip_device.MIMXRT1176 platform.drivers.clock.MIMXRT1176 platform.drivers.iomuxc.MIMXRT1176 platform.drivers.anatop_ai.MIMXRT1176 platform.drivers.memory.MIMXRT1176 platform.drivers.dcdc_soc.MIMXRT1176 platform.drivers.gpc_3.MIMXRT1176 platform.drivers.pgmc.MIMXRT1176 platform.drivers.pmu_1.MIMXRT1176 platform.drivers.soc_src.MIMXRT1176 CMSIS_DSP_Source.MIMXRT1176 CMSIS_Include_core_cm.MIMXRT1176 device.MIMXRT1176_CMSIS.MIMXRT1176 device.MIMXRT1176_system.MIMXRT1176 device.MIMXRT1176_startup.MIMXRT1176 platform.drivers.cache_armv7_m7.MIMXRT1176 platform.drivers.common.MIMXRT1176 platform.drivers.dmamux.MIMXRT1176 platform.drivers.edma.MIMXRT1176 platform.drivers.igpio.MIMXRT1176 platform.drivers.lpi2c.MIMXRT1176 platform.drivers.lpuart.MIMXRT1176 platform.drivers.mu.MIMXRT1176 platform.drivers.sai_edma.MIMXRT1176 platform.drivers.sai.MIMXRT1176 platform.drivers.usdhc.MIMXRT1176 platform.utilities.assert_lite.MIMXRT1176 platform.utilities.misc_utilities.MIMXRT1176 component.lists.MIMXRT1176 utility.str.MIMXRT1176 utility.debug_console_lite.MIMXRT1176 component.codec_i2c.MIMXRT1176 driver.codec.MIMXRT1176 component.codec_adapters.MIMXRT1176 component.wm8962_adapter.MIMXRT1176 driver.wm8962.MIMXRT1176 component.igpio_adapter.MIMXRT1176 component.i2c_adapter_interface.MIMXRT1176 component.lpi2c_adapter.MIMXRT1176 component.lpuart_adapter.MIMXRT1176 component.osa_template_config.MIMXRT1176 component.osa.MIMXRT1176 component.osa_bm.MIMXRT1176 middleware.fatfs.MIMXRT1176 middleware.fatfs.template_sd.MIMXRT1176 middleware.fatfs.sd.MIMXRT1176 middleware.sdmmc.common.MIMXRT1176 middleware.sdmmc.osa.freertos.MIMXRT1176 middleware.sdmmc.sd.MIMXRT1176 middleware.sdmmc.host.usdhc.MIMXRT1176 middleware.sdmmc.host.usdhc.non_blocking.MIMXRT1176 middleware.sdmmc.usdhc.template.MIMXRT1176" category="demo_apps">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -88,7 +87,8 @@
           <value>PRINTF_FLOAT_ENABLE=1</value>
           <value>SDK_DEBUGCONSOLE=1</value>
           <value>MCUX_META_BUILD</value>
-          <value>CPU_MIMXRT1176DVMAA_cm7</value>
+          <value>CPU_MIMXRT1176DVMAB_cm7</value>
+          <value>MIMXRT1176_cm7_SERIES</value>
           <value>OSA_USED</value>
           <value>DISABLEFLOAT16</value>
           <value>SDK_I2C_BASED_COMPONENT_USED=1</value>
@@ -199,6 +199,13 @@
       <files mask="evkbmimxrt1170_flexspi_nor.ini"/>
       <files mask="evkbmimxrt1170_sdram_init.ini"/>
     </source>
+    <source path="." project_relative_path="source" type="other">
+      <files mask="sai.mex"/>
+    </source>
+    <source path="." project_relative_path="source" type="binary">
+      <files mask="sai.bin" hidden="true"/>
+      <files mask="sai_cm7.bin" hidden="true"/>
+    </source>
     <source path="." project_relative_path="source" type="src">
       <files mask="sai.c"/>
       <files mask="recordtoSdcard.c"/>
@@ -265,6 +272,9 @@
     </source>
     <source path="." project_relative_path="doc" type="doc">
       <files mask="example_board_readme.md"/>
+    </source>
+    <source path="." project_relative_path="doc" type="doc">
+      <files mask="examples_shared_readme.md"/>
     </source>
   </example>
 </ksdk:examples>

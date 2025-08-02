@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 NXP
+ * Copyright 2023,2025 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -9,6 +9,10 @@
 #define __EDGEFAST_BT_BLE_QUEUE_H__
 
 #include <system_c.h>
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 typedef struct bt_fifo
 {
@@ -327,5 +331,8 @@ __syscall void *k_queue_peek_tail(struct k_queue *queue);
 
 /** @} */
 
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* __EDGEFAST_BT_BLE_QUEUE_H__ */

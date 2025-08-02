@@ -47,15 +47,7 @@
 
 /* Rotate panel or not. */
 #ifndef DEMO_USE_ROTATE
-#if LV_USE_PXP
-#if LV_USE_ROTATE_PXP
-#define DEMO_USE_ROTATE 1
-#else
 #define DEMO_USE_ROTATE 0
-#endif
-#else
-#define DEMO_USE_ROTATE 0
-#endif
 #endif
 
 /* Cache line size. */

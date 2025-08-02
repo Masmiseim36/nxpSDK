@@ -1,10 +1,10 @@
 # soem_gpio_pulse_bm
 
 ## Overview
-This example demonstrates how to use the Simple Open EtherCAT Master (SOEM) Library to communicate with EhterCAT devices.
+This example demonstrates how to use the Simple Open EtherCAT MainDevice (SOEM) Library to communicate with EhterCAT devices.
 
-In this example there are three EhterCAT devices, one EtherCAT Coupler EK1100, one EtherCAT Terminal EL2008 (slave0),
-and one EtherCAT Terminal EL1018 (slave1).
+In this example there are three EhterCAT devices, one EtherCAT Coupler EK1100, one EtherCAT Terminal EL2008 (SubDevice0),
+and one EtherCAT Terminal EL1018 (SubDevice1).
 
 This example controls a stepper motor system using two outputs and one input remote IO:
   Outputs:
@@ -15,10 +15,10 @@ This example controls a stepper motor system using two outputs and one input rem
      The Dir signal changes once when one of the Limit Switchs has been touched.
 
 ## Running the demo
-If the test passes, the led2 of slave0 lights up at 50% brightness.
+If the test passes, the led2 of SubDevice0 lights up at 50% brightness.
 
 If the stepper motor system is not setup properly, you can get information from
-the console log and the led4 status of slave0.
+the console log and the led4 status of SubDevice0.
 
 When the demo is running, the serial port will output:
 

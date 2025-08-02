@@ -1,6 +1,6 @@
 /*
 * Copyright 2016, Freescale Semiconductor, Inc.
-* Copyright 2016-2021, 2024 NXP
+* Copyright 2016-2021, 2024-2025 NXP
 *
 * NXP Proprietary. This software is owned or controlled by NXP and may
 * only be used strictly in accordance with the applicable license terms. 
@@ -31,6 +31,7 @@ typedef struct _mcdrv_qd_enc_t
     ENC_Type *pui32QdBase;        /* pointer to QD module base address*/
     float_t *pfltSpdMeEst;        /* pointer to measured mechanical speed  */
     frac16_t *pf16PosElEst;       /* pointer to measured electrical position */
+    acc32_t *pa32PosMeReal;       /* pointer to real position (revolution counter + mechanical position) */
     acc32_t a32PosErr;            /* position error to tracking observer  */
     acc32_t a32PosMeGain;         /* encoder pulses to mechanical position scale gain */
     float_t fltSpdMeEst;          /* estimated speed calculated using tracking observer */

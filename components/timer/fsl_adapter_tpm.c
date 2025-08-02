@@ -1,6 +1,5 @@
 /*
- * Copyright 2018-2019 NXP
- *
+ * Copyright 2018-2019,2025 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -9,12 +8,11 @@
 #include "fsl_adapter_timer.h"
 #include "fsl_tpm.h"
 
-#ifndef TIMER_ADAPTER_TPM1_ENABLE
-#define TIMER_ADAPTER_TPM1_ENABLE (0)
-#endif
-
-#ifndef TIMER_ADAPTER_TPM2_ENABLE
-#define TIMER_ADAPTER_TPM2_ENABLE (0)
+/* Correct tpm instance index in TPM_BASE_PTRS */
+#if defined(TPM0)
+#define TPM_INSTANCE_MAX_INDEX FSL_FEATURE_SOC_TPM_COUNT
+#else
+#define TPM_INSTANCE_MAX_INDEX (FSL_FEATURE_SOC_TPM_COUNT + 1)
 #endif
 
 typedef struct _hal_timer_handle_struct_t
@@ -23,10 +21,7 @@ typedef struct _hal_timer_handle_struct_t
     uint32_t timerClock_Hz;
     hal_timer_callback_t callback;
     void *callbackParam;
-#if (defined(TIMER_ADAPTER_TPM1_ENABLE) && (TIMER_ADAPTER_TPM1_ENABLE > 0U)) || \
-    (defined(TIMER_ADAPTER_TPM2_ENABLE) && (TIMER_ADAPTER_TPM2_ENABLE > 0U))
     uint8_t instance;
-#endif
 } hal_timer_handle_struct_t;
 
 /*******************************************************************************
@@ -36,12 +31,8 @@ typedef struct _hal_timer_handle_struct_t
 static TPM_Type *const s_TPMBase[] = TPM_BASE_PTRS;
 static IRQn_Type const mTPMIrqId[] = TPM_IRQS;
 
-#if (defined(TIMER_ADAPTER_TPM1_ENABLE) && (TIMER_ADAPTER_TPM1_ENABLE > 0U)) || \
-    (defined(TIMER_ADAPTER_TPM2_ENABLE) && (TIMER_ADAPTER_TPM2_ENABLE > 0U))
 static hal_timer_handle_struct_t *s_halTimerState[sizeof(s_TPMBase) / sizeof(TPM_Type *)];
-#else
-static hal_timer_handle_struct_t *s_halTimerState[1];
-#endif
+
 /************************************************************************************
 *************************************************************************************
 * Private prototypes
@@ -63,13 +54,9 @@ static void HAL_TimerInterruptHandle(uint8_t instance)
 }
 static uint8_t HAL_TimerGetInstance(hal_timer_handle_t halTimerHandle)
 {
-#if (defined(TIMER_ADAPTER_TPM1_ENABLE) && (TIMER_ADAPTER_TPM1_ENABLE > 0U)) || \
-    (defined(TIMER_ADAPTER_TPM2_ENABLE) && (TIMER_ADAPTER_TPM2_ENABLE > 0U))
     hal_timer_handle_struct_t *halTimerState = halTimerHandle;
+
     return halTimerState->instance;
-#else
-    return 0;
-#endif
 }
 
 static void HAL_TimerHwInit(hal_timer_handle_t halTimerHandle)
@@ -81,10 +68,7 @@ static void HAL_TimerHwInit(hal_timer_handle_t halTimerHandle)
 
     assert(halTimerHandle);
     TPM_GetDefaultConfig(&tpmInfo);
-#if (defined(TIMER_ADAPTER_TPM1_ENABLE) && (TIMER_ADAPTER_TPM1_ENABLE > 0U)) || \
-    (defined(TIMER_ADAPTER_TPM2_ENABLE) && (TIMER_ADAPTER_TPM2_ENABLE > 0U))
     instance = halTimerState->instance;
-#endif
     /* Initialize TPM module */
     tpmInfo.prescale = kTPM_Prescale_Divide_128;
     TPM_Init(s_TPMBase[instance], (void *)&tpmInfo);
@@ -102,6 +86,7 @@ static void HAL_TimerHwInit(hal_timer_handle_t halTimerHandle)
     NVIC_SetPriority(irqId, HAL_TIMER_ISR_PRIORITY);
     (void)EnableIRQ(irqId);
 }
+
 void TPM0_IRQHandler(void);
 
 void TPM0_IRQHandler(void)
@@ -110,23 +95,78 @@ void TPM0_IRQHandler(void)
     SDK_ISR_EXIT_BARRIER;
 }
 
-#if (defined(TIMER_ADAPTER_TPM1_ENABLE) && (TIMER_ADAPTER_TPM1_ENABLE > 0U))
+#if (TPM_INSTANCE_MAX_INDEX > 1U)
 void TPM1_IRQHandler(void);
 void TPM1_IRQHandler(void)
 {
     HAL_TimerInterruptHandle(1);
     SDK_ISR_EXIT_BARRIER;
 }
-#endif /*TIMER_ADAPTER_TPM1_ENABLE*/
+#endif
 
-#if (defined(TIMER_ADAPTER_TPM2_ENABLE) && (TIMER_ADAPTER_TPM2_ENABLE > 0U))
+#if (TPM_INSTANCE_MAX_INDEX > 2U)
 void TPM2_IRQHandler(void);
 void TPM2_IRQHandler(void)
 {
     HAL_TimerInterruptHandle(2);
     SDK_ISR_EXIT_BARRIER;
 }
-#endif /*TIMER_ADAPTER_TPM2_ENABLE*/
+#endif
+
+#if (TPM_INSTANCE_MAX_INDEX > 3U)
+void TPM3_IRQHandler(void);
+void TPM3_IRQHandler(void)
+{
+    HAL_TimerInterruptHandle(3);
+    SDK_ISR_EXIT_BARRIER;
+}
+#endif
+
+#if (TPM_INSTANCE_MAX_INDEX > 4U)
+void TPM4_IRQHandler(void);
+void TPM4_IRQHandler(void)
+{
+    HAL_TimerInterruptHandle(4);
+    SDK_ISR_EXIT_BARRIER;
+}
+#endif
+
+#if (TPM_INSTANCE_MAX_INDEX > 5U)
+void TPM5_IRQHandler(void);
+void TPM5_IRQHandler(void)
+{
+    HAL_TimerInterruptHandle(5);
+    SDK_ISR_EXIT_BARRIER;
+}
+#endif
+
+#if (TPM_INSTANCE_MAX_INDEX > 6U)
+void TPM6_IRQHandler(void);
+void TPM6_IRQHandler(void)
+{
+    HAL_TimerInterruptHandle(6);
+    SDK_ISR_EXIT_BARRIER;
+}
+#endif
+
+#if (TPM_INSTANCE_MAX_INDEX > 7U)
+void TPM7_IRQHandler(void);
+void TPM7_IRQHandler(void)
+{
+    HAL_TimerInterruptHandle(7);
+    SDK_ISR_EXIT_BARRIER;
+}
+#endif
+
+#if (TPM_INSTANCE_MAX_INDEX > 8U)
+void TPM8_IRQHandler(void);
+void TPM8_IRQHandler(void)
+{
+    HAL_TimerInterruptHandle(8);
+    SDK_ISR_EXIT_BARRIER;
+}
+#endif
+
 /************************************************************************************
 *************************************************************************************
 * Public functions
@@ -143,11 +183,9 @@ hal_timer_status_t HAL_TimerInit(hal_timer_handle_t halTimerHandle, hal_timer_co
     assert(halTimerConfig->instance < (sizeof(s_TPMBase) / sizeof(TPM_Type *)));
 
     halTimerState->timeout = halTimerConfig->timeout;
-#if (defined(TIMER_ADAPTER_TPM1_ENABLE) && (TIMER_ADAPTER_TPM1_ENABLE > 0U)) || \
-    (defined(TIMER_ADAPTER_TPM2_ENABLE) && (TIMER_ADAPTER_TPM2_ENABLE > 0U))
     halTimerState->instance = halTimerConfig->instance;
     assert(s_TPMBase[halTimerState->instance]);
-#endif
+
     /* TPM clock divide by 128 */
     tpmInfo.prescale             = kTPM_Prescale_Divide_128;
     halTimerState->timerClock_Hz = halTimerConfig->srcClock_Hz / (1UL << (uint8_t)tpmInfo.prescale);
@@ -208,11 +246,6 @@ hal_timer_status_t HAL_TimerUpdateTimeout(hal_timer_handle_t halTimerHandle, uin
     s_halTimerState[HAL_TimerGetInstance(halTimerHandle)]->timeout = timeout;
     tickCount = (uint32_t)USEC_TO_COUNT((s_halTimerState[HAL_TimerGetInstance(halTimerHandle)]->timeout),
                                         (s_halTimerState[HAL_TimerGetInstance(halTimerHandle)]->timerClock_Hz));
-    if ((tickCount < 1U) || (tickCount > 0xfff0U))
-    {
-        return kStatus_HAL_TimerOutOfRanger;
-    }
-
     s_TPMBase[HAL_TimerGetInstance(halTimerHandle)]->CNT = 0;
     TPM_SetTimerPeriod(s_TPMBase[HAL_TimerGetInstance(halTimerHandle)], tickCount);
     return kStatus_HAL_TimerSuccess;
@@ -227,4 +260,17 @@ void HAL_TimerExitLowpower(hal_timer_handle_t halTimerHandle)
 void HAL_TimerEnterLowpower(hal_timer_handle_t halTimerHandle)
 {
     assert(halTimerHandle);
+}
+
+hal_timer_time_t HAL_TimerGetCurrentTicks(hal_timer_handle_t halTimerHandle)
+{
+    /* NOT IMPLEMENTED */
+    assert(false);
+    return 0;
+}
+
+void HAL_TimerUpdateMatchValueInTicks(hal_timer_handle_t halTimerHandle, hal_timer_time_t matchValue)
+{
+    /* NOT IMPLEMENTED */
+    assert(false); 
 }

@@ -56,6 +56,7 @@
           <value>SDK_DEBUGCONSOLE=1</value>
           <value>MCUX_META_BUILD</value>
           <value>CPU_MIMXRT1166DVM6A_cm4</value>
+          <value>MIMXRT1166_cm4_SERIES</value>
         </option>
         <option id="com.crt.advproject.link.toram" type="boolean">
           <value>true</value>
@@ -184,6 +185,12 @@
       <files mask="evkmimxrt1160_cm4_sdram_init.ini"/>
       <files mask="evkmimxrt1160_cm4_sdram_init_txt.ini"/>
     </source>
+    <source path="." project_relative_path="boards/evkmimxrt1160/demo_apps/hello_world/cm4" type="binary">
+      <files mask="hello_world.bin" hidden="true"/>
+    </source>
+    <source path="." project_relative_path="source" type="other">
+      <files mask="hello_world.mex"/>
+    </source>
     <source path="." project_relative_path="source" type="src">
       <files mask="hello_world.c"/>
     </source>
@@ -246,6 +253,9 @@
     </source>
     <source path="." project_relative_path="doc" type="doc">
       <files mask="example_board_readme.md"/>
+    </source>
+    <source path="." project_relative_path="doc" type="doc">
+      <files mask="examples_shared_readme.md"/>
     </source>
   </example>
 </ksdk:examples>

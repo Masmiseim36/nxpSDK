@@ -12,11 +12,15 @@ ENDIF()
 
 SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_DEBUG " \
     ${CMAKE_ASM_FLAGS_FLEXSPI_NOR_DEBUG} \
+    -include ${ProjDirPath}/../mcux_config.h \
     -D__STARTUP_INITIALIZE_RAMFUNCTION \
     -D__STARTUP_INITIALIZE_NONCACHEDATA \
     -D__STARTUP_CLEAR_BSS \
     -DMCUXPRESSO_SDK \
-    -DCPU_MIMXRT1189CVM8B_cm7 \
+    -DCPU_MIMXRT1189CVM8C_cm7 \
+    -DMIMXRT1189_cm7_SERIES \
+    -DDEBUG_CONSOLE_TRANSFER_NON_BLOCKING \
+    -DOSA_USED \
     -g \
     -mthumb \
     -mcpu=cortex-m7 \
@@ -24,11 +28,15 @@ SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_DEBUG " \
 ")
 SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_RELEASE " \
     ${CMAKE_ASM_FLAGS_FLEXSPI_NOR_RELEASE} \
+    -include ${ProjDirPath}/../mcux_config.h \
     -D__STARTUP_INITIALIZE_RAMFUNCTION \
     -D__STARTUP_INITIALIZE_NONCACHEDATA \
     -D__STARTUP_CLEAR_BSS \
     -DMCUXPRESSO_SDK \
-    -DCPU_MIMXRT1189CVM8B_cm7 \
+    -DCPU_MIMXRT1189CVM8C_cm7 \
+    -DMIMXRT1189_cm7_SERIES \
+    -DDEBUG_CONSOLE_TRANSFER_NON_BLOCKING \
+    -DOSA_USED \
     -mthumb \
     -mcpu=cortex-m7 \
     ${FPU} \
@@ -38,24 +46,18 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG " \
     -include ${ProjDirPath}/../mcux_config.h \
     -DDEBUG \
     -DXIP_EXTERNAL_FLASH=1 \
+    -D__STARTUP_CLEAR_BSS \
     -DUSE_RTOS=1 \
     -DPRINTF_ADVANCED_ENABLE=1 \
+    -DSHELL_TASK_STACK_SIZE=2048 \
     -DFSL_ETH_ENABLE_CACHE_CONTROL \
     -DMCUX_META_BUILD \
     -DMCUXPRESSO_SDK \
-    -DCPU_MIMXRT1189CVM8B_cm7 \
+    -DCPU_MIMXRT1189CVM8C_cm7 \
+    -DMIMXRT1189_cm7_SERIES \
+    -DDEBUG_CONSOLE_TRANSFER_NON_BLOCKING \
+    -DOSA_USED \
     -DSERIAL_PORT_TYPE_UART=1 \
-    -DLWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1 \
-    -DLWIP_SUPPORT_CUSTOM_PBUF=1 \
-    -DCHECKSUM_GEN_IP=1 \
-    -DCHECKSUM_GEN_UDP=1 \
-    -DCHECKSUM_GEN_TCP=1 \
-    -DCHECKSUM_GEN_ICMP=1 \
-    -DCHECKSUM_GEN_ICMP6=1 \
-    -DCHECKSUM_CHECK_UDP=1 \
-    -DCHECKSUM_CHECK_TCP=1 \
-    -DCHECKSUM_CHECK_ICMP=1 \
-    -DCHECKSUM_CHECK_ICMP6=1 \
     -DSDK_OS_FREE_RTOS \
     -g \
     -O0 \
@@ -76,24 +78,18 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE " \
     -include ${ProjDirPath}/../mcux_config.h \
     -DNDEBUG \
     -DXIP_EXTERNAL_FLASH=1 \
+    -D__STARTUP_CLEAR_BSS \
     -DUSE_RTOS=1 \
     -DPRINTF_ADVANCED_ENABLE=1 \
+    -DSHELL_TASK_STACK_SIZE=2048 \
     -DFSL_ETH_ENABLE_CACHE_CONTROL \
     -DMCUX_META_BUILD \
     -DMCUXPRESSO_SDK \
-    -DCPU_MIMXRT1189CVM8B_cm7 \
+    -DCPU_MIMXRT1189CVM8C_cm7 \
+    -DMIMXRT1189_cm7_SERIES \
+    -DDEBUG_CONSOLE_TRANSFER_NON_BLOCKING \
+    -DOSA_USED \
     -DSERIAL_PORT_TYPE_UART=1 \
-    -DLWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1 \
-    -DLWIP_SUPPORT_CUSTOM_PBUF=1 \
-    -DCHECKSUM_GEN_IP=1 \
-    -DCHECKSUM_GEN_UDP=1 \
-    -DCHECKSUM_GEN_TCP=1 \
-    -DCHECKSUM_GEN_ICMP=1 \
-    -DCHECKSUM_GEN_ICMP6=1 \
-    -DCHECKSUM_CHECK_UDP=1 \
-    -DCHECKSUM_CHECK_TCP=1 \
-    -DCHECKSUM_CHECK_ICMP=1 \
-    -DCHECKSUM_CHECK_ICMP6=1 \
     -DSDK_OS_FREE_RTOS \
     -Os \
     -Wall \
@@ -110,23 +106,17 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE " \
 ")
 SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG " \
     ${CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG} \
+    -include ${ProjDirPath}/../mcux_config.h \
     -DDEBUG \
     -DXIP_EXTERNAL_FLASH=1 \
     -DMCUX_META_BUILD \
     -DMCUXPRESSO_SDK \
-    -DCPU_MIMXRT1189CVM8B_cm7 \
+    -DCPU_MIMXRT1189CVM8C_cm7 \
+    -DMIMXRT1189_cm7_SERIES \
+    -DDEBUG_CONSOLE_TRANSFER_NON_BLOCKING \
+    -DOSA_USED \
     -DSERIAL_PORT_TYPE_UART=1 \
-    -DLWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1 \
-    -DLWIP_SUPPORT_CUSTOM_PBUF=1 \
-    -DCHECKSUM_GEN_IP=1 \
-    -DCHECKSUM_GEN_UDP=1 \
-    -DCHECKSUM_GEN_TCP=1 \
-    -DCHECKSUM_GEN_ICMP=1 \
-    -DCHECKSUM_GEN_ICMP6=1 \
-    -DCHECKSUM_CHECK_UDP=1 \
-    -DCHECKSUM_CHECK_TCP=1 \
-    -DCHECKSUM_CHECK_ICMP=1 \
-    -DCHECKSUM_CHECK_ICMP6=1 \
+    -DUSE_RTOS=1 \
     -DSDK_OS_FREE_RTOS \
     -g \
     -O0 \
@@ -145,23 +135,17 @@ SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG " \
 ")
 SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE " \
     ${CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE} \
+    -include ${ProjDirPath}/../mcux_config.h \
     -DNDEBUG \
     -DXIP_EXTERNAL_FLASH=1 \
     -DMCUX_META_BUILD \
     -DMCUXPRESSO_SDK \
-    -DCPU_MIMXRT1189CVM8B_cm7 \
+    -DCPU_MIMXRT1189CVM8C_cm7 \
+    -DMIMXRT1189_cm7_SERIES \
+    -DDEBUG_CONSOLE_TRANSFER_NON_BLOCKING \
+    -DOSA_USED \
     -DSERIAL_PORT_TYPE_UART=1 \
-    -DLWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1 \
-    -DLWIP_SUPPORT_CUSTOM_PBUF=1 \
-    -DCHECKSUM_GEN_IP=1 \
-    -DCHECKSUM_GEN_UDP=1 \
-    -DCHECKSUM_GEN_TCP=1 \
-    -DCHECKSUM_GEN_ICMP=1 \
-    -DCHECKSUM_GEN_ICMP6=1 \
-    -DCHECKSUM_CHECK_UDP=1 \
-    -DCHECKSUM_CHECK_TCP=1 \
-    -DCHECKSUM_CHECK_ICMP=1 \
-    -DCHECKSUM_CHECK_ICMP6=1 \
+    -DUSE_RTOS=1 \
     -DSDK_OS_FREE_RTOS \
     -Os \
     -Wall \
@@ -183,7 +167,7 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_DEBUG " \
     -Xlinker \
     --defsym=__stack_size__=2048 \
     -Xlinker \
-    --defsym=__heap_size__=25600 \
+    --defsym=__heap_size__=35840 \
     -Xlinker \
     -Map=output.map \
     -Wall \
@@ -195,9 +179,6 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_DEBUG " \
     -mapcs \
     -Wl,--gc-sections \
     -Wl,-static \
-    -Wl,-z \
-    -Wl,muldefs \
-    -Wl,-Map=output.map \
     -Wl,--print-memory-usage \
     -mcpu=cortex-m7 \
     ${FPU} \
@@ -209,7 +190,7 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE " \
     -Xlinker \
     --defsym=__stack_size__=2048 \
     -Xlinker \
-    --defsym=__heap_size__=25600 \
+    --defsym=__heap_size__=35840 \
     -Xlinker \
     -Map=output.map \
     -Wall \
@@ -221,9 +202,6 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE " \
     -mapcs \
     -Wl,--gc-sections \
     -Wl,-static \
-    -Wl,-z \
-    -Wl,muldefs \
-    -Wl,-Map=output.map \
     -Wl,--print-memory-usage \
     -mcpu=cortex-m7 \
     ${FPU} \

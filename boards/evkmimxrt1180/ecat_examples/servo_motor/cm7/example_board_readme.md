@@ -5,7 +5,7 @@ Hardware requirements
 - Teknic2311P Motor
 - RJ45 Network cable
 - Mini/micro USB cable
-- Personal Computer on which the TwinCat3 has been installed
+- Personal Computer on which the TwinCat3 has been installed(Windows 10 is recommended)
 
 Board settings
 ==============
@@ -78,4 +78,3 @@ Detailed User Guide
 - [TwinCAT Project Setup](./topics/twincat_project_setup.md)
 - [Tuning Motor Parameters](./topics/tuning_motor_parameters.md)
 - [Note](./topics/note_about_the_source_code_in_the_document.md)
-

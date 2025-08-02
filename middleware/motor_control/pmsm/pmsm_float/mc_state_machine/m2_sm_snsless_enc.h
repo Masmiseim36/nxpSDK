@@ -22,7 +22,7 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define M2_SPEED_CONV_SCALE 628.06F /* Speed conversion scale */
+#define M2_SPEED_CONV_SCALE (628.06F*2) /* Speed conversion scale */
 
 #define MCAT_SENSORLESS_CTRL 0U /* Sensorless control flag */
 #define MCAT_ENC_CTRL 1U        /* Position quadrature encoder control flag */

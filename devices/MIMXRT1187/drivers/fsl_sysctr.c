@@ -50,7 +50,7 @@ static void SYSCTR_Reset(SYS_CTR_CONTROL_Type *ctrlBase, SYS_CTR_COMPARE_Type *c
     ctrlBase->CNTCR = SYS_CTR_CONTROL_CNTCR_EN(0) | SYS_CTR_CONTROL_CNTCR_HDBG(0) |
                       SYS_CTR_CONTROL_CNTCR_FCR0(1) | SYS_CTR_CONTROL_CNTCR_FCR1(0);
 
-    while((ctrlBase->CNTSR & SYS_CTR_CONTROL_CNTSR_FCA1_MASK) != 0)
+    while((ctrlBase->CNTSR & SYS_CTR_CONTROL_CNTSR_FCA1_MASK) != 0U)
     {
     }
 
@@ -216,7 +216,7 @@ void SYSCTR_SetCompareValue(SYS_CTR_CONTROL_Type *ctrlBase,
                             sysctr_compare_frame_t cmpFrame,
                             uint64_t value)
 {
-    assert((ctrlBase->CNTSR & SYS_CTR_CONTROL_CNTSR_FCA1_MASK) == 0);
+    assert((ctrlBase->CNTSR & SYS_CTR_CONTROL_CNTSR_FCA1_MASK) == 0U);
 
     if (cmpFrame == kSYSCTR_CompareFrame_0)
     {

@@ -20,9 +20,11 @@
      defined(WIFI_IW611_BOARD_MURATA_2DL_USD) || defined (WIFI_IW611_BOARD_MURATA_2DL_M2) || \
      defined(WIFI_AW611_BOARD_UBX_JODY_W5_USD) || defined (WIFI_AW611_BOARD_UBX_JODY_W5_M2) || \
      defined (WIFI_IW612_BOARD_MURATA_2EL_USD) || defined (WIFI_IW612_BOARD_MURATA_2EL_M2) || \
-     defined(WIFI_IW610_BOARD_MURATA_2LL_M2) || defined(WIFI_IW416_BOARD_AW_AM510_ARDUINO))
+     defined(WIFI_IW610_BOARD_MURATA_2LL_M2) || defined(WIFI_IW610_BOARD_MURATA_2LL_USD) || \
+     defined(WIFI_IW416_BOARD_AW_AM510_ARDUINO))
 
-#ifndef CONTROLLER_INIT_ESCAPE
+#if !defined (CONTROLLER_INIT_ESCAPE) || \
+    (defined (CONTROLLER_INIT_ESCAPE) && (CONFIG_COEX_APP))
 #ifdef CONFIG_BT_IND_DNLD
 #if defined(SD8978) /*RB3P*/
 #include "uartIW416_bt.h"
@@ -57,7 +59,7 @@
 #error Controller module is unsupported
 #endif /*defined(SD8978)*/
 #endif /*CONFIG_BT_IND_DNLD*/
-#endif /* CONTROLLER_INIT_ESCAPE */
+#endif /*CONTROLLER_INIT_ESCAPE*/
 
 #include "controller.h"
 #include "firmware_dnld.h"
@@ -126,6 +128,22 @@ void controller_init(void)
     controller_hci_uart_init();
 }
 
+#ifdef CONFIG_BT_IND_DNLD
+void controller_fw_reload(void)
+{
+#ifndef CONTROLLER_INIT_ESCAPE
+    int result;
+    void *intf = NULL;
+    (void) result;
+    intf = uart_init_interface();
+    assert(intf != NULL);
+    result = firmware_download(bt_fw_bin, bt_fw_bin_len, intf, 0);
+    assert(result == FWDNLD_INTF_SUCCESS);
+#endif /*CONTROLLER_INIT_ESCAPE*/
+    controller_hci_uart_init();
+}
+#endif /*CONFIG_BT_IND_DNLD*/
+
 __WEAK_FUNC int controller_hci_uart_get_configuration(controller_hci_uart_config_t *config)
 {
     return -1;
@@ -149,7 +167,7 @@ static void controller_hci_uart_init(void)
      defined(WIFI_IW416_BOARD_AW_AM510MA) || defined(WIFI_IW416_BOARD_MURATA_1XK_USD) ||      \
      defined(WIFI_IW416_BOARD_MURATA_1XK_M2) || defined(WIFI_88W8987_BOARD_MURATA_1ZM_USD) || \
      defined(WIFI_88W8987_BOARD_MURATA_1ZM_M2) || defined(WIFI_IW610_BOARD_MURATA_2LL_M2) ||  \
-     defined(WIFI_IW416_BOARD_AW_AM510_ARDUINO))
+     defined(WIFI_IW610_BOARD_MURATA_2LL_USD) || defined(WIFI_IW416_BOARD_AW_AM510_ARDUINO))
     /*delay to make sure controller is ready to receive command*/
     OSA_TimeDelay(100);
 #endif

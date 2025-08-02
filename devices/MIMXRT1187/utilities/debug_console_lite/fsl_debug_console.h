@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018, 2020, 2022 NXP
+ * Copyright 2017-2018, 2020, 2022, 2024 NXP
  *
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -188,46 +188,18 @@ status_t DbgConsole_ExitLowpower(void);
 
 #else
 /*!
- * Use an error to replace the DbgConsole_Init when SDK_DEBUGCONSOLE is not DEBUGCONSOLE_REDIRECT_TO_SDK and
+ * Use an error when SDK_DEBUGCONSOLE is not DEBUGCONSOLE_REDIRECT_TO_SDK and
  * SDK_DEBUGCONSOLE_UART is not defined.
  */
-static inline status_t DbgConsole_Init(uint8_t instance,
-                                       uint32_t baudRate,
-                                       serial_port_type_t device,
-                                       uint32_t clkSrcFreq)
-{
-    (void)instance;
-    (void)baudRate;
-    (void)device;
-    (void)clkSrcFreq;
-    return (status_t)kStatus_Fail;
-}
-/*!
- * Use an error to replace the DbgConsole_Deinit when SDK_DEBUGCONSOLE is not DEBUGCONSOLE_REDIRECT_TO_SDK and
- * SDK_DEBUGCONSOLE_UART is not defined.
- */
-static inline status_t DbgConsole_Deinit(void)
+static inline status_t DbgConsole_Error(void)
 {
     return (status_t)kStatus_Fail;
 }
 
-/*!
- * Use an error to replace the DbgConsole_EnterLowpower when SDK_DEBUGCONSOLE is not DEBUGCONSOLE_REDIRECT_TO_SDK and
- * SDK_DEBUGCONSOLE_UART is not defined.
- */
-static inline status_t DbgConsole_EnterLowpower(void)
-{
-    return (status_t)kStatus_Fail;
-}
-
-/*!
- * Use an error to replace the DbgConsole_ExitLowpower when SDK_DEBUGCONSOLE is not DEBUGCONSOLE_REDIRECT_TO_SDK and
- * SDK_DEBUGCONSOLE_UART is not defined.
- */
-static inline status_t DbgConsole_ExitLowpower(void)
-{
-    return (status_t)kStatus_Fail;
-}
+#define DbgConsole_Init(...)  DbgConsole_Error()
+#define DbgConsole_Deinit(...)  DbgConsole_Error()
+#define DbgConsole_EnterLowpower(...)  DbgConsole_Error()
+#define DbgConsole_ExitLowpower(...)  DbgConsole_Error()
 
 #endif /* ((SDK_DEBUGCONSOLE == DEBUGCONSOLE_REDIRECT_TO_SDK) || defined(SDK_DEBUGCONSOLE_UART)) */
 

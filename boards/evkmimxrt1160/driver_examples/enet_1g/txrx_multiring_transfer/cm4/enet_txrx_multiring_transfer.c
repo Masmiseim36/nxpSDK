@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2023 NXP
+ * Copyright 2017-2025 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -40,24 +40,8 @@
 #define ENET_AVTPDU_IEC61883_6AUDIOTYPE   0x10U   /*! @brief AVTPDU IEC61883-6 audio&music type. */
 #define ENET_AVTPDU_IEC61883_8DVDTYPE     0x00U   /*! @brief AVTPDU IEC61883-8 DV type. */
 #define ENET_HTONS(n)                     __REV16(n)
-#ifndef APP_ENET_BUFF_ALIGNMENT
-#define APP_ENET_BUFF_ALIGNMENT ENET_BUFF_ALIGNMENT
-#endif
-#ifndef PHY_AUTONEGO_TIMEOUT_COUNT
-#define PHY_AUTONEGO_TIMEOUT_COUNT (800000U)
-#endif
-#ifndef PHY_STABILITY_DELAY_US
-#define PHY_STABILITY_DELAY_US (500000U)
-#endif
 
 /* @TEST_ANCHOR */
-
-#ifndef MAC_ADDR
-#define MAC_ADDR                        \
-    {                                      \
-        0xd4, 0xbe, 0xd9, 0x45, 0x22, 0x60 \
-    }
-#endif
 
 /*******************************************************************************
  * Prototypes
@@ -93,7 +77,7 @@ SDK_ALIGN(uint8_t g_txDataBuff2[ENET_TXBD_NUM][SDK_SIZEALIGN(ENET_TXBUFF_SIZE, A
 enet_handle_t g_handle;
 
 /* The MAC address for ENET device. */
-uint8_t g_macAddr[6] = MAC_ADDR;
+uint8_t g_macAddr[6] = APP_MAC_ADDRESS;
 uint8_t g_frame[FSL_FEATURE_ENET_QUEUE][ENET_FRAME_LENGTH];
 uint32_t g_rxIndex       = 0;
 uint32_t g_rxIndex1      = 0;
@@ -335,7 +319,7 @@ int main(void)
         {
             PRINTF("Wait for PHY link up...\r\n");
             /* Wait for auto-negotiation success and link up */
-            count = PHY_AUTONEGO_TIMEOUT_COUNT;
+            count = APP_PHY_AUTONEGO_TIMEOUT_COUNT;
             do
             {
                 PHY_GetAutoNegotiationStatus(&phyHandle, &autonego);
@@ -353,7 +337,7 @@ int main(void)
     } while (!(link && autonego));
 
     /* Wait a moment for PHY status to be stable. */
-    SDK_DelayAtLeastUs(PHY_STABILITY_DELAY_US, SDK_DEVICE_MAXIMUM_CPU_CLOCK_FREQUENCY);
+    SDK_DelayAtLeastUs(APP_PHY_STABILITY_DELAY_US, SDK_DEVICE_MAXIMUM_CPU_CLOCK_FREQUENCY);
 
     /* Change the MII speed and duplex for actual link status. */
     PHY_GetLinkSpeedDuplex(&phyHandle, &speed, &duplex);

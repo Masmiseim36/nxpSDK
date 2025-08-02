@@ -24,3 +24,5 @@ throuth internal loopback interconnect and print out the Message payload to term
 - [MCIMX93AUTO-EVK](../../../_boards/mcimx93autoevk/driver_examples/canfd/loopback/example_board_readme.md)
 - [MCIMX93-EVK](../../../_boards/mcimx93evk/driver_examples/canfd/loopback/example_board_readme.md)
 - [MCIMX93-QSB](../../../_boards/mcimx93qsb/driver_examples/canfd/loopback/example_board_readme.md)
+- [FRDM-MCXE247](../../../_boards/frdmmcxe247/driver_examples/canfd/loopback/example_board_readme.md)
+- [FRDM-MCXE31B](../../../_boards/frdmmcxe31b/driver_examples/canfd/loopback/example_board_readme.md)

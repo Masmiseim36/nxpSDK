@@ -241,7 +241,7 @@ static usb_status_t USB_DeviceCdcVcomCallback(class_handle_t handle, uint32_t ev
                  */
                 error = USB_DeviceCdcAcmSend(handle, USB_CDC_VCOM_BULK_IN_ENDPOINT, NULL, 0);
             }
-            else if ((_fmstr_exampleUsbCtx.attach == 1U))
+            else if (_fmstr_exampleUsbCtx.attach == 1U)
             {
                 if ((epCbParam->buffer != NULL) || ((epCbParam->buffer == NULL) && (epCbParam->length == 0U)))
                 {
@@ -259,7 +259,7 @@ static usb_status_t USB_DeviceCdcVcomCallback(class_handle_t handle, uint32_t ev
         break;
         case kUSB_DeviceCdcEventRecvResponse:
         {
-            if ((_fmstr_exampleUsbCtx.attach == 1U))
+            if (_fmstr_exampleUsbCtx.attach == 1U)
             {
                 /* Call Freemaster interrupt with received data */
                 FMSTR_SerialUsbProcessEvent(FMSTR_SERIAL_USBCDC_EVENT_TYPE_RECEIVED, (FMSTR_U8 *)s_usbRxTxBuff,

@@ -1,28 +1,46 @@
 /*
 ** ###################################################################
 **     Processors:          MIMXRT1181CVP2B
+**                          MIMXRT1181CVP2C
 **                          MIMXRT1181XVP2B
+**                          MIMXRT1181XVP2C
 **                          MIMXRT1182CVP2B
+**                          MIMXRT1182CVP2C
 **                          MIMXRT1182XVP2B
+**                          MIMXRT1182XVP2C
+**                          MIMXRT1186CVJ8C_cm33
+**                          MIMXRT1186CVJ8C_cm7
+**                          MIMXRT1186XVJ8C_cm33
+**                          MIMXRT1186XVJ8C_cm7
 **                          MIMXRT1187AVM8B_cm33
 **                          MIMXRT1187AVM8B_cm7
+**                          MIMXRT1187AVM8C_cm33
+**                          MIMXRT1187AVM8C_cm7
 **                          MIMXRT1187CVM8B_cm33
 **                          MIMXRT1187CVM8B_cm7
+**                          MIMXRT1187CVM8C_cm33
+**                          MIMXRT1187CVM8C_cm7
 **                          MIMXRT1187XVM8B_cm33
 **                          MIMXRT1187XVM8B_cm7
+**                          MIMXRT1187XVM8C_cm33
+**                          MIMXRT1187XVM8C_cm7
 **                          MIMXRT1189CVM8B_cm33
 **                          MIMXRT1189CVM8B_cm7
+**                          MIMXRT1189CVM8C_cm33
+**                          MIMXRT1189CVM8C_cm7
 **                          MIMXRT1189XVM8B_cm33
 **                          MIMXRT1189XVM8B_cm7
+**                          MIMXRT1189XVM8C_cm33
+**                          MIMXRT1189XVM8C_cm7
 **
-**     Version:             rev. 2.0, 2024-01-18
-**     Build:               b240705
+**     Version:             rev. 3.0, 2024-10-29
+**     Build:               b250611
 **
 **     Abstract:
 **         CMSIS Peripheral Access Layer for DCDC
 **
 **     Copyright 1997-2016 Freescale Semiconductor, Inc.
-**     Copyright 2016-2024 NXP
+**     Copyright 2016-2025 NXP
 **     SPDX-License-Identifier: BSD-3-Clause
 **
 **     http:                 www.nxp.com
@@ -33,33 +51,40 @@
 **         Initial version.
 **     - rev. 2.0 (2024-01-18)
 **         Header RFP.
+**     - rev. 3.0 (2024-10-29)
+**         Change the device header file from single flat file to multiple files based on peripherals,
+**         each peripheral with dedicated header file located in periphN folder.
 **
 ** ###################################################################
 */
 
 /*!
- * @file DCDC.h
- * @version 2.0
- * @date 2024-01-18
+ * @file PERI_DCDC.h
+ * @version 3.0
+ * @date 2024-10-29
  * @brief CMSIS Peripheral Access Layer for DCDC
  *
  * CMSIS Peripheral Access Layer for DCDC
  */
 
-#if !defined(DCDC_H_)
-#define DCDC_H_                                  /**< Symbol preventing repeated inclusion */
+#if !defined(PERI_DCDC_H_)
+#define PERI_DCDC_H_                             /**< Symbol preventing repeated inclusion */
 
-#if (defined(CPU_MIMXRT1181CVP2B) || defined(CPU_MIMXRT1181XVP2B))
+#if (defined(CPU_MIMXRT1181CVP2B) || defined(CPU_MIMXRT1181CVP2C) || defined(CPU_MIMXRT1181XVP2B) || defined(CPU_MIMXRT1181XVP2C))
 #include "MIMXRT1181_COMMON.h"
-#elif (defined(CPU_MIMXRT1182CVP2B) || defined(CPU_MIMXRT1182XVP2B))
+#elif (defined(CPU_MIMXRT1182CVP2B) || defined(CPU_MIMXRT1182CVP2C) || defined(CPU_MIMXRT1182XVP2B) || defined(CPU_MIMXRT1182XVP2C))
 #include "MIMXRT1182_COMMON.h"
-#elif (defined(CPU_MIMXRT1187AVM8B_cm33) || defined(CPU_MIMXRT1187CVM8B_cm33) || defined(CPU_MIMXRT1187XVM8B_cm33))
+#elif (defined(CPU_MIMXRT1186CVJ8C_cm33) || defined(CPU_MIMXRT1186XVJ8C_cm33))
+#include "MIMXRT1186_cm33_COMMON.h"
+#elif (defined(CPU_MIMXRT1186CVJ8C_cm7) || defined(CPU_MIMXRT1186XVJ8C_cm7))
+#include "MIMXRT1186_cm7_COMMON.h"
+#elif (defined(CPU_MIMXRT1187AVM8B_cm33) || defined(CPU_MIMXRT1187AVM8C_cm33) || defined(CPU_MIMXRT1187CVM8B_cm33) || defined(CPU_MIMXRT1187CVM8C_cm33) || defined(CPU_MIMXRT1187XVM8B_cm33) || defined(CPU_MIMXRT1187XVM8C_cm33))
 #include "MIMXRT1187_cm33_COMMON.h"
-#elif (defined(CPU_MIMXRT1187AVM8B_cm7) || defined(CPU_MIMXRT1187CVM8B_cm7) || defined(CPU_MIMXRT1187XVM8B_cm7))
+#elif (defined(CPU_MIMXRT1187AVM8B_cm7) || defined(CPU_MIMXRT1187AVM8C_cm7) || defined(CPU_MIMXRT1187CVM8B_cm7) || defined(CPU_MIMXRT1187CVM8C_cm7) || defined(CPU_MIMXRT1187XVM8B_cm7) || defined(CPU_MIMXRT1187XVM8C_cm7))
 #include "MIMXRT1187_cm7_COMMON.h"
-#elif (defined(CPU_MIMXRT1189CVM8B_cm33) || defined(CPU_MIMXRT1189XVM8B_cm33))
+#elif (defined(CPU_MIMXRT1189CVM8B_cm33) || defined(CPU_MIMXRT1189CVM8C_cm33) || defined(CPU_MIMXRT1189XVM8B_cm33) || defined(CPU_MIMXRT1189XVM8C_cm33))
 #include "MIMXRT1189_cm33_COMMON.h"
-#elif (defined(CPU_MIMXRT1189CVM8B_cm7) || defined(CPU_MIMXRT1189XVM8B_cm7))
+#elif (defined(CPU_MIMXRT1189CVM8B_cm7) || defined(CPU_MIMXRT1189CVM8C_cm7) || defined(CPU_MIMXRT1189XVM8B_cm7) || defined(CPU_MIMXRT1189XVM8C_cm7))
 #include "MIMXRT1189_cm7_COMMON.h"
 #else
   #error "No valid CPU defined!"
@@ -495,10 +520,9 @@ typedef struct {
 
 #define DCDC_CURRENT_TRG_LP_EN_1P0_MASK          (0x80000000U)
 #define DCDC_CURRENT_TRG_LP_EN_1P0_SHIFT         (31U)
-/*! LP_EN_1P0 - This value comes from the smaller one between TRG_SW_0 and TRG_SW_1. This bit only
- *    controls 1P0. 1P8 is always controlled by VDD1P8CTRL_TRG
- *  0b0..DCDC 1P0 works in run mode. Its output voltage is controlled by VDD1P0CTRL_TRG.
- *  0b1..DCDC 1P0 works in low power mode. Its output voltage is controlled by VDD1P0CTRL_LP_TRG and its output current is less than 50mA.
+/*! LP_EN_1P0 - Low-Power Enable. This value comes from the smaller one between TRG_SW_0 and TRG_SW_1.
+ *  0b0..DCDC works in run mode. Its output voltage is controlled by VDD1P0CTRL_TRG.
+ *  0b1..DCDC works in low power mode.
  */
 #define DCDC_CURRENT_TRG_LP_EN_1P0(x)            (((uint32_t)(((uint32_t)(x)) << DCDC_CURRENT_TRG_LP_EN_1P0_SHIFT)) & DCDC_CURRENT_TRG_LP_EN_1P0_MASK)
 /*! @} */
@@ -587,7 +611,7 @@ typedef struct {
 
 #define DCDC_TRG_SW_0_LP_EN_1P0_MASK             (0x80000000U)
 #define DCDC_TRG_SW_0_LP_EN_1P0_SHIFT            (31U)
-/*! LP_EN_1P0 - LP_EN_1P0 only controls 1P0. 1P8 is always controlled by VDD1P8CTRL_TRG */
+/*! LP_EN_1P0 - Low-Power Enable */
 #define DCDC_TRG_SW_0_LP_EN_1P0(x)               (((uint32_t)(((uint32_t)(x)) << DCDC_TRG_SW_0_LP_EN_1P0_SHIFT)) & DCDC_TRG_SW_0_LP_EN_1P0_MASK)
 /*! @} */
 
@@ -608,7 +632,7 @@ typedef struct {
 
 #define DCDC_TRG_GPC_0_LP_EN_1P0_MASK            (0x80000000U)
 #define DCDC_TRG_GPC_0_LP_EN_1P0_SHIFT           (31U)
-/*! LP_EN_1P0 - LP_EN_1P0 only controls 1P0. 1P8 is always controlled by VDD1P8CTRL_TRG */
+/*! LP_EN_1P0 - Low-Power Enable */
 #define DCDC_TRG_GPC_0_LP_EN_1P0(x)              (((uint32_t)(((uint32_t)(x)) << DCDC_TRG_GPC_0_LP_EN_1P0_SHIFT)) & DCDC_TRG_GPC_0_LP_EN_1P0_MASK)
 /*! @} */
 
@@ -687,7 +711,7 @@ typedef struct {
 
 #define DCDC_TRG_SW_1_LP_EN_1P0_MASK             (0x80000000U)
 #define DCDC_TRG_SW_1_LP_EN_1P0_SHIFT            (31U)
-/*! LP_EN_1P0 - LP_EN_1P0 only controls 1P0. 1P8 is always controlled by VDD1P8CTRL_TRG */
+/*! LP_EN_1P0 - Low-Power Enable */
 #define DCDC_TRG_SW_1_LP_EN_1P0(x)               (((uint32_t)(((uint32_t)(x)) << DCDC_TRG_SW_1_LP_EN_1P0_SHIFT)) & DCDC_TRG_SW_1_LP_EN_1P0_MASK)
 /*! @} */
 
@@ -708,7 +732,7 @@ typedef struct {
 
 #define DCDC_TRG_GPC_1_LP_EN_1P0_MASK            (0x80000000U)
 #define DCDC_TRG_GPC_1_LP_EN_1P0_SHIFT           (31U)
-/*! LP_EN_1P0 - LP_EN_1P0 only controls 1P0. 1P8 is always controlled by VDD1P8CTRL_TRG */
+/*! LP_EN_1P0 - Low-Power Enable */
 #define DCDC_TRG_GPC_1_LP_EN_1P0(x)              (((uint32_t)(((uint32_t)(x)) << DCDC_TRG_GPC_1_LP_EN_1P0_SHIFT)) & DCDC_TRG_GPC_1_LP_EN_1P0_MASK)
 /*! @} */
 
@@ -746,5 +770,5 @@ typedef struct {
  */ /* end of group Peripheral_access_layer */
 
 
-#endif  /* DCDC_H_ */
+#endif  /* PERI_DCDC_H_ */
 

@@ -1,5 +1,5 @@
 /*
-    * Copyright 2024 NXP
+    * Copyright 2024-2025 NXP
     *
     * SPDX-License-Identifier: BSD-3-Clause
 */
@@ -13,7 +13,7 @@
 !!GlobalInfo
 product: Pins v14.0
 processor: MIMXRT1176xxxxx
-package_id: MIMXRT1176DVMAA
+package_id: MIMXRT1176DVMAB
 mcu_data: ksdk2_0
 processor_version: 14.0.0
 external_user_signals: {}
@@ -213,7 +213,7 @@ void BOARD_InitADC(void) {
       0U);                                    /* Software Input On Field: Input Path is determined by functionality */
   IOMUXC_SetPinConfig(
       IOMUXC_GPIO_AD_08_GPIO_MUX3_IO07,       /* GPIO_AD_08 PAD functional properties : */
-      0x02U);                                 /* Slew Rate Field: Slow Slew Rate
+      0x02U);                                 /* Slew Rate Field: Fast Slew Rate
                                                  Drive Strength Field: high drive strength
                                                  Pull / Keep Select Field: Pull Disable, Highz
                                                  Pull Up / Down Config. Field: Weak pull down
@@ -222,7 +222,7 @@ void BOARD_InitADC(void) {
                                                  Domain write protection lock: Neither of DWP bits is locked */
   IOMUXC_SetPinConfig(
       IOMUXC_GPIO_AD_11_GPIO_MUX3_IO10,       /* GPIO_AD_11 PAD functional properties : */
-      0x02U);                                 /* Slew Rate Field: Slow Slew Rate
+      0x02U);                                 /* Slew Rate Field: Fast Slew Rate
                                                  Drive Strength Field: high drive strength
                                                  Pull / Keep Select Field: Pull Disable, Highz
                                                  Pull Up / Down Config. Field: Weak pull down
@@ -231,7 +231,7 @@ void BOARD_InitADC(void) {
                                                  Domain write protection lock: Neither of DWP bits is locked */
   IOMUXC_SetPinConfig(
       IOMUXC_GPIO_AD_12_GPIO_MUX3_IO11,       /* GPIO_AD_12 PAD functional properties : */
-      0x02U);                                 /* Slew Rate Field: Slow Slew Rate
+      0x02U);                                 /* Slew Rate Field: Fast Slew Rate
                                                  Drive Strength Field: high drive strength
                                                  Pull / Keep Select Field: Pull Disable, Highz
                                                  Pull Up / Down Config. Field: Weak pull down
@@ -240,7 +240,7 @@ void BOARD_InitADC(void) {
                                                  Domain write protection lock: Neither of DWP bits is locked */
   IOMUXC_SetPinConfig(
       IOMUXC_GPIO_AD_13_GPIO_MUX3_IO12,       /* GPIO_AD_13 PAD functional properties : */
-      0x02U);                                 /* Slew Rate Field: Slow Slew Rate
+      0x02U);                                 /* Slew Rate Field: Fast Slew Rate
                                                  Drive Strength Field: high drive strength
                                                  Pull / Keep Select Field: Pull Disable, Highz
                                                  Pull Up / Down Config. Field: Weak pull down

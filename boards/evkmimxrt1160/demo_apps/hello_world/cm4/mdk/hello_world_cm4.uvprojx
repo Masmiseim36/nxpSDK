@@ -332,7 +332,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../mcux_config.h -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
-              <Define>DEBUG, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1166DVM6A_cm4</Define>
+              <Define>DEBUG, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1166DVM6A_cm4, MIMXRT1166_cm4_SERIES</Define>
               <Undefine/>
               <IncludePath>..;../../../../../../devices/MIMXRT1166/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1166;../../../../../../devices/MIMXRT1166/periph;../../../../../../devices/MIMXRT1166/drivers/cm4;../../../../../../devices/MIMXRT1166/utilities/debug_console_lite;../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../components/uart</IncludePath>
             </VariousControls>
@@ -350,7 +350,7 @@
             <ClangAsOpt>2</ClangAsOpt>
             <VariousControls>
               <MiscControls/>
-              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1166DVM6A_cm4</Define>
+              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1166DVM6A_cm4, MIMXRT1166_cm4_SERIES</Define>
               <Undefine/>
               <IncludePath>..;../../../../../../devices/MIMXRT1166/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1166;../../../../../../devices/MIMXRT1166/periph;../../../../../../devices/MIMXRT1166/drivers/cm4;../../../../../../devices/MIMXRT1166/utilities/debug_console_lite;../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../components/uart</IncludePath>
             </VariousControls>
@@ -1257,6 +1257,11 @@
               <FileName>example_board_readme.md</FileName>
               <FileType>5</FileType>
               <FilePath>../example_board_readme.md</FilePath>
+            </File>
+            <File>
+              <FileName>examples_shared_readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../examples_shared_readme.md</FilePath>
             </File>
           </Files>
         </Group>
@@ -1591,7 +1596,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../mcux_config.h -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
-              <Define>DEBUG, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1166DVM6A_cm4</Define>
+              <Define>DEBUG, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1166DVM6A_cm4, MIMXRT1166_cm4_SERIES</Define>
               <Undefine/>
               <IncludePath>..;../../../../../../devices/MIMXRT1166/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1166;../../../../../../devices/MIMXRT1166/periph;../../../../../../devices/MIMXRT1166/drivers/cm4;../../../../../../devices/MIMXRT1166/utilities/debug_console_lite;../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../components/uart</IncludePath>
             </VariousControls>
@@ -1609,7 +1614,7 @@
             <ClangAsOpt>2</ClangAsOpt>
             <VariousControls>
               <MiscControls/>
-              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1166DVM6A_cm4</Define>
+              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1166DVM6A_cm4, MIMXRT1166_cm4_SERIES</Define>
               <Undefine/>
               <IncludePath>..;../../../../../../devices/MIMXRT1166/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1166;../../../../../../devices/MIMXRT1166/periph;../../../../../../devices/MIMXRT1166/drivers/cm4;../../../../../../devices/MIMXRT1166/utilities/debug_console_lite;../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../components/uart</IncludePath>
             </VariousControls>
@@ -2517,6 +2522,11 @@
               <FileType>5</FileType>
               <FilePath>../example_board_readme.md</FilePath>
             </File>
+            <File>
+              <FileName>examples_shared_readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../examples_shared_readme.md</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>
@@ -2850,7 +2860,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../mcux_config.h -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
-              <Define>DEBUG, USE_SDRAM=1, SKIP_SYSCLK_INIT=1, DATA_SECTION_IS_CACHEABLE=1, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1166DVM6A_cm4</Define>
+              <Define>DEBUG, USE_SDRAM=1, SKIP_SYSCLK_INIT=1, DATA_SECTION_IS_CACHEABLE=1, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1166DVM6A_cm4, MIMXRT1166_cm4_SERIES</Define>
               <Undefine/>
               <IncludePath>..;../../../../../../devices/MIMXRT1166/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1166;../../../../../../devices/MIMXRT1166/periph;../../../../../../devices/MIMXRT1166/drivers/cm4;../../../../../../devices/MIMXRT1166/utilities/debug_console_lite;../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../components/uart</IncludePath>
             </VariousControls>
@@ -2868,7 +2878,7 @@
             <ClangAsOpt>2</ClangAsOpt>
             <VariousControls>
               <MiscControls/>
-              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1166DVM6A_cm4</Define>
+              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1166DVM6A_cm4, MIMXRT1166_cm4_SERIES</Define>
               <Undefine/>
               <IncludePath>..;../../../../../../devices/MIMXRT1166/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1166;../../../../../../devices/MIMXRT1166/periph;../../../../../../devices/MIMXRT1166/drivers/cm4;../../../../../../devices/MIMXRT1166/utilities/debug_console_lite;../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../components/uart</IncludePath>
             </VariousControls>
@@ -3776,6 +3786,11 @@
               <FileType>5</FileType>
               <FilePath>../example_board_readme.md</FilePath>
             </File>
+            <File>
+              <FileName>examples_shared_readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../examples_shared_readme.md</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>
@@ -4109,7 +4124,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../mcux_config.h -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
-              <Define>DEBUG, USE_SDRAM=1, SKIP_SYSCLK_INIT=1, DATA_SECTION_IS_CACHEABLE=1, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1166DVM6A_cm4</Define>
+              <Define>DEBUG, USE_SDRAM=1, SKIP_SYSCLK_INIT=1, DATA_SECTION_IS_CACHEABLE=1, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1166DVM6A_cm4, MIMXRT1166_cm4_SERIES</Define>
               <Undefine/>
               <IncludePath>..;../../../../../../devices/MIMXRT1166/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1166;../../../../../../devices/MIMXRT1166/periph;../../../../../../devices/MIMXRT1166/drivers/cm4;../../../../../../devices/MIMXRT1166/utilities/debug_console_lite;../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../components/uart</IncludePath>
             </VariousControls>
@@ -4127,7 +4142,7 @@
             <ClangAsOpt>2</ClangAsOpt>
             <VariousControls>
               <MiscControls/>
-              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1166DVM6A_cm4</Define>
+              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1166DVM6A_cm4, MIMXRT1166_cm4_SERIES</Define>
               <Undefine/>
               <IncludePath>..;../../../../../../devices/MIMXRT1166/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1166;../../../../../../devices/MIMXRT1166/periph;../../../../../../devices/MIMXRT1166/drivers/cm4;../../../../../../devices/MIMXRT1166/utilities/debug_console_lite;../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../components/uart</IncludePath>
             </VariousControls>
@@ -5035,6 +5050,11 @@
               <FileType>5</FileType>
               <FilePath>../example_board_readme.md</FilePath>
             </File>
+            <File>
+              <FileName>examples_shared_readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../examples_shared_readme.md</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>
@@ -5368,7 +5388,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../mcux_config.h -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
-              <Define>DEBUG, XIP_EXTERNAL_FLASH=1, USE_SDRAM=1, SKIP_SYSCLK_INIT=1, DATA_SECTION_IS_CACHEABLE=1, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1166DVM6A_cm4</Define>
+              <Define>DEBUG, XIP_EXTERNAL_FLASH=1, USE_SDRAM=1, SKIP_SYSCLK_INIT=1, DATA_SECTION_IS_CACHEABLE=1, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1166DVM6A_cm4, MIMXRT1166_cm4_SERIES</Define>
               <Undefine/>
               <IncludePath>..;../../../../../../devices/MIMXRT1166/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1166;../../../../../../devices/MIMXRT1166/periph;../../../../../../devices/MIMXRT1166/drivers/cm4;../../../../../../devices/MIMXRT1166/utilities/debug_console_lite;../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../components/uart</IncludePath>
             </VariousControls>
@@ -5386,7 +5406,7 @@
             <ClangAsOpt>2</ClangAsOpt>
             <VariousControls>
               <MiscControls/>
-              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1166DVM6A_cm4</Define>
+              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1166DVM6A_cm4, MIMXRT1166_cm4_SERIES</Define>
               <Undefine/>
               <IncludePath>..;../../../../../../devices/MIMXRT1166/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1166;../../../../../../devices/MIMXRT1166/periph;../../../../../../devices/MIMXRT1166/drivers/cm4;../../../../../../devices/MIMXRT1166/utilities/debug_console_lite;../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../components/uart</IncludePath>
             </VariousControls>
@@ -6294,6 +6314,11 @@
               <FileType>5</FileType>
               <FilePath>../example_board_readme.md</FilePath>
             </File>
+            <File>
+              <FileName>examples_shared_readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../examples_shared_readme.md</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>
@@ -6627,7 +6652,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../mcux_config.h -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
-              <Define>DEBUG, XIP_EXTERNAL_FLASH=1, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1166DVM6A_cm4</Define>
+              <Define>DEBUG, XIP_EXTERNAL_FLASH=1, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1166DVM6A_cm4, MIMXRT1166_cm4_SERIES</Define>
               <Undefine/>
               <IncludePath>..;../../../../../../devices/MIMXRT1166/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1166;../../../../../../devices/MIMXRT1166/periph;../../../../../../devices/MIMXRT1166/drivers/cm4;../../../../../../devices/MIMXRT1166/utilities/debug_console_lite;../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../components/uart</IncludePath>
             </VariousControls>
@@ -6645,7 +6670,7 @@
             <ClangAsOpt>2</ClangAsOpt>
             <VariousControls>
               <MiscControls/>
-              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1166DVM6A_cm4</Define>
+              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1166DVM6A_cm4, MIMXRT1166_cm4_SERIES</Define>
               <Undefine/>
               <IncludePath>..;../../../../../../devices/MIMXRT1166/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1166;../../../../../../devices/MIMXRT1166/periph;../../../../../../devices/MIMXRT1166/drivers/cm4;../../../../../../devices/MIMXRT1166/utilities/debug_console_lite;../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../components/uart</IncludePath>
             </VariousControls>
@@ -7553,6 +7578,11 @@
               <FileType>5</FileType>
               <FilePath>../example_board_readme.md</FilePath>
             </File>
+            <File>
+              <FileName>examples_shared_readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../examples_shared_readme.md</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>
@@ -7886,7 +7916,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../mcux_config.h -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
-              <Define>NDEBUG, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1166DVM6A_cm4</Define>
+              <Define>NDEBUG, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1166DVM6A_cm4, MIMXRT1166_cm4_SERIES</Define>
               <Undefine/>
               <IncludePath>..;../../../../../../devices/MIMXRT1166/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1166;../../../../../../devices/MIMXRT1166/periph;../../../../../../devices/MIMXRT1166/drivers/cm4;../../../../../../devices/MIMXRT1166/utilities/debug_console_lite;../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../components/uart</IncludePath>
             </VariousControls>
@@ -7904,7 +7934,7 @@
             <ClangAsOpt>2</ClangAsOpt>
             <VariousControls>
               <MiscControls/>
-              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1166DVM6A_cm4</Define>
+              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1166DVM6A_cm4, MIMXRT1166_cm4_SERIES</Define>
               <Undefine/>
               <IncludePath>..;../../../../../../devices/MIMXRT1166/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1166;../../../../../../devices/MIMXRT1166/periph;../../../../../../devices/MIMXRT1166/drivers/cm4;../../../../../../devices/MIMXRT1166/utilities/debug_console_lite;../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../components/uart</IncludePath>
             </VariousControls>
@@ -8812,6 +8842,11 @@
               <FileType>5</FileType>
               <FilePath>../example_board_readme.md</FilePath>
             </File>
+            <File>
+              <FileName>examples_shared_readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../examples_shared_readme.md</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>
@@ -9145,7 +9180,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../mcux_config.h -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
-              <Define>NDEBUG, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1166DVM6A_cm4</Define>
+              <Define>NDEBUG, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1166DVM6A_cm4, MIMXRT1166_cm4_SERIES</Define>
               <Undefine/>
               <IncludePath>..;../../../../../../devices/MIMXRT1166/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1166;../../../../../../devices/MIMXRT1166/periph;../../../../../../devices/MIMXRT1166/drivers/cm4;../../../../../../devices/MIMXRT1166/utilities/debug_console_lite;../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../components/uart</IncludePath>
             </VariousControls>
@@ -9163,7 +9198,7 @@
             <ClangAsOpt>2</ClangAsOpt>
             <VariousControls>
               <MiscControls/>
-              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1166DVM6A_cm4</Define>
+              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1166DVM6A_cm4, MIMXRT1166_cm4_SERIES</Define>
               <Undefine/>
               <IncludePath>..;../../../../../../devices/MIMXRT1166/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1166;../../../../../../devices/MIMXRT1166/periph;../../../../../../devices/MIMXRT1166/drivers/cm4;../../../../../../devices/MIMXRT1166/utilities/debug_console_lite;../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../components/uart</IncludePath>
             </VariousControls>
@@ -10071,6 +10106,11 @@
               <FileType>5</FileType>
               <FilePath>../example_board_readme.md</FilePath>
             </File>
+            <File>
+              <FileName>examples_shared_readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../examples_shared_readme.md</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>
@@ -10404,7 +10444,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../mcux_config.h -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
-              <Define>NDEBUG, USE_SDRAM=1, SKIP_SYSCLK_INIT=1, DATA_SECTION_IS_CACHEABLE=1, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1166DVM6A_cm4</Define>
+              <Define>NDEBUG, USE_SDRAM=1, SKIP_SYSCLK_INIT=1, DATA_SECTION_IS_CACHEABLE=1, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1166DVM6A_cm4, MIMXRT1166_cm4_SERIES</Define>
               <Undefine/>
               <IncludePath>..;../../../../../../devices/MIMXRT1166/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1166;../../../../../../devices/MIMXRT1166/periph;../../../../../../devices/MIMXRT1166/drivers/cm4;../../../../../../devices/MIMXRT1166/utilities/debug_console_lite;../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../components/uart</IncludePath>
             </VariousControls>
@@ -10422,7 +10462,7 @@
             <ClangAsOpt>2</ClangAsOpt>
             <VariousControls>
               <MiscControls/>
-              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1166DVM6A_cm4</Define>
+              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1166DVM6A_cm4, MIMXRT1166_cm4_SERIES</Define>
               <Undefine/>
               <IncludePath>..;../../../../../../devices/MIMXRT1166/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1166;../../../../../../devices/MIMXRT1166/periph;../../../../../../devices/MIMXRT1166/drivers/cm4;../../../../../../devices/MIMXRT1166/utilities/debug_console_lite;../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../components/uart</IncludePath>
             </VariousControls>
@@ -11330,6 +11370,11 @@
               <FileType>5</FileType>
               <FilePath>../example_board_readme.md</FilePath>
             </File>
+            <File>
+              <FileName>examples_shared_readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../examples_shared_readme.md</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>
@@ -11663,7 +11708,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../mcux_config.h -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
-              <Define>NDEBUG, USE_SDRAM=1, SKIP_SYSCLK_INIT=1, DATA_SECTION_IS_CACHEABLE=1, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1166DVM6A_cm4</Define>
+              <Define>NDEBUG, USE_SDRAM=1, SKIP_SYSCLK_INIT=1, DATA_SECTION_IS_CACHEABLE=1, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1166DVM6A_cm4, MIMXRT1166_cm4_SERIES</Define>
               <Undefine/>
               <IncludePath>..;../../../../../../devices/MIMXRT1166/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1166;../../../../../../devices/MIMXRT1166/periph;../../../../../../devices/MIMXRT1166/drivers/cm4;../../../../../../devices/MIMXRT1166/utilities/debug_console_lite;../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../components/uart</IncludePath>
             </VariousControls>
@@ -11681,7 +11726,7 @@
             <ClangAsOpt>2</ClangAsOpt>
             <VariousControls>
               <MiscControls/>
-              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1166DVM6A_cm4</Define>
+              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1166DVM6A_cm4, MIMXRT1166_cm4_SERIES</Define>
               <Undefine/>
               <IncludePath>..;../../../../../../devices/MIMXRT1166/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1166;../../../../../../devices/MIMXRT1166/periph;../../../../../../devices/MIMXRT1166/drivers/cm4;../../../../../../devices/MIMXRT1166/utilities/debug_console_lite;../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../components/uart</IncludePath>
             </VariousControls>
@@ -12589,6 +12634,11 @@
               <FileType>5</FileType>
               <FilePath>../example_board_readme.md</FilePath>
             </File>
+            <File>
+              <FileName>examples_shared_readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../examples_shared_readme.md</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>
@@ -12922,7 +12972,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../mcux_config.h -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
-              <Define>NDEBUG, XIP_EXTERNAL_FLASH=1, USE_SDRAM=1, SKIP_SYSCLK_INIT=1, DATA_SECTION_IS_CACHEABLE=1, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1166DVM6A_cm4</Define>
+              <Define>NDEBUG, XIP_EXTERNAL_FLASH=1, USE_SDRAM=1, SKIP_SYSCLK_INIT=1, DATA_SECTION_IS_CACHEABLE=1, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1166DVM6A_cm4, MIMXRT1166_cm4_SERIES</Define>
               <Undefine/>
               <IncludePath>..;../../../../../../devices/MIMXRT1166/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1166;../../../../../../devices/MIMXRT1166/periph;../../../../../../devices/MIMXRT1166/drivers/cm4;../../../../../../devices/MIMXRT1166/utilities/debug_console_lite;../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../components/uart</IncludePath>
             </VariousControls>
@@ -12940,7 +12990,7 @@
             <ClangAsOpt>2</ClangAsOpt>
             <VariousControls>
               <MiscControls/>
-              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1166DVM6A_cm4</Define>
+              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1166DVM6A_cm4, MIMXRT1166_cm4_SERIES</Define>
               <Undefine/>
               <IncludePath>..;../../../../../../devices/MIMXRT1166/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1166;../../../../../../devices/MIMXRT1166/periph;../../../../../../devices/MIMXRT1166/drivers/cm4;../../../../../../devices/MIMXRT1166/utilities/debug_console_lite;../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../components/uart</IncludePath>
             </VariousControls>
@@ -13848,6 +13898,11 @@
               <FileType>5</FileType>
               <FilePath>../example_board_readme.md</FilePath>
             </File>
+            <File>
+              <FileName>examples_shared_readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../examples_shared_readme.md</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>
@@ -14181,7 +14236,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../mcux_config.h -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
-              <Define>NDEBUG, XIP_EXTERNAL_FLASH=1, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1166DVM6A_cm4</Define>
+              <Define>NDEBUG, XIP_EXTERNAL_FLASH=1, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1166DVM6A_cm4, MIMXRT1166_cm4_SERIES</Define>
               <Undefine/>
               <IncludePath>..;../../../../../../devices/MIMXRT1166/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1166;../../../../../../devices/MIMXRT1166/periph;../../../../../../devices/MIMXRT1166/drivers/cm4;../../../../../../devices/MIMXRT1166/utilities/debug_console_lite;../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../components/uart</IncludePath>
             </VariousControls>
@@ -14199,7 +14254,7 @@
             <ClangAsOpt>2</ClangAsOpt>
             <VariousControls>
               <MiscControls/>
-              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1166DVM6A_cm4</Define>
+              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1166DVM6A_cm4, MIMXRT1166_cm4_SERIES</Define>
               <Undefine/>
               <IncludePath>..;../../../../../../devices/MIMXRT1166/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1166;../../../../../../devices/MIMXRT1166/periph;../../../../../../devices/MIMXRT1166/drivers/cm4;../../../../../../devices/MIMXRT1166/utilities/debug_console_lite;../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../components/uart</IncludePath>
             </VariousControls>
@@ -15106,6 +15161,11 @@
               <FileName>example_board_readme.md</FileName>
               <FileType>5</FileType>
               <FilePath>../example_board_readme.md</FilePath>
+            </File>
+            <File>
+              <FileName>examples_shared_readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../examples_shared_readme.md</FilePath>
             </File>
           </Files>
         </Group>

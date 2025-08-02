@@ -11,9 +11,14 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>36</version>
+        <version>37</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
+        <option>
+          <name>OG_32_64DeviceCoreSlave</name>
+          <version>34</version>
+          <state>39</state>
+        </option>
         <option>
           <name>BrowseInfoPath</name>
           <state>Debug\BrowseInfo</state>
@@ -70,7 +75,7 @@
         </option>
         <option>
           <name>OGLastSavedByProductVersion</name>
-          <state>9.30.1.48832</state>
+          <state>9.60.1.2936</state>
         </option>
         <option>
           <name>OGChipSelectEditMenu</name>
@@ -98,7 +103,7 @@
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>33</version>
+          <version>34</version>
           <state>41</state>
         </option>
         <option>
@@ -115,7 +120,7 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>33</version>
+          <version>34</version>
           <state>41</state>
         </option>
         <option>
@@ -138,7 +143,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>33</version>
+          <version>34</version>
           <state>41</state>
         </option>
         <option>
@@ -211,45 +216,63 @@
           <name>FPU64</name>
           <state>1</state>
         </option>
+        <option>
+          <name>GOutputSo</name>
+          <state>0</state>
+        </option>
       </data>
     </settings>
     <settings>
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>38</version>
+        <version>39</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
+        <option>
+          <name>CCPointerAutentiction</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCBranchTargetIdentification</name>
+          <state>0</state>
+        </option>
         <option>
           <name>CCDefines</name>
           <state>DEBUG</state>
           <state>XIP_EXTERNAL_FLASH=1</state>
+          <state>USE_SDRAM=1</state>
           <state>XIP_BOOT_HEADER_ENABLE=1</state>
-          <state>XIP_BOOT_HEADER_DCD_ENABLE=0</state>
           <state>XIP_BOOT_HEADER_XMCD_ENABLE=1</state>
-          <state>USE_SDRAM</state>
+          <state>SKIP_SYSCLK_INIT=1</state>
           <state>DATA_SECTION_IS_CACHEABLE=1</state>
-          <state>CPU_MIMXRT1176DVMAA_cm7</state>
-          <state>MODEL_SIZE=28*1024*1024</state>
+          <state>SDK_DEBUGCONSOLE_UART</state>
+          <state>MODEL_SIZE=100*1024</state>
           <state>PRINTF_ADVANCED_ENABLE=1</state>
           <state>PRINTF_FLOAT_ENABLE=1</state>
           <state>USE_RTOS=1</state>
           <state>MODELRUNNER_HTTP=1</state>
-          <state>FSL_RTOS_FREE_RTOS</state>
+          <state>__FPU_PRESENT=1</state>
           <state>FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE</state>
           <state>FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1</state>
-          <state>SDK_OS_FREE_RTOS</state>
-          <state>FSL_RTOS_BM</state>
-          <state>SDK_DEBUGCONSOLE_UART</state>
-          <state>ARM_MATH_CM7</state>
-          <state>__FPU_PRESENT=1</state>
-          <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
-          <state>TF_LITE_STATIC_MEMORY</state>
+          <state>SDK_DEBUGCONSOLE=1</state>
+          <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
-          <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
+          <state>CPU_MIMXRT1176DVMAB_cm7</state>
+          <state>MIMXRT1176_cm7_SERIES</state>
           <state>LWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1</state>
+          <state>LWIP_SUPPORT_CUSTOM_PBUF=1</state>
+          <state>CHECKSUM_GEN_UDP=1</state>
+          <state>CHECKSUM_GEN_TCP=1</state>
+          <state>CHECKSUM_GEN_ICMP=1</state>
           <state>CHECKSUM_GEN_ICMP6=1</state>
+          <state>CHECKSUM_CHECK_UDP=1</state>
+          <state>CHECKSUM_CHECK_TCP=1</state>
+          <state>CHECKSUM_CHECK_ICMP=1</state>
           <state>CHECKSUM_CHECK_ICMP6=1</state>
+          <state>TF_LITE_STATIC_MEMORY</state>
+          <state>KERNELS_OPTIMIZED_FOR_SPEED</state>
+          <state>SDK_OS_FREE_RTOS</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -289,7 +312,7 @@
         </option>
         <option>
           <name>CCDiagSuppress</name>
-          <state>Go003,Pa050,Pa082,Pa084,Pa093,Pe069,Pe111,Pe161,Pe174,Pe177,Pe186,Pe188,Pe550,Pe611,Pe997,Pe1444,Pe1675,Pa082,Pa050</state>
+          <state/>
         </option>
         <option>
           <name>CCDiagRemark</name>
@@ -330,7 +353,7 @@
         </option>
         <option>
           <name>IExtraOptions</name>
-          <state>--enable_restrict</state>
+          <state>--diag_suppress=Pe068,Pa025  --diag_suppress=Pa082,Pa050  --diag_suppress=Pa082,Pa050,Pe188,Pe069,Go003,Pa050,Pa082,Pa183,Pa084,Pa093,Pe069,Pe111,Pe161,Pe174,Pe177,Pe186,Pe188,Pe550,Pe611,Pe997,Pe1444,Pe1675,Pe830,Pe1097 --diag_suppress=Pa082,Pa050  --diag_suppress=Pa082,Pa050,Pe188,Pe069,Go003,Pa050,Pa082,Pa084,Pa093,Pe069,Pe111,Pe161,Pe174,Pe177,Pe186,Pe188,Pe550,Pe611,Pe997,Pe1444,Pe1675,Pe830</state>
         </option>
         <option>
           <name>CCLangConformance</name>
@@ -366,39 +389,38 @@
         </option>
         <option>
           <name>PreInclude</name>
-          <state/>
+          <state>$PROJ_DIR$/../mcux_config.h</state>
         </option>
         <option>
           <name>CCIncludePath2</name>
-          <state>$PROJ_DIR$/../source</state>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../source/common</state>
-          <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include</state>
-          <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM4F</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/xip</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/lwip/port</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/lwip/src</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/lwip/src/include</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/m-profile</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/cm7</state>
-          <state>$PROJ_DIR$/../../../../../../components/phy/device/phyksz8081</state>
-          <state>$PROJ_DIR$/../../../../../../components/phy/device/phyrtl8211f</state>
-          <state>$PROJ_DIR$/../../../../../../components/silicon_id/socs</state>
-          <state>$PROJ_DIR$/../../../../../../components/silicon_id</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/debug_console_lite</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/str</state>
+          <state>$PROJ_DIR$/../../../../../../components/silicon_id</state>
+          <state>$PROJ_DIR$/../../../../../../components/silicon_id/socs</state>
+          <state>$PROJ_DIR$/../../../../../../components/gpio</state>
+          <state>$PROJ_DIR$/../../../../../../components/uart</state>
+          <state>$PROJ_DIR$/../../../../../../components/phy</state>
+          <state>$PROJ_DIR$/../../../../../../components/phy/device/phyrtl8211f</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/lwip/port</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/lwip/src/include</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/lwip/port/sys_arch/dynamic</state>
           <state>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite</state>
           <state>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/third_party/flatbuffers/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp</state>
-          <state>$PROJ_DIR$/../../../../../../components/lists</state>
-          <state>$PROJ_DIR$/../../../../../../components/uart</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/xip</state>
-          <state>$PROJ_DIR$/../../../../xip</state>
-          <state>$PROJ_DIR$/../../../../xmcd</state>
-          <state>$PROJ_DIR$/../../../../../../components/phy</state>
-          <state>$PROJ_DIR$/../../../../../../components/gpio</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/str</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/third_party/kissfft</state>
           <state>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/third_party/ruy</state>
-          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis_nn</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis_nn/Include</state>
+          <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include</state>
+          <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM4F</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -500,11 +522,11 @@
         </option>
         <option>
           <name>IccExceptions2</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>IccRTTI2</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>OICompilerExtraOption</name>
@@ -512,6 +534,14 @@
         </option>
         <option>
           <name>CCStackProtection</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCPosRadRwpi</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCPosSharedSlave</name>
           <state>0</state>
         </option>
       </data>
@@ -523,6 +553,10 @@
         <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
+        <option>
+          <name>A_32_64Device</name>
+          <state>1</state>
+        </option>
         <option>
           <name>AObjPrefix</name>
           <state>1</state>
@@ -570,8 +604,9 @@
         </option>
         <option>
           <name>ADefines</name>
-          <state>DEBUG</state>
-          <state>__STARTUP_INITIALIZE_NONCACHEDATA</state>
+          <state>MCUXPRESSO_SDK</state>
+          <state>CPU_MIMXRT1176DVMAB_cm7</state>
+          <state>MIMXRT1176_cm7_SERIES</state>
         </option>
         <option>
           <name>AList</name>
@@ -663,8 +698,34 @@
         </option>
         <option>
           <name>AUserIncludes</name>
-          <state>$PROJ_DIR$/../source</state>
+          <state>$PROJ_DIR$/..</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/xip</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/m-profile</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/cm7</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/debug_console_lite</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/str</state>
+          <state>$PROJ_DIR$/../../../../../../components/silicon_id</state>
+          <state>$PROJ_DIR$/../../../../../../components/silicon_id/socs</state>
+          <state>$PROJ_DIR$/../../../../../../components/gpio</state>
+          <state>$PROJ_DIR$/../../../../../../components/uart</state>
+          <state>$PROJ_DIR$/../../../../../../components/phy</state>
+          <state>$PROJ_DIR$/../../../../../../components/phy/device/phyrtl8211f</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/lwip/port</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/lwip/src/include</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/lwip/port/sys_arch/dynamic</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/third_party/flatbuffers/include</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/third_party/kissfft</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/third_party/ruy</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis_nn</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis_nn/Include</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include</state>
+          <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM4F</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -694,15 +755,15 @@
         <option>
           <name>OOCOutputFormat</name>
           <version>3</version>
-          <state>0</state>
+          <state>3</state>
         </option>
         <option>
           <name>OCOutputOverride</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>OOCOutputFile</name>
-          <state/>
+          <state>tflm_modelrunner.bin</state>
         </option>
         <option>
           <name>OOCCommandLineProducer</name>
@@ -710,33 +771,24 @@
         </option>
         <option>
           <name>OOCObjCopyEnable</name>
-          <state>0</state>
+          <state>1</state>
         </option>
       </data>
     </settings>
     <settings>
       <name>CUSTOM</name>
-      <archiveVersion>3</archiveVersion>
+      <archiveVersion>4</archiveVersion>
       <data>
         <extensions/>
         <cmdline/>
-        <hasPrio>0</hasPrio>
         <buildSequence>inputOutputBased</buildSequence>
-      </data>
-    </settings>
-    <settings>
-      <name>BUILDACTION</name>
-      <archiveVersion>2</archiveVersion>
-      <data>
-        <prebuild/>
-        <postbuild/>
       </data>
     </settings>
     <settings>
       <name>ILINK</name>
       <archiveVersion>0</archiveVersion>
       <data>
-        <version>27</version>
+        <version>28</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -782,9 +834,8 @@
         <option>
           <name>IlinkConfigDefines</name>
           <state>__use_flash64MB__=1</state>
-          <state>__stack_size__=0x17000</state>
           <state>__heap_size__=0x2000000</state>
-          <state>__stack_size__=0x2000</state>
+          <state>__stack_size__=0x4000</state>
         </option>
         <option>
           <name>IlinkMapFile</name>
@@ -1106,6 +1157,10 @@
           <name>IlinkFpuProcessor</name>
           <state>1</state>
         </option>
+        <option>
+          <name>IlinkSharedSlave</name>
+          <state>0</state>
+        </option>
       </data>
     </settings>
     <settings>
@@ -1129,6 +1184,14 @@
         </option>
       </data>
     </settings>
+    <settings>
+      <name>BUILDACTION</name>
+      <archiveVersion>2</archiveVersion>
+      <data>
+        <prebuild/>
+        <postbuild/>
+      </data>
+    </settings>
   </configuration>
   <configuration>
     <name>flexspi_nor_sdram_release</name>
@@ -1140,9 +1203,14 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>36</version>
+        <version>37</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
+        <option>
+          <name>OG_32_64DeviceCoreSlave</name>
+          <version>34</version>
+          <state>38</state>
+        </option>
         <option>
           <name>BrowseInfoPath</name>
           <state>Release\BrowseInfo</state>
@@ -1227,7 +1295,7 @@
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>33</version>
+          <version>34</version>
           <state>41</state>
         </option>
         <option>
@@ -1244,7 +1312,7 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>33</version>
+          <version>34</version>
           <state>41</state>
         </option>
         <option>
@@ -1267,7 +1335,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>33</version>
+          <version>34</version>
           <state>41</state>
         </option>
         <option>
@@ -1340,45 +1408,63 @@
           <name>FPU64</name>
           <state>1</state>
         </option>
+        <option>
+          <name>GOutputSo</name>
+          <state>0</state>
+        </option>
       </data>
     </settings>
     <settings>
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>38</version>
+        <version>39</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
+          <name>CCPointerAutentiction</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCBranchTargetIdentification</name>
+          <state>0</state>
+        </option>
+        <option>
           <name>CCDefines</name>
-          <state>XIP_EXTERNAL_FLASH=1</state>
-          <state>XIP_BOOT_HEADER_ENABLE=1</state>
-          <state>XIP_BOOT_HEADER_DCD_ENABLE=0</state>
-          <state>XIP_BOOT_HEADER_XMCD_ENABLE=1</state>
-          <state>USE_SDRAM</state>
-          <state>DATA_SECTION_IS_CACHEABLE=1</state>
           <state>NDEBUG</state>
-          <state>CPU_MIMXRT1176DVMAA_cm7</state>
-          <state>MODEL_SIZE=28*1024*1024</state>
+          <state>XIP_EXTERNAL_FLASH=1</state>
+          <state>USE_SDRAM=1</state>
+          <state>XIP_BOOT_HEADER_ENABLE=1</state>
+          <state>XIP_BOOT_HEADER_XMCD_ENABLE=1</state>
+          <state>SKIP_SYSCLK_INIT=1</state>
+          <state>DATA_SECTION_IS_CACHEABLE=1</state>
+          <state>SDK_DEBUGCONSOLE_UART</state>
+          <state>MODEL_SIZE=100*1024</state>
           <state>PRINTF_ADVANCED_ENABLE=1</state>
           <state>PRINTF_FLOAT_ENABLE=1</state>
           <state>USE_RTOS=1</state>
           <state>MODELRUNNER_HTTP=1</state>
-          <state>FSL_RTOS_FREE_RTOS</state>
+          <state>__FPU_PRESENT=1</state>
           <state>FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE</state>
           <state>FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1</state>
-          <state>SDK_OS_FREE_RTOS</state>
-          <state>FSL_RTOS_BM</state>
-          <state>SDK_DEBUGCONSOLE_UART</state>
-          <state>ARM_MATH_CM7</state>
-          <state>__FPU_PRESENT=1</state>
-          <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
-          <state>TF_LITE_STATIC_MEMORY</state>
+          <state>SDK_DEBUGCONSOLE=1</state>
+          <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
-          <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
+          <state>CPU_MIMXRT1176DVMAB_cm7</state>
+          <state>MIMXRT1176_cm7_SERIES</state>
           <state>LWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1</state>
+          <state>LWIP_SUPPORT_CUSTOM_PBUF=1</state>
+          <state>CHECKSUM_GEN_UDP=1</state>
+          <state>CHECKSUM_GEN_TCP=1</state>
+          <state>CHECKSUM_GEN_ICMP=1</state>
           <state>CHECKSUM_GEN_ICMP6=1</state>
+          <state>CHECKSUM_CHECK_UDP=1</state>
+          <state>CHECKSUM_CHECK_TCP=1</state>
+          <state>CHECKSUM_CHECK_ICMP=1</state>
           <state>CHECKSUM_CHECK_ICMP6=1</state>
+          <state>TF_LITE_STATIC_MEMORY</state>
+          <state>KERNELS_OPTIMIZED_FOR_SPEED</state>
+          <state>SDK_OS_FREE_RTOS</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -1418,7 +1504,7 @@
         </option>
         <option>
           <name>CCDiagSuppress</name>
-          <state>Go003,Pa050,Pa082,Pa084,Pa093,Pe069,Pe111,Pe161,Pe174,Pe177,Pe186,Pe188,Pe550,Pe611,Pe997,Pe1444,Pe1675,Pa082,Pa050</state>
+          <state/>
         </option>
         <option>
           <name>CCDiagRemark</name>
@@ -1459,7 +1545,7 @@
         </option>
         <option>
           <name>IExtraOptions</name>
-          <state>--enable_restrict</state>
+          <state>--diag_suppress=Pe068,Pa025  --diag_suppress=Pa082,Pa050  --diag_suppress=Pa082,Pa050,Pe188,Pe069,Go003,Pa050,Pa082,Pa183,Pa084,Pa093,Pe069,Pe111,Pe161,Pe174,Pe177,Pe186,Pe188,Pe550,Pe611,Pe997,Pe1444,Pe1675,Pe830,Pe1097 --diag_suppress=Pa082,Pa050  --diag_suppress=Pa082,Pa050,Pe188,Pe069,Go003,Pa050,Pa082,Pa084,Pa093,Pe069,Pe111,Pe161,Pe174,Pe177,Pe186,Pe188,Pe550,Pe611,Pe997,Pe1444,Pe1675,Pe830</state>
         </option>
         <option>
           <name>CCLangConformance</name>
@@ -1495,39 +1581,38 @@
         </option>
         <option>
           <name>PreInclude</name>
-          <state/>
+          <state>$PROJ_DIR$/../mcux_config.h</state>
         </option>
         <option>
           <name>CCIncludePath2</name>
-          <state>$PROJ_DIR$/../source</state>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../source/common</state>
-          <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include</state>
-          <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM4F</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/xip</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/lwip/port</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/lwip/src</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/lwip/src/include</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/m-profile</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/cm7</state>
-          <state>$PROJ_DIR$/../../../../../../components/phy/device/phyksz8081</state>
-          <state>$PROJ_DIR$/../../../../../../components/phy/device/phyrtl8211f</state>
-          <state>$PROJ_DIR$/../../../../../../components/silicon_id/socs</state>
-          <state>$PROJ_DIR$/../../../../../../components/silicon_id</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/debug_console_lite</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/str</state>
+          <state>$PROJ_DIR$/../../../../../../components/silicon_id</state>
+          <state>$PROJ_DIR$/../../../../../../components/silicon_id/socs</state>
+          <state>$PROJ_DIR$/../../../../../../components/gpio</state>
+          <state>$PROJ_DIR$/../../../../../../components/uart</state>
+          <state>$PROJ_DIR$/../../../../../../components/phy</state>
+          <state>$PROJ_DIR$/../../../../../../components/phy/device/phyrtl8211f</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/lwip/port</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/lwip/src/include</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/lwip/port/sys_arch/dynamic</state>
           <state>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite</state>
           <state>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/third_party/flatbuffers/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp</state>
-          <state>$PROJ_DIR$/../../../../../../components/lists</state>
-          <state>$PROJ_DIR$/../../../../../../components/uart</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/xip</state>
-          <state>$PROJ_DIR$/../../../../xip</state>
-          <state>$PROJ_DIR$/../../../../xmcd</state>
-          <state>$PROJ_DIR$/../../../../../../components/phy</state>
-          <state>$PROJ_DIR$/../../../../../../components/gpio</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/str</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/third_party/kissfft</state>
           <state>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/third_party/ruy</state>
-          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis_nn</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis_nn/Include</state>
+          <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include</state>
+          <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM4F</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1629,11 +1714,11 @@
         </option>
         <option>
           <name>IccExceptions2</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>IccRTTI2</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>OICompilerExtraOption</name>
@@ -1641,6 +1726,14 @@
         </option>
         <option>
           <name>CCStackProtection</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCPosRadRwpi</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCPosSharedSlave</name>
           <state>0</state>
         </option>
       </data>
@@ -1652,6 +1745,10 @@
         <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
+        <option>
+          <name>A_32_64Device</name>
+          <state>1</state>
+        </option>
         <option>
           <name>AObjPrefix</name>
           <state>1</state>
@@ -1699,8 +1796,9 @@
         </option>
         <option>
           <name>ADefines</name>
-          <state>NDEBUG</state>
-          <state>__STARTUP_INITIALIZE_NONCACHEDATA</state>
+          <state>MCUXPRESSO_SDK</state>
+          <state>CPU_MIMXRT1176DVMAB_cm7</state>
+          <state>MIMXRT1176_cm7_SERIES</state>
         </option>
         <option>
           <name>AList</name>
@@ -1792,8 +1890,34 @@
         </option>
         <option>
           <name>AUserIncludes</name>
-          <state>$PROJ_DIR$/../source</state>
+          <state>$PROJ_DIR$/..</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/xip</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/m-profile</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/cm7</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/debug_console_lite</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/str</state>
+          <state>$PROJ_DIR$/../../../../../../components/silicon_id</state>
+          <state>$PROJ_DIR$/../../../../../../components/silicon_id/socs</state>
+          <state>$PROJ_DIR$/../../../../../../components/gpio</state>
+          <state>$PROJ_DIR$/../../../../../../components/uart</state>
+          <state>$PROJ_DIR$/../../../../../../components/phy</state>
+          <state>$PROJ_DIR$/../../../../../../components/phy/device/phyrtl8211f</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/lwip/port</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/lwip/src/include</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/lwip/port/sys_arch/dynamic</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/third_party/flatbuffers/include</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/third_party/kissfft</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/third_party/ruy</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis_nn</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis_nn/Include</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include</state>
+          <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM4F</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -1823,15 +1947,15 @@
         <option>
           <name>OOCOutputFormat</name>
           <version>3</version>
-          <state>0</state>
+          <state>3</state>
         </option>
         <option>
           <name>OCOutputOverride</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>OOCOutputFile</name>
-          <state/>
+          <state>tflm_modelrunner.bin</state>
         </option>
         <option>
           <name>OOCCommandLineProducer</name>
@@ -1839,33 +1963,24 @@
         </option>
         <option>
           <name>OOCObjCopyEnable</name>
-          <state>0</state>
+          <state>1</state>
         </option>
       </data>
     </settings>
     <settings>
       <name>CUSTOM</name>
-      <archiveVersion>3</archiveVersion>
+      <archiveVersion>4</archiveVersion>
       <data>
         <extensions/>
         <cmdline/>
-        <hasPrio>0</hasPrio>
         <buildSequence>inputOutputBased</buildSequence>
-      </data>
-    </settings>
-    <settings>
-      <name>BUILDACTION</name>
-      <archiveVersion>2</archiveVersion>
-      <data>
-        <prebuild/>
-        <postbuild/>
       </data>
     </settings>
     <settings>
       <name>ILINK</name>
       <archiveVersion>0</archiveVersion>
       <data>
-        <version>27</version>
+        <version>28</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -1911,9 +2026,8 @@
         <option>
           <name>IlinkConfigDefines</name>
           <state>__use_flash64MB__=1</state>
-          <state>__stack_size__=0x17000</state>
           <state>__heap_size__=0x2000000</state>
-          <state>__stack_size__=0x2000</state>
+          <state>__stack_size__=0x4000</state>
         </option>
         <option>
           <name>IlinkMapFile</name>
@@ -2235,6 +2349,10 @@
           <name>IlinkFpuProcessor</name>
           <state>1</state>
         </option>
+        <option>
+          <name>IlinkSharedSlave</name>
+          <state>0</state>
+        </option>
       </data>
     </settings>
     <settings>
@@ -2258,108 +2376,74 @@
         </option>
       </data>
     </settings>
+    <settings>
+      <name>BUILDACTION</name>
+      <archiveVersion>2</archiveVersion>
+      <data>
+        <prebuild/>
+        <postbuild/>
+      </data>
+    </settings>
   </configuration>
   <group>
     <name>source</name>
     <file>
-      <name>$PROJ_DIR$/../source/main.cpp</name>
+      <name>$PROJ_DIR$/../main.cpp</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../source/modelrunner.h</name>
+      <name>$PROJ_DIR$/../modelrunner.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../source/modelrunner.cpp</name>
+      <name>$PROJ_DIR$/../modelrunner.cpp</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../source/tf_benchmark.h</name>
+      <name>$PROJ_DIR$/../tf_benchmark.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../source/tf_benchmark.cpp</name>
-    </file>
-    <group>
-      <name>cJSON</name>
-      <file>
-        <name>$PROJ_DIR$/../source/cJSON/cJSON.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../source/cJSON/cJSON.c</name>
-      </file>
-    </group>
-    <group>
-      <name>base64</name>
-      <file>
-        <name>$PROJ_DIR$/../source/base64/base64.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../source/base64/base64.c</name>
-      </file>
-    </group>
-    <file>
-      <name>$PROJ_DIR$/../source/json_results.cpp</name>
+      <name>$PROJ_DIR$/../tf_benchmark.cpp</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../source/http.h</name>
+      <name>$PROJ_DIR$/../cJSON.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../source/app.h</name>
+      <name>$PROJ_DIR$/../cJSON.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../source/http.cpp</name>
+      <name>$PROJ_DIR$/../base64.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../source/http_handler.h</name>
+      <name>$PROJ_DIR$/../base64.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../source/http_handler.cpp</name>
+      <name>$PROJ_DIR$/../json_results.cpp</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../source/FreeRTOSConfig.h</name>
+      <name>$PROJ_DIR$/../http.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../source/lwipopts.h</name>
-    </file>
-    <group>
-      <name>picohttpparser</name>
-      <file>
-        <name>$PROJ_DIR$/../source/picohttpparser/picohttpparser.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../source/picohttpparser/picohttpparser.c</name>
-      </file>
-    </group>
-    <group>
-      <name>common</name>
-      <file>
-        <name>$PROJ_DIR$/../source/common/eiq_common.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../source/common/eiq_iui.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../source/common/eiq_iworker.h</name>
-      </file>
-    </group>
-  </group>
-  <group>
-    <name>scripts</name>
-    <file>
-      <name>$PROJ_DIR$/../scripts/cli.py</name>
+      <name>$PROJ_DIR$/../http.cpp</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../scripts/main.py</name>
+      <name>$PROJ_DIR$/../http_handler.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../scripts/modelrunner.py</name>
+      <name>$PROJ_DIR$/../http_handler.cpp</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../scripts/xexpect.py</name>
+      <name>$PROJ_DIR$/../FreeRTOSConfig.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../scripts/requirements.txt</name>
+      <name>$PROJ_DIR$/../FreeRTOSConfigBoard.h</name>
     </file>
-  </group>
-  <group>
-    <name>board</name>
+    <file>
+      <name>$PROJ_DIR$/../lwipopts.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../picohttpparser.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../picohttpparser.c</name>
+    </file>
     <file>
       <name>$PROJ_DIR$/../flash_opts.h</name>
     </file>
@@ -2367,25 +2451,58 @@
       <name>$PROJ_DIR$/../flash_opts.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../clock_config.c</name>
+      <name>$PROJ_DIR$/../cli.py</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../clock_config.h</name>
+      <name>$PROJ_DIR$/../main.py</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/retarget.c</name>
+      <name>$PROJ_DIR$/../modelrunner.py</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../dcd.c</name>
+      <name>$PROJ_DIR$/../xexpect.py</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../requirements.txt</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../evkbmimxrt1170_flexspi_nor_config.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../evkbmimxrt1170_flexspi_nor_config.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../xmcd.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../xmcd.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../dcd.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../xmcd/xmcd.c</name>
+      <name>$PROJ_DIR$/../dcd.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../xmcd/xmcd.h</name>
+      <name>$PROJ_DIR$/../FreeRTOSConfig_Gen.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../mcux_config.h</name>
+    </file>
+  </group>
+  <group>
+    <name>board</name>
+    <file>
+      <name>$PROJ_DIR$/../board.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../board.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../clock_config.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../clock_config.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../pin_mux.c</name>
@@ -2394,184 +2511,58 @@
       <name>$PROJ_DIR$/../pin_mux.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../clock_config.h</name>
+      <name>$PROJ_DIR$/../hardware_init.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../clock_config.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../board.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../board.h</name>
+      <name>$PROJ_DIR$/../app.h</name>
     </file>
   </group>
   <group>
-    <name>freertos</name>
-    <group>
-      <name>freertos-kernel</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/croutine.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/event_groups.c</name>
-      </file>
-      <group>
-        <name>include</name>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/atomic.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/croutine.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/deprecated_definitions.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/event_groups.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/FreeRTOS.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/list.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/message_buffer.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/mpu_prototypes.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/mpu_syscall_numbers.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/mpu_wrappers.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/newlib-freertos.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/picolibc-freertos.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/portable.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/projdefs.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/queue.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/semphr.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/stack_macros.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/StackMacros.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/stdint.readme</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/stream_buffer.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/task.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/timers.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/freertos_tasks_c_additions.h</name>
-        </file>
-      </group>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/list.c</name>
-      </file>
-      <group>
-        <name>portable</name>
-        <group>
-          <name>IAR</name>
-          <group>
-            <name>ARM_CM4F</name>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM4F/port.c</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM4F/portasm.s</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM4F/portmacro.h</name>
-            </file>
-          </group>
-        </group>
-        <group>
-          <name>MemMang</name>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/MemMang/ReadMe.url</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/MemMang/heap_3.c</name>
-          </file>
-        </group>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/readme.txt</name>
-        </file>
-      </group>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/queue.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/stream_buffer.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/tasks.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/timers.c</name>
-      </file>
-    </group>
+    <name>xip</name>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/xip/fsl_flexspi_nor_boot.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/xip/fsl_flexspi_nor_boot.h</name>
+    </file>
   </group>
   <group>
     <name>drivers</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_enet.h</name>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_clock.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_enet.c</name>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_clock.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/cm7/fsl_cache.c</name>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_iomuxc.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/cm7/fsl_cache.h</name>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_anatop_ai.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_romapi.h</name>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_anatop_ai.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_romapi.c</name>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_memory.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_gpt.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_gpt.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_lpuart.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_lpuart.c</name>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_dcdc.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_dcdc.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_dcdc.c</name>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_gpc.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_gpc.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_pgmc.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_pgmc.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_pmu.h</name>
@@ -2580,10 +2571,22 @@
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_pmu.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_clock.h</name>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_soc_src.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_clock.c</name>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_soc_src.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_romapi.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_romapi.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/cm7/fsl_cache.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/cm7/fsl_cache.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_common.h</name>
@@ -2598,13 +2601,22 @@
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_common_arm.h</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_enet.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_enet.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_gpt.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_gpt.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_gpio.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_gpio.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_iomuxc.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_lpi2c.c</name>
@@ -2613,19 +2625,493 @@
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_lpi2c.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_memory.h</name>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_lpuart.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_anatop_ai.h</name>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_lpuart.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_anatop_ai.c</name>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_mu.h</name>
     </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_mu.c</name>
+    </file>
+  </group>
+  <group>
+    <name>CMSIS</name>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/cmsis_compiler.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/cmsis_version.h</name>
+    </file>
+    <group>
+      <name>m-profile</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/m-profile/cmsis_iccarm_m.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/m-profile/armv7m_cachel1.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/m-profile/armv7m_mpu.h</name>
+      </file>
+    </group>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/core_cm7.h</name>
+    </file>
+  </group>
+  <group>
+    <name>device</name>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/fsl_device_registers.h</name>
+    </file>
+    <group>
+      <name>periph</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_ADC.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_ADC_ETC.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_ANADIG_LDO_SNVS.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_ANADIG_LDO_SNVS_DIG.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_ANADIG_MISC.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_ANADIG_OSC.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_ANADIG_PLL.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_ANADIG_PMU.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_ANADIG_TEMPSENSOR.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_AOI.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_ASRC.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_AUDIO_PLL.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_CAAM.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_CAN.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_CAN_WRAPPER.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_CCM.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_CCM_OBS.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_CDOG.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_CMP.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_CSI.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_DAC.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_DCDC.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_DCIC.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_DMA.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_DMAMUX.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_DSI_HOST.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_DSI_HOST_APB_PKT_IF.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_DSI_HOST_DPI_INTFC.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_DSI_HOST_NXP_FDSOI28_DPHY_INTFC.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_EMVSIM.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_ENC.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_ENET.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_ENET_QOS.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_ETHERNET_PLL.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_EWM.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_FLEXIO.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_FLEXRAM.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_FLEXSPI.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_GPC_CPU_MODE_CTRL.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_GPC_SET_POINT_CTRL.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_GPC_STBY_CTRL.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_GPIO.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_GPT.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_I2S.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_IEE.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_IEE_APC.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_IOMUXC.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_IOMUXC_GPR.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_IOMUXC_LPSR.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_IOMUXC_LPSR_GPR.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_IOMUXC_SNVS.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_IOMUXC_SNVS_GPR.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_IPS_DOMAIN.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_KEY_MANAGER.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_KPP.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_LCDIF.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_LCDIFV2.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_LMEM.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_LPI2C.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_LPSPI.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_LPUART.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_MCM.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_MECC.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_MIPI_CSI2RX.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_MMCAU.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_MU.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_OCOTP.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_OSC_RC_400M.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_OTFAD.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_PDM.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_PGMC_BPC.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_PGMC_CPC.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_PGMC_MIF.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_PGMC_PPC.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_PHY_LDO.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_PIT.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_PUF.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_PWM.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_PXP.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_RDC.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_RDC_SEMAPHORE.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_RTWDOG.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_SEMA4.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_SEMC.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_SNVS.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_SPDIF.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_SRAM.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_SRC.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_SSARC_HP.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_SSARC_LP.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_TMPSNS.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_TMR.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_USB.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_USBHSDCD.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_USBNC.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_USBPHY.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_USDHC.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_VIDEO_MUX.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_VIDEO_PLL.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_VMBANDGAP.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_WDOG.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_XBARA.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_XBARB.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_XECC.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_XRDC2.h</name>
+      </file>
+    </group>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/MIMXRT1176_cm7.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/MIMXRT1176_cm7_COMMON.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/MIMXRT1176_cm7_features.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/system_MIMXRT1176_cm7.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/system_MIMXRT1176_cm7.h</name>
+    </file>
+  </group>
+  <group>
+    <name>startup</name>
+    <group>
+      <name>iar</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/iar/startup_MIMXRT1176_cm7.s</name>
+      </file>
+    </group>
+  </group>
+  <group>
+    <name>utilities</name>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/debug_console_lite/fsl_assert.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/debug_console_lite/fsl_assert.c</name>
+    </file>
+    <group>
+      <name>str</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.c</name>
+      </file>
+    </group>
+    <group>
+      <name>debug_console_lite</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/debug_console_lite/fsl_debug_console.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/debug_console_lite/fsl_debug_console.c</name>
+      </file>
+    </group>
+  </group>
+  <group>
+    <name>component</name>
+    <group>
+      <name>silicon_id</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/silicon_id/fsl_silicon_id.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/silicon_id/fsl_silicon_id.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/silicon_id/socs/imxrt1170/fsl_silicon_id_soc.c</name>
+      </file>
+    </group>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../components/silicon_id/socs/fsl_silicon_id_soc.h</name>
+    </file>
+    <group>
+      <name>gpio</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/gpio/fsl_adapter_gpio.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/gpio/fsl_adapter_igpio.c</name>
+      </file>
+    </group>
+    <group>
+      <name>uart</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/uart/fsl_adapter_uart.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/uart/fsl_adapter_lpuart.c</name>
+      </file>
+    </group>
+    <group>
+      <name>phy</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/phy/fsl_phy.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/phy/device/phyrtl8211f/fsl_phyrtl8211f.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/phy/device/phyrtl8211f/fsl_phyrtl8211f.h</name>
+      </file>
+    </group>
   </group>
   <group>
     <name>lwip</name>
     <group>
       <name>port</name>
+      <group>
+        <name>arch</name>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/lwip/port/arch/cc.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/lwip/port/arch/perf.h</name>
+        </file>
+      </group>
+      <group>
+        <name>sys_arch</name>
+        <group>
+          <name>dynamic</name>
+          <group>
+            <name>arch</name>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lwip/port/sys_arch/dynamic/arch/sys_arch.h</name>
+            </file>
+          </group>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lwip/port/sys_arch/dynamic/sys_arch.c</name>
+          </file>
+        </group>
+      </group>
       <file>
         <name>$PROJ_DIR$/../../../../../../middleware/lwip/port/enet_ethernetif.c</name>
       </file>
@@ -2650,21 +3136,6 @@
       <file>
         <name>$PROJ_DIR$/../../../../../../middleware/lwip/port/enet_ethernetif_kinetis.c</name>
       </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/lwip/port/sys_arch.c</name>
-      </file>
-      <group>
-        <name>arch</name>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/lwip/port/arch/cc.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/lwip/port/arch/perf.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/lwip/port/arch/sys_arch.h</name>
-        </file>
-      </group>
     </group>
     <group>
       <name>src</name>
@@ -2723,6 +3194,42 @@
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/ip.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/mem.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/memp.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/netif.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/pbuf.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/raw.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/stats.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/sys.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/tcp.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/tcp_in.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/tcp_out.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/timeouts.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/udp.c</name>
         </file>
         <group>
           <name>ipv4</name>
@@ -2784,42 +3291,6 @@
             <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/ipv6/nd6.c</name>
           </file>
         </group>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/mem.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/memp.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/netif.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/pbuf.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/raw.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/stats.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/sys.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/tcp.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/tcp_in.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/tcp_out.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/timeouts.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/udp.c</name>
-        </file>
       </group>
       <group>
         <name>include</name>
@@ -2827,6 +3298,9 @@
           <name>compat</name>
           <group>
             <name>posix</name>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/compat/posix/netdb.h</name>
+            </file>
             <group>
               <name>arpa</name>
               <file>
@@ -2839,9 +3313,6 @@
                 <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/compat/posix/net/if.h</name>
               </file>
             </group>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/compat/posix/netdb.h</name>
-            </file>
             <group>
               <name>sys</name>
               <file>
@@ -3026,13 +3497,13 @@
               <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/lwip/priv/api_msg.h</name>
             </file>
             <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/lwip/priv/mem_priv.h</name>
-            </file>
-            <file>
               <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/lwip/priv/memp_priv.h</name>
             </file>
             <file>
               <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/lwip/priv/memp_std.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/lwip/priv/mem_priv.h</name>
             </file>
             <file>
               <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/lwip/priv/nd6_priv.h</name>
@@ -3044,10 +3515,10 @@
               <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/lwip/priv/sockets_priv.h</name>
             </file>
             <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/lwip/priv/tcp_priv.h</name>
+              <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/lwip/priv/tcpip_priv.h</name>
             </file>
             <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/lwip/priv/tcpip_priv.h</name>
+              <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/lwip/priv/tcp_priv.h</name>
             </file>
           </group>
           <group>
@@ -3140,6 +3611,12 @@
           <file>
             <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/netif/lowpan6_opts.h</name>
           </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/netif/slipif.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/netif/zepif.h</name>
+          </file>
           <group>
             <name>ppp</name>
             <file>
@@ -3181,32 +3658,8 @@
             <file>
               <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/netif/ppp/mppe.h</name>
             </file>
-            <group>
-              <name>polarssl</name>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/netif/ppp/polarssl/arc4.h</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/netif/ppp/polarssl/des.h</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/netif/ppp/polarssl/md4.h</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/netif/ppp/polarssl/md5.h</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/netif/ppp/polarssl/sha1.h</name>
-              </file>
-            </group>
             <file>
               <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/netif/ppp/ppp.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/netif/ppp/ppp_impl.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/netif/ppp/ppp_opts.h</name>
             </file>
             <file>
               <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/netif/ppp/pppapi.h</name>
@@ -3227,18 +3680,36 @@
               <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/netif/ppp/pppos.h</name>
             </file>
             <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/netif/ppp/ppp_impl.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/netif/ppp/ppp_opts.h</name>
+            </file>
+            <file>
               <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/netif/ppp/upap.h</name>
             </file>
             <file>
               <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/netif/ppp/vj.h</name>
             </file>
+            <group>
+              <name>polarssl</name>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/netif/ppp/polarssl/arc4.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/netif/ppp/polarssl/des.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/netif/ppp/polarssl/md4.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/netif/ppp/polarssl/md5.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/netif/ppp/polarssl/sha1.h</name>
+              </file>
+            </group>
           </group>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/netif/slipif.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/netif/zepif.h</name>
-          </file>
         </group>
       </group>
       <group>
@@ -3344,86 +3815,29 @@
           <file>
             <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/netif/ppp/vj.c</name>
           </file>
+          <group>
+            <name>polarssl</name>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/netif/ppp/polarssl/arc4.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/netif/ppp/polarssl/des.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/netif/ppp/polarssl/md4.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/netif/ppp/polarssl/md5.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/netif/ppp/polarssl/sha1.c</name>
+            </file>
+          </group>
         </group>
       </group>
     </group>
-  </group>
-  <group>
-    <name>component</name>
-    <group>
-      <name>phy</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/phy/device/phyksz8081/fsl_phyksz8081.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/phy/device/phyksz8081/fsl_phyksz8081.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/phy/device/phyrtl8211f/fsl_phyrtl8211f.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/phy/device/phyrtl8211f/fsl_phyrtl8211f.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/phy/fsl_phy.h</name>
-      </file>
-    </group>
-    <group>
-      <name>silicon_id</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/silicon_id/socs/imxrt1170/fsl_silicon_id_soc.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/silicon_id/socs/fsl_silicon_id_soc.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/silicon_id/fsl_silicon_id.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/silicon_id/fsl_silicon_id.h</name>
-      </file>
-    </group>
-    <group>
-      <name>lists</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/lists/fsl_component_generic_list.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/lists/fsl_component_generic_list.c</name>
-      </file>
-    </group>
-    <group>
-      <name>uart</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/uart/fsl_adapter_uart.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/uart/fsl_adapter_lpuart.c</name>
-      </file>
-    </group>
-    <group>
-      <name>gpio</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/gpio/fsl_adapter_gpio.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/gpio/fsl_adapter_igpio.c</name>
-      </file>
-    </group>
-  </group>
-  <group>
-    <name>utilities</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/debug_console_lite/fsl_debug_console.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/debug_console_lite/fsl_debug_console.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.h</name>
+      <name>$PROJ_DIR$/../../../../../../middleware/lwip/README</name>
     </file>
   </group>
   <group>
@@ -3433,304 +3847,52 @@
       <group>
         <name>tensorflow</name>
         <group>
+          <name>compiler</name>
+          <group>
+            <name>mlir</name>
+            <group>
+              <name>lite</name>
+              <group>
+                <name>kernels</name>
+                <group>
+                  <name>internal</name>
+                  <file>
+                    <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/compiler/mlir/lite/kernels/internal/compatibility_macros.h</name>
+                  </file>
+                </group>
+              </group>
+              <group>
+                <name>schema</name>
+                <file>
+                  <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/compiler/mlir/lite/schema/schema_generated.h</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/compiler/mlir/lite/schema/schema_utils.h</name>
+                </file>
+              </group>
+              <group>
+                <name>core</name>
+                <group>
+                  <name>api</name>
+                  <file>
+                    <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/compiler/mlir/lite/core/api/error_reporter.h</name>
+                  </file>
+                </group>
+                <group>
+                  <name>c</name>
+                  <file>
+                    <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/compiler/mlir/lite/core/c/builtin_op_data.h</name>
+                  </file>
+                  <file>
+                    <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/compiler/mlir/lite/core/c/tflite_types.h</name>
+                  </file>
+                </group>
+              </group>
+            </group>
+          </group>
+        </group>
+        <group>
           <name>lite</name>
-          <group>
-            <name>micro</name>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/debug_log.cpp</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/compatibility.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/debug_log.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/fake_micro_context.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/flatbuffer_utils.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/memory_helpers.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/micro_allocation_info.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/micro_allocator.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/micro_arena_constants.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/micro_common.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/micro_context.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/micro_graph.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/micro_interpreter.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/micro_interpreter_context.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/micro_interpreter_graph.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/micro_log.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/micro_mutable_op_resolver.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/micro_op_resolver.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/micro_profiler.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/micro_profiler_interface.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/micro_resource_variable.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/micro_time.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/micro_utils.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/mock_micro_graph.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/recording_micro_allocator.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/recording_micro_interpreter.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/system_setup.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/test_helper_custom_ops.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/test_helpers.h</name>
-            </file>
-            <group>
-              <name>kernels</name>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/activation_utils.h</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/activations.h</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/add.h</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/circular_buffer.h</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/circular_buffer_flexbuffers_generated_data.h</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/conv.h</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/conv_test.h</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/depthwise_conv.h</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/dequantize.h</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/detection_postprocess_flexbuffers_generated_data.h</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/ethosu.h</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/fully_connected.h</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/hard_swish.h</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/kernel_runner.h</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/kernel_util.h</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/leaky_relu.h</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/logical.h</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/logistic.h</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/lstm_eval.h</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/lstm_eval_test.h</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/lstm_shared.h</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/micro_ops.h</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/micro_tensor_utils.h</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/mul.h</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/pad.h</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/pooling.h</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/prelu.h</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/quantize.h</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/reduce.h</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/reshape.h</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/softmax.h</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/strided_slice.h</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/sub.h</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/svdf.h</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/unidirectional_sequence_lstm.h</name>
-              </file>
-            </group>
-            <group>
-              <name>arena_allocator</name>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/arena_allocator/ibuffer_allocator.h</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/arena_allocator/non_persistent_arena_buffer_allocator.h</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/arena_allocator/persistent_arena_buffer_allocator.h</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/arena_allocator/recording_single_arena_buffer_allocator.h</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/arena_allocator/single_arena_buffer_allocator.h</name>
-              </file>
-            </group>
-            <group>
-              <name>memory_planner</name>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/memory_planner/greedy_memory_planner.h</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/memory_planner/linear_memory_planner.h</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/memory_planner/memory_plan_struct.h</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/memory_planner/micro_memory_planner.h</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/memory_planner/non_persistent_buffer_planner_shim.h</name>
-              </file>
-            </group>
-            <group>
-              <name>tflite_bridge</name>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/tflite_bridge/flatbuffer_conversions_bridge.h</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/tflite_bridge/micro_error_reporter.h</name>
-              </file>
-            </group>
-          </group>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/builtin_op_data.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/builtin_ops.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/context_util.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/portable_type_to_tflitetype.h</name>
-          </file>
-          <group>
-            <name>c</name>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/c/builtin_op_data.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/c/c_api_types.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/c/common.h</name>
-            </file>
-          </group>
-          <group>
-            <name>core</name>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/core/macros.h</name>
-            </file>
-            <group>
-              <name>api</name>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/core/api/error_reporter.h</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/core/api/flatbuffer_conversions.h</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/core/api/tensor_utils.h</name>
-              </file>
-            </group>
-            <group>
-              <name>c</name>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/core/c/builtin_op_data.h</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/core/c/c_api_types.h</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/core/c/common.h</name>
-              </file>
-            </group>
-          </group>
           <group>
             <name>kernels</name>
             <file>
@@ -3780,12 +3942,6 @@
               <file>
                 <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/types.h</name>
               </file>
-              <group>
-                <name>optimized</name>
-                <file>
-                  <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/optimized/neon_check.h</name>
-                </file>
-              </group>
               <group>
                 <name>reference</name>
                 <file>
@@ -3993,6 +4149,75 @@
                   </file>
                 </group>
               </group>
+              <group>
+                <name>optimized</name>
+                <file>
+                  <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/optimized/neon_check.h</name>
+                </file>
+              </group>
+            </group>
+          </group>
+          <group>
+            <name>experimental</name>
+            <group>
+              <name>microfrontend</name>
+              <group>
+                <name>lib</name>
+                <file>
+                  <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/experimental/microfrontend/lib/bits.h</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/experimental/microfrontend/lib/fft.h</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/experimental/microfrontend/lib/fft_util.h</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/experimental/microfrontend/lib/filterbank.h</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/experimental/microfrontend/lib/filterbank_util.h</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/experimental/microfrontend/lib/frontend.h</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/experimental/microfrontend/lib/frontend_util.h</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/experimental/microfrontend/lib/kiss_fft_common.h</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/experimental/microfrontend/lib/kiss_fft_int16.h</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/experimental/microfrontend/lib/log_lut.h</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/experimental/microfrontend/lib/log_scale.h</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/experimental/microfrontend/lib/log_scale_util.h</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/experimental/microfrontend/lib/noise_reduction.h</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/experimental/microfrontend/lib/noise_reduction_util.h</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/experimental/microfrontend/lib/pcan_gain_control.h</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/experimental/microfrontend/lib/pcan_gain_control_util.h</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/experimental/microfrontend/lib/window.h</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/experimental/microfrontend/lib/window_util.h</name>
+                </file>
+              </group>
             </group>
           </group>
           <group>
@@ -4004,23 +4229,386 @@
               <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/schema/schema_utils.h</name>
             </file>
           </group>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/array.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/builtin_op_data.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/builtin_ops.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/context_util.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/portable_type_to_tflitetype.h</name>
+          </file>
+          <group>
+            <name>core</name>
+            <group>
+              <name>api</name>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/core/api/error_reporter.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/core/api/flatbuffer_conversions.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/core/api/tensor_utils.h</name>
+              </file>
+            </group>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/core/macros.h</name>
+            </file>
+            <group>
+              <name>c</name>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/core/c/builtin_op_data.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/core/c/c_api_types.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/core/c/common.h</name>
+              </file>
+            </group>
+          </group>
+          <group>
+            <name>micro</name>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/compatibility.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/compression.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/debug_log.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/fake_micro_context.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/flatbuffer_utils.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/hexdump.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/memory_helpers.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/micro_allocation_info.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/micro_allocator.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/micro_arena_constants.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/micro_common.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/micro_context.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/micro_graph.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/micro_interpreter.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/micro_interpreter_context.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/micro_interpreter_graph.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/micro_log.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/micro_mutable_op_resolver.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/micro_op_resolver.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/micro_profiler.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/micro_profiler_interface.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/micro_resource_variable.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/micro_time.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/micro_utils.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/mock_micro_graph.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/recording_micro_allocator.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/recording_micro_interpreter.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/span.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/static_vector.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/system_setup.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/test_helper_custom_ops.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/test_helpers.h</name>
+            </file>
+            <group>
+              <name>kernels</name>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/activation_utils.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/activations.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/add.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/batch_matmul.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/circular_buffer.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/circular_buffer_flexbuffers_generated_data.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/conv.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/conv_test.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/decompress.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/depthwise_conv.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/dequantize.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/detection_postprocess_flexbuffers_generated_data.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/ethosu.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/fully_connected.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/hard_swish.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/kernel_runner.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/kernel_util.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/leaky_relu.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/logical.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/logistic.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/lstm_eval.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/lstm_eval_test.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/lstm_shared.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/maximum_minimum.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/micro_ops.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/micro_tensor_utils.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/mul.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/pad.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/pooling.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/prelu.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/quantize.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/reduce.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/reshape.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/softmax.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/strided_slice.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/sub.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/svdf.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/transpose.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/transpose_conv.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/unidirectional_sequence_lstm.h</name>
+              </file>
+              <group>
+                <name>xtensa</name>
+                <file>
+                  <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/lstm_eval.h</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/xtensa.h</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/xtensa_add.h</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/xtensa_conv.h</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/xtensa_depthwise_conv.h</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/xtensa_fully_connected.h</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/xtensa_pad.h</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/xtensa_pooling.h</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/xtensa_reduce.h</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/xtensa_reshape.h</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/xtensa_softmax.h</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/xtensa_svdf.h</name>
+                </file>
+                <group>
+                  <name>hifimini</name>
+                  <file>
+                    <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/hifimini/fixedpoint_utils.h</name>
+                  </file>
+                </group>
+              </group>
+            </group>
+            <group>
+              <name>compression</name>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/compression/metadata_saved.h</name>
+              </file>
+            </group>
+            <group>
+              <name>memory_planner</name>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/memory_planner/greedy_memory_planner.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/memory_planner/linear_memory_planner.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/memory_planner/memory_plan_struct.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/memory_planner/micro_memory_planner.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/memory_planner/non_persistent_buffer_planner_shim.h</name>
+              </file>
+            </group>
+            <group>
+              <name>arena_allocator</name>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/arena_allocator/ibuffer_allocator.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/arena_allocator/non_persistent_arena_buffer_allocator.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/arena_allocator/persistent_arena_buffer_allocator.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/arena_allocator/recording_single_arena_buffer_allocator.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/arena_allocator/single_arena_buffer_allocator.h</name>
+              </file>
+            </group>
+            <group>
+              <name>tflite_bridge</name>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/tflite_bridge/flatbuffer_conversions_bridge.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/tflite_bridge/micro_error_reporter.h</name>
+              </file>
+            </group>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/debug_log.cpp</name>
+            </file>
+          </group>
+          <group>
+            <name>c</name>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/c/builtin_op_data.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/c/c_api_types.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/c/common.h</name>
+            </file>
+          </group>
         </group>
       </group>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/AUTHORS</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/LICENSE</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/NOTICE</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/ChangeLogKSDK.txt</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/readme.txt</name>
-      </file>
       <group>
         <name>signal</name>
         <group>
@@ -4034,6 +4622,9 @@
               <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/signal/micro/kernels/energy_flexbuffers_generated_data.h</name>
             </file>
             <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/signal/micro/kernels/fft_auto_scale_kernel.h</name>
+            </file>
+            <file>
               <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/signal/micro/kernels/fft_flexbuffers_generated_data.h</name>
             </file>
             <file>
@@ -4044,6 +4635,9 @@
             </file>
             <file>
               <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/signal/micro/kernels/filter_bank_spectral_subtraction_flexbuffers_generated_data.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/signal/micro/kernels/filter_bank_square_root.h</name>
             </file>
             <file>
               <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/signal/micro/kernels/framer_flexbuffers_generated_data.h</name>
@@ -4141,13 +4735,43 @@
       <group>
         <name>third_party</name>
         <group>
+          <name>cmsis_nn</name>
+          <group>
+            <name>Include</name>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis_nn/Include/arm_nn_math_types.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis_nn/Include/arm_nn_tables.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis_nn/Include/arm_nn_types.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis_nn/Include/arm_nnfunctions.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis_nn/Include/arm_nnsupportfunctions.h</name>
+            </file>
+            <group>
+              <name>Internal</name>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis_nn/Include/Internal/arm_nn_compiler.h</name>
+              </file>
+            </group>
+          </group>
+        </group>
+        <group>
+          <name>fft2d</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/third_party/fft2d/fft.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/third_party/fft2d/fft2d.h</name>
+          </file>
+        </group>
+        <group>
           <name>flatbuffers</name>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/third_party/flatbuffers/readme.md</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/third_party/flatbuffers/LICENSE.txt</name>
-          </file>
           <group>
             <name>include</name>
             <group>
@@ -4168,10 +4792,19 @@
                 <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/buffer_ref.h</name>
               </file>
               <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/code_generator.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/code_generators.h</name>
+              </file>
+              <file>
                 <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/default_allocator.h</name>
               </file>
               <file>
                 <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/detached_buffer.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/file_manager.h</name>
               </file>
               <file>
                 <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/flatbuffer_builder.h</name>
@@ -4180,13 +4813,40 @@
                 <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/flatbuffers.h</name>
               </file>
               <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/flatc.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/flex_flat_util.h</name>
+              </file>
+              <file>
                 <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/flexbuffers.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/grpc.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/hash.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/idl.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/minireflect.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/reflection.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/reflection_generated.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/registry.h</name>
               </file>
               <file>
                 <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/stl_emulation.h</name>
               </file>
               <file>
-                <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/strings.h</name>
+                <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/string.h</name>
               </file>
               <file>
                 <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/struct.h</name>
@@ -4206,17 +4866,20 @@
               <file>
                 <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/verifier.h</name>
               </file>
+              <group>
+                <name>pch</name>
+                <file>
+                  <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/pch/flatc_pch.h</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/pch/pch.h</name>
+                </file>
+              </group>
             </group>
           </group>
         </group>
         <group>
           <name>gemmlowp</name>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp/LICENSE</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp/README.md</name>
-          </file>
           <group>
             <name>fixedpoint</name>
             <file>
@@ -4238,12 +4901,6 @@
         </group>
         <group>
           <name>ruy</name>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/third_party/ruy/LICENSE</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/third_party/ruy/README.md</name>
-          </file>
           <group>
             <name>ruy</name>
             <group>
@@ -4254,73 +4911,175 @@
             </group>
           </group>
         </group>
+        <group>
+          <name>kissfft</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/third_party/kissfft/_kiss_fft_guts.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/third_party/kissfft/kiss_fft.h</name>
+          </file>
+          <group>
+            <name>tools</name>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/third_party/kissfft/tools/kfc.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/third_party/kissfft/tools/kiss_fftnd.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/third_party/kissfft/tools/kiss_fftndr.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/third_party/kissfft/tools/kiss_fftr.h</name>
+            </file>
+          </group>
+        </group>
+      </group>
+    </group>
+    <group>
+      <name>common</name>
+      <group>
+        <name>toolchains</name>
+        <group>
+          <name>iar</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/eiq/common/toolchains/iar/retarget.c</name>
+          </file>
+        </group>
       </group>
     </group>
   </group>
   <group>
-    <name>device</name>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/fsl_device_registers.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/MIMXRT1176_cm7.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/MIMXRT1176_cm7_features.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/system_MIMXRT1176_cm7.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/system_MIMXRT1176_cm7.h</name>
-    </file>
-  </group>
-  <group>
-    <name>startup</name>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/iar/startup_MIMXRT1176_cm7.s</name>
-    </file>
-  </group>
-  <group>
-    <name>xip</name>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/xip/fsl_flexspi_nor_boot.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/xip/fsl_flexspi_nor_boot.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../xip/evkbmimxrt1170_flexspi_nor_config.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../xip/evkbmimxrt1170_flexspi_nor_config.h</name>
-    </file>
-  </group>
-  <group>
-    <name>CMSIS</name>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/cmsis_compiler.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/cmsis_iccarm.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/cmsis_version.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/core_cm7.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/cachel1_armv7.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/mpu_armv7.h</name>
-    </file>
+    <name>freertos</name>
+    <group>
+      <name>freertos-kernel</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/croutine.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/event_groups.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/list.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/queue.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/stream_buffer.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/tasks.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/timers.c</name>
+      </file>
+      <group>
+        <name>include</name>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/atomic.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/croutine.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/deprecated_definitions.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/event_groups.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/FreeRTOS.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/list.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/message_buffer.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/mpu_prototypes.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/mpu_syscall_numbers.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/mpu_wrappers.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/portable.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/projdefs.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/queue.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/semphr.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/stack_macros.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/StackMacros.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/stdint.readme</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/stream_buffer.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/task.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/timers.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/freertos_tasks_c_additions.h</name>
+        </file>
+      </group>
+      <group>
+        <name>portable</name>
+        <group>
+          <name>MemMang</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/MemMang/ReadMe.url</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/MemMang/heap_3.c</name>
+          </file>
+        </group>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/readme.txt</name>
+        </file>
+        <group>
+          <name>IAR</name>
+          <group>
+            <name>ARM_CM4F</name>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM4F/port.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM4F/portasm.s</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM4F/portmacro.h</name>
+            </file>
+          </group>
+        </group>
+      </group>
+    </group>
   </group>
   <group>
     <name>doc</name>
     <file>
       <name>$PROJ_DIR$/../readme.md</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../examples_shared_readme.md</name>
     </file>
   </group>
 </project>

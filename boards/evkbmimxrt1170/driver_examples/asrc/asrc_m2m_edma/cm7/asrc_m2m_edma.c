@@ -180,7 +180,7 @@ int main(void)
     asrcConvert.inDataSize  = MUSIC_LEN;
     asrcConvert.outData     = asrcConvertBuffer;
     asrcConvert.outDataSize = outputBufSize;
-    ASRC_TransferEDMA(ASRC, &asrcHandle, &asrcConvert);
+    ASRC_TransferEDMA(DEMO_ASRC, &asrcHandle, &asrcConvert);
 
     while (!isASRCFinished)
     {

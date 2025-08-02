@@ -1,5 +1,6 @@
+# tflm_modelrunner
+
 Overview
-========
 
 TFlite Model Behchmark example for Microcontrollers.
 
@@ -17,31 +18,7 @@ Supported board and settings
       UART mode.
       
 
-
-SDK version
-===========
-- Version: 2.16.000
-
-Toolchain supported
-===================
-- IAR embedded Workbench  9.60.1
-- Keil MDK  5.39.0
-- GCC ARM Embedded  13.2.1
-- MCUXpresso  11.10.0
-
-Hardware requirements
-=====================
-- Mini/micro USB cable
-- Network cable RJ45 standard
-- MIMXRT1170-EVKB board
-- Personal Computer
-
-Board settings
-==============
-This example uses 1G port(J4) as default. If want to test 100M port(J3), please set the macro BOARD_NETWORK_USE_100M_ENET_PORT to 1.
-
-Running the demo
-================
+## Running the demo
 
 Get benchmark results via ModelRunner http handler
 
@@ -196,3 +173,9 @@ tensor_loadb input_1 490
 
 
 The latency timing is 59.808 ms, the layer timings can be found in model command, for example the first layer timing is 9.827 ms.
+
+## Supported Boards
+- [FRDM-MCXN947](../../_boards/frdmmcxn947/eiq_examples/tflm_modelrunner/example_board_readme.md)
+- [MCX-N5XX-EVK](../../_boards/mcxn5xxevk/eiq_examples/tflm_modelrunner/example_board_readme.md)
+- [MCX-N9XX-EVK](../../_boards/mcxn9xxevk/eiq_examples/tflm_modelrunner/example_board_readme.md)
+- [MIMXRT700-EVK](../../_boards/mimxrt700evk/eiq_examples/tflm_modelrunner/example_board_readme.md)

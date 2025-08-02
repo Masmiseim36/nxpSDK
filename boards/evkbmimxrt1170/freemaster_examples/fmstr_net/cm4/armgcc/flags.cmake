@@ -16,7 +16,8 @@ SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_DEBUG " \
     -D__STARTUP_INITIALIZE_NONCACHEDATA \
     -D__STARTUP_CLEAR_BSS \
     -DMCUXPRESSO_SDK \
-    -DCPU_MIMXRT1176DVMAA_cm4 \
+    -DCPU_MIMXRT1176DVMAB_cm4 \
+    -DMIMXRT1176_cm4_SERIES \
     -g \
     -mthumb \
     -mcpu=cortex-m4 \
@@ -28,7 +29,8 @@ SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_RELEASE " \
     -D__STARTUP_INITIALIZE_NONCACHEDATA \
     -D__STARTUP_CLEAR_BSS \
     -DMCUXPRESSO_SDK \
-    -DCPU_MIMXRT1176DVMAA_cm4 \
+    -DCPU_MIMXRT1176DVMAB_cm4 \
+    -DMIMXRT1176_cm4_SERIES \
     -mthumb \
     -mcpu=cortex-m4 \
     ${FPU} \
@@ -38,11 +40,13 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG " \
     -include ${ProjDirPath}/../mcux_config.h \
     -DDEBUG \
     -DXIP_EXTERNAL_FLASH=1 \
+    -D__STARTUP_CLEAR_BSS \
     -DPHY_RTL8211F=1 \
     -DUSE_RTOS=1 \
     -DMCUX_META_BUILD \
     -DMCUXPRESSO_SDK \
-    -DCPU_MIMXRT1176DVMAA_cm4 \
+    -DCPU_MIMXRT1176DVMAB_cm4 \
+    -DMIMXRT1176_cm4_SERIES \
     -DLWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1 \
     -DLWIP_SUPPORT_CUSTOM_PBUF=1 \
     -DCHECKSUM_GEN_UDP=1 \
@@ -73,11 +77,13 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE " \
     -include ${ProjDirPath}/../mcux_config.h \
     -DNDEBUG \
     -DXIP_EXTERNAL_FLASH=1 \
+    -D__STARTUP_CLEAR_BSS \
     -DPHY_RTL8211F=1 \
     -DUSE_RTOS=1 \
     -DMCUX_META_BUILD \
     -DMCUXPRESSO_SDK \
-    -DCPU_MIMXRT1176DVMAA_cm4 \
+    -DCPU_MIMXRT1176DVMAB_cm4 \
+    -DMIMXRT1176_cm4_SERIES \
     -DLWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1 \
     -DLWIP_SUPPORT_CUSTOM_PBUF=1 \
     -DCHECKSUM_GEN_UDP=1 \
@@ -108,7 +114,8 @@ SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG " \
     -DXIP_EXTERNAL_FLASH=1 \
     -DMCUX_META_BUILD \
     -DMCUXPRESSO_SDK \
-    -DCPU_MIMXRT1176DVMAA_cm4 \
+    -DCPU_MIMXRT1176DVMAB_cm4 \
+    -DMIMXRT1176_cm4_SERIES \
     -DLWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1 \
     -DLWIP_SUPPORT_CUSTOM_PBUF=1 \
     -DCHECKSUM_GEN_UDP=1 \
@@ -141,7 +148,8 @@ SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE " \
     -DXIP_EXTERNAL_FLASH=1 \
     -DMCUX_META_BUILD \
     -DMCUXPRESSO_SDK \
-    -DCPU_MIMXRT1176DVMAA_cm4 \
+    -DCPU_MIMXRT1176DVMAB_cm4 \
+    -DMIMXRT1176_cm4_SERIES \
     -DLWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1 \
     -DLWIP_SUPPORT_CUSTOM_PBUF=1 \
     -DCHECKSUM_GEN_UDP=1 \
@@ -187,9 +195,6 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_DEBUG " \
     -mapcs \
     -Wl,--gc-sections \
     -Wl,-static \
-    -Wl,-z \
-    -Wl,muldefs \
-    -Wl,-Map=output.map \
     -Wl,--print-memory-usage \
     -mcpu=cortex-m4 \
     ${FPU} \
@@ -215,9 +220,6 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE " \
     -mapcs \
     -Wl,--gc-sections \
     -Wl,-static \
-    -Wl,-z \
-    -Wl,muldefs \
-    -Wl,-Map=output.map \
     -Wl,--print-memory-usage \
     -mcpu=cortex-m4 \
     ${FPU} \

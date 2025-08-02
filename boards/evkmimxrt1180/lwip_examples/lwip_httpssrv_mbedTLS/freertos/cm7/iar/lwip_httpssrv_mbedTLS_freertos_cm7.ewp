@@ -243,31 +243,19 @@
           <state>XIP_EXTERNAL_FLASH=1</state>
           <state>USE_RTOS=1</state>
           <state>PRINTF_ADVANCED_ENABLE=1</state>
-          <state>HTTPSRV_CFG_WEBSOCKET_ENABLED=1</state>
-          <state>HTTPSRV_CFG_MBEDTLS_ENABLE=1</state>
           <state>MBEDTLS_KEY_EXCHANGE_RSA_ENABLED</state>
           <state>FSL_ETH_ENABLE_CACHE_CONTROL</state>
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
-          <state>CPU_MIMXRT1189CVM8B_cm7</state>
+          <state>CPU_MIMXRT1189CVM8C_cm7</state>
+          <state>MIMXRT1189_cm7_SERIES</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>CACHE_MODE_WRITE_THROUGH=1</state>
           <state>MBEDTLS_MCUX_ELE_S400_API</state>
           <state>MBEDTLS_CONFIG_FILE="ele_s400_mbedtls_config.h"</state>
           <state>MBEDTLS_THREADING_C</state>
           <state>MBEDTLS_THREADING_ALT</state>
-          <state>LWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1</state>
-          <state>LWIP_SUPPORT_CUSTOM_PBUF=1</state>
-          <state>CHECKSUM_GEN_IP=1</state>
-          <state>CHECKSUM_GEN_UDP=1</state>
-          <state>CHECKSUM_GEN_TCP=1</state>
-          <state>CHECKSUM_GEN_ICMP=1</state>
-          <state>CHECKSUM_GEN_ICMP6=1</state>
-          <state>CHECKSUM_CHECK_UDP=1</state>
-          <state>CHECKSUM_CHECK_TCP=1</state>
-          <state>CHECKSUM_CHECK_ICMP=1</state>
-          <state>CHECKSUM_CHECK_ICMP6=1</state>
           <state>SDK_OS_FREE_RTOS</state>
         </option>
         <option>
@@ -396,10 +384,11 @@
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/periph</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/drivers/cm7</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/debug_console</state>
+          <state>$PROJ_DIR$/../../../../../../../components/silicon_id</state>
+          <state>$PROJ_DIR$/../../../../../../../components/silicon_id/socs</state>
           <state>$PROJ_DIR$/../../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../../components/gpio</state>
           <state>$PROJ_DIR$/../../../../../../../components/uart</state>
@@ -407,15 +396,11 @@
           <state>$PROJ_DIR$/../../../../../../../components/phy</state>
           <state>$PROJ_DIR$/../../../../../../../components/phy/device/phyrtl8211f</state>
           <state>$PROJ_DIR$/../../../../../../../components/phy/device/phyrtl8201</state>
-          <state>$PROJ_DIR$/../../../../../../../components/silicon_id</state>
-          <state>$PROJ_DIR$/../../../../../../../components/silicon_id/socs</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/mbedtls/include</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/mbedtls/library</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/mbedtls/port/ele_s400</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/lwip/port</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/lwip/src</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/lwip/src/include</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/lwip/src/include/lwip</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/lwip/port/sys_arch/dynamic</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/lwip/src/apps/httpsrv</state>
           <state>$PROJ_DIR$/../../../../../../../rtos/freertos/freertos-kernel/include</state>
@@ -605,7 +590,8 @@
         <option>
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
-          <state>CPU_MIMXRT1189CVM8B_cm7</state>
+          <state>CPU_MIMXRT1189CVM8C_cm7</state>
+          <state>MIMXRT1189_cm7_SERIES</state>
         </option>
         <option>
           <name>AList</name>
@@ -704,10 +690,11 @@
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/periph</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/drivers/cm7</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/debug_console</state>
+          <state>$PROJ_DIR$/../../../../../../../components/silicon_id</state>
+          <state>$PROJ_DIR$/../../../../../../../components/silicon_id/socs</state>
           <state>$PROJ_DIR$/../../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../../components/gpio</state>
           <state>$PROJ_DIR$/../../../../../../../components/uart</state>
@@ -715,15 +702,11 @@
           <state>$PROJ_DIR$/../../../../../../../components/phy</state>
           <state>$PROJ_DIR$/../../../../../../../components/phy/device/phyrtl8211f</state>
           <state>$PROJ_DIR$/../../../../../../../components/phy/device/phyrtl8201</state>
-          <state>$PROJ_DIR$/../../../../../../../components/silicon_id</state>
-          <state>$PROJ_DIR$/../../../../../../../components/silicon_id/socs</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/mbedtls/include</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/mbedtls/library</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/mbedtls/port/ele_s400</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/lwip/port</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/lwip/src</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/lwip/src/include</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/lwip/src/include/lwip</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/lwip/port/sys_arch/dynamic</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/lwip/src/apps/httpsrv</state>
           <state>$PROJ_DIR$/../../../../../../../rtos/freertos/freertos-kernel/include</state>
@@ -744,7 +727,7 @@
         </option>
         <option>
           <name>PreInclude</name>
-          <state/>
+          <state>$PROJ_DIR$/../mcux_config.h</state>
         </option>
       </data>
     </settings>
@@ -1436,31 +1419,19 @@
           <state>XIP_EXTERNAL_FLASH=1</state>
           <state>USE_RTOS=1</state>
           <state>PRINTF_ADVANCED_ENABLE=1</state>
-          <state>HTTPSRV_CFG_WEBSOCKET_ENABLED=1</state>
-          <state>HTTPSRV_CFG_MBEDTLS_ENABLE=1</state>
           <state>MBEDTLS_KEY_EXCHANGE_RSA_ENABLED</state>
           <state>FSL_ETH_ENABLE_CACHE_CONTROL</state>
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
-          <state>CPU_MIMXRT1189CVM8B_cm7</state>
+          <state>CPU_MIMXRT1189CVM8C_cm7</state>
+          <state>MIMXRT1189_cm7_SERIES</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>CACHE_MODE_WRITE_THROUGH=1</state>
           <state>MBEDTLS_MCUX_ELE_S400_API</state>
           <state>MBEDTLS_CONFIG_FILE="ele_s400_mbedtls_config.h"</state>
           <state>MBEDTLS_THREADING_C</state>
           <state>MBEDTLS_THREADING_ALT</state>
-          <state>LWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1</state>
-          <state>LWIP_SUPPORT_CUSTOM_PBUF=1</state>
-          <state>CHECKSUM_GEN_IP=1</state>
-          <state>CHECKSUM_GEN_UDP=1</state>
-          <state>CHECKSUM_GEN_TCP=1</state>
-          <state>CHECKSUM_GEN_ICMP=1</state>
-          <state>CHECKSUM_GEN_ICMP6=1</state>
-          <state>CHECKSUM_CHECK_UDP=1</state>
-          <state>CHECKSUM_CHECK_TCP=1</state>
-          <state>CHECKSUM_CHECK_ICMP=1</state>
-          <state>CHECKSUM_CHECK_ICMP6=1</state>
           <state>SDK_OS_FREE_RTOS</state>
         </option>
         <option>
@@ -1589,10 +1560,11 @@
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/periph</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/drivers/cm7</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/debug_console</state>
+          <state>$PROJ_DIR$/../../../../../../../components/silicon_id</state>
+          <state>$PROJ_DIR$/../../../../../../../components/silicon_id/socs</state>
           <state>$PROJ_DIR$/../../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../../components/gpio</state>
           <state>$PROJ_DIR$/../../../../../../../components/uart</state>
@@ -1600,15 +1572,11 @@
           <state>$PROJ_DIR$/../../../../../../../components/phy</state>
           <state>$PROJ_DIR$/../../../../../../../components/phy/device/phyrtl8211f</state>
           <state>$PROJ_DIR$/../../../../../../../components/phy/device/phyrtl8201</state>
-          <state>$PROJ_DIR$/../../../../../../../components/silicon_id</state>
-          <state>$PROJ_DIR$/../../../../../../../components/silicon_id/socs</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/mbedtls/include</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/mbedtls/library</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/mbedtls/port/ele_s400</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/lwip/port</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/lwip/src</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/lwip/src/include</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/lwip/src/include/lwip</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/lwip/port/sys_arch/dynamic</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/lwip/src/apps/httpsrv</state>
           <state>$PROJ_DIR$/../../../../../../../rtos/freertos/freertos-kernel/include</state>
@@ -1798,7 +1766,8 @@
         <option>
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
-          <state>CPU_MIMXRT1189CVM8B_cm7</state>
+          <state>CPU_MIMXRT1189CVM8C_cm7</state>
+          <state>MIMXRT1189_cm7_SERIES</state>
         </option>
         <option>
           <name>AList</name>
@@ -1897,10 +1866,11 @@
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/periph</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/drivers/cm7</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/debug_console</state>
+          <state>$PROJ_DIR$/../../../../../../../components/silicon_id</state>
+          <state>$PROJ_DIR$/../../../../../../../components/silicon_id/socs</state>
           <state>$PROJ_DIR$/../../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../../components/gpio</state>
           <state>$PROJ_DIR$/../../../../../../../components/uart</state>
@@ -1908,15 +1878,11 @@
           <state>$PROJ_DIR$/../../../../../../../components/phy</state>
           <state>$PROJ_DIR$/../../../../../../../components/phy/device/phyrtl8211f</state>
           <state>$PROJ_DIR$/../../../../../../../components/phy/device/phyrtl8201</state>
-          <state>$PROJ_DIR$/../../../../../../../components/silicon_id</state>
-          <state>$PROJ_DIR$/../../../../../../../components/silicon_id/socs</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/mbedtls/include</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/mbedtls/library</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/mbedtls/port/ele_s400</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/lwip/port</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/lwip/src</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/lwip/src/include</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/lwip/src/include/lwip</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/lwip/port/sys_arch/dynamic</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/lwip/src/apps/httpsrv</state>
           <state>$PROJ_DIR$/../../../../../../../rtos/freertos/freertos-kernel/include</state>
@@ -1937,7 +1903,7 @@
         </option>
         <option>
           <name>PreInclude</name>
-          <state/>
+          <state>$PROJ_DIR$/../mcux_config.h</state>
         </option>
       </data>
     </settings>
@@ -2438,6 +2404,15 @@
       <name>$PROJ_DIR$/../fsl_debug_console_conf.h</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../lwipopts_gen.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../mcux_config.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../mcux_config.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../mcux_config.h</name>
     </file>
   </group>
@@ -2502,6 +2477,9 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/drivers/fsl_iomuxc.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/drivers/fsl_memory.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/drivers/fsl_memory.h</name>
@@ -2609,6 +2587,9 @@
       </group>
       <file>
         <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/drivers/fsl_netc_switch.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/drivers/fsl_netc_tag.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/drivers/fsl_netc_switch.c</name>
@@ -3008,10 +2989,10 @@
   <group>
     <name>utilities</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/fsl_assert.h</name>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/debug_console/fsl_assert.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/fsl_assert.c</name>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/debug_console/fsl_assert.c</name>
     </file>
     <group>
       <name>str</name>
@@ -3043,6 +3024,21 @@
         <name>$PROJ_DIR$/../../../../../../../components/lists/fsl_component_generic_list.c</name>
       </file>
     </group>
+    <group>
+      <name>silicon_id</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../components/silicon_id/fsl_silicon_id.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../components/silicon_id/fsl_silicon_id.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../components/silicon_id/socs/imxrt1180/fsl_silicon_id_soc.c</name>
+      </file>
+    </group>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../components/silicon_id/socs/fsl_silicon_id_soc.h</name>
+    </file>
     <group>
       <name>serial_manager</name>
       <file>
@@ -3109,21 +3105,6 @@
         <name>$PROJ_DIR$/../../../../../../../components/phy/device/phyrtl8201/fsl_phyrtl8201.h</name>
       </file>
     </group>
-    <group>
-      <name>silicon_id</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../components/silicon_id/fsl_silicon_id.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../components/silicon_id/fsl_silicon_id.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../components/silicon_id/socs/imxrt1180/fsl_silicon_id_soc.c</name>
-      </file>
-    </group>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../components/silicon_id/socs/fsl_silicon_id_soc.h</name>
-    </file>
   </group>
   <group>
     <name>mbedtls</name>
@@ -4818,6 +4799,9 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../example_board_readme.md</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../examples_shared_readme.md</name>
     </file>
   </group>
 </project>

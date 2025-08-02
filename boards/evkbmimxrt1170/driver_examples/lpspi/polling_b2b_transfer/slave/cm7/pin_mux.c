@@ -1,5 +1,5 @@
 /*
- * Copyright 2020-2021 NXP
+ * Copyright 2020-2025 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -15,7 +15,7 @@
 !!GlobalInfo
 product: Pins v9.0
 processor: MIMXRT1176xxxxx
-package_id: MIMXRT1176DVMAA
+package_id: MIMXRT1176DVMAB
 mcu_data: ksdk2_0
 processor_version: 0.9.6
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
@@ -41,17 +41,17 @@ BOARD_InitPins:
 - options: {callFromInitBoot: 'true', coreID: cm7, enableClock: 'true'}
 - pin_list:
   - {pin_num: L13, peripheral: LPUART1, signal: TXD, pin_signal: GPIO_AD_24, software_input_on: Disable, pull_up_down_config: Pull_Down, pull_keeper_select: Keeper,
-    open_drain: Disable, drive_strength: High, slew_rate: Slow}
+    open_drain: Disable, drive_strength: High, slew_rate: Fast}
   - {pin_num: M15, peripheral: LPUART1, signal: RXD, pin_signal: GPIO_AD_25, software_input_on: Disable, pull_up_down_config: Pull_Down, pull_keeper_select: Keeper,
-    open_drain: Disable, drive_strength: High, slew_rate: Slow}
+    open_drain: Disable, drive_strength: High, slew_rate: Fast}
   - {pin_num: M17, peripheral: LPSPI1, signal: PCS0, pin_signal: GPIO_AD_29, software_input_on: Disable, pull_up_down_config: Pull_Down, pull_keeper_select: Keeper,
-    open_drain: Disable, drive_strength: High, slew_rate: Slow}
+    open_drain: Disable, drive_strength: High, slew_rate: Fast}
   - {pin_num: L17, peripheral: LPSPI1, signal: SCK, pin_signal: GPIO_AD_28, software_input_on: Disable, pull_up_down_config: Pull_Down, pull_keeper_select: Keeper,
-    open_drain: Disable, drive_strength: High, slew_rate: Slow}
+    open_drain: Disable, drive_strength: High, slew_rate: Fast}
   - {pin_num: J17, peripheral: LPSPI1, signal: SIN, pin_signal: GPIO_AD_31, software_input_on: Disable, pull_up_down_config: Pull_Down, pull_keeper_select: Keeper,
-    open_drain: Disable, drive_strength: High, slew_rate: Slow}
+    open_drain: Disable, drive_strength: High, slew_rate: Fast}
   - {pin_num: K17, peripheral: LPSPI1, signal: SOUT, pin_signal: GPIO_AD_30, software_input_on: Disable, pull_up_down_config: Pull_Down, pull_keeper_select: Keeper,
-    open_drain: Disable, drive_strength: High, slew_rate: Slow}
+    open_drain: Disable, drive_strength: High, slew_rate: Fast}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 
@@ -84,7 +84,7 @@ void BOARD_InitPins(void) {
       0U);                                    /* Software Input On Field: Input Path is determined by functionality */
   IOMUXC_SetPinConfig(
       IOMUXC_GPIO_AD_24_LPUART1_TXD,          /* GPIO_AD_24 PAD functional properties : */
-      0x02U);                                 /* Slew Rate Field: Slow Slew Rate
+      0x02U);                                 /* Slew Rate Field: Fast Slew Rate
                                                  Drive Strength Field: high drive strength
                                                  Pull / Keep Select Field: Pull Disable, Highz
                                                  Pull Up / Down Config. Field: Weak pull down
@@ -93,7 +93,7 @@ void BOARD_InitPins(void) {
                                                  Domain write protection lock: Neither of DWP bits is locked */
   IOMUXC_SetPinConfig(
       IOMUXC_GPIO_AD_25_LPUART1_RXD,          /* GPIO_AD_25 PAD functional properties : */
-      0x02U);                                 /* Slew Rate Field: Slow Slew Rate
+      0x02U);                                 /* Slew Rate Field: Fast Slew Rate
                                                  Drive Strength Field: high drive strength
                                                  Pull / Keep Select Field: Pull Disable, Highz
                                                  Pull Up / Down Config. Field: Weak pull down
@@ -102,7 +102,7 @@ void BOARD_InitPins(void) {
                                                  Domain write protection lock: Neither of DWP bits is locked */
   IOMUXC_SetPinConfig(
       IOMUXC_GPIO_AD_28_LPSPI1_SCK,           /* GPIO_AD_28 PAD functional properties : */
-      0x02U);                                 /* Slew Rate Field: Slow Slew Rate
+      0x02U);                                 /* Slew Rate Field: Fast Slew Rate
                                                  Drive Strength Field: high drive strength
                                                  Pull / Keep Select Field: Pull Disable, Highz
                                                  Pull Up / Down Config. Field: Weak pull down
@@ -111,7 +111,7 @@ void BOARD_InitPins(void) {
                                                  Domain write protection lock: Neither of DWP bits is locked */
   IOMUXC_SetPinConfig(
       IOMUXC_GPIO_AD_29_LPSPI1_PCS0,          /* GPIO_AD_29 PAD functional properties : */
-      0x02U);                                 /* Slew Rate Field: Slow Slew Rate
+      0x02U);                                 /* Slew Rate Field: Fast Slew Rate
                                                  Drive Strength Field: high drive strength
                                                  Pull / Keep Select Field: Pull Disable, Highz
                                                  Pull Up / Down Config. Field: Weak pull down
@@ -120,7 +120,7 @@ void BOARD_InitPins(void) {
                                                  Domain write protection lock: Neither of DWP bits is locked */
   IOMUXC_SetPinConfig(
       IOMUXC_GPIO_AD_30_LPSPI1_SOUT,          /* GPIO_AD_30 PAD functional properties : */
-      0x02U);                                 /* Slew Rate Field: Slow Slew Rate
+      0x02U);                                 /* Slew Rate Field: Fast Slew Rate
                                                  Drive Strength Field: high drive strength
                                                  Pull / Keep Select Field: Pull Disable, Highz
                                                  Pull Up / Down Config. Field: Weak pull down
@@ -129,7 +129,7 @@ void BOARD_InitPins(void) {
                                                  Domain write protection lock: Neither of DWP bits is locked */
   IOMUXC_SetPinConfig(
       IOMUXC_GPIO_AD_31_LPSPI1_SIN,           /* GPIO_AD_31 PAD functional properties : */
-      0x02U);                                 /* Slew Rate Field: Slow Slew Rate
+      0x02U);                                 /* Slew Rate Field: Fast Slew Rate
                                                  Drive Strength Field: high drive strength
                                                  Pull / Keep Select Field: Pull Disable, Highz
                                                  Pull Up / Down Config. Field: Weak pull down

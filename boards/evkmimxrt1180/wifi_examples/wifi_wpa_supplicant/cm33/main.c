@@ -292,9 +292,33 @@ int wlan_event_callback(enum wlan_event_reason reason, void *data)
             printSeparator();
             PRINTF("Soft AP \"%s\" started successfully\r\n", ssid);
             printSeparator();
-            if (dhcp_server_start(net_get_uap_handle()))
+            void *intrfc_handle = net_get_uap_handle();
+#if CONFIG_WPA_SUPP_P2P
+            struct wlan_network *uap_network = NULL;
+            uap_network = OSA_MemoryAllocate(sizeof(struct wlan_network));
+            if (uap_network == NULL )
+            {
+                PRINTF("Failed to allocate memory for uap_network!\r\n");
+                return 0;
+            }
+            (void)memset(uap_network, 0, sizeof(struct wlan_network));
+            ret = wlan_get_current_uap_network(uap_network);
+            if (ret != WM_SUCCESS)
+            {
+                PRINTF("Failed to get Soft AP network\r\n");
+		        OSA_MemoryFree(uap_network);
+                return 0;
+            }
+            if (uap_network->type == WLAN_BSS_TYPE_WIFIDIRECT)
+            {
+                intrfc_handle = net_get_wfd_handle();
+            }
+            OSA_MemoryFree(uap_network);
+#endif
+            if (dhcp_server_start(intrfc_handle))
+            {
                 PRINTF("Error in starting dhcp server\r\n");
-
+            }
             PRINTF("DHCP Server started successfully\r\n");
             printSeparator();
             break;
@@ -361,6 +385,7 @@ int wlan_event_callback(enum wlan_event_reason reason, void *data)
             break;
         default:
             PRINTF("app_cb: WLAN: Unknown Event: %d\r\n", reason);
+            break;
     }
     return 0;
 }
@@ -679,7 +704,7 @@ int main(void)
     printSeparator();
     PRINTF("wifi wpa supplicant demo\r\n");
     printSeparator();
-    CRYPTO_InitHardware();
+    (void)CRYPTO_InitHardware();
 #ifdef RW610
     RTC_Init(RTC);
 #endif

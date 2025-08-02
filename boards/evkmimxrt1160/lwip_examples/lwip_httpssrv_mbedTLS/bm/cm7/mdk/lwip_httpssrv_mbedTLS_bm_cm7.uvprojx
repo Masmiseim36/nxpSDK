@@ -332,9 +332,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../mcux_config.h -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
-              <Define>FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, DEBUG, XIP_EXTERNAL_FLASH=1, USE_SDRAM=1, XIP_BOOT_HEADER_ENABLE=1, XIP_BOOT_HEADER_XMCD_ENABLE=1, SKIP_SYSCLK_INIT=1, DATA_SECTION_IS_CACHEABLE=1, PRINTF_ADVANCED_ENABLE=1, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, LWIP_ENET_FLEXIBLE_CONFIGURATION, MBEDTLS_CONFIG_FILE='\"ksdk_mbedtls_config.h\"', MBEDTLS_SSL_CIPHERSUITES=MBEDTLS_TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1166DVM6A_cm7, CRYPTO_USE_DRIVER_CAAM, CACHE_MODE_WRITE_THROUGH=1, SERIAL_PORT_TYPE_UART=1, LWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1, LWIP_SUPPORT_CUSTOM_PBUF=1, CHECKSUM_GEN_UDP=1, CHECKSUM_GEN_TCP=1, CHECKSUM_GEN_ICMP=1, CHECKSUM_GEN_ICMP6=1, CHECKSUM_CHECK_UDP=1, CHECKSUM_CHECK_TCP=1, CHECKSUM_CHECK_ICMP=1, CHECKSUM_CHECK_ICMP6=1</Define>
+              <Define>FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, DEBUG, XIP_EXTERNAL_FLASH=1, USE_SDRAM=1, XIP_BOOT_HEADER_ENABLE=1, XIP_BOOT_HEADER_XMCD_ENABLE=1, SKIP_SYSCLK_INIT=1, DATA_SECTION_IS_CACHEABLE=1, PRINTF_ADVANCED_ENABLE=1, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, MBEDTLS_CONFIG_FILE='\"ksdk_mbedtls_config.h\"', MBEDTLS_SSL_CIPHERSUITES=MBEDTLS_TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1166DVM6A_cm7, MIMXRT1166_cm7_SERIES, CRYPTO_USE_DRIVER_CAAM, CACHE_MODE_WRITE_THROUGH=1, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../xip;../../../../../../../devices/MIMXRT1166/xip;../../../../../../../devices/MIMXRT1166/drivers;../../../../../../../CMSIS/Core/Include;../../../../../../../CMSIS/Core/Include/m-profile;../../../../../../../devices/MIMXRT1166;../../../../../../../devices/MIMXRT1166/periph;../../../../../../../devices/MIMXRT1166/drivers/cm7;../../../../../../../devices/MIMXRT1166/utilities;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../../devices/MIMXRT1166/utilities/debug_console;../../../../../../../components/serial_manager;../../../../../../../components/gpio;../../../../../../../components/uart;../../../../../../../components/phy;../../../../../../../components/phy/device/phyrtl8211f;../../../../../../../components/phy/device/phyksz8081;../../../../../../../components/silicon_id;../../../../../../../components/silicon_id/socs;../../../../../../../middleware/mbedtls/include;../../../../../../../middleware/mbedtls/library;../../../../../../../middleware/mbedtls/port/ksdk;../../../../../../../middleware/lwip/port;../../../../../../../middleware/lwip/src;../../../../../../../middleware/lwip/src/include;../../../../../../../middleware/lwip/src/include/lwip;../../../../../../../middleware/lwip/port/sys_arch/dynamic;../../../../../../../middleware/lwip/src/apps/http;../../../../../../../middleware/lwip/src/include/lwip/apps</IncludePath>
+              <IncludePath>..;../../../../../xip;../../../../../../../devices/MIMXRT1166/xip;../../../../../../../devices/MIMXRT1166/drivers;../../../../../../../CMSIS/Core/Include;../../../../../../../CMSIS/Core/Include/m-profile;../../../../../../../devices/MIMXRT1166;../../../../../../../devices/MIMXRT1166/periph;../../../../../../../devices/MIMXRT1166/drivers/cm7;../../../../../../../devices/MIMXRT1166/utilities/debug_console;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../../components/silicon_id;../../../../../../../components/silicon_id/socs;../../../../../../../components/serial_manager;../../../../../../../components/gpio;../../../../../../../components/uart;../../../../../../../components/phy;../../../../../../../components/phy/device/phyrtl8211f;../../../../../../../components/phy/device/phyksz8081;../../../../../../../middleware/mbedtls/include;../../../../../../../middleware/mbedtls/library;../../../../../../../middleware/mbedtls/port/ksdk;../../../../../../../middleware/lwip/port;../../../../../../../middleware/lwip/src/include;../../../../../../../middleware/lwip/port/sys_arch/dynamic;../../../../../../../middleware/lwip/src/apps/altcp_tls;../../../../../../../middleware/lwip/src/apps/http</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -350,9 +350,9 @@
             <ClangAsOpt>2</ClangAsOpt>
             <VariousControls>
               <MiscControls/>
-              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1166DVM6A_cm7</Define>
+              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1166DVM6A_cm7, MIMXRT1166_cm7_SERIES</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../xip;../../../../../../../devices/MIMXRT1166/xip;../../../../../../../devices/MIMXRT1166/drivers;../../../../../../../CMSIS/Core/Include;../../../../../../../CMSIS/Core/Include/m-profile;../../../../../../../devices/MIMXRT1166;../../../../../../../devices/MIMXRT1166/periph;../../../../../../../devices/MIMXRT1166/drivers/cm7;../../../../../../../devices/MIMXRT1166/utilities;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../../devices/MIMXRT1166/utilities/debug_console;../../../../../../../components/serial_manager;../../../../../../../components/gpio;../../../../../../../components/uart;../../../../../../../components/phy;../../../../../../../components/phy/device/phyrtl8211f;../../../../../../../components/phy/device/phyksz8081;../../../../../../../components/silicon_id;../../../../../../../components/silicon_id/socs;../../../../../../../middleware/mbedtls/include;../../../../../../../middleware/mbedtls/library;../../../../../../../middleware/mbedtls/port/ksdk;../../../../../../../middleware/lwip/port;../../../../../../../middleware/lwip/src;../../../../../../../middleware/lwip/src/include;../../../../../../../middleware/lwip/src/include/lwip;../../../../../../../middleware/lwip/port/sys_arch/dynamic;../../../../../../../middleware/lwip/src/apps/http;../../../../../../../middleware/lwip/src/include/lwip/apps</IncludePath>
+              <IncludePath>..;../../../../../xip;../../../../../../../devices/MIMXRT1166/xip;../../../../../../../devices/MIMXRT1166/drivers;../../../../../../../CMSIS/Core/Include;../../../../../../../CMSIS/Core/Include/m-profile;../../../../../../../devices/MIMXRT1166;../../../../../../../devices/MIMXRT1166/periph;../../../../../../../devices/MIMXRT1166/drivers/cm7;../../../../../../../devices/MIMXRT1166/utilities/debug_console;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../../components/silicon_id;../../../../../../../components/silicon_id/socs;../../../../../../../components/serial_manager;../../../../../../../components/gpio;../../../../../../../components/uart;../../../../../../../components/phy;../../../../../../../components/phy/device/phyrtl8211f;../../../../../../../components/phy/device/phyksz8081;../../../../../../../middleware/mbedtls/include;../../../../../../../middleware/mbedtls/library;../../../../../../../middleware/mbedtls/port/ksdk;../../../../../../../middleware/lwip/port;../../../../../../../middleware/lwip/src/include;../../../../../../../middleware/lwip/port/sys_arch/dynamic;../../../../../../../middleware/lwip/src/apps/altcp_tls;../../../../../../../middleware/lwip/src/apps/http</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -379,16 +379,6 @@
           <GroupName>source</GroupName>
           <Files>
             <File>
-              <FileName>httpd_mbedtls.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../httpd_mbedtls.c</FilePath>
-            </File>
-            <File>
-              <FileName>httpd_mbedtls.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../httpd_mbedtls.h</FilePath>
-            </File>
-            <File>
               <FileName>lwip_httpssrv_mbedTLS_bm.c</FileName>
               <FileType>1</FileType>
               <FilePath>../lwip_httpssrv_mbedTLS_bm.c</FilePath>
@@ -402,6 +392,11 @@
               <FileName>fsl_debug_console_conf.h</FileName>
               <FileType>5</FileType>
               <FilePath>../fsl_debug_console_conf.h</FilePath>
+            </File>
+            <File>
+              <FileName>lwipopts_gen.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../lwipopts_gen.h</FilePath>
             </File>
             <File>
               <FileName>mcux_config.h</FileName>
@@ -652,6 +647,16 @@
               <FileName>fsl_lpuart.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_lpuart.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_mu.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_mu.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_mu.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_mu.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1276,12 +1281,12 @@
             <File>
               <FileName>fsl_assert.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/utilities/fsl_assert.h</FilePath>
+              <FilePath>../../../../../../../devices/MIMXRT1166/utilities/debug_console/fsl_assert.h</FilePath>
             </File>
             <File>
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/utilities/fsl_assert.c</FilePath>
+              <FilePath>../../../../../../../devices/MIMXRT1166/utilities/debug_console/fsl_assert.c</FilePath>
             </File>
             <File>
               <FileName>fsl_memcpy.S</FileName>
@@ -1317,6 +1322,36 @@
               <FileName>fsl_str.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1166/utilities/str/fsl_str.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/silicon_id</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_silicon_id.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_silicon_id.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_silicon_id_soc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../components/silicon_id/socs/imxrt1170/fsl_silicon_id_soc.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_silicon_id_soc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../components/silicon_id/socs/fsl_silicon_id_soc.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1422,36 +1457,6 @@
               <FileName>fsl_phyksz8081.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../components/phy/device/phyksz8081/fsl_phyksz8081.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component/silicon_id</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_silicon_id.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_silicon_id.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_silicon_id_soc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../components/silicon_id/socs/imxrt1170/fsl_silicon_id_soc.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_silicon_id_soc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../components/silicon_id/socs/fsl_silicon_id_soc.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3821,6 +3826,61 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>lwip/src/apps/altcp_tls</GroupName>
+          <Files>
+            <File>
+              <FileName>altcp_tls_mbedtls.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/apps/altcp_tls/altcp_tls_mbedtls.c</FilePath>
+            </File>
+            <File>
+              <FileName>altcp_tls_mbedtls_mem.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/apps/altcp_tls/altcp_tls_mbedtls_mem.c</FilePath>
+            </File>
+            <File>
+              <FileName>altcp_tls_mbedtls_mem.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/apps/altcp_tls/altcp_tls_mbedtls_mem.h</FilePath>
+            </File>
+            <File>
+              <FileName>altcp_tls_mbedtls_structs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/apps/altcp_tls/altcp_tls_mbedtls_structs.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lwip/src/include/lwip/apps</GroupName>
+          <Files>
+            <File>
+              <FileName>altcp_proxyconnect.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/apps/altcp_proxyconnect.h</FilePath>
+            </File>
+            <File>
+              <FileName>altcp_tls_mbedtls_opts.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/apps/altcp_tls_mbedtls_opts.h</FilePath>
+            </File>
+            <File>
+              <FileName>fs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/apps/fs.h</FilePath>
+            </File>
+            <File>
+              <FileName>httpd.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/apps/httpd.h</FilePath>
+            </File>
+            <File>
+              <FileName>httpd_opts.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/apps/httpd_opts.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>lwip/src/apps/http</GroupName>
           <Files>
             <File>
@@ -3842,26 +3902,6 @@
               <FileName>httpd.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../middleware/lwip/src/apps/http/httpd.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>lwip/src/include/lwip/apps</GroupName>
-          <Files>
-            <File>
-              <FileName>fs.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/apps/fs.h</FilePath>
-            </File>
-            <File>
-              <FileName>httpd.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/apps/httpd.h</FilePath>
-            </File>
-            <File>
-              <FileName>httpd_opts.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/apps/httpd_opts.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3922,6 +3962,11 @@
               <FileName>example_board_readme.md</FileName>
               <FileType>5</FileType>
               <FilePath>../example_board_readme.md</FilePath>
+            </File>
+            <File>
+              <FileName>examples_shared_readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../examples_shared_readme.md</FilePath>
             </File>
           </Files>
         </Group>
@@ -4256,9 +4301,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../mcux_config.h -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
-              <Define>FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, NDEBUG, XIP_EXTERNAL_FLASH=1, USE_SDRAM=1, XIP_BOOT_HEADER_ENABLE=1, XIP_BOOT_HEADER_XMCD_ENABLE=1, SKIP_SYSCLK_INIT=1, DATA_SECTION_IS_CACHEABLE=1, PRINTF_ADVANCED_ENABLE=1, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, LWIP_ENET_FLEXIBLE_CONFIGURATION, MBEDTLS_CONFIG_FILE='\"ksdk_mbedtls_config.h\"', MBEDTLS_SSL_CIPHERSUITES=MBEDTLS_TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1166DVM6A_cm7, CRYPTO_USE_DRIVER_CAAM, CACHE_MODE_WRITE_THROUGH=1, SERIAL_PORT_TYPE_UART=1, LWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1, LWIP_SUPPORT_CUSTOM_PBUF=1, CHECKSUM_GEN_UDP=1, CHECKSUM_GEN_TCP=1, CHECKSUM_GEN_ICMP=1, CHECKSUM_GEN_ICMP6=1, CHECKSUM_CHECK_UDP=1, CHECKSUM_CHECK_TCP=1, CHECKSUM_CHECK_ICMP=1, CHECKSUM_CHECK_ICMP6=1</Define>
+              <Define>FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, NDEBUG, XIP_EXTERNAL_FLASH=1, USE_SDRAM=1, XIP_BOOT_HEADER_ENABLE=1, XIP_BOOT_HEADER_XMCD_ENABLE=1, SKIP_SYSCLK_INIT=1, DATA_SECTION_IS_CACHEABLE=1, PRINTF_ADVANCED_ENABLE=1, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, MBEDTLS_CONFIG_FILE='\"ksdk_mbedtls_config.h\"', MBEDTLS_SSL_CIPHERSUITES=MBEDTLS_TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1166DVM6A_cm7, MIMXRT1166_cm7_SERIES, CRYPTO_USE_DRIVER_CAAM, CACHE_MODE_WRITE_THROUGH=1, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../xip;../../../../../../../devices/MIMXRT1166/xip;../../../../../../../devices/MIMXRT1166/drivers;../../../../../../../CMSIS/Core/Include;../../../../../../../CMSIS/Core/Include/m-profile;../../../../../../../devices/MIMXRT1166;../../../../../../../devices/MIMXRT1166/periph;../../../../../../../devices/MIMXRT1166/drivers/cm7;../../../../../../../devices/MIMXRT1166/utilities;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../../devices/MIMXRT1166/utilities/debug_console;../../../../../../../components/serial_manager;../../../../../../../components/gpio;../../../../../../../components/uart;../../../../../../../components/phy;../../../../../../../components/phy/device/phyrtl8211f;../../../../../../../components/phy/device/phyksz8081;../../../../../../../components/silicon_id;../../../../../../../components/silicon_id/socs;../../../../../../../middleware/mbedtls/include;../../../../../../../middleware/mbedtls/library;../../../../../../../middleware/mbedtls/port/ksdk;../../../../../../../middleware/lwip/port;../../../../../../../middleware/lwip/src;../../../../../../../middleware/lwip/src/include;../../../../../../../middleware/lwip/src/include/lwip;../../../../../../../middleware/lwip/port/sys_arch/dynamic;../../../../../../../middleware/lwip/src/apps/http;../../../../../../../middleware/lwip/src/include/lwip/apps</IncludePath>
+              <IncludePath>..;../../../../../xip;../../../../../../../devices/MIMXRT1166/xip;../../../../../../../devices/MIMXRT1166/drivers;../../../../../../../CMSIS/Core/Include;../../../../../../../CMSIS/Core/Include/m-profile;../../../../../../../devices/MIMXRT1166;../../../../../../../devices/MIMXRT1166/periph;../../../../../../../devices/MIMXRT1166/drivers/cm7;../../../../../../../devices/MIMXRT1166/utilities/debug_console;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../../components/silicon_id;../../../../../../../components/silicon_id/socs;../../../../../../../components/serial_manager;../../../../../../../components/gpio;../../../../../../../components/uart;../../../../../../../components/phy;../../../../../../../components/phy/device/phyrtl8211f;../../../../../../../components/phy/device/phyksz8081;../../../../../../../middleware/mbedtls/include;../../../../../../../middleware/mbedtls/library;../../../../../../../middleware/mbedtls/port/ksdk;../../../../../../../middleware/lwip/port;../../../../../../../middleware/lwip/src/include;../../../../../../../middleware/lwip/port/sys_arch/dynamic;../../../../../../../middleware/lwip/src/apps/altcp_tls;../../../../../../../middleware/lwip/src/apps/http</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -4274,9 +4319,9 @@
             <ClangAsOpt>2</ClangAsOpt>
             <VariousControls>
               <MiscControls/>
-              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1166DVM6A_cm7</Define>
+              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1166DVM6A_cm7, MIMXRT1166_cm7_SERIES</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../xip;../../../../../../../devices/MIMXRT1166/xip;../../../../../../../devices/MIMXRT1166/drivers;../../../../../../../CMSIS/Core/Include;../../../../../../../CMSIS/Core/Include/m-profile;../../../../../../../devices/MIMXRT1166;../../../../../../../devices/MIMXRT1166/periph;../../../../../../../devices/MIMXRT1166/drivers/cm7;../../../../../../../devices/MIMXRT1166/utilities;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../../devices/MIMXRT1166/utilities/debug_console;../../../../../../../components/serial_manager;../../../../../../../components/gpio;../../../../../../../components/uart;../../../../../../../components/phy;../../../../../../../components/phy/device/phyrtl8211f;../../../../../../../components/phy/device/phyksz8081;../../../../../../../components/silicon_id;../../../../../../../components/silicon_id/socs;../../../../../../../middleware/mbedtls/include;../../../../../../../middleware/mbedtls/library;../../../../../../../middleware/mbedtls/port/ksdk;../../../../../../../middleware/lwip/port;../../../../../../../middleware/lwip/src;../../../../../../../middleware/lwip/src/include;../../../../../../../middleware/lwip/src/include/lwip;../../../../../../../middleware/lwip/port/sys_arch/dynamic;../../../../../../../middleware/lwip/src/apps/http;../../../../../../../middleware/lwip/src/include/lwip/apps</IncludePath>
+              <IncludePath>..;../../../../../xip;../../../../../../../devices/MIMXRT1166/xip;../../../../../../../devices/MIMXRT1166/drivers;../../../../../../../CMSIS/Core/Include;../../../../../../../CMSIS/Core/Include/m-profile;../../../../../../../devices/MIMXRT1166;../../../../../../../devices/MIMXRT1166/periph;../../../../../../../devices/MIMXRT1166/drivers/cm7;../../../../../../../devices/MIMXRT1166/utilities/debug_console;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../../components/silicon_id;../../../../../../../components/silicon_id/socs;../../../../../../../components/serial_manager;../../../../../../../components/gpio;../../../../../../../components/uart;../../../../../../../components/phy;../../../../../../../components/phy/device/phyrtl8211f;../../../../../../../components/phy/device/phyksz8081;../../../../../../../middleware/mbedtls/include;../../../../../../../middleware/mbedtls/library;../../../../../../../middleware/mbedtls/port/ksdk;../../../../../../../middleware/lwip/port;../../../../../../../middleware/lwip/src/include;../../../../../../../middleware/lwip/port/sys_arch/dynamic;../../../../../../../middleware/lwip/src/apps/altcp_tls;../../../../../../../middleware/lwip/src/apps/http</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -4303,16 +4348,6 @@
           <GroupName>source</GroupName>
           <Files>
             <File>
-              <FileName>httpd_mbedtls.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../httpd_mbedtls.c</FilePath>
-            </File>
-            <File>
-              <FileName>httpd_mbedtls.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../httpd_mbedtls.h</FilePath>
-            </File>
-            <File>
               <FileName>lwip_httpssrv_mbedTLS_bm.c</FileName>
               <FileType>1</FileType>
               <FilePath>../lwip_httpssrv_mbedTLS_bm.c</FilePath>
@@ -4326,6 +4361,11 @@
               <FileName>fsl_debug_console_conf.h</FileName>
               <FileType>5</FileType>
               <FilePath>../fsl_debug_console_conf.h</FilePath>
+            </File>
+            <File>
+              <FileName>lwipopts_gen.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../lwipopts_gen.h</FilePath>
             </File>
             <File>
               <FileName>mcux_config.h</FileName>
@@ -4576,6 +4616,16 @@
               <FileName>fsl_lpuart.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_lpuart.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_mu.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_mu.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_mu.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_mu.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -5200,12 +5250,12 @@
             <File>
               <FileName>fsl_assert.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/utilities/fsl_assert.h</FilePath>
+              <FilePath>../../../../../../../devices/MIMXRT1166/utilities/debug_console/fsl_assert.h</FilePath>
             </File>
             <File>
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/utilities/fsl_assert.c</FilePath>
+              <FilePath>../../../../../../../devices/MIMXRT1166/utilities/debug_console/fsl_assert.c</FilePath>
             </File>
             <File>
               <FileName>fsl_memcpy.S</FileName>
@@ -5241,6 +5291,36 @@
               <FileName>fsl_str.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1166/utilities/str/fsl_str.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/silicon_id</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_silicon_id.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_silicon_id.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_silicon_id_soc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../components/silicon_id/socs/imxrt1170/fsl_silicon_id_soc.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_silicon_id_soc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../components/silicon_id/socs/fsl_silicon_id_soc.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -5346,36 +5426,6 @@
               <FileName>fsl_phyksz8081.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../components/phy/device/phyksz8081/fsl_phyksz8081.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component/silicon_id</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_silicon_id.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_silicon_id.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_silicon_id_soc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../components/silicon_id/socs/imxrt1170/fsl_silicon_id_soc.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_silicon_id_soc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../components/silicon_id/socs/fsl_silicon_id_soc.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -7745,6 +7795,61 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>lwip/src/apps/altcp_tls</GroupName>
+          <Files>
+            <File>
+              <FileName>altcp_tls_mbedtls.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/apps/altcp_tls/altcp_tls_mbedtls.c</FilePath>
+            </File>
+            <File>
+              <FileName>altcp_tls_mbedtls_mem.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/apps/altcp_tls/altcp_tls_mbedtls_mem.c</FilePath>
+            </File>
+            <File>
+              <FileName>altcp_tls_mbedtls_mem.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/apps/altcp_tls/altcp_tls_mbedtls_mem.h</FilePath>
+            </File>
+            <File>
+              <FileName>altcp_tls_mbedtls_structs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/apps/altcp_tls/altcp_tls_mbedtls_structs.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lwip/src/include/lwip/apps</GroupName>
+          <Files>
+            <File>
+              <FileName>altcp_proxyconnect.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/apps/altcp_proxyconnect.h</FilePath>
+            </File>
+            <File>
+              <FileName>altcp_tls_mbedtls_opts.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/apps/altcp_tls_mbedtls_opts.h</FilePath>
+            </File>
+            <File>
+              <FileName>fs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/apps/fs.h</FilePath>
+            </File>
+            <File>
+              <FileName>httpd.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/apps/httpd.h</FilePath>
+            </File>
+            <File>
+              <FileName>httpd_opts.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/apps/httpd_opts.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>lwip/src/apps/http</GroupName>
           <Files>
             <File>
@@ -7766,26 +7871,6 @@
               <FileName>httpd.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../middleware/lwip/src/apps/http/httpd.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>lwip/src/include/lwip/apps</GroupName>
-          <Files>
-            <File>
-              <FileName>fs.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/apps/fs.h</FilePath>
-            </File>
-            <File>
-              <FileName>httpd.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/apps/httpd.h</FilePath>
-            </File>
-            <File>
-              <FileName>httpd_opts.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/apps/httpd_opts.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -7846,6 +7931,11 @@
               <FileName>example_board_readme.md</FileName>
               <FileType>5</FileType>
               <FilePath>../example_board_readme.md</FilePath>
+            </File>
+            <File>
+              <FileName>examples_shared_readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../examples_shared_readme.md</FilePath>
             </File>
           </Files>
         </Group>

@@ -19,6 +19,10 @@
 #define EXAMPLE_EP_TX_MSIX_ENTRY_IDX 2U
 #define EXAMPLE_FRAME_FID            1U
 
+/* ENETC pseudo port for management */
+#ifndef EXAMPLE_SWT_SI
+#define EXAMPLE_SWT_SI kNETC_ENETC1PSI0
+#endif
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
@@ -61,6 +65,42 @@ static uint8_t g_macAddr[6] = {0x54, 0x27, 0x8d, 0x00, 0x00, 0x00};
  ******************************************************************************/
 
 /*! @brief Build Frame for single ring transmit. */
+#if defined(FSL_FEATURE_NETC_HAS_SWITCH_TAG) && FSL_FEATURE_NETC_HAS_SWITCH_TAG
+static void APP_BuildBroadCastFrameSwtTag(uint32_t dstPort, uint32_t srcPort,
+                                          uint8_t port, netc_swt_tag_type_t type)
+{
+    netc_swt_tag_port_no_ts_t tag = {
+        .comTag = {
+            .tpid = NETC_SWITCH_DEFAULT_ETHER_TYPE,
+            .subType = kNETC_TagToPortNoTs,
+            .type = type,
+            .qv = 1,
+            .ipv = 0,
+            .dr = 0,
+            .swtId = 1,
+            .port = port
+        }
+    };
+    uint32_t headerSize = 14U + sizeof(tag);
+    uint32_t length = EXAMPLE_EP_TEST_FRAME_SIZE - headerSize;
+    uint32_t count;
+
+    memcpy(&g_txFrame[0], &g_macAddr[0], 5U);
+    g_txFrame[5] = dstPort;
+    memcpy(&g_txFrame[6], &g_macAddr[0], 5U);
+    g_txFrame[11] = srcPort;
+
+    memcpy(&g_txFrame[12], &tag, sizeof(tag));
+
+    g_txFrame[12 + sizeof(tag)] = (length >> 8U) & 0xFFU;
+    g_txFrame[13 + sizeof(tag)] = length & 0xFFU;
+
+    for (count = 0; count < length; count++)
+    {
+        g_txFrame[count + headerSize] = count % 0xFFU;
+    }
+}
+#else
 static void APP_BuildBroadCastFrame(uint32_t dstPort, uint32_t srcPort)
 {
     uint32_t length = EXAMPLE_EP_TEST_FRAME_SIZE - 14U;
@@ -78,10 +118,12 @@ static void APP_BuildBroadCastFrame(uint32_t dstPort, uint32_t srcPort)
         g_txFrame[count + 14U] = count % 0xFFU;
     }
 }
+#endif
 
 static status_t APP_ReclaimCallback(ep_handle_t *handle, uint8_t ring, netc_tx_frame_info_t *frameInfo, void *userData)
 {
     txFrameInfo = *frameInfo;
+    (void)txFrameInfo;
     return kStatus_Success;
 }
 
@@ -120,7 +162,9 @@ status_t APP_SWT_MacLearning_Forwarding(void)
     netc_bdr_config_t bdrConfig      = {.rxBdrConfig = &rxBdrConfig, .txBdrConfig = &txBdrConfig};
     netc_buffer_struct_t txBuff      = {.buffer = &g_txFrame, .length = sizeof(g_txFrame)};
     netc_frame_struct_t txFrame      = {.buffArray = &txBuff, .length = 1};
+#if !(defined(FSL_FEATURE_NETC_HAS_SWITCH_TAG) && FSL_FEATURE_NETC_HAS_SWITCH_TAG)
     swt_mgmt_tx_arg_t txArg          = {0};
+#endif
     bool link                        = false;
     netc_port_phy_mac_traffic_statistic_t swtTxStatis;
     netc_tb_fdb_search_criteria_t sCriteria;
@@ -174,7 +218,7 @@ status_t APP_SWT_MacLearning_Forwarding(void)
     bdrConfig.txBdrConfig[0].enIntr       = true;
 
     (void)EP_GetDefaultConfig(&g_ep_config);
-    g_ep_config.si                 = kNETC_ENETC1PSI0;
+    g_ep_config.si                 = EXAMPLE_SWT_SI;
     g_ep_config.siConfig.txRingUse = 1;
     g_ep_config.siConfig.rxRingUse = 1;
     g_ep_config.reclaimCallback    = APP_ReclaimCallback;
@@ -268,10 +312,15 @@ status_t APP_SWT_MacLearning_Forwarding(void)
         }
 
         /* Send the frame on port and loopback, let MAC learning work. */
-        APP_BuildBroadCastFrame(0xF0, i);
         txOver     = false;
+#if defined(FSL_FEATURE_NETC_HAS_SWITCH_TAG) && FSL_FEATURE_NETC_HAS_SWITCH_TAG
+        APP_BuildBroadCastFrameSwtTag(0xF0, i, i, kNETC_TagToPort);
+        result     = SWT_SendFrame(&g_swt_handle, &txFrame, NULL, NULL);
+#else
+        APP_BuildBroadCastFrame(0xF0, i);
         txArg.ring = 0;
         result     = SWT_SendFrame(&g_swt_handle, txArg, (netc_hw_port_idx_t)(kNETC_SWITCH0Port0 + i), false, &txFrame, NULL, NULL);
+#endif
         if (result != kStatus_Success)
         {
             PRINTF("\r\nTransmit frame failed!\r\n");
@@ -280,7 +329,11 @@ status_t APP_SWT_MacLearning_Forwarding(void)
         while (!txOver)
         {
         }
+#if defined(FSL_FEATURE_NETC_HAS_SWITCH_TAG) && FSL_FEATURE_NETC_HAS_SWITCH_TAG
+        SWT_ReclaimTxDescriptor(&g_swt_handle, 0);
+#else
         SWT_ReclaimTxDescriptor(&g_swt_handle, false, 0);
+#endif
         if (mgmtTxFrameInfo.status != kNETC_EPTxSuccess)
         {
             PRINTF("\r\nTransmit frame has error!\r\n");
@@ -327,7 +380,7 @@ status_t APP_SWT_MacLearning_Forwarding(void)
         }
 
         /* Disable the PHY loopback on this port */
-        result = APP_PHY_EnableLoopback(i+1U, false);
+        result = APP_PHY_EnableLoopback(EXAMPLE_SWT_PORT0 + i, false);
         if (kStatus_Success != result)
         {
             return result;
@@ -336,9 +389,14 @@ status_t APP_SWT_MacLearning_Forwarding(void)
         NETC_PortGetPhyMacTxStatistic(g_swt_handle.hw.ports[i].eth, kNETC_ExpressMAC, &swtTxStatis);
         txCount = swtTxStatis.total511To1023BPacket;
 
-        APP_BuildBroadCastFrame(i, 0xF0);
         txOver = false;
+#if defined(FSL_FEATURE_NETC_HAS_SWITCH_TAG) && FSL_FEATURE_NETC_HAS_SWITCH_TAG
+        APP_BuildBroadCastFrameSwtTag(i, 0xF0, 0, kNETC_TagForward);
+        result = SWT_SendFrame(&g_swt_handle, &txFrame, NULL, NULL);
+#else
+        APP_BuildBroadCastFrame(i, 0xF0);
         result = EP_SendFrame(&g_ep_handle, 0, &txFrame, NULL, NULL);
+#endif
         if (result != kStatus_Success)
         {
             PRINTF("\r\nTransmit frame failed!\r\n");
@@ -347,12 +405,21 @@ status_t APP_SWT_MacLearning_Forwarding(void)
         while (!txOver)
         {
         }
+#if defined(FSL_FEATURE_NETC_HAS_SWITCH_TAG) && FSL_FEATURE_NETC_HAS_SWITCH_TAG
+        SWT_ReclaimTxDescriptor(&g_swt_handle, 0);
+        if (mgmtTxFrameInfo.status != kNETC_EPTxSuccess)
+        {
+            PRINTF("\r\nTransmit frame has error!\r\n");
+            return kStatus_Fail;
+        }
+#else
         EP_ReclaimTxDescriptor(&g_ep_handle, 0);
         if (txFrameInfo.status != kNETC_EPTxSuccess)
         {
             PRINTF("\r\nTransmit frame failed!\r\n");
             return kStatus_Fail;
         }
+#endif
 
         do
         {

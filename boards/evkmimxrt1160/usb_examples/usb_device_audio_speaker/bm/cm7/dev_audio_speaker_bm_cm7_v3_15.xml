@@ -24,6 +24,7 @@
     <definition extID="platform.drivers.igpio.MIMXRT1166"/>
     <definition extID="platform.drivers.lpi2c.MIMXRT1166"/>
     <definition extID="platform.drivers.lpuart.MIMXRT1166"/>
+    <definition extID="platform.drivers.mu.MIMXRT1166"/>
     <definition extID="platform.drivers.sai_edma.MIMXRT1166"/>
     <definition extID="platform.drivers.sai.MIMXRT1166"/>
     <definition extID="platform.utilities.assert_lite.MIMXRT1166"/>
@@ -39,14 +40,14 @@
     <definition extID="component.i2c_adapter_interface.MIMXRT1166"/>
     <definition extID="component.lpi2c_adapter.MIMXRT1166"/>
     <definition extID="component.lpuart_adapter.MIMXRT1166"/>
+    <definition extID="component.audio_sai_edma_adapter.MIMXRT1166"/>
     <definition extID="component.osa_template_config.MIMXRT1166"/>
-    <definition extID="component.osa_interface.MIMXRT1166"/>
     <definition extID="component.osa.MIMXRT1166"/>
     <definition extID="component.osa_bm.MIMXRT1166"/>
-    <definition extID="component.audio_sai_edma_adapter.MIMXRT1166"/>
     <definition extID="middleware.usb.common_header.MIMXRT1166"/>
     <definition extID="middleware.usb.device.common_header.MIMXRT1166"/>
     <definition extID="middleware.usb.device_controller_ehci.MIMXRT1166"/>
+    <definition extID="middleware.usb.device.ehci_config_header.MIMXRT1166"/>
     <definition extID="middleware.usb.device.controller.driver.MIMXRT1166"/>
     <definition extID="middleware.usb.device.stack.MIMXRT1166"/>
     <definition extID="middleware.usb.device.audio.MIMXRT1166"/>
@@ -59,7 +60,7 @@
     <definition extID="com.crt.advproject.config.exe.debug"/>
     <definition extID="com.crt.advproject.config.exe.release"/>
   </externalDefinitions>
-  <example id="evkmimxrt1160_dev_audio_speaker_bm_cm7" name="dev_audio_speaker_bm_cm7" device_core="cm7_MIMXRT1166xxxxx" dependency="platform.drivers.xip_board.evkmimxrt1160.MIMXRT1166 platform.drivers.xip_device.MIMXRT1166 platform.drivers.clock.MIMXRT1166 platform.drivers.iomuxc.MIMXRT1166 platform.drivers.anatop_ai.MIMXRT1166 platform.drivers.memory.MIMXRT1166 platform.drivers.dcdc_soc.MIMXRT1166 platform.drivers.gpc_3.MIMXRT1166 platform.drivers.pgmc.MIMXRT1166 platform.drivers.pmu_1.MIMXRT1166 platform.drivers.soc_src.MIMXRT1166 CMSIS_Include_core_cm.MIMXRT1166 device.MIMXRT1166_CMSIS.MIMXRT1166 device.MIMXRT1166_system.MIMXRT1166 device.MIMXRT1166_startup.MIMXRT1166 platform.drivers.cache_armv7_m7.MIMXRT1166 platform.drivers.common.MIMXRT1166 platform.drivers.dmamux.MIMXRT1166 platform.drivers.edma.MIMXRT1166 platform.drivers.igpio.MIMXRT1166 platform.drivers.lpi2c.MIMXRT1166 platform.drivers.lpuart.MIMXRT1166 platform.drivers.sai_edma.MIMXRT1166 platform.drivers.sai.MIMXRT1166 platform.utilities.assert_lite.MIMXRT1166 platform.utilities.misc_utilities.MIMXRT1166 component.lists.MIMXRT1166 utility.str.MIMXRT1166 utility.debug_console_lite.MIMXRT1166 component.codec_i2c.MIMXRT1166 driver.codec.MIMXRT1166 component.codec_adapters.MIMXRT1166 component.wm8960_adapter.MIMXRT1166 driver.wm8960.MIMXRT1166 component.i2c_adapter_interface.MIMXRT1166 component.lpi2c_adapter.MIMXRT1166 component.lpuart_adapter.MIMXRT1166 component.osa_template_config.MIMXRT1166 component.osa_interface.MIMXRT1166 component.osa.MIMXRT1166 component.osa_bm.MIMXRT1166 component.audio_sai_edma_adapter.MIMXRT1166 middleware.usb.common_header.MIMXRT1166 middleware.usb.device.common_header.MIMXRT1166 middleware.usb.device_controller_ehci.MIMXRT1166 middleware.usb.device.controller.driver.MIMXRT1166 middleware.usb.device.stack.MIMXRT1166 middleware.usb.device.audio.MIMXRT1166 middleware.usb.phy.MIMXRT1166" category="usb_examples">
+  <example id="evkmimxrt1160_dev_audio_speaker_bm_cm7" name="dev_audio_speaker_bm_cm7" device_core="cm7_MIMXRT1166xxxxx" dependency="platform.drivers.xip_board.evkmimxrt1160.MIMXRT1166 platform.drivers.xip_device.MIMXRT1166 platform.drivers.clock.MIMXRT1166 platform.drivers.iomuxc.MIMXRT1166 platform.drivers.anatop_ai.MIMXRT1166 platform.drivers.memory.MIMXRT1166 platform.drivers.dcdc_soc.MIMXRT1166 platform.drivers.gpc_3.MIMXRT1166 platform.drivers.pgmc.MIMXRT1166 platform.drivers.pmu_1.MIMXRT1166 platform.drivers.soc_src.MIMXRT1166 CMSIS_Include_core_cm.MIMXRT1166 device.MIMXRT1166_CMSIS.MIMXRT1166 device.MIMXRT1166_system.MIMXRT1166 device.MIMXRT1166_startup.MIMXRT1166 platform.drivers.cache_armv7_m7.MIMXRT1166 platform.drivers.common.MIMXRT1166 platform.drivers.dmamux.MIMXRT1166 platform.drivers.edma.MIMXRT1166 platform.drivers.igpio.MIMXRT1166 platform.drivers.lpi2c.MIMXRT1166 platform.drivers.lpuart.MIMXRT1166 platform.drivers.mu.MIMXRT1166 platform.drivers.sai_edma.MIMXRT1166 platform.drivers.sai.MIMXRT1166 platform.utilities.assert_lite.MIMXRT1166 platform.utilities.misc_utilities.MIMXRT1166 component.lists.MIMXRT1166 utility.str.MIMXRT1166 utility.debug_console_lite.MIMXRT1166 component.codec_i2c.MIMXRT1166 driver.codec.MIMXRT1166 component.codec_adapters.MIMXRT1166 component.wm8960_adapter.MIMXRT1166 driver.wm8960.MIMXRT1166 component.i2c_adapter_interface.MIMXRT1166 component.lpi2c_adapter.MIMXRT1166 component.lpuart_adapter.MIMXRT1166 component.audio_sai_edma_adapter.MIMXRT1166 component.osa_template_config.MIMXRT1166 component.osa.MIMXRT1166 component.osa_bm.MIMXRT1166 middleware.usb.common_header.MIMXRT1166 middleware.usb.device.common_header.MIMXRT1166 middleware.usb.device_controller_ehci.MIMXRT1166 middleware.usb.device.ehci_config_header.MIMXRT1166 middleware.usb.device.controller.driver.MIMXRT1166 middleware.usb.device.stack.MIMXRT1166 middleware.usb.device.audio.MIMXRT1166 middleware.usb.phy.MIMXRT1166" category="usb_examples">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -84,6 +85,7 @@
           <value>SDK_DEBUGCONSOLE=1</value>
           <value>MCUX_META_BUILD</value>
           <value>CPU_MIMXRT1166DVM6A_cm7</value>
+          <value>MIMXRT1166_cm7_SERIES</value>
           <value>OSA_USED</value>
           <value>SDK_I2C_BASED_COMPONENT_USED=1</value>
           <value>CODEC_MULTI_ADAPTERS=1</value>
@@ -238,12 +240,10 @@
     </source>
     <source path="." project_relative_path="source" type="c_include" config="true">
       <files mask="fsl_os_abstraction_config.h"/>
+      <files mask="usb_device_config.h"/>
     </source>
     <source path="." project_relative_path="source" type="c_preinclude">
       <files mask="mcux_config.h"/>
-    </source>
-    <source path="." project_relative_path="source" type="c_include">
-      <files mask="usb_device_config.h"/>
     </source>
     <source path="." project_relative_path="doc" type="doc">
       <files mask="readme.md"/>
@@ -254,6 +254,9 @@
       <files mask="usb_device_audio_speaker_select_properties.jpg"/>
       <files mask="usb_device_audio_speaker_set_default.jpg"/>
       <files mask="usb_device_audio_speaker_start_log.jpg"/>
+    </source>
+    <source path="." project_relative_path="doc" type="doc">
+      <files mask="examples_shared_readme.md"/>
     </source>
   </example>
 </ksdk:examples>

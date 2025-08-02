@@ -1,5 +1,6 @@
 /*
- * Copyright 2019, 2024 NXP
+ * Copyright (c) 2016, Freescale Semiconductor, Inc.
+ * Copyright 2016-2022, 2025 NXP
  * All rights reserved.
  *
  *
@@ -7,9 +8,10 @@
  */
 
 #include "fsl_flexspi.h"
-#include "fsl_xecc.h"
 #include "app.h"
+#if (defined CACHE_MAINTAIN) && (CACHE_MAINTAIN == 1)
 #include "fsl_cache.h"
+#endif
 
 /*******************************************************************************
  * Definitions
@@ -24,9 +26,94 @@
  *****************************************************************************/
 extern flexspi_device_config_t deviceconfig;
 extern const uint32_t customLUT[CUSTOM_LUT_LENGTH];
+
 /*******************************************************************************
  * Code
  ******************************************************************************/
+#if (defined CACHE_MAINTAIN) && (CACHE_MAINTAIN == 1)
+void flexspi_nor_disable_cache(flexspi_cache_status_t *cacheStatus)
+{
+#if (defined __CORTEX_M) && (__CORTEX_M == 7U)
+#if defined(__DCACHE_PRESENT) && (__DCACHE_PRESENT == 1U)
+    /* Disable D cache. */
+    if (SCB_CCR_DC_Msk == (SCB_CCR_DC_Msk & SCB->CCR))
+    {
+        SCB_DisableDCache();
+        cacheStatus->DCacheEnableFlag = true;
+    }
+#endif /* __DCACHE_PRESENT */
+
+#if defined(__ICACHE_PRESENT) && (__ICACHE_PRESENT == 1U)
+    /* Disable I cache. */
+    if (SCB_CCR_IC_Msk == (SCB_CCR_IC_Msk & SCB->CCR))
+    {
+        SCB_DisableICache();
+        cacheStatus->ICacheEnableFlag = true;
+    }
+#endif /* __ICACHE_PRESENT */
+
+#elif (defined FSL_FEATURE_SOC_LMEM_COUNT) && (FSL_FEATURE_SOC_LMEM_COUNT != 0U)
+    /* Disable code bus cache and system bus cache */
+    if (LMEM_PCCCR_ENCACHE_MASK == (LMEM_PCCCR_ENCACHE_MASK & LMEM->PCCCR))
+    {
+        L1CACHE_DisableCodeCache();
+        cacheStatus->codeCacheEnableFlag = true;
+    }
+    if (LMEM_PSCCR_ENCACHE_MASK == (LMEM_PSCCR_ENCACHE_MASK & LMEM->PSCCR))
+    {
+        L1CACHE_DisableSystemCache();
+        cacheStatus->systemCacheEnableFlag = true;
+    }
+
+#elif (defined FSL_FEATURE_SOC_CACHE64_CTRL_COUNT) && (FSL_FEATURE_SOC_CACHE64_CTRL_COUNT != 0U)
+    /* Disable cache */
+    CACHE64_DisableCache(EXAMPLE_CACHE);
+    cacheStatus->CacheEnableFlag = true;
+#endif
+}
+
+void flexspi_nor_enable_cache(flexspi_cache_status_t cacheStatus)
+{
+#if (defined __CORTEX_M) && (__CORTEX_M == 7U)
+#if defined(__DCACHE_PRESENT) && (__DCACHE_PRESENT == 1U)
+    if (cacheStatus.DCacheEnableFlag)
+    {
+        /* Enable D cache. */
+        SCB_EnableDCache();
+    }
+#endif /* __DCACHE_PRESENT */
+
+#if defined(__ICACHE_PRESENT) && (__ICACHE_PRESENT == 1U)
+    if (cacheStatus.ICacheEnableFlag)
+    {
+        /* Enable I cache. */
+        SCB_EnableICache();
+    }
+#endif /* __ICACHE_PRESENT */
+
+#elif (defined FSL_FEATURE_SOC_LMEM_COUNT) && (FSL_FEATURE_SOC_LMEM_COUNT != 0U)
+    if (cacheStatus.codeCacheEnableFlag)
+    {
+        /* Enable code cache. */
+        L1CACHE_EnableCodeCache();
+    }
+
+    if (cacheStatus.systemCacheEnableFlag)
+    {
+        /* Enable system cache. */
+        L1CACHE_EnableSystemCache();
+    }
+
+#elif (defined FSL_FEATURE_SOC_CACHE64_CTRL_COUNT) && (FSL_FEATURE_SOC_CACHE64_CTRL_COUNT != 0U)
+    if (cacheStatus.CacheEnableFlag)
+    {
+        /* Enable cache. */
+        CACHE64_EnableCache(EXAMPLE_CACHE);
+    }
+#endif
+}
+#endif
+
 status_t flexspi_nor_write_enable(FLEXSPI_Type *base, uint32_t baseAddr)
 {
     flexspi_transfer_t flashXfer;
@@ -34,7 +121,7 @@ status_t flexspi_nor_write_enable(FLEXSPI_Type *base, uint32_t baseAddr)
 
     /* Write enable */
     flashXfer.deviceAddress = baseAddr;
-    flashXfer.port          = kFLEXSPI_PortA1;
+    flashXfer.port          = FLASH_PORT;
     flashXfer.cmdType       = kFLEXSPI_Command;
     flashXfer.SeqNumber     = 1;
     flashXfer.seqIndex      = NOR_CMD_LUT_SEQ_IDX_WRITEENABLE;
@@ -53,7 +140,7 @@ status_t flexspi_nor_wait_bus_busy(FLEXSPI_Type *base)
     flexspi_transfer_t flashXfer;
 
     flashXfer.deviceAddress = 0;
-    flashXfer.port          = kFLEXSPI_PortA1;
+    flashXfer.port          = FLASH_PORT;
     flashXfer.cmdType       = kFLEXSPI_Read;
     flashXfer.SeqNumber     = 1;
     flashXfer.seqIndex      = NOR_CMD_LUT_SEQ_IDX_READSTATUSREG;
@@ -100,7 +187,14 @@ status_t flexspi_nor_enable_quad_mode(FLEXSPI_Type *base)
 {
     flexspi_transfer_t flashXfer;
     status_t status;
+#if defined(FLASH_QUAD_ENABLE) && FLASH_QUAD_ENABLE
     uint32_t writeValue = FLASH_QUAD_ENABLE;
+#endif
+
+#if defined(CACHE_MAINTAIN) && CACHE_MAINTAIN
+    flexspi_cache_status_t cacheStatus;
+    flexspi_nor_disable_cache(&cacheStatus);
+#endif
 
     /* Write enable */
     status = flexspi_nor_write_enable(base, 0);
@@ -112,11 +206,67 @@ status_t flexspi_nor_enable_quad_mode(FLEXSPI_Type *base)
 
     /* Enable quad mode. */
     flashXfer.deviceAddress = 0;
-    flashXfer.port          = kFLEXSPI_PortA1;
+    flashXfer.port          = FLASH_PORT;
+#if defined(FLASH_QUAD_ENABLE) && FLASH_QUAD_ENABLE
     flashXfer.cmdType       = kFLEXSPI_Write;
     flashXfer.SeqNumber     = 1;
     flashXfer.seqIndex      = NOR_CMD_LUT_SEQ_IDX_WRITESTATUSREG;
     flashXfer.data          = &writeValue;
+    flashXfer.dataSize      = writeValue <= 0xFFU ? 1 : 2;
+#endif
+#if defined(MT25Q_FLASH_QUAD_ENABLE) && MT25Q_FLASH_QUAD_ENABLE
+    flashXfer.cmdType       = kFLEXSPI_Command;
+    flashXfer.SeqNumber     = 1;
+    flashXfer.seqIndex      = NOR_CMD_LUT_SEQ_IDX_ENABLEQUAD;
+#endif
+    status = FLEXSPI_TransferBlocking(base, &flashXfer);
+    if (status != kStatus_Success)
+    {
+        return status;
+    }
+
+    status = flexspi_nor_wait_bus_busy(base);
+
+    /* Do software reset. */
+    FLEXSPI_SoftwareReset(base);
+
+#if defined(CACHE_MAINTAIN) && CACHE_MAINTAIN
+    flexspi_nor_enable_cache(cacheStatus);
+#endif
+
+    return status;
+}
+
+#if defined(NOR_CMD_LUT_SEQ_IDX_SETREADPARAMETER) && NOR_CMD_LUT_SEQ_IDX_SETREADPARAMETER
+status_t flexspi_nor_set_read_parameter(
+    FLEXSPI_Type *base, uint8_t burstLength, bool enableWrap, uint8_t dummyCycle, bool resetPinSelected)
+{
+    flexspi_transfer_t flashXfer;
+    status_t status;
+    uint32_t readParameterRegVal = ((uint32_t)resetPinSelected << RESET_PIN_SELECTED_REG_SHIFT) |
+                                   ((uint32_t)dummyCycle << DUMMY_CYCLES_REG_SHIFT) |
+                                   ((uint32_t)enableWrap << WRAP_ENABLE_REG_SHIFT) |
+                                   ((uint32_t)burstLength << BURST_LEGNTH_REG_SHIFT);
+
+#if defined(CACHE_MAINTAIN) && CACHE_MAINTAIN
+    flexspi_cache_status_t cacheStatus;
+    flexspi_nor_disable_cache(&cacheStatus);
+#endif
+
+    /* Write enable */
+    status = flexspi_nor_write_enable(base, 0);
+
+    if (status != kStatus_Success)
+    {
+        return status;
+    }
+
+    flashXfer.deviceAddress = 0;
+    flashXfer.port          = FLASH_PORT;
+    flashXfer.cmdType       = kFLEXSPI_Write;
+    flashXfer.SeqNumber     = 1;
+    flashXfer.seqIndex      = NOR_CMD_LUT_SEQ_IDX_SETREADPARAMETER;
+    flashXfer.data          = &readParameterRegVal;
     flashXfer.dataSize      = 1;
 
     status = FLEXSPI_TransferBlocking(base, &flashXfer);
@@ -130,17 +280,27 @@ status_t flexspi_nor_enable_quad_mode(FLEXSPI_Type *base)
     /* Do software reset. */
     FLEXSPI_SoftwareReset(base);
 
+#if defined(CACHE_MAINTAIN) && CACHE_MAINTAIN
+    flexspi_nor_enable_cache(cacheStatus);
+#endif
+
     return status;
 }
+#endif
 
 status_t flexspi_nor_flash_erase_sector(FLEXSPI_Type *base, uint32_t address)
 {
     status_t status;
     flexspi_transfer_t flashXfer;
 
+#if defined(CACHE_MAINTAIN) && CACHE_MAINTAIN
+    flexspi_cache_status_t cacheStatus;
+    flexspi_nor_disable_cache(&cacheStatus);
+#endif
+
     /* Write enable */
     flashXfer.deviceAddress = address;
-    flashXfer.port          = kFLEXSPI_PortA1;
+    flashXfer.port          = FLASH_PORT;
     flashXfer.cmdType       = kFLEXSPI_Command;
     flashXfer.SeqNumber     = 1;
     flashXfer.seqIndex      = NOR_CMD_LUT_SEQ_IDX_WRITEENABLE;
@@ -153,7 +313,7 @@ status_t flexspi_nor_flash_erase_sector(FLEXSPI_Type *base, uint32_t address)
     }
 
     flashXfer.deviceAddress = address;
-    flashXfer.port          = kFLEXSPI_PortA1;
+    flashXfer.port          = FLASH_PORT;
     flashXfer.cmdType       = kFLEXSPI_Command;
     flashXfer.SeqNumber     = 1;
     flashXfer.seqIndex      = NOR_CMD_LUT_SEQ_IDX_ERASESECTOR;
@@ -169,38 +329,22 @@ status_t flexspi_nor_flash_erase_sector(FLEXSPI_Type *base, uint32_t address)
     /* Do software reset. */
     FLEXSPI_SoftwareReset(base);
 
-    return status;
-}
-
-status_t flexspi_nor_flash_read(FLEXSPI_Type *base, uint32_t dstAddr, const uint32_t *src, uint32_t size)
-{
-    status_t status = kStatus_InvalidArgument;
-    flexspi_transfer_t flashXfer;
-
-    /* Read page. */
-    flashXfer.deviceAddress = dstAddr;
-    flashXfer.port          = kFLEXSPI_PortA1;
-    flashXfer.cmdType       = kFLEXSPI_Read;
-    flashXfer.SeqNumber     = 1;
-    flashXfer.seqIndex      = NOR_CMD_LUT_SEQ_IDX_READ_FAST_QUAD;
-    flashXfer.data          = (uint32_t *)(void *)src;
-    flashXfer.dataSize      = size;
-    status                  = FLEXSPI_TransferBlocking(base, &flashXfer);
-
-    if (status != kStatus_Success)
-    {
-        return status;
-    }
-
-    status = flexspi_nor_wait_bus_busy(base);
+#if defined(CACHE_MAINTAIN) && CACHE_MAINTAIN
+    flexspi_nor_enable_cache(cacheStatus);
+#endif
 
     return status;
 }
 
-status_t flexspi_nor_flash_program(FLEXSPI_Type *base, uint32_t dstAddr, const uint32_t *src, uint32_t size)
+status_t flexspi_nor_flash_read(FLEXSPI_Type *base, uint32_t dstAddr, const uint32_t *src, uint32_t length)
 {
     status_t status;
     flexspi_transfer_t flashXfer;
+
+#if defined(CACHE_MAINTAIN) && CACHE_MAINTAIN
+    flexspi_cache_status_t cacheStatus;
+    flexspi_nor_disable_cache(&cacheStatus);
+#endif
 
     /* Write enable */
     status = flexspi_nor_write_enable(base, dstAddr);
@@ -212,12 +356,12 @@ status_t flexspi_nor_flash_program(FLEXSPI_Type *base, uint32_t dstAddr, const u
 
     /* Prepare page program command */
     flashXfer.deviceAddress = dstAddr;
-    flashXfer.port          = kFLEXSPI_PortA1;
-    flashXfer.cmdType       = kFLEXSPI_Write;
+    flashXfer.port          = FLASH_PORT;
+    flashXfer.cmdType       = kFLEXSPI_Read;
     flashXfer.SeqNumber     = 1;
-    flashXfer.seqIndex      = NOR_CMD_LUT_SEQ_IDX_PAGEPROGRAM_QUAD;
-    flashXfer.data          = (uint32_t *)(void *)src;
-    flashXfer.dataSize      = size;
+    flashXfer.seqIndex      = NOR_CMD_LUT_SEQ_IDX_READ_FAST_QUAD;
+    flashXfer.data          = (uint32_t *)src;
+    flashXfer.dataSize      = length;
     status                  = FLEXSPI_TransferBlocking(base, &flashXfer);
 
     if (status != kStatus_Success)
@@ -227,18 +371,129 @@ status_t flexspi_nor_flash_program(FLEXSPI_Type *base, uint32_t dstAddr, const u
 
     status = flexspi_nor_wait_bus_busy(base);
 
-    /* Do software reset. */
+    /* Do software reset or clear AHB buffer directly. */
+#if defined(FSL_FEATURE_SOC_OTFAD_COUNT) && defined(FLEXSPI_AHBCR_CLRAHBRXBUF_MASK) && \
+    defined(FLEXSPI_AHBCR_CLRAHBTXBUF_MASK)
+    base->AHBCR |= FLEXSPI_AHBCR_CLRAHBRXBUF_MASK | FLEXSPI_AHBCR_CLRAHBTXBUF_MASK;
+    base->AHBCR &= ~(FLEXSPI_AHBCR_CLRAHBRXBUF_MASK | FLEXSPI_AHBCR_CLRAHBTXBUF_MASK);
+#else
     FLEXSPI_SoftwareReset(base);
+#endif
+
+#if defined(CACHE_MAINTAIN) && CACHE_MAINTAIN
+    flexspi_nor_enable_cache(cacheStatus);
+#endif
 
     return status;
 }
 
+/*!
+ * @brief Write data to flash, the size of buffer is not limited.
+ * 
+ * @param base Flexspi base address.
+ * @param dstAddr Flash address to write
+ * @param src Pointer to source data buffer.
+ * @param length Length of buffer size.
+ *
+ * @return Status of operation.
+ */
+status_t flexspi_nor_flash_program(FLEXSPI_Type *base, uint32_t dstAddr, const uint32_t *src, uint32_t length)
+{
+    status_t status;
+    flexspi_transfer_t flashXfer;
+    uint32_t tmpAddr = dstAddr;
+    int32_t remainingSize = (int32_t)length;
+    uint32_t transferSize = 0UL;
+    uint32_t srdAddr = (uint32_t)src;
+
+#if defined(CACHE_MAINTAIN) && CACHE_MAINTAIN
+    flexspi_cache_status_t cacheStatus;
+    flexspi_nor_disable_cache(&cacheStatus);
+#endif
+
+    while(remainingSize > 0)
+    {
+        transferSize = (remainingSize >= FLASH_PAGE_SIZE) ? FLASH_PAGE_SIZE : remainingSize;
+        /* Write enable */
+        status = flexspi_nor_write_enable(base, tmpAddr);
+
+        if (status != kStatus_Success)
+        {
+            return status;
+        }
+
+        /* Prepare page program command */
+        flashXfer.deviceAddress = tmpAddr;
+        flashXfer.port          = FLASH_PORT;
+        flashXfer.cmdType       = kFLEXSPI_Write;
+        flashXfer.SeqNumber     = 1;
+        flashXfer.seqIndex      = NOR_CMD_LUT_SEQ_IDX_PAGEPROGRAM_QUAD;
+        flashXfer.data          = (uint32_t *)srdAddr;
+        flashXfer.dataSize      = transferSize;
+        status                  = FLEXSPI_TransferBlocking(base, &flashXfer);
+
+        if (status != kStatus_Success)
+        {
+            return status;
+        }
+
+        status = flexspi_nor_wait_bus_busy(base);
+
+        if (status != kStatus_Success)
+        {
+            return status;
+        }
+
+        remainingSize -= transferSize;
+        tmpAddr += transferSize;
+        srdAddr += transferSize;
+    }
+
+    /* Do software reset or clear AHB buffer directly. */
+#if defined(FSL_FEATURE_SOC_OTFAD_COUNT) && defined(FLEXSPI_AHBCR_CLRAHBRXBUF_MASK) && \
+    defined(FLEXSPI_AHBCR_CLRAHBTXBUF_MASK)
+    base->AHBCR |= FLEXSPI_AHBCR_CLRAHBRXBUF_MASK | FLEXSPI_AHBCR_CLRAHBTXBUF_MASK;
+    base->AHBCR &= ~(FLEXSPI_AHBCR_CLRAHBRXBUF_MASK | FLEXSPI_AHBCR_CLRAHBTXBUF_MASK);
+#else
+    FLEXSPI_SoftwareReset(base);
+#endif
+
+#if defined(CACHE_MAINTAIN) && CACHE_MAINTAIN
+    flexspi_nor_enable_cache(cacheStatus);
+#endif
+
+    return status;
+}
+
+/*!
+ * @brief Do whole page program to flash.
+ * 
+ * @param base Flexspi Base address.
+ * @param dstAddr Flash address to write
+ * @param src Pointer to source data buffer.
+ *
+ * @return Status of operation.
+ */
 status_t flexspi_nor_flash_page_program(FLEXSPI_Type *base, uint32_t dstAddr, const uint32_t *src)
 {
     status_t status;
     flexspi_transfer_t flashXfer;
 
-    /* Write enable */
+#if defined(CACHE_MAINTAIN) && CACHE_MAINTAIN
+    flexspi_cache_status_t cacheStatus;
+    flexspi_nor_disable_cache(&cacheStatus);
+#endif
+
+    /* To make sure external flash be in idle status, added wait for busy before program data for
+        an external flash without RWW(read while write) attribute.*/
+    status = flexspi_nor_wait_bus_busy(base);
+
+    if (kStatus_Success != status)
+    {
+        return status;
+    }
+
+    /* Write enable. */
     status = flexspi_nor_write_enable(base, dstAddr);
 
     if (status != kStatus_Success)
@@ -248,7 +503,7 @@ status_t flexspi_nor_flash_page_program(FLEXSPI_Type *base, uint32_t dstAddr, co
 
     /* Prepare page program command */
     flashXfer.deviceAddress = dstAddr;
-    flashXfer.port          = kFLEXSPI_PortA1;
+    flashXfer.port          = FLASH_PORT;
     flashXfer.cmdType       = kFLEXSPI_Write;
     flashXfer.SeqNumber     = 1;
     flashXfer.seqIndex      = NOR_CMD_LUT_SEQ_IDX_PAGEPROGRAM_QUAD;
@@ -263,8 +518,18 @@ status_t flexspi_nor_flash_page_program(FLEXSPI_Type *base, uint32_t dstAddr, co
 
     status = flexspi_nor_wait_bus_busy(base);
 
-    /* Do software reset. */
+    /* Do software reset or clear AHB buffer directly. */
+#if defined(FSL_FEATURE_SOC_OTFAD_COUNT) && defined(FLEXSPI_AHBCR_CLRAHBRXBUF_MASK) && \
+    defined(FLEXSPI_AHBCR_CLRAHBTXBUF_MASK)
+    base->AHBCR |= FLEXSPI_AHBCR_CLRAHBRXBUF_MASK | FLEXSPI_AHBCR_CLRAHBTXBUF_MASK;
+    base->AHBCR &= ~(FLEXSPI_AHBCR_CLRAHBRXBUF_MASK | FLEXSPI_AHBCR_CLRAHBTXBUF_MASK);
+#else
     FLEXSPI_SoftwareReset(base);
+#endif
+
+#if defined(CACHE_MAINTAIN) && CACHE_MAINTAIN
+    flexspi_nor_enable_cache(cacheStatus);
+#endif
 
     return status;
 }
@@ -274,7 +539,7 @@ status_t flexspi_nor_get_vendor_id(FLEXSPI_Type *base, uint8_t *vendorId)
     uint32_t temp;
     flexspi_transfer_t flashXfer;
     flashXfer.deviceAddress = 0;
-    flashXfer.port          = kFLEXSPI_PortA1;
+    flashXfer.port          = FLASH_PORT;
     flashXfer.cmdType       = kFLEXSPI_Read;
     flashXfer.SeqNumber     = 1;
     flashXfer.seqIndex      = NOR_CMD_LUT_SEQ_IDX_READID;
@@ -285,8 +550,14 @@ status_t flexspi_nor_get_vendor_id(FLEXSPI_Type *base, uint8_t *vendorId)
 
     *vendorId = temp;
 
-    /* Do software reset. */
+    /* Do software reset or clear AHB buffer directly. */
+#if defined(FSL_FEATURE_SOC_OTFAD_COUNT) && defined(FLEXSPI_AHBCR_CLRAHBRXBUF_MASK) && \
+    defined(FLEXSPI_AHBCR_CLRAHBTXBUF_MASK)
+    base->AHBCR |= FLEXSPI_AHBCR_CLRAHBRXBUF_MASK | FLEXSPI_AHBCR_CLRAHBTXBUF_MASK;
+    base->AHBCR &= ~(FLEXSPI_AHBCR_CLRAHBRXBUF_MASK | FLEXSPI_AHBCR_CLRAHBTXBUF_MASK);
+#else
     FLEXSPI_SoftwareReset(base);
+#endif
 
     return status;
 }
@@ -295,6 +566,11 @@ status_t flexspi_nor_erase_chip(FLEXSPI_Type *base)
 {
     status_t status;
     flexspi_transfer_t flashXfer;
+
+#if defined(CACHE_MAINTAIN) && CACHE_MAINTAIN
+    flexspi_cache_status_t cacheStatus;
+    flexspi_nor_disable_cache(&cacheStatus);
+#endif
 
     /* Write enable */
     status = flexspi_nor_write_enable(base, 0);
@@ -305,7 +581,7 @@ status_t flexspi_nor_erase_chip(FLEXSPI_Type *base)
     }
 
     flashXfer.deviceAddress = 0;
-    flashXfer.port          = kFLEXSPI_PortA1;
+    flashXfer.port          = FLASH_PORT;
     flashXfer.cmdType       = kFLEXSPI_Command;
     flashXfer.SeqNumber     = 1;
     flashXfer.seqIndex      = NOR_CMD_LUT_SEQ_IDX_ERASECHIP;
@@ -319,46 +595,27 @@ status_t flexspi_nor_erase_chip(FLEXSPI_Type *base)
 
     status = flexspi_nor_wait_bus_busy(base);
 
+#if defined(CACHE_MAINTAIN) && CACHE_MAINTAIN
+    flexspi_nor_enable_cache(cacheStatus);
+#endif
+
     return status;
 }
 
 void flexspi_nor_flash_init(FLEXSPI_Type *base)
 {
     flexspi_config_t config;
+    /* To store custom's LUT table in local. */
+    uint32_t tempLUT[CUSTOM_LUT_LENGTH] = {0x00U};
 
-#if (defined __CORTEX_M) && (__CORTEX_M == 7U)
-#if defined(__DCACHE_PRESENT) && (__DCACHE_PRESENT == 1U)
-    bool DCacheEnableFlag = false;
-    /* Disable D cache. */
-    if (SCB_CCR_DC_Msk == (SCB_CCR_DC_Msk & SCB->CCR))
-    {
-        SCB_DisableDCache();
-        DCacheEnableFlag = true;
-    }
-#endif /* __DCACHE_PRESENT */
-
-#if defined(__ICACHE_PRESENT) && (__ICACHE_PRESENT == 1U)
-    volatile bool ICacheEnableFlag = false;
-    /* Disable I cache. */
-    if (SCB_CCR_IC_Msk == (SCB_CCR_IC_Msk & SCB->CCR))
-    {
-        SCB_DisableICache();
-        ICacheEnableFlag = true;
-    }
-#endif /* __ICACHE_PRESENT */
-#elif (defined __CORTEX_M) && (__CORTEX_M == 4U)
-    L1CACHE_DisableCodeCache();
-    L1CACHE_DisableSystemCache();
+#if defined(CACHE_MAINTAIN) && CACHE_MAINTAIN
+    flexspi_cache_status_t cacheStatus;
+    flexspi_nor_disable_cache(&cacheStatus);
 #endif
 
-    /* Waiting for bus to be idle only with FLEXSPI enabled. */
-    if ((base->MCR0 & FLEXSPI_MCR0_MDIS_MASK) != FLEXSPI_MCR0_MDIS_MASK)
-    {
-        /* Make sure flexspi bus be idle before changing its clock setting. */
-        while (!FLEXSPI_GetBusIdleStatus(base))
-        {
-        }
-    }
+    /* Copy LUT information from flash region into RAM region, because LUT update maybe corrupt read sequence(LUT[0])
+     * and load wrong LUT table from FLASH region. */
+    memcpy(tempLUT, customLUT, sizeof(tempLUT));
 
     flexspi_clock_init();
 
@@ -367,76 +624,22 @@ void flexspi_nor_flash_init(FLEXSPI_Type *base)
 
     /*Set AHB buffer size for reading data through AHB bus. */
     config.ahbConfig.enableAHBPrefetch    = true;
-    config.ahbConfig.enableAHBBufferable  = false;
+    config.ahbConfig.enableAHBBufferable  = true;
     config.ahbConfig.enableReadAddressOpt = true;
-    config.ahbConfig.enableAHBCachable    = false;
-    config.rxSampleClock                  = kFLEXSPI_ReadSampleClkLoopbackFromDqsPad;
-
+    config.ahbConfig.enableAHBCachable    = true;
+    config.rxSampleClock                  = EXAMPLE_FLEXSPI_RX_SAMPLE_CLOCK;
     FLEXSPI_Init(base, &config);
 
     /* Configure flash settings according to serial flash feature. */
-    FLEXSPI_SetFlashConfig(base, &deviceconfig, kFLEXSPI_PortA1);
+    FLEXSPI_SetFlashConfig(base, &deviceconfig, FLASH_PORT);
 
-    uint32_t tmpLUT[CUSTOM_LUT_LENGTH] = {0x00U};
-    memcpy(tmpLUT, customLUT, sizeof(tmpLUT));
     /* Update LUT table. */
-    FLEXSPI_UpdateLUT(base, 0, tmpLUT, CUSTOM_LUT_LENGTH);
+    FLEXSPI_UpdateLUT(base, 0, tempLUT, CUSTOM_LUT_LENGTH);
 
     /* Do software reset. */
     FLEXSPI_SoftwareReset(base);
 
-#if (defined __CORTEX_M) && (__CORTEX_M == 7U)
-#if defined(__DCACHE_PRESENT) && (__DCACHE_PRESENT == 1U)
-    if (DCacheEnableFlag)
-    {
-        /* Enable D cache. */
-        SCB_EnableDCache();
-    }
-#endif /* __DCACHE_PRESENT */
-
-#if defined(__ICACHE_PRESENT) && (__ICACHE_PRESENT == 1U)
-    if (ICacheEnableFlag)
-    {
-        /* Enable I cache. */
-        SCB_EnableICache();
-    }
-#endif /* __ICACHE_PRESENT */
-#elif (defined __CORTEX_M) && (__CORTEX_M == 4U)
-    L1CACHE_EnableCodeCache();
-    L1CACHE_EnableSystemCache();
+#if defined(CACHE_MAINTAIN) && CACHE_MAINTAIN
+    flexspi_nor_enable_cache(cacheStatus);
 #endif
-}
-
-void flexspi_nor_AHB_write_4bytes(FLEXSPI_Type *base, uint32_t address, uint8_t *buffer)
-{
-    /* Write enable */
-    flexspi_nor_write_enable(base, 0);
-
-    /* AHB write access to external flash memory */
-    (*((volatile uint32_t *)(address))) =
-        (uint32_t)buffer[0] << 0 | (uint32_t)buffer[1] << 8 | (uint32_t)buffer[2] << 16 | (uint32_t)buffer[3] << 24;
-
-    flexspi_nor_wait_bus_busy(base);
-}
-
-void flexspi_nor_AHB_read_4bytes(FLEXSPI_Type *base, uint32_t address, uint32_t *buffer)
-{
-    *buffer = (*((volatile uint32_t *)(address)));
-}
-
-void flexspi_nor_xecc_init(FLEXSPI_Type *flexspiBase, XECC_Type *xeccBase, const xecc_config_t *config)
-{
-    /* Waiting for bus idle only when FLEXSPI enabled. */
-    if ((flexspiBase->MCR0 & FLEXSPI_MCR0_MDIS_MASK) != FLEXSPI_MCR0_MDIS_MASK)
-    {
-        /* Make sure flexspi bus idle before change its clock setting. */
-        while (!FLEXSPI_GetBusIdleStatus(flexspiBase))
-        {
-        }
-    }
-
-    /* Clear AHB TX and RX buffer, both of them are reserved field now, so use software reset to clear instead.*/
-    FLEXSPI_SoftwareReset(flexspiBase);
-
-    XECC_Init(xeccBase, config);
 }

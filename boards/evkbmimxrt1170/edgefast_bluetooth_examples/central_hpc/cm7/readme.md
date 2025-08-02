@@ -2,6 +2,7 @@
 
 ## Overview
 Application demonstrating very basic BLE Central role functionality by scanning for other BLE devices and establishing a connection to the first one with a strong enough signal.
+
 Except that this application specifically looks for HPS Server and programs a set of characteristics that configures a Hyper Text Transfer Protocol (HTTP) request, initiate this request, and then read the response once connected.
 
 ## Prepare the Demo
@@ -48,3 +49,4 @@ HTTP Body: HTTPBODY
 - [MIMXRT685-AUD-EVK](../../_boards/mimxrt685audevk/edgefast_bluetooth_examples/central_hpc/example_board_readme.md)
 - [MIMXRT700-EVK](../../_boards/mimxrt700evk/edgefast_bluetooth_examples/central_hpc/example_board_readme.md)
 - [RD-RW612-BGA](../../_boards/rdrw612bga/edgefast_bluetooth_examples/central_hpc/example_board_readme.md)
+- [FRDM-MCXN947](../../_boards/frdmmcxn947/edgefast_bluetooth_examples/central_hpc/example_board_readme.md)

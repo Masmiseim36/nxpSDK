@@ -332,9 +332,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../mcux_config.h -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
-              <Define>DEBUG, XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, CORE1_IMAGE_COPY_TO_RAM, __USE_SHMEM, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1166DVM6A_cm7, MULTICORE_APP=1</Define>
+              <Define>DEBUG, XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, CORE1_IMAGE_COPY_TO_RAM, __USE_SHMEM, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1166DVM6A_cm7, MIMXRT1166_cm7_SERIES, MULTICORE_APP=1</Define>
               <Undefine/>
-              <IncludePath>..;../../../../xip;../../../../../../devices/MIMXRT1166/xip;../../../../../../devices/MIMXRT1166/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1166;../../../../../../devices/MIMXRT1166/periph;../../../../../../devices/MIMXRT1166/drivers/cm7;../../../../../../devices/MIMXRT1166/utilities/debug_console_lite;../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../components/uart;../../../../../../middleware/multicore/rpmsg-lite/lib/include;../../../../../../middleware/multicore/rpmsg-lite/lib/include/environment/bm;../../../../../../middleware/multicore/rpmsg-lite/lib/include/platform/imxrt1160;../../../../../../middleware/multicore/mcmgr/src;../../../../../../middleware/multicore/erpc/erpc_c/infra;../../../../../../middleware/multicore/erpc/erpc_c/setup;../../../../../../middleware/multicore/erpc/erpc_c/port;../../../../../../middleware/multicore/erpc/erpc_c/transports;../../../../../../middleware/multicore/erpc/erpc_c/config;../../../../../../middleware/multicore/erpc/examples/MCUXPRESSO_SDK;../../../../../../middleware/multicore/erpc/examples/MCUXPRESSO_SDK/erpc_matrix_multiply/service</IncludePath>
+              <IncludePath>..;../../../../xip;../../../../../../devices/MIMXRT1166/xip;../../../../../../devices/MIMXRT1166/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1166;../../../../../../devices/MIMXRT1166/periph;../../../../../../devices/MIMXRT1166/drivers/cm7;../../../../../../devices/MIMXRT1166/utilities/debug_console_lite;../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../components/uart;../../../../../../middleware/multicore/rpmsg-lite/lib/include;../../../../../../middleware/multicore/rpmsg-lite/lib/include/environment/bm;../../../../../../middleware/multicore/rpmsg-lite/lib/include/platform/imxrt1160;../../../../../../middleware/multicore/mcmgr/inc;../../../../../../middleware/multicore/mcmgr/inc/platform/imxrt1160;../../../../../../middleware/multicore/erpc/erpc_c/infra;../../../../../../middleware/multicore/erpc/erpc_c/setup;../../../../../../middleware/multicore/erpc/erpc_c/port;../../../../../../middleware/multicore/erpc/erpc_c/transports;../../../../../../middleware/multicore/erpc/erpc_c/config;../../../../../../middleware/multicore/erpc/examples/MCUXPRESSO_SDK;../../../../../../middleware/multicore/erpc/examples/MCUXPRESSO_SDK/erpc_matrix_multiply/service</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -350,9 +350,9 @@
             <ClangAsOpt>2</ClangAsOpt>
             <VariousControls>
               <MiscControls/>
-              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1166DVM6A_cm7</Define>
+              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1166DVM6A_cm7, MIMXRT1166_cm7_SERIES</Define>
               <Undefine/>
-              <IncludePath>../../cm4/mdk/debug;..;../../../../xip;../../../../../../devices/MIMXRT1166/xip;../../../../../../devices/MIMXRT1166/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1166;../../../../../../devices/MIMXRT1166/periph;../../../../../../devices/MIMXRT1166/drivers/cm7;../../../../../../devices/MIMXRT1166/utilities/debug_console_lite;../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../components/uart;../../../../../../middleware/multicore/rpmsg-lite/lib/include;../../../../../../middleware/multicore/rpmsg-lite/lib/include/environment/bm;../../../../../../middleware/multicore/rpmsg-lite/lib/include/platform/imxrt1160;../../../../../../middleware/multicore/mcmgr/src;../../../../../../middleware/multicore/erpc/erpc_c/infra;../../../../../../middleware/multicore/erpc/erpc_c/setup;../../../../../../middleware/multicore/erpc/erpc_c/port;../../../../../../middleware/multicore/erpc/erpc_c/transports;../../../../../../middleware/multicore/erpc/erpc_c/config;../../../../../../middleware/multicore/erpc/examples/MCUXPRESSO_SDK;../../../../../../middleware/multicore/erpc/examples/MCUXPRESSO_SDK/erpc_matrix_multiply/service</IncludePath>
+              <IncludePath>../../cm4/mdk/debug;..;../../../../xip;../../../../../../devices/MIMXRT1166/xip;../../../../../../devices/MIMXRT1166/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1166;../../../../../../devices/MIMXRT1166/periph;../../../../../../devices/MIMXRT1166/drivers/cm7;../../../../../../devices/MIMXRT1166/utilities/debug_console_lite;../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../components/uart;../../../../../../middleware/multicore/rpmsg-lite/lib/include;../../../../../../middleware/multicore/rpmsg-lite/lib/include/environment/bm;../../../../../../middleware/multicore/rpmsg-lite/lib/include/platform/imxrt1160;../../../../../../middleware/multicore/mcmgr/inc;../../../../../../middleware/multicore/mcmgr/inc/platform/imxrt1160;../../../../../../middleware/multicore/erpc/erpc_c/infra;../../../../../../middleware/multicore/erpc/erpc_c/setup;../../../../../../middleware/multicore/erpc/erpc_c/port;../../../../../../middleware/multicore/erpc/erpc_c/transports;../../../../../../middleware/multicore/erpc/erpc_c/config;../../../../../../middleware/multicore/erpc/examples/MCUXPRESSO_SDK;../../../../../../middleware/multicore/erpc/examples/MCUXPRESSO_SDK/erpc_matrix_multiply/service</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -1441,18 +1441,23 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>mcmgr/mcmgr/src</GroupName>
+          <GroupName>mcmgr/mcmgr/inc</GroupName>
           <Files>
             <File>
               <FileName>mcmgr.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/mcmgr/src/mcmgr.h</FilePath>
+              <FilePath>../../../../../../middleware/multicore/mcmgr/inc/mcmgr.h</FilePath>
             </File>
             <File>
               <FileName>mcmgr_internal_core_api.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/mcmgr/src/mcmgr_internal_core_api.h</FilePath>
+              <FilePath>../../../../../../middleware/multicore/mcmgr/inc/mcmgr_internal_core_api.h</FilePath>
             </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>mcmgr/mcmgr/src</GroupName>
+          <Files>
             <File>
               <FileName>mcmgr.c</FileName>
               <FileType>1</FileType>
@@ -1467,6 +1472,16 @@
               <FileName>mcmgr_mu_internal.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/multicore/mcmgr/src/mcmgr_mu_internal.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>mcmgr/mcmgr/inc/platform/imxrt1160</GroupName>
+          <Files>
+            <File>
+              <FileName>mcmgr_platform.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/multicore/mcmgr/inc/platform/imxrt1160/mcmgr_platform.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1752,6 +1767,11 @@
               <FileName>example_board_readme.md</FileName>
               <FileType>5</FileType>
               <FilePath>../example_board_readme.md</FilePath>
+            </File>
+            <File>
+              <FileName>examples_shared_readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../examples_shared_readme.md</FilePath>
             </File>
           </Files>
         </Group>
@@ -2086,9 +2106,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../mcux_config.h -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
-              <Define>NDEBUG, XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, CORE1_IMAGE_COPY_TO_RAM, __USE_SHMEM, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1166DVM6A_cm7, MULTICORE_APP=1</Define>
+              <Define>NDEBUG, XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, CORE1_IMAGE_COPY_TO_RAM, __USE_SHMEM, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1166DVM6A_cm7, MIMXRT1166_cm7_SERIES, MULTICORE_APP=1</Define>
               <Undefine/>
-              <IncludePath>..;../../../../xip;../../../../../../devices/MIMXRT1166/xip;../../../../../../devices/MIMXRT1166/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1166;../../../../../../devices/MIMXRT1166/periph;../../../../../../devices/MIMXRT1166/drivers/cm7;../../../../../../devices/MIMXRT1166/utilities/debug_console_lite;../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../components/uart;../../../../../../middleware/multicore/rpmsg-lite/lib/include;../../../../../../middleware/multicore/rpmsg-lite/lib/include/environment/bm;../../../../../../middleware/multicore/rpmsg-lite/lib/include/platform/imxrt1160;../../../../../../middleware/multicore/mcmgr/src;../../../../../../middleware/multicore/erpc/erpc_c/infra;../../../../../../middleware/multicore/erpc/erpc_c/setup;../../../../../../middleware/multicore/erpc/erpc_c/port;../../../../../../middleware/multicore/erpc/erpc_c/transports;../../../../../../middleware/multicore/erpc/erpc_c/config;../../../../../../middleware/multicore/erpc/examples/MCUXPRESSO_SDK;../../../../../../middleware/multicore/erpc/examples/MCUXPRESSO_SDK/erpc_matrix_multiply/service</IncludePath>
+              <IncludePath>..;../../../../xip;../../../../../../devices/MIMXRT1166/xip;../../../../../../devices/MIMXRT1166/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1166;../../../../../../devices/MIMXRT1166/periph;../../../../../../devices/MIMXRT1166/drivers/cm7;../../../../../../devices/MIMXRT1166/utilities/debug_console_lite;../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../components/uart;../../../../../../middleware/multicore/rpmsg-lite/lib/include;../../../../../../middleware/multicore/rpmsg-lite/lib/include/environment/bm;../../../../../../middleware/multicore/rpmsg-lite/lib/include/platform/imxrt1160;../../../../../../middleware/multicore/mcmgr/inc;../../../../../../middleware/multicore/mcmgr/inc/platform/imxrt1160;../../../../../../middleware/multicore/erpc/erpc_c/infra;../../../../../../middleware/multicore/erpc/erpc_c/setup;../../../../../../middleware/multicore/erpc/erpc_c/port;../../../../../../middleware/multicore/erpc/erpc_c/transports;../../../../../../middleware/multicore/erpc/erpc_c/config;../../../../../../middleware/multicore/erpc/examples/MCUXPRESSO_SDK;../../../../../../middleware/multicore/erpc/examples/MCUXPRESSO_SDK/erpc_matrix_multiply/service</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2104,9 +2124,9 @@
             <ClangAsOpt>2</ClangAsOpt>
             <VariousControls>
               <MiscControls/>
-              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1166DVM6A_cm7</Define>
+              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1166DVM6A_cm7, MIMXRT1166_cm7_SERIES</Define>
               <Undefine/>
-              <IncludePath>../../cm4/mdk/release;..;../../../../xip;../../../../../../devices/MIMXRT1166/xip;../../../../../../devices/MIMXRT1166/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1166;../../../../../../devices/MIMXRT1166/periph;../../../../../../devices/MIMXRT1166/drivers/cm7;../../../../../../devices/MIMXRT1166/utilities/debug_console_lite;../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../components/uart;../../../../../../middleware/multicore/rpmsg-lite/lib/include;../../../../../../middleware/multicore/rpmsg-lite/lib/include/environment/bm;../../../../../../middleware/multicore/rpmsg-lite/lib/include/platform/imxrt1160;../../../../../../middleware/multicore/mcmgr/src;../../../../../../middleware/multicore/erpc/erpc_c/infra;../../../../../../middleware/multicore/erpc/erpc_c/setup;../../../../../../middleware/multicore/erpc/erpc_c/port;../../../../../../middleware/multicore/erpc/erpc_c/transports;../../../../../../middleware/multicore/erpc/erpc_c/config;../../../../../../middleware/multicore/erpc/examples/MCUXPRESSO_SDK;../../../../../../middleware/multicore/erpc/examples/MCUXPRESSO_SDK/erpc_matrix_multiply/service</IncludePath>
+              <IncludePath>../../cm4/mdk/release;..;../../../../xip;../../../../../../devices/MIMXRT1166/xip;../../../../../../devices/MIMXRT1166/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1166;../../../../../../devices/MIMXRT1166/periph;../../../../../../devices/MIMXRT1166/drivers/cm7;../../../../../../devices/MIMXRT1166/utilities/debug_console_lite;../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../components/uart;../../../../../../middleware/multicore/rpmsg-lite/lib/include;../../../../../../middleware/multicore/rpmsg-lite/lib/include/environment/bm;../../../../../../middleware/multicore/rpmsg-lite/lib/include/platform/imxrt1160;../../../../../../middleware/multicore/mcmgr/inc;../../../../../../middleware/multicore/mcmgr/inc/platform/imxrt1160;../../../../../../middleware/multicore/erpc/erpc_c/infra;../../../../../../middleware/multicore/erpc/erpc_c/setup;../../../../../../middleware/multicore/erpc/erpc_c/port;../../../../../../middleware/multicore/erpc/erpc_c/transports;../../../../../../middleware/multicore/erpc/erpc_c/config;../../../../../../middleware/multicore/erpc/examples/MCUXPRESSO_SDK;../../../../../../middleware/multicore/erpc/examples/MCUXPRESSO_SDK/erpc_matrix_multiply/service</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -3195,18 +3215,23 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>mcmgr/mcmgr/src</GroupName>
+          <GroupName>mcmgr/mcmgr/inc</GroupName>
           <Files>
             <File>
               <FileName>mcmgr.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/mcmgr/src/mcmgr.h</FilePath>
+              <FilePath>../../../../../../middleware/multicore/mcmgr/inc/mcmgr.h</FilePath>
             </File>
             <File>
               <FileName>mcmgr_internal_core_api.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/mcmgr/src/mcmgr_internal_core_api.h</FilePath>
+              <FilePath>../../../../../../middleware/multicore/mcmgr/inc/mcmgr_internal_core_api.h</FilePath>
             </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>mcmgr/mcmgr/src</GroupName>
+          <Files>
             <File>
               <FileName>mcmgr.c</FileName>
               <FileType>1</FileType>
@@ -3221,6 +3246,16 @@
               <FileName>mcmgr_mu_internal.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/multicore/mcmgr/src/mcmgr_mu_internal.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>mcmgr/mcmgr/inc/platform/imxrt1160</GroupName>
+          <Files>
+            <File>
+              <FileName>mcmgr_platform.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/multicore/mcmgr/inc/platform/imxrt1160/mcmgr_platform.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3506,6 +3541,11 @@
               <FileName>example_board_readme.md</FileName>
               <FileType>5</FileType>
               <FilePath>../example_board_readme.md</FilePath>
+            </File>
+            <File>
+              <FileName>examples_shared_readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../examples_shared_readme.md</FilePath>
             </File>
           </Files>
         </Group>

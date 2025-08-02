@@ -1,6 +1,6 @@
 /*
 * Copyright 2016, Freescale Semiconductor, Inc.
-* Copyright 2016-2021, 2024 NXP
+* Copyright 2016-2021, 2024-2025 NXP
 *
 * NXP Proprietary. This software is owned or controlled by NXP and may
 * only be used strictly in accordance with the applicable license terms. 
@@ -102,9 +102,16 @@ void MCS_PMSMFocCtrl(mcs_pmsm_foc_t *psFocPMSM)
     {
         /* D current error calculation */
         psFocPMSM->sIDQError.fltD = MLIB_Sub_FLT(psFocPMSM->sIDQReq.fltD, psFocPMSM->sIDQ.fltD);
-
+        
+#if defined(Q_CURRENT_ZC_FILTER)     
+        /* Zero cancellation filter */
+        psFocPMSM->sIDQReqFilt.fltQ = GDFLIB_FilterIIR1_FLT(psFocPMSM->sIDQReq.fltQ, &psFocPMSM->sIqReqZCFilter);
+        
         /* Q current error calculation */
+        psFocPMSM->sIDQError.fltQ = MLIB_Sub_FLT(psFocPMSM->sIDQReqFilt.fltQ, psFocPMSM->sIDQ.fltQ);
+#else
         psFocPMSM->sIDQError.fltQ = MLIB_Sub_FLT(psFocPMSM->sIDQReq.fltQ, psFocPMSM->sIDQ.fltQ);
+#endif
 
         /*** D - controller limitation calculation ***/
         psFocPMSM->sIdPiParams.fltLowerLim = MLIB_MulNeg_FLT(psFocPMSM->fltDutyCycleLimit, psFocPMSM->fltUDcBusFilt);
@@ -136,6 +143,61 @@ void MCS_PMSMFocCtrl(mcs_pmsm_foc_t *psFocPMSM)
 }
 
 /*!
+ * @brief Optimized PMSM field oriented current control.
+ *
+ * This function is used to compute PMSM field oriented current control.
+ *
+ * @param psFocPMSM     The pointer of the PMSM FOC structure
+ *
+ * @return None
+ */
+RAM_FUNC_LIB  
+void MCS_PMSMFocCtrl_Optim(mcs_pmsm_foc_t *psFocPMSM)
+{
+    /* 3-phase to 2-phase transformation to stationary ref. frame */
+    GMCLIB_Clark_FLT(&psFocPMSM->sIABC, &psFocPMSM->sIAlBe);
+
+    /* 2-phase to 2-phase transformation to rotary ref. frame */
+    GFLIB_SinCos_FLTa((acc32_t)psFocPMSM->f16PosElExt, &psFocPMSM->sAnglePosEl);
+    
+    GMCLIB_Park_FLT(&psFocPMSM->sIAlBe, &psFocPMSM->sAnglePosEl, &psFocPMSM->sIDQ);
+
+    /* perform current control loop if enabled */
+    if (psFocPMSM->bCurrentLoopOn)
+    {
+        /* D current error calculation */
+        psFocPMSM->sIDQError.fltD = MLIB_Sub_FLT(psFocPMSM->sIDQReq.fltD, psFocPMSM->sIDQ.fltD);
+        
+#if defined(Q_CURRENT_ZC_FILTER)      
+        /* Zero cancellation filter */
+        psFocPMSM->sIDQReqFilt.fltQ = GDFLIB_FilterIIR1_FLT(psFocPMSM->sIDQReq.fltQ, &psFocPMSM->sIqReqZCFilter);
+        
+        /* Q current error calculation */
+        psFocPMSM->sIDQError.fltQ = MLIB_Sub_FLT(psFocPMSM->sIDQReqFilt.fltQ, psFocPMSM->sIDQ.fltQ);
+#else
+        psFocPMSM->sIDQError.fltQ = MLIB_Sub_FLT(psFocPMSM->sIDQReq.fltQ, psFocPMSM->sIDQ.fltQ);
+#endif
+        
+        /* D current PI controller */
+        psFocPMSM->sUDQReq.fltD =
+            GFLIB_CtrlPIpAW_FLT(psFocPMSM->sIDQError.fltD, &psFocPMSM->bIdPiStopInteg, &psFocPMSM->sIdPiParams);
+        
+        /* Q current PI controller */
+        psFocPMSM->sUDQReq.fltQ =
+            GFLIB_CtrlPIpAW_FLT(psFocPMSM->sIDQError.fltQ, &psFocPMSM->bIqPiStopInteg, &psFocPMSM->sIqPiParams);
+    }
+
+    /* 2-phase to 2-phase transformation to stationary ref. frame */
+    GMCLIB_ParkInv_FLT(&psFocPMSM->sUDQReq, &psFocPMSM->sAnglePosEl, &psFocPMSM->sUAlBeReq);
+
+    /* DCBus ripple elimination */
+    GMCLIB_ElimDcBusRipFOC_F16ff(psFocPMSM->fltUDcBusFilt, &psFocPMSM->sUAlBeReq, &psFocPMSM->sUAlBeCompFrac);
+
+    /* space vector modulation */
+    psFocPMSM->ui16SectorSVM = GMCLIB_SvmStd_F16(&psFocPMSM->sUAlBeCompFrac, &psFocPMSM->sDutyABC);
+}
+
+/*!
  * @brief PMSM field oriented speed control.
  *
  * This function is used to compute PMSM field oriented speed control.
@@ -151,12 +213,21 @@ void MCS_PMSMFocCtrlSpeed(mcs_speed_t *psSpeed)
     psSpeed->bSpeedPiStopInteg = (bool_t)((psSpeed->sSpeedPiParams.bLimFlag | psSpeed->bIqPiLimFlag) &
     		(bool_t)(MLIB_Abs_FLT(psSpeed->fltSpeedCmd) >= MLIB_Abs_FLT(psSpeed->fltSpeedFilt)));
 
-    /* Speed ramp generation */
-    psSpeed->fltSpeedRamp = GFLIB_Ramp_FLT(psSpeed->fltSpeedCmd, &psSpeed->sSpeedRampParams);
-
-    /* Speed error calculation */
-    psSpeed->fltSpeedError = MLIB_Sub_FLT(psSpeed->fltSpeedRamp, psSpeed->fltSpeedFilt);
-
+    if(psSpeed->bSpeedZCOn)
+    {
+        /* Speed zero cancellation filter */
+        psSpeed->fltSpeedCmdFilt  = GDFLIB_FilterIIR1_FLT(psSpeed->fltSpeedCmd, &psSpeed->sSpeedCmdZCFilter);
+        /* Speed error calculation */
+        psSpeed->fltSpeedError = MLIB_Sub_FLT(psSpeed->fltSpeedCmdFilt, psSpeed->fltSpeedFilt);
+    }
+    else
+    {
+        /* Speed ramp generation */
+        psSpeed->fltSpeedRamp = GFLIB_Ramp_FLT(psSpeed->fltSpeedCmd, &psSpeed->sSpeedRampParams);
+        /* Speed error calculation */
+        psSpeed->fltSpeedError = MLIB_Sub_FLT(psSpeed->fltSpeedRamp, psSpeed->fltSpeedFilt);
+    }
+      
     /* Desired current by the speed PI controller */
     psSpeed->fltIqReq =
         GFLIB_CtrlPIpAW_FLT(psSpeed->fltSpeedError, &psSpeed->bSpeedPiStopInteg, &psSpeed->sSpeedPiParams);
@@ -175,9 +246,58 @@ RAM_FUNC_LIB
 void MCS_PMSMFocCtrlPosition(mcs_position_t *psPosition)
 {
     /* Position error calculation */
-    psPosition->a32PositionError = ((psPosition->a32PositionCmd) - (psPosition->a32Position));
+    psPosition->fltPositionError = MLIB_Conv_FLTa((psPosition->a32PositionCmd - psPosition->a32Position));
+    
+    /* Convert acc32 to flt */
+    psPosition->fltPositionCmd = MLIB_Conv_FLTa(psPosition->a32PositionCmd);
+    psPosition->fltPosition = MLIB_Conv_FLTa(psPosition->a32Position);      
+    
+    /* If Feed-Forward is on */
+    if(psPosition->bFeedFrwdOn)
+    {  
+      psPosition->fltPositionCmdDelta = MLIB_Sub_FLT(psPosition->fltPositionCmd, psPosition->fltPositionCmd_stored);
+                                         
+      /* Limit fltPositionCmdDelta due to very high value after derivation */
+      GFLIB_Limit_FLT(psPosition->fltPositionCmdDelta, -0.5F, 0.5F); 
+               
+      psPosition->fltFirstDerivation = MLIB_Div_FLT((psPosition->fltPositionCmdDelta), (psPosition->fltSpeedLoopTs)); 
+      
+      psPosition->fltFirstDerivationDelta = MLIB_Sub_FLT((psPosition->fltFirstDerivation), (psPosition->fltFirstDerivation_stored));
+      
+      /* Limit fltFirstDerivationDelta due to very high value after derivation */
+      GFLIB_Limit_FLT(psPosition->fltFirstDerivationDelta, -0.8F, 0.8F); 
+      
+      psPosition->fltSecondDerivation = MLIB_Div_FLT(psPosition->fltFirstDerivationDelta, (psPosition->fltSpeedLoopTs));
+    
+      psPosition->fltSpeedFeedFrwdK1 = MLIB_Mul_FLT(psPosition->fltFirstDerivation, psPosition->fltFeedFrwdK1);
+      psPosition->fltSpeedFeedFrwdK2 = MLIB_Mul_FLT(psPosition->fltSecondDerivation, psPosition->fltFeedFrwdK2);
+      
+    }
+    else
+    {
+      psPosition->fltSpeedFeedFrwdK1 = 0.0F;
+      psPosition->fltSpeedFeedFrwdK2 = 0.0F;
+    }
+      
     /* Position P controller output */
-    psPosition->f16SpeedReq = MLIB_MulSat_F16as((psPosition->a32PositionError), (psPosition->f16PositionPGain));
+    psPosition->fltSpeedReq = GFLIB_CtrlPIpAW_FLT(psPosition->fltPositionError, &psPosition->bPositionPiStopInteg, &psPosition->sPositionPiParams) + psPosition->fltSpeedFeedFrwdK1 + psPosition->fltSpeedFeedFrwdK2;
+    
+    /* Store actual fltPositionCmd needed for next derivation */
+    psPosition->fltPositionCmd_stored = psPosition->fltPositionCmd;
+    /* Store actual fltFirstDerivation needed for next derivation */
+    psPosition->fltFirstDerivation_stored = psPosition->fltFirstDerivation;
+    
+    /* Speed saturation flag given by the Q current controller saturation flag and speed controller saturation flag */
+    psPosition->bSpeedPiStopInteg = (bool_t)((psPosition->sSpeedPiParams.bLimFlag | psPosition->bIqPiLimFlag) &
+    		(bool_t)(MLIB_Abs_FLT(psPosition->fltSpeedReq) >= MLIB_Abs_FLT(psPosition->fltSpeedFilt)));
+
+    /* Speed zero cancellation filter */
+    psPosition->fltSpeedReqFilt  = GDFLIB_FilterIIR1_FLT(psPosition->fltSpeedReq, &psPosition->sSpeedReqZCFilter);
+    /* Speed error calculation */
+    psPosition->fltSpeedError = MLIB_Sub_FLT(psPosition->fltSpeedReqFilt, psPosition->fltSpeedFilt);
+
+    /* Desired current by the speed PI controller */
+    psPosition->fltIqReq =  GFLIB_CtrlPIpAW_FLT(psPosition->fltSpeedError, &psPosition->bSpeedPiStopInteg, &psPosition->sSpeedPiParams);
 }
 
 /*!

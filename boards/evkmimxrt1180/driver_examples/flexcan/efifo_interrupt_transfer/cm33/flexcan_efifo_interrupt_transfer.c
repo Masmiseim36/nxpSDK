@@ -20,10 +20,10 @@
 #endif
 /*
  *    DWORD_IN_MB    DLC    BYTES_IN_MB             Maximum MBs
- *    2              8      kFLEXCAN_8BperMB        64
- *    4              10     kFLEXCAN_16BperMB       42
- *    8              13     kFLEXCAN_32BperMB       25
- *    16             15     kFLEXCAN_64BperMB       14
+ *    2              8      kFLEXCAN_8BperMB    32(1 RAM block)  64(2 RAM block)  96(3 RAM block)
+ *    4              10     kFLEXCAN_16BperMB   21(1 RAM block)  42(2 RAM block)  63(3 RAM block)
+ *    8              13     kFLEXCAN_32BperMB   12(1 RAM block)  24(2 RAM block)  36(3 RAM block)
+ *    16             15     kFLEXCAN_64BperMB   7(1 RAM block)   14(2 RAM block)  21(3 RAM block)
  *
  * Dword in each message buffer, Length of data in bytes, Payload size must align,
  * and the Message Buffers are limited corresponding to each payload configuration:
@@ -204,6 +204,13 @@ int main(void)
     FLEXCAN_GetDefaultConfig(&flexcanConfig);
 
     flexcanConfig.bitRate = 500000U;
+
+#if (defined(FSL_FEATURE_FLEXCAN_HAS_HIGH_RESOLUTION_TIMESTAMP) && FSL_FEATURE_FLEXCAN_HAS_HIGH_RESOLUTION_TIMESTAMP)
+    /* Select free-running timer as message buffer TIME_STAMP field timebase. */
+    flexcanConfig.captureTimeBase = kFLEXCAN_CANTimer;
+    /* Enable high resolution timestamp feature to read HR TIMESTAMP in enhanced Rx FIFO. */
+    flexcanConfig.capturePoint = kFLEXCAN_CANFrameStart;
+#endif
 
 #if defined(EXAMPLE_CAN_CLK_SOURCE)
     flexcanConfig.clkSrc = EXAMPLE_CAN_CLK_SOURCE;

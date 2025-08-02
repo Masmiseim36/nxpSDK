@@ -10,7 +10,7 @@
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
-          <Device>MIMXRT1176DVMAA:cm7</Device>
+          <Device>MIMXRT1176DVMAB:cm7</Device>
           <Vendor>NXP</Vendor>
           <PackID>NXP.MIMXRT1176_DFP.12.0.0</PackID>
           <PackURL>http://mcuxpresso.nxp.com/cmsis_pack/repo/</PackURL>
@@ -332,7 +332,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../mcux_config.h -fno-common  -fdata-sections  -fno-builtin  -mthumb  -fms-extensions -fno-exceptions</MiscControls>
-              <Define>DEBUG, XIP_EXTERNAL_FLASH=1, USE_SDRAM=1, XIP_BOOT_HEADER_ENABLE=1, XIP_BOOT_HEADER_XMCD_ENABLE=1, SKIP_SYSCLK_INIT=1, DATA_SECTION_IS_CACHEABLE=1, GCID_REV_CID=gc355/0x0_1216, CUSTOM_VGLITE_MEMORY_CONFIG=0, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, SDK_I2C_BASED_COMPONENT_USED=1, CPU_MIMXRT1176DVMAA_cm7, LV_CONF_INCLUDE_SIMPLE=1, SDK_OS_FREE_RTOS</Define>
+              <Define>DEBUG, XIP_EXTERNAL_FLASH=1, USE_SDRAM=1, XIP_BOOT_HEADER_ENABLE=1, XIP_BOOT_HEADER_XMCD_ENABLE=1, SKIP_SYSCLK_INIT=1, DATA_SECTION_IS_CACHEABLE=1, GCID_REV_CID=gc355/0x0_1216, CUSTOM_VGLITE_MEMORY_CONFIG=0, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, SDK_I2C_BASED_COMPONENT_USED=1, CPU_MIMXRT1176DVMAB_cm7, MIMXRT1176_cm7_SERIES, LV_CONF_INCLUDE_SIMPLE=1, SDK_OS_FREE_RTOS</Define>
               <Undefine/>
               <IncludePath>..;../generated;../custom;../generated/guider_customer_fonts;../../../../xip;../../../../../../devices/MIMXRT1176/xip;../../../../../../devices/MIMXRT1176/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1176;../../../../../../devices/MIMXRT1176/periph;../../../../../../devices/MIMXRT1176/drivers/cm7;../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../components/uart;../../../../../../components/video;../../../../../../components/video/display/dc;../../../../../../components/video/display;../../../../../../components/video/display/fbdev;../../../../../../components/video/display/dc/elcdif;../../../../../../components/video/display/dc/lcdifv2;../../../../../../components/video/display/mipi_dsi_cmd;../../../../../../components/video/display/hx8394;../../../../../../components/video/display/rm68191;../../../../../../components/video/display/rm68200;../../../../../../components/video/display/rpi;../../../../../../components/touch/gt911;../../../../../../components/touch/ft5406_rt;../../../../../../middleware/vglite/driver/inc;../../../../../../middleware/vglite/driver/VGLite;../../../../../../middleware/vglite/driver/VGLite/rtos;../../../../../../middleware/vglite/driver/VGLite/Series/gc555/0x423_ECO;../../../../../../middleware/vglite/driver/VGLite/Series/gc355/0x0_1216;../../../../../../middleware/vglite/driver/VGLite/Series/gc255/0x40A;../../../../../../middleware/vglite/driver/VGLiteKernel;../../../../../../middleware/vglite/driver/VGLiteKernel/rtos;../../../../../../middleware/lvgl;../../../../../../middleware/lvgl/src/draw/nxp/vglite;../../../../../../middleware/lvgl/template;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../../rtos/freertos/freertos-kernel/template</IncludePath>
             </VariousControls>
@@ -350,7 +350,7 @@
             <ClangAsOpt>2</ClangAsOpt>
             <VariousControls>
               <MiscControls/>
-              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1176DVMAA_cm7</Define>
+              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1176DVMAB_cm7, MIMXRT1176_cm7_SERIES</Define>
               <Undefine/>
               <IncludePath>..;../../../../xip;../../../../../../devices/MIMXRT1176/xip;../../../../../../devices/MIMXRT1176/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1176;../../../../../../devices/MIMXRT1176/periph;../../../../../../devices/MIMXRT1176/drivers/cm7;../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../components/uart;../../../../../../components/video;../../../../../../components/video/display/dc;../../../../../../components/video/display;../../../../../../components/video/display/fbdev;../../../../../../components/video/display/dc/elcdif;../../../../../../components/video/display/dc/lcdifv2;../../../../../../components/video/display/mipi_dsi_cmd;../../../../../../components/video/display/hx8394;../../../../../../components/video/display/rm68191;../../../../../../components/video/display/rm68200;../../../../../../components/video/display/rpi;../../../../../../components/touch/gt911;../../../../../../components/touch/ft5406_rt;../../../../../../middleware/vglite/driver/inc;../../../../../../middleware/vglite/driver/VGLite;../../../../../../middleware/vglite/driver/VGLite/rtos;../../../../../../middleware/vglite/driver/VGLite/Series/gc555/0x423_ECO;../../../../../../middleware/vglite/driver/VGLite/Series/gc355/0x0_1216;../../../../../../middleware/vglite/driver/VGLite/Series/gc255/0x40A;../../../../../../middleware/vglite/driver/VGLiteKernel;../../../../../../middleware/vglite/driver/VGLiteKernel/rtos;../../../../../../middleware/lvgl;../../../../../../middleware/lvgl/src/draw/nxp/vglite;../../../../../../middleware/lvgl/template;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../../rtos/freertos/freertos-kernel/template</IncludePath>
             </VariousControls>
@@ -384,56 +384,6 @@
               <FilePath>../lvgl_guider.c</FilePath>
             </File>
             <File>
-              <FileName>guider_customer_fonts.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../generated/guider_customer_fonts/guider_customer_fonts.h</FilePath>
-            </File>
-            <File>
-              <FileName>gui_guider.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../generated/gui_guider.c</FilePath>
-            </File>
-            <File>
-              <FileName>gui_guider.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../generated/gui_guider.h</FilePath>
-            </File>
-            <File>
-              <FileName>events_init.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../generated/events_init.c</FilePath>
-            </File>
-            <File>
-              <FileName>events_init.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../generated/events_init.h</FilePath>
-            </File>
-            <File>
-              <FileName>setup_scr_screen.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../generated/setup_scr_screen.c</FilePath>
-            </File>
-            <File>
-              <FileName>widgets_init.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../generated/widgets_init.c</FilePath>
-            </File>
-            <File>
-              <FileName>widgets_init.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../generated/widgets_init.h</FilePath>
-            </File>
-            <File>
-              <FileName>custom.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../custom/custom.c</FilePath>
-            </File>
-            <File>
-              <FileName>custom.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../custom/custom.h</FilePath>
-            </File>
-            <File>
               <FileName>lv_conf_ext.h</FileName>
               <FileType>5</FileType>
               <FilePath>../lv_conf_ext.h</FilePath>
@@ -457,6 +407,11 @@
               <FileName>lvgl_freertos.h</FileName>
               <FileType>5</FileType>
               <FilePath>../lvgl_freertos.h</FilePath>
+            </File>
+            <File>
+              <FileName>FreeRTOSConfig_frag.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../FreeRTOSConfig_frag.h</FilePath>
             </File>
             <File>
               <FileName>pin_mux.c</FileName>
@@ -522,6 +477,71 @@
               <FileName>mcux_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../mcux_config.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>generated/guider_customer_fonts</GroupName>
+          <Files>
+            <File>
+              <FileName>guider_customer_fonts.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../generated/guider_customer_fonts/guider_customer_fonts.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>generated</GroupName>
+          <Files>
+            <File>
+              <FileName>gui_guider.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../generated/gui_guider.c</FilePath>
+            </File>
+            <File>
+              <FileName>gui_guider.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../generated/gui_guider.h</FilePath>
+            </File>
+            <File>
+              <FileName>events_init.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../generated/events_init.c</FilePath>
+            </File>
+            <File>
+              <FileName>events_init.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../generated/events_init.h</FilePath>
+            </File>
+            <File>
+              <FileName>setup_scr_screen.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../generated/setup_scr_screen.c</FilePath>
+            </File>
+            <File>
+              <FileName>widgets_init.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../generated/widgets_init.c</FilePath>
+            </File>
+            <File>
+              <FileName>widgets_init.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../generated/widgets_init.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>custom</GroupName>
+          <Files>
+            <File>
+              <FileName>custom.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../custom/custom.c</FilePath>
+            </File>
+            <File>
+              <FileName>custom.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../custom/custom.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -4064,6 +4084,11 @@
               <FilePath>../../../../../../middleware/lvgl/src/osal/lv_freertos.c</FilePath>
             </File>
             <File>
+              <FileName>lv_linux.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/lvgl/src/osal/lv_linux.c</FilePath>
+            </File>
+            <File>
               <FileName>lv_mqx.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/lvgl/src/osal/lv_mqx.c</FilePath>
@@ -4102,6 +4127,11 @@
               <FileName>lv_freertos.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/lvgl/src/osal/lv_freertos.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_linux_private.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/lvgl/src/osal/lv_linux_private.h</FilePath>
             </File>
             <File>
               <FileName>lv_mqx.h</FileName>
@@ -5698,6 +5728,11 @@
               <FileType>5</FileType>
               <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/timers.h</FilePath>
             </File>
+            <File>
+              <FileName>freertos_tasks_c_additions.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/freertos_tasks_c_additions.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -5763,6 +5798,11 @@
               <FileType>5</FileType>
               <FilePath>../lvgl_examples_readme.md</FilePath>
             </File>
+            <File>
+              <FileName>examples_shared_readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../examples_shared_readme.md</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>
@@ -5774,7 +5814,7 @@
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
-          <Device>MIMXRT1176DVMAA:cm7</Device>
+          <Device>MIMXRT1176DVMAB:cm7</Device>
           <Vendor>NXP</Vendor>
           <PackID>NXP.MIMXRT1176_DFP.12.0.0</PackID>
           <PackURL>http://mcuxpresso.nxp.com/cmsis_pack/repo/</PackURL>
@@ -6096,7 +6136,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../mcux_config.h -fno-common  -fdata-sections  -fno-builtin  -mthumb  -fms-extensions -fno-exceptions</MiscControls>
-              <Define>NDEBUG, XIP_EXTERNAL_FLASH=1, USE_SDRAM=1, XIP_BOOT_HEADER_ENABLE=1, XIP_BOOT_HEADER_XMCD_ENABLE=1, SKIP_SYSCLK_INIT=1, DATA_SECTION_IS_CACHEABLE=1, GCID_REV_CID=gc355/0x0_1216, CUSTOM_VGLITE_MEMORY_CONFIG=0, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, SDK_I2C_BASED_COMPONENT_USED=1, CPU_MIMXRT1176DVMAA_cm7, LV_CONF_INCLUDE_SIMPLE=1, SDK_OS_FREE_RTOS</Define>
+              <Define>NDEBUG, XIP_EXTERNAL_FLASH=1, USE_SDRAM=1, XIP_BOOT_HEADER_ENABLE=1, XIP_BOOT_HEADER_XMCD_ENABLE=1, SKIP_SYSCLK_INIT=1, DATA_SECTION_IS_CACHEABLE=1, GCID_REV_CID=gc355/0x0_1216, CUSTOM_VGLITE_MEMORY_CONFIG=0, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, SDK_I2C_BASED_COMPONENT_USED=1, CPU_MIMXRT1176DVMAB_cm7, MIMXRT1176_cm7_SERIES, LV_CONF_INCLUDE_SIMPLE=1, SDK_OS_FREE_RTOS</Define>
               <Undefine/>
               <IncludePath>..;../generated;../custom;../generated/guider_customer_fonts;../../../../xip;../../../../../../devices/MIMXRT1176/xip;../../../../../../devices/MIMXRT1176/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1176;../../../../../../devices/MIMXRT1176/periph;../../../../../../devices/MIMXRT1176/drivers/cm7;../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../components/uart;../../../../../../components/video;../../../../../../components/video/display/dc;../../../../../../components/video/display;../../../../../../components/video/display/fbdev;../../../../../../components/video/display/dc/elcdif;../../../../../../components/video/display/dc/lcdifv2;../../../../../../components/video/display/mipi_dsi_cmd;../../../../../../components/video/display/hx8394;../../../../../../components/video/display/rm68191;../../../../../../components/video/display/rm68200;../../../../../../components/video/display/rpi;../../../../../../components/touch/gt911;../../../../../../components/touch/ft5406_rt;../../../../../../middleware/vglite/driver/inc;../../../../../../middleware/vglite/driver/VGLite;../../../../../../middleware/vglite/driver/VGLite/rtos;../../../../../../middleware/vglite/driver/VGLite/Series/gc555/0x423_ECO;../../../../../../middleware/vglite/driver/VGLite/Series/gc355/0x0_1216;../../../../../../middleware/vglite/driver/VGLite/Series/gc255/0x40A;../../../../../../middleware/vglite/driver/VGLiteKernel;../../../../../../middleware/vglite/driver/VGLiteKernel/rtos;../../../../../../middleware/lvgl;../../../../../../middleware/lvgl/src/draw/nxp/vglite;../../../../../../middleware/lvgl/template;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../../rtos/freertos/freertos-kernel/template</IncludePath>
             </VariousControls>
@@ -6114,7 +6154,7 @@
             <ClangAsOpt>2</ClangAsOpt>
             <VariousControls>
               <MiscControls/>
-              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1176DVMAA_cm7</Define>
+              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1176DVMAB_cm7, MIMXRT1176_cm7_SERIES</Define>
               <Undefine/>
               <IncludePath>..;../../../../xip;../../../../../../devices/MIMXRT1176/xip;../../../../../../devices/MIMXRT1176/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1176;../../../../../../devices/MIMXRT1176/periph;../../../../../../devices/MIMXRT1176/drivers/cm7;../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../components/uart;../../../../../../components/video;../../../../../../components/video/display/dc;../../../../../../components/video/display;../../../../../../components/video/display/fbdev;../../../../../../components/video/display/dc/elcdif;../../../../../../components/video/display/dc/lcdifv2;../../../../../../components/video/display/mipi_dsi_cmd;../../../../../../components/video/display/hx8394;../../../../../../components/video/display/rm68191;../../../../../../components/video/display/rm68200;../../../../../../components/video/display/rpi;../../../../../../components/touch/gt911;../../../../../../components/touch/ft5406_rt;../../../../../../middleware/vglite/driver/inc;../../../../../../middleware/vglite/driver/VGLite;../../../../../../middleware/vglite/driver/VGLite/rtos;../../../../../../middleware/vglite/driver/VGLite/Series/gc555/0x423_ECO;../../../../../../middleware/vglite/driver/VGLite/Series/gc355/0x0_1216;../../../../../../middleware/vglite/driver/VGLite/Series/gc255/0x40A;../../../../../../middleware/vglite/driver/VGLiteKernel;../../../../../../middleware/vglite/driver/VGLiteKernel/rtos;../../../../../../middleware/lvgl;../../../../../../middleware/lvgl/src/draw/nxp/vglite;../../../../../../middleware/lvgl/template;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../../rtos/freertos/freertos-kernel/template</IncludePath>
             </VariousControls>
@@ -6148,56 +6188,6 @@
               <FilePath>../lvgl_guider.c</FilePath>
             </File>
             <File>
-              <FileName>guider_customer_fonts.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../generated/guider_customer_fonts/guider_customer_fonts.h</FilePath>
-            </File>
-            <File>
-              <FileName>gui_guider.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../generated/gui_guider.c</FilePath>
-            </File>
-            <File>
-              <FileName>gui_guider.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../generated/gui_guider.h</FilePath>
-            </File>
-            <File>
-              <FileName>events_init.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../generated/events_init.c</FilePath>
-            </File>
-            <File>
-              <FileName>events_init.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../generated/events_init.h</FilePath>
-            </File>
-            <File>
-              <FileName>setup_scr_screen.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../generated/setup_scr_screen.c</FilePath>
-            </File>
-            <File>
-              <FileName>widgets_init.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../generated/widgets_init.c</FilePath>
-            </File>
-            <File>
-              <FileName>widgets_init.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../generated/widgets_init.h</FilePath>
-            </File>
-            <File>
-              <FileName>custom.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../custom/custom.c</FilePath>
-            </File>
-            <File>
-              <FileName>custom.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../custom/custom.h</FilePath>
-            </File>
-            <File>
               <FileName>lv_conf_ext.h</FileName>
               <FileType>5</FileType>
               <FilePath>../lv_conf_ext.h</FilePath>
@@ -6221,6 +6211,11 @@
               <FileName>lvgl_freertos.h</FileName>
               <FileType>5</FileType>
               <FilePath>../lvgl_freertos.h</FilePath>
+            </File>
+            <File>
+              <FileName>FreeRTOSConfig_frag.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../FreeRTOSConfig_frag.h</FilePath>
             </File>
             <File>
               <FileName>pin_mux.c</FileName>
@@ -6286,6 +6281,71 @@
               <FileName>mcux_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../mcux_config.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>generated/guider_customer_fonts</GroupName>
+          <Files>
+            <File>
+              <FileName>guider_customer_fonts.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../generated/guider_customer_fonts/guider_customer_fonts.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>generated</GroupName>
+          <Files>
+            <File>
+              <FileName>gui_guider.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../generated/gui_guider.c</FilePath>
+            </File>
+            <File>
+              <FileName>gui_guider.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../generated/gui_guider.h</FilePath>
+            </File>
+            <File>
+              <FileName>events_init.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../generated/events_init.c</FilePath>
+            </File>
+            <File>
+              <FileName>events_init.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../generated/events_init.h</FilePath>
+            </File>
+            <File>
+              <FileName>setup_scr_screen.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../generated/setup_scr_screen.c</FilePath>
+            </File>
+            <File>
+              <FileName>widgets_init.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../generated/widgets_init.c</FilePath>
+            </File>
+            <File>
+              <FileName>widgets_init.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../generated/widgets_init.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>custom</GroupName>
+          <Files>
+            <File>
+              <FileName>custom.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../custom/custom.c</FilePath>
+            </File>
+            <File>
+              <FileName>custom.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../custom/custom.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -9828,6 +9888,11 @@
               <FilePath>../../../../../../middleware/lvgl/src/osal/lv_freertos.c</FilePath>
             </File>
             <File>
+              <FileName>lv_linux.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/lvgl/src/osal/lv_linux.c</FilePath>
+            </File>
+            <File>
               <FileName>lv_mqx.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/lvgl/src/osal/lv_mqx.c</FilePath>
@@ -9866,6 +9931,11 @@
               <FileName>lv_freertos.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/lvgl/src/osal/lv_freertos.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_linux_private.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/lvgl/src/osal/lv_linux_private.h</FilePath>
             </File>
             <File>
               <FileName>lv_mqx.h</FileName>
@@ -11462,6 +11532,11 @@
               <FileType>5</FileType>
               <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/timers.h</FilePath>
             </File>
+            <File>
+              <FileName>freertos_tasks_c_additions.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/freertos_tasks_c_additions.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -11526,6 +11601,11 @@
               <FileName>lvgl_examples_readme.md</FileName>
               <FileType>5</FileType>
               <FilePath>../lvgl_examples_readme.md</FilePath>
+            </File>
+            <File>
+              <FileName>examples_shared_readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../examples_shared_readme.md</FilePath>
             </File>
           </Files>
         </Group>

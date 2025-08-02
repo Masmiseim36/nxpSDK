@@ -29,18 +29,19 @@
     <definition extID="utility.debug_console_lite.MIMXRT1176"/>
     <definition extID="component.lpuart_adapter.MIMXRT1176"/>
     <definition extID="component.osa_template_config.MIMXRT1176"/>
-    <definition extID="component.osa_interface.MIMXRT1176"/>
     <definition extID="component.osa.MIMXRT1176"/>
     <definition extID="component.osa_free_rtos.MIMXRT1176"/>
     <definition extID="middleware.usb.common_header.MIMXRT1176"/>
     <definition extID="middleware.usb.device.common_header.MIMXRT1176"/>
     <definition extID="middleware.usb.device_controller_ehci.MIMXRT1176"/>
+    <definition extID="middleware.usb.device.ehci_config_header.MIMXRT1176"/>
     <definition extID="middleware.usb.device.controller.driver.MIMXRT1176"/>
     <definition extID="middleware.usb.device.stack.MIMXRT1176"/>
     <definition extID="middleware.usb.device.video.MIMXRT1176"/>
     <definition extID="middleware.usb.phy.MIMXRT1176"/>
     <definition extID="middleware.freertos-kernel.MIMXRT1176"/>
     <definition extID="middleware.freertos-kernel.heap_4.MIMXRT1176"/>
+    <definition extID="middleware.freertos-kernel.extension.MIMXRT1176"/>
     <definition extID="middleware.freertos-kernel.config.MIMXRT1176"/>
     <definition extID="iar"/>
     <definition extID="mdk"/>
@@ -50,7 +51,7 @@
     <definition extID="com.crt.advproject.config.exe.debug"/>
     <definition extID="com.crt.advproject.config.exe.release"/>
   </externalDefinitions>
-  <example id="evkbmimxrt1170_dev_video_virtual_camera_freertos_cm7" name="dev_video_virtual_camera_freertos_cm7" device_core="cm7_MIMXRT1176xxxxx" dependency="platform.drivers.xip_board.evkbmimxrt1170.MIMXRT1176 platform.drivers.xip_device.MIMXRT1176 platform.drivers.clock.MIMXRT1176 platform.drivers.iomuxc.MIMXRT1176 platform.drivers.anatop_ai.MIMXRT1176 platform.drivers.memory.MIMXRT1176 platform.drivers.dcdc_soc.MIMXRT1176 platform.drivers.gpc_3.MIMXRT1176 platform.drivers.pgmc.MIMXRT1176 platform.drivers.pmu_1.MIMXRT1176 platform.drivers.soc_src.MIMXRT1176 CMSIS_Include_core_cm.MIMXRT1176 device.MIMXRT1176_CMSIS.MIMXRT1176 device.MIMXRT1176_system.MIMXRT1176 device.MIMXRT1176_startup.MIMXRT1176 platform.drivers.cache_armv7_m7.MIMXRT1176 platform.drivers.common.MIMXRT1176 platform.drivers.igpio.MIMXRT1176 platform.drivers.lpuart.MIMXRT1176 platform.drivers.mu.MIMXRT1176 platform.utilities.assert_lite.MIMXRT1176 platform.utilities.misc_utilities.MIMXRT1176 component.lists.MIMXRT1176 utility.str.MIMXRT1176 utility.debug_console_lite.MIMXRT1176 component.lpuart_adapter.MIMXRT1176 component.osa_template_config.MIMXRT1176 component.osa_interface.MIMXRT1176 component.osa.MIMXRT1176 component.osa_free_rtos.MIMXRT1176 middleware.usb.common_header.MIMXRT1176 middleware.usb.device.common_header.MIMXRT1176 middleware.usb.device_controller_ehci.MIMXRT1176 middleware.usb.device.controller.driver.MIMXRT1176 middleware.usb.device.stack.MIMXRT1176 middleware.usb.device.video.MIMXRT1176 middleware.usb.phy.MIMXRT1176 middleware.freertos-kernel.MIMXRT1176 middleware.freertos-kernel.heap_4.MIMXRT1176 middleware.freertos-kernel.config.MIMXRT1176" category="usb_examples">
+  <example id="evkbmimxrt1170_dev_video_virtual_camera_freertos_cm7" name="dev_video_virtual_camera_freertos_cm7" device_core="cm7_MIMXRT1176xxxxx" dependency="platform.drivers.xip_board.evkbmimxrt1170.MIMXRT1176 platform.drivers.xip_device.MIMXRT1176 platform.drivers.clock.MIMXRT1176 platform.drivers.iomuxc.MIMXRT1176 platform.drivers.anatop_ai.MIMXRT1176 platform.drivers.memory.MIMXRT1176 platform.drivers.dcdc_soc.MIMXRT1176 platform.drivers.gpc_3.MIMXRT1176 platform.drivers.pgmc.MIMXRT1176 platform.drivers.pmu_1.MIMXRT1176 platform.drivers.soc_src.MIMXRT1176 CMSIS_Include_core_cm.MIMXRT1176 device.MIMXRT1176_CMSIS.MIMXRT1176 device.MIMXRT1176_system.MIMXRT1176 device.MIMXRT1176_startup.MIMXRT1176 platform.drivers.cache_armv7_m7.MIMXRT1176 platform.drivers.common.MIMXRT1176 platform.drivers.igpio.MIMXRT1176 platform.drivers.lpuart.MIMXRT1176 platform.drivers.mu.MIMXRT1176 platform.utilities.assert_lite.MIMXRT1176 platform.utilities.misc_utilities.MIMXRT1176 component.lists.MIMXRT1176 utility.str.MIMXRT1176 utility.debug_console_lite.MIMXRT1176 component.lpuart_adapter.MIMXRT1176 component.osa_template_config.MIMXRT1176 component.osa.MIMXRT1176 component.osa_free_rtos.MIMXRT1176 middleware.usb.common_header.MIMXRT1176 middleware.usb.device.common_header.MIMXRT1176 middleware.usb.device_controller_ehci.MIMXRT1176 middleware.usb.device.ehci_config_header.MIMXRT1176 middleware.usb.device.controller.driver.MIMXRT1176 middleware.usb.device.stack.MIMXRT1176 middleware.usb.device.video.MIMXRT1176 middleware.usb.phy.MIMXRT1176 middleware.freertos-kernel.MIMXRT1176 middleware.freertos-kernel.heap_4.MIMXRT1176 middleware.freertos-kernel.extension.MIMXRT1176 middleware.freertos-kernel.config.MIMXRT1176" category="usb_examples">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -75,7 +76,8 @@
           <value>USB_STACK_FREERTOS</value>
           <value>SDK_DEBUGCONSOLE=1</value>
           <value>MCUX_META_BUILD</value>
-          <value>CPU_MIMXRT1176DVMAA_cm7</value>
+          <value>CPU_MIMXRT1176DVMAB_cm7</value>
+          <value>MIMXRT1176_cm7_SERIES</value>
           <value>OSA_USED</value>
           <value>USE_RTOS=1</value>
           <value>SDK_OS_FREE_RTOS</value>
@@ -229,18 +231,19 @@
     <source path="." project_relative_path="source" type="c_include" config="true">
       <files mask="FreeRTOSConfig_Gen.h"/>
       <files mask="fsl_os_abstraction_config.h"/>
+      <files mask="usb_device_config.h"/>
     </source>
     <source path="." project_relative_path="source" type="c_preinclude">
       <files mask="mcux_config.h"/>
-    </source>
-    <source path="." project_relative_path="source" type="c_include">
-      <files mask="usb_device_config.h"/>
     </source>
     <source path="." project_relative_path="doc" type="doc">
       <files mask="readme.md"/>
       <files mask="usb_device_video_test_tool_attached.jpg"/>
       <files mask="usb_device_video_test_tool_web.jpg"/>
       <files mask="usb_device_video_test_tool_windows.jpg"/>
+    </source>
+    <source path="." project_relative_path="doc" type="doc">
+      <files mask="examples_shared_readme.md"/>
     </source>
   </example>
 </ksdk:examples>

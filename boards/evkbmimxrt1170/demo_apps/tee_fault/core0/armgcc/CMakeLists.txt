@@ -14,9 +14,6 @@ if(CMAKE_SCRIPT_MODE_FILE)
 endif()
 
 
-set(CMAKE_STATIC_LIBRARY_PREFIX)
-set(CMAKE_STATIC_LIBRARY_SUFFIX)
-
 set(CMAKE_EXECUTABLE_LIBRARY_PREFIX)
 set(CMAKE_EXECUTABLE_LIBRARY_SUFFIX)
 
@@ -45,9 +42,9 @@ include(${ProjDirPath}/config.cmake)
 
 add_executable(${MCUX_SDK_PROJECT_NAME} 
 "${ProjDirPath}/../tee_fault_core0.c"
+"${ProjDirPath}/../tee_fault_common.h"
 "${ProjDirPath}/../resource_config.h"
 "${ProjDirPath}/../resource_config.c"
-"${ProjDirPath}/../tee_fault_common.h"
 "${ProjDirPath}/../board.h"
 "${ProjDirPath}/../board.c"
 "${ProjDirPath}/../clock_config.h"

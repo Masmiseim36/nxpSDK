@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 NXP
+ * Copyright 2020, 2025 NXP
  * All rights reserved.
  *
  *
@@ -8,6 +8,7 @@
 #ifndef _APP_H_
 #define _APP_H_
 
+#include "fsl_flexspi.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -64,6 +65,28 @@ static inline void flexspi_clock_init(void)
     /*Clock setting for flexspi1*/
     CLOCK_SetRootClockDiv(kCLOCK_Root_Flexspi1, 2);
     CLOCK_SetRootClockMux(kCLOCK_Root_Flexspi1, 0);
+#if !(defined(XIP_EXTERNAL_FLASH))
+    flexspi_transfer_t flashXfer;
+
+    uint32_t ResetFlashCommandSeq[8] = {0U};
+
+    
+    ResetFlashCommandSeq[0] = FLEXSPI_LUT_SEQ(kFLEXSPI_Command_SDR, kFLEXSPI_1PAD, 0x66, kFLEXSPI_Command_STOP, kFLEXSPI_1PAD, 0x00);
+    ResetFlashCommandSeq[4] = FLEXSPI_LUT_SEQ(kFLEXSPI_Command_SDR, kFLEXSPI_1PAD, 0x99, kFLEXSPI_Command_STOP, kFLEXSPI_1PAD, 0x00);
+    FLEXSPI_UpdateLUT(EXAMPLE_FLEXSPI, 4 * 14, ResetFlashCommandSeq, 8);
+
+    /* Reset */
+    flashXfer.deviceAddress = 0;
+    flashXfer.port          = kFLEXSPI_PortA1;
+    flashXfer.cmdType       = kFLEXSPI_Command;
+    flashXfer.SeqNumber     = 1;
+
+    flashXfer.seqIndex = 14;
+
+    (void)FLEXSPI_TransferBlocking(EXAMPLE_FLEXSPI, &flashXfer);
+    flashXfer.seqIndex = 15;
+    (void)FLEXSPI_TransferBlocking(EXAMPLE_FLEXSPI, &flashXfer);
+#endif
 }
 /*${prototype:end}*/
 

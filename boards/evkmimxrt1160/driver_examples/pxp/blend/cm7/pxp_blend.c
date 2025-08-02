@@ -1,5 +1,5 @@
 /*
- * Copyright  2017-2019 NXP
+ * Copyright  2017-2025 NXP
  * All rights reserved.
  *
  *
@@ -46,7 +46,7 @@ typedef uint32_t pixel_t;
 #define APP_RED  0x00FF0000U
 #define APP_BLUE 0x000000FFU
 #if (!(defined(FSL_FEATURE_PXP_HAS_NO_EXTEND_PIXEL_FORMAT) && FSL_FEATURE_PXP_HAS_NO_EXTEND_PIXEL_FORMAT)) && \
-    (!(defined(FSL_FEATURE_PXP_V3) && FSL_FEATURE_PXP_V3))
+    (!(defined(FSL_FEATURE_PXP_V3) && FSL_FEATURE_PXP_V3)) && (!(defined(FSL_FEATURE_PXP_V4) && FSL_FEATURE_PXP_V4))
 #define APP_PXP_PS_FORMAT kPXP_PsPixelFormatARGB8888
 #else
 #define APP_PXP_PS_FORMAT kPXP_PsPixelFormatRGB888
@@ -163,13 +163,17 @@ static void APP_InitPxp(void)
         .pitchBytes  = APP_PS_WIDTH * APP_BPP,
     };
 
-#if defined(FSL_FEATURE_PXP_V3) && FSL_FEATURE_PXP_V3
+#if (defined(FSL_FEATURE_PXP_V3) && FSL_FEATURE_PXP_V3) || (defined(FSL_FEATURE_PXP_V4) && FSL_FEATURE_PXP_V4)
     PXP_SetProcessSurfaceBackGroundColor(APP_PXP, 0U, 0U);
 #else
     PXP_SetProcessSurfaceBackGroundColor(APP_PXP, 0U);
 #endif
 
     PXP_SetProcessSurfaceBufferConfig(APP_PXP, &psBufferConfig);
+
+#if defined(FSL_FEATURE_PXP_V4) && FSL_FEATURE_PXP_V4
+    PXP_SetProcessSurfaceBufferSize(APP_PXP, APP_PS_WIDTH - 1, APP_PS_HEIGHT - 1);
+#endif /* FSL_FEATURE_PXP_V4 */
 
     /* AS config. */
     const pxp_as_buffer_config_t asBufferConfig = {

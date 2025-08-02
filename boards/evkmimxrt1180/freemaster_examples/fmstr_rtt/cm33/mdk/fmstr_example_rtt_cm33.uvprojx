@@ -10,7 +10,7 @@
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
-          <Device>MIMXRT1189CVM8B:cm33</Device>
+          <Device>MIMXRT1189CVM8C:cm33</Device>
           <Vendor>NXP</Vendor>
           <PackID>NXP.MIMXRT1189_DFP.18.0.0</PackID>
           <PackURL>https://mcuxpresso.nxp.com/cmsis_pack/repo/</PackURL>
@@ -333,9 +333,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../mcux_config.h -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
-              <Define>DEBUG, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1189CVM8B_cm33</Define>
+              <Define>DEBUG, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1189CVM8C_cm33, MIMXRT1189_cm33_SERIES</Define>
               <Undefine/>
-              <IncludePath>..;../../../../xip;../../../../../../devices/MIMXRT1189/xip;../../../../../../devices/MIMXRT1189/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1189;../../../../../../devices/MIMXRT1189/periph;../../../../../../devices/MIMXRT1189/drivers/cm33;../../../../../../devices/MIMXRT1189/utilities/debug_console_lite;../../../../../../devices/MIMXRT1189/utilities/str;../../../../../../components/uart;../../../../../../components/rtt/RTT;../../../../../../components/silicon_id;../../../../../../components/silicon_id/socs;../../../../../../middleware/freemaster/src/common;../../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial</IncludePath>
+              <IncludePath>..;../../../../xip;../../../../../../devices/MIMXRT1189/xip;../../../../../../devices/MIMXRT1189/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1189;../../../../../../devices/MIMXRT1189/periph;../../../../../../devices/MIMXRT1189/drivers/cm33;../../../../../../devices/MIMXRT1189/utilities/debug_console_lite;../../../../../../devices/MIMXRT1189/utilities/str;../../../../../../components/silicon_id;../../../../../../components/silicon_id/socs;../../../../../../components/rtt/RTT;../../../../../../components/uart;../../../../../../middleware/freemaster/src/common;../../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -350,10 +350,10 @@
             <useXO>0</useXO>
             <ClangAsOpt>2</ClangAsOpt>
             <VariousControls>
-              <MiscControls/>
-              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1189CVM8B_cm33</Define>
+              <MiscControls>-include ../mcux_config.h</MiscControls>
+              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1189CVM8C_cm33, MIMXRT1189_cm33_SERIES</Define>
               <Undefine/>
-              <IncludePath>..;../../../../xip;../../../../../../devices/MIMXRT1189/xip;../../../../../../devices/MIMXRT1189/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1189;../../../../../../devices/MIMXRT1189/periph;../../../../../../devices/MIMXRT1189/drivers/cm33;../../../../../../devices/MIMXRT1189/utilities/debug_console_lite;../../../../../../devices/MIMXRT1189/utilities/str;../../../../../../components/uart;../../../../../../components/rtt/RTT;../../../../../../components/silicon_id;../../../../../../components/silicon_id/socs;../../../../../../middleware/freemaster/src/common;../../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial</IncludePath>
+              <IncludePath>..;../../../../xip;../../../../../../devices/MIMXRT1189/xip;../../../../../../devices/MIMXRT1189/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1189;../../../../../../devices/MIMXRT1189/periph;../../../../../../devices/MIMXRT1189/drivers/cm33;../../../../../../devices/MIMXRT1189/utilities/debug_console_lite;../../../../../../devices/MIMXRT1189/utilities/str;../../../../../../components/silicon_id;../../../../../../components/silicon_id/socs;../../../../../../components/rtt/RTT;../../../../../../components/uart;../../../../../../middleware/freemaster/src/common;../../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -433,6 +433,16 @@
               <FileName>SEGGER_RTT_Conf.h</FileName>
               <FileType>5</FileType>
               <FilePath>../SEGGER_RTT_Conf.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../mcux_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../mcux_config.h</FilePath>
             </File>
             <File>
               <FileName>mcux_config.h</FileName>
@@ -558,6 +568,11 @@
               <FileName>fsl_iomuxc.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT1189/drivers/fsl_iomuxc.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_memory.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1189/drivers/fsl_memory.c</FilePath>
             </File>
             <File>
               <FileName>fsl_memory.h</FileName>
@@ -1307,6 +1322,36 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>component/silicon_id</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_silicon_id.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_silicon_id.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_silicon_id_soc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/silicon_id/socs/imxrt1180/fsl_silicon_id_soc.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_silicon_id_soc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/silicon_id/socs/fsl_silicon_id_soc.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>utilities/debug_console_lite</GroupName>
           <Files>
             <File>
@@ -1318,21 +1363,6 @@
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1189/utilities/debug_console_lite/fsl_debug_console.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component/uart</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_adapter_uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/uart/fsl_adapter_uart.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_adapter_lpuart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/uart/fsl_adapter_lpuart.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1402,32 +1432,17 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component/silicon_id</GroupName>
+          <GroupName>component/uart</GroupName>
           <Files>
             <File>
-              <FileName>fsl_silicon_id.h</FileName>
+              <FileName>fsl_adapter_uart.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
+              <FilePath>../../../../../../components/uart/fsl_adapter_uart.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_silicon_id.c</FileName>
+              <FileName>fsl_adapter_lpuart.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_silicon_id_soc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/silicon_id/socs/imxrt1180/fsl_silicon_id_soc.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_silicon_id_soc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/silicon_id/socs/fsl_silicon_id_soc.h</FilePath>
+              <FilePath>../../../../../../components/uart/fsl_adapter_lpuart.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1575,6 +1590,16 @@
               <FilePath>../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can/freemaster_flexcan.c</FilePath>
             </File>
             <File>
+              <FileName>freemaster_flexcanfd.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can/freemaster_flexcanfd.h</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_flexcanfd.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can/freemaster_flexcanfd.c</FilePath>
+            </File>
+            <File>
               <FileName>freemaster_flexcan.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can/freemaster_flexcan.h</FilePath>
@@ -1714,6 +1739,11 @@
               <FileType>5</FileType>
               <FilePath>../example_board_readme.md</FilePath>
             </File>
+            <File>
+              <FileName>examples_shared_readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../examples_shared_readme.md</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>
@@ -1725,7 +1755,7 @@
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
-          <Device>MIMXRT1189CVM8B:cm33</Device>
+          <Device>MIMXRT1189CVM8C:cm33</Device>
           <Vendor>NXP</Vendor>
           <PackID>NXP.MIMXRT1189_DFP.18.0.0</PackID>
           <PackURL>https://mcuxpresso.nxp.com/cmsis_pack/repo/</PackURL>
@@ -2048,9 +2078,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../mcux_config.h -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
-              <Define>DEBUG, USE_HYPERRAM=1, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1189CVM8B_cm33</Define>
+              <Define>DEBUG, DATA_SECTION_IS_CACHEABLE=1, USE_HYPERRAM=1, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1189CVM8C_cm33, MIMXRT1189_cm33_SERIES</Define>
               <Undefine/>
-              <IncludePath>..;../../../../xip;../../../../../../devices/MIMXRT1189/xip;../../../../../../devices/MIMXRT1189/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1189;../../../../../../devices/MIMXRT1189/periph;../../../../../../devices/MIMXRT1189/drivers/cm33;../../../../../../devices/MIMXRT1189/utilities/debug_console_lite;../../../../../../devices/MIMXRT1189/utilities/str;../../../../../../components/uart;../../../../../../components/rtt/RTT;../../../../../../components/silicon_id;../../../../../../components/silicon_id/socs;../../../../../../middleware/freemaster/src/common;../../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial</IncludePath>
+              <IncludePath>..;../../../../xip;../../../../../../devices/MIMXRT1189/xip;../../../../../../devices/MIMXRT1189/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1189;../../../../../../devices/MIMXRT1189/periph;../../../../../../devices/MIMXRT1189/drivers/cm33;../../../../../../devices/MIMXRT1189/utilities/debug_console_lite;../../../../../../devices/MIMXRT1189/utilities/str;../../../../../../components/silicon_id;../../../../../../components/silicon_id/socs;../../../../../../components/rtt/RTT;../../../../../../components/uart;../../../../../../middleware/freemaster/src/common;../../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2065,10 +2095,10 @@
             <useXO>0</useXO>
             <ClangAsOpt>2</ClangAsOpt>
             <VariousControls>
-              <MiscControls/>
-              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1189CVM8B_cm33</Define>
+              <MiscControls>-include ../mcux_config.h</MiscControls>
+              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1189CVM8C_cm33, MIMXRT1189_cm33_SERIES</Define>
               <Undefine/>
-              <IncludePath>..;../../../../xip;../../../../../../devices/MIMXRT1189/xip;../../../../../../devices/MIMXRT1189/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1189;../../../../../../devices/MIMXRT1189/periph;../../../../../../devices/MIMXRT1189/drivers/cm33;../../../../../../devices/MIMXRT1189/utilities/debug_console_lite;../../../../../../devices/MIMXRT1189/utilities/str;../../../../../../components/uart;../../../../../../components/rtt/RTT;../../../../../../components/silicon_id;../../../../../../components/silicon_id/socs;../../../../../../middleware/freemaster/src/common;../../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial</IncludePath>
+              <IncludePath>..;../../../../xip;../../../../../../devices/MIMXRT1189/xip;../../../../../../devices/MIMXRT1189/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1189;../../../../../../devices/MIMXRT1189/periph;../../../../../../devices/MIMXRT1189/drivers/cm33;../../../../../../devices/MIMXRT1189/utilities/debug_console_lite;../../../../../../devices/MIMXRT1189/utilities/str;../../../../../../components/silicon_id;../../../../../../components/silicon_id/socs;../../../../../../components/rtt/RTT;../../../../../../components/uart;../../../../../../middleware/freemaster/src/common;../../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -2148,6 +2178,16 @@
               <FileName>SEGGER_RTT_Conf.h</FileName>
               <FileType>5</FileType>
               <FilePath>../SEGGER_RTT_Conf.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../mcux_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../mcux_config.h</FilePath>
             </File>
             <File>
               <FileName>mcux_config.h</FileName>
@@ -2273,6 +2313,11 @@
               <FileName>fsl_iomuxc.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT1189/drivers/fsl_iomuxc.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_memory.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1189/drivers/fsl_memory.c</FilePath>
             </File>
             <File>
               <FileName>fsl_memory.h</FileName>
@@ -3022,6 +3067,36 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>component/silicon_id</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_silicon_id.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_silicon_id.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_silicon_id_soc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/silicon_id/socs/imxrt1180/fsl_silicon_id_soc.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_silicon_id_soc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/silicon_id/socs/fsl_silicon_id_soc.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>utilities/debug_console_lite</GroupName>
           <Files>
             <File>
@@ -3033,21 +3108,6 @@
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1189/utilities/debug_console_lite/fsl_debug_console.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component/uart</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_adapter_uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/uart/fsl_adapter_uart.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_adapter_lpuart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/uart/fsl_adapter_lpuart.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -3117,32 +3177,17 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component/silicon_id</GroupName>
+          <GroupName>component/uart</GroupName>
           <Files>
             <File>
-              <FileName>fsl_silicon_id.h</FileName>
+              <FileName>fsl_adapter_uart.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
+              <FilePath>../../../../../../components/uart/fsl_adapter_uart.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_silicon_id.c</FileName>
+              <FileName>fsl_adapter_lpuart.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_silicon_id_soc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/silicon_id/socs/imxrt1180/fsl_silicon_id_soc.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_silicon_id_soc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/silicon_id/socs/fsl_silicon_id_soc.h</FilePath>
+              <FilePath>../../../../../../components/uart/fsl_adapter_lpuart.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -3290,6 +3335,16 @@
               <FilePath>../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can/freemaster_flexcan.c</FilePath>
             </File>
             <File>
+              <FileName>freemaster_flexcanfd.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can/freemaster_flexcanfd.h</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_flexcanfd.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can/freemaster_flexcanfd.c</FilePath>
+            </File>
+            <File>
               <FileName>freemaster_flexcan.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can/freemaster_flexcan.h</FilePath>
@@ -3429,6 +3484,11 @@
               <FileType>5</FileType>
               <FilePath>../example_board_readme.md</FilePath>
             </File>
+            <File>
+              <FileName>examples_shared_readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../examples_shared_readme.md</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>
@@ -3440,7 +3500,7 @@
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
-          <Device>MIMXRT1189CVM8B:cm33</Device>
+          <Device>MIMXRT1189CVM8C:cm33</Device>
           <Vendor>NXP</Vendor>
           <PackID>NXP.MIMXRT1189_DFP.18.0.0</PackID>
           <PackURL>https://mcuxpresso.nxp.com/cmsis_pack/repo/</PackURL>
@@ -3763,9 +3823,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../mcux_config.h -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
-              <Define>DEBUG, XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=0, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1189CVM8B_cm33</Define>
+              <Define>DEBUG, XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=0, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1189CVM8C_cm33, MIMXRT1189_cm33_SERIES</Define>
               <Undefine/>
-              <IncludePath>..;../../../../xip;../../../../../../devices/MIMXRT1189/xip;../../../../../../devices/MIMXRT1189/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1189;../../../../../../devices/MIMXRT1189/periph;../../../../../../devices/MIMXRT1189/drivers/cm33;../../../../../../devices/MIMXRT1189/utilities/debug_console_lite;../../../../../../devices/MIMXRT1189/utilities/str;../../../../../../components/uart;../../../../../../components/rtt/RTT;../../../../../../components/silicon_id;../../../../../../components/silicon_id/socs;../../../../../../middleware/freemaster/src/common;../../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial</IncludePath>
+              <IncludePath>..;../../../../xip;../../../../../../devices/MIMXRT1189/xip;../../../../../../devices/MIMXRT1189/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1189;../../../../../../devices/MIMXRT1189/periph;../../../../../../devices/MIMXRT1189/drivers/cm33;../../../../../../devices/MIMXRT1189/utilities/debug_console_lite;../../../../../../devices/MIMXRT1189/utilities/str;../../../../../../components/silicon_id;../../../../../../components/silicon_id/socs;../../../../../../components/rtt/RTT;../../../../../../components/uart;../../../../../../middleware/freemaster/src/common;../../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -3780,10 +3840,10 @@
             <useXO>0</useXO>
             <ClangAsOpt>2</ClangAsOpt>
             <VariousControls>
-              <MiscControls/>
-              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1189CVM8B_cm33</Define>
+              <MiscControls>-include ../mcux_config.h</MiscControls>
+              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1189CVM8C_cm33, MIMXRT1189_cm33_SERIES</Define>
               <Undefine/>
-              <IncludePath>..;../../../../xip;../../../../../../devices/MIMXRT1189/xip;../../../../../../devices/MIMXRT1189/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1189;../../../../../../devices/MIMXRT1189/periph;../../../../../../devices/MIMXRT1189/drivers/cm33;../../../../../../devices/MIMXRT1189/utilities/debug_console_lite;../../../../../../devices/MIMXRT1189/utilities/str;../../../../../../components/uart;../../../../../../components/rtt/RTT;../../../../../../components/silicon_id;../../../../../../components/silicon_id/socs;../../../../../../middleware/freemaster/src/common;../../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial</IncludePath>
+              <IncludePath>..;../../../../xip;../../../../../../devices/MIMXRT1189/xip;../../../../../../devices/MIMXRT1189/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1189;../../../../../../devices/MIMXRT1189/periph;../../../../../../devices/MIMXRT1189/drivers/cm33;../../../../../../devices/MIMXRT1189/utilities/debug_console_lite;../../../../../../devices/MIMXRT1189/utilities/str;../../../../../../components/silicon_id;../../../../../../components/silicon_id/socs;../../../../../../components/rtt/RTT;../../../../../../components/uart;../../../../../../middleware/freemaster/src/common;../../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -3863,6 +3923,16 @@
               <FileName>SEGGER_RTT_Conf.h</FileName>
               <FileType>5</FileType>
               <FilePath>../SEGGER_RTT_Conf.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../mcux_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../mcux_config.h</FilePath>
             </File>
             <File>
               <FileName>mcux_config.h</FileName>
@@ -3988,6 +4058,11 @@
               <FileName>fsl_iomuxc.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT1189/drivers/fsl_iomuxc.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_memory.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1189/drivers/fsl_memory.c</FilePath>
             </File>
             <File>
               <FileName>fsl_memory.h</FileName>
@@ -4737,6 +4812,36 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>component/silicon_id</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_silicon_id.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_silicon_id.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_silicon_id_soc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/silicon_id/socs/imxrt1180/fsl_silicon_id_soc.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_silicon_id_soc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/silicon_id/socs/fsl_silicon_id_soc.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>utilities/debug_console_lite</GroupName>
           <Files>
             <File>
@@ -4748,21 +4853,6 @@
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1189/utilities/debug_console_lite/fsl_debug_console.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component/uart</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_adapter_uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/uart/fsl_adapter_uart.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_adapter_lpuart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/uart/fsl_adapter_lpuart.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -4832,32 +4922,17 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component/silicon_id</GroupName>
+          <GroupName>component/uart</GroupName>
           <Files>
             <File>
-              <FileName>fsl_silicon_id.h</FileName>
+              <FileName>fsl_adapter_uart.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
+              <FilePath>../../../../../../components/uart/fsl_adapter_uart.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_silicon_id.c</FileName>
+              <FileName>fsl_adapter_lpuart.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_silicon_id_soc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/silicon_id/socs/imxrt1180/fsl_silicon_id_soc.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_silicon_id_soc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/silicon_id/socs/fsl_silicon_id_soc.h</FilePath>
+              <FilePath>../../../../../../components/uart/fsl_adapter_lpuart.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -5005,6 +5080,16 @@
               <FilePath>../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can/freemaster_flexcan.c</FilePath>
             </File>
             <File>
+              <FileName>freemaster_flexcanfd.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can/freemaster_flexcanfd.h</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_flexcanfd.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can/freemaster_flexcanfd.c</FilePath>
+            </File>
+            <File>
               <FileName>freemaster_flexcan.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can/freemaster_flexcan.h</FilePath>
@@ -5144,6 +5229,11 @@
               <FileType>5</FileType>
               <FilePath>../example_board_readme.md</FilePath>
             </File>
+            <File>
+              <FileName>examples_shared_readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../examples_shared_readme.md</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>
@@ -5155,7 +5245,7 @@
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
-          <Device>MIMXRT1189CVM8B:cm33</Device>
+          <Device>MIMXRT1189CVM8C:cm33</Device>
           <Vendor>NXP</Vendor>
           <PackID>NXP.MIMXRT1189_DFP.18.0.0</PackID>
           <PackURL>https://mcuxpresso.nxp.com/cmsis_pack/repo/</PackURL>
@@ -5478,9 +5568,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../mcux_config.h -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
-              <Define>NDEBUG, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1189CVM8B_cm33</Define>
+              <Define>NDEBUG, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1189CVM8C_cm33, MIMXRT1189_cm33_SERIES</Define>
               <Undefine/>
-              <IncludePath>..;../../../../xip;../../../../../../devices/MIMXRT1189/xip;../../../../../../devices/MIMXRT1189/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1189;../../../../../../devices/MIMXRT1189/periph;../../../../../../devices/MIMXRT1189/drivers/cm33;../../../../../../devices/MIMXRT1189/utilities/debug_console_lite;../../../../../../devices/MIMXRT1189/utilities/str;../../../../../../components/uart;../../../../../../components/rtt/RTT;../../../../../../components/silicon_id;../../../../../../components/silicon_id/socs;../../../../../../middleware/freemaster/src/common;../../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial</IncludePath>
+              <IncludePath>..;../../../../xip;../../../../../../devices/MIMXRT1189/xip;../../../../../../devices/MIMXRT1189/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1189;../../../../../../devices/MIMXRT1189/periph;../../../../../../devices/MIMXRT1189/drivers/cm33;../../../../../../devices/MIMXRT1189/utilities/debug_console_lite;../../../../../../devices/MIMXRT1189/utilities/str;../../../../../../components/silicon_id;../../../../../../components/silicon_id/socs;../../../../../../components/rtt/RTT;../../../../../../components/uart;../../../../../../middleware/freemaster/src/common;../../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -5495,10 +5585,10 @@
             <useXO>0</useXO>
             <ClangAsOpt>2</ClangAsOpt>
             <VariousControls>
-              <MiscControls/>
-              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1189CVM8B_cm33</Define>
+              <MiscControls>-include ../mcux_config.h</MiscControls>
+              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1189CVM8C_cm33, MIMXRT1189_cm33_SERIES</Define>
               <Undefine/>
-              <IncludePath>..;../../../../xip;../../../../../../devices/MIMXRT1189/xip;../../../../../../devices/MIMXRT1189/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1189;../../../../../../devices/MIMXRT1189/periph;../../../../../../devices/MIMXRT1189/drivers/cm33;../../../../../../devices/MIMXRT1189/utilities/debug_console_lite;../../../../../../devices/MIMXRT1189/utilities/str;../../../../../../components/uart;../../../../../../components/rtt/RTT;../../../../../../components/silicon_id;../../../../../../components/silicon_id/socs;../../../../../../middleware/freemaster/src/common;../../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial</IncludePath>
+              <IncludePath>..;../../../../xip;../../../../../../devices/MIMXRT1189/xip;../../../../../../devices/MIMXRT1189/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1189;../../../../../../devices/MIMXRT1189/periph;../../../../../../devices/MIMXRT1189/drivers/cm33;../../../../../../devices/MIMXRT1189/utilities/debug_console_lite;../../../../../../devices/MIMXRT1189/utilities/str;../../../../../../components/silicon_id;../../../../../../components/silicon_id/socs;../../../../../../components/rtt/RTT;../../../../../../components/uart;../../../../../../middleware/freemaster/src/common;../../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -5578,6 +5668,16 @@
               <FileName>SEGGER_RTT_Conf.h</FileName>
               <FileType>5</FileType>
               <FilePath>../SEGGER_RTT_Conf.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../mcux_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../mcux_config.h</FilePath>
             </File>
             <File>
               <FileName>mcux_config.h</FileName>
@@ -5703,6 +5803,11 @@
               <FileName>fsl_iomuxc.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT1189/drivers/fsl_iomuxc.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_memory.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1189/drivers/fsl_memory.c</FilePath>
             </File>
             <File>
               <FileName>fsl_memory.h</FileName>
@@ -6452,6 +6557,36 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>component/silicon_id</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_silicon_id.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_silicon_id.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_silicon_id_soc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/silicon_id/socs/imxrt1180/fsl_silicon_id_soc.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_silicon_id_soc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/silicon_id/socs/fsl_silicon_id_soc.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>utilities/debug_console_lite</GroupName>
           <Files>
             <File>
@@ -6463,21 +6598,6 @@
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1189/utilities/debug_console_lite/fsl_debug_console.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component/uart</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_adapter_uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/uart/fsl_adapter_uart.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_adapter_lpuart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/uart/fsl_adapter_lpuart.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -6547,32 +6667,17 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component/silicon_id</GroupName>
+          <GroupName>component/uart</GroupName>
           <Files>
             <File>
-              <FileName>fsl_silicon_id.h</FileName>
+              <FileName>fsl_adapter_uart.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
+              <FilePath>../../../../../../components/uart/fsl_adapter_uart.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_silicon_id.c</FileName>
+              <FileName>fsl_adapter_lpuart.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_silicon_id_soc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/silicon_id/socs/imxrt1180/fsl_silicon_id_soc.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_silicon_id_soc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/silicon_id/socs/fsl_silicon_id_soc.h</FilePath>
+              <FilePath>../../../../../../components/uart/fsl_adapter_lpuart.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -6720,6 +6825,16 @@
               <FilePath>../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can/freemaster_flexcan.c</FilePath>
             </File>
             <File>
+              <FileName>freemaster_flexcanfd.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can/freemaster_flexcanfd.h</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_flexcanfd.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can/freemaster_flexcanfd.c</FilePath>
+            </File>
+            <File>
               <FileName>freemaster_flexcan.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can/freemaster_flexcan.h</FilePath>
@@ -6859,6 +6974,11 @@
               <FileType>5</FileType>
               <FilePath>../example_board_readme.md</FilePath>
             </File>
+            <File>
+              <FileName>examples_shared_readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../examples_shared_readme.md</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>
@@ -6870,7 +6990,7 @@
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
-          <Device>MIMXRT1189CVM8B:cm33</Device>
+          <Device>MIMXRT1189CVM8C:cm33</Device>
           <Vendor>NXP</Vendor>
           <PackID>NXP.MIMXRT1189_DFP.18.0.0</PackID>
           <PackURL>https://mcuxpresso.nxp.com/cmsis_pack/repo/</PackURL>
@@ -7193,9 +7313,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../mcux_config.h -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
-              <Define>NDEBUG, USE_HYPERRAM=1, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1189CVM8B_cm33</Define>
+              <Define>NDEBUG, DATA_SECTION_IS_CACHEABLE=1, USE_HYPERRAM=1, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1189CVM8C_cm33, MIMXRT1189_cm33_SERIES</Define>
               <Undefine/>
-              <IncludePath>..;../../../../xip;../../../../../../devices/MIMXRT1189/xip;../../../../../../devices/MIMXRT1189/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1189;../../../../../../devices/MIMXRT1189/periph;../../../../../../devices/MIMXRT1189/drivers/cm33;../../../../../../devices/MIMXRT1189/utilities/debug_console_lite;../../../../../../devices/MIMXRT1189/utilities/str;../../../../../../components/uart;../../../../../../components/rtt/RTT;../../../../../../components/silicon_id;../../../../../../components/silicon_id/socs;../../../../../../middleware/freemaster/src/common;../../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial</IncludePath>
+              <IncludePath>..;../../../../xip;../../../../../../devices/MIMXRT1189/xip;../../../../../../devices/MIMXRT1189/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1189;../../../../../../devices/MIMXRT1189/periph;../../../../../../devices/MIMXRT1189/drivers/cm33;../../../../../../devices/MIMXRT1189/utilities/debug_console_lite;../../../../../../devices/MIMXRT1189/utilities/str;../../../../../../components/silicon_id;../../../../../../components/silicon_id/socs;../../../../../../components/rtt/RTT;../../../../../../components/uart;../../../../../../middleware/freemaster/src/common;../../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -7210,10 +7330,10 @@
             <useXO>0</useXO>
             <ClangAsOpt>2</ClangAsOpt>
             <VariousControls>
-              <MiscControls/>
-              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1189CVM8B_cm33</Define>
+              <MiscControls>-include ../mcux_config.h</MiscControls>
+              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1189CVM8C_cm33, MIMXRT1189_cm33_SERIES</Define>
               <Undefine/>
-              <IncludePath>..;../../../../xip;../../../../../../devices/MIMXRT1189/xip;../../../../../../devices/MIMXRT1189/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1189;../../../../../../devices/MIMXRT1189/periph;../../../../../../devices/MIMXRT1189/drivers/cm33;../../../../../../devices/MIMXRT1189/utilities/debug_console_lite;../../../../../../devices/MIMXRT1189/utilities/str;../../../../../../components/uart;../../../../../../components/rtt/RTT;../../../../../../components/silicon_id;../../../../../../components/silicon_id/socs;../../../../../../middleware/freemaster/src/common;../../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial</IncludePath>
+              <IncludePath>..;../../../../xip;../../../../../../devices/MIMXRT1189/xip;../../../../../../devices/MIMXRT1189/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1189;../../../../../../devices/MIMXRT1189/periph;../../../../../../devices/MIMXRT1189/drivers/cm33;../../../../../../devices/MIMXRT1189/utilities/debug_console_lite;../../../../../../devices/MIMXRT1189/utilities/str;../../../../../../components/silicon_id;../../../../../../components/silicon_id/socs;../../../../../../components/rtt/RTT;../../../../../../components/uart;../../../../../../middleware/freemaster/src/common;../../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -7293,6 +7413,16 @@
               <FileName>SEGGER_RTT_Conf.h</FileName>
               <FileType>5</FileType>
               <FilePath>../SEGGER_RTT_Conf.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../mcux_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../mcux_config.h</FilePath>
             </File>
             <File>
               <FileName>mcux_config.h</FileName>
@@ -7418,6 +7548,11 @@
               <FileName>fsl_iomuxc.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT1189/drivers/fsl_iomuxc.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_memory.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1189/drivers/fsl_memory.c</FilePath>
             </File>
             <File>
               <FileName>fsl_memory.h</FileName>
@@ -8167,6 +8302,36 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>component/silicon_id</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_silicon_id.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_silicon_id.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_silicon_id_soc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/silicon_id/socs/imxrt1180/fsl_silicon_id_soc.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_silicon_id_soc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/silicon_id/socs/fsl_silicon_id_soc.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>utilities/debug_console_lite</GroupName>
           <Files>
             <File>
@@ -8178,21 +8343,6 @@
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1189/utilities/debug_console_lite/fsl_debug_console.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component/uart</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_adapter_uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/uart/fsl_adapter_uart.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_adapter_lpuart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/uart/fsl_adapter_lpuart.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -8262,32 +8412,17 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component/silicon_id</GroupName>
+          <GroupName>component/uart</GroupName>
           <Files>
             <File>
-              <FileName>fsl_silicon_id.h</FileName>
+              <FileName>fsl_adapter_uart.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
+              <FilePath>../../../../../../components/uart/fsl_adapter_uart.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_silicon_id.c</FileName>
+              <FileName>fsl_adapter_lpuart.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_silicon_id_soc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/silicon_id/socs/imxrt1180/fsl_silicon_id_soc.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_silicon_id_soc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/silicon_id/socs/fsl_silicon_id_soc.h</FilePath>
+              <FilePath>../../../../../../components/uart/fsl_adapter_lpuart.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -8435,6 +8570,16 @@
               <FilePath>../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can/freemaster_flexcan.c</FilePath>
             </File>
             <File>
+              <FileName>freemaster_flexcanfd.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can/freemaster_flexcanfd.h</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_flexcanfd.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can/freemaster_flexcanfd.c</FilePath>
+            </File>
+            <File>
               <FileName>freemaster_flexcan.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can/freemaster_flexcan.h</FilePath>
@@ -8574,6 +8719,11 @@
               <FileType>5</FileType>
               <FilePath>../example_board_readme.md</FilePath>
             </File>
+            <File>
+              <FileName>examples_shared_readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../examples_shared_readme.md</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>
@@ -8585,7 +8735,7 @@
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
-          <Device>MIMXRT1189CVM8B:cm33</Device>
+          <Device>MIMXRT1189CVM8C:cm33</Device>
           <Vendor>NXP</Vendor>
           <PackID>NXP.MIMXRT1189_DFP.18.0.0</PackID>
           <PackURL>https://mcuxpresso.nxp.com/cmsis_pack/repo/</PackURL>
@@ -8908,9 +9058,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../mcux_config.h -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
-              <Define>NDEBUG, XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=0, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1189CVM8B_cm33</Define>
+              <Define>NDEBUG, XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=0, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1189CVM8C_cm33, MIMXRT1189_cm33_SERIES</Define>
               <Undefine/>
-              <IncludePath>..;../../../../xip;../../../../../../devices/MIMXRT1189/xip;../../../../../../devices/MIMXRT1189/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1189;../../../../../../devices/MIMXRT1189/periph;../../../../../../devices/MIMXRT1189/drivers/cm33;../../../../../../devices/MIMXRT1189/utilities/debug_console_lite;../../../../../../devices/MIMXRT1189/utilities/str;../../../../../../components/uart;../../../../../../components/rtt/RTT;../../../../../../components/silicon_id;../../../../../../components/silicon_id/socs;../../../../../../middleware/freemaster/src/common;../../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial</IncludePath>
+              <IncludePath>..;../../../../xip;../../../../../../devices/MIMXRT1189/xip;../../../../../../devices/MIMXRT1189/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1189;../../../../../../devices/MIMXRT1189/periph;../../../../../../devices/MIMXRT1189/drivers/cm33;../../../../../../devices/MIMXRT1189/utilities/debug_console_lite;../../../../../../devices/MIMXRT1189/utilities/str;../../../../../../components/silicon_id;../../../../../../components/silicon_id/socs;../../../../../../components/rtt/RTT;../../../../../../components/uart;../../../../../../middleware/freemaster/src/common;../../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -8925,10 +9075,10 @@
             <useXO>0</useXO>
             <ClangAsOpt>2</ClangAsOpt>
             <VariousControls>
-              <MiscControls/>
-              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1189CVM8B_cm33</Define>
+              <MiscControls>-include ../mcux_config.h</MiscControls>
+              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1189CVM8C_cm33, MIMXRT1189_cm33_SERIES</Define>
               <Undefine/>
-              <IncludePath>..;../../../../xip;../../../../../../devices/MIMXRT1189/xip;../../../../../../devices/MIMXRT1189/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1189;../../../../../../devices/MIMXRT1189/periph;../../../../../../devices/MIMXRT1189/drivers/cm33;../../../../../../devices/MIMXRT1189/utilities/debug_console_lite;../../../../../../devices/MIMXRT1189/utilities/str;../../../../../../components/uart;../../../../../../components/rtt/RTT;../../../../../../components/silicon_id;../../../../../../components/silicon_id/socs;../../../../../../middleware/freemaster/src/common;../../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial</IncludePath>
+              <IncludePath>..;../../../../xip;../../../../../../devices/MIMXRT1189/xip;../../../../../../devices/MIMXRT1189/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1189;../../../../../../devices/MIMXRT1189/periph;../../../../../../devices/MIMXRT1189/drivers/cm33;../../../../../../devices/MIMXRT1189/utilities/debug_console_lite;../../../../../../devices/MIMXRT1189/utilities/str;../../../../../../components/silicon_id;../../../../../../components/silicon_id/socs;../../../../../../components/rtt/RTT;../../../../../../components/uart;../../../../../../middleware/freemaster/src/common;../../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -9008,6 +9158,16 @@
               <FileName>SEGGER_RTT_Conf.h</FileName>
               <FileType>5</FileType>
               <FilePath>../SEGGER_RTT_Conf.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../mcux_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../mcux_config.h</FilePath>
             </File>
             <File>
               <FileName>mcux_config.h</FileName>
@@ -9133,6 +9293,11 @@
               <FileName>fsl_iomuxc.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT1189/drivers/fsl_iomuxc.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_memory.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1189/drivers/fsl_memory.c</FilePath>
             </File>
             <File>
               <FileName>fsl_memory.h</FileName>
@@ -9882,6 +10047,36 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>component/silicon_id</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_silicon_id.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_silicon_id.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_silicon_id_soc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/silicon_id/socs/imxrt1180/fsl_silicon_id_soc.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_silicon_id_soc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/silicon_id/socs/fsl_silicon_id_soc.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>utilities/debug_console_lite</GroupName>
           <Files>
             <File>
@@ -9893,21 +10088,6 @@
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1189/utilities/debug_console_lite/fsl_debug_console.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component/uart</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_adapter_uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/uart/fsl_adapter_uart.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_adapter_lpuart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/uart/fsl_adapter_lpuart.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -9977,32 +10157,17 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component/silicon_id</GroupName>
+          <GroupName>component/uart</GroupName>
           <Files>
             <File>
-              <FileName>fsl_silicon_id.h</FileName>
+              <FileName>fsl_adapter_uart.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
+              <FilePath>../../../../../../components/uart/fsl_adapter_uart.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_silicon_id.c</FileName>
+              <FileName>fsl_adapter_lpuart.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_silicon_id_soc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/silicon_id/socs/imxrt1180/fsl_silicon_id_soc.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_silicon_id_soc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/silicon_id/socs/fsl_silicon_id_soc.h</FilePath>
+              <FilePath>../../../../../../components/uart/fsl_adapter_lpuart.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -10150,6 +10315,16 @@
               <FilePath>../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can/freemaster_flexcan.c</FilePath>
             </File>
             <File>
+              <FileName>freemaster_flexcanfd.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can/freemaster_flexcanfd.h</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_flexcanfd.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can/freemaster_flexcanfd.c</FilePath>
+            </File>
+            <File>
               <FileName>freemaster_flexcan.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can/freemaster_flexcan.h</FilePath>
@@ -10288,6 +10463,11 @@
               <FileName>example_board_readme.md</FileName>
               <FileType>5</FileType>
               <FilePath>../example_board_readme.md</FilePath>
+            </File>
+            <File>
+              <FileName>examples_shared_readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../examples_shared_readme.md</FilePath>
             </File>
           </Files>
         </Group>

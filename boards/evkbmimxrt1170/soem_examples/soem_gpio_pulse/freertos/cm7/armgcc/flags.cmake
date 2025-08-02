@@ -15,7 +15,8 @@ SET(CMAKE_ASM_FLAGS_DEBUG " \
     -D__STARTUP_INITIALIZE_NONCACHEDATA \
     -D__STARTUP_CLEAR_BSS \
     -DMCUXPRESSO_SDK \
-    -DCPU_MIMXRT1176DVMAA_cm7 \
+    -DCPU_MIMXRT1176DVMAB_cm7 \
+    -DMIMXRT1176_cm7_SERIES \
     -g \
     -mthumb \
     -mcpu=cortex-m7 \
@@ -26,7 +27,8 @@ SET(CMAKE_ASM_FLAGS_RELEASE " \
     -D__STARTUP_INITIALIZE_NONCACHEDATA \
     -D__STARTUP_CLEAR_BSS \
     -DMCUXPRESSO_SDK \
-    -DCPU_MIMXRT1176DVMAA_cm7 \
+    -DCPU_MIMXRT1176DVMAB_cm7 \
+    -DMIMXRT1176_cm7_SERIES \
     -mthumb \
     -mcpu=cortex-m7 \
     ${FPU} \
@@ -37,7 +39,8 @@ SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_DEBUG " \
     -D__STARTUP_INITIALIZE_NONCACHEDATA \
     -D__STARTUP_CLEAR_BSS \
     -DMCUXPRESSO_SDK \
-    -DCPU_MIMXRT1176DVMAA_cm7 \
+    -DCPU_MIMXRT1176DVMAB_cm7 \
+    -DMIMXRT1176_cm7_SERIES \
     -g \
     -mthumb \
     -mcpu=cortex-m7 \
@@ -49,7 +52,8 @@ SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_RELEASE " \
     -D__STARTUP_INITIALIZE_NONCACHEDATA \
     -D__STARTUP_CLEAR_BSS \
     -DMCUXPRESSO_SDK \
-    -DCPU_MIMXRT1176DVMAA_cm7 \
+    -DCPU_MIMXRT1176DVMAB_cm7 \
+    -DMIMXRT1176_cm7_SERIES \
     -mthumb \
     -mcpu=cortex-m7 \
     ${FPU} \
@@ -58,6 +62,7 @@ SET(CMAKE_C_FLAGS_DEBUG " \
     ${CMAKE_C_FLAGS_DEBUG} \
     -include ${ProjDirPath}/../mcux_config.h \
     -DDEBUG \
+    -D__STARTUP_CLEAR_BSS \
     -DSERIAL_PORT_TYPE_UART=1 \
     -DPRINTF_ADVANCED_ENABLE=1 \
     -DEC_MAXSLAVE=32 \
@@ -65,7 +70,8 @@ SET(CMAKE_C_FLAGS_DEBUG " \
     -DBOARD_NETWORK_USE_100M_ENET_PORT=1 \
     -DMCUX_META_BUILD \
     -DMCUXPRESSO_SDK \
-    -DCPU_MIMXRT1176DVMAA_cm7 \
+    -DCPU_MIMXRT1176DVMAB_cm7 \
+    -DMIMXRT1176_cm7_SERIES \
     -DSDK_OS_FREE_RTOS \
     -g \
     -O0 \
@@ -85,6 +91,7 @@ SET(CMAKE_C_FLAGS_RELEASE " \
     ${CMAKE_C_FLAGS_RELEASE} \
     -include ${ProjDirPath}/../mcux_config.h \
     -DNDEBUG \
+    -D__STARTUP_CLEAR_BSS \
     -DSERIAL_PORT_TYPE_UART=1 \
     -DPRINTF_ADVANCED_ENABLE=1 \
     -DEC_MAXSLAVE=32 \
@@ -92,7 +99,8 @@ SET(CMAKE_C_FLAGS_RELEASE " \
     -DBOARD_NETWORK_USE_100M_ENET_PORT=1 \
     -DMCUX_META_BUILD \
     -DMCUXPRESSO_SDK \
-    -DCPU_MIMXRT1176DVMAA_cm7 \
+    -DCPU_MIMXRT1176DVMAB_cm7 \
+    -DMIMXRT1176_cm7_SERIES \
     -DSDK_OS_FREE_RTOS \
     -Os \
     -Wall \
@@ -113,6 +121,7 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG " \
     -DDEBUG \
     -DXIP_EXTERNAL_FLASH=1 \
     -DXIP_BOOT_HEADER_ENABLE=1 \
+    -D__STARTUP_CLEAR_BSS \
     -DSERIAL_PORT_TYPE_UART=1 \
     -DPRINTF_ADVANCED_ENABLE=1 \
     -DEC_MAXSLAVE=32 \
@@ -120,7 +129,8 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG " \
     -DBOARD_NETWORK_USE_100M_ENET_PORT=1 \
     -DMCUX_META_BUILD \
     -DMCUXPRESSO_SDK \
-    -DCPU_MIMXRT1176DVMAA_cm7 \
+    -DCPU_MIMXRT1176DVMAB_cm7 \
+    -DMIMXRT1176_cm7_SERIES \
     -DSDK_OS_FREE_RTOS \
     -g \
     -O0 \
@@ -142,6 +152,7 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE " \
     -DNDEBUG \
     -DXIP_EXTERNAL_FLASH=1 \
     -DXIP_BOOT_HEADER_ENABLE=1 \
+    -D__STARTUP_CLEAR_BSS \
     -DSERIAL_PORT_TYPE_UART=1 \
     -DPRINTF_ADVANCED_ENABLE=1 \
     -DEC_MAXSLAVE=32 \
@@ -149,7 +160,8 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE " \
     -DBOARD_NETWORK_USE_100M_ENET_PORT=1 \
     -DMCUX_META_BUILD \
     -DMCUXPRESSO_SDK \
-    -DCPU_MIMXRT1176DVMAA_cm7 \
+    -DCPU_MIMXRT1176DVMAB_cm7 \
+    -DMIMXRT1176_cm7_SERIES \
     -DSDK_OS_FREE_RTOS \
     -Os \
     -Wall \
@@ -169,7 +181,8 @@ SET(CMAKE_CXX_FLAGS_DEBUG " \
     -DDEBUG \
     -DMCUX_META_BUILD \
     -DMCUXPRESSO_SDK \
-    -DCPU_MIMXRT1176DVMAA_cm7 \
+    -DCPU_MIMXRT1176DVMAB_cm7 \
+    -DMIMXRT1176_cm7_SERIES \
     -DSDK_OS_FREE_RTOS \
     -g \
     -O0 \
@@ -191,7 +204,8 @@ SET(CMAKE_CXX_FLAGS_RELEASE " \
     -DNDEBUG \
     -DMCUX_META_BUILD \
     -DMCUXPRESSO_SDK \
-    -DCPU_MIMXRT1176DVMAA_cm7 \
+    -DCPU_MIMXRT1176DVMAB_cm7 \
+    -DMIMXRT1176_cm7_SERIES \
     -DSDK_OS_FREE_RTOS \
     -Os \
     -Wall \
@@ -213,7 +227,8 @@ SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG " \
     -DXIP_EXTERNAL_FLASH=1 \
     -DMCUX_META_BUILD \
     -DMCUXPRESSO_SDK \
-    -DCPU_MIMXRT1176DVMAA_cm7 \
+    -DCPU_MIMXRT1176DVMAB_cm7 \
+    -DMIMXRT1176_cm7_SERIES \
     -DSDK_OS_FREE_RTOS \
     -g \
     -O0 \
@@ -236,7 +251,8 @@ SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE " \
     -DXIP_EXTERNAL_FLASH=1 \
     -DMCUX_META_BUILD \
     -DMCUXPRESSO_SDK \
-    -DCPU_MIMXRT1176DVMAA_cm7 \
+    -DCPU_MIMXRT1176DVMAB_cm7 \
+    -DMIMXRT1176_cm7_SERIES \
     -DSDK_OS_FREE_RTOS \
     -Os \
     -Wall \
@@ -270,9 +286,6 @@ SET(CMAKE_EXE_LINKER_FLAGS_DEBUG " \
     -mapcs \
     -Wl,--gc-sections \
     -Wl,-static \
-    -Wl,-z \
-    -Wl,muldefs \
-    -Wl,-Map=output.map \
     -Wl,--print-memory-usage \
     -mcpu=cortex-m7 \
     ${FPU} \
@@ -296,9 +309,6 @@ SET(CMAKE_EXE_LINKER_FLAGS_RELEASE " \
     -mapcs \
     -Wl,--gc-sections \
     -Wl,-static \
-    -Wl,-z \
-    -Wl,muldefs \
-    -Wl,-Map=output.map \
     -Wl,--print-memory-usage \
     -mcpu=cortex-m7 \
     ${FPU} \
@@ -325,9 +335,6 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_DEBUG " \
     -mapcs \
     -Wl,--gc-sections \
     -Wl,-static \
-    -Wl,-z \
-    -Wl,muldefs \
-    -Wl,-Map=output.map \
     -Wl,--print-memory-usage \
     -mcpu=cortex-m7 \
     ${FPU} \
@@ -353,9 +360,6 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE " \
     -mapcs \
     -Wl,--gc-sections \
     -Wl,-static \
-    -Wl,-z \
-    -Wl,muldefs \
-    -Wl,-Map=output.map \
     -Wl,--print-memory-usage \
     -mcpu=cortex-m7 \
     ${FPU} \

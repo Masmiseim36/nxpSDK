@@ -244,7 +244,8 @@
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
-          <state>CPU_MIMXRT1189CVM8B_cm33</state>
+          <state>CPU_MIMXRT1189CVM8C_cm33</state>
+          <state>MIMXRT1189_cm33_SERIES</state>
           <state>DEBUG_CONSOLE_TRANSFER_NON_BLOCKING</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>TIMER_PORT_TYPE_GPT=1</state>
@@ -378,22 +379,22 @@
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/periph</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/drivers/cm33</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/debug_console</state>
+          <state>$PROJ_DIR$/../../../../../../../components/silicon_id</state>
+          <state>$PROJ_DIR$/../../../../../../../components/silicon_id/socs</state>
           <state>$PROJ_DIR$/../../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../../components/gpio</state>
           <state>$PROJ_DIR$/../../../../../../../components/timer</state>
           <state>$PROJ_DIR$/../../../../../../../components/i2c</state>
           <state>$PROJ_DIR$/../../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../../components/osa</state>
-          <state>$PROJ_DIR$/../../../../../../../components/silicon_id</state>
-          <state>$PROJ_DIR$/../../../../../../../components/silicon_id/socs</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/pd</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/pd/ptn5110</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/pd/phy_interface</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/usb/config/pd</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/phy</state>
         </option>
         <option>
@@ -579,7 +580,8 @@
         <option>
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
-          <state>CPU_MIMXRT1189CVM8B_cm33</state>
+          <state>CPU_MIMXRT1189CVM8C_cm33</state>
+          <state>MIMXRT1189_cm33_SERIES</state>
           <state>DEBUG_CONSOLE_TRANSFER_NON_BLOCKING</state>
         </option>
         <option>
@@ -681,22 +683,22 @@
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/periph</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/drivers/cm33</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/debug_console</state>
+          <state>$PROJ_DIR$/../../../../../../../components/silicon_id</state>
+          <state>$PROJ_DIR$/../../../../../../../components/silicon_id/socs</state>
           <state>$PROJ_DIR$/../../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../../components/gpio</state>
           <state>$PROJ_DIR$/../../../../../../../components/timer</state>
           <state>$PROJ_DIR$/../../../../../../../components/i2c</state>
           <state>$PROJ_DIR$/../../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../../components/osa</state>
-          <state>$PROJ_DIR$/../../../../../../../components/silicon_id</state>
-          <state>$PROJ_DIR$/../../../../../../../components/silicon_id/socs</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/pd</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/pd/ptn5110</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/pd/phy_interface</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/usb/config/pd</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/phy</state>
         </option>
         <option>
@@ -713,7 +715,7 @@
         </option>
         <option>
           <name>PreInclude</name>
-          <state/>
+          <state>$PROJ_DIR$/../mcux_config.h</state>
         </option>
       </data>
     </settings>
@@ -1407,7 +1409,8 @@
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
-          <state>CPU_MIMXRT1189CVM8B_cm33</state>
+          <state>CPU_MIMXRT1189CVM8C_cm33</state>
+          <state>MIMXRT1189_cm33_SERIES</state>
           <state>DEBUG_CONSOLE_TRANSFER_NON_BLOCKING</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>TIMER_PORT_TYPE_GPT=1</state>
@@ -1541,22 +1544,22 @@
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/periph</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/drivers/cm33</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/debug_console</state>
+          <state>$PROJ_DIR$/../../../../../../../components/silicon_id</state>
+          <state>$PROJ_DIR$/../../../../../../../components/silicon_id/socs</state>
           <state>$PROJ_DIR$/../../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../../components/gpio</state>
           <state>$PROJ_DIR$/../../../../../../../components/timer</state>
           <state>$PROJ_DIR$/../../../../../../../components/i2c</state>
           <state>$PROJ_DIR$/../../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../../components/osa</state>
-          <state>$PROJ_DIR$/../../../../../../../components/silicon_id</state>
-          <state>$PROJ_DIR$/../../../../../../../components/silicon_id/socs</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/pd</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/pd/ptn5110</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/pd/phy_interface</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/usb/config/pd</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/phy</state>
         </option>
         <option>
@@ -1742,7 +1745,8 @@
         <option>
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
-          <state>CPU_MIMXRT1189CVM8B_cm33</state>
+          <state>CPU_MIMXRT1189CVM8C_cm33</state>
+          <state>MIMXRT1189_cm33_SERIES</state>
           <state>DEBUG_CONSOLE_TRANSFER_NON_BLOCKING</state>
         </option>
         <option>
@@ -1844,22 +1848,22 @@
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/periph</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/drivers/cm33</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/debug_console</state>
+          <state>$PROJ_DIR$/../../../../../../../components/silicon_id</state>
+          <state>$PROJ_DIR$/../../../../../../../components/silicon_id/socs</state>
           <state>$PROJ_DIR$/../../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../../components/gpio</state>
           <state>$PROJ_DIR$/../../../../../../../components/timer</state>
           <state>$PROJ_DIR$/../../../../../../../components/i2c</state>
           <state>$PROJ_DIR$/../../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../../components/osa</state>
-          <state>$PROJ_DIR$/../../../../../../../components/silicon_id</state>
-          <state>$PROJ_DIR$/../../../../../../../components/silicon_id/socs</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/pd</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/pd/ptn5110</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/pd/phy_interface</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/usb/config/pd</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/phy</state>
         </option>
         <option>
@@ -1876,7 +1880,7 @@
         </option>
         <option>
           <name>PreInclude</name>
-          <state/>
+          <state>$PROJ_DIR$/../mcux_config.h</state>
         </option>
       </data>
     </settings>
@@ -2571,7 +2575,8 @@
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
-          <state>CPU_MIMXRT1189CVM8B_cm33</state>
+          <state>CPU_MIMXRT1189CVM8C_cm33</state>
+          <state>MIMXRT1189_cm33_SERIES</state>
           <state>DEBUG_CONSOLE_TRANSFER_NON_BLOCKING</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>TIMER_PORT_TYPE_GPT=1</state>
@@ -2705,22 +2710,22 @@
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/periph</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/drivers/cm33</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/debug_console</state>
+          <state>$PROJ_DIR$/../../../../../../../components/silicon_id</state>
+          <state>$PROJ_DIR$/../../../../../../../components/silicon_id/socs</state>
           <state>$PROJ_DIR$/../../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../../components/gpio</state>
           <state>$PROJ_DIR$/../../../../../../../components/timer</state>
           <state>$PROJ_DIR$/../../../../../../../components/i2c</state>
           <state>$PROJ_DIR$/../../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../../components/osa</state>
-          <state>$PROJ_DIR$/../../../../../../../components/silicon_id</state>
-          <state>$PROJ_DIR$/../../../../../../../components/silicon_id/socs</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/pd</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/pd/ptn5110</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/pd/phy_interface</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/usb/config/pd</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/phy</state>
         </option>
         <option>
@@ -2906,7 +2911,8 @@
         <option>
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
-          <state>CPU_MIMXRT1189CVM8B_cm33</state>
+          <state>CPU_MIMXRT1189CVM8C_cm33</state>
+          <state>MIMXRT1189_cm33_SERIES</state>
           <state>DEBUG_CONSOLE_TRANSFER_NON_BLOCKING</state>
         </option>
         <option>
@@ -3008,22 +3014,22 @@
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/periph</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/drivers/cm33</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/debug_console</state>
+          <state>$PROJ_DIR$/../../../../../../../components/silicon_id</state>
+          <state>$PROJ_DIR$/../../../../../../../components/silicon_id/socs</state>
           <state>$PROJ_DIR$/../../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../../components/gpio</state>
           <state>$PROJ_DIR$/../../../../../../../components/timer</state>
           <state>$PROJ_DIR$/../../../../../../../components/i2c</state>
           <state>$PROJ_DIR$/../../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../../components/osa</state>
-          <state>$PROJ_DIR$/../../../../../../../components/silicon_id</state>
-          <state>$PROJ_DIR$/../../../../../../../components/silicon_id/socs</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/pd</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/pd/ptn5110</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/pd/phy_interface</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/usb/config/pd</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/phy</state>
         </option>
         <option>
@@ -3040,7 +3046,7 @@
         </option>
         <option>
           <name>PreInclude</name>
-          <state/>
+          <state>$PROJ_DIR$/../mcux_config.h</state>
         </option>
       </data>
     </settings>
@@ -3733,7 +3739,8 @@
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
-          <state>CPU_MIMXRT1189CVM8B_cm33</state>
+          <state>CPU_MIMXRT1189CVM8C_cm33</state>
+          <state>MIMXRT1189_cm33_SERIES</state>
           <state>DEBUG_CONSOLE_TRANSFER_NON_BLOCKING</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>TIMER_PORT_TYPE_GPT=1</state>
@@ -3867,22 +3874,22 @@
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/periph</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/drivers/cm33</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/debug_console</state>
+          <state>$PROJ_DIR$/../../../../../../../components/silicon_id</state>
+          <state>$PROJ_DIR$/../../../../../../../components/silicon_id/socs</state>
           <state>$PROJ_DIR$/../../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../../components/gpio</state>
           <state>$PROJ_DIR$/../../../../../../../components/timer</state>
           <state>$PROJ_DIR$/../../../../../../../components/i2c</state>
           <state>$PROJ_DIR$/../../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../../components/osa</state>
-          <state>$PROJ_DIR$/../../../../../../../components/silicon_id</state>
-          <state>$PROJ_DIR$/../../../../../../../components/silicon_id/socs</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/pd</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/pd/ptn5110</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/pd/phy_interface</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/usb/config/pd</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/phy</state>
         </option>
         <option>
@@ -4068,7 +4075,8 @@
         <option>
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
-          <state>CPU_MIMXRT1189CVM8B_cm33</state>
+          <state>CPU_MIMXRT1189CVM8C_cm33</state>
+          <state>MIMXRT1189_cm33_SERIES</state>
           <state>DEBUG_CONSOLE_TRANSFER_NON_BLOCKING</state>
         </option>
         <option>
@@ -4170,22 +4178,22 @@
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/periph</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/drivers/cm33</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/debug_console</state>
+          <state>$PROJ_DIR$/../../../../../../../components/silicon_id</state>
+          <state>$PROJ_DIR$/../../../../../../../components/silicon_id/socs</state>
           <state>$PROJ_DIR$/../../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../../components/gpio</state>
           <state>$PROJ_DIR$/../../../../../../../components/timer</state>
           <state>$PROJ_DIR$/../../../../../../../components/i2c</state>
           <state>$PROJ_DIR$/../../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../../components/osa</state>
-          <state>$PROJ_DIR$/../../../../../../../components/silicon_id</state>
-          <state>$PROJ_DIR$/../../../../../../../components/silicon_id/socs</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/pd</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/pd/ptn5110</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/pd/phy_interface</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/usb/config/pd</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/phy</state>
         </option>
         <option>
@@ -4202,7 +4210,7 @@
         </option>
         <option>
           <name>PreInclude</name>
-          <state/>
+          <state>$PROJ_DIR$/../mcux_config.h</state>
         </option>
       </data>
     </settings>
@@ -4896,7 +4904,8 @@
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
-          <state>CPU_MIMXRT1189CVM8B_cm33</state>
+          <state>CPU_MIMXRT1189CVM8C_cm33</state>
+          <state>MIMXRT1189_cm33_SERIES</state>
           <state>DEBUG_CONSOLE_TRANSFER_NON_BLOCKING</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>TIMER_PORT_TYPE_GPT=1</state>
@@ -5030,22 +5039,22 @@
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/periph</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/drivers/cm33</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/debug_console</state>
+          <state>$PROJ_DIR$/../../../../../../../components/silicon_id</state>
+          <state>$PROJ_DIR$/../../../../../../../components/silicon_id/socs</state>
           <state>$PROJ_DIR$/../../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../../components/gpio</state>
           <state>$PROJ_DIR$/../../../../../../../components/timer</state>
           <state>$PROJ_DIR$/../../../../../../../components/i2c</state>
           <state>$PROJ_DIR$/../../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../../components/osa</state>
-          <state>$PROJ_DIR$/../../../../../../../components/silicon_id</state>
-          <state>$PROJ_DIR$/../../../../../../../components/silicon_id/socs</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/pd</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/pd/ptn5110</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/pd/phy_interface</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/usb/config/pd</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/phy</state>
         </option>
         <option>
@@ -5231,7 +5240,8 @@
         <option>
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
-          <state>CPU_MIMXRT1189CVM8B_cm33</state>
+          <state>CPU_MIMXRT1189CVM8C_cm33</state>
+          <state>MIMXRT1189_cm33_SERIES</state>
           <state>DEBUG_CONSOLE_TRANSFER_NON_BLOCKING</state>
         </option>
         <option>
@@ -5333,22 +5343,22 @@
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/periph</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/drivers/cm33</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/debug_console</state>
+          <state>$PROJ_DIR$/../../../../../../../components/silicon_id</state>
+          <state>$PROJ_DIR$/../../../../../../../components/silicon_id/socs</state>
           <state>$PROJ_DIR$/../../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../../components/gpio</state>
           <state>$PROJ_DIR$/../../../../../../../components/timer</state>
           <state>$PROJ_DIR$/../../../../../../../components/i2c</state>
           <state>$PROJ_DIR$/../../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../../components/osa</state>
-          <state>$PROJ_DIR$/../../../../../../../components/silicon_id</state>
-          <state>$PROJ_DIR$/../../../../../../../components/silicon_id/socs</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/pd</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/pd/ptn5110</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/pd/phy_interface</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/usb/config/pd</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/phy</state>
         </option>
         <option>
@@ -5365,7 +5375,7 @@
         </option>
         <option>
           <name>PreInclude</name>
-          <state/>
+          <state>$PROJ_DIR$/../mcux_config.h</state>
         </option>
       </data>
     </settings>
@@ -6060,7 +6070,8 @@
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
-          <state>CPU_MIMXRT1189CVM8B_cm33</state>
+          <state>CPU_MIMXRT1189CVM8C_cm33</state>
+          <state>MIMXRT1189_cm33_SERIES</state>
           <state>DEBUG_CONSOLE_TRANSFER_NON_BLOCKING</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>TIMER_PORT_TYPE_GPT=1</state>
@@ -6194,22 +6205,22 @@
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/periph</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/drivers/cm33</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/debug_console</state>
+          <state>$PROJ_DIR$/../../../../../../../components/silicon_id</state>
+          <state>$PROJ_DIR$/../../../../../../../components/silicon_id/socs</state>
           <state>$PROJ_DIR$/../../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../../components/gpio</state>
           <state>$PROJ_DIR$/../../../../../../../components/timer</state>
           <state>$PROJ_DIR$/../../../../../../../components/i2c</state>
           <state>$PROJ_DIR$/../../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../../components/osa</state>
-          <state>$PROJ_DIR$/../../../../../../../components/silicon_id</state>
-          <state>$PROJ_DIR$/../../../../../../../components/silicon_id/socs</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/pd</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/pd/ptn5110</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/pd/phy_interface</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/usb/config/pd</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/phy</state>
         </option>
         <option>
@@ -6395,7 +6406,8 @@
         <option>
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
-          <state>CPU_MIMXRT1189CVM8B_cm33</state>
+          <state>CPU_MIMXRT1189CVM8C_cm33</state>
+          <state>MIMXRT1189_cm33_SERIES</state>
           <state>DEBUG_CONSOLE_TRANSFER_NON_BLOCKING</state>
         </option>
         <option>
@@ -6497,22 +6509,22 @@
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/periph</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/drivers/cm33</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/debug_console</state>
+          <state>$PROJ_DIR$/../../../../../../../components/silicon_id</state>
+          <state>$PROJ_DIR$/../../../../../../../components/silicon_id/socs</state>
           <state>$PROJ_DIR$/../../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../../components/gpio</state>
           <state>$PROJ_DIR$/../../../../../../../components/timer</state>
           <state>$PROJ_DIR$/../../../../../../../components/i2c</state>
           <state>$PROJ_DIR$/../../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../../components/osa</state>
-          <state>$PROJ_DIR$/../../../../../../../components/silicon_id</state>
-          <state>$PROJ_DIR$/../../../../../../../components/silicon_id/socs</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/pd</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/pd/ptn5110</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/pd/phy_interface</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/usb/config/pd</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/phy</state>
         </option>
         <option>
@@ -6529,7 +6541,7 @@
         </option>
         <option>
           <name>PreInclude</name>
-          <state/>
+          <state>$PROJ_DIR$/../mcux_config.h</state>
         </option>
       </data>
     </settings>
@@ -7036,6 +7048,12 @@
       <name>$PROJ_DIR$/../mcux_config.h</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../mcux_config.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../mcux_config.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../usb_pd_config.h</name>
     </file>
   </group>
@@ -7103,6 +7121,9 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/drivers/fsl_iomuxc.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/drivers/fsl_memory.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/drivers/fsl_memory.h</name>
@@ -7546,10 +7567,10 @@
   <group>
     <name>utilities</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/fsl_assert.h</name>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/debug_console/fsl_assert.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/fsl_assert.c</name>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/debug_console/fsl_assert.c</name>
     </file>
     <group>
       <name>str</name>
@@ -7581,6 +7602,21 @@
         <name>$PROJ_DIR$/../../../../../../../components/lists/fsl_component_generic_list.c</name>
       </file>
     </group>
+    <group>
+      <name>silicon_id</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../components/silicon_id/fsl_silicon_id.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../components/silicon_id/fsl_silicon_id.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../components/silicon_id/socs/imxrt1180/fsl_silicon_id_soc.c</name>
+      </file>
+    </group>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../components/silicon_id/socs/fsl_silicon_id_soc.h</name>
+    </file>
     <group>
       <name>serial_manager</name>
       <file>
@@ -7638,30 +7674,15 @@
     <group>
       <name>osa</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../../../components/osa/fsl_os_abstraction.h</name>
-      </file>
-      <file>
         <name>$PROJ_DIR$/../../../../../../../components/osa/fsl_os_abstraction_bm.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../../../components/osa/fsl_os_abstraction_bm.c</name>
       </file>
-    </group>
-    <group>
-      <name>silicon_id</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../../../components/silicon_id/fsl_silicon_id.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../components/silicon_id/fsl_silicon_id.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../components/silicon_id/socs/imxrt1180/fsl_silicon_id_soc.c</name>
+        <name>$PROJ_DIR$/../../../../../../../components/osa/fsl_os_abstraction.h</name>
       </file>
     </group>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../components/silicon_id/socs/fsl_silicon_id_soc.h</name>
-    </file>
   </group>
   <group>
     <name>usb</name>
@@ -7760,6 +7781,9 @@
     <name>doc</name>
     <file>
       <name>$PROJ_DIR$/../readme.md</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../examples_shared_readme.md</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../demo_menu.jpg</name>

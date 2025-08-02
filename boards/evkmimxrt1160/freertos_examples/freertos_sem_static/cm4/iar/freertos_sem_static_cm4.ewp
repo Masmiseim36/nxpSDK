@@ -244,6 +244,7 @@
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1166DVM6A_cm4</state>
+          <state>MIMXRT1166_cm4_SERIES</state>
           <state>SDK_OS_FREE_RTOS</state>
         </option>
         <option>
@@ -563,6 +564,7 @@
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1166DVM6A_cm4</state>
+          <state>MIMXRT1166_cm4_SERIES</state>
         </option>
         <option>
           <name>AList</name>
@@ -1376,6 +1378,7 @@
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1166DVM6A_cm4</state>
+          <state>MIMXRT1166_cm4_SERIES</state>
           <state>SDK_OS_FREE_RTOS</state>
         </option>
         <option>
@@ -1695,6 +1698,7 @@
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1166DVM6A_cm4</state>
+          <state>MIMXRT1166_cm4_SERIES</state>
         </option>
         <option>
           <name>AList</name>
@@ -2506,6 +2510,7 @@
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1166DVM6A_cm4</state>
+          <state>MIMXRT1166_cm4_SERIES</state>
           <state>SDK_OS_FREE_RTOS</state>
         </option>
         <option>
@@ -2825,6 +2830,7 @@
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1166DVM6A_cm4</state>
+          <state>MIMXRT1166_cm4_SERIES</state>
         </option>
         <option>
           <name>AList</name>
@@ -3635,6 +3641,7 @@
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1166DVM6A_cm4</state>
+          <state>MIMXRT1166_cm4_SERIES</state>
           <state>SDK_OS_FREE_RTOS</state>
         </option>
         <option>
@@ -3954,6 +3961,7 @@
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1166DVM6A_cm4</state>
+          <state>MIMXRT1166_cm4_SERIES</state>
         </option>
         <option>
           <name>AList</name>
@@ -4767,6 +4775,7 @@
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1166DVM6A_cm4</state>
+          <state>MIMXRT1166_cm4_SERIES</state>
           <state>SDK_OS_FREE_RTOS</state>
         </option>
         <option>
@@ -5086,6 +5095,7 @@
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1166DVM6A_cm4</state>
+          <state>MIMXRT1166_cm4_SERIES</state>
         </option>
         <option>
           <name>AList</name>
@@ -5897,6 +5907,7 @@
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1166DVM6A_cm4</state>
+          <state>MIMXRT1166_cm4_SERIES</state>
           <state>SDK_OS_FREE_RTOS</state>
         </option>
         <option>
@@ -6216,6 +6227,7 @@
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1166DVM6A_cm4</state>
+          <state>MIMXRT1166_cm4_SERIES</state>
         </option>
         <option>
           <name>AList</name>
@@ -7395,6 +7407,9 @@
         <file>
           <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/timers.h</name>
         </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/freertos_tasks_c_additions.h</name>
+        </file>
       </group>
       <group>
         <name>portable</name>
@@ -7438,6 +7453,9 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../example_board_readme.md</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../examples_shared_readme.md</name>
     </file>
   </group>
 </project>

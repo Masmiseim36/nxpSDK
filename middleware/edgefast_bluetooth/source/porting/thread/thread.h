@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 NXP
+ * Copyright 2023,2025 NXP
  * Copyright (c) 2016, Wind River Systems, Inc.
  *
  * SPDX-License-Identifier: Apache-2.0
@@ -9,6 +9,10 @@
 #define __EDGEFAST_BT_BLE_THREAD_H__
 
 #include <system_c.h>
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 typedef void (*k_thread_entry_t)(void *p1, void *p2, void *p3);
 
@@ -758,5 +762,9 @@ static inline int64_t k_uptime_delta(int64_t *reftime)
 /**
  * @}
  */
+
+ #ifdef __cplusplus
+}
+#endif
 
 #endif /* __EDGEFAST_BT_BLE_THREAD_H__ */

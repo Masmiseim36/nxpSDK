@@ -90,7 +90,6 @@ Otherwise, Mac OS shows "not enough space for allocate" and can't format the dis
 - LPCXpresso55S69
 - EVK-MIMXRT1064
 - MIMXRT685-AUD-EVK
-- FRDM-MCXA276
 - LPCXpresso51U68
 - LPCXpresso54S018
 - LPCXpresso55S16

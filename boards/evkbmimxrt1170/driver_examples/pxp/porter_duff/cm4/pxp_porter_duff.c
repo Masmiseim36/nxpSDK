@@ -1,5 +1,5 @@
-/*
- * Copyright 2019-2020 NXP
+ /*
+ * Copyright 2019-2025 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -20,7 +20,7 @@
 
 #define APP_BPP 4U /* Use 32-bit XRGB888 format. */
 #if (!(defined(FSL_FEATURE_PXP_HAS_NO_EXTEND_PIXEL_FORMAT) && FSL_FEATURE_PXP_HAS_NO_EXTEND_PIXEL_FORMAT)) && \
-    (!(defined(FSL_FEATURE_PXP_V3) && FSL_FEATURE_PXP_V3))
+    (!(defined(FSL_FEATURE_PXP_V3) && FSL_FEATURE_PXP_V3)) && (!(defined(FSL_FEATURE_PXP_V4) && FSL_FEATURE_PXP_V4))
 #define APP_PXP_PS_FORMAT kPXP_PsPixelFormatARGB8888
 #else
 #define APP_PXP_PS_FORMAT kPXP_PsPixelFormatRGB888
@@ -150,7 +150,7 @@ static void APP_InitPxp(void)
         .pitchBytes  = APP_IMG_WIDTH * APP_BPP,
     };
 
-#if defined(FSL_FEATURE_PXP_V3) && FSL_FEATURE_PXP_V3
+#if (defined(FSL_FEATURE_PXP_V3) && FSL_FEATURE_PXP_V3) || (defined(FSL_FEATURE_PXP_V4) && FSL_FEATURE_PXP_V4)
     PXP_SetProcessSurfaceBackGroundColor(APP_PXP, 0U, 0U);
 #else
     PXP_SetProcessSurfaceBackGroundColor(APP_PXP, 0U);
@@ -180,6 +180,9 @@ static void APP_InitPxp(void)
 
     PXP_SetProcessSurfacePosition(APP_PXP, 0, 0, APP_IMG_WIDTH - 1, APP_IMG_HEIGHT - 1);
     PXP_SetAlphaSurfacePosition(APP_PXP, 0, 0, APP_IMG_WIDTH - 1, APP_IMG_HEIGHT - 1);
+#if defined(FSL_FEATURE_PXP_V4) && FSL_FEATURE_PXP_V4
+    PXP_SetProcessSurfaceBufferSize(APP_PXP, APP_IMG_WIDTH - 1, APP_IMG_HEIGHT - 1);
+#endif /* FSL_FEATURE_PXP_V4 */
 
     /* Disable CSC1, it is enabled by default. */
     PXP_EnableCsc1(APP_PXP, false);
@@ -204,7 +207,7 @@ static void APP_PorterDuff(void)
             modeIndex = 0;
         }
 
-#if defined(FSL_FEATURE_PXP_V3) && FSL_FEATURE_PXP_V3
+#if (defined(FSL_FEATURE_PXP_V3) && FSL_FEATURE_PXP_V3) || (defined(FSL_FEATURE_PXP_V4) && FSL_FEATURE_PXP_V4)
         PXP_SetPorterDuffConfig(APP_PXP, 0U, &pxpPorterDuffConfig);
 #else
         PXP_SetPorterDuffConfig(APP_PXP, &pxpPorterDuffConfig);

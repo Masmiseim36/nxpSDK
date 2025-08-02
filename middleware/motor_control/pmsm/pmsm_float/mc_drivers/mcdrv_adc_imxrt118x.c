@@ -1,6 +1,6 @@
 /*
  * Copyright 2013 - 2015, Freescale Semiconductor, Inc.
-* Copyright 2016-2021, 2024 NXP
+* Copyright 2016-2021, 2024-2025 NXP
 *
 * NXP Proprietary. This software is owned or controlled by NXP and may
 * only be used strictly in accordance with the applicable license terms. 
@@ -59,29 +59,26 @@
  */
 void MCDRV_CurrAndVoltDcBusGet(mcdrv_adc_t *this)
 {
+    uint16_t ui16Dummy;
     GMCLIB_3COOR_T_F16 sIABCtemp;
-
+   
     /* ADC1 */
     /* FIFO_0 - conversion 1 - I_A */
-    LPADC_GetConvResult(ADC1, &this->s_ADC_ResultStructure, 0U);
-    this->ui16AdcCurrA = ((int16_t)((this->s_ADC_ResultStructure.convValue)*12/11));
+    this->ui16AdcCurrA = ((int16_t)(((uint16_t)(ADC1->RESFIFO[0] & ADC_RESFIFO_D_MASK))*12/11));
     /* FIFO_1 - conversion 1 - I_B */
-    LPADC_GetConvResult(ADC1, &this->s_ADC_ResultStructure, 1U);
-    this->ui16AdcCurrB = ((int16_t)((this->s_ADC_ResultStructure.convValue)*12/11));
+    this->ui16AdcCurrB = ((int16_t)(((uint16_t)(ADC1->RESFIFO[1] & ADC_RESFIFO_D_MASK))*12/11));
     /* FIFO_0 - conversion 2 */
-    LPADC_GetConvResult(ADC1, &this->s_ADC_ResultStructure, 0U);  
+    ui16Dummy = (ADC1->RESFIFO[0] & ADC_RESFIFO_D_MASK);
     /* FIFO_1 - conversion 2 - UDCBus */
-    LPADC_GetConvResult(ADC1, &this->s_ADC_ResultStructure, 1U);
-    this->ui16AdcDCBVolt = ((int16_t)((this->s_ADC_ResultStructure.convValue)*12/11));
+    this->ui16AdcDCBVolt = ((int16_t)(((uint16_t)(ADC1->RESFIFO[1] & ADC_RESFIFO_D_MASK))*12/11));
     *this->pf16UDcBus    = (frac16_t)(this->ui16AdcDCBVolt);
 
     /* ADC2 */
     /* FIFO_0 - conversion 1 - I_C */
-    LPADC_GetConvResult(ADC2, &this->s_ADC_ResultStructure, 0U);
-    this->ui16AdcCurrC = ((int16_t)((this->s_ADC_ResultStructure.convValue)*12/11));
+    this->ui16AdcCurrC = ((int16_t)(((uint16_t)(ADC2->RESFIFO[0] & ADC_RESFIFO_D_MASK))*12/11));
     /* FIFO_1 - conversion 2 */
-    LPADC_GetConvResult(ADC2, &this->s_ADC_ResultStructure, 1U);
-
+    ui16Dummy = (ADC2->RESFIFO[1] & ADC_RESFIFO_D_MASK);
+      
     switch (*this->pui16SVMSector)
     {
         case 2:

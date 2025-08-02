@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2020 NXP
+ * Copyright 2018-2025 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -20,7 +20,7 @@
 !!GlobalInfo
 product: Clocks v13.0
 processor: MIMXRT1189xxxxx
-package_id: MIMXRT1189CVM8B
+package_id: MIMXRT1189CVM8C
 mcu_data: ksdk2_0
 processor_version: 0.15.10
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS **********/
@@ -388,7 +388,6 @@ void BOARD_BootClockRUN(void)
 
     /* Init OSC RC 400M */
     CLOCK_OSC_EnableOscRc400M();
-    CLOCK_OSC_GateOscRc400M(false);
 
     /* Switch both core to OscRC400M first */
 #if (__CORTEX_M == 7)

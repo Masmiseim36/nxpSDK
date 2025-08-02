@@ -66,19 +66,11 @@ int sd_fs_initialize(void)
     }
 #endif
 
-    PRINTF("\r\nCreate directory......\r\n");
     error = f_mkdir(_T(PSA_ITS_STORAGE_PREFIX));
-    if (error)
+    if (FR_OK != error && FR_EXIST != error)
     {
-        if (error == FR_EXIST)
-        {
-            PRINTF("Directory exists.\r\n");
-        }
-        else
-        {
-            PRINTF("Make directory failed.\r\n");
-            return -1;
-        }
+        PRINTF("Make directory failed.\r\n");
+        return -1;
     }
 
     return kStatus_Success;
@@ -98,7 +90,6 @@ static status_t sdcardWaitCardInsert(void)
     /* wait card insert */
     if (SD_PollingCardInsert(&g_sd, kSD_Inserted) == kStatus_Success)
     {
-        PRINTF("\r\nCard inserted.\r\n");
         /* power off card */
         SD_SetCardPower(&g_sd, false);
         /* power on the card */
@@ -123,9 +114,6 @@ void BOARD_InitHardware(void)
 
     /* Initialize the filesystem with SD backend */
     sd_fs_initialize();
-    
-    PRINTF("File System initialized for Persistent Storage\r\n");
-    
 }
 
 /*${function:end}*/

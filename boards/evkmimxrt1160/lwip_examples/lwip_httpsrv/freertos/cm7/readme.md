@@ -79,22 +79,24 @@ The assigned unique local or global unique addresses could be typed into the web
 
 ## Modifying content of static web pages
 To modify content available through the web server you must complete following steps:
-  1. Modify, add or delete files in folder "boards\<board_name>\lwip_examples\lwip_httpsrv_freertos\webpage".
-  2. Run the script file "middleware\lwip\src\apps\httpsrv\mkfs\mkfs.pl <directory name>" to generate new "httpsrv_fs_data.c".
+  1. Modify, add or delete files in folder "boards/<board_name>/lwip_examples/lwip_httpsrv_freertos/webpage".
+  2. Run the script file "middleware/lwip/src/apps/httpsrv/mkfs/mkfs.pl \<directory name\>" to generate new "httpsrv_fs_data.c".
      Make sure to execute it from a folder where the file "httpsrv_fs_data.c" is. For example:
-        C:\sdk\boards\<board_name>\lwip_examples\lwip_httpsrv_freertos> C:\sdk\middleware\lwip\src\apps\httpsrv\mkfs\mkfs.pl webpage
-		Processing file webpage/auth.html
-		Processing file webpage/cgi.html
-		Processing file webpage/favicon.ico
-		Processing file webpage/help.html
-		Processing file webpage/httpsrv.css
-		Processing file webpage/index.html
-		Processing file webpage/NXP_logo.png
-		Processing file webpage/poll.html
-		Processing file webpage/request.js
-		Processing file webpage/ssi.shtml
-		Processing file webpage/welcome.html
-		Done.
+
+         C:\sdk\boards\<board_name>\lwip_examples\lwip_httpsrv_freertos> C:\sdk\middleware\lwip\src\apps\httpsrv\mkfs\mkfs.pl webpage
+		 Processing file webpage/auth.html
+		 Processing file webpage/cgi.html
+		 Processing file webpage/favicon.ico
+		 Processing file webpage/help.html
+		 Processing file webpage/httpsrv.css
+		 Processing file webpage/index.html
+		 Processing file webpage/NXP_logo.png
+		 Processing file webpage/poll.html
+		 Processing file webpage/request.js
+		 Processing file webpage/ssi.shtml
+		 Processing file webpage/welcome.html
+		 Done.
+
   3. Make sure the "httpsrv_fs_data.c" file has been overwritten with the newly generated content.
   4. Re-compile the HTTP server application example and download it to your board.
 
@@ -109,6 +111,7 @@ To modify content available through the web server you must complete following s
 - [EVK-MIMXRT1064](../../../_boards/evkmimxrt1064/lwip_examples/lwip_httpsrv/freertos/example_board_readme.md)
 - [MIMXRT1160-EVK](../../../_boards/evkmimxrt1160/lwip_examples/lwip_httpsrv/freertos/example_board_readme.md)
 - [MIMXRT1180-EVK](../../../_boards/evkmimxrt1180/lwip_examples/lwip_httpsrv/freertos/example_board_readme.md)
+- [FRDM-MCXE247](../../../_boards/frdmmcxe247/lwip_examples/lwip_httpsrv/freertos/example_board_readme.md)
 - [FRDM-MCXN947](../../../_boards/frdmmcxn947/lwip_examples/lwip_httpsrv/freertos/example_board_readme.md)
 - [FRDM-RW612](../../../_boards/frdmrw612/lwip_examples/lwip_httpsrv/freertos/example_board_readme.md)
 - [LPCXpresso54628](../../../_boards/lpcxpresso54628/lwip_examples/lwip_httpsrv/freertos/example_board_readme.md)

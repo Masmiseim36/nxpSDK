@@ -1,5 +1,5 @@
 /*
- * Copyright 2020-2021 NXP
+ * Copyright 2020-2025 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -15,7 +15,7 @@
 !!GlobalInfo
 product: Pins v9.0
 processor: MIMXRT1176xxxxx
-package_id: MIMXRT1176DVMAA
+package_id: MIMXRT1176DVMAB
 mcu_data: ksdk2_0
 processor_version: 0.9.6
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
@@ -41,8 +41,8 @@ void BOARD_InitBootPins(void) {
 BOARD_InitDebugConsolePins:
 - options: {callFromInitBoot: 'true', coreID: cm7, enableClock: 'true'}
 - pin_list:
-  - {pin_num: L13, peripheral: LPUART1, signal: TXD, pin_signal: GPIO_AD_24, slew_rate: Slow}
-  - {pin_num: M15, peripheral: LPUART1, signal: RXD, pin_signal: GPIO_AD_25, slew_rate: Slow}
+  - {pin_num: L13, peripheral: LPUART1, signal: TXD, pin_signal: GPIO_AD_24, slew_rate: Fast}
+  - {pin_num: M15, peripheral: LPUART1, signal: RXD, pin_signal: GPIO_AD_25, slew_rate: Fast}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 
@@ -63,7 +63,7 @@ void BOARD_InitDebugConsolePins(void) {
       0U);                                    /* Software Input On Field: Input Path is determined by functionality */
   IOMUXC_SetPinConfig(
       IOMUXC_GPIO_AD_24_LPUART1_TXD,          /* GPIO_AD_24 PAD functional properties : */
-      0x06U);                                 /* Slew Rate Field: Slow Slew Rate
+      0x06U);                                 /* Slew Rate Field: Fast Slew Rate
                                                  Drive Strength Field: high drive strength
                                                  Pull / Keep Select Field: Pull Enable
                                                  Pull Up / Down Config. Field: Weak pull down
@@ -72,7 +72,7 @@ void BOARD_InitDebugConsolePins(void) {
                                                  Domain write protection lock: Neither of DWP bits is locked */
   IOMUXC_SetPinConfig(
       IOMUXC_GPIO_AD_25_LPUART1_RXD,          /* GPIO_AD_25 PAD functional properties : */
-      0x06U);                                 /* Slew Rate Field: Slow Slew Rate
+      0x06U);                                 /* Slew Rate Field: Fast Slew Rate
                                                  Drive Strength Field: high drive strength
                                                  Pull / Keep Select Field: Pull Enable
                                                  Pull Up / Down Config. Field: Weak pull down
@@ -99,7 +99,7 @@ BOARD_InitEnetPins:
   - {pin_num: C13, peripheral: ENET_QOS, signal: 'enet_tdata, 00', pin_signal: GPIO_DISP_B1_09, pull_down_pull_up_config: No_Pull, pdrv_config: High_Driver}
   - {pin_num: A14, peripheral: ENET_QOS, signal: enet_tx_clk, pin_signal: GPIO_DISP_B1_11, pull_down_pull_up_config: No_Pull, pdrv_config: High_Driver}
   - {pin_num: B14, peripheral: ENET_QOS, signal: enet_tx_en, pin_signal: GPIO_DISP_B1_10, pull_down_pull_up_config: No_Pull, pdrv_config: High_Driver}
-  - {pin_num: A5, peripheral: GPIO11, signal: 'gpio_io, 14', pin_signal: GPIO_DISP_B2_13, slew_rate: Slow}
+  - {pin_num: A5, peripheral: GPIO11, signal: 'gpio_io, 14', pin_signal: GPIO_DISP_B2_13, slew_rate: Fast}
   - {pin_num: U2, peripheral: ENET_QOS, signal: enet_mdc, pin_signal: GPIO_EMC_B2_19, pull_down_pull_up_config: Pull_Down, open_drain: Disable}
   - {pin_num: R3, peripheral: ENET_QOS, signal: enet_mdio, pin_signal: GPIO_EMC_B2_20, pull_down_pull_up_config: Pull_Down, open_drain: Disable}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
@@ -245,7 +245,7 @@ void BOARD_InitEnetPins(void) {
                                                  Domain write protection lock: Neither of DWP bits is locked */
   IOMUXC_SetPinConfig(
       IOMUXC_GPIO_DISP_B2_13_GPIO11_IO14,     /* GPIO_DISP_B2_13 PAD functional properties : */
-      0x06U);                                 /* Slew Rate Field: Slow Slew Rate
+      0x06U);                                 /* Slew Rate Field: Fast Slew Rate
                                                  Drive Strength Field: high drive strength
                                                  Pull / Keep Select Field: Pull Enable
                                                  Pull Up / Down Config. Field: Weak pull down

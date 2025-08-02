@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2022, 2023-2024 NXP
+ * Copyright 2016-2022, 2023-2025 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -70,7 +70,7 @@ typedef void (*flexspi_isr_t)(FLEXSPI_Type *base, flexspi_handle_t *handle);
 #if !(defined(FSL_SDK_DISABLE_DRIVER_RESET_CONTROL) && FSL_SDK_DISABLE_DRIVER_RESET_CONTROL)
 #if defined(FLEXSPI_RSTS)
 #define FLEXSPI_RESETS_ARRAY FLEXSPI_RSTS
-#endif 
+#endif
 #endif /* FSL_SDK_DISABLE_DRIVER_RESET_CONTROL */
 
 /*******************************************************************************
@@ -106,9 +106,11 @@ static flexspi_handle_t *s_flexspiHandle[ARRAY_SIZE(s_flexspiBases)];
 #endif
 
 #if !(defined(FSL_SDK_DISABLE_DRIVER_RESET_CONTROL) && FSL_SDK_DISABLE_DRIVER_RESET_CONTROL)
+#if (defined(FSL_SDK_ENABLE_FLEXSPI_RESET_CONTROL) && FSL_SDK_ENABLE_FLEXSPI_RESET_CONTROL)
 #if defined(FLEXSPI_RESETS_ARRAY)
 static const reset_ip_name_t s_flexspiResets[] = FLEXSPI_RESETS_ARRAY;
 #endif /* defined(FLEXSPI_RESETS_ARRAY) */
+#endif /* FSL_SDK_ENABLE_FLEXSPI_RESET_CONTROL */
 #endif /* FSL_SDK_DISABLE_DRIVER_RESET_CONTROL */
 
 #if defined(FSL_DRIVER_TRANSFER_DOUBLE_WEAK_IRQ) && FSL_DRIVER_TRANSFER_DOUBLE_WEAK_IRQ
@@ -136,10 +138,10 @@ static void FLEXSPI_Memset(void *src, uint8_t value, size_t length)
 
 /*!
  * brief Check if input lut address is not in FLEXSPI AHB region.
- * 
+ *
  * param base Flexspi peripheral base address.
  * param lutAddr The address if input lut.
- * 
+ *
  * retval false Input LUT address is not allowed.
  * retval true Input LUT address is allowed.
  */
@@ -297,10 +299,16 @@ void FLEXSPI_Init(FLEXSPI_Type *base, const flexspi_config_t *config)
 #endif /* FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL */
 
 #if !(defined(FSL_SDK_DISABLE_DRIVER_RESET_CONTROL) && FSL_SDK_DISABLE_DRIVER_RESET_CONTROL)
+/* once global reset control is enabled (FSL_SDK_DISABLE_DRIVER_RESET_CONTROL = 0), the default FLEXSPI module will not
+ * be reset. However, it is possible to enable flexspi reset control independently by setting
+ * "FSL_SDK_ENABLE_FLEXSPI_RESET_CONTROL" to 1. Please note that reset flexspi may also reset corresponding cache in
+ * some platforms. */
+#if (defined(FSL_SDK_ENABLE_FLEXSPI_RESET_CONTROL) && FSL_SDK_ENABLE_FLEXSPI_RESET_CONTROL)
 #if defined(FLEXSPI_RESETS_ARRAY)
     /* Reset the FLEXSPI module */
     RESET_PeripheralReset(s_flexspiResets[FLEXSPI_GetInstance(base)]);
 #endif /* defined(FLEXSPI_RESETS_ARRAY) */
+#endif /* FSL_SDK_ENABLE_FLEXSPI_RESET_CONTROL */
 #endif /* FSL_SDK_DISABLE_DRIVER_RESET_CONTROL */
 
     /* Reset peripheral before configuring it. */
@@ -355,10 +363,16 @@ void FLEXSPI_Init(FLEXSPI_Type *base, const flexspi_config_t *config)
     /* Configure AHB control items. */
     configValue = base->AHBCR;
     configValue &= ~(FLEXSPI_AHBCR_READADDROPT_MASK | FLEXSPI_AHBCR_PREFETCHEN_MASK | FLEXSPI_AHBCR_BUFFERABLEEN_MASK |
+#if (defined(FSL_FEATURE_FLEXSPI_HAS_RESUMEDISABLE_BIT_CONFIG_SUPPORT) && FSL_FEATURE_FLEXSPI_HAS_RESUMEDISABLE_BIT_CONFIG_SUPPORT)
+                    FLEXSPI_AHBCR_RESUMEDISABLE_MASK |
+#endif
                      FLEXSPI_AHBCR_CACHABLEEN_MASK);
     configValue |= FLEXSPI_AHBCR_READADDROPT(config->ahbConfig.enableReadAddressOpt) |
                    FLEXSPI_AHBCR_PREFETCHEN(config->ahbConfig.enableAHBPrefetch) |
                    FLEXSPI_AHBCR_BUFFERABLEEN(config->ahbConfig.enableAHBBufferable) |
+#if (defined(FSL_FEATURE_FLEXSPI_HAS_RESUMEDISABLE_BIT_CONFIG_SUPPORT) && FSL_FEATURE_FLEXSPI_HAS_RESUMEDISABLE_BIT_CONFIG_SUPPORT)
+                   FLEXSPI_AHBCR_RESUMEDISABLE(config->ahbConfig.disableAhbReadResume) | 
+#endif 
                    FLEXSPI_AHBCR_CACHABLEEN(config->ahbConfig.enableAHBCachable);
     base->AHBCR = configValue;
 
@@ -449,6 +463,15 @@ void FLEXSPI_GetDefaultConfig(flexspi_config_t *config)
     config->ahbConfig.enableAHBPrefetch       = false;
     config->ahbConfig.enableAHBBufferable     = false;
     config->ahbConfig.enableAHBCachable       = false;
+#if (defined(FSL_FEATURE_FLEXSPI_HAS_RESUMEDISABLE_BIT_CONFIG_SUPPORT) && FSL_FEATURE_FLEXSPI_HAS_RESUMEDISABLE_BIT_CONFIG_SUPPORT)
+#if FSL_FEATURE_FLEXSPI_HAS_ERRATA_052733
+    /* ERR052733: When IPED is enabled, the RESUME should be disabled. Flexspi does not support RESUME when IPED is enabled.
+       Workaround: Software should configure this AHBCR_RESUMEDISABLE bit to 1'b1 which uses the IPED enable.*/
+    config->ahbConfig.disableAhbReadResume   = true;
+#else    
+    config->ahbConfig.disableAhbReadResume   = false;
+#endif /* FSL_FEATURE_FLEXSPI_HAS_ERRATA_052733 */
+#endif /* FSL_FEATURE_FLEXSPI_HAS_RESUMEDISABLE_BIT_CONFIG_SUPPORT */
 }
 
 /*!
@@ -634,6 +657,67 @@ void FLEXSPI_SoftwareReset(FLEXSPI_Type *base)
     while (0U != (base->MCR0 & FLEXSPI_MCR0_SWRESET_MASK))
     {
     }
+}
+
+#if (defined(FSL_FEATURE_FLEXSPI_HAS_ADDR_REMAP)) && (FSL_FEATURE_FLEXSPI_HAS_ADDR_REMAP)
+/*!
+ * brief Configure FLEXSPI address mapping
+ *
+ * param base FLEXSPI peripheral base address
+ * param config Pointer to address mapping configuration structure
+ */
+void FLEXSPI_SetAddressMapping(FLEXSPI_Type *base, const flexspi_addr_map_config_t *config)
+{
+    assert(config != NULL);
+    assert(((config->addrStart & (~FLEXSPI_HADDRSTART_ADDRSTART_MASK)) == 0U) &&
+           ((config->addrEnd & (~FLEXSPI_HADDREND_ENDSTART_MASK)) == 0U) &&
+           ((config->addrOffset & (~FLEXSPI_HADDROFFSET_ADDROFFSET_MASK)) == 0U) &&
+           (config->addrStart < config->addrEnd));
+
+    base->HADDRSTART  = config->addrStart;
+    base->HADDREND    = config->addrEnd;
+    base->HADDROFFSET = config->addrOffset;
+
+    FLEXSPI_EnableRemap(base, config->remapEnable);
+}
+#endif
+
+/*!
+ * brief Update all AHB buffers' settings, including buffer size, master ID.
+ * 
+ * param base FLEXSPI peripheral base address.
+ * param ptrAhbBufferCtrl Pointer to structure flexspi_ahbBuffers_ctrl_t which store all AHB buffers' settings.
+ */
+void FLEXSPI_UpdateAhbBuffersSettings(FLEXSPI_Type *base, flexspi_ahbBuffers_ctrl_t *ptrAhbBufferCtrl)
+{
+    assert(ptrAhbBufferCtrl != NULL);
+
+    uint32_t configValue = 0UL;
+    uint32_t totalAhbBufferSize = 0UL;
+
+    /* Wait for bus to be idle before changing flash configuration. */
+    while (!FLEXSPI_GetBusIdleStatus(base))
+    {
+    }
+
+    for (uint32_t i = 0; i < (uint32_t)FSL_FEATURE_FLEXSPI_AHB_BUFFER_COUNT; i++)
+    {
+        totalAhbBufferSize += (ptrAhbBufferCtrl->buffer[i].bufferSize);
+        /* Check if input configuration not overallocate AHB RX buffer. */
+        assert(totalAhbBufferSize <= (uint32_t)FSL_FEATURE_FLEXSPI_AHB_RX_BUFFER_SIZEn(base));
+
+        configValue = base->AHBRXBUFCR0[i];
+
+        configValue &= ~(FLEXSPI_AHBRXBUFCR0_PREFETCHEN_MASK | FLEXSPI_AHBRXBUFCR0_PRIORITY_MASK |
+                         FLEXSPI_AHBRXBUFCR0_MSTRID_MASK | FLEXSPI_AHBRXBUFCR0_BUFSZ_MASK);
+        configValue |= FLEXSPI_AHBRXBUFCR0_PREFETCHEN(ptrAhbBufferCtrl->buffer[i].enablePrefetch) |
+                       FLEXSPI_AHBRXBUFCR0_PRIORITY(ptrAhbBufferCtrl->buffer[i].priority) |
+                       FLEXSPI_AHBRXBUFCR0_MSTRID(ptrAhbBufferCtrl->buffer[i].masterIndex) |
+                       FLEXSPI_AHBRXBUFCR0_BUFSZ((uint32_t)ptrAhbBufferCtrl->buffer[i].bufferSize / 8U);
+        base->AHBRXBUFCR0[i] = configValue;
+    }
+
+    (void)totalAhbBufferSize;
 }
 
 /*! brief Updates the LUT table.
@@ -1058,10 +1142,11 @@ status_t FLEXSPI_TransferNonBlocking(FLEXSPI_Type *base, flexspi_handle_t *handl
         base->IPTXFCR |= FLEXSPI_IPTXFCR_CLRIPTXF_MASK;
         base->IPRXFCR |= FLEXSPI_IPRXFCR_CLRIPRXF_MASK;
 
+        configValue = (base->IPCR1 & ~(FLEXSPI_IPCR1_IDATSZ_MASK | FLEXSPI_IPCR1_ISEQID_MASK | FLEXSPI_IPCR1_ISEQNUM_MASK));
         /* Configure data size. */
         if ((xfer->cmdType == kFLEXSPI_Read) || (xfer->cmdType == kFLEXSPI_Write))
         {
-            configValue = FLEXSPI_IPCR1_IDATSZ(xfer->dataSize);
+            configValue |= FLEXSPI_IPCR1_IDATSZ(xfer->dataSize);
         }
 
         /* Configure sequence ID. */
@@ -1215,18 +1300,6 @@ void FLEXSPI_TransferHandleIRQ(FLEXSPI_Type *base, flexspi_handle_t *handle)
                 base->INTR = (uint32_t)kFLEXSPI_IpRxFifoWatermarkAvailableFlag;
             }
 
-            if (0U != (status & (uint32_t)kFLEXSPI_IpCommandExecutionDoneFlag))
-            {
-                base->INTR = (uint32_t)kFLEXSPI_IpCommandExecutionDoneFlag;
-
-                FLEXSPI_TransferAbort(base, handle);
-
-                if (NULL != handle->completionCallback)
-                {
-                    handle->completionCallback(base, handle, kStatus_Success, handle->userData);
-                }
-            }
-
             /* TX FIFO empty interrupt, push watermark level data into tx FIFO. */
             if ((0U != (status & (uint32_t)kFLEXSPI_IpTxFifoWatermarkEmptyFlag)) &&
                 (handle->state == (uint32_t)kFLEXSPI_BusyWrite))
@@ -1280,6 +1353,73 @@ void FLEXSPI_TransferHandleIRQ(FLEXSPI_Type *base, flexspi_handle_t *handle)
             else
             {
                 /* Empty else */
+            }
+
+            if (0U != (status & (uint32_t)kFLEXSPI_IpCommandExecutionDoneFlag))
+            {
+                base->INTR = (uint32_t)kFLEXSPI_IpCommandExecutionDoneFlag;
+                if (handle->dataSize > 0UL) /* In case of some data not read/write. */
+                {
+                    if (handle->state ==  kFLEXSPI_BusyRead)
+                    {
+                        /* Read word aligned data from rx fifo. */
+                        for (i = 0U; i < (handle->dataSize / 4U); i++)
+                        {
+                            *(uint32_t *)(void *)handle->data = base->RFDR[i];
+                            handle->data += 4U;
+                        }
+
+                        /* Adjust size by the amount processed. */
+                        handle->dataSize -= (size_t)4U * i;
+
+                        /* Read word un-aligned data from rx fifo. */
+                        if (0x00U != handle->dataSize)
+                        {
+                            uint32_t tempVal = base->RFDR[i];
+
+                            for (i = 0U; i < handle->dataSize; i++)
+                            {
+                                *handle->data++ = ((uint8_t)(tempVal >> (8U * i)) & 0xFFU);
+                            }
+                        }
+
+                    }
+                    else if (handle->state == kFLEXSPI_BusyWrite)
+                    {
+                        /* Write word aligned data into tx fifo. */
+                        for (i = 0U; i < (handle->dataSize / 4U); i++)
+                        {
+                            base->TFDR[i] = *(uint32_t *)(void *)handle->data;
+                            handle->data += 4U;
+                        }
+
+                        /* Adjust size by the amount processed. */
+                        handle->dataSize -= (size_t)4U * i;
+
+                        /* Write word un-aligned data into tx fifo. */
+                        if (0x00U != handle->dataSize)
+                        {
+                            uint32_t tempVal = 0x00U;
+
+                            for (uint32_t j = 0U; j < handle->dataSize; j++)
+                            {
+                                tempVal |= ((uint32_t)*handle->data++ << (8U * j));
+                            }
+
+                            base->TFDR[i] = tempVal;
+                        }
+                    }
+                    handle->dataSize = 0;
+                }
+
+                /* Until now, all data should be read/write. */
+                /* Abort transfer, reset state as Idle. */
+                FLEXSPI_TransferAbort(base, handle);
+
+                if (NULL != handle->completionCallback)
+                {
+                    handle->completionCallback(base, handle, kStatus_Success, handle->userData);
+                }
             }
         }
     }

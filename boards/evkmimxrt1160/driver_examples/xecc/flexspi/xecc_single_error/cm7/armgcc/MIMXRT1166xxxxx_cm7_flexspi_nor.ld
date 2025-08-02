@@ -105,12 +105,14 @@ SECTIONS
     *(EXCLUDE_FILE(
         /* Exclude flash and frequently executed functions from XIP */
         */flexspi_nor_flash_ops.c.obj
+        */flexspi_xecc_ops.c.obj
         */fsl_flexspi.c.obj
         */fsl_xecc.c.obj
     ) .text)                 /* .text sections (code) */
     *(EXCLUDE_FILE(
         /* Exclude flash and frequently executed functions from XIP */
         */flexspi_nor_flash_ops.c.obj
+        */flexspi_xecc_ops.c.obj
         */fsl_flexspi.c.obj
         */fsl_xecc.c.obj
     ) .text*)                /* .text* sections (code) */
@@ -118,12 +120,14 @@ SECTIONS
         /* Exclude flash and frequently executed functions from XIP */
         */flexspi_nor_flash_ops.c.obj
         */fsl_flexspi.c.obj
+        */flexspi_xecc_ops.c.obj
         */fsl_xecc.c.obj
     ) .rodata)               /* .rodata sections (constants, strings, etc.) */
     *(EXCLUDE_FILE(
         /* Exclude flash and frequently executed functions from XIP */
         */flexspi_nor_flash_ops.c.obj
         */fsl_flexspi.c.obj
+        */flexspi_xecc_ops.c.obj
         */fsl_xecc.c.obj
     ) .rodata*)              /* .rodata* sections (constants, strings, etc.) */
     *(.glue_7)               /* glue arm to thumb code */
@@ -229,6 +233,7 @@ SECTIONS
     *(m_usb_dma_init_data)
     /* Explicit placement of flash and frequently executed functions in RAM */
     */flexspi_nor_flash_ops.c.obj
+    */flexspi_xecc_ops.c.obj
     */fsl_flexspi.c.obj
     */fsl_xecc.c.obj
     *(.data)                 /* .data sections */

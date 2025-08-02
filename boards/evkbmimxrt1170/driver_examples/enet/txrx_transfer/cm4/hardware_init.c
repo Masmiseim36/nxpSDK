@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2023 NXP
+ * Copyright 2022-2023, 2025 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -12,7 +12,7 @@
 
 /*${variable:start}*/
 phy_rtl8201_resource_t g_phy_resource;
-#if (defined(EXAMPLE_PHY_LINK_INTR_SUPPORT) && (EXAMPLE_PHY_LINK_INTR_SUPPORT))
+#if (defined(APP_PHY_LINK_INTR_SUPPORT) && (APP_PHY_LINK_INTR_SUPPORT))
 extern void PHY_LinkStatusChange(void);
 #endif
 /*${variable:end}*/
@@ -62,7 +62,7 @@ void BOARD_InitHardware(void)
     GPIO_WritePinOutput(GPIO12, 12, 1);
     SDK_DelayAtLeastUs(150000, CLOCK_GetFreq(kCLOCK_CpuClk));
 
-#if (defined(EXAMPLE_PHY_LINK_INTR_SUPPORT) && (EXAMPLE_PHY_LINK_INTR_SUPPORT))
+#if (defined(APP_PHY_LINK_INTR_SUPPORT) && (APP_PHY_LINK_INTR_SUPPORT))
     IRQ_ClearPendingIRQ(GPIO3_Combined_0_15_IRQn);
     EnableIRQ(GPIO3_Combined_0_15_IRQn);
 #endif
@@ -72,7 +72,7 @@ void BOARD_InitHardware(void)
     g_phy_resource.write = MDIO_Write;
 }
 
-#if (defined(EXAMPLE_PHY_LINK_INTR_SUPPORT) && (EXAMPLE_PHY_LINK_INTR_SUPPORT))
+#if (defined(APP_PHY_LINK_INTR_SUPPORT) && (APP_PHY_LINK_INTR_SUPPORT))
 void GPIO_EnableLinkIntr(void)
 {
     GPIO_EnableInterrupts(GPIO3, 1U << 11);

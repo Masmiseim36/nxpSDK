@@ -167,7 +167,7 @@ int main(void)
     asrcConvert.inDataSize  = MUSIC_LEN;
     asrcConvert.outData     = (void *)SAI_TxGetDataRegisterAddress(DEMO_SAI, DEMO_SAI_CHANNEL);
     asrcConvert.outDataSize = outputBufSize;
-    ASRC_TransferEDMA(ASRC, &asrcHandle, &asrcConvert);
+    ASRC_TransferEDMA(DEMO_ASRC, &asrcHandle, &asrcConvert);
 
     while (!isASRCFinished)
     {

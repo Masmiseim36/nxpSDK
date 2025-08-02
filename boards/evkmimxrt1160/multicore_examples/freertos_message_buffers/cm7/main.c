@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2024 NXP
+ * Copyright 2019-2025 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -136,10 +136,10 @@ void vGeneratePrimaryToSecondaryInterrupt(void *xUpdatedMessageBuffer)
     /* Trigger the inter-core interrupt using the MCMGR component.
        Pass the APP_MESSAGE_BUFFER_EVENT_DATA as data that accompany
        the kMCMGR_FreeRtosMessageBuffersEvent event. */
-    (void)MCMGR_TriggerEventForce(kMCMGR_FreeRtosMessageBuffersEvent, APP_MESSAGE_BUFFER_EVENT_DATA);
+    (void)MCMGR_TriggerEventForce(kMCMGR_Core0, kMCMGR_FreeRtosMessageBuffersEvent, APP_MESSAGE_BUFFER_EVENT_DATA);
 }
 
-static void FreeRtosMessageBuffersEventHandler(uint16_t eventData, void *context)
+static void FreeRtosMessageBuffersEventHandler(mcmgr_core_t coreNum, uint16_t eventData, void *context)
 {
     BaseType_t xHigherPriorityTaskWoken = pdFALSE;
 
@@ -163,7 +163,7 @@ static void FreeRtosMessageBuffersEventHandler(uint16_t eventData, void *context
     /* No need to clear the interrupt flag here, it is handled by the mcmgr. */
 }
 
-static void RemoteAppReadyEventHandler(uint16_t eventData, void *context)
+static void RemoteAppReadyEventHandler(mcmgr_core_t coreNum, uint16_t eventData, void *context)
 {
     uint16_t *data = (uint16_t *)context;
 

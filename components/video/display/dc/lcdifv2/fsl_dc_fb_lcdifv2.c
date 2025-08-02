@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2020, 2021 NXP
+ * Copyright 2019-2020, 2021, 2025 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -46,7 +46,12 @@ static const dc_fb_lcdifv2_pixel_foramt_map_t s_lcdifv2PixelFormatMap[] = {
     {kVIDEO_PixelFormatXBGR8888, kLCDIFV2_PixelFormatABGR8888},
     {kVIDEO_PixelFormatLUT8, kLCDIFV2_PixelFormatIndex8BPP},
     {kVIDEO_PixelFormatXRGB4444, kLCDIFV2_PixelFormatARGB4444},
-    {kVIDEO_PixelFormatXRGB1555, kLCDIFV2_PixelFormatARGB1555}};
+    {kVIDEO_PixelFormatXRGB1555, kLCDIFV2_PixelFormatARGB1555},
+    {kVIDEO_PixelFormatUYVY, kLCDIFV2_PixelFormatUYVY},
+    {kVIDEO_PixelFormatVYUY, kLCDIFV2_PixelFormatVYUY},
+    {kVIDEO_PixelFormatYUYV, kLCDIFV2_PixelFormatYUYV},
+    {kVIDEO_PixelFormatYVYU, kLCDIFV2_PixelFormatYVYU},
+};
 
 /*******************************************************************************
  * Code

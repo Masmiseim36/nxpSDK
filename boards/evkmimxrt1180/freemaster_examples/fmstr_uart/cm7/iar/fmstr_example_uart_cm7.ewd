@@ -92,6 +92,7 @@
         </option>
         <option>
           <name>CExtraOptions</name>
+          <state>--jlink_script_file=$PROJ_DIR$/../evkmimxrt1180_cm7.jlinkscript</state>
           <state>--macro_param enable_core=1</state>
         </option>
         <option>
@@ -332,7 +333,7 @@
         <option>
           <name>CMSISDAPResetList</name>
           <version>1</version>
-          <state>1</state>
+          <state>4</state>
         </option>
         <option>
           <name>CMSISDAPHWResetDuration</name>
@@ -1732,6 +1733,7 @@
         </option>
         <option>
           <name>CExtraOptions</name>
+          <state>--jlink_script_file=$PROJ_DIR$/../evkmimxrt1180_cm7.jlinkscript</state>
           <state>--macro_param enable_core=1</state>
         </option>
         <option>
@@ -1972,7 +1974,7 @@
         <option>
           <name>CMSISDAPResetList</name>
           <version>1</version>
-          <state>1</state>
+          <state>4</state>
         </option>
         <option>
           <name>CMSISDAPHWResetDuration</name>
@@ -3372,6 +3374,7 @@
         </option>
         <option>
           <name>CExtraOptions</name>
+          <state>--jlink_script_file=$PROJ_DIR$/../evkmimxrt1180_cm7.jlinkscript</state>
           <state>--macro_param enable_core=1</state>
         </option>
         <option>
@@ -3612,7 +3615,7 @@
         <option>
           <name>CMSISDAPResetList</name>
           <version>1</version>
-          <state>1</state>
+          <state>4</state>
         </option>
         <option>
           <name>CMSISDAPHWResetDuration</name>
@@ -5012,6 +5015,7 @@
         </option>
         <option>
           <name>CExtraOptions</name>
+          <state>--jlink_script_file=$PROJ_DIR$/../evkmimxrt1180_cm7.jlinkscript</state>
           <state>--macro_param enable_core=1</state>
         </option>
         <option>
@@ -5252,7 +5256,7 @@
         <option>
           <name>CMSISDAPResetList</name>
           <version>1</version>
-          <state>1</state>
+          <state>4</state>
         </option>
         <option>
           <name>CMSISDAPHWResetDuration</name>
@@ -6652,6 +6656,7 @@
         </option>
         <option>
           <name>CExtraOptions</name>
+          <state>--jlink_script_file=$PROJ_DIR$/../evkmimxrt1180_cm7.jlinkscript</state>
           <state>--macro_param enable_core=1</state>
         </option>
         <option>
@@ -6892,7 +6897,7 @@
         <option>
           <name>CMSISDAPResetList</name>
           <version>1</version>
-          <state>1</state>
+          <state>4</state>
         </option>
         <option>
           <name>CMSISDAPHWResetDuration</name>
@@ -8292,6 +8297,7 @@
         </option>
         <option>
           <name>CExtraOptions</name>
+          <state>--jlink_script_file=$PROJ_DIR$/../evkmimxrt1180_cm7.jlinkscript</state>
           <state>--macro_param enable_core=1</state>
         </option>
         <option>
@@ -8532,7 +8538,7 @@
         <option>
           <name>CMSISDAPResetList</name>
           <version>1</version>
-          <state>1</state>
+          <state>4</state>
         </option>
         <option>
           <name>CMSISDAPHWResetDuration</name>
@@ -9932,6 +9938,7 @@
         </option>
         <option>
           <name>CExtraOptions</name>
+          <state>--jlink_script_file=$PROJ_DIR$/../evkmimxrt1180_cm7.jlinkscript</state>
           <state>--macro_param enable_core=1</state>
         </option>
         <option>
@@ -10172,7 +10179,7 @@
         <option>
           <name>CMSISDAPResetList</name>
           <version>1</version>
-          <state>1</state>
+          <state>4</state>
         </option>
         <option>
           <name>CMSISDAPHWResetDuration</name>
@@ -11572,6 +11579,7 @@
         </option>
         <option>
           <name>CExtraOptions</name>
+          <state>--jlink_script_file=$PROJ_DIR$/../evkmimxrt1180_cm7.jlinkscript</state>
           <state>--macro_param enable_core=1</state>
         </option>
         <option>
@@ -11812,7 +11820,7 @@
         <option>
           <name>CMSISDAPResetList</name>
           <version>1</version>
-          <state>1</state>
+          <state>4</state>
         </option>
         <option>
           <name>CMSISDAPHWResetDuration</name>

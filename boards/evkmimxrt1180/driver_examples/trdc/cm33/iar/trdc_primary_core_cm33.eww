@@ -11,6 +11,14 @@
         <project>trdc_primary_core_cm33</project>
         <configuration>flexspi_nor_release</configuration>
       </member>
+      <member>
+        <project>trdc_secondary_core_cm7</project>
+        <configuration>flexspi_nor_debug</configuration>
+      </member>
+      <member>
+        <project>trdc_secondary_core_cm7</project>
+        <configuration>flexspi_nor_release</configuration>
+      </member>
     </batchDefinition>
     <batchDefinition>
       <name>flexspi_nor_debug</name>
@@ -18,11 +26,19 @@
         <project>trdc_primary_core_cm33</project>
         <configuration>flexspi_nor_debug</configuration>
       </member>
+      <member>
+        <project>trdc_secondary_core_cm7</project>
+        <configuration>flexspi_nor_debug</configuration>
+      </member>
     </batchDefinition>
     <batchDefinition>
       <name>flexspi_nor_release</name>
       <member>
         <project>trdc_primary_core_cm33</project>
+        <configuration>flexspi_nor_release</configuration>
+      </member>
+      <member>
+        <project>trdc_secondary_core_cm7</project>
         <configuration>flexspi_nor_release</configuration>
       </member>
     </batchDefinition>

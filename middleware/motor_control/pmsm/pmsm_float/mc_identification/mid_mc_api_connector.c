@@ -1,5 +1,5 @@
 /*
-* Copyright 2020, 2024 NXP
+* Copyright 2020, 2024-2025 NXP
 *
 * NXP Proprietary. This software is owned or controlled by NXP and may
 * only be used strictly in accordance with the applicable license terms. 
@@ -222,7 +222,7 @@ void MID_MC_ReadSignals(void)
     frac16_t f16PosElPark;
 
     /* get all adc samples - DC-bus voltage, current, bemf and aux sample */
-    M1_MCDRV_ADC_GET(&g_sM1AdcSensor); 
+    M1_MCDRV_CURR_3PH_VOLT_DCB_GET(&g_sM1Curr3phDcBus); 
     
     /* Convert phase currents from fractional measured values to float */
     g_sMidDrive.sFocPMSM.sIABC.fltA = MLIB_ConvSc_FLTsf(g_sMidDrive.sFocPMSM.sIABCFrac.f16A, g_fltMIDcurrentScale);
@@ -323,5 +323,5 @@ void MID_MC_ApplySignals(void)
     M1_MCDRV_PWM3PH_SET(&g_sM1Pwm3ph);   
     
     /* set current sensor for  sampling */
-    M1_MCDRV_CURR_3PH_CHAN_ASSIGN(&g_sM1AdcSensor);     
+    M1_MCDRV_CURR_3PH_CHAN_ASSIGN(&g_sM1Curr3phDcBus);     
 }

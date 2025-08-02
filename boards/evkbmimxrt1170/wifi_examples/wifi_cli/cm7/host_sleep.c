@@ -23,12 +23,13 @@
 #include "fsl_debug_console.h"
 #include "cli.h"
 #include "wlan.h"
+#include <osa.h>
 
 GPIO_HANDLE_DEFINE(s_WakeupGpioHandle);
 
 static void (*wlan_host_sleep_pre_cfg)(void);
 static void (*wlan_host_sleep_post_cfg)(void);
-
+extern bool wlan_is_manual;
 /*******************************************************************************
  * Variables
  ******************************************************************************/
@@ -42,7 +43,6 @@ static uint32_t g_savedPrimask;
 /*******************************************************************************
  * Code
  ******************************************************************************/
-
 void GPC_EnableWakeupSource(uint32_t irq)
 {
     GPC_CM_EnableIrqWakeup(GPC_CPU_MODE_CTRL_0, irq, true);
@@ -140,6 +140,12 @@ void CpuModeTransition(void)
 }
 void mcu_suspend()
 {
+    if (!wlan_is_manual)
+    {
+        PRINTF("Error: Maunal mode is not selected!\r\n");
+        return;
+    }
+
     if (wlan_host_sleep_pre_cfg)
     {
         wlan_host_sleep_pre_cfg();

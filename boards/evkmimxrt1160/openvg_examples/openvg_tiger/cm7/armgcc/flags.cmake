@@ -3,7 +3,7 @@ IF(NOT DEFINED FPU)
 ENDIF()  
 
 IF(NOT DEFINED SPECS)  
-    SET(SPECS "--specs=rdimon.specs")  
+    SET(SPECS "--specs=nano.specs --specs=rdimon.specs")  
 ENDIF()  
 
 IF(NOT DEFINED DEBUG_CONSOLE_CONFIG)  
@@ -17,6 +17,7 @@ SET(CMAKE_ASM_FLAGS_SDRAM_DEBUG " \
     -D__STARTUP_CLEAR_BSS \
     -DMCUXPRESSO_SDK \
     -DCPU_MIMXRT1166DVM6A_cm7 \
+    -DMIMXRT1166_cm7_SERIES \
     -g \
     -mthumb \
     -mcpu=cortex-m7 \
@@ -29,6 +30,7 @@ SET(CMAKE_ASM_FLAGS_SDRAM_RELEASE " \
     -D__STARTUP_CLEAR_BSS \
     -DMCUXPRESSO_SDK \
     -DCPU_MIMXRT1166DVM6A_cm7 \
+    -DMIMXRT1166_cm7_SERIES \
     -mthumb \
     -mcpu=cortex-m7 \
     ${FPU} \
@@ -41,12 +43,14 @@ SET(CMAKE_C_FLAGS_SDRAM_DEBUG " \
     -DUSE_SDRAM=1 \
     -DSKIP_SYSCLK_INIT=1 \
     -DDATA_SECTION_IS_CACHEABLE=1 \
+    -D__STARTUP_CLEAR_BSS \
     -DSTATIC_LINK=1 \
     -DgcdSTATIC_LINK=1 \
     -DGCID_REV_CID=gc355/0x0_1216 \
     -DMCUX_META_BUILD \
     -DMCUXPRESSO_SDK \
     -DCPU_MIMXRT1166DVM6A_cm7 \
+    -DMIMXRT1166_cm7_SERIES \
     -DSDK_OS_FREE_RTOS \
     -g \
     -O0 \
@@ -70,12 +74,14 @@ SET(CMAKE_C_FLAGS_SDRAM_RELEASE " \
     -DUSE_SDRAM=1 \
     -DSKIP_SYSCLK_INIT=1 \
     -DDATA_SECTION_IS_CACHEABLE=1 \
+    -D__STARTUP_CLEAR_BSS \
     -DSTATIC_LINK=1 \
     -DgcdSTATIC_LINK=1 \
     -DGCID_REV_CID=gc355/0x0_1216 \
     -DMCUX_META_BUILD \
     -DMCUXPRESSO_SDK \
     -DCPU_MIMXRT1166DVM6A_cm7 \
+    -DMIMXRT1166_cm7_SERIES \
     -DSDK_OS_FREE_RTOS \
     -Os \
     -Wall \
@@ -98,6 +104,7 @@ SET(CMAKE_CXX_FLAGS_SDRAM_DEBUG " \
     -DMCUX_META_BUILD \
     -DMCUXPRESSO_SDK \
     -DCPU_MIMXRT1166DVM6A_cm7 \
+    -DMIMXRT1166_cm7_SERIES \
     -DSDK_OS_FREE_RTOS \
     -g \
     -O0 \
@@ -121,6 +128,7 @@ SET(CMAKE_CXX_FLAGS_SDRAM_RELEASE " \
     -DMCUX_META_BUILD \
     -DMCUXPRESSO_SDK \
     -DCPU_MIMXRT1166DVM6A_cm7 \
+    -DMIMXRT1166_cm7_SERIES \
     -DSDK_OS_FREE_RTOS \
     -Os \
     -Wall \
@@ -150,9 +158,6 @@ SET(CMAKE_EXE_LINKER_FLAGS_SDRAM_DEBUG " \
     -mapcs \
     -Wl,--gc-sections \
     -Wl,-static \
-    -Wl,-z \
-    -Wl,muldefs \
-    -Wl,-Map=output.map \
     -Wl,--print-memory-usage \
     -mcpu=cortex-m7 \
     ${FPU} \
@@ -172,9 +177,6 @@ SET(CMAKE_EXE_LINKER_FLAGS_SDRAM_RELEASE " \
     -mapcs \
     -Wl,--gc-sections \
     -Wl,-static \
-    -Wl,-z \
-    -Wl,muldefs \
-    -Wl,-Map=output.map \
     -Wl,--print-memory-usage \
     -mcpu=cortex-m7 \
     ${FPU} \

@@ -31,6 +31,7 @@
     <definition extID="component.lpuart_adapter.MIMXRT1176"/>
     <definition extID="component.mflash_offchip.MIMXRT1176"/>
     <definition extID="middleware.littlefs.MIMXRT1176"/>
+    <definition extID="middleware.littlefs_mflash.MIMXRT1176"/>
     <definition extID="iar"/>
     <definition extID="mdk"/>
     <definition extID="armgcc"/>
@@ -41,7 +42,7 @@
     <definition extID="com.nxp.mcuxpresso.core.debug.support.segger.debug"/>
     <definition extID="com.nxp.mcuxpresso.core.debug.support.segger.release"/>
   </externalDefinitions>
-  <example id="evkbmimxrt1170_littlefs_shell_cm4" name="littlefs_shell_cm4" device_core="cm4_MIMXRT1176xxxxx" dependency="platform.drivers.clock.MIMXRT1176 platform.drivers.iomuxc.MIMXRT1176 platform.drivers.anatop_ai.MIMXRT1176 platform.drivers.memory.MIMXRT1176 platform.drivers.dcdc_soc.MIMXRT1176 platform.drivers.gpc_3.MIMXRT1176 platform.drivers.pgmc.MIMXRT1176 platform.drivers.pmu_1.MIMXRT1176 platform.drivers.soc_src.MIMXRT1176 CMSIS_Include_core_cm.MIMXRT1176 device.MIMXRT1176_CMSIS.MIMXRT1176 device.MIMXRT1176_system.MIMXRT1176 device.MIMXRT1176_startup.MIMXRT1176 platform.drivers.cache_lmem.MIMXRT1176 platform.drivers.common.MIMXRT1176 platform.drivers.flexspi.MIMXRT1176 platform.drivers.igpio.MIMXRT1176 platform.drivers.lpuart.MIMXRT1176 platform.utilities.assert.MIMXRT1176 platform.utilities.misc_utilities.MIMXRT1176 component.lists.MIMXRT1176 utility.str.MIMXRT1176 utility.debug_console.MIMXRT1176 utility.shell.MIMXRT1176 component.serial_manager.MIMXRT1176 component.serial_manager_uart.MIMXRT1176 component.lpuart_adapter.MIMXRT1176 component.mflash_offchip.MIMXRT1176 middleware.littlefs.MIMXRT1176" category="littlefs_examples">
+  <example id="evkbmimxrt1170_littlefs_shell_cm4" name="littlefs_shell_cm4" device_core="cm4_MIMXRT1176xxxxx" dependency="platform.drivers.clock.MIMXRT1176 platform.drivers.iomuxc.MIMXRT1176 platform.drivers.anatop_ai.MIMXRT1176 platform.drivers.memory.MIMXRT1176 platform.drivers.dcdc_soc.MIMXRT1176 platform.drivers.gpc_3.MIMXRT1176 platform.drivers.pgmc.MIMXRT1176 platform.drivers.pmu_1.MIMXRT1176 platform.drivers.soc_src.MIMXRT1176 CMSIS_Include_core_cm.MIMXRT1176 device.MIMXRT1176_CMSIS.MIMXRT1176 device.MIMXRT1176_system.MIMXRT1176 device.MIMXRT1176_startup.MIMXRT1176 platform.drivers.cache_lmem.MIMXRT1176 platform.drivers.common.MIMXRT1176 platform.drivers.flexspi.MIMXRT1176 platform.drivers.igpio.MIMXRT1176 platform.drivers.lpuart.MIMXRT1176 platform.utilities.assert.MIMXRT1176 platform.utilities.misc_utilities.MIMXRT1176 component.lists.MIMXRT1176 utility.str.MIMXRT1176 utility.debug_console.MIMXRT1176 utility.shell.MIMXRT1176 component.serial_manager.MIMXRT1176 component.serial_manager_uart.MIMXRT1176 component.lpuart_adapter.MIMXRT1176 component.mflash_offchip.MIMXRT1176 middleware.littlefs.MIMXRT1176 middleware.littlefs_mflash.MIMXRT1176" category="littlefs_examples">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -63,7 +64,8 @@
           <value>LFS_NO_INTRINSICS=1</value>
           <value>SDK_DEBUGCONSOLE_UART</value>
           <value>MCUX_META_BUILD</value>
-          <value>CPU_MIMXRT1176DVMAA_cm4</value>
+          <value>CPU_MIMXRT1176DVMAB_cm4</value>
+          <value>MIMXRT1176_cm4_SERIES</value>
           <value>SERIAL_PORT_TYPE_UART=1</value>
           <value>MFLASH_FILE_BASEADDR=14221312</value>
           <value>LFS_NO_ASSERT</value>
@@ -183,12 +185,6 @@
       <files mask="littlefs_shell.c"/>
     </source>
     <source path="." project_relative_path="source" type="src">
-      <files mask="lfs_mflash.c"/>
-    </source>
-    <source path="." project_relative_path="source" type="c_include">
-      <files mask="lfs_mflash.h"/>
-    </source>
-    <source path="." project_relative_path="source" type="src">
       <files mask="peripherals.c"/>
     </source>
     <source path="." project_relative_path="source" type="c_include">
@@ -241,6 +237,9 @@
     </source>
     <source path="." project_relative_path="doc" type="doc">
       <files mask="example_board_readme.md"/>
+    </source>
+    <source path="." project_relative_path="doc" type="doc">
+      <files mask="examples_shared_readme.md"/>
     </source>
   </example>
 </ksdk:examples>

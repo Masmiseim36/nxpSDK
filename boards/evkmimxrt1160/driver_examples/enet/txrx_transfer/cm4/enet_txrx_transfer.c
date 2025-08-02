@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2024 NXP
+ * Copyright 2016-2025 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -21,38 +21,8 @@
 #define ENET_TXBUFF_SIZE       (ENET_FRAME_MAX_FRAMELEN)
 #define ENET_DATA_LENGTH       (1000)
 #define ENET_TRANSMIT_DATA_NUM (20)
-#ifndef APP_ENET_BUFF_ALIGNMENT
-#define APP_ENET_BUFF_ALIGNMENT ENET_BUFF_ALIGNMENT
-#endif
-#ifndef PHY_AUTONEGO_TIMEOUT_COUNT
-#define PHY_AUTONEGO_TIMEOUT_COUNT (300000)
-#endif
-#ifndef EXAMPLE_PHY_LINK_INTR_SUPPORT
-#define EXAMPLE_PHY_LINK_INTR_SUPPORT (0U)
-#endif
-#ifndef EXAMPLE_USES_LOOPBACK_CABLE
-#define EXAMPLE_USES_LOOPBACK_CABLE (0U)
-#endif
-
-#ifndef PHY_STABILITY_DELAY_US
-#if EXAMPLE_USES_LOOPBACK_CABLE
-#define PHY_STABILITY_DELAY_US (0U)
-#else
-/* If cable is not used there is no "readiness wait" caused by auto negotiation. Lets wait 100ms.*/
-#define PHY_STABILITY_DELAY_US (100000U)
-#endif
-#endif
 
 /* @TEST_ANCHOR */
-
-#ifndef MAC_ADDRESS
-#define MAC_ADDRESS                        \
-    {                                      \
-        0x54, 0x27, 0x8d, 0x00, 0x00, 0x00 \
-    }
-#else
-#define USER_DEFINED_MAC_ADDRESS
-#endif
 
 /*******************************************************************************
  * Prototypes
@@ -60,7 +30,7 @@
 /*! @brief Build ENET broadcast frame. */
 static void ENET_BuildBroadCastFrame(void);
 
-#if (defined(EXAMPLE_PHY_LINK_INTR_SUPPORT) && (EXAMPLE_PHY_LINK_INTR_SUPPORT))
+#if (defined(APP_PHY_LINK_INTR_SUPPORT) && (APP_PHY_LINK_INTR_SUPPORT))
 void GPIO_EnableLinkIntr(void);
 #endif
 
@@ -84,11 +54,15 @@ static enet_handle_t g_handle;
 static uint8_t g_frame[ENET_DATA_LENGTH + 14];
 
 /*! @brief The MAC address for ENET device. */
-uint8_t g_macAddr[6] = MAC_ADDRESS;
+#if APP_USER_DEFINED_MAC_ADDRESS
+uint8_t g_macAddr[6] = APP_MAC_ADDRESS;
+#else
+uint8_t g_macAddr[6];
+#endif
 
 /*! @brief PHY status. */
 static phy_handle_t phyHandle;
-#if ((EXAMPLE_USES_LOOPBACK_CABLE) && defined(EXAMPLE_PHY_LINK_INTR_SUPPORT) && (EXAMPLE_PHY_LINK_INTR_SUPPORT))
+#if ((APP_USES_LOOPBACK_CABLE) && defined(APP_PHY_LINK_INTR_SUPPORT) && (APP_PHY_LINK_INTR_SUPPORT))
 static bool linkChange = false;
 #endif
 
@@ -115,10 +89,10 @@ static void ENET_BuildBroadCastFrame(void)
     }
 }
 
-#if (defined(EXAMPLE_PHY_LINK_INTR_SUPPORT) && (EXAMPLE_PHY_LINK_INTR_SUPPORT))
+#if (defined(APP_PHY_LINK_INTR_SUPPORT) && (APP_PHY_LINK_INTR_SUPPORT))
 void PHY_LinkStatusChange(void)
 {
-#if (EXAMPLE_USES_LOOPBACK_CABLE)
+#if (APP_USES_LOOPBACK_CABLE)
     linkChange = true;
 #endif
 }
@@ -135,7 +109,7 @@ int main(void)
     enet_data_error_stats_t eErrStatic;
     status_t status;
     enet_config_t config;
-#if EXAMPLE_USES_LOOPBACK_CABLE
+#if APP_USES_LOOPBACK_CABLE
     volatile uint32_t count = 0;
     phy_speed_t speed;
     phy_duplex_t duplex;
@@ -180,7 +154,7 @@ int main(void)
     config.miiMode = kENET_RmiiMode;
 #endif
     phyConfig.phyAddr = EXAMPLE_PHY_ADDRESS;
-#if EXAMPLE_USES_LOOPBACK_CABLE
+#if APP_USES_LOOPBACK_CABLE
     phyConfig.autoNeg = true;
 #else
     phyConfig.autoNeg = false;
@@ -188,13 +162,13 @@ int main(void)
 #endif
     phyConfig.ops      = EXAMPLE_PHY_OPS;
     phyConfig.resource = EXAMPLE_PHY_RESOURCE;
-#if (defined(EXAMPLE_PHY_LINK_INTR_SUPPORT) && (EXAMPLE_PHY_LINK_INTR_SUPPORT))
+#if (defined(APP_PHY_LINK_INTR_SUPPORT) && (APP_PHY_LINK_INTR_SUPPORT))
     phyConfig.intrType = kPHY_IntrActiveLow;
 #endif
 
     /* Initialize PHY and wait auto-negotiation over. */
     PRINTF("Wait for PHY init...\r\n");
-#if EXAMPLE_USES_LOOPBACK_CABLE
+#if APP_USES_LOOPBACK_CABLE
     do
     {
         status = PHY_Init(&phyHandle, &phyConfig);
@@ -202,7 +176,7 @@ int main(void)
         {
             PRINTF("Wait for PHY link up...\r\n");
             /* Wait for auto-negotiation success and link up */
-            count = PHY_AUTONEGO_TIMEOUT_COUNT;
+            count = APP_PHY_AUTONEGO_TIMEOUT_COUNT;
             do
             {
                 PHY_GetLinkStatus(&phyHandle, &link);
@@ -230,21 +204,21 @@ int main(void)
     /* set PHY link speed/duplex and enable loopback. */
     PHY_SetLinkSpeedDuplex(&phyHandle, (phy_speed_t)config.miiSpeed, (phy_duplex_t)config.miiDuplex);
     PHY_EnableLoopback(&phyHandle, kPHY_LocalLoop, (phy_speed_t)config.miiSpeed, true);
-#endif /* EXAMPLE_USES_LOOPBACK_CABLE */
+#endif /* APP_USES_LOOPBACK_CABLE */
 
-#if PHY_STABILITY_DELAY_US
+#if APP_PHY_STABILITY_DELAY_US
     /* Wait a moment for PHY status to be stable. */
-    SDK_DelayAtLeastUs(PHY_STABILITY_DELAY_US, SDK_DEVICE_MAXIMUM_CPU_CLOCK_FREQUENCY);
+    SDK_DelayAtLeastUs(APP_PHY_STABILITY_DELAY_US, SDK_DEVICE_MAXIMUM_CPU_CLOCK_FREQUENCY);
 #endif
 
-#if EXAMPLE_USES_LOOPBACK_CABLE
+#if APP_USES_LOOPBACK_CABLE
     /* Get the actual PHY link speed and set in MAC. */
     PHY_GetLinkSpeedDuplex(&phyHandle, &speed, &duplex);
     config.miiSpeed  = (enet_mii_speed_t)speed;
     config.miiDuplex = (enet_mii_duplex_t)duplex;
 #endif
 
-#ifndef USER_DEFINED_MAC_ADDRESS
+#if !APP_USER_DEFINED_MAC_ADDRESS
     /* Set special address for each chip. */
     SILICONID_ConvertToMacAddr(&g_macAddr);
 #endif
@@ -258,9 +232,9 @@ int main(void)
 
     while (1)
     {
-#if EXAMPLE_USES_LOOPBACK_CABLE
+#if APP_USES_LOOPBACK_CABLE
         /* PHY link status update. */
-#if (defined(EXAMPLE_PHY_LINK_INTR_SUPPORT) && (EXAMPLE_PHY_LINK_INTR_SUPPORT))
+#if (defined(APP_PHY_LINK_INTR_SUPPORT) && (APP_PHY_LINK_INTR_SUPPORT))
         if (linkChange)
         {
             linkChange = false;
@@ -276,7 +250,7 @@ int main(void)
             PRINTF("PHY link changed, link status = %u\r\n", link);
             tempLink = link;
         }
-#endif /*EXAMPLE_USES_LOOPBACK_CABLE*/
+#endif /*APP_USES_LOOPBACK_CABLE*/
         /* Get the Frame size */
         status = ENET_GetRxFrameSize(&g_handle, &length, 0);
         /* Call ENET_ReadFrame when there is a received frame. */
@@ -306,7 +280,7 @@ int main(void)
         if (testTxNum < ENET_TRANSMIT_DATA_NUM)
         {
             /* Send a multicast frame when the PHY is link up. */
-#if EXAMPLE_USES_LOOPBACK_CABLE
+#if APP_USES_LOOPBACK_CABLE
             if (link)
 #endif
             {

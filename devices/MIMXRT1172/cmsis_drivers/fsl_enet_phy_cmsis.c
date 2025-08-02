@@ -1,7 +1,7 @@
 /*
  * Copyright (c) 2013-2016 ARM Limited. All rights reserved.
  * Copyright (c) 2016, Freescale Semiconductor, Inc. Not a Contribution.
- * Copyright 2016-2022 NXP. Not a Contribution.
+ * Copyright 2016-2022, 2025 NXP. Not a Contribution.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -21,7 +21,7 @@
 #include "fsl_enet_phy_cmsis.h"
 #include "fsl_enet.h"
 
-#define ARM_ETH_PHY_DRV_VERSION ARM_DRIVER_VERSION_MAJOR_MINOR(2, 1)
+#define ARM_ETH_PHY_DRV_VERSION ARM_DRIVER_VERSION_MAJOR_MINOR(2, 4)
 
 #ifndef PHY_AUTONEGO_DELAY_COUNT
 #define PHY_AUTONEGO_DELAY_COUNT (800000U)

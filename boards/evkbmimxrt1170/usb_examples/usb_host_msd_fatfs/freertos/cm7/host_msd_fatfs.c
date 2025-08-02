@@ -162,7 +162,7 @@ static void USB_HostMsdFatfsThroughputTest(usb_host_msd_fatfs_instance_t *msdFat
     }
 
     sprintf(test_file_name, "%c:", USBDISK + '0');
-    fatfsCode = f_mount(&fatfs, test_file_name, 1);
+    fatfsCode = f_mount(&fatfs, test_file_name, 0);
     if (fatfsCode)
     {
         usb_echo("fatfs mount error\r\n");
@@ -170,6 +170,29 @@ static void USB_HostMsdFatfsThroughputTest(usb_host_msd_fatfs_instance_t *msdFat
         return;
     }
 
+#if (FF_FS_RPATH >= 2)
+    fatfsCode = f_chdrive((char const *)&test_file_name[0]);
+    if (fatfsCode)
+    {
+        usb_echo("error\r\n");
+        USB_HostMsdFatfsTestDone();
+        return;
+    }
+#endif
+
+#if FF_USE_MKFS
+    MKFS_PARM formatOptions = {FM_SFD | FM_ANY, 0, 0, 0, 0};
+    usb_echo("test f_mkfs......");
+    fatfsCode = f_mkfs((char const *)&test_file_name[0], &formatOptions, testThroughputBuffer, THROUGHPUT_BUFFER_SIZE);
+    if (fatfsCode)
+    {
+        usb_echo("error\r\n");
+        USB_HostMsdFatfsTestDone();
+        return;
+    }
+    usb_echo("success\r\n");
+#endif /* FF_USE_MKFS */
+    
     sprintf(test_file_name, "%c:/thput.dat", USBDISK + '0');
     usb_echo("throughput test:\r\n");
     for (testIndex = 0; testIndex < (sizeof(testSizeArray) / 4); ++testIndex)

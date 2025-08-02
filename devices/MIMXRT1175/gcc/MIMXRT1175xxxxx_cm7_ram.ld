@@ -1,19 +1,22 @@
 /*
 ** ###################################################################
 **     Processors:          MIMXRT1175AVM8A_cm7
+**                          MIMXRT1175AVM8B_cm7
 **                          MIMXRT1175CVM8A_cm7
+**                          MIMXRT1175CVM8B_cm7
 **                          MIMXRT1175DVMAA_cm7
+**                          MIMXRT1175DVMAB_cm7
 **
 **     Compiler:            GNU C Compiler
 **     Reference manual:    IMXRT1170RM, Rev 1, 02/2021
 **     Version:             rev. 1.1, 2022-04-02
-**     Build:               b241024
+**     Build:               b250415
 **
 **     Abstract:
 **         Linker file for the GNU C Compiler
 **
 **     Copyright 2016 Freescale Semiconductor, Inc.
-**     Copyright 2016-2024 NXP
+**     Copyright 2016-2025 NXP
 **     SPDX-License-Identifier: BSD-3-Clause
 **
 **     http:                 www.nxp.com

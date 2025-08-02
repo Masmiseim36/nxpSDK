@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2023 NXP
+ * Copyright 2022-2023, 2025 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -67,12 +67,11 @@ void NETC_TimerInitHandle(netc_timer_handle_t *handle)
 status_t NETC_TimerInit(netc_timer_handle_t *handle, const netc_timer_config_t *config)
 {
     status_t result = kStatus_Success;
-    uint32_t period = NETC_NANOSECOND_ONE_SECOND / config->refClkHz;
 
     /* Initialize the handle. */
     NETC_TimerInitHandle(handle);
-    handle->entryNum     = config->entryNum;
-    handle->timerFreq    = config->refClkHz;
+    handle->entryNum  = config->entryNum;
+    handle->timerFreq = config->refClkHz;
 
     /* Reset this function */
     handle->hw.func->PCI_CFC_PCIE_DEV_CTL |= ENETC_PCI_TYPE0_PCI_CFC_PCIE_DEV_CTL_INIT_FLR_MASK;
@@ -90,10 +89,9 @@ status_t NETC_TimerInit(netc_timer_handle_t *handle, const netc_timer_config_t *
         return result;
     }
 
-    handle->hw.base->TMR_CTRL =
-        ENETC_PF_TMR_TMR_CTRL_TCLK_PERIOD(period) | ENETC_PF_TMR_TMR_CTRL_COPH(config->clkOutputPhase) |
+    handle->hw.base->TMR_CTRL = ENETC_PF_TMR_TMR_CTRL_COPH(config->clkOutputPhase) |
         ENETC_PF_TMR_TMR_CTRL_CIPH(config->clkInputPhase) | ENETC_PF_TMR_TMR_CTRL_TE(config->enableTimer) |
-        ENETC_PF_TMR_TMR_CTRL_COMP_MODE(config->atomicMode) | ENETC_PF_TMR_TMR_CTRL_CK_SEL(config->clockSelect);
+        ENETC_PF_TMR_TMR_CTRL_COMP_MODE(1U) | ENETC_PF_TMR_TMR_CTRL_CK_SEL(config->clockSelect);
 
     NETC_TimerAdjustFreq(handle, config->defaultPpb);
 
@@ -278,10 +276,10 @@ void NETC_TimerConfigureExtPulseTrig(netc_timer_handle_t *handle,
     handle->hw.base->TMR_CTRL &= ~clear;
     handle->hw.base->TMR_CTRL |= control;
 
-    clear = (extTrigId == kNETC_TimerExtTrig1) ?
-                (ENETC_PF_TMR_TMR_TEMASK_ETS1EN_MASK | ENETC_PF_TMR_TMR_TEMASK_ETS1_THREN_MASK |
+    clear   = (extTrigId == kNETC_TimerExtTrig1) ?
+                  (ENETC_PF_TMR_TMR_TEMASK_ETS1EN_MASK | ENETC_PF_TMR_TMR_TEMASK_ETS1_THREN_MASK |
                  ENETC_PF_TMR_TMR_TEMASK_ETS1_OVEN_MASK) :
-                (ENETC_PF_TMR_TMR_TEMASK_ETS2EN_MASK | ENETC_PF_TMR_TMR_TEMASK_ETS2_THREN_MASK |
+                  (ENETC_PF_TMR_TMR_TEMASK_ETS2EN_MASK | ENETC_PF_TMR_TMR_TEMASK_ETS2_THREN_MASK |
                  ENETC_PF_TMR_TMR_TEMASK_ETS2_OVEN_MASK);
     control = (extTrigId == kNETC_TimerExtTrig1) ?
                   (ENETC_PF_TMR_TMR_TEMASK_ETS1EN(extTrig->enableTsAvailInterrupt) |
@@ -323,7 +321,7 @@ status_t NETC_TimerReadExtPulseCaptureTime(netc_timer_handle_t *handle,
         else
         {
             timeLow  = handle->hw.base->TMR_ETTSN[1].TMR_ETTS_L;
-            timeHigh  = handle->hw.base->TMR_ETTSN[1].TMR_ETTS_H;
+            timeHigh = handle->hw.base->TMR_ETTSN[1].TMR_ETTS_H;
         }
         *nanosecond = ((uint64_t)timeHigh << 32U) + timeLow;
         result      = kStatus_Success;
@@ -336,7 +334,8 @@ static void __NETC_TimerGetCurrentTime(ENETC_PF_TMR_Type *base, uint64_t *nanose
     uint32_t timeLow, timeHigh[2];
 
     timeHigh[0] = base->TMR_CUR_TIME_H;
-    do {
+    do
+    {
         timeHigh[1] = timeHigh[0];
         timeLow     = base->TMR_CUR_TIME_L;
         timeHigh[0] = base->TMR_CUR_TIME_H;
@@ -347,13 +346,17 @@ static void __NETC_TimerGetCurrentTime(ENETC_PF_TMR_Type *base, uint64_t *nanose
 
 void NETC_TimerGetTime(ENETC_PF_TMR_Type *base, uint64_t *nanosecond)
 {
-    if ((base->TMR_CTRL & ENETC_PF_TMR_TMR_CTRL_TE_MASK) != 0U) {
+    if ((base->TMR_CTRL & ENETC_PF_TMR_TMR_CTRL_TE_MASK) != 0U)
+    {
         __NETC_TimerGetCurrentTime(base, nanosecond);
-    } else {
+    }
+    else
+    {
         uint32_t timeLow, timeHigh[2];
 
         timeHigh[0] = base->TMR_DEF_CNT_H;
-        do {
+        do
+        {
             timeHigh[1] = timeHigh[0];
             timeLow     = base->TMR_DEF_CNT_L;
             timeHigh[0] = base->TMR_DEF_CNT_H;
@@ -402,6 +405,7 @@ void NETC_TimerAdjustFreq(netc_timer_handle_t *handle, int32_t ppb)
 {
     int64_t offset = 1000000000LL + ppb;
     uint64_t addend;
+    uint32_t control;
 
     /* period (in ns) is given by: 10^9 / freq */
     /* ppb is applied to period: period' = period * (1 + ppb / 10^9) */
@@ -409,6 +413,9 @@ void NETC_TimerAdjustFreq(netc_timer_handle_t *handle, int32_t ppb)
     /* which is equivalent to scaling period by 2^32, and then taking the lower 32bits */
     /* addend' = 10^9 / freq * (1 + ppp / 10^9) * 2^32 = (2^32 * (10^9 + ppb)) / freq */
     addend = (((uint64_t)1ULL << 32) * (uint64_t)offset) / handle->timerFreq;
+
+    control = handle->hw.base->TMR_CTRL & ~ENETC_PF_TMR_TMR_CTRL_TCLK_PERIOD_MASK;
+    handle->hw.base->TMR_CTRL = control | ENETC_PF_TMR_TMR_CTRL_TCLK_PERIOD((uint32_t)(addend >> 32));
 
     handle->hw.base->TMR_ADD = (uint32_t)addend;
 }

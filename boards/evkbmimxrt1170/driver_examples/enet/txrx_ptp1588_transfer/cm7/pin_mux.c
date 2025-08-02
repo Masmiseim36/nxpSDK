@@ -1,5 +1,5 @@
 /*
- * Copyright 2020-2021 NXP
+ * Copyright 2020-2025 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -15,7 +15,7 @@
 !!GlobalInfo
 product: Pins v9.0
 processor: MIMXRT1176xxxxx
-package_id: MIMXRT1176DVMAA
+package_id: MIMXRT1176DVMAB
 mcu_data: ksdk2_0
 processor_version: 0.9.6
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
@@ -41,27 +41,27 @@ BOARD_InitPins:
 - options: {callFromInitBoot: 'true', coreID: cm7, enableClock: 'true'}
 - pin_list:
   - {pin_num: M15, peripheral: LPUART1, signal: RXD, pin_signal: GPIO_AD_25, software_input_on: Enable, pull_up_down_config: Pull_Down, pull_keeper_select: Pull,
-    open_drain: Disable, drive_strength: High, slew_rate: Slow}
-  - {pin_num: L13, peripheral: LPUART1, signal: TXD, pin_signal: GPIO_AD_24, software_input_on: Disable, pull_up_down_config: Pull_Down, pull_keeper_select: Pull,
-    open_drain: Disable, drive_strength: High, slew_rate: Slow}
-  - {pin_num: P17, peripheral: GPIO9, signal: 'gpio_io, 11', pin_signal: GPIO_AD_12, software_input_on: Disable, pull_up_down_config: Pull_Down, pull_keeper_select: Pull,
-    open_drain: Disable, drive_strength: High, slew_rate: Slow}
-  - {pin_num: U5, peripheral: GPIO12, signal: 'gpio_io, 12', pin_signal: GPIO_LPSR_12, software_input_on: Disable, pull_up_down_config: Pull_Up, pull_keeper_select: Pull,
-    open_drain: Disable, drive_strength: High, slew_rate: Slow}
-  - {pin_num: C6, peripheral: ENET, signal: 'enet_rdata, 00', pin_signal: GPIO_DISP_B2_06, software_input_on: Enable, pull_up_down_config: Pull_Down, pull_keeper_select: Pull,
-    open_drain: Disable, drive_strength: High, slew_rate: Slow}
-  - {pin_num: D6, peripheral: ENET, signal: 'enet_rdata, 01', pin_signal: GPIO_DISP_B2_07, software_input_on: Enable, pull_up_down_config: Pull_Down, pull_keeper_select: Pull,
-    open_drain: Disable, drive_strength: High, slew_rate: Slow}
-  - {pin_num: B5, peripheral: ENET, signal: enet_rx_en, pin_signal: GPIO_DISP_B2_08, software_input_on: Disable, pull_up_down_config: Pull_Down, pull_keeper_select: Pull,
-    open_drain: Disable, drive_strength: High, slew_rate: Slow}
-  - {pin_num: E9, peripheral: ENET, signal: 'enet_tdata, 00', pin_signal: GPIO_DISP_B2_02, software_input_on: Disable, pull_up_down_config: Pull_Down, pull_keeper_select: Keeper,
-    open_drain: Disable, drive_strength: High, slew_rate: Slow}
-  - {pin_num: D7, peripheral: ENET, signal: 'enet_tdata, 01', pin_signal: GPIO_DISP_B2_03, software_input_on: Disable, pull_up_down_config: Pull_Down, pull_keeper_select: Keeper,
-    open_drain: Disable, drive_strength: High, slew_rate: Slow}
-  - {pin_num: C7, peripheral: ENET, signal: enet_tx_en, pin_signal: GPIO_DISP_B2_04, software_input_on: Disable, pull_up_down_config: Pull_Down, pull_keeper_select: Keeper,
-    open_drain: Disable, drive_strength: High, slew_rate: Slow}
-  - {pin_num: C9, peripheral: ENET, signal: enet_ref_clk, pin_signal: GPIO_DISP_B2_05, software_input_on: Enable, pull_up_down_config: Pull_Down, pull_keeper_select: Keeper,
     open_drain: Disable, drive_strength: High, slew_rate: Fast}
+  - {pin_num: L13, peripheral: LPUART1, signal: TXD, pin_signal: GPIO_AD_24, software_input_on: Disable, pull_up_down_config: Pull_Down, pull_keeper_select: Pull,
+    open_drain: Disable, drive_strength: High, slew_rate: Fast}
+  - {pin_num: P17, peripheral: GPIO9, signal: 'gpio_io, 11', pin_signal: GPIO_AD_12, software_input_on: Disable, pull_up_down_config: Pull_Down, pull_keeper_select: Pull,
+    open_drain: Disable, drive_strength: High, slew_rate: Fast}
+  - {pin_num: U5, peripheral: GPIO12, signal: 'gpio_io, 12', pin_signal: GPIO_LPSR_12, software_input_on: Disable, pull_up_down_config: Pull_Up, pull_keeper_select: Pull,
+    open_drain: Disable, drive_strength: High, slew_rate: Fast}
+  - {pin_num: C6, peripheral: ENET, signal: 'enet_rdata, 00', pin_signal: GPIO_DISP_B2_06, software_input_on: Enable, pull_up_down_config: Pull_Down, pull_keeper_select: Pull,
+    open_drain: Disable, drive_strength: High, slew_rate: Fast}
+  - {pin_num: D6, peripheral: ENET, signal: 'enet_rdata, 01', pin_signal: GPIO_DISP_B2_07, software_input_on: Enable, pull_up_down_config: Pull_Down, pull_keeper_select: Pull,
+    open_drain: Disable, drive_strength: High, slew_rate: Fast}
+  - {pin_num: B5, peripheral: ENET, signal: enet_rx_en, pin_signal: GPIO_DISP_B2_08, software_input_on: Disable, pull_up_down_config: Pull_Down, pull_keeper_select: Pull,
+    open_drain: Disable, drive_strength: High, slew_rate: Fast}
+  - {pin_num: E9, peripheral: ENET, signal: 'enet_tdata, 00', pin_signal: GPIO_DISP_B2_02, software_input_on: Disable, pull_up_down_config: Pull_Down, pull_keeper_select: Keeper,
+    open_drain: Disable, drive_strength: High, slew_rate: Fast}
+  - {pin_num: D7, peripheral: ENET, signal: 'enet_tdata, 01', pin_signal: GPIO_DISP_B2_03, software_input_on: Disable, pull_up_down_config: Pull_Down, pull_keeper_select: Keeper,
+    open_drain: Disable, drive_strength: High, slew_rate: Fast}
+  - {pin_num: C7, peripheral: ENET, signal: enet_tx_en, pin_signal: GPIO_DISP_B2_04, software_input_on: Disable, pull_up_down_config: Pull_Down, pull_keeper_select: Keeper,
+    open_drain: Disable, drive_strength: High, slew_rate: Fast}
+  - {pin_num: C9, peripheral: ENET, signal: enet_ref_clk, pin_signal: GPIO_DISP_B2_05, software_input_on: Enable, pull_up_down_config: Pull_Down, pull_keeper_select: Keeper,
+    open_drain: Disable, drive_strength: High, slew_rate: Slow}
   - {pin_num: D8, peripheral: ENET, signal: enet_rx_er, pin_signal: GPIO_DISP_B2_09, software_input_on: Disable, pull_up_down_config: Pull_Down, pull_keeper_select: Pull,
     open_drain: Disable}
   - {pin_num: K16, peripheral: ENET, signal: enet_mdc, pin_signal: GPIO_AD_32}
@@ -127,7 +127,7 @@ void BOARD_InitPins(void) {
       0U);                                    /* Software Input On Field: Input Path is determined by functionality */
   IOMUXC_SetPinConfig(
       IOMUXC_GPIO_AD_12_GPIO9_IO11,           /* GPIO_AD_12 PAD functional properties : */
-      0x06U);                                 /* Slew Rate Field: Slow Slew Rate
+      0x06U);                                 /* Slew Rate Field: Fast Slew Rate
                                                  Drive Strength Field: high drive strength
                                                  Pull / Keep Select Field: Pull Enable
                                                  Pull Up / Down Config. Field: Weak pull down
@@ -136,7 +136,7 @@ void BOARD_InitPins(void) {
                                                  Domain write protection lock: Neither of DWP bits is locked */
   IOMUXC_SetPinConfig(
       IOMUXC_GPIO_AD_24_LPUART1_TXD,          /* GPIO_AD_24 PAD functional properties : */
-      0x06U);                                 /* Slew Rate Field: Slow Slew Rate
+      0x06U);                                 /* Slew Rate Field: Fast Slew Rate
                                                  Drive Strength Field: high drive strength
                                                  Pull / Keep Select Field: Pull Enable
                                                  Pull Up / Down Config. Field: Weak pull down
@@ -145,7 +145,7 @@ void BOARD_InitPins(void) {
                                                  Domain write protection lock: Neither of DWP bits is locked */
   IOMUXC_SetPinConfig(
       IOMUXC_GPIO_AD_25_LPUART1_RXD,          /* GPIO_AD_25 PAD functional properties : */
-      0x06U);                                 /* Slew Rate Field: Slow Slew Rate
+      0x06U);                                 /* Slew Rate Field: Fast Slew Rate
                                                  Drive Strength Field: high drive strength
                                                  Pull / Keep Select Field: Pull Enable
                                                  Pull Up / Down Config. Field: Weak pull down
@@ -154,7 +154,7 @@ void BOARD_InitPins(void) {
                                                  Domain write protection lock: Neither of DWP bits is locked */
   IOMUXC_SetPinConfig(
       IOMUXC_GPIO_DISP_B2_02_ENET_TX_DATA00,  /* GPIO_DISP_B2_02 PAD functional properties : */
-      0x02U);                                 /* Slew Rate Field: Slow Slew Rate
+      0x02U);                                 /* Slew Rate Field: Fast Slew Rate
                                                  Drive Strength Field: high drive strength
                                                  Pull / Keep Select Field: Pull Disable, Highz
                                                  Pull Up / Down Config. Field: Weak pull down
@@ -163,7 +163,7 @@ void BOARD_InitPins(void) {
                                                  Domain write protection lock: Neither of DWP bits is locked */
   IOMUXC_SetPinConfig(
       IOMUXC_GPIO_DISP_B2_03_ENET_TX_DATA01,  /* GPIO_DISP_B2_03 PAD functional properties : */
-      0x02U);                                 /* Slew Rate Field: Slow Slew Rate
+      0x02U);                                 /* Slew Rate Field: Fast Slew Rate
                                                  Drive Strength Field: high drive strength
                                                  Pull / Keep Select Field: Pull Disable, Highz
                                                  Pull Up / Down Config. Field: Weak pull down
@@ -172,7 +172,7 @@ void BOARD_InitPins(void) {
                                                  Domain write protection lock: Neither of DWP bits is locked */
   IOMUXC_SetPinConfig(
       IOMUXC_GPIO_DISP_B2_04_ENET_TX_EN,      /* GPIO_DISP_B2_04 PAD functional properties : */
-      0x02U);                                 /* Slew Rate Field: Slow Slew Rate
+      0x02U);                                 /* Slew Rate Field: Fast Slew Rate
                                                  Drive Strength Field: high drive strength
                                                  Pull / Keep Select Field: Pull Disable, Highz
                                                  Pull Up / Down Config. Field: Weak pull down
@@ -181,7 +181,7 @@ void BOARD_InitPins(void) {
                                                  Domain write protection lock: Neither of DWP bits is locked */
   IOMUXC_SetPinConfig(
       IOMUXC_GPIO_DISP_B2_05_ENET_REF_CLK,    /* GPIO_DISP_B2_05 PAD functional properties : */
-      0x03U);                                 /* Slew Rate Field: Fast Slew Rate
+      0x03U);                                 /* Slew Rate Field: Slow Slew Rate
                                                  Drive Strength Field: high drive strength
                                                  Pull / Keep Select Field: Pull Disable, Highz
                                                  Pull Up / Down Config. Field: Weak pull down
@@ -190,7 +190,7 @@ void BOARD_InitPins(void) {
                                                  Domain write protection lock: Neither of DWP bits is locked */
   IOMUXC_SetPinConfig(
       IOMUXC_GPIO_DISP_B2_06_ENET_RX_DATA00,  /* GPIO_DISP_B2_06 PAD functional properties : */
-      0x06U);                                 /* Slew Rate Field: Slow Slew Rate
+      0x06U);                                 /* Slew Rate Field: Fast Slew Rate
                                                  Drive Strength Field: high drive strength
                                                  Pull / Keep Select Field: Pull Enable
                                                  Pull Up / Down Config. Field: Weak pull down
@@ -199,7 +199,7 @@ void BOARD_InitPins(void) {
                                                  Domain write protection lock: Neither of DWP bits is locked */
   IOMUXC_SetPinConfig(
       IOMUXC_GPIO_DISP_B2_07_ENET_RX_DATA01,  /* GPIO_DISP_B2_07 PAD functional properties : */
-      0x06U);                                 /* Slew Rate Field: Slow Slew Rate
+      0x06U);                                 /* Slew Rate Field: Fast Slew Rate
                                                  Drive Strength Field: high drive strength
                                                  Pull / Keep Select Field: Pull Enable
                                                  Pull Up / Down Config. Field: Weak pull down
@@ -208,7 +208,7 @@ void BOARD_InitPins(void) {
                                                  Domain write protection lock: Neither of DWP bits is locked */
   IOMUXC_SetPinConfig(
       IOMUXC_GPIO_DISP_B2_08_ENET_RX_EN,      /* GPIO_DISP_B2_08 PAD functional properties : */
-      0x06U);                                 /* Slew Rate Field: Slow Slew Rate
+      0x06U);                                 /* Slew Rate Field: Fast Slew Rate
                                                  Drive Strength Field: high drive strength
                                                  Pull / Keep Select Field: Pull Enable
                                                  Pull Up / Down Config. Field: Weak pull down
@@ -217,7 +217,7 @@ void BOARD_InitPins(void) {
                                                  Domain write protection lock: Neither of DWP bits is locked */
   IOMUXC_SetPinConfig(
       IOMUXC_GPIO_DISP_B2_09_ENET_RX_ER,      /* GPIO_DISP_B2_09 PAD functional properties : */
-      0x06U);                                 /* Slew Rate Field: Slow Slew Rate
+      0x06U);                                 /* Slew Rate Field: Fast Slew Rate
                                                  Drive Strength Field: high drive strength
                                                  Pull / Keep Select Field: Pull Enable
                                                  Pull Up / Down Config. Field: Weak pull down
@@ -226,7 +226,7 @@ void BOARD_InitPins(void) {
                                                  Domain write protection lock: Neither of DWP bits is locked */
   IOMUXC_SetPinConfig(
       IOMUXC_GPIO_LPSR_12_GPIO12_IO12,        /* GPIO_LPSR_12 PAD functional properties : */
-      0x0EU);                                 /* Slew Rate Field: Slow Slew Rate
+      0x0EU);                                 /* Slew Rate Field: Fast Slew Rate
                                                  Drive Strength Field: high driver
                                                  Pull / Keep Select Field: Pull Enable
                                                  Pull Up / Down Config. Field: Weak pull up

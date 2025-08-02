@@ -96,7 +96,7 @@ int main(void)
     {
     }
 
-    PRINTF("The MBC selected block is accessiable for secure master now\r\n");
+    PRINTF("The MBC selected block is accessible for secure master now\r\n");
 
     /* 6. MRC function demonstration. */
     PRINTF("Set the selected MRC region to non-secure for domain that is secure access only\r\n");
@@ -112,7 +112,7 @@ int main(void)
     while (!g_hardfaultFlag)
     {
     }
-    PRINTF("The MRC selected region is accessiable for secure master now\r\n");
+    PRINTF("The MRC selected region is accessible for secure master now\r\n");
 
     PRINTF("TRDC example succeeds on primary core\r\n");
 

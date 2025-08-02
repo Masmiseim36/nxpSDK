@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2024 NXP
+ * Copyright 2022-2025 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -154,7 +154,7 @@ int main(void)
     /* Get the startup data */
     do
     {
-        status = MCMGR_GetStartupData(&startupData);
+        status = MCMGR_GetStartupData(kMCMGR_Core0, &startupData);
     } while (status != kStatus_MCMGR_Success);
 
     /* Make a noticable delay after the reset */
@@ -234,6 +234,7 @@ int main(void)
 
     /* Send SI message to set PSI MAC address. */
     vsiMsgTxOver = false;
+    __DSB();
     do
     {
         result = EP_VsiSendMsg(&g_ep_handle, (uintptr_t)&vsiMsgBuff[0], 32);
@@ -306,6 +307,7 @@ int main(void)
         /* Send SI message to set PSI MAC address. */
         vsiMsgBuff[9] = msg;
         vsiMsgTxOver  = false;
+        __DSB();
         do
         {
             result = EP_VsiSendMsg(&g_ep_handle, (uintptr_t)&vsiMsgBuff[0], 32);

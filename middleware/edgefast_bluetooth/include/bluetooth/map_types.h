@@ -14,6 +14,10 @@
 
 #include <bluetooth/obex.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /**
  * @brief Message Access Profile (MAP)
  * @defgroup bt_map Message Access Profile (MAP)
@@ -473,5 +477,9 @@ struct bt_map_resp_hdr
  */
 #define BT_MAP_ADD_BODY(buf, val, len)             bt_obex_add_hdr((buf), BT_MAP_HDR_BODY, (val), (len))
 #define BT_MAP_ADD_END_OF_BODY(buf, val, len)      bt_obex_add_hdr((buf), BT_MAP_HDR_END_OF_BODY, (val), (len))
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* ZEPHYR_INCLUDE_BLUETOOTH_MAP_TYPES_H_ */

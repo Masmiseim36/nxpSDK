@@ -14,10 +14,23 @@
 #include "bluetooth/audio/media_proxy.h"
 #include "bluetooth/audio/bap_lc3_preset.h"
 
+#if defined(LC3_HIFI4) && (LC3_HIFI4 != 0)
+#include "lc3_codec.h"
+
+#ifndef LC3_INPUT_FRAME_SIZE_MAX
+#define LC3_INPUT_FRAME_SIZE_MAX 480
+#endif
+
+#ifndef LC3_FRAME_SIZE_MAX
+#define LC3_FRAME_SIZE_MAX 400
+#endif
+
+#else
 #if defined(LC3_DSP) && (LC3_DSP == 0)
 #include "LC3_ndsp_api.h"
 #else
 #include "LC3_api.h"
+#endif
 #endif
 
 #include "fsl_os_abstraction.h"
@@ -81,38 +94,52 @@ struct stream_state
 
 struct lc3_encoder
 {
+#if defined(LC3_HIFI4) && (LC3_HIFI4 != 0)
+    lc3_encoder_t encoder[MAX_AUDIO_CHANNEL_COUNT];
+#else
 #if defined(LC3_DSP) && (LC3_DSP == 0)
     LC3_ENCODER_CONFIG encoder_cfg[MAX_AUDIO_CHANNEL_COUNT];
     LC3_ENCODER_CHANNEL_CNTX encoder[MAX_AUDIO_CHANNEL_COUNT];
 #else
     LC3_ENCODER_CNTX encoder[MAX_AUDIO_CHANNEL_COUNT];
 #endif
+#endif
     bool init[MAX_AUDIO_CHANNEL_COUNT];
-    INT32* pcm_buf_list_in[MAX_AUDIO_CHANNEL_COUNT];
-    UINT8* enc_buf_list_out[MAX_AUDIO_CHANNEL_COUNT];
-    INT32 target_enc_bytes[MAX_AUDIO_CHANNEL_COUNT];
-    INT32 pcm_buf_in[MAX_AUDIO_CHANNEL_COUNT][LC3_INPUT_FRAME_SIZE_MAX];
-    UINT8 enc_buf_out[MAX_AUDIO_CHANNEL_COUNT][LC3_FRAME_SIZE_MAX];
-    UINT8 enc_core_buffer[MAX_AUDIO_CHANNEL_COUNT][LC3_ENCODER_CORE_BUFFER_SIZE_MAX];
-    UINT8 enc_work_buffer[MAX_AUDIO_CHANNEL_COUNT][LC3_ENCODER_WORK_BUFFER_SIZE_MAX];
+    int32_t* pcm_buf_list_in[MAX_AUDIO_CHANNEL_COUNT];
+    uint8_t* enc_buf_list_out[MAX_AUDIO_CHANNEL_COUNT];
+    int32_t target_enc_bytes[MAX_AUDIO_CHANNEL_COUNT];
+    int32_t pcm_buf_in[MAX_AUDIO_CHANNEL_COUNT][LC3_INPUT_FRAME_SIZE_MAX];
+    uint8_t enc_buf_out[MAX_AUDIO_CHANNEL_COUNT][LC3_FRAME_SIZE_MAX];
+#if defined(LC3_HIFI4) && (LC3_HIFI4 != 0)
+#else
+    uint8_t enc_core_buffer[MAX_AUDIO_CHANNEL_COUNT][LC3_ENCODER_CORE_BUFFER_SIZE_MAX];
+    uint8_t enc_work_buffer[MAX_AUDIO_CHANNEL_COUNT][LC3_ENCODER_WORK_BUFFER_SIZE_MAX];
+#endif
     sys_snode_t node;
 };
 
 struct lc3_decoder
 {
+#if defined(LC3_HIFI4) && (LC3_HIFI4 != 0)
+    lc3_decoder_t decoder[MAX_AUDIO_CHANNEL_COUNT];
+#else
 #if defined(LC3_DSP) && (LC3_DSP == 0)
     LC3_DECODER_CONFIG decoder_cfg[MAX_AUDIO_CHANNEL_COUNT];
     LC3_DECODER_CHANNEL_CNTX decoder[MAX_AUDIO_CHANNEL_COUNT];
 #else
     LC3_DECODER_CNTX decoder[MAX_AUDIO_CHANNEL_COUNT];
 #endif
+#endif
     bool init[MAX_AUDIO_CHANNEL_COUNT];
-    UINT8* enc_buf_list_in[MAX_AUDIO_CHANNEL_COUNT];
-    INT32* dec_buf_list_out[MAX_AUDIO_CHANNEL_COUNT];
-    UINT8 enc_buf_in[MAX_AUDIO_CHANNEL_COUNT][LC3_FRAME_SIZE_MAX];
-    INT32 dec_buf_out[MAX_AUDIO_CHANNEL_COUNT][LC3_INPUT_FRAME_SIZE_MAX];
-    UINT8 dec_core_buffer[MAX_AUDIO_CHANNEL_COUNT][LC3_DECODER_CORE_BUFFER_SIZE_MAX];
-    UINT8 dec_work_buffer[MAX_AUDIO_CHANNEL_COUNT][LC3_DECODER_WORK_BUFFER_SIZE_MAX];
+    uint8_t* enc_buf_list_in[MAX_AUDIO_CHANNEL_COUNT];
+    int32_t* dec_buf_list_out[MAX_AUDIO_CHANNEL_COUNT];
+    uint8_t enc_buf_in[MAX_AUDIO_CHANNEL_COUNT][LC3_FRAME_SIZE_MAX];
+    int32_t dec_buf_out[MAX_AUDIO_CHANNEL_COUNT][LC3_INPUT_FRAME_SIZE_MAX];
+#if defined(LC3_HIFI4) && (LC3_HIFI4 != 0)
+#else
+    uint8_t dec_core_buffer[MAX_AUDIO_CHANNEL_COUNT][LC3_DECODER_CORE_BUFFER_SIZE_MAX];
+    uint8_t dec_work_buffer[MAX_AUDIO_CHANNEL_COUNT][LC3_DECODER_WORK_BUFFER_SIZE_MAX];
+#endif
     sys_snode_t node;
 };
 
@@ -1345,6 +1372,9 @@ static int unicast_client_lc3_decoder_init(struct conn_state *state, struct lc3_
 
     for (uint32_t i = 0U; i < state->src_cap_required.channel_count; i++)
     {
+#if defined(LC3_HIFI4) && (LC3_HIFI4 != 0)
+        ret = lc3_decoder_init(&decoder->decoder[i], state->src_cap_required.frequency, state->src_cap_required.duration, state->src_cap_required.frame_bytes, BITS_RATES_OF_SAMPLE);
+#else
 #if defined(LC3_DSP) && (LC3_DSP == 0)
         ret = lc3_ndsp_dec_set_config_params(&decoder->decoder_cfg[i], state->src_cap_required.frequency, 1, 0, state->src_cap_required.duration / 100, BITS_RATES_OF_SAMPLE);
         ret = lc3_dec_init_ch_cntx(&decoder->decoder[i], &decoder->decoder_cfg[i], state->src_cap_required.frame_bytes);
@@ -1365,7 +1395,8 @@ static int unicast_client_lc3_decoder_init(struct conn_state *state, struct lc3_
                 &decoder->dec_buf_list_out[i]
             );
 #endif
-        if(ret != LC3_ENCODER_SUCCESS)
+#endif
+        if(ret != 0)
         {
             PRINTF("Failed to create lc3 decoder %d\n", ret);
             return -EIO;
@@ -1389,6 +1420,9 @@ static int unicast_client_lc3_encoder_init(struct conn_state *state, struct lc3_
 
     for (uint32_t i = 0U; i < state->snk_cap_required.channel_count; i++)
     {
+#if defined(LC3_HIFI4) && (LC3_HIFI4 != 0)
+        ret = lc3_encoder_init(&encoder->encoder[i], state->snk_cap_required.frequency, state->snk_cap_required.duration, state->snk_cap_required.frame_bytes, BITS_RATES_OF_SAMPLE);
+#else
 #if defined(LC3_DSP) && (LC3_DSP == 0)
         ret = lc3_ndsp_enc_set_config_params(&encoder->encoder_cfg[i], state->snk_cap_required.frequency, 1, state->snk_cap_required.duration / 100, BITS_RATES_OF_SAMPLE);
         ret = lc3_enc_init_ch_cntx(&encoder->encoder[i], &encoder->encoder_cfg[i], state->snk_cap_required.frame_bytes);
@@ -1411,7 +1445,8 @@ static int unicast_client_lc3_encoder_init(struct conn_state *state, struct lc3_
                 &encoder->enc_buf_list_out[i]
             );
 #endif
-        if(ret != LC3_ENCODER_SUCCESS)
+#endif
+        if(ret != 0)
         {
             PRINTF("Failed to create lc3 encoder %d\n", ret);
             return -EIO;
@@ -1612,8 +1647,8 @@ int unicast_client_stop_streams(void)
 static int lc3_decode_stream(struct bt_conn * conn, struct net_buf *buf, uint8_t *pcm)
 {
     /* LC3 decode. */
-    INT32 flg_bfi[MAX_AUDIO_CHANNEL_COUNT];
-    INT32 dec_byte_count[MAX_AUDIO_CHANNEL_COUNT];
+    int32_t flg_bfi[MAX_AUDIO_CHANNEL_COUNT];
+    int32_t dec_byte_count[MAX_AUDIO_CHANNEL_COUNT];
     int lc3_ret;
     struct conn_state *state = NULL;
     int16_t *p = (int16_t *)pcm;
@@ -1729,8 +1764,8 @@ static void sink_recv_stream_task(void *param)
     struct net_buf *buf;
     struct bt_iso_recv_info * info;
     osa_status_t ret;
-    INT32 flg_bfi[MAX_AUDIO_CHANNEL_COUNT];
-    INT32 dec_byte_count[MAX_AUDIO_CHANNEL_COUNT];
+    int32_t flg_bfi[MAX_AUDIO_CHANNEL_COUNT];
+    int32_t dec_byte_count[MAX_AUDIO_CHANNEL_COUNT];
     int lc3_ret;
     struct conn_state *state = NULL;
     uint8_t * in;
@@ -1842,21 +1877,25 @@ static void sink_recv_stream_task(void *param)
 
                     if (0 != buf->len)
                     {
+#if defined(LC3_HIFI4) && (LC3_HIFI4 != 0)
+                        lc3_ret = lc3_decoder(&state->src[0].decoder->decoder[i], &in[i * dec_byte_count[i]], flg_bfi[i], (void *)state->src[0].in_buffer);
+#else
 #if defined(LC3_DSP) && (LC3_DSP == 0)
                         lc3_ret = LC3_decode_a_frame(&state->src[0].decoder->decoder[i], &in[i * dec_byte_count[i]], (void *)state->src[0].in_buffer, flg_bfi[i], state->src[0].decoder->dec_work_buffer[i]);
 #else
                         memcpy(state->src[0].decoder->enc_buf_in[i], &in[i * state->src_cap_required.frame_bytes], state->src_cap_required.frame_bytes);
                         lc3_ret = LC3_decoder_process(&state->src[0].decoder->decoder[i], &flg_bfi[i], &dec_byte_count[i]);
 #endif
-                        if(lc3_ret != LC3_DECODER_SUCCESS)
+#endif
+                        if(lc3_ret != 0)
                         {
-                            memset(state->src[0].decoder->dec_buf_out[i], 0, sizeof(INT32) * LC3_INPUT_FRAME_SIZE_MAX);
+                            memset(state->src[0].decoder->dec_buf_out[i], 0, sizeof(int32_t) * LC3_INPUT_FRAME_SIZE_MAX);
                             PRINTF("Fail to decoder stream! %d\n", lc3_ret);
                         }
                     }
                     else
                     {
-                        memset(state->src[0].decoder->dec_buf_out[i], 0, sizeof(INT32) * LC3_INPUT_FRAME_SIZE_MAX);
+                        memset(state->src[0].decoder->dec_buf_out[i], 0, sizeof(int32_t) * LC3_INPUT_FRAME_SIZE_MAX);
                     }
 #if (defined(UNICAST_AUDIO_SYNC_MODE) && (UNICAST_AUDIO_SYNC_MODE > 0))
                     OSA_ENTER_CRITICAL();
@@ -1895,12 +1934,15 @@ static void sink_recv_stream_task(void *param)
 
                     srCvtUpdateFreqOffset(&state->src[0].resampler[i].upSrc, update_delta);
 
+#if defined(LC3_HIFI4) && (LC3_HIFI4 != 0)
+#else
 #if defined(LC3_DSP) && (LC3_DSP == 0)
 #else
                     for (int j = 0; j < (state->src_cap_required.frequency * state->src_cap_required.duration / 1000000); j++)
                     {
                         state->src[0].in_buffer[j] = (int16_t)state->src[0].decoder->dec_buf_out[i][j];
                     }
+#endif
 #endif
                     /* resampler */
                     state->src[0].resampler[i].out_length = upCvtFrm(&state->src[0].resampler[i].upSrc, state->src[0].in_buffer, state->src[0].resampler[i].out_buffer);
@@ -2439,16 +2481,22 @@ static int lc3_encode_stream(struct bt_conn * conn, uint8_t *pcm, uint32_t pcm_l
     uint8_t * out2;
     uint32_t channel_count;
     int lc3_ret;
+#if defined(LC3_HIFI4) && (LC3_HIFI4 != 0)
+#else
 #if defined(LC3_DSP) && (LC3_DSP == 0)
     LC3_ENCODER_CHANNEL_CNTX *encoder_cntx[UNICAST_AUDIO_SERVER_COUNT];
 #else
     LC3_ENCODER_CNTX *encoder_cntx[UNICAST_AUDIO_SERVER_COUNT];
 #endif
+#endif
     struct lc3_encoder *encoder[UNICAST_AUDIO_SERVER_COUNT];
     int err;
 
     memset(encoder, 0, sizeof(encoder));
+#if defined(LC3_HIFI4) && (LC3_HIFI4 != 0)
+#else
     memset(encoder_cntx, 0, sizeof(encoder_cntx));
+#endif
 
     for (uint32_t index = 0; index < ARRAY_SIZE(server_state); index++)
     {
@@ -2477,7 +2525,10 @@ static int lc3_encode_stream(struct bt_conn * conn, uint8_t *pcm, uint32_t pcm_l
             {
                 if (server_state[index].snk[0].encoder->init[0])
                 {
+#if defined(LC3_HIFI4) && (LC3_HIFI4 != 0)
+#else
                     encoder_cntx[index] = &server_state[index].snk[0].encoder->encoder[0];
+#endif
                     encoder[index] = server_state[index].snk[0].encoder;
                 }
             }
@@ -2489,7 +2540,10 @@ static int lc3_encode_stream(struct bt_conn * conn, uint8_t *pcm, uint32_t pcm_l
         {
             if (state->snk[0].encoder->init[i])
             {
+#if defined(LC3_HIFI4) && (LC3_HIFI4 != 0)
+#else
                 encoder_cntx[i] = &state->snk[0].encoder->encoder[i];
+#endif
                 encoder[i] = state->snk[0].encoder;
             }
         }
@@ -2498,7 +2552,11 @@ static int lc3_encode_stream(struct bt_conn * conn, uint8_t *pcm, uint32_t pcm_l
     err = -EINVAL;
     for (uint32_t i = 0; i < UNICAST_AUDIO_SERVER_COUNT; i++)
     {
+#if defined(LC3_HIFI4) && (LC3_HIFI4 != 0)
+        if (encoder[i] != NULL)
+#else
         if ((encoder_cntx[i] != NULL) && (encoder[i] != NULL))
+#endif
         {
             err = 0;
         }
@@ -2533,20 +2591,30 @@ static int lc3_encode_stream(struct bt_conn * conn, uint8_t *pcm, uint32_t pcm_l
                 }
                 if (state->snk_cap_required.channel_count < channel_count)
                 {
+#if defined(LC3_HIFI4) && (LC3_HIFI4 != 0)
+                    int16_t *pcm_buf = (int16_t *)encoder[i]->pcm_buf_in[0];
+                    pcm_buf[j] = p[j*channel_count + i];
+#else
 #if defined(LC3_DSP) && (LC3_DSP == 0)
                     int16_t *pcm_buf = (int16_t *)encoder[i]->pcm_buf_in[0];
                     pcm_buf[j] = p[j*channel_count + i];
 #else
                     encoder[i]->pcm_buf_in[0][j] = (int32_t)p[j*channel_count + i];
 #endif
+#endif
                 }
                 else
                 {
+#if defined(LC3_HIFI4) && (LC3_HIFI4 != 0)
+                    int16_t *pcm_buf = (int16_t *)encoder[i]->pcm_buf_in[i];
+                    pcm_buf[j] = p[j*channel_count + i];
+#else
 #if defined(LC3_DSP) && (LC3_DSP == 0)
                     int16_t *pcm_buf = (int16_t *)encoder[i]->pcm_buf_in[i];
                     pcm_buf[j] = p[j*channel_count + i];
 #else
                     encoder[i]->pcm_buf_in[i][j] = (int32_t)p[j*channel_count + i];
+#endif
 #endif
                 }
             }
@@ -2554,16 +2622,25 @@ static int lc3_encode_stream(struct bt_conn * conn, uint8_t *pcm, uint32_t pcm_l
 
         for(int i = 0; i < channel_count; i++)
         {
+#if defined(LC3_HIFI4) && (LC3_HIFI4 != 0)
+            if (encoder[i] == NULL)
+#else
             if (encoder_cntx[i] == NULL)
+#endif
             {
                 continue;
             }
+#if defined(LC3_HIFI4) && (LC3_HIFI4 != 0)
+            lc3_ret = lc3_encoder(&encoder[i]->encoder[i], encoder[i]->pcm_buf_in[i], encoder[i]->enc_buf_out[i]);
+            if(lc3_ret)
+#else
 #if defined(LC3_DSP) && (LC3_DSP == 0)
             lc3_ret = LC3_encode_a_frame(encoder_cntx[i], encoder[i]->pcm_buf_in[i], encoder[i]->enc_buf_out[i], encoder[i]->enc_work_buffer[i]);
 #else
             lc3_ret = LC3_encoder_process(encoder_cntx[i]);
 #endif
             if(lc3_ret != state->snk_cap_required.frame_bytes)
+#endif
             {
                 PRINTF("Channel %d lc3 encode fail! %d\n", i, lc3_ret);
                 return lc3_ret;

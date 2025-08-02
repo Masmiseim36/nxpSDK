@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2023 NXP
+ * Copyright 2022-2025 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -393,7 +393,6 @@ void BOARD_BootClockRUN(void)
 
     /* Init OSC RC 400M */
     CLOCK_OSC_EnableOscRc400M();
-    CLOCK_OSC_GateOscRc400M(false);
 
     /* Switch both core to OscRC400M first */
 #if (__CORTEX_M == 7)

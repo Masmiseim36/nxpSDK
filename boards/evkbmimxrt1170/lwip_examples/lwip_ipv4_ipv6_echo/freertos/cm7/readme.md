@@ -84,34 +84,37 @@ In such case, you will be able to connect another PC:
 		"print_ip_cfg": Prints IP configuration.
 
 3. TCP client echo
-	a) Launch ncat -v -l -p 10001 on your computer.
-	b) Run command echo_tcp_client 192.168.0.100 10001 in demo shell.
-	c) You should see on your PC "Ncat: Connection from 192.168.0.102."
-	d) Type some text into ncat (not demo shell) and the demo will send your line back
-	   when you hit enter.
-	e) You can terminate connection by pressing ctrl+c in ncat or typing end to demo shell.
-	
+
+	* Launch ncat -v -l -p 10001 on your computer.
+	* Run command echo_tcp_client 192.168.0.100 10001 in demo shell.
+	* You should see on your PC "Ncat: Connection from 192.168.0.102."
+	* Type some text into ncat (not demo shell) and the demo will send your line back
+	  when you hit enter.
+	* You can terminate connection by pressing ctrl+c in ncat or typing end to demo shell.
+
 	For IPv6 just replace 192.168.0.100 with IPv6 address of your PC and zone ID.
 	
 4. TCP server echo
-	a) Run command echo_tcp_server 10001 in demo shell.
-	b) Launch ncat -v 192.168.0.102 10001 on your computer.
-	c) You should see on your PC "Ncat: Connected to 192.168.0.102:10001."
-	d) Type some text into ncat (not demo shell) and the demo will send your line back
-	   when you hit enter.
-	e) You can terminate connection by pressing ctrl+c in ncat or typing end to demo shell.
-	
-	For IPv6 just replace 192.168.0.102 with IPv6 address of demo FE80::12:13FF:FE10:1511%<zone ID>.
 
-5. UDP echo
-	a) Run command echo_udp 10001 in demo shell.
-	b) On your computer launch ncat -v -u 192.168.0.102 10001
-	c) You should see on your PC "Ncat: Connected to 192.168.0.102:10001."
-	d) Type some text into ncat (not demo shell) and the demo will send your line back
-	   when you hit enter.
-	e) To terminate is necessary by doing both, pressing ctrl+c in ncat and typing end to demo shell.
-	
-	For IPv6 just replace 192.168.0.102 with IPv6 address of demo FE80::12:13FF:FE10:1511%<zone ID>.
+	* Run command echo_tcp_server 10001 in demo shell.
+	* Launch ncat -v 192.168.0.102 10001 on your computer.
+	* You should see on your PC "Ncat: Connected to 192.168.0.102:10001."
+	* Type some text into ncat (not demo shell) and the demo will send your line back
+	  when you hit enter.
+	* You can terminate connection by pressing ctrl+c in ncat or typing end to demo shell.
+
+	For IPv6 just replace 192.168.0.102 with IPv6 address of demo FE80::12:13FF:FE10:1511%&lt;zone ID&gt;.
+
+6. UDP echo
+
+	* Run command echo_udp 10001 in demo shell.
+	* On your computer launch ncat -v -u 192.168.0.102 10001
+	* You should see on your PC "Ncat: Connected to 192.168.0.102:10001."
+	* Type some text into ncat (not demo shell) and the demo will send your line back
+	  when you hit enter.
+	* To terminate is necessary by doing both, pressing ctrl+c in ncat and typing end to demo shell.
+
+	For IPv6 just replace 192.168.0.102 with IPv6 address of demo FE80::12:13FF:FE10:1511%&lt;zone ID&gt;.
 
 ## Supported Boards
 - [EVKB-IMXRT1050](../../../_boards/evkbimxrt1050/lwip_examples/lwip_ipv4_ipv6_echo/freertos/example_board_readme.md)
@@ -124,6 +127,7 @@ In such case, you will be able to connect another PC:
 - [EVK-MIMXRT1064](../../../_boards/evkmimxrt1064/lwip_examples/lwip_ipv4_ipv6_echo/freertos/example_board_readme.md)
 - [MIMXRT1160-EVK](../../../_boards/evkmimxrt1160/lwip_examples/lwip_ipv4_ipv6_echo/freertos/example_board_readme.md)
 - [MIMXRT1180-EVK](../../../_boards/evkmimxrt1180/lwip_examples/lwip_ipv4_ipv6_echo/freertos/example_board_readme.md)
+- [FRDM-MCXE247](../../../_boards/frdmmcxe247/lwip_examples/lwip_ipv4_ipv6_echo/freertos/example_board_readme.md)
 - [FRDM-RW612](../../../_boards/frdmrw612/lwip_examples/lwip_ipv4_ipv6_echo/freertos/example_board_readme.md)
 - [LPCXpresso54628](../../../_boards/lpcxpresso54628/lwip_examples/lwip_ipv4_ipv6_echo/freertos/example_board_readme.md)
 - [LPCXpresso54S018](../../../_boards/lpcxpresso54s018/lwip_examples/lwip_ipv4_ipv6_echo/freertos/example_board_readme.md)

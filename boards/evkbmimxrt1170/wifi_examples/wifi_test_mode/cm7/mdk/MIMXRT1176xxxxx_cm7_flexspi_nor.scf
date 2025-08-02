@@ -63,8 +63,8 @@
   #define m_data2_start                0x202C2000
   #define m_data2_size                 0x0007E000
 #else
-  #define m_data2_start                0x202C0000
-  #define m_data2_size                 0x00080000
+  #define m_data2_start                0x20240000
+  #define m_data2_size                 0x000C0000
 #endif
 
 #if (defined(__use_flash64MB__))

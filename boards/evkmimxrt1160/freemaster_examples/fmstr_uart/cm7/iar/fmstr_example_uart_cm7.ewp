@@ -244,6 +244,7 @@
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1166DVM6A_cm7</state>
+          <state>MIMXRT1166_cm7_SERIES</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -565,6 +566,7 @@
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1166DVM6A_cm7</state>
+          <state>MIMXRT1166_cm7_SERIES</state>
         </option>
         <option>
           <name>AList</name>
@@ -1381,6 +1383,7 @@
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1166DVM6A_cm7</state>
+          <state>MIMXRT1166_cm7_SERIES</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -1702,6 +1705,7 @@
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1166DVM6A_cm7</state>
+          <state>MIMXRT1166_cm7_SERIES</state>
         </option>
         <option>
           <name>AList</name>
@@ -2518,6 +2522,7 @@
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1166DVM6A_cm7</state>
+          <state>MIMXRT1166_cm7_SERIES</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -2839,6 +2844,7 @@
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1166DVM6A_cm7</state>
+          <state>MIMXRT1166_cm7_SERIES</state>
         </option>
         <option>
           <name>AList</name>
@@ -3658,6 +3664,7 @@
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1166DVM6A_cm7</state>
+          <state>MIMXRT1166_cm7_SERIES</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -3979,6 +3986,7 @@
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1166DVM6A_cm7</state>
+          <state>MIMXRT1166_cm7_SERIES</state>
         </option>
         <option>
           <name>AList</name>
@@ -4794,6 +4802,7 @@
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1166DVM6A_cm7</state>
+          <state>MIMXRT1166_cm7_SERIES</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -5115,6 +5124,7 @@
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1166DVM6A_cm7</state>
+          <state>MIMXRT1166_cm7_SERIES</state>
         </option>
         <option>
           <name>AList</name>
@@ -5928,6 +5938,7 @@
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1166DVM6A_cm7</state>
+          <state>MIMXRT1166_cm7_SERIES</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -6249,6 +6260,7 @@
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1166DVM6A_cm7</state>
+          <state>MIMXRT1166_cm7_SERIES</state>
         </option>
         <option>
           <name>AList</name>
@@ -7065,6 +7077,7 @@
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1166DVM6A_cm7</state>
+          <state>MIMXRT1166_cm7_SERIES</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -7386,6 +7399,7 @@
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1166DVM6A_cm7</state>
+          <state>MIMXRT1166_cm7_SERIES</state>
         </option>
         <option>
           <name>AList</name>
@@ -8202,6 +8216,7 @@
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1166DVM6A_cm7</state>
+          <state>MIMXRT1166_cm7_SERIES</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -8523,6 +8538,7 @@
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1166DVM6A_cm7</state>
+          <state>MIMXRT1166_cm7_SERIES</state>
         </option>
         <option>
           <name>AList</name>
@@ -9342,6 +9358,7 @@
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1166DVM6A_cm7</state>
+          <state>MIMXRT1166_cm7_SERIES</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -9663,6 +9680,7 @@
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1166DVM6A_cm7</state>
+          <state>MIMXRT1166_cm7_SERIES</state>
         </option>
         <option>
           <name>AList</name>
@@ -10478,6 +10496,7 @@
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1166DVM6A_cm7</state>
+          <state>MIMXRT1166_cm7_SERIES</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -10799,6 +10818,7 @@
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1166DVM6A_cm7</state>
+          <state>MIMXRT1166_cm7_SERIES</state>
         </option>
         <option>
           <name>AList</name>
@@ -11533,6 +11553,12 @@
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/drivers/fsl_lpuart.c</name>
     </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/drivers/fsl_mu.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/drivers/fsl_mu.c</name>
+    </file>
   </group>
   <group>
     <name>CMSIS</name>
@@ -12040,6 +12066,12 @@
               <name>$PROJ_DIR$/../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can/freemaster_flexcan.c</name>
             </file>
             <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can/freemaster_flexcanfd.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can/freemaster_flexcanfd.c</name>
+            </file>
+            <file>
               <name>$PROJ_DIR$/../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can/freemaster_flexcan.h</name>
             </file>
             <file>
@@ -12126,6 +12158,9 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../example_board_readme.md</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../examples_shared_readme.md</name>
     </file>
   </group>
 </project>

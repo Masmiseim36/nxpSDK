@@ -118,6 +118,7 @@ LR_m_text m_interrupts_start m_text_start+m_text_size-m_interrupts_start {   ; l
     * (RamFunction)
     /* Necessary to run flash routines from SRAM */
     flexspi_nor_flash_ops.o (+RO +RW +ZI)
+    flexspi_xecc_ops.o (+RO +RW +ZI)
     fsl_flexspi.o (+RO +RW +ZI)
     fsl_xecc.o (+RO +RW +ZI)
     * (NonCacheable.init)

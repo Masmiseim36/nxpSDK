@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2017, 2025 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -20,8 +20,6 @@
 /* Channel transmit and receive register */
 #define CHN_MU_REG_NUM kMU_MsgReg0
 
-/* How many message is used to test message sending */
-#define MSG_LENGTH 32U
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
@@ -29,7 +27,7 @@
 /*******************************************************************************
  * Variables
  ******************************************************************************/
-static uint32_t g_msgRecv[MSG_LENGTH];
+static uint32_t g_msgRecv[CONFIG_MSG_LENGTH];
 volatile uint32_t g_curSend = 0;
 volatile uint32_t g_curRecv = 0;
 /*******************************************************************************
@@ -42,7 +40,7 @@ volatile uint32_t g_curRecv = 0;
 static void ClearMsgRecv(void)
 {
     uint32_t i;
-    for (i = 0U; i < MSG_LENGTH; i++)
+    for (i = 0U; i < CONFIG_MSG_LENGTH; i++)
     {
         g_msgRecv[i] = 0U;
     }
@@ -67,7 +65,7 @@ void APP_MU_IRQHandler(void)
     flag = MU_GetStatusFlags(APP_MU);
     if ((flag & kMU_Rx0FullFlag) == kMU_Rx0FullFlag)
     {
-        if (g_curRecv < MSG_LENGTH)
+        if (g_curRecv < CONFIG_MSG_LENGTH)
         {
             g_msgRecv[g_curRecv++] = MU_ReceiveMsgNonBlocking(APP_MU, CHN_MU_REG_NUM);
         }
@@ -76,9 +74,9 @@ void APP_MU_IRQHandler(void)
             MU_DisableInterrupts(APP_MU, kMU_Rx0FullInterruptEnable);
         }
     }
-    if (((flag & kMU_Tx0EmptyFlag) == kMU_Tx0EmptyFlag) && (g_curRecv == MSG_LENGTH))
+    if (((flag & kMU_Tx0EmptyFlag) == kMU_Tx0EmptyFlag) && (g_curRecv == CONFIG_MSG_LENGTH))
     {
-        if (g_curSend < MSG_LENGTH)
+        if (g_curSend < CONFIG_MSG_LENGTH)
         {
             MU_SendMsgNonBlocking(APP_MU, CHN_MU_REG_NUM, g_msgRecv[g_curSend++]);
         }
@@ -111,7 +109,7 @@ int main(void)
     /* Enable transmit and receive interrupt */
     MU_EnableInterrupts(APP_MU, (kMU_Tx0EmptyInterruptEnable | kMU_Rx0FullInterruptEnable));
     /* Wait the data send and receive finish */
-    while ((g_curSend < MSG_LENGTH) || (g_curRecv < MSG_LENGTH))
+    while ((g_curSend < CONFIG_MSG_LENGTH) || (g_curRecv < CONFIG_MSG_LENGTH))
     {
     }
 

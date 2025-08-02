@@ -10,29 +10,6 @@ IF(NOT DEFINED DEBUG_CONSOLE_CONFIG)
     SET(DEBUG_CONSOLE_CONFIG "-DSDK_DEBUGCONSOLE=1")  
 ENDIF()  
 
-SET(CMAKE_ASM_FLAGS_SDRAM_DEBUG " \
-    ${CMAKE_ASM_FLAGS_SDRAM_DEBUG} \
-    -D__STARTUP_INITIALIZE_QADATA \
-    -D__STARTUP_INITIALIZE_NONCACHEDATA \
-    -D__STARTUP_CLEAR_BSS \
-    -DMCUXPRESSO_SDK \
-    -DCPU_MIMXRT1176DVMAA_cm4 \
-    -g \
-    -mthumb \
-    -mcpu=cortex-m4 \
-    ${FPU} \
-")
-SET(CMAKE_ASM_FLAGS_SDRAM_RELEASE " \
-    ${CMAKE_ASM_FLAGS_SDRAM_RELEASE} \
-    -D__STARTUP_INITIALIZE_QADATA \
-    -D__STARTUP_INITIALIZE_NONCACHEDATA \
-    -D__STARTUP_CLEAR_BSS \
-    -DMCUXPRESSO_SDK \
-    -DCPU_MIMXRT1176DVMAA_cm4 \
-    -mthumb \
-    -mcpu=cortex-m4 \
-    ${FPU} \
-")
 SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG " \
     ${CMAKE_ASM_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG} \
     -D__STARTUP_INITIALIZE_QADATA \
@@ -40,7 +17,8 @@ SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG " \
     -D__STARTUP_INITIALIZE_NONCACHEDATA \
     -D__STARTUP_CLEAR_BSS \
     -DMCUXPRESSO_SDK \
-    -DCPU_MIMXRT1176DVMAA_cm4 \
+    -DCPU_MIMXRT1176DVMAB_cm4 \
+    -DMIMXRT1176_cm4_SERIES \
     -g \
     -mthumb \
     -mcpu=cortex-m4 \
@@ -53,57 +31,11 @@ SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE " \
     -D__STARTUP_INITIALIZE_NONCACHEDATA \
     -D__STARTUP_CLEAR_BSS \
     -DMCUXPRESSO_SDK \
-    -DCPU_MIMXRT1176DVMAA_cm4 \
+    -DCPU_MIMXRT1176DVMAB_cm4 \
+    -DMIMXRT1176_cm4_SERIES \
     -mthumb \
     -mcpu=cortex-m4 \
     ${FPU} \
-")
-SET(CMAKE_C_FLAGS_SDRAM_DEBUG " \
-    ${CMAKE_C_FLAGS_SDRAM_DEBUG} \
-    -include ${ProjDirPath}/../mcux_config.h \
-    -DDEBUG \
-    -DUSE_SDRAM=1 \
-    -DSKIP_SYSCLK_INIT=1 \
-    -DDATA_SECTION_IS_CACHEABLE=1 \
-    -DMCUX_META_BUILD \
-    -DMCUXPRESSO_SDK \
-    -DCPU_MIMXRT1176DVMAA_cm4 \
-    -g \
-    -O0 \
-    -Wall \
-    -fno-common \
-    -ffunction-sections \
-    -fdata-sections \
-    -fno-builtin \
-    -mthumb \
-    -mapcs \
-    -std=gnu99 \
-    -mcpu=cortex-m4 \
-    ${FPU} \
-    ${DEBUG_CONSOLE_CONFIG} \
-")
-SET(CMAKE_C_FLAGS_SDRAM_RELEASE " \
-    ${CMAKE_C_FLAGS_SDRAM_RELEASE} \
-    -include ${ProjDirPath}/../mcux_config.h \
-    -DNDEBUG \
-    -DUSE_SDRAM=1 \
-    -DSKIP_SYSCLK_INIT=1 \
-    -DDATA_SECTION_IS_CACHEABLE=1 \
-    -DMCUX_META_BUILD \
-    -DMCUXPRESSO_SDK \
-    -DCPU_MIMXRT1176DVMAA_cm4 \
-    -Os \
-    -Wall \
-    -fno-common \
-    -ffunction-sections \
-    -fdata-sections \
-    -fno-builtin \
-    -mthumb \
-    -mapcs \
-    -std=gnu99 \
-    -mcpu=cortex-m4 \
-    ${FPU} \
-    ${DEBUG_CONSOLE_CONFIG} \
 ")
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG " \
     ${CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG} \
@@ -113,9 +45,11 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG " \
     -DUSE_SDRAM=1 \
     -DSKIP_SYSCLK_INIT=1 \
     -DDATA_SECTION_IS_CACHEABLE=1 \
+    -D__STARTUP_CLEAR_BSS \
     -DMCUX_META_BUILD \
     -DMCUXPRESSO_SDK \
-    -DCPU_MIMXRT1176DVMAA_cm4 \
+    -DCPU_MIMXRT1176DVMAB_cm4 \
+    -DMIMXRT1176_cm4_SERIES \
     -g \
     -O0 \
     -Wall \
@@ -138,9 +72,11 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE " \
     -DUSE_SDRAM=1 \
     -DSKIP_SYSCLK_INIT=1 \
     -DDATA_SECTION_IS_CACHEABLE=1 \
+    -D__STARTUP_CLEAR_BSS \
     -DMCUX_META_BUILD \
     -DMCUXPRESSO_SDK \
-    -DCPU_MIMXRT1176DVMAA_cm4 \
+    -DCPU_MIMXRT1176DVMAB_cm4 \
+    -DMIMXRT1176_cm4_SERIES \
     -Os \
     -Wall \
     -fno-common \
@@ -154,49 +90,6 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE " \
     ${FPU} \
     ${DEBUG_CONSOLE_CONFIG} \
 ")
-SET(CMAKE_CXX_FLAGS_SDRAM_DEBUG " \
-    ${CMAKE_CXX_FLAGS_SDRAM_DEBUG} \
-    -DDEBUG \
-    -DUSE_SDRAM=1 \
-    -DMCUX_META_BUILD \
-    -DMCUXPRESSO_SDK \
-    -DCPU_MIMXRT1176DVMAA_cm4 \
-    -g \
-    -O0 \
-    -Wall \
-    -fno-common \
-    -ffunction-sections \
-    -fdata-sections \
-    -fno-builtin \
-    -mthumb \
-    -mapcs \
-    -fno-rtti \
-    -fno-exceptions \
-    -mcpu=cortex-m4 \
-    ${FPU} \
-    ${DEBUG_CONSOLE_CONFIG} \
-")
-SET(CMAKE_CXX_FLAGS_SDRAM_RELEASE " \
-    ${CMAKE_CXX_FLAGS_SDRAM_RELEASE} \
-    -DNDEBUG \
-    -DUSE_SDRAM=1 \
-    -DMCUX_META_BUILD \
-    -DMCUXPRESSO_SDK \
-    -DCPU_MIMXRT1176DVMAA_cm4 \
-    -Os \
-    -Wall \
-    -fno-common \
-    -ffunction-sections \
-    -fdata-sections \
-    -fno-builtin \
-    -mthumb \
-    -mapcs \
-    -fno-rtti \
-    -fno-exceptions \
-    -mcpu=cortex-m4 \
-    ${FPU} \
-    ${DEBUG_CONSOLE_CONFIG} \
-")
 SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG " \
     ${CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG} \
     -DDEBUG \
@@ -204,7 +97,8 @@ SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG " \
     -DUSE_SDRAM=1 \
     -DMCUX_META_BUILD \
     -DMCUXPRESSO_SDK \
-    -DCPU_MIMXRT1176DVMAA_cm4 \
+    -DCPU_MIMXRT1176DVMAB_cm4 \
+    -DMIMXRT1176_cm4_SERIES \
     -g \
     -O0 \
     -Wall \
@@ -227,7 +121,8 @@ SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE " \
     -DUSE_SDRAM=1 \
     -DMCUX_META_BUILD \
     -DMCUXPRESSO_SDK \
-    -DCPU_MIMXRT1176DVMAA_cm4 \
+    -DCPU_MIMXRT1176DVMAB_cm4 \
+    -DMIMXRT1176_cm4_SERIES \
     -Os \
     -Wall \
     -fno-common \
@@ -241,51 +136,6 @@ SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE " \
     -mcpu=cortex-m4 \
     ${FPU} \
     ${DEBUG_CONSOLE_CONFIG} \
-")
-SET(CMAKE_EXE_LINKER_FLAGS_SDRAM_DEBUG " \
-    ${CMAKE_EXE_LINKER_FLAGS_SDRAM_DEBUG} \
-    -g \
-    -Xlinker \
-    -Map=output.map \
-    -Wall \
-    -fno-common \
-    -ffunction-sections \
-    -fdata-sections \
-    -fno-builtin \
-    -mthumb \
-    -mapcs \
-    -Wl,--gc-sections \
-    -Wl,-static \
-    -Wl,-z \
-    -Wl,muldefs \
-    -Wl,-Map=output.map \
-    -Wl,--print-memory-usage \
-    -mcpu=cortex-m4 \
-    ${FPU} \
-    ${SPECS} \
-    -T\"${ProjDirPath}/MIMXRT1176xxxxx_cm4_sdram.ld\" -static \
-")
-SET(CMAKE_EXE_LINKER_FLAGS_SDRAM_RELEASE " \
-    ${CMAKE_EXE_LINKER_FLAGS_SDRAM_RELEASE} \
-    -Xlinker \
-    -Map=output.map \
-    -Wall \
-    -fno-common \
-    -ffunction-sections \
-    -fdata-sections \
-    -fno-builtin \
-    -mthumb \
-    -mapcs \
-    -Wl,--gc-sections \
-    -Wl,-static \
-    -Wl,-z \
-    -Wl,muldefs \
-    -Wl,-Map=output.map \
-    -Wl,--print-memory-usage \
-    -mcpu=cortex-m4 \
-    ${FPU} \
-    ${SPECS} \
-    -T\"${ProjDirPath}/MIMXRT1176xxxxx_cm4_sdram.ld\" -static \
 ")
 SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG " \
     ${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG} \
@@ -303,9 +153,6 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG " \
     -mapcs \
     -Wl,--gc-sections \
     -Wl,-static \
-    -Wl,-z \
-    -Wl,muldefs \
-    -Wl,-Map=output.map \
     -Wl,--print-memory-usage \
     -mcpu=cortex-m4 \
     ${FPU} \
@@ -327,9 +174,6 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE " \
     -mapcs \
     -Wl,--gc-sections \
     -Wl,-static \
-    -Wl,-z \
-    -Wl,muldefs \
-    -Wl,-Map=output.map \
     -Wl,--print-memory-usage \
     -mcpu=cortex-m4 \
     ${FPU} \

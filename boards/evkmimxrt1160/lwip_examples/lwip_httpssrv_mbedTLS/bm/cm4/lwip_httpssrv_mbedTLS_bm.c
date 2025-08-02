@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2020,2022-2024 NXP
+ * Copyright 2016-2020, 2022-2025 NXP
  * All rights reserved.
  *
  *
@@ -12,8 +12,9 @@
  ******************************************************************************/
 #include "lwip/opt.h"
 
-#if LWIP_TCP
+#if LWIP_TCP && LWIP_ALTCP && LWIP_ALTCP_TLS && HTTPD_ENABLE_HTTPS
 
+#include "lwip/altcp_tls.h"
 #include "lwip/apps/httpd.h"
 #include "lwip/timeouts.h"
 #include "lwip/init.h"
@@ -30,15 +31,7 @@
 #include "ksdk_mbedtls.h"
 #endif /* MBEDTLS_MCUX_ELE_S400_API */
 
-#include "httpd_mbedtls.h"
-
-#include "mbedtls/entropy.h"
-
-#include "mbedtls/ctr_drbg.h"
 #include "mbedtls/certs.h"
-#include "mbedtls/x509.h"
-#include "mbedtls/ssl.h"
-#include "mbedtls/ssl_cache.h"
 #include "mbedtls/debug.h"
 
 /*******************************************************************************
@@ -63,17 +56,6 @@
  ******************************************************************************/
 
 static phy_handle_t phyHandle;
-
-const char *pers = "ssl_server";
-mbedtls_entropy_context entropy;
-mbedtls_ctr_drbg_context ctr_drbg;
-mbedtls_ssl_context ssl;
-mbedtls_ssl_config conf;
-mbedtls_x509_crt srvcert;
-mbedtls_pk_context pkey;
-#if defined(MBEDTLS_SSL_CACHE_C)
-mbedtls_ssl_cache_context cache;
-#endif
 
 /*******************************************************************************
  * Code
@@ -178,81 +160,24 @@ int main(void)
      * mbedTLS - setup
      */
 
-    mbedtls_ssl_init(&ssl);
-    mbedtls_ssl_config_init(&conf);
-#if defined(MBEDTLS_SSL_CACHE_C)
-    mbedtls_ssl_cache_init(&cache);
-#endif
-    mbedtls_x509_crt_init(&srvcert);
-    mbedtls_pk_init(&pkey);
-    mbedtls_entropy_init(&entropy);
-    mbedtls_ctr_drbg_init(&ctr_drbg);
-
 #if defined(MBEDTLS_DEBUG_C) && defined(DEBUG_LEVEL)
     mbedtls_debug_set_threshold(DEBUG_LEVEL);
 #endif
-    /*
-     * 1. Load the certificates and private RSA key
-     */
 
-    /*
-     * This demonstration program uses embedded test certificates.
-     * Instead, you may want to use mbedtls_x509_crt_parse_file() to read the
-     * server and CA certificates, as well as mbedtls_pk_parse_keyfile().
-     */
-    ret = mbedtls_x509_crt_parse(&srvcert, (const unsigned char *)mbedtls_test_srv_crt, mbedtls_test_srv_crt_len);
-    if (ret != 0)
+    /* Create TLS config for web server */
+    struct altcp_tls_config *tls_config = altcp_tls_create_config_server_privkey_cert(
+                                            (const u8_t *)mbedtls_test_srv_key, mbedtls_test_srv_key_len,
+                                            NULL, 0U,
+                                            (const u8_t *)mbedtls_test_srv_crt, mbedtls_test_srv_crt_len);
+
+    if (tls_config == NULL)
     {
-        PRINTF(" failed\r\n  !  mbedtls_x509_crt_parse returned %d\r\n\r\n", ret);
+        PRINTF("Failed to create TLS config\r\n");
         goto exit;
     }
 
-    ret = mbedtls_pk_parse_key(&pkey, (const unsigned char *)mbedtls_test_srv_key, mbedtls_test_srv_key_len, NULL, 0);
-    if (ret != 0)
-    {
-        PRINTF(" failed\r\n  !  mbedtls_pk_parse_key returned %d\r\n\r\n", ret);
-        goto exit;
-    }
-
-    /*
-     * 2. Seeding the random number generator
-     */
-    if ((ret = mbedtls_ctr_drbg_seed(&ctr_drbg, mbedtls_entropy_func, &entropy, (const unsigned char *)pers,
-                                     strlen(pers))) != 0)
-    {
-        PRINTF(" failed\r\n  ! mbedtls_ctr_drbg_seed returned %d\r\n", ret);
-        goto exit;
-    }
-
-    /*
-     * 3. Setting up the SSL data.
-     */
-    if ((ret = mbedtls_ssl_config_defaults(&conf, MBEDTLS_SSL_IS_SERVER, MBEDTLS_SSL_TRANSPORT_STREAM,
-                                           MBEDTLS_SSL_PRESET_DEFAULT)) != 0)
-    {
-        PRINTF(" failed\r\n  ! mbedtls_ssl_config_defaults returned %d\r\n\r\n", ret);
-        goto exit;
-    }
-
-    mbedtls_ssl_conf_rng(&conf, mbedtls_ctr_drbg_random, &ctr_drbg);
-    mbedtls_ssl_conf_dbg(&conf, my_debug, NULL);
-#if defined(MBEDTLS_SSL_CACHE_C)
-    mbedtls_ssl_conf_session_cache(&conf, &cache, mbedtls_ssl_cache_get, mbedtls_ssl_cache_set);
-#endif
-    mbedtls_ssl_conf_ca_chain(&conf, srvcert.next, NULL);
-    if ((ret = mbedtls_ssl_conf_own_cert(&conf, &srvcert, &pkey)) != 0)
-    {
-        PRINTF(" failed\r\n  ! mbedtls_ssl_conf_own_cert returned %d\r\n\r\n", ret);
-        goto exit;
-    }
-
-    if ((ret = mbedtls_ssl_setup(&ssl, &conf)) != 0)
-    {
-        PRINTF(" failed\r\n  ! mbedtls_ssl_setup returned %d\r\n\r\n", ret);
-        goto exit;
-    }
-
-    httpd_mbedtls_init(&ssl);
+    /* Initialize web server */
+    httpd_inits(tls_config);
 
 #if LWIP_IPV6
     set_ipv6_valid_state_cb(netif_ipv6_callback);
@@ -285,4 +210,4 @@ int main(void)
 exit:
     return -1;
 }
-#endif // LWIP_TCP
+#endif // LWIP_TCP && LWIP_ALTCP && LWIP_ALTCP_TLS && HTTPD_ENABLE_HTTPS

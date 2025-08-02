@@ -14,9 +14,6 @@ if(CMAKE_SCRIPT_MODE_FILE)
 endif()
 
 
-set(CMAKE_STATIC_LIBRARY_PREFIX)
-set(CMAKE_STATIC_LIBRARY_SUFFIX)
-
 set(CMAKE_EXECUTABLE_LIBRARY_PREFIX)
 set(CMAKE_EXECUTABLE_LIBRARY_SUFFIX)
 
@@ -48,7 +45,6 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../hardware_init.c"
 "${ProjDirPath}/../pin_mux.c"
 "${ProjDirPath}/../pin_mux.h"
-"${ProjDirPath}/../displayport_host.xml"
 "${ProjDirPath}/../pd_board_config.h"
 "${ProjDirPath}/../pd_app.h"
 "${ProjDirPath}/../pd_app_demo.c"
@@ -86,6 +82,7 @@ target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
 
 set_source_files_properties("${ProjDirPath}/../FreeRTOSConfig_Gen.h" PROPERTIES COMPONENT_CONFIG_FILE "middleware_freertos-kernel_config")
 set_source_files_properties("${ProjDirPath}/../fsl_os_abstraction_config.h" PROPERTIES COMPONENT_CONFIG_FILE "component_osa_template_config")
+set_source_files_properties("${ProjDirPath}/../usb_pd_config.h" PROPERTIES COMPONENT_CONFIG_FILE "middleware_usb_pd_config_header")
 
 include(${SdkRootDirPath}/devices/MIMXRT1176/all_lib_device.cmake)
 

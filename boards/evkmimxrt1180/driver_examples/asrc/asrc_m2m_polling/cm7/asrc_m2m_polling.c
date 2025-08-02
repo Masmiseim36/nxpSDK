@@ -141,7 +141,7 @@ int main(void)
     asrcConvert.outData     = asrcConvertBuffer;
     asrcConvert.outDataSize = ASRC_GetOutSamplesSize(DEMO_ASRC, DEMO_ASRC_CHANNEL_PAIR, DEMO_AUDIO_SAMPLE_RATE_IN,
                                                      DEMO_AUDIO_SAMPLE_RATE_OUT, MUSIC_LEN);
-    ASRC_TransferBlocking(ASRC, DEMO_ASRC_CHANNEL_PAIR, &asrcConvert);
+    ASRC_TransferBlocking(DEMO_ASRC, DEMO_ASRC_CHANNEL_PAIR, &asrcConvert);
 
     PRINTF("Playback converted audio data\r\n");
     PRINTF("    sample rate : %d\r\n", DEMO_AUDIO_SAMPLE_RATE_OUT);

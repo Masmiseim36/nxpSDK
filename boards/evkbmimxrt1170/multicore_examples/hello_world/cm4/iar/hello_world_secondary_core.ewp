@@ -245,7 +245,8 @@
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
-          <state>CPU_MIMXRT1176DVMAA_cm4</state>
+          <state>CPU_MIMXRT1176DVMAB_cm4</state>
+          <state>MIMXRT1176_cm4_SERIES</state>
           <state>MULTICORE_APP=1</state>
         </option>
         <option>
@@ -377,7 +378,8 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/multicore/mcmgr/src</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/multicore/mcmgr/inc</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/multicore/mcmgr/inc/platform/imxrt1170</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -562,7 +564,8 @@
         <option>
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
-          <state>CPU_MIMXRT1176DVMAA_cm4</state>
+          <state>CPU_MIMXRT1176DVMAB_cm4</state>
+          <state>MIMXRT1176_cm4_SERIES</state>
         </option>
         <option>
           <name>AList</name>
@@ -664,7 +667,8 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/multicore/mcmgr/src</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/multicore/mcmgr/inc</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/multicore/mcmgr/inc/platform/imxrt1170</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -1372,7 +1376,8 @@
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
-          <state>CPU_MIMXRT1176DVMAA_cm4</state>
+          <state>CPU_MIMXRT1176DVMAB_cm4</state>
+          <state>MIMXRT1176_cm4_SERIES</state>
           <state>MULTICORE_APP=1</state>
         </option>
         <option>
@@ -1504,7 +1509,8 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/multicore/mcmgr/src</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/multicore/mcmgr/inc</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/multicore/mcmgr/inc/platform/imxrt1170</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1689,7 +1695,8 @@
         <option>
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
-          <state>CPU_MIMXRT1176DVMAA_cm4</state>
+          <state>CPU_MIMXRT1176DVMAB_cm4</state>
+          <state>MIMXRT1176_cm4_SERIES</state>
         </option>
         <option>
           <name>AList</name>
@@ -1791,7 +1798,8 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/multicore/mcmgr/src</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/multicore/mcmgr/inc</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/multicore/mcmgr/inc/platform/imxrt1170</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -2791,13 +2799,25 @@
     <group>
       <name>mcmgr</name>
       <group>
+        <name>inc</name>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/multicore/mcmgr/inc/mcmgr.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/multicore/mcmgr/inc/mcmgr_internal_core_api.h</name>
+        </file>
+        <group>
+          <name>platform</name>
+          <group>
+            <name>imxrt1170</name>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/multicore/mcmgr/inc/platform/imxrt1170/mcmgr_platform.h</name>
+            </file>
+          </group>
+        </group>
+      </group>
+      <group>
         <name>src</name>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/multicore/mcmgr/src/mcmgr.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/multicore/mcmgr/src/mcmgr_internal_core_api.h</name>
-        </file>
         <file>
           <name>$PROJ_DIR$/../../../../../../middleware/multicore/mcmgr/src/mcmgr.c</name>
         </file>
@@ -2817,6 +2837,9 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../example_board_readme.md</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../examples_shared_readme.md</name>
     </file>
   </group>
 </project>

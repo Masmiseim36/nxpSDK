@@ -21,6 +21,9 @@
 #define EXAMPLE_TX_MSIX_ENTRY_IDX     0U
 #define EXAMPLE_RX_MSIX_ENTRY_IDX     1U
 #define EXAMPLE_SI_COM_MSIX_ENTRY_IDX 2U
+#ifndef EXAMPLE_SWT_PORT
+#define EXAMPLE_SWT_PORT              1U
+#endif
 
 /*******************************************************************************
  * Prototypes
@@ -225,11 +228,11 @@ int main(void)
     }
 
     SWT_GetDefaultConfig(&g_swt_config);
-    g_swt_config.ports[1].ethMac.miiMode   = kNETC_RgmiiMode;
-    g_swt_config.ports[1].ethMac.miiSpeed  = kNETC_MiiSpeed100M;
-    g_swt_config.ports[1].ethMac.miiDuplex = kNETC_MiiFullDuplex;
+    g_swt_config.ports[EXAMPLE_SWT_PORT].ethMac.miiMode   = kNETC_RgmiiMode;
+    g_swt_config.ports[EXAMPLE_SWT_PORT].ethMac.miiSpeed  = kNETC_MiiSpeed100M;
+    g_swt_config.ports[EXAMPLE_SWT_PORT].ethMac.miiDuplex = kNETC_MiiFullDuplex;
     /* Only set default forword in switch port1 and internel pseudo MAC port. */
-    g_swt_config.bridgeCfg.dVFCfg.portMembership = 0x12U;
+    g_swt_config.bridgeCfg.dVFCfg.portMembership = 0x10U | (1U << EXAMPLE_SWT_PORT);
     g_swt_config.bridgeCfg.dVFCfg.mlo = kNETC_DisableMACLearn;
 
     result = SWT_Init(&g_swt_handle, &g_swt_config);
@@ -326,7 +329,7 @@ int main(void)
 
         txOver                  = false;
         swt_mgmt_tx_arg_t txArg = {.ring = 0};
-        result                  = SWT_SendFrame(&g_swt_handle, txArg, kNETC_SWITCH0Port1, false, &txFrame, NULL, NULL);
+        result                  = SWT_SendFrame(&g_swt_handle, txArg, (netc_hw_port_idx_t)(kNETC_SWITCH0Port0 + EXAMPLE_SWT_PORT), false, &txFrame, NULL, NULL);
         if (result != kStatus_Success)
         {
             PRINTF("\r\nTransmit frame failed!\r\n");

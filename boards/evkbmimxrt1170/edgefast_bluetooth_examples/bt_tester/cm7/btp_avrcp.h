@@ -114,8 +114,28 @@ struct btp_avrcp_handle_register_notification_cmd {
 	uint8_t status;
 } __packed;
 
-#define BTP_COVER_ART_START_INITIATOR     0x016
-struct btp_avrcp_cover_art_initiator_cmd {
+#define BTP_AVRCP_COVER_ART_START_INITIATOR     0x040
+struct btp_avrcp_cover_art_start_initiator_cmd {
+        bt_addr_le_t address;
+} __packed;
+
+#define BTP_AVRCP_COVER_ART_GET_IMAGE     0x041
+#define IMAGE_DESCRIPTOR_TYPE_NONE 0x00
+#define IMAGE_DESCRIPTOR_TYPE_NATIVE 0x01
+#define IMAGE_DESCRIPTOR_TYPE_VARIANT 0x02
+#define IMAGE_DESCRIPTOR_TYPE_THUMBNAIL 0x03
+struct btp_avrcp_cover_art_get_image_cmd {
+        bt_addr_le_t address;
+        uint8_t desc_type;
+} __packed;
+
+#define BTP_AVRCP_COVER_ART_GET_IMAGE_PROPERTY     0x042
+struct btp_avrcp_cover_art_get_image_property_cmd {
+        bt_addr_le_t address;
+} __packed;
+
+#define BTP_AVRCP_COVER_ART_GET_LINKED_THUMBNAIL     0x043
+struct btp_avrcp_cover_art_get_linked_thumbnail_cmd {
         bt_addr_le_t address;
 } __packed;
 

@@ -25,7 +25,7 @@ void SE_PIT_RESET_HANDLER(void)
 {
     /* Clear interrupt flag.*/
     PIT_ClearStatusFlags(PIT_BASE_ADDR, kPIT_Chnl_0, kPIT_TimerFlag);
-#ifdef CPU_MIMXRT1176DVMAA_cm7
+#if defined(MIMXRT1176_cm7_SERIES) || defined(MIMXRT1175_cm7_SERIES) || defined (MIMXRT1173_cm7_SERIES) || defined (MIMXRT1172_SERIES) || defined (MIMXRT1171_SERIES)
     __DSB();
 #endif
     PIT_Deinit(PIT_BASE_ADDR);

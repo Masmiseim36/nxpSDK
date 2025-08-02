@@ -12,11 +12,13 @@ ENDIF()
 
 SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_RELEASE " \
     ${CMAKE_ASM_FLAGS_FLEXSPI_NOR_RELEASE} \
+    -include ${ProjDirPath}/../mcux_config.h \
     -D__STARTUP_INITIALIZE_RAMFUNCTION \
     -D__STARTUP_INITIALIZE_NONCACHEDATA \
     -D__STARTUP_CLEAR_BSS \
     -DMCUXPRESSO_SDK \
-    -DCPU_MIMXRT1189CVM8B_cm33 \
+    -DCPU_MIMXRT1189CVM8C_cm33 \
+    -DMIMXRT1189_cm33_SERIES \
     -DOSA_USED \
     -mthumb \
     -mcpu=cortex-m33 \
@@ -28,10 +30,12 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE " \
     -DNDEBUG \
     -DXIP_EXTERNAL_FLASH=1 \
     -DXIP_BOOT_HEADER_ENABLE=0 \
+    -D__STARTUP_CLEAR_BSS \
     -DUSB_STACK_FREERTOS \
     -DMCUX_META_BUILD \
     -DMCUXPRESSO_SDK \
-    -DCPU_MIMXRT1189CVM8B_cm33 \
+    -DCPU_MIMXRT1189CVM8C_cm33 \
+    -DMIMXRT1189_cm33_SERIES \
     -DOSA_USED \
     -DUSE_RTOS=1 \
     -DSDK_OS_FREE_RTOS \
@@ -50,11 +54,13 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE " \
 ")
 SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE " \
     ${CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE} \
+    -include ${ProjDirPath}/../mcux_config.h \
     -DNDEBUG \
     -DXIP_EXTERNAL_FLASH=1 \
     -DMCUX_META_BUILD \
     -DMCUXPRESSO_SDK \
-    -DCPU_MIMXRT1189CVM8B_cm33 \
+    -DCPU_MIMXRT1189CVM8C_cm33 \
+    -DMIMXRT1189_cm33_SERIES \
     -DOSA_USED \
     -DUSE_RTOS=1 \
     -DSDK_OS_FREE_RTOS \
@@ -91,9 +97,6 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE " \
     -mapcs \
     -Wl,--gc-sections \
     -Wl,-static \
-    -Wl,-z \
-    -Wl,muldefs \
-    -Wl,-Map=output.map \
     -Wl,--print-memory-usage \
     -mcpu=cortex-m33 \
     ${FPU} \

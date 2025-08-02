@@ -1,6 +1,5 @@
 /*
- * Copyright 2020-2022 NXP
- * All rights reserved.
+ * Copyright 2025 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -13,11 +12,11 @@
 /* clang-format off */
 /* TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 !!GlobalInfo
-product: Peripherals v9.0
+product: Peripherals v15.0
 processor: MIMXRT1176xxxxx
-package_id: MIMXRT1176DVMAA
+package_id: MIMXRT1176DVMAB
 mcu_data: ksdk2_0
-processor_version: 9.0.0
+processor_version: 0.2506.20
 board: MIMXRT1170-EVKB
 functionalGroups:
 - name: BOARD_InitPeripherals
@@ -33,6 +32,23 @@ component:
 - global_system_definitions:
   - user_definitions: '#define LITTLEFS_START_ADDR 0x400000\n'
   - user_includes: '#include "lfs_mflash.h"\n'
+  - global_init: ''
+ * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS **********/
+
+/* TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
+component:
+- type: 'gpio_adapter_common'
+- type_id: 'gpio_adapter_common'
+- global_gpio_adapter_common:
+  - quick_selection: 'default'
+ * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS **********/
+
+/* TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
+component:
+- type: 'uart_cmsis_common'
+- type_id: 'uart_cmsis_common'
+- global_USART_CMSIS_common:
+  - quick_selection: 'default'
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS **********/
 /* clang-format on */
 
@@ -45,6 +61,30 @@ component:
  * BOARD_InitPeripherals functional group
  **********************************************************************************************************************/
 /***********************************************************************************************************************
+ * CM4_NVIC initialization code
+ **********************************************************************************************************************/
+/* clang-format off */
+/* TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
+instance:
+- name: 'CM4_NVIC'
+- type: 'nvic'
+- mode: 'general'
+- custom_name_enabled: 'false'
+- type_id: 'nvic'
+- functional_group: 'BOARD_InitPeripherals'
+- peripheral: 'CM4_NVIC'
+- config_sets:
+  - nvic:
+    - interrupt_table: []
+    - interrupts: []
+ * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS **********/
+/* clang-format on */
+
+/* Empty initialization function (commented out)
+static void CM4_NVIC_init(void) {
+} */
+
+/***********************************************************************************************************************
  * LittleFS initialization code
  **********************************************************************************************************************/
 /* clang-format off */
@@ -54,7 +94,7 @@ instance:
 - type: 'littlefs'
 - mode: 'general'
 - custom_name_enabled: 'false'
-- type_id: 'littlefs_2fd9081a6d702e2c6a27590ee19148f3'
+- type_id: 'littlefs_2.1.4'
 - functional_group: 'BOARD_InitPeripherals'
 - config_sets:
   - general_config:

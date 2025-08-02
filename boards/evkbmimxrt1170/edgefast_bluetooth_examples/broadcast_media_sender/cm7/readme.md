@@ -4,8 +4,8 @@
 Application demonstrating how to use the broadcast media sender feature.
 
 There should be three boards: 1 BMS + 1 BMR(left) + 1 BMR(right).
-BMS: broadcast stereo audio stream, left channel on first BIS and right channel on another BIS.
-BMR: lisen one of BIS channel and render it.
+1. BMS: broadcast stereo audio stream, left channel on first BIS and right channel on another BIS.
+2. BMR: lisen one of BIS channel and render it.
 
 ## Prepare the Demo
 
@@ -90,20 +90,20 @@ Broadcast source started
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Procedures to run
-1 input "help" to show command list
-2 input "wav_open <path>" open the wav file.
-3 input "lc3_preset <name>" load lc3 preset, then the broadcast will start.
-4 input "pause" to stop the broadcast.
-5 input "play" to start broadcast.
+1. input "help" to show command list
+2. input "wav_open <path>" open the wav file.
+3. input "lc3_preset <name>" load lc3 preset, then the broadcast will start.
+4. input "pause" to stop the broadcast.
+5. input "play" to start broadcast.
 
 Other cmds could be used:
-1 "lc3_preset_list" used to list all the lc3 preset this demo support.
-2 "sync_info" used to get iso_interval/sync_delay, and this cmd should be used after the audio stream start.
-3 "config_rtn" used to config the rtn, and this cmd should be used before "lc3_preset".
-4 "config_pd" used to config the pd, and this cmd should be used before "lc3_preset".
-5 "config_phy" used to config the phy, and this cmd should be used before "lc3_preset".
-6 "config_packing" used to config iso packing mode, and this cmd should be used before "lc3_preset".
-7 "set_broadcast_code" used to set broadcast code, and this cmd should be used before "lc3_preset".
+1. "lc3_preset_list" used to list all the lc3 preset this demo support.
+2. "sync_info" used to get iso_interval/sync_delay, and this cmd should be used after the audio stream start.
+3. "config_rtn" used to config the rtn, and this cmd should be used before "lc3_preset".
+4. "config_pd" used to config the pd, and this cmd should be used before "lc3_preset".
+5. "config_phy" used to config the phy, and this cmd should be used before "lc3_preset".
+6. "config_packing" used to config iso packing mode, and this cmd should be used before "lc3_preset".
+7. "set_broadcast_code" used to set broadcast code, and this cmd should be used before "lc3_preset".
 
 Note:
 1 "exit" command is a shell internal command, only used to exit shell module and could not used to exit demo.

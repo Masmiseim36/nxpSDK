@@ -82,7 +82,8 @@
           <value>MBEDTLS_CONFIG_FILE='"ksdk_mbedtls_config.h"'</value>
           <value>SDK_DEBUGCONSOLE=1</value>
           <value>MCUX_META_BUILD</value>
-          <value>CPU_MIMXRT1176DVMAA_cm4</value>
+          <value>CPU_MIMXRT1176DVMAB_cm4</value>
+          <value>MIMXRT1176_cm4_SERIES</value>
           <value>CRYPTO_USE_DRIVER_CAAM</value>
           <value>CACHE_MODE_WRITE_THROUGH=1</value>
         </option>
@@ -235,6 +236,9 @@
     </source>
     <source path="." project_relative_path="doc" type="doc">
       <files mask="example_board_readme.md"/>
+    </source>
+    <source path="." project_relative_path="doc" type="doc">
+      <files mask="examples_shared_readme.md"/>
     </source>
   </example>
 </ksdk:examples>

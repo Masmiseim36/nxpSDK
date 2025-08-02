@@ -44,6 +44,7 @@
     <definition extID="middleware.multicore.erpc.examples.erpc_matrix_multiply_client.MIMXRT1166"/>
     <definition extID="middleware.freertos-kernel.MIMXRT1166"/>
     <definition extID="middleware.freertos-kernel.heap_4.MIMXRT1166"/>
+    <definition extID="middleware.freertos-kernel.extension.MIMXRT1166"/>
     <definition extID="middleware.freertos-kernel.config.MIMXRT1166"/>
     <definition extID="iar"/>
     <definition extID="mdk"/>
@@ -53,7 +54,7 @@
     <definition extID="com.crt.advproject.config.exe.debug"/>
     <definition extID="com.crt.advproject.config.exe.release"/>
   </externalDefinitions>
-  <example id="evkmimxrt1160_erpc_matrix_multiply_rpmsg_rtos_primary_core" name="erpc_matrix_multiply_rpmsg_rtos_primary_core" device_core="cm7_MIMXRT1166xxxxx" dependency="platform.drivers.xip_board.evkmimxrt1160.MIMXRT1166 platform.drivers.xip_device.MIMXRT1166 platform.drivers.clock.MIMXRT1166 platform.drivers.iomuxc.MIMXRT1166 platform.drivers.anatop_ai.MIMXRT1166 platform.drivers.memory.MIMXRT1166 platform.drivers.dcdc_soc.MIMXRT1166 platform.drivers.gpc_3.MIMXRT1166 platform.drivers.pgmc.MIMXRT1166 platform.drivers.pmu_1.MIMXRT1166 platform.drivers.soc_src.MIMXRT1166 CMSIS_Include_core_cm.MIMXRT1166 device.MIMXRT1166_CMSIS.MIMXRT1166 device.MIMXRT1166_system.MIMXRT1166 device.MIMXRT1166_startup.MIMXRT1166 platform.drivers.cache_armv7_m7.MIMXRT1166 platform.drivers.common.MIMXRT1166 platform.drivers.igpio.MIMXRT1166 platform.drivers.lpuart.MIMXRT1166 platform.drivers.mu.MIMXRT1166 platform.utilities.assert_lite.MIMXRT1166 platform.utilities.misc_utilities.MIMXRT1166 utility.incbin.MIMXRT1166 utility.str.MIMXRT1166 utility.debug_console_lite.MIMXRT1166 component.lpuart_adapter.MIMXRT1166 middleware.multicore.rpmsg-lite.MIMXRT1166 middleware.multicore.rpmsg-lite.queue.MIMXRT1166 middleware.multicore.rpmsg-lite.ns.MIMXRT1166 middleware.multicore.rpmsg-lite.freertos.MIMXRT1166 middleware.multicore.rpmsg-lite.imxrt1160.MIMXRT1166 middleware.multicore.mcmgr.MIMXRT1166 middleware.multicore.mcmgr.imxrt1160.MIMXRT1166 middleware.multicore.erpc.common.MIMXRT1166 middleware.multicore.erpc.client.MIMXRT1166 middleware.multicore.erpc.port_freertos.MIMXRT1166 middleware.multicore.erpc.eRPC_rpmsg_lite_rtos_transport_master.MIMXRT1166 middleware.multicore.erpc.examples.erpc_common_multicore.MIMXRT1166 middleware.multicore.erpc.examples.erpc_matrix_multiply_client.MIMXRT1166 middleware.freertos-kernel.MIMXRT1166 middleware.freertos-kernel.heap_4.MIMXRT1166 middleware.freertos-kernel.config.MIMXRT1166" linked_projects="evkmimxrt1160_erpc_matrix_multiply_rpmsg_rtos_secondary_core" category="multicore_examples">
+  <example id="evkmimxrt1160_erpc_matrix_multiply_rpmsg_rtos_primary_core" name="erpc_matrix_multiply_rpmsg_rtos_primary_core" device_core="cm7_MIMXRT1166xxxxx" dependency="platform.drivers.xip_board.evkmimxrt1160.MIMXRT1166 platform.drivers.xip_device.MIMXRT1166 platform.drivers.clock.MIMXRT1166 platform.drivers.iomuxc.MIMXRT1166 platform.drivers.anatop_ai.MIMXRT1166 platform.drivers.memory.MIMXRT1166 platform.drivers.dcdc_soc.MIMXRT1166 platform.drivers.gpc_3.MIMXRT1166 platform.drivers.pgmc.MIMXRT1166 platform.drivers.pmu_1.MIMXRT1166 platform.drivers.soc_src.MIMXRT1166 CMSIS_Include_core_cm.MIMXRT1166 device.MIMXRT1166_CMSIS.MIMXRT1166 device.MIMXRT1166_system.MIMXRT1166 device.MIMXRT1166_startup.MIMXRT1166 platform.drivers.cache_armv7_m7.MIMXRT1166 platform.drivers.common.MIMXRT1166 platform.drivers.igpio.MIMXRT1166 platform.drivers.lpuart.MIMXRT1166 platform.drivers.mu.MIMXRT1166 platform.utilities.assert_lite.MIMXRT1166 platform.utilities.misc_utilities.MIMXRT1166 utility.incbin.MIMXRT1166 utility.str.MIMXRT1166 utility.debug_console_lite.MIMXRT1166 component.lpuart_adapter.MIMXRT1166 middleware.multicore.rpmsg-lite.MIMXRT1166 middleware.multicore.rpmsg-lite.queue.MIMXRT1166 middleware.multicore.rpmsg-lite.ns.MIMXRT1166 middleware.multicore.rpmsg-lite.freertos.MIMXRT1166 middleware.multicore.rpmsg-lite.imxrt1160.MIMXRT1166 middleware.multicore.mcmgr.MIMXRT1166 middleware.multicore.mcmgr.imxrt1160.MIMXRT1166 middleware.multicore.erpc.common.MIMXRT1166 middleware.multicore.erpc.client.MIMXRT1166 middleware.multicore.erpc.port_freertos.MIMXRT1166 middleware.multicore.erpc.eRPC_rpmsg_lite_rtos_transport_master.MIMXRT1166 middleware.multicore.erpc.examples.erpc_common_multicore.MIMXRT1166 middleware.multicore.erpc.examples.erpc_matrix_multiply_client.MIMXRT1166 middleware.freertos-kernel.MIMXRT1166 middleware.freertos-kernel.heap_4.MIMXRT1166 middleware.freertos-kernel.extension.MIMXRT1166 middleware.freertos-kernel.config.MIMXRT1166" linked_projects="evkmimxrt1160_erpc_matrix_multiply_rpmsg_rtos_secondary_core" category="multicore_examples">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.ccnature"/>
     </projects>
@@ -79,6 +80,7 @@
           <value>SDK_DEBUGCONSOLE=1</value>
           <value>MCUX_META_BUILD</value>
           <value>CPU_MIMXRT1166DVM6A_cm7</value>
+          <value>MIMXRT1166_cm7_SERIES</value>
           <value>MULTICORE_APP=1</value>
           <value>SDK_OS_FREE_RTOS</value>
         </option>
@@ -88,6 +90,7 @@
           <value>SDK_DEBUGCONSOLE=1</value>
           <value>MCUX_META_BUILD</value>
           <value>CPU_MIMXRT1166DVM6A_cm7</value>
+          <value>MIMXRT1166_cm7_SERIES</value>
           <value>SDK_OS_FREE_RTOS</value>
         </option>
         <option id="com.crt.advproject.link.cpp.multicore.master" type="string">
@@ -174,11 +177,13 @@
       <files mask="erpc_matrix_multiply_rpmsg_rtos_primary_core.ewp"/>
       <files mask="erpc_matrix_multiply_rpmsg_rtos_primary_core.ewd"/>
       <files mask="erpc_matrix_multiply_rpmsg_rtos_primary_core.eww"/>
+      <files mask="erpc_matrix_multiply_rpmsg_rtos.eww"/>
     </source>
     <source path="mdk" project_relative_path="./" type="workspace" toolchain="mdk">
       <files mask="erpc_matrix_multiply_rpmsg_rtos_primary_core.uvprojx"/>
       <files mask="erpc_matrix_multiply_rpmsg_rtos_primary_core.uvoptx"/>
       <files mask="erpc_matrix_multiply_rpmsg_rtos_primary_core.uvmpw"/>
+      <files mask="erpc_matrix_multiply_rpmsg_rtos.uvmpw"/>
     </source>
     <source path="armgcc" project_relative_path="./" type="workspace" toolchain="armgcc">
       <files mask="build_all.bat"/>
@@ -249,6 +254,9 @@
     </source>
     <source path="." project_relative_path="doc" type="doc">
       <files mask="example_board_readme.md"/>
+    </source>
+    <source path="." project_relative_path="doc" type="doc">
+      <files mask="examples_shared_readme.md"/>
     </source>
   </example>
 </ksdk:examples>

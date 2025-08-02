@@ -28,8 +28,8 @@ int servo_slave_check(struct servo_t *servo, int servo_num)
 		}
 
 		if (ret < 0) {
-			break;
 			servo[i].slave = NULL;
+			break;
 		} else {
 			servo[i].slave = &ec_slave[index];
 		}

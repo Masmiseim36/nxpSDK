@@ -67,7 +67,8 @@
           <value>__USE_SHMEM</value>
           <value>SDK_DEBUGCONSOLE=1</value>
           <value>MCUX_META_BUILD</value>
-          <value>CPU_MIMXRT1176DVMAA_cm7</value>
+          <value>CPU_MIMXRT1176DVMAB_cm7</value>
+          <value>MIMXRT1176_cm7_SERIES</value>
           <value>MULTICORE_APP=1</value>
         </option>
         <option id="com.crt.advproject.link.gcc.multicore.master" type="string">
@@ -145,11 +146,13 @@
       <files mask="rpmsg_lite_pingpong_primary_core.ewp"/>
       <files mask="rpmsg_lite_pingpong_primary_core.ewd"/>
       <files mask="rpmsg_lite_pingpong_primary_core.eww"/>
+      <files mask="rpmsg_lite_pingpong.eww"/>
     </source>
     <source path="mdk" project_relative_path="./" type="workspace" toolchain="mdk">
       <files mask="rpmsg_lite_pingpong_primary_core.uvprojx"/>
       <files mask="rpmsg_lite_pingpong_primary_core.uvoptx"/>
       <files mask="rpmsg_lite_pingpong_primary_core.uvmpw"/>
+      <files mask="rpmsg_lite_pingpong.uvmpw"/>
     </source>
     <source path="armgcc" project_relative_path="./" type="workspace" toolchain="armgcc">
       <files mask="build_all.bat"/>
@@ -167,10 +170,10 @@
     <source path="../../../../../devices/MIMXRT1176" project_relative_path="./" type="workspace" toolchain="armgcc">
       <files mask="all_lib_device.cmake"/>
     </source>
-    <source path="iar" project_relative_path="evkbmimxrt1170" type="other" toolchain="iar">
+    <source path="." project_relative_path="source" type="other" toolchain="iar">
       <files mask="evkbmimxrt1170_connect_cm7.mac"/>
     </source>
-    <source path="mdk" project_relative_path="evkbmimxrt1170" type="configuration" toolchain="mdk">
+    <source path="." project_relative_path="source" type="configuration" toolchain="mdk">
       <files mask="evkbmimxrt1170_flexspi_nor.ini"/>
     </source>
     <source path="." project_relative_path="source" type="src">
@@ -216,6 +219,9 @@
     </source>
     <source path="." project_relative_path="doc" type="doc">
       <files mask="example_board_readme.md"/>
+    </source>
+    <source path="." project_relative_path="doc" type="doc">
+      <files mask="examples_shared_readme.md"/>
     </source>
   </example>
 </ksdk:examples>

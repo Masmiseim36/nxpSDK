@@ -1,6 +1,6 @@
 /*
 * Copyright 2016, Freescale Semiconductor, Inc.
-* Copyright 2016-2021, 2024 NXP
+* Copyright 2016-2021, 2024-2025 NXP
 *
 * NXP Proprietary. This software is owned or controlled by NXP and may
 * only be used strictly in accordance with the applicable license terms. 
@@ -49,7 +49,8 @@ void MCDRV_QdEncGet(mcdrv_qd_enc_t *this)
    this->f16RevCounter = (frac16_t)(this->pui32QdBase->REV);
 
    /* calculating position for position control */
-   this->a32PosMeReal = (acc32_t)( ( ( ((int32_t)(this->f16RevCounter)) << 15) + (((uint16_t)(this->f16PosMe)) >> 1) ) ); 
+   this->a32PosMeReal = (acc32_t)( ( ( ((int32_t)(this->f16RevCounter)) << 15) + (((uint16_t)(this->f16PosMe)) >> 1) ) );
+   *this->pa32PosMeReal = (acc32_t)( ( ( ((int32_t)(this->f16RevCounter)) << 15) + (((uint16_t)(this->f16PosMe)) >> 1) ) );
 
    /* pass estimator speed values lower than minimal encoder speed */
    if ((MLIB_Abs_FLT(this->fltSpdMeEst) < (this->fltSpdEncMin)))

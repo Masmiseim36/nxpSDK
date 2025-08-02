@@ -14,9 +14,6 @@ if(CMAKE_SCRIPT_MODE_FILE)
 endif()
 
 
-set(CMAKE_STATIC_LIBRARY_PREFIX)
-set(CMAKE_STATIC_LIBRARY_SUFFIX)
-
 set(CMAKE_EXECUTABLE_LIBRARY_PREFIX)
 set(CMAKE_EXECUTABLE_LIBRARY_SUFFIX)
 
@@ -31,7 +28,7 @@ project(lpadc_polling_cm4)
 
 enable_language(ASM)
 
-set(MCUX_BUILD_TYPES sdram_debug sdram_release flexspi_nor_debug flexspi_nor_release debug release)
+set(MCUX_BUILD_TYPES flexspi_nor_debug flexspi_nor_release)
 
 set(MCUX_SDK_PROJECT_NAME lpadc_polling_cm4.elf)
 

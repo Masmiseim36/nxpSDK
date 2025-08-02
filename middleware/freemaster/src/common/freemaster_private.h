@@ -275,6 +275,10 @@ FMSTR_SIZE FMSTR_GetAlignmentCorrection(FMSTR_ADDR addr, FMSTR_SIZE size);
 
 FMSTR_INLINE FMSTR_S8 _FMSTR_GetS8(FMSTR_ADDR addr)
 {
+    /* Coverity: Intentional cast as part of optimized recorder operation.
+       Access to target memory done indirectly using generic FMSTR_ADDR
+       address stored in Recorder configuration. Also see similar in all 
+       GetXX functions below. */
     /* coverity[misra_c_2012_rule_11_3_violation:FALSE] */
     FMSTR_S8* a = (FMSTR_S8*)addr;
     return *a;

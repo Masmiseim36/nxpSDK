@@ -1,28 +1,46 @@
 /*
 ** ###################################################################
 **     Processors:          MIMXRT1181CVP2B
+**                          MIMXRT1181CVP2C
 **                          MIMXRT1181XVP2B
+**                          MIMXRT1181XVP2C
 **                          MIMXRT1182CVP2B
+**                          MIMXRT1182CVP2C
 **                          MIMXRT1182XVP2B
+**                          MIMXRT1182XVP2C
+**                          MIMXRT1186CVJ8C_cm33
+**                          MIMXRT1186CVJ8C_cm7
+**                          MIMXRT1186XVJ8C_cm33
+**                          MIMXRT1186XVJ8C_cm7
 **                          MIMXRT1187AVM8B_cm33
 **                          MIMXRT1187AVM8B_cm7
+**                          MIMXRT1187AVM8C_cm33
+**                          MIMXRT1187AVM8C_cm7
 **                          MIMXRT1187CVM8B_cm33
 **                          MIMXRT1187CVM8B_cm7
+**                          MIMXRT1187CVM8C_cm33
+**                          MIMXRT1187CVM8C_cm7
 **                          MIMXRT1187XVM8B_cm33
 **                          MIMXRT1187XVM8B_cm7
+**                          MIMXRT1187XVM8C_cm33
+**                          MIMXRT1187XVM8C_cm7
 **                          MIMXRT1189CVM8B_cm33
 **                          MIMXRT1189CVM8B_cm7
+**                          MIMXRT1189CVM8C_cm33
+**                          MIMXRT1189CVM8C_cm7
 **                          MIMXRT1189XVM8B_cm33
 **                          MIMXRT1189XVM8B_cm7
+**                          MIMXRT1189XVM8C_cm33
+**                          MIMXRT1189XVM8C_cm7
 **
-**     Version:             rev. 2.0, 2024-01-18
-**     Build:               b240705
+**     Version:             rev. 3.0, 2024-10-29
+**     Build:               b250611
 **
 **     Abstract:
 **         CMSIS Peripheral Access Layer for GPC_SYS_SLEEP_CTRL
 **
 **     Copyright 1997-2016 Freescale Semiconductor, Inc.
-**     Copyright 2016-2024 NXP
+**     Copyright 2016-2025 NXP
 **     SPDX-License-Identifier: BSD-3-Clause
 **
 **     http:                 www.nxp.com
@@ -33,33 +51,40 @@
 **         Initial version.
 **     - rev. 2.0 (2024-01-18)
 **         Header RFP.
+**     - rev. 3.0 (2024-10-29)
+**         Change the device header file from single flat file to multiple files based on peripherals,
+**         each peripheral with dedicated header file located in periphN folder.
 **
 ** ###################################################################
 */
 
 /*!
- * @file GPC_SYS_SLEEP_CTRL.h
- * @version 2.0
- * @date 2024-01-18
+ * @file PERI_GPC_SYS_SLEEP_CTRL.h
+ * @version 3.0
+ * @date 2024-10-29
  * @brief CMSIS Peripheral Access Layer for GPC_SYS_SLEEP_CTRL
  *
  * CMSIS Peripheral Access Layer for GPC_SYS_SLEEP_CTRL
  */
 
-#if !defined(GPC_SYS_SLEEP_CTRL_H_)
-#define GPC_SYS_SLEEP_CTRL_H_                    /**< Symbol preventing repeated inclusion */
+#if !defined(PERI_GPC_SYS_SLEEP_CTRL_H_)
+#define PERI_GPC_SYS_SLEEP_CTRL_H_               /**< Symbol preventing repeated inclusion */
 
-#if (defined(CPU_MIMXRT1181CVP2B) || defined(CPU_MIMXRT1181XVP2B))
+#if (defined(CPU_MIMXRT1181CVP2B) || defined(CPU_MIMXRT1181CVP2C) || defined(CPU_MIMXRT1181XVP2B) || defined(CPU_MIMXRT1181XVP2C))
 #include "MIMXRT1181_COMMON.h"
-#elif (defined(CPU_MIMXRT1182CVP2B) || defined(CPU_MIMXRT1182XVP2B))
+#elif (defined(CPU_MIMXRT1182CVP2B) || defined(CPU_MIMXRT1182CVP2C) || defined(CPU_MIMXRT1182XVP2B) || defined(CPU_MIMXRT1182XVP2C))
 #include "MIMXRT1182_COMMON.h"
-#elif (defined(CPU_MIMXRT1187AVM8B_cm33) || defined(CPU_MIMXRT1187CVM8B_cm33) || defined(CPU_MIMXRT1187XVM8B_cm33))
+#elif (defined(CPU_MIMXRT1186CVJ8C_cm33) || defined(CPU_MIMXRT1186XVJ8C_cm33))
+#include "MIMXRT1186_cm33_COMMON.h"
+#elif (defined(CPU_MIMXRT1186CVJ8C_cm7) || defined(CPU_MIMXRT1186XVJ8C_cm7))
+#include "MIMXRT1186_cm7_COMMON.h"
+#elif (defined(CPU_MIMXRT1187AVM8B_cm33) || defined(CPU_MIMXRT1187AVM8C_cm33) || defined(CPU_MIMXRT1187CVM8B_cm33) || defined(CPU_MIMXRT1187CVM8C_cm33) || defined(CPU_MIMXRT1187XVM8B_cm33) || defined(CPU_MIMXRT1187XVM8C_cm33))
 #include "MIMXRT1187_cm33_COMMON.h"
-#elif (defined(CPU_MIMXRT1187AVM8B_cm7) || defined(CPU_MIMXRT1187CVM8B_cm7) || defined(CPU_MIMXRT1187XVM8B_cm7))
+#elif (defined(CPU_MIMXRT1187AVM8B_cm7) || defined(CPU_MIMXRT1187AVM8C_cm7) || defined(CPU_MIMXRT1187CVM8B_cm7) || defined(CPU_MIMXRT1187CVM8C_cm7) || defined(CPU_MIMXRT1187XVM8B_cm7) || defined(CPU_MIMXRT1187XVM8C_cm7))
 #include "MIMXRT1187_cm7_COMMON.h"
-#elif (defined(CPU_MIMXRT1189CVM8B_cm33) || defined(CPU_MIMXRT1189XVM8B_cm33))
+#elif (defined(CPU_MIMXRT1189CVM8B_cm33) || defined(CPU_MIMXRT1189CVM8C_cm33) || defined(CPU_MIMXRT1189XVM8B_cm33) || defined(CPU_MIMXRT1189XVM8C_cm33))
 #include "MIMXRT1189_cm33_COMMON.h"
-#elif (defined(CPU_MIMXRT1189CVM8B_cm7) || defined(CPU_MIMXRT1189XVM8B_cm7))
+#elif (defined(CPU_MIMXRT1189CVM8B_cm7) || defined(CPU_MIMXRT1189CVM8C_cm7) || defined(CPU_MIMXRT1189XVM8B_cm7) || defined(CPU_MIMXRT1189XVM8C_cm7))
 #include "MIMXRT1189_cm7_COMMON.h"
 #else
   #error "No valid CPU defined!"
@@ -277,6 +302,21 @@ typedef struct {
 /*! @name SS_PMIC_IN_CTRL - System Sleep PMIC in control */
 /*! @{ */
 
+#define GPC_SYS_SLEEP_CTRL_SS_PMIC_IN_CTRL_STEP_CNT_MASK (0xFFFFU)
+#define GPC_SYS_SLEEP_CTRL_SS_PMIC_IN_CTRL_STEP_CNT_SHIFT (0U)
+/*! STEP_CNT - Step count, useage depends on CNT_MODE */
+#define GPC_SYS_SLEEP_CTRL_SS_PMIC_IN_CTRL_STEP_CNT(x) (((uint32_t)(((uint32_t)(x)) << GPC_SYS_SLEEP_CTRL_SS_PMIC_IN_CTRL_STEP_CNT_SHIFT)) & GPC_SYS_SLEEP_CTRL_SS_PMIC_IN_CTRL_STEP_CNT_MASK)
+
+#define GPC_SYS_SLEEP_CTRL_SS_PMIC_IN_CTRL_CNT_MODE_MASK (0x30000000U)
+#define GPC_SYS_SLEEP_CTRL_SS_PMIC_IN_CTRL_CNT_MODE_SHIFT (28U)
+/*! CNT_MODE - Count mode
+ *  0b00..Counter disable mode: not use step counter, step completes once receiving step_done
+ *  0b01..Counter delay mode: delay after receiving step_done, delay cycle number is STEP_CNT
+ *  0b10..Ignore step_done response, the counter starts to count once step begins, when counter reaches STEP_CNT value, the step completes
+ *  0b11..Time out mode, the counter starts to count once step begins, the step completes when either step_done received or counting to STEP_CNT value
+ */
+#define GPC_SYS_SLEEP_CTRL_SS_PMIC_IN_CTRL_CNT_MODE(x) (((uint32_t)(((uint32_t)(x)) << GPC_SYS_SLEEP_CTRL_SS_PMIC_IN_CTRL_CNT_MODE_SHIFT)) & GPC_SYS_SLEEP_CTRL_SS_PMIC_IN_CTRL_CNT_MODE_MASK)
+
 #define GPC_SYS_SLEEP_CTRL_SS_PMIC_IN_CTRL_DISABLE_MASK (0x80000000U)
 #define GPC_SYS_SLEEP_CTRL_SS_PMIC_IN_CTRL_DISABLE_SHIFT (31U)
 /*! DISABLE - Disable this step
@@ -288,6 +328,21 @@ typedef struct {
 
 /*! @name SS_PMIC_OUT_CTRL - System Sleep PMIC out control */
 /*! @{ */
+
+#define GPC_SYS_SLEEP_CTRL_SS_PMIC_OUT_CTRL_STEP_CNT_MASK (0xFFFFU)
+#define GPC_SYS_SLEEP_CTRL_SS_PMIC_OUT_CTRL_STEP_CNT_SHIFT (0U)
+/*! STEP_CNT - Step count, useage depends on CNT_MODE */
+#define GPC_SYS_SLEEP_CTRL_SS_PMIC_OUT_CTRL_STEP_CNT(x) (((uint32_t)(((uint32_t)(x)) << GPC_SYS_SLEEP_CTRL_SS_PMIC_OUT_CTRL_STEP_CNT_SHIFT)) & GPC_SYS_SLEEP_CTRL_SS_PMIC_OUT_CTRL_STEP_CNT_MASK)
+
+#define GPC_SYS_SLEEP_CTRL_SS_PMIC_OUT_CTRL_CNT_MODE_MASK (0x30000000U)
+#define GPC_SYS_SLEEP_CTRL_SS_PMIC_OUT_CTRL_CNT_MODE_SHIFT (28U)
+/*! CNT_MODE - Count mode
+ *  0b00..Counter disable mode: not use step counter, step completes once receiving step_done
+ *  0b01..Counter delay mode: delay after receiving step_done, delay cycle number is STEP_CNT
+ *  0b10..Ignore step_done response, the counter starts to count once step begins, when counter reaches STEP_CNT value, the step completes
+ *  0b11..Time out mode, the counter starts to count once step begins, the step completes when either step_done received or counting to STEP_CNT value
+ */
+#define GPC_SYS_SLEEP_CTRL_SS_PMIC_OUT_CTRL_CNT_MODE(x) (((uint32_t)(((uint32_t)(x)) << GPC_SYS_SLEEP_CTRL_SS_PMIC_OUT_CTRL_CNT_MODE_SHIFT)) & GPC_SYS_SLEEP_CTRL_SS_PMIC_OUT_CTRL_CNT_MODE_MASK)
 
 #define GPC_SYS_SLEEP_CTRL_SS_PMIC_OUT_CTRL_DISABLE_MASK (0x80000000U)
 #define GPC_SYS_SLEEP_CTRL_SS_PMIC_OUT_CTRL_DISABLE_SHIFT (31U)
@@ -392,5 +447,5 @@ typedef struct {
  */ /* end of group Peripheral_access_layer */
 
 
-#endif  /* GPC_SYS_SLEEP_CTRL_H_ */
+#endif  /* PERI_GPC_SYS_SLEEP_CTRL_H_ */
 

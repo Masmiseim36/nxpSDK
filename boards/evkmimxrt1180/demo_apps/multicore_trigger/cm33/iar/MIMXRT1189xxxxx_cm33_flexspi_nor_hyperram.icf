@@ -1,18 +1,20 @@
 /*
 ** ###################################################################
 **     Processors:          MIMXRT1189CVM8B_cm33
+**                          MIMXRT1189CVM8C_cm33
 **                          MIMXRT1189XVM8B_cm33
+**                          MIMXRT1189XVM8C_cm33
 **
 **     Compiler:            IAR ANSI C/C++ Compiler for ARM
 **     Reference manual:    IMXRT1180RM, Rev 5, 01/2024
 **     Version:             rev. 2.0, 2024-01-18
-**     Build:               b241024
+**     Build:               b250310
 **
 **     Abstract:
 **         Linker file for the IAR ANSI C/C++ Compiler for ARM
 **
 **     Copyright 2016 Freescale Semiconductor, Inc.
-**     Copyright 2016-2024 NXP
+**     Copyright 2016-2025 NXP
 **     SPDX-License-Identifier: BSD-3-Clause
 **
 **     http:                 www.nxp.com
@@ -41,7 +43,7 @@ define symbol m_sdram_size             = isdefinedsymbol(__dual_image__) ? 0x002
 define symbol m_hyperram_start         = isdefinedsymbol(__dual_image__) ? 0x04600000 : 0x04000000;
 define symbol m_hyperram_size          = isdefinedsymbol(__dual_image__) ? 0x00200000 : 0x00800000;
 define symbol m_flash_start            = 0x28000000;
-define symbol m_flash_size             = 0x01000000;
+define symbol m_flash_size             = 0x00800000;
 
 define symbol m_core1_image_maximum_size = 0x00040000;
 
@@ -61,7 +63,7 @@ define symbol m_container_size         = 0x2000;
 define symbol m_container_start        = m_flash_start + m_container_offset;
 define symbol m_container_end          = m_container_start + m_container_size - 1;
 
-define symbol app_image_offset         = isdefinedsymbol(__dual_image__) ? 0x0010B000 : 0x0000B000;
+define symbol app_image_offset         = 0x0000B000;
 define symbol vector_table_size        = 0x00000400;
 if (isdefinedsymbol(__stack_size__)) {
   define symbol __size_cstack__        = __stack_size__;

@@ -245,7 +245,8 @@
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
-          <state>CPU_MIMXRT1189CVM8B_cm33</state>
+          <state>CPU_MIMXRT1189CVM8C_cm33</state>
+          <state>MIMXRT1189_cm33_SERIES</state>
           <state>CACHE_MODE_WRITE_THROUGH=1</state>
           <state>MBEDTLS_CONFIG_FILE="mcux_mbedtls_config.h"</state>
         </option>
@@ -379,6 +380,8 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/drivers/cm33</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/utilities/str</state>
+          <state>$PROJ_DIR$/../../../../../../components/silicon_id</state>
+          <state>$PROJ_DIR$/../../../../../../components/silicon_id/socs</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/ele_crypto</state>
           <state>$PROJ_DIR$/../../../../../../components/psa_crypto_driver/osal</state>
@@ -386,11 +389,9 @@
           <state>$PROJ_DIR$/../../../../../../components/psa_crypto_driver/ele_s4xx</state>
           <state>$PROJ_DIR$/../../../../../../components/psa_crypto_driver/ele_s4xx/include</state>
           <state>$PROJ_DIR$/../../../../../../components/psa_crypto_driver/ele_s4xx/include/common</state>
-          <state>$PROJ_DIR$/../../../../../../components/silicon_id</state>
-          <state>$PROJ_DIR$/../../../../../../components/silicon_id/socs</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port</state>
           <state>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/library</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -575,7 +576,8 @@
         <option>
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
-          <state>CPU_MIMXRT1189CVM8B_cm33</state>
+          <state>CPU_MIMXRT1189CVM8C_cm33</state>
+          <state>MIMXRT1189_cm33_SERIES</state>
         </option>
         <option>
           <name>AList</name>
@@ -678,6 +680,8 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/drivers/cm33</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/utilities/str</state>
+          <state>$PROJ_DIR$/../../../../../../components/silicon_id</state>
+          <state>$PROJ_DIR$/../../../../../../components/silicon_id/socs</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/ele_crypto</state>
           <state>$PROJ_DIR$/../../../../../../components/psa_crypto_driver/osal</state>
@@ -685,11 +689,9 @@
           <state>$PROJ_DIR$/../../../../../../components/psa_crypto_driver/ele_s4xx</state>
           <state>$PROJ_DIR$/../../../../../../components/psa_crypto_driver/ele_s4xx/include</state>
           <state>$PROJ_DIR$/../../../../../../components/psa_crypto_driver/ele_s4xx/include/common</state>
-          <state>$PROJ_DIR$/../../../../../../components/silicon_id</state>
-          <state>$PROJ_DIR$/../../../../../../components/silicon_id/socs</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port</state>
           <state>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/library</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -705,7 +707,7 @@
         </option>
         <option>
           <name>PreInclude</name>
-          <state/>
+          <state>$PROJ_DIR$/../mcux_config.h</state>
         </option>
       </data>
     </settings>
@@ -1399,7 +1401,8 @@
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
-          <state>CPU_MIMXRT1189CVM8B_cm33</state>
+          <state>CPU_MIMXRT1189CVM8C_cm33</state>
+          <state>MIMXRT1189_cm33_SERIES</state>
           <state>CACHE_MODE_WRITE_THROUGH=1</state>
           <state>MBEDTLS_CONFIG_FILE="mcux_mbedtls_config.h"</state>
         </option>
@@ -1533,6 +1536,8 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/drivers/cm33</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/utilities/str</state>
+          <state>$PROJ_DIR$/../../../../../../components/silicon_id</state>
+          <state>$PROJ_DIR$/../../../../../../components/silicon_id/socs</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/ele_crypto</state>
           <state>$PROJ_DIR$/../../../../../../components/psa_crypto_driver/osal</state>
@@ -1540,11 +1545,9 @@
           <state>$PROJ_DIR$/../../../../../../components/psa_crypto_driver/ele_s4xx</state>
           <state>$PROJ_DIR$/../../../../../../components/psa_crypto_driver/ele_s4xx/include</state>
           <state>$PROJ_DIR$/../../../../../../components/psa_crypto_driver/ele_s4xx/include/common</state>
-          <state>$PROJ_DIR$/../../../../../../components/silicon_id</state>
-          <state>$PROJ_DIR$/../../../../../../components/silicon_id/socs</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port</state>
           <state>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/library</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1729,7 +1732,8 @@
         <option>
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
-          <state>CPU_MIMXRT1189CVM8B_cm33</state>
+          <state>CPU_MIMXRT1189CVM8C_cm33</state>
+          <state>MIMXRT1189_cm33_SERIES</state>
         </option>
         <option>
           <name>AList</name>
@@ -1832,6 +1836,8 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/drivers/cm33</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/utilities/str</state>
+          <state>$PROJ_DIR$/../../../../../../components/silicon_id</state>
+          <state>$PROJ_DIR$/../../../../../../components/silicon_id/socs</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/ele_crypto</state>
           <state>$PROJ_DIR$/../../../../../../components/psa_crypto_driver/osal</state>
@@ -1839,11 +1845,9 @@
           <state>$PROJ_DIR$/../../../../../../components/psa_crypto_driver/ele_s4xx</state>
           <state>$PROJ_DIR$/../../../../../../components/psa_crypto_driver/ele_s4xx/include</state>
           <state>$PROJ_DIR$/../../../../../../components/psa_crypto_driver/ele_s4xx/include/common</state>
-          <state>$PROJ_DIR$/../../../../../../components/silicon_id</state>
-          <state>$PROJ_DIR$/../../../../../../components/silicon_id/socs</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port</state>
           <state>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/library</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -1859,7 +1863,7 @@
         </option>
         <option>
           <name>PreInclude</name>
-          <state/>
+          <state>$PROJ_DIR$/../mcux_config.h</state>
         </option>
       </data>
     </settings>
@@ -2317,6 +2321,12 @@
     <file>
       <name>$PROJ_DIR$/../mcux_config.h</name>
     </file>
+    <file>
+      <name>$PROJ_DIR$/../mcux_config.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../mcux_config.h</name>
+    </file>
   </group>
   <group>
     <name>board</name>
@@ -2394,6 +2404,9 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/drivers/fsl_iomuxc.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/drivers/fsl_memory.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/drivers/fsl_memory.h</name>
@@ -2852,6 +2865,21 @@
   <group>
     <name>component</name>
     <group>
+      <name>silicon_id</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/silicon_id/fsl_silicon_id.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/silicon_id/fsl_silicon_id.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/silicon_id/socs/imxrt1180/fsl_silicon_id_soc.c</name>
+      </file>
+    </group>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../components/silicon_id/socs/fsl_silicon_id_soc.h</name>
+    </file>
+    <group>
       <name>uart</name>
       <file>
         <name>$PROJ_DIR$/../../../../../../components/uart/fsl_adapter_uart.h</name>
@@ -2923,51 +2951,9 @@
         </group>
       </group>
     </group>
-    <group>
-      <name>silicon_id</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/silicon_id/fsl_silicon_id.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/silicon_id/fsl_silicon_id.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/silicon_id/socs/imxrt1180/fsl_silicon_id_soc.c</name>
-      </file>
-    </group>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../components/silicon_id/socs/fsl_silicon_id_soc.h</name>
-    </file>
   </group>
   <group>
     <name>mbedtls3x</name>
-    <group>
-      <name>port</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_config.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_accelerator_config.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_config.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_accelerator_config.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port/mcux_psa_defines.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_psa_crypto_config.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_accelerator_config.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port/mcux_psa_defines.h</name>
-      </file>
-    </group>
     <group>
       <name>include</name>
       <group>
@@ -3207,6 +3193,9 @@
           <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/include/psa/crypto_adjust_auto_enabled.h</name>
         </file>
         <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/include/psa/crypto_adjust_config_dependencies.h</name>
+        </file>
+        <file>
           <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/include/psa/crypto_adjust_config_key_pair_types.h</name>
         </file>
         <file>
@@ -3308,6 +3297,12 @@
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/library/bignum_core.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/library/bignum_core_invasive.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/library/bignum_internal.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/library/bignum_mod.c</name>
@@ -3766,6 +3761,33 @@
         <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/library/ssl_tls13_server.c</name>
       </file>
     </group>
+    <group>
+      <name>port</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_config.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_accelerator_config.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_config.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_accelerator_config.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port/mcux_psa_defines.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_psa_crypto_config.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_accelerator_config.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port/mcux_psa_defines.h</name>
+      </file>
+    </group>
   </group>
   <group>
     <name>doc</name>
@@ -3774,6 +3796,9 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../example_board_readme.md</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../examples_shared_readme.md</name>
     </file>
   </group>
 </project>

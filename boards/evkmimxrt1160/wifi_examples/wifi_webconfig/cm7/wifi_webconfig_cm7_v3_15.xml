@@ -22,6 +22,7 @@
     <definition extID="platform.drivers.flexspi.MIMXRT1166"/>
     <definition extID="platform.drivers.igpio.MIMXRT1166"/>
     <definition extID="platform.drivers.lpuart.MIMXRT1166"/>
+    <definition extID="platform.drivers.mu.MIMXRT1166"/>
     <definition extID="platform.drivers.usdhc.MIMXRT1166"/>
     <definition extID="platform.utilities.assert.MIMXRT1166"/>
     <definition extID="platform.utilities.misc_utilities.MIMXRT1166"/>
@@ -32,14 +33,15 @@
     <definition extID="component.serial_manager_uart.MIMXRT1166"/>
     <definition extID="component.igpio_adapter.MIMXRT1166"/>
     <definition extID="component.lpuart_adapter.MIMXRT1166"/>
-    <definition extID="component.mflash_offchip.MIMXRT1166"/>
     <definition extID="component.osa_template_config.MIMXRT1166"/>
-    <definition extID="component.osa_interface.MIMXRT1166"/>
     <definition extID="component.osa.MIMXRT1166"/>
     <definition extID="component.osa_free_rtos.MIMXRT1166"/>
     <definition extID="middleware.edgefast_wifi_nxp.MIMXRT1166"/>
     <definition extID="component.wifi_bt_module.tx_pwr_limits.MIMXRT1166"/>
     <definition extID="component.wifi_bt_module.config.MIMXRT1166"/>
+    <definition extID="component.wifi_bt_module.IW416.MIMXRT1166"/>
+    <definition extID="component.wifi_bt_module.board_murata_1xk_m2.MIMXRT1166"/>
+    <definition extID="component.mflash_offchip.MIMXRT1166"/>
     <definition extID="middleware.wifi.template.MIMXRT1166"/>
     <definition extID="middleware.wifi.osa_free_rtos.MIMXRT1166"/>
     <definition extID="middleware.wifi.osa.MIMXRT1166"/>
@@ -73,7 +75,7 @@
     <definition extID="com.crt.advproject.config.exe.debug"/>
     <definition extID="com.crt.advproject.config.exe.release"/>
   </externalDefinitions>
-  <example id="evkmimxrt1160_wifi_webconfig_cm7" name="wifi_webconfig_cm7" device_core="cm7_MIMXRT1166xxxxx" dependency="platform.drivers.xip_board.evkmimxrt1160.MIMXRT1166 platform.drivers.xip_device.MIMXRT1166 platform.drivers.clock.MIMXRT1166 platform.drivers.iomuxc.MIMXRT1166 platform.drivers.anatop_ai.MIMXRT1166 platform.drivers.memory.MIMXRT1166 platform.drivers.dcdc_soc.MIMXRT1166 platform.drivers.gpc_3.MIMXRT1166 platform.drivers.pgmc.MIMXRT1166 platform.drivers.pmu_1.MIMXRT1166 platform.drivers.soc_src.MIMXRT1166 CMSIS_Include_core_cm.MIMXRT1166 device.MIMXRT1166_CMSIS.MIMXRT1166 device.MIMXRT1166_system.MIMXRT1166 device.MIMXRT1166_startup.MIMXRT1166 platform.drivers.cache_armv7_m7.MIMXRT1166 platform.drivers.common.MIMXRT1166 platform.drivers.flexspi.MIMXRT1166 platform.drivers.igpio.MIMXRT1166 platform.drivers.lpuart.MIMXRT1166 platform.drivers.usdhc.MIMXRT1166 platform.utilities.assert.MIMXRT1166 platform.utilities.misc_utilities.MIMXRT1166 component.lists.MIMXRT1166 utility.str.MIMXRT1166 utility.debug_console.MIMXRT1166 component.serial_manager.MIMXRT1166 component.serial_manager_uart.MIMXRT1166 component.igpio_adapter.MIMXRT1166 component.lpuart_adapter.MIMXRT1166 component.mflash_offchip.MIMXRT1166 component.osa_template_config.MIMXRT1166 component.osa_interface.MIMXRT1166 component.osa.MIMXRT1166 component.osa_free_rtos.MIMXRT1166 middleware.edgefast_wifi_nxp.MIMXRT1166 component.wifi_bt_module.tx_pwr_limits.MIMXRT1166 component.wifi_bt_module.config.MIMXRT1166 middleware.wifi.template.MIMXRT1166 middleware.wifi.osa_free_rtos.MIMXRT1166 middleware.wifi.osa.MIMXRT1166 middleware.wifi.common_files.MIMXRT1166 middleware.wifi.fwdnld.MIMXRT1166 middleware.wifi.net.MIMXRT1166 middleware.wifi.wifidriver.MIMXRT1166 middleware.wifi.wifidriver.softap.MIMXRT1166 middleware.wifi.MIMXRT1166 middleware.wifi.sdio.MIMXRT1166 middleware.wifi.mlan_sdio.MIMXRT1166 middleware.wifi.fwdnld_intf_abs.MIMXRT1166 middleware.lwip.MIMXRT1166 middleware.lwip.sys_arch.dynamic.MIMXRT1166 middleware.lwip.apps.httpsrv.MIMXRT1166 middleware.sdmmc.common.MIMXRT1166 middleware.sdmmc.osa.freertos.MIMXRT1166 middleware.sdmmc.sdio.MIMXRT1166 middleware.sdmmc.host.usdhc.MIMXRT1166 middleware.sdmmc.host.usdhc.non_blocking.MIMXRT1166 middleware.sdmmc.usdhc.template.MIMXRT1166 middleware.freertos-kernel.MIMXRT1166 middleware.freertos-kernel.heap_3.MIMXRT1166 middleware.freertos-kernel.extension.MIMXRT1166 middleware.freertos-kernel.config.MIMXRT1166" category="wifi_examples">
+  <example id="evkmimxrt1160_wifi_webconfig_cm7" name="wifi_webconfig_cm7" device_core="cm7_MIMXRT1166xxxxx" dependency="platform.drivers.xip_board.evkmimxrt1160.MIMXRT1166 platform.drivers.xip_device.MIMXRT1166 platform.drivers.clock.MIMXRT1166 platform.drivers.iomuxc.MIMXRT1166 platform.drivers.anatop_ai.MIMXRT1166 platform.drivers.memory.MIMXRT1166 platform.drivers.dcdc_soc.MIMXRT1166 platform.drivers.gpc_3.MIMXRT1166 platform.drivers.pgmc.MIMXRT1166 platform.drivers.pmu_1.MIMXRT1166 platform.drivers.soc_src.MIMXRT1166 CMSIS_Include_core_cm.MIMXRT1166 device.MIMXRT1166_CMSIS.MIMXRT1166 device.MIMXRT1166_system.MIMXRT1166 device.MIMXRT1166_startup.MIMXRT1166 platform.drivers.cache_armv7_m7.MIMXRT1166 platform.drivers.common.MIMXRT1166 platform.drivers.flexspi.MIMXRT1166 platform.drivers.igpio.MIMXRT1166 platform.drivers.lpuart.MIMXRT1166 platform.drivers.mu.MIMXRT1166 platform.drivers.usdhc.MIMXRT1166 platform.utilities.assert.MIMXRT1166 platform.utilities.misc_utilities.MIMXRT1166 component.lists.MIMXRT1166 utility.str.MIMXRT1166 utility.debug_console.MIMXRT1166 component.serial_manager.MIMXRT1166 component.serial_manager_uart.MIMXRT1166 component.igpio_adapter.MIMXRT1166 component.lpuart_adapter.MIMXRT1166 component.osa_template_config.MIMXRT1166 component.osa.MIMXRT1166 component.osa_free_rtos.MIMXRT1166 middleware.edgefast_wifi_nxp.MIMXRT1166 component.wifi_bt_module.tx_pwr_limits.MIMXRT1166 component.wifi_bt_module.config.MIMXRT1166 component.wifi_bt_module.IW416.MIMXRT1166 component.wifi_bt_module.board_murata_1xk_m2.MIMXRT1166 component.mflash_offchip.MIMXRT1166 middleware.wifi.template.MIMXRT1166 middleware.wifi.osa_free_rtos.MIMXRT1166 middleware.wifi.osa.MIMXRT1166 middleware.wifi.common_files.MIMXRT1166 middleware.wifi.fwdnld.MIMXRT1166 middleware.wifi.net.MIMXRT1166 middleware.wifi.wifidriver.MIMXRT1166 middleware.wifi.wifidriver.softap.MIMXRT1166 middleware.wifi.MIMXRT1166 middleware.wifi.sdio.MIMXRT1166 middleware.wifi.mlan_sdio.MIMXRT1166 middleware.wifi.fwdnld_intf_abs.MIMXRT1166 middleware.lwip.MIMXRT1166 middleware.lwip.sys_arch.dynamic.MIMXRT1166 middleware.lwip.apps.httpsrv.MIMXRT1166 middleware.sdmmc.common.MIMXRT1166 middleware.sdmmc.osa.freertos.MIMXRT1166 middleware.sdmmc.sdio.MIMXRT1166 middleware.sdmmc.host.usdhc.MIMXRT1166 middleware.sdmmc.host.usdhc.non_blocking.MIMXRT1166 middleware.sdmmc.usdhc.template.MIMXRT1166 middleware.freertos-kernel.MIMXRT1166 middleware.freertos-kernel.heap_3.MIMXRT1166 middleware.freertos-kernel.extension.MIMXRT1166 middleware.freertos-kernel.config.MIMXRT1166" category="wifi_examples">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -102,8 +104,10 @@
           <value>SDK_DEBUGCONSOLE=1</value>
           <value>MCUX_META_BUILD</value>
           <value>CPU_MIMXRT1166DVM6A_cm7</value>
+          <value>MIMXRT1166_cm7_SERIES</value>
           <value>OSA_USED</value>
           <value>SERIAL_PORT_TYPE_UART=1</value>
+          <value>WIFI_IW416_BOARD_MURATA_1XK_M2</value>
           <value>MFLASH_FILE_BASEADDR=14221312</value>
           <value>CONFIG_NXP_WIFI_SOFTAP_SUPPORT=1</value>
           <value>SDIO_ENABLED=1</value>
@@ -216,8 +220,11 @@
     <source path="." project_relative_path="source" type="configuration" toolchain="mdk">
       <files mask="evkmimxrt1160_flexspi_nor.ini"/>
     </source>
-    <source path="mcux/linkscripts" project_relative_path="linkscripts" type="src" toolchain="mcuxpresso">
+    <source path="linkscripts" project_relative_path="linkscripts" type="src" toolchain="mcuxpresso">
       <files mask="data.ldt"/>
+      <files mask="main_rodata.ldt"/>
+    </source>
+    <source path="." project_relative_path="linkscripts" type="src" toolchain="mcuxpresso">
       <files mask="main_text.ldt"/>
     </source>
     <source path="." project_relative_path="source" type="src">
@@ -244,9 +251,6 @@
     <source path="." project_relative_path="source" type="c_include">
       <files mask="FreeRTOSConfigBoard.h"/>
       <files mask="wifi_bt_config.h"/>
-    </source>
-    <source path="." project_relative_path="source" type="c_include">
-      <files mask="app_config.h"/>
     </source>
     <source path="." project_relative_path="source" type="src">
       <files mask="pin_mux.c"/>
@@ -304,6 +308,12 @@
     </source>
     <source path="." project_relative_path="doc" type="doc">
       <files mask="wifi_examples_readme.md"/>
+    </source>
+    <source path="." project_relative_path="doc" type="doc">
+      <files mask="readme_modules.md"/>
+    </source>
+    <source path="." project_relative_path="doc" type="doc">
+      <files mask="examples_shared_readme.md"/>
     </source>
   </example>
 </ksdk:examples>

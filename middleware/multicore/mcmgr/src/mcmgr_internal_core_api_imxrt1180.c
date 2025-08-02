@@ -1,7 +1,5 @@
 /*
- * Copyright 2022-2023 NXP
- * All rights reserved.
- *
+ * Copyright 2022-2025 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -11,14 +9,6 @@
 #include "fsl_device_registers.h"
 #include "fsl_mu.h"
 
-/* Count of cores in the system */
-#define MCMGR_CORECOUNT 2
-
-/* Count of memory regions in the system */
-#define MCMGR_MEMREGCOUNT 2
-
-/* MCMGR MU channel index - used for passing startupData */
-#define MCMGR_MU_CHANNEL 3
 
 /* MU TR/RR $MCMGR_MU_CHANNEL is managed by MCMGR */
 #define MU_RX_ISR_Handler(x)     MU_RX_ISR(x)
@@ -46,9 +36,12 @@ mcmgr_status_t mcmgr_early_init_internal(mcmgr_core_t coreNum)
        Avoid using uninitialized data here. */
 
     uint32_t flags;
+    mcmgr_core_t target_core;
     __attribute__((unused)) uint32_t data;
+
 /* MUA clk enable */
 #if defined(FSL_FEATURE_MU_SIDE_A)
+    target_core = kMCMGR_Core1;
     MU_Init(MU1_MUA);
     /* Clear all RX registers and status flags */
     for (uint32_t idx = 0U; idx < MU_RR_COUNT; idx++)
@@ -61,6 +54,7 @@ mcmgr_status_t mcmgr_early_init_internal(mcmgr_core_t coreNum)
 #endif
 /* MUB clk enable */
 #if defined(FSL_FEATURE_MU_SIDE_B)
+    target_core = kMCMGR_Core0;
     MU_Init(MU1_MUB);
     for (uint32_t idx = 0U; idx < MU_RR_COUNT; idx++)
     {
@@ -71,7 +65,7 @@ mcmgr_status_t mcmgr_early_init_internal(mcmgr_core_t coreNum)
 #endif
 
     /* Trigger core up event here, core is starting! */
-    return MCMGR_TriggerEvent(kMCMGR_RemoteCoreUpEvent, 0);
+    return MCMGR_TriggerEvent(target_core, kMCMGR_RemoteCoreUpEvent, 0);
 }
 
 mcmgr_status_t mcmgr_late_init_internal(mcmgr_core_t coreNum)
@@ -116,13 +110,48 @@ mcmgr_status_t mcmgr_start_core_internal(mcmgr_core_t coreNum, void *bootAddress
      * RT1180 Specific CM7 Kick Off operation
      */
     /* Trigger S401 */
+#if MCMGR_BUSY_POLL_COUNT
+    uint32_t poll_count = MCMGR_BUSY_POLL_COUNT;
+#endif
+
     while ((MU_RT_S3MUA->TSR & MU_TSR_TE0_MASK) == 0)
-        ; /*Wait TR empty*/
+    {
+#if MCMGR_BUSY_POLL_COUNT
+        if ((--poll_count) == 0u)
+        {
+            return kStatus_MCMGR_Error;
+        }
+#endif
+    } /*Wait TR empty*/
+
     MU_RT_S3MUA->TR[0] = 0x17d20106;
+
+#if MCMGR_BUSY_POLL_COUNT
+    poll_count = MCMGR_BUSY_POLL_COUNT;
+#endif
     while ((MU_RT_S3MUA->RSR & MU_RSR_RF0_MASK) == 0)
-        ; /*Wait RR Full*/
+    {
+#if MCMGR_BUSY_POLL_COUNT
+        if ((--poll_count) == 0u)
+        {
+            return kStatus_MCMGR_Error;
+        }
+#endif
+    } /*Wait RR Full*/
+
+#if MCMGR_BUSY_POLL_COUNT
+    poll_count = MCMGR_BUSY_POLL_COUNT;
+#endif
+
     while ((MU_RT_S3MUA->RSR & MU_RSR_RF1_MASK) == 0)
-        ; /*Wait RR Full*/
+    {
+#if MCMGR_BUSY_POLL_COUNT
+        if ((--poll_count) == 0u)
+        {
+            return kStatus_MCMGR_Error;
+        }
+#endif
+    } /*Wait RR Full*/
 
     /* Response from ELE must be always read */
     result1 = MU_RT_S3MUA->RR[0];
@@ -182,8 +211,11 @@ mcmgr_core_t mcmgr_get_current_core_internal(void)
 #endif
 }
 
-mcmgr_status_t mcmgr_trigger_event_internal(uint32_t remoteData, bool forcedWrite)
+mcmgr_status_t mcmgr_trigger_event_internal(mcmgr_core_t coreNum, uint32_t remoteData, bool forcedWrite)
 {
+    /* Can be unused for two core platform. ifdefs are selecting core to trigger. */
+    (void)coreNum;
+
     /* When forcedWrite is false, execute the blocking call, i.e. wait until previously
        sent data is processed. Otherwise, run the non-blocking version of the MU send function. */
     if (false == forcedWrite)
@@ -212,7 +244,7 @@ mcmgr_status_t mcmgr_trigger_event_internal(uint32_t remoteData, bool forcedWrit
  *
  * This function is called when data from MU is received
  */
-void mcmgr_mu_channel_handler(void)
+void mcmgr_mu_channel_handler(MU_Type *base, mcmgr_core_t coreNum)
 {
     uint32_t data;
     uint16_t eventType;
@@ -221,11 +253,7 @@ void mcmgr_mu_channel_handler(void)
     /* Non-blocking version of the receive function needs to be called here to avoid
        deadlock in ISR. The RX register must contain the payload now because the RX flag/event
        has been identified before reaching this point (mcmgr_mu_channel_handler function). */
-#if defined(FSL_FEATURE_MU_SIDE_A)
-    data = MU_ReceiveMsgNonBlocking(MU1_MUA, MCMGR_MU_CHANNEL);
-#elif defined(FSL_FEATURE_MU_SIDE_B)
-    data = MU_ReceiveMsgNonBlocking(MU1_MUB, MCMGR_MU_CHANNEL);
-#endif
+    data = MU_ReceiveMsgNonBlocking(base, MCMGR_MU_CHANNEL);
 
     /* To be MISRA compliant, return value needs to be checked even it could not never be 0 */
     if (0U != data)
@@ -239,7 +267,7 @@ void mcmgr_mu_channel_handler(void)
             if (MCMGR_eventTable[(mcmgr_event_type_t)eventType].callback != ((void *)0))
             {
                 MCMGR_eventTable[(mcmgr_event_type_t)eventType].callback(
-                    eventData, MCMGR_eventTable[(mcmgr_event_type_t)eventType].callbackData);
+                    coreNum, eventData, MCMGR_eventTable[(mcmgr_event_type_t)eventType].callbackData);
             }
         }
     }
@@ -249,8 +277,17 @@ void mcmgr_mu_channel_handler(void)
 /* This overrides the weak DefaultISR implementation from startup file */
 void DefaultISR(void)
 {
+    mcmgr_core_t target_core;
     uint32_t exceptionNumber = __get_IPSR();
-    (void)MCMGR_TriggerEvent(kMCMGR_RemoteExceptionEvent, (uint16_t)exceptionNumber);
+
+    /* Select what core to trigger in case of exception */
+#if defined(FSL_FEATURE_MU_SIDE_A)
+    target_core = kMCMGR_Core1;
+#elif defined(FSL_FEATURE_MU_SIDE_B)
+    target_core = kMCMGR_Core0;
+#endif
+
+    (void)MCMGR_TriggerEvent(target_core, kMCMGR_RemoteExceptionEvent, (uint16_t)exceptionNumber);
     for (;;)
     {
     } /* stop here */

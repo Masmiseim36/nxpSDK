@@ -224,14 +224,14 @@ static FMSTR_BCHR _FMSTR_FlexCANFD_GetRxFrameByte(FMSTR_SIZE8 index)
 {
     FMSTR_BCHR dataByte;
 
-    /* Get word index */
-    FMSTR_U8 wordIdx = index / 4;
-    /* Get byte index */
-    FMSTR_U8 byteIdx = index % 4;
-    /* Get data word */
-    uint32_t dataWord = fmstr_rxmsg.dataWord[wordIdx];
-    /* Get byte from data word */
-    dataByte = (dataWord >> ((3 - byteIdx) * 8)) & 0xFF;
+    /* calculate data byte position within the data frame word */
+    FMSTR_SIZE8 wordIdx = (FMSTR_SIZE8)(index / 4U);
+    FMSTR_SIZE8 byteIdx = (FMSTR_SIZE8)(index % 4U);
+    FMSTR_SIZE8 shift = (FMSTR_SIZE8)(3U - byteIdx) * 8U;
+
+    /* Get data word and byte */
+    FMSTR_U32 dataWord = fmstr_rxmsg.dataWord[wordIdx];
+    dataByte = (FMSTR_BCHR)((FMSTR_U32)(dataWord >> shift) & 0xFFU);
 
     return dataByte;
 }
@@ -273,15 +273,18 @@ static FMSTR_BOOL _FMSTR_FlexCANFD_PrepareTxFrame(void)
 static void _FMSTR_FlexCANFD_PutTxFrameByte(FMSTR_SIZE8 index, FMSTR_BCHR data)
 {
     /* calculate data byte position within the data frame word */
-    FMSTR_U8 wordIdx = index / 4;
-    FMSTR_U8 byteIdx = index % 4;
-    uint32_t dataWord = fmstr_txmsg.dataWord[wordIdx];
-    FMSTR_U8 shift = (3 - byteIdx) * 8;
-    uint32_t byteMask = 0xFF << shift;
-    dataWord &= ~byteMask;
+    FMSTR_SIZE8 wordIdx = (FMSTR_SIZE8)(index / 4U);
+    FMSTR_SIZE8 byteIdx = (FMSTR_SIZE8)(index % 4U);
+    FMSTR_SIZE8 shift = (FMSTR_SIZE8)(3U - byteIdx) * 8U;
+    FMSTR_U32 byteMask = (FMSTR_U32)(0xFFUL << shift);
+   
+    /* Put byte into data word */
+    FMSTR_U32 dataWord = fmstr_txmsg.dataWord[wordIdx];
+    dataWord &= (FMSTR_U32)(~byteMask);
+    dataWord |= (FMSTR_U32)((((FMSTR_U32)data) << shift) & byteMask);
 
-    /* Set byte in data word */
-    fmstr_txmsg.dataWord[wordIdx] = dataWord | (data << shift);
+    /* Write back to frame data */
+    fmstr_txmsg.dataWord[wordIdx] = dataWord;
 }
 
 static void _FMSTR_FlexCANFD_SendTxFrame(FMSTR_SIZE8 len)

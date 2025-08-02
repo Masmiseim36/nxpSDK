@@ -560,7 +560,7 @@ static void SerialManager_IsrFunction(serial_manager_handle_t *serHandle)
 #endif
 #if (defined(SERIAL_PORT_TYPE_UART_DMA) && (SERIAL_PORT_TYPE_UART_DMA > 0U))
         case kSerialPort_UartDma:
-            Serial_UartIsrFunction(((serial_handle_t)&serHandle->lowLevelhandleBuffer[0]));
+            Serial_UartDmaIsrFunction(((serial_handle_t)&serHandle->lowLevelhandleBuffer[0]));
             break;
 #endif
 #if (defined(SERIAL_PORT_TYPE_USBCDC) && (SERIAL_PORT_TYPE_USBCDC > 0U))

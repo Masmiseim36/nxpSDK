@@ -12,11 +12,13 @@ ENDIF()
 
 SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_DEBUG " \
     ${CMAKE_ASM_FLAGS_FLEXSPI_NOR_DEBUG} \
+    -include ${ProjDirPath}/../mcux_config.h \
     -D__STARTUP_INITIALIZE_RAMFUNCTION \
     -D__STARTUP_INITIALIZE_NONCACHEDATA \
     -D__STARTUP_CLEAR_BSS \
     -DMCUXPRESSO_SDK \
-    -DCPU_MIMXRT1189CVM8B_cm7 \
+    -DCPU_MIMXRT1189CVM8C_cm7 \
+    -DMIMXRT1189_cm7_SERIES \
     -g \
     -mthumb \
     -mcpu=cortex-m7 \
@@ -24,32 +26,13 @@ SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_DEBUG " \
 ")
 SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_RELEASE " \
     ${CMAKE_ASM_FLAGS_FLEXSPI_NOR_RELEASE} \
+    -include ${ProjDirPath}/../mcux_config.h \
     -D__STARTUP_INITIALIZE_RAMFUNCTION \
     -D__STARTUP_INITIALIZE_NONCACHEDATA \
     -D__STARTUP_CLEAR_BSS \
     -DMCUXPRESSO_SDK \
-    -DCPU_MIMXRT1189CVM8B_cm7 \
-    -mthumb \
-    -mcpu=cortex-m7 \
-    ${FPU} \
-")
-SET(CMAKE_ASM_FLAGS_DEBUG " \
-    ${CMAKE_ASM_FLAGS_DEBUG} \
-    -D__STARTUP_INITIALIZE_NONCACHEDATA \
-    -D__STARTUP_CLEAR_BSS \
-    -DMCUXPRESSO_SDK \
-    -DCPU_MIMXRT1189CVM8B_cm7 \
-    -g \
-    -mthumb \
-    -mcpu=cortex-m7 \
-    ${FPU} \
-")
-SET(CMAKE_ASM_FLAGS_RELEASE " \
-    ${CMAKE_ASM_FLAGS_RELEASE} \
-    -D__STARTUP_INITIALIZE_NONCACHEDATA \
-    -D__STARTUP_CLEAR_BSS \
-    -DMCUXPRESSO_SDK \
-    -DCPU_MIMXRT1189CVM8B_cm7 \
+    -DCPU_MIMXRT1189CVM8C_cm7 \
+    -DMIMXRT1189_cm7_SERIES \
     -mthumb \
     -mcpu=cortex-m7 \
     ${FPU} \
@@ -59,9 +42,11 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG " \
     -include ${ProjDirPath}/../mcux_config.h \
     -DDEBUG \
     -DXIP_EXTERNAL_FLASH=1 \
+    -D__STARTUP_CLEAR_BSS \
     -DMCUX_META_BUILD \
     -DMCUXPRESSO_SDK \
-    -DCPU_MIMXRT1189CVM8B_cm7 \
+    -DCPU_MIMXRT1189CVM8C_cm7 \
+    -DMIMXRT1189_cm7_SERIES \
     -g \
     -O0 \
     -Wall \
@@ -81,50 +66,11 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE " \
     -include ${ProjDirPath}/../mcux_config.h \
     -DNDEBUG \
     -DXIP_EXTERNAL_FLASH=1 \
+    -D__STARTUP_CLEAR_BSS \
     -DMCUX_META_BUILD \
     -DMCUXPRESSO_SDK \
-    -DCPU_MIMXRT1189CVM8B_cm7 \
-    -Os \
-    -Wall \
-    -fno-common \
-    -ffunction-sections \
-    -fdata-sections \
-    -fno-builtin \
-    -mthumb \
-    -mapcs \
-    -std=gnu99 \
-    -mcpu=cortex-m7 \
-    ${FPU} \
-    ${DEBUG_CONSOLE_CONFIG} \
-")
-SET(CMAKE_C_FLAGS_DEBUG " \
-    ${CMAKE_C_FLAGS_DEBUG} \
-    -include ${ProjDirPath}/../mcux_config.h \
-    -DDEBUG \
-    -DMCUX_META_BUILD \
-    -DMCUXPRESSO_SDK \
-    -DCPU_MIMXRT1189CVM8B_cm7 \
-    -g \
-    -O0 \
-    -Wall \
-    -fno-common \
-    -ffunction-sections \
-    -fdata-sections \
-    -fno-builtin \
-    -mthumb \
-    -mapcs \
-    -std=gnu99 \
-    -mcpu=cortex-m7 \
-    ${FPU} \
-    ${DEBUG_CONSOLE_CONFIG} \
-")
-SET(CMAKE_C_FLAGS_RELEASE " \
-    ${CMAKE_C_FLAGS_RELEASE} \
-    -include ${ProjDirPath}/../mcux_config.h \
-    -DNDEBUG \
-    -DMCUX_META_BUILD \
-    -DMCUXPRESSO_SDK \
-    -DCPU_MIMXRT1189CVM8B_cm7 \
+    -DCPU_MIMXRT1189CVM8C_cm7 \
+    -DMIMXRT1189_cm7_SERIES \
     -Os \
     -Wall \
     -fno-common \
@@ -140,11 +86,13 @@ SET(CMAKE_C_FLAGS_RELEASE " \
 ")
 SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG " \
     ${CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG} \
+    -include ${ProjDirPath}/../mcux_config.h \
     -DDEBUG \
     -DXIP_EXTERNAL_FLASH=1 \
     -DMCUX_META_BUILD \
     -DMCUXPRESSO_SDK \
-    -DCPU_MIMXRT1189CVM8B_cm7 \
+    -DCPU_MIMXRT1189CVM8C_cm7 \
+    -DMIMXRT1189_cm7_SERIES \
     -g \
     -O0 \
     -Wall \
@@ -162,52 +110,13 @@ SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG " \
 ")
 SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE " \
     ${CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE} \
+    -include ${ProjDirPath}/../mcux_config.h \
     -DNDEBUG \
     -DXIP_EXTERNAL_FLASH=1 \
     -DMCUX_META_BUILD \
     -DMCUXPRESSO_SDK \
-    -DCPU_MIMXRT1189CVM8B_cm7 \
-    -Os \
-    -Wall \
-    -fno-common \
-    -ffunction-sections \
-    -fdata-sections \
-    -fno-builtin \
-    -mthumb \
-    -mapcs \
-    -fno-rtti \
-    -fno-exceptions \
-    -mcpu=cortex-m7 \
-    ${FPU} \
-    ${DEBUG_CONSOLE_CONFIG} \
-")
-SET(CMAKE_CXX_FLAGS_DEBUG " \
-    ${CMAKE_CXX_FLAGS_DEBUG} \
-    -DDEBUG \
-    -DMCUX_META_BUILD \
-    -DMCUXPRESSO_SDK \
-    -DCPU_MIMXRT1189CVM8B_cm7 \
-    -g \
-    -O0 \
-    -Wall \
-    -fno-common \
-    -ffunction-sections \
-    -fdata-sections \
-    -fno-builtin \
-    -mthumb \
-    -mapcs \
-    -fno-rtti \
-    -fno-exceptions \
-    -mcpu=cortex-m7 \
-    ${FPU} \
-    ${DEBUG_CONSOLE_CONFIG} \
-")
-SET(CMAKE_CXX_FLAGS_RELEASE " \
-    ${CMAKE_CXX_FLAGS_RELEASE} \
-    -DNDEBUG \
-    -DMCUX_META_BUILD \
-    -DMCUXPRESSO_SDK \
-    -DCPU_MIMXRT1189CVM8B_cm7 \
+    -DCPU_MIMXRT1189CVM8C_cm7 \
+    -DMIMXRT1189_cm7_SERIES \
     -Os \
     -Wall \
     -fno-common \
@@ -238,9 +147,6 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_DEBUG " \
     -mapcs \
     -Wl,--gc-sections \
     -Wl,-static \
-    -Wl,-z \
-    -Wl,muldefs \
-    -Wl,-Map=output.map \
     -Wl,--print-memory-usage \
     -mcpu=cortex-m7 \
     ${FPU} \
@@ -262,61 +168,9 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE " \
     -mapcs \
     -Wl,--gc-sections \
     -Wl,-static \
-    -Wl,-z \
-    -Wl,muldefs \
-    -Wl,-Map=output.map \
     -Wl,--print-memory-usage \
     -mcpu=cortex-m7 \
     ${FPU} \
     ${SPECS} \
     -T\"${ProjDirPath}/MIMXRT1189xxxxx_cm7_flexspi_nor.ld\" -static \
-")
-SET(CMAKE_EXE_LINKER_FLAGS_DEBUG " \
-    ${CMAKE_EXE_LINKER_FLAGS_DEBUG} \
-    -g \
-    -Xlinker \
-    --defsym=__stack_size__=0x2000 \
-    -Xlinker \
-    -Map=output.map \
-    -Wall \
-    -fno-common \
-    -ffunction-sections \
-    -fdata-sections \
-    -fno-builtin \
-    -mthumb \
-    -mapcs \
-    -Wl,--gc-sections \
-    -Wl,-static \
-    -Wl,-z \
-    -Wl,muldefs \
-    -Wl,-Map=output.map \
-    -Wl,--print-memory-usage \
-    -mcpu=cortex-m7 \
-    ${FPU} \
-    ${SPECS} \
-    -T\"${ProjDirPath}/MIMXRT1189xxxxx_cm7_ram.ld\" -static \
-")
-SET(CMAKE_EXE_LINKER_FLAGS_RELEASE " \
-    ${CMAKE_EXE_LINKER_FLAGS_RELEASE} \
-    -Xlinker \
-    --defsym=__stack_size__=0x2000 \
-    -Xlinker \
-    -Map=output.map \
-    -Wall \
-    -fno-common \
-    -ffunction-sections \
-    -fdata-sections \
-    -fno-builtin \
-    -mthumb \
-    -mapcs \
-    -Wl,--gc-sections \
-    -Wl,-static \
-    -Wl,-z \
-    -Wl,muldefs \
-    -Wl,-Map=output.map \
-    -Wl,--print-memory-usage \
-    -mcpu=cortex-m7 \
-    ${FPU} \
-    ${SPECS} \
-    -T\"${ProjDirPath}/MIMXRT1189xxxxx_cm7_ram.ld\" -static \
 ")

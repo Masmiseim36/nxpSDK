@@ -3,7 +3,7 @@ Hardware requirements
 - MIMXRT1180-EVK RevC
 - RJ45 Network cable
 - Mini/micro USB cable
-- Personal Computer on which the TwinCat3 has been installed
+- Personal Computer on which the TwinCat3 has been installed(Windows 10 is recommended)
 
 Board settings
 ==============

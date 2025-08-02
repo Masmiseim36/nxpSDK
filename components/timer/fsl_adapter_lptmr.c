@@ -1,6 +1,5 @@
 /*
- * Copyright 2018-2021, 2024 NXP
- *
+ * Copyright 2018-2021,2024-2025 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -13,6 +12,13 @@
 /*! @brief Definition to determine LPTMR timer whether use free running mode*/
 #ifndef LPTMR_USE_FREE_RUNNING
 #define LPTMR_USE_FREE_RUNNING (0)
+#endif
+
+/* Correct lptmr instance index in LPTMR_BASE_PTRS */
+#if defined(LPTMR0)
+#define LPTMR_INSTANCE_MAX_INDEX FSL_FEATURE_SOC_LPTMR_COUNT
+#else
+#define LPTMR_INSTANCE_MAX_INDEX (FSL_FEATURE_SOC_LPTMR_COUNT + 1)
 #endif
 
 typedef struct _hal_timer_handle_struct_t
@@ -71,7 +77,7 @@ void LPTMR0_IRQHandler(void)
     SDK_ISR_EXIT_BARRIER;
 }
 
-#if (FSL_FEATURE_SOC_LPTMR_COUNT > 1)
+#if (LPTMR_INSTANCE_MAX_INDEX > 1U)
 void LPTMR1_IRQHandler(void);
 void LPTMR1_IRQHandler(void)
 {
@@ -80,7 +86,7 @@ void LPTMR1_IRQHandler(void)
 }
 #endif
 
-#if (FSL_FEATURE_SOC_LPTMR_COUNT >2)
+#if (LPTMR_INSTANCE_MAX_INDEX > 2U)
 void LPTMR2_IRQHandler(void);
 void LPTMR2_IRQHandler(void)
 {
@@ -93,9 +99,9 @@ void LPTMR0_LPTMR1_IRQHandler(void);
 void LPTMR0_LPTMR1_IRQHandler(void)
 {
     HAL_TimerInterruptHandle(0);
-#if (defined(FSL_FEATURE_SOC_LPTMR_COUNT) && (FSL_FEATURE_SOC_LPTMR_COUNT > 1))
+#if (LPTMR_INSTANCE_MAX_INDEX > 1U)
     HAL_TimerInterruptHandle(1);
-#endif /* (FSL_FEATURE_SOC_LPTMR_COUNT > 1) */
+#endif
     SDK_ISR_EXIT_BARRIER;
 }
 /************************************************************************************
@@ -265,4 +271,17 @@ void HAL_TimerExitLowpower(hal_timer_handle_t halTimerHandle)
 void HAL_TimerEnterLowpower(hal_timer_handle_t halTimerHandle)
 {
     assert(halTimerHandle);
+}
+
+hal_timer_time_t HAL_TimerGetCurrentTicks(hal_timer_handle_t halTimerHandle)
+{
+    /* NOT IMPLEMENTED */
+    assert(false);
+    return 0;
+}
+
+void HAL_TimerUpdateMatchValueInTicks(hal_timer_handle_t halTimerHandle, hal_timer_time_t matchValue)
+{
+    /* NOT IMPLEMENTED */
+    assert(false); 
 }

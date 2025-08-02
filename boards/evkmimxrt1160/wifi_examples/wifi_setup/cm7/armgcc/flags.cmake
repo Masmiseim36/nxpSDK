@@ -17,6 +17,7 @@ SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_DEBUG " \
     -D__STARTUP_CLEAR_BSS \
     -DMCUXPRESSO_SDK \
     -DCPU_MIMXRT1166DVM6A_cm7 \
+    -DMIMXRT1166_cm7_SERIES \
     -DOSA_USED \
     -g \
     -mthumb \
@@ -30,6 +31,7 @@ SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_RELEASE " \
     -D__STARTUP_CLEAR_BSS \
     -DMCUXPRESSO_SDK \
     -DCPU_MIMXRT1166DVM6A_cm7 \
+    -DMIMXRT1166_cm7_SERIES \
     -DOSA_USED \
     -mthumb \
     -mcpu=cortex-m7 \
@@ -41,13 +43,16 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG " \
     -DDEBUG \
     -DXIP_EXTERNAL_FLASH=1 \
     -DXIP_BOOT_HEADER_ENABLE=1 \
+    -D__STARTUP_CLEAR_BSS \
     -DUSE_RTOS=1 \
     -DPRINTF_ADVANCED_ENABLE=1 \
     -DMCUX_META_BUILD \
     -DMCUXPRESSO_SDK \
     -DCPU_MIMXRT1166DVM6A_cm7 \
+    -DMIMXRT1166_cm7_SERIES \
     -DOSA_USED \
     -DSERIAL_PORT_TYPE_UART=1 \
+    -DWIFI_IW416_BOARD_MURATA_1XK_M2 \
     -DCONFIG_NXP_WIFI_SOFTAP_SUPPORT=1 \
     -DSDIO_ENABLED=1 \
     -DSDK_OS_FREE_RTOS \
@@ -71,13 +76,16 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE " \
     -DNDEBUG \
     -DXIP_EXTERNAL_FLASH=1 \
     -DXIP_BOOT_HEADER_ENABLE=1 \
+    -D__STARTUP_CLEAR_BSS \
     -DUSE_RTOS=1 \
     -DPRINTF_ADVANCED_ENABLE=1 \
     -DMCUX_META_BUILD \
     -DMCUXPRESSO_SDK \
     -DCPU_MIMXRT1166DVM6A_cm7 \
+    -DMIMXRT1166_cm7_SERIES \
     -DOSA_USED \
     -DSERIAL_PORT_TYPE_UART=1 \
+    -DWIFI_IW416_BOARD_MURATA_1XK_M2 \
     -DCONFIG_NXP_WIFI_SOFTAP_SUPPORT=1 \
     -DSDIO_ENABLED=1 \
     -DSDK_OS_FREE_RTOS \
@@ -101,9 +109,11 @@ SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG " \
     -DMCUX_META_BUILD \
     -DMCUXPRESSO_SDK \
     -DCPU_MIMXRT1166DVM6A_cm7 \
+    -DMIMXRT1166_cm7_SERIES \
     -DOSA_USED \
     -DSERIAL_PORT_TYPE_UART=1 \
     -DUSE_RTOS=1 \
+    -DWIFI_IW416_BOARD_MURATA_1XK_M2 \
     -DSDK_OS_FREE_RTOS \
     -g \
     -O0 \
@@ -127,9 +137,11 @@ SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE " \
     -DMCUX_META_BUILD \
     -DMCUXPRESSO_SDK \
     -DCPU_MIMXRT1166DVM6A_cm7 \
+    -DMIMXRT1166_cm7_SERIES \
     -DOSA_USED \
     -DSERIAL_PORT_TYPE_UART=1 \
     -DUSE_RTOS=1 \
+    -DWIFI_IW416_BOARD_MURATA_1XK_M2 \
     -DSDK_OS_FREE_RTOS \
     -Os \
     -Wall \
@@ -163,9 +175,6 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_DEBUG " \
     -mapcs \
     -Wl,--gc-sections \
     -Wl,-static \
-    -Wl,-z \
-    -Wl,muldefs \
-    -Wl,-Map=output.map \
     -Wl,--print-memory-usage \
     -mcpu=cortex-m7 \
     ${FPU} \
@@ -189,9 +198,6 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE " \
     -mapcs \
     -Wl,--gc-sections \
     -Wl,-static \
-    -Wl,-z \
-    -Wl,muldefs \
-    -Wl,-Map=output.map \
     -Wl,--print-memory-usage \
     -mcpu=cortex-m7 \
     ${FPU} \

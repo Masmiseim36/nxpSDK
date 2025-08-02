@@ -21,6 +21,10 @@
 
 #include <bluetooth/obex.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /* PBAP Version Counter size */
 #define BT_PBAP_FLDR_VER_CNTR_SIZE       0x10U /* 16 */
 /*PBAP Database Identifiers size */
@@ -232,5 +236,9 @@ struct bt_pbap_push_response_hdr
  */
 #define BT_PBAP_ADD_BODY(buf, val, len)        bt_obex_add_hdr(buf, BT_PBAP_HDR_BODY, val, len)
 #define BT_PBAP_ADD_END_OF_BODY(buf, val, len) bt_obex_add_hdr(buf, BT_PBAP_HDR_END_OF_BODY, val, len)
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* ZEPHYR_INCLUDE_BLUETOOTH_PBAP_TYPES_H_ */

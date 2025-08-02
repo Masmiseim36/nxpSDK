@@ -1,8 +1,9 @@
 /*
-    * Copyright 2024 NXP
-    *
-    * SPDX-License-Identifier: BSD-3-Clause
-*/
+ * Copyright 2025 NXP
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
+ */
+
 /*
  * How to setup clock using clock driver functions:
  *
@@ -16,11 +17,11 @@
 
 /* TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 !!GlobalInfo
-product: Clocks v12.0
+product: Clocks v16.0
 processor: MIMXRT1176xxxxx
-package_id: MIMXRT1176DVMAA
+package_id: MIMXRT1176DVMAB
 mcu_data: ksdk2_0
-processor_version: 14.0.0
+processor_version: 0.2506.20
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS **********/
 
 #include "clock_config.h"
@@ -111,7 +112,7 @@ outputs:
 - {id: FLEXIO2_CLK_ROOT.outFreq, value: 24 MHz}
 - {id: FLEXSPI1_CLK_ROOT.outFreq, value: 24 MHz}
 - {id: FLEXSPI2_CLK_ROOT.outFreq, value: 24 MHz}
-- {id: GC355_CLK_ROOT.outFreq, value: 492.0000125 MHz}
+- {id: GC355_CLK_ROOT.outFreq, value: 480 MHz}
 - {id: GPT1_CLK_ROOT.outFreq, value: 24 MHz}
 - {id: GPT1_ipg_clk_highfreq.outFreq, value: 24 MHz}
 - {id: GPT2_CLK_ROOT.outFreq, value: 24 MHz}
@@ -165,7 +166,7 @@ outputs:
 - {id: OSC_RC_400M.outFreq, value: 400 MHz}
 - {id: OSC_RC_48M.outFreq, value: 48 MHz}
 - {id: OSC_RC_48M_DIV2.outFreq, value: 24 MHz}
-- {id: PLL_VIDEO_CLK.outFreq, value: 984.000025 MHz}
+- {id: PLL_VIDEO_CLK.outFreq, value: 960 MHz}
 - {id: SAI1_CLK_ROOT.outFreq, value: 24 MHz}
 - {id: SAI1_MCLK1.outFreq, value: 24 MHz}
 - {id: SAI1_MCLK3.outFreq, value: 24 MHz}
@@ -198,14 +199,15 @@ settings:
 - {id: ANADIG_OSC_OSC_24M_CTRL_LP_EN_CFG, value: Low}
 - {id: ANADIG_OSC_OSC_24M_CTRL_OSC_EN_CFG, value: Enabled}
 - {id: ANADIG_PLL.PLL_AUDIO_BYPASS.sel, value: ANADIG_OSC.OSC_24M}
-- {id: ANADIG_PLL.PLL_VIDEO.denom, value: '960000'}
-- {id: ANADIG_PLL.PLL_VIDEO.div, value: '41'}
-- {id: ANADIG_PLL.PLL_VIDEO.num, value: '1'}
+- {id: ANADIG_PLL.PLL_VIDEO.denom, value: '1'}
+- {id: ANADIG_PLL.PLL_VIDEO.div, value: '40'}
+- {id: ANADIG_PLL.PLL_VIDEO.num, value: '0'}
+- {id: ANADIG_PLL.PLL_VIDEO_SS_DIV.scale, value: '1'}
 - {id: ANADIG_PLL.SYS_PLL1_BYPASS.sel, value: ANADIG_OSC.OSC_24M}
-- {id: ANADIG_PLL.SYS_PLL2.denom, value: '268435455'}
+- {id: ANADIG_PLL.SYS_PLL2.denom, value: '1'}
 - {id: ANADIG_PLL.SYS_PLL2.div, value: '22'}
 - {id: ANADIG_PLL.SYS_PLL2.num, value: '0'}
-- {id: ANADIG_PLL.SYS_PLL2_SS_DIV.scale, value: '268435455'}
+- {id: ANADIG_PLL.SYS_PLL2_SS_DIV.scale, value: '1'}
 - {id: ANADIG_PLL.SYS_PLL3_PFD3_DIV.scale, value: '22', locked: true}
 - {id: ANADIG_PLL.SYS_PLL3_PFD3_MUL.scale, value: '18', locked: true}
 - {id: ANADIG_PLL_ARM_PLL_CTRL_POWERUP_CFG, value: Enabled}
@@ -278,8 +280,8 @@ void BOARD_BootClockRUN(void)
     clock_root_config_t rootCfg = {0};
 
 #if !defined(SKIP_DCDC_CONFIGURATION) || (!SKIP_DCDC_CONFIGURATION)
-    /* Set DCDC to DCM mode to improve the efficiency for light loading in run mode and transient performance with a big loading step. */
-    DCDC_BootIntoDCM(DCDC);
+    /* Set DCDC to CCM mode to improve stablility. */
+    DCDC_BootIntoCCM(DCDC);
 
 #if !defined(SKIP_DCDC_ADJUSTMENT) || (!SKIP_DCDC_ADJUSTMENT)
     if((OCOTP->FUSEN[16].FUSE == 0x57AC5969U) && ((OCOTP->FUSEN[17].FUSE & 0xFFU) == 0x0BU))
@@ -337,7 +339,6 @@ void BOARD_BootClockRUN(void)
 
     /* Init OSC RC 400M */
     CLOCK_OSC_EnableOscRc400M();
-    CLOCK_OSC_GateOscRc400M(false);
 
     /* Init OSC RC 48M */
     CLOCK_OSC_EnableOsc48M(true);
@@ -351,22 +352,29 @@ void BOARD_BootClockRUN(void)
     {
     }
 
-    /* Swicth both core, M7 Systick and Bus_Lpsr to OscRC48MDiv2 first */
+    /* Switch core M7 clock root to OscRC48MDiv2 first */
 #if __CORTEX_M == 7
     rootCfg.mux = kCLOCK_M7_ClockRoot_MuxOscRc48MDiv2;
     rootCfg.div = 1;
     CLOCK_SetRootClock(kCLOCK_Root_M7, &rootCfg);
+#endif
 
+    /* Switch core M7 systick clock root to OscRC48MDiv2 first */
+#if __CORTEX_M == 7
     rootCfg.mux = kCLOCK_M7_SYSTICK_ClockRoot_MuxOscRc48MDiv2;
     rootCfg.div = 1;
     CLOCK_SetRootClock(kCLOCK_Root_M7_Systick, &rootCfg);
 #endif
 
+    /* Switch core M4 clock root to OscRC48MDiv2 first */
 #if __CORTEX_M == 4
     rootCfg.mux = kCLOCK_M4_ClockRoot_MuxOscRc48MDiv2;
     rootCfg.div = 1;
     CLOCK_SetRootClock(kCLOCK_Root_M4, &rootCfg);
+#endif
 
+    /* Switch the Bus_Lpsr clock root to OscRC48MDiv2 first */
+#if __CORTEX_M == 4
     rootCfg.mux = kCLOCK_BUS_LPSR_ClockRoot_MuxOscRc48MDiv2;
     rootCfg.div = 1;
     CLOCK_SetRootClock(kCLOCK_Root_Bus_Lpsr, &rootCfg);

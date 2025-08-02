@@ -44,53 +44,7 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define EC_MAXSLAVE 31
-
-#define BOARD_SW_GPIO		BOARD_USER_BUTTON_GPIO
-#define BOARD_SW_GPIO_PIN	BOARD_USER_BUTTON_GPIO_PIN
-#define BOARD_SW_IRQ		 BOARD_USER_BUTTON_IRQ
-#define BOARD_SW_IRQ_HANDLER BOARD_USER_BUTTON_IRQ_HANDLER
-#define BOARD_SW_NAME		BOARD_USER_BUTTON_NAME
-
-#define BOARD_LED_RGPIO     BOARD_USER_LED_GPIO
-#define BOARD_LED_RGPIO_PIN BOARD_USER_LED_GPIO_PIN
-
-#define BOARD_SW_INT_OUTPUT kRGPIO_InterruptOutput0
-
-#define PHY_PAGE_SELECT_REG 0x1FU /*!< The PHY page select register. */
-#define EP0_PORT  0x00U
-
-#define EP0_PHY_ADDR	   0x03U
-#define NETC_FREQ		  CLOCK_GetRootClockFreq(kCLOCK_Root_Netc)
-
-#define EP_RING_NUM		  3U
-#define EP_RXBD_NUM		  8U
-#define EP_TXBD_NUM		  8U
-#define EP_BD_ALIGN		  128U
-#define EP_BUFF_SIZE_ALIGN   64U
-#define EP_RXBUFF_SIZE	   1518U
-#define EP_TXBUFF_SIZE	   1518U
-#define EP_RXBUFF_SIZE_ALIGN SDK_SIZEALIGN(EP_RXBUFF_SIZE, EP_BUFF_SIZE_ALIGN)
-
-#define EP_TXFRAME_NUM 20U
-#define TX_INTR_MSG_DATA  1U
-#define RX_INTR_MSG_DATA  2U
-#define TX_MSIX_ENTRY_IDX 0U
-#define RX_MSIX_ENTRY_IDX 1U
-
-#define CLOCK_GRANULARITY_NS 25UL
-#define CLOCK_GRANULARITY_FRE (1000000000UL/CLOCK_GRANULARITY_NS)
-#define CLOCK_INCREASE_PER_SEC 1000000000UL 
-
 #define CYCLE_PERIOD_NS 1000000 // 1ms
-
-#define SOEM_PORT_NAME "EtherCAT0"
-
-#define ENET_RXBD_NUM (4)
-#define ENET_TXBD_NUM (4)
-
-#define ENET_RXBUFF_SIZE (ENET_FRAME_MAX_FRAMELEN)
-#define ENET_TXBUFF_SIZE (ENET_FRAME_MAX_FRAMELEN)
 
 #define asda_b3_VendorId 0x000001dd
 #define asda_b3_ProductID 0x00006080
@@ -107,8 +61,7 @@
 /*******************************************************************************
  * Variables
  ******************************************************************************/
-
-static struct netc_ep_if_port if_port;
+extern struct netc_ep_if_port if_port;
 
 volatile uint64_t system_time_ns = 0;
 
@@ -122,7 +75,6 @@ AT_NONCACHEABLE_SECTION_ALIGN(static uint8_t g_txFrame[EP_TXBUFF_SIZE], EP_BUFF_
 uint64_t rxBuffAddrArray[EP_RING_NUM][EP_RXBD_NUM];
 
 static netc_tx_frame_info_t g_txDirty[EP_RING_NUM][EP_TXBD_NUM];
-static netc_tx_frame_info_t txFrameInfo = {0};
 
 static char IOmap[1500];
 
@@ -171,22 +123,6 @@ int _write(int handle, char *buffer, int size)
 
 struct servo_t servo[MAX_SERVO];
 struct axis_t axis[MAX_AXIS];
-
-/*!
- * @brief Interrupt service fuction of switch.
- *
- */
-void BOARD_SW_IRQ_HANDLER(void)
-{
-	int i = 0;
-	/* Clear external interrupt flag. */
-	RGPIO_ClearPinsInterruptFlags(BOARD_SW_GPIO, BOARD_SW_INT_OUTPUT, 1U << BOARD_SW_GPIO_PIN);
-	/* Change state of button. */
-	for (i = 0; i < MAX_AXIS; i++)
-		axis_nc_stop(&axis[i]);
-
-	SDK_ISR_EXIT_BARRIER;
-}
 
 static void EtherCAT_servo_init(struct servo_t *svo, struct axis_t *ax)
 {
@@ -379,7 +315,6 @@ void msgintrCallback(MSGINTR_Type *base, uint8_t channel, uint32_t pendingIntr)
 
 static status_t ReclaimCallback(ep_handle_t *handle, uint8_t ring, netc_tx_frame_info_t *frameInfo, void *userData)
 {
-    txFrameInfo = *frameInfo;
     return kStatus_Success;
 }
 
@@ -460,13 +395,13 @@ static int if_port_init(void)
 
     /* Endpoint configuration. */
     (void)EP_GetDefaultConfig(&ep_config);
-    ep_config.si                    = kNETC_ENETC0PSI0;
+    ep_config.si                    = KNETC_EP_CONFIG_SI;
     ep_config.siConfig.txRingUse    = 1;
     ep_config.siConfig.rxRingUse    = 1;
     ep_config.reclaimCallback       = ReclaimCallback;
     ep_config.msixEntry             = &msixEntry[0];
     ep_config.entryNum              = 2;
-    ep_config.port.ethMac.miiMode   = kNETC_RmiiMode;
+    ep_config.port.ethMac.miiMode   = KNETC_HW_MII_MODE;
     ep_config.port.ethMac.miiSpeed  = kNETC_MiiSpeed100M;
     ep_config.port.ethMac.miiDuplex = kNETC_MiiFullDuplex;
 #ifdef EXAMPLE_ENABLE_CACHE_MAINTAIN
@@ -514,18 +449,18 @@ void control_task(char *ifname)
 
 	/* initialise SOEM, and if_port */
 	if (ec_init(ifname)) {
-		printf("ec_init on %s succeeded.\n",ifname);
+		PRINTF("ec_init on %s succeeded.\n",ifname);
 		/* find and auto-config slaves */
 		if ( ec_config_init(FALSE) > 0 ) {
-			printf("%d slaves found and configured.\n",ec_slavecount);
+			PRINTF("%d slaves found and configured.\n",ec_slavecount);
 			if (ec_slavecount < MAX_SERVO) {
-				printf("The number of Servo scanned is not consistent with configed, please reconfirm\n");
+				PRINTF("The number of Servo scanned is not consistent with configed, please reconfirm\n");
 				return;
 			}
 
 			i = servo_slave_check(servo, MAX_SERVO);
 			if (i < 0) {
-				printf("The infomation of Servo:%d is not consistent with scanned, please reconfirm\n", -i);
+				PRINTF("The infomation of Servo:%d is not consistent with scanned, please reconfirm\n", -i);
 				return;
 			}
 
@@ -548,18 +483,18 @@ void control_task(char *ifname)
 			for (i = 0; i < MAX_AXIS; i++) {
 				axis_nc_init(&axis[i], tp[i], CYCLE_PERIOD_NS);
 			}
-			printf("Slaves mapped, state to SAFE_OP.\n");
+			PRINTF("Slaves mapped, state to SAFE_OP.\n");
 			/* wait for all slaves to reach SAFE_OP state */
 			ec_statecheck(0, EC_STATE_SAFE_OP,  EC_TIMEOUTSTATE * 4);
 			for (i = 0; i < MAX_AXIS; i++) {
 				PDO_write_targe_position(&axis[i], axis[i].current_position);
 				axis_nc_start(&axis[i]);
 			}
-			printf("segments : %d : %lu %lu %lu %lu\n",ec_group[0].nsegments ,ec_group[0].IOsegment[0],ec_group[0].IOsegment[1],ec_group[0].IOsegment[2],ec_group[0].IOsegment[3]);
+			PRINTF("segments : %d : %lu %lu %lu %lu\n",ec_group[0].nsegments ,ec_group[0].IOsegment[0],ec_group[0].IOsegment[1],ec_group[0].IOsegment[2],ec_group[0].IOsegment[3]);
 
-			printf("Request operational state for all slaves\n");
+			PRINTF("Request operational state for all slaves\n");
 			expectedWKC = (ec_group[0].outputsWKC * 2) + ec_group[0].inputsWKC;
-			printf("Calculated workcounter %d\n", expectedWKC);
+			PRINTF("Calculated workcounter %d\n", expectedWKC);
 			ec_slave[0].state = EC_STATE_OPERATIONAL;
 			/* send one valid process data to make outputs in slaves happy*/
 			ec_send_processdata();
@@ -588,7 +523,6 @@ void control_task(char *ifname)
 			/* request OP state for all slaves */
 			ec_writestate(0);
 			chk = 500;
-			int led = 0;
 			/* wait for all slaves to reach OP state */
 			do {
 				ec_send_processdata();
@@ -651,8 +585,8 @@ void control_task(char *ifname)
 						PRINTF("expired\r\n");
 					}
 				}
-				printf("wkc_lost = %d\r\n", wkc_lost);
-				printf("\r\nRequest init state for all slaves\r\n");
+				PRINTF("wkc_lost = %d\r\n", wkc_lost);
+				PRINTF("\r\nRequest init state for all slaves\r\n");
 				for(i = 1; i<=ec_slavecount ; i++) {
 					if(ec_slave[i].state != EC_STATE_OPERATIONAL) {
 						PRINTF("Slave %d State=0x%2.2x StatusCode=0x%4.4x : %s\r\n",
@@ -667,171 +601,21 @@ void control_task(char *ifname)
 			/* stop SOEM, close socket */
 			ec_close();
 		} else {
-			printf("No socket connection on %s\nExecute as root\r\n",ifname);
+			PRINTF("No socket connection on %s\nExecute as root\r\n",ifname);
 		}
 	}
 	return;
 }
-
-status_t NETC_EP_MDIO_Init(void)
-{
-    status_t result = kStatus_Success;
-
-    netc_mdio_config_t mdioConfig = {
-        .isPreambleDisable = false,
-        .isNegativeDriven  = false,
-        .srcClockHz        = NETC_FREQ,
-    };
-
-    mdioConfig.mdio.type = kNETC_EMdio;
-    result               = NETC_MDIOInit(&if_port.s_emdio_handle, &mdioConfig);
-    if (result != kStatus_Success)
-    {
-        return result;
-    }
-
-    return result;
-}
-
-static status_t NETC_EP_EMDIOWrite(uint8_t phyAddr, uint8_t regAddr, uint16_t data)
-{
-    return NETC_MDIOWrite(&if_port.s_emdio_handle, phyAddr, regAddr, data);
-}
-
-static status_t NETC_EP_EMDIORead(uint8_t phyAddr, uint8_t regAddr, uint16_t *pData)
-{
-    return NETC_MDIORead(&if_port.s_emdio_handle, phyAddr, regAddr, pData);
-}
-
-static status_t NETC_EP_Phy8201SetUp(phy_handle_t *handle)
-{
-	status_t result;
-	uint16_t data;
-
-	result = PHY_Write(handle, PHY_PAGE_SELECT_REG, 7);
-	if (result != kStatus_Success)
-	{
-		return result;
-	}
-	result = PHY_Read(handle, 16, &data);
-	if (result != kStatus_Success)
-	{
-		return result;
-	}
-
-	/* CRS/DV pin is RXDV signal. */
-	data |= (1U << 2);
-	result = PHY_Write(handle, 16, data);
-	if (result != kStatus_Success)
-	{
-		return result;
-	}
-	result = PHY_Write(handle, PHY_PAGE_SELECT_REG, 0);
-	if (result != kStatus_Success)
-	{
-		return result;
-	}
-	
-	result = PHY_Read(handle, 0, &data);
-	if (result != kStatus_Success)
-	{
-		return result;
-	}
-
-	/* Auto Negotiation Enable. */
-	data |= (1U << 12);
-	result = PHY_Write(handle, 0, data);
-
-	return result;
-}
-
-phy_rtl8201_resource_t s_phy_resource;
-status_t NETC_EP_PHY_Init(void)
-{
-    status_t result            = kStatus_Success;
-    phy_config_t phy8201Config = {
-        .autoNeg   = false,
-        .speed     = kPHY_Speed100M,
-        .duplex    = kPHY_FullDuplex,
-        .enableEEE = false,
-        .ops       = &phyrtl8201_ops,
-    };
-    rgpio_pin_config_t pinConfig = {.pinDirection = kRGPIO_DigitalOutput, .outputLogic = 0};
-
-    /* Reset PHY8201 for ETH4(EP), ETH0(Switch port0). Power on 150ms, reset 10ms, wait 150ms. */
-    /* Reset PHY8211 for ETH1(Switch port1). Reset 10ms, wait 72ms. */
-    RGPIO_PinInit(RGPIO4, 13, &pinConfig);
-    RGPIO_PinInit(RGPIO4, 25, &pinConfig);
-    SDK_DelayAtLeastUs(10000, SDK_DEVICE_MAXIMUM_CPU_CLOCK_FREQUENCY);
-    RGPIO_PinWrite(RGPIO4, 13, 1);
-    RGPIO_PinWrite(RGPIO4, 25, 1);
-    SDK_DelayAtLeastUs(150000, SDK_DEVICE_MAXIMUM_CPU_CLOCK_FREQUENCY);
-
-    /* Initialize PHY for EP. */
-    s_phy_resource.write = NETC_EP_EMDIOWrite;
-    s_phy_resource.read  = NETC_EP_EMDIORead;
-    
-	phy8201Config.resource = &s_phy_resource;
-    phy8201Config.phyAddr  = EP0_PHY_ADDR;
-    result                 = PHY_Init(&if_port.phy_handle, &phy8201Config);
-    if (result != kStatus_Success)
-    {
-        return result;
-    }
-
-    result = NETC_EP_Phy8201SetUp(&if_port.phy_handle);
-    if (result != kStatus_Success)
-    {
-        return result;
-    }
-
-    return result;
-}
-
 
 /*!
  * @brief Main function
  */
 int main(void)
 {
-	status_t result = kStatus_Success;
-	bool link;
 	BOARD_InitHardware();
 
-	result = NETC_EP_MDIO_Init();
-	if (result != kStatus_Success)
-	{
-		PRINTF("\r\nMDIO Init failed!\r\n");
-		return result;
-	}
+	PRINTF("Start the soem_servo_motor baremetal example...\r\n");
 
-	result = NETC_EP_PHY_Init();
-	if (result != kStatus_Success)
-	{
-		PRINTF("\r\nPHY Init failed!\r\n");
-		return result;
-	}
-	/* Define the init structure for the input switch pin */
-	rgpio_pin_config_t sw_config = {
-		kRGPIO_DigitalInput,
-		0,
-	};
-
-	/* Workaround: Disable interrupt which might be enabled by ROM. */
-	RGPIO_SetPinInterruptConfig(RGPIO1, 9U, kRGPIO_InterruptOutput0, kRGPIO_InterruptOrDMADisabled);
-	NVIC_ClearPendingIRQ(GPIO1_0_IRQn);
-
-	/* Init input switch GPIO. */
-	RGPIO_SetPinInterruptConfig(BOARD_SW_GPIO, BOARD_SW_GPIO_PIN, BOARD_SW_INT_OUTPUT, kRGPIO_InterruptFallingEdge);
-
-	EnableIRQ(BOARD_SW_IRQ);
-	RGPIO_PinInit(BOARD_SW_GPIO, BOARD_SW_GPIO_PIN, &sw_config);
-
-	do
-	{
-		PHY_GetLinkStatus(&if_port.phy_handle, &link);
-	} while (!link);
-	
 	osal_timer_init(0);
 	if_port_init();
 	control_task(SOEM_PORT_NAME);

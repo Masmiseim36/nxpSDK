@@ -53,8 +53,8 @@ if (isdefinedsymbol(__use_shmem__)) {
   define exported symbol __NCACHE_REGION_START   = rpmsg_sh_mem_start;
   define exported symbol __NCACHE_REGION_SIZE    = rpmsg_sh_mem_end - rpmsg_sh_mem_start + 1;
 } else {
-  define symbol m_data2_start                    = 0x202C0000;
-  define symbol m_data2_end                      = 0x2033FFFF;
+  define symbol m_data2_start                    = 0x20240000;
+  define symbol m_data2_end                      = 0x202FFFFF;
 
   define exported symbol __NCACHE_REGION_START   = m_data2_start;
   define exported symbol __NCACHE_REGION_SIZE    = 0x0;

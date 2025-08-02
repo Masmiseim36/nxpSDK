@@ -2,9 +2,9 @@
 
 ## Overview
 
-The lwip_httpsrv demo application demonstrates an HTTPServer on the lwIP TCP/IP
-stack with bare metal SDK or FreeRTOS.The user uses an Internet browser to send
-a request for connection. The board acts as an HTTP server and sends a Webpage
+The lwip_httpsrv demo application demonstrates an HTTP server on the lwIP TCP/IP
+stack with bare metal SDK or FreeRTOS. The user uses an Internet browser to send
+a request for connection. The board acts as an HTTP server and sends a webpage
 back to the PC.
 
 ## Supported Boards

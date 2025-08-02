@@ -7734,7 +7734,6 @@ void appl_smp_lesc_xtxp_lk_complete(SMP_LESC_LK_LTK_GEN_PL * xtxp)
     API_RESULT retval;
     SMP_AUTH_INFO auth;
     struct bt_keys_link_key *link_key;
-    struct bt_conn *conn;
     UCHAR type = 0U;
 
     LOG_DBG("\n LK of the device is ...\n");

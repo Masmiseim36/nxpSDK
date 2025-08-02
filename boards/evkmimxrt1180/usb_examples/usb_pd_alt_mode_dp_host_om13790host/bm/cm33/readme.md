@@ -33,6 +33,7 @@ It recognize attached video adapters (like "Type-C to DisplayPort" or "Type-C to
 
 <br> For detailed instructions, see the appropriate board User's Guide.
 > Please reference to the re-worked document for hardware settings.
+> Please note that this case does not work with the SCH-32144 REV B of shield board because this verison of shield board uses PTN36502 and the I2C  address of PTN36502 is 0x1A. To make it work, need to change the macro PD_PTN36502_SLAVE_ADDRESS from 0x12 to 0x1A.
 
 
 ### Prepare the example

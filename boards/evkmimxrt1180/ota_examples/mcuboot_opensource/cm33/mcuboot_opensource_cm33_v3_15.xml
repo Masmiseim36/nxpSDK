@@ -28,14 +28,14 @@
     <definition extID="platform.utilities.misc_utilities.MIMXRT1189"/>
     <definition extID="component.lists.MIMXRT1189"/>
     <definition extID="utility.str.MIMXRT1189"/>
+    <definition extID="component.silicon_id.MIMXRT1189"/>
+    <definition extID="component.silicon_id_imxrt1180.MIMXRT1189"/>
     <definition extID="utility.debug_console.MIMXRT1189"/>
     <definition extID="component.serial_manager.MIMXRT1189"/>
     <definition extID="component.serial_manager_uart.MIMXRT1189"/>
     <definition extID="component.lpuart_adapter.MIMXRT1189"/>
-    <definition extID="component.mflash_offchip.MIMXRT1189"/>
     <definition extID="component.ele_crypto.MIMXRT1189"/>
-    <definition extID="component.silicon_id.MIMXRT1189"/>
-    <definition extID="component.silicon_id_imxrt1180.MIMXRT1189"/>
+    <definition extID="component.mflash_offchip.MIMXRT1189"/>
     <definition extID="middleware.mbedtls.port.ele_s400_option.MIMXRT1189"/>
     <definition extID="middleware.mbedtls.MIMXRT1189"/>
     <definition extID="middleware.mbedtls.port.ele_s400.MIMXRT1189"/>
@@ -44,7 +44,6 @@
     <definition extID="middleware.mcuboot.stack_heap_default_mbedtls.MIMXRT1189"/>
     <definition extID="middleware.mcuboot.bootutil.flashapi_rt.MIMXRT1189"/>
     <definition extID="iar"/>
-    <definition extID="mdk"/>
     <definition extID="armgcc"/>
     <definition extID="mcuxpresso"/>
     <definition extID="com.nxp.mcuxpresso"/>
@@ -53,7 +52,7 @@
     <definition extID="com.nxp.mcuxpresso.core.debug.support.segger.debug"/>
     <definition extID="com.nxp.mcuxpresso.core.debug.support.segger.release"/>
   </externalDefinitions>
-  <example id="evkmimxrt1180_mcuboot_opensource_cm33" name="mcuboot_opensource_cm33" device_core="cm33_MIMXRT1189xxxxx" dependency="platform.drivers.xip_board.evkmimxrt1180.MIMXRT1189 platform.drivers.xip_device.MIMXRT1189 platform.drivers.pmu_1.MIMXRT1189 platform.drivers.clock.MIMXRT1189 platform.drivers.dcdc_soc.MIMXRT1189 platform.drivers.ele_base_api.MIMXRT1189 platform.drivers.gpc_3.MIMXRT1189 platform.drivers.iomuxc.MIMXRT1189 platform.drivers.memory.MIMXRT1189 platform.drivers.misc.MIMXRT1189 platform.drivers.soc_src.MIMXRT1189 CMSIS_Include_core_cm.MIMXRT1189 device.MIMXRT1189_CMSIS.MIMXRT1189 device.MIMXRT1189_system.MIMXRT1189 device.MIMXRT1189_startup.MIMXRT1189 platform.drivers.cache_xcache.MIMXRT1189 platform.drivers.common.MIMXRT1189 platform.drivers.flexspi.MIMXRT1189 platform.drivers.lpuart.MIMXRT1189 platform.drivers.rgpio.MIMXRT1189 platform.drivers.s3mu.MIMXRT1189 platform.drivers.trdc.MIMXRT1189 platform.utilities.assert.MIMXRT1189 platform.utilities.misc_utilities.MIMXRT1189 component.lists.MIMXRT1189 utility.str.MIMXRT1189 utility.debug_console.MIMXRT1189 component.serial_manager.MIMXRT1189 component.serial_manager_uart.MIMXRT1189 component.lpuart_adapter.MIMXRT1189 component.mflash_offchip.MIMXRT1189 component.ele_crypto.MIMXRT1189 component.silicon_id.MIMXRT1189 component.silicon_id_imxrt1180.MIMXRT1189 middleware.mbedtls.port.ele_s400_option.MIMXRT1189 middleware.mbedtls.MIMXRT1189 middleware.mbedtls.port.ele_s400.MIMXRT1189 middleware.mcuboot.bootutil.MIMXRT1189 middleware.mcuboot.nxp_bootutil_port.MIMXRT1189 middleware.mcuboot.stack_heap_default_mbedtls.MIMXRT1189 middleware.mcuboot.bootutil.flashapi_rt.MIMXRT1189" category="ota_examples">
+  <example id="evkmimxrt1180_mcuboot_opensource_cm33" name="mcuboot_opensource_cm33" device_core="cm33_MIMXRT1189xxxxx" dependency="platform.drivers.xip_board.evkmimxrt1180.MIMXRT1189 platform.drivers.xip_device.MIMXRT1189 platform.drivers.pmu_1.MIMXRT1189 platform.drivers.clock.MIMXRT1189 platform.drivers.dcdc_soc.MIMXRT1189 platform.drivers.ele_base_api.MIMXRT1189 platform.drivers.gpc_3.MIMXRT1189 platform.drivers.iomuxc.MIMXRT1189 platform.drivers.memory.MIMXRT1189 platform.drivers.misc.MIMXRT1189 platform.drivers.soc_src.MIMXRT1189 CMSIS_Include_core_cm.MIMXRT1189 device.MIMXRT1189_CMSIS.MIMXRT1189 device.MIMXRT1189_system.MIMXRT1189 device.MIMXRT1189_startup.MIMXRT1189 platform.drivers.cache_xcache.MIMXRT1189 platform.drivers.common.MIMXRT1189 platform.drivers.flexspi.MIMXRT1189 platform.drivers.lpuart.MIMXRT1189 platform.drivers.rgpio.MIMXRT1189 platform.drivers.s3mu.MIMXRT1189 platform.drivers.trdc.MIMXRT1189 platform.utilities.assert.MIMXRT1189 platform.utilities.misc_utilities.MIMXRT1189 component.lists.MIMXRT1189 utility.str.MIMXRT1189 component.silicon_id.MIMXRT1189 component.silicon_id_imxrt1180.MIMXRT1189 utility.debug_console.MIMXRT1189 component.serial_manager.MIMXRT1189 component.serial_manager_uart.MIMXRT1189 component.lpuart_adapter.MIMXRT1189 component.ele_crypto.MIMXRT1189 component.mflash_offchip.MIMXRT1189 middleware.mbedtls.port.ele_s400_option.MIMXRT1189 middleware.mbedtls.MIMXRT1189 middleware.mbedtls.port.ele_s400.MIMXRT1189 middleware.mcuboot.bootutil.MIMXRT1189 middleware.mcuboot.nxp_bootutil_port.MIMXRT1189 middleware.mcuboot.stack_heap_default_mbedtls.MIMXRT1189 middleware.mcuboot.bootutil.flashapi_rt.MIMXRT1189" category="ota_examples">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -100,11 +99,12 @@
           <value>MBEDTLS_KEY_EXCHANGE_RSA_ENABLED</value>
           <value>SDK_DEBUGCONSOLE=1</value>
           <value>MCUX_META_BUILD</value>
-          <value>CPU_MIMXRT1189CVM8B_cm33</value>
+          <value>CPU_MIMXRT1189CVM8C_cm33</value>
+          <value>MIMXRT1189_cm33_SERIES</value>
           <value>XIP_BOOT_HEADER_ENABLE=1</value>
           <value>SERIAL_PORT_TYPE_UART=1</value>
-          <value>MFLASH_FILE_BASEADDR=14221312</value>
           <value>CACHE_MODE_WRITE_THROUGH=1</value>
+          <value>MFLASH_FILE_BASEADDR=14221312</value>
           <value>MBEDTLS_MCUX_ELE_S400_API</value>
         </option>
         <option id="com.crt.advproject.link.memory.sections" type="stringList">
@@ -162,11 +162,6 @@
       <files mask="mcuboot_opensource_cm33.ewd"/>
       <files mask="mcuboot_opensource_cm33.eww"/>
     </source>
-    <source path="mdk" project_relative_path="./" type="workspace" toolchain="mdk">
-      <files mask="mcuboot_opensource_cm33.uvprojx"/>
-      <files mask="mcuboot_opensource_cm33.uvoptx"/>
-      <files mask="mcuboot_opensource_cm33.uvmpw"/>
-    </source>
     <source path="armgcc" project_relative_path="./" type="workspace" toolchain="armgcc">
       <files mask="build_all.bat"/>
       <files mask="build_all.sh"/>
@@ -186,8 +181,62 @@
     <source path="." project_relative_path="source" type="other" toolchain="iar">
       <files mask="evkmimxrt1180.mac"/>
     </source>
-    <source path="." project_relative_path="source" type="configuration" toolchain="mdk">
-      <files mask="evkmimxrt1180_flexspi_nor_cm33.ini"/>
+    <source path="../.." project_relative_path="source" type="other" exclude="true">
+      <files mask="CHANGELOG.md" hidden="true"/>
+      <files mask="README.md" hidden="true"/>
+    </source>
+    <source path="../../_common/sb3_templates" project_relative_path="source" type="other" exclude="true">
+      <files mask="mcxn_sb3_cfg_primary_slot.yaml" hidden="true"/>
+      <files mask="rw612_sb3_cfg_primary_slot.yaml" hidden="true"/>
+      <files mask="rw612_sb3_cfg_secondary_slot.yaml" hidden="true"/>
+    </source>
+    <source path="../../_common/sb3_api" project_relative_path="source" type="other" exclude="true">
+      <files mask="sb3_api.h" hidden="true"/>
+      <files mask="sb3_api_mcxn10.c" hidden="true"/>
+      <files mask="sb3_api_rw61x.c" hidden="true"/>
+    </source>
+    <source path="../../_doc" project_relative_path="source" type="other" exclude="true">
+      <files mask="encrypted_xip_readme.md" hidden="true"/>
+      <files mask="encrypted_xip_npx_readme.md" hidden="true"/>
+      <files mask="flash_remap_readme.md" hidden="true"/>
+      <files mask="sb3_common_readme.md" hidden="true"/>
+      <files mask="sb3_mcxn_readme.md" hidden="true"/>
+      <files mask="sb3_rw61x_readme.md" hidden="true"/>
+    </source>
+    <source path="../../_doc/sb3_pics" project_relative_path="source" type="other" exclude="true">
+      <files mask="1_prov_keys.jpg" hidden="true"/>
+      <files mask="1_prov_mcuboot_mcxn.jpg" hidden="true"/>
+      <files mask="1_prov_mcuboot_rw61x.jpg.jpg" hidden="true"/>
+      <files mask="1_prov_rom_mcxn.jpg" hidden="true"/>
+      <files mask="1_prov_write_mcxn.jpg" hidden="true"/>
+      <files mask="1_prov_write_rw61x.jpg.jpg" hidden="true"/>
+      <files mask="2_ota_create_mcuboot_mcxn_1.jpg" hidden="true"/>
+      <files mask="2_ota_create_mcuboot_mcxn_2.jpg" hidden="true"/>
+      <files mask="2_ota_create_mcuboot_rw61x_1.jpg" hidden="true"/>
+      <files mask="2_ota_create_mcuboot_rw61x_2.jpg" hidden="true"/>
+      <files mask="2_ota_create_rom_rw61x.jpg" hidden="true"/>
+      <files mask="3_ota_mcuboot_mcxn_1.jpg" hidden="true"/>
+      <files mask="3_ota_mcuboot_mcxn_2.jpg" hidden="true"/>
+      <files mask="3_ota_mcuboot_rw61x_1.jpg" hidden="true"/>
+      <files mask="3_ota_mcuboot_rw61x_2.jpg" hidden="true"/>
+      <files mask="3_ota_rom_mcxn_1.jpg" hidden="true"/>
+      <files mask="3_ota_rom_mcxn_2.jpg" hidden="true"/>
+      <files mask="3_ota_rom_rw61x_1.jpg" hidden="true"/>
+      <files mask="3_ota_rom_rw61x_2.jpg" hidden="true"/>
+    </source>
+    <source path="../../_doc/encrypted_xip_pics" project_relative_path="source" type="other" exclude="true">
+      <files mask="bee_metadata.jpg" hidden="true"/>
+      <files mask="bee_rom_layout.jpg" hidden="true"/>
+      <files mask="device_fleet_graph.jpg" hidden="true"/>
+      <files mask="general_metadata.jpg" hidden="true"/>
+      <files mask="iped_metadata.jpg" hidden="true"/>
+      <files mask="keys_scheme.jpg" hidden="true"/>
+      <files mask="npx_example_1.jpg" hidden="true"/>
+      <files mask="npx_example_2.jpg" hidden="true"/>
+      <files mask="npx_example_3.jpg" hidden="true"/>
+      <files mask="npx_example_4.jpg" hidden="true"/>
+      <files mask="overwrite_only.jpg" hidden="true"/>
+      <files mask="overwrite_only_flow.jpg" hidden="true"/>
     </source>
     <source path="linkscripts" project_relative_path="linkscripts" type="src" toolchain="mcuxpresso">
       <files mask="data.ldt"/>
@@ -210,9 +259,6 @@
     </source>
     <source path="armgcc" project_relative_path="MIMXRT1189/armgcc" type="linker" toolchain="armgcc">
       <files mask="MIMXRT1189xxxxx_cm33_flexspi_nor.ld"/>
-    </source>
-    <source path="mdk" project_relative_path="MIMXRT1189/mdk" type="linker" toolchain="mdk">
-      <files mask="MIMXRT1189xxxxx_cm33_flexspi_nor.scf"/>
     </source>
     <source path="." project_relative_path="board" type="c_include">
       <files mask="board.h"/>
@@ -243,6 +289,9 @@
     </source>
     <source path="." project_relative_path="doc" type="doc">
       <files mask="example_board_readme.md"/>
+    </source>
+    <source path="." project_relative_path="doc" type="doc">
+      <files mask="examples_shared_readme.md"/>
     </source>
   </example>
 </ksdk:examples>

@@ -75,7 +75,7 @@ void BOARD_InitHardware(void)
 
     /* Init DMAMUX */
     DMAMUX_Init(DEMO_DMAMUX);
-    DMAMUX_SetSource(DEMO_DMAMUX, DEMO_TX_EDMA_CHANNEL, (uint8_t)DEMO_SAI_TX_SOURCE);
+    DMAMUX_SetSource(DEMO_DMAMUX, DEMO_TX_EDMA_CHANNEL, DEMO_SAI_TX_SOURCE);
     DMAMUX_EnableChannel(DEMO_DMAMUX, DEMO_TX_EDMA_CHANNEL);
 
     /* enable codec power */

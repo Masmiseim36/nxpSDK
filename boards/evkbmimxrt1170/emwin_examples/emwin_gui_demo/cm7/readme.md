@@ -5,14 +5,14 @@ The example demonstrates graphical widgets of the emWin library.
 
 SDK version
 ===========
-- Version: 24.12.00
+- Version: 25.06.00
 
 Toolchain supported
 ===================
 - Keil MDK  5.41
 - IAR embedded Workbench  9.60.3
 - GCC ARM Embedded  13.2.1
-- MCUXpresso  24.12.00
+- MCUXpresso  25.06.00
 
 Hardware requirements
 =====================
@@ -34,7 +34,7 @@ If package is used, modify the mcux_config.h:
 change DEMO_PANEL to 0 to use RK055AHD091-CTG.
 change DEMO_PANEL to 1 to use RK055IQH091-CTG.
 change DEMO_PANEL to 2 to use RK055MHD091A0-CTG(default).
-change DEMO_PANEL to 3 to use RaspberryPi panel.
+change DEMO_PANEL to 5 to use RaspberryPi panel.
 
 Prepare the Demo
 ================

@@ -1,6 +1,6 @@
 /*
 * Copyright 2016, Freescale Semiconductor, Inc.
-* Copyright 2016-2021, 2024 NXP
+* Copyright 2016-2021, 2024-2025 NXP
 *
 * NXP Proprietary. This software is owned or controlled by NXP and may
 * only be used strictly in accordance with the applicable license terms. 
@@ -27,6 +27,8 @@
  * Definitions
  ******************************************************************************/
 
+#define Q_CURRENT_ZC_FILTER
+   
 /*! @brief mcs alignment structure */
 typedef struct _mcs_alignment_a1
 {
@@ -47,6 +49,7 @@ typedef struct _mcs_pmsm_foc_a1
     GMCLIB_2COOR_ALBE_T_FLT sIAlBe;           /* Alpha/Beta current */
     GMCLIB_2COOR_DQ_T_FLT sIDQ;               /* DQ current */
     GMCLIB_2COOR_DQ_T_FLT sIDQReq;            /* DQ required current */
+    GMCLIB_2COOR_DQ_T_FLT sIDQReqFilt;        /* DQ required current filtered by ZC filter */
     GMCLIB_2COOR_DQ_T_FLT sIDQError;          /* DQ current error */
     GMCLIB_3COOR_T_F16 sDutyABC;              /* Applied duty cycles ABC */
     GMCLIB_2COOR_ALBE_T_FLT sUAlBeReq;        /* Required Alpha/Beta voltage */
@@ -58,6 +61,8 @@ typedef struct _mcs_pmsm_foc_a1
     AMCLIB_BEMF_OBSRV_DQ_T_FLT sBemfObsrv;    /* BEMF observer in DQ */
     AMCLIB_TRACK_OBSRV_T_FLT sTo;             /* Tracking observer */
     GDFLIB_FILTER_IIR1_T_FLT sSpeedElEstFilt; /* Estimated speed filter */
+    GDFLIB_FILTER_IIR1_T_FLT sIdReqZCFilter;  /* Id required filter */
+    GDFLIB_FILTER_IIR1_T_FLT sIqReqZCFilter;  /* Iq required filter */
     acc32_t acc32BemfErr;                     /* BEMF observer output */
     float_t fltSpeedElEst;                    /* Rotor electrical speed estimated */
     uint16_t ui16SectorSVM;                   /* SVM sector */
@@ -90,43 +95,78 @@ typedef struct _mcs_pmsm_scalar_ctrl_a1
     float_t fltUqMin;                       /* Minimal Uq voltage for scalar control*/
 } mcs_pmsm_scalar_ctrl_t;
 
-/*! @brief mcs scalar structure */
+/*! @brief mcs speed structure */
 typedef struct _mcs_speed_a1
 {
     GDFLIB_FILTER_IIR1_T_FLT sSpeedFilter;   /* Speed filter */
     GFLIB_CTRL_PI_P_AW_T_FLT sSpeedPiParams; /* Speed PI controller parameters */
+    GDFLIB_FILTER_IIR1_T_FLT sSpeedCmdZCFilter; /* Speed zero-cancellation filter */
     GFLIB_RAMP_T_FLT sSpeedRampParams;       /* Speed ramp parameters */
     float_t fltSpeed;                        /* Speed */
     float_t fltSpeedFilt;                    /* Speed filtered */
     float_t fltSpeedError;                   /* Speed error */
     float_t fltSpeedRamp;                    /* Required speed (ramp output) */
     float_t fltSpeedCmd;                     /* Speed command (entered by user or master layer) */
+    float_t fltSpeedCmdFilt;                 /* Speed command filtered by ZC filter */
     float_t fltIqReq;                        /* Output of ASR */
     bool_t bSpeedPiStopInteg;                /* Speed PI controller saturation flag */
     bool_t bIqPiLimFlag;                     /* Saturation flag of Iq controller */
+    bool_t bSpeedZCOn;                          /* Zero cancellation switch */
 } mcs_speed_t;
 
 /*! @brief mcs openloop structure */
 typedef struct _mcs_openloop_a1
 {
-	GFLIB_INTEGRATOR_T_A32 sFreqIntegrator;
-	GMCLIB_2COOR_DQ_T_FLT sUDQReq;
-	GMCLIB_2COOR_DQ_T_FLT sIDQReq;
-	float_t fltFreqMax;
-	float_t fltFreqReq;
-	bool_t bCurrentControl;
-	frac16_t f16Theta;
+    GFLIB_INTEGRATOR_T_A32 sFreqIntegrator;
+    GMCLIB_2COOR_DQ_T_FLT sUDQReq;
+    GMCLIB_2COOR_DQ_T_FLT sIDQReq;
+    float_t fltFreqMax;
+    float_t fltFreqReq;
+    bool_t bCurrentControl;
+    frac16_t f16Theta;
     frac16_t f16PosElExt;
 } mcs_openloop_t;
 
 /*! @brief mcs position structure */
 typedef struct _mcs_position_a1
 {
-    frac16_t f16PositionPGain; /* Position P gain */
-    acc32_t a32Position;       /* Position */
-    acc32_t a32PositionError;  /* Position error */
-    acc32_t a32PositionCmd;    /* Position command (entered by user or master layer) */
-    frac16_t f16SpeedReq;      /* Output from P position controller in fraction */
+    GFLIB_CTRL_PI_P_AW_T_FLT sPositionPiParams;/* Position PI controller parameters */
+    GFLIB_CTRL_PI_P_AW_T_FLT sSpeedPiParams;   /* Speed PI controller parameters */
+    GDFLIB_FILTER_IIR1_T_FLT sSpeedReqZCFilter;    /* Zero cancellation parameters */
+    
+    float_t fltPositionCmd;
+    float_t fltPosition;
+
+    float_t fltSpeedReq;                        /* Output from position PI controller */
+    float_t fltSpeedFeedFrwdK1;                 /* Addition from first derivation of feed forward loop */
+    float_t fltSpeedFeedFrwdK2;                 /* Addition from second derivation of feed forward loop */
+    float_t fltPositionError;                   /* Float position error */
+    float_t fltPositionCmdDelta;                /* Difference between fltPositionCmd(n) and fltPositionCmd(n-1) */
+    float_t fltFirstDerivationDelta;            /* Difference between fltFirstDerivation(n) and fltFirstDerivation(n-1) */
+    float_t fltFirstDerivation;                 /* First derivation */
+    float_t fltSecondDerivation;                /* Second derivation */
+    float_t fltPositionCmd_stored;              /* fltPositionCmd(n-1) */
+    float_t fltFirstDerivation_stored;          /* fltFirstDerivation(n-1) */
+    
+    float_t fltSpeedLoopTs;                     /* Slow loop sample time */
+    
+    bool_t bPositionPiStopInteg;                /* Position PI controller saturation flag */           
+    
+    float_t fltFeedFrwdK1;                      /* First feed forward parameter */
+    float_t fltFeedFrwdK2;                      /* Second feed forward parameter */
+    
+    bool_t bFeedFrwdOn;                         /* Feed forward switch */
+
+    float_t fltSpeedFilt;                    /* Speed filtered */
+    float_t fltSpeedError;                   /* Speed error */
+    float_t fltSpeedReqFilt;                 /* Speed required (output from position controller) */
+    float_t fltIqReq;                        /* Output of ASR */
+    bool_t bSpeedPiStopInteg;                /* Speed PI controller saturation flag */
+    bool_t bIqPiLimFlag;                     /* Saturation flag of Iq controller */
+    
+    acc32_t a32Position;                        /* Actual accumulator Position */
+    acc32_t a32PositionError;                   /* Acumullator Position error */
+    acc32_t a32PositionCmd;                     /* Position command (entered by user or master layer) */
 } mcs_position_t;
 
 /*! @brief mcs mcat control structure */
@@ -195,6 +235,18 @@ void MCS_PMSMOpenloop(mcs_openloop_t *psOpenloop);
  */
 RAM_FUNC_LIB
 void MCS_PMSMFocCtrl(mcs_pmsm_foc_t *psFocPMSM);
+
+/*!
+ * @brief Optimized PMSM field oriented current control.
+ *
+ * This function is used to compute PMSM field oriented current control.
+ *
+ * @param psFocPMSM     The pointer of the PMSM FOC structure
+ *
+ * @return None
+ */
+RAM_FUNC_LIB
+void MCS_PMSMFocCtrl_Optim(mcs_pmsm_foc_t *psFocPMSM);
 
 /*!
  * @brief PMSM field oriented speed control.

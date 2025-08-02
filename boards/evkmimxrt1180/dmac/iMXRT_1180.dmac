@@ -1,0 +1,312 @@
+__param disable_watchdog = 0;
+__param _m7_vtor=0x0;
+__param authentication = 0;
+
+DisableWatchdog(wdog,ram)
+{
+    __var tmp;
+    __var Mem_Word0;
+    __var Mem_Word1;
+    __var PC_reg;
+    __var R0_reg;
+    __var R1_reg;
+    __var R2_reg;
+    __var R3_reg;
+
+    /*Read Watchdog Control and Status Register*/
+    tmp = __readMemory32(wdog,"Memory");
+
+    if(tmp & (1<<7))
+    {
+        /*Watchdog is enabled*/
+        __message "Disable watchdog ...";
+        /*Timing restrictions force WDOG disabling to be executed on target*/
+        /*Read Memory used for WDOG disabling code*/
+        Mem_Word0 = __readMemory32(ram+0,"Memory");
+        Mem_Word1 = __readMemory32(ram+4,"Memory");
+        /*Load disabling code in Ram*/
+        __writeMemory16(0x0000, ram+0, "Memory"); // MOVS R0,R0 ; TODO workaround, remove this when possible.
+        __writeMemory16(0x6041, ram+2, "Memory"); // STR R1, [R0, #0x4] ; WDOG_CNT   = 0xD928C520;
+        __writeMemory16(0x6083, ram+4, "Memory"); // STR R3, [R0, #0x8] ; WDOG_TOVAL = 0xFFFF;
+        __writeMemory16(0x6002, ram+6, "Memory"); // STR R2, [R0]       ; WDOG_CS = 0x2120;
+
+        /*Keep Registers*/
+        PC_reg = #PC; //__readMemory32(0x1ec, "Register );
+        R0_reg = #R0; //__readMemory32(0x00, "Register );
+        R1_reg = #R1; //__readMemory32(0x04, "Register );
+        R2_reg = #R2; //__readMemory32(0x08, "Register );
+        R3_reg = #R3; //__readMemory32(0x0C, "Register );
+        /*Init registers*/
+        #R0 = wdog;  //__writeMemory32(wdog, 0x00, "Register );  // R0 = wdog
+        #R1 = 0xD928C520; //__writeMemory32(0xD928C520, 0x04, "Register );  // R1 = 0xD928C520
+        #R2 = 0x00002120; //__writeMemory32(0x00002120, 0x08, "Register );  // R2 = 0x00002120
+        #R3 = 0x0000FFFF; //__writeMemory32(0x0000FFFF, 0x0C, "Register );  // R3 = 0x0000FFFF
+        /*Disable code start address*/
+        #PC = ram; //__writeMemory32(ram, 0x1ec, "Register); //PC = ram;
+
+        if(0 > __hwRunToBreakpoint(ram+8,20))
+        {
+            __message "Disable watchdog failed";
+        }
+
+        /*Restore memory*/
+        __writeMemory32(Mem_Word0, ram+0, "Memory");
+        __writeMemory32(Mem_Word1, ram+4, "Memory");
+        /*Restore Registers*/
+        #PC = PC_reg; //__writeMemory32(PC_reg, 0x1ec, "Register );
+        #R0 = R0_reg; //__writeMemory32(R0_reg, 0x00, "Register );
+        #R1 = R1_reg; //__writeMemory32(R1_reg, 0x04, "Register );
+        #R2 = R2_reg; //__writeMemory32(R2_reg, 0x08, "Register );
+        #R3 = R3_reg; //__writeMemory32(R3_reg, 0x0C, "Register );
+    }
+}
+
+_enableClockRoot(root, mux, div)
+{
+    /*Use AP0 (AHP-AP System)*/
+    __var config;
+    __var status;
+    __var tmp;
+
+    config = 0x44450000 + root*0x80 + 0x00;
+    status = 0x44450000 + root*0x80 + 0x20;
+
+    mux &= 0x3;
+    div &= 0xFF;
+
+    if((__readMemory32(status,"AP0_Memory") & 0x1FFFFFF) != ((mux<<8) | (div<<0)))
+    {
+        __writeMemory32(1<<24,config+4,"AP0_Memory");
+        __writeMemory32((mux<<8) | (div<<0),config,"AP0_Memory");
+    }
+}
+
+_enableClockGate(gate)
+{
+    /*Use AP0 (AHP-AP System)*/
+    __var direct;
+    __var tmp;
+
+    direct = 0x44458000 + gate*0x40 + 0x00;
+
+    if((__readMemory32(direct,"AP0_Memory") & 0x1) != (1<<0))
+    {
+        __writeMemory32((1<<0),direct,"AP0_Memory");
+    }
+}
+
+_releaseM7Reset()
+{
+    /*Use AP0 (AHP-AP System)*/
+    __var control;
+    __var tmp;
+
+    control = 0x44460010;
+
+    if((__readMemory32(control,"AP0_Memory") & 0x1) != (1<<0))
+    {
+        __writeMemory32((1<<0),control,"AP0_Memory");
+    }
+}
+
+_enableM7Core(ecc_init)
+{
+    /*Enable M7 core. Use APx access*/
+
+    __var reg;
+
+    /*BLK_CTRL_S_AONMIX->M7_CFG*/
+    reg = __readMemory32(0x444F0080,"AP0_Memory");
+    if((reg & 0x10) == 0)
+    {
+        __message "CM7 is running already";
+    }
+    else
+    {
+        __message "Starts to kickoff CM7 core...";
+
+        /*Enable ROSC 400M, ROSC400M_CTRL1*/
+        __writeMemory32(0x0,0x44484350,"AP0_Memory");
+
+        /*Enable M7 Clock Root. Clock Source OSCRC400MHz divider 1*/
+        _enableClockRoot(0, 1, 0);
+
+        /*Enable M7 clock gate*/
+        _enableClockGate(0);
+
+        /*M7 vtor 0x00000000*/
+        __writeMemory32( 0x10, 0x444F0080,"AP0_Memory");
+
+        /*Release M7 Reset*/
+        __writeMemory32(0x00000001,0x44460010,"AP0_Memory");
+
+        if(ecc_init)
+        {
+            /*Init M7 TCM*/
+            _RAM_Init(0x303C0000,0x40000);
+            _RAM_Init(0x30400000,0x40000);
+        }
+
+        __writeMemory32(0x20020000,0x303C0000,"AP0_Memory");
+        __writeMemory32(0x00000009,0x303C0004,"AP0_Memory");
+        __writeMemory32(0xE7FEE7FE,0x303C0008,"AP0_Memory");
+
+        /*ELE trigger to kick off CM7*/
+        __writeMemory32(0x17d20106,0x47520200,"AP0_Memory");
+        reg = __readMemory32(0x47520280,"AP0_Memory");
+        __message "ELE: resp1: 0x", reg:%x;
+        reg = __readMemory32(0x47520284,"AP0_Memory");
+        __message "ELE: resp2: 0x", reg:%x;
+
+        /*clear CM7 wait signal */
+        __writeMemory32(0x0,0x444F0080,"AP0_Memory");
+
+        __message "CM7 core is kicked-off";
+    }
+}
+
+_haltM33Core()
+{
+    __var tmp;
+
+    tmp = __readMemory32(0xE000EDF0,"AP3_Memory");
+
+    if((tmp & 0x02) != 0)
+    {
+        __message "CM33 is halted. CM33 DHCSR = 0x", tmp:%x;
+    }
+    else
+    {
+        __message "CM33 is running, trying to halt it. CM33 DHCSR = 0x", tmp:%x;
+
+        __writeMemory32(0xA05F0001,0xE000EDF0,"AP3_Memory");
+        __writeMemory32(0xA05F0003,0xE000EDF0,"AP3_Memory");
+
+        tmp = __readMemory32(0xE000EDF0,"AP3_Memory");
+
+        if(0 != (tmp & 0x02))
+        {
+            __message "CM33 is halted now. CM33 DHCSR = 0x", tmp:%x;
+        }
+        else
+        {
+            __message "CM33 still running, halt failed. CM33 DHCSR = 0x", tmp:%x;
+        }
+    }
+}
+
+_haltM7Core()
+{
+    __var tmp;
+
+    tmp = __readMemory32(0xE000EDF0,"AP2_Memory");
+
+    if((tmp & 0x02) != 0)
+    {
+        __message "CM7 is halted. CM7 DHCSR = 0x", tmp:%x;
+    }
+    else
+    {
+        __message "CM7 is running, trying to halt it. CM7 DHCSR = 0x", tmp:%x;
+
+        __writeMemory32(0xA05F0001,0xE000EDF0,"AP2_Memory");
+        __writeMemory32(0xA05F0003,0xE000EDF0,"AP2_Memory");
+
+        tmp = __readMemory32(0xE000EDF0,"AP2_Memory");
+
+        if(0 != (tmp & 0x02))
+        {
+            __message "CM7 is halted now. CM7 DHCSR = 0x", tmp:%x;
+        }
+        else
+        {
+            __message "CM7 still running, halt failed. CM7 DHCSR = 0x", tmp:%x;
+        }
+    }
+}
+
+/*Use DMA to initialize memory*/
+_RAM_Init(addr,size)
+{
+    __var reg;
+
+    reg = __readMemory32(0x42010000,"AP0_Memory");           // DMA4->TDC[0].CH_CSR
+
+    if((reg & 0x80000000) != 0)
+    {
+        // DMA channel is active, wait it get finished
+        do
+        {
+            reg = __readMemory32(0x42010000,"AP0_Memory");   // DMA4->TDC[0].CH_CSR
+        } while((reg & 0x40000000) == 0);
+    }
+
+    __writeMemory32(0x40000000,0x42010000,"AP0_Memory");  // DMA4->TDC[0].CH_CSR, clear DONE flag
+
+    __writeMemory32(0x00000000,0x4201002C,"AP0_Memory");  // DMA4->TCD[0].SLAST_SGA
+    __writeMemory32(0x00000000,0x42010038,"AP0_Memory");  // DMA4->TCD[0].DLAST_SGA
+    __writeMemory32(0x40000000,0x42010000,"AP0_Memory");  // DMA4->TCD[0].CH_CSR
+    __writeMemory32(0x20484000,0x42010020,"AP0_Memory");  // DMA4->TCD[0].SADDR
+    __writeMemory32(addr,      0x42010030,"AP0_Memory");  // DMA4->TCD[0].DADDR
+    __writeMemory32(size,      0x42010028,"AP0_Memory");  // DMA4->TCD[0].NBYTES_MLOFFNO
+    __writeMemory16(0x1,       0x42010036,"AP0_Memory");  // DMA4->TCD[0].ELINKNO
+    __writeMemory16(0x1,       0x4201003E,"AP0_Memory");  // DMA4->TCD[0].BITER_ELINKNO
+    __writeMemory16(0x0303,    0x42010026,"AP0_Memory");  // DMA4->TCD[0].ATTR
+    __writeMemory16(0x0,       0x42010024,"AP0_Memory");  // DMA4->TCD[0].SOFF
+    __writeMemory16(0x8,       0x42010034,"AP0_Memory");  // DMA4->TCD[0].DOFF
+    __writeMemory32(0x7,       0x42010000,"AP0_Memory");  // DMA4->TDC[0].CH_CSR
+    __writeMemory16(0x8,       0x4201003C,"AP0_Memory");  // DMA4->TCD[0].CSR
+    __writeMemory16(0x9,       0x4201003C,"AP0_Memory");  // DMA4->TCD[0].CSR
+
+    do
+    {
+        reg = __readMemory32(0x42010000,"AP0_Memory");   // DMA4->TDC[0].CH_CSR
+    } while((reg & 0x40000000) == 0);
+
+    __writeMemory32(0x40000000,0x42010000,"AP0_Memory");  // DMA4->TDC[0].CH_CSR, clear DONE flag
+}
+
+_connect()
+{
+    if((0 != authentication))
+    {
+        FWAuth();
+    }
+}
+
+ResetTimer()
+{
+    __var DO_RESET;
+    DO_RESET = 0x1;
+    if (DO_RESET)
+    {
+        __writeMemory32(0x17040106, 0x47520200, "AP0_Memory");
+        __readMemory32(0x47520280, "AP0_Memory");
+        __readMemory32(0x47520284, "AP0_Memory");
+    }
+}
+
+FWAuth()
+{
+    __var result1; 
+    __var result2;
+
+    /*Make sure we are using secure access*/
+    __probeCmd("dap.HPROT &=", ~0x40000000, 0);
+
+    __message "DMAC: Load Sentinel FW";
+
+    ResetTimer();
+    __memoryRestore("AP0_Memory", "$TOOLKIT_DIR$/config/debugger/NXP/RT1180FW/RT1180FW.hex", 0x20490000);
+
+    __delay(100);
+    __writeMemory32(0x17020406, 0x47520200, "AP0_Memory");
+    __writeMemory32(0x20490000, 0x47520204, "AP0_Memory");
+    __writeMemory32(0x00000000, 0x47520208, "AP0_Memory");
+    __writeMemory32(0x20490000, 0x4752020C, "AP0_Memory");
+    __message "DMAC: Get Response";
+    __delay(500);
+    result1 = __readMemory32(0x47520280, "AP0_Memory");
+    result2 = __readMemory32(0x47520284, "AP0_Memory");
+    __message "DMAC: resp1 ", result1:%x, " resp2 ", result2:%x;
+}

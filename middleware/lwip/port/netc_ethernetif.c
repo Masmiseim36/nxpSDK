@@ -32,7 +32,7 @@
 
 /*
  * Copyright (c) 2013-2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2024 NXP
+ * Copyright 2016-2025 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -574,6 +574,9 @@ void ethernetif_plat_init(struct netif *netif,
     ethernetif->ep_config->entryNum = 2;
 #endif
 
+#if (NETC_VSI_NUM_USED > 0) && defined(NETC_VSI_PREINIT_FUNC)
+    ethernetif->ep_config->preinitVsi = NETC_VSI_PREINIT_FUNC;
+#endif
     for (i = 0; i < NETC_RXBUFF_NUM; i++)
     {
         ethernetif->rxPbufs[i].p.custom_free_function = rx_pbuf_free_from_lwip;
@@ -834,8 +837,10 @@ err_t ethernetif_linkoutput(struct netif *netif, struct pbuf *p)
 }
 
 /**
- * Should be called at the beginning of the program to set up the
- * first network interface. It calls the function ethernetif_init() to do the
+ * Should be called by lwIP at the beginning of the program to set up the
+ * FIRST available network interface.
+ *
+ * It calls the function ethernetif_init() to do the
  * actual setup of the hardware.
  *
  * This function should be passed as a parameter to netif_add().

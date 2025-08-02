@@ -3,7 +3,7 @@ Hardware requirements
 - MIMXRT1180-EVK RevC
 - RJ45 Network cable
 - Mini/micro USB cable
-- Personal Computer on which the TwinCat3 has been installed
+- Personal Computer on which the TwinCat3 has been installed(Windows 10 is recommended)
 
 Board settings
 ==============
@@ -24,7 +24,7 @@ Prepare the Demo
 	- Remove digital_io.c under Src folder
 	
 2. Connect EtherCAT Port0 with TwinCAT3
-	RJ45 interface labeled as J28 is the EtherCAT Port0 and RJ45 interface labeled as J32 is the EtherCAT Port1.
+	RJ45 interface labeled as J28 is the EtherCAT Port0, RJ45 interface labeled as J32 is the EtherCAT Port1.
 
 3. Connect a USB cable between the host PC and the OpenSDA USB port on the target board
 
@@ -46,6 +46,7 @@ Prepare the Demo
 
 8. Scan and load this device and create a PLC project in TwinCat3
 	The PLC Main code is as follows:
+	
 		PROGRAM MAIN
 		VAR 
 			Delay : TON;
@@ -71,4 +72,3 @@ Detailed User Guide
 - [Install TwinCAT](./topics/download_and_install_the_twincat_software.md)
 - [TwinCAT Project Setup](./topics/twincat_project_setup.md)
 - [Note](./topics/note_about_the_source_code_in_the_document.md)
-

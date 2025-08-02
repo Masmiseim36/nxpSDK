@@ -58,6 +58,6 @@ Connect J1 => J3, J2 => J6, J4 => J7, J5 => J8. 10/100M transfer only requires J
 Check your net cable color order and refer to the 568B standard or the other standard. If your cable's color order is not showed in the list,
 please connect J1~J8 based on your situation.
 
-1.  Add #define EXAMPLE_USES_LOOPBACK_CABLE 1  into app.h and rebuild the example.
+1.  Set CONFIG_APP_USES_LOOPBACK_CABLE=y in .config (or add/change #define APP_USES_LOOPBACK_CABLE 1 in mcux_config.h if you don't use Kconfig) and rebuild the example.
 2.  Insert loopback network cable to Ethernet RJ45 port.
 3.  Run the demo in the same way as described earlier.

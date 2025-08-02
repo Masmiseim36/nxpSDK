@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 NXP
+ * Copyright 2018, 2025 NXP
  * All rights reserved.
  *
  *
@@ -18,12 +18,18 @@
 /*${header:end}*/
 
 /*${function:start}*/
+extern void LPSPI1_DriverIRQHandler(void);
+
 void BOARD_InitHardware(void)
 {
     BOARD_ConfigMPU();
     BOARD_InitPins();
     BOARD_BootClockRUN();
     BOARD_InitDebugConsole();
+
+#if defined(ENABLE_RAM_VECTOR_TABLE)
+    InstallIRQHandler(LPSPI1_IRQn, (uint32_t)LPSPI1_DriverIRQHandler);
+#endif
 }
 
 uint32_t LPSPI1_GetFreq(void)

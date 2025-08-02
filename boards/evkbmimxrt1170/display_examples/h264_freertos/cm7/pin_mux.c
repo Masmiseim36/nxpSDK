@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 NXP
+ * Copyright 2021-2025 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -15,7 +15,7 @@
 !!GlobalInfo
 product: Pins v8.0
 processor: MIMXRT1176xxxxx
-package_id: MIMXRT1176DVMAA
+package_id: MIMXRT1176DVMAB
 mcu_data: ksdk2_0
 processor_version: 0.8.1
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
@@ -244,7 +244,7 @@ void BOARD_InitLpi2cPins(void) {
       1U);                                    /* Software Input On Field: Force input path of pad GPIO_LPSR_05 */
   IOMUXC_SetPinConfig(
       IOMUXC_GPIO_LPSR_04_LPI2C5_SDA,         /* GPIO_LPSR_04 PAD functional properties : */
-      0x20U);                                 /* Slew Rate Field: Slow Slew Rate
+      0x20U);                                 /* Slew Rate Field: Fast Slew Rate
                                                  Drive Strength Field: normal driver
                                                  Pull / Keep Select Field: Pull Disable
                                                  Pull Up / Down Config. Field: Weak pull down
@@ -253,7 +253,7 @@ void BOARD_InitLpi2cPins(void) {
                                                  Domain write protection lock: Neither of DWP bits is locked */
   IOMUXC_SetPinConfig(
       IOMUXC_GPIO_LPSR_05_LPI2C5_SCL,         /* GPIO_LPSR_05 PAD functional properties : */
-      0x20U);                                 /* Slew Rate Field: Slow Slew Rate
+      0x20U);                                 /* Slew Rate Field: Fast Slew Rate
                                                  Drive Strength Field: normal driver
                                                  Pull / Keep Select Field: Pull Disable
                                                  Pull Up / Down Config. Field: Weak pull down

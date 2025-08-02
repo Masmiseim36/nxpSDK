@@ -332,9 +332,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../mcux_config.h -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
-              <Define>DEBUG, __USE_SHMEM, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1166DVM6A_cm4, MULTICORE_APP=1, SDK_OS_FREE_RTOS</Define>
+              <Define>DEBUG, __USE_SHMEM, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1166DVM6A_cm4, MIMXRT1166_cm4_SERIES, MULTICORE_APP=1, SDK_OS_FREE_RTOS</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../devices/MIMXRT1166/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1166;../../../../../../devices/MIMXRT1166/periph;../../../../../../devices/MIMXRT1166/drivers/cm4;../../../../../../devices/MIMXRT1166/utilities/debug_console_lite;../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../components/uart;../../../../../../middleware/multicore/mcmgr/src;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../../rtos/freertos/freertos-kernel/template/ARM_CM4F_4_priority_bits</IncludePath>
+              <IncludePath>..;../../../../../../devices/MIMXRT1166/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1166;../../../../../../devices/MIMXRT1166/periph;../../../../../../devices/MIMXRT1166/drivers/cm4;../../../../../../devices/MIMXRT1166/utilities/debug_console_lite;../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../components/uart;../../../../../../middleware/multicore/mcmgr/inc;../../../../../../middleware/multicore/mcmgr/inc/platform/imxrt1160;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../../rtos/freertos/freertos-kernel/template/ARM_CM4F_4_priority_bits</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -350,9 +350,9 @@
             <ClangAsOpt>2</ClangAsOpt>
             <VariousControls>
               <MiscControls/>
-              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1166DVM6A_cm4</Define>
+              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1166DVM6A_cm4, MIMXRT1166_cm4_SERIES</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../devices/MIMXRT1166/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1166;../../../../../../devices/MIMXRT1166/periph;../../../../../../devices/MIMXRT1166/drivers/cm4;../../../../../../devices/MIMXRT1166/utilities/debug_console_lite;../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../components/uart;../../../../../../middleware/multicore/mcmgr/src;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../../rtos/freertos/freertos-kernel/template/ARM_CM4F_4_priority_bits</IncludePath>
+              <IncludePath>..;../../../../../../devices/MIMXRT1166/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1166;../../../../../../devices/MIMXRT1166/periph;../../../../../../devices/MIMXRT1166/drivers/cm4;../../../../../../devices/MIMXRT1166/utilities/debug_console_lite;../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../components/uart;../../../../../../middleware/multicore/mcmgr/inc;../../../../../../middleware/multicore/mcmgr/inc/platform/imxrt1160;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../../rtos/freertos/freertos-kernel/template/ARM_CM4F_4_priority_bits</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -1266,18 +1266,23 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>mcmgr/mcmgr/src</GroupName>
+          <GroupName>mcmgr/mcmgr/inc</GroupName>
           <Files>
             <File>
               <FileName>mcmgr.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/mcmgr/src/mcmgr.h</FilePath>
+              <FilePath>../../../../../../middleware/multicore/mcmgr/inc/mcmgr.h</FilePath>
             </File>
             <File>
               <FileName>mcmgr_internal_core_api.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/mcmgr/src/mcmgr_internal_core_api.h</FilePath>
+              <FilePath>../../../../../../middleware/multicore/mcmgr/inc/mcmgr_internal_core_api.h</FilePath>
             </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>mcmgr/mcmgr/src</GroupName>
+          <Files>
             <File>
               <FileName>mcmgr.c</FileName>
               <FileType>1</FileType>
@@ -1292,6 +1297,16 @@
               <FileName>mcmgr_mu_internal.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/multicore/mcmgr/src/mcmgr_mu_internal.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>mcmgr/mcmgr/inc/platform/imxrt1160</GroupName>
+          <Files>
+            <File>
+              <FileName>mcmgr_platform.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/multicore/mcmgr/inc/platform/imxrt1160/mcmgr_platform.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1502,6 +1517,11 @@
               <FileName>example_board_readme.md</FileName>
               <FileType>5</FileType>
               <FilePath>../example_board_readme.md</FilePath>
+            </File>
+            <File>
+              <FileName>examples_shared_readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../examples_shared_readme.md</FilePath>
             </File>
           </Files>
         </Group>
@@ -1836,9 +1856,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../mcux_config.h -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
-              <Define>NDEBUG, __USE_SHMEM, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1166DVM6A_cm4, MULTICORE_APP=1, SDK_OS_FREE_RTOS</Define>
+              <Define>NDEBUG, __USE_SHMEM, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1166DVM6A_cm4, MIMXRT1166_cm4_SERIES, MULTICORE_APP=1, SDK_OS_FREE_RTOS</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../devices/MIMXRT1166/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1166;../../../../../../devices/MIMXRT1166/periph;../../../../../../devices/MIMXRT1166/drivers/cm4;../../../../../../devices/MIMXRT1166/utilities/debug_console_lite;../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../components/uart;../../../../../../middleware/multicore/mcmgr/src;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../../rtos/freertos/freertos-kernel/template/ARM_CM4F_4_priority_bits</IncludePath>
+              <IncludePath>..;../../../../../../devices/MIMXRT1166/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1166;../../../../../../devices/MIMXRT1166/periph;../../../../../../devices/MIMXRT1166/drivers/cm4;../../../../../../devices/MIMXRT1166/utilities/debug_console_lite;../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../components/uart;../../../../../../middleware/multicore/mcmgr/inc;../../../../../../middleware/multicore/mcmgr/inc/platform/imxrt1160;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../../rtos/freertos/freertos-kernel/template/ARM_CM4F_4_priority_bits</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1854,9 +1874,9 @@
             <ClangAsOpt>2</ClangAsOpt>
             <VariousControls>
               <MiscControls/>
-              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1166DVM6A_cm4</Define>
+              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1166DVM6A_cm4, MIMXRT1166_cm4_SERIES</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../devices/MIMXRT1166/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1166;../../../../../../devices/MIMXRT1166/periph;../../../../../../devices/MIMXRT1166/drivers/cm4;../../../../../../devices/MIMXRT1166/utilities/debug_console_lite;../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../components/uart;../../../../../../middleware/multicore/mcmgr/src;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../../rtos/freertos/freertos-kernel/template/ARM_CM4F_4_priority_bits</IncludePath>
+              <IncludePath>..;../../../../../../devices/MIMXRT1166/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1166;../../../../../../devices/MIMXRT1166/periph;../../../../../../devices/MIMXRT1166/drivers/cm4;../../../../../../devices/MIMXRT1166/utilities/debug_console_lite;../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../components/uart;../../../../../../middleware/multicore/mcmgr/inc;../../../../../../middleware/multicore/mcmgr/inc/platform/imxrt1160;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../../rtos/freertos/freertos-kernel/template/ARM_CM4F_4_priority_bits</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -2770,18 +2790,23 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>mcmgr/mcmgr/src</GroupName>
+          <GroupName>mcmgr/mcmgr/inc</GroupName>
           <Files>
             <File>
               <FileName>mcmgr.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/mcmgr/src/mcmgr.h</FilePath>
+              <FilePath>../../../../../../middleware/multicore/mcmgr/inc/mcmgr.h</FilePath>
             </File>
             <File>
               <FileName>mcmgr_internal_core_api.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/mcmgr/src/mcmgr_internal_core_api.h</FilePath>
+              <FilePath>../../../../../../middleware/multicore/mcmgr/inc/mcmgr_internal_core_api.h</FilePath>
             </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>mcmgr/mcmgr/src</GroupName>
+          <Files>
             <File>
               <FileName>mcmgr.c</FileName>
               <FileType>1</FileType>
@@ -2796,6 +2821,16 @@
               <FileName>mcmgr_mu_internal.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/multicore/mcmgr/src/mcmgr_mu_internal.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>mcmgr/mcmgr/inc/platform/imxrt1160</GroupName>
+          <Files>
+            <File>
+              <FileName>mcmgr_platform.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/multicore/mcmgr/inc/platform/imxrt1160/mcmgr_platform.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3006,6 +3041,11 @@
               <FileName>example_board_readme.md</FileName>
               <FileType>5</FileType>
               <FilePath>../example_board_readme.md</FilePath>
+            </File>
+            <File>
+              <FileName>examples_shared_readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../examples_shared_readme.md</FilePath>
             </File>
           </Files>
         </Group>

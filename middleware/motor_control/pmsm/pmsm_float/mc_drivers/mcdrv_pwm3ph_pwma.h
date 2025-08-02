@@ -1,6 +1,6 @@
 /*
 * Copyright 2016, Freescale Semiconductor, Inc.
-* Copyright 2016-2021, 2024 NXP
+* Copyright 2016-2021, 2024-2025 NXP
 *
 * NXP Proprietary. This software is owned or controlled by NXP and may
 * only be used strictly in accordance with the applicable license terms. 
@@ -38,6 +38,8 @@ typedef struct _mcdrv_pwm3ph_pwma
     uint16_t ui16PhCSubNum;        /* PWMA phase C sub-module number */
     uint16_t ui16FaultFixNum;      /* PWMA fault number for fixed over-current fault detection */
     uint16_t ui16FaultAdjNum;      /* PWMA fault number for adjustable over-current fault detection */
+    uint16_t ui16Fault2FixNum;     /* PWMA fault number for additional fault detection (e.g. Over-voltage) */
+    uint16_t ui16Modulo;           /* PWMA modulo value */
 } mcdrv_pwm3ph_pwma_t;
 
 /*******************************************************************************
@@ -79,6 +81,16 @@ RAM_FUNC_LIB
 void MCDRV_eFlexPwm3PhOutDis(mcdrv_pwm3ph_pwma_t *this);
 
 /*!
+ * @brief Function disables PWM outputs
+ *
+ * @param this   Pointer to the current object
+ *
+ * @return none
+ */
+RAM_FUNC_LIB
+void MCDRV_eFlexPwm3PhOutDis_Optim(mcdrv_pwm3ph_pwma_t *this);
+
+/*!
  * @brief Function return actual value of over current flag
  *
  * @param this   Pointer to the current object
@@ -87,6 +99,16 @@ void MCDRV_eFlexPwm3PhOutDis(mcdrv_pwm3ph_pwma_t *this);
  */
 RAM_FUNC_LIB
 bool_t MCDRV_eFlexPwm3PhFltGet(mcdrv_pwm3ph_pwma_t *this);
+   
+/*!
+ * @brief Function return actual value of fault flag
+ *
+ * @param this   Pointer to the current object
+ *
+ * @return boot_t true on success
+ */
+RAM_FUNC_LIB
+bool_t MCDRV_eFlexPwm3PhFlt2Get(mcdrv_pwm3ph_pwma_t *this);
 
 #ifdef __cplusplus
 }

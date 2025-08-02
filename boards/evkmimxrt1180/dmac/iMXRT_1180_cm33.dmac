@@ -1,0 +1,227 @@
+SystemReset()
+    //@RESET_DRIVER=cmsisdap,ijet
+    //@reset_index=4
+    //@reset_default=true
+{
+    __var r, w;
+    __var core_reset_request_bit_mask;
+    __var rom_trap_addr;
+    
+    if (!(__driverType("ijet") || __driverType("cmsisdap")))
+    {
+        return; // Only supported drivers.
+    }
+    
+    core_reset_request_bit_mask = 0x100;  /* for CM33 core */
+    
+    /* Halt the CPU and wait sometime for possible peripheral operation finish */
+    __probeCmd("/noerror dap.w 0xE000EDF0 0xA05F0003 3"); /* _DCB_DHCSR_ADDR */
+    __delay(10);
+
+    r = __probeCmd("dap.r 0xE000EDF0 3");  /* _DCB_DHCSR_ADDR */
+    if ((r & 0x02) == 0)
+    {
+        __message "ERR: CM33 core can't be halted!";
+    }
+
+    /* check and enable core request system reset */
+    r = __probeCmd("dap.r 0x54460018 3");  // _SRC_SRMASK_ADDR
+    if ( (r & core_reset_request_bit_mask) != 0 )
+    {
+        if ( (r & (core_reset_request_bit_mask<<16)) == 0 )
+        {
+            w = r & (~core_reset_request_bit_mask);
+            r = __probeCmd("dap.r 0x44460004 3"); /* _SRC_AUTHEN_CTRL_ADDR */
+            if ( (r & 0x80) == 0 )
+            {
+                __message "Enable system reset via CM33 core reset";
+                __probeCmd("/noerror dap.w 0x44460018", w, 3);  /* _SRC_SRMASK_ADDR */
+            }
+            else
+            {
+                __message "ERR: Core reset request is masked and all mask are locked!";
+            }
+        }
+        else
+        {
+            __message "ERR: Core reset request is masked and locked!";
+        }
+    }
+    
+    r = __probeCmd("dap.r 0x5751804C 3"); /* _SI_VER_ADDR */
+    r = r & 0xF;
+    
+    if ( r == 1 )
+    {
+        rom_trap_addr = 0x100025D4;
+    }
+    else if ( r == 2 )
+    {
+        rom_trap_addr = 0x100025D4;
+    }
+    else
+    {
+        rom_trap_addr = 0x10002932;
+    }
+    __message "SI_VER = 0x", r:%x;
+    __message "TRAP   = 0x", rom_trap_addr:%x;
+    
+    __message "Set CM33 watch point";
+    __probeCmd("/noerror dap.w 0xE0001020", rom_trap_addr, 3);  /* _DWT_COMP0_ADDR */
+    __probeCmd("/noerror dap.w 0xE0001028 0x00000412 3");  /* _DWT_FUNC0_ADDR */
+
+    /* Clear the reset status to avoid ROM clean the core TCM after reset */
+    r = __probeCmd("dap.r 0x54460050 3");  /* _SRC_SRSR_ADDR */
+    __probeCmd("dap.w 0x54460050", r, 3);  /* _SRC_SRSR_ADDR */
+    
+    __message "Execute SYSRESETREQ via AIRCR";
+    __probeCmd("/noerror dap.w 0xE000ED0C 0x05FA0004 3"); /* _SCB_AIRCR_ADDR */
+    __delay(100);
+    
+    r = __probeCmd("dap.r 0xE0001028 3");  /* _DWT_FUNC0_ADDR */
+    if ((r & 0x01000000) == 0)
+    {
+        __message "ERR: CM33 core is not trapped!";
+    }
+    else
+    {
+        __message "CM33 core is trapped, 0x", r:%x;
+    }
+
+    __message "clear CM33 watch point";
+    __probeCmd("/noerror dap.w 0xE0001020", 0x0, 3);  /* _DWT_COMP0_ADDR */
+    __probeCmd("/noerror dap.w 0xE0001028", 0x0, 3);  /* _DWT_FUNC0_ADDR */
+    
+    r = __probeCmd("dap.r 0xE000EDF0 3");  /* _DCB_DHCSR_ADDR */
+    if ((r & 0x02) == 0)
+    {
+        __message "ERR: CM33 is not halted after reset!";
+    }
+}
+
+SoftwareReset()
+    //@RESET_DRIVER=cmsisdap,ijet
+    //@reset_index=1
+    //@reset_default=false
+{
+    if( __isTrustZoneEnabled() && !__isTZSecureModeProject())
+    {
+        __probeCmd("emu ResetStyle=software,ns");
+    }
+    else
+    {
+        __probeCmd("emu ResetStyle=software");
+    }
+    __probeCmd("/noerror reset");
+}
+
+ResetAndStopAtUser()
+    //@RESET_DRIVER=cmsisdap,ijet
+    //@reset_index=7
+    //@reset_default=false
+{
+    __var r, w;
+    __var core_reset_request_bit_mask;
+
+    /*clear VECTOR CATCH and set TRCENA*/
+    r =   __probeCmd("dap.r 0xE000EDFC 3") & ~1;
+    __probeCmd("dap.w 0xE000EDFC", r | (1<<24), 3);
+
+    core_reset_request_bit_mask = 0x100;  /* for CM33 core */
+    
+    /* Halt the CPU and wait sometime for possible peripheral operation finish */
+    __probeCmd("/noerror dap.w 0xE000EDF0 0xA05F0003 3"); /* _DCB_DHCSR_ADDR */
+    __delay(10);
+
+    r = __probeCmd("dap.r 0xE000EDF0 3");  /* _DCB_DHCSR_ADDR */
+    if ((r & 0x02) == 0)
+    {
+        __message "ERR: CM33 core can't be halted!";
+    }
+
+    /* check and enable core request system reset */
+    r = __probeCmd("dap.r 0x54460018 3");  // _SRC_SRMASK_ADDR
+    if ( (r & core_reset_request_bit_mask) != 0 )
+    {
+        if ( (r & (core_reset_request_bit_mask<<16)) == 0 )
+        {
+            w = r & (~core_reset_request_bit_mask);
+            r = __probeCmd("dap.r 0x44460004 3"); /* _SRC_AUTHEN_CTRL_ADDR */
+            if ( (r & 0x80) == 0 )
+            {
+                __message "Enable system reset via CM33 core reset";
+                __probeCmd("/noerror dap.w 0x44460018", w, 3);  /* _SRC_SRMASK_ADDR */
+            }
+            else
+            {
+                __message "ERR: Core reset request is masked and all mask are locked!";
+            }
+        }
+        else
+        {
+            __message "ERR: Core reset request is masked and locked!";
+        }
+    }
+    
+    __message "Set CM33 watch point";
+    if( __isTrustZoneEnabled() && __isTZSecureModeProject())
+    {
+        //Stop at secure code in RAM after reset
+        __probeCmd("dap.w 0xE0001028 0x412 3");      // DWT_FUNCTION0
+        __probeCmd("dap.w 0xE0001020 0x1FFC0000 3"); // DWT_COMP0
+        __probeCmd("dap.w 0xE0001030 0x1FFFFFF 3"); // DWT_COMP1
+        __probeCmd("dap.w 0xE0001038 0x403 3");      // DWT_FUNCTION1
+        //Stop at secure code in FlexSPI Flash after reset
+        __probeCmd("dap.w 0xE0001048 0x412 3");      // DWT_FUNCTION0
+        __probeCmd("dap.w 0xE0001040 0x38000000 3"); // DWT_COMP0
+        __probeCmd("dap.w 0xE0001050 0x3FFFFFFF 3"); // DWT_COMP1
+        __probeCmd("dap.w 0xE0001058 0x403 3");      // DWT_FUNCTION1
+    }
+    else
+    {
+        //Stop at non-secure code in RAM after reset
+        __probeCmd("dap.w 0xE0001028 0x412 3");      // DWT_FUNCTION0
+        __probeCmd("dap.w 0xE0001020 0x0FFC0000 3"); // DWT_COMP0
+        __probeCmd("dap.w 0xE0001030 0x0FFFFFFF 3"); // DWT_COMP1
+        __probeCmd("dap.w 0xE0001038 0x403 3");      // DWT_FUNCTION1
+                                                     //Stop at non-secure code in FlexSPI Flash after reset
+        __probeCmd("dap.w 0xE0001048 0x412 3");      // DWT_FUNCTION0
+        __probeCmd("dap.w 0xE0001040 0x28000000 3"); // DWT_COMP0
+        __probeCmd("dap.w 0xE0001050 0x2FFFFFFF 3"); // DWT_COMP1
+        __probeCmd("dap.w 0xE0001058 0x403 3");      // DWT_FUNCTION1
+    }
+
+    /* Clear the reset status to avoid ROM clean the core TCM after reset */
+    r = __probeCmd("dap.r 0x54460050 3");  /* _SRC_SRSR_ADDR */
+    __probeCmd("dap.w 0x54460050", r, 3);  /* _SRC_SRSR_ADDR */
+    
+    __message "Execute SYSRESETREQ via AIRCR";
+    __probeCmd("/noerror dap.w 0xE000ED0C 0x05FA0004 3"); /* _SCB_AIRCR_ADDR */
+    __delay(100);
+    
+    __message "clear CM33 watch point";
+   
+    __probeCmd("/noerror dap.w 0xe0001028 0x0 3");
+    __probeCmd("/noerror dap.w 0xe0001038 0x0 3");
+    __probeCmd("/noerror dap.w 0xe0001048 0x0 3");
+    __probeCmd("/noerror dap.w 0xe0001058 0x0 3");
+}
+
+_ExecDeviceCoreConnect()
+{
+    if (!(__driverType("ijet") || __driverType("cmsisdap")))
+    {
+        return; // Only supported drivers.
+    }
+
+    _connect();
+}
+
+_ExecDevicePreload()
+{
+}
+
+_ExecDeviceReset()
+{
+    #xPSR &= ~0x0600FC00;
+}

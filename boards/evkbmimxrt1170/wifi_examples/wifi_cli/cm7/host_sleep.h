@@ -17,10 +17,10 @@
  * Definitions
  ******************************************************************************/
 
-#define APP_WAKEUP_GPIO           GPIO5
-#define APP_WAKEUP_GPIO_PORT      5
-#define APP_WAKEUP_GPIO_PIN       12
-#define APP_WAKEUP_IRQ            GPIO5_Combined_0_15_IRQn
+#define APP_WAKEUP_GPIO           GPIO3
+#define APP_WAKEUP_GPIO_PORT      3
+#define APP_WAKEUP_GPIO_PIN       28
+#define APP_WAKEUP_IRQ            GPIO3_Combined_16_31_IRQn
 #define APP_WAKEUP_INTTERUPT_TYPE kHAL_GpioInterruptFallingEdge
 
 /*******************************************************************************

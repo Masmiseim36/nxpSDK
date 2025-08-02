@@ -7,6 +7,34 @@
 
 #include "lc3_codec.h"
 
+#include <string.h>
+
+#if defined(LC3_HIFI4) && (LC3_HIFI4 != 0)
+extern int BOARD_DSP_IPC_Send(uint8_t *data, int size);
+extern int BOARD_DSP_IPC_Recv(uint8_t *data, int size);
+
+static uint8_t lc3_msg[2*1024];
+static uint8_t lc3_msg_res[2*1024];
+
+#define LC3_MSG_HEADER_SIZE 3
+
+#define LC3_MSG_SUCCESS 0x00
+#define LC3_MSG_ERROR 0xff
+
+struct lc3_msg_header {
+	uint8_t type;
+	uint16_t len;
+	uint8_t data[0];
+} __attribute__((packed));
+
+struct lc3_msg_res_headr {
+	uint8_t type;
+	uint16_t len;
+	uint8_t res;
+	uint8_t data[0];
+} __attribute__((packed));
+
+#else
 static int input_precessing(lc3_encoder_t *encoder, void *input)
 {
     int samples_num = LC3_SAMPLES_PER_FRAME(encoder);
@@ -94,9 +122,46 @@ static int output_precessing(lc3_decoder_t *decoder, void *output)
 
     return 0;
 }
+#endif
 
 int lc3_encoder_init(lc3_encoder_t *encoder, int sample_rate, int duration_us, int target_bytes, int sample_bits)
 {
+#if defined(LC3_HIFI4) && (LC3_HIFI4 != 0)
+    struct lc3_msg_header *msg = (struct lc3_msg_header *)lc3_msg;
+    struct lc3_msg_res_headr *msg_res = (struct lc3_msg_res_headr *)lc3_msg_res;
+
+    int res;
+    int instans;
+
+    msg->type = 0x01;
+    msg->len  = 10;
+    memcpy(&msg->data[0], &sample_rate, sizeof(uint32_t));
+    memcpy(&msg->data[4], &duration_us, sizeof(uint32_t));
+    msg->data[8] = (uint8_t)target_bytes;
+    msg->data[9] = (uint8_t)sample_bits;
+
+    BOARD_DSP_IPC_Send(lc3_msg, LC3_MSG_HEADER_SIZE);
+    if(msg->len)
+    {
+        BOARD_DSP_IPC_Send(&lc3_msg[LC3_MSG_HEADER_SIZE], msg->len);
+    }
+
+    BOARD_DSP_IPC_Recv(lc3_msg_res, LC3_MSG_HEADER_SIZE);
+    if(msg_res->len)
+    {
+        BOARD_DSP_IPC_Recv(&lc3_msg_res[LC3_MSG_HEADER_SIZE], msg_res->len);
+    }
+
+    res = (int)msg_res->res;
+    if(res)
+    {
+        return LC3_CODEC_ERR;
+    }
+
+    instans = (int)msg_res->data[0];
+    encoder->instans = instans;
+
+#else
     INT32 ret;
 
     if(!encoder)
@@ -136,6 +201,7 @@ int lc3_encoder_init(lc3_encoder_t *encoder, int sample_rate, int duration_us, i
         return LC3_CODEC_ERR;
     }
 
+#endif
     encoder->sample_rate = sample_rate;
     encoder->duration_us = duration_us;
     encoder->enc_bytes   = target_bytes;
@@ -146,6 +212,41 @@ int lc3_encoder_init(lc3_encoder_t *encoder, int sample_rate, int duration_us, i
 
 int lc3_encoder(lc3_encoder_t *encoder, void *input, uint8_t *output)
 {
+#if defined(LC3_HIFI4) && (LC3_HIFI4 != 0)
+    struct lc3_msg_header *msg = (struct lc3_msg_header *)lc3_msg;
+    struct lc3_msg_res_headr *msg_res = (struct lc3_msg_res_headr *)lc3_msg_res;
+
+    int res;
+    int instans;
+
+    msg->type = 0x03;
+    msg->len  = 1 + LC3_SAMPLES_BYTES_PER_FRAME(encoder);
+    msg->data[0] = (uint8_t)encoder->instans;
+    memcpy(&msg->data[1], input, LC3_SAMPLES_BYTES_PER_FRAME(encoder));
+
+    BOARD_DSP_IPC_Send(lc3_msg, LC3_MSG_HEADER_SIZE);
+    if(msg->len)
+    {
+        BOARD_DSP_IPC_Send(&lc3_msg[LC3_MSG_HEADER_SIZE], msg->len);
+    }
+
+    BOARD_DSP_IPC_Recv(lc3_msg_res, LC3_MSG_HEADER_SIZE);
+    if(msg_res->len)
+    {
+        BOARD_DSP_IPC_Recv(&lc3_msg_res[LC3_MSG_HEADER_SIZE], msg_res->len);
+    }
+
+    res = (int)msg_res->res;
+    if(res)
+    {
+        return LC3_CODEC_ERR;
+    }
+
+    instans = (int)msg_res->data[0];
+
+    memcpy(output, &msg_res->data[1], encoder->enc_bytes);
+
+#else
     INT32 ret;
 
     if(!encoder)
@@ -176,12 +277,42 @@ int lc3_encoder(lc3_encoder_t *encoder, void *input, uint8_t *output)
 #else
     (void)memcpy(output, encoder->buf_out, encoder->enc_bytes);
 #endif
-
+#endif
     return 0;
 }
 
 int lc3_encoder_deinit(lc3_encoder_t *encoder)
 {
+#if defined(LC3_HIFI4) && (LC3_HIFI4 != 0)
+    struct lc3_msg_header *msg = (struct lc3_msg_header *)lc3_msg;
+    struct lc3_msg_res_headr *msg_res = (struct lc3_msg_res_headr *)lc3_msg_res;
+
+    int res;
+    int instans;
+
+    msg->type = 0x02;
+    msg->len  = 1;
+    msg->data[0] = (uint8_t)encoder->instans;
+
+    BOARD_DSP_IPC_Send(lc3_msg, LC3_MSG_HEADER_SIZE);
+    if(msg->len)
+    {
+        BOARD_DSP_IPC_Send(&lc3_msg[LC3_MSG_HEADER_SIZE], msg->len);
+    }
+
+    BOARD_DSP_IPC_Recv(lc3_msg_res, LC3_MSG_HEADER_SIZE);
+    if(msg_res->len)
+    {
+        BOARD_DSP_IPC_Recv(&lc3_msg_res[LC3_MSG_HEADER_SIZE], msg_res->len);
+    }
+
+    res = (int)msg_res->res;
+    if(res)
+    {
+        return LC3_CODEC_ERR;
+    }
+
+#else
     if(!encoder)
     {
         return LC3_CODEC_ERR;
@@ -191,6 +322,7 @@ int lc3_encoder_deinit(lc3_encoder_t *encoder)
 #else
     LC3_encoder_delete(&encoder->lc3_ctx);
 #endif
+#endif
 
     (void)memset(encoder, 0, sizeof(lc3_encoder_t));
 
@@ -199,6 +331,41 @@ int lc3_encoder_deinit(lc3_encoder_t *encoder)
 
 int lc3_decoder_init(lc3_decoder_t *decoder, int sample_rate, int duration_us, int input_bytes, int sample_bits)
 {
+#if defined(LC3_HIFI4) && (LC3_HIFI4 != 0)
+    struct lc3_msg_header *msg = (struct lc3_msg_header *)lc3_msg;
+    struct lc3_msg_res_headr *msg_res = (struct lc3_msg_res_headr *)lc3_msg_res;
+
+    int res;
+    int instans;
+
+    msg->type = 0x04;
+    msg->len  = 10;
+    memcpy(&msg->data[0], &sample_rate, sizeof(uint32_t));
+    memcpy(&msg->data[4], &duration_us, sizeof(uint32_t));
+    msg->data[8] = (uint8_t)input_bytes;
+    msg->data[9] = (uint8_t)sample_bits;
+
+    BOARD_DSP_IPC_Send(lc3_msg, LC3_MSG_HEADER_SIZE);
+    if(msg->len)
+    {
+        BOARD_DSP_IPC_Send(&lc3_msg[LC3_MSG_HEADER_SIZE], msg->len);
+    }
+
+    BOARD_DSP_IPC_Recv(lc3_msg_res, LC3_MSG_HEADER_SIZE);
+    if(msg_res->len)
+    {
+        BOARD_DSP_IPC_Recv(&lc3_msg_res[LC3_MSG_HEADER_SIZE], msg_res->len);
+    }
+
+    res = (int)msg_res->res;
+    if(res)
+    {
+        return LC3_CODEC_ERR;
+    }
+
+    instans = (int)msg_res->data[0];
+    decoder->instans = instans;
+#else
     INT32 ret;
 
     if(!decoder)
@@ -235,6 +402,7 @@ int lc3_decoder_init(lc3_decoder_t *decoder, int sample_rate, int duration_us, i
     {
         return LC3_CODEC_ERR;
     }
+#endif
 
     decoder->sample_rate = sample_rate;
     decoder->duration_us = duration_us;
@@ -246,6 +414,41 @@ int lc3_decoder_init(lc3_decoder_t *decoder, int sample_rate, int duration_us, i
 
 int lc3_decoder(lc3_decoder_t *decoder, uint8_t *input, int frame_flag, void *output)
 {
+#if defined(LC3_HIFI4) && (LC3_HIFI4 != 0)
+    struct lc3_msg_header *msg = (struct lc3_msg_header *)lc3_msg;
+    struct lc3_msg_res_headr *msg_res = (struct lc3_msg_res_headr *)lc3_msg_res;
+
+    int res;
+    int instans;
+
+    msg->type = 0x06;
+    msg->len  = 2 + LC3_ENC_BYTES_PER_FRAME(decoder);
+    msg->data[0] = (uint8_t)decoder->instans;
+    msg->data[1] = (uint8_t)frame_flag;
+    memcpy(&msg->data[2], input, LC3_ENC_BYTES_PER_FRAME(decoder));
+
+    BOARD_DSP_IPC_Send(lc3_msg, LC3_MSG_HEADER_SIZE);
+    if(msg->len)
+    {
+        BOARD_DSP_IPC_Send(&lc3_msg[LC3_MSG_HEADER_SIZE], msg->len);
+    }
+
+    BOARD_DSP_IPC_Recv(lc3_msg_res, LC3_MSG_HEADER_SIZE);
+    if(msg_res->len)
+    {
+        BOARD_DSP_IPC_Recv(&lc3_msg_res[LC3_MSG_HEADER_SIZE], msg_res->len);
+    }
+
+    res = (int)msg_res->res;
+    if(res)
+    {
+        return LC3_CODEC_ERR;
+    }
+
+    instans = (int)msg_res->data[0];
+
+    memcpy(output, &msg_res->data[1], LC3_SAMPLES_BYTES_PER_FRAME(decoder));
+#else
     INT32 ret;
 
     if(!decoder)
@@ -282,12 +485,41 @@ int lc3_decoder(lc3_decoder_t *decoder, uint8_t *input, int frame_flag, void *ou
         return LC3_CODEC_ERR;
     }
 #endif
-
+#endif
     return 0;
 }
 
 int lc3_decoder_deinit(lc3_decoder_t *decoder)
 {
+#if defined(LC3_HIFI4) && (LC3_HIFI4 != 0)
+    struct lc3_msg_header *msg = (struct lc3_msg_header *)lc3_msg;
+    struct lc3_msg_res_headr *msg_res = (struct lc3_msg_res_headr *)lc3_msg_res;
+
+    int res;
+    int instans;
+
+    msg->type = 0x05;
+    msg->len  = 1;
+    msg->data[0] = (uint8_t)decoder->instans;
+
+    BOARD_DSP_IPC_Send(lc3_msg, LC3_MSG_HEADER_SIZE);
+    if(msg->len)
+    {
+        BOARD_DSP_IPC_Send(&lc3_msg[LC3_MSG_HEADER_SIZE], msg->len);
+    }
+
+    BOARD_DSP_IPC_Recv(lc3_msg_res, LC3_MSG_HEADER_SIZE);
+    if(msg_res->len)
+    {
+        BOARD_DSP_IPC_Recv(&lc3_msg_res[LC3_MSG_HEADER_SIZE], msg_res->len);
+    }
+
+    res = (int)msg_res->res;
+    if(res)
+    {
+        return LC3_CODEC_ERR;
+    }
+#else
     if(!decoder)
     {
         return LC3_CODEC_ERR;
@@ -299,6 +531,6 @@ int lc3_decoder_deinit(lc3_decoder_t *decoder)
 #endif
 
     (void)memset(decoder, 0, sizeof(lc3_decoder_t));
-
+#endif
     return 0;
 }

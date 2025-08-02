@@ -874,3 +874,67 @@ void BOARD_NETC_Init(void)
     }
 }
 #endif /* SDK_NETC_USED */
+
+
+void BOARD_RequestTRDC(bool bRequestAON, bool bRequestWakeup, bool bReqeustMega)
+{
+#define ELE_TRDC_AON_ID    0x74
+#define ELE_TRDC_WAKEUP_ID 0x78
+#define ELE_TRDC_MEGA_ID   0x82
+#define ELE_CORE_CM33_ID   0x1
+#define ELE_CORE_CM7_ID    0x2
+
+/* Set ELE_STICK_FAIL to 0 when ELE status check is not required,
+ * which is useful when debug reset, where the core has already get the
+ * TRDC ownership at first time and ELE is not able to release TRDC
+ * ownership again for the following TRDC ownership request.
+ */
+#define ELE_STICK_FAIL  1U
+
+#if ELE_STICK_FAIL
+#define ELE_CHECK_FAIL(sts) if( sts != kStatus_Success ) { while(1) {}}
+#else
+#define ELE_CHECK_FAIL(sts) (void)sts
+#endif
+
+#if (__CORTEX_M == 33)
+    uint8_t ele_core_id = ELE_CORE_CM33_ID;
+#elif (__CORTEX_M == 7)
+    uint8_t ele_core_id = ELE_CORE_CM7_ID;
+#endif
+
+    uint32_t ele_fw_sts;
+    status_t sts;
+
+    /* Get ELE FW status */
+    sts = ELE_BaseAPI_GetFwStatus(MU_RT_S3MUA, &ele_fw_sts);
+    ELE_CHECK_FAIL(sts);
+
+    if(bRequestAON)
+    {
+        /* Release TRDC AON to current core */
+        sts = ELE_BaseAPI_ReleaseRDC(MU_RT_S3MUA, ELE_TRDC_AON_ID, ele_core_id);
+        ELE_CHECK_FAIL(sts);
+    }
+
+    /*
+     * TRDC MEGA request must be prior to TRDC WAKEUP, as TRDC MEGA access
+     * is controlled by the TRDC WAKEUP.
+     * note:
+     *   If TRDC WAKEUP has been release to one core firstly, then it will fail
+     *   to release TRDC MEGA to same/another core.
+     */
+    if(bReqeustMega)
+    {
+        /* Release TRDC MEGA to current core */
+        sts = ELE_BaseAPI_ReleaseRDC(MU_RT_S3MUA, ELE_TRDC_MEGA_ID, ele_core_id);
+        ELE_CHECK_FAIL(sts);
+    }
+
+    if(bRequestWakeup)
+    {
+        /* Release TRDC WAKEUP to current core */
+        sts = ELE_BaseAPI_ReleaseRDC(MU_RT_S3MUA, ELE_TRDC_WAKEUP_ID, ele_core_id);
+        ELE_CHECK_FAIL(sts);
+    }
+}

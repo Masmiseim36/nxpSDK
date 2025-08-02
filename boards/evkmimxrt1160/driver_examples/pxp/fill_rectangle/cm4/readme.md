@@ -12,3 +12,4 @@ If this example runs correctly, you will see the panel filled with red, green an
 - [MIMXRT1040-EVK](../../../_boards/evkmimxrt1040/driver_examples/pxp/fill_rectangle/example_board_readme.md)
 - [EVK-MIMXRT1064](../../../_boards/evkmimxrt1064/driver_examples/pxp/fill_rectangle/example_board_readme.md)
 - [MIMXRT1160-EVK](../../../_boards/evkmimxrt1160/driver_examples/pxp/fill_rectangle/example_board_readme.md)
+- [IMX943-EVK](../../../_boards/imx943evk/driver_examples/pxp/fill_rectangle/example_board_readme.md)

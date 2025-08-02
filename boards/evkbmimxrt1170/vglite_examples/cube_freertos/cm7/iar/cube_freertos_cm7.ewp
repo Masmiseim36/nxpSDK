@@ -249,7 +249,8 @@
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
-          <state>CPU_MIMXRT1176DVMAA_cm7</state>
+          <state>CPU_MIMXRT1176DVMAB_cm7</state>
+          <state>MIMXRT1176_cm7_SERIES</state>
           <state>SDK_OS_FREE_RTOS</state>
         </option>
         <option>
@@ -589,7 +590,8 @@
         <option>
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
-          <state>CPU_MIMXRT1176DVMAA_cm7</state>
+          <state>CPU_MIMXRT1176DVMAB_cm7</state>
+          <state>MIMXRT1176_cm7_SERIES</state>
         </option>
         <option>
           <name>AList</name>
@@ -1427,7 +1429,8 @@
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
-          <state>CPU_MIMXRT1176DVMAA_cm7</state>
+          <state>CPU_MIMXRT1176DVMAB_cm7</state>
+          <state>MIMXRT1176_cm7_SERIES</state>
           <state>SDK_OS_FREE_RTOS</state>
         </option>
         <option>
@@ -1767,7 +1770,8 @@
         <option>
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
-          <state>CPU_MIMXRT1176DVMAA_cm7</state>
+          <state>CPU_MIMXRT1176DVMAB_cm7</state>
+          <state>MIMXRT1176_cm7_SERIES</state>
         </option>
         <option>
           <name>AList</name>
@@ -3263,6 +3267,9 @@
         <file>
           <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/timers.h</name>
         </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/freertos_tasks_c_additions.h</name>
+        </file>
       </group>
       <group>
         <name>portable</name>
@@ -3309,6 +3316,9 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../example_board_readme.md</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../examples_shared_readme.md</name>
     </file>
   </group>
 </project>

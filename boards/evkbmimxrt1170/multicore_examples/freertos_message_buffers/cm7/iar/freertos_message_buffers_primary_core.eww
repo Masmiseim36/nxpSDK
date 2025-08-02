@@ -11,6 +11,14 @@
         <project>freertos_message_buffers_primary_core</project>
         <configuration>flexspi_nor_release</configuration>
       </member>
+      <member>
+        <project>freertos_message_buffers_secondary_core</project>
+        <configuration>flexspi_nor_debug</configuration>
+      </member>
+      <member>
+        <project>freertos_message_buffers_secondary_core</project>
+        <configuration>flexspi_nor_release</configuration>
+      </member>
     </batchDefinition>
     <batchDefinition>
       <name>flexspi_nor_debug</name>
@@ -18,11 +26,19 @@
         <project>freertos_message_buffers_primary_core</project>
         <configuration>flexspi_nor_debug</configuration>
       </member>
+      <member>
+        <project>freertos_message_buffers_secondary_core</project>
+        <configuration>flexspi_nor_debug</configuration>
+      </member>
     </batchDefinition>
     <batchDefinition>
       <name>flexspi_nor_release</name>
       <member>
         <project>freertos_message_buffers_primary_core</project>
+        <configuration>flexspi_nor_release</configuration>
+      </member>
+      <member>
+        <project>freertos_message_buffers_secondary_core</project>
         <configuration>flexspi_nor_release</configuration>
       </member>
     </batchDefinition>

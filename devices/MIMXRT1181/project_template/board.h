@@ -209,6 +209,7 @@ void EdgeLock_SetClock(uint8_t mux, uint8_t div);
 void DCDC_SetVoltage(uint8_t core, uint8_t targetVoltage);
 
 void BOARD_NETC_Init(void);
+void BOARD_RequestTRDC(bool bRequestAON, bool bRequestWakeup, bool bReqeustMega);
 #if defined(__cplusplus)
 }
 #endif /* __cplusplus */

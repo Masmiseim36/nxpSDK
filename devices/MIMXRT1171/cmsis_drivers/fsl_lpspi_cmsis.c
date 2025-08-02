@@ -1,7 +1,7 @@
 /*
  * Copyright (c) 2013-2016 ARM Limited. All rights reserved.
  * Copyright (c) 2016, Freescale Semiconductor, Inc. Not a Contribution.
- * Copyright 2016-2017,2020,2021,2024 NXP. Not a Contribution.
+ * Copyright 2016-2017,2020,2021,2024-2025 NXP. Not a Contribution.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -25,19 +25,19 @@
 #define FSL_COMPONENT_ID "platform.drivers.lpspi_cmsis"
 #endif
 
-#if ((defined(RTE_SPI0) && RTE_SPI0 && defined(LPSPI0)) || (defined(RTE_SPI1) && RTE_SPI1 && defined(LPSPI1)) ||       \
-     (defined(RTE_SPI2) && RTE_SPI2 && defined(LPSPI2)) || (defined(RTE_SPI3) && RTE_SPI3 && defined(LPSPI3)) ||       \
-     (defined(RTE_SPI4) && RTE_SPI4 && defined(LPSPI4)) || (defined(RTE_SPI5) && RTE_SPI5 && defined(LPSPI5)) ||       \
-     (defined(RTE_SPI6) && RTE_SPI6 && defined(LPSPI6)) || (defined(RTE_SPI7) && RTE_SPI7 && defined(LPSPI7)) ||       \
-     (defined(RTE_SPI8) && RTE_SPI8 && defined(LPSPI8)) || (defined(RTE_SPI9) && RTE_SPI9 && defined(LPSPI9)) ||       \
-     (defined(RTE_SPI10) && RTE_SPI10 && defined(LPSPI10)) || (defined(RTE_SPI11) && RTE_SPI11 && defined(LPSPI11)) || \
-     (defined(RTE_SPI12) && RTE_SPI12 && defined(LPSPI12)) || (defined(RTE_SPI13) && RTE_SPI13 && defined(LPSPI13)) || \
-     (defined(RTE_SPI14) && RTE_SPI14 && defined(LPSPI14)) || (defined(RTE_SPI15) && RTE_SPI15 && defined(LPSPI15)) || \
-     (defined(RTE_SPI16) && RTE_SPI16 && defined(LPSPI16)) || (defined(RTE_SPI17) && RTE_SPI17 && defined(LPSPI17)) || \
-     (defined(RTE_SPI18) && RTE_SPI18 && defined(LPSPI18)) || (defined(RTE_SPI19) && RTE_SPI19 && defined(LPSPI19)) || \
-     (defined(RTE_SPI20) && RTE_SPI20 && defined(LPSPI20)))
+#if ((defined(RTE_SPI0) && RTE_SPI0 && (defined(LPSPI0) || defined(LPSPI_0))) || (defined(RTE_SPI1) && RTE_SPI1 && (defined(LPSPI1) || defined(LPSPI_1))) ||       \
+     (defined(RTE_SPI2) && RTE_SPI2 && (defined(LPSPI2) || defined(LPSPI_2))) || (defined(RTE_SPI3) && RTE_SPI3 && (defined(LPSPI3) || defined(LPSPI_3))) ||       \
+     (defined(RTE_SPI4) && RTE_SPI4 && (defined(LPSPI4) || defined(LPSPI_4))) || (defined(RTE_SPI5) && RTE_SPI5 && (defined(LPSPI5) || defined(LPSPI_5))) ||       \
+     (defined(RTE_SPI6) && RTE_SPI6 && (defined(LPSPI6) || defined(LPSPI_6))) || (defined(RTE_SPI7) && RTE_SPI7 && (defined(LPSPI7) || defined(LPSPI_7))) ||       \
+     (defined(RTE_SPI8) && RTE_SPI8 && (defined(LPSPI8) || defined(LPSPI_8))) || (defined(RTE_SPI9) && RTE_SPI9 && (defined(LPSPI9) || defined(LPSPI_9))) ||       \
+     (defined(RTE_SPI10) && RTE_SPI10 && (defined(LPSPI10) || defined(LPSPI_10))) || (defined(RTE_SPI11) && RTE_SPI11 && (defined(LPSPI11) || defined(LPSPI_11))) || \
+     (defined(RTE_SPI12) && RTE_SPI12 && (defined(LPSPI12) || defined(LPSPI_12))) || (defined(RTE_SPI13) && RTE_SPI13 && (defined(LPSPI13) || defined(LPSPI_13))) || \
+     (defined(RTE_SPI14) && RTE_SPI14 && (defined(LPSPI14) || defined(LPSPI_14))) || (defined(RTE_SPI15) && RTE_SPI15 && (defined(LPSPI15) || defined(LPSPI_15))) || \
+     (defined(RTE_SPI16) && RTE_SPI16 && (defined(LPSPI16) || defined(LPSPI_16))) || (defined(RTE_SPI17) && RTE_SPI17 && (defined(LPSPI17) || defined(LPSPI_17))) || \
+     (defined(RTE_SPI18) && RTE_SPI18 && (defined(LPSPI18) || defined(LPSPI_18))) || (defined(RTE_SPI19) && RTE_SPI19 && (defined(LPSPI19) || defined(LPSPI_19))) || \
+     (defined(RTE_SPI20) && RTE_SPI20 && (defined(LPSPI20) || defined(LPSPI_20))))
 
-#define ARM_LPSPI_DRV_VERSION ARM_DRIVER_VERSION_MAJOR_MINOR((2), (10)) /* driver version */
+#define ARM_LPSPI_DRV_VERSION ARM_DRIVER_VERSION_MAJOR_MINOR((2), (12)) /* driver version */
 
 /*
  * ARMCC does not support split the data section automatically, so the driver
@@ -609,10 +609,22 @@ static int32_t LPSPI_EdmaSend(const void *data, uint32_t num, cmsis_lpspi_edma_d
     status_t status;
     lpspi_transfer_t xfer = {0};
     uint32_t datawidth    = (LPSPI_GetTcr(lpspi->resource->base) & (uint32_t)LPSPI_TCR_FRAMESZ_MASK) >> LPSPI_TCR_FRAMESZ_SHIFT;
+    uint32_t bytesPerFrame = ((datawidth + 8U) / 8U);
+
+    if (num == 0U)
+    {
+        return ARM_DRIVER_ERROR_PARAMETER;
+    }
+
+    uint32_t tmp = UINT32_MAX / num;
+    if (bytesPerFrame > tmp)
+    {
+        return ARM_DRIVER_ERROR_PARAMETER;
+    }
 
     xfer.rxData   = NULL;
     xfer.txData   = (uint8_t *)data;
-    xfer.dataSize = num * ((datawidth + 8U) / 8U);
+    xfer.dataSize = num * bytesPerFrame;
 
     LPSPI_SetTransferConfigFlags(LPSPI_IsMaster(lpspi->resource->base), lpspi->resource->instance, &xfer);
 
@@ -650,10 +662,22 @@ static int32_t LPSPI_EdmaReceive(void *data, uint32_t num, cmsis_lpspi_edma_driv
     status_t status;
     lpspi_transfer_t xfer = {0};
     uint32_t datawidth    = (LPSPI_GetTcr(lpspi->resource->base) & (uint32_t)LPSPI_TCR_FRAMESZ_MASK) >> LPSPI_TCR_FRAMESZ_SHIFT;
+    uint32_t bytesPerFrame = ((datawidth + 8U) / 8U);
+
+    if (num == 0U)
+    {
+        return ARM_DRIVER_ERROR_PARAMETER;
+    }
+
+    uint32_t tmp = UINT32_MAX / num;
+    if (bytesPerFrame > tmp)
+    {
+        return ARM_DRIVER_ERROR_PARAMETER;
+    }
 
     xfer.txData   = NULL;
     xfer.rxData   = (uint8_t *)data;
-    xfer.dataSize = num * ((datawidth + 8U) / 8U);
+    xfer.dataSize = num * bytesPerFrame;
 
     LPSPI_SetTransferConfigFlags(LPSPI_IsMaster(lpspi->resource->base), lpspi->resource->instance, &xfer);
 
@@ -694,10 +718,22 @@ static int32_t LPSPI_EdmaTransfer(const void *data_out,
     status_t status;
     lpspi_transfer_t xfer = {0};
     uint32_t datawidth    = (LPSPI_GetTcr(lpspi->resource->base) & (uint32_t)LPSPI_TCR_FRAMESZ_MASK) >> LPSPI_TCR_FRAMESZ_SHIFT;
+    uint32_t bytesPerFrame = ((datawidth + 8U) / 8U);
+
+    if (num == 0U)
+    {
+        return ARM_DRIVER_ERROR_PARAMETER;
+    }
+
+    uint32_t tmp = UINT32_MAX / num;
+    if (bytesPerFrame > tmp)
+    {
+        return ARM_DRIVER_ERROR_PARAMETER;
+    }
 
     xfer.txData   = (uint8_t *)data_out;
     xfer.rxData   = (uint8_t *)data_in;
-    xfer.dataSize = num * ((datawidth + 8U) / 8U);
+    xfer.dataSize = num * bytesPerFrame;
 
     LPSPI_SetTransferConfigFlags(LPSPI_IsMaster(lpspi->resource->base), lpspi->resource->instance, &xfer);
 
@@ -830,6 +866,11 @@ static int32_t LPSPI_EdmaControl(uint32_t control, uint32_t arg, cmsis_lpspi_edm
             break;
 
         case ARM_SPI_SET_DEFAULT_TX_VALUE: /* Set default Transmit value; arg = value */
+            if (arg > 0xFFU)
+            {
+                result = ARM_DRIVER_ERROR_PARAMETER;
+                break;
+            }
             LPSPI_SetDummyData(lpspi->resource->base, (uint8_t)arg);
             result = ARM_DRIVER_OK;
             break;
@@ -1020,10 +1061,22 @@ static int32_t LPSPI_InterruptSend(const void *data, uint32_t num, cmsis_lpspi_i
     status_t status;
     lpspi_transfer_t xfer = {0};
     uint32_t datawidth    = (LPSPI_GetTcr(lpspi->resource->base) & (uint32_t)LPSPI_TCR_FRAMESZ_MASK) >> LPSPI_TCR_FRAMESZ_SHIFT;
+    uint32_t bytesPerFrame = ((datawidth + 8U) / 8U);
+
+    if (num == 0U)
+    {
+        return ARM_DRIVER_ERROR_PARAMETER;
+    }
+
+    uint32_t tmp = UINT32_MAX / num;
+    if (bytesPerFrame > tmp)
+    {
+        return ARM_DRIVER_ERROR_PARAMETER;
+    }
 
     xfer.rxData   = NULL;
     xfer.txData   = (uint8_t *)data;
-    xfer.dataSize = num * ((datawidth + 8U) / 8U);
+    xfer.dataSize = num * bytesPerFrame;
 
     LPSPI_SetTransferConfigFlags(LPSPI_IsMaster(lpspi->resource->base), lpspi->resource->instance, &xfer);
 
@@ -1061,10 +1114,22 @@ static int32_t LPSPI_InterruptReceive(void *data, uint32_t num, cmsis_lpspi_inte
     status_t status;
     lpspi_transfer_t xfer = {0};
     uint32_t datawidth    = (LPSPI_GetTcr(lpspi->resource->base) & (uint32_t)LPSPI_TCR_FRAMESZ_MASK) >> LPSPI_TCR_FRAMESZ_SHIFT;
+    uint32_t bytesPerFrame = ((datawidth + 8U) / 8U);
+
+    if (num == 0U)
+    {
+        return ARM_DRIVER_ERROR_PARAMETER;
+    }
+
+    uint32_t tmp = UINT32_MAX / num;
+    if (bytesPerFrame > tmp)
+    {
+        return ARM_DRIVER_ERROR_PARAMETER;
+    }
 
     xfer.txData   = NULL;
     xfer.rxData   = (uint8_t *)data;
-    xfer.dataSize = num * ((datawidth + 8U) / 8U);
+    xfer.dataSize = num * bytesPerFrame;
 
     LPSPI_SetTransferConfigFlags(LPSPI_IsMaster(lpspi->resource->base), lpspi->resource->instance, &xfer);
 
@@ -1105,10 +1170,22 @@ static int32_t LPSPI_InterruptTransfer(const void *data_out,
     status_t status;
     lpspi_transfer_t xfer = {0};
     uint32_t datawidth    = (LPSPI_GetTcr(lpspi->resource->base) & (uint32_t)LPSPI_TCR_FRAMESZ_MASK) >> LPSPI_TCR_FRAMESZ_SHIFT;
+    uint32_t bytesPerFrame = ((datawidth + 8U) / 8U);
+
+    if (num == 0U)
+    {
+        return ARM_DRIVER_ERROR_PARAMETER;
+    }
+
+    uint32_t tmp = UINT32_MAX / num;
+    if (bytesPerFrame > tmp)
+    {
+        return ARM_DRIVER_ERROR_PARAMETER;
+    }
 
     xfer.txData   = (uint8_t *)data_out;
     xfer.rxData   = (uint8_t *)data_in;
-    xfer.dataSize = num * ((datawidth + 8U) / 8U);
+    xfer.dataSize = num * bytesPerFrame;
 
     LPSPI_SetTransferConfigFlags(LPSPI_IsMaster(lpspi->resource->base), lpspi->resource->instance, &xfer);
 
@@ -1235,6 +1312,11 @@ static int32_t LPSPI_InterruptControl(uint32_t control, uint32_t arg, cmsis_lpsp
         case ARM_SPI_SET_DEFAULT_TX_VALUE: /* Set default Transmit value; arg = value */
             if (LPSPI_IsMaster(lpspi->resource->base))
             {
+                if (arg > 0xFFU)
+                {
+                    result = ARM_DRIVER_ERROR_PARAMETER;
+                    break;
+                }
                 LPSPI_SetDummyData(lpspi->resource->base, (uint8_t)arg);
             }
             else
@@ -1295,13 +1377,17 @@ static ARM_SPI_STATUS LPSPI_InterruptGetStatus(cmsis_lpspi_interrupt_driver_stat
 
 #endif
 
-#if defined(LPSPI0) && defined(RTE_SPI0) && RTE_SPI0
+#if (defined(LPSPI0) || defined(LPSPI_0)) && defined(RTE_SPI0) && RTE_SPI0
 
 /* User needs to provide the implementation for LPSPI0_GetFreq/InitPins/DeinitPins
 in the application for enabling according instance. */
 extern uint32_t LPSPI0_GetFreq(void);
 
+#if defined(LPSPI0)
 static cmsis_lpspi_resource_t LPSPI0_Resource = {LPSPI0, 0, LPSPI0_GetFreq};
+#elif defined(LPSPI_0)
+static cmsis_lpspi_resource_t LPSPI0_Resource = {LPSPI_0, 0, LPSPI0_GetFreq};
+#endif
 
 #if defined(RTE_SPI0_DMA_EN) && RTE_SPI0_DMA_EN
 
@@ -1465,13 +1551,17 @@ ARM_DRIVER_SPI Driver_SPI0 = {
 
 #endif /*  LPSPI0  */
 
-#if defined(LPSPI1) && defined(RTE_SPI1) && RTE_SPI1
+#if (defined(LPSPI1) || defined(LPSPI_1)) && defined(RTE_SPI1) && RTE_SPI1
 
 /* User needs to provide the implementation for LPSPI1_GetFreq/InitPins/DeinitPins
 in the application for enabling according instance. */
 extern uint32_t LPSPI1_GetFreq(void);
 
+#if defined(LPSPI1)
 static cmsis_lpspi_resource_t LPSPI1_Resource = {LPSPI1, 1, LPSPI1_GetFreq};
+#elif defined(LPSPI_1)
+static cmsis_lpspi_resource_t LPSPI1_Resource = {LPSPI_1, 1, LPSPI1_GetFreq};
+#endif
 
 #if defined(RTE_SPI1_DMA_EN) && RTE_SPI1_DMA_EN
 
@@ -1635,13 +1725,17 @@ ARM_DRIVER_SPI Driver_SPI1 = {
 
 #endif /*  LPSPI1  */
 
-#if defined(LPSPI2) && defined(RTE_SPI2) && RTE_SPI2
+#if (defined(LPSPI2) || defined(LPSPI_2)) && defined(RTE_SPI2) && RTE_SPI2
 
 /* User needs to provide the implementation for LPSPI2_GetFreq/InitPins/DeinitPins
 in the application for enabling according instance. */
 extern uint32_t LPSPI2_GetFreq(void);
 
+#if defined(LPSPI2)
 static cmsis_lpspi_resource_t LPSPI2_Resource = {LPSPI2, 2, LPSPI2_GetFreq};
+#elif defined(LPSPI_2)
+static cmsis_lpspi_resource_t LPSPI2_Resource = {LPSPI_2, 2, LPSPI2_GetFreq};
+#endif
 
 #if defined(RTE_SPI2_DMA_EN) && RTE_SPI2_DMA_EN
 
@@ -1805,13 +1899,17 @@ ARM_DRIVER_SPI Driver_SPI2 = {
 
 #endif /*  LPSPI2  */
 
-#if defined(LPSPI3) && defined(RTE_SPI3) && RTE_SPI3
+#if (defined(LPSPI3) || defined(LPSPI_3)) && defined(RTE_SPI3) && RTE_SPI3
 
 /* User needs to provide the implementation for LPSPI3_GetFreq/InitPins/DeinitPins
 in the application for enabling according instance. */
 extern uint32_t LPSPI3_GetFreq(void);
 
+#if defined(LPSPI3)
 static cmsis_lpspi_resource_t LPSPI3_Resource = {LPSPI3, 3, LPSPI3_GetFreq};
+#elif defined(LPSPI_3)
+static cmsis_lpspi_resource_t LPSPI3_Resource = {LPSPI_3, 3, LPSPI3_GetFreq};
+#endif
 
 #if defined(RTE_SPI3_DMA_EN) && RTE_SPI3_DMA_EN
 
@@ -1975,13 +2073,17 @@ ARM_DRIVER_SPI Driver_SPI3 = {
 
 #endif /*  LPSPI3  */
 
-#if defined(LPSPI4) && defined(RTE_SPI4) && RTE_SPI4
+#if (defined(LPSPI4) || defined(LPSPI_4)) && defined(RTE_SPI4) && RTE_SPI4
 
 /* User needs to provide the implementation for LPSPI4_GetFreq/InitPins/DeinitPins
 in the application for enabling according instance. */
 extern uint32_t LPSPI4_GetFreq(void);
 
+#if defined(LPSPI4)
 static cmsis_lpspi_resource_t LPSPI4_Resource = {LPSPI4, 4, LPSPI4_GetFreq};
+#elif defined(LPSPI_4)
+static cmsis_lpspi_resource_t LPSPI4_Resource = {LPSPI_4, 4, LPSPI4_GetFreq};
+#endif
 
 #if defined(RTE_SPI4_DMA_EN) && RTE_SPI4_DMA_EN
 
@@ -2145,13 +2247,17 @@ ARM_DRIVER_SPI Driver_SPI4 = {
 
 #endif /*  LPSPI4  */
 
-#if defined(LPSPI5) && defined(RTE_SPI5) && RTE_SPI5
+#if (defined(LPSPI5) || defined(LPSPI_5)) && defined(RTE_SPI5) && RTE_SPI5
 
 /* User needs to provide the implementation for LPSPI5_GetFreq/InitPins/DeinitPins
 in the application for enabling according instance. */
 extern uint32_t LPSPI5_GetFreq(void);
 
+#if defined(LPSPI5)
 static cmsis_lpspi_resource_t LPSPI5_Resource = {LPSPI5, 5, LPSPI5_GetFreq};
+#elif defined(LPSPI_5)
+static cmsis_lpspi_resource_t LPSPI5_Resource = {LPSPI_5, 5, LPSPI5_GetFreq};
+#endif
 
 #if defined(RTE_SPI5_DMA_EN) && RTE_SPI5_DMA_EN
 
@@ -2315,13 +2421,17 @@ ARM_DRIVER_SPI Driver_SPI5 = {
 
 #endif /*  LPSPI5  */
 
-#if defined(LPSPI6) && defined(RTE_SPI6) && RTE_SPI6
+#if (defined(LPSPI6) || defined(LPSPI_6)) && defined(RTE_SPI6) && RTE_SPI6
 
 /* User needs to provide the implementation for LPSPI6_GetFreq/InitPins/DeinitPins
 in the application for enabling according instance. */
 extern uint32_t LPSPI6_GetFreq(void);
 
+#if defined(LPSPI6)
 static cmsis_lpspi_resource_t LPSPI6_Resource = {LPSPI6, 6, LPSPI6_GetFreq};
+#elif defined(LPSPI_6)
+static cmsis_lpspi_resource_t LPSPI6_Resource = {LPSPI_6, 6, LPSPI6_GetFreq};
+#endif
 
 #if defined(RTE_SPI6_DMA_EN) && RTE_SPI6_DMA_EN
 
@@ -2485,13 +2595,17 @@ ARM_DRIVER_SPI Driver_SPI6 = {
 
 #endif /*  LPSPI6  */
 
-#if defined(LPSPI7) && defined(RTE_SPI7) && RTE_SPI7
+#if (defined(LPSPI7) || defined(LPSPI_7)) && defined(RTE_SPI7) && RTE_SPI7
 
 /* User needs to provide the implementation for LPSPI7_GetFreq/InitPins/DeinitPins
 in the application for enabling according instance. */
 extern uint32_t LPSPI7_GetFreq(void);
 
+#if defined(LPSPI7)
 static cmsis_lpspi_resource_t LPSPI7_Resource = {LPSPI7, 7, LPSPI7_GetFreq};
+#elif defined(LPSPI_7)
+static cmsis_lpspi_resource_t LPSPI7_Resource = {LPSPI_7, 7, LPSPI7_GetFreq};
+#endif
 
 #if defined(RTE_SPI7_DMA_EN) && RTE_SPI7_DMA_EN
 
@@ -2655,13 +2769,17 @@ ARM_DRIVER_SPI Driver_SPI7 = {
 
 #endif /*  LPSPI7  */
 
-#if defined(LPSPI8) && defined(RTE_SPI8) && RTE_SPI8
+#if (defined(LPSPI8) || defined(LPSPI_8)) && defined(RTE_SPI8) && RTE_SPI8
 
 /* User needs to provide the implementation for LPSPI8_GetFreq/InitPins/DeinitPins
 in the application for enabling according instance. */
 extern uint32_t LPSPI8_GetFreq(void);
 
+#if defined(LPSPI8)
 static cmsis_lpspi_resource_t LPSPI8_Resource = {LPSPI8, 8, LPSPI8_GetFreq};
+#elif defined(LPSPI_8)
+static cmsis_lpspi_resource_t LPSPI8_Resource = {LPSPI_8, 8, LPSPI8_GetFreq};
+#endif
 
 #if defined(RTE_SPI8_DMA_EN) && RTE_SPI8_DMA_EN
 
@@ -2825,13 +2943,17 @@ ARM_DRIVER_SPI Driver_SPI8 = {
 
 #endif /*  LPSPI8  */
 
-#if defined(LPSPI9) && defined(RTE_SPI9) && RTE_SPI9
+#if (defined(LPSPI9) || defined(LPSPI_9)) && defined(RTE_SPI9) && RTE_SPI9
 
 /* User needs to provide the implementation for LPSPI9_GetFreq/InitPins/DeinitPins
 in the application for enabling according instance. */
 extern uint32_t LPSPI9_GetFreq(void);
 
+#if defined(LPSPI9)
 static cmsis_lpspi_resource_t LPSPI9_Resource = {LPSPI9, 9, LPSPI9_GetFreq};
+#elif defined(LPSPI_9)
+static cmsis_lpspi_resource_t LPSPI9_Resource = {LPSPI_9, 9, LPSPI9_GetFreq};
+#endif
 
 #if defined(RTE_SPI9_DMA_EN) && RTE_SPI9_DMA_EN
 
@@ -2995,13 +3117,17 @@ ARM_DRIVER_SPI Driver_SPI9 = {
 
 #endif /*  LPSPI9  */
 
-#if defined(LPSPI10) && defined(RTE_SPI10) && RTE_SPI10
+#if (defined(LPSPI10) || defined(LPSPI_10)) && defined(RTE_SPI10) && RTE_SPI10
 
 /* User needs to provide the implementation for LPSPI10_GetFreq/InitPins/DeinitPins
 in the application for enabling according instance. */
 extern uint32_t LPSPI10_GetFreq(void);
 
+#if defined(LPSPI10)
 static cmsis_lpspi_resource_t LPSPI10_Resource = {LPSPI10, 10, LPSPI10_GetFreq};
+#elif defined(LPSPI_10)
+static cmsis_lpspi_resource_t LPSPI10_Resource = {LPSPI_10, 10, LPSPI10_GetFreq};
+#endif
 
 #if defined(RTE_SPI10_DMA_EN) && RTE_SPI10_DMA_EN
 
@@ -3166,13 +3292,17 @@ ARM_DRIVER_SPI Driver_SPI10 = {
 
 #endif /*  LPSPI10  */
 
-#if defined(LPSPI11) && defined(RTE_SPI11) && RTE_SPI11
+#if (defined(LPSPI11) || defined(LPSPI_11)) && defined(RTE_SPI11) && RTE_SPI11
 
 /* User needs to provide the implementation for LPSPI11_GetFreq/InitPins/DeinitPins
 in the application for enabling according instance. */
 extern uint32_t LPSPI11_GetFreq(void);
 
+#if defined(LPSPI11)
 static cmsis_lpspi_resource_t LPSPI11_Resource = {LPSPI11, 11, LPSPI11_GetFreq};
+#elif defined(LPSPI_11)
+static cmsis_lpspi_resource_t LPSPI11_Resource = {LPSPI_11, 11, LPSPI11_GetFreq};
+#endif
 
 #if defined(RTE_SPI11_DMA_EN) && RTE_SPI11_DMA_EN
 
@@ -3337,13 +3467,17 @@ ARM_DRIVER_SPI Driver_SPI11 = {
 
 #endif /*  LPSPI11  */
 
-#if defined(LPSPI12) && defined(RTE_SPI12) && RTE_SPI12
+#if (defined(LPSPI12) || defined(LPSPI_12)) && defined(RTE_SPI12) && RTE_SPI12
 
 /* User needs to provide the implementation for LPSPI12_GetFreq/InitPins/DeinitPins
 in the application for enabling according instance. */
 extern uint32_t LPSPI12_GetFreq(void);
 
+#if defined(LPSPI12)
 static cmsis_lpspi_resource_t LPSPI12_Resource = {LPSPI12, 12, LPSPI12_GetFreq};
+#elif defined(LPSPI_12)
+static cmsis_lpspi_resource_t LPSPI12_Resource = {LPSPI_12, 12, LPSPI12_GetFreq};
+#endif
 
 #if defined(RTE_SPI12_DMA_EN) && RTE_SPI12_DMA_EN
 
@@ -3508,13 +3642,17 @@ ARM_DRIVER_SPI Driver_SPI12 = {
 
 #endif /*  LPSPI12  */
 
-#if defined(LPSPI13) && defined(RTE_SPI13) && RTE_SPI13
+#if (defined(LPSPI13) || defined(LPSPI_13)) && defined(RTE_SPI13) && RTE_SPI13
 
 /* User needs to provide the implementation for LPSPI13_GetFreq/InitPins/DeinitPins
 in the application for enabling according instance. */
 extern uint32_t LPSPI13_GetFreq(void);
 
+#if defined(LPSPI13)
 static cmsis_lpspi_resource_t LPSPI13_Resource = {LPSPI13, 13, LPSPI13_GetFreq};
+#elif defined(LPSPI_13)
+static cmsis_lpspi_resource_t LPSPI13_Resource = {LPSPI_13, 13, LPSPI13_GetFreq};
+#endif
 
 #if defined(RTE_SPI13_DMA_EN) && RTE_SPI13_DMA_EN
 
@@ -3679,13 +3817,17 @@ ARM_DRIVER_SPI Driver_SPI13 = {
 
 #endif /*  LPSPI13  */
 
-#if defined(LPSPI14) && defined(RTE_SPI14) && RTE_SPI14
+#if (defined(LPSPI14) || defined(LPSPI_14)) && defined(RTE_SPI14) && RTE_SPI14
 
 /* User needs to provide the implementation for LPSPI14_GetFreq/InitPins/DeinitPins
 in the application for enabling according instance. */
 extern uint32_t LPSPI14_GetFreq(void);
 
+#if defined(LPSPI14)
 static cmsis_lpspi_resource_t LPSPI14_Resource = {LPSPI14, 14, LPSPI14_GetFreq};
+#elif defined(LPSPI_14)
+static cmsis_lpspi_resource_t LPSPI14_Resource = {LPSPI_14, 14, LPSPI14_GetFreq};
+#endif
 
 #if defined(RTE_SPI14_DMA_EN) && RTE_SPI14_DMA_EN
 
@@ -3850,13 +3992,17 @@ ARM_DRIVER_SPI Driver_SPI14 = {
 
 #endif /*  LPSPI14  */
 
-#if defined(LPSPI15) && defined(RTE_SPI15) && RTE_SPI15
+#if (defined(LPSPI15) || defined(LPSPI_15)) && defined(RTE_SPI15) && RTE_SPI15
 
 /* User needs to provide the implementation for LPSPI15_GetFreq/InitPins/DeinitPins
 in the application for enabling according instance. */
 extern uint32_t LPSPI15_GetFreq(void);
 
+#if defined(LPSPI15)
 static cmsis_lpspi_resource_t LPSPI15_Resource = {LPSPI15, 15, LPSPI15_GetFreq};
+#elif defined(LPSPI_15)
+static cmsis_lpspi_resource_t LPSPI15_Resource = {LPSPI_15, 15, LPSPI15_GetFreq};
+#endif
 
 #if defined(RTE_SPI15_DMA_EN) && RTE_SPI15_DMA_EN
 
@@ -4021,13 +4167,17 @@ ARM_DRIVER_SPI Driver_SPI15 = {
 
 #endif /*  LPSPI15  */
 
-#if defined(LPSPI16) && defined(RTE_SPI16) && RTE_SPI16
+#if (defined(LPSPI16) || defined(LPSPI_16)) && defined(RTE_SPI16) && RTE_SPI16
 
 /* User needs to provide the implementation for LPSPI16_GetFreq/InitPins/DeinitPins
 in the application for enabling according instance. */
 extern uint32_t LPSPI16_GetFreq(void);
 
+#if defined(LPSPI16)
 static cmsis_lpspi_resource_t LPSPI16_Resource = {LPSPI16, 16, LPSPI16_GetFreq};
+#elif defined(LPSPI_16)
+static cmsis_lpspi_resource_t LPSPI16_Resource = {LPSPI_16, 16, LPSPI16_GetFreq};
+#endif
 
 #if defined(RTE_SPI16_DMA_EN) && RTE_SPI16_DMA_EN
 
@@ -4192,13 +4342,17 @@ ARM_DRIVER_SPI Driver_SPI16 = {
 
 #endif /*  LPSPI16  */
 
-#if defined(LPSPI17) && defined(RTE_SPI17) && RTE_SPI17
+#if (defined(LPSPI17) || defined(LPSPI_17)) && defined(RTE_SPI17) && RTE_SPI17
 
 /* User needs to provide the implementation for LPSPI17_GetFreq/InitPins/DeinitPins
 in the application for enabling according instance. */
 extern uint32_t LPSPI17_GetFreq(void);
 
+#if defined(LPSPI17)
 static cmsis_lpspi_resource_t LPSPI17_Resource = {LPSPI17, 17, LPSPI17_GetFreq};
+#elif defined(LPSPI_17)
+static cmsis_lpspi_resource_t LPSPI17_Resource = {LPSPI_17, 17, LPSPI17_GetFreq};
+#endif
 
 #if defined(RTE_SPI17_DMA_EN) && RTE_SPI17_DMA_EN
 
@@ -4363,13 +4517,17 @@ ARM_DRIVER_SPI Driver_SPI17 = {
 
 #endif /*  LPSPI17  */
 
-#if defined(LPSPI18) && defined(RTE_SPI18) && RTE_SPI18
+#if (defined(LPSPI18) || defined(LPSPI_18)) && defined(RTE_SPI18) && RTE_SPI18
 
 /* User needs to provide the implementation for LPSPI18_GetFreq/InitPins/DeinitPins
 in the application for enabling according instance. */
 extern uint32_t LPSPI18_GetFreq(void);
 
+#if defined(LPSPI18)
 static cmsis_lpspi_resource_t LPSPI18_Resource = {LPSPI18, 18, LPSPI18_GetFreq};
+#elif defined(LPSPI_18)
+static cmsis_lpspi_resource_t LPSPI18_Resource = {LPSPI_18, 18, LPSPI18_GetFreq};
+#endif
 
 #if defined(RTE_SPI18_DMA_EN) && RTE_SPI18_DMA_EN
 
@@ -4534,13 +4692,17 @@ ARM_DRIVER_SPI Driver_SPI18 = {
 
 #endif /*  LPSPI18  */
 
-#if defined(LPSPI19) && defined(RTE_SPI19) && RTE_SPI19
+#if (defined(LPSPI19) || defined(LPSPI_19)) && defined(RTE_SPI19) && RTE_SPI19
 
 /* User needs to provide the implementation for LPSPI19_GetFreq/InitPins/DeinitPins
 in the application for enabling according instance. */
 extern uint32_t LPSPI19_GetFreq(void);
 
+#if defined(LPSPI19)
 static cmsis_lpspi_resource_t LPSPI19_Resource = {LPSPI19, 19, LPSPI19_GetFreq};
+#elif defined(LPSPI_19)
+static cmsis_lpspi_resource_t LPSPI19_Resource = {LPSPI_19, 19, LPSPI19_GetFreq};
+#endif
 
 #if defined(RTE_SPI19_DMA_EN) && RTE_SPI19_DMA_EN
 
@@ -4705,13 +4867,17 @@ ARM_DRIVER_SPI Driver_SPI19 = {
 
 #endif /*  LPSPI19  */
 
-#if defined(LPSPI20) && defined(RTE_SPI20) && RTE_SPI20
+#if (defined(LPSPI20) || defined(LPSPI_20)) && defined(RTE_SPI20) && RTE_SPI20
 
 /* User needs to provide the implementation for LPSPI20_GetFreq/InitPins/DeinitPins
 in the application for enabling according instance. */
 extern uint32_t LPSPI20_GetFreq(void);
 
+#if defined(LPSPI20)
 static cmsis_lpspi_resource_t LPSPI20_Resource = {LPSPI20, 20, LPSPI20_GetFreq};
+#elif defined(LPSPI_20)
+static cmsis_lpspi_resource_t LPSPI20_Resource = {LPSPI_20, 20, LPSPI20_GetFreq};
+#endif
 
 #if defined(RTE_SPI20_DMA_EN) && RTE_SPI20_DMA_EN
 

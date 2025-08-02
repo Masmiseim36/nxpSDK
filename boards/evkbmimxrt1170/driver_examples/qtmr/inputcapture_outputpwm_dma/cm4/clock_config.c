@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2023 NXP
+ * Copyright 2025 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -17,12 +17,11 @@
 
 /* TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 !!GlobalInfo
-product: Clocks v11.0
+product: Clocks v16.0
 processor: MIMXRT1176xxxxx
-package_id: MIMXRT1176DVMAA
+package_id: MIMXRT1176DVMAB
 mcu_data: ksdk2_0
-processor_version: 0.14.8
-board: MIMXRT1170-EVKB
+processor_version: 0.2506.20
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS **********/
 
 #include "clock_config.h"
@@ -282,8 +281,8 @@ void BOARD_BootClockRUN(void)
     clock_root_config_t rootCfg = {0};
 
 #if !defined(SKIP_DCDC_CONFIGURATION) || (!SKIP_DCDC_CONFIGURATION)
-    /* Set DCDC to DCM mode to improve the efficiency for light loading in run mode and transient performance with a big loading step. */
-    DCDC_BootIntoDCM(DCDC);
+    /* Set DCDC to CCM mode to improve stablility. */
+    DCDC_BootIntoCCM(DCDC);
 
 #if !defined(SKIP_DCDC_ADJUSTMENT) || (!SKIP_DCDC_ADJUSTMENT)
     if((OCOTP->FUSEN[16].FUSE == 0x57AC5969U) && ((OCOTP->FUSEN[17].FUSE & 0xFFU) == 0x0BU))
@@ -341,7 +340,6 @@ void BOARD_BootClockRUN(void)
 
     /* Init OSC RC 400M */
     CLOCK_OSC_EnableOscRc400M();
-    CLOCK_OSC_GateOscRc400M(false);
 
     /* Init OSC RC 48M */
     CLOCK_OSC_EnableOsc48M(true);
@@ -355,22 +353,29 @@ void BOARD_BootClockRUN(void)
     {
     }
 
-    /* Switch both core, M7 Systick and Bus_Lpsr to OscRC48MDiv2 first */
+    /* Switch core M7 clock root to OscRC48MDiv2 first */
 #if __CORTEX_M == 7
     rootCfg.mux = kCLOCK_M7_ClockRoot_MuxOscRc48MDiv2;
     rootCfg.div = 1;
     CLOCK_SetRootClock(kCLOCK_Root_M7, &rootCfg);
+#endif
 
+    /* Switch core M7 systick clock root to OscRC48MDiv2 first */
+#if __CORTEX_M == 7
     rootCfg.mux = kCLOCK_M7_SYSTICK_ClockRoot_MuxOscRc48MDiv2;
     rootCfg.div = 1;
     CLOCK_SetRootClock(kCLOCK_Root_M7_Systick, &rootCfg);
 #endif
 
+    /* Switch core M4 clock root to OscRC48MDiv2 first */
 #if __CORTEX_M == 4
     rootCfg.mux = kCLOCK_M4_ClockRoot_MuxOscRc48MDiv2;
     rootCfg.div = 1;
     CLOCK_SetRootClock(kCLOCK_Root_M4, &rootCfg);
+#endif
 
+    /* Switch the Bus_Lpsr clock root to OscRC48MDiv2 first */
+#if __CORTEX_M == 4
     rootCfg.mux = kCLOCK_BUS_LPSR_ClockRoot_MuxOscRc48MDiv2;
     rootCfg.div = 1;
     CLOCK_SetRootClock(kCLOCK_Root_Bus_Lpsr, &rootCfg);
@@ -1097,8 +1102,8 @@ void BOARD_BootClockRUN_800M(void)
     clock_root_config_t rootCfg = {0};
 
 #if !defined(SKIP_DCDC_CONFIGURATION) || (!SKIP_DCDC_CONFIGURATION)
-    /* Set DCDC to DCM mode to improve the efficiency for light loading in run mode and transient performance with a big loading step. */
-    DCDC_BootIntoDCM(DCDC);
+    /* Set DCDC to CCM mode to improve stablility. */
+    DCDC_BootIntoCCM(DCDC);
 
 #if !defined(SKIP_DCDC_ADJUSTMENT) || (!SKIP_DCDC_ADJUSTMENT)
     if((OCOTP->FUSEN[16].FUSE == 0x57AC5969U) && ((OCOTP->FUSEN[17].FUSE & 0xFFU) == 0x0BU))
@@ -1156,7 +1161,6 @@ void BOARD_BootClockRUN_800M(void)
 
     /* Init OSC RC 400M */
     CLOCK_OSC_EnableOscRc400M();
-    CLOCK_OSC_GateOscRc400M(false);
 
     /* Init OSC RC 48M */
     CLOCK_OSC_EnableOsc48M(true);
@@ -1170,22 +1174,29 @@ void BOARD_BootClockRUN_800M(void)
     {
     }
 
-    /* Switch both core, M7 Systick and Bus_Lpsr to OscRC48MDiv2 first */
+    /* Switch core M7 clock root to OscRC48MDiv2 first */
 #if __CORTEX_M == 7
     rootCfg.mux = kCLOCK_M7_ClockRoot_MuxOscRc48MDiv2;
     rootCfg.div = 1;
     CLOCK_SetRootClock(kCLOCK_Root_M7, &rootCfg);
+#endif
 
+    /* Switch core M7 systick clock root to OscRC48MDiv2 first */
+#if __CORTEX_M == 7
     rootCfg.mux = kCLOCK_M7_SYSTICK_ClockRoot_MuxOscRc48MDiv2;
     rootCfg.div = 1;
     CLOCK_SetRootClock(kCLOCK_Root_M7_Systick, &rootCfg);
 #endif
 
+    /* Switch core M4 clock root to OscRC48MDiv2 first */
 #if __CORTEX_M == 4
     rootCfg.mux = kCLOCK_M4_ClockRoot_MuxOscRc48MDiv2;
     rootCfg.div = 1;
     CLOCK_SetRootClock(kCLOCK_Root_M4, &rootCfg);
+#endif
 
+    /* Switch the Bus_Lpsr clock root to OscRC48MDiv2 first */
+#if __CORTEX_M == 4
     rootCfg.mux = kCLOCK_BUS_LPSR_ClockRoot_MuxOscRc48MDiv2;
     rootCfg.div = 1;
     CLOCK_SetRootClock(kCLOCK_Root_Bus_Lpsr, &rootCfg);

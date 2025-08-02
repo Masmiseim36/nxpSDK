@@ -20,17 +20,15 @@
 #include "RdspDeviceConfig.h"
 
 #if defined(PLATFORM_RT1060)
-#define DEVICE_ID    Device_IMXRT1060_CM7
-#define RDSP_NUM_MIC 2
+#define DEVICE_ID Device_IMXRT1060_CM7
 #elif defined(PLATFORM_RT1170_EVKB)
-#define DEVICE_ID    Device_IMXRT1170_CM7
-#define RDSP_NUM_MIC 2
+#define DEVICE_ID Device_IMXRT1170_CM7
 #elif defined(PLATFORM_RW61X)
-#define DEVICE_ID    Device_RW610_CM33_NO_DSP
-#define RDSP_NUM_MIC 2
+#define DEVICE_ID Device_RW610_CM33_NO_DSP
 #else
 #error "No platform selected"
 #endif
+#define RDSP_NUM_MIC DEMO_MIC_CHANNEL_NUM
 
 RETUNE_VOICESEEKERLIGHT_plugin_t vsl             = {0};
 static rdsp_voiceseekerlight_config_t vsl_config = {0};

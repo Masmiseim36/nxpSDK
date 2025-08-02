@@ -23,6 +23,7 @@
     <definition extID="platform.drivers.igpio.MIMXRT1166"/>
     <definition extID="platform.drivers.lpi2c.MIMXRT1166"/>
     <definition extID="platform.drivers.lpuart.MIMXRT1166"/>
+    <definition extID="platform.drivers.mu.MIMXRT1166"/>
     <definition extID="platform.drivers.sai.MIMXRT1166"/>
     <definition extID="platform.utilities.assert_lite.MIMXRT1166"/>
     <definition extID="platform.utilities.misc_utilities.MIMXRT1166"/>
@@ -44,7 +45,7 @@
     <definition extID="com.crt.advproject.config.exe.debug"/>
     <definition extID="com.crt.advproject.config.exe.release"/>
   </externalDefinitions>
-  <example id="evkmimxrt1160_asrc_m2m_interrupt_cm7" name="asrc_m2m_interrupt_cm7" device_core="cm7_MIMXRT1166xxxxx" dependency="platform.drivers.xip_board.evkmimxrt1160.MIMXRT1166 platform.drivers.xip_device.MIMXRT1166 platform.drivers.clock.MIMXRT1166 platform.drivers.iomuxc.MIMXRT1166 platform.drivers.anatop_ai.MIMXRT1166 platform.drivers.memory.MIMXRT1166 platform.drivers.dcdc_soc.MIMXRT1166 platform.drivers.gpc_3.MIMXRT1166 platform.drivers.pgmc.MIMXRT1166 platform.drivers.pmu_1.MIMXRT1166 platform.drivers.soc_src.MIMXRT1166 CMSIS_Include_core_cm.MIMXRT1166 device.MIMXRT1166_CMSIS.MIMXRT1166 device.MIMXRT1166_system.MIMXRT1166 device.MIMXRT1166_startup.MIMXRT1166 platform.drivers.asrc.MIMXRT1166 platform.drivers.cache_armv7_m7.MIMXRT1166 platform.drivers.common.MIMXRT1166 platform.drivers.igpio.MIMXRT1166 platform.drivers.lpi2c.MIMXRT1166 platform.drivers.lpuart.MIMXRT1166 platform.drivers.sai.MIMXRT1166 platform.utilities.assert_lite.MIMXRT1166 platform.utilities.misc_utilities.MIMXRT1166 utility.str.MIMXRT1166 utility.debug_console_lite.MIMXRT1166 component.codec_i2c.MIMXRT1166 driver.codec.MIMXRT1166 component.codec_adapters.MIMXRT1166 component.wm8960_adapter.MIMXRT1166 driver.wm8960.MIMXRT1166 component.i2c_adapter_interface.MIMXRT1166 component.lpi2c_adapter.MIMXRT1166 component.lpuart_adapter.MIMXRT1166" category="driver_examples/asrc">
+  <example id="evkmimxrt1160_asrc_m2m_interrupt_cm7" name="asrc_m2m_interrupt_cm7" device_core="cm7_MIMXRT1166xxxxx" dependency="platform.drivers.xip_board.evkmimxrt1160.MIMXRT1166 platform.drivers.xip_device.MIMXRT1166 platform.drivers.clock.MIMXRT1166 platform.drivers.iomuxc.MIMXRT1166 platform.drivers.anatop_ai.MIMXRT1166 platform.drivers.memory.MIMXRT1166 platform.drivers.dcdc_soc.MIMXRT1166 platform.drivers.gpc_3.MIMXRT1166 platform.drivers.pgmc.MIMXRT1166 platform.drivers.pmu_1.MIMXRT1166 platform.drivers.soc_src.MIMXRT1166 CMSIS_Include_core_cm.MIMXRT1166 device.MIMXRT1166_CMSIS.MIMXRT1166 device.MIMXRT1166_system.MIMXRT1166 device.MIMXRT1166_startup.MIMXRT1166 platform.drivers.asrc.MIMXRT1166 platform.drivers.cache_armv7_m7.MIMXRT1166 platform.drivers.common.MIMXRT1166 platform.drivers.igpio.MIMXRT1166 platform.drivers.lpi2c.MIMXRT1166 platform.drivers.lpuart.MIMXRT1166 platform.drivers.mu.MIMXRT1166 platform.drivers.sai.MIMXRT1166 platform.utilities.assert_lite.MIMXRT1166 platform.utilities.misc_utilities.MIMXRT1166 utility.str.MIMXRT1166 utility.debug_console_lite.MIMXRT1166 component.codec_i2c.MIMXRT1166 driver.codec.MIMXRT1166 component.codec_adapters.MIMXRT1166 component.wm8960_adapter.MIMXRT1166 driver.wm8960.MIMXRT1166 component.i2c_adapter_interface.MIMXRT1166 component.lpi2c_adapter.MIMXRT1166 component.lpuart_adapter.MIMXRT1166" category="driver_examples/asrc">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -68,6 +69,7 @@
           <value>SDK_DEBUGCONSOLE=1</value>
           <value>MCUX_META_BUILD</value>
           <value>CPU_MIMXRT1166DVM6A_cm7</value>
+          <value>MIMXRT1166_cm7_SERIES</value>
           <value>SDK_I2C_BASED_COMPONENT_USED=1</value>
           <value>CODEC_MULTI_ADAPTERS=1</value>
           <value>CODEC_WM8960_ENABLE</value>
@@ -150,18 +152,10 @@
       <files mask="CMakeLists.txt"/>
       <files mask="flags.cmake"/>
       <files mask="config.cmake"/>
-      <files mask="build_sdram_debug.bat"/>
-      <files mask="build_sdram_debug.sh"/>
-      <files mask="build_sdram_release.bat"/>
-      <files mask="build_sdram_release.sh"/>
       <files mask="build_flexspi_nor_debug.bat"/>
       <files mask="build_flexspi_nor_debug.sh"/>
       <files mask="build_flexspi_nor_release.bat"/>
       <files mask="build_flexspi_nor_release.sh"/>
-      <files mask="build_debug.bat"/>
-      <files mask="build_debug.sh"/>
-      <files mask="build_release.bat"/>
-      <files mask="build_release.sh"/>
     </source>
     <source path="../../../../../../devices/MIMXRT1166" project_relative_path="./" type="workspace" toolchain="armgcc">
       <files mask="all_lib_device.cmake"/>
@@ -170,9 +164,7 @@
       <files mask="evkmimxrt1160_connect_cm7.mac"/>
     </source>
     <source path="." project_relative_path="source" type="configuration" toolchain="mdk">
-      <files mask="evkmimxrt1160_ram.ini"/>
       <files mask="evkmimxrt1160_flexspi_nor.ini"/>
-      <files mask="evkmimxrt1160_sdram_init.ini"/>
     </source>
     <source path="." project_relative_path="source" type="src">
       <files mask="asrc_m2m_interrupt.c"/>
@@ -187,19 +179,13 @@
       <files mask="board.c"/>
     </source>
     <source path="iar" project_relative_path="MIMXRT1166/iar" type="linker" toolchain="iar">
-      <files mask="MIMXRT1166xxxxx_cm7_ram.icf"/>
       <files mask="MIMXRT1166xxxxx_cm7_flexspi_nor.icf"/>
-      <files mask="MIMXRT1166xxxxx_cm7_sdram.icf"/>
-    </source>
-    <source path="armgcc" project_relative_path="MIMXRT1166/armgcc" type="linker" toolchain="armgcc">
-      <files mask="MIMXRT1166xxxxx_cm7_ram.ld"/>
-      <files mask="MIMXRT1166xxxxx_cm7_flexspi_nor.ld"/>
-      <files mask="MIMXRT1166xxxxx_cm7_sdram.ld"/>
     </source>
     <source path="mdk" project_relative_path="MIMXRT1166/mdk" type="linker" toolchain="mdk">
-      <files mask="MIMXRT1166xxxxx_cm7_ram.scf"/>
       <files mask="MIMXRT1166xxxxx_cm7_flexspi_nor.scf"/>
-      <files mask="MIMXRT1166xxxxx_cm7_sdram.scf"/>
+    </source>
+    <source path="armgcc" project_relative_path="MIMXRT1166/armgcc" type="linker" toolchain="armgcc">
+      <files mask="MIMXRT1166xxxxx_cm7_flexspi_nor.ld"/>
     </source>
     <source path="." project_relative_path="board" type="c_include">
       <files mask="clock_config.h"/>
@@ -227,6 +213,9 @@
     </source>
     <source path="." project_relative_path="doc" type="doc">
       <files mask="example_board_readme.md"/>
+    </source>
+    <source path="." project_relative_path="doc" type="doc">
+      <files mask="examples_shared_readme.md"/>
     </source>
   </example>
 </ksdk:examples>

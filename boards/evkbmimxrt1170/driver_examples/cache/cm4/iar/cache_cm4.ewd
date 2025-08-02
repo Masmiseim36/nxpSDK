@@ -88,12 +88,11 @@
         </option>
         <option>
           <name>CExtraOptionsCheck</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>CExtraOptions</name>
-          <state>--jlink_script_file=$PROJ_DIR$/../evkbmimxrt1170_connect_cm4_cm4side.jlinkscript</state>
-          <state>--macro_param enable_core=1</state>
+          <state/>
         </option>
         <option>
           <name>CFpuProcessor</name>
@@ -333,7 +332,7 @@
         <option>
           <name>CMSISDAPResetList</name>
           <version>1</version>
-          <state>1</state>
+          <state>4</state>
         </option>
         <option>
           <name>CMSISDAPHWResetDuration</name>
@@ -3370,12 +3369,11 @@
         </option>
         <option>
           <name>CExtraOptionsCheck</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>CExtraOptions</name>
-          <state>--jlink_script_file=$PROJ_DIR$/../evkbmimxrt1170_connect_cm4_cm4side.jlinkscript</state>
-          <state>--macro_param enable_core=1</state>
+          <state/>
         </option>
         <option>
           <name>CFpuProcessor</name>
@@ -3615,7 +3613,7 @@
         <option>
           <name>CMSISDAPResetList</name>
           <version>1</version>
-          <state>1</state>
+          <state>5</state>
         </option>
         <option>
           <name>CMSISDAPHWResetDuration</name>

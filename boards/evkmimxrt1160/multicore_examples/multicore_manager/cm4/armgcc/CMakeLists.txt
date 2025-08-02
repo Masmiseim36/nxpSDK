@@ -1,129 +1,80 @@
 # CROSS COMPILER SETTING
-SET(CMAKE_SYSTEM_NAME Generic)
-CMAKE_MINIMUM_REQUIRED (VERSION 3.10.0)
+set(CMAKE_SYSTEM_NAME Generic)
+cmake_minimum_required(VERSION 3.10.0)
 
 # THE VERSION NUMBER
-SET (Tutorial_VERSION_MAJOR 1)
-SET (Tutorial_VERSION_MINOR 0)
+SET (MCUXPRESSO_CMAKE_FORMAT_MAJOR_VERSION 2)
+SET (MCUXPRESSO_CMAKE_FORMAT_MINOR_VERSION 0)
 
-# ENABLE ASM
-ENABLE_LANGUAGE(ASM)
+include(ide_overrides.cmake OPTIONAL)
 
-SET(CMAKE_STATIC_LIBRARY_PREFIX)
-SET(CMAKE_STATIC_LIBRARY_SUFFIX)
+if(CMAKE_SCRIPT_MODE_FILE)
+  message("${MCUXPRESSO_CMAKE_FORMAT_MAJOR_VERSION}")
+  return()
+endif()
 
-SET(CMAKE_EXECUTABLE_LIBRARY_PREFIX)
-SET(CMAKE_EXECUTABLE_LIBRARY_SUFFIX)
+
+set(CMAKE_EXECUTABLE_LIBRARY_PREFIX)
+set(CMAKE_EXECUTABLE_LIBRARY_SUFFIX)
 
 # CURRENT DIRECTORY
-SET(ProjDirPath ${CMAKE_CURRENT_SOURCE_DIR})
+set(ProjDirPath ${CMAKE_CURRENT_SOURCE_DIR})
 
-SET(EXECUTABLE_OUTPUT_PATH ${ProjDirPath}/${CMAKE_BUILD_TYPE})
-SET(LIBRARY_OUTPUT_PATH ${ProjDirPath}/${CMAKE_BUILD_TYPE})
+set(EXECUTABLE_OUTPUT_PATH ${ProjDirPath}/${CMAKE_BUILD_TYPE})
+set(LIBRARY_OUTPUT_PATH ${ProjDirPath}/${CMAKE_BUILD_TYPE})
 
 
-project(multicore_manager_cm4)
+project(multicore_manager_secondary_core)
 
-set(MCUX_SDK_PROJECT_NAME multicore_manager_cm4.elf)
+enable_language(ASM)
+
+set(MCUX_BUILD_TYPES debug release)
+
+set(MCUX_SDK_PROJECT_NAME multicore_manager_secondary_core.elf)
+
+if (NOT DEFINED SdkRootDirPath)
+    SET(SdkRootDirPath ${ProjDirPath}/../../../../../..)
+endif()
 
 include(${ProjDirPath}/flags.cmake)
 
 include(${ProjDirPath}/config.cmake)
 
 add_executable(${MCUX_SDK_PROJECT_NAME} 
-"${ProjDirPath}/../board.c"
-"${ProjDirPath}/../board.h"
 "${ProjDirPath}/../clock_config.c"
 "${ProjDirPath}/../clock_config.h"
-"${ProjDirPath}/../mcmgr_core1.c"
+"${ProjDirPath}/../main.c"
+"${ProjDirPath}/../board.h"
+"${ProjDirPath}/../board.c"
 "${ProjDirPath}/../pin_mux.c"
 "${ProjDirPath}/../pin_mux.h"
-"${ProjDirPath}/../dcd.c"
-"${ProjDirPath}/../dcd.h"
-"${ProjDirPath}/../evkmimxrt1160_connect_cm4_cm4side.jlinkscript"
+"${ProjDirPath}/../hardware_init.c"
+"${ProjDirPath}/../app.h"
+"${ProjDirPath}/../mcux_config.h"
 )
 
 target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
     ${ProjDirPath}/..
 )
 
-set(CMAKE_MODULE_PATH
-    ${ProjDirPath}/../../../../../../middleware/multicore
-    ${ProjDirPath}/../../../../../../devices/MIMXRT1166/utilities/debug_console_lite
-    ${ProjDirPath}/../../../../../../devices/MIMXRT1166/drivers
-    ${ProjDirPath}/../../../../../../devices/MIMXRT1166
-    ${ProjDirPath}/../../../../../../components/uart
-    ${ProjDirPath}/../../../../../../components/lists
-    ${ProjDirPath}/../../../../../../devices/MIMXRT1166/xip
-    ${ProjDirPath}/../../../../xip
-    ${ProjDirPath}/../../../../../../devices/MIMXRT1166/drivers/cm4
-    ${ProjDirPath}/../../../../../../components/silicon_id
-    ${ProjDirPath}/../../../../../../CMSIS/Core/Include
-    ${ProjDirPath}/../../../../../../devices/MIMXRT1166/utilities
-)
 
-# include modules
-include(middleware_multicore_mcmgr_imxrt1160_MIMXRT1166_cm4)
+include(${SdkRootDirPath}/devices/MIMXRT1166/all_lib_device.cmake)
 
-include(utility_debug_console_lite_MIMXRT1166_cm4)
-
-include(utility_assert_lite_MIMXRT1166_cm4)
-
-include(driver_lpuart_MIMXRT1166_cm4)
-
-include(driver_clock_MIMXRT1166_cm4)
-
-include(driver_mu_MIMXRT1166_cm4)
-
-include(middleware_multicore_mcmgr_MIMXRT1166_cm4)
-
-include(driver_common_MIMXRT1166_cm4)
-
-include(device_MIMXRT1166_CMSIS_MIMXRT1166_cm4)
-
-include(component_lpuart_adapter_MIMXRT1166_cm4)
-
-include(component_lists_MIMXRT1166_cm4)
-
-include(device_MIMXRT1166_startup_MIMXRT1166_cm4)
-
-include(driver_iomuxc_MIMXRT1166_cm4)
-
-include(driver_igpio_MIMXRT1166_cm4)
-
-include(driver_xip_device_MIMXRT1166_cm4)
-
-include(driver_xip_board_evkmimxrt1160_MIMXRT1166_cm4)
-
-include(driver_pmu_1_MIMXRT1166_cm4)
-
-include(driver_dcdc_soc_MIMXRT1166_cm4)
-
-include(driver_cache_lmem_MIMXRT1166_cm4)
-
-include(component_silicon_id_MIMXRT1166_cm4)
-
-include(driver_anatop_ai_MIMXRT1166_cm4)
-
-include(CMSIS_Include_core_cm_MIMXRT1166_cm4)
-
-include(utilities_misc_utilities_MIMXRT1166_cm4)
-
-include(device_MIMXRT1166_system_MIMXRT1166_cm4)
-
+IF(NOT DEFINED TARGET_LINK_SYSTEM_LIBRARIES)  
+    SET(TARGET_LINK_SYSTEM_LIBRARIES "-lm -lc -lgcc -lnosys")  
+ENDIF()  
 
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--start-group)
 
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE m)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE c)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE gcc)
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE nosys)
+target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${TARGET_LINK_SYSTEM_LIBRARIES})
 
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--end-group)
 
 ADD_CUSTOM_COMMAND(TARGET ${MCUX_SDK_PROJECT_NAME} POST_BUILD COMMAND ${CMAKE_OBJCOPY}
 -Obinary ${EXECUTABLE_OUTPUT_PATH}/${MCUX_SDK_PROJECT_NAME} ${EXECUTABLE_OUTPUT_PATH}/core1_image.bin)
+
+set_target_properties(${MCUX_SDK_PROJECT_NAME} PROPERTIES ADDITIONAL_CLEAN_FILES "output.map;${EXECUTABLE_OUTPUT_PATH}/core1_image.bin")
+
+# wrap all libraries with -Wl,--start-group -Wl,--end-group to prevent link order issue
+group_link_libraries()
 

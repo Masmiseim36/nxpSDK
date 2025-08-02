@@ -60,7 +60,8 @@
           <value>MCUXPRESSO_SDK</value>
           <value>SDK_DEBUGCONSOLE=1</value>
           <value>MCUX_META_BUILD</value>
-          <value>CPU_MIMXRT1176DVMAA_cm4</value>
+          <value>CPU_MIMXRT1176DVMAB_cm4</value>
+          <value>MIMXRT1176_cm4_SERIES</value>
         </option>
         <option id="com.crt.advproject.link.toram" type="boolean">
           <value>true</value>
@@ -179,6 +180,12 @@
       <files mask="evkbmimxrt1170_cm4_flexspi_nor.ini"/>
       <files mask="evkbmimxrt1170_cm4_sdram_init.ini"/>
     </source>
+    <source path="." project_relative_path="source" type="other">
+      <files mask="xbar_aoi.mex"/>
+    </source>
+    <source path="." project_relative_path="source" type="binary">
+      <files mask="xbar_aoi.bin" hidden="true"/>
+    </source>
     <source path="." project_relative_path="source" type="src">
       <files mask="xbar_aoi.c"/>
     </source>
@@ -229,6 +236,9 @@
     </source>
     <source path="." project_relative_path="doc" type="doc">
       <files mask="example_board_readme.md"/>
+    </source>
+    <source path="." project_relative_path="doc" type="doc">
+      <files mask="examples_shared_readme.md"/>
     </source>
   </example>
 </ksdk:examples>

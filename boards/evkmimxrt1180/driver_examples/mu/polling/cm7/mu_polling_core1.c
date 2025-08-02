@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2017, 2025 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -20,8 +20,6 @@
 /* Channel transmit and receive register */
 #define CHN_MU_REG_NUM kMU_MsgReg0
 
-/* How many message is used to test message sending */
-#define MSG_LENGTH 32U
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
@@ -29,7 +27,7 @@
 /*******************************************************************************
  * Variables
  ******************************************************************************/
-static uint32_t g_msgRecv[MSG_LENGTH];
+static uint32_t g_msgRecv[CONFIG_MSG_LENGTH];
 /*******************************************************************************
  * Code
  ******************************************************************************/
@@ -41,7 +39,7 @@ static uint32_t g_msgRecv[MSG_LENGTH];
 static void ClearMsgRecv(void)
 {
     uint32_t i;
-    for (i = 0U; i < MSG_LENGTH; i++)
+    for (i = 0U; i < CONFIG_MSG_LENGTH; i++)
     {
         g_msgRecv[i] = 0U;
     }
@@ -79,12 +77,12 @@ int main(void)
     /* Clear the g_msgRecv array before receive */
     ClearMsgRecv();
     /* Core 1 receive message from Core 0 */
-    for (i = 0U; i < MSG_LENGTH; i++)
+    for (i = 0U; i < CONFIG_MSG_LENGTH; i++)
     {
         g_msgRecv[i] = MU_ReceiveMsg(APP_MU, CHN_MU_REG_NUM);
     }
     /* Core 1 send message back to Core 0 */
-    for (i = 0U; i < MSG_LENGTH; i++)
+    for (i = 0U; i < CONFIG_MSG_LENGTH; i++)
     {
         MU_SendMsg(APP_MU, CHN_MU_REG_NUM, g_msgRecv[i]);
     }

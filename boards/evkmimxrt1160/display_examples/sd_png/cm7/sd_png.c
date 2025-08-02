@@ -26,15 +26,6 @@
 #define APP_FB_START_X DEMO_BUFFER_START_X
 #define APP_FB_START_Y DEMO_BUFFER_START_Y
 
-/*
- * For better performance, by default, three frame buffers are used in this demo.
- * If the memory region is not large enough, user can define to 2 to override
- * this value.
- */
-#ifndef APP_FB_NUM
-#define APP_FB_NUM 3 /* LCD frame buffer number. */
-#endif
-
 /* Use XBGR8888 format by default. */
 #define APP_FB_BPP    4
 #define APP_FB_FORMAT kVIDEO_PixelFormatXBGR8888

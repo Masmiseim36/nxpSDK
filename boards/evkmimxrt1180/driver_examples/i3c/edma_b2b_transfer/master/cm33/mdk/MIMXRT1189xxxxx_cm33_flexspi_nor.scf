@@ -43,16 +43,12 @@
 #define m_hyperram_size     0x00800000
 #endif
 #define m_flash_start       0x28000000
-#define m_flash_size        0x01000000
+#define m_flash_size        0x00800000
 
 #define m_core1_image_maximum_size  0x00040000
 
 /* General definition */
-#if defined(__dual_image__)
-#define app_image_offset           0x0010B000
-#else
 #define app_image_offset           0x0000B000
-#endif
 #define vector_table_size          0x400
 #define m_ram_vector_table_start   m_code_tcm_start
 

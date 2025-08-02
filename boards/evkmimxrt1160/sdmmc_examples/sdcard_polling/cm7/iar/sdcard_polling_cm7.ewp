@@ -245,6 +245,7 @@
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1166DVM6A_cm7</state>
+          <state>MIMXRT1166_cm7_SERIES</state>
           <state>OSA_USED</state>
           <state>USE_RTOS=0</state>
           <state>SD_ENABLED=1</state>
@@ -572,6 +573,7 @@
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1166DVM6A_cm7</state>
+          <state>MIMXRT1166_cm7_SERIES</state>
           <state>OSA_USED</state>
         </option>
         <option>
@@ -1393,6 +1395,7 @@
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1166DVM6A_cm7</state>
+          <state>MIMXRT1166_cm7_SERIES</state>
           <state>OSA_USED</state>
           <state>USE_RTOS=0</state>
           <state>SD_ENABLED=1</state>
@@ -1720,6 +1723,7 @@
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1166DVM6A_cm7</state>
+          <state>MIMXRT1166_cm7_SERIES</state>
           <state>OSA_USED</state>
         </option>
         <option>
@@ -2540,6 +2544,7 @@
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1166DVM6A_cm7</state>
+          <state>MIMXRT1166_cm7_SERIES</state>
           <state>OSA_USED</state>
           <state>USE_RTOS=0</state>
           <state>SD_ENABLED=1</state>
@@ -2867,6 +2872,7 @@
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1166DVM6A_cm7</state>
+          <state>MIMXRT1166_cm7_SERIES</state>
           <state>OSA_USED</state>
         </option>
         <option>
@@ -3685,6 +3691,7 @@
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1166DVM6A_cm7</state>
+          <state>MIMXRT1166_cm7_SERIES</state>
           <state>OSA_USED</state>
           <state>USE_RTOS=0</state>
           <state>SD_ENABLED=1</state>
@@ -4012,6 +4019,7 @@
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1166DVM6A_cm7</state>
+          <state>MIMXRT1166_cm7_SERIES</state>
           <state>OSA_USED</state>
         </option>
         <option>
@@ -4833,6 +4841,7 @@
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1166DVM6A_cm7</state>
+          <state>MIMXRT1166_cm7_SERIES</state>
           <state>OSA_USED</state>
           <state>USE_RTOS=0</state>
           <state>SD_ENABLED=1</state>
@@ -5160,6 +5169,7 @@
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1166DVM6A_cm7</state>
+          <state>MIMXRT1166_cm7_SERIES</state>
           <state>OSA_USED</state>
         </option>
         <option>
@@ -5980,6 +5990,7 @@
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1166DVM6A_cm7</state>
+          <state>MIMXRT1166_cm7_SERIES</state>
           <state>OSA_USED</state>
           <state>USE_RTOS=0</state>
           <state>SD_ENABLED=1</state>
@@ -6307,6 +6318,7 @@
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1166DVM6A_cm7</state>
+          <state>MIMXRT1166_cm7_SERIES</state>
           <state>OSA_USED</state>
         </option>
         <option>
@@ -7034,6 +7046,12 @@
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/drivers/fsl_lpuart.c</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/drivers/fsl_mu.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/drivers/fsl_mu.c</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/drivers/fsl_usdhc.c</name>
     </file>
     <file>
@@ -7468,13 +7486,13 @@
     <group>
       <name>osa</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction.h</name>
-      </file>
-      <file>
         <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction_bm.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction_bm.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction.h</name>
       </file>
     </group>
   </group>
@@ -7536,6 +7554,9 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../example_board_readme.md</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../examples_shared_readme.md</name>
     </file>
   </group>
 </project>

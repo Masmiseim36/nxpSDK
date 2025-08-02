@@ -34,3 +34,5 @@ west build --sysbuild examples/multicore_examples/hello_world/primary --toolchai
 - [MCX-N9XX-EVK](../../_boards/mcxn9xxevk/multicore_examples/hello_world/example_board_readme.md)
 - [MCX-W72-EVK](../../_boards/mcxw72evk/multicore_examples/hello_world/example_board_readme.md)
 - [MIMXRT700-EVK](../../_boards/mimxrt700evk/multicore_examples/hello_world/example_board_readme.md)
+- [FRDM-MCXL255](../../_boards/frdmmcxl255/multicore_examples/hello_world/example_board_readme.md)
+- [MCXW72-LOC](../../_boards/mcxw72loc/multicore_examples/hello_world/example_board_readme.md)

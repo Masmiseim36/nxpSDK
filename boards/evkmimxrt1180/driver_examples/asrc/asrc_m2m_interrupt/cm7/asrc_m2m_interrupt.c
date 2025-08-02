@@ -150,7 +150,7 @@ int main(void)
     asrcConvert.outData     = asrcConvertBuffer;
     asrcConvert.outDataSize = ASRC_GetOutSamplesSize(DEMO_ASRC, DEMO_ASRC_CHANNEL_PAIR, DEMO_AUDIO_SAMPLE_RATE_IN,
                                                      DEMO_AUDIO_SAMPLE_RATE_OUT, MUSIC_LEN);
-    ASRC_TransferNonBlocking(ASRC, &asrcHandle, &asrcConvert);
+    ASRC_TransferNonBlocking(DEMO_ASRC, &asrcHandle, &asrcConvert);
 
     while (!isASRCFinished)
     {

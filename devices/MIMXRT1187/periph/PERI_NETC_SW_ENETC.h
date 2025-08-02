@@ -1,28 +1,46 @@
 /*
 ** ###################################################################
 **     Processors:          MIMXRT1181CVP2B
+**                          MIMXRT1181CVP2C
 **                          MIMXRT1181XVP2B
+**                          MIMXRT1181XVP2C
 **                          MIMXRT1182CVP2B
+**                          MIMXRT1182CVP2C
 **                          MIMXRT1182XVP2B
+**                          MIMXRT1182XVP2C
+**                          MIMXRT1186CVJ8C_cm33
+**                          MIMXRT1186CVJ8C_cm7
+**                          MIMXRT1186XVJ8C_cm33
+**                          MIMXRT1186XVJ8C_cm7
 **                          MIMXRT1187AVM8B_cm33
 **                          MIMXRT1187AVM8B_cm7
+**                          MIMXRT1187AVM8C_cm33
+**                          MIMXRT1187AVM8C_cm7
 **                          MIMXRT1187CVM8B_cm33
 **                          MIMXRT1187CVM8B_cm7
+**                          MIMXRT1187CVM8C_cm33
+**                          MIMXRT1187CVM8C_cm7
 **                          MIMXRT1187XVM8B_cm33
 **                          MIMXRT1187XVM8B_cm7
+**                          MIMXRT1187XVM8C_cm33
+**                          MIMXRT1187XVM8C_cm7
 **                          MIMXRT1189CVM8B_cm33
 **                          MIMXRT1189CVM8B_cm7
+**                          MIMXRT1189CVM8C_cm33
+**                          MIMXRT1189CVM8C_cm7
 **                          MIMXRT1189XVM8B_cm33
 **                          MIMXRT1189XVM8B_cm7
+**                          MIMXRT1189XVM8C_cm33
+**                          MIMXRT1189XVM8C_cm7
 **
-**     Version:             rev. 2.0, 2024-01-18
-**     Build:               b240705
+**     Version:             rev. 3.0, 2024-10-29
+**     Build:               b250611
 **
 **     Abstract:
 **         CMSIS Peripheral Access Layer for NETC_SW_ENETC
 **
 **     Copyright 1997-2016 Freescale Semiconductor, Inc.
-**     Copyright 2016-2024 NXP
+**     Copyright 2016-2025 NXP
 **     SPDX-License-Identifier: BSD-3-Clause
 **
 **     http:                 www.nxp.com
@@ -33,33 +51,40 @@
 **         Initial version.
 **     - rev. 2.0 (2024-01-18)
 **         Header RFP.
+**     - rev. 3.0 (2024-10-29)
+**         Change the device header file from single flat file to multiple files based on peripherals,
+**         each peripheral with dedicated header file located in periphN folder.
 **
 ** ###################################################################
 */
 
 /*!
- * @file NETC_SW_ENETC.h
- * @version 2.0
- * @date 2024-01-18
+ * @file PERI_NETC_SW_ENETC.h
+ * @version 3.0
+ * @date 2024-10-29
  * @brief CMSIS Peripheral Access Layer for NETC_SW_ENETC
  *
  * CMSIS Peripheral Access Layer for NETC_SW_ENETC
  */
 
-#if !defined(NETC_SW_ENETC_H_)
-#define NETC_SW_ENETC_H_                         /**< Symbol preventing repeated inclusion */
+#if !defined(PERI_NETC_SW_ENETC_H_)
+#define PERI_NETC_SW_ENETC_H_                    /**< Symbol preventing repeated inclusion */
 
-#if (defined(CPU_MIMXRT1181CVP2B) || defined(CPU_MIMXRT1181XVP2B))
+#if (defined(CPU_MIMXRT1181CVP2B) || defined(CPU_MIMXRT1181CVP2C) || defined(CPU_MIMXRT1181XVP2B) || defined(CPU_MIMXRT1181XVP2C))
 #include "MIMXRT1181_COMMON.h"
-#elif (defined(CPU_MIMXRT1182CVP2B) || defined(CPU_MIMXRT1182XVP2B))
+#elif (defined(CPU_MIMXRT1182CVP2B) || defined(CPU_MIMXRT1182CVP2C) || defined(CPU_MIMXRT1182XVP2B) || defined(CPU_MIMXRT1182XVP2C))
 #include "MIMXRT1182_COMMON.h"
-#elif (defined(CPU_MIMXRT1187AVM8B_cm33) || defined(CPU_MIMXRT1187CVM8B_cm33) || defined(CPU_MIMXRT1187XVM8B_cm33))
+#elif (defined(CPU_MIMXRT1186CVJ8C_cm33) || defined(CPU_MIMXRT1186XVJ8C_cm33))
+#include "MIMXRT1186_cm33_COMMON.h"
+#elif (defined(CPU_MIMXRT1186CVJ8C_cm7) || defined(CPU_MIMXRT1186XVJ8C_cm7))
+#include "MIMXRT1186_cm7_COMMON.h"
+#elif (defined(CPU_MIMXRT1187AVM8B_cm33) || defined(CPU_MIMXRT1187AVM8C_cm33) || defined(CPU_MIMXRT1187CVM8B_cm33) || defined(CPU_MIMXRT1187CVM8C_cm33) || defined(CPU_MIMXRT1187XVM8B_cm33) || defined(CPU_MIMXRT1187XVM8C_cm33))
 #include "MIMXRT1187_cm33_COMMON.h"
-#elif (defined(CPU_MIMXRT1187AVM8B_cm7) || defined(CPU_MIMXRT1187CVM8B_cm7) || defined(CPU_MIMXRT1187XVM8B_cm7))
+#elif (defined(CPU_MIMXRT1187AVM8B_cm7) || defined(CPU_MIMXRT1187AVM8C_cm7) || defined(CPU_MIMXRT1187CVM8B_cm7) || defined(CPU_MIMXRT1187CVM8C_cm7) || defined(CPU_MIMXRT1187XVM8B_cm7) || defined(CPU_MIMXRT1187XVM8C_cm7))
 #include "MIMXRT1187_cm7_COMMON.h"
-#elif (defined(CPU_MIMXRT1189CVM8B_cm33) || defined(CPU_MIMXRT1189XVM8B_cm33))
+#elif (defined(CPU_MIMXRT1189CVM8B_cm33) || defined(CPU_MIMXRT1189CVM8C_cm33) || defined(CPU_MIMXRT1189XVM8B_cm33) || defined(CPU_MIMXRT1189XVM8C_cm33))
 #include "MIMXRT1189_cm33_COMMON.h"
-#elif (defined(CPU_MIMXRT1189CVM8B_cm7) || defined(CPU_MIMXRT1189XVM8B_cm7))
+#elif (defined(CPU_MIMXRT1189CVM8B_cm7) || defined(CPU_MIMXRT1189CVM8C_cm7) || defined(CPU_MIMXRT1189XVM8B_cm7) || defined(CPU_MIMXRT1189XVM8C_cm7))
 #include "MIMXRT1189_cm7_COMMON.h"
 #else
   #error "No valid CPU defined!"
@@ -150,9 +175,9 @@ typedef struct {
   __I  uint32_t TCRPTSR;                           /**< Time capture receive port timestamp register, offset: 0x1114, available only on: SW0_COMMON (missing on ENETC0_COMMON, ENETC1_COMMON) */
   __IO uint32_t TCMSIVR;                           /**< Time capture MSI-X vector register, offset: 0x1118, available only on: SW0_COMMON (missing on ENETC0_COMMON, ENETC1_COMMON) */
        uint8_t RESERVED_11[228];
-  __IO uint32_t CVLANR1;                           /**< Custom VLAN Ethertype register 1, offset: 0x1200 */
-  __IO uint32_t CVLANR2;                           /**< Custom VLAN Ethertype register 2, offset: 0x1204 */
-  __IO uint32_t PSRTAGETR;                         /**< Pre-Standard RTAG Ethertype register, offset: 0x1208, available only on: SW0_COMMON (missing on ENETC0_COMMON, ENETC1_COMMON) */
+  __IO uint32_t CVLANR1;                           /**< Custom VLAN EtherType register 1, offset: 0x1200 */
+  __IO uint32_t CVLANR2;                           /**< Custom VLAN EtherType register 2, offset: 0x1204 */
+  __IO uint32_t PSRTAGETR;                         /**< Pre-Standard RTAG EtherType register, offset: 0x1208, available only on: SW0_COMMON (missing on ENETC0_COMMON, ENETC1_COMMON) */
        uint8_t RESERVED_12[20];
   __IO uint32_t DOSL2CR;                           /**< DoS L2 configuration register, offset: 0x1220 */
        uint8_t RESERVED_13[220];
@@ -715,7 +740,7 @@ typedef struct {
 #define NETC_SW_ENETC_TCMSIVR_VECTOR(x)          (((uint32_t)(((uint32_t)(x)) << NETC_SW_ENETC_TCMSIVR_VECTOR_SHIFT)) & NETC_SW_ENETC_TCMSIVR_VECTOR_MASK)
 /*! @} */
 
-/*! @name CVLANR1 - Custom VLAN Ethertype register 1 */
+/*! @name CVLANR1 - Custom VLAN EtherType register 1 */
 /*! @{ */
 
 #define NETC_SW_ENETC_CVLANR1_ETYPE_MASK         (0xFFFFU)
@@ -728,7 +753,7 @@ typedef struct {
 #define NETC_SW_ENETC_CVLANR1_V(x)               (((uint32_t)(((uint32_t)(x)) << NETC_SW_ENETC_CVLANR1_V_SHIFT)) & NETC_SW_ENETC_CVLANR1_V_MASK)
 /*! @} */
 
-/*! @name CVLANR2 - Custom VLAN Ethertype register 2 */
+/*! @name CVLANR2 - Custom VLAN EtherType register 2 */
 /*! @{ */
 
 #define NETC_SW_ENETC_CVLANR2_ETYPE_MASK         (0xFFFFU)
@@ -741,7 +766,7 @@ typedef struct {
 #define NETC_SW_ENETC_CVLANR2_V(x)               (((uint32_t)(((uint32_t)(x)) << NETC_SW_ENETC_CVLANR2_V_SHIFT)) & NETC_SW_ENETC_CVLANR2_V_MASK)
 /*! @} */
 
-/*! @name PSRTAGETR - Pre-Standard RTAG Ethertype register */
+/*! @name PSRTAGETR - Pre-Standard RTAG EtherType register */
 /*! @{ */
 
 #define NETC_SW_ENETC_PSRTAGETR_ETHERTYPE_MASK   (0xFFFFU)
@@ -1324,10 +1349,10 @@ typedef struct {
 #define NETC_SW_ENETC_TGSTCAPR_ACCESS_METH_MASK  (0xF00000U)
 #define NETC_SW_ENETC_TGSTCAPR_ACCESS_METH_SHIFT (20U)
 /*! ACCESS_METH - Access Method
- *  0bxxx1..Index
- *  0bxx1x..EntryId
- *  0bx1xx..Search
  *  0b1xxx..
+ *  0bx1xx..Search
+ *  0bxx1x..EntryId
+ *  0bxxx1..Index
  */
 #define NETC_SW_ENETC_TGSTCAPR_ACCESS_METH(x)    (((uint32_t)(((uint32_t)(x)) << NETC_SW_ENETC_TGSTCAPR_ACCESS_METH_SHIFT)) & NETC_SW_ENETC_TGSTCAPR_ACCESS_METH_MASK)
 
@@ -1508,8 +1533,8 @@ typedef struct {
 #define NETC_SW_ENETC_ISIDKC0CR0_OVIDP_MASK      (0x20U)
 #define NETC_SW_ENETC_ISIDKC0CR0_OVIDP_SHIFT     (5U)
 /*! OVIDP - Outer VID Present
- *  0b0..Not present
- *  0b1..Present
+ *  0b0..Outer VLAN ID is not present in the key
+ *  0b1..Outer VLAN ID is present in the key
  */
 #define NETC_SW_ENETC_ISIDKC0CR0_OVIDP(x)        (((uint32_t)(((uint32_t)(x)) << NETC_SW_ENETC_ISIDKC0CR0_OVIDP_SHIFT)) & NETC_SW_ENETC_ISIDKC0CR0_OVIDP_MASK)
 
@@ -1524,16 +1549,16 @@ typedef struct {
 #define NETC_SW_ENETC_ISIDKC0CR0_IVIDP_MASK      (0x80U)
 #define NETC_SW_ENETC_ISIDKC0CR0_IVIDP_SHIFT     (7U)
 /*! IVIDP - Inner VID Present.
- *  0b0..Not present
- *  0b1..Present
+ *  0b0..Inner VLAN ID is not present in the key
+ *  0b1..Inner VLAN ID is present in the key
  */
 #define NETC_SW_ENETC_ISIDKC0CR0_IVIDP(x)        (((uint32_t)(((uint32_t)(x)) << NETC_SW_ENETC_ISIDKC0CR0_IVIDP_SHIFT)) & NETC_SW_ENETC_ISIDKC0CR0_IVIDP_MASK)
 
 #define NETC_SW_ENETC_ISIDKC0CR0_IPCPP_MASK      (0x100U)
 #define NETC_SW_ENETC_ISIDKC0CR0_IPCPP_SHIFT     (8U)
-/*! IPCPP - Inner PCP Present.
- *  0b0..Not present
- *  0b1..Present
+/*! IPCPP - Inner PCP Present
+ *  0b0..Inner PCP is not present in the key
+ *  0b1..Inner PCP is present in the key
  */
 #define NETC_SW_ENETC_ISIDKC0CR0_IPCPP(x)        (((uint32_t)(((uint32_t)(x)) << NETC_SW_ENETC_ISIDKC0CR0_IPCPP_SHIFT)) & NETC_SW_ENETC_ISIDKC0CR0_IPCPP_MASK)
 
@@ -1708,8 +1733,8 @@ typedef struct {
 #define NETC_SW_ENETC_ISIDKC1CR0_OVIDP_MASK      (0x20U)
 #define NETC_SW_ENETC_ISIDKC1CR0_OVIDP_SHIFT     (5U)
 /*! OVIDP - Outer VID Present
- *  0b0..Not present
- *  0b1..Present
+ *  0b0..Outer VLAN ID is not present in the key
+ *  0b1..Outer VLAN ID is present in the key
  */
 #define NETC_SW_ENETC_ISIDKC1CR0_OVIDP(x)        (((uint32_t)(((uint32_t)(x)) << NETC_SW_ENETC_ISIDKC1CR0_OVIDP_SHIFT)) & NETC_SW_ENETC_ISIDKC1CR0_OVIDP_MASK)
 
@@ -1724,16 +1749,16 @@ typedef struct {
 #define NETC_SW_ENETC_ISIDKC1CR0_IVIDP_MASK      (0x80U)
 #define NETC_SW_ENETC_ISIDKC1CR0_IVIDP_SHIFT     (7U)
 /*! IVIDP - Inner VID Present.
- *  0b0..Not present
- *  0b1..Present
+ *  0b0..Inner VLAN ID is not present in the key
+ *  0b1..Inner VLAN ID is present in the key
  */
 #define NETC_SW_ENETC_ISIDKC1CR0_IVIDP(x)        (((uint32_t)(((uint32_t)(x)) << NETC_SW_ENETC_ISIDKC1CR0_IVIDP_SHIFT)) & NETC_SW_ENETC_ISIDKC1CR0_IVIDP_MASK)
 
 #define NETC_SW_ENETC_ISIDKC1CR0_IPCPP_MASK      (0x100U)
 #define NETC_SW_ENETC_ISIDKC1CR0_IPCPP_SHIFT     (8U)
-/*! IPCPP - Inner PCP Present.
- *  0b0..Not present
- *  0b1..Present
+/*! IPCPP - Inner PCP Present
+ *  0b0..Inner PCP is not present in the key
+ *  0b1..Inner PCP is present in the key
  */
 #define NETC_SW_ENETC_ISIDKC1CR0_IPCPP(x)        (((uint32_t)(((uint32_t)(x)) << NETC_SW_ENETC_ISIDKC1CR0_IPCPP_SHIFT)) & NETC_SW_ENETC_ISIDKC1CR0_IPCPP_MASK)
 
@@ -1908,8 +1933,8 @@ typedef struct {
 #define NETC_SW_ENETC_ISIDKC2CR0_OVIDP_MASK      (0x20U)
 #define NETC_SW_ENETC_ISIDKC2CR0_OVIDP_SHIFT     (5U)
 /*! OVIDP - Outer VID Present
- *  0b0..Not present
- *  0b1..Present
+ *  0b0..Outer VLAN ID is not present in the key
+ *  0b1..Outer VLAN ID is present in the key
  */
 #define NETC_SW_ENETC_ISIDKC2CR0_OVIDP(x)        (((uint32_t)(((uint32_t)(x)) << NETC_SW_ENETC_ISIDKC2CR0_OVIDP_SHIFT)) & NETC_SW_ENETC_ISIDKC2CR0_OVIDP_MASK)
 
@@ -1924,16 +1949,16 @@ typedef struct {
 #define NETC_SW_ENETC_ISIDKC2CR0_IVIDP_MASK      (0x80U)
 #define NETC_SW_ENETC_ISIDKC2CR0_IVIDP_SHIFT     (7U)
 /*! IVIDP - Inner VID Present.
- *  0b0..Not present
- *  0b1..Present
+ *  0b0..Inner VLAN ID is not present in the key
+ *  0b1..Inner VLAN ID is present in the key
  */
 #define NETC_SW_ENETC_ISIDKC2CR0_IVIDP(x)        (((uint32_t)(((uint32_t)(x)) << NETC_SW_ENETC_ISIDKC2CR0_IVIDP_SHIFT)) & NETC_SW_ENETC_ISIDKC2CR0_IVIDP_MASK)
 
 #define NETC_SW_ENETC_ISIDKC2CR0_IPCPP_MASK      (0x100U)
 #define NETC_SW_ENETC_ISIDKC2CR0_IPCPP_SHIFT     (8U)
-/*! IPCPP - Inner PCP Present.
- *  0b0..Not present
- *  0b1..Present
+/*! IPCPP - Inner PCP Present
+ *  0b0..Inner PCP is not present in the key
+ *  0b1..Inner PCP is present in the key
  */
 #define NETC_SW_ENETC_ISIDKC2CR0_IPCPP(x)        (((uint32_t)(((uint32_t)(x)) << NETC_SW_ENETC_ISIDKC2CR0_IPCPP_SHIFT)) & NETC_SW_ENETC_ISIDKC2CR0_IPCPP_MASK)
 
@@ -2108,8 +2133,8 @@ typedef struct {
 #define NETC_SW_ENETC_ISIDKC3CR0_OVIDP_MASK      (0x20U)
 #define NETC_SW_ENETC_ISIDKC3CR0_OVIDP_SHIFT     (5U)
 /*! OVIDP - Outer VID Present
- *  0b0..Not present
- *  0b1..Present
+ *  0b0..Outer VLAN ID is not present in the key
+ *  0b1..Outer VLAN ID is present in the key
  */
 #define NETC_SW_ENETC_ISIDKC3CR0_OVIDP(x)        (((uint32_t)(((uint32_t)(x)) << NETC_SW_ENETC_ISIDKC3CR0_OVIDP_SHIFT)) & NETC_SW_ENETC_ISIDKC3CR0_OVIDP_MASK)
 
@@ -2124,16 +2149,16 @@ typedef struct {
 #define NETC_SW_ENETC_ISIDKC3CR0_IVIDP_MASK      (0x80U)
 #define NETC_SW_ENETC_ISIDKC3CR0_IVIDP_SHIFT     (7U)
 /*! IVIDP - Inner VID Present.
- *  0b0..Not present
- *  0b1..Present
+ *  0b0..Inner VLAN ID is not present in the key
+ *  0b1..Inner VLAN ID is present in the key
  */
 #define NETC_SW_ENETC_ISIDKC3CR0_IVIDP(x)        (((uint32_t)(((uint32_t)(x)) << NETC_SW_ENETC_ISIDKC3CR0_IVIDP_SHIFT)) & NETC_SW_ENETC_ISIDKC3CR0_IVIDP_MASK)
 
 #define NETC_SW_ENETC_ISIDKC3CR0_IPCPP_MASK      (0x100U)
 #define NETC_SW_ENETC_ISIDKC3CR0_IPCPP_SHIFT     (8U)
-/*! IPCPP - Inner PCP Present.
- *  0b0..Not present
- *  0b1..Present
+/*! IPCPP - Inner PCP Present
+ *  0b0..Inner PCP is not present in the key
+ *  0b1..Inner PCP is present in the key
  */
 #define NETC_SW_ENETC_ISIDKC3CR0_IPCPP(x)        (((uint32_t)(((uint32_t)(x)) << NETC_SW_ENETC_ISIDKC3CR0_IPCPP_SHIFT)) & NETC_SW_ENETC_ISIDKC3CR0_IPCPP_MASK)
 
@@ -2300,5 +2325,5 @@ typedef struct {
  */ /* end of group Peripheral_access_layer */
 
 
-#endif  /* NETC_SW_ENETC_H_ */
+#endif  /* PERI_NETC_SW_ENETC_H_ */
 

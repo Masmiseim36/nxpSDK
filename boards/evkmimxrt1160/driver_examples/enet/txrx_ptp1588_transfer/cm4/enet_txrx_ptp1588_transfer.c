@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2023 NXP
+ * Copyright 2016-2025 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -22,26 +22,8 @@
 #define ENET_DATA_LENGTH       (1000)
 #define ENET_TRANSMIT_DATA_NUM (20)
 #define ENET_PTP_SYNC_MSG      0x00U
-#ifndef APP_ENET_BUFF_ALIGNMENT
-#define APP_ENET_BUFF_ALIGNMENT ENET_BUFF_ALIGNMENT
-#endif
-#ifndef PHY_AUTONEGO_TIMEOUT_COUNT
-#define PHY_AUTONEGO_TIMEOUT_COUNT (300000)
-#endif
-#ifndef PHY_STABILITY_DELAY_US
-#define PHY_STABILITY_DELAY_US (0U)
-#endif
 
 /* @TEST_ANCHOR */
-
-#ifndef MAC_ADDRESS
-#define MAC_ADDRESS                        \
-    {                                      \
-        0x54, 0x27, 0x8d, 0x00, 0x00, 0x00 \
-    }
-#else
-#define USER_DEFINED_MAC_ADDRESS
-#endif
 
 /*******************************************************************************
  * Prototypes
@@ -71,7 +53,11 @@ static uint32_t g_testTxNum = 0;
 static enet_frame_info_t txFrameInfoArray[ENET_TXBD_NUM];
 
 /* The unicast MAC address for ENET device. */
-static uint8_t g_macAddr[6] = MAC_ADDRESS;
+#if APP_USER_DEFINED_MAC_ADDRESS
+static uint8_t g_macAddr[6] = APP_MAC_ADDRESS;
+#else
+static uint8_t g_macAddr[6];
+#endif
 
 /* The multicast MAC address. */
 static uint8_t multicastAddr[6] = {0x01, 0x00, 0x5e, 0x01, 0x01, 0x1};
@@ -199,7 +185,7 @@ int main(void)
         {
             PRINTF("Wait for PHY link up...\r\n");
             /* Wait for auto-negotiation success and link up */
-            count = PHY_AUTONEGO_TIMEOUT_COUNT;
+            count = APP_PHY_AUTONEGO_TIMEOUT_COUNT;
             do
             {
                 PHY_GetAutoNegotiationStatus(&phyHandle, &autonego);
@@ -216,9 +202,9 @@ int main(void)
         }
     } while (!(link && autonego));
 
-#if PHY_STABILITY_DELAY_US
+#if APP_PHY_STABILITY_DELAY_US
     /* Wait a moment for PHY status to be stable. */
-    SDK_DelayAtLeastUs(PHY_STABILITY_DELAY_US, SDK_DEVICE_MAXIMUM_CPU_CLOCK_FREQUENCY);
+    SDK_DelayAtLeastUs(APP_PHY_STABILITY_DELAY_US, SDK_DEVICE_MAXIMUM_CPU_CLOCK_FREQUENCY);
 #endif
 
     /* Change the MII speed and duplex for actual link status. */
@@ -226,7 +212,7 @@ int main(void)
     config.miiSpeed  = (enet_mii_speed_t)speed;
     config.miiDuplex = (enet_mii_duplex_t)duplex;
 
-#ifndef USER_DEFINED_MAC_ADDRESS
+#if !APP_USER_DEFINED_MAC_ADDRESS
     /* Set special address for each chip. */
     SILICONID_ConvertToMacAddr(&g_macAddr);
 #endif

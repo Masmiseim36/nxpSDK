@@ -12,3 +12,4 @@ change the period and duty cycle,use oscilloscope can measure this output PWM si
 - [FRDM-KE16Z](../../../_boards/frdmke16z/driver_examples/lpit/lpit_pwm/example_board_readme.md)
 - [FRDM-KE17Z](../../../_boards/frdmke17z/driver_examples/lpit/lpit_pwm/example_board_readme.md)
 - [FRDM-KE17Z512](../../../_boards/frdmke17z512/driver_examples/lpit/lpit_pwm/example_board_readme.md)
+- [FRDM-MCXE247](../../../_boards/frdmmcxe247/driver_examples/lpit/lpit_pwm/example_board_readme.md)

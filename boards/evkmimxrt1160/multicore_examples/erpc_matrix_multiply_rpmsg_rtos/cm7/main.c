@@ -1,7 +1,6 @@
 /*
  * Copyright (c) 2015-2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2024 NXP
- * All rights reserved.
+ * Copyright 2016-2025 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -80,7 +79,7 @@ static void print_matrix(Matrix matrix_ptr)
 /*!
  * @brief eRPC server side ready event handler
  */
-static void eRPCReadyEventHandler(uint16_t eventData, void *context)
+static void eRPCReadyEventHandler(mcmgr_core_t coreNum, uint16_t eventData, void *context)
 {
     eRPCReadyEventData = eventData;
 }

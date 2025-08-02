@@ -358,7 +358,7 @@ static void battery(struct bt_conn *conn, uint32_t value)
     }
 }
 
-static void connected(struct bt_conn *conn)
+static void connected(struct bt_conn *conn, int err)
 {
     default_conn = conn;
     conn_count++;
@@ -573,7 +573,7 @@ static void k_work_ata_response(struct k_work *work)
     bt_hfp_ag_call_status_pl(hfp_ag_handle, hfp_ag_call_call_incoming);
 }
 
-static void ag_connected(struct bt_hfp_ag *hfp_ag)
+static void ag_connected(struct bt_hfp_ag *hfp_ag, int err)
 {
     hfp_ag_handle = hfp_ag;
     if (call_active)

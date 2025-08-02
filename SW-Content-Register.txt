@@ -275,6 +275,16 @@ wifi                       Name: NXP Wi-Fi driver
                            Location: middleware/wifi_nxp                     
                            Origin: NXP (BSD-3-Clause)                        
 
+wifi_tx_pwr_limits         Name: Wi-Fi module Tx power limits                
+                           Version: 1.0.0                                    
+                           Description: Wi-Fi module Tx power limits         
+                           Format: source code                               
+                           Location: components/wifi_bt_module/Murata        
+                           Origin: Murata Manufacturing Co., Ltd.            
+                           (BSD-3-Clause)                                    
+                           Outgoing License: BSD-3-Clause                    
+                           License File: ./COPYING-BSD-3                     
+
 usb                        Name: USB                                         
                            Version: 2.12.0                                   
                            Outgoing License: BSD-3-Clause                    
@@ -295,6 +305,41 @@ tinycbor                   Name: TinyCBOR
                            Location: middleware/tinycbor                     
                            Origin: Intel Corporation (MIT)                   
                            Url: https://github.com/intel/TinyCBOR            
+
+psatest                    Name: PSA Test Suite                              
+                           Version: 1.4                                      
+                           Outgoing License: Apache-2.0                      
+                           License File:                                     
+                           middleware/tfm/psa-arch-tests/LICENSE.md          
+                           Format: source code                               
+                           Description: Arm Platform Security Architecture   
+                           Test Suite                                        
+                           Location: middleware/tfm/psa-arch-tests           
+                           Origin: ARM(Apache-2.0) -                         
+                           https://github.com/ARM-software/psa-arch-tests    
+
+tfm_t_cose                 Name: tfm_t_cose                                  
+                           Version: 2.1.1                                    
+                           Outgoing License: BSD-3-Clause                    
+                           License File:                                     
+                           middleware/tfm/tf-m/lib/ext/t_cose/LICENSE        
+                           Format: source code                               
+                           Description: t_cose is a partial implementation of
+                           the COSE standard (RFC 8152)                      
+                           Location: middleware/tfm/tf-m/lib/ext/t_cose      
+                           Origin: Laurence Lundblade (BSD-3-Clause)         
+
+freemodbus                 Name: freemodbus library                          
+                           Version: 1.0.0                                    
+                           Outgoing License: BSD-3-Clause                    
+                           License File: middleware/freemodbus/bsd.txt       
+                           Format: source code                               
+                           Description: An opensource freemodbus library     
+                           Location: middleware/freemodbus                   
+                           Origin: freemodbus                                
+                           Url:                                              
+                           https://github.com/RT-Thread-packages/freemodbus/t
+                           ree/master                                        
 
 soem                       Name: Simple Open EtherCAT Master Library (SOEM)  
                            Version: 1.4.0                                    
@@ -495,7 +540,7 @@ coremark                   Name: CoreMark
                            Url: https://github.com/eembc/coremark            
 
 motor_control_rtcesl       Name: rtcesl                                      
-                           Version: 4.8                                      
+                           Version: 4.8.1                                    
                            Outgoing License: LA_OPT_Online_Code_Hosting      
                            License File: middleware/motor_control/LICENSE.txt
                            Format: object code & header files                
@@ -570,29 +615,6 @@ mbedtls-asn1               Name: MbedTLS
                            Origin:                                           
                            https://github.com/mcu-tools/mcuboot/tree/main/ext
                            /mbedtls-asn1                                     
-
-psatest                    Name: PSA Test Suite                              
-                           Version: 1.4                                      
-                           Outgoing License: Apache-2.0                      
-                           License File:                                     
-                           middleware/tfm/psa-arch-tests/LICENSE.md          
-                           Format: source code                               
-                           Description: Arm Platform Security Architecture   
-                           Test Suite                                        
-                           Location: middleware/tfm/psa-arch-tests           
-                           Origin: ARM(Apache-2.0) -                         
-                           https://github.com/ARM-software/psa-arch-tests    
-
-tfm_t_cose                 Name: tfm_t_cose                                  
-                           Version: 2.1.1                                    
-                           Outgoing License: BSD-3-Clause                    
-                           License File:                                     
-                           middleware/tfm/tf-m/lib/ext/t_cose/LICENSE        
-                           Format: source code                               
-                           Description: t_cose is a partial implementation of
-                           the COSE standard (RFC 8152)                      
-                           Location: middleware/tfm/tf-m/lib/ext/t_cose      
-                           Origin: Laurence Lundblade (BSD-3-Clause)         
 
 mbedtls3x                  Name: Mbed TLS                                    
                            Version: 3.6.3                                    
@@ -1310,16 +1332,6 @@ psa_crypto_driver          Name: PSA CRYPTO DRIVER
                            Format: source code                               
                            Location: components/psa_crypto_driver            
                            Origin: NXP (BSD-3-Clause)                        
-                           Outgoing License: BSD-3-Clause                    
-                           License File: ./COPYING-BSD-3                     
-
-wifi_tx_pwr_limits         Name: Wi-Fi module Tx power limits                
-                           Version: 1.0.0                                    
-                           Description: Wi-Fi module Tx power limits         
-                           Format: source code                               
-                           Location: components/wifi_bt_module/Murata        
-                           Origin: Murata Manufacturing Co., Ltd.            
-                           (BSD-3-Clause)                                    
                            Outgoing License: BSD-3-Clause                    
                            License File: ./COPYING-BSD-3                     
 

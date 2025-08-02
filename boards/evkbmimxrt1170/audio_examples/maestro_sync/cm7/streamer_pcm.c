@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 NXP
+ * Copyright 2023,2025 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -17,7 +17,6 @@
 volatile int8_t PDM_started = 0;  /* Indicates that the PDM transfer has already started. */
 volatile int8_t SAI_started = 0;  /* Indicates that the SAI transfer has already started. */
 volatile int rx_data_valid  = 0;  /* Indicates that RX data are ready for processing. */
-volatile int tx_data_valid  = 0;  /* Indicates that RX data are ready for processing. */
 
 #define RECORD_BUFFER_SIZE (3840) // 16kHz * 4bytes * 2channels * 30ms
 #define BUFFER_NUM         (3U)
@@ -109,12 +108,11 @@ static void saiTxCallback(I2S_Type *base, sai_edma_handle_t *handle, status_t st
         /* Handle the error. */
     }
     BaseType_t reschedule = -1;
-    tx_data_valid++;
     if (PDM_started == 0)
     {
+        rx_data_valid = 0;
         PDM_EnableDMA(DEMO_PDM, true);
         PDM_started = 1;
-        tx_data_valid--;
     }
     OSA_SemaphorePost(pcmHandle.semaphoreTX);
     portYIELD_FROM_ISR(reschedule);
@@ -170,7 +168,6 @@ void streamer_pcm_init(void)
         s_receiveXfer[ibuf].linkTransfer = &s_receiveXfer[ibuf_next];
     }
 
-    pcmHandle.isFirstRx      = 1;
     pcmHandle.isFirstTx      = 1;
     PDM_started              = 0;
     SAI_started              = 0;
@@ -178,7 +175,6 @@ void streamer_pcm_init(void)
     streamer_buff_addr.head  = 0;
     streamer_buff_addr.tail  = 0;
     rx_data_valid            = 0;
-    tx_data_valid            = 0;
     s_readIndex              = 0;
 
     PDM_TransferReceiveEDMA(DEMO_PDM, &(pcmHandle.pdmRxHandle), s_receiveXfer);
@@ -255,27 +251,17 @@ int streamer_pcm_read(uint8_t *data, uint32_t size)
         return -1;
     }
 
-    if (pcmHandle.isFirstRx)
+    if ((rx_data_valid > 0))
     {
-        // Do not start PDM transmission - due to RX-TX synchronization (VIT and Voiceseeker initialization takes too
-        // long in the first cycle).
-        pcmHandle.isFirstRx = 0;
-    }
-    else
-    {
-        if ((rx_data_valid > 0) && (tx_data_valid > 0))
-        {
-            rx_data_valid--;
-            tx_data_valid--;
-            /* Copy data from the DMIC buffer */
-            memcpy(Streamer_buff_addr_Pull(), &s_buffer[s_readIndex], size);
-            s_readIndex += size;
-            if (s_readIndex >= BUFFER_SIZE)
-                s_readIndex -= BUFFER_SIZE;
+        rx_data_valid--;
+        /* Copy data from the DMIC buffer */
+        memcpy(Streamer_buff_addr_Pull(), &s_buffer[s_readIndex], size);
+        s_readIndex += size;
+        if (s_readIndex >= BUFFER_SIZE)
+            s_readIndex -= BUFFER_SIZE;
 
-            /* Signal that data are already ready for processing */
-            ret = 0;
-        }
+        /* Signal that data are already ready for processing */
+        ret = 0;
     }
 
     // Store the data buffer address in the queue

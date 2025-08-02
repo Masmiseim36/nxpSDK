@@ -34,6 +34,10 @@
  * LWIP_SOCKET==1: Enable Socket API (require to use sockets.c)
  */
 #define LWIP_SOCKET 1
+/**
+ * LWIP_ERR_T==1: Native enum as err_t error code type for MISRA compliance.
+ */
+#define LWIP_ERR_T err_enum_t
 
 /**
  * LWIP_SO_RCVTIMEO==1: Enable receive timeout for sockets/netconns and

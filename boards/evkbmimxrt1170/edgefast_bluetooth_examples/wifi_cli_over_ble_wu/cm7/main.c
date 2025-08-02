@@ -46,8 +46,10 @@
  * Prototypes
  ******************************************************************************/
 int wlan_driver_init(void);
+#ifndef RW610
 #if CONFIG_HOST_SLEEP
 int wlan_hs_cli_init(void);
+#endif
 #endif
 
 /*******************************************************************************
@@ -60,15 +62,15 @@ int wlan_hs_cli_init(void);
 #define MAIN_TASK_STACK_SIZE 4096
 #endif
 
-static void main_task(osa_task_param_t arg);
+static void task_main(osa_task_param_t arg);
 
-static OSA_TASK_DEFINE(main_task, WLAN_TASK_PRI_LOW, 1, MAIN_TASK_STACK_SIZE, 0);
+static OSA_TASK_DEFINE(task_main, WLAN_TASK_PRI_LOW, 1, MAIN_TASK_STACK_SIZE, 0);
 
-OSA_TASK_HANDLE_DEFINE(main_task_Handle);
+OSA_TASK_HANDLE_DEFINE(task_main_Handle);
 
 static void printSeparator(void)
 {
-    PRINTF("========================================\r\n");
+    (void)PRINTF("========================================\r\n");
 }
 
 /* Callback Function passed to WLAN Connection Manager. The callback function
@@ -85,60 +87,61 @@ int wlan_event_callback(enum wlan_event_reason reason, void *data)
 #if CONFIG_NXP_WIFI_SOFTAP_SUPPORT
     wlan_uap_client_disassoc_t *disassoc_resp = data;
 #endif
+    int i;
 
     switch (reason)
     {
         case WLAN_REASON_INITIALIZED:
-            PRINTF("app_cb: WLAN initialized\r\n");
+            (void)PRINTF("app_cb: WLAN initialized\r\n");
             printSeparator();
 
             ret = wlan_basic_cli_init();
             if (ret != WM_SUCCESS)
             {
-                PRINTF("Failed to initialize BASIC WLAN CLIs\r\n");
+                (void)PRINTF("Failed to initialize BASIC WLAN CLIs\r\n");
                 return 0;
             }
 
             ret = wlan_cli_init();
             if (ret != WM_SUCCESS)
             {
-                PRINTF("Failed to initialize WLAN CLIs\r\n");
+                (void)PRINTF("Failed to initialize WLAN CLIs\r\n");
                 return 0;
             }
-            PRINTF("WLAN CLIs are initialized\r\n");
+            (void)PRINTF("WLAN CLIs are initialized\r\n");
             printSeparator();
 
             ret = wlan_enhanced_cli_init();
             if (ret != WM_SUCCESS)
             {
-                PRINTF("Failed to initialize WLAN CLIs\r\n");
+                (void)PRINTF("Failed to initialize WLAN CLIs\r\n");
                 return 0;
             }
-            PRINTF("ENHANCED WLAN CLIs are initialized\r\n");
+            (void)PRINTF("ENHANCED WLAN CLIs are initialized\r\n");
             printSeparator();
 #ifdef RW610
 #if CONFIG_HOST_SLEEP
             ret = host_sleep_cli_init();
             if (ret != WM_SUCCESS)
             {
-                PRINTF("Failed to initialize WLAN CLIs\r\n");
+                (void)PRINTF("Failed to initialize WLAN CLIs\r\n");
                 return 0;
             }
-            PRINTF("HOST SLEEP CLIs are initialized\r\n");
+            (void)PRINTF("HOST SLEEP CLIs are initialized\r\n");
             printSeparator();
 #endif
 #endif
             ret = ping_cli_init();
             if (ret != WM_SUCCESS)
             {
-                PRINTF("Failed to initialize PING CLI\r\n");
+                (void)PRINTF("Failed to initialize PING CLI\r\n");
                 return 0;
             }
 
             ret = iperf_cli_init();
             if (ret != WM_SUCCESS)
             {
-                PRINTF("Failed to initialize IPERF CLI\r\n");
+                (void)PRINTF("Failed to initialize IPERF CLI\r\n");
                 return 0;
             }
 
@@ -146,28 +149,28 @@ int wlan_event_callback(enum wlan_event_reason reason, void *data)
             ret = dhcpd_cli_init();
             if (ret != WM_SUCCESS)
             {
-                PRINTF("Failed to initialize DHCP Server CLI\r\n");
+                (void)PRINTF("Failed to initialize DHCP Server CLI\r\n");
                 return 0;
             }
 #endif
 
-            PRINTF("CLIs Available:\r\n");
+            (void)PRINTF("CLIs Available:\r\n");
             printSeparator();
             help_command(0, NULL);
             printSeparator();
             break;
         case WLAN_REASON_INITIALIZATION_FAILED:
-            PRINTF("app_cb: WLAN: initialization failed\r\n");
+            (void)PRINTF("app_cb: WLAN: initialization failed\r\n");
             break;
         case WLAN_REASON_AUTH_SUCCESS:
-            PRINTF("app_cb: WLAN: authenticated to network\r\n");
+            (void)PRINTF("app_cb: WLAN: authenticated to network\r\n");
             break;
         case WLAN_REASON_SUCCESS:
-            PRINTF("app_cb: WLAN: connected to network\r\n");
+            (void)PRINTF("app_cb: WLAN: connected to network\r\n");
             ret = wlan_get_address(&addr);
             if (ret != WM_SUCCESS)
             {
-                PRINTF("failed to get IP address\r\n");
+                (void)PRINTF("failed to get IP address\r\n");
                 return 0;
             }
 
@@ -176,21 +179,20 @@ int wlan_event_callback(enum wlan_event_reason reason, void *data)
             ret = wlan_get_current_network_ssid(ssid);
             if (ret != WM_SUCCESS)
             {
-                PRINTF("Failed to get External AP network\r\n");
+                (void)PRINTF("Failed to get External AP network\r\n");
                 return 0;
             }
 
-            PRINTF("Connected to following BSS:\r\n");
-            PRINTF("SSID = [%s]\r\n", ssid);
+            (void)PRINTF("Connected to following BSS:\r\n");
+            (void)PRINTF("SSID = [%s]\r\n", ssid);
             if (addr.ipv4.address != 0U)
             {
-                PRINTF("IPv4 Address: [%s]\r\n", ip);
+                (void)PRINTF("IPv4 Address: [%s]\r\n", ip);
             }
 #if CONFIG_IPV6
-            int i;
             for (i = 0; i < CONFIG_MAX_IPV6_ADDRESSES; i++)
             {
-                if (ip6_addr_isvalid(addr.ipv6[i].addr_state))
+                if (ip6_addr_isvalid(((int8_t)(addr.ipv6[i].addr_state))) != 0)
                 {
                     (void)PRINTF("IPv6 Address: %-13s:\t%s (%s)\r\n",
                                  ipv6_addr_type_to_desc((struct net_ipv6_config *)&addr.ipv6[i]),
@@ -202,91 +204,93 @@ int wlan_event_callback(enum wlan_event_reason reason, void *data)
             auth_fail = 0;
             break;
         case WLAN_REASON_CONNECT_FAILED:
-            PRINTF("app_cb: WLAN: connect failed\r\n");
+            (void)PRINTF("app_cb: WLAN: connect failed\r\n");
             break;
         case WLAN_REASON_NETWORK_NOT_FOUND:
-            PRINTF("app_cb: WLAN: network not found\r\n");
+            (void)PRINTF("app_cb: WLAN: network not found\r\n");
             break;
         case WLAN_REASON_NETWORK_AUTH_FAILED:
-            PRINTF("app_cb: WLAN: network authentication failed\r\n");
+            (void)PRINTF("app_cb: WLAN: network authentication failed\r\n");
             auth_fail++;
             if (auth_fail >= 3)
             {
-                PRINTF("Authentication Failed. Disconnecting ... \r\n");
-                wlan_disconnect();
+                (void)PRINTF("Authentication Failed. Disconnecting ... \r\n");
+                (void)wlan_disconnect();
                 auth_fail = 0;
             }
             break;
         case WLAN_REASON_ADDRESS_SUCCESS:
-            PRINTF("network mgr: DHCP new lease\r\n");
+            (void)PRINTF("network mgr: DHCP new lease\r\n");
             break;
         case WLAN_REASON_ADDRESS_FAILED:
-            PRINTF("app_cb: failed to obtain an IP address\r\n");
+            (void)PRINTF("app_cb: failed to obtain an IP address\r\n");
             break;
         case WLAN_REASON_USER_DISCONNECT:
-            PRINTF("app_cb: disconnected\r\n");
+            (void)PRINTF("app_cb: disconnected\r\n");
             auth_fail = 0;
             break;
         case WLAN_REASON_LINK_LOST:
-            PRINTF("app_cb: WLAN: link lost\r\n");
+            (void)PRINTF("app_cb: WLAN: link lost\r\n");
             break;
         case WLAN_REASON_CHAN_SWITCH:
-            PRINTF("app_cb: WLAN: channel switch\r\n");
+            (void)PRINTF("app_cb: WLAN: channel switch\r\n");
             break;
 #if CONFIG_NXP_WIFI_SOFTAP_SUPPORT
         case WLAN_REASON_UAP_SUCCESS:
-            PRINTF("app_cb: WLAN: UAP Started\r\n");
+            (void)PRINTF("app_cb: WLAN: UAP Started\r\n");
             ret = wlan_get_current_uap_network_ssid(ssid);
 
             if (ret != WM_SUCCESS)
             {
-                PRINTF("Failed to get Soft AP network\r\n");
+                (void)PRINTF("Failed to get Soft AP network\r\n");
                 return 0;
             }
 
             printSeparator();
-            PRINTF("Soft AP \"%s\" started successfully\r\n", ssid);
+            (void)PRINTF("Soft AP \"%s\" started successfully\r\n", ssid);
             printSeparator();
-            if (dhcp_server_start(net_get_uap_handle()))
-                PRINTF("Error in starting dhcp server\r\n");
+            if (dhcp_server_start(net_get_uap_handle()) != 0)
+            {
+                (void)PRINTF("Error in starting dhcp server\r\n");
+            }
 
-            PRINTF("DHCP Server started successfully\r\n");
+            (void)PRINTF("DHCP Server started successfully\r\n");
             printSeparator();
             break;
         case WLAN_REASON_UAP_CLIENT_ASSOC:
-            PRINTF("app_cb: WLAN: UAP a Client Associated\r\n");
+            (void)PRINTF("app_cb: WLAN: UAP a Client Associated\r\n");
             printSeparator();
-            PRINTF("Client => ");
+            (void)PRINTF("Client => ");
             print_mac((const char *)data);
-            PRINTF("Associated with Soft AP\r\n");
+            (void)PRINTF("Associated with Soft AP\r\n");
             printSeparator();
             break;
         case WLAN_REASON_UAP_CLIENT_CONN:
-            PRINTF("app_cb: WLAN: UAP a Client Connected\r\n");
+            (void)PRINTF("app_cb: WLAN: UAP a Client Connected\r\n");
             printSeparator();
-            PRINTF("Client => ");
+            (void)PRINTF("Client => ");
             print_mac((const char *)data);
-            PRINTF("Connected with Soft AP\r\n");
+            (void)PRINTF("Connected with Soft AP\r\n");
             printSeparator();
             break;
         case WLAN_REASON_UAP_CLIENT_DISSOC:
             printSeparator();
-            PRINTF("app_cb: WLAN: UAP a Client Dissociated:");
-            PRINTF(" Client MAC => ");
+            (void)PRINTF("app_cb: WLAN: UAP a Client Dissociated:");
+            (void)PRINTF(" Client MAC => ");
             print_mac((const char *)(disassoc_resp->sta_addr));
-            PRINTF(" Reason code => ");
-            PRINTF("%d\r\n", disassoc_resp->reason_code);
+            (void)PRINTF(" Reason code => ");
+            (void)PRINTF("%d\r\n", disassoc_resp->reason_code);
             printSeparator();
             break;
         case WLAN_REASON_UAP_STOPPED:
-            PRINTF("app_cb: WLAN: UAP Stopped\r\n");
+            (void)PRINTF("app_cb: WLAN: UAP Stopped\r\n");
             printSeparator();
-            PRINTF("Soft AP stopped successfully\r\n");
+            (void)PRINTF("Soft AP stopped successfully\r\n");
             printSeparator();
 
             dhcp_server_stop();
 
-            PRINTF("DHCP Server stopped successfully\r\n");
+            (void)PRINTF("DHCP Server stopped successfully\r\n");
             printSeparator();
             break;
 #endif /* CONFIG_NXP_WIFI_SOFTAP_SUPPORT */
@@ -310,10 +314,11 @@ int wlan_event_callback(enum wlan_event_reason reason, void *data)
 #endif
         case WLAN_REASON_FW_HANG:
         case WLAN_REASON_FW_RESET:
-            PRINTF("app_cb: WLAN: FW hang Event: %d\r\n", reason);
+            (void)PRINTF("app_cb: WLAN: FW hang Event: %d\r\n", reason);
             break;
         default:
-            PRINTF("app_cb: WLAN: Unknown Event: %d\r\n", reason);
+            (void)PRINTF("app_cb: WLAN: Unknown Event: %d\r\n", reason);
+            break;
     }
     return 0;
 }
@@ -322,7 +327,7 @@ int wlan_driver_init(void)
 {
     int result = 0;
 
-#if CONFIG_FW_DNLD_ASYNC
+#if defined(CONFIG_FW_DNLD_ASYNC) && (CONFIG_FW_DNLD_ASYNC == 1)
     result = wlan_init_nb(wlan_fw_bin, wlan_fw_bin_len, wlan_event_callback);
 #else
     /* Initialize WIFI Driver */
@@ -365,12 +370,12 @@ int wlan_hs_cli_init(void)
 #endif
 #endif
 
-static void main_task(osa_task_param_t arg)
+static void task_main(osa_task_param_t arg)
 {
     int32_t result = 0;
     (void)result;
 
-    PRINTF("Initialize CLI\r\n");
+    (void)PRINTF("Initialize CLI\r\n");
     printSeparator();
 
     result = cli_init();
@@ -381,11 +386,11 @@ static void main_task(osa_task_param_t arg)
 #ifndef RW610
     hostsleep_init(wlan_hs_pre_cfg, wlan_hs_post_cfg);
 #else
-    hostsleep_init();
+    (void)hostsleep_init();
 #endif
 #endif
 
-    PRINTF("Initialize WLAN Driver\r\n");
+    (void)PRINTF("Initialize WLAN Driver\r\n");
     printSeparator();
 
     /* Initialize WIFI Driver */
@@ -401,7 +406,7 @@ static void main_task(osa_task_param_t arg)
 #endif
 #endif
 
-    while (1)
+    while (true)
     {
         /* wait for interface up */
         OSA_TimeDelay(5000);
@@ -421,10 +426,10 @@ int main(void)
 #endif
 
     printSeparator();
-    PRINTF("wifi cli demo\r\n");
+    (void)PRINTF("wifi cli demo\r\n");
     printSeparator();
 
-    (void)OSA_TaskCreate((osa_task_handle_t)main_task_Handle, OSA_TASK(main_task), NULL);
+    (void)OSA_TaskCreate((osa_task_handle_t)task_main_Handle, OSA_TASK(task_main), NULL);
 
     OSA_Start();
 

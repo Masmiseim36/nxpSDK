@@ -3,8 +3,8 @@
 ## Overview
 
 The lwip_dhcp demo application demonstrates a DHCP demo on the lwIP TCP/IP
-stack.The application acts as a DHCP client and prints the status as it is
-progressing.Once the interface is being bound to an IP address obtained from
+stack. The application acts as a DHCP client and prints the status as it is
+progressing. Once the interface is being bound to an IP address obtained from
 DHCP server, address information is printed.
 
 ## Supported Boards

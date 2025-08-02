@@ -14,9 +14,10 @@
 !!GlobalInfo
 product: Pins v15.0
 processor: MIMXRT1189xxxxx
-package_id: MIMXRT1189CVM8B
+package_id: MIMXRT1189CVM8C
 mcu_data: ksdk2_0
-processor_version: 0.15.9
+processor_version: 15.0.0
+board: MIMXRT1180-EVK
 pin_labels:
 - {pin_num: P17, pin_signal: GPIO_AD_12, label: ENET4_INT_B, identifier: ENET4_INT_B}
 - {pin_num: L17, pin_signal: GPIO_AD_30, label: NETC_ECAT_MDC, identifier: NETC_ECAT_MDC}

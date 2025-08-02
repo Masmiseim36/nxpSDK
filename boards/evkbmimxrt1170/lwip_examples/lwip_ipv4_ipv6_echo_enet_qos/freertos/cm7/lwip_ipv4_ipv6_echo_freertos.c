@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2020, 2022-2024 NXP
+ * Copyright 2016-2020, 2022-2025 NXP
  * All rights reserved.
  *
  *
@@ -156,7 +156,7 @@ static void stack_init(void *arg)
         PRINTF("PHY Auto-negotiation failed. Please check the cable connection and link partner setting.\r\n");
     }
 
-    shell_task_init(NULL, 0);
+    shell_task_init(NULL);
 
     vTaskDelete(NULL);
 }

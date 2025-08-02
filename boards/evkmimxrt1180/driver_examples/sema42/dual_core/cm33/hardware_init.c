@@ -12,27 +12,6 @@
 #include "fsl_ele_base_api.h"
 /*${header:end}*/
 
-/*${macro:start}*/
-#define ELE_TRDC_AON_ID    0x74
-#define ELE_TRDC_WAKEUP_ID 0x78
-#define ELE_CORE_CM33_ID   0x1
-#define ELE_CORE_CM7_ID    0x2
-
-/*
- * Set ELE_STICK_FAILED_STS to 0 when ELE status check is not required,
- * which is useful when debug reset, where the core has already get the
- * TRDC ownership at first time and ELE is not able to release TRDC
- * ownership again for the following TRDC ownership request.
- */
-#define ELE_STICK_FAILED_STS 1
-
-#if ELE_STICK_FAILED_STS
-#define ELE_IS_FAILED(x) (x != kStatus_Success)
-#else
-#define ELE_IS_FAILED(x) false
-#endif
-/*${macro:end}*/
-
 /*${function:start}*/
 
 static void BOARD_InitLedPin(void)
@@ -69,10 +48,13 @@ void APP_BootCore1(void)
     status_t sts;
 
     /* Enble CM7 */
-    do
+    sts = ELE_BaseAPI_EnableAPC(MU_RT_S3MUA);
+    if(sts != kStatus_Success)
     {
-        sts = ELE_BaseAPI_EnableAPC(MU_RT_S3MUA);
-    } while (ELE_IS_FAILED(sts));
+        while(1)
+        {
+        }
+    }
 
     /* Deassert Wait */
     BLK_CTRL_S_AONMIX->M7_CFG =

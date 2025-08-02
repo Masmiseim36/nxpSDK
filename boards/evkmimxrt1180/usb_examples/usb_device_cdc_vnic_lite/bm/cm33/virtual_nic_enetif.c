@@ -15,6 +15,8 @@
 #include "fsl_phyrtl8201.h"
 #elif defined(BOARD_USE_NETC_PHY_RTL8211F)
 #include "fsl_phyrtl8211f.h"
+#elif defined(BOARD_USE_NETC_PHY_YT8521)
+#include "fsl_phyyt8521.h"
 #endif
 #include "fsl_msgintr.h"
 
@@ -80,6 +82,8 @@ uint64_t rxBuffAddr[NETC_RXBD_NUM];
 static phy_rtl8201_resource_t s_phy_resource;
 #elif defined(BOARD_USE_NETC_PHY_RTL8211F)
 static phy_rtl8211f_resource_t s_phy_resource;
+#elif defined(BOARD_USE_NETC_PHY_YT8521)
+static phy_yt8521_resource_t s_phy_resource;
 #endif
 static phy_handle_t s_phy_handle;
 static uint8_t s_phy_address = NETC_EP0_PHY_ADDR;
@@ -302,6 +306,8 @@ status_t APP_PHY_GetLinkModeSpeedDuplex(netc_hw_mii_mode_t *mode,
     *mode = kNETC_RmiiMode;
 #elif defined(BOARD_USE_NETC_PHY_RTL8211F)
     *mode = kNETC_RgmiiMode;
+#elif defined(BOARD_USE_NETC_PHY_YT8521)
+    *mode = kNETC_RmiiMode;
 #endif
 
     return PHY_GetLinkSpeedDuplex(&s_phy_handle, (phy_speed_t *)speed, (phy_duplex_t *)duplex);
@@ -335,7 +341,9 @@ status_t APP_PHY_Init(void)
         .ops = &phyrtl8201_ops,
 #elif defined(BOARD_USE_NETC_PHY_RTL8211F)
         .ops = &phyrtl8211f_ops,
-#endif
+#elif defined(BOARD_USE_NETC_PHY_YT8521)
+        .ops = &phyyt8521_ops,
+#endif    
     };
 
     /* Initialize PHY for EP. */

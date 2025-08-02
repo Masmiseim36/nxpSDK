@@ -1,5 +1,6 @@
         <#if memory.name=="SRAM_OC1">
         *flexspi_nor_flash_ops.o(.text*)
+        *flexspi_xecc_ops.o(.text*)
         *fsl_flexspi.o(.text*)
         *fsl_xecc.o(.text*)
         </#if>

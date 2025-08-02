@@ -18,6 +18,11 @@
 #ifndef APP_DEFAULT_PWM_FREQUENCY
 #define APP_DEFAULT_PWM_FREQUENCY (1000UL)
 #endif
+
+/* DEMO_PWM_DISABLE_MAP_OP: Operator, it can be define as '~') in app.h */
+#ifndef DEMO_PWM_DISABLE_MAP_OP
+#define DEMO_PWM_DISABLE_MAP_OP
+#endif
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
@@ -93,7 +98,6 @@ int main(void)
     BOARD_InitHardware();
 
     PRINTF("FlexPWM driver example\n");
-
     /*
      * pwmConfig.enableDebugMode = false;
      * pwmConfig.enableWait = false;
@@ -153,7 +157,6 @@ int main(void)
 #ifdef DEMO_PWM_FAULT_LEVEL
     faultConfig.faultLevel = DEMO_PWM_FAULT_LEVEL;
 #endif
-
     /* Sets up the PWM fault protection */
     PWM_SetupFaults(BOARD_PWM_BASEADDR, kPWM_Fault_0, &faultConfig);
     PWM_SetupFaults(BOARD_PWM_BASEADDR, kPWM_Fault_1, &faultConfig);
@@ -162,12 +165,11 @@ int main(void)
 
     /* Set PWM fault disable mapping for submodule 0/1/2 */
     PWM_SetupFaultDisableMap(BOARD_PWM_BASEADDR, kPWM_Module_0, kPWM_PwmA, kPWM_faultchannel_0,
-                             kPWM_FaultDisable_0 | kPWM_FaultDisable_1 | kPWM_FaultDisable_2 | kPWM_FaultDisable_3);
+                             DEMO_PWM_DISABLE_MAP_OP(kPWM_FaultDisable_0 | kPWM_FaultDisable_1 | kPWM_FaultDisable_2 | kPWM_FaultDisable_3));
     PWM_SetupFaultDisableMap(BOARD_PWM_BASEADDR, kPWM_Module_1, kPWM_PwmA, kPWM_faultchannel_0,
-                             kPWM_FaultDisable_0 | kPWM_FaultDisable_1 | kPWM_FaultDisable_2 | kPWM_FaultDisable_3);
+                             DEMO_PWM_DISABLE_MAP_OP(kPWM_FaultDisable_0 | kPWM_FaultDisable_1 | kPWM_FaultDisable_2 | kPWM_FaultDisable_3));
     PWM_SetupFaultDisableMap(BOARD_PWM_BASEADDR, kPWM_Module_2, kPWM_PwmA, kPWM_faultchannel_0,
-                             kPWM_FaultDisable_0 | kPWM_FaultDisable_1 | kPWM_FaultDisable_2 | kPWM_FaultDisable_3);
-
+                             DEMO_PWM_DISABLE_MAP_OP(kPWM_FaultDisable_0 | kPWM_FaultDisable_1 | kPWM_FaultDisable_2 | kPWM_FaultDisable_3));
     /* 
      * Call the init function with demo configuration.
      * Recommend to invoke API PWM_SetupPwm after PWM and fault configuration, because reference manual advises to

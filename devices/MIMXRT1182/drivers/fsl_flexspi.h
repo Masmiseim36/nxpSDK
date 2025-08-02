@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2024 NXP
+ * Copyright 2016-2025 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -25,7 +25,7 @@
 /*! @name Driver version */
 /*! @{ */
 /*! @brief FLEXSPI driver version. */
-#define FSL_FLEXSPI_DRIVER_VERSION (MAKE_VERSION(2, 6, 2))
+#define FSL_FLEXSPI_DRIVER_VERSION (MAKE_VERSION(2, 8, 0))
 /*! @} */
 
 #define FSL_FEATURE_FLEXSPI_AHB_BUFFER_COUNT FSL_FEATURE_FLEXSPI_AHB_BUFFER_COUNTn(0)
@@ -224,6 +224,14 @@ typedef struct _flexspi_ahbBuffer_config
                           prefetch disable/enable separately for each master. */
 } flexspi_ahbBuffer_config_t;
 
+/*!
+ * @brief Structure to control all AHB buffers.
+ */
+typedef struct _flexspi_ahbBuffers_ctrl
+{
+    flexspi_ahbBuffer_config_t buffer[FSL_FEATURE_FLEXSPI_AHB_BUFFER_COUNT]; /*!< Configurations of all AHB buffers. */
+} flexspi_ahbBuffers_ctrl_t;
+
 /*! @brief FLEXSPI configuration structure. */
 typedef struct _flexspi_config
 {
@@ -268,6 +276,10 @@ typedef struct _flexspi_config
                                       timeout after ahbBusTimeoutCycle*1024 AHB clock cycles. */
         uint8_t resumeWaitCycle;      /*!< Wait cycle for idle state before suspended command sequence
                                        resume, timeout after ahbBusTimeoutCycle AHB clock cycles. */
+#if (defined(FSL_FEATURE_FLEXSPI_HAS_RESUMEDISABLE_BIT_CONFIG_SUPPORT) && FSL_FEATURE_FLEXSPI_HAS_RESUMEDISABLE_BIT_CONFIG_SUPPORT)
+        bool    disableAhbReadResume; /*!< \b True: Suspended AHB read prefetch does not resume once aborted;
+                                           \b False: Suspended AHB read prefetch resumes when AHB is IDLE. */
+#endif
         flexspi_ahbBuffer_config_t buffer[FSL_FEATURE_FLEXSPI_AHB_BUFFER_COUNT]; /*!< AHB buffer size. */
         bool enableClearAHBBufferOpt; /*!< Enable/disable automatically clean AHB RX Buffer and TX Buffer
                                        when FLEXSPI returns STOP mode ACK. */
@@ -343,6 +355,15 @@ struct _flexspi_handle
     flexspi_transfer_callback_t completionCallback; /*!< Callback for users while transfer finish or error occurred */
     void *userData;                                 /*!< FLEXSPI callback function parameter.*/
 };
+
+/*! @brief Address mapping configuration structure. */
+typedef struct _flexspi_addr_map_config
+{
+    uint32_t addrStart;  /*!< Remapping start address. */
+    uint32_t addrEnd;    /*!< Remapping end address. */
+    uint32_t addrOffset; /*!< Address offset. */
+    bool remapEnable;    /*!< Enable address remapping. */
+} flexspi_addr_map_config_t;
 
 /*******************************************************************************
  * API
@@ -447,6 +468,47 @@ static inline void FLEXSPI_Enable(FLEXSPI_Type *base, bool enable)
         base->MCR0 |= FLEXSPI_MCR0_MDIS_MASK;
     }
 }
+
+#if (defined(FSL_FEATURE_FLEXSPI_HAS_ADDR_REMAP)) && (FSL_FEATURE_FLEXSPI_HAS_ADDR_REMAP)
+/*!
+ * @brief Configure FLEXSPI address mapping
+ *
+ * @param base FLEXSPI peripheral base address
+ * @param config Pointer to address mapping configuration structure
+ */
+void FLEXSPI_SetAddressMapping(FLEXSPI_Type *base, const flexspi_addr_map_config_t *config);
+
+/*!
+ * @brief Enable/Disables FLEXSPI address remapping
+ *
+ * This function controls the address remapping feature which allows
+ * remapping of AHB addresses to different flash memory regions.
+ * When remapping is enabled, accesses to the configured address range
+ * will be redirected to the specified flash device.
+ *
+ * @param base  FLEXSPI peripheral base address
+ * @param enable  True to enable remapping, false to disable
+ */
+static inline void FLEXSPI_EnableRemap(FLEXSPI_Type *base, bool enable)
+{
+    if (enable)
+    {
+        base->HADDRSTART |= FLEXSPI_HADDRSTART_REMAPEN_MASK;
+    }
+    else
+    {
+        base->HADDRSTART &= ~FLEXSPI_HADDRSTART_REMAPEN_MASK;
+    }
+}
+#endif
+
+/*!
+ * @brief Update all AHB buffers' settings, including buffer size, master ID.
+ * 
+ * @param base FLEXSPI peripheral base address.
+ * @param ptrAhbBufferCtrl Pointer to structure @ref flexspi_ahbBuffers_ctrl_t which store all AHB buffers' settings.
+ */
+void FLEXSPI_UpdateAhbBuffersSettings(FLEXSPI_Type *base, flexspi_ahbBuffers_ctrl_t *ptrAhbBufferCtrl);
 
 /*! @} */
 
@@ -736,10 +798,10 @@ static inline void FLEXSPI_EnableAHBParallelMode(FLEXSPI_Type *base, bool enable
 #if (defined(FSL_FEATURE_FLEXSPI_HAS_AHBCR_AFLASHBASE_BIT) && FSL_FEATURE_FLEXSPI_HAS_AHBCR_AFLASHBASE_BIT)
 /*!
  * @brief Set AHB Memory-Mapped Flash base address.
- * 
+ *
  * @note The length of base address may be different for differnt instance, please refer to the reference manual.
  * @note This function should be called when FLEXSPI is in stop mode.
- * 
+ *
  * @param base FLEXSPI peripheral base address.
  * @param address AHB Memory-Mapped Flash base address.
  */

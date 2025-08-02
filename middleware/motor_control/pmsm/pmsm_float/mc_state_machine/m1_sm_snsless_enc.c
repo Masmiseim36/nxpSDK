@@ -1,6 +1,6 @@
 /*
 * Copyright 2016, Freescale Semiconductor, Inc.
-* Copyright 2016-2021, 2024 NXP
+* Copyright 2016-2021, 2024-2025 NXP
 *
 * NXP Proprietary. This software is owned or controlled by NXP and may
 * only be used strictly in accordance with the applicable license terms. 
@@ -185,8 +185,8 @@ sm_app_ctrl_t g_sM1Ctrl = {
 RAM_FUNC_LIB
 static void M1_StateFaultFast(void)
 {
-    /* get all adc samples - DC-bus voltage, current, bemf and aux sample */
-    M1_MCDRV_ADC_GET(&g_sM1AdcSensor);
+    /* get all measured samples - DC-bus voltage, current, bemf and aux sample */
+    M1_MCDRV_CURR_3PH_VOLT_DCB_GET(&g_sM1Curr3phDcBus);
 
     /* convert voltages from fractional measured values to float */
     g_sM1Drive.sFocPMSM.fltUDcBus = MLIB_ConvSc_FLTsf(g_sM1Drive.sFocPMSM.f16UDcBus, g_fltM1DCBvoltageScale);
@@ -242,6 +242,13 @@ static void M1_StateInitFast(void)
     g_sM1Drive.sFocPMSM.sIqPiParams.fltIGain    = M1_Q_KI_GAIN;
     g_sM1Drive.sFocPMSM.sIqPiParams.fltUpperLim = M1_U_MAX;
     g_sM1Drive.sFocPMSM.sIqPiParams.fltLowerLim = -M1_U_MAX;
+    
+    /* Zero cancellation current filter */    
+    g_sM1Drive.sFocPMSM.sIqReqZCFilter.sFltCoeff.fltB0 = M1_Q_IIR_ZC_B0;
+    g_sM1Drive.sFocPMSM.sIqReqZCFilter.sFltCoeff.fltB1 = M1_Q_IIR_ZC_B1;
+    g_sM1Drive.sFocPMSM.sIqReqZCFilter.sFltCoeff.fltA1 = M1_Q_IIR_ZC_A1;
+    
+    GDFLIB_FilterIIR1Init_FLT(&g_sM1Drive.sFocPMSM.sIqReqZCFilter);
 
     g_sM1Drive.sFocPMSM.ui16SectorSVM     = M1_SVM_SECTOR_DEFAULT;
     g_sM1Drive.sFocPMSM.fltDutyCycleLimit = M1_CLOOP_LIMIT;
@@ -301,15 +308,43 @@ static void M1_StateInitFast(void)
     g_sM1Drive.sSpeed.sSpeedFilter.sFltCoeff.fltB0 = M1_SPEED_IIR_B0;
     g_sM1Drive.sSpeed.sSpeedFilter.sFltCoeff.fltB1 = M1_SPEED_IIR_B1;
     g_sM1Drive.sSpeed.sSpeedFilter.sFltCoeff.fltA1 = M1_SPEED_IIR_A1;
-
+    
+    /* Speed comand zero cancellation filter */
+    g_sM1Drive.sSpeed.sSpeedCmdZCFilter.sFltCoeff.fltB0 = M1_SPEED_IIR_ZC_B0;
+    g_sM1Drive.sSpeed.sSpeedCmdZCFilter.sFltCoeff.fltB1 = M1_SPEED_IIR_ZC_B1;
+    g_sM1Drive.sSpeed.sSpeedCmdZCFilter.sFltCoeff.fltA1 = M1_SPEED_IIR_ZC_A1;
+    GDFLIB_FilterIIR1Init_FLT(&g_sM1Drive.sSpeed.sSpeedCmdZCFilter);
+    g_sM1Drive.sSpeed.bSpeedZCOn = TRUE;
+    
     g_sM1Drive.sSpeed.fltSpeedCmd = 0.0F;
-
-    /* Position params */
-    g_sM1Drive.sPosition.f16PositionPGain = M1_POS_P_PROP_GAIN;
-    g_sM1Drive.sPosition.a32Position      = ACC32(0.0);
-    g_sM1Drive.sPosition.a32PositionError = ACC32(0.0);
-    g_sM1Drive.sPosition.a32PositionCmd   = ACC32(0.0);
-    g_sM1Drive.sPosition.f16SpeedReq      = FRAC16(0.0);
+    
+    /* Slow loop sample time */
+    g_sM1Drive.sPosition.fltSpeedLoopTs = 1.0F/(float_t)(g_sClockSetup.ui16M1SpeedLoopFreq);
+    
+    /* Servo parameters - Position P controller */
+    g_sM1Drive.sPosition.sPositionPiParams.fltPGain    = M1_SERVO_POSITION_P_PROP_GAIN;
+    g_sM1Drive.sPosition.sPositionPiParams.fltIGain    = 0.0F;
+    g_sM1Drive.sPosition.sPositionPiParams.fltUpperLim = M1_SERVO_POSITION_P_HIGH_LIMIT;
+    g_sM1Drive.sPosition.sPositionPiParams.fltLowerLim = M1_SERVO_POSITION_P_LOW_LIMIT;
+    
+    /* Servo parameters - Feed Forward */
+    g_sM1Drive.sPosition.fltFeedFrwdK1 = M1_SERVO_FEED_FRWD_K1;
+    g_sM1Drive.sPosition.fltFeedFrwdK2 = M1_SERVO_FEED_FRWD_K2;
+    g_sM1Drive.sPosition.fltPositionCmd_stored = 0.0F;
+    g_sM1Drive.sPosition.fltFirstDerivation_stored = 0.0F;
+  
+    /* Servo parameters - Speed PI controller */
+    g_sM1Drive.sPosition.sSpeedPiParams.fltPGain    = M1_SERVO_SPEED_PI_PROP_GAIN;
+    g_sM1Drive.sPosition.sSpeedPiParams.fltIGain    = M1_SERVO_SPEED_PI_INTEG_GAIN;
+    g_sM1Drive.sPosition.sSpeedPiParams.fltUpperLim = M1_SERVO_SPEED_PI_HIGH_LIMIT;
+    g_sM1Drive.sPosition.sSpeedPiParams.fltLowerLim = M1_SERVO_SPEED_PI_LOW_LIMIT;
+    
+    /* Servo parameters - Zero cancellation parameters */
+    g_sM1Drive.sPosition.sSpeedReqZCFilter.sFltCoeff.fltB0 = M1_SERVO_IIR_ZC_B0;
+    g_sM1Drive.sPosition.sSpeedReqZCFilter.sFltCoeff.fltB1 = M1_SERVO_IIR_ZC_B1;
+    g_sM1Drive.sPosition.sSpeedReqZCFilter.sFltCoeff.fltA1 = M1_SERVO_IIR_ZC_A1;
+    GDFLIB_FilterIIR1Init_FLT(&g_sM1Drive.sPosition.sSpeedReqZCFilter);  
+    g_sM1Drive.sPosition.bFeedFrwdOn = TRUE;
 
     /* Scalar control params */
     g_sM1Drive.sScalarCtrl.fltVHzGain                  = M1_SCALAR_VHZ_FACTOR_GAIN;
@@ -381,18 +416,20 @@ static void M1_StateInitFast(void)
     /* Init sensors/actuators pointers */
     /* For PWM driver */
     g_sM1Pwm3ph.psUABC = &(g_sM1Drive.sFocPMSM.sDutyABC);
-    /* For ADC driver */
-    g_sM1AdcSensor.pf16UDcBus     = &(g_sM1Drive.sFocPMSM.f16UDcBus);
-    g_sM1AdcSensor.psIABC         = &(g_sM1Drive.sFocPMSM.sIABCFrac);
-    g_sM1AdcSensor.pui16SVMSector = &(g_sM1Drive.sFocPMSM.ui16SectorSVM);
-    g_sM1AdcSensor.pui16AuxChan   = &(g_sM1Drive.f16AdcAuxSample);
+    
+    /* For phase currents and DC-bus voltage driver */
+    g_sM1Curr3phDcBus.pf16UDcBus     = &(g_sM1Drive.sFocPMSM.f16UDcBus);
+    g_sM1Curr3phDcBus.psIABC         = &(g_sM1Drive.sFocPMSM.sIABCFrac);
+    g_sM1Curr3phDcBus.pui16SVMSector = &(g_sM1Drive.sFocPMSM.ui16SectorSVM);
+    g_sM1Curr3phDcBus.pui16AuxChan   = &(g_sM1Drive.f16AdcAuxSample);
 
-    /* get all adc samples - DC-bus voltage, current, bemf and aux sample */
-    M1_MCDRV_ADC_GET(&g_sM1AdcSensor);
+    /* Get all measured samples (phase currents, DC-bus voltage,...) - to prevent fault when SM is executed in ADC ISR. */
+    M1_MCDRV_CURR_3PH_VOLT_DCB_GET(&g_sM1Curr3phDcBus);
 
-    /* For ENC driver */
+    /* Init pointers for position/speed driver */
     g_sM1Enc.pf16PosElEst = &(g_sM1Drive.f16PosElEnc);
     g_sM1Enc.pfltSpdMeEst = &(g_sM1Drive.fltSpeedEnc);
+    g_sM1Enc.pa32PosMeReal = &(g_sM1Drive.sPosition.a32Position);
 
     /* INIT_DONE command */
     g_sM1Ctrl.uiCtrl |= SM_CTRL_INIT_DONE;
@@ -420,14 +457,14 @@ static void M1_StateInitFast(void)
 RAM_FUNC_LIB
 static void M1_StateStopFast(void)
 {
-    /* get all adc samples - DC-bus voltage, current, bemf and aux sample */
-    M1_MCDRV_ADC_GET(&g_sM1AdcSensor);
+    /* get all measured samples - DC-bus voltage, current, bemf and aux sample */
+    M1_MCDRV_CURR_3PH_VOLT_DCB_GET(&g_sM1Curr3phDcBus);
 
     /* Set encoder direction */
-    M1_MCDRV_QD_SET_DIRECTION(&g_sM1Enc);
+    M1_MCDRV_ENC_SET_DIRECTION(&g_sM1Enc);
 
     /* get position and speed from quadrature encoder sensor */
-    M1_MCDRV_QD_GET(&g_sM1Enc);
+    M1_MCDRV_ENC_GET(&g_sM1Enc);
 
     /* convert voltages from fractional measured values to float */
     g_sM1Drive.sFocPMSM.fltUDcBus = MLIB_ConvSc_FLTsf(g_sM1Drive.sFocPMSM.f16UDcBus, g_fltM1DCBvoltageScale);
@@ -479,11 +516,11 @@ static void M1_StateStopFast(void)
 RAM_FUNC_LIB
 static void M1_StateRunFast(void)
 {
-    /* get all adc samples - DC-bus voltage, current, bemf and aux sample */
-    M1_MCDRV_ADC_GET(&g_sM1AdcSensor);
+    /* get all measured samples - DC-bus voltage, current, bemf and aux sample */
+    M1_MCDRV_CURR_3PH_VOLT_DCB_GET(&g_sM1Curr3phDcBus);
 
     /* get position and speed from quadrature encoder sensor */
-    M1_MCDRV_QD_GET(&g_sM1Enc);
+    M1_MCDRV_ENC_GET(&g_sM1Enc);
 
     /* If the user switches off */
     if (!g_bM1SwitchAppOnOff)
@@ -534,7 +571,7 @@ static void M1_StateRunFast(void)
     M1_MCDRV_PWM3PH_SET(&g_sM1Pwm3ph);
 
     /* Set current sensor for sampling - applies only to some devices. */
-    M1_MCDRV_CURR_3PH_CHAN_ASSIGN(&g_sM1AdcSensor);
+    M1_MCDRV_CURR_3PH_CHAN_ASSIGN(&g_sM1Curr3phDcBus);
 }
 
 /*!
@@ -693,7 +730,7 @@ static void M1_TransStopRun(void)
     M1_MCDRV_PWM3PH_SET(&g_sM1Pwm3ph);
 
     /* Clear offset filters */
-    M1_MCDRV_CURR_3PH_CALIB_INIT(&g_sM1AdcSensor);
+    M1_MCDRV_CURR_3PH_CALIB_INIT(&g_sM1Curr3phDcBus);
 
     /* Enable PWM output */
     M1_MCDRV_PWM3PH_EN(&g_sM1Pwm3ph);
@@ -702,7 +739,7 @@ static void M1_TransStopRun(void)
     g_sM1Drive.ui16CounterState = g_sM1Drive.ui16TimeCalibration;
 
     /* Update modulo counter */
-    M1_MCDRV_QD_SET_PULSES(&g_sM1Enc);
+    M1_MCDRV_ENC_SET_PULSES(&g_sM1Enc);
 
     /* Calibration sub-state when transition to RUN */
     g_eM1StateRun = kRunState_Calib;
@@ -741,6 +778,7 @@ static void M1_TransRunFault(void)
     g_sM1Drive.sScalarCtrl.fltFreqRamp = 0.0F;
     g_sM1Drive.sSpeed.fltSpeed         = 0.0F;
     g_sM1Drive.sSpeed.fltSpeedFilt     = 0.0F;
+    g_sM1Drive.sPosition.bPositionPiStopInteg = FALSE;
 }
 
 /*!
@@ -785,7 +823,7 @@ static void M1_StateRunCalibFast(void)
        performing ADC offset calibration */
 
     /* Call offset measurement */
-    M1_MCDRV_CURR_3PH_CALIB(&g_sM1AdcSensor);
+    M1_MCDRV_CURR_3PH_CALIB(&g_sM1Curr3phDcBus);
 
     /* Change SVM sector in range <1;6> to measure all AD channel mapping combinations */
     if (++g_sM1Drive.sFocPMSM.ui16SectorSVM > 6U)
@@ -1197,8 +1235,9 @@ static void M1_StateRunCalibSlow(void)
 {
     if (--g_sM1Drive.ui16CounterState == 0U)
     {
-	  /* Write calibrated offset values */
-	  M1_MCDRV_CURR_3PH_CALIB_SET(&g_sM1AdcSensor);
+      /* Write calibrated offset values */
+      M1_MCDRV_CURR_3PH_CALIB_SET(&g_sM1Curr3phDcBus);
+      
       /* To switch to the RUN READY sub-state */
       M1_TransRunCalibReady();
     }
@@ -1305,43 +1344,20 @@ static void M1_StateRunSpinSlow(void)
 
     if (g_sM1Drive.eControl == kControlMode_PositionFOC)
     {
-        /* actual speed filter */
-        g_sM1Drive.sSpeed.fltSpeedFilt =
-            GDFLIB_FilterIIR1_FLT(g_sM1Drive.sSpeed.fltSpeed, &g_sM1Drive.sSpeed.sSpeedFilter);
-
-        /* pass required speed values lower than nominal speed */
-        if ((MLIB_Abs_FLT(g_sM1Drive.sSpeed.fltSpeedCmd) > g_sM1Drive.sFaultThresholds.fltSpeedNom))
-        {
-            /* set required speed to nominal speed if over speed command > speed nominal */
-            if (g_sM1Drive.sSpeed.fltSpeedCmd > 0.0F)
-            {
-            	g_sM1Drive.sSpeed.fltSpeedCmd = g_sM1Drive.sFaultThresholds.fltSpeedNom;
-            }
-            else
-            {
-            	g_sM1Drive.sSpeed.fltSpeedCmd = MLIB_Neg_FLT(g_sM1Drive.sFaultThresholds.fltSpeedNom);
-            }
-        }
-
-        if ((MLIB_Abs_FLT(g_sM1Drive.sSpeed.fltSpeedRamp) < g_sM1Drive.sFaultThresholds.fltSpeedMin) &&
-            (g_sM1Drive.sMCATctrl.ui16PospeSensor == MCAT_SENSORLESS_CTRL))
-        {
-        	M1_TransRunSpinFreewheel();
-        }
-
-        /* Actual position */
-        g_sM1Drive.sPosition.a32Position = g_sM1Enc.a32PosMeReal;
-
+        /* Actual speed filter */
+        g_sM1Drive.sSpeed.fltSpeedFilt = GDFLIB_FilterIIR1_FLT(g_sM1Drive.sSpeed.fltSpeed, &g_sM1Drive.sSpeed.sSpeedFilter);
+        
+        /* Actual position - passed using pointer */        
+        
+        /* Pass filtered speed to position structure */
+        g_sM1Drive.sPosition.fltSpeedFilt = g_sM1Drive.sSpeed.fltSpeedFilt;
+        /* Pass Iq PI controller limit flag to position structure  */
+        g_sM1Drive.sPosition.bIqPiLimFlag = g_sM1Drive.sFocPMSM.sIqPiParams.bLimFlag;
         /* Call PMSM position control */
         MCS_PMSMFocCtrlPosition(&g_sM1Drive.sPosition);
+        /* Pass required current computed from position control to current structure */
+        g_sM1Drive.sFocPMSM.sIDQReq.fltQ = g_sM1Drive.sPosition.fltIqReq;
 
-        /* Speed command is equal to position controller output */
-        g_sM1Drive.sSpeed.fltSpeedCmd = MLIB_ConvSc_FLTsf(g_sM1Drive.sPosition.f16SpeedReq, M1_SPEED_CONV_SCALE);
-
-        /* Call PMSM speed control */
-        g_sM1Drive.sSpeed.bIqPiLimFlag = g_sM1Drive.sFocPMSM.sIqPiParams.bLimFlag;
-        MCS_PMSMFocCtrlSpeed(&g_sM1Drive.sSpeed);
-        g_sM1Drive.sFocPMSM.sIDQReq.fltQ = g_sM1Drive.sSpeed.fltIqReq;
     }
 }
 
@@ -1398,7 +1414,7 @@ static void M1_TransRunReadyAlign(void)
     /* Alignment duration set-up */
     g_sM1Drive.ui16CounterState = g_sM1Drive.sAlignment.ui16Time;
     /* Counter of half alignment duration */
-    g_sM1Drive.sAlignment.ui16TimeHalf = (uint16_t)MLIB_ShR_F16((int16_t)g_sM1Drive.sAlignment.ui16Time, 1);
+    g_sM1Drive.sAlignment.ui16TimeHalf = (g_sM1Drive.sAlignment.ui16Time / 2U);
 
     /* set required alignment voltage to Ud */
     g_sM1Drive.sFocPMSM.sUDQReq.fltD = g_sM1Drive.sAlignment.fltUdReq;
@@ -1450,7 +1466,7 @@ static void M1_TransRunAlignStartup(void)
 {
     /* Type the code to do when going from the RUN kRunState_Align to the RUN kRunState_Startup sub-state */
     /* initialize encoder driver */
-    M1_MCDRV_QD_CLEAR(&g_sM1Enc);
+    M1_MCDRV_ENC_CLEAR(&g_sM1Enc);
 
     /* Clear application parameters */
     M1_ClearFOCVariables();
@@ -1491,7 +1507,7 @@ static void M1_TransRunAlignSpin(void)
 {
     /* Type the code to do when going from the RUN STARTUP to the RUN SPIN sub-state */
     /* initialize encoder driver */
-    M1_MCDRV_QD_CLEAR(&g_sM1Enc);
+    M1_MCDRV_ENC_CLEAR(&g_sM1Enc);
 
     g_sM1Drive.sFocPMSM.bPosExtOn = TRUE;  /* enable passing external electrical position from encoder to FOC */
     g_sM1Drive.sFocPMSM.bOpenLoop = FALSE; /* disable parallel runnig openloop and estimator */
@@ -1667,10 +1683,12 @@ static void M1_ClearFOCVariables(void)
     g_sM1Drive.sFocPMSM.sIdPiParams.fltIAccK_1 = 0.0F;
     g_sM1Drive.sFocPMSM.sIdPiParams.fltIAccK_1 = 0.0F;
     g_sM1Drive.sFocPMSM.sIqPiParams.fltIAccK_1 = 0.0F;
-    g_sM1Drive.sFocPMSM.sIqPiParams.fltIAccK_1 = 0.0F;
-    GDFLIB_FilterIIR1Init_FLT(&g_sM1Drive.sFocPMSM.sSpeedElEstFilt);
+    g_sM1Drive.sFocPMSM.sIqPiParams.fltIAccK_1 = 0.0F;   
     g_sM1Drive.sFocPMSM.bIdPiStopInteg = FALSE;
-    g_sM1Drive.sFocPMSM.bIqPiStopInteg = FALSE;
+    g_sM1Drive.sFocPMSM.bIqPiStopInteg = FALSE;   
+    g_sM1Drive.sFocPMSM.sIqReqZCFilter.fltFltBfrX[0] = 0.0F;
+    g_sM1Drive.sFocPMSM.sIqReqZCFilter.fltFltBfrY[0] = 0.0F;
+    GDFLIB_FilterIIR1Init_FLT(&g_sM1Drive.sFocPMSM.sIqReqZCFilter);
 
     /* Clear Speed control state variables */
     g_sM1Drive.sSpeed.sSpeedRampParams.fltState  = 0.0F;
@@ -1678,12 +1696,30 @@ static void M1_ClearFOCVariables(void)
     g_sM1Drive.sSpeed.fltSpeedFilt               = 0.0F;
     g_sM1Drive.sSpeed.fltSpeedError              = 0.0F;
     g_sM1Drive.sSpeed.fltSpeedRamp               = 0.0F;
+    g_sM1Drive.sSpeed.fltSpeedCmdFilt            = 0.0F;
     g_sM1Drive.sSpeed.sSpeedPiParams.fltIAccK_1  = 0.0F;
     g_sM1Drive.sSpeed.sSpeedPiParams.bLimFlag    = FALSE;
     g_sM1Drive.sSpeed.sSpeedFilter.fltFltBfrX[0] = 0.0F;
     g_sM1Drive.sSpeed.sSpeedFilter.fltFltBfrY[0] = 0.0F;
     g_sM1Drive.sSpeed.bSpeedPiStopInteg          = FALSE;
+    
+    g_sM1Drive.sSpeed.sSpeedCmdZCFilter.fltFltBfrX[0] = 0.0F;
+    g_sM1Drive.sSpeed.sSpeedCmdZCFilter.fltFltBfrY[0] = 0.0F;
     GDFLIB_FilterIIR1Init_FLT(&g_sM1Drive.sSpeed.sSpeedFilter);
+    GDFLIB_FilterIIR1Init_FLT(&g_sM1Drive.sSpeed.sSpeedCmdZCFilter);
+    
+    GDFLIB_FilterIIR1Init_FLT(&g_sM1Drive.sFocPMSM.sSpeedElEstFilt);
+    
+    
+    g_sM1Drive.sPosition.sPositionPiParams.fltIAccK_1  = 0.0F;
+    g_sM1Drive.sPosition.sPositionPiParams.bLimFlag    = FALSE;
+    g_sM1Drive.sPosition.bPositionPiStopInteg = FALSE;
+    g_sM1Drive.sPosition.sSpeedReqZCFilter.fltFltBfrX[0] = 0.0F;
+    g_sM1Drive.sPosition.sSpeedReqZCFilter.fltFltBfrY[0] = 0.0F;
+    GDFLIB_FilterIIR1Init_FLT(&g_sM1Drive.sPosition.sSpeedReqZCFilter);
+    
+    g_sM1Drive.sPosition.fltPositionCmd_stored = 0.0F;
+    g_sM1Drive.sPosition.fltFirstDerivation_stored = 0.0F;
 
     /* Init Blocked rotor filter */
     GDFLIB_FilterMAInit_FLT(0.0F, &g_sM1Drive.msM1BlockedRotorUqFilt);

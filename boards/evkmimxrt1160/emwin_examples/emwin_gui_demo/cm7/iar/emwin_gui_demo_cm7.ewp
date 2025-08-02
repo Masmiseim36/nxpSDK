@@ -250,6 +250,7 @@
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1166DVM6A_cm7</state>
+          <state>MIMXRT1166_cm7_SERIES</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
         </option>
         <option>
@@ -581,6 +582,7 @@
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1166DVM6A_cm7</state>
+          <state>MIMXRT1166_cm7_SERIES</state>
         </option>
         <option>
           <name>AList</name>
@@ -1408,6 +1410,7 @@
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1166DVM6A_cm7</state>
+          <state>MIMXRT1166_cm7_SERIES</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
         </option>
         <option>
@@ -1739,6 +1742,7 @@
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1166DVM6A_cm7</state>
+          <state>MIMXRT1166_cm7_SERIES</state>
         </option>
         <option>
           <name>AList</name>
@@ -2491,6 +2495,12 @@
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/drivers/fsl_mipi_dsi.h</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/drivers/fsl_mu.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/drivers/fsl_mu.c</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/drivers/fsl_pxp.c</name>
     </file>
     <file>
@@ -2652,15 +2662,6 @@
         <name>$PROJ_DIR$/../../../../../../middleware/emwin/emWin_header/GUIDRV_SSD1926_Private.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/emwin/emWin_header/GUIDRV_Template.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/emwin/emWin_header/GUIDRV_TemplateI.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/emwin/emWin_header/GUIDRV_TemplateI_Private.h</name>
-      </file>
-      <file>
         <name>$PROJ_DIR$/../../../../../../middleware/emwin/emWin_header/GUITDRV_ADS7846.h</name>
       </file>
       <file>
@@ -2686,9 +2687,6 @@
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../../middleware/emwin/emWin_header/GUI_GIF_Private.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/emwin/emWin_header/GUI_HOOK.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../../middleware/emwin/emWin_header/GUI_JPEG_Private.h</name>
@@ -2742,10 +2740,10 @@
         <name>$PROJ_DIR$/../../../../../../middleware/emwin/emWin_header/GUI_Version.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/emwin/emWin_header/GUI__BiDi2_Brackets_800.h</name>
+        <name>$PROJ_DIR$/../../../../../../middleware/emwin/emWin_header/GUI__BiDi_Brackets.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/emwin/emWin_header/GUI__BiDi2_Types_800.h</name>
+        <name>$PROJ_DIR$/../../../../../../middleware/emwin/emWin_header/GUI__BiDi_Types.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../../middleware/emwin/emWin_header/Global.h</name>
@@ -2962,6 +2960,9 @@
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../../middleware/emwin/emWin_header/WM_Intern.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/emwin/emWin_header/WM_Layout.h</name>
       </file>
     </group>
     <group>

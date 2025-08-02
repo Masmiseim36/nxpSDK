@@ -2,7 +2,7 @@
 <configuration name="" xsi:schemaLocation="http://mcuxpresso.nxp.com/XSD/mex_configuration_14 http://mcuxpresso.nxp.com/XSD/mex_configuration_14.xsd" uuid="2789973b-4e08-461b-a604-ca74c2c2a2cf" version="14" xmlns="http://mcuxpresso.nxp.com/XSD/mex_configuration_14" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
    <common>
       <processor>MIMXRT1176xxxxx</processor>
-      <package>MIMXRT1176DVMAA</package>
+      <package>MIMXRT1176DVMAB</package>
       <mcu_data>ksdk2_0</mcu_data>
       <cores selected="cm7">
          <core name="Cortex-M4F" id="cm4" description=""/>

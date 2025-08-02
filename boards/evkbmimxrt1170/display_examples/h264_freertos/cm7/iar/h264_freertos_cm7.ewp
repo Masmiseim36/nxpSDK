@@ -250,7 +250,8 @@
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
-          <state>CPU_MIMXRT1176DVMAA_cm7</state>
+          <state>CPU_MIMXRT1176DVMAB_cm7</state>
+          <state>MIMXRT1176_cm7_SERIES</state>
           <state>OSA_USED</state>
           <state>USE_RTOS=1</state>
           <state>SD_ENABLED=1</state>
@@ -415,7 +416,7 @@
           <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/osa</state>
           <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/sd</state>
           <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/host/usdhc</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/openh264/codec/api/svc</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/openh264/codec/api/wels</state>
           <state>$PROJ_DIR$/../../../../../../middleware/openh264/codec/common/inc</state>
           <state>$PROJ_DIR$/../../../../../../middleware/openh264/codec/decoder/core/inc</state>
           <state>$PROJ_DIR$/../../../../../../middleware/openh264/codec/decoder/plus/inc</state>
@@ -605,7 +606,8 @@
         <option>
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
-          <state>CPU_MIMXRT1176DVMAA_cm7</state>
+          <state>CPU_MIMXRT1176DVMAB_cm7</state>
+          <state>MIMXRT1176_cm7_SERIES</state>
           <state>OSA_USED</state>
         </option>
         <option>
@@ -732,7 +734,7 @@
           <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/osa</state>
           <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/sd</state>
           <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/host/usdhc</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/openh264/codec/api/svc</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/openh264/codec/api/wels</state>
           <state>$PROJ_DIR$/../../../../../../middleware/openh264/codec/common/inc</state>
           <state>$PROJ_DIR$/../../../../../../middleware/openh264/codec/decoder/core/inc</state>
           <state>$PROJ_DIR$/../../../../../../middleware/openh264/codec/decoder/plus/inc</state>
@@ -1453,7 +1455,8 @@
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
-          <state>CPU_MIMXRT1176DVMAA_cm7</state>
+          <state>CPU_MIMXRT1176DVMAB_cm7</state>
+          <state>MIMXRT1176_cm7_SERIES</state>
           <state>OSA_USED</state>
           <state>USE_RTOS=1</state>
           <state>SD_ENABLED=1</state>
@@ -1618,7 +1621,7 @@
           <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/osa</state>
           <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/sd</state>
           <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/host/usdhc</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/openh264/codec/api/svc</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/openh264/codec/api/wels</state>
           <state>$PROJ_DIR$/../../../../../../middleware/openh264/codec/common/inc</state>
           <state>$PROJ_DIR$/../../../../../../middleware/openh264/codec/decoder/core/inc</state>
           <state>$PROJ_DIR$/../../../../../../middleware/openh264/codec/decoder/plus/inc</state>
@@ -1808,7 +1811,8 @@
         <option>
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
-          <state>CPU_MIMXRT1176DVMAA_cm7</state>
+          <state>CPU_MIMXRT1176DVMAB_cm7</state>
+          <state>MIMXRT1176_cm7_SERIES</state>
           <state>OSA_USED</state>
         </option>
         <option>
@@ -1935,7 +1939,7 @@
           <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/osa</state>
           <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/sd</state>
           <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/host/usdhc</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/openh264/codec/api/svc</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/openh264/codec/api/wels</state>
           <state>$PROJ_DIR$/../../../../../../middleware/openh264/codec/common/inc</state>
           <state>$PROJ_DIR$/../../../../../../middleware/openh264/codec/decoder/core/inc</state>
           <state>$PROJ_DIR$/../../../../../../middleware/openh264/codec/decoder/plus/inc</state>
@@ -2612,18 +2616,18 @@
       <group>
         <name>api</name>
         <group>
-          <name>svc</name>
+          <name>wels</name>
           <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/openh264/codec/api/svc/codec_api.h</name>
+            <name>$PROJ_DIR$/../../../../../../middleware/openh264/codec/api/wels/codec_api.h</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/openh264/codec/api/svc/codec_app_def.h</name>
+            <name>$PROJ_DIR$/../../../../../../middleware/openh264/codec/api/wels/codec_app_def.h</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/openh264/codec/api/svc/codec_def.h</name>
+            <name>$PROJ_DIR$/../../../../../../middleware/openh264/codec/api/wels/codec_def.h</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/openh264/codec/api/svc/codec_ver.h</name>
+            <name>$PROJ_DIR$/../../../../../../middleware/openh264/codec/api/wels/codec_ver.h</name>
           </file>
         </group>
       </group>
@@ -2659,6 +2663,9 @@
             <name>$PROJ_DIR$/../../../../../../middleware/openh264/codec/common/inc/intra_pred_common.h</name>
           </file>
           <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/openh264/codec/common/inc/loongson_intrinsics.h</name>
+          </file>
+          <file>
             <name>$PROJ_DIR$/../../../../../../middleware/openh264/codec/common/inc/ls_defines.h</name>
           </file>
           <file>
@@ -2672,6 +2679,9 @@
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../../middleware/openh264/codec/common/inc/memory_align.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/openh264/codec/common/inc/msa_macros.h</name>
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../../middleware/openh264/codec/common/inc/sad_common.h</name>
@@ -2954,9 +2964,6 @@
     </group>
     <file>
       <name>$PROJ_DIR$/../../../../../../middleware/openh264/LICENSE</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../middleware/openh264/CONTRIBUTORS</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../middleware/openh264/CODING_STYLE</name>
@@ -3588,13 +3595,13 @@
     <group>
       <name>osa</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction.h</name>
-      </file>
-      <file>
         <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction_free_rtos.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction_free_rtos.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction.h</name>
       </file>
     </group>
   </group>
@@ -3884,6 +3891,9 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../example_board_readme.md</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../examples_shared_readme.md</name>
     </file>
   </group>
 </project>

@@ -12,10 +12,12 @@ ENDIF()
 
 SET(CMAKE_ASM_FLAGS_DEBUG " \
     ${CMAKE_ASM_FLAGS_DEBUG} \
+    -include ${ProjDirPath}/../mcux_config.h \
     -D__STARTUP_INITIALIZE_NONCACHEDATA \
     -D__STARTUP_CLEAR_BSS \
     -DMCUXPRESSO_SDK \
-    -DCPU_MIMXRT1189CVM8B_cm7 \
+    -DCPU_MIMXRT1189CVM8C_cm7 \
+    -DMIMXRT1189_cm7_SERIES \
     -g \
     -mthumb \
     -mcpu=cortex-m7 \
@@ -23,21 +25,25 @@ SET(CMAKE_ASM_FLAGS_DEBUG " \
 ")
 SET(CMAKE_ASM_FLAGS_RELEASE " \
     ${CMAKE_ASM_FLAGS_RELEASE} \
+    -include ${ProjDirPath}/../mcux_config.h \
     -D__STARTUP_INITIALIZE_NONCACHEDATA \
     -D__STARTUP_CLEAR_BSS \
     -DMCUXPRESSO_SDK \
-    -DCPU_MIMXRT1189CVM8B_cm7 \
+    -DCPU_MIMXRT1189CVM8C_cm7 \
+    -DMIMXRT1189_cm7_SERIES \
     -mthumb \
     -mcpu=cortex-m7 \
     ${FPU} \
 ")
 SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_DEBUG " \
     ${CMAKE_ASM_FLAGS_FLEXSPI_NOR_DEBUG} \
+    -include ${ProjDirPath}/../mcux_config.h \
     -D__STARTUP_INITIALIZE_RAMFUNCTION \
     -D__STARTUP_INITIALIZE_NONCACHEDATA \
     -D__STARTUP_CLEAR_BSS \
     -DMCUXPRESSO_SDK \
-    -DCPU_MIMXRT1189CVM8B_cm7 \
+    -DCPU_MIMXRT1189CVM8C_cm7 \
+    -DMIMXRT1189_cm7_SERIES \
     -g \
     -mthumb \
     -mcpu=cortex-m7 \
@@ -45,11 +51,13 @@ SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_DEBUG " \
 ")
 SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_RELEASE " \
     ${CMAKE_ASM_FLAGS_FLEXSPI_NOR_RELEASE} \
+    -include ${ProjDirPath}/../mcux_config.h \
     -D__STARTUP_INITIALIZE_RAMFUNCTION \
     -D__STARTUP_INITIALIZE_NONCACHEDATA \
     -D__STARTUP_CLEAR_BSS \
     -DMCUXPRESSO_SDK \
-    -DCPU_MIMXRT1189CVM8B_cm7 \
+    -DCPU_MIMXRT1189CVM8C_cm7 \
+    -DMIMXRT1189_cm7_SERIES \
     -mthumb \
     -mcpu=cortex-m7 \
     ${FPU} \
@@ -58,11 +66,13 @@ SET(CMAKE_C_FLAGS_DEBUG " \
     ${CMAKE_C_FLAGS_DEBUG} \
     -include ${ProjDirPath}/../mcux_config.h \
     -DDEBUG \
+    -D__STARTUP_CLEAR_BSS \
     -DSERIAL_PORT_TYPE_UART=1 \
     -DPRINTF_ADVANCED_ENABLE=1 \
     -DMCUX_META_BUILD \
     -DMCUXPRESSO_SDK \
-    -DCPU_MIMXRT1189CVM8B_cm7 \
+    -DCPU_MIMXRT1189CVM8C_cm7 \
+    -DMIMXRT1189_cm7_SERIES \
     -O0 \
     -g \
     -Wall \
@@ -81,11 +91,13 @@ SET(CMAKE_C_FLAGS_RELEASE " \
     ${CMAKE_C_FLAGS_RELEASE} \
     -include ${ProjDirPath}/../mcux_config.h \
     -DNDEBUG \
+    -D__STARTUP_CLEAR_BSS \
     -DSERIAL_PORT_TYPE_UART=1 \
     -DPRINTF_ADVANCED_ENABLE=1 \
     -DMCUX_META_BUILD \
     -DMCUXPRESSO_SDK \
-    -DCPU_MIMXRT1189CVM8B_cm7 \
+    -DCPU_MIMXRT1189CVM8C_cm7 \
+    -DMIMXRT1189_cm7_SERIES \
     -O0 \
     -Os \
     -Wall \
@@ -105,11 +117,13 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG " \
     -include ${ProjDirPath}/../mcux_config.h \
     -DDEBUG \
     -DXIP_EXTERNAL_FLASH=1 \
+    -D__STARTUP_CLEAR_BSS \
     -DSERIAL_PORT_TYPE_UART=1 \
     -DPRINTF_ADVANCED_ENABLE=1 \
     -DMCUX_META_BUILD \
     -DMCUXPRESSO_SDK \
-    -DCPU_MIMXRT1189CVM8B_cm7 \
+    -DCPU_MIMXRT1189CVM8C_cm7 \
+    -DMIMXRT1189_cm7_SERIES \
     -O0 \
     -g \
     -Wall \
@@ -129,11 +143,13 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE " \
     -include ${ProjDirPath}/../mcux_config.h \
     -DNDEBUG \
     -DXIP_EXTERNAL_FLASH=1 \
+    -D__STARTUP_CLEAR_BSS \
     -DSERIAL_PORT_TYPE_UART=1 \
     -DPRINTF_ADVANCED_ENABLE=1 \
     -DMCUX_META_BUILD \
     -DMCUXPRESSO_SDK \
-    -DCPU_MIMXRT1189CVM8B_cm7 \
+    -DCPU_MIMXRT1189CVM8C_cm7 \
+    -DMIMXRT1189_cm7_SERIES \
     -O0 \
     -Os \
     -Wall \
@@ -150,10 +166,12 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE " \
 ")
 SET(CMAKE_CXX_FLAGS_DEBUG " \
     ${CMAKE_CXX_FLAGS_DEBUG} \
+    -include ${ProjDirPath}/../mcux_config.h \
     -DDEBUG \
     -DMCUX_META_BUILD \
     -DMCUXPRESSO_SDK \
-    -DCPU_MIMXRT1189CVM8B_cm7 \
+    -DCPU_MIMXRT1189CVM8C_cm7 \
+    -DMIMXRT1189_cm7_SERIES \
     -g \
     -O0 \
     -Wall \
@@ -171,10 +189,12 @@ SET(CMAKE_CXX_FLAGS_DEBUG " \
 ")
 SET(CMAKE_CXX_FLAGS_RELEASE " \
     ${CMAKE_CXX_FLAGS_RELEASE} \
+    -include ${ProjDirPath}/../mcux_config.h \
     -DNDEBUG \
     -DMCUX_META_BUILD \
     -DMCUXPRESSO_SDK \
-    -DCPU_MIMXRT1189CVM8B_cm7 \
+    -DCPU_MIMXRT1189CVM8C_cm7 \
+    -DMIMXRT1189_cm7_SERIES \
     -Os \
     -Wall \
     -fno-common \
@@ -191,11 +211,13 @@ SET(CMAKE_CXX_FLAGS_RELEASE " \
 ")
 SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG " \
     ${CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG} \
+    -include ${ProjDirPath}/../mcux_config.h \
     -DDEBUG \
     -DXIP_EXTERNAL_FLASH=1 \
     -DMCUX_META_BUILD \
     -DMCUXPRESSO_SDK \
-    -DCPU_MIMXRT1189CVM8B_cm7 \
+    -DCPU_MIMXRT1189CVM8C_cm7 \
+    -DMIMXRT1189_cm7_SERIES \
     -g \
     -O0 \
     -Wall \
@@ -213,11 +235,13 @@ SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG " \
 ")
 SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE " \
     ${CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE} \
+    -include ${ProjDirPath}/../mcux_config.h \
     -DNDEBUG \
     -DXIP_EXTERNAL_FLASH=1 \
     -DMCUX_META_BUILD \
     -DMCUXPRESSO_SDK \
-    -DCPU_MIMXRT1189CVM8B_cm7 \
+    -DCPU_MIMXRT1189CVM8C_cm7 \
+    -DMIMXRT1189_cm7_SERIES \
     -Os \
     -Wall \
     -fno-common \
@@ -250,9 +274,6 @@ SET(CMAKE_EXE_LINKER_FLAGS_DEBUG " \
     -mapcs \
     -Wl,--gc-sections \
     -Wl,-static \
-    -Wl,-z \
-    -Wl,muldefs \
-    -Wl,-Map=output.map \
     -Wl,--print-memory-usage \
     -mcpu=cortex-m7 \
     ${FPU} \
@@ -276,9 +297,6 @@ SET(CMAKE_EXE_LINKER_FLAGS_RELEASE " \
     -mapcs \
     -Wl,--gc-sections \
     -Wl,-static \
-    -Wl,-z \
-    -Wl,muldefs \
-    -Wl,-Map=output.map \
     -Wl,--print-memory-usage \
     -mcpu=cortex-m7 \
     ${FPU} \
@@ -303,9 +321,6 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_DEBUG " \
     -mapcs \
     -Wl,--gc-sections \
     -Wl,-static \
-    -Wl,-z \
-    -Wl,muldefs \
-    -Wl,-Map=output.map \
     -Wl,--print-memory-usage \
     -mcpu=cortex-m7 \
     ${FPU} \
@@ -329,9 +344,6 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE " \
     -mapcs \
     -Wl,--gc-sections \
     -Wl,-static \
-    -Wl,-z \
-    -Wl,muldefs \
-    -Wl,-Map=output.map \
     -Wl,--print-memory-usage \
     -mcpu=cortex-m7 \
     ${FPU} \

@@ -68,6 +68,7 @@
           <value>SDK_DEBUGCONSOLE=1</value>
           <value>MCUX_META_BUILD</value>
           <value>CPU_MIMXRT1166DVM6A_cm7</value>
+          <value>MIMXRT1166_cm7_SERIES</value>
           <value>MULTICORE_APP=1</value>
           <value>SDK_OS_FREE_RTOS</value>
         </option>
@@ -146,11 +147,13 @@
       <files mask="freertos_message_buffers_primary_core.ewp"/>
       <files mask="freertos_message_buffers_primary_core.ewd"/>
       <files mask="freertos_message_buffers_primary_core.eww"/>
+      <files mask="freertos_message_buffers.eww"/>
     </source>
     <source path="mdk" project_relative_path="./" type="workspace" toolchain="mdk">
       <files mask="freertos_message_buffers_primary_core.uvprojx"/>
       <files mask="freertos_message_buffers_primary_core.uvoptx"/>
       <files mask="freertos_message_buffers_primary_core.uvmpw"/>
+      <files mask="freertos_message_buffers.uvmpw"/>
     </source>
     <source path="armgcc" project_relative_path="./" type="workspace" toolchain="armgcc">
       <files mask="build_all.bat"/>
@@ -168,10 +171,10 @@
     <source path="../../../../../devices/MIMXRT1166" project_relative_path="./" type="workspace" toolchain="armgcc">
       <files mask="all_lib_device.cmake"/>
     </source>
-    <source path="iar" project_relative_path="evkmimxrt1160" type="other" toolchain="iar">
+    <source path="." project_relative_path="source" type="other" toolchain="iar">
       <files mask="evkmimxrt1160_connect_cm7.mac"/>
     </source>
-    <source path="mdk" project_relative_path="evkmimxrt1160" type="configuration" toolchain="mdk">
+    <source path="." project_relative_path="source" type="configuration" toolchain="mdk">
       <files mask="evkmimxrt1160_flexspi_nor.ini"/>
     </source>
     <source path="." project_relative_path="source" type="src">
@@ -220,6 +223,9 @@
     </source>
     <source path="." project_relative_path="doc" type="doc">
       <files mask="example_board_readme.md"/>
+    </source>
+    <source path="." project_relative_path="doc" type="doc">
+      <files mask="examples_shared_readme.md"/>
     </source>
   </example>
 </ksdk:examples>

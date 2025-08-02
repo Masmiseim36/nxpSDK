@@ -12,10 +12,12 @@ ENDIF()
 
 SET(CMAKE_ASM_FLAGS_DEBUG " \
     ${CMAKE_ASM_FLAGS_DEBUG} \
+    -include ${ProjDirPath}/../mcux_config.h \
     -D__STARTUP_INITIALIZE_NONCACHEDATA \
     -D__STARTUP_CLEAR_BSS \
     -DMCUXPRESSO_SDK \
-    -DCPU_MIMXRT1189CVM8B_cm33 \
+    -DCPU_MIMXRT1189CVM8C_cm33 \
+    -DMIMXRT1189_cm33_SERIES \
     -DOSA_USED \
     -g \
     -mthumb \
@@ -24,11 +26,13 @@ SET(CMAKE_ASM_FLAGS_DEBUG " \
 ")
 SET(CMAKE_ASM_FLAGS_HYPERRAM_DEBUG " \
     ${CMAKE_ASM_FLAGS_HYPERRAM_DEBUG} \
+    -include ${ProjDirPath}/../mcux_config.h \
     -D__STARTUP_INITIALIZE_QADATA \
     -D__STARTUP_INITIALIZE_NONCACHEDATA \
     -D__STARTUP_CLEAR_BSS \
     -DMCUXPRESSO_SDK \
-    -DCPU_MIMXRT1189CVM8B_cm33 \
+    -DCPU_MIMXRT1189CVM8C_cm33 \
+    -DMIMXRT1189_cm33_SERIES \
     -DOSA_USED \
     -g \
     -mthumb \
@@ -37,11 +41,13 @@ SET(CMAKE_ASM_FLAGS_HYPERRAM_DEBUG " \
 ")
 SET(CMAKE_ASM_FLAGS_HYPERRAM_RELEASE " \
     ${CMAKE_ASM_FLAGS_HYPERRAM_RELEASE} \
+    -include ${ProjDirPath}/../mcux_config.h \
     -D__STARTUP_INITIALIZE_QADATA \
     -D__STARTUP_INITIALIZE_NONCACHEDATA \
     -D__STARTUP_CLEAR_BSS \
     -DMCUXPRESSO_SDK \
-    -DCPU_MIMXRT1189CVM8B_cm33 \
+    -DCPU_MIMXRT1189CVM8C_cm33 \
+    -DMIMXRT1189_cm33_SERIES \
     -DOSA_USED \
     -mthumb \
     -mcpu=cortex-m33 \
@@ -49,11 +55,13 @@ SET(CMAKE_ASM_FLAGS_HYPERRAM_RELEASE " \
 ")
 SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_DEBUG " \
     ${CMAKE_ASM_FLAGS_FLEXSPI_NOR_DEBUG} \
+    -include ${ProjDirPath}/../mcux_config.h \
     -D__STARTUP_INITIALIZE_RAMFUNCTION \
     -D__STARTUP_INITIALIZE_NONCACHEDATA \
     -D__STARTUP_CLEAR_BSS \
     -DMCUXPRESSO_SDK \
-    -DCPU_MIMXRT1189CVM8B_cm33 \
+    -DCPU_MIMXRT1189CVM8C_cm33 \
+    -DMIMXRT1189_cm33_SERIES \
     -DOSA_USED \
     -g \
     -mthumb \
@@ -62,11 +70,13 @@ SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_DEBUG " \
 ")
 SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_RELEASE " \
     ${CMAKE_ASM_FLAGS_FLEXSPI_NOR_RELEASE} \
+    -include ${ProjDirPath}/../mcux_config.h \
     -D__STARTUP_INITIALIZE_RAMFUNCTION \
     -D__STARTUP_INITIALIZE_NONCACHEDATA \
     -D__STARTUP_CLEAR_BSS \
     -DMCUXPRESSO_SDK \
-    -DCPU_MIMXRT1189CVM8B_cm33 \
+    -DCPU_MIMXRT1189CVM8C_cm33 \
+    -DMIMXRT1189_cm33_SERIES \
     -DOSA_USED \
     -mthumb \
     -mcpu=cortex-m33 \
@@ -74,10 +84,12 @@ SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_RELEASE " \
 ")
 SET(CMAKE_ASM_FLAGS_RELEASE " \
     ${CMAKE_ASM_FLAGS_RELEASE} \
+    -include ${ProjDirPath}/../mcux_config.h \
     -D__STARTUP_INITIALIZE_NONCACHEDATA \
     -D__STARTUP_CLEAR_BSS \
     -DMCUXPRESSO_SDK \
-    -DCPU_MIMXRT1189CVM8B_cm33 \
+    -DCPU_MIMXRT1189CVM8C_cm33 \
+    -DMIMXRT1189_cm33_SERIES \
     -DOSA_USED \
     -mthumb \
     -mcpu=cortex-m33 \
@@ -87,11 +99,13 @@ SET(CMAKE_C_FLAGS_DEBUG " \
     ${CMAKE_C_FLAGS_DEBUG} \
     -include ${ProjDirPath}/../mcux_config.h \
     -DDEBUG \
+    -D__STARTUP_CLEAR_BSS \
     -DUSB_HOST_CONFIG_BUFFER_PROPERTY_CACHEABLE=1 \
     -DUSB_STACK_BM \
     -DMCUX_META_BUILD \
     -DMCUXPRESSO_SDK \
-    -DCPU_MIMXRT1189CVM8B_cm33 \
+    -DCPU_MIMXRT1189CVM8C_cm33 \
+    -DMIMXRT1189_cm33_SERIES \
     -DOSA_USED \
     -DSERIAL_PORT_TYPE_UART=1 \
     -DUSE_RTOS=0 \
@@ -114,11 +128,13 @@ SET(CMAKE_C_FLAGS_HYPERRAM_DEBUG " \
     -include ${ProjDirPath}/../mcux_config.h \
     -DDEBUG \
     -DUSE_HYPERRAM=1 \
+    -D__STARTUP_CLEAR_BSS \
     -DUSB_HOST_CONFIG_BUFFER_PROPERTY_CACHEABLE=1 \
     -DUSB_STACK_BM \
     -DMCUX_META_BUILD \
     -DMCUXPRESSO_SDK \
-    -DCPU_MIMXRT1189CVM8B_cm33 \
+    -DCPU_MIMXRT1189CVM8C_cm33 \
+    -DMIMXRT1189_cm33_SERIES \
     -DOSA_USED \
     -DSERIAL_PORT_TYPE_UART=1 \
     -DUSE_RTOS=0 \
@@ -141,11 +157,13 @@ SET(CMAKE_C_FLAGS_HYPERRAM_RELEASE " \
     -include ${ProjDirPath}/../mcux_config.h \
     -DNDEBUG \
     -DUSE_HYPERRAM=1 \
+    -D__STARTUP_CLEAR_BSS \
     -DUSB_HOST_CONFIG_BUFFER_PROPERTY_CACHEABLE=1 \
     -DUSB_STACK_BM \
     -DMCUX_META_BUILD \
     -DMCUXPRESSO_SDK \
-    -DCPU_MIMXRT1189CVM8B_cm33 \
+    -DCPU_MIMXRT1189CVM8C_cm33 \
+    -DMIMXRT1189_cm33_SERIES \
     -DOSA_USED \
     -DSERIAL_PORT_TYPE_UART=1 \
     -DUSE_RTOS=0 \
@@ -168,11 +186,13 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG " \
     -DDEBUG \
     -DXIP_EXTERNAL_FLASH=1 \
     -DXIP_BOOT_HEADER_ENABLE=0 \
+    -D__STARTUP_CLEAR_BSS \
     -DUSB_HOST_CONFIG_BUFFER_PROPERTY_CACHEABLE=1 \
     -DUSB_STACK_BM \
     -DMCUX_META_BUILD \
     -DMCUXPRESSO_SDK \
-    -DCPU_MIMXRT1189CVM8B_cm33 \
+    -DCPU_MIMXRT1189CVM8C_cm33 \
+    -DMIMXRT1189_cm33_SERIES \
     -DOSA_USED \
     -DSERIAL_PORT_TYPE_UART=1 \
     -DUSE_RTOS=0 \
@@ -196,11 +216,13 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE " \
     -DNDEBUG \
     -DXIP_EXTERNAL_FLASH=1 \
     -DXIP_BOOT_HEADER_ENABLE=0 \
+    -D__STARTUP_CLEAR_BSS \
     -DUSB_HOST_CONFIG_BUFFER_PROPERTY_CACHEABLE=1 \
     -DUSB_STACK_BM \
     -DMCUX_META_BUILD \
     -DMCUXPRESSO_SDK \
-    -DCPU_MIMXRT1189CVM8B_cm33 \
+    -DCPU_MIMXRT1189CVM8C_cm33 \
+    -DMIMXRT1189_cm33_SERIES \
     -DOSA_USED \
     -DSERIAL_PORT_TYPE_UART=1 \
     -DUSE_RTOS=0 \
@@ -221,11 +243,13 @@ SET(CMAKE_C_FLAGS_RELEASE " \
     ${CMAKE_C_FLAGS_RELEASE} \
     -include ${ProjDirPath}/../mcux_config.h \
     -DNDEBUG \
+    -D__STARTUP_CLEAR_BSS \
     -DUSB_HOST_CONFIG_BUFFER_PROPERTY_CACHEABLE=1 \
     -DUSB_STACK_BM \
     -DMCUX_META_BUILD \
     -DMCUXPRESSO_SDK \
-    -DCPU_MIMXRT1189CVM8B_cm33 \
+    -DCPU_MIMXRT1189CVM8C_cm33 \
+    -DMIMXRT1189_cm33_SERIES \
     -DOSA_USED \
     -DSERIAL_PORT_TYPE_UART=1 \
     -DUSE_RTOS=0 \
@@ -244,10 +268,12 @@ SET(CMAKE_C_FLAGS_RELEASE " \
 ")
 SET(CMAKE_CXX_FLAGS_DEBUG " \
     ${CMAKE_CXX_FLAGS_DEBUG} \
+    -include ${ProjDirPath}/../mcux_config.h \
     -DDEBUG \
     -DMCUX_META_BUILD \
     -DMCUXPRESSO_SDK \
-    -DCPU_MIMXRT1189CVM8B_cm33 \
+    -DCPU_MIMXRT1189CVM8C_cm33 \
+    -DMIMXRT1189_cm33_SERIES \
     -DOSA_USED \
     -DSERIAL_PORT_TYPE_UART=1 \
     -DUSE_RTOS=0 \
@@ -268,11 +294,13 @@ SET(CMAKE_CXX_FLAGS_DEBUG " \
 ")
 SET(CMAKE_CXX_FLAGS_HYPERRAM_DEBUG " \
     ${CMAKE_CXX_FLAGS_HYPERRAM_DEBUG} \
+    -include ${ProjDirPath}/../mcux_config.h \
     -DDEBUG \
     -DUSE_HYPERRAM=1 \
     -DMCUX_META_BUILD \
     -DMCUXPRESSO_SDK \
-    -DCPU_MIMXRT1189CVM8B_cm33 \
+    -DCPU_MIMXRT1189CVM8C_cm33 \
+    -DMIMXRT1189_cm33_SERIES \
     -DOSA_USED \
     -DSERIAL_PORT_TYPE_UART=1 \
     -DUSE_RTOS=0 \
@@ -293,11 +321,13 @@ SET(CMAKE_CXX_FLAGS_HYPERRAM_DEBUG " \
 ")
 SET(CMAKE_CXX_FLAGS_HYPERRAM_RELEASE " \
     ${CMAKE_CXX_FLAGS_HYPERRAM_RELEASE} \
+    -include ${ProjDirPath}/../mcux_config.h \
     -DNDEBUG \
     -DUSE_HYPERRAM=1 \
     -DMCUX_META_BUILD \
     -DMCUXPRESSO_SDK \
-    -DCPU_MIMXRT1189CVM8B_cm33 \
+    -DCPU_MIMXRT1189CVM8C_cm33 \
+    -DMIMXRT1189_cm33_SERIES \
     -DOSA_USED \
     -DSERIAL_PORT_TYPE_UART=1 \
     -DUSE_RTOS=0 \
@@ -317,11 +347,13 @@ SET(CMAKE_CXX_FLAGS_HYPERRAM_RELEASE " \
 ")
 SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG " \
     ${CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG} \
+    -include ${ProjDirPath}/../mcux_config.h \
     -DDEBUG \
     -DXIP_EXTERNAL_FLASH=1 \
     -DMCUX_META_BUILD \
     -DMCUXPRESSO_SDK \
-    -DCPU_MIMXRT1189CVM8B_cm33 \
+    -DCPU_MIMXRT1189CVM8C_cm33 \
+    -DMIMXRT1189_cm33_SERIES \
     -DOSA_USED \
     -DSERIAL_PORT_TYPE_UART=1 \
     -DUSE_RTOS=0 \
@@ -342,11 +374,13 @@ SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG " \
 ")
 SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE " \
     ${CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE} \
+    -include ${ProjDirPath}/../mcux_config.h \
     -DNDEBUG \
     -DXIP_EXTERNAL_FLASH=1 \
     -DMCUX_META_BUILD \
     -DMCUXPRESSO_SDK \
-    -DCPU_MIMXRT1189CVM8B_cm33 \
+    -DCPU_MIMXRT1189CVM8C_cm33 \
+    -DMIMXRT1189_cm33_SERIES \
     -DOSA_USED \
     -DSERIAL_PORT_TYPE_UART=1 \
     -DUSE_RTOS=0 \
@@ -366,10 +400,12 @@ SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE " \
 ")
 SET(CMAKE_CXX_FLAGS_RELEASE " \
     ${CMAKE_CXX_FLAGS_RELEASE} \
+    -include ${ProjDirPath}/../mcux_config.h \
     -DNDEBUG \
     -DMCUX_META_BUILD \
     -DMCUXPRESSO_SDK \
-    -DCPU_MIMXRT1189CVM8B_cm33 \
+    -DCPU_MIMXRT1189CVM8C_cm33 \
+    -DMIMXRT1189_cm33_SERIES \
     -DOSA_USED \
     -DSERIAL_PORT_TYPE_UART=1 \
     -DUSE_RTOS=0 \
@@ -405,9 +441,6 @@ SET(CMAKE_EXE_LINKER_FLAGS_DEBUG " \
     -mapcs \
     -Wl,--gc-sections \
     -Wl,-static \
-    -Wl,-z \
-    -Wl,muldefs \
-    -Wl,-Map=output.map \
     -Wl,--print-memory-usage \
     -mcpu=cortex-m33 \
     ${FPU} \
@@ -432,9 +465,6 @@ SET(CMAKE_EXE_LINKER_FLAGS_HYPERRAM_DEBUG " \
     -mapcs \
     -Wl,--gc-sections \
     -Wl,-static \
-    -Wl,-z \
-    -Wl,muldefs \
-    -Wl,-Map=output.map \
     -Wl,--print-memory-usage \
     -mcpu=cortex-m33 \
     ${FPU} \
@@ -458,9 +488,6 @@ SET(CMAKE_EXE_LINKER_FLAGS_HYPERRAM_RELEASE " \
     -mapcs \
     -Wl,--gc-sections \
     -Wl,-static \
-    -Wl,-z \
-    -Wl,muldefs \
-    -Wl,-Map=output.map \
     -Wl,--print-memory-usage \
     -mcpu=cortex-m33 \
     ${FPU} \
@@ -485,9 +512,6 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_DEBUG " \
     -mapcs \
     -Wl,--gc-sections \
     -Wl,-static \
-    -Wl,-z \
-    -Wl,muldefs \
-    -Wl,-Map=output.map \
     -Wl,--print-memory-usage \
     -mcpu=cortex-m33 \
     ${FPU} \
@@ -511,9 +535,6 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE " \
     -mapcs \
     -Wl,--gc-sections \
     -Wl,-static \
-    -Wl,-z \
-    -Wl,muldefs \
-    -Wl,-Map=output.map \
     -Wl,--print-memory-usage \
     -mcpu=cortex-m33 \
     ${FPU} \
@@ -537,9 +558,6 @@ SET(CMAKE_EXE_LINKER_FLAGS_RELEASE " \
     -mapcs \
     -Wl,--gc-sections \
     -Wl,-static \
-    -Wl,-z \
-    -Wl,muldefs \
-    -Wl,-Map=output.map \
     -Wl,--print-memory-usage \
     -mcpu=cortex-m33 \
     ${FPU} \

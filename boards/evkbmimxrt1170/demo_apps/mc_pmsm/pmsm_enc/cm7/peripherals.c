@@ -1,7 +1,5 @@
 /*
- * Copyright 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2022 NXP
- * All rights reserved.
+ * Copyright 2025 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -14,11 +12,11 @@
 /* clang-format off */
 /* TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 !!GlobalInfo
-product: Peripherals v14.0
+product: Peripherals v15.0
 processor: MIMXRT1176xxxxx
-package_id: MIMXRT1176DVMAA
+package_id: MIMXRT1176DVMAB
 mcu_data: ksdk2_0
-processor_version: 0.15.10
+processor_version: 0.2506.20
 functionalGroups:
 - name: BOARD_InitPeripherals
   UUID: e6284d15-619c-4414-9a55-c92278f7aa04
@@ -62,30 +60,6 @@ component:
  * BOARD_InitPeripherals functional group
  **********************************************************************************************************************/
 /***********************************************************************************************************************
- * NVIC initialization code
- **********************************************************************************************************************/
-/* clang-format off */
-/* TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
-instance:
-- name: 'NVIC'
-- type: 'nvic'
-- mode: 'general'
-- custom_name_enabled: 'false'
-- type_id: 'nvic_57b5eef3774cc60acaede6f5b8bddc67'
-- functional_group: 'BOARD_InitPeripherals'
-- peripheral: 'NVIC'
-- config_sets:
-  - nvic:
-    - interrupt_table: []
-    - interrupts: []
- * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS **********/
-/* clang-format on */
-
-/* Empty initialization function (commented out)
-static void NVIC_init(void) {
-} */
-
-/***********************************************************************************************************************
  * LPUART1 initialization code
  **********************************************************************************************************************/
 /* clang-format off */
@@ -95,19 +69,23 @@ instance:
 - type: 'lpuart'
 - mode: 'polling'
 - custom_name_enabled: 'false'
-- type_id: 'lpuart_bebe3e12b6ec22bbd14199038f2bf459'
+- type_id: 'lpuart_2.5.3'
 - functional_group: 'BOARD_InitPeripherals'
 - peripheral: 'LPUART1'
 - config_sets:
   - lpuartConfig_t:
     - lpuartConfig:
       - clockSource: 'LpuartClock'
-      - lpuartSrcClkFreq: 'BOARD_BootClockRUN'
+      - lpuartSrcClkFreq: 'custom:24000000'
       - baudRate_Bps: '115200'
       - parityMode: 'kLPUART_ParityDisabled'
       - dataBitsCount: 'kLPUART_EightDataBits'
       - isMsb: 'false'
       - stopBitCount: 'kLPUART_OneStopBit'
+      - enableMatchAddress1: 'false'
+      - matchAddress1: '0'
+      - enableMatchAddress2: 'false'
+      - matchAddress2: '0'
       - txFifoWatermark: '0'
       - rxFifoWatermark: '0'
       - enableRxRTS: 'false'
@@ -143,6 +121,30 @@ static void LPUART1_init(void) {
 }
 
 /***********************************************************************************************************************
+ * CM7_NVIC initialization code
+ **********************************************************************************************************************/
+/* clang-format off */
+/* TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
+instance:
+- name: 'CM7_NVIC'
+- type: 'nvic'
+- mode: 'general'
+- custom_name_enabled: 'false'
+- type_id: 'nvic'
+- functional_group: 'BOARD_InitPeripherals'
+- peripheral: 'CM7_NVIC'
+- config_sets:
+  - nvic:
+    - interrupt_table: []
+    - interrupts: []
+ * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS **********/
+/* clang-format on */
+
+/* Empty initialization function (commented out)
+static void CM7_NVIC_init(void) {
+} */
+
+/***********************************************************************************************************************
  * FreeMASTER initialization code
  **********************************************************************************************************************/
 /* clang-format off */
@@ -152,7 +154,7 @@ instance:
 - type: 'freemaster'
 - mode: 'general'
 - custom_name_enabled: 'false'
-- type_id: 'freemaster_14894d49d87e02d0dca5f799e22554da'
+- type_id: 'freemaster_3.0.1'
 - functional_group: 'BOARD_InitPeripherals'
 - config_sets:
   - freemaster_config:
@@ -165,7 +167,7 @@ instance:
       - serialConfig:
         - peripheralUART: 'LPUART1'
         - clockSource: 'genericUartClockSource'
-        - clockSourceFreq: 'BOARD_BootClockRUN'
+        - clockSourceFreq: 'custom:24000000'
         - baudRate_Bps: '115200'
         - parityMode_lpuart: 'kLPUART_ParityDisabled'
         - stopBitCount_lpuart: 'kLPUART_OneStopBit'
@@ -177,12 +179,12 @@ instance:
         - interrupt_rx_tx:
           - IRQn: 'LPUART1_IRQn'
           - enable_interrrupt: 'enabled'
+          - intmuxChannel: '0'
           - enable_priority: 'false'
           - priority: '0'
           - useDefaultISR: 'true'
           - enable_custom_name: 'false'
           - handler_custom_name: ''
-        - quick_selection: 'QuickSelection1'
       - canConfig:
         - peripheralCAN: 'CAN1'
         - generic_can_driver_version: '2.8.2'
@@ -197,6 +199,7 @@ instance:
         - flexcan_interrupt_mb:
           - IRQn: 'CAN1_IRQn'
           - enable_interrrupt: 'enabled'
+          - intmuxChannel: '0'
           - enable_priority: 'false'
           - priority: '0'
           - useDefaultISR: 'true'
@@ -206,6 +209,7 @@ instance:
         - flexcan_interrupt_error:
           - IRQn: 'CAN1_ERROR_IRQn'
           - enable_interrrupt: 'enabled'
+          - intmuxChannel: '0'
           - enable_priority: 'false'
           - priority: '0'
           - useDefaultISR: 'true'

@@ -92,6 +92,7 @@
         </option>
         <option>
           <name>CExtraOptions</name>
+          <state>--jlink_script_file=$PROJ_DIR$/../evkmimxrt1160_connect_cm4_cm4side.jlinkscript</state>
           <state>--macro_param enable_core=1</state>
         </option>
         <option>
@@ -1732,6 +1733,7 @@
         </option>
         <option>
           <name>CExtraOptions</name>
+          <state>--jlink_script_file=$PROJ_DIR$/../evkmimxrt1160_connect_cm4_cm4side_sdram.jlinkscript</state>
           <state>--macro_param enable_core=1</state>
         </option>
         <option>
@@ -3372,6 +3374,7 @@
         </option>
         <option>
           <name>CExtraOptions</name>
+          <state>--jlink_script_file=$PROJ_DIR$/../evkmimxrt1160_connect_cm4_cm4side.jlinkscript</state>
           <state>--macro_param enable_core=1</state>
         </option>
         <option>
@@ -5012,6 +5015,7 @@
         </option>
         <option>
           <name>CExtraOptions</name>
+          <state>--jlink_script_file=$PROJ_DIR$/../evkmimxrt1160_connect_cm4_cm4side.jlinkscript</state>
           <state>--macro_param enable_core=1</state>
         </option>
         <option>
@@ -6652,6 +6656,7 @@
         </option>
         <option>
           <name>CExtraOptions</name>
+          <state>--jlink_script_file=$PROJ_DIR$/../evkmimxrt1160_connect_cm4_cm4side_sdram.jlinkscript</state>
           <state>--macro_param enable_core=1</state>
         </option>
         <option>
@@ -8292,6 +8297,7 @@
         </option>
         <option>
           <name>CExtraOptions</name>
+          <state>--jlink_script_file=$PROJ_DIR$/../evkmimxrt1160_connect_cm4_cm4side.jlinkscript</state>
           <state>--macro_param enable_core=1</state>
         </option>
         <option>

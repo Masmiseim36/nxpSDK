@@ -14,9 +14,6 @@ if(CMAKE_SCRIPT_MODE_FILE)
 endif()
 
 
-set(CMAKE_STATIC_LIBRARY_PREFIX)
-set(CMAKE_STATIC_LIBRARY_SUFFIX)
-
 set(CMAKE_EXECUTABLE_LIBRARY_PREFIX)
 set(CMAKE_EXECUTABLE_LIBRARY_SUFFIX)
 
@@ -49,7 +46,6 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../sdmmc_config.c"
 "${ProjDirPath}/../sdmmc_config.h"
 "${ProjDirPath}/../app_definitions.h"
-"${ProjDirPath}/../app.h"
 "${ProjDirPath}/../app_streamer.c"
 "${ProjDirPath}/../cmd.c"
 "${ProjDirPath}/../main.c"
@@ -68,6 +64,7 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../pin_mux.c"
 "${ProjDirPath}/../pin_mux.h"
 "${ProjDirPath}/../hardware_init.c"
+"${ProjDirPath}/../app.h"
 "${ProjDirPath}/../FreeRTOSConfig_Gen.h"
 "${ProjDirPath}/../ffconf_gen.h"
 "${ProjDirPath}/../fsl_debug_console_conf.h"

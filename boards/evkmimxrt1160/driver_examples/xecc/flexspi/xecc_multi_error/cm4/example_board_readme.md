@@ -22,7 +22,7 @@ Prepare the Demo
 
 Running the demo
 ================   
-The log below shows the output of the hello world demo in the terminal window:
+The log below shows the output of the xecc_multi_error demo in the terminal window:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 XECC multiple error example started!
 Vendor ID: 0x9d

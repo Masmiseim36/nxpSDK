@@ -502,6 +502,7 @@ static void sbc_start_play_source(int err)
 {
     /* Start Audio Source */
     a2dp_src_playback = 1U;
+    a2dp_src_sent_ms = 0;
 
     a2dp_src_timer = xTimerCreate("a2dp play", (A2DP_SRC_PERIOD_MS / portTICK_PERIOD_MS),
                                   pdTRUE, NULL, a2dp_pl_playback_timeout_handler);

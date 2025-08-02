@@ -1,6 +1,6 @@
 /*
  * Copyright 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2021 NXP
+ * Copyright 2016-2021, 2025 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -102,8 +102,8 @@ static uint32_t ui32ButtonFilter = 0U;
 
 /* Structure used in FM to get required ID's */
 app_ver_t g_sAppIdFM = {
-    "../../../examples/evkbmimxrt1170/demo_apps/mc_pmsm/pmsm_enc",         /* User Path 1- the highest priority */
-    "",       /* User Path 2 */
+    "../../../examples/_boards/evkbmimxrt1170/demo_apps/mc_pmsm/pmsm_enc/cm7",         /* User Path 1- the highest priority */
+    "../../../boards/evkbmimxrt1170/demo_apps/mc_pmsm/pmsm_enc/cm7",       /* User Path 2 */
     "evkbmimxrt1170", /* board id */
     "pmsm_enc", /* example id */
     MCRSP_VER,      /* sw version */

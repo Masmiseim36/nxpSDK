@@ -1,6 +1,5 @@
 /*
- * Copyright 2019-2020 NXP
- * All rights reserved.
+ * Copyright 2019-2020, 2025 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -137,10 +136,10 @@ void vGenerateSecondaryToPrimaryInterrupt(void *xUpdatedMessageBuffer)
     /* Trigger the inter-core interrupt using the MCMGR component.
        Pass the APP_MESSAGE_BUFFER_EVENT_DATA as data that accompany
        the kMCMGR_FreeRtosMessageBuffersEvent event. */
-    (void)MCMGR_TriggerEventForce(kMCMGR_FreeRtosMessageBuffersEvent, APP_MESSAGE_BUFFER_EVENT_DATA);
+    (void)MCMGR_TriggerEventForce(kMCMGR_Core0, kMCMGR_FreeRtosMessageBuffersEvent, APP_MESSAGE_BUFFER_EVENT_DATA);
 }
 
-static void FreeRtosMessageBuffersEventHandler(uint16_t eventData, void *context)
+static void FreeRtosMessageBuffersEventHandler(mcmgr_core_t coreNum, uint16_t eventData, void *context)
 {
     BaseType_t xHigherPriorityTaskWoken = pdFALSE;
 
@@ -185,13 +184,13 @@ static void app_task(void *param)
     /* Get the startup data */
     do
     {
-        status = MCMGR_GetStartupData(&startupData);
+        status = MCMGR_GetStartupData(kMCMGR_Core0, &startupData);
     } while (status != kStatus_MCMGR_Success);
 
     (void)MCMGR_RegisterEvent(kMCMGR_FreeRtosMessageBuffersEvent, FreeRtosMessageBuffersEventHandler, ((void *)0));
 
     /* Signal the other core we are ready by triggering the event and passing the APP_READY_EVENT_DATA */
-    (void)MCMGR_TriggerEvent(kMCMGR_RemoteApplicationEvent, APP_READY_EVENT_DATA);
+    (void)MCMGR_TriggerEvent(kMCMGR_Core0, kMCMGR_RemoteApplicationEvent, APP_READY_EVENT_DATA);
 
     while (msg.DATA <= 100U)
     {

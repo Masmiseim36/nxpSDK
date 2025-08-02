@@ -1,6 +1,6 @@
 /*
 * Copyright 2016, Freescale Semiconductor, Inc.
-* Copyright 2016-2021, 2024 NXP
+* Copyright 2016-2021, 2024-2025 NXP
 *
 * NXP Proprietary. This software is owned or controlled by NXP and may
 * only be used strictly in accordance with the applicable license terms. 
@@ -184,7 +184,7 @@ RAM_FUNC_LIB
 static void M1_StateFaultFast(void)
 {
     /* get all adc samples - DC-bus voltage, current, bemf and aux sample */
-    M1_MCDRV_ADC_GET(&g_sM1AdcSensor);
+    M1_MCDRV_CURR_3PH_VOLT_DCB_GET(&g_sM1Curr3phDcBus);
 
     /* convert voltages from fractional measured values to float */
     g_sM1Drive.sFocPMSM.fltUDcBus = MLIB_ConvSc_FLTsf(g_sM1Drive.sFocPMSM.f16UDcBus, g_fltM1DCBvoltageScale);
@@ -373,10 +373,10 @@ static void M1_StateInitFast(void)
     g_sM1Pwm3ph.psUABC = &(g_sM1Drive.sFocPMSM.sDutyABC);
 
     /* For ADC driver */
-    g_sM1AdcSensor.pf16UDcBus     = &(g_sM1Drive.sFocPMSM.f16UDcBus);
-    g_sM1AdcSensor.psIABC         = &(g_sM1Drive.sFocPMSM.sIABCFrac);
-    g_sM1AdcSensor.pui16SVMSector = &(g_sM1Drive.sFocPMSM.ui16SectorSVM);
-    g_sM1AdcSensor.pui16AuxChan   = &(g_sM1Drive.f16AdcAuxSample);
+    g_sM1Curr3phDcBus.pf16UDcBus     = &(g_sM1Drive.sFocPMSM.f16UDcBus);
+    g_sM1Curr3phDcBus.psIABC         = &(g_sM1Drive.sFocPMSM.sIABCFrac);
+    g_sM1Curr3phDcBus.pui16SVMSector = &(g_sM1Drive.sFocPMSM.ui16SectorSVM);
+    g_sM1Curr3phDcBus.pui16AuxChan   = &(g_sM1Drive.f16AdcAuxSample);
 
     /* INIT_DONE command */
     g_sM1Ctrl.uiCtrl |= SM_CTRL_INIT_DONE;
@@ -401,7 +401,7 @@ RAM_FUNC_LIB
 static void M1_StateStopFast(void)
 {
     /* get all adc samples - DC-bus voltage, current, bemf and aux sample */
-    M1_MCDRV_ADC_GET(&g_sM1AdcSensor);
+    M1_MCDRV_CURR_3PH_VOLT_DCB_GET(&g_sM1Curr3phDcBus);
 
     /* convert voltages from fractional measured values to float */
     g_sM1Drive.sFocPMSM.fltUDcBus = MLIB_ConvSc_FLTsf(g_sM1Drive.sFocPMSM.f16UDcBus, g_fltM1DCBvoltageScale);
@@ -454,7 +454,7 @@ RAM_FUNC_LIB
 static void M1_StateRunFast(void)
 {
     /* get all adc samples - DC-bus voltage, current, bemf and aux sample */
-    M1_MCDRV_ADC_GET(&g_sM1AdcSensor);
+    M1_MCDRV_CURR_3PH_VOLT_DCB_GET(&g_sM1Curr3phDcBus);
 
     /* If the user switches off */
     if (!g_bM1SwitchAppOnOff)
@@ -502,7 +502,7 @@ static void M1_StateRunFast(void)
     M1_MCDRV_PWM3PH_SET(&g_sM1Pwm3ph);
 
     /* Set current sensor for sampling - applies only to some devices. */
-    M1_MCDRV_CURR_3PH_CHAN_ASSIGN(&g_sM1AdcSensor);
+    M1_MCDRV_CURR_3PH_CHAN_ASSIGN(&g_sM1Curr3phDcBus);
 }
 
 /*!
@@ -654,7 +654,7 @@ static void M1_TransStopRun(void)
     M1_MCDRV_PWM3PH_SET(&g_sM1Pwm3ph);
 
     /* Clear offset filters */
-    M1_MCDRV_CURR_3PH_CALIB_INIT(&g_sM1AdcSensor);
+    M1_MCDRV_CURR_3PH_CALIB_INIT(&g_sM1Curr3phDcBus);
 
     /* Enable PWM output */
     M1_MCDRV_PWM3PH_EN(&g_sM1Pwm3ph);
@@ -743,7 +743,7 @@ static void M1_StateRunCalibFast(void)
        performing ADC offset calibration */
 
     /* Call offset measurement */
-    M1_MCDRV_CURR_3PH_CALIB(&g_sM1AdcSensor);
+    M1_MCDRV_CURR_3PH_CALIB(&g_sM1Curr3phDcBus);
 
     /* Change SVM sector in range <1;6> to measure all AD channel mapping combinations */
     if (++g_sM1Drive.sFocPMSM.ui16SectorSVM > 6U)
@@ -1100,7 +1100,7 @@ static void M1_StateRunCalibSlow(void)
     if (--g_sM1Drive.ui16CounterState == 0U)
     {
 	  /* Write calibrated offset values */
-      M1_MCDRV_CURR_3PH_CALIB_SET(&g_sM1AdcSensor);
+      M1_MCDRV_CURR_3PH_CALIB_SET(&g_sM1Curr3phDcBus);
       /* To switch to the RUN READY sub-state */
       M1_TransRunCalibReady();
     }

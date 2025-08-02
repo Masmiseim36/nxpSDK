@@ -10,7 +10,7 @@
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
-          <Device>MIMXRT1189CVM8B:cm7</Device>
+          <Device>MIMXRT1189CVM8C:cm7</Device>
           <Vendor>NXP</Vendor>
           <PackID>NXP.MIMXRT1189_DFP.18.0.0</PackID>
           <PackURL>https://mcuxpresso.nxp.com/cmsis_pack/repo/</PackURL>
@@ -333,9 +333,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../mcux_config.h -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
-              <Define>DEBUG, XIP_EXTERNAL_FLASH=1, PRINTF_ADVANCED_ENABLE=1, FSL_ETH_ENABLE_CACHE_CONTROL, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1189CVM8B_cm7, LWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1, LWIP_SUPPORT_CUSTOM_PBUF=1, CHECKSUM_GEN_IP=1, CHECKSUM_GEN_UDP=1, CHECKSUM_GEN_TCP=1, CHECKSUM_GEN_ICMP=1, CHECKSUM_GEN_ICMP6=1, CHECKSUM_CHECK_UDP=1, CHECKSUM_CHECK_TCP=1, CHECKSUM_CHECK_ICMP=1, CHECKSUM_CHECK_ICMP6=1</Define>
+              <Define>DEBUG, XIP_EXTERNAL_FLASH=1, PRINTF_ADVANCED_ENABLE=1, FSL_ETH_ENABLE_CACHE_CONTROL, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1189CVM8C_cm7, MIMXRT1189_cm7_SERIES</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../../devices/MIMXRT1189/drivers;../../../../../../../CMSIS/Core/Include;../../../../../../../CMSIS/Core/Include/m-profile;../../../../../../../devices/MIMXRT1189;../../../../../../../devices/MIMXRT1189/periph;../../../../../../../devices/MIMXRT1189/drivers/cm7;../../../../../../../devices/MIMXRT1189/utilities/debug_console_lite;../../../../../../../devices/MIMXRT1189/utilities/str;../../../../../../../components/gpio;../../../../../../../components/uart;../../../../../../../components/phy;../../../../../../../components/phy/device/phyrtl8211f;../../../../../../../components/phy/device/phyrtl8201;../../../../../../../components/silicon_id;../../../../../../../components/silicon_id/socs;../../../../../../../middleware/lwip/port;../../../../../../../middleware/lwip/src;../../../../../../../middleware/lwip/src/include;../../../../../../../middleware/lwip/src/include/lwip;../../../../../../../middleware/lwip/port/sys_arch/dynamic;../../../../../../../middleware/lwip/contrib/apps/ping</IncludePath>
+              <IncludePath>..;../../../../../../../devices/MIMXRT1189/drivers;../../../../../../../CMSIS/Core/Include;../../../../../../../CMSIS/Core/Include/m-profile;../../../../../../../devices/MIMXRT1189;../../../../../../../devices/MIMXRT1189/periph;../../../../../../../devices/MIMXRT1189/drivers/cm7;../../../../../../../devices/MIMXRT1189/utilities/debug_console_lite;../../../../../../../devices/MIMXRT1189/utilities/str;../../../../../../../components/silicon_id;../../../../../../../components/silicon_id/socs;../../../../../../../components/gpio;../../../../../../../components/uart;../../../../../../../components/phy;../../../../../../../components/phy/device/phyrtl8211f;../../../../../../../components/phy/device/phyrtl8201;../../../../../../../middleware/lwip/port;../../../../../../../middleware/lwip/src/include;../../../../../../../middleware/lwip/port/sys_arch/dynamic;../../../../../../../middleware/lwip/contrib/apps/ping</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -350,10 +350,10 @@
             <useXO>0</useXO>
             <ClangAsOpt>2</ClangAsOpt>
             <VariousControls>
-              <MiscControls/>
-              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1189CVM8B_cm7</Define>
+              <MiscControls>-include ../mcux_config.h</MiscControls>
+              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1189CVM8C_cm7, MIMXRT1189_cm7_SERIES</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../../devices/MIMXRT1189/drivers;../../../../../../../CMSIS/Core/Include;../../../../../../../CMSIS/Core/Include/m-profile;../../../../../../../devices/MIMXRT1189;../../../../../../../devices/MIMXRT1189/periph;../../../../../../../devices/MIMXRT1189/drivers/cm7;../../../../../../../devices/MIMXRT1189/utilities/debug_console_lite;../../../../../../../devices/MIMXRT1189/utilities/str;../../../../../../../components/gpio;../../../../../../../components/uart;../../../../../../../components/phy;../../../../../../../components/phy/device/phyrtl8211f;../../../../../../../components/phy/device/phyrtl8201;../../../../../../../components/silicon_id;../../../../../../../components/silicon_id/socs;../../../../../../../middleware/lwip/port;../../../../../../../middleware/lwip/src;../../../../../../../middleware/lwip/src/include;../../../../../../../middleware/lwip/src/include/lwip;../../../../../../../middleware/lwip/port/sys_arch/dynamic;../../../../../../../middleware/lwip/contrib/apps/ping</IncludePath>
+              <IncludePath>..;../../../../../../../devices/MIMXRT1189/drivers;../../../../../../../CMSIS/Core/Include;../../../../../../../CMSIS/Core/Include/m-profile;../../../../../../../devices/MIMXRT1189;../../../../../../../devices/MIMXRT1189/periph;../../../../../../../devices/MIMXRT1189/drivers/cm7;../../../../../../../devices/MIMXRT1189/utilities/debug_console_lite;../../../../../../../devices/MIMXRT1189/utilities/str;../../../../../../../components/silicon_id;../../../../../../../components/silicon_id/socs;../../../../../../../components/gpio;../../../../../../../components/uart;../../../../../../../components/phy;../../../../../../../components/phy/device/phyrtl8211f;../../../../../../../components/phy/device/phyrtl8201;../../../../../../../middleware/lwip/port;../../../../../../../middleware/lwip/src/include;../../../../../../../middleware/lwip/port/sys_arch/dynamic;../../../../../../../middleware/lwip/contrib/apps/ping</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -388,6 +388,21 @@
               <FileName>lwipopts.h</FileName>
               <FileType>5</FileType>
               <FilePath>../lwipopts.h</FilePath>
+            </File>
+            <File>
+              <FileName>lwipopts_gen.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../lwipopts_gen.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../mcux_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../mcux_config.h</FilePath>
             </File>
             <File>
               <FileName>mcux_config.h</FileName>
@@ -498,6 +513,11 @@
               <FileName>fsl_iomuxc.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1189/drivers/fsl_iomuxc.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_memory.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1189/drivers/fsl_memory.c</FilePath>
             </File>
             <File>
               <FileName>fsl_memory.h</FileName>
@@ -1285,6 +1305,11 @@
               <FilePath>../../../../../../../devices/MIMXRT1189/drivers/fsl_netc_switch.h</FilePath>
             </File>
             <File>
+              <FileName>fsl_netc_tag.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1189/drivers/fsl_netc_tag.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_netc_switch.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1189/drivers/fsl_netc_switch.c</FilePath>
@@ -1372,6 +1397,36 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>component/silicon_id</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_silicon_id.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_silicon_id.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_silicon_id_soc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../components/silicon_id/socs/imxrt1180/fsl_silicon_id_soc.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_silicon_id_soc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../components/silicon_id/socs/fsl_silicon_id_soc.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>utilities/debug_console_lite</GroupName>
           <Files>
             <File>
@@ -1443,36 +1498,6 @@
               <FileName>fsl_phyrtl8201.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../components/phy/device/phyrtl8201/fsl_phyrtl8201.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component/silicon_id</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_silicon_id.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_silicon_id.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_silicon_id_soc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../components/silicon_id/socs/imxrt1180/fsl_silicon_id_soc.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_silicon_id_soc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../components/silicon_id/socs/fsl_silicon_id_soc.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2729,6 +2754,11 @@
               <FileType>5</FileType>
               <FilePath>../example_board_readme.md</FilePath>
             </File>
+            <File>
+              <FileName>examples_shared_readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../examples_shared_readme.md</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>
@@ -2740,7 +2770,7 @@
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
-          <Device>MIMXRT1189CVM8B:cm7</Device>
+          <Device>MIMXRT1189CVM8C:cm7</Device>
           <Vendor>NXP</Vendor>
           <PackID>NXP.MIMXRT1189_DFP.18.0.0</PackID>
           <PackURL>https://mcuxpresso.nxp.com/cmsis_pack/repo/</PackURL>
@@ -3063,9 +3093,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../mcux_config.h -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
-              <Define>NDEBUG, XIP_EXTERNAL_FLASH=1, PRINTF_ADVANCED_ENABLE=1, FSL_ETH_ENABLE_CACHE_CONTROL, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1189CVM8B_cm7, LWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1, LWIP_SUPPORT_CUSTOM_PBUF=1, CHECKSUM_GEN_IP=1, CHECKSUM_GEN_UDP=1, CHECKSUM_GEN_TCP=1, CHECKSUM_GEN_ICMP=1, CHECKSUM_GEN_ICMP6=1, CHECKSUM_CHECK_UDP=1, CHECKSUM_CHECK_TCP=1, CHECKSUM_CHECK_ICMP=1, CHECKSUM_CHECK_ICMP6=1</Define>
+              <Define>NDEBUG, XIP_EXTERNAL_FLASH=1, PRINTF_ADVANCED_ENABLE=1, FSL_ETH_ENABLE_CACHE_CONTROL, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1189CVM8C_cm7, MIMXRT1189_cm7_SERIES</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../../devices/MIMXRT1189/drivers;../../../../../../../CMSIS/Core/Include;../../../../../../../CMSIS/Core/Include/m-profile;../../../../../../../devices/MIMXRT1189;../../../../../../../devices/MIMXRT1189/periph;../../../../../../../devices/MIMXRT1189/drivers/cm7;../../../../../../../devices/MIMXRT1189/utilities/debug_console_lite;../../../../../../../devices/MIMXRT1189/utilities/str;../../../../../../../components/gpio;../../../../../../../components/uart;../../../../../../../components/phy;../../../../../../../components/phy/device/phyrtl8211f;../../../../../../../components/phy/device/phyrtl8201;../../../../../../../components/silicon_id;../../../../../../../components/silicon_id/socs;../../../../../../../middleware/lwip/port;../../../../../../../middleware/lwip/src;../../../../../../../middleware/lwip/src/include;../../../../../../../middleware/lwip/src/include/lwip;../../../../../../../middleware/lwip/port/sys_arch/dynamic;../../../../../../../middleware/lwip/contrib/apps/ping</IncludePath>
+              <IncludePath>..;../../../../../../../devices/MIMXRT1189/drivers;../../../../../../../CMSIS/Core/Include;../../../../../../../CMSIS/Core/Include/m-profile;../../../../../../../devices/MIMXRT1189;../../../../../../../devices/MIMXRT1189/periph;../../../../../../../devices/MIMXRT1189/drivers/cm7;../../../../../../../devices/MIMXRT1189/utilities/debug_console_lite;../../../../../../../devices/MIMXRT1189/utilities/str;../../../../../../../components/silicon_id;../../../../../../../components/silicon_id/socs;../../../../../../../components/gpio;../../../../../../../components/uart;../../../../../../../components/phy;../../../../../../../components/phy/device/phyrtl8211f;../../../../../../../components/phy/device/phyrtl8201;../../../../../../../middleware/lwip/port;../../../../../../../middleware/lwip/src/include;../../../../../../../middleware/lwip/port/sys_arch/dynamic;../../../../../../../middleware/lwip/contrib/apps/ping</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -3080,10 +3110,10 @@
             <useXO>0</useXO>
             <ClangAsOpt>2</ClangAsOpt>
             <VariousControls>
-              <MiscControls/>
-              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1189CVM8B_cm7</Define>
+              <MiscControls>-include ../mcux_config.h</MiscControls>
+              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1189CVM8C_cm7, MIMXRT1189_cm7_SERIES</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../../devices/MIMXRT1189/drivers;../../../../../../../CMSIS/Core/Include;../../../../../../../CMSIS/Core/Include/m-profile;../../../../../../../devices/MIMXRT1189;../../../../../../../devices/MIMXRT1189/periph;../../../../../../../devices/MIMXRT1189/drivers/cm7;../../../../../../../devices/MIMXRT1189/utilities/debug_console_lite;../../../../../../../devices/MIMXRT1189/utilities/str;../../../../../../../components/gpio;../../../../../../../components/uart;../../../../../../../components/phy;../../../../../../../components/phy/device/phyrtl8211f;../../../../../../../components/phy/device/phyrtl8201;../../../../../../../components/silicon_id;../../../../../../../components/silicon_id/socs;../../../../../../../middleware/lwip/port;../../../../../../../middleware/lwip/src;../../../../../../../middleware/lwip/src/include;../../../../../../../middleware/lwip/src/include/lwip;../../../../../../../middleware/lwip/port/sys_arch/dynamic;../../../../../../../middleware/lwip/contrib/apps/ping</IncludePath>
+              <IncludePath>..;../../../../../../../devices/MIMXRT1189/drivers;../../../../../../../CMSIS/Core/Include;../../../../../../../CMSIS/Core/Include/m-profile;../../../../../../../devices/MIMXRT1189;../../../../../../../devices/MIMXRT1189/periph;../../../../../../../devices/MIMXRT1189/drivers/cm7;../../../../../../../devices/MIMXRT1189/utilities/debug_console_lite;../../../../../../../devices/MIMXRT1189/utilities/str;../../../../../../../components/silicon_id;../../../../../../../components/silicon_id/socs;../../../../../../../components/gpio;../../../../../../../components/uart;../../../../../../../components/phy;../../../../../../../components/phy/device/phyrtl8211f;../../../../../../../components/phy/device/phyrtl8201;../../../../../../../middleware/lwip/port;../../../../../../../middleware/lwip/src/include;../../../../../../../middleware/lwip/port/sys_arch/dynamic;../../../../../../../middleware/lwip/contrib/apps/ping</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -3118,6 +3148,21 @@
               <FileName>lwipopts.h</FileName>
               <FileType>5</FileType>
               <FilePath>../lwipopts.h</FilePath>
+            </File>
+            <File>
+              <FileName>lwipopts_gen.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../lwipopts_gen.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../mcux_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../mcux_config.h</FilePath>
             </File>
             <File>
               <FileName>mcux_config.h</FileName>
@@ -3228,6 +3273,11 @@
               <FileName>fsl_iomuxc.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1189/drivers/fsl_iomuxc.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_memory.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1189/drivers/fsl_memory.c</FilePath>
             </File>
             <File>
               <FileName>fsl_memory.h</FileName>
@@ -4015,6 +4065,11 @@
               <FilePath>../../../../../../../devices/MIMXRT1189/drivers/fsl_netc_switch.h</FilePath>
             </File>
             <File>
+              <FileName>fsl_netc_tag.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1189/drivers/fsl_netc_tag.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_netc_switch.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1189/drivers/fsl_netc_switch.c</FilePath>
@@ -4102,6 +4157,36 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>component/silicon_id</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_silicon_id.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_silicon_id.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_silicon_id_soc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../components/silicon_id/socs/imxrt1180/fsl_silicon_id_soc.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_silicon_id_soc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../components/silicon_id/socs/fsl_silicon_id_soc.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>utilities/debug_console_lite</GroupName>
           <Files>
             <File>
@@ -4173,36 +4258,6 @@
               <FileName>fsl_phyrtl8201.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../components/phy/device/phyrtl8201/fsl_phyrtl8201.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component/silicon_id</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_silicon_id.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_silicon_id.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_silicon_id_soc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../components/silicon_id/socs/imxrt1180/fsl_silicon_id_soc.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_silicon_id_soc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../components/silicon_id/socs/fsl_silicon_id_soc.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -5458,6 +5513,11 @@
               <FileName>example_board_readme.md</FileName>
               <FileType>5</FileType>
               <FilePath>../example_board_readme.md</FilePath>
+            </File>
+            <File>
+              <FileName>examples_shared_readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../examples_shared_readme.md</FilePath>
             </File>
           </Files>
         </Group>

@@ -19,6 +19,7 @@ then connect the panel's 5V pin to J85-1, GND pin to J85-2.
 
 Prepare the Demo
 ================
+
 1.  Connect a USB cable between the host PC and the OpenSDA USB port on the target board.
 2.  Open a serial terminal with the following settings:
     - 115200 baud rate
@@ -27,15 +28,10 @@ Prepare the Demo
     - One stop bit
     - No flow control
 3.  Build the project, the project uses RK055MHD091 by default, to use other panels,
-    change
-    #define DEMO_PANEL 2
-    to
-    #define DEMO_PANEL 0
-    or
-    #define DEMO_PANEL 1
-    or
-    #define USE_MIPI_PANEL 3 in mcux_config.h
-    Which number represent which panel can be found in display_support.h.
+set the coresponding panel DEMO_PANEL_xxx(without '_SUPPORT') to y in prj.conf under board example folder before project generation.
+The supported panels can be found in examples\_boards\<board>\project_segments\display_support\Kconfig.prjseg.
+Or change the macro DEMO_PANEL in mcux_config.h of the project,
+which number represents which panel can be found in display_support.h
 4.  Download the program to the target board.
 5.  Either press the reset button on your board or launch the debugger in your IDE to begin running the demo.
 

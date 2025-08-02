@@ -24,10 +24,10 @@
 #endif
 /*
  *    DWORD_IN_MB    DLC    BYTES_IN_MB             Maximum MBs
- *    2              8      kFLEXCAN_8BperMB        64
- *    4              10     kFLEXCAN_16BperMB       42
- *    8              13     kFLEXCAN_32BperMB       25
- *    16             15     kFLEXCAN_64BperMB       14
+ *    2              8      kFLEXCAN_8BperMB    32(1 RAM block)  64(2 RAM block)  96(3 RAM block)
+ *    4              10     kFLEXCAN_16BperMB   21(1 RAM block)  42(2 RAM block)  63(3 RAM block)
+ *    8              13     kFLEXCAN_32BperMB   12(1 RAM block)  24(2 RAM block)  36(3 RAM block)
+ *    16             15     kFLEXCAN_64BperMB   7(1 RAM block)   14(2 RAM block)  21(3 RAM block)
  *
  * Dword in each message buffer, Length of data in bytes, Payload size must align,
  * and the Message Buffers are limited corresponding to each payload configuration:
@@ -215,6 +215,13 @@ int main(void)
 
     flexcanConfig.bitRate = 500000U;
 
+#if (defined(FSL_FEATURE_FLEXCAN_HAS_HIGH_RESOLUTION_TIMESTAMP) && FSL_FEATURE_FLEXCAN_HAS_HIGH_RESOLUTION_TIMESTAMP)
+    /* Select free-running timer as message buffer TIME_STAMP field timebase. */
+    flexcanConfig.captureTimeBase = kFLEXCAN_CANTimer;
+    /* Enable high resolution timestamp feature to read HR TIMESTAMP in enhanced Rx FIFO. */
+    flexcanConfig.capturePoint = kFLEXCAN_CANFrameStart;
+#endif
+
 #if defined(EXAMPLE_CAN_CLK_SOURCE)
     flexcanConfig.clkSrc = EXAMPLE_CAN_CLK_SOURCE;
 #endif
@@ -263,10 +270,17 @@ int main(void)
     {
 #endif
 #if defined(FSL_FEATURE_SOC_DMAMUX_COUNT) && FSL_FEATURE_SOC_DMAMUX_COUNT
+#if defined(EXAMPLE_CAN_DMAMUX_CHANNEL)
+        /* Configure DMA. */
+        DMAMUX_Init(EXAMPLE_CAN_DMAMUX);
+        DMAMUX_SetSource(EXAMPLE_CAN_DMAMUX, EXAMPLE_CAN_DMAMUX_CHANNEL, EXAMPLE_CAN_DMA_REQUEST);
+        DMAMUX_EnableChannel(EXAMPLE_CAN_DMAMUX, EXAMPLE_CAN_DMAMUX_CHANNEL);
+#else
         /* Configure DMA. */
         DMAMUX_Init(EXAMPLE_CAN_DMAMUX);
         DMAMUX_SetSource(EXAMPLE_CAN_DMAMUX, EXAMPLE_CAN_DMA_CHANNEL, EXAMPLE_CAN_DMA_REQUEST);
         DMAMUX_EnableChannel(EXAMPLE_CAN_DMAMUX, EXAMPLE_CAN_DMA_CHANNEL);
+#endif
 #endif
 
         /*
@@ -296,7 +310,11 @@ int main(void)
            read per transfer (dmaPerReadLength) should be programmed so that the Enhanced Rx FIFO element can store the
            largest CAN message present on the CAN bus. */
         rxEhFifoConfig.fifoWatermark    = 0U;
+#if (defined(FSL_FEATURE_FLEXCAN_HAS_HIGH_RESOLUTION_TIMESTAMP) && FSL_FEATURE_FLEXCAN_HAS_HIGH_RESOLUTION_TIMESTAMP)
+        rxEhFifoConfig.dmaPerReadLength = kFLEXCAN_20WordPerRead;
+#else
         rxEhFifoConfig.dmaPerReadLength = kFLEXCAN_19WordPerRead;
+#endif
         rxEhFifoConfig.priority         = kFLEXCAN_RxFifoPrioHigh;
         FLEXCAN_SetEnhancedRxFifoConfig(EXAMPLE_CAN, &rxEhFifoConfig, true);
         rxFifoXfer.framefd  = &rxFrame[0];

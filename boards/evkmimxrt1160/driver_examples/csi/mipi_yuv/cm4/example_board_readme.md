@@ -22,8 +22,8 @@ Prepare the Demo
     - One stop bit
     - No flow control
 3.  Build the project, this project uses RK055MHD091 panel by default, to use the RK055AHD091 panel,
-    change #define DEMO_PANEL DEMO_PANEL_RK055MHD091 to #define DEMO_PANEL DEMO_PANEL_RK055AHD091
-    in display_support.h.
+    change #define DEMO_PANEL 2 to #define DEMO_PANEL 0
+    in mcux_config.h.
 4.  Download the program to the target board.
 5.  Either press the reset button on your board or launch the debugger in your IDE to begin running the demo.
 

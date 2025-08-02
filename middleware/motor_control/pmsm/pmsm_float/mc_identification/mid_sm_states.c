@@ -1,5 +1,5 @@
 /*
-* Copyright 2020, 2024 NXP
+* Copyright 2020, 2024-2025 NXP
 *
 * NXP Proprietary. This software is owned or controlled by NXP and may
 * only be used strictly in accordance with the applicable license terms. 
@@ -441,7 +441,7 @@ static void MID_StateCalib(void)
   if (--g_sMidDrive.ui16CounterState == 0U)
   {
       /* Write calibrated offset values */
-      M1_MCDRV_CURR_3PH_CALIB_SET(&g_sM1AdcSensor);
+      M1_MCDRV_CURR_3PH_CALIB_SET(&g_sM1Curr3phDcBus);
 
       /* To switch to the START state */
       MID_TransCalib2Start();
@@ -449,7 +449,7 @@ static void MID_StateCalib(void)
   else
   {
       /* Call offset measurement */
-      M1_MCDRV_CURR_3PH_CALIB(&g_sM1AdcSensor);
+      M1_MCDRV_CURR_3PH_CALIB(&g_sM1Curr3phDcBus);
 
       /* Change SVM sector in range <1;6> to measure all AD channel mapping combinations */
       if (++g_sMidDrive.sFocPMSM.ui16SectorSVM > 6)
@@ -776,7 +776,7 @@ static void MID_TransStop2Calib(void)
   M1_MCDRV_PWM3PH_SET(&g_sM1Pwm3ph);
   
   /* Clear offset filters */
-  M1_MCDRV_CURR_3PH_CALIB_INIT(&g_sM1AdcSensor);
+  M1_MCDRV_CURR_3PH_CALIB_INIT(&g_sM1Curr3phDcBus);
 
   /* pass calibration routine duration to state counter*/
   g_sMidDrive.ui16CounterState = g_sMidDrive.ui16TimeCalibration;
@@ -923,10 +923,10 @@ void MID_Init_AR(void)
     g_sM1Pwm3ph.psUABC = &(g_sMidDrive.sFocPMSM.sDutyABC);
     
     /* For ADC driver */
-    g_sM1AdcSensor.pf16UDcBus     = &(g_sMidDrive.sFocPMSM.f16UDcBus);
-    g_sM1AdcSensor.psIABC         = &(g_sMidDrive.sFocPMSM.sIABCFrac);
-    g_sM1AdcSensor.pui16SVMSector = &(g_sMidDrive.sFocPMSM.ui16SectorSVM);
-    g_sM1AdcSensor.pui16AuxChan   = &(g_sMidDrive.f16AdcAuxSample);
+    g_sM1Curr3phDcBus.pf16UDcBus     = &(g_sMidDrive.sFocPMSM.f16UDcBus);
+    g_sM1Curr3phDcBus.psIABC         = &(g_sMidDrive.sFocPMSM.sIABCFrac);
+    g_sM1Curr3phDcBus.pui16SVMSector = &(g_sMidDrive.sFocPMSM.ui16SectorSVM);
+    g_sM1Curr3phDcBus.pui16AuxChan   = &(g_sMidDrive.f16AdcAuxSample);
     
     /* Disable PWM output */
     M1_MCDRV_PWM3PH_DIS(&g_sM1Pwm3ph);
@@ -965,7 +965,7 @@ void MID_ProcessFast_FL(void)
       M1_MCDRV_PWM3PH_SET(&g_sM1Pwm3ph);   
     
       /* set current sensor for  sampling */
-      M1_MCDRV_CURR_3PH_CHAN_ASSIGN(&g_sM1AdcSensor); 
+      M1_MCDRV_CURR_3PH_CHAN_ASSIGN(&g_sM1Curr3phDcBus); 
     }
     
     

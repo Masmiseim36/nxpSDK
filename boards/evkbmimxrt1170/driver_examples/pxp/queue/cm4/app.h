@@ -13,8 +13,6 @@
 /*${macro:start}*/
 #define APP_PXP PXP
 
-/* Use RGB565 or XRGB8888 */
-#define USE_RGB565 1
 /*${macro:end}*/
 
 /*******************************************************************************

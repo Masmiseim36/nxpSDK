@@ -308,7 +308,7 @@ _FLEXSPI2_ModuleInit()
     __writeMemory32(0x0000A704, 0x445E0228, "Memory"); // LUT[10]
     __writeMemory32(0x00000000, 0x445E022C, "Memory"); // LUT[11]
     __writeMemory32(0x8B188760, 0x445E0230, "Memory"); // LUT[12]
-    __writeMemory32(0xA3048F10, 0x445E0234, "Memory"); // LUT[13]
+    __writeMemory32(0xA3028F10, 0x445E0234, "Memory"); // LUT[13]
     __writeMemory32(0x00000000, 0x445E0238, "Memory"); // LUT[14]
     __writeMemory32(0x00000000, 0x445E023C, "Memory"); // LUT[15]
     __writeMemory32(0x00000000, 0x445E0240, "Memory"); // LUT[16]
@@ -317,6 +317,32 @@ _FLEXSPI2_ModuleInit()
     __writeMemory32(0x00000000, 0x445E024C, "Memory"); // LUT[19]
     __writeMemory32(0x5AF05AF0, 0x445E0018, "Memory"); // LUTKEY
     __writeMemory32(0x00000001, 0x445E001C, "Memory"); // LUTCR
+
+    /* Restore hyperram CR0 register */
+    __writeMemory32(0x00001000, 0x445E00A0, "Memory"); // IPCR0
+    __writeMemory32(0x00030002, 0x445E00A4, "Memory"); // IPCR1
+    __writeMemory32(0x00000001, 0x445E00BC, "Memory"); // IPTXFCR
+    __writeMemory32(0x2F8F2F8F, 0x445E0180, "Memory"); // TFDR     0x8F2F is default value of W756/7x of CR0
+    __writeMemory32(0x00000040, 0x445E0014, "Memory"); // INTR
+    __writeMemory32(0x00000001, 0x445E00B0, "Memory"); // IPCMD
+    do
+    {
+        reg = __readMemory32(0x445E0014, "Memory"); // INTR
+    } while ((reg & 0x1) == 0x0);
+    __writeMemory32(0x00000001, 0x445E0014, "Memory"); // INTR
+
+    /* Restore hyperram CR1 register */
+    __writeMemory32(0x00001002, 0x445E00A0, "Memory"); // IPCR0
+    __writeMemory32(0x00030002, 0x445E00A4, "Memory"); // IPCR1
+    __writeMemory32(0x00000001, 0x445E00BC, "Memory"); // IPTXFCR
+    __writeMemory32(0xC1FFC1FF, 0x445E0180, "Memory"); // TFDR      0xFFC1 is default value of W756/7x of CR1
+    __writeMemory32(0x00000040, 0x445E0014, "Memory"); // INTR
+    __writeMemory32(0x00000001, 0x445E00B0, "Memory"); // IPCMD
+    do
+    {
+        reg = __readMemory32(0x445E0014, "Memory"); // INTR
+    } while ((reg & 0x1) == 0x0);
+    __writeMemory32(0x00000001, 0x445E0014, "Memory"); // INTR
 
     _FLEXSPI2_ModuleReset();
 }
@@ -350,6 +376,12 @@ Flash_Init()
 }
 
 execUserPreload()
+{
+    Flash_Init();
+    HyperRAM_Init();
+}
+
+execUserReset()
 {
     Flash_Init();
     HyperRAM_Init();

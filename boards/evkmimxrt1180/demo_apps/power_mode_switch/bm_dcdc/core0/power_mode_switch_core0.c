@@ -1,6 +1,5 @@
 /*
- * Copyright 2022 NXP
- * All rights reserved.
+ * Copyright 2022, 2025 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -45,7 +44,7 @@ void APP_WAKEUP_BUTTON_IRQ_HANDLER(void)
 {
     /* Clear GPIO stop request. */
     GPIO_ClearStopRequest();
-	
+
     if ((1U << APP_WAKEUP_BUTTON_GPIO_PIN) &
         RGPIO_GetPinsInterruptFlags(APP_WAKEUP_BUTTON_GPIO, kRGPIO_InterruptOutput0))
     {
@@ -382,7 +381,7 @@ void RunModeSwitch(void)
         ch = GETCHAR();
 #ifdef CORE1_GET_INPUT_FROM_CORE0
         /* Send message to another core */
-        (void)MCMGR_TriggerEvent(kMCMGR_RemoteApplicationEvent, ch);
+        (void)MCMGR_TriggerEvent(kMCMGR_Core1, kMCMGR_RemoteApplicationEvent, ch);
 #endif
 
         if ((ch >= 'a') && (ch <= 'z'))
@@ -425,7 +424,7 @@ void CpuModeSwitch(void)
         ch = GETCHAR();
 #ifdef CORE1_GET_INPUT_FROM_CORE0
         /* Send message to another core */
-        (void)MCMGR_TriggerEvent(kMCMGR_RemoteApplicationEvent, ch);
+        (void)MCMGR_TriggerEvent(kMCMGR_Core1, kMCMGR_RemoteApplicationEvent, ch);
         delay();
 #endif
 
@@ -568,7 +567,7 @@ int main(void)
         ch = GETCHAR();
 #ifdef CORE1_GET_INPUT_FROM_CORE0
         /* Send message to another core */
-        (void)MCMGR_TriggerEvent(kMCMGR_RemoteApplicationEvent, ch);
+        (void)MCMGR_TriggerEvent(kMCMGR_Core1, kMCMGR_RemoteApplicationEvent, ch);
 #endif
 
         if ((ch >= 'a') && (ch <= 'z'))

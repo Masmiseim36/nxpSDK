@@ -10,10 +10,17 @@
 
 #include <stdint.h>
 
+#if defined(LC3_HIFI4) && (LC3_HIFI4 != 0)
+#else
 #if defined(LC3_DSP) && (LC3_DSP == 0)
 #include "LC3_ndsp_api.h"
 #else
 #include "LC3_api.h"
+#endif
+#endif
+
+#ifndef LC3_FRAME_SIZE_MAX
+#define LC3_FRAME_SIZE_MAX 400
 #endif
 
 #define LC3_CODEC_ERR   -1
@@ -24,6 +31,9 @@ typedef struct _lc3_encoder_t {
     int enc_bytes;    /* output bytes of after encode. */
     int sample_bits;  /* 8bits, 16bits, 24bits, 32bits. */
 
+#if defined(LC3_HIFI4) && (LC3_HIFI4 != 0)
+    int instans;
+#else
 #if defined(LC3_DSP) && (LC3_DSP == 0)
     LC3_ENCODER_CONFIG lc3_cfg;
     LC3_ENCODER_CHANNEL_CNTX lc3_enc;
@@ -34,6 +44,7 @@ typedef struct _lc3_encoder_t {
     uint8_t buf_out[LC3_FRAME_SIZE_MAX];
     uint8_t core_buff[LC3_ENCODER_CORE_BUFFER_SIZE_MAX];
     uint8_t work_buff[LC3_ENCODER_WORK_BUFFER_SIZE_MAX];
+#endif
 } lc3_encoder_t;
 
 typedef struct _lc3_decoder_t {
@@ -42,6 +53,9 @@ typedef struct _lc3_decoder_t {
     int enc_bytes;    /* input bytes before decode. */
     int sample_bits;  /* 8bits, 16bits, 24bits, 32bits. */
 
+#if defined(LC3_HIFI4) && (LC3_HIFI4 != 0)
+    int instans;
+#else
 #if defined(LC3_DSP) && (LC3_DSP == 0)
     LC3_DECODER_CONFIG lc3_cfg;
     LC3_DECODER_CHANNEL_CNTX lc3_dec;
@@ -52,6 +66,7 @@ typedef struct _lc3_decoder_t {
     int32_t buf_out[LC3_INPUT_FRAME_SIZE_MAX];
     uint8_t core_buff[LC3_DECODER_CORE_BUFFER_SIZE_MAX];
     uint8_t work_buff[LC3_DECODER_WORK_BUFFER_SIZE_MAX];
+#endif
 } lc3_decoder_t;
 
 #define LC3_FRAME_FLAG_GOOD       0

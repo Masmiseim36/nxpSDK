@@ -7,7 +7,7 @@
 #ifndef __APP_PBAP_PCE_H__
 #define __APP_PBAP_PCE_H__
 
-#define CURRENT_PATH_MAX_LEN 30
+#define CURRENT_PATH_MAX_LEN 50
 
 struct pbap_hdr
 {

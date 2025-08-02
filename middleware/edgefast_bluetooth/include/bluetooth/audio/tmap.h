@@ -2,7 +2,7 @@
  * @file
  * @brief Header for Bluetooth TMAP.
  *
- * Copyright 2023 NXP
+ * Copyright 2023,2025 NXP
  * Copyright (c) 2024 Nordic Semiconductor ASA
  *
  * SPDX-License-Identifier: Apache-2.0
@@ -13,6 +13,10 @@
 
 #include <bluetooth/conn.h>
 #include <sys/util.h>
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 /** Call Gateway (CG) supported */
 #define BT_TMAP_CG_SUPPORTED                                                                       \
@@ -135,5 +139,9 @@ int bt_tmap_discover(struct bt_conn *conn, const struct bt_tmap_cb *tmap_cb);
  *
  */
 void bt_tmap_set_role(enum bt_tmap_role role);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* ZEPHYR_INCLUDE_BLUETOOTH_AUDIO_TMAP_ */

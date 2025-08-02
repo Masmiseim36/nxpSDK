@@ -13,27 +13,6 @@
 #include "fsl_ele_base_api.h"
 /*${header:end}*/
 
-/*${macro:start}*/
-#define ELE_TRDC_AON_ID    0x74
-#define ELE_TRDC_WAKEUP_ID 0x78
-#define ELE_CORE_CM33_ID   0x1
-#define ELE_CORE_CM7_ID    0x2
-
-/*
- * Set ELE_STICK_FAILED_STS to 0 when ELE status check is not required,
- * which is useful when debug reset, where the core has already get the
- * TRDC ownership at first time and ELE is not able to release TRDC
- * ownership again for the following TRDC ownership request.
- */
-#define ELE_STICK_FAILED_STS 1
-
-#if ELE_STICK_FAILED_STS
-#define ELE_IS_FAILED(x) (x != kStatus_Success)
-#else
-#define ELE_IS_FAILED(x) false
-#endif
-/*${macro:end}*/
-
 /*${function:start}*/
 #ifdef CORE1_IMAGE_COPY_TO_RAM
 uint32_t get_core1_image_size(void)
@@ -69,34 +48,23 @@ void BOARD_InitHardware(void)
     XCACHE_DisableCache(XCACHE_PS);
     XCACHE_DisableCache(XCACHE_PC);
 
-    /* Get ELE FW status */
-    do
-    {
-        uint32_t ele_fw_sts;
-        sts = ELE_BaseAPI_GetFwStatus(MU_RT_S3MUA, &ele_fw_sts);
-    } while (sts != kStatus_Success);
+    BOARD_RequestTRDC(true, true, false);
 
     /* Enble CM7 */
-    do
+    sts = ELE_BaseAPI_EnableAPC(MU_RT_S3MUA);
+    if(sts != kStatus_Success)
     {
-        sts = ELE_BaseAPI_EnableAPC(MU_RT_S3MUA);
-    } while (ELE_IS_FAILED(sts));
-
-    /* Release TRDC A to CM33 core */
-    do
-    {
-        sts = ELE_BaseAPI_ReleaseRDC(MU_RT_S3MUA, ELE_TRDC_AON_ID, ELE_CORE_CM33_ID);
-    } while (ELE_IS_FAILED(sts));
-
-    /* Release TRDC W to CM33 core */
-    do
-    {
-        sts = ELE_BaseAPI_ReleaseRDC(MU_RT_S3MUA, ELE_TRDC_WAKEUP_ID, ELE_CORE_CM33_ID);
-    } while (ELE_IS_FAILED(sts));
+        while(1)
+        {
+        }
+    }
 }
 
 void APP_SetTrdcGlobalConfig(void)
 {
+    /* Enable all access control(secore and non-secure read/write/execute) for the
+     * TRDC1 and TRDC2. There is no need to configure TRDC3 because it has no MBC/MRC
+     * thus no access control to be configured. */
     uint32_t i, j;
 
     TRDC_Init(EXAMPLE_TRDC_INSTANCE);

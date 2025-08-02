@@ -19,8 +19,6 @@
 /*${macro:start}*/
 #define APP_PXP PXP
 
-#define USE_RGB565 1
-
 /*
  * Frame buffer data alignment.
  * The PXP input buffer, output buffer, and LCDIF frame buffer address 64B align.

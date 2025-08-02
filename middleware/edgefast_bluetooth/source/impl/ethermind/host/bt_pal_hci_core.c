@@ -4178,6 +4178,10 @@ static int hci_init(void)
 int bt_send(struct net_buf *buf)
 {
 	API_RESULT ret = API_FAILURE;
+#if (defined(CONFIG_BT_ISO) && ((CONFIG_BT_ISO) > 0))
+	UINT16 acl_handles[CONFIG_BT_ISO_MAX_CHAN];
+	UINT16 cis_handles[CONFIG_BT_ISO_MAX_CHAN];
+#endif
 	LOG_DBG("buf %p len %u type %u", buf, buf->len, bt_buf_get_type(buf));
 
 	bt_monitor_send(bt_monitor_opcode(buf), buf->data, buf->len);
@@ -4191,8 +4195,42 @@ int bt_send(struct net_buf *buf)
 	case BT_BUF_CMD:
 	{
 		struct bt_hci_cmd_hdr *hdr = (struct bt_hci_cmd_hdr *)buf->data;
+#if (defined(CONFIG_BT_ISO) && ((CONFIG_BT_ISO) > 0))
+		if(hdr->opcode == BT_HCI_OP_LE_CREATE_CIS)
+		{
+			struct bt_hci_cp_le_create_cis *param = (struct bt_hci_cp_le_create_cis *)&(((uint8_t *)buf->data)[sizeof(*hdr)]);
+			if(param->num_cis <= CONFIG_BT_ISO_MAX_CHAN)
+			{
+				memset(acl_handles, 0, sizeof(acl_handles));
+				memset(cis_handles, 0, sizeof(cis_handles));
+				for(int i = 0; i < param->num_cis; i++)
+				{
+					cis_handles[i] = param->cis[i].cis_handle;
+					acl_handles[i] = param->cis[i].acl_handle;
+				}
+				ret = BT_hci_le_create_cis(param->num_cis, cis_handles, acl_handles);
+			}
+			else
+			{
+				ret = API_FAILURE;
+			}
+		}
+		else if(hdr->opcode == BT_HCI_OP_LE_ACCEPT_CIS)
+		{
+			struct bt_hci_cp_le_accept_cis *param = (struct bt_hci_cp_le_accept_cis *)&(((uint8_t *)buf->data)[sizeof(*hdr)]);
+			ret = BT_hci_le_accept_cis_request(param->handle);
+		}
+		else if(hdr->opcode == BT_HCI_OP_LE_REJECT_CIS)
+		{
+			struct bt_hci_cp_le_reject_cis *param = (struct bt_hci_cp_le_reject_cis *)&(((uint8_t *)buf->data)[sizeof(*hdr)]);
+			ret = BT_hci_le_reject_cis_request(param->handle, param->reason);
+		}
+		else
+#endif
+		{
+			ret = BT_hci_send_command(BT_OGF(hdr->opcode), BT_OCF(hdr->opcode), &(((uint8_t *)buf->data)[sizeof(*hdr)]), buf->len - sizeof(*hdr));
+		}
 
-		ret = BT_hci_send_command(BT_OGF(hdr->opcode), BT_OCF(hdr->opcode), &(((uint8_t *)buf->data)[sizeof(*hdr)]), buf->len - sizeof(*hdr));
 		if (API_SUCCESS == ret) {
 			net_buf_unref(buf);
 		}

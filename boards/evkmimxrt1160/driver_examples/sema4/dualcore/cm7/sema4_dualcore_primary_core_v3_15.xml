@@ -63,6 +63,7 @@
           <value>SDK_DEBUGCONSOLE=1</value>
           <value>MCUX_META_BUILD</value>
           <value>CPU_MIMXRT1166DVM6A_cm7</value>
+          <value>MIMXRT1166_cm7_SERIES</value>
         </option>
         <option id="com.crt.advproject.link.gcc.multicore.master" type="string">
           <value>M4SLAVE,${workspace_loc:/evkmimxrt1160_sema4_dualcore_secondary_core/${ConfigName}/evkmimxrt1160_sema4_dualcore_secondary_core.axf.o},OCRAM_ITCM_ALIAS,,true;</value>
@@ -137,11 +138,13 @@
       <files mask="sema4_dualcore_primary_core.ewp"/>
       <files mask="sema4_dualcore_primary_core.ewd"/>
       <files mask="sema4_dualcore_primary_core.eww"/>
+      <files mask="sema4_dualcore.eww"/>
     </source>
     <source path="mdk" project_relative_path="./" type="workspace" toolchain="mdk">
       <files mask="sema4_dualcore_primary_core.uvprojx"/>
       <files mask="sema4_dualcore_primary_core.uvoptx"/>
       <files mask="sema4_dualcore_primary_core.uvmpw"/>
+      <files mask="sema4_dualcore.uvmpw"/>
     </source>
     <source path="armgcc" project_relative_path="./" type="workspace" toolchain="armgcc">
       <files mask="build_all.bat"/>
@@ -208,6 +211,9 @@
     </source>
     <source path="." project_relative_path="doc" type="doc">
       <files mask="example_board_readme.md"/>
+    </source>
+    <source path="." project_relative_path="doc" type="doc">
+      <files mask="examples_shared_readme.md"/>
     </source>
   </example>
 </ksdk:examples>

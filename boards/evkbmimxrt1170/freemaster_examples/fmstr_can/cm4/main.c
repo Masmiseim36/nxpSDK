@@ -71,8 +71,8 @@ int main(void)
  */
 static void init_freemaster_can(void)
 {
-    flexcan_config_t flexcanConfig;
-    flexcan_timing_config_t timing_config;
+    flexcan_config_t flexcanConfig = { 0 };
+    flexcan_timing_config_t timing_config = { 0 };
     uint32_t canSrcClock = (CLOCK_GetRootClockFreq(kCLOCK_Root_Can3) / 100000U) * 100000U;
 
     /* Init FlexCAN module. */

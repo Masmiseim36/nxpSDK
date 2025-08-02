@@ -1728,11 +1728,11 @@
         </option>
         <option>
           <name>CExtraOptionsCheck</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>CExtraOptions</name>
-          <state/>
+          <state>--jlink_script_file=$PROJ_DIR$/../evkmimxrt1180_cm33.jlinkscript</state>
         </option>
         <option>
           <name>CFpuProcessor</name>
@@ -1972,7 +1972,7 @@
         <option>
           <name>CMSISDAPResetList</name>
           <version>1</version>
-          <state>1</state>
+          <state>4</state>
         </option>
         <option>
           <name>CMSISDAPHWResetDuration</name>
@@ -3368,11 +3368,11 @@
         </option>
         <option>
           <name>CExtraOptionsCheck</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>CExtraOptions</name>
-          <state/>
+          <state>--jlink_script_file=$PROJ_DIR$/../evkmimxrt1180_cm33.jlinkscript</state>
         </option>
         <option>
           <name>CFpuProcessor</name>
@@ -3612,7 +3612,7 @@
         <option>
           <name>CMSISDAPResetList</name>
           <version>1</version>
-          <state>1</state>
+          <state>4</state>
         </option>
         <option>
           <name>CMSISDAPHWResetDuration</name>
@@ -5008,11 +5008,11 @@
         </option>
         <option>
           <name>CExtraOptionsCheck</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>CExtraOptions</name>
-          <state/>
+          <state>--jlink_script_file=$PROJ_DIR$/../evkmimxrt1180_cm33.jlinkscript</state>
         </option>
         <option>
           <name>CFpuProcessor</name>
@@ -5252,7 +5252,7 @@
         <option>
           <name>CMSISDAPResetList</name>
           <version>1</version>
-          <state>1</state>
+          <state>4</state>
         </option>
         <option>
           <name>CMSISDAPHWResetDuration</name>

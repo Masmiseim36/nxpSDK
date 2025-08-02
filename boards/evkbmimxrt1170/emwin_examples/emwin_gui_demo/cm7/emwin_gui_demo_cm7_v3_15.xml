@@ -83,7 +83,8 @@
           <value>SDK_DEBUGCONSOLE=1</value>
           <value>MCUX_META_BUILD</value>
           <value>SDK_I2C_BASED_COMPONENT_USED=1</value>
-          <value>CPU_MIMXRT1176DVMAA_cm7</value>
+          <value>CPU_MIMXRT1176DVMAB_cm7</value>
+          <value>MIMXRT1176_cm7_SERIES</value>
         </option>
         <option id="com.crt.advproject.link.memory.sections" type="stringList">
           <value>isd=*(CodeQuickAccess);region=SRAM_ITC_cm7;type=.data</value>

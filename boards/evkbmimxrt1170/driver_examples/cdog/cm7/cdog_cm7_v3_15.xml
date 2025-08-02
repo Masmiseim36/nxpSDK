@@ -59,7 +59,8 @@
           <value>XIP_BOOT_HEADER_ENABLE=1</value>
           <value>SDK_DEBUGCONSOLE=1</value>
           <value>MCUX_META_BUILD</value>
-          <value>CPU_MIMXRT1176DVMAA_cm7</value>
+          <value>CPU_MIMXRT1176DVMAB_cm7</value>
+          <value>MIMXRT1176_cm7_SERIES</value>
         </option>
         <option id="com.crt.advproject.link.memory.sections" type="stringList">
           <value>isd=*(CodeQuickAccess);region=SRAM_ITC_cm7;type=.data</value>
@@ -139,18 +140,10 @@
       <files mask="CMakeLists.txt"/>
       <files mask="flags.cmake"/>
       <files mask="config.cmake"/>
-      <files mask="build_sdram_debug.bat"/>
-      <files mask="build_sdram_debug.sh"/>
-      <files mask="build_sdram_release.bat"/>
-      <files mask="build_sdram_release.sh"/>
       <files mask="build_flexspi_nor_debug.bat"/>
       <files mask="build_flexspi_nor_debug.sh"/>
       <files mask="build_flexspi_nor_release.bat"/>
       <files mask="build_flexspi_nor_release.sh"/>
-      <files mask="build_debug.bat"/>
-      <files mask="build_debug.sh"/>
-      <files mask="build_release.bat"/>
-      <files mask="build_release.sh"/>
     </source>
     <source path="../../../../../devices/MIMXRT1176" project_relative_path="./" type="workspace" toolchain="armgcc">
       <files mask="all_lib_device.cmake"/>
@@ -159,9 +152,7 @@
       <files mask="evkbmimxrt1170_connect_cm7.mac"/>
     </source>
     <source path="." project_relative_path="source" type="configuration" toolchain="mdk">
-      <files mask="evkbmimxrt1170_ram.ini"/>
       <files mask="evkbmimxrt1170_flexspi_nor.ini"/>
-      <files mask="evkbmimxrt1170_sdram_init.ini"/>
     </source>
     <source path="." project_relative_path="source" type="src">
       <files mask="cdog.c"/>
@@ -173,19 +164,13 @@
       <files mask="board.c"/>
     </source>
     <source path="iar" project_relative_path="MIMXRT1176/iar" type="linker" toolchain="iar">
-      <files mask="MIMXRT1176xxxxx_cm7_ram.icf"/>
       <files mask="MIMXRT1176xxxxx_cm7_flexspi_nor.icf"/>
-      <files mask="MIMXRT1176xxxxx_cm7_sdram.icf"/>
-    </source>
-    <source path="armgcc" project_relative_path="MIMXRT1176/armgcc" type="linker" toolchain="armgcc">
-      <files mask="MIMXRT1176xxxxx_cm7_ram.ld"/>
-      <files mask="MIMXRT1176xxxxx_cm7_flexspi_nor.ld"/>
-      <files mask="MIMXRT1176xxxxx_cm7_sdram.ld"/>
     </source>
     <source path="mdk" project_relative_path="MIMXRT1176/mdk" type="linker" toolchain="mdk">
-      <files mask="MIMXRT1176xxxxx_cm7_ram.scf"/>
       <files mask="MIMXRT1176xxxxx_cm7_flexspi_nor.scf"/>
-      <files mask="MIMXRT1176xxxxx_cm7_sdram.scf"/>
+    </source>
+    <source path="armgcc" project_relative_path="MIMXRT1176/armgcc" type="linker" toolchain="armgcc">
+      <files mask="MIMXRT1176xxxxx_cm7_flexspi_nor.ld"/>
     </source>
     <source path="." project_relative_path="board" type="c_include">
       <files mask="clock_config.h"/>
@@ -213,6 +198,9 @@
     </source>
     <source path="." project_relative_path="doc" type="doc">
       <files mask="example_board_readme.md"/>
+    </source>
+    <source path="." project_relative_path="doc" type="doc">
+      <files mask="examples_shared_readme.md"/>
     </source>
   </example>
 </ksdk:examples>

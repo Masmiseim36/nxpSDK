@@ -1,7 +1,6 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2023 NXP
- * All rights reserved.
+ * Copyright 2016-2025 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -51,6 +50,8 @@ static struct rpmsg_lite_instance *volatile my_rpmsg = NULL;
 static struct rpmsg_lite_endpoint *volatile my_ept = NULL;
 static volatile rpmsg_queue_handle my_queue        = NULL;
 
+static bool error_occurred = false;
+
 void app_destroy_task(void)
 {
     if (app_task_handle)
@@ -84,8 +85,8 @@ static void app_nameservice_isr_cb(uint32_t new_ept, const char *new_ept_name, u
 
 static void app_task(void *param)
 {
-    volatile uint32_t remote_addr = 0U;
-    volatile rpmsg_ns_handle ns_handle;
+    volatile uint32_t remote_addr      = 0U;
+    volatile rpmsg_ns_handle ns_handle = NULL;
 
     /* Print the initial banner */
     (void)PRINTF("\r\nRPMSG Ping-Pong FreeRTOS RTOS API Demo...\r\n");
@@ -97,23 +98,55 @@ static void app_task(void *param)
     /* Get the startup data */
     do
     {
-        status = MCMGR_GetStartupData(&startupData);
+        status = MCMGR_GetStartupData(kMCMGR_Core0, &startupData);
     } while (status != kStatus_MCMGR_Success);
 
     my_rpmsg = rpmsg_lite_remote_init((void *)(char *)(platform_patova(startupData)), RPMSG_LITE_LINK_ID, RL_NO_FLAGS);
+    if (my_rpmsg == NULL)
+    {
+        (void)PRINTF("Failed to initialize rpmsg...\r\n");
+        error_occurred = true;
+        goto cleanup;
+    }
 
     /* Signal the other core we are ready by triggering the event and passing the APP_RPMSG_READY_EVENT_DATA */
-    (void)MCMGR_TriggerEvent(kMCMGR_RemoteApplicationEvent, APP_RPMSG_READY_EVENT_DATA);
+    (void)MCMGR_TriggerEvent(kMCMGR_Core0, kMCMGR_RemoteApplicationEvent, APP_RPMSG_READY_EVENT_DATA);
 #else
     (void)PRINTF("RPMSG Share Base Addr is 0x%x\r\n", RPMSG_LITE_SHMEM_BASE);
     my_rpmsg = rpmsg_lite_remote_init((void *)RPMSG_LITE_SHMEM_BASE, RPMSG_LITE_LINK_ID, RL_NO_FLAGS);
+    if (my_rpmsg == NULL)
+    {
+        (void)PRINTF("Failed to initialize rpmsg...\r\n");
+        error_occurred = true;
+        goto cleanup;
+    }
 #endif /* MCMGR_USED */
     rpmsg_lite_wait_for_link_up(my_rpmsg, RL_BLOCK);
     (void)PRINTF("Link is up!\r\n");
 
-    my_queue  = rpmsg_queue_create(my_rpmsg);
-    my_ept    = rpmsg_lite_create_ept(my_rpmsg, LOCAL_EPT_ADDR, rpmsg_queue_rx_cb, my_queue);
+    my_queue = rpmsg_queue_create(my_rpmsg);
+    if (my_queue == NULL)
+    {
+        (void)PRINTF("Failed to create queue...\r\n");
+        error_occurred = true;
+        goto cleanup;
+    }
+
+    my_ept = rpmsg_lite_create_ept(my_rpmsg, LOCAL_EPT_ADDR, rpmsg_queue_rx_cb, my_queue);
+    if (my_ept == NULL)
+    {
+        (void)PRINTF("Failed to create endpoint...\r\n");
+        error_occurred = true;
+        goto cleanup;
+    }
+
     ns_handle = rpmsg_ns_bind(my_rpmsg, app_nameservice_isr_cb, ((void *)0));
+    if (ns_handle == NULL)
+    {
+        (void)PRINTF("Failed to bind name service...\r\n");
+        error_occurred = true;
+        goto cleanup;
+    }
     /* Introduce some delay to avoid NS announce message not being captured by the master side.
        This could happen when the remote side execution is too fast and the NS announce message is triggered
        before the nameservice_isr_cb is registered on the master side. */
@@ -139,16 +172,40 @@ static void app_task(void *param)
 
     (void)PRINTF("Ping pong done, deinitializing...\r\n");
 
-    (void)rpmsg_lite_destroy_ept(my_rpmsg, my_ept);
-    my_ept = ((void *)0);
-    (void)rpmsg_queue_destroy(my_rpmsg, my_queue);
-    my_queue = ((void *)0);
-    (void)rpmsg_ns_unbind(my_rpmsg, ns_handle);
-    (void)rpmsg_lite_deinit(my_rpmsg);
-    my_rpmsg = ((void *)0);
+cleanup:
+    if (my_ept)
+    {
+        (void)rpmsg_lite_destroy_ept(my_rpmsg, my_ept);
+        my_ept = ((void *)0);
+    }
+
+    if (my_queue)
+    {
+        (void)rpmsg_queue_destroy(my_rpmsg, my_queue);
+        my_queue = ((void *)0);
+    }
+
+    if (ns_handle)
+    {
+        (void)rpmsg_ns_unbind(my_rpmsg, ns_handle);
+    }
+
+    if (my_rpmsg)
+    {
+        (void)rpmsg_lite_deinit(my_rpmsg);
+        my_rpmsg = ((void *)0);
+    }
+
     msg.DATA = 0U;
 
-    (void)PRINTF("Looping forever...\r\n");
+    if (error_occurred)
+    {
+        (void)PRINTF("Error occurred, looping forever...\r\n");
+    }
+    else
+    {
+        (void)PRINTF("Looping forever...\r\n");
+    }
 
     /* End of the example */
     for (;;)

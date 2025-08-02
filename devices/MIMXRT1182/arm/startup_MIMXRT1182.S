@@ -2,13 +2,13 @@
 /*  @file:    startup_MIMXRT1182.s                                           */
 /*  @purpose: CMSIS Cortex-M33 Core Device Startup File                      */
 /*            MIMXRT1182                                                     */
-/*  @version: 0.1                                                            */
-/*  @date:    2021-3-9                                                       */
-/*  @build:   b231215                                                        */
+/*  @version: 3.0                                                            */
+/*  @date:    2024-10-29                                                     */
+/*  @build:   b250520                                                        */
 /* ------------------------------------------------------------------------- */
 /*                                                                           */
 /* Copyright 1997-2016 Freescale Semiconductor, Inc.                         */
-/* Copyright 2016-2023 NXP                                                   */
+/* Copyright 2016-2025 NXP                                                   */
 /* SPDX-License-Identifier: BSD-3-Clause                                     */
 /*****************************************************************************/
 /* Version: GCC for ARM Embedded Processors                                  */
@@ -62,11 +62,11 @@ __Vectors:
     .long   LPUART2_IRQHandler                              /* LPUART2 interrupt*/
     .long   MU1_IRQHandler                                  /* MU1 interrupt*/
     .long   MU2_IRQHandler                                  /* MU2 interrupt*/
-    .long   PWM1_FAULT_IRQHandler                           /* PWM1 fault or reload error interrupt*/
-    .long   PWM1_0_IRQHandler                               /* PWM1 capture 0, compare 0, or reload 0 interrupt*/
-    .long   PWM1_1_IRQHandler                               /* PWM1 capture 1, compare 1, or reload 1 interrupt*/
-    .long   PWM1_2_IRQHandler                               /* PWM1 capture 2, compare 2, or reload 2 interrupt*/
-    .long   PWM1_3_IRQHandler                               /* PWM1 capture 3, compare 3, or reload 3 interrupt*/
+    .long   Reserved39_IRQHandler                           /* Reserved interrupt*/
+    .long   Reserved40_IRQHandler                           /* Reserved interrupt*/
+    .long   Reserved41_IRQHandler                           /* Reserved interrupt*/
+    .long   Reserved42_IRQHandler                           /* Reserved interrupt*/
+    .long   Reserved43_IRQHandler                           /* Reserved interrupt*/
     .long   EDGELOCK_TRUST_MUA_RX_FULL_IRQHandler           /* Edgelock Trust MUA RX full interrupt*/
     .long   EDGELOCK_TRUST_MUA_TX_EMPTY_IRQHandler          /* Edgelock Trust MUA TX empty interrupt*/
     .long   EDGELOCK_APPS_CORE_MUA_RX_FULL_IRQHandler       /* Edgelock Apps Core MUA RX full interrupt*/
@@ -90,8 +90,8 @@ __Vectors:
     .long   CM33_TCM_ERROR_IRQHandler                       /* M33 TCM Error interrupt*/
     .long   CM7_TCM_ECC_IRQHandler                          /* M7 TCM ECC interrupt*/
     .long   CM7_TCM_ERROR_IRQHandler                        /* M7 TCM Error interrupt*/
-    .long   CAN2_IRQHandler                                 /* CAN2 interrupt*/
-    .long   CAN2_ERROR_IRQHandler                           /* CAN2 error interrupt*/
+    .long   Reserved67_IRQHandler                           /* Reserved interrupt*/
+    .long   Reserved68_IRQHandler                           /* Reserved interrupt*/
     .long   FLEXIO1_IRQHandler                              /* FLEXIO1 interrupt*/
     .long   FLEXIO2_IRQHandler                              /* FLEXIO2 interrupt*/
     .long   FLEXSPI1_IRQHandler                             /* FLEXSPI1 interrupt*/
@@ -125,8 +125,8 @@ __Vectors:
     .long   TMPSNS_INT_IRQHandler                           /* Temperature alarm interrupt*/
     .long   BBSM_IRQHandler                                 /* BBSM wakeup alarm interrupt*/
     .long   LDO_AON_ANA_IRQHandler                          /* Brown out interrupt*/
-    .long   USDHC1_IRQHandler                               /* USDHC1*/
-    .long   Reserved103_IRQHandler                          /* Reserved interrupt*/
+    .long   Reserved102_IRQHandler                          /* Reserved interrupt*/
+    .long   USDHC2_IRQHandler                               /* USDHC2*/
     .long   TRDC_MGR_MEGA_IRQHandler                        /* MEGAMIX TRDC transfer error interrupt*/
     .long   SFA_IRQHandler                                  /* Signal Frequency Analyzer interrupt*/
     .long   LDO_AON_DIG_IRQHandler                          /* Brown out interrupt*/
@@ -185,7 +185,7 @@ __Vectors:
     .long   DMA4_CH30_CH31_CH62_CH63_IRQHandler             /* WAKEUP Domain eDMA channel 30/31/62/63 interrupt*/
     .long   XBAR1_CH0_CH1_IRQHandler                        /* XBAR1 channel 0/1 interrupt*/
     .long   XBAR1_CH2_CH3_IRQHandler                        /* XBAR1 channel 2/3 interrupt*/
-    .long   Reserved162_IRQHandler                          /* Reserved interrupt*/
+    .long   SINC3_CH0_CH1_CH2_CH3_IRQHandler                /* SINC Filter Glue 3 channel 0/1/2/3*/
     .long   EWM_IRQHandler                                  /* EWM reset out interrupt*/
     .long   Reserved164_IRQHandler                          /* Reserved interrupt*/
     .long   LPIT3_IRQHandler                                /* LPIT3 interrupt*/
@@ -193,7 +193,7 @@ __Vectors:
     .long   TMR4_IRQHandler                                 /* TMR4 interrupt*/
     .long   Reserved168_IRQHandler                          /* Reserved interrupt*/
     .long   Reserved169_IRQHandler                          /* Reserved interrupt*/
-    .long   SAI4_IRQHandler                                 /* SAI4 interrupt*/
+    .long   Reserved170_IRQHandler                          /* Reserved interrupt*/
     .long   SPDIF_IRQHandler                                /* SPDIF interrupt*/
     .long   Reserved172_IRQHandler                          /* Reserved interrupt*/
     .long   Reserved173_IRQHandler                          /* Reserved interrupt*/
@@ -209,40 +209,40 @@ __Vectors:
     .long   M33_LOCKUP_IRQHandler                           /* CM33 LOCKUP SRC reset source*/
     .long   M7_SYSRESET_REQ_IRQHandler                      /* CM33 SYSREQRST SRC reset source*/
     .long   M7_LOCKUP_IRQHandler                            /* CM33 LOCKUP SRC reset source*/
-    .long   PWM2_FAULT_IRQHandler                           /* PWM2 fault or reload error interrupt*/
-    .long   PWM2_0_IRQHandler                               /* PWM2 capture 0, compare 0, or reload 0 interrupt*/
-    .long   PWM2_1_IRQHandler                               /* PWM2 capture 1, compare 1, or reload 1 interrupt*/
-    .long   PWM2_2_IRQHandler                               /* PWM2 capture 2, compare 2, or reload 2 interrupt*/
-    .long   PWM2_3_IRQHandler                               /* PWM2 capture 3, compare 3, or reload 3 interrupt*/
-    .long   Reserved191_IRQHandler                          /* Reserved interrupt*/
-    .long   Reserved192_IRQHandler                          /* Reserved interrupt*/
-    .long   Reserved193_IRQHandler                          /* Reserved interrupt*/
-    .long   Reserved194_IRQHandler                          /* Reserved interrupt*/
-    .long   Reserved195_IRQHandler                          /* Reserved interrupt*/
-    .long   Reserved196_IRQHandler                          /* Reserved interrupt*/
-    .long   Reserved197_IRQHandler                          /* Reserved interrupt*/
-    .long   Reserved198_IRQHandler                          /* Reserved interrupt*/
-    .long   Reserved199_IRQHandler                          /* Reserved interrupt*/
-    .long   Reserved200_IRQHandler                          /* Reserved interrupt*/
+    .long   Reserved186_IRQHandler                          /* Reserved interrupt*/
+    .long   Reserved187_IRQHandler                          /* Reserved interrupt*/
+    .long   Reserved188_IRQHandler                          /* Reserved interrupt*/
+    .long   Reserved189_IRQHandler                          /* Reserved interrupt*/
+    .long   Reserved190_IRQHandler                          /* Reserved interrupt*/
+    .long   PWM3_FAULT_IRQHandler                           /* PWM3 fault or reload error interrupt*/
+    .long   PWM3_0_IRQHandler                               /* PWM3 capture 0, compare 0, or reload 0 interrupt*/
+    .long   PWM3_1_IRQHandler                               /* PWM3 capture 1, compare 1, or reload 1 interrupt*/
+    .long   PWM3_2_IRQHandler                               /* PWM3 capture 2, compare 2, or reload 2 interrupt*/
+    .long   PWM3_3_IRQHandler                               /* PWM3 capture 3, compare 3, or reload 3 interrupt*/
+    .long   PWM4_FAULT_IRQHandler                           /* PWM4 fault or reload error interrupt*/
+    .long   PWM4_0_IRQHandler                               /* PWM4 capture 0, compare 0, or reload 0 interrupt*/
+    .long   PWM4_1_IRQHandler                               /* PWM4 capture 1, compare 1, or reload 1 interrupt*/
+    .long   PWM4_2_IRQHandler                               /* PWM4 capture 2, compare 2, or reload 2 interrupt*/
+    .long   PWM4_3_IRQHandler                               /* PWM4 capture 3, compare 3, or reload 3 interrupt*/
     .long   EQDC1_IRQHandler                                /* EQDC1 interrupt*/
     .long   EQDC2_IRQHandler                                /* EQDC2 interrupt*/
-    .long   Reserved203_IRQHandler                          /* Reserved interrupt*/
-    .long   Reserved204_IRQHandler                          /* Reserved interrupt*/
-    .long   Reserved205_IRQHandler                          /* Reserved interrupt*/
+    .long   EQDC3_IRQHandler                                /* EQDC3 interrupt*/
+    .long   EQDC4_IRQHandler                                /* EQDC4 interrupt*/
+    .long   ADC2_IRQHandler                                 /* ADC2 interrupt*/
     .long   DCDC_IRQHandler                                 /* DCDC brown out interrupt*/
-    .long   Reserved207_IRQHandler                          /* Reserved interrupt*/
-    .long   Reserved208_IRQHandler                          /* Reserved interrupt*/
+    .long   CAN3_IRQHandler                                 /* CAN3 interrupt*/
+    .long   CAN3_ERROR_IRQHandler                           /* CAN3 error interrupt*/
     .long   DAC_IRQHandler                                  /* DAC interrupt*/
-    .long   Reserved210_IRQHandler                          /* Reserved interrupt*/
-    .long   Reserved211_IRQHandler                          /* Reserved interrupt*/
+    .long   LPSPI5_IRQHandler                               /* LPSPI5 interrupt*/
+    .long   LPSPI6_IRQHandler                               /* LPSPI6 interrupt*/
     .long   LPUART7_IRQHandler                              /* LPUART7 interrupt*/
     .long   LPUART8_IRQHandler                              /* LPUART8 interrupt*/
-    .long   SAI2_IRQHandler                                 /* SAI2 interrupt*/
-    .long   SAI3_IRQHandler                                 /* SAI3 interrupt*/
-    .long   ACMP1_IRQHandler                                /* CMP1 interrupt*/
-    .long   ACMP2_IRQHandler                                /* CMP2 interrupt*/
+    .long   Reserved214_IRQHandler                          /* Reserved interrupt*/
+    .long   Reserved215_IRQHandler                          /* Reserved interrupt*/
+    .long   Reserved216_IRQHandler                          /* Reserved interrupt*/
+    .long   Reserved217_IRQHandler                          /* Reserved interrupt*/
     .long   ACMP3_IRQHandler                                /* CMP3 interrupt*/
-    .long   ACMP4_IRQHandler                                /* CMP4 interrupt*/
+    .long   Reserved219_IRQHandler                          /* Reserved interrupt*/
     .long   CM7_PS_IRQHandler                               /* M7 PS Tag/Data Parity Error*/
     .long   CM7_MCM_IRQHandler                              /* M7 MCM interrupt*/
     .long   CM33_MCM_IRQHandler                             /* M33 MCM interrupt*/
@@ -491,24 +491,6 @@ SAI1_IRQHandler:
 
     .align 1
     .thumb_func
-    .weak CAN2_IRQHandler
-    .type CAN2_IRQHandler, %function
-CAN2_IRQHandler:
-    ldr   r0,=CAN2_DriverIRQHandler
-    bx    r0
-    .size CAN2_IRQHandler, . - CAN2_IRQHandler
-
-    .align 1
-    .thumb_func
-    .weak CAN2_ERROR_IRQHandler
-    .type CAN2_ERROR_IRQHandler, %function
-CAN2_ERROR_IRQHandler:
-    ldr   r0,=CAN2_ERROR_DriverIRQHandler
-    bx    r0
-    .size CAN2_ERROR_IRQHandler, . - CAN2_ERROR_IRQHandler
-
-    .align 1
-    .thumb_func
     .weak FLEXIO1_IRQHandler
     .type FLEXIO1_IRQHandler, %function
 FLEXIO1_IRQHandler:
@@ -617,12 +599,12 @@ LPUART6_IRQHandler:
 
     .align 1
     .thumb_func
-    .weak USDHC1_IRQHandler
-    .type USDHC1_IRQHandler, %function
-USDHC1_IRQHandler:
-    ldr   r0,=USDHC1_DriverIRQHandler
+    .weak USDHC2_IRQHandler
+    .type USDHC2_IRQHandler, %function
+USDHC2_IRQHandler:
+    ldr   r0,=USDHC2_DriverIRQHandler
     bx    r0
-    .size USDHC1_IRQHandler, . - USDHC1_IRQHandler
+    .size USDHC2_IRQHandler, . - USDHC2_IRQHandler
 
     .align 1
     .thumb_func
@@ -1076,21 +1058,48 @@ DMA4_CH30_CH31_CH62_CH63_IRQHandler:
 
     .align 1
     .thumb_func
-    .weak SAI4_IRQHandler
-    .type SAI4_IRQHandler, %function
-SAI4_IRQHandler:
-    ldr   r0,=SAI4_DriverIRQHandler
-    bx    r0
-    .size SAI4_IRQHandler, . - SAI4_IRQHandler
-
-    .align 1
-    .thumb_func
     .weak SPDIF_IRQHandler
     .type SPDIF_IRQHandler, %function
 SPDIF_IRQHandler:
     ldr   r0,=SPDIF_DriverIRQHandler
     bx    r0
     .size SPDIF_IRQHandler, . - SPDIF_IRQHandler
+
+    .align 1
+    .thumb_func
+    .weak CAN3_IRQHandler
+    .type CAN3_IRQHandler, %function
+CAN3_IRQHandler:
+    ldr   r0,=CAN3_DriverIRQHandler
+    bx    r0
+    .size CAN3_IRQHandler, . - CAN3_IRQHandler
+
+    .align 1
+    .thumb_func
+    .weak CAN3_ERROR_IRQHandler
+    .type CAN3_ERROR_IRQHandler, %function
+CAN3_ERROR_IRQHandler:
+    ldr   r0,=CAN3_ERROR_DriverIRQHandler
+    bx    r0
+    .size CAN3_ERROR_IRQHandler, . - CAN3_ERROR_IRQHandler
+
+    .align 1
+    .thumb_func
+    .weak LPSPI5_IRQHandler
+    .type LPSPI5_IRQHandler, %function
+LPSPI5_IRQHandler:
+    ldr   r0,=LPSPI5_DriverIRQHandler
+    bx    r0
+    .size LPSPI5_IRQHandler, . - LPSPI5_IRQHandler
+
+    .align 1
+    .thumb_func
+    .weak LPSPI6_IRQHandler
+    .type LPSPI6_IRQHandler, %function
+LPSPI6_IRQHandler:
+    ldr   r0,=LPSPI6_DriverIRQHandler
+    bx    r0
+    .size LPSPI6_IRQHandler, . - LPSPI6_IRQHandler
 
     .align 1
     .thumb_func
@@ -1109,24 +1118,6 @@ LPUART8_IRQHandler:
     ldr   r0,=LPUART8_DriverIRQHandler
     bx    r0
     .size LPUART8_IRQHandler, . - LPUART8_IRQHandler
-
-    .align 1
-    .thumb_func
-    .weak SAI2_IRQHandler
-    .type SAI2_IRQHandler, %function
-SAI2_IRQHandler:
-    ldr   r0,=SAI2_DriverIRQHandler
-    bx    r0
-    .size SAI2_IRQHandler, . - SAI2_IRQHandler
-
-    .align 1
-    .thumb_func
-    .weak SAI3_IRQHandler
-    .type SAI3_IRQHandler, %function
-SAI3_IRQHandler:
-    ldr   r0,=SAI3_DriverIRQHandler
-    bx    r0
-    .size SAI3_IRQHandler, . - SAI3_IRQHandler
 
     .align 1
     .thumb_func
@@ -1184,11 +1175,11 @@ ASRC_IRQHandler:
     def_irq_handler    LPUART2_DriverIRQHandler
     def_irq_handler    MU1_IRQHandler
     def_irq_handler    MU2_IRQHandler
-    def_irq_handler    PWM1_FAULT_IRQHandler
-    def_irq_handler    PWM1_0_IRQHandler
-    def_irq_handler    PWM1_1_IRQHandler
-    def_irq_handler    PWM1_2_IRQHandler
-    def_irq_handler    PWM1_3_IRQHandler
+    def_irq_handler    Reserved39_IRQHandler
+    def_irq_handler    Reserved40_IRQHandler
+    def_irq_handler    Reserved41_IRQHandler
+    def_irq_handler    Reserved42_IRQHandler
+    def_irq_handler    Reserved43_IRQHandler
     def_irq_handler    EDGELOCK_TRUST_MUA_RX_FULL_IRQHandler
     def_irq_handler    EDGELOCK_TRUST_MUA_TX_EMPTY_IRQHandler
     def_irq_handler    EDGELOCK_APPS_CORE_MUA_RX_FULL_IRQHandler
@@ -1212,8 +1203,8 @@ ASRC_IRQHandler:
     def_irq_handler    CM33_TCM_ERROR_IRQHandler
     def_irq_handler    CM7_TCM_ECC_IRQHandler
     def_irq_handler    CM7_TCM_ERROR_IRQHandler
-    def_irq_handler    CAN2_DriverIRQHandler
-    def_irq_handler    CAN2_ERROR_DriverIRQHandler
+    def_irq_handler    Reserved67_IRQHandler
+    def_irq_handler    Reserved68_IRQHandler
     def_irq_handler    FLEXIO1_DriverIRQHandler
     def_irq_handler    FLEXIO2_DriverIRQHandler
     def_irq_handler    FLEXSPI1_DriverIRQHandler
@@ -1247,8 +1238,8 @@ ASRC_IRQHandler:
     def_irq_handler    TMPSNS_INT_IRQHandler
     def_irq_handler    BBSM_IRQHandler
     def_irq_handler    LDO_AON_ANA_IRQHandler
-    def_irq_handler    USDHC1_DriverIRQHandler
-    def_irq_handler    Reserved103_IRQHandler
+    def_irq_handler    Reserved102_IRQHandler
+    def_irq_handler    USDHC2_DriverIRQHandler
     def_irq_handler    TRDC_MGR_MEGA_IRQHandler
     def_irq_handler    SFA_IRQHandler
     def_irq_handler    LDO_AON_DIG_IRQHandler
@@ -1307,7 +1298,7 @@ ASRC_IRQHandler:
     def_irq_handler    DMA4_CH30_CH31_CH62_CH63_DriverIRQHandler
     def_irq_handler    XBAR1_CH0_CH1_IRQHandler
     def_irq_handler    XBAR1_CH2_CH3_IRQHandler
-    def_irq_handler    Reserved162_IRQHandler
+    def_irq_handler    SINC3_CH0_CH1_CH2_CH3_IRQHandler
     def_irq_handler    EWM_IRQHandler
     def_irq_handler    Reserved164_IRQHandler
     def_irq_handler    LPIT3_IRQHandler
@@ -1315,7 +1306,7 @@ ASRC_IRQHandler:
     def_irq_handler    TMR4_IRQHandler
     def_irq_handler    Reserved168_IRQHandler
     def_irq_handler    Reserved169_IRQHandler
-    def_irq_handler    SAI4_DriverIRQHandler
+    def_irq_handler    Reserved170_IRQHandler
     def_irq_handler    SPDIF_DriverIRQHandler
     def_irq_handler    Reserved172_IRQHandler
     def_irq_handler    Reserved173_IRQHandler
@@ -1331,40 +1322,40 @@ ASRC_IRQHandler:
     def_irq_handler    M33_LOCKUP_IRQHandler
     def_irq_handler    M7_SYSRESET_REQ_IRQHandler
     def_irq_handler    M7_LOCKUP_IRQHandler
-    def_irq_handler    PWM2_FAULT_IRQHandler
-    def_irq_handler    PWM2_0_IRQHandler
-    def_irq_handler    PWM2_1_IRQHandler
-    def_irq_handler    PWM2_2_IRQHandler
-    def_irq_handler    PWM2_3_IRQHandler
-    def_irq_handler    Reserved191_IRQHandler
-    def_irq_handler    Reserved192_IRQHandler
-    def_irq_handler    Reserved193_IRQHandler
-    def_irq_handler    Reserved194_IRQHandler
-    def_irq_handler    Reserved195_IRQHandler
-    def_irq_handler    Reserved196_IRQHandler
-    def_irq_handler    Reserved197_IRQHandler
-    def_irq_handler    Reserved198_IRQHandler
-    def_irq_handler    Reserved199_IRQHandler
-    def_irq_handler    Reserved200_IRQHandler
+    def_irq_handler    Reserved186_IRQHandler
+    def_irq_handler    Reserved187_IRQHandler
+    def_irq_handler    Reserved188_IRQHandler
+    def_irq_handler    Reserved189_IRQHandler
+    def_irq_handler    Reserved190_IRQHandler
+    def_irq_handler    PWM3_FAULT_IRQHandler
+    def_irq_handler    PWM3_0_IRQHandler
+    def_irq_handler    PWM3_1_IRQHandler
+    def_irq_handler    PWM3_2_IRQHandler
+    def_irq_handler    PWM3_3_IRQHandler
+    def_irq_handler    PWM4_FAULT_IRQHandler
+    def_irq_handler    PWM4_0_IRQHandler
+    def_irq_handler    PWM4_1_IRQHandler
+    def_irq_handler    PWM4_2_IRQHandler
+    def_irq_handler    PWM4_3_IRQHandler
     def_irq_handler    EQDC1_IRQHandler
     def_irq_handler    EQDC2_IRQHandler
-    def_irq_handler    Reserved203_IRQHandler
-    def_irq_handler    Reserved204_IRQHandler
-    def_irq_handler    Reserved205_IRQHandler
+    def_irq_handler    EQDC3_IRQHandler
+    def_irq_handler    EQDC4_IRQHandler
+    def_irq_handler    ADC2_IRQHandler
     def_irq_handler    DCDC_IRQHandler
-    def_irq_handler    Reserved207_IRQHandler
-    def_irq_handler    Reserved208_IRQHandler
+    def_irq_handler    CAN3_DriverIRQHandler
+    def_irq_handler    CAN3_ERROR_DriverIRQHandler
     def_irq_handler    DAC_IRQHandler
-    def_irq_handler    Reserved210_IRQHandler
-    def_irq_handler    Reserved211_IRQHandler
+    def_irq_handler    LPSPI5_DriverIRQHandler
+    def_irq_handler    LPSPI6_DriverIRQHandler
     def_irq_handler    LPUART7_DriverIRQHandler
     def_irq_handler    LPUART8_DriverIRQHandler
-    def_irq_handler    SAI2_DriverIRQHandler
-    def_irq_handler    SAI3_DriverIRQHandler
-    def_irq_handler    ACMP1_IRQHandler
-    def_irq_handler    ACMP2_IRQHandler
+    def_irq_handler    Reserved214_IRQHandler
+    def_irq_handler    Reserved215_IRQHandler
+    def_irq_handler    Reserved216_IRQHandler
+    def_irq_handler    Reserved217_IRQHandler
     def_irq_handler    ACMP3_IRQHandler
-    def_irq_handler    ACMP4_IRQHandler
+    def_irq_handler    Reserved219_IRQHandler
     def_irq_handler    CM7_PS_IRQHandler
     def_irq_handler    CM7_MCM_IRQHandler
     def_irq_handler    CM33_MCM_IRQHandler

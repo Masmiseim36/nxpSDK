@@ -22,6 +22,10 @@
 #include <bluetooth/obex.h>
 #include <bluetooth/map_types.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /**
  * @brief Reserve length for SendEvent.
  *
@@ -669,5 +673,9 @@ int bt_map_mse_mns_get_max_pkt_len(struct bt_map_mse_mns *mse_mns, uint16_t *max
  * @return 0 in case of success or negative value in case of error.
  */
 #define bt_map_mse_get_body(buf, body, length) bt_obex_get_body(buf, body, length)
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* ZEPHYR_INCLUDE_BLUETOOTH_MAP_H_ */

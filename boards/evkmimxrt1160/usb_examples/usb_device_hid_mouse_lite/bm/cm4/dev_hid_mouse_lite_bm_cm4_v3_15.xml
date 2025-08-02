@@ -28,14 +28,15 @@
     <definition extID="component.pit_adapter.MIMXRT1166"/>
     <definition extID="component.lpuart_adapter.MIMXRT1166"/>
     <definition extID="component.osa_template_config.MIMXRT1166"/>
-    <definition extID="component.osa_interface.MIMXRT1166"/>
     <definition extID="component.osa.MIMXRT1166"/>
     <definition extID="component.osa_bm.MIMXRT1166"/>
     <definition extID="middleware.usb.common_header.MIMXRT1166"/>
     <definition extID="middleware.usb.device.common_header.MIMXRT1166"/>
     <definition extID="middleware.usb.device_controller_ehci.MIMXRT1166"/>
+    <definition extID="middleware.usb.device.ehci_config_header.MIMXRT1166"/>
     <definition extID="middleware.usb.device.controller.driver.MIMXRT1166"/>
     <definition extID="middleware.usb.hsdcd.MIMXRT1166"/>
+    <definition extID="middleware.usb.hsdcd_config_header.MIMXRT1166"/>
     <definition extID="middleware.usb.phy.MIMXRT1166"/>
     <definition extID="iar"/>
     <definition extID="mdk"/>
@@ -47,7 +48,7 @@
     <definition extID="com.nxp.mcuxpresso.core.debug.support.segger.debug"/>
     <definition extID="com.nxp.mcuxpresso.core.debug.support.segger.release"/>
   </externalDefinitions>
-  <example id="evkmimxrt1160_dev_hid_mouse_lite_bm_cm4" name="dev_hid_mouse_lite_bm_cm4" device_core="cm4_MIMXRT1166xxxxx" dependency="platform.drivers.clock.MIMXRT1166 platform.drivers.iomuxc.MIMXRT1166 platform.drivers.anatop_ai.MIMXRT1166 platform.drivers.memory.MIMXRT1166 platform.drivers.dcdc_soc.MIMXRT1166 platform.drivers.gpc_3.MIMXRT1166 platform.drivers.pgmc.MIMXRT1166 platform.drivers.pmu_1.MIMXRT1166 platform.drivers.soc_src.MIMXRT1166 CMSIS_Include_core_cm.MIMXRT1166 device.MIMXRT1166_CMSIS.MIMXRT1166 device.MIMXRT1166_system.MIMXRT1166 device.MIMXRT1166_startup.MIMXRT1166 platform.drivers.cache_lmem.MIMXRT1166 platform.drivers.common.MIMXRT1166 platform.drivers.igpio.MIMXRT1166 platform.drivers.lpuart.MIMXRT1166 platform.drivers.pit.MIMXRT1166 platform.utilities.assert_lite.MIMXRT1166 platform.utilities.misc_utilities.MIMXRT1166 component.lists.MIMXRT1166 utility.str.MIMXRT1166 utility.debug_console_lite.MIMXRT1166 component.pit_adapter.MIMXRT1166 component.lpuart_adapter.MIMXRT1166 component.osa_template_config.MIMXRT1166 component.osa_interface.MIMXRT1166 component.osa.MIMXRT1166 component.osa_bm.MIMXRT1166 middleware.usb.common_header.MIMXRT1166 middleware.usb.device.common_header.MIMXRT1166 middleware.usb.device_controller_ehci.MIMXRT1166 middleware.usb.device.controller.driver.MIMXRT1166 middleware.usb.hsdcd.MIMXRT1166 middleware.usb.phy.MIMXRT1166" category="usb_examples">
+  <example id="evkmimxrt1160_dev_hid_mouse_lite_bm_cm4" name="dev_hid_mouse_lite_bm_cm4" device_core="cm4_MIMXRT1166xxxxx" dependency="platform.drivers.clock.MIMXRT1166 platform.drivers.iomuxc.MIMXRT1166 platform.drivers.anatop_ai.MIMXRT1166 platform.drivers.memory.MIMXRT1166 platform.drivers.dcdc_soc.MIMXRT1166 platform.drivers.gpc_3.MIMXRT1166 platform.drivers.pgmc.MIMXRT1166 platform.drivers.pmu_1.MIMXRT1166 platform.drivers.soc_src.MIMXRT1166 CMSIS_Include_core_cm.MIMXRT1166 device.MIMXRT1166_CMSIS.MIMXRT1166 device.MIMXRT1166_system.MIMXRT1166 device.MIMXRT1166_startup.MIMXRT1166 platform.drivers.cache_lmem.MIMXRT1166 platform.drivers.common.MIMXRT1166 platform.drivers.igpio.MIMXRT1166 platform.drivers.lpuart.MIMXRT1166 platform.drivers.pit.MIMXRT1166 platform.utilities.assert_lite.MIMXRT1166 platform.utilities.misc_utilities.MIMXRT1166 component.lists.MIMXRT1166 utility.str.MIMXRT1166 utility.debug_console_lite.MIMXRT1166 component.pit_adapter.MIMXRT1166 component.lpuart_adapter.MIMXRT1166 component.osa_template_config.MIMXRT1166 component.osa.MIMXRT1166 component.osa_bm.MIMXRT1166 middleware.usb.common_header.MIMXRT1166 middleware.usb.device.common_header.MIMXRT1166 middleware.usb.device_controller_ehci.MIMXRT1166 middleware.usb.device.ehci_config_header.MIMXRT1166 middleware.usb.device.controller.driver.MIMXRT1166 middleware.usb.hsdcd.MIMXRT1166 middleware.usb.hsdcd_config_header.MIMXRT1166 middleware.usb.phy.MIMXRT1166" category="usb_examples">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -68,6 +69,7 @@
           <value>SDK_DEBUGCONSOLE=1</value>
           <value>MCUX_META_BUILD</value>
           <value>CPU_MIMXRT1166DVM6A_cm4</value>
+          <value>MIMXRT1166_cm4_SERIES</value>
           <value>OSA_USED</value>
           <value>TIMER_PORT_TYPE_PIT=1</value>
           <value>USE_RTOS=0</value>
@@ -185,7 +187,9 @@
       <files mask="evkmimxrt1160_connect_cm4.mac"/>
     </source>
     <source path="." project_relative_path="source" type="configuration" toolchain="mdk">
-      <files mask="evkmimxrt1160_flexspi_nor.ini"/>
+      <files mask="evkmimxrt1160_ram_cm4.ini"/>
+      <files mask="evkmimxrt1160_cm4_flexspi_nor.ini"/>
+      <files mask="evkmimxrt1160_cm4_sdram_init.ini"/>
     </source>
     <source path="." project_relative_path="evkmimxrt1160/usb_examples/usb_device_hid_mouse_lite/bm/cm4" type="binary">
       <files mask="dev_hid_mouse_lite_bm.bin" hidden="true"/>
@@ -241,17 +245,18 @@
     </source>
     <source path="." project_relative_path="source" type="c_include" config="true">
       <files mask="fsl_os_abstraction_config.h"/>
+      <files mask="usb_device_config.h"/>
+      <files mask="usb_hsdcd_config.h"/>
     </source>
     <source path="." project_relative_path="source" type="c_preinclude">
       <files mask="mcux_config.h"/>
     </source>
-    <source path="." project_relative_path="source" type="c_include">
-      <files mask="usb_device_config.h"/>
-      <files mask="usb_hsdcd_config.h"/>
-    </source>
     <source path="." project_relative_path="doc" type="doc">
       <files mask="readme.md"/>
       <files mask="dcd_detection.jpg"/>
+    </source>
+    <source path="." project_relative_path="doc" type="doc">
+      <files mask="examples_shared_readme.md"/>
     </source>
   </example>
 </ksdk:examples>

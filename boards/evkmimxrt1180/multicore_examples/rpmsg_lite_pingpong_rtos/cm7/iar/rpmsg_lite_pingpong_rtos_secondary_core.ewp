@@ -244,7 +244,8 @@
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
-          <state>CPU_MIMXRT1189CVM8B_cm7</state>
+          <state>CPU_MIMXRT1189CVM8C_cm7</state>
+          <state>MIMXRT1189_cm7_SERIES</state>
           <state>MULTICORE_APP=1</state>
           <state>SDK_OS_FREE_RTOS</state>
         </option>
@@ -376,13 +377,14 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/drivers/cm7</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/silicon_id</state>
           <state>$PROJ_DIR$/../../../../../../components/silicon_id/socs</state>
+          <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg-lite/lib/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg-lite/lib/include/environment/freertos</state>
           <state>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg-lite/lib/include/platform/imxrt1180</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/multicore/mcmgr/src</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/multicore/mcmgr/inc</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/multicore/mcmgr/inc/platform/imxrt1180</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM4F</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/template</state>
@@ -570,7 +572,8 @@
         <option>
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
-          <state>CPU_MIMXRT1189CVM8B_cm7</state>
+          <state>CPU_MIMXRT1189CVM8C_cm7</state>
+          <state>MIMXRT1189_cm7_SERIES</state>
         </option>
         <option>
           <name>AList</name>
@@ -671,13 +674,14 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/drivers/cm7</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/silicon_id</state>
           <state>$PROJ_DIR$/../../../../../../components/silicon_id/socs</state>
+          <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg-lite/lib/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg-lite/lib/include/environment/freertos</state>
           <state>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg-lite/lib/include/platform/imxrt1180</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/multicore/mcmgr/src</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/multicore/mcmgr/inc</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/multicore/mcmgr/inc/platform/imxrt1180</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM4F</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/template</state>
@@ -696,7 +700,7 @@
         </option>
         <option>
           <name>PreInclude</name>
-          <state/>
+          <state>$PROJ_DIR$/../mcux_config.h</state>
         </option>
       </data>
     </settings>
@@ -1390,7 +1394,8 @@
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
-          <state>CPU_MIMXRT1189CVM8B_cm7</state>
+          <state>CPU_MIMXRT1189CVM8C_cm7</state>
+          <state>MIMXRT1189_cm7_SERIES</state>
           <state>MULTICORE_APP=1</state>
           <state>SDK_OS_FREE_RTOS</state>
         </option>
@@ -1522,13 +1527,14 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/drivers/cm7</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/silicon_id</state>
           <state>$PROJ_DIR$/../../../../../../components/silicon_id/socs</state>
+          <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg-lite/lib/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg-lite/lib/include/environment/freertos</state>
           <state>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg-lite/lib/include/platform/imxrt1180</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/multicore/mcmgr/src</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/multicore/mcmgr/inc</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/multicore/mcmgr/inc/platform/imxrt1180</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM4F</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/template</state>
@@ -1716,7 +1722,8 @@
         <option>
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
-          <state>CPU_MIMXRT1189CVM8B_cm7</state>
+          <state>CPU_MIMXRT1189CVM8C_cm7</state>
+          <state>MIMXRT1189_cm7_SERIES</state>
         </option>
         <option>
           <name>AList</name>
@@ -1817,13 +1824,14 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/drivers/cm7</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/silicon_id</state>
           <state>$PROJ_DIR$/../../../../../../components/silicon_id/socs</state>
+          <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg-lite/lib/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg-lite/lib/include/environment/freertos</state>
           <state>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg-lite/lib/include/platform/imxrt1180</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/multicore/mcmgr/src</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/multicore/mcmgr/inc</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/multicore/mcmgr/inc/platform/imxrt1180</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM4F</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/template</state>
@@ -1842,7 +1850,7 @@
         </option>
         <option>
           <name>PreInclude</name>
-          <state/>
+          <state>$PROJ_DIR$/../mcux_config.h</state>
         </option>
       </data>
     </settings>
@@ -2311,6 +2319,12 @@
       <name>$PROJ_DIR$/../mcux_config.h</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../mcux_config.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../mcux_config.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../rpmsg_config.h</name>
     </file>
   </group>
@@ -2369,6 +2383,9 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/drivers/fsl_iomuxc.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/drivers/fsl_memory.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/drivers/fsl_memory.h</name>
@@ -2833,15 +2850,6 @@
   <group>
     <name>component</name>
     <group>
-      <name>uart</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/uart/fsl_adapter_uart.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/uart/fsl_adapter_lpuart.c</name>
-      </file>
-    </group>
-    <group>
       <name>silicon_id</name>
       <file>
         <name>$PROJ_DIR$/../../../../../../components/silicon_id/fsl_silicon_id.h</name>
@@ -2856,6 +2864,15 @@
     <file>
       <name>$PROJ_DIR$/../../../../../../components/silicon_id/socs/fsl_silicon_id_soc.h</name>
     </file>
+    <group>
+      <name>uart</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/uart/fsl_adapter_uart.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/uart/fsl_adapter_lpuart.c</name>
+      </file>
+    </group>
   </group>
   <group>
     <name>rpmsg-lite</name>
@@ -2961,13 +2978,25 @@
     <group>
       <name>mcmgr</name>
       <group>
+        <name>inc</name>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/multicore/mcmgr/inc/mcmgr.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/multicore/mcmgr/inc/mcmgr_internal_core_api.h</name>
+        </file>
+        <group>
+          <name>platform</name>
+          <group>
+            <name>imxrt1180</name>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/multicore/mcmgr/inc/platform/imxrt1180/mcmgr_platform.h</name>
+            </file>
+          </group>
+        </group>
+      </group>
+      <group>
         <name>src</name>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/multicore/mcmgr/src/mcmgr.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/multicore/mcmgr/src/mcmgr_internal_core_api.h</name>
-        </file>
         <file>
           <name>$PROJ_DIR$/../../../../../../middleware/multicore/mcmgr/src/mcmgr.c</name>
         </file>
@@ -3067,6 +3096,9 @@
         <file>
           <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/timers.h</name>
         </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/freertos_tasks_c_additions.h</name>
+        </file>
       </group>
       <group>
         <name>portable</name>
@@ -3113,6 +3145,9 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../example_board_readme.md</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../examples_shared_readme.md</name>
     </file>
   </group>
 </project>

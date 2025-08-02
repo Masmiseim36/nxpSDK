@@ -1,7 +1,7 @@
 /*
  * Copyright (c) 2013-2016 ARM Limited. All rights reserved.
  * Copyright (c) 2016, Freescale Semiconductor, Inc. Not a Contribution.
- * Copyright 2016-2021, 2023 NXP. Not a Contribution.
+ * Copyright 2016-2021, 2023, 2025 NXP. Not a Contribution.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -25,7 +25,7 @@
 #define FSL_COMPONENT_ID "platform.drivers.enet_cmsis"
 #endif
 
-#define ARM_ETH_MAC_DRV_VERSION ARM_DRIVER_VERSION_MAJOR_MINOR(2, 3)
+#define ARM_ETH_MAC_DRV_VERSION ARM_DRIVER_VERSION_MAJOR_MINOR(2, 4)
 
 /* Define the alignment macro. */
 #if defined(FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL) && FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL
@@ -359,8 +359,7 @@ static int32_t ENET_CommonPowerControl(ARM_POWER_STATE state, cmsis_enet_mac_dri
             }
 
             /* Enable the tx/rx interrupt mode. */
-            config.interrupt = (uint32_t)kENET_TxFrameInterrupt | (uint32_t)kENET_TxBufferInterrupt |
-                               (uint32_t)kENET_RxFrameInterrupt | (uint32_t)kENET_TxBufferInterrupt;
+            config.interrupt = (uint32_t)kENET_TxFrameInterrupt | (uint32_t)kENET_RxFrameInterrupt;
             /* Enable tx accelerate function. */
             config.txAccelerConfig = (uint8_t)kENET_TxAccelIpCheckEnabled | (uint8_t)kENET_TxAccelProtoCheckEnabled;
             /* Callback setup */
@@ -498,6 +497,12 @@ static uint32_t ENET_CommonGetFrameSize(cmsis_enet_mac_driver_state_t *enet)
 static int32_t ENET_CommonReadFrame(cmsis_enet_mac_driver_state_t *enet, uint8_t *frame, uint32_t len)
 {
     status_t status;
+
+    /* Check if len exceeds int32_t maximum value. */
+    if (len > 0x7FFFFFFFU)
+    {
+        return ARM_DRIVER_ERROR_PARAMETER;
+    }
 
     status = ENET_ReadFrame(enet->resource->base, enet->handle, frame, len, 0, NULL);
     if (status != kStatus_Success)

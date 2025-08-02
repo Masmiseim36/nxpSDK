@@ -1,6 +1,5 @@
 /*
- * Copyright 2018-2024 NXP
- * All rights reserved.
+ * Copyright 2018-2025 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -52,7 +51,7 @@ static volatile uint16_t eRPCReadyEventData = 0U;
 /*!
  * @brief eRPC server side ready event handler
  */
-static void eRPCReadyEventHandler(uint16_t eventData, void *context)
+static void eRPCReadyEventHandler(mcmgr_core_t coreNum, uint16_t eventData, void *context)
 {
     eRPCReadyEventData = eventData;
 }
@@ -60,7 +59,7 @@ static void eRPCReadyEventHandler(uint16_t eventData, void *context)
 /* Implementation of RPC function increaseNumber. */
 void increaseNumber(uint32_t *number)
 {
-    *number += 1U;
+    (*number < UINT32_MAX) ? (*number += 1U) : (*number = UINT32_MAX);
     s_number = *number;
 }
 

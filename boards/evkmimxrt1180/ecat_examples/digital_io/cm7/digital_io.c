@@ -17,7 +17,7 @@
 #include "digital_io.h"
 #undef _DIGITAL_IO_
 
-#include "fsl_rgpio.h"
+#include "app.h"
 /*--------------------------------------------------------------------------------------
 ------
 ------    local types and defines
@@ -283,7 +283,7 @@ void APPL_OutputMapping(UINT16 *pData)
 *////////////////////////////////////////////////////////////////////////////////////////
 void APPL_Application(void)
 {
-    RGPIO_PinWrite(RGPIO4, 27, LED_status & 0x01);
+    RGPIO_PinWrite(GPIO_LED, GPIO_LED_PIN, LED_status & 0x01);
 }
 
 #if EXPLICIT_DEVICE_ID
@@ -372,7 +372,7 @@ UINT8 WriteObject0x7000(UINT16 index, UINT8 subindex, UINT32 dataSize, UINT16 MB
     {
         return ABORTIDX_VALUE_EXCEEDED;
     }
-    RGPIO_PinWrite(RGPIO4, 27, LED_status & 0x01);
+    RGPIO_PinWrite(GPIO_LED, GPIO_LED_PIN, LED_status & 0x01);
     return 0;
 }
 

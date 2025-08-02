@@ -1,6 +1,6 @@
 /*
  * Copyright 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2021 NXP
+ * Copyright 2016-2021, 2025 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -110,7 +110,7 @@ typedef struct _clock_setup
  * Define common ADC control functions for motor 1
  ******************************************************************************/
 #define M1_MCDRV_ADC_PERIPH_INIT() (InitADC())
-#define M1_MCDRV_ADC_GET(par) \
+#define M1_MCDRV_CURR_3PH_VOLT_DCB_GET(par) \
 	MCDRV_Curr3Ph2ShGet(par); \
 	MCDRV_VoltDcBusGet(par);  \
 	MCDRV_AuxValGet(par);
@@ -136,21 +136,30 @@ typedef struct _clock_setup
 /******************************************************************************
  * Define position and speed sensor - quadrature encoder for motor 1
  ******************************************************************************/
-#define M1_MCDRV_QD_PERIPH_INIT() M1_InitQD()
-#define M1_MCDRV_QD_GET(par) (MCDRV_QdEncGet(par))
-#define M1_MCDRV_QD_SET_DIRECTION(par) (MCDRV_QdEncSetDirection(par))
-#define M1_MCDRV_QD_SET_PULSES(par) (MCDRV_QdEncSetPulses(par))
-#define M1_MCDRV_QD_CLEAR(par) (MCDRV_QdEncClear(par))
+#define M1_MCDRV_ENC_PERIPH_INIT() M1_InitQD()
+#define M1_MCDRV_ENC_GET(par) (MCDRV_QdEncGet(par))
+#define M1_MCDRV_ENC_SET_DIRECTION(par) (MCDRV_QdEncSetDirection(par))
+#define M1_MCDRV_ENC_SET_PULSES(par) (MCDRV_QdEncSetPulses(par))
+#define M1_MCDRV_ENC_CLEAR(par) (MCDRV_QdEncClear(par))
 
 /******************************************************************************
  * Define motor 1 CMP2 for overcurrent detection
  ******************************************************************************/
 #define M1_MCDRV_CMP_INIT() InitCMP()
 
+/* SENSORS*/
+#define M1_POSPE_ENC_PULSES (2000)
+#define M1_POSPE_ENC_DIRECTION (0)
+#define M1_POSPE_ENC_N_MIN (0.0F)
+#define M1_POSPE_MECH_POS_GAIN ACC32(32768.0/((M1_POSPE_ENC_PULSES*4.0)/2.0))
+#define M1_POSPE_TO_KP_GAIN (1256.64F)
+#define M1_POSPE_TO_KI_GAIN (24.6740F)
+#define M1_POSPE_TO_THETA_GAIN (0.0000198944F)
+        
 /******************************************************************************
  * Global variable definitions
  ******************************************************************************/
-extern mcdrv_adcetc_t g_sM1AdcSensor;
+extern mcdrv_adcetc_t g_sM1Curr3phDcBus;
 extern mcdrv_pwm3ph_pwma_t g_sM1Pwm3ph;
 extern mcdrv_qd_enc_t g_sM1Enc;
 

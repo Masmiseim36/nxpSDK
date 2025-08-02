@@ -48,6 +48,63 @@ struct pbap_hdr
     uint8_t *value;
     uint16_t length;
 };
+#define MAX_NAME_LEN   84
+#define MAX_BUFFER_SIZE 2048
+static struct {
+	uint16_t len;
+	uint8_t buf[MAX_BUFFER_SIZE];
+} pbap_buf;
+static struct {
+	uint8_t cmd;
+    uint8_t flags;
+    uint8_t srmp_wait;
+    char name[MAX_NAME_LEN];
+	struct net_buf *buf;
+} pbap_cmd;
+
+static void *pbap_buf_add(const void *data, size_t len)
+{
+	void *ptr = pbap_buf.buf + pbap_buf.len;
+
+	if ((len + pbap_buf.len) > MAX_BUFFER_SIZE) {
+		return NULL;
+	}
+
+	if (data) {
+		memcpy(ptr, data, len);
+	} else {
+		(void)memset(ptr, 0, len);
+	}
+
+	pbap_buf.len += len;
+
+	LOG_DBG("%d/%d used", pbap_buf.len, MAX_BUFFER_SIZE);
+
+	return ptr;
+}
+
+static void pbap_buf_clear(void)
+{
+	(void)memset(&pbap_buf, 0, sizeof(pbap_buf));
+}
+
+static void pbap_ev_failure(uint8_t event)
+{
+    uint8_t result = BTP_STATUS_FAILED;
+    tester_event(BTP_SERVICE_ID_PBAP, event, &result, sizeof(result));
+}
+
+static void pbap_ev_success(uint8_t event, uint8_t result, struct net_buf *buf)
+{
+    pbap_buf_add(&result, sizeof(result));
+    if (buf != NULL)
+    {
+        pbap_buf_add(buf->data, buf->len);
+        // net_buf_unref(buf);
+    }
+    tester_event(BTP_SERVICE_ID_PBAP, event, &pbap_buf.buf, pbap_buf.len);
+    pbap_buf_clear();
+}
 
 #if defined(CONFIG_BT_PBAP_PCE) && (CONFIG_BT_PBAP_PCE > 0)
 #include <bluetooth/pbap_pce.h>
@@ -74,7 +131,7 @@ static struct bt_sdp_attribute pbap_pce_attrs[] = {
             BT_SDP_ARRAY_16(BT_SDP_PBAP_PCE_SVCLASS) //11 2E
         },
         )
-    ),
+    ), 
     BT_SDP_LIST(
         BT_SDP_ATTR_PROFILE_DESC_LIST,
         BT_SDP_TYPE_SIZE_VAR(BT_SDP_SEQ8, 8), //35 08
@@ -136,7 +193,6 @@ static void app_pce_pull_phonebook_cb(struct bt_pbap_pce *pbap_pce, uint8_t resu
         net_buf_unref(buf);
         return;
     }
-  //  bt_pbap_pce_app_param_parse(buf, app_app_param_cb, NULL);
     net_buf_unref(buf);
 
     if (result == PBAP_CONTINUE_RSP)
@@ -149,6 +205,10 @@ static void app_pce_pull_phonebook_cb(struct bt_pbap_pce *pbap_pce, uint8_t resu
             return;
         }
         net_buf_reserve(buf, BT_PBAP_PCE_RSV_LEN_PULL_PHONEBOOK(g_PbapPce.pbap_pceHandle, BT_OBEX_REQ_END));
+        if (conn_model == BTP_PBAP_PCE_RFCOMM_CONN)
+        {
+            OSA_TimeDelay(1000);
+        }
         revert = bt_pbap_pce_pull_phonebook(g_PbapPce.pbap_pceHandle, buf, NULL, g_PbapPce.lcl_srmp_wait, BT_OBEX_REQ_END);
         if (revert != 0)
         {
@@ -166,7 +226,6 @@ static void app_pce_pull_vcard_listing_cb(struct bt_pbap_pce *pbap_pce, uint8_t 
         net_buf_unref(buf);
         return;
     }
- //   bt_pbap_pce_app_param_parse(buf, app_app_param_cb, NULL);
     net_buf_unref(buf);
 
     if (result == PBAP_CONTINUE_RSP)
@@ -200,7 +259,6 @@ static void app_pce_pull_vcard_entry_cb(struct bt_pbap_pce *pbap_pce, uint8_t re
         net_buf_unref(buf);
         return;
     }
- //   bt_pbap_pce_app_param_parse(buf, app_app_param_cb, NULL);
     net_buf_unref(buf);
 
     if (result == PBAP_CONTINUE_RSP)
@@ -290,14 +348,21 @@ static struct bt_sdp_discover_params discov_pbap_pce = {
     .pool = &sdp_client_pool,
 };
 
-static uint8_t create_connect(const void *cmd, uint16_t cmd_len,
+static uint8_t pce_create_connect(const void *cmd, uint16_t cmd_len,
  				  void *rsp, uint16_t *rsp_len)
 {
     int retval = 0;
     const struct btp_pbap_pce_connect_cmd *cp = cmd;
     struct bt_conn *conn = bt_conn_lookup_addr_br(&cp->address.a);
     conn_model = cp->model;
-
+    pce_auth = cp->is_auth;
+    if(pce_auth)
+    {
+        strcpy(userid, "PTS");
+        g_Pbap_pce_Auth.user_id = userid;
+        strcpy(password, "0000");
+        g_Pbap_pce_Auth.pin_code = password;
+    }
     if (!conn) {
 		return BTP_STATUS_FAILED;
 	} else {
@@ -319,111 +384,122 @@ static uint8_t pce_disconnect(const void *cmd, uint16_t cmd_len,
     return BTP_STATUS_SUCCESS;
 }
 
-static uint8_t pce_connect_auth(const void *cmd, uint16_t cmd_len,
+static uint8_t pce_create_cmd(const void *cmd, uint16_t cmd_len,
  				  void *rsp, uint16_t *rsp_len)
 {
-    pce_auth = 1;
-    strcpy(userid, "PTS");
-    g_Pbap_pce_Auth.user_id = userid;
-    strcpy(password, "0000");
-    g_Pbap_pce_Auth.pin_code = password;
-    return BTP_STATUS_SUCCESS;
-}
-
-static void pce_add_params(uint8_t *cmd, uint16_t len, struct net_buf *buf)
-{
-    uint8_t *req_param = cmd;
-    uint16_t req_len = len;
-    uint8_t data_8 = 0;
-    uint16_t data_16 = 0;
-    uint64_t data_64 = 0;
-    if(cmd == NULL || len == 0 || buf == NULL)
-    {
-        return;
-    }
-    while(req_len > 0)
-    {
-        struct param *pce_param = (struct param *)req_param;
-        switch (pce_param->id)
-        {
-            case BTP_PBAP_PCE_NAME:
-                memcpy(name, pce_param->value, pce_param->length);
-                name[pce_param->length] = 0;
-                break;
-            
-            case BTP_PBAP_PCE_APPL_MLC:
-                data_16 = sys_get_be16(pce_param->value);
-                BT_PBAP_ADD_PARAMS_MAX_LIST_COUNT(buf, data_16);
-                break;
-            
-            case BTP_PBAP_PCE_APPL_PROPERTY_SELECTOR:
-                data_64 = sys_get_be64(pce_param->value);
-                BT_PBAP_ADD_PARAMS_PROPERTY_SELECTOR(buf, data_64);
-                break;
-            
-            case BTP_PBAP_PCE_APPL_RESET_NEW_MISSED_CALLS:
-                data_8 = pce_param->value[0];
-                BT_PBAP_ADD_PARAMS_RESET_NEW_MISSED_CALLS(buf, data_8);
-                break;
-
-            case BTP_PBAP_PCE_APPL_VCAED_SELECTOR:
-                data_64 = sys_get_be64(pce_param->value);
-                BT_PBAP_ADD_PARAMS_VCARD_SELECTOR(buf, data_64);
-                break;
-
-            case BTP_PBAP_PCE_APPL_SEARCH_PROPERTY:
-                data_8 = pce_param->value[0];
-                BT_PBAP_ADD_PARAMS_SEARCH_PROPERTY(buf, data_8);
-                break;
-
-            case BTP_PBAP_PCE_APPL_SEARCH_VALUE:
-                BT_PBAP_ADD_PARAMS_SEARCH_VALUE(buf, pce_param->value, pce_param->length);
-                break;
-            
-            case BTP_PBAP_PCE_APPL_VCARD_SELELCTOP_OPERATOR:
-                data_8 = pce_param->value[0];
-                BT_PBAP_ADD_PARAMS_VCARD_SELECTOR_OPERATOR(buf, data_8);
-                break;
-
-        }
-        req_len -= pce_param->length;
-        req_len -= sizeof(struct param);
-        req_param += sizeof(struct param);
-        req_param += pce_param->length;
-    }
-}
-
-static uint8_t pce_pull_phonebook(const void *cmd, uint16_t cmd_len,
- 				  void *rsp, uint16_t *rsp_len)
-{
-
-    API_RESULT retval = 0;
-    struct net_buf *buf;
-    uint8_t *req_param = (uint8_t *)cmd;
-    uint16_t req_len = cmd_len;
-
-    buf = net_buf_alloc(&pbap_pce_appl_pool, osaWaitNone_c);
+    const struct btp_pbap_pce_create_cmd *cp = cmd;
+    struct net_buf *buf = net_buf_alloc(&pbap_pce_appl_pool, osaWaitNone_c);
     if (!buf)
     {
          return BTP_STATUS_FAILED;
     }
-    net_buf_reserve(buf, BT_PBAP_PCE_RSV_LEN_PULL_PHONEBOOK(g_PbapPce.pbap_pceHandle, BT_OBEX_REQ_UNSEG));
-    
-    BT_PBAP_ADD_PARAMS_MAX_LIST_COUNT(buf, 65535);
-    pce_add_params(req_param, req_len, buf);
 
-    g_PbapPce.num_srmp_wait = 0;
-    g_PbapPce.lcl_srmp_wait = g_PbapPce.num_srmp_wait > 0 ? true : false;
-
-    retval = bt_pbap_pce_pull_phonebook(g_PbapPce.pbap_pceHandle, buf, (char *)name, g_PbapPce.lcl_srmp_wait, BT_OBEX_REQ_UNSEG);
-    if (API_SUCCESS != retval)
+    pbap_cmd.cmd = cp->cmd;
+    pbap_cmd.flags = cp->flags;
+    pbap_cmd.srmp_wait = cp->srmp_wait;
+    pbap_cmd.buf = buf;
+    memset(pbap_cmd.name, 0, MAX_NAME_LEN);
+    strncpy(pbap_cmd.name, cp->name, strlen(cp->name));
+    g_PbapPce.lcl_srmp_wait = pbap_cmd.srmp_wait; 
+    switch (cp->cmd)
     {
-        net_buf_unref(buf);
-        return BTP_STATUS_FAILED;
+        case BTP_PBAP_PCE_PULL_PHONEBOOK:
+            net_buf_reserve(pbap_cmd.buf, BT_PBAP_PCE_RSV_LEN_PULL_PHONEBOOK(g_PbapPce.pbap_pceHandle, cp->flags));
+            BT_PBAP_ADD_PARAMS_MAX_LIST_COUNT(pbap_cmd.buf, 65535);
+            break;
+        case BTP_PBAP_PCE_PULL_VCARD_LISTING:
+            net_buf_reserve(pbap_cmd.buf, BT_PBAP_PCE_RSV_LEN_PULL_VCARD_LISTING(g_PbapPce.pbap_pceHandle, cp->flags));
+            BT_PBAP_ADD_PARAMS_MAX_LIST_COUNT(pbap_cmd.buf, 65535);
+            break;
+        case BTP_PBAP_PCE_PULL_VCARD_ENTRY:
+            net_buf_reserve(pbap_cmd.buf, BT_PBAP_PCE_RSV_LEN_PULL_VCARD_ENTRY(g_PbapPce.pbap_pceHandle, cp->flags));
+            break;
+
+        default:
+            return BTP_STATUS_FAILED;
+    }
+    return BTP_STATUS_SUCCESS;
+}
+
+static uint8_t pce_set_appl_param(const void *cmd, uint16_t cmd_len,
+ 				  void *rsp, uint16_t *rsp_len)
+{
+    struct btp_pbap_pce_set_appl_param *cp = (struct btp_pbap_pce_set_appl_param *)cmd;
+    uint8_t value_8 = 0;
+    uint16_t value_16 = 0;
+    uint32_t value_32 = 0;
+    uint64_t value_64 = 0;
+    switch(cp->tag)
+    {
+        case BT_PBAP_TAG_ID_MAX_LIST_COUNT:
+            value_16 = sys_get_be16((uint8_t *)cp->value);
+            BT_PBAP_ADD_PARAMS_MAX_LIST_COUNT(pbap_cmd.buf, value_16);
+            break;
+        case BT_PBAP_TAG_ID_PROPERTY_SELECTOR:
+            value_64 = sys_get_be64((uint8_t *)cp->value);
+            BT_PBAP_ADD_PARAMS_PROPERTY_SELECTOR(pbap_cmd.buf, value_64);
+            break;
+        case BT_PBAP_TAG_ID_RESET_NEW_MISSED_CALLS:
+            value_8 = (uint8_t)cp->value[0];
+            BT_PBAP_ADD_PARAMS_RESET_NEW_MISSED_CALLS(pbap_cmd.buf, value_8);
+            break;
+        case BT_PBAP_TAG_ID_VCARD_SELECTOR:
+            value_64 = sys_get_be64((uint8_t *)cp->value);
+            BT_PBAP_ADD_PARAMS_VCARD_SELECTOR(pbap_cmd.buf, value_64);
+            break;
+        case BT_PBAP_TAG_ID_VCARD_SELECTOR_OPERATOR:
+            value_8 = (uint8_t)cp->value[0];
+            BT_PBAP_ADD_PARAMS_VCARD_SELECTOR_OPERATOR(pbap_cmd.buf, value_8);
+            break;
+        case BT_PBAP_TAG_ID_SEARCH_PROPERTY:
+            value_8 = (uint8_t)cp->value[0];
+            BT_PBAP_ADD_PARAMS_SEARCH_PROPERTY(pbap_cmd.buf, value_8);
+            break;
+        case BT_PBAP_TAG_ID_SEARCH_VALUE:
+            BT_PBAP_ADD_PARAMS_SEARCH_VALUE(pbap_cmd.buf, cp->value, strlen(cp->value));
+            break;
+    }
+    return BTP_STATUS_SUCCESS;
+}
+
+static uint8_t pce_excute_cmd(const void *cmd, uint16_t cmd_len,
+ 				  void *rsp, uint16_t *rsp_len)
+{
+    uint8_t err = BTP_STATUS_SUCCESS;
+    uint8_t retval = 0;
+    switch (pbap_cmd.cmd)
+    {
+        case BTP_PBAP_PCE_PULL_PHONEBOOK:
+            retval = bt_pbap_pce_pull_phonebook(g_PbapPce.pbap_pceHandle, pbap_cmd.buf, (char *)pbap_cmd.name, g_PbapPce.lcl_srmp_wait, (enum bt_obex_req_flags)pbap_cmd.flags);
+            if (API_SUCCESS != retval)
+            {
+                net_buf_unref(pbap_cmd.buf);
+                err = BTP_STATUS_FAILED;
+            }
+            break;
+        case BTP_PBAP_PCE_PULL_VCARD_LISTING:
+            retval = bt_pbap_pce_pull_vcard_listing(g_PbapPce.pbap_pceHandle, pbap_cmd.buf, (char *)pbap_cmd.name, g_PbapPce.lcl_srmp_wait, (enum bt_obex_req_flags)pbap_cmd.flags);
+            if (API_SUCCESS != retval)
+            {
+                net_buf_unref(pbap_cmd.buf);
+                err = BTP_STATUS_FAILED;
+            }
+            break;
+        case BTP_PBAP_PCE_PULL_VCARD_ENTRY:
+            retval = bt_pbap_pce_pull_vcard_entry(g_PbapPce.pbap_pceHandle, pbap_cmd.buf, (char *)pbap_cmd.name, g_PbapPce.lcl_srmp_wait, (enum bt_obex_req_flags)pbap_cmd.flags);
+            if (API_SUCCESS != retval)
+            {
+                net_buf_unref(pbap_cmd.buf);
+                err = BTP_STATUS_FAILED;
+            }
+            break;
+
+        default:
+            err =  BTP_STATUS_FAILED;
+            break;
     }
 
-    return BTP_STATUS_SUCCESS;
-    
+    return err;
 }
 
 static uint8_t pce_set_path(const void *cmd, uint16_t cmd_len,
@@ -431,9 +507,6 @@ static uint8_t pce_set_path(const void *cmd, uint16_t cmd_len,
 {
     API_RESULT retval = 0;
     struct net_buf *buf;
-    uint8_t *req_cmd = (uint8_t *)cmd;
-    uint8_t length = req_cmd[0];
-    memset(name, 0, sizeof(name));
     buf = net_buf_alloc(&pbap_pce_appl_pool, osaWaitNone_c);
     if (!buf)
     {
@@ -441,8 +514,7 @@ static uint8_t pce_set_path(const void *cmd, uint16_t cmd_len,
     }
     net_buf_reserve(buf, BT_PBAP_PCE_RSV_LEN_SET_PATH(g_PbapPce.pbap_pceHandle));
 
-    memcpy(name, req_cmd + 1, length);
-    retval = bt_pbap_pce_set_phonebook_path(g_PbapPce.pbap_pceHandle, buf, (char *)name);
+    retval = bt_pbap_pce_set_phonebook_path(g_PbapPce.pbap_pceHandle, buf, (char *)cmd);
     if (retval != API_SUCCESS)
     {
         net_buf_unref(buf);
@@ -451,67 +523,7 @@ static uint8_t pce_set_path(const void *cmd, uint16_t cmd_len,
     return BTP_STATUS_SUCCESS;
 }
 
-static uint8_t pce_pull_vcard_listing(const void *cmd, uint16_t cmd_len,
- 				  void *rsp, uint16_t *rsp_len)
-{
-    API_RESULT retval = 0;
-    struct net_buf *buf;
-    uint8_t *req_param = (uint8_t *)cmd;
-    uint16_t req_len = cmd_len;
 
-    buf = net_buf_alloc(&pbap_pce_appl_pool, osaWaitNone_c);
-    if (!buf)
-    {
-         return BTP_STATUS_FAILED;
-    }
-    net_buf_reserve(buf, BT_PBAP_PCE_RSV_LEN_PULL_VCARD_LISTING(g_PbapPce.pbap_pceHandle, BT_OBEX_REQ_UNSEG));
-    
-    BT_PBAP_ADD_PARAMS_MAX_LIST_COUNT(buf, 65535);
-
-    pce_add_params(req_param, req_len, buf);
-
-    g_PbapPce.num_srmp_wait = 0;
-    g_PbapPce.lcl_srmp_wait = g_PbapPce.num_srmp_wait > 0 ? true : false;
-
-    retval = bt_pbap_pce_pull_vcard_listing(g_PbapPce.pbap_pceHandle, buf, (char *)name, g_PbapPce.lcl_srmp_wait, BT_OBEX_REQ_UNSEG);
-    if (API_SUCCESS != retval)
-    {
-        net_buf_unref(buf);
-        return BTP_STATUS_FAILED;
-    }
-
-    return BTP_STATUS_SUCCESS;
-}
-
-static uint8_t pce_pull_vcard_entry(const void *cmd, uint16_t cmd_len,
- 				  void *rsp, uint16_t *rsp_len)
-{
-    API_RESULT retval = 0;
-    struct net_buf *buf;
-    uint8_t *req_param = (uint8_t *)cmd;
-    uint16_t req_len = cmd_len;
-
-    buf = net_buf_alloc(&pbap_pce_appl_pool, osaWaitNone_c);
-    if (!buf)
-    {
-         return BTP_STATUS_FAILED;
-    }
-    net_buf_reserve(buf, BT_PBAP_PCE_RSV_LEN_PULL_VCARD_ENTRY(g_PbapPce.pbap_pceHandle, BT_OBEX_REQ_UNSEG));
-    
-    pce_add_params(req_param, req_len, buf);
-
-    g_PbapPce.num_srmp_wait = 0;
-    g_PbapPce.lcl_srmp_wait = g_PbapPce.num_srmp_wait > 0 ? true : false;
-
-    retval = bt_pbap_pce_pull_vcard_entry(g_PbapPce.pbap_pceHandle, buf, (char *)name, g_PbapPce.lcl_srmp_wait, BT_OBEX_REQ_UNSEG);
-    if (API_SUCCESS != retval)
-    {
-        net_buf_unref(buf);
-        return BTP_STATUS_FAILED;
-    }
-
-    return BTP_STATUS_SUCCESS;
-}
 
 static uint8_t pce_abort(const void *cmd, uint16_t cmd_len,
  				  void *rsp, uint16_t *rsp_len)
@@ -693,7 +705,8 @@ static int endwith(char *str, char *suffix)
     return strcmp(endpart, suffix) == 0;
 }
 
-uint8_t feature = 0;
+static uint8_t feature = 0;
+static uint8_t rsp_flag = 0;
 
 static uint8_t sample_primay_folder_version[16] =
        {
@@ -712,31 +725,37 @@ static uint8_t sample_database_identifier[16] =
           0x07U, 0x00U, 0x00U, 0x00U, 0x00U, 0x00U, 0x00U, 0x00U,
           0x00U, 0x00U, 0x00U, 0x00U, 0x00U, 0x00U, 0x00U, 0x03U
        };
-static char pbap_pse_phonebook_example[] =
+static char pbap_pse_phonebook_example[4096] =
     "BEGIN:VCARD\n\
 VERSION:2.1\n\
-FN;CHARSET=UTF-8:descvs\n\
-N;CHARSET=UTF-8:descvs\n\
+FN:PTS\n\
+N:PTS\n\
+X-BT-UID:1234567890ABCDEF1234567890000000\n\
+X-BT-UCI:skype:PTS\n\
 END:VCARD\n\
 BEGIN:VCARD\n\
 VERSION:2.1\n\
 N:;cc;;;\n\
 FN:cc\n\
 TEL;CELL:154555845\n\
+X-BT-UID:1234567890ABCDEF1234567890000001\n\
+X-BT-UCI:skype:PTS1\n\
 END:VCARD";
 
-static const char pbap_pse_vcard_listing[] =
+static char pbap_pse_vcard_listing[4096] =
     "<?xml version=\"1.0\"?><!DOCTYPE vcard-listing SYSTEM \"vcard-listing.dtd\"><vCard-listing version=\"1.0\">\
-<card handle=\"1.vcf\" name=\"qwe\"/><card handle=\"2.vcf\" name=\"qwe\"/><card handle=\"3.vcf\" name=\"qwe\"/>\
-<card handle=\"4.vcf\" name=\"1155\"/><card handle=\"5.vcf\" name=\"051295205593\"/><card handle=\"6.vcf\" name=\"130\"/>/vCard-listing>";
+<card handle=\"0.vcf\" name=\"PTS\"/><card handle=\"1.vcf\" name=\"cc\"/>/vCard-listing>";
 
 static const char pbap_pse_vcard_entry[] =
     "BEGIN:VCARD\n\
 VERSION:2.1\n\
-FN:\n\
-N:\n\
+FN:PTS\n\
+N:PTS\n\
 TEL;X-0:1155\n\
 X-IRMC-CALL-DATETIME;DIALED:20220913T110607\n\
+X-BT-UID:1234567890ABCDEF1234567890000002\n\
+X-BT-SPEEDDIALKEY:1\n\
+X-BT-UCI:skype:PTS\n\
 END:VCARD";
 
 static struct bt_sdp_attribute pbap_pse_attrs[] = {
@@ -804,7 +823,7 @@ static struct bt_sdp_attribute pbap_pse_attrs[] = {
             },
             {
                 BT_SDP_TYPE_SIZE(BT_SDP_UINT16), //09
-                BT_SDP_ARRAY_16(0x0101U) //01 01
+                BT_SDP_ARRAY_16(0x0102U) //01 02
             },
             )
         },
@@ -925,19 +944,34 @@ static bool app_pse_param_cb(struct bt_data *data, void *user_data)
     switch (data->type)
     {
         case BT_PBAP_TAG_ID_MAX_LIST_COUNT:
-            g_PbapPse.req_appl_params.max_list_count = sys_get_be16(data->data);
-            PBAP_SET_APPL_PARAM_FLAG(g_PbapPse.req_appl_params.appl_param_flag, (uint16_t)1U << (data->type -1) % BT_PBAP_APPL_PARAM_HDR_COUNT);
+            g_PbapPse.req_appl_params.max_list_count = sys_get_be16(data->data);  
+            break;
+        case BT_PBAP_TAG_ID_RESET_NEW_MISSED_CALLS:
+            g_PbapPse.req_appl_params.reset_new_missed_calls = data->data[0];  
             break;
         default:
             break;
     }
-    
+    PBAP_SET_APPL_PARAM_FLAG(g_PbapPse.req_appl_params.appl_param_flag, (uint16_t)1U << (data->type -1) % BT_PBAP_APPL_PARAM_HDR_COUNT);
     return 1;
 }
 
 static uint8_t app_pse_appl_param_response(struct net_buf *buf, app_pbap_pse_t *g_PbapPse, enum pbap_pse_command command)
 {
     uint8_t send_body = 1;
+    static uint8_t nmc_strp = 1;
+    if (PBAP_GET_APPL_PARAM_FLAG(g_PbapPse->req_appl_params.appl_param_flag, ((uint16_t)1U << (BT_PBAP_TAG_ID_MAX_LIST_COUNT -1) % BT_PBAP_APPL_PARAM_HDR_COUNT)) == 0)
+    {
+        g_PbapPse->req_appl_params.max_list_count = 0xFFFF;  
+    }
+    if (strstr(g_PbapPse->name, "mch") != NULL)
+    {
+        BT_PBAP_ADD_PARAMS_NEW_MISSED_CALLS(buf, 1);
+    }
+    if (strstr(g_PbapPse->name, "cch") != NULL && (g_PbapPse->rem_supported_features & BT_PBAP_FEATURE_ENHANCED_MISSED_CALLS))
+    { 
+        BT_PBAP_ADD_PARAMS_NEW_MISSED_CALLS(buf, 1);
+    }
     for (uint8_t index = 0; index < BT_PBAP_APPL_PARAM_HDR_COUNT; ++index)
     {
         if (PBAP_GET_APPL_PARAM_FLAG(g_PbapPse->req_appl_params.appl_param_flag, (uint16_t)1U << index % BT_PBAP_APPL_PARAM_HDR_COUNT) != 0)
@@ -947,24 +981,30 @@ static uint8_t app_pse_appl_param_response(struct net_buf *buf, app_pbap_pse_t *
                 case  BT_PBAP_TAG_ID_MAX_LIST_COUNT:
                     if (g_PbapPse->req_appl_params.max_list_count == 0)
                     {
+                        BT_PBAP_ADD_PARAMS_DATABASE_IDENTIFIER(buf, sample_database_identifier);
+                        BT_PBAP_ADD_PARAMS_PRIMARY_FOLDER_VERSION(buf, sample_primay_folder_version);
+                        BT_PBAP_ADD_PARAMS_SECONDARY_FOLDER_VERSION(buf, sample_secondary_folder_version);
                         BT_PBAP_ADD_PARAMS_PHONE_BOOK_SIZE(buf, 2);
                         send_body = 0;
+                    }
+                    break;
+                case BT_PBAP_TAG_ID_RESET_NEW_MISSED_CALLS:
+                    if (g_PbapPse->req_appl_params.reset_new_missed_calls == 1)
+                    {
+                        BT_PBAP_ADD_PARAMS_NEW_MISSED_CALLS(buf, 1);
                     }
                     break;
                 default:
                     break;
             }
-        }
+        } 
     }
-    if (g_PbapPse->rem_supported_features & BT_PBAP_FEATURE_ENHANCED_MISSED_CALLS || strstr(g_PbapPse->name, "mch") != NULL)
-    {
-        BT_PBAP_ADD_PARAMS_NEW_MISSED_CALLS(buf, 1);
-    }
-    if(g_PbapPse->rem_supported_features & BT_PBAP_FEATURE_DATABASE_IDENTIFIER)
+
+    if(g_PbapPse->lcl_supported_features & BT_PBAP_FEATURE_DATABASE_IDENTIFIER)
     {
         BT_PBAP_ADD_PARAMS_DATABASE_IDENTIFIER(buf, sample_database_identifier);
     }
-    if (g_PbapPse->rem_supported_features & BT_PBAP_FEATURE_FOLDER_VERSION_COUNTERS)
+    if (g_PbapPse->lcl_supported_features & BT_PBAP_FEATURE_FOLDER_VERSION_COUNTERS)
     {
         BT_PBAP_ADD_PARAMS_PRIMARY_FOLDER_VERSION(buf, sample_primay_folder_version);
         BT_PBAP_ADD_PARAMS_SECONDARY_FOLDER_VERSION(buf, sample_secondary_folder_version);
@@ -1028,7 +1068,7 @@ static void app_pse_pull_phonebook_cb(struct bt_pbap_pse *pbap_pse, struct net_b
             result = app_check_pull_phonebook_path(g_PbapPse.name);
             if (result == 0)
             {
-                memcpy(g_PbapPse.currentpath, "root\0", BT_str_len("root\0"));
+                // memcpy(g_PbapPse.currentpath, "root\0", BT_str_len("root\0"));
                 result = app_pse_appl_param_response(buf, &g_PbapPse, PBAP_PSE_PULL_PHONE_BOOK);
             }
             else
@@ -1040,6 +1080,7 @@ static void app_pse_pull_phonebook_cb(struct bt_pbap_pse *pbap_pse, struct net_b
     if (g_PbapPse.remaining_rsp != 0)
     {
         bt_pbap_pse_get_max_pkt_len(pbap_pse, &max_pkt_len);
+        max_pkt_len -= BT_PBAP_PSE_RSV_LEN_SEND_RESPONSE(pbap_pse);
         max_pkt_len -= sizeof(struct bt_pbap_push_response_hdr);
         max_pkt_len -= buf->len;
         max_pkt_len -= sizeof(struct bt_obex_hdr_bytes);
@@ -1050,9 +1091,9 @@ static void app_pse_pull_phonebook_cb(struct bt_pbap_pse *pbap_pse, struct net_b
             bt_obex_add_hdr(buf, BT_OBEX_HDR_END_OF_BODY, body.value, body.length);
             g_PbapPse.remaining_rsp  = 0;
             result                   = BT_PBAP_SUCCESS_RSP;
-            g_PbapPse.currentpath[4] = 0;
+            // g_PbapPse.currentpath[4] = 0;
         }
-        else
+        else 
         {
             body.value  = (uint8_t *)&pbap_pse_phonebook_example[g_PbapPse.send_rsp];
             body.length = max_pkt_len;
@@ -1062,11 +1103,17 @@ static void app_pse_pull_phonebook_cb(struct bt_pbap_pse *pbap_pse, struct net_b
             result = BT_PBAP_CONTINUE_RSP;
         }
     }
+    if(rsp_flag)
+    {
+        OSA_TimeDelay(1000);
+    }
+    pbap_ev_success(PBAP_EV_PCE_PULL_PHONEBOOK, result, buf);
     revert = bt_pbap_pse_pull_phonebook_response(pbap_pse, result, buf, 0);
     if (revert != 0)
     {
         net_buf_unref(buf);
     }
+
 }
 
 static void app_pse_set_phonebook_path_cb(struct bt_pbap_pse *pbap_pse, char *name)
@@ -1113,53 +1160,62 @@ static void app_pse_set_phonebook_path_cb(struct bt_pbap_pse *pbap_pse, char *na
             {
                 strcat(g_PbapPse.currentpath, "/");
                 strcat(g_PbapPse.currentpath, path_name);
-                result = BT_PBAP_SUCCESS_RSP;
+                result =  BT_PBAP_SUCCESS_RSP;
             }
             else
             {
                 result = BT_PBAP_NOT_FOUND_RSP;
             }
-        }
-        for (index = 0; index < 8; index++)
-        {
-            if (strcmp(path_name, child_floader_name[index]) == 0)
+            revert = bt_pbap_pse_set_phonebook_path_response(pbap_pse, result);
+            if (API_SUCCESS != revert)
             {
-                if (index == 0)
+                return ;
+            }
+        }
+        else
+        {
+            for (index = 0; index < 8; index++)
+            {
+                if (strcmp(path_name, child_floader_name[index]) == 0)
                 {
-                    if (endwith(g_PbapPse.currentpath, "root") || endwith(g_PbapPse.currentpath, "SIM1"))
+                    if (index == 0)
                     {
-                        strcat(g_PbapPse.currentpath, "/");
-                        strcat(g_PbapPse.currentpath, path_name);
-                        result = BT_PBAP_SUCCESS_RSP;
-                        break;
+                        if (endwith(g_PbapPse.currentpath, "root") || endwith(g_PbapPse.currentpath, "SIM1"))
+                        {
+                            strcat(g_PbapPse.currentpath, "/");
+                            strcat(g_PbapPse.currentpath, path_name);
+                            result = BT_PBAP_SUCCESS_RSP;
+                            break;
+                        }
+                        else
+                        {
+                            result = BT_PBAP_NOT_FOUND_RSP;
+                            break;
+                        }
                     }
                     else
                     {
-                        result = BT_PBAP_NOT_FOUND_RSP;
-                        break;
-                    }
-                }
-                else
-                {
-                    if (endwith(g_PbapPse.currentpath, "telecom"))
-                    {
-                        strcat((char *)g_PbapPse.currentpath, "/");
-                        strcat((char *)g_PbapPse.currentpath, path_name);
-                        result = BT_PBAP_SUCCESS_RSP;
-                        break;
-                    }
-                    else
-                    {
-                        result = BT_PBAP_NOT_FOUND_RSP;
-                        break;
+                        if (endwith(g_PbapPse.currentpath, "telecom"))
+                        {
+                            strcat((char *)g_PbapPse.currentpath, "/");
+                            strcat((char *)g_PbapPse.currentpath, path_name);
+                            result = BT_PBAP_SUCCESS_RSP;
+                            break;
+                        }
+                        else
+                        {
+                            result = BT_PBAP_NOT_FOUND_RSP;
+                            break;
+                        }
                     }
                 }
             }
+            if (index >= 8)
+            {
+                result = BT_PBAP_NOT_FOUND_RSP;
+            }
         }
-        if (index >= 8)
-        {
-            result = BT_PBAP_NOT_FOUND_RSP;
-        }
+
     }
     revert = bt_pbap_pse_set_phonebook_path_response(pbap_pse, result);
     if (API_SUCCESS != revert)
@@ -1171,6 +1227,17 @@ static void app_pse_set_phonebook_path_cb(struct bt_pbap_pse *pbap_pse, char *na
 static int app_check_pull_vcard_listing_path(char *name)
 {
     uint8_t index = 0;
+    if (name == NULL || strlen(name) == 0)
+    {
+        for(index = 1; index < 8; index++)
+        {
+            if (endwith(g_PbapPse.currentpath, child_floader_name[index]) == 1)
+            {
+                return BT_PBAP_SUCCESS_RSP;
+            }
+        }
+        return BT_PBAP_NOT_FOUND_RSP;
+    }
     for (index = 0; index < 8; index++)
     {
         if (strcmp(name, child_floader_name[index]) == 0)
@@ -1210,6 +1277,7 @@ static void app_pse_pull_vcard_listing_cb(struct bt_pbap_pse *pbap_pse, struct n
         return;
     }
     net_buf_reserve(buf, BT_PBAP_PSE_RSV_LEN_SEND_RESPONSE(pbap_pse));
+    g_PbapPse.name[0] = 0;
     if (name != NULL)
     {
         memcpy(g_PbapPse.name, name, BT_str_len(name) + 1);
@@ -1243,6 +1311,7 @@ static void app_pse_pull_vcard_listing_cb(struct bt_pbap_pse *pbap_pse, struct n
     {
 
         bt_pbap_pse_get_max_pkt_len(pbap_pse, &max_pkt_len);
+        max_pkt_len -= BT_PBAP_PSE_RSV_LEN_SEND_RESPONSE(pbap_pse);
         max_pkt_len -= sizeof(struct bt_pbap_push_response_hdr);
         max_pkt_len -= buf->len;
         max_pkt_len -= sizeof(struct bt_obex_hdr_bytes);
@@ -1264,6 +1333,10 @@ static void app_pse_pull_vcard_listing_cb(struct bt_pbap_pse *pbap_pse, struct n
             result = BT_PBAP_CONTINUE_RSP;
         }
     }
+    if(rsp_flag)
+    {
+        OSA_TimeDelay(1000);
+    }
     revert = bt_pbap_pse_pull_vcard_listing_response(pbap_pse, result, buf, 0);
     if (revert != 0)
     {
@@ -1274,6 +1347,7 @@ static void app_pse_pull_vcard_listing_cb(struct bt_pbap_pse *pbap_pse, struct n
 static int app_check_pull_vcard_entry_path(char *name)
 {
     uint8_t index = 1;
+    char x_id[] = "X-BT-UID:1234567890ABCDEF1234567890000002";
     if (name == NULL)
     {
         return -EINVAL;
@@ -1283,6 +1357,17 @@ static int app_check_pull_vcard_entry_path(char *name)
         if (startwith(name, "X-BT-UID") == 0)
         {
             return -EINVAL;
+        }
+        else
+        {
+            if(strncmp(name, x_id, strlen(x_id)) != 0)
+            {
+                return -EINVAL;
+            }
+            else
+            {
+                return 0;
+            }
         }
     }
     for (index = 1; index < 8; index++)
@@ -1314,6 +1399,12 @@ static void app_pse_pull_vcard_entry_cb(struct bt_pbap_pse *pbap_pse,
     }
     bt_pbap_pse_app_param_parse(buf, app_pse_param_cb, NULL);
     net_buf_unref(buf);
+    buf = net_buf_alloc(&pbap_appl_pse_pool, osaWaitNone_c);
+    if (!buf)
+    {
+        return;
+    }
+    net_buf_reserve(buf, BT_PBAP_PSE_RSV_LEN_SEND_RESPONSE(pbap_pse));
     if (name != NULL)
     {
         memcpy(g_PbapPse.name, name, BT_str_len(name) + 1);
@@ -1341,12 +1432,7 @@ static void app_pse_pull_vcard_entry_cb(struct bt_pbap_pse *pbap_pse,
             }
             else
             {
-                buf = net_buf_alloc(&pbap_appl_pse_pool, osaWaitNone_c);
-                if (!buf)
-                {
-                    return;
-                }
-                net_buf_reserve(buf, BT_PBAP_PSE_RSV_LEN_SEND_RESPONSE(pbap_pse));
+
                 result                  = BT_PBAP_NOT_FOUND_RSP;
                 g_PbapPse.remaining_rsp = 0;
             }
@@ -1354,18 +1440,13 @@ static void app_pse_pull_vcard_entry_cb(struct bt_pbap_pse *pbap_pse,
     }
     if (g_PbapPse.remaining_rsp != 0)
     {
-        buf = net_buf_alloc(&pbap_appl_pse_pool, osaWaitNone_c);
-        if (!buf)
-        {
-            return;
-        }
-        net_buf_reserve(buf, BT_PBAP_PSE_RSV_LEN_SEND_RESPONSE(pbap_pse));
         if ((g_PbapPse.lcl_supported_features & BT_PBAP_FEATURE_DATABASE_IDENTIFIER) &&
             (g_PbapPse.rem_supported_features & BT_PBAP_FEATURE_DATABASE_IDENTIFIER))
         {
             BT_PBAP_ADD_PARAMS_DATABASE_IDENTIFIER(buf, sample_database_identifier);
         }
         bt_pbap_pse_get_max_pkt_len(pbap_pse, &max_pkt_len);
+        max_pkt_len -= BT_PBAP_PSE_RSV_LEN_SEND_RESPONSE(pbap_pse);
         max_pkt_len -= sizeof(struct bt_pbap_push_response_hdr);
         max_pkt_len -= buf->len;
         max_pkt_len -= sizeof(struct bt_obex_hdr_bytes);
@@ -1387,6 +1468,7 @@ static void app_pse_pull_vcard_entry_cb(struct bt_pbap_pse *pbap_pse,
             result = BT_PBAP_CONTINUE_RSP;
         }
     }
+    pbap_ev_success(PBAP_EV_PCE_PULL_VCARD_ENTRY, result, buf);
     revert = bt_pbap_pse_pull_vcard_entry_response(pbap_pse, result, buf, 0);
     if (revert != 0)
     {
@@ -1448,6 +1530,38 @@ static uint8_t pse_modify_contact(const void *cmd, uint16_t cmd_len,
     return BTP_STATUS_SUCCESS;
 }
 
+static uint8_t pse_response_delay(const void *cmd, uint16_t cmd_len,
+				  void *rsp, uint16_t *rsp_len)
+{
+    
+    rsp_flag = 1;
+    uint16_t example_length = 0;
+    char *example = NULL;
+    while(strlen(pbap_pse_phonebook_example) < 4096)
+    {
+        example_length = strlen(pbap_pse_phonebook_example);
+        if (2 * example_length > 4096)
+        {
+            break;
+        }
+        example = pbap_pse_phonebook_example;
+        strncat(pbap_pse_phonebook_example, (char *)example, example_length);
+    }
+
+    while(strlen(pbap_pse_vcard_listing) < 4096)
+    {
+        example_length = strlen(pbap_pse_vcard_listing);
+        if (2 * example_length > 4096)
+        {
+            break;
+        }
+        example = pbap_pse_vcard_listing;
+        strncat(pbap_pse_vcard_listing, (char *)example, example_length);
+    }
+
+    return BTP_STATUS_SUCCESS;
+}
+
 #endif /* CONFIG_BT_PBAP_PSE */
 
 
@@ -1494,10 +1608,6 @@ static uint8_t supported_commands(const void *cmd, uint16_t cmd_len,
     return BTP_STATUS_SUCCESS;
  }
 
-
-
-
-
 static const struct btp_handler handlers[] = {
     {
         .opcode = BTP_PBAP_READ_SUPPORTED_COMMANDS,
@@ -1516,7 +1626,7 @@ static const struct btp_handler handlers[] = {
         .opcode = BTP_PBAP_PCE_CONNECT,
         .index = BTP_INDEX,
         .expect_len = sizeof(struct btp_pbap_pce_connect_cmd),
-        .func = create_connect,
+        .func = pce_create_connect,
     },
     {
         .opcode = BTP_PBAP_PCE_DISCONNECT,
@@ -1525,34 +1635,29 @@ static const struct btp_handler handlers[] = {
         .func = pce_disconnect,
     },
     {
-        .opcode = BTP_PBAP_PCE_CONNECT_AUTH,
-        .index = BTP_INDEX,
-        .expect_len = 0,
-        .func = pce_connect_auth,
-    },
-    {
-        .opcode = BTP_PBAP_PULL_PHONEBOOK,
+        .opcode = BTP_PBAP_PCE_CREATE_CMD,
         .index = BTP_INDEX,
         .expect_len = -1,
-        .func = pce_pull_phonebook,
+        .func = pce_create_cmd,
+    },
+    {
+        .opcode = BTP_PBAP_PCE_SET_APPL_PARAM,
+        .index = BTP_INDEX,
+        .expect_len = -1,
+        .func = pce_set_appl_param,
+    },
+
+    {
+        .opcode = PBAP_PCE_EXCUTE_CMD,
+        .index = BTP_INDEX,
+        .expect_len = -1,
+        .func = pce_excute_cmd,
     },
     {
         .opcode = BTP_PBAP_PCE_SET_PATH,
         .index = BTP_INDEX,
         .expect_len = -1,
         .func = pce_set_path,
-    },
-    {
-        .opcode = BTP_PBAP_PCE_PULL_VCARD_LISTING,
-        .index = BTP_INDEX,
-        .expect_len = -1,
-        .func = pce_pull_vcard_listing,
-    },
-    {
-        .opcode = BTP_PBAP_PCE_PULL_VCARD_ENTRY,
-        .index = BTP_INDEX,
-        .expect_len = -1,
-        .func = pce_pull_vcard_entry,
     },
     {
         .opcode = BTP_PBAP_PCE_ABORT,
@@ -1580,7 +1685,14 @@ static const struct btp_handler handlers[] = {
         .expect_len = -1,
         .func = pse_modify_contact,
     },
-#endif 
+    {
+        .opcode = BTP_PBAP_PSE_RESPONSE_CODE,
+        .index = BTP_INDEX,
+        .expect_len = -1,
+        .func = pse_response_delay,
+    },
+
+#endif
 };
 
 

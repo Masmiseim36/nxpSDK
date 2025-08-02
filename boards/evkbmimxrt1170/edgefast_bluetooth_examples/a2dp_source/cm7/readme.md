@@ -36,10 +36,10 @@ Copyright  2021  NXP
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Procedures to run
-1 input "help" to show command list
-2 input "bt discover" to discover connctable bluetooth devices
-3 input "bt connect [index]" to create basic bluetooth connection with the discovered device
-4 the music start playing after connection success.
+1. input "help" to show command list
+2. input "bt discover" to discover connctable bluetooth devices
+3. input "bt connect [index]" to create basic bluetooth connection with the discovered device
+4. the music start playing after connection success.
 
 ## Supported Boards
 - [EVKB-IMXRT1050](../../_boards/evkbimxrt1050/edgefast_bluetooth_examples/a2dp_source/example_board_readme.md)

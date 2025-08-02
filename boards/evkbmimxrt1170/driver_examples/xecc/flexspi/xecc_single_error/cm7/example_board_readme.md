@@ -25,7 +25,7 @@ Running the demo
 The log below shows the output of the hello world demo in the terminal window:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 XECC single error example started!
-Vendor ID: 0x9d
+Vendor ID: 0xef
 Erasing Serial NOR FLASH over FlexSPI...
 Erase data - successfully. 
 Correcdted read data: 0xddccbbaa 

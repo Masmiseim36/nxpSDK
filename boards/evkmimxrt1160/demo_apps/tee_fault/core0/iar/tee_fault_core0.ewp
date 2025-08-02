@@ -248,6 +248,7 @@
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1166DVM6A_cm7</state>
+          <state>MIMXRT1166_cm7_SERIES</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -565,6 +566,7 @@
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1166DVM6A_cm7</state>
+          <state>MIMXRT1166_cm7_SERIES</state>
         </option>
         <option>
           <name>AList</name>
@@ -1380,6 +1382,7 @@
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1166DVM6A_cm7</state>
+          <state>MIMXRT1166_cm7_SERIES</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -1697,6 +1700,7 @@
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1166DVM6A_cm7</state>
+          <state>MIMXRT1166_cm7_SERIES</state>
         </option>
         <option>
           <name>AList</name>
@@ -2271,13 +2275,13 @@
       <name>$PROJ_DIR$/../tee_fault_core0.c</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../tee_fault_common.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../resource_config.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../resource_config.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../tee_fault_common.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../mcux_config.h</name>
@@ -2839,6 +2843,9 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../example_board_readme.md</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../examples_shared_readme.md</name>
     </file>
   </group>
 </project>

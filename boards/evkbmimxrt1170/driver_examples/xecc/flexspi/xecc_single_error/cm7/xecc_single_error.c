@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2020 NXP
+ * Copyright 2019-2020, 2025 NXP
  * All rights reserved.
  *
  *
@@ -88,6 +88,7 @@ int main(void)
     PRINTF("Vendor ID: 0x%x\r\n", vendorID);
 
 #if !(defined(XIP_EXTERNAL_FLASH))
+#if defined(DEMO_ERASE_WHOLE_CHIP)
     /* Erase whole chip . */
     PRINTF("Erasing whole chip over FlexSPI...\r\n");
 
@@ -97,6 +98,7 @@ int main(void)
         return status;
     }
     PRINTF("Erase finished !\r\n");
+#endif /* defined(DEMO_ERASE_WHOLE_CHIP) */
 #endif
 
 #if (defined __CORTEX_M) && (__CORTEX_M == 7U)
@@ -297,3 +299,4 @@ int main(void)
     {
     }
 }
+

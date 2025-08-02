@@ -80,7 +80,8 @@
           <value>SDK_DEBUGCONSOLE=1</value>
           <value>MCUX_META_BUILD</value>
           <value>SDK_I2C_BASED_COMPONENT_USED=1</value>
-          <value>CPU_MIMXRT1176DVMAA_cm4</value>
+          <value>CPU_MIMXRT1176DVMAB_cm4</value>
+          <value>MIMXRT1176_cm4_SERIES</value>
         </option>
         <option id="com.crt.advproject.link.toram" type="boolean">
           <value>true</value>

@@ -247,6 +247,7 @@
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1166DVM6A_cm7</state>
+          <state>MIMXRT1166_cm7_SERIES</state>
           <state>OSA_USED</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
           <state>CODEC_MULTI_ADAPTERS=1</state>
@@ -392,10 +393,11 @@
           <state>$PROJ_DIR$/../../../../../../../components/codec/wm8960</state>
           <state>$PROJ_DIR$/../../../../../../../components/i2c</state>
           <state>$PROJ_DIR$/../../../../../../../components/uart</state>
-          <state>$PROJ_DIR$/../../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../../components/audio</state>
+          <state>$PROJ_DIR$/../../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/device</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/usb/config/device/ehci</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/device/class</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../../../rtos/freertos/freertos-kernel/include</state>
@@ -586,6 +588,7 @@
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1166DVM6A_cm7</state>
+          <state>MIMXRT1166_cm7_SERIES</state>
           <state>OSA_USED</state>
         </option>
         <option>
@@ -697,10 +700,11 @@
           <state>$PROJ_DIR$/../../../../../../../components/codec/wm8960</state>
           <state>$PROJ_DIR$/../../../../../../../components/i2c</state>
           <state>$PROJ_DIR$/../../../../../../../components/uart</state>
-          <state>$PROJ_DIR$/../../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../../components/audio</state>
+          <state>$PROJ_DIR$/../../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/device</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/usb/config/device/ehci</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/device/class</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../../../rtos/freertos/freertos-kernel/include</state>
@@ -1420,6 +1424,7 @@
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1166DVM6A_cm7</state>
+          <state>MIMXRT1166_cm7_SERIES</state>
           <state>OSA_USED</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
           <state>CODEC_MULTI_ADAPTERS=1</state>
@@ -1565,10 +1570,11 @@
           <state>$PROJ_DIR$/../../../../../../../components/codec/wm8960</state>
           <state>$PROJ_DIR$/../../../../../../../components/i2c</state>
           <state>$PROJ_DIR$/../../../../../../../components/uart</state>
-          <state>$PROJ_DIR$/../../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../../components/audio</state>
+          <state>$PROJ_DIR$/../../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/device</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/usb/config/device/ehci</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/device/class</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../../../rtos/freertos/freertos-kernel/include</state>
@@ -1759,6 +1765,7 @@
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1166DVM6A_cm7</state>
+          <state>MIMXRT1166_cm7_SERIES</state>
           <state>OSA_USED</state>
         </option>
         <option>
@@ -1870,10 +1877,11 @@
           <state>$PROJ_DIR$/../../../../../../../components/codec/wm8960</state>
           <state>$PROJ_DIR$/../../../../../../../components/i2c</state>
           <state>$PROJ_DIR$/../../../../../../../components/uart</state>
-          <state>$PROJ_DIR$/../../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../../components/audio</state>
+          <state>$PROJ_DIR$/../../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/device</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/usb/config/device/ehci</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/device/class</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../../../rtos/freertos/freertos-kernel/include</state>
@@ -2592,6 +2600,7 @@
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1166DVM6A_cm7</state>
+          <state>MIMXRT1166_cm7_SERIES</state>
           <state>OSA_USED</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
           <state>CODEC_MULTI_ADAPTERS=1</state>
@@ -2737,10 +2746,11 @@
           <state>$PROJ_DIR$/../../../../../../../components/codec/wm8960</state>
           <state>$PROJ_DIR$/../../../../../../../components/i2c</state>
           <state>$PROJ_DIR$/../../../../../../../components/uart</state>
-          <state>$PROJ_DIR$/../../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../../components/audio</state>
+          <state>$PROJ_DIR$/../../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/device</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/usb/config/device/ehci</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/device/class</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../../../rtos/freertos/freertos-kernel/include</state>
@@ -2931,6 +2941,7 @@
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1166DVM6A_cm7</state>
+          <state>MIMXRT1166_cm7_SERIES</state>
           <state>OSA_USED</state>
         </option>
         <option>
@@ -3042,10 +3053,11 @@
           <state>$PROJ_DIR$/../../../../../../../components/codec/wm8960</state>
           <state>$PROJ_DIR$/../../../../../../../components/i2c</state>
           <state>$PROJ_DIR$/../../../../../../../components/uart</state>
-          <state>$PROJ_DIR$/../../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../../components/audio</state>
+          <state>$PROJ_DIR$/../../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/device</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/usb/config/device/ehci</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/device/class</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../../../rtos/freertos/freertos-kernel/include</state>
@@ -3762,6 +3774,7 @@
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1166DVM6A_cm7</state>
+          <state>MIMXRT1166_cm7_SERIES</state>
           <state>OSA_USED</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
           <state>CODEC_MULTI_ADAPTERS=1</state>
@@ -3907,10 +3920,11 @@
           <state>$PROJ_DIR$/../../../../../../../components/codec/wm8960</state>
           <state>$PROJ_DIR$/../../../../../../../components/i2c</state>
           <state>$PROJ_DIR$/../../../../../../../components/uart</state>
-          <state>$PROJ_DIR$/../../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../../components/audio</state>
+          <state>$PROJ_DIR$/../../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/device</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/usb/config/device/ehci</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/device/class</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../../../rtos/freertos/freertos-kernel/include</state>
@@ -4101,6 +4115,7 @@
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1166DVM6A_cm7</state>
+          <state>MIMXRT1166_cm7_SERIES</state>
           <state>OSA_USED</state>
         </option>
         <option>
@@ -4212,10 +4227,11 @@
           <state>$PROJ_DIR$/../../../../../../../components/codec/wm8960</state>
           <state>$PROJ_DIR$/../../../../../../../components/i2c</state>
           <state>$PROJ_DIR$/../../../../../../../components/uart</state>
-          <state>$PROJ_DIR$/../../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../../components/audio</state>
+          <state>$PROJ_DIR$/../../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/device</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/usb/config/device/ehci</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/device/class</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../../../rtos/freertos/freertos-kernel/include</state>
@@ -4935,6 +4951,7 @@
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1166DVM6A_cm7</state>
+          <state>MIMXRT1166_cm7_SERIES</state>
           <state>OSA_USED</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
           <state>CODEC_MULTI_ADAPTERS=1</state>
@@ -5080,10 +5097,11 @@
           <state>$PROJ_DIR$/../../../../../../../components/codec/wm8960</state>
           <state>$PROJ_DIR$/../../../../../../../components/i2c</state>
           <state>$PROJ_DIR$/../../../../../../../components/uart</state>
-          <state>$PROJ_DIR$/../../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../../components/audio</state>
+          <state>$PROJ_DIR$/../../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/device</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/usb/config/device/ehci</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/device/class</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../../../rtos/freertos/freertos-kernel/include</state>
@@ -5274,6 +5292,7 @@
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1166DVM6A_cm7</state>
+          <state>MIMXRT1166_cm7_SERIES</state>
           <state>OSA_USED</state>
         </option>
         <option>
@@ -5385,10 +5404,11 @@
           <state>$PROJ_DIR$/../../../../../../../components/codec/wm8960</state>
           <state>$PROJ_DIR$/../../../../../../../components/i2c</state>
           <state>$PROJ_DIR$/../../../../../../../components/uart</state>
-          <state>$PROJ_DIR$/../../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../../components/audio</state>
+          <state>$PROJ_DIR$/../../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/device</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/usb/config/device/ehci</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/device/class</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../../../rtos/freertos/freertos-kernel/include</state>
@@ -6107,6 +6127,7 @@
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1166DVM6A_cm7</state>
+          <state>MIMXRT1166_cm7_SERIES</state>
           <state>OSA_USED</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
           <state>CODEC_MULTI_ADAPTERS=1</state>
@@ -6252,10 +6273,11 @@
           <state>$PROJ_DIR$/../../../../../../../components/codec/wm8960</state>
           <state>$PROJ_DIR$/../../../../../../../components/i2c</state>
           <state>$PROJ_DIR$/../../../../../../../components/uart</state>
-          <state>$PROJ_DIR$/../../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../../components/audio</state>
+          <state>$PROJ_DIR$/../../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/device</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/usb/config/device/ehci</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/device/class</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../../../rtos/freertos/freertos-kernel/include</state>
@@ -6446,6 +6468,7 @@
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1166DVM6A_cm7</state>
+          <state>MIMXRT1166_cm7_SERIES</state>
           <state>OSA_USED</state>
         </option>
         <option>
@@ -6557,10 +6580,11 @@
           <state>$PROJ_DIR$/../../../../../../../components/codec/wm8960</state>
           <state>$PROJ_DIR$/../../../../../../../components/i2c</state>
           <state>$PROJ_DIR$/../../../../../../../components/uart</state>
-          <state>$PROJ_DIR$/../../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../../components/audio</state>
+          <state>$PROJ_DIR$/../../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/device</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/usb/config/device/ehci</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/device/class</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../../../rtos/freertos/freertos-kernel/include</state>
@@ -7226,6 +7250,12 @@
       <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/drivers/fsl_lpuart.c</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/drivers/fsl_mu.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/drivers/fsl_mu.c</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/drivers/fsl_sai_edma.h</name>
     </file>
     <file>
@@ -7664,24 +7694,24 @@
       </file>
     </group>
     <group>
-      <name>osa</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../components/osa/fsl_os_abstraction.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../components/osa/fsl_os_abstraction_free_rtos.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../components/osa/fsl_os_abstraction_free_rtos.c</name>
-      </file>
-    </group>
-    <group>
       <name>audio</name>
       <file>
         <name>$PROJ_DIR$/../../../../../../../components/audio/fsl_adapter_audio.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../../../components/audio/fsl_adapter_sai.c</name>
+      </file>
+    </group>
+    <group>
+      <name>osa</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../components/osa/fsl_os_abstraction_free_rtos.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../components/osa/fsl_os_abstraction_free_rtos.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../components/osa/fsl_os_abstraction.h</name>
       </file>
     </group>
   </group>
@@ -7880,6 +7910,9 @@
         <file>
           <name>$PROJ_DIR$/../../../../../../../rtos/freertos/freertos-kernel/include/timers.h</name>
         </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../../rtos/freertos/freertos-kernel/include/freertos_tasks_c_additions.h</name>
+        </file>
       </group>
       <group>
         <name>portable</name>
@@ -7923,6 +7956,9 @@
     <name>doc</name>
     <file>
       <name>$PROJ_DIR$/../readme.md</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../examples_shared_readme.md</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../usb_device_audio_recorder_signal_enhancement.jpg</name>

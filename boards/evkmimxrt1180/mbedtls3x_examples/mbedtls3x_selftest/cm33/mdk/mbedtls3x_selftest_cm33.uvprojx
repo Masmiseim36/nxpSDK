@@ -10,7 +10,7 @@
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
-          <Device>MIMXRT1189CVM8B:cm33</Device>
+          <Device>MIMXRT1189CVM8C:cm33</Device>
           <Vendor>NXP</Vendor>
           <PackID>NXP.MIMXRT1189_DFP.18.0.0</PackID>
           <PackURL>https://mcuxpresso.nxp.com/cmsis_pack/repo/</PackURL>
@@ -333,9 +333,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../mcux_config.h -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
-              <Define>DEBUG, XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=0, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1189CVM8B_cm33, CACHE_MODE_WRITE_THROUGH=1, MBEDTLS_CONFIG_FILE='\"mcux_mbedtls_config.h\"'</Define>
+              <Define>DEBUG, XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=0, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1189CVM8C_cm33, MIMXRT1189_cm33_SERIES, CACHE_MODE_WRITE_THROUGH=1, MBEDTLS_CONFIG_FILE='\"mcux_mbedtls_config.h\"'</Define>
               <Undefine/>
-              <IncludePath>..;../../../../xip;../../../../../../devices/MIMXRT1189/xip;../../../../../../devices/MIMXRT1189/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1189;../../../../../../devices/MIMXRT1189/periph;../../../../../../devices/MIMXRT1189/drivers/cm33;../../../../../../devices/MIMXRT1189/utilities/debug_console_lite;../../../../../../devices/MIMXRT1189/utilities/str;../../../../../../components/uart;../../../../../../components/ele_crypto;../../../../../../components/psa_crypto_driver/osal;../../../../../../components/psa_crypto_driver/osal/baremetal;../../../../../../components/psa_crypto_driver/ele_s4xx;../../../../../../components/psa_crypto_driver/ele_s4xx/include;../../../../../../components/psa_crypto_driver/ele_s4xx/include/common;../../../../../../components/silicon_id;../../../../../../components/silicon_id/socs;../../../../../../middleware/mbedtls3x/port;../../../../../../middleware/mbedtls3x/include;../../../../../../middleware/mbedtls3x/library</IncludePath>
+              <IncludePath>..;../../../../xip;../../../../../../devices/MIMXRT1189/xip;../../../../../../devices/MIMXRT1189/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1189;../../../../../../devices/MIMXRT1189/periph;../../../../../../devices/MIMXRT1189/drivers/cm33;../../../../../../devices/MIMXRT1189/utilities/debug_console_lite;../../../../../../devices/MIMXRT1189/utilities/str;../../../../../../components/silicon_id;../../../../../../components/silicon_id/socs;../../../../../../components/uart;../../../../../../components/ele_crypto;../../../../../../components/psa_crypto_driver/osal;../../../../../../components/psa_crypto_driver/osal/baremetal;../../../../../../components/psa_crypto_driver/ele_s4xx;../../../../../../components/psa_crypto_driver/ele_s4xx/include;../../../../../../components/psa_crypto_driver/ele_s4xx/include/common;../../../../../../middleware/mbedtls3x/include;../../../../../../middleware/mbedtls3x/library;../../../../../../middleware/mbedtls3x/port</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -350,10 +350,10 @@
             <useXO>0</useXO>
             <ClangAsOpt>2</ClangAsOpt>
             <VariousControls>
-              <MiscControls/>
-              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1189CVM8B_cm33</Define>
+              <MiscControls>-include ../mcux_config.h</MiscControls>
+              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1189CVM8C_cm33, MIMXRT1189_cm33_SERIES</Define>
               <Undefine/>
-              <IncludePath>..;../../../../xip;../../../../../../devices/MIMXRT1189/xip;../../../../../../devices/MIMXRT1189/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1189;../../../../../../devices/MIMXRT1189/periph;../../../../../../devices/MIMXRT1189/drivers/cm33;../../../../../../devices/MIMXRT1189/utilities/debug_console_lite;../../../../../../devices/MIMXRT1189/utilities/str;../../../../../../components/uart;../../../../../../components/ele_crypto;../../../../../../components/psa_crypto_driver/osal;../../../../../../components/psa_crypto_driver/osal/baremetal;../../../../../../components/psa_crypto_driver/ele_s4xx;../../../../../../components/psa_crypto_driver/ele_s4xx/include;../../../../../../components/psa_crypto_driver/ele_s4xx/include/common;../../../../../../components/silicon_id;../../../../../../components/silicon_id/socs;../../../../../../middleware/mbedtls3x/port;../../../../../../middleware/mbedtls3x/include;../../../../../../middleware/mbedtls3x/library</IncludePath>
+              <IncludePath>..;../../../../xip;../../../../../../devices/MIMXRT1189/xip;../../../../../../devices/MIMXRT1189/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1189;../../../../../../devices/MIMXRT1189/periph;../../../../../../devices/MIMXRT1189/drivers/cm33;../../../../../../devices/MIMXRT1189/utilities/debug_console_lite;../../../../../../devices/MIMXRT1189/utilities/str;../../../../../../components/silicon_id;../../../../../../components/silicon_id/socs;../../../../../../components/uart;../../../../../../components/ele_crypto;../../../../../../components/psa_crypto_driver/osal;../../../../../../components/psa_crypto_driver/osal/baremetal;../../../../../../components/psa_crypto_driver/ele_s4xx;../../../../../../components/psa_crypto_driver/ele_s4xx/include;../../../../../../components/psa_crypto_driver/ele_s4xx/include/common;../../../../../../middleware/mbedtls3x/include;../../../../../../middleware/mbedtls3x/library;../../../../../../middleware/mbedtls3x/port</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -383,6 +383,16 @@
               <FileName>selftest.c</FileName>
               <FileType>1</FileType>
               <FilePath>../selftest.c</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../mcux_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../mcux_config.h</FilePath>
             </File>
             <File>
               <FileName>mcux_config.h</FileName>
@@ -518,6 +528,11 @@
               <FileName>fsl_iomuxc.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT1189/drivers/fsl_iomuxc.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_memory.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1189/drivers/fsl_memory.c</FilePath>
             </File>
             <File>
               <FileName>fsl_memory.h</FileName>
@@ -1267,6 +1282,36 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>component/silicon_id</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_silicon_id.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_silicon_id.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_silicon_id_soc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/silicon_id/socs/imxrt1180/fsl_silicon_id_soc.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_silicon_id_soc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/silicon_id/socs/fsl_silicon_id_soc.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>utilities/debug_console_lite</GroupName>
           <Files>
             <File>
@@ -1383,81 +1428,6 @@
               <FileName>mcux_psa_s4xx_entropy.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../components/psa_crypto_driver/ele_s4xx/include/common/mcux_psa_s4xx_entropy.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component/silicon_id</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_silicon_id.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_silicon_id.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_silicon_id_soc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/silicon_id/socs/imxrt1180/fsl_silicon_id_soc.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_silicon_id_soc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/silicon_id/socs/fsl_silicon_id_soc.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>mbedtls3x/port</GroupName>
-          <Files>
-            <File>
-              <FileName>mcux_mbedtls_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>mcux_mbedtls_accelerator_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_accelerator_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>mcux_mbedtls_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>mcux_mbedtls_accelerator_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_accelerator_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>mcux_psa_defines.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_psa_defines.h</FilePath>
-            </File>
-            <File>
-              <FileName>mcux_mbedtls_psa_crypto_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_psa_crypto_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>mcux_mbedtls_accelerator_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_accelerator_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>mcux_psa_defines.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_psa_defines.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1855,6 +1825,11 @@
               <FilePath>../../../../../../middleware/mbedtls3x/include/psa/crypto_adjust_auto_enabled.h</FilePath>
             </File>
             <File>
+              <FileName>crypto_adjust_config_dependencies.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/include/psa/crypto_adjust_config_dependencies.h</FilePath>
+            </File>
+            <File>
               <FileName>crypto_adjust_config_key_pair_types.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/mbedtls3x/include/psa/crypto_adjust_config_key_pair_types.h</FilePath>
@@ -2023,6 +1998,16 @@
               <FileName>bignum_core.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/mbedtls3x/library/bignum_core.c</FilePath>
+            </File>
+            <File>
+              <FileName>bignum_core_invasive.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/library/bignum_core_invasive.h</FilePath>
+            </File>
+            <File>
+              <FileName>bignum_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/library/bignum_internal.h</FilePath>
             </File>
             <File>
               <FileName>bignum_mod.c</FileName>
@@ -2787,6 +2772,51 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>mbedtls3x/port</GroupName>
+          <Files>
+            <File>
+              <FileName>mcux_mbedtls_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_mbedtls_accelerator_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_accelerator_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_mbedtls_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_mbedtls_accelerator_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_accelerator_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_psa_defines.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_psa_defines.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_mbedtls_psa_crypto_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_psa_crypto_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_mbedtls_accelerator_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_accelerator_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_psa_defines.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_psa_defines.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>doc</GroupName>
           <Files>
             <File>
@@ -2799,6 +2829,11 @@
               <FileType>5</FileType>
               <FilePath>../example_board_readme.md</FilePath>
             </File>
+            <File>
+              <FileName>examples_shared_readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../examples_shared_readme.md</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>
@@ -2810,7 +2845,7 @@
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
-          <Device>MIMXRT1189CVM8B:cm33</Device>
+          <Device>MIMXRT1189CVM8C:cm33</Device>
           <Vendor>NXP</Vendor>
           <PackID>NXP.MIMXRT1189_DFP.18.0.0</PackID>
           <PackURL>https://mcuxpresso.nxp.com/cmsis_pack/repo/</PackURL>
@@ -3133,9 +3168,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../mcux_config.h -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
-              <Define>NDEBUG, XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=0, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1189CVM8B_cm33, CACHE_MODE_WRITE_THROUGH=1, MBEDTLS_CONFIG_FILE='\"mcux_mbedtls_config.h\"'</Define>
+              <Define>NDEBUG, XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=0, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1189CVM8C_cm33, MIMXRT1189_cm33_SERIES, CACHE_MODE_WRITE_THROUGH=1, MBEDTLS_CONFIG_FILE='\"mcux_mbedtls_config.h\"'</Define>
               <Undefine/>
-              <IncludePath>..;../../../../xip;../../../../../../devices/MIMXRT1189/xip;../../../../../../devices/MIMXRT1189/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1189;../../../../../../devices/MIMXRT1189/periph;../../../../../../devices/MIMXRT1189/drivers/cm33;../../../../../../devices/MIMXRT1189/utilities/debug_console_lite;../../../../../../devices/MIMXRT1189/utilities/str;../../../../../../components/uart;../../../../../../components/ele_crypto;../../../../../../components/psa_crypto_driver/osal;../../../../../../components/psa_crypto_driver/osal/baremetal;../../../../../../components/psa_crypto_driver/ele_s4xx;../../../../../../components/psa_crypto_driver/ele_s4xx/include;../../../../../../components/psa_crypto_driver/ele_s4xx/include/common;../../../../../../components/silicon_id;../../../../../../components/silicon_id/socs;../../../../../../middleware/mbedtls3x/port;../../../../../../middleware/mbedtls3x/include;../../../../../../middleware/mbedtls3x/library</IncludePath>
+              <IncludePath>..;../../../../xip;../../../../../../devices/MIMXRT1189/xip;../../../../../../devices/MIMXRT1189/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1189;../../../../../../devices/MIMXRT1189/periph;../../../../../../devices/MIMXRT1189/drivers/cm33;../../../../../../devices/MIMXRT1189/utilities/debug_console_lite;../../../../../../devices/MIMXRT1189/utilities/str;../../../../../../components/silicon_id;../../../../../../components/silicon_id/socs;../../../../../../components/uart;../../../../../../components/ele_crypto;../../../../../../components/psa_crypto_driver/osal;../../../../../../components/psa_crypto_driver/osal/baremetal;../../../../../../components/psa_crypto_driver/ele_s4xx;../../../../../../components/psa_crypto_driver/ele_s4xx/include;../../../../../../components/psa_crypto_driver/ele_s4xx/include/common;../../../../../../middleware/mbedtls3x/include;../../../../../../middleware/mbedtls3x/library;../../../../../../middleware/mbedtls3x/port</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -3150,10 +3185,10 @@
             <useXO>0</useXO>
             <ClangAsOpt>2</ClangAsOpt>
             <VariousControls>
-              <MiscControls/>
-              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1189CVM8B_cm33</Define>
+              <MiscControls>-include ../mcux_config.h</MiscControls>
+              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1189CVM8C_cm33, MIMXRT1189_cm33_SERIES</Define>
               <Undefine/>
-              <IncludePath>..;../../../../xip;../../../../../../devices/MIMXRT1189/xip;../../../../../../devices/MIMXRT1189/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1189;../../../../../../devices/MIMXRT1189/periph;../../../../../../devices/MIMXRT1189/drivers/cm33;../../../../../../devices/MIMXRT1189/utilities/debug_console_lite;../../../../../../devices/MIMXRT1189/utilities/str;../../../../../../components/uart;../../../../../../components/ele_crypto;../../../../../../components/psa_crypto_driver/osal;../../../../../../components/psa_crypto_driver/osal/baremetal;../../../../../../components/psa_crypto_driver/ele_s4xx;../../../../../../components/psa_crypto_driver/ele_s4xx/include;../../../../../../components/psa_crypto_driver/ele_s4xx/include/common;../../../../../../components/silicon_id;../../../../../../components/silicon_id/socs;../../../../../../middleware/mbedtls3x/port;../../../../../../middleware/mbedtls3x/include;../../../../../../middleware/mbedtls3x/library</IncludePath>
+              <IncludePath>..;../../../../xip;../../../../../../devices/MIMXRT1189/xip;../../../../../../devices/MIMXRT1189/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1189;../../../../../../devices/MIMXRT1189/periph;../../../../../../devices/MIMXRT1189/drivers/cm33;../../../../../../devices/MIMXRT1189/utilities/debug_console_lite;../../../../../../devices/MIMXRT1189/utilities/str;../../../../../../components/silicon_id;../../../../../../components/silicon_id/socs;../../../../../../components/uart;../../../../../../components/ele_crypto;../../../../../../components/psa_crypto_driver/osal;../../../../../../components/psa_crypto_driver/osal/baremetal;../../../../../../components/psa_crypto_driver/ele_s4xx;../../../../../../components/psa_crypto_driver/ele_s4xx/include;../../../../../../components/psa_crypto_driver/ele_s4xx/include/common;../../../../../../middleware/mbedtls3x/include;../../../../../../middleware/mbedtls3x/library;../../../../../../middleware/mbedtls3x/port</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -3183,6 +3218,16 @@
               <FileName>selftest.c</FileName>
               <FileType>1</FileType>
               <FilePath>../selftest.c</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../mcux_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../mcux_config.h</FilePath>
             </File>
             <File>
               <FileName>mcux_config.h</FileName>
@@ -3318,6 +3363,11 @@
               <FileName>fsl_iomuxc.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT1189/drivers/fsl_iomuxc.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_memory.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1189/drivers/fsl_memory.c</FilePath>
             </File>
             <File>
               <FileName>fsl_memory.h</FileName>
@@ -4067,6 +4117,36 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>component/silicon_id</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_silicon_id.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_silicon_id.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_silicon_id_soc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/silicon_id/socs/imxrt1180/fsl_silicon_id_soc.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_silicon_id_soc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/silicon_id/socs/fsl_silicon_id_soc.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>utilities/debug_console_lite</GroupName>
           <Files>
             <File>
@@ -4183,81 +4263,6 @@
               <FileName>mcux_psa_s4xx_entropy.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../components/psa_crypto_driver/ele_s4xx/include/common/mcux_psa_s4xx_entropy.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component/silicon_id</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_silicon_id.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_silicon_id.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_silicon_id_soc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/silicon_id/socs/imxrt1180/fsl_silicon_id_soc.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_silicon_id_soc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/silicon_id/socs/fsl_silicon_id_soc.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>mbedtls3x/port</GroupName>
-          <Files>
-            <File>
-              <FileName>mcux_mbedtls_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>mcux_mbedtls_accelerator_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_accelerator_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>mcux_mbedtls_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>mcux_mbedtls_accelerator_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_accelerator_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>mcux_psa_defines.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_psa_defines.h</FilePath>
-            </File>
-            <File>
-              <FileName>mcux_mbedtls_psa_crypto_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_psa_crypto_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>mcux_mbedtls_accelerator_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_accelerator_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>mcux_psa_defines.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_psa_defines.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -4655,6 +4660,11 @@
               <FilePath>../../../../../../middleware/mbedtls3x/include/psa/crypto_adjust_auto_enabled.h</FilePath>
             </File>
             <File>
+              <FileName>crypto_adjust_config_dependencies.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/include/psa/crypto_adjust_config_dependencies.h</FilePath>
+            </File>
+            <File>
               <FileName>crypto_adjust_config_key_pair_types.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/mbedtls3x/include/psa/crypto_adjust_config_key_pair_types.h</FilePath>
@@ -4823,6 +4833,16 @@
               <FileName>bignum_core.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/mbedtls3x/library/bignum_core.c</FilePath>
+            </File>
+            <File>
+              <FileName>bignum_core_invasive.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/library/bignum_core_invasive.h</FilePath>
+            </File>
+            <File>
+              <FileName>bignum_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/library/bignum_internal.h</FilePath>
             </File>
             <File>
               <FileName>bignum_mod.c</FileName>
@@ -5587,6 +5607,51 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>mbedtls3x/port</GroupName>
+          <Files>
+            <File>
+              <FileName>mcux_mbedtls_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_mbedtls_accelerator_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_accelerator_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_mbedtls_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_mbedtls_accelerator_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_accelerator_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_psa_defines.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_psa_defines.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_mbedtls_psa_crypto_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_psa_crypto_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_mbedtls_accelerator_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_accelerator_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcux_psa_defines.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/port/mcux_psa_defines.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>doc</GroupName>
           <Files>
             <File>
@@ -5598,6 +5663,11 @@
               <FileName>example_board_readme.md</FileName>
               <FileType>5</FileType>
               <FilePath>../example_board_readme.md</FilePath>
+            </File>
+            <File>
+              <FileName>examples_shared_readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../examples_shared_readme.md</FilePath>
             </File>
           </Files>
         </Group>

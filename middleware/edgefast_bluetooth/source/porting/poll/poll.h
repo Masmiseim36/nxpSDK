@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 NXP
+ * Copyright 2024-2025 NXP
  * Copyright (c) 2016, Wind River Systems, Inc.
  *
  * SPDX-License-Identifier: Apache-2.0
@@ -9,6 +9,10 @@
 #define __BT_BLE_POLL_H__
 
 #include <system_c.h>
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 #define _POLL_EVENT_OBJ_INIT(obj) \
 	.poll_events = {NULL},
@@ -353,6 +357,10 @@ __syscall void k_poll_signal_check(struct k_poll_signal *sig,
  */
 
 __syscall int k_poll_signal_raise(struct k_poll_signal *sig, int result);
+
+#ifdef __cplusplus
+}
+#endif
 
 /** @} */
 

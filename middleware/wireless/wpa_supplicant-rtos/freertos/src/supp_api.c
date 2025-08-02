@@ -16,6 +16,9 @@
 #include "common/ptksa_cache.h"
 #include "wpa_supplicant/config.h"
 #include "wpa_supplicant_i.h"
+#ifdef CONFIG_P2P
+#include "p2p_i.h"
+#endif
 #include "driver_i.h"
 #include "ap.h"
 #include "crc32.h"
@@ -6141,6 +6144,17 @@ int wpa_supp_p2p_status(const struct netif *dev, char *buf, size_t buflen)
             goto out;
         pos += ret;
     }
+
+#ifdef CONFIG_P2P
+    if (wpa_s->global->p2p)
+    {
+        struct p2p_data *p2p = wpa_s->global->p2p;
+        ret = os_snprintf(pos, end - pos, "group_number=%d\r\n", p2p->num_groups);
+        if (os_snprintf_error(end - pos, ret))
+            goto out;
+        pos += ret;
+    }
+#endif
 
 out:
     OSA_MutexUnlock((osa_mutex_handle_t)wpa_supplicant_mutex);

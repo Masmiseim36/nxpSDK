@@ -402,7 +402,7 @@ void usb_device_full_shutdown(const peripheral_descriptor_t *self)
 #else
         CLOCK_DisableClock(kCLOCK_UsbOh3);
 #endif
-#elif defined(ANADIG_MISC_BASE)
+#elif defined(ANADIG_MISC_BASE) || defined(MIMXRT1189_cm33_SERIES) || defined(MIMXRT1186_cm33_SERIES) // add MIMXRT1189_cm33_SERIES because ANADIG_MISC_BASE has been removed on RT1180 new header file
         CLOCK_DisableClock(kCLOCK_Usb);
 #else
         if (SIM->SCGC3 & SIM_SCGC3_USBHS_MASK)

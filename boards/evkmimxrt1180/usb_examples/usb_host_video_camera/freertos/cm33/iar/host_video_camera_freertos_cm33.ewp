@@ -247,7 +247,8 @@
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
-          <state>CPU_MIMXRT1189CVM8B_cm33</state>
+          <state>CPU_MIMXRT1189CVM8C_cm33</state>
+          <state>MIMXRT1189_cm33_SERIES</state>
           <state>OSA_USED</state>
           <state>USE_RTOS=1</state>
           <state>SD_ENABLED=1</state>
@@ -384,13 +385,14 @@
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/str</state>
+          <state>$PROJ_DIR$/../../../../../../../components/silicon_id</state>
+          <state>$PROJ_DIR$/../../../../../../../components/silicon_id/socs</state>
           <state>$PROJ_DIR$/../../../../../../../components/gpio</state>
           <state>$PROJ_DIR$/../../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../../components/osa</state>
-          <state>$PROJ_DIR$/../../../../../../../components/silicon_id</state>
-          <state>$PROJ_DIR$/../../../../../../../components/silicon_id/socs</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/host</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/usb/config/host/ehci</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/host/class</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/fatfs/source</state>
@@ -587,7 +589,8 @@
         <option>
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
-          <state>CPU_MIMXRT1189CVM8B_cm33</state>
+          <state>CPU_MIMXRT1189CVM8C_cm33</state>
+          <state>MIMXRT1189_cm33_SERIES</state>
           <state>OSA_USED</state>
         </option>
         <option>
@@ -692,13 +695,14 @@
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/str</state>
+          <state>$PROJ_DIR$/../../../../../../../components/silicon_id</state>
+          <state>$PROJ_DIR$/../../../../../../../components/silicon_id/socs</state>
           <state>$PROJ_DIR$/../../../../../../../components/gpio</state>
           <state>$PROJ_DIR$/../../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../../components/osa</state>
-          <state>$PROJ_DIR$/../../../../../../../components/silicon_id</state>
-          <state>$PROJ_DIR$/../../../../../../../components/silicon_id/socs</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/host</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/usb/config/host/ehci</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/host/class</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/fatfs/source</state>
@@ -726,7 +730,7 @@
         </option>
         <option>
           <name>PreInclude</name>
-          <state/>
+          <state>$PROJ_DIR$/../mcux_config.h</state>
         </option>
       </data>
     </settings>
@@ -1422,7 +1426,8 @@
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
-          <state>CPU_MIMXRT1189CVM8B_cm33</state>
+          <state>CPU_MIMXRT1189CVM8C_cm33</state>
+          <state>MIMXRT1189_cm33_SERIES</state>
           <state>OSA_USED</state>
           <state>USE_RTOS=1</state>
           <state>SD_ENABLED=1</state>
@@ -1559,13 +1564,14 @@
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/str</state>
+          <state>$PROJ_DIR$/../../../../../../../components/silicon_id</state>
+          <state>$PROJ_DIR$/../../../../../../../components/silicon_id/socs</state>
           <state>$PROJ_DIR$/../../../../../../../components/gpio</state>
           <state>$PROJ_DIR$/../../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../../components/osa</state>
-          <state>$PROJ_DIR$/../../../../../../../components/silicon_id</state>
-          <state>$PROJ_DIR$/../../../../../../../components/silicon_id/socs</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/host</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/usb/config/host/ehci</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/host/class</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/fatfs/source</state>
@@ -1762,7 +1768,8 @@
         <option>
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
-          <state>CPU_MIMXRT1189CVM8B_cm33</state>
+          <state>CPU_MIMXRT1189CVM8C_cm33</state>
+          <state>MIMXRT1189_cm33_SERIES</state>
           <state>OSA_USED</state>
         </option>
         <option>
@@ -1867,13 +1874,14 @@
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/str</state>
+          <state>$PROJ_DIR$/../../../../../../../components/silicon_id</state>
+          <state>$PROJ_DIR$/../../../../../../../components/silicon_id/socs</state>
           <state>$PROJ_DIR$/../../../../../../../components/gpio</state>
           <state>$PROJ_DIR$/../../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../../components/osa</state>
-          <state>$PROJ_DIR$/../../../../../../../components/silicon_id</state>
-          <state>$PROJ_DIR$/../../../../../../../components/silicon_id/socs</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/host</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/usb/config/host/ehci</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/host/class</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/fatfs/source</state>
@@ -1901,7 +1909,7 @@
         </option>
         <option>
           <name>PreInclude</name>
-          <state/>
+          <state>$PROJ_DIR$/../mcux_config.h</state>
         </option>
       </data>
     </settings>
@@ -2399,6 +2407,12 @@
       <name>$PROJ_DIR$/../mcux_config.h</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../mcux_config.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../mcux_config.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../usb_host_config.h</name>
     </file>
   </group>
@@ -2466,6 +2480,9 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/drivers/fsl_iomuxc.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/drivers/fsl_memory.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/drivers/fsl_memory.h</name>
@@ -2939,6 +2956,21 @@
       </file>
     </group>
     <group>
+      <name>silicon_id</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../components/silicon_id/fsl_silicon_id.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../components/silicon_id/fsl_silicon_id.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../components/silicon_id/socs/imxrt1180/fsl_silicon_id_soc.c</name>
+      </file>
+    </group>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../components/silicon_id/socs/fsl_silicon_id_soc.h</name>
+    </file>
+    <group>
       <name>gpio</name>
       <file>
         <name>$PROJ_DIR$/../../../../../../../components/gpio/fsl_adapter_gpio.h</name>
@@ -2959,30 +2991,15 @@
     <group>
       <name>osa</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../../../components/osa/fsl_os_abstraction.h</name>
-      </file>
-      <file>
         <name>$PROJ_DIR$/../../../../../../../components/osa/fsl_os_abstraction_free_rtos.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../../../components/osa/fsl_os_abstraction_free_rtos.c</name>
       </file>
-    </group>
-    <group>
-      <name>silicon_id</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../../../components/silicon_id/fsl_silicon_id.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../components/silicon_id/fsl_silicon_id.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../components/silicon_id/socs/imxrt1180/fsl_silicon_id_soc.c</name>
+        <name>$PROJ_DIR$/../../../../../../../components/osa/fsl_os_abstraction.h</name>
       </file>
     </group>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../components/silicon_id/socs/fsl_silicon_id_soc.h</name>
-    </file>
   </group>
   <group>
     <name>usb</name>
@@ -3230,6 +3247,9 @@
         <file>
           <name>$PROJ_DIR$/../../../../../../../rtos/freertos/freertos-kernel/include/timers.h</name>
         </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../../rtos/freertos/freertos-kernel/include/freertos_tasks_c_additions.h</name>
+        </file>
       </group>
       <group>
         <name>portable</name>
@@ -3285,6 +3305,9 @@
     <name>doc</name>
     <file>
       <name>$PROJ_DIR$/../readme.md</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../examples_shared_readme.md</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../com_port.jpg</name>

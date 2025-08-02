@@ -45,6 +45,14 @@ typedef struct uart_config
     bool enableRTS;
     bool enableCTS;
     bool isSecondaryBaudRateReq;
+#if (defined(HAL_UART_DMA_ENABLE) && (HAL_UART_DMA_ENABLE> 0u))
+    uint8_t dma_instance;
+    uint8_t rx_channel;
+    uint8_t tx_channel;
+    uint8_t dma_mux_instance;
+    uint32_t rx_request;
+    uint32_t tx_request;
+#endif
 } fw_download_uart_config_t;
 
 typedef struct uart_fw_download_settings

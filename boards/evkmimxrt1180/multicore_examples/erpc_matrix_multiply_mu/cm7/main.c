@@ -1,7 +1,6 @@
 /*
  * Copyright (c) 2015-2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2020 NXP
- * All rights reserved.
+ * Copyright 2016-2020, 2025 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -66,7 +65,7 @@ void erpcMatrixMultiply(Matrix matrix1, Matrix matrix2, Matrix result_matrix)
 static void SignalReady(void)
 {
     /* Signal the other core we are ready by triggering the event and passing the APP_ERPC_READY_EVENT_DATA */
-    (void)MCMGR_TriggerEvent(kMCMGR_RemoteApplicationEvent, APP_ERPC_READY_EVENT_DATA);
+    (void)MCMGR_TriggerEvent(kMCMGR_Core0, kMCMGR_RemoteApplicationEvent, APP_ERPC_READY_EVENT_DATA);
 }
 
 /*!

@@ -1728,11 +1728,11 @@
         </option>
         <option>
           <name>CExtraOptionsCheck</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>CExtraOptions</name>
-          <state/>
+          <state>--jlink_script_file=$PROJ_DIR$/../evkmimxrt1180_cm33.jlinkscript</state>
         </option>
         <option>
           <name>CFpuProcessor</name>
@@ -1856,15 +1856,15 @@
         </option>
         <option>
           <name>OCMulticoreWorkspace</name>
-          <state/>
+          <state>$PROJ_DIR$/../../cm7/iar/trdc_secondary_core_cm7.eww</state>
         </option>
         <option>
           <name>OCMulticoreSlaveProject</name>
-          <state/>
+          <state>trdc_secondary_core_cm7</state>
         </option>
         <option>
           <name>OCMulticoreSlaveConfiguration</name>
-          <state/>
+          <state>debug</state>
         </option>
         <option>
           <name>OCDownloadExtraImage</name>
@@ -1884,7 +1884,7 @@
         </option>
         <option>
           <name>OCMulticoreAMPConfigType</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>OCMulticoreSessionFile</name>
@@ -1972,7 +1972,7 @@
         <option>
           <name>CMSISDAPResetList</name>
           <version>1</version>
-          <state>1</state>
+          <state>4</state>
         </option>
         <option>
           <name>CMSISDAPHWResetDuration</name>
@@ -5008,11 +5008,11 @@
         </option>
         <option>
           <name>CExtraOptionsCheck</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>CExtraOptions</name>
-          <state/>
+          <state>--jlink_script_file=$PROJ_DIR$/../evkmimxrt1180_cm33.jlinkscript</state>
         </option>
         <option>
           <name>CFpuProcessor</name>
@@ -5136,15 +5136,15 @@
         </option>
         <option>
           <name>OCMulticoreWorkspace</name>
-          <state/>
+          <state>$PROJ_DIR$/../../cm7/iar/trdc_secondary_core_cm7.eww</state>
         </option>
         <option>
           <name>OCMulticoreSlaveProject</name>
-          <state/>
+          <state>trdc_secondary_core_cm7</state>
         </option>
         <option>
           <name>OCMulticoreSlaveConfiguration</name>
-          <state/>
+          <state>release</state>
         </option>
         <option>
           <name>OCDownloadExtraImage</name>
@@ -5164,7 +5164,7 @@
         </option>
         <option>
           <name>OCMulticoreAMPConfigType</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>OCMulticoreSessionFile</name>
@@ -5252,7 +5252,7 @@
         <option>
           <name>CMSISDAPResetList</name>
           <version>1</version>
-          <state>1</state>
+          <state>4</state>
         </option>
         <option>
           <name>CMSISDAPHWResetDuration</name>

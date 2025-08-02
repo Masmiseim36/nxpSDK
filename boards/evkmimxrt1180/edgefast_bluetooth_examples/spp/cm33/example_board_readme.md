@@ -24,9 +24,7 @@ connect J57 2-3
 
 Hardware rework guide:
 ======================
-The hardware should be reworked according to the hardware rework guide for evkmimxrt1180 and Murata 1XK M.2 Adapter in document Hardware Rework Guide for EdgeFast BT PAL.
-The hardware should be reworked according to the hardware rework guide for evkmimxrt1180 and Murata 1ZM M.2 Adapter in document Hardware Rework Guide for EdgeFast BT PAL.
-The rework guide for evkmimxrt1180 and Murata 2EL M.2 Adapter is same as evkmimxrt1180 and Murata 1ZM M.2 Adapter.
+The hardware should be reworked according to the Hardware Rework Guide for MIMXRT1180 and Murata M.2 Module in document Hardware Rework Guide for EdgeFast BT PAL.
 
 Murata Solution Board settings
 ==============================

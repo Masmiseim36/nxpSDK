@@ -24,6 +24,8 @@ the virtual serial port on board.
 - [FRDM-KE15Z](../../../../_boards/frdmke15z/driver_examples/flexio/i2c/read_accel_value_transfer/example_board_readme.md)
 - [FRDM-KE17Z](../../../../_boards/frdmke17z/driver_examples/flexio/i2c/read_accel_value_transfer/example_board_readme.md)
 - [FRDM-MCXC242](../../../../_boards/frdmmcxc242/driver_examples/flexio/i2c/read_accel_value_transfer/example_board_readme.md)
+- [FRDM-MCXE247](../../../../_boards/frdmmcxe247/driver_examples/flexio/i2c/read_accel_value_transfer/example_board_readme.md)
 - [MCIMX93AUTO-EVK](../../../../_boards/mcimx93autoevk/driver_examples/flexio/i2c/read_accel_value_transfer/example_board_readme.md)
 - [MCIMX93-EVK](../../../../_boards/mcimx93evk/driver_examples/flexio/i2c/read_accel_value_transfer/example_board_readme.md)
 - [MCIMX93-QSB](../../../../_boards/mcimx93qsb/driver_examples/flexio/i2c/read_accel_value_transfer/example_board_readme.md)
+- [FRDM-MCXE31B](../../../../_boards/frdmmcxe31b/driver_examples/flexio/i2c/read_accel_value_transfer/example_board_readme.md)

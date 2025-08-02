@@ -53,7 +53,7 @@ void DMA4_CH58_CH59_LPUART10_IRQHandler(void)
     LPUART10_IRQHandler();
 }
 
-static void SEI_EAR_TRDC_EDMA4_ResetPermissions()
+static void TRDC_EDMA4_ResetPermissions()
 {
     uint8_t i, j;
     /* Set the master domain access configuration for eDMA4 */
@@ -167,7 +167,7 @@ void BOARD_SetDMA4Permission(void)
         result = MU_RT_S3MUA->RR[1];
     } while (result != 0xD6);
 
-    SEI_EAR_TRDC_EDMA4_ResetPermissions();
+    TRDC_EDMA4_ResetPermissions();
 }
 
 void BOARD_InitHardware(void)

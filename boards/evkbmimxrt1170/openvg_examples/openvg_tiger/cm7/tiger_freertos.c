@@ -77,7 +77,7 @@
 #define DEMO_RENDER_WIDTH  512
 #define DEMO_RENDER_HEIGHT 512
 
-#if defined(CPU_MIMXRT798SGFOA_cm33_core0) && defined(__ICCARM__)
+#if defined(MIMXRT798S_cm33_core0_SERIES) && defined(__ICCARM__)
 #define MAIN_TASK_STACK_SIZE 12800
 #else
 #define MAIN_TASK_STACK_SIZE 700

@@ -80,7 +80,6 @@ note<br>
 - EVK-MIMXRT1064
 - FRDM-MCXA153
 - [MIMXRT685-AUD-EVK](../../_boards/mimxrt685audevk/usb_examples/usb_device_audio_generator/example_board_readme.md)
-- FRDM-MCXA276
 - LPCXpresso54S018
 - [LPCXpresso55S16](../../_boards/lpcxpresso55s16/usb_examples/usb_device_audio_generator/example_board_readme.md)
 - LPCXpresso54S018M

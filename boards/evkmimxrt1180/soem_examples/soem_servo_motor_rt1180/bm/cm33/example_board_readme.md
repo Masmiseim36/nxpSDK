@@ -22,5 +22,5 @@ Prepare the Demo
     - One stop bit
     - No flow control
 4.  Write the program to the flash of the target board.
-5.  Start the demo and test SOEM performance.
+5.  Start the demo.
 

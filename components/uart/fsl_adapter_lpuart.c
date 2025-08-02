@@ -377,6 +377,7 @@ static void HAL_UartDMAIdlelineInterruptHandle(uint8_t instance)
         /* HAL_UartDMAAbortReceive(uartDmaHandle); */
 
 #if (defined(FSL_FEATURE_SOC_EDMA_COUNT) && (FSL_FEATURE_SOC_EDMA_COUNT > 0U))
+        EDMA_StopTransfer(uartDmaHandle->edmaHandle.rxEdmaHandle);
         (void)LPUART_TransferGetReceiveCountEDMA(s_LpuartAdapterBase[uartDmaHandle->instance],
                                                  &uartDmaHandle->edmaHandle, &dmaMsg.dataSize);
         LPUART_TransferAbortReceiveEDMA(s_LpuartAdapterBase[uartDmaHandle->instance], &uartDmaHandle->edmaHandle);

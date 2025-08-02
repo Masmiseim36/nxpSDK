@@ -14,9 +14,6 @@ if(CMAKE_SCRIPT_MODE_FILE)
 endif()
 
 
-set(CMAKE_STATIC_LIBRARY_PREFIX)
-set(CMAKE_STATIC_LIBRARY_SUFFIX)
-
 set(CMAKE_EXECUTABLE_LIBRARY_PREFIX)
 set(CMAKE_EXECUTABLE_LIBRARY_SUFFIX)
 
@@ -48,11 +45,13 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../lwipopts.h"
 "${ProjDirPath}/../lwippools.h"
 "${ProjDirPath}/../mfg_wlan_bt_fw.h"
-"${ProjDirPath}/../sd8801_mfg_wlan.h"
 "${ProjDirPath}/../sduart8987_mfg_wlan_bt.h"
 "${ProjDirPath}/../sduartIW416_mfg_wlan_bt.h"
 "${ProjDirPath}/../sduart_nw61x_mfg_se.h"
 "${ProjDirPath}/../uart_nw61x_mfg_se.h"
+"${ProjDirPath}/../sd_iw610_mfg_se.h"
+"${ProjDirPath}/../sduartspi_iw610_mfg_se.h"
+"${ProjDirPath}/../uartspi_iw610_mfg_se.h"
 "${ProjDirPath}/../FreeRTOSConfig.h"
 "${ProjDirPath}/../wifi_config.h"
 "${ProjDirPath}/../hardware_init.c"
@@ -61,7 +60,6 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../sdmmc_config.h"
 "${ProjDirPath}/../wifi_bt_config.c"
 "${ProjDirPath}/../wifi_bt_config.h"
-"${ProjDirPath}/../app_config.h"
 "${ProjDirPath}/../FreeRTOSConfigBoard.h"
 "${ProjDirPath}/../pin_mux.c"
 "${ProjDirPath}/../pin_mux.h"
@@ -92,6 +90,7 @@ set_source_files_properties("${ProjDirPath}/../sdmmc_config.c" PROPERTIES COMPON
 set_source_files_properties("${ProjDirPath}/../sdmmc_config.h" PROPERTIES COMPONENT_CONFIG_FILE "middleware_sdmmc_usdhc_template")
 set_source_files_properties("${ProjDirPath}/../ffconf_gen.h" PROPERTIES COMPONENT_CONFIG_FILE "middleware_fatfs_template_usb")
 set_source_files_properties("${ProjDirPath}/../fsl_os_abstraction_config.h" PROPERTIES COMPONENT_CONFIG_FILE "component_osa_template_config")
+set_source_files_properties("${ProjDirPath}/../usb_host_config.h" PROPERTIES COMPONENT_CONFIG_FILE "middleware_usb_host_ehci_config_header")
 
 include(${SdkRootDirPath}/devices/MIMXRT1176/all_lib_device.cmake)
 

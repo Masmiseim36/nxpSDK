@@ -1,6 +1,6 @@
 /*
  * Copyright 2013 - 2015, Freescale Semiconductor, Inc.
-* Copyright 2016-2021, 2024 NXP
+* Copyright 2016-2021, 2024-2025 NXP
 *
 * NXP Proprietary. This software is owned or controlled by NXP and may
 * only be used strictly in accordance with the applicable license terms. 
@@ -12,8 +12,8 @@
 * use the software.
  */
 
-#ifndef _MCDRV_ADC_LPC_H_
-#define _MCDRV_ADC_LPC_H_
+#ifndef _MCDRV_ADC_IMXRT118X_H_
+#define _MCDRV_ADC_IMXRT118X_H_
 
 #include "fsl_lpadc.h"
 
@@ -27,12 +27,6 @@
  ******************************************************************************/
 
 #define MCDRV_ADC (3)
-
-/* init sensors/actuators pointers */
-#define M1_SET_PTR_U_DC_BUS(par1) (g_sM1AdcSensor.pf16UDcBus = &(par1))
-#define M1_SET_PTR_I_ABC(par1) (g_sM1AdcSensor.psIABC = &(par1))
-#define M1_SET_PTR_SECTOR(par1) (g_sM1AdcSensor.pui16SVMSector = &(par1))
-#define M1_SET_PTR_AUX_CHAN(par1) (g_sM1AdcSensor.pui16AuxChan = &(par1))
 
 typedef struct _pha_ab
 {
@@ -155,4 +149,4 @@ void MCDRV_AuxValGet(mcdrv_adc_t *this);
 }
 #endif
 
-#endif /* _MCDRV_ADC_LPC_H_ */
+#endif /* _MCDRV_ADC_IMXRT118X_H_ */

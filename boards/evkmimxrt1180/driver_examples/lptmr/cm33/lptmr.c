@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2017,2025 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -68,7 +68,9 @@ int main(void)
      */
     /* Note: the input clock source for prescaler clock must be enabled and attached in advance with configuration in SYSCON or SCG */
     LPTMR_GetDefaultConfig(&lptmrConfig);
-
+#ifdef DEMO_LPTMR_PRE_SCALER_CLOCK
+    lptmrConfig.prescalerClockSource = DEMO_LPTMR_PRE_SCALER_CLOCK;
+#endif
     /* Initialize the LPTMR */
     LPTMR_Init(DEMO_LPTMR_BASE, &lptmrConfig);
 

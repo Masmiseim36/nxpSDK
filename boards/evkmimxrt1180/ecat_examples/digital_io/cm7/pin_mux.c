@@ -14,7 +14,7 @@
 !!GlobalInfo
 product: Pins v15.0
 processor: MIMXRT1189xxxxx
-package_id: MIMXRT1189CVM8B
+package_id: MIMXRT1189CVM8C
 mcu_data: ksdk2_0
 processor_version: 0.15.9
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
@@ -23,20 +23,6 @@ processor_version: 0.15.9
 #include "fsl_common.h"
 #include "fsl_iomuxc.h"
 #include "pin_mux.h"
-
-/* FUNCTION ************************************************************************************************************
- * 
- * Function Name : BOARD_InitBootPins
- * Description   : Calls initialization functions.
- * 
- * END ****************************************************************************************************************/
-void BOARD_InitBootPins(void) {
-    BOARD_InitPins();
-    BOARD_ECAT_MDIO_InitPins();
-    BOARD_Port0_RMII_InitPins();
-    BOARD_Port1_RMII_InitPins();
-    BOARD_ECAT_I2C_InitPins();
-}
 
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
@@ -325,6 +311,20 @@ void BOARD_ECAT_I2C_InitPins(void) {
                                                  Pull Up / Down Config. Field: Weak pull up
                                                  Open Drain Field: Enabled
                                                  Force ibe off Field: Disabled */
+}
+
+/* FUNCTION ************************************************************************************************************
+ * 
+ * Function Name : BOARD_InitBootPins
+ * Description   : Calls initialization functions.
+ * 
+ * END ****************************************************************************************************************/
+void BOARD_InitBootPins(void) {
+    BOARD_InitPins();
+    BOARD_ECAT_MDIO_InitPins();
+    BOARD_Port0_RMII_InitPins();
+    BOARD_Port1_RMII_InitPins();
+    BOARD_ECAT_I2C_InitPins();
 }
 
 /***********************************************************************************************************************

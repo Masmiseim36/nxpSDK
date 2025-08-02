@@ -1,6 +1,6 @@
 /*
  * Copyright 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2021 NXP
+ * Copyright 2016-2021, 2025 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -20,7 +20,7 @@
 
 /* Motor 1 */
 /* Structure for current and voltage measurement */
-mcdrv_adcetc_t g_sM1AdcSensor;
+mcdrv_adcetc_t g_sM1Curr3phDcBus;
 
 /* Structure for 3-phase PWM MC driver */
 mcdrv_pwm3ph_pwma_t g_sM1Pwm3ph;
@@ -68,7 +68,7 @@ void MCDRV_Init_M1(void)
     M1_MCDRV_PWM_PERIPH_INIT();
 
     /* Qudrature decoder peripheral init */
-    M1_MCDRV_QD_PERIPH_INIT();
+    M1_MCDRV_ENC_PERIPH_INIT();
 
     /* Comparator CMP */
     M1_MCDRV_CMP_INIT();
@@ -126,35 +126,35 @@ void InitADC(void)
     /* Phase current measurement */
     /* Sector 1,6 - measured currents Ib & Ic */
     /* ADC1, channel Ib = M1_ADC1_PH_B (ADC_ETC trigger 0, chain 0) */
-    g_sM1AdcSensor.sCurrSec16.ui16ChanNumPhaB = M1_ADC1_PH_B_CHNL;
-    g_sM1AdcSensor.sCurrSec16.ui16ChanSidePhaB = M1_ADC1_PH_B_SIDE;
+    g_sM1Curr3phDcBus.sCurrSec16.ui16ChanNumPhaB = M1_ADC1_PH_B_CHNL;
+    g_sM1Curr3phDcBus.sCurrSec16.ui16ChanSidePhaB = M1_ADC1_PH_B_SIDE;
     /* ADC2, channel Ic = M1_ADC2_PH_C (ADC_ETC trigger 4, chain 0) */
-    g_sM1AdcSensor.sCurrSec16.ui16ChanNumPhaC = M1_ADC2_PH_C_CHNL;
-    g_sM1AdcSensor.sCurrSec16.ui16ChanSidePhaC = M1_ADC2_PH_C_SIDE;
+    g_sM1Curr3phDcBus.sCurrSec16.ui16ChanNumPhaC = M1_ADC2_PH_C_CHNL;
+    g_sM1Curr3phDcBus.sCurrSec16.ui16ChanSidePhaC = M1_ADC2_PH_C_SIDE;
 
     /* Sector 2,3 - measured currents Ia & Ic*/
     /* ADC1, channel Ia = M1_ADC1_PH_A (ADC_ETC trigger 0, chain 0) */
-    g_sM1AdcSensor.sCurrSec23.ui16ChanNumPhaA = M1_ADC1_PH_A_CHNL;
-    g_sM1AdcSensor.sCurrSec23.ui16ChanSidePhaA = M1_ADC1_PH_A_SIDE;
+    g_sM1Curr3phDcBus.sCurrSec23.ui16ChanNumPhaA = M1_ADC1_PH_A_CHNL;
+    g_sM1Curr3phDcBus.sCurrSec23.ui16ChanSidePhaA = M1_ADC1_PH_A_SIDE;
     /* ADC2, channel Ic = M1_ADC2_PH_C (ADC_ETC trigger 4, chain 0) */
-    g_sM1AdcSensor.sCurrSec23.ui16ChanNumPhaC = M1_ADC2_PH_C_CHNL;
-    g_sM1AdcSensor.sCurrSec23.ui16ChanSidePhaC = M1_ADC2_PH_C_SIDE;
+    g_sM1Curr3phDcBus.sCurrSec23.ui16ChanNumPhaC = M1_ADC2_PH_C_CHNL;
+    g_sM1Curr3phDcBus.sCurrSec23.ui16ChanSidePhaC = M1_ADC2_PH_C_SIDE;
 
     /* Sector 4,5 - measured currents Ia & Ib */
     /* ADC1, channel Ia = M1_ADC1_PH_A (ADC_ETC trigger 0, chain 0) */
-    g_sM1AdcSensor.sCurrSec45.ui16ChanNumPhaA = M1_ADC1_PH_A_CHNL;
-    g_sM1AdcSensor.sCurrSec45.ui16ChanSidePhaA = M1_ADC1_PH_A_SIDE;
+    g_sM1Curr3phDcBus.sCurrSec45.ui16ChanNumPhaA = M1_ADC1_PH_A_CHNL;
+    g_sM1Curr3phDcBus.sCurrSec45.ui16ChanSidePhaA = M1_ADC1_PH_A_SIDE;
     /* ADC2, channel Ib = M1_ADC2_PH_B (ADC_ETC trigger 4, chain 0) */
-    g_sM1AdcSensor.sCurrSec45.ui16ChanNumPhaB = M1_ADC2_PH_B_CHNL;
-    g_sM1AdcSensor.sCurrSec45.ui16ChanSidePhaB = M1_ADC2_PH_B_SIDE;
+    g_sM1Curr3phDcBus.sCurrSec45.ui16ChanNumPhaB = M1_ADC2_PH_B_CHNL;
+    g_sM1Curr3phDcBus.sCurrSec45.ui16ChanSidePhaB = M1_ADC2_PH_B_SIDE;
 
     /* UDCbus channel measurement */
     /* ADC1, channel Udcb = M1_ADC1_UDCB (ADC_ETC trigger 0, chain 1) */
-    g_sM1AdcSensor.ui16ChanNumVDcb  = M1_ADC1_UDCB_CHNL;
-    g_sM1AdcSensor.ui16ChanSideVDcb  = M1_ADC1_UDCB_SIDE;
+    g_sM1Curr3phDcBus.ui16ChanNumVDcb  = M1_ADC1_UDCB_CHNL;
+    g_sM1Curr3phDcBus.ui16ChanSideVDcb  = M1_ADC1_UDCB_SIDE;
     /* ADC2, channel AUX (ADC_ETC trigger 4, chain 1) */
-    g_sM1AdcSensor.ui16ChanNumAux = 7U;
-    g_sM1AdcSensor.ui16ChanSideAux = kLPADC_SampleChannelSingleEndSideB;
+    g_sM1Curr3phDcBus.ui16ChanNumAux = 7U;
+    g_sM1Curr3phDcBus.ui16ChanSideAux = kLPADC_SampleChannelSingleEndSideB;
 
     //Default channel assigment for Sector 2
 
@@ -164,10 +164,10 @@ void InitADC(void)
 
     /* Set conversion CMD configuration. */
     LPADC_GetDefaultConvCommandConfig(&lpadcCommandConfig);
-    lpadcCommandConfig.channelNumber = g_sM1AdcSensor.sCurrSec23.ui16ChanNumPhaA;
+    lpadcCommandConfig.channelNumber = g_sM1Curr3phDcBus.sCurrSec23.ui16ChanNumPhaA;
     lpadcCommandConfig.sampleTimeMode = kLPADC_SampleTimeADCK3;
     lpadcCommandConfig.sampleScaleMode = kLPADC_SamplePartScale;
-    lpadcCommandConfig.sampleChannelMode = g_sM1AdcSensor.sCurrSec23.ui16ChanSidePhaA;
+    lpadcCommandConfig.sampleChannelMode = g_sM1Curr3phDcBus.sCurrSec23.ui16ChanSidePhaA;
     LPADC_SetConvCommandConfig(LPADC1, 1U, &lpadcCommandConfig); // CMDL[number]
     /* Set trigger configuration. */
     LPADC_GetDefaultConvTriggerConfig(&lpadcTriggerConfig);
@@ -177,10 +177,10 @@ void InitADC(void)
 
     /* Set conversion CMD configuration. */
     LPADC_GetDefaultConvCommandConfig(&lpadcCommandConfig);
-    lpadcCommandConfig.channelNumber = g_sM1AdcSensor.ui16ChanNumVDcb;
+    lpadcCommandConfig.channelNumber = g_sM1Curr3phDcBus.ui16ChanNumVDcb;
     lpadcCommandConfig.sampleTimeMode = kLPADC_SampleTimeADCK3;
     lpadcCommandConfig.sampleScaleMode = kLPADC_SamplePartScale;
-    lpadcCommandConfig.sampleChannelMode = g_sM1AdcSensor.ui16ChanSideVDcb;
+    lpadcCommandConfig.sampleChannelMode = g_sM1Curr3phDcBus.ui16ChanSideVDcb;
     LPADC_SetConvCommandConfig(LPADC1, 2U, &lpadcCommandConfig); // CMDL[number]
     /* Set trigger configuration. */
     LPADC_GetDefaultConvTriggerConfig(&lpadcTriggerConfig);
@@ -194,10 +194,10 @@ void InitADC(void)
 
     /* Set conversion CMD configuration. */
     LPADC_GetDefaultConvCommandConfig(&lpadcCommandConfig);
-    lpadcCommandConfig.channelNumber = g_sM1AdcSensor.sCurrSec23.ui16ChanNumPhaC;
+    lpadcCommandConfig.channelNumber = g_sM1Curr3phDcBus.sCurrSec23.ui16ChanNumPhaC;
     lpadcCommandConfig.sampleTimeMode = kLPADC_SampleTimeADCK3;
     lpadcCommandConfig.sampleScaleMode = kLPADC_SamplePartScale;
-    lpadcCommandConfig.sampleChannelMode = g_sM1AdcSensor.sCurrSec23.ui16ChanSidePhaC;
+    lpadcCommandConfig.sampleChannelMode = g_sM1Curr3phDcBus.sCurrSec23.ui16ChanSidePhaC;
     LPADC_SetConvCommandConfig(LPADC2, 1U, &lpadcCommandConfig); // CMDL[number]
     /* Set trigger configuration. */
     LPADC_GetDefaultConvTriggerConfig(&lpadcTriggerConfig);
@@ -209,10 +209,10 @@ void InitADC(void)
     
     /* Set conversion CMD configuration. */
     LPADC_GetDefaultConvCommandConfig(&lpadcCommandConfig);
-    lpadcCommandConfig.channelNumber = g_sM1AdcSensor.ui16ChanNumAux;
+    lpadcCommandConfig.channelNumber = g_sM1Curr3phDcBus.ui16ChanNumAux;
     lpadcCommandConfig.sampleTimeMode = kLPADC_SampleTimeADCK3;
     lpadcCommandConfig.sampleScaleMode = kLPADC_SamplePartScale;
-    lpadcCommandConfig.sampleChannelMode = g_sM1AdcSensor.ui16ChanSideAux;
+    lpadcCommandConfig.sampleChannelMode = g_sM1Curr3phDcBus.ui16ChanSideAux;
     LPADC_SetConvCommandConfig(LPADC2, 2U, &lpadcCommandConfig); // CMDL[number]
     /* Set trigger configuration. */
     LPADC_GetDefaultConvTriggerConfig(&lpadcTriggerConfig);
@@ -497,10 +497,10 @@ void M1_InitQD(void)
     g_sM1Enc.bDirection    = M1_POSPE_ENC_DIRECTION;
     g_sM1Enc.fltSpdEncMin  = M1_POSPE_ENC_N_MIN;
     g_sM1Enc.ui16PulseNumber = M1_POSPE_ENC_PULSES;
-    M1_MCDRV_QD_SET_DIRECTION(&g_sM1Enc);
+    M1_MCDRV_ENC_SET_DIRECTION(&g_sM1Enc);
       
     /* Initialization modulo counter*/
-    M1_MCDRV_QD_SET_PULSES(&g_sM1Enc);
+    M1_MCDRV_ENC_SET_PULSES(&g_sM1Enc);
 
     /* Enable modulo counting and revolution counter increment on roll-over */
     ENC1->CTRL2 = (ENC_CTRL2_MOD_MASK | ENC_CTRL2_REVMOD_MASK);

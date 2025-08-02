@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2020 NXP
+ * Copyright 2017-2020, 2025 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -27,15 +27,6 @@
 
 /* @TEST_ANCHOR*/
 
-#ifndef MAC_ADDRESS
-#define MAC_ADDRESS                        \
-    {                                      \
-        0x54, 0x27, 0x8d, 0x00, 0x00, 0x00 \
-    }
-#else
-#define USER_DEFINED_MAC_ADDRESS
-#endif
-
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
@@ -44,8 +35,13 @@
  * Variables
  ******************************************************************************/
 uint8_t g_frame[ENET_DATA_LENGTH + 14];
+uint8_t g_rxFrame[ENET_FRAME_MAX_FRAMELEN];
 volatile uint32_t g_testTxNum  = 0;
-uint8_t g_macAddr[6]           = MAC_ADDRESS;
+#if APP_USER_DEFINED_MAC_ADDRESS
+uint8_t g_macAddr[6] = APP_MAC_ADDRESS;
+#else
+uint8_t g_macAddr[6];
+#endif
 volatile uint32_t g_rxIndex    = 0;
 volatile uint32_t g_rxCheckIdx = 0;
 volatile uint32_t g_txCheckIdx = 0;
@@ -58,33 +54,31 @@ void ENET_SignalEvent_t(uint32_t event)
     if (event == ARM_ETH_MAC_EVENT_RX_FRAME)
     {
         uint32_t size;
-        uint32_t len;
+        int32_t len;
 
         /* Get the Frame size */
         size = EXAMPLE_ENET.GetRxFrameSize();
         /* Call ENET_ReadFrame when there is a received frame. */
-        if (size != 0)
+        if ((size != 0) && (size <= sizeof(g_rxFrame)))
         {
-            /* Received valid frame. Deliver the rx buffer with the size equal to length. */
-            uint8_t *data = (uint8_t *)malloc(size);
-            if (data)
+            /* Received valid frame. Just read it out into a buffer. */
+            len = EXAMPLE_ENET.ReadFrame(&g_rxFrame[0], size);
+            if ((len >= 0) && (size == (uint32_t)len))
             {
-                len = EXAMPLE_ENET.ReadFrame(data, size);
-                if (size == len)
+                /* Increase the received frame numbers. */
+                if (g_rxIndex < ENET_EXAMPLE_LOOP_COUNT)
                 {
-                    /* Increase the received frame numbers. */
-                    if (g_rxIndex < ENET_EXAMPLE_LOOP_COUNT)
-                    {
-                        g_rxIndex++;
-                    }
+                    g_rxIndex++;
                 }
-                free(data);
             }
         }
     }
     if (event == ARM_ETH_MAC_EVENT_TX_FRAME)
     {
-        g_testTxNum++;
+        if (g_testTxNum < 0xFFFFFFFFU)
+        {
+            g_testTxNum++;
+        }
     }
 }
 
@@ -121,7 +115,7 @@ int main(void)
 
     PRINTF("\r\nENET example start.\r\n");
 
-#ifndef USER_DEFINED_MAC_ADDRESS
+#if !APP_USER_DEFINED_MAC_ADDRESS
     /* Set special address for each chip. */
     SILICONID_ConvertToMacAddr(&g_macAddr);
 #endif

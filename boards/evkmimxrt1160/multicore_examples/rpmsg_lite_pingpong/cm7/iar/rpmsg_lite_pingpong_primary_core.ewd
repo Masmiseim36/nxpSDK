@@ -1708,7 +1708,7 @@
         </option>
         <option>
           <name>MacFile</name>
-          <state>$PROJ_DIR$/evkmimxrt1160_connect_cm7.mac</state>
+          <state>$PROJ_DIR$/../evkmimxrt1160_connect_cm7.mac</state>
         </option>
         <option>
           <name>MemOverride</name>
@@ -4988,7 +4988,7 @@
         </option>
         <option>
           <name>MacFile</name>
-          <state>$PROJ_DIR$/evkmimxrt1160_connect_cm7.mac</state>
+          <state>$PROJ_DIR$/../evkmimxrt1160_connect_cm7.mac</state>
         </option>
         <option>
           <name>MemOverride</name>

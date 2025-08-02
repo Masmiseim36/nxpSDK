@@ -1,6 +1,5 @@
 /*
- * Copyright 2020, 2023 NXP
- * All rights reserved.
+ * Copyright 2025 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -13,15 +12,16 @@
 /* clang-format off */
 /* TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 !!GlobalInfo
-product: Peripherals v12.0
+product: Peripherals v15.0
 processor: MIMXRT1176xxxxx
-package_id: MIMXRT1176DVMAA
+package_id: MIMXRT1176DVMAB
 mcu_data: ksdk2_0
-processor_version: 0.13.3
+processor_version: 0.2506.20
 functionalGroups:
 - name: BOARD_InitPeripherals
   UUID: 7ee8fc36-68c9-403c-a923-44701e1362da
   called_from_default_init: true
+  selectedCore: cm7
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS **********/
 
 /* TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
@@ -31,6 +31,7 @@ component:
 - global_system_definitions:
   - user_definitions: ''
   - user_includes: ''
+  - global_init: ''
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS **********/
 
 /* TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
@@ -59,18 +60,18 @@ component:
  * BOARD_InitPeripherals functional group
  **********************************************************************************************************************/
 /***********************************************************************************************************************
- * NVIC initialization code
+ * CM7_NVIC initialization code
  **********************************************************************************************************************/
 /* clang-format off */
 /* TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 instance:
-- name: 'NVIC'
+- name: 'CM7_NVIC'
 - type: 'nvic'
 - mode: 'general'
 - custom_name_enabled: 'false'
-- type_id: 'nvic_57b5eef3774cc60acaede6f5b8bddc67'
+- type_id: 'nvic'
 - functional_group: 'BOARD_InitPeripherals'
-- peripheral: 'NVIC'
+- peripheral: 'CM7_NVIC'
 - config_sets:
   - nvic:
     - interrupt_table: []
@@ -79,7 +80,7 @@ instance:
 /* clang-format on */
 
 /* Empty initialization function (commented out)
-static void NVIC_init(void) {
+static void CM7_NVIC_init(void) {
 } */
 
 /***********************************************************************************************************************

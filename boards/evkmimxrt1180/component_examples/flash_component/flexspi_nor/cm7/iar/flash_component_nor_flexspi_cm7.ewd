@@ -64,11 +64,11 @@
         </option>
         <option>
           <name>MacOverride</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>MacFile</name>
-          <state>$PROJ_DIR$/../evkmimxrt1180.mac</state>
+          <state/>
         </option>
         <option>
           <name>MemOverride</name>
@@ -88,11 +88,11 @@
         </option>
         <option>
           <name>CExtraOptionsCheck</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>CExtraOptions</name>
-          <state>--macro_param enable_core=1</state>
+          <state/>
         </option>
         <option>
           <name>CFpuProcessor</name>
@@ -332,7 +332,7 @@
         <option>
           <name>CMSISDAPResetList</name>
           <version>1</version>
-          <state>1</state>
+          <state>4</state>
         </option>
         <option>
           <name>CMSISDAPHWResetDuration</name>
@@ -1732,6 +1732,7 @@
         </option>
         <option>
           <name>CExtraOptions</name>
+          <state>--jlink_script_file=$PROJ_DIR$/../evkmimxrt1180_cm7.jlinkscript</state>
           <state>--macro_param enable_core=1</state>
         </option>
         <option>
@@ -1972,7 +1973,7 @@
         <option>
           <name>CMSISDAPResetList</name>
           <version>1</version>
-          <state>1</state>
+          <state>4</state>
         </option>
         <option>
           <name>CMSISDAPHWResetDuration</name>
@@ -3344,11 +3345,11 @@
         </option>
         <option>
           <name>MacOverride</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>MacFile</name>
-          <state>$PROJ_DIR$/../evkmimxrt1180.mac</state>
+          <state/>
         </option>
         <option>
           <name>MemOverride</name>
@@ -3368,11 +3369,11 @@
         </option>
         <option>
           <name>CExtraOptionsCheck</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>CExtraOptions</name>
-          <state>--macro_param enable_core=1</state>
+          <state/>
         </option>
         <option>
           <name>CFpuProcessor</name>
@@ -3612,7 +3613,7 @@
         <option>
           <name>CMSISDAPResetList</name>
           <version>1</version>
-          <state>1</state>
+          <state>5</state>
         </option>
         <option>
           <name>CMSISDAPHWResetDuration</name>
@@ -5012,6 +5013,7 @@
         </option>
         <option>
           <name>CExtraOptions</name>
+          <state>--jlink_script_file=$PROJ_DIR$/../evkmimxrt1180_cm7.jlinkscript</state>
           <state>--macro_param enable_core=1</state>
         </option>
         <option>
@@ -5252,7 +5254,7 @@
         <option>
           <name>CMSISDAPResetList</name>
           <version>1</version>
-          <state>1</state>
+          <state>4</state>
         </option>
         <option>
           <name>CMSISDAPHWResetDuration</name>

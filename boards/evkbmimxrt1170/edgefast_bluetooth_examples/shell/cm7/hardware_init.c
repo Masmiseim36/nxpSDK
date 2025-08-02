@@ -46,7 +46,7 @@ void BOARD_InitHardware(void)
     BOARD_ConfigMPU();
     BOARD_InitBootPins();
 #if (defined(WIFI_88W8987_BOARD_MURATA_1ZM_M2) || defined(WIFI_IW416_BOARD_MURATA_1XK_M2) || \
-     defined(WIFI_IW612_BOARD_MURATA_2EL_M2) )
+     defined(WIFI_IW612_BOARD_MURATA_2EL_M2) || defined(WIFI_IW610_BOARD_MURATA_2LL_M2) )
     BOARD_InitM2UARTPins();
 #else
     BOARD_InitArduinoUARTPins();
@@ -67,7 +67,7 @@ void BOARD_InitHardware(void)
 }
 
 #if (defined(WIFI_88W8987_BOARD_MURATA_1ZM_M2) || defined(WIFI_IW416_BOARD_MURATA_1XK_M2) || \
-     defined(WIFI_IW612_BOARD_MURATA_2EL_M2) || defined (WIFI_AW611_BOARD_UBX_JODY_W5_M2))
+     defined(WIFI_IW612_BOARD_MURATA_2EL_M2) || defined(WIFI_IW610_BOARD_MURATA_2LL_M2) || defined (WIFI_AW611_BOARD_UBX_JODY_W5_M2))
 int controller_hci_uart_get_configuration(controller_hci_uart_config_t *config)
 {
     if (NULL == config)
@@ -77,7 +77,7 @@ int controller_hci_uart_get_configuration(controller_hci_uart_config_t *config)
     config->clockSrc        = CLOCK_GetRootClockFreq(kCLOCK_Root_Lpuart2);
 #if (defined(WIFI_AW611_BOARD_UBX_JODY_W5_M2))
     config->defaultBaudrate = BOARD_BT_UART_BAUDRATE;
-#elif (defined(WIFI_88W8987_BOARD_MURATA_1ZM_M2) || defined(WIFI_IW416_BOARD_MURATA_1XK_M2) || defined(WIFI_IW612_BOARD_MURATA_2EL_M2))
+#elif (defined(WIFI_88W8987_BOARD_MURATA_1ZM_M2) || defined(WIFI_IW416_BOARD_MURATA_1XK_M2) || defined(WIFI_IW612_BOARD_MURATA_2EL_M2) || defined(WIFI_IW610_BOARD_MURATA_2LL_M2))
     config->defaultBaudrate = 115200U;
 #endif
     config->runningBaudrate = BOARD_BT_UART_BAUDRATE;

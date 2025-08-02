@@ -35,29 +35,29 @@ Copyright  2020  NXP
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 1.  Procedure to run SPP server
-1.1 input "help" to show command list
-1.2 input "spp register 3" to register spp server channel 3, wait for spp connection
-1.3 After spp connection on channel 3 is created, input "spp send [1|2|3|4]" to send data
-1.4 After peer device send "spp set_pn client 3", input "spp get_pn server 3" to test pn command
-1.5 After peer device send "spp set_port client 5", input "spp register 5" to register spp server channel 5 and wait for spp connection
-1.6 After spp connection on channel 5 is created, input "spp get_port server 5" to test remote port negotiation command after spp connection is created
-1.7 input "spp handle" to show current active spp handle
-1.8 input "spp switch 0" to select the first spp handle
-1.9 input "spp disconnect" to disconnect with peer device
+    1. input "help" to show command list
+    2. input "spp register 3" to register spp server channel 3, wait for spp connection
+    3. After spp connection on channel 3 is created, input "spp send [1|2|3|4]" to send data
+    4. After peer device send "spp set_pn client 3", input "spp get_pn server 3" to test pn command
+    5. After peer device send "spp set_port client 5", input "spp register 5" to register spp server channel 5 and wait for spp connection
+    6. After spp connection on channel 5 is created, input "spp get_port server 5" to test remote port negotiation command after spp connection is created
+    7. input "spp handle" to show current active spp handle
+    8. input "spp switch 0" to select the first spp handle
+    9. input "spp disconnect" to disconnect with peer device
 
 2.  Procedure to run SPP client
-2.1 input "bt discover" to discover connctable bluetooth device
-2.2 input "bt connect [index]" to create basic bluetooth connection with the discovered device
-2.3 input "spp discover" to discover registered spp server channel in peer device
-2.4 input "spp connect 3" to create spp connection on channel 3 with peer device
-2.5 After spp connection on channel 3 is created, input "spp send [1|2|3|4]" to send data
-2.6 After spp connection on channel 3 is created, input "spp send_rls" to test remote line status command
-2.7 After spp connection on channel 3 is created, input "spp send_msc" to test modem status command
-2.8 After spp connection on channel 3 is created, input "spp set_pn client 3" to test parameter command
-2.9 input "spp get_port client 5" to test remote port negotiation command before spp connection on channel 5 is created
-2.10 input "spp set_port client 5" to test remote port negotiation command before spp connection on channel 5 is created
-2.11 input "spp connect 5" to create spp connection on channel 5 with peer device
-2.12 input "spp get_port client 5" to test remote port negotiation command after spp connection on channel 5 is created
+    1. input "bt discover" to discover connctable bluetooth device
+    2. input "bt connect [index]" to create basic bluetooth connection with the discovered device
+    3. input "spp discover" to discover registered spp server channel in peer device
+    4. input "spp connect 3" to create spp connection on channel 3 with peer device
+    5. After spp connection on channel 3 is created, input "spp send [1|2|3|4]" to send data
+    6. After spp connection on channel 3 is created, input "spp send_rls" to test remote line status command
+    7. After spp connection on channel 3 is created, input "spp send_msc" to test modem status command
+    8. After spp connection on channel 3 is created, input "spp set_pn client 3" to test parameter command
+    9. input "spp get_port client 5" to test remote port negotiation command before spp connection on channel 5 is created
+    10. input "spp set_port client 5" to test remote port negotiation command before spp connection on channel 5 is created
+    11. input "spp connect 5" to create spp connection on channel 5 with peer device
+    12. input "spp get_port client 5" to test remote port negotiation command after spp connection on channel 5 is created
 
 ## Supported Boards
 - [EVKB-IMXRT1050](../../_boards/evkbimxrt1050/edgefast_bluetooth_examples/spp/example_board_readme.md)

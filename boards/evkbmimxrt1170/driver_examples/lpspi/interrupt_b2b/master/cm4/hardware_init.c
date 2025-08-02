@@ -18,17 +18,11 @@
 /*${header:end}*/
 
 /*${function:start}*/
-extern void LPSPI1_DriverIRQHandler(void);
-
 void BOARD_InitHardware(void)
 {
     BOARD_ConfigMPU();
     BOARD_InitPins();
     BOARD_BootClockRUN();
     BOARD_InitDebugConsole();
-
-#if defined(ENABLE_RAM_VECTOR_TABLE)
-    InstallIRQHandler(LPSPI1_IRQn, (uint32_t)LPSPI1_DriverIRQHandler);
-#endif
 }
 /*${function:end}*/

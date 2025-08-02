@@ -11,33 +11,11 @@
 #include "board.h"
 #include "fsl_edma.h"
 #include "fsl_trdc.h"
-#include "fsl_ele_base_api.h"
 #include "app.h"
 #include "fsl_codec_common.h"
 #include "fsl_wm8962.h"
 #include "fsl_codec_adapter.h"
 /*${header:end}*/
-
-/*${macro:start}*/
-#define ELE_TRDC_AON_ID    0x74
-#define ELE_TRDC_WAKEUP_ID 0x78
-#define ELE_CORE_CM33_ID   0x1
-#define ELE_CORE_CM7_ID    0x2
-
-/*
- * Set ELE_STICK_FAILED_STS to 0 when ELE status check is not required,
- * which is useful when debug reset, where the core has already get the
- * TRDC ownership at first time and ELE is not able to release TRDC
- * ownership again for the following TRDC ownership request.
- */
-#define ELE_STICK_FAILED_STS 1
-
-#if ELE_STICK_FAILED_STS
-#define ELE_IS_FAILED(x) (x != kStatus_Success)
-#else
-#define ELE_IS_FAILED(x) false
-#endif
-/*${macro:end}*/
 
 /*${variable:start}*/
 edma_channel_config_t channelConfig = {
@@ -82,7 +60,7 @@ const clock_audio_pll_config_t audioPllConfig = {
 /*${variable:end}*/
 
 /*${function:start}*/
-void SEI_EAR_TRDC_EDMA4_ResetPermissions()
+void TRDC_EDMA4_ResetPermissions()
 {
     uint8_t i, j;
     /* Set the master domain access configuration for eDMA4 */
@@ -134,7 +112,7 @@ void SEI_EAR_TRDC_EDMA4_ResetPermissions()
     }
 }
 
-void SEI_EAR_TRDC_EDMA3_ResetPermissions()
+void TRDC_EDMA3_ResetPermissions()
 {
     uint8_t i, j;
     /* Set the master domain access configuration for eDMA3 */
@@ -200,8 +178,6 @@ void BOARD_EnableSaiMclkOutput(bool enable)
 
 void BOARD_InitHardware(void)
 {
-    status_t sts;
-
     BOARD_ConfigMPU();
     BOARD_InitPins();
     BOARD_BootClockRUN();
@@ -210,27 +186,10 @@ void BOARD_InitHardware(void)
     /*Workaround to make SAI1 CLK Root output 12MHz*/
     CLOCK_InitAudioPll(&audioPllConfig);
     
-    /* Get ELE FW status */
-    do
-    {
-        uint32_t ele_fw_sts;
-        sts = ELE_BaseAPI_GetFwStatus(MU_RT_S3MUA, &ele_fw_sts);
-    } while (sts != kStatus_Success);
+    BOARD_RequestTRDC(true, true, false);
 
-    /* Release TRDC A to CM33 core */
-    do
-    {
-        sts = ELE_BaseAPI_ReleaseRDC(MU_RT_S3MUA, ELE_TRDC_AON_ID, ELE_CORE_CM33_ID);
-    } while (ELE_IS_FAILED(sts));
-
-    /* Release TRDC W to CM33 core */
-    do
-    {
-        sts = ELE_BaseAPI_ReleaseRDC(MU_RT_S3MUA, ELE_TRDC_WAKEUP_ID, ELE_CORE_CM33_ID);
-    } while (ELE_IS_FAILED(sts));
-
-    SEI_EAR_TRDC_EDMA3_ResetPermissions();
-    SEI_EAR_TRDC_EDMA4_ResetPermissions();
+    TRDC_EDMA3_ResetPermissions();
+    TRDC_EDMA4_ResetPermissions();
 
 #if 0
 #ifdef ASRC_SAI_DMA

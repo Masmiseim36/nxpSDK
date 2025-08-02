@@ -248,6 +248,7 @@
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1166DVM6A_cm7</state>
+          <state>MIMXRT1166_cm7_SERIES</state>
           <state>MULTICORE_APP=1</state>
           <state>SDK_OS_FREE_RTOS</state>
         </option>
@@ -385,7 +386,8 @@
           <state>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg-lite/lib/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg-lite/lib/include/environment/freertos</state>
           <state>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg-lite/lib/include/platform/imxrt1160</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/multicore/mcmgr/src</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/multicore/mcmgr/inc</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/multicore/mcmgr/inc/platform/imxrt1160</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM4F</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/template</state>
@@ -574,6 +576,7 @@
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1166DVM6A_cm7</state>
+          <state>MIMXRT1166_cm7_SERIES</state>
         </option>
         <option>
           <name>AList</name>
@@ -680,7 +683,8 @@
           <state>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg-lite/lib/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg-lite/lib/include/environment/freertos</state>
           <state>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg-lite/lib/include/platform/imxrt1160</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/multicore/mcmgr/src</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/multicore/mcmgr/inc</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/multicore/mcmgr/inc/platform/imxrt1160</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM4F</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/template</state>
@@ -713,7 +717,7 @@
         <option>
           <name>OOCOutputFormat</name>
           <version>3</version>
-          <state>0</state>
+          <state>3</state>
         </option>
         <option>
           <name>OCOutputOverride</name>
@@ -729,7 +733,7 @@
         </option>
         <option>
           <name>OOCObjCopyEnable</name>
-          <state>0</state>
+          <state>1</state>
         </option>
       </data>
     </settings>
@@ -1399,6 +1403,7 @@
           <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1166DVM6A_cm7</state>
+          <state>MIMXRT1166_cm7_SERIES</state>
           <state>MULTICORE_APP=1</state>
           <state>SDK_OS_FREE_RTOS</state>
         </option>
@@ -1536,7 +1541,8 @@
           <state>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg-lite/lib/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg-lite/lib/include/environment/freertos</state>
           <state>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg-lite/lib/include/platform/imxrt1160</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/multicore/mcmgr/src</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/multicore/mcmgr/inc</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/multicore/mcmgr/inc/platform/imxrt1160</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM4F</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/template</state>
@@ -1725,6 +1731,7 @@
           <name>ADefines</name>
           <state>MCUXPRESSO_SDK</state>
           <state>CPU_MIMXRT1166DVM6A_cm7</state>
+          <state>MIMXRT1166_cm7_SERIES</state>
         </option>
         <option>
           <name>AList</name>
@@ -1831,7 +1838,8 @@
           <state>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg-lite/lib/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg-lite/lib/include/environment/freertos</state>
           <state>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg-lite/lib/include/platform/imxrt1160</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/multicore/mcmgr/src</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/multicore/mcmgr/inc</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/multicore/mcmgr/inc/platform/imxrt1160</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM4F</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/template</state>
@@ -1864,7 +1872,7 @@
         <option>
           <name>OOCOutputFormat</name>
           <version>3</version>
-          <state>0</state>
+          <state>3</state>
         </option>
         <option>
           <name>OCOutputOverride</name>
@@ -1880,7 +1888,7 @@
         </option>
         <option>
           <name>OOCObjCopyEnable</name>
-          <state>0</state>
+          <state>1</state>
         </option>
       </data>
     </settings>
@@ -2971,13 +2979,25 @@
     <group>
       <name>mcmgr</name>
       <group>
+        <name>inc</name>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/multicore/mcmgr/inc/mcmgr.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/multicore/mcmgr/inc/mcmgr_internal_core_api.h</name>
+        </file>
+        <group>
+          <name>platform</name>
+          <group>
+            <name>imxrt1160</name>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/multicore/mcmgr/inc/platform/imxrt1160/mcmgr_platform.h</name>
+            </file>
+          </group>
+        </group>
+      </group>
+      <group>
         <name>src</name>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/multicore/mcmgr/src/mcmgr.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/multicore/mcmgr/src/mcmgr_internal_core_api.h</name>
-        </file>
         <file>
           <name>$PROJ_DIR$/../../../../../../middleware/multicore/mcmgr/src/mcmgr.c</name>
         </file>
@@ -3077,6 +3097,9 @@
         <file>
           <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/timers.h</name>
         </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/freertos_tasks_c_additions.h</name>
+        </file>
       </group>
       <group>
         <name>portable</name>
@@ -3123,6 +3146,9 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../example_board_readme.md</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../examples_shared_readme.md</name>
     </file>
   </group>
 </project>

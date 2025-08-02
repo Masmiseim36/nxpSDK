@@ -581,7 +581,7 @@ int main(void)
     firmwareDownloadSize = 0;
     bRunApplication = TRUE;
 
-    PRINTF("Image version: 2.4.0\r\n");
+    PRINTF("Image version: 2.3.0\r\n");
 
     /* determine if there is any image in TEST state */
     for (int image = 0; image < MCUBOOT_IMAGE_NUMBER; image++) {

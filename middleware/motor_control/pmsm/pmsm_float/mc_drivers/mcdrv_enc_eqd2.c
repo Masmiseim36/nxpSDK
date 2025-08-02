@@ -1,6 +1,6 @@
 /*
 * Copyright 2016, Freescale Semiconductor, Inc.
-* Copyright 2016-2021, 2024 NXP
+* Copyright 2016-2021, 2024-2025 NXP
 *
 * NXP Proprietary. This software is owned or controlled by NXP and may
 * only be used strictly in accordance with the applicable license terms. 
@@ -36,7 +36,6 @@ void MCDRV_QdEncGetPosition(mcdrv_eqd_enc_t *this)
     frac32_t f32Pos;
 
     /* read number of pulses and get mechanical position */
-    this->ui16Dummy = this->pui32QdBase->LPOS;
     this->ui32CurrentCount = ((uint32_t)(this->pui32QdBase->UPOSH)<<16)|(this->pui32QdBase->LPOSH);
 
     f32Pos = ((uint64_t)this->i32Q10Cnt2PosGain * this->ui32CurrentCount)>>10; /* Q22.10 * Q32 = Q54.10, get rid of the last 10 fractional bits, keeping the last 32bits of Q54
@@ -48,7 +47,7 @@ void MCDRV_QdEncGetPosition(mcdrv_eqd_enc_t *this)
     this->f16RevCounter = (frac16_t)(this->pui32QdBase->REV);
 
     /* calculating position for position control */
-    this->a32PosMeReal = (acc32_t)( ( ( ((int32_t)(this->f16RevCounter)) << 15) + (((uint16_t)(this->f16PosMe)) >> 1) ) ); 
+    *this->pa32PosMeReal = (acc32_t)( ( ( ((int32_t)(this->f16RevCounter)) << 15) + (((uint16_t)(this->f16PosMe)) >> 1) ) );
 
     /* store results to user-defined variables */
     *this->pf16PosElEst = (frac16_t)(this->f16PosMe * this->ui16Pp);
@@ -66,9 +65,10 @@ void MCDRV_QdEncGetPosition(mcdrv_eqd_enc_t *this)
 void MCDRV_QdEncGetSpeed(mcdrv_eqd_enc_t *this)
 {
     int64_t i64Numerator;
+    uint16_t ui16Dummy;
 
     /* Read POSDH, POSDPERH and LASTEDGEH */
-    this->ui16Dummy = this->pui32QdBase->POSD;
+    ui16Dummy = this->pui32QdBase->POSD;
     this->i16POSDH = this->pui32QdBase->POSDH;
     this->ui16POSDPERH = this->pui32QdBase->POSDPERH;
     this->ui16LASTEDGEH = this->pui32QdBase->LASTEDGEH;
@@ -131,9 +131,8 @@ void MCDRV_QdEncGetSpeed(mcdrv_eqd_enc_t *this)
             }
         }
     }
-
-    this->f16SpeedFilt = GDFLIB_FilterIIR1_F16(MLIB_Conv_F16l(this->f32Speed), &this->sSpeedEncFilter);
-    this->fltSpdMech = MLIB_ConvSc_FLTsf(this->f16SpeedFilt, this->fltSpeedFrac16ToAngularCoeff);
+    
+    this->fltSpdMech = MLIB_ConvSc_FLTlf(this->f32Speed, this->fltSpeedFracToAngularCoeff);
     
     this->fltSpdMeEst = this->fltSpdMech; 
 
@@ -154,26 +153,16 @@ void MCDRV_QdEncClear(mcdrv_eqd_enc_t *this)
 {
 
     this->f16PosMe    = FRAC16(0.0);
-    this->f16PosMeEst = FRAC16(0.0);
     this->f32PosMech  = FRAC32(0.0);
     this->fltSpdMeEst = 0.0F;
     this->fltSpdMech  = 0.0F;
-
-    /* initilize tracking observer */
-    this->sTo.f32Theta = FRAC32(0.0);
-    this->sTo.fltSpeed = 0.0F;
-    this->sTo.fltI_1   = 0.0F;
     
-    this->f16SpeedFilt  = FRAC16(0.0);
     this->f32Speed      = FRAC32(0.0);
     this->i8SpeedSign   = 0;
     this->i8SpeedSign_1 = 0;
     this->ui16Period    = 0U;
     this->ui16Period_1  = 0U;
     this->i16PosDiff    = 0;
-
-    this->sSpeedEncFilter.f16FltBfrX[0] = FRAC16(0.0);
-    this->sSpeedEncFilter.f32FltBfrY[0] = FRAC32(0.0);
     
     /* clear decoder counters */
     this->pui32QdBase->POSD = 0;
@@ -233,5 +222,5 @@ void MCDRV_QdEncUpdateParameters(mcdrv_eqd_enc_t *this)
 {
     this->i32Q10Cnt2PosGain = ((0xffffffffU/(4*(1*this->ui16PulseNumber)))*1024); // #define M1_QDC_LINE_RECIPROCAL_4_POS_GEN
     this->f32SpeedCalConst = (frac32_t)((60.0*this->ui32QDTimerFrequency/(this->ui16Pp*(4*this->ui16PulseNumber)*g_fltM1speedScale)) * 134217728); // #define M1_SPEED_CAL_CONST
-    this->fltSpeedFrac16ToAngularCoeff = (float_t)(2*PI*g_fltM1speedScale*this->ui16Pp/60.0); // #define M1_SPEED_FRAC_TO_ANGULAR_COEFF
+    this->fltSpeedFracToAngularCoeff = (float_t)(2*FLOAT_PI*g_fltM1speedScale*this->ui16Pp/60.0); // #define M1_SPEED_FRAC_TO_ANGULAR_COEFF
 }

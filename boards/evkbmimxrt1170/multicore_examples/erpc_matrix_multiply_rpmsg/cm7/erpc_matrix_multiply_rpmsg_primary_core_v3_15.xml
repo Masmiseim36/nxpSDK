@@ -74,7 +74,8 @@
           <value>__USE_SHMEM</value>
           <value>SDK_DEBUGCONSOLE=1</value>
           <value>MCUX_META_BUILD</value>
-          <value>CPU_MIMXRT1176DVMAA_cm7</value>
+          <value>CPU_MIMXRT1176DVMAB_cm7</value>
+          <value>MIMXRT1176_cm7_SERIES</value>
           <value>MULTICORE_APP=1</value>
         </option>
         <option id="gnu.cpp.compiler.option.preprocessor.def" type="stringList">
@@ -82,7 +83,8 @@
           <value>XIP_EXTERNAL_FLASH=1</value>
           <value>SDK_DEBUGCONSOLE=1</value>
           <value>MCUX_META_BUILD</value>
-          <value>CPU_MIMXRT1176DVMAA_cm7</value>
+          <value>CPU_MIMXRT1176DVMAB_cm7</value>
+          <value>MIMXRT1176_cm7_SERIES</value>
         </option>
         <option id="com.crt.advproject.link.cpp.multicore.master" type="string">
           <value>M4SLAVE,${workspace_loc:/evkbmimxrt1170_erpc_matrix_multiply_rpmsg_secondary_core/${ConfigName}/evkbmimxrt1170_erpc_matrix_multiply_rpmsg_secondary_core.axf.o},OCRAM_ITCM_ALIAS,,true;</value>
@@ -168,11 +170,13 @@
       <files mask="erpc_matrix_multiply_rpmsg_primary_core.ewp"/>
       <files mask="erpc_matrix_multiply_rpmsg_primary_core.ewd"/>
       <files mask="erpc_matrix_multiply_rpmsg_primary_core.eww"/>
+      <files mask="erpc_matrix_multiply_rpmsg.eww"/>
     </source>
     <source path="mdk" project_relative_path="./" type="workspace" toolchain="mdk">
       <files mask="erpc_matrix_multiply_rpmsg_primary_core.uvprojx"/>
       <files mask="erpc_matrix_multiply_rpmsg_primary_core.uvoptx"/>
       <files mask="erpc_matrix_multiply_rpmsg_primary_core.uvmpw"/>
+      <files mask="erpc_matrix_multiply_rpmsg.uvmpw"/>
     </source>
     <source path="armgcc" project_relative_path="./" type="workspace" toolchain="armgcc">
       <files mask="build_all.bat"/>
@@ -240,6 +244,9 @@
     </source>
     <source path="." project_relative_path="doc" type="doc">
       <files mask="example_board_readme.md"/>
+    </source>
+    <source path="." project_relative_path="doc" type="doc">
+      <files mask="examples_shared_readme.md"/>
     </source>
   </example>
 </ksdk:examples>

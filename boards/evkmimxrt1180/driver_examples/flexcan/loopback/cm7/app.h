@@ -1,6 +1,5 @@
 /*
- * Copyright 2022 NXP
- * All rights reserved.
+ * Copyright 2022, 2025 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -16,7 +15,6 @@
 #define EXAMPLE_FLEXCAN_IRQHandler CAN3_IRQHandler
 #define RX_MESSAGE_BUFFER_NUM      (9)
 #define TX_MESSAGE_BUFFER_NUM      (8)
-#define DLC                        (8)
 
 /* Get frequency of flexcan clock */
 #define EXAMPLE_CAN_CLK_FREQ CLOCK_GetRootClockFreq(kCLOCK_Root_Can3)

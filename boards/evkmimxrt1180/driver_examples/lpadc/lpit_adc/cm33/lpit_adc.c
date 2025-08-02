@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2023 NXP
+ * Copyright 2022-2023, 2025 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -14,11 +14,12 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-void DEMO_InitLPIT(void);
-void DEMO_InitLPADC(void);
+
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
+void DEMO_InitLPIT(void);
+void DEMO_InitLPADC(void);
 
 /*******************************************************************************
  * Variables
@@ -113,6 +114,11 @@ void DEMO_InitLPADC(void)
 
     /* Init LPADC module. */
     LPADC_GetDefaultConfig(&mLpadcConfigStruct);
+    /* Set to highest power level here, users need to properly match ADC clock and power level according 
+     * to application requirements. For specific correspondence, please refer to the data sheet. */
+#if defined(FSL_FEATURE_LPADC_HAS_CFG_PWRSEL) && (FSL_FEATURE_LPADC_HAS_CFG_PWRSEL == 1U)
+    mLpadcConfigStruct.powerLevelMode = kLPADC_PowerLevelAlt4;
+#endif /* FSL_FEATURE_LPADC_HAS_CFG_PWRSEL */
     mLpadcConfigStruct.enableAnalogPreliminary = true;
     mLpadcConfigStruct.referenceVoltageSource  = DEMO_LPADC_VREF_SOURCE;
     mLpadcConfigStruct.conversionAverageMode   = kLPADC_ConversionAverage128;

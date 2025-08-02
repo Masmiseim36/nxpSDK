@@ -10,7 +10,7 @@
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
-          <Device>MIMXRT1176DVMAA:cm4</Device>
+          <Device>MIMXRT1176DVMAB:cm4</Device>
           <Vendor>NXP</Vendor>
           <PackID>NXP.MIMXRT1176_DFP.12.0.0</PackID>
           <PackURL>http://mcuxpresso.nxp.com/cmsis_pack/repo/</PackURL>
@@ -332,9 +332,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../mcux_config.h -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
-              <Define>DEBUG, MCMGR_HANDLE_EXCEPTIONS=1, __SEMIHOST_HARDFAULT_DISABLE=1, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1176DVMAA_cm4, MULTICORE_APP=1</Define>
+              <Define>DEBUG, MCMGR_HANDLE_EXCEPTIONS=1, __SEMIHOST_HARDFAULT_DISABLE=1, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1176DVMAB_cm4, MIMXRT1176_cm4_SERIES, MULTICORE_APP=1</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../devices/MIMXRT1176/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1176;../../../../../../devices/MIMXRT1176/periph;../../../../../../devices/MIMXRT1176/drivers/cm4;../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../components/uart;../../../../../../middleware/multicore/mcmgr/src</IncludePath>
+              <IncludePath>..;../../../../../../devices/MIMXRT1176/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1176;../../../../../../devices/MIMXRT1176/periph;../../../../../../devices/MIMXRT1176/drivers/cm4;../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../components/uart;../../../../../../middleware/multicore/mcmgr/inc;../../../../../../middleware/multicore/mcmgr/inc/platform/imxrt1170</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -350,9 +350,9 @@
             <ClangAsOpt>2</ClangAsOpt>
             <VariousControls>
               <MiscControls/>
-              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1176DVMAA_cm4</Define>
+              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1176DVMAB_cm4, MIMXRT1176_cm4_SERIES</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../devices/MIMXRT1176/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1176;../../../../../../devices/MIMXRT1176/periph;../../../../../../devices/MIMXRT1176/drivers/cm4;../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../components/uart;../../../../../../middleware/multicore/mcmgr/src</IncludePath>
+              <IncludePath>..;../../../../../../devices/MIMXRT1176/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1176;../../../../../../devices/MIMXRT1176/periph;../../../../../../devices/MIMXRT1176/drivers/cm4;../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../components/uart;../../../../../../middleware/multicore/mcmgr/inc;../../../../../../middleware/multicore/mcmgr/inc/platform/imxrt1170</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -1261,18 +1261,23 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>mcmgr/mcmgr/src</GroupName>
+          <GroupName>mcmgr/mcmgr/inc</GroupName>
           <Files>
             <File>
               <FileName>mcmgr.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/mcmgr/src/mcmgr.h</FilePath>
+              <FilePath>../../../../../../middleware/multicore/mcmgr/inc/mcmgr.h</FilePath>
             </File>
             <File>
               <FileName>mcmgr_internal_core_api.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/mcmgr/src/mcmgr_internal_core_api.h</FilePath>
+              <FilePath>../../../../../../middleware/multicore/mcmgr/inc/mcmgr_internal_core_api.h</FilePath>
             </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>mcmgr/mcmgr/src</GroupName>
+          <Files>
             <File>
               <FileName>mcmgr.c</FileName>
               <FileType>1</FileType>
@@ -1291,6 +1296,16 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>mcmgr/mcmgr/inc/platform/imxrt1170</GroupName>
+          <Files>
+            <File>
+              <FileName>mcmgr_platform.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/multicore/mcmgr/inc/platform/imxrt1170/mcmgr_platform.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>doc</GroupName>
           <Files>
             <File>
@@ -1303,6 +1318,11 @@
               <FileType>5</FileType>
               <FilePath>../example_board_readme.md</FilePath>
             </File>
+            <File>
+              <FileName>examples_shared_readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../examples_shared_readme.md</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>
@@ -1314,7 +1334,7 @@
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
-          <Device>MIMXRT1176DVMAA:cm4</Device>
+          <Device>MIMXRT1176DVMAB:cm4</Device>
           <Vendor>NXP</Vendor>
           <PackID>NXP.MIMXRT1176_DFP.12.0.0</PackID>
           <PackURL>http://mcuxpresso.nxp.com/cmsis_pack/repo/</PackURL>
@@ -1636,9 +1656,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../mcux_config.h -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
-              <Define>NDEBUG, MCMGR_HANDLE_EXCEPTIONS=1, __SEMIHOST_HARDFAULT_DISABLE=1, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1176DVMAA_cm4, MULTICORE_APP=1</Define>
+              <Define>NDEBUG, MCMGR_HANDLE_EXCEPTIONS=1, __SEMIHOST_HARDFAULT_DISABLE=1, SDK_DEBUGCONSOLE=1, MCUX_META_BUILD, MCUXPRESSO_SDK, CPU_MIMXRT1176DVMAB_cm4, MIMXRT1176_cm4_SERIES, MULTICORE_APP=1</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../devices/MIMXRT1176/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1176;../../../../../../devices/MIMXRT1176/periph;../../../../../../devices/MIMXRT1176/drivers/cm4;../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../components/uart;../../../../../../middleware/multicore/mcmgr/src</IncludePath>
+              <IncludePath>..;../../../../../../devices/MIMXRT1176/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1176;../../../../../../devices/MIMXRT1176/periph;../../../../../../devices/MIMXRT1176/drivers/cm4;../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../components/uart;../../../../../../middleware/multicore/mcmgr/inc;../../../../../../middleware/multicore/mcmgr/inc/platform/imxrt1170</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1654,9 +1674,9 @@
             <ClangAsOpt>2</ClangAsOpt>
             <VariousControls>
               <MiscControls/>
-              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1176DVMAA_cm4</Define>
+              <Define>MCUXPRESSO_SDK, CPU_MIMXRT1176DVMAB_cm4, MIMXRT1176_cm4_SERIES</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../devices/MIMXRT1176/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1176;../../../../../../devices/MIMXRT1176/periph;../../../../../../devices/MIMXRT1176/drivers/cm4;../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../components/uart;../../../../../../middleware/multicore/mcmgr/src</IncludePath>
+              <IncludePath>..;../../../../../../devices/MIMXRT1176/drivers;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Core/Include/m-profile;../../../../../../devices/MIMXRT1176;../../../../../../devices/MIMXRT1176/periph;../../../../../../devices/MIMXRT1176/drivers/cm4;../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../components/uart;../../../../../../middleware/multicore/mcmgr/inc;../../../../../../middleware/multicore/mcmgr/inc/platform/imxrt1170</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -2565,18 +2585,23 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>mcmgr/mcmgr/src</GroupName>
+          <GroupName>mcmgr/mcmgr/inc</GroupName>
           <Files>
             <File>
               <FileName>mcmgr.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/mcmgr/src/mcmgr.h</FilePath>
+              <FilePath>../../../../../../middleware/multicore/mcmgr/inc/mcmgr.h</FilePath>
             </File>
             <File>
               <FileName>mcmgr_internal_core_api.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/mcmgr/src/mcmgr_internal_core_api.h</FilePath>
+              <FilePath>../../../../../../middleware/multicore/mcmgr/inc/mcmgr_internal_core_api.h</FilePath>
             </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>mcmgr/mcmgr/src</GroupName>
+          <Files>
             <File>
               <FileName>mcmgr.c</FileName>
               <FileType>1</FileType>
@@ -2595,6 +2620,16 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>mcmgr/mcmgr/inc/platform/imxrt1170</GroupName>
+          <Files>
+            <File>
+              <FileName>mcmgr_platform.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/multicore/mcmgr/inc/platform/imxrt1170/mcmgr_platform.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>doc</GroupName>
           <Files>
             <File>
@@ -2606,6 +2641,11 @@
               <FileName>example_board_readme.md</FileName>
               <FileType>5</FileType>
               <FilePath>../example_board_readme.md</FilePath>
+            </File>
+            <File>
+              <FileName>examples_shared_readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../examples_shared_readme.md</FilePath>
             </File>
           </Files>
         </Group>

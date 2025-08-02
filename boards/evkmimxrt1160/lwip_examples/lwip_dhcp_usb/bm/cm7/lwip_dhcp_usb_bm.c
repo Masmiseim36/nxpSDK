@@ -54,6 +54,7 @@ uint32_t dhcpReady;
 uint8_t pingReady;
 /*set when app get the URL's ip addrss*/
 uint8_t dnsReady;
+uint8_t dnsErrCnt;
 ip4_addr_t addrBuffer;
 ip4_addr_t currentaddr;
 
@@ -86,7 +87,14 @@ void lwip_dns_dns_found(const char *name, const ip_addr_t *ipaddr, void *arg)
     }
     else
     {
-        PRINTF("\r\n error in dns request\r\n");
+        if (dnsErrCnt++ < 10)
+        {
+            dhcpReady = 1;
+        }
+        else
+        {
+            PRINTF("\r\n error in dns request\r\n");
+        }
     }
 }
 /*!
@@ -184,6 +192,7 @@ static void print_dhcp_state(struct netif *netif)
             PRINTF(" IPv4 Gateway     : %s\r\n\r\n", ipaddr_ntoa(&netif->gw));
 
             dhcpReady = 1;
+            dnsErrCnt = 0;
         }
     }
 }

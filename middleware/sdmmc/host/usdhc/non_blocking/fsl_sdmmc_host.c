@@ -590,7 +590,11 @@ status_t SDMMCHOST_TransferFunction(sdmmchost_t *host, sdmmchost_transfer_t *con
 #if defined SDMMCHOST_ENABLE_CACHE_LINE_ALIGN_TRANSFER && SDMMCHOST_ENABLE_CACHE_LINE_ALIGN_TRANSFER
 status_t SDMMCHOST_ScatterGatherTransferFunction(sdmmchost_t *host, sdmmchost_scatter_gather_transfer_t *content)
 {
+#if ((defined __DCACHE_PRESENT) && __DCACHE_PRESENT) || (defined FSL_FEATURE_HAS_L1CACHE && FSL_FEATURE_HAS_L1CACHE)
+#if !(defined(FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL) && FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL)
     sdmmchost_scatter_gather_data_list_t *dataList;
+#endif
+#endif
     status_t error = kStatus_Success;
     uint32_t event = 0U;
     usdhc_adma_config_t dmaConfig;

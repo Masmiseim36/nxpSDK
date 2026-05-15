@@ -13,8 +13,9 @@ endif()
 
 add_definitions(-DMCUBOOT_TARGET=${MCUBOOT_TARGET})
 add_definitions(-D__ESPRESSIF__=1)
+add_definitions(-DCONFIG_MCUBOOT_ESPRESSIF=1)
 
-set(EXPECTED_IDF_HAL_VERSION "5.1.4")
+set(EXPECTED_IDF_HAL_VERSION "5.1.6")
 
 if ("${MCUBOOT_TARGET}" STREQUAL "esp32" OR
     "${MCUBOOT_TARGET}" STREQUAL "esp32s2" OR
@@ -236,7 +237,12 @@ endif()
 
 set(bootutil_srcs
     ${BOOTUTIL_DIR}/src/boot_record.c
+    ${BOOTUTIL_DIR}/src/bootutil_find_key.c
+    ${BOOTUTIL_DIR}/src/bootutil_img_hash.c
+    ${BOOTUTIL_DIR}/src/bootutil_img_security_cnt.c
     ${BOOTUTIL_DIR}/src/bootutil_misc.c
+    ${BOOTUTIL_DIR}/src/bootutil_area.c
+    ${BOOTUTIL_DIR}/src/bootutil_loader.c
     ${BOOTUTIL_DIR}/src/bootutil_public.c
     ${BOOTUTIL_DIR}/src/caps.c
     ${BOOTUTIL_DIR}/src/encrypted.c
@@ -343,7 +349,7 @@ if(CONFIG_ESP_MCUBOOT_SERIAL)
         ${ZCBOR_DIR}/include
         )
     list(APPEND port_srcs
-        ${CMAKE_CURRENT_LIST_DIR}/port/${MCUBOOT_TARGET}/serial_adapter.c
+        ${CMAKE_CURRENT_LIST_DIR}/port/serial_adapter.c
         ${MBEDTLS_DIR}/library/base64.c
         )
     list(APPEND CRYPTO_INC

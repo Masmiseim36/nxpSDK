@@ -59,6 +59,9 @@ psa_status_t psa_algo_to_generic_rsa_encrypt_algo(psa_algorithm_t alg,
     return status;
 }
 
+#if defined(MBEDTLS_RSA_C)
+
+#if defined(PSA_WANT_ALG_RSA_OAEP) || defined(PSA_WANT_ALG_RSA_PKCS1V15_CRYPT)
 static psa_status_t ele_s4xx_transparent_internal_rsa_encrypt(
     const psa_key_attributes_t *attributes, const uint8_t *key_buffer,
     size_t key_buffer_size, psa_algorithm_t alg, const uint8_t *input,
@@ -73,7 +76,6 @@ static psa_status_t ele_s4xx_transparent_internal_rsa_encrypt(
     struct rsa_keypair rsa_key = { 0 };
     size_t key_bits = psa_get_key_bits(attributes);
     uint32_t key_bytes = key_bits / 8;
-    int lock = 0;
 
     // No check on input as input can be NULL
     if (!output) {
@@ -108,12 +110,12 @@ static psa_status_t ele_s4xx_transparent_internal_rsa_encrypt(
             return PSA_ERROR_INVALID_ARGUMENT;
         }
 
-        /* Check for  input message length . RFC defines mLen > k – 2hLen – 2 as error */
+        /* Check for input message length. RFC defines mLen > k - 2hLen - 2 as error */
         if (input_length > (key_bytes - 2 * hlen - 2)) {
             return PSA_ERROR_INVALID_ARGUMENT;
         }
     } else {
-        /* Check for  input message length . For PKCS#1.5 padding is 11 bytes */
+        /* Check for input message length. For PKCS#1.5 padding is 11 bytes */
         if (input_length > key_bytes - 11) {
             return PSA_ERROR_INVALID_ARGUMENT;
         }
@@ -154,10 +156,8 @@ static psa_status_t ele_s4xx_transparent_internal_rsa_encrypt(
         GenericRsaEncrypt.label_size = label_len;
     }
 
-    if (mcux_mutex_lock(&ele_hwcrypto_mutex)) {
-        lock = 1;
-        status = PSA_ERROR_COMMUNICATION_FAILURE;
-        goto cleanup;
+    if (mcux_mutex_lock(&ele_hwcrypto_mutex) != 0) {
+        return PSA_ERROR_SERVICE_FAILURE;
     }
 
     ele_status = ELE_GenericRsa(S3MU, &GenericRsaEncrypt);
@@ -168,17 +168,13 @@ static psa_status_t ele_s4xx_transparent_internal_rsa_encrypt(
         *output_length = key_bytes;
     }
 
-cleanup:
     mcux_free_raw_rsa(rsa_key);
 
-    if (lock) {
-        if (mcux_mutex_unlock(&ele_hwcrypto_mutex)) {
-            return PSA_ERROR_BAD_STATE;
-        }
+    if (mcux_mutex_unlock(&ele_hwcrypto_mutex) != 0) {
+        return PSA_ERROR_SERVICE_FAILURE;
     }
 
     return status;
-
 }
 
 static psa_status_t ele_s4xx_transparent_internal_rsa_decrypt(
@@ -195,7 +191,6 @@ static psa_status_t ele_s4xx_transparent_internal_rsa_decrypt(
     struct rsa_keypair rsa_key = { 0 };
     size_t key_bits = psa_get_key_bits(attributes);
     uint32_t key_bytes = key_bits / 8;
-    int lock = 0;
 
     /* If user sends a buffer with 0 size, return error */
     if (!output || !output_size) {
@@ -255,10 +250,8 @@ static psa_status_t ele_s4xx_transparent_internal_rsa_decrypt(
         GenericRsaDecrypt.label_size = label_len;
     }
 
-    if (mcux_mutex_lock(&ele_hwcrypto_mutex)) {
-        lock = 1;
-        status = PSA_ERROR_COMMUNICATION_FAILURE;
-        goto cleanup;
+    if (mcux_mutex_lock(&ele_hwcrypto_mutex) != 0) {
+        return PSA_ERROR_SERVICE_FAILURE;
     }
 
     ele_status = ELE_GenericRsa(S3MU, &GenericRsaDecrypt);
@@ -269,17 +262,16 @@ static psa_status_t ele_s4xx_transparent_internal_rsa_decrypt(
         *output_length = GenericRsaDecrypt.out_plaintext_len;
     }
 
-cleanup:
     mcux_free_raw_rsa(rsa_key);
 
-    if (lock) {
-        if (mcux_mutex_unlock(&ele_hwcrypto_mutex)) {
-            return PSA_ERROR_BAD_STATE;
-        }
+    if (mcux_mutex_unlock(&ele_hwcrypto_mutex) != 0) {
+        return PSA_ERROR_SERVICE_FAILURE;
     }
 
     return status;
 }
+#endif /* defined(PSA_WANT_ALG_RSA_OAEP) || defined(PSA_WANT_ALG_RSA_PKCS1V15_CRYPT) */
+#endif /* MBEDTLS_RSA_C */
 
 /** \defgroup psa_asym_encrypt PSA driver entry points for asymmetric cipher
  *
@@ -324,6 +316,9 @@ psa_status_t ele_s4xx_transparent_asymmetric_encrypt(const psa_key_attributes_t 
     {
         status = PSA_ERROR_INVALID_ARGUMENT;
     }
+
+    (void)type;
+    (void)key_bits;
 
     return status;
 }

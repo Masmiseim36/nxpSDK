@@ -264,7 +264,7 @@ int invoke_boot_go(struct sim_context *ctx, struct area_desc *adesc,
     sim_set_context(ctx);
 
     if (setjmp(ctx->boot_jmpbuf) == 0) {
-        boot_state_clear(state);
+        boot_state_init(state);
 
 #if BOOT_IMAGE_NUMBER > 1
         if (image_id >= 0) {
@@ -276,17 +276,77 @@ int invoke_boot_go(struct sim_context *ctx, struct area_desc *adesc,
 #endif /* BOOT_IMAGE_NUMBER > 1 */
 
         res = context_boot_go(state, rsp);
+        boot_state_clear(state);
         sim_reset_flash_areas();
         sim_reset_context();
         free(state);
         /* printf("boot_go off: %d (0x%08x)\n", res, rsp->br_image_off); */
         return res;
     } else {
+        boot_state_clear(state);
         sim_reset_flash_areas();
         sim_reset_context();
         free(state);
         return -0x13579;
     }
+}
+
+int invoke_boot_load_image_from_flash_to_sram(struct sim_context *ctx, struct area_desc *adesc)
+{
+#ifdef MCUBOOT_RAM_LOAD
+    int res;
+    struct boot_loader_state *state;
+    const struct flash_area *fa_p;
+    struct image_header hdr;
+
+#if defined(MCUBOOT_SIGN_RSA) || \
+    (defined(MCUBOOT_SIGN_EC256) && defined(MCUBOOT_USE_MBED_TLS)) ||\
+    (defined(MCUBOOT_ENCRYPT_EC256) && defined(MCUBOOT_USE_MBED_TLS)) ||\
+    (defined(MCUBOOT_ENCRYPT_X25519) && defined(MCUBOOT_USE_MBED_TLS))
+    mbedtls_platform_set_calloc_free(calloc, free);
+#endif
+
+    state = malloc(sizeof(struct boot_loader_state));
+
+    sim_set_flash_areas(adesc);
+    sim_set_context(ctx);
+    boot_state_init(state);
+
+    res = flash_area_open(FLASH_AREA_IMAGE_PRIMARY(0), &fa_p);
+    if (res != 0) {
+        printf("Failed to open primary image area: %d\n", res);
+        sim_reset_flash_areas();
+        sim_reset_context();
+        free(state);
+        return res;
+    }
+
+    res = boot_image_load_header(fa_p, &hdr);
+    if (res != 0) {
+        printf("Failed to load image header: %d\n", res);
+        flash_area_close(fa_p);
+        sim_reset_flash_areas();
+        sim_reset_context();
+        free(state);
+        return res;
+    }
+
+    res = boot_load_image_from_flash_to_sram(state, &hdr, fa_p);
+    if (res != 0) {
+        printf("Failed to load image from flash to SRAM: %d\n", res);
+    }
+
+    flash_area_close(fa_p);
+    boot_state_clear(state);
+    sim_reset_flash_areas();
+    sim_reset_context();
+    free(state);
+    return res;
+#else
+    (void)ctx;
+    (void)adesc;
+    return 0;
+#endif /* MCUBOOT_RAM_LOAD */
 }
 
 void *os_malloc(size_t size)

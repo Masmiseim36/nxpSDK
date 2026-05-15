@@ -71,6 +71,7 @@ zephyr_library_sources(
   flash_map_extended.c
   os.c
   keys.c
+  watchdog.c
   )
 
 if(DEFINED CONFIG_ENABLE_MGMT_PERUSER)
@@ -83,17 +84,11 @@ if(DEFINED CONFIG_ENABLE_MGMT_PERUSER)
     SECTIONS include/boot_serial/boot_serial.ld
   )
 
-  if(DEFINED CONFIG_BOOT_MGMT_CUSTOM_STORAGE_ERASE OR DEFINED CONFIG_BOOT_MGMT_CUSTOM_IMG_LIST)
+  if(DEFINED CONFIG_BOOT_MGMT_CUSTOM_STORAGE_ERASE)
     zephyr_library_sources(
       boot_serial_extension_zephyr_basic.c
       )
   endif()
-endif()
-
-if(NOT DEFINED CONFIG_FLASH_PAGE_LAYOUT)
-  zephyr_library_sources(
-    flash_map_legacy.c
-    )
 endif()
 
 if(DEFINED CONFIG_BOOT_SHARE_BACKEND_RETENTION)
@@ -106,20 +101,26 @@ endif()
 zephyr_library_include_directories(${BOOT_DIR}/bootutil/include)
 zephyr_library_sources(
   ${BOOT_DIR}/bootutil/src/image_validate.c
+  ${BOOT_DIR}/bootutil/src/bootutil_find_key.c
+  ${BOOT_DIR}/bootutil/src/bootutil_img_hash.c
+  ${BOOT_DIR}/bootutil/src/bootutil_img_security_cnt.c
   ${BOOT_DIR}/bootutil/src/tlv.c
   ${BOOT_DIR}/bootutil/src/encrypted.c
   ${BOOT_DIR}/bootutil/src/image_rsa.c
   ${BOOT_DIR}/bootutil/src/image_ecdsa.c
   ${BOOT_DIR}/bootutil/src/image_ed25519.c
   ${BOOT_DIR}/bootutil/src/bootutil_misc.c
+  ${BOOT_DIR}/bootutil/src/bootutil_area.c
+  ${BOOT_DIR}/bootutil/src/bootutil_loader.c
   ${BOOT_DIR}/bootutil/src/fault_injection_hardening.c
   )
 
-if(DEFINED CONFIG_BOOT_ENCRYPT_X25519 AND DEFINED CONFIG_BOOT_ED25519_PSA)
+if((CONFIG_BOOT_ENCRYPT_X25519 AND CONFIG_BOOT_ED25519_PSA)
+   OR (CONFIG_BOOT_ENCRYPT_EC256 AND CONFIG_BOOT_ECDSA_PSA))
   zephyr_library_sources(${BOOT_DIR}/bootutil/src/encrypted_psa.c)
 endif()
 
-if(DEFINED CONFIG_MEASURED_BOOT OR DEFINED CONFIG_BOOT_SHARE_DATA)
+if(CONFIG_MEASURED_BOOT OR CONFIG_BOOT_SHARE_DATA)
   zephyr_library_sources(
     ${BOOT_DIR}/bootutil/src/boot_record.c
     )
@@ -186,7 +187,10 @@ else()
 endif()
 
 if(CONFIG_BOOT_SIGNATURE_TYPE_ECDSA_P256 OR CONFIG_BOOT_ENCRYPT_EC256)
-  if(MBEDTLS_ASN1_DIR)
+  # When ECDSA PSA is used, do not pull in additional ASN.1 include
+  # directories or sources, as it would cause incorrect header files
+  # to be included.
+  if(MBEDTLS_ASN1_DIR AND NOT CONFIG_BOOT_ECDSA_PSA)
     zephyr_library_include_directories(
       ${MBEDTLS_ASN1_DIR}/include
     )
@@ -284,14 +288,19 @@ elseif(CONFIG_BOOT_SIGNATURE_TYPE_ED25519 OR CONFIG_BOOT_ENCRYPT_X25519)
       ${FIAT_DIR}/src/curve25519.c
     )
   else()
+    if(MBEDTLS_ASN1_DIR)
+      zephyr_library_sources(
+        ${MBEDTLS_ASN1_DIR}/src/asn1parse.c
+      )
+    endif()
+
     zephyr_library_sources(
-      ${MBEDTLS_ASN1_DIR}/src/asn1parse.c
       ${BOOT_DIR}/bootutil/src/ed25519_psa.c
     )
   endif()
 endif()
 
-if(NOT CONFIG_BOOT_ED25519_PSA)
+if(NOT CONFIG_BOOT_ED25519_PSA AND NOT CONFIG_BOOT_ECDSA_PSA)
   if(CONFIG_BOOT_ENCRYPT_EC256 OR CONFIG_BOOT_ENCRYPT_X25519)
     zephyr_library_sources(
       ${TINYCRYPT_DIR}/source/aes_encrypt.c
@@ -303,7 +312,7 @@ if(NOT CONFIG_BOOT_ED25519_PSA)
   endif()
 endif()
 
-if(CONFIG_BOOT_ENCRYPT_EC256)
+if(CONFIG_BOOT_ENCRYPT_EC256 AND NOT CONFIG_BOOT_ECDSA_PSA)
   zephyr_library_sources(
     ${TINYCRYPT_DIR}/source/ecc_dh.c
     )
@@ -330,29 +339,18 @@ if(CONFIG_MCUBOOT_SERIAL)
   endif()
 endif()
 
-if(NOT CONFIG_BOOT_SIGNATURE_KEY_FILE STREQUAL "")
-  # CONF_FILE points to the KConfig configuration files of the bootloader.
-  foreach (filepath ${CONF_FILE})
-    file(READ ${filepath} temp_text)
-    string(FIND "${temp_text}" ${CONFIG_BOOT_SIGNATURE_KEY_FILE} match)
-    if (${match} GREATER_EQUAL 0)
-      if (NOT DEFINED CONF_DIR)
-        get_filename_component(CONF_DIR ${filepath} DIRECTORY)
-      else()
-        message(FATAL_ERROR "Signature key file defined in multiple conf files")
-      endif()
-    endif()
-  endforeach()
+if(NOT CONFIG_BOOT_SIGNATURE_TYPE_NONE AND NOT CONFIG_BOOT_SIGNATURE_KEY_FILE STREQUAL "")
+  set(key_file "${CONFIG_BOOT_SIGNATURE_KEY_FILE}")
+  string(CONFIGURE "${key_file}" key_file)
 
-  if(IS_ABSOLUTE ${CONFIG_BOOT_SIGNATURE_KEY_FILE})
-    set(KEY_FILE ${CONFIG_BOOT_SIGNATURE_KEY_FILE})
-  elseif((DEFINED CONF_DIR) AND
-	 (EXISTS ${CONF_DIR}/${CONFIG_BOOT_SIGNATURE_KEY_FILE}))
-    set(KEY_FILE ${CONF_DIR}/${CONFIG_BOOT_SIGNATURE_KEY_FILE})
+  if(IS_ABSOLUTE ${key_file})
+    set(signing_key_file ${key_file})
+  elseif(EXISTS ${APPLICATION_CONFIG_DIR}/${key_file})
+    set(signing_key_file ${APPLICATION_CONFIG_DIR}/${key_file})
   else()
-    set(KEY_FILE ${MCUBOOT_DIR}/${CONFIG_BOOT_SIGNATURE_KEY_FILE})
+    set(signing_key_file ${MCUBOOT_DIR}/${key_file})
   endif()
-  message("MCUBoot bootloader key file: ${KEY_FILE}")
+  message("MCUBoot bootloader key file: ${signing_key_file}")
 
   set(mcuboot_default_signature_files
       ${MCUBOOT_DIR}/root-ec-p256-pkcs8.pem
@@ -365,7 +363,7 @@ if(NOT CONFIG_BOOT_SIGNATURE_KEY_FILE STREQUAL "")
   )
 
   # Emit a warning if using one of the default MCUboot key files
-  if(${KEY_FILE} IN_LIST mcuboot_default_signature_files)
+  if(${signing_key_file} IN_LIST mcuboot_default_signature_files)
     message(WARNING "WARNING: Using default MCUboot signing key file, this file is for debug use only and is not secure!")
   endif()
 
@@ -377,37 +375,25 @@ if(NOT CONFIG_BOOT_SIGNATURE_KEY_FILE STREQUAL "")
     ${MCUBOOT_DIR}/scripts/imgtool.py
     getpub
     -k
-    ${KEY_FILE}
+    ${signing_key_file}
     > ${GENERATED_PUBKEY}
-    DEPENDS ${KEY_FILE}
+    DEPENDS ${signing_key_file}
     )
   zephyr_library_sources(${GENERATED_PUBKEY})
 endif()
 
 if(CONFIG_BOOT_ENCRYPTION_KEY_FILE AND NOT CONFIG_BOOT_ENCRYPTION_KEY_FILE STREQUAL "")
-  # CONF_FILE points to the KConfig configuration files of the bootloader.
-  unset(CONF_DIR)
-  foreach(filepath ${CONF_FILE})
-    file(READ ${filepath} temp_text)
-    string(FIND "${temp_text}" ${CONFIG_BOOT_ENCRYPTION_KEY_FILE} match)
-    if(${match} GREATER_EQUAL 0)
-      if(NOT DEFINED CONF_DIR)
-        get_filename_component(CONF_DIR ${filepath} DIRECTORY)
-      else()
-        message(FATAL_ERROR "Encryption key file defined in multiple conf files")
-      endif()
-    endif()
-  endforeach()
+  set(key_file "${CONFIG_BOOT_ENCRYPTION_KEY_FILE}")
+  string(CONFIGURE "${key_file}" key_file)
 
-  if(IS_ABSOLUTE ${CONFIG_BOOT_ENCRYPTION_KEY_FILE})
-    set(KEY_FILE ${CONFIG_BOOT_ENCRYPTION_KEY_FILE})
-  elseif((DEFINED CONF_DIR) AND
-	 (EXISTS ${CONF_DIR}/${CONFIG_BOOT_ENCRYPTION_KEY_FILE}))
-    set(KEY_FILE ${CONF_DIR}/${CONFIG_BOOT_ENCRYPTION_KEY_FILE})
+  if(IS_ABSOLUTE ${key_file})
+    set(encryption_key_file ${key_file})
+  elseif(EXISTS ${APPLICATION_CONFIG_DIR}/${key_file})
+    set(encryption_key_file ${APPLICATION_CONFIG_DIR}/${key_file})
   else()
-    set(KEY_FILE ${MCUBOOT_DIR}/${CONFIG_BOOT_ENCRYPTION_KEY_FILE})
+    set(encryption_key_file ${MCUBOOT_DIR}/${key_file})
   endif()
-  message("MCUBoot bootloader encryption key file: ${KEY_FILE}")
+  message("MCUBoot bootloader encryption key file: ${encryption_key_file}")
 
   # Emit a warning if using one of the default MCUboot key files
   set(mcuboot_default_encryption_files
@@ -419,7 +405,7 @@ if(CONFIG_BOOT_ENCRYPTION_KEY_FILE AND NOT CONFIG_BOOT_ENCRYPTION_KEY_FILE STREQ
       ${MCUBOOT_DIR}/enc-x25519-pub.pem
   )
 
-  if(${KEY_FILE} IN_LIST mcuboot_default_encryption_files)
+  if(${encryption_key_file} IN_LIST mcuboot_default_encryption_files)
     message(WARNING "WARNING: Using default MCUboot encryption key file, this file is for debug use only and is not secure!")
   endif()
 
@@ -431,17 +417,25 @@ if(CONFIG_BOOT_ENCRYPTION_KEY_FILE AND NOT CONFIG_BOOT_ENCRYPTION_KEY_FILE STREQ
     ${MCUBOOT_DIR}/scripts/imgtool.py
     getpriv
     -k
-    ${KEY_FILE}
+    ${encryption_key_file}
     > ${GENERATED_ENCKEY}
-    DEPENDS ${KEY_FILE}
+    DEPENDS ${encryption_key_file}
     )
   zephyr_library_sources(${GENERATED_ENCKEY})
 endif()
 
 if(CONFIG_MCUBOOT_CLEANUP_ARM_CORE)
-zephyr_library_sources(
-  ${BOOT_DIR}/zephyr/arm_cleanup.c
-)
+  # ARM Cortex-M
+  zephyr_library_sources_ifdef(
+    CONFIG_CPU_CORTEX_M
+    ${BOOT_DIR}/zephyr/cleanup/arm_cortex_m.c
+  )
+
+  # ARM Cortex-R
+  zephyr_library_sources_ifdef(
+    CONFIG_ARMV7_R
+    ${BOOT_DIR}/zephyr/cleanup/arm_cortex_r.c
+  )
 endif()
 
 if(CONFIG_MCUBOOT_BOOT_BANNER)
@@ -465,7 +459,7 @@ function(dt_get_parent node)
   set(${node} "${${node}}" PARENT_SCOPE)
 endfunction()
 
-dt_nodelabel(slot0_flash NODELABEL "slot0_partition")
+dt_nodelabel(slot0_flash NODELABEL "slot0_partition" REQUIRED)
 dt_prop(slot0_size PATH "${slot0_flash}" PROPERTY "reg" INDEX 1)
 dt_get_parent(slot0_flash)
 dt_get_parent(slot0_flash)
@@ -483,7 +477,7 @@ if(CONFIG_BOOT_SWAP_USING_MOVE OR CONFIG_BOOT_SWAP_USING_OFFSET)
 endif()
 
 if(NOT CONFIG_SINGLE_APPLICATION_SLOT AND NOT CONFIG_SINGLE_APPLICATION_SLOT_RAM_LOAD)
-  dt_nodelabel(slot1_flash NODELABEL "slot1_partition")
+  dt_nodelabel(slot1_flash NODELABEL "slot1_partition" REQUIRED)
   dt_prop(slot1_size PATH "${slot1_flash}" PROPERTY "reg" INDEX 1)
   dt_get_parent(slot1_flash)
   dt_get_parent(slot1_flash)
@@ -536,15 +530,19 @@ if((CONFIG_BOOT_SWAP_USING_SCRATCH OR CONFIG_BOOT_SWAP_USING_MOVE OR CONFIG_BOOT
   zephyr_library_sources(flash_check.c)
 endif()
 
+if(CONFIG_MULTIPLE_EXECUTABLE_RAM_REGIONS_DEFAULT_FILE)
+  zephyr_library_sources(ram_load.c)
+endif()
+
 if(SYSBUILD)
   if(CONFIG_SINGLE_APPLICATION_SLOT OR CONFIG_BOOT_FIRMWARE_LOADER OR CONFIG_BOOT_SWAP_USING_SCRATCH OR CONFIG_BOOT_SWAP_USING_MOVE OR CONFIG_BOOT_SWAP_USING_OFFSET OR CONFIG_BOOT_UPGRADE_ONLY OR CONFIG_BOOT_DIRECT_XIP OR CONFIG_BOOT_RAM_LOAD)
     # TODO: RAM LOAD support
-    dt_nodelabel(slot0_flash NODELABEL "slot0_partition")
+    dt_nodelabel(slot0_flash NODELABEL "slot0_partition" REQUIRED)
     dt_get_parent(slot0_flash)
     dt_get_parent(slot0_flash)
 
     if(NOT CONFIG_SINGLE_APPLICATION_SLOT)
-      dt_nodelabel(slot1_flash NODELABEL "slot1_partition")
+      dt_nodelabel(slot1_flash NODELABEL "slot1_partition" REQUIRED)
       dt_get_parent(slot1_flash)
       dt_get_parent(slot1_flash)
 

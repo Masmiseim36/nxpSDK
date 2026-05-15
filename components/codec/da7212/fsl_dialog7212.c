@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015-2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2020 NXP
+ * Copyright 2016-2025 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -403,7 +403,7 @@ status_t DA7212_Init(da7212_handle_t *handle, da7212_config_t *codecConfig)
 
         sysClock = (uint32_t)(codecConfig->pll->outputClock_HZ);
     }
-    
+
     DA7212_ChangeInput(handle, codecConfig->inputSource);
 
     error = DA7212_ConfigAudioFormat(handle, sysClock, config->format.sampleRate, config->format.bitWidth);
@@ -457,8 +457,15 @@ status_t DA7212_SetPLLConfig(da7212_handle_t *handle, da7212_pll_config_t *confi
         (uint64_t)(((uint64_t)((((uint64_t)config->outputClock_HZ * 8U) * inputDiv) << 13U)) / (config->refClock_HZ));
 
     /* extract integer and fractional */
+    /* INT31-C: Validate before narrowing conversion */
+    assert((pllValue >> 13U) <= 0xFFU);
     pllInteger    = (uint8_t)(pllValue >> 13U);
-    pllFractional = (uint32_t)(pllValue - ((uint64_t)pllInteger << 13U));
+    /* INT31-C: Validate before narrowing conversion */
+    uint64_t tempFractional = pllValue - ((uint64_t)pllInteger << 13U);
+    assert(tempFractional <= 0xFFFFFFFFUL);
+    pllFractional = (uint32_t)tempFractional;
+    /* INT31-C: Validate before narrowing conversion */
+    assert((pllFractional >> 8U) <= 0xFFU);
     pllFracTop    = (uint8_t)(pllFractional >> 8U);
     pllFracBottom = (uint8_t)(pllFractional & 0xFFU);
 
@@ -536,7 +543,8 @@ status_t DA7212_ConfigAudioFormat(da7212_handle_t *handle,
 
     /* Set data bits of word */
     retVal = DA7212_ReadRegister(handle, DIALOG7212_DAI_CTRL, &regVal);
-    regVal &= ~(uint8_t)DIALOG7212_DAI_WORD_LENGTH_MASK;
+    /* INT31-C: Use XOR instead of NOT to prevent integer promotion */
+    regVal &= 0xFFU ^ DIALOG7212_DAI_WORD_LENGTH_MASK;
     switch (dataBits)
     {
         case 16:

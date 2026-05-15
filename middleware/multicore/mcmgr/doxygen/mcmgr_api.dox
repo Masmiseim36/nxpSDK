@@ -1,0 +1,6 @@
+/*!
+
+@defgroup mcmgr MCMGR API
+@brief This section describes the Multicore Manager component API.
+*/
+

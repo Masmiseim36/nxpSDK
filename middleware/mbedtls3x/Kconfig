@@ -1,10 +1,12 @@
 menu "Mbed TLS 3.x"
     config MCUX_COMPONENT_middleware.mbedtls3x.crypto.no_psa
         bool "Crypto (No PSA)"
+        imply USING_MBEDTLS_3X
 
     config MCUX_COMPONENT_middleware.mbedtls3x.crypto
         bool "Crypto"
         select MCUX_COMPONENT_middleware.mbedtls3x.crypto.no_psa
+        imply USING_MBEDTLS_3X
 
     config MCUX_COMPONENT_middleware.mbedtls3x.x509
         bool "X.509"
@@ -25,20 +27,25 @@ menu "Mbed TLS 3.x"
 
     config MCUX_COMPONENT_middleware.mbedtls3x.no_psa
         bool "Mbed TLS (No PSA)"
-        select MCUX_COMPONENT_middleware.mbedtls3x.template
+        imply MCUX_COMPONENT_middleware.mbedtls3x.template
         select MCUX_COMPONENT_middleware.mbedtls3x.crypto.no_psa
         select MCUX_COMPONENT_middleware.mbedtls3x.ssl.no_psa
         select MCUX_COMPONENT_middleware.mbedtls3x.x509
 
     config MCUX_COMPONENT_middleware.mbedtls3x
         bool "Mbed TLS"
-        select MCUX_COMPONENT_middleware.mbedtls3x.template
+        imply MCUX_COMPONENT_middleware.mbedtls3x.template
         select MCUX_COMPONENT_middleware.mbedtls3x.crypto
         select MCUX_COMPONENT_middleware.mbedtls3x.ssl
         select MCUX_COMPONENT_middleware.mbedtls3x.x509
+        imply MCUX_COMPONENT_middleware.mbedtls3x.port.config
+        imply MCUX_COMPONENT_middleware.mbedtls3x.port.psa_crypto_config
 
     config MCUX_COMPONENT_middleware.mbedtls3x.tests
         bool "Tests"
+
+    config MCUX_COMPONENT_middleware.mbedtls3x.tests_certs_only
+        bool "Test certificates only"
 
     config MCUX_PRJSEG_middleware.mbedtls3x.default_heap_stack
         bool "Default Heap/Stack Configuration"
@@ -51,6 +58,7 @@ menu "Mbed TLS 3.x"
             bool "Mbed TLS configuration header files"
 
         config MCUX_COMPONENT_middleware.mbedtls3x.port.psa_crypto_config
+            default true if MCUX_COMPONENT_middleware.mbedtls3x
             bool "PSA configuration header files"
 
         config MCUX_COMPONENT_middleware.mbedtls3x.port.only_accelerator_config
@@ -65,7 +73,7 @@ menu "Mbed TLS 3.x"
         config MCUX_COMPONENT_middleware.mbedtls3x.port.rng
             bool "Random Number Generator"
             select MCUX_COMPONENT_middleware.mbedtls3x
-            select MCUX_COMPONENT_middleware.mbedtls3x.port.config
+            imply MCUX_COMPONENT_middleware.mbedtls3x.port.config
             if MCUX_COMPONENT_middleware.mbedtls3x.port.rng
                 choice
                     prompt "RNG Implementation"
@@ -92,7 +100,7 @@ menu "Mbed TLS 3.x"
             bool "TF-M Support"
             select MCUX_COMPONENT_middleware.tfm.ns
             select MCUX_COMPONENT_middleware.mbedtls3x.no_psa
-            select MCUX_COMPONENT_middleware.mbedtls3x.port.config
+            imply MCUX_COMPONENT_middleware.mbedtls3x.port.config
     endmenu
 
     menu "Crypto Storage Options"

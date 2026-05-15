@@ -36,74 +36,61 @@
  */
 psa_status_t ele_get_entropy(uint32_t flags, size_t *estimate_bits, uint8_t *output, size_t output_size)
 {
-    status_t result     = kStatus_Success;
     psa_status_t status = PSA_ERROR_CORRUPTION_DETECTED;
+    sss_sscp_rng_t ctx  = {0u};
 
     if (output == NULL)
     {
         status = PSA_ERROR_INVALID_ARGUMENT;
-        goto end;
+        goto exit;
     }
 
     if (estimate_bits == NULL)
     {
         status = PSA_ERROR_INVALID_ARGUMENT;
-        goto end;
+        goto exit;
     }
 
     if (output_size == 0u)
     {
         status = PSA_ERROR_INVALID_ARGUMENT;
-        goto end;
+        goto exit;
     }
 
-#if defined(MBEDTLS_THREADING_C)
-    if (mbedtls_mutex_lock(&mbedtls_threading_hwcrypto_ele_mutex) != 0)
+    /* No failure up to this point. Reset status and handle the rest with
+     * calls to the RNG HW.
+     */
+    status = PSA_SUCCESS;
+
+    if (mcux_mutex_lock(&ele_hwcrypto_mutex) != 0)
     {
-        return PSA_ERROR_GENERIC_ERROR;
+        return PSA_ERROR_SERVICE_FAILURE;
     }
-#endif
 
-    sss_sscp_rng_t ctx;
-    result = sss_sscp_rng_context_init(&g_ele_ctx.sssSession, &ctx, 0u);
-    if (result != kStatus_SSS_Success)
+    if (kStatus_SSS_Success != sss_sscp_rng_context_init(&g_ele_ctx.sssSession, &ctx, 0u))
     {
-        return result;
+        status = PSA_ERROR_HARDWARE_FAILURE;
     }
-
-    result = sss_sscp_rng_get_random(&ctx, output, output_size);
-    if (result != kStatus_SSS_Success)
+    if (kStatus_SSS_Success != sss_sscp_rng_get_random(&ctx, output, output_size))
     {
-        return result;
+        status = PSA_ERROR_HARDWARE_FAILURE;
     }
-
-    result = sss_sscp_rng_free(&ctx);
-    if (result != kStatus_SSS_Success)
+    if (kStatus_SSS_Success != sss_sscp_rng_free(&ctx))
     {
-        return result;
+        status = PSA_ERROR_HARDWARE_FAILURE;
     }
 
-    if (result == kStatus_SSS_Success)
+    if (mcux_mutex_unlock(&ele_hwcrypto_mutex) != 0)
     {
-        result = kStatus_Success;
+        return PSA_ERROR_SERVICE_FAILURE;
     }
-
-    status = ele_to_psa_status(result);
-
-#if defined(MBEDTLS_THREADING_C)
-    if (mbedtls_mutex_unlock(&mbedtls_threading_hwcrypto_ele_mutex) != 0)
-    {
-        return PSA_ERROR_GENERIC_ERROR;
-    }
-#endif
 
     if (status == PSA_SUCCESS)
     {
-        *estimate_bits = output_size * 8;
-        status         = PSA_SUCCESS;
+        *estimate_bits = output_size * 8u;
     }
 
-end:
+exit:
     return status;
 }
 /** @} */ // end of psa_entropy

@@ -12,6 +12,7 @@ message("${CMAKE_CURRENT_LIST_FILE} component is included.")
           ${CMAKE_CURRENT_LIST_DIR}/source/ctr_mode.c
           ${CMAKE_CURRENT_LIST_DIR}/source/ctr_prng.c
           ${CMAKE_CURRENT_LIST_DIR}/source/ecc.c
+          ${CMAKE_CURRENT_LIST_DIR}/source/ecc_dh.c
           ${CMAKE_CURRENT_LIST_DIR}/source/ecc_dsa.c
           ${CMAKE_CURRENT_LIST_DIR}/source/hmac.c
           ${CMAKE_CURRENT_LIST_DIR}/source/hmac_prng.c

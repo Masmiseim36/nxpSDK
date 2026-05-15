@@ -68,6 +68,8 @@ typedef struct altcp_mbedtls_state_s {
   struct pbuf *rx;
   struct pbuf *rx_app;
   u8_t flags;
+  u8_t apiflags;
+  u16_t tx_len;
   int rx_passed_unrecved;
   int bio_bytes_read;
   int bio_bytes_appl;

@@ -234,6 +234,7 @@ static void sslContextFree( SSLContext_t * pSslContext )
 
 	mbedtls_ctr_drbg_free(&( pSslContext->drbgCtx ) ) ;
 	mbedtls_pk_free(&( pSslContext->privKey));
+    mbedtls_entropy_free(&( pSslContext->entropyCtx ) );
 }
 /*-----------------------------------------------------------*/
 

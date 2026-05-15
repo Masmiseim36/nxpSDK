@@ -3,16 +3,7 @@
 include_guard(GLOBAL)
 message("${CMAKE_CURRENT_LIST_FILE} component is included.")
 
-      target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
-          ${CMAKE_CURRENT_LIST_DIR}/mbedtls_thread_alt/threading_alt.c
-        )
-
-  
-      target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
-          ${CMAKE_CURRENT_LIST_DIR}/mbedtls_thread_alt
-        )
-
-    if(CONFIG_USE_COMPONENT_CONFIGURATION)
+  if(CONFIG_USE_COMPONENT_CONFIGURATION)
   message("===>Import configuration from ${CMAKE_CURRENT_LIST_FILE}")
 
       target_compile_definitions(${MCUX_SDK_PROJECT_NAME} PUBLIC

@@ -1,0 +1,128 @@
+/*
+ * Copyright (c) 2015, Freescale Semiconductor, Inc.
+ * Copyright 2016-2017, 2025-2026 NXP
+ * All rights reserved.
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
+ */
+
+#include "fsl_common.h"
+#include "fsl_mu.h"
+#include "board.h"
+#include "app.h"
+
+/*******************************************************************************
+ * Definitions
+ ******************************************************************************/
+/* Flag indicates Core Boot Up*/
+#define BOOT_FLAG 0x01U
+
+/* Channel transmit and receive register */
+#define CHN_MU_REG_NUM kMU_MsgReg0
+
+/*******************************************************************************
+ * Prototypes
+ ******************************************************************************/
+
+/*******************************************************************************
+ * Variables
+ ******************************************************************************/
+static uint32_t g_msgRecv[CONFIG_MSG_LENGTH];
+volatile uint32_t g_curSend = 0;
+volatile uint32_t g_curRecv = 0;
+/*******************************************************************************
+ * Code
+ ******************************************************************************/
+/*!
+ * @brief Function to clear the g_msgRecv array.
+ * This function set g_msgRecv to be 0.
+ */
+static void ClearMsgRecv(void)
+{
+    uint32_t i;
+    for (i = 0U; i < CONFIG_MSG_LENGTH; i++)
+    {
+        g_msgRecv[i] = 0U;
+    }
+}
+
+/*!
+ * @brief Function to create delay for Led blink.
+ */
+static void delay(void)
+{
+    volatile uint32_t i = 0;
+    for (i = 0; i < 5000000; ++i)
+    {
+        __NOP();
+    }
+}
+
+#if defined(__DSC__) || defined(__CW__)
+#pragma interrupt alignsp saveall
+void APP_MU_IRQHandler(void);
+#endif
+void APP_MU_IRQHandler(void)
+{
+    uint32_t flag = 0;
+
+    flag = MU_GetStatusFlags(APP_MU);
+    if ((flag & kMU_Rx0FullFlag) == kMU_Rx0FullFlag)
+    {
+        if (g_curRecv < CONFIG_MSG_LENGTH)
+        {
+            g_msgRecv[g_curRecv++] = MU_ReceiveMsgNonBlocking(APP_MU, CHN_MU_REG_NUM);
+        }
+        else
+        {
+            MU_DisableInterrupts(APP_MU, kMU_Rx0FullInterruptEnable);
+        }
+    }
+    if (((flag & kMU_Tx0EmptyFlag) == kMU_Tx0EmptyFlag) && (g_curRecv == CONFIG_MSG_LENGTH))
+    {
+        if (g_curSend < CONFIG_MSG_LENGTH)
+        {
+            MU_SendMsgNonBlocking(APP_MU, CHN_MU_REG_NUM, g_msgRecv[g_curSend++]);
+        }
+        else
+        {
+            MU_DisableInterrupts(APP_MU, kMU_Tx0EmptyInterruptEnable);
+        }
+    }
+    SDK_ISR_EXIT_BARRIER;
+}
+#if defined(__DSC__) || defined(__CW__)
+#pragma interrupt off
+#endif
+
+/*!
+ * @brief Main function
+ */
+int main(void)
+{
+    /* Init board hardware.*/
+    BOARD_InitHardware();
+    /* Initialize LED */
+    LED_INIT();
+
+    /* MUB init */
+    MU_Init(APP_MU);
+
+    /* Send flag to Core 0 to indicate Core 1 has startup */
+    MU_SetFlags(APP_MU, BOOT_FLAG);
+
+    /* Clear the g_msgRecv array before receive */
+    ClearMsgRecv();
+    /* Enable transmit and receive interrupt */
+    MU_EnableInterrupts(APP_MU, (kMU_Tx0EmptyInterruptEnable | kMU_Rx0FullInterruptEnable));
+    /* Wait the data send and receive finish */
+    while ((g_curSend < CONFIG_MSG_LENGTH) || (g_curRecv < CONFIG_MSG_LENGTH))
+    {
+    }
+
+    while (1)
+    {
+        delay();
+        LED_TOGGLE();
+    }
+}

@@ -91,7 +91,7 @@ static inline acc32_t AMCLIB_PMSMBemfObsrvDQMAU_A32fff_FCi(const GMCLIB_2COOR_DQ
     }
     
     /* Error BEMF calculation in gamma/delta coordinates */
-    psCtrl->a32Error = GFLIB_AtanYXMAU_A32f_FCi(fltTmpEObsrvD, fltTmpEObsrvQ, &bErrFlag); 
+    psCtrl->a32Error = GFLIB_AtanYXMAU_A32f_FCi(fltTmpEObsrvD, fltTmpEObsrvQ, &bErrFlag, RTCESL_MAU_DT_RES2); 
     
     return((acc32_t)psCtrl->a32Error);
 } 

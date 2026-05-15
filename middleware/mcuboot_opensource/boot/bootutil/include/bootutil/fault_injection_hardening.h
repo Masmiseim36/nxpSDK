@@ -137,7 +137,7 @@ extern fih_ret FIH_BOOT_HOOK_REGULAR;
 /* Global failure handler - more resistant to unlooping. noinline and used are
  * used to prevent optimization
  */
-__attribute__((noinline)) __attribute__((used))
+__attribute__((noinline)) __attribute__((used)) __attribute__((noreturn))
 void fih_panic_loop(void);
 #define FIH_PANIC fih_panic_loop()
 #else
@@ -277,7 +277,7 @@ void fih_cfi_decrement(void);
  * after compilation. Does not require debug symbols.
  */
 #if defined(__ICCARM__)
-#define FIH_LABEL(str, lin, cnt) __asm volatile ("FIH_LABEL_" str "_" #lin "_" #cnt "::" ::);
+#define FIH_LABEL(str, lin, cnt) __asm volatile ("FIH_LABEL_" str "_" #lin "_" #cnt ":" ::);
 #elif defined(__APPLE__)
 #define FIH_LABEL(str) do {} while (0)
 #else

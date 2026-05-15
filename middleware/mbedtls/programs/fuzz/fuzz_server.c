@@ -1,9 +1,11 @@
+#define MBEDTLS_DECLARE_PRIVATE_IDENTIFIERS
+
 #include "mbedtls/ssl.h"
-#include "mbedtls/entropy.h"
-#include "mbedtls/ctr_drbg.h"
-#include "mbedtls/certs.h"
+#include "mbedtls/private/entropy.h"
+#include "mbedtls/private/ctr_drbg.h"
 #include "mbedtls/ssl_ticket.h"
-#include "common.h"
+#include "test/certs.h"
+#include "fuzz_common.h"
 #include <string.h>
 #include <stdlib.h>
 #include <stdint.h>
@@ -54,11 +56,30 @@ int LLVMFuzzerTestOneInput(const uint8_t *Data, size_t Size)
     }
     options = Data[Size - 1];
 
+    mbedtls_ctr_drbg_init(&ctr_drbg);
+    mbedtls_entropy_init(&entropy);
+#if defined(MBEDTLS_X509_CRT_PARSE_C) && defined(MBEDTLS_PEM_PARSE_C)
+    mbedtls_x509_crt_init(&srvcert);
+    mbedtls_pk_init(&pkey);
+#endif
+    mbedtls_ssl_init(&ssl);
+    mbedtls_ssl_config_init(&conf);
+#if defined(MBEDTLS_SSL_SESSION_TICKETS) && defined(MBEDTLS_SSL_TICKET_C)
+    mbedtls_ssl_ticket_init(&ticket_ctx);
+#endif
+    psa_status_t status = psa_crypto_init();
+    if (status != PSA_SUCCESS) {
+        goto exit;
+    }
+
+    if (mbedtls_ctr_drbg_seed(&ctr_drbg, dummy_entropy, &entropy,
+                              (const unsigned char *) pers, strlen(pers)) != 0) {
+        return 1;
+    }
+
     if (initialized == 0) {
-#if defined(MBEDTLS_X509_CRT_PARSE_C) && defined(MBEDTLS_PEM_PARSE_C) && \
-        defined(MBEDTLS_CERTS_C)
-        mbedtls_x509_crt_init(&srvcert);
-        mbedtls_pk_init(&pkey);
+
+#if defined(MBEDTLS_X509_CRT_PARSE_C) && defined(MBEDTLS_PEM_PARSE_C)
         if (mbedtls_x509_crt_parse(&srvcert, (const unsigned char *) mbedtls_test_srv_crt,
                                    mbedtls_test_srv_crt_len) != 0) {
             return 1;
@@ -81,26 +102,6 @@ int LLVMFuzzerTestOneInput(const uint8_t *Data, size_t Size)
 
         initialized = 1;
     }
-    mbedtls_ssl_init(&ssl);
-    mbedtls_ssl_config_init(&conf);
-    mbedtls_ctr_drbg_init(&ctr_drbg);
-    mbedtls_entropy_init(&entropy);
-#if defined(MBEDTLS_SSL_SESSION_TICKETS) && defined(MBEDTLS_SSL_TICKET_C)
-    mbedtls_ssl_ticket_init(&ticket_ctx);
-#endif
-
-#if defined(MBEDTLS_USE_PSA_CRYPTO)
-    psa_status_t status = psa_crypto_init();
-    if (status != PSA_SUCCESS) {
-        goto exit;
-    }
-#endif /* MBEDTLS_USE_PSA_CRYPTO */
-
-    if (mbedtls_ctr_drbg_seed(&ctr_drbg, dummy_entropy, &entropy,
-                              (const unsigned char *) pers, strlen(pers)) != 0) {
-        goto exit;
-    }
-
 
     if (mbedtls_ssl_config_defaults(&conf,
                                     MBEDTLS_SSL_IS_SERVER,
@@ -108,9 +109,6 @@ int LLVMFuzzerTestOneInput(const uint8_t *Data, size_t Size)
                                     MBEDTLS_SSL_PRESET_DEFAULT) != 0) {
         goto exit;
     }
-
-    srand(1);
-    mbedtls_ssl_conf_rng(&conf, dummy_random, &ctr_drbg);
 
 #if defined(MBEDTLS_X509_CRT_PARSE_C) && defined(MBEDTLS_PEM_PARSE_C)
     mbedtls_ssl_conf_ca_chain(&conf, srvcert.next, NULL);
@@ -129,10 +127,11 @@ int LLVMFuzzerTestOneInput(const uint8_t *Data, size_t Size)
 #endif
 #if defined(MBEDTLS_SSL_SESSION_TICKETS) && defined(MBEDTLS_SSL_TICKET_C)
     if (options & 0x4) {
-        if (mbedtls_ssl_ticket_setup(&ticket_ctx,
-                                     dummy_random, &ctr_drbg,
-                                     MBEDTLS_CIPHER_AES_256_GCM,
-                                     86400) != 0) {
+        if (mbedtls_ssl_ticket_setup(&ticket_ctx, //context
+                                     PSA_ALG_GCM, //alg
+                                     PSA_KEY_TYPE_AES, //key_type
+                                     256, //key_bits
+                                     86400) != 0) { //lifetime
             goto exit;
         }
 
@@ -141,11 +140,6 @@ int LLVMFuzzerTestOneInput(const uint8_t *Data, size_t Size)
                                             mbedtls_ssl_ticket_parse,
                                             &ticket_ctx);
     }
-#endif
-#if defined(MBEDTLS_SSL_TRUNCATED_HMAC)
-    mbedtls_ssl_conf_truncated_hmac(&conf,
-                                    (options &
-                                     0x8) ? MBEDTLS_SSL_TRUNC_HMAC_ENABLED : MBEDTLS_SSL_TRUNC_HMAC_DISABLED);
 #endif
 #if defined(MBEDTLS_SSL_EXTENDED_MASTER_SECRET)
     mbedtls_ssl_conf_extended_master_secret(&conf,
@@ -198,19 +192,17 @@ int LLVMFuzzerTestOneInput(const uint8_t *Data, size_t Size)
 exit:
 #if defined(MBEDTLS_SSL_SESSION_TICKETS) && defined(MBEDTLS_SSL_TICKET_C)
     mbedtls_ssl_ticket_free(&ticket_ctx);
-#endif
+#endif /* MBEDTLS_SSL_SESSION_TICKETS && MBEDTLS_SSL_TICKET_C */
     mbedtls_entropy_free(&entropy);
     mbedtls_ctr_drbg_free(&ctr_drbg);
     mbedtls_ssl_config_free(&conf);
 #if defined(MBEDTLS_X509_CRT_PARSE_C) && defined(MBEDTLS_PEM_PARSE_C)
     mbedtls_x509_crt_free(&srvcert);
     mbedtls_pk_free(&pkey);
-#endif
+#endif /* MBEDTLS_X509_CRT_PARSE_C && MBEDTLS_PEM_PARSE_C */
     mbedtls_ssl_free(&ssl);
-#if defined(MBEDTLS_USE_PSA_CRYPTO)
     mbedtls_psa_crypto_free();
-#endif
-#else
+#else /* MBEDTLS_SSL_SRV_C && MBEDTLS_ENTROPY_C && MBEDTLS_CTR_DRBG_C */
     (void) Data;
     (void) Size;
 #endif /* MBEDTLS_SSL_SRV_C && MBEDTLS_ENTROPY_C && MBEDTLS_CTR_DRBG_C */

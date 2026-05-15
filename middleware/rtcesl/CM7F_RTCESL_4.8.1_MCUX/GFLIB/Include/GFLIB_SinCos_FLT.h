@@ -86,10 +86,15 @@ extern float_t GFLIB_Cos_FLTa_FCRam(acc32_t a32AngleExt);
 /*******************************************************************************
 * Sine and cosine functions
 *******************************************************************************/
-static inline void GFLIB_SinCos_FLTa_FCi(register acc32_t a32AngleExt, register GMCLIB_2COOR_SINCOS_T_FLT *fltSinCos)
+RAM_FUNC_LIB 
+RTCESL_INLINE static inline void GFLIB_SinCos_FLTa_FCi(register acc32_t a32AngleExt, register GMCLIB_2COOR_SINCOS_T_FLT *fltSinCos)
 {    
     register float_t fltSin;
-    fltSin = GFLIB_Sin_FLTa_FC(a32AngleExt);
+#if (defined(RAM_RELOCATION))
+    fltSin = GFLIB_Sin_FLTa_CRam(a32AngleExt);
+#else  /* placed to ROM */
+    fltSin = GFLIB_Sin_FLTa_C(a32AngleExt);
+#endif /* defined(RAM_RELOCATION) */   
     fltSinCos->fltSin = fltSin; 
     /* Used constant 1.00000096F=1.00000048F*1.00000048F instead of 1.0F because its max square sin return value */    
     fltSin = GFLIB_Sqrt_FLT_Asmi(1.00000096F - fltSin * fltSin);

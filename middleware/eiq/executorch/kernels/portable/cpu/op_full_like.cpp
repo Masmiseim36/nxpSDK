@@ -5,6 +5,7 @@
  * This source code is licensed under the BSD-style license found in the
  * LICENSE file in the root directory of this source tree.
  */
+#include <c10/util/irange.h>
 
 #include <executorch/kernels/portable/cpu/scalar_utils.h>
 #include <executorch/runtime/kernel/kernel_includes.h>
@@ -13,8 +14,8 @@ namespace torch {
 namespace executor {
 namespace native {
 
-using Tensor = exec_aten::Tensor;
-using ScalarType = exec_aten::ScalarType;
+using Tensor = executorch::aten::Tensor;
+using ScalarType = executorch::aten::ScalarType;
 
 Tensor& full_like_out(
     KernelRuntimeContext& ctx,
@@ -47,22 +48,20 @@ Tensor& full_like_out(
       out,
       "Failed to resize output tensor.");
 
-  ScalarType val_type = utils::get_scalar_dtype(fill_value);
   ScalarType out_type = out.scalar_type();
 
-  constexpr auto name = "scalar_tensor.out";
+  // @lint-ignore CLANGTIDY facebook-hte-CArray
+  static constexpr const char op_name[] = "full_like.out";
 
-  ET_SWITCH_REALB_TYPES(val_type, ctx, name, CTYPE_VAL, [&] {
-    CTYPE_VAL val;
-    utils::extract_scalar(fill_value, &val);
-
-    ET_SWITCH_REALHB_TYPES(out_type, ctx, name, CTYPE_OUT, [&] {
-      CTYPE_OUT val_casted = static_cast<CTYPE_OUT>(val);
-      auto data_out = out.mutable_data_ptr<CTYPE_OUT>();
-      for (size_t i = 0; i < out.numel(); ++i) {
-        data_out[i] = val_casted;
-      }
-    });
+  ET_SWITCH_REALHBBF16_TYPES(out_type, ctx, op_name, CTYPE_OUT, [&] {
+    auto opt_val_casted =
+        utils::internal::check_overflow_scalar_cast<CTYPE_OUT>(fill_value);
+    ET_KERNEL_CHECK(ctx, opt_val_casted.has_value(), InvalidArgument, );
+    auto val_casted = opt_val_casted.value();
+    auto data_out = out.mutable_data_ptr<CTYPE_OUT>();
+    for (const auto i : c10::irange(out.numel())) {
+      data_out[i] = val_casted;
+    }
   });
 
   return out;

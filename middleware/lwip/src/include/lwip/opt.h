@@ -517,7 +517,7 @@
  * The number of sys timeouts used by the core stack (not apps)
  * The default number of timeouts is calculated here for all enabled modules.
  */
-#define LWIP_NUM_SYS_TIMEOUT_INTERNAL   (LWIP_TCP + IP_REASSEMBLY + LWIP_ARP + (2*LWIP_DHCP) + LWIP_ACD + LWIP_IGMP + LWIP_DNS + PPP_NUM_TIMEOUTS + (LWIP_IPV6 * (1 + LWIP_IPV6_REASS + LWIP_IPV6_MLD + LWIP_IPV6_DHCP6)))
+#define LWIP_NUM_SYS_TIMEOUT_INTERNAL   (LWIP_TCP + IP_REASSEMBLY + LWIP_ARP + (LWIP_DHCP_FINE_TIMERS_ONDEMAND ? LWIP_DHCP : 2*LWIP_DHCP) + LWIP_ACD + (LWIP_IGMP_TIMERS_ONDEMAND ? 0 : LWIP_IGMP) + (LWIP_DNS_TIMERS_ONDEMAND ? 0 : LWIP_DNS) + PPP_NUM_TIMEOUTS + (LWIP_IPV6 * (1 + LWIP_IPV6_REASS + (LWIP_MLD6_TIMERS_ONDEMAND ? 0 : LWIP_IPV6_MLD) + LWIP_IPV6_DHCP6)))
 
 /**
  * MEMP_NUM_SYS_TIMEOUT: the number of simultaneously active timeouts.
@@ -3700,6 +3700,82 @@
 #if !defined LWIP_PERF || defined __DOXYGEN__
 #define LWIP_PERF                       0
 #endif
+/**
+ * @}
+ */
+
+/*
+   --------------------------------------------------
+   ---------- On-demand Timer Configuration ---------
+   --------------------------------------------------
+*/
+
+/**
+ * @defgroup lwip_opts_ondemand LWIP On-demand Timer Configuration
+ * @ingroup lwip_opts
+ * @{
+ */
+
+/**
+ * LWIP_DHCP_FINE_TIMERS_ONDEMAND: Controls DHCP fine timers execution mode
+ * When enabled (1), DHCP fine timers run on-demand instead of periodically
+ * which is the lwIP default behavior. On-demand timers reduce CPU usage when
+ * DHCP services are not actively needed.
+ */
+#if !defined LWIP_DHCP_FINE_TIMERS_ONDEMAND || defined __DOXYGEN__
+#define LWIP_DHCP_FINE_TIMERS_ONDEMAND 0
+#endif
+
+/**
+ * LWIP_DNS_TIMERS_ONDEMAND: Controls DNS timer execution mode
+ * When enabled (1), DNS timers run on-demand instead of periodically
+ * which is the lwIP default behavior. On-demand timers improve efficiency
+ * by only running when DNS resolution is actively needed.
+ */
+#if !defined LWIP_DNS_TIMERS_ONDEMAND || defined __DOXYGEN__
+#define LWIP_DNS_TIMERS_ONDEMAND 0
+#endif
+
+/**
+ * LWIP_IGMP_TIMERS_ONDEMAND: Controls IGMP timer execution mode
+ * When enabled (1), IGMP timers run on-demand instead of periodically
+ * which is the lwIP default behavior. On-demand timers reduce processing
+ * overhead when multicast functionality isn't in active use.
+ */
+#if !defined LWIP_IGMP_TIMERS_ONDEMAND || defined __DOXYGEN__
+#define LWIP_IGMP_TIMERS_ONDEMAND 0
+#endif
+
+/**
+ * LWIP_IP4_REASSEMBLY_TIMERS_ONDEMAND: Controls IPv4 reassembly timer mode
+ * When enabled (1), IPv4 fragment reassembly timers run on-demand instead of
+ * periodically which is the lwIP default behavior. On-demand execution reduces
+ * system overhead when IPv4 fragmentation isn't actively occurring.
+ */
+#if !defined LWIP_IP4_REASSEMBLY_TIMERS_ONDEMAND || defined __DOXYGEN__
+#define LWIP_IP4_REASSEMBLY_TIMERS_ONDEMAND 0
+#endif
+
+/**
+ * LWIP_IP6_REASSEMBLY_TIMERS_ONDEMAND: Controls IPv6 reassembly timer mode
+ * When enabled (1), IPv6 fragment reassembly timers run on-demand instead of
+ * periodically which is the lwIP default behavior. This reduces CPU usage
+ * when IPv6 fragment reassembly is not actively needed.
+ */
+#if !defined LWIP_IP6_REASSEMBLY_TIMERS_ONDEMAND || defined __DOXYGEN__
+#define LWIP_IP6_REASSEMBLY_TIMERS_ONDEMAND 0
+#endif
+
+/**
+ * LWIP_MLD6_TIMERS_ONDEMAND: Controls MLD6 timer execution mode
+ * When enabled (1), Multicast Listener Discovery timers for IPv6 run on-demand
+ * instead of periodically which is the lwIP default behavior. This improves
+ * power efficiency on systems with limited IPv6 multicast usage.
+ */
+#if !defined LWIP_MLD6_TIMERS_ONDEMAND || defined __DOXYGEN__
+#define LWIP_MLD6_TIMERS_ONDEMAND 0
+#endif
+
 /**
  * @}
  */

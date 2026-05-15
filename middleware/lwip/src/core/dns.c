@@ -94,6 +94,12 @@
 #include "lwip/memp.h"
 #include "lwip/dns.h"
 #include "lwip/prot/dns.h"
+#include "lwip/timeouts.h"
+
+#if LWIP_DNS_TIMERS_ONDEMAND
+#include "stdbool.h"
+static bool s_is_tmr_start = false;
+#endif /* LWIP_DNS_TIMERS_ONDEMAND */
 
 #include <string.h>
 
@@ -387,6 +393,17 @@ dns_getserver(u8_t numdns)
   }
 }
 
+#if LWIP_DNS_TIMERS_ONDEMAND
+/**
+ * Wrapper function with matching prototype which calls the actual callback
+ */
+static void dns_timeout_cb(void *arg)
+{
+  LWIP_UNUSED_ARG(arg);
+  dns_tmr();
+}
+#endif /* LWIP_DNS_TIMERS_ONDEMAND */
+
 /**
  * The DNS resolver client timer - handle retries and timeouts and should
  * be called every DNS_TMR_INTERVAL milliseconds (every second by default).
@@ -394,8 +411,26 @@ dns_getserver(u8_t numdns)
 void
 dns_tmr(void)
 {
+#if LWIP_DNS_TIMERS_ONDEMAND
+  bool tmr_restart = false;
+  u8_t i = 0;
+#endif /* LWIP_DNS_TIMERS_ONDEMAND */
   LWIP_DEBUGF(DNS_DEBUG, ("dns_tmr: dns_check_entries\n"));
   dns_check_entries();
+#if LWIP_DNS_TIMERS_ONDEMAND
+  for (i = 0; i < DNS_TABLE_SIZE; ++i) {
+    if (dns_table[i].state != DNS_STATE_UNUSED) {
+      tmr_restart = true;
+      break;
+    }
+  }
+  if (tmr_restart) {
+    sys_timeout(DNS_TMR_INTERVAL, dns_timeout_cb, NULL);
+  } else {
+    sys_untimeout(dns_timeout_cb, NULL);
+    s_is_tmr_start = false;
+  }
+#endif/* LWIP_DNS_TIMERS_ONDEMAND */
 }
 
 #if DNS_LOCAL_HOSTLIST
@@ -1520,6 +1555,12 @@ dns_enqueue(const char *name, size_t hostnamelen, dns_found_callback found,
 
   /* force to send query without waiting timer */
   dns_check_entry(i);
+#if LWIP_DNS_TIMERS_ONDEMAND
+  if (!s_is_tmr_start) {
+    sys_timeout(DNS_TMR_INTERVAL, dns_timeout_cb, NULL);
+    s_is_tmr_start = true;
+  }
+#endif /* LWIP_DNS_TIMERS_ONDEMAND */
 
   /* dns query is enqueued */
   return ERR_INPROGRESS;

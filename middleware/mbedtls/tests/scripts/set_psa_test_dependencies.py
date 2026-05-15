@@ -11,7 +11,7 @@ import re
 import sys
 
 CLASSIC_DEPENDENCIES = frozenset([
-    # This list is manually filtered from config.h.
+    # This list is manually filtered from mbedtls_config.h.
 
     # Mbed TLS feature support.
     # Only features that affect what can be done are listed here.
@@ -27,13 +27,9 @@ CLASSIC_DEPENDENCIES = frozenset([
     'MBEDTLS_CIPHER_PADDING_ONE_AND_ZEROS',
     'MBEDTLS_CIPHER_PADDING_ZEROS_AND_LEN',
     'MBEDTLS_CIPHER_PADDING_ZEROS',
-    #curve#'MBEDTLS_ECP_DP_SECP192R1_ENABLED',
-    #curve#'MBEDTLS_ECP_DP_SECP224R1_ENABLED',
     #curve#'MBEDTLS_ECP_DP_SECP256R1_ENABLED',
     #curve#'MBEDTLS_ECP_DP_SECP384R1_ENABLED',
     #curve#'MBEDTLS_ECP_DP_SECP521R1_ENABLED',
-    #curve#'MBEDTLS_ECP_DP_SECP192K1_ENABLED',
-    #curve#'MBEDTLS_ECP_DP_SECP224K1_ENABLED',
     #curve#'MBEDTLS_ECP_DP_SECP256K1_ENABLED',
     #curve#'MBEDTLS_ECP_DP_BP256R1_ENABLED',
     #curve#'MBEDTLS_ECP_DP_BP384R1_ENABLED',
@@ -44,15 +40,12 @@ CLASSIC_DEPENDENCIES = frozenset([
     #'MBEDTLS_GENPRIME', #needed for RSA key generation
     'MBEDTLS_PKCS1_V15',
     'MBEDTLS_PKCS1_V21',
-    'MBEDTLS_SHA512_NO_SHA384',
 
     # Mbed TLS modules.
     # Only modules that provide cryptographic mechanisms are listed here.
     # Platform, data formatting, X.509 or TLS modules are omitted.
     'MBEDTLS_AES_C',
-    'MBEDTLS_ARC4_C',
     'MBEDTLS_BIGNUM_C',
-    #cipher#'MBEDTLS_BLOWFISH_C',
     'MBEDTLS_CAMELLIA_C',
     'MBEDTLS_ARIA_C',
     'MBEDTLS_CCM_C',
@@ -60,8 +53,6 @@ CLASSIC_DEPENDENCIES = frozenset([
     'MBEDTLS_CHACHAPOLY_C',
     'MBEDTLS_CMAC_C',
     'MBEDTLS_CTR_DRBG_C',
-    'MBEDTLS_DES_C',
-    'MBEDTLS_DHM_C',
     'MBEDTLS_ECDH_C',
     'MBEDTLS_ECDSA_C',
     'MBEDTLS_ECJPAKE_C',
@@ -71,8 +62,6 @@ CLASSIC_DEPENDENCIES = frozenset([
     'MBEDTLS_HKDF_C',
     'MBEDTLS_HMAC_DRBG_C',
     'MBEDTLS_NIST_KW_C',
-    'MBEDTLS_MD2_C',
-    'MBEDTLS_MD4_C',
     'MBEDTLS_MD5_C',
     'MBEDTLS_PKCS5_C',
     'MBEDTLS_PKCS12_C',
@@ -82,7 +71,6 @@ CLASSIC_DEPENDENCIES = frozenset([
     'MBEDTLS_SHA1_C',
     'MBEDTLS_SHA256_C',
     'MBEDTLS_SHA512_C',
-    'MBEDTLS_XTEA_C',
 ])
 
 def is_classic_dependency(dep):

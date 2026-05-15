@@ -7,13 +7,27 @@
 
 #include "lfs_mflash.h"
 #include "fsl_debug_console.h"
-#include "peripherals.h"
 
 /*******************************************************************************
  * Variables
  ******************************************************************************/
 
 struct lfs_mflash_ctx LittleFS_ctx = {LITTLEFS_START_ADDR};
+
+const struct lfs_config LittleFS_config = {
+  .context = (void*)&LittleFS_ctx,
+  .read = lfs_mflash_read,
+  .prog = lfs_mflash_prog,
+  .erase = lfs_mflash_erase,
+  .sync = lfs_mflash_sync,
+  .read_size = LITTLEFS_READ_SIZE,
+  .prog_size = LITTLEFS_PROG_SIZE,
+  .block_size = LITTLEFS_BLOCK_SIZE,
+  .block_count = LITTLEFS_BLOCK_COUNT,
+  .block_cycles = LITTLEFS_BLOCK_CYCLES,
+  .cache_size = LITTLEFS_CACHE_SIZE,
+  .lookahead_size = LITTLEFS_LOOKAHEAD_SIZE
+};
 
 /*******************************************************************************
  * Code

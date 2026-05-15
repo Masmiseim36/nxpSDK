@@ -116,6 +116,9 @@ struct DataSegmentBuilder;
 struct SubsegmentOffsets;
 struct SubsegmentOffsetsBuilder;
 
+struct NamedData;
+struct NamedDataBuilder;
+
 struct Program;
 struct ProgramBuilder;
 
@@ -2796,6 +2799,75 @@ inline ::flatbuffers::Offset<SubsegmentOffsets> CreateSubsegmentOffsetsDirect(
       offsets__);
 }
 
+struct NamedData FLATBUFFERS_FINAL_CLASS : private ::flatbuffers::Table {
+  typedef NamedDataBuilder Builder;
+  enum FlatBuffersVTableOffset FLATBUFFERS_VTABLE_UNDERLYING_TYPE {
+    VT_KEY = 4,
+    VT_SEGMENT_INDEX = 6
+  };
+  const ::flatbuffers::String *key() const {
+    return GetPointer<const ::flatbuffers::String *>(VT_KEY);
+  }
+  ::flatbuffers::String *mutable_key() {
+    return GetPointer<::flatbuffers::String *>(VT_KEY);
+  }
+  uint32_t segment_index() const {
+    return GetField<uint32_t>(VT_SEGMENT_INDEX, 0);
+  }
+  bool mutate_segment_index(uint32_t _segment_index = 0) {
+    return SetField<uint32_t>(VT_SEGMENT_INDEX, _segment_index, 0);
+  }
+  bool Verify(::flatbuffers::Verifier &verifier) const {
+    return VerifyTableStart(verifier) &&
+           VerifyOffset(verifier, VT_KEY) &&
+           verifier.VerifyString(key()) &&
+           VerifyField<uint32_t>(verifier, VT_SEGMENT_INDEX, 4) &&
+           verifier.EndTable();
+  }
+};
+
+struct NamedDataBuilder {
+  typedef NamedData Table;
+  ::flatbuffers::FlatBufferBuilder &fbb_;
+  ::flatbuffers::uoffset_t start_;
+  void add_key(::flatbuffers::Offset<::flatbuffers::String> key) {
+    fbb_.AddOffset(NamedData::VT_KEY, key);
+  }
+  void add_segment_index(uint32_t segment_index) {
+    fbb_.AddElement<uint32_t>(NamedData::VT_SEGMENT_INDEX, segment_index, 0);
+  }
+  explicit NamedDataBuilder(::flatbuffers::FlatBufferBuilder &_fbb)
+        : fbb_(_fbb) {
+    start_ = fbb_.StartTable();
+  }
+  ::flatbuffers::Offset<NamedData> Finish() {
+    const auto end = fbb_.EndTable(start_);
+    auto o = ::flatbuffers::Offset<NamedData>(end);
+    return o;
+  }
+};
+
+inline ::flatbuffers::Offset<NamedData> CreateNamedData(
+    ::flatbuffers::FlatBufferBuilder &_fbb,
+    ::flatbuffers::Offset<::flatbuffers::String> key = 0,
+    uint32_t segment_index = 0) {
+  NamedDataBuilder builder_(_fbb);
+  builder_.add_segment_index(segment_index);
+  builder_.add_key(key);
+  return builder_.Finish();
+}
+
+inline ::flatbuffers::Offset<NamedData> CreateNamedDataDirect(
+    ::flatbuffers::FlatBufferBuilder &_fbb,
+    const char *key = nullptr,
+    uint32_t segment_index = 0) {
+  auto key__ = key ? _fbb.CreateString(key) : 0;
+  return executorch_flatbuffer::CreateNamedData(
+      _fbb,
+      key__,
+      segment_index);
+}
+
 struct Program FLATBUFFERS_FINAL_CLASS : private ::flatbuffers::Table {
   typedef ProgramBuilder Builder;
   enum FlatBuffersVTableOffset FLATBUFFERS_VTABLE_UNDERLYING_TYPE {
@@ -2805,7 +2877,8 @@ struct Program FLATBUFFERS_FINAL_CLASS : private ::flatbuffers::Table {
     VT_BACKEND_DELEGATE_DATA = 10,
     VT_SEGMENTS = 12,
     VT_CONSTANT_SEGMENT = 14,
-    VT_MUTABLE_DATA_SEGMENTS = 16
+    VT_MUTABLE_DATA_SEGMENTS = 16,
+    VT_NAMED_DATA = 18
   };
   uint32_t version() const {
     return GetField<uint32_t>(VT_VERSION, 0);
@@ -2849,6 +2922,12 @@ struct Program FLATBUFFERS_FINAL_CLASS : private ::flatbuffers::Table {
   ::flatbuffers::Vector<::flatbuffers::Offset<executorch_flatbuffer::SubsegmentOffsets>> *mutable_mutable_data_segments() {
     return GetPointer<::flatbuffers::Vector<::flatbuffers::Offset<executorch_flatbuffer::SubsegmentOffsets>> *>(VT_MUTABLE_DATA_SEGMENTS);
   }
+  const ::flatbuffers::Vector<::flatbuffers::Offset<executorch_flatbuffer::NamedData>> *named_data() const {
+    return GetPointer<const ::flatbuffers::Vector<::flatbuffers::Offset<executorch_flatbuffer::NamedData>> *>(VT_NAMED_DATA);
+  }
+  ::flatbuffers::Vector<::flatbuffers::Offset<executorch_flatbuffer::NamedData>> *mutable_named_data() {
+    return GetPointer<::flatbuffers::Vector<::flatbuffers::Offset<executorch_flatbuffer::NamedData>> *>(VT_NAMED_DATA);
+  }
   bool Verify(::flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
            VerifyField<uint32_t>(verifier, VT_VERSION, 4) &&
@@ -2869,6 +2948,9 @@ struct Program FLATBUFFERS_FINAL_CLASS : private ::flatbuffers::Table {
            VerifyOffset(verifier, VT_MUTABLE_DATA_SEGMENTS) &&
            verifier.VerifyVector(mutable_data_segments()) &&
            verifier.VerifyVectorOfTables(mutable_data_segments()) &&
+           VerifyOffset(verifier, VT_NAMED_DATA) &&
+           verifier.VerifyVector(named_data()) &&
+           verifier.VerifyVectorOfTables(named_data()) &&
            verifier.EndTable();
   }
 };
@@ -2898,6 +2980,9 @@ struct ProgramBuilder {
   void add_mutable_data_segments(::flatbuffers::Offset<::flatbuffers::Vector<::flatbuffers::Offset<executorch_flatbuffer::SubsegmentOffsets>>> mutable_data_segments) {
     fbb_.AddOffset(Program::VT_MUTABLE_DATA_SEGMENTS, mutable_data_segments);
   }
+  void add_named_data(::flatbuffers::Offset<::flatbuffers::Vector<::flatbuffers::Offset<executorch_flatbuffer::NamedData>>> named_data) {
+    fbb_.AddOffset(Program::VT_NAMED_DATA, named_data);
+  }
   explicit ProgramBuilder(::flatbuffers::FlatBufferBuilder &_fbb)
         : fbb_(_fbb) {
     start_ = fbb_.StartTable();
@@ -2917,8 +3002,10 @@ inline ::flatbuffers::Offset<Program> CreateProgram(
     ::flatbuffers::Offset<::flatbuffers::Vector<::flatbuffers::Offset<executorch_flatbuffer::BackendDelegateInlineData>>> backend_delegate_data = 0,
     ::flatbuffers::Offset<::flatbuffers::Vector<::flatbuffers::Offset<executorch_flatbuffer::DataSegment>>> segments = 0,
     ::flatbuffers::Offset<executorch_flatbuffer::SubsegmentOffsets> constant_segment = 0,
-    ::flatbuffers::Offset<::flatbuffers::Vector<::flatbuffers::Offset<executorch_flatbuffer::SubsegmentOffsets>>> mutable_data_segments = 0) {
+    ::flatbuffers::Offset<::flatbuffers::Vector<::flatbuffers::Offset<executorch_flatbuffer::SubsegmentOffsets>>> mutable_data_segments = 0,
+    ::flatbuffers::Offset<::flatbuffers::Vector<::flatbuffers::Offset<executorch_flatbuffer::NamedData>>> named_data = 0) {
   ProgramBuilder builder_(_fbb);
+  builder_.add_named_data(named_data);
   builder_.add_mutable_data_segments(mutable_data_segments);
   builder_.add_constant_segment(constant_segment);
   builder_.add_segments(segments);
@@ -2937,12 +3024,14 @@ inline ::flatbuffers::Offset<Program> CreateProgramDirect(
     const std::vector<::flatbuffers::Offset<executorch_flatbuffer::BackendDelegateInlineData>> *backend_delegate_data = nullptr,
     const std::vector<::flatbuffers::Offset<executorch_flatbuffer::DataSegment>> *segments = nullptr,
     ::flatbuffers::Offset<executorch_flatbuffer::SubsegmentOffsets> constant_segment = 0,
-    const std::vector<::flatbuffers::Offset<executorch_flatbuffer::SubsegmentOffsets>> *mutable_data_segments = nullptr) {
+    const std::vector<::flatbuffers::Offset<executorch_flatbuffer::SubsegmentOffsets>> *mutable_data_segments = nullptr,
+    const std::vector<::flatbuffers::Offset<executorch_flatbuffer::NamedData>> *named_data = nullptr) {
   auto execution_plan__ = execution_plan ? _fbb.CreateVector<::flatbuffers::Offset<executorch_flatbuffer::ExecutionPlan>>(*execution_plan) : 0;
   auto constant_buffer__ = constant_buffer ? _fbb.CreateVector<::flatbuffers::Offset<executorch_flatbuffer::Buffer>>(*constant_buffer) : 0;
   auto backend_delegate_data__ = backend_delegate_data ? _fbb.CreateVector<::flatbuffers::Offset<executorch_flatbuffer::BackendDelegateInlineData>>(*backend_delegate_data) : 0;
   auto segments__ = segments ? _fbb.CreateVector<::flatbuffers::Offset<executorch_flatbuffer::DataSegment>>(*segments) : 0;
   auto mutable_data_segments__ = mutable_data_segments ? _fbb.CreateVector<::flatbuffers::Offset<executorch_flatbuffer::SubsegmentOffsets>>(*mutable_data_segments) : 0;
+  auto named_data__ = named_data ? _fbb.CreateVector<::flatbuffers::Offset<executorch_flatbuffer::NamedData>>(*named_data) : 0;
   return executorch_flatbuffer::CreateProgram(
       _fbb,
       version,
@@ -2951,7 +3040,8 @@ inline ::flatbuffers::Offset<Program> CreateProgramDirect(
       backend_delegate_data__,
       segments__,
       constant_segment,
-      mutable_data_segments__);
+      mutable_data_segments__,
+      named_data__);
 }
 
 inline bool VerifyKernelTypes(::flatbuffers::Verifier &verifier, const void *obj, KernelTypes type) {

@@ -216,6 +216,12 @@
     {                                                                                  \
         .ed_ctrl_2g = 0x1, .ed_offset_2g = 0xA, .ed_ctrl_5g = 0x1, .ed_offset_5g = 0xA \
     }
+#elif  defined(BT_NW61X_BOARD_NXP_RD_USD)
+/* AW-300 is a BT-Only module. WiFi functions are not used, but SD9177
+   firmware selection is still required for the underlying IW612 chipset
+ */
+#define SD9177
+#define WIFI_BT_USE_M2_INTERFACE
 
 /* u-blox EVK-JODY-W263 */
 #elif defined(WIFI_88W8987_BOARD_UBX_JODY_W2_USD)

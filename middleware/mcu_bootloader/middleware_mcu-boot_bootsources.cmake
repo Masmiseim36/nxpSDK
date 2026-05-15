@@ -31,7 +31,7 @@ message("${CMAKE_CURRENT_LIST_FILE} component is included.")
         )
     endif()
 
-        if((CONFIG_TOOLCHAIN STREQUAL mcux OR CONFIG_TOOLCHAIN STREQUAL armgcc))
+        if(CONFIG_TOOLCHAIN STREQUAL mcux)
     target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
           ${CMAKE_CURRENT_LIST_DIR}/src/memory/src/pattern_fill_gcc.S
         )

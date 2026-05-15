@@ -39,6 +39,7 @@ typedef enum _usb_device_notification
 #if (defined(USB_DEVICE_CONFIG_CHARGER_DETECT) && (USB_DEVICE_CONFIG_CHARGER_DETECT > 0U))
     kUSB_DeviceNotifyDcdDetectFinished, /*!< Device charger detection finished */
 #endif
+    kUSB_DeviceNotifyNoop,              /*!< Noop, may be used for wakeup */
 } usb_device_notification_t;
 
 /*! @brief Device notification message structure */

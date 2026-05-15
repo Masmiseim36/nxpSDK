@@ -55,9 +55,22 @@
  */
 
 #define ET_NORETURN [[noreturn]]
+
+// Inline/NoInline
+#if defined(_MSC_VER)
+#define ET_NOINLINE __declspec(noinline)
+#define ET_INLINE __forceinline
+#else
 #define ET_NOINLINE __attribute__((noinline))
 #define ET_INLINE __attribute__((always_inline)) inline
-#define ET_INLINE_ATTRIBUTE __attribute__((always_inline))
+#endif
+
+// Restrict
+#if defined(_MSC_VER)
+#define ET_RESTRICT __restrict
+#else
+#define ET_RESTRICT __restrict__
+#endif
 
 #if defined(__GNUC__)
 
@@ -146,6 +159,15 @@
 #define ET_FUNCTION __FUNCTION__
 #endif // __has_builtin(__builtin_FUNCTION)
 
+// As of G3 RJ-2024.3 toolchain, zu format specifier is not supported for Xtensa
+#if defined(__XTENSA__)
+#define ET_PRIsize_t "u"
+#define ET_PRIssize_t "d"
+#else
+#define ET_PRIsize_t "zu"
+#define ET_PRIssize_t "zd"
+#endif
+
 // Whether the compiler supports GNU statement expressions.
 // https://gcc.gnu.org/onlinedocs/gcc/Statement-Exprs.html
 #ifndef ET_HAVE_GNU_STATEMENT_EXPRESSIONS
@@ -162,6 +184,14 @@
 #else
 #include <stddef.h>
 using ssize_t = ptrdiff_t;
+#endif
+
+#ifdef __EXCEPTIONS
+#define ET_HAS_EXCEPTIONS 1
+#elif defined(_MSC_VER) && defined(_HAS_EXCEPTIONS) && _HAS_EXCEPTIONS
+#define ET_HAS_EXCEPTIONS 1
+#else
+#define ET_HAS_EXCEPTIONS 0
 #endif
 
 // DEPRECATED: Use the non-underscore-prefixed versions instead.

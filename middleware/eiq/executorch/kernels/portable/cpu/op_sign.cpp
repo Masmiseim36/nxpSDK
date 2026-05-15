@@ -10,6 +10,7 @@
 #include <cstring>
 
 #include <executorch/kernels/portable/cpu/util/functional_util.h>
+#include <executorch/kernels/portable/cpu/util/math_util.h>
 #include <executorch/runtime/kernel/kernel_includes.h>
 #include <executorch/runtime/platform/assert.h>
 
@@ -17,7 +18,7 @@ namespace torch {
 namespace executor {
 namespace native {
 
-using exec_aten::Tensor;
+using executorch::aten::Tensor;
 
 Tensor& sign_out(KernelRuntimeContext& ctx, const Tensor& in, Tensor& out) {
   (void)ctx;
@@ -36,13 +37,13 @@ Tensor& sign_out(KernelRuntimeContext& ctx, const Tensor& in, Tensor& out) {
   ET_KERNEL_CHECK(
       ctx, tensors_have_same_shape_and_dtype(in, out), InvalidArgument, out);
 
-  if (in.scalar_type() == exec_aten::ScalarType::Bool) {
+  if (in.scalar_type() == executorch::aten::ScalarType::Bool) {
     memcpy(out.mutable_data_ptr(), in.const_data_ptr(), in.nbytes());
   } else {
-    ET_SWITCH_REAL_TYPES(in.scalar_type(), ctx, "sign.out", CTYPE, [&] {
+    ET_SWITCH_REALHBF16_TYPES(in.scalar_type(), ctx, "sign.out", CTYPE, [&] {
       apply_unary_map_fn(
           [](const CTYPE val_in) {
-            if (std::isnan(val_in)) {
+            if (utils::isnan_override(val_in)) {
               return val_in;
             } else {
               return static_cast<CTYPE>((val_in > 0) - (val_in < 0));

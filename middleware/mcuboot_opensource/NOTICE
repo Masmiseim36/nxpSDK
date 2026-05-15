@@ -9,3 +9,24 @@ Runtime Inc, copyright 2015.
 
 Portions of this software were developed at
 Arm Limited, copyright 2019-2021.
+
+================================================================================
+
+Intel Corporation - Zephyr Project
+Copyright (c) 2017 Intel Corporation
+SPDX-License-Identifier: Apache-2.0
+
+Source: https://github.com/zephyrproject-rtos/zephyr
+
+================================================================================
+
+Nordic Semiconductor ASA / ARM Limited - Zephyr Project
+RFC 1521 base64 encoding/decoding
+
+Copyright (C) 2018, Nordic Semiconductor ASA
+Copyright (C) 2006-2015, ARM Limited, All Rights Reserved
+SPDX-License-Identifier: Apache-2.0
+
+Source: https://github.com/zephyrproject-rtos/zephyr
+
+================================================================================

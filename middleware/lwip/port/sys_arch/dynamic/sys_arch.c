@@ -96,6 +96,12 @@ uint32_t lwip_rand(void)
 }
 
 #if !NO_SYS
+
+void sys_arch_msleep(u32_t delay_ms)
+{
+    vTaskDelay(pdMS_TO_TICKS(delay_ms));
+}
+
 /*---------------------------------------------------------------------------*
  * Routine:  sys_mbox_new
  *---------------------------------------------------------------------------*
@@ -344,49 +350,46 @@ u32_t sys_arch_mbox_tryfetch(sys_mbox_t *pxMailBox, void **ppvBuffer)
     return ulReturn;
 }
 
-/*---------------------------------------------------------------------------*
- * Routine:  sys_sem_new
- *---------------------------------------------------------------------------*
- * Description:
- *      Creates and returns a new semaphore. If the value of "ucCount" argument
- *      is 0, maximum count of semaphore is 1 and the initial state is 0.
- *      Otherwise the "ucCount" argument specifies both initial state and
- *      maximum count of the semaphore.
- * Inputs:
- *      sys_mbox_t mbox         -- Handle of mailbox
- *      u8_t ucCount            -- Initial ucCount of semaphore
- * Outputs:
- *      sys_sem_t               -- Created semaphore or 0 if could not create.
- *---------------------------------------------------------------------------*/
-err_t sys_sem_new(sys_sem_t *pxSemaphore, u8_t ucCount)
+/**
+ * Create a new semaphore
+ * Creates a new semaphore. The semaphore is allocated to the memory that 'sem'
+ * points to (which can be both a pointer or the actual OS structure).
+ * The "count" argument specifies the initial state of the semaphore (which is
+ * either 0 or 1).
+ * If the semaphore has been created, ERR_OK should be returned. Returning any
+ * other error will provide a hint what went wrong, but except for assertions,
+ * no real error handling is implemented.
+ *
+ * @param sem pointer to the semaphore to create
+ * @param count initial count of the semaphore
+ * @return ERR_OK if successful, another err_t otherwise
+ */
+err_t sys_sem_new(sys_sem_t *sem, u8_t count)
 {
-    err_t xReturn = ERR_MEM;
+    LWIP_ASSERT("sem == NULL", sem != NULL);
+    LWIP_ASSERT("count invalid (not 0 or 1)", (count == 0) || (count == 1));
 
-    if (ucCount > 1U)
+    if ((sem == NULL) || ((count != 0) && (count != 1)))
     {
-        *pxSemaphore = xSemaphoreCreateCounting(ucCount, ucCount);
-    }
-    else
-    {
-        *pxSemaphore = xSemaphoreCreateBinary();
+        return ERR_ARG;
     }
 
-    if (*pxSemaphore != NULL)
-    {
-        if (ucCount == 0U)
-        {
-            xSemaphoreTake(*pxSemaphore, 1UL);
-        }
+    *sem = xSemaphoreCreateBinary();
 
-        xReturn = ERR_OK;
-        SYS_STATS_INC_USED(sem);
-    }
-    else
+    if (*sem == NULL)
     {
         SYS_STATS_INC(sem.err);
+        return ERR_MEM;
     }
 
-    return xReturn;
+    if (count == 1U)
+    {
+        BaseType_t ret = xSemaphoreGive(*sem);
+        LWIP_ASSERT("sys_sem_new: initial give failed", ret == pdTRUE);
+    }
+
+    SYS_STATS_INC_USED(sem);
+    return ERR_OK;
 }
 
 /*---------------------------------------------------------------------------*

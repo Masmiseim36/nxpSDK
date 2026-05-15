@@ -16,13 +16,11 @@
 #define _M1_SM_SERVO_REF_SOL_H_
 
 #include "sm_servo_common.h"
-#include "m1_pmsm_appconfig.h"
 #include "state_machine.h"
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define M1_SPEED_CONV_SCALE (628.06F*2) /* Speed conversion scale */
 
 #define MCAT_SENSORLESS_CTRL 0U /* Sensorless control flag */
 #define MCAT_ENC_CTRL 1U        /* Position quadrature encoder control flag */

@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2014-2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2023 NXP
+ * Copyright 2016-2026 NXP
  * Copyright 2021 ACRIOS Systems s.r.o.
  * All rights reserved.
  *
@@ -45,13 +45,13 @@ erpc_status_t MessageBuffer::read(uint16_t offset, void *data, uint32_t length)
         {
             err = kErpcStatus_MemoryError;
         }
-        else if ((offset + length) > m_len || (offset + length) < offset)
+        else if (offset >= m_len || length > ((uint32_t)m_len - (uint32_t)offset))
         {
             err = kErpcStatus_BufferOverrun;
         }
         else
         {
-            (void)memcpy(data, &m_buf[offset], length);
+            (void)memcpy(data, (void *)&m_buf[offset], length);
         }
     }
 
@@ -68,13 +68,13 @@ erpc_status_t MessageBuffer::write(uint16_t offset, const void *data, uint32_t l
         {
             err = kErpcStatus_MemoryError;
         }
-        else if ((offset + length) > m_len || (offset + length) < offset)
+        else if (offset >= m_len || length > ((uint32_t)m_len - (uint32_t)offset))
         {
             err = kErpcStatus_BufferOverrun;
         }
         else
         {
-            (void)memcpy(&m_buf[offset], data, length);
+            (void)memcpy((void *)&m_buf[offset], data, length);
         }
     }
 
@@ -136,7 +136,7 @@ MessageBuffer &Cursor::getBufferRef(void)
 uint8_t &Cursor::operator[](int index)
 {
     erpc_assert(((m_pos + index) >= m_buffer.get()) &&
-                ((uint16_t)(m_pos - m_buffer.get()) + index <= m_buffer.getLength()));
+                ((int32_t)(m_pos - m_buffer.get()) + (int32_t)index <= (int32_t)m_buffer.getLength()));
 
     return m_pos[index];
 }
@@ -144,14 +144,14 @@ uint8_t &Cursor::operator[](int index)
 const uint8_t &Cursor::operator[](int index) const
 {
     erpc_assert(((m_pos + index) >= m_buffer.get()) &&
-                ((uint16_t)(m_pos - m_buffer.get()) + index <= m_buffer.getLength()));
+                ((int32_t)(m_pos - m_buffer.get()) + (int32_t)index <= (int32_t)m_buffer.getLength()));
 
     return m_pos[index];
 }
 
 Cursor &Cursor::operator+=(uint16_t n)
 {
-    erpc_assert((uint32_t)(m_pos - m_buffer.get()) + n <= m_buffer.getLength());
+    erpc_assert((int32_t)(m_pos - m_buffer.get()) + (int32_t)n <= (int32_t)m_buffer.getLength());
 
     m_pos += n;
 
@@ -169,7 +169,7 @@ Cursor &Cursor::operator-=(uint16_t n)
 
 Cursor &Cursor::operator++(void)
 {
-    erpc_assert((uint16_t)(m_pos - m_buffer.get()) < m_buffer.getLength());
+    erpc_assert((int32_t)(m_pos - m_buffer.get()) < (int32_t)m_buffer.getLength());
 
     ++m_pos;
 
@@ -207,7 +207,7 @@ erpc_status_t Cursor::read(void *data, uint32_t length)
         }
         else
         {
-            (void)memcpy(data, m_pos, length);
+            (void)memcpy(data, (void *)m_pos, length);
             m_pos += length;
         }
     }
@@ -234,7 +234,7 @@ erpc_status_t Cursor::write(const void *data, uint32_t length)
         }
         else
         {
-            (void)memcpy(m_pos, data, length);
+            (void)memcpy((void *)m_pos, data, length);
             m_pos += length;
             m_buffer.setUsed(m_buffer.getUsed() + length);
         }

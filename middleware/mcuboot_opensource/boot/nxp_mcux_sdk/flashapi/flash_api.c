@@ -13,7 +13,7 @@
 #include "sysflash/sysflash.h"
 #include "bootutil/bootutil_log.h"
 #include "mflash_drv.h"
-#if defined(CONFIG_ENCRYPT_XIP_EXT_ENABLE) && defined(CONFIG_ENCRYPT_XIP_EXT_OVERWRITE_ONLY)
+#if defined(CONFIG_BOOT_MODE_ENCRYPTED_XIP)
 #include "encrypted_xip.h"
 #endif
 
@@ -27,7 +27,7 @@
 
 static uint32_t flash_page_buf[MFLASH_PAGE_SIZE / sizeof(uint32_t)];
 
-#if defined(CONFIG_ENCRYPT_XIP_EXT_ENABLE) && defined(CONFIG_ENCRYPT_XIP_EXT_OVERWRITE_ONLY)
+#if defined(CONFIG_BOOT_MODE_ENCRYPTED_XIP)
 
 #if defined(ENCRYPTED_XIP_IPED)
 #define BUFFER_ENC_SZ   CONFIG_ENCRYPT_XIP_OVERWRITE_ONLY_BUF_SIZE
@@ -185,7 +185,7 @@ int flash_area_read(const struct flash_area *area, uint32_t off, void *dst, uint
 
 int flash_area_write(const struct flash_area *area, uint32_t off, const void *src, uint32_t len)
 {
-#if defined(CONFIG_ENCRYPT_XIP_EXT_ENABLE) && defined(CONFIG_ENCRYPT_XIP_EXT_OVERWRITE_ONLY)
+#if defined(CONFIG_BOOT_MODE_ENCRYPTED_XIP)
     /* Check whether offset is within encrypted area */
     uint32_t phy_addr = area->fa_off + off;
     if(phy_addr < area->fa_off || 
@@ -249,7 +249,7 @@ int flash_area_write(const struct flash_area *area, uint32_t off, const void *sr
     }
 #else
   return flash_area_write_internal(area, off, src, len);
-#endif /* defined(CONFIG_ENCRYPT_XIP_EXT_ENABLE) && defined(CONFIG_ENCRYPT_XIP_EXT_OVERWRITE_ONLY) */
+#endif /* defined(CONFIG_BOOT_MODE_ENCRYPTED_XIP) */
 }
 
 int flash_area_erase(const struct flash_area *area, uint32_t off, uint32_t len)

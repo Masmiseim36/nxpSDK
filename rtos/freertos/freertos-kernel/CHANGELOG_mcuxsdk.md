@@ -9,10 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Kconfig added `CONFIG_FREERTOS_USE_CUSTOM_CONFIG_FRAGMENT` config to optionally include custom FreeRTOSConfig fragment  
-  include file `FreeRTOSConfig_frag.h`. File must be provided by application.
-- Added missing Kconfig option for configUSE_PICOLIBC_TLS.
-- Add correct header files to build when configUSE_NEWLIB_REENTRANT and configUSE_PICOLIBC_TLS is selected in config.
+## [11.2.0_rev0]
+- update amazon freertos version
 
 ## [11.1.0_rev0]
 - update amazon freertos version

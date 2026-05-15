@@ -15,6 +15,7 @@ import re
 import subprocess
 import sys
 import tempfile
+import uuid
 
 from lib.summarize import print_proof_results
 
@@ -153,8 +154,12 @@ def get_args():
     }, {
             "flags": ["--version"],
             "action": "version",
-            "version": "CBMC starter kit 2.5",
+            "version": "CBMC starter kit 2.8",
             "help": "display version and exit"
+    }, {
+            "flags": ["--no-coverage"],
+            "action": "store_true",
+            "help": "do property checking without coverage checking"
     }]:
         flags = arg.pop("flags")
         pars.add_argument(*flags, **arg)
@@ -218,7 +223,7 @@ def run_build(litani, jobs, fail_on_proof_failure, summarize):
         cmd.extend(["--out-file", str(out_file)])
 
     logging.debug(" ".join(cmd))
-    proc = subprocess.run(cmd, check=False)
+    proc = subprocess.run(cmd, check=False, timeout=360)
 
     if proc.returncode and not fail_on_proof_failure:
         logging.critical("Failed to run litani run-build")
@@ -297,7 +302,7 @@ def should_enable_pools(litani_caps, args):
 
 
 async def configure_proof_dirs( # pylint: disable=too-many-arguments
-    queue, counter, proof_uids, enable_pools, enable_memory_profiling, debug):
+        queue, counter, proof_uids, enable_pools, enable_memory_profiling, report_target, debug):
     while True:
         print_counter(counter)
         path = str(await queue.get())
@@ -308,11 +313,15 @@ async def configure_proof_dirs( # pylint: disable=too-many-arguments
         profiling = [
             "ENABLE_MEMORY_PROFILING=true"] if enable_memory_profiling else []
 
+        env = dict(os.environ)
+        env["EXTERNAL_SAT_SOLVER"] = "kissat"
+
         # Allow interactive tasks to preempt proof configuration
         proc = await asyncio.create_subprocess_exec(
-            "nice", "-n", "15", "make", *pools,
-            *profiling, "-B", "_report", "" if debug else "--quiet", cwd=path,
-            stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE)
+            "nice", "-n", "15", "make", "EXTERNAL_SAT_SOLVER=kissat", *pools,
+            *profiling, "-B", report_target, "" if debug else "--quiet", cwd=path,
+            stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE,
+            env=env)
         stdout, stderr = await proc.communicate()
         logging.debug("returncode: %s", str(proc.returncode))
         logging.debug("stdout:")
@@ -388,11 +397,12 @@ async def main(): # pylint: disable=too-many-locals
     tasks = []
 
     enable_memory_profiling = should_enable_memory_profiling(litani_caps, args)
+    report_target = "_report_no_coverage" if args.no_coverage else "_report"
 
     for _ in range(task_pool_size()):
         task = asyncio.create_task(configure_proof_dirs(
             proof_queue, counter, proof_uids, enable_pools,
-            enable_memory_profiling, args.debug))
+            enable_memory_profiling, report_target, args.debug))
         tasks.append(task)
 
     await proof_queue.join()

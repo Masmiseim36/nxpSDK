@@ -87,9 +87,13 @@ const FMSTR_NET_DRV_INTF FMSTR_NET_SEGGER_RTT = {
     .GetCaps = _FMSTR_RttGetCaps,
 };
 
+#define FMSTR_RTT_BUFF_SIZE (FMSTR_COMM_BUFFER_SIZE + 8)
 #if FMSTR_NET_SEGGER_RTT_BUFFER_INDEX > 0
-#define FMSTR_RTT_BUFF_SIZE (FMSTR_COMM_BUFFER_SIZE + 7)
 static FMSTR_U8 fmstr_rttBuffer[FMSTR_RTT_BUFF_SIZE];
+#else
+#if (FMSTR_RTT_BUFF_SIZE > BUFFER_SIZE_UP) || (FMSTR_RTT_BUFF_SIZE > BUFFER_SIZE_DOWN)
+#error RTT buffer size configured too small! FreeMASTER frame would not fit.
+#endif
 #endif
 
 /******************************************************************************

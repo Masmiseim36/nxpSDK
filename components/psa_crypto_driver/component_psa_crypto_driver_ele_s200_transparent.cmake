@@ -10,6 +10,7 @@ message("${CMAKE_CURRENT_LIST_FILE} component is included.")
           ${CMAKE_CURRENT_LIST_DIR}/ele_s200/src/transparent/mcux_psa_s2xx_init.c
           ${CMAKE_CURRENT_LIST_DIR}/ele_s200/src/transparent/mcux_psa_s2xx_mac.c
           ${CMAKE_CURRENT_LIST_DIR}/ele_s200/src/transparent/mcux_psa_s2xx_asymmetric_signature.c
+          ${CMAKE_CURRENT_LIST_DIR}/ele_s200/src/transparent/mcux_psa_s2xx_key_generation.c
         )
 
   

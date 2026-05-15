@@ -1,8 +1,8 @@
 /*----------------------------------------------------------------------------/
-/  FatFs - Generic FAT Filesystem module  R0.15                               /
+/  FatFs - Generic FAT Filesystem module  R0.16                               /
 /-----------------------------------------------------------------------------/
 /
-/ Copyright (C) 2022, ChaN, all right reserved.
+/ Copyright (C) 2025, ChaN, all right reserved.
 /
 / FatFs module is an open source software. Redistribution and use of FatFs in
 / source and binary forms, with or without modification, are permitted provided

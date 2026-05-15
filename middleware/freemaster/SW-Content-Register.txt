@@ -1,0 +1,11 @@
+NXP Software Content Register
+
+Repository:                 mcux-freemaster.git
+
+Version:                    v25.09.12-pvw1 (internally 3.0.12)
+Outgoing License:           NXP LA_OPT_Online Code Hosting NXP_Software_License
+License File:               LICENSE.txt
+Description and comments:   FreeMASTER Communication Driver
+Release Location:           https://github.com/nxp-mcuxpresso/mcux-freemaster
+Origin:                     NXP (proprietary)
+                            SHA-1 crypto-algorithms (public domain) https://github.com/B-Con/crypto-algorithms

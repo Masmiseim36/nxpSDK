@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2023 NXP
+ * Copyright 2022-2023, 2025 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -251,50 +251,89 @@ static status_t WM8962_SetMasterClock(wm8962_handle_t *handle,
     uint32_t bitClockDivider = 0U, regDivider = 0U;
     status_t ret = kStatus_Success;
 
-    bitClockDivider = dspClock / (sampleRate * bitWidth * 2U);
-
-    switch (bitClockDivider)
+    /* Validate input parameters first */
+    if ((sampleRate == 0U) || (bitWidth == 0U))
     {
-        case 1:
-            regDivider = 0U;
-            break;
-        case 2:
-            regDivider = 2U;
-            break;
-        case 3:
-            regDivider = 3U;
-            break;
-        case 4:
-            regDivider = 4U;
-            break;
-        case 6:
-            regDivider = 6U;
-            break;
-        case 8:
-            regDivider = 7U;
-            break;
-        case 12:
-            regDivider = 9U;
-            break;
-        case 16:
-            regDivider = 10U;
-            break;
-        case 24:
-            regDivider = 11U;
-            break;
-        case 32:
-            regDivider = 13U;
-            break;
-
-        default:
-            ret = kStatus_InvalidArgument;
-            break;
+        ret = kStatus_InvalidArgument;
     }
+    else
+    {
+        /* Check for overflow: sampleRate * bitWidth * 2 */
+        /* Rearrange to: dspClock / sampleRate / bitWidth / 2 */
+        uint32_t tempDivider = dspClock / sampleRate;
+        if (tempDivider >= bitWidth)
+        {
+            tempDivider = tempDivider / bitWidth;
+            if (tempDivider >= 2U)
+            {
+                bitClockDivider = tempDivider / 2U;
+            }
+            else
+            {
+                ret = kStatus_InvalidArgument;
+            }
+        }
+        else
+        {
+            ret = kStatus_InvalidArgument;
+        }
+    }
+
+    if (ret == kStatus_Success)
+    {
+        switch (bitClockDivider)
+        {
+            case 1:
+                regDivider = 0U;
+                break;
+            case 2:
+                regDivider = 2U;
+                break;
+            case 3:
+                regDivider = 3U;
+                break;
+            case 4:
+                regDivider = 4U;
+                break;
+            case 6:
+                regDivider = 6U;
+                break;
+            case 8:
+                regDivider = 7U;
+                break;
+            case 12:
+                regDivider = 9U;
+                break;
+            case 16:
+                regDivider = 10U;
+                break;
+            case 24:
+                regDivider = 11U;
+                break;
+            case 32:
+                regDivider = 13U;
+                break;
+
+            default:
+                ret = kStatus_InvalidArgument;
+                break;
+        }
+    }
+
     if (ret == kStatus_Success)
     {
         WM8962_CHECK_RET(WM8962_ModifyReg(handle, WM8962_CLOCK2, WM8962_CLOCK2_BCLK_DIV_MASK, (uint16_t)regDivider),
                          ret);
-        WM8962_CHECK_RET(WM8962_WriteReg(handle, WM8962_IFACE2, (uint16_t)(bitWidth * 2U)), ret);
+        
+        /* Check for overflow in bitWidth * 2U before writing to register */
+        if (bitWidth <= (UINT16_MAX / 2U))
+        {
+            WM8962_CHECK_RET(WM8962_WriteReg(handle, WM8962_IFACE2, (uint16_t)(bitWidth * 2U)), ret);
+        }
+        else
+        {
+            ret = kStatus_InvalidArgument;
+        }
     }
 
     return ret;
@@ -423,52 +462,53 @@ status_t WM8962_SetProtocol(wm8962_handle_t *handle, wm8962_protocol_t protocol)
 status_t WM8962_SetModulePower(wm8962_handle_t *handle, wm8962_module_t module, bool isEnabled)
 {
     status_t ret = kStatus_Success;
+    uint16_t enableValue = isEnabled ? 1U : 0U;  /* Safe bool to uint16_t conversion */
 
     switch (module)
     {
         case kWM8962_ModuleADC:
             WM8962_CHECK_RET(WM8962_ModifyReg(handle, WM8962_POWER1, WM8962_POWER1_ADCL_MASK,
-                                              ((uint16_t)isEnabled << WM8962_POWER1_ADCL_SHIFT)),
+                                              (enableValue << WM8962_POWER1_ADCL_SHIFT)),
                              ret);
             WM8962_CHECK_RET(WM8962_ModifyReg(handle, WM8962_POWER1, WM8962_POWER1_ADCR_MASK,
-                                              ((uint16_t)isEnabled << WM8962_POWER1_ADCR_SHIFT)),
+                                              (enableValue << WM8962_POWER1_ADCR_SHIFT)),
                              ret);
             break;
         case kWM8962_ModuleDAC:
             WM8962_CHECK_RET(WM8962_ModifyReg(handle, WM8962_POWER2, WM8962_POWER2_DACL_MASK,
-                                              ((uint16_t)isEnabled << WM8962_POWER2_DACL_SHIFT)),
+                                              (enableValue << WM8962_POWER2_DACL_SHIFT)),
                              ret);
             WM8962_CHECK_RET(WM8962_ModifyReg(handle, WM8962_POWER2, WM8962_POWER2_DACR_MASK,
-                                              ((uint16_t)isEnabled << WM8962_POWER2_DACR_SHIFT)),
+                                              (enableValue << WM8962_POWER2_DACR_SHIFT)),
                              ret);
             break;
         case kWM8962_ModuleLineIn:
             WM8962_CHECK_RET(WM8962_ModifyReg(handle, WM8962_POWER1, WM8962_POWER1_AINL_MASK,
-                                              ((uint16_t)isEnabled << WM8962_POWER1_AINL_SHIFT)),
+                                              (enableValue << WM8962_POWER1_AINL_SHIFT)),
                              ret);
             WM8962_CHECK_RET(WM8962_ModifyReg(handle, WM8962_POWER1, WM8962_POWER1_AINR_MASK,
-                                              ((uint16_t)isEnabled << WM8962_POWER1_AINR_SHIFT)),
+                                              (enableValue << WM8962_POWER1_AINR_SHIFT)),
                              ret);
             break;
         case kWM8962_ModuleHeadphone:
             WM8962_CHECK_RET(WM8962_ModifyReg(handle, WM8962_POWER2, WM8962_POWER2_LOUT1_MASK,
-                                              ((uint16_t)isEnabled << WM8962_POWER2_LOUT1_SHIFT)),
+                                              (enableValue << WM8962_POWER2_LOUT1_SHIFT)),
                              ret);
             WM8962_CHECK_RET(WM8962_ModifyReg(handle, WM8962_POWER2, WM8962_POWER2_ROUT1_MASK,
-                                              ((uint16_t)isEnabled << WM8962_POWER2_ROUT1_SHIFT)),
+                                              (enableValue << WM8962_POWER2_ROUT1_SHIFT)),
                              ret);
             break;
         case kWM8962_ModuleMICB:
             WM8962_CHECK_RET(WM8962_ModifyReg(handle, WM8962_POWER1, WM8962_POWER1_MICB_MASK,
-                                              ((uint16_t)isEnabled << WM8962_POWER1_MICB_SHIFT)),
+                                              (enableValue << WM8962_POWER1_MICB_SHIFT)),
                              ret);
             break;
         case kWM8962_ModuleSpeaker:
             WM8962_CHECK_RET(WM8962_ModifyReg(handle, WM8962_POWER2, WM8962_POWER2_SPKL_MASK,
-                                              ((uint16_t)isEnabled << WM8962_POWER2_SPKL_SHIFT)),
+                                              (enableValue << WM8962_POWER2_SPKL_SHIFT)),
                              ret);
             WM8962_CHECK_RET(WM8962_ModifyReg(handle, WM8962_POWER2, WM8962_POWER2_SPKR_MASK,
-                                              ((uint16_t)isEnabled << WM8962_POWER2_SPKR_SHIFT)),
+                                              (enableValue << WM8962_POWER2_SPKR_SHIFT)),
                              ret);
             break;
         default:
@@ -478,6 +518,7 @@ status_t WM8962_SetModulePower(wm8962_handle_t *handle, wm8962_module_t module, 
 
     return ret;
 }
+
 
 status_t WM8962_SetDataRoute(wm8962_handle_t *handle, const wm8962_route_config_t *route)
 {

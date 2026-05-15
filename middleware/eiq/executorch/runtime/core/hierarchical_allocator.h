@@ -8,13 +8,11 @@
 
 #pragma once
 
+#include <c10/util/irange.h>
+
 #include <executorch/runtime/core/memory_allocator.h>
 #include <executorch/runtime/core/result.h>
 #include <executorch/runtime/core/span.h>
-#include <executorch/runtime/platform/assert.h>
-#include <executorch/runtime/platform/compiler.h>
-#include <executorch/runtime/platform/log.h>
-#include <cstdint>
 
 namespace executorch {
 namespace runtime {
@@ -59,17 +57,27 @@ class HierarchicalAllocator final {
       uint32_t memory_id,
       size_t offset_bytes,
       size_t size_bytes) {
+    // Check for integer overflow in offset_bytes + size_bytes.
+    ET_CHECK_OR_RETURN_ERROR(
+        size_bytes <= SIZE_MAX - offset_bytes,
+        InvalidArgument,
+        "Integer overflow in offset_bytes (%" ET_PRIsize_t
+        ") + size_bytes (%" ET_PRIsize_t ")",
+        offset_bytes,
+        size_bytes);
     ET_CHECK_OR_RETURN_ERROR(
         memory_id < buffers_.size(),
         InvalidArgument,
-        "id %" PRIu32 " >= %zu",
+        "id %" PRIu32 " >= %" ET_PRIsize_t,
         memory_id,
         buffers_.size());
     Span<uint8_t> buffer = buffers_[memory_id];
     ET_CHECK_OR_RETURN_ERROR(
         offset_bytes + size_bytes <= buffer.size(),
         MemoryAllocationFailed,
-        "offset_bytes (%zu) + size_bytes (%zu) >= allocator size (%zu) "
+        "offset_bytes (%" ET_PRIsize_t ") + size_bytes (%" ET_PRIsize_t
+        ") >= allocator size (%" ET_PRIsize_t
+        ") "
         "for memory_id %" PRIu32,
         offset_bytes,
         size_bytes,
@@ -94,7 +102,7 @@ class HierarchicalAllocator final {
         "n_allocators %" PRIu32 " > %zu",
         n_allocators,
         kSpanArraySize);
-    for (uint32_t i = 0; i < n_allocators; ++i) {
+    for (const auto i : c10::irange(n_allocators)) {
       span_array_[i] =
           Span<uint8_t>(allocators[i].base_address(), allocators[i].size());
     }

@@ -1534,6 +1534,10 @@ status_t semc_nand_set_device_ecc(semc_nand_config_t *config, semc_nand_device_e
             }
         }
     }
+    else if (config->deviceEccStatus == expectedStatus)
+    {
+        isEccSetAsExpected = true;
+    }
 
     if (!isEccSetAsExpected)
     {

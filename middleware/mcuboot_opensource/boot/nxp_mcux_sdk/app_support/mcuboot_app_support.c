@@ -13,6 +13,7 @@
 #include "mcuboot_app_support.h"
 #include "mflash_drv.h"
 #include "sblconfig.h"
+#include "mcuboot_config.h"
 #include "sysflash/sysflash.h"
 #include "flash_map.h"
 
@@ -90,65 +91,6 @@ const union boot_img_magic_t boot_img_magic = {
 #define BOOT_IMG_ALIGN  (boot_img_magic.align)
 #endif
 
-#if defined(CONFIG_ENCRYPT_XIP_EXT_ENABLE)
-
-#define ENC_MAGIC_SZ    16
-
-union enc_magic_t
-{
-    uint8_t val[ENC_MAGIC_SZ];
-};
-
-const union enc_magic_t enc_magic = {
-    .val = {
-        0xAA, 0xBB, 0xCC, 0xDD,
-        0x60, 0x4D, 0xBA, 0x70,
-        0x34, 0x79, 0x2c, 0x0f,
-        0x2c, 0xb6, 0x0f, 0x35
-    }
-};
-
-#define ENC_MAGIC  (enc_magic.val)
-
-/** Structure holds partial metadata used for active slot
- */
-typedef struct
-{
-    /* ...platform specific...*/
-    uint32_t active_slot;                       // 0 - primary, 1 - secondary
-    uint8_t pad_0[12];                          // Padding zeroes
-    uint8_t hash[16];                           // Hash of encrypted key blocks including padding zeroes
-    uint8_t pad_1[16];                          // Padding zeroes
-    uint8_t magic[ENC_MAGIC_SZ];                // Magic number
-} enc_metadata_t;
-
-/* Returns slot number linked to execution slot */
-static uint32_t read_enc_metadata(void)
-{
-  enc_metadata_t metadata;
-  uint32_t off = boot_flash_meta_map[0].fa_off + boot_flash_meta_map[0].fa_size 
-                  - sizeof(enc_metadata_t);
-  
-  memset(&metadata, 0, sizeof(enc_metadata_t));
-  if(bl_flash_read(off, (uint32_t *)&metadata, sizeof(enc_metadata_t)) != 0)
-     goto error;
-  if(memcmp(&metadata.magic, ENC_MAGIC, ENC_MAGIC_SZ) == 0)
-  {
-    if(metadata.active_slot == 0)
-      return PRIMARY_SLOT_ACTIVE;
-    else
-      return SECONDARY_SLOT_ACTIVE;
-  }
-error:
-  /* Valid metadata should be always present in production phase */
-  /* Always return a slot number */
-  PRINTF("WARNING: invalid metadata of active slot - debug session?\n");
-  PRINTF("WARNING: OTA image will be downloaded to secondary slot\n");
-  return PRIMARY_SLOT_ACTIVE;
-}
-#endif /* CONFIG_ENCRYPT_XIP_EXT_ENABLE */
-
-
 /** Find out what slot is currently booted.
  *
  * @retval PRIMARY_SLOT_ACTIVE: image is running from primary slot
@@ -173,7 +115,7 @@ static uint32_t get_active_image(uint32_t image)
 {
     (void)image;
 
-#if defined(CONFIG_MCUBOOT_FLASH_REMAP_ENABLE) && !defined(CONFIG_MCUBOOT_FLASH_REMAP_BY_SWAP)
+#if defined(CONFIG_BOOT_MODE_FLASH_REMAP) && !defined(CONFIG_MCUBOOT_FLASH_REMAP_BY_SWAP)
 
     /* Using flash remapping by overlay done by FlexSPI IP */
     if (bl_flash_remap_active())
@@ -181,8 +123,6 @@ static uint32_t get_active_image(uint32_t image)
     else
         return PRIMARY_SLOT_ACTIVE;
     
-#elif defined (CONFIG_ENCRYPT_XIP_EXT_ENABLE)
-    return read_enc_metadata();
 #else
 
     /* In other configurations active slot is the PRIMARY one*/
@@ -198,7 +138,7 @@ static uint32_t get_active_image(uint32_t image)
  * @retval kStatus_Success: all OK
  *         otherwise something failed
  */
-#ifdef CONFIG_MCUBOOT_FLASH_REMAP_ENABLE
+#ifdef CONFIG_BOOT_MODE_FLASH_REMAP
 static int32_t mflash_drv_read_wrapper(uint32_t addr, void *dst, uint32_t len)
 {
     /* temporary buffer size has to be multiple of 4! */
@@ -263,7 +203,7 @@ static int32_t mflash_drv_read_wrapper(uint32_t addr, void *dst, uint32_t len)
 
     return kStatus_Success;
 }
-#endif /* CONFIG_MCUBOOT_FLASH_REMAP_ENABLE */
+#endif /* CONFIG_BOOT_MODE_FLASH_REMAP */
 
 static int check_unset(uint8_t *p, int len)
 {
@@ -661,7 +601,7 @@ status_t bl_get_image_state(uint32_t image, uint32_t *state)
 
 int bl_flash_remap_active(void)
 {
-#ifdef CONFIG_MCUBOOT_FLASH_REMAP_ENABLE
+#ifdef CONFIG_BOOT_MODE_FLASH_REMAP
     return (*((volatile uint32_t *)FLASH_REMAP_OFFSET_REG) > 0) ? 1 : 0;
 #else
     return 0;
@@ -816,9 +756,6 @@ void bl_print_image_info(bl_hashfunc_t hashfunc)
                 if (boot_flash_map[get_active_image(image)].fa_off == slot_offset_phys[slot])
                 {
                     PRINTF("    *ACTIVE*\n");
-#if defined(CONFIG_ENCRYPT_XIP_EXT_ENABLE) && !defined(CONFIG_ENCRYPT_XIP_EXT_OVERWRITE_ONLY)
-                    PRINTF("    Encrypted XIP: This slot is linked to execution slot\n");
-#endif
                 }
             }
             else
@@ -856,7 +793,7 @@ int32_t bl_flash_read(uint32_t addr, uint32_t *buffer, uint32_t len)
         else
 #endif
         {
-#ifdef CONFIG_MCUBOOT_FLASH_REMAP_ENABLE
+#ifdef CONFIG_BOOT_MODE_FLASH_REMAP
             /* remapped memory is accessible only by flash peripheral */
             if (mflash_drv_read_wrapper(addr, (uint32_t *)buffer_u8, readsize) != kStatus_Success)
             {
@@ -870,7 +807,7 @@ int32_t bl_flash_read(uint32_t addr, uint32_t *buffer, uint32_t len)
             }
             /* use direct memcpy as mflash_drv_read low layer may expects len to be word aligned */
             memcpy(buffer_u8, flash_ptr, readsize);
-#endif /* CONFIG_MCUBOOT_FLASH_REMAP_ENABLE */
+#endif /* CONFIG_BOOT_MODE_FLASH_REMAP */
         }
 
         len -= readsize;

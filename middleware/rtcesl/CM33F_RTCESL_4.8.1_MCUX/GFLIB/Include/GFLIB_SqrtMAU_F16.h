@@ -34,7 +34,7 @@ extern "C" {
 /*******************************************************************************
 * Macros 
 *******************************************************************************/
-#define GFLIB_SqrtMAU_F16_Ci(f16Val) GFLIB_SqrtMAU_F16_FCi(f16Val)
+#define GFLIB_SqrtMAU_F16_Ci(f16Val, u8ResReg) GFLIB_SqrtMAU_F16_FCi(f16Val, u8ResReg)
   
 /****************************************************************************
 * Inline functions 
@@ -45,7 +45,9 @@ extern "C" {
 * @brief  Calculates the square root of the argument by Math Accelerator Unit.
 *
 * @param    ptr  GFLIB_SQRT_TABLE_T_F32 *psParam - Pointer to the polynomial table 
-* @param    in   frac32_t f32Val - Argument in <0;1) in frac32_t
+* @param    in   frac16_t f16Val  - Argument in <0;1) in frac16_t
+*                uint8_t u8ResReg - MAU result register. Valid parameter values are {1, 2, 3, 4}. 
+*                                   Any value outside this range will trigger a CPU HardFault exception.
 *
 * @return This function returns - frac16_t value <0;1)
 *		
@@ -54,7 +56,7 @@ extern "C" {
 *		If the value is negative the function returns zero value.
 *
 ****************************************************************************/
-static inline frac16_t GFLIB_SqrtMAU_F16_FCi(register frac16_t f16Val)
+static inline frac16_t GFLIB_SqrtMAU_F16_FCi(register frac16_t f16Val, register uint8_t u8ResReg)
 {
     register frac16_t f16Temp;
     register uint32_t addr;
@@ -66,9 +68,9 @@ static inline frac16_t GFLIB_SqrtMAU_F16_FCi(register frac16_t f16Val)
         #pragma GCC diagnostic ignored "-Wstrict-aliasing"
         #endif
         
-        addr = RTCESL_MAU_IND_ADDR((uint32_t)RTCESL_MAU_BASE_PTR, RTCESL_MAU_DT_Q1X, 3, RTCESL_MAU_MOPC_SQRT);
+        addr = RTCESL_MAU_IND_ADDR((uint32_t)RTCESL_MAU_BASE_PTR, RTCESL_MAU_DT_Q1X, u8ResReg, RTCESL_MAU_MOPC_SQRT);
         RTCESL_MAU_REG_Q15(addr) = f16Val;
-        f16Temp = RTCESL_MAU_RES3;        
+        f16Temp = rtcesl_mau_res_table[u8ResReg].res_addr;        
 	    
         #if defined(__GNUC__)
         #pragma GCC diagnostic pop

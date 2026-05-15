@@ -1,6 +1,7 @@
 /*
  * Copyright (c) Meta Platforms, Inc. and affiliates.
  * All rights reserved.
+ * Copyright 2025 Arm Limited and/or its affiliates.
  *
  * This source code is licensed under the BSD-style license found in the
  * LICENSE file in the root directory of this source tree.
@@ -16,8 +17,8 @@
 #include <executorch/runtime/executor/method_meta.h>
 #include <executorch/runtime/platform/log.h>
 
-using exec_aten::Tensor;
-using exec_aten::TensorImpl;
+using executorch::aten::Tensor;
+using executorch::aten::TensorImpl;
 using executorch::runtime::Error;
 using executorch::runtime::Method;
 using executorch::runtime::TensorInfo;
@@ -36,11 +37,11 @@ Error fill_ones(torch::executor::Tensor tensor) {
     std::fill(                                         \
         tensor.mutable_data_ptr<T>(),                  \
         tensor.mutable_data_ptr<T>() + tensor.numel(), \
-        1);                                            \
+        T(1));                                         \
     break;
 
   switch (tensor.scalar_type()) {
-    ET_FORALL_REAL_TYPES_AND(Bool, FILL_CASE)
+    ET_FORALL_REALHBBF16_TYPES(FILL_CASE)
     default:
       ET_LOG(Error, "Unsupported scalar type %d", (int)tensor.scalar_type());
       return Error::InvalidArgument;
@@ -56,7 +57,8 @@ Error fill_and_set_input(
     Method& method,
     TensorInfo& tensor_meta,
     size_t input_index,
-    void* data_ptr) {
+    void* data_ptr,
+    bool fill_tensor) {
   TensorImpl impl = TensorImpl(
       tensor_meta.scalar_type(),
       /*dim=*/tensor_meta.sizes().size(),
@@ -68,7 +70,11 @@ Error fill_and_set_input(
       data_ptr,
       const_cast<TensorImpl::DimOrderType*>(tensor_meta.dim_order().data()));
   Tensor t(&impl);
-  ET_CHECK_OK_OR_RETURN_ERROR(fill_ones(t));
+
+  if (fill_tensor) {
+    ET_CHECK_OK_OR_RETURN_ERROR(fill_ones(t));
+  }
+
   return method.set_input(t, input_index);
 }
 

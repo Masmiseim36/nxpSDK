@@ -39,6 +39,7 @@ fn main() {
     let direct_xip = env::var("CARGO_FEATURE_DIRECT_XIP").is_ok();
     let max_align_32 = env::var("CARGO_FEATURE_MAX_ALIGN_32").is_ok();
     let hw_rollback_protection = env::var("CARGO_FEATURE_HW_ROLLBACK_PROTECTION").is_ok();
+    let check_load_addr = env::var("CARGO_FEATURE_CHECK_LOAD_ADDR").is_ok();
 
     let mut conf = CachedBuild::new();
     conf.conf.define("__BOOTSIM__", None);
@@ -62,6 +63,10 @@ fn main() {
     if bootstrap {
         conf.conf.define("MCUBOOT_BOOTSTRAP", None);
         conf.conf.define("MCUBOOT_OVERWRITE_ONLY_FAST", None);
+    }
+
+    if check_load_addr {
+        conf.conf.define("MCUBOOT_CHECK_HEADER_LOAD_ADDRESS", None);
     }
 
     if validate_primary_slot {
@@ -109,6 +114,7 @@ fn main() {
             conf.file("../../ext/mbedtls/library/chachapoly.c");
             conf.file("../../ext/mbedtls/library/cipher.c");
             conf.file("../../ext/mbedtls/library/cipher_wrap.c");
+            conf.file("../../ext/mbedtls/library/constant_time.c");
             conf.file("../../ext/mbedtls/library/ctr_drbg.c");
             conf.file("../../ext/mbedtls/library/des.c");
             conf.file("../../ext/mbedtls/library/ecdsa.c");
@@ -131,7 +137,6 @@ fn main() {
             conf.file("../../ext/mbedtls/library/psa_crypto.c");
             conf.file("../../ext/mbedtls/library/psa_crypto_cipher.c");
             conf.file("../../ext/mbedtls/library/psa_crypto_client.c");
-            conf.file("../../ext/mbedtls/library/psa_crypto_driver_wrappers.c");
             conf.file("../../ext/mbedtls/library/psa_crypto_ecp.c");
             conf.file("../../ext/mbedtls/library/psa_crypto_hash.c");
             conf.file("../../ext/mbedtls/library/psa_crypto_mac.c");
@@ -139,6 +144,7 @@ fn main() {
             conf.file("../../ext/mbedtls/library/psa_crypto_slot_management.c");
             conf.file("../../ext/mbedtls/library/psa_crypto_storage.c");
             conf.file("../../ext/mbedtls/library/psa_its_file.c");
+            conf.file("../../ext/mbedtls/library/psa_util.c");
             conf.file("../../ext/mbedtls/library/ripemd160.c");
             conf.file("../../ext/mbedtls/library/rsa_alt_helpers.c");
             conf.file("../../ext/mbedtls/library/sha1.c");
@@ -170,6 +176,9 @@ fn main() {
 
         conf.file("../../ext/mbedtls/library/rsa.c");
         conf.file("../../ext/mbedtls/library/bignum.c");
+        conf.file("../../ext/mbedtls/library/bignum_core.c");
+        conf.file("../../ext/mbedtls/library/constant_time.c");
+        conf.file("../../ext/mbedtls/library/nist_kw.c");
         conf.file("../../ext/mbedtls/library/platform.c");
         conf.file("../../ext/mbedtls/library/platform_util.c");
         conf.file("../../ext/mbedtls/library/asn1parse.c");
@@ -203,6 +212,9 @@ fn main() {
 
         conf.file("../../ext/mbedtls/library/asn1parse.c");
         conf.file("../../ext/mbedtls/library/bignum.c");
+        conf.file("../../ext/mbedtls/library/bignum_core.c");
+        conf.file("../../ext/mbedtls/library/constant_time.c");
+        conf.file("../../ext/mbedtls/library/nist_kw.c");
         conf.file("../../ext/mbedtls/library/ecdsa.c");
         conf.file("../../ext/mbedtls/library/ecp.c");
         conf.file("../../ext/mbedtls/library/ecp_curves.c");
@@ -222,6 +234,9 @@ fn main() {
         conf.file("csupport/keys.c");
         conf.file("../../ext/mbedtls/library/asn1parse.c");
         conf.file("../../ext/mbedtls/library/bignum.c");
+        conf.file("../../ext/mbedtls/library/bignum_core.c");
+        conf.file("../../ext/mbedtls/library/constant_time.c");
+        conf.file("../../ext/mbedtls/library/nist_kw.c");
         conf.file("../../ext/mbedtls/library/ecp.c");
         conf.file("../../ext/mbedtls/library/ecp_curves.c");
         conf.file("../../ext/mbedtls/library/platform.c");
@@ -285,6 +300,9 @@ fn main() {
         conf.file("../../ext/mbedtls/library/md.c");
         conf.file("../../ext/mbedtls/library/aes.c");
         conf.file("../../ext/mbedtls/library/bignum.c");
+        conf.file("../../ext/mbedtls/library/bignum_core.c");
+        conf.file("../../ext/mbedtls/library/constant_time.c");
+        conf.file("../../ext/mbedtls/library/nist_kw.c");
         conf.file("../../ext/mbedtls/library/asn1parse.c");
     }
 
@@ -308,6 +326,7 @@ fn main() {
         conf.conf.include("../../ext/mbedtls/library");
         conf.file("../../ext/mbedtls/library/platform_util.c");
         conf.file("../../ext/mbedtls/library/nist_kw.c");
+        conf.file("../../ext/mbedtls/library/constant_time.c");
         conf.file("../../ext/mbedtls/library/cipher.c");
         conf.file("../../ext/mbedtls/library/cipher_wrap.c");
         conf.file("../../ext/mbedtls/library/aes.c");
@@ -372,6 +391,9 @@ fn main() {
         conf.file("../../ext/mbedtls/library/sha256.c");
         conf.file("../../ext/mbedtls/library/asn1parse.c");
         conf.file("../../ext/mbedtls/library/bignum.c");
+        conf.file("../../ext/mbedtls/library/bignum_core.c");
+        conf.file("../../ext/mbedtls/library/constant_time.c");
+        conf.file("../../ext/mbedtls/library/nist_kw.c");
         conf.file("../../ext/mbedtls/library/ecdh.c");
         conf.file("../../ext/mbedtls/library/md.c");
         conf.file("../../ext/mbedtls/library/aes.c");
@@ -449,6 +471,9 @@ fn main() {
     }
 
     conf.file("../../boot/bootutil/src/image_validate.c");
+    conf.file("../../boot/bootutil/src/bootutil_find_key.c");
+    conf.file("../../boot/bootutil/src/bootutil_img_hash.c");
+    conf.file("../../boot/bootutil/src/bootutil_img_security_cnt.c");
     if sig_rsa || sig_rsa3072 {
         conf.file("../../boot/bootutil/src/image_rsa.c");
     } else if sig_ecdsa || sig_ecdsa_mbedtls || sig_ecdsa_psa {
@@ -467,6 +492,8 @@ fn main() {
     conf.file("../../boot/bootutil/src/swap_offset.c");
     conf.file("../../boot/bootutil/src/caps.c");
     conf.file("../../boot/bootutil/src/bootutil_misc.c");
+    conf.file("../../boot/bootutil/src/bootutil_area.c");
+    conf.file("../../boot/bootutil/src/bootutil_loader.c");
     conf.file("../../boot/bootutil/src/bootutil_public.c");
     conf.file("../../boot/bootutil/src/tlv.c");
     conf.file("../../boot/bootutil/src/fault_injection_hardening.c");

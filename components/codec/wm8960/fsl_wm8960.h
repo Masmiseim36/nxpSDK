@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2021 NXP
+ * Copyright 2016-2021, 2025 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -22,8 +22,8 @@
  ******************************************************************************/
 /*! @name Driver version */
 /*! @{ */
-/*! @brief CLOCK driver version 2.2.4 */
-#define FSL_WM8960_DRIVER_VERSION (MAKE_VERSION(2, 2, 4))
+/*! @brief CLOCK driver version 2.2.5 */
+#define FSL_WM8960_DRIVER_VERSION (MAKE_VERSION(2, 2, 5))
 /*! @} */
 
 /*! @brief wm8960 handle size */

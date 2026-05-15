@@ -1,14 +1,11 @@
 #!/usr/bin/env python3
 
-"""Mbed TLS configuration file manipulation library and tool
+"""Mbed TLS and PSA configuration file manipulation library and tool
 
 Basic usage, to read the Mbed TLS configuration:
-    config = ConfigFile()
-    if 'MBEDTLS_RSA_C' in config: print('RSA is enabled')
+    config = CombinedConfigFile()
+    if 'MBEDTLS_SSL_TLS_C' in config: print('TLS is enabled')
 """
-
-# Note that the version of this script in the mbedtls-2.28 branch must remain
-# compatible with Python 3.4.
 
 ## Copyright The Mbed TLS Contributors
 ## SPDX-License-Identifier: Apache-2.0 OR GPL-2.0-or-later
@@ -16,146 +13,55 @@ Basic usage, to read the Mbed TLS configuration:
 
 import os
 import re
+import sys
 
-class Setting:
-    """Representation of one Mbed TLS config.h setting.
+import framework_scripts_path # pylint: disable=unused-import
+from mbedtls_framework import config_common
 
-    Fields:
-    * name: the symbol name ('MBEDTLS_xxx').
-    * value: the value of the macro. The empty string for a plain #define
-      with no value.
-    * active: True if name is defined, False if a #define for name is
-      present in config.h but commented out.
-    * section: the name of the section that contains this symbol.
+
+def is_boolean_setting(name, value):
+    """Is this a boolean setting?
+
+    Mbed TLS boolean settings are enabled if the preprocessor macro is
+    defined, and disabled if the preprocessor macro is not defined. The
+    macro definition line in the configuration file has an empty expansion.
+
+    PSA_WANT_xxx settings are also boolean, but when they are enabled,
+    they expand to a nonzero value. We leave them undefined when they
+    are disabled. (Setting them to 0 currently means to enable them, but
+    this might change to mean disabling them. Currently we just never set
+    them to 0.)
     """
-    # pylint: disable=too-few-public-methods
-    def __init__(self, active, name, value='', section=None):
-        self.active = active
-        self.name = name
-        self.value = value
-        self.section = section
+    if name.startswith('PSA_WANT_'):
+        return True
+    if not value:
+        return True
+    return False
 
-class Config:
-    """Representation of the Mbed TLS configuration.
-
-    In the documentation of this class, a symbol is said to be *active*
-    if there is a #define for it that is not commented out, and *known*
-    if there is a #define for it whether commented out or not.
-
-    This class supports the following protocols:
-    * `name in config` is `True` if the symbol `name` is active, `False`
-      otherwise (whether `name` is inactive or not known).
-    * `config[name]` is the value of the macro `name`. If `name` is inactive,
-      raise `KeyError` (even if `name` is known).
-    * `config[name] = value` sets the value associated to `name`. `name`
-      must be known, but does not need to be set. This does not cause
-      name to become set.
-    """
-
-    def __init__(self):
-        self.settings = {}
-
-    def __contains__(self, name):
-        """True if the given symbol is active (i.e. set).
-
-        False if the given symbol is not set, even if a definition
-        is present but commented out.
-        """
-        return name in self.settings and self.settings[name].active
-
-    def all(self, *names):
-        """True if all the elements of names are active (i.e. set)."""
-        return all(self.__contains__(name) for name in names)
-
-    def any(self, *names):
-        """True if at least one symbol in names are active (i.e. set)."""
-        return any(self.__contains__(name) for name in names)
-
-    def known(self, name):
-        """True if a #define for name is present, whether it's commented out or not."""
-        return name in self.settings
-
-    def __getitem__(self, name):
-        """Get the value of name, i.e. what the preprocessor symbol expands to.
-
-        If name is not known, raise KeyError. name does not need to be active.
-        """
-        return self.settings[name].value
-
-    def get(self, name, default=None):
-        """Get the value of name. If name is inactive (not set), return default.
-
-        If a #define for name is present and not commented out, return
-        its expansion, even if this is the empty string.
-
-        If a #define for name is present but commented out, return default.
-        """
-        if name in self.settings:
-            return self.settings[name].value
-        else:
-            return default
-
-    def __setitem__(self, name, value):
-        """If name is known, set its value.
-
-        If name is not known, raise KeyError.
-        """
-        self.settings[name].value = value
-
-    def set(self, name, value=None):
-        """Set name to the given value and make it active.
-
-        If value is None and name is already known, don't change its value.
-        If value is None and name is not known, set its value to the empty
-        string.
-        """
-        if name in self.settings:
-            if value is not None:
-                self.settings[name].value = value
-            self.settings[name].active = True
-        else:
-            self.settings[name] = Setting(True, name, value=value)
-
-    def unset(self, name):
-        """Make name unset (inactive).
-
-        name remains known if it was known before.
-        """
-        if name not in self.settings:
-            return
-        self.settings[name].active = False
-
-    def adapt(self, adapter):
-        """Run adapter on each known symbol and (de)activate it accordingly.
-
-        `adapter` must be a function that returns a boolean. It is called as
-        `adapter(name, active, section)` for each setting, where `active` is
-        `True` if `name` is set and `False` if `name` is known but unset,
-        and `section` is the name of the section containing `name`. If
-        `adapter` returns `True`, then set `name` (i.e. make it active),
-        otherwise unset `name` (i.e. make it known but inactive).
-        """
-        for setting in self.settings.values():
-            setting.active = adapter(setting.name, setting.active,
-                                     setting.section)
-
-def is_full_section(section):
-    """Is this section affected by "config.py full" and friends?"""
-    return section.endswith('support') or section.endswith('modules')
-
-def realfull_adapter(_name, active, section):
-    """Activate all symbols found in the global and boolean feature sections.
+def realfull_adapter(_name, _value, _active):
+    """Activate all symbols.
 
     This is intended for building the documentation, including the
     documentation of settings that are activated by defining an optional
-    preprocessor macro.
-
-    Do not activate definitions in the section containing symbols that are
-    supposed to be defined and documented in their own module.
+    preprocessor macro. There is no expectation that the resulting
+    configuration can be built.
     """
-    if section == 'Module configuration options':
-        return active
     return True
+
+PSA_UNSUPPORTED_FEATURE = frozenset([
+    'PSA_WANT_ALG_CBC_MAC',
+    'PSA_WANT_ALG_XTS',
+    'PSA_WANT_KEY_TYPE_RSA_KEY_PAIR_DERIVE',
+    'PSA_WANT_KEY_TYPE_DH_KEY_PAIR_DERIVE'
+])
+
+PSA_DEPRECATED_FEATURE = frozenset([
+    'PSA_WANT_KEY_TYPE_ECC_KEY_PAIR',
+    'PSA_WANT_KEY_TYPE_RSA_KEY_PAIR'
+])
+
+EXCLUDE_FROM_CRYPTO = PSA_UNSUPPORTED_FEATURE | \
+                      PSA_DEPRECATED_FEATURE
 
 # The goal of the full configuration is to have everything that can be tested
 # together. This includes deprecated or insecure options. It excludes:
@@ -167,40 +73,36 @@ def realfull_adapter(_name, active, section):
 # * Options that remove features.
 EXCLUDE_FROM_FULL = frozenset([
     #pylint: disable=line-too-long
-    'MBEDTLS_CTR_DRBG_USE_128_BIT_KEY', # interacts with ENTROPY_FORCE_SHA256
+    'MBEDTLS_AES_ONLY_128_BIT_KEY_LENGTH', # interacts with CTR_DRBG_128_BIT_KEY
+    'MBEDTLS_AES_USE_HARDWARE_ONLY', # hardware dependency
+    'MBEDTLS_BLOCK_CIPHER_NO_DECRYPT', # incompatible with ECB in PSA, CBC/XTS/NIST_KW
     'MBEDTLS_DEPRECATED_REMOVED', # conflicts with deprecated options
     'MBEDTLS_DEPRECATED_WARNING', # conflicts with deprecated options
     'MBEDTLS_ECDH_VARIANT_EVEREST_ENABLED', # influences the use of ECDH in TLS
-    'MBEDTLS_ECP_NO_FALLBACK', # removes internal ECP implementation
-    'MBEDTLS_ECP_NO_INTERNAL_RNG', # removes a feature
-    'MBEDTLS_ECP_RESTARTABLE', # incompatible with USE_PSA_CRYPTO
-    'MBEDTLS_ENTROPY_FORCE_SHA256', # interacts with CTR_DRBG_128_BIT_KEY
+    'MBEDTLS_ECP_WITH_MPI_UINT', # disables the default ECP and is experimental
     'MBEDTLS_HAVE_SSE2', # hardware dependency
     'MBEDTLS_MEMORY_BACKTRACE', # depends on MEMORY_BUFFER_ALLOC_C
     'MBEDTLS_MEMORY_BUFFER_ALLOC_C', # makes sanitizers (e.g. ASan) less effective
     'MBEDTLS_MEMORY_DEBUG', # depends on MEMORY_BUFFER_ALLOC_C
     'MBEDTLS_NO_64BIT_MULTIPLICATION', # influences anything that uses bignum
-    'MBEDTLS_NO_DEFAULT_ENTROPY_SOURCES', # removes a feature
-    'MBEDTLS_NO_PLATFORM_ENTROPY', # removes a feature
     'MBEDTLS_NO_UDBL_DIVISION', # influences anything that uses bignum
-    'MBEDTLS_PKCS11_C', # build dependency (libpkcs11-helper)
+    'MBEDTLS_PSA_DRIVER_GET_ENTROPY', # incompatible with MBEDTLS_PSA_BUILTIN_GET_ENTROPY
+    'MBEDTLS_PSA_P256M_DRIVER_ENABLED', # influences SECP256R1 KeyGen/ECDH/ECDSA
     'MBEDTLS_PLATFORM_NO_STD_FUNCTIONS', # removes a feature
     'MBEDTLS_PSA_ASSUME_EXCLUSIVE_BUFFERS', # removes a feature
-    'MBEDTLS_PSA_CRYPTO_CONFIG', # toggles old/new style PSA config
     'MBEDTLS_PSA_CRYPTO_EXTERNAL_RNG', # behavior change + build dependency
-    'MBEDTLS_PSA_CRYPTO_KEY_ID_ENCODES_OWNER', # incompatible with USE_PSA_CRYPTO
+    'MBEDTLS_PSA_CRYPTO_KEY_ID_ENCODES_OWNER', # interface and behavior change
     'MBEDTLS_PSA_CRYPTO_SPM', # platform dependency (PSA SPM)
-    'MBEDTLS_PSA_INJECT_ENTROPY', # conflicts with platform entropy sources
-    'MBEDTLS_REMOVE_3DES_CIPHERSUITES', # removes a feature
-    'MBEDTLS_REMOVE_ARC4_CIPHERSUITES', # removes a feature
     'MBEDTLS_RSA_NO_CRT', # influences the use of RSA in X.509 and TLS
-    'MBEDTLS_SHA512_NO_SHA384', # removes a feature
-    'MBEDTLS_SSL_HW_RECORD_ACCEL', # build dependency (hook functions)
+    'MBEDTLS_SHA256_USE_ARMV8_A_CRYPTO_ONLY', # interacts with *_USE_ARMV8_A_CRYPTO_IF_PRESENT
+    'MBEDTLS_SHA512_USE_A64_CRYPTO_ONLY', # interacts with *_USE_A64_CRYPTO_IF_PRESENT
     'MBEDTLS_TEST_CONSTANT_FLOW_MEMSAN', # build dependency (clang+memsan)
     'MBEDTLS_TEST_CONSTANT_FLOW_VALGRIND', # build dependency (valgrind headers)
-    'MBEDTLS_TEST_NULL_ENTROPY', # removes a feature
-    'MBEDTLS_X509_ALLOW_UNSUPPORTED_CRITICAL_EXTENSION', # influences the use of X.509 in TLS
-    'MBEDTLS_ZLIB_SUPPORT', # build dependency (libz)
+    'MBEDTLS_X509_REMOVE_INFO', # removes a feature
+    'MBEDTLS_PSA_STATIC_KEY_SLOTS', # only relevant for embedded devices
+    'MBEDTLS_PSA_STATIC_KEY_SLOT_BUFFER_SIZE', # only relevant for embedded devices
+    *PSA_UNSUPPORTED_FEATURE,
+    *PSA_DEPRECATED_FEATURE,
 ])
 
 def is_seamless_alt(name):
@@ -218,6 +120,7 @@ def is_seamless_alt(name):
     if name in (
             'MBEDTLS_PLATFORM_GMTIME_R_ALT',
             'MBEDTLS_PLATFORM_SETUP_TEARDOWN_ALT',
+            'MBEDTLS_PLATFORM_MS_TIME_ALT',
             'MBEDTLS_PLATFORM_ZEROIZE_ALT',
     ):
         # Similar to non-platform xxx_ALT, requires platform_alt.h
@@ -232,9 +135,9 @@ def include_in_full(name):
         return is_seamless_alt(name)
     return True
 
-def full_adapter(name, active, section):
+def full_adapter(name, value, active):
     """Config adapter for "full"."""
-    if not is_full_section(section):
+    if not is_boolean_setting(name, value):
         return active
     return include_in_full(name)
 
@@ -247,19 +150,19 @@ EXCLUDE_FROM_BAREMETAL = frozenset([
     #pylint: disable=line-too-long
     'MBEDTLS_ENTROPY_NV_SEED', # requires a filesystem and FS_IO or alternate NV seed hooks
     'MBEDTLS_FS_IO', # requires a filesystem
-    'MBEDTLS_HAVEGE_C', # requires a clock
     'MBEDTLS_HAVE_TIME', # requires a clock
     'MBEDTLS_HAVE_TIME_DATE', # requires a clock
     'MBEDTLS_NET_C', # requires POSIX-like networking
     'MBEDTLS_PLATFORM_FPRINTF_ALT', # requires FILE* from stdio.h
     'MBEDTLS_PLATFORM_NV_SEED_ALT', # requires a filesystem and ENTROPY_NV_SEED
     'MBEDTLS_PLATFORM_TIME_ALT', # requires a clock and HAVE_TIME
-    'MBEDTLS_PSA_CRYPTO_SE_C', # requires a filesystem and PSA_CRYPTO_STORAGE_C
     'MBEDTLS_PSA_CRYPTO_STORAGE_C', # requires a filesystem
     'MBEDTLS_PSA_ITS_FILE_C', # requires a filesystem
     'MBEDTLS_THREADING_C', # requires a threading interface
     'MBEDTLS_THREADING_PTHREAD', # requires pthread
     'MBEDTLS_TIMING_C', # requires a clock
+    'MBEDTLS_SHA256_USE_ARMV8_A_CRYPTO_IF_PRESENT', # requires an OS for runtime-detection
+    'MBEDTLS_SHA512_USE_A64_CRYPTO_IF_PRESENT', # requires an OS for runtime-detection
 ])
 
 def keep_in_baremetal(name):
@@ -268,109 +171,107 @@ def keep_in_baremetal(name):
         return False
     return True
 
-def baremetal_adapter(name, active, section):
+def baremetal_adapter(name, value, active):
     """Config adapter for "baremetal"."""
-    if not is_full_section(section):
+    if not is_boolean_setting(name, value):
         return active
-    if name == 'MBEDTLS_NO_PLATFORM_ENTROPY':
+    if name == 'MBEDTLS_PSA_BUILTIN_GET_ENTROPY':
         # No OS-provided entropy source
+        return False
+    if name == 'MBEDTLS_PSA_DRIVER_GET_ENTROPY':
         return True
     return include_in_full(name) and keep_in_baremetal(name)
 
 # This set contains options that are mostly for debugging or test purposes,
 # and therefore should be excluded when doing code size measurements.
-# Options that are their own module (such as MBEDTLS_CERTS_C and
-# MBEDTLS_ERROR_C) are not listed and therefore will be included when doing
-# code size measurements.
+# Options that are their own module (such as MBEDTLS_ERROR_C) are not listed
+# and therefore will be included when doing code size measurements.
 EXCLUDE_FOR_SIZE = frozenset([
-    'MBEDTLS_CHECK_PARAMS', # increases the size of many modules
-    'MBEDTLS_CHECK_PARAMS_ASSERT', # no effect without MBEDTLS_CHECK_PARAMS
     'MBEDTLS_DEBUG_C', # large code size increase in TLS
     'MBEDTLS_SELF_TEST', # increases the size of many modules
     'MBEDTLS_TEST_HOOKS', # only useful with the hosted test framework, increases code size
 ])
 
-def baremetal_size_adapter(name, active, section):
+def baremetal_size_adapter(name, value, active):
     if name in EXCLUDE_FOR_SIZE:
         return False
-    return baremetal_adapter(name, active, section)
+    return baremetal_adapter(name, value, active)
 
 def include_in_crypto(name):
     """Rules for symbols in a crypto configuration."""
     if name.startswith('MBEDTLS_X509_') or \
+       name.startswith('MBEDTLS_VERSION_') or \
        name.startswith('MBEDTLS_SSL_') or \
        name.startswith('MBEDTLS_KEY_EXCHANGE_'):
         return False
     if name in [
-            'MBEDTLS_CERTS_C', # part of libmbedx509
             'MBEDTLS_DEBUG_C', # part of libmbedtls
             'MBEDTLS_NET_C', # part of libmbedtls
-            'MBEDTLS_PKCS11_C', # part of libmbedx509
+            'MBEDTLS_PKCS7_C', # part of libmbedx509
+            'MBEDTLS_TIMING_C', # part of libmbedtls
+            'MBEDTLS_ERROR_C', # part of libmbedx509
+            'MBEDTLS_ERROR_STRERROR_DUMMY', # part of libmbedx509
     ]:
+        return False
+    if name in EXCLUDE_FROM_CRYPTO:
         return False
     return True
 
 def crypto_adapter(adapter):
     """Modify an adapter to disable non-crypto symbols.
 
-    ``crypto_adapter(adapter)(name, active, section)`` is like
-    ``adapter(name, active, section)``, but unsets all X.509 and TLS symbols.
+    ``crypto_adapter(adapter)(name, value, active)`` is like
+    ``adapter(name, value, active)``, but unsets all X.509 and TLS symbols.
     """
-    def continuation(name, active, section):
+    def continuation(name, value, active):
         if not include_in_crypto(name):
             return False
         if adapter is None:
             return active
-        return adapter(name, active, section)
+        return adapter(name, value, active)
     return continuation
 
 DEPRECATED = frozenset([
-    'MBEDTLS_SSL_PROTO_SSL3',
-    'MBEDTLS_SSL_CLI_ALLOW_WEAK_CERTIFICATE_VERIFICATION_WITHOUT_HOSTNAME',
-    'MBEDTLS_SSL_SRV_SUPPORT_SSLV2_CLIENT_HELLO',
+    *PSA_DEPRECATED_FEATURE
 ])
-
 def no_deprecated_adapter(adapter):
     """Modify an adapter to disable deprecated symbols.
 
-    ``no_deprecated_adapter(adapter)(name, active, section)`` is like
-    ``adapter(name, active, section)``, but unsets all deprecated symbols
+    ``no_deprecated_adapter(adapter)(name, value, active)`` is like
+    ``adapter(name, value, active)``, but unsets all deprecated symbols
     and sets ``MBEDTLS_DEPRECATED_REMOVED``.
     """
-    def continuation(name, active, section):
+    def continuation(name, value, active):
         if name == 'MBEDTLS_DEPRECATED_REMOVED':
             return True
         if name in DEPRECATED:
             return False
         if adapter is None:
             return active
-        return adapter(name, active, section)
+        return adapter(name, value, active)
     return continuation
 
 def no_platform_adapter(adapter):
     """Modify an adapter to disable platform symbols.
 
-    ``no_platform_adapter(adapter)(name, active, section)`` is like
-    ``adapter(name, active, section)``, but unsets all platform symbols other
+    ``no_platform_adapter(adapter)(name, value, active)`` is like
+    ``adapter(name, value, active)``, but unsets all platform symbols other
     ``than MBEDTLS_PLATFORM_C.
     """
-    def continuation(name, active, section):
+    def continuation(name, value, active):
         # Allow MBEDTLS_PLATFORM_C but remove all other platform symbols.
         if name.startswith('MBEDTLS_PLATFORM_') and name != 'MBEDTLS_PLATFORM_C':
             return False
         if adapter is None:
             return active
-        return adapter(name, active, section)
+        return adapter(name, value, active)
     return continuation
 
-class ConfigFile(Config):
-    """Representation of the Mbed TLS configuration read for a file.
 
-    See the documentation of the `Config` class for methods to query
-    and modify the configuration.
-    """
+class MbedTLSConfigFile(config_common.ConfigFile):
+    """Representation of an MbedTLS configuration file."""
 
-    _path_in_tree = 'include/mbedtls/config.h'
+    _path_in_tree = 'include/mbedtls/mbedtls_config.h'
     default_path = [_path_in_tree,
                     os.path.join(os.path.dirname(__file__),
                                  os.pardir,
@@ -379,214 +280,219 @@ class ConfigFile(Config):
                                  _path_in_tree)]
 
     def __init__(self, filename=None):
-        """Read the Mbed TLS configuration file."""
-        if filename is None:
-            for candidate in self.default_path:
-                if os.path.lexists(candidate):
-                    filename = candidate
-                    break
-            else:
-                raise Exception('Mbed TLS configuration file not found',
-                                self.default_path)
-        super().__init__()
-        self.filename = filename
-        self.inclusion_guard = None
+        super().__init__(self.default_path, 'Mbed TLS', filename)
         self.current_section = 'header'
-        with open(filename, 'r', encoding='utf-8') as file:
-            self.templates = [self._parse_line(line) for line in file]
-        self.current_section = None
+
+
+class CryptoConfigFile(config_common.ConfigFile):
+    """Representation of a Crypto configuration file."""
+
+    # Temporary, while Mbed TLS does not just rely on the TF-PSA-Crypto
+    # build system to build its crypto library. When it does, the
+    # condition can just be removed.
+    _path_in_tree = ('include/psa/crypto_config.h'
+                     if not os.path.isdir(os.path.join(os.path.dirname(__file__),
+                                                       os.pardir,
+                                                       'tf-psa-crypto')) else
+                     'tf-psa-crypto/include/psa/crypto_config.h')
+    default_path = [_path_in_tree,
+                    os.path.join(os.path.dirname(__file__),
+                                 os.pardir,
+                                 _path_in_tree),
+                    os.path.join(os.path.dirname(os.path.abspath(os.path.dirname(__file__))),
+                                 _path_in_tree)]
+
+    def __init__(self, filename=None):
+        super().__init__(self.default_path, 'Crypto', filename)
+
+
+class MbedTLSConfig(config_common.Config):
+    """Representation of the Mbed TLS configuration.
+
+    See the documentation of the `Config` class for methods to query
+    and modify the configuration.
+    """
+
+    def __init__(self, filename=None):
+        """Read the Mbed TLS configuration file."""
+
+        super().__init__()
+        configfile = MbedTLSConfigFile(filename)
+        self.configfiles.append(configfile)
+        self.settings.update({name: config_common.Setting(configfile, active, name, value, section)
+                              for (active, name, value, section)
+                              in configfile.parse_file()})
 
     def set(self, name, value=None):
+        """Set name to the given value and make it active."""
+
         if name not in self.settings:
-            self.templates.append((name, '', '#define ' + name + ' '))
+            self._get_configfile().templates.append((name, '', '#define ' + name + ' '))
+
         super().set(name, value)
 
-    _define_line_regexp = (r'(?P<indentation>\s*)' +
-                           r'(?P<commented_out>(//\s*)?)' +
-                           r'(?P<define>#\s*define\s+)' +
-                           r'(?P<name>\w+)' +
-                           r'(?P<arguments>(?:\((?:\w|\s|,)*\))?)' +
-                           r'(?P<separator>\s*)' +
-                           r'(?P<value>.*)')
-    _ifndef_line_regexp = r'#ifndef (?P<inclusion_guard>\w+)'
-    _section_line_regexp = (r'\s*/?\*+\s*[\\@]name\s+SECTION:\s*' +
-                            r'(?P<section>.*)[ */]*')
-    _config_line_regexp = re.compile(r'|'.join([_define_line_regexp,
-                                                _ifndef_line_regexp,
-                                                _section_line_regexp]))
-    def _parse_line(self, line):
-        """Parse a line in config.h and return the corresponding template."""
-        line = line.rstrip('\r\n')
-        m = re.match(self._config_line_regexp, line)
-        if m is None:
-            return line
-        elif m.group('section'):
-            self.current_section = m.group('section')
-            return line
-        elif m.group('inclusion_guard') and self.inclusion_guard is None:
-            self.inclusion_guard = m.group('inclusion_guard')
-            return line
-        else:
-            active = not m.group('commented_out')
-            name = m.group('name')
-            value = m.group('value')
-            if name == self.inclusion_guard and value == '':
-                # The file double-inclusion guard is not an option.
-                return line
-            template = (name,
-                        m.group('indentation'),
-                        m.group('define') + name +
-                        m.group('arguments') + m.group('separator'))
-            self.settings[name] = Setting(active, name, value,
-                                          self.current_section)
-            return template
 
-    def _format_template(self, name, indent, middle):
-        """Build a line for config.h for the given setting.
+class CryptoConfig(config_common.Config):
+    """Representation of the PSA crypto configuration.
 
-        The line has the form "<indent>#define <name> <value>"
-        where <middle> is "#define <name> ".
-        """
-        setting = self.settings[name]
-        value = setting.value
-        if value is None:
-            value = ''
-        # Normally the whitespace to separate the symbol name from the
-        # value is part of middle, and there's no whitespace for a symbol
-        # with no value. But if a symbol has been changed from having a
-        # value to not having one, the whitespace is wrong, so fix it.
-        if value:
-            if middle[-1] not in '\t ':
-                middle += ' '
-        else:
-            middle = middle.rstrip()
-        return ''.join([indent,
-                        '' if setting.active else '//',
-                        middle,
-                        value]).rstrip()
+    See the documentation of the `Config` class for methods to query
+    and modify the configuration.
+    """
 
-    def write_to_stream(self, output):
-        """Write the whole configuration to output."""
-        for template in self.templates:
-            if isinstance(template, str):
-                line = template
+    def __init__(self, filename=None):
+        """Read the PSA crypto configuration file."""
+
+        super().__init__()
+        configfile = CryptoConfigFile(filename)
+        self.configfiles.append(configfile)
+        self.settings.update({name: config_common.Setting(configfile, active, name, value, section)
+                              for (active, name, value, section)
+                              in configfile.parse_file()})
+
+    def set(self, name, value='1'):
+        """Set name to the given value and make it active."""
+
+        if name in PSA_UNSUPPORTED_FEATURE:
+            raise ValueError(f'Feature is unsupported: \'{name}\'')
+
+        if name not in self.settings:
+            self._get_configfile().templates.append((name, '', '#define ' + name + ' '))
+
+        super().set(name, value)
+
+
+class CombinedConfig(config_common.Config):
+    """Representation of MbedTLS and PSA crypto configuration
+
+    See the documentation of the `Config` class for methods to query
+    and modify the configuration.
+    """
+
+    def __init__(self, *configs):
+        super().__init__()
+        for config in configs:
+            if isinstance(config, MbedTLSConfigFile):
+                self.mbedtls_configfile = config
+            elif isinstance(config, CryptoConfigFile):
+                self.crypto_configfile = config
             else:
-                line = self._format_template(*template)
-            output.write(line + '\n')
+                raise ValueError(f'Invalid configfile: {config}')
+            self.configfiles.append(config)
 
-    def write(self, filename=None):
+        self.settings.update({name: config_common.Setting(configfile, active, name, value, section)
+                              for configfile in [self.mbedtls_configfile, self.crypto_configfile]
+                              for (active, name, value, section) in configfile.parse_file()})
+
+    _crypto_regexp = re.compile(r'^PSA_.*')
+    def _get_configfile(self, name=None):
+        """Find a config type for a setting name"""
+
+        if name in self.settings:
+            return self.settings[name].configfile
+        elif re.match(self._crypto_regexp, name):
+            return self.crypto_configfile
+        else:
+            return self.mbedtls_configfile
+
+    def set(self, name, value=None):
+        """Set name to the given value and make it active."""
+
+        configfile = self._get_configfile(name)
+
+        if configfile == self.crypto_configfile:
+            if name in PSA_UNSUPPORTED_FEATURE:
+                raise ValueError(f'Feature is unsupported: \'{name}\'')
+
+            # The default value in the crypto config is '1'
+            if not value and re.match(self._crypto_regexp, name):
+                value = '1'
+
+        if name not in self.settings:
+            configfile.templates.append((name, '', '#define ' + name + ' '))
+
+        super().set(name, value)
+
+    #pylint: disable=arguments-differ
+    def write(self, mbedtls_file=None, crypto_file=None):
         """Write the whole configuration to the file it was read from.
 
-        If filename is specified, write to this file instead.
+        If mbedtls_file or crypto_file is specified, write the specific configuration
+        to the corresponding file instead.
+
+        Two file name parameters and not only one as in the super class as we handle
+        two configuration files in this class.
         """
-        if filename is None:
-            filename = self.filename
-        with open(filename, 'w', encoding='utf-8') as output:
-            self.write_to_stream(output)
+
+        self.mbedtls_configfile.write(self.settings, mbedtls_file)
+        self.crypto_configfile.write(self.settings, crypto_file)
+
+    def filename(self, name=None):
+        """Get the name of the config files.
+
+        If 'name' is specified return the name of the config file where it is defined.
+        """
+
+        if not name:
+            return [config.filename for config in [self.mbedtls_configfile, self.crypto_configfile]]
+
+        return self._get_configfile(name).filename
+
+
+class MbedTLSConfigTool(config_common.ConfigTool):
+    """Command line mbedtls_config.h and crypto_config.h manipulation tool."""
+
+    def __init__(self):
+        super().__init__(MbedTLSConfigFile.default_path)
+        self.config = CombinedConfig(MbedTLSConfigFile(self.args.file),
+                                     CryptoConfigFile(self.args.cryptofile))
+
+    def custom_parser_options(self):
+        """Adds MbedTLS specific options for the parser."""
+
+        self.parser.add_argument(
+            '--cryptofile', '-c',
+            help="""Crypto file to read (and modify if requested). Default: {}."""
+            .format(CryptoConfigFile.default_path))
+
+        self.add_adapter(
+            'baremetal', baremetal_adapter,
+            """Like full, but exclude features that require platform features
+            such as file input-output.
+            """)
+        self.add_adapter(
+            'baremetal_size', baremetal_size_adapter,
+            """Like baremetal, but exclude debugging features. Useful for code size measurements.
+            """)
+        self.add_adapter(
+            'full', full_adapter,
+            """Uncomment most features.
+            Exclude alternative implementations and platform support options, as well as
+            some options that are awkward to test.
+            """)
+        self.add_adapter(
+            'full_no_deprecated', no_deprecated_adapter(full_adapter),
+            """Uncomment most non-deprecated features.
+            Like "full", but without deprecated features.
+            """)
+        self.add_adapter(
+            'full_no_platform', no_platform_adapter(full_adapter),
+            """Uncomment most non-platform features. Like "full", but without platform features.
+            """)
+        self.add_adapter(
+            'realfull', realfull_adapter,
+            """Uncomment all boolean #defines.
+            Suitable for generating documentation, but not for building.
+            """)
+        self.add_adapter(
+            'crypto', crypto_adapter(None),
+            """Only include crypto features. Exclude X.509 and TLS.""")
+        self.add_adapter(
+            'crypto_baremetal', crypto_adapter(baremetal_adapter),
+            """Like baremetal, but with only crypto features, excluding X.509 and TLS.""")
+        self.add_adapter(
+            'crypto_full', crypto_adapter(full_adapter),
+            """Like full, but with only crypto features, excluding X.509 and TLS.""")
+
 
 if __name__ == '__main__':
-    def main():
-        """Command line config.h manipulation tool."""
-        parser = argparse.ArgumentParser(description="""
-        Mbed TLS configuration file manipulation tool.
-        """)
-        parser.add_argument('--file', '-f',
-                            help="""File to read (and modify if requested).
-                            Default: {}.
-                            """.format(ConfigFile.default_path))
-        parser.add_argument('--force', '-o',
-                            action='store_true',
-                            help="""For the set command, if SYMBOL is not
-                            present, add a definition for it.""")
-        parser.add_argument('--write', '-w', metavar='FILE',
-                            help="""File to write to instead of the input file.""")
-        subparsers = parser.add_subparsers(dest='command',
-                                           title='Commands')
-        parser_get = subparsers.add_parser('get',
-                                           help="""Find the value of SYMBOL
-                                           and print it. Exit with
-                                           status 0 if a #define for SYMBOL is
-                                           found, 1 otherwise.
-                                           """)
-        parser_get.add_argument('symbol', metavar='SYMBOL')
-        parser_set = subparsers.add_parser('set',
-                                           help="""Set SYMBOL to VALUE.
-                                           If VALUE is omitted, just uncomment
-                                           the #define for SYMBOL.
-                                           Error out of a line defining
-                                           SYMBOL (commented or not) is not
-                                           found, unless --force is passed.
-                                           """)
-        parser_set.add_argument('symbol', metavar='SYMBOL')
-        parser_set.add_argument('value', metavar='VALUE', nargs='?',
-                                default='')
-        parser_unset = subparsers.add_parser('unset',
-                                             help="""Comment out the #define
-                                             for SYMBOL. Do nothing if none
-                                             is present.""")
-        parser_unset.add_argument('symbol', metavar='SYMBOL')
-
-        def add_adapter(name, function, description):
-            subparser = subparsers.add_parser(name, help=description)
-            subparser.set_defaults(adapter=function)
-        add_adapter('baremetal', baremetal_adapter,
-                    """Like full, but exclude features that require platform
-                    features such as file input-output.""")
-        add_adapter('baremetal_size', baremetal_size_adapter,
-                    """Like baremetal, but exclude debugging features.
-                    Useful for code size measurements.""")
-        add_adapter('full', full_adapter,
-                    """Uncomment most features.
-                    Exclude alternative implementations and platform support
-                    options, as well as some options that are awkward to test.
-                    """)
-        add_adapter('full_no_deprecated', no_deprecated_adapter(full_adapter),
-                    """Uncomment most non-deprecated features.
-                    Like "full", but without deprecated features.
-                    """)
-        add_adapter('full_no_platform', no_platform_adapter(full_adapter),
-                    """Uncomment most non-platform features.
-                    Like "full", but without platform features.
-                    """)
-        add_adapter('realfull', realfull_adapter,
-                    """Uncomment all boolean #defines.
-                    Suitable for generating documentation, but not for building.""")
-        add_adapter('crypto', crypto_adapter(None),
-                    """Only include crypto features. Exclude X.509 and TLS.""")
-        add_adapter('crypto_baremetal', crypto_adapter(baremetal_adapter),
-                    """Like baremetal, but with only crypto features,
-                    excluding X.509 and TLS.""")
-        add_adapter('crypto_full', crypto_adapter(full_adapter),
-                    """Like full, but with only crypto features,
-                    excluding X.509 and TLS.""")
-
-        args = parser.parse_args()
-        config = ConfigFile(args.file)
-        if args.command is None:
-            parser.print_help()
-            return 1
-        elif args.command == 'get':
-            if args.symbol in config:
-                value = config[args.symbol]
-                if value:
-                    sys.stdout.write(value + '\n')
-            return 0 if args.symbol in config else 1
-        elif args.command == 'set':
-            if not args.force and args.symbol not in config.settings:
-                sys.stderr.write("A #define for the symbol {} "
-                                 "was not found in {}\n"
-                                 .format(args.symbol, config.filename))
-                return 1
-            config.set(args.symbol, value=args.value)
-        elif args.command == 'unset':
-            config.unset(args.symbol)
-        else:
-            config.adapt(args.adapter)
-        config.write(args.write)
-        return 0
-
-    # Import modules only used by main only if main is defined and called.
-    # pylint: disable=wrong-import-position
-    import argparse
-    import sys
-    sys.exit(main())
+    sys.exit(MbedTLSConfigTool().main())

@@ -5,11 +5,9 @@
  *  SPDX-License-Identifier: Apache-2.0 OR GPL-2.0-or-later
  */
 
-#if !defined(MBEDTLS_CONFIG_FILE)
-#include "mbedtls/config.h"
-#else
-#include MBEDTLS_CONFIG_FILE
-#endif
+#define MBEDTLS_DECLARE_PRIVATE_IDENTIFIERS
+
+#include "mbedtls/build_info.h"
 
 #include "mbedtls/platform.h"
 
@@ -17,20 +15,20 @@
     !defined(MBEDTLS_SSL_TLS_C) || !defined(MBEDTLS_SSL_CLI_C) || \
     !defined(MBEDTLS_NET_C) || !defined(MBEDTLS_RSA_C) ||         \
     !defined(MBEDTLS_X509_CRT_PARSE_C) || !defined(MBEDTLS_FS_IO) ||  \
-    !defined(MBEDTLS_CTR_DRBG_C)
+    !defined(MBEDTLS_CTR_DRBG_C) || defined(MBEDTLS_X509_REMOVE_INFO)
 int main(void)
 {
     mbedtls_printf("MBEDTLS_BIGNUM_C and/or MBEDTLS_ENTROPY_C and/or "
                    "MBEDTLS_SSL_TLS_C and/or MBEDTLS_SSL_CLI_C and/or "
                    "MBEDTLS_NET_C and/or MBEDTLS_RSA_C and/or "
                    "MBEDTLS_X509_CRT_PARSE_C and/or MBEDTLS_FS_IO and/or "
-                   "MBEDTLS_CTR_DRBG_C not defined.\n");
+                   "MBEDTLS_CTR_DRBG_C not defined and/or MBEDTLS_X509_REMOVE_INFO defined.\n");
     mbedtls_exit(0);
 }
 #else
 
-#include "mbedtls/entropy.h"
-#include "mbedtls/ctr_drbg.h"
+#include "mbedtls/private/entropy.h"
+#include "mbedtls/private/ctr_drbg.h"
 #include "mbedtls/net_sockets.h"
 #include "mbedtls/ssl.h"
 #include "mbedtls/x509.h"
@@ -154,14 +152,12 @@ int main(int argc, char *argv[])
     memset(&cacrl, 0, sizeof(mbedtls_x509_crl));
 #endif
 
-#if defined(MBEDTLS_USE_PSA_CRYPTO)
     psa_status_t status = psa_crypto_init();
     if (status != PSA_SUCCESS) {
         mbedtls_fprintf(stderr, "Failed to initialize PSA Crypto implementation: %d\n",
                         (int) status);
         goto exit;
     }
-#endif /* MBEDTLS_USE_PSA_CRYPTO */
 
     if (argc < 2) {
 usage:
@@ -385,7 +381,6 @@ usage:
             mbedtls_ssl_conf_authmode(&conf, MBEDTLS_SSL_VERIFY_NONE);
         }
 
-        mbedtls_ssl_conf_rng(&conf, mbedtls_ctr_drbg_random, &ctr_drbg);
         mbedtls_ssl_conf_dbg(&conf, my_debug, stdout);
 
         if ((ret = mbedtls_ssl_setup(&ssl, &conf)) != 0) {
@@ -449,14 +444,7 @@ exit:
 #endif
     mbedtls_ctr_drbg_free(&ctr_drbg);
     mbedtls_entropy_free(&entropy);
-#if defined(MBEDTLS_USE_PSA_CRYPTO)
     mbedtls_psa_crypto_free();
-#endif /* MBEDTLS_USE_PSA_CRYPTO */
-
-#if defined(_WIN32)
-    mbedtls_printf("  + Press Enter to exit this program.\n");
-    fflush(stdout); getchar();
-#endif
 
     mbedtls_exit(exit_code);
 }

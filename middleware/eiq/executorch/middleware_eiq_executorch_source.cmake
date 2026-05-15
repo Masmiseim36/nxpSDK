@@ -11,20 +11,27 @@ message("${CMAKE_CURRENT_LIST_FILE} component is included.")
           ${CMAKE_CURRENT_LIST_DIR}/extension/runner_util/inputs_portable.cpp
           ${CMAKE_CURRENT_LIST_DIR}/runtime/backend/interface.cpp
           ${CMAKE_CURRENT_LIST_DIR}/runtime/core/evalue.cpp
+          ${CMAKE_CURRENT_LIST_DIR}/runtime/core/exec_aten/util/tensor_shape_to_c_string.cpp
           ${CMAKE_CURRENT_LIST_DIR}/runtime/core/exec_aten/util/tensor_util_portable.cpp
           ${CMAKE_CURRENT_LIST_DIR}/runtime/core/portable_type/tensor_impl.cpp
+          ${CMAKE_CURRENT_LIST_DIR}/runtime/core/tag.cpp
+          ${CMAKE_CURRENT_LIST_DIR}/runtime/core/tensor_layout.cpp
           ${CMAKE_CURRENT_LIST_DIR}/runtime/executor/method.cpp
           ${CMAKE_CURRENT_LIST_DIR}/runtime/executor/method_meta.cpp
           ${CMAKE_CURRENT_LIST_DIR}/runtime/executor/program.cpp
           ${CMAKE_CURRENT_LIST_DIR}/runtime/executor/tensor_parser_exec_aten.cpp
           ${CMAKE_CURRENT_LIST_DIR}/runtime/executor/tensor_parser_portable.cpp
+          ${CMAKE_CURRENT_LIST_DIR}/runtime/executor/pte_data_map.cpp
           ${CMAKE_CURRENT_LIST_DIR}/runtime/kernel/operator_registry.cpp
           ${CMAKE_CURRENT_LIST_DIR}/runtime/platform/abort.cpp
           ${CMAKE_CURRENT_LIST_DIR}/runtime/platform/default/posix.cpp
           ${CMAKE_CURRENT_LIST_DIR}/runtime/platform/log.cpp
+          ${CMAKE_CURRENT_LIST_DIR}/runtime/platform/platform.cpp
           ${CMAKE_CURRENT_LIST_DIR}/runtime/platform/profiler.cpp
           ${CMAKE_CURRENT_LIST_DIR}/runtime/platform/runtime.cpp
           ${CMAKE_CURRENT_LIST_DIR}/schema/extended_header.cpp
+          ${CMAKE_CURRENT_LIST_DIR}/kernels/portable/cpu/op__clone_dim_order.cpp
+          ${CMAKE_CURRENT_LIST_DIR}/kernels/portable/cpu/op__empty_dim_order.cpp
           ${CMAKE_CURRENT_LIST_DIR}/kernels/portable/cpu/op__to_dim_order_copy.cpp
           ${CMAKE_CURRENT_LIST_DIR}/kernels/portable/cpu/op_abs.cpp
           ${CMAKE_CURRENT_LIST_DIR}/kernels/portable/cpu/op_acos.cpp
@@ -58,6 +65,7 @@ message("${CMAKE_CURRENT_LIST_FILE} component is included.")
           ${CMAKE_CURRENT_LIST_DIR}/kernels/portable/cpu/op_clone.cpp
           ${CMAKE_CURRENT_LIST_DIR}/kernels/portable/cpu/op_constant_pad_nd.cpp
           ${CMAKE_CURRENT_LIST_DIR}/kernels/portable/cpu/op_convolution.cpp
+          ${CMAKE_CURRENT_LIST_DIR}/kernels/portable/cpu/op_convolution_backward.cpp
           ${CMAKE_CURRENT_LIST_DIR}/kernels/portable/cpu/op_copy.cpp
           ${CMAKE_CURRENT_LIST_DIR}/kernels/portable/cpu/op_cos.cpp
           ${CMAKE_CURRENT_LIST_DIR}/kernels/portable/cpu/op_cosh.cpp
@@ -65,6 +73,7 @@ message("${CMAKE_CURRENT_LIST_FILE} component is included.")
           ${CMAKE_CURRENT_LIST_DIR}/kernels/portable/cpu/op_detach_copy.cpp
           ${CMAKE_CURRENT_LIST_DIR}/kernels/portable/cpu/op_diagonal_copy.cpp
           ${CMAKE_CURRENT_LIST_DIR}/kernels/portable/cpu/op_div.cpp
+          ${CMAKE_CURRENT_LIST_DIR}/kernels/portable/cpu/op_elu.cpp
           ${CMAKE_CURRENT_LIST_DIR}/kernels/portable/cpu/op_embedding.cpp
           ${CMAKE_CURRENT_LIST_DIR}/kernels/portable/cpu/op_empty.cpp
           ${CMAKE_CURRENT_LIST_DIR}/kernels/portable/cpu/op_eq.cpp
@@ -79,6 +88,7 @@ message("${CMAKE_CURRENT_LIST_FILE} component is included.")
           ${CMAKE_CURRENT_LIST_DIR}/kernels/portable/cpu/op_fmod.cpp
           ${CMAKE_CURRENT_LIST_DIR}/kernels/portable/cpu/op_full.cpp
           ${CMAKE_CURRENT_LIST_DIR}/kernels/portable/cpu/op_full_like.cpp
+          ${CMAKE_CURRENT_LIST_DIR}/kernels/portable/cpu/op_gather.cpp
           ${CMAKE_CURRENT_LIST_DIR}/kernels/portable/cpu/op_ge.cpp
           ${CMAKE_CURRENT_LIST_DIR}/kernels/portable/cpu/op_gelu.cpp
           ${CMAKE_CURRENT_LIST_DIR}/kernels/portable/cpu/op_glu.cpp
@@ -92,7 +102,6 @@ message("${CMAKE_CURRENT_LIST_FILE} component is included.")
           ${CMAKE_CURRENT_LIST_DIR}/kernels/portable/cpu/op_le.cpp
           ${CMAKE_CURRENT_LIST_DIR}/kernels/portable/cpu/op_leaky_relu.cpp
           ${CMAKE_CURRENT_LIST_DIR}/kernels/portable/cpu/op_lift_fresh_copy.cpp
-          ${CMAKE_CURRENT_LIST_DIR}/kernels/portable/cpu/op_linear_scratch_example.cpp
           ${CMAKE_CURRENT_LIST_DIR}/kernels/portable/cpu/op_log.cpp
           ${CMAKE_CURRENT_LIST_DIR}/kernels/portable/cpu/op_log10.cpp
           ${CMAKE_CURRENT_LIST_DIR}/kernels/portable/cpu/op_log1p.cpp
@@ -105,8 +114,11 @@ message("${CMAKE_CURRENT_LIST_FILE} component is included.")
           ${CMAKE_CURRENT_LIST_DIR}/kernels/portable/cpu/op_logit.cpp
           ${CMAKE_CURRENT_LIST_DIR}/kernels/portable/cpu/op_lt.cpp
           ${CMAKE_CURRENT_LIST_DIR}/kernels/portable/cpu/op_masked_fill.cpp
+          ${CMAKE_CURRENT_LIST_DIR}/kernels/portable/cpu/op_masked_scatter.cpp
+          ${CMAKE_CURRENT_LIST_DIR}/kernels/portable/cpu/op_masked_select.cpp
           ${CMAKE_CURRENT_LIST_DIR}/kernels/portable/cpu/op_max.cpp
           ${CMAKE_CURRENT_LIST_DIR}/kernels/portable/cpu/op_max_pool2d_with_indices.cpp
+          ${CMAKE_CURRENT_LIST_DIR}/kernels/portable/cpu/op_max_pool2d_with_indices_backward.cpp
           ${CMAKE_CURRENT_LIST_DIR}/kernels/portable/cpu/op_maximum.cpp
           ${CMAKE_CURRENT_LIST_DIR}/kernels/portable/cpu/op_mean.cpp
           ${CMAKE_CURRENT_LIST_DIR}/kernels/portable/cpu/op_min.cpp
@@ -114,7 +126,10 @@ message("${CMAKE_CURRENT_LIST_FILE} component is included.")
           ${CMAKE_CURRENT_LIST_DIR}/kernels/portable/cpu/op_mm.cpp
           ${CMAKE_CURRENT_LIST_DIR}/kernels/portable/cpu/op_mul.cpp
           ${CMAKE_CURRENT_LIST_DIR}/kernels/portable/cpu/op_native_batch_norm.cpp
+          ${CMAKE_CURRENT_LIST_DIR}/kernels/portable/cpu/op_native_dropout.cpp
           ${CMAKE_CURRENT_LIST_DIR}/kernels/portable/cpu/op_native_group_norm.cpp
+          ${CMAKE_CURRENT_LIST_DIR}/kernels/portable/cpu/op_native_layer_norm.cpp
+          ${CMAKE_CURRENT_LIST_DIR}/kernels/portable/cpu/op_narrow_copy.cpp
           ${CMAKE_CURRENT_LIST_DIR}/kernels/portable/cpu/op_ne.cpp
           ${CMAKE_CURRENT_LIST_DIR}/kernels/portable/cpu/op_neg.cpp
           ${CMAKE_CURRENT_LIST_DIR}/kernels/portable/cpu/op_nonzero.cpp
@@ -122,8 +137,11 @@ message("${CMAKE_CURRENT_LIST_FILE} component is included.")
           ${CMAKE_CURRENT_LIST_DIR}/kernels/portable/cpu/op_pdist_forward.cpp
           ${CMAKE_CURRENT_LIST_DIR}/kernels/portable/cpu/op_permute_copy.cpp
           ${CMAKE_CURRENT_LIST_DIR}/kernels/portable/cpu/op_pixel_shuffle.cpp
+          ${CMAKE_CURRENT_LIST_DIR}/kernels/portable/cpu/op_pixel_unshuffle.cpp
           ${CMAKE_CURRENT_LIST_DIR}/kernels/portable/cpu/op_pow.cpp
           ${CMAKE_CURRENT_LIST_DIR}/kernels/portable/cpu/op_prod.cpp
+          ${CMAKE_CURRENT_LIST_DIR}/kernels/portable/cpu/op_rand.cpp
+          ${CMAKE_CURRENT_LIST_DIR}/kernels/portable/cpu/op_randn.cpp
           ${CMAKE_CURRENT_LIST_DIR}/kernels/portable/cpu/op_reciprocal.cpp
           ${CMAKE_CURRENT_LIST_DIR}/kernels/portable/cpu/op_reflection_pad1d.cpp
           ${CMAKE_CURRENT_LIST_DIR}/kernels/portable/cpu/op_reflection_pad2d.cpp
@@ -131,6 +149,7 @@ message("${CMAKE_CURRENT_LIST_FILE} component is included.")
           ${CMAKE_CURRENT_LIST_DIR}/kernels/portable/cpu/op_relu.cpp
           ${CMAKE_CURRENT_LIST_DIR}/kernels/portable/cpu/op_remainder.cpp
           ${CMAKE_CURRENT_LIST_DIR}/kernels/portable/cpu/op_repeat.cpp
+          ${CMAKE_CURRENT_LIST_DIR}/kernels/portable/cpu/op_repeat_interleave.cpp
           ${CMAKE_CURRENT_LIST_DIR}/kernels/portable/cpu/op_replication_pad1d.cpp
           ${CMAKE_CURRENT_LIST_DIR}/kernels/portable/cpu/op_replication_pad2d.cpp
           ${CMAKE_CURRENT_LIST_DIR}/kernels/portable/cpu/op_replication_pad3d.cpp
@@ -139,6 +158,7 @@ message("${CMAKE_CURRENT_LIST_FILE} component is included.")
           ${CMAKE_CURRENT_LIST_DIR}/kernels/portable/cpu/op_rsqrt.cpp
           ${CMAKE_CURRENT_LIST_DIR}/kernels/portable/cpu/op_rsub.cpp
           ${CMAKE_CURRENT_LIST_DIR}/kernels/portable/cpu/op_scalar_tensor.cpp
+          ${CMAKE_CURRENT_LIST_DIR}/kernels/portable/cpu/op_scatter.cpp
           ${CMAKE_CURRENT_LIST_DIR}/kernels/portable/cpu/op_scatter_add.cpp
           ${CMAKE_CURRENT_LIST_DIR}/kernels/portable/cpu/op_select_copy.cpp
           ${CMAKE_CURRENT_LIST_DIR}/kernels/portable/cpu/op_select_scatter.cpp
@@ -160,21 +180,30 @@ message("${CMAKE_CURRENT_LIST_FILE} component is included.")
           ${CMAKE_CURRENT_LIST_DIR}/kernels/portable/cpu/op_tan.cpp
           ${CMAKE_CURRENT_LIST_DIR}/kernels/portable/cpu/op_tanh.cpp
           ${CMAKE_CURRENT_LIST_DIR}/kernels/portable/cpu/op_to_copy.cpp
+          ${CMAKE_CURRENT_LIST_DIR}/kernels/portable/cpu/op_topk.cpp
           ${CMAKE_CURRENT_LIST_DIR}/kernels/portable/cpu/op_transpose_copy.cpp
           ${CMAKE_CURRENT_LIST_DIR}/kernels/portable/cpu/op_tril.cpp
           ${CMAKE_CURRENT_LIST_DIR}/kernels/portable/cpu/op_trunc.cpp
           ${CMAKE_CURRENT_LIST_DIR}/kernels/portable/cpu/op_unbind_copy.cpp
+          ${CMAKE_CURRENT_LIST_DIR}/kernels/portable/cpu/op_unfold_copy.cpp
           ${CMAKE_CURRENT_LIST_DIR}/kernels/portable/cpu/op_unsqueeze_copy.cpp
+          ${CMAKE_CURRENT_LIST_DIR}/kernels/portable/cpu/op_upsample_bilinear2d.cpp
+          ${CMAKE_CURRENT_LIST_DIR}/kernels/portable/cpu/op_upsample_bilinear2d_aa.cpp
+          ${CMAKE_CURRENT_LIST_DIR}/kernels/portable/cpu/op_upsample_nearest2d.cpp
           ${CMAKE_CURRENT_LIST_DIR}/kernels/portable/cpu/op_var.cpp
+          ${CMAKE_CURRENT_LIST_DIR}/kernels/portable/cpu/op_view_as_real_copy.cpp
           ${CMAKE_CURRENT_LIST_DIR}/kernels/portable/cpu/op_view_copy.cpp
           ${CMAKE_CURRENT_LIST_DIR}/kernels/portable/cpu/op_where.cpp
           ${CMAKE_CURRENT_LIST_DIR}/kernels/portable/cpu/op_zeros.cpp
-          ${CMAKE_CURRENT_LIST_DIR}/kernels/portable/cpu/pattern/unary_ufunc_realh.cpp
-          ${CMAKE_CURRENT_LIST_DIR}/kernels/portable/cpu/pattern/unary_ufunc_realhb_to_bool.cpp
+          ${CMAKE_CURRENT_LIST_DIR}/kernels/portable/cpu/pattern/unary_ufunc_realhbbf16_to_bool.cpp
+          ${CMAKE_CURRENT_LIST_DIR}/kernels/portable/cpu/pattern/unary_ufunc_realhbbf16_to_floathbf16.cpp
+          ${CMAKE_CURRENT_LIST_DIR}/kernels/portable/cpu/pattern/unary_ufunc_realhbf16.cpp
           ${CMAKE_CURRENT_LIST_DIR}/kernels/portable/cpu/util/activation_ops_util.cpp
           ${CMAKE_CURRENT_LIST_DIR}/kernels/portable/cpu/util/advanced_index_util.cpp
+          ${CMAKE_CURRENT_LIST_DIR}/kernels/portable/cpu/util/arange_util.cpp
           ${CMAKE_CURRENT_LIST_DIR}/kernels/portable/cpu/util/broadcast_util.cpp
           ${CMAKE_CURRENT_LIST_DIR}/kernels/portable/cpu/util/copy_ops_util.cpp
+          ${CMAKE_CURRENT_LIST_DIR}/kernels/portable/cpu/util/delinearize_index.cpp
           ${CMAKE_CURRENT_LIST_DIR}/kernels/portable/cpu/util/distance_util.cpp
           ${CMAKE_CURRENT_LIST_DIR}/kernels/portable/cpu/util/dtype_util.cpp
           ${CMAKE_CURRENT_LIST_DIR}/kernels/portable/cpu/util/index_util.cpp
@@ -185,10 +214,14 @@ message("${CMAKE_CURRENT_LIST_FILE} component is included.")
           ${CMAKE_CURRENT_LIST_DIR}/kernels/portable/cpu/util/reduce_util.cpp
           ${CMAKE_CURRENT_LIST_DIR}/kernels/portable/cpu/util/repeat_util.cpp
           ${CMAKE_CURRENT_LIST_DIR}/kernels/portable/cpu/util/select_copy_util.cpp
+          ${CMAKE_CURRENT_LIST_DIR}/kernels/portable/cpu/util/slice_util.cpp
+          ${CMAKE_CURRENT_LIST_DIR}/kernels/portable/cpu/util/upsample_util.cpp
+          ${CMAKE_CURRENT_LIST_DIR}/kernels/quantized/cpu/embeddingxb.cpp
           ${CMAKE_CURRENT_LIST_DIR}/kernels/quantized/cpu/op_add.cpp
           ${CMAKE_CURRENT_LIST_DIR}/kernels/quantized/cpu/op_choose_qparams.cpp
           ${CMAKE_CURRENT_LIST_DIR}/kernels/quantized/cpu/op_dequantize.cpp
           ${CMAKE_CURRENT_LIST_DIR}/kernels/quantized/cpu/op_embedding.cpp
+          ${CMAKE_CURRENT_LIST_DIR}/kernels/quantized/cpu/op_embedding2b.cpp
           ${CMAKE_CURRENT_LIST_DIR}/kernels/quantized/cpu/op_embedding4b.cpp
           ${CMAKE_CURRENT_LIST_DIR}/kernels/quantized/cpu/op_mixed_linear.cpp
           ${CMAKE_CURRENT_LIST_DIR}/kernels/quantized/cpu/op_mixed_mm.cpp

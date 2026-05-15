@@ -20,7 +20,14 @@
  * Definitions
  ******************************************************************************/
 /*!@brief codec handler size */
-#define HAL_CODEC_WM8962_HANDLER_SIZE (WM8962_I2C_HANDLER_SIZE + 4)
+/* Detect 64-bit architecture (primarily ARM64 for NXP platforms) */
+#if defined(__aarch64__) || defined(__arm64__) || defined(_M_ARM64) || \
+    defined(__LP64__) || defined(_LP64) || defined(_WIN64)
+#define HAL_CODEC_WM8962_PTR_SIZE (8U)
+#else
+#define HAL_CODEC_WM8962_PTR_SIZE (4U)
+#endif
+#define HAL_CODEC_WM8962_HANDLER_SIZE (WM8962_I2C_HANDLER_SIZE + HAL_CODEC_WM8962_PTR_SIZE + DEBUG_WM8962_MODULE_NUM * 2U)
 /*******************************************************************************
  * API
  ******************************************************************************/

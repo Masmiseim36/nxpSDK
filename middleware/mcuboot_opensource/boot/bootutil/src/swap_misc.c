@@ -2,6 +2,7 @@
  * SPDX-License-Identifier: Apache-2.0
  *
  * Copyright (c) 2019 JUUL Labs
+ * Copyright (c) 2025 Nordic Semiconductor ASA
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -41,7 +42,7 @@ swap_erase_trailer_sectors(const struct boot_loader_state *state,
      * erase, there is nothing to do here.
      */
     if (device_requires_erase(fap)) {
-        uint8_t slot = BOOT_PRIMARY_SLOT;
+        uint8_t slot = BOOT_SLOT_PRIMARY;
         uint32_t sector;
         uint32_t trailer_sz;
         uint32_t total_sz;
@@ -49,8 +50,8 @@ swap_erase_trailer_sectors(const struct boot_loader_state *state,
         BOOT_LOG_DBG("Erasing trailer; fa_id=%d", flash_area_get_id(fap));
 
         /* By default it is assumed that slot is primary */
-        if (fap == BOOT_IMG_AREA(state, BOOT_SECONDARY_SLOT)) {
-            slot = BOOT_SECONDARY_SLOT;
+        if (fap == BOOT_IMG_AREA(state, BOOT_SLOT_SECONDARY)) {
+            slot = BOOT_SLOT_SECONDARY;
         }
 
         /* Delete starting from last sector and moving to beginning */
@@ -80,7 +81,7 @@ swap_scramble_trailer_sectors(const struct boot_loader_state *state,
     size_t off;
     int rc;
 
-    BOOT_LOG_DBG("Scrambling trailer; fa_id=%d", flash_area_get_id(fap));
+    BOOT_LOG_DBG("swap_scramble_trailer_sectors: fa_id=%d", flash_area_get_id(fap));
 
     /* Delete starting from last sector and moving to beginning */
     rc = boot_trailer_scramble_offset(fap, BOOT_WRITE_SZ(state), &off);
@@ -119,7 +120,7 @@ swap_status_init(const struct boot_loader_state *state,
 
     BOOT_LOG_DBG("initializing status; fa_id=%d", flash_area_get_id(fap));
 
-    rc = boot_read_swap_state(state->imgs[image_index][BOOT_SECONDARY_SLOT].area,
+    rc = boot_read_swap_state(state->imgs[image_index][BOOT_SLOT_SECONDARY].area,
                               &swap_state);
     assert(rc == 0);
 
@@ -136,12 +137,15 @@ swap_status_init(const struct boot_loader_state *state,
     rc = boot_write_swap_size(fap, bs->swap_size);
     assert(rc == 0);
 
-#ifdef MCUBOOT_ENC_IMAGES
-    rc = boot_write_enc_key(fap, 0, bs);
+#ifdef MCUBOOT_SWAP_USING_OFFSET
+    rc = boot_write_unprotected_tlv_sizes(fap,
+                                   BOOT_IMG_UNPROTECTED_TLV_SIZE(state, BOOT_SLOT_PRIMARY),
+                                   BOOT_IMG_UNPROTECTED_TLV_SIZE(state, BOOT_SLOT_SECONDARY));
     assert(rc == 0);
+#endif
 
-    rc = boot_write_enc_key(fap, 1, bs);
-    assert(rc == 0);
+#ifdef MCUBOOT_ENC_IMAGES
+    rc = boot_write_enc_keys(fap, bs);
 #endif
 
     rc = boot_write_magic(fap);
@@ -170,7 +174,7 @@ swap_read_status(struct boot_loader_state *state, struct boot_status *bs)
 #endif
 
     case BOOT_STATUS_SOURCE_PRIMARY_SLOT:
-        fap = BOOT_IMG_AREA(state, BOOT_PRIMARY_SLOT);
+        fap = BOOT_IMG_AREA(state, BOOT_SLOT_PRIMARY);
         break;
 
     default:
@@ -246,6 +250,5 @@ out:
     flash_area_close(fap);
     return rc;
 }
-
 
 #endif /* defined(MCUBOOT_SWAP_USING_SCRATCH) || defined(MCUBOOT_SWAP_USING_MOVE) || defined(MCUBOOT_SWAP_USING_OFFSET) */

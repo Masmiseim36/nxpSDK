@@ -1,0 +1,69 @@
+# flexio_spi_int_lpspi_transfer_master
+
+## Overview
+The flexio_spi_master_interrupt_lpspi_slave example shows how to use flexio spi master driver in interrupt way:
+
+In this example, a flexio simulated master connect to a lpspi slave .
+
+
+## Running the demo
+You can see the similar message shows following in the terminal if the example runs successfully.
+
+FLEXIO Master - LPSPI Slave interrupt example start.
+This example use one flexio spi as master and one lpspi instance as slave on one board.
+Master and slave are both use interrupt way.
+Please make sure you make the correct line connection. Basically, the connection is:
+FLEXI_SPI_master -- LPSPI_slave
+      CLK        --    CLK
+      PCS        --    PCS
+      SOUT       --    SIN
+      SIN        --    SOUT
+This is LPSPI slave call back.
+FLEXIO SPI master <-> LPSPI slave transfer all data matched!
+
+End of example.
+
+## Supported Boards
+- [EVK9-MIMX8ULP](../../../../../_boards/evk9mimx8ulp/driver_examples/flexio/spi/int_lpspi_transfer/master/example_board_readme.md)
+- [EVKB-IMXRT1050](../../../../../_boards/evkbimxrt1050/driver_examples/flexio/spi/int_lpspi_transfer/master/example_board_readme.md)
+- [MIMXRT1060-EVKB](../../../../../_boards/evkbmimxrt1060/driver_examples/flexio/spi/int_lpspi_transfer/master/example_board_readme.md)
+- [MIMXRT1170-EVKB](../../../../../_boards/evkbmimxrt1170/driver_examples/flexio/spi/int_lpspi_transfer/master/example_board_readme.md)
+- [MIMXRT1060-EVKC](../../../../../_boards/evkcmimxrt1060/driver_examples/flexio/spi/int_lpspi_transfer/master/example_board_readme.md)
+- [EVK-MCIMX7ULP](../../../../../_boards/evkmcimx7ulp/driver_examples/flexio/spi/int_lpspi_transfer/master/example_board_readme.md)
+- [EVK-MIMX8ULP](../../../../../_boards/evkmimx8ulp/driver_examples/flexio/spi/int_lpspi_transfer/master/example_board_readme.md)
+- [EVK-MIMXRT1010](../../../../../_boards/evkmimxrt1010/driver_examples/flexio/spi/int_lpspi_transfer/master/example_board_readme.md)
+- [EVK-MIMXRT1015](../../../../../_boards/evkmimxrt1015/driver_examples/flexio/spi/int_lpspi_transfer/master/example_board_readme.md)
+- [EVK-MIMXRT1020](../../../../../_boards/evkmimxrt1020/driver_examples/flexio/spi/int_lpspi_transfer/master/example_board_readme.md)
+- [MIMXRT1024-EVK](../../../../../_boards/evkmimxrt1024/driver_examples/flexio/spi/int_lpspi_transfer/master/example_board_readme.md)
+- [MIMXRT1040-EVK](../../../../../_boards/evkmimxrt1040/driver_examples/flexio/spi/int_lpspi_transfer/master/example_board_readme.md)
+- [EVK-MIMXRT1064](../../../../../_boards/evkmimxrt1064/driver_examples/flexio/spi/int_lpspi_transfer/master/example_board_readme.md)
+- [MIMXRT1160-EVK](../../../../../_boards/evkmimxrt1160/driver_examples/flexio/spi/int_lpspi_transfer/master/example_board_readme.md)
+- [MIMXRT1180-EVK](../../../../../_boards/evkmimxrt1180/driver_examples/flexio/spi/int_lpspi_transfer/master/example_board_readme.md)
+- [FRDM-K32L2A4S](../../../../../_boards/frdmk32l2a4s/driver_examples/flexio/spi/int_lpspi_transfer/master/example_board_readme.md)
+- [FRDM-K32L3A6](../../../../../_boards/frdmk32l3a6/driver_examples/flexio/spi/int_lpspi_transfer/master/example_board_readme.md)
+- [FRDM-KE15Z](../../../../../_boards/frdmke15z/driver_examples/flexio/spi/int_lpspi_transfer/master/example_board_readme.md)
+- [FRDM-KE17Z](../../../../../_boards/frdmke17z/driver_examples/flexio/spi/int_lpspi_transfer/master/example_board_readme.md)
+- [FRDM-KE17Z512](../../../../../_boards/frdmke17z512/driver_examples/flexio/spi/int_lpspi_transfer/master/example_board_readme.md)
+- [FRDM-MCXA156](../../../../../_boards/frdmmcxa156/driver_examples/flexio/spi/int_lpspi_transfer/master/example_board_readme.md)
+- [FRDM-MCXE247](../../../../../_boards/frdmmcxe247/driver_examples/flexio/spi/int_lpspi_transfer/master/example_board_readme.md)
+- [FRDM-MCXN236](../../../../../_boards/frdmmcxn236/driver_examples/flexio/spi/int_lpspi_transfer/master/example_board_readme.md)
+- [FRDM-MCXN947](../../../../../_boards/frdmmcxn947/driver_examples/flexio/spi/int_lpspi_transfer/master/example_board_readme.md)
+- [FRDM-MCXW71](../../../../../_boards/frdmmcxw71/driver_examples/flexio/spi/int_lpspi_transfer/master/example_board_readme.md)
+- [MCX-W71-EVK](../../../../../_boards/mcxw71evk/driver_examples/flexio/spi/int_lpspi_transfer/master/example_board_readme.md)
+- [KW45B41Z-EVK](../../../../../_boards/kw45b41zevk/driver_examples/flexio/spi/int_lpspi_transfer/master/example_board_readme.md)
+- [KW47-EVK](../../../../../_boards/kw47evk/driver_examples/flexio/spi/int_lpspi_transfer/master/example_board_readme.md)
+- [MCIMX93AUTO-EVK](../../../../../_boards/mcimx93autoevk/driver_examples/flexio/spi/int_lpspi_transfer/master/example_board_readme.md)
+- [MCIMX93-EVK](../../../../../_boards/mcimx93evk/driver_examples/flexio/spi/int_lpspi_transfer/master/example_board_readme.md)
+- [MCIMX93W-EVK](../../../../../_boards/mcimx93wevk/driver_examples/flexio/spi/int_lpspi_transfer/master/example_board_readme.md)
+- [MCIMX93-QSB](../../../../../_boards/mcimx93qsb/driver_examples/flexio/spi/int_lpspi_transfer/master/example_board_readme.md)
+- [MCX-N5XX-EVK](../../../../../_boards/mcxn5xxevk/driver_examples/flexio/spi/int_lpspi_transfer/master/example_board_readme.md)
+- [MCX-N9XX-EVK](../../../../../_boards/mcxn9xxevk/driver_examples/flexio/spi/int_lpspi_transfer/master/example_board_readme.md)
+- [MCX-W72-EVK](../../../../../_boards/mcxw72evk/driver_examples/flexio/spi/int_lpspi_transfer/master/example_board_readme.md)
+- [MIMXRT700-EVK](../../../../../_boards/mimxrt700evk/driver_examples/flexio/spi/int_lpspi_transfer/master/example_board_readme.md)
+- [KW47-LOC](../../../../../_boards/kw47loc/driver_examples/flexio/spi/int_lpspi_transfer/master/example_board_readme.md)
+- [MCXW72-LOC](../../../../../_boards/mcxw72loc/driver_examples/flexio/spi/int_lpspi_transfer/master/example_board_readme.md)
+- [FRDM-IMXRT1186](../../../../../_boards/frdmimxrt1186/driver_examples/flexio/spi/int_lpspi_transfer/master/example_board_readme.md)
+- [FRDM-MCXA266](../../../../../_boards/frdmmcxa266/driver_examples/flexio/spi/int_lpspi_transfer/master/example_board_readme.md)
+- [FRDM-MCXA366](../../../../../_boards/frdmmcxa366/driver_examples/flexio/spi/int_lpspi_transfer/master/example_board_readme.md)
+- [FRDM-MCXW72](../../../../../_boards/frdmmcxw72/driver_examples/flexio/spi/int_lpspi_transfer/master/example_board_readme.md)
+- [FRDM-MCXA577](../../../../../_boards/frdmmcxa577/driver_examples/flexio/spi/int_lpspi_transfer/master/example_board_readme.md)

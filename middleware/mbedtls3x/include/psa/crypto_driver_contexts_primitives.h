@@ -65,6 +65,10 @@
 #include "sgi_crypto_primitives.h"
 #endif
 
+#if defined(PSA_CRYPTO_DRIVER_ELE_HSEB)
+#include "ele_hseb_crypto_primitives.h"
+#endif
+
 #if defined(PSA_CRYPTO_DRIVER_TEST)
 
 #if defined(MBEDTLS_TEST_LIBTESTDRIVER1) && \
@@ -147,6 +151,9 @@ typedef union {
 #if defined(PSA_CRYPTO_DRIVER_SGI)
     mcux_sgi_hash_operation_t sgi_driver_ctx;
 #endif
+#if defined(PSA_CRYPTO_DRIVER_ELE_HSEB)
+    ele_hseb_hash_operation_t ele_hseb_driver_ctx;
+#endif
 } psa_driver_hash_context_t;
 
 typedef union {
@@ -162,6 +169,12 @@ typedef union {
 #if defined(PSA_CRYPTO_DRIVER_ELS_PKC)
     els_pkc_transparent_cipher_operation_t transparent_els_pkc_driver_ctx;
     els_pkc_opaque_cipher_operation_t opaque_els_pkc_driver_ctx;
+#endif
+#if defined(PSA_CRYPTO_DRIVER_ELE_HSEB)
+    ele_hseb_transparent_cipher_operation_t transparent_ele_hseb_driver_ctx;
+#endif
+#if defined(PSA_CRYPTO_DRIVER_SGI)
+    sgi_cipher_operation_t sgi_driver_ctx;
 #endif
 } psa_driver_cipher_context_t;
 

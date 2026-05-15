@@ -7,6 +7,8 @@
 /*******************************************************************************
  * Includes
  ******************************************************************************/
+#if defined(PSA_ELE_S4XX_SD_NVM_MANAGER)
+
 #include <stdio.h>
 #include <string.h>
 
@@ -73,7 +75,6 @@ static int get_chunk_file_path(
                sizeof(blob_id_lsb) * 2 + 1 +
                sizeof(blob_ext) * 2 + 1;
     if (path_buf_sz < path_len) {
-        PRINTF("Insufficient size of path buffer \r\n");
         return -1;
     }
 
@@ -210,3 +211,5 @@ int sd_ele_fs_initialize(void)
 
     return kStatus_Success;
 }
+
+#endif /* #if defined(PSA_ELE_S4XX_SD_NVM_MANAGER) */

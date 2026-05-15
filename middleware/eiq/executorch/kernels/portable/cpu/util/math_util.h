@@ -8,6 +8,14 @@
 
 #pragma once
 
+#include <executorch/runtime/core/exec_aten/exec_aten.h>
+
+#if defined(ET_USE_PYTORCH_HEADERS) && ET_USE_PYTORCH_HEADERS
+#include <ATen/cpu/vec/vec.h>
+#endif
+
+#include <type_traits>
+
 namespace torch {
 namespace executor {
 namespace native {
@@ -25,7 +33,8 @@ template <
     typename std::enable_if<std::is_integral<INT_T>::value, bool>::type = true>
 INT_T floor_divide(INT_T a, INT_T b) {
   const auto quot = a / b;
-  if (std::signbit(a) == std::signbit(b)) {
+  // MSVC does not like signbit on integral types.
+  if ((a < 0) == (b < 0)) {
     return quot;
   }
   const auto rem = a % b;
@@ -46,6 +55,20 @@ FLOAT_T floor_divide(FLOAT_T a, FLOAT_T b) {
     return div - 1;
   }
   return div;
+}
+
+/**
+ * A wrapper around std::isnan that works with MSVC. When building with MSVC,
+ * std::isnan calls with integer inputs fail to compile due to ambiguous
+ * overload resolution.
+ */
+template <typename T>
+bool isnan_override(T a) {
+  if constexpr (!std::is_integral_v<T>) {
+    return std::isnan(a);
+  } else {
+    return false;
+  }
 }
 
 /**
@@ -96,8 +119,10 @@ INT_T max_override(INT_T a, INT_T b) {
 
 template <
     typename T,
-    typename std::enable_if<std::is_same<T, exec_aten::Half>::value, bool>::
-        type = true>
+    typename std::enable_if_t<
+        std::is_same_v<T, executorch::aten::Half> ||
+            std::is_same_v<T, executorch::aten::BFloat16>,
+        bool> = true>
 T min_override(T a, T b) {
   const auto float_a = static_cast<float>(a);
   if (std::isnan(float_a)) {
@@ -116,8 +141,10 @@ T min_override(T a, T b) {
 
 template <
     typename T,
-    typename std::enable_if<std::is_same<T, exec_aten::Half>::value, bool>::
-        type = true>
+    typename std::enable_if_t<
+        std::is_same_v<T, executorch::aten::Half> ||
+            std::is_same_v<T, executorch::aten::BFloat16>,
+        bool> = true>
 T max_override(T a, T b) {
   const auto float_a = static_cast<float>(a);
   if (std::isnan(float_a)) {
@@ -134,6 +161,32 @@ T max_override(T a, T b) {
   return b;
 }
 
+#if defined(ET_USE_PYTORCH_HEADERS) && ET_USE_PYTORCH_HEADERS
+template <typename T>
+at::vec::Vectorized<T> min_override(
+    at::vec::Vectorized<T> a,
+    at::vec::Vectorized<T> b) {
+  return at::vec::minimum(a, b);
+}
+
+template <typename T>
+at::vec::Vectorized<T> min_override(at::vec::Vectorized<T> a, T b) {
+  return min_override(a, at::vec::Vectorized<T>(b));
+}
+
+template <typename T>
+at::vec::Vectorized<T> max_override(
+    at::vec::Vectorized<T> a,
+    at::vec::Vectorized<T> b) {
+  return at::vec::maximum(a, b);
+}
+
+template <typename T>
+at::vec::Vectorized<T> max_override(at::vec::Vectorized<T> a, T b) {
+  return max_override(a, at::vec::Vectorized<T>(b));
+}
+
+#endif
 /**
  * There is a slight difference in how std::fmod works compared to how ATen
  * determines remainders:

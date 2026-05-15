@@ -11,7 +11,75 @@ To avoid ambiguity, change log below contains SHA-1 hashes of GIT commits used w
 
 KSDK refers to Kinetis SDK, the predecessor of MCUXpresso SDK.
 
-## 2.2.1_rev4 (newest)
+## 2.2.1_rev8 (newest)
+### New features:
+- Applied patch #10465: Overall altcp_tls_mbedtls fixes and enhancements (https://savannah.nongnu.org/patch/?10465):
+  - Copy received TCP flags
+  - Free client's TLS config on dealloc
+  - Fix abort management. Fix to return ERR_ABRT on altcp_abort(). Add check to altcp_mbedtls_abort().
+  - Free SSL cache and session tickets on tls_free_config()
+  - Mark freed members to prevent double free.
+  - Correctly close and free LISTEN connections
+  - Use handshake steps rather than a single blocking call
+  - Add mbedtls return values.
+  - free rx_app on dealloc
+  - correct ALTCP_MBEDTLS_PLATFORM_ALLOC configuration
+  - Manage write apiflags
+  - Port to mbedtls v3
+  - Fix the return value of altcp_mbdtls_sndbuf when the underlying tcp sndbuf is consumed by ssl expansion bytes.
+- Switched from mbedTLS 2.x to mbedTLS 3.x:
+  - Updated Kconfig dependencies.
+  - Updated altcp_tls_mbedtls layer to use PSA crypto random number generator abstraction instead of ctr_drbg, which would be initialized twice.
+  - Updated NXP web server (src/apps/httpsrv).
+### Bug fixes:
+- Fixed sys_sem_new in FreeRTOS porting layer:
+  - If the initial count argument was 1, the newly created semaphore was not signalled from the start.
+  - The initial count should be just 0 or 1 according to lwIP documentation, but the implementation allowed
+    it to be more than 1 (counting semaphore). Fixed to allow only binary semaphore behavior.
+  - `src/apps/httpsrv` updated to use FreeRTOS API directly where it cannot use sys_sem_t as a counting
+    semaphore anymore.
+
+## 2.2.1_rev7
+### New features:
+- Operating system abstraction layer: the default implementation of the sys_msleep function (using a temporary
+  allocated semaphore) is overwritten by a new implementation in the adaptation layer (using vTaskDelay on FreeRTOS).
+### Bug fixes:
+- ENET QoS adaptation layer: initialize the CSR (control and status register) clock field in the driver configuration.
+  This fixes the bug with the number of clock ticks for one-microsecond reference timer being set incorrectly.
+- Ethernet adaptation layers: Updated logic in ethernetif_pbuf_free_safe to allow the thread to sleep between
+  attempts to schedule pbuf_free on tcpip_thread. Previously, when ETH_RX_TASK_PRIO was higher than tcpip_thread
+  priority and scheduling failed due to resource constraints, ethernetif_pbuf_free_safe would loop indefinitely,
+  preventing tcpip_thread from freeing those resources. Changes include:
+  - Added thread sleep between scheduling attempts to prevent infinite loops
+  - Removed looping on schedule failure in interrupt context (now asserts instead)
+  - Added direct pbuf_free calls when LWIP_ALLOW_MEM_FREE_FROM_OTHER_CONTEXT is enabled
+
+## 2.2.1_rev6
+### New features:
+- Support for on-demand timers for some of the protocols. Reused from Espressif open source lwIP port.
+  LwIP default protocol timer handlers are invoked periodically, even if there is nothing to do.
+  This is not suitable for low-power applications entering into a sleep mode. The added feature
+  calculates the time when the timer callback should be invoked, instead of waking-up periodically
+  to only check if there is anything to do or not.
+  The feature is turned off by default and can be enabled by the following options:
+  - LWIP_IP4_REASSEMBLY_TIMERS_ONDEMAND
+  - LWIP_IP6_REASSEMBLY_TIMERS_ONDEMAND
+  - LWIP_DNS_TIMERS_ONDEMAND
+  - LWIP_DHCP_FINE_TIMERS_ONDEMAND
+  - LWIP_IGMP_TIMERS_ONDEMAND
+  - LWIP_MLD6_TIMERS_ONDEMAND
+
+  Note that other protocols don't have on-demand timers implemented, so for example if there are
+  open TCP connections, its protocol timers will be still invoked periodically.
+- NETC adaptation layer: Possibility to use switch port, see NETC_USE_SWT and related options.
+- New option ETH_USE_GPIO_ADAPTER which can be used on platforms without GPIO adapter to bypass the code using it.
+- New option ETH_ENET_QOS_MII_MODE to override default MII mode for ENET QoS.
+
+## 2.2.1_rev5
+### New features:
+- Iperf now tries to place buffers into fast memory.
+
+## 2.2.1_rev4
 ### New features:
 - Enabled build of `ALTCP_TLS`:
   - This enables option to use `ALTCP` with mbedTLS for transparent TLS.

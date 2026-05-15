@@ -5,11 +5,9 @@
  *  SPDX-License-Identifier: Apache-2.0 OR GPL-2.0-or-later
  */
 
-#if !defined(MBEDTLS_CONFIG_FILE)
-#include "mbedtls/config.h"
-#else
-#include MBEDTLS_CONFIG_FILE
-#endif
+#define MBEDTLS_DECLARE_PRIVATE_IDENTIFIERS
+
+#include "mbedtls/build_info.h"
 
 #include "mbedtls/platform.h"
 
@@ -22,21 +20,19 @@
 #define BIND_IP     "::"
 #endif
 
-#if !defined(MBEDTLS_SSL_SRV_C) || !defined(MBEDTLS_SSL_PROTO_DTLS) ||    \
-    !defined(MBEDTLS_SSL_COOKIE_C) || !defined(MBEDTLS_NET_C) ||          \
-    !defined(MBEDTLS_ENTROPY_C) || !defined(MBEDTLS_CTR_DRBG_C) ||        \
-    !defined(MBEDTLS_X509_CRT_PARSE_C) || !defined(MBEDTLS_RSA_C) ||      \
-    !defined(MBEDTLS_CERTS_C) || !defined(MBEDTLS_PEM_PARSE_C) ||         \
-    !defined(MBEDTLS_TIMING_C)
-
+#if !defined(MBEDTLS_ENTROPY_C) || !defined(MBEDTLS_CTR_DRBG_C) ||      \
+    !defined(MBEDTLS_NET_C) || !defined(MBEDTLS_SSL_SRV_C) ||           \
+    !defined(MBEDTLS_TIMING_C) || !defined(MBEDTLS_SSL_PROTO_DTLS) ||   \
+    !defined(MBEDTLS_SSL_COOKIE_C) ||                                   \
+    !defined(MBEDTLS_PEM_PARSE_C) || !defined(MBEDTLS_X509_CRT_PARSE_C)
 int main(void)
 {
-    printf("MBEDTLS_SSL_SRV_C and/or MBEDTLS_SSL_PROTO_DTLS and/or "
-           "MBEDTLS_SSL_COOKIE_C and/or MBEDTLS_NET_C and/or "
-           "MBEDTLS_ENTROPY_C and/or MBEDTLS_CTR_DRBG_C and/or "
-           "MBEDTLS_X509_CRT_PARSE_C and/or MBEDTLS_RSA_C and/or "
-           "MBEDTLS_CERTS_C and/or MBEDTLS_PEM_PARSE_C and/or "
-           "MBEDTLS_TIMING_C not defined.\n");
+    mbedtls_printf("MBEDTLS_ENTROPY_C and/or MBEDTLS_CTR_DRBG_C and/or "
+                   "MBEDTLS_NET_C and/or MBEDTLS_SSL_SRV_C and/or "
+                   "MBEDTLS_TIMING_C and/or MBEDTLS_SSL_PROTO_DTLS and/or "
+                   "MBEDTLS_SSL_COOKIE_C and/or "
+                   "MBEDTLS_PEM_PARSE_C and/or MBEDTLS_X509_CRT_PARSE_C "
+                   "not defined.\n");
     mbedtls_exit(0);
 }
 #else
@@ -49,9 +45,8 @@ int main(void)
 #include <stdlib.h>
 #include <stdio.h>
 
-#include "mbedtls/entropy.h"
-#include "mbedtls/ctr_drbg.h"
-#include "mbedtls/certs.h"
+#include "mbedtls/private/entropy.h"
+#include "mbedtls/private/ctr_drbg.h"
 #include "mbedtls/x509.h"
 #include "mbedtls/ssl.h"
 #include "mbedtls/ssl_cookie.h"
@@ -59,6 +54,8 @@ int main(void)
 #include "mbedtls/error.h"
 #include "mbedtls/debug.h"
 #include "mbedtls/timing.h"
+
+#include "test/certs.h"
 
 #if defined(MBEDTLS_SSL_CACHE_C)
 #include "mbedtls/ssl_cache.h"
@@ -112,7 +109,6 @@ int main(void)
     mbedtls_entropy_init(&entropy);
     mbedtls_ctr_drbg_init(&ctr_drbg);
 
-#if defined(MBEDTLS_USE_PSA_CRYPTO)
     psa_status_t status = psa_crypto_init();
     if (status != PSA_SUCCESS) {
         mbedtls_fprintf(stderr, "Failed to initialize PSA Crypto implementation: %d\n",
@@ -120,14 +116,28 @@ int main(void)
         ret = MBEDTLS_ERR_SSL_HW_ACCEL_FAILED;
         goto exit;
     }
-#endif /* MBEDTLS_USE_PSA_CRYPTO */
 
 #if defined(MBEDTLS_DEBUG_C)
     mbedtls_debug_set_threshold(DEBUG_LEVEL);
 #endif
 
     /*
-     * 1. Load the certificates and private RSA key
+     * 1. Seed the RNG
+     */
+    printf("  . Seeding the random number generator...");
+    fflush(stdout);
+
+    if ((ret = mbedtls_ctr_drbg_seed(&ctr_drbg, mbedtls_entropy_func, &entropy,
+                                     (const unsigned char *) pers,
+                                     strlen(pers))) != 0) {
+        printf(" failed\n  ! mbedtls_ctr_drbg_seed returned %d\n", ret);
+        goto exit;
+    }
+
+    printf(" ok\n");
+
+    /*
+     * 2. Load the certificates and private RSA key
      */
     printf("\n  . Loading the server cert. and key...");
     fflush(stdout);
@@ -151,8 +161,11 @@ int main(void)
         goto exit;
     }
 
-    ret =  mbedtls_pk_parse_key(&pkey, (const unsigned char *) mbedtls_test_srv_key,
-                                mbedtls_test_srv_key_len, NULL, 0);
+    ret =  mbedtls_pk_parse_key(&pkey,
+                                (const unsigned char *) mbedtls_test_srv_key,
+                                mbedtls_test_srv_key_len,
+                                NULL,
+                                0);
     if (ret != 0) {
         printf(" failed\n  !  mbedtls_pk_parse_key returned %d\n\n", ret);
         goto exit;
@@ -161,28 +174,13 @@ int main(void)
     printf(" ok\n");
 
     /*
-     * 2. Setup the "listening" UDP socket
+     * 3. Setup the "listening" UDP socket
      */
     printf("  . Bind on udp/*/4433 ...");
     fflush(stdout);
 
     if ((ret = mbedtls_net_bind(&listen_fd, BIND_IP, "4433", MBEDTLS_NET_PROTO_UDP)) != 0) {
         printf(" failed\n  ! mbedtls_net_bind returned %d\n\n", ret);
-        goto exit;
-    }
-
-    printf(" ok\n");
-
-    /*
-     * 3. Seed the RNG
-     */
-    printf("  . Seeding the random number generator...");
-    fflush(stdout);
-
-    if ((ret = mbedtls_ctr_drbg_seed(&ctr_drbg, mbedtls_entropy_func, &entropy,
-                                     (const unsigned char *) pers,
-                                     strlen(pers))) != 0) {
-        printf(" failed\n  ! mbedtls_ctr_drbg_seed returned %d\n", ret);
         goto exit;
     }
 
@@ -202,7 +200,6 @@ int main(void)
         goto exit;
     }
 
-    mbedtls_ssl_conf_rng(&conf, mbedtls_ctr_drbg_random, &ctr_drbg);
     mbedtls_ssl_conf_dbg(&conf, my_debug, stdout);
     mbedtls_ssl_conf_read_timeout(&conf, READ_TIMEOUT_MS);
 
@@ -218,8 +215,7 @@ int main(void)
         goto exit;
     }
 
-    if ((ret = mbedtls_ssl_cookie_setup(&cookie_ctx,
-                                        mbedtls_ctr_drbg_random, &ctr_drbg)) != 0) {
+    if ((ret = mbedtls_ssl_cookie_setup(&cookie_ctx)) != 0) {
         printf(" failed\n  ! mbedtls_ssl_cookie_setup returned %d\n\n", ret);
         goto exit;
     }
@@ -251,7 +247,7 @@ reset:
     mbedtls_ssl_session_reset(&ssl);
 
     /*
-     * 3. Wait until a client connects
+     * 5. Wait until a client connects
      */
     printf("  . Waiting for a remote connection ...");
     fflush(stdout);
@@ -276,7 +272,7 @@ reset:
     printf(" ok\n");
 
     /*
-     * 5. Handshake
+     * 6. Handshake
      */
     printf("  . Performing the DTLS handshake...");
     fflush(stdout);
@@ -291,14 +287,21 @@ reset:
         ret = 0;
         goto reset;
     } else if (ret != 0) {
-        printf(" failed\n  ! mbedtls_ssl_handshake returned -0x%x\n\n", (unsigned int) -ret);
+        printf(" failed\n  ! mbedtls_ssl_handshake returned -0x%x\n", (unsigned int) -ret);
+        if (ret == MBEDTLS_ERR_SSL_UNEXPECTED_MESSAGE) {
+            printf("    An unexpected message was received from our peer. If this happened at\n");
+            printf("    the beginning of the handshake, this is likely a duplicated packet or\n");
+            printf("    a close_notify alert from the previous connection, which is harmless.\n");
+            ret = 0;
+        }
+        printf("\n");
         goto reset;
     }
 
     printf(" ok\n");
 
     /*
-     * 6. Read the echo Request
+     * 7. Read the echo Request
      */
     printf("  < Read from client:");
     fflush(stdout);
@@ -331,7 +334,7 @@ reset:
     printf(" %d bytes read\n\n%s\n\n", len, buf);
 
     /*
-     * 7. Write the 200 Response
+     * 8. Write the 200 Response
      */
     printf("  > Write to client:");
     fflush(stdout);
@@ -350,7 +353,7 @@ reset:
     printf(" %d bytes written\n\n%s\n\n", len, buf);
 
     /*
-     * 8. Done, cleanly close the connection
+     * 9. Done, cleanly close the connection
      */
 close_notify:
     printf("  . Closing the connection...");
@@ -391,14 +394,7 @@ exit:
 #endif
     mbedtls_ctr_drbg_free(&ctr_drbg);
     mbedtls_entropy_free(&entropy);
-#if defined(MBEDTLS_USE_PSA_CRYPTO)
     mbedtls_psa_crypto_free();
-#endif /* MBEDTLS_USE_PSA_CRYPTO */
-
-#if defined(_WIN32)
-    printf("  Press Enter to exit this program.\n");
-    fflush(stdout); getchar();
-#endif
 
     /* Shell can not handle large exit numbers -> 1 for errors */
     if (ret < 0) {
@@ -407,7 +403,5 @@ exit:
 
     mbedtls_exit(ret);
 }
-#endif /* MBEDTLS_SSL_SRV_C && MBEDTLS_SSL_PROTO_DTLS &&
-          MBEDTLS_SSL_COOKIE_C && MBEDTLS_NET_C && MBEDTLS_ENTROPY_C &&
-          MBEDTLS_CTR_DRBG_C && MBEDTLS_X509_CRT_PARSE_C && MBEDTLS_RSA_C
-          && MBEDTLS_CERTS_C && MBEDTLS_PEM_PARSE_C && MBEDTLS_TIMING_C */
+
+#endif /* configuration allows running this program */

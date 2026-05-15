@@ -38,6 +38,20 @@ if (CONFIG_MCUX_COMPONENT_middleware.soem.netc)
     )
 endif ()
 
+if (CONFIG_MCUX_COMPONENT_middleware.soem.netc_swt)
+    mcux_add_include(
+        INCLUDES oshw/mcux-sdk
+        INCLUDES oshw/mcux-sdk/netc_swt
+    )
+    mcux_add_source(
+        SOURCES
+            oshw/mcux-sdk/nicdrv.c
+            oshw/mcux-sdk/netc_swt/soem_netc_swt.h
+            oshw/mcux-sdk/netc_swt/netc_swt.c
+            oshw/mcux-sdk/netc_swt/netc_swt.h
+    )
+endif ()
+
 if (CONFIG_MCUX_COMPONENT_middleware.soem.bm)
     mcux_add_include(
         INCLUDES soem

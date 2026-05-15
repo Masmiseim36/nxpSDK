@@ -1,0 +1,35 @@
+# edma3_memory_to_memory
+
+## Overview
+The EDMA memory to memory example is a simple demonstration program that uses the SDK software.
+It executes one shot transfer from source buffer to destination buffer using the SDK EDMA drivers.
+The purpose of this example is to show how to use the EDMA and to provide a simple example for
+debugging and further development.
+
+## Supported Boards
+- [MIMXRT1180-EVK](../../../_boards/evkmimxrt1180/driver_examples/edma3/memory_to_memory/example_board_readme.md)
+- [IMX952LPD5EVK-19](../../../_boards/imx952evk/driver_examples/edma3/memory_to_memory/example_board_readme.md)
+- [IMX952LPD5EVK-15](../../../_boards/imx952evk/driver_examples/edma3/memory_to_memory/example_board_readme.md)
+- [FRDM-MCXA153](../../../_boards/frdmmcxa153/driver_examples/edma3/memory_to_memory/example_board_readme.md)
+- [FRDM-MCXA156](../../../_boards/frdmmcxa156/driver_examples/edma3/memory_to_memory/example_board_readme.md)
+- [FRDM-MCXA346](../../../_boards/frdmmcxa346/driver_examples/edma3/memory_to_memory/example_board_readme.md)
+- [FRDM-MCXN236](../../../_boards/frdmmcxn236/driver_examples/edma3/memory_to_memory/example_board_readme.md)
+- [FRDM-MCXN947](../../../_boards/frdmmcxn947/driver_examples/edma3/memory_to_memory/example_board_readme.md)
+- [IMX95LP4XEVK-15](../../../_boards/imx95lp4xevk15/driver_examples/edma3/memory_to_memory/example_board_readme.md)
+- [IMX95LPD5EVK-19](../../../_boards/imx95lpd5evk19/driver_examples/edma3/memory_to_memory/example_board_readme.md)
+- [imx95verdinevk](../../../_boards/imx95verdinevk/driver_examples/edma3/memory_to_memory/example_board_readme.md)
+- [FRDMIMX95](../../../_boards/frdmimx95/driver_examples/edma3/memory_to_memory/example_board_readme.md)
+- [MCIMX93AUTO-EVK](../../../_boards/mcimx93autoevk/driver_examples/edma3/memory_to_memory/example_board_readme.md)
+- [MCIMX93-EVK](../../../_boards/mcimx93evk/driver_examples/edma3/memory_to_memory/example_board_readme.md)
+- [MCIMX93W-EVK](../../../_boards/mcimx93wevk/driver_examples/edma3/memory_to_memory/example_board_readme.md)
+- [MCIMX93-QSB](../../../_boards/mcimx93qsb/driver_examples/edma3/memory_to_memory/example_board_readme.md)
+- [MCX-N5XX-EVK](../../../_boards/mcxn5xxevk/driver_examples/edma3/memory_to_memory/example_board_readme.md)
+- [MCX-N9XX-EVK](../../../_boards/mcxn9xxevk/driver_examples/edma3/memory_to_memory/example_board_readme.md)
+- [FRDM-MCXL255](../../../_boards/frdmmcxl255/driver_examples/edma3/memory_to_memory/example_board_readme.md)
+- [FRDM-MCXA174](../../../_boards/frdmmcxa174/driver_examples/edma3/memory_to_memory/example_board_readme.md)
+- [FRDM-MCXA344](../../../_boards/frdmmcxa344/driver_examples/edma3/memory_to_memory/example_board_readme.md)
+- [FRDM-IMXRT1186](../../../_boards/frdmimxrt1186/driver_examples/edma3/memory_to_memory/example_board_readme.md)
+- [FRDM-MCXA266](../../../_boards/frdmmcxa266/driver_examples/edma3/memory_to_memory/example_board_readme.md)
+- [FRDM-MCXA366](../../../_boards/frdmmcxa366/driver_examples/edma3/memory_to_memory/example_board_readme.md)
+- [FRDM-MCXA577](../../../_boards/frdmmcxa577/driver_examples/edma3/memory_to_memory/example_board_readme.md)
+- [FRDM-MCXC162](../../../_boards/frdmmcxc162/driver_examples/edma3/memory_to_memory/example_board_readme.md)

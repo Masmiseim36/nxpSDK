@@ -67,15 +67,48 @@
 // #include "fsl_netc.h"
 #include "fsl_phy.h"
 #include "fsl_netc_endpoint.h"
+#if !(defined(FSL_FEATURE_NETC_HAS_NO_SWITCH) && FSL_FEATURE_NETC_HAS_NO_SWITCH)
+#include "fsl_netc_switch.h"
+#endif
 #include "fsl_netc_mdio.h"
 #if defined(NETC_VSI_NUM_USED) && (NETC_VSI_NUM_USED > 0)
 #include "fsl_netc_msg.h"
 #endif
 #include "fsl_msgintr.h"
+#if defined(FSL_FEATURE_NETC_HAS_SWITCH_TAG) && FSL_FEATURE_NETC_HAS_SWITCH_TAG
+#include "fsl_netc_tag.h"
+#endif
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
+
+/* Use switch port instead of endpoint port. */
+#ifndef NETC_USE_SWT
+#define NETC_USE_SWT (0)
+#endif
+
+#if NETC_USE_SWT
+
+/* Maximum number of switch ports. */
+#ifndef NETC_SWT_MAX_PORT_NUM
+#define NETC_SWT_MAX_PORT_NUM (4U)
+#endif
+
+/*
+ * Enabled switch port bit map, bit n represents port n.
+ * Note: Be careful that some ports are multiplexed with SEMC.
+ */
+#if !defined(NETC_SWT_USED_PORT_BITMAP)
+#define NETC_SWT_USED_PORT_BITMAP 0x5U
+#endif
+
+/* Switch pseudo port. */
+#ifndef NETC_SWT_PSEUDO_PORT
+#define NETC_SWT_PSEUDO_PORT 0x4U
+#endif
+
+#endif /* NETC_USE_SWT */
 
 #define NETC_TIMEOUT (0xFFFU)
 
@@ -185,7 +218,11 @@
 #endif
 
 #ifndef NETC_PSI
+#if NETC_USE_SWT
+#define NETC_PSI kNETC_ENETC1PSI0
+#else
 #define NETC_PSI kNETC_ENETC0PSI0
+#endif
 #endif
 
 #ifndef NETC_VSI_NUM_USED
@@ -223,6 +260,9 @@ AT_NONCACHEABLE_SECTION_ALIGN(static uint8_t psiMsgBuff1[1024], 32);
 #if (NETC_VSI_NUM_USED > 1)
 AT_NONCACHEABLE_SECTION_ALIGN(static uint8_t psiMsgBuff2[1024], 32);
 #endif
+#if (NETC_VSI_NUM_USED > 2)
+AT_NONCACHEABLE_SECTION_ALIGN(static uint8_t psiMsgBuff3[1024], 32);
+#endif
 /*!
  * @brief Used to wrap received data in a pbuf to be passed into lwIP
  *        without copying.
@@ -233,7 +273,11 @@ typedef struct rx_pbuf_wrapper
     struct pbuf_custom p;      /*!< Pbuf wrapper. Has to be first. */
     void *buffer;              /*!< Original buffer wrapped by p. */
     volatile bool buffer_used; /*!< Wrapped buffer is used by NETC or lwIP. */
+#if NETC_USE_SWT
+    swt_handle_t *handle;
+#else
     ep_handle_t *handle;
+#endif
     uint8_t ring;
 } rx_pbuf_wrapper_t;
 
@@ -244,6 +288,13 @@ struct ethernetif
 {
     ep_handle_t *ep_handle;
     ep_config_t *ep_config;
+#if NETC_USE_SWT
+    bool swt_initialized;
+    swt_handle_t *swt_handle;
+    swt_config_t *swt_config;
+    swt_transfer_config_t *swt_transfer_config;
+    netc_tx_frame_info_t mgmtTxFrameInfo;
+#endif
 #if (NETC_VSI_NUM_USED > 0)
     netc_msix_entry_t msixEntry[3];
 #else
@@ -258,6 +309,9 @@ struct ethernetif
     netc_bdr_config_t bdrConfig;
 
     netc_cmd_bd_t *cmdBuffDescrip;
+#if NETC_USE_SWT
+    netc_cmd_bd_t *cmdSwtBuffDescrip;
+#endif
 
     netc_rx_bd_t *rxBuffDescrip;
     netc_tx_bd_t *txBuffDescrip;
@@ -276,28 +330,24 @@ struct ethernetif
     phy_duplex_t last_duplex;
     bool last_link_up;
 
+#if ETH_USE_GPIO_ADAPTER
     uint32_t intGpioHdl[((HAL_GPIO_HANDLE_SIZE + sizeof(uint32_t) - 1U) / sizeof(uint32_t))];
+#endif /* ETH_USE_GPIO_ADAPTER */
 
     struct netif *netif;
 };
 
 static struct ethernetif *s_ethernetif = NULL;
 
-static rx_pbuf_wrapper_t *get_rx_pbufs_from_handle(ep_handle_t *handle, uint8_t ring)
-{
-    (void)ring;
-    void *ep_user_data = handle->cfg.userData;
-
-    return (rx_pbuf_wrapper_t *)ep_user_data;
-}
-
-/*! @brief Defines the NETC Rx memory buffer free function pointer. */
+#if NETC_USE_SWT
+static void *rx_buff_alloc(swt_handle_t *handle, uint32_t length, void *userData)
+#else
 static void *rx_buff_alloc(ep_handle_t *handle, uint8_t ring, uint32_t length, void *userData)
+#endif
 {
     (void)userData;
-
+    rx_pbuf_wrapper_t *p_wrp = (rx_pbuf_wrapper_t *)handle->cfg.userData;
     void *buffer             = NULL;
-    rx_pbuf_wrapper_t *p_wrp = get_rx_pbufs_from_handle(handle, ring);
     int i;
 
     SYS_ARCH_DECL_PROTECT(old_level);
@@ -317,7 +367,11 @@ static void *rx_buff_alloc(ep_handle_t *handle, uint8_t ring, uint32_t length, v
     if (buffer == NULL)
     {
         /* Mask (disable) RX interrupt */
+#if NETC_USE_SWT
+        EP_MsixSetEntryMask(handle->epHandle, RX_MSIX_ENTRY_IDX, true);
+#else
         EP_MsixSetEntryMask(handle, RX_MSIX_ENTRY_IDX, true);
+#endif
     }
 #else
     (void)handle;
@@ -331,11 +385,15 @@ static void *rx_buff_alloc(ep_handle_t *handle, uint8_t ring, uint32_t length, v
 /**
  * Callback for release of RX zero-copy buffer from NETC driver.
  */
-static void rx_buf_free(ep_handle_t *handle, uint8_t ring, void *address, void *userData)
+#if NETC_USE_SWT
+static void rx_buff_free(swt_handle_t *handle, void *address, void *userData)
+#else
+static void rx_buff_free(ep_handle_t *handle, uint8_t ring, void *address, void *userData)
+#endif
 {
     (void)userData;
 
-    rx_pbuf_wrapper_t *p_wrp = get_rx_pbufs_from_handle(handle, ring);
+    rx_pbuf_wrapper_t *p_wrp = (rx_pbuf_wrapper_t *)handle->cfg.userData;
     int i;
     bool found = false;
 
@@ -357,7 +415,11 @@ static void rx_buf_free(ep_handle_t *handle, uint8_t ring, void *address, void *
 
 #if ETH_DISABLE_RX_INT_WHEN_OUT_OF_BUFFERS
     /* Unmask (enable) RX interrupt */
-    EP_MsixSetEntryMask(handle, RX_MSIX_ENTRY_IDX, false);
+#if NETC_USE_SWT
+        EP_MsixSetEntryMask(handle->epHandle, RX_MSIX_ENTRY_IDX, false);
+#else
+        EP_MsixSetEntryMask(handle, RX_MSIX_ENTRY_IDX, false);
+#endif
 #else
     (void)handle;
 #endif
@@ -369,7 +431,11 @@ static void rx_pbuf_free_from_lwip(struct pbuf *p)
 {
     rx_pbuf_wrapper_t *p_wrp = (rx_pbuf_wrapper_t *)p;
 
-    rx_buf_free(p_wrp->handle, p_wrp->ring, p_wrp->buffer, NULL);
+#if NETC_USE_SWT
+    rx_buff_free(p_wrp->handle, p_wrp->buffer, NULL);
+#else
+    rx_buff_free(p_wrp->handle, p_wrp->ring, p_wrp->buffer, NULL);
+#endif
 }
 
 void msgintrCallback(MSGINTR_Type *base, uint8_t channel, uint32_t pendingIntr)
@@ -381,6 +447,9 @@ void msgintrCallback(MSGINTR_Type *base, uint8_t channel, uint32_t pendingIntr)
 
 #if (NETC_VSI_NUM_USED > 1)
     msg_recv_flags |= kNETC_PsiRxMsgFromVsi2Flag;
+#endif
+#if (NETC_VSI_NUM_USED > 2)
+    msg_recv_flags |= kNETC_PsiRxMsgFromVsi3Flag;
 #endif
 
     if (NULL == ethernetif)
@@ -448,6 +517,18 @@ static status_t ethernetif_tx_reclaim_callback(ep_handle_t *handle,
     return kStatus_Success;
 }
 
+#if NETC_USE_SWT
+static status_t ethernetif_swt_reclaim_callback(swt_handle_t *handle, netc_tx_frame_info_t *frameInfo, void *userData)
+{
+    struct ethernetif *ethernetif = s_ethernetif;
+    LWIP_ASSERT("ethernetif is NULL", ethernetif != NULL);
+
+    ethernetif->mgmtTxFrameInfo = *frameInfo;
+
+    return kStatus_Success;
+}
+#endif
+
 #if (NETC_VSI_NUM_USED > 0)
 static void netc_si_msg_thread(void *arg)
 {
@@ -468,6 +549,13 @@ static void netc_si_msg_thread(void *arg)
         if (result == kStatus_Success)
         {
             EP_PsiHandleRxMsg(ethernetif->ep_handle, 2, &msgInfo);
+        }
+#endif
+#if (NETC_VSI_NUM_USED > 2)
+        result = EP_PsiRxMsg(ethernetif->ep_handle, kNETC_Vsi3, &msgInfo);
+        if (result == kStatus_Success)
+        {
+            EP_PsiHandleRxMsg(ethernetif->ep_handle, 3, &msgInfo);
         }
 #endif
         sys_msleep(1U);
@@ -494,6 +582,42 @@ static status_t ethernetif_getlinkspeed(ep_handle_t *handle, netc_hw_mii_speed_t
     return kStatus_Success;
 }
 
+#if NETC_USE_SWT
+static status_t ethernetif_swt_add_table_entry(swt_handle_t *swt_handle)
+{
+    status_t result = kStatus_Success;
+    uint32_t entryID;
+
+    netc_tb_ipf_config_t ipfEntryCfg;
+
+    memset(&ipfEntryCfg, 0U, sizeof(netc_tb_ipf_config_t));
+    ipfEntryCfg.keye.srcPortMask = NETC_SWT_USED_PORT_BITMAP;
+    ipfEntryCfg.cfge.hr          = kNETC_SoftwareDefHR0;
+    ipfEntryCfg.cfge.fltfa       = kNETC_IPFRedirectToMgmtPort;
+
+    /* Frame from used port redirect to management port. */
+    for (uint32_t i = 0; i < NETC_SWT_MAX_PORT_NUM; i++)
+    {
+        /* Only check the enabled port. */
+        if (((1U << i) & NETC_SWT_USED_PORT_BITMAP) == 0U)
+        {
+            continue;
+        }
+
+        ipfEntryCfg.keye.srcPort = i;
+        result                   = SWT_RxIPFAddTableEntry(swt_handle, &ipfEntryCfg, &entryID);
+        if ((kStatus_Success != result) && (entryID != 0xFFFFFFFF))
+        {
+            PRINTF("\r\n%s: %d, Failed to add IPF table!, result = %u\r\n, entryID = %u", __func__, __LINE__, result,
+                   entryID);
+            return kStatus_Fail;
+        }
+    }
+
+    return result;
+}
+#endif
+
 /**
  * Initializes NETC driver.
  */
@@ -509,6 +633,9 @@ void ethernetif_plat_init(struct netif *netif,
 
 #if (NETC_VSI_NUM_USED > 1)
     msg_recv_flags |= kNETC_PsiRxMsgFromVsi2Flag;
+#endif
+#if (NETC_VSI_NUM_USED > 2)
+    msg_recv_flags |= kNETC_PsiRxMsgFromVsi3Flag;
 #endif
 
     ethernetif->netif = netif;
@@ -560,6 +687,7 @@ void ethernetif_plat_init(struct netif *netif,
 
     /* Endpoint configuration. */
     (void)EP_GetDefaultConfig(ethernetif->ep_config);
+
     ethernetif->ep_config->si                 = NETC_PSI;
     ethernetif->ep_config->siConfig.txRingUse = TX_RINGS;
     ethernetif->ep_config->siConfig.rxRingUse = RX_RINGS;
@@ -581,16 +709,26 @@ void ethernetif_plat_init(struct netif *netif,
     {
         ethernetif->rxPbufs[i].p.custom_free_function = rx_pbuf_free_from_lwip;
         ethernetif->rxPbufs[i].buffer                 = &(ethernetif->rxDataBuff[i]);
-        ethernetif->rxPbufs[i].buffer_used            = false;
+        ethernetif->rxPbufs[i].buffer_used            = (NETC_USE_SWT && (i < NETC_RXBD_NUM));
+#if NETC_USE_SWT
+        ethernetif->rxPbufs[i].handle                 = ethernetif->swt_handle;
+#else
         ethernetif->rxPbufs[i].handle                 = ethernetif->ep_handle;
+#endif
         ethernetif->rxPbufs[i].ring                   = 0;
     }
 
     ethernetif->ep_config->rxCacheMaintain = true;
     ethernetif->ep_config->txCacheMaintain = true;
+#if NETC_USE_SWT
+    ethernetif->ep_config->rxZeroCopy      = false;
+    ethernetif->ep_config->rxBuffAlloc     = NULL;
+    ethernetif->ep_config->rxBuffFree      = NULL;
+#else
     ethernetif->ep_config->rxZeroCopy      = true;
     ethernetif->ep_config->rxBuffAlloc     = rx_buff_alloc;
-    ethernetif->ep_config->rxBuffFree      = rx_buf_free;
+    ethernetif->ep_config->rxBuffFree      = rx_buff_free;
+#endif
     ethernetif->ep_config->userData        = &ethernetif->rxPbufs[0];
 
     ethernetif->ep_config->port.ethMac.miiMode        = NETC_MII_MODE;
@@ -660,12 +798,72 @@ void ethernetif_plat_init(struct netif *netif,
 #if (NETC_VSI_NUM_USED > 1)
     EP_PsiSetRxBuffer(ethernetif->ep_handle, kNETC_Vsi2, (uintptr_t)&psiMsgBuff2[0]);
 #endif
+#if (NETC_VSI_NUM_USED > 2)
+    EP_PsiSetRxBuffer(ethernetif->ep_handle, kNETC_Vsi3, (uintptr_t)&psiMsgBuff3[0]);
+#endif
 
 #if (NETC_VSI_NUM_USED > 0)
     /* Create VSI-PSI messaging thread */
     sys_thread_new("netc_si_msg_thread", netc_si_msg_thread, NULL, SI_MSG_THREAD_STACKSIZE, SI_MSG_THREAD_PRIO);
 #endif
 }
+
+#if NETC_USE_SWT
+static void ethernetif_swt_init(struct ethernetif *ethernetif)
+{
+    status_t result;
+
+    result = SWT_GetDefaultConfig(ethernetif->swt_config);
+    LWIP_ASSERT("SWT_GetDefaultConfig failed", result == kStatus_Success);
+
+    ethernetif->swt_config->ports[0].ethMac.miiMode = NETC_MII_MODE;
+    ethernetif->swt_config->ports[0].ethMac.miiSpeed = NETC_MII_SPEED;
+    ethernetif->swt_config->ports[0].ethMac.miiDuplex = kNETC_MiiFullDuplex;
+
+    ethernetif->swt_config->bridgeCfg.dVFCfg.portMembership = (1U << NETC_SWT_PSEUDO_PORT) | NETC_SWT_USED_PORT_BITMAP;
+    ethernetif->swt_config->ports[0].commonCfg.ipfCfg.enIPFTable = true;
+    ethernetif->swt_config->ports[2].commonCfg.ipfCfg.enIPFTable = true;
+    ethernetif->swt_config->cmdRingUse            = 1U;
+    ethernetif->swt_config->cmdBdrCfg[0].bdBase   = ethernetif->cmdSwtBuffDescrip;
+    ethernetif->swt_config->cmdBdrCfg[0].bdLength = NETC_CMDBD_NUM;
+
+    result = SWT_Init(ethernetif->swt_handle, ethernetif->swt_config);
+    LWIP_ASSERT("SWT_Init failed", result == kStatus_Success);
+
+    /* Configure switch transfer resource. */
+    ethernetif->swt_transfer_config->enUseMgmtRxBdRing            = false;
+    ethernetif->swt_transfer_config->enUseMgmtTxBdRing            = true;
+    ethernetif->swt_transfer_config->mgmtTxBdrConfig.bdArray      = &ethernetif->txBuffDescrip[0];
+    ethernetif->swt_transfer_config->mgmtTxBdrConfig.len          = NETC_TXBD_NUM;
+    ethernetif->swt_transfer_config->mgmtTxBdrConfig.dirtyArray   = &ethernetif->txDirty[0];
+    ethernetif->swt_transfer_config->mgmtTxBdrConfig.msixEntryIdx = TX_MSIX_ENTRY_IDX;
+    ethernetif->swt_transfer_config->mgmtTxBdrConfig.enIntr       = true;
+    ethernetif->swt_transfer_config->reclaimCallback              = ethernetif_swt_reclaim_callback;
+    ethernetif->swt_transfer_config->rxZeroCopy                   = true;
+    ethernetif->swt_transfer_config->rxBuffAlloc                  = rx_buff_alloc;
+    ethernetif->swt_transfer_config->rxBuffFree                   = rx_buff_free;
+    ethernetif->swt_transfer_config->userData                     = &ethernetif->rxPbufs[0];
+    ethernetif->swt_transfer_config->rxCacheMaintain = true;
+    ethernetif->swt_transfer_config->txCacheMaintain = true;
+
+    result = SWT_ManagementTxRxConfig(ethernetif->swt_handle, ethernetif->ep_handle, ethernetif->swt_transfer_config);
+    LWIP_ASSERT("SWT_ManagementTxRxConfig failed", result == kStatus_Success);
+
+    result = ethernetif_swt_add_table_entry(ethernetif->swt_handle);
+    LWIP_ASSERT("ethernetif_swt_add_table_entry failed", result == kStatus_Success);
+
+    ethernetif->swt_initialized = true;
+}
+
+static void ethernetif_swt_configure_link(struct ethernetif *ethernetif)
+{
+    status_t status = SWT_SetEthPortMII(ethernetif->swt_handle,
+                                        0,
+                                        (netc_hw_mii_speed_t)ethernetif->last_speed,
+                                        (netc_hw_mii_duplex_t)ethernetif->last_duplex);
+    LWIP_ASSERT("SWT_SetEthPortMII failed", status == kStatus_Success);
+}
+#endif
 
 /** Wraps received buffer(s) into a pbuf or a pbuf chain and returns it. */
 static struct pbuf *ethernetif_rx_frame_to_pbufs(struct ethernetif *ethernetif, netc_frame_struct_t *frame)
@@ -680,15 +878,30 @@ static struct pbuf *ethernetif_rx_frame_to_pbufs(struct ethernetif *ethernetif, 
         netc_buffer_struct_t *bs    = &frame->buffArray[buf_n];
         rx_pbuf_wrapper_t *pw_found = NULL;
         int n                       = 0;
+        void *buffer                = bs->buffer;
+        uint16_t length             = bs->length;
+
+#if defined(FSL_FEATURE_NETC_HAS_SWITCH_TAG) && FSL_FEATURE_NETC_HAS_SWITCH_TAG
+        if ((buf_n == 0) && NETC_EnetcHasManagement(ethernetif->ep_handle->hw.base) &&
+            (getSiNum(ethernetif->ep_handle->cfg.si) == 0U)) {
+            size_t tagSize = sizeof(netc_swt_tag_host_t);
+
+            /* Drop switch tag after DMA/SMAC field */
+            for (int i = 0; i < length - 12 - tagSize; i++)
+                ((char *)buffer)[12 + i] = ((char *)buffer)[12 + tagSize + i];
+
+            length = length - tagSize;
+        }
+#endif
 
         // seek pbuf
         while ((n < NETC_RXBUFF_NUM) && (pw_found == NULL))
         {
-            if (ethernetif->rxPbufs[i].buffer == bs->buffer)
+            if (ethernetif->rxPbufs[i].buffer == buffer)
             {
                 pw_found = &ethernetif->rxPbufs[i];
 
-                p = pbuf_alloced_custom(PBUF_RAW, bs->length, PBUF_REF, &pw_found->p, bs->buffer, NETC_RXBUFF_SIZE);
+                p = pbuf_alloced_custom(PBUF_RAW, length, PBUF_REF, &pw_found->p, buffer, NETC_RXBUFF_SIZE);
                 LWIP_ASSERT("pbuf_alloced_custom() failed", p);
 
                 if (p_root == NULL)
@@ -722,7 +935,6 @@ static struct pbuf *ethernetif_rx_frame_to_pbufs(struct ethernetif *ethernetif, 
     }
 
     LINK_STATS_INC(link.recv);
-
     return p;
 }
 
@@ -734,7 +946,11 @@ struct pbuf *ethernetif_linkinput(struct netif *netif)
     netc_buffer_struct_t buffers[MAX_BUFFERS_PER_FRAME];
     netc_frame_struct_t frame = {.length = (MAX_BUFFERS_PER_FRAME), .buffArray = buffers};
 
+#if NETC_USE_SWT
+    status_t result = SWT_ReceiveFrame(ethernetif->swt_handle, &frame, NULL);
+#else
     status_t result = EP_ReceiveFrame(ethernetif->ep_handle, 0 /*ring*/, &frame, NULL);
+#endif
 
     if (result == kStatus_Success)
     {
@@ -766,16 +982,53 @@ err_t ethernetif_linkoutput(struct netif *netif, struct pbuf *p)
     {
         return ERR_BUF;
     }
-    else
-    {
+
+#if defined(FSL_FEATURE_NETC_HAS_SWITCH_TAG) && FSL_FEATURE_NETC_HAS_SWITCH_TAG
+    if (NETC_EnetcHasManagement(ethernetif->ep_handle->hw.base) &&
+        (getSiNum(ethernetif->ep_handle->cfg.si) == 0U)) {
+        size_t tagSize = sizeof(netc_swt_tag_forward_t);
+        netc_swt_tag_forward_t tag = {
+            .comTag = {
+                .tpid = NETC_SWITCH_DEFAULT_ETHER_TYPE,
+                .subType = kNETC_TagToPortNoTs,
+                .type = kNETC_TagForward,
+            }
+        };
+
+        if ((p->tot_len + tagSize) > (NETC_FRAME_MAX_FRAMELEN - NETC_FCS_LEN))
+        {
+            return ERR_BUF;
+        }
+
+        /* Copy DMAC/SMAC fields */
+        uCopied = pbuf_copy_partial(p, buff.buffer, 12, 0);
+        LWIP_ASSERT("uCopied != 12", 12);
+
+        /* Insert switch tag */
+        memcpy(&((char *)buff.buffer)[12], &tag, tagSize);
+
+        /* Copy the rest fields */
+        uCopied = pbuf_copy_partial(p, (void *)((uintptr_t)buff.buffer + 12 + tagSize), p->tot_len - 12, 12);
+        LWIP_ASSERT("uCopied != (p->tot_len - 12)", uCopied == (p->tot_len - 12));
+        buff.length = p->tot_len + tagSize;
+    } else {
         uCopied = pbuf_copy_partial(p, buff.buffer, p->tot_len, 0);
         LWIP_ASSERT("uCopied != p->tot_len", uCopied == p->tot_len);
+        buff.length = p->tot_len;
     }
-    /* Send frame. */
-
+#else
+    uCopied = pbuf_copy_partial(p, buff.buffer, p->tot_len, 0);
+    LWIP_ASSERT("uCopied != p->tot_len", uCopied == p->tot_len);
     buff.length = p->tot_len;
+#endif
 
+    /* Send frame. */
+#if NETC_USE_SWT
+    swt_mgmt_tx_arg_t txArg = { .ring = 0U };
+    status_t status = SWT_SendFrame(ethernetif->swt_handle, txArg, kNETC_SWITCH0Port0, false, &frame, NULL, NULL);
+#else
     status_t status = EP_SendFrame(ethernetif->ep_handle, 0 /*ring*/, &frame, NULL, NULL);
+#endif
 
     if (status == kStatus_Busy)
     {
@@ -794,9 +1047,17 @@ err_t ethernetif_linkoutput(struct netif *netif, struct pbuf *p)
         xEventGroupWaitBits(ethernetif->transmitAccessEvent, ethernetif->txFlag, pdTRUE, (BaseType_t) false,
                             portMAX_DELAY);
 #else
+#if NETC_USE_SWT
+        SWT_WaitUnitilTxComplete(ethernetif->swt_handle, false, 0);
+#else
         EP_WaitUnitilTxComplete(ethernetif->ep_handle, 0);
 #endif
+#endif
+#if NETC_USE_SWT
+        SWT_ReclaimTxDescriptor(ethernetif->swt_handle, false, 0);
+#else
         EP_ReclaimTxDescriptor(ethernetif->ep_handle, 0);
+#endif
         if (ethernetif->txFrameInfo.status != kNETC_EPTxSuccess)
         {
             LWIP_DEBUGF(NETIF_DEBUG,
@@ -858,6 +1119,13 @@ err_t ethernetif0_init(struct netif *netif)
     static ep_handle_t ep_handle;
     static ep_config_t ep_config;
 
+#if NETC_USE_SWT
+    /* Switch resource. */
+    static swt_handle_t swt_handle;
+    static swt_config_t swt_config;
+    static swt_transfer_config_t swt_transfer_config;
+#endif /* NETC_USE_SWT */
+
     /* Buffer descriptor and buffer memory. */
 
     AT_NONCACHEABLE_SECTION_ALIGN(static netc_rx_bd_t rxBuffDescrip_0[NETC_RXBD_NUM], NETC_BD_ALIGNMENT);
@@ -866,6 +1134,9 @@ err_t ethernetif0_init(struct netif *netif)
     SDK_ALIGN(static tx_buffer_t txDataBuff_0[NETC_TXBUFF_NUM], NETC_BUFF_ALIGNMENT);
 
     AT_NONCACHEABLE_SECTION_ALIGN(static netc_cmd_bd_t cmdBuffDescrip_0[NETC_CMDBD_NUM], NETC_BD_ALIGNMENT);
+#if NETC_USE_SWT
+    AT_NONCACHEABLE_SECTION_ALIGN(static netc_cmd_bd_t cmdSwtBuffDescrip_0[NETC_CMDBD_NUM], NETC_BD_ALIGNMENT);
+#endif
 
     static uint64_t rxBuffAddrArray_0[NETC_RXBD_NUM];
 
@@ -874,6 +1145,9 @@ err_t ethernetif0_init(struct netif *netif)
     ethernetif_config_t *cfg = (ethernetif_config_t *)netif->state;
 
     ethernetif_0.cmdBuffDescrip  = &cmdBuffDescrip_0[0];
+#if NETC_USE_SWT
+    ethernetif_0.cmdSwtBuffDescrip = &cmdSwtBuffDescrip_0[0];
+#endif
     ethernetif_0.rxBuffDescrip   = &rxBuffDescrip_0[0];
     ethernetif_0.txBuffDescrip   = &txBuffDescrip_0[0];
     ethernetif_0.rxDataBuff      = &rxDataBuff_0[0];
@@ -883,6 +1157,12 @@ err_t ethernetif0_init(struct netif *netif)
 
     ethernetif_0.ep_handle = &ep_handle;
     ethernetif_0.ep_config = &ep_config;
+
+#if NETC_USE_SWT
+    ethernetif_0.swt_handle = &swt_handle;
+    ethernetif_0.swt_config = &swt_config;
+    ethernetif_0.swt_transfer_config = &swt_transfer_config;
+#endif /* NETC_USE_SWT */
 
     ethernetif_0.phyHandle = cfg->phyHandle;
 
@@ -904,11 +1184,13 @@ phy_handle_t *ethernetif_get_phy(struct netif *netif_)
     return eif->phyHandle;
 }
 
+#if ETH_USE_GPIO_ADAPTER
 hal_gpio_handle_t ethernetif_get_int_gpio_hdl(struct netif *netif_)
 {
     struct ethernetif *eif = netif_->state;
     return (hal_gpio_handle_t)eif->intGpioHdl;
 }
+#endif /* ETH_USE_GPIO_ADAPTER */
 
 phy_speed_t ethernetif_get_link_speed(struct netif *netif_)
 {
@@ -937,19 +1219,29 @@ void ethernetif_on_link_up(struct netif *netif_, phy_speed_t speed, phy_duplex_t
 #if (NETC_VSI_NUM_USED > 0)
         EP_PsiNotifyLink(eif->ep_handle);
 #endif
+#if NETC_USE_SWT
+        if (!eif->swt_initialized)
+        {
+            ethernetif_swt_init(eif);
+        }
+        else
+        {
+            ethernetif_swt_configure_link(eif);
+        }
+#endif
     }
 }
 
 void ethernetif_on_link_down(struct netif *netif_)
 {
     struct ethernetif *eif = netif_->state;
-#if (NETC_VSI_NUM_USED == 0)
+#if ((NETC_VSI_NUM_USED == 0) && !NETC_USE_SWT)
     status_t status;
 #endif
 
     if (eif->last_link_up)
     {
-#if (NETC_VSI_NUM_USED == 0)
+#if ((NETC_VSI_NUM_USED == 0) && !NETC_USE_SWT)
         status = EP_Down(eif->ep_handle);
         LWIP_ASSERT("EP_Down failed", status == kStatus_Success);
 #endif

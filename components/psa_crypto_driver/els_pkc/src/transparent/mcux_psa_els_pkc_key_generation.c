@@ -28,7 +28,7 @@ psa_status_t els_pkc_transparent_generate_key(const psa_key_attributes_t *attrib
 
 #if defined(PSA_CRYPTO_DRIVER_THREAD_EN)
     if (mcux_mutex_lock(&els_pkc_hwcrypto_mutex)) {
-        return PSA_ERROR_GENERIC_ERROR;
+        return PSA_ERROR_SERVICE_FAILURE;
     }
 #endif /* defined(PSA_CRYPTO_DRIVER_THREAD_EN) */
 
@@ -39,7 +39,7 @@ psa_status_t els_pkc_transparent_generate_key(const psa_key_attributes_t *attrib
 
 #if defined(PSA_CRYPTO_DRIVER_THREAD_EN)
     if (mcux_mutex_unlock(&els_pkc_hwcrypto_mutex)) {
-        return PSA_ERROR_GENERIC_ERROR;
+        return PSA_ERROR_SERVICE_FAILURE;
     }
 #endif /* defined(PSA_CRYPTO_DRIVER_THREAD_EN) */
 
@@ -56,7 +56,7 @@ psa_status_t els_pkc_transparent_export_public_key(const psa_key_attributes_t *a
 
 #if defined(PSA_CRYPTO_DRIVER_THREAD_EN)
     if (mcux_mutex_lock(&els_pkc_hwcrypto_mutex)) {
-        return PSA_ERROR_GENERIC_ERROR;
+        return PSA_ERROR_SERVICE_FAILURE;
     }
 #endif /* defined(PSA_CRYPTO_DRIVER_THREAD_EN) */
 
@@ -71,7 +71,7 @@ psa_status_t els_pkc_transparent_export_public_key(const psa_key_attributes_t *a
 
 #if defined(PSA_CRYPTO_DRIVER_THREAD_EN)
     if (mcux_mutex_unlock(&els_pkc_hwcrypto_mutex)) {
-        return PSA_ERROR_GENERIC_ERROR;
+        return PSA_ERROR_SERVICE_FAILURE;
     }
 #endif /* defined(PSA_CRYPTO_DRIVER_THREAD_EN) */
 
@@ -87,7 +87,7 @@ psa_status_t els_pkc_transparent_export_key(const psa_key_attributes_t *attribut
 
 #if defined(PSA_CRYPTO_DRIVER_THREAD_EN)
     if (mcux_mutex_lock(&els_pkc_hwcrypto_mutex)) {
-        return PSA_ERROR_GENERIC_ERROR;
+        return PSA_ERROR_SERVICE_FAILURE;
     }
 #endif /* defined(PSA_CRYPTO_DRIVER_THREAD_EN) */
 
@@ -100,7 +100,7 @@ psa_status_t els_pkc_transparent_export_key(const psa_key_attributes_t *attribut
 
 #if defined(PSA_CRYPTO_DRIVER_THREAD_EN)
     if (mcux_mutex_unlock(&els_pkc_hwcrypto_mutex)) {
-        return PSA_ERROR_GENERIC_ERROR;
+        return PSA_ERROR_SERVICE_FAILURE;
     }
 #endif /* defined(PSA_CRYPTO_DRIVER_THREAD_EN) */
 
@@ -136,7 +136,7 @@ psa_status_t els_pkc_transparent_key_agreement( const psa_key_attributes_t *attr
 
 #if defined(PSA_CRYPTO_DRIVER_THREAD_EN)
     if (mcux_mutex_lock(&els_pkc_hwcrypto_mutex)) {
-        return PSA_ERROR_GENERIC_ERROR;
+        return PSA_ERROR_SERVICE_FAILURE;
     }
 #endif /* defined(PSA_CRYPTO_DRIVER_THREAD_EN) */
 
@@ -152,7 +152,7 @@ psa_status_t els_pkc_transparent_key_agreement( const psa_key_attributes_t *attr
 
 #if defined(PSA_CRYPTO_DRIVER_THREAD_EN)
     if (mcux_mutex_unlock(&els_pkc_hwcrypto_mutex)) {
-        return PSA_ERROR_GENERIC_ERROR;
+        return PSA_ERROR_SERVICE_FAILURE;
     }
 #endif /* defined(PSA_CRYPTO_DRIVER_THREAD_EN) */
 

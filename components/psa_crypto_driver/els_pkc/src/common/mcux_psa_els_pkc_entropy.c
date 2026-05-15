@@ -57,7 +57,7 @@ psa_status_t els_pkc_get_entropy(uint32_t flags, size_t *estimate_bits, uint8_t 
 #if defined(PSA_CRYPTO_DRIVER_THREAD_EN)
         if (mcux_mutex_lock(&els_pkc_hwcrypto_mutex) != 0)
         {
-            status = PSA_ERROR_GENERIC_ERROR;
+            status = PSA_ERROR_SERVICE_FAILURE;
         }
         else
         {
@@ -156,7 +156,7 @@ psa_status_t els_pkc_get_entropy(uint32_t flags, size_t *estimate_bits, uint8_t 
         }
         if (mcux_mutex_unlock(&els_pkc_hwcrypto_mutex) != 0)
         {
-            status = PSA_ERROR_GENERIC_ERROR;
+            status = PSA_ERROR_SERVICE_FAILURE;
         }
 #endif
     }

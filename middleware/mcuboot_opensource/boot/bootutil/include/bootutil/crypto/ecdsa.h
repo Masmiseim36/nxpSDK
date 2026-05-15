@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * Copyright (c) 2023-2024 Arm Limited
+ * Copyright (c) 2023-2025 Arm Limited
  */
 
 /*
@@ -65,10 +65,12 @@
 /* Universal defines */
 #define BOOTUTIL_CRYPTO_ECDSA_P256_HASH_SIZE (32)
 
-#include "mbedtls/oid.h"
-#include "mbedtls/asn1.h"
 #include "bootutil/sign_key.h"
-#include "common.h"
+#if !defined(MCUBOOT_USE_PSA_CRYPTO)
+#include "bootutil/crypto/common.h"
+#include "mbedtls/asn1.h"
+#include "mbedtls/oid.h"
+#endif
 
 #ifdef __cplusplus
 extern "C" {

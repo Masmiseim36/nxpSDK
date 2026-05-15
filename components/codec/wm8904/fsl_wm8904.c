@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2021 NXP
+ * Copyright 2016-2021, 2025 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -511,11 +511,20 @@ status_t WM8904_SetMasterSlave(wm8904_handle_t *handle, bool master)
  */
 status_t WM8904_SetMasterClock(wm8904_handle_t *handle, uint32_t sysclk, uint32_t sampleRate, uint32_t bitWidth)
 {
-    uint32_t bclk           = sampleRate * bitWidth * 2U;
     uint32_t bclkDiv        = 0U;
     uint16_t audioInterface = 0U;
     status_t result         = kStatus_WM8904_Success;
     uint16_t sysclkDiv      = 0U;
+    uint32_t bclk;
+
+    // Check for zero inputs and potential overflow in one step
+    if (sampleRate == 0U || bitWidth == 0U || 
+        sampleRate > (UINT32_MAX / (bitWidth * 2U)))
+    {
+        return kStatus_InvalidArgument;
+    }
+    
+    bclk = sampleRate * bitWidth * 2U;
 
     result = WM8904_ReadRegister(handle, WM8904_CLK_RATES_0, &sysclkDiv);
     sysclk = sysclk >> (sysclkDiv & 0x1U);
@@ -531,7 +540,7 @@ status_t WM8904_SetMasterClock(wm8904_handle_t *handle, uint32_t sysclk, uint32_
         return result;
     }
 
-    audioInterface &= ~(uint16_t)0x1FU;
+    audioInterface &= 0xFFE0;
     bclkDiv = (sysclk * 10U) / bclk;
 
     switch (bclkDiv)
@@ -713,12 +722,23 @@ status_t WM8904_SetFLLConfig(wm8904_handle_t *handle, wm8904_fll_config_t *confi
     }
 
     n = fvco / ((ratio + 1U) * referenceClock);
-    k = (uint32_t)((uint64_t)fvco * 1000000U) / ((ratio + 1U) * referenceClock);
+    uint64_t k_calc;
+    k_calc = ((uint64_t)fvco * 1000000ULL) / ((ratio + 1U) * referenceClock);
+    if (k_calc > UINT32_MAX)
+    {
+        return kStatus_InvalidArgument; // Value too large for uint32_t
+    }
+    k = (uint32_t)k_calc;
     if (n != 0U)
     {
         k = k - n * 1000000U;
     }
-    k = (uint32_t)((uint64_t)k * 65536U) / 1000000U;
+    k_calc = ((uint64_t)k * 65536ULL) / 1000000ULL;
+    if (k_calc > UINT32_MAX)
+    {
+        return kStatus_InvalidArgument; // Value too large for uint32_t
+    }
+    k = (uint32_t)k_calc;
 
     /* configure WM8904  */
     if (WM8904_ModifyRegister(handle, WM8904_FLL_CONTROL_1, 7U, 4U) != kStatus_Success)
@@ -786,6 +806,12 @@ status_t WM8904_SetProtocol(wm8904_handle_t *handle, wm8904_protocol_t protocol)
  */
 status_t WM8904_SelectLRCPolarity(wm8904_handle_t *handle, uint32_t polarity)
 {
+    // Check if polarity value fits in uint16_t
+    if (polarity > UINT16_MAX)
+    {
+        return kStatus_InvalidArgument;
+    }
+    
     return WM8904_ModifyRegister(handle, WM8904_AUDIO_IF_1, 0x0010U, (uint16_t)polarity);
 }
 
@@ -1512,7 +1538,8 @@ status_t WM8904_SetPlay(wm8904_handle_t *handle, uint32_t playSource)
     /* source from DAC*/
     if (playSource == (uint32_t)kWM8904_PlaySourceDAC)
     {
-        regValue &= (uint16_t) ~((3U << 2U) | 3U);
+        uint16_t clear_mask = (uint16_t)((3U << 2U) | 3U);  // 0xFU
+        regValue &= ~clear_mask;
     }
 
     return WM8904_ModifyRegister(handle, WM8904_ANALOG_OUT12_ZC, regBitMask, regValue);

@@ -36,7 +36,7 @@ message("${CMAKE_CURRENT_LIST_FILE} component is included.")
     )
     endif()
 
-        if(CONFIG_TOOLCHAIN STREQUAL iar AND CONFIG_CORE STREQUAL cm7f)
+        if(CONFIG_TOOLCHAIN STREQUAL iar AND (CONFIG_CORE STREQUAL cm4f OR CONFIG_CORE STREQUAL cm7f))
     target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE
     -Wl,--start-group
           ${CMAKE_CURRENT_LIST_DIR}/RTX/Library/IAR/RTX_V7MF.a
@@ -44,7 +44,7 @@ message("${CMAKE_CURRENT_LIST_FILE} component is included.")
     )
     endif()
 
-        if((CONFIG_TOOLCHAIN STREQUAL armgcc OR CONFIG_TOOLCHAIN STREQUAL mcux) AND CONFIG_CORE STREQUAL cm0p)
+        if(CONFIG_TOOLCHAIN STREQUAL mcux AND CONFIG_CORE STREQUAL cm0p)
     target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE
     -Wl,--start-group
           ${CMAKE_CURRENT_LIST_DIR}/RTX/Library/GCC/libRTX_V6M.a
@@ -52,7 +52,7 @@ message("${CMAKE_CURRENT_LIST_FILE} component is included.")
     )
     endif()
 
-        if((CONFIG_TOOLCHAIN STREQUAL armgcc OR CONFIG_TOOLCHAIN STREQUAL mcux) AND CONFIG_CORE STREQUAL cm7f)
+        if(CONFIG_TOOLCHAIN STREQUAL mcux AND (CONFIG_CORE STREQUAL cm4f OR CONFIG_CORE STREQUAL cm7f))
     target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE
     -Wl,--start-group
           ${CMAKE_CURRENT_LIST_DIR}/RTX/Library/GCC/libRTX_V7MF.a
@@ -68,7 +68,7 @@ message("${CMAKE_CURRENT_LIST_FILE} component is included.")
     )
     endif()
 
-        if(CONFIG_TOOLCHAIN STREQUAL mdk AND CONFIG_CORE STREQUAL cm7f)
+        if(CONFIG_TOOLCHAIN STREQUAL mdk AND (CONFIG_CORE STREQUAL cm4f OR CONFIG_CORE STREQUAL cm7f))
     target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE
     -Wl,--start-group
           ${CMAKE_CURRENT_LIST_DIR}/RTX/Library/ARM/RTX_V7MF.lib
@@ -76,7 +76,7 @@ message("${CMAKE_CURRENT_LIST_FILE} component is included.")
     )
     endif()
 
-        if(CONFIG_TOOLCHAIN STREQUAL iar AND CONFIG_CORE STREQUAL cm33 AND CONFIG_DSP STREQUAL NO_DSP)
+        if(CONFIG_TOOLCHAIN STREQUAL iar AND (CONFIG_CORE STREQUAL cm23 OR CONFIG_CORE STREQUAL cm33) AND CONFIG_DSP STREQUAL NO_DSP)
     target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE
     -Wl,--start-group
           ${CMAKE_CURRENT_LIST_DIR}/RTX/Library/IAR/RTX_V8MB.a
@@ -93,6 +93,14 @@ message("${CMAKE_CURRENT_LIST_FILE} component is included.")
     )
     endif()
 
+        if(CONFIG_TOOLCHAIN STREQUAL iar AND CONFIG_CORE STREQUAL cm23 AND CONFIG_FPU STREQUAL NO_FPU AND CONFIG_DSP STREQUAL NO_DSP)
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    -Wl,--start-group
+          ${CMAKE_CURRENT_LIST_DIR}/RTX/Library/IAR/RTX_V8MBN.a
+        -Wl,--end-group
+    )
+    endif()
+
         if(CONFIG_TOOLCHAIN STREQUAL iar AND CONFIG_CORE STREQUAL cm33 AND (CONFIG_FPU STREQUAL SP_FPU OR CONFIG_FPU STREQUAL DP_FPU) AND CONFIG_DSP STREQUAL DSP)
     target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE
     -Wl,--start-group
@@ -102,7 +110,7 @@ message("${CMAKE_CURRENT_LIST_FILE} component is included.")
     )
     endif()
 
-        if(CONFIG_COMPILER STREQUAL gcc AND CONFIG_CORE STREQUAL cm33 AND CONFIG_DSP STREQUAL NO_DSP)
+        if(CONFIG_COMPILER STREQUAL gcc AND (CONFIG_CORE STREQUAL cm23 OR CONFIG_CORE STREQUAL cm33) AND CONFIG_DSP STREQUAL NO_DSP)
     target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE
     -Wl,--start-group
           ${CMAKE_CURRENT_LIST_DIR}/RTX/Library/GCC/libRTX_V8MB.a
@@ -128,7 +136,15 @@ message("${CMAKE_CURRENT_LIST_FILE} component is included.")
     )
     endif()
 
-        if(CONFIG_COMPILER STREQUAL armclang AND CONFIG_CORE STREQUAL cm33 AND CONFIG_DSP STREQUAL NO_DSP)
+        if(CONFIG_COMPILER STREQUAL gcc AND CONFIG_CORE STREQUAL cm23 AND CONFIG_FPU STREQUAL NO_FPU AND CONFIG_DSP STREQUAL NO_DSP)
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    -Wl,--start-group
+          ${CMAKE_CURRENT_LIST_DIR}/RTX/Library/GCC/libRTX_V8MBN.a
+        -Wl,--end-group
+    )
+    endif()
+
+        if(CONFIG_COMPILER STREQUAL armclang AND (CONFIG_CORE STREQUAL cm23 OR CONFIG_CORE STREQUAL cm33) AND CONFIG_DSP STREQUAL NO_DSP)
     target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE
     -Wl,--start-group
           ${CMAKE_CURRENT_LIST_DIR}/RTX/Library/CLANG/libRTX_V8MB.a
@@ -154,10 +170,34 @@ message("${CMAKE_CURRENT_LIST_FILE} component is included.")
     )
     endif()
 
+        if(CONFIG_COMPILER STREQUAL armclang AND CONFIG_CORE STREQUAL cm23 AND CONFIG_FPU STREQUAL NO_FPU AND CONFIG_DSP STREQUAL NO_DSP)
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    -Wl,--start-group
+          ${CMAKE_CURRENT_LIST_DIR}/RTX/Library/CLANG/libRTX_V8MBN.a
+        -Wl,--end-group
+    )
+    endif()
+
+        if(CONFIG_TOOLCHAIN STREQUAL iar AND CONFIG_CORE STREQUAL cm23 AND CONFIG_FPU STREQUAL NO_FPU AND CONFIG_DSP STREQUAL NO_DSP AND CONFIG_TRUSTZONE STREQUAL TZ)
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    -Wl,--start-group
+          ${CMAKE_CURRENT_LIST_DIR}/RTX/Library/IAR/RTX_V8MB.a
+        -Wl,--end-group
+    )
+    endif()
+
         if(CONFIG_TOOLCHAIN STREQUAL iar AND CONFIG_CORE STREQUAL cm33 AND CONFIG_FPU STREQUAL NO_FPU AND CONFIG_DSP STREQUAL DSP AND CONFIG_TRUSTZONE STREQUAL TZ)
     target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE
     -Wl,--start-group
           ${CMAKE_CURRENT_LIST_DIR}/RTX/Library/IAR/RTX_V8MM.a
+        -Wl,--end-group
+    )
+    endif()
+
+        if(CONFIG_TOOLCHAIN STREQUAL iar AND CONFIG_CORE STREQUAL cm23 AND CONFIG_FPU STREQUAL NO_FPU AND CONFIG_DSP STREQUAL NO_DSP AND CONFIG_TRUSTZONE STREQUAL NO_TZ)
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    -Wl,--start-group
+          ${CMAKE_CURRENT_LIST_DIR}/RTX/Library/IAR/RTX_V8MBN.a
         -Wl,--end-group
     )
     endif()
@@ -186,6 +226,14 @@ message("${CMAKE_CURRENT_LIST_FILE} component is included.")
     )
     endif()
 
+        if(CONFIG_COMPILER STREQUAL gcc AND CONFIG_CORE STREQUAL cm23 AND CONFIG_FPU STREQUAL NO_FPU AND CONFIG_DSP STREQUAL NO_DSP AND CONFIG_TRUSTZONE STREQUAL TZ)
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    -Wl,--start-group
+          ${CMAKE_CURRENT_LIST_DIR}/RTX/Library/GCC/libRTX_V8MB.a
+        -Wl,--end-group
+    )
+    endif()
+
         if(CONFIG_COMPILER STREQUAL gcc AND CONFIG_CORE STREQUAL cm33 AND CONFIG_FPU STREQUAL NO_FPU AND CONFIG_DSP STREQUAL DSP AND CONFIG_TRUSTZONE STREQUAL TZ)
     target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE
     -Wl,--start-group
@@ -198,6 +246,14 @@ message("${CMAKE_CURRENT_LIST_FILE} component is included.")
     target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE
     -Wl,--start-group
           ${CMAKE_CURRENT_LIST_DIR}/RTX/Library/GCC/libRTX_V8MMF.a
+        -Wl,--end-group
+    )
+    endif()
+
+        if(CONFIG_COMPILER STREQUAL gcc AND CONFIG_CORE STREQUAL cm23 AND CONFIG_FPU STREQUAL NO_FPU AND CONFIG_DSP STREQUAL NO_DSP AND CONFIG_TRUSTZONE STREQUAL NO_TZ)
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    -Wl,--start-group
+          ${CMAKE_CURRENT_LIST_DIR}/RTX/Library/GCC/libRTX_V8MBN.a
         -Wl,--end-group
     )
     endif()
@@ -218,6 +274,14 @@ message("${CMAKE_CURRENT_LIST_FILE} component is included.")
     )
     endif()
 
+        if(CONFIG_COMPILER STREQUAL armclang AND CONFIG_CORE STREQUAL cm23 AND CONFIG_FPU STREQUAL NO_FPU AND CONFIG_DSP STREQUAL NO_DSP AND CONFIG_TRUSTZONE STREQUAL TZ)
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    -Wl,--start-group
+          ${CMAKE_CURRENT_LIST_DIR}/RTX/Library/CLANG/libRTX_V8MB.a
+        -Wl,--end-group
+    )
+    endif()
+
         if(CONFIG_COMPILER STREQUAL armclang AND CONFIG_CORE STREQUAL cm33 AND CONFIG_FPU STREQUAL NO_FPU AND CONFIG_DSP STREQUAL DSP AND CONFIG_TRUSTZONE STREQUAL TZ)
     target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE
     -Wl,--start-group
@@ -230,6 +294,14 @@ message("${CMAKE_CURRENT_LIST_FILE} component is included.")
     target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE
     -Wl,--start-group
           ${CMAKE_CURRENT_LIST_DIR}/RTX/Library/CLANG/libRTX_V8MMF.a
+        -Wl,--end-group
+    )
+    endif()
+
+        if(CONFIG_COMPILER STREQUAL armclang AND CONFIG_CORE STREQUAL cm23 AND CONFIG_FPU STREQUAL NO_FPU AND CONFIG_DSP STREQUAL NO_DSP AND CONFIG_TRUSTZONE STREQUAL NO_TZ)
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    -Wl,--start-group
+          ${CMAKE_CURRENT_LIST_DIR}/RTX/Library/CLANG/libRTX_V8MBN.a
         -Wl,--end-group
     )
     endif()

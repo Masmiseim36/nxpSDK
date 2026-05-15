@@ -2058,12 +2058,13 @@ FMSTR_BPTR FMSTR_PipeFrame(FMSTR_SESSION *session, FMSTR_BPTR msgBuffIO, FMSTR_S
             txToSend = (FMSTR_SIZE)txAvail;
         }
         
-        /* Pipe uses 8-bit lengths only, this sanity check shall never happen, but anyway */
-        if(txToSend > 0xffU)
+        /* Pipe uses 8-bit lengths only, we trim it even more to 0xfc as older
+           versions of the PC host tool were not ready to accept more.  */
+        if(txToSend > 0xfcU)
         {
             /* Coverity: Intentional condition which may be evaluated as always false. */
             /* coverity[misra_c_2012_rule_14_3_violation:FALSE] */
-            txToSend = 0xffU;
+            txToSend = 0xfcU;
         }
 
         /* send pipe's transmit data back */

@@ -35,7 +35,7 @@
  * if the NVM manager is not present. Since psa_crypto_wrapper will be auto-generated, we can't add
  * the check there. hence implementing it in opaque drivers for ELE.
  */
-#if !defined(PSA_ELE_S4XX_SD_NVM_MANAGER)
+#if !defined(PSA_ELE_S4XX_SD_NVM_MANAGER) && !defined(CONFIG_PSA_ELE_S4XX_NVM_MANAGER)
 
 psa_status_t ele_s4xx_opaque_sign_message(const psa_key_attributes_t *attributes,
                                           const uint8_t *key, size_t key_length,
@@ -163,8 +163,6 @@ static psa_status_t ele_s4xx_opaque_sign_common(
         return PSA_ERROR_INVALID_ARGUMENT;
     }
 
-    /* TBD - should we add a check that this key id corresponds to a key pair ?? */
-
     signGenParam.key_id     = key_id;
     signGenParam.msg        = input;
     signGenParam.msg_size   = input_length;
@@ -180,8 +178,8 @@ static psa_status_t ele_s4xx_opaque_sign_common(
         signGenParam.salt_size = 0u;
     }
 
-    if (mcux_mutex_lock(&ele_hwcrypto_mutex)) {
-        return PSA_ERROR_COMMUNICATION_FAILURE;
+    if (mcux_mutex_lock(&ele_hwcrypto_mutex) != 0) {
+        return PSA_ERROR_SERVICE_FAILURE;
     }
 
     ele_status = ELE_OpenSignService(S3MU, g_ele_ctx.key_store_handle, &signHandleID);
@@ -191,20 +189,21 @@ static psa_status_t ele_s4xx_opaque_sign_common(
     }
 
     ele_status = ELE_Sign(S3MU, signHandleID, &signGenParam, &sig_size);
+
     status = ele_to_psa_status(ele_status);
     /* Avoid over-writing status */
     if (status != PSA_SUCCESS) {
         ELE_CloseSignService(S3MU, signHandleID);
         goto out;
     }
-        
+
     ele_status = ELE_CloseSignService(S3MU, signHandleID);
     status = ele_to_psa_status(ele_status);
 
 out:
     *signature_length = sig_size;
-    if (mcux_mutex_unlock(&ele_hwcrypto_mutex)) {
-        return PSA_ERROR_BAD_STATE;
+    if (mcux_mutex_unlock(&ele_hwcrypto_mutex) != 0) {
+        return PSA_ERROR_SERVICE_FAILURE;
     }
 
     return status;
@@ -249,9 +248,9 @@ static psa_status_t ele_s4xx_opaque_verify_common(
         return PSA_ERROR_INSUFFICIENT_MEMORY;
     }
 
-    if (mcux_mutex_lock(&ele_hwcrypto_mutex)) {
+    if (mcux_mutex_lock(&ele_hwcrypto_mutex) != 0) {
         free(tmp);
-        return PSA_ERROR_COMMUNICATION_FAILURE;
+        return PSA_ERROR_SERVICE_FAILURE;
     }
 
     ele_status = ELE_GeneratePubKey(S3MU, g_ele_ctx.key_store_handle, key_id,
@@ -284,11 +283,6 @@ static psa_status_t ele_s4xx_opaque_verify_common(
         verifyParam.salt_size = 0u;
     }
 
-    if (mcux_mutex_lock(&ele_hwcrypto_mutex)) {
-        free(tmp);
-        return PSA_ERROR_COMMUNICATION_FAILURE;
-    }
-
     ele_status = ELE_OpenVerifyService(S3MU, g_ele_ctx.session_handle, &verifyHandleID);
     status = ele_to_psa_status(ele_status);
     if (status != PSA_SUCCESS) {
@@ -307,8 +301,8 @@ static psa_status_t ele_s4xx_opaque_verify_common(
 
 out:
     free(tmp);
-    if (mcux_mutex_unlock(&ele_hwcrypto_mutex)) {
-        return PSA_ERROR_BAD_STATE;
+    if (mcux_mutex_unlock(&ele_hwcrypto_mutex) != 0) {
+        return PSA_ERROR_SERVICE_FAILURE;
     }
 
     return status;

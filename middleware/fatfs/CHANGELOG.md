@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/)
 
+## [R0.16_rev0]
+- Upgraded to version 0.16
+- Applied patch https://elm-chan.org/fsw/ff/patch/ff16p1.diff
+- Applied patch https://elm-chan.org/fsw/ff/patch/ffunicode.zip
+- Make lb and hb variables conditional. Fix 'unused variable' issue:
+    - ffunicode.c:10622:28: error: unused variable 'lb'
+    - ffunicode.c:10622:7: error: unused variable 'hb'
+
 ## [R0.15_rev0]
 - Upgraded to version 0.15
 - Applied patches from http://elm-chan.org/fsw/ff/patches.html

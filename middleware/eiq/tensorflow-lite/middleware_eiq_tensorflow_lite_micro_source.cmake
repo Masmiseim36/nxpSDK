@@ -109,7 +109,6 @@ message("${CMAKE_CURRENT_LIST_FILE} component is included.")
           ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/micro_log.cpp
           ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/micro_interpreter_context.cpp
           ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/micro_interpreter_graph.cpp
-          ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/system_setup.cpp
           ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/test_helper_custom_ops.cpp
           ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/micro_time.cpp
           ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/test_helpers.cpp

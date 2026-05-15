@@ -1,5 +1,5 @@
 #
-# Copyright 2024 NXP
+# Copyright 2024-2026 NXP
 #
 # SPDX-License-Identifier: MIT
 #
@@ -204,6 +204,132 @@ if (CONFIG_MCUX_COMPONENT_middleware.freertos-kernel)
     )
 endif ()
 
+if (CONFIG_MCUX_COMPONENT_middleware.freertos-kernel.cm23_non_trustzone)
+    mcux_add_include(
+        INCLUDES portable/IAR/ARM_CM23_NTZ/non_secure
+        TOOLCHAINS iar
+        CORES cm23
+        FPU NO_FPU SP_FPU DP_FPU
+    )
+    mcux_add_include(
+        INCLUDES portable/GCC/ARM_CM23_NTZ/non_secure
+        TOOLCHAINS armgcc mcux mdk
+        CORES cm23
+        FPU NO_FPU SP_FPU DP_FPU
+    )
+    mcux_add_source(
+        SOURCES portable/GCC/ARM_CM23_NTZ/non_secure/mpu_wrappers_v2_asm.c
+                portable/GCC/ARM_CM23_NTZ/non_secure/port.c
+                portable/GCC/ARM_CM23_NTZ/non_secure/portasm.c
+                portable/GCC/ARM_CM23_NTZ/non_secure/portasm.h
+                portable/GCC/ARM_CM23_NTZ/non_secure/portmacro.h
+                portable/GCC/ARM_CM23_NTZ/non_secure/portmacrocommon.h
+        TOOLCHAINS armgcc mcux mdk
+        CORES cm23
+        FPU NO_FPU SP_FPU DP_FPU
+    )
+    mcux_add_source(
+        SOURCES portable/IAR/ARM_CM23_NTZ/non_secure/mpu_wrappers_v2_asm.S
+                portable/IAR/ARM_CM23_NTZ/non_secure/port.c
+                portable/IAR/ARM_CM23_NTZ/non_secure/portasm.h
+                portable/IAR/ARM_CM23_NTZ/non_secure/portasm.s
+                portable/IAR/ARM_CM23_NTZ/non_secure/portmacro.h
+                portable/IAR/ARM_CM23_NTZ/non_secure/portmacrocommon.h
+        TOOLCHAINS iar
+        CORES cm23
+        FPU NO_FPU SP_FPU DP_FPU
+    )
+
+endif ()
+
+if (CONFIG_MCUX_COMPONENT_middleware.freertos-kernel.cm23_trustzone.non_secure)
+    mcux_add_include(
+        INCLUDES portable/IAR/ARM_CM23/non_secure
+                 portable/IAR/ARM_CM23/secure
+        TOOLCHAINS iar
+        CORES cm23
+        FPU NO_FPU SP_FPU DP_FPU
+    )
+
+    mcux_add_include(
+        INCLUDES portable/GCC/ARM_CM23/non_secure
+                 portable/GCC/ARM_CM23/secure
+        TOOLCHAINS armgcc mcux mdk
+        CORES cm23
+        FPU NO_FPU SP_FPU DP_FPU
+    )
+
+    mcux_add_source(
+        SOURCES portable/GCC/ARM_CM23/non_secure/mpu_wrappers_v2_asm.c
+                portable/GCC/ARM_CM23/non_secure/port.c
+                portable/GCC/ARM_CM23/non_secure/portasm.c
+                portable/GCC/ARM_CM23/non_secure/portasm.h
+                portable/GCC/ARM_CM23/non_secure/portmacro.h
+                portable/GCC/ARM_CM23/non_secure/portmacrocommon.h
+                portable/GCC/ARM_CM23/secure/secure_context.h
+                portable/GCC/ARM_CM23/secure/secure_init.h
+        TOOLCHAINS armgcc mcux mdk
+        CORES cm23
+        FPU NO_FPU SP_FPU DP_FPU
+    )
+    mcux_add_source(
+        SOURCES portable/IAR/ARM_CM23/non_secure/mpu_wrappers_v2_asm.S
+                portable/IAR/ARM_CM23/non_secure/port.c
+                portable/IAR/ARM_CM23/non_secure/portasm.h
+                portable/IAR/ARM_CM23/non_secure/portasm.s
+                portable/IAR/ARM_CM23/non_secure/portmacro.h
+                portable/IAR/ARM_CM23/non_secure/portmacrocommon.h
+                portable/IAR/ARM_CM23/secure/secure_context.h
+                portable/IAR/ARM_CM23/secure/secure_init.h
+        TOOLCHAINS iar
+        CORES cm23
+        FPU NO_FPU SP_FPU DP_FPU
+    )
+endif ()
+
+if (CONFIG_MCUX_COMPONENT_middleware.freertos-kernel.cm23_trustzone.secure)
+
+    mcux_add_include(
+        INCLUDES portable/GCC/ARM_CM23/secure
+                 portable/GCC/ARM_CM23/non_secure
+        TOOLCHAINS armgcc mcux mdk
+    )
+
+    mcux_add_source(
+        SOURCES portable/GCC/ARM_CM23/secure/secure_context.c
+                portable/GCC/ARM_CM23/secure/secure_context.h
+                portable/GCC/ARM_CM23/secure/secure_context_port.c
+                portable/GCC/ARM_CM23/secure/secure_heap.c
+                portable/GCC/ARM_CM23/secure/secure_heap.h
+                portable/GCC/ARM_CM23/secure/secure_init.c
+                portable/GCC/ARM_CM23/secure/secure_init.h
+                portable/GCC/ARM_CM23/secure/secure_port_macros.h
+        TOOLCHAINS armgcc mcux mdk
+        CORES cm23
+        FPU NO_FPU SP_FPU DP_FPU
+    )
+
+    mcux_add_include(
+        INCLUDES portable/IAR/ARM_CM23/secure
+                 portable/IAR/ARM_CM23/non_secure
+        TOOLCHAINS iar
+    )
+
+    mcux_add_source(
+        SOURCES portable/IAR/ARM_CM23/secure/secure_context.c
+                portable/IAR/ARM_CM23/secure/secure_context.h
+                portable/IAR/ARM_CM23/secure/secure_context_port_asm.s
+                portable/IAR/ARM_CM23/secure/secure_heap.c
+                portable/IAR/ARM_CM23/secure/secure_heap.h
+                portable/IAR/ARM_CM23/secure/secure_init.c
+                portable/IAR/ARM_CM23/secure/secure_init.h
+                portable/IAR/ARM_CM23/secure/secure_port_macros.h
+        TOOLCHAINS iar
+        CORES cm23
+    )
+
+endif ()
+
 if (CONFIG_MCUX_COMPONENT_middleware.freertos-kernel.cm33_non_trustzone)
     mcux_add_include(
         INCLUDES portable/IAR/ARM_CM33_NTZ/non_secure
@@ -330,6 +456,258 @@ if (CONFIG_MCUX_COMPONENT_middleware.freertos-kernel.cm33_trustzone.secure)
 
 endif ()
 
+if (CONFIG_MCUX_COMPONENT_middleware.freertos-kernel.cm55_non_trustzone)
+    mcux_add_include(
+        INCLUDES portable/IAR/ARM_CM55_NTZ/non_secure
+        TOOLCHAINS iar
+        CORES cm55 cm55f
+        FPU NO_FPU SP_FPU DP_FPU
+    )
+    mcux_add_include(
+        INCLUDES portable/GCC/ARM_CM55_NTZ/non_secure
+        TOOLCHAINS armgcc mcux mdk
+        CORES cm55 cm55f
+        FPU NO_FPU SP_FPU DP_FPU
+    )
+    mcux_add_source(
+        SOURCES portable/GCC/ARM_CM55_NTZ/non_secure/mpu_wrappers_v2_asm.c
+                portable/GCC/ARM_CM55_NTZ/non_secure/port.c
+                portable/GCC/ARM_CM55_NTZ/non_secure/portasm.c
+                portable/GCC/ARM_CM55_NTZ/non_secure/portasm.h
+                portable/GCC/ARM_CM55_NTZ/non_secure/portmacro.h
+                portable/GCC/ARM_CM55_NTZ/non_secure/portmacrocommon.h
+        TOOLCHAINS armgcc mcux mdk
+        CORES cm55 cm55f
+        FPU NO_FPU SP_FPU DP_FPU
+    )
+    mcux_add_source(
+        SOURCES portable/IAR/ARM_CM55_NTZ/non_secure/mpu_wrappers_v2_asm.S
+                portable/IAR/ARM_CM55_NTZ/non_secure/port.c
+                portable/IAR/ARM_CM55_NTZ/non_secure/portasm.h
+                portable/IAR/ARM_CM55_NTZ/non_secure/portasm.s
+                portable/IAR/ARM_CM55_NTZ/non_secure/portmacro.h
+                portable/IAR/ARM_CM55_NTZ/non_secure/portmacrocommon.h
+        TOOLCHAINS iar
+        CORES cm55 cm55f
+        FPU NO_FPU SP_FPU DP_FPU
+    )
+
+endif ()
+
+if (CONFIG_MCUX_COMPONENT_middleware.freertos-kernel.cm55_trustzone.non_secure)
+    mcux_add_include(
+        INCLUDES portable/IAR/ARM_CM55/non_secure
+                 portable/IAR/ARM_CM55/secure
+        TOOLCHAINS iar
+        CORES cm55 cm55f
+        FPU NO_FPU SP_FPU DP_FPU
+    )
+
+    mcux_add_include(
+        INCLUDES portable/GCC/ARM_CM55/non_secure
+                 portable/GCC/ARM_CM55/secure
+        TOOLCHAINS armgcc mcux mdk
+        CORES cm55 cm55f
+        FPU NO_FPU SP_FPU DP_FPU
+    )
+
+    mcux_add_source(
+        SOURCES portable/GCC/ARM_CM55/non_secure/mpu_wrappers_v2_asm.c
+                portable/GCC/ARM_CM55/non_secure/port.c
+                portable/GCC/ARM_CM55/non_secure/portasm.c
+                portable/GCC/ARM_CM55/non_secure/portasm.h
+                portable/GCC/ARM_CM55/non_secure/portmacro.h
+                portable/GCC/ARM_CM55/non_secure/portmacrocommon.h
+                portable/GCC/ARM_CM55/secure/secure_context.h
+                portable/GCC/ARM_CM55/secure/secure_init.h
+        TOOLCHAINS armgcc mcux mdk
+        CORES cm55 cm55f
+        FPU NO_FPU SP_FPU DP_FPU
+    )
+    mcux_add_source(
+        SOURCES portable/IAR/ARM_CM55/non_secure/mpu_wrappers_v2_asm.S
+                portable/IAR/ARM_CM55/non_secure/port.c
+                portable/IAR/ARM_CM55/non_secure/portasm.h
+                portable/IAR/ARM_CM55/non_secure/portasm.s
+                portable/IAR/ARM_CM55/non_secure/portmacro.h
+                portable/IAR/ARM_CM55/non_secure/portmacrocommon.h
+                portable/IAR/ARM_CM55/secure/secure_context.h
+                portable/IAR/ARM_CM55/secure/secure_init.h
+        TOOLCHAINS iar
+        CORES cm55 cm55f
+        FPU NO_FPU SP_FPU DP_FPU
+    )
+endif ()
+
+if (CONFIG_MCUX_COMPONENT_middleware.freertos-kernel.cm55_trustzone.secure)
+
+    mcux_add_include(
+        INCLUDES portable/GCC/ARM_CM55/secure
+                 portable/GCC/ARM_CM55/non_secure
+        TOOLCHAINS armgcc mcux mdk
+    )
+
+    mcux_add_source(
+        SOURCES portable/GCC/ARM_CM55/secure/secure_context.c
+                portable/GCC/ARM_CM55/secure/secure_context.h
+                portable/GCC/ARM_CM55/secure/secure_context_port.c
+                portable/GCC/ARM_CM55/secure/secure_heap.c
+                portable/GCC/ARM_CM55/secure/secure_heap.h
+                portable/GCC/ARM_CM55/secure/secure_init.c
+                portable/GCC/ARM_CM55/secure/secure_init.h
+                portable/GCC/ARM_CM55/secure/secure_port_macros.h
+        TOOLCHAINS armgcc mcux mdk
+        CORES cm55 cm55f
+        FPU NO_FPU SP_FPU DP_FPU
+    )
+
+    mcux_add_include(
+        INCLUDES portable/IAR/ARM_CM55/secure
+                 portable/IAR/ARM_CM55/non_secure
+        TOOLCHAINS iar
+    )
+
+    mcux_add_source(
+        SOURCES portable/IAR/ARM_CM55/secure/secure_context.c
+                portable/IAR/ARM_CM55/secure/secure_context.h
+                portable/IAR/ARM_CM55/secure/secure_context_port_asm.s
+                portable/IAR/ARM_CM55/secure/secure_heap.c
+                portable/IAR/ARM_CM55/secure/secure_heap.h
+                portable/IAR/ARM_CM55/secure/secure_init.c
+                portable/IAR/ARM_CM55/secure/secure_init.h
+                portable/IAR/ARM_CM55/secure/secure_port_macros.h
+        TOOLCHAINS iar
+        CORES cm55 cm55f
+    )
+
+endif ()
+
+if (CONFIG_MCUX_COMPONENT_middleware.freertos-kernel.cm85_non_trustzone)
+    mcux_add_include(
+        INCLUDES portable/IAR/ARM_CM85_NTZ/non_secure
+        TOOLCHAINS iar
+        CORES cm85 cm85f
+        FPU NO_FPU SP_FPU DP_FPU
+    )
+    mcux_add_include(
+        INCLUDES portable/GCC/ARM_CM85_NTZ/non_secure
+        TOOLCHAINS armgcc mcux mdk
+        CORES cm85 cm85f
+        FPU NO_FPU SP_FPU DP_FPU
+    )
+    mcux_add_source(
+        SOURCES portable/GCC/ARM_CM85_NTZ/non_secure/mpu_wrappers_v2_asm.c
+                portable/GCC/ARM_CM85_NTZ/non_secure/port.c
+                portable/GCC/ARM_CM85_NTZ/non_secure/portasm.c
+                portable/GCC/ARM_CM85_NTZ/non_secure/portasm.h
+                portable/GCC/ARM_CM85_NTZ/non_secure/portmacro.h
+                portable/GCC/ARM_CM85_NTZ/non_secure/portmacrocommon.h
+        TOOLCHAINS armgcc mcux mdk
+        CORES cm85 cm85f
+        FPU NO_FPU SP_FPU DP_FPU
+    )
+    mcux_add_source(
+        SOURCES portable/IAR/ARM_CM85_NTZ/non_secure/mpu_wrappers_v2_asm.S
+                portable/IAR/ARM_CM85_NTZ/non_secure/port.c
+                portable/IAR/ARM_CM85_NTZ/non_secure/portasm.h
+                portable/IAR/ARM_CM85_NTZ/non_secure/portasm.s
+                portable/IAR/ARM_CM85_NTZ/non_secure/portmacro.h
+                portable/IAR/ARM_CM85_NTZ/non_secure/portmacrocommon.h
+        TOOLCHAINS iar
+        CORES cm85 cm85f
+        FPU NO_FPU SP_FPU DP_FPU
+    )
+
+endif ()
+
+if (CONFIG_MCUX_COMPONENT_middleware.freertos-kernel.cm85_trustzone.non_secure)
+    mcux_add_include(
+        INCLUDES portable/IAR/ARM_CM85/non_secure
+                 portable/IAR/ARM_CM85/secure
+        TOOLCHAINS iar
+        CORES cm85 cm85f
+        FPU NO_FPU SP_FPU DP_FPU
+    )
+
+    mcux_add_include(
+        INCLUDES portable/GCC/ARM_CM85/non_secure
+                 portable/GCC/ARM_CM85/secure
+        TOOLCHAINS armgcc mcux mdk
+        CORES cm85 cm85f
+        FPU NO_FPU SP_FPU DP_FPU
+    )
+
+    mcux_add_source(
+        SOURCES portable/GCC/ARM_CM85/non_secure/mpu_wrappers_v2_asm.c
+                portable/GCC/ARM_CM85/non_secure/port.c
+                portable/GCC/ARM_CM85/non_secure/portasm.c
+                portable/GCC/ARM_CM85/non_secure/portasm.h
+                portable/GCC/ARM_CM85/non_secure/portmacro.h
+                portable/GCC/ARM_CM85/non_secure/portmacrocommon.h
+                portable/GCC/ARM_CM85/secure/secure_context.h
+                portable/GCC/ARM_CM85/secure/secure_init.h
+        TOOLCHAINS armgcc mcux mdk
+        CORES cm85 cm85f
+        FPU NO_FPU SP_FPU DP_FPU
+    )
+    mcux_add_source(
+        SOURCES portable/IAR/ARM_CM85/non_secure/mpu_wrappers_v2_asm.S
+                portable/IAR/ARM_CM85/non_secure/port.c
+                portable/IAR/ARM_CM85/non_secure/portasm.h
+                portable/IAR/ARM_CM85/non_secure/portasm.s
+                portable/IAR/ARM_CM85/non_secure/portmacro.h
+                portable/IAR/ARM_CM85/non_secure/portmacrocommon.h
+                portable/IAR/ARM_CM85/secure/secure_context.h
+                portable/IAR/ARM_CM85/secure/secure_init.h
+        TOOLCHAINS iar
+        CORES cm85 cm85f
+        FPU NO_FPU SP_FPU DP_FPU
+    )
+endif ()
+
+if (CONFIG_MCUX_COMPONENT_middleware.freertos-kernel.cm85_trustzone.secure)
+
+    mcux_add_include(
+        INCLUDES portable/GCC/ARM_CM85/secure
+                 portable/GCC/ARM_CM85/non_secure
+        TOOLCHAINS armgcc mcux mdk
+    )
+
+    mcux_add_source(
+        SOURCES portable/GCC/ARM_CM85/secure/secure_context.c
+                portable/GCC/ARM_CM85/secure/secure_context.h
+                portable/GCC/ARM_CM85/secure/secure_context_port.c
+                portable/GCC/ARM_CM85/secure/secure_heap.c
+                portable/GCC/ARM_CM85/secure/secure_heap.h
+                portable/GCC/ARM_CM85/secure/secure_init.c
+                portable/GCC/ARM_CM85/secure/secure_init.h
+                portable/GCC/ARM_CM85/secure/secure_port_macros.h
+        TOOLCHAINS armgcc mcux mdk
+        CORES cm85 cm85f
+        FPU NO_FPU SP_FPU DP_FPU
+    )
+
+    mcux_add_include(
+        INCLUDES portable/IAR/ARM_CM85/secure
+                 portable/IAR/ARM_CM85/non_secure
+        TOOLCHAINS iar
+    )
+
+    mcux_add_source(
+        SOURCES portable/IAR/ARM_CM85/secure/secure_context.c
+                portable/IAR/ARM_CM85/secure/secure_context.h
+                portable/IAR/ARM_CM85/secure/secure_context_port_asm.s
+                portable/IAR/ARM_CM85/secure/secure_heap.c
+                portable/IAR/ARM_CM85/secure/secure_heap.h
+                portable/IAR/ARM_CM85/secure/secure_init.c
+                portable/IAR/ARM_CM85/secure/secure_init.h
+                portable/IAR/ARM_CM85/secure/secure_port_macros.h
+        TOOLCHAINS iar
+        CORES cm85 cm85f
+    )
+
+endif ()
+
 if (CONFIG_MCUX_COMPONENT_middleware.freertos-kernel.tfm_ns)
     mcux_add_source(
         SOURCES portable/ThirdParty/GCC/ARM_TFM/os_wrapper_freertos.c
@@ -439,7 +817,7 @@ if (CONFIG_MCUX_COMPONENT_middleware.freertos-kernel.config)
         INCLUDES template/ARM_CM33_3_priority_bits
         TARGET_FILES FreeRTOSConfig_Gen.h
         CORES cm33 cm33f
-        DEVICE_IDS K32W1480xxxA K32W232H KW45B41Z52xxxA KW45B41Z53xxxA KW45B41Z82xxxA KW45B41Z83xxxA KW45Z41052xxxA KW45Z41053xxxA KW45Z41082xxxA KW45Z41083xxxA KW47B42Z83xxxA KW47B42Z96xxxA KW47B42Z97xxxA KW47B42ZB2xxxA KW47B42ZB3xxxA KW47B42ZB6xxxA KW47B42ZB7xxxA KW47Z42082xxxA KW47Z42092xxxA KW47Z420B2xxxA KW47Z420B3xxxA LPC5502 LPC5502CPXXXX LPC5504 LPC5504CPXXXX LPC5506 LPC5506CPXXXX LPC5512 LPC5514 LPC5516 LPC5524 LPC5526 LPC5528 LPC5534 LPC5536 LPC55S04 LPC55S06 LPC55S14 LPC55S16 LPC55S26 LPC55S28 LPC55S36 LPC55S66 LPC55S66 LPC55S69 LPC55S69 MCXW235 MCXW236 MCXN546 MCXN547 MCXN946 MCXN947 MCXW343 MCXW345 MCXW727AxxxA MCXW727CxxxA MCXW727DxxxA MCXW748V MCXW744V MCXW748V MCXW748V MCXW748V MIMX8UD3xxx08 MIMX8UD3xxx10 MCXW748UV MCXW744UV MCXW745UV MCXW743UV MCXA153 MCXA152 MCXA143 MCXA142 MCXA133 MCXA132 MCXL144 MCXL143 MCXL142 MCXA156 MCXA155 MCXA154 MCXA146 MCXA145 MCXA144 MCXA276 MCXA275 MCXA256 MCXA255 MCXA345 MCXA346 MCXA166 MCXA165 MCXN235 MCXN236 MCXL253 MCXL254 MCXL255 MIMX8UD5xxx08 MIMX8UD5xxx10 MIMX8UD7xxx10 MIMX8US3xxx08 MIMX8US3xxx10 MIMX8US5xxx08 MIMX8US5xxx10 MIMX9311xxxxM MIMX9311xxxxK MIMX9312xxxxM MIMX9312xxxxK MIMX9321xxxxM MIMX9321xxxxK MIMX9322xxxxM MIMX9322xxxxK MIMX9331xxxxM MIMX9331xxxxK MIMX9332xxxxM MIMX9332xxxxK MIMX9351xxxxM MIMX9351xxxxK MIMX9352xxxxM MIMX9352xxxxK MIMXRT1181xxxxx MIMXRT1182xxxxx MIMXRT1187xxxxx MIMXRT1189xxxxx MIMXRT1189xxxxA MIMXRT533S MIMXRT555S MIMXRT595S MIMXRT633S MIMXRT685S MIMXRT798S MIMXRT735S MIMXRT758S PN7640 PN7642 RW610 RW612 MCXW716CxxxA MCXW716AxxxA
+        DEVICE_IDS K32W1480xxxA K32W232H KW45B41Z52xxxA KW45B41Z53xxxA KW45B41Z82xxxA KW45B41Z83xxxA KW45Z41052xxxA KW45Z41053xxxA KW45Z41082xxxA KW45Z41083xxxA KW47B42Z83xxxA KW47B42Z96xxxA KW47B42Z97xxxA KW47B42ZB2xxxA KW47B42ZB3xxxA KW47B42ZB6xxxA KW47B42ZB7xxxA KW47Z42082xxxA KW47Z42092xxxA KW47Z420B2xxxA KW47Z420B3xxxA LPC5502 LPC5502CPXXXX LPC5504 LPC5504CPXXXX LPC5506 LPC5506CPXXXX LPC5512 LPC5514 LPC5516 LPC5524 LPC5526 LPC5528 LPC5534 LPC5536 LPC55S04 LPC55S06 LPC55S14 LPC55S16 LPC55S26 LPC55S28 LPC55S36 LPC55S66 LPC55S66 LPC55S69 LPC55S69 MCXW235 MCXW236 MCXW343 MCXW345 MCXW727AxxxA MCXW727CxxxA MCXW727DxxxA MCXW748V MCXW744V MCXW748V MCXW748V MCXW748V MIMX8UD3xxx08 MIMX8UD3xxx10 MCXW748UV MCXW744UV MCXW745UV MCXW743UV MCXA132 MCXA133 MCXA142 MCXA143 MCXA144 MCXA145 MCXA146 MCXA152 MCXA153 MCXA154 MCXA155 MCXA156 MCXA175 MCXA176 MCXA185 MCXA186 MCXA255 MCXA256 MCXA265 MCXA266 MCXA343 MCXA344 MCXA345 MCXA346 MCXA355 MCXA356 MCXA365 MCXA366 MCXN235 MCXN236 MCXN247 MCXN526 MCXN527 MCXN536 MCXN537 MCXN546 MCXN547 MCXN556S MCXN946 MCXN947 MCXL142 MCXL143 MCXL144 MCXL253 MCXL254 MCXL255 MIMX8UD5xxx08 MIMX8UD5xxx10 MIMX8UD7xxx10 MIMX8US3xxx08 MIMX8US3xxx10 MIMX8US5xxx08 MIMX8US5xxx10 MIMX9311xxxxM MIMX9311xxxxK MIMX9312xxxxM MIMX9312xxxxK MIMX9321xxxxM MIMX9321xxxxK MIMX9322xxxxM MIMX9322xxxxK MIMX9331xxxxM MIMX9331xxxxK MIMX9332xxxxM MIMX9332xxxxK MIMX9351xxxxM MIMX9351xxxxK MIMX9352xxxxM MIMX9352xxxxK MIMXRT1181xxxxx MIMXRT1182xxxxx MIMXRT1187xxxxx MIMXRT1189xxxxx MIMXRT1189xxxxA MIMXRT533S MIMXRT555S MIMXRT595S MIMXRT633S MIMXRT685S MIMXRT798S MIMXRT735S MIMXRT758S PN7640 PN7642 RW610 RW612 MCXW716CxxxA MCXW716AxxxA
         FPU NO_FPU SP_FPU
     )
     mcux_add_include(
@@ -459,7 +837,7 @@ if (CONFIG_MCUX_COMPONENT_middleware.freertos-kernel.config)
         INCLUDES template/ARM_CM4F_4_priority_bits
         TARGET_FILES FreeRTOSConfig_Gen.h
         CORES cm4f cm7f
-        DEVICE_IDS K32L3A60xxx MCIMX7U3xxxxx MCIMX7U5xxxxx MIMX8DL1xxxFZ MIMX8DX1xxxFZ MIMX8DX2xxxFZ MIMX8DX3xxxFZ MIMX8DX4xxxFZ MIMX8DX5xxxFZ MIMX8DX5xxxDZ MIMX8DX6xxxFZ MIMX8DX6xxxDZ MIMX8MD6xxxJZ MIMX8MD6xxxHZ MIMX8MD7xxxJZ MIMX8MD7xxxHZ MIMX8MM1xxxLZ MIMX8MM1xxxKZ MIMX8MM2xxxLZ MIMX8MM2xxxKZ MIMX8MM3xxxLZ MIMX8MM3xxxKZ MIMX8MM4xxxLZ MIMX8MM4xxxKZ MIMX8MM5xxxLZ MIMX8MM5xxxKZ MIMX8MM6xxxLZ MIMX8MM6xxxKZ MIMX8MQ5xxxJZ MIMX8MQ5xxxHZ MIMX8MQ6xxxJZ MIMX8MQ6xxxHZ MIMX8MQ7xxxJZ MIMX8MQ7xxxHZ MIMX8QM6xxxFF MIMX8QX1xxxFZ MIMX8QX2xxxFZ MIMX8QX3xxxFZ MIMX8QX4xxxFZ MIMX8QX5xxxFZ MIMX8QX5xxxDZ MIMX8QX6xxxFZ MIMX8QX6xxxDZ MIMX8SL1xxxFZ MIMX8UX5xxxFZ MIMX8UX5xxxDZ MIMX8UX6xxxFZ MIMX8UX6xxxDZ MIMXRT1165xxxxx MIMXRT1166xxxxx MIMXRT1173xxxxx MIMXRT1175xxxxx MIMXRT1176xxxxx MK02FN128xxx10 MK02FN64xxx10 MK21FN1M0xxx12 MK21FX512xxx12 MK21FN1M0xxx12 MK21FX512xxx12WS MK21FN1M0Axxx12 MK21FX512Axxx12 MK21FN1M0Axxx12 MK21FX512Axxx12WS MK22FX512xxx12 MK22FN1M0xxx12 MK22FN128xxx10 MK22FN128xxx12 MK22FN256xxx12 MK22FN512xxx12 MK22FN1M0Axxx12 MK22FX512Axxx12 MK24FN1M0xxx12 MK24FN256xxx12 MK26FN2M0xxx18 MK27FN2M0xxx15 MK27FN2M0Axxx15 MK28FN2M0xxx15 MK28FN2M0Axxx15 MK63FN1M0xxx12 MK63FN1M0xxx12WS MK64FN1M0xxx12 MK64FX512xxx12 MK65FN2M0xxx18 MK65FX1M0xxx18 MK65FN2M0xxx18 MK65FX1M0xxx18WS MK66FN2M0xxx18 MK66FX1M0xxx18 MK80FN256xxx15 MK81FN256xxx15 MK82FN256xxx15 MKE14F512xxx16 MKE14F256xxx16 MKE16F512xxx16 MKE16F256xxx16 MKE18F512xxx16 MKE18F256xxx16 MKS20FN128xxx12 MKS20FN256xxx12 MKS22FN128xxx12 MKS22FN256xxx12 MKV30F128xxx10 MKV30F64xxx10 MKV31F128xxx10 MKV31F256xxx12 MKV31F512xxx12 MKV42F128xxx16 MKV42F256xxx16 MKV42F64xxx16 MKV44F128xxx16 MKV44F256xxx16 MKV44F64xxx16 MKV46F128xxx16 MKV46F256xxx16 PKE18F512xxx15 QN908XC K32H844P000xxxx MIMX8ML3xxxLZ MIMX8ML3xxxKZ MIMX8ML4xxxLZ MIMX8ML4xxxKZ MIMX8ML6xxxLZ MIMX8ML6xxxKZ MIMX8ML8xxxLZ MIMX8ML8xxxKZ MIMX8MN1xxxJZ MIMX8MN1xxxIZ MIMX8MN2xxxJZ MIMX8MN2xxxIZ MIMX8MN3xxxJZ MIMX8MN3xxxIZ MIMX8MN4xxxJZ MIMX8MN4xxxIZ MIMX8MN5xxxJZ MIMX8MN5xxxIZ MIMX8MN6xxxJZ MIMX8MN6xxxIZ MIMXRT1011xxxxx MIMXRT1015xxxxx MIMXRT1021xxxxx MIMXRT1024xxxxx MIMXRT1041xxxxB MIMXRT1042xxxxB MIMXRT1051xxxxB MIMXRT1052xxxxB MIMXRT1061xxxxA MIMXRT1061xxxxB MIMXRT1062xxxxA MIMXRT1062xxxxB MIMXRT1064xxxxA MIMXRT1165xxxxx MIMXRT1166xxxxx MIMXRT1171xxxxx MIMXRT1172xxxxx MIMXRT1173xxxxx MIMXRT1175xxxxx MIMXRT1176xxxxx MIMXRT1187xxxxx MIMXRT1189xxxxx MIMXRT1189xxxxA MKV56F1M0xxx24 MKV56F512xxx24 MKV58F1M0xxx24 MKV58F512xxx24 MCXE245 MCXE246 MCXE247 MCXE31B
+        DEVICE_IDS K32L3A60xxx MCIMX7U3xxxxx MCIMX7U5xxxxx MIMX8DL1xxxFZ MIMX8DX1xxxFZ MIMX8DX2xxxFZ MIMX8DX3xxxFZ MIMX8DX4xxxFZ MIMX8DX5xxxFZ MIMX8DX5xxxDZ MIMX8DX6xxxFZ MIMX8DX6xxxDZ MIMX8MD6xxxJZ MIMX8MD6xxxHZ MIMX8MD7xxxJZ MIMX8MD7xxxHZ MIMX8MM1xxxLZ MIMX8MM1xxxKZ MIMX8MM2xxxLZ MIMX8MM2xxxKZ MIMX8MM3xxxLZ MIMX8MM3xxxKZ MIMX8MM4xxxLZ MIMX8MM4xxxKZ MIMX8MM5xxxLZ MIMX8MM5xxxKZ MIMX8MM6xxxLZ MIMX8MM6xxxKZ MIMX8MQ5xxxJZ MIMX8MQ5xxxHZ MIMX8MQ6xxxJZ MIMX8MQ6xxxHZ MIMX8MQ7xxxJZ MIMX8MQ7xxxHZ MIMX8QM6xxxFF MIMX8QX1xxxFZ MIMX8QX2xxxFZ MIMX8QX3xxxFZ MIMX8QX4xxxFZ MIMX8QX5xxxFZ MIMX8QX5xxxDZ MIMX8QX6xxxFZ MIMX8QX6xxxDZ MIMX8SL1xxxFZ MIMX8UX5xxxFZ MIMX8UX5xxxDZ MIMX8UX6xxxFZ MIMX8UX6xxxDZ MIMXRT1165xxxxx MIMXRT1166xxxxx MIMXRT1173xxxxx MIMXRT1175xxxxx MIMXRT1176xxxxx MK02FN128xxx10 MK02FN64xxx10 MK21FN1M0xxx12 MK21FX512xxx12 MK21FN1M0xxx12 MK21FX512xxx12WS MK21FN1M0Axxx12 MK21FX512Axxx12 MK21FN1M0Axxx12 MK21FX512Axxx12WS MK22FX512xxx12 MK22FN1M0xxx12 MK22FN128xxx10 MK22FN128xxx12 MK22FN256xxx12 MK22FN512xxx12 MK22FN1M0Axxx12 MK22FX512Axxx12 MK24FN1M0xxx12 MK24FN256xxx12 MK26FN2M0xxx18 MK27FN2M0xxx15 MK27FN2M0Axxx15 MK28FN2M0xxx15 MK28FN2M0Axxx15 MK63FN1M0xxx12 MK63FN1M0xxx12WS MK64FN1M0xxx12 MK64FX512xxx12 MK65FN2M0xxx18 MK65FX1M0xxx18 MK65FN2M0xxx18 MK65FX1M0xxx18WS MK66FN2M0xxx18 MK66FX1M0xxx18 MK80FN256xxx15 MK81FN256xxx15 MK82FN256xxx15 MKE14F512xxx16 MKE14F256xxx16 MKE16F512xxx16 MKE16F256xxx16 MKE18F512xxx16 MKE18F256xxx16 MKS20FN128xxx12 MKS20FN256xxx12 MKS22FN128xxx12 MKS22FN256xxx12 MKV30F128xxx10 MKV30F64xxx10 MKV31F128xxx10 MKV31F256xxx12 MKV31F512xxx12 MKV42F128xxx16 MKV42F256xxx16 MKV42F64xxx16 MKV44F128xxx16 MKV44F256xxx16 MKV44F64xxx16 MKV46F128xxx16 MKV46F256xxx16 PKE18F512xxx15 QN908XC K32H844P000xxxx MIMX8ML3xxxLZ MIMX8ML3xxxKZ MIMX8ML4xxxLZ MIMX8ML4xxxKZ MIMX8ML6xxxLZ MIMX8ML6xxxKZ MIMX8ML8xxxLZ MIMX8ML8xxxKZ MIMX8MN1xxxJZ MIMX8MN1xxxIZ MIMX8MN2xxxJZ MIMX8MN2xxxIZ MIMX8MN3xxxJZ MIMX8MN3xxxIZ MIMX8MN4xxxJZ MIMX8MN4xxxIZ MIMX8MN5xxxJZ MIMX8MN5xxxIZ MIMX8MN6xxxJZ MIMX8MN6xxxIZ MIMXRT1011xxxxx MIMXRT1015xxxxx MIMXRT1021xxxxx MIMXRT1024xxxxx MIMXRT1041xxxxB MIMXRT1042xxxxB MIMXRT1043xxxxB MIMXRT1046xxxxB MIMXRT1051xxxxB MIMXRT1052xxxxB MIMXRT1061xxxxA MIMXRT1061xxxxB MIMXRT1062xxxxA MIMXRT1062xxxxB MIMXRT1064xxxxA MIMXRT1064xxxxB MIMXRT1165xxxxx MIMXRT1166xxxxx MIMXRT1171xxxxx MIMXRT1172xxxxx MIMXRT1173xxxxx MIMXRT1175xxxxx MIMXRT1176xxxxx MIMXRT1187xxxxx MIMXRT1189xxxxx MIMXRT1189xxxxA MKV56F1M0xxx24 MKV56F512xxx24 MKV58F1M0xxx24 MKV58F512xxx24 MCXE245 MCXE246 MCXE247 MCXE315 MCXE316 MCXE317 MCXE31B
     )
     mcux_add_source(
         SOURCES template/FreeRTOSConfig.h
@@ -473,6 +851,13 @@ if (CONFIG_MCUX_COMPONENT_middleware.freertos-kernel.config)
     mcux_add_source(
         SOURCES template/ARM_CM0/FreeRTOSConfig_Gen.h
         CORES cm0p
+        CONFIG TRUE
+    )
+    mcux_add_source(
+        SOURCES template/ARM_CM23_2_priority_bits/FreeRTOSConfig_Gen.h
+        CORES cm23
+        DEVICE_IDS MCXC151 MCXC161 MCXC162
+        FPU NO_FPU SP_FPU
         CONFIG TRUE
     )
     mcux_add_source(
@@ -490,7 +875,7 @@ if (CONFIG_MCUX_COMPONENT_middleware.freertos-kernel.config)
     mcux_add_source(
         SOURCES template/ARM_CM33_3_priority_bits/FreeRTOSConfig_Gen.h
         CORES cm33 cm33f
-        DEVICE_IDS K32W1480xxxA K32W232H KW45B41Z52xxxA KW45B41Z53xxxA KW45B41Z82xxxA KW45B41Z83xxxA KW45Z41052xxxA KW45Z41053xxxA KW45Z41082xxxA KW45Z41083xxxA KW47B42Z83xxxA KW47B42Z96xxxA KW47B42Z97xxxA KW47B42ZB2xxxA KW47B42ZB3xxxA KW47B42ZB6xxxA KW47B42ZB7xxxA KW47Z42082xxxA KW47Z42092xxxA KW47Z420B2xxxA KW47Z420B3xxxA LPC5502 LPC5502CPXXXX LPC5504 LPC5504CPXXXX LPC5506 LPC5506CPXXXX LPC5512 LPC5514 LPC5516 LPC5524 LPC5526 LPC5528 LPC5534 LPC5536 LPC55S04 LPC55S06 LPC55S14 LPC55S16 LPC55S26 LPC55S28 LPC55S36 LPC55S66 LPC55S66 LPC55S69 LPC55S69 MCXW235 MCXW236 MCXN546 MCXN547 MCXN946 MCXN947 MCXW343 MCXW345 MCXW727AxxxA MCXW727CxxxA MCXW727DxxxA MCXW748V MCXW744V MCXW748V MCXW748V MCXW748V MIMX8UD3xxx08 MIMX8UD3xxx10 MCXW748UV MCXW744UV MCXW745UV MCXW743UV MCXA153 MCXA152 MCXA143 MCXA142 MCXA133 MCXA132 MCXL144 MCXL143 MCXL142 MCXA156 MCXA155 MCXA154 MCXA146 MCXA145 MCXA144 MCXA276 MCXA275 MCXA256 MCXA255 MCXA345 MCXA346 MCXA166 MCXA165 MCXN235 MCXN236 MCXL253 MCXL254 MCXL255 MIMX8UD5xxx08 MIMX8UD5xxx10 MIMX8UD7xxx10 MIMX8US3xxx08 MIMX8US3xxx10 MIMX8US5xxx08 MIMX8US5xxx10 MIMX9311xxxxM MIMX9311xxxxK MIMX9312xxxxM MIMX9312xxxxK MIMX9321xxxxM MIMX9321xxxxK MIMX9322xxxxM MIMX9322xxxxK MIMX9331xxxxM MIMX9331xxxxK MIMX9332xxxxM MIMX9332xxxxK MIMX9351xxxxM MIMX9351xxxxK MIMX9352xxxxM MIMX9352xxxxK MIMXRT1181xxxxx MIMXRT1182xxxxx MIMXRT1187xxxxx MIMXRT1189xxxxx MIMXRT1189xxxxA MIMXRT533S MIMXRT555S MIMXRT595S MIMXRT633S MIMXRT685S MIMXRT798S MIMXRT735S MIMXRT758S PN7640 PN7642 RW610 RW612 MCXW716CxxxA MCXW716AxxxA
+        DEVICE_IDS K32W1480xxxA K32W232H KW45B41Z52xxxA KW45B41Z53xxxA KW45B41Z82xxxA KW45B41Z83xxxA KW45Z41052xxxA KW45Z41053xxxA KW45Z41082xxxA KW45Z41083xxxA KW47B42Z83xxxA KW47B42Z96xxxA KW47B42Z97xxxA KW47B42ZB2xxxA KW47B42ZB3xxxA KW47B42ZB6xxxA KW47B42ZB7xxxA KW47Z42082xxxA KW47Z42092xxxA KW47Z420B2xxxA KW47Z420B3xxxA LPC5502 LPC5502CPXXXX LPC5504 LPC5504CPXXXX LPC5506 LPC5506CPXXXX LPC5512 LPC5514 LPC5516 LPC5524 LPC5526 LPC5528 LPC5534 LPC5536 LPC55S04 LPC55S06 LPC55S14 LPC55S16 LPC55S26 LPC55S28 LPC55S36 LPC55S66 LPC55S66 LPC55S69 LPC55S69 MCXW235 MCXW236 MCXW343 MCXW345 MCXW727AxxxA MCXW727CxxxA MCXW727DxxxA MCXW748V MCXW744V MCXW748V MCXW748V MCXW748V MIMX8UD3xxx08 MIMX8UD3xxx10 MCXW748UV MCXW744UV MCXW745UV MCXW743UV MCXA132 MCXA133 MCXA142 MCXA143 MCXA144 MCXA145 MCXA146 MCXA152 MCXA153 MCXA154 MCXA155 MCXA156 MCXA175 MCXA176 MCXA185 MCXA186 MCXA255 MCXA256 MCXA265 MCXA266 MCXA343 MCXA344 MCXA345 MCXA346 MCXA355 MCXA356 MCXA365 MCXA366 MCXN235 MCXN236 MCXN247 MCXN526 MCXN527 MCXN536 MCXN537 MCXN546 MCXN547 MCXN556S MCXN946 MCXN947 MCXL142 MCXL143 MCXL144 MCXL253 MCXL254 MCXL255 MIMX8UD5xxx08 MIMX8UD5xxx10 MIMX8UD7xxx10 MIMX8US3xxx08 MIMX8US3xxx10 MIMX8US5xxx08 MIMX8US5xxx10 MIMX9311xxxxM MIMX9311xxxxK MIMX9312xxxxM MIMX9312xxxxK MIMX9321xxxxM MIMX9321xxxxK MIMX9322xxxxM MIMX9322xxxxK MIMX9331xxxxM MIMX9331xxxxK MIMX9332xxxxM MIMX9332xxxxK MIMX9351xxxxM MIMX9351xxxxK MIMX9352xxxxM MIMX9352xxxxK MIMXRT1181xxxxx MIMXRT1182xxxxx MIMXRT1187xxxxx MIMXRT1189xxxxx MIMXRT1189xxxxA MIMXRT533S MIMXRT555S MIMXRT595S MIMXRT633S MIMXRT685S MIMXRT798S MIMXRT735S MIMXRT758S PN7640 PN7642 RW610 RW612 MCXW716CxxxA MCXW716AxxxA
         FPU NO_FPU SP_FPU
         CONFIG TRUE
     )
@@ -502,6 +887,20 @@ if (CONFIG_MCUX_COMPONENT_middleware.freertos-kernel.config)
         CONFIG TRUE
     )
     mcux_add_source(
+        SOURCES template/ARM_CM55_3_priority_bits/FreeRTOSConfig_Gen.h
+        CORES cm55 cm55f
+        DEVICE_IDS MIMXRTL3450
+        FPU NO_FPU SP_FPU DP_FPU
+        CONFIG TRUE
+    )
+    mcux_add_source(
+        SOURCES template/ARM_CM85_4_priority_bits/FreeRTOSConfig_Gen.h
+        CORES cm85 cm85f
+        DEVICE_IDS MIMXRT2662xxxxx
+        FPU NO_FPU SP_FPU DP_FPU
+        CONFIG TRUE
+    )
+    mcux_add_source(
         SOURCES template/ARM_CM4F_3_priority_bits/FreeRTOSConfig_Gen.h
         CORES cm4f
         DEVICE_IDS K32W032S1M2xxx LPC54005 LPC54016 LPC54018 LPC54018J2M LPC54018J4M LPC54101J512 LPC54101J256 LPC54102J512 LPC54102J256 LPC54113J256 LPC54113J128 LPC54114J256 LPC54605J512 LPC54605J256 LPC54606J512 LPC54606J256 LPC54607J256 LPC54607J512 LPC54608J512 LPC54616J512 LPC54616J256 LPC54618J512 LPC54628J512 LPC54S005 LPC54S016 LPC54S018 LPC54S018J2M LPC54S018J4M QN908XC
@@ -510,7 +909,7 @@ if (CONFIG_MCUX_COMPONENT_middleware.freertos-kernel.config)
     mcux_add_source(
         SOURCES template/ARM_CM4F_4_priority_bits/FreeRTOSConfig_Gen.h
         CORES cm4f cm7f
-        DEVICE_IDS K32L3A60xxx MCIMX7U3xxxxx MCIMX7U5xxxxx MIMX8DL1xxxFZ MIMX8DX1xxxFZ MIMX8DX2xxxFZ MIMX8DX3xxxFZ MIMX8DX4xxxFZ MIMX8DX5xxxFZ MIMX8DX5xxxDZ MIMX8DX6xxxFZ MIMX8DX6xxxDZ MIMX8MD6xxxJZ MIMX8MD6xxxHZ MIMX8MD7xxxJZ MIMX8MD7xxxHZ MIMX8MM1xxxLZ MIMX8MM1xxxKZ MIMX8MM2xxxLZ MIMX8MM2xxxKZ MIMX8MM3xxxLZ MIMX8MM3xxxKZ MIMX8MM4xxxLZ MIMX8MM4xxxKZ MIMX8MM5xxxLZ MIMX8MM5xxxKZ MIMX8MM6xxxLZ MIMX8MM6xxxKZ MIMX8MQ5xxxJZ MIMX8MQ5xxxHZ MIMX8MQ6xxxJZ MIMX8MQ6xxxHZ MIMX8MQ7xxxJZ MIMX8MQ7xxxHZ MIMX8QM6xxxFF MIMX8QX1xxxFZ MIMX8QX2xxxFZ MIMX8QX3xxxFZ MIMX8QX4xxxFZ MIMX8QX5xxxFZ MIMX8QX5xxxDZ MIMX8QX6xxxFZ MIMX8QX6xxxDZ MIMX8SL1xxxFZ MIMX8UX5xxxFZ MIMX8UX5xxxDZ MIMX8UX6xxxFZ MIMX8UX6xxxDZ MIMXRT1165xxxxx MIMXRT1166xxxxx MIMXRT1173xxxxx MIMXRT1175xxxxx MIMXRT1176xxxxx MK02FN128xxx10 MK02FN64xxx10 MK21FN1M0xxx12 MK21FX512xxx12 MK21FN1M0xxx12 MK21FX512xxx12WS MK21FN1M0Axxx12 MK21FX512Axxx12 MK21FN1M0Axxx12 MK21FX512Axxx12WS MK22FX512xxx12 MK22FN1M0xxx12 MK22FN128xxx10 MK22FN128xxx12 MK22FN256xxx12 MK22FN512xxx12 MK22FN1M0Axxx12 MK22FX512Axxx12 MK24FN1M0xxx12 MK24FN256xxx12 MK26FN2M0xxx18 MK27FN2M0xxx15 MK27FN2M0Axxx15 MK28FN2M0xxx15 MK28FN2M0Axxx15 MK63FN1M0xxx12 MK63FN1M0xxx12WS MK64FN1M0xxx12 MK64FX512xxx12 MK65FN2M0xxx18 MK65FX1M0xxx18 MK65FN2M0xxx18 MK65FX1M0xxx18WS MK66FN2M0xxx18 MK66FX1M0xxx18 MK80FN256xxx15 MK81FN256xxx15 MK82FN256xxx15 MKE14F512xxx16 MKE14F256xxx16 MKE16F512xxx16 MKE16F256xxx16 MKE18F512xxx16 MKE18F256xxx16 MKS20FN128xxx12 MKS20FN256xxx12 MKS22FN128xxx12 MKS22FN256xxx12 MKV30F128xxx10 MKV30F64xxx10 MKV31F128xxx10 MKV31F256xxx12 MKV31F512xxx12 MKV42F128xxx16 MKV42F256xxx16 MKV42F64xxx16 MKV44F128xxx16 MKV44F256xxx16 MKV44F64xxx16 MKV46F128xxx16 MKV46F256xxx16 PKE18F512xxx15 QN908XC K32H844P000xxxx MIMX8ML3xxxLZ MIMX8ML3xxxKZ MIMX8ML4xxxLZ MIMX8ML4xxxKZ MIMX8ML6xxxLZ MIMX8ML6xxxKZ MIMX8ML8xxxLZ MIMX8ML8xxxKZ MIMX8MN1xxxJZ MIMX8MN1xxxIZ MIMX8MN2xxxJZ MIMX8MN2xxxIZ MIMX8MN3xxxJZ MIMX8MN3xxxIZ MIMX8MN4xxxJZ MIMX8MN4xxxIZ MIMX8MN5xxxJZ MIMX8MN5xxxIZ MIMX8MN6xxxJZ MIMX8MN6xxxIZ MIMXRT1011xxxxx MIMXRT1015xxxxx MIMXRT1021xxxxx MIMXRT1024xxxxx MIMXRT1041xxxxB MIMXRT1042xxxxB MIMXRT1051xxxxB MIMXRT1052xxxxB MIMXRT1061xxxxA MIMXRT1061xxxxB MIMXRT1062xxxxA MIMXRT1062xxxxB MIMXRT1064xxxxA MIMXRT1165xxxxx MIMXRT1166xxxxx MIMXRT1171xxxxx MIMXRT1172xxxxx MIMXRT1173xxxxx MIMXRT1175xxxxx MIMXRT1176xxxxx MIMXRT1187xxxxx MIMXRT1189xxxxx MIMXRT1189xxxxA MKV56F1M0xxx24 MKV56F512xxx24 MKV58F1M0xxx24 MKV58F512xxx24 MCXE245 MCXE246 MCXE247 MCXE31B
+        DEVICE_IDS K32L3A60xxx MCIMX7U3xxxxx MCIMX7U5xxxxx MIMX8DL1xxxFZ MIMX8DX1xxxFZ MIMX8DX2xxxFZ MIMX8DX3xxxFZ MIMX8DX4xxxFZ MIMX8DX5xxxFZ MIMX8DX5xxxDZ MIMX8DX6xxxFZ MIMX8DX6xxxDZ MIMX8MD6xxxJZ MIMX8MD6xxxHZ MIMX8MD7xxxJZ MIMX8MD7xxxHZ MIMX8MM1xxxLZ MIMX8MM1xxxKZ MIMX8MM2xxxLZ MIMX8MM2xxxKZ MIMX8MM3xxxLZ MIMX8MM3xxxKZ MIMX8MM4xxxLZ MIMX8MM4xxxKZ MIMX8MM5xxxLZ MIMX8MM5xxxKZ MIMX8MM6xxxLZ MIMX8MM6xxxKZ MIMX8MQ5xxxJZ MIMX8MQ5xxxHZ MIMX8MQ6xxxJZ MIMX8MQ6xxxHZ MIMX8MQ7xxxJZ MIMX8MQ7xxxHZ MIMX8QM6xxxFF MIMX8QX1xxxFZ MIMX8QX2xxxFZ MIMX8QX3xxxFZ MIMX8QX4xxxFZ MIMX8QX5xxxFZ MIMX8QX5xxxDZ MIMX8QX6xxxFZ MIMX8QX6xxxDZ MIMX8SL1xxxFZ MIMX8UX5xxxFZ MIMX8UX5xxxDZ MIMX8UX6xxxFZ MIMX8UX6xxxDZ MIMXRT1165xxxxx MIMXRT1166xxxxx MIMXRT1173xxxxx MIMXRT1175xxxxx MIMXRT1176xxxxx MK02FN128xxx10 MK02FN64xxx10 MK21FN1M0xxx12 MK21FX512xxx12 MK21FN1M0xxx12 MK21FX512xxx12WS MK21FN1M0Axxx12 MK21FX512Axxx12 MK21FN1M0Axxx12 MK21FX512Axxx12WS MK22FX512xxx12 MK22FN1M0xxx12 MK22FN128xxx10 MK22FN128xxx12 MK22FN256xxx12 MK22FN512xxx12 MK22FN1M0Axxx12 MK22FX512Axxx12 MK24FN1M0xxx12 MK24FN256xxx12 MK26FN2M0xxx18 MK27FN2M0xxx15 MK27FN2M0Axxx15 MK28FN2M0xxx15 MK28FN2M0Axxx15 MK63FN1M0xxx12 MK63FN1M0xxx12WS MK64FN1M0xxx12 MK64FX512xxx12 MK65FN2M0xxx18 MK65FX1M0xxx18 MK65FN2M0xxx18 MK65FX1M0xxx18WS MK66FN2M0xxx18 MK66FX1M0xxx18 MK80FN256xxx15 MK81FN256xxx15 MK82FN256xxx15 MKE14F512xxx16 MKE14F256xxx16 MKE16F512xxx16 MKE16F256xxx16 MKE18F512xxx16 MKE18F256xxx16 MKS20FN128xxx12 MKS20FN256xxx12 MKS22FN128xxx12 MKS22FN256xxx12 MKV30F128xxx10 MKV30F64xxx10 MKV31F128xxx10 MKV31F256xxx12 MKV31F512xxx12 MKV42F128xxx16 MKV42F256xxx16 MKV42F64xxx16 MKV44F128xxx16 MKV44F256xxx16 MKV44F64xxx16 MKV46F128xxx16 MKV46F256xxx16 PKE18F512xxx15 QN908XC K32H844P000xxxx MIMX8ML3xxxLZ MIMX8ML3xxxKZ MIMX8ML4xxxLZ MIMX8ML4xxxKZ MIMX8ML6xxxLZ MIMX8ML6xxxKZ MIMX8ML8xxxLZ MIMX8ML8xxxKZ MIMX8MN1xxxJZ MIMX8MN1xxxIZ MIMX8MN2xxxJZ MIMX8MN2xxxIZ MIMX8MN3xxxJZ MIMX8MN3xxxIZ MIMX8MN4xxxJZ MIMX8MN4xxxIZ MIMX8MN5xxxJZ MIMX8MN5xxxIZ MIMX8MN6xxxJZ MIMX8MN6xxxIZ MIMXRT1011xxxxx MIMXRT1015xxxxx MIMXRT1021xxxxx MIMXRT1024xxxxx MIMXRT1041xxxxB MIMXRT1042xxxxB MIMXRT1043xxxxB MIMXRT1046xxxxB MIMXRT1051xxxxB MIMXRT1052xxxxB MIMXRT1061xxxxA MIMXRT1061xxxxB MIMXRT1062xxxxA MIMXRT1062xxxxB MIMXRT1064xxxxA MIMXRT1064xxxxB MIMXRT1165xxxxx MIMXRT1166xxxxx MIMXRT1171xxxxx MIMXRT1172xxxxx MIMXRT1173xxxxx MIMXRT1175xxxxx MIMXRT1176xxxxx MIMXRT1187xxxxx MIMXRT1189xxxxx MIMXRT1189xxxxA MKV56F1M0xxx24 MKV56F512xxx24 MKV58F1M0xxx24 MKV58F512xxx24 MCXE245 MCXE246 MCXE247 MCXE315 MCXE316 MCXE317 MCXE31B
         CONFIG TRUE
     )
 endif ()

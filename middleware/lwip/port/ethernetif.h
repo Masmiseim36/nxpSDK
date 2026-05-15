@@ -32,7 +32,7 @@
 
 /*
  * Copyright (c) 2013-2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2024 NXP
+ * Copyright 2016-2025 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -45,11 +45,18 @@
 #include "lwip/netif.h"
 #include "fsl_phy.h"
 #include "lwipopts.h"
+
+#ifndef ETH_USE_GPIO_ADAPTER
+#define ETH_USE_GPIO_ADAPTER 1
+#endif /* ETH_USE_GPIO_ADAPTER */
+
+#if ETH_USE_GPIO_ADAPTER
 #if defined(FSL_FEATURE_SOC_RGPIO_COUNT) && (FSL_FEATURE_SOC_RGPIO_COUNT > 0)
 #include "fsl_rgpio.h"
 #else
 #include "fsl_gpio.h"
 #endif
+#endif /* ETH_USE_GPIO_ADAPTER */
 
 /*******************************************************************************
  * Definitions
@@ -105,12 +112,14 @@ typedef struct ethernetif_config
     uint8_t macAddress[NETIF_MAX_HWADDR_LEN];
 
 #if NO_SYS == 0
+#if ETH_USE_GPIO_ADAPTER
 #if defined(FSL_FEATURE_SOC_RGPIO_COUNT) && (FSL_FEATURE_SOC_RGPIO_COUNT > 0)
     RGPIO_Type *phyIntGpio;
 #else
     GPIO_Type *phyIntGpio;
 #endif
     uint8_t phyIntGpioPin;
+#endif /* ETH_USE_GPIO_ADAPTER */
 #endif
 } ethernetif_config_t;
 

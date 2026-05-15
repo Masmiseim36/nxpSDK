@@ -60,6 +60,16 @@
 #include "ela_csec.h"
 
 #endif
+/* Headers for ele_hseb transparent driver */
+#if defined(PSA_CRYPTO_DRIVER_ELE_HSEB)
+#include "ele_hseb.h"
+
+#endif
+/* Headers for ele_s2xx opaque driver */
+#if defined(PSA_CRYPTO_DRIVER_ELE_S2XX)
+#include "ele_s2xx.h"
+
+#endif
 /* Headers for ele_s2xx transparent driver */
 #if defined(PSA_CRYPTO_DRIVER_ELE_S2XX)
 #include "ele_s2xx.h"
@@ -110,6 +120,11 @@
 #include "sgi.h"
 
 #endif
+/* Headers for pkc transparent driver */
+#if defined(PSA_CRYPTO_DRIVER_PKC)
+#include "pkc.h"
+
+#endif
 
 /* END-driver headers */
 
@@ -125,16 +140,19 @@
 #define CC3XX_TRANSPARENT_DRIVER_ID (6)
 #define DCP_TRANSPARENT_DRIVER_ID (7)
 #define ELA_CSEC_TRANSPARENT_DRIVER_ID (8)
-#define ELE_S2XX_TRANSPARENT_DRIVER_ID (9)
-#define ELE_S4XX_OPAQUE_DRIVER_ID (10)
-#define ELE_S4XX_TRANSPARENT_DRIVER_ID (11)
-#define ELS_PKC_OPAQUE_DRIVER_ID (12)
-#define ELS_PKC_TRANSPARENT_DRIVER_ID (13)
-#define CAAM_OPAQUE_DRIVER_ID (14)
-#define CAAM_TRANSPARENT_DRIVER_ID (15)
-#define HASHCRYPT_TRANSPARENT_DRIVER_ID (16)
-#define CASPER_TRANSPARENT_DRIVER_ID (17)
-#define SGI_TRANSPARENT_DRIVER_ID (18)
+#define ELE_HSEB_TRANSPARENT_DRIVER_ID (9)
+#define ELE_S2XX_OPAQUE_DRIVER_ID (10)
+#define ELE_S2XX_TRANSPARENT_DRIVER_ID (11)
+#define ELE_S4XX_OPAQUE_DRIVER_ID (12)
+#define ELE_S4XX_TRANSPARENT_DRIVER_ID (13)
+#define ELS_PKC_OPAQUE_DRIVER_ID (14)
+#define ELS_PKC_TRANSPARENT_DRIVER_ID (15)
+#define CAAM_OPAQUE_DRIVER_ID (16)
+#define CAAM_TRANSPARENT_DRIVER_ID (17)
+#define HASHCRYPT_TRANSPARENT_DRIVER_ID (18)
+#define CASPER_TRANSPARENT_DRIVER_ID (19)
+#define SGI_TRANSPARENT_DRIVER_ID (20)
+#define PKC_TRANSPARENT_DRIVER_ID (21)
 
 /* END-driver id */
 
@@ -203,7 +221,7 @@ psa_status_t psa_driver_wrapper_get_key_buffer_size(
 #endif /* PSA_CRYPTO_DRIVER_TFM_BUILTIN_KEY_LOADER */
 
 #if defined(PSA_CRYPTO_DRIVER_ELE_S4XX)
-        case 0x000001:
+        case PSA_CRYPTO_ELE_S4XX_LOCATION:
             *key_buffer_size = ele_s4xx_opaque_size_function(key_type,
                                                            key_bits );
             return( ( *key_buffer_size != 0 ) ?
@@ -231,6 +249,14 @@ psa_status_t psa_driver_wrapper_get_key_buffer_size(
                     PSA_SUCCESS : PSA_ERROR_NOT_SUPPORTED );
             break;
 #endif /* PSA_CRYPTO_DRIVER_CAAM */
+
+#if defined(PSA_CRYPTO_DRIVER_ELE_S2XX)
+        case PSA_CRYPTO_LOCATION_S200_KEY_STORAGE_NON_EL2GO:
+            *key_buffer_size = ele_s2xx_opaque_get_key_buffer_size( attributes );
+            return( ( *key_buffer_size != 0 ) ?
+                    PSA_SUCCESS : PSA_ERROR_NOT_SUPPORTED );
+            break;
+#endif /* PSA_CRYPTO_DRIVER_ELE_S2XX */
 
         default:
             (void)key_type;
@@ -326,6 +352,20 @@ psa_status_t psa_driver_wrapper_export_public_key(
 
 
 
+#if (defined(PSA_CRYPTO_DRIVER_ELE_S2XX) )
+            status = ele_s2xx_transparent_export_public_key
+                (attributes,
+                                key_buffer,
+                                key_buffer_size,
+                                data,
+                                data_size,
+                                data_length
+            );
+
+            if( status != PSA_ERROR_NOT_SUPPORTED )
+                return( status );
+#endif
+
 
 #if (defined(PSA_CRYPTO_DRIVER_ELS_PKC) )
             status = els_pkc_transparent_export_public_key
@@ -370,8 +410,9 @@ psa_status_t psa_driver_wrapper_export_public_key(
         ));
 #endif
 
+
 #if (defined(PSA_CRYPTO_DRIVER_ELE_S4XX) )
-        case 0x000001:
+        case PSA_CRYPTO_ELE_S4XX_LOCATION:
             return( ele_s4xx_opaque_export_public_key
             (attributes,
                             key_buffer,
@@ -402,6 +443,7 @@ psa_status_t psa_driver_wrapper_export_public_key(
 #endif /* PSA_CRYPTO_DRIVER_ELS_PKC */
 #if defined(PSA_CRYPTO_DRIVER_ELE_S2XX)
         case PSA_CRYPTO_LOCATION_S200_KEY_STORAGE:
+        case PSA_CRYPTO_LOCATION_S200_KEY_STORAGE_NON_EL2GO:
             return( ele_s2xx_opaque_export_public_key
             (attributes,
                             key_buffer,
@@ -451,6 +493,7 @@ psa_status_t psa_driver_wrapper_get_builtin_key(
                             key_buffer_length
         ));
 #endif
+
 
 
 

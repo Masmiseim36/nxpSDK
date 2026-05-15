@@ -58,9 +58,7 @@ int netc_ep_send(void *pri, const void *payload, uint32_t len)
     if ( EP_SendFrame(&port->g_ep_handle, 0, &txFrame, NULL, NULL) != kStatus_Success) {
         return 0;
 	}
- 
-	while (!port->txOver) { }
-    EP_ReclaimTxDescriptor(&port->g_ep_handle, 0);
+
 	return len;
 }
 

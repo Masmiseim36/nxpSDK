@@ -60,7 +60,7 @@ const struct bootutil_key bootutil_enc_key = {
     .len = &enc_priv_key_len,
 };
 #elif defined(MCUBOOT_ENCRYPT_EC256)
-#include "enc-ecdsa-p256-priv-minimal.c"
+#include "enc-ec256-priv-minimal.c"
 
 const struct bootutil_key bootutil_enc_key = {
     .key = enc_priv_key,

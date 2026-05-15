@@ -1,0 +1,229 @@
+/*
+ * Copyright 2025 NXP
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
+ */
+
+#include "fsl_debug_console.h"
+#include "pin_mux.h"
+#include "clock_config.h"
+#include "board.h"
+#include "fsl_xbar.h"
+#include "fsl_iomuxc.h"
+#include "fsl_ecat.h"
+#include "fsl_ele_base_api.h"
+
+#include "ecat_def.h"
+#include "ecatslv.h"
+#include "ecat_hw.h"
+#include "ecatappl.h"
+
+#include "app.h"
+
+UINT32 EcatTimerCnt;
+volatile uint32_t g_systickCounter;
+
+static void Ecat_KickOff(void)
+{
+    BLK_CTRL_WAKEUPMIX->ECAT_MISC_CFG &= ~BLK_CTRL_WAKEUPMIX_ECAT_MISC_CFG_RMII_SEL0_MASK;
+    BLK_CTRL_WAKEUPMIX->ECAT_MISC_CFG &= ~BLK_CTRL_WAKEUPMIX_ECAT_MISC_CFG_RMII_SEL1_MASK;
+
+    BLK_CTRL_WAKEUPMIX->MISC_IO_CTRL &= ~(1 << BLK_CTRL_WAKEUPMIX_MISC_IO_CTRL_ECAT_LINK_ACT0_POL_SHIFT);
+    BLK_CTRL_WAKEUPMIX->MISC_IO_CTRL &= ~(1 << BLK_CTRL_WAKEUPMIX_MISC_IO_CTRL_ECAT_LINK_ACT1_POL_SHIFT);
+
+    BLK_CTRL_WAKEUPMIX->ECAT_MISC_CFG |= (1 << BLK_CTRL_WAKEUPMIX_ECAT_MISC_CFG_EEPROM_SIZE_OPTION_SHIFT);
+
+    SRC_GENERAL_REG->SRMASK &= ~(0x1 << SRC_GENERAL_SRMASK_ECAT_RSTO_MASK_SHIFT);
+
+    BLK_CTRL_WAKEUPMIX->ECAT_MISC_CFG |= (BLK_CTRL_WAKEUPMIX_ECAT_MISC_CFG_PHY_OFFSET_VEC(2));
+    BLK_CTRL_WAKEUPMIX->ECAT_MISC_CFG &= ~BLK_CTRL_WAKEUPMIX_ECAT_MISC_CFG_GLB_RST_MASK;
+    BLK_CTRL_WAKEUPMIX->ECAT_MISC_CFG |= BLK_CTRL_WAKEUPMIX_ECAT_MISC_CFG_GLB_EN_MASK;
+}
+
+UINT16 HW_Init(void)
+{
+    UINT32 intMask;
+    UINT16 led_startus = 0;
+    xbar_control_config_t xbaraConfig;
+    rgpio_pin_config_t pinConfig = {.pinDirection = kRGPIO_DigitalOutput, .outputLogic = 0};
+
+    /* Init board hardware. */
+    BOARD_ConfigMPU();
+    BOARD_InitBootPins();
+    BOARD_InitBootClocks();
+    BOARD_InitDebugConsole();
+
+    PRINTF("Start the SSC digital_io example...\r\n");
+
+    Ecat_KickOff();
+
+    SDK_DelayAtLeastUs(90000, SDK_DEVICE_MAXIMUM_CPU_CLOCK_FREQUENCY);
+    /*set port0 page register*/
+    ECAT_EscMdioWrite(ECAT, 0x00, 31, 0x07);
+
+    /*enable prot0 coustomized LED */
+    ECAT_EscMdioRead(ECAT, 0x00, 19, &led_startus);
+    ECAT_EscMdioWrite(ECAT, 0x00, 19, led_startus | (1 << 3));
+
+    /*Set led1 to LINK100 and set led0 to ACK*/
+    ECAT_EscMdioRead(ECAT, 0x00, 17, &led_startus);
+    ECAT_EscMdioWrite(ECAT, 0x00, 17, led_startus | (1 << 3) | (1 << 5));
+
+    /*set port1 page register*/
+    ECAT_EscMdioWrite(ECAT, 0x01, 31, 0x07);
+
+    /*enable prot1 coustomized LED */
+    ECAT_EscMdioRead(ECAT, 0x01, 19, &led_startus);
+    ECAT_EscMdioWrite(ECAT, 0x01, 19, led_startus | (1 << 3));
+
+    /*Set led1 to LINK100 and set led0 to ACK*/
+    ECAT_EscMdioRead(ECAT, 0x01, 17, &led_startus);
+    ECAT_EscMdioWrite(ECAT, 0x01, 17, led_startus | (1 << 3) | (1 << 5));
+
+    /*Disable phy eee mode*/
+    ECAT_EscMdioWrite(ECAT, 0x00, 31, 4);
+    ECAT_EscMdioWrite(ECAT, 0x00, 16, 0x4077);
+    ECAT_EscMdioWrite(ECAT, 0x00, 31, 0);
+    ECAT_EscMdioWrite(ECAT, 0x00, 13, 0x0007);
+    ECAT_EscMdioWrite(ECAT, 0x00, 14, 0x003c);
+    ECAT_EscMdioWrite(ECAT, 0x00, 13, 0x4007);
+    ECAT_EscMdioWrite(ECAT, 0x00, 14, 0x0);
+    ECAT_EscMdioWrite(ECAT, 0x00, 0, 0x1200);
+    ECAT_EscMdioWrite(ECAT, 0x01, 31, 4);
+    ECAT_EscMdioWrite(ECAT, 0x01, 16, 0x4077);
+    ECAT_EscMdioWrite(ECAT, 0x01, 31, 0);
+    ECAT_EscMdioWrite(ECAT, 0x01, 13, 0x0007);
+    ECAT_EscMdioWrite(ECAT, 0x01, 14, 0x003c);
+    ECAT_EscMdioWrite(ECAT, 0x01, 13, 0x4007);
+    ECAT_EscMdioWrite(ECAT, 0x01, 14, 0x0);
+    ECAT_EscMdioWrite(ECAT, 0x01, 0, 0x1200);
+
+    RGPIO_PinInit(GPIO_LED, GPIO_LED_PIN, &pinConfig);
+
+    /*config Sync0/1 IRQ*/
+    XBAR_Init(kXBAR_DSC1);
+
+    XBAR_SetSignalsConnection(kXBAR1_InputEcatSyncOut0, kXBAR1_OutputDma4MuxReq154);
+    BLK_CTRL_WAKEUPMIX->XBAR_TRIG_SYNC_CTRL1 = 0x0;
+    xbaraConfig.activeEdge                   = kXBAR_EdgeRising;
+    xbaraConfig.requestType                  = kXBAR_RequestInterruptEnable;
+    XBAR_SetOutputSignalConfig(kXBAR1_OutputDma4MuxReq154, &xbaraConfig);
+    BLK_CTRL_WAKEUPMIX->XBAR_TRIG_SYNC_CTRL1 |= 0xff << 16;
+    BLK_CTRL_WAKEUPMIX->XBAR_TRIG_SYNC_CTRL1 |= 0xff << 8;
+    BLK_CTRL_WAKEUPMIX->XBAR_TRIG_SYNC_CTRL2 |= 3;
+    BLK_CTRL_WAKEUPMIX->XBAR_TRIG_SYNC_CTRL2 |= 3 << 4;
+
+    XBAR_SetSignalsConnection(kXBAR1_InputEcatSyncOut1, kXBAR1_OutputDma4MuxReq155);
+    xbaraConfig.activeEdge  = kXBAR_EdgeRising;
+    xbaraConfig.requestType = kXBAR_RequestInterruptEnable;
+    XBAR_SetOutputSignalConfig(kXBAR1_OutputDma4MuxReq155, &xbaraConfig);
+
+    do
+    {
+        intMask = 0x93;
+        HW_EscWriteDWord(intMask, ESC_AL_EVENTMASK_OFFSET);
+        intMask = 0;
+        HW_EscReadDWord(intMask, ESC_AL_EVENTMASK_OFFSET);
+    } while (intMask != 0x93);
+
+    intMask = 0x00;
+
+    HW_EscWriteDWord(intMask, ESC_AL_EVENTMASK_OFFSET);
+
+    /* Set systick reload value to generate 1ms interrupt */
+    SysTick_Config(SystemCoreClock / 1000U);
+
+    /*Enable PDI IRQ*/
+    EnableIRQ(ECAT_INT_IRQn);
+    NVIC_EnableIRQ(XBAR1_CH0_CH1_IRQn);
+    return 0;
+}
+
+void ECAT_INT_IRQHandler(void)
+{
+    PDI_Isr();
+
+    SDK_ISR_EXIT_BARRIER;
+}
+
+/*config Sync0/1 IRQ*/
+void XBAR1_CH0_CH1_IRQHandler(void)
+{
+    bool status;
+    XBAR_GetOutputStatusFlag(kXBAR1_OutputDma4MuxReq154, &status);
+    if (status)
+    {
+        XBAR_ClearOutputStatusFlag(kXBAR1_OutputDma4MuxReq154);
+        Sync0_Isr();
+    }
+
+    XBAR_GetOutputStatusFlag(kXBAR1_OutputDma4MuxReq155, &status);
+    if (status)
+    {
+        XBAR_ClearOutputStatusFlag(kXBAR1_OutputDma4MuxReq155);
+        Sync1_Isr();
+    }
+
+    SDK_ISR_EXIT_BARRIER;
+}
+
+void HW_Release(void)
+{
+}
+
+void SysTick_Handler(void)
+{
+    /* Clear interrupt flag.*/
+#if ECAT_TIMER_INT
+    ECAT_CheckTimer();
+#endif
+    EcatTimerCnt++;
+    g_systickCounter++;
+
+    /*
+     *  RT118x ELE requires ping every 24 hours, which is mandatory,
+     *  otherwise soc may reset.
+     *
+     *  note:
+     *    1. This is generic rule for all RT118x demos.
+     *    2. Most of RT118x demos don't ping ELE every 24 hours, that
+     *       is because those demos focus on the function demonstrate only.
+     *       It is still MUST to ping ELE every 24 hours if demo run
+     *       duration > 24 hours.
+     *    3. Below is an example to ping the ELE every 23(but not 24)
+     *       hours, in case of any clock inaccuracy.
+     */
+    if (g_systickCounter >= (23 * 60 * 60 * 1000UL))
+    {
+        g_systickCounter = 0;
+        ELE_BaseAPI_Ping(MU_RT_S3MUA);
+    }
+
+    SDK_ISR_EXIT_BARRIER;
+}
+
+UINT16 HW_GetTimer(void)
+{
+    return EcatTimerCnt;
+}
+
+void HW_ClearTimer(void)
+{
+    EcatTimerCnt = 0;
+}
+
+void ENABLE_ESC_INT(void)
+{
+    NVIC_EnableIRQ(ECAT_INT_IRQn);
+    NVIC_EnableIRQ(XBAR1_CH0_CH1_IRQn);
+}
+
+void DISABLE_ESC_INT(void)
+{
+    NVIC_DisableIRQ(XBAR1_CH0_CH1_IRQn);
+    NVIC_DisableIRQ(ECAT_INT_IRQn);
+}
+
+void HW_SetLed(UINT8 RunLed, UINT8 ErrorLed)
+{
+}

@@ -15,6 +15,7 @@
 #if (defined(SDK_COMPONENT_DEPENDENCY_FSL_COMMON) && (SDK_COMPONENT_DEPENDENCY_FSL_COMMON > 0U))
 #include "fsl_common.h"
 #else
+#include <stdint.h>
 #endif
 
 #include "fsl_os_abstraction_config.h"
@@ -433,11 +434,11 @@ extern const uint8_t gUseRtos_c;
     uint32_t name[(OSA_MSGQ_HANDLE_SIZE + sizeof(uint32_t) - 1U) / sizeof(uint32_t)]
 #elif defined(__ZEPHYR__)
 #define OSA_MSGQ_HANDLE_DEFINE(name, numberOfMsgs, msgSize) \
-    uint32_t name[(OSA_MSGQ_HANDLE_SIZE + (numberOfMsgs * msgSize) + sizeof(uint32_t) - 1U) / sizeof(uint32_t)]
+    uint32_t name[(OSA_MSGQ_HANDLE_SIZE + ((numberOfMsgs) * (msgSize)) + sizeof(uint32_t) - 1U) / sizeof(uint32_t)]
 #else
 /*< Macro For BARE_MATEL and FREE_RTOS static allocation*/
 #define OSA_MSGQ_HANDLE_DEFINE(name, numberOfMsgs, msgSize) \
-    uint32_t name[((OSA_MSGQ_HANDLE_SIZE + numberOfMsgs * msgSize) + sizeof(uint32_t) - 1U) / sizeof(uint32_t)]
+    uint32_t name[((OSA_MSGQ_HANDLE_SIZE + (numberOfMsgs) * (msgSize)) + sizeof(uint32_t) - 1U) / sizeof(uint32_t)]
 #endif
 
 /*!

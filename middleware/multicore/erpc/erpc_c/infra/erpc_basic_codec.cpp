@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2014, Freescale Semiconductor, Inc.
- * Copyright 2016-2021 NXP
+ * Copyright 2016-2026 NXP
  * Copyright 2021 ACRIOS Systems s.r.o.
  * All rights reserved.
  *
@@ -52,7 +52,7 @@ void BasicCodec::writeData(uint32_t length, const void *value)
 void BasicCodec::write(bool value)
 {
     // Make sure the bool is a single byte.
-    uint8_t v = (uint8_t)value;
+    uint8_t v = value ? 1U : 0U;
 
     writeData(sizeof(v), &v);
 }
@@ -307,7 +307,10 @@ void BasicCodec::readPtr(uintptr_t &value)
 
 void BasicCodec::readString(uint32_t &length, char **value)
 {
-    readBinary(length, reinterpret_cast<uint8_t **>(value));
+    uint8_t *tempPtr = NULL;
+    readBinary(length, &tempPtr);
+
+    *value = reinterpret_cast<char *>(tempPtr);
 }
 
 void BasicCodec::readBinary(uint32_t &length, uint8_t **value)
@@ -331,7 +334,7 @@ void BasicCodec::readBinary(uint32_t &length, uint8_t **value)
             *value = m_cursor.get();
 
             // Skip over data.
-            m_cursor += (uint16_t)length;
+            (void)(m_cursor += (uint16_t)length);
         }
     }
     if (!isStatusOk())

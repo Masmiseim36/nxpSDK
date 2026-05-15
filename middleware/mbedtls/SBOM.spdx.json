@@ -1,0 +1,69 @@
+{
+  "SPDXID": "SPDXRef-DOCUMENT",
+  "spdxVersion": "SPDX-2.3",
+  "creationInfo": {
+    "created": "2026-02-06T09:17:31Z",
+    "creators": [
+      "Organization: NXP"
+    ],
+    "licenseListVersion": "3.26"
+  },
+  "name": "mbedtls-v26.03.00-pvw2",
+  "dataLicense": "CC0-1.0",
+  "documentNamespace": "https://nxp.com/spdx/df55f0cf-45ce-4455-a6a4-eb11750582ed",
+  "packages": [
+    {
+      "SPDXID": "SPDXRef-package-df55f0cf-45ce-4455-a6a4-eb11750582ed",
+      "name": "mbedtls",
+      "versionInfo": "v26.03.00-pvw2",
+      "licenseConcluded": "(Apache-2.0)",
+      "licenseDeclared": "(Apache-2.0)",
+      "downloadLocation": "NOASSERTION",
+      "originator": "Organization: NXP",
+      "supplier": "NOASSERTION",
+      "externalRefs": [],
+      "filesAnalyzed": false
+    },
+    {
+      "SPDXID": "SPDXRef-package-afb9a437-666d-44c1-9c81-f31662201c51",
+      "name": "mbed TLS",
+      "versionInfo": "v4.0.0",
+      "licenseConcluded": "Apache-2.0",
+      "licenseDeclared": "Apache-2.0",
+      "homepage": "https://www.trustedfirmware.org/",
+      "downloadLocation": "NOASSERTION",
+      "originator": "Organization: mbed TLS",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "SECURITY",
+          "referenceLocator": "cpe:2.3:a:arm:mbed_tls:4.0.0:*:*:*:*:*:*:*",
+          "referenceType": "cpe23Type"
+        },
+        {
+          "referenceCategory": "SECURITY",
+          "referenceLocator": "cpe:2.3:a:mbed:mbedtls:4.0.0:*:*:*:*:*:*:*",
+          "referenceType": "cpe23Type"
+        },
+        {
+          "referenceCategory": "SECURITY",
+          "referenceLocator": "cpe:2.3:o:arm:mbed_tls:4.0.0:*:*:*:*:*:*:*",
+          "referenceType": "cpe23Type"
+        }
+      ],
+      "filesAnalyzed": false
+    }
+  ],
+  "relationships": [
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-package-df55f0cf-45ce-4455-a6a4-eb11750582ed"
+    },
+    {
+      "spdxElementId": "SPDXRef-package-df55f0cf-45ce-4455-a6a4-eb11750582ed",
+      "relationshipType": "CONTAINS",
+      "relatedSpdxElement": "SPDXRef-package-afb9a437-666d-44c1-9c81-f31662201c51"
+    }
+  ]
+}

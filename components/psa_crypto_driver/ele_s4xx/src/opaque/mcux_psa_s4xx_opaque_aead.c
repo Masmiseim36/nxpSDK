@@ -29,7 +29,7 @@ extern ele_s4xx_ctx_t g_ele_ctx;
  * if the NVM manager is not present. Since psa_crypto_wrapper will be auto-generated, we can't add
  * the check there. hence implementing it in opaque drivers for ELE.
  */
-#if !defined(PSA_ELE_S4XX_SD_NVM_MANAGER)
+#if !defined(PSA_ELE_S4XX_SD_NVM_MANAGER) && !defined(CONFIG_PSA_ELE_S4XX_NVM_MANAGER)
 
 psa_status_t
 ele_s4xx_opaque_aead_encrypt(const psa_key_attributes_t *attributes,
@@ -188,6 +188,10 @@ ele_s4xx_opaque_aead_encrypt(const psa_key_attributes_t *attributes,
     ctx.output = (uint32_t) ciphertext;
     ctx.output_size = ciphertext_length;
 
+    if (mcux_mutex_lock(&ele_hwcrypto_mutex) != 0) {
+        return PSA_ERROR_SERVICE_FAILURE;
+    }
+
     ele_status = ELE_OpenCipherService(S3MU, g_ele_ctx.key_store_handle, &cipherHandleID);
     status = ele_to_psa_status(ele_status);
     if (status != PSA_SUCCESS) {
@@ -208,8 +212,8 @@ ele_s4xx_opaque_aead_encrypt(const psa_key_attributes_t *attributes,
     }
 
 out:
-    if (mcux_mutex_unlock(&ele_hwcrypto_mutex)) {
-        return PSA_ERROR_BAD_STATE;
+    if (mcux_mutex_unlock(&ele_hwcrypto_mutex) != 0) {
+        return PSA_ERROR_SERVICE_FAILURE;
     }
 
     return status;
@@ -306,6 +310,10 @@ psa_status_t ele_s4xx_opaque_aead_decrypt(
     ctx.output = (uint32_t) plaintext;
     ctx.output_size = &output_length;
 
+    if (mcux_mutex_lock(&ele_hwcrypto_mutex) != 0) {
+        return PSA_ERROR_SERVICE_FAILURE;
+    }
+
     ele_status = ELE_OpenCipherService(S3MU, g_ele_ctx.key_store_handle, &cipherHandleID);
     status = ele_to_psa_status(ele_status);
     if (status != PSA_SUCCESS) {
@@ -328,8 +336,8 @@ psa_status_t ele_s4xx_opaque_aead_decrypt(
     status = ele_to_psa_status(ele_status);
 
 out:
-    if (mcux_mutex_unlock(&ele_hwcrypto_mutex)) {
-        return PSA_ERROR_BAD_STATE;
+    if (mcux_mutex_unlock(&ele_hwcrypto_mutex) != 0) {
+        return PSA_ERROR_SERVICE_FAILURE;
     }
 
     return status;

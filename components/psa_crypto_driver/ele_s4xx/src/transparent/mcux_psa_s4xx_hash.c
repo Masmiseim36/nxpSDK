@@ -82,15 +82,15 @@ psa_status_t ele_s4xx_transparent_hash_setup(ele_s4xx_hash_operation_t *operatio
         return status;
     }
 
-    if (mcux_mutex_lock(&ele_hwcrypto_mutex)) {
-        return PSA_ERROR_COMMUNICATION_FAILURE;
+    if (mcux_mutex_lock(&ele_hwcrypto_mutex) != 0) {
+        return PSA_ERROR_SERVICE_FAILURE;
     }
 
     ele_status = ELE_Hash_Init(S3MU, &operation->ctx, operation->mode);
     status = ele_to_psa_status(ele_status);
 
-    if (mcux_mutex_unlock(&ele_hwcrypto_mutex)) {
-        return PSA_ERROR_BAD_STATE;
+    if (mcux_mutex_unlock(&ele_hwcrypto_mutex) != 0) {
+        return PSA_ERROR_SERVICE_FAILURE;
     }
 
     return status;
@@ -129,15 +129,15 @@ psa_status_t ele_s4xx_transparent_hash_update(ele_s4xx_hash_operation_t *operati
         return PSA_ERROR_INVALID_ARGUMENT;
     }
 
-    if (mcux_mutex_lock(&ele_hwcrypto_mutex)) {
-        return PSA_ERROR_COMMUNICATION_FAILURE;
+    if (mcux_mutex_lock(&ele_hwcrypto_mutex) != 0) {
+        return PSA_ERROR_SERVICE_FAILURE;
     }
 
     ele_status = ELE_Hash_Update(S3MU, &operation->ctx, operation->mode, input, input_length);
     status = ele_to_psa_status(ele_status);
 
-    if (mcux_mutex_unlock(&ele_hwcrypto_mutex)) {
-        return PSA_ERROR_BAD_STATE;
+    if (mcux_mutex_unlock(&ele_hwcrypto_mutex) != 0) {
+        return PSA_ERROR_SERVICE_FAILURE;
     }
 
     return status;
@@ -200,16 +200,16 @@ psa_status_t ele_s4xx_transparent_hash_finish(ele_s4xx_hash_operation_t *operati
     /* Assign the output buffer size to 0. This will be updated by ELE */
     *hash_length = 0;
 
-    if (mcux_mutex_lock(&ele_hwcrypto_mutex)) {
-        return PSA_ERROR_COMMUNICATION_FAILURE;
+    if (mcux_mutex_lock(&ele_hwcrypto_mutex) != 0) {
+        return PSA_ERROR_SERVICE_FAILURE;
     }
 
     ele_status = ELE_Hash_Finish(S3MU, &operation->ctx, operation->mode,
                                  hash, hash_size, (uint32_t *) hash_length, NULL, 0U);
     status = ele_to_psa_status(ele_status);
 
-    if (mcux_mutex_unlock(&ele_hwcrypto_mutex)) {
-        return PSA_ERROR_BAD_STATE;
+    if (mcux_mutex_unlock(&ele_hwcrypto_mutex) != 0) {
+        return PSA_ERROR_SERVICE_FAILURE;
     }
 
     return status;
@@ -257,16 +257,16 @@ psa_status_t ele_s4xx_transparent_hash_compute(psa_algorithm_t alg, const uint8_
     /* Assign the output buffer size to 0. This will be updated by ELE */
     *hash_length = 0;
 
-    if (mcux_mutex_lock(&ele_hwcrypto_mutex)) {
-        return PSA_ERROR_COMMUNICATION_FAILURE;
+    if (mcux_mutex_lock(&ele_hwcrypto_mutex) != 0) {
+        return PSA_ERROR_SERVICE_FAILURE;
     }
 
     ele_status =
         ELE_Hash(S3MU, input, input_length, hash, hash_size, (uint32_t *) hash_length, mode);
     status = ele_to_psa_status(ele_status);
 
-    if (mcux_mutex_unlock(&ele_hwcrypto_mutex)) {
-        return PSA_ERROR_BAD_STATE;
+    if (mcux_mutex_unlock(&ele_hwcrypto_mutex) != 0) {
+        return PSA_ERROR_SERVICE_FAILURE;
     }
 
     return status;

@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2021 NXP
+ * Copyright 2018-2021, 2025-2026 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -167,7 +167,7 @@ static void semc_nand_crc16_onfi_finalize(crc16_data_t *crc16Info, uint16_t *has
     assert(crc16Info != NULL);
     assert(hash != NULL);
 
-    *hash = crc16Info->currentCrc;
+    *hash = (uint16_t)crc16Info->currentCrc;
 }
 
 static void semc_get_default_timing_configure(semc_nand_timing_config_t *semcNandTimingConfig)
@@ -334,7 +334,7 @@ static status_t semc_nand_get_onfi_timing_configure(nand_handle_t *handle, nand_
             break;
     }
 
-    /* Get onfi timing mode for timing mode setting only when appliation have no timing configuration. */
+    /* Get onfi timing mode for timing mode setting only when application have no timing configuration. */
     if (semcConfig->timingConfig == NULL)
     {
         const nand_ac_timing_parameter_t *timingArray;
@@ -488,7 +488,8 @@ static status_t semc_nand_issue_reset(nand_handle_t *handle)
                                                    kSEMC_NANDAM_ColumnRow, // Don't care
                                                    kSEMC_NANDCM_Command);  // Command Only
     status = SEMC_SendIPCommand((SEMC_Type *)handle->driverBaseAddr, kSEMC_MemType_NAND, semcHandle->ctlAccessMemAddr1,
-                                commandCode, 0, NULL);
+    /* EXP34-C: SEMC_SendIPCommand safely handles NULL for data parameter in command-only mode */
+                                commandCode, 0, (uint32_t *)NULL);
     if (status != kStatus_Success)
     {
         return status;
@@ -581,7 +582,8 @@ static status_t semc_nand_issue_read_mode(nand_handle_t *handle)
                                                    kSEMC_NANDAM_ColumnRow, // Don't care
                                                    kSEMC_NANDCM_Command);  // Command Only
     status = SEMC_SendIPCommand((SEMC_Type *)handle->driverBaseAddr, kSEMC_MemType_NAND, semcHandle->ctlAccessMemAddr1,
-                                commandCode, 0, NULL);
+    /* EXP34-C: SEMC_SendIPCommand safely handles NULL for data parameter in command-only mode */
+                                commandCode, 0, (uint32_t *)NULL);
 
     return status;
 }
@@ -596,7 +598,8 @@ static status_t semc_nand_issue_access_feature(nand_handle_t *handle, nand_onfi_
                                                    kSEMC_NANDAM_ColumnCA0,       // CA1
                                                    kSEMC_NANDCM_CommandAddress); // Commmand Address
     status = SEMC_SendIPCommand((SEMC_Type *)handle->driverBaseAddr, kSEMC_MemType_NAND, featureConfig->address,
-                                commandCode, 0, NULL);
+    /* EXP34-C: SEMC_SendIPCommand safely handles NULL for data parameter in command-only mode */
+                                commandCode, 0, (uint32_t *)NULL);
     if (status != kStatus_Success)
     {
         return status;
@@ -660,7 +663,8 @@ static status_t semc_nand_issue_read_parameter(nand_handle_t *handle, nand_onfi_
     uint16_t commandCode = SEMC_BuildNandIPCommand(kNandDeviceCmd_ONFI_ReadParameterPage,
                                                    kSEMC_NANDAM_ColumnCA0,       // 1 byte address
                                                    kSEMC_NANDCM_CommandAddress); // Command Address
-    status = SEMC_SendIPCommand((SEMC_Type *)handle->driverBaseAddr, kSEMC_MemType_NAND, 0, commandCode, 0, NULL);
+    /* EXP34-C: SEMC_SendIPCommand safely handles NULL for data parameter in command-only mode */
+    status = SEMC_SendIPCommand((SEMC_Type *)handle->driverBaseAddr, kSEMC_MemType_NAND, 0, commandCode, 0, (uint32_t *)NULL);
     if (status != kStatus_Success)
     {
         return status;
@@ -735,7 +739,7 @@ static status_t semc_nand_issue_read_status(nand_handle_t *handle, uint8_t *stat
     }
 
     /* Set SR value according to readout data from Device */
-    *stat = (uint8_t)readoutData;
+    *stat = (uint8_t)(readoutData & 0xFFU);
 
     return kStatus_Success;
 }
@@ -756,7 +760,8 @@ static status_t semc_nand_issue_read_page(nand_handle_t *handle, uint32_t ipgCmd
                                                    kSEMC_NANDAM_ColumnRow,       // Address value
                                                    kSEMC_NANDCM_CommandAddress); // Command Address
     status =
-        SEMC_SendIPCommand((SEMC_Type *)handle->driverBaseAddr, kSEMC_MemType_NAND, ipgCmdAddr, commandCode, 0, NULL);
+    /* EXP34-C: SEMC_SendIPCommand safely handles NULL for data parameter in command-only mode */
+        SEMC_SendIPCommand((SEMC_Type *)handle->driverBaseAddr, kSEMC_MemType_NAND, ipgCmdAddr, commandCode, 0, (uint32_t *)NULL);
     if (status != kStatus_Success)
     {
         return status;
@@ -766,7 +771,8 @@ static status_t semc_nand_issue_read_page(nand_handle_t *handle, uint32_t ipgCmd
                                           kSEMC_NANDAM_ColumnRow,    // Don't care
                                           kSEMC_NANDCM_CommandHold); // Commmand Hold
     status =
-        SEMC_SendIPCommand((SEMC_Type *)handle->driverBaseAddr, kSEMC_MemType_NAND, ipgCmdAddr, commandCode, 0, NULL);
+    /* EXP34-C: SEMC_SendIPCommand safely handles NULL for data parameter in command-only mode */
+        SEMC_SendIPCommand((SEMC_Type *)handle->driverBaseAddr, kSEMC_MemType_NAND, ipgCmdAddr, commandCode, 0, (uint32_t *)NULL);
     if (status != kStatus_Success)
     {
         return status;
@@ -824,11 +830,17 @@ status_t Nand_Flash_Read_Page_Partial(
 {
     status_t status     = kStatus_Success;
     uint32_t pageSize   = handle->bytesInPageDataArea + handle->bytesInPageSpareArea;
+    /* INT30-C: Prevent multiplication overflow */
+    assert(handle->pagesInBlock == 0U || handle->blocksInPlane <= UINT32_MAX / handle->pagesInBlock);
+    assert((handle->pagesInBlock * handle->blocksInPlane) == 0U ||
+           handle->planesInDevice <= UINT32_MAX / (handle->pagesInBlock * handle->blocksInPlane));
     uint32_t ipgCmdAddr = pageIndex * (1UL << ((semc_mem_nand_handle_t *)handle->deviceSpecific)->columnWidth);
     uint32_t pageNum    = handle->pagesInBlock * handle->blocksInPlane * handle->planesInDevice;
     bool eccCheckPassed;
 
     /* Validate given length */
+    /* INT30-C: Prevent unsigned integer overflow */
+    assert(offset_bytes <= UINT32_MAX - length);
     if (((offset_bytes + length) > pageSize) || (pageIndex >= pageNum))
     {
         return kStatus_Fail;
@@ -988,6 +1000,10 @@ status_t Nand_Flash_Read_Page(nand_handle_t *handle, uint32_t pageIndex, uint8_t
     bool eccCheckPassed                = false;
     uint32_t pageSize                  = handle->bytesInPageDataArea + handle->bytesInPageSpareArea;
     semc_mem_nand_handle_t *semcHandle = (semc_mem_nand_handle_t *)handle->deviceSpecific;
+    /* INT30-C: Prevent multiplication overflow */
+    assert(handle->pagesInBlock == 0U || handle->blocksInPlane <= UINT32_MAX / handle->pagesInBlock);
+    assert((handle->pagesInBlock * handle->blocksInPlane) == 0U ||
+           handle->planesInDevice <= UINT32_MAX / (handle->pagesInBlock * handle->blocksInPlane));
     uint32_t pageNum                   = handle->pagesInBlock * handle->blocksInPlane * handle->planesInDevice;
 
     ipgCmdAddr = pageIndex * (1UL << semcHandle->columnWidth);
@@ -1041,12 +1057,18 @@ status_t Nand_Flash_Read_Page(nand_handle_t *handle, uint32_t pageIndex, uint8_t
 status_t Nand_Flash_Page_Program(nand_handle_t *handle, uint32_t pageIndex, const uint8_t *src, uint32_t length)
 {
     status_t status  = kStatus_Success;
+    /* INT30-C: Prevent multiplication overflow */
+    assert(handle->pagesInBlock == 0U || handle->blocksInPlane <= UINT32_MAX / handle->pagesInBlock);
+    assert((handle->pagesInBlock * handle->blocksInPlane) == 0U ||
+           handle->planesInDevice <= UINT32_MAX / (handle->pagesInBlock * handle->blocksInPlane));
     uint32_t pageNum = handle->pagesInBlock * handle->blocksInPlane * handle->planesInDevice;
     uint32_t ipgCmdAddr;
     bool eccCheckPassed = false;
     uint16_t commandCode;
     semc_mem_nand_handle_t *semcHandle = (semc_mem_nand_handle_t *)handle->deviceSpecific;
 
+    /* INT30-C: Prevent unsigned integer overflow */
+    assert(handle->bytesInPageDataArea <= UINT32_MAX - handle->bytesInPageSpareArea);
     if ((length > (handle->bytesInPageDataArea + handle->bytesInPageSpareArea)) || (pageIndex >= pageNum))
     {
         return kStatus_Fail;
@@ -1070,7 +1092,8 @@ status_t Nand_Flash_Page_Program(nand_handle_t *handle, uint32_t pageIndex, cons
                                           kSEMC_NANDAM_ColumnRow,       // Address value
                                           kSEMC_NANDCM_CommandAddress); // Command Address
     status =
-        SEMC_SendIPCommand((SEMC_Type *)handle->driverBaseAddr, kSEMC_MemType_NAND, ipgCmdAddr, commandCode, 0, NULL);
+    /* EXP34-C: SEMC_SendIPCommand safely handles NULL for data parameter in command-only mode */
+        SEMC_SendIPCommand((SEMC_Type *)handle->driverBaseAddr, kSEMC_MemType_NAND, ipgCmdAddr, commandCode, 0, (uint32_t *)NULL);
     if (status != kStatus_Success)
     {
         return status;
@@ -1089,7 +1112,8 @@ status_t Nand_Flash_Page_Program(nand_handle_t *handle, uint32_t pageIndex, cons
                                           kSEMC_NANDAM_ColumnRow, // Don't care
                                           kSEMC_NANDCM_Command);  // Commmand Only
     status =
-        SEMC_SendIPCommand((SEMC_Type *)handle->driverBaseAddr, kSEMC_MemType_NAND, ipgCmdAddr, commandCode, 0, NULL);
+    /* EXP34-C: SEMC_SendIPCommand safely handles NULL for data parameter in command-only mode */
+        SEMC_SendIPCommand((SEMC_Type *)handle->driverBaseAddr, kSEMC_MemType_NAND, ipgCmdAddr, commandCode, 0, (uint32_t *)NULL);
     if (status != kStatus_Success)
     {
         return status;
@@ -1121,8 +1145,12 @@ status_t Nand_Flash_Erase_Block(nand_handle_t *handle, uint32_t blockIndex)
     uint32_t ipgCmdAddr;
     bool eccCheckPassed                = false;
     semc_mem_nand_handle_t *semcHandle = (semc_mem_nand_handle_t *)handle->deviceSpecific;
+    /* INT30-C: Prevent multiplication overflow */
+    assert(blockIndex == 0U || handle->pagesInBlock <= UINT32_MAX / blockIndex);
     ipgCmdAddr                         = blockIndex * handle->pagesInBlock * (1UL << semcHandle->columnWidth);
 
+    /* INT30-C: Prevent multiplication overflow */
+    assert(handle->blocksInPlane == 0U || handle->planesInDevice <= UINT32_MAX / handle->blocksInPlane);
     if (blockIndex >= handle->blocksInPlane * handle->planesInDevice)
     {
         return kStatus_Fail;
@@ -1142,7 +1170,8 @@ status_t Nand_Flash_Erase_Block(nand_handle_t *handle, uint32_t blockIndex)
                                                    kSEMC_NANDAM_RawRA0RA1RA2,    // Address value
                                                    kSEMC_NANDCM_CommandAddress); // Command Address
     status =
-        SEMC_SendIPCommand((SEMC_Type *)handle->driverBaseAddr, kSEMC_MemType_NAND, ipgCmdAddr, commandCode, 0, NULL);
+    /* EXP34-C: SEMC_SendIPCommand safely handles NULL for data parameter in command-only mode */
+        SEMC_SendIPCommand((SEMC_Type *)handle->driverBaseAddr, kSEMC_MemType_NAND, ipgCmdAddr, commandCode, 0, (uint32_t *)NULL);
     if (status != kStatus_Success)
     {
         return status;

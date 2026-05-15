@@ -1,14 +1,15 @@
+#define MBEDTLS_DECLARE_PRIVATE_IDENTIFIERS
+
 #include <string.h>
 #include <stdlib.h>
 #include <stdint.h>
-#include "common.h"
+#include "fuzz_common.h"
 #include "mbedtls/ssl.h"
 #if defined(MBEDTLS_SSL_PROTO_DTLS)
-#include "mbedtls/entropy.h"
-#include "mbedtls/ctr_drbg.h"
-#include "mbedtls/certs.h"
+#include "mbedtls/private/entropy.h"
+#include "mbedtls/private/ctr_drbg.h"
 #include "mbedtls/timing.h"
-
+#include "test/certs.h"
 
 #if defined(MBEDTLS_SSL_CLI_C) && \
     defined(MBEDTLS_ENTROPY_C) && \
@@ -43,8 +44,7 @@ int LLVMFuzzerTestOneInput(const uint8_t *Data, size_t Size)
     fuzzBufferOffset_t biomemfuzz;
 
     if (initialized == 0) {
-#if defined(MBEDTLS_X509_CRT_PARSE_C) && defined(MBEDTLS_PEM_PARSE_C) && \
-        defined(MBEDTLS_CERTS_C)
+#if defined(MBEDTLS_X509_CRT_PARSE_C) && defined(MBEDTLS_PEM_PARSE_C)
         mbedtls_x509_crt_init(&cacert);
         if (mbedtls_x509_crt_parse(&cacert, (const unsigned char *) mbedtls_test_cas_pem,
                                    mbedtls_test_cas_pem_len) != 0) {
@@ -61,14 +61,11 @@ int LLVMFuzzerTestOneInput(const uint8_t *Data, size_t Size)
     mbedtls_ctr_drbg_init(&ctr_drbg);
     mbedtls_entropy_init(&entropy);
 
-#if defined(MBEDTLS_USE_PSA_CRYPTO)
     psa_status_t status = psa_crypto_init();
     if (status != PSA_SUCCESS) {
         goto exit;
     }
-#endif /* MBEDTLS_USE_PSA_CRYPTO */
 
-    srand(1);
     if (mbedtls_ctr_drbg_seed(&ctr_drbg, dummy_entropy, &entropy,
                               (const unsigned char *) pers, strlen(pers)) != 0) {
         goto exit;
@@ -85,7 +82,6 @@ int LLVMFuzzerTestOneInput(const uint8_t *Data, size_t Size)
     mbedtls_ssl_conf_ca_chain(&conf, &cacert, NULL);
 #endif
     mbedtls_ssl_conf_authmode(&conf, MBEDTLS_SSL_VERIFY_NONE);
-    mbedtls_ssl_conf_rng(&conf, dummy_random, &ctr_drbg);
 
     if (mbedtls_ssl_setup(&ssl, &conf) != 0) {
         goto exit;
@@ -126,9 +122,7 @@ exit:
     mbedtls_ctr_drbg_free(&ctr_drbg);
     mbedtls_ssl_config_free(&conf);
     mbedtls_ssl_free(&ssl);
-#if defined(MBEDTLS_USE_PSA_CRYPTO)
     mbedtls_psa_crypto_free();
-#endif /* MBEDTLS_USE_PSA_CRYPTO */
 
 #else
     (void) Data;

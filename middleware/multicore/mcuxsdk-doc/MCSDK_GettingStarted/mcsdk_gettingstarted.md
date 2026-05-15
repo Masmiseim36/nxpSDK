@@ -10,7 +10,7 @@ The following figure highlights the layers and main software components of the M
 
 All the MCSDK-related files are located in _`<MCUXpressoSDK_install_dir>/middleware/multicore`_ folder.
 
-For supported toolchain versions, see the _Multicore SDK v25.06.00 Release Notes_ `(document MCSDKRN)`. For the latest version of this and other MCSDK documents, visit [www.nxp.com](http://www.nxp.com).
+For supported toolchain versions, see the _Multicore SDK v26.03.00 Release Notes_ `(document MCSDKRN)`. For the latest version of this and other MCSDK documents, visit [www.nxp.com](http://www.nxp.com).
 
 ## Multicore SDK (MCSDK) components
 

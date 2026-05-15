@@ -1,5 +1,5 @@
 /*
- * Copyright  2021 NXP
+ * Copyright  2021, 2025 NXP
  *
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -284,7 +284,7 @@ status_t CS42448_ConfigDataFormat(cs42448_handle_t *handle, uint32_t mclk, uint3
     }
 
     /* clear mfreq field */
-    val &= (uint8_t)~0xEU;
+    val &= 0xF1;
 
     switch (ratio)
     {
@@ -367,14 +367,13 @@ status_t CS42448_SetModule(cs42448_handle_t *handle, cs42448_module_t module, bo
 status_t CS42448_SetAOUTVolume(cs42448_handle_t *handle, uint8_t channel, uint8_t volume)
 {
     status_t ret = kStatus_Success;
-    uint8_t reg  = CS42448_VOL_CONTROL_AOUT1 + (channel - 1U);
-
     if ((channel < 1U) || (channel > 8U))
     {
         ret = kStatus_Fail;
     }
     else
     {
+        uint8_t reg  = CS42448_VOL_CONTROL_AOUT1 + (channel - 1U);
         ret = CS42448_WriteReg(handle, reg, volume);
     }
     return ret;
@@ -383,14 +382,13 @@ status_t CS42448_SetAOUTVolume(cs42448_handle_t *handle, uint8_t channel, uint8_
 status_t CS42448_SetAINVolume(cs42448_handle_t *handle, uint8_t channel, uint8_t volume)
 {
     status_t ret = kStatus_Success;
-    uint8_t reg  = CS42448_VOL_CONTROL_AIN1 + (channel - 1U);
-
     if ((channel < 1U) || (channel > 6U))
     {
         ret = kStatus_Fail;
     }
     else
     {
+        uint8_t reg  = CS42448_VOL_CONTROL_AIN1 + (channel - 1U);
         ret = CS42448_WriteReg(handle, reg, volume);
     }
     return ret;
@@ -399,13 +397,13 @@ status_t CS42448_SetAINVolume(cs42448_handle_t *handle, uint8_t channel, uint8_t
 uint8_t CS42448_GetAOUTVolume(cs42448_handle_t *handle, uint8_t channel)
 {
     uint8_t val = 0;
-    uint8_t reg = CS42448_VOL_CONTROL_AOUT1 + (channel - 1U);
     if ((channel < 1U) || (channel > 8U))
     {
         val = 0;
     }
     else
     {
+        uint8_t reg = CS42448_VOL_CONTROL_AOUT1 + (channel - 1U);
         (void)CS42448_ReadReg(handle, reg, &val);
     }
     return val;
@@ -414,13 +412,13 @@ uint8_t CS42448_GetAOUTVolume(cs42448_handle_t *handle, uint8_t channel)
 uint8_t CS42448_GetAINVolume(cs42448_handle_t *handle, uint8_t channel)
 {
     uint8_t val = 0;
-    uint8_t reg = CS42448_VOL_CONTROL_AIN1 + (channel - 1U);
     if ((channel < 1U) || (channel > 4U))
     {
         val = 0;
     }
     else
     {
+        uint8_t reg = CS42448_VOL_CONTROL_AIN1 + (channel - 1U);
         (void)CS42448_ReadReg(handle, reg, &val);
     }
     return val;

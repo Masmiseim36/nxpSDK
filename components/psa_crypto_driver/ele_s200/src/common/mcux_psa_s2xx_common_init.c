@@ -12,6 +12,17 @@
 #endif /* ELEMU_HAS_LOADABLE_FW */
 
 /******************************************************************************/
+/*************************** Definitions **************************************/
+/******************************************************************************/
+/**
+ * @brief Default session ID for ELE S2XX
+ *
+ * Using value of 1 to prevent possible issues with software resets,
+ * as value of 0 may only be used _once_ with the OPEN SESSION command.
+ */
+#define PSA_ELE_S2XX_DEFAULT_SESSION_ID (1u)
+
+/******************************************************************************/
 /*************************** Mutex ********************************************/
 /******************************************************************************/
 /*
@@ -25,7 +36,7 @@ mcux_mutex_t ele_hwcrypto_mutex;
 
 ele_s2xx_ctx_t g_ele_ctx = {0u}; /* Global context */
 
-uint32_t g_isCryptoHWInitialized = false;
+static bool g_isCryptoHWInitialized = false;
 
 psa_status_t ele_to_psa_status(status_t ele_status)
 {
@@ -59,7 +70,6 @@ static status_t ele_close_handles(void)
         status = sss_sscp_rng_free(&g_ele_ctx.rngctx);
         if (status != kStatus_SSS_Success)
         {
-            PRINTF("sss_sscp_rng_free failed\n");
             break;
         }
 
@@ -67,7 +77,6 @@ static status_t ele_close_handles(void)
         status = sss_sscp_key_store_free(&g_ele_ctx.keyStore);
         if (status != kStatus_SSS_Success)
         {
-            PRINTF("sss_sscp_key_store_free failed\n");
             break;
         }
 
@@ -75,14 +84,13 @@ static status_t ele_close_handles(void)
         status = sss_sscp_close_session(&g_ele_ctx.sssSession);
         if (status != kStatus_SSS_Success)
         {
-            PRINTF("sss_sscp_close_session failed\n");
             break;
         }
 
         /****************** Close SSCP context ******************/
         sscp_mu_deinit(&g_ele_ctx.sscpContext);
 
-    } while (0);
+    } while (false);
 
     return 0;
 }
@@ -95,62 +103,92 @@ static status_t ele_close_handles(void)
  */
 status_t CRYPTO_InitHardware(void)
 {
-    status_t result = kStatus_Fail;
+    status_t result     = kStatus_Fail;
 
-    if (g_isCryptoHWInitialized == true)
+    if (true == g_isCryptoHWInitialized)
     {
-        return 0;
+        return kStatus_Success;
     }
 
     /* Mutex for access to ele_crypto HW */
-    if (mcux_mutex_init(&ele_hwcrypto_mutex))
+    if (mcux_mutex_init(&ele_hwcrypto_mutex) != 0)
     {
-        PRINTF("NO memory - init failed\n");
         return kStatus_Fail;
     }
 
     if ((result = mcux_mutex_lock(&ele_hwcrypto_mutex)) != 0)
     {
-        PRINTF("Mutex lock failed\n");
         return kStatus_Fail;
+    }
+
+    if ((result = CRYPTO_InitHardwareUnsafe()) != kStatus_Success)
+    {
+        (void)ele_close_handles();
+    }
+
+    if (mcux_mutex_unlock(&ele_hwcrypto_mutex) != 0)
+    {
+        return kStatus_Fail;
+    }
+
+    return result;
+}
+
+
+/*!
+ * @brief Application init for Crypto blocks.
+ *
+ * Unsafe version of CRYPTO_InitHardware that does not take mutexs.
+ *
+ * @warning This function does not acquire any mutex locks and is not thread-safe.
+ *          If called incorrectly by an application (e.g., from multiple threads
+ *          concurrently or without proper external synchronization), this may
+ *          cause race conditions, undefined behavior, or hardware access issues.
+ *          Use CRYPTO_InitHardware() for thread-safe initialization.
+ */
+status_t CRYPTO_InitHardwareUnsafe(void)
+{
+    status_t result     = kStatus_Fail;
+    sss_sscp_rng_t rctx = {0u};
+
+    if (true == g_isCryptoHWInitialized)
+    {
+        return kStatus_Success;
     }
 
     do
     {
         /****************** Wait for ELE MU is ready ***********************/
-        sss_sscp_rng_t rctx;
-        result = ELEMU_mu_wait_for_ready(ELEMUA, ELE_MAX_SUBSYSTEM_WAIT);
-        if (result != kStatus_Success)
+        if (kStatus_Success != ELEMU_mu_wait_for_ready(ELEMUA, ELE_MAX_SUBSYSTEM_WAIT))
         {
+            result = kStatus_Fail;
             break;
         }
 
 #if (defined(ELEMU_HAS_LOADABLE_FW) && ELEMU_HAS_LOADABLE_FW)
-        result = ELEMU_loadFw(ELEMUA, (uint32_t *)fw);
-        if (result != kStatus_Success)
+        if (kStatus_Success != ELEMU_loadFw(ELEMUA, (uint32_t *)fw))
         {
+            result = kStatus_Fail;
             break;
         }
 #endif /* ELEMU_HAS_LOADABLE_FW */
 
         /****************** Init SSCP service   ***********************/
-        result = sscp_mu_init(&g_ele_ctx.sscpContext, (ELEMU_Type *)(uintptr_t)ELEMUA);
-        if (result != kStatus_SSCP_Success)
+        if (kStatus_SSCP_Success != sscp_mu_init(&g_ele_ctx.sscpContext, (ELEMU_Type *)(uintptr_t)ELEMUA))
         {
+            result = kStatus_Fail;
             break;
         }
         /****************** Open ELE Session  ***********************/
-        result = sss_sscp_open_session(&g_ele_ctx.sssSession, 0u, ELE_SUBSYSTEM, &g_ele_ctx.sscpContext);
-
-        if (result != kStatus_SSS_Success)
+        if (kStatus_SSS_Success != sss_sscp_open_session(&g_ele_ctx.sssSession, PSA_ELE_S2XX_DEFAULT_SESSION_ID, ELE_SUBSYSTEM, &g_ele_ctx.sscpContext))
         {
+            result = kStatus_Fail;
             break;
         }
 
-        result = sss_sscp_key_store_init(&g_ele_ctx.keyStore, &g_ele_ctx.sssSession);
-
-        if (result != kStatus_SSS_Success)
+        if (kStatus_SSS_Success != sss_sscp_key_store_init(&g_ele_ctx.keyStore, &g_ele_ctx.sssSession))
         {
+            result = kStatus_Fail;
             break;
         }
 
@@ -158,56 +196,32 @@ status_t CRYPTO_InitHardware(void)
         /* RNG call used to init ELE TRNG required e.g. by sss_sscp_key_store_generate_key service
        if TRNG initialization is no needed for used operations, the following code can be removed
        to increase the perfomance.*/
-        result = sss_sscp_rng_context_init(&g_ele_ctx.sssSession, &rctx, ELE_HIGH_QUALITY_RNG);
-
-        if (result != kStatus_SSS_Success)
-        {
-            break;
-        }
-
-        /*Providing NULL output buffer, as we just need to initialize TRNG, not get random data*/
-        result = sss_sscp_rng_get_random(&rctx, NULL, 0x0u);
-
-        if (result != kStatus_SSS_Success)
-        {
-            break;
-        }
-
-        result = sss_sscp_rng_free(&rctx);
-
-        if (result != kStatus_SSS_Success)
-        {
-            break;
-        }
-
-#if defined(SECURE_STORAGE)
-        /* Init secure storage */
-        if (PSA_SUCCESS != secure_storage_its_initialize())
+        if (kStatus_SSS_Success != sss_sscp_rng_context_init(&g_ele_ctx.sssSession, &rctx, ELE_HIGH_QUALITY_RNG))
         {
             result = kStatus_Fail;
             break;
         }
-#endif /* SECURE_STORAGE */
 
-        result = kStatus_Success;
+        /*Providing NULL output buffer, as we just need to initialize TRNG, not get random data*/
+        if (kStatus_SSS_Success != sss_sscp_rng_get_random(&rctx, NULL, 0x0u))
+        {
+            result = kStatus_Fail;
+            break;
+        }
 
+        if (kStatus_SSS_Success != sss_sscp_rng_free(&rctx))
+        {
+            result = kStatus_Fail;
+            break;
+        }
+
+        result                  = kStatus_Success;
         g_isCryptoHWInitialized = true;
-
-    } while (0);
-
-    if (result != kStatus_Success)
-    {
-        ele_close_handles();
-    }
-
-    if (mcux_mutex_unlock(&ele_hwcrypto_mutex))
-    {
-        PRINTF("Mutex unlock failed\n");
-        return kStatus_Fail;
-    }
+    } while (false);
 
     return result;
 }
+
 
 /*!
  * @brief Application Deinit for Crypto blocks.
@@ -224,7 +238,7 @@ status_t CRYPTO_DeinitHardware(void)
         return 0;
     }
 
-    if (mcux_mutex_lock(&ele_hwcrypto_mutex))
+    if (mcux_mutex_lock(&ele_hwcrypto_mutex) != 0)
     {
         return kStatus_Fail;
     }
@@ -235,19 +249,42 @@ status_t CRYPTO_DeinitHardware(void)
         g_isCryptoHWInitialized = false;
     }
 
-    if (mcux_mutex_unlock(&ele_hwcrypto_mutex))
+    if (mcux_mutex_unlock(&ele_hwcrypto_mutex) != 0)
     {
         return kStatus_Fail;
     }
 
     if (result == kStatus_Success)
     {
-        mcux_mutex_free(&ele_hwcrypto_mutex);
+        (void)mcux_mutex_free(&ele_hwcrypto_mutex);
     }
 
     return result;
 }
 
+/*!
+ * @brief Application Deinit for Crypto blocks.
+ *
+ * Unsafe version of CRYPTO_DeinitHardware that does not take mutexs and do not close handles.
+ *
+ * @warning This function does not acquire any mutex locks and is not thread-safe.
+ *          If called incorrectly by an application (e.g., from multiple threads
+ *          concurrently or without proper external synchronization), this may
+ *          cause race conditions, undefined behavior, or hardware access issues.
+ *          Use CRYPTO_InitHardware() for thread-safe initialization.
+ */
+status_t CRYPTO_DeinitHardwareUnsafe(void)
+{
+    if (g_isCryptoHWInitialized == false)
+    {
+        return 0;
+    }
+
+    g_isCryptoHWInitialized = false;
+
+    (void)ELEMU_LP_WakeupPathInit(ELEMUA);
+    return kStatus_Success;
+}
 
 /*!
  * @brief Application reset for Crypto blocks.
@@ -258,7 +295,7 @@ status_t CRYPTO_DeinitHardware(void)
  */
 void CRYPTO_ELEMU_reset(void)
 {
-    CRYPTO_DeinitHardware();
+    (void)CRYPTO_DeinitHardware();
     (void)ELEMU_LP_WakeupPathInit(ELEMUA);
 }
 

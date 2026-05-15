@@ -35,6 +35,7 @@
 #include "lwip/prot/dhcp.h"
 #include "lwip/etharp.h"
 #include "lwip/inet.h"
+#include "lwip/timeouts.h"
 #include "netif/ethernet.h"
 
 #if LWIP_ACD
@@ -178,7 +179,12 @@ static void tick_lwip(void)
   acd_tmr();
 #endif
   if (tick % 5 == 0) {
+#if LWIP_DHCP_FINE_TIMERS_ONDEMAND
+    sys_untimeout(dhcp_fine_timeout_cb, (void *)&net_test);
+    dhcp_fine_tmr(&net_test);
+#else
     dhcp_fine_tmr();
+#endif
   }
   if (tick % 600 == 0) {
     dhcp_coarse_tmr();

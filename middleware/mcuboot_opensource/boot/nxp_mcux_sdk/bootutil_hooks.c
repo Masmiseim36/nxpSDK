@@ -18,7 +18,7 @@
 #include "flash_map.h"
 #include "flash_partitioning.h"
 
-#ifdef CONFIG_ENCRYPT_XIP_EXT_OVERWRITE_ONLY
+#ifdef CONFIG_BOOT_MODE_ENCRYPTED_XIP
 #include "encrypted_xip.h"
 #endif
 
@@ -45,7 +45,7 @@ int boot_perform_update_hook(int img_index, struct image_header *img_head,
 
 int boot_copy_region_pre_hook(int img_index, const struct flash_area *area, size_t size)
 {
-#ifdef CONFIG_ENCRYPT_XIP_EXT_OVERWRITE_ONLY
+#ifdef CONFIG_BOOT_MODE_ENCRYPTED_XIP
     status_t status;
     const uint32_t enc_region_start = area->fa_off + BOOT_FLASH_BASE;
        
@@ -62,7 +62,7 @@ int boot_copy_region_pre_hook(int img_index, const struct flash_area *area, size
 
 int boot_copy_region_post_hook(int img_index, const struct flash_area *area, size_t size)
 {
-#ifdef CONFIG_ENCRYPT_XIP_EXT_OVERWRITE_ONLY
+#ifdef CONFIG_BOOT_MODE_ENCRYPTED_XIP
     status_t status;
     
     status = encrypted_xip_cfg_confirm(boot_flash_meta_map, 0);
@@ -72,7 +72,18 @@ int boot_copy_region_post_hook(int img_index, const struct flash_area *area, siz
     return 0;
 }
 
+int boot_serial_uploaded_hook(int img_index, const struct flash_area *area,
+                              size_t size)
+{
+    return BOOT_HOOK_REGULAR;
+}
+
 int boot_read_swap_state_primary_slot_hook(int image_index, struct boot_swap_state *state)
 {
     return BOOT_HOOK_REGULAR;
+}
+
+int boot_reset_request_hook(bool force)
+{
+    return 0;
 }

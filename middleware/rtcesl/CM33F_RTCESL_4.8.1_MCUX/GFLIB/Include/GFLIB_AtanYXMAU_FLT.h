@@ -38,8 +38,8 @@ extern "C" {
 /******************************************************************************
 * Macros 
 ******************************************************************************/                         
-#define GFLIB_AtanYXMAU_FLT_Ci(fltY, fltX, pbErrFlag)                         \
-        GFLIB_AtanYXMAU_FLT_FCi(fltY, fltX, pbErrFlag)
+#define GFLIB_AtanYXMAU_FLT_Ci(fltY, fltX, pbErrFlag, u8ResReg)               \
+        GFLIB_AtanYXMAU_FLT_FCi(fltY, fltX, pbErrFlag, u8ResReg)
 
 /****************************************************************************
 * Inline functions 
@@ -54,6 +54,8 @@ extern "C" {
 *
 * @param     in  r0 - fltY in the range of [-1,1).
 *                r1 - fltX in the range of [-1,1).
+*                r2 - uint8_t u8ResReg - MAU result register. Valid parameter values are {1, 2, 3, 4}. 
+*                                        Any value outside this range will trigger a CPU HardFault exception.
 *
 * @return    The function returns
 *                r0 - AtanYX(fltY,fltX).The output data value
@@ -66,7 +68,7 @@ extern "C" {
 *            In case of the inputs 0, 0 the error flag is set to 1 and the output
 *            of the function is 0.
 *******************************************************************************/
-static inline float_t GFLIB_AtanYXMAU_FLT_FCi(float_t fltY, float_t fltX, bool_t *pbErrFlag)
+static inline float_t GFLIB_AtanYXMAU_FLT_FCi(float_t fltY, float_t fltX, bool_t *pbErrFlag, uint8_t u8ResReg)
 {
     float_t fltAng1;
     float_t fltAng2;
@@ -124,7 +126,7 @@ static inline float_t GFLIB_AtanYXMAU_FLT_FCi(float_t fltY, float_t fltX, bool_t
                 {   /* Division by 0 handled in previous step, MLIB_Div function not used here */
                     fltO1Tan = (fltY / fltX);    
                     /* Calculate arcus tangent */
-                    fltAng2 = GFLIB_AtanMAU_FLT_FCi(fltO1Tan);    
+                    fltAng2 = GFLIB_AtanMAU_FLT_FCi(fltO1Tan, u8ResReg);    
                 }
             }
         }
@@ -135,11 +137,11 @@ static inline float_t GFLIB_AtanYXMAU_FLT_FCi(float_t fltY, float_t fltX, bool_t
     }
 }
 
-static inline acc32_t GFLIB_AtanYXMAU_A32f_FCi(float_t fltY, float_t fltX, bool_t *pbErrFlag)
+static inline acc32_t GFLIB_AtanYXMAU_A32f_FCi(float_t fltY, float_t fltX, bool_t *pbErrFlag, uint8_t u8ResReg)
 {
     acc32_t a32Out;
 
-    fltY = GFLIB_AtanYXMAU_FLT_FCi(fltY, fltX, pbErrFlag);
+    fltY = GFLIB_AtanYXMAU_FLT_FCi(fltY, fltX, pbErrFlag, u8ResReg);
 
 #if defined(__GNUC__) && !defined(__ARMCC_VERSION)   /* GCC(KDS) compiler */
     if (fltY == RTCESL_NAN)

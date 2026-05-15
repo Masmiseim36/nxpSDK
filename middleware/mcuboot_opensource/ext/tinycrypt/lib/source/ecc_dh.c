@@ -54,6 +54,13 @@
  *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *  POSSIBILITY OF SUCH DAMAGE.
  */
+
+/*
+ * Modified by NXP Seminductor, 2026
+ * Changes: Replaced memset + asm volatile pattern with secure_zero function
+ *          for secure memory clearing.
+ */
+
 #include <tinycrypt/constants.h>
 #include <tinycrypt/ecc.h>
 #include <tinycrypt/ecc_dh.h>
@@ -141,6 +148,13 @@ int uECC_make_key(uint8_t *public_key, uint8_t *private_key, uECC_Curve curve)
 	return 0;
 }
 
+static void secure_zeroize(void *ptr, size_t len) {
+    volatile unsigned char *p = (volatile unsigned char *)ptr;
+    while (len--) {
+        *p++ = 0;
+    }
+}
+
 int uECC_shared_secret(const uint8_t *public_key, const uint8_t *private_key,
 		       uint8_t *secret, uECC_Curve curve)
 {
@@ -189,12 +203,18 @@ int uECC_shared_secret(const uint8_t *public_key, const uint8_t *private_key,
 
 clear_and_out:
 	/* erasing temporary buffer used to store secret: */
-	memset(p2, 0, sizeof(p2));
+	/*
+        memset(p2, 0, sizeof(p2));
 	__asm__ __volatile__("" :: "g"(p2) : "memory");
 	memset(tmp, 0, sizeof(tmp));
 	__asm__ __volatile__("" :: "g"(tmp) : "memory");
 	memset(_private, 0, sizeof(_private));
 	__asm__ __volatile__("" :: "g"(_private) : "memory");
+        */
+        /* NXP */
+        secure_zeroize(p2, sizeof(p2));
+	secure_zeroize(tmp, sizeof(tmp));
+	secure_zeroize(_private, sizeof(_private));
 
 	return r;
 }

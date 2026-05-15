@@ -1,0 +1,48 @@
+# flexcan_loopback
+
+## Overview
+The flexcan_loopback_functional example shows how to use the loopback test mode to debug your CAN Bus design:
+
+To demonstrates this example, only one board is needed. The example will config one FlexCAN Message
+Buffer to Rx Message Buffer and the other FlexCAN Message Buffer to Tx Message Buffer with same ID.
+After that, the example will send a CAN Message from the Tx Message Buffer to the Rx Message Buffer
+throuth internal loopback interconnect and print out the Message payload to terminal.
+
+## Supported Boards
+- [EVK9-MIMX8ULP](../../../_boards/evk9mimx8ulp/driver_examples/flexcan/loopback/example_board_readme.md)
+- [IMX952LPD5EVK-19](../../../_boards/imx952evk/driver_examples/flexcan/loopback/example_board_readme.md)
+- [IMX952LPD5EVK-15](../../../_boards/imx952evk/driver_examples/flexcan/loopback/example_board_readme.md)
+- [EVKB-IMXRT1050](../../../_boards/evkbimxrt1050/driver_examples/flexcan/loopback/example_board_readme.md)
+- [MIMXRT1060-EVKB](../../../_boards/evkbmimxrt1060/driver_examples/flexcan/loopback/example_board_readme.md)
+- [MIMXRT1170-EVKB](../../../_boards/evkbmimxrt1170/driver_examples/flexcan/loopback/example_board_readme.md)
+- [MIMXRT1060-EVKC](../../../_boards/evkcmimxrt1060/driver_examples/flexcan/loopback/example_board_readme.md)
+- [EVK-MIMX8MP](../../../_boards/evkmimx8mp/driver_examples/flexcan/loopback/example_board_readme.md)
+- [EVK-MIMX8ULP](../../../_boards/evkmimx8ulp/driver_examples/flexcan/loopback/example_board_readme.md)
+- [EVK-MIMXRT1020](../../../_boards/evkmimxrt1020/driver_examples/flexcan/loopback/example_board_readme.md)
+- [MIMXRT1024-EVK](../../../_boards/evkmimxrt1024/driver_examples/flexcan/loopback/example_board_readme.md)
+- [MIMXRT1040-EVK](../../../_boards/evkmimxrt1040/driver_examples/flexcan/loopback/example_board_readme.md)
+- [EVK-MIMXRT1064](../../../_boards/evkmimxrt1064/driver_examples/flexcan/loopback/example_board_readme.md)
+- [MIMXRT1160-EVK](../../../_boards/evkmimxrt1160/driver_examples/flexcan/loopback/example_board_readme.md)
+- [MIMXRT1180-EVK](../../../_boards/evkmimxrt1180/driver_examples/flexcan/loopback/example_board_readme.md)
+- [FRDM-MCXA156](../../../_boards/frdmmcxa156/driver_examples/flexcan/loopback/example_board_readme.md)
+- [FRDM-MCXA346](../../../_boards/frdmmcxa346/driver_examples/flexcan/loopback/example_board_readme.md)
+- [FRDM-MCXE247](../../../_boards/frdmmcxe247/driver_examples/flexcan/loopback/example_board_readme.md)
+- [FRDM-MCXN236](../../../_boards/frdmmcxn236/driver_examples/flexcan/loopback/example_board_readme.md)
+- [FRDM-MCXN947](../../../_boards/frdmmcxn947/driver_examples/flexcan/loopback/example_board_readme.md)
+- [IMX95LP4XEVK-15](../../../_boards/imx95lp4xevk15/driver_examples/flexcan/loopback/example_board_readme.md)
+- [IMX95LPD5EVK-19](../../../_boards/imx95lpd5evk19/driver_examples/flexcan/loopback/example_board_readme.md)
+- [imx95verdinevk](../../../_boards/imx95verdinevk/driver_examples/flexcan/loopback/example_board_readme.md)
+- [FRDMIMX95](../../../_boards/frdmimx95/driver_examples/flexcan/loopback/example_board_readme.md)
+- [MCIMX93AUTO-EVK](../../../_boards/mcimx93autoevk/driver_examples/flexcan/loopback/example_board_readme.md)
+- [MCIMX93-EVK](../../../_boards/mcimx93evk/driver_examples/flexcan/loopback/example_board_readme.md)
+- [MCIMX93W-EVK](../../../_boards/mcimx93wevk/driver_examples/flexcan/loopback/example_board_readme.md)
+- [MCIMX93-QSB](../../../_boards/mcimx93qsb/driver_examples/flexcan/loopback/example_board_readme.md)
+- [MCX-N5XX-EVK](../../../_boards/mcxn5xxevk/driver_examples/flexcan/loopback/example_board_readme.md)
+- [MCX-N9XX-EVK](../../../_boards/mcxn9xxevk/driver_examples/flexcan/loopback/example_board_readme.md)
+- [FRDM-MCXE31B](../../../_boards/frdmmcxe31b/driver_examples/flexcan/loopback/example_board_readme.md)
+- [FRDM-MCXA174](../../../_boards/frdmmcxa174/driver_examples/flexcan/loopback/example_board_readme.md)
+- [FRDM-MCXA344](../../../_boards/frdmmcxa344/driver_examples/flexcan/loopback/example_board_readme.md)
+- [FRDM-IMXRT1186](../../../_boards/frdmimxrt1186/driver_examples/flexcan/loopback/example_board_readme.md)
+- [FRDM-MCXA266](../../../_boards/frdmmcxa266/driver_examples/flexcan/loopback/example_board_readme.md)
+- [FRDM-MCXA366](../../../_boards/frdmmcxa366/driver_examples/flexcan/loopback/example_board_readme.md)
+- [FRDM-MCXA577](../../../_boards/frdmmcxa577/driver_examples/flexcan/loopback/example_board_readme.md)

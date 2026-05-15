@@ -81,7 +81,7 @@ const struct lwip_cyclic_timer lwip_cyclic_timers[] = {
   {TCP_TMR_INTERVAL, HANDLER(tcp_tmr)},
 #endif /* LWIP_TCP */
 #if LWIP_IPV4
-#if IP_REASSEMBLY
+#if IP_REASSEMBLY && !LWIP_IP4_REASSEMBLY_TIMERS_ONDEMAND
   {IP_TMR_INTERVAL, HANDLER(ip_reass_tmr)},
 #endif /* IP_REASSEMBLY */
 #if LWIP_ARP
@@ -89,24 +89,26 @@ const struct lwip_cyclic_timer lwip_cyclic_timers[] = {
 #endif /* LWIP_ARP */
 #if LWIP_DHCP
   {DHCP_COARSE_TIMER_MSECS, HANDLER(dhcp_coarse_tmr)},
-  {DHCP_FINE_TIMER_MSECS, HANDLER(dhcp_fine_tmr)},
 #endif /* LWIP_DHCP */
+#if LWIP_DHCP && !LWIP_DHCP_FINE_TIMERS_ONDEMAND
+  {DHCP_FINE_TIMER_MSECS, HANDLER(dhcp_fine_tmr)},
+#endif /*  LWIP_DHCP && !LWIP_DHCP_FINE_TIMERS_ONDEMAND */
 #if LWIP_ACD
   {ACD_TMR_INTERVAL, HANDLER(acd_tmr)},
 #endif /* LWIP_ACD */
-#if LWIP_IGMP
+#if LWIP_IGMP && !LWIP_IGMP_TIMERS_ONDEMAND
   {IGMP_TMR_INTERVAL, HANDLER(igmp_tmr)},
 #endif /* LWIP_IGMP */
 #endif /* LWIP_IPV4 */
-#if LWIP_DNS
+#if LWIP_DNS && !LWIP_DNS_TIMERS_ONDEMAND
   {DNS_TMR_INTERVAL, HANDLER(dns_tmr)},
 #endif /* LWIP_DNS */
 #if LWIP_IPV6
   {ND6_TMR_INTERVAL, HANDLER(nd6_tmr)},
-#if LWIP_IPV6_REASS
+#if LWIP_IPV6_REASS && !LWIP_IP6_REASSEMBLY_TIMERS_ONDEMAND
   {IP6_REASS_TMR_INTERVAL, HANDLER(ip6_reass_tmr)},
 #endif /* LWIP_IPV6_REASS */
-#if LWIP_IPV6_MLD
+#if LWIP_IPV6_MLD && !LWIP_MLD6_TIMERS_ONDEMAND
   {MLD6_TMR_INTERVAL, HANDLER(mld6_tmr)},
 #endif /* LWIP_IPV6_MLD */
 #if LWIP_IPV6_DHCP6
@@ -272,6 +274,15 @@ void sys_timeouts_init(void)
   }
 }
 
+/** Deinitialize this module */
+void sys_timeouts_deinit(void)
+{
+  size_t i;
+  /* tcp_tmr() at index 0 is started on demand */
+  for (i = (LWIP_TCP ? 1 : 0); i < LWIP_ARRAYSIZE(lwip_cyclic_timers); i++) {
+    sys_untimeout(lwip_cyclic_timer, LWIP_CONST_CAST(void *, &lwip_cyclic_timers[i]));
+  }
+}
 /**
  * Create a one-shot timer (aka timeout). Timeouts are processed in the
  * following cases:

@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2023 NXP
+ * Copyright 2016-2023, 2025 NXP
  * All rights reserved.
  *
  *
@@ -49,7 +49,8 @@ void httpsrv_server_task(void *arg)
         int new_sock;
 
         /* limit number of opened sessions */
-        sys_arch_sem_wait(&server->ses_cnt, 0);
+        while (xSemaphoreTake(server->ses_cnt, portMAX_DELAY) != pdTRUE)
+            ;
 
         /* Get socket with incoming connection (IPv4 or IPv6) */
         int connsock = httpsrv_wait_for_conn(server);
@@ -66,7 +67,7 @@ void httpsrv_server_task(void *arg)
             new_sock = httpsrv_accept(server->sock);
             if (new_sock < 0)
             {
-                sys_sem_signal(&server->ses_cnt);
+                xSemaphoreGive(server->ses_cnt);
                 /* We probably run out of sockets. Wait some time then try again to prevent session tasks resource
                  * starvation */
                 sys_msleep(100);
@@ -87,7 +88,7 @@ void httpsrv_server_task(void *arg)
                 if (error != 0)
                 {
                     httpsrv_abort(new_sock);
-                    sys_sem_signal(&server->ses_cnt);
+                    xSemaphoreGive(server->ses_cnt);
                     break;
                 }
 #endif
@@ -99,7 +100,7 @@ void httpsrv_server_task(void *arg)
                 if (error != 0)
                 {
                     httpsrv_abort(new_sock);
-                    sys_sem_signal(&server->ses_cnt);
+                    xSemaphoreGive(server->ses_cnt);
                     break;
                 }
 #endif
@@ -155,7 +156,7 @@ void httpsrv_server_task(void *arg)
                                     httpsrv_ses_close(session);
                                     httpsrv_ses_free(session);
                                     server->session[i] = NULL;
-                                    sys_sem_signal(&server->ses_cnt);
+                                    xSemaphoreGive(server->ses_cnt);
                                     httpsrv_mem_free(ses_param);
                                 }
                             }
@@ -163,7 +164,7 @@ void httpsrv_server_task(void *arg)
                             {
                                 httpsrv_ses_close(session);
                                 httpsrv_ses_free(session);
-                                sys_sem_signal(&server->ses_cnt);
+                                xSemaphoreGive(server->ses_cnt);
                                 httpsrv_mem_free(ses_param);
                             }
                         }
@@ -172,19 +173,19 @@ void httpsrv_server_task(void *arg)
                             httpsrv_ses_close(session);
                             httpsrv_ses_free(session);
                             httpsrv_abort(new_sock);
-                            sys_sem_signal(&server->ses_cnt);
+                            xSemaphoreGive(server->ses_cnt);
                         }
                     }
                     else
                     {
                         httpsrv_abort(new_sock);
-                        sys_sem_signal(&server->ses_cnt);
+                        xSemaphoreGive(server->ses_cnt);
                     }
                 }
                 else
                 {
                     httpsrv_abort(new_sock);
-                    sys_sem_signal(&server->ses_cnt);
+                    xSemaphoreGive(server->ses_cnt);
                 }
             }
         }
@@ -219,7 +220,7 @@ static void httpsrv_session_task(void *arg)
 
     /* Cleanup and end task */
     httpsrv_mem_free(ses_param);
-    sys_sem_signal(&server->ses_cnt);
+    xSemaphoreGive(server->ses_cnt);
     vTaskDelete(NULL);
 }
 

@@ -2,27 +2,27 @@
   "SPDXID": "SPDXRef-DOCUMENT",
   "spdxVersion": "SPDX-2.3",
   "creationInfo": {
-    "created": "2025-05-22T03:06:57Z",
+    "created": "2026-01-08T03:43:45Z",
     "creators": [
       "Organization: NXP"
     ],
-    "licenseListVersion": "3.20"
+    "licenseListVersion": "3.26"
   },
-  "name": "fatfs-v25.06.00",
+  "name": "fatfs-v26.03.00-pvw1",
   "dataLicense": "CC0-1.0",
   "hasExtractedLicensingInfos": [
     {
+      "name": "FatFs License",
       "licenseId": "LicenseRef-e5b7758e-198f-4ef0-a1c0-449099001fd5",
-      "extractedText": "FatFs License\n=============\n\nFatFs module is a generic FAT file system module for small embedded systems. This\nis a free software that opened for education, research and commercial\ndevelopments under license policy of following trems.\n\nCopyright (C) 2013, ChaN, all right reserved.\n\n  * The FatFs module is a free software and there is NO WARRANTY.\n\n  *  No restriction on use. You can use, modify and redistribute it for personal,\n    non-profit or commercial products UNDER YOUR RESPONSIBILITY.\n\n  * Redistributions of source code must retain the above copyright notice.",
-      "name": "FatFs License"
+      "extractedText": "FatFs License\n=============\n\nFatFs module is a generic FAT file system module for small embedded systems. This\nis a free software that opened for education, research and commercial\ndevelopments under license policy of following trems.\n\nCopyright (C) 2013, ChaN, all right reserved.\n\n  * The FatFs module is a free software and there is NO WARRANTY.\n\n  *  No restriction on use. You can use, modify and redistribute it for personal,\n    non-profit or commercial products UNDER YOUR RESPONSIBILITY.\n\n  * Redistributions of source code must retain the above copyright notice."
     }
   ],
-  "documentNamespace": "https://nxp.com/spdx/99e41f3a-869d-45cb-b696-d92b6d36756d",
+  "documentNamespace": "https://nxp.com/spdx/a18789af-315f-45f7-a251-64f40f2fe963",
   "packages": [
     {
-      "SPDXID": "SPDXRef-package-99e41f3a-869d-45cb-b696-d92b6d36756d",
+      "SPDXID": "SPDXRef-package-a18789af-315f-45f7-a251-64f40f2fe963",
       "name": "fatfs",
-      "versionInfo": "v25.06.00",
+      "versionInfo": "v26.03.00-pvw1",
       "licenseConcluded": "(LicenseRef-e5b7758e-198f-4ef0-a1c0-449099001fd5)",
       "licenseDeclared": "(LicenseRef-e5b7758e-198f-4ef0-a1c0-449099001fd5)",
       "downloadLocation": "https://github.com/nxp-mcuxpresso/fatfs",
@@ -32,33 +32,28 @@
       "filesAnalyzed": false
     },
     {
-      "SPDXID": "SPDXRef-package-18f07cfa-2c43-47ad-b6c4-546506c7a5d7",
+      "SPDXID": "SPDXRef-package-26133453-b9a8-49d0-b454-c28ac915a5c6",
       "name": "FatFs Module",
-      "versionInfo": "R0.15",
+      "versionInfo": "R0.16",
       "licenseConcluded": "LicenseRef-e5b7758e-198f-4ef0-a1c0-449099001fd5",
       "licenseDeclared": "LicenseRef-e5b7758e-198f-4ef0-a1c0-449099001fd5",
-      "homepage": "http://elm-chan.org/fsw/ff/00index_e.html",
-      "downloadLocation": "https://elm-chan.org/fsw/ff/arc/ff15.zip",
+      "downloadLocation": "https://elm-chan.org/fsw/ff/archives.html",
+      "originator": "Organization: FatFs Module",
+      "supplier": "NOASSERTION",
       "externalRefs": [],
-      "filesAnalyzed": false,
-      "supplier": "NOASSERTION"
+      "filesAnalyzed": false
     }
   ],
   "relationships": [
     {
       "spdxElementId": "SPDXRef-DOCUMENT",
       "relationshipType": "DESCRIBES",
-      "relatedSpdxElement": "SPDXRef-package-99e41f3a-869d-45cb-b696-d92b6d36756d"
+      "relatedSpdxElement": "SPDXRef-package-a18789af-315f-45f7-a251-64f40f2fe963"
     },
     {
-      "spdxElementId": "SPDXRef-package-99e41f3a-869d-45cb-b696-d92b6d36756d",
-      "relationshipType": "DYNAMIC_LINK",
-      "relatedSpdxElement": "SPDXRef-package-18f07cfa-2c43-47ad-b6c4-546506c7a5d7"
-    },
-    {
-      "spdxElementId": "SPDXRef-package-99e41f3a-869d-45cb-b696-d92b6d36756d",
+      "spdxElementId": "SPDXRef-package-a18789af-315f-45f7-a251-64f40f2fe963",
       "relationshipType": "CONTAINS",
-      "relatedSpdxElement": "SPDXRef-package-18f07cfa-2c43-47ad-b6c4-546506c7a5d7"
+      "relatedSpdxElement": "SPDXRef-package-26133453-b9a8-49d0-b454-c28ac915a5c6"
     }
   ]
 }

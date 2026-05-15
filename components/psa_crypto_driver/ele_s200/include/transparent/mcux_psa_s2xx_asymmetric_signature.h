@@ -26,11 +26,11 @@ extern "C" {
  * \brief Sign a precomputed hash of a message
  *
  * \param[in]  attributes       Attributes of the key to use
- * \param[in]  key              Key material buffer
- * \param[in]  key_length       Size in bytes of the key
+ * \param[in]  key_buffer       Key material buffer
+ * \param[in]  key_buffer_size  Size in bytes of the key
  * \param[in]  alg              Algorithm to use
- * \param[in]  input            Hash to sign buffer
- * \param[in]  input_length     Size in bytes of the data to sign
+ * \param[in]  hash             Hash to sign buffer
+ * \param[in]  hash_length      Size in bytes of the data to sign
  * \param[out] signature        Buffer to hold the signature data
  * \param[in]  signature_size   Size in bytes of the signature buffer
  * \param[out] signature_length Size in bytes of the signature
@@ -39,19 +39,23 @@ extern "C" {
  *          failure
  */
 psa_status_t ele_s2xx_transparent_sign_hash(const psa_key_attributes_t *attributes,
-                                            const uint8_t *key, size_t key_length,
-                                            psa_algorithm_t alg, const uint8_t *input,
-                                            size_t input_length, uint8_t *signature,
-                                            size_t signature_size, size_t *signature_length);
+                                            const uint8_t *key_buffer,
+                                            size_t key_buffer_size,
+                                            psa_algorithm_t alg,
+                                            const uint8_t *hash,
+                                            size_t hash_length,
+                                            uint8_t *signature,
+                                            size_t signature_size,
+                                            size_t *signature_length);
 /*!
  * \brief Verify a message signature on a hash
  *
  * \param[in] attributes       Attributes of the key to use
- * \param[in] key              Key material buffer
- * \param[in] key_length       Size in bytes of the key
+ * \param[in] key_buffer       Key material buffer
+ * \param[in] key_buffer_size  Size in bytes of the key
  * \param[in] alg              Algorithm to use
- * \param[in] hash            Hash to sign buffer
- * \param[in] hash_length     Size in bytes of the data to sign
+ * \param[in] hash             Hash to sign buffer
+ * \param[in] hash_length      Size in bytes of the data to sign
  * \param[in] signature        Signature to verify
  * \param[in] signature_length Size in bytes of the signature
  *
@@ -59,9 +63,12 @@ psa_status_t ele_s2xx_transparent_sign_hash(const psa_key_attributes_t *attribut
  *          failure
  */
 psa_status_t ele_s2xx_transparent_verify_hash(const psa_key_attributes_t *attributes,
-                                              const uint8_t *key, size_t key_length,
-                                              psa_algorithm_t alg, const uint8_t *hash,
-                                              size_t hash_length, const uint8_t *signature,
+                                              const uint8_t *key_buffer,
+                                              size_t key_buffer_size,
+                                              psa_algorithm_t alg,
+                                              const uint8_t *hash,
+                                              size_t hash_length,
+                                              const uint8_t *signature,
                                               size_t signature_length);
 #ifdef __cplusplus
 }

@@ -19,7 +19,7 @@
 
 /*
  * Copyright (c) 2014 Simon Goldschmidt
- * Copyright 2019-2024 NXP
+ * Copyright 2019-2025 NXP
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
@@ -58,6 +58,8 @@
 #include "lwip/timeouts.h"
 #include "lwip/igmp.h"
 #include "lwip/mld6.h"
+
+#include "fsl_common.h"
 
 #include <string.h>
 #include <stdbool.h>
@@ -225,7 +227,7 @@ typedef struct _lwiperf_state_tcp {
 static lwiperf_state_base_t *lwiperf_all_connections;
 
 /** A const buffer to send from: we want to measure sending, not copying! */
-static const u8_t lwiperf_txbuf_const[1600] = {
+AT_QUICKACCESS_SECTION_DATA_ALIGN(static const u8_t lwiperf_txbuf_const[1600], 32) = {
   '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
   '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
   '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',

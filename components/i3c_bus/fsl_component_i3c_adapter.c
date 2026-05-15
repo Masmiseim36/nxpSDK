@@ -1,5 +1,5 @@
 /*
- * Copyright 2020, 2022-2024 NXP
+ * Copyright 2020, 2022-2026 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -135,13 +135,18 @@ static void i3c_master_ibi_callback(I3C_Type *base,
             if (ibiState == kI3C_IbiDataBuffNeed)
             {
                 handle->ibiBuff = malloc(I3C_MASTER_IBI_BUFF_SIZE);
+                assert(handle->ibiBuff != NULL);
             }
             else
             {
                 void *ibiData = malloc(handle->ibiPayloadSize);
-                (void)memcpy(ibiData, (void *)handle->ibiBuff, handle->ibiPayloadSize);
-                (void)I3C_BusMasterHandleIBI(master, handle->ibiAddress, ibiData, handle->ibiPayloadSize);
-                free(ibiData);
+                if (ibiData != NULL)
+                {
+                    (void)memcpy(ibiData, (void *)handle->ibiBuff, handle->ibiPayloadSize);
+                    (void)I3C_BusMasterHandleIBI(master, handle->ibiAddress, ibiData, handle->ibiPayloadSize);
+                    free(ibiData);
+                }
+                free(handle->ibiBuff);
             }
             break;
 
@@ -208,15 +213,36 @@ static void i3c_master_callback(I3C_Type *base, i3c_master_handle_t *handle, sta
 static status_t I3C_MasterAdapterInit(i3c_device_t *master)
 {
     assert(master != NULL);
+
     i3c_device_control_info_t *masterControlInfo  = master->devControlInfo;
     i3c_bus_t *bus                                = master->bus;
     i3c_master_adapter_resource_t *masterResource = (i3c_master_adapter_resource_t *)masterControlInfo->resource;
-
-    I3C_Type *base                       = masterResource->base;
-    i3c_master_transfer_mode_t transMode = masterResource->transMode;
+    I3C_Type *base                                = masterResource->base;
     i3c_master_adapter_private_t *masterPrivate;
-
     i3c_config_t masterConfig;
+    uint8_t *pool;
+    uint8_t *pMem;
+
+    size_t totalMemSize = SDK_SIZEALIGN(sizeof(i3c_master_adapter_private_t), 4);
+
+    if (masterControlInfo->isSecondary)
+    {
+        totalMemSize += SDK_SIZEALIGN(I3C_SLAVELIST_MAX_LEN, 4);
+        totalMemSize += SDK_SIZEALIGN(sizeof(i3c_slave_handle_t), 4);
+    }
+
+    if (masterResource->transMode == kI3C_MasterTransferInterruptMode)
+    {
+        totalMemSize += SDK_SIZEALIGN(sizeof(i3c_master_handle_t), 4);
+    }
+
+    pool = malloc(totalMemSize);
+    if (pool == NULL)
+    {
+        return kStatus_I3CBus_MasterOpsFailure;
+    }
+    pMem = pool;
+
     I3C_GetDefaultConfig(&masterConfig);
     masterConfig.baudRate_Hz.i2cBaud          = bus->i2cBaudRate;
     masterConfig.baudRate_Hz.i3cPushPullBaud  = bus->i3cPushPullBaudRate;
@@ -232,10 +258,11 @@ static status_t I3C_MasterAdapterInit(i3c_device_t *master)
     masterConfig.bcr                          = master->info.bcr;
     masterConfig.hdrMode                      = master->info.hdrMode;
 #if !(defined(FSL_FEATURE_I3C_HAS_NO_SCONFIG_BAMATCH) && FSL_FEATURE_I3C_HAS_NO_SCONFIG_BAMATCH)
-    masterConfig.slowClock_Hz                 = masterResource->slowClockInHz;
+    masterConfig.slowClock_Hz = masterResource->slowClockInHz;
 #endif
 
-    masterPrivate                  = malloc(sizeof(i3c_master_adapter_private_t));
+    masterPrivate = (i3c_master_adapter_private_t *)(uintptr_t)pMem;
+    pMem += SDK_SIZEALIGN(sizeof(i3c_master_adapter_private_t), 4);
     masterControlInfo->privateData = masterPrivate;
 
     /* Master is capable of working as master but work as slave for now */
@@ -244,9 +271,10 @@ static status_t I3C_MasterAdapterInit(i3c_device_t *master)
         masterConfig.enableMaster = kI3C_MasterCapable;
         masterConfig.enableSlave  = true;
         masterConfig.isHotJoin    = masterControlInfo->isHotJoin;
-        masterPrivate->devList    = malloc(I3C_SLAVELIST_MAX_LEN);
+        masterPrivate->devList    = (i3c_ccc_dev_t *)(uintptr_t)pMem;
         masterPrivate->devCount   = 0U;
         (void)memset((void *)masterPrivate->devList, 0, I3C_SLAVELIST_MAX_LEN);
+        pMem += SDK_SIZEALIGN(I3C_SLAVELIST_MAX_LEN, 4);
     }
     else
     {
@@ -256,9 +284,10 @@ static status_t I3C_MasterAdapterInit(i3c_device_t *master)
 
     I3C_Init(base, &masterConfig, masterResource->clockInHz);
 
-    if (transMode == kI3C_MasterTransferInterruptMode)
+    if (masterResource->transMode == kI3C_MasterTransferInterruptMode)
     {
-        i3c_master_handle_t *g_i3c_m_handle = malloc(sizeof(i3c_master_handle_t));
+        i3c_master_handle_t *g_i3c_m_handle = (i3c_master_handle_t *)(uintptr_t)pMem;
+        pMem += SDK_SIZEALIGN(sizeof(i3c_master_handle_t), 4);
         I3C_MasterTransferCreateHandle(base, g_i3c_m_handle, &masterCallback, master);
     }
 
@@ -267,7 +296,7 @@ static status_t I3C_MasterAdapterInit(i3c_device_t *master)
     if (masterControlInfo->isSecondary)
     {
         /* Create slave handle. */
-        i3c_slave_handle_t *g_i3c_s_handle = malloc(sizeof(*g_i3c_s_handle));
+        i3c_slave_handle_t *g_i3c_s_handle = (i3c_slave_handle_t *)(uintptr_t)pMem;
         I3C_SlaveTransferCreateHandle(base, g_i3c_s_handle, i3c_secondarymaster_callback, master);
 
         /* Start slave non-blocking transfer. */
@@ -287,10 +316,10 @@ static status_t I3C_MasterAdapterProcessDAA(i3c_device_t *master)
     i3c_device_control_info_t *masterControlInfo  = master->devControlInfo;
     i3c_master_adapter_resource_t *masterResource = (i3c_master_adapter_resource_t *)masterControlInfo->resource;
     I3C_Type *base                                = masterResource->base;
-    uint8_t rxBuffer[8] = {0xFFU, 0xFFU, 0xFFU, 0xFFU, 0xFFU, 0xFFU, 0xFFU, 0xFFU};
-    i3c_bus_t *i3cBus   = master->bus;
-    bool mctrlDone      = false;
-    uint8_t rxSize      = 0;
+    uint8_t rxBuffer[8]                           = {0xFFU, 0xFFU, 0xFFU, 0xFFU, 0xFFU, 0xFFU, 0xFFU, 0xFFU};
+    i3c_bus_t *i3cBus                             = master->bus;
+    bool mctrlDone                                = false;
+    uint8_t rxSize                                = 0;
     uint32_t errStatus;
     uint32_t status;
     size_t rxCount;
@@ -328,8 +357,11 @@ static status_t I3C_MasterAdapterProcessDAA(i3c_device_t *master)
         if ((!mctrlDone) || (rxSize < 8U))
         {
             I3C_MasterGetFifoCounts(base, &rxCount, NULL);
-            while (rxCount-- != 0U)
+            /* INT30-C: Use explicit loop to avoid post-decrement underflow warning */
+            while (rxCount > 0U)
             {
+                rxCount--;
+                assert(rxSize < sizeof(rxBuffer));
                 rxBuffer[rxSize++] = (uint8_t)(base->MRDATAB & I3C_MRDATAB_VALUE_MASK);
             }
 
@@ -340,7 +372,7 @@ static status_t I3C_MasterAdapterProcessDAA(i3c_device_t *master)
             }
         }
         else if ((I3C_MasterGetState(base) == kI3C_MasterStateDaa) &&
-            (0UL != (I3C_MasterGetStatusFlags(base) & (uint32_t)kI3C_MasterBetweenFlag)))
+                 (0UL != (I3C_MasterGetStatusFlags(base) & (uint32_t)kI3C_MasterBetweenFlag)))
         {
             uint8_t validAddr = I3C_BusGetValidAddrSlot(i3cBus, 0x0);
             if (validAddr < I3C_BUS_MAX_ADDR)
@@ -349,7 +381,7 @@ static status_t I3C_MasterAdapterProcessDAA(i3c_device_t *master)
                 base->MWDATAB = validAddr;
                 /* Emit process DAA again. */
                 I3C_MasterEmitRequest(base, kI3C_RequestProcessDAA);
-              
+
                 i3c_device_t *newI3CDev = malloc(sizeof(i3c_device_t));
                 (void)memset(newI3CDev, 0, sizeof(i3c_device_t));
                 newI3CDev->info.dynamicAddr = validAddr;
@@ -579,6 +611,7 @@ static void I3C_MasterAdapterTakeOverMasterShip(i3c_device_t *master)
                 if (cccDev->dynamicAddr != 0U)
                 {
                     i3c_device_t *newI3CDev = malloc(sizeof(i3c_device_t));
+                    assert(newI3CDev != NULL);
                     (void)memset(newI3CDev, 0, sizeof(i3c_device_t));
 
                     newI3CDev->info.dynamicAddr = cccDev->dynamicAddr >> 1U;
@@ -591,6 +624,7 @@ static void I3C_MasterAdapterTakeOverMasterShip(i3c_device_t *master)
                 else
                 {
                     i2c_device_t *newI2CDev = malloc(sizeof(i2c_device_t));
+                    assert(newI2CDev != NULL);
                     (void)memset(newI2CDev, 0, sizeof(i2c_device_t));
 
                     newI2CDev->lvr        = cccDev->lvr;

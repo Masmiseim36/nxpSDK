@@ -323,4 +323,13 @@ void lwip_example_app_platform_assert(const char *msg, int line, const char *fil
 #define LWIP_PLATFORM_ASSERT(x) lwip_example_app_platform_assert(x, __LINE__, __FILE__)
 #endif
 
+/* On-demand timer options */
+#define LWIP_IGMP_TIMERS_ONDEMAND 1
+#define LWIP_MLD6_TIMERS_ONDEMAND 1
+#define LWIP_DHCP_FINE_TIMERS_ONDEMAND 1
+#define LWIP_DNS_TIMERS_ONDEMAND 1
+#define LWIP_IP4_REASSEMBLY_TIMERS_ONDEMAND 1
+#define LWIP_IP6_REASSEMBLY_TIMERS_ONDEMAND 1
+
+
 #endif /* LWIP_LWIPOPTS_H */

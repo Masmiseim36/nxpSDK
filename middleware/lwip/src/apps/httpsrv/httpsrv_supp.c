@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2023 NXP
+ * Copyright 2016-2023, 2025 NXP
  * All rights reserved.
  *
  *
@@ -239,8 +239,8 @@ HTTPSRV_STRUCT *httpsrv_create_server(HTTPSRV_PARAM_STRUCT *params)
         goto EXIT;
     }
 
-    error = sys_sem_new(&server->ses_cnt, server->params.max_ses);
-    if (error != ERR_OK)
+    server->ses_cnt = xSemaphoreCreateCounting(server->params.max_ses, server->params.max_ses);
+    if (server->ses_cnt == NULL)
     {
         goto EXIT;
     }
@@ -318,7 +318,7 @@ void httpsrv_destroy_server(HTTPSRV_STRUCT *server)
 
         if (server->ses_cnt)
         {
-            sys_sem_free(&server->ses_cnt);
+            vQueueDelete(server->ses_cnt);
         }
 
         /* server->finished is deallocated later */

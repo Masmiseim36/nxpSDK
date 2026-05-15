@@ -22,6 +22,6 @@ struct netc_ep_if_port
 	ep_config_t *ep_config;
 	netc_bdr_config_t *bdrConfig;
 	uint8_t *g_txFrame; 
-	bool txOver;
+	volatile bool txOver;
 };
 #endif

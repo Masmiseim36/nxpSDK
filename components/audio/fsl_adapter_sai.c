@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 NXP
+ * Copyright 2021, 2025 NXP
  *
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -240,6 +240,163 @@ static void HAL_AudioCallbackDMA(I2S_Type *base, sai_dma_handle_t *handle, statu
 #else
 #endif
 
+static uint8_t HAL_AudioSetSaiConfig(const hal_audio_config_t *config, sai_transceiver_t *saiConfig)
+{
+    hal_audio_ip_config_t *featureConfig = (hal_audio_ip_config_t *)config->ipConfig;
+#if (defined(FSL_FEATURE_SAI_HAS_FIFO_COMBINE_MODE) && (FSL_FEATURE_SAI_HAS_FIFO_COMBINE_MODE > 0U))
+    uint32_t u32Temp;
+    uint8_t lineNum;
+#endif /* FSL_FEATURE_SAI_HAS_FIFO_COMBINE_MODE */
+    uint8_t channelNum;
+
+#if (defined(FSL_FEATURE_SAI_HAS_FIFO_COMBINE_MODE) && (FSL_FEATURE_SAI_HAS_FIFO_COMBINE_MODE > 0U))
+    lineNum = 0;
+    u32Temp = featureConfig->sai.lineMask;
+    while (u32Temp > 0U)
+    {
+        u32Temp &= u32Temp - 1U;
+        lineNum++;
+    }
+
+    if (lineNum > 1U)
+    {
+        saiConfig->fifo.fifoCombine = kSAI_FifoCombineModeEnabledOnWrite;
+    }
+#endif /* FSL_FEATURE_SAI_HAS_FIFO_COMBINE_MODE */
+
+#if (defined(FSL_FEATURE_SAI_HAS_FIFO) && (FSL_FEATURE_SAI_HAS_FIFO > 0U))
+    if (config->fifoWatermark < (uint16_t)FSL_FEATURE_SAI_FIFO_COUNTn(s_i2sBases[config->instance]))
+    {
+        saiConfig->fifo.fifoWatermark = (uint8_t)(config->fifoWatermark & 0xFFU);
+    }
+    else
+    {
+        saiConfig->fifo.fifoWatermark = (uint8_t)FSL_FEATURE_SAI_FIFO_COUNTn(s_i2sBases[config->instance]) - 1U;
+    }
+#endif /* FSL_FEATURE_SAI_HAS_FIFO */
+
+    if ((uint8_t)config->bclkPolarity == (uint8_t)kHAL_AudioSampleOnFallingEdge)
+    {
+        saiConfig->bitClock.bclkPolarity = kSAI_SampleOnFallingEdge;
+    }
+    else
+    {
+        saiConfig->bitClock.bclkPolarity = kSAI_SampleOnRisingEdge;
+    }
+
+    channelNum = (uint8_t)config->lineChannels;
+
+    if (channelNum == (uint8_t)kHAL_AudioMono)
+    {
+        saiConfig->frameSync.frameSyncWidth = config->bitWidth >> 1U;
+        saiConfig->serialData.dataWordNum   = 1U;
+        channelNum                         = 1;
+    }
+    else if (channelNum < (uint8_t)kHAL_AudioStereo)
+    {
+        saiConfig->frameSync.frameSyncWidth  = config->bitWidth;
+        saiConfig->serialData.dataWordNum    = 2U;
+        saiConfig->serialData.dataMaskedWord = 0x1UL << channelNum;
+        channelNum                          = 2;
+    }
+    else
+    {
+        assert(config->bitWidth <= UINT8_MAX / channelNum << 1U);
+        saiConfig->frameSync.frameSyncWidth = config->bitWidth * channelNum >> 1U;
+        saiConfig->serialData.dataWordNum   = channelNum;
+    }
+
+    if ((uint8_t)featureConfig->sai.syncMode == (uint8_t)kHAL_AudioSaiModeAsync)
+    {
+        saiConfig->syncMode = kSAI_ModeAsync;
+    }
+    else
+    {
+        saiConfig->syncMode = kSAI_ModeSync;
+    }
+
+    switch (config->masterSlave)
+    {
+        case kHAL_AudioMaster:
+            saiConfig->masterSlave = kSAI_Master;
+            break;
+
+        case kHAL_AudioSlave:
+            saiConfig->masterSlave = kSAI_Slave;
+            break;
+
+        case kHAL_AudioBclkMasterFrameSyncSlave:
+            saiConfig->masterSlave = kSAI_Bclk_Master_FrameSync_Slave;
+            break;
+
+        case kHAL_AudioBclkSlaveFrameSyncMaster:
+            saiConfig->masterSlave = kSAI_Bclk_Slave_FrameSync_Master;
+            break;
+
+        default:
+            assert(false);
+            break;
+    }
+
+    switch (config->dataFormat)
+    {
+        case kHAL_AudioDataFormatI2sClassic:
+            saiConfig->frameSync.frameSyncEarly    = true;
+            saiConfig->frameSync.frameSyncPolarity = kSAI_PolarityActiveLow;
+            break;
+
+        case kHAL_AudioDataFormatLeftJustified:
+            saiConfig->frameSync.frameSyncEarly    = false;
+            saiConfig->frameSync.frameSyncPolarity = kSAI_PolarityActiveHigh;
+            break;
+
+        case kHAL_AudioDataFormatRightJustified:
+            saiConfig->frameSync.frameSyncEarly    = false;
+            saiConfig->frameSync.frameSyncPolarity = kSAI_PolarityActiveHigh;
+            break;
+
+        case kHAL_AudioDataFormatDspModeA:
+            saiConfig->frameSync.frameSyncEarly    = true;
+            saiConfig->frameSync.frameSyncPolarity = kSAI_PolarityActiveHigh;
+            if ((uint8_t)config->frameSyncWidth == (uint8_t)kHAL_AudioFrameSyncWidthOneBitClk)
+            {
+                saiConfig->frameSync.frameSyncWidth = 1;
+            }
+            else if ((uint8_t)config->frameSyncWidth == (uint8_t)kHAL_AudioFrameSyncWidthPerWordWidth)
+            {
+                saiConfig->frameSync.frameSyncWidth = config->bitWidth;
+            }
+            else
+            {
+                /* no action */
+            }
+            break;
+
+        case kHAL_AudioDataFormatDspModeB:
+            saiConfig->frameSync.frameSyncEarly    = false;
+            saiConfig->frameSync.frameSyncPolarity = kSAI_PolarityActiveHigh;
+            if ((uint8_t)config->frameSyncWidth == (uint8_t)kHAL_AudioFrameSyncWidthOneBitClk)
+            {
+                saiConfig->frameSync.frameSyncWidth = 1;
+            }
+            else if ((uint8_t)config->frameSyncWidth == (uint8_t)kHAL_AudioFrameSyncWidthPerWordWidth)
+            {
+                saiConfig->frameSync.frameSyncWidth = config->bitWidth;
+            }
+            else
+            {
+                /* no action */
+            }
+            break;
+
+        default:
+            assert(false);
+            break;
+    }
+
+    return channelNum;
+}
+
 static hal_audio_status_t HAL_AudioCommonInit(hal_audio_handle_t handle,
                                               const hal_audio_config_t *config,
                                               bool direction)
@@ -276,11 +433,6 @@ static hal_audio_status_t HAL_AudioCommonInit(hal_audio_handle_t handle,
     IRQn_Type dmaIrqNumber[][FSL_FEATURE_DMA_MODULE_CHANNEL] = DMA_CHN_IRQS;
 #else
 #endif /* FSL_FEATURE_SOC_EDMA_COUNT or FSL_FEATURE_SOC_DMA_COUNT */
-
-#if (defined(FSL_FEATURE_SAI_HAS_FIFO_COMBINE_MODE) && (FSL_FEATURE_SAI_HAS_FIFO_COMBINE_MODE > 0U))
-    uint32_t u32Temp;
-    uint8_t lineNum;
-#endif /* FSL_FEATURE_SAI_HAS_FIFO_COMBINE_MODE */
     uint8_t channelNum;
 
     assert(handle);
@@ -311,150 +463,7 @@ static hal_audio_status_t HAL_AudioCommonInit(hal_audio_handle_t handle,
     audioHandle->occupied    = 1;
 
     SAI_GetClassicI2SConfig(&saiConfig, (sai_word_width_t)config->bitWidth, kSAI_Stereo, featureConfig->sai.lineMask);
-
-#if (defined(FSL_FEATURE_SAI_HAS_FIFO_COMBINE_MODE) && (FSL_FEATURE_SAI_HAS_FIFO_COMBINE_MODE > 0U))
-    lineNum = 0;
-    u32Temp = featureConfig->sai.lineMask;
-    while (u32Temp > 0U)
-    {
-        u32Temp &= u32Temp - 1U;
-        lineNum++;
-    }
-
-    if (lineNum > 1U)
-    {
-        saiConfig.fifo.fifoCombine = kSAI_FifoCombineModeEnabledOnWrite;
-    }
-#endif /* FSL_FEATURE_SAI_HAS_FIFO_COMBINE_MODE */
-
-#if (defined(FSL_FEATURE_SAI_HAS_FIFO) && (FSL_FEATURE_SAI_HAS_FIFO > 0U))
-    if (config->fifoWatermark < (uint16_t)FSL_FEATURE_SAI_FIFO_COUNTn(s_i2sBases[audioHandle->instance]))
-    {
-        saiConfig.fifo.fifoWatermark = (uint8_t)config->fifoWatermark;
-    }
-    else
-    {
-        saiConfig.fifo.fifoWatermark = (uint8_t)FSL_FEATURE_SAI_FIFO_COUNTn(s_i2sBases[audioHandle->instance]) - 1U;
-    }
-#endif /* FSL_FEATURE_SAI_HAS_FIFO */
-
-    if ((uint8_t)config->bclkPolarity == (uint8_t)kHAL_AudioSampleOnFallingEdge)
-    {
-        saiConfig.bitClock.bclkPolarity = kSAI_SampleOnFallingEdge;
-    }
-    else
-    {
-        saiConfig.bitClock.bclkPolarity = kSAI_SampleOnRisingEdge;
-    }
-
-    channelNum = (uint8_t)config->lineChannels;
-
-    if (channelNum == (uint8_t)kHAL_AudioMono)
-    {
-        saiConfig.frameSync.frameSyncWidth = config->bitWidth >> 1U;
-        saiConfig.serialData.dataWordNum   = 1U;
-        channelNum                         = 1;
-    }
-    else if (channelNum < (uint8_t)kHAL_AudioStereo)
-    {
-        saiConfig.frameSync.frameSyncWidth  = config->bitWidth;
-        saiConfig.serialData.dataWordNum    = 2U;
-        saiConfig.serialData.dataMaskedWord = 0x1UL << channelNum;
-        channelNum                          = 2;
-    }
-    else
-    {
-        saiConfig.frameSync.frameSyncWidth = config->bitWidth * channelNum >> 1U;
-        saiConfig.serialData.dataWordNum   = channelNum;
-    }
-
-    if ((uint8_t)featureConfig->sai.syncMode == (uint8_t)kHAL_AudioSaiModeAsync)
-    {
-        saiConfig.syncMode = kSAI_ModeAsync;
-    }
-    else
-    {
-        saiConfig.syncMode = kSAI_ModeSync;
-    }
-
-    switch (config->masterSlave)
-    {
-        case kHAL_AudioMaster:
-            saiConfig.masterSlave = kSAI_Master;
-            break;
-
-        case kHAL_AudioSlave:
-            saiConfig.masterSlave = kSAI_Slave;
-            break;
-
-        case kHAL_AudioBclkMasterFrameSyncSlave:
-            saiConfig.masterSlave = kSAI_Bclk_Master_FrameSync_Slave;
-            break;
-
-        case kHAL_AudioBclkSlaveFrameSyncMaster:
-            saiConfig.masterSlave = kSAI_Bclk_Slave_FrameSync_Master;
-            break;
-
-        default:
-            assert(false);
-            break;
-    }
-
-    switch (config->dataFormat)
-    {
-        case kHAL_AudioDataFormatI2sClassic:
-            saiConfig.frameSync.frameSyncEarly    = true;
-            saiConfig.frameSync.frameSyncPolarity = kSAI_PolarityActiveLow;
-            break;
-
-        case kHAL_AudioDataFormatLeftJustified:
-            saiConfig.frameSync.frameSyncEarly    = false;
-            saiConfig.frameSync.frameSyncPolarity = kSAI_PolarityActiveHigh;
-            break;
-
-        case kHAL_AudioDataFormatRightJustified:
-            saiConfig.frameSync.frameSyncEarly    = false;
-            saiConfig.frameSync.frameSyncPolarity = kSAI_PolarityActiveHigh;
-            break;
-
-        case kHAL_AudioDataFormatDspModeA:
-            saiConfig.frameSync.frameSyncEarly    = true;
-            saiConfig.frameSync.frameSyncPolarity = kSAI_PolarityActiveHigh;
-            if ((uint8_t)config->frameSyncWidth == (uint8_t)kHAL_AudioFrameSyncWidthOneBitClk)
-            {
-                saiConfig.frameSync.frameSyncWidth = 1;
-            }
-            else if ((uint8_t)config->frameSyncWidth == (uint8_t)kHAL_AudioFrameSyncWidthPerWordWidth)
-            {
-                saiConfig.frameSync.frameSyncWidth = config->bitWidth;
-            }
-            else
-            {
-                /* no action */
-            }
-            break;
-
-        case kHAL_AudioDataFormatDspModeB:
-            saiConfig.frameSync.frameSyncEarly    = false;
-            saiConfig.frameSync.frameSyncPolarity = kSAI_PolarityActiveHigh;
-            if ((uint8_t)config->frameSyncWidth == (uint8_t)kHAL_AudioFrameSyncWidthOneBitClk)
-            {
-                saiConfig.frameSync.frameSyncWidth = 1;
-            }
-            else if ((uint8_t)config->frameSyncWidth == (uint8_t)kHAL_AudioFrameSyncWidthPerWordWidth)
-            {
-                saiConfig.frameSync.frameSyncWidth = config->bitWidth;
-            }
-            else
-            {
-                /* no action */
-            }
-            break;
-
-        default:
-            assert(false);
-            break;
-    }
+    channelNum = HAL_AudioSetSaiConfig(config, &saiConfig);
 
     if (s_i2sOccupied[audioHandle->instance] == 0U)
     {
@@ -478,6 +487,7 @@ static hal_audio_status_t HAL_AudioCommonInit(hal_audio_handle_t handle,
     s_dmaMuxOccupied[audioHandle->dmaMuxInstance]++;
 #endif /* HAL_AUDIO_DMA_INIT_ENABLE */
 
+    assert(dmaMuxConfig->dmaMuxConfig.dmaRequestSource <= INT32_MAX);
     DMAMUX_SetSource(dmaMuxBases[audioHandle->dmaMuxInstance], dmaConfig->channel,
                      (int32_t)dmaMuxConfig->dmaMuxConfig.dmaRequestSource);
 
@@ -514,7 +524,7 @@ static hal_audio_status_t HAL_AudioCommonInit(hal_audio_handle_t handle,
 #if (defined(FSL_FEATURE_EDMA_HAS_CHANNEL_MUX) && (FSL_FEATURE_EDMA_HAS_CHANNEL_MUX > 0U))
         assert(dmaConfig->dmaChannelMuxConfig);
         EDMA_SetChannelMux(dmaBases[dmaConfig->instance], dmaConfig->channel,
-                          (int32_t)((hal_audio_dma_channel_mux_config_t *)dmaConfig->dmaChannelMuxConfig)
+                          ((hal_audio_dma_channel_mux_config_t *)dmaConfig->dmaChannelMuxConfig)
                                    ->dmaChannelMuxConfig.dmaRequestSource);
 #endif /* FSL_FEATURE_EDMA_HAS_CHANNEL_MUX */
 

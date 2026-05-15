@@ -1,5 +1,5 @@
 /*
- * Copyright 2020, 2022-2024 NXP
+ * Copyright 2020, 2022-2025 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -95,13 +95,20 @@ static status_t I3C_CheckBusMasterOps(i3c_device_hw_ops_t *ops)
 
 static status_t I3C_BusMasterGetMaxReadLength(i3c_device_t *master, i3c_device_information_t *info)
 {
-    i3c_ccc_cmd_t getMRLCmd = {0};
     status_t result         = kStatus_Success;
+    i3c_ccc_cmd_t getMRLCmd = {0};
+    uint8_t *pData;
+
+    pData = malloc(3U);
+    if (pData == NULL)
+    {
+        return kStatus_I3CBus_MasterOpsFailure;
+    }
 
     getMRLCmd.isRead   = true;
     getMRLCmd.cmdId    = I3C_BUS_CCC_GETMRL;
     getMRLCmd.destAddr = info->dynamicAddr;
-    getMRLCmd.data     = malloc(3U);
+    getMRLCmd.data     = pData;
     getMRLCmd.dataSize = 3U;
 
     /*
@@ -115,15 +122,17 @@ static status_t I3C_BusMasterGetMaxReadLength(i3c_device_t *master, i3c_device_i
 
     result = I3C_BusMasterSendCCC(master, &getMRLCmd);
 
-    uint8_t *pData = getMRLCmd.data;
     if ((info->bcr & I3C_BUS_DEV_BCR_IBI_PAYLOAD_MASK) != 0U)
     {
         info->maxIBILength = pData[2];
     }
 
-    info->maxReadLength = (uint16_t)pData[0] << 8UL | (uint16_t)pData[1];
+    /* INT31-C: Unify operand types before narrowing conversion */
+    uint32_t tempReadLen = ((uint32_t)pData[0] << 8U) | (uint32_t)pData[1];
+    assert(tempReadLen <= 0xFFFFU);
+    info->maxReadLength = (uint16_t)tempReadLen;
 
-    free(getMRLCmd.data);
+    free(pData);
 
     return result;
 }
@@ -690,6 +699,7 @@ status_t I3C_BusMasterSetDynamicAddrFromStaticAddr(i3c_device_t *master, uint8_t
 status_t I3C_BusMasterSendSlavesList(i3c_device_t *masterDev)
 {
     i3c_bus_t *i3cBus = masterDev->bus;
+    uint8_t *pData;
 
     if (masterDev != i3cBus->currentMaster)
     {
@@ -709,7 +719,13 @@ status_t I3C_BusMasterSendSlavesList(i3c_device_t *masterDev)
 
     for (listItem = i2cDevList->head; listItem != NULL; listItem = listItem->next)
     {
+        /* INT30-C: Prevent unsigned integer overflow */
+        assert(devCount < UINT8_MAX);
         devCount++;
+        if (devCount > I3C_BUS_MAX_DEVS)
+        {
+            return kStatus_I3CBus_MasterOpsFailure;
+        }
     }
 
     for (listItem = i3cDevList->head; listItem != NULL; listItem = listItem->next)
@@ -721,14 +737,24 @@ status_t I3C_BusMasterSendSlavesList(i3c_device_t *masterDev)
         }
         else
         {
+            /* INT30-C: Prevent unsigned integer overflow */
+            assert(devCount < UINT8_MAX);
             devCount++;
+            if (devCount > I3C_BUS_MAX_DEVS)
+            {
+                return kStatus_I3CBus_MasterOpsFailure;
+            }
         }
     }
 
     defSlavesCmd.dataSize = (uint16_t)sizeof(i3c_ccc_dev_t) * (uint16_t)devCount + 1U;
-    defSlavesCmd.data     = malloc(defSlavesCmd.dataSize);
+    pData                 = malloc(defSlavesCmd.dataSize);
+    if (pData == NULL)
+    {
+        return kStatus_I3CBus_MasterOpsFailure;
+    }
 
-    uint8_t *pData = defSlavesCmd.data;
+    defSlavesCmd.data = pData;
 
     *pData                    = devCount;
     i3c_ccc_dev_t *masterInfo = (i3c_ccc_dev_t *)(void *)&pData[1];

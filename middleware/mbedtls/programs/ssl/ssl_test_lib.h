@@ -8,37 +8,30 @@
 #ifndef MBEDTLS_PROGRAMS_SSL_SSL_TEST_LIB_H
 #define MBEDTLS_PROGRAMS_SSL_SSL_TEST_LIB_H
 
-#include "mbedtls/version.h"
+#include "mbedtls/private/pk_private.h"
 
-#if !defined(MBEDTLS_CONFIG_FILE)
-#include "mbedtls/config.h"
-#else
-#include MBEDTLS_CONFIG_FILE
-#endif
+#include "mbedtls/build_info.h"
 
 #include "mbedtls/platform.h"
+#include "mbedtls/md.h"
 
 #undef HAVE_RNG
-#if defined(MBEDTLS_PSA_CRYPTO_EXTERNAL_RNG) &&         \
-    (defined(MBEDTLS_USE_PSA_CRYPTO) ||                \
-    defined(MBEDTLS_TEST_USE_PSA_CRYPTO_RNG))
+#if defined(MBEDTLS_PSA_CRYPTO_EXTERNAL_RNG)
 #define HAVE_RNG
 #elif defined(MBEDTLS_ENTROPY_C) && defined(MBEDTLS_CTR_DRBG_C)
 #define HAVE_RNG
 #elif defined(MBEDTLS_ENTROPY_C) && defined(MBEDTLS_HMAC_DRBG_C) &&     \
-    (defined(MBEDTLS_SHA256_C) || defined(MBEDTLS_SHA512_C))
+    (defined(PSA_WANT_ALG_SHA_256) || defined(PSA_WANT_ALG_SHA_512))
 #define HAVE_RNG
 #endif
 
 #if !defined(MBEDTLS_NET_C) ||                              \
-    !defined(MBEDTLS_SSL_TLS_C) ||                          \
-    defined(MBEDTLS_PSA_CRYPTO_KEY_ID_ENCODES_OWNER)
-#define MBEDTLS_SSL_TEST_IMPOSSIBLE                             \
-    "MBEDTLS_NET_C and/or "                                     \
-    "MBEDTLS_SSL_TLS_C not defined, "                           \
-    "and/or MBEDTLS_PSA_CRYPTO_KEY_ID_ENCODES_OWNER defined.\n"
+    !defined(MBEDTLS_SSL_TLS_C)
+#define MBEDTLS_SSL_TEST_IMPOSSIBLE                         \
+    "MBEDTLS_NET_C and/or "                                 \
+    "MBEDTLS_SSL_TLS_C not defined."
 #elif !defined(HAVE_RNG)
-#define MBEDTLS_SSL_TEST_IMPOSSIBLE             \
+#define MBEDTLS_SSL_TEST_IMPOSSIBLE                         \
     "No random generator is available.\n"
 #else
 #undef MBEDTLS_SSL_TEST_IMPOSSIBLE
@@ -51,20 +44,19 @@
 
 #include "mbedtls/net_sockets.h"
 #include "mbedtls/ssl.h"
-#include "mbedtls/entropy.h"
-#include "mbedtls/ctr_drbg.h"
-#include "mbedtls/hmac_drbg.h"
-#include "mbedtls/certs.h"
+#include "mbedtls/ssl_ciphersuites.h"
+#include "mbedtls/private/entropy.h"
+#include "mbedtls/private/ctr_drbg.h"
+#include "mbedtls/private/hmac_drbg.h"
 #include "mbedtls/x509.h"
 #include "mbedtls/error.h"
 #include "mbedtls/debug.h"
 #include "mbedtls/timing.h"
 #include "mbedtls/base64.h"
+#include "test/certs.h"
 
-#if defined(MBEDTLS_USE_PSA_CRYPTO) || defined(MBEDTLS_TEST_USE_PSA_CRYPTO_RNG)
 #include "psa/crypto.h"
 #include "mbedtls/psa_util.h"
-#endif
 
 #if defined(MBEDTLS_MEMORY_BUFFER_ALLOC_C)
 #include "mbedtls/memory_buffer_alloc.h"
@@ -72,9 +64,11 @@
 
 #include <test/helpers.h>
 
-#include "../test/query_config.h"
+#include "query_config.h"
 
-#if defined(MBEDTLS_SSL_EXPORT_KEYS)
+#define ALPN_LIST_SIZE    10
+#define GROUP_LIST_SIZE   25
+#define SIG_ALG_LIST_SIZE  5
 
 typedef struct eap_tls_keys {
     unsigned char master_secret[48];
@@ -99,8 +93,6 @@ typedef struct dtls_srtp_keys {
 
 #endif /* MBEDTLS_SSL_DTLS_SRTP */
 
-#endif /* MBEDTLS_SSL_EXPORT_KEYS */
-
 typedef struct {
     mbedtls_ssl_context *ssl;
     mbedtls_net_context *net;
@@ -114,30 +106,7 @@ void my_debug(void *ctx, int level,
 mbedtls_time_t dummy_constant_time(mbedtls_time_t *time);
 #endif
 
-#if defined(MBEDTLS_USE_PSA_CRYPTO)
-/* If MBEDTLS_TEST_USE_PSA_CRYPTO_RNG is defined, the SSL test programs will use
- * mbedtls_psa_get_random() rather than entropy+DRBG as a random generator.
- *
- * The constraints are:
- * - Without the entropy module, the PSA RNG is the only option.
- * - Without at least one of the DRBG modules, the PSA RNG is the only option.
- * - The PSA RNG does not support explicit seeding, so it is incompatible with
- *   the reproducible mode used by test programs.
- * - For good overall test coverage, there should be at least one configuration
- *   where the test programs use the PSA RNG while the PSA RNG is itself based
- *   on entropy+DRBG, and at least one configuration where the test programs
- *   do not use the PSA RNG even though it's there.
- *
- * A simple choice that meets the constraints is to use the PSA RNG whenever
- * MBEDTLS_USE_PSA_CRYPTO is enabled. There's no real technical reason the
- * choice to use the PSA RNG in the test programs and the choice to use
- * PSA crypto when TLS code needs crypto have to be tied together, but it
- * happens to be a good match. It's also a good match from an application
- * perspective: either PSA is preferred for TLS (both for crypto and for
- * random generation) or it isn't.
- */
 #define MBEDTLS_TEST_USE_PSA_CRYPTO_RNG
-#endif
 
 /** A context for random number generation (RNG).
  */
@@ -201,7 +170,71 @@ void rng_free(rng_context_t *rng);
  */
 int rng_get(void *p_rng, unsigned char *output, size_t output_len);
 
-#if defined(MBEDTLS_USE_PSA_CRYPTO) && defined(MBEDTLS_PSA_CRYPTO_EXTERNAL_RNG)
+/** Parse command-line option: key_opaque_algs
+ *
+ *
+ * \param arg           String value of key_opaque_algs
+ *                      Coma-separated pair of values among the following:
+ *                      - "rsa-sign-pkcs1"
+ *                      - "rsa-sign-pss"
+ *                      - "ecdsa-sign"
+ *                      - "ecdh"
+ *                      - "none" (only acceptable for the second value).
+ * \param alg1          Address of pointer to alg #1
+ * \param alg2          Address of pointer to alg #2
+ *
+ * \return              \c 0 on success.
+ * \return              \c 1 on parse failure.
+ */
+int key_opaque_alg_parse(const char *arg, const char **alg1, const char **alg2);
+
+/** Parse given opaque key algorithms to obtain psa algs and usage
+ *  that will be passed to mbedtls_pk_wrap_as_opaque().
+ *
+ *
+ * \param alg1          input string opaque key algorithm #1
+ * \param alg2          input string opaque key algorithm #2
+ * \param psa_alg1      output PSA algorithm #1
+ * \param psa_alg2      output PSA algorithm #2
+ * \param usage         output key usage
+ * \param key_type      key type used to set default psa algorithm/usage
+ *                      when alg1 in "none"
+ *
+ * \return              \c 0 on success.
+ * \return              \c 1 on parse failure.
+ */
+int key_opaque_set_alg_usage(const char *alg1, const char *alg2,
+                             psa_algorithm_t *psa_alg1,
+                             psa_algorithm_t *psa_alg2,
+                             psa_key_usage_t *usage,
+                             mbedtls_pk_type_t key_type);
+
+#if defined(MBEDTLS_PK_C)
+/** Turn a non-opaque PK context into an opaque one with folowing steps:
+ * - extract the key data and attributes from the PK context.
+ * - import the key material into PSA.
+ * - free the provided PK context and re-initilize it as an opaque PK context
+ *   wrapping the PSA key imported in the above step.
+ *
+ * \param[in,out] pk    On input, the non-opaque PK context which contains the
+ *                      key to be wrapped. On output, the re-initialized PK
+ *                      context which represents the opaque version of the one
+ *                      provided as input.
+ * \param[in] psa_alg   The primary algorithm that will be associated to the
+ *                      PSA key.
+ * \param[in] psa_alg2  The enrollment algorithm that will be associated to the
+ *                      PSA key.
+ * \param[in] psa_usage The PSA key usage policy.
+ * \param[out] key_id   The PSA key identifier of the imported key.
+ *
+ * \return              \c 0 on sucess.
+ * \return              \c -1 on failure.
+ */
+int pk_wrap_as_opaque(mbedtls_pk_context *pk, psa_algorithm_t psa_alg, psa_algorithm_t psa_alg2,
+                      psa_key_usage_t psa_usage, mbedtls_svc_key_id_t *key_id);
+#endif /* MBEDTLS_PK_C */
+
+#if defined(MBEDTLS_PSA_CRYPTO_EXTERNAL_RNG)
 /* The test implementation of the PSA external RNG is insecure. When
  * MBEDTLS_PSA_CRYPTO_EXTERNAL_RNG is enabled, before using any PSA crypto
  * function that makes use of an RNG, you must call
@@ -262,6 +295,9 @@ int test_hooks_failure_detected(void);
 void test_hooks_free(void);
 
 #endif /* !MBEDTLS_TEST_HOOKS */
+
+/* Helper functions for FFDH groups. */
+int parse_groups(const char *groups, uint16_t *group_list, size_t group_list_len);
 
 #endif /* MBEDTLS_SSL_TEST_IMPOSSIBLE conditions: else */
 #endif /* MBEDTLS_PROGRAMS_SSL_SSL_TEST_LIB_H */

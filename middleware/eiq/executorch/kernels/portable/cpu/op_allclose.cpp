@@ -1,6 +1,7 @@
 /*
  * Copyright (c) Meta Platforms, Inc. and affiliates.
  * All rights reserved.
+ * Copyright 2025 Arm Limited and/or its affiliates.
  *
  * This source code is licensed under the BSD-style license found in the
  * LICENSE file in the root directory of this source tree.
@@ -8,15 +9,15 @@
 
 #include <executorch/runtime/kernel/kernel_includes.h>
 #include <executorch/runtime/platform/compiler.h>
-#include <math.h>
 #include <string.h>
+#include <cmath>
 
 namespace torch {
 namespace executor {
 namespace native {
-using Tensor = exec_aten::Tensor;
-using ScalarType = exec_aten::ScalarType;
-using Scalar = exec_aten::Scalar;
+using Tensor = executorch::aten::Tensor;
+using ScalarType = executorch::aten::ScalarType;
+using Scalar = executorch::aten::Scalar;
 namespace {
 
 /**
@@ -42,7 +43,7 @@ bool data_is_close(
     } else {
       auto allowed_error = atol + fabs(rtol * b[i]);
       auto actual_error = fabs(a[i] - b[i]);
-      if (!isfinite(actual_error) || actual_error > allowed_error) {
+      if (!std::isfinite(actual_error) || actual_error > allowed_error) {
         return false;
       }
     }
@@ -81,6 +82,20 @@ bool tensors_are_close(
     return data_is_close<double>(
         a.const_data_ptr<double>(),
         b.const_data_ptr<double>(),
+        a.numel(),
+        rtol,
+        atol);
+  } else if (a.scalar_type() == ScalarType::Half) {
+    return data_is_close<Half>(
+        a.const_data_ptr<Half>(),
+        b.const_data_ptr<Half>(),
+        a.numel(),
+        rtol,
+        atol);
+  } else if (a.scalar_type() == ScalarType::BFloat16) {
+    return data_is_close<BFloat16>(
+        a.const_data_ptr<BFloat16>(),
+        b.const_data_ptr<BFloat16>(),
         a.numel(),
         rtol,
         atol);

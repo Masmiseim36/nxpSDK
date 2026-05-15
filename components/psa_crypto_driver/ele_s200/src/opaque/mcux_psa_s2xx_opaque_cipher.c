@@ -21,37 +21,37 @@
 
 static psa_status_t psa_to_s200_alg(psa_key_type_t key_type, psa_algorithm_t alg, sss_algorithm_t *ele_algo)
 {
-    switch (key_type)
-    {
+    psa_status_t status = PSA_ERROR_NOT_SUPPORTED;
+
 #if defined(PSA_WANT_KEY_TYPE_AES)
-        case PSA_KEY_TYPE_AES:
-            switch (alg)
-            {
+    if (PSA_KEY_TYPE_AES == key_type)
+    {
+        status = PSA_SUCCESS;
+        switch (alg)
+        {
 #if defined(PSA_WANT_ALG_CBC_NO_PADDING)
-                case PSA_ALG_CBC_NO_PADDING:
-                    *ele_algo = kAlgorithm_SSS_AES_CBC;
-                    break;
+            case PSA_ALG_CBC_NO_PADDING:
+                *ele_algo = kAlgorithm_SSS_AES_CBC;
+                break;
 #endif /* PSA_WANT_ALG_CBC_NO_PADDING */
 #if defined(PSA_WANT_ALG_ECB_NO_PADDING)
-                case PSA_ALG_ECB_NO_PADDING:
-                    *ele_algo = kAlgorithm_SSS_AES_ECB;
-                    break;
+            case PSA_ALG_ECB_NO_PADDING:
+                *ele_algo = kAlgorithm_SSS_AES_ECB;
+                break;
 #endif /* PSA_WANT_ALG_ECB_NO_PADDING */
 #if defined(PSA_WANT_ALG_CTR)
-                case PSA_ALG_CTR:
-                    *ele_algo = kAlgorithm_SSS_AES_CTR;
-                    break;
+            case PSA_ALG_CTR:
+                *ele_algo = kAlgorithm_SSS_AES_CTR;
+                break;
 #endif /* PSA_WANT_ALG_CTR */
-                default:
-                    return PSA_ERROR_NOT_SUPPORTED;
-            } /* operation->alg */
-            break;
-#endif        /* PSA_WANT_KEY_TYPE_AES */
-        default:
-            return PSA_ERROR_NOT_SUPPORTED;
+            default:
+                status = PSA_ERROR_NOT_SUPPORTED;
+                break;
+        }
     }
+#endif /* PSA_WANT_KEY_TYPE_AES */
 
-    return PSA_SUCCESS;
+    return status;
 }
 
 static psa_status_t ele_s2xx_cipher_arg_validation(
@@ -133,30 +133,13 @@ static psa_status_t ele_s2xx_cipher_arg_validation(
     return PSA_SUCCESS;
 }
 
-static psa_status_t key_management(const psa_key_attributes_t *attributes,
-                                   const uint8_t *key_buffer,
-                                   size_t key_buffer_size,
-                                   sss_sscp_object_t *sssKey)
-{
-    psa_status_t status = PSA_ERROR_CORRUPTION_DETECTED;
-
-    /* Validate if the key is a blob */
-    status = ele_s2xx_validate_blob_attributes(attributes, key_buffer, key_buffer_size);
-    if (PSA_SUCCESS != status)
-    {
-        return status;
-    }
-
-    /* Import the key */
-    status = ele_s2xx_import_key(attributes, key_buffer, key_buffer_size, sssKey);
-    if (PSA_SUCCESS != status)
-    {
-        return status;
-    }
-
-    return PSA_SUCCESS;
-}
-
+/** \defgroup psa_cipher_opaque PSA opaque key driver entry points for ciphers
+ *
+ *  Entry points for cipher operations as described by the PSA Cryptoprocessor
+ *  Driver interface specification with the use of opaque keys
+ *
+ *  @{
+ */
 psa_status_t ele_s2xx_opaque_cipher_encrypt(
     const psa_key_attributes_t *attributes,
     const uint8_t *key_buffer,
@@ -202,13 +185,12 @@ psa_status_t ele_s2xx_opaque_cipher_encrypt(
         return PSA_SUCCESS;
     }
 
-    if (mcux_mutex_lock(&ele_hwcrypto_mutex))
+    if (mcux_mutex_lock(&ele_hwcrypto_mutex) != 0)
     {
-        return PSA_ERROR_COMMUNICATION_FAILURE;
+        return PSA_ERROR_SERVICE_FAILURE;
     }
 
-    /* Handle key import */
-    status = key_management(attributes, key_buffer, key_buffer_size, &sssKey);
+    status = ele_s2xx_import_key(attributes, key_buffer, key_buffer_size, &sssKey);
     if (PSA_SUCCESS != status)
     {
         goto exit;
@@ -224,9 +206,11 @@ psa_status_t ele_s2xx_opaque_cipher_encrypt(
     *output_length = input_length;
 
 exit:
-    if (mcux_mutex_unlock(&ele_hwcrypto_mutex))
+    (void)ele_s2xx_delete_key(&sssKey);
+
+    if (mcux_mutex_unlock(&ele_hwcrypto_mutex) != 0)
     {
-        return PSA_ERROR_BAD_STATE;
+        return PSA_ERROR_SERVICE_FAILURE;
     }
 
     return status;
@@ -290,13 +274,12 @@ psa_status_t ele_s2xx_opaque_cipher_decrypt(
         return PSA_ERROR_BUFFER_TOO_SMALL;
     }
 
-    if (mcux_mutex_lock(&ele_hwcrypto_mutex))
+    if (mcux_mutex_lock(&ele_hwcrypto_mutex) != 0)
     {
-        return PSA_ERROR_COMMUNICATION_FAILURE;
+        return PSA_ERROR_SERVICE_FAILURE;
     }
 
-    /* Handle key import */
-    status = key_management(attributes, key_buffer, key_buffer_size, &sssKey);
+    status = ele_s2xx_import_key(attributes, key_buffer, key_buffer_size, &sssKey);
     if (PSA_SUCCESS != status)
     {
         goto exit;
@@ -312,10 +295,14 @@ psa_status_t ele_s2xx_opaque_cipher_decrypt(
     *output_length = expected_op_length;
 
 exit:
-    if (mcux_mutex_unlock(&ele_hwcrypto_mutex))
+    (void)ele_s2xx_delete_key(&sssKey);
+
+    if (mcux_mutex_unlock(&ele_hwcrypto_mutex) != 0)
     {
-        return PSA_ERROR_BAD_STATE;
+        return PSA_ERROR_SERVICE_FAILURE;
     }
 
     return status;
 }
+
+/** @} */ // end of psa_cipher_opaque

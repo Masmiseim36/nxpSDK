@@ -17,60 +17,66 @@
 #include "mcux_psa_s2xx_key_locations.h"
 #include "mcux_psa_s2xx_common_key_management.h"
 #include "mcux_psa_s2xx_common_compute.h"
+#include "mcux_psa_util_wrapcheck_static_inline.h"
 
 /* Number of valid tag lengths sizes both for CCM and GCM modes */
 #define VALID_TAG_LENGTH_SIZE 7u
 
-static psa_status_t check_generic_aead_alg(psa_algorithm_t alg, psa_key_type_t key_type, sss_algorithm_t *ele_alg)
+static psa_status_t translate_psa_aead_to_ele_aead(psa_algorithm_t alg, psa_key_type_t key_type, sss_algorithm_t *ele_alg)
 {
-    psa_algorithm_t default_alg = PSA_ALG_AEAD_WITH_DEFAULT_LENGTH_TAG(alg);
-    size_t tag_length           = PSA_ALG_AEAD_GET_TAG_LENGTH(alg);
-    size_t valid_tag_lengths[VALID_TAG_LENGTH_SIZE];
+    psa_status_t status                             = PSA_ERROR_NOT_SUPPORTED;
+    psa_algorithm_t default_alg                     = PSA_ALG_AEAD_WITH_DEFAULT_LENGTH_TAG(alg);
+    size_t tag_length                               = PSA_ALG_AEAD_GET_TAG_LENGTH(alg);
+    size_t valid_tag_lengths[VALID_TAG_LENGTH_SIZE] = {0u};
 
-    /* Only AES key type is supported, first check for that */
-    switch (key_type)
-    {
 #if defined(PSA_WANT_KEY_TYPE_AES)
-        case PSA_KEY_TYPE_AES:
-            break;
-#endif /* PSA_WANT_KEY_TYPE_AES */
-        default:
-            return PSA_ERROR_NOT_SUPPORTED;
-    }
-
-    switch (default_alg)
+    if (PSA_KEY_TYPE_AES == key_type)
     {
+        status = PSA_SUCCESS;
+        switch (default_alg)
+        {
 #if defined(PSA_WANT_ALG_CCM)
-        case PSA_ALG_CCM:
-            valid_tag_lengths[0] = 4;
-            valid_tag_lengths[1] = 6;
-            valid_tag_lengths[2] = 8;
-            valid_tag_lengths[3] = 10;
-            valid_tag_lengths[4] = 12;
-            valid_tag_lengths[5] = 14;
-            valid_tag_lengths[6] = 16;
-            *ele_alg             = kAlgorithm_SSS_AES_CCM;
-            break;
+            case PSA_ALG_CCM:
+                valid_tag_lengths[0] = 4;
+                valid_tag_lengths[1] = 6;
+                valid_tag_lengths[2] = 8;
+                valid_tag_lengths[3] = 10;
+                valid_tag_lengths[4] = 12;
+                valid_tag_lengths[5] = 14;
+                valid_tag_lengths[6] = 16;
+                *ele_alg             = kAlgorithm_SSS_AES_CCM;
+                break;
 #endif /* PSA_WANT_ALG_CCM */
 #if defined(PSA_WANT_ALG_GCM)
-        case PSA_ALG_GCM:
-            valid_tag_lengths[0] = 4;
-            valid_tag_lengths[1] = 8;
-            valid_tag_lengths[2] = 12;
-            valid_tag_lengths[3] = 13;
-            valid_tag_lengths[4] = 14;
-            valid_tag_lengths[5] = 15;
-            valid_tag_lengths[6] = 16;
-            *ele_alg             = kAlgorithm_SSS_AES_GCM;
-            break;
+            case PSA_ALG_GCM:
+                valid_tag_lengths[0] = 4;
+                valid_tag_lengths[1] = 8;
+                valid_tag_lengths[2] = 12;
+                valid_tag_lengths[3] = 13;
+                valid_tag_lengths[4] = 14;
+                valid_tag_lengths[5] = 15;
+                valid_tag_lengths[6] = 16;
+                *ele_alg             = kAlgorithm_SSS_AES_GCM;
+                break;
 #endif /* PSA_WANT_ALG_GCM */
-        default:
-            return PSA_ERROR_NOT_SUPPORTED;
+            default:
+                status = PSA_ERROR_NOT_SUPPORTED;
+                break;
+        }
+    }
+#endif /* PSA_WANT_KEY_TYPE_AES */
+
+    /* If we fail here, it means the key type or algorithm is unsupported.
+     * Else we continue to also check tag lengths.
+     */
+    if (PSA_SUCCESS != status)
+    {
+        return status;
     }
 
     /* Cycle through all valid tag lengths for CCM or GCM */
     uint32_t i;
-    for (i = 0; i < VALID_TAG_LENGTH_SIZE; i++)
+    for (i = 0u; i < VALID_TAG_LENGTH_SIZE; i++)
     {
         if (tag_length == valid_tag_lengths[i])
         {
@@ -80,34 +86,10 @@ static psa_status_t check_generic_aead_alg(psa_algorithm_t alg, psa_key_type_t k
 
     if (i == VALID_TAG_LENGTH_SIZE)
     {
-        return PSA_ERROR_INVALID_ARGUMENT;
+        status = PSA_ERROR_INVALID_ARGUMENT;
     }
 
-    return PSA_SUCCESS;
-}
-
-static psa_status_t key_management(const psa_key_attributes_t *attributes,
-                                   const uint8_t *key_buffer,
-                                   size_t key_buffer_size,
-                                   sss_sscp_object_t *sssKey)
-{
-    psa_status_t psa_status = PSA_ERROR_CORRUPTION_DETECTED;
-
-    /* Validate if the key is a blob */
-    psa_status = ele_s2xx_validate_blob_attributes(attributes, key_buffer, key_buffer_size);
-    if (PSA_SUCCESS != psa_status)
-    {
-        return psa_status;
-    }
-
-    /* Import the key */
-    psa_status = ele_s2xx_import_key(attributes, key_buffer, key_buffer_size, sssKey);
-    if (PSA_SUCCESS != psa_status)
-    {
-        return psa_status;
-    }
-
-    return PSA_SUCCESS;
+    return status;
 }
 
 static status_t ele_s2xx_aead_arg_validation(const psa_key_attributes_t *attributes,
@@ -144,6 +126,13 @@ static status_t ele_s2xx_aead_arg_validation(const psa_key_attributes_t *attribu
     return PSA_SUCCESS;
 }
 
+/** \defgroup psa_aead_opaque PSA opaque key driver entry points for AEAD
+ *
+ *  Entry points for AEAD encryption and decryption as described by the PSA
+ *  Cryptoprocessor Driver interface specification with the use of opaque keys
+ *
+ *  @{
+ */
 psa_status_t ele_s2xx_opaque_aead_encrypt(const psa_key_attributes_t *attributes,
                                           const uint8_t *key_buffer, size_t key_buffer_size,
                                           psa_algorithm_t alg,
@@ -161,7 +150,7 @@ psa_status_t ele_s2xx_opaque_aead_encrypt(const psa_key_attributes_t *attributes
     size_t tag_length        = 0u;
 
     /* Validate the algorithm first */
-    status = check_generic_aead_alg(alg, key_type, &ele_alg);
+    status = translate_psa_aead_to_ele_aead(alg, key_type, &ele_alg);
     if (PSA_SUCCESS != status)
     {
         return status;
@@ -174,16 +163,25 @@ psa_status_t ele_s2xx_opaque_aead_encrypt(const psa_key_attributes_t *attributes
         return status;
     }
 
-    /* S200 doesnt support plaintext_length 0 */
-    if (plaintext_length == 0U)
+#if !defined(ELE200_EXTENDED_FEATURES)
+    /* KW45 S200 doesn't support plaintext length 0 CCM */
+    if ((0u == plaintext_length) &&
+        (PSA_ALG_AEAD_WITH_DEFAULT_LENGTH_TAG(alg) == PSA_ALG_CCM))
     {
         return PSA_ERROR_NOT_SUPPORTED;
     }
+#endif
 
     /* Get the TAG length encoded in the algorithm */
     tag_length = PSA_ALG_AEAD_GET_TAG_LENGTH(alg);
 
     /* No check for input and additional data as 0 value for these is allowed */
+
+    /* Wrapcheck for `plaintext_length + tag_length` */
+    if (true == mcux_psa_add_size_t_wrapcheck(plaintext_length, tag_length))
+    {
+        return PSA_ERROR_INVALID_ARGUMENT;
+    }
 
     /* Output buffer has to be atleast Input buffer size  -> Check for encrypt */
     if (ciphertext_size < (plaintext_length + tag_length))
@@ -199,13 +197,12 @@ psa_status_t ele_s2xx_opaque_aead_encrypt(const psa_key_attributes_t *attributes
 
     *ciphertext_length = 0u;
 
-    if (mcux_mutex_lock(&ele_hwcrypto_mutex))
+    if (mcux_mutex_lock(&ele_hwcrypto_mutex) != 0)
     {
-        return PSA_ERROR_COMMUNICATION_FAILURE;
+        return PSA_ERROR_SERVICE_FAILURE;
     }
 
-    /* Handle key import */
-    status = key_management(attributes, key_buffer, key_buffer_size, &sssKey);
+    status = ele_s2xx_import_key(attributes, key_buffer, key_buffer_size, &sssKey);
     if (PSA_SUCCESS != status)
     {
         goto exit;
@@ -226,9 +223,11 @@ psa_status_t ele_s2xx_opaque_aead_encrypt(const psa_key_attributes_t *attributes
     *ciphertext_length = plaintext_length + tag_length;
 
 exit:
-    if (mcux_mutex_unlock(&ele_hwcrypto_mutex))
+    (void)ele_s2xx_delete_key(&sssKey);
+
+    if (mcux_mutex_unlock(&ele_hwcrypto_mutex) != 0)
     {
-        return PSA_ERROR_BAD_STATE;
+        return PSA_ERROR_SERVICE_FAILURE;
     }
 
     return status;
@@ -252,7 +251,7 @@ psa_status_t ele_s2xx_opaque_aead_decrypt(const psa_key_attributes_t *attributes
     size_t cipher_length     = 0;
 
     /* Validate the algorithm first */
-    status = check_generic_aead_alg(alg, key_type, &ele_alg);
+    status = translate_psa_aead_to_ele_aead(alg, key_type, &ele_alg);
     if (PSA_SUCCESS != status)
     {
         return status;
@@ -277,11 +276,14 @@ psa_status_t ele_s2xx_opaque_aead_decrypt(const psa_key_attributes_t *attributes
     /* ciphertext has cipher + tag */
     cipher_length = ciphertext_length - tag_length;
 
-    /* S200 doesn't support cipher_length 0 */
-    if (cipher_length == 0U)
+#if !defined(ELE200_EXTENDED_FEATURES)
+    /* KW45 S200 doesn't support cipher length 0 CCM */
+    if ((0u == cipher_length) &&
+        (PSA_ALG_AEAD_WITH_DEFAULT_LENGTH_TAG(alg) == PSA_ALG_CCM))
     {
         return PSA_ERROR_NOT_SUPPORTED;
     }
+#endif
 
     if (plaintext_size < cipher_length)
     {
@@ -298,13 +300,12 @@ psa_status_t ele_s2xx_opaque_aead_decrypt(const psa_key_attributes_t *attributes
     /* Tag is at the end of ciphertext */
     tag = (uint8_t *)(ciphertext + cipher_length);
 
-    if (mcux_mutex_lock(&ele_hwcrypto_mutex))
+    if (mcux_mutex_lock(&ele_hwcrypto_mutex) != 0)
     {
-        return PSA_ERROR_BAD_STATE;
+        return PSA_ERROR_SERVICE_FAILURE;
     }
 
-    /* Handle key import */
-    status = key_management(attributes, key_buffer, key_buffer_size, &sssKey);
+    status = ele_s2xx_import_key(attributes, key_buffer, key_buffer_size, &sssKey);
     if (PSA_SUCCESS != status)
     {
         goto exit;
@@ -324,10 +325,14 @@ psa_status_t ele_s2xx_opaque_aead_decrypt(const psa_key_attributes_t *attributes
     *plaintext_length = cipher_length;
 
 exit:
-    if (mcux_mutex_unlock(&ele_hwcrypto_mutex))
+    (void)ele_s2xx_delete_key(&sssKey);
+
+    if (mcux_mutex_unlock(&ele_hwcrypto_mutex) != 0)
     {
-        return PSA_ERROR_BAD_STATE;
+        return PSA_ERROR_SERVICE_FAILURE;
     }
 
     return status;
 }
+
+/** @} */ // end of psa_aead_opaque

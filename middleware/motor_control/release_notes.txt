@@ -1,8 +1,89 @@
 Release notes
 =============
 
-These release notes are for the motor-control middleware group of applications released together with the
-MCUXpresso SDK. The latest documentation for the motor control SDK is available on [MCUXpresso SDK for Motor Control](https://www.nxp.com/sdkmotorcontrol) web.
+Release notes for the motor-control middleware group of applications released together with the
+MCUXpresso SDK. The latest documentation for the motor control SDK examples is available on [MCUXpresso SDK for Motor Control](https://www.nxp.com/sdkmotorcontrol) web.
+
+MCUXpresso SDK 26.03.00, Motor control middleware v3.2.0
+========================================================
+
+	Tested platforms:
+	- mc_pmsm_enc: MIMXRT1186-EVK, FRDM-MCXA174, FRDM-MCXA344, FRDM-MCXA346, FRDM-MCXA366, FRDM-MCXN947, FRDM-MCXE31B
+	- mc_pmsm_servo: i.MX943-EVK, MIMXRT1186-EVK
+	- mc_pmsm_servo_dual: i.MX943-EVK, MIMXRT1186-EVK
+
+	What is new:
+	- FRDM-MCXE31B - Added position control.
+	- i.MX943-EVK - Servo examples have been updated to use the cm7_0 core instead of the cm7_1 core. 
+	  SCMI API used to access BLK_CTRL_WAKEUP registers.
+	- MAU fixed to be working on more platforms.
+
+	Known issues:
+
+MCUXpresso SDK 25.12.00, Motor control middleware v3.2.0
+========================================================
+
+	Tested platforms:
+	- mc_pmsm_enc: MIMXRT1186-EVK, FRDM-MCXA344, FRDM-MCXA346, FRDM-MCXN947
+	- mc_pmsm_servo: i.MX943-EVK, MIMXRT1186-EVK
+	- mc_pmsm_servo_dual: i.MX943-EVK, MIMXRT1186-EVK
+
+	What is new:
+	- m1_pmsm_preprocessor.h - If using the MCAT tool for control parameter calculation is not desired, the parameters can be computed using the preprocessor. 
+	  The preprocessor uses the provided motor data (resistance, inductance, number of poles, nominal speed...) and, based on the implemented algorithm, calculates the optimal control values.
+	- Control buttons in the MCAT intended to the motor parameters identification control.
+	- MCAA_EstimBJ_FLT - new mechanical parameters identification algorithm (floating-point implementation).
+	- Advanced parameters tuning of the RL estimation algorithm (please see documentation for detailed description).
+	- EnDat 3 encoder supported in the servo example on i.MX943-EVK board.
+	- EnDat 2.2 encoder via FlexIO module supported in the servo examples on MIMXRT1186-EVK board.
+
+	Known issues:
+	- FRDM-MCXA344 - The CPU clock may be incorrectly configured. A bug in the fsl_clock driver causes the clock_config.c function BOARD_BootClockFROHF180M() may fail to set the CPU clock properly.
+	- MCAT inputs are not loaded properly when MCAT page is loaded or refreshed. Please, choose appconfig manually from the dropdown list and load inputs by clicking on the "Load data" button.
+
+MCUXpresso SDK 25.09.00, Motor control middleware v3.1.0
+========================================================
+
+	Leading platforms:
+	- mc_pmsm_snsless: LPCXpresso860-MAX, LPCXpresso55S69-EVK, MC56F80000-EVK, TWR-MC55F8200, FRDM-MCXE247
+	- mc_pmsm_enc: MIMXRT1170-EVKB, MIMXRT1180-EVK, MIMXRT1186-EVK, FRDM-MCXA153, FRDM-MCXA156, FRDM-MCXA266, FRDM-MCXA344, FRDM-MCXA346, FRDM-MCXA366, FRDM-MCXN236, FRDM-MCXN947, 
+	  LPCXpresso55S36-EVK, MC56F81000-EVK, MC56F83000-EVK, TWR-MC56F8400
+	- mc_pmsm_enc_iopamp: LPCXpresso55S36-EVK
+	- mc_pmsm_enc_dual: LPCXpresso55S36-EVK
+	- mc_pmsm_servo: i.MX943-EVK
+	- mc_pmsm_servo_dual: i.MX943-EVK
+	- mc_bldc: MIMXRT1170-EVKB, LPCXpresso55S36-EVK
+
+	What is new:
+
+	Known issues:
+	
+MCUXpresso SDK 25.06.00, Motor control middleware v3.1.0
+========================================================
+
+	Leading platforms:
+	- mc_pmsm_snsless: LPCXpresso860-MAX, LPCXpresso55S69-EVK, MC56F80000-EVK, TWR-MC55F8200, FRDM-MCXE247
+	- mc_pmsm_enc: MIMXRT1170-EVKB, MIMXRT1180-EVK, FRDM-MCXA153, FRDM-MCXA156, FRDM-MCXA346, FRDM-MCXN236, FRDM-MCXN947, 
+	  LPCXpresso55S36-EVK, MC56F81000-EVK, MC56F83000-EVK, TWR-MC56F8400
+	- mc_pmsm_enc_iopamp: LPCXpresso55S36-EVK
+	- mc_pmsm_enc_dual: LPCXpresso55S36-EVK
+	- mc_pmsm_servo: i.MX943-EVK
+	- mc_pmsm_servo_dual: i.MX943-EVK
+	- mc_bldc: MIMXRT1170-EVKB, LPCXpresso55S36-EVK
+
+	What is new:
+	- Servo control loops with zero cancellation and feed-forward.
+	- MCAT adjusted for servo control loops.
+	- mc_pmsm_servo and mc_pmsm_servo_dual examples demontrating Industrial Servo (leading platform i.MX943).
+
+	Known issues:
+	- FRDM-MCXA153 - Due to CPU load issues is FCTRL[RWSC] configuration out of specification
+	- FRDM-MCXA156 - Due to CPU load issues is FCTRL[RWSC] configuration out of specification
+	- Encoder driver which uses Tracking Observer has hardcoded contstants
+	- Some newer versions of FRDM-LVPMSM motor schield is populated with different switching transistors.
+	  Therefore, increased deadtime might be needed to avoid power stage overheating.
+	- Version of motor control components is not correctly updated to v3.1.0 in CMakeLists.txt (GitHub) and SW-Content-Register.txt (MCUXpresso SDK Package) files.
+
 
 MCUXpresso SDK 24.12.00, Motor control middleware v3.0.0
 ========================================================

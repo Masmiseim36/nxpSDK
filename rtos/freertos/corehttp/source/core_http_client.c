@@ -1,6 +1,6 @@
 /*
- * coreHTTP v3.0.0
- * Copyright (C) 2022 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
+ * coreHTTP v3.1.1
+ * Copyright (C) 2024 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
  *
  * SPDX-License-Identifier: MIT
  *
@@ -42,44 +42,6 @@
  * @return This function always returns zero.
  */
 static uint32_t getZeroTimestampMs( void );
-
-/**
- * @brief Send HTTP bytes over the transport send interface.
- *
- * @param[in] pTransport Transport interface.
- * @param[in] getTimestampMs Function to retrieve a timestamp in milliseconds.
- * @param[in] pData HTTP request data to send.
- * @param[in] dataLen HTTP request data length.
- *
- * @return #HTTPSuccess if successful. If there was a network error or less
- * bytes than what were specified were sent, then #HTTPNetworkError is
- * returned.
- */
-static HTTPStatus_t sendHttpData( const TransportInterface_t * pTransport,
-                                  HTTPClient_GetCurrentTimeFunc_t getTimestampMs,
-                                  const uint8_t * pData,
-                                  size_t dataLen );
-
-/**
- * @brief Send the HTTP headers over the transport send interface.
- *
- * @param[in] pTransport Transport interface.
- * @param[in] getTimestampMs Function to retrieve a timestamp in milliseconds.
- * @param[in] pRequestHeaders Request headers to send, it includes the buffer
- * and length.
- * @param[in] reqBodyLen The length of the request body to be sent. This is
- * used to generated a Content-Length header.
- * @param[in] sendFlags Application provided flags to #HTTPClient_Send.
- *
- * @return #HTTPSuccess if successful. If there was a network error or less
- * bytes than what were specified were sent, then #HTTPNetworkError is
- * returned.
- */
-static HTTPStatus_t sendHttpHeaders( const TransportInterface_t * pTransport,
-                                     HTTPClient_GetCurrentTimeFunc_t getTimestampMs,
-                                     HTTPRequestHeaders_t * pRequestHeaders,
-                                     size_t reqBodyLen,
-                                     uint32_t sendFlags );
 
 /**
  * @brief Adds the Content-Length header field and value to the
@@ -188,21 +150,6 @@ static HTTPStatus_t getFinalResponseStatus( HTTPParsingState_t parsingState,
                                             size_t responseBufferLen );
 
 /**
- * @brief Receive the HTTP response from the network and parse it.
- *
- * @param[in] pTransport Transport interface.
- * @param[in] pResponse Response message to receive data from the network.
- * @param[in] pRequestHeaders Request headers for the corresponding HTTP request.
- *
- * @return Returns #HTTPSuccess if successful. #HTTPNetworkError for a transport
- * receive error. Please see #parseHttpResponse and #getFinalResponseStatus for
- * other statuses returned.
- */
-static HTTPStatus_t receiveAndParseHttpResponse( const TransportInterface_t * pTransport,
-                                                 HTTPResponse_t * pResponse,
-                                                 const HTTPRequestHeaders_t * pRequestHeaders );
-
-/**
  * @brief Send the HTTP request over the network.
  *
  * @param[in] pTransport Transport interface.
@@ -212,7 +159,7 @@ static HTTPStatus_t receiveAndParseHttpResponse( const TransportInterface_t * pT
  * @param[in] reqBodyBufLen Length of the request body buffer.
  * @param[in] sendFlags Application provided flags to #HTTPClient_Send.
  *
- * @return Returns #HTTPSuccess if successful. Please see #sendHttpHeaders and
+ * @return Returns #HTTPSuccess if successful. Please see #HTTPClient_SendHttpHeaders and
  * #sendHttpBody for other statuses returned.
  */
 static HTTPStatus_t sendHttpRequest( const TransportInterface_t * pTransport,
@@ -388,6 +335,16 @@ static int httpParserOnMessageBeginCallback( llhttp_t * pHttpParser );
 static int httpParserOnStatusCallback( llhttp_t * pHttpParser,
                                        const char * pLoc,
                                        size_t length );
+
+/**
+ * @brief Callback invoked during llhttp_execute() when the HTTP response
+ * status parsing is complete.
+ *
+ * @param[in] pHttpParser Parsing object containing state and callback context.
+ *
+ * @return #LLHTTP_CONTINUE_PARSING to continue parsing.
+ */
+static int httpParserOnStatusCompleteCallback( llhttp_t * pHttpParser );
 
 /**
  * @brief Callback invoked during llhttp_execute() when an HTTP response
@@ -574,7 +531,7 @@ static int8_t caseInsensitiveStringCmp( const char * str1,
                                         size_t n )
 {
     size_t i = 0U;
-    /* Inclusion of inbetween variables for MISRA rule 13.2 compliance */
+    /* Inclusion of temporary variables for MISRA rule 13.2 compliance */
     char firstChar;
     char secondChar;
     /* Get the offset from a lowercase to capital character in a MISRA compliant way */
@@ -588,12 +545,12 @@ static int8_t caseInsensitiveStringCmp( const char * str1,
         /* Subtract offset to go from lowercase to uppercase ASCII character */
         if( ( firstChar >= 'a' ) && ( firstChar <= 'z' ) )
         {
-            firstChar = firstChar - offset;
+            firstChar = ( char ) ( firstChar - offset );
         }
 
         if( ( secondChar >= 'a' ) && ( secondChar <= 'z' ) )
         {
-            secondChar = secondChar - offset;
+            secondChar = ( char ) ( secondChar - offset );
         }
 
         if( ( firstChar ) != ( secondChar ) )
@@ -693,7 +650,7 @@ static int httpParserOnStatusCallback( llhttp_t * pHttpParser,
     assert( pResponse != NULL );
 
     /* Set the location of what to parse next. */
-    pParsingContext->pBufferCur = pLoc + length;
+    pParsingContext->pBufferCur = &pLoc[ length ];
 
     /* Initialize the first header field and value to be passed to the user
      * callback. */
@@ -711,6 +668,38 @@ static int httpParserOnStatusCallback( llhttp_t * pHttpParser,
                 ( unsigned int ) pResponse->statusCode,
                 ( int ) length,
                 pLoc ) );
+
+    return LLHTTP_CONTINUE_PARSING;
+}
+
+/*-----------------------------------------------------------*/
+
+static int httpParserOnStatusCompleteCallback( llhttp_t * pHttpParser )
+{
+    HTTPParsingContext_t * pParsingContext = NULL;
+    HTTPResponse_t * pResponse = NULL;
+
+    assert( pHttpParser != NULL );
+    assert( pHttpParser->data != NULL );
+
+    pParsingContext = ( HTTPParsingContext_t * ) ( pHttpParser->data );
+    pResponse = pParsingContext->pResponse;
+
+    assert( pResponse != NULL );
+
+    /* Initialize the first header field and value to be passed to the user
+     * callback. */
+    pParsingContext->pLastHeaderField = NULL;
+    pParsingContext->lastHeaderFieldLen = 0U;
+    pParsingContext->pLastHeaderValue = NULL;
+    pParsingContext->lastHeaderValueLen = 0U;
+
+    /* httpParserOnStatusCompleteCallback() is reached because llhttp_execute()
+     * has successfully read the HTTP response status code. */
+    pResponse->statusCode = ( uint16_t ) ( pHttpParser->status_code );
+
+    LogDebug( ( "Response parsing: StatusCode=%u",
+                ( unsigned int ) pResponse->statusCode ) );
 
     return LLHTTP_CONTINUE_PARSING;
 }
@@ -741,7 +730,7 @@ static int httpParserOnHeaderFieldCallback( llhttp_t * pHttpParser,
     }
 
     /* Set the location of what to parse next. */
-    pParsingContext->pBufferCur = pLoc + length;
+    pParsingContext->pBufferCur = &pLoc[ length ];
 
     /* The httpParserOnHeaderFieldCallback() always follows the
      * httpParserOnHeaderValueCallback() if there is another header field. When
@@ -787,7 +776,7 @@ static int httpParserOnHeaderValueCallback( llhttp_t * pHttpParser,
     pParsingContext = ( HTTPParsingContext_t * ) ( pHttpParser->data );
 
     /* Set the location of what to parse next. */
-    pParsingContext->pBufferCur = pLoc + length;
+    pParsingContext->pBufferCur = &pLoc[ length ];
 
     /* If httpParserOnHeaderValueCallback() is invoked in succession, then the
      * last time llhttp_execute() was called only part of the header field
@@ -832,6 +821,9 @@ static int httpParserOnHeadersCompleteCallback( llhttp_t * pHttpParser )
 
     assert( pResponse != NULL );
     assert( pParsingContext->pBufferCur != NULL );
+
+    /* Flag indicating that the headers have been completely signed - useful for libraries built on top of corehttp. */
+    pResponse->areHeadersComplete = 1;
 
     /* The current location to parse was updated in previous callbacks and MUST
      * always be within the response buffer. */
@@ -902,6 +894,13 @@ static int httpParserOnHeadersCompleteCallback( llhttp_t * pHttpParser )
 
     LogDebug( ( "Response parsing: Found the end of the headers." ) );
 
+    /* If there is HTTP_RESPONSE_DO_NOT_PARSE_BODY_FLAG opt-in we should stop
+     * parsing here. */
+    if( ( pResponse->respOptionFlags & HTTP_RESPONSE_DO_NOT_PARSE_BODY_FLAG ) != 0U )
+    {
+        shouldContinueParse = ( int ) LLHTTP_PAUSE_PARSING;
+    }
+
     return shouldContinueParse;
 }
 
@@ -946,7 +945,7 @@ static int httpParserOnBodyCallback( llhttp_t * pHttpParser,
     /* MISRA Ref 11.8.1 [Removal of const from pointer] */
     /* More details at: https://github.com/FreeRTOS/coreHTTP/blob/main/MISRA.md#rule-118 */
     /* coverity[misra_c_2012_rule_11_8_violation] */
-    pNextWriteLoc = ( char * ) ( pResponse->pBody + pResponse->bodyLen );
+    pNextWriteLoc = ( char * ) ( &( pResponse->pBody[ pResponse->bodyLen ] ) );
 
     /* If the response is of type Transfer-Encoding: chunked, then actual body
      * will follow the the chunked header. This body data is in a later location
@@ -968,7 +967,7 @@ static int httpParserOnBodyCallback( llhttp_t * pHttpParser,
     pResponse->bodyLen += length;
 
     /* Set the next location of parsing. */
-    pParsingContext->pBufferCur = pLoc + length;
+    pParsingContext->pBufferCur = &pLoc[ length ];
 
     LogDebug( ( "Response parsing: Found the response body: "
                 "BodyLength=%lu",
@@ -1009,6 +1008,7 @@ static void initializeParsingContextForFirstResponse( HTTPParsingContext_t * pPa
     llhttp_settings_init( &( pParsingContext->llhttpSettings ) );
     pParsingContext->llhttpSettings.on_message_begin = httpParserOnMessageBeginCallback;
     pParsingContext->llhttpSettings.on_status = httpParserOnStatusCallback;
+    pParsingContext->llhttpSettings.on_status_complete = httpParserOnStatusCompleteCallback;
     pParsingContext->llhttpSettings.on_header_field = httpParserOnHeaderFieldCallback;
     pParsingContext->llhttpSettings.on_header_value = httpParserOnHeaderValueCallback;
     pParsingContext->llhttpSettings.on_headers_complete = httpParserOnHeadersCompleteCallback;
@@ -1050,6 +1050,7 @@ static HTTPStatus_t processLlhttpError( const llhttp_t * pHttpParser )
     switch( llhttp_get_errno( pHttpParser ) )
     {
         case HPE_OK:
+        case HPE_PAUSED_UPGRADE:
             /* There were no errors. */
             break;
 
@@ -1133,6 +1134,11 @@ static HTTPStatus_t processLlhttpError( const llhttp_t * pHttpParser )
             returnStatus = HTTPSecurityAlertInvalidContentLength;
             break;
 
+        case HPE_PAUSED:
+            LogInfo( ( "User intervention: Parsing stopped by user." ) );
+            returnStatus = HTTPParserPaused;
+            break;
+
         /* All other error cases cannot be triggered and indicate an error in the
          * third-party parsing library if found. */
         default:
@@ -1158,6 +1164,7 @@ static HTTPStatus_t parseHttpResponse( HTTPParsingContext_t * pParsingContext,
 {
     HTTPStatus_t returnStatus;
     const char * parsingStartLoc = NULL;
+    llhttp_errno_t eReturn;
 
     assert( pParsingContext != NULL );
     assert( pResponse != NULL );
@@ -1202,12 +1209,25 @@ static HTTPStatus_t parseHttpResponse( HTTPParsingContext_t * pParsingContext,
 
     /* This will begin the parsing. Each of the callbacks set in
      * parserSettings will be invoked as parts of the HTTP response are
-     * reached. The return code is parsed in #processLlhttpError so is not needed. */
-    ( void ) llhttp_execute( &( pParsingContext->llhttpParser ), parsingStartLoc, parseLen );
+     * reached. The return code is parsed in #processLlhttpError. */
+    eReturn = llhttp_execute( &( pParsingContext->llhttpParser ), parsingStartLoc, parseLen );
 
-    /* The next location to parse will always be after what has already
-     * been parsed. */
-    pParsingContext->pBufferCur = parsingStartLoc + parseLen;
+    if( eReturn == HPE_PAUSED_UPGRADE )
+    {
+        llhttp_resume_after_upgrade( &( pParsingContext->llhttpParser ) );
+    }
+
+    if( eReturn == HPE_PAUSED )
+    {
+        /* The next location to parse is where the parser was paused. */
+        pParsingContext->pBufferCur = pParsingContext->llhttpParser.error_pos;
+    }
+    else
+    {
+        /* The next location to parse is after what has already been parsed. */
+        pParsingContext->pBufferCur = &parsingStartLoc[ parseLen ];
+    }
+
     returnStatus = processLlhttpError( &( pParsingContext->llhttpParser ) );
 
     return returnStatus;
@@ -1229,6 +1249,7 @@ static uint8_t convertInt32ToAscii( int32_t value,
     uint8_t numOfDigits = 0U;
     uint8_t index = 0U;
     uint8_t isNegative = 0U;
+    int32_t bufferIndex;
     char temp = '\0';
 
     assert( pBuffer != NULL );
@@ -1243,7 +1264,7 @@ static uint8_t convertInt32ToAscii( int32_t value,
         *pBuffer = '-';
 
         /* Convert the value to its absolute representation. */
-        absoluteValue = value * -1;
+        absoluteValue = value * ( -1 );
     }
 
     /* Write the absolute integer value in reverse ASCII representation. */
@@ -1259,11 +1280,12 @@ static uint8_t convertInt32ToAscii( int32_t value,
     for( index = 0U; index < ( numOfDigits / 2U ); index++ )
     {
         temp = pBuffer[ isNegative + index ];
-        pBuffer[ isNegative + index ] = pBuffer[ isNegative + numOfDigits - index - 1U ];
-        pBuffer[ isNegative + numOfDigits - index - 1U ] = temp;
+        bufferIndex = ( int32_t ) isNegative + ( int32_t ) numOfDigits - ( int32_t ) index - 1;
+        pBuffer[ isNegative + index ] = pBuffer[ bufferIndex ];
+        pBuffer[ bufferIndex ] = temp;
     }
 
-    return( isNegative + numOfDigits );
+    return ( uint8_t ) ( isNegative + numOfDigits );
 }
 
 /*-----------------------------------------------------------*/
@@ -1340,18 +1362,18 @@ static HTTPStatus_t addHeader( HTTPRequestHeaders_t * pRequestHeaders,
     assert( fieldLen != 0U );
     assert( valueLen != 0U );
 
-    pBufferCur = ( char * ) ( pRequestHeaders->pBuffer + pRequestHeaders->headersLen );
+    pBufferCur = ( char * ) &( pRequestHeaders->pBuffer[ pRequestHeaders->headersLen ] );
     backtrackHeaderLen = pRequestHeaders->headersLen;
 
     /* Backtrack before trailing "\r\n" (HTTP header end) if it's already written.
      * Note that this method also writes trailing "\r\n" before returning.
      * The first condition prevents reading before start of the header. */
     if( ( HTTP_HEADER_END_INDICATOR_LEN <= pRequestHeaders->headersLen ) &&
-        ( strncmp( ( char * ) pBufferCur - HTTP_HEADER_END_INDICATOR_LEN,
+        ( strncmp( ( char * ) &pBufferCur[ 0 - ( ( int ) HTTP_HEADER_END_INDICATOR_LEN ) ],
                    HTTP_HEADER_END_INDICATOR, HTTP_HEADER_END_INDICATOR_LEN ) == 0 ) )
     {
         backtrackHeaderLen -= HTTP_HEADER_LINE_SEPARATOR_LEN;
-        pBufferCur -= HTTP_HEADER_LINE_SEPARATOR_LEN;
+        pBufferCur = &pBufferCur[ 0 - ( ( int ) HTTP_HEADER_LINE_SEPARATOR_LEN ) ];
     }
 
     /* Check if there is enough space in buffer for additional header. */
@@ -1373,14 +1395,14 @@ static HTTPStatus_t addHeader( HTTPRequestHeaders_t * pRequestHeaders,
 
         if( returnStatus == HTTPSuccess )
         {
-            pBufferCur += fieldLen;
+            pBufferCur = &pBufferCur[ fieldLen ];
 
             /* Copy the field separator, ": ", into the buffer. */
             ( void ) memcpy( pBufferCur,
                              httpFieldSeparator,
                              HTTP_HEADER_FIELD_SEPARATOR_LEN );
 
-            pBufferCur += HTTP_HEADER_FIELD_SEPARATOR_LEN;
+            pBufferCur = &pBufferCur[ HTTP_HEADER_FIELD_SEPARATOR_LEN ];
 
             /* Copy the header value into the buffer. */
             if( httpHeaderStrncpy( pBufferCur, pValue, valueLen, HTTP_HEADER_STRNCPY_IS_VALUE ) == NULL )
@@ -1391,7 +1413,7 @@ static HTTPStatus_t addHeader( HTTPRequestHeaders_t * pRequestHeaders,
 
         if( returnStatus == HTTPSuccess )
         {
-            pBufferCur += valueLen;
+            pBufferCur = &pBufferCur[ valueLen ];
 
             /* Copy the header end indicator, "\r\n\r\n" into the buffer. */
             ( void ) memcpy( pBufferCur,
@@ -1447,7 +1469,7 @@ static HTTPStatus_t addRangeHeader( HTTPRequestHeaders_t * pRequestHeaders,
 
     /* Write the range start value in the buffer. */
     rangeValueLength += convertInt32ToAscii( rangeStartOrlastNbytes,
-                                             rangeValueBuffer + rangeValueLength,
+                                             &rangeValueBuffer[ rangeValueLength ],
                                              sizeof( rangeValueBuffer ) - rangeValueLength );
 
     /* Add remaining value data depending on the range specification type. */
@@ -1456,19 +1478,19 @@ static HTTPStatus_t addRangeHeader( HTTPRequestHeaders_t * pRequestHeaders,
     if( rangeEnd != HTTP_RANGE_REQUEST_END_OF_FILE )
     {
         /* Write the "-" character to the buffer.*/
-        *( rangeValueBuffer + rangeValueLength ) = DASH_CHARACTER;
+        rangeValueBuffer[ rangeValueLength ] = DASH_CHARACTER;
         rangeValueLength += DASH_CHARACTER_LEN;
 
         /* Write the rangeEnd value of the request range to the buffer. */
         rangeValueLength += convertInt32ToAscii( rangeEnd,
-                                                 rangeValueBuffer + rangeValueLength,
+                                                 &rangeValueBuffer[ rangeValueLength ],
                                                  sizeof( rangeValueBuffer ) - rangeValueLength );
     }
     /* Case when request is for bytes in the range [rangeStart, EoF). */
     else if( rangeStartOrlastNbytes >= 0 )
     {
         /* Write the "-" character to the buffer.*/
-        *( rangeValueBuffer + rangeValueLength ) = DASH_CHARACTER;
+        rangeValueBuffer[ rangeValueLength ] = DASH_CHARACTER;
         rangeValueLength += DASH_CHARACTER_LEN;
     }
     else
@@ -1527,10 +1549,10 @@ static HTTPStatus_t writeRequestLine( HTTPRequestHeaders_t * pRequestHeaders,
     {
         /* Write "<METHOD> <PATH> HTTP/1.1\r\n" to start the HTTP header. */
         ( void ) memcpy( pBufferCur, pMethod, methodLen );
-        pBufferCur += methodLen;
+        pBufferCur = &pBufferCur[ methodLen ];
 
         *pBufferCur = SPACE_CHARACTER;
-        pBufferCur += SPACE_CHARACTER_LEN;
+        pBufferCur = &pBufferCur[ SPACE_CHARACTER_LEN ];
 
         /* Use "/" as default value if <PATH> is NULL. */
         if( ( pPath == NULL ) || ( pathLen == 0U ) )
@@ -1538,21 +1560,21 @@ static HTTPStatus_t writeRequestLine( HTTPRequestHeaders_t * pRequestHeaders,
             ( void ) memcpy( pBufferCur,
                              pHttpEmptyPath,
                              HTTP_EMPTY_PATH_LEN );
-            pBufferCur += HTTP_EMPTY_PATH_LEN;
+            pBufferCur = &pBufferCur[ HTTP_EMPTY_PATH_LEN ];
         }
         else
         {
             ( void ) memcpy( pBufferCur, pPath, pathLen );
-            pBufferCur += pathLen;
+            pBufferCur = &pBufferCur[ pathLen ];
         }
 
         *pBufferCur = SPACE_CHARACTER;
-        pBufferCur += SPACE_CHARACTER_LEN;
+        pBufferCur = &pBufferCur[ SPACE_CHARACTER_LEN ];
 
         ( void ) memcpy( pBufferCur,
                          pHttpProtocolVersion,
                          HTTP_PROTOCOL_VERSION_LEN );
-        pBufferCur += HTTP_PROTOCOL_VERSION_LEN;
+        pBufferCur = &pBufferCur[ HTTP_PROTOCOL_VERSION_LEN ];
         ( void ) memcpy( pBufferCur,
                          pHeaderLineSeparator,
                          HTTP_HEADER_LINE_SEPARATOR_LEN );
@@ -1625,12 +1647,15 @@ HTTPStatus_t HTTPClient_InitializeRequestHeaders( HTTPRequestHeaders_t * pReques
 
     if( returnStatus == HTTPSuccess )
     {
-        /* Write "User-Agent: <Value>". */
-        returnStatus = addHeader( pRequestHeaders,
-                                  HTTP_USER_AGENT_FIELD,
-                                  HTTP_USER_AGENT_FIELD_LEN,
-                                  HTTP_USER_AGENT_VALUE,
-                                  HTTP_USER_AGENT_VALUE_LEN );
+        if( ( HTTP_REQUEST_NO_USER_AGENT_FLAG & pRequestInfo->reqFlags ) == 0U )
+        {
+            /* Write "User-Agent: <Value>". */
+            returnStatus = addHeader( pRequestHeaders,
+                                      HTTP_USER_AGENT_FIELD,
+                                      HTTP_USER_AGENT_FIELD_LEN,
+                                      HTTP_USER_AGENT_VALUE,
+                                      HTTP_USER_AGENT_VALUE_LEN );
+        }
     }
 
     if( returnStatus == HTTPSuccess )
@@ -1786,10 +1811,10 @@ HTTPStatus_t HTTPClient_AddRangeHeader( HTTPRequestHeaders_t * pRequestHeaders,
 
 /*-----------------------------------------------------------*/
 
-static HTTPStatus_t sendHttpData( const TransportInterface_t * pTransport,
-                                  HTTPClient_GetCurrentTimeFunc_t getTimestampMs,
-                                  const uint8_t * pData,
-                                  size_t dataLen )
+HTTPStatus_t HTTPClient_SendHttpData( const TransportInterface_t * pTransport,
+                                      HTTPClient_GetCurrentTimeFunc_t getTimestampMs,
+                                      const uint8_t * pData,
+                                      size_t dataLen )
 {
     HTTPStatus_t returnStatus = HTTPSuccess;
     const uint8_t * pIndex = pData;
@@ -1839,7 +1864,7 @@ static HTTPStatus_t sendHttpData( const TransportInterface_t * pTransport,
             lastSendTimeMs = getTimestampMs();
 
             bytesRemaining -= ( size_t ) bytesSent;
-            pIndex += bytesSent;
+            pIndex = &pIndex[ bytesSent ];
             LogDebug( ( "Sent data over the transport: "
                         "BytesSent=%ld, BytesRemaining=%lu, TotalBytesSent=%lu",
                         ( long int ) bytesSent,
@@ -1898,11 +1923,11 @@ static HTTPStatus_t addContentLengthHeader( HTTPRequestHeaders_t * pRequestHeade
 
 /*-----------------------------------------------------------*/
 
-static HTTPStatus_t sendHttpHeaders( const TransportInterface_t * pTransport,
-                                     HTTPClient_GetCurrentTimeFunc_t getTimestampMs,
-                                     HTTPRequestHeaders_t * pRequestHeaders,
-                                     size_t reqBodyLen,
-                                     uint32_t sendFlags )
+HTTPStatus_t HTTPClient_SendHttpHeaders( const TransportInterface_t * pTransport,
+                                         HTTPClient_GetCurrentTimeFunc_t getTimestampMs,
+                                         HTTPRequestHeaders_t * pRequestHeaders,
+                                         size_t reqBodyLen,
+                                         uint32_t sendFlags )
 {
     HTTPStatus_t returnStatus = HTTPSuccess;
     uint8_t shouldSendContentLength = 0U;
@@ -1925,10 +1950,10 @@ static HTTPStatus_t sendHttpHeaders( const TransportInterface_t * pTransport,
     {
         LogDebug( ( "Sending HTTP request headers: HeaderBytes=%lu",
                     ( unsigned long ) ( pRequestHeaders->headersLen ) ) );
-        returnStatus = sendHttpData( pTransport,
-                                     getTimestampMs,
-                                     pRequestHeaders->pBuffer,
-                                     pRequestHeaders->headersLen );
+        returnStatus = HTTPClient_SendHttpData( pTransport,
+                                                getTimestampMs,
+                                                pRequestHeaders->pBuffer,
+                                                pRequestHeaders->headersLen );
     }
 
     return returnStatus;
@@ -1950,7 +1975,7 @@ static HTTPStatus_t sendHttpBody( const TransportInterface_t * pTransport,
     /* Send the request body. */
     LogDebug( ( "Sending the HTTP request body: BodyBytes=%lu",
                 ( unsigned long ) reqBodyBufLen ) );
-    returnStatus = sendHttpData( pTransport, getTimestampMs, pRequestBodyBuf, reqBodyBufLen );
+    returnStatus = HTTPClient_SendHttpData( pTransport, getTimestampMs, pRequestBodyBuf, reqBodyBufLen );
 
     return returnStatus;
 }
@@ -2002,9 +2027,9 @@ static HTTPStatus_t getFinalResponseStatus( HTTPParsingState_t parsingState,
 
 /*-----------------------------------------------------------*/
 
-static HTTPStatus_t receiveAndParseHttpResponse( const TransportInterface_t * pTransport,
-                                                 HTTPResponse_t * pResponse,
-                                                 const HTTPRequestHeaders_t * pRequestHeaders )
+HTTPStatus_t HTTPClient_ReceiveAndParseHttpResponse( const TransportInterface_t * pTransport,
+                                                     HTTPResponse_t * pResponse,
+                                                     const HTTPRequestHeaders_t * pRequestHeaders )
 {
     HTTPStatus_t returnStatus = HTTPSuccess;
     size_t totalReceived = 0U;
@@ -2038,7 +2063,7 @@ static HTTPStatus_t receiveAndParseHttpResponse( const TransportInterface_t * pT
     {
         /* Receive the HTTP response data into the pResponse->pBuffer. */
         currentReceived = pTransport->recv( pTransport->pNetworkContext,
-                                            pResponse->pBuffer + totalReceived,
+                                            &( pResponse->pBuffer[ totalReceived ] ),
                                             pResponse->bufferLen - totalReceived );
 
         /* Transport receive errors are negative. */
@@ -2106,6 +2131,21 @@ static HTTPStatus_t receiveAndParseHttpResponse( const TransportInterface_t * pT
                        ( totalReceived < pResponse->bufferLen ) ) ? 1U : 0U;
     }
 
+    if( ( returnStatus == HTTPParserPaused ) &&
+        ( ( pResponse->respOptionFlags & HTTP_RESPONSE_DO_NOT_PARSE_BODY_FLAG ) != 0U ) )
+    {
+        returnStatus = HTTPSuccess;
+
+        /* There may be dangling data if we parse with do not parse body flag.
+         * We expose this data through body to let the applications access it. */
+        pResponse->pBody = ( const uint8_t * ) parsingContext.pBufferCur;
+
+        /* MISRA Ref 11.4.1 [Casting pointer to int] */
+        /* More details at: https://github.com/FreeRTOS/coreHTTP/blob/main/MISRA.md#rule-114 */
+        /* coverity[misra_c_2012_rule_11_4_violation] */
+        pResponse->bodyLen = totalReceived - ( size_t ) ( ( ( uintptr_t ) pResponse->pBody ) - ( ( uintptr_t ) pResponse->pBuffer ) );
+    }
+
     if( returnStatus == HTTPSuccess )
     {
         /* If there are errors in receiving from the network or during parsing,
@@ -2137,11 +2177,11 @@ static HTTPStatus_t sendHttpRequest( const TransportInterface_t * pTransport,
     assert( getTimestampMs != NULL );
 
     /* Send the headers, which are at one location in memory. */
-    returnStatus = sendHttpHeaders( pTransport,
-                                    getTimestampMs,
-                                    pRequestHeaders,
-                                    reqBodyBufLen,
-                                    sendFlags );
+    returnStatus = HTTPClient_SendHttpHeaders( pTransport,
+                                               getTimestampMs,
+                                               pRequestHeaders,
+                                               reqBodyBufLen,
+                                               sendFlags );
 
     /* Send the body, which is at another location in memory. */
     if( returnStatus == HTTPSuccess )
@@ -2257,9 +2297,9 @@ HTTPStatus_t HTTPClient_Send( const TransportInterface_t * pTransport,
 
     if( returnStatus == HTTPSuccess )
     {
-        returnStatus = receiveAndParseHttpResponse( pTransport,
-                                                    pResponse,
-                                                    pRequestHeaders );
+        returnStatus = HTTPClient_ReceiveAndParseHttpResponse( pTransport,
+                                                               pResponse,
+                                                               pRequestHeaders );
     }
 
     return returnStatus;
@@ -2625,6 +2665,10 @@ const char * HTTPClient_strerror( HTTPStatus_t status )
 
         case HTTPSecurityAlertInvalidContentLength:
             str = "HTTPSecurityAlertInvalidContentLength";
+            break;
+
+        case HTTPParserPaused:
+            str = "HTTPParserPaused";
             break;
 
         case HTTPParserInternalError:

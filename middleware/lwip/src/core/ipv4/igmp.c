@@ -94,6 +94,7 @@ Steve Reynolds
 #include "lwip/netif.h"
 #include "lwip/stats.h"
 #include "lwip/prot/igmp.h"
+#include "lwip/timeouts.h"
 
 #include <string.h>
 
@@ -107,6 +108,11 @@ static void   igmp_send(struct netif *netif, struct igmp_group *group, u8_t type
 
 static ip4_addr_t     allsystems;
 static ip4_addr_t     allrouters;
+
+#if LWIP_IGMP_TIMERS_ONDEMAND
+#include <stdbool.h>
+static bool is_tmr_start = false;
+#endif
 
 /**
  * Initialize the IGMP module
@@ -638,6 +644,17 @@ igmp_leavegroup_netif(struct netif *netif, const ip4_addr_t *groupaddr)
   }
 }
 
+#if LWIP_IGMP_TIMERS_ONDEMAND
+/**
+ * Wrapper function with matching prototype which calls the actual callback
+ */
+static void igmp_timeout_cb(void *arg)
+{
+  LWIP_UNUSED_ARG(arg);
+
+  igmp_tmr();
+}
+#endif
 /**
  * The igmp timer function (both for NO_SYS=1 and =0)
  * Should be called every IGMP_TMR_INTERVAL milliseconds (100 ms is default).
@@ -646,6 +663,9 @@ void
 igmp_tmr(void)
 {
   struct netif *netif;
+#if LWIP_IGMP_TIMERS_ONDEMAND
+  bool tmr_restart = false;
+#endif
 
   NETIF_FOREACH(netif) {
     struct igmp_group *group = netif_igmp_data(netif);
@@ -656,10 +676,23 @@ igmp_tmr(void)
         if (group->timer == 0) {
           igmp_timeout(netif, group);
         }
+#if LWIP_IGMP_TIMERS_ONDEMAND
+        else {
+          tmr_restart = true;
+        }
+#endif
       }
       group = group->next;
     }
   }
+#if LWIP_IGMP_TIMERS_ONDEMAND
+  if (tmr_restart) {
+    sys_timeout(IGMP_TMR_INTERVAL, igmp_timeout_cb, NULL);
+  } else {
+    sys_untimeout(igmp_timeout_cb, NULL);
+    is_tmr_start = false;
+  }
+#endif
 }
 
 /**
@@ -706,6 +739,12 @@ igmp_start_timer(struct igmp_group *group, u8_t max_time)
   if (group->timer == 0) {
     group->timer = 1;
   }
+#if LWIP_IGMP_TIMERS_ONDEMAND
+  if (!is_tmr_start) {
+    sys_timeout(IGMP_TMR_INTERVAL, igmp_timeout_cb, NULL);
+    is_tmr_start = true;
+  }
+#endif
 }
 
 /**

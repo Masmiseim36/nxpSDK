@@ -34,7 +34,7 @@ extern "C" {
 /*******************************************************************************
 * Macros 
 *******************************************************************************/
-#define GFLIB_SqrtMAU_FLT_Ci(fltVal) GFLIB_SqrtMAU_FLT_FCi(fltVal)
+#define GFLIB_SqrtMAU_FLT_Ci(fltVal, u8ResReg) GFLIB_SqrtMAU_FLT_FCi(fltVal, u8ResReg)
     
 /****************************************************************************
 * Inline functions 
@@ -53,7 +53,7 @@ extern "C" {
 *           the function returns zero value.
 *
 ****************************************************************************/  
-static inline float_t GFLIB_SqrtMAU_FLT_FCi(register float_t fltVal)
+static inline float_t GFLIB_SqrtMAU_FLT_FCi(register float_t fltVal, register uint8_t u8ResReg)
 {
     register uint32_t addr;
 
@@ -64,7 +64,7 @@ static inline float_t GFLIB_SqrtMAU_FLT_FCi(register float_t fltVal)
         #pragma GCC diagnostic ignored "-Wstrict-aliasing"
         #endif
       
-        addr = RTCESL_MAU_IND_ADDR((uint32_t)RTCESL_MAU_BASE_PTR, RTCESL_MAU_DT_FLOAT, 3, RTCESL_MAU_MOPC_SQRT);
+        addr = RTCESL_MAU_IND_ADDR((uint32_t)RTCESL_MAU_BASE_PTR, RTCESL_MAU_DT_FLOAT, u8ResReg, RTCESL_MAU_MOPC_SQRT);
         RTCESL_MAU_REG_FLOAT(addr) = fltVal;
         fltVal = RTCESL_MAU_REG_FLOAT((uint32_t)(RTCESL_MAU_RES3_ADDR));       
         

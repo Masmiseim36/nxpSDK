@@ -140,6 +140,7 @@ void FMSTR_SetCanCmdID(FMSTR_U32 canID);
 void FMSTR_SetCanRespID(FMSTR_U32 canID);
 void FMSTR_ProcessCanRx(void);
 void FMSTR_ProcessCanTx(void);
+void FMSTR_AbortCanTx(void);
 
 #ifdef FMSTR_CAN_DRV
 extern const FMSTR_CAN_DRV_INTF FMSTR_CAN_DRV;

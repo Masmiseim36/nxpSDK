@@ -109,7 +109,6 @@ extern "C" {
 #define GFLIB_LutPer1D_FLT(fltX, pfltTable, psParam)                  GFLIB_LutPer1D_FLT_C(fltX, pfltTable, psParam)
 #define GFLIB_Sin_FLT(fltAngle)                                       GFLIB_Sin_FLT_C(fltAngle)
 #define GFLIB_Sin_FLTa(a32AngleExt)                                   GFLIB_Sin_FLTa_C(a32AngleExt)
-#define GFLIB_SinCos_FLTa(a32AngleExt, fltSinCos)                     GFLIB_SinCos_FLTa_Ci(a32AngleExt, fltSinCos)
 #define GFLIB_Tan_FLT(fltAngle)                                       GFLIB_Tan_FLT_C(fltAngle)
 #define GFLIB_Tan_FLTa(a32AngleExt)                                   GFLIB_Tan_FLTa_C(a32AngleExt)
 #define GFLIB_VectorLimit1_FLT(psVectorIn, fltLim, psVectorOut)       GFLIB_VectorLimit1_FLT_C(psVectorIn, fltLim, psVectorOut)

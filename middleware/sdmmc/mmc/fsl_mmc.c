@@ -2412,7 +2412,7 @@ status_t MMC_ReadBlocks(mmc_card_t *card, uint8_t *buffer, uint32_t startBlock, 
         while (blockLeft != 0U)
         {
             nextBuffer = (uint8_t *)((uint32_t)buffer + blockDone * FSL_SDMMC_DEFAULT_BLOCK_SIZE);
-            if (!card->noInteralAlign && (!dataAddrAlign || ((((uint32_t)nextBuffer) & (sizeof(uint32_t) - 1U)) != 0U)))
+            if (!card->noInteralAlign && (!dataAddrAlign || ((((uint32_t)nextBuffer) & (SDMMC_DATA_BUFFER_ALIGN_CACHE - 1U)) != 0U)))
             {
                 blockLeft--;
                 blockCountOneTime = 1U;
@@ -2484,7 +2484,7 @@ status_t MMC_WriteBlocks(mmc_card_t *card, const uint8_t *buffer, uint32_t start
         while (blockLeft != 0U)
         {
             nextBuffer = (uint8_t *)((uint32_t)buffer + blockDone * FSL_SDMMC_DEFAULT_BLOCK_SIZE);
-            if (!card->noInteralAlign && (!dataAddrAlign || (0U != (((uint32_t)nextBuffer) & (sizeof(uint32_t) - 1U)))))
+            if (!card->noInteralAlign && (!dataAddrAlign || (0U != (((uint32_t)nextBuffer) & (SDMMC_DATA_BUFFER_ALIGN_CACHE - 1U)))))
             {
                 blockLeft--;
                 blockCountOneTime = 1U;

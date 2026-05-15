@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ksdk:examples xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd manifest.xsd">
+  <externalDefinitions>
+    <definition extID="cm7_MIMXRT1186xxxxx"/>
+    <definition extID="platform.drivers.pmu_1.MIMXRT1186"/>
+    <definition extID="platform.drivers.clock.MIMXRT1186"/>
+    <definition extID="platform.drivers.dcdc_soc.MIMXRT1186"/>
+    <definition extID="platform.drivers.ele_base_api.MIMXRT1186"/>
+    <definition extID="platform.drivers.gpc_3.MIMXRT1186"/>
+    <definition extID="platform.drivers.iomuxc.MIMXRT1186"/>
+    <definition extID="platform.drivers.memory.MIMXRT1186"/>
+    <definition extID="platform.drivers.misc.MIMXRT1186"/>
+    <definition extID="platform.drivers.soc_src.MIMXRT1186"/>
+    <definition extID="CMSIS_Include_core_cm.MIMXRT1186"/>
+    <definition extID="device.MIMXRT1186_CMSIS.MIMXRT1186"/>
+    <definition extID="device.MIMXRT1186_system.MIMXRT1186"/>
+    <definition extID="device.MIMXRT1186_startup.MIMXRT1186"/>
+    <definition extID="platform.drivers.cache_armv7_m7.MIMXRT1186"/>
+    <definition extID="platform.drivers.common.MIMXRT1186"/>
+    <definition extID="platform.drivers.lpuart.MIMXRT1186"/>
+    <definition extID="platform.drivers.rgpio.MIMXRT1186"/>
+    <definition extID="platform.drivers.s3mu.MIMXRT1186"/>
+    <definition extID="platform.drivers.trdc.MIMXRT1186"/>
+    <definition extID="platform.utilities.assert_lite.MIMXRT1186"/>
+    <definition extID="platform.utilities.misc_utilities.MIMXRT1186"/>
+    <definition extID="utility.str.MIMXRT1186"/>
+    <definition extID="component.silicon_id.MIMXRT1186"/>
+    <definition extID="component.silicon_id_imxrt1180.MIMXRT1186"/>
+    <definition extID="utility.debug_console_lite.MIMXRT1186"/>
+    <definition extID="component.lpuart_adapter.MIMXRT1186"/>
+    <definition extID="component.ele_crypto.MIMXRT1186"/>
+    <definition extID="component.ele_nvm_manager.MIMXRT1186"/>
+    <definition extID="iar"/>
+    <definition extID="mdk"/>
+    <definition extID="mcuxpresso"/>
+    <definition extID="com.nxp.mcuxpresso"/>
+    <definition extID="com.crt.advproject.config.exe.debug"/>
+    <definition extID="com.crt.advproject.config.exe.release"/>
+    <definition extID="com.nxp.mcuxpresso.core.debug.support.segger.debug"/>
+    <definition extID="com.nxp.mcuxpresso.core.debug.support.segger.release"/>
+  </externalDefinitions>
+  <example id="frdmimxrt1186_ele_crypto_nvm_generic_cm7" name="ele_crypto_nvm_generic_cm7" device_core="cm7_MIMXRT1186xxxxx" dependency="platform.drivers.pmu_1.MIMXRT1186 platform.drivers.clock.MIMXRT1186 platform.drivers.dcdc_soc.MIMXRT1186 platform.drivers.ele_base_api.MIMXRT1186 platform.drivers.gpc_3.MIMXRT1186 platform.drivers.iomuxc.MIMXRT1186 platform.drivers.memory.MIMXRT1186 platform.drivers.misc.MIMXRT1186 platform.drivers.soc_src.MIMXRT1186 CMSIS_Include_core_cm.MIMXRT1186 device.MIMXRT1186_CMSIS.MIMXRT1186 device.MIMXRT1186_system.MIMXRT1186 device.MIMXRT1186_startup.MIMXRT1186 platform.drivers.cache_armv7_m7.MIMXRT1186 platform.drivers.common.MIMXRT1186 platform.drivers.lpuart.MIMXRT1186 platform.drivers.rgpio.MIMXRT1186 platform.drivers.s3mu.MIMXRT1186 platform.drivers.trdc.MIMXRT1186 platform.utilities.assert_lite.MIMXRT1186 platform.utilities.misc_utilities.MIMXRT1186 utility.str.MIMXRT1186 component.silicon_id.MIMXRT1186 component.silicon_id_imxrt1180.MIMXRT1186 utility.debug_console_lite.MIMXRT1186 component.lpuart_adapter.MIMXRT1186 component.ele_crypto.MIMXRT1186 component.ele_nvm_manager.MIMXRT1186" category="ele_crypto">
+    <projects>
+      <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
+    </projects>
+    <memory>
+      <memoryBlock id="BOARD_FLASH_frdmimxrt1186" name="BOARD_FLASH" addr="04800000" size="00800000" type="ExtFlash" access="RO"/>
+      <memoryBlock id="SRAM_ITC_cm7_frdmimxrt1186" name="SRAM_ITC_cm7" addr="00000000" size="00040000" type="RAM" access="RW"/>
+      <memoryBlock id="SRAM_DTC_cm7_frdmimxrt1186" name="SRAM_DTC_cm7" addr="20000000" size="00040000" type="RAM" access="RW"/>
+      <memoryBlock id="SRAM_OC1_1H_frdmimxrt1186" name="SRAM_OC1_1H" addr="20484000" size="0003C000" type="RAM" access="RW"/>
+      <memoryBlock id="NCACHE_REGION_frdmimxrt1186" name="NCACHE_REGION" addr="204C0000" size="00040000" type="RAM" access="RW"/>
+      <memoryBlock id="SHMEM_REGION_frdmimxrt1186" name="SHMEM_REGION" addr="20500000" size="00040000" type="RAM" access="RW"/>
+      <memoryBlock id="BOARD_SDRAM_frdmimxrt1186" name="BOARD_SDRAM" addr="80000000" size="02000000" type="RAM" access="RW"/>
+      <memoryBlock id="BOARD_HYPERRAM_frdmimxrt1186" name="BOARD_HYPERRAM" addr="28000000" size="00800000" type="RAM" access="RW"/>
+    </memory>
+    <toolchainSettings>
+      <toolchainSetting id_refs="com.nxp.mcuxpresso">
+        <option id="gnu.c.compiler.option.preprocessor.def.symbols" type="stringList">
+          <value>MCUXPRESSO_SDK</value>
+          <value>SDK_DEBUGCONSOLE=1</value>
+          <value>MCUX_META_BUILD</value>
+          <value>CPU_MIMXRT1186CVJ8C_cm7</value>
+          <value>MIMXRT1186_cm7_SERIES</value>
+          <value>CACHE_MODE_WRITE_THROUGH=1</value>
+        </option>
+        <option id="com.crt.advproject.link.toram" type="boolean">
+          <value>true</value>
+        </option>
+        <option id="com.crt.advproject.link.memory.sections" type="stringList">
+          <value>isd=*(CodeQuickAccess);region=SRAM_ITC_cm7;type=.data</value>
+          <value>isd=*(DataQuickAccess);region=SRAM_DTC_cm7;type=.data</value>
+          <value>isd=*(.data*);region=SRAM_DTC_cm7;type=.data</value>
+          <value>isd=*(.bss*);region=SRAM_DTC_cm7;type=.bss</value>
+          <value>isd=*(.noinit.$rpmsg_sh_mem);region=SHMEM_REGION;type=.noinit</value>
+          <value>isd=*(NonCacheable.init);region=NCACHE_REGION;type=.data</value>
+          <value>isd=*(NonCacheable);region=NCACHE_REGION;type=.bss</value>
+        </option>
+        <option id="com.crt.advproject.link.fpu" type="enum">
+          <value>com.crt.advproject.link.fpu.fpv5dp.hard</value>
+        </option>
+        <option id="gnu.c.link.option.nostdlibs" type="boolean">
+          <value>true</value>
+        </option>
+        <option id="com.crt.advproject.link.memory.heapAndStack" type="string">
+          <value>&amp;Heap:SRAM_OC1_1H;Start;0x1000&amp;Stack:SRAM_DTC_cm7;End;0x1000</value>
+        </option>
+        <option id="gnu.c.link.option.other" type="stringList">
+          <value>-no-warn-rwx-segments</value>
+        </option>
+        <option id="gnu.c.link.option.group" type="boolean">
+          <value>true</value>
+        </option>
+        <option id="com.crt.advproject.gas.fpu" type="enum">
+          <value>com.crt.advproject.gas.fpu.fpv5dp.hard</value>
+        </option>
+        <option id="com.crt.advproject.gcc.fpu" type="enum">
+          <value>com.crt.advproject.gcc.fpu.fpv5dp.hard</value>
+        </option>
+        <option id="gnu.c.compiler.option.optimization.flags" type="string">
+          <value>-fno-common</value>
+        </option>
+        <option id="com.crt.advproject.c.misc.dialect" type="enum">
+          <value>com.crt.advproject.misc.dialect.gnu99</value>
+        </option>
+        <option id="gnu.c.compiler.option.misc.other" type="string">
+          <value>-mthumb -c -ffunction-sections -fdata-sections -fno-builtin</value>
+        </option>
+        <option id="gnu.c.compiler.option.warnings.allwarn" type="boolean">
+          <value>false</value>
+        </option>
+        <option id="gnu.c.compiler.option.warnings.toerrors" type="boolean">
+          <value>false</value>
+        </option>
+      </toolchainSetting>
+    </toolchainSettings>
+    <debug_configurations>
+      <debug_configuration id_refs="com.crt.advproject.config.exe.debug com.crt.advproject.config.exe.release">
+        <drivers>
+          <driver id_refs="BOARD_FLASH_frdmimxrt1186">
+            <driverBinary path="../../../../../devices/MIMXRT1189/mcuxpresso" project_relative_path="binary" type="binary">
+              <files mask="MIMXRT1180_SFDP_FlexSPI2_PriGr_A_QSPI.cfx"/>
+            </driverBinary>
+          </driver>
+        </drivers>
+      </debug_configuration>
+      <debug_configuration id_refs="com.nxp.mcuxpresso.core.debug.support.segger.debug com.nxp.mcuxpresso.core.debug.support.segger.release">
+        <scripts>
+          <script type="segger_script">
+            <source path="." project_relative_path="script" type="script">
+              <files mask="frdmimxrt1186_cm7.jlinkscript"/>
+            </source>
+          </script>
+        </scripts>
+      </debug_configuration>
+    </debug_configurations>
+    <include_paths>
+      <include_path path="." project_relative_path="source" type="c_include"/>
+      <include_path path="." project_relative_path="board" type="c_include"/>
+      <include_path path="." project_relative_path="source" type="asm_include"/>
+    </include_paths>
+    <source path="iar" project_relative_path="./" type="workspace" toolchain="iar">
+      <files mask="ele_crypto_nvm_generic_cm7.ewp"/>
+      <files mask="ele_crypto_nvm_generic_cm7.ewd"/>
+      <files mask="ele_crypto_nvm_generic_cm7.eww"/>
+    </source>
+    <source path="mdk" project_relative_path="./" type="workspace" toolchain="mdk">
+      <files mask="ele_crypto_nvm_generic_cm7.uvprojx"/>
+      <files mask="ele_crypto_nvm_generic_cm7.uvoptx"/>
+      <files mask="ele_crypto_nvm_generic_cm7.uvmpw"/>
+    </source>
+    <source path="." project_relative_path="source" type="other" toolchain="iar">
+      <files mask="frdmimxrt1186.mac"/>
+    </source>
+    <source path="." project_relative_path="source" type="configuration" toolchain="mdk">
+      <files mask="frdmimxrt1186_ram_cm7.ini"/>
+      <files mask="frdmimxrt1186_flexspi_nor_cm7.ini"/>
+    </source>
+    <source path="." project_relative_path="source" type="src">
+      <files mask="ele_crypto_nvm_generic.c"/>
+    </source>
+    <source path="." project_relative_path="source" type="c_include">
+      <files mask="ele_fw.h"/>
+    </source>
+    <source path="." project_relative_path="board" type="c_include">
+      <files mask="board.h"/>
+    </source>
+    <source path="." project_relative_path="board" type="src">
+      <files mask="board.c"/>
+    </source>
+    <source path="iar" project_relative_path="MIMXRT1186/iar" type="linker" toolchain="iar">
+      <files mask="MIMXRT1186xxxxx_cm7_ram.icf"/>
+      <files mask="MIMXRT1186xxxxx_cm7_flexspi_nor.icf"/>
+      <files mask="MIMXRT1186xxxxx_cm7_hyperram.icf"/>
+    </source>
+    <source path="mdk" project_relative_path="MIMXRT1186/mdk" type="linker" toolchain="mdk">
+      <files mask="MIMXRT1186xxxxx_cm7_ram.scf"/>
+      <files mask="MIMXRT1186xxxxx_cm7_flexspi_nor.scf"/>
+      <files mask="MIMXRT1186xxxxx_cm7_hyperram.scf"/>
+    </source>
+    <source path="." project_relative_path="board" type="c_include">
+      <files mask="clock_config.h"/>
+    </source>
+    <source path="." project_relative_path="board" type="src">
+      <files mask="clock_config.c"/>
+    </source>
+    <source path="." project_relative_path="board" type="c_include">
+      <files mask="pin_mux.h"/>
+    </source>
+    <source path="." project_relative_path="board" type="src">
+      <files mask="pin_mux.c"/>
+    </source>
+    <source path="." project_relative_path="board" type="src">
+      <files mask="hardware_init.c"/>
+    </source>
+    <source path="." project_relative_path="board" type="c_include">
+      <files mask="app.h"/>
+    </source>
+    <source path="." project_relative_path="source" type="c_preinclude">
+      <files mask="mcux_config.h"/>
+      <files mask="mcuxsdk_version.h"/>
+    </source>
+    <source path="." project_relative_path="doc" type="doc">
+      <files mask="readme.md"/>
+    </source>
+    <source path="." project_relative_path="doc" type="doc">
+      <files mask="example_board_readme.md"/>
+    </source>
+    <source path="." project_relative_path="doc" type="doc">
+      <files mask="examples_shared_readme.md"/>
+    </source>
+  </example>
+</ksdk:examples>

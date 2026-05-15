@@ -15,78 +15,80 @@
 #define _MID_SM_STATES_H_
 
 #include "mid_def.h"
-#include "mid_mc_api_connector.h"
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-/* RL Estim measurement parameters. */ 
-#if (M1_PWM_FREQ <= 10000U)
-  #define F_SAMPLING 		M1_PWM_FREQ             /* AP MID - Sampling frequency [Hz]. */
-#else
-  #define F_SAMPLING 		(M1_PWM_FREQ / 2U)      /* AP MID - Sampling frequency [Hz]. */
-  #define ESTIMRL_HALF_TS       (TRUE)                  /* Execute RL Estim every second ADC IQR */ 
-#endif
-
-#define NUM_MEAS 		20U                     /* AP MID - Number of measurement. */
-#define I_NOMINAL 		5.0F                    /* AP MID - Nominal current [A]. */
-#define I_POSMAX 		6.0F                    /* AP MID - Maximum positive current [A]. */
-#define I_NEGMAX 		-6.0F                   /* AP MID - Minimum positive current [A]. */
-#define I_LD			0.0F                    /* AP MID - Current to determine inductance in d-axis [A]. */
-#define I_LQ			I_NOMINAL               /* AP MID - Current to determine inductance in q-axis [A]. */
-
-/* The default measurement configuration used to initialize the
-   sUserMIDMeasConfig variable. */
-#define MID_DEFAULT_MEAS_CONFIG {\
-    .fltAlignId            = 0.5F,   \
-    .fltKeIdReqOpenLoop    = 0.8F,   \
-    .fltKeFreqElReq        = 20.0F,  \
-    .fltPpIdReqOpenLoop    = 0.5F,   \
-    .fltPpFreqElReq        = 10.0F,  \
-    .fltMechKt             = 0.5F,   \
-    .fltMechIqStartup      = 0.3F,   \
-    .fltMechMergingCoeff   = 100.0F, \
-    .fltMechIqAccelerate   = 0.3F,   \
-    .fltMechIqDecelerate   = 0.05F,  \
-    .fltMechSpeedThrsAccel = (800.0F / 60.F * 3.0F * 2.0F * FLOAT_PI), \
-    .fltMechSpeedThrsDecel = (1100.0F / 60.F * 3.0F * 2.0F * FLOAT_PI),\
-    .fltMechSpeedThrsInteg = (800.0F / 60.F * 3.0F * 2.0F * FLOAT_PI)}
+/* Pp Assist config params structure. */
+typedef struct _pp_assist_cfg_params_t
+{
+    float_t   fltIdReqOpenLoop;  /* Openloop current [A]. */
+    float_t   fltFreqElReq;      /* Required Electrical Speed [Hz]. */
+    /* Advanced parameters */
+    float_t   fltRampTime;       /* Frequency ramp time [s]. */
+    float_t   fltZeroPosTime;    /* Steady position time [s]. */
+    float_t   fltUMax;           /* Maximal motor voltage [V]. */
+    float_t   fltDutyCycleLimit; /* Maximum allowable duty cycle in frac [-]. */
+    float_t   fltDPiPropGain;    /* Proportional gain of the D-axis current loop controller [-]. */
+    float_t   fltDPiIntegGain;   /* Integral gain of the D-axis current loop controller [-]. */
+    float_t   fltQPiPropGain;    /* Proportional gain of the Q-axis current loop controller [-]. */
+    float_t   fltQPiIntegGain;   /* Integral gain of the Q-axis current loop controller [-]. */
+}pp_assist_cfg_params_t;
 
 /* RL Estim config params structure. */
 typedef struct _rl_estim_cfg_params_t
 {
-  float_t fltIDcNom;            /* Nominal DC current [A]. */
-  float_t fltIDcPosMax;         /* Maximum DC current [A]. */
-  float_t fltIDcNegMax;         /* Maximum allowed negative d-axis DC current [A]. The value of fltIDcNegMax must be negative or zero. */
-  float_t fltIDcLd;             /* DC current used for Ld measurement [A]. */
-  float_t fltIDcLq;             /* DC current used for Lq measurement [A]. */
+    float_t fltIDcMeas;          /* Measurement DC current [A]. */
+    float_t fltIDcPosMax;        /* Maximum DC current [A]. */
+    float_t fltIDcNegMax;        /* Maximum allowed negative d-axis DC current [A]. The value of fltIDcNegMax must be negative or zero. */
+    float_t fltIDcLd;            /* DC current used for Ld measurement [A]. */
+    float_t fltIDcLq;            /* DC current used for Lq measurement [A]. */
 }rl_estim_cfg_params_t;
+
+/* BJ Estim config params structure. */
+typedef struct _bj_estim_cfg_params_t
+{
+    float_t fltIMeas;            /* Measurement current [A]. */
+    float_t fltNN;               /* Nominal speed [rpm]. */
+    /* Advanced parameters */
+    bool_t  bEstimFriction;      /* Enable "Advanced" mode (friction estimation) [-]. */
+    float_t fltAlignTime;        /* Time needed for rotor alignment [s]. */
+    float_t fltIReqOl;           /* Required d-axis current for open loop startup [A]. */
+    float_t fltNStepDc;          /* Required DC speed step for ramp [delta rpm/s]. */
+    float_t fltNStepAc;          /* Required AC speed step for ramp [delta rpm/s]. */
+    float_t fltNDcReq1;          /* Required speed for measurement point 1 [rpm]. */
+    float_t fltNDcReq2;          /* Required speed for measurement point 2 ("Advanced mode") [rpm]. */
+    float_t fltNAcReq;           /* Required amplitude of the injected AC speed [rpm]. */
+    float_t fltSSTimeoutTime;    /* Time to reach steady state before timeout [s]. */
+    float_t fltSSTimeMin;        /* Minimum time needed for stable behavior [s]. */
+    float_t fltSSTimeTrans;      /* Transition time during selection of injected frequency [s]. */
+    float_t fltFInjMax;          /* Maximum possible injection frequency [Hz]. */                          
+    float_t fltFInjMin;          /* Minimum possible injection frequency [Hz]. */
+    float_t fltFInjStep;         /* Injection frequency calculation step [Hz]. */
+    float_t fltDcPiPropGain;     /* Proportional gain of the speed loops DC controller [-]. */
+    float_t fltDcPiIntegGain;    /* Integral gain of the speed loops DC controller [-]. */
+    float_t fltAcPiPropGain;     /* Proportional gain of the speed loops AC controller [-]. */
+    float_t fltAcPiIntegGain;    /* Integral gain of the speed loops AC controller [-]. */
+}bj_estim_cfg_params_t;
 
 /*******************************************************************************
  * Variables
  ******************************************************************************/
 /*! @brief User control variables: */
 
-/* MID start result user variable. */
-extern uint32_t                ui32UserMIDStartResult;
-
 /* MID measurement type selection user variable. */
 extern mid_meas_type_t         eUserMIDMeasType;
 
-/* Global structure for all measurements */
-extern mid_config_t            sUserMIDMeasConfig;
-/* MID Config result user variable */
-extern uint16_t ui16MeasConfigResult;
-
-/* MID known and measured motor parameter set user structure. */
+/* MID known motor parameters set by user structure. */
 extern mid_motor_params_user_t sUserMIDMotorParamsKnown;
+/* MID measured motor parameters structure. */
 extern mid_motor_params_user_t sUserMIDMotorParamsMeas;
 
 /* MID measurement status user variable. */
 extern mid_status_t            sUserMIDStatus;
 
 /* Control motor during MID */
-extern mid_pmsm_t g_sMidDrive;
+extern mid_pmsm_t              g_sMidDrive;
 
 extern volatile float g_fltMIDvoltageScale;
 extern volatile float g_fltMIDDCBvoltageScale;
@@ -95,17 +97,22 @@ extern volatile float g_fltMIDspeedScale;
 extern volatile float g_fltMIDspeedAngularScale;
 extern volatile float g_fltMIDspeedMechanicalScale;
 
-/* EstimRL variables */
-extern MCAA_ESTIMRL_T_FLT g_sEstimRLStruct;
-extern MCAA_ESTIMRL_RUN_T_FLT g_sEstimRLCtrlRun;
-extern rl_estim_cfg_params_t g_sEstimRLInitFMSTR;
-extern float_t	fltIDcPlot;
-extern float_t	fltLdPlot;
-extern float_t	fltLqPlot;
-extern uint8_t u8ModeEstimRL;
+/* Pp Assist variables */
+extern MCAA_PPASSIST_T_FLT    g_sPpAssistStruct;
+extern pp_assist_cfg_params_t g_sPpAssistInitFMSTR;
 
-/* Control FOC and MID */
-extern mid_pmsm_t g_sMidDrive;          // -> mid_sm_states.h
+/* EstimRL variables */
+extern MCAA_ESTIMRL_T_FLT     g_sEstimRLStruct;
+extern MCAA_ESTIMRL_RUN_T_FLT g_sEstimRLCtrlRun;
+extern rl_estim_cfg_params_t  g_sEstimRLInitFMSTR;
+extern float_t	              fltIDcPlot;
+extern float_t	              fltLdPlot;
+extern float_t	              fltLqPlot;
+extern uint8_t                u8ModeEstimRL;
+
+/* EstimBJ variables */
+extern MCAA_ESTIMBJ_T_FLT     g_sEstimBJStruct;
+extern bj_estim_cfg_params_t  g_sEstimBJInitFMSTR;
 
 /*******************************************************************************
  * API
@@ -137,25 +144,13 @@ void MID_ProcessFast_FL(void);
 
 /*!
  * @brief   MID measurement start function.
-
- * @details Motor parameters and measurement configuration must be correctly set
- *          in advance by  MID_UpdateMotorParamsManually() and MID_Config()
- *          functions to start the measurement.
- *          Check the return value for the start result. If non-zero value was
- *          returned, please check the known motor parameters and measurement
- *          configuration inputs.
  *
  * @param   eMeasurementType - measurement type that will be done.
  *
- * @return  Status word containing following measurement pre-check result:
- *           -b0 - Parameter Rs is missing when TRUE.
- *           -b1 - Parameter Ld is missing when TRUE.
- *           -b2 - Parameter Lq is missing when TRUE.
- *           -b3 - Parameter Ke is missing when TRUE.
- *           -b4 - Parameter Pp is missing when TRUE.
+ * @return  none
  */
 RAM_FUNC_LIB
-uint32_t MID_Start_BL(mid_meas_type_t eMeasurementType);
+void MID_Start_BL(mid_meas_type_t eMeasurementType);
 
 /*!
  * @brief  MID measurement stop function.
@@ -180,17 +175,6 @@ RAM_FUNC_LIB
 bool_t MID_GetStatus_BL(mid_status_t *psMIDStatus);
 
 /*!
- * @brief  Measurement configuration setup function.
- *
- * @param  psMeasConfig - Pointer to the measurement configuration structure.
- *
- * @return MID configuration result. See the MID Configuration result defines
- *         for more details.
- */
-RAM_FUNC_LIB
-uint16_t MID_SetMeasConfig_BL(mid_config_t *psMeasConfig);
-
-/*!
  * @brief   Function sets known machine parameters.
  *
  * @details The function can be called to provide known machine parameters prior
@@ -199,8 +183,7 @@ uint16_t MID_SetMeasConfig_BL(mid_config_t *psMeasConfig);
  * @note    This function MUST be called at least to set the non-zero number of
  *          pole-pairs.
  *          Providing correct parameter does not affect the electrical and
- *          mechanical parameter scheduling. Use MID_SetMeasConfig_BL() for
- *          this purpose.
+ *          mechanical parameter scheduling.
  *
  * @param   sMotorParams - Pointer to motor parameters provided by the user.
  *

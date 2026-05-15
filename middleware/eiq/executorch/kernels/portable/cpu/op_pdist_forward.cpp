@@ -13,7 +13,7 @@ namespace torch {
 namespace executor {
 namespace native {
 
-using Tensor = exec_aten::Tensor;
+using Tensor = executorch::aten::Tensor;
 
 Tensor& _pdist_forward_out(
     KernelRuntimeContext& ctx,
@@ -40,9 +40,9 @@ Tensor& _pdist_forward_out(
       out);
 
   ScalarType in_type = in.scalar_type();
-  constexpr auto name = "_pdist_forward.out";
+  static constexpr auto name = "_pdist_forward.out";
 
-  ET_SWITCH_FLOAT_TYPES(
+  ET_SWITCH_FLOATHBF16_TYPES(
       in_type, ctx, name, CTYPE, [&] { pdist<CTYPE>(in, out, p); });
 
   return out;

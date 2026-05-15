@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ksdk:examples xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd manifest.xsd">
+  <externalDefinitions>
+    <definition extID="cm33_MIMXRT1186xxxxx"/>
+    <definition extID="platform.drivers.xip_board.frdmimxrt1186.MIMXRT1186"/>
+    <definition extID="platform.drivers.xip_device.MIMXRT1186"/>
+    <definition extID="platform.drivers.pmu_1.MIMXRT1186"/>
+    <definition extID="platform.drivers.clock.MIMXRT1186"/>
+    <definition extID="platform.drivers.dcdc_soc.MIMXRT1186"/>
+    <definition extID="platform.drivers.ele_base_api.MIMXRT1186"/>
+    <definition extID="platform.drivers.gpc_3.MIMXRT1186"/>
+    <definition extID="platform.drivers.iomuxc.MIMXRT1186"/>
+    <definition extID="platform.drivers.memory.MIMXRT1186"/>
+    <definition extID="platform.drivers.misc.MIMXRT1186"/>
+    <definition extID="platform.drivers.soc_src.MIMXRT1186"/>
+    <definition extID="CMSIS_Include_core_cm.MIMXRT1186"/>
+    <definition extID="device.MIMXRT1186_CMSIS.MIMXRT1186"/>
+    <definition extID="platform.drivers.cache_xcache.MIMXRT1186"/>
+    <definition extID="platform.drivers.common.MIMXRT1186"/>
+    <definition extID="platform.drivers.lpspi.MIMXRT1186"/>
+    <definition extID="platform.drivers.lpuart.MIMXRT1186"/>
+    <definition extID="platform.drivers.rgpio.MIMXRT1186"/>
+    <definition extID="platform.drivers.s3mu.MIMXRT1186"/>
+    <definition extID="platform.drivers.trdc.MIMXRT1186"/>
+    <definition extID="platform.utilities.assert_lite.MIMXRT1186"/>
+    <definition extID="platform.utilities.misc_utilities.MIMXRT1186"/>
+    <definition extID="component.lists.MIMXRT1186"/>
+    <definition extID="utility.str.MIMXRT1186"/>
+    <definition extID="component.silicon_id.MIMXRT1186"/>
+    <definition extID="component.silicon_id_imxrt1180.MIMXRT1186"/>
+    <definition extID="utility.debug_console_lite.MIMXRT1186"/>
+    <definition extID="component.lpuart_adapter.MIMXRT1186"/>
+    <definition extID="component.osa_template_config.MIMXRT1186"/>
+    <definition extID="component.osa.MIMXRT1186"/>
+    <definition extID="component.osa_bm.MIMXRT1186"/>
+    <definition extID="middleware.usb.common_header.MIMXRT1186"/>
+    <definition extID="middleware.usb.phy.MIMXRT1186"/>
+    <definition extID="middleware.mcu-boot.bootsources.MIMXRT1186"/>
+    <definition extID="middleware.mcu-boot.src_startup.MIMXRT1186"/>
+    <definition extID="middleware.mcu-boot.usb.device.controller.driver.MIMXRT1186"/>
+    <definition extID="middleware.mcu-boot.usb.phy.MIMXRT1186"/>
+    <definition extID="middleware.mcu-boot.usb.device.common_header.MIMXRT1186"/>
+    <definition extID="middleware.mcu-boot.usb.device.stack.MIMXRT1186"/>
+    <definition extID="middleware.mcu-boot.usb.device.hid.MIMXRT1186"/>
+    <definition extID="middleware.mcu-boot.src_bm_usb_hid.MIMXRT1186"/>
+    <definition extID="middleware.mcu-boot.drv_serial_nor_eeprom.MIMXRT1186"/>
+    <definition extID="middleware.mcu-boot.mem_spi_nor_eeprom.MIMXRT1186"/>
+    <definition extID="middleware.mcu-boot.drv_sdmmc.MIMXRT1186"/>
+    <definition extID="middleware.mcu-boot.mem_sdmmc.MIMXRT1186"/>
+    <definition extID="middleware.mcu-boot.drv_semc_nand.MIMXRT1186"/>
+    <definition extID="middleware.mcu-boot.drv_flexspi_nor.MIMXRT1186"/>
+    <definition extID="middleware.mcu-boot.mem_flexspi_nor.MIMXRT1186"/>
+    <definition extID="middleware.mcu-boot.drv_flexspi_nand.MIMXRT1186"/>
+    <definition extID="middleware.mcu-boot.mem_spi_nand.MIMXRT1186"/>
+    <definition extID="middleware.mcu-boot.drv_microseconds_lpit.MIMXRT1186"/>
+    <definition extID="middleware.mcu-boot.drv_edgelock.MIMXRT1186"/>
+    <definition extID="middleware.mcu-boot.MIMXRT1186_startup.MIMXRT1186"/>
+    <definition extID="middleware.mcu-boot.MIMXRT1186_sources.MIMXRT1186"/>
+    <definition extID="iar"/>
+    <definition extID="mcuxpresso"/>
+    <definition extID="com.nxp.mcuxpresso"/>
+  </externalDefinitions>
+  <example id="frdmimxrt1186_flashloader_cm33" name="flashloader_cm33" device_core="cm33_MIMXRT1186xxxxx" dependency="platform.drivers.xip_board.frdmimxrt1186.MIMXRT1186 platform.drivers.xip_device.MIMXRT1186 platform.drivers.pmu_1.MIMXRT1186 platform.drivers.clock.MIMXRT1186 platform.drivers.dcdc_soc.MIMXRT1186 platform.drivers.ele_base_api.MIMXRT1186 platform.drivers.gpc_3.MIMXRT1186 platform.drivers.iomuxc.MIMXRT1186 platform.drivers.memory.MIMXRT1186 platform.drivers.misc.MIMXRT1186 platform.drivers.soc_src.MIMXRT1186 CMSIS_Include_core_cm.MIMXRT1186 device.MIMXRT1186_CMSIS.MIMXRT1186 platform.drivers.cache_xcache.MIMXRT1186 platform.drivers.common.MIMXRT1186 platform.drivers.lpspi.MIMXRT1186 platform.drivers.lpuart.MIMXRT1186 platform.drivers.rgpio.MIMXRT1186 platform.drivers.s3mu.MIMXRT1186 platform.drivers.trdc.MIMXRT1186 platform.utilities.assert_lite.MIMXRT1186 platform.utilities.misc_utilities.MIMXRT1186 component.lists.MIMXRT1186 utility.str.MIMXRT1186 component.silicon_id.MIMXRT1186 component.silicon_id_imxrt1180.MIMXRT1186 utility.debug_console_lite.MIMXRT1186 component.lpuart_adapter.MIMXRT1186 component.osa_template_config.MIMXRT1186 component.osa.MIMXRT1186 component.osa_bm.MIMXRT1186 middleware.usb.common_header.MIMXRT1186 middleware.usb.phy.MIMXRT1186 middleware.mcu-boot.bootsources.MIMXRT1186 middleware.mcu-boot.src_startup.MIMXRT1186 middleware.mcu-boot.usb.device.controller.driver.MIMXRT1186 middleware.mcu-boot.usb.phy.MIMXRT1186 middleware.mcu-boot.usb.device.common_header.MIMXRT1186 middleware.mcu-boot.usb.device.stack.MIMXRT1186 middleware.mcu-boot.usb.device.hid.MIMXRT1186 middleware.mcu-boot.src_bm_usb_hid.MIMXRT1186 middleware.mcu-boot.drv_serial_nor_eeprom.MIMXRT1186 middleware.mcu-boot.mem_spi_nor_eeprom.MIMXRT1186 middleware.mcu-boot.drv_sdmmc.MIMXRT1186 middleware.mcu-boot.mem_sdmmc.MIMXRT1186 middleware.mcu-boot.drv_semc_nand.MIMXRT1186 middleware.mcu-boot.drv_flexspi_nor.MIMXRT1186 middleware.mcu-boot.mem_flexspi_nor.MIMXRT1186 middleware.mcu-boot.drv_flexspi_nand.MIMXRT1186 middleware.mcu-boot.mem_spi_nand.MIMXRT1186 middleware.mcu-boot.drv_microseconds_lpit.MIMXRT1186 middleware.mcu-boot.drv_edgelock.MIMXRT1186 middleware.mcu-boot.MIMXRT1186_startup.MIMXRT1186 middleware.mcu-boot.MIMXRT1186_sources.MIMXRT1186" category="bootloader_examples">
+    <projects>
+      <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
+    </projects>
+    <toolchainSettings>
+      <toolchainSetting id_refs="com.nxp.mcuxpresso">
+        <option id="gnu.c.compiler.option.preprocessor.def.symbols" type="stringList">
+          <value>MCUXPRESSO_SDK</value>
+          <value>__SEMIHOST_HARDFAULT_DISABLE=1</value>
+          <value>CPU_MIMXRT1186CVJ8C_cm33</value>
+          <value>CPU_IS_ARM_CORTEX_M33=1</value>
+          <value>BL_TARGET_RAM</value>
+          <value>MIMXRT1186</value>
+          <value>USB_STACK_BM</value>
+          <value>PINT_USE_SIMPLE_CALLBACK=1</value>
+          <value>SDK_DEBUGCONSOLE=1</value>
+          <value>MIMXRT1186_cm33_SERIES</value>
+          <value>OSA_USED</value>
+          <value>NDEBUG</value>
+          <value>USE_RTOS=0</value>
+          <value>DEBUG</value>
+        </option>
+        <option id="com.crt.advproject.gas.fpu" type="enum">
+          <value>com.crt.advproject.gas.fpu.fpv5sp.hard</value>
+        </option>
+        <option id="com.crt.advproject.gcc.exe.debug.option.debugging.level" type="enum">
+          <value>gnu.c.debugging.level.default</value>
+        </option>
+        <option id="com.crt.advproject.gcc.exe.debug.option.optimization.level" type="enum">
+          <value>gnu.c.optimization.level.size</value>
+        </option>
+        <option id="gnu.c.compiler.option.optimization.flags" type="string">
+          <value>-fno-common</value>
+        </option>
+        <option id="com.crt.advproject.c.misc.dialect" type="enum">
+          <value>com.crt.advproject.misc.dialect.gnu99</value>
+        </option>
+        <option id="com.crt.advproject.gcc.fpu" type="enum">
+          <value>com.crt.advproject.gcc.fpu.fpv5sp.hard</value>
+        </option>
+        <option id="com.crt.advproject.gcc.exe.release.option.optimization.level" type="enum">
+          <value>gnu.c.optimization.level.size</value>
+        </option>
+        <option id="gnu.c.compiler.option.misc.other" type="string">
+          <value>-c -ffunction-sections -fdata-sections -fno-builtin -mcpu=cortex-m33</value>
+        </option>
+        <option id="gnu.c.compiler.option.warnings.allwarn" type="boolean">
+          <value>false</value>
+        </option>
+        <option id="gnu.c.compiler.option.warnings.toerrors" type="boolean">
+          <value>false</value>
+        </option>
+        <option id="gnu.c.link.option.nostdlibs" type="boolean">
+          <value>true</value>
+        </option>
+        <option id="com.crt.advproject.link.fpu" type="enum">
+          <value>com.crt.advproject.link.fpu.fpv5sp.hard</value>
+        </option>
+        <option id="gnu.c.link.option.other" type="stringList">
+          <value>-no-warn-rwx-segments</value>
+          <value>--gc-sections</value>
+          <value>-Map=${BuildArtifactFileBaseName}.map</value>
+        </option>
+        <option id="gnu.c.link.option.group" type="boolean">
+          <value>true</value>
+        </option>
+        <option id="com.crt.advproject.link.script" type="string">
+          <value>MIMXRT1186_ram_flashloader.ld</value>
+        </option>
+        <option id="com.crt.advproject.link.scriptdir" type="string">
+          <value>${ProjDirPath}/mcu_bootloader</value>
+        </option>
+      </toolchainSetting>
+    </toolchainSettings>
+    <include_paths>
+      <include_path path="." project_relative_path="source" type="c_include"/>
+      <include_path path="." project_relative_path="board" type="c_include"/>
+      <include_path path="." project_relative_path="source" type="asm_include"/>
+    </include_paths>
+    <source path="iar" project_relative_path="./" type="workspace" toolchain="iar">
+      <files mask="flashloader_cm33.ewp"/>
+      <files mask="flashloader_cm33.ewd"/>
+      <files mask="flashloader_cm33.eww"/>
+    </source>
+    <source path="." project_relative_path="source" type="other" toolchain="iar">
+      <files mask="frdmimxrt1186.mac"/>
+    </source>
+    <source path="." project_relative_path="source" type="src">
+      <files mask="pin_mux.c"/>
+    </source>
+    <source path="." project_relative_path="source" type="c_include">
+      <files mask="pin_mux.h"/>
+    </source>
+    <source path="." project_relative_path="board" type="c_include">
+      <files mask="board.h"/>
+    </source>
+    <source path="." project_relative_path="board" type="src">
+      <files mask="board.c"/>
+    </source>
+    <source path="." project_relative_path="board" type="c_include">
+      <files mask="clock_config.h"/>
+    </source>
+    <source path="." project_relative_path="board" type="src">
+      <files mask="clock_config.c"/>
+    </source>
+    <source path="mcux" project_relative_path="mcu_bootloader" type="linker" toolchain="mcuxpresso">
+      <files mask="MIMXRT1186_ram_flashloader.ld"/>
+    </source>
+    <source path="iar" project_relative_path="MIMXRT1186/iar" type="linker" toolchain="iar">
+      <files mask="MIMXRT1186_ram_flashloader.icf"/>
+    </source>
+    <source path="." project_relative_path="source" type="c_include" config="true">
+      <files mask="fsl_os_abstraction_config.h"/>
+    </source>
+    <source path="." project_relative_path="source" type="c_preinclude">
+      <files mask="mcux_config.h"/>
+      <files mask="mcuxsdk_version.h"/>
+    </source>
+  </example>
+</ksdk:examples>

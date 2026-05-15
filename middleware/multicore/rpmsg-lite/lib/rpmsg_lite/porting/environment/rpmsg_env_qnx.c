@@ -2,7 +2,7 @@
  * Copyright (c) 2014, Mentor Graphics Corporation
  * Copyright (c) 2015 Xilinx, Inc.
  * Copyright (c) 2016 Freescale Semiconductor, Inc.
- * Copyright 2016-2025 NXP
+ * Copyright 2016-2026 NXP
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -62,7 +62,7 @@
 #include <sys/imx_rpmsg_lite.h>
 
 /* Max supported ISR counts */
-#define ISR_COUNT (32U)
+#define ISR_COUNT RL_PLATFORM_MAX_ISR_COUNT
 
 #if (!defined(RL_USE_ENVIRONMENT_CONTEXT)) || (RL_USE_ENVIRONMENT_CONTEXT != 1)
 #error "This RPMsg-Lite port requires RL_USE_ENVIRONMENT_CONTEXT set to 1"
@@ -231,8 +231,9 @@ void env_free_memory(void *ptr)
  */
 void env_memset(void *ptr, int32_t value, uint32_t size)
 {
-    /* Explicitly convert value to unsigned char range to ensure consistent behavior */
-    (void)memset(ptr, (unsigned char)(value & 0xFF), size);
+    /* Mask to byte range for memset */
+    uint32_t masked = ((uint32_t)value) & 0xFFU;
+    (void)memset(ptr, (int)masked, size);
 }
 
 /*!
@@ -443,27 +444,6 @@ void env_delete_sync_lock(void *lock)
 }
 
 /*!
- * env_acquire_sync_lock
- *
- * Tries to acquire the lock, if lock is not available then call to
- * this function waits for lock to become available.
- */
-void env_acquire_sync_lock(void *lock)
-{
-    env_lock_mutex(lock);
-}
-
-/*!
- * env_release_sync_lock
- *
- * Releases the given lock.
- */
-void env_release_sync_lock(void *lock)
-{
-    env_unlock_mutex(lock);
-}
-
-/*!
  * env_sleep_msec
  *
  * Suspends the calling thread for given time , in msecs.
@@ -485,11 +465,11 @@ void env_register_isr(void *env, uint32_t vector_id, void *data)
 {
     env_context_t *ctx = env;
 
-    RL_ASSERT(vector_id < ISR_COUNT);
     if (vector_id < ISR_COUNT)
     {
         ctx->isr_table[vector_id].data = data;
     }
+    RL_ASSERT(vector_id < ISR_COUNT);
 }
 
 /*!
@@ -503,12 +483,12 @@ void env_unregister_isr(void *env, uint32_t vector_id)
 {
     env_context_t *ctx = env;
 
-    RL_ASSERT(vector_id < ISR_COUNT);
     if (vector_id < ISR_COUNT)
     {
         ctx->isr_table[vector_id].data    = ((void *)0);
         ctx->isr_table[vector_id].enabled = 0;
     }
+    RL_ASSERT(vector_id < ISR_COUNT);
 }
 
 /*!
@@ -613,18 +593,18 @@ uint64_t env_get_timestamp(void)
  */
 void env_isr(void *env, uint32_t vector)
 {
-    struct isr_info *info;
+    struct isr_info *isr_entry;
     env_context_t *ctx = env;
 
-    RL_ASSERT(vector < ISR_COUNT);
     if (vector < ISR_COUNT)
     {
-        info = &ctx->isr_table[vector];
-        if (info->enabled)
+        isr_entry = &ctx->isr_table[vector];
+        if (isr_entry->enabled)
         {
-            virtqueue_notification((struct virtqueue *)info->data);
+            virtqueue_notification((struct virtqueue *)isr_entry->data);
         }
     }
+    RL_ASSERT(vector < ISR_COUNT);
 }
 
 /**

@@ -21,7 +21,7 @@ extern "C"
 // Software library version
 // Major (top-nibble), incremented on backwards incompatible changes
 // Minor (bottom-nibble), incremented on feature additions
-#define LFS_VERSION 0x00020009
+#define LFS_VERSION 0x0002000b
 #define LFS_VERSION_MAJOR (0xffff & (LFS_VERSION >> 16))
 #define LFS_VERSION_MINOR (0xffff & (LFS_VERSION >>  0))
 
@@ -59,7 +59,8 @@ typedef uint32_t lfs_block_t;
 #endif
 
 // Maximum size of custom attributes in bytes, may be redefined, but there is
-// no real benefit to using a smaller LFS_ATTR_MAX. Limited to <= 1022.
+// no real benefit to using a smaller LFS_ATTR_MAX. Limited to <= 1022. Stored
+// in superblock and must be respected by other littlefs drivers.
 #ifndef LFS_ATTR_MAX
 #define LFS_ATTR_MAX 1022
 #endif
@@ -203,7 +204,8 @@ struct lfs_config {
     // program sizes.
     lfs_size_t block_size;
 
-    // Number of erasable blocks on the device.
+    // Number of erasable blocks on the device. Defaults to block_count stored
+    // on disk when zero.
     lfs_size_t block_count;
 
     // Number of erase cycles before littlefs evicts metadata logs and moves
@@ -252,18 +254,18 @@ struct lfs_config {
 
     // Optional upper limit on length of file names in bytes. No downside for
     // larger names except the size of the info struct which is controlled by
-    // the LFS_NAME_MAX define. Defaults to LFS_NAME_MAX when zero. Stored in
-    // superblock and must be respected by other littlefs drivers.
+    // the LFS_NAME_MAX define. Defaults to LFS_NAME_MAX or name_max stored on
+    // disk when zero.
     lfs_size_t name_max;
 
     // Optional upper limit on files in bytes. No downside for larger files
-    // but must be <= LFS_FILE_MAX. Defaults to LFS_FILE_MAX when zero. Stored
-    // in superblock and must be respected by other littlefs drivers.
+    // but must be <= LFS_FILE_MAX. Defaults to LFS_FILE_MAX or file_max stored
+    // on disk when zero.
     lfs_size_t file_max;
 
     // Optional upper limit on custom attributes in bytes. No downside for
     // larger attributes size but must be <= LFS_ATTR_MAX. Defaults to
-    // LFS_ATTR_MAX when zero.
+    // LFS_ATTR_MAX or attr_max stored on disk when zero.
     lfs_size_t attr_max;
 
     // Optional upper limit on total space given to metadata pairs in bytes. On
@@ -764,7 +766,11 @@ int lfs_fs_gc(lfs_t *lfs);
 // Grows the filesystem to a new size, updating the superblock with the new
 // block count.
 //
-// Note: This is irreversible.
+// If LFS_SHRINKNONRELOCATING is defined, this function will also accept
+// block_counts smaller than the current configuration, after checking
+// that none of the blocks that are being removed are in use.
+// Note that littlefs's pseudorandom block allocation means that
+// this is very unlikely to work in the general case.
 //
 // Returns a negative error code on failure.
 int lfs_fs_grow(lfs_t *lfs, lfs_size_t block_count);

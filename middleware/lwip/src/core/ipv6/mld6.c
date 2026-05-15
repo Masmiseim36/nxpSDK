@@ -67,6 +67,7 @@
 #include "lwip/netif.h"
 #include "lwip/memp.h"
 #include "lwip/stats.h"
+#include "lwip/timeouts.h"
 
 #include <string.h>
 
@@ -101,6 +102,11 @@ static void mld6_report_change(struct netif *netif, struct mld_group *group);
 static void mld6_set_max_response_delay(struct mld_data *mld, u16_t max_response_code);
 static void mld6_set_general_report_tmr(struct mld_data *mld);
 static void mld6_send(struct netif *netif, struct mld_group *group, u8_t send_change_report);
+
+#if LWIP_MLD6_TIMERS_ONDEMAND
+#include <stdbool.h>
+static bool is_tmr_start = false;
+#endif
 
 static struct
 mld_data *mld6_get_data(struct netif *netif) {
@@ -609,6 +615,17 @@ mld6_leavegroup_netif(struct netif *netif, const ip6_addr_t *groupaddr)
   return ERR_VAL;
 }
 
+#if LWIP_MLD6_TIMERS_ONDEMAND
+/**
+ * Wrapper function with matching prototype which calls the actual callback
+ */
+static void mld6_timeout_cb(void *arg)
+{
+  LWIP_UNUSED_ARG(arg);
+
+  mld6_tmr();
+}
+#endif
 /**
  * Sets change report send time to interval from MLD6_TMR_INTERVAL to 1 s
  *
@@ -625,6 +642,13 @@ mld6_set_change_report_tmr(struct mld_data *mld) {
   } else {
     LWIP_DEBUGF(MLD6_DEBUG | LWIP_DBG_TRACE, ("already running\n"));
   }
+
+#if LWIP_MLD6_TIMERS_ONDEMAND
+  if (!is_tmr_start) {
+    sys_timeout(MLD6_TMR_INTERVAL, mld6_timeout_cb, NULL);
+    is_tmr_start = true;
+  }
+#endif
 }
 
 /**
@@ -683,6 +707,13 @@ mld6_set_general_report_tmr(struct mld_data *mld) {
   if (mld->general_report_tmr == 0) {
     mld->general_report_tmr = 1;
   }
+
+#if LWIP_MLD6_TIMERS_ONDEMAND
+  if (!is_tmr_start) {
+    sys_timeout(MLD6_TMR_INTERVAL, mld6_timeout_cb, NULL);
+    is_tmr_start = true;
+  }
+#endif
 }
 
 
@@ -696,11 +727,18 @@ void
 mld6_tmr(void) {
   struct netif *netif;
 
+#if LWIP_MLD6_TIMERS_ONDEMAND
+  bool tmr_restart = false;
+#endif
+
   NETIF_FOREACH(netif) {
     struct mld_data *mld = mld6_get_data(netif);
     if (mld != NULL) {
       if (mld->chg_report_tmr > 1) {
         mld->chg_report_tmr--;
+#if LWIP_MLD6_TIMERS_ONDEMAND
+        tmr_restart = true;
+#endif
       } else if (mld->chg_report_tmr == 1) {
         /* send change report */
         mld->chg_report_tmr = 0;
@@ -710,11 +748,17 @@ mld6_tmr(void) {
         if (mld->groups_to_report != NULL) {
           /* There is still some groups to send set timer again */
           mld6_set_change_report_tmr(mld);
+#if LWIP_MLD6_TIMERS_ONDEMAND
+          tmr_restart = true;
+#endif
         }
       }
 
       if (mld->general_report_tmr > 1) {
         mld->general_report_tmr--;
+#if LWIP_MLD6_TIMERS_ONDEMAND
+        tmr_restart = true;
+#endif
       } else if (mld->general_report_tmr == 1) {
         /* send general report */
         mld->general_report_tmr = 0;
@@ -722,6 +766,20 @@ mld6_tmr(void) {
       }
     }
   } /* NETIF_FOREACH */
+
+#if LWIP_MLD6_TIMERS_ONDEMAND
+  if (tmr_restart) {
+    /* Cancel any existing timeout first */
+    if (is_tmr_start) {
+      sys_untimeout(mld6_timeout_cb, NULL);
+    }
+    sys_timeout(MLD6_TMR_INTERVAL, mld6_timeout_cb, NULL);
+    is_tmr_start = true;
+  } else {
+    sys_untimeout(mld6_timeout_cb, NULL);
+    is_tmr_start = false;
+  }
+#endif
 }
 
 /**

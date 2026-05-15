@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 NXP
+ * Copyright 2023, 2025 NXP
  *
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -35,6 +35,7 @@ psa_status_t ele_get_entropy(uint32_t flags, size_t *estimate_bits, uint8_t *out
 {
     status_t result     = kStatus_Success;
     psa_status_t status = PSA_ERROR_CORRUPTION_DETECTED;
+    uint32_t trng_state = 0u;
 
     if (output == NULL)
     {
@@ -54,22 +55,37 @@ psa_status_t ele_get_entropy(uint32_t flags, size_t *estimate_bits, uint8_t *out
         goto end;
     }
 
-#if defined(MBEDTLS_THREADING_C)
-    if (mbedtls_mutex_lock(&mbedtls_threading_hwcrypto_ele_mutex) != 0)
+    if (mcux_mutex_lock(&ele_hwcrypto_mutex) != 0)
     {
-        return PSA_ERROR_GENERIC_ERROR;
+        return PSA_ERROR_SERVICE_FAILURE;
     }
-#endif
 
+    /* We need proper RNG init in case of MbedTLS3.x SW-only builds.
+     * Otherwise this is done in CRYPTO_InitHardware().
+     */
+    (void)ELE_GetTrngState(S3MU, &trng_state);
+    if (kELE_TRNG_CSAL_success << 8u != trng_state)
+    {
+        (void)ELE_StartRng(S3MU);
+    }
+
+    /* Wait until ready */
+    do
+    {
+        result = ELE_GetTrngState(S3MU, &trng_state);
+    } while (!(((trng_state & 0xFFu) == kELE_TRNG_ready) &&
+               ((trng_state & 0xFF00u) == kELE_TRNG_CSAL_success << 8u )));
+
+    /* NOTE: If this call fails, then the most likely issue is that there is
+     *       no firmware loaded into ELE, since RNG is FW-dependent.
+     */
     result = ELE_RngGetRandom(S3MU, (uint32_t *)output, output_size, kNoReseed);
     status = ele_to_psa_status(result);
 
-#if defined(MBEDTLS_THREADING_C)
-    if (mbedtls_mutex_unlock(&mbedtls_threading_hwcrypto_ele_mutex) != 0)
+    if (mcux_mutex_unlock(&ele_hwcrypto_mutex) != 0)
     {
-        return PSA_ERROR_GENERIC_ERROR;
+        return PSA_ERROR_SERVICE_FAILURE;
     }
-#endif
 
     if (status == PSA_SUCCESS)
     {

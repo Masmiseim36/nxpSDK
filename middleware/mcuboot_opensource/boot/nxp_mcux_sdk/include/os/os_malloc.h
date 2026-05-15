@@ -20,7 +20,7 @@
 #ifndef H_OS_MALLOC_
 #define H_OS_MALLOC_
 
-#if defined(USE_RTOS)
+#if defined(USE_RTOS) && USE_RTOS != 0
 #include "FreeRTOS.h"
 
 #ifdef __cplusplus

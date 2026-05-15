@@ -32,7 +32,7 @@
 
 /*
  * Copyright (c) 2013-2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2017,2020,2022 NXP
+ * Copyright 2016-2017,2020,2022,2025 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -66,6 +66,9 @@ typedef TaskHandle_t sys_thread_t;
 #define sys_mbox_set_invalid(x) ((*x) = NULL)
 #define sys_sem_valid(x)        (((*x) == NULL) ? pdFALSE : pdTRUE)
 #define sys_sem_set_invalid(x)  ((*x) = NULL)
+
+void sys_arch_msleep(uint32_t delay_ms);
+#define sys_msleep(ms) sys_arch_msleep(ms)
 
 #else /* NO_SYS */ /* Bare-metal */
 

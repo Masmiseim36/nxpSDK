@@ -175,15 +175,15 @@ ele_s4xx_transparent_aead_encrypt(const psa_key_attributes_t *attributes,
     ctx.tag = (uint32_t) (ciphertext + plaintext_length);
     ctx.tag_size = tag_length;
 
-    if (mcux_mutex_lock(&ele_hwcrypto_mutex)) {
-        return PSA_ERROR_COMMUNICATION_FAILURE;
+    if (mcux_mutex_lock(&ele_hwcrypto_mutex) != 0) {
+        return PSA_ERROR_SERVICE_FAILURE;
     }
 
     ele_status = ELE_GenericAead(S3MU, &ctx);
     status = ele_to_psa_status(ele_status);
 
-    if (mcux_mutex_unlock(&ele_hwcrypto_mutex)) {
-        return PSA_ERROR_BAD_STATE;
+    if (mcux_mutex_unlock(&ele_hwcrypto_mutex) != 0) {
+        return PSA_ERROR_SERVICE_FAILURE;
     }
 
     if (status == PSA_SUCCESS) {
@@ -283,26 +283,26 @@ psa_status_t ele_s4xx_transparent_aead_decrypt(
     /* Plain text output data */
     ctx.output = (uint32_t) plaintext;
 
-    if (mcux_mutex_lock(&ele_hwcrypto_mutex)) {
-        return PSA_ERROR_COMMUNICATION_FAILURE;
+    if (mcux_mutex_lock(&ele_hwcrypto_mutex) != 0) {
+        return PSA_ERROR_SERVICE_FAILURE;
     }
 
     ele_status = ELE_GenericAead(S3MU, &ctx);
     status = ele_to_psa_status(ele_status);
 
-    if (mcux_mutex_unlock(&ele_hwcrypto_mutex)) {
-        return PSA_ERROR_BAD_STATE;
+    if (mcux_mutex_unlock(&ele_hwcrypto_mutex) != 0) {
+        return PSA_ERROR_SERVICE_FAILURE;
     }
 
     if (status == PSA_SUCCESS) {
         *plaintext_length = cipher_length;
     } else {
-	/* 
+	/*
 	 * ELE doesn't return a specific error in case the signature is invalid,
 	 * which is required by PSA specification. As a workaround parameter checks
 	 * have ben done before calling the ELE_GenericAEAD function. Expectation
 	 * is that the only case where ELE would return error would be when there
-	 * is invalid signature. This may not always hold good. This is a 
+	 * is invalid signature. This may not always hold good. This is a
 	 * workaround for now.
 	 */
 	status = PSA_ERROR_INVALID_SIGNATURE;

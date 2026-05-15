@@ -38,8 +38,8 @@ extern "C" {
 /******************************************************************************
 * Macros 
 ******************************************************************************/                         
-#define GFLIB_AtanMAU_FLT_Ci(fltVal)                                          \
-        GFLIB_AtanMAU_FLT_FCi(fltVal)
+#define GFLIB_AtanMAU_FLT_Ci(fltVal, u8ResReg)                                          \
+        GFLIB_AtanMAU_FLT_FCi(fltVal, u8ResReg)
 
 /****************************************************************************
 * Inline functions 
@@ -51,17 +51,18 @@ extern "C" {
 *
 * @param    ptr  *psParam - Pointer to the table
 *
-* @param    in   fltVal - The input data value is 32-bit single precision 
-*                         floating-point value within the full type's range.                       
+* @param    in   float_t fltVal - The input data value is 32-bit single precision 
+*                                 floating-point value within the full type's range.
+*                uint8_t u8ResReg - MAU result register. Valid parameter values are {1, 2, 3, 4}. 
+*                                   Any value outside this range will trigger a CPU HardFault exception.
 *
 * @return   The function returns arctangent of the input as a 32-bit single
 *           precision floating-point value in radians.              
 *       
-* @remarks  The GFLIB_Atan function computes the atan(x)/pi
-*            using MAU module.
+* @remarks  The GFLIB_Atan function computes the atan(x)/pi using MAU module.
 *
 *******************************************************************************/
-static inline float_t GFLIB_AtanMAU_FLT_FCi(register float_t fltVal)
+static inline float_t GFLIB_AtanMAU_FLT_FCi(register float_t fltVal, register uint8_t u8ResReg)
 {
     register uint32_t addr;
     
@@ -70,9 +71,9 @@ static inline float_t GFLIB_AtanMAU_FLT_FCi(register float_t fltVal)
     #pragma GCC diagnostic ignored "-Wstrict-aliasing"
     #endif
 
-    addr = RTCESL_MAU_IND_ADDR((uint32_t)RTCESL_MAU_BASE_PTR, RTCESL_MAU_DT_FLOAT, 2, RTCESL_MAU_MOPC_ATAN);
+    addr = RTCESL_MAU_IND_ADDR((uint32_t)RTCESL_MAU_BASE_PTR, RTCESL_MAU_DT_FLOAT, u8ResReg, RTCESL_MAU_MOPC_ATAN);
     RTCESL_MAU_REG_FLOAT(addr) = fltVal;
-    return (RTCESL_MAU_REG_FLOAT((uint32_t)(RTCESL_MAU_RES2_ADDR))*FLOAT_PI);
+    return (RTCESL_MAU_REG_FLOAT((uint32_t)(rtcesl_mau_res_table[u8ResReg].res_addr))*FLOAT_PI);
 	
     #if defined(__GNUC__)
     #pragma GCC diagnostic pop

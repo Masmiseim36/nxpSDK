@@ -16,8 +16,8 @@ namespace torch {
 namespace executor {
 namespace native {
 
-using Tensor = exec_aten::Tensor;
-using Scalar = exec_aten::Scalar;
+using Tensor = executorch::aten::Tensor;
+using Scalar = executorch::aten::Scalar;
 
 Tensor& addmm_out(
     KernelRuntimeContext& ctx,
@@ -34,7 +34,7 @@ Tensor& addmm_out(
       out);
 
   size_t output_ndim = 0;
-  exec_aten::SizesType output_sizes[kTensorDimensionLimit];
+  executorch::aten::SizesType output_sizes[kTensorDimensionLimit];
   get_mm_out_target_size(mat1, mat2, output_sizes, &output_ndim);
   ET_KERNEL_CHECK(
       ctx,
@@ -88,8 +88,11 @@ Tensor& addmm_out(
           n,
           p);
 
-      utils::apply_bitensor_elementwise_fn<CTYPE, op_name>(
-          [alpha_val, beta_val](const CTYPE val_a, const CTYPE val_b) {
+      utils::apply_bitensor_elementwise_fn<
+          CTYPE,
+          op_name,
+          utils::SupportedTensorDtypes::REALHBF16>(
+          [alpha_val, beta_val](const auto& val_a, const auto& val_b) {
             return val_a * alpha_val + val_b * beta_val;
           },
           ctx,
@@ -97,8 +100,7 @@ Tensor& addmm_out(
           utils::SupportedTensorDtypes::REALHBF16,
           in,
           utils::SupportedTensorDtypes::REALHBF16,
-          out,
-          utils::SupportedTensorDtypes::REALHBF16);
+          out);
     }
   });
 

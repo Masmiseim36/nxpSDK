@@ -16,7 +16,7 @@ namespace torch {
 namespace executor {
 namespace native {
 
-using Tensor = exec_aten::Tensor;
+using Tensor = executorch::aten::Tensor;
 
 // copy.out(const Tensor& in, const Tensor& src, bool non_blocking, Tensor(a!)
 // out) -> Tensor(a!), see caffe2/aten/src/ATen/native/Copy.cpp
@@ -46,17 +46,27 @@ Tensor& copy_out(
   // @lint-ignore CLANGTIDY facebook-hte-CArray
   static constexpr const char op_name[] = "copy.out";
 
-  ET_SWITCH_REALHBBF16_TYPES(in.scalar_type(), ctx, "copy.out", CTYPE, [&]() {
-    utils::apply_bitensor_elementwise_fn<CTYPE, op_name>(
-        [](ET_UNUSED const CTYPE _, const CTYPE val_src) { return val_src; },
-        ctx,
-        in,
-        utils::SupportedTensorDtypes::REALHBBF16,
-        src,
-        utils::SupportedTensorDtypes::REALHBBF16,
-        out,
-        utils::SupportedTensorDtypes::REALHBBF16);
-  });
+  // Use direct copy fast path if broadcast is not needed and tensors are
+  // non-empty
+  if (internal::sizes_match_ignoring_leading_1s(out.sizes(), src.sizes()) &&
+      src.numel() > 0 && out.nbytes() >= src.nbytes() &&
+      tensors_have_same_dtype(src, out)) {
+    std::memcpy(out.mutable_data_ptr(), src.const_data_ptr(), src.nbytes());
+  } else {
+    ET_SWITCH_REALHBBF16_TYPES(in.scalar_type(), ctx, op_name, CTYPE, [&]() {
+      utils::apply_bitensor_elementwise_fn<
+          CTYPE,
+          op_name,
+          utils::SupportedTensorDtypes::REALHBBF16>(
+          [](ET_UNUSED const CTYPE _, const CTYPE val_src) { return val_src; },
+          ctx,
+          in,
+          utils::SupportedTensorDtypes::REALHBBF16,
+          src,
+          utils::SupportedTensorDtypes::REALHBBF16,
+          out);
+    });
+  }
 
   return out;
 }
@@ -79,17 +89,27 @@ Tensor& copy_(
   // @lint-ignore CLANGTIDY facebook-hte-CArray
   static constexpr const char op_name[] = "copy_";
 
-  ET_SWITCH_REALHBBF16_TYPES(in.scalar_type(), ctx, "copy_", CTYPE, [&]() {
-    utils::apply_bitensor_elementwise_fn<CTYPE, op_name>(
-        [](ET_UNUSED const CTYPE _, const CTYPE val_src) { return val_src; },
-        ctx,
-        in,
-        utils::SupportedTensorDtypes::REALHBBF16,
-        src,
-        utils::SupportedTensorDtypes::REALHBBF16,
-        in,
-        utils::SupportedTensorDtypes::REALHBBF16);
-  });
+  // Use direct copy fast path if broadcast is not needed and tensors are
+  // non-empty
+  if (internal::sizes_match_ignoring_leading_1s(in.sizes(), src.sizes()) &&
+      src.numel() > 0 && in.nbytes() >= src.nbytes() &&
+      tensors_have_same_dtype(src, in)) {
+    std::memcpy(in.mutable_data_ptr(), src.const_data_ptr(), src.nbytes());
+  } else {
+    ET_SWITCH_REALHBBF16_TYPES(in.scalar_type(), ctx, op_name, CTYPE, [&]() {
+      utils::apply_bitensor_elementwise_fn<
+          CTYPE,
+          op_name,
+          utils::SupportedTensorDtypes::REALHBBF16>(
+          [](ET_UNUSED const CTYPE _, const CTYPE val_src) { return val_src; },
+          ctx,
+          in,
+          utils::SupportedTensorDtypes::REALHBBF16,
+          src,
+          utils::SupportedTensorDtypes::REALHBBF16,
+          in);
+    });
+  }
 
   return in;
 }

@@ -29,6 +29,12 @@
 #ifndef FREERTOS_CONFIG_H
 #define FREERTOS_CONFIG_H
 
+/* *INDENT-OFF* */
+#ifdef __cplusplus
+    extern "C" {
+#endif
+/* *INDENT-ON* */
+
 #if defined(__ICCARM__)||defined(__CC_ARM)||defined(__GNUC__)
     #include <stdint.h>
     extern uint32_t SystemCoreClock;
@@ -38,6 +44,10 @@
 
 #ifdef CONFIG_FREERTOS_USE_CUSTOM_CONFIG_FRAGMENT
 #include "FreeRTOSConfig_frag.h"
+#endif
+
+#ifdef CONFIG_DEBUG_COREDUMP_MEMORY_DUMP_THREADS
+#include "FreeRTOSConfig_debug_coredump.h"
 #endif
 
 /* Handle macros required to be defined.
@@ -83,12 +93,18 @@
 #define configSUPPORT_DYNAMIC_ALLOCATION  0
 #endif
 
-#if USE_PERCEPIO_TRACELYZER == 1
+#if defined(USE_PERCEPIO_TRACELYZER) && (USE_PERCEPIO_TRACELYZER == 1)
     /* Do not include if processing assembly file */
     #if (!defined(__IAR_SYSTEMS_ASM__) && !defined(__ASSEMBLER__))
     #   include "fsl_device_registers.h"
     #   include "trcKernelPort.h"
     #endif
 #endif
+
+/* *INDENT-OFF* */
+#ifdef __cplusplus
+    }
+#endif
+/* *INDENT-ON* */
 
 #endif /* FREERTOS_CONFIG_H */

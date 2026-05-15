@@ -94,15 +94,15 @@ psa_status_t ele_internal_gen_rsa_keypair(const psa_key_attributes_t *attributes
     GenericRsaKeygen.pub_exponent_size  = rsa_key.pub_exp_len;
     GenericRsaKeygen.key_size           = key_bits;
 
-    if (mcux_mutex_lock(&ele_hwcrypto_mutex)) {
-        return PSA_ERROR_COMMUNICATION_FAILURE;
+    if (mcux_mutex_lock(&ele_hwcrypto_mutex) != 0) {
+        return PSA_ERROR_SERVICE_FAILURE;
     }
 
     ele_status = ELE_GenericRsaKeygen(S3MU, &GenericRsaKeygen);
     status = ele_to_psa_status(ele_status);
 
-    if (mcux_mutex_unlock(&ele_hwcrypto_mutex)) {
-        return PSA_ERROR_BAD_STATE;
+    if (mcux_mutex_unlock(&ele_hwcrypto_mutex) != 0) {
+        return PSA_ERROR_SERVICE_FAILURE;
     }
 
     if (status == PSA_SUCCESS) {

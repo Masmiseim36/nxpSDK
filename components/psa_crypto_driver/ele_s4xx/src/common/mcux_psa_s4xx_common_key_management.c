@@ -27,12 +27,12 @@ psa_status_t get_ele_key_group(psa_key_lifetime_t lifetime, uint16_t *keyGroupID
         if (g_volatile_grp_id >= ELE_KEYGROUP_ID_VOLATILE_LIMIT) {
             return PSA_ERROR_INSUFFICIENT_STORAGE;
         }
-        grp_id = g_volatile_grp_id++;
+        grp_id = g_volatile_grp_id;
     } else {
         if (g_persistent_grp_id >= ELE_KEYGROUP_ID_PERSISTENT_LIMIT) {
             return PSA_ERROR_INSUFFICIENT_STORAGE;
         }
-        grp_id = g_persistent_grp_id++;
+        grp_id = g_persistent_grp_id;
     }
 
     *keyGroupID = grp_id;
@@ -62,6 +62,9 @@ psa_status_t ele_get_key_id_from_buf(const psa_key_attributes_t *attributes,
 }
 
 // Functions
+
+#if defined(MBEDTLS_RSA_C)
+#if defined(PSA_WANT_ALG_RSA_OAEP) || defined(PSA_WANT_ALG_RSA_PKCS1V15_CRYPT)
 
 /*
  *  RSAPublicKey ::= SEQUENCE {
@@ -361,4 +364,7 @@ psa_status_t mcux_free_raw_rsa(struct rsa_keypair rsa_key)
 
     return PSA_SUCCESS;
 }
+
+#endif /* defined(PSA_WANT_ALG_RSA_OAEP) || defined(PSA_WANT_ALG_RSA_PKCS1V15_CRYPT) */
+#endif /* defined(MBEDTLS_RSA_C) */
 /** @} */ // end of psa_key_generation

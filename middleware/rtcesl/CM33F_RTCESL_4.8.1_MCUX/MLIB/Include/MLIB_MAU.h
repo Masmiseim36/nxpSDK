@@ -36,6 +36,12 @@ extern "C" {
 /* ----------------------------------------------------------------------------
    -- MAU Peripheral Access Layer
    ---------------------------------------------------------------------------- */
+
+/* Result register address structure */
+typedef struct {
+    uint32_t res_addr;
+} RTCESL_MAU_RES_t;
+  
 /* Base address of Math Accelerator Unit(MAU) */ 
 #define RTCESL_MAU_BASE_PTR     0x40108000U 
 /** Peripheral MRCC0 base address */
@@ -47,25 +53,46 @@ extern "C" {
 #define RTCESL_MAU_RES_SET(res)   ((res) << 7U)
 #define RTCESL_MAU_MOPC_SET(mopc) ((mopc) << 2U)
 
-#define RTCESL_MAU_IND_ADDR(base, dt, ds, mopc) ((base) | 0x800U | RTCESL_MAU_DT_SET(dt) | \
-                                                 RTCESL_MAU_RES_SET(ds) | RTCESL_MAU_MOPC_SET(mopc))
-
 #define RTCESL_MAU_REG_UINT32(addr) (*((volatile uint32_t *)(addr)))
 #define RTCESL_MAU_REG_Q15(addr)    (*((volatile frac16_t *)(addr)))
 #define RTCESL_MAU_REG_Q31(addr)    (*((volatile frac32_t *)(addr)))
-#define RTCESL_MAU_REG_FLOAT(addr)  (*((volatile  float_t *)(addr)))    
+#define RTCESL_MAU_REG_FLOAT(addr)  (*((volatile  float_t *)(addr)))   
 
-/* MAU Registers access macros */
-#define RTCESL_MAU_RES0_ADDR      (RTCESL_MAU_BASE_PTR + 0x40)
-#define RTCESL_MAU_RES1_ADDR      (RTCESL_MAU_BASE_PTR + 0x44)
-#define RTCESL_MAU_RES2_ADDR      (RTCESL_MAU_BASE_PTR + 0x48)
-#define RTCESL_MAU_RES3_ADDR      (RTCESL_MAU_BASE_PTR + 0x4C)
-#define RTCESL_MAU_SYS_CTLR       *(volatile uint32_t*)(RTCESL_MAU_BASE_PTR + 0x10)
-#define RTCESL_MAU_GEXP_STATUS_IE *(volatile uint32_t*)(RTCESL_MAU_BASE_PTR + 0x14)
-#define RTCESL_MAU_GEXP_STATUS    *(volatile uint32_t*)(RTCESL_MAU_BASE_PTR + 0x30)
-#define RTCESL_MAU_OP_CTRL        *(volatile uint32_t*)(RTCESL_MAU_BASE_PTR + 0x30)
-#define RTCESL_MAU_RES_STATUS_IE  *(volatile uint32_t*)(RTCESL_MAU_BASE_PTR + 0x38)
-#define RTCESL_MAU_RES_STATUS     *(volatile uint32_t*)(RTCESL_MAU_BASE_PTR + 0x3C)
+#if defined(RTCESL_MAU_INDIRECT_IS_LOW_ADDR0)
+  
+    #define RTCESL_MAU_IND_ADDR(base, dt, ds, mopc) ((base) | RTCESL_MAU_DT_SET(dt) | \
+                                                     RTCESL_MAU_RES_SET(ds) | RTCESL_MAU_MOPC_SET(mopc))
+
+    /* MAU Registers access macros */
+    #define RTCESL_MAU_RES0_ADDR      (RTCESL_MAU_BASE_PTR + 0x840)
+    #define RTCESL_MAU_RES1_ADDR      (RTCESL_MAU_BASE_PTR + 0x844)
+    #define RTCESL_MAU_RES2_ADDR      (RTCESL_MAU_BASE_PTR + 0x848)
+    #define RTCESL_MAU_RES3_ADDR      (RTCESL_MAU_BASE_PTR + 0x84C)
+    #define RTCESL_MAU_SYS_CTLR       *(volatile uint32_t*)(RTCESL_MAU_BASE_PTR + 0x810)
+    #define RTCESL_MAU_GEXP_STATUS_IE *(volatile uint32_t*)(RTCESL_MAU_BASE_PTR + 0x814)
+    #define RTCESL_MAU_GEXP_STATUS    *(volatile uint32_t*)(RTCESL_MAU_BASE_PTR + 0x818)
+    #define RTCESL_MAU_OP_CTRL        *(volatile uint32_t*)(RTCESL_MAU_BASE_PTR + 0x830)
+    #define RTCESL_MAU_RES_STATUS_IE  *(volatile uint32_t*)(RTCESL_MAU_BASE_PTR + 0x838)
+    #define RTCESL_MAU_RES_STATUS     *(volatile uint32_t*)(RTCESL_MAU_BASE_PTR + 0x83C)
+  
+#else
+ 
+    #define RTCESL_MAU_IND_ADDR(base, dt, ds, mopc) ((base) | 0x800U | RTCESL_MAU_DT_SET(dt) | \
+                                                     RTCESL_MAU_RES_SET(ds) | RTCESL_MAU_MOPC_SET(mopc))
+    /* MAU Registers access macros */
+    #define RTCESL_MAU_RES0_ADDR      (RTCESL_MAU_BASE_PTR + 0x40)
+    #define RTCESL_MAU_RES1_ADDR      (RTCESL_MAU_BASE_PTR + 0x44)
+    #define RTCESL_MAU_RES2_ADDR      (RTCESL_MAU_BASE_PTR + 0x48)
+    #define RTCESL_MAU_RES3_ADDR      (RTCESL_MAU_BASE_PTR + 0x4C)
+    #define RTCESL_MAU_SYS_CTLR       *(volatile uint32_t*)(RTCESL_MAU_BASE_PTR + 0x10)
+    #define RTCESL_MAU_GEXP_STATUS_IE *(volatile uint32_t*)(RTCESL_MAU_BASE_PTR + 0x14)
+    #define RTCESL_MAU_GEXP_STATUS    *(volatile uint32_t*)(RTCESL_MAU_BASE_PTR + 0x30)
+    #define RTCESL_MAU_OP_CTRL        *(volatile uint32_t*)(RTCESL_MAU_BASE_PTR + 0x30)
+    #define RTCESL_MAU_RES_STATUS_IE  *(volatile uint32_t*)(RTCESL_MAU_BASE_PTR + 0x38)
+    #define RTCESL_MAU_RES_STATUS     *(volatile uint32_t*)(RTCESL_MAU_BASE_PTR + 0x3C)
+
+#endif
+
 #define RTCESL_MAU_RES0           *(volatile uint32_t*)(RTCESL_MAU_RES0_ADDR)
 #define RTCESL_MAU_RES1           *(volatile uint32_t*)(RTCESL_MAU_RES1_ADDR)
 #define RTCESL_MAU_RES2           *(volatile uint32_t*)(RTCESL_MAU_RES2_ADDR)
@@ -94,6 +121,17 @@ extern "C" {
 #define RTCESL_MAU_MOPC_COS        8U
 #define RTCESL_MAU_MOPC_SIN        9U
 #define RTCESL_MAU_MOPC_ATAN       12
+
+/* Result register table definition */
+#define RTCESL_MAU_RES_DATA {\
+        {RTCESL_MAU_RES0_ADDR},\
+        {RTCESL_MAU_RES1_ADDR},\
+        {RTCESL_MAU_RES2_ADDR},\
+        {RTCESL_MAU_RES3_ADDR}\
+}
+
+/* Initialize structure array */
+static const RTCESL_MAU_RES_t rtcesl_mau_res_table[4] = RTCESL_MAU_RES_DATA;
     
 /*******************************************************************************
 * Types

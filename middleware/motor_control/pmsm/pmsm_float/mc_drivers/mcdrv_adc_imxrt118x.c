@@ -78,6 +78,9 @@ void MCDRV_CurrAndVoltDcBusGet(mcdrv_adc_t *this)
     this->ui16AdcCurrC = ((int16_t)(((uint16_t)(ADC2->RESFIFO[0] & ADC_RESFIFO_D_MASK))*12/11));
     /* FIFO_1 - conversion 2 */
     ui16Dummy = (ADC2->RESFIFO[1] & ADC_RESFIFO_D_MASK);
+    
+    /* warning suppression  */
+    NOT_USED(ui16Dummy);
       
     switch (*this->pui16SVMSector)
     {

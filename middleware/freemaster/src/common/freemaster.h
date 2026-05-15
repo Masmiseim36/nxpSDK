@@ -181,13 +181,18 @@ typedef struct
  * ASSERT functionality
  ******************************************************************************/
 
-#if defined(DEBUG) || (FMSTR_DEBUG_LEVEL > 0)
+/* Assertion tests and reaction may be provided by user */
+#ifndef FMSTR_ASSERT
+/* By default, use asserts only when enabled in user configuration */
+#if FMSTR_DEBUG_ASSERT
 #include <assert.h>
 #define FMSTR_ASSERT(condition) assert(condition)
 #else
 #define FMSTR_ASSERT(condition)
 #endif
+#endif
 
+/* This macro compiles to 'return' code with additional assertion check. */
 #define FMSTR_ASSERT_RETURN(condition, ret) \
     do                                      \
     {                                       \

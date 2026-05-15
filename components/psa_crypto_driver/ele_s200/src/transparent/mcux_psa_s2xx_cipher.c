@@ -16,10 +16,57 @@
 #include "mcux_psa_s2xx_init.h"
 #include "mcux_psa_s2xx_cipher.h"
 #include "mcux_psa_s2xx_common_compute.h"
+#include "mcux_psa_s2xx_common_key_management.h"
+#include "mcux_psa_util_wrapcheck_static_inline.h"
 
 /* To be able to include the PSA style configuration */
 #include "mbedtls/build_info.h"
 
+static psa_status_t translate_psa_cipher_to_ele_cipher(const psa_key_attributes_t *attributes,
+                                                 psa_algorithm_t alg,
+                                                 sss_algorithm_t *ele_algo)
+{
+    psa_status_t status     = PSA_ERROR_NOT_SUPPORTED;
+    psa_key_type_t key_type = psa_get_key_type(attributes);
+
+#if defined(PSA_WANT_KEY_TYPE_AES)
+    if (PSA_KEY_TYPE_AES == key_type)
+    {
+        status = PSA_SUCCESS;
+        switch (alg)
+        {
+#if defined(PSA_WANT_ALG_CBC_NO_PADDING)
+            case PSA_ALG_CBC_NO_PADDING:
+                *ele_algo = kAlgorithm_SSS_AES_CBC;
+                break;
+#endif /* PSA_WANT_ALG_CBC_NO_PADDING */
+#if defined(PSA_WANT_ALG_ECB_NO_PADDING)
+            case PSA_ALG_ECB_NO_PADDING:
+                *ele_algo = kAlgorithm_SSS_AES_ECB;
+                break;
+#endif /* PSA_WANT_ALG_ECB_NO_PADDING */
+#if defined(PSA_WANT_ALG_CTR)
+            case PSA_ALG_CTR:
+                *ele_algo = kAlgorithm_SSS_AES_CTR;
+                break;
+#endif /* PSA_WANT_ALG_CTR */
+            default:
+                status = PSA_ERROR_NOT_SUPPORTED;
+                break;
+        }
+    }
+#endif /* PSA_WANT_KEY_TYPE_AES */
+
+    return status;
+}
+
+/** \defgroup psa_cipher PSA transparent key driver entry points for ciphers
+ *
+ *  Entry points for cipher operations as described by the PSA Cryptoprocessor
+ *  Driver interface specification
+ *
+ *  @{
+ */
 psa_status_t ele_s2xx_transparent_cipher_encrypt(const psa_key_attributes_t *attributes,
                                                  const uint8_t *key_buffer,
                                                  size_t key_buffer_size,
@@ -45,6 +92,12 @@ psa_status_t ele_s2xx_transparent_cipher_encrypt(const psa_key_attributes_t *att
         return PSA_ERROR_INVALID_ARGUMENT;
     }
 
+    /* Wrapcheck for `PSA_BYTES_TO_BITS(key_buffer_size)` */
+    if (true == mcux_psa_mul_size_t_wrapcheck(key_buffer_size, 8u))
+    {
+        return PSA_ERROR_INVALID_ARGUMENT;
+    }
+
     /* Key size should match the key_bits in attribute */
     if (PSA_BYTES_TO_BITS(key_buffer_size) != key_bits)
     {
@@ -58,53 +111,30 @@ psa_status_t ele_s2xx_transparent_cipher_encrypt(const psa_key_attributes_t *att
         return PSA_ERROR_INVALID_ARGUMENT;
     }
 
-    switch (key_type)
+    /* IV buffer can't be NULL or size 0 for these algorithms */
+    if (PSA_ALG_CBC_NO_PADDING == alg ||
+        PSA_ALG_CTR == alg)
     {
-#if defined(PSA_WANT_KEY_TYPE_AES)
-        case PSA_KEY_TYPE_AES:
-            switch (alg)
-            {
-#if defined(PSA_WANT_ALG_CBC_NO_PADDING)
-                case PSA_ALG_CBC_NO_PADDING:
-                    ele_algo = kAlgorithm_SSS_AES_CBC;
-                    /* IV buffer can't be NULL or size 0 */
-                    if (NULL == iv || 0u == iv_length)
-                    {
-                        return PSA_ERROR_INVALID_ARGUMENT;
-                    }
-                    break;
-#endif /* PSA_WANT_ALG_CBC_NO_PADDING */
-#if defined(PSA_WANT_ALG_ECB_NO_PADDING)
-                case PSA_ALG_ECB_NO_PADDING:
-                    ele_algo = kAlgorithm_SSS_AES_ECB;
-                    /* PSA specification is not very clear on 0 input for ECB.
-                     * However software implementation and the tests return SUCCESS
-                     * for 0 input. So adding this check here.
-                     */
-                    if (input_length == 0u)
-                    {
-                        *output_length = 0;
-                        return PSA_SUCCESS;
-                    }
-                    break;
-#endif /* PSA_WANT_ALG_ECB_NO_PADDING */
-#if defined(PSA_WANT_ALG_CTR)
-                case PSA_ALG_CTR:
-                    ele_algo = kAlgorithm_SSS_AES_CTR;
-                    /* IV buffer can't be NULL or size 0 */
-                    if (NULL == iv || 0u == iv_length)
-                    {
-                        return PSA_ERROR_INVALID_ARGUMENT;
-                    }
-                    break;
-#endif /* PSA_WANT_ALG_CTR */
-                default:
-                    return PSA_ERROR_NOT_SUPPORTED;
-            } /* operation->alg */
-            break;
-#endif        /* PSA_WANT_KEY_TYPE_AES */
-        default:
-            return PSA_ERROR_NOT_SUPPORTED;
+        if (NULL == iv || 0u == iv_length)
+        {
+            return PSA_ERROR_INVALID_ARGUMENT;
+        }
+    }
+
+    /* PSA specification is not very clear on 0 input for ECB.
+     * However software implementation and the tests return SUCCESS
+     * for 0 input. So adding this check here and returning early.
+     */
+    if (PSA_ALG_ECB_NO_PADDING == alg && 0u == input_length)
+    {
+        *output_length = 0u;
+        return PSA_SUCCESS;
+    }
+
+    status = translate_psa_cipher_to_ele_cipher(attributes, alg, &ele_algo);
+    if (PSA_SUCCESS != status)
+    {
+        return status;
     }
 
     /* If input length or input buffer NULL, it;s an error.
@@ -135,29 +165,17 @@ psa_status_t ele_s2xx_transparent_cipher_encrypt(const psa_key_attributes_t *att
         return PSA_ERROR_INVALID_ARGUMENT;
     }
 
-    if (mcux_mutex_lock(&ele_hwcrypto_mutex))
+    if (mcux_mutex_lock(&ele_hwcrypto_mutex) != 0)
     {
-        return PSA_ERROR_COMMUNICATION_FAILURE;
+        return PSA_ERROR_SERVICE_FAILURE;
     }
 
-    if ((sss_sscp_key_object_init(&sssKey, &g_ele_ctx.keyStore)) != kStatus_SSS_Success)
+    status = ele_s2xx_set_key(&sssKey, 0u,  /* key id */
+                              key_buffer, key_buffer_size, kSSS_KeyPart_Default,
+                              kSSS_CipherType_AES, kSSS_KeyProp_CryptoAlgo_AES,
+                              key_buffer_size, key_bits);
+    if (PSA_SUCCESS != status)
     {
-        status = PSA_ERROR_GENERIC_ERROR;
-        goto exit;
-    }
-
-    if ((sss_sscp_key_object_allocate_handle(&sssKey, 1u, /* key id */
-                                             kSSS_KeyPart_Default, kSSS_CipherType_AES, key_buffer_size,
-                                             kSSS_KeyProp_CryptoAlgo_AES)) != kStatus_SSS_Success)
-    {
-        status = PSA_ERROR_GENERIC_ERROR;
-        goto exit;
-    }
-
-    if ((sss_sscp_key_store_set_key(&g_ele_ctx.keyStore, &sssKey, key_buffer, key_buffer_size,
-                                    PSA_BYTES_TO_BITS(key_buffer_size), kSSS_KeyPart_Default)) != kStatus_SSS_Success)
-    {
-        status = PSA_ERROR_GENERIC_ERROR;
         goto exit;
     }
 
@@ -171,11 +189,11 @@ psa_status_t ele_s2xx_transparent_cipher_encrypt(const psa_key_attributes_t *att
     *output_length = input_length;
 
 exit:
-    (void)sss_sscp_key_object_free(&sssKey, kSSS_keyObjFree_KeysStoreDefragment);
+    (void)ele_s2xx_delete_key(&sssKey);
 
-    if (mcux_mutex_unlock(&ele_hwcrypto_mutex))
+    if (mcux_mutex_unlock(&ele_hwcrypto_mutex) != 0)
     {
-        return PSA_ERROR_BAD_STATE;
+        return PSA_ERROR_SERVICE_FAILURE;
     }
 
     return status;
@@ -201,6 +219,12 @@ psa_status_t ele_s2xx_transparent_cipher_decrypt(const psa_key_attributes_t *att
     uint32_t iv_length          = 0u;
     uint32_t expected_op_length = 0u;
 
+    /* Wrapcheck for `PSA_BYTES_TO_BITS(key_buffer_size)` */
+    if (true == mcux_psa_mul_size_t_wrapcheck(key_buffer_size, 8u))
+    {
+        return PSA_ERROR_INVALID_ARGUMENT;
+    }
+
     if (PSA_BYTES_TO_BITS(key_buffer_size) != key_bits)
     {
         /* The attributes don't match the buffer given as input */
@@ -212,42 +236,20 @@ psa_status_t ele_s2xx_transparent_cipher_decrypt(const psa_key_attributes_t *att
         return PSA_ERROR_INVALID_ARGUMENT;
     }
 
-    switch (key_type)
+    /* PSA specification is not very clear on 0 input for ECB.
+     * However software implementation and the tests return SUCCESS
+     * for 0 input. So adding this check here and returning early.
+     */
+    if (PSA_ALG_ECB_NO_PADDING == alg && 0u == input_length)
     {
-#if defined(PSA_WANT_KEY_TYPE_AES)
-        case PSA_KEY_TYPE_AES:
-            switch (alg)
-            {
-#if defined(PSA_WANT_ALG_CBC_NO_PADDING)
-                case PSA_ALG_CBC_NO_PADDING:
-                    ele_algo = kAlgorithm_SSS_AES_CBC;
-                    break;
-#endif /* PSA_WANT_ALG_CBC_NO_PADDING */
-#if defined(PSA_WANT_ALG_ECB_NO_PADDING)
-                case PSA_ALG_ECB_NO_PADDING:
-                    ele_algo = kAlgorithm_SSS_AES_ECB;
-                    /* PSA specification is not very clear on 0 input for ECB.
-                     * However software implementation and the tests return SUCCESS
-                     * for 0 input. So adding this check here.
-                     */
-                    if (input_length == 0u)
-                    {
-                        *output_length = 0;
-                        return PSA_SUCCESS;
-                    }
-                    break;
-#endif /* PSA_WANT_ALG_ECB_NO_PADDING */
-#if defined(PSA_WANT_ALG_CTR)
-                case PSA_ALG_CTR:
-                    ele_algo = kAlgorithm_SSS_AES_CTR;
-#endif /* PSA_WANT_ALG_CTR */
-                default:
-                    return PSA_ERROR_NOT_SUPPORTED;
-            } /* operation->alg */
-            break;
-#endif        /* PSA_WANT_KEY_TYPE_AES */
-        default:
-            return PSA_ERROR_NOT_SUPPORTED;
+        *output_length = 0u;
+        return PSA_SUCCESS;
+    }
+
+    status = translate_psa_cipher_to_ele_cipher(attributes, alg, &ele_algo);
+    if (PSA_SUCCESS != status)
+    {
+        return status;
     }
 
     /* If input length or input buffer NULL, it;s an error.
@@ -285,29 +287,17 @@ psa_status_t ele_s2xx_transparent_cipher_decrypt(const psa_key_attributes_t *att
         return PSA_ERROR_BUFFER_TOO_SMALL;
     }
 
-    if (mcux_mutex_lock(&ele_hwcrypto_mutex))
+    if (mcux_mutex_lock(&ele_hwcrypto_mutex) != 0)
     {
-        return PSA_ERROR_COMMUNICATION_FAILURE;
+        return PSA_ERROR_SERVICE_FAILURE;
     }
 
-    if ((sss_sscp_key_object_init(&sssKey, &g_ele_ctx.keyStore)) != kStatus_SSS_Success)
+    status = ele_s2xx_set_key(&sssKey, 0u,  /* key id */
+                              key_buffer, key_buffer_size, kSSS_KeyPart_Default,
+                              kSSS_CipherType_AES, kSSS_KeyProp_CryptoAlgo_AES,
+                              key_buffer_size, key_bits);
+    if (PSA_SUCCESS != status)
     {
-        status = PSA_ERROR_GENERIC_ERROR;
-        goto exit;
-    }
-
-    if ((sss_sscp_key_object_allocate_handle(&sssKey, 1u, /* key id */
-                                             kSSS_KeyPart_Default, kSSS_CipherType_AES, key_buffer_size,
-                                             kSSS_KeyProp_CryptoAlgo_AES)) != kStatus_SSS_Success)
-    {
-        status = PSA_ERROR_GENERIC_ERROR;
-        goto exit;
-    }
-
-    if ((sss_sscp_key_store_set_key(&g_ele_ctx.keyStore, &sssKey, key_buffer, key_buffer_size,
-                                    PSA_BYTES_TO_BITS(key_buffer_size), kSSS_KeyPart_Default)) != kStatus_SSS_Success)
-    {
-        status = PSA_ERROR_GENERIC_ERROR;
         goto exit;
     }
 
@@ -321,12 +311,13 @@ psa_status_t ele_s2xx_transparent_cipher_decrypt(const psa_key_attributes_t *att
     *output_length = expected_op_length;
 
 exit:
-    (void)sss_sscp_key_object_free(&sssKey, kSSS_keyObjFree_KeysStoreDefragment);
+    (void)ele_s2xx_delete_key(&sssKey);
 
-    if (mcux_mutex_unlock(&ele_hwcrypto_mutex))
+    if (mcux_mutex_unlock(&ele_hwcrypto_mutex) != 0)
     {
-        return PSA_ERROR_BAD_STATE;
+        return PSA_ERROR_SERVICE_FAILURE;
     }
 
     return status;
 }
+/** @} */ // end of psa_cipher

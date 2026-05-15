@@ -137,7 +137,7 @@ hal_i2c_status_t HAL_I2cMasterInit(hal_i2c_master_handle_t handle, const hal_i2c
 
     assert(handle);
     assert(halI2cConfig);
-
+    assert(halI2cConfig->instance < ARRAY_SIZE(s_i3cBases));
     assert(HAL_I2C_MASTER_HANDLE_SIZE >= sizeof(hal_i3c_master_t));
 
     i3cMasterHandle = (hal_i3c_master_t *)handle;
@@ -159,6 +159,7 @@ hal_i2c_status_t HAL_I2cSlaveInit(hal_i2c_slave_handle_t handle, const hal_i2c_s
 
     assert(handle);
     assert(halI2cConfig);
+    assert(halI2cConfig->instance < ARRAY_SIZE(s_i3cBases));
 
     if (HAL_I2C_SLAVE_HANDLE_SIZE < sizeof(hal_i3c_slave_t))
     {

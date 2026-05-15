@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2023 NXP
+ * Copyright 2022-2023, 2025 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -21,8 +21,8 @@
  ******************************************************************************/
 /*! @name Driver version */
 /*! @{ */
-/*! @brief CLOCK driver version 2.1.3 */
-#define FSL_WM8962_DRIVER_VERSION (MAKE_VERSION(2, 2, 0))
+/*! @brief CLOCK driver version 2.2.1 */
+#define FSL_WM8962_DRIVER_VERSION (MAKE_VERSION(2, 2, 1))
 /*! @} */
 
 /*! @brief wm8962 handle size */

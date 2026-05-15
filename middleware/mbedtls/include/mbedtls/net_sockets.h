@@ -25,12 +25,9 @@
  */
 #ifndef MBEDTLS_NET_SOCKETS_H
 #define MBEDTLS_NET_SOCKETS_H
+#include "mbedtls/private_access.h"
 
-#if !defined(MBEDTLS_CONFIG_FILE)
-#include "mbedtls/config.h"
-#else
-#include MBEDTLS_CONFIG_FILE
-#endif
+#include "mbedtls/build_info.h"
 
 #include "mbedtls/ssl.h"
 
@@ -56,7 +53,7 @@
 /** Failed to get an IP address for the given hostname. */
 #define MBEDTLS_ERR_NET_UNKNOWN_HOST                      -0x0052
 /** Buffer is too small to hold the data. */
-#define MBEDTLS_ERR_NET_BUFFER_TOO_SMALL                  -0x0043
+#define MBEDTLS_ERR_NET_BUFFER_TOO_SMALL                  PSA_ERROR_BUFFER_TOO_SMALL
 /** The context is invalid, eg because it was free()ed. */
 #define MBEDTLS_ERR_NET_INVALID_CONTEXT                   -0x0045
 /** Polling the net context failed. */
@@ -84,7 +81,13 @@ extern "C" {
  * structures for hand-made UDP demultiplexing).
  */
 typedef struct mbedtls_net_context {
-    int fd;             /**< The underlying file descriptor                 */
+    /** The underlying file descriptor.
+     *
+     * This field is only guaranteed to be present on POSIX/Unix-like platforms.
+     * On other platforms, it may have a different type, have a different
+     * meaning, or be absent altogether.
+     */
+    int fd;
 }
 mbedtls_net_context;
 
@@ -144,11 +147,11 @@ int mbedtls_net_bind(mbedtls_net_context *ctx, const char *bind_ip, const char *
  *                  can be NULL if client_ip is null
  *
  * \return          0 if successful, or
- *                  MBEDTLS_ERR_NET_SOCKET_FAILED,
- *                  MBEDTLS_ERR_NET_BIND_FAILED,
- *                  MBEDTLS_ERR_NET_ACCEPT_FAILED, or
- *                  MBEDTLS_ERR_NET_BUFFER_TOO_SMALL if buf_size is too small,
- *                  MBEDTLS_ERR_SSL_WANT_READ if bind_fd was set to
+ *                  #MBEDTLS_ERR_NET_SOCKET_FAILED,
+ *                  #MBEDTLS_ERR_NET_BIND_FAILED,
+ *                  #MBEDTLS_ERR_NET_ACCEPT_FAILED, or
+ *                  #PSA_ERROR_BUFFER_TOO_SMALL if buf_size is too small,
+ *                  #MBEDTLS_ERR_SSL_WANT_READ if bind_fd was set to
  *                  non-blocking and accept() would block.
  */
 int mbedtls_net_accept(mbedtls_net_context *bind_ctx,

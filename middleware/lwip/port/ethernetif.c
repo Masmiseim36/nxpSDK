@@ -32,7 +32,7 @@
 
 /*
  * Copyright (c) 2013-2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2020,2022-2024 NXP
+ * Copyright 2016-2020,2022-2025 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -123,7 +123,7 @@ static netif_status_callback_fn ipv6_valid_state_user_cb;
  * Code
  ******************************************************************************/
 
-#if ETH_LINK_POLLING_INTERVAL_MS == 0 && NO_SYS == 0
+#if ETH_USE_GPIO_ADAPTER && ETH_LINK_POLLING_INTERVAL_MS == 0 && NO_SYS == 0
 static void phy_irq_synced_handler(void *arg)
 {
     struct netif *netif_ = (struct netif *)arg;
@@ -378,7 +378,7 @@ err_t ethernetif_init(struct netif *netif_,
     /* Start polling link state */
 #if ETH_LINK_POLLING_INTERVAL_MS > 0
     probe_link_cyclic(netif_);
-#elif NO_SYS == 0
+#elif ETH_USE_GPIO_ADAPTER && (NO_SYS == 0)
     if (ethernetifConfig->phyIntGpio != NULL)
     {
         hal_gpio_handle_t gpioHdl = ethernetif_get_int_gpio_hdl(netif_);
@@ -740,48 +740,74 @@ void set_ipv6_valid_state_cb(netif_status_callback_fn callback_fn)
 }
 #endif /* ((LWIP_IPV6 == 1) && (LWIP_NETIF_EXT_STATUS_CALLBACK == 1)) */
 
+#if !LWIP_ALLOW_MEM_FREE_FROM_OTHER_CONTEXT && !NO_SYS
+/**
+ * Simple callback function used with tcpip_callback to free a pbuf
+ * (pbuf_free has a wrong signature for tcpip_callback)
+ *
+ * @param p The pbuf (chain) to be dereferenced.
+ */
+static void ethernetif_pbuf_free_cb(void *p)
+{
+    struct pbuf *q = (struct pbuf *)p;
+    pbuf_free(q);
+}
+#endif /* !LWIP_ALLOW_MEM_FREE_FROM_OTHER_CONTEXT && !NO_SYS */
+
 void ethernetif_pbuf_free_safe(struct pbuf *p)
 {
-#if NO_SYS
-    /* bare metal */
-#ifdef __CA7_REV
-    if (SystemGetIRQNestingLevel())
-#else /* __CA7_REV */
-    if (__get_IPSR())
-#endif
-    {
-        /*
-         * Inside ISR and pbuf_free_callback is not available in bare metal,
-         * so need to assert if memory free from other context is enabled.
-         */
-        LWIP_ASSERT("Set LWIP_ALLOW_MEM_FREE_FROM_OTHER_CONTEXT", LWIP_ALLOW_MEM_FREE_FROM_OTHER_CONTEXT);
-    }
+#if LWIP_ALLOW_MEM_FREE_FROM_OTHER_CONTEXT
+    /*
+     * Memory free from other context is allowed.
+     * Just free the buffer directly,
+     * no matter if on bare-metal/OS or if inside ISR or not.
+     */
     pbuf_free(p);
 #else
-    err_t err;
+    /* Memory free from other context is not allowed. */
 
-    /*
-     * OS, try to schedule the pbuf_free on tcpip_thread, no matter
-     * if LWIP_ALLOW_MEM_FREE_FROM_OTHER_CONTEXT is enabled or not.
-     */
-    do
-    {
-        err = pbuf_free_callback(p);
-        if (err != ERR_OK)
-        {
 #ifdef __CA7_REV
-            if (SystemGetIRQNestingLevel())
-#else  /* __CA7_REV */
-            if (__get_IPSR())
-#endif
-            {
-                portYIELD_FROM_ISR(pdTRUE);
-            }
-            else
-            {
-                portYIELD();
-            }
-        }
-    } while (err != ERR_OK);
+    if (SystemGetIRQNestingLevel())
+#else
+    if (__get_IPSR())
+#endif /* __CA7_REV */
+    {
+        /* Inside ISR. */
+#if NO_SYS
+        /* Bare-metal, the function pbuf_free_callback is not available. */
+        LWIP_ASSERT("Enable LWIP_ALLOW_MEM_FREE_FROM_OTHER_CONTEXT to call pbuf_free from ISR", false);
+#else
+        /* OS, try to schedule pbuf_free on tcpip_thread. */
+        err_t err = pbuf_free_callback(p);
+
+        /* Check the result, if failed, there is not much we could do. */
+        LWIP_ASSERT("pbuf_free_callback from ISR failed", err == ERR_OK);
 #endif /* NO_SYS */
+    }
+    else
+    {
+#if NO_SYS
+        /* Not inside ISR, bare-metal. Just free the buffer directly. */
+        pbuf_free(p);
+#else
+        /* Not inside ISR, OS. */
+        err_t err;
+
+        do
+        {
+            /* Try to wait until pbuf_free is posted to the tcpip_thread queue. */
+            err = tcpip_callback(ethernetif_pbuf_free_cb, p);
+            if (err != ERR_OK)
+            {
+                /*
+                 * Failed, meaning MEMP_TCPIP_MSG_API pool is exhausted,
+                 * let other tasks run so they could potentially free
+                 * some resources and then try again.
+                 */
+                sys_msleep(1U);
+            }
+        } while (err != ERR_OK);
+#endif /* NO_SYS */
+    }
+#endif /* LWIP_ALLOW_MEM_FREE_FROM_OTHER_CONTEXT */
 }

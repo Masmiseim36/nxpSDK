@@ -27,6 +27,19 @@ struct zcbor_map_decode_key_val {
     bool found;
 };
 
+/* NXP - IAR adaptation*/
+#ifndef EBADMSG
+#define EBADMSG    77  /* Bad message */
+#endif
+
+#ifndef EADDRINUSE
+#define EADDRINUSE 112  /* Address already in use */
+#endif
+
+#ifndef ENOMSG
+#define ENOMSG     35  /* No message of desired type */
+#endif
+
 /** @brief Define single key-decoder mapping
  *
  * The macro creates a single zcbor_map_decode_key_val type object.

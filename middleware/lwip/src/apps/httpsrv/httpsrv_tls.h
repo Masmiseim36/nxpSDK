@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2018,2022 NXP
+ * Copyright 2016-2018,2022,2025 NXP
  * All rights reserved.
  *
  *
@@ -27,11 +27,12 @@ typedef WOLFSSL_CTX *httpsrv_tls_ctx_t;
 #if HTTPSRV_CFG_MBEDTLS_ENABLE
 #include "mbedtls/entropy.h"
 #include "mbedtls/ctr_drbg.h"
-#include "mbedtls/certs.h"
+#include "test/certs.h"
 #include "mbedtls/x509.h"
 #include "mbedtls/ssl.h"
 #include "mbedtls/ssl_cache.h"
 #include "mbedtls/debug.h"
+#include "psa/crypto.h"
 
 #ifndef MBEDTLS_THREADING_C
 /*
@@ -46,8 +47,6 @@ typedef mbedtls_ssl_context *httpsrv_tls_sock_t;
 
 typedef struct
 {
-    mbedtls_entropy_context entropy;
-    mbedtls_ctr_drbg_context ctr_drbg;
     mbedtls_ssl_config conf;
     mbedtls_x509_crt srvcert;
     mbedtls_pk_context pkey;

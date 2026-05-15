@@ -1,6 +1,6 @@
 /*
- * coreHTTP v3.0.0
- * Copyright (C) 2022 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
+ * coreHTTP v3.1.1
+ * Copyright (C) 2024 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
  *
  * SPDX-License-Identifier: MIT
  *
@@ -111,7 +111,18 @@
  *
  * This flag is valid only for #HTTPRequestInfo_t reqFlags parameter.
  */
-#define HTTP_REQUEST_KEEP_ALIVE_FLAG    0x1U
+#define HTTP_REQUEST_KEEP_ALIVE_FLAG       0x1U
+
+/**
+ * @ingroup http_request_flags
+ * @brief Set this flag to skip the User-Agent in the request headers.
+ *
+ * Setting this will cause the "User-Agent: <Value>" to be omitted in the
+ * request headers.
+ *
+ * This flag is valid only for #HTTPRequestInfo_t reqFlags parameter.
+ */
+#define HTTP_REQUEST_NO_USER_AGENT_FLAG    0x2U
 
 /**
  * @defgroup http_response_flags HTTPResponse_t Flags
@@ -143,6 +154,27 @@
 #define HTTP_RESPONSE_CONNECTION_KEEP_ALIVE_FLAG    0x2U
 
 /**
+ * @defgroup http_response_option_flags HTTPResponse_t Flags
+ * @brief Flags for #HTTPResponse_t.respOptionFlags.
+ * These flags control the behavior of response parsing.
+ *
+ * Flags should be bitwise-ORed with each other to change the behavior of
+ * #HTTPClient_ReceiveAndParseHttpResponse and #HTTPClient_Send.
+ */
+
+/**
+ * @ingroup http_response_option_flags
+ * @brief Set this flag to indicate that the response body should not be parsed.
+ *
+ * Setting this will cause parser to stop after parsing the headers. Portion of
+ * the raw body may be available in #HTTPResponse_t.pBody and
+ * #HTTPResponse_t.bodyLen.
+ *
+ * This flag is valid only for #HTTPResponse_t.respOptionFlags.
+ */
+#define HTTP_RESPONSE_DO_NOT_PARSE_BODY_FLAG    0x1U
+
+/**
  * @ingroup http_constants
  * @brief Flag that represents End of File byte in the range specification of
  * a Range Request.
@@ -154,7 +186,7 @@
  *  - When the requested range is for the last N bytes of the file.
  * In both cases, this value should be used for the "rangeEnd" parameter.
  */
-#define HTTP_RANGE_REQUEST_END_OF_FILE              -1
+#define HTTP_RANGE_REQUEST_END_OF_FILE          -1
 
 /**
  * @ingroup http_enum_types
@@ -279,6 +311,17 @@ typedef enum HTTPStatus
      * - #HTTPClient_Send
      */
     HTTPSecurityAlertInvalidContentLength,
+
+    /**
+     * @brief Represents the paused state of the HTTP parser.
+     *
+     * This state indicates that the parser has encountered a pause condition
+     * and is waiting for further input.
+     *
+     * @see HTTPClient_Send
+     * @see HTTPClient_ReceiveAndParseHttpResponse
+     */
+    HTTPParserPaused,
 
     /**
      * @brief An error occurred in the third-party parsing library.
@@ -518,6 +561,20 @@ typedef struct HTTPResponse
     size_t headerCount;
 
     /**
+     * @brief Indicates whether the HTTP response headers have been fully received.
+     *
+     * This variable is set to 1 after all headers have been received and processed by #HTTPClient_Send.
+     */
+    uint8_t areHeadersComplete;
+
+    /**
+     * @brief Flags to control the behavior of response parsing.
+     *
+     * Please see @ref http_response_option_flags for more information.
+     */
+    uint32_t respOptionFlags;
+
+    /**
      * @brief Flags of useful headers found in the response.
      *
      * This is updated by #HTTPClient_Send. Please see @ref http_response_flags
@@ -720,6 +777,69 @@ HTTPStatus_t HTTPClient_AddRangeHeader( HTTPRequestHeaders_t * pRequestHeaders,
 /* @[declare_httpclient_addrangeheader] */
 
 /**
+ * @brief Send the request headers in @p pRequestHeaders over the transport.
+ *
+ * If #HTTP_SEND_DISABLE_CONTENT_LENGTH_FLAG is not set in parameter @p sendFlags,
+ * then the Content-Length to be sent to the server is automatically written to
+ * @p pRequestHeaders. The Content-Length will not be written when there is
+ * no request body. If there is not enough room in the buffer to write the
+ * Content-Length then #HTTPInsufficientMemory is returned. Please see
+ * #HTTP_MAX_CONTENT_LENGTH_HEADER_LENGTH for the maximum Content-Length header
+ * field and value that could be written to the buffer.
+ *
+ * The application should close the connection with the server if any of the
+ * following errors are returned:
+ * - #HTTPSecurityAlertExtraneousResponseData
+ * - #HTTPSecurityAlertInvalidChunkHeader
+ * - #HTTPSecurityAlertInvalidProtocolVersion
+ * - #HTTPSecurityAlertInvalidStatusCode
+ * - #HTTPSecurityAlertInvalidCharacter
+ * - #HTTPSecurityAlertInvalidContentLength
+ *
+ *
+ * @param[in] pTransport Transport interface, see #TransportInterface_t for
+ * more information.
+ * @param[in] getTimestampMs Function to retrieve a timestamp in milliseconds.
+ * @param[in] pRequestHeaders Request configuration containing the buffer of headers to
+ * send.
+ * @param[in] reqBodyLen The length of the request entity in bytes.
+ * @param[in] sendFlags Flags which modify the behavior of this function. Please see @ref
+ * http_send_flags for more information.
+ *
+ * @return #HTTPSuccess if successful. If there was a network error or less
+ * bytes than what were specified were sent, then #HTTPNetworkError is
+ * returned.
+ *
+ */
+/* @[declare_httpclient_sendhttpheaders] */
+HTTPStatus_t HTTPClient_SendHttpHeaders( const TransportInterface_t * pTransport,
+                                         HTTPClient_GetCurrentTimeFunc_t getTimestampMs,
+                                         HTTPRequestHeaders_t * pRequestHeaders,
+                                         size_t reqBodyLen,
+                                         uint32_t sendFlags );
+/* @[declare_httpclient_sendhttpheaders] */
+
+/**
+ * @brief Send the request body in @p pRequestBodyBuf over the transport.
+ *
+ * @param[in] pTransport Transport interface, see #TransportInterface_t for
+ * more information.
+ * @param[in] getTimestampMs Function to retrieve a timestamp in milliseconds.
+ * @param[in] pData HTTP request data to send.
+ * @param[in] dataLen HTTP request data length.
+ *
+ * @return #HTTPSuccess if successful. If there was a network error or less
+ * bytes than what were specified were sent, then #HTTPNetworkError is
+ * returned.
+ */
+/* @[declare_httpclient_sendhttpdata] */
+HTTPStatus_t HTTPClient_SendHttpData( const TransportInterface_t * pTransport,
+                                      HTTPClient_GetCurrentTimeFunc_t getTimestampMs,
+                                      const uint8_t * pData,
+                                      size_t dataLen );
+/* @[declare_httpclient_sendhttpdata] */
+
+/**
  * @brief Send the request headers in #HTTPRequestHeaders_t.pBuffer and request
  * body in @p pRequestBodyBuf over the transport. The response is received in
  * #HTTPResponse_t.pBuffer.
@@ -820,6 +940,27 @@ HTTPStatus_t HTTPClient_Send( const TransportInterface_t * pTransport,
                               HTTPResponse_t * pResponse,
                               uint32_t sendFlags );
 /* @[declare_httpclient_send] */
+
+/**
+ * @brief Receive the HTTP response from the network and parse it.
+ *
+ * @param[in] pTransport Transport interface, see #TransportInterface_t for more
+ *  information.
+ * @param[in] pResponse The response message and some notable response parameters will be
+ * returned here on success.
+ * @param[in] pRequestHeaders Request configuration containing the buffer of headers to
+ * send.
+ *
+ * @return Returns #HTTPSuccess if successful. #HTTPNetworkError for a transport
+ * receive error. Please see #parseHttpResponse and #getFinalResponseStatus for
+ * other statuses returned.
+ *
+ */
+/* @[declare_httpclient_receiveandparsehttpresponse] */
+HTTPStatus_t HTTPClient_ReceiveAndParseHttpResponse( const TransportInterface_t * pTransport,
+                                                     HTTPResponse_t * pResponse,
+                                                     const HTTPRequestHeaders_t * pRequestHeaders );
+/* @[declare_httpclient_receiveandparsehttpresponse] */
 
 /**
  * @brief Read a header from a buffer containing a complete HTTP response.

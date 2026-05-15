@@ -6,11 +6,9 @@
  *  SPDX-License-Identifier: Apache-2.0 OR GPL-2.0-or-later
  */
 
-#if !defined(MBEDTLS_CONFIG_FILE)
-#include "mbedtls/config.h"
-#else
-#include MBEDTLS_CONFIG_FILE
-#endif
+#define MBEDTLS_DECLARE_PRIVATE_IDENTIFIERS
+
+#include "mbedtls/build_info.h"
 
 #include "mbedtls/platform.h"
 
@@ -45,8 +43,8 @@ int main(void)
 
 #include "mbedtls/net_sockets.h"
 #include "mbedtls/ssl.h"
-#include "mbedtls/entropy.h"
-#include "mbedtls/ctr_drbg.h"
+#include "mbedtls/private/entropy.h"
+#include "mbedtls/private/ctr_drbg.h"
 
 #include <sys/socket.h>
 #include <netinet/in.h>
@@ -74,7 +72,7 @@ const char psk_id[] = "Client_identity";
 #endif
 
 #if defined(MBEDTLS_X509_CRT_PARSE_C)
-/* This is tests/data_files/test-ca2.crt, a CA using EC secp384r1 */
+/* This is framework/data_files/test-ca2.crt, a CA using EC secp384r1 */
 const unsigned char ca_cert[] = {
     0x30, 0x82, 0x02, 0x52, 0x30, 0x82, 0x01, 0xd7, 0xa0, 0x03, 0x02, 0x01,
     0x02, 0x02, 0x09, 0x00, 0xc1, 0x43, 0xe2, 0x7e, 0x62, 0x43, 0xcc, 0xe8,
@@ -169,13 +167,11 @@ int main(void)
 #endif
     mbedtls_entropy_init(&entropy);
 
-#if defined(MBEDTLS_USE_PSA_CRYPTO)
     psa_status_t status = psa_crypto_init();
     if (status != PSA_SUCCESS) {
         ret = MBEDTLS_ERR_SSL_HW_ACCEL_FAILED;
         goto exit;
     }
-#endif /* MBEDTLS_USE_PSA_CRYPTO */
 
     if (mbedtls_ctr_drbg_seed(&ctr_drbg, mbedtls_entropy_func, &entropy,
                               (const unsigned char *) pers, strlen(pers)) != 0) {
@@ -190,8 +186,6 @@ int main(void)
         ret = ssl_config_defaults_failed;
         goto exit;
     }
-
-    mbedtls_ssl_conf_rng(&conf, mbedtls_ctr_drbg_random, &ctr_drbg);
 
 #if defined(MBEDTLS_KEY_EXCHANGE_SOME_PSK_ENABLED)
     mbedtls_ssl_conf_psk(&conf, psk, sizeof(psk),
@@ -269,9 +263,7 @@ exit:
 #if defined(MBEDTLS_X509_CRT_PARSE_C)
     mbedtls_x509_crt_free(&ca);
 #endif
-#if defined(MBEDTLS_USE_PSA_CRYPTO)
     mbedtls_psa_crypto_free();
-#endif /* MBEDTLS_USE_PSA_CRYPTO */
 
     mbedtls_exit(ret);
 }

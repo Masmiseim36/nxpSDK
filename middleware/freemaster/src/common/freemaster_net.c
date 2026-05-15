@@ -181,7 +181,7 @@ static void _FMSTR_NetSendSessionFrame(FMSTR_SIZE nLength, FMSTR_U8 statusCode, 
     FMSTR_BPTR pResponse;
 
     /* Maximum length we can put to output buffer. */
-    FMSTR_ASSERT_RETURN(nLength < (FMSTR_SIZE)FMSTR_COMM_BUFFER_SIZE, /* void */);
+    FMSTR_ASSERT_RETURN(nLength <= (FMSTR_SIZE)FMSTR_COMM_BUFFER_SIZE, /* void */);
     
     pMessageIO = &ses->ioBuffer[0];
 

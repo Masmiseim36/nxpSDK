@@ -130,15 +130,15 @@ psa_status_t ele_s4xx_transparent_cipher_encrypt(
     ctx.size = input_length;
     ctx.mode = kEncrypt;
 
-    if (mcux_mutex_lock(&ele_hwcrypto_mutex)) {
-        return PSA_ERROR_COMMUNICATION_FAILURE;
+    if (mcux_mutex_lock(&ele_hwcrypto_mutex) != 0) {
+        return PSA_ERROR_SERVICE_FAILURE;
     }
 
     ele_status = ELE_GenericCipher(S3MU, &ctx);
     status = ele_to_psa_status(ele_status);
 
-    if (mcux_mutex_unlock(&ele_hwcrypto_mutex)) {
-        return PSA_ERROR_BAD_STATE;
+    if (mcux_mutex_unlock(&ele_hwcrypto_mutex) != 0) {
+        return PSA_ERROR_SERVICE_FAILURE;
     }
 
     *output_length = input_length;
@@ -256,15 +256,15 @@ psa_status_t ele_s4xx_transparent_cipher_decrypt(
     ctx.size = expected_op_length;
     ctx.mode = kDecrypt;
 
-    if (mcux_mutex_lock(&ele_hwcrypto_mutex)) {
-        return PSA_ERROR_COMMUNICATION_FAILURE;
+    if (mcux_mutex_lock(&ele_hwcrypto_mutex) != 0) {
+        return PSA_ERROR_SERVICE_FAILURE;
     }
 
     ele_status = ELE_GenericCipher(S3MU, &ctx);
     status = ele_to_psa_status(ele_status);
 
-    if (mcux_mutex_unlock(&ele_hwcrypto_mutex)) {
-        return PSA_ERROR_BAD_STATE;
+    if (mcux_mutex_unlock(&ele_hwcrypto_mutex) != 0) {
+        return PSA_ERROR_SERVICE_FAILURE;
     }
 
     *output_length = expected_op_length;

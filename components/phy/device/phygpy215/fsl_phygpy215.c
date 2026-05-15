@@ -1,5 +1,5 @@
 /*
- * Copyright 2020-2025 NXP
+ * Copyright 2020-2026 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -77,15 +77,12 @@
 /*! @brief Defines the timeout macro. */
 #define PHY_READID_TIMEOUT_COUNT (1000U)
 
+/*! @brief Defines minimal PHY access delay so next access does not fail */
+#ifndef PHY_ACCESS_DELAY_COUNT
+#define PHY_ACCESS_DELAY_COUNT (200000U)
+#endif
+
 /*! @brief Defines the PHY resource interface. */
-#define PHY_GPY215_WRITE(handle, regAddr, data) \
-    (((phy_gpy215_resource_t *)(handle)->resource)->write((handle)->phyAddr, regAddr, data))
-#define PHY_GPY215_READ(handle, regAddr, pData) \
-    (((phy_gpy215_resource_t *)(handle)->resource)->read((handle)->phyAddr, regAddr, pData))
-#define PHY_GPY215_WRITE_EXT(handle, devAddr, regAddr, data) \
-    ((phy_gpy215_resource_t *)(handle)->resource)->writeExt((handle)->phyAddr, devAddr, regAddr, data)
-#define PHY_GPY215_READ_EXT(handle, devAddr, regAddr, pData) \
-    ((phy_gpy215_resource_t *)(handle)->resource)->readExt((handle)->phyAddr, devAddr, regAddr, pData)
 #define PHY_GPY215_HAS_C45(handle)                                      \
     (((phy_gpy215_resource_t *)(handle)->resource)->readExt != NULL) && \
     (((phy_gpy215_resource_t *)(handle)->resource)->writeExt != NULL)
@@ -122,6 +119,52 @@ const phy_operations_t phygpy215_ops = {.phyInit             = PHY_GPY215_Init,
  * Code
  ******************************************************************************/
 
+static void PHY_GPY215_AccessDelay(void)
+{
+    volatile uint32_t counter = PHY_ACCESS_DELAY_COUNT;
+
+    while (counter != 0U)
+    {
+        counter--;
+    }
+}
+
+status_t PHY_GPY215_Write(phy_handle_t *handle, uint8_t phyReg, uint16_t data)
+{
+    status_t status = ((phy_gpy215_resource_t *)(handle)->resource)->write((handle)->phyAddr, phyReg, data);
+
+    PHY_GPY215_AccessDelay();
+
+    return status;
+}
+
+status_t PHY_GPY215_Read(phy_handle_t *handle, uint8_t phyReg, uint16_t *pData)
+{
+    status_t status = ((phy_gpy215_resource_t *)(handle)->resource)->read((handle)->phyAddr, phyReg, pData);
+
+    PHY_GPY215_AccessDelay();
+
+    return status;
+}
+
+status_t PHY_GPY215_WriteC45(phy_handle_t *handle, uint8_t devAddr, uint16_t regAddr, uint16_t data)
+{
+    status_t status = ((phy_gpy215_resource_t *)(handle)->resource)->writeExt((handle)->phyAddr, devAddr, regAddr, data);
+
+    PHY_GPY215_AccessDelay();
+
+    return status;
+}
+
+status_t PHY_GPY215_ReadC45(phy_handle_t *handle, uint8_t devAddr, uint16_t regAddr, uint16_t *pData)
+{
+    status_t status = ((phy_gpy215_resource_t *)(handle)->resource)->readExt((handle)->phyAddr, devAddr, regAddr, pData);
+
+    PHY_GPY215_AccessDelay();
+
+    return status;
+}
+
 status_t PHY_GPY215_Init(phy_handle_t *handle, const phy_config_t *config)
 {
     uint32_t counter  = PHY_READID_TIMEOUT_COUNT;
@@ -156,7 +199,7 @@ status_t PHY_GPY215_Init(phy_handle_t *handle, const phy_config_t *config)
     /* Check PHY ID. */
     do
     {
-        result = PHY_GPY215_READ(handle, PHY_ID1_REG, &regValue);
+        result = PHY_GPY215_Read(handle, PHY_ID1_REG, &regValue);
         if (result != kStatus_Success)
         {
             return result;
@@ -170,7 +213,7 @@ status_t PHY_GPY215_Init(phy_handle_t *handle, const phy_config_t *config)
     }
 
     /* Reset PHY. */
-    result = PHY_GPY215_WRITE(handle, PHY_BASICCONTROL_REG, STD_CTRL_RST_MASK);
+    result = PHY_GPY215_Write(handle, PHY_BASICCONTROL_REG, STD_CTRL_RST_MASK);
     if (result != kStatus_Success)
     {
         return result;
@@ -179,7 +222,7 @@ status_t PHY_GPY215_Init(phy_handle_t *handle, const phy_config_t *config)
     /* Wait for reset to complete. */
     do
     {
-        result = PHY_GPY215_READ(handle, PHY_BASICCONTROL_REG, &regValue);
+        result = PHY_GPY215_Read(handle, PHY_BASICCONTROL_REG, &regValue);
         if (result != kStatus_Success)
         {
             return result;
@@ -256,26 +299,6 @@ status_t PHY_GPY215_Init(phy_handle_t *handle, const phy_config_t *config)
     return result;
 }
 
-status_t PHY_GPY215_Write(phy_handle_t *handle, uint8_t phyReg, uint16_t data)
-{
-    return PHY_GPY215_WRITE(handle, phyReg, data);
-}
-
-status_t PHY_GPY215_Read(phy_handle_t *handle, uint8_t phyReg, uint16_t *pData)
-{
-    return PHY_GPY215_READ(handle, phyReg, pData);
-}
-
-status_t PHY_GPY215_WriteC45(phy_handle_t *handle, uint8_t devAddr, uint16_t regAddr, uint16_t data)
-{
-    return PHY_GPY215_WRITE_EXT(handle, devAddr, regAddr, data);
-}
-
-status_t PHY_GPY215_ReadC45(phy_handle_t *handle, uint8_t devAddr, uint16_t regAddr, uint16_t *pData)
-{
-    return PHY_GPY215_READ_EXT(handle, devAddr, regAddr, pData);
-}
-
 status_t PHY_GPY215_GetAutoNegotiationStatus(phy_handle_t *handle, bool *status)
 {
     assert(status);
@@ -291,7 +314,7 @@ status_t PHY_GPY215_GetAutoNegotiationStatus(phy_handle_t *handle, bool *status)
     *status = false;
 
     /* Check auto negotiation complete. */
-    result = PHY_GPY215_READ(handle, PHY_BASICSTATUS_REG, &regValue);
+    result = PHY_GPY215_Read(handle, PHY_BASICSTATUS_REG, &regValue);
     if (result == kStatus_Success)
     {
         if ((regValue & PHY_BSTATUS_AUTONEGCOMP_MASK) != 0U)
@@ -315,7 +338,7 @@ status_t PHY_GPY215_GetLinkStatus(phy_handle_t *handle, bool *status)
     }
 
     /* Read the basic status register. */
-    result = PHY_GPY215_READ(handle, PHY_BASICSTATUS_REG, &regValue);
+    result = PHY_GPY215_Read(handle, PHY_BASICSTATUS_REG, &regValue);
     if (result == kStatus_Success)
     {
         if ((regValue & PHY_BSTATUS_LINKSTATUS_MASK) != 0U)
@@ -340,7 +363,7 @@ status_t PHY_GPY215_GetLinkSpeedDuplex(phy_handle_t *handle, phy_speed_t *speed,
     uint16_t regValue;
 
     /* Read the media-independent interface status register. */
-    result = PHY_GPY215_READ(handle, PHY_MIISTAT_REG, &regValue);
+    result = PHY_GPY215_Read(handle, PHY_MIISTAT_REG, &regValue);
     if (result != kStatus_Success)
     {
         return result;
@@ -402,7 +425,7 @@ status_t PHY_GPY215_SetLinkSpeedDuplex(phy_handle_t *handle, phy_speed_t speed, 
     result = PHY_GPY215_SetLinkSpeed(handle, speed);
 
     /* Set duplex mode. */
-    result = PHY_GPY215_READ(handle, PHY_BASICCONTROL_REG, &regValue);
+    result = PHY_GPY215_Read(handle, PHY_BASICCONTROL_REG, &regValue);
     if (result != kStatus_Success)
     {
         return result;
@@ -454,7 +477,7 @@ status_t PHY_GPY215_EnableLoopback(phy_handle_t *handle, phy_loop_t mode, phy_sp
         }
     }
 
-    result = PHY_GPY215_READ(handle, PHY_BASICCONTROL_REG, &regValue);
+    result = PHY_GPY215_Read(handle, PHY_BASICCONTROL_REG, &regValue);
     if (result != kStatus_Success)
     {
         return result;
@@ -464,14 +487,14 @@ status_t PHY_GPY215_EnableLoopback(phy_handle_t *handle, phy_loop_t mode, phy_sp
     {
         /* Enable loopback. */
         regValue |= STD_CTRL_LB_MASK;
-        return PHY_GPY215_WRITE(handle, PHY_BASICCONTROL_REG, regValue);
+        return PHY_GPY215_Write(handle, PHY_BASICCONTROL_REG, regValue);
     }
     else
     {
         /* Disable loopback and restart autonegotiation if enabled. */
         regValue &= ~STD_CTRL_LB_MASK;
         regValue |= STD_CTRL_ANRS_MASK;
-        return PHY_GPY215_WRITE(handle, PHY_BASICCONTROL_REG, regValue);
+        return PHY_GPY215_Write(handle, PHY_BASICCONTROL_REG, regValue);
     }
 }
 
@@ -505,14 +528,14 @@ status_t PHY_GPY215_EnableLinkInterrupt(phy_handle_t *handle, phy_interrupt_type
                     PHY_IMASK_ANC_MASK);
     }
 
-    return PHY_GPY215_WRITE(handle, PHY_IMASK_REG, regValue);
+    return PHY_GPY215_Write(handle, PHY_IMASK_REG, regValue);
 }
 
 status_t PHY_GPY215_ClearInterrupt(phy_handle_t *handle)
 {
     uint16_t regValue;
 
-    return PHY_GPY215_READ(handle, PHY_ISTAT_REG, &regValue);    
+    return PHY_GPY215_Read(handle, PHY_ISTAT_REG, &regValue);
 }
 
 static status_t PHY_GPY215_SetLinkSpeed(phy_handle_t *handle, phy_speed_t speed)
@@ -587,21 +610,21 @@ static status_t PHY_GPY215_MMD_SetDevice(phy_handle_t *handle,
     status_t result;
 
     /* Set Function mode of address access(b00) and device address. */
-    result = PHY_GPY215_WRITE(handle, PHY_MMD_ACCESS_CONTROL_REG, device);
+    result = PHY_GPY215_Write(handle, PHY_MMD_ACCESS_CONTROL_REG, device);
     if (result != kStatus_Success)
     {
         return result;
     }
 
     /* Set register address. */
-    result = PHY_GPY215_WRITE(handle, PHY_MMD_ACCESS_DATA_REG, addr);
+    result = PHY_GPY215_Write(handle, PHY_MMD_ACCESS_DATA_REG, addr);
     if (result != kStatus_Success)
     {
         return result;
     }
 
     /* Set Function mode of data access(b01~11) and device address. */
-    return PHY_GPY215_WRITE(handle, PHY_MMD_ACCESS_CONTROL_REG, (uint16_t)mode | (uint16_t)device);
+    return PHY_GPY215_Write(handle, PHY_MMD_ACCESS_CONTROL_REG, (uint16_t)mode | (uint16_t)device);
 }
 
 static status_t PHY_GPY215_MMD_Read(phy_handle_t *handle, uint8_t device, uint16_t addr, uint16_t *data)
@@ -610,14 +633,14 @@ static status_t PHY_GPY215_MMD_Read(phy_handle_t *handle, uint8_t device, uint16
     
     if (PHY_GPY215_HAS_C45(handle))
     {
-        result = PHY_GPY215_READ_EXT(handle, device, addr, data);
+        result = PHY_GPY215_ReadC45(handle, device, addr, data);
     }
     else
     {
         result = PHY_GPY215_MMD_SetDevice(handle, device, addr, kPHY_MMDAccessNoPostIncrement);
         if (result == kStatus_Success)
         {
-            result = PHY_GPY215_READ(handle, PHY_MMD_ACCESS_DATA_REG, data);
+            result = PHY_GPY215_Read(handle, PHY_MMD_ACCESS_DATA_REG, data);
         }
     }
 
@@ -630,14 +653,14 @@ static status_t PHY_GPY215_MMD_Write(phy_handle_t *handle, uint8_t device, uint1
 
     if (PHY_GPY215_HAS_C45(handle))
     {
-        result = PHY_GPY215_WRITE_EXT(handle, device, addr, data);
+        result = PHY_GPY215_WriteC45(handle, device, addr, data);
     }
     else
     {
         result = PHY_GPY215_MMD_SetDevice(handle, device, addr, kPHY_MMDAccessNoPostIncrement);
         if (result == kStatus_Success)
         {
-            result = PHY_GPY215_WRITE(handle, PHY_MMD_ACCESS_DATA_REG, data);
+            result = PHY_GPY215_Write(handle, PHY_MMD_ACCESS_DATA_REG, data);
         }
     }
 

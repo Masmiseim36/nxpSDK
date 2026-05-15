@@ -23,6 +23,93 @@
  */
 
 /*
+ * UPGRADE MODE
+ *
+ * NXP supports several upgrade modes defined below.
+ * Refer to ota_examples\_doc documentation for more information.
+ */
+
+#if (defined(CONFIG_BOOT_MODE_OVERWRITE_ONLY) + \
+     defined(CONFIG_BOOT_MODE_FLASH_REMAP) + \
+     defined(CONFIG_BOOT_MODE_ENCRYPTED_XIP) + \
+     defined(CONFIG_BOOT_MODE_SINGLE_APPLICATION_SLOT) + \
+     defined(CONFIG_BOOT_MODE_SWAP)) != 1
+#error "An upgrade mode must be defined"
+#endif
+
+#if defined(CONFIG_BOOT_MODE_OVERWRITE_ONLY)
+
+/* Upgrade mode: OVERWRITE_ONLY */
+#define MCUBOOT_OVERWRITE_ONLY
+#define UPGRADE_MODE  "OVERWRITE ONLY"
+/* Uncomment to only erase and overwrite those primary slot sectors needed
+ * to install the new image, rather than the entire image slot. */
+//#define MCUBOOT_OVERWRITE_ONLY_FAST
+
+#elif defined(CONFIG_BOOT_MODE_FLASH_REMAP)
+
+/* Upgrade mode: DIRECT-XIP + FLASH REMAP */
+#define MCUBOOT_DIRECT_XIP
+#define MCUBOOT_DIRECT_XIP_REVERT
+#define UPGRADE_MODE  "FLASH REMAP"
+
+#elif defined(CONFIG_BOOT_MODE_ENCRYPTED_XIP)
+
+/* Upgrade mode: OVERWRITE_ONLY + ENCRYPTED XIP extension */
+#define MCUBOOT_OVERWRITE_ONLY
+#define MCUBOOT_OVERWRITE_ONLY_FAST
+#define MCUBOOT_IMAGE_ACCESS_HOOKS
+#define UPGRADE_MODE  "ENCRYPTED XIP"
+
+#elif defined(CONFIG_BOOT_MODE_SINGLE_APPLICATION_SLOT)
+
+/* Upgrade mode: SINGLE_APPLICATION_SLOT */
+#define MCUBOOT_SINGLE_APPLICATION_SLOT
+#define UPGRADE_MODE  "SINGLE APPLICATION SLOT"
+
+#elif defined(CONFIG_BOOT_MODE_SWAP)
+
+/* Upgrade mode: SWAP MODE */ 
+#define MCUBOOT_SWAP_USING_MOVE 1
+#define UPGRADE_MODE  "SWAP"
+
+#else
+
+#error "An upgrade mode is not defined"
+
+#endif /* Upgrade mode */
+
+/*
+ * CRYPTOGRAPHIC SETTINGS
+ */
+
+/* 
+ * Cryptographic backend
+ *
+ * You must choose between PSA, mbedTLS or Tinycrypt as source of
+ * cryptographic primitives.
+ */
+/* Use mbedTLS legacy API (no hw acceleration) */
+#if defined(CONFIG_BOOT_USE_MBEDTLS)
+#define MCUBOOT_USE_MBED_TLS
+#endif
+
+/* Use PSA Crypto API (hw acceleration support) - experimental */
+#if defined(CONFIG_BOOT_USE_PSA_CRYPTO)   
+#define MCUBOOT_USE_PSA_CRYPTO
+#endif
+
+/* Uncomment to use lightweight TinyCrypt */
+#ifdef CONFIG_BOOT_USE_TINYCRYPT
+#define MCUBOOT_USE_TINYCRYPT
+#endif
+
+#if (defined(CONFIG_BOOT_USE_MBEDTLS) + defined(CONFIG_BOOT_USE_PSA_CRYPTO) + \
+    defined(CONFIG_BOOT_USE_TINYCRYPT)) > 1
+#error "Only one crypto backend can be enabled"
+#endif
+
+/*
  * Signature types
  *
  * You must choose exactly one signature type.
@@ -42,90 +129,39 @@
 #define MCUBOOT_SIGN_ED25519
 #endif
 
+/*
+ * Encrypted image
+ *
+ * You must choose exactly one encryption type.
+ */
+
+#if defined(CONFIG_BOOT_MODE_ENCRYPTED_XIP) && defined(CONFIG_BOOT_USE_PSA_CRYPTO)
+#error "Currently Encrypted XIP is not supported with PSA Crypto API"
+#endif
+
+#ifdef CONFIG_BOOT_ENCRYPT_RSA
+#define MCUBOOT_ENC_IMAGES
+#define MCUBOOT_ENCRYPT_RSA
+#endif
+
+#ifdef CONFIG_BOOT_ENCRYPT_EC256
+#define MCUBOOT_ENC_IMAGES
+#define MCUBOOT_ENCRYPT_EC256
+#endif
+
+/*
+ * Serial recovery
+ */
+#define MCUBOOT_ERASE_PROGRESSIVELY
+#define MCUBOOT_BOOT_MGMT_ECHO
+
+#if defined(CONFIG_BOOT_SERIAL_RECOVERY) && defined(CONFIG_BOOT_MODE_ENCRYPTED_XIP)
+#warning "Serial recovery currently doesn't support encrypted XIP mode"
+#endif
 
 /* Uncomment to enable Hardware Key */
 #ifdef CONFIG_BOOT_HW_KEY
 #define MCUBOOT_HW_KEY
-#endif
-
-/*
- * Upgrade mode
- *
- * The default is to support A/B image swapping with rollback.  A
- * simpler code path, which only supports overwriting the
- * existing image with the update image, is also available.
- *
- * In case of supported flash remap funcionality in the used processor the
- * direct-xip mode is configured.
- */
-
-#ifdef CONFIG_BOOT_OVERWRITE_ONLY
-#define MCUBOOT_OVERWRITE_ONLY
-#endif
-
-
-#ifndef MCUBOOT_OVERWRITE_ONLY
-   
-#if defined(CONFIG_ENCRYPT_XIP_EXT_ENABLE) && defined(CONFIG_MCUBOOT_FLASH_REMAP_ENABLE)
-#error "Flash remap support cannot be combined with encrypted xip support"
-#endif
-   
-#ifdef CONFIG_MCUBOOT_FLASH_REMAP_ENABLE
-
-/* Upgrade mode: DIRECT-XIP + FLASH REMAP */ 
-#define MCUBOOT_DIRECT_XIP
-#define MCUBOOT_DIRECT_XIP_REVERT
-
-#elif defined(CONFIG_ENCRYPT_XIP_EXT_ENABLE)
-
-/* Upgrade mode: ENCRYPTED XIP */
-#define CONFIG_BOOT_ENCRYPT_RSA
-#if defined(CONFIG_ENCRYPT_XIP_EXT_OVERWRITE_ONLY)
-/* Upgrade mode: ENCRYPTED XIP - overwrite only */
-#define MCUBOOT_OVERWRITE_ONLY
-#define MCUBOOT_OVERWRITE_ONLY_FAST
-#define MCUBOOT_IMAGE_ACCESS_HOOKS
-#else
-/* Upgrade mode: ENCRYPTED XIP - three slots */
-#define MCUBOOT_DIRECT_XIP
-#define MCUBOOT_DIRECT_XIP_REVERT
-#endif /* CONFIG_ENCRYPT_XIP_EXT_OVERWRITE_ONLY */
-
-#else
-
-/* Upgrade mode: SWAP MODE (default) */ 
-#ifndef CONFIG_BOOT_SWAP_USING_MOVE
-#define CONFIG_BOOT_SWAP_USING_MOVE
-#endif
-#define MCUBOOT_SWAP_USING_MOVE 1
-
-#endif /* CONFIG_MCUBOOT_FLASH_REMAP_ENABLE */
-
-#endif /* MCUBOOT_OVERWRITE_ONLY */
-
-#ifdef MCUBOOT_OVERWRITE_ONLY
-/* Uncomment to only erase and overwrite those primary slot sectors needed
- * to install the new image, rather than the entire image slot. */
-
-/* #define MCUBOOT_OVERWRITE_ONLY_FAST */
-
-#endif
-
-/*
- * Cryptographic settings
- *
- * You must choose between mbedTLS and Tinycrypt as source of
- * cryptographic primitives. Other cryptographic settings are also
- * available.
- */
-
-/* Uncomment to use ARM's mbedTLS cryptographic primitives */
-#if defined(CONFIG_BOOT_USE_MBEDTLS) || defined(COMPONENT_MBEDTLS)
-#define MCUBOOT_USE_MBED_TLS
-#endif
-
-#ifdef CONFIG_BOOT_USE_TINYCRYPT
-#define MCUBOOT_USE_TINYCRYPT
 #endif
 
 /*
@@ -144,7 +180,7 @@
 #endif
 
 /*
- * Flash abstraction
+ * FLASH ABSTRACTION
  */
 
 /* Uncomment if your flash map API supports flash_area_get_sectors().
@@ -160,7 +196,7 @@
 #endif
 
 /*
- * Logging
+ * LOGGING
  */
 
 /*
@@ -195,16 +231,7 @@
  * "assert" is used. */
 /* #define MCUBOOT_HAVE_ASSERT_H */
 
-#ifdef CONFIG_BOOT_ENCRYPT_RSA
-#define MCUBOOT_ENC_IMAGES
-#define MCUBOOT_ENCRYPT_RSA
-#endif
-
-#ifdef CONFIG_BOOT_ENCRYPT_ECDSA_P256
-#define MCUBOOT_ENC_IMAGES
-#define MCUBOOT_ENCRYPT_EC256
-#endif
-
+/* BOOTSTRAP support */
 #ifdef CONFIG_BOOT_BOOTSTRAP
 #define MCUBOOT_BOOTSTRAP 1
 #endif
@@ -215,4 +242,7 @@
     {                           \
     } while (0)
 
+#define MCUBOOT_CPU_IDLE() \
+    do {                   \
+    } while (0)
 #endif /* __MCUBOOT_CONFIG_H__ */

@@ -1,7 +1,7 @@
 MCUXpresso SDK: FreeRTOS kernel
 ==========================================
 
-This repository is a fork of FreeRTOS kernel (https://github.com/FreeRTOS/FreeRTOS-Kernel)(11.1.0). Modifications have been made to adapt to NXP MCUXpresso SDK. CMakeLists.txt and Kconfig added to enable FreeRTOS kernel repo sources build in MCUXpresso SDK. It is part of the MCUXpresso SDK overall delivery which is composed of several sub-repositories/projects. Navigate to the top/parent repository mcuxsdk-manifests(https://github.com/nxp-mcuxpresso/mcuxsdk-manifests) for the complete delivery of MCUXpresso SDK.
+This repository is a fork of FreeRTOS kernel (https://github.com/FreeRTOS/FreeRTOS-Kernel)(11.2.0). Modifications have been made to adapt to NXP MCUXpresso SDK. CMakeLists.txt and Kconfig added to enable FreeRTOS kernel repo sources build in MCUXpresso SDK. It is part of the MCUXpresso SDK overall delivery which is composed of several sub-repositories/projects. Navigate to the top/parent repository mcuxsdk-manifests(https://github.com/nxp-mcuxpresso/mcuxsdk-manifests) for the complete delivery of MCUXpresso SDK.
 
 For more information about the FreeRTOS kernel repo adoption see [README_mcuxsdk.md: FreeRTOS kernel for MCUXpresso SDK Readme](https://mcuxpresso.nxp.com/mcuxsdk/latest/html/rtos/freertos/freertos-kernel/README_mcuxsdk.html) document.
 
@@ -22,15 +22,21 @@ application projects.  That way you will have the correct FreeRTOS source files
 included, and the correct include paths configured. Once a demo application is
 building and executing you can remove the demo application files, and start to
 add in your own application source files.  See the
-[FreeRTOS Kernel Quick Start Guide](https://www.FreeRTOS.org/FreeRTOS-quick-start-guide.html)
+[FreeRTOS Kernel Quick Start Guide](https://www.freertos.org/Documentation/01-FreeRTOS-quick-start/01-Beginners-guide/02-Quick-start-guide)
 for detailed instructions and other useful links.
 
 Additionally, for FreeRTOS kernel feature information refer to the
-[Developer Documentation](https://www.FreeRTOS.org/features.html),
-and [API Reference](https://www.FreeRTOS.org/a00106.html).
+[Developer Documentation](https://www.freertos.org/Documentation/02-Kernel/02-Kernel-features/00-Developer-docs),
+and [API Reference](https://www.freertos.org/Documentation/02-Kernel/04-API-references/01-Task-creation/00-TaskHandle).
 
 Also for contributing and creating a Pull Request please refer to
 [the instructions here](.github/CONTRIBUTING.md#contributing-via-pull-request).
+
+**FreeRTOS-Kernel V11.1.0
+[source code](https://github.com/FreeRTOS/FreeRTOS-Kernel/tree/V11.1.0) is part
+of the
+[FreeRTOS 202406.00 LTS](https://github.com/FreeRTOS/FreeRTOS-LTS/tree/202406-LTS)
+release.**
 
 ### Getting help
 
@@ -188,3 +194,7 @@ then sort the list, which can be done by running the bash command:
 Note that only the FreeRTOS-Kernel Source Files, [include](include),
 [portable/MemMang](portable/MemMang), and [portable/Common](portable/Common)
 files are checked for proper spelling, and formatting at this time.
+
+## Third Party Tools
+Visit [this link](.github/third_party_tools.md) for detailed information about
+third-party tools with FreeRTOS support.

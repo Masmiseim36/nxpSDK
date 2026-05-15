@@ -9,6 +9,8 @@
 
 #pragma once
 
+#include <c10/util/irange.h>
+#include <executorch/runtime/platform/compiler.h>
 #include <algorithm>
 #include <cmath>
 #include <cstdint>
@@ -44,11 +46,11 @@ inline float vec_maxf(const float* x, size_t size) {
 /// Add each element of `x` and `y` into the corresponding element of `z`. All
 /// arrays must have `size` elements.
 inline void vec_addf(
-    float* __restrict__ z,
-    const float* __restrict__ x,
-    const float* __restrict__ y,
+    float* ET_RESTRICT z,
+    const float* ET_RESTRICT x,
+    const float* ET_RESTRICT y,
     size_t size) {
-  for (size_t i = 0; i < size; ++i) {
+  for (const auto i : c10::irange(size)) {
     z[i] = x[i] + y[i];
   }
 }
@@ -56,11 +58,11 @@ inline void vec_addf(
 /// Multiplies every element of `x` by `scale`, and writes the result into the
 /// corresponding element of `y`. `x` and `y` must have `size` elements.
 inline void vec_scalef(
-    float* __restrict__ y,
-    const float* __restrict__ x,
+    float* ET_RESTRICT y,
+    const float* ET_RESTRICT x,
     float scale,
     size_t size) {
-  for (size_t i = 0; i < size; ++i) {
+  for (const auto i : c10::irange(size)) {
     y[i] = x[i] * scale;
   }
 }
@@ -69,16 +71,16 @@ inline void vec_scalef(
 /// z[i][j] = sum(x[i][k] * y[k][j])
 template <typename T, typename U = T>
 inline void vec_matmul(
-    T* __restrict__ z,
-    const U* __restrict__ x,
-    const U* __restrict__ y,
+    T* ET_RESTRICT z,
+    const U* ET_RESTRICT x,
+    const U* ET_RESTRICT y,
     int64_t m,
     int64_t n,
     int64_t p) {
-  for (size_t i = 0; i < m; ++i) {
-    for (size_t j = 0; j < p; ++j) {
+  for (const auto i : c10::irange(m)) {
+    for (const auto j : c10::irange(p)) {
       T sum = 0;
-      for (size_t k = 0; k < n; ++k) {
+      for (const auto k : c10::irange(n)) {
         sum += x[i * n + k] * y[k * p + j];
       }
       z[i * p + j] = sum;
@@ -88,17 +90,17 @@ inline void vec_matmul(
 
 template <typename T, typename U = T>
 inline void vec_quantized_matmul_int8(
-    T* __restrict__ z,
-    const U* __restrict__ x,
-    const int8_t* __restrict__ y,
-    const U* __restrict__ s,
+    T* ET_RESTRICT z,
+    const U* ET_RESTRICT x,
+    const int8_t* ET_RESTRICT y,
+    const U* ET_RESTRICT s,
     int64_t m,
     int64_t n,
     int64_t p) {
-  for (size_t i = 0; i < m; ++i) {
-    for (size_t j = 0; j < p; ++j) {
+  for (const auto i : c10::irange(m)) {
+    for (const auto j : c10::irange(p)) {
       T sum = 0;
-      for (size_t k = 0; k < n; ++k) {
+      for (const auto k : c10::irange(n)) {
         sum += x[i * n + k] * static_cast<U>(y[k * p + j]) * s[k];
       }
       z[i * p + j] = sum;
@@ -114,23 +116,23 @@ static inline size_t bounds_min(size_t a, size_t b) {
 /// z[i][j] = sum(x[i][k] * y[j][k] * s[j][k/g])
 template <typename T, typename U = T, typename V = U>
 inline void vec_quantized_matmul_transb_int8(
-    T* __restrict__ z,
-    const U* __restrict__ x,
-    const int8_t* __restrict__ y,
-    const V* __restrict__ s,
+    T* ET_RESTRICT z,
+    const U* ET_RESTRICT x,
+    const int8_t* ET_RESTRICT y,
+    const V* ET_RESTRICT s,
     int64_t m,
     int64_t n,
     int64_t p,
     int64_t g) {
   int64_t n_over_g = (n + g - 1) / g;
 
-  for (size_t i = 0; i < m; ++i) {
-    for (size_t j = 0; j < p; ++j) {
+  for (const auto i : c10::irange(m)) {
+    for (const auto j : c10::irange(p)) {
       T sum = 0;
-      for (size_t k = 0; k < n; k += g) {
+      for (int64_t k = 0; k < n; k += g) {
         T psum = 0;
         // the last group may have fewer than g elements
-        for (size_t k2 = k; k2 < bounds_min(k + g, n); k2++) {
+        for (const auto k2 : c10::irange(k, bounds_min(k + g, n))) {
           psum += x[i * n + k2] * static_cast<U>(y[j * n + k2]);
         }
         sum += psum * s[j * n_over_g + k / g];
@@ -145,19 +147,19 @@ inline void vec_quantized_matmul_transb_int8(
 // T for tensor dtype, U for scalar type
 template <typename T, typename U = T>
 inline void vec_addmm(
-    T* __restrict__ out_data,
-    const T* __restrict__ self_data,
-    const T* __restrict__ mat1_data,
-    const T* __restrict__ mat2_data,
+    T* ET_RESTRICT out_data,
+    const T* ET_RESTRICT self_data,
+    const T* ET_RESTRICT mat1_data,
+    const T* ET_RESTRICT mat2_data,
     int64_t m,
     int64_t n,
     int64_t p,
     U beta,
     U alpha) {
-  for (size_t i = 0; i < m; ++i) {
-    for (size_t j = 0; j < p; ++j) {
+  for (const auto i : c10::irange(m)) {
+    for (const auto j : c10::irange(p)) {
       T sum = 0;
-      for (size_t k = 0; k < n; ++k) {
+      for (const auto k : c10::irange(n)) {
         sum += mat1_data[i * n + k] * mat2_data[k * p + j];
       }
       out_data[i * p + j] = sum * alpha + self_data[i * p + j] * beta;
@@ -176,7 +178,7 @@ inline float reduce_add(const T* x, size_t size) {
 template <typename T>
 inline float vec_powerf(const T* x, size_t size) {
   float sum = 0;
-  for (size_t i = 0; i < size; ++i) {
+  for (const auto i : c10::irange(size)) {
     sum += x[i] * x[i];
   }
   return sum;
@@ -194,16 +196,16 @@ template <
     typename checkU = typename std::enable_if<
         std::is_same<float, typename std::remove_cv<U>::type>::value ||
         std::is_same<double, typename std::remove_cv<U>::type>::value>::type>
-inline void vec_softmax(T* __restrict__ y, const U* __restrict__ x, int n) {
+inline void vec_softmax(T* ET_RESTRICT y, const U* ET_RESTRICT x, int n) {
   U max_x = *std::max_element(x, x + n);
   T sum = 0;
 
-  for (int i = 0; i < n; ++i) {
+  for (const auto i : c10::irange(n)) {
     y[i] = expf(x[i] - max_x);
     sum += y[i];
   }
 
-  for (int i = 0; i < n; ++i) {
+  for (const auto i : c10::irange(n)) {
     y[i] /= sum;
   }
 }
@@ -222,12 +224,12 @@ constexpr const T& clamp(const T& v, const T& lo, const T& hi) {
 /// Quantizes the elements of `x` into `y`, both of which must have `size`
 /// elements. Inverse of `dequantize_i8_f32()`.
 inline void quantize_i8_f32(
-    int8_t* __restrict__ y,
-    const float* __restrict__ x,
+    int8_t* ET_RESTRICT y,
+    const float* ET_RESTRICT x,
     float scale,
     int32_t zero_point,
     size_t size) {
-  for (size_t i = 0; i < size; ++i) {
+  for (const auto i : c10::irange(size)) {
     float tmp = roundf(x[i] * scale + zero_point);
     y[i] = internal::clamp(tmp, -128.f, 127.f);
   }
@@ -236,12 +238,12 @@ inline void quantize_i8_f32(
 /// Dequantizes the elements of `x` into `y`, both of which must have `size`
 /// elements. Inverse of `quantize_i8_f32()`.
 inline void dequantize_i8_f32(
-    float* __restrict__ y,
-    const int8_t* __restrict__ x,
+    float* ET_RESTRICT y,
+    const int8_t* ET_RESTRICT x,
     float scale,
     int32_t zero_point,
     size_t size) {
-  for (size_t i = 0; i < size; ++i) {
+  for (const auto i : c10::irange(size)) {
     y[i] = scale * (x[i] - zero_point);
   }
 }

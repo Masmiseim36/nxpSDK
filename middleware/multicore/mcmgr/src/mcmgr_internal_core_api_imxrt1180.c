@@ -110,13 +110,13 @@ mcmgr_status_t mcmgr_start_core_internal(mcmgr_core_t coreNum, void *bootAddress
      * RT1180 Specific CM7 Kick Off operation
      */
     /* Trigger S401 */
-#if MCMGR_BUSY_POLL_COUNT
+#if defined(MCMGR_BUSY_POLL_COUNT) && (MCMGR_BUSY_POLL_COUNT > 0)
     uint32_t poll_count = MCMGR_BUSY_POLL_COUNT;
 #endif
 
     while ((MU_RT_S3MUA->TSR & MU_TSR_TE0_MASK) == 0)
     {
-#if MCMGR_BUSY_POLL_COUNT
+#if defined(MCMGR_BUSY_POLL_COUNT) && (MCMGR_BUSY_POLL_COUNT > 0)
         if ((--poll_count) == 0u)
         {
             return kStatus_MCMGR_Error;
@@ -126,12 +126,12 @@ mcmgr_status_t mcmgr_start_core_internal(mcmgr_core_t coreNum, void *bootAddress
 
     MU_RT_S3MUA->TR[0] = 0x17d20106;
 
-#if MCMGR_BUSY_POLL_COUNT
+#if defined(MCMGR_BUSY_POLL_COUNT) && (MCMGR_BUSY_POLL_COUNT > 0)
     poll_count = MCMGR_BUSY_POLL_COUNT;
 #endif
     while ((MU_RT_S3MUA->RSR & MU_RSR_RF0_MASK) == 0)
     {
-#if MCMGR_BUSY_POLL_COUNT
+#if defined(MCMGR_BUSY_POLL_COUNT) && (MCMGR_BUSY_POLL_COUNT > 0)
         if ((--poll_count) == 0u)
         {
             return kStatus_MCMGR_Error;
@@ -139,13 +139,13 @@ mcmgr_status_t mcmgr_start_core_internal(mcmgr_core_t coreNum, void *bootAddress
 #endif
     } /*Wait RR Full*/
 
-#if MCMGR_BUSY_POLL_COUNT
+#if defined(MCMGR_BUSY_POLL_COUNT) && (MCMGR_BUSY_POLL_COUNT > 0)
     poll_count = MCMGR_BUSY_POLL_COUNT;
 #endif
 
     while ((MU_RT_S3MUA->RSR & MU_RSR_RF1_MASK) == 0)
     {
-#if MCMGR_BUSY_POLL_COUNT
+#if defined(MCMGR_BUSY_POLL_COUNT) && (MCMGR_BUSY_POLL_COUNT > 0)
         if ((--poll_count) == 0u)
         {
             return kStatus_MCMGR_Error;
@@ -159,9 +159,15 @@ mcmgr_status_t mcmgr_start_core_internal(mcmgr_core_t coreNum, void *bootAddress
 
     // PRINTF("Get Status %x %x\r\n", result1, result2); /*Should be 0xE1D20206, 0xD6*/
 
+    /* Disable M7 clock before clearing CPU_WAIT bit */
+    CLOCK_DisableClock(kCLOCK_M7);
+
     /* Deassert Wait */
     BLK_CTRL_S_AONMIX->M7_CFG =
         (BLK_CTRL_S_AONMIX->M7_CFG & (~BLK_CTRL_S_AONMIX_M7_CFG_WAIT_MASK)) | BLK_CTRL_S_AONMIX_M7_CFG_WAIT(0);
+
+    /* Re-enable M7 clock again */
+    CLOCK_EnableClock(kCLOCK_M7);
 
     return kStatus_MCMGR_Success;
 }

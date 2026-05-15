@@ -1,0 +1,67 @@
+Hardware requirements
+=====================
+- Mini/micro USB cable
+- FRDM-IMXRT1186 board
+- Personal Computer
+
+Board settings
+============
+Change Jumper J27 from 1-2 to 2-3. 
+ADC1_IN1 is ADC input. Please sample voltage by J51-8 pin.
+
+Prepare the Demo
+===============
+1.  Connect a USB cable between the host PC and the OpenSDA USB port on the target board. 
+2.  Open a serial terminal with the following settings:
+    - 115200 baud rate
+    - 8 data bits
+    - No parity
+    - One stop bit
+    - No flow control
+3.  Download the program to the target board.
+4.  Either press the reset button on your board or launch the debugger in your IDE to begin running the demo.
+
+Running the demo
+================   
+The log below shows the output of the lpadc sample rate count demo in the terminal window:
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ADC High Sample Rate Demo!
+Current ADC clock frequency is 83375104 Hz!
+
+Please select sample time!
+        A -- 3 ADCK cycles total sample time
+        B -- 5 ADCK cycles total sample time
+        C -- 7 ADCK cycles total sample time
+        D -- 11 ADCK cycles total sample time
+        E -- 19 ADCK cycles total sample time
+        F -- 35 ADCK cycles total sample time
+        G -- 67 ADCK cycles total sample time
+        H -- 131 ADCK cycles total sample time
+a
+Please press any keys to trigger ADC conversion!
+Sample Rate: 4376192 SPS
+
+Please select sample time!
+        A -- 3 ADCK cycles total sample time
+        B -- 5 ADCK cycles total sample time
+        C -- 7 ADCK cycles total sample time
+        D -- 11 ADCK cycles total sample time
+        E -- 19 ADCK cycles total sample time
+        F -- 35 ADCK cycles total sample time
+        G -- 67 ADCK cycles total sample time
+        H -- 131 ADCK cycles total sample time
+h
+Please press any keys to trigger ADC conversion!
+Sample Rate: 566912 SPS
+
+Please select sample time!
+        A -- 3 ADCK cycles total sample time
+        B -- 5 ADCK cycles total sample time
+        C -- 7 ADCK cycles total sample time
+        D -- 11 ADCK cycles total sample time
+        E -- 19 ADCK cycles total sample time
+        F -- 35 ADCK cycles total sample time
+        G -- 67 ADCK cycles total sample time
+        H -- 131 ADCK cycles total sample time
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

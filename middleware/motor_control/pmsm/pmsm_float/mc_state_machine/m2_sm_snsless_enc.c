@@ -978,8 +978,14 @@ static void M2_StateRunStartupFast(void)
     /* Open loop startup */
     MCS_PMSMOpenLoopStartUp(&g_sM2Drive.sStartUp);
 
-    /* Pass f16SpeedRampOpenloop to f16SpeedRamp*/
+    /* Pass fltSpeedRampOpenloop to fltSpeedRamp */
     g_sM2Drive.sSpeed.fltSpeedRamp = g_sM2Drive.sStartUp.fltSpeedRampOpenLoop;
+    
+    if(g_sM2Drive.sSpeed.bSpeedZCOn)
+    {
+        /* Pass fltSpeedRampOpenloop to fltSpeedCmdFilt */
+        g_sM2Drive.sSpeed.fltSpeedCmdFilt = g_sM2Drive.sStartUp.fltSpeedRampOpenLoop;
+    }
 
     /* Position and speed for FOC */
     g_sM2Drive.sFocPMSM.f16PosElExt = g_sM2Drive.sStartUp.f16PosMerged;
@@ -1211,6 +1217,7 @@ static void M2_StateRunFreewheelFast(void)
     g_sM2Drive.sSpeed.fltSpeed         = 0.0F;
     g_sM2Drive.sSpeed.fltSpeedFilt     = 0.0F;
     g_sM2Drive.sSpeed.fltSpeedRamp     = 0.0F;
+    g_sM2Drive.sSpeed.fltSpeedCmdFilt     = 0.0F;
 }
 
 /*!
@@ -1225,8 +1232,9 @@ static void M2_StateRunCalibSlow(void)
 {
     if (--g_sM2Drive.ui16CounterState == 0U)
     {
-	  /* Write calibrated offset values */
+      /* Write calibrated offset values */
 	  M2_MCDRV_CURR_3PH_CALIB_SET(&g_sM2Curr3phDcBus);
+      
       /* To switch to the RUN READY sub-state */
       M2_TransRunCalibReady();
     }

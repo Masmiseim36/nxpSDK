@@ -639,6 +639,8 @@ static usb_status_t USB_DeviceNotification(usb_device_struct_t *handle, usb_devi
             status = USB_DeviceSOFNotification(handle, message);
             break;
 #endif
+        case kUSB_DeviceNotifyNoop:
+            break;
 
         default:
             if (endpoint < USB_DEVICE_CONFIG_ENDPOINTS)

@@ -113,8 +113,8 @@
 #if (defined(SERIAL_MANAGER_NON_BLOCKING_MODE) && (SERIAL_MANAGER_NON_BLOCKING_MODE > 0U))
 #define SERIAL_MANAGER_WRITE_HANDLE_SIZE       (44U)
 #define SERIAL_MANAGER_READ_HANDLE_SIZE        (44U)
-#define SERIAL_MANAGER_WRITE_BLOCK_HANDLE_SIZE (4U)
-#define SERIAL_MANAGER_READ_BLOCK_HANDLE_SIZE  (4U)
+#define SERIAL_MANAGER_WRITE_BLOCK_HANDLE_SIZE (SERIAL_MANAGER_WRITE_HANDLE_SIZE)
+#define SERIAL_MANAGER_READ_BLOCK_HANDLE_SIZE  (SERIAL_MANAGER_READ_HANDLE_SIZE)
 #else
 #define SERIAL_MANAGER_WRITE_HANDLE_SIZE       (4U)
 #define SERIAL_MANAGER_READ_HANDLE_SIZE        (4U)
@@ -282,14 +282,14 @@
 #if (defined(SERIAL_MANAGER_NON_BLOCKING_MODE) && (SERIAL_MANAGER_NON_BLOCKING_MODE > 0U))
 #if (defined(OSA_USED) && !(defined(SERIAL_MANAGER_USE_COMMON_TASK) && (SERIAL_MANAGER_USE_COMMON_TASK > 0U)))
 #define SERIAL_MANAGER_HANDLE_SIZE \
-    (SERIAL_MANAGER_HANDLE_SIZE_TEMP + 124U + OSA_TASK_HANDLE_SIZE + OSA_EVENT_HANDLE_SIZE)
+    (SERIAL_MANAGER_HANDLE_SIZE_TEMP + 128U + OSA_TASK_HANDLE_SIZE + OSA_EVENT_HANDLE_SIZE)
 #else  /*defined(OSA_USED)*/
-#define SERIAL_MANAGER_HANDLE_SIZE (SERIAL_MANAGER_HANDLE_SIZE_TEMP + 124U)
+#define SERIAL_MANAGER_HANDLE_SIZE (SERIAL_MANAGER_HANDLE_SIZE_TEMP + 128U)
 #endif /*defined(OSA_USED)*/
-#define SERIAL_MANAGER_BLOCK_HANDLE_SIZE (SERIAL_MANAGER_HANDLE_SIZE_TEMP + 16U)
+#define SERIAL_MANAGER_BLOCK_HANDLE_SIZE (SERIAL_MANAGER_HANDLE_SIZE)
 #else
-#define SERIAL_MANAGER_HANDLE_SIZE       (SERIAL_MANAGER_HANDLE_SIZE_TEMP + 12U)
-#define SERIAL_MANAGER_BLOCK_HANDLE_SIZE (SERIAL_MANAGER_HANDLE_SIZE_TEMP + 12U)
+#define SERIAL_MANAGER_HANDLE_SIZE       (SERIAL_MANAGER_HANDLE_SIZE_TEMP + 16U)
+#define SERIAL_MANAGER_BLOCK_HANDLE_SIZE (SERIAL_MANAGER_HANDLE_SIZE)
 #endif
 
 /*!
@@ -402,8 +402,8 @@ typedef struct _serial_manager_config
                                           manager module. */
     uint32_t ringBufferSize;         /*!< The size of the ring buffer */
 #if (defined(OSA_USED) && !(defined(SERIAL_MANAGER_USE_COMMON_TASK) && (SERIAL_MANAGER_USE_COMMON_TASK > 0U)))
-    osa_task_def_t *serialTaskConfig;  /*!< Serial manager task configuration, can be defined the serial manager 
-                                            task configuration for this instance, if serialTaskConfig is NULL, will use the 
+    osa_task_def_t *serialTaskConfig;  /*!< Serial manager task configuration, can be defined the serial manager
+                                            task configuration for this instance, if serialTaskConfig is NULL, will use the
                                             default serial manager configure provided by serial manger module.*/
 #endif
 #endif

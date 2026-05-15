@@ -26,7 +26,7 @@
  * if the NVM manager is not present. Since psa_crypto_wrapper will be auto-generated, we can't add
  * the check there. hence implementing it in opaque drivers for ELE.
  */
-#if !defined(PSA_ELE_S4XX_SD_NVM_MANAGER)
+#if !defined(PSA_ELE_S4XX_SD_NVM_MANAGER) && !defined(CONFIG_PSA_ELE_S4XX_NVM_MANAGER)
 
 psa_status_t ele_s4xx_opaque_destroy_key(const psa_key_attributes_t *attributes,
                                          uint8_t *key_buffer, size_t key_buffer_size)
@@ -201,8 +201,8 @@ static inline psa_status_t psa_key_algo_to_ele(psa_algorithm_t key_algo, uint32_
     return status;
 }
 
-/* This can be set to any value. Using 0x1 to avoid clash with LOCAL STORAGE */
-#define ELE_LOCATION_STANDARD               0x1
+/* This can be set to any value. Using PSA_CRYPTO_ELE_S4XX_LOCATION to avoid clash with LOCAL STORAGE */
+#define ELE_LOCATION_STANDARD               PSA_CRYPTO_ELE_S4XX_LOCATION
 #define ELE_LOCATION_IMPORT_KEY_EL2GO       0xE00000
 #define ELE_LOCATION_IMPORT_DATA_EL2GO      0xE08000
 #define ELE_LOCATION_IMPORT_KEY             0xC00200
@@ -278,7 +278,7 @@ psa_status_t ele_internal_gen_keypair(const psa_key_attributes_t *attributes,
         return status;
     }
 
-    NISTkeyGenParam.key_lifecycle = kKeylifecycle_Open;         /* TBD -> how to fill this ??? - May be get current lifecycle */
+    NISTkeyGenParam.key_lifecycle = ELE_KEY_LIFECYCLE;         /* TBD -> how to fill this ??? - May be get current lifecycle */
     NISTkeyGenParam.key_size      = key_bits;
 
     /* We are not exporting key here */
@@ -292,8 +292,8 @@ psa_status_t ele_internal_gen_keypair(const psa_key_attributes_t *attributes,
         sync = true;
     }
 
-    if (mcux_mutex_lock(&ele_hwcrypto_mutex)) {
-        return PSA_ERROR_COMMUNICATION_FAILURE;
+    if (mcux_mutex_lock(&ele_hwcrypto_mutex) != 0) {
+        return PSA_ERROR_SERVICE_FAILURE;
     }
 
     ele_status = ELE_GenerateKey(S3MU,
@@ -312,8 +312,8 @@ psa_status_t ele_internal_gen_keypair(const psa_key_attributes_t *attributes,
         }
     }
 
-    if (mcux_mutex_unlock(&ele_hwcrypto_mutex)) {
-        return PSA_ERROR_BAD_STATE;
+    if (mcux_mutex_unlock(&ele_hwcrypto_mutex) != 0) {
+        return PSA_ERROR_SERVICE_FAILURE;
     }
 
     /* The key_id returned needs to be saved in data for perisstent keys for now */
@@ -344,38 +344,51 @@ psa_status_t ele_s4xx_opaque_generate_key(const psa_key_attributes_t *attributes
     *key_buffer_length = 0;
 
     /* These checks are mainly to check WANT_KEY_TYPE */
-    if (PSA_KEY_TYPE_IS_KEY_PAIR(key_type)) {
+
+    /* ECC */
 #if defined(PSA_WANT_KEY_TYPE_ECC_KEY_PAIR_GENERATE)
-        if (PSA_KEY_TYPE_IS_ECC(key_type)) {
-            if (PSA_KEY_TYPE_ECC_GET_FAMILY(key_type) ==
-                PSA_ECC_FAMILY_BRAINPOOL_P_R1 ||
-                PSA_KEY_TYPE_ECC_GET_FAMILY(key_type) ==
-                PSA_ECC_FAMILY_SECP_R1) {
-                err = ele_internal_gen_keypair(
-                    attributes, key_buffer, key_buffer_size, key_buffer_length);
-            }
-        } else
-#endif /* PSA_WANT_KEY_TYPE_ECC_KEY_PAIR_GENERATE */
-#if defined(PSA_WANT_KEY_TYPE_RSA_KEY_PAIR_GENERATE)
-        if (PSA_KEY_TYPE_IS_RSA(key_type)) {
+    if (PSA_KEY_TYPE_IS_KEY_PAIR(key_type) && PSA_KEY_TYPE_IS_ECC(key_type)) 
+    {
+        if (PSA_KEY_TYPE_ECC_GET_FAMILY(key_type) ==
+            PSA_ECC_FAMILY_BRAINPOOL_P_R1 ||
+            PSA_KEY_TYPE_ECC_GET_FAMILY(key_type) ==
+            PSA_ECC_FAMILY_SECP_R1)
+        {
             err = ele_internal_gen_keypair(
                 attributes, key_buffer, key_buffer_size, key_buffer_length);
         }
-#endif /* PSA_WANT_KEY_TYPE_RSA_KEY_PAIR_GENERATE */
-    } else if (PSA_KEY_TYPE_IS_UNSTRUCTURED(key_type)) {
-#if defined(PSA_WANT_KEY_TYPE_AES) || defined(PSA_WANT_KEY_TYPE_HMAC)
-        if (key_type == PSA_KEY_TYPE_AES || key_type == PSA_KEY_TYPE_HMAC) {
-            err = ele_internal_gen_keypair(
-                attributes, key_buffer, key_buffer_size, key_buffer_length);
-        }
-#endif /* PSA_WANT_KEY_TYPE_AES || PSA_WANT_KEY_TYPE_HMAC */
     }
+#endif /* PSA_WANT_KEY_TYPE_ECC_KEY_PAIR_GENERATE */
+
+    /* RSA */
+#if defined(PSA_WANT_KEY_TYPE_RSA_KEY_PAIR_GENERATE)
+    if (PSA_KEY_TYPE_IS_KEY_PAIR(key_type) && PSA_KEY_TYPE_IS_RSA(key_type)) 
+    {
+        err = ele_internal_gen_keypair(
+            attributes, key_buffer, key_buffer_size, key_buffer_length);
+    }
+#endif /* PSA_WANT_KEY_TYPE_RSA_KEY_PAIR_GENERATE */
+
+    /* Symmectric */
+#if defined(PSA_WANT_KEY_TYPE_AES) || defined(PSA_WANT_KEY_TYPE_HMAC)
+    if (PSA_KEY_TYPE_IS_UNSTRUCTURED(key_type)) 
+    {
+        if (key_type == PSA_KEY_TYPE_AES || key_type == PSA_KEY_TYPE_HMAC) 
+        {
+            err = ele_internal_gen_keypair(
+                attributes, key_buffer, key_buffer_size, key_buffer_length);
+        }
+    }
+#endif /* PSA_WANT_KEY_TYPE_AES || PSA_WANT_KEY_TYPE_HMAC */
 
     return err;
 }
 
 /* Default RSA public exponent is 65537, which has a length of 3 bytes */
 #define DEFAULT_RSA_PUB_EXP_LEN 3
+
+#if defined(MBEDTLS_RSA_C)
+#if defined(PSA_WANT_ALG_RSA_OAEP) || defined(PSA_WANT_ALG_RSA_PKCS1V15_CRYPT)
 
 static psa_status_t export_rsa_public_key(psa_key_type_t key_type,
                                           uint32_t key_id,
@@ -418,18 +431,18 @@ static psa_status_t export_rsa_public_key(psa_key_type_t key_type,
     memset(tmp, 0, size);
     memset(data, 0, data_size);
 
-    if (mcux_mutex_lock(&ele_hwcrypto_mutex)) {
+    if (mcux_mutex_lock(&ele_hwcrypto_mutex) != 0) {
         free(tmp);
-        return PSA_ERROR_COMMUNICATION_FAILURE;
+        return PSA_ERROR_SERVICE_FAILURE;
     }
 
     ele_status = ELE_GeneratePubKey(S3MU, g_ele_ctx.key_store_handle, key_id,
                                     (uint32_t *) tmp, data_size, &out_size);
     status = ele_to_psa_status(ele_status);
 
-    if (mcux_mutex_unlock(&ele_hwcrypto_mutex)) {
+    if (mcux_mutex_unlock(&ele_hwcrypto_mutex) != 0) {
         free(tmp);
-        return PSA_ERROR_BAD_STATE;
+        return PSA_ERROR_SERVICE_FAILURE;
     }
 
     if (status == PSA_SUCCESS) {
@@ -462,6 +475,9 @@ static psa_status_t export_rsa_public_key(psa_key_type_t key_type,
     return status;
 }
 
+#endif /* defined(PSA_WANT_ALG_RSA_OAEP) || defined(PSA_WANT_ALG_RSA_PKCS1V15_CRYPT) */
+#endif /* defined(MBEDTLS_RSA_C) */
+
 static psa_status_t export_ecc_public_key(psa_key_type_t key_type,
                                           uint32_t key_id, uint8_t *data,
                                           size_t data_size, size_t *data_length)
@@ -477,16 +493,16 @@ static psa_status_t export_ecc_public_key(psa_key_type_t key_type,
         return PSA_ERROR_INVALID_ARGUMENT;
     }
 
-    if (mcux_mutex_lock(&ele_hwcrypto_mutex)) {
-        return PSA_ERROR_COMMUNICATION_FAILURE;
+    if (mcux_mutex_lock(&ele_hwcrypto_mutex) != 0) {
+        return PSA_ERROR_SERVICE_FAILURE;
     }
 
     ele_status = ELE_GeneratePubKey(S3MU, g_ele_ctx.key_store_handle, key_id,
                                     (uint32_t *) tmp, data_size - 1, &out_size);
     status = ele_to_psa_status(ele_status);
 
-    if (mcux_mutex_unlock(&ele_hwcrypto_mutex)) {
-        return PSA_ERROR_BAD_STATE;
+    if (mcux_mutex_unlock(&ele_hwcrypto_mutex) != 0) {
+        return PSA_ERROR_SERVICE_FAILURE;
     }
 
     /* ECC key will have 0x4 at first offset */
@@ -501,10 +517,6 @@ psa_status_t ele_s4xx_opaque_export_public_key(const psa_key_attributes_t *attri
                                                size_t key_buffer_size, uint8_t *data,
                                                size_t data_size, size_t *data_length)
 {
-#if !defined(PSA_ELE_S4XX_SD_NVM_MANAGER)
-    return PSA_ERROR_NOT_SUPPORTED;
-#endif
-
     uint32_t key_id;
     psa_status_t status = PSA_ERROR_CORRUPTION_DETECTED;
     psa_key_type_t key_type = psa_get_key_type(attributes);
@@ -527,10 +539,15 @@ psa_status_t ele_s4xx_opaque_export_public_key(const psa_key_attributes_t *attri
         status = export_ecc_public_key(key_type, key_id, data,
                                        data_size, data_length);
     } else
+#if defined(MBEDTLS_RSA_C)
+#if defined(PSA_WANT_ALG_RSA_OAEP) || defined(PSA_WANT_ALG_RSA_PKCS1V15_CRYPT)
     if (PSA_KEY_TYPE_IS_RSA(key_type)) {
         status = export_rsa_public_key(key_type, key_id, key_bits,
                                        data, data_size, data_length);
-    } else {
+    } else
+#endif /* (PSA_WANT_ALG_RSA_OAEP) || defined(PSA_WANT_ALG_RSA_PKCS1V15_CRYPT) */
+#endif /* (MBEDTLS_RSA_C) */
+    {
         status = PSA_ERROR_NOT_SUPPORTED;
     }
 
@@ -561,15 +578,15 @@ psa_status_t ele_s4xx_opaque_destroy_key(const psa_key_attributes_t *attributes,
         sync = true;
     }
 
-    if (mcux_mutex_lock(&ele_hwcrypto_mutex)) {
-        return PSA_ERROR_COMMUNICATION_FAILURE;
+    if (mcux_mutex_lock(&ele_hwcrypto_mutex) != 0) {
+        return PSA_ERROR_SERVICE_FAILURE;
     }
 
     ele_status = ELE_DeleteKey(S3MU, g_ele_ctx.key_management_handle, key_id, mono, sync);
     status = ele_to_psa_status(ele_status);
 
-    if (mcux_mutex_unlock(&ele_hwcrypto_mutex)) {
-        return PSA_ERROR_BAD_STATE;
+    if (mcux_mutex_unlock(&ele_hwcrypto_mutex) != 0) {
+        return PSA_ERROR_SERVICE_FAILURE;
     }
 
     return status;
@@ -581,5 +598,5 @@ size_t ele_s4xx_opaque_size_function(psa_key_type_t key_type, size_t key_bits)
     return sizeof(uint32_t);
 }
 
-#endif
+#endif /* !PSA_ELE_S4XX_SD_NVM_MANAGER && !CONFIG_PSA_ELE_S4XX_NVM_MANAGER */
 /** @} */ // end of psa_key_generation

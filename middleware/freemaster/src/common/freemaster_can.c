@@ -422,9 +422,6 @@ static FMSTR_BOOL _FMSTR_TxCan(void)
     /* if the full frame is safe in tx buffer(s), release the received command */
     if (fmstr_nTxTodo == 0U)
     {
-        /* no more transmitting */
-        fmstr_wFlags.flg.bTxActive = 0U;
-
         /* start listening immediately (also frees the last received frame) */
         _FMSTR_Listen();
     }
@@ -748,6 +745,23 @@ void FMSTR_ProcessCanTx(void)
             FMSTR_UNUSED(result);
 #endif
         }
+    }
+}
+
+/******************************************************************************
+ *
+ * @brief   Abort the ongoing CAN transmission mode and switch to listen mode
+ *
+ ******************************************************************************/
+
+void FMSTR_AbortCanTx(void)
+{
+    if (fmstr_wFlags.flg.bTxActive != 0U)
+    {
+        fmstr_nTxTodo = 0U;
+
+        /* start listening */
+        _FMSTR_Listen();
     }
 }
 

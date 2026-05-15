@@ -1,7 +1,5 @@
 /*
- * Copyright 2017-2019, 2024 NXP
- * All rights reserved.
- *
+ * Copyright 2017-2019, 2024, 2025 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -67,16 +65,17 @@ extern const uint8_t FreeRTOSDebugConfig[];
  */
 
 #if (tskKERNEL_VERSION_MAJOR >= 11) || ((tskKERNEL_VERSION_MAJOR >= 10) && (tskKERNEL_VERSION_MINOR >= 2))
+extern const char *const portArch_Name;
 #if defined(__GNUC__)
-char *const portArch_Name __attribute__((section(".rodata"))) = portARCH_NAME;
+const char *const portArch_Name __attribute__((section(".rodata"))) = portARCH_NAME;
 #elif defined(__CC_ARM) || defined(__ARMCC_VERSION)
-char *const portArch_Name __attribute__((used)) = portARCH_NAME;
+const char *const portArch_Name __attribute__((used)) = portARCH_NAME;
 #elif defined(__IAR_SYSTEMS_ICC__)
-char *const portArch_Name = portARCH_NAME;
+const char *const portArch_Name = portARCH_NAME;
 #pragma required=portArch_Name
 #endif
 #else
-char *const portArch_Name = NULL;
+const char *const portArch_Name = NULL;
 #endif	// tskKERNEL_VERSION_MAJOR
 
 #if defined(__GNUC__)

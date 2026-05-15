@@ -11,7 +11,7 @@
 
 set -eu
 
-CONFIG_H='include/mbedtls/config.h'
+CONFIG_H='include/mbedtls/mbedtls_config.h'
 
 CLIENT='mini_client'
 
@@ -34,7 +34,7 @@ if [ $( uname ) != Linux ]; then
 fi
 
 if git status | grep -F $CONFIG_H >/dev/null 2>&1; then
-    echo "config.h not clean" >&2
+    echo "mbedtls_config.h not clean" >&2
     exit 1
 fi
 
@@ -59,8 +59,8 @@ do_config()
 
     printf "    Executable size... "
 
-    make clean
-    CFLAGS=$CFLAGS_EXEC make OFLAGS=-Os lib >/dev/null 2>&1
+    make -f ./scripts/legacy.make clean
+    CFLAGS=$CFLAGS_EXEC make -f ./scripts/legacy.make OFLAGS=-Os lib >/dev/null 2>&1
     cd programs
     CFLAGS=$CFLAGS_EXEC make OFLAGS=-Os ssl/$CLIENT >/dev/null
     strip ssl/$CLIENT
@@ -69,8 +69,8 @@ do_config()
 
     printf "    Peak ram usage... "
 
-    make clean
-    CFLAGS=$CFLAGS_MEM make OFLAGS=-Os lib >/dev/null 2>&1
+    make -f ./scripts/legacy.make clean
+    CFLAGS=$CFLAGS_MEM make -f ./scripts/legacy.make OFLAGS=-Os lib >/dev/null 2>&1
     cd programs
     CFLAGS=$CFLAGS_MEM make OFLAGS=-Os ssl/$CLIENT >/dev/null
     cd ..
@@ -103,8 +103,8 @@ rm -f massif.out.*
 
 printf "building server... "
 
-make clean
-make lib >/dev/null 2>&1
+make -f ./scripts/legacy.make clean
+make -f ./scripts/legacy.make lib >/dev/null 2>&1
 (cd programs && make ssl/ssl_server2) >/dev/null
 cp programs/ssl/ssl_server2 .
 
@@ -117,13 +117,13 @@ do_config   "ccm-psk-tls1_2" \
             "psk=000102030405060708090A0B0C0D0E0F"
 
 do_config   "suite-b" \
-            "MBEDTLS_BASE64_C MBEDTLS_PEM_PARSE_C MBEDTLS_CERTS_C" \
+            "MBEDTLS_BASE64_C MBEDTLS_PEM_PARSE_C" \
             ""
 
 # cleanup
 
 mv $CONFIG_BAK $CONFIG_H
-make clean
+make -f scripts/legacy.make clean
 rm ssl_server2
 
 exit $FAILED

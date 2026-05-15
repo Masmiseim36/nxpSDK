@@ -75,6 +75,7 @@ message("${CMAKE_CURRENT_LIST_FILE} component is included.")
   
       target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
           ${CMAKE_CURRENT_LIST_DIR}/include
+          ${CMAKE_CURRENT_LIST_DIR}/include/mbedtls
           ${CMAKE_CURRENT_LIST_DIR}/library
         )
 
@@ -90,6 +91,11 @@ message("${CMAKE_CURRENT_LIST_FILE} component is included.")
           if(CONFIG_TOOLCHAIN STREQUAL armgcc)
       target_compile_options(${MCUX_SDK_PROJECT_NAME} PUBLIC
               -fomit-frame-pointer
+            )
+      endif()
+          if(CONFIG_TOOLCHAIN STREQUAL iar)
+      target_compile_options(${MCUX_SDK_PROJECT_NAME} PUBLIC
+              --diag_suppress=Pe111,Pe546,Pe550
             )
       endif()
       

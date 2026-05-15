@@ -16,6 +16,10 @@
 /*******************************************************************************
  * Variables
  ******************************************************************************/
+#ifndef USB_DEVICE_CONFIG_REMOTE_WAKEUP
+#define USB_DEVICE_CONFIG_REMOTE_WAKEUP (0U)
+#endif
+
 /* Define endpoint for communication class */
 usb_device_endpoint_struct_t g_UsbDeviceCdcVcomCicEndpoints[USB_CDC_VCOM_ENDPOINT_CIC_COUNT] = {
     {

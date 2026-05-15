@@ -122,12 +122,13 @@ typedef struct _ctrl_m1_mid_t
     mcdef_fault_t sFaultCtrlM1_Mid;     /* 0x01 - Spin is on or not in Stop state, 0x02 - MID is not in Stop state */
 } ctrl_m1_mid_t;
 
-#define FAULT_I_DCBUS_OVER 0  /* OverCurrent fault flag */
-#define FAULT_U_DCBUS_UNDER 1 /* Undervoltage fault flag */
-#define FAULT_U_DCBUS_OVER 2  /* Overvoltage fault flag */
-#define FAULT_LOAD_OVER 3     /* Overload fault flag */
-#define FAULT_SPEED_OVER 4    /* Over speed fault flag */
-#define FAULT_ROTOR_BLOCKED 5 /* Blocked rotor fault flag */
+#define FAULT_I_DCBUS_OVER 0    /* OverCurrent fault flag */
+#define FAULT_U_DCBUS_UNDER 1   /* Undervoltage fault flag */
+#define FAULT_U_DCBUS_OVER 2    /* Overvoltage fault flag */
+#define FAULT_LOAD_OVER 3       /* Overload fault flag */
+#define FAULT_SPEED_OVER 4      /* Over speed fault flag */
+#define FAULT_ROTOR_BLOCKED 5   /* Blocked rotor fault flag */
+#define FAULT_ENC_TIMEOUT 6     /* Encoder ISR timeout */
 
 #define FAULT_APP_SPIN 1        /* Spin on fault flag */
 #define FAULT_APP_MID  2        /* MID run fault flag */

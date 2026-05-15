@@ -1,0 +1,679 @@
+From 2e0d545c865fc62d044648b39fb06901da469ab1 Mon Sep 17 00:00:00 2001
+From: Wenbin Song <wenbin.song@nxp.com>
+Date: Thu, 21 Aug 2025 22:10:42 +0800
+Subject: [PATCH] SSC Servo dual cores servo motor control support
+
+Signed-off-by: Wenbin Song <wenbin.song@nxp.com>
+---
+ cia402appl.c | 282 ++++++++++++++++++++++++++++++++++++++++++++-------
+ cia402appl.h |   4 +
+ ecatappl.c   |  48 ++++-----
+ ecatappl.h   |   2 +
+ ecatslv.c    |   2 +-
+ 5 files changed, 276 insertions(+), 62 deletions(-)
+
+diff --git a/cia402appl.c b/cia402appl.c
+index e3489a0..8aba7d5 100644
+--- a/cia402appl.c
++++ b/cia402appl.c
+@@ -48,6 +48,7 @@ V4.30 : create file (state machine; handling state transition options; input fee
+ ------
+ -----------------------------------------------------------------------------------------*/
+ #include "ecat_def.h"
++#include "mu_ipc_shm_host.h"
+ 
+ /*ECATCHANGE_START(V5.13) CIA402 3*/
+ /*ECATCHANGE_END(V5.13) CIA402 3*/
+@@ -67,18 +68,20 @@ V4.30 : create file (state machine; handling state transition options; input fee
+ ------    local types and defines
+ ------
+ --------------------------------------------------------------------------------------*/
+-
++#define    MEASUREMENT_ACTIVE (((sSyncManOutPar.u16GetCycleTime & 0x1) == 0x1) || ((sSyncManInPar.u16GetCycleTime & 0x1) == 0x1))
+ /*-----------------------------------------------------------------------------------------
+ ------
+ ------    local variables and constants
+ ------
+ -----------------------------------------------------------------------------------------*/
+ TCiA402Axis       LocalAxes[MAX_AXES];
++extern UINT16           aPdInputData[(MAX_PD_INPUT_SIZE>>1)];
+ /*-----------------------------------------------------------------------------------------
+ ------
+ ------    application specific functions
+ ------
+ -----------------------------------------------------------------------------------------*/
++void InputMapping(UINT16* pData);
+ 
+ /////////////////////////////////////////////////////////////////////////////////////////
+ /**
+@@ -113,6 +116,12 @@ UINT16 CiA402_Init(void)
+         LocalAxes[AxisCnt].fCurPosition = 0;
+         LocalAxes[AxisCnt].u32CycleTime = 0;
+ 
++		g_param->axis[AxisCnt].axis_is_active = LocalAxes[AxisCnt].bAxisIsActive;
++        g_param->axis[AxisCnt].brake_applied = LocalAxes[AxisCnt].bBrakeApplied;
++        g_param->axis[AxisCnt].highlevel_power_applied = LocalAxes[AxisCnt].bHighLevelPowerApplied;
++        g_param->axis[AxisCnt].axis_function_enabled =  LocalAxes[AxisCnt].bAxisFunctionEnabled;
++        g_param->axis[AxisCnt].configuration_allowed = LocalAxes[AxisCnt].bConfigurationAllowed;
++        g_param->axis[AxisCnt].pending_option_code = LocalAxes[AxisCnt].u16PendingOptionCode;
+ 
+         /***********************************
+             init objects
+@@ -352,7 +361,9 @@ void CiA402_StateMachine(void)
+             if(nAlStatus == STATE_OP)
+             {
+                 // Automatic transition -> Communication shall be activated
+-                pCiA402Axis->i16State = STATE_SWITCH_ON_DISABLED; // Transition 1
++				if (!CiA402_transition1(counter)) {
++                	pCiA402Axis->i16State = STATE_SWITCH_ON_DISABLED; // Transition 1
++				}
+             }
+             else
+             {
+@@ -367,7 +378,8 @@ void CiA402_StateMachine(void)
+             StatusWord |= (STATUSWORD_STATE_SWITCHEDONDISABLED);
+             if ((ControlWord6040 & CONTROLWORD_COMMAND_SHUTDOWN_MASK) == CONTROLWORD_COMMAND_SHUTDOWN)
+             {
+-                pCiA402Axis->i16State = STATE_READY_TO_SWITCH_ON; // Transition 2
++				if (!CiA402_transition2(counter))
++                	pCiA402Axis->i16State = STATE_READY_TO_SWITCH_ON; // Transition 2
+             }
+             break;
+         case STATE_READY_TO_SWITCH_ON:
+@@ -375,12 +387,16 @@ void CiA402_StateMachine(void)
+             if (((ControlWord6040 & CONTROLWORD_COMMAND_QUICKSTOP_MASK) == CONTROLWORD_COMMAND_QUICKSTOP)
+                 || ((ControlWord6040 & CONTROLWORD_COMMAND_DISABLEVOLTAGE_MASK) == CONTROLWORD_COMMAND_DISABLEVOLTAGE))
+             {
+-                pCiA402Axis->i16State = STATE_SWITCH_ON_DISABLED; // Transition 7
++				if (!CiA402_transition7(counter)) {
++                	pCiA402Axis->i16State = STATE_SWITCH_ON_DISABLED; // Transition 7
++				}
+             } 
+             else if (((ControlWord6040 & CONTROLWORD_COMMAND_SWITCHON_MASK) == CONTROLWORD_COMMAND_SWITCHON) ||
+                     ((ControlWord6040 & CONTROLWORD_COMMAND_SWITCHON_ENABLEOPERATION_MASK) == CONTROLWORD_COMMAND_SWITCHON_ENABLEOPERATION))
+                 {
+-                    pCiA402Axis->i16State = STATE_SWITCHED_ON;           // Transition 3
++					if(!CiA402_transition3(counter)) {
++                    	pCiA402Axis->i16State = STATE_SWITCHED_ON;           // Transition 3
++					}
+                 }
+                 break;
+         case STATE_SWITCHED_ON:
+@@ -388,18 +404,24 @@ void CiA402_StateMachine(void)
+ 
+             if ((ControlWord6040 & CONTROLWORD_COMMAND_SHUTDOWN_MASK) == CONTROLWORD_COMMAND_SHUTDOWN)
+             {
+-                pCiA402Axis->i16State = STATE_READY_TO_SWITCH_ON; // Transition 6
++				if (!CiA402_transition6(counter)) {
++                	pCiA402Axis->i16State = STATE_READY_TO_SWITCH_ON; // Transition 6
++				}
+ 
+             } 
+             else if (((ControlWord6040 & CONTROLWORD_COMMAND_QUICKSTOP_MASK) == CONTROLWORD_COMMAND_QUICKSTOP
+                     || (ControlWord6040 & CONTROLWORD_COMMAND_DISABLEVOLTAGE_MASK) == CONTROLWORD_COMMAND_DISABLEVOLTAGE))
+                 {
+-                    pCiA402Axis->i16State = STATE_SWITCH_ON_DISABLED; // Transition 10
++					if (!CiA402_transition10(counter)) {
++                    	pCiA402Axis->i16State = STATE_SWITCH_ON_DISABLED; // Transition 10
++					}
+ 
+                 } 
+             else if ((ControlWord6040 & CONTROLWORD_COMMAND_ENABLEOPERATION_MASK) == CONTROLWORD_COMMAND_ENABLEOPERATION)
+                     {
+-                        pCiA402Axis->i16State = STATE_OPERATION_ENABLED;  // Transition 4
++						if (!CiA402_transition4(counter)) {
++                        	pCiA402Axis->i16State = STATE_OPERATION_ENABLED;  // Transition 4
++						}
+                         //The Axis function shall be enabled and all internal set-points cleared.
+                     }
+                     break;
+@@ -414,12 +436,16 @@ void CiA402_StateMachine(void)
+                     pCiA402Axis->u16PendingOptionCode = 0x605C; //STATE_TRANSITION (STATE_OPERATION_ENABLED,STATE_SWITCHED_ON);
+                     return;
+                 }
+-                pCiA402Axis->i16State = STATE_SWITCHED_ON;           // Transition 5
++				if (!CiA402_transition5(counter)) {
++                	pCiA402Axis->i16State = STATE_SWITCHED_ON;           // Transition 5
++				}
+             } else
+                 if ((ControlWord6040 & CONTROLWORD_COMMAND_QUICKSTOP_MASK) == CONTROLWORD_COMMAND_QUICKSTOP)
+                 {
+-                    pCiA402Axis->i16State = STATE_QUICK_STOP_ACTIVE;  // Transition 11
+-                } else
++					if(!CiA402_transition11(counter)) {
++                    	pCiA402Axis->i16State = STATE_QUICK_STOP_ACTIVE;  // Transition 11
++					}
++                } else {
+                     if ((ControlWord6040 & CONTROLWORD_COMMAND_SHUTDOWN_MASK) == CONTROLWORD_COMMAND_SHUTDOWN)
+                     {
+                         if(pCiA402Axis->Objects.objShutdownOptionCode != DISABLE_DRIVE)
+@@ -428,15 +454,20 @@ void CiA402_StateMachine(void)
+                             pCiA402Axis->u16PendingOptionCode = 0x605B; //STATE_TRANSITION (STATE_OPERATION_ENABLED,STATE_READY_TO_SWITCH_ON);
+                             return;
+                         }
++						if (!CiA402_transition8(counter)) {
++                        	pCiA402Axis->i16State = STATE_READY_TO_SWITCH_ON; // Transition 8
++						}
+ 
+-                        pCiA402Axis->i16State = STATE_READY_TO_SWITCH_ON; // Transition 8
+-
+-                    } else
++                    } else {
+                         if ((ControlWord6040 & CONTROLWORD_COMMAND_DISABLEVOLTAGE_MASK) == CONTROLWORD_COMMAND_DISABLEVOLTAGE)
+                         {
+-                            pCiA402Axis->i16State = STATE_SWITCH_ON_DISABLED; // Transition 9
++							if(!CiA402_transition9(counter)) {
++                            	pCiA402Axis->i16State = STATE_SWITCH_ON_DISABLED; // Transition 9
++							}
+                         }
+-                        break;
++					}
++				}
++                break;
+         case STATE_QUICK_STOP_ACTIVE:
+             StatusWord |= STATUSWORD_STATE_QUICKSTOPACTIVE;
+ 
+@@ -450,7 +481,9 @@ void CiA402_StateMachine(void)
+ 
+             if ((ControlWord6040 & CONTROLWORD_COMMAND_DISABLEVOLTAGE_MASK) == CONTROLWORD_COMMAND_DISABLEVOLTAGE)
+             {
+-                pCiA402Axis->i16State = STATE_SWITCH_ON_DISABLED; // Transition 12
++				if(!CiA402_transition12(counter)) {	
++                	pCiA402Axis->i16State = STATE_SWITCH_ON_DISABLED; // Transition 12
++				}
+             }
+ 
+             /*NOTE: it is not recommend to support transition 16 */
+@@ -465,14 +498,18 @@ void CiA402_StateMachine(void)
+             }
+ 
+             // Automatic transition
+-            pCiA402Axis->i16State = STATE_FAULT;// Transition 14
++			if (!CiA402_transition14(counter)) {
++            	pCiA402Axis->i16State = STATE_FAULT;// Transition 14
++			}
+             break;
+         case STATE_FAULT:
+             StatusWord |= (STATUSWORD_STATE_FAULT);
+ 
+             if ((ControlWord6040 & CONTROLWORD_COMMAND_FAULTRESET_MASK) == CONTROLWORD_COMMAND_FAULTRESET)
+             {
+-                pCiA402Axis->i16State = STATE_SWITCH_ON_DISABLED;// Transition 15
++				if(!CiA402_transition15(counter)) {
++                	pCiA402Axis->i16State = STATE_SWITCH_ON_DISABLED;// Transition 15
++				}
+             }
+             break;
+ 
+@@ -523,6 +560,11 @@ void CiA402_StateMachine(void)
+             pCiA402Axis->bConfigurationAllowed = TRUE;
+             break;
+         }
++		g_param->axis[counter].brake_applied = pCiA402Axis->bBrakeApplied;
++		g_param->axis[counter].highlevel_power_applied = pCiA402Axis->bHighLevelPowerApplied;
++		g_param->axis[counter].axis_function_enabled =  pCiA402Axis->bAxisFunctionEnabled;
++		g_param->axis[counter].configuration_allowed = pCiA402Axis->bConfigurationAllowed;
++		g_param->axis[counter].pending_option_code = pCiA402Axis->u16PendingOptionCode;
+ 
+         if (pCiA402Axis->bHighLevelPowerApplied == TRUE)
+         {
+@@ -682,7 +724,7 @@ BOOL CiA402_TransitionAction(INT16 Characteristic,TCiA402Axis *pCiA402Axis)
+  \brief check if a state transition is pending and pass desired ramp-code to CiA402TransitionAction()
+  \brief if this functions returns true the state transition is finished.
+ *////////////////////////////////////////////////////////////////////////////////////////
+-void CiA402_Application(TCiA402Axis *pCiA402Axis)
++void CiA402_Application(int axis, TCiA402Axis *pCiA402Axis)
+ {
+     /*clear "Drive follows the command value" flag if the target values from the master overwritten by the local application*/
+     if(pCiA402Axis->u16PendingOptionCode != 0 &&
+@@ -726,7 +768,7 @@ void CiA402_Application(TCiA402Axis *pCiA402Axis)
+                 }
+             }
+ 
+-            if(CiA402_TransitionAction(ramp,pCiA402Axis))
++            if(!CiA402_transition_action_query(axis))
+             {
+                 /*quick stop ramp is finished complete state transition*/
+                 pCiA402Axis->u16PendingOptionCode = 0x0;
+@@ -744,7 +786,7 @@ void CiA402_Application(TCiA402Axis *pCiA402Axis)
+     case 0x605B:
+         /*state transition 8 is pending analyse shutdown option code (0x605B)*/
+         {
+-            if(CiA402_TransitionAction(pCiA402Axis->Objects.objShutdownOptionCode,pCiA402Axis))
++            if(!CiA402_transition_action_query(axis))
+             {
+                 /*shutdown ramp is finished complete state transition*/
+                 pCiA402Axis->u16PendingOptionCode = 0x0;
+@@ -755,7 +797,7 @@ void CiA402_Application(TCiA402Axis *pCiA402Axis)
+     case 0x605C:
+         /*state transition 5 is pending analyse Disable operation option code (0x605C)*/
+         {
+-            if(CiA402_TransitionAction(pCiA402Axis->Objects.objDisableOperationOptionCode,pCiA402Axis))
++            if(!CiA402_transition_action_query(axis))
+             {
+                 /*disable operation ramp is finished complete state transition*/
+                 pCiA402Axis->u16PendingOptionCode = 0x0;
+@@ -767,7 +809,7 @@ void CiA402_Application(TCiA402Axis *pCiA402Axis)
+     case 0x605E:
+         /*state transition 14 is pending analyse Fault reaction option code (0x605E)*/
+         {
+-            if(CiA402_TransitionAction(pCiA402Axis->Objects.objFaultReactionCode,pCiA402Axis))
++            if(!CiA402_transition_action_query(axis))
+             {
+                 /*fault reaction ramp is finished complete state transition*/
+                 pCiA402Axis->u16PendingOptionCode = 0x0;
+@@ -780,12 +822,12 @@ void CiA402_Application(TCiA402Axis *pCiA402Axis)
+         pCiA402Axis->Objects.objStatusWord |= STATUSWORD_DRIVE_FOLLOWS_COMMAND;
+         break;
+     }
+-    if(bDcSyncActive
+-        && (pCiA402Axis->u32CycleTime != 0)
+-        && ((pCiA402Axis->Objects.objSupportedDriveModes >> (pCiA402Axis->Objects.objModesOfOperation - 1)) & 0x1)) //Mode of Operation (0x6060) - 1 specifies the Bit within Supported Drive Modes (0x6502)
+-    {
+-        CiA402_DummyMotionControl(pCiA402Axis);
+-    }
++  //  if(bDcSyncActive
++  //      && (pCiA402Axis->u32CycleTime != 0)
++  //      && ((pCiA402Axis->Objects.objSupportedDriveModes >> (pCiA402Axis->Objects.objModesOfOperation - 1)) & 0x1)) //Mode of Operation (0x6060) - 1 specifies the Bit within Supported Drive Modes (0x6502)
++  //  {
++  //      CiA402_DummyMotionControl(pCiA402Axis);
++//    }
+ 
+ 
+ 
+@@ -961,6 +1003,81 @@ UINT8 Write0xF030( UINT16 index, UINT8 subindex, UINT32 dataSize, UINT16 MBXMEM
+     return 0;
+ }
+ 
++UINT8 ObjRead0x6064( UINT16 Index, UINT8 Subindex, UINT32 Size, UINT16 MBXMEM * pData, UINT8 bCompleteAccess)
++{
++    if(bCompleteAccess)
++    {
++        return ABORTIDX_UNSUPPORTED_ACCESS;
++    }
++
++    if(Subindex == 0)
++    {
++			CiA402_object_read(Index, Subindex, pData, Size);
++    } else {
++        return ABORTIDX_SUBINDEX_NOT_EXISTING;
++    }
++ return 0;
++}
++
++
++UINT8 ObjRead0x606c( UINT16 Index, UINT8 Subindex, UINT32 Size, UINT16 MBXMEM * pData, UINT8 bCompleteAccess)
++{
++    if(bCompleteAccess)
++    {
++        return ABORTIDX_UNSUPPORTED_ACCESS;
++    }
++
++    if(Subindex == 0)
++    {
++		CiA402_object_read(Index, Subindex, pData, Size);
++    } else {
++        return ABORTIDX_SUBINDEX_NOT_EXISTING;
++    }
++ return 0;
++}
++
++UINT8 ObjRead0x6060( UINT16 Index, UINT8 Subindex, UINT32 Size, UINT16 MBXMEM * pData, UINT8 bCompleteAccess)
++{
++    if(bCompleteAccess)
++    {
++        return ABORTIDX_UNSUPPORTED_ACCESS;
++    }
++
++    if(Subindex == 0)
++    {
++		CiA402_object_read(Index, Subindex, pData, Size);
++    } else {
++        return ABORTIDX_SUBINDEX_NOT_EXISTING;
++    }
++ return 0;
++}
++
++UINT8 ObjWrite0x6060( UINT16 Index, UINT8 Subindex, UINT32 Size, UINT16 MBXMEM * pData, UINT8 bCompleteAccess)
++{
++   if ( bCompleteAccess )
++   {
++      /* Complete Access is not supported for object 0x1010 */
++      return ABORTIDX_UNSUPPORTED_ACCESS;
++   }
++
++   if ( Subindex == 0 )
++   {
++      if (*pData == CYCLIC_SYNC_POSITION_MODE) {
++          LocalAxes[0].Objects.objModesOfOperation = CYCLIC_SYNC_POSITION_MODE;
++		  CiA402_object_write(Index, Subindex, pData, 2);
++      } else if (*pData == CYCLIC_SYNC_VELOCITY_MODE) {
++		  CiA402_object_write(Index, Subindex, pData, 2);
++          LocalAxes[0].Objects.objModesOfOperation = CYCLIC_SYNC_VELOCITY_MODE;
++      } else
++          return ABORTIDX_PARAM_IS_INCOMPATIBLE;
++   } else {
++      return ABORTIDX_SUBINDEX_NOT_EXISTING;
++   }
++ return 0;
++}
++
++
++
+ /*-----------------------------------------------------------------------------------------
+ ------
+ ------    generic functions
+@@ -1077,6 +1194,7 @@ UINT16 APPL_StartInputHandler(UINT16 *pIntMask)
+     {
+         UINT16 i;
+         Sync0CycleTime = Sync0CycleTime / 1000; //get cycle time in us
++		g_param->u32CycleTime = Sync0CycleTime;
+         for(i = 0; i< MAX_AXES;i++)
+         {
+                 if (LocalAxes[i].bAxisIsActive)
+@@ -1194,6 +1312,7 @@ UINT16 APPL_GenerateMapping(UINT16* pInputSize,UINT16* pOutputSize)
+ 
+                 
+                 LocalAxes[PDOAssignEntryCnt].bAxisIsActive = TRUE;
++				g_param->axis[PDOAssignEntryCnt].axis_is_active = TRUE;
+             }
+ 
+         }
+@@ -1214,6 +1333,7 @@ UINT16 APPL_GenerateMapping(UINT16* pInputSize,UINT16* pOutputSize)
+ 
+                 
+                 LocalAxes[PDOAssignEntryCnt].bAxisIsActive = FALSE;
++				g_param->axis[PDOAssignEntryCnt].axis_is_active  = FALSE;
+             }
+         }
+ 
+@@ -1290,6 +1410,69 @@ UINT16 APPL_GenerateMapping(UINT16* pInputSize,UINT16* pOutputSize)
+     return result;
+ }
+ 
++void PDO_InputMapping_CallBack(void)
++{
++	if (bEcatInputUpdateRunning) {
++	/* EtherCAT slave is at least in SAFE-OPERATIONAL, update inputs */
++
++	#if ((MIN_PD_CYCLE_TIME == 0) || (PD_INPUT_CALC_AND_COPY_TIME == 0))
++	    UINT32 u32TimeValue = 0;
++	    UINT16 ALEvent = HW_GetALEventRegister_Isr();
++	    ALEvent = SWAPWORD(ALEvent);
++	
++	    if (MEASUREMENT_ACTIVE)
++	    {
++	        u32TimeValue = GetSystemTimeDelay(0);
++	    }
++	#endif /* ((MIN_PD_CYCLE_TIME == 0) || (PD_INPUT_CALC_AND_COPY_TIME == 0)) */
++	
++	    InputMapping((UINT16*)aPdInputData);
++	    HW_EscWriteIsr(((MEM_ADDR *) aPdInputData), nEscAddrInputData, nPdInputSize );
++	
++	#if ((MIN_PD_CYCLE_TIME == 0) || (PD_INPUT_CALC_AND_COPY_TIME == 0))
++	
++	    if (MEASUREMENT_ACTIVE)
++	    {
++	        u32TimeValue = GetSystemTimeDelay(u32TimeValue);
++	
++	#if (PD_INPUT_CALC_AND_COPY_TIME == 0)
++	        if (sSyncManInPar.u32CalcAndCopyTime < u32TimeValue)
++	        {
++	            sSyncManInPar.u32CalcAndCopyTime = u32TimeValue;
++	        }
++	#endif
++	
++	#if (MIN_PD_CYCLE_TIME == 0)
++//	        /* handle the min cycle time measurement only if a new cycle was started (prevent measurement failures if the get cycle time bit is set within a process data cycle)*/
++	        if (bMinCycleTimeMeasurementStarted == TRUE)
++	        {
++	
++	            /* add input mapping time to the min cycle time*/
++	            u32MinCycleTimeValue = u32MinCycleTimeValue + u32TimeValue;
++//	
++//	
++	            if (sSyncManOutPar.u32MinCycleTime < u32MinCycleTimeValue)
++	            {
++	                    sSyncManOutPar.u32MinCycleTime = u32MinCycleTimeValue;
++	            }
++	
++	            if (sSyncManInPar.u32MinCycleTime < u32MinCycleTimeValue)
++	            {
++	                    sSyncManInPar.u32MinCycleTime = u32MinCycleTimeValue;
++	            }
++	
++	            bMinCycleTimeMeasurementStarted = FALSE;
++	        }
++	#endif /* (MIN_PD_CYCLE_TIME == 0) */
++	    }
++	
++	#endif /* ((MIN_PD_CYCLE_TIME == 0) || (PD_INPUT_CALC_AND_COPY_TIME == 0)) */
++		
++	}
++
++}
++
++
+ /////////////////////////////////////////////////////////////////////////////////////////
+ /**
+ \param      pData  pointer to input process data
+@@ -1297,10 +1480,18 @@ UINT16 APPL_GenerateMapping(UINT16* pInputSize,UINT16* pOutputSize)
+             to the hardware
+ *////////////////////////////////////////////////////////////////////////////////////////
+ void APPL_InputMapping(UINT16* pData)
++{
++	while(!GET_PDO_RECEIVE_FLAG());
++	InputMapping(pData);
++	CLR_PDO_RECEIVE_FLAG();
++}
++
++void InputMapping(UINT16* pData)
+ {
+     UINT16 j = 0;
+     UINT8 *pTmpData = (UINT8 *)pData;
+     UINT8 AxisIndex;
++	struct pdo_to_esc_t *pdo = PDO_read_start();
+ 
+     for (j = 0; j < sTxPDOassign.u16SubIndex0; j++)
+     {
+@@ -1314,9 +1505,11 @@ void APPL_InputMapping(UINT16* pData)
+                 TCiA402PDO1A00 *pInputs = (TCiA402PDO1A00 *)pTmpData;
+ 
+                 pInputs->ObjStatusWord = SWAPWORD(LocalAxes[AxisIndex].Objects.objStatusWord);
+-                pInputs->ObjPositionActualValue = SWAPDWORD(LocalAxes[AxisIndex].Objects.objPositionActualValue);
+-                pInputs->ObjVelocityActualValue = SWAPDWORD(LocalAxes[AxisIndex].Objects.objVelocityActualValue);
++           //     pInputs->ObjPositionActualValue = SWAPDWORD(LocalAxes[AxisIndex].Objects.objPositionActualValue);
++           //     pInputs->ObjVelocityActualValue = SWAPDWORD(LocalAxes[AxisIndex].Objects.objVelocityActualValue);
+                 pInputs->ObjModesOfOperationDisplay = SWAPWORD((LocalAxes[AxisIndex].Objects.objModesOfOperationDisplay & 0x00FF));
++				pInputs->ObjPositionActualValue = pdo[j].Actual_pos;
++				pInputs->ObjVelocityActualValue = pdo[j].Actual_vel;
+ 
+                 /*shift pointer PDO mapping object following*/
+                 if(j < (sTxPDOassign.u16SubIndex0 - 1))
+@@ -1328,7 +1521,8 @@ void APPL_InputMapping(UINT16* pData)
+                 TCiA402PDO1A01 *pInputs = (TCiA402PDO1A01 *)pTmpData;
+ 
+                 pInputs->ObjStatusWord = SWAPWORD(LocalAxes[AxisIndex].Objects.objStatusWord);
+-                pInputs->ObjPositionActualValue = SWAPDWORD(LocalAxes[AxisIndex].Objects.objPositionActualValue);
++                //pInputs->ObjPositionActualValue = SWAPDWORD(LocalAxes[AxisIndex].Objects.objPositionActualValue);
++				pInputs->ObjPositionActualValue = pdo[j].Actual_pos;
+ 
+                 /*shift pointer PDO mapping object following*/
+                 if (j < (sTxPDOassign.u16SubIndex0 - 1))
+@@ -1342,7 +1536,9 @@ void APPL_InputMapping(UINT16* pData)
+                 TCiA402PDO1A02 *pInputs = (TCiA402PDO1A02 *)pTmpData;
+ 
+                 pInputs->ObjStatusWord = SWAPWORD(LocalAxes[AxisIndex].Objects.objStatusWord);
+-                pInputs->ObjPositionActualValue = SWAPDWORD(LocalAxes[AxisIndex].Objects.objPositionActualValue);
++            //    pInputs->ObjPositionActualValue = SWAPDWORD(LocalAxes[AxisIndex].Objects.objPositionActualValue);
++				pInputs->ObjPositionActualValue = pdo[j].Actual_pos;
++			//	  pInputs->ObjVelocit = pdo[j].Actual_vel;
+             
+                 /*shift pointer PDO mapping object following*/
+                 if (j < (sTxPDOassign.u16SubIndex0 - 1))
+@@ -1353,6 +1549,7 @@ void APPL_InputMapping(UINT16* pData)
+             break;
+         }    //switch TXPDO entry
+     }
++	PDO_read_end();
+ }
+ 
+ /////////////////////////////////////////////////////////////////////////////////////////
+@@ -1367,7 +1564,7 @@ void APPL_OutputMapping(UINT16* pData)
+     UINT16 j = 0;
+     UINT8 *pTmpData = (UINT8 *)pData;
+     UINT8 AxisIndex;
+-
++	struct pdo_to_motor_t *pdo = PDO_write_start();
+     for (j = 0; j < sRxPDOassign.u16SubIndex0; j++)
+     {
+         /*The Axis index is based on the PDO mapping offset (0x10)*/
+@@ -1420,7 +1617,11 @@ void APPL_OutputMapping(UINT16* pData)
+             }
+             break;
+         }
++		pdo[j].Control = LocalAxes[AxisIndex].Objects.objControlWord;
++		pdo[j].Target_pos = LocalAxes[AxisIndex].Objects.objTargetPosition;
++		pdo[j].Target_vel = LocalAxes[AxisIndex].Objects.objTargetVelocity;
+     }
++	PDO_write_end();
+ }
+ /////////////////////////////////////////////////////////////////////////////////////////
+ /**
+@@ -1430,14 +1631,21 @@ void APPL_OutputMapping(UINT16* pData)
+ void APPL_Application(void)
+ {
+     UINT16 i;
+-
++	int active = 0, ready = 0;
+     for(i = 0; i < MAX_AXES;i++)
+     {
+             if (LocalAxes[i].bAxisIsActive)
+             {
+-                CiA402_Application(&LocalAxes[i]);
++				active++;
++                CiA402_Application(i, &LocalAxes[i]);
++				if (LocalAxes[i].u32CycleTime != 0 && ((LocalAxes[i].Objects.objSupportedDriveModes >> (LocalAxes[i].Objects.objModesOfOperation - 1)) & 0x1)) {
++					ready++;
++				}
+             }
+     }
++	if(bDcSyncActive && active == ready) {
++		PDO_TRIGGER();	
++	}	
+ }
+ 
+ 
+diff --git a/cia402appl.h b/cia402appl.h
+index ccb754e..c70cd5a 100644
+--- a/cia402appl.h
++++ b/cia402appl.h
+@@ -1097,6 +1097,10 @@ PROTO TOBJF030 sConfiguredModuleIdentList
+ 
+ PROTO UINT8 Write0xF030( UINT16 index, UINT8 subindex, UINT32 dataSize, UINT16 MBXMEM * pData, UINT8 bCompleteAccess );
+ 
++PROTO UINT8 ObjRead0x6060( UINT16 Index, UINT8 Subindex, UINT32 Size, UINT16 MBXMEM * pData, UINT8 bCompleteAccess);
++PROTO UINT8 ObjWrite0x6060( UINT16 Index, UINT8 Subindex, UINT32 Size, UINT16 MBXMEM * pData, UINT8 bCompleteAccess);
++PROTO UINT8 ObjRead0x6064( UINT16 Index, UINT8 Subindex, UINT32 Size, UINT16 MBXMEM * pData, UINT8 bCompleteAccess);
++PROTO UINT8 ObjRead0x606c( UINT16 Index, UINT8 Subindex, UINT32 Size, UINT16 MBXMEM * pData, UINT8 bCompleteAccess);
+ 
+ /** 
+  * \brief Object 0xF050 (Detected Module List) variable to handle object data
+diff --git a/ecatappl.c b/ecatappl.c
+index 5ff3302..423506a 100644
+--- a/ecatappl.c
++++ b/ecatappl.c
+@@ -579,22 +579,22 @@ void Sync0_Isr(void)
+     if(bDcSyncActive)
+     {
+ /*ECATCHANGE_START(V5.13) ECAT 6*/
+-        BOOL bCallInputMapping = FALSE;
++ //       BOOL bCallInputMapping = FALSE;
+ /*ECATCHANGE_END(V5.13) ECAT 6*/
+ 
+ /*ECATCHANGE_START(V5.13) ECAT 6*/
+-        if ((bEcatInputUpdateRunning == TRUE) && (LatchInputSync0Value > 0) && (nPdInputSize > 0))
+-        {
+-            if(LatchInputSync0Value > LatchInputSync0Counter) /* Inputs shall be latched on a specific Sync0 event */
+-            {
+-                LatchInputSync0Counter++;
+-            }
+-
+-            if (LatchInputSync0Value == LatchInputSync0Counter)
+-            {
+-                bCallInputMapping = TRUE;
+-            }
+-        }
++//        if ((bEcatInputUpdateRunning == TRUE) && (LatchInputSync0Value > 0) && (nPdInputSize > 0))
++//        {
++//            if(LatchInputSync0Value > LatchInputSync0Counter) /* Inputs shall be latched on a specific Sync0 event */
++//            {
++//                LatchInputSync0Counter++;
++//            }
++
++//            if (LatchInputSync0Value == LatchInputSync0Counter)
++//            {
++//                bCallInputMapping = TRUE;
++//            }
++//        }
+ /*ECATCHANGE_END(V5.13) ECAT 6*/
+ 
+         if(u16SmSync0Value > 0)
+@@ -651,17 +651,17 @@ void Sync0_Isr(void)
+         ECAT_Application();
+ 
+ /*ECATCHANGE_START(V5.13) ECAT 6*/
+-        if (bCallInputMapping == TRUE)
+-        {
+-            /* EtherCAT slave is at least in SAFE-OPERATIONAL, update inputs */
+-            PDO_InputMapping();
+-
+-            if(LatchInputSync0Value == 1)
+-            {
+-                /* if inputs are latched on every Sync0 event (otherwise the counter is reset on the next Sync1 event) */
+-                LatchInputSync0Counter = 0;
+-            }
+-        }
++//        if (bCallInputMapping == TRUE)
++//        {
++//            /* EtherCAT slave is at least in SAFE-OPERATIONAL, update inputs */
++//            PDO_InputMapping();
++//
++//            if(LatchInputSync0Value == 1)
++//            {
++//                /* if inputs are latched on every Sync0 event (otherwise the counter is reset on the next Sync1 event) */
++//                LatchInputSync0Counter = 0;
++//            }
++//        }
+ /*ECATCHANGE_END(V5.13) ECAT 6*/
+ 
+     }
+diff --git a/ecatappl.h b/ecatappl.h
+index f52d4fd..713d6e9 100644
+--- a/ecatappl.h
++++ b/ecatappl.h
+@@ -125,6 +125,8 @@ PROTO    void       PDO_InputMapping(void);
+ 
+ PROTO    void       ECAT_SetLedIndication(void);
+ PROTO    void       CalcSMCycleTime(void);
++PROTO	 UINT32 GetSystemTimeDelay(UINT32 u32StartTime);
++/*ET9300 Project Handler :(#if ESC_EEPROM_ACCESS_SUPPORT) lines 178 to 181 deleted*/
+ 
+ 
+ 
+diff --git a/ecatslv.c b/ecatslv.c
+index b0fd563..486a2d2 100644
+--- a/ecatslv.c
++++ b/ecatslv.c
+@@ -1248,7 +1248,7 @@ UINT16 StartInputHandler(void)
+     }
+ 
+     /*write initial input data*/
+-    PDO_InputMapping();
++    //PDO_InputMapping();
+ 
+     return ALSTATUSCODE_NOERROR;
+ }
+-- 
+2.25.1
+

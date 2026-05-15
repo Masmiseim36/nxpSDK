@@ -460,6 +460,7 @@ static void M2_StateInitFast_Optim(void)
     FAULT_SET(g_sM2Drive.sFaultIdEnable, FAULT_LOAD_OVER);
     FAULT_SET(g_sM2Drive.sFaultIdEnable, FAULT_SPEED_OVER);
     FAULT_SET(g_sM2Drive.sFaultIdEnable, FAULT_ROTOR_BLOCKED);
+    FAULT_SET(g_sM2Drive.sFaultIdEnable, FAULT_ENC_TIMEOUT);
     
 #if ENABLE_FLASH_PARAM_UPDATE
       M2_MCDRV_FLASH_CFG_INIT();
@@ -786,6 +787,7 @@ static void M2_StateInitFast(void)
     FAULT_SET(g_sM2Drive.sFaultIdEnable, FAULT_LOAD_OVER);
     FAULT_SET(g_sM2Drive.sFaultIdEnable, FAULT_SPEED_OVER);
     FAULT_SET(g_sM2Drive.sFaultIdEnable, FAULT_ROTOR_BLOCKED);
+    FAULT_SET(g_sM2Drive.sFaultIdEnable, FAULT_ENC_TIMEOUT);
     
 #if ENABLE_FLASH_PARAM_UPDATE
       M2_MCDRV_FLASH_CFG_INIT();
@@ -1502,8 +1504,14 @@ static void M2_StateRunStartupFast(void)
     /* Open loop startup */
     MCS_PMSMOpenLoopStartUp(&g_sM2Drive.sStartUp);
 
-    /* Pass f16SpeedRampOpenloop to f16SpeedRamp*/
+    /* Pass fltSpeedRampOpenloop to fltSpeedRamp */
     g_sM2Drive.sSpeed.fltSpeedRamp = g_sM2Drive.sStartUp.fltSpeedRampOpenLoop;
+    
+    if(g_sM2Drive.sSpeed.bSpeedZCOn)
+    {
+        /* Pass fltSpeedRampOpenloop to fltSpeedCmdFilt */
+        g_sM2Drive.sSpeed.fltSpeedCmdFilt = g_sM2Drive.sStartUp.fltSpeedRampOpenLoop;
+    }
 
     /* Position and speed for FOC */
     g_sM2Drive.sFocPMSM.f16PosElExt = g_sM2Drive.sStartUp.f16PosMerged;
@@ -1735,6 +1743,7 @@ static void M2_StateRunFreewheelFast(void)
     g_sM2Drive.sSpeed.fltSpeed         = 0.0F;
     g_sM2Drive.sSpeed.fltSpeedFilt     = 0.0F;
     g_sM2Drive.sSpeed.fltSpeedRamp     = 0.0F;
+    g_sM2Drive.sSpeed.fltSpeedCmdFilt     = 0.0F;
 }
 #endif
 

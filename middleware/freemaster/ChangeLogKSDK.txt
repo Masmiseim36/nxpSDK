@@ -67,4 +67,12 @@
     - Support for CAN-FD interface in both MCUX SDK and Zephyr
     - Standardized SBOM component file added
 
+  - 3.0.11
+    - Fixed RTT default buffer size issue
+    - Enforcing assert checks when FMSTR_DEBUG_LEVEL is >0
+    - Fixed KConfig default values for Zephyr RTOS
+
+  - 3.0.12
+    - Fixed callback handling in CAN driver for Zephyr RTOS
+
 */

@@ -37,11 +37,7 @@
 #endif
 #endif /* PSA_CRYPTO_DRIVER_ELE_S4XX */
 
-/*
- * Location specific details go in this file which is also exposed to application writers
- * to iunclude when using key from a particular location.
- */
-#include "mcux_psa_defines.h"
+#define PSA_CRYPTO_ELE_S4XX_LOCATION 0xC00002
 
 #include "mcux_psa_s4xx_entropy.h"
 

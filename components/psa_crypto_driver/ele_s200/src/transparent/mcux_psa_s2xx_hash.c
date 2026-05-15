@@ -24,8 +24,9 @@
 #define SHA384_DIGEST_SIZE_IN_BYTES (384u / 8u)
 #define SHA512_DIGEST_SIZE_IN_BYTES (512u / 8u)
 
-static psa_status_t ele_psa_hash_alg_to_ele_hash_alg(psa_algorithm_t alg, sss_algorithm_t *mode)
+static psa_status_t translate_psa_hash_to_ele_hash(psa_algorithm_t alg, sss_algorithm_t *mode)
 {
+    psa_status_t status = PSA_SUCCESS;
     switch (alg)
     {
 #if defined(PSA_WANT_ALG_SHA_224)
@@ -76,18 +77,19 @@ static psa_status_t ele_psa_hash_alg_to_ele_hash_alg(psa_algorithm_t alg, sss_al
             break;
 #endif /* PSA_WANT_ALG_SHA_1 */
         default:
-            return PSA_ERROR_NOT_SUPPORTED;
+            status = PSA_ERROR_NOT_SUPPORTED;
+            break;
     }
-
-    return PSA_SUCCESS;
+    return status;
 }
 
 #if defined(ELE_FEATURE_DIGEST_CLONE) && (ELE_FEATURE_DIGEST_CLONE == 1)
 /**
- * @brief Inverse to ele_psa_hash_alg_to_ele_hash_alg()
+ * @brief Inverse to translate_psa_hash_to_ele_hash()
  */
-static psa_status_t ele_ele_hash_alg_to_psa_hash_alg(sss_algorithm_t mode, psa_algorithm_t *alg)
+static psa_status_t translate_ele_hash_to_psa_hash(sss_algorithm_t mode, psa_algorithm_t *alg)
 {
+    psa_status_t status = PSA_SUCCESS;
     switch (mode)
     {
 #if defined(PSA_WANT_ALG_SHA_224)
@@ -138,10 +140,10 @@ static psa_status_t ele_ele_hash_alg_to_psa_hash_alg(sss_algorithm_t mode, psa_a
             break;
 #endif /* PSA_WANT_ALG_SHA_1 */
         default:
-            return PSA_ERROR_NOT_SUPPORTED;
+            status = PSA_ERROR_NOT_SUPPORTED;
+            break;
     }
-
-    return PSA_SUCCESS;
+    return status;
 }
 #endif /* ELE_FEATURE_DIGEST_CLONE */
 
@@ -163,14 +165,14 @@ psa_status_t ele_s2xx_transparent_hash_setup(ele_s2xx_hash_operation_t *operatio
 
     (void)memset(operation, 0, sizeof(ele_s2xx_hash_operation_t));
 
-    if ((status = ele_psa_hash_alg_to_ele_hash_alg(alg, &operation->ctx.algorithm)) != PSA_SUCCESS)
+    if ((status = translate_psa_hash_to_ele_hash(alg, &operation->ctx.algorithm)) != PSA_SUCCESS)
     {
         return status;
     }
 
     if (mcux_mutex_lock(&ele_hwcrypto_mutex) != 0)
     {
-        return PSA_ERROR_GENERIC_ERROR;
+        return PSA_ERROR_SERVICE_FAILURE;
     }
 
     if (sss_sscp_digest_context_init(&operation->ctx, &g_ele_ctx.sssSession, operation->ctx.algorithm,
@@ -189,7 +191,7 @@ psa_status_t ele_s2xx_transparent_hash_setup(ele_s2xx_hash_operation_t *operatio
 exit:
     if (mcux_mutex_unlock(&ele_hwcrypto_mutex) != 0)
     {
-        return PSA_ERROR_GENERIC_ERROR;
+        return PSA_ERROR_SERVICE_FAILURE;
     }
 
     return status;
@@ -207,7 +209,7 @@ psa_status_t ele_s2xx_transparent_hash_clone(const ele_s2xx_hash_operation_t *so
     }
 
     /* Initialize target to same algorithm as source */
-    if ((status = ele_ele_hash_alg_to_psa_hash_alg(source_operation->ctx.algorithm, &alg)) != PSA_SUCCESS)
+    if ((status = translate_ele_hash_to_psa_hash(source_operation->ctx.algorithm, &alg)) != PSA_SUCCESS)
     {
         return status;
     }
@@ -220,7 +222,7 @@ psa_status_t ele_s2xx_transparent_hash_clone(const ele_s2xx_hash_operation_t *so
     /* Clone */
     if (mcux_mutex_lock(&ele_hwcrypto_mutex) != 0)
     {
-        return PSA_ERROR_GENERIC_ERROR;
+        return PSA_ERROR_SERVICE_FAILURE;
     }
 
     if (sss_sscp_digest_clone((sss_sscp_digest_t *)&source_operation->ctx, &target_operation->ctx) != kStatus_SSS_Success)
@@ -232,7 +234,7 @@ psa_status_t ele_s2xx_transparent_hash_clone(const ele_s2xx_hash_operation_t *so
 exit:
     if (mcux_mutex_unlock(&ele_hwcrypto_mutex) != 0)
     {
-        return PSA_ERROR_GENERIC_ERROR;
+        return PSA_ERROR_SERVICE_FAILURE;
     }
 
     return status;
@@ -270,7 +272,7 @@ psa_status_t ele_s2xx_transparent_hash_update(ele_s2xx_hash_operation_t *operati
 
     if (mcux_mutex_lock(&ele_hwcrypto_mutex) != 0)
     {
-        return PSA_ERROR_GENERIC_ERROR;
+        return PSA_ERROR_SERVICE_FAILURE;
     }
 
     if (sss_sscp_digest_update(&operation->ctx, (uint8_t *)(uintptr_t)input, input_length) != kStatus_SSS_Success)
@@ -282,7 +284,7 @@ psa_status_t ele_s2xx_transparent_hash_update(ele_s2xx_hash_operation_t *operati
 exit:
     if (mcux_mutex_unlock(&ele_hwcrypto_mutex) != 0)
     {
-        return PSA_ERROR_GENERIC_ERROR;
+        return PSA_ERROR_SERVICE_FAILURE;
     }
 
     return status;
@@ -308,7 +310,7 @@ psa_status_t ele_s2xx_transparent_hash_finish(ele_s2xx_hash_operation_t *operati
 
     if (mcux_mutex_lock(&ele_hwcrypto_mutex) != 0)
     {
-        return PSA_ERROR_GENERIC_ERROR;
+        return PSA_ERROR_SERVICE_FAILURE;
     }
 
     if (sss_sscp_digest_finish(&operation->ctx, hash, &hash_size) != kStatus_SSS_Success)
@@ -322,7 +324,7 @@ psa_status_t ele_s2xx_transparent_hash_finish(ele_s2xx_hash_operation_t *operati
 exit:
     if (mcux_mutex_unlock(&ele_hwcrypto_mutex) != 0)
     {
-        return PSA_ERROR_GENERIC_ERROR;
+        return PSA_ERROR_SERVICE_FAILURE;
     }
 
     return status;
@@ -332,14 +334,14 @@ psa_status_t ele_s2xx_transparent_hash_abort(ele_s2xx_hash_operation_t *operatio
 {
     if (mcux_mutex_lock(&ele_hwcrypto_mutex) != 0)
     {
-        return PSA_ERROR_GENERIC_ERROR;
+        return PSA_ERROR_SERVICE_FAILURE;
     }
 
     (void)sss_sscp_digest_context_free(&operation->ctx);
 
     if (mcux_mutex_unlock(&ele_hwcrypto_mutex) != 0)
     {
-        return PSA_ERROR_GENERIC_ERROR;
+        return PSA_ERROR_SERVICE_FAILURE;
     }
 
     /* Zeroize the context */
@@ -360,7 +362,7 @@ psa_status_t ele_s2xx_transparent_hash_compute(psa_algorithm_t alg,
     sss_sscp_digest_t ctx;
     sss_algorithm_t mode = 0;
 
-    if ((status = ele_psa_hash_alg_to_ele_hash_alg(alg, &mode)) != PSA_SUCCESS)
+    if ((status = translate_psa_hash_to_ele_hash(alg, &mode)) != PSA_SUCCESS)
     {
         return status;
     }
@@ -372,14 +374,9 @@ psa_status_t ele_s2xx_transparent_hash_compute(psa_algorithm_t alg,
 
     /* Fill the output buffer with something that isn't a valid hash
      * (barring an attack on the hash and deliberately-crafted input),
-     * in case the caller doesn't check the return status properly. */
-
-    /* If hash_size is 0 then hash may be NULL and then the
-     * call to memset would have undefined behavior. */
-    if (hash_size != 0u)
-    {
-        (void)memset(hash, '!', hash_size);
-    }
+     * in case the caller doesn't check the return status properly.
+     */
+    (void)memset(hash, (int)'!', hash_size);
 
     if (hash_size < actual_hash_length)
     {
@@ -388,7 +385,7 @@ psa_status_t ele_s2xx_transparent_hash_compute(psa_algorithm_t alg,
 
     if (mcux_mutex_lock(&ele_hwcrypto_mutex) != 0)
     {
-        return PSA_ERROR_GENERIC_ERROR;
+        return PSA_ERROR_SERVICE_FAILURE;
     }
 
     if (sss_sscp_digest_context_init(&ctx, &g_ele_ctx.sssSession, mode, kMode_SSS_Digest) != kStatus_SSS_Success)
@@ -414,7 +411,7 @@ psa_status_t ele_s2xx_transparent_hash_compute(psa_algorithm_t alg,
 exit:
     if (mcux_mutex_unlock(&ele_hwcrypto_mutex) != 0)
     {
-        return PSA_ERROR_GENERIC_ERROR;
+        return PSA_ERROR_SERVICE_FAILURE;
     }
 
     return status;

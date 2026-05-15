@@ -33,25 +33,52 @@ print_cpp () {
  *
  */
 
-#include "mbedtls/config.h"
+#include "mbedtls/build_info.h"
 
 EOF
 
-  for header in include/mbedtls/*.h include/psa/*.h; do
-    case ${header#include/} in
-      psa/crypto_config.h) :;; # not meant for direct inclusion
-      # Some of the psa/crypto_*.h headers are not meant to be included directly.
-      # They do have include guards that make them no-ops if psa/crypto.h
-      # has been included before. Since psa/crypto.h comes before psa/crypto_*.h
-      # in the wildcard enumeration, we don't need to skip those headers.
-      *) echo "#include \"${header#include/}\"";;
-    esac
-  done
+    for header in include/mbedtls/*.h; do
+        case ${header#include/} in
+            mbedtls/mbedtls_config.h) :;; # not meant for direct inclusion
+            mbedtls/config_*.h) :;; # not meant for direct inclusion
+            *) echo "#include \"${header#include/}\"";;
+        esac
+    done
+
+    for header in tf-psa-crypto/drivers/builtin/include/mbedtls/*.h; do
+        case ${header#tf-psa-crypto/drivers/builtin/include/} in
+            mbedtls/config_*.h) :;; # not meant for direct inclusion
+            *) echo "#include \"${header#tf-psa-crypto/drivers/builtin/include/}\"";;
+        esac
+    done
+
+    if [ -d "tf-psa-crypto/include/mbedtls" ]; then
+        for header in tf-psa-crypto/include/mbedtls/*.h; do
+            echo "#include \"${header#tf-psa-crypto/include/}\""
+        done
+    fi
+
+    for header in tf-psa-crypto/include/psa/*.h; do
+        case ${header#tf-psa-crypto/include/} in
+            psa/crypto_config.h) :;; # not meant for direct inclusion
+            psa/crypto_ajdust_config*.h) :;; # not meant for direct inclusion
+            # Some of the psa/crypto_*.h headers are not meant to be included
+            # directly. They do have include guards that make them no-ops if
+            # psa/crypto.h has been included before. Since psa/crypto.h comes
+            # before psa/crypto_*.h in the wildcard enumeration, we don't need
+            # to skip those headers.
+            *) echo "#include \"${header#tf-psa-crypto/include/}\"";;
+        esac
+    done
 
     cat <<'EOF'
 
+#include <iostream>
+
 int main()
 {
+    std::cout << "CPP dummy build\n";
+
     mbedtls_platform_context *ctx = NULL;
     mbedtls_platform_setup(ctx);
     mbedtls_printf("CPP Build test passed\n");

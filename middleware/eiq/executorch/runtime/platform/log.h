@@ -33,6 +33,15 @@
 #define ET_LOG_ENABLED 1
 #endif // !defined(ET_LOG_ENABLED)
 
+// Even though it is supposed to be "portable" some toolchains
+// do not define, so providing a definition here
+#ifndef PRIu64
+#define PRIu64 "llu"
+#endif
+#ifndef PRId64
+#define PRId64 "lld"
+#endif
+
 namespace executorch {
 namespace runtime {
 
@@ -172,6 +181,20 @@ using ::executorch::runtime::LogLevel;
           ##__VA_ARGS__);                                            \
     }                                                                \
   } while (0)
+
+/**
+ * Check a condition and log an error message if the condition is false.
+ *
+ * @param[in] _condition The condition to check.
+ * @param[in] _format Log message format string.
+ */
+#define ET_CHECK_OR_LOG_ERROR(_condition, _format, ...) \
+  do {                                                  \
+    if (!(_condition)) {                                \
+      ET_LOG(Error, _format, ##__VA_ARGS__);            \
+    }                                                   \
+  } while (0)
+
 #else // ET_LOG_ENABLED
 
 /**
@@ -181,5 +204,13 @@ using ::executorch::runtime::LogLevel;
  * @param[in] _format Log message format string.
  */
 #define ET_LOG(_level, _format, ...) ((void)0)
+
+/**
+ * Check a condition and log an error message if the condition is false.
+ *
+ * @param[in] _condition The condition to check.
+ * @param[in] _format Log message format string.
+ */
+#define ET_CHECK_OR_LOG_ERROR(_condition, _format, ...) ((void)0)
 
 #endif // ET_LOG_ENABLED

@@ -2,7 +2,7 @@
  * Copyright (c) 2014, Mentor Graphics Corporation
  * Copyright (c) 2015 Xilinx, Inc.
  * Copyright (c) 2016 Freescale Semiconductor, Inc.
- * Copyright 2016-2025 NXP
+ * Copyright 2016-2026 NXP
  * Copyright 2021 ACRIOS Systems s.r.o.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -77,7 +77,7 @@ StaticEventGroup_t event_group_static_context;
 #define RL_ENV_MAX_MUTEX_COUNT (10)
 
 /* Max supported ISR counts */
-#define ISR_COUNT (32U)
+#define ISR_COUNT RL_PLATFORM_MAX_ISR_COUNT
 /*!
  * Structure to keep track of registered ISR's.
  */
@@ -160,7 +160,11 @@ void env_tx_callback(uint32_t link_id)
     if (env_in_isr() != 0)
     {
         (void)xEventGroupSetBitsFromISR(event_group, (EventBits_t)(1UL << link_id), &xHigherPriorityTaskWoken);
-        portEND_SWITCHING_ISR(xHigherPriorityTaskWoken);
+        /*
+         * $Branch Coverage Justification$
+         * portEND_SWITCHING_ISR false condition not met
+         */
+        portEND_SWITCHING_ISR(xHigherPriorityTaskWoken); /* GCOVR_EXCL_BR_LINE */
     }
     else
     {
@@ -181,12 +185,20 @@ int32_t env_init(void)
     vTaskSuspendAll(); /* stop scheduler */
     /* verify 'env_init_counter' */
     RL_ASSERT(env_init_counter >= 0);
-    if (env_init_counter < 0)
+    /*
+     * $Branch Coverage Justification$
+     * (env_init_counter < 0) condition will never met unless RAM is corrupted.
+     */
+    if (env_init_counter < 0) /* GCOVR_EXCL_BR_LINE */
     {
-        /* coco begin validated: (env_init_counter < 0) condition will never met unless RAM is corrupted */
+        /*
+         * $Line Coverage Justification$
+         * (env_init_counter < 0) condition will never met unless RAM is corrupted.
+         */
+        /* GCOVR_EXCL_START */
         (void)xTaskResumeAll(); /* re-enable scheduler */
         return -1;
-        /* coco end */
+        /* GCOVR_EXCL_STOP */
     }
     env_init_counter++;
     /* multiple call of 'env_init' - return ok */
@@ -304,8 +316,9 @@ void env_free_memory(void *ptr)
  */
 void env_memset(void *ptr, int32_t value, uint32_t size)
 {
-    /* Explicitly convert value to unsigned char range to ensure consistent behavior */
-    (void)memset(ptr, (unsigned char)(value & 0xFF), size);
+    /* Mask to byte range for memset */
+    uint32_t masked = ((uint32_t)value) & 0xFFU;
+    (void)memset(ptr, (int)masked, size);
 }
 
 /*!
@@ -512,49 +525,6 @@ void env_delete_sync_lock(void *lock)
     }
 }
 
-#ifndef __COVERAGESCANNER__
-/*!
- * env_acquire_sync_lock
- *
- * Tries to acquire the lock, if lock is not available then call to
- * this function waits for lock to become available.
- */
-void env_acquire_sync_lock(void *lock)
-{
-    BaseType_t xTaskWokenByReceive = pdFALSE;
-    SemaphoreHandle_t xSemaphore   = (SemaphoreHandle_t)lock;
-    if (env_in_isr() != 0)
-    {
-        (void)xSemaphoreTakeFromISR(xSemaphore, &xTaskWokenByReceive);
-        portEND_SWITCHING_ISR(xTaskWokenByReceive);
-    }
-    else
-    {
-        (void)xSemaphoreTake(xSemaphore, portMAX_DELAY);
-    }
-}
-
-/*!
- * env_release_sync_lock
- *
- * Releases the given lock.
- */
-void env_release_sync_lock(void *lock)
-{
-    BaseType_t xTaskWokenByReceive = pdFALSE;
-    SemaphoreHandle_t xSemaphore   = (SemaphoreHandle_t)lock;
-    if (env_in_isr() != 0)
-    {
-        (void)xSemaphoreGiveFromISR(xSemaphore, &xTaskWokenByReceive);
-        portEND_SWITCHING_ISR(xTaskWokenByReceive);
-    }
-    else
-    {
-        (void)xSemaphoreGive(xSemaphore);
-    }
-}
-#endif /* __COVERAGESCANNER__ */
-
 /*!
  * env_sleep_msec
  *
@@ -575,11 +545,11 @@ void env_sleep_msec(uint32_t num_msec)
  */
 void env_register_isr(uint32_t vector_id, void *data)
 {
-    RL_ASSERT(vector_id < ISR_COUNT);
     if (vector_id < ISR_COUNT)
     {
         isr_table[vector_id].data = data;
     }
+    RL_ASSERT(vector_id < ISR_COUNT);
 }
 
 /*!
@@ -591,11 +561,11 @@ void env_register_isr(uint32_t vector_id, void *data)
  */
 void env_unregister_isr(uint32_t vector_id)
 {
-    RL_ASSERT(vector_id < ISR_COUNT);
     if (vector_id < ISR_COUNT)
     {
         isr_table[vector_id].data = ((void *)0);
     }
+    RL_ASSERT(vector_id < ISR_COUNT);
 }
 
 /*!
@@ -692,13 +662,13 @@ uint64_t env_get_timestamp(void)
 
 void env_isr(uint32_t vector)
 {
-    struct isr_info *info;
-    RL_ASSERT(vector < ISR_COUNT);
+    struct isr_info *isr_entry;
     if (vector < ISR_COUNT)
     {
-        info = &isr_table[vector];
-        virtqueue_notification((struct virtqueue *)info->data);
+        isr_entry = &isr_table[vector];
+        virtqueue_notification((struct virtqueue *)isr_entry->data);
     }
+    RL_ASSERT(vector < ISR_COUNT);
 }
 
 /*
@@ -856,5 +826,5 @@ int32_t env_get_current_queue_size(void *queue)
         messages = uxQueueMessagesWaiting(queue);
     }
 
-    return (messages > INT32_MAX) ? INT32_MAX : (int32_t)messages;
+    return (messages > (UBaseType_t)INT32_MAX) ? INT32_MAX : (int32_t)messages;
 }

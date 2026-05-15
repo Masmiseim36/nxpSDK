@@ -80,8 +80,10 @@ psa_status_t ele_s2xx_opaque_export_key(const psa_key_attributes_t *attributes,
  */
 psa_status_t ele_s2xx_opaque_export_public_key(const psa_key_attributes_t *attributes,
                                                const uint8_t *key_buffer,
-                                               size_t key_buffer_size, uint8_t *data,
-                                               size_t data_size, size_t *data_length);
+                                               size_t key_buffer_size,
+                                               uint8_t *data,
+                                               size_t data_size,
+                                               size_t *data_length);
 
 /*!
  * \brief Destroy a random key
@@ -107,6 +109,15 @@ psa_status_t ele_s2xx_opaque_destroy_key(const psa_key_attributes_t *attributes,
  */
 size_t ele_s2xx_opaque_size_function(const psa_key_attributes_t *attributes,
                                      const uint8_t *data, size_t data_length);
+
+/*!
+ * \brief Return the buffer size required by driver for storing key.
+ *
+ * \param[in] attributes Attributes of the key
+ * \retval The number of bytes required for storing the opaque key on success,
+ *         0 on failure
+ */
+size_t ele_s2xx_opaque_get_key_buffer_size(const psa_key_attributes_t *attributes);
 
 /*!
  * \brief Perform a key agreement and return the raw shared secret.
@@ -149,6 +160,25 @@ psa_status_t ele_s2xx_opaque_key_agreement(const psa_key_attributes_t *attribute
                                            uint8_t *shared_secret,
                                            size_t shared_secret_size,
                                            size_t *shared_secret_length);
+
+/*!
+ * \brief Generate an opaque key
+ *
+ * The resulting key is an S200 die-unique key blob. After generating the key,
+ * it is left cached in the S200.
+ *
+ * \param[in]  attributes        Attributes of the key to use
+ * \param[in]  key_buffer        Buffer to hold the generated key
+ * \param[in]  key_buffer_size   Size in bytes of the key_buffer buffer
+ * \param[out] key_buffer_length Length in bytes of the generated opaque key
+ *
+ * \retval PSA_SUCCESS on success. Error code from \ref psa_status_t on
+ *         failure
+ */
+psa_status_t ele_s2xx_opaque_generate_key(const psa_key_attributes_t *attributes,
+                                          uint8_t *key_buffer,
+                                          size_t key_buffer_size,
+                                          size_t *key_buffer_length);
 
 #ifdef __cplusplus
 }

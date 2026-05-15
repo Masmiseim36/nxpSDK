@@ -15,7 +15,7 @@ message("${CMAKE_CURRENT_LIST_FILE} component is included.")
         )
     endif()
 
-        if((CONFIG_TOOLCHAIN STREQUAL mcux OR CONFIG_TOOLCHAIN STREQUAL armgcc))
+        if(CONFIG_TOOLCHAIN STREQUAL mcux)
     target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
           ${CMAKE_CURRENT_LIST_DIR}/pmsm/pmsm_float/mc_algorithms/mcaa_lib/cm7f_mcux/Include
         )
@@ -38,7 +38,7 @@ message("${CMAKE_CURRENT_LIST_FILE} component is included.")
     )
     endif()
 
-        if((CONFIG_TOOLCHAIN STREQUAL mcux OR CONFIG_TOOLCHAIN STREQUAL armgcc))
+        if(CONFIG_TOOLCHAIN STREQUAL mcux)
     target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE
     -Wl,--start-group
           ${CMAKE_CURRENT_LIST_DIR}/pmsm/pmsm_float/mc_algorithms/mcaa_lib/cm7f_mcux/libmcaa_lib.a

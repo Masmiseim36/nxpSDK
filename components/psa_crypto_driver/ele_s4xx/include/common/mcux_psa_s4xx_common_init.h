@@ -20,10 +20,10 @@
 #include "fsl_common.h"
 #include "osal_mutex.h"
 
-#if defined(MIMXRT1189_cm33_SERIES) || defined(MIMXRT1187_cm33_SERIES) || defined(MIMXRT1182_SERIES) || \
-    defined(MIMXRT1181_SERIES)
+#if defined(MIMXRT1189_cm33_SERIES) || defined(MIMXRT1187_cm33_SERIES) || defined(MIMXRT1186_cm33_SERIES) || \
+    defined(MIMXRT1182_SERIES) || defined(MIMXRT1181_SERIES)
 #define S3MU MU_RT_S3MUA
-#elif defined(MIMXRT1189_cm7_SERIES) || defined(MIMXRT1187_cm7_SERIES)
+#elif defined(MIMXRT1189_cm7_SERIES) || defined(MIMXRT1187_cm7_SERIES) || defined(MIMXRT1186_cm7_SERIES)
 #define S3MU MU_APPS_S3MUA
 #else
 #error "No valid SoC defined"

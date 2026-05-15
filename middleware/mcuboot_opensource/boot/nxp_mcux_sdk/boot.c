@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2021 NXP
+ * Copyright 2016-2026 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -21,14 +21,30 @@
 #include "fsl_debug_console.h"
 #include "mflash_drv.h"
 
-#ifdef CONFIG_ENCRYPT_XIP_EXT_ENABLE
-#include "encrypted_xip_mcuboot_support.h"
+#ifdef CONFIG_BOOT_USE_PSA_CRYPTO
+#include "psa/crypto.h"
+#endif
+
+#ifdef CONFIG_BOOT_SERIAL_RECOVERY
+#include "boot_serial/boot_serial.h"
+#include "serial_recovery_support.h"
+#endif
+
+#ifdef CONFIG_BOOT_MODE_ENCRYPTED_XIP
 #include "encrypted_xip.h"
 #endif
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
+
+#if defined(__IAR_SYSTEMS_ICC__)
+#define __TOOLCHAIN__ __VERSION__
+#elif defined(__GNUC__)
+#define __TOOLCHAIN__ "GCC " __VERSION__
+#else
+#define __TOOLCHAIN__ "UNKNOWN"
+#endif
 
 #ifdef NDEBUG
 #undef assert
@@ -38,12 +54,7 @@
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
-
-#ifdef CONFIG_BOOT_SIGNATURE
-status_t CRYPTO_InitHardware(void);
-#endif
-
-#ifdef CONFIG_MCUBOOT_FLASH_REMAP_ENABLE
+#ifdef CONFIG_BOOT_MODE_FLASH_REMAP
 extern void SBL_EnableRemap(uint32_t start_addr, uint32_t end_addr, uint32_t off);
 extern void SBL_DisableRemap(void);
 #endif
@@ -52,6 +63,7 @@ extern void SBL_DisableRemap(void);
 void cleanup(void);
 
 extern void SBL_DisablePeripherals(void);
+extern int SBL_SerialRecovery_gpio_check(void);
 
 /*******************************************************************************
  * Types
@@ -64,6 +76,15 @@ struct arm_vector_table
 };
 
 static struct arm_vector_table *vt;
+
+#ifdef CONFIG_BOOT_SERIAL_RECOVERY
+const struct boot_uart_funcs boot_funcs = {
+    .read = serial_recovery_read,
+    .write = serial_recovery_write
+};
+#endif
+
+int SerialRecoveryActive = 0;
 
 /*******************************************************************************
  * Code
@@ -84,7 +105,7 @@ void do_boot(struct boot_rsp *rsp)
     rc = flash_device_base(rsp->br_flash_dev_id, &flash_base);
     assert(rc == 0);
 
-#if defined(MCUBOOT_DIRECT_XIP) && defined(CONFIG_MCUBOOT_FLASH_REMAP_ENABLE)
+#if defined(MCUBOOT_DIRECT_XIP) && defined(CONFIG_BOOT_MODE_FLASH_REMAP)
 
     /* In case direct-xip mode and enabled flash remapping function check if
      * the secondary slot is chosen to boot. If so we have to modify boot_rsp
@@ -127,19 +148,52 @@ int sbl_boot_main(void)
     int rc = -1;
     struct boot_rsp rsp;
 
-#ifdef CONFIG_BOOT_SIGNATURE
-    CRYPTO_InitHardware();
+#ifdef CONFIG_BOOT_USE_PSA_CRYPTO
+    psa_status_t psa_status;
+    int i;
+    /* MCUX-84288,MCUX-84297 - this is workaround to fix random issues with 
+     * entropy source on devices with DCP module */
+    for(i = 0; i < 10; i++)
+    {
+        psa_status = psa_crypto_init();
+        if(psa_status == PSA_SUCCESS)
+        {
+            break;
+        }
+        BOOT_LOG_WRN("Warning: failed to init PSA crypto backend...trying again the initialization");
+    }
+    if (psa_status != PSA_SUCCESS)
+    {
+        BOOT_LOG_ERR("FAILED to init PSA crypto backend! PSA error %d", psa_status);
+        while(1)
+          ;
+    }
 #endif
 
     rc = mflash_drv_init();
     if (rc != 0)
     {
         BOOT_LOG_ERR("FAILED to init mflash!");
+        while(1)
+          ;
     }
-
+   
     BOOT_LOG_INF("Bootloader Version %s", BOOTLOADER_VERSION);
+    BOOT_LOG_INF("Built " __DATE__ " " __TIME__);
+    BOOT_LOG_INF("Toolchain " __TOOLCHAIN__);
+    BOOT_LOG_INF("Upgrade mode: " UPGRADE_MODE);
+
+#if defined(CONFIG_BOOT_SERIAL_RECOVERY)
+    if(SBL_SerialRecovery_gpio_check())
+    {
+        BOOT_LOG_INF("Serial recovery button pressed");
+        BOOT_LOG_INF("Entering the serial recovery mode...");
+        SerialRecoveryActive = 1;
+        boot_serial_start(&boot_funcs);
+    }
+#endif
     
-#if defined(CONFIG_ENCRYPT_XIP_EXT_ENABLE) && defined(CONFIG_ENCRYPT_XIP_EXT_OVERWRITE_ONLY)
+#if defined(CONFIG_BOOT_MODE_ENCRYPTED_XIP)
     /* Initialize encryption XIP extension for overwrite-only mode */
     rc = encrypted_xip_init();
     if (rc != 0)
@@ -163,27 +217,22 @@ int sbl_boot_main(void)
     if (rc != 0)
     {
         BOOT_LOG_ERR("Unable to find bootable image");
+#if defined(CONFIG_BOOT_SERIAL_RECOVERY)
+        BOOT_LOG_INF("Entering the serial recovery mode...");
+        SerialRecoveryActive = 1;
+        boot_serial_start(&boot_funcs);
+#endif
         for (;;)
             ;
     }
 
-#if defined(CONFIG_ENCRYPT_XIP_EXT_ENABLE) && defined(CONFIG_ENCRYPT_XIP_EXT_OVERWRITE_ONLY)
-    /* Deinitialize encryption XIP extension for overwrite-only mode */
+#if defined(CONFIG_BOOT_MODE_ENCRYPTED_XIP)
+    /* Finish operations related to encryption XIP */
     rc = encrypted_xip_finish();
     if (rc != 0)
     {
-        BOOT_LOG_ERR("FAILED to deinit encrypted XIP extension!");
+        BOOT_LOG_ERR("encrypted_xip_finish failed!");
     }
-#endif
-#if defined(CONFIG_ENCRYPT_XIP_EXT_ENABLE) && !defined(CONFIG_ENCRYPT_XIP_EXT_OVERWRITE_ONLY)
-    /* Initialize encryption XIP extension for three slot mode */
-    BOOT_LOG_INF("\nStarting post-bootloader process of encrypted image...");
-    if(encrypted_xip_process(&rsp) != kStatus_Success){
-        BOOT_LOG_ERR("Failed to process encrypted image. Please reboot...");
-        while(1)
-          ;
-    }
-    BOOT_LOG_INF("Post-bootloader process of encrypted image successful\n");
 #endif
     BOOT_LOG_INF("Bootloader chainload address offset: 0x%x", rsp.br_image_off);
     BOOT_LOG_INF("Reset_Handler address offset: 0x%x", rsp.br_image_off + rsp.br_hdr->ih_hdr_size);
@@ -200,7 +249,7 @@ void cleanup(void)
     SBL_DisablePeripherals();
 }
 
-#if !defined(MCUBOOT_DIRECT_XIP) && !defined(MCUBOOT_SWAP_USING_MOVE) && !defined(MCUBOOT_OVERWRITE_ONLY)
+#if !defined(MCUBOOT_DIRECT_XIP) && !defined(MCUBOOT_SWAP_USING_MOVE) && !defined(MCUBOOT_OVERWRITE_ONLY) && !defined(MCUBOOT_SINGLE_APPLICATION_SLOT)
 #warning "Make sure scratch area is defined in 'boot_flash_map' array if required by defined swap mechanism"
 #endif
 

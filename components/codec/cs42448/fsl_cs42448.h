@@ -1,5 +1,5 @@
 /*
- * Copyright  2017-2021 NXP
+ * Copyright  2017-2021, 2025 NXP
  *
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -21,8 +21,8 @@
  ******************************************************************************/
 /*! @name Driver version */
 /*! @{ */
-/*! @brief cs42448 driver version 2.0.1. */
-#define FSL_CS42448_DRIVER_VERSION (MAKE_VERSION(2, 0, 1))
+/*! @brief cs42448 driver version 2.0.2. */
+#define FSL_CS42448_DRIVER_VERSION (MAKE_VERSION(2, 0, 2))
 /*! @} */
 
 /*! @brief CS42448 handle size */

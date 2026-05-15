@@ -9,13 +9,16 @@
 #define ETHERNETIF_PRIV_H
 
 #include "fsl_common.h"
-#include "fsl_adapter_gpio.h"
 
 #include "lwip/err.h"
 #include "lwip/opt.h"
 #include "lwip/netif.h"
 #include "ethernetif.h"
 #include "ethernetif_mmac.h"
+
+#if ETH_USE_GPIO_ADAPTER
+#include "fsl_adapter_gpio.h"
+#endif /* ETH_USE_GPIO_ADAPTER */
 
 /* SDK_SIZEALIGN could not be used in some constant expressions */
 #define CONSTANT_SIZEALIGN(var, alignbytes) (((var) + ((alignbytes)-1U)) & (~((alignbytes)-1U)))
@@ -64,12 +67,14 @@ void *ethernetif_get_enet_base(const uint8_t enetIdx);
  */
 phy_handle_t *ethernetif_get_phy(struct netif *netif_);
 
+#if ETH_USE_GPIO_ADAPTER
 /**
  * Returns a GPIO handle associated with a pin for PHY state interrupts.
  * @param netif_ The lwip network interface.
  * @return The handle.
  */
 hal_gpio_handle_t ethernetif_get_int_gpio_hdl(struct netif *netif);
+#endif /* ETH_USE_GPIO_ADAPTER */
 
 /**
  * Informs ethernet MAC driver that link is up or the link speed or duplex has changed.
@@ -89,7 +94,8 @@ void ethernetif_on_link_up(struct netif *netif_, phy_speed_t speed, phy_duplex_t
  */
 void ethernetif_on_link_down(struct netif *netif_);
 
-#if defined(FSL_FEATURE_SOC_ENET_QOS_COUNT) && (FSL_FEATURE_SOC_ENET_QOS_COUNT > 0)
+#if (defined(FSL_FEATURE_SOC_ENET_QOS_COUNT) && (FSL_FEATURE_SOC_ENET_QOS_COUNT > 0)) || \
+    (defined(FSL_FEATURE_SOC_EMAC_COUNT) && (FSL_FEATURE_SOC_EMAC_COUNT > 0))
 /**
  * Function to map ENET_QOS instance index to its base address
  *

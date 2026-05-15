@@ -8,7 +8,7 @@ This is a harness to help regression testing, not a functional tester.
 Sample usage:
 
     test_config_script.py -d old
-    ## Modify config.py and/or config.h ##
+    ## Modify config.py and/or mbedtls_config.h ##
     test_config_script.py -d new
     diff -ru old new
 """
@@ -130,7 +130,7 @@ def run_one(options, args, stem_prefix='', input_file=None):
 ### config.py stops handling that case correctly.
 TEST_SYMBOLS = [
     'CUSTOM_SYMBOL', # does not exist
-    'MBEDTLS_AES_C', # set, no value
+    'PSA_WANT_KEY_TYPE_AES', # set, no value
     'MBEDTLS_MPI_MAX_SIZE', # unset, has a value
     'MBEDTLS_NO_UDBL_DIVISION', # unset, in "System support"
     'MBEDTLS_PLATFORM_ZEROIZE_ALT', # unset, in "Customisation configuration options"
@@ -159,7 +159,7 @@ def main():
                         dest='output_directory', required=True,
                         help="""Output directory.""")
     parser.add_argument('-f', metavar='FILE',
-                        dest='input_file', default='include/mbedtls/config.h',
+                        dest='input_file', default='include/mbedtls/mbedtls_config.h',
                         help="""Config file (default: %(default)s).""")
     parser.add_argument('-p', metavar='PRESET,...',
                         dest='presets',

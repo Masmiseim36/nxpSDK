@@ -2,15 +2,15 @@
 
 ## Overview
 
-These are the release notes for the NXP Multicore Software Development Kit (MCSDK) version 25.06.00.  
+These are the release notes for the NXP Multicore Software Development Kit (MCSDK) version 26.03.00.  
 This software package contains components for efficient work with multicore devices as well as for the  
 multiprocessor communication.
 
 ## What is new
 
-- eRPC [CHANGELOG](https://github.com/EmbeddedRPC/erpc/blob/release/25.06.00/CHANGELOG.md)
-- RPMsg-Lite [CHANGELOG](https://github.com/nxp-mcuxpresso/rpmsg-lite/blob/release/25.06.00/CHANGELOG.md)
-- MCMgr [CHANGELOG](https://github.com/nxp-mcuxpresso/mcux-mcmgr/blob/release/25.06.00/CHANGELOG.md)
+- eRPC [CHANGELOG](https://github.com/EmbeddedRPC/erpc/blob/release/26.03.00/CHANGELOG.md)
+- RPMsg-Lite [CHANGELOG](https://github.com/nxp-mcuxpresso/rpmsg-lite/blob/release/26.03.00/CHANGELOG.md)
+- MCMgr [CHANGELOG](https://github.com/nxp-mcuxpresso/mcux-mcmgr/blob/release/26.03.00/CHANGELOG.md)
 
 - Supported evaluation boards (multicore examples):
   - LPCXpresso55S69
@@ -26,6 +26,7 @@ multiprocessor communication.
   - KW47-LOC
   - FRDM-MCXW72
   - MCX-W72-EVK
+  - FRDM-IMXRT1186
 
 - Supported evaluation boards (multiprocessor examples):
   - LPCXpresso55S36
@@ -40,6 +41,7 @@ multiprocessor communication.
   - MCX-N9XX-EVK
   - FRDM-MCXN947
   - MIMXRT700-EVK
+  - FRDM-IMXRT1186
 
 ## Development tools
 
@@ -85,6 +87,7 @@ the _`<MCUXpressoSDK_install_dir>/examples/multicore_examples`_ subdirectories.
 - multicore_manager
 - rpmsg_lite_pingpong
 - rpmsg_lite_pingpong_rtos
+- rpmsg_lite_pingpong_dsp
 - rpmsg_lite_pingpong_tzm
 
 The eRPC multicore component can be leveraged for inter-processor communication and remote procedure calls between SoCs / development boards.  

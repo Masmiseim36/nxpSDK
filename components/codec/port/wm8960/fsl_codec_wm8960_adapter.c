@@ -1,5 +1,5 @@
 /*
- * Copyright  2021-2023 NXP
+ * Copyright  2021-2023, 2025 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -133,18 +133,35 @@ status_t HAL_CODEC_WM8960_SetVolume(void *handle, uint32_t playChannel, uint32_t
 
     status_t retVal       = kStatus_Success;
     uint32_t mappedVolume = 0U;
+    uint32_t volumeRange = WM8960_HEADPHONE_MAX_VOLUME_vALUE - WM8960_HEADPHONE_MIN_VOLUME_vALUE;
+
+    /* Clamp volume to valid range to prevent overflow */
+    if (volume > 100U)
+    {
+        volume = 100U;
+    }
 
     if (((playChannel & (uint32_t)kWM8960_HeadphoneLeft) != 0U) ||
         ((playChannel & (uint32_t)kWM8960_HeadphoneRight) != 0U))
     {
         /*
-         * 0 is mute
-         * 1 - 100 is mapped to 0x30 - 0x7F
-         */
-        mappedVolume = (volume * (WM8960_HEADPHONE_MAX_VOLUME_vALUE - WM8960_HEADPHONE_MIN_VOLUME_vALUE)) / 100U +
-                       WM8960_HEADPHONE_MIN_VOLUME_vALUE;
+        * 0 is mute
+        * 1 - 100 is mapped to 0x30 - 0x7F
+        */
+
+        /* Check that volumeRange * volume won't wrap */
+        if (volumeRange > 0U && volume > (UINT32_MAX / volumeRange))
+        {
+            /* If wrap would occur, use maximum volume value */
+            mappedVolume = WM8960_HEADPHONE_MAX_VOLUME_vALUE;
+        }
+        else
+        {
+            mappedVolume = (volume * volumeRange) / 100U + WM8960_HEADPHONE_MIN_VOLUME_vALUE;
+        }
+
         retVal = WM8960_SetVolume((wm8960_handle_t *)((uintptr_t)(((codec_handle_t *)handle)->codecDevHandle)),
-                                  kWM8960_ModuleHP, mappedVolume);
+                                kWM8960_ModuleHP, mappedVolume);
     }
 
     if (((playChannel & (uint32_t)kWM8960_SpeakerLeft) != 0U) || ((playChannel & (uint32_t)kWM8960_SpeakerRight) != 0U))
@@ -153,22 +170,42 @@ status_t HAL_CODEC_WM8960_SetVolume(void *handle, uint32_t playChannel, uint32_t
          * 0 is mute
          * 1 - 100 is mapped to 0x30 - 0x7F
          */
-        mappedVolume = (volume * (WM8960_HEADPHONE_MAX_VOLUME_vALUE - WM8960_HEADPHONE_MIN_VOLUME_vALUE)) / 100U +
-                       WM8960_HEADPHONE_MIN_VOLUME_vALUE;
+        
+        /* Check that volumeRange * volume won't wrap */
+        if (volumeRange > 0U && volume > (UINT32_MAX / volumeRange))
+        {
+            /* If wrap would occur, use maximum volume value */
+            mappedVolume = WM8960_HEADPHONE_MAX_VOLUME_vALUE;
+        }
+        else
+        {
+            mappedVolume = (volume * volumeRange) / 100U + WM8960_HEADPHONE_MIN_VOLUME_vALUE;
+        }
+
         retVal = WM8960_SetVolume((wm8960_handle_t *)((uintptr_t)(((codec_handle_t *)handle)->codecDevHandle)),
-                                  kWM8960_ModuleSpeaker, mappedVolume);
+                                kWM8960_ModuleSpeaker, mappedVolume);
     }
 
     if ((playChannel & (uint32_t)kCODEC_VolumeDAC) != 0U)
     {
         /*
          * 0 is mute
-         * 0 - 100 is mapped to 0x00 - 0xFF
+         * 1 - 100 is mapped to 0x30 - 0x7F
          */
-        mappedVolume = (volume * (WM8960_DAC_MAX_VOLUME_vALUE - 0U)) / 100U;
+
+        /* Check that volumeRange * volume won't wrap */
+        if (volume > (UINT32_MAX / WM8960_DAC_MAX_VOLUME_vALUE))
+        {
+            /* If wrap would occur, use maximum volume value */
+            mappedVolume = WM8960_DAC_MAX_VOLUME_vALUE;
+        }
+        else
+        {
+            mappedVolume = (volume * (WM8960_DAC_MAX_VOLUME_vALUE - 0U)) / 100U;
+        }
 
         retVal = WM8960_SetVolume((wm8960_handle_t *)((uintptr_t)(((codec_handle_t *)handle)->codecDevHandle)),
-                                  kWM8960_ModuleDAC, mappedVolume);
+                                kWM8960_ModuleDAC, mappedVolume);
     }
 
     return retVal;

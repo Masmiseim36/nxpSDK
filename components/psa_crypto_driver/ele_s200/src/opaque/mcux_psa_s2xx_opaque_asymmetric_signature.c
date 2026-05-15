@@ -18,18 +18,17 @@
 #include "mcux_psa_s2xx_common_key_management.h"
 #include "mcux_psa_s2xx_hash.h"
 #include "mcux_psa_s2xx_common_compute.h"
+#include "mcux_psa_util_wrapcheck_static_inline.h"
 
 #define NISTP521_BITLEN (521u)
-#define ED25519_BITLEN  (255u)
 
-static psa_status_t ele_s2xx_psa_2_ele_asym_alg(const psa_key_attributes_t *attributes,
-                                                psa_algorithm_t alg,
-                                                sss_algorithm_t *ele_alg)
+static psa_status_t translate_psa_asym_to_ele_asym(psa_algorithm_t alg,
+                                                   sss_algorithm_t *ele_alg)
 {
     psa_status_t status           = PSA_SUCCESS;
     psa_algorithm_t sign_hash_alg = PSA_ALG_ANY_HASH;
 
-    if (PSA_ALG_PURE_EDDSA == alg)
+    if (PSA_ALG_PURE_EDDSA == alg || PSA_ALG_ED25519PH == alg)
     {
         *ele_alg = kAlgorithm_SSS_EdDSA_Ed25519;
         status   = PSA_SUCCESS;
@@ -74,56 +73,50 @@ static psa_status_t ele_s2xx_psa_2_ele_asym_alg(const psa_key_attributes_t *attr
     return status;
 }
 
-static psa_status_t key_management(const psa_key_attributes_t *attributes,
-                                   const uint8_t *key_buffer,
-                                   size_t key_buffer_size,
-                                   sss_sscp_object_t *sssKey)
-{
-    psa_status_t psa_status = PSA_ERROR_CORRUPTION_DETECTED;
-
-    /* Validate if the key is a blob */
-    psa_status = ele_s2xx_validate_blob_attributes(attributes, key_buffer, key_buffer_size);
-    if (PSA_SUCCESS != psa_status)
-    {
-        return psa_status;
-    }
-
-    /* Import the key */
-    psa_status = ele_s2xx_import_key(attributes, key_buffer, key_buffer_size, sssKey);
-    if (PSA_SUCCESS != psa_status)
-    {
-        return psa_status;
-    }
-
-    return PSA_SUCCESS;
-}
-
 static psa_status_t validate_key_bitlen_for_hash_sign(const psa_key_attributes_t *attributes,
                                                       psa_algorithm_t alg,
                                                       size_t hash_length)
 {
     size_t hash_alg_bitlen   = PSA_BYTES_TO_BITS(PSA_HASH_LENGTH(PSA_ALG_SIGN_GET_HASH(alg)));
-    size_t hash_input_bitlen = PSA_BYTES_TO_BITS(hash_length);
+    size_t hash_input_bitlen = 0u;
     size_t key_bitlen        = psa_get_key_bits(attributes);
 
-    /* NIST-P 521 can used for signing 512-bit hashes,
-     * so we just update the bitlen for the comparison
-     */
-    if (NISTP521_BITLEN == key_bitlen)
+    /* Wrapcheck for `PSA_BYTES_TO_BITS(hash_length)` */
+    if (true == mcux_psa_mul_size_t_wrapcheck(hash_length, 8u))
     {
-        key_bitlen = PSA_BYTES_TO_BITS(PSA_HASH_LENGTH(PSA_ALG_SHA_512));
-    }
-
-    if (key_bitlen != hash_alg_bitlen)
-    {
-        /* key is not supported for use with alg */
-        return PSA_ERROR_NOT_SUPPORTED;
-    }
-
-    if (key_bitlen != hash_input_bitlen)
-    {
-        /* hash_length is not valid for the algorithm and key type */
         return PSA_ERROR_INVALID_ARGUMENT;
+    }
+    hash_input_bitlen = PSA_BYTES_TO_BITS(hash_length);
+
+    if (true == PSA_ALG_IS_ECDSA(alg))
+    {
+        /* NIST-P 521 can used for signing 512-bit hashes,
+         * so we just update the bitlen for the comparison.
+         */
+        if (NISTP521_BITLEN == key_bitlen)
+        {
+            key_bitlen = 512u;
+        }
+
+        /* The digest bitlen must be equal or larger than the key bitlen.
+         * Limitation of the S200 HW.
+         */
+        if (key_bitlen > hash_alg_bitlen ||
+            key_bitlen > hash_input_bitlen)
+        {
+            return PSA_ERROR_NOT_SUPPORTED;
+        }
+    }
+    else if (PSA_ALG_ED25519PH == alg)
+    {
+        if (false == IS_VALID_ED25519_BITLENGTH(key_bitlen))
+        {
+            return PSA_ERROR_INVALID_ARGUMENT;
+        }
+    }
+    else
+    {
+        return PSA_ERROR_NOT_SUPPORTED;
     }
 
     return PSA_SUCCESS;
@@ -133,18 +126,20 @@ static psa_status_t validate_key_bitlen_for_message_sign(const psa_key_attribute
                                                          psa_algorithm_t alg)
 {
     psa_status_t status = PSA_ERROR_CORRUPTION_DETECTED;
+    const size_t bits   = psa_get_key_bits(attributes);
 
-    if (true == PSA_ALG_IS_ECDSA(alg))
+    if (true == PSA_ALG_IS_ECDSA(alg) || PSA_ALG_ED25519PH == alg)
     {
-        /* We will be pre-hashing the message for ECDSA, so we know that the hash length
-         * will be PSA_HASH_LENGTH(PSA_ALG_SIGN_GET_HASH(alg))
+        /* We will be pre-hashing the message for ECDSA and Ed25519ph,
+         * so we know that the hash length is
+         * PSA_HASH_LENGTH(PSA_ALG_SIGN_GET_HASH(alg)).
          */
         status = validate_key_bitlen_for_hash_sign(attributes, alg, PSA_HASH_LENGTH(PSA_ALG_SIGN_GET_HASH(alg)));
     }
-    else if ((PSA_ALG_PURE_EDDSA == alg) && (psa_get_key_bits(attributes) != ED25519_BITLEN))
+    else if (PSA_ALG_PURE_EDDSA == alg)
     {
-        /* S200 supports only 255 bitlen for EdDSA (Ed25519) */
-        status = PSA_ERROR_NOT_SUPPORTED;
+        /* S200 supports Ed25519 from the EdDSA suite */
+        status = (true == IS_VALID_ED25519_BITLENGTH(bits)) ? PSA_SUCCESS : PSA_ERROR_NOT_SUPPORTED;
     }
     else
     {
@@ -154,6 +149,13 @@ static psa_status_t validate_key_bitlen_for_message_sign(const psa_key_attribute
     return status;
 }
 
+/** \defgroup psa_asym_sign_opaque PSA opaque key driver entry points for asymmetric signatures
+ *
+ *  Entry points for asymmetric signatures as described by the PSA
+ *  Cryptoprocessor Driver interface specification with the use of opaque keys
+ *
+ *  @{
+ */
 psa_status_t ele_s2xx_opaque_sign_hash(const psa_key_attributes_t *attributes,
                                        const uint8_t *key_buffer, size_t key_buffer_size,
                                        psa_algorithm_t alg,
@@ -161,36 +163,45 @@ psa_status_t ele_s2xx_opaque_sign_hash(const psa_key_attributes_t *attributes,
                                        uint8_t *signature, size_t signature_size,
                                        size_t *signature_length)
 {
-    psa_status_t status      = PSA_ERROR_CORRUPTION_DETECTED;
-    sss_sscp_object_t sssKey = {0};
-    sss_algorithm_t ele_alg  = {0};
-    size_t output_size       = 0;
+    psa_status_t status           = PSA_ERROR_CORRUPTION_DETECTED;
+    sss_sscp_object_t sssKey      = {0};
+    sss_algorithm_t ele_alg       = {0};
+    size_t output_size            = 0u;
+    psa_key_location_t location   = PSA_KEY_LIFETIME_GET_LOCATION(psa_get_key_lifetime(attributes));
+    sss_cipher_type_t cipher_type = {0u};
+    psa_key_type_t type           = psa_get_key_type(attributes);
+    psa_ecc_family_t ecc_family   = PSA_KEY_TYPE_ECC_GET_FAMILY(type);
 
-    /* Convert PSA_ALG_* to ELE value and validate supported alg */
-    status = ele_s2xx_psa_2_ele_asym_alg(attributes, alg, &ele_alg);
+    status = translate_psa_asym_to_ele_asym(alg, &ele_alg);
     if (PSA_SUCCESS != status)
     {
         return status;
     }
 
-    if (PSA_KEY_TYPE_ECC_GET_FAMILY(psa_get_key_type(attributes)) != PSA_ECC_FAMILY_SECP_R1)
+    status = translate_psa_ecc_family_to_ele_cipher_type(attributes, &cipher_type);
+    if (PSA_SUCCESS != status)
+    {
+        return status;
+    }
+
+    if (true == MCUXCLPSADRIVER_IS_S200_KEY_STORAGE(location))
+    {
+        /* EL2GO is a special case and it supports only SECP ECDSA for
+         * sign/verify hash.
+         */
+        if (ecc_family != PSA_ECC_FAMILY_SECP_R1 || false == PSA_ALG_IS_RANDOMIZED_ECDSA(alg))
+        {
+            return PSA_ERROR_NOT_SUPPORTED;
+        }
+    }
+
+    /* Hash sign/verify only with randomized ECDSA or Ed25519ph on S200 */
+    if (false == PSA_ALG_IS_RANDOMIZED_ECDSA(alg) && alg != PSA_ALG_ED25519PH)
     {
         return PSA_ERROR_NOT_SUPPORTED;
     }
 
-    /* Hash sign/verify only with ECDSA on S200 */
-    if (false == PSA_ALG_IS_ECDSA(alg))
-    {
-        return PSA_ERROR_NOT_SUPPORTED;
-    }
-
-    /* Deterministic ECDSA not supported */
-    if (true == PSA_ALG_IS_DETERMINISTIC_ECDSA(alg))
-    {
-        return PSA_ERROR_NOT_SUPPORTED;
-    }
-
-    /* The given hash length and algorithm must match the ECDSA key length */
+    /* The given hash length and algorithm must be valid */
     status = validate_key_bitlen_for_hash_sign(attributes, alg, hash_length);
     if (PSA_SUCCESS != status)
     {
@@ -218,28 +229,35 @@ psa_status_t ele_s2xx_opaque_sign_hash(const psa_key_attributes_t *attributes,
         return PSA_ERROR_BUFFER_TOO_SMALL;
     }
 
-    if (mcux_mutex_lock(&ele_hwcrypto_mutex))
+    if (mcux_mutex_lock(&ele_hwcrypto_mutex) != 0)
     {
-        return PSA_ERROR_COMMUNICATION_FAILURE;
+        return PSA_ERROR_SERVICE_FAILURE;
     }
 
-    status = key_management(attributes, key_buffer, key_buffer_size, &sssKey);
+    status = ele_s2xx_import_key(attributes, key_buffer, key_buffer_size, &sssKey);
     if (PSA_SUCCESS != status)
     {
         goto exit;
     }
 
     *signature_length = signature_size;
-    status = ele_s2xx_common_sign_digest((uint8_t *)hash, hash_length, signature, signature_length, &sssKey, ele_alg);
+    status = ele_s2xx_common_sign_digest((uint8_t *)hash,
+                                         hash_length,
+                                         signature,
+                                         signature_length,
+                                         &sssKey,
+                                         ele_alg);
     if (PSA_SUCCESS != status)
     {
         goto exit;
     }
 
 exit:
-    if (mcux_mutex_unlock(&ele_hwcrypto_mutex))
+    (void)ele_s2xx_delete_key(&sssKey);
+
+    if (mcux_mutex_unlock(&ele_hwcrypto_mutex) != 0)
     {
-        return PSA_ERROR_BAD_STATE;
+        return PSA_ERROR_SERVICE_FAILURE;
     }
 
     return status;
@@ -251,35 +269,44 @@ psa_status_t ele_s2xx_opaque_verify_hash(const psa_key_attributes_t *attributes,
                                          const uint8_t *hash, size_t hash_length,
                                          const uint8_t *signature, size_t signature_length)
 {
-    psa_status_t status      = PSA_ERROR_CORRUPTION_DETECTED;
-    sss_sscp_object_t sssKey = {0};
-    sss_algorithm_t ele_alg  = {0};
+    psa_status_t status           = PSA_ERROR_CORRUPTION_DETECTED;
+    sss_sscp_object_t sssKey      = {0};
+    sss_algorithm_t ele_alg       = {0};
+    psa_key_location_t location   = PSA_KEY_LIFETIME_GET_LOCATION(psa_get_key_lifetime(attributes));
+    sss_cipher_type_t cipher_type = {0u};
+    psa_key_type_t type           = psa_get_key_type(attributes);
+    psa_ecc_family_t ecc_family   = PSA_KEY_TYPE_ECC_GET_FAMILY(type);
 
-    /* Convert PSA_ALG_* to ELE value and validate supported alg */
-    status = ele_s2xx_psa_2_ele_asym_alg(attributes, alg, &ele_alg);
+    status = translate_psa_asym_to_ele_asym(alg, &ele_alg);
     if (PSA_SUCCESS != status)
     {
         return status;
     }
 
-    if (PSA_KEY_TYPE_ECC_GET_FAMILY(psa_get_key_type(attributes)) != PSA_ECC_FAMILY_SECP_R1)
+    status = translate_psa_ecc_family_to_ele_cipher_type(attributes, &cipher_type);
+    if (PSA_SUCCESS != status)
+    {
+        return status;
+    }
+
+    if (true == MCUXCLPSADRIVER_IS_S200_KEY_STORAGE(location))
+    {
+        /* EL2GO is a special case and it supports only SECP ECDSA for
+         * sign/verify hash.
+         */
+        if (ecc_family != PSA_ECC_FAMILY_SECP_R1 || false == PSA_ALG_IS_RANDOMIZED_ECDSA(alg))
+        {
+            return PSA_ERROR_NOT_SUPPORTED;
+        }
+    }
+
+    /* Hash sign/verify only with randomized ECDSA or Ed25519ph on S200 */
+    if (false == PSA_ALG_IS_RANDOMIZED_ECDSA(alg) && alg != PSA_ALG_ED25519PH)
     {
         return PSA_ERROR_NOT_SUPPORTED;
     }
 
-    /* Hash sign/verify only with ECDSA on S200 */
-    if (false == PSA_ALG_IS_ECDSA(alg))
-    {
-        return PSA_ERROR_NOT_SUPPORTED;
-    }
-
-    /* Deterministic ECDSA not supported */
-    if (true == PSA_ALG_IS_DETERMINISTIC_ECDSA(alg))
-    {
-        return PSA_ERROR_NOT_SUPPORTED;
-    }
-
-    /* The given hash length and algorithm must match the ECDSA key length */
+    /* The given hash length and algorithm must be valid */
     status = validate_key_bitlen_for_hash_sign(attributes, alg, hash_length);
     if (PSA_SUCCESS != status)
     {
@@ -301,27 +328,34 @@ psa_status_t ele_s2xx_opaque_verify_hash(const psa_key_attributes_t *attributes,
         return PSA_ERROR_INVALID_ARGUMENT;
     }
 
-    if (mcux_mutex_lock(&ele_hwcrypto_mutex))
+    if (mcux_mutex_lock(&ele_hwcrypto_mutex) != 0)
     {
-        return PSA_ERROR_COMMUNICATION_FAILURE;
+        return PSA_ERROR_SERVICE_FAILURE;
     }
 
-    status = key_management(attributes, key_buffer, key_buffer_size, &sssKey);
+    status = ele_s2xx_import_key(attributes, key_buffer, key_buffer_size, &sssKey);
     if (PSA_SUCCESS != status)
     {
         goto exit;
     }
 
-    status = ele_s2xx_common_verify_digest((uint8_t *)hash, hash_length, (uint8_t *)signature, signature_length, &sssKey, ele_alg);
+    status = ele_s2xx_common_verify_digest((uint8_t *)hash,
+                                           hash_length,
+                                           (uint8_t *)signature,
+                                           signature_length,
+                                           &sssKey,
+                                           ele_alg);
     if (PSA_SUCCESS != status)
     {
         goto exit;
     }
 
 exit:
-    if (mcux_mutex_unlock(&ele_hwcrypto_mutex))
+    (void)ele_s2xx_delete_key(&sssKey);
+
+    if (mcux_mutex_unlock(&ele_hwcrypto_mutex) != 0)
     {
-        return PSA_ERROR_BAD_STATE;
+        return PSA_ERROR_SERVICE_FAILURE;
     }
 
     return status;
@@ -339,21 +373,57 @@ psa_status_t ele_s2xx_opaque_sign_message(const psa_key_attributes_t *attributes
     sss_algorithm_t ele_alg                        = {0};
     uint8_t hash[PSA_HASH_LENGTH(PSA_ALG_SHA_512)] = {0u};
     size_t hash_length                             = 0u;
+    sss_cipher_type_t cipher_type                  = {0u};
+    const uint8_t *input_internal                  = input;
+    size_t input_length_internal                   = input_length;
+    psa_key_type_t type                            = psa_get_key_type(attributes);
+    psa_ecc_family_t ecc_family                    = PSA_KEY_TYPE_ECC_GET_FAMILY(type);
+    psa_key_location_t location                    = PSA_KEY_LIFETIME_GET_LOCATION(psa_get_key_lifetime(attributes));
 
-    /* Convert PSA_ALG_* to ELE value and validate supported alg */
-    status = ele_s2xx_psa_2_ele_asym_alg(attributes, alg, &ele_alg);
+    status = translate_psa_asym_to_ele_asym(alg, &ele_alg);
     if (PSA_SUCCESS != status)
     {
         return status;
     }
 
-    /* Check if we were given one of the supported algs (EdDSA and ECDSA on S200) and
-     * check if key is supported for use with alg
-     */
+    status = translate_psa_ecc_family_to_ele_cipher_type(attributes, &cipher_type);
+    if (PSA_SUCCESS != status)
+    {
+        return status;
+    }
+
     status = validate_key_bitlen_for_message_sign(attributes, alg);
     if (PSA_SUCCESS != status)
     {
         return status;
+    }
+
+    if (true == MCUXCLPSADRIVER_IS_S200_KEY_STORAGE(location))
+    {
+        /* EL2GO is a special case and it supports only SECP ECDSA and
+         * PURE_EDDSA for sign/verify message.
+         */
+        if ((ecc_family != PSA_ECC_FAMILY_SECP_R1) &&
+            (ecc_family != PSA_ECC_FAMILY_TWISTED_EDWARDS))
+        {
+            return PSA_ERROR_NOT_SUPPORTED;
+        }
+        if (ecc_family == PSA_ECC_FAMILY_SECP_R1 && false == PSA_ALG_IS_ECDSA(alg))
+        {
+            return PSA_ERROR_NOT_SUPPORTED;
+        }
+        if (ecc_family == PSA_ECC_FAMILY_TWISTED_EDWARDS && PSA_ALG_PURE_EDDSA != alg)
+        {
+            return PSA_ERROR_NOT_SUPPORTED;
+        }
+    }
+
+    /* Message sign/verify only with randomized ECDSA, Ed25519, or Ed25519ph */
+    if ((false == PSA_ALG_IS_RANDOMIZED_ECDSA(alg)) &&
+        (PSA_ALG_PURE_EDDSA != alg) &&
+        (PSA_ALG_ED25519PH != alg))
+    {
+        return PSA_ERROR_NOT_SUPPORTED;
     }
 
     if (NULL == key_buffer || 0u == key_buffer_size)
@@ -361,7 +431,7 @@ psa_status_t ele_s2xx_opaque_sign_message(const psa_key_attributes_t *attributes
         return PSA_ERROR_INVALID_ARGUMENT;
     }
 
-    if (NULL == input || 0u == input_length)
+    if (NULL == input_internal || 0u == input_length_internal)
     {
         return PSA_ERROR_INVALID_ARGUMENT;
     }
@@ -371,11 +441,12 @@ psa_status_t ele_s2xx_opaque_sign_message(const psa_key_attributes_t *attributes
         return PSA_ERROR_INVALID_ARGUMENT;
     }
 
-    /* Pre-hash for ECDSA */
-    if (true == PSA_ALG_IS_ECDSA(alg))
+    /* Pre-hash for hash-and-sign algorithms */
+    if (true == PSA_ALG_IS_ECDSA(alg) || PSA_ALG_ED25519PH == alg)
     {
         status = ele_s2xx_transparent_hash_compute(PSA_ALG_SIGN_GET_HASH(alg),
-                                                   input, input_length,
+                                                   input_internal,
+                                                   input_length_internal,
                                                    hash, sizeof(hash),
                                                    &hash_length);
         if (PSA_SUCCESS != status)
@@ -384,32 +455,39 @@ psa_status_t ele_s2xx_opaque_sign_message(const psa_key_attributes_t *attributes
         }
 
         /* Update the inputs for the call to sign */
-        input        = hash;
-        input_length = hash_length;
+        input_internal        = hash;
+        input_length_internal = hash_length;
     }
 
-    if (mcux_mutex_lock(&ele_hwcrypto_mutex))
+    if (mcux_mutex_lock(&ele_hwcrypto_mutex) != 0)
     {
-        return PSA_ERROR_COMMUNICATION_FAILURE;
+        return PSA_ERROR_SERVICE_FAILURE;
     }
 
-    status = key_management(attributes, key_buffer, key_buffer_size, &sssKey);
+    status = ele_s2xx_import_key(attributes, key_buffer, key_buffer_size, &sssKey);
     if (PSA_SUCCESS != status)
     {
         goto exit;
     }
 
     *signature_length = signature_size;
-    status = ele_s2xx_common_sign_digest((uint8_t *)input, input_length, signature, signature_length, &sssKey, ele_alg);
+    status = ele_s2xx_common_sign_digest((uint8_t *)input_internal,
+                                         input_length_internal,
+                                         signature,
+                                         signature_length,
+                                         &sssKey,
+                                         ele_alg);
     if (PSA_SUCCESS != status)
     {
         goto exit;
     }
 
 exit:
-    if (mcux_mutex_unlock(&ele_hwcrypto_mutex))
+    (void)ele_s2xx_delete_key(&sssKey);
+
+    if (mcux_mutex_unlock(&ele_hwcrypto_mutex) != 0)
     {
-        return PSA_ERROR_BAD_STATE;
+        return PSA_ERROR_SERVICE_FAILURE;
     }
 
     return status;
@@ -426,21 +504,57 @@ psa_status_t ele_s2xx_opaque_verify_message(const psa_key_attributes_t *attribut
     sss_algorithm_t ele_alg                        = {0};
     uint8_t hash[PSA_HASH_LENGTH(PSA_ALG_SHA_512)] = {0u};
     size_t hash_length                             = 0u;
+    sss_cipher_type_t cipher_type                  = {0u};
+    const uint8_t *input_internal                  = input;
+    size_t input_length_internal                   = input_length;
+    psa_key_type_t type                            = psa_get_key_type(attributes);
+    psa_ecc_family_t ecc_family                    = PSA_KEY_TYPE_ECC_GET_FAMILY(type);
+    psa_key_location_t location                    = PSA_KEY_LIFETIME_GET_LOCATION(psa_get_key_lifetime(attributes));
 
-    /* Convert PSA_ALG_* to ELE value and validate supported alg */
-    status = ele_s2xx_psa_2_ele_asym_alg(attributes, alg, &ele_alg);
+    status = translate_psa_asym_to_ele_asym(alg, &ele_alg);
     if (PSA_SUCCESS != status)
     {
         return status;
     }
 
-    /* Check if we were given one of the supported algs (EdDSA and ECDSA on S200) and
-     * check if key is supported for use with alg
-     */
+    status = translate_psa_ecc_family_to_ele_cipher_type(attributes, &cipher_type);
+    if (PSA_SUCCESS != status)
+    {
+        return status;
+    }
+
     status = validate_key_bitlen_for_message_sign(attributes, alg);
     if (PSA_SUCCESS != status)
     {
         return status;
+    }
+
+    if (true == MCUXCLPSADRIVER_IS_S200_KEY_STORAGE(location))
+    {
+        /* EL2GO is a special case and it supports only SECP ECDSA and
+         * PURE_EDDSA for sign/verify message.
+         */
+        if ((ecc_family != PSA_ECC_FAMILY_SECP_R1) &&
+            (ecc_family != PSA_ECC_FAMILY_TWISTED_EDWARDS))
+        {
+            return PSA_ERROR_NOT_SUPPORTED;
+        }
+        if (ecc_family == PSA_ECC_FAMILY_SECP_R1 && false == PSA_ALG_IS_ECDSA(alg))
+        {
+            return PSA_ERROR_NOT_SUPPORTED;
+        }
+        if (ecc_family == PSA_ECC_FAMILY_TWISTED_EDWARDS && PSA_ALG_PURE_EDDSA != alg)
+        {
+            return PSA_ERROR_NOT_SUPPORTED;
+        }
+    }
+
+    /* Message sign/verify only with randomized ECDSA, Ed25519, or Ed25519ph */
+    if ((false == PSA_ALG_IS_RANDOMIZED_ECDSA(alg)) &&
+        (PSA_ALG_PURE_EDDSA != alg) &&
+        (PSA_ALG_ED25519PH != alg))
+    {
+        return PSA_ERROR_NOT_SUPPORTED;
     }
 
     if (NULL == key_buffer || 0u == key_buffer_size)
@@ -448,7 +562,7 @@ psa_status_t ele_s2xx_opaque_verify_message(const psa_key_attributes_t *attribut
         return PSA_ERROR_INVALID_ARGUMENT;
     }
 
-    if (NULL == input || 0u == input_length)
+    if (NULL == input_internal || 0u == input_length_internal)
     {
         return PSA_ERROR_INVALID_ARGUMENT;
     }
@@ -458,11 +572,12 @@ psa_status_t ele_s2xx_opaque_verify_message(const psa_key_attributes_t *attribut
         return PSA_ERROR_INVALID_ARGUMENT;
     }
 
-    /* Pre-hash for ECDSA */
-    if (true == PSA_ALG_IS_ECDSA(alg))
+    /* Pre-hash for hash-and-sign algorithms */
+    if (true == PSA_ALG_IS_ECDSA(alg) || PSA_ALG_ED25519PH == alg)
     {
         status = ele_s2xx_transparent_hash_compute(PSA_ALG_SIGN_GET_HASH(alg),
-                                                   input, input_length,
+                                                   input_internal,
+                                                   input_length_internal,
                                                    hash, sizeof(hash),
                                                    &hash_length);
         if (PSA_SUCCESS != status)
@@ -470,33 +585,42 @@ psa_status_t ele_s2xx_opaque_verify_message(const psa_key_attributes_t *attribut
             return status;
         }
 
-        /* Update the inputs for the call to sign */
-        input        = hash;
-        input_length = hash_length;
+        /* Update the inputs for the call to verify */
+        input_internal        = hash;
+        input_length_internal = hash_length;
     }
 
-    if (mcux_mutex_lock(&ele_hwcrypto_mutex))
+    if (mcux_mutex_lock(&ele_hwcrypto_mutex) != 0)
     {
-        return PSA_ERROR_COMMUNICATION_FAILURE;
+        return PSA_ERROR_SERVICE_FAILURE;
     }
 
-    status = key_management(attributes, key_buffer, key_buffer_size, &sssKey);
+    status = ele_s2xx_import_key(attributes, key_buffer, key_buffer_size, &sssKey);
     if (PSA_SUCCESS != status)
     {
         goto exit;
     }
 
-    status = ele_s2xx_common_verify_digest((uint8_t *)input, input_length, (uint8_t *)signature, signature_length, &sssKey, ele_alg);
+    status = ele_s2xx_common_verify_digest((uint8_t *)input_internal,
+                                           input_length_internal,
+                                           (uint8_t *)signature,
+                                           signature_length,
+                                           &sssKey,
+                                           ele_alg);
     if (PSA_SUCCESS != status)
     {
         goto exit;
     }
 
 exit:
-    if (mcux_mutex_unlock(&ele_hwcrypto_mutex))
+    (void)ele_s2xx_delete_key(&sssKey);
+
+    if (mcux_mutex_unlock(&ele_hwcrypto_mutex) != 0)
     {
-        return PSA_ERROR_BAD_STATE;
+        return PSA_ERROR_SERVICE_FAILURE;
     }
 
     return status;
 }
+
+/** @} */ // end of psa_asym_sign_opaque

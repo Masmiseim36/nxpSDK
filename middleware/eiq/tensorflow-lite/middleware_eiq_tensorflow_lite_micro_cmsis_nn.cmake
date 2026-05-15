@@ -50,6 +50,7 @@ message("${CMAKE_CURRENT_LIST_FILE} component is included.")
           ${CMAKE_CURRENT_LIST_DIR}/third_party/cmsis_nn/Source/ConvolutionFunctions/arm_convolve_wrapper_s4.c
           ${CMAKE_CURRENT_LIST_DIR}/third_party/cmsis_nn/Source/ConvolutionFunctions/arm_nn_mat_mult_kernel_row_offset_s8_s16.c
           ${CMAKE_CURRENT_LIST_DIR}/third_party/cmsis_nn/Source/ConvolutionFunctions/arm_convolve_get_buffer_sizes_s4.c
+          ${CMAKE_CURRENT_LIST_DIR}/third_party/cmsis_nn/Source/ConvolutionFunctions/arm_convolve_even_s4.c
           ${CMAKE_CURRENT_LIST_DIR}/third_party/cmsis_nn/Source/ConvolutionFunctions/arm_convolve_wrapper_s8.c
           ${CMAKE_CURRENT_LIST_DIR}/third_party/cmsis_nn/Source/ConvolutionFunctions/arm_convolve_wrapper_s16.c
           ${CMAKE_CURRENT_LIST_DIR}/third_party/cmsis_nn/Source/ConvolutionFunctions/arm_convolve_get_buffer_sizes_s8.c
@@ -97,6 +98,7 @@ message("${CMAKE_CURRENT_LIST_FILE} component is included.")
           ${CMAKE_CURRENT_LIST_DIR}/third_party/cmsis_nn/Source/ActivationFunctions/arm_relu_q15.c
           ${CMAKE_CURRENT_LIST_DIR}/third_party/cmsis_nn/Source/ActivationFunctions/arm_nn_activation_s16.c
           ${CMAKE_CURRENT_LIST_DIR}/third_party/cmsis_nn/Source/ActivationFunctions/arm_relu6_s8.c
+          ${CMAKE_CURRENT_LIST_DIR}/third_party/cmsis_nn/Source/NNSupportFunctions/arm_nn_mat_mult_nt_interleaved_t_even_s4.c
           ${CMAKE_CURRENT_LIST_DIR}/third_party/cmsis_nn/Source/NNSupportFunctions/arm_nn_vec_mat_mult_t_per_ch_s8.c
           ${CMAKE_CURRENT_LIST_DIR}/third_party/cmsis_nn/Source/NNSupportFunctions/arm_nn_lstm_step_s16.c
           ${CMAKE_CURRENT_LIST_DIR}/third_party/cmsis_nn/Source/NNSupportFunctions/arm_nn_mat_mul_core_1x_s8.c

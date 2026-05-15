@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2018 NXP
+ * Copyright 2016-2018, 2025 NXP
  * All rights reserved.
  *
  *
@@ -13,6 +13,16 @@
 #include "httpsrv_supp.h"
 
 #if HTTPSRV_CFG_WOLFSSL_ENABLE || HTTPSRV_CFG_MBEDTLS_ENABLE
+
+#if HTTPSRV_CFG_MBEDTLS_ENABLE
+static int psa_random_generator(void *p_rng, unsigned char *output, size_t len)
+{
+    psa_status_t status;
+
+    status = psa_generate_random(output, len);
+    return (status == PSA_SUCCESS) ? 0 : -1;
+}
+#endif
 
 /* Initialize TLS */
 httpsrv_tls_ctx_t httpsrv_tls_init(const HTTPSRV_TLS_PARAM_STRUCT *params)
@@ -53,8 +63,6 @@ httpsrv_tls_ctx_t httpsrv_tls_init(const HTTPSRV_TLS_PARAM_STRUCT *params)
 
 #if HTTPSRV_CFG_MBEDTLS_ENABLE
 
-        const char *pers = "ssl_server";
-
         ctx = httpsrv_mem_alloc_zero(sizeof(*ctx));
         if (ctx)
         {
@@ -64,8 +72,6 @@ httpsrv_tls_ctx_t httpsrv_tls_init(const HTTPSRV_TLS_PARAM_STRUCT *params)
 #endif
             mbedtls_x509_crt_init(&ctx->srvcert);
             mbedtls_pk_init(&ctx->pkey);
-            mbedtls_entropy_init(&ctx->entropy);
-            mbedtls_ctr_drbg_init(&ctx->ctr_drbg);
 
 #if defined(MBEDTLS_DEBUG_C)
             mbedtls_debug_set_threshold(0); /* Set this to >= 2 to see debug info */
@@ -81,14 +87,7 @@ httpsrv_tls_ctx_t httpsrv_tls_init(const HTTPSRV_TLS_PARAM_STRUCT *params)
                 }
 
                 if (mbedtls_pk_parse_key(&ctx->pkey, params->private_key_buffer, params->private_key_buffer_size, NULL,
-                                         0) != 0)
-                {
-                    goto ERROR;
-                }
-
-                /* Seed the RNG  */
-                if (mbedtls_ctr_drbg_seed(&ctx->ctr_drbg, mbedtls_entropy_func, &ctx->entropy,
-                                          (const unsigned char *)pers, strlen(pers)) != 0)
+                                         0, psa_random_generator, NULL) != 0)
                 {
                     goto ERROR;
                 }
@@ -100,7 +99,7 @@ httpsrv_tls_ctx_t httpsrv_tls_init(const HTTPSRV_TLS_PARAM_STRUCT *params)
                     goto ERROR;
                 }
 
-                mbedtls_ssl_conf_rng(&ctx->conf, mbedtls_ctr_drbg_random, &ctx->ctr_drbg);
+                mbedtls_ssl_conf_rng(&ctx->conf, psa_random_generator, NULL);
 #if 0 /* Debug info.*/
                mbedtls_ssl_conf_dbg(&ctx->conf, my_debug, NULL);
 #endif
@@ -144,8 +143,6 @@ void httpsrv_tls_release(httpsrv_tls_ctx_t ctx)
 #if defined(MBEDTLS_SSL_CACHE_C)
         mbedtls_ssl_cache_free(&ctx->cache);
 #endif
-        mbedtls_ctr_drbg_free(&ctx->ctr_drbg);
-        mbedtls_entropy_free(&ctx->entropy);
 
         httpsrv_mem_free(ctx);
 #endif

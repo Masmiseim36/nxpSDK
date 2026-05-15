@@ -13,12 +13,12 @@ namespace torch {
 namespace executor {
 namespace native {
 
-using Tensor = exec_aten::Tensor;
+using Tensor = executorch::aten::Tensor;
 
 Tensor& replication_pad2d_out(
     KernelRuntimeContext& ctx,
     const Tensor& in,
-    exec_aten::ArrayRef<int64_t> padding,
+    executorch::aten::ArrayRef<int64_t> padding,
     Tensor& out) {
   (void)ctx;
 
@@ -36,7 +36,7 @@ Tensor& replication_pad2d_out(
       out);
 
   ScalarType in_type = in.scalar_type();
-  constexpr auto name = "replication_pad2d.out";
+  static constexpr auto name = "replication_pad2d.out";
 
   ET_SWITCH_ALL_TYPES(in_type, ctx, name, CTYPE, [&] {
     pad2d<CTYPE>(replication_ix, in, out, padding);

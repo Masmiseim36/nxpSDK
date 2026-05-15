@@ -15,6 +15,7 @@
 
 #include "mcux_psa_s2xx_mac.h"
 #include "mcux_psa_s2xx_common_compute.h"
+#include "mcux_psa_s2xx_common_key_management.h"
 
 /*
  * Entry points for MAC computation and verification as described by the PSA
@@ -22,7 +23,7 @@
  */
 
 /* Convert PSA Algorithm to ELE Algorithm, CMAC or HMAC */
-static psa_status_t ele_psa_mac_alg_to_ele_mac_alg(psa_algorithm_t alg, sss_algorithm_t *ele_alg)
+static psa_status_t translate_psa_mac_to_ele_mac(psa_algorithm_t alg, sss_algorithm_t *ele_alg)
 {
     psa_status_t status = PSA_ERROR_CORRUPTION_DETECTED;
 
@@ -30,7 +31,7 @@ static psa_status_t ele_psa_mac_alg_to_ele_mac_alg(psa_algorithm_t alg, sss_algo
     if (PSA_ALG_FULL_LENGTH_MAC(alg) == PSA_ALG_CMAC)
     {
         *ele_alg = kAlgorithm_SSS_CMAC_AES;
-        status = PSA_SUCCESS;
+        status   = PSA_SUCCESS;
     }
     else
 #endif /* PSA_WANT_ALG_CMAC */
@@ -81,49 +82,13 @@ static psa_status_t ele_psa_mac_alg_to_ele_mac_alg(psa_algorithm_t alg, sss_algo
     return status;
 }
 
-/**
- *  Set MAC key which is placed in keybuffer into keyslot inside ELE
+/** \defgroup psa_mac PSA transparent key driver entry points for MAC
+ *
+ *  Entry points for MAC generation and verification as described by the PSA
+ *  Cryptoprocessor Driver interface specification
+ *
+ *  @{
  */
-static status_t set_mac_key(sss_sscp_object_t *sssKey, const uint8_t *key_buffer, size_t key_bits, sss_algorithm_t mode)
-{
-    sss_cipher_type_t type = 0u;
-
-    /* Validation and enum conversion was done before calling this function,
-     * so if mode is not CMAC, then it must be HMAC and nothing else.
-     */
-    if (mode == kAlgorithm_SSS_CMAC_AES)
-    {
-        type = kSSS_CipherType_CMAC;
-    }
-    else
-    {
-        type = kSSS_CipherType_HMAC;
-    }
-    size_t key_bytes = key_bits >> 3u;
-
-    if ((sss_sscp_key_object_init(sssKey, &g_ele_ctx.keyStore)) != kStatus_SSS_Success)
-    {
-        return kStatus_Fail;
-    }
-
-    if ((sss_sscp_key_object_allocate_handle(sssKey, 1u, /* key id */
-                                             kSSS_KeyPart_Default, type, key_bytes, kSSS_KeyProp_CryptoAlgo_MAC)) !=
-        kStatus_SSS_Success)
-    {
-        (void)sss_sscp_key_object_free(sssKey, kSSS_keyObjFree_KeysStoreDefragment);
-        return kStatus_Fail;
-    }
-
-    if ((sss_sscp_key_store_set_key(&g_ele_ctx.keyStore, sssKey, key_buffer, key_bytes, key_bits,
-                                    kSSS_KeyPart_Default)) != kStatus_SSS_Success)
-    {
-        (void)sss_sscp_key_object_free(sssKey, kSSS_keyObjFree_KeysStoreDefragment);
-        return kStatus_Fail;
-    }
-
-    return kStatus_Success;
-}
-
 psa_status_t ele_s2xx_transparent_mac_compute(const psa_key_attributes_t *attributes,
                                               const uint8_t *key_buffer,
                                               size_t key_buffer_size,
@@ -135,13 +100,13 @@ psa_status_t ele_s2xx_transparent_mac_compute(const psa_key_attributes_t *attrib
                                               size_t *mac_length)
 {
     psa_status_t status      = PSA_ERROR_CORRUPTION_DETECTED;
-    sss_algorithm_t ele_alg  = 0;
+    sss_algorithm_t ele_alg  = 0u;
     sss_sscp_object_t sssKey = {0};
     size_t key_bits          = psa_get_key_bits(attributes);
     psa_key_type_t key_type  = psa_get_key_type(attributes);
 
     /* Get Algo for ELE */
-    status = ele_psa_mac_alg_to_ele_mac_alg(alg, &ele_alg);
+    status = translate_psa_mac_to_ele_mac(alg, &ele_alg);
     if (status != PSA_SUCCESS)
     {
         return status;
@@ -151,13 +116,16 @@ psa_status_t ele_s2xx_transparent_mac_compute(const psa_key_attributes_t *attrib
 
     if (mcux_mutex_lock(&ele_hwcrypto_mutex) != 0)
     {
-        return PSA_ERROR_GENERIC_ERROR;
+        return PSA_ERROR_SERVICE_FAILURE;
     }
 
-    /* Set Key for MAC */
-    if ((set_mac_key(&sssKey, key_buffer, key_bits, ele_alg)) != kStatus_Success)
+
+    status = ele_s2xx_set_key(&sssKey, 0u, /* key id */
+                              key_buffer, key_buffer_size, kSSS_KeyPart_Default,
+                              kSSS_CipherType_MAC, kSSS_KeyProp_CryptoAlgo_MAC,
+                              key_buffer_size, key_bits);
+    if (PSA_SUCCESS != status)
     {
-        status = PSA_ERROR_GENERIC_ERROR;
         goto exit;
     }
 
@@ -168,11 +136,11 @@ psa_status_t ele_s2xx_transparent_mac_compute(const psa_key_attributes_t *attrib
     }
 
 exit:
-    (void)sss_sscp_key_object_free(&sssKey, kSSS_keyObjFree_KeysStoreDefragment);
+    (void)ele_s2xx_delete_key(&sssKey);
 
     if (mcux_mutex_unlock(&ele_hwcrypto_mutex) != 0)
     {
-        return PSA_ERROR_GENERIC_ERROR;
+        return PSA_ERROR_SERVICE_FAILURE;
     }
 
     return status;
@@ -200,7 +168,7 @@ static psa_status_t mac_common_setup(ele_s2xx_transparent_mac_operation_t *opera
         return PSA_ERROR_INVALID_ARGUMENT;
     }
 
-    status = ele_psa_mac_alg_to_ele_mac_alg(alg, &operation->algorithm);
+    status = translate_psa_mac_to_ele_mac(alg, &operation->algorithm);
     if (PSA_SUCCESS != status)
     {
         return status;
@@ -208,7 +176,7 @@ static psa_status_t mac_common_setup(ele_s2xx_transparent_mac_operation_t *opera
 
     if (mcux_mutex_lock(&ele_hwcrypto_mutex) != 0)
     {
-        return PSA_ERROR_GENERIC_ERROR;
+        return PSA_ERROR_SERVICE_FAILURE;
     }
 
     /* This key object is to be freed during mac_*_finish() or mac_abort() */
@@ -280,7 +248,7 @@ exit:
 
     if (mcux_mutex_unlock(&ele_hwcrypto_mutex) != 0)
     {
-        return PSA_ERROR_GENERIC_ERROR;
+        return PSA_ERROR_SERVICE_FAILURE;
     }
 
     return status;
@@ -324,7 +292,7 @@ psa_status_t ele_s2xx_transparent_mac_update(ele_s2xx_transparent_mac_operation_
 
     if (mcux_mutex_lock(&ele_hwcrypto_mutex) != 0)
     {
-        return PSA_ERROR_GENERIC_ERROR;
+        return PSA_ERROR_SERVICE_FAILURE;
     }
 
     if (sss_sscp_mac_context_init(&mac_ctx,
@@ -370,7 +338,7 @@ exit:
 
     if (mcux_mutex_unlock(&ele_hwcrypto_mutex) != 0)
     {
-        return PSA_ERROR_GENERIC_ERROR;
+        return PSA_ERROR_SERVICE_FAILURE;
     }
 
     return status;
@@ -387,7 +355,7 @@ psa_status_t ele_s2xx_transparent_mac_sign_finish(ele_s2xx_transparent_mac_opera
 
     if (mcux_mutex_lock(&ele_hwcrypto_mutex) != 0)
     {
-        return PSA_ERROR_GENERIC_ERROR;
+        return PSA_ERROR_SERVICE_FAILURE;
     }
 
     if (sss_sscp_mac_context_init(&mac_ctx,
@@ -431,7 +399,7 @@ exit:
 
     if (mcux_mutex_unlock(&ele_hwcrypto_mutex) != 0)
     {
-        return PSA_ERROR_GENERIC_ERROR;
+        return PSA_ERROR_SERVICE_FAILURE;
     }
 
     if (PSA_SUCCESS == status)
@@ -453,7 +421,7 @@ psa_status_t ele_s2xx_transparent_mac_verify_finish(ele_s2xx_transparent_mac_ope
 
     if (mcux_mutex_lock(&ele_hwcrypto_mutex) != 0)
     {
-        return PSA_ERROR_GENERIC_ERROR;
+        return PSA_ERROR_SERVICE_FAILURE;
     }
 
     if (sss_sscp_mac_context_init(&mac_ctx,
@@ -491,13 +459,13 @@ exit:
 
     if (mcux_mutex_unlock(&ele_hwcrypto_mutex) != 0)
     {
-        return PSA_ERROR_GENERIC_ERROR;
+        return PSA_ERROR_SERVICE_FAILURE;
     }
 
     /* Verify the MAC */
     if (PSA_SUCCESS == status)
     {
-        if (memcmp(mac, mac_finished, mac_length) != 0)
+        if (ele_s2xx_util_ct_memcmp(mac, mac_finished, mac_length) != 0)
         {
             status = PSA_ERROR_INVALID_SIGNATURE;
         }
@@ -510,7 +478,7 @@ psa_status_t ele_s2xx_transparent_mac_abort(ele_s2xx_transparent_mac_operation_t
 {
     if (mcux_mutex_lock(&ele_hwcrypto_mutex) != 0)
     {
-        return PSA_ERROR_GENERIC_ERROR;
+        return PSA_ERROR_SERVICE_FAILURE;
     }
 
     /* We have no S200 error code granularity, so we go by best effort and
@@ -520,14 +488,14 @@ psa_status_t ele_s2xx_transparent_mac_abort(ele_s2xx_transparent_mac_operation_t
      *  - the key object has never been created (failure during key creation),
      *  - operation->key_object attribute has been corrupted.
      */
-    (void)sss_sscp_key_object_free(&operation->key_object, kSSS_keyObjFree_KeysStoreDefragment);
+    (void)ele_s2xx_delete_key(&operation->key_object);
 
     /* Clean up the SW-side context */
     (void)memset(operation, 0, sizeof(ele_s2xx_transparent_mac_operation_t));
 
     if (mcux_mutex_unlock(&ele_hwcrypto_mutex) != 0)
     {
-        return PSA_ERROR_GENERIC_ERROR;
+        return PSA_ERROR_SERVICE_FAILURE;
     }
 
     return PSA_SUCCESS;

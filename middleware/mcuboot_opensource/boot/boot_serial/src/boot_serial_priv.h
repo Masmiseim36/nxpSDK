@@ -54,12 +54,30 @@ extern "C" {
 #define NMGR_ID_ECHO            0
 #define NMGR_ID_CONS_ECHO_CTRL  1
 #define NMGR_ID_RESET           5
+ 
+/* NXP */
+#if defined(__IAR_SYSTEMS_ICC__)
 
-#ifndef __packed
-#define __packed __attribute__((__packed__))
+#define STRUCT_PACKED __packed struct
+#define __ORDER_BIG_ENDIAN__    1
+#define __ORDER_LITTLE_ENDIAN__ 2
+#if defined(__LITTLE_ENDIAN__)
+#if __LITTLE_ENDIAN__ == 1
+#define __BYTE_ORDER__          __ORDER_LITTLE_ENDIAN__
+#else
+#define __BYTE_ORDER__          __ORDER_BIG_ENDIAN__
+#endif /* __LITTLE_ENDIAN__ == 1 */
 #endif
 
-struct nmgr_hdr {
+#elif defined(__GNUC__)
+
+#define STRUCT_PACKED struct __attribute__((__packed__))
+
+#else
+#error "Unknown toolchain"
+#endif
+
+STRUCT_PACKED nmgr_hdr {
 #if (__BYTE_ORDER__ == __ORDER_BIG_ENDIAN__)
     uint8_t  _res1:3;
     uint8_t  nh_version:2;
@@ -74,7 +92,7 @@ struct nmgr_hdr {
     uint16_t nh_group;          /* NMGR_GROUP_XXX */
     uint8_t  nh_seq;            /* sequence number */
     uint8_t  nh_id;             /* message ID within group */
-} __packed;
+};
 
 /*
  * From imgmgr.h

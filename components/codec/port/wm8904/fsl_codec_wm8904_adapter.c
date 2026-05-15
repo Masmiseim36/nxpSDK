@@ -1,5 +1,5 @@
 /*
- * Copyright  2021 NXP
+ * Copyright  2021, 2025 NXP
  *
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -210,6 +210,12 @@ status_t HAL_CODEC_WM8904_SetPower(void *handle, uint32_t module, bool powerOn)
 {
     assert(handle != NULL);
     status_t ret = kStatus_Success;
+
+    // Validate module is within valid enum range (0-12)
+    if (module > kCODEC_ModuleMixer)
+    {
+        return kStatus_InvalidArgument;
+    }
 
     ret = WM8904_SetModulePower((wm8904_handle_t *)((uint32_t)(((codec_handle_t *)handle)->codecDevHandle)),
                                 HAL_WM8904_MAP_MODULE((codec_module_t)module), powerOn);

@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 NXP
+ * Copyright 2022, 2025 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -42,7 +42,7 @@ typedef struct _p3t1755_config
     sensor_write_transfer_func_t writeTransfer;
     sensor_read_transfer_func_t readTransfer;
     uint8_t sensorAddress;
-    uint8_t oneshotMode;
+    bool oneshotMode;
 } p3t1755_config_t;
 
 #if defined(__cplusplus)

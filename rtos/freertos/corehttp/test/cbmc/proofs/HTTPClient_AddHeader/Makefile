@@ -34,7 +34,7 @@ REMOVE_FUNCTION_BODY += __CPROVER_file_local_core_http_client_c_httpParserOnBody
 REMOVE_FUNCTION_BODY += __CPROVER_file_local_core_http_client_c_httpParserOnHeaderFieldCallback
 REMOVE_FUNCTION_BODY += __CPROVER_file_local_core_http_client_c_httpParserOnHeaderValueCallback
 REMOVE_FUNCTION_BODY += __CPROVER_file_local_core_http_client_c_httpParserOnStatusCallback
-
+REMOVE_FUNCTION_BODY += __CPROVER_file_local_core_http_client_c_httpParserOnStatusCompleteCallback
 REMOVE_FUNCTION_BODY += __CPROVER_file_local_core_http_client_c_httpParserOnHeadersCompleteCallback
 REMOVE_FUNCTION_BODY += __CPROVER_file_local_core_http_client_c_httpParserOnMessageBeginCallback
 REMOVE_FUNCTION_BODY += __CPROVER_file_local_core_http_client_c_httpParserOnMessageCompleteCallback
@@ -57,5 +57,7 @@ PROOF_SOURCES += $(SRCDIR)/test/cbmc/stubs/strncpy.c
 PROOF_SOURCES += $(SRCDIR)/test/cbmc/stubs/httpHeaderStrncpy.c
 
 PROJECT_SOURCES += $(SRCDIR)/source/core_http_client.c
+
+EXTERNAL_SAT_SOLVER := kissat
 
 include ../Makefile.common

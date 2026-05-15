@@ -222,7 +222,7 @@ int tfa2_cnt_get_app_name(struct tfa2_device *tfa, char *name)
 
     for (i = 0; i < sizeof(tfa->cnt->application); i++)
     {
-        if (isalnum(tfa->cnt->application[i])) /* copy char if valid */
+        if (isalnum((unsigned char)tfa->cnt->application[i])) /* copy char if valid */
             name[len++] = tfa->cnt->application[i];
         if (tfa->cnt->application[i] == '\0')
             break;

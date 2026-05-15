@@ -1,5 +1,5 @@
 /*
- * Copyright  2019 NXP
+ * Copyright  2019, 2025 NXP
  *
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -18,7 +18,7 @@
  * Code
  ******************************************************************************/
 /*!
- * brief Codec i2c bus initilization.
+ * brief Codec i2c bus initialization.
  *
  * param handle i2c master handle.
  * param i2CInstance instance number of the i2c bus, such as 0 is corresponding to I2C0.
@@ -33,16 +33,24 @@ status_t CODEC_I2C_Init(void *handle, uint32_t i2cInstance, uint32_t i2cBaudrate
     masterConfig.enableMaster = true;
     masterConfig.baudRate_Bps = i2cBaudrate;
     masterConfig.srcClock_Hz  = i2cSourceClockHz;
-    masterConfig.instance     = (uint8_t)i2cInstance;
+
+    if (i2cInstance < UINT8_MAX)
+    {
+        masterConfig.instance = (uint8_t)i2cInstance;
+    }
+    else
+    {
+        return kStatus_InvalidArgument;
+    }
 
     return (status_t)HAL_I2cMasterInit((hal_i2c_master_handle_t *)handle, &masterConfig);
 }
 
 /*!
- * brief Codec i2c de-initilization.
+ * brief Codec i2c de-initialization.
  *
  * param handle i2c master handle.
- * return kStatus_HAL_I2cSuccess is success, else deinitial failed.
+ * return kStatus_HAL_I2cSuccess is success, else deinit failed.
  */
 status_t CODEC_I2C_Deinit(void *handle)
 {
@@ -99,6 +107,12 @@ status_t CODEC_I2C_Receive(void *handle,
                            uint8_t rxBuffSize)
 {
     hal_i2c_master_transfer_t masterXfer;
+
+    // Validate that subaddressSize is not 0 to prevent out-of-bounds array violation
+    if (subaddressSize == 0)
+    {
+        return kStatus_InvalidArgument;
+    }
 
     masterXfer.slaveAddress   = deviceAddress;
     masterXfer.direction      = kHAL_I2cRead;

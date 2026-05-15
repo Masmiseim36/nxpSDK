@@ -2227,6 +2227,7 @@ status_t flexspi_nor_generate_config_block_hyperflash(uint32_t instance, flexspi
         }
         // ID-CFI Read
         uint32_t buffer[2];
+        uint32_t address = 0x27;
         // Read Query Unique ASCII String
         status = flexspi_nor_hyperbus_read(instance, 0x10, &buffer[0], sizeof(buffer));
         if (status != kStatus_Success)
@@ -2237,11 +2238,24 @@ status_t flexspi_nor_generate_config_block_hyperflash(uint32_t instance, flexspi
         // Check that the data read out is  unicode "QRY" in big-endian order
         if ((buffer[0] != 0x52005100) || (buffer[1] != 0x5900))
         {
-            status = kStatus_FLEXSPINOR_Flash_NotFound;
-            break;
+            status = flexspi_nor_hyperbus_read(instance, 0, &buffer[0], sizeof(buffer));
+            if (status != kStatus_Success)
+            {
+                break;
+            }
+            // Check that the data read out is  unicode "SFDP" in big-endian order
+            if (buffer[0] == 0x44505346)
+            {
+                address = 0x802;
+            }
+            else
+            {
+                status = kStatus_FLEXSPINOR_Flash_NotFound;
+                break;
+            }
         }
         // Read Flash density
-        status = flexspi_nor_hyperbus_read(instance, 0x27, &buffer[0], sizeof(buffer));
+        status = flexspi_nor_hyperbus_read(instance, address, &buffer[0], sizeof(buffer));
         if (status != kStatus_Success)
         {
             break;

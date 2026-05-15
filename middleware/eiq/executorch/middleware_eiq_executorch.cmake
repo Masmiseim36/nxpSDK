@@ -8,6 +8,7 @@ message("${CMAKE_CURRENT_LIST_FILE} component is included.")
           ${CMAKE_CURRENT_LIST_DIR}/..
           ${CMAKE_CURRENT_LIST_DIR}/../..
           ${CMAKE_CURRENT_LIST_DIR}/third-party/flatbuffers/include
+          ${CMAKE_CURRENT_LIST_DIR}/runtime/core/portable_type/c10
         )
 
     if(CONFIG_USE_COMPONENT_CONFIGURATION)

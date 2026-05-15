@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016, 2023 NXP
+ * Copyright 2016, 2023, 2025 NXP
  * All rights reserved.
  *
  *
@@ -17,7 +17,7 @@
 #include "httpsrv_tls.h"
 
 #include <stdio.h>
-
+#include "semphr.h"
 #include "lwip/sys.h"
 
 #define HTTPSRV_PRODUCT_STRING      "HTTPSRV/0.1 - NXP Embedded Web Server v0.1"
@@ -199,7 +199,7 @@ typedef struct httpsrv_struct
     volatile uint32_t valid;                   /* Any value different than HTTPSRV_VALID means session is invalid */
     volatile sys_thread_t server_tid;          /* Server task ID */
     void *script_msgq;                         /* Message queue for CGI */
-    sys_sem_t ses_cnt;                         /* Session counter */
+    SemaphoreHandle_t ses_cnt;                 /* Session counter */
     sys_sem_t finished;        /* Server finished, field is used after httpsrv_destroy_server is called */
 #if HTTPSRV_CFG_WOLFSSL_ENABLE || HTTPSRV_CFG_MBEDTLS_ENABLE
     httpsrv_tls_ctx_t tls_ctx; /* TLS context */

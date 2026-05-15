@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2023 NXP
+ * Copyright 2022-2023,2025 NXP
  *
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -11,8 +11,15 @@
 #include "ele_fw.h"      /* ELE FW, can be placed in bootable container in real world app */
 #include "fsl_s3mu.h"    /* Messaging unit driver */
 
-#if defined(PSA_ELE_S4XX_SD_NVM_MANAGER)
+#if defined(CONFIG_PSA_ELE_S4XX_NVM_MANAGER) || defined(PSA_ELE_S4XX_SD_NVM_MANAGER)
 #include "ele_nvm_manager.h"
+#endif
+
+#if defined(__ZEPHYR__) && defined(CONFIG_PSA_ELE_S4XX_NVM_MANAGER)
+#include "mcux_psa_s4xx_zephyr_nvm_manager.h"
+#endif
+
+#if defined(PSA_ELE_S4XX_SD_NVM_MANAGER)
 #include "mcux_psa_s4xx_sdmmc_nvm_manager.h"
 #endif
 
@@ -67,7 +74,6 @@ static status_t ele_close_handles(void)
         if (g_ele_ctx.key_management_handle != 0u) {
             result = ELE_CloseKeyService(S3MU, g_ele_ctx.key_management_handle);
             if (result != kStatus_Success) {
-                PRINTF("ELE_CloseKeyService failed\n");
                 break;
             }
             g_ele_ctx.key_management_handle = 0u;
@@ -77,29 +83,26 @@ static status_t ele_close_handles(void)
         if (g_ele_ctx.key_store_handle != 0u) {
             result = ELE_CloseKeystore(S3MU, g_ele_ctx.key_store_handle);
             if (result != kStatus_Success) {
-                PRINTF("ELE_CloseKeystore failed\n");
                 break;
             }
             g_ele_ctx.key_store_handle = 0u;
         }
 
-#if defined(PSA_ELE_S4XX_SD_NVM_MANAGER)
+#if defined(CONFIG_PSA_ELE_S4XX_NVM_MANAGER)
         /****************** Close NVM storage session **************************/
         if (g_ele_ctx.storage_handle != 0u) {
             result = ELE_CloseNvmStorageService(S3MU, g_ele_ctx.storage_handle);
             if (result != kStatus_Success) {
-                PRINTF("ELE_CloseNvmStorageService failed\n");
                 break;
             }
             g_ele_ctx.storage_handle = 0u;
         }
-#endif
+#endif /* defined(CONFIG_PSA_ELE_S4XX_NVM_MANAGER) */
 
         /****************** Close EdgeLock session ******************/
         if (g_ele_ctx.session_handle != 0u) {
             result = ELE_CloseSession(S3MU, g_ele_ctx.session_handle);
             if (result != kStatus_Success) {
-                PRINTF("ELE_CloseSession failed\n");
                 break;
             }
             g_ele_ctx.session_handle = 0;
@@ -120,9 +123,16 @@ static status_t ele_close_handles(void)
  */
 status_t CRYPTO_InitHardware(void)
 {
-    status_t result = kStatus_Fail;
-#if defined(PSA_ELE_S4XX_SD_NVM_MANAGER)
+    status_t result     = kStatus_Fail;
+    uint32_t trng_state = 0u;
+#if defined(CONFIG_PSA_ELE_S4XX_NVM_MANAGER) || defined(PSA_ELE_S4XX_SD_NVM_MANAGER)
     ele_nvm_manager_t manager;
+#endif /* CONFIG_PSA_ELE_S4XX_NVM_MANAGER || PSA_ELE_S4XX_SD_NVM_MANAGER */
+
+#if defined(__ZEPHYR__) && (CONFIG_PSA_ELE_S4XX_NVM_MANAGER)
+    manager.nvm_read = zephyr_settings_read;
+    manager.nvm_write = zephyr_settings_write;
+#elif defined(PSA_ELE_S4XX_SD_NVM_MANAGER)
     manager.nvm_read = sd_file_read;
     manager.nvm_write = sd_file_write;
 #endif
@@ -133,12 +143,10 @@ status_t CRYPTO_InitHardware(void)
 
     /* Mutex for access to ele_crypto HW */
     if (mcux_mutex_init(&ele_hwcrypto_mutex)) {
-        PRINTF("NO memory - init failed\n");
         return kStatus_Fail;
     }
 
     if ((result = mcux_mutex_lock(&ele_hwcrypto_mutex)) != 0) {
-        PRINTF("Mutex lock failed\n");
         return kStatus_Fail;
     }
 
@@ -147,7 +155,6 @@ status_t CRYPTO_InitHardware(void)
         if (g_ele_ctx.is_fw_loaded != true) {
             result = ELE_LoadFw(S3MU, ele_fw);
             if (result != kStatus_Success) {
-                PRINTF("Load FW failed\n");
                 break;
             } else {
                 g_ele_ctx.is_fw_loaded = true;
@@ -159,13 +166,11 @@ status_t CRYPTO_InitHardware(void)
                 break;
             }
 
-            uint32_t trng_state = 0u;
             do
             {
                 result = ELE_GetTrngState(S3MU, &trng_state);
-            } while (((trng_state & 0xFFu) != kELE_TRNG_ready) &&
-                     ((trng_state & 0xFF00u) != kELE_TRNG_CSAL_success << 8u ) &&
-                       result == kStatus_Success);
+            } while (!(((trng_state & 0xFFu) == kELE_TRNG_ready) &&
+                       ((trng_state & 0xFF00u) == kELE_TRNG_CSAL_success << 8u )));
 
             /****************** Initialize EdgeLock services ************/
             result = ELE_InitServices(S3MU);
@@ -173,21 +178,23 @@ status_t CRYPTO_InitHardware(void)
                 break;
             }
 
-#if defined(PSA_ELE_S4XX_SD_NVM_MANAGER)
-
-            sd_ele_fs_initialize();
+#if defined(CONFIG_PSA_ELE_S4XX_NVM_MANAGER) || defined(PSA_ELE_S4XX_SD_NVM_MANAGER)
 
             /* Register for NVM Storage backend - to be done only once*/
             result = ELE_Register_NVM_Manager(&manager);
             if (result != kStatus_Success) {
-                PRINTF("ELE_Register_NVM_Manager failed\n");
                 break;
             }
 #endif
 
-#if defined(MBEDTLS_PSA_ITS_FILE_FATFS)
+#if defined(MBEDTLS_PSA_ITS_FILE_FATFS) && defined(PSA_ELE_S4XX_SD_NVM_MANAGER)
+            sd_ele_fs_initialize();
             sd_its_fs_initialize();
 #endif
+#if defined(__ZEPHYR__) && defined(CONFIG_PSA_ELE_S4XX_NVM_MANAGER)
+            ele_zephyr_settings_initialize();
+#endif
+
         }
 
         // Initalize rest of the handles as 0
@@ -200,17 +207,15 @@ status_t CRYPTO_InitHardware(void)
         /****************** Open EdgeLock session ******************/
         result = ELE_OpenSession(S3MU, &g_ele_ctx.session_handle);
         if (result != kStatus_Success) {
-            PRINTF("Open Session failed\n");
             break;
         }
 
-#if defined(PSA_ELE_S4XX_SD_NVM_MANAGER)
+#if defined(CONFIG_PSA_ELE_S4XX_NVM_MANAGER) || defined(PSA_ELE_S4XX_SD_NVM_MANAGER)
 
         /****************** Open NVM Storage service **************************/
         result =
             ELE_OpenNvmStorageService(S3MU, g_ele_ctx.session_handle, &g_ele_ctx.storage_handle);
         if (result != kStatus_Success) {
-            PRINTF("ELE_OpenNvmStorageService failed\n");
             break;
         }
 
@@ -220,10 +225,9 @@ status_t CRYPTO_InitHardware(void)
             result = kStatus_Success;
         }
         if (result != kStatus_Success) {
-            PRINTF("ELE_StorageMasterImport_From_NVM failed\n");
             break;
         }
-#endif
+#endif /* defined(CONFIG_PSA_ELE_S4XX_NVM_MANAGER) */
 
         /**************** Create/Open key Store ******************************/
         ele_keystore_t keystoreParam;
@@ -241,7 +245,6 @@ status_t CRYPTO_InitHardware(void)
             result = ELE_OpenKeystore(S3MU, g_ele_ctx.session_handle, &keystoreParam,
                                       &g_ele_ctx.key_store_handle, NULL, 0);
             if (result != kStatus_Success) {
-                PRINTF("ELE_OpenKeystore failed\n");
                 break;
             }
         }
@@ -251,7 +254,6 @@ status_t CRYPTO_InitHardware(void)
                                     g_ele_ctx.key_store_handle,
                                     &g_ele_ctx.key_management_handle);
         if (result != kStatus_Success) {
-            PRINTF("ELE_OpenKeyService failed\n");
             break;
         }
 
@@ -264,7 +266,6 @@ status_t CRYPTO_InitHardware(void)
     }
 
     if (mcux_mutex_unlock(&ele_hwcrypto_mutex)) {
-        PRINTF("Mutex unlock failed\n");
         return kStatus_Fail;
     }
 

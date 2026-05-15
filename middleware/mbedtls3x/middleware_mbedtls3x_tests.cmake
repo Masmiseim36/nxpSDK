@@ -4,6 +4,17 @@ include_guard(GLOBAL)
 message("${CMAKE_CURRENT_LIST_FILE} component is included.")
 
       target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
+          ${CMAKE_CURRENT_LIST_DIR}/framework/tests/src/asn1_helpers.c
+          ${CMAKE_CURRENT_LIST_DIR}/framework/tests/src/bignum_helpers.c
+          ${CMAKE_CURRENT_LIST_DIR}/framework/tests/src/fake_external_rng_for_test.c
+          ${CMAKE_CURRENT_LIST_DIR}/framework/tests/src/helpers.c
+          ${CMAKE_CURRENT_LIST_DIR}/framework/tests/src/psa_crypto_helpers.c
+          ${CMAKE_CURRENT_LIST_DIR}/framework/tests/src/psa_crypto_stubs.c
+          ${CMAKE_CURRENT_LIST_DIR}/framework/tests/src/psa_exercise_key.c
+          ${CMAKE_CURRENT_LIST_DIR}/framework/tests/src/psa_memory_poisoning_wrappers.c
+          ${CMAKE_CURRENT_LIST_DIR}/framework/tests/src/random.c
+          ${CMAKE_CURRENT_LIST_DIR}/framework/tests/src/test_memory.c
+          ${CMAKE_CURRENT_LIST_DIR}/framework/tests/src/threading_helpers.c
           ${CMAKE_CURRENT_LIST_DIR}/tests/src/certs.c
           ${CMAKE_CURRENT_LIST_DIR}/tests/src/psa_test_wrappers.c
           ${CMAKE_CURRENT_LIST_DIR}/tests/src/test_helpers/ssl_helpers.c
@@ -11,6 +22,8 @@ message("${CMAKE_CURRENT_LIST_FILE} component is included.")
 
   
       target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
+          ${CMAKE_CURRENT_LIST_DIR}/framework/tests/include/test
+          ${CMAKE_CURRENT_LIST_DIR}/framework/tests/include
           ${CMAKE_CURRENT_LIST_DIR}/tests/include/test
           ${CMAKE_CURRENT_LIST_DIR}/tests/include
         )

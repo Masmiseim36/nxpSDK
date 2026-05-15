@@ -29,8 +29,8 @@
 #include "freemaster_cfg.h"
 
 /* Define global version macro */
-#define FMSTR_VERSION     0x00030010
-#define FMSTR_VERSION_STR "3.0.10"
+#define FMSTR_VERSION     0x00030012
+#define FMSTR_VERSION_STR "3.0.12"
 
 /******************************************************************************
  * Includes
@@ -301,9 +301,21 @@
 #endif
 #endif
 
+/* Debug level cannot work without debug printing */
 #if FMSTR_DEBUG_LEVEL > 0 && !defined(FMSTR_DEBUG_PRINTF)
 #undef FMSTR_DEBUG_LEVEL
 #define FMSTR_DEBUG_LEVEL 0
+#undef FMSTR_DEBUG_ASSERT 
+#define FMSTR_DEBUG_ASSERT 1
+#endif
+
+/* Use FMSTR_ASSERT checks in debug builds */
+#ifndef FMSTR_DEBUG_ASSERT 
+#if defined(DEBUG) || defined(_DEBUG) || (FMSTR_DEBUG_LEVEL > 0)
+#define FMSTR_DEBUG_ASSERT 1
+#else
+#define FMSTR_DEBUG_ASSERT 0
+#endif
 #endif
 
 /* Recorder optimizations */
